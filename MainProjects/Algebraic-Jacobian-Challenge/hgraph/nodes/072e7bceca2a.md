@@ -7,9 +7,9 @@ generated: blueprint
 label: lem:presentation_modulesRestrictBasicOpen
 lean_status: lean_ok
 order: 261
-title: Presentation of the affine restriction (Route B, step B4)
+title: Presentation of the affine restriction
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-23T22:32:06'
 ---
 Let \(\mathcal{F}\) be an \(\mathcal{O}_{\operatorname{Spec} R}\)-module, let \(U\) be an open
   carrying a presentation of \(\mathcal{F}.\operatorname{over} U\), and let \(g \in R\) with

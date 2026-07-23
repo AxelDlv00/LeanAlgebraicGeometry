@@ -7,9 +7,9 @@ generated: blueprint
 label: lem:coprodToProd_isIso_of_equiv
 lean_status: lean_ok
 order: 364
-title: The comparison map's iso-status is stable under index reindexing
+title: The comparison map is invariant under index reindexing
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-23T22:59:54'
 ---
 Let \(e : \alpha \simeq \beta\) be an equivalence of finite index types and let
   \(\mathrm{legs} : \beta \to \operatorname{Over} X\) be a family of slice objects. If the canonical

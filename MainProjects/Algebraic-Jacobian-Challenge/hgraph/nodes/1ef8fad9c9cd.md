@@ -7,10 +7,9 @@ generated: blueprint
 label: lem:section_isLocalizedModule_of_isIso_fromTildeGamma
 lean_status: empty
 order: 255
-title: Section-restriction localizes when the counit is an isomorphism (per-piece
-  engine)
+title: Section restriction localizes when the counit is an isomorphism
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-23T22:32:06'
 ---
 Let \(\mathcal{F}\) be an \(\mathcal{O}_{\operatorname{Spec} R}\)-module for which the
   tilde--\(\Gamma\) counit \(\operatorname{fromTilde\Gamma}\) is an isomorphism, and let \(f \in R\).

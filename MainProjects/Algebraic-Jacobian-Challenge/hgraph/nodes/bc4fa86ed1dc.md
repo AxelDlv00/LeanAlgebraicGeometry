@@ -7,9 +7,9 @@ generated: blueprint
 label: lem:tilde_section_isLocalizedModule
 lean_status: lean_ok
 order: 254
-title: Section-restriction of \(\widetilde{M}\) localizes (local-model brick)
+title: Section restriction of \(\widetilde{M}\) localizes
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-23T22:32:06'
 ---
 Let \(M\) be an \(R\)-module and \(f \in R\). The section-restriction map
   \(\Gamma(\operatorname{Spec} R, \widetilde{M}) \to \Gamma(D(f), \widetilde{M})\) of the associated

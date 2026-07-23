@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.rawPushPullMap_comp
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-23T22:32:05'
 ---
 lemma rawPushPullMap_comp {Z₁ Z₂ Z₃ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (b : Z₃ ⟶ Z₂)
     (p₁ : Z₁ ⟶ X) (p₂ : Z₂ ⟶ X) (p₃ : Z₃ ⟶ X)
@@ -32,7 +32,8 @@ lemma rawPushPullMap_comp {Z₁ Z₂ Z₃ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (b :
   -- The inner identity in `Z₁.Modules`: the pure pushforward-of-pentagon content.
   have INNER : (Scheme.Modules.pullbackPushforwardAdjunction (b ≫ a)).unit.app
           ((Scheme.Modules.pullback p₁).obj F) ≫
-        (Scheme.Modules.pushforward (b ≫ a)).map ((Scheme.Modules.pullbackComp (b ≫ a) p₁).hom.app F) ≫
+        (Scheme.Modules.pushforward (b ≫ a)).map
+          ((Scheme.Modules.pullbackComp (b ≫ a) p₁).hom.app F) ≫
         eqToHom (congrArg (fun q => (Scheme.Modules.pushforward (b ≫ a)).obj
           ((Scheme.Modules.pullback q).obj F)) (Category.assoc b a p₁)) =
       ((Scheme.Modules.pullbackPushforwardAdjunction a).unit.app

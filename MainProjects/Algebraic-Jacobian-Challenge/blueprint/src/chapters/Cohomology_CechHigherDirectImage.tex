@@ -536,21 +536,14 @@ bricks, and the functor laws assembling them are the lone coherence statement.
 \subsection{The categorical--module bridge (L1)}
 \label{sec:cech_l1_bridge}
 
-The affine vanishing of Lemma~\ref{lem:cech_acyclic_affine} is a statement about the
+The affine vanishing of Lemma~\ref{lem:cech_acyclic_affine} concerns the
 \emph{section} {\v C}ech complex \(\check{\mathcal{C}}^\bullet(\mathcal{U},
-\mathcal{F})\) of Definition~\ref{def:section_cech_complex} --- a cochain complex of
-abelian groups --- whereas the combinatorial contracting-homotopy core operates on a
-concrete complex of localised \(R\)-modules. The passage between the two, the
-\emph{categorical--module bridge}, decomposes into two self-contained statements: the
-section identification (each section group is an away localisation, with the
-restriction maps the canonical localisation maps) and the homology-to-exactness
-reduction (vanishing of the abstract homology is equivalent to exactness of the
-underlying localised-module complex). These are isolated as
-Definition~\ref{def:qcoh_sections_localized} and
-Lemma~\ref{lem:section_cech_homology_exact} below; the assembly --- feeding each
-positive-degree node through the local-to-global exactness criterion and closing with
-the dependent combinatorial port --- is carried out in the proof of
-Lemma~\ref{lem:cech_acyclic_affine}.
+\mathcal{F})\), a cochain complex of abelian groups, while its contracting homotopy is
+most naturally described on a concrete complex of localised \(R\)-modules. The
+passage between them has two parts: identify sections and restriction maps with away
+localisations and their canonical maps, then translate vanishing of homology into
+exactness of the resulting module complex. Definition~\ref{def:qcoh_sections_localized}
+and Lemma~\ref{lem:section_cech_homology_exact} give these two parts.
 
 \begin{definition}
 
@@ -594,25 +587,12 @@ Lemma~\ref{lem:cech_acyclic_affine}.
   as an \(R_g\)-module) and item~(5) gives the second (the restriction along
   \(D(g) \subset D(f)\) is the localisation map \(M_f \to M_g\)).
 
-  The module-level input on the side of Mathlib is the development
-  \texttt{AlgebraicGeometry.Modules.Tilde}: the comparison map
-  \((\operatorname{tilde.toOpen} M\, (D(g))).\mathrm{hom}\) carries the instance
-  \(\operatorname{IsLocalizedModule}(\operatorname{Submonoid.powers} g)\), and
-  \(\operatorname{isUnit\_algebraMap\_end\_basicOpen}\) records that \(g\) acts
-  invertibly on the sections over \(D(g)\); the restriction compatibility is
-  \(\operatorname{tilde.toOpen\_res}\). These supply the statement \emph{verbatim} for
-  the standard sheaf \(\widetilde{M}\). For an \emph{arbitrary} quasi-coherent
-  \(\mathcal{F}\) the remaining step is the canonical comparison
-  \(\mathcal{F} \cong \widetilde{\Gamma(\operatorname{Spec} R, \mathcal{F})}\), i.e.\
-  that the counit \(\operatorname{Scheme.Modules.fromTildeΓ}\) is an isomorphism. This
-  is \emph{not} yet available in Mathlib for a general quasi-coherent \(\mathcal{F}\):
-  Mathlib provides it only from a \emph{global} presentation
-  (\(\operatorname{isIso\_fromTildeΓ\_of\_presentation}\)), whereas quasi-coherence
-  supplies only \emph{local} presentation data on a cover. Globalising the local data
-  on the affine \(\operatorname{Spec} R\) --- the affine equivalence
-  \(\operatorname{QCoh}(\operatorname{Spec} R) \simeq \operatorname{Mod}(R)\), Stacks
-  Tag~01I8 --- is the one genuine gap this definition records as a build target; it is
-  the canonical missing affine equivalence and is self-contained.
+  For a standard sheaf \(\widetilde M\), the distinguished-open comparison identifies
+  \(\Gamma(D(g),\widetilde M)\) with \(M_g\), and its naturality identifies restriction
+  maps with localization maps. For arbitrary quasi-coherent \(\mathcal F\), the affine
+  equivalence
+  \(\mathcal{F} \cong \widetilde{\Gamma(\operatorname{Spec} R,\mathcal{F})}\)
+  reduces the assertion to this standard-sheaf case.
 
   Two combinatorial--geometric ingredients package the identification into the form
   consumed by Lemma~\ref{lem:section_cech_homology_exact}. First, the multi-index
@@ -633,15 +613,9 @@ Lemma~\ref{lem:cech_acyclic_affine}.
   this is the single differential brick that the {\v C}ech coface match of
   Lemma~\ref{lem:section_cech_homology_exact} feeds on.
 
-  The identification is packaged by a few helpers: the two localised-module endpoints
-  \(\operatorname{tP}, \operatorname{tU}\) (the section groups
-  \(\mathcal{F}(D(s_\sigma))\) named as away localisations at the two indices
-  involved in a face), the per-\(\sigma\) comparison
-  \(\varphi_\sigma = \operatorname{IsLocalizedModule.iso}\) realised both as the bare
-  localisation comparison \(\operatorname{phiL}\) and as its sheaf-level avatar
-  \(\operatorname{phi}\) (their agreement is \(\operatorname{phi\_eq\_phiL}\)), and the
-  accessor-bridge \(\operatorname{restr\_bridge}\) that exhibits the presheaf
-  restriction map through these comparisons.
+  Consequently the canonical localization isomorphisms commute with every face
+  restriction. They identify the section {\v C}ech differential with the alternating
+  sum of the corresponding localization maps.
 \end{definition}
 
 \begin{lemma}
@@ -704,37 +678,31 @@ Lemma~\ref{lem:cech_acyclic_affine}.
     \qquad
     s_\sigma = \prod_{k} s_{\sigma(k)},
   \]
-  whose differential is the alternating sum of the canonical localisation maps. The
-  intended top-level conclusion is the directed homology vanishing
+  whose differential is the alternating sum of the canonical localisation maps. Its
+  positive-degree homology vanishes:
   \[
     1 \leq p
     \;\Longrightarrow\;
     \operatorname{IsZero}\bigl(\check{\mathcal{C}}^\bullet(\mathcal{U},
       \mathcal{F}).\mathrm{homology}\, p\bigr),
   \]
-  which is the form the affine vanishing
-  Lemma~\ref{lem:cech_acyclic_affine} (\(\operatorname{sectionCech\_affine\_vanishing}\))
-  consumes; it is read off from positive-degree exactness of the underlying group
+  This follows from positive-degree exactness of the underlying group
   homomorphisms,
   \(\operatorname{Function.Exact}\bigl(D^{p-1} \to D^p \to D^{p+1}\bigr)\), which is
   Lemma~\ref{lem:section_cech_module_exact}.
 
-  The reduction from the abstract homology to this group-level exactness is \emph{not}
-  a \(\operatorname{ModuleCat}\) statement: the degree-\(p\) object of
+  The degree-\(p\) object of
   \(\check{\mathcal{C}}^\bullet(\mathcal{U}, \mathcal{F})\) is the \emph{categorical
   product}
   \(\prod^{c}_{\sigma : \mathrm{Fin}(p+1) \to \iota}
   \mathcal{F}(D(s_\sigma))\) in the category \(\mathrm{Ab}\) of abelian groups (the
   alternating-coface-map complex of the \(\mathrm{Ab}\)-valued cosimplicial object
   \(\operatorname{sectionCechCosimplicial}\)), not an \(R\)-module object, so the
-  module-category criterion \(\operatorname{ShortComplex.moduleCat\_exact\_iff}\) does
-  not apply. The correct chain runs through three steps, isolated as the sub-lemmas
-  below: \(\operatorname{IsZero}\) of the homology is \(\operatorname{ExactAt}\) at
-  \(p\) (\(\operatorname{exactAt\_iff\_isZero\_homology}\)); \(\operatorname{ExactAt}\)
-  of a short complex in \(\mathrm{Ab}\) is the underlying-group exactness
-  \(\forall x_2,\; g(x_2) = 0 \Rightarrow \exists x_1,\; f(x_1) = x_2\) via the abelian
-  analogue \(\operatorname{ShortComplex.ab\_exact\_iff}\)
-  (Lemma~\ref{lem:section_cech_ab_exact}); and the categorical product is moved to the
+  appropriate exactness criterion is therefore the one in \(\mathrm{Ab}\). Vanishing
+  of homology is equivalent to exactness at degree \(p\), which in \(\mathrm{Ab}\) is
+  the underlying-group condition
+  \(\forall x_2,\; g(x_2)=0\Rightarrow\exists x_1,\;f(x_1)=x_2\)
+  (Lemma~\ref{lem:section_cech_ab_exact}). The categorical product is identified with
   per-\(\sigma\) localised modules by the element-level product equivalence
   \(\operatorname{ToType}(\prod^{c} F_\sigma) \simeq \prod_\sigma
   \operatorname{ToType}(F_\sigma)\)
@@ -742,16 +710,9 @@ Lemma~\ref{lem:cech_acyclic_affine}.
   differential matches the localisation differential \(\operatorname{dDiff}\) of
   \(D^\bullet\) (the abstract cosimplicial unfold
   Lemma~\ref{lem:section_cech_objd_apply} followed by the tilde-bridge identification
-  Lemma~\ref{lem:section_cech_coface_match}). Transporting the
-  already-proved exactness \(\operatorname{dDiff\_exact}\) of
+  Lemma~\ref{lem:section_cech_coface_match}). Transporting the exactness of
   Lemma~\ref{lem:section_cech_module_exact} across the product equivalence then
-  discharges the group-level exactness. The active target is the tilde case
-  \(\mathcal{F} = \widetilde{M}\), for which the per-coordinate comparisons are
-  immediate from \(\operatorname{qcohRestriction\_eq\_comparison}\); a general
-  quasi-coherent \(\mathcal{F}\) is reduced to this case via the affine equivalence
-  \(\mathcal{F} \cong \widetilde{\Gamma\mathcal{F}}\) (Stacks Tag~01I8), the
-  separately-deferred globalisation gap recorded in
-  Definition~\ref{def:qcoh_sections_localized}.
+  proves the group-level exactness.
 \end{lemma}
 
 \begin{proof}
@@ -785,16 +746,9 @@ Lemma~\ref{lem:cech_acyclic_affine}.
   D^{p+1})\), supplied by \(\operatorname{dDiff\_exact}\)
   (Lemma~\ref{lem:section_cech_module_exact}).
 
-  The identification of the abstract section complex with the concrete localised
-  complex \(D^\bullet\) --- together with the construction of the prepend transport
-  \(c\) and the localisation cofaces \(\delta_k\) discharging the unit, shift, and
-  coface-commutation compatibilities \(\mathtt{hu}\)/\(\mathtt{hsh}\)/\(\mathtt{hcomm}\)
-  of the dependent combinatorial port --- is the bulk of the bridge. The non-circular
-  route is reflection along the localisation equivalence on its essential image (the
-  global-sections functor \(\Gamma\) is the inverse equivalence there, so it reflects
-  \(\operatorname{IsZero}\) of homology); it is \emph{not} the assertion that
-  ``\(\Gamma\) preserves homology'', which would presuppose the very affine exactness
-  being proved.
+  This argument uses the equivalence between localized modules and its essential
+  image: global sections is an inverse there and hence reflects zero homology. It does
+  not require an a priori assertion that global sections preserves homology.
 \end{proof}
 
 \begin{lemma}
@@ -945,13 +899,6 @@ Lemma~\ref{lem:cech_acyclic_affine}.
   cofaces, i.e.\ \(\operatorname{dDiff}\).
 \end{lemma}
 
-% NOTE: For the tilde case \(\mathcal{F} = \widetilde{M}\) the per-coordinate
-% comparison isomorphism and the naturality square follow directly from
-% \(\operatorname{qcohRestriction\_eq\_comparison}\). For a general quasi-coherent
-% \(\mathcal{F}\), reduce to the tilde case via \(\mathcal{F} \cong
-% \widetilde{\Gamma\mathcal{F}}\) (Stacks Tag 01I8), the affine equivalence
-% \(\operatorname{QCoh}(\operatorname{Spec} R) \simeq \operatorname{Mod}(R)\),
-% which is the open gap recorded in Definition~\ref{def:qcoh_sections_localized}.
 \begin{proof}
   \uses{lem:section_cech_objd_apply, def:section_cech_module_complex, def:qcoh_sections_localized}
   The proof layers in two steps.
@@ -1153,41 +1100,26 @@ Lemma~\ref{lem:cech_acyclic_affine}.
     \operatorname{Function.Exact}\bigl(d^{p+1} : D^{p+1} \to D^{p+2},\;
       d^{p+2} : D^{p+2} \to D^{p+3}\bigr).
   \]
-  This is step~(a) of the affine vanishing: the node-by-node exactness of the
-  un-localised module complex, from which the homology vanishing of the section
-  {\v C}ech complex (Lemma~\ref{lem:section_cech_homology_exact}, step~(c)) is read off.
+  The homology vanishing of the section {\v C}ech complex follows from this exactness
+  by Lemma~\ref{lem:section_cech_homology_exact}.
 \end{lemma}
 
 \begin{proof}
   \uses{def:section_cech_module_complex}
   \leanok
-  Exactness of \(D^\bullet\) at each positive-degree node is a local-to-global
-  statement over the spanning family. By the local-to-global exactness criterion
-  \(\operatorname{exact\_of\_isLocalized\_span}(\operatorname{Set.range} s)\) (with the
-  spanning hypothesis \(\operatorname{Ideal.span}(\operatorname{range} s) = \top\)), it
-  suffices to verify \(\operatorname{Function.Exact}(d^{p+1}, d^{p+2})\) after
-  localising at each spanning element \(s_r\). In the localisation at \(s_r\) the
-  comparison family \(\mathtt{map\_dDiff\_eq\_locDiff}\) identifies the localised
-  differential of \(D^\bullet\) with the localised Čech differential \(\mathtt{locDiff}\)
-  of Definition~\ref{def:section_cech_module_complex} (using the localisation
-  transitivity \(M_a[1/b] = M_{ab}\) of
-  \(\mathtt{AwayComparison.comparison\_isLocalizedModule}\)). Exactness of that
-  localised differential is \(\mathtt{locDiff\_exact}\), which is in turn the
-  dependent-coefficient combinatorial exactness transported along
-  \(\mathtt{locDiff\_eq\_depDiff}\); the contracting homotopy at the fixed index
-  \(r\) (where \(s_r\) is invertible) furnishes \((dh + hd) = \operatorname{id}\),
-  giving the localised exactness one localisation at a time. Reassembling over the
-  spanning family yields the un-localised exactness.
+  By the local-to-global criterion for a spanning family, it suffices to prove
+  exactness after localizing at each \(s_r\). Localization transitivity identifies the
+  localized differential with the {\v C}ech differential whose coefficients are all
+  localized at \(s_r\). Since \(s_r\) is then invertible, prepending the fixed index
+  \(r\) defines a contracting homotopy and gives \(dh+hd=\operatorname{id}\). Thus the
+  complex is exact after every localization in the spanning family, and hence exact
+  before localization.
 \end{proof}
 
 \begin{lemma}
 
 [Standard-cover {\v C}ech-complex vanishing on affines]
   \label{lem:cech_acyclic_affine}
-  % NOTE: The top-level Lean target vanishes the absolute section {\v C}ech
-  % complex (def:section_cech_complex) rather than the relative pushforward
-  % complex; the realizing name is
-  % AlgebraicGeometry.sectionCech_affine_vanishing.
   \lean{AlgebraicGeometry.sectionCech_affine_vanishing,
     AlgebraicGeometry.CombinatorialCech.combDifferential,
     AlgebraicGeometry.CombinatorialCech.combHomotopy,
@@ -1305,54 +1237,21 @@ Lemma~\ref{lem:cech_acyclic_affine}.
   \(\operatorname{Function.Exact}\) of the underlying localisation maps. Equivalently,
   the extended complex \(0 \to M \to \prod_{i_0} M_{s_{i_0}} \to \cdots\) (whose
   truncation is studied in Algebra, Lemma \texttt{algebra-lemma-cover-module}) is
-  exact in positive degrees. The active target is the tilde case
-  \(\mathcal{F} = \widetilde{M}\), where the section identification of
-  Definition~\ref{def:qcoh_sections_localized} is gap-free and the coface match is
-  the abstract unfold of Lemma~\ref{lem:section_cech_objd_apply} composed with the
-  tilde bridge of Lemma~\ref{lem:section_cech_coface_match}; a general quasi-coherent
-  \(\mathcal{F}\) is reduced to this case by \(\mathcal{F} \cong
-  \widetilde{\Gamma\mathcal{F}}\) (Stacks Tag~01I8), the separately-deferred
-  globalisation gap.
+  exact in positive degrees. For \(\mathcal{F}=\widetilde M\), the coface
+  identification is Lemma~\ref{lem:section_cech_coface_match}. The general case follows
+  from the affine equivalence
+  \(\mathcal{F}\cong\widetilde{\Gamma\mathcal{F}}\).
 
-  \paragraph{Node-by-node exactness via local-to-global and the dependent port.}
-  Exactness of each positive-degree node is established from the spanning family
-  \((s, hs)\). The local-to-global exactness criterion
-  \(\operatorname{exact\_of\_isLocalized\_span}(\operatorname{Set.range} s)\, hs\)
-  reduces \(\operatorname{Function.Exact}(d^{p-1}, d^{p})\) to exactness after
-  localising at each spanning element \(r\) (the away localisation
-  \(\operatorname{Away}(s_r)\)), checking exactness one localisation at a time. In the
-  localisation at \(s_r\) the fixed index \(i_{\mathrm{fix}} = r\) makes \(s_r\)
-  invertible, so the prepend-\(i_{\mathrm{fix}}\) transport \(c\)
-  (\(\operatorname{depTransport}\)) is defined globally on that localisation and
-  furnishes a contracting homotopy of the localised complex: the unit, shift, and
-  coface-commutation compatibilities \(\mathtt{hu}\) (\(c \circ \delta_0 =
-  \operatorname{id}\)), \(\mathtt{hsh}\) (\(c \circ \delta_{k+1} = \delta_k \circ c\)),
-  and \(\mathtt{hcomm}\) hold for the localisation cofaces \(\delta_k\). The node is
-  then closed by \(\operatorname{depDiff\_exact}\) of the dependent combinatorial port,
-  which packages the identity \((dh + hd) = \operatorname{id}\) into the
-  \(\operatorname{Function.Exact}\) statement that
-  \(\operatorname{exact\_of\_isLocalized\_span}\) consumes. The constant- and
-  dependent-coefficient combinatorial cores and the spanning-family certifier are
-  already in place; the section and differential identifications of
-  Definition~\ref{def:qcoh_sections_localized} and the homology--exactness reduction of
-  Lemma~\ref{lem:section_cech_homology_exact} are the bridge that connects them to the
-  abstract section complex.
-
-  The homotopy is built directly from the away-localisation identification, \emph{not}
-  routed through \(\operatorname{SimplicialObject.Augmented.ExtraDegeneracy}\): the
-  extra-degeneracy packaging does not apply here (the prepend-\(i_{\mathrm{fix}}\) map
-  is only a section-level homotopy after localisation, not an augmented-simplicial extra
-  degeneracy), so the concrete
-  \(\operatorname{depHomotopy}\)/\(\operatorname{depDiff}\) route of the dependent port
-  is used instead.
+  \paragraph{Local exactness.}
+  By the local-to-global exactness criterion for the spanning family \((s,hs)\), it
+  remains to prove exactness after localization at each \(s_r\). In that localization,
+  \(s_r\) is invertible. Prepending the fixed index \(r\) therefore defines a homotopy
+  \(h\) satisfying \(dh+hd=\operatorname{id}\): the term involving the first coface is
+  the identity, while the remaining terms cancel in pairs after shifting the omitted
+  index. Hence every localized complex is contractible in positive degrees. The
+  local-to-global criterion proves exactness of the original complex, and
+  Lemma~\ref{lem:section_cech_homology_exact} gives the asserted vanishing.
 \end{proof}
-
-% NOTE: the section-complex sibling `AlgebraicGeometry.CechAcyclic.affine` (the F-valued
-% section-complex homotopy declaration that once carried a sorry) is a dead placeholder: its role
-% is subsumed by the toSheaf-reflect bridge feeding `lem:cech_augmented_resolution`
-% (cechAugmented_exact), which routes the local-vanishing input through
-% `lem:cechSection_isZero_homology` instead. It is intentionally left in place, unused, and is NOT a
-% live obligation of this chapter.
 
 \subsection{Presheaf-level {\v C}ech machinery}
 \label{sec:presheaf_cech_machinery}
@@ -1799,11 +1698,6 @@ neither enough-injectives in \(\mathrm{PMod}(\mathcal{O}_X)\) nor a right-derive
   \(K(\mathcal{U})_\bullet \to \mathcal{O}_{\mathcal{U}}[0]\)
   is precisely the augmented combinatorial
   {\v C}ech complex of the simplex on \(I_1\) with coefficients \(\mathcal{O}_X(V)\).
-  % NOTE: Lean assembly of the degreewise iso: (i) evaluation commutes with the
-  % coproduct (cechFreeEval_X); (ii) a surviving summand (V \leq U_\sigma) evaluates
-  % to \mathcal{O}_X(V) (freeYonedaEval_iso_of_le); (iii) a non-surviving summand
-  % is zero (freeYonedaEval_isZero_of_not_le). The cover-agnostic family mirror is
-  % cechFreeEval_XFam, used by the family form of the Cech acyclicity lemma.
 \end{lemma}
 
 \begin{proof}
@@ -1826,10 +1720,6 @@ neither enough-injectives in \(\mathrm{PMod}(\mathcal{O}_X)\) nor a right-derive
   Definition~\ref{def:cover_structure_presheaf}.
 \end{proof}
 
-% NOTE: FreeCechEngine.* is a deliberate constant-coefficient free-side COPY of the
-% private CombinatorialCech.* engine in CechAcyclic.lean. The privacy barrier prevents
-% cross-file reuse, and de-privatising the original was judged too risky to attempt;
-% the copy is the chosen tradeoff so the free-complex route has its own public engine.
 \begin{lemma}
 [Constant-coefficient combinatorial {\v C}ech contracting-homotopy engine]
   \label{lem:free_cech_engine}
@@ -2217,21 +2107,8 @@ neither enough-injectives in \(\mathrm{PMod}(\mathcal{O}_X)\) nor a right-derive
   direct sum \(0\) (there is no map \(\mathrm{Fin}(p+1) \to \varnothing\)) and the
   augmentation target is \(\mathcal{O}_{\mathcal{U}}(V) = 0\). Consequently the
   evaluation at \(V\) of \(\operatorname{cechFreeComplexAug}\) is a morphism of zero
-  complexes, which is a quasi-isomorphism (both sides have vanishing homology). The Lean
-  bricks are \(\operatorname{cechFreeEval\_isZero\_of\_isEmpty}\) (each evaluated source
-  term is a zero object, via the coproduct-of-zeros helper
-  \(\operatorname{isZero\_sigma\_of\_forall\_isZero}\) of
-  Lemma~\ref{lem:free_cech_engine}),
-  \(\operatorname{coverStructurePresheaf\_eval\_isZero\_of\_isEmpty}\) (the evaluated
-  augmentation target is zero), and the generic
-  \(\operatorname{isZero\_homology\_of\_isZero\_X}\) (a short complex with zero middle
-  term has vanishing homology), which together force every
-  \(\operatorname{homologyMap}\) to be a map of zero objects.
-
-  The parallel \texttt{...Fam} declarations pinned above are the cover-agnostic
-  raw-finite-family mirror of this empty-index case (an arbitrary finite family of
-  opens, no covering hypothesis), feeding the family form of the {\v C}ech
-  acyclicity lemma.
+  complexes, hence a quasi-isomorphism. The same argument applies to an arbitrary
+  finite family of opens, without a covering hypothesis.
 \end{lemma}
 
 \begin{proof}
@@ -2240,20 +2117,13 @@ neither enough-injectives in \(\mathrm{PMod}(\mathcal{O}_X)\) nor a right-derive
   \(\bigoplus_{\sigma : \mathrm{Fin}(p+1) \to I_1} \mathcal{O}_X(V)\); when
   \(I_1 = \varnothing\) the index type \(\mathrm{Fin}(p+1) \to I_1\) is empty, so the
   term is the zero object, and likewise \(\mathcal{O}_{\mathcal{U}}(V) = 0\). A
-  morphism whose source and target complexes are both zero (so all their homology
-  objects are zero, \(\operatorname{IsZero}\)) is a quasi-isomorphism; in Lean this is
-  immediate from \(\operatorname{quasiIso\_iff}\) since each
-  \(\operatorname{homologyMap}\) is a map of zero objects, hence an isomorphism.
+  morphism whose source and target complexes are both zero has isomorphisms on all
+  homology objects and is therefore a quasi-isomorphism.
 \end{proof}
 
 \begin{lemma}
 [Prepend homotopy on the evaluated free complex, by transport]
   \label{lem:cech_free_eval_prepend_homotopy}
-  % NOTE: the contracting homotopy is built at the ENGINE-complex level as
-  % `cechEnginePrepend` (pinned by lem:cech_engine_complex). This block carries no
-  % standalone `\lean{}` pin: the evaluated-complex form is not a separate Lean
-  % declaration but is obtained by transporting `cechEnginePrepend` across the
-  % degreewise iso `cechFreeEvalEngineIso` of lem:cech_free_eval_engine_iso.
   \uses{lem:cech_free_eval_sectionwise, lem:cech_free_eval_engine_iso, lem:free_cech_engine, lem:cech_engine_complex}
   % SOURCE: [Stacks Project], Cohomology, Lemma \texttt{lemma-homology-complex}
   % (proof, definition of the contracting map $h$) (read from
@@ -2313,12 +2183,6 @@ neither enough-injectives in \(\mathrm{PMod}(\mathcal{O}_X)\) nor a right-derive
 \begin{lemma}
 [The prepend homotopy contracts the augmented evaluated complex, by transport]
   \label{lem:cech_free_eval_prepend_homotopy_spec}
-  % NOTE: the contracting identity `d ∘ s + s ∘ d = id` is established at the
-  % engine-complex level as `cechEnginePrepend_spec` (with positive-degree exactness
-  % packaged as `cechEngineD_exact`), both pinned by lem:cech_engine_complex. This
-  % block carries no standalone `\lean{}` pin: the evaluated-complex identity follows
-  % by transporting `cechEnginePrepend_spec` across `cechFreeEvalEngineIso` of
-  % lem:cech_free_eval_engine_iso.
   \uses{lem:cech_free_eval_prepend_homotopy, lem:free_cech_engine, lem:cech_engine_complex, lem:cech_free_eval_engine_iso}
   % SOURCE: [Stacks Project], Cohomology, Lemma \texttt{lemma-homology-complex}
   % (proof, the $dh + hd = \mathrm{id}$ computation) (read from
@@ -2588,10 +2452,6 @@ neither enough-injectives in \(\mathrm{PMod}(\mathcal{O}_X)\) nor a right-derive
   (Definition~\ref{def:cech_free_presheaf_complex}) under the covariant
   \(\operatorname{Hom}(-, \mathcal{F})\) functor
   \(\operatorname{preadditiveYoneda}.\mathrm{obj}\,\mathcal{F}\).
-  % NOTE: Lean construction: isoOfComponents with identity components; differential
-  % squares use homCechComplex_d_eq (matching the Cech-hom and opposite-free
-  % differentials term-by-term via homCechCosimplicial_delta, a definitional
-  % equality exposing the alternating-sum coface).
 \end{lemma}
 
 \begin{lemma}
@@ -2663,11 +2523,6 @@ neither enough-injectives in \(\mathrm{PMod}(\mathcal{O}_X)\) nor a right-derive
     AlgebraicGeometry.injective_cech_acyclicFam,
     AlgebraicGeometry.injective_toPresheafOfModules}
   \uses{def:cech_complex, def:section_cech_complex, lem:cech_complex_hom_identification, lem:cech_free_complex_quasi_iso, lem:injective_of_adjoint, lem:mod_pmod_adjunction, lem:cech_complex_op_identification, lem:section_cech_complex_mapop_iso, lem:hom_into_injective_exact}
-  % NOTE: The Lean declaration AlgebraicGeometry.injective_cech_acyclic formalizes
-  % ONLY the positive-degree vanishing clause (Ȟ^p = 0 for p > 0), which is the half
-  % consumed downstream (01EO/01XB). The p = 0 clause (Ȟ^0(𝒰, I) = I(U)) of the
-  % Stacks statement below is NOT part of this declaration — it is the separate easy
-  % degree-0 identification and remains unformalized here.
   % SOURCE: [Stacks Project], Cohomology, Lemma
   % \texttt{lemma-injective-trivial-cech} (statement + proof) (read from
   % references/stacks-cohomology.tex, L1407--1431).
@@ -3633,11 +3488,6 @@ of this instantiation.
   \label{lem:cover_datum_bridge}
   \lean{AlgebraicGeometry.coverOpen_affineOpenCoverOfSpan}
   \uses{def:standard_affine_cover}
-  % NOTE: This lemma provides the open-level identity coverOpen 𝒰 i = D(s_i) for a standard
-  % affine cover; it is used to recognise a standard cover's opens as distinguished opens
-  % (e.g. to relate a covering of D(f) to its standard opens). The injective acyclicity
-  % condition of the affine cover system is discharged directly by the family-form
-  % Lemma~\ref{lem:injective_cech_acyclic}, not via this lemma.
   \textit{Project-bespoke compatibility lemma.}
   Let \(\mathcal{U}\) be the standard affine cover associated to a spanning family
   \(s : \iota \to R\) with \(\operatorname{span}(\operatorname{range} s) = \top\)
@@ -3667,10 +3517,6 @@ of this instantiation.
   \label{lem:affine_injective_acyclic}
   \lean{AlgebraicGeometry.affine_injective_acyclic}
   \uses{lem:injective_cech_acyclic, lem:cover_datum_bridge}
-  % NOTE: This covers only standard covers of the whole affine (spanning hypothesis
-  % span(range s) = ⊤); the injective acyclicity condition of the affine cover system is
-  % discharged by the family-form Lemma~\ref{lem:injective_cech_acyclic}, which applies to
-  % any distinguished open D(f), not just the whole affine.
   % SOURCE: [Stacks Project], Cohomology, Lemma \texttt{lemma-injective-trivial-cech}
   % (read from references/stacks-cohomology.tex, L1407--1422).
   % SOURCE QUOTE: "Let $X$ be a ringed space.
@@ -3714,9 +3560,6 @@ of this instantiation.
   \lean{AlgebraicGeometry.affineCoverSystem}
   \uses{def:basis_cov_system, lem:affine_faces_mem, lem:affine_surj_of_vanishing,
     lem:injective_cech_acyclic}
-  % NOTE: The injective acyclicity field is discharged by Lemma~\ref{lem:injective_cech_acyclic}
-  % (family-form, no covering hypothesis, applies to standard covers of any D(f));
-  % the surj_of_vanishing field by Lemma~\ref{lem:affine_surj_of_vanishing}.
   % SOURCE: [Stacks Project], Cohomology of Schemes, Tag 01XB, Lemma
   % \texttt{lemma-quasi-coherent-affine-cohomology-zero} (proof, choice of basis and
   % coverings) (read from references/stacks-coherent.tex, L160--163).
@@ -3745,14 +3588,6 @@ of this instantiation.
     AlgebraicGeometry.qcoh_iso_tilde_sections_hom,
     AlgebraicGeometry.qcoh_iso_tilde_sections_inv}
   \uses{def:standard_affine_cover, lem:qcoh_iso_tilde_sections_of_presentation}
-  % NOTE: The formalized declaration is the conditional form requiring IsIso F.fromTildeΓ
-  % (i.e. that the tilde–Γ counit is an isomorphism), not the unconditional quasi-coherent
-  % statement. The unconditional upgrade is discharged by the 01I8 counit-iso instance
-  % lem:qcoh_isIso_fromTildeGamma (the live Route-B assembly via the section-localization
-  % keystone lem:qcoh_section_isLocalizedModule), which makes IsIso F.fromTildeΓ hold for any
-  % quasi-coherent F; see rem:o1i8_decomposition. The presentation-driven discharge
-  % Lemma~\ref{lem:qcoh_iso_tilde_sections_of_presentation} remains available for any F carrying
-  % a global presentation.
   % SOURCE: [Stacks Project], Schemes, Tag 01HV, Lemma \texttt{lemma-spec-sheaves}
   % (read from references/stacks-schemes.tex, L691--719).
   % SOURCE QUOTE: "Let $R$ be a ring. Let $M$ be an $R$-module. Let $\widetilde M$
@@ -3843,37 +3678,17 @@ of this instantiation.
   \mathcal{F}\) is an isomorphism.
 \end{lemma}
 
-\section{Route B: the 01I8 counit isomorphism via section-localization}
+\section{The 01I8 counit isomorphism via section localization}
 
-The unconditional 01I8 instance \([{\,}\mathrm{IsQuasicoherent}\,\mathcal{F}{\,}] \Rightarrow
-\operatorname{IsIso}(\operatorname{fromTilde\Gamma})\) on \(\operatorname{Spec} R\) is established here
-along the \emph{section-localization} route (Route B), the shortest path aligned with the ambient
-library's \(\widetilde{(-)} / \operatorname{fromTilde\Gamma}\) layer. That layer states the entire
-local theory of \(\widetilde{(-)}\) in the language of \(\operatorname{IsLocalizedModule}\): the
-structure-sheaf-localization map \(\widetilde{(-)}.\operatorname{toOpen}\) exhibits
-\(\Gamma(D(f), \widetilde{M}) = M_f\) as a localization at the powers of \(f\), and the
-distinguished-open component of the counit \(\operatorname{fromTilde\Gamma}\) is \emph{literally} the
-localization lift \(\operatorname{IsLocalizedModule.lift}\) of the section-restriction map along that
-identification. Route B therefore reduces 01I8 to a single keystone — that the section-restriction
-map \(\Gamma(X, \mathcal{F}) \to \Gamma(D(f), \mathcal{F})\) of a quasi-coherent \(\mathcal{F}\) is a
-localization at the powers of \(f\) (Lemma~\ref{lem:qcoh_section_isLocalizedModule}) — and then checks
-the counit on the basis of distinguished opens. Compared with the alternative global-presentation
-route (Route A), Route B replaces that route's two genuine-mathematics obligations — the
-structure-sheaf base change \(\widetilde{M}|_{D(f)} = \widetilde{M_f}\)
-(Lemma~\ref{lem:tilde_restrict_basicOpen}) and the finite-limit preservation of
-\(\widetilde{(-)}\) — with a single bounded categorical bridge, the \emph{restrict--over
-compatibility} of Lemma~\ref{lem:restrict_over_compat} (step B3). The restriction-to-basic-open
-transport of Lemma~\ref{lem:modules_restrict_basicOpen} (the affine restriction
-\(\operatorname{modulesRestrictBasicOpen}\) and its comparison isomorphism) is \emph{not} dormant on
-Route B: it is load-bearing inside the bridge B3 and the presentation transport B4. Only the
-structure-sheaf base-change Lemma~\ref{lem:tilde_restrict_basicOpen} and the
-\(\widetilde{(-)}\)-exactness blocks remain below as a dormant Route-A fallback.
-
-The blocks immediately following record the Mathlib results Route B stands on — the tilde--\(\Gamma\)
-counit and its localization description, the essential-image criterion, the
-localization-uniqueness lemma, and the categorical primitives for transporting presentations across
-functors, isomorphisms and site equivalences — and then the local-model bricks and the B1--B6 chain
-that build the keystone; the keystone and the assembly carry out the route.
+Let \(X=\operatorname{Spec}R\) and let \(\mathcal F\) be quasi-coherent. The
+distinguished-open component of the counit
+\(\operatorname{fromTilde\Gamma}:\widetilde{\Gamma(X,\mathcal F)}\to\mathcal F\)
+is the canonical map between two localizations of \(\Gamma(X,\mathcal F)\) at the
+powers of \(f\). Thus it is an isomorphism once the restriction map
+\(\Gamma(X,\mathcal F)\to\Gamma(D(f),\mathcal F)\) is known to have the localization
+property. Lemma~\ref{lem:qcoh_section_isLocalizedModule} establishes this property;
+checking it on the basis of distinguished opens then proves the counit is an
+isomorphism.
 
 \begin{lemma}[The tilde--\(\Gamma\) counit]
   \label{lem:fromTildeGamma_mathlib}
@@ -3927,8 +3742,6 @@ that build the keystone; the keystone and the assembly carry out the route.
   \(\operatorname{IsLocalizedModule.lift} S\, \varphi\, \psi\) is an isomorphism whenever both
   \(\varphi\) and \(\psi\) are localizations of \(M\) at \(S\).
 \end{lemma}
-
-% ===== Route B: Mathlib dependency anchors =====
 
 \begin{lemma}[The structure-sheaf localization of \(\widetilde{M}\) over \(D(f)\)]
   \label{lem:tilde_toOpen_isLocalizedModule_mathlib}
@@ -4002,11 +3815,8 @@ that build the keystone; the keystone and the assembly carry out the route.
   Both functors of the over-site equivalence
   \((\operatorname{Opens} T).\operatorname{over} U \simeq \operatorname{Opens} U\) of
   Lemma~\ref{lem:overEquivalence_mathlib} are cover-preserving and continuous for the respective
-  Grothendieck topologies of pointwise covers. Their continuity is the site-theoretic input required
-  by the site-equivalence transport of step B3. The last two pinned names are the same continuity
-  facts re-stated for the \(\operatorname{toScheme}\)-wrapped carrier
-  \(\widehat{D(g)}.\operatorname{toScheme}\), so that instance search fires in the B3b context (the
-  generic instances are over the bare subspace type, defeq but not syntactically the scheme site).
+  Grothendieck topologies of pointwise covers. The same holds after identifying the
+  subspace \(D(g)\) with its associated open subscheme.
 \end{lemma}
 \begin{proof}
   \uses{lem:overEquivalence_mathlib}
@@ -4042,10 +3852,8 @@ that build the keystone; the keystone and the assembly carry out the route.
   isomorphism.
 \end{lemma}
 
-% ===== Route B: local-model bricks =====
-
 \begin{lemma}\leanok
-[Section-restriction of \(\widetilde{M}\) localizes (local-model brick)]
+[Section restriction of \(\widetilde{M}\) localizes]
   \label{lem:tilde_section_isLocalizedModule}
   \lean{AlgebraicGeometry.tilde_section_isLocalizedModule}
   \uses{lem:tilde_toOpen_isLocalizedModule_mathlib}
@@ -4068,7 +3876,7 @@ that build the keystone; the keystone and the assembly carry out the route.
 \end{proof}
 
 \begin{lemma}\leanok
-[Section-restriction localizes when the counit is an isomorphism (per-piece engine)]
+[Section restriction localizes when the counit is an isomorphism]
   \label{lem:section_isLocalizedModule_of_isIso_fromTildeGamma}
   \lean{AlgebraicGeometry.section_isLocalizedModule_of_isIso_fromTildeΓ}
   \uses{lem:tilde_section_isLocalizedModule, lem:qcoh_iso_tilde_sections}
@@ -4089,7 +3897,7 @@ that build the keystone; the keystone and the assembly carry out the route.
 \end{proof}
 
 \begin{lemma}\leanok
-[Section-restriction localizes for a globally presented module (keystone local case)]
+[Section restriction localizes for a globally presented module]
   \label{lem:section_isLocalizedModule_of_presentation}
   \lean{AlgebraicGeometry.section_isLocalizedModule_of_presentation}
   \uses{lem:section_isLocalizedModule_of_isIso_fromTildeGamma,
@@ -4108,9 +3916,7 @@ that build the keystone; the keystone and the assembly carry out the route.
   Lemma~\ref{lem:section_isLocalizedModule_of_isIso_fromTildeGamma}.
 \end{proof}
 
-% ===== Route B: the B1--B4 bridge chain (to-build) =====
-
-\begin{lemma}[Finite presentation cover from quasi-coherence (Route B, step B1)]
+\begin{lemma}[Finite presentation cover from quasi-coherence]
   \label{lem:qcoh_finite_presentation_cover}
   \lean{AlgebraicGeometry.qcoh_finite_presentation_cover, AlgebraicGeometry.coversTop_iSup_eq_top}
   \uses{lem:exists_finite_basicOpen_subcover, lem:quasicoherentData_mathlib}
@@ -4132,7 +3938,7 @@ that build the keystone; the keystone and the assembly carry out the route.
 \end{proof}
 
 \begin{lemma}\leanok
-[Restricting a presentation to a basic open (Route B, step B2)]
+[Restricting a presentation to a basic open]
   \label{lem:presentation_over_basicOpen}
   \lean{AlgebraicGeometry.presentationOverBasicOpen}
   \uses{lem:presentation_map_mathlib}
@@ -4154,17 +3960,17 @@ that build the keystone; the keystone and the assembly carry out the route.
   relevant site equivalence via Lemma~\ref{lem:pushforwardPushforwardEquivalence_mathlib}, transporting
   the presentation through its inverse with \(\operatorname{Presentation.map}\), and closing along the
   residual isomorphism with \(\operatorname{Presentation.ofIsIso}\)
-  (Lemma~\ref{lem:presentation_ofIsIso_mathlib}). This step is independent of the bridge of step B3.
+  (Lemma~\ref{lem:presentation_ofIsIso_mathlib}).
 \end{proof}
 
-\begin{definition}[B3b engine: module equivalence over a basic open]
+\begin{definition}[Module equivalence over a basic open]
   \label{def:modules_over_basicOpen_equivalence}
   \lean{AlgebraicGeometry.modulesOverBasicOpenEquivalence,
     AlgebraicGeometry.overForgetIso, AlgebraicGeometry.overForgetInvIso,
     AlgebraicGeometry.overBasicOpenRingHom, AlgebraicGeometry.overBasicOpenRingInvHom,
     AlgebraicGeometry.specBasicOpen_ι_image_overEquivalence_functor}
   \uses{lem:overEquivalence_isContinuous, lem:pushforwardPushforwardEquivalence_mathlib}
-  For \(g \in R\), the engine equivalence of step B3b is the equivalence of categories of sheaves of
+  For \(g \in R\), there is an equivalence of categories of sheaves of
   modules
   \[
     \widehat{D(g)}.\operatorname{toScheme}.\mathrm{Modules} \;\simeq\;
@@ -4180,13 +3986,12 @@ that build the keystone; the keystone and the assembly carry out the route.
   \operatorname{overEquivalence}.\operatorname{functor} \circ \iota.\operatorname{opensFunctor}\)
   (whose object component is the image--preimage identity
   \(\iota(\iota^{-1} V) = V\) for opens \(V \le D(g)\)) and its definitional inverse
-  \(\operatorname{overForgetInvIso} g\). This engine is the load-bearing half of step B3; the
-  assembled bridge isomorphism \(\operatorname{overBasicOpenIsoRestrict}\) of
-  Lemma~\ref{lem:restrict_over_compat} is its object-level corollary.
+  \(\operatorname{overForgetInvIso} g\). Lemma~\ref{lem:restrict_over_compat} gives its
+  object-level comparison with restriction to the open subscheme.
 \end{definition}
 
 \begin{lemma}\leanok
-[Restrict--over compatibility (Route B, step B3b --- the bridge)]
+[Compatibility between over-restriction and open-subscheme restriction]
   \label{lem:restrict_over_compat}
   \lean{AlgebraicGeometry.overBasicOpenIsoRestrict}
   \uses{def:modules_over_basicOpen_equivalence, lem:modules_restrict_basicOpen,
@@ -4194,8 +3999,8 @@ that build the keystone; the keystone and the assembly carry out the route.
   Let \(\mathcal{F}\) be an \(\mathcal{O}_{\operatorname{Spec} R}\)-module and \(g \in R\); write
   \(\iota : \widehat{D(g)} \hookrightarrow \operatorname{Spec} R\) for the open immersion of the basic
   open and \(\operatorname{e} = \operatorname{modulesOverBasicOpenEquivalence} g\)
-  (Definition~\ref{def:modules_over_basicOpen_equivalence}) for the engine equivalence. Then the
-  inverse of the engine carries the over-picture object \(\mathcal{F}.\operatorname{over} D(g)\) — a
+  (Definition~\ref{def:modules_over_basicOpen_equivalence}) for this equivalence. Then its
+  inverse carries the over-picture object \(\mathcal{F}.\operatorname{over} D(g)\) — a
   sheaf of modules over the localized site \((\operatorname{Opens} \operatorname{Spec}
   R).\operatorname{over} D(g)\), where the quasi-coherence presentation lives — to the honest subspace
   restriction \(\mathcal{F}.\operatorname{restrict} \iota\):
@@ -4205,75 +4010,32 @@ that build the keystone; the keystone and the assembly carry out the route.
       \;\cong\; \mathcal{F}.\operatorname{restrict} \iota
     \qquad \text{in } \widehat{D(g)}.\mathrm{Modules}.
   \]
-  This is the object-level corollary of the engine equivalence: it identifies the over-picture
-  restriction with the subscheme restriction \(\mathcal{F}.\operatorname{restrict} \iota\) over the open
-  \(\widehat{D(g)} \subseteq \operatorname{Spec} R\). The further transport to the affine
-  \(\operatorname{Spec} R_g\) along the identification \(D(g) \cong \operatorname{Spec} R_g\) — landing on
-  \(\mathcal{F}_{(g)} = \operatorname{modulesRestrictBasicOpen} g\, \mathcal{F}\)
-  — is performed downstream inside
-  step B4 (Lemma~\ref{lem:presentation_modulesRestrictBasicOpen}), not here.
+  Thus the over-picture restriction agrees with restriction to the corresponding open
+  subscheme.
 \end{lemma}
 \begin{proof}
   \uses{def:modules_over_basicOpen_equivalence, lem:modules_restrict_basicOpen,
     lem:pushforwardPushforwardEquivalence_mathlib,
     lem:restrict_obj_mathlib, lem:overEquivalence_isContinuous}
     \leanok
-  Both objects describe ``\(\mathcal{F}\) restricted to \(D(g)\)'', but in two different pictures: the
-  over-picture indexes the opens of \(\operatorname{Spec} R\) lying under \(D(g)\), whereas
-  \(\mathcal{F}.\operatorname{restrict} \iota\) is the subscheme restriction onto the open
-  \(\widehat{D(g)}\). The bridge isomorphism is assembled in two sub-steps (B3a, B3b); the affine
-  transport B3c to \(\operatorname{Spec} R_g\) is deferred to step B4.
-
-  \emph{Step B3a (the structure-sheaf compatibility datum).} The site equivalence underlying the bridge
-  is the over-site equivalence
-  \((\operatorname{Opens} \operatorname{Spec} R).\operatorname{over} D(g) \simeq
-  \operatorname{Opens}(\widehat{D(g)})\) of Lemma~\ref{lem:overEquivalence_isContinuous} (now known to be
-  continuous), between the over-site and the subspace site of the open
-  \(\widehat{D(g)} \subseteq \operatorname{Spec} R\). Across this equivalence the two structure sheaves
-  are genuinely different presentations of \(\mathcal{O}\): on the over-side it is
-  \(\mathcal{S} = (\operatorname{Spec} R).\operatorname{ringCatSheaf}.\operatorname{over} D(g)\), whose
-  sections over an over-object \(V\) are \(\Gamma(\operatorname{Spec} R, V)\); on the subspace side it is
-  the subscheme structure sheaf \((\widehat{D(g)}).\operatorname{ringCatSheaf}\), whose sections over an
-  open \(W \subseteq \widehat{D(g)}\) are \(\Gamma(\operatorname{Spec} R, \iota(W))\) for the image open
-  along the inclusion. These agree on sections because \(\iota\) is an open immersion, and the
-  comparison ring-sheaf morphisms \(\varphi, \psi\) (with their coherence witnesses \(H_1, H_2\)) are
-  built from the open-immersion structure-sheaf isomorphism \(\operatorname{Hom.appIso}\) of the
-  inclusion \((\operatorname{specBasicOpen} g).\iota\) — the same datum used by the
-  module-restriction functor along an open immersion to build its ring map. This is genuine
-  geometric content: unlike step B2, where both ring sheaves were \(\operatorname{over}\) of the same
-  base and related by the identity ring homomorphism, here the two ring sheaves live on
-  different sites and the comparison is a non-trivial open-immersion isomorphism.
-
-  \emph{Step B3b (the module equivalence on the subspace).} Feed the comparison data
-  \(\varphi, \psi, H_1, H_2\) and the now-continuous site equivalence
-  (Lemma~\ref{lem:overEquivalence_isContinuous}) into
-  Lemma~\ref{lem:pushforwardPushforwardEquivalence_mathlib}, obtaining an equivalence of categories of
-  sheaves of modules
-  \((\widehat{D(g)}).\mathrm{Modules} \simeq \operatorname{SheafOfModules}
-  \bigl((\operatorname{Spec} R).\operatorname{ringCatSheaf}.\operatorname{over} D(g)\bigr)\)
-  whose object map sends the subscheme restriction
-  \(\mathcal{F}.\operatorname{restrict} (\operatorname{specBasicOpen} g).\iota\) to the over-picture
-  object \(\mathcal{F}.\operatorname{over} D(g)\); on sections the two agree by the definitional equality
-  of Lemma~\ref{lem:restrict_obj_mathlib}.
-
-  Taking \(\operatorname{e}.\operatorname{inverse} = \operatorname{e}^{-1}\) of the step-B3b object
-  isomorphism (equivalently, reading the equivalence in the inverse direction) yields the stated bridge
-  \(\operatorname{e}.\operatorname{inverse}.\operatorname{obj}(\mathcal{F}.\operatorname{over} D(g))
-  \cong \mathcal{F}.\operatorname{restrict} \iota\) in \(\widehat{D(g)}.\mathrm{Modules}\).
-
-  \emph{Remark (B3c, deferred to B4).} The remaining transport from the subspace \(\widehat{D(g)}\) to
-  the affine \(\operatorname{Spec} R_g\) along the canonical identification \(D(g) \cong \operatorname{Spec} R_g\)
-  — restriction along an isomorphism is an in-framework equivalence of \(\mathrm{Modules}\)-categories,
-  landing on \(\operatorname{modulesRestrictBasicOpen} g\, \mathcal{F}\)
-  (Lemma~\ref{lem:modules_restrict_basicOpen}) — is performed inside step B4
-  (Lemma~\ref{lem:presentation_modulesRestrictBasicOpen}), where it is composed with the present bridge
-  to present \(\mathcal{F}_{(g)}\). This whole obligation is genuinely distinct from the structure-sheaf
-  base change \(\widetilde{M}|_{D(f)} = \widetilde{M_f}\) (Lemma~\ref{lem:tilde_restrict_basicOpen}) and
-  is \emph{not} discharged by Lemma~\ref{lem:modules_restrict_basicOpen} alone, which relates two
-  scheme-picture restrictions and never mentions the over-picture.
+  Both objects describe \(\mathcal{F}\) restricted to \(D(g)\), in two equivalent
+  sites. The equivalence
+  \[
+    (\operatorname{Opens}\operatorname{Spec}R).\operatorname{over}D(g)
+      \simeq \operatorname{Opens}(\widehat{D(g)})
+  \]
+  is continuous by Lemma~\ref{lem:overEquivalence_isContinuous}. The structure sheaf
+  on the over-site and the structure sheaf of the open subscheme agree under this
+  equivalence: both assign to an open \(W\subseteq\widehat{D(g)}\) the sections over
+  its image \(\iota(W)\). Lemma~\ref{lem:pushforwardPushforwardEquivalence_mathlib}
+  therefore induces an equivalence of their module categories. Under it,
+  Lemma~\ref{lem:restrict_obj_mathlib} identifies the subscheme restriction
+  \(\mathcal F|_{\widehat{D(g)}}\) with the over-picture object
+  \(\mathcal F.\operatorname{over}D(g)\). Reading this identification in the inverse
+  direction gives the asserted isomorphism.
 \end{proof}
 
-\begin{lemma}[Presentation of the affine restriction (Route B, step B4)]
+\begin{lemma}[Presentation of the affine restriction]
   \label{lem:presentation_modulesRestrictBasicOpen}
   \lean{AlgebraicGeometry.presentationModulesRestrictBasicOpen,
     AlgebraicGeometry.restrictBasicOpenUnitIso,
@@ -4291,15 +4053,15 @@ that build the keystone; the keystone and the assembly carry out the route.
   \uses{lem:presentation_over_basicOpen, lem:restrict_over_compat,
     def:modules_over_basicOpen_equivalence, lem:presentation_ofIsIso_mathlib,
     lem:modules_restrict_basicOpen}
-  By Lemma~\ref{lem:presentation_over_basicOpen} (step B2), \(\mathcal{F}.\operatorname{over} D(g)\)
-  admits a presentation. Carry this presentation through the engine inverse
+  By Lemma~\ref{lem:presentation_over_basicOpen}, \(\mathcal{F}.\operatorname{over} D(g)\)
+  admits a presentation. Carry this presentation through the inverse equivalence
   \(\operatorname{e}.\operatorname{inverse}\) (Definition~\ref{def:modules_over_basicOpen_equivalence})
-  and across the step-B3b bridge \(\operatorname{e}.\operatorname{inverse}.\operatorname{obj}
+  and across the isomorphism \(\operatorname{e}.\operatorname{inverse}.\operatorname{obj}
   (\mathcal{F}.\operatorname{over} D(g)) \cong \mathcal{F}.\operatorname{restrict} \iota\)
   (Lemma~\ref{lem:restrict_over_compat}) using Lemma~\ref{lem:presentation_ofIsIso_mathlib},
   obtaining a presentation of the subspace restriction \(\mathcal{F}.\operatorname{restrict} \iota\) on
   \(\widehat{D(g)}\). Finally transport along the canonical affine identification \(D(g) \cong
-  \operatorname{Spec} R_g\) (step B3c): restriction along this isomorphism preserves colimits and
+  \operatorname{Spec} R_g\): restriction along this isomorphism preserves colimits and
   carries the structure-sheaf unit of \(\widehat{D(g)}\) to the unit of \(\operatorname{Spec} R_g\)
   — this unit compatibility holds because the identification is an isomorphism of schemes.
   The transported presentation, under
@@ -4307,18 +4069,9 @@ that build the keystone; the keystone and the assembly carry out the route.
   \(\mathcal{F}_{(g)}\).
 \end{proof}
 
-% ===== Route B keystone: the sheaf-axiom equalizer route (Stacks 01HV(4)/01I8), degree 0/1 =====
-
 \begin{lemma}[Degree-0/1 sheaf-axiom equalizer of a sheaf on a finite standard cover]
   \label{lem:qcoh_section_equalizer}
   \lean{AlgebraicGeometry.qcoh_section_equalizer, AlgebraicGeometry.res_trans_apply}
-  % NOTE: the Lean decl is STRICTLY MORE GENERAL than this statement (iter-041): it takes an
-  % arbitrary index family `U : ι → (Spec R).Opens` with `∀ i, U i ≤ W` and `W ≤ ⨆ U i` (any open
-  % cover of W), not specifically `U i = W ∩ D(gᵢ)`. The blueprint's basic-open instance is the
-  % downstream `W = ⊤, U = D(gᵢ)` / `W = D(f), U = D(f gᵢ)` specialisation. Sections are the
-  % `ModuleCat R`-valued `(modulesSpecToSheaf.obj F).presheaf.obj`. No change needed; just a note that
-  % the formalised lemma subsumes the stated one. Helper `res_trans_apply` (private, restriction
-  % functoriality) is part of this proof — bundle its DAG coverage here.
   Let \(X = \Spec R\), let \(\mathcal{F}\) be an \(\mathcal{O}_X\)-module (a sheaf of modules on the
   spectral site), let \(W \subseteq X\) be an open, and let \(g_1, \ldots, g_n \in R\) be a finite family
   with \(W = \bigcup_{j=1}^{n} \bigl(W \cap D(g_j)\bigr)\). Then the augmented two-term {\v C}ech sequence
@@ -4380,11 +4133,8 @@ that build the keystone; the keystone and the assembly carry out the route.
 \begin{proof}
 
 \leanok
-  % NOTE (Lean): converse of IsLocalizedModule.of_restrictScalars; unit clause uses Module.End.isUnit_iff.
-  This is the converse of the scalar-restriction direction of the localised-module API (which
-  descends a localisation at a submonoid \(S \subseteq R\) to its image in \(A\)); Mathlib does not
-  provide this direction, so it is recorded here as a project lemma. It is elementary. The three
-  defining clauses of being a localised module transfer directly. Surjectivity-of-quotients
+  The three defining clauses of being a localised module transfer directly.
+  Surjectivity of quotients
   and injectivity-up-to-torsion are statements about the underlying additive maps and are unchanged by
   restricting scalars. For the unit clause one must see that multiplication by \(f^k\) on \(N\) is
   bijective as an \(R\)-endomorphism: by the scalar tower \(f^k \cdot x = f_A^{\,k} \cdot x\) for every
@@ -4398,9 +4148,6 @@ that build the keystone; the keystone and the assembly carry out the route.
   \label{lem:tile_image_opens_identities}
   \lean{AlgebraicGeometry.tile_image_opens_identities}
   \uses{lem:presentation_modulesRestrictBasicOpen}
-  % NOTE (Lean): in the structure-sheaf restriction calculus these equalities read
-  %   (specBasicOpen g).ι ''ᵁ ((basicOpenIsoSpecAway g).inv ''ᵁ ⊤) = specBasicOpen g  and
-  %   (specBasicOpen g).ι ''ᵁ ((basicOpenIsoSpecAway g).inv ''ᵁ D(f̄)) = specBasicOpen(gf).
   Let \(g, f \in R\), let \(R_g = R[g^{-1}]\) be the localisation of \(R\) away from \(g\), and
   let \(\iota : \Spec R_g \xrightarrow{\sim} D(g) \hookrightarrow X\) be the open immersion
   identifying \(\Spec R_g\) with the basic open \(D(g) \subseteq X = \Spec R\) (the composite of the
@@ -4739,27 +4486,8 @@ that build the keystone; the keystone and the assembly carry out the route.
 \end{proof}
 
 \begin{lemma}
-% NOTE (review iter-080):  REMOVED from statement+proof. This block is UNFORMALIZED
-% (no \lean{}, per the iter-044 NOTE below): only the V=⊤ scalar core tile_scalar_compat is in
-% Lean, not the full natural R_g-linear iso over all V asserted here. The marker was a stale manual
-%  invisible to sync_leanok (sync keys off \lean{}); no node \uses this leaf (impact=0).
 [Natural section comparison between the tile and the ambient sheaf]
   \label{lem:tile_section_comparison}
-  % NOTE (review iter-044): the residual structure-sheaf ring identity that this proof reduces to
-  % (route (A), \(\Gamma\)-\(\Spec\) naturality) is now CLOSED in Lean as
-  % \texttt{AlgebraicGeometry.tile_scalar_compat} (axiom-clean), supported by the route-(A) helpers
-  % \texttt{key_morph}, \texttt{tile_appIso_comp}, \texttt{tile_section_ring_identity},
-  % \texttt{appTop_appIso_inv_eq_res}.  Do NOT pin \lean{tile_scalar_compat} onto THIS block: the Lean
-  % lemma is the scalar equality at \(V=\top\) (\(r\cdot x = (\mathrm{algebraMap}\,r)\cdot x\)), NOT the
-  % full natural \(R_g\)-linear iso over all \(V\) asserted here (statement mismatch confirmed by
-  % lean-vs-blueprint-checker iter-044).  Planner: author a dedicated block for \texttt{tile_scalar_compat}
-  % (+ blocks for the four helpers), and tighten this sketch — the "single focused sub-proof" wording
-  % understates the 4 helper lemmas / 1M heartbeats the route actually needed, and conflates
-  % underlying-type carrier equality (holds) with bundled-module defeq (does NOT hold for
-  % \texttt{modulesSpecToSheaf}).
-  % NOTE: this block stays UNFORMALIZED (no \lean{}): only its scalar core at \(V=\top\) is built in
-  % Lean, as \texttt{tile_scalar_compat} (see lem:tile_scalar_compat); the full natural \(R_g\)-linear
-  % iso over all \(V\) is an assembly target not yet realised.
   \uses{lem:presentation_modulesRestrictBasicOpen, lem:restrict_obj_mathlib,
     lem:tile_image_opens_identities, lem:modulesSpecToSheaf_smul_eq,
     lem:modulesRestrictBasicOpen_smul_eq, lem:tile_section_ring_identity,
@@ -4781,66 +4509,25 @@ that build the keystone; the keystone and the assembly carry out the route.
     lem:tile_image_opens_identities, lem:modulesSpecToSheaf_smul_eq,
     lem:modulesRestrictBasicOpen_smul_eq, lem:tile_section_ring_identity,
     lem:tile_scalar_compat}
-  The two section modules \(\Gamma_{R_g}(V,\mathcal{F}_{(g)})\) and \(\Gamma_R(\iota(V),\mathcal{F})\)
-  share the same underlying section \emph{type}. Indeed, keeping the \(\mathcal{F}\)-side open in its
-  iterated-image form \(W = \iota(V)\) (rather than rewriting it to a basic open), the underlying carriers
-  coincide by the restriction-of-objects identity of Lemma~\ref{lem:restrict_obj_mathlib}. This is an
-  equality of the underlying section \emph{types} only: the \emph{bundled} module objects do \emph{not}
-  coincide definitionally. The tile side is an \(R_g\)-module object and the \(\mathcal{F}\) side an
-  \(R\)-module object; these are different objects of different module categories
-  (\(\mathrm{Mod}\,R_g\) versus \(\mathrm{Mod}\,R\)), not the same bundled object. So the comparison is a
-  reconciliation between two distinct module structures carried by one and the same underlying type, not a
-  bare definitional identification of bundled modules.
-
-  The two scalar actions \emph{reduce} to a common form, but their reconciliation is not definitional. By
-  Lemma~\ref{lem:modulesSpecToSheaf_smul_eq} the native \(R\)-action of the global-ring section functor
-  \(\Gamma_R(-,\mathcal{F})\) is the structure-sheaf action of the restricted global-sections image; by
-  Lemma~\ref{lem:modulesRestrictBasicOpen_smul_eq} the \(R_g\)-action of the tile
-  \(\Gamma_{R_g}(-,\mathcal{F}_{(g)})\) transports through the two open-immersion ring isomorphisms to a
-  structure-sheaf action on the same underlying carrier. These two scalar-reduction identities
-  established, the additive carrier identification of Lemma~\ref{lem:restrict_obj_mathlib} already
-  respects restriction maps and naturality in \(V\); to make it the asserted \(R_g\)-linear isomorphism it
-  remains only to reconcile the two structure-sheaf scalar prescriptions, and \emph{this} reconciliation
-  is the ring identity below --- not a definitional coincidence of bundled modules.
-
-  Comparing the two action formulas (and reducing to the case \(V = \top\), so that \(W = D(g)\) by
-  Lemma~\ref{lem:tile_image_opens_identities}), the sole remaining content is a single structure-sheaf ring
-  identity: for \(r \in R\),
+  By Lemma~\ref{lem:restrict_obj_mathlib}, both sides have the same underlying additive
+  group, and these identifications commute with restriction maps. It remains to compare
+  scalar multiplication. For \(r\in R\), naturality of global sections for the
+  localization morphism gives
   \[
     \rho^{D(g)}\bigl(\theta_R(r)\bigr)
       \;=\;
     \beta_g^{-1}\bigl(\theta_{R_g}(\bar r)\bigr),
     \qquad \bar r \;=\; \text{image of } r \text{ in } R_g,
   \]
-  where \(\theta_R : R \xrightarrow{\sim} \Gamma(\Spec R,\mathcal{O})\) and \(\theta_{R_g} : R_g
-  \xrightarrow{\sim} \Gamma(\Spec R_g,\mathcal{O})\) are the global-sections identifications,
-  \(\rho^{D(g)}\) is restriction of sections to \(D(g)\), and \(\beta_g\) is the ring isomorphism on global
-  sections induced by the affine identification \(\Spec R_g \cong D(g)\). This identity is exactly the
-  statement that \emph{the sections of \(\mathcal{O}\) over \(D(g)\) are the localisation \(R_g\),
-  compatibly with the algebra map \(R \to R_g\)}: the left-hand side restricts \(r\) to \(D(g)\), and the
-  right-hand side is the same element viewed through the affine identification of \(D(g)\) with
-  \(\Spec R_g\) applied to the localisation map.
-
-  There are two routes to this ring identity.
-  \emph{(A) Geometric.} The open inclusion \(D(g) \hookrightarrow \Spec R\) induces the identity on
-  sections, so the composite of the two open-immersion ring isomorphisms is the global-sections map of the
-  localisation morphism \(\Spec R_g \to \Spec R\), which is \(\Spec\) of the algebra map \(R \to R_g\).
-  The identity then follows from the naturality of the \(\Spec\)-to-global-sections comparison
-  (\(\Gamma\)-\(\Spec\) naturality) applied to that algebra map.
-  \emph{(B) Algebraic.} Rewriting \(W = D(g)\) by Lemma~\ref{lem:tile_image_opens_identities}, the ring
-  \(\Gamma(D(g),\mathcal{O})\) is the localisation of \(R\) away from \(g\); both sides of the displayed
-  identity are then \(R\)-algebra maps \(R \to R_g\) into this localisation, and they agree by uniqueness
-  of the localisation comparison map.
-
-  Route (A) is the one realised. At morphism (ring-map) level the displayed identity is exactly
-  Lemma~\ref{lem:tile_section_ring_identity}, which is assembled from the \(\Gamma\)-\(\Spec\) naturality
-  of the localisation immersion (Lemma~\ref{lem:key_morph}) and the composition of the two tile section
-  isomorphisms (Lemma~\ref{lem:tile_appIso_comp}). Feeding this ring identity through the
-  scalar-reduction identities (Lemmas~\ref{lem:modulesSpecToSheaf_smul_eq} and
-  \ref{lem:modulesRestrictBasicOpen_smul_eq}) yields the scalar reconciliation at the source open
-  \(V = \top\), which is Lemma~\ref{lem:tile_scalar_compat}. Thus the scalar core of the comparison is
-  formalized; what is \emph{not} definitional, and is supplied precisely by this ring identity, is the
-  reconciliation of the two bundled-module structures on the common underlying carrier.
+  where \(\theta_R\) and \(\theta_{R_g}\) are the affine global-section
+  identifications and \(\beta_g\) is induced by
+  \(\operatorname{Spec}R_g\cong D(g)\). This is precisely the compatibility of
+  \(\Gamma(D(g),\mathcal O)\cong R_g\) with the localization map \(R\to R_g\), as
+  recorded in Lemma~\ref{lem:tile_section_ring_identity}. Together with
+  Lemmas~\ref{lem:modulesSpecToSheaf_smul_eq} and
+  \ref{lem:modulesRestrictBasicOpen_smul_eq}, it shows that the additive comparison
+  respects the \(R_g\)-action. Hence it is an \(R_g\)-linear isomorphism, and its
+  compatibility with restrictions makes it natural in \(V\).
 \end{proof}
 
 \begin{lemma}\leanok
@@ -4893,16 +4580,6 @@ that build the keystone; the keystone and the assembly carry out the route.
   identity map is thus \(R\)-linear with \(R\)-linear inverse, hence an \(R\)-linear isomorphism.
 \end{proof}
 
-% NOTE (review iter-046): LANDED — `AlgebraicGeometry.tile_section_localization` now exists and is
-% axiom-clean (kernel-verified `lake env lean` exit 0; `#print axioms` = {propext, Classical.choice,
-% Quot.sound}). \leanok on statement + proof is the genuine sync_leanok verdict (iter-046, sha b31330c).
-% The iter-045 W1/W2/W3 walls were dissolved by the restrictScalars-carrier recipe
-% (analogies/tile-descent-instance-shape.md): route the descent's carrier through the bundled
-% `(ModuleCat.restrictScalars (algebraMap R R_g)).obj _` so Module R / Module R_g / IsScalarTower are
-% all inferInstance-structural (Prop instance isScalarTower_restrictScalars_obj — no W1 hoist; SMul R
-% present — no W2), then a two-layer transport (reconcile equivs tileReconcileEquiv, then mapIso opens
-% transport). Internal scaffolding (tileReconcileEquiv, tile_restrict_map_apply,
-% isScalarTower_restrictScalars_obj) is coverage debt — see review iter-046 recommendations.
 \begin{lemma}
 
 [Per-tile section localisation at \(f\)]
@@ -4928,21 +4605,13 @@ that build the keystone; the keystone and the assembly carry out the route.
     lem:tile_image_opens_identities, lem:tile_scalar_compat_genV, lem:tileReconcileEquiv,
     lem:isScalarTower_restrictScalars_obj,
     lem:modulesSpecToSheaf_smul_eq, lem:modulesRestrictBasicOpen_smul_eq}
-  % NOTE (review iter-046): proof LANDED axiom-clean (see statement-block NOTE); the five-step descent
-  % below is the formalized route.  is the genuine sync verdict.
-  % NOTE: the naive route using the carrier equality of Lemma~\ref{lem:restrict_obj_mathlib}
-  % is UNSOUND: that equality holds only for the local-ring section functor,
-  % whereas the localisation here uses the global-ring section functor,
-  % which does NOT commute with restriction definitionally. Hence the five-step descent below.
   Let \(\iota : \Spec R_g \xrightarrow{\sim} D(g) \hookrightarrow X\) be the open immersion of
   Lemma~\ref{lem:tile_image_opens_identities}, with \(\bar f\) the image of \(f\) under the
-  localisation map \(R \to R_g\). The proof is a base-ring descent in five steps; the section
-  comparison it rests on is \emph{not} the definitional equality of
-  Lemma~\ref{lem:restrict_obj_mathlib} (see the proof of
-  Lemma~\ref{lem:tile_section_comparison}).
+  localisation map \(R \to R_g\). We compare the section maps after restriction of
+  scalars from \(R_g\) to \(R\).
 
   \emph{Step 1 (global presentation of the tile).} Since \(D(g)\) lies in a presentation member of the
-  cover, step B4 (Lemma~\ref{lem:presentation_modulesRestrictBasicOpen}) presents the tile
+  cover, Lemma~\ref{lem:presentation_modulesRestrictBasicOpen} presents the tile
   \(\mathcal{F}_{(g)}\) globally over \(\Spec R_g\).
 
   \emph{Step 2 (localisation over \(R_g\)).} Apply
@@ -5087,10 +4756,6 @@ that build the keystone; the keystone and the assembly carry out the route.
   \label{lem:qcoh_section_kernel_comparison}
   \lean{AlgebraicGeometry.qcoh_section_kernel_comparison}
   \uses{lem:qcoh_section_isLocalizedModule, lem:isLocalizedModule_linearEquiv_mathlib}
-  % NOTE: Packaged-isomorphism corollary of the keystone. The only dependencies are the keystone
-  % (lem:qcoh_section_isLocalizedModule) and the standard linear-equivalence packaging of a
-  % localisation map (lem:isLocalizedModule_linearEquiv_mathlib). The equalizer and kernel chase
-  % live in the keystone proof.
   Let \(X = \Spec R\), let \(\mathcal{F}\) be a quasi-coherent \(\mathcal{O}_X\)-module, let \(f \in R\),
   and let \(g_1, \ldots, g_n\) be the finite presentation cover of
   Lemma~\ref{lem:qcoh_finite_presentation_cover}, with \(\operatorname{span}\{g_j\} = R\). Then the
@@ -5101,7 +4766,7 @@ that build the keystone; the keystone and the assembly carry out the route.
 \begin{proof}
   \uses{lem:qcoh_section_isLocalizedModule, lem:isLocalizedModule_linearEquiv_mathlib}
     \leanok
-  Immediate from the keystone Lemma~\ref{lem:qcoh_section_isLocalizedModule}: there the
+  By Lemma~\ref{lem:qcoh_section_isLocalizedModule}, the
   section-restriction map \(\rho_f : \Gamma(X, \mathcal{F}) \to \Gamma(D(f), \mathcal{F})\) is shown to
   exhibit \(\Gamma(D(f), \mathcal{F})\) as the localisation of \(\Gamma(X, \mathcal{F})\) at the powers of
   \(f\). Packaging this localisation map as a linear equivalence
@@ -5112,25 +4777,12 @@ that build the keystone; the keystone and the assembly carry out the route.
 \end{proof}
 
 \begin{lemma}\leanok
-[Sections over a basic open localize the global sections (Route B keystone)]
+[Sections over a basic open localize the global sections]
   \label{lem:qcoh_section_isLocalizedModule}
   \lean{AlgebraicGeometry.qcoh_section_isLocalizedModule}
   \uses{lem:qcoh_finite_presentation_cover, lem:qcoh_section_equalizer,
     lem:localized_module_map_exact_mathlib, lem:tile_section_localization,
     lem:isLocalizedModule_of_exact, lem:section_isLocalizedModule_of_presentation}
-  % NOTE: (Route B keystone). Proved directly: apply the abstract left-exact-ladder kernel comparison
-  % (lem:isLocalizedModule_of_exact) to the two degree-0/1 sheaf-axiom equalizer rows
-  % (lem:qcoh_section_equalizer), with the per-tile and per-overlap section-restriction maps
-  % (lem:tile_section_localization, lem:overlap_section_localization) as the two localised right-hand
-  % verticals. The packaged-isomorphism corollary lem:qcoh_section_kernel_comparison is derived from
-  % this keystone. Route uses the sheaf-axiom equalizer of Stacks 01HV(4)/01I8 in degrees 0/1 only:
-  % lem:qcoh_finite_presentation_cover supplies a finite presentation cover; lem:qcoh_section_equalizer
-  % presents Γ(X,F) and Γ(D(f),F) as kernels of the Čech differentials; lem:isLocalizedModule_of_exact
-  % transports the per-tile/per-overlap localisations (lem:tile_section_localization,
-  % lem:overlap_section_localization, lem:section_isLocalizedModule_of_presentation) to \(\rho_f\).
-  % Non-circular: every "sections-localise" input sits on a presented tile, never on the global object;
-  % lem:isLocalizedModule_of_span_cover is not used here (it would reduce the keystone-at-f to the
-  % keystone-at-g_j, the same statement).
   % SOURCE: [Stacks Project], Schemes, Tag 01HV, Lemma \texttt{lemma-spec-sheaves} (item~(4))
   % and \texttt{lemma-widetilde-pullback} (proof), Tag 01I8 (read from
   % references/stacks-schemes.tex, L701--702, L1262--1276).
@@ -5151,7 +4803,7 @@ that build the keystone; the keystone and the assembly carry out the route.
   \(\Gamma(D(f), \mathcal{F})\) as the localization of \(\Gamma(X, \mathcal{F})\) at the powers of
   \(f\). This is the
   generalization of Tag 01HV~(4) (\(\Gamma(D(f), \widetilde{M}) = M_f\)) from \(\widetilde{M}\) to an
-  arbitrary quasi-coherent \(\mathcal{F}\), and is the single load-bearing input of Route B.
+  arbitrary quasi-coherent \(\mathcal{F}\).
 \end{lemma}
 \begin{proof}
   \uses{lem:qcoh_finite_presentation_cover, lem:qcoh_section_equalizer,
@@ -5159,7 +4811,7 @@ that build the keystone; the keystone and the assembly carry out the route.
     lem:overlap_section_localization, lem:isLocalizedModule_of_exact,
     lem:section_isLocalizedModule_of_presentation}
     \leanok
-  By Lemma~\ref{lem:qcoh_finite_presentation_cover} (step B1), refine the quasi-coherence cover of
+  By Lemma~\ref{lem:qcoh_finite_presentation_cover}, refine the quasi-coherence cover of
   \(\mathcal{F}\) to a finite standard cover \(\operatorname{Spec} R = \bigcup_{j=1}^{n} D(g_j)\) with
   \(\operatorname{span}\{g_1, \ldots, g_n\} = R\), where each \(D(g_j)\) — and hence each overlap
   \(D(g_j g_k)\) — lies in a cover member carrying a presentation of the over-picture restriction, so
@@ -5237,9 +4889,6 @@ that build the keystone; the keystone and the assembly carry out the route.
     lem:isIso_fromTildeGamma_iff_mathlib, lem:forget_reflectsIso_mathlib,
     lem:isIso_fromTildeGamma_iff_isLocalizing_mathlib,
     lem:isLocalizedModule_linearEquiv_mathlib}
-  % NOTE: With the v4.31.0 Mathlib criterion lem:isIso_fromTildeGamma_iff_isLocalizing_mathlib
-  % the unconditional instance is the one-line composite of that iff with the keystone
-  % lem:qcoh_section_isLocalizedModule; the basis-checking proof below remains valid.
   % SOURCE: [Stacks Project], Schemes, Tag 01I8, Lemma \texttt{lemma-quasi-coherent-affine}
   % (statement and final step of proof) (read from references/stacks-schemes.tex,
   % L1278--1284, L1380--1386).
@@ -5312,69 +4961,30 @@ that build the keystone; the keystone and the assembly carry out the route.
   % isomorphism."
   \textit{Source: Stacks Project, Schemes, Tag 01I8, \texttt{lemma-quasi-coherent-affine}
   (proof).}
-  The unconditional quasi-coherent statement
-  \([{\,}\mathrm{IsQuasicoherent}\,\mathcal{F}{\,}] \Rightarrow \mathcal{F} \cong
-  \widetilde{\Gamma(\operatorname{Spec} R, \mathcal{F})}\) reduces, through
-  Lemma~\ref{lem:qcoh_iso_tilde_sections}, to the single instance
-  \([{\,}\mathrm{IsQuasicoherent}\,\mathcal{F}{\,}] \Rightarrow
-  \operatorname{IsIso}(\operatorname{fromTilde\Gamma})\) on the affine base \(\operatorname{Spec} R\).
-  This is the content of Stacks Tag 01I8, and it is discharged here by the
-  \emph{section-localization} route (Route B):
-  \begin{enumerate}
-  \item \emph{Keystone (P1).} For a quasi-coherent \(\mathcal{F}\) and \(f \in R\), the
-    section-restriction map \(\Gamma(X, \mathcal{F}) \to \Gamma(D(f), \mathcal{F})\) is a
-    localization at the powers of \(f\): Lemma~\ref{lem:qcoh_section_isLocalizedModule}. This is
-    proved by the sheaf-axiom equalizer route in degrees \(0/1\). Refine to a finite presentation
-    cover \(\{D(g_j)\}\) (Lemma~\ref{lem:qcoh_finite_presentation_cover}); present
-    \(\Gamma(X, \mathcal{F})\) and \(\Gamma(D(f), \mathcal{F})\) as the kernels of the {\v C}ech
-    differentials on \(\{D(g_j)\}\) and \(\{D(g_j f)\}\) (the degree-\(0/1\) sheaf axiom,
-    Lemma~\ref{lem:qcoh_section_equalizer}); localize the global equalizer at \(f\) using exactness of
-    localization (Lemma~\ref{lem:localized_module_map_exact_mathlib}); and match it term-by-term with
-    the \(D(f)\)-cover equalizer through the per-tile localizations
-    (Lemma~\ref{lem:tile_section_localization}), giving the kernel comparison
-    (Lemma~\ref{lem:qcoh_section_kernel_comparison}). The route is non-circular because every
-    ``sections-localize'' input sits on a presented tile, never on the global object. It is the only
-    load-bearing input.
-  \item \emph{Assembly.} The distinguished-open component of
-    \(\operatorname{fromTilde\Gamma}\) is the localization lift
-    (Lemma~\ref{lem:fromTildeGamma_mathlib}) of that very section-restriction map along the
-    structure-sheaf localization; with the keystone in hand both sides are localizations of
-    \(\Gamma(X, \mathcal{F})\) at the powers of \(f\), so the component is an isomorphism
-    (Lemma~\ref{lem:isLocalizedModule_linearEquiv_mathlib}). Since the forgetful functor reflects
-    isomorphisms and \(\{D(f)\}\) is a basis (Lemma~\ref{lem:forget_reflectsIso_mathlib}), the counit
-    is an isomorphism: Lemma~\ref{lem:qcoh_isIso_fromTildeGamma} (equivalently, the essential-image
-    criterion Lemma~\ref{lem:isIso_fromTildeGamma_iff_mathlib}). This is the unconditional instance
-    that upgrades Lemma~\ref{lem:qcoh_iso_tilde_sections} to its quasi-coherent form.
-  \end{enumerate}
-  Route B drops the global-generation step, the kernel-quasi-coherence step, the finite-limit
-  preservation of \(\widetilde{(-)}\), and the restriction-to-basic-open base-change chain from the
-  critical path; the presentation-form discharge
-  Lemma~\ref{lem:qcoh_iso_tilde_sections_of_presentation} (built on the Mathlib counit-iso
-  Lemma~\ref{lem:isIso_fromTildeGamma_of_presentation}) remains available for any \(\mathcal{F}\)
-  carrying a global presentation.
+  Let \(X=\operatorname{Spec}R\) and let \(\mathcal F\) be quasi-coherent. Choose a
+  finite basic-open cover \(\{D(g_j)\}\) on which \(\mathcal F\) admits presentations.
+  The sheaf axiom presents both \(\Gamma(X,\mathcal F)\) and
+  \(\Gamma(D(f),\mathcal F)\) as equalizers for the covers \(\{D(g_j)\}\) and
+  \(\{D(fg_j)\}\). Exactness of localization, together with the section-localization
+  isomorphisms on each tile and overlap, identifies these equalizers after localizing
+  at \(f\). Hence
+  \[
+    \Gamma(D(f),\mathcal F)\cong\Gamma(X,\mathcal F)_f.
+  \]
+  The component of \(\operatorname{fromTilde\Gamma}\) on \(D(f)\) is the canonical map
+  between these two localizations, so it is an isomorphism. Since distinguished opens
+  form a basis, the counit is an isomorphism and
+  \(\mathcal F\cong\widetilde{\Gamma(X,\mathcal F)}\).
 
-  \emph{Route A (dormant fallback).} The same instance can alternatively be reached through the
-  \emph{global-generation} route (Hartshorne~II.5.14--17, Stacks Tag 01I8): globally generate
-  \(\mathcal{F}\) (Lemma~\ref{lem:qcoh_global_generation}, fed by the localized-sections core
-  Lemma~\ref{lem:qcoh_localized_sections}); observe its kernel is again quasi-coherent using the
-  exactness of \(\widetilde{(-)}\) (Lemma~\ref{lem:tilde_preserves_kernels},
-  Lemma~\ref{lem:qcoh_kernel_qcoh}); and feed the two generating families to
-  Lemma~\ref{lem:isIso_fromTildeGamma_of_genSections}, packaged as
-  Lemma~\ref{lem:isIso_fromTildeGamma_of_quasicoherent} and
-  Lemma~\ref{lem:qcoh_iso_tilde_sections_of_genSections}. This route is strictly longer and relies on
-  the finite-limit preservation of \(\widetilde{(-)}\) and a base-change chain that are not available
-  in the ambient library; its blocks below are kept as dormant axiom-clean assets but are off the
-  live 01I8 critical path. It is also distinct from the
-  \emph{module-gluing} route suggested by the Stacks proof above (gluing the local modules \(M_i\)
-  along the cocycle \(\psi_{ij}\), Algebra \texttt{lemma-glue-modules}), which is not pursued, as it
-  would require effective faithfully-flat descent of modules.
+  Alternatively, one may choose global generators for \(\mathcal F\), prove that the
+  kernel of the resulting epimorphism from a free module is quasi-coherent, and compare
+  the two resulting presentations after applying \(\widetilde{(-)}\). The lemmas below
+  record this global-generation argument.
 \end{remark}
 
-The blocks below carry out the dormant Route-A global-generation route P0--P4, together with the
-two generating-family assembly helpers and the free-module quasi-coherence fact they consume. The
-free-module quasi-coherence fact (Lemma~\ref{lem:free_isQuasicoherent}) and the finite basic-open
-refinement (Lemma~\ref{lem:exists_finite_basicOpen_subcover}) are also consumed by the live Route-B
-keystone above. All are anchored to the Stacks Project section ``Quasi-coherent sheaves on affines''.
+We now give the global-generation argument. It uses quasi-coherence of free modules
+and finite basic-open refinements of covers, as in the Stacks Project section
+``Quasi-coherent sheaves on affines''.
 
 \begin{lemma}\leanok
 [Free \(\mathcal{O}\)-modules are quasi-coherent]
@@ -5445,13 +5055,6 @@ keystone above. All are anchored to the Stacks Project section ``Quasi-coherent 
   as an \(\mathcal{O}_{\operatorname{Spec} R_f}\)-module]
   \label{lem:modules_restrict_basicOpen}
   \lean{AlgebraicGeometry.modulesRestrictBasicOpen, AlgebraicGeometry.modulesRestrictBasicOpenIso}
-  % NOTE (review iter-035): BOTH named Lean targets are FORMALIZED and axiom-clean
-  % ({propext, Classical.choice, Quot.sound}, lake env lean EXIT 0) in the NEW file
-  % AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean.  is NOT yet set only
-  % because that file is not imported by the AlgebraicJacobian.lean root barrel, so
-  % sync_leanok cannot see the decls. Planner: wire the root import (refactor) and add a
-  % `% archon:covers AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean` header entry;
-  %  will then propagate automatically.
   % SOURCE: [Stacks Project], Schemes, \texttt{lemma-widetilde-pullback} and the
   % remark following it, Tag 01I8 (read from references/stacks-schemes.tex, L1241--1276).
   % SOURCE QUOTE: "Lemma \ref{lemma-widetilde-pullback} above says in particular
@@ -5469,9 +5072,6 @@ keystone above. All are anchored to the Stacks Project section ``Quasi-coherent 
   isomorphism \(\mathcal{F}|_{D(f)} \cong \mathcal{F}_{(f)}\) of sheaves of modules over the
   identification \(D(f) \cong \operatorname{Spec} R_f\). This assignment is functorial in
   \(\mathcal{F}\).
-  \emph{Route-A fallback: this block and the restriction-to-basic-open base-change chain it heads are
-  superseded on the live 01I8 path by the section-localization route (Route B); they are kept as
-  dormant axiom-clean assets (see \texttt{analogies/o1i8-route.md}).}
 \end{lemma}
 \begin{proof}
   The basic open \(D(f) \subseteq \operatorname{Spec} R\) is an affine scheme, and the
@@ -5549,8 +5149,6 @@ keystone above. All are anchored to the Stacks Project section ``Quasi-coherent 
   isomorphic to the associated sheaf of the away-localised module:
   \(\widetilde{M}\,|_{D(f)} \cong \widetilde{M_f}\) as \(\mathcal{O}_{\operatorname{Spec}
   R_f}\)-modules, where \(M_f = (\operatorname{powers} f)^{-1} M\).
-  \emph{Route-A fallback (tilde base-change), off the live 01I8 path; see
-  \texttt{analogies/o1i8-route.md}.}
 \end{lemma}
 \begin{proof}
   \uses{lem:modules_restrict_basicOpen}
@@ -5588,8 +5186,6 @@ keystone above. All are anchored to the Stacks Project section ``Quasi-coherent 
   \(\mathcal{O}^{(J)} \to \mathcal{O}^{(I)} \to \mathcal{F}|_{D(g)} \to 0\) over
   \(\operatorname{Spec} R_g\); in particular \(\mathcal{F}|_{D(g)}\) is quasi-coherent over
   \(R_g\).
-  \emph{Route-A fallback (P1a base-change chain), off the live 01I8 path; see
-  \texttt{analogies/o1i8-route.md}.}
 \end{lemma}
 \begin{proof}
   \uses{lem:modules_restrict_basicOpen, lem:tilde_restrict_basicOpen}
@@ -5633,9 +5229,6 @@ keystone above. All are anchored to the Stacks Project section ``Quasi-coherent 
   presentation \(\mathcal{O}^{(J)} \to \mathcal{O}^{(I)} \to \mathcal{F}|_{D(f)} \to 0\) over
   \(\operatorname{Spec} R_f\). Consequently \(\mathcal{F}|_{D(f)} \cong \widetilde{M}\) for the
   \(R_f\)-module \(M = \Gamma(D(f), \mathcal{F})\).
-  \emph{Route-A fallback (P1a base-change chain), off the live 01I8 path; the live keystone
-  Lemma~\ref{lem:qcoh_section_isLocalizedModule} obtains the section-localisation without base
-  change (see \texttt{analogies/o1i8-route.md}).}
 \end{lemma}
 \begin{proof}
   \uses{lem:exists_finite_basicOpen_subcover, lem:qcoh_iso_tilde_sections_of_presentation,
@@ -5663,9 +5256,6 @@ keystone above. All are anchored to the Stacks Project section ``Quasi-coherent 
     AlgebraicGeometry.mem_range_of_span_pow, AlgebraicGeometry.eq_zero_of_span_pow,
     AlgebraicGeometry.map_smul_endFun, AlgebraicGeometry.bump_eq, AlgebraicGeometry.per_j_surj,
     AlgebraicGeometry.per_j_eq}
-  % NOTE: the 7 names after the main theorem are file-private helper lemmas of the span-cover
-  % descent, bundled here only to keep them out of the leandag `unmatched` coverage debt (they
-  % carry no separate blueprint block). sync_leanok resolves them as [leanok].
   Let \(R\) be a commutative ring, let \(M\) and \(N\) be \(R\)-modules, let
   \(g : M \to N\) be an \(R\)-linear map, let \(f \in R\), and let
   \(s : \{1, \ldots, n\} \to R\) be a finite family with
@@ -5843,22 +5433,9 @@ keystone above. All are anchored to the Stacks Project section ``Quasi-coherent 
   \(\widetilde{\varphi} : \widetilde{M} \to \widetilde{N}\) has
   \(\operatorname{Ker}(\widetilde{\varphi}) = \widetilde{\operatorname{Ker}(\varphi)}\),
   and more generally \(\widetilde{(-)}\) carries finite limits of \(R\)-modules to the
-  corresponding limits of associated sheaves. The tilde functor is already known to be
-  additive and to preserve colimits; its preservation of finite limits (kernels) is the
-  property needed here and is supplied as a dedicated lemma.
-  \emph{Route-A fallback: \(\widetilde{(-)}\) preserving finite limits is used only by the
-  global-presentation route (to make the kernel of a generating epimorphism quasi-coherent); the live
-  section-localization route (Route B) does not need it. The block and its stalk sub-lemmas below are
-  kept as dormant axiom-clean assets, off the live 01I8 path (see \texttt{analogies/o1i8-route.md}).}
+  corresponding limits of associated sheaves.
 \end{lemma}
 
-% NOTE: The Lean instance AlgebraicGeometry.tildePreservesFiniteLimits
-% (PreservesFiniteLimits / PreservesKernels for the tilde functor
-% ~ : ModuleCat R ⥤ (Spec R).Modules) is ABSENT from Mathlib and is
-% project-to-build (Route-P P3 sub-gap). Mathlib provides the tilde functor
-% and its stalk computation but not the packaged finite-limit-preservation
-% instance; the informal proof below is the stalkwise-flatness argument the
-% eventual prover formalizes.
 % SOURCE QUOTE PROOF: "Let us compute the stalk of $\widetilde M$ at a point
 % $x \in \Spec(R)$. Suppose that $x$ corresponds to the prime
 % $\mathfrak p \subset R$. By definition of the stalk we see that
@@ -5899,47 +5476,6 @@ keystone above. All are anchored to the Stacks Project section ``Quasi-coherent 
   that \(\widetilde{(-)}\) carries finite limits to finite limits; equivalently
   \(\widetilde{(-)}\) is left exact, i.e.\ preserves finite limits (kernels).
 
-  \emph{Mechanization remarks (the three sub-steps the formalization rests on).}
-  \begin{itemize}
-    \item \textbf{(A) The stalk comparison is \(R_{\mathfrak{p}}\)-linear, not merely
-      additive.} The stalk of \(\widetilde{M}\) at \(x\) is computed as a stalk of the
-      underlying sheaf of abelian groups, so the induced stalk map is \emph{a priori}
-      only a map of abelian groups. To know it is the localised \(R\)-module map
-      \(M_{\mathfrak{p}} \to N_{\mathfrak{p}}\) — and hence injective/exact by the
-      flatness of localisation — one identifies it on germs with the linear localisation
-      map: the germ \(\operatorname{germ}_x\) is \(R_{\mathfrak{p}}\)-linear (the linear
-      germ \(\operatorname{germ}_\ell\)), and the stalk action of the abelian-group stalk
-      functor on \(\widetilde{\varphi}\) agrees with \(\varphi\) on the image of the
-      structure map \(\widetilde{M} \to \widetilde{M}_x\). This germ-naturality identity
-      is the load-bearing step.
-      % NOTE: realized by the helper `tilde_stalkFunctor_map_toStalk` (the germ-naturality
-      % transport, axiom-clean iter-034) together with the public linear germ
-      % `StructureSheaf.germₗ` and the Γ-linearity of `Scheme.Modules.Hom.app`; this packages
-      % the abelian-group stalk map `σ_x` as the R-linear localisation map and identifies it
-      % with `IsLocalizedModule.map …`, whose injectivity is the already-built
-      % `tilde_toStalk_map_injective`.
-    \item \textbf{(B) Stalkwise isomorphism \(\Rightarrow\) isomorphism of sheaves.} A
-      morphism of sheaves of \(\mathcal{O}_X\)-modules that is an isomorphism on every
-      stalk is an isomorphism; equivalently the family of stalk functors jointly reflects
-      isomorphisms (and jointly reflects the finite limits being compared). One checks the
-      kernel-comparison map is a stalk-wise isomorphism by (A), then concludes it is an
-      isomorphism of sheaves of modules.
-      % NOTE: in Lean, reduce to the underlying abelian-presheaf comparison and use the
-      % jointly-reflecting stalk family on a sheaf (e.g. `JointlyReflectIsomorphisms` /
-      % `Sheaf.forget ⋙ stalkFunctor x` preserving finite limits), via
-      % `Scheme.Modules.toPresheaf` (faithful, `ReflectsIsomorphisms`, `PreservesLimits`);
-      % the ModuleCat-valued stalk path is DEAD (Mathlib privacy of `toStalkₗ'`/`stalkIsoₗ`).
-    \item \textbf{(C) Reduction to the underlying abelian-presheaf composite.} The
-      finite-limit-preservation question for \(\widetilde{(-)}\) into sheaves of modules is
-      equivalent to the same question for the composite of \(\widetilde{(-)}\) with the
-      forgetful functor to the underlying presheaf of abelian groups, where the
-      sections-level localisation flatness from (A)–(B) applies directly. This reduction
-      lets the proof work entirely at the abelian-presheaf/stalk level.
-      % NOTE: realized by the helper `tildePreservesFiniteLimits_of_toPresheaf` (axiom-clean
-      % iter-034) via `preservesFiniteLimits_of_reflects_of_preserves`: it reduces
-      % `PreservesFiniteLimits (~)` to `PreservesFiniteLimits (~ ⋙ Scheme.Modules.toPresheaf)`,
-      % and the named target assembles from that composite once (A)+(B) are in place.
-  \end{itemize}
 \end{proof}
 
 \begin{lemma}[The kernel of a generating epimorphism is quasi-coherent]
@@ -6025,15 +5561,10 @@ keystone above. All are anchored to the Stacks Project section ``Quasi-coherent 
   identification of distinguished-open sections with away localisations.
 \end{proof}
 
-\begin{lemma}[Quasi-coherence implies the counit is an isomorphism (01I8, Route-A fallback)]
+\begin{lemma}[Quasi-coherence implies the counit is an isomorphism by global generation]
   \label{lem:isIso_fromTildeGamma_of_quasicoherent}
   \uses{lem:qcoh_global_generation, lem:qcoh_kernel_qcoh,
     lem:isIso_fromTildeGamma_of_genSections}
-  % NOTE: Route-A fallback, superseded by Route B. The live formalization of the 01I8 counit-iso
-  % instance AlgebraicGeometry.isIso_fromTildeΓ_of_quasicoherent is the section-localization
-  % assembly Lemma~\ref{lem:qcoh_isIso_fromTildeGamma}; this block carries the dormant
-  % global-generation proof of the same instance (no \lean{} pin, to avoid duplicating the target).
-  % See analogies/o1i8-route.md.
   % SOURCE: [Stacks Project], Schemes, Tag 01I8, Lemma
   % \texttt{lemma-quasi-coherent-affine} (read from references/stacks-schemes.tex,
   % L1278--1387).
@@ -6051,9 +5582,6 @@ keystone above. All are anchored to the Stacks Project section ``Quasi-coherent 
   (\([{\,}\mathrm{IsQuasicoherent}\,\mathcal{F}{\,}] \Rightarrow
   \operatorname{IsIso}(\operatorname{fromTilde\Gamma})\), Stacks Tag 01I8) that
   discharges the conditional hypothesis of Lemma~\ref{lem:qcoh_iso_tilde_sections}.
-  \emph{This is the Route-A (global-generation) proof of the 01I8 counit isomorphism; it is a
-  dormant fallback superseded by the live section-localization assembly
-  Lemma~\ref{lem:qcoh_isIso_fromTildeGamma} (Route B; see \texttt{analogies/o1i8-route.md}).}
 \end{lemma}
 \begin{proof}
   \uses{lem:qcoh_global_generation, lem:qcoh_kernel_qcoh,
@@ -6074,10 +5602,6 @@ keystone above. All are anchored to the Stacks Project section ``Quasi-coherent 
     AlgebraicGeometry.affine_tildeVanishing}
   \uses{lem:cech_acyclic_affine, lem:qcoh_iso_tilde_sections, lem:affine_cech_vanishing_tilde_subcover,
     lem:cechCohomology_isZero_of_iso, def:affine_cover_system, def:has_vanishing_higher_cech}
-  % NOTE (iter-052): the unconditional `affine_cech_vanishing_qcoh` is now a CLOSED axiom-clean
-  % Lean declaration. It is `affine_cech_vanishing_qcoh_of_tildeVanishing` with the `htilde`
-  % residual discharged by the now-proved `lem:affine_cech_vanishing_tilde_subcover`
-  % (`sectionCech_homology_exact_of_localizationAway`) via the private helper `affine_tildeVanishing`.
   % SOURCE: [Stacks Project], Cohomology of Schemes, Tag 01XB, Lemma
   % \texttt{lemma-quasi-coherent-affine-cohomology-zero} (proof, condition (3)) (read
   % from references/stacks-coherent.tex, L172--173).
@@ -6276,11 +5800,6 @@ keystone above. All are anchored to the Stacks Project section ``Quasi-coherent 
   \uses{lem:section_cech_module_exact, lem:section_cech_homology_exact,
     lem:affine_cover_span_localizationAway, lem:away_comparison_isLocalizedModule,
     def:cech_cohomology_accessor}
-  % NOTE (prover target): this is the residual `htilde` discharged by the new public theorem
-  % `AlgebraicGeometry.sectionCech_homology_exact_of_localizationAway`, built directly in
-  % CechAcyclic.lean (where the polymorphic `SectionCechModule`/`SectionCechTilde` core is in scope)
-  % and consumed by the reduced forms `affine_cech_vanishing_qcoh_of_tildeVanishing` /
-  % `affine_serre_vanishing_of_tildeVanishing`.
   % SOURCE: [Stacks Project], Cohomology of Schemes, Lemma
   % \texttt{lemma-cech-cohomology-quasi-coherent-trivial} (standard-cover
   % {\v C}ech vanishing on an affine open) (read from references/stacks-coherent.tex, L44--52).
@@ -6346,14 +5865,13 @@ coefficient module, decomposed below into four sub-lemmas: the short exact seque
 resulting stability of vanishing higher {\v C}ech cohomology under the injective
 quotient (Lemma~\ref{lem:quotient_vanishing_cech}), the sheaf-cohomology base case
 \(H^1(U, \mathcal{F}) = 0\) (Lemma~\ref{lem:absolute_cohomology_one_vanishing}), and the
-dimension-shift induction \(H^p(U, \mathcal{F}) = 0\) for \(p > 0\)
-(Lemma~\ref{lem:absolute_cohomology_pos_vanishing}). The top lemma's proof then just
-chains these.
+  dimension-shift induction \(H^p(U, \mathcal{F}) = 0\) for \(p > 0\)
+  (Lemma~\ref{lem:absolute_cohomology_pos_vanishing}).
 
 \subsection{Section {\v C}ech infrastructure and the cover-system encoding}
 
-The sub-lemmas below are formalized in a \emph{cover-local}, presheaf-level, hypothesis-driven
-form: each lemma fixes a single index family \(U : \iota \to \mathrm{Opens}(X)\) and works with the
+The sub-lemmas below have a \emph{cover-local}, presheaf-level form: each lemma fixes
+a single index family \(U : \iota \to \mathrm{Opens}(X)\) and works with the
 section {\v C}ech complexes of that one covering, taking the geometric inputs (section-level
 exactness on faces, positive-degree {\v C}ech vanishing) as hypotheses. The cover-global
 \((\mathcal{B}, \mathrm{Cov})\) data of Lemma~\ref{lem:cech_to_cohomology_on_basis} re-enters only
@@ -6412,7 +5930,6 @@ definitions and the degreewise product engine are collected first.
   \label{def:face_short_complex}
   \lean{AlgebraicGeometry.faceShortComplex}
   \uses{def:section_cech_complex}
-  \textit{Project-local building block.}
   Let \(U : \iota \to \mathrm{Opens}(X)\) be an index family and let
   \(P : \mathcal{P}_1 \to \mathcal{P}_2 \to \mathcal{P}_3\) be a short complex of presheaves of
   \(\mathcal{O}_X\)-modules. For a degree \(p\) and a tuple \(\sigma : \{0, \ldots, p\} \to \iota\)
@@ -7194,11 +6711,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \label{lem:isZero_of_faithful_preservesZeroMorphisms}
   \lean{AlgebraicGeometry.isZero_of_faithful_preservesZeroMorphisms,
     CategoryTheory.Functor.isZero_of_faithful_preservesZeroMorphisms}
-  % NOTE: CategoryTheory.Functor.isZero_of_faithful_preservesZeroMorphisms is an
-  % import-isolation duplicate of the AlgebraicGeometry version, carrying the identical
-  % statement and proof; it lives in OpenImmersionPushforward.lean because that file is not in
-  % the import chain of the file holding the original. Both \lean{} targets resolve to this one
-  % block.
   Let \(F : \mathcal{C} \to \mathcal{D}\) be a functor between categories with zero
   morphisms that is \emph{faithful} and \emph{preserves zero morphisms}. If the image
   \(F(Y)\) of an object \(Y\) is a zero object of \(\mathcal{D}\), then \(Y\) is a zero
@@ -7252,24 +6764,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
     lem:cech_free_eval_prepend_homotopy_spec, lem:cohomology_sheaf_is_sheafify_homology,
     lem:sheafify_kills_locally_zero, lem:isZero_of_faithful_preservesZeroMorphisms,
     lem:isZero_presheafToSheaf_of_locally_isZero, lem:cechSection_isZero_homology}
-  % NOTE: the augmented-complex object layer (cechComplexOnX, cechNervePointIso, cechAugmentation,
-  % cechAugmentation_comp_d, cechAugmentedComplex) is formalized in CechHigherDirectImage.lean.
-  % The \lean{} target cechAugmented_exact (the exactness theorem) is now PLACED in the new
-  % downstream file CechAugmentedResolution.lean — NOT in CechHigherDirectImage.lean. Reason
-  % (file placement, NOT a math gap): cechAugmented_exact CANNOT be proved in
-  % CechHigherDirectImage.lean because every ingredient of the sections/sheafification route
-  % (homologyIsoSheafify, sectionCech_affine_vanishing, sectionCech_homology_exact_of_localizationAway,
-  % sectionCechComplex, affineCoverSystem, qcoh_iso_tilde_sections) lives in a file that transitively
-  % IMPORTS CechHigherDirectImage.lean (the most-upstream Cohomology file), so using them there is an
-  % import cycle. The new CechAugmentedResolution.lean sits downstream and imports
-  % CechAcyclic + HigherDirectImagePresheaf + AffineSerreVanishing + QcohTildeSections, so all those
-  % ingredients are in scope; the \lean{} pin name stays cechAugmented_exact, only its file changes.
-  % The pure-Mathlib Step-2 site lemmas (isZero_presheafToSheaf_obj_of_W / _of_W_isZero /
-  % _of_isLocallyBijective, blueprint lem:sheafify_kills_locally_zero) live in CechHigherDirectImage.lean
-  % and are importable by the relocated theorem. The remaining bridge is the module-sheafification →
-  % presheafToSheaf reflection (via the faithful additive SheafOfModules.toSheaf, which reflects IsZero),
-  % built next to the relocated theorem in CechAugmentedResolution.lean. Earlier stalk-at-prime route is
-  % a documented dead end (no SheafOfModules.stalk, no exact-iff-stalkwise in Mathlib).
   % SOURCE: [Stacks Project], Cohomology of Schemes, Lemma
   % \texttt{lemma-cech-cohomology-quasi-coherent-trivial} (proof: exactness of the
   % extended {\v C}ech complex) (read from references/stacks-coherent.tex, L68--82).
@@ -7304,11 +6798,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   Definition~\ref{def:cech_nerve}, with augmentation the canonical map
   \(\mathcal{F} \to \mathcal{C}^0\). This augmented complex is exact; that is, the
   {\v C}ech nerve is a resolution of \(\mathcal{F}\) in \(\operatorname{QCoh}(X)\).
-  The object underlying this statement --- the augmented complex
-  \(0 \to \mathcal{F} \to \mathcal{C}^0 \to \mathcal{C}^1 \to \cdots\) of
-  Definition~\ref{def:cech_augmented_complex} together with its augmentation and the identity
-  \(\varepsilon \cdot d^0 = 0\) --- is already constructed; what remains is the
-  exactness (acyclicity) asserted here.
 \end{lemma}
 
 % SOURCE QUOTE PROOF: "It suffices to show that (\ref{equation-extended})
@@ -8091,16 +7580,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 
 \begin{lemma}
 \leanok
-% NOTE: iter-328 — landed sorry-free + axiom-clean in NEW file
-% Cohomology/ModulesCoverConservativity.lean (\lean{} anchor matches exactly). `\leanok`
-% added as a manual review override: sync_leanok-state was at iter-327 when review ran, so
-% the deterministic sync had not yet seen this iter's new decl. Verified: lake build OK,
-% #print axioms = {propext, Classical.choice, Quot.sound}, lvb-modulescover + aud328 clean.
-% NOTE: prose-API drift (cosmetic, anchor correct): the prose writes cover maps/members as
-% `𝔘.map j` / `𝔘.obj j`, but the Mathlib `Scheme.OpenCover` API the Lean uses is `𝒰.f j`
-% (the open immersion) and `𝒰.X j` (the member); selectors `𝒰.covers`/`𝒰.idx`. Also the
-% lift-to-Sheaf(Ab) step is justified in Lean by `Sheaf.forget` PRESERVING isos (via
-% `Functor.map_isIso`), not by full-faithfulness of `sheafToPresheaf`. Planner: align prose.
 [A module-sheaf morphism is an isomorphism iff it is one on every member of an open cover]
   \label{lem:isIso_iff_isIso_restrict}
   \lean{AlgebraicGeometry.Scheme.Modules.Hom.isIso_iff_isIso_restrict}
@@ -8122,13 +7601,10 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \((\Leftarrow)\) Assume every restriction is an isomorphism. It suffices to show that the image
   of \(\varphi\) under the forgetful functor \(\operatorname{Scheme.Modules.toPresheaf} X\) to the
   underlying presheaf of abelian groups is an isomorphism, because that functor reflects
-  isomorphisms (\cref{lem:isIso_modules_of_toPresheaf}). Present \(\mathcal{M}\) and
-  \(\mathcal{N}\) as sheaves of abelian groups: the underlying presheaf \(\mathcal{M}.\mathrm{presheaf}\)
-  satisfies the sheaf condition (\cref{lem:modules_isSheaf_mathlib}), and an iso of presheaves of
-  abelian groups lifts to an iso of \(\mathrm{Sheaf}(\mathrm{Ab})\) by full faithfulness of the
-  inclusion \(\operatorname{sheafToPresheaf}\). By stalk conservativity for sheaves of abelian
-  groups (\cref{lem:isIso_iff_stalkFunctor_map_iso_mathlib}), it then suffices that \(\varphi\) be
-  an isomorphism on every stalk \(x \in X\).
+  isomorphisms (\cref{lem:isIso_modules_of_toPresheaf}). The underlying presheaves are
+  sheaves of abelian groups by \cref{lem:modules_isSheaf_mathlib}; by stalk
+  conservativity (\cref{lem:isIso_iff_stalkFunctor_map_iso_mathlib}), it suffices to
+  show that \(\varphi\) is an isomorphism on every stalk.
 
   Fix \(x \in X\) and choose an index \(j\) such that \(x\) lies in the image of the cover map
   \(\mathfrak{U}.\mathrm{map}\,j\) (the covering property); choose \(y\) in
@@ -8516,7 +7992,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{definition}
 
 \begin{lemma}\leanok
-[The comparison map's iso-status is stable under index reindexing]
+[The comparison map is invariant under index reindexing]
   \label{lem:coprodToProd_isIso_of_equiv}
   \lean{AlgebraicGeometry.coprodToProd_isIso_of_equiv}
   \uses{def:push_pull_obj, def:coprodOverIncl, def:coprodToProdMap, lem:pushPullObjCongr}
@@ -8605,11 +8081,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \label{lem:pushPull_coprod_prod}
   \lean{AlgebraicGeometry.pushPull_coprod_prod, AlgebraicGeometry.coprodToProdMap_comp_π,
     AlgebraicGeometry.isIso_coprodToProdMap}
-  % NOTE (review iter-065): CLOSED axiom-clean. Both remaining induction-step leaves were closed
-  % this iter — pushPull_coprod_prod_empty (empty base, via the new helper isZero_modules_of_isEmpty:
-  % a sheaf of modules over an empty/initial scheme is the zero object) and coprodToProd_isIso_of_equiv
-  % (whiskerEquiv reindex). With all three coprodToProd_isIso_* steps closed, this lemma and the
-  % cascade Stub 2 (lem:pushPull_sigma_iso) + Stub 4 (lem:pushPull_eval_prod_iso) are all axiom-clean.
   \uses{def:push_pull_obj, def:coprodOverIncl, def:coprodToProdMap, lem:isIso_modules_of_toPresheaf,
     lem:pushPull_binary_coprod_prod, lem:pushPullObjCongr, lem:over_sigmaOptionIso, lem:piOptionIso,
     lem:pushPull_coprod_prod_empty, lem:coprodToProd_isIso_of_equiv, lem:coprodToProd_isIso_option}
@@ -9351,7 +8822,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
       \Gamma\bigl(\textstyle\bigcap_l(U_{\sigma l}\cap V),\mathcal{F}\bigr).
   \]
   This is the degree-\(0\) sibling of the per-leg naturality of
-  Lemma~\ref{lem:coreIso_comm_leg}, and is the augmentation seam invoked by
+  Lemma~\ref{lem:coreIso_comm_leg}, and is the augmentation compatibility used by
   Lemma~\ref{lem:cechSection_contractible} for its degree-\(0\) contracting identities.
 \end{lemma}
 \begin{proof}
@@ -9382,16 +8853,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \label{lem:cechSection_complex_iso}
   \lean{AlgebraicGeometry.cechSection_complex_iso,
     AlgebraicGeometry.sectionCechComplexV}
-  % NOTE: build target — augmented form. The iso is to the AUGMENTED concrete section
-  % complex D'_aug := (sectionCechComplex U'·).augment ε_can hε_can, NOT to the bare section
-  % complex. The augmentation ε_can is the CANONICAL augmentation of def:sectionCechAugV — NOT a
-  % free parameter: for a non-canonical ε the statement is false (the consumer hSec calls with no
-  % free ε). The evaluated augmented complex D carries Γ(V,F) at its augmentation node
-  % (def:cech_augmented_complex prepends F there), which the bare section complex does not have;
-  % the two agree only after the section complex is augmented along the canonical ε_can. The
-  % degree-0 compatibility datum h_compat is now DEFINITIONAL: ε_can is BY CONSTRUCTION the
-  % evaluated Čech augmentation transported across coreIso_obj_iso 0, so the compatibility square
-  % closes by definitional reduction rather than a diagram chase.
   \uses{lem:pushPull_eval_prod_iso, lem:section_cech_objd_apply,
     lem:section_cech_product_equiv, def:cech_augmented_complex,
     def:cech_augmentation, lem:cech_augmentation_comp_d,
@@ -9517,12 +8978,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
     AlgebraicGeometry.stubInterLeV, AlgebraicGeometry.stubOpen,
     AlgebraicGeometry.stubOpen_le_coface, AlgebraicGeometry.stubOpen_le_prepend,
     AlgebraicGeometry.stubRestrTrans, AlgebraicGeometry.stubRestrUnique}
-  % NOTE: build target — augmented form. The contractible complex is the AUGMENTED section
-  % complex D'_aug = (sectionCechComplex U'·).augment ε hε, NOT the bare section complex D'
-  % (which is not contractible: a one-member cover {V} gives H⁰(D') = Γ(V,F) ≠ 0). The prover
-  % re-signs the Lean declaration to Homotopy (𝟙 D'_aug) 0. The dep* engine supplies only the
-  % positive-degree homotopy; the augmentation node is a separate explicit degree-0 computation,
-  % given below.
   \uses{lem:cechSection_complex_iso, lem:cech_acyclic_affine, lem:cech_engine_complex,
     def:cech_augmentation, lem:cech_augmentation_comp_d}
   % SOURCE: [Stacks Project], Cohomology of Schemes, Lemma
@@ -9778,11 +9233,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
     PresheafOfModules.counitComplexIso,
     PresheafOfModules.sheafificationAdditive,
     CategoryTheory.Functor.mapHomologyIso'}
-  % NOTE: project-built generalization. Stacks Tag~01XJ
-  % (\texttt{lemma-describe-higher-direct-images}) establishes the consequence
-  % $R^if_*\mathcal{F} \cong \text{sheafification of }(V \mapsto H^i(f^{-1}(V),\mathcal{F}))$
-  % but does not state sheafification commuting with the homology of an arbitrary
-  % cochain complex as a standalone lemma. No verbatim Stacks source quote for this block.
   Let \(K\) be a cochain complex of presheaves of modules over a site admitting
   sheafification. For every index \(i\) there is a natural
   isomorphism between the \(i\)-th homology of the sheafified complex and the
@@ -9996,11 +9446,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \label{lem:open_immersion_pushforward_acyclic}
   \lean{AlgebraicGeometry.higherDirectImage_openImmersion_acyclic,
     AlgebraicGeometry.isAffineHom_of_affine_separated}
-  % NOTE (iter-066): both Lean decls are sorry-free and axiom-clean since iter-065, but
-  % `isAffineHom_of_affine_separated` is `private` (Lean name-mangled), so `sync_leanok`
-  % cannot resolve it and leaves this block WITHOUT . To restore the marker, drop
-  % `private` from that helper in OpenImmersionPushforward.lean (prover task) or remove it
-  % from this \lean{} list. Do NOT add  manually — sync_leanok owns it.
   \uses{lem:affine_serre_vanishing, lem:higher_direct_image_presheaf,
     lem:sheafify_kills_locally_zero,
     lem:isZero_presheafToSheaf_of_locally_isZero, lem:ext_homcomplex_mathlib,
@@ -10880,10 +10325,6 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   \lean{AlgebraicGeometry.jShriekOU_transport_along_iso,
     AlgebraicGeometry.sectionsCorep,
     AlgebraicGeometry.sectionsCorepPushforward}
-  % NOTE (iter-066): `jShriekOU_transport_along_iso` is sorry-free since iter-060, but
-  % `sectionsCorep`/`sectionsCorepPushforward` are `private` (name-mangled), so `sync_leanok`
-  % cannot resolve this block and has left it WITHOUT  for ~6 iters. Fix = drop
-  % `private` from those two helpers (prover task) or remove them from this \lean{} list.
   \uses{def:jshriek_ou, lem:sectionsFunctorCorepIso}
   Let \(\varphi : X \cong Y\) be an isomorphism of schemes, \(V \subseteq X\) an open, and
   \(\Phi = \operatorname{pushforwardEquivOfIso}\varphi : X.\mathrm{Modules} \simeq Y.\mathrm{Modules}\)
@@ -10956,11 +10397,6 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 
 \begin{lemma}[Pushforward along an iso commutes with restriction to an open]
   \label{lem:pushforward_commutes_restriction}
-  % formerly planned: AlgebraicGeometry.pushforward_commutes_restriction
-  % NOTE: superseded — the pushforward_iso_preserves_qcoh route no longer depends on this lemma;
-  % it is replaced by the leaner single-ring-map pullback route (lem:slice_structureSheaf_hom and
-  % lem:pushforward_slice_pullback_iso). Retained as an alternative/reference statement only;
-  % not an active build target and not on any live \uses chain.
   \uses{lem:pushforwardPushforwardEquivalence_mathlib, lem:restrict_obj_mathlib}
   Let \(\varphi : X \cong Y\) be an isomorphism of schemes,
   \(\Phi = \operatorname{pushforwardEquivOfIso}\varphi\) the induced equivalence of module categories,
@@ -11120,10 +10556,6 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   is an equivalence, whence its induced pushforward of sheaves of rings has a right adjoint. The result
   is the slice structure-sheaf ring map \(\psi_r\).
 \end{proof}
-
-% ----- Mathlib dependency anchors for the leftAdjointUniq pullback route -----
-% (The former pullbackObjUnitToUnit \mathlibok anchor was removed iter-070: it served only the
-% rejected unit-comparison route inside the now-closed open-immersion arc and carried no graph edges.)
 
 \begin{lemma}[Uniqueness of left adjoints]
   \label{lem:leftAdjointUniq_mathlib}
@@ -11403,9 +10835,6 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 [The two-pushforward adjunction for the slice ring maps]
   \label{lem:pushforward_slice_two_adjunction}
   \lean{AlgebraicGeometry.pushforwardSliceTwoAdjunction}
-  % NOTE (review iter-065): CLOSED axiom-clean. The two leaves H1/H2
-  % (lem:pushforward_slice_adjunction_h1/h2) and the keystone phi'' (lem:slice_reverse_ring_map)
-  % are all concrete and sorry-free this iter, so the whole two-adjunction is axiom-clean.
   \uses{lem:slice_structureSheaf_hom, lem:slice_reverse_ring_map,
     lem:pushforward_slice_adjunction_h1, lem:pushforward_slice_adjunction_h2,
     lem:slice_overs_equiv_continuity, lem:pushforwardPushforwardAdj_mathlib,
@@ -11461,12 +10890,6 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 [Pullback along $\psi_r$ realizes the per-slice pushforward]
   \label{lem:pushforward_slice_pullback_iso}
   \lean{AlgebraicGeometry.pushforwardSlicePullbackIso}
-  % NOTE (review iter-065): CLOSED axiom-clean. Step 1 (leftAdjointUniq of
-  % pullbackPushforwardAdjunction psi_r and pushforwardSliceTwoAdjunction) and Step 2 (the section
-  % identity (pushforward phi'').obj (H.over Ui) congr (Phi H).over Vi) are both closed — Step 2 was
-  % rfl-clean (Iso.refl _) once phi'' (lem:slice_reverse_ring_map) became concrete. With this,
-  % pushforward_iso_preserves_qcoh and the whole case-hqc cascade of
-  % higherDirectImage_openImmersion_acyclic are sorry-free (the acyclicity lemma is fully closed).
   \uses{lem:slice_structureSheaf_hom, lem:slice_reverse_ring_map, lem:sheafOfModules_pullback_mathlib,
     lem:pushforward_slice_two_adjunction, lem:leftAdjointUniq_mathlib,
     lem:pullbackPushforwardAdjunction_mathlib, lem:pushforward_obj_obj_mathlib}
@@ -11529,12 +10952,6 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 [Pushforward along an iso preserves quasi-coherence]
   \label{lem:pushforward_iso_preserves_qcoh}
   \lean{AlgebraicGeometry.pushforward_iso_preserves_qcoh}
-  % NOTE (review iter-065): CLOSED axiom-clean. The keystone phi'' (lem:slice_reverse_ring_map) that
-  % this chain was transitively gated on is now concrete, so this lemma and case hqc of
-  % higherDirectImage_openImmersion_acyclic are fully sorry-free — the acyclicity lemma is closed
-  % (kernel-verified {propext, Classical.choice, Quot.sound}). (per-cover-member presentation
-  % transport across pullback psi_r then pushforwardSlicePullbackIso, glued by
-  % lem:pushforward_iso_qcoh_of_slice_qcoh; needs maxHeartbeats bumps for the sliced-site instances.)
   \uses{lem:slice_structureSheaf_hom, lem:pushforward_slice_pullback_iso,
     lem:pushforward_iso_qcoh_of_slice_qcoh, lem:presentation_map_mathlib,
     lem:presentation_ofIsIso_mathlib, lem:nonempty_quasicoherentData_mathlib,
@@ -12122,8 +11539,6 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 [From augmented exactness to the acyclic-resolution input data]
   \label{lem:cechAugmented_to_acyclicResolutionInput}
   \lean{AlgebraicGeometry.cechAugmented_to_acyclicResolutionInput}
-  % NOTE (review iter-077): the Lean packages the two outputs as PProd (×'), not Prod
-  % (×), because the second component is a Prop. Informal content unchanged.
   \uses{lem:cech_augmented_resolution, def:cech_complex_on_X, def:cech_augmented_complex}
   \textit{Project-local.}
   Suppose the augmented {\v C}ech complex of
@@ -12161,24 +11576,6 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   an epimorphism onto \(\mathrm{cycles}\,0\) is an isomorphism, giving the desired
   \(e : \mathcal{F} \cong (\mathcal{C}^\bullet).\mathrm{cycles}\,0\).
 \end{proof}
-
-
-% =====================================================================
-% Target-local roadmap nodes preserved across the Cech-Cohomology merge
-% (2026-06-18). These two declarations were target-only content at the tail
-% of the pre-merge CechHigherDirectImage chapter; the source library does not
-% package them. They are reinstated here (Lean in
-% Cohomology/CechHigherDirectImageUnconditional.lean) so the target's blueprint
-% scope and \uses{} graph are preserved. `def:cech_higher_direct_image` is
-% sorry-free. `lem:cech_flat_base_change`: the ASSEMBLY is now sorry-free (it
-% reduces to the two leaves below), but \leanok is still dropped because it
-% depends transitively on two genuine open gaps —
-% `lem:pullback_preserves_finite_limits` (flat ⇒ g^* left-exact) and
-% `def:cech_complex_base_change_iso` (Stacks 02KG, via the two residual
-% cosimplicial-naturality leaves). The homology-side machinery
-% (`lem:map_hc_homology_iso`, `lem:pullback_preserves_finite_colimits`,
-% `lem:pullback_preserves_homology`, `lem:pullback_mapHC_homologyIso`) IS sorry-free.
-% =====================================================================
 
 \section{The unconditional higher direct image}
 
@@ -12597,9 +11994,8 @@ already proved; the genuine open content is isolated in the two clearly-flagged 
   \[
     H^i\bigl((F\text{-applied degreewise to } K)\bigr) \;\cong\; F\bigl(H^i(K)\bigr).
   \]
-  This is the complex-level upgrade of \texttt{ShortComplex.mapHomologyIso}: the
-  degree-\(i\) short complex of \(F\) applied to \(K\) is definitionally \(F\) applied
-  to the degree-\(i\) short complex of \(K\).
+  Indeed, the short complex defining degree-\(i\) homology after applying \(F\) is the
+  image under \(F\) of the short complex defining \(H^i(K)\).
 \end{lemma}
 
 \begin{lemma}
@@ -12611,14 +12007,13 @@ already proved; the genuine open content is isolated in the two clearly-flagged 
   \operatorname{QCoh}(S')\) preserves finite colimits, being a left adjoint.
 \end{lemma}
 
-\subsection{Left-exactness of the flat pullback: the factorisation and its frontier}
+\subsection{Left exactness of flat pullback}
 \label{sec:pullback_pfl_decomposition}
 
-The pullback \(g^* = \texttt{SheafOfModules.pullback}\,\varphi\) (with \(\varphi\)
-the ring-sheaf hom underlying \(g\)) is \emph{not} a primitive functor: Mathlib
-factors it, on any site, through the presheaf level. The next four blocks record the
-factorisation and the three factors Mathlib already controls; the genuine open
-content is then isolated in a single middle factor.
+Let \(\varphi\) be the morphism of ring sheaves underlying \(g\). Pullback of sheaves
+of modules factors through presheaves: one forgets the sheaf condition, applies
+presheaf pullback, and sheafifies. Left exactness can therefore be checked on these
+three factors.
 
 \begin{lemma}[Factorisation of the sheaf-of-modules pullback]
   \label{lem:sheafOfModules_pullbackIso}
@@ -12635,11 +12030,7 @@ content is then isolated in a single middle factor.
       \texttt{PresheafOfModules.sheafification},
   \]
   i.e.\ forget the sheaf condition, take the presheaf-level pullback, then
-  re-sheafify. For the scheme pullback \(g^*\) on the genuine scheme site this is the
-  factorisation through which finite-limit preservation must be verified; the site's
-  \(\operatorname{HasSheafify}\), weak-sheafification and
-  \(\mathcal{W}\)-locally-bijective instances, and the right-adjointness of the
-  presheaf pushforward, are all present there by typeclass inference.
+  re-sheafify.
 \end{lemma}
 
 \begin{lemma}[Forgetful functor is left-exact]
@@ -12648,10 +12039,7 @@ content is then isolated in a single middle factor.
   \mathlibok
   \textit{Provided by Mathlib.}
   The forgetful functor \(\operatorname{forget}\) from sheaves of modules to the
-  underlying sheaves of abelian groups preserves finite limits. On the genuine
-  scheme site the corresponding \(\operatorname{PreservesFiniteLimits}\) instance is
-  supplied by typeclass inference (the functor being, in particular, a right adjoint
-  to sheafification).
+  underlying sheaves of abelian groups preserves finite limits.
 \end{lemma}
 
 \begin{lemma}[Sheafification of presheaves of modules is left-exact]
@@ -12660,10 +12048,7 @@ content is then isolated in a single middle factor.
   \mathlibok
   \textit{Provided by Mathlib.}
   Sheafification of presheaves of modules is a left-exact reflector, hence preserves
-  finite limits. On the genuine scheme site, where the requisite
-  \(\operatorname{HasSheafify}\)/weak-sheafification instances hold, the
-  \(\operatorname{PreservesFiniteLimits}\) instance is supplied by typeclass
-  inference.
+  finite limits.
 \end{lemma}
 
 \begin{lemma}[Flat extension of scalars is left-exact]
@@ -12676,26 +12061,20 @@ content is then isolated in a single middle factor.
   \(M \mapsto B \otimes_A M\), preserves finite limits.
 \end{lemma}
 
-The two outer factors of Lemma~\ref{lem:sheafOfModules_pullbackIso}
-(Lemmas~\ref{lem:forget_sheafOfModules_pfl_mathlib}
-and~\ref{lem:sheafification_pfl_mathlib}) are left-exact unconditionally. The entire
-flatness-dependent content of left-exactness is therefore concentrated in the
-\emph{middle} factor, the presheaf-level pullback. This is the genuine frontier, and
-it does not yield to a stalkwise argument.
+The two outer factors are left exact by
+Lemmas~\ref{lem:forget_sheafOfModules_pfl_mathlib}
+and~\ref{lem:sheafification_pfl_mathlib}. It remains to treat presheaf pullback.
 
-\begin{definition}[Inverse-image model of the presheaf pullback \textnormal{(FRONTIER)}]
+\begin{definition}[Inverse-image model of presheaf pullback]
   \label{def:presheaf_pullback_inverseImage_model}
-  The concrete candidate model for the presheaf-level pullback along \(\varphi_{\mathrm{hom}}\):
+  The inverse-image model for presheaf-level pullback along \(\varphi_{\mathrm{hom}}\) is
   the inverse-image functor \(g^{-1}\) on presheaves of modules followed by degreewise
   extension of scalars along the underlying flat ring map, i.e.\ the composite
   \(g^{-1} \;\circ\; \operatorname{extendScalars}\), assembled sectionwise from the
-  presheaf inverse image and Mathlib's \(\operatorname{extendScalars}\). Unlike
-  \texttt{PresheafOfModules.pullback} itself (defined purely as an abstract left
-  adjoint), this model is computed pointwise and so exposes the data needed for an
-  exactness argument.
+  presheaf inverse image and extension of scalars.
 \end{definition}
 
-\begin{lemma}[The inverse-image model computes the presheaf pullback \textnormal{(FRONTIER)}]
+\begin{lemma}[The inverse-image model computes presheaf pullback]
   \label{lem:presheaf_pullback_inverseImage_adjoint}
   \uses{def:presheaf_pullback_inverseImage_model}
   The model \(g^{-1} \circ \operatorname{extendScalars}\) of
@@ -12704,21 +12083,21 @@ it does not yield to a stalkwise argument.
   adjoints it is therefore canonically isomorphic to
   \(\texttt{PresheafOfModules.pullback}\,\varphi_{\mathrm{hom}}
   = (\texttt{PresheafOfModules.pushforward}\,\varphi_{\mathrm{hom}})^{\mathrm{L}}\).
-  \emph{Proof sketch.} Exhibit the unit and counit by composing, sectionwise, the
+  The unit and counit are obtained by composing, sectionwise, the
   inverse-image/direct-image adjunction with the extension-of-scalars/restriction-of-scalars
-  adjunction; verify the triangle identities; conclude by uniqueness of left adjoints.
+  adjunction. Their triangle identities follow from those of the constituent
+  adjunctions, and uniqueness of left adjoints gives the stated isomorphism.
 \end{lemma}
 
-\begin{lemma}[Presheaf inverse image is exact \textnormal{(FRONTIER)}]
+\begin{lemma}[Presheaf inverse image is exact]
   \label{lem:presheaf_inverseImage_exact}
   The inverse-image functor \(g^{-1}\) on presheaves of modules is exact, hence
-  preserves finite limits. \emph{Proof sketch.} On presheaves the inverse image is
-  computed by a filtered colimit over the comma category of the structure map; filtered
-  colimits are exact in an abelian category, so \(g^{-1}\) preserves both finite limits
-  and finite colimits.
+  preserves finite limits. It is computed by filtered colimits over the relevant comma
+  categories. Filtered colimits of modules are exact, so they commute with the finite
+  limits and colimits defining exact sequences.
 \end{lemma}
 
-\begin{lemma}[Presheaf pullback is left-exact under flat \textnormal{(FRONTIER)}]
+\begin{lemma}[Presheaf pullback is left exact under flatness]
   \label{lem:presheaf_pullback_pfl_flat}
   \uses{lem:presheaf_pullback_inverseImage_adjoint, lem:presheaf_inverseImage_exact,
         lem:extendScalars_pfl_flat_mathlib}
@@ -12743,7 +12122,7 @@ it does not yield to a stalkwise argument.
 \begin{lemma}
 
 \leanok
-[Flat pullback is left-exact \textnormal{(OPEN)}]
+[Flat pullback is left exact]
   \label{lem:pullback_preserves_finite_limits}
   \lean{AlgebraicGeometry.pullback_preservesFiniteLimits}
   \uses{lem:sheafOfModules_pullbackIso, lem:forget_sheafOfModules_pfl_mathlib,
@@ -12795,18 +12174,15 @@ it does not yield to a stalkwise argument.
 \subsection{The {\v C}ech base-change isomorphism via a cosimplicial natural iso}
 \label{sec:cech_base_change_construction}
 
-The relative {\v C}ech complex is \emph{not} a literal product of affine
-pushforwards but an abstract cosimplicial whiskering: by
-Definition~\ref{def:relative_cech_complex_of_nerve},
+By Definition~\ref{def:relative_cech_complex_of_nerve},
 \(\check{\mathcal{C}}^\bullet(\mathfrak{U}, \mathcal{F}) =
 \operatorname{alternatingCofaceMapComplex}\bigl((\operatorname{pushforward} f) \circ
 \operatorname{CechNerve}(\mathfrak{U}, \mathcal{F})\bigr)\), whose degree-\(p\) term is
 \((\operatorname{pushforward} f)\) of a push--pull nerve object and whose differentials
-are \((\operatorname{pushforward} f)\) of cosimplicial coface maps. The base-change iso
-must therefore be built at the cosimplicial altitude, by transporting natural isos
-through the functor \(\operatorname{alternatingCofaceMapComplex}\) — \emph{not} by a
-hand-assembled \(\operatorname{isoOfComponents}\) with explicit per-degree {\v C}ech
-differential squares. The construction has four pieces, recorded next.
+are \((\operatorname{pushforward} f)\) of cosimplicial coface maps. A natural
+isomorphism of the underlying cosimplicial objects therefore induces an isomorphism
+of {\v C}ech complexes by functoriality of
+\(\operatorname{alternatingCofaceMapComplex}\).
 
 \begin{lemma}\leanok
 [Additive functors commute with the alternating-coface differential]
@@ -12824,10 +12200,6 @@ differential squares. The construction has four pieces, recorded next.
 [Flat pullback commutes with the alternating-coface complex]
   \label{lem:pullback_commutes_alternatingCofaceMapComplex}
   \lean{AlgebraicGeometry.mapAlternatingCofaceMapComplexIso}
-  % NOTE: AlgebraicGeometry.mapAlternatingCofaceMapComplexIso is currently DUPLICATED in
-  % two Lean files (CechHigherDirectImageUnconditional.lean and CechToHigherDirectImage.lean);
-  % this node pins the CechHigherDirectImageUnconditional copy. The duplicate needs a
-  % Lean-side de-dup refactor (planner-scheduled).
   \uses{def:relative_cech_complex_of_nerve, lem:map_alternatingCofaceMapComplex_objD}
   For an additive functor \(F\) between preadditive categories, \(F\) applied
   degreewise commutes with the alternating-coface-map cochain complex functor: there is
@@ -12835,11 +12207,10 @@ differential squares. The construction has four pieces, recorded next.
   \(F\bigl(\operatorname{alternatingCofaceMapComplex}(C)\bigr) \cong
   \operatorname{alternatingCofaceMapComplex}(F \circ C)\), natural in the cosimplicial
   object \(C\). In particular this holds for \(F = g^*\), which is additive.
-  \emph{Proof sketch.} The degree-\(p\) terms agree on the nose (\(F\) applied to the
+  The degree-\(p\) terms agree canonically (\(F\) applied to the
   degree-\(p\) term of \(C\)); the differential is an alternating sum of coface maps,
   and since \(F\) is additive it commutes with finite sums and with each coface map, so
-  the term-wise identifications assemble into a chain isomorphism. \emph{(Mathlib-absent;
-  a moderate \(\operatorname{NatTrans}\)-level build.)}
+  the term-wise identifications assemble into a chain isomorphism.
 \end{lemma}
 
 % The affine termwise base-change brick lives in the Flat Base Change chapter as
@@ -13812,7 +13183,7 @@ of an affine open-immersion cover of a separated scheme.
   \operatorname{pushPullObj}((g')^*\mathcal{F})\,(\operatorname{Over.mk} p')\). This is the
   open-immersion (in particular flat) case of Beck--Chevalley. The affineness of \(V\)
   together with the quasi-coherence of \(\mathcal{F}\) is what reduces it, after refining
-  \(X'\) by an affine open cover, to the sorry-free affine termwise base-change brick
+  \(X'\) by an affine open cover, to the affine termwise base-change isomorphism
   \cref{lem:affine_pushforward_pullback_baseChange}. The separatedness hypothesis on \(X\) is
   what makes the affine \(V\) meet each affine open of \(X\) in an affine; in the application
   the consumer discharges it from its own separatedness hypothesis through
@@ -13829,7 +13200,7 @@ of an affine open-immersion cover of a separated scheme.
   So there is no ``both sides vanish away from \(V'\)'' support argument. The off-\(V'\) data is
   real and is exactly the content of the comparison; the correct tool is a sectionwise criterion.
   The orientation is the open-immersion (flat) special case of base change, Stacks Project
-  Tag~02KH (\texttt{lemma-flat-base-change-cohomology}); the section-level input for Stage~2 is
+  Tag~02KH (\texttt{lemma-flat-base-change-cohomology}); the section-level input is
   supplied, after refining \(X'\) by an affine open cover and using that \(V\) is affine and
   \(\mathcal{F}\) quasi-coherent, by the affine termwise base-change brick
   \cref{lem:affine_pushforward_pullback_baseChange} (Stacks Project Tag~02KG), which already
@@ -13879,7 +13250,7 @@ of an affine open-immersion cover of a separated scheme.
   \((g')^{-1}(\text{affine opens of } X)\) (\cref{lem:openimm_refining_affine_cover}): over each
   member \(W_j = \operatorname{Spec} B\), with \(g'(W_j) \subseteq U_j = \operatorname{Spec} A\),
   --- because \(V\) is affine and \(X\) is separated --- the intersection \(V \cap U_j\) is
-  affine, the restricted local square is a \emph{fully-affine} pullback, and the sorry-free
+  affine, the restricted local square is a \emph{fully-affine} pullback, and the
   affine termwise base-change isomorphism \cref{lem:affine_pushforward_pullback_baseChange},
   applied with the open immersion \(V \cap U_j \hookrightarrow U_j\) in the role of the affine
   map and presenting module \(M' = \Gamma(V \cap U_j,\ p^*\mathcal{F})\) (quasi-coherent by
@@ -13905,28 +13276,6 @@ of an affine open-immersion cover of a separated scheme.
   Beck--Chevalley.
 \end{proof}
 
-% NOTE (status, 2026-07-02 session 0007-horizon-T2): the Stage-2 chain is now fully CLOSED.
-% The member node \cref{lem:openimm_bareBC_app_isIso_affine} is proved in the new
-% Cohomology/AffinePushPullEssImage.lean (restrict_pullback_pushforward_essImage): the pullback
-% pseudofunctor + the open-open pushforward--restriction commutation
-% (pushforwardRestrictOpensIso, the same-opens-functor pattern) + the affine heart
-% (pullback_pushforward_affineOpen_essImage: affinePushforwardPullbackBaseChange over the
-% ABSTRACT ring pushout, Spec of which is cartesian, with the isoOfRangeEq range transport).
-% For the affine tilde dictionary the square of \cref{lem:openimm_beckchevalley} is specialized
-% in Lean to p = V₀.ι of an affine open V₀ : X.Opens (the form every consumer instantiates).
-% Consequently \cref{lem:openimm_bareBC_isIso}, \cref{lem:openimm_beckchevalley} and
-% \cref{lem:twisted_cech_nerve_per_sigma} are sorry-free.
-
-% =====================================================================================
-% Stage-2 decomposition chain for lem:openimm_beckchevalley (carved iter-329, slug obc329).
-% These are an INTERNAL decomposition of the already-cited open-immersion Beck--Chevalley
-% proof (Stacks Tags 02KH/02KG/01I9, quoted at lem:pullback_spec_tilde_iso /
-% lem:affine_pushforward_pullback_baseChange in Cohomology_FlatBaseChange.tex and at the
-% target lemma above); no new external source is introduced. Lean homes: namespace
-% AlgebraicGeometry in Cohomology/CechHigherDirectImageUnconditional.lean (next to
-% openImmersion_bareBC).
-% =====================================================================================
-
 \begin{lemma}\leanok
 [Affine cover of \(X'\) refining preimages of affine opens of \(X\)]
   \label{lem:openimm_refining_affine_cover}
@@ -13951,7 +13300,7 @@ of an affine open-immersion cover of a separated scheme.
 \end{proof}
 
 \begin{lemma}\leanok
-[Stage 2, reduction (1): the geometric counit at an open immersion is invertible]
+[The geometric counit at an open immersion is invertible]
   \label{lem:openimm_pullback_counit_isIso}
   \lean{AlgebraicGeometry.openImmersion_pullback_counit_isIso}
   \uses{lem:restrictFunctorIsoPullback_mathlib}
@@ -13973,7 +13322,7 @@ of an affine open-immersion cover of a separated scheme.
 \end{proof}
 
 \begin{lemma}\leanok
-[Stage 2, reduction (2): restriction maps of a pushforward-presented module are isomorphisms]
+[Restriction maps of a pushforward-presented module are isomorphisms]
   \label{lem:restrictionMap_isIso_of_essImage}
   \lean{AlgebraicGeometry.restrictionMap_isIso_of_essImage}
   Let \(W\) be a scheme, \(O_0 \subseteq W\) an open with inclusion \(\iota : O_0 \hookrightarrow
@@ -13994,7 +13343,7 @@ of an affine open-immersion cover of a separated scheme.
 \end{proof}
 
 \begin{lemma}\leanok
-[Stage 2, reduction (3): essential-image membership for \(p'_*\) is cover-local]
+[Essential-image membership for \(p'_*\) is cover local]
   \label{lem:essimage_pushforward_cover_local}
   \lean{AlgebraicGeometry.essImage_pushforward_of_openCover,
         AlgebraicGeometry.restrictFunctor_map_app}
@@ -14026,7 +13375,7 @@ of an affine open-immersion cover of a separated scheme.
 \end{proof}
 
 \begin{lemma}\leanok
-[Stage 2, member node: over each affine \(W_j\) the pulled-back push--pull module is a pushforward]
+[Local essential-image comparison over an affine cover member]
   \label{lem:openimm_bareBC_app_isIso_affine}
   \lean{AlgebraicGeometry.openImmersion_pushPull_essImage_member,
         AlgebraicGeometry.restrict_pullback_pushforward_essImage,
@@ -14038,14 +13387,8 @@ of an affine open-immersion cover of a separated scheme.
   \uses{lem:affine_pushforward_pullback_baseChange,
         lem:pullback_preserves_quasicoherent, lem:pullback_spec_tilde_iso,
         lem:openimm_refining_affine_cover, lem:restrictFunctorIsoPullback_mathlib}
-  Keep the data of \cref{lem:openimm_beckchevalley}, and assume explicitly the hypotheses this
-  member node consumes: \(V\) an \emph{affine open} of \(X\) (in Lean the open immersion \(p\) is
-  the inclusion \(V_0.\iota\) of an affine open \(V_0 : X.\mathrm{Opens}\) with
-  \(\mathrm{IsAffineOpen}\,V_0\) --- the form in which every consumer instantiates it), \(X\)
-  separated (the separatedness predicate of \cref{lem:openimm_beckchevalley} --- e.g.\
-  \([\mathrm{IsSeparated}\,(\mathrm{terminal.from}\,X)]\), or an equivalent affine-intersection
-  input, at the prover's choice), and \(\mathcal{F}\) quasi-coherent
-  (\(\mathtt{hF} : \mathcal{F}.\mathrm{IsQuasicoherent}\)).
+  Keep the data of \cref{lem:openimm_beckchevalley}. Assume that \(V\) is an affine
+  open of \(X\), that \(X\) is separated, and that \(\mathcal F\) is quasi-coherent.
   Write \(M := (g')^*(p_*\,p^*\mathcal{F})\).  Let \(W_j = \operatorname{Spec} B \subseteq X'\),
   \(U_j = \operatorname{Spec} A \subseteq X\) be as in \cref{lem:openimm_refining_affine_cover},
   with \(g'|_{W_j} = \operatorname{Spec}\varphi\), \(\varphi : A \to B\). Since \(V\) is affine and
@@ -14477,7 +13820,7 @@ of an affine open-immersion cover of a separated scheme.
   cosimplicial iso \(e\) and feed it into that reduction. We bypass the canonical
   base-change map entirely. The sole genuine input is the \emph{affine termwise} base
   change \cref{lem:affine_pushforward_pullback_baseChange}, which is assembled from the
-  sorry-free concrete tilde dictionaries \cref{lem:pushforward_spec_tilde_iso} and
+  concrete tilde identifications \cref{lem:pushforward_spec_tilde_iso} and
   \cref{lem:pullback_spec_tilde_iso} together with the commutative-algebra cancellation
   \(\operatorname{cancelBaseChange}\) (\cref{lem:cancelBaseChange_mathlib}) --- not the
   canonical adjoint mate \(\operatorname{pushforwardBaseChangeMap}\). Unwinding the

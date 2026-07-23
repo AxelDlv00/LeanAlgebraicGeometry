@@ -26,11 +26,11 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.freeYonedaEval_iso_of_le
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-23T22:59:53'
 ---
 noncomputable def freeYonedaEval_iso_of_le {W V : TopologicalSpace.Opens ↥X} (h : V ≤ W) :
     (PresheafOfModules.evaluation X.ringCatSheaf.obj (Opposite.op V)).obj (freeYoneda.obj W)
       ≅ ModuleCat.of (X.ringCatSheaf.obj.obj (Opposite.op V))
           (X.ringCatSheaf.obj.obj (Opposite.op V)) :=
   haveI : Unique (V ⟶ W) := ⟨⟨homOfLE h⟩, fun _ => Subsingleton.elim _ _⟩
-  (Finsupp.LinearEquiv.finsuppUnique _ _ (V ⟶ W)).toModuleIso
+  (Finsupp.uniqueLinearEquiv _ _ (homOfLE h)).toModuleIso

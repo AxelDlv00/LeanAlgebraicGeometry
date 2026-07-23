@@ -947,27 +947,16 @@ mathematical content is the obligation analysed in
   \label{def:inst_has_pic_scheme}
   \lean{AlgebraicGeometry.Scheme.instHasPicScheme}
   \uses{def:has_pic_scheme, def:has_rational_point}
-  The instance recording that \cref{def:has_pic_scheme} holds for every
-  smooth proper geometrically integral curve \(C/k\) \emph{with a
-  \(k\)-rational point} (\cref{def:has_rational_point}) --- run-0008: the
-  conditionality is essential, since without a section the plain relative
-  functor is not representable in general. This is the SINGLE genuine FGA
-  sorry of the chapter after the run-0008 rewire; its discharge is the
-  Step-0-through-Step-4 construction of \cref{thm:fga_pic_representability}
-  (Kleiman \S 2 Thm.~2.5 + \S 4 Thm.~th:main), gated on the Riemann--Roch
-  substrate. Since the run-0010 strengthening of
-  \cref{def:has_pic_scheme}, this sorry also carries part (1) of Kleiman
-  \S 4, Thm.~th:main: the representing scheme is locally of finite type
-  over \(k\) (absorbing the former separate
-  \cref{def:inst_pic_scheme_lft} sorry). See
-  \cref{sec:fga_pic_sorry_closure_order}.
+  Let \(C/k\) be a smooth proper geometrically integral curve with a
+  \(k\)-rational point. Then the relative Picard functor of \(C\) is
+  represented by a scheme locally of finite type over \(k\).
 \end{definition}
 
 \begin{proof}
-
-\leanok
-  Typed statement in Lean; the semantic discharge is the obligation of
-  \cref{sec:fga_pic_sorry_closure_order}.
+  Apply the FGA representability construction of
+  \cref{thm:fga_pic_representability}. The rational point rigidifies line
+  bundles along the section, and the bounded Hilbert-polynomial strata glue to
+  the required locally finite type representing scheme.
 \end{proof}
 
 \begin{definition}\leanok
