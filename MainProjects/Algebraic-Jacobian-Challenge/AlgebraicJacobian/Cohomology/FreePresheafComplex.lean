@@ -1227,7 +1227,8 @@ noncomputable def cechEngineComplexAug (𝒰 : X.OpenCover) (V : TopologicalSpac
     cechEngineComplex 𝒰 V ⟶ (ChainComplex.single₀ _).obj (coverSectionModule V) :=
   ((cechEngineComplex 𝒰 V).toSingle₀Equiv (coverSectionModule V)).symm
     ⟨cechEngineAug0 𝒰 V, by
-      rw [show (cechEngineComplex 𝒰 V).d 1 0 = cechEngineD 𝒰 V 0 from ChainComplex.of_d (cechEngineX 𝒰 V) (cechEngineD 𝒰 V) 0]
+      rw [show (cechEngineComplex 𝒰 V).d 1 0 = cechEngineD 𝒰 V 0 from
+        ChainComplex.of_d (cechEngineX 𝒰 V) (cechEngineD 𝒰 V) 0]
       exact cechEngineD_comp_aug 𝒰 V⟩
 
 /-! ## Project-local Mathlib supplement — degree-`0` splitting and engine quasi-isomorphism -/
@@ -1511,8 +1512,8 @@ noncomputable def cechFreeSimplicialFam :
     have e : σ ∘ ⇑(SimplexCategory.Hom.toOrderHom (𝟙 n).unop) = σ := by funext i; simp
     have eo : coverInterOpenFam U (σ ∘ ⇑(SimplexCategory.Hom.toOrderHom (𝟙 n).unop))
         = coverInterOpenFam U σ := by rw [e]
-    rw [Subsingleton.elim (homOfLE
-        (coverInterOpen_comp_leFam U (SimplexCategory.Hom.toOrderHom (𝟙 n).unop) σ)) (eqToHom eo.symm),
+    rw [Subsingleton.elim (homOfLE (coverInterOpen_comp_leFam U
+        (SimplexCategory.Hom.toOrderHom (𝟙 n).unop) σ)) (eqToHom eo.symm),
       eqToHom_map]
     exact sigma_ι_eqToHom_transport
       (fun σ : Fin (n.unop.len + 1) → ι => freeYoneda.obj (coverInterOpenFam U σ)) e
@@ -1596,7 +1597,8 @@ private lemma cechFree_d_comp_augFam :
     AlgebraicTopology.alternatingFaceMapComplex_obj_d (cechFreeSimplicialFam U) 0
   -- Prove the simplicial-level identity as a standalone `have` so its composition `≫` is
   -- elaborated fresh at the `cechFreeSimplicialFam.obj` types — matching
-  -- `cechFreeSimplicial_δ_comp_augFam`. Rewriting `hd` into the goal first would pin the composition
+  -- `cechFreeSimplicial_δ_comp_augFam`. Rewriting `hd` into the goal first would pin the
+  -- composition
   -- at the `.X` types of the chain complex, which are only definitionally (not syntactically)
   -- equal and block the rewrites.
   have main : AlgebraicTopology.AlternatingFaceMapComplex.objD (cechFreeSimplicialFam U) 0
@@ -1792,7 +1794,8 @@ noncomputable def cechFreeEvalDropZerosFam
 /-- **Degreewise engine model of the evaluated free Čech term.** The degree-`p` term of the
 evaluated free Čech complex at `V` is isomorphic to the constant-coefficient combinatorial model
 `∐_{τ : Fin (p+1) → I₁(V)} O_X(V)`, where `I₁(V) = {i : V ≤ U_i}`.  Built as the composite of
-`cechFreeEval_XFam` (evaluation commutes with the coproduct), `cechFreeEvalDropZerosFam` (discard the
+`cechFreeEval_XFam` (evaluation commutes with the coproduct),
+`cechFreeEvalDropZerosFam` (discard the
 `V ≰ U_σ` summands), and `Limits.Sigma.whiskerEquiv` along `survivingEquivFam` with the per-summand
 identification `freeYonedaEval_iso_of_le`.  This is the object half of the engine iso
 `cechFreeEvalEngineIsoFam`; the differential match remains. -/
@@ -1870,7 +1873,8 @@ lemma cechEngineD_compFam (V : TopologicalSpace.Opens ↥X) (p : ℕ) :
 /-- **The engine chain complex** `C•` of an open `V` meeting some cover member.
 
 The chain complex of `O_X(V)`-modules with `C_p = ∐_{σ : Fin (p+1) → I₁(V)} O_X(V)` and the
-alternating index-dropping differential `cechEngineDFam`.  It is the constant-coefficient combinatorial
+alternating index-dropping differential `cechEngineDFam`.  It is the constant-coefficient
+combinatorial
 model that `cechFreeEvalEngineIsoFam` identifies with the evaluated free Čech complex; the nonempty
 acyclicity of the evaluated complex reduces to the contractibility of `C•`.
 
@@ -1925,7 +1929,8 @@ lemma cechEnginePrepend_specFam (V : TopologicalSpace.Opens ↥X)
 
 /-- **Positive-degree exactness of the engine complex** (`Function.Exact` form), the coproduct port
 of `FreeCechEngine.combDifferential_exact`.  When `I₁(V)` is nonempty (witnessed by `i_fix`), the
-engine differential is exact at every positive degree: a cycle `x` with `cechEngineDFam n x = 0` is the
+engine differential is exact at every positive degree: a cycle `x` with
+`cechEngineDFam n x = 0` is the
 boundary `cechEngineDFam (n+1) (cechEnginePrependFam (n+1) x)`, by the contracting identity
 `cechEnginePrepend_specFam`.  Feeds the nonempty-case homology vanishing via
 `ModuleCat.shortComplex_exact`. -/
@@ -2036,7 +2041,8 @@ private lemma cechFreeEvalEngine_map_ιFam
 
 /-- **Differential comm-square of the engine identification.** The degreewise object isos
 `cechFreeEvalEngine_XFam` intertwine the evaluated free Čech differential with the engine
-differential `cechEngineDFam`.  This is the single comm-square upgrading the degreewise object iso to
+differential `cechEngineDFam`.  This is the single comm-square upgrading the degreewise object
+iso to
 the chain iso `cechFreeEvalEngineIsoFam`. -/
 private lemma cechFreeEvalEngine_commFam
     (V : TopologicalSpace.Opens ↥X) (p : ℕ) :
@@ -2068,7 +2074,8 @@ private lemma cechFreeEvalEngine_commFam
 
 /-- **The engine chain isomorphism** (`lem:cech_free_eval_engine_iso`).  For each open `V`, the
 evaluation at `V` of the free Čech complex is isomorphic, as a chain complex, to the
-constant-coefficient engine complex `cechEngineComplexFam U V`.  Built from the degreewise object isos
+constant-coefficient engine complex `cechEngineComplexFam U V`.  Built from the degreewise
+object isos
 `cechFreeEvalEngine_XFam` and the differential comm-square `cechFreeEvalEngine_commFam`.
 
 Project-local: the identification of the evaluated free Čech complex with its combinatorial
@@ -2082,7 +2089,8 @@ noncomputable def cechFreeEvalEngineIsoFam
     rw [ComplexShape.down_Rel] at hij
     obtain rfl : i = j + 1 := hij.symm
     rw [Functor.mapHomologicalComplex_obj_d,
-      show (cechEngineComplexFam U V).d (j + 1) j = cechEngineDFam U V j from ChainComplex.of_d _ _ j]
+      show (cechEngineComplexFam U V).d (j + 1) j = cechEngineDFam U V j from
+        ChainComplex.of_d _ _ j]
     exact cechFreeEvalEngine_commFam U V j)
 
 /-- **Positive-degree exactness of the engine complex.** When `I₁(V)` is nonempty (witnessed by
@@ -2127,17 +2135,20 @@ lemma cechEngineD_comp_augFam (V : TopologicalSpace.Opens ↥X) :
   simp only [Fin.val_zero, Fin.val_one, pow_zero, pow_one, one_zsmul, neg_one_zsmul]
   abel
 
-/-- **The augmentation chain map** `cechEngineComplexFam U V ⟶ O_X(V)[0]`, whose degree-`0` component
+/-- **The augmentation chain map** `cechEngineComplexFam U V ⟶ O_X(V)[0]`, whose
+degree-`0` component
 is the codiagonal `cechEngineAug0Fam`.  The chain-map condition is `cechEngineD_comp_augFam`. -/
 noncomputable def cechEngineComplexAugFam (V : TopologicalSpace.Opens ↥X) :
     cechEngineComplexFam U V ⟶ (ChainComplex.single₀ _).obj (coverSectionModule V) :=
   ((cechEngineComplexFam U V).toSingle₀Equiv (coverSectionModule V)).symm
     ⟨cechEngineAug0Fam U V, by
-      rw [show (cechEngineComplexFam U V).d 1 0 = cechEngineDFam U V 0 from ChainComplex.of_d (cechEngineXFam U V) (cechEngineDFam U V) 0]
+      rw [show (cechEngineComplexFam U V).d 1 0 = cechEngineDFam U V 0 from
+        ChainComplex.of_d (cechEngineXFam U V) (cechEngineDFam U V) 0]
       exact cechEngineD_comp_augFam U V⟩
 
 /-- **Degree-`0` contracting identity of the augmented engine complex.** Fixing
-`i_fix ∈ I₁(V)`, the prepend map `s := cechEnginePrependFam 0`, the differential `d := cechEngineDFam 0`,
+`i_fix ∈ I₁(V)`, the prepend map `s := cechEnginePrependFam 0`, the differential
+`d := cechEngineDFam 0`,
 the augmentation `g := cechEngineAug0Fam` and the section `r := ι_{(fun _ => i_fix)}` of `g` satisfy
 `s ≫ d + g ≫ r = 𝟙`.  Together with `r ≫ g = 𝟙` this exhibits `g` as the cokernel of `d` (and the
 augmented complex `C₁ → C₀ → O_X(V)` as exact at `C₀`), the degree-`0` input to the engine
@@ -2173,7 +2184,8 @@ lemma cechEngineComplexAug_f_zeroFam (V : TopologicalSpace.Opens ↥X) :
 /-- **The engine augmentation is a quasi-isomorphism** (nonempty case).  When `I₁(V)` is nonempty
 (witnessed by `i_fix`), `cechEngineComplexAugFam U V : cechEngineComplexFam U V ⟶ O_X(V)[0]` is a
 quasi-isomorphism: positive-degree exactness comes from the contracting homotopy
-(`cechEngineComplex_exactAtFam`), and degree `0` from the splitting `cechEngineAug0_splitFam` exhibiting
+(`cechEngineComplex_exactAtFam`), and degree `0` from the splitting
+`cechEngineAug0_splitFam` exhibiting
 `cechEngineAug0Fam` as the cokernel of the degree-`0` differential. -/
 lemma cechEngineComplexAug_quasiIsoFam (V : TopologicalSpace.Opens ↥X)
     (i_fix : {i : ι // V ≤ U i}) :
@@ -2230,7 +2242,8 @@ lemma cechEngineComplexAug_quasiIsoFam (V : TopologicalSpace.Opens ↥X)
 /-- **Degree-`0` augmentation comm-square (engine identification).** Evaluating the free Čech
 augmentation `cechFreeAugFam` at `V` and the engine codiagonal `cechEngineAug0Fam` agree under the
 degree-`0` object identification `cechFreeEvalEngine_XFam`.  This is the degree-`0` analogue of
-`cechFreeEvalEngine_commFam` and the key bridge for the nonempty quasi-isomorphism: it identifies the
+`cechFreeEvalEngine_commFam` and the key bridge for the nonempty quasi-isomorphism: it
+identifies the
 evaluated free augmentation with the engine augmentation. -/
 private lemma cechFreeAug_eval_eqFam
     (V : TopologicalSpace.Opens ↥X) :
@@ -2262,8 +2275,9 @@ private lemma epi_cechEngineAug0Fam (V : TopologicalSpace.Opens ↥X)
 
 /-- **The cover structure presheaf evaluates to `O_X(V)` over an open meeting a cover member.**
 When `I₁(V) ≠ ∅` (witnessed by `i_fix`), `(eval V).obj O_U ≅ O_X(V)`.  The augmentation
-`cechFreeAugFam` evaluates (by `cechFreeAug_eval_eqFam`) to the engine codiagonal up to the degree-`0`
-object iso, hence is an epimorphism; since `O_U = image(cechFreeAugFam)` and evaluation is exact, the
+`cechFreeAugFam` evaluates (by `cechFreeAug_eval_eqFam`) to the engine codiagonal up to the
+degree-`0` object iso, hence is an epimorphism; since `O_U = image(cechFreeAugFam)` and
+evaluation is exact, the
 evaluated image inclusion `(eval V)(image.ι)` is mono and epi, hence iso. -/
 noncomputable def coverStructurePresheafEval_isoFam
     (V : TopologicalSpace.Opens ↥X) (i_fix : {i : ι // V ≤ U i}) :
@@ -2306,7 +2320,8 @@ private lemma coverStructurePresheafEval_iso_homFam
 
 /-- **Evaluated free Čech quasi-isomorphism, nonempty case** (`lem:cech_free_eval_nonempty`).
 When `I₁(V) ≠ ∅` (witnessed by `i_fix`), the evaluation at `V` of the augmentation chain map
-`cechFreeComplexAugFam` is a quasi-isomorphism.  Transferred across `cechFreeEvalEngineIsoFam` from the
+`cechFreeComplexAugFam` is a quasi-isomorphism.  Transferred across
+`cechFreeEvalEngineIsoFam` from the
 engine quasi-isomorphism `cechEngineComplexAug_quasiIsoFam`, using the degree-`0` augmentation
 identification `cechFreeAug_eval_eqFam` and the geometric identification
 `coverStructurePresheafEval_isoFam`. -/
