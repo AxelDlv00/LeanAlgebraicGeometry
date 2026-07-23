@@ -90,7 +90,7 @@ Because \(k\) need not be algebraically closed, every place carries a
 Over an algebraically closed \(k\) one has \(\deg P = 1\) and this
 recovers the classical count; the whole \(\chi\)-ledger below carries the
 residue degrees. This is the degree of
-\Cref{def:divisor_degree,thm:divisor_degree_hom}.
+\Cref{def:divisor_degree} and \cref{thm:divisor_degree_hom}.
 
 \paragraph{Notation.} We write \(\ell(D) = \dim_k L(D)\),
 \(i(D) = \dim_k \check{H}^1(D)\), and
@@ -103,7 +103,8 @@ verify without the later ones.
 \emph{Tier 0} (\Cref{sec:RiemannRoch_Adelic_substrate}) records the
 Dedekind chart, the point valuation, the sheaf of sections, and the
 finite-support lemma.
-\emph{Tier 1} (\Cref{sec:RiemannRoch_Adelic_cokernel,sec:RiemannRoch_Adelic_finiteness})
+\emph{Tier 1} (\Cref{sec:RiemannRoch_Adelic_cokernel} and
+\cref{sec:RiemannRoch_Adelic_finiteness})
 delivers the single live-tree payoff --- finite-dimensionality of
 \(H^1(C, \struct{C})\), hence an honest \(\genus C\) --- funnelling
 through the keystone
@@ -563,7 +564,8 @@ hypotheses of \Cref{def:genus}; \(K = C.\mathrm{left}.\mathrm{functionField}\).
   Čech-to-derived comparison \(\HasCechToHModuleIso\) itself (one
   candidate route to it, via acyclicity of the affine square and the
   Mayer--Vietoris presentation of \(\HModulePrime\), is sketched at
-  \Cref{thm:adelic_instIsCechAcyclicCover,thm:adelic_instHasCechToHModuleIso});
+  \Cref{thm:adelic_instIsCechAcyclicCover} and
+  \cref{thm:adelic_instHasCechToHModuleIso});
   node N5 above (\Cref{thm:adelic_cechH1_eq_cokernel}) needs no gate at
   all.
 \end{proof}
@@ -619,7 +621,8 @@ morphism.
   here. This gate is further reduced, decoupling it from all over-\(k\)
   and relative-projective-space bookkeeping, to the strictly cleaner
   gate \(\mathrm{ExistsNonconstantMapToProjInt}\, C\)
-  (\Cref{def:adelic_nonconstant_projint_gate,lem:adelic_nonconstant_projint_bridge}).
+  (\Cref{def:adelic_nonconstant_projint_gate} and
+  \cref{lem:adelic_nonconstant_projint_bridge}).
 \end{definition}
 
 \begin{definition}
@@ -1270,7 +1273,7 @@ the two agree at \(D = 0\).
   \struct{C}(D)) + B(D')\) --- are not yet formalised (they need the
   affineness of \(U_0, U_1\) as a genuine geometric input) and are taken
   as an explicit hypothesis at the two downstream consumers
-  \Cref{thm:adelic_ledger_alternating,thm:adelic_chi_additivity}.
+  \Cref{thm:adelic_ledger_alternating} and \cref{thm:adelic_chi_additivity}.
 \end{proposition}
 \begin{proof}
   Because \(D \le D'\), the section spaces enlarge:
@@ -1614,7 +1617,7 @@ the two agree at \(D = 0\).
   (the finiteness/one-dimensionality of global sections is the input
   \Cref{inst:Scheme_instIsHModuleHomFinite_toModuleKSheaf}); and
   \(i(0) = \dim_k \check{H}^1(0) = g\) is the genus
-  (\Cref{def:genus,thm:adelic_HModuleOne_linearEquiv_cokernel}). Hence
+  (\Cref{def:genus} and \cref{thm:adelic_HModuleOne_linearEquiv_cokernel}). Hence
   \(\chi(D) = \deg D + 1 - g\).
 \end{proof}
 

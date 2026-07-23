@@ -149,44 +149,6 @@ cocycle condition can be expressed cleanly.
   shape in which the multiplicative cocycle condition is stated below.
 \end{proof}
 
-\begin{lemma}[Triple-overlap endpoint bridges]
-  \label{lem:gr_glueData_bridges}
-  \lean{AlgebraicGeometry.Scheme.Modules.glueData_bridge_src,
-        AlgebraicGeometry.Scheme.Modules.glueData_bridge_mid,
-        AlgebraicGeometry.Scheme.Modules.glueData_bridge_tgt}
-  \uses{def:gr_the_glue_data}
-  Let \(D\) be a glue datum of schemes (\cref{def:gr_the_glue_data}) and fix
-  indices \(i,j,k\) with triple overlap \(V_{ijk} = V_{ij} \times_{U_i} V_{ik}\).
-  The three transports of \cref{lem:modules_pullback_basechange_transport} have
-  endpoints pinned down by three scheme-morphism equalities on \(V_{ijk}\), each a
-  pure consequence of the glue datum's structural identities:
-  \begin{itemize}
-    \item (\emph{src}) \(\mathrm{fst} \circ f_{ij} = \mathrm{snd} \circ f_{ik}\)
-      -- the defining pullback condition of \(V_{ijk}\);
-    \item (\emph{mid}) \(\mathrm{fst} \circ (t_{ij} \circ f_{ji})
-      = (t'_{ijk} \circ \mathrm{fst}) \circ f_{jk}\) -- the pullback condition
-      composed with the glue datum's \(t_{\mathrm{fac}}\) identity;
-    \item (\emph{tgt}) \((t'_{ijk} \circ \mathrm{fst}) \circ (t_{jk} \circ f_{kj})
-      = \mathrm{snd} \circ (t_{ik} \circ f_{ki})\) -- the cocycle core, from the
-      \(t_{\mathrm{fac}}\) associativity, the reversed pullback condition, the
-      \(t_{\mathrm{inv}}\) collapse and the glue datum's cocycle identity.
-  \end{itemize}
-  These three equalities align the source, middle, and target sheaves of the three
-  transports so that the cocycle equation (C2) of \cref{def:scheme_modules_glue}
-  typechecks.
-\end{lemma}
-\begin{proof}  \uses{def:gr_the_glue_data}
-  Each equality is an identity of morphisms in the category of schemes, proved by
-  rewriting with the glue datum's axioms: \emph{src} is literally
-  \(\mathrm{pullback.condition}\); \emph{mid} adds the \(t_{\mathrm{fac}}\)
-  factorisation \(D.t_{\mathrm{fac}}\,i\,j\,k\); \emph{tgt} chains
-  \(t_{\mathrm{fac}}\)-associativity at \((j,k,i)\), the reversed pullback
-  condition, an auxiliary collapse combining \(t_{\mathrm{fac}}\)-associativity at
-  \((k,i,j)\) with \(t_{\mathrm{inv}}\), and finally the cocycle identity
-  \(D.\mathrm{cocycle}\,i\,j\,k\). No sheaf-of-modules data enters; these are
-  bookkeeping equalities of the underlying scheme cover.
-\end{proof}
-
 % HISTORICAL (abandoned route): an earlier draft built the glued sheaf as a hand-rolled
 % presheaf of compatible families (decls gluePresheaf / gluePresheafModule / gluePresheafIsSheaf).
 % That route is abandoned; the gluing is now the equalizer of pushforwards described in the
@@ -2072,5 +2034,4 @@ representability theorem.
   (\cref{lem:tautologicalQuotient_epi}) makes the tautological pair an honest quotient, so the
   forward map indeed lands in \(\mathrm{Grass}(r,d)(T)\).
 \end{proof}
-
 

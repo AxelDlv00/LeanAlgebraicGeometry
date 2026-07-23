@@ -445,12 +445,12 @@ independently of any upstream timing.
   coherence data of the monoidal category --- pentagon, triangle, hexagon, and
   a fortiori any monoidal-closed structure --- is never \emph{consumed} by the
   group law. The group law needs only the existence of the three coherence
-  isomorphisms \cref{lem:tensorobj_assoc_iso,lem:tensorobj_unit_iso,%
-  lem:tensorobj_comm_iso}, supplied directly: the associator by gluing canonical
+  isomorphisms \cref{lem:tensorobj_assoc_iso}, \cref{lem:tensorobj_unit_iso}, and
+  \cref{lem:tensorobj_comm_iso}, supplied directly: the associator by gluing canonical
   local isomorphisms through the restriction-compatibility isomorphism
   \cref{lem:tensorobj_restrict_iso} (\cref{lem:tensorobj_assoc_iso}), and the
   unitors and braiding by the cheap \(\mathtt{mapIso}\) pattern
-  (\cref{lem:tensorobj_unit_iso,lem:tensorobj_comm_iso}). The carrier --- iso-classes
+  (\cref{lem:tensorobj_unit_iso} and \cref{lem:tensorobj_comm_iso}). The carrier --- iso-classes
   of the substrate tensor \(\otimes_X\) --- is the scheme-theoretic analogue of
   Mathlib's Picard group \(\mathtt{CommRing.Pic}\,R := \mathrm{Skeleton}(
   \mathtt{Module.Invertible}\,R)\) (\texttt{Mathlib.RingTheory.PicardGroup}), but it
@@ -475,7 +475,8 @@ commutativity and inverse) that the relative Picard group law consumes. These fa
 are supplied \emph{directly}: associativity by the direct-gluing associator
 \cref{lem:tensorobj_assoc_iso} (through the linchpin
 \cref{lem:tensorobj_restrict_iso}), unit and commutativity by the cheap
-\(\mathtt{mapIso}\) pattern (\cref{lem:tensorobj_unit_iso,lem:tensorobj_comm_iso}),
+\(\mathtt{mapIso}\) pattern (\cref{lem:tensorobj_unit_iso} and
+\cref{lem:tensorobj_comm_iso}),
 and the inverse existentially from \(\otimes\)-invertibility. They are \emph{not}
 read off any \(\MonoidalCategory\) structure: the route that would derive them from
 \texttt{jw\_ismonoidal} (route~(e)) is superseded and off-path. The section also
@@ -869,8 +870,8 @@ analogue of Mathlib's \(\mathtt{CommRing.Pic}\), not off a coherent monoidal
 category's \(\mathtt{Skeleton}\)). The associator is obtained as the sheafification
 transport of the presheaf associator (\cref{lem:tensorobj_assoc_iso}), whose
 \emph{single} open left-whisker obligation is closed by the d.2 stalk--tensor
-commutation (\cref{lem:islocallyinjective_whiskerleft_via_stalk,%
-lem:stalk_tensor_commutation}); it uses \emph{no} \emph{full}
+commutation (\cref{lem:islocallyinjective_whiskerleft_via_stalk} and
+\cref{lem:stalk_tensor_commutation}); it uses \emph{no} \emph{full}
 \((J.W).\mathtt{IsMonoidal}\) instance and \emph{no} \(\mathtt{LocalizedMonoidal}\)
 monoidal category. Accordingly the \emph{full monoidal-category} target of this
 section --- the \emph{pair} of whiskering-stability fields (\cref{lem:whisker_of_W})
@@ -915,8 +916,8 @@ commutation.
 
 The following lemma is the \(R_x\)-linear stalk-map packaging (the ``d.1''
 ingredient). It is consumed by the stalk--tensor commutation of
-\cref{sec:tensorobj_stalk_tensor} (\cref{lem:stalk_tensor_commutation,
-lem:islocallyinjective_whiskerleft_via_stalk}) and is therefore a live ingredient
+\cref{sec:tensorobj_stalk_tensor} (\cref{lem:stalk_tensor_commutation} and
+\cref{lem:islocallyinjective_whiskerleft_via_stalk}) and is therefore a live ingredient
 of the unconditional associator route.
 
 \begin{lemma}
@@ -1941,7 +1942,8 @@ Each is proved directly in Lean and carries the dependency edges of the construc
 
 The relative Picard group law is assembled from \emph{\(\otimes\)-invertibility}
 and the monoidal coherence isomorphisms of
-\cref{lem:tensorobj_assoc_iso,lem:tensorobj_unit_iso,lem:tensorobj_comm_iso},
+\cref{lem:tensorobj_assoc_iso}, \cref{lem:tensorobj_unit_iso}, and
+\cref{lem:tensorobj_comm_iso},
 following Mathlib's Picard-group idiom (\(\mathtt{Module.Invertible}\),
 \(\mathtt{CommRing.Pic} = \mathrm{Units}(\mathrm{Skeleton}(\mathtt{ModuleCat}\,R))\),
 \(\mathtt{instCommGroupPic}\); \texttt{Mathlib.RingTheory.PicardGroup}) as the
@@ -4640,7 +4642,7 @@ associator)]
 \section{Consumer: the \(\AddCommGroup\) instance for the relative Picard sheaf}
 \label{sec:tensorobj_consumer_acg}
 
-The substrate of \cref{sec:tensorobj_substrate,sec:tensorobj_onproduct_lift}
+The substrate of \cref{sec:tensorobj_substrate} and \cref{sec:tensorobj_onproduct_lift}
 supplies all the data missing from \cref{lem:rel_pic_sharp_groupoid}'s Lean
 encoding. The consumer instance below packages the abelian-group law
 \(\bigl[\,\mathcal{L}\,\bigr] + \bigl[\,\mathcal{L}'\,\bigr]
@@ -4724,7 +4726,8 @@ relative Picard quotient via the substrate.
   (\cref{lem:tensorobj_isoclass_commgroup}): multiplication
   \([L]\cdot[L'] = [L \otimes_{C\times_k T} L']\) is well-defined and
   commutative-monoidal by the coherence isomorphisms
-  \cref{lem:tensorobj_assoc_iso,lem:tensorobj_unit_iso,lem:tensorobj_comm_iso},
+  \cref{lem:tensorobj_assoc_iso}, \cref{lem:tensorobj_unit_iso}, and
+  \cref{lem:tensorobj_comm_iso},
   and an iso-class is a unit precisely when its carrier is
   \(\otimes\)-invertible (\cref{def:scheme_modules_isinvertible}), the inverse
   being carried by the predicate. Each axiom is a \emph{proposition} --- the
@@ -4818,8 +4821,8 @@ chapter \cref{chap:Picard_RelPicFunctor} (A.1.c on disk):
   \item \cref{lem:scheme_modules_tensorobj_functoriality} uses
     \cref{def:scheme_modules_tensorobj}.
   \item \cref{rem:scheme_modules_monoidal_off_path} uses
-    \cref{def:scheme_modules_tensorobj,
-          lem:scheme_modules_tensorobj_functoriality, lem:whisker_of_W}; it
+    \cref{def:scheme_modules_tensorobj},
+    \cref{lem:scheme_modules_tensorobj_functoriality}, and \cref{lem:whisker_of_W}; it
     records that, under route~(e), the full monoidal category is \emph{cheap}
     (the output of \(\mathtt{LocalizedMonoidal}\)) and that the group law still
     consumes only existence-of-isomorphism propositions.
@@ -4871,14 +4874,14 @@ chapter \cref{chap:Picard_RelPicFunctor} (A.1.c on disk):
     (\cref{lem:islocallyinjective_whiskerleft_via_stalk}).
   \item \cref{lem:tensorobj_isoclass_commgroup} (the commutative group on
     locally-trivial \(\otimes\)-iso-classes) uses
-    \cref{def:scheme_modules_tensorobj,
-          def:scheme_modules_isinvertible,
-          lem:scheme_modules_tensorobj_functoriality,
-          lem:tensorobj_lift_onproduct,
-          lem:tensorobj_inverse_invertible,
-          lem:tensorobj_assoc_iso,
-          lem:tensorobj_unit_iso,
-          lem:tensorobj_comm_iso}. This is the group-law engine: the PRIMARY
+    \cref{def:scheme_modules_tensorobj},
+    \cref{def:scheme_modules_isinvertible},
+    \cref{lem:scheme_modules_tensorobj_functoriality},
+    \cref{lem:tensorobj_lift_onproduct},
+    \cref{lem:tensorobj_inverse_invertible},
+    \cref{lem:tensorobj_assoc_iso},
+    \cref{lem:tensorobj_unit_iso}, and
+    \cref{lem:tensorobj_comm_iso}. This is the group-law engine: the PRIMARY
     construction is the commutative group on locally-trivial iso-classes à la
     \(\mathtt{Module.Invertible}\) / \(\mathtt{CommRing.Pic}\), needing only
     \cref{lem:tensorobj_restrict_iso} and \cref{lem:tensorobj_inverse_invertible}
@@ -4890,21 +4893,23 @@ chapter \cref{chap:Picard_RelPicFunctor} (A.1.c on disk):
     \cref{lem:tensorobj_inverse_invertible} (in the \texttt{\textbackslash uses} of
     \cref{lem:tensorobj_isoclass_commgroup}, supplying inverses) are ON the critical
     path. The remaining supplements
-    \cref{lem:restrictscalars_laxmonoidal,lem:tensorobj_preserves_locally_trivial}
+    \cref{lem:restrictscalars_laxmonoidal} and
+    \cref{lem:tensorobj_preserves_locally_trivial}
     use \cref{def:scheme_modules_tensorobj} and are auxiliary. The group law rests on
     \cref{lem:tensorobj_isoclass_commgroup} and \cref{def:scheme_modules_isinvertible}.
   \item \cref{lem:tensorobj_lift_onproduct} restricts \(\otimes\) to the
     locally-trivial carrier \(\texttt{LineBundle.OnProduct}\) on \(C \times_S T\),
-    using \cref{def:scheme_modules_tensorobj,lem:tensorobj_preserves_locally_trivial}
+    using \cref{def:scheme_modules_tensorobj} and
+    \cref{lem:tensorobj_preserves_locally_trivial}
     (the Lean \(\mathtt{tensorObjOnProduct}\) applies
     \(\mathtt{tensorObj\_isLocallyTrivial}\) directly).
   \item \cref{thm:rel_pic_addcommgroup_via_tensorobj} uses
-    \cref{lem:tensorobj_lift_onproduct,
-          lem:pullback_tensor_iso_loctriv,
-          def:scheme_modules_isinvertible,
-          lem:tensorobj_isoclass_commgroup,
-          thm:relative_pic_quotient_well_defined,
-          lem:rel_pic_sharp_groupoid}; the last two are in
+    \cref{lem:tensorobj_lift_onproduct},
+    \cref{lem:pullback_tensor_iso_loctriv},
+    \cref{def:scheme_modules_isinvertible},
+    \cref{lem:tensorobj_isoclass_commgroup},
+    \cref{thm:relative_pic_quotient_well_defined}, and
+    \cref{lem:rel_pic_sharp_groupoid}; the last two are in
     \cref{chap:Picard_LineBundlePullback} (A.1.b) and
     \cref{chap:Picard_RelPicFunctor} (A.1.c) respectively.
 \end{itemize}
@@ -10770,7 +10775,7 @@ the presheaf pullback-unit comparator]
 [Alternative route via object-level descent (fallback)]
   \label{rem:dual_via_stack}
   Should the slice-and-sheafify route of
-  \cref{def:presheaf_internal_hom,lem:internal_hom_isSheaf} bottom out, the dual can
+  \cref{def:presheaf_internal_hom} and \cref{lem:internal_hom_isSheaf} bottom out, the dual can
   instead be assembled by \emph{object-level descent}: glue the local trivial duals
   \(\mathcal{O}_{U_i}\) along the inverse-transpose transition isomorphisms
   \(g_{ij}^{-\mathsf{T}}\) of \(L\) into a global \(L^{-1}\) on \(X\). Abstractly this

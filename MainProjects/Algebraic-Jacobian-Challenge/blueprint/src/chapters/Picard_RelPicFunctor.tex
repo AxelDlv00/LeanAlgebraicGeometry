@@ -507,7 +507,8 @@ correspondence.
       \cong L' ,
   \]
   after reassociating and braiding with
-  \cref{lem:tensorobj_assoc_iso,lem:tensorobj_comm_iso,lem:tensorobj_unit_iso}
+  \cref{lem:tensorobj_assoc_iso}, \cref{lem:tensorobj_comm_iso}, and
+  \cref{lem:tensorobj_unit_iso}
   and applying the pullback--unit isomorphism \cref{lem:pullback_unit_iso}.
   Hence \(L' \cong \pi_T^*(N^{-1}) \otimes L\) with \(N^{-1}\) locally trivial,
   so \(L' \sim L\).
@@ -593,7 +594,7 @@ correspondence.
   middle-four interchange
   \((A \otimes B) \otimes (C \otimes D) \cong (A \otimes C) \otimes (B \otimes D)\)
   of \cref{lem:tensor_middle_four}, assembled from the associator and the
-  braiding \cref{lem:tensorobj_assoc_iso,lem:tensorobj_comm_iso},
+  braiding \cref{lem:tensorobj_assoc_iso} and \cref{lem:tensorobj_comm_iso},
   \[
     L_1 \otimes L_1'
       \cong (\pi_T^* N \otimes L_2) \otimes (\pi_T^* N' \otimes L_2')
@@ -639,7 +640,8 @@ correspondence.
   of \(L, M\). We show \(\pi_T^*(N^{-1}) \otimes M^{-1}\) is a tensor inverse of
   \(L\): tensoring the hypothesis with \(\pi_T^*(N^{-1}) \otimes M^{-1}\),
   reassociating and braiding with
-  \cref{lem:tensorobj_assoc_iso,lem:tensorobj_comm_iso,lem:tensorobj_unit_iso},
+  \cref{lem:tensorobj_assoc_iso}, \cref{lem:tensorobj_comm_iso}, and
+  \cref{lem:tensorobj_unit_iso},
   and multiplying the pullbacks through the locally-trivial comparison
   isomorphism \cref{lem:pullback_tensor_iso_loctriv},
   \[
@@ -1361,42 +1363,43 @@ the deterministic \texttt{sync\_leanok} phase) form a connected
 \cref{chap:Picard_LineBundlePullback}:
 \begin{itemize}
   \item \cref{lem:rel_pic_sharp_groupoid} uses
-    \cref{def:line_bundle_on_product, def:pullback_along_projection,
-    thm:relative_pic_quotient_well_defined} (all from A.1.b on disk) for the
+    \cref{def:line_bundle_on_product}, \cref{def:pullback_along_projection}, and
+    \cref{thm:relative_pic_quotient_well_defined} (all from A.1.b on disk) for the
     statement, and in its proof additionally consumes the tensor-substrate
-    lemmas \cref{lem:tensorobj_lift_onproduct,
-    lem:tensorobj_preserves_locally_trivial, lem:tensorobj_assoc_iso,
-    lem:tensorobj_comm_iso, lem:tensorobj_unit_iso,
-    lem:tensorobj_isoclass_commgroup, lem:tensorobj_inverse_invertible,
-    lem:pullback_unit_iso} together with the locally-trivial pullback--tensor
+    lemmas \cref{lem:tensorobj_lift_onproduct},
+    \cref{lem:tensorobj_preserves_locally_trivial}, \cref{lem:tensorobj_assoc_iso},
+    \cref{lem:tensorobj_comm_iso}, \cref{lem:tensorobj_unit_iso},
+    \cref{lem:tensorobj_isoclass_commgroup}, \cref{lem:tensorobj_inverse_invertible},
+    and \cref{lem:pullback_unit_iso} together with the locally-trivial pullback--tensor
     comparison isomorphism \cref{lem:pullback_tensor_iso_loctriv} (the
     concurrently-built A.1.c.sub input feeding additivity of \(\pi_T^*\)).
   \item \cref{def:rel_pic_sharp} (run-0008 repin: \texttt{relPresheaf})
     uses
-    \cref{def:line_bundle_on_product, def:pullback_along_projection,
-    thm:relative_pic_quotient_well_defined, lem:relpic_setoid,
-    thm:rel_pic_addcommgroup_via_tensorobj, lem:relpic_pullback_welldef}.
+    \cref{def:line_bundle_on_product}, \cref{def:pullback_along_projection},
+    \cref{thm:relative_pic_quotient_well_defined}, \cref{lem:relpic_setoid},
+    \cref{thm:rel_pic_addcommgroup_via_tensorobj}, and
+    \cref{lem:relpic_pullback_welldef}.
   \item \cref{lem:rel_pic_sharp_functorial} (run-0008 repin:
     \texttt{relFunctorial}) uses
-    \cref{def:rel_pic_sharp, lem:pullback_compose,
-    lem:relpic_pullback_welldef, lem:relpic_rel_of_iso}.
+    \cref{def:rel_pic_sharp}, \cref{lem:pullback_compose},
+    \cref{lem:relpic_pullback_welldef}, and \cref{lem:relpic_rel_of_iso}.
   \item \cref{thm:rel_pic_sharp_presheaf} (no separate pin; same Lean
     declaration as \cref{def:rel_pic_sharp}) uses
-    \cref{def:rel_pic_sharp, lem:rel_pic_sharp_functorial,
-    thm:rel_pic_addcommgroup_via_tensorobj}.
+    \cref{def:rel_pic_sharp}, \cref{lem:rel_pic_sharp_functorial}, and
+    \cref{thm:rel_pic_addcommgroup_via_tensorobj}.
   \item \cref{def:abs_pic_functor} (the absolute functor,
     \texttt{Scheme.PicSharp}) uses
-    \cref{def:line_bundle_on_product, lem:rel_pic_sharp_groupoid,
-    thm:pullback_natural}; \cref{lem:relpic_quotient_comparison} compares
+    \cref{def:line_bundle_on_product}, \cref{lem:rel_pic_sharp_groupoid}, and
+    \cref{thm:pullback_natural}; \cref{lem:relpic_quotient_comparison} compares
     it onto \cref{def:rel_pic_sharp}.
   \item \cref{def:rel_pic_etale_sheafification} uses
     \cref{def:abs_pic_functor} (run-0008: sheafifies the absolute bundle;
     no longer consumed by the FGA chapter).
   \item \cref{thm:rel_pic_etale_sheaf_group_structure} uses
-    \cref{def:rel_pic_etale_sheafification, thm:rel_pic_sharp_presheaf}.
+    \cref{def:rel_pic_etale_sheafification} and \cref{thm:rel_pic_sharp_presheaf}.
   \item \cref{thm:rel_pic_etale_sheaf_unit_canonical} uses
-    \cref{def:rel_pic_etale_sheafification, thm:rel_pic_sharp_presheaf,
-    thm:rel_pic_etale_sheaf_group_structure}. This block records the
+    \cref{def:rel_pic_etale_sheafification}, \cref{thm:rel_pic_sharp_presheaf}, and
+    \cref{thm:rel_pic_etale_sheaf_group_structure}. This block records the
     canonical sheafification unit and its universal property; it carries
     no \texttt{\textbackslash lean\{\dots\}} pin and is not yet tracked
     by the deterministic \texttt{sync\_leanok} phase.
