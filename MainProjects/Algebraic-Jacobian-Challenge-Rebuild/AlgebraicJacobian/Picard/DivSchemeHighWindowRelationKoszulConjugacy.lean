@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 
 import AlgebraicJacobian.Picard.DivSchemeHighWindowMulConjugacy
+import AlgebraicJacobian.Picard.DivSchemeHighWindowConjugacy
 import AlgebraicJacobian.Picard.DivSchemeHighWindowRelativeKoszulRelation
 import AlgebraicJacobian.Picard.DivSchemeHighWindowPencilFibre
 
@@ -274,6 +275,59 @@ theorem divUniversalHighWindowRelationKoszulBoundary_fibre_conjugacy (n : Nat)
         (TensorProduct.piRightHom RZ K K (fun _ : HI × HI => ↑Kr[n])))
   rw [LinearMap.comp_assoc, hbase, ← LinearMap.comp_assoc, hconj,
     LinearMap.comp_assoc]
+
+set_option maxHeartbeats 4800000 in
+-- The criterion instantiates three large base-change equivalences simultaneously.
+set_option synthInstance.maxHeartbeats 1200000 in
+-- The successor multiplication map and preceding boundary use adjacent stages.
+set_option maxRecDepth 24000 in
+/-- Adjacent projective fibre models make the injectivization of the successor
+relation multiplication map remain injective after tensoring with the field. -/
+theorem divUniversalHighWindowRelationMul_liftQ_rTensor_injective_of_fibre_models
+    (hb : 0 < windowBound pi hpi) (n : Nat)
+    [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    [Module.Projective RZ (Amb[n + 1] ⧸ Kr[n + 1])]
+    (himage : DivUniversalHighWindowFibreImage
+      C hpi g r1 r2 b1 b2 i j K hO hchi hker n)
+    (himageNext : DivUniversalHighWindowFibreImage
+      C hpi g r1 r2 b1 b2 i j K hO hchi hker (n + 1)) :
+    Function.Injective
+      (((LinearMap.ker
+          (divUniversalHighWindowMulMap (C := C) (pi := pi)
+            hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1])).liftQ
+        (divUniversalHighWindowMulMap (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1]) le_rfl).rTensor K) := by
+  apply liftQ_rTensor_injective_of_conjugate_boundary
+    (f := divUniversalHighWindowMulMap (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1])
+    (d := divUniversalHighWindowRelationKoszulBoundary (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j n)
+    (hfd := divUniversalHighWindowMulMap_comp_relationKoszulBoundary_eq_zero
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j n)
+    (f' := Scheme.finiteMulMap
+      (Scheme.divisorSections K (windowS C K hpi g) ⊤) HF[n + 1]
+      (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K))
+    (d' := Scheme.highWindowMulKoszulBoundary
+      (windowN C K hpi g) (windowS C K hpi g) Dᵤ n
+      (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K))
+    (eM := divUniversalHighWindowMulSourceFibreEquiv
+      C hpi g r1 r2 b1 b2 i j K hO hchi hker (n + 1) himageNext)
+    (eN := divUniversalHighWindowClosedAmbientFibreRead
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K (n + 2))
+    (eP := divUniversalHighWindowRelationKoszulSourceFibreEquiv
+      C hpi g r1 r2 b1 b2 i j K hO hchi hker n himage)
+  · intro x
+    exact divUniversalHighWindowMulMap_fibre_conjugacy
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K hO hchi hker
+        (n + 1) himageNext x
+  · intro y
+    exact LinearMap.congr_fun
+      (divUniversalHighWindowRelationKoszulBoundary_fibre_conjugacy
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K hO hchi hker
+          n himage himageNext) y
+  · exact (divUniversalFibreHighWindow_ker_finiteMulMap_eq_range_koszul
+      C hpi g r1 r2 b1 b2 i j K hO hchi hker hb n
+        (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)).le
 
 end HighWindowRelationKoszulConjugacy
 
