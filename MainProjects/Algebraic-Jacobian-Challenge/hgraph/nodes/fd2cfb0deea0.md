@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: PresheafOfModules.restrictScalarsLax
 type: lean
-updated: '2026-07-23T17:31:55'
+updated: '2026-07-23T18:01:58'
 ---
 noncomputable def restrictScalarsLaxμ
     (α : R ⋙ forget₂ CommRingCat RingCat ⟶ S ⋙ forget₂ CommRingCat RingCat)

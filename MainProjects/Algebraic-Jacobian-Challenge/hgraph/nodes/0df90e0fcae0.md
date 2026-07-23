@@ -11,7 +11,7 @@ mathlib_name:
 order: 1095
 title: Module sheaves transport across an equivalence of ringed sites
 type: tex
-updated: '2026-07-23T17:31:56'
+updated: '2026-07-23T18:01:59'
 ---
 \textit{Provided by Mathlib
   (\texttt{Mathlib.Algebra.Category.ModuleCat.Sheaf.PushforwardContinuous}).}
