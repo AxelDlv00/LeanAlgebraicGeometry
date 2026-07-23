@@ -130,6 +130,38 @@ theorem range_finiteKoszulBoundary_le_ker_finiteComponentSum
     (finiteComponentSum_comp_finiteKoszulBoundary_eq_zero row step hcomm) z
   simpa only [LinearMap.comp_apply, LinearMap.zero_apply] using hz
 
+/-! ## Conjugacy of the boundary -/
+
+section Conjugacy
+
+variable {L' M' : Type u}
+variable [AddCommGroup L'] [Module R L']
+variable [AddCommGroup M'] [Module R M']
+
+/-- Pointwise conjugacy of the indexed steps conjugates the complete finite
+Koszul boundary.  This separates the finite-product bookkeeping from the
+geometric comparison of the individual multiplication steps. -/
+theorem piCongrRight_comp_finiteKoszulBoundary_of_conjugate
+    (step : ι → L →ₗ[R] M) (step' : ι → L' →ₗ[R] M')
+    (eL : L ≃ₗ[R] L') (eM : M ≃ₗ[R] M')
+    (hstep : ∀ (i : ι) (x : L), eM (step i x) = step' i (eL x)) :
+    (LinearEquiv.piCongrRight fun _ : ι => eM).toLinearMap.comp
+        (finiteKoszulBoundary step) =
+      (finiteKoszulBoundary step').comp
+        (LinearEquiv.piCongrRight fun _ : ι × ι => eL).toLinearMap := by
+  classical
+  apply LinearMap.ext
+  intro z
+  funext i
+  change eM (finiteKoszulBoundary step z i) =
+    finiteKoszulBoundary step' (fun q => eL (z q)) i
+  simp only [finiteKoszulBoundary_apply, map_sum, map_sub]
+  apply Finset.sum_congr rfl
+  intro j _
+  rw [hstep, hstep]
+
+end Conjugacy
+
 /-! ## Scalar extension of the boundary -/
 
 section BaseChange
