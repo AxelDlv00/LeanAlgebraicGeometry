@@ -3,18 +3,13 @@ title: 'DD-R: the relative endgame — Z(♦), local generators via lm:ctn/Nakay
   inherited from the ambient summand, inverse laws, divRep'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'LANDED: fibre-to-stalk transport; all-window residue-field persistence and
-  H1 vanishing; finite/projective high-window ambients; recursive relations; cofinal
-  pinned-chart exhaustion; compatible relation and quotient transitions; stage-zero
-  anchoring and stable chart-read ideals; the concrete shifted-colimit flatness criterion;
-  the canonical-syzygy equivalence showing actual-kernel base change is not a shortcut;
-  and nilpotent-safe eventual killing of every zero chart read. IN PROGRESS: two-coordinate
-  recurrence, pure-window multiplication span, coefficient action, and ideal-span
-  assembly for full saturation. REMAINING XL GATE: prove all shifted finite relation
-  quotients flat over arbitrary nonreduced RZ via a genuine relative high-window Koszul/Gotzmann
-  theorem, or rebuild the representing base using universal flattening strata. Then
-  instantiate the certificate, discharge U1/U2, package the universal family, and
-  finish affine/global divRep.'
+summary: 'LANDED: high-window foundations, recursive relation/quotient transitions,
+  field-fibre Koszul exactness, seed relation-fibre models at stages 0 and 1, and
+  coefficient/ideal-span chart-read saturation. ACTIVE: the simultaneous relative
+  bridge induction transporting field exactness to all-stage fibre models and successor
+  finite flat/projective quotients over nonreduced carve rings. PENDING: the genuine
+  chart quotient bridge, the mutually exclusive flattening/Hilbert fallback, RD-N
+  and local purity, certificate/U1/U2, divRep, and the final datum tail.'
 status: active
 kind: proof
 priority: normal
@@ -28,4 +23,4 @@ metadata:
   author: horizon
   created_at: '2026-07-16T08:26:37.867341+00:00'
   parent: AJCR.w4-rep.datum.dat-d
-  updated_at: '2026-07-21T23:08:32.161253+00:00'
+  updated_at: '2026-07-23T01:59:45.641432+00:00'

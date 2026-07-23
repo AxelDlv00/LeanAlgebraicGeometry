@@ -4,15 +4,11 @@ title: 'DAT-D (worksheet-first): $\mathrm{Div}^g$-lite representability — degr
   carving'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: DD-0 through DD-F are complete and DD-Q has its geometry bundle. DD-R constructs
-  the direct high-window system through recursive relations, cofinal chart exhaustion,
-  compatible quotient transitions, stabilized reads, and the shifted-colimit flatness
-  criterion. New verified layers identify the canonical syzygy condition as exactly
-  equivalent to successor flatness and prove arbitrary-ring eventual killing for zero
-  reads. Coefficient saturation remains in progress; the final XL gate is nonreduced
-  finite-stage quotient flatness via relative high-window Koszul/Gotzmann exactness
-  or a flattening-strata rebuild. Downstream certificate and divRep consumers remain
-  gated.
+summary: 'DD-0 through DD-F and the DD-R high-window foundation, fibre Koszul gate,
+  relation tower, and coefficient/chart-read saturation are complete. DD-R.koszul-flatness
+  is the sole active theorem: prove the relative successor syzygy condition and finite-stage
+  flatness over nonreduced bases. The quotient bridge, RD-N, certificate, divRep,
+  and datum consumers are explicitly pending.'
 status: active
 kind: proof
 priority: normal
@@ -26,4 +22,4 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:07.577029+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-21T23:08:22.082705+00:00'
+  updated_at: '2026-07-23T01:57:51.160711+00:00'

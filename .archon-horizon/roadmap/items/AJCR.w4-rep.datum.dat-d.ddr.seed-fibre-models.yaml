@@ -1,0 +1,29 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.seed-fibre-models
+title: 'DD-R seed fibre models: relation-image models at stages zero and one'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: LANDED. DivSchemeHighWindowFibreModelBase proves the residue-prime relation-image
+  models at stages zero and one, supplying the induction seeds. No all-stage fibre-model
+  theorem is claimed here.
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-23T01:58:44.059049+00:00'
+  provenance:
+    run: '0045'
+    session: 0001-horizon-interactive
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: AJCR.w4-rep
+    task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr

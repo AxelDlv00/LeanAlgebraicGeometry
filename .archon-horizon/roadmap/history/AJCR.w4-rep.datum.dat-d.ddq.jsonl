@@ -2,3 +2,5 @@
 {"at": "2026-07-19T11:06:28.794005+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "active", "note": ""}
 {"at": "2026-07-21T02:12:50.535565+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "active", "note": ""}
 {"at": "2026-07-21T02:12:50.535755+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-23T01:57:53.627406+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "pending", "note": ""}
+{"at": "2026-07-23T01:57:53.627626+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}

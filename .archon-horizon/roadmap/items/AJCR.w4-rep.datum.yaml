@@ -2,14 +2,11 @@ id: AJCR.w4-rep.datum
 title: The pinned RepresentableBy datum
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: The pinned representability datum remains active. DAT-D/DD-R now includes
-  the direct high-window relation and quotient system, stable chart-read ideals, the
-  concrete colimit criterion, canonical-syzygy obstruction analysis, and arbitrary-ring
-  zero-read killing along transitions. The remaining saturation work is coefficient
-  action plus ideal-span assembly. The remaining scheme-theoretic gate is nonreduced
-  flatness of all shifted finite quotients, requiring a relative Koszul/Gotzmann theorem
-  or a genuine flattening-strata route rebuild. Certificate and divRep assembly remain
-  downstream.
+summary: The pinned datum is active. DAT-D/DD-R now has the complete high-window relation
+  and quotient infrastructure, field-fibre exactness, chart-read saturation, and zero-read
+  killing. The remaining scheme-theoretic gate is successor finite-stage flatness
+  over arbitrary nonreduced carve rings, then the genuine chart quotient bridge; certificate
+  and divRep assembly remain downstream.
 status: active
 kind: proof
 priority: normal
@@ -23,4 +20,4 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:11.833612+00:00'
   parent: AJCR.w4-rep
-  updated_at: '2026-07-21T23:08:13.797519+00:00'
+  updated_at: '2026-07-23T01:57:50.368386+00:00'

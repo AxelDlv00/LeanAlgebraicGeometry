@@ -1,0 +1,29 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.rdn
+title: 'DD-R RD-N: ideal purity and local principal generation via flatness and Nakayama'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'After the quotient bridge, prove the closed residue-fibre branch: fibre
+  containment plus flatness of B/J gives J_z=(s) by the finite-module Nakayama argument,
+  then closes SeedUnivRDN and the unconditional isGenerator consumer.'
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-23T01:57:18.058337+00:00'
+  provenance:
+    run: '0045'
+    session: 0001-horizon-interactive
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: AJCR.w4-rep
+    task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr

@@ -1,0 +1,32 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.fibre-koszul
+title: 'DD-R fibre exactness: all-window field Koszul equality and normalized multiplication
+  conjugacy'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: LANDED. The divisor-window pencil gives the field multiplication-kernel equals
+  Koszul-boundary theorem in every window, together with ambient normalization and
+  multiplication conjugacy. This does not by itself provide all-stage relation-fibre
+  models over residue primes.
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-23T01:57:13.999325+00:00'
+  provenance:
+    run: '0045'
+    session: 0001-horizon-interactive
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: AJCR.w4-rep
+    task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr
+  updated_at: '2026-07-23T01:58:43.032448+00:00'

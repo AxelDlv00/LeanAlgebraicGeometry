@@ -1,0 +1,29 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.datum-tail
+title: 'DD-R datum tail: universal family and DAT-D/DAT-G assembly'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: After divRep, package the universal family and feed DAT-B/C/Q, finite-stage
+  descent, gluing, and the final Pic^0 RepresentableBy datum. These consumers remain
+  gated rather than parallel active work.
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-23T01:57:20.558724+00:00'
+  provenance:
+    run: '0045'
+    session: 0001-horizon-interactive
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: AJCR.w4-rep
+    task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr
