@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.BasicOpenCocycleDatum.projective_sections
 type: lean
-updated: '2026-07-23T15:22:56'
+updated: '2026-07-24T03:32:05'
 ---
 theorem projective_sections₁ :
     Module.Projective B
