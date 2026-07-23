@@ -1,55 +1,41 @@
 # AlgebraicJacobian
 
-<!-- archon:readme -->
+A Lean 4 formalization of the Jacobian of a smooth, proper, geometrically
+integral curve over a field.  The project follows the Picard-scheme route: it
+constructs the relative Picard functor, represents it through the
+Grassmannian/Quot/flattening-stratification machinery, identifies its identity
+component as an abelian variety of dimension equal to the genus, and proves the
+Albanese universal property.
 
-## Project
+The formalization is advanced but incomplete.  The live Horizon roadmap now
+separates the completed infrastructure from the remaining flat-base-change,
+Serre-finiteness, Quot, Picard, Picard-identity-component, and Albanese cones.
 
-A formalization in Lean 4 + Mathlib of the **Jacobian of a smooth, proper, geometrically
-irreducible curve** over a field. By a smooth curve we mean a geometrically irreducible, smooth
-scheme of relative dimension one over a field. The project supplies the missing definitions
-(`genus`, `Jacobian`, the Abel–Jacobi map `ofCurve`) and theorems (the Jacobian is smooth of
-relative dimension equal to the genus, proper, geometrically irreducible, and is the Albanese
-variety of the curve, characterized by the universal property `exists_unique_ofCurve_comp`).
-This is an AI challenge inspired by Kevin Buzzard's analogous formalization for Riemann
-surfaces.
+## Layout
 
-## References
+- `AlgebraicJacobian/Cohomology/`: sheaf cohomology, the finite-cover Cech
+  complex, higher direct images, and flat base change.
+- `AlgebraicJacobian/Picard/`: line bundles, relative Spec, the relative Picard
+  functor, Grassmannians, Quot schemes, flattening stratification, and Picard
+  identity components.
+- `AlgebraicJacobian/Albanese/`: rigidity and extension of rational maps, plus
+  the Albanese factorization.
+- `AlgebraicJacobian/RiemannRoch/`: divisor and adelic Riemann--Roch
+  infrastructure.
+- `blueprint/src/chapters/`: the mathematical blueprint.
+- `hgraph/`: the generated statement/declaration dependency graph.
+- [`../../references/summary.md`](../../references/summary.md): shared source
+  bibliography and retrieval notes.
 
-See [`references/summary.md`](references/summary.md) for a description of each source.
+## Build
 
-## Structure
-
-- `AlgebraicJacobian/Genus.lean` — definition of `genus`
-- `AlgebraicJacobian/Jacobian.lean` — definition of `Jacobian` and its abelian-variety structure
-- `AlgebraicJacobian/AbelJacobi.lean` — the Abel–Jacobi map and the universal property
-- `AlgebraicJacobian/Cohomology/` — relative cohomology `Rⁱf_*` engine; the Čech
-  development (Čech nerve, relative Čech complex, acyclic resolution, and the
-  comparison `cech_computes_higherDirectImage`) was merged in from the
-  `Cech-Cohomology` subproject (2026-06-18)
-- `AlgebraicJacobian/Picard/` — relative Picard substrate (relative Spec, Quot scheme,
-  flattening stratification, `Pic⁰`). The **Grassmannian/Quot representability**
-  development (`Grassmannian.represents`, the section graded ring/module lane
-  `Γ_*(X,L)` through `GCommSemiring`, graded Hilbert–Serre, Grassmannian cell
-  charts, glue-descent, and the tautological-quotient epi) was merged in from the
-  `GR-quot_closure` subproject (union merge, 2026-06-22; files `GrassmannianCells`,
-  `GlueDescent`, `GrassmannianQuot`, `GradedHilbertSerre`, `SectionGradedRing`, all
-  sorry-free)
-- `blueprint/` — leanblueprint source (build with `leanblueprint pdf` and `leanblueprint web`)
-- `references/` — original challenge file and informal sources backing the formalization
-- `archon-protected.yaml` — declarations agents must not modify
-- `.archon/` — agent state (not committed)
-
-## How to build
+The project uses Lean `v4.31.0` and Mathlib `v4.31.0`.
 
 ```bash
-lake exe cache get   # download Mathlib olean cache
-lake build           # compile the project
+lake exe cache get
+lake build
 ```
 
-## How to run the formalization loop
-
-```bash
-archon loop .
-```
-
-This launches the plan → prove → review loop and opens a dashboard.
+This project is part of an Archon Horizon workspace.  Roadmap, task, inbox, and
+cross-project state live at the workspace root and are accessed through the
+`horizon` CLI.

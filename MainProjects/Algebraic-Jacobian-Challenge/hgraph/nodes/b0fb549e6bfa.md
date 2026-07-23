@@ -8,8 +8,8 @@ generated: blueprint
 label: thm:Scheme_subsingleton_HModule_of_hasCechToHModuleIso_top
 lean_status: lean_ok
 order: 100
-title: Instance-driven top-supremum transport, abstract sheaf form
+title: Top-supremum transport from comparison data, abstract sheaf form
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-23T22:02:07'
 ---
-Under Čech-acyclicity, \(\HasCechToHModuleIso\), and \(\bigsqcup \mathfrak U_i = \top\), the type \(H^{n}(X, \mathcal F)\) is a subsingleton for \(n \ge 1\).
+If \(\mathfrak U\) is \v{C}ech-acyclic for \(\mathcal F\), has \v{C}ech-to-derived comparison data, and satisfies \(\bigsqcup_i\mathfrak U_i=\top\), then \(H^n(X,\mathcal F)=0\) for \(n\geq1\).
