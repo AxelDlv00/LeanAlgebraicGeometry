@@ -1,0 +1,12 @@
+[Unit]
+Description=Publish the Horizon static dashboard every 30 minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=30min
+Persistent=true
+RandomizedDelaySec=2min
+Unit=horizon-dashboard-publish.service
+
+[Install]
+WantedBy=timers.target
