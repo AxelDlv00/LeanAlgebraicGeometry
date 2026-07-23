@@ -1936,7 +1936,7 @@ Each is proved directly in Lean and carries the dependency edges of the construc
   sketch.
 \end{proof}
 
-\section{\(\otimes\)-invertibility and the commutative-monoid group-law engine}
+\section{Tensor invertibility and the commutative-monoid group-law engine}
 \label{sec:tensorobj_invertibility}
 
 The relative Picard group law is assembled from \emph{\(\otimes\)-invertibility}
@@ -3777,7 +3777,7 @@ the presheaf-level pullback. Write
   preserved and reflected by the pseudofunctoriality isomorphism it is conjugated by.
 \end{proof}
 
-\subsection{The K1 monoidal-mate bridge ($\mu$-side): two pure-tensor collapses}
+\subsection{The K1 monoidal-mate bridge on the multiplication side}
 
 The open-immersion comparison lemma K1 (\cref{lem:pullback_tensor_map_isiso_open_immersion})
 reduces, by the same two-ingredient model as \cref{lem:tensorobj_restrict_iso}, to the
@@ -4887,7 +4887,7 @@ chapter \cref{chap:Picard_RelPicFunctor} (A.1.c on disk):
     via \texttt{jw\_ismonoidal} is retained as the route~(e) fallback.
   \item Under the PRIMARY locally-trivial group law, \cref{lem:tensorobj_restrict_iso}
     (consumed by the PRIMARY proof of \cref{lem:islocallyinjective_whisker_of_W}) and
-    \cref{lem:tensorobj_inverse_invertible} (in the \(\uses\) of
+    \cref{lem:tensorobj_inverse_invertible} (in the \texttt{\textbackslash uses} of
     \cref{lem:tensorobj_isoclass_commgroup}, supplying inverses) are ON the critical
     path. The remaining supplements
     \cref{lem:restrictscalars_laxmonoidal,lem:tensorobj_preserves_locally_trivial}
@@ -4908,13 +4908,12 @@ chapter \cref{chap:Picard_RelPicFunctor} (A.1.c on disk):
     \cref{chap:Picard_LineBundlePullback} (A.1.b) and
     \cref{chap:Picard_RelPicFunctor} (A.1.c) respectively.
 \end{itemize}
-All \(\uses\) targets resolve either in this chapter, in
+All \texttt{\textbackslash uses} targets resolve either in this chapter, in
 \cref{chap:Picard_LineBundlePullback}, or in
 \cref{chap:Picard_RelPicFunctor}. No declaration cross-references a
 chapter that does not yet exist on disk.
 
-\section{Sheaf internal-hom of \(\mathcal{O}_X\)-modules (the \(\otimes\)-inverse
-  infrastructure)}
+\section{Sheaf internal-hom and tensor-inverse infrastructure}
 \label{sec:tensorobj_dual_infra}
 
 The PRIMARY group law (\cref{lem:tensorobj_isoclass_commgroup}) needs a
@@ -11776,7 +11775,7 @@ above are wired to depend on them. All but one are sorry-free; the single residu
   step (c) --- is circular: it returns the very identity one set out to prove.
 \end{proof}
 
-\subsection{Change-of-rings, lax-\(\mu\) and \(\mathtt{extendScalars}\) helpers}
+\subsection{Change-of-rings, lax multiplication, and extension-of-scalars helpers}
 \label{subsec:tensorobj_changeofrings_helpers}
 
 This subsection blueprints the change-of-base-ring cluster of
