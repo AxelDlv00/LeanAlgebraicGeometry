@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.restrictScalars_
 type: lean
-updated: '2026-07-23T17:01:59'
+updated: '2026-07-23T17:31:55'
 ---
 private lemma restrictScalars_δ_app_tmul
     {C : Type u} [Category.{u} C] {R S : Cᵒᵖ ⥤ CommRingCat.{u}}
