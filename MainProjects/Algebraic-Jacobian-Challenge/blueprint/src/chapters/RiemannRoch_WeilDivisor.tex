@@ -829,8 +829,8 @@ becomes load-bearing.
       For a DVR-uniformised local ring its value on \(r \in R\) is the
       length of \(R/(r)\) (the DVR valuation); on \(a/b \in K\), it is
       \(\texttt{ord}(a) - \texttt{ord}(b)\). The hypotheses
-      \texttt{[CommRing R] [Nontrivial R] [IsNoetherianRing R]\\
-      [Ring.KrullDimLE 1 R]} are exactly the typeclasses the body
+      \texttt{[CommRing R] [Nontrivial R] [IsNoetherianRing R]}
+      and \texttt{[Ring.KrullDimLE 1 R]} are exactly the typeclasses the body
       synthesises from \([\texttt{IsIntegral}\ X]\) (delivers
       \texttt{IsDomain} hence \texttt{Nontrivial} on the stalk via
       \texttt{instIsDomainCarrierStalkCommRingCatPresheafOfIsIntegral},

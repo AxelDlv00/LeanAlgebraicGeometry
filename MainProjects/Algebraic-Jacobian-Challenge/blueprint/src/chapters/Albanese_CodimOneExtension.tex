@@ -365,9 +365,9 @@ Stage 6 is the residual gap inside
 \cref{lem:smooth_to_regular_local_ring}'s six-stage chain: given Stages
 1--5b (a standard-smooth presentation of an affine chart
 \(R \to S\) at a point \(z\), with \(\Omega_{S/R}\) free of rank \(n\)
-and \(\Omega_{S_\mathfrak q / R}\) free of rank \(n\) on the stalk
-\(S_\mathfrak q = \mathcal O_{X, z}\)), one must conclude that
-\(S_\mathfrak q\) is a regular local ring. The Stacks proof of tag
+and \(\Omega_{S_{\mathfrak q} / R}\) free of rank \(n\) on the stalk
+\(S_{\mathfrak q} = \mathcal O_{X, z}\)), one must conclude that
+\(S_{\mathfrak q}\) is a regular local ring. The Stacks proof of tag
 \texttt{00TT} ultimately reduces to two ingredients which Mathlib does
 not yet ship at commit \texttt{b80f227}: (6.A) the smooth-algebra
 Krull-dimension formula (Stacks tag \texttt{00OE}, in the algebra
@@ -377,8 +377,8 @@ base (Stacks tag \texttt{02JK}, in the algebra chapter as
 Lemma~\texttt{lemma-differential-seq} plus the separable-residue-field
 refinement of Lemma~\texttt{lemma-separable-smooth}). The two
 ingredients combine (6.C) into the regularity conclusion via
-\(\dim S_\mathfrak q = \mathrm{rank}_{S_\mathfrak q}\Omega_{S_\mathfrak
-q / R} = \dim_{\kappa(\mathfrak q)} \mathfrak m / \mathfrak m^2\),
+\(\dim S_{\mathfrak q} = \mathrm{rank}_{S_{\mathfrak q}}
+\Omega_{S_{\mathfrak q} / R} = \dim_{\kappa(\mathfrak q)} \mathfrak m / \mathfrak m^2\),
 which is the cotangent-space characterisation of regularity that
 Mathlib's \texttt{IsRegularLocalRing.iff\_finrank\_cotangentSpace}
 already exposes. The next three lemmas package the three sub-gaps as
@@ -1196,7 +1196,7 @@ either directly or through the Jacobian regular-sequence witness.
   A sub-step of \cref{lem:mvPolynomial_maximalIdeal_height_eq_card}.
 \end{proof}
 
-\begin{lemma}[00OE Step 2 (upper bound) --- height $\le \#\iota$ in $k[\iota]$]
+\begin{lemma}[00OE Step 2: polynomial-ring upper height bound]
   \label{lem:mvPolynomial_maximalIdeal_height_le_natCard}
   \lean{AlgebraicGeometry.Scheme.MvPolynomial.maximalIdeal_height_le_natCard_of_field}
   For a field \(k\) and a finite index set \(\iota\), every proper ideal of
@@ -1577,9 +1577,9 @@ either directly or through the Jacobian regular-sequence witness.
   fact phrased via Stacks tag \texttt{00OF}). The composition of (i)--(iv) is
   the formalised content of the smooth-implies-regular implication; the only
   Mathlib gap at \texttt{b80f227} is in step (ii)--(iii), specifically the
-  Jacobian-criterion scheme-level packaging that promotes
-  \texttt{[Smooth\,X.hom]\,[IsAlgClosed\,\bar k]} to
-  \texttt{IsRegularLocalRing\,(X.left.presheaf.stalk\,z)}.
+  Jacobian-criterion scheme-level packaging that promotes the instances
+  \(\texttt{Smooth}\,X.\texttt{hom}\) and \(\texttt{IsAlgClosed}\,\bar{k}\) to
+  \(\texttt{IsRegularLocalRing}\,(X.\texttt{left.presheaf.stalk}\,z)\).
 
   As a backup citation, Matsumura, \emph{Commutative Ring Theory}, Chapter~19
   (``Regular Rings'') develops the regular-local-ring theory needed for

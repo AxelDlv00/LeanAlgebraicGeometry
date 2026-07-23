@@ -1322,14 +1322,14 @@ of this chapter correspond to Lean targets as follows.
     \texttt{[GeometricallyIrreducible]} on the structural morphism
     \texttt{(Pic0Scheme C).hom} together with
     \texttt{Nonempty (GrpObj (Pic0Scheme C))}.
-  \item \texttt{AlgebraicGeometry.Scheme.Pic0Scheme.finrank_eq_genus}
+  \item \texttt{AlgebraicGeometry.Scheme.Pic0Scheme.finrank\_eq\_genus}
     (\cref{thm:pic_zero_dimension_equals_genus}) is the dimension
     formula \(\dim_k \Pic^0_{C/k} = g(C)\) (Milne~\S III.1,
     Rmk.~1.4(e)). In Lean this is the equation
     \texttt{Module.finrank k (Pic0Scheme C).left = AlgebraicGeometry.genus C}
     (precise statement via the project's Krull-dimension API on the
     underlying scheme).
-  \item \texttt{AlgebraicGeometry.Scheme.Pic0Scheme.kPoints_iff_kerDegree}
+  \item \texttt{AlgebraicGeometry.Scheme.Pic0Scheme.kPoints\_iff\_kerDegree}
     (\cref{thm:pic_zero_k_points_iff_degree_zero}) is the
     \(k\)-point-characterisation
     \(\Pic^0_{C/k}(k) = \ker(\deg)\) (Milne~\S III.1, p.~88). In Lean,
