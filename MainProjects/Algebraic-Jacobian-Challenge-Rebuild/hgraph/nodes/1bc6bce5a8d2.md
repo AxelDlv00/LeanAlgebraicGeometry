@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.hom_f
 type: lean
-updated: '2026-07-22T17:56:04'
+updated: '2026-07-23T09:35:36'
 ---
 private lemma hom_f₁₃_q₂_appTop (x : Γ(XB, ⊤)) :
     (Scheme.ΓSpecIso (CommRingCat.of (B ⊗[A] (B ⊗[A] B)))).hom.hom

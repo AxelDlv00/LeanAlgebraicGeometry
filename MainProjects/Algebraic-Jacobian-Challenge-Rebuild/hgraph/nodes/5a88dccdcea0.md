@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.fiberCoord
 type: lean
-updated: '2026-07-22T17:56:05'
+updated: '2026-07-23T09:35:36'
 ---
 noncomputable def fiberCoord : Γ(Y, fiberChart₀ π) :=
   (π.app (P1.chartOpen K 0)).hom ((Proj.awayToSection 𝒜 (X 0)).hom (P1.chartCoord K 0 1))

@@ -63,6 +63,23 @@ variable (K : Type u) [Field K] [Algebra k K]
   [Algebra (PairChartRing k g r1 g r2 i j) K]
   [IsScalarTower k (PairChartRing k g r1 g r2 i j) K]
 
+noncomputable local instance instIsIntegralRelCurveHighWindowFibreWindowEquiv :
+    IsIntegral (relCurve C K) := instIsIntegralBaseChange C K
+
+noncomputable local instance instSmoothRelCurveHighWindowFibreWindowEquiv :
+    SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K)) :=
+  instSmoothOfRelativeDimensionBaseChange C K
+
+noncomputable local instance instQCRelCurveHighWindowFibreWindowEquiv :
+    QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K)) :=
+  instQuasiCompactBaseChange C K
+
+noncomputable local instance instLFTRelCurveHighWindowFibreWindowEquiv :
+    LocallyOfFiniteType (relCurve C K ↘ Spec (CommRingCat.of K)) :=
+  haveI : Smooth (relCurve C K ↘ Spec (CommRingCat.of K)) :=
+    SmoothOfRelativeDimension.smooth 1 _
+  inferInstance
+
 variable (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
   (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
   (hker : divCarveIdeal k
@@ -83,6 +100,22 @@ noncomputable def divUniversalFibreHighWindowInAmbientEquiv (n : Nat) :
   Submodule.comapSubtypeEquivOfLe
     (divUniversalFibreHighWindow_le_closedAmbient
       C hpi g r1 r2 b1 b2 i j K hO hchi hker n)
+
+/-- The in-ambient equivalence does not change the underlying function-field
+element. -/
+@[simp]
+theorem divUniversalFibreHighWindowInAmbientEquiv_coe (n : Nat)
+    (x : ↥(divUniversalFibreHighWindowInAmbient
+      C hpi g r1 r2 b1 b2 i j K hO hchi hker n)) :
+    ((divUniversalFibreHighWindowInAmbientEquiv
+        C hpi g r1 r2 b1 b2 i j K hO hchi hker n x :
+      divUniversalFibreHighWindow
+        C hpi g r1 r2 b1 b2 i j K hO hchi hker n) :
+      (relCurve C K).functionField) =
+    ((x : Scheme.divisorSections K
+      (windowN C K hpi g + n • windowS C K hpi g) ⊤) :
+      (relCurve C K).functionField) :=
+  rfl
 
 end HighWindowFibreWindowEquiv
 

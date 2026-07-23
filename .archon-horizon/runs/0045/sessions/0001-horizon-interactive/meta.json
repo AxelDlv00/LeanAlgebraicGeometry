@@ -1,0 +1,12 @@
+{
+  "role": "horizon",
+  "interactive": true,
+  "engine": "codex",
+  "engine_session_id": null,
+  "task_id": "AJCR.w4-rep",
+  "projects": [
+    "Algebraic-Jacobian-Challenge-Rebuild"
+  ],
+  "started_at": "2026-07-23T01:36:00.556259+00:00",
+  "status": "running"
+}

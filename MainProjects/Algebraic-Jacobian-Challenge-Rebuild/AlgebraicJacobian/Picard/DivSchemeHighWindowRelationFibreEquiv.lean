@@ -123,8 +123,8 @@ variable (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
         RingHom.ker (algebraMap (PairChartRing k g r1 g r2 i j) K))
 
 set_option maxHeartbeats 2000000 in
-set_option synthInstance.maxHeartbeats 800000 in
 -- Projective base change unfolds the dependent relation and normalized ambient types.
+set_option synthInstance.maxHeartbeats 800000 in
 /-- A projective relative quotient and the fieldwise image equality identify
 the scalar extension of the relation itself with the canonical divisor fibre
 window. -/
@@ -144,8 +144,8 @@ noncomputable def divUniversalHighWindowRelationFibreEquiv (n : Nat)
       C hpi g r1 r2 b1 b2 i j K hO hchi hker n)
 
 set_option maxHeartbeats 2400000 in
-set_option synthInstance.maxHeartbeats 800000 in
 -- Rewriting the composite equivalence through nested function-field coercions is expensive.
+set_option synthInstance.maxHeartbeats 800000 in
 /-- The relation fibre equivalence is the normalized ambient read after
 scalar-extending the relation inclusion. -/
 @[simp]
@@ -166,8 +166,7 @@ theorem divUniversalHighWindowRelationFibreEquiv_coe (n : Nat)
           (windowN C K hpi g + n • windowS C K hpi g) ⊤) :
       (relCurve C K).functionField) := by
   rw [divUniversalHighWindowRelationFibreEquiv, LinearEquiv.trans_apply,
-    divUniversalFibreHighWindowInAmbientEquiv,
-    Submodule.comapSubtypeEquivOfLe_apply_coe,
+    divUniversalFibreHighWindowInAmbientEquiv_coe,
     Grassmannian.projectiveQuotientFibreModelEquiv_coe]
 
 end HighWindowRelationFibreEquiv
