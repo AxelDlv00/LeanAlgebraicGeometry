@@ -79,9 +79,19 @@ local notation "Kr[" n "]" => divUniversalHighWindowRelation
 variable (K : Type u) [Field K] [Algebra k K]
   [Algebra (PairChartRing k g r1 g r2 i j) K]
   [IsScalarTower k (PairChartRing k g r1 g r2 i j) K]
-  [Algebra RZ K]
-  [IsScalarTower (PairChartRing k g r1 g r2 i j) RZ K]
-  [IsScalarTower k RZ K]
+  [Algebra (DivCarveChartRing k
+    (windowS_choice pi hpi g • fiberWeilDivisor pi)
+    (windowM_choice pi hpi g • fiberWeilDivisor pi)
+    g r1 r2 b1 b2 i j) K]
+  [IsScalarTower (PairChartRing k g r1 g r2 i j)
+    (DivCarveChartRing k
+      (windowS_choice pi hpi g • fiberWeilDivisor pi)
+      (windowM_choice pi hpi g • fiberWeilDivisor pi)
+      g r1 r2 b1 b2 i j) K]
+  [IsScalarTower k (DivCarveChartRing k
+    (windowS_choice pi hpi g • fiberWeilDivisor pi)
+    (windowM_choice pi hpi g • fiberWeilDivisor pi)
+    g r1 r2 b1 b2 i j) K]
 
 noncomputable local instance instIsIntegralRelCurveHighWindowMulConjugacy :
     IsIntegral (relCurve C K) := instIsIntegralBaseChange C K
@@ -120,7 +130,9 @@ local notation "HF[" n "]" => divUniversalFibreHighWindow
   C hpi g r1 r2 b1 b2 i j K hO hchi hker n
 
 set_option maxHeartbeats 2400000 in
+-- The dependent finite product and relation quotient need a larger reduction budget.
 set_option synthInstance.maxHeartbeats 800000 in
+-- Projectivity transport traverses the full carve-ring scalar tower.
 /-- Scalar extension distributes over the finite multiplication source, and
 each relation component is then read in the canonical divisor fibre window. -/
 noncomputable def divUniversalHighWindowMulSourceFibreEquiv (n : Nat)
@@ -136,7 +148,9 @@ noncomputable def divUniversalHighWindowMulSourceFibreEquiv (n : Nat)
         C hpi g r1 r2 b1 b2 i j K hO hchi hker n himage)
 
 set_option maxHeartbeats 2400000 in
+-- Reducing the composite finite-product equivalence exceeds the default budget.
 set_option synthInstance.maxHeartbeats 800000 in
+-- The pointwise relation-fibre equivalence has a deep instance chain.
 @[simp]
 theorem divUniversalHighWindowMulSourceFibreEquiv_apply (n : Nat)
     [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
@@ -154,7 +168,9 @@ theorem divUniversalHighWindowMulSourceFibreEquiv_apply (n : Nat)
   rfl
 
 set_option maxHeartbeats 2400000 in
+-- The normalized ambient contains the full dependent high-window expression.
 set_option synthInstance.maxHeartbeats 800000 in
+-- Scalar extension through the carve ring needs additional instance search.
 /-- Read a scalar-extended high-window ambient as an element of the function
 field of the fibre curve. -/
 noncomputable def divUniversalHighWindowClosedAmbientFibreRead (n : Nat) :
@@ -175,7 +191,9 @@ theorem divUniversalHighWindowClosedAmbientFibreRead_apply (n : Nat)
   rfl
 
 set_option maxHeartbeats 4000000 in
+-- Comparing the relative row with fibre multiplication is reduction-heavy.
 set_option synthInstance.maxHeartbeats 1000000 in
+-- Both relation and closed-ambient scalar towers must be synthesized.
 set_option maxRecDepth 20000 in
 /-- One relative multiplication row becomes multiplication by the corresponding
 member of the scalar-extended fixed multiplier basis. -/
@@ -203,7 +221,9 @@ theorem divUniversalHighWindowMulRow_fibre_conjugacy (n : Nat)
     Module.Basis.baseChange_apply]
 
 set_option maxHeartbeats 4000000 in
+-- Expanding the finite component sum and its fibre reads exceeds the default budget.
 set_option synthInstance.maxHeartbeats 1000000 in
+-- Each summand carries the dependent relation-fibre equivalence.
 set_option maxRecDepth 20000 in
 /-- The base change of the whole relative high-window multiplication map is
 conjugate to the fixed-field finite multiplication map. -/
@@ -225,8 +245,7 @@ theorem divUniversalHighWindowMulMap_fibre_conjugacy (n : Nat)
           C hpi g r1 r2 b1 b2 i j K hO hchi hker n himage x) := by
   rw [divUniversalHighWindowMulMap_eq_finiteComponentSum,
     baseChange_finiteComponentSum, LinearMap.comp_apply,
-    LinearMap.sum_apply, map_sum, Scheme.finiteMulMap_apply,
-    Submodule.coe_sum]
+    LinearMap.sum_apply, map_sum, Scheme.finiteMulMap_apply]
   apply Finset.sum_congr rfl
   intro t _
   simp only [LinearMap.comp_apply, LinearMap.proj_apply,
@@ -236,7 +255,9 @@ theorem divUniversalHighWindowMulMap_fibre_conjugacy (n : Nat)
       (TensorProduct.piRightHom RZ K K (fun _ : HI => ↥Kr[n]) x t)
 
 set_option maxHeartbeats 4000000 in
+-- Equality of the two large dependent linear maps needs a larger reduction budget.
 set_option synthInstance.maxHeartbeats 1000000 in
+-- The map-level statement retains the projective relation quotient instance.
 set_option maxRecDepth 20000 in
 /-- Linear-map form of `divUniversalHighWindowMulMap_fibre_conjugacy`. -/
 theorem divUniversalHighWindowMulMap_fibre_conjugacy_map (n : Nat)
