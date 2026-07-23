@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 
 import AlgebraicJacobian.Picard.DivSchemeHighWindowMulConjugacy
 import AlgebraicJacobian.Picard.DivSchemeHighWindowConjugacy
+import AlgebraicJacobian.Picard.DivSchemeHighWindowFibreModel
 import AlgebraicJacobian.Picard.DivSchemeHighWindowRelativeKoszulRelation
 import AlgebraicJacobian.Picard.DivSchemeHighWindowPencilFibre
 
@@ -328,6 +329,68 @@ theorem divUniversalHighWindowRelationMul_liftQ_rTensor_injective_of_fibre_model
   · exact (divUniversalFibreHighWindow_ker_finiteMulMap_eq_range_koszul
       C hpi g r1 r2 b1 b2 i j K hO hchi hker hb n
         (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)).le
+
+set_option maxHeartbeats 4800000 in
+-- Quantifying the injectivity theorem over all residue fields is elaboration-heavy.
+set_option synthInstance.maxHeartbeats 1200000 in
+-- Each prime reconstructs the four-step carve-ring scalar tower.
+set_option maxRecDepth 24000 in
+/-- Adjacent projective fibre models make the actual kernel of the successor
+multiplication presentation span every residue-field kernel. -/
+theorem divUniversalHighWindowKernelSyzygySpans_of_adjacent_fibreModels
+    (hb : 0 < windowBound pi hpi) (n : Nat)
+    [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    [Module.Projective RZ (Amb[n + 1] ⧸ Kr[n + 1])]
+    (hmodel : DivUniversalHighWindowFibreModel
+      C hpi g r1 r2 b1 b2 i j hO hchi n)
+    (hmodelNext : DivUniversalHighWindowFibreModel
+      C hpi g r1 r2 b1 b2 i j hO hchi (n + 1)) :
+    DivUniversalHighWindowSyzygySpans (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1]
+      (divUniversalHighWindowKernelSyzygy (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1]) := by
+  apply (divUniversalHighWindowKernelSyzygySpans_iff
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1]).2
+  intro p
+  exact divUniversalHighWindowRelationMul_liftQ_rTensor_injective_of_fibre_models
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j p.asIdeal.ResidueField hO hchi
+      (divCarveIdeal_le_ker_of_tower k
+        (windowS_choice pi hpi g • fiberWeilDivisor pi)
+        (windowM_choice pi hpi g • fiberWeilDivisor pi)
+        g r1 r2 b1 b2 i j p.asIdeal.ResidueField)
+      hb n (hmodel p) (hmodelNext p)
+
+set_option maxHeartbeats 3200000 in
+-- Rewriting the recursive stage and synthesizing its finite relation is expensive.
+set_option synthInstance.maxHeartbeats 800000 in
+-- The projective quotient consumer unfolds the dependent multiplication source.
+/-- Adjacent projective fibre models force the relation quotient two stages
+later to be finite projective over the possibly nonreduced carve ring. -/
+theorem projective_divUniversalHighWindowRelationQuotient_succ_succ_of_fibreModels
+    (hb : 0 < windowBound pi hpi) (n : Nat)
+    [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    [Module.Projective RZ (Amb[n + 1] ⧸ Kr[n + 1])]
+    (hmodel : DivUniversalHighWindowFibreModel
+      C hpi g r1 r2 b1 b2 i j hO hchi n)
+    (hmodelNext : DivUniversalHighWindowFibreModel
+      C hpi g r1 r2 b1 b2 i j hO hchi (n + 1)) :
+    Module.Projective RZ
+      (divUniversalHighWindowRelationQuotient (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j (n + 2)) := by
+  let L := divUniversalHighWindowKernelSyzygy (C := C) (pi := pi)
+    hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1]
+  have hL : DivUniversalHighWindowSyzygySpans (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1] L :=
+    divUniversalHighWindowKernelSyzygySpans_of_adjacent_fibreModels
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi
+        hb n hmodel hmodelNext
+  letI := finite_divUniversalHighWindowRelation
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j (n + 1)
+  change Module.Projective RZ
+    (Amb[n + 2] ⧸ divUniversalHighWindowMulSpan (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1])
+  exact projective_divUniversalHighWindowMulSpanQuotient_of_syzygies
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j (n + 1) Kr[n + 1] L hL
 
 end HighWindowRelationKoszulConjugacy
 
