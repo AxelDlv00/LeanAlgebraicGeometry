@@ -1,0 +1,1 @@
+The base module has a contained set of actionable warnings beyond the two large legacy long-line clusters: deprecated limit constructors, unused simp arguments, flexible `simp`, `show`/`change`, and missing heartbeat rationales. I’m delegating that independent cleanup while the WPCI design investigation finishes; it will stay in a separate file and be validated separately.

@@ -27,6 +27,24 @@ open Scheme.Modules
 
 variable {X : Scheme.{u}}
 
+/-- Precomposition preserves equality of morphisms. Kept opaque so large categorical
+prefixes do not get duplicated in downstream proof terms. -/
+private lemma precomp_eq_of_eq {C : Type*} [Category C] {W Y Z : C}
+    (e : W ⟶ Y) {f g : Y ⟶ Z} (h : f = g) : e ≫ f = e ≫ g :=
+  congrArg (fun w => e ≫ w) h
+
+/-- Two-prefix variant of `precomp_eq_of_eq`, preserving the displayed association. -/
+private lemma precomp₂_eq_of_eq {C : Type*} [Category C] {V W Y Z : C}
+    (d : V ⟶ W) (e : W ⟶ Y) {f g : Y ⟶ Z} (h : f = g) :
+    d ≫ e ≫ f = d ≫ e ≫ g :=
+  congrArg (fun w => d ≫ e ≫ w) h
+
+/-- Three-prefix variant of `precomp_eq_of_eq`, preserving the displayed association. -/
+private lemma precomp₃_eq_of_eq {C : Type*} [Category C] {U V W Y Z : C}
+    (c : U ⟶ V) (d : V ⟶ W) (e : W ⟶ Y) {f g : Y ⟶ Z} (h : f = g) :
+    c ≫ d ≫ e ≫ f = c ≫ d ≫ e ≫ g :=
+  congrArg (fun w => c ≫ d ≫ e ≫ w) h
+
 /-! ### The `coreIso_comm` chain (`lem:coreIso_comm_leg` → `lem:coreIso_comm_coface` →
 `lem:coreIso_comm_sum` → `lem:coreIso_comm`), built bottom-up per the iter-072 effort-break. -/
 
@@ -106,10 +124,10 @@ lemma nerveδ_backboneProj (𝒰 : X.OpenCover) (p : ℕ) (k : Fin (p + 2)) (l :
   apply Over.OverMorphism.ext
   exact WidePullback.lift_π (fun _ : Fin (p + 1) => Sigma.desc 𝒰.f) _ _ _ l
 
--- The `rfl` unfolds the whiskered augmented-cosimplicial packaging of `CechNerve`, whose
--- kernel `whnf` exceeds the default budget.
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- The `rfl` unfolds the whiskered augmented-cosimplicial packaging of `CechNerve`, whose
+-- kernel `whnf` exceeds the default budget.
 /-- The evaluated Čech-nerve coface is the push–pull map of the geometric backbone
 simplicial face (definitional unwinding of `CechNerve`). -/
 lemma cechNerve_drop_δ (𝒰 : X.OpenCover) (F : X.Modules) {p : ℕ} (k : Fin (p + 2)) :
@@ -138,7 +156,7 @@ noncomputable def interProj (𝒰 : X.OpenCover) {p : ℕ} (τ : Fin (p + 1) →
     (l : Fin (p + 1)) :
     Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ)) ⟶ Over.mk (Sigma.desc 𝒰.f) :=
   Over.homMk (coverInterToMember 𝒰 τ l ≫ Sigma.ι 𝒰.X (τ l)) (by
-    show (coverInterToMember 𝒰 τ l ≫ Sigma.ι 𝒰.X (τ l)) ≫ Sigma.desc 𝒰.f =
+    change (coverInterToMember 𝒰 τ l ≫ Sigma.ι 𝒰.X (τ l)) ≫ Sigma.desc 𝒰.f =
       Scheme.Opens.ι (coverInterOpen 𝒰 τ)
     rw [Category.assoc, Sigma.ι_desc]
     exact coverInterToMember_fac 𝒰 τ l)
@@ -187,6 +205,7 @@ private lemma prodFinSuccIso_hom_snd_π [HasFiniteProducts C] {n : ℕ} (W : Fin
   IsLimit.conePointUniqueUpToIso_hom_comp _ _ (Discrete.mk i.succ)
 
 /-- ι-compatibility of a `Sigma.mapIso` inverse. -/
+@[reassoc]
 lemma ι_sigmaMapIso_inv {β : Type*} {f g : β → C} [HasCoproductsOfShape β C]
     (w : ∀ b, f b ≅ g b) (b : β) :
     Limits.Sigma.ι g b ≫ (Limits.Sigma.mapIso w).inv = (w b).inv ≫ Limits.Sigma.ι f b := by
@@ -197,20 +216,21 @@ lemma ι_sigmaMapIso_inv {β : Type*} {f g : β → C} [HasCoproductsOfShape β 
 
 /-- ι-compatibility of the nested-coproduct flatten/reindex
 `coproduct_fibrePower_reindex`. -/
+@[reassoc]
 private lemma ι_fibrePower_reindex_inv {ι : Type} [Finite ι] [HasFiniteCoproducts C]
     {p : ℕ} (F : (Fin (p + 2) → ι) → C) (i : ι) (t : Fin (p + 1) → ι) :
     Limits.Sigma.ι F (Fin.cons i t) ≫ (coproduct_fibrePower_reindex p F).inv =
       Limits.Sigma.ι (fun τ : Fin (p + 1) → ι => F (Fin.cons i τ)) t ≫
         Limits.Sigma.ι (fun i : ι => ∐ fun τ : Fin (p + 1) → ι => F (Fin.cons i τ)) i := by
   simp only [coproduct_fibrePower_reindex, Iso.trans_inv, Sigma.whiskerEquiv,
-    Limits.Sigma.ι_comp_map'_assoc, Iso.refl_hom, Category.comp_id, Category.assoc,
-    sigmaSigmaIso_inv, Equiv.symm_trans_apply]
+    Iso.refl_hom, Category.comp_id, sigmaSigmaIso_inv, Equiv.symm_trans_apply]
   refine Eq.trans (Limits.Sigma.ι_comp_map'_assoc _ _ _ _) ?_
   exact Eq.trans (Category.id_comp _)
     (Limits.Sigma.ι_desc _ ((⟨i, t⟩ : Σ _ : ι, Fin (p + 1) → ι)))
 
 /-- ι-compatibility of a `Sigma.whiskerEquiv` inverse (the reindex layers of the
 Stub-1 chain). -/
+@[reassoc]
 private lemma ι_whiskerEquiv_inv {β γ : Type*} {f : β → C} {g : γ → C}
     [HasCoproduct f] [HasCoproduct g] (e : β ≃ γ) (w : ∀ b, g (e b) ≅ f b) (c : γ) :
     Limits.Sigma.ι g c ≫ (Sigma.whiskerEquiv e w).inv =
@@ -244,6 +264,7 @@ private lemma ι_cf_hom {S : C} (B : C) (b : B ⟶ S) {Y : ι → C} (g : (i : �
   · rw [Category.assoc, cf_hom_fst, Limits.Sigma.ι_desc, pullback.lift_fst]
   · rw [Category.assoc, cf_hom_snd, Limits.Sigma.ι_desc, pullback.lift_snd, Category.comp_id]
 
+omit [HasPullbacks C] in
 /-- The slice structure map of a coproduct, through the coproduct comparison of
 `Over.forget` (local copy of the `CechSectionIdentificationBase` private helper). -/
 private lemma overSigmaHomEq {S : C} (A : ι → Over S) :
@@ -256,12 +277,13 @@ private lemma overSigmaHomEq {S : C} (A : ι → Over S) :
   rw [PreservesCoproduct.inv_hom]
   refine Limits.Sigma.hom_ext _ _ (fun i => ?_)
   rw [ι_comp_sigmaComparison_assoc]
-  show (Limits.Sigma.ι A i).left ≫ (∐ A).hom = _
+  change (Limits.Sigma.ι A i).left ≫ (∐ A).hom = _
   rw [Limits.Sigma.ι_desc]
   exact Over.w (Limits.Sigma.ι A i)
 
 /-- ι-compatibility of the slice distributivity `overProd_coproduct_distrib`: the `i`-th
 inclusion of the distributed products corresponds to `Sigma.ι ⨯ 𝟙`. -/
+@[reassoc]
 private lemma ι_overProd_distrib_inv {S : C} [HasBinaryProducts (Over S)]
     (A : ι → Over S) (B : Over S) (i : ι) :
     Limits.Sigma.ι (fun i => A i ⨯ B) i ≫ (overProd_coproduct_distrib A B).inv =
@@ -308,8 +330,7 @@ private lemma ι_overProd_distrib_inv {S : C} [HasBinaryProducts (Over S)]
     apply pullback.hom_ext
     · simp only [Category.assoc, pullback.lift_fst, pullback.lift_fst_assoc]
       exact congrArg (fun w => pullback.fst (A i).hom B.hom ≫ w) hpA
-    · simp only [Category.assoc, pullback.lift_snd, pullback.lift_snd_assoc,
-        Category.comp_id]
+    · simp only [Category.assoc, pullback.lift_snd, Category.comp_id]
   -- step 3: the fused comparison is the inclusion of the distributed pullback factor.
   have h3 : pullback.map (A i).hom B.hom (Limits.Sigma.desc fun j => (A j).hom) B.hom
         (Limits.Sigma.ι (fun j => (A j).left) i) (𝟙 B.left) (𝟙 S)
@@ -360,6 +381,7 @@ private lemma ι_overProd_distrib_inv {S : C} [HasBinaryProducts (Over S)]
   exact c1.trans (c2.trans (c3.trans h4))
 
 /-- ι-compatibility of the right-handed slice distributivity. -/
+@[reassoc]
 private lemma ι_overProd_distrib_right_inv {S : C} [HasBinaryProducts (Over S)]
     (A : Over S) (Y : ι → Over S) (i : ι) :
     Limits.Sigma.ι (fun i => A ⨯ Y i) i ≫ (overProd_coproduct_distrib_right A Y).inv =
@@ -368,7 +390,7 @@ private lemma ι_overProd_distrib_right_inv {S : C} [HasBinaryProducts (Over S)]
   simp only [Iso.trans_inv, ← Category.assoc]
   rw [ι_sigmaMapIso_inv (fun i => Limits.prod.braiding (Y i) A) i]
   simp only [Category.assoc]
-  rw [reassoc_of% (ι_overProd_distrib_inv (C := C) (S := S) Y A i)]
+  rw [ι_overProd_distrib_inv_assoc (C := C) (S := S) Y A i]
   -- residual braiding algebra:
   -- `(br (Y i) A).inv ≫ prod.map ι 𝟙 ≫ (br A (∐Y)).inv = prod.map 𝟙 ι`
   refine (Iso.inv_comp_eq _).mpr ?_
@@ -396,29 +418,283 @@ noncomputable def overDescIncl (f : (i : ι) → Z i ⟶ S) (i : ι) :
     Over.mk (f i) ⟶ Over.mk (Limits.Sigma.desc f) :=
   Over.homMk (Limits.Sigma.ι Z i) (Limits.Sigma.ι_desc f i)
 
+omit [HasPullbacks C] [FinitaryPreExtensive C] [HasFiniteWidePullbacks C]
+  [HasFiniteProducts (Over S)] [HasFiniteCoproducts (Over S)] in
 /-- The descent iso `overSigmaDescIso` sends coproduct inclusions to `overDescIncl`. -/
+@[reassoc]
 private lemma ι_overSigmaDescIso_hom (f : (i : ι) → Z i ⟶ S) (i : ι) :
     Limits.Sigma.ι (fun i => Over.mk (f i)) i ≫ (overSigmaDescIso f).hom =
       overDescIncl f i :=
   IsColimit.comp_coconePointUniqueUpToIso_hom (coproductIsCoproduct _)
     (overSigmaDescIsColimit f) (Discrete.mk i)
 
+omit [HasPullbacks C] [FinitaryPreExtensive C] [HasFiniteCoproducts (Over S)] in
 /-- Inverse projections of the slice-product identification of the fibre power. -/
+@[reassoc]
 private lemma wpEqProd_inv_overWPproj (f : (i : ι) → Z i ⟶ S) (m : ℕ) (l : Fin m) :
     (widePullback_overX_eq_prod (fun _ : Fin m => Limits.Sigma.desc f)).inv ≫
       overWPproj f m l = Pi.π (fun _ : Fin m => Over.mk (Limits.Sigma.desc f)) l :=
   IsLimit.conePointUniqueUpToIso_inv_comp _ _ (Discrete.mk l)
 
+omit [HasPullbacks C] [FinitaryPreExtensive C] [HasFiniteCoproducts (Over S)] in
 /-- Forward projections of the slice-product identification of the fibre power. -/
+@[reassoc]
 private lemma wpEqProd_hom_π (f : (i : ι) → Z i ⟶ S) (m : ℕ) (l : Fin m) :
     (widePullback_overX_eq_prod (fun _ : Fin m => Limits.Sigma.desc f)).hom ≫
       Pi.π (fun _ : Fin m => Over.mk (Limits.Sigma.desc f)) l = overWPproj f m l :=
   IsLimit.conePointUniqueUpToIso_hom_comp _ _ (Discrete.mk l)
 
+/-- The head projection of the successor step in `ι_wpci_inv_overWPproj`. -/
+private lemma ι_wpci_inv_overWPproj_succ_zero (f : (i : ι) → Z i ⟶ S) (p : ℕ)
+    (i : ι) (t : Fin (p + 1) → ι) :
+    (prodFinSuccIso fun k : Fin (p + 2) =>
+        Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv ≫
+      Limits.prod.map (𝟙 (Over.mk (f i))) (Limits.Sigma.ι
+        (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) t) ≫
+      Limits.prod.map (Limits.Sigma.ι (fun j : ι => Over.mk (f j)) i)
+        (𝟙 (∐ fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k)))) ≫
+      (Limits.prod.mapIso (overSigmaDescIso f).symm
+        ((widePullback_overX_eq_prod (fun _ : Fin (p + 1) => Limits.Sigma.desc f)).symm ≪≫
+          widePullback_coproduct_iso f p)).inv ≫
+      (prodFinSuccIso (fun _ : Fin (p + 2) => Over.mk (Limits.Sigma.desc f))).inv ≫
+      (widePullback_overX_eq_prod (fun _ : Fin (p + 2) => Limits.Sigma.desc f)).inv ≫
+      overWPproj f (p + 2) 0 =
+    Pi.π (fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))) 0 ≫
+      overDescIncl f (Fin.cons (α := fun _ => ι) i t 0) := by
+  have htail : (Limits.prod.mapIso (overSigmaDescIso f).symm
+        ((widePullback_overX_eq_prod (fun _ : Fin (p + 1) => Limits.Sigma.desc f)).symm ≪≫
+          widePullback_coproduct_iso f p)).inv ≫
+      (prodFinSuccIso (fun _ : Fin (p + 2) => Over.mk (Limits.Sigma.desc f))).inv ≫
+      (widePullback_overX_eq_prod (fun _ : Fin (p + 2) => Limits.Sigma.desc f)).inv ≫
+      overWPproj f (p + 2) 0 = Limits.prod.fst ≫ (overSigmaDescIso f).hom := by
+    refine Eq.trans (precomp₂_eq_of_eq (Limits.prod.mapIso (overSigmaDescIso f).symm
+        ((widePullback_overX_eq_prod (fun _ : Fin (p + 1) => Limits.Sigma.desc f)).symm ≪≫
+          widePullback_coproduct_iso f p)).inv
+      (prodFinSuccIso (fun _ : Fin (p + 2) => Over.mk (Limits.Sigma.desc f))).inv
+      (wpEqProd_inv_overWPproj f (p + 2) 0)) ?_
+    refine Eq.trans (precomp_eq_of_eq (Limits.prod.mapIso (overSigmaDescIso f).symm
+        ((widePullback_overX_eq_prod (fun _ : Fin (p + 1) => Limits.Sigma.desc f)).symm ≪≫
+          widePullback_coproduct_iso f p)).inv
+      (prodFinSuccIso_inv_π_zero (fun _ : Fin (p + 2) => Over.mk (Limits.Sigma.desc f)))) ?_
+    exact Limits.prod.map_fst _ _
+  refine Eq.trans (precomp₃_eq_of_eq
+    (prodFinSuccIso fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv
+    (Limits.prod.map (𝟙 (Over.mk (f i))) (Limits.Sigma.ι
+      (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) t))
+    (Limits.prod.map (Limits.Sigma.ι (fun j : ι => Over.mk (f j)) i)
+      (𝟙 (∐ fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))))) htail) ?_
+  refine Eq.trans (precomp₂_eq_of_eq
+    (prodFinSuccIso fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv
+    (Limits.prod.map (𝟙 (Over.mk (f i))) (Limits.Sigma.ι
+      (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) t))
+    (Limits.prod.map_fst_assoc (Limits.Sigma.ι (fun j : ι => Over.mk (f j)) i)
+      (𝟙 (∐ fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))))
+      ((overSigmaDescIso f).hom))) ?_
+  refine Eq.trans (precomp_eq_of_eq
+    (prodFinSuccIso fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv
+    (Limits.prod.map_fst_assoc (𝟙 (Over.mk (f i)))
+      (Limits.Sigma.ι (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) t)
+      (Limits.Sigma.ι (fun j : ι => Over.mk (f j)) i ≫ (overSigmaDescIso f).hom))) ?_
+  refine Eq.trans (precomp₂_eq_of_eq
+    (prodFinSuccIso fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv Limits.prod.fst
+    ((Category.id_comp _).trans (ι_overSigmaDescIso_hom f i))) ?_
+  refine Eq.trans (Category.assoc _ _ _).symm ?_
+  exact congrArg (fun w => w ≫ overDescIncl f i)
+    (prodFinSuccIso_hom_fst (fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))))
+
+/-- A tail projection of the successor step in `ι_wpci_inv_overWPproj`. -/
+private lemma ι_wpci_inv_overWPproj_succ_succ (f : (i : ι) → Z i ⟶ S) (p : ℕ)
+    (ih : ∀ (σ : Fin (p + 1) → ι) (l : Fin (p + 1)),
+      Limits.Sigma.ι (fun σ' : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (σ' k))) σ ≫
+          (widePullback_coproduct_iso f p).inv ≫ overWPproj f (p + 1) l =
+        Pi.π (fun k => Over.mk (f (σ k))) l ≫ overDescIncl f (σ l))
+    (i : ι) (t : Fin (p + 1) → ι) (l' : Fin (p + 1)) :
+    (prodFinSuccIso fun k : Fin (p + 2) =>
+        Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv ≫
+      Limits.prod.map (𝟙 (Over.mk (f i))) (Limits.Sigma.ι
+        (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) t) ≫
+      Limits.prod.map (Limits.Sigma.ι (fun j : ι => Over.mk (f j)) i)
+        (𝟙 (∐ fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k)))) ≫
+      (Limits.prod.mapIso (overSigmaDescIso f).symm
+        ((widePullback_overX_eq_prod (fun _ : Fin (p + 1) => Limits.Sigma.desc f)).symm ≪≫
+          widePullback_coproduct_iso f p)).inv ≫
+      (prodFinSuccIso (fun _ : Fin (p + 2) => Over.mk (Limits.Sigma.desc f))).inv ≫
+      (widePullback_overX_eq_prod (fun _ : Fin (p + 2) => Limits.Sigma.desc f)).inv ≫
+      overWPproj f (p + 2) l'.succ =
+    Pi.π (fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))) l'.succ ≫
+      overDescIncl f (Fin.cons (α := fun _ => ι) i t l'.succ) := by
+  have htail : (Limits.prod.mapIso (overSigmaDescIso f).symm
+        ((widePullback_overX_eq_prod (fun _ : Fin (p + 1) => Limits.Sigma.desc f)).symm ≪≫
+          widePullback_coproduct_iso f p)).inv ≫
+      (prodFinSuccIso (fun _ : Fin (p + 2) => Over.mk (Limits.Sigma.desc f))).inv ≫
+      (widePullback_overX_eq_prod (fun _ : Fin (p + 2) => Limits.Sigma.desc f)).inv ≫
+      overWPproj f (p + 2) l'.succ =
+      Limits.prod.snd ≫ (widePullback_coproduct_iso f p).inv ≫
+        overWPproj f (p + 1) l' := by
+    refine Eq.trans (precomp₂_eq_of_eq (Limits.prod.mapIso (overSigmaDescIso f).symm
+        ((widePullback_overX_eq_prod (fun _ : Fin (p + 1) => Limits.Sigma.desc f)).symm ≪≫
+          widePullback_coproduct_iso f p)).inv
+      (prodFinSuccIso (fun _ : Fin (p + 2) => Over.mk (Limits.Sigma.desc f))).inv
+      (wpEqProd_inv_overWPproj f (p + 2) l'.succ)) ?_
+    refine Eq.trans (precomp_eq_of_eq (Limits.prod.mapIso (overSigmaDescIso f).symm
+        ((widePullback_overX_eq_prod (fun _ : Fin (p + 1) => Limits.Sigma.desc f)).symm ≪≫
+          widePullback_coproduct_iso f p)).inv
+      (prodFinSuccIso_inv_π_succ
+        (fun _ : Fin (p + 2) => Over.mk (Limits.Sigma.desc f)) l')) ?_
+    refine Eq.trans (Limits.prod.map_snd_assoc _ _ _) ?_
+    refine precomp_eq_of_eq Limits.prod.snd ?_
+    refine Eq.trans (Category.assoc _ _ _) ?_
+    exact precomp_eq_of_eq (widePullback_coproduct_iso f p).inv
+      (wpEqProd_hom_π f (p + 1) l')
+  refine Eq.trans (precomp₃_eq_of_eq
+    (prodFinSuccIso fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv
+    (Limits.prod.map (𝟙 (Over.mk (f i))) (Limits.Sigma.ι
+      (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) t))
+    (Limits.prod.map (Limits.Sigma.ι (fun j : ι => Over.mk (f j)) i)
+      (𝟙 (∐ fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))))) htail) ?_
+  refine Eq.trans (precomp₂_eq_of_eq
+    (prodFinSuccIso fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv
+    (Limits.prod.map (𝟙 (Over.mk (f i))) (Limits.Sigma.ι
+      (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) t))
+    (Limits.prod.map_snd_assoc (Limits.Sigma.ι (fun j : ι => Over.mk (f j)) i)
+      (𝟙 (∐ fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))))
+      ((widePullback_coproduct_iso f p).inv ≫ overWPproj f (p + 1) l'))) ?_
+  refine Eq.trans (precomp_eq_of_eq
+    (prodFinSuccIso fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv
+    (Limits.prod.map_snd_assoc (𝟙 (Over.mk (f i)))
+      (Limits.Sigma.ι (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) t)
+      (𝟙 (∐ fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) ≫
+        (widePullback_coproduct_iso f p).inv ≫ overWPproj f (p + 1) l'))) ?_
+  refine Eq.trans (precomp₂_eq_of_eq
+    (prodFinSuccIso fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv Limits.prod.snd
+    ((precomp_eq_of_eq (Limits.Sigma.ι (fun τ : Fin (p + 1) → ι =>
+        ∏ᶜ fun k => Over.mk (f (τ k))) t) (Category.id_comp _)).trans (ih t l'))) ?_
+  refine Eq.trans (precomp_eq_of_eq
+    (prodFinSuccIso fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv
+    (Category.assoc _ _ _).symm) ?_
+  refine Eq.trans (Category.assoc _ _ _).symm ?_
+  exact congrArg (fun w => w ≫ overDescIncl f (t l'))
+    (prodFinSuccIso_hom_snd_π (fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))) l')
+
+/-- Base case of `ι_wpci_inv_overWPproj`. -/
+private lemma ι_wpci_inv_overWPproj_zero (f : (i : ι) → Z i ⟶ S)
+    (σ : Fin 1 → ι) (l : Fin 1) :
+    Limits.Sigma.ι (fun σ' : Fin 1 → ι => ∏ᶜ fun k => Over.mk (f (σ' k))) σ ≫
+        (widePullback_coproduct_iso f 0).inv ≫ overWPproj f 1 l =
+      Pi.π (fun k => Over.mk (f (σ k))) l ≫ overDescIncl f (σ l) := by
+  obtain rfl : l = 0 := Subsingleton.elim (α := Fin 1) l 0
+  obtain ⟨i0, rfl⟩ : ∃ i0, σ = fun _ => i0 :=
+    ⟨σ 0, funext fun j => congrArg σ (Subsingleton.elim (α := Fin 1) j 0)⟩
+  simp only [widePullback_coproduct_iso, widePullback_coproduct_iso_zero, Iso.trans_inv,
+    Iso.symm_inv, Category.assoc, Sigma.whiskerEquiv, Limits.Sigma.ι_comp_map'_assoc]
+  rw [wpEqProd_inv_overWPproj]
+  have hb := IsLimit.conePointUniqueUpToIso_inv_comp
+    (limit.isLimit (Discrete.functor (fun _ : Fin 1 => Over.mk (Limits.Sigma.desc f))))
+    (limitConeOfUnique (fun _ : Fin 1 => Over.mk (Limits.Sigma.desc f))).isLimit
+    (Discrete.mk (0 : Fin 1))
+  refine Eq.trans (Category.id_comp _) ?_
+  refine Eq.trans (precomp_eq_of_eq (productUniqueIso fun k : Fin 1 =>
+      Over.mk (f ((Equiv.funUnique (Fin 1) ι).symm
+        ((Equiv.funUnique (Fin 1) ι).symm.symm fun _ => i0) k))).hom
+    (ι_overSigmaDescIso_hom_assoc f
+      ((Equiv.funUnique (Fin 1) ι).symm.symm fun _ => i0) _)) ?_
+  refine Eq.trans (precomp₂_eq_of_eq (productUniqueIso fun k : Fin 1 =>
+      Over.mk (f ((Equiv.funUnique (Fin 1) ι).symm
+        ((Equiv.funUnique (Fin 1) ι).symm.symm fun _ => i0) k))).hom
+    (overDescIncl f ((Equiv.funUnique (Fin 1) ι).symm.symm fun _ => i0)) hb) ?_
+  exact Eq.trans (precomp_eq_of_eq (productUniqueIso fun k : Fin 1 =>
+      Over.mk (f ((Equiv.funUnique (Fin 1) ι).symm
+        ((Equiv.funUnique (Fin 1) ι).symm.symm fun _ => i0) k))).hom
+    (Category.comp_id _)) rfl
+
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
--- The chain unfolds seven layers of distributivity isos; the `whnf` cost on the nested
--- fibre powers exceeds the default budget.
+-- Unfolding one successor layer traverses seven distributivity isos and exceeds defaults.
+/-- Successor step of `ι_wpci_inv_overWPproj`. -/
+private lemma ι_wpci_inv_overWPproj_succ (f : (i : ι) → Z i ⟶ S) (p : ℕ)
+    (ih : ∀ (σ : Fin (p + 1) → ι) (l : Fin (p + 1)),
+      Limits.Sigma.ι (fun σ' : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (σ' k))) σ ≫
+          (widePullback_coproduct_iso f p).inv ≫ overWPproj f (p + 1) l =
+        Pi.π (fun k => Over.mk (f (σ k))) l ≫ overDescIncl f (σ l))
+    (σ : Fin (p + 2) → ι) (l : Fin (p + 2)) :
+    Limits.Sigma.ι (fun σ' : Fin (p + 2) → ι => ∏ᶜ fun k => Over.mk (f (σ' k))) σ ≫
+        (widePullback_coproduct_iso f (p + 1)).inv ≫ overWPproj f (p + 2) l =
+      Pi.π (fun k => Over.mk (f (σ k))) l ≫ overDescIncl f (σ l) := by
+  obtain ⟨i, t, rfl⟩ : ∃ i t, σ = Fin.cons i t :=
+    ⟨σ 0, Fin.tail σ, (Fin.cons_self_tail σ).symm⟩
+  simp only [widePullback_coproduct_iso, Iso.trans_inv, Category.assoc]
+  rw [ι_fibrePower_reindex_inv_assoc
+    (fun σ' : Fin (p + 2) → ι => ∏ᶜ fun k => Over.mk (f (σ' k))) i t]
+  have he7 := ι_sigmaMapIso_inv_assoc (β := ι)
+    (Z := Over.mk (Limits.Sigma.desc f))
+    (f := fun j : ι => ∐ fun τ : Fin (p + 1) → ι =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) j τ 0)) ⨯
+        ∏ᶜ fun k : Fin (p + 1) => Over.mk (f (Fin.cons (α := fun _ => ι) j τ k.succ)))
+    (g := fun j : ι => ∐ fun τ : Fin (p + 1) → ι =>
+      ∏ᶜ fun k : Fin (p + 2) => Over.mk (f (Fin.cons (α := fun _ => ι) j τ k)))
+    (fun j : ι => Limits.Sigma.mapIso
+      (f := fun τ : Fin (p + 1) → ι =>
+        Over.mk (f (Fin.cons (α := fun _ => ι) j τ 0)) ⨯
+          ∏ᶜ fun k : Fin (p + 1) => Over.mk (f (Fin.cons (α := fun _ => ι) j τ k.succ)))
+      (g := fun τ : Fin (p + 1) → ι =>
+        ∏ᶜ fun k : Fin (p + 2) => Over.mk (f (Fin.cons (α := fun _ => ι) j τ k)))
+      (fun τ : Fin (p + 1) → ι =>
+        (prodFinSuccIso (fun k : Fin (p + 2) =>
+          Over.mk (f (Fin.cons (α := fun _ => ι) j τ k)))).symm)) i
+  refine Eq.trans (precomp_eq_of_eq (Limits.Sigma.ι
+    (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i τ k))) t)
+    (he7 _)) ?_
+  have he7' := ι_sigmaMapIso_inv_assoc (β := Fin (p + 1) → ι)
+    (Z := Over.mk (Limits.Sigma.desc f))
+    (f := fun τ : Fin (p + 1) → ι =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i τ 0)) ⨯
+        ∏ᶜ fun k : Fin (p + 1) => Over.mk (f (Fin.cons (α := fun _ => ι) i τ k.succ)))
+    (g := fun τ : Fin (p + 1) → ι =>
+      ∏ᶜ fun k : Fin (p + 2) => Over.mk (f (Fin.cons (α := fun _ => ι) i τ k)))
+    (fun τ : Fin (p + 1) → ι =>
+      (prodFinSuccIso (fun k : Fin (p + 2) =>
+        Over.mk (f (Fin.cons (α := fun _ => ι) i τ k)))).symm) t
+  refine Eq.trans (he7' _) ?_
+  have hA5 := ι_sigmaMapIso_inv_assoc (Z := Over.mk (Limits.Sigma.desc f)) (fun j : ι =>
+    overProd_coproduct_distrib_right (Over.mk (f j))
+      (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k)))) i
+  refine Eq.trans (precomp₂_eq_of_eq
+    (prodFinSuccIso fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv
+    (Limits.Sigma.ι (fun τ : Fin (p + 1) → ι =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i τ 0)) ⨯
+        ∏ᶜ fun k : Fin (p + 1) => Over.mk (f (Fin.cons (α := fun _ => ι) i τ k.succ))) t)
+    (hA5 _)) ?_
+  refine Eq.trans (precomp_eq_of_eq
+    (prodFinSuccIso fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv
+    (ι_overProd_distrib_right_inv_assoc (Over.mk (f i))
+      (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) t _)) ?_
+  refine Eq.trans (precomp₂_eq_of_eq
+    (prodFinSuccIso fun k : Fin (p + 2) =>
+      Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv
+    (Limits.prod.map (𝟙 (Over.mk (f i))) (Limits.Sigma.ι
+      (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) t))
+    (ι_overProd_distrib_inv_assoc (fun j : ι => Over.mk (f j))
+      (∐ fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) i _)) ?_
+  induction l using Fin.cases with
+  | zero => exact ι_wpci_inv_overWPproj_succ_zero f p i t
+  | succ l' => exact ι_wpci_inv_overWPproj_succ_succ f p ih i t l'
+
 /-- **Inclusion/projection characterization of the wide-fibre-power distributivity**
 (the abstract Stub-1 unwinding): the `σ`-summand inclusion composed with the inverse of
 `widePullback_coproduct_iso` and the `l`-th over-level wide-pullback projection is the
@@ -429,202 +705,12 @@ private lemma ι_wpci_inv_overWPproj (f : (i : ι) → Z i ⟶ S) (p : ℕ) :
         (widePullback_coproduct_iso f p).inv ≫ overWPproj f (p + 1) l =
       Pi.π (fun k => Over.mk (f (σ k))) l ≫ overDescIncl f (σ l) := by
   induction p with
-  | zero =>
-    intro σ l
-    obtain rfl : l = 0 := Subsingleton.elim (α := Fin 1) l 0
-    obtain ⟨i0, rfl⟩ : ∃ i0, σ = fun _ => i0 :=
-      ⟨σ 0, funext fun j => congrArg σ (Subsingleton.elim (α := Fin 1) j 0)⟩
-    simp only [widePullback_coproduct_iso, widePullback_coproduct_iso_zero, Iso.trans_inv,
-      Iso.symm_inv, Category.assoc, Sigma.whiskerEquiv, Limits.Sigma.ι_comp_map'_assoc]
-    rw [wpEqProd_inv_overWPproj]
-    have hb := IsLimit.conePointUniqueUpToIso_inv_comp
-      (limit.isLimit (Discrete.functor (fun _ : Fin 1 => Over.mk (Limits.Sigma.desc f))))
-      (limitConeOfUnique (fun _ : Fin 1 => Over.mk (Limits.Sigma.desc f))).isLimit
-      (Discrete.mk (0 : Fin 1))
-    refine Eq.trans (Category.id_comp _) ?_
-    refine Eq.trans (congrArg (fun w => (productUniqueIso fun k : Fin 1 =>
-        Over.mk (f ((Equiv.funUnique (Fin 1) ι).symm
-          ((Equiv.funUnique (Fin 1) ι).symm.symm fun _ => i0) k))).hom ≫ w)
-      ((reassoc_of% (ι_overSigmaDescIso_hom f
-        ((Equiv.funUnique (Fin 1) ι).symm.symm fun _ => i0))) _)) ?_
-    refine Eq.trans (congrArg (fun w => (productUniqueIso fun k : Fin 1 =>
-        Over.mk (f ((Equiv.funUnique (Fin 1) ι).symm
-          ((Equiv.funUnique (Fin 1) ι).symm.symm fun _ => i0) k))).hom ≫
-      overDescIncl f ((Equiv.funUnique (Fin 1) ι).symm.symm fun _ => i0) ≫ w) hb) ?_
-    exact Eq.trans (congrArg (fun w => (productUniqueIso fun k : Fin 1 =>
-        Over.mk (f ((Equiv.funUnique (Fin 1) ι).symm
-          ((Equiv.funUnique (Fin 1) ι).symm.symm fun _ => i0) k))).hom ≫ w)
-      (Category.comp_id _)) rfl
-  | succ p ih =>
-    intro σ l
-    obtain ⟨i, t, rfl⟩ : ∃ i t, σ = Fin.cons i t :=
-      ⟨σ 0, Fin.tail σ, (Fin.cons_self_tail σ).symm⟩
-    -- unfold one layer of the recursion and reassociate
-    simp only [widePullback_coproduct_iso, Iso.trans_inv, Category.assoc]
-    -- peel the reindex layer
-    rw [reassoc_of% (ι_fibrePower_reindex_inv
-      (fun σ' : Fin (p + 2) → ι => ∏ᶜ fun k => Over.mk (f (σ' k))) i t)]
-    -- peel the `e7` (prodFinSuccIso) relabelling layer
-    have he7 := ι_sigmaMapIso_inv (β := ι)
-      (f := fun j : ι => ∐ fun τ : Fin (p + 1) → ι =>
-        Over.mk (f (Fin.cons (α := fun _ => ι) j τ 0)) ⨯
-          ∏ᶜ fun k : Fin (p + 1) => Over.mk (f (Fin.cons (α := fun _ => ι) j τ k.succ)))
-      (g := fun j : ι => ∐ fun τ : Fin (p + 1) → ι =>
-        ∏ᶜ fun k : Fin (p + 2) => Over.mk (f (Fin.cons (α := fun _ => ι) j τ k)))
-      (fun j : ι => Limits.Sigma.mapIso
-        (f := fun τ : Fin (p + 1) → ι =>
-          Over.mk (f (Fin.cons (α := fun _ => ι) j τ 0)) ⨯
-            ∏ᶜ fun k : Fin (p + 1) => Over.mk (f (Fin.cons (α := fun _ => ι) j τ k.succ)))
-        (g := fun τ : Fin (p + 1) → ι =>
-          ∏ᶜ fun k : Fin (p + 2) => Over.mk (f (Fin.cons (α := fun _ => ι) j τ k)))
-        (fun τ : Fin (p + 1) → ι =>
-          (prodFinSuccIso (fun k : Fin (p + 2) => Over.mk (f (Fin.cons (α := fun _ => ι) j τ k)))).symm)) i
-    refine Eq.trans (congrArg (fun w => Limits.Sigma.ι
-      (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k : Fin (p + 2) =>
-        Over.mk (f (Fin.cons (α := fun _ => ι) i τ k))) t ≫ w)
-      ((reassoc_of% he7) _)) ?_
-    have he7' := ι_sigmaMapIso_inv (β := Fin (p + 1) → ι)
-      (f := fun τ : Fin (p + 1) → ι =>
-        Over.mk (f (Fin.cons (α := fun _ => ι) i τ 0)) ⨯
-          ∏ᶜ fun k : Fin (p + 1) => Over.mk (f (Fin.cons (α := fun _ => ι) i τ k.succ)))
-      (g := fun τ : Fin (p + 1) → ι =>
-        ∏ᶜ fun k : Fin (p + 2) => Over.mk (f (Fin.cons (α := fun _ => ι) i τ k)))
-      (fun τ : Fin (p + 1) → ι =>
-        (prodFinSuccIso (fun k : Fin (p + 2) => Over.mk (f (Fin.cons (α := fun _ => ι) i τ k)))).symm) t
-    refine Eq.trans ((reassoc_of% he7') _) ?_
-    -- peel the two distributivity layers
-    have hA5 := ι_sigmaMapIso_inv (fun j : ι =>
-      overProd_coproduct_distrib_right (Over.mk (f j))
-        (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k)))) i
-    refine Eq.trans (congrArg (fun w =>
-      (prodFinSuccIso fun k : Fin (p + 2) =>
-        Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv ≫
-      Limits.Sigma.ι (fun τ : Fin (p + 1) → ι =>
-        Over.mk (f (Fin.cons (α := fun _ => ι) i τ 0)) ⨯
-          ∏ᶜ fun k : Fin (p + 1) => Over.mk (f (Fin.cons (α := fun _ => ι) i τ k.succ))) t ≫ w)
-      ((reassoc_of% hA5) _)) ?_
-    refine Eq.trans (congrArg (fun w =>
-      (prodFinSuccIso fun k : Fin (p + 2) =>
-        Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv ≫ w)
-      ((reassoc_of% (ι_overProd_distrib_right_inv (Over.mk (f i))
-        (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) t)) _)) ?_
-    refine Eq.trans (congrArg (fun w =>
-      (prodFinSuccIso fun k : Fin (p + 2) =>
-        Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv ≫
-      Limits.prod.map (𝟙 (Over.mk (f i))) (Limits.Sigma.ι (fun τ : Fin (p + 1) → ι =>
-        ∏ᶜ fun k => Over.mk (f (τ k))) t) ≫ w)
-      ((reassoc_of% (ι_overProd_distrib_inv (fun j : ι => Over.mk (f j))
-        (∐ fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) i)) _)) ?_
-    -- split on the projection index and collapse the tail
-    induction l using Fin.cases with
-    | zero =>
-      have htail : (Limits.prod.mapIso (overSigmaDescIso f).symm
-            ((widePullback_overX_eq_prod (fun _ : Fin (p + 1) => Limits.Sigma.desc f)).symm ≪≫
-              widePullback_coproduct_iso f p)).inv ≫
-          (prodFinSuccIso (fun _ : Fin (p + 2) => Over.mk (Limits.Sigma.desc f))).inv ≫
-          (widePullback_overX_eq_prod (fun _ : Fin (p + 2) => Limits.Sigma.desc f)).inv ≫
-          overWPproj f (p + 2) 0 =
-          Limits.prod.fst ≫ (overSigmaDescIso f).hom := by
-        refine Eq.trans (congrArg (fun w => (Limits.prod.mapIso (overSigmaDescIso f).symm
-            ((widePullback_overX_eq_prod (fun _ : Fin (p + 1) => Limits.Sigma.desc f)).symm ≪≫
-              widePullback_coproduct_iso f p)).inv ≫
-          (prodFinSuccIso (fun _ : Fin (p + 2) => Over.mk (Limits.Sigma.desc f))).inv ≫ w)
-          (wpEqProd_inv_overWPproj f (p + 2) 0)) ?_
-        refine Eq.trans (congrArg (fun w => (Limits.prod.mapIso (overSigmaDescIso f).symm
-            ((widePullback_overX_eq_prod (fun _ : Fin (p + 1) => Limits.Sigma.desc f)).symm ≪≫
-              widePullback_coproduct_iso f p)).inv ≫ w)
-          (prodFinSuccIso_inv_π_zero (fun _ : Fin (p + 2) => Over.mk (Limits.Sigma.desc f)))) ?_
-        exact Limits.prod.map_fst _ _
-      refine Eq.trans (congrArg (fun w =>
-        (prodFinSuccIso fun k : Fin (p + 2) =>
-          Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv ≫
-        Limits.prod.map (𝟙 (Over.mk (f i))) (Limits.Sigma.ι (fun τ : Fin (p + 1) → ι =>
-          ∏ᶜ fun k => Over.mk (f (τ k))) t) ≫
-        Limits.prod.map (Limits.Sigma.ι (fun j : ι => Over.mk (f j)) i)
-          (𝟙 (∐ fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k)))) ≫ w) htail) ?_
-      refine Eq.trans (congrArg (fun w =>
-        (prodFinSuccIso fun k : Fin (p + 2) =>
-          Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv ≫
-        Limits.prod.map (𝟙 (Over.mk (f i))) (Limits.Sigma.ι (fun τ : Fin (p + 1) → ι =>
-          ∏ᶜ fun k => Over.mk (f (τ k))) t) ≫ w)
-        (Limits.prod.map_fst_assoc (Limits.Sigma.ι (fun j : ι => Over.mk (f j)) i)
-          (𝟙 (∐ fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))))
-          ((overSigmaDescIso f).hom))) ?_
-      refine Eq.trans (congrArg (fun w =>
-        (prodFinSuccIso fun k : Fin (p + 2) =>
-          Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv ≫ w)
-        (Limits.prod.map_fst_assoc (𝟙 (Over.mk (f i)))
-          (Limits.Sigma.ι (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) t)
-          (Limits.Sigma.ι (fun j : ι => Over.mk (f j)) i ≫ (overSigmaDescIso f).hom))) ?_
-      refine Eq.trans (congrArg (fun w =>
-        (prodFinSuccIso fun k : Fin (p + 2) =>
-          Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv ≫ Limits.prod.fst ≫ w)
-        ((Category.id_comp _).trans (ι_overSigmaDescIso_hom f i))) ?_
-      refine Eq.trans (Category.assoc _ _ _).symm ?_
-      exact congrArg (fun w => w ≫ overDescIncl f i)
-        (prodFinSuccIso_hom_fst (fun k : Fin (p + 2) =>
-          Over.mk (f (Fin.cons (α := fun _ => ι) i t k))))
-    | succ l' =>
-      have htail : (Limits.prod.mapIso (overSigmaDescIso f).symm
-            ((widePullback_overX_eq_prod (fun _ : Fin (p + 1) => Limits.Sigma.desc f)).symm ≪≫
-              widePullback_coproduct_iso f p)).inv ≫
-          (prodFinSuccIso (fun _ : Fin (p + 2) => Over.mk (Limits.Sigma.desc f))).inv ≫
-          (widePullback_overX_eq_prod (fun _ : Fin (p + 2) => Limits.Sigma.desc f)).inv ≫
-          overWPproj f (p + 2) l'.succ =
-          Limits.prod.snd ≫ (widePullback_coproduct_iso f p).inv ≫ overWPproj f (p + 1) l' := by
-        refine Eq.trans (congrArg (fun w => (Limits.prod.mapIso (overSigmaDescIso f).symm
-            ((widePullback_overX_eq_prod (fun _ : Fin (p + 1) => Limits.Sigma.desc f)).symm ≪≫
-              widePullback_coproduct_iso f p)).inv ≫
-          (prodFinSuccIso (fun _ : Fin (p + 2) => Over.mk (Limits.Sigma.desc f))).inv ≫ w)
-          (wpEqProd_inv_overWPproj f (p + 2) l'.succ)) ?_
-        refine Eq.trans (congrArg (fun w => (Limits.prod.mapIso (overSigmaDescIso f).symm
-            ((widePullback_overX_eq_prod (fun _ : Fin (p + 1) => Limits.Sigma.desc f)).symm ≪≫
-              widePullback_coproduct_iso f p)).inv ≫ w)
-          (prodFinSuccIso_inv_π_succ (fun _ : Fin (p + 2) => Over.mk (Limits.Sigma.desc f)) l')) ?_
-        refine Eq.trans (Limits.prod.map_snd_assoc _ _ _) ?_
-        refine congrArg (fun w => Limits.prod.snd ≫ w) ?_
-        refine Eq.trans (Category.assoc _ _ _) ?_
-        exact congrArg (fun w => (widePullback_coproduct_iso f p).inv ≫ w)
-          (wpEqProd_hom_π f (p + 1) l')
-      refine Eq.trans (congrArg (fun w =>
-        (prodFinSuccIso fun k : Fin (p + 2) =>
-          Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv ≫
-        Limits.prod.map (𝟙 (Over.mk (f i))) (Limits.Sigma.ι (fun τ : Fin (p + 1) → ι =>
-          ∏ᶜ fun k => Over.mk (f (τ k))) t) ≫
-        Limits.prod.map (Limits.Sigma.ι (fun j : ι => Over.mk (f j)) i)
-          (𝟙 (∐ fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k)))) ≫ w) htail) ?_
-      refine Eq.trans (congrArg (fun w =>
-        (prodFinSuccIso fun k : Fin (p + 2) =>
-          Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv ≫
-        Limits.prod.map (𝟙 (Over.mk (f i))) (Limits.Sigma.ι (fun τ : Fin (p + 1) → ι =>
-          ∏ᶜ fun k => Over.mk (f (τ k))) t) ≫ w)
-        (Limits.prod.map_snd_assoc (Limits.Sigma.ι (fun j : ι => Over.mk (f j)) i)
-          (𝟙 (∐ fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))))
-          ((widePullback_coproduct_iso f p).inv ≫ overWPproj f (p + 1) l'))) ?_
-      refine Eq.trans (congrArg (fun w =>
-        (prodFinSuccIso fun k : Fin (p + 2) =>
-          Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv ≫ w)
-        (Limits.prod.map_snd_assoc (𝟙 (Over.mk (f i)))
-          (Limits.Sigma.ι (fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) t)
-          (𝟙 (∐ fun τ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (f (τ k))) ≫
-            (widePullback_coproduct_iso f p).inv ≫ overWPproj f (p + 1) l'))) ?_
-      refine Eq.trans (congrArg (fun w =>
-        (prodFinSuccIso fun k : Fin (p + 2) =>
-          Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv ≫ Limits.prod.snd ≫ w)
-        ((congrArg (fun w => Limits.Sigma.ι (fun τ : Fin (p + 1) → ι =>
-            ∏ᶜ fun k => Over.mk (f (τ k))) t ≫ w) (Category.id_comp _)).trans
-          (ih t l'))) ?_
-      refine Eq.trans (congrArg (fun w =>
-        (prodFinSuccIso fun k : Fin (p + 2) =>
-          Over.mk (f (Fin.cons (α := fun _ => ι) i t k))).symm.inv ≫ w)
-        (Category.assoc _ _ _).symm) ?_
-      refine Eq.trans (Category.assoc _ _ _).symm ?_
-      exact congrArg (fun w => w ≫ overDescIncl f (t l'))
-        (prodFinSuccIso_hom_snd_π (fun k : Fin (p + 2) =>
-          Over.mk (f (Fin.cons (α := fun _ => ι) i t k))) l')
+  | zero => exact ι_wpci_inv_overWPproj_zero f
+  | succ p ih => exact ι_wpci_inv_overWPproj_succ f p ih
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- Reindexing the nested product family and synthesizing its coproduct structure exceed defaults.
 set_option synthInstance.maxHeartbeats 400000 in
 /-- **Combo: reindex layer + distributivity layer in one step.**  The `τ`-summand inclusion
 through the universe-reduction reindex `Sigma.whiskerEquiv` and the distributivity inverse,
@@ -636,7 +722,7 @@ lemma ι_reindex_wpci_inv_overWPproj {ι₀ : Type*} {Z' : ι₀ → C}
     (τ : Fin (p + 1) → ι₀) (l : Fin (p + 1)) :
     Limits.Sigma.ι (fun τ' : Fin (p + 1) → ι₀ => ∏ᶜ fun k => Over.mk (g (τ' k))) τ ≫
         (Sigma.whiskerEquiv (Equiv.arrowCongr (Equiv.refl (Fin (p + 1))) E.symm)
-          (fun σ : Fin (p + 1) → ι => Iso.refl _)).inv ≫
+          (fun _ : Fin (p + 1) → ι => Iso.refl _)).inv ≫
         (widePullback_coproduct_iso (fun j : ι => g (E.symm j)) p).inv ≫
         overWPproj (fun j : ι => g (E.symm j)) (p + 1) l =
       eqToHom (congrArg (fun fam : Fin (p + 1) → ι₀ =>
@@ -644,20 +730,20 @@ lemma ι_reindex_wpci_inv_overWPproj {ι₀ : Type*} {Z' : ι₀ → C}
         (funext (fun k => (E.symm_apply_apply (τ k)).symm))) ≫
       Pi.π (fun k => Over.mk (g (E.symm (E (τ k))))) l ≫
       overDescIncl (fun j : ι => g (E.symm j)) (E (τ l)) := by
-  refine Eq.trans ((reassoc_of% (ι_whiskerEquiv_inv
+  refine Eq.trans ((ι_whiskerEquiv_inv_assoc
       (f := fun σ : Fin (p + 1) → ι => ∏ᶜ fun k => Over.mk (g (E.symm (σ k))))
       (g := fun τ' : Fin (p + 1) → ι₀ => ∏ᶜ fun k => Over.mk (g (τ' k)))
       (Equiv.arrowCongr (Equiv.refl (Fin (p + 1))) E.symm)
-      (fun σ : Fin (p + 1) → ι => Iso.refl _) τ))
+      (fun σ : Fin (p + 1) → ι => Iso.refl _) τ)
     ((widePullback_coproduct_iso (fun j : ι => g (E.symm j)) p).inv ≫
       overWPproj (fun j : ι => g (E.symm j)) (p + 1) l)) ?_
-  refine Eq.trans (congrArg (fun w => eqToHom (congrArg (fun fam : Fin (p + 1) → ι₀ =>
+  refine Eq.trans (precomp_eq_of_eq (eqToHom (congrArg (fun fam : Fin (p + 1) → ι₀ =>
         ∏ᶜ fun k => Over.mk (g (fam k)))
-      (funext (fun k => (E.symm_apply_apply (τ k)).symm))) ≫ w)
+      (funext (fun k => (E.symm_apply_apply (τ k)).symm))))
     (Category.id_comp _)) ?_
-  exact congrArg (fun w => eqToHom (congrArg (fun fam : Fin (p + 1) → ι₀ =>
+  exact precomp_eq_of_eq (eqToHom (congrArg (fun fam : Fin (p + 1) → ι₀ =>
         ∏ᶜ fun k => Over.mk (g (fam k)))
-      (funext (fun k => (E.symm_apply_apply (τ k)).symm))) ≫ w)
+      (funext (fun k => (E.symm_apply_apply (τ k)).symm))))
     (ι_wpci_inv_overWPproj (fun j : ι => g (E.symm j)) p
       ((Equiv.arrowCongr (Equiv.refl (Fin (p + 1))) E.symm).symm τ) l)
 
