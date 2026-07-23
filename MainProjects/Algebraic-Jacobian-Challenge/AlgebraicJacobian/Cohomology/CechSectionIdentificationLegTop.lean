@@ -6,14 +6,11 @@ Authors: Christian Merten
 import AlgebraicJacobian.Cohomology.CechSectionIdentificationLegMid2
 
 /-!
-# Sub-brick A — LegTop: restrict-FIP chain (part B) and final leg naturality
+# Naturality of the Čech section comparison
 
-`pullbackComp_rFIP_compat`, `pushPull_toRestrict_comm`, `thin_resid5` (private),
-`pls_eq` (private), `pushPull_interLegHom_sections`, `map_op_eqToHom_swap` (private),
-`coreIso_comm_leg` (`lem:coreIso_comm_leg`).
-
-Split from `CechSectionIdentificationLeg` to keep per-file heartbeat budget under 10 min.
-Depends on `CechSectionIdentificationLegMid2`.
+This file identifies the push-pull map of an inclusion of intersection opens with direct
+restriction on sections. It then uses that identification to prove the coordinatewise
+naturality theorem `coreIso_comm_leg` (`lem:coreIso_comm_leg`).
 -/
 
 universe u
@@ -25,10 +22,8 @@ namespace AlgebraicGeometry
 open Scheme.Modules
 
 variable {X : Scheme.{u}}
--- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
-set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
-set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 800000 in
+-- Transporting the composite adjunction unit through two restriction isomorphisms exceeds defaults.
 /-- Step 2 (K4): the `pullbackComp` comparison, conjugated to restrict-world through
 `restrictFunctorIsoPullback`, is the `restrictFunctorComp` identification. -/
 lemma pullbackComp_rFIP_compat {A C' : Scheme.{u}} (q : A ⟶ X) [IsOpenImmersion q]
@@ -134,10 +129,23 @@ lemma pullbackComp_rFIP_compat {A C' : Scheme.{u}} (q : A ⟶ X) [IsOpenImmersio
     exact restrict_unit_comp q c F
   exact hA.trans hB.symm
 
--- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
-set_option backward.isDefEq.respectTransparency false in
+/-- The restrict-world normal form of a push-pull map along an open inclusion in a slice. -/
+noncomputable def pushPullRestrictComparison {A C' : Scheme.{u}} (q : A ⟶ X)
+    [IsOpenImmersion q] (c : C' ⟶ A) [IsOpenImmersion c] (pC : C' ⟶ X)
+    [IsOpenImmersion pC] (wC : c ≫ q = pC) (F : X.Modules) :=
+  (Scheme.Modules.pushforward q).map
+      ((Scheme.Modules.restrictFunctorIsoPullback q).inv.app F) ≫
+    (Scheme.Modules.pushforward q).map
+      ((Scheme.Modules.restrictAdjunction c).unit.app (F.restrict q)) ≫
+    (Scheme.Modules.pushforward q).map ((Scheme.Modules.pushforward c).map
+      ((Scheme.Modules.restrictFunctorComp c q).inv.app F)) ≫
+    (Scheme.Modules.pushforwardCongr wC).hom.app
+      ((Scheme.Modules.restrictFunctor (c ≫ q)).obj F) ≫
+    (Scheme.Modules.pushforward pC).map
+      ((Scheme.Modules.restrictFunctorCongr wC).hom.app F)
+
 set_option maxHeartbeats 1600000 in
-set_option synthInstance.maxHeartbeats 400000 in
+-- Reducing the two proof-irrelevant over-triangle transports exceeds the default budget.
 /-- Step 3: the push–pull map of a slice-level open inclusion, conjugated to restrict-world,
 is the restriction unit followed by the `restrictFunctorComp` identification and the two
 transport isos along the over-triangle (all with `rfl` section components). -/
@@ -147,16 +155,8 @@ lemma pushPull_toRestrict_comm {A C' : Scheme.{u}} (q : A ⟶ X) [IsOpenImmersio
     pushPullMap F (Over.homMk c wC : Over.mk pC ⟶ Over.mk q) ≫
         (Scheme.Modules.pushforward pC).map
           ((Scheme.Modules.restrictFunctorIsoPullback pC).inv.app F) =
-      (Scheme.Modules.pushforward q).map
-          ((Scheme.Modules.restrictFunctorIsoPullback q).inv.app F) ≫
-        (Scheme.Modules.pushforward q).map
-          ((Scheme.Modules.restrictAdjunction c).unit.app (F.restrict q)) ≫
-        (Scheme.Modules.pushforward q).map ((Scheme.Modules.pushforward c).map
-          ((Scheme.Modules.restrictFunctorComp c q).inv.app F)) ≫
-        (Scheme.Modules.pushforwardCongr wC).hom.app
-          ((Scheme.Modules.restrictFunctor (c ≫ q)).obj F) ≫
-        (Scheme.Modules.pushforward pC).map
-          ((Scheme.Modules.restrictFunctorCongr wC).hom.app F) := by
+      pushPullRestrictComparison q c pC wC F := by
+  dsimp only [pushPullRestrictComparison]
   subst wC
   -- the two transport isos at `rfl` are identities (their section components are
   -- restriction maps along `eqToHom rfl`)
@@ -251,167 +251,191 @@ private lemma thin_resid5 (P : (TopologicalSpace.Opens ↥X)ᵒᵖ ⥤ Ab.{u})
     (P.map i₁.op ≫ P.map i₂.op ≫ P.map i₃.op ≫ P.map i₄.op) ≫ eqToHom h₄ =
       eqToHom h₅ ≫ P.map i₆.op := by
   subst e₄ e₅
-  show (P.map i₁.op ≫ P.map i₂.op ≫ P.map i₃.op ≫ P.map i₄.op) ≫
+  change (P.map i₁.op ≫ P.map i₂.op ≫ P.map i₃.op ≫ P.map i₄.op) ≫
       𝟙 (P.obj (Opposite.op E)) = 𝟙 (P.obj (Opposite.op A)) ≫ P.map i₆.op
   rw [Category.comp_id, Category.id_comp, ← Functor.map_comp, ← Functor.map_comp,
     ← Functor.map_comp, ← op_comp, ← op_comp, ← op_comp]
   exact congrArg (fun t : E ⟶ A => P.map t.op) (Subsingleton.elim _ _)
 
--- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
-set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
-set_option synthInstance.maxHeartbeats 400000 in
+private lemma map_comp_postcomp_of_eq {C D : Type*} [Category C] [Category D]
+    (E : C ⥤ D) {A B C' : C} {T : D} (f : A ⟶ B) (g : B ⟶ C') (h : A ⟶ C')
+    (e : f ≫ g = h) (k : E.obj C' ⟶ T) :
+    E.map f ≫ E.map g ≫ k = E.map h ≫ k := by
+  rw [← Category.assoc, ← E.map_comp, e]
+
+private lemma iota_image_preimage_eq_inf (U V : TopologicalSpace.Opens X) :
+    Scheme.Opens.ι U ''ᵁ (Scheme.Opens.ι U ⁻¹ᵁ V) = U ⊓ V := by
+  rw [Scheme.Hom.image_preimage_eq_opensRange_inf, Scheme.Opens.opensRange_ι]
+
+private noncomputable def openOverHomOfLE {U W : TopologicalSpace.Opens X} (h : U ≤ W) :
+    Over.mk (Scheme.Opens.ι U) ⟶ Over.mk (Scheme.Opens.ι W) :=
+  Over.homMk (X.homOfLE h) (Scheme.homOfLE_ι X h)
+
+private noncomputable def openFaceRestrV (F : X.Modules) (V : TopologicalSpace.Opens X)
+    {U W : TopologicalSpace.Opens X} (h : U ≤ W) :
+    ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj
+        (Opposite.op (W ⊓ V)) ⟶
+      ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj
+        (Opposite.op (U ⊓ V)) :=
+  ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.map
+    (homOfLE (inf_le_inf_right V h)).op
+
+private noncomputable def openLegSectionsHom (F : X.Modules)
+    (U V : TopologicalSpace.Opens X) :=
+  (sectionFunctorV V).map
+      ((Scheme.Modules.pushforward (Scheme.Opens.ι U)).map
+        ((Scheme.Modules.restrictFunctorIsoPullback (Scheme.Opens.ι U)).inv.app F)) ≫
+    eqToHom (congrArg (fun W =>
+      ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op W))
+      (iota_image_preimage_eq_inf U V))
+
+private noncomputable def openRestrictChain (F : X.Modules)
+    {U W : TopologicalSpace.Opens X} (h : U ≤ W) :=
+  pushPullRestrictComparison (Scheme.Opens.ι W) (X.homOfLE h)
+    (Scheme.Opens.ι U) (Scheme.homOfLE_ι X h) F
+
+private lemma openOverHomOfLE_eq {U W : TopologicalSpace.Opens X} (h : U ≤ W) :
+    openOverHomOfLE h =
+      (Over.homMk (X.homOfLE h) (Scheme.homOfLE_ι X h) :
+        Over.mk (Scheme.Opens.ι U) ⟶ Over.mk (Scheme.Opens.ι W)) :=
+  rfl
+
+private lemma openRestrictChain_eq (F : X.Modules)
+    {U W : TopologicalSpace.Opens X} (h : U ≤ W) :
+    openRestrictChain F h =
+      pushPullRestrictComparison (Scheme.Opens.ι W) (X.homOfLE h)
+        (Scheme.Opens.ι U) (Scheme.homOfLE_ι X h) F :=
+  rfl
+
+private lemma openLegSectionsHom_eq (F : X.Modules) (U V : TopologicalSpace.Opens X) :
+    openLegSectionsHom F U V =
+      (sectionFunctorV V).map
+          ((Scheme.Modules.pushforward (Scheme.Opens.ι U)).map
+            ((Scheme.Modules.restrictFunctorIsoPullback (Scheme.Opens.ι U)).inv.app F)) ≫
+        eqToHom (congrArg (fun W =>
+          ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op W))
+          (iota_image_preimage_eq_inf U V)) :=
+  rfl
+
+/-- The restriction map on sections induced by deleting one index from a cover tuple. -/
+private noncomputable def coverInterFaceRestrV (𝒰 : X.OpenCover) (F : X.Modules)
+    (V : TopologicalSpace.Opens X) {p : ℕ} (σ' : Fin (p + 2) → 𝒰.I₀)
+    (k : Fin (p + 2)) :=
+  openFaceRestrV F V
+    (coverInterOpen_comp_le 𝒰 (SimplexCategory.δ k).toOrderHom σ')
+
 /-- Coordinate unfolding of the per-leg section identification: `pushPull_leg_sections`
 is, by `rfl`, the evaluated pushforward of the `restrictFunctorIsoPullback` inverse
 followed by the image-reindex transport. -/
 private lemma pls_eq (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
     {m : ℕ} (σ : Fin (m + 1) → 𝒰.I₀) (V : TopologicalSpace.Opens X) :
     (pushPull_leg_sections 𝒰 F σ V).hom =
-      (sectionFunctorV V).map
-        ((Scheme.Modules.pushforward (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).map
-          ((Scheme.Modules.restrictFunctorIsoPullback
-            (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).inv.app F)) ≫
-      eqToHom (congrArg (fun W =>
-          ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op W))
-        (show Scheme.Opens.ι (coverInterOpen 𝒰 σ) ''ᵁ
-            (Scheme.Opens.ι (coverInterOpen 𝒰 σ) ⁻¹ᵁ V) = coverInterOpen 𝒰 σ ⊓ V by
-          rw [Scheme.Hom.image_preimage_eq_opensRange_inf, Scheme.Opens.opensRange_ι])) := rfl
+      openLegSectionsHom F (coverInterOpen 𝒰 σ) V := rfl
 
--- KERNEL-BUDGET (measured ~1.9M): the kernel symbolically unfolds `coverInterOpen 𝒰 σ = ⨅ₖ
--- coverOpen 𝒰 (σ k)` over the variable-length face `Fin (p+2)` while checking this statement's
--- well-typedness. This is intrinsic to stating the per-leg identity over concrete cover
--- intersections at the section level (irreducibility doesn't help — the kernel ignores it;
--- abstracting the opens to variables makes it cheap but re-grinds on specialization). A genuine
--- speedup needs redesigning the section-identification away from module-level adjunction units.
--- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
-set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
-/-- Decomposition of `pushPull_interLegHom_sections` (kernel-budget split): the
-`simp`/`erw`/`congr 1`/`thin_resid5` residual, stated on the post-`hstep` goal `G1` so the
-kernel checks this heavy defeq INDEPENDENTLY of the `pls_eq`/`hstep` prefix (each term then
-checks under the 1600000 budget — the undecomposed term times out). The LHS is the evaluated
-`pushPull_toRestrict_comm` RHS; the RHS is the `pls_eq`-unfolded leg target. -/
-private lemma pushPull_interLegHom_resid (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
-    (V : TopologicalSpace.Opens ↥X) {p : ℕ} (σ' : Fin (p + 2) → 𝒰.I₀) (k : Fin (p + 2))
-    (hle : coverInterOpen 𝒰 σ' ≤
-      coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom)) :
-    (sectionFunctorV V).map
-        ((Scheme.Modules.pushforward (Scheme.Opens.ι (coverInterOpen 𝒰
-              (σ' ∘ (SimplexCategory.δ k).toOrderHom)))).map
-            ((Scheme.Modules.restrictFunctorIsoPullback (Scheme.Opens.ι (coverInterOpen 𝒰
-              (σ' ∘ (SimplexCategory.δ k).toOrderHom)))).inv.app F) ≫
-          (Scheme.Modules.pushforward (Scheme.Opens.ι (coverInterOpen 𝒰
-              (σ' ∘ (SimplexCategory.δ k).toOrderHom)))).map
-            ((Scheme.Modules.restrictAdjunction (X.homOfLE hle)).unit.app
-              (F.restrict (Scheme.Opens.ι (coverInterOpen 𝒰
-                (σ' ∘ (SimplexCategory.δ k).toOrderHom))))) ≫
-          (Scheme.Modules.pushforward (Scheme.Opens.ι (coverInterOpen 𝒰
-              (σ' ∘ (SimplexCategory.δ k).toOrderHom)))).map
-            ((Scheme.Modules.pushforward (X.homOfLE hle)).map
-              ((Scheme.Modules.restrictFunctorComp (X.homOfLE hle)
-                (Scheme.Opens.ι (coverInterOpen 𝒰
-                  (σ' ∘ (SimplexCategory.δ k).toOrderHom)))).inv.app F)) ≫
-          (Scheme.Modules.pushforwardCongr (Scheme.homOfLE_ι X hle)).hom.app
-            ((Scheme.Modules.restrictFunctor (X.homOfLE hle ≫ Scheme.Opens.ι
-              (coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom)))).obj F) ≫
-          (Scheme.Modules.pushforward (Scheme.Opens.ι (coverInterOpen 𝒰 σ'))).map
-            ((Scheme.Modules.restrictFunctorCongr (Scheme.homOfLE_ι X hle)).hom.app F)) ≫
-      eqToHom (congrArg (fun W =>
-          ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op W))
-        (show Scheme.Opens.ι (coverInterOpen 𝒰 σ') ''ᵁ
-            (Scheme.Opens.ι (coverInterOpen 𝒰 σ') ⁻¹ᵁ V) = coverInterOpen 𝒰 σ' ⊓ V by
-          rw [Scheme.Hom.image_preimage_eq_opensRange_inf, Scheme.Opens.opensRange_ι])) =
-    ((sectionFunctorV V).map
-          ((Scheme.Modules.pushforward (Scheme.Opens.ι (coverInterOpen 𝒰
-              (σ' ∘ (SimplexCategory.δ k).toOrderHom)))).map
-            ((Scheme.Modules.restrictFunctorIsoPullback (Scheme.Opens.ι (coverInterOpen 𝒰
-              (σ' ∘ (SimplexCategory.δ k).toOrderHom)))).inv.app F)) ≫
-        eqToHom (congrArg (fun W =>
-            ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op W))
-          (show Scheme.Opens.ι (coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom)) ''ᵁ
-              (Scheme.Opens.ι (coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom)) ⁻¹ᵁ V) =
-            coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom) ⊓ V by
-            rw [Scheme.Hom.image_preimage_eq_opensRange_inf, Scheme.Opens.opensRange_ι]))) ≫
-      ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.map
-        (homOfLE (inf_le_inf_right V (le_iInf (fun l =>
-          iInf_le (fun j => coverOpen 𝒰 (σ' j))
-            ((SimplexCategory.δ k).toOrderHom l))))).op := by
-  -- reconstruct the equality haves consumed by `thin_resid5`
-  have heq_σ' : Scheme.Opens.ι (coverInterOpen 𝒰 σ') ''ᵁ
-      (Scheme.Opens.ι (coverInterOpen 𝒰 σ') ⁻¹ᵁ V) = coverInterOpen 𝒰 σ' ⊓ V :=
-    by rw [Scheme.Hom.image_preimage_eq_opensRange_inf, Scheme.Opens.opensRange_ι]
-  have heq_dk : Scheme.Opens.ι (coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom)) ''ᵁ
-        (Scheme.Opens.ι (coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom)) ⁻¹ᵁ V) =
-      coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom) ⊓ V :=
-    by rw [Scheme.Hom.image_preimage_eq_opensRange_inf, Scheme.Opens.opensRange_ι]
-  have hcomp_image : (X.homOfLE hle ≫ Scheme.Opens.ι (coverInterOpen 𝒰
-            (σ' ∘ (SimplexCategory.δ k).toOrderHom))) ''ᵁ
-          ((X.homOfLE hle) ⁻¹ᵁ ((Scheme.Opens.ι (coverInterOpen 𝒰
-            (σ' ∘ (SimplexCategory.δ k).toOrderHom))) ⁻¹ᵁ V)) =
-      (Scheme.Opens.ι (coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom))) ''ᵁ
-          ((X.homOfLE hle) ''ᵁ ((X.homOfLE hle) ⁻¹ᵁ
-            ((Scheme.Opens.ι (coverInterOpen 𝒰
-              (σ' ∘ (SimplexCategory.δ k).toOrderHom))) ⁻¹ᵁ V))) :=
+set_option maxHeartbeats 800000 in
+-- Normalizing the evaluated five-map pushforward chain exceeds the default heartbeat budget.
+/-- The evaluated generic restriction chain is the direct restriction on sections. -/
+private lemma openRestrictChain_sections (F : X.Modules) (V : TopologicalSpace.Opens X)
+    {U W : TopologicalSpace.Opens X} (h : U ≤ W) :
+    (sectionFunctorV V).map (openRestrictChain F h) ≫
+        eqToHom (congrArg (fun Z =>
+          ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op Z))
+          (iota_image_preimage_eq_inf U V)) =
+      openLegSectionsHom F W V ≫ openFaceRestrV F V h := by
+  dsimp only [openRestrictChain, openLegSectionsHom, openFaceRestrV]
+  have heq_U := iota_image_preimage_eq_inf U V
+  have heq_W := iota_image_preimage_eq_inf W V
+  have hcomp_image : (X.homOfLE h ≫ Scheme.Opens.ι W) ''ᵁ
+          ((X.homOfLE h) ⁻¹ᵁ ((Scheme.Opens.ι W) ⁻¹ᵁ V)) =
+      (Scheme.Opens.ι W) ''ᵁ
+          ((X.homOfLE h) ''ᵁ ((X.homOfLE h) ⁻¹ᵁ ((Scheme.Opens.ι W) ⁻¹ᵁ V))) :=
     by rw [Scheme.Hom.comp_image]
-  have hpreimg_eq : (Scheme.Opens.ι (coverInterOpen 𝒰 σ')) ⁻¹ᵁ V =
-      (X.homOfLE hle ≫ Scheme.Opens.ι (coverInterOpen 𝒰
-        (σ' ∘ (SimplexCategory.δ k).toOrderHom))) ⁻¹ᵁ V :=
-    by simp only [← Scheme.homOfLE_ι X hle]
-  have himg2_eq : (Scheme.Opens.ι (coverInterOpen 𝒰 σ')) ''ᵁ
-        ((Scheme.Opens.ι (coverInterOpen 𝒰 σ')) ⁻¹ᵁ V) =
-      (X.homOfLE hle ≫ Scheme.Opens.ι (coverInterOpen 𝒰
-          (σ' ∘ (SimplexCategory.δ k).toOrderHom))) ''ᵁ
-        ((Scheme.Opens.ι (coverInterOpen 𝒰 σ')) ⁻¹ᵁ V) :=
-    by simp only [← Scheme.homOfLE_ι X hle]
-  simp only [Functor.map_comp, Category.assoc]
-  erw [Functor.map_comp, Category.assoc, Category.assoc, Category.assoc]
-  congr 1
+  have hpreimg_eq : (Scheme.Opens.ι U) ⁻¹ᵁ V =
+      (X.homOfLE h ≫ Scheme.Opens.ι W) ⁻¹ᵁ V :=
+    by simp only [← Scheme.homOfLE_ι X h]
+  have himg2_eq : (Scheme.Opens.ι U) ''ᵁ ((Scheme.Opens.ι U) ⁻¹ᵁ V) =
+      (X.homOfLE h ≫ Scheme.Opens.ι W) ''ᵁ ((Scheme.Opens.ι U) ⁻¹ᵁ V) :=
+    by simp only [← Scheme.homOfLE_ι X h]
+  simp only [Category.assoc]
+  erw [Functor.map_comp]
+  erw [Category.assoc]
+  refine congrArg (fun z => (sectionFunctorV V).map
+    ((Scheme.Modules.pushforward (Scheme.Opens.ι W)).map
+      ((Scheme.Modules.restrictFunctorIsoPullback (Scheme.Opens.ι W)).inv.app F)) ≫ z) ?_
   exact thin_resid5 ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf
-    ((Scheme.Hom.opensFunctor (Scheme.Opens.ι (coverInterOpen 𝒰
-        (σ' ∘ (SimplexCategory.δ k).toOrderHom)))).map
-      (homOfLE ((X.homOfLE hle).image_preimage_le
-        ((Scheme.Opens.ι (coverInterOpen 𝒰
-          (σ' ∘ (SimplexCategory.δ k).toOrderHom))) ⁻¹ᵁ V))))
+    ((Scheme.Hom.opensFunctor (Scheme.Opens.ι W)).map
+      (homOfLE ((X.homOfLE h).image_preimage_le ((Scheme.Opens.ι W) ⁻¹ᵁ V))))
     (eqToHom hcomp_image)
-    ((Scheme.Hom.opensFunctor (X.homOfLE hle ≫ Scheme.Opens.ι (coverInterOpen 𝒰
-        (σ' ∘ (SimplexCategory.δ k).toOrderHom)))).map (eqToHom hpreimg_eq))
+    ((Scheme.Hom.opensFunctor (X.homOfLE h ≫ Scheme.Opens.ι W)).map
+      (eqToHom hpreimg_eq))
     (eqToHom himg2_eq)
-    (congrArg (fun W =>
-        ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op W)) heq_σ')
-    (congrArg (fun W =>
-        ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op W)) heq_dk)
-    (homOfLE (inf_le_inf_right V hle))
-    heq_σ' heq_dk
+    (congrArg (fun Z =>
+      ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op Z)) heq_U)
+    (congrArg (fun Z =>
+      ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op Z)) heq_W)
+    (homOfLE (inf_le_inf_right V h)) heq_U heq_W
 
-/- USER (iter-093): `lake build` (the KERNEL, not the LSP) REJECTS this lemma with
-   `(kernel) deterministic timeout` at the `pushPull_interLegHom_sections` declaration below.
-   The LSP shows it green — the LSP's kernel check is laxer; DO NOT trust it. Verify every
-   change with `lake build AlgebraicJacobian.Cohomology.CechSectionIdentificationLegTop`
-   (the deps Base→…→Mid2 already have oleans, so only THIS file re-checks).
-   The downstream `unknown constant 'pushPull_interLegHom_sections'` error at `coreIso_comm_leg`
-   is a pure CASCADE of this timeout — fixing this lemma fixes both.
+/-- The push-pull comparison for an inclusion of opens, with its five-map target kept opaque. -/
+private lemma pushPull_openOverHom_restrict (F : X.Modules)
+    {U W : TopologicalSpace.Opens X} (h : U ≤ W) :
+    pushPullMap F (openOverHomOfLE h) ≫
+        (Scheme.Modules.pushforward (Scheme.Opens.ι U)).map
+          ((Scheme.Modules.restrictFunctorIsoPullback (Scheme.Opens.ι U)).inv.app F) =
+      openRestrictChain F h := by
+  rw [openOverHomOfLE_eq h, openRestrictChain_eq F h]
+  exact @pushPull_toRestrict_comm X
+    (Scheme.Opens.toScheme W) (Scheme.Opens.toScheme U)
+    (Scheme.Opens.ι W) inferInstance (X.homOfLE h) inferInstance
+    (Scheme.Opens.ι U) inferInstance (Scheme.homOfLE_ι X h) F
 
-   FIX (directive-aligned with "make the build faster / ensure it builds"): the proof body is
-   logically correct but its elaborated proof TERM is too large for the kernel to check under
-   `maxHeartbeats 1600000`. A prior pass already extracted inline equalities into named `have`s
-   (see comments) and it STILL times out. The kernel checks each declaration's term INDEPENDENTLY
-   and treats references to other declarations as opaque (type-only) — so DECOMPOSE this lemma so
-   each resulting declaration's term checks UNDER the current 1600000 budget. Natural seam: pull the
-   post-`congr 1` thin-category residual (the `thin_resid5 …` application, lines ~338-354) out into a
-   separate `private lemma` stated with its explicit hypotheses, proven by `thin_resid5`; the main
-   lemma then composes the `pls_eq`/`hstep` prefix with `exact <that lemma> …`. Re-verify EACH piece
-   kernel-checks; `#print axioms coreIso_comm_leg` must stay sorry-free (kernel axioms only).
-   ONLY if decomposition genuinely cannot bound it this iter, raise `maxHeartbeats` on JUST the
-   offending declaration to the smallest passing value with a `-- KERNEL-BUDGET:` note (fallback;
-   decomposition is preferred). Do NOT change the statement signatures of
-   `pushPull_interLegHom_sections` or `coreIso_comm_leg` — both are consumed downstream (CSI/Aux). -/
--- KERNEL-BUDGET: same intrinsic cost as `pushPull_interLegHom_resid` — the kernel symbolically
--- expands `coverInterOpen` over the variable-length face while checking this concrete statement.
--- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
-set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 4000000 in
-set_option synthInstance.maxHeartbeats 400000 in
+/-- Evaluating the push-pull comparison gives the opaque restriction chain on sections. -/
+private lemma pushPull_openOverHom_sections_prefix (F : X.Modules)
+    (V : TopologicalSpace.Opens X) {U W : TopologicalSpace.Opens X} (h : U ≤ W) :
+    (sectionFunctorV V).map (pushPullMap F (openOverHomOfLE h)) ≫
+        (sectionFunctorV V).map
+          ((Scheme.Modules.pushforward (Scheme.Opens.ι U)).map
+            ((Scheme.Modules.restrictFunctorIsoPullback (Scheme.Opens.ι U)).inv.app F)) ≫
+        eqToHom (congrArg (fun Z =>
+          ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op Z))
+          (iota_image_preimage_eq_inf U V)) =
+      (sectionFunctorV V).map (openRestrictChain F h) ≫
+        eqToHom (congrArg (fun Z =>
+          ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op Z))
+          (iota_image_preimage_eq_inf U V)) :=
+  map_comp_postcomp_of_eq (sectionFunctorV V)
+    (pushPullMap F (openOverHomOfLE h))
+    ((Scheme.Modules.pushforward (Scheme.Opens.ι U)).map
+      ((Scheme.Modules.restrictFunctorIsoPullback (Scheme.Opens.ι U)).inv.app F))
+    (openRestrictChain F h) (pushPull_openOverHom_restrict F h)
+    (eqToHom (congrArg (fun Z =>
+      ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op Z))
+      (iota_image_preimage_eq_inf U V)))
+
+/-- The section comparison is natural for an arbitrary inclusion of opens. Keeping the
+opens abstract prevents the kernel from normalizing a variable-length cover intersection. -/
+private lemma pushPull_openOverHom_sections (F : X.Modules) (V : TopologicalSpace.Opens X)
+    {U W : TopologicalSpace.Opens X} (h : U ≤ W) :
+    (sectionFunctorV V).map (pushPullMap F (openOverHomOfLE h)) ≫
+      openLegSectionsHom F U V =
+      openLegSectionsHom F W V ≫ openFaceRestrV F V h := by
+  rw [openLegSectionsHom_eq F U V]
+  exact (pushPull_openOverHom_sections_prefix F V h).trans
+    (openRestrictChain_sections F V h)
+
+private lemma interLegHom_eq_openOverHomOfLE (𝒰 : X.OpenCover) {p : ℕ}
+    (σ' : Fin (p + 2) → 𝒰.I₀) (k : Fin (p + 2))
+    (h : coverInterOpen 𝒰 σ' ≤
+      coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom)) :
+    interLegHom 𝒰 σ' k = openOverHomOfLE h := by
+  rfl
+
+private lemma coverInterFaceRestrV_eq_openFaceRestrV (𝒰 : X.OpenCover) (F : X.Modules)
+    (V : TopologicalSpace.Opens X) {p : ℕ} (σ' : Fin (p + 2) → 𝒰.I₀)
+    (k : Fin (p + 2)) (h : coverInterOpen 𝒰 σ' ≤
+      coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom)) :
+    coverInterFaceRestrV 𝒰 F V σ' k = openFaceRestrV F V h := by
+  rfl
+
 /-- **Per-leg restriction naturality** (the sheaf-theoretic seam): the evaluated push–pull
 map of the face inclusion `interLegHom : U_{σ'} ⊆ U_{σ'∘δᵏ}` acts on the identified leg
 sections as the plain `F`-restriction along `U_{σ'} ⊓ V ⊆ U_{σ'∘δᵏ} ⊓ V`. -/
@@ -420,36 +444,14 @@ lemma pushPull_interLegHom_sections (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F :
     (sectionFunctorV V).map (pushPullMap F (interLegHom 𝒰 σ' k)) ≫
         (pushPull_leg_sections 𝒰 F σ' V).hom =
       (pushPull_leg_sections 𝒰 F (σ' ∘ (SimplexCategory.δ k).toOrderHom) V).hom ≫
-        ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.map
-          (homOfLE (inf_le_inf_right V (le_iInf (fun l =>
-            iInf_le (fun j => coverOpen 𝒰 (σ' j))
-              ((SimplexCategory.δ k).toOrderHom l))))).op := by
-  -- Kernel-term-shrink: extracted inline equality proofs into named `have`s below.
-  have hle : coverInterOpen 𝒰 σ' ≤
+        coverInterFaceRestrV 𝒰 F V σ' k := by
+  let h : coverInterOpen 𝒰 σ' ≤
       coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom) :=
-    le_iInf (fun l => iInf_le (fun j => coverOpen 𝒰 (σ' j))
-      ((SimplexCategory.δ k).toOrderHom l))
-  have hstep := @pushPull_toRestrict_comm X
-    (Scheme.Opens.toScheme (coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom)))
-    (Scheme.Opens.toScheme (coverInterOpen 𝒰 σ'))
-    (Scheme.Opens.ι (coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom)))
-    inferInstance (X.homOfLE hle) inferInstance
-    (Scheme.Opens.ι (coverInterOpen 𝒰 σ')) inferInstance
-    (Scheme.homOfLE_ι X hle) F
-  -- Extract inline equality proofs as named `have`s to prevent kernel term blowup
-  have heq_σ' : Scheme.Opens.ι (coverInterOpen 𝒰 σ') ''ᵁ
-      (Scheme.Opens.ι (coverInterOpen 𝒰 σ') ⁻¹ᵁ V) = coverInterOpen 𝒰 σ' ⊓ V :=
-    by rw [Scheme.Hom.image_preimage_eq_opensRange_inf, Scheme.Opens.opensRange_ι]
-  rw [pls_eq 𝒰 F σ' V, pls_eq 𝒰 F (σ' ∘ (SimplexCategory.δ k).toOrderHom) V]
-  conv_lhs => erw [← Category.assoc]
-  refine Eq.trans (congrArg (fun w => w ≫ eqToHom (congrArg (fun W =>
-      ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op W))
-      heq_σ'))
-    (congrArg (fun m => (sectionFunctorV V).map m) hstep)) ?_
-  -- The post-`hstep` goal `G1` is exactly the conclusion of the extracted residual lemma
-  -- (kernel-budget split): the heavy `simp`/`erw`/`congr 1`/`thin_resid5` defeq lives there,
-  -- checked independently of this prefix term.
-  exact pushPull_interLegHom_resid 𝒰 F V σ' k hle
+    coverInterOpen_comp_le 𝒰 (SimplexCategory.δ k).toOrderHom σ'
+  rw [pls_eq 𝒰 F σ' V, pls_eq 𝒰 F (σ' ∘ (SimplexCategory.δ k).toOrderHom) V,
+    interLegHom_eq_openOverHomOfLE 𝒰 σ' k h,
+    coverInterFaceRestrV_eq_openFaceRestrV 𝒰 F V σ' k h]
+  exact pushPull_openOverHom_sections F V h
 
 
 /-- Thin-category fusion of presheaf restrictions against `eqToHom` reindexes: a
@@ -465,9 +467,6 @@ private lemma map_op_eqToHom_swap (P : (TopologicalSpace.Opens ↥X)ᵒᵖ ⥤ A
   rw [eqToHom_refl, eqToHom_refl, Category.comp_id, Category.id_comp]
   exact congrArg (fun u => P.map u) (congrArg Quiver.Hom.op (Subsingleton.elim f g))
 
--- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
-set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
 /-- **Per-leg naturality of the core comparison coface** (`lem:coreIso_comm_leg`).
 For a fixed coface index `k` and multi-index `σ'`, the `σ'`-coordinate (the projection
 `Pi.π … σ'`) of the evaluated push–pull coface `G_V(Ψ(δ^nerve_k))` followed by the
