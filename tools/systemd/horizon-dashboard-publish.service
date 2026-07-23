@@ -1,0 +1,14 @@
+[Unit]
+Description=Build and push the Horizon static dashboard
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/axel/LeanAlgebraicGeometry-Horizon
+Environment=HORIZON_WORKSPACE=/home/axel/LeanAlgebraicGeometry-Horizon
+Environment=HORIZON_BIN=/home/axel/.archon-env/bin/horizon
+Environment=HORIZON_WORKSPACE_GIT=/home/axel/LeanAlgebraicGeometry-Horizon/.archon-horizon/vcs/workspace.git
+Environment=HORIZON_PUBLISH_REMOTE=upstream
+Environment=HORIZON_PUBLISH_BRANCH=main
+ExecStart=/home/axel/LeanAlgebraicGeometry-Horizon/scripts/publish-dashboard.sh
