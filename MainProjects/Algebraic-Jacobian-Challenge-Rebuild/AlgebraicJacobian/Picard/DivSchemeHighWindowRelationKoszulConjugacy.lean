@@ -146,6 +146,25 @@ noncomputable def divUniversalHighWindowRelationKoszulSourceFibreEquiv (n : Nat)
       divUniversalHighWindowRelationFibreEquiv
         C hpi g r1 r2 b1 b2 i j K hO hchi hker n himage)
 
+set_option maxHeartbeats 2400000 in
+-- Reducing the pair-indexed composite equivalence exceeds the default budget.
+set_option synthInstance.maxHeartbeats 800000 in
+-- The pointwise relation-fibre equivalence retains the carve-ring scalar tower.
+@[simp]
+theorem divUniversalHighWindowRelationKoszulSourceFibreEquiv_apply (n : Nat)
+    [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    (himage : DivUniversalHighWindowFibreImage
+      C hpi g r1 r2 b1 b2 i j K hO hchi hker n)
+    (x : K ⊗[RZ] (HI × HI → ↑Kr[n])) (q : HI × HI) :
+    divUniversalHighWindowRelationKoszulSourceFibreEquiv
+        C hpi g r1 r2 b1 b2 i j K hO hchi hker n himage x q =
+      divUniversalHighWindowRelationFibreEquiv
+        C hpi g r1 r2 b1 b2 i j K hO hchi hker n himage
+        (TensorProduct.piRightHom RZ K K (fun _ : HI × HI => ↑Kr[n]) x q) := by
+  rw [divUniversalHighWindowRelationKoszulSourceFibreEquiv,
+    LinearEquiv.trans_apply, TensorProduct.piRight_apply]
+  rfl
+
 set_option maxHeartbeats 4000000 in
 -- Comparing the corestricted relation step with the ambient row is reduction-heavy.
 set_option synthInstance.maxHeartbeats 1000000 in
@@ -193,6 +212,68 @@ theorem divUniversalHighWindowRelationBasisStep_fibre_conjugacy (n : Nat)
     (divUniversalHighWindowMulRow_fibre_conjugacy
       (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K hO hchi hker
         n himage t x)
+
+set_option maxHeartbeats 4800000 in
+-- The map equation combines two dependent finite-product conjugacy squares.
+set_option synthInstance.maxHeartbeats 1200000 in
+-- Consecutive projective fibres and their Koszul sources share a deep scalar tower.
+set_option maxRecDepth 24000 in
+/-- The scalar extension of the relative relation Koszul boundary is conjugate
+to the canonical high-window Koszul boundary on the divisor fibre. -/
+theorem divUniversalHighWindowRelationKoszulBoundary_fibre_conjugacy (n : Nat)
+    [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
+    [Module.Projective RZ (Amb[n + 1] ⧸ Kr[n + 1])]
+    (himage : DivUniversalHighWindowFibreImage
+      C hpi g r1 r2 b1 b2 i j K hO hchi hker n)
+    (himageNext : DivUniversalHighWindowFibreImage
+      C hpi g r1 r2 b1 b2 i j K hO hchi hker (n + 1)) :
+    (divUniversalHighWindowMulSourceFibreEquiv
+        C hpi g r1 r2 b1 b2 i j K hO hchi hker (n + 1) himageNext).toLinearMap.comp
+      (LinearMap.baseChange K
+        (divUniversalHighWindowRelationKoszulBoundary (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j n)) =
+    (Scheme.highWindowMulKoszulBoundary
+        (windowN C K hpi g) (windowS C K hpi g) Dᵤ n
+        (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)).comp
+      (divUniversalHighWindowRelationKoszulSourceFibreEquiv
+        C hpi g r1 r2 b1 b2 i j K hO hchi hker n himage).toLinearMap := by
+  let stepR : HI → ↑Kr[n] →ₗ[RZ] ↑Kr[n + 1] := fun t =>
+    divUniversalHighWindowRelationBasisStep (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j n t
+  let stepF : HI → ↑HF[n] →ₗ[K] ↑HF[n + 1] := fun t =>
+    Scheme.finiteMulStepTo
+      (Scheme.divisorSections K (windowS C K hpi g) ⊤) HF[n] HF[n + 1]
+      (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K)
+      (fun s z => Scheme.mul_mem_divisorSections_highWindow
+        (windowN C K hpi g) (windowS C K hpi g) Dᵤ n
+        (divUniversalMultiplierFibreBasis (pi := pi) C hpi g K s) z) t
+  let eNow : (K ⊗[RZ] ↑Kr[n]) ≃ₗ[K] ↑HF[n] :=
+    divUniversalHighWindowRelationFibreEquiv
+      C hpi g r1 r2 b1 b2 i j K hO hchi hker n himage
+  let eNext : (K ⊗[RZ] ↑Kr[n + 1]) ≃ₗ[K] ↑HF[n + 1] :=
+    divUniversalHighWindowRelationFibreEquiv
+      C hpi g r1 r2 b1 b2 i j K hO hchi hker (n + 1) himageNext
+  have hbase := piRightHom_comp_baseChange_finiteKoszulBoundary
+    (R := RZ) (S := K) stepR
+  have hstep : ∀ (t : HI) (x : K ⊗[RZ] ↑Kr[n]),
+      eNext (LinearMap.baseChange K (stepR t) x) = stepF t (eNow x) := by
+    intro t x
+    simpa only [stepR, stepF, eNow, eNext] using
+      divUniversalHighWindowRelationBasisStep_fibre_conjugacy
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K hO hchi hker
+          n himage himageNext t x
+  have hconj := piCongrRight_comp_finiteKoszulBoundary_of_conjugate
+    (step := fun t => LinearMap.baseChange K (stepR t))
+    (step' := stepF) eNow eNext hstep
+  change
+    ((LinearEquiv.piCongrRight fun _ : HI => eNext).toLinearMap.comp
+        (TensorProduct.piRightHom RZ K K (fun _ : HI => ↑Kr[n + 1]))).comp
+      (LinearMap.baseChange K (finiteKoszulBoundary stepR)) =
+    (finiteKoszulBoundary stepF).comp
+      ((LinearEquiv.piCongrRight fun _ : HI × HI => eNow).toLinearMap.comp
+        (TensorProduct.piRightHom RZ K K (fun _ : HI × HI => ↑Kr[n])))
+  rw [LinearMap.comp_assoc, hbase, ← LinearMap.comp_assoc, hconj,
+    LinearMap.comp_assoc]
 
 end HighWindowRelationKoszulConjugacy
 
