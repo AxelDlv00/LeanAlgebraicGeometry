@@ -6,17 +6,17 @@ the algebraic-geometry version of the [Algebraic Jacobian challenge](https://lea
 proposed by Christian Merten after Kevin Buzzard's differential-geometry challenge.
 
 > [!IMPORTANT]
-> **`MainProjects/Algebraic-Jacobian-Challenge-Rebuild` is the current Algebraic Jacobian
-> Challenge project and the project actively being worked on.** All ongoing AJC formalization,
-> integration, and new contributions should target the rebuild unless a task explicitly says
-> otherwise. `MainProjects/Algebraic-Jacobian-Challenge` is the legacy implementation: it is kept
-> for historical context and occasional reference, but it is not the current development target.
+> The workspace develops **two live routes** to the Algebraic Jacobian challenge. Follow the
+> project named by the active task rather than treating either route as reference-only.
+>
+> - `MainProjects/Algebraic-Jacobian-Challenge` continues the ambitious Picard-scheme route through
+>   Grassmannians, Quot schemes, flattening stratification, `Pic^0`, and the Albanese property.
+> - `MainProjects/Algebraic-Jacobian-Challenge-Rebuild` develops a cleaner curve-specialized route
+>   from protected target statements.
 
-The rebuild starts from a protected, reviewable statement file and develops a cleaner,
-mathlib-idiomatic proof stack from scratch. It targets the Jacobian of a smooth, proper,
-geometrically irreducible curve, its Abel-Jacobi map and Albanese universal property, together
-with the extended functoriality and field-base-change statements. Current work is concentrated in
-the rebuild's Picard and representability pipeline on the path to those headline declarations.
+The two projects share mathematical sources and supporting subprojects while keeping independent
+Lean roots, blueprints, and roadmaps. The rebuild is listed first in the workspace manifest as the
+default project; explicitly scoped tasks may and do advance the ambitious original route.
 
 The [live dashboard](https://axeldlv00.github.io/LeanAlgebraicGeometry/) is the best view of current
 tasks, commits, session logs, blueprint graphs, and declaration-level progress. A static snapshot
@@ -27,17 +27,17 @@ minutes before a new snapshot is visible.
 
 | Path | Role |
 | --- | --- |
-| `MainProjects/Algebraic-Jacobian-Challenge-Rebuild` | **Current and active AJC formalization. New work belongs here.** |
-| `MainProjects/Algebraic-Jacobian-Challenge` | Legacy implementation retained for reference; not the active target. |
+| `MainProjects/Algebraic-Jacobian-Challenge-Rebuild` | Cleaner curve-specialized AJC route and workspace default. |
+| `MainProjects/Algebraic-Jacobian-Challenge` | Ambitious Picard-scheme/Quot AJC route, maintained by scoped tasks. |
 | `SubProjects/` | Supporting, extracted, and related-paper formalizations available to the active project. |
 | `references/` | Shared mathematical sources and retrieval notes. |
 | `.archon-horizon/` | Workspace state: tasks, roadmap, inbox, run metadata, graphs, and ledger. |
 | `config.yaml` | Ordered workspace manifest. The rebuild is listed first because it is the primary project. |
 
-The active rebuild has its own overview in
-[`MainProjects/Algebraic-Jacobian-Challenge-Rebuild/README.md`](MainProjects/Algebraic-Jacobian-Challenge-Rebuild/README.md).
-Its protected target signatures live in
-[`AlgebraicJacobian/Challenge.lean`](MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Challenge.lean).
+Each route has its own overview:
+
+- [`MainProjects/Algebraic-Jacobian-Challenge/README.md`](MainProjects/Algebraic-Jacobian-Challenge/README.md)
+- [`MainProjects/Algebraic-Jacobian-Challenge-Rebuild/README.md`](MainProjects/Algebraic-Jacobian-Challenge-Rebuild/README.md)
 
 ## Project Map
 
@@ -45,8 +45,8 @@ The workspace currently registers these projects, in priority order:
 
 | Project | Purpose |
 | --- | --- |
-| **`Algebraic-Jacobian-Challenge-Rebuild`** | **Primary project under active development: the from-scratch Jacobian formalization and extended challenge.** |
-| `Algebraic-Jacobian-Challenge` | Legacy AJC development used only as reference when needed. |
+| **`Algebraic-Jacobian-Challenge-Rebuild`** | Cleaner curve-specialized route; default project in the workspace manifest. |
+| `Algebraic-Jacobian-Challenge` | Ambitious Picard-scheme, Quot, `Pic^0`, and Albanese route. |
 | `Line-Bundle-Comparison-Iso` | Extracted line-bundle pullback, tensor, and dual comparison infrastructure. |
 | `Albanese` | Albanese universal property, rigidity, and rational-map-extension infrastructure. |
 | `Cech-Cohomology` | Čech computation of higher direct images and its cohomological substrate. |
@@ -55,14 +55,15 @@ The workspace currently registers these projects, in priority order:
 | `Picard-IdentityComponent` | Extracted Picard identity-component and `Pic^0` development. |
 
 These member projects remain useful sources of proved APIs, mathematical designs, and failure
-memory. They do not change the default integration target: current AJC work goes into the rebuild.
+memory for both main routes.
 
-## Working in the Active Project
+## Working in a Main Project
 
-The workspace currently uses Lean and Mathlib `v4.31.0`. To build the active project:
+The workspace currently uses Lean and Mathlib `v4.31.0`. Build the project named by the task. For
+the ambitious Picard-scheme route:
 
 ```bash
-cd MainProjects/Algebraic-Jacobian-Challenge-Rebuild
+cd MainProjects/Algebraic-Jacobian-Challenge
 lake build
 ```
 
@@ -73,7 +74,7 @@ For workspace-wide exploration, run commands from the repository root:
 
 ```bash
 horizon dashboard
-horizon graph -p Algebraic-Jacobian-Challenge-Rebuild frontier
+horizon graph -p Algebraic-Jacobian-Challenge frontier
 horizon search "Jacobian Picard representability"
 ```
 
@@ -101,11 +102,10 @@ timeless account of the mathematics.
 
 ## Contributing
 
-Contributions are welcome, but please use the active/legacy distinction consistently:
+Contributions are welcome, but keep the two routes and task scope explicit:
 
-- **AJC proofs and infrastructure:** target
-  `MainProjects/Algebraic-Jacobian-Challenge-Rebuild` by default. Do not add new AJC development to
-  the legacy project unless an issue or task explicitly requests legacy maintenance.
+- **AJC proofs and infrastructure:** change only the main project named by the task; share reusable
+  inputs through the supporting projects when appropriate.
 - **Protected statements:** do not alter the signatures in the rebuild's `Challenge.lean` or files
   covered by `archon-protected.yaml` without prior agreement. Contributions should discharge those
   statements, not weaken or reshape them silently.

@@ -1,4 +1,4 @@
-# AlgebraicJacobian
+# Algebraic Jacobian Challenge
 
 A Lean 4 formalization of the Jacobian of a smooth, proper, geometrically
 integral curve over a field.  The project follows the Picard-scheme route: it
@@ -7,9 +7,22 @@ Grassmannian/Quot/flattening-stratification machinery, identifies its identity
 component as an abelian variety of dimension equal to the genus, and proves the
 Albanese universal property.
 
-The formalization is advanced but incomplete.  The live Horizon roadmap now
+This is the workspace's ambitious Picard-scheme route. It is developed alongside
+`Algebraic-Jacobian-Challenge-Rebuild`, which follows a separate curve-specialized strategy.
+
+The formalization is advanced but incomplete.  The live Horizon roadmap
 separates the completed infrastructure from the remaining flat-base-change,
 Serre-finiteness, Quot, Picard, Picard-identity-component, and Albanese cones.
+
+## Navigation
+
+- [`AlgebraicJacobian.lean`](AlgebraicJacobian.lean): project import root.
+- [`AlgebraicJacobian/Jacobian.lean`](AlgebraicJacobian/Jacobian.lean): final Jacobian witness
+  interface and assembly point.
+- [`blueprint/web/index.html`](blueprint/web/index.html): generated mathematical blueprint.
+- [`../Algebraic-Jacobian-Challenge-Rebuild/README.md`](../Algebraic-Jacobian-Challenge-Rebuild/README.md):
+  the alternative Rebuild route.
+- `horizon roadmap list --focus AJC.jacobian`: current nested completion roadmap.
 
 ## Layout
 
