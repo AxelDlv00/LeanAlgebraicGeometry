@@ -1,0 +1,17 @@
+---
+author: sync
+content_type: definition
+created: '2026-07-16T21:14:26'
+decl: AlgebraicGeometry.cechEngineX
+docstring: 'The degree-`p` object of the engine complex: `∐_{σ : Fin (p+1) → I₁(V)}
+  O_X(V)`.'
+file: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.cechEngineX
+type: lean
+updated: '2026-07-16T21:14:26'
+---
+noncomputable abbrev cechEngineX (𝒰 : X.OpenCover) (V : TopologicalSpace.Opens ↥X) (p : ℕ) :
+    ModuleCat (X.ringCatSheaf.obj.obj (Opposite.op V)) :=
+  ∐ fun _ : Fin (p + 1) → {i : 𝒰.I₀ // V ≤ coverOpen 𝒰 i} => coverSectionModule V

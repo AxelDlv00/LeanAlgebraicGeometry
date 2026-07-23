@@ -1,0 +1,46 @@
+id: ajc-optimize
+project: Algebraic-Jacobian-Challenge
+objective: This project is already well advanced. Another project chooses another
+  route, Algebraic-Jacobian-Challenge-Rebuild, you can read some parts and get inspiration
+  from it. However I want you to continue Algebraic-Jacobian-Challenge, whose route
+  is more ambitious and mathematically more useful. I first want the blueprints to
+  be cleaner, the roadmap to be refactored to be cleaner (using subitems etc) showing
+  clearly what's been done and what's still to be done. Moreover the code quality
+  should be enhanced, for instance the build time (mostly for Cech) is very high,
+  the code might not use good mathlib convention, and might not be optimized, there
+  are heartbeat everywhere. This task is to optimize and improve the work that was
+  already done, and organize it better.
+title: Make the project clean and optimized
+explanation: This project is already well advanced. Another project chooses another
+  route, Algebraic-Jacobian-Challenge-Rebuild, you can read some parts and get inspiration
+  from it. However I want you to continue Algebraic-Jacobian-Challenge, whose route
+  is more ambitious and mathematically more useful. I first want the blueprints to
+  be cleaner, the roadmap to be refactored to be cleaner (using subitems etc) showing
+  clearly what's been done and what's still to be done. Moreover the code quality
+  should be enhanced, for instance the build time (mostly for Cech) is very high,
+  the code might not use good mathlib convention, and might not be optimized, there
+  are heartbeat everywhere. This task is to optimize and improve the work that was
+  already done, and organize it better.
+projects:
+- Algebraic-Jacobian-Challenge
+priority: normal
+status: queued
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+roadmap_refs: []
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-07-23T04:11:40.588499+00:00'
+updated_at: '2026-07-23T04:11:40.588499+00:00'
+metadata:
+  updated_at: '2026-07-23T04:11:40.588499+00:00'
+  author: Axel
+  created_at: '2026-07-23T04:11:40.588499+00:00'

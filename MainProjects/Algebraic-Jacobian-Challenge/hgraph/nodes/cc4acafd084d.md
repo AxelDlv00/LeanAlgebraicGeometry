@@ -1,0 +1,19 @@
+---
+author: sync
+content_type: definition
+created: '2026-07-16T21:14:26'
+decl: AlgebraicGeometry.cechEngineAug0
+docstring: '**Degree-`0` augmentation of the engine complex**: the codiagonal `∐_{σ
+  : Fin 1 → I₁(V)} O_X(V)
+
+  ⟶ O_X(V)` sending every summand by the identity.'
+file: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.cechEngineAug0
+type: lean
+updated: '2026-07-16T21:14:26'
+---
+noncomputable def cechEngineAug0 (𝒰 : X.OpenCover) (V : TopologicalSpace.Opens ↥X) :
+    cechEngineX 𝒰 V 0 ⟶ coverSectionModule V :=
+  Limits.Sigma.desc fun _ => 𝟙 (coverSectionModule V)

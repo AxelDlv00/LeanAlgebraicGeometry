@@ -1,0 +1,68 @@
+---
+author: sync
+content_type: theorem
+created: '2026-07-16T21:14:26'
+decl: AlgebraicGeometry.Scheme._root_.Subalgebra.FG.isNoetherianRing
+docstring: 'Reduce-to-noetherian helper (the point of `B2` for the `B4`/`B3`
+
+  consumers): a finitely generated subalgebra stage of a `k`-algebra is a
+
+  noetherian ring (Hilbert basis via `Algebra.FiniteType`), so the
+
+  noetherian-pinned engines (`B3` rigid pushforward, flattening stratification)
+
+  apply over `Spec S` after descending.'
+file: AlgebraicJacobian/Picard/FinitePresentationFunctor.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.Scheme._root_.Subalgebra.FG.isNoetherianRing
+type: lean
+updated: '2026-07-16T21:14:26'
+---
+theorem _root_.Subalgebra.FG.isNoetherianRing {A : Type u} [CommRing A]
+    [Algebra k A] {S : Subalgebra k A} (hS : S.FG) :
+    IsNoetherianRing S := by
+  have : Algebra.FiniteType k S := by
+    rw [← Subalgebra.fg_iff_finiteType]
+    exact hS
+  exact Algebra.FiniteType.isNoetherianRing k S
+
+/-- **Campaign `B2(b)` gate** (Prop-class, NO instance — house wall pattern):
+every `DivFamily` on `C_A/Spec A` descends, up to `DivFamily.Rel`, to a
+finitely generated stage `Spec S`, and stage families identified over `A` are
+identified at a larger finitely generated stage.
+
+AUDIT (recorded before any discharge attempt): both clauses are TRUE — the
+fields of `Scheme.DivFamily` are finitely presented data over the finitely
+presented morphism `C_A → Spec A` (`C` is of finite type over the field `k`),
+so they descend through the filtered colimit by EGA IV 8.5.2 (f.p. modules
+and homs), 11.2.6 (flatness at a finite stage), 8.10.5(xii) (properness of
+the support), and Stacks `0B8W` finite-locally-free descent for the
+invertible kernel (kernel formation commutes with the transition base changes
+at flat stages by `Modules.mono_pullback_map_kernel_ι`).  WALL: no in-tree
+presentation of modules on `C_A` as colimits of stage pullbacks; mathlib's
+f.p.-module filtered-colimit descent is localization-shaped only (W1-F §5).
+DISCHARGE ROUTE: the `AffineTransitionLimit` tower `C_A = lim C_S`
+(`Scheme.exists_isOpenCover_and_isAffine`, Stacks `01ZC`) + a f.p.-module
+descent brick, or a cocycle-level presentation of divisor families through
+§2.  The two clauses are the `∃`-form of "`DivFunctor` restricted to affines
+preserves the filtered colimit `A = colim A_i`" (`B2(d)` for `Div`). -/
+class HasDivFamilyFgDescent (C : Over (Spec (CommRingCat.of k))) : Prop where
+  /-- Every divisor family over `Spec A` descends, up to `Rel`, to a
+  finitely generated stage. -/
+  exists_fg_descent :
+    ∀ (A : Type u) [CommRing A] [Algebra k A]
+      (x : DivFamily C.hom (specOver k A)),
+      ∃ S : Subalgebra k A, S.FG ∧
+        ∃ y : DivFamily C.hom (specOver k S),
+          (DivFamily.pullbackAlong (specOverMap k S.val) y).Rel x
+  /-- Stage families identified over `A` are identified at a larger finitely
+  generated stage. -/
+  exists_fg_le_rel :
+    ∀ (A : Type u) [CommRing A] [Algebra k A] (S : Subalgebra k A), S.FG →
+      ∀ y y' : DivFamily C.hom (specOver k S),
+        (DivFamily.pullbackAlong (specOverMap k S.val) y).Rel
+          (DivFamily.pullbackAlong (specOverMap k S.val) y') →
+        ∃ (T : Subalgebra k A) (hle : S ≤ T), T.FG ∧
+          (DivFamily.pullbackAlong (specOverMap k (Subalgebra.inclusion hle)) y).Rel
+            (DivFamily.pullbackAlong (specOverMap k (Subalgebra.inclusion hle)) y')
