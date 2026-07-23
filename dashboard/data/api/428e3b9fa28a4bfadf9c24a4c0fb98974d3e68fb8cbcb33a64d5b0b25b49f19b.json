@@ -1,1 +1,1 @@
-{"markdown": "The pointwise theorem is elaborating through two consecutive projective fibre models; this is expected to be slower than the source-equivalence definition. I\u2019m polling the LSP rather than launching a build, so any proof mismatch will come back as a focused goal.", "recommendation": ""}
+{"markdown": "The imported module is now built; the language server still retains the failed import state, so one final short restart is necessary before editing the field-level consumer.", "recommendation": ""}
