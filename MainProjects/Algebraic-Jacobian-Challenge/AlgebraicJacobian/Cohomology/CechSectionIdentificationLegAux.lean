@@ -3,19 +3,13 @@ Copyright (c) 2026 Christian Merten. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Christian Merten
 -/
-import AlgebraicJacobian.Cohomology.CechSectionIdentificationBase
 import AlgebraicJacobian.Cohomology.CechSectionIdentificationLegTop
 
 /-!
-# Sub-brick A — LegAux: the upper `coreIso_comm` chain
+# Naturality of the Čech complex comparison
 
-The three upper lemmas of the `coreIso_comm` chain:
-`coreIso_comm_coface`, `coreIso_comm_sum`, `coreIso_comm`.
-
-Split from `CechSectionIdentificationLeg` to allow both files to compile within
-the 10-minute heartbeat budget (the three lemmas totalled ~14 M HB).
-
-Depends on `CechSectionIdentificationLeg` (transitively Base).
+This file assembles the coordinatewise naturality theorem `coreIso_comm_leg` into
+per-coface, alternating-sum, and cochain-complex comparison squares.
 -/
 
 universe u
@@ -28,9 +22,42 @@ open Scheme.Modules
 
 variable {X : Scheme.{u}}
 
--- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
-set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 6400000 in
+private lemma comp_univ_sum {C : Type*} [Category C] [Preadditive C]
+    {P Q R : C} {J : Type*} [Fintype J] (f : P ⟶ Q) (g : J → (Q ⟶ R)) :
+    f ≫ (∑ j, g j) = ∑ j, f ≫ g j := by
+  simpa using Preadditive.comp_sum Finset.univ f g
+
+private lemma sum_univ_comp {C : Type*} [Category C] [Preadditive C]
+    {P Q R : C} {J : Type*} [Fintype J] (f : J → (P ⟶ Q)) (g : Q ⟶ R) :
+    (∑ j, f j) ≫ g = ∑ j, f j ≫ g := by
+  simpa using Preadditive.sum_comp Finset.univ f g
+
+private lemma map_univ_sum {C D : Type*} [Category C] [Category D]
+    [Preadditive C] [Preadditive D] (G : C ⥤ D) [G.Additive]
+    {P Q : C} {J : Type*} [Fintype J] (f : J → (P ⟶ Q)) :
+    G.map (∑ j, f j) = ∑ j, G.map (f j) := by
+  simp
+
+private lemma comp_sum_zsmul_eq_sum_zsmul_comp
+    {C : Type*} [Category C] [Preadditive C] {P Q R S : C}
+    {J : Type*} [Fintype J] (a : P ⟶ Q) (b : S ⟶ R) (n : J → ℤ)
+    (f : J → (Q ⟶ R)) (g : J → (P ⟶ S))
+    (h : ∀ j, a ≫ f j = g j ≫ b) :
+    a ≫ (∑ j, n j • f j) = (∑ j, n j • g j) ≫ b := by
+  rw [comp_univ_sum, sum_univ_comp]
+  apply Finset.sum_congr rfl
+  intro j _
+  rw [Preadditive.comp_zsmul, Preadditive.zsmul_comp, h j]
+
+private lemma map_sum_zsmul {C D : Type*} [Category C] [Category D]
+    [Preadditive C] [Preadditive D] (G : C ⥤ D) [G.Additive]
+    {P Q : C} {J : Type*} [Fintype J] (n : J → ℤ) (f : J → (P ⟶ Q)) :
+    G.map (∑ j, n j • f j) = ∑ j, n j • G.map (f j) := by
+  rw [map_univ_sum]
+  apply Finset.sum_congr rfl
+  intro j _
+  rw [Functor.map_zsmul]
+
 /-- **Per-coface square of the core comparison** (`lem:coreIso_comm_coface`): for each
 degree `p` and coface index `k`, the object isos intertwine the individual cofaces.
 Coordinatewise extensionality (`Pi.hom_ext`); the `σ'`-coordinate of the left side is the
@@ -47,10 +74,8 @@ lemma coreIso_comm_coface (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules
               PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map
             ((CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ k)) ≫
         (coreIso_objIso 𝒰 F (p + 1) V).hom := by
-  ext x
-  apply (sectionCechProductEquiv (fun a => coverOpen 𝒰 a ⊓ V)
-    ((SheafOfModules.forget X.ringCatSheaf).obj F) (p + 1)).injective
-  funext σ'
+  apply Limits.Pi.hom_ext
+  intro σ'
   have hπ : (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V)
         ((SheafOfModules.forget X.ringCatSheaf).obj F)).map (SimplexCategory.δ k) ≫
         Pi.π _ σ' =
@@ -58,21 +83,27 @@ lemma coreIso_comm_coface (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules
         sectionCechFaceRestr (fun a => coverOpen 𝒰 a ⊓ V)
           ((SheafOfModules.forget X.ringCatSheaf).obj F) σ' k :=
     Pi.lift_π _ σ'
-  have hL := ConcreteCategory.congr_hom hπ (ConcreteCategory.hom (coreIso_objIso 𝒰 F p V).hom x)
-  have hR := ConcreteCategory.congr_hom (coreIso_comm_leg 𝒰 F V p k σ') x
-  exact ((sectionCechProductEquiv_apply (fun a => coverOpen 𝒰 a ⊓ V)
-      ((SheafOfModules.forget X.ringCatSheaf).obj F) (p + 1) _ σ').trans hL).trans
-    (((sectionCechProductEquiv_apply (fun a => coverOpen 𝒰 a ⊓ V)
-      ((SheafOfModules.forget X.ringCatSheaf).obj F) (p + 1) _ σ').trans hR).symm)
+  change (coreIso_objIso 𝒰 F p V).hom ≫
+    ((sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V)
+      ((SheafOfModules.forget X.ringCatSheaf).obj F)).map (SimplexCategory.δ k) ≫
+      Pi.π _ σ') = _
+  calc
+    _ = (coreIso_objIso 𝒰 F p V).hom ≫
+        (Pi.π _ (σ' ∘ (SimplexCategory.δ k).toOrderHom) ≫
+          sectionCechFaceRestr (fun a => coverOpen 𝒰 a ⊓ V)
+            ((SheafOfModules.forget X.ringCatSheaf).obj F) σ' k) :=
+      congrArg (fun f => (coreIso_objIso 𝒰 F p V).hom ≫ f) hπ
+    _ = ((coreIso_objIso 𝒰 F p V).hom ≫
+        Pi.π _ (σ' ∘ (SimplexCategory.δ k).toOrderHom)) ≫
+          sectionCechFaceRestr (fun a => coverOpen 𝒰 a ⊓ V)
+            ((SheafOfModules.forget X.ringCatSheaf).obj F) σ' k :=
+      (Category.assoc _ _ _).symm
+    _ = _ := (coreIso_comm_leg 𝒰 F V p k σ').symm
 
--- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
-set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 6400000 in
 /-- **Alternating-sum assembly of the core comparison square** (`lem:coreIso_comm_sum`):
-the full alternating-coface differentials are intertwined by the object isos.  Proved
-ELEMENTWISE (per the iter-067 dead-end note: no `Preadditive.comp_sum` against the bundled
-`AddCommGrpCat`-hom `objD`): both sides, evaluated at an element and a coordinate `σ'`, are
-the same finite alternating sum, matched summand-by-summand by `coreIso_comm_leg`. -/
+the full alternating-coface differentials are intertwined by the object isos. This follows
+by distributing composition and the additive evaluation functors over the finite sum, then
+applying `coreIso_comm_coface` to each summand. -/
 lemma coreIso_comm_sum (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
     (V : TopologicalSpace.Opens X) (p : ℕ) :
     (coreIso_objIso 𝒰 F p V).hom ≫
@@ -89,124 +120,68 @@ lemma coreIso_comm_sum (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
   haveI : (SheafOfModules.forget X.ringCatSheaf ⋙
       PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).Additive := inferInstance
   haveI : (PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
-      (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj (Opposite.op V)).Additive :=
-    inferInstance
-  -- (1) Element-level decomposition of the evaluated nerve differential.  All steps are
-  -- term-chained (`Eq.trans`/`congrArg`) — no `rw` of a `have` against the goal, dodging the
-  -- instance-path mismatch on the `Finset.sum` of the `Preadditive` hom group.
-  have hpush : ∀ x : ToType (((SheafOfModules.forget X.ringCatSheaf).obj
-        (pushPullObj F
-          ((coverCechNerveOver 𝒰).obj (Opposite.op (SimplexCategory.mk p))))).presheaf.obj
-        (Opposite.op V)),
-      ConcreteCategory.hom
-          ((PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
-              (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj (Opposite.op V)).map
+      (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj
+        (Opposite.op V)).Additive := inferInstance
+  rw [AlgebraicTopology.AlternatingCofaceMapComplex.objD,
+    AlgebraicTopology.AlternatingCofaceMapComplex.objD]
+  have hmap :
+      (PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
+            (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj
+              (Opposite.op V)).map
+          ((SheafOfModules.forget X.ringCatSheaf ⋙
+              PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map
+            (∑ k : Fin (p + 2), (-1 : ℤ) ^ (k : ℕ) •
+              (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ k)) =
+        ∑ k : Fin (p + 2), (-1 : ℤ) ^ (k : ℕ) •
+          (PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
+                (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj
+                  (Opposite.op V)).map
             ((SheafOfModules.forget X.ringCatSheaf ⋙
                 PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map
-              (AlgebraicTopology.AlternatingCofaceMapComplex.objD
-                (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)) p))) x =
-        ∑ i : Fin (p + 2), (-1 : ℤ) ^ (i : ℕ) •
-          ConcreteCategory.hom
-            ((PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
-                (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj (Opposite.op V)).map
-              ((SheafOfModules.forget X.ringCatSheaf ⋙
+              ((CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ k)) := by
+    calc
+      _ = (PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
+              (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj
+                (Opposite.op V)).map
+            (∑ k : Fin (p + 2), (-1 : ℤ) ^ (k : ℕ) •
+              (SheafOfModules.forget X.ringCatSheaf ⋙
                   PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map
-                ((CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ i))) x := by
-    intro x
-    have h1 : (SheafOfModules.forget X.ringCatSheaf ⋙
+                ((CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ k)) :=
+        congrArg _ (map_sum_zsmul
+          (SheafOfModules.forget X.ringCatSheaf ⋙
+            PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj))
+          (fun k : Fin (p + 2) => (-1 : ℤ) ^ (k : ℕ))
+          (fun k => (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ k))
+      _ = _ := map_sum_zsmul
+        (PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
+          (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj (Opposite.op V))
+        (fun k : Fin (p + 2) => (-1 : ℤ) ^ (k : ℕ))
+        (fun k => (SheafOfModules.forget X.ringCatSheaf ⋙
           PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map
-          (AlgebraicTopology.AlternatingCofaceMapComplex.objD
-            (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)) p) =
-        ∑ i : Fin (p + 2), (SheafOfModules.forget X.ringCatSheaf ⋙
-            PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map
-          ((-1 : ℤ) ^ (i : ℕ) • (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ i) :=
-      Functor.map_sum _ _ _
-    have h2 : (PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
-          (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj (Opposite.op V)).map
-          ((SheafOfModules.forget X.ringCatSheaf ⋙
-              PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map
-            (AlgebraicTopology.AlternatingCofaceMapComplex.objD
-              (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)) p)) =
-        ∑ i : Fin (p + 2),
+            ((CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ k))
+  calc
+    _ = (∑ k : Fin (p + 2), (-1 : ℤ) ^ (k : ℕ) •
           (PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
-              (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj (Opposite.op V)).map
+                (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj
+                  (Opposite.op V)).map
             ((SheafOfModules.forget X.ringCatSheaf ⋙
                 PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map
-              ((-1 : ℤ) ^ (i : ℕ) •
-                (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ i)) :=
-      (congrArg (fun m => (PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
-          (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj
-            (Opposite.op V)).map m) h1).trans
-        (Functor.map_sum _ _ _)
-    refine (ConcreteCategory.congr_hom h2 x).trans ?_
-    rw [abHom_finsetSum_apply]
-    refine Finset.sum_congr rfl fun i _ => ?_
-    have h3 : (PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
-          (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj (Opposite.op V)).map
+              ((CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ k))) ≫
+        (coreIso_objIso 𝒰 F (p + 1) V).hom :=
+      comp_sum_zsmul_eq_sum_zsmul_comp
+        (coreIso_objIso 𝒰 F p V).hom (coreIso_objIso 𝒰 F (p + 1) V).hom
+        (fun k : Fin (p + 2) => (-1 : ℤ) ^ (k : ℕ))
+        (fun k => (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V)
+          ((SheafOfModules.forget X.ringCatSheaf).obj F)).δ k)
+        (fun k => (PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
+              (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj
+                (Opposite.op V)).map
           ((SheafOfModules.forget X.ringCatSheaf ⋙
               PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map
-            ((-1 : ℤ) ^ (i : ℕ) •
-              (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ i)) =
-        (-1 : ℤ) ^ (i : ℕ) •
-          (PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
-              (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj (Opposite.op V)).map
-            ((SheafOfModules.forget X.ringCatSheaf ⋙
-                PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map
-              ((CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ i)) :=
-      (congrArg (fun m => (PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
-          (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj
-            (Opposite.op V)).map m)
-        (Functor.map_zsmul _)).trans (Functor.map_zsmul _)
-    exact (ConcreteCategory.congr_hom h3 x).trans rfl
-  -- (2) Elementwise comparison through the product equivalence, coordinate by coordinate.
-  ext x
-  apply (sectionCechProductEquiv (fun a => coverOpen 𝒰 a ⊓ V)
-    ((SheafOfModules.forget X.ringCatSheaf).obj F) (p + 1)).injective
-  funext σ'
-  refine Eq.trans (sectionCech_objD_apply (fun a => coverOpen 𝒰 a ⊓ V)
-    ((SheafOfModules.forget X.ringCatSheaf).obj F) p
-    (ConcreteCategory.hom (coreIso_objIso 𝒰 F p V).hom x) σ') (Eq.symm ?_)
-  refine Eq.trans (sectionCechProductEquiv_apply (fun a => coverOpen 𝒰 a ⊓ V)
-    ((SheafOfModules.forget X.ringCatSheaf).obj F) (p + 1) _ σ') ?_
-  refine Eq.trans (congrArg
-      (ConcreteCategory.hom (Pi.π (fun σ : Fin (p + 2) → 𝒰.I₀ =>
-        ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj
-          (Opposite.op (⨅ l, (coverOpen 𝒰 (σ l) ⊓ V)))) σ'))
-      (ConcreteCategory.comp_apply _ ((coreIso_objIso 𝒰 F (p + 1) V).hom) x)) ?_
-  refine Eq.trans (congrArg
-      (ConcreteCategory.hom (Pi.π (fun σ : Fin (p + 2) → 𝒰.I₀ =>
-        ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj
-          (Opposite.op (⨅ l, (coverOpen 𝒰 (σ l) ⊓ V)))) σ'))
-      (congrArg (ConcreteCategory.hom (coreIso_objIso 𝒰 F (p + 1) V).hom) (hpush x))) ?_
-  refine Eq.trans (congrArg
-      (ConcreteCategory.hom (Pi.π (fun σ : Fin (p + 2) → 𝒰.I₀ =>
-        ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj
-          (Opposite.op (⨅ l, (coverOpen 𝒰 (σ l) ⊓ V)))) σ'))
-      (map_sum (ConcreteCategory.hom (coreIso_objIso 𝒰 F (p + 1) V).hom) _ Finset.univ)) ?_
-  refine Eq.trans (map_sum (ConcreteCategory.hom (Pi.π (fun σ : Fin (p + 2) → 𝒰.I₀ =>
-      ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj
-        (Opposite.op (⨅ l, (coverOpen 𝒰 (σ l) ⊓ V)))) σ')) _ Finset.univ) ?_
-  refine Finset.sum_congr rfl fun i _ => ?_
-  refine Eq.trans (congrArg
-      (ConcreteCategory.hom (Pi.π (fun σ : Fin (p + 2) → 𝒰.I₀ =>
-        ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj
-          (Opposite.op (⨅ l, (coverOpen 𝒰 (σ l) ⊓ V)))) σ'))
-      (map_zsmul (ConcreteCategory.hom (coreIso_objIso 𝒰 F (p + 1) V).hom) _ _)) ?_
-  refine Eq.trans (map_zsmul (ConcreteCategory.hom (Pi.π (fun σ : Fin (p + 2) → 𝒰.I₀ =>
-      ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj
-        (Opposite.op (⨅ l, (coverOpen 𝒰 (σ l) ⊓ V)))) σ')) _ _) ?_
-  congr 1
-  have hleg := ConcreteCategory.congr_hom (coreIso_comm_leg 𝒰 F V p i σ') x
-  simp only [ConcreteCategory.comp_apply] at hleg
-  rw [sectionCechProductEquiv_apply (fun a => coverOpen 𝒰 a ⊓ V)
-    ((SheafOfModules.forget X.ringCatSheaf).obj F) p
-    (ConcreteCategory.hom (coreIso_objIso 𝒰 F p V).hom x)
-    (σ' ∘ (SimplexCategory.δ i).toOrderHom)]
-  exact hleg
+            ((CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ k)))
+        (coreIso_comm_coface 𝒰 F V p)
+    _ = _ := congrArg (fun f => f ≫ (coreIso_objIso 𝒰 F (p + 1) V).hom) hmap.symm
 
--- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
-set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
 /-- **The core comparison intertwines the Čech differentials** (`lem:coreIso_comm`).  Under the
 degreewise object isos `coreIso_objIso`, the alternating-coface differential of the evaluated
 backbone complex `(G_V ∘ Ψ) Č•(𝒰, F)` matches the alternating-coface differential of the
@@ -229,11 +204,20 @@ lemma coreIso_comm (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
       AlgebraicTopology.AlternatingCofaceMapComplex.objD
         (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V)
           ((SheafOfModules.forget X.ringCatSheaf).obj F)) i :=
-    CochainComplex.of_d (fun n => (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V) ((SheafOfModules.forget X.ringCatSheaf).obj F)).obj (SimplexCategory.mk n)) (AlgebraicTopology.AlternatingCofaceMapComplex.objD (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V) ((SheafOfModules.forget X.ringCatSheaf).obj F))) i
+    CochainComplex.of_d
+      (fun n => (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V)
+        ((SheafOfModules.forget X.ringCatSheaf).obj F)).obj (SimplexCategory.mk n))
+      (AlgebraicTopology.AlternatingCofaceMapComplex.objD
+        (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V)
+          ((SheafOfModules.forget X.ringCatSheaf).obj F))) i
   have hX : (cechComplexOnX 𝒰 F).d i (i + 1) =
       AlgebraicTopology.AlternatingCofaceMapComplex.objD
         (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)) i :=
-    CochainComplex.of_d (fun n => (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).obj (SimplexCategory.mk n)) (AlgebraicTopology.AlternatingCofaceMapComplex.objD (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F))) i
+    CochainComplex.of_d
+      (fun n => (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).obj
+        (SimplexCategory.mk n))
+      (AlgebraicTopology.AlternatingCofaceMapComplex.objD
+        (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F))) i
   rw [hsec, hX]
   exact coreIso_comm_sum 𝒰 F V i
 
