@@ -3,10 +3,13 @@ title: 'DD-R certificate: inherited certificate, epsilon projection, U1/U2, and 
   laws'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: After RD-N, inherit the ambient colength certificate, construct the epsilon
-  projection and its naturality, discharge U1/U2, and prove the local/global inverse
-  laws required by the divisor functor.
-status: pending
+summary: 'Unconditional high-window generator is landed. The generic assembler DivisorAdaptation.isCertified_of_noLeak_kernel_spanning
+  exists, but no specialization reaches the extracted adaptation. First missing bridge:
+  transport the generator''s fibre_regular law through divisorAdaptation/eqn_rel to
+  fibrewise regularity of every adaptation equation. No-leak, finite/flat overlap
+  apparatus, residue-fibre delta-kernel spanning, and kernel dimension g remain after
+  that; a conditional seven-hypothesis wrapper would add no mathematics.'
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -28,3 +31,4 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
+  updated_at: '2026-07-23T19:26:43.138951+00:00'

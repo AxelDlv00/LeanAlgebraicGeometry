@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divUniversalHighWindowMulRow_fibre_conjugacy
 type: lean
-updated: '2026-07-23T14:31:46'
+updated: '2026-07-23T23:01:57'
 ---
 theorem divUniversalHighWindowMulRow_fibre_conjugacy (n : Nat)
     [Module.Projective RZ (Amb[n] ⧸ Kr[n])]
@@ -37,5 +37,7 @@ theorem divUniversalHighWindowMulRow_fibre_conjugacy (n : Nat)
     Module.Basis.baseChange_apply]
 
 set_option maxHeartbeats 4000000 in
+-- Expanding the finite component sum and its fibre reads exceeds the default budget.
 set_option synthInstance.maxHeartbeats 1000000 in
+-- Each summand carries the dependent relation-fibre equivalence.
 set_option maxRecDepth 20000 in

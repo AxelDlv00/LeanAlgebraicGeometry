@@ -2,13 +2,13 @@ id: AJCR.w4-rep.datum.dat-d.ddr.rdn
 title: 'DD-R RD-N: ideal purity and local principal generation via flatness and Nakayama'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'POINTWISE RD-N LANDED. Flatness of the genuine two chart-reading quotients
-  now gives the closed residue-fibre branch, and the existing generic/non-generic
-  split proves PointwiseSeedRDN at every total point. Remaining: package the ann-cutter
-  seed into the unconditional IsGenerator/certificate route (or reconcile it with
-  the older SeedUnivRDN interface); fibre nonvanishing on the chosen cutter is the
-  next adapter.'
-status: active
+summary: 'DONE. PointwiseSeedRDN is now promoted to an unconditional ThetaGeneratorSeed.IsGenerator.
+  A base coordinate of the selected pointwise window vector cuts an open containing
+  the point and preserves fibre nonvanishing; multiplying that base-locus seed by
+  the RD-N annihilator cutter supplies both hfib and chart-reading divisibility. Landed
+  endpoints: pointwiseGeneratorSeed/isGenerator_pointwiseGeneratorSeed and their high-window
+  wrappers.'
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -30,4 +30,4 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-23T18:33:00.905798+00:00'
+  updated_at: '2026-07-23T19:20:34.755470+00:00'
