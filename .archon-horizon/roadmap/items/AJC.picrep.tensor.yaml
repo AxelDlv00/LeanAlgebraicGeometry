@@ -1,0 +1,28 @@
+id: AJC.picrep.tensor
+title: Pullback-tensor and fibre base change
+projects:
+- Algebraic-Jacobian-Challenge
+summary: Prove the canonical pullback tensor comparison is an isomorphism and finish
+  the quasi-coherent tensor-section input used by Hilbert-function base change.
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-23T13:46:31.376526+00:00'
+  provenance:
+    run: '0046'
+    session: 0021-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep

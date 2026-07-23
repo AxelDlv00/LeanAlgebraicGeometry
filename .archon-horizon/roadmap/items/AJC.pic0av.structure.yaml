@@ -1,0 +1,28 @@
+id: AJC.pic0av.structure
+title: Smoothness, properness, and irreducibility
+projects:
+- Algebraic-Jacobian-Challenge
+summary: Prove Pic0 is smooth and proper; combine these with the completed geometric-irreducibility
+  and group-object infrastructure to obtain the abelian-variety structure.
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-23T13:46:35.996275+00:00'
+  provenance:
+    run: '0046'
+    session: 0021-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.pic0av

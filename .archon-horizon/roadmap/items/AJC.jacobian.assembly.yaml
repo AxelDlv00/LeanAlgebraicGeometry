@@ -1,0 +1,29 @@
+id: AJC.jacobian.assembly
+title: Package the final Jacobian witness
+projects:
+- Algebraic-Jacobian-Challenge
+summary: Construct picardJacobianWitness from Picard representability, the Pic0 abelian-variety
+  structure, dimension g, and the Albanese universal property; discharge the protected
+  Jacobian interface.
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-23T13:46:39.843351+00:00'
+  provenance:
+    run: '0046'
+    session: 0021-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.jacobian

@@ -1,0 +1,28 @@
+id: AJC.pic0av.tangent
+title: Cotangent space and H1 comparison
+projects:
+- Algebraic-Jacobian-Challenge
+summary: Identify the cotangent-space dual at the identity with the Cech H1 cokernel
+  and hence with H1(C,O_C), including the required linearity and finrank comparison.
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-23T13:46:35.234262+00:00'
+  provenance:
+    run: '0046'
+    session: 0021-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.pic0av
