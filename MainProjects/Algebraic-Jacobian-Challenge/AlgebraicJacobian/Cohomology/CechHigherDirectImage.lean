@@ -3,59 +3,30 @@ Copyright (c) 2026 Christian Merten. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Christian Merten
 -/
-import Mathlib
-import AlgebraicJacobian.Cohomology.HigherDirectImage
-
-/-
-MERGE PROVENANCE (enrich merge, 2026-06-18): this file (and the rest of the
-`Cohomology/` Čech development) was imported wholesale from the `Cech-Cohomology`
-subproject, replacing the target's previously-orphaned (un-imported) version.
-The `pushPullMap` definition is byte-identical to the target's; the source
-additionally *completes* the functor laws (`pushPullMap_comp`, `pushPullFunctor`,
-`pushPull_pentagon`) that the target had left as a blocked TODO, which is what
-closes the formerly-`sorry` `CechNerve`. The target's pre-merge version is
-preserved in the inner git revert point (.archon/git-dir, pre-merge snapshot).
-The two target-local roadmap nodes that lived at the tail of the old file
-(`cechHigherDirectImage`, `cech_flatBaseChange`) are reinstated in
-`Cohomology/CechHigherDirectImageUnconditional.lean`.
--/
+import Mathlib.Algebra.Homology.Augment
+import Mathlib.AlgebraicGeometry.Limits
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.AlgebraicTopology.AlternatingFaceMapComplex
+import Mathlib.AlgebraicTopology.CechNerve
+import Mathlib.CategoryTheory.Sites.Abelian
+import Mathlib.CategoryTheory.Sites.LocallyBijective
 
 /-!
-# Čech computation of the higher direct images `Rⁱ f_*` (unconditional)
+# The relative Čech complex
 
-This file constructs the higher derived direct images `Rⁱ f_* F` for `i ≥ 1`
-**without appealing to injective resolutions** in the category of sheaves of
-modules. The companion `Cohomology/HigherDirectImage.lean` defines `Rⁱ f_*` as a
-right derived functor, which requires the ambient category of `O_X`-modules to
-have enough injectives — a property not currently available for sheaves of
-modules over a sheaf of rings whose value category varies over the site. The
-Čech approach developed here sidesteps the issue: it computes `Rⁱ f_* F` as the
-cohomology of an explicit complex built from the pushforwards of `F` over the
-finite intersections of an affine open cover, producing an **unconditional**
-construction of `Rⁱ f_*` for quasi-coherent `F` and separated quasi-compact `f`.
+This file constructs the augmented Čech nerve of a scheme's open cover with
+coefficients in a sheaf of modules. It first builds the simplicial scheme of
+iterated fibre products, then applies the contravariant push-pull functor
+`(Y, p) ↦ p_* p^* F`. The alternating coface-map construction turns the
+result into a relative cochain complex.
 
-Throughout, `f : X ⟶ S` is a quasi-compact, separated morphism of schemes (so
-all finite intersections of an affine open cover of `X` are again affine), and
-`F : X.Modules` is a quasi-coherent `O_X`-module. A base change of `f` along
-`g : S' ⟶ S` is recorded by a cartesian square
-```
-  X' --g'--> X
-  |f'        |f
-  v          v
-  S' --g---> S
-```
-with `F' = (g')^* F` the pullback of `F` to `X'`.
-
-The six main declarations are:
+The main declarations are:
 
 * `AlgebraicGeometry.CechNerve` — the (augmented) Čech nerve of an affine open
   cover, an augmented cosimplicial object of `O_X`-modules.
-* `AlgebraicGeometry.CechComplex` — the relative Čech complex in `QCoh(S)`, a
+* `AlgebraicGeometry.CechComplex` — the relative Čech complex on the base, a
   cochain complex of `O_S`-modules whose degree-`p` term is the product of the
   pushforwards of `F` over the `(p+1)`-fold intersections of the cover.
-* `AlgebraicGeometry.CechAcyclic.affine` — Čech acyclicity on affines: the Čech
-  complex of a standard cover of an affine scheme has vanishing cohomology in
-  all positive degrees (Serre vanishing for quasi-coherent sheaves on affines).
 See `blueprint/src/chapters/Cohomology_CechHigherDirectImage.tex`.
 
 Source: Stacks Project, Cohomology of Schemes, §Čech cohomology of quasi-coherent
@@ -74,10 +45,6 @@ open Scheme.Modules
 
 variable {S S' X X' : Scheme.{u}}
 
-/- The Čech nerve `CechNerve` is *constructed* (no longer a hole) further below, once the
-geometric backbone (`coverCechNerveOverAug`) and the push–pull functor (`pushPullFunctor`)
-are in scope; see its definition just before `relativeCechComplexOfNerve`. -/
-
 /-! ## Project-local Mathlib supplement — scheme-level Čech nerve backbone
 
 The genuine construction of the {\v C}ech nerve `CechNerve` factors through two
@@ -91,19 +58,11 @@ ingredients that are independent of one another:
   turns the simplicial scheme over `X` into the cosimplicial `O_X`-module
   `CechNerve`.
 
-The backbone (`coverArrow`, `coverCechNerve`) is built here axiom-clean. The
-push-pull functor is the remaining gap: its `map_comp` requires the
-`pushforwardComp` / `pullbackComp` coherence isomorphisms (the same coherence
-quagmire active in `Picard/TensorObjSubstrate.lean`), so `CechNerve` itself is
-left as the single genuine hole.
-
-Independently of the nerve, the passage *from* an augmented cosimplicial
+The passage from an augmented cosimplicial
 `O_X`-module *to* the relative {\v C}ech cochain complex in `QCoh(S)` is pure,
 coherence-free plumbing (`relativeCechComplexOfNerve`): forget the augmentation,
 push forward along `f` via `CosimplicialObject.whiskering`, and take the
-alternating coface-map cochain complex. We record it here so that `CechComplex`
-is *defined* in terms of `CechNerve` — closing `CechNerve` axiom-clean
-immediately yields an axiom-clean `CechComplex`. -/
+alternating coface-map cochain complex. -/
 
 /-- The arrow `∐ᵢ Uᵢ ⟶ X` (`Sigma.desc 𝒰.f`) attached to an open cover `𝒰` of a
 scheme `X`. Its augmented {\v C}ech nerve is the geometric backbone of the
@@ -130,13 +89,9 @@ The geometric backbone above is lifted to a cosimplicial `O_X`-module by the
   G : (Over X)ᵒᵖ ⥤ X.Modules,   (Y, p) ↦ p_* p^* F,
 ```
 sending an `X`-scheme `p : Y ⟶ X` to the pushforward along `p` of the pullback
-`p^* F`. We record here the two *pre-coherence* bricks of `G` — its action on
-objects (`pushPullObj`, the planner's `Gobj`) and on morphisms (`pushPullMap`,
-the planner's `Gmap`) — both axiom-clean and free of any functor law. The functor
-laws `G(𝟙) = 𝟙` and `G(g ≫ h) = G(h) ≫ G(g)` are a *consumer* of the
-pushforward/pullback composition coherence (`pushforwardComp` / `pullbackComp` and
-their unitor/pentagon identities) and are deferred; see the note after
-`pushPullMap`. -/
+`p^* F`. The definitions below construct its object and morphism maps and prove
+the identity and composition laws from the pullback and pushforward coherence
+isomorphisms. -/
 
 /-- The object map of the push–pull functor `G : (Over X)ᵒᵖ ⥤ X.Modules`,
 `(Y, p) ↦ p_* p^* F`. Sends an `X`-scheme `Y` (with structure map `Y.hom : Y.left
@@ -144,6 +99,24 @@ their unitor/pentagon identities) and are deferred; see the note after
 object brick of the {\v C}ech push–pull functor (the planner's `Gobj`). -/
 noncomputable def pushPullObj (F : X.Modules) (Y : Over X) : X.Modules :=
   (pushforward Y.hom).obj ((Scheme.Modules.pullback Y.hom).obj F)
+
+/-- Scheme-level push-pull comparison map with the over-triangle as a free
+hypothesis. Generalizing the triangle away from the `Over X` packaging lets the
+composition proof eliminate its transports before normalization. -/
+noncomputable def rawPushPullMap {Z₁ Z₂ : Scheme.{u}} (a : Z₂ ⟶ Z₁)
+    (p₁ : Z₁ ⟶ X) (p₂ : Z₂ ⟶ X) (w : a ≫ p₁ = p₂) (F : X.Modules) :
+    (Scheme.Modules.pushforward p₁).obj ((Scheme.Modules.pullback p₁).obj F) ⟶
+      (Scheme.Modules.pushforward p₂).obj ((Scheme.Modules.pullback p₂).obj F) :=
+  (Scheme.Modules.pushforward p₁).map
+      ((Scheme.Modules.pullbackPushforwardAdjunction a).unit.app
+        ((Scheme.Modules.pullback p₁).obj F)) ≫
+    (Scheme.Modules.pushforwardComp a p₁).hom.app
+      ((Scheme.Modules.pullback a).obj ((Scheme.Modules.pullback p₁).obj F)) ≫
+    eqToHom (congrArg (fun q => (Scheme.Modules.pushforward q).obj
+      ((Scheme.Modules.pullback a).obj ((Scheme.Modules.pullback p₁).obj F))) w) ≫
+    (Scheme.Modules.pushforward p₂).map ((Scheme.Modules.pullbackComp a p₁).hom.app F) ≫
+    eqToHom (congrArg (fun q => (Scheme.Modules.pushforward p₂).obj
+      ((Scheme.Modules.pullback q).obj F)) w)
 
 /-- The morphism map of the push–pull functor `G : (Over X)ᵒᵖ ⥤ X.Modules`. For a
 morphism `g : Y₂ ⟶ Y₁` of `X`-schemes (so `g.left ≫ Y₁.hom = Y₂.hom`, the
@@ -156,17 +129,12 @@ of the pullback comparison `(pullbackComp g.left Y₁.hom).hom`, glued by two
 this is a reusable pre-coherence brick (the planner's `Gmap`). -/
 noncomputable def pushPullMap (F : X.Modules) {Y₁ Y₂ : Over X} (g : Y₂ ⟶ Y₁) :
     pushPullObj F Y₁ ⟶ pushPullObj F Y₂ :=
-  (pushforward Y₁.hom).map
-      ((pullbackPushforwardAdjunction g.left).unit.app
-        ((Scheme.Modules.pullback Y₁.hom).obj F)) ≫
-    (pushforwardComp g.left Y₁.hom).hom.app
-      ((Scheme.Modules.pullback g.left).obj ((Scheme.Modules.pullback Y₁.hom).obj F)) ≫
-    eqToHom (congrArg (fun q => (pushforward q).obj
-      ((Scheme.Modules.pullback g.left).obj ((Scheme.Modules.pullback Y₁.hom).obj F)))
-      (Over.w g)) ≫
-    (pushforward Y₂.hom).map ((pullbackComp g.left Y₁.hom).hom.app F) ≫
-    eqToHom (congrArg (fun q => (pushforward Y₂.hom).obj ((Scheme.Modules.pullback q).obj F))
-      (Over.w g))
+  rawPushPullMap g.left Y₁.hom Y₂.hom (Over.w g) F
+
+/-- `pushPullMap` is the `Over X` instance of `rawPushPullMap`. -/
+lemma pushPullMap_eq_raw (F : X.Modules) {Y₁ Y₂ : Over X} (g : Y₂ ⟶ Y₁) :
+    pushPullMap F g = rawPushPullMap g.left Y₁.hom Y₂.hom (Over.w g) F :=
+  rfl
 
 /- **The functor laws `pushPullMap_id` / `pushPullMap_comp`.**
 Assembling `pushPullObj` / `pushPullMap` into the functor `G : (Over X)ᵒᵖ ⥤
@@ -236,7 +204,7 @@ lemma pushPullMap_id (F : X.Modules) (Y : Over X) :
       rw [eqToHom_map]
     rw [he, ← Functor.map_comp]; exact congrArg _ hib_inner
   -- assemble
-  simp only [pushPullMap, Over.id_left]
+  simp only [pushPullMap, rawPushPullMap, Over.id_left]
   erw [reassoc_of% hpf, hib, ← Functor.map_comp]
   erw [hzig, CategoryTheory.Functor.map_id]; rfl
 
@@ -296,7 +264,7 @@ lemma pushPull_transport_cancel {Y₁ Y₂ : Scheme.{u}}
       eqToHom (congrArg (fun q => (Scheme.Modules.pushforward q).obj
         ((Scheme.Modules.pullback q).obj F)) h) := by
   subst h
-  simp <;> rfl
+  (simp; rfl)
 
 /-- **Composite-unit decomposition for the push–pull head.** The adjunction unit
 `η^{f≫p}` for a composite morphism, expressed through the iterated units `η^p`,
@@ -327,35 +295,6 @@ lemma pushforwardComp_hom_app_id {Z₁ Z₂ Z₃ : Scheme.{u}} (a : Z₂ ⟶ Z�
     (M : Z₂.Modules) : (Scheme.Modules.pushforwardComp a p).hom.app M = 𝟙 _ :=
   rfl
 
-/-- **Scheme-level push–pull comparison map with the over-triangle as a free
-hypothesis.** This is the body of `pushPullMap` with the underlying scheme map
-`a`, the two structure maps `p₁ p₂`, and the over-triangle `w : a ≫ p₁ = p₂`
-generalised away from the `Over X` packaging. Spelling the over-triangle as a free
-hypothesis is what makes the composition law provable by `subst` (after which the
-`eqToHom` over-triangle transports become `eqToHom rfl = 𝟙` and vanish, dodging the
-kernel `whnf` wall). By construction `pushPullMap F g = rawPushPullMap g.left Y₁.hom
-Y₂.hom (Over.w g) F` definitionally. Project-local. -/
-noncomputable def rawPushPullMap {Z₁ Z₂ : Scheme.{u}} (a : Z₂ ⟶ Z₁)
-    (p₁ : Z₁ ⟶ X) (p₂ : Z₂ ⟶ X) (w : a ≫ p₁ = p₂) (F : X.Modules) :
-    (Scheme.Modules.pushforward p₁).obj ((Scheme.Modules.pullback p₁).obj F) ⟶
-      (Scheme.Modules.pushforward p₂).obj ((Scheme.Modules.pullback p₂).obj F) :=
-  (Scheme.Modules.pushforward p₁).map
-      ((Scheme.Modules.pullbackPushforwardAdjunction a).unit.app
-        ((Scheme.Modules.pullback p₁).obj F)) ≫
-    (Scheme.Modules.pushforwardComp a p₁).hom.app
-      ((Scheme.Modules.pullback a).obj ((Scheme.Modules.pullback p₁).obj F)) ≫
-    eqToHom (congrArg (fun q => (Scheme.Modules.pushforward q).obj
-      ((Scheme.Modules.pullback a).obj ((Scheme.Modules.pullback p₁).obj F))) w) ≫
-    (Scheme.Modules.pushforward p₂).map ((Scheme.Modules.pullbackComp a p₁).hom.app F) ≫
-    eqToHom (congrArg (fun q => (Scheme.Modules.pushforward p₂).obj
-      ((Scheme.Modules.pullback q).obj F)) w)
-
-set_option maxHeartbeats 1000000 in
-/-- `pushPullMap` is the `Over X`-instance of `rawPushPullMap`. Holds by `rfl`. -/
-lemma pushPullMap_eq_raw (F : X.Modules) {Y₁ Y₂ : Over X} (g : Y₂ ⟶ Y₁) :
-    pushPullMap F g = rawPushPullMap g.left Y₁.hom Y₂.hom (Over.w g) F :=
-  rfl
-
 -- Composition law `pushPullMap_comp` is proved axiom-clean below (see `rawPushPullMap_comp`).
 -- Dead-end note: `erw`/`congr 1` directly on `pullbackComp` whnf-unfolds it into its
 -- `TwoSquare.equivNatTrans`/`mateEquiv` mate form, exploding heartbeats; the
@@ -378,6 +317,7 @@ lemma rawPushPullMap_self {Z₁ Z₂ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (p₁ : Z
   rfl
 
 set_option maxHeartbeats 4000000 in
+-- Normalizing the dependent transport in `w` is expensive before `subst` removes it.
 /-- Clean form of `rawPushPullMap` for a general over-triangle `w : a ≫ p₁ = p₂`:
 the transport-free head `(pushforward p₁).map (η^a ≫ a_*(pullbackComp a p₁).hom)`
 followed by the single `eqToHom` identifying the target along `w`. Project-local
@@ -413,11 +353,10 @@ lemma pushPull_pentagon {Z₁ Z₂ Z₃ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (b : Z
   have H := Scheme.Modules.pseudofunctor_associativity (f := b) (g := a) (h := p₁)
   have HF := congrArg (fun t => NatTrans.app t F) H
   simp only [NatTrans.comp_app, Functor.whiskerRight_app, Functor.whiskerLeft_app,
-    Functor.associator_hom_app, eqToHom_app, Functor.comp_obj,
-    Category.id_comp] at HF
+    Functor.associator_hom_app, eqToHom_app, Category.id_comp] at HF
   -- HF : A1⁻¹ ≫ B1⁻¹ ≫ C ≫ D = eqToHom eF, with the associator (= 𝟙) absorbed.
-  -- Cancel the two leading isos `B1 = (pullback b).map (pullbackComp a p₁).hom`, `A1 = pullbackComp b (a ≫ p₁)`
-  -- against their inverses (no `IsIso` instances needed: `Iso.hom_inv_id_app` + functoriality),
+  -- Cancel the two leading isos against their inverses (no `IsIso` instances
+  -- are needed: `Iso.hom_inv_id_app` and functoriality suffice),
   -- then feed `HF` in via `congrArg`/`trans` (defeq, so no fragile `rw [HF]` matching).
   have cancel : (Scheme.Modules.pullback b).map ((Scheme.Modules.pullbackComp a p₁).hom.app F) ≫
         (Scheme.Modules.pullbackComp b (a ≫ p₁)).hom.app F ≫
@@ -441,9 +380,10 @@ lemma pushPull_pentagon {Z₁ Z₂ Z₃ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (b : Z
   rw [← Category.assoc ((Scheme.Modules.pullbackComp b a).hom.app
         ((Scheme.Modules.pullback p₁).obj F))
       ((Scheme.Modules.pullbackComp (b ≫ a) p₁).hom.app F), hcd]
-  simp [eqToHom_trans]
+  simp
 
 set_option maxHeartbeats 1600000 in
+-- This proof normalizes two nested pseudofunctor coherence diagrams.
 set_option backward.isDefEq.respectTransparency false in
 /-- Composition law for `rawPushPullMap` with the two over-triangles as free
 hypotheses (kernel-cheap). -/
@@ -466,7 +406,8 @@ lemma rawPushPullMap_comp {Z₁ Z₂ Z₃ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (b :
   -- The inner identity in `Z₁.Modules`: the pure pushforward-of-pentagon content.
   have INNER : (Scheme.Modules.pullbackPushforwardAdjunction (b ≫ a)).unit.app
           ((Scheme.Modules.pullback p₁).obj F) ≫
-        (Scheme.Modules.pushforward (b ≫ a)).map ((Scheme.Modules.pullbackComp (b ≫ a) p₁).hom.app F) ≫
+        (Scheme.Modules.pushforward (b ≫ a)).map
+          ((Scheme.Modules.pullbackComp (b ≫ a) p₁).hom.app F) ≫
         eqToHom (congrArg (fun q => (Scheme.Modules.pushforward (b ≫ a)).obj
           ((Scheme.Modules.pullback q).obj F)) (Category.assoc b a p₁)) =
       ((Scheme.Modules.pullbackPushforwardAdjunction a).unit.app
@@ -733,10 +674,10 @@ private lemma augmentation_comp_alternatingCofaceMap_objD_zero
         N.right.δ i = N.hom.app (SimplexCategory.mk 1) := by
     intro i
     have h := N.hom.naturality (SimplexCategory.δ i)
-    simp only [Functor.id_obj, Functor.id_map, Functor.const_obj_map] at h
+    simp only [Functor.id_obj, Functor.const_obj_map] at h
     erw [Category.id_comp] at h
     exact h.symm
-  show (N.hom.app (SimplexCategory.mk 0) : N.left ⟶ N.right.obj (SimplexCategory.mk 0)) ≫
+  change (N.hom.app (SimplexCategory.mk 0) : N.left ⟶ N.right.obj (SimplexCategory.mk 0)) ≫
       AlgebraicTopology.AlternatingCofaceMapComplex.objD N.right 0 = 0
   simp only [AlgebraicTopology.AlternatingCofaceMapComplex.objD]
   rw [Fin.sum_univ_two]
