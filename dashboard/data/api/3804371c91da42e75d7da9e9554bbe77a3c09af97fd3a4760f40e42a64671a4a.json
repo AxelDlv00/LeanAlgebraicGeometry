@@ -1,1 +1,1 @@
-{"markdown": "The companion module is in place. Its direct Lean compilation is still elaborating the universal-span equality and generator specialization; there is no diagnostic output yet, so I\u2019m letting the foreground check finish before adjusting anything.", "recommendation": ""}
+{"markdown": "The universal second-window base-change theorem, the heaviest dependency for this proof, has now rebuilt successfully. What remains is the pointwise-generator branch and the final companion target.", "recommendation": ""}
