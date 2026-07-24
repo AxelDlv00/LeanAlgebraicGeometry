@@ -3,17 +3,16 @@ title: 'DD-R certificate: inherited certificate, epsilon projection, U1/U2, and 
   laws'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'The extracted generator adaptation has fibre-regular equations, and the
-  pulled pointwise-generator local equation germ is now identified with the canonical
-  residue-fibre achiever reading. The pulled-degree lane remains local: prove the
-  residual base multiplicity of H0(N-d_p) relative to N-d_p is zero, then cross the
-  stalk-unit valuation bridge to presentation coefficients and degree g. The certificate
-  also still needs a relative submodule L inside ker(deltaLeft-deltaRight) spanning
-  every residue-fibre kernel. Arbitrary .some adaptation no-leak/finite chart colength
-  is false (horizontal divisor over k[t] on the piece D(t)); replace extraction with
-  support-isolating base localization or flattening strata. Universal second-window
-  containment and arbitrary residue-fibre reindexing are landed; certificate, U1/U2,
-  inverse laws, and divRep remain open.'
+summary: 'The pulled pointwise-generator local equation germ is identified with the
+  canonical residue-fibre achiever reading. Abstract residual normalization is now
+  closed: H0(O(N-D)) has base multiplicity zero relative to N-D for effective degree-g
+  D under the high-window pack. Stalk transition units also have trivial ordZ and
+  preserve additive order. The pulled-degree lane now needs a bounded explicit residue-field
+  wrapper, then presentation-coefficient and degree-g assembly. The certificate separately
+  still needs a relative submodule L inside ker(deltaLeft-deltaRight) spanning every
+  residue-fibre kernel. Arbitrary extracted-piece no-leak is false; use support-isolating
+  localization or flattening strata. Certificate, U1/U2, inverse laws, and divRep
+  remain open.'
 status: active
 kind: proof
 priority: normal
@@ -36,7 +35,9 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-24T11:43:47.528395+00:00'
+  updated_at: '2026-07-24T13:09:16.323802+00:00'
   pinned_commits:
+  - c843eafd7
+  - 359c0a38d
   - 2ff846d74
   - 5e6d8ac6c

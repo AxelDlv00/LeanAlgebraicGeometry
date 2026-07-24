@@ -1,0 +1,33 @@
+id: I-0318
+provider: local
+kind: issue
+body: 'Hgraph sync lacks project configuration
+
+
+  The command horizon graph -p Algebraic-Jacobian-Challenge-Rebuild sync exits 2 because
+  the project has no hgraph/config.yaml and no explicit Lean or blueprint inputs.
+  The source declarations in commits 359c0a38d and c843eafd7 therefore were not graph-synced.
+  Configure the v0.1.2 sync inputs during the dedicated Horizon managed-file refresh;
+  do not guess them during active run 0045 because the graph worktree already contains
+  broad deliberate edits.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-24T13:10:36.696236+00:00'
+updated_at: '2026-07-24T13:10:36.696246+00:00'
+metadata:
+  provenance:
+    run: '0045'
+    session: 0015-horizon-AJCR.w4-rep
+    role: horizon
+    round: '2'
+    rounds: '3'
+    task: AJCR.w4-rep
+    task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
