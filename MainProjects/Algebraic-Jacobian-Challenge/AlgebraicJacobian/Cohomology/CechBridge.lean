@@ -207,9 +207,9 @@ private lemma freeYonedaHomAddEquiv_naturality {V W : TopologicalSpace.Opens ↥
         (freeYonedaHomAddEquiv V F).toAddCommGrpIso.hom
       = (freeYonedaHomAddEquiv W F).toAddCommGrpIso.hom ≫ F.presheaf.map h.op := by
   ext ψ
-  show freeYonedaHomEquiv V F (freeYoneda.map h ≫ ψ)
+  change freeYonedaHomEquiv V F (freeYoneda.map h ≫ ψ)
       = (ConcreteCategory.hom (F.presheaf.map h.op)) (freeYonedaHomEquiv W F ψ)
-  show yonedaEquiv (PresheafOfModules.freeHomEquiv (freeYoneda.map h ≫ ψ))
+  change yonedaEquiv (PresheafOfModules.freeHomEquiv (freeYoneda.map h ≫ ψ))
       = (ConcreteCategory.hom (F.presheaf.map h.op))
           (yonedaEquiv (PresheafOfModules.freeHomEquiv ψ))
   rw [show PresheafOfModules.freeHomEquiv (freeYoneda.map h ≫ ψ)
@@ -304,10 +304,12 @@ private lemma homCechComplex_d_eq (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
           (HomologicalComplex.op (cechFreePresheafComplex 𝒰))).d p (p + 1) := by
   have hL : (homCechComplex 𝒰 F).d p (p + 1)
       = AlgebraicTopology.AlternatingCofaceMapComplex.objD (homCechCosimplicial 𝒰 F) p :=
-    CochainComplex.of_d (fun n => (homCechCosimplicial 𝒰 F).obj (SimplexCategory.mk n)) (AlgebraicTopology.AlternatingCofaceMapComplex.objD (homCechCosimplicial 𝒰 F)) p
+    CochainComplex.of_d (fun n => (homCechCosimplicial 𝒰 F).obj (SimplexCategory.mk n))
+      (AlgebraicTopology.AlternatingCofaceMapComplex.objD (homCechCosimplicial 𝒰 F)) p
   have hR : (cechFreePresheafComplex 𝒰).d (p + 1) p
       = AlgebraicTopology.AlternatingFaceMapComplex.objD (cechFreeSimplicial 𝒰) p :=
-    ChainComplex.of_d (fun n => (cechFreeSimplicial 𝒰).obj (Opposite.op (SimplexCategory.mk n))) (AlgebraicTopology.AlternatingFaceMapComplex.objD (cechFreeSimplicial 𝒰)) p
+    ChainComplex.of_d (fun n => (cechFreeSimplicial 𝒰).obj (Opposite.op (SimplexCategory.mk n)))
+      (AlgebraicTopology.AlternatingFaceMapComplex.objD (cechFreeSimplicial 𝒰)) p
   rw [hL, AlgebraicTopology.AlternatingCofaceMapComplex.objD,
     Functor.mapHomologicalComplex_obj_d, HomologicalComplex.op_d, hR,
     AlgebraicTopology.AlternatingFaceMapComplex.objD]
@@ -465,10 +467,12 @@ theorem sectionCech_objD_exact_of_isZero_homology {ι : Type u}
         (AlternatingCofaceMapComplex.objD (sectionCechCosimplicial U F) (q + 1))) := by
   have hf : (sectionCechComplex U F).d q (q + 1)
       = AlternatingCofaceMapComplex.objD (sectionCechCosimplicial U F) q :=
-    CochainComplex.of_d (fun n => (sectionCechCosimplicial U F).obj (SimplexCategory.mk n)) (AlternatingCofaceMapComplex.objD (sectionCechCosimplicial U F)) q
+    CochainComplex.of_d (fun n => (sectionCechCosimplicial U F).obj (SimplexCategory.mk n))
+      (AlternatingCofaceMapComplex.objD (sectionCechCosimplicial U F)) q
   have hg : (sectionCechComplex U F).d (q + 1) (q + 2)
       = AlternatingCofaceMapComplex.objD (sectionCechCosimplicial U F) (q + 1) :=
-    CochainComplex.of_d (fun n => (sectionCechCosimplicial U F).obj (SimplexCategory.mk n)) (AlternatingCofaceMapComplex.objD (sectionCechCosimplicial U F)) (q + 1)
+    CochainComplex.of_d (fun n => (sectionCechCosimplicial U F).obj (SimplexCategory.mk n))
+      (AlternatingCofaceMapComplex.objD (sectionCechCosimplicial U F)) (q + 1)
   have key : Function.Exact
       (ConcreteCategory.hom ((sectionCechComplex U F).d q (q + 1)))
       (ConcreteCategory.hom ((sectionCechComplex U F).d (q + 1) (q + 2))) := by
@@ -636,6 +640,8 @@ private lemma pair_comp_δ1 {ι : Type u} (i j : ι) :
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- The section-level coboundary assembly repeatedly unfolds presheaf restrictions and
+-- finite products; the default kernel budget is insufficient for this bridge.
 /-- **Surjectivity on sections from {\v C}ech-`H¹` vanishing** (blueprint `lem:ses_cech_h1`,
 Stacks `lemma-ses-cech-h1`).
 
@@ -713,7 +719,8 @@ theorem ses_cech_h1 {ι : Type u} (U : ι → Opens ↥X)
           ((-1 : ℤ) ^ (i : ℕ) • ConcreteCategory.hom (sectionCechFaceRestr U G σ i)
             (sLoc'coord (σ ∘ (SimplexCategory.δ i).toOrderHom)))
         = (-1 : ℤ) ^ (i : ℕ) • ConcreteCategory.hom (H.presheaf.map
-            (homOfLE (le_trans (iInf_le (fun k => U (σ k)) (0 : Fin 2)) (le_iSup U (σ 0)))).op) s := by
+            (homOfLE (le_trans (iInf_le (fun k => U (σ k)) (0 : Fin 2))
+              (le_iSup U (σ 0)))).op) s := by
       intro i
       rw [map_zsmul]; congr 1
       rw [← fι_sectionCechFaceRestr U G H gπ σ i,
@@ -819,7 +826,7 @@ theorem ses_cech_h1 {ι : Type u} (U : ι → Opens ↥X)
       rw [← hgluing i]
       erw [← ConcreteCategory.comp_apply, ← gπ.naturality (Opens.leSupr U i).op,
         ConcreteCategory.comp_apply]
-    show ConcreteCategory.hom (H.presheaf.map (Opens.leSupr U i).op)
+    change ConcreteCategory.hom (H.presheaf.map (Opens.leSupr U i).op)
         (ConcreteCategory.hom (gπ.app (op (iSup U))) g) = sH i
     rw [hn]
     exact hgπglue i
@@ -1025,10 +1032,12 @@ private lemma homCechComplex_d_eqFam (F : X.PresheafOfModules) (p : ℕ) :
           (HomologicalComplex.op (cechFreePresheafComplexFam U))).d p (p + 1) := by
   have hL : (homCechComplexFam U F).d p (p + 1)
       = AlgebraicTopology.AlternatingCofaceMapComplex.objD (homCechCosimplicialFam U F) p :=
-    CochainComplex.of_d (fun n => (homCechCosimplicialFam U F).obj (SimplexCategory.mk n)) (AlgebraicTopology.AlternatingCofaceMapComplex.objD (homCechCosimplicialFam U F)) p
+    CochainComplex.of_d (fun n => (homCechCosimplicialFam U F).obj (SimplexCategory.mk n))
+      (AlgebraicTopology.AlternatingCofaceMapComplex.objD (homCechCosimplicialFam U F)) p
   have hR : (cechFreePresheafComplexFam U).d (p + 1) p
       = AlgebraicTopology.AlternatingFaceMapComplex.objD (cechFreeSimplicialFam U) p :=
-    ChainComplex.of_d (fun n => (cechFreeSimplicialFam U).obj (Opposite.op (SimplexCategory.mk n))) (AlgebraicTopology.AlternatingFaceMapComplex.objD (cechFreeSimplicialFam U)) p
+    ChainComplex.of_d (fun n => (cechFreeSimplicialFam U).obj (Opposite.op (SimplexCategory.mk n)))
+      (AlgebraicTopology.AlternatingFaceMapComplex.objD (cechFreeSimplicialFam U)) p
   rw [hL, AlgebraicTopology.AlternatingCofaceMapComplex.objD,
     Functor.mapHomologicalComplex_obj_d, HomologicalComplex.op_d, hR,
     AlgebraicTopology.AlternatingFaceMapComplex.objD]
