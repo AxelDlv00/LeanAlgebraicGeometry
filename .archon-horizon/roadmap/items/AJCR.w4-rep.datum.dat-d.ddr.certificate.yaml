@@ -3,15 +3,17 @@ title: 'DD-R certificate: inherited certificate, epsilon projection, U1/U2, and 
   laws'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: The extracted generator adaptation now has fibre-regular chart equations.
-  No-leak supplies chart and overlap finiteness, seed regularity supplies overlap
-  flatness, and pulled divisor degree supplies the Cech-kernel fibre rank; seed-specific
-  assemblers reduce the certificate to no-leak, a relative submodule L inside ker(deltaLeft-deltaRight)
-  spanning every residue-fibre kernel, and degree g for the pulled presentation divisor.
-  Universal second-window containment and arbitrary residue-fibre point reindexing
-  are landed. The degree residual is local unit/order transport from the pointwise
-  achiever; generic adaptation extraction still does not preserve closed support traces.
-  The full certificate and epsilon inverse laws remain open.
+summary: 'The extracted generator adaptation has fibre-regular equations, and the
+  pulled pointwise-generator local equation germ is now identified with the canonical
+  residue-fibre achiever reading. The pulled-degree lane remains local: prove the
+  residual base multiplicity of H0(N-d_p) relative to N-d_p is zero, then cross the
+  stalk-unit valuation bridge to presentation coefficients and degree g. The certificate
+  also still needs a relative submodule L inside ker(deltaLeft-deltaRight) spanning
+  every residue-fibre kernel. Arbitrary .some adaptation no-leak/finite chart colength
+  is false (horizontal divisor over k[t] on the piece D(t)); replace extraction with
+  support-isolating base localization or flattening strata. Universal second-window
+  containment and arbitrary residue-fibre reindexing are landed; certificate, U1/U2,
+  inverse laws, and divRep remain open.'
 status: active
 kind: proof
 priority: normal
@@ -34,4 +36,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-24T06:49:52.026761+00:00'
+  updated_at: '2026-07-24T11:43:47.528395+00:00'
+  pinned_commits:
+  - 2ff846d74
+  - 5e6d8ac6c
