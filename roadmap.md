@@ -9,8 +9,9 @@ A high-level, mathematical checklist across the scope's member projects.
 - [ ] not started (no Lean yet — blueprint only, or theme not begun)
 
 **Status snapshot** *(open `sorry` counts over each project's `AlgebraicJacobian/` source tree
-via a Lean comment-stripping pass — comments/docstrings excluded; measured 2026-06-30. The two
-active loops move these between pushes; the **[live dashboard](https://axeldlv00.github.io/LeanAlgebraicGeometry/)**
+via a Lean comment-stripping pass — comments/docstrings excluded; baseline measured 2026-06-30,
+with separately dated rows refreshed later. The two active loops move these between pushes;
+the **[live dashboard](https://axeldlv00.github.io/LeanAlgebraicGeometry/)**
 holds the authoritative per-node counts. **v4.31 note (repaid 2026-07-03):** the mathlib
 v4.31.0 bump had introduced ~20–30 mechanical **migration-interim** `sorry`s; all are now
 closed — the AJC in-tree copies (T8, commit `eed5383`), the `GR-Quot-Closure` and
@@ -20,7 +21,7 @@ closed — the AJC in-tree copies (T8, commit `eed5383`), the `GR-Quot-Closure` 
 | Project | Stage | Open `sorry` |
 | --- | --- | --- |
 | Algebraic-Jacobian-Challenge-Rebuild | prover ✨ | 13 — all of them the protected `Challenge.lean` targets; **zero infrastructure sorries**. Wave 1 complete 2026-07-11 (see the rebuild section below) |
-| Algebraic-Jacobian-Challenge | prover | 25 ✨ *(2026-07-07 fleet session: 30→25 — closed `isFiniteTypeGeometricallyIrreducible`, Stacks 02KE, `Pic0.bundle`, `rationalMap_order_finite_support` (after an honest `[IsNoetherian]` re-pin), `pullback_kernel_isLocallyTrivial`; I-0118 QuotScheme restated faithfully; NEW adelic Riemann–Roch lane (`RiemannRoch/Adelic/*`) with the H¹-finiteness keystone `LaurentChartData.module_finite_H1Cok` proved — see the `RiemannRoch_Adelic` blueprint chapter and inbox I-0134)* |
+| Algebraic-Jacobian-Challenge | prover | 24 *(refreshed 2026-07-24; grouped by the nested AJC roadmap below)* |
 | Cech-Cohomology | ✅ complete · merged → AJC | 0 — standalone green, v4.31-clean ✨ |
 | Line-Bundle-Comparison-Iso | prover | 3 ✨ |
 | Albanese | prover | 17 |
@@ -77,32 +78,47 @@ functor (curve-specialized Kleiman, no Quot schemes), Albanese via Milne III.6.1
 Blueprint: Challenge/BaseChange/Curves/Algebra/Cohomology/AbelianVariety chapters all synced
 1-to-1 with the Lean, `\leanok` only after kernel checks, `\source{}` read-before-cite.
 
-## Algebraic-Jacobian-Challenge  *(core engine — prover stage, 25 open `sorry` as of 2026-07-07)* ✨
+## Algebraic-Jacobian-Challenge  *(core engine -- prover stage, 24 open `sorry` as of 2026-07-24)*
 
-**Goal:** the Jacobian of a smooth proper geometrically-irreducible curve — smooth of
-relative dimension = genus, proper, geometrically irreducible, and the Albanese variety
-(`exists_unique_ofCurve_comp`). Spine = pointed vs. unpointed; 0 project axioms.
+**Goal:** construct the Jacobian of a smooth proper geometrically integral curve as
+`Pic^0`, prove that it is an abelian variety of dimension equal to the genus, and
+establish the Albanese universal property. The structured roadmap command
+`horizon roadmap list --focus AJC.jacobian` is the authoritative work breakdown.
 
-> **v4.31 note (repaid 2026-07-03):** the ~20–30 mechanical *migration-interim* `sorry`s from the
-> mathlib v4.31.0 bump (Čech library + GR/Quot-merge files) are all closed — T8 (`eed5383`) fixed
-> the AJC in-tree copies, and the fixes were back-ported to the standalones. The remaining open
-> `sorry`s in AJC are genuine structural/math gaps (χ-endgame, FGA, Pic⁰ cone …), not migration debt.
-
-- [x] **Kähler-differential / cotangent substrate** — `Cotangent/GrpObj`, `Cotangent/ChartAlgebra`, `Differentials` (cotangent iso, chart algebra) **sorry-free**
-- [x] **Rigidity & Abel–Jacobi scaffolding** — `Rigidity`, `RigidityLemma`, `Genus`, `AbelJacobi` **sorry-free**
-- [x] **Line-bundle coherence substrate** — `Picard/LineBundleCoherence`, `Picard/LineBundlePullback`, `Picard/RelPicFunctor`, `Picard/RelativeSpec` **sorry-free** (local triviality, pullback-tensor compatibility)
-- [x] **Čech higher-direct-image engine (A.2.c)** — the comparison theorem `cech_computes_higherDirectImage` and `pushPull` functoriality (`pushPullFunctor`, `pushPullMap_comp`) are **proved sorry-free in `Cech-Cohomology`** and merged in **sorry-free** ✨; `cechHigherDirectImage` is sorry-free in the AJC tree. *(The Čech theorem itself has no open mathematical gap; the 16 `sorry`s now in the Čech library — `CechHigherDirectImage` ×7, `CechSectionIdentificationBase` ×8, `PresheafCech` ×1 — are v4.31 migration-interim, mechanical.)*
-- [x] **Čech merge-back RESTORED** ✨ *(2026-06-19)* — the former **7 MERGE-STUBs** (`CechSectionIdentificationLeg` ×5, `CechToHigherDirectImage` ×2, `sorry`-ed during the merge to dodge build-time elaboration blow-ups) are now **replaced with the working proofs from `Cech-Cohomology` and build clean**: the monolithic `…Leg` was split to match the subproject (`…Mid1/Mid2/Top/Aux`) and the `cechAugmented_to_acyclicResolutionInput` iso proof was given a term-shrinking rewrite. AJC's full `lake build` is green; the AJC capstone `cech_computes_higherDirectImage` depends only on `[propext, Classical.choice, Quot.sound]`.
-- [~] **Flat base change (Stacks 02KH)** ✨ *(2026-06-24, Čech route)* — `cech_flatBaseChange` (`CechHigherDirectImageUnconditional`): the top-level assembly **and all homology machinery are now sorry-free** (separated case — **no spectral sequence**: `mapHomologicalComplexHomologyIso`, flat-pullback `PreservesHomology` derived via `preservesHomologyOfExact`, `pullback_mapHC_homologyIso`). **Two** genuine open leaves remain: `pullback_preservesFiniteLimits` (flat ⇒ `g^*` left-exact — verified-reduced to presheaf-pullback left-exactness; `forget`+`sheafification` already preserve finite limits in Mathlib) and `cechComplex_baseChange_iso` (Stacks 02KG, the termwise affine base change, via the still-open `affineBaseChange_pushforward_iso` in `FlatBaseChange`). Reusable FBC-B foundations salvaged in-tree sorry-free (`Cohomology/RegroupHelper`, `Cohomology/FlatBaseChangeGlobal` prefix: `gammaTopEquivEqLocus`, `baseChangeGammaEquiv`). *(Not a gap in the Čech engine itself; full general/qcqs 02KH would additionally need the Čech-to-cohomology spectral sequence — present only abstractly in Mathlib.)*
-- [x] **Group schemes** — `Ga`, `Gm`, `ProjectiveLineBar` (ℙ¹) **defined**; `Genus0BaseObjects` is **sorry-free in-tree** ✨ (the `BareScheme`/`GmScaling` riders now live only in the `Albanese` extraction)
-- [~] **Tensor/dual comparison substrate + Picard group (A.1.c.sub)** — `Picard/TensorObjSubstrate` defines `PicGroup`/`picCommGroup` and the slice-dual transport; **5 residual `sorry`** (`TensorObjSubstrate` ×3 + `TensorObjSubstrate/PullbackTensorComp` ×2) *(shared with `Line-Bundle-Comparison-Iso`)*
-- [~] **Weil-divisor remnant** — only `RiemannRoch/WeilDivisor` (**×2**) remains in-tree; the rest of the Riemann–Roch core left the AJC tree with the genus-0 / Route-C removal (the standalone `RiemannRoch` extraction is now obsolete)
-- [~] **Albanese / abelian-variety leg** — `Albanese/*` (**12 `sorry`**: `AlbaneseUP` ×7, `CodimOneExtension` ×3, `Thm32RationalMapExtension` ×2; `AuslanderBuchsbaum`, `CoheightBridge` sorry-free)
-- [x] **GR/Quot representability merged from `GR-quot_closure`** ✨ *(union merge 2026-06-22)* — the relative-Grassmannian representability deliverable is now in-tree **sorry-free**: `Grassmannian.represents` (rank-`d` quotient-functor representability), `tautologicalQuotient_epi`, the section graded **ring** (`sectionGradedRing_gcommSemiring`, Stacks 01CV) and graded **module** (`sectionGradedModule_gmodule`) lanes, graded Hilbert–Serre rationality, and the Grassmannian cell-chart / glue-descent atlas. Five new sorry-free files (`Picard/GrassmannianCells`, `GlueDescent`, `GrassmannianQuot`, `GradedHilbertSerre`, `SectionGradedRing`). `QuotScheme.lean` was reconciled as a *union* (AJC's base-change cohomology lane kept; the subproject's quasi-coherent descent machinery appended). Three same-name/different-meaning collisions with the existing `TensorObjSubstrate` were resolved by renaming the imported copies (`sheafTensorObj`, `IsInvertibleGr`, `gr_pullbackObjUnitToUnit_comp`) — both implementations kept. Full `lake build` green at merge; the v4.31 bump since then left **migration-interim `sorry`s** in these files (`SectionGradedRing` ×8, `GrassmannianQuot` ×4, `GlueDescent` ×3 — mechanical debt, not the deliverable).
-- [~] **Picard representability cone** — `Picard/QuotScheme` (×14: the χ-blocked `hilbertPolynomial`/`QuotFunctor`/`Grassmannian.representable` stubs + Quot endgame), `IdentityComponent` (×9), `FGAPicRepresentability` (×7), `FlatteningStratification` (×7), `Pic0AbelianVariety` (×5) *(the Grassmannian-representability substrate `Grassmannian.represents` is now sorry-free in-tree — see above)*
-- [~] **Flatness & generic flatness** — flat-locus open → Noetherian stratification (`FlatteningStratification`; shared root with `Quot-Foundations`)
-- [ ] **Smooth proper curves** — projectivity, normalization iso, function-field equivalence *(held: classically RR-dependent; Route C paused)*
-- [ ] **Top goal: `Pic_{C/k}` representability + Jacobian = Albanese** *(once the substrate + engine themes close)*
+- [x] **Foundational and representability substrate**
+  - [x] Line-bundle coherence, pullback, tensor/dual comparison, and the relative
+    Picard group law are sorry-free.
+  - [x] The relative-Spec, Grassmannian, graded-algebra, glue-descent, flattening,
+    and generic-flatness infrastructure is sorry-free.
+- [~] **Cohomology and flat base change** *(3 open leaves)*
+  - [x] The Cech higher-direct-image comparison and `pushPull` functoriality are
+    sorry-free. Exact augmentations now supply the capstone comparison generically,
+    without the former 4M-heartbeat specialized proof.
+  - [ ] Prove that flat pullback preserves finite limits *(1)*.
+  - [ ] Prove the pushforward and twisted-nerve cosimplicial naturality laws *(2)*.
+- [~] **Picard-scheme representability** *(6 open leaves)*
+  - [x] Line bundles, the Grassmannian, graded modules, descent, and flattening are
+    complete inputs.
+  - [ ] Finish Serre finiteness and the Hilbert-polynomial package *(2)*.
+  - [ ] Finish the Quot carrier and representability theorem *(3)*.
+  - [ ] Assemble the relative Picard scheme *(1)*.
+- [~] **`Pic^0` as an abelian variety** *(6 open leaves)*
+  - [ ] Identify the degree-zero identity component *(3)*.
+  - [ ] Complete the cotangent/`H^1` dimension comparison *(1)*.
+  - [ ] Prove smoothness and properness *(2)*.
+- [~] **Riemann--Roch and divisors** *(1 open leaf)*
+  - [x] The adelic genus and cohomological finiteness lane is complete.
+  - [ ] Prove that principal divisors have degree zero in `WeilDivisor` *(1)*.
+- [~] **Albanese** *(7 open leaves)*
+  - [ ] Finish the symmetric-power and universal-property assembly *(6)*.
+  - [ ] Extend rational maps across codimension one *(1)*.
+- [~] **Final Jacobian witness** *(1 open leaf)*
+  - [ ] Assemble `picardJacobianWitness` from representability, the `Pic^0`
+    abelian-variety structure, the dimension theorem, and Albanese universality.
+- [~] **Maintenance and documentation**
+  - [x] Optimize the Cech capstone and prune its unnecessary import chain.
+  - [ ] Continue bounded blueprint prose and formalization-pin audits.
+  - [ ] Establish a fresh full-project build and warning baseline.
 
 ## Cech-Cohomology  *(✅ complete — deliverable merged sorry-free into AJC ✨ 2026-06-19; standalone fully green + sorry-free — the 16 v4.31-interim `sorry`s were closed and the full build (incl. the `CechToHigherDirectImage` capstone) verified 2026-07-03)*
 
