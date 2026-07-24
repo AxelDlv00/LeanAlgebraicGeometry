@@ -188,4 +188,18 @@ theorem Scheme.exists_achiever_baseDivisor_sub {T : Submodule K X.functionField}
   rw [CurveDivisor.coeffAt_add] at heq
   omega
 
+/-- **No residual base multiplicity after normalization**: once the base divisor of a
+nonzero subspace `T ≤ H⁰(𝒪(A))` is removed from `A`, the same subspace has base
+multiplicity zero at every closed point. -/
+theorem Scheme.baseDivisorAt_sub_baseDivisor_eq_zero
+    {T : Submodule K X.functionField} {A : X.CurveDivisor}
+    (hTA : T ≤ divisorSections K A ⊤) (hT : ∃ f ∈ T, f ≠ 0)
+    {x : X} (hx : x ≠ genericPoint X) :
+    Scheme.baseDivisorAt K T (A - Scheme.baseDivisor K T A hT) ⟨x, hx⟩ = 0 := by
+  have hnormalized := Scheme.le_divisorSections_sub_baseDivisor K hTA hT
+  obtain ⟨f, hfT, hf, hcoeff⟩ := Scheme.exists_achiever_baseDivisor_sub K hTA hT hx
+  have hle := Scheme.baseDivisorAt_le_coeffAt K hnormalized hfT hf hx
+  rw [hcoeff] at hle
+  omega
+
 end AlgebraicGeometry
