@@ -44,7 +44,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.sheafPullbackUnit_forget_eq
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-25T02:33:16'
 ---
 private lemma sheafPullbackUnit_forget_eq {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
     (M : X.Modules) :
@@ -55,9 +55,9 @@ private lemma sheafPullbackUnit_forget_eq {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOp
       = (PresheafOfModules.pullbackPushforwardAdjunction φ').unit.app M.val
         ≫ (PresheafOfModules.pushforward φ').map
             ((PresheafOfModules.sheafificationAdjunction (R := Y.ringCatSheaf)
-                (𝟙 Y.ringCatSheaf.val)).unit.app ((PresheafOfModules.pullback φ').obj M.val)
+                (𝟙 Y.ringCatSheaf.obj)).unit.app ((PresheafOfModules.pullback φ').obj M.val)
               ≫ (SheafOfModules.forget Y.ringCatSheaf).map (pullbackValIso f M).hom) := by
-  -- iter-052 RESTRUCTURE.  The genuine content is to compute the *opaque* sheaf pullback unit
+  -- The main step computes the opaque sheaf pullback unit
   -- `(pullbackPushforwardAdjunction f).unit.app M` (built by `Adjunction.ofIsRightAdjoint`).
   -- Mathlib's `pullbackIso φ = leftAdjointUniq (pullbackPushforwardAdjunction φ)
   -- (PullbackConstruction.adjunction φ)` relates it to the CONCRETE
@@ -97,7 +97,7 @@ private lemma sheafPullbackUnit_forget_eq {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOp
       = (PresheafOfModules.pullbackPushforwardAdjunction φ.hom).unit.app M.val
         ≫ (PresheafOfModules.pushforward φ.hom).map
             ((PresheafOfModules.sheafificationAdjunction (R := Y.ringCatSheaf)
-                (𝟙 Y.ringCatSheaf.val)).unit.app
+                (𝟙 Y.ringCatSheaf.obj)).unit.app
               ((PresheafOfModules.pullback φ.hom).obj M.val)) := by
     simp only [SheafOfModules.PullbackConstruction.adjunction, Adjunction.mkOfHomEquiv_unit_app]
     -- The `Equiv.trans` coercion only matches up to defeq, so drive the unfold with `erw`:
@@ -127,7 +127,8 @@ private lemma sheafPullbackUnit_forget_eq {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOp
     rw [Adjunction.homEquiv_leftAdjointUniq_hom_app, Adjunction.homEquiv_unit]
     -- GOAL `hA2`: `pullbackPPAdj_sheaf.unit.app M
     --                = PC.unit.app M ≫ (pushforward φ).map (pullbackValIso f M).hom`.
-    -- This is the genuine sheafification-intertwining content of the B1 crux.  It is NOT provable by
+    -- This is the genuine sheafification-intertwining content of the B1 crux. It is not
+    -- provable by
     -- further transposition (every `homEquiv` route is circular — `hKEY`/`hA2`/the parent `G0` are
     -- all logically equivalent).  The sole non-circular input is the DEFINITION of
     -- `sheafificationCompPullback` as `leftAdjointUniq A B` (root
@@ -143,7 +144,7 @@ private lemma sheafPullbackUnit_forget_eq {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOp
     --      i.e. the already-proven `hUNIT`).
     --  (3) `pullbackValIso.hom = sheafCompPullback.inv.app M.val ≫ pullback_sheaf.map ε`; the two
     --      `ε`/`pullback_sheaf.map ε` legs cancel, leaving exactly the `sheafCompPullback` unit
-    --      identity from (2).  ESCALATION (per PROGRESS iter-052): mathlib-analogist cross-domain on
+    --      identity from (2). The remaining issue is the cross-domain behavior of
     --      `ofIsRightAdjoint`-unit transparency / the `pullbackIso ↔ sheafificationCompPullback`
     --      coherence (NO Mathlib API relates these two un-lemma'd `leftAdjointUniq` defs).
     -- Scaffolding for the route (both genuine non-circular inputs typecheck):
@@ -151,49 +152,50 @@ private lemma sheafPullbackUnit_forget_eq {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOp
     --   `hpin` — the `sheafificationCompPullback` definition as `unit_leftAdjointUniq` of A vs B.
     have hnat := (SheafOfModules.pullbackPushforwardAdjunction φ).unit.naturality
       ((PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-        (𝟙 X.ringCatSheaf.val)).counit.app M)
+        (𝟙 X.ringCatSheaf.obj)).counit.app M)
     have hpin := Adjunction.unit_leftAdjointUniq_hom_app
       ((PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-          (𝟙 X.ringCatSheaf.val)).comp (SheafOfModules.pullbackPushforwardAdjunction φ))
+          (𝟙 X.ringCatSheaf.obj)).comp (SheafOfModules.pullbackPushforwardAdjunction φ))
       ((PresheafOfModules.pullbackPushforwardAdjunction φ.hom).comp
-        (PresheafOfModules.sheafificationAdjunction (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)))
+        (PresheafOfModules.sheafificationAdjunction (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)))
       M.val
     -- Telescope (analogist Analogue 1, ported): transpose to the presheaf world via forget
     -- faithfulness, then chase the opaque sheaf unit `η_s.app M` through the X-counit `ε` (hnat),
     -- the `A`-unit comp formula (`comp_unit_app`), `hpin` (= sheafCompPullback unit triangle), and
     -- the `B`-unit comp formula, landing on the presheaf composite `u_pre ≫ pushforward.map η_Y`.
     apply (SheafOfModules.fullyFaithfulForget X.ringCatSheaf).map_injective
-    -- RHS: split forget over the sheaf composite (erw past the SheafOfModules ≫ seam), insert hUNIT.
+    -- RHS: split forget over the sheaf composite (past the `SheafOfModules` seam), then
+    -- insert `hUNIT`.
     erw [CategoryTheory.Functor.map_comp]
     rw [hUNIT]
     -- LHS telescope (P1): forget(hnat) split + the X-sheafification triangle.
     have hfn := congrArg (SheafOfModules.forget X.ringCatSheaf).map hnat
     erw [CategoryTheory.Functor.map_comp, CategoryTheory.Functor.map_comp] at hfn
     have htri2 := (PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-      (𝟙 X.ringCatSheaf.val)).right_triangle_components (Y := M)
+      (𝟙 X.ringCatSheaf.obj)).right_triangle_components (Y := M)
     simp only [Functor.id_obj, Functor.id_map, Functor.comp_map, restrictScalarsId_map] at hfn htri2
     -- Cleanly-typed sheafification triangle (`(forget⋙restrict).obj M` is defeq `M.val`).
     have htri2' : (PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-            (𝟙 X.ringCatSheaf.val)).unit.app M.val
+            (𝟙 X.ringCatSheaf.obj)).unit.app M.val
           ≫ (SheafOfModules.forget X.ringCatSheaf).map
               ((PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-                (𝟙 X.ringCatSheaf.val)).counit.app M)
+                (𝟙 X.ringCatSheaf.obj)).counit.app M)
         = 𝟙 M.val := htri2
     -- ε-cancelled LHS: solve `forget(hnat)` for `forget(η_s M)` via the triangle.
     have hLHS : (SheafOfModules.forget X.ringCatSheaf).map
           ((SheafOfModules.pullbackPushforwardAdjunction φ).unit.app M)
         = (PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-              (𝟙 X.ringCatSheaf.val)).unit.app M.val
+              (𝟙 X.ringCatSheaf.obj)).unit.app M.val
           ≫ (SheafOfModules.forget X.ringCatSheaf).map
               ((SheafOfModules.pullbackPushforwardAdjunction φ).unit.app
                 (((SheafOfModules.forget X.ringCatSheaf ⋙
-                      PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.val)) ⋙
-                    PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.val)).obj M))
+                      PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)) ⋙
+                    PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)).obj M))
           ≫ (SheafOfModules.forget X.ringCatSheaf).map
               ((SheafOfModules.pushforward φ).map
                 ((SheafOfModules.pullback φ).map
                   ((PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-                    (𝟙 X.ringCatSheaf.val)).counit.app M))) := by
+                    (𝟙 X.ringCatSheaf.obj)).counit.app M))) := by
       rw [show (SheafOfModules.forget X.ringCatSheaf).map
               ((SheafOfModules.pullbackPushforwardAdjunction φ).unit.app M)
             = 𝟙 M.val ≫ (SheafOfModules.forget X.ringCatSheaf).map
@@ -201,36 +203,36 @@ private lemma sheafPullbackUnit_forget_eq {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOp
           from (Category.id_comp _).symm, ← htri2']
       exact (Category.assoc _ _ _).trans
         (congrArg (fun t => (PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-          (𝟙 X.ringCatSheaf.val)).unit.app M.val ≫ t) hfn)
+          (𝟙 X.ringCatSheaf.obj)).unit.app M.val ≫ t) hfn)
     rw [hLHS]
     -- `η ≫ (forget η_s)` is, on the nose, the composite-adjunction unit `A.unit` (proved before
     -- the `set` so the bare `rfl` can still zeta-unfold the `Adjunction.comp`).
     have hAcomp : (PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-            (𝟙 X.ringCatSheaf.val)).unit.app M.val
+            (𝟙 X.ringCatSheaf.obj)).unit.app M.val
           ≫ (SheafOfModules.forget X.ringCatSheaf).map
               ((SheafOfModules.pullbackPushforwardAdjunction φ).unit.app
                 (((SheafOfModules.forget X.ringCatSheaf ⋙
-                      PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.val)) ⋙
-                    PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.val)).obj M))
+                      PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)) ⋙
+                    PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)).obj M))
         = ((PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-              (𝟙 X.ringCatSheaf.val)).comp
+              (𝟙 X.ringCatSheaf.obj)).comp
             (SheafOfModules.pullbackPushforwardAdjunction φ)).unit.app M.val := rfl
     -- `A.unit` solved by the inverse `leftAdjointUniq` unit triangle (`B.leftAdjointUniq A`):
     -- `A.unit = B.unit ≫ R.map((A.leftAdjointUniq B)⁻¹)`.
     have hAcancel : ((PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-            (𝟙 X.ringCatSheaf.val)).comp
+            (𝟙 X.ringCatSheaf.obj)).comp
           (SheafOfModules.pullbackPushforwardAdjunction φ)).unit.app M.val
         = ((PresheafOfModules.pullbackPushforwardAdjunction φ.hom).comp
               (PresheafOfModules.sheafificationAdjunction (R := Y.ringCatSheaf)
-                (𝟙 Y.ringCatSheaf.val))).unit.app M.val
+                (𝟙 Y.ringCatSheaf.obj))).unit.app M.val
           ≫ (SheafOfModules.pushforward φ ⋙ SheafOfModules.forget X.ringCatSheaf ⋙
-              PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.val)).map
+              PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map
               ((((PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-                    (𝟙 X.ringCatSheaf.val)).comp
+                    (𝟙 X.ringCatSheaf.obj)).comp
                   (SheafOfModules.pullbackPushforwardAdjunction φ)).leftAdjointUniq
                 ((PresheafOfModules.pullbackPushforwardAdjunction φ.hom).comp
                   (PresheafOfModules.sheafificationAdjunction (R := Y.ringCatSheaf)
-                    (𝟙 Y.ringCatSheaf.val)))).inv.app M.val) := by
+                    (𝟙 Y.ringCatSheaf.obj)))).inv.app M.val) := by
       rw [Adjunction.leftAdjointUniq_inv_app]
       exact (Adjunction.unit_leftAdjointUniq_hom_app _ _ M.val).symm
     -- `pullbackValIso.hom = sheafCompPullback⁻¹ ≫ pullback.map (X-counit)`.
@@ -238,39 +240,41 @@ private lemma sheafPullbackUnit_forget_eq {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOp
         = (SheafOfModules.sheafificationCompPullback φ).inv.app M.val
           ≫ (SheafOfModules.pullback φ).map
               ((PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-                (𝟙 X.ringCatSheaf.val)).counit.app M) := by
+                (𝟙 X.ringCatSheaf.obj)).counit.app M) := by
       rw [pullbackValIso, Iso.trans_hom, Iso.symm_hom, Functor.mapIso_hom]
       rfl
     -- The `scp⁻¹`/`pullbackValIso` reconciliation (last leg).
     have hFINAL : (SheafOfModules.pushforward φ ⋙ SheafOfModules.forget X.ringCatSheaf ⋙
-            PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.val)).map
+            PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map
             ((((PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-                  (𝟙 X.ringCatSheaf.val)).comp
+                  (𝟙 X.ringCatSheaf.obj)).comp
                 (SheafOfModules.pullbackPushforwardAdjunction φ)).leftAdjointUniq
               ((PresheafOfModules.pullbackPushforwardAdjunction φ.hom).comp
                 (PresheafOfModules.sheafificationAdjunction (R := Y.ringCatSheaf)
-                  (𝟙 Y.ringCatSheaf.val)))).inv.app M.val)
+                  (𝟙 Y.ringCatSheaf.obj)))).inv.app M.val)
           ≫ (SheafOfModules.forget X.ringCatSheaf).map
               ((SheafOfModules.pushforward φ).map
                 ((SheafOfModules.pullback φ).map
                   ((PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-                    (𝟙 X.ringCatSheaf.val)).counit.app M)))
+                    (𝟙 X.ringCatSheaf.obj)).counit.app M)))
         = (SheafOfModules.forget X.ringCatSheaf).map
             ((SheafOfModules.pushforward φ).map (pullbackValIso f M).hom) := by
-      -- Bridge the explicit `leftAdjointUniq` back to `sheafificationCompPullback` (defeq through the
+      -- Bridge the explicit `leftAdjointUniq` back to `sheafificationCompPullback`
+      -- (definitionally through the
       -- `set φ := Hom.toRingCatSheafHom f`, so a `rw` of the lemma at `f` would miss).
       have hscp_eq : (((PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-              (𝟙 X.ringCatSheaf.val)).comp
+              (𝟙 X.ringCatSheaf.obj)).comp
             (SheafOfModules.pullbackPushforwardAdjunction φ)).leftAdjointUniq
           ((PresheafOfModules.pullbackPushforwardAdjunction φ.hom).comp
             (PresheafOfModules.sheafificationAdjunction (R := Y.ringCatSheaf)
-              (𝟙 Y.ringCatSheaf.val))))
+              (𝟙 Y.ringCatSheaf.obj))))
           = SheafOfModules.sheafificationCompPullback φ :=
         (sheafificationCompPullback_eq_leftAdjointUniq f).symm
       rw [hpbv, hscp_eq]
       erw [CategoryTheory.Functor.map_comp, CategoryTheory.Functor.map_comp]
       rfl
-    -- Assemble: reassociate, recognise `A.unit`, cancel via the inverse triangle, merge the last leg.
+    -- Assemble: reassociate, recognize `A.unit`, cancel via the inverse triangle, and merge
+    -- the last leg.
     refine Eq.trans (Category.assoc _ _ _).symm ?_
     rw [hAcomp, hAcancel]
     -- `(B.unit ≫ R.map scp⁻¹) ≫ last`; reassociate and merge the last leg via `hFINAL` (term mode,
@@ -278,7 +282,7 @@ private lemma sheafPullbackUnit_forget_eq {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOp
     exact Eq.trans (Category.assoc _ _ _)
       (congrArg (fun t => ((PresheafOfModules.pullbackPushforwardAdjunction φ.hom).comp
         (PresheafOfModules.sheafificationAdjunction (R := Y.ringCatSheaf)
-          (𝟙 Y.ringCatSheaf.val))).unit.app M.val ≫ t) hFINAL)
+          (𝟙 Y.ringCatSheaf.obj))).unit.app M.val ≫ t) hFINAL)
   -- Assemble: rewrite the opaque unit, split `forget` over `≫` (term mode for the `SheafOfModules`
   -- seam), insert `hUNIT`/`hKEY`, then merge the two presheaf `pushforward.map` legs.
   rw [hA]
@@ -287,12 +291,14 @@ private lemma sheafPullbackUnit_forget_eq {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOp
     ((SheafOfModules.pushforward φ).map ((SheafOfModules.pullbackIso φ).inv.app M))) ?_
   rw [hUNIT, hKEY]
   refine Eq.trans (Category.assoc _ _ _) ?_
-  exact (congrArg (fun t => (PresheafOfModules.pullbackPushforwardAdjunction φ.hom).unit.app M.val ≫ t)
+  exact (congrArg
+    (fun t => (PresheafOfModules.pullbackPushforwardAdjunction φ.hom).unit.app M.val ≫ t)
     (CategoryTheory.Functor.map_comp (PresheafOfModules.pushforward φ.hom)
         ((PresheafOfModules.sheafificationAdjunction (R := Y.ringCatSheaf)
-            (𝟙 Y.ringCatSheaf.val)).unit.app ((PresheafOfModules.pullback φ.hom).obj M.val))
+            (𝟙 Y.ringCatSheaf.obj)).unit.app ((PresheafOfModules.pullback φ.hom).obj M.val))
         ((SheafOfModules.forget Y.ringCatSheaf).map (pullbackValIso f M).hom))).symm
 
 -- The `homEquiv`/`leftAdjointUniq` unfolding over the heavy sheafification-laden adjunctions is
 -- heartbeat-heavy; bump past the default.
 set_option maxHeartbeats 1600000 in
+-- The proof unfolds adjoint uniqueness across the sheafification comparison.

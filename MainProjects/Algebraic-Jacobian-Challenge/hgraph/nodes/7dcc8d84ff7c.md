@@ -33,7 +33,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.dualUnitIso_dualIsoOfIso
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-25T02:02:27'
 ---
 lemma dualUnitIso_dualIsoOfIso {V : Scheme.{u}}
     (s : SheafOfModules.unit V.ringCatSheaf ≅ SheafOfModules.unit V.ringCatSheaf) :
@@ -60,6 +60,6 @@ lemma dualUnitIso_dualIsoOfIso {V : Scheme.{u}}
     rw [← Category.assoc]
     erw [← Functor.map_comp, hcore, Functor.map_comp, Category.assoc]
     erw [(PresheafOfModules.sheafificationAdjunction
-      (𝟙 V.ringCatSheaf.val)).counit.naturality s.hom]
+      (𝟙 V.ringCatSheaf.obj)).counit.naturality s.hom]
     rfl
   rw [hN, ← Iso.trans_assoc, Iso.symm_self_id, Iso.refl_trans]

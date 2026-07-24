@@ -2853,3 +2853,6 @@
 {"type": "publish.completed", "id": "1c312b009c134d4f987ad8985c8a4f07", "created_at": "2026-07-24T17:28:24.958148+00:00", "actor": "orchestrator", "data": {"run_id": "0046", "reports": [], "blueprints": [".archon-horizon/blueprints/Algebraic-Jacobian-Challenge.json"]}}
 {"type": "blueprint.dags", "id": "b0aa3b5569054a3cbc08f375d5a3c2cf", "created_at": "2026-07-24T17:28:32.071745+00:00", "actor": "orchestrator", "data": {"projects": {"Algebraic-Jacobian-Challenge": {"nodes": 1870, "edges": 4356}}}}
 {"type": "task.started", "id": "cb603f87581f44e18ffbb0c73b771a1c", "created_at": "2026-07-24T17:28:32.909722+00:00", "actor": "horizon", "data": {"task_id": "ajc-optimize"}}
+{"type": "report.written", "id": "94a4ef5dfa9443038086c8ef275168d5", "created_at": "2026-07-24T20:56:53.480026+00:00", "actor": "orchestrator", "data": {"name": "task-ajc-optimize", "ref": ".archon-horizon/runs/0046/sessions/0042-horizon-ajc-optimize/report.md"}}
+{"type": "task.incomplete", "id": "d32de8246d494de7a4a0dcfc77b7b631", "created_at": "2026-07-24T20:56:53.486514+00:00", "actor": "orchestrator", "data": {"task_id": "ajc-optimize", "reason": "no-terminal-status-recorded"}}
+{"type": "task.finished", "id": "ddca3fbc64184c2caaf745fd0177bcba", "created_at": "2026-07-24T20:56:53.489082+00:00", "actor": "horizon", "data": {"task_id": "ajc-optimize", "status": "queued"}}

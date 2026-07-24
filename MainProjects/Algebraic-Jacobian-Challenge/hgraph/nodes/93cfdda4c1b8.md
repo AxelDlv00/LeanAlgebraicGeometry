@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.trivialisation_restrict_eM_leg
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-25T02:33:16'
 ---
 private lemma trivialisation_restrict_eM_leg {X : Scheme.{u}} {L : X.Modules}
     {U V : X.Opens} (hVU : V ≤ U)
@@ -31,13 +31,7 @@ private lemma trivialisation_restrict_eM_leg {X : Scheme.{u}} {L : X.Modules}
       = (restrictCompReindex j hjι L).symm
           ≪≫ restrictIsoUnitOfLE hVU eM
           ≪≫ (unitRestrictIso j).symm := by
-  /- Planner strategy:
-     1.  `have hkey := restrictIsoUnitOfLE_eq_restrict hVU j hjι eM` (keystone, `TrivialisationRestrict.lean`).
-         This gives `restrictIsoUnitOfLE hVU eM = restrictCompReindex j hjι L ≪≫ (rf j).mapIso eM ≪≫ unitRestrictIso j`.
-     2.  `apply Iso.ext`; then at the `.hom` level rewrite `hkey` and cancel `ρ_L.hom`/`ρ_L.inv`
-         (via `Iso.hom_inv_id_assoc` or `Iso.symm_hom_assoc`) and `u_j.hom`/`u_j.inv`
-         (via `Iso.inv_hom_id`).
-     Alternatively: `rw [← hkey]` after isolating `(rf j).mapIso eM` on the LHS via
-     `Iso.ext` + `simp [Iso.trans_hom, Iso.symm_hom, Category.assoc, Iso.hom_inv_id_assoc]`. -/
+  -- Substitute the keystone equality, then cancel the outer reindexing and unit
+  -- isomorphisms.
   rw [restrictIsoUnitOfLE_eq_restrict hVU j hjι eM]
   simp only [Iso.trans_assoc, Iso.symm_self_id_assoc, Iso.self_symm_id, Iso.trans_refl]

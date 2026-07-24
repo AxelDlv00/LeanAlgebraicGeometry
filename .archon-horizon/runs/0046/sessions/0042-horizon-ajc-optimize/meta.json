@@ -1,0 +1,25 @@
+{
+  "role": "horizon",
+  "round": 2,
+  "project": "Algebraic-Jacobian-Challenge",
+  "task_id": "ajc-optimize",
+  "projects": [
+    "Algebraic-Jacobian-Challenge"
+  ],
+  "status": "queued",
+  "started_at": "2026-07-24T17:28:32.911112+00:00",
+  "ended_at": "2026-07-24T20:56:53.489818+00:00",
+  "harness_name": "codex",
+  "harness_kind": "codex",
+  "model": "gpt-5.6-sol",
+  "effort": "ultra",
+  "config_dir": null,
+  "auth": "subscription",
+  "usage": {
+    "tokens_in": 98736628,
+    "tokens_out": 118036,
+    "cost_usd": null
+  },
+  "engine_session_id": "019f952b-f3ad-7ce1-b5f6-8ee848699b02",
+  "workspace_sha": "c15b2a917f90701e39353b7d2064582271fe8f70"
+}
