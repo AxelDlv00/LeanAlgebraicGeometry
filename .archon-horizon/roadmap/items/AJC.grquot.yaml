@@ -1,10 +1,10 @@
 id: AJC.grquot
-title: Grassmannian and graded-module substrate (merged)
+title: Grassmannian and graded-module substrate
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Completed and sorry-free: Grassmannian representability, section graded
-  rings and modules, Hilbert-Serre algebra, cell charts, and glue descent. The Nitsure
-  Quot representability theorem itself remains under AJC.picrep.quot.'
+summary: 'Complete and sorry-free: Grassmannian representability, section graded rings
+  and modules, Hilbert-Serre algebra, cell charts, and glue descent. The Nitsure Quot
+  representability theorem remains under `AJC.picrep.quot`.'
 status: done
 kind: proof
 priority: normal
@@ -17,5 +17,5 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:45.525391+00:00'
-  updated_at: '2026-07-23T13:46:29.850598+00:00'
+  updated_at: '2026-07-24T00:49:34.283990+00:00'
   parent: AJC.picrep

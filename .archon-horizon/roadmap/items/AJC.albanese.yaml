@@ -1,9 +1,9 @@
 id: AJC.albanese
-title: Albanese / abelian-variety leg (merges from Albanese)
+title: Albanese and abelian-variety leg
 projects:
 - Algebraic-Jacobian-Challenge
 summary: Prove the rational-map extension machinery and the Abel-Jacobi factorisation
-  through Pic0. The remaining leaves are codimension-one extension, symmetric-power
+  through Pic^0. The remaining leaves are codimension-one extension, symmetric-power
   constructions, and universal-property assembly.
 status: pending
 kind: proof
@@ -17,5 +17,5 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:47.569594+00:00'
-  updated_at: '2026-07-23T13:46:36.753949+00:00'
+  updated_at: '2026-07-24T00:49:32.795494+00:00'
   parent: AJC.jacobian

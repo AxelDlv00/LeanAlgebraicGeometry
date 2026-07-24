@@ -1,3 +1,4 @@
 {"at": "2026-07-01T10:06:45.533744+00:00", "actor": "human", "field": "created", "from": "", "to": "done", "note": "opened"}
 {"at": "2026-07-23T13:46:29.850312+00:00", "actor": "horizon", "field": "nested", "from": "", "to": "", "note": "parent=AJC.picrep"}
 {"at": "2026-07-23T13:46:29.850501+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, title updated"}
+{"at": "2026-07-24T00:49:34.283814+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, title updated"}
