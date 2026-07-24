@@ -3,9 +3,9 @@ Copyright (c) 2026 Christian Merten. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Christian Merten
 -/
-import Mathlib
-import AlgebraicJacobian.Cohomology.CechHigherDirectImage
-import AlgebraicJacobian.Cohomology.PresheafCech
+import Mathlib.Algebra.Homology.Opposite
+import Mathlib.CategoryTheory.Preadditive.Yoneda.Injective
+import Mathlib.CategoryTheory.Preadditive.Yoneda.Limits
 import AlgebraicJacobian.Cohomology.FreePresheafComplex
 import AlgebraicJacobian.Cohomology.CechAcyclic
 
