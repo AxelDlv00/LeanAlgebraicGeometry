@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:restrictscalars_laxmonoidal
 lean_status: lean_ok
-order: 626
+order: 625
 title: Sectionwise lax-monoidal structure on \(\mathtt{restrictScalars}\,\varphi\)
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T04:02:11'
 ---
 Let \(\varphi : R \to S\) be a morphism of presheaves of \emph{commutative}
   rings on a site (so that both \(R\) and \(S\) factor through

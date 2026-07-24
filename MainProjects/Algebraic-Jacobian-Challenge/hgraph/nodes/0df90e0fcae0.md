@@ -8,10 +8,10 @@ label: lem:pushforwardPushforwardEquivalence_mathlib
 lean_status: mathlib_ok
 mathlib_name:
 - SheafOfModules.pushforwardPushforwardEquivalence
-order: 1095
+order: 1094
 title: Module sheaves transport across an equivalence of ringed sites
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T08:32:09'
 ---
 \textit{Provided by Mathlib
   (\texttt{Mathlib.Algebra.Category.ModuleCat.Sheaf.PushforwardContinuous}).}

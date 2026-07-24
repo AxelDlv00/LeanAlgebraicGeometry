@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:rigidity_core
 lean_status: lean_ok
-order: 539
+order: 538
 title: Scheme-level gluing core of the Rigidity Lemma
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T04:02:11'
 ---
 Let \(\bar k\) be algebraically closed, \(X\) proper, \(X \times Y\) geometrically irreducible,
   reduced and locally of finite type over \(\bar k\), and \(Z\) separated. Let

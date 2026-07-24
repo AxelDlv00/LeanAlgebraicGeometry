@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:projective_space_base_change
 lean_status: lean_ok
-order: 1170
+order: 1169
 title: Base change of relative projective space
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T04:02:11'
 ---
 For every morphism \(g : S' \to S\) the canonical square
   \[

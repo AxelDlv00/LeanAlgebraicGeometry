@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: def:cech_complex_base_change_cosimplicialIso
 lean_status: lean_ok
-order: 531
+order: 530
 title: The {\v C}ech base-change cosimplicial isomorphism \(e\)
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T04:02:11'
 ---
 The cosimplicial natural isomorphism \(e\) required by
   \cref{def:cech_complex_base_change_iso_of_cosimplicialIso} is assembled from the two

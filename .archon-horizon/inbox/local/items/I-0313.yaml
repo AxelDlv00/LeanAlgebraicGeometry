@@ -1,0 +1,36 @@
+id: I-0313
+provider: local
+kind: memory
+body: 'Lean --profile output order does not localize async kernel time
+
+
+  In Lean 4.31, `Elab.async` defaults to true and `Lean.addDecl` queues each kernel
+  check asynchronously. The legacy `--profile` wrapper for `type checking` supplies
+  no declaration name, so its bare `type checking took ...` line may be printed after
+  later command elaboration. For `CechSectionIdentificationLeg`, the ~1300 s entry
+  proves the file is kernel-check dominated, but placement after `cechNerve_drop_δ`
+  alone does not distinguish that lemma from the later WPCI declarations. Localize
+  with a scratch prefix or `set_option Elab.async false in` around the candidate before
+  redesigning it; if confirmed, split the definitional conversion at `cechNerveCosimplicial`.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-23T19:55:01.039600+00:00'
+updated_at: '2026-07-23T19:56:17.040010+00:00'
+metadata:
+  provenance:
+    run: '0046'
+    session: 0027-horizon-ajc-optimize
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  agent: ground

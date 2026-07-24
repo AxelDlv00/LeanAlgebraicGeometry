@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:chart_locus_rank_bound
 lean_status: lean_ok
-order: 987
+order: 986
 title: Rank bound on the chart locus
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T04:02:11'
 ---
 Let \(\F\) be a quasi-coherent \(\OO_S\)-module.  Every point of \(W_e\)
   has point rank at most \(e\).

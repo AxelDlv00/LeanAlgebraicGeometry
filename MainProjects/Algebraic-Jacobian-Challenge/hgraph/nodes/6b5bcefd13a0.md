@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:isoLocus
 lean_status: lean_ok
-order: 1504
+order: 1502
 title: Iso-locus of a morphism of module sheaves
 type: tex
-updated: '2026-07-24T03:02:15'
+updated: '2026-07-24T04:02:12'
 ---
 For a morphism \(\varphi : \mathcal{M} \to \mathcal{N}\) of sheaves of
   \(\mathcal{O}_X\)-modules on a scheme \(X\), the \emph{iso-locus}

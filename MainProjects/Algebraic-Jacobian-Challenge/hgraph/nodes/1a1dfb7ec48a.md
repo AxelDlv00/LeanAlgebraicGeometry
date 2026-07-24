@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:rigidity_eqOn_saturated_open_to_affine
 lean_status: sorry
-order: 541
+order: 540
 title: 'Bridge~2: slice-constancy on a saturated open mapping into an affine'
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T04:02:11'
 ---
 \textit{Source: Mumford, Abelian Varieties, Ch.~II \S4, Rigidity Lemma (Form~I), p.~43 (the
   ``for each \(y \in V\), the complete slice maps into the affine, hence to a single point'' step).}

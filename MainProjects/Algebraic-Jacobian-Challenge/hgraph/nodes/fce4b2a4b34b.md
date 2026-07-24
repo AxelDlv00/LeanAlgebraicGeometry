@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:graded_polyModule
 lean_status: lean_ok
-order: 1064
+order: 1063
 title: Polynomial-ring module structure on $M$
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T04:02:11'
 ---
 The \emph{polynomial-module structure} is the \(\kappa[t_0, \dots, t_{r-1}]\)-module
   structure on \(M\) obtained by restricting scalars along

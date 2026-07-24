@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:slice_dual_transport
 lean_status: sorry
-order: 696
+order: 695
 title: The per-section dual transport \(\mathtt{sliceDualTransport}\)
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T04:02:11'
 ---
 Let \(f : Y \hookrightarrow X\) be an open immersion of schemes and let
   \(M \in \Scheme.\mathtt{Modules}\,X\). Write \(\alpha\) for the open-immersion

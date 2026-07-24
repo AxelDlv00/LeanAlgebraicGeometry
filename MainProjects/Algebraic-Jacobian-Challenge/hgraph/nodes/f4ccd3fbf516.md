@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:identity_component_section_is_section
 lean_status: lean_ok
-order: 1566
+order: 1564
 title: The lifted identity section is a section
 type: tex
-updated: '2026-07-24T03:02:15'
+updated: '2026-07-24T04:02:12'
 ---
 Let \(k\) be a field and \(G\) a \(k\)-group scheme locally of finite
   type. The morphism \(\Spec k \to G^0\) of

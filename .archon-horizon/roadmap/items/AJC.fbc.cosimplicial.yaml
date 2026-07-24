@@ -1,9 +1,9 @@
 id: AJC.fbc.cosimplicial
-title: Cech base-change naturality
+title: Cosimplicial base-change comparison
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Close the two cosimplicial naturality fields for the degreewise base-change
-  isomorphisms, using compatibility of restriction maps on cover intersections.
+summary: Split the remaining degreewise Čech base-change naturality into the pushforward
+  comparison and twisted-nerve compatibility obligations.
 status: pending
 kind: proof
 priority: high
@@ -26,3 +26,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc
+  updated_at: '2026-07-24T00:03:07.163325+00:00'

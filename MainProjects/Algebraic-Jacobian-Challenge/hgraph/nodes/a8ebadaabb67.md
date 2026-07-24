@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:restrict_iso_unit_of_le_eq_restrict
 lean_status: lean_ok
-order: 815
+order: 814
 title: 'Seam 1 keystone: the unit-of-\(\le\) restriction iso is the chart restriction
   of \(e^M\)'
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T04:02:11'
 ---
 \textit{Source: internal categorical construction; no external reference.}
   Let \(j : V \hookrightarrow U\) be the chart morphism (\(j \mathbin{;} \iota_U = \iota_V\)) and

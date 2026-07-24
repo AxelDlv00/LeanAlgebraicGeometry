@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.then
 file: AlgebraicJacobian/Cohomology/CechSectionIdentificationLegTop.lean
 generated: lean
 lean_status: sorry
+stale: true
 title: AlgebraicGeometry.then
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-24T05:02:12'
 ---
    lemma then composes the `pls_eq`/`hstep` prefix with `exact <that lemma> …`. Re-verify EACH piece
    kernel-checks; `#print axioms coreIso_comm_leg` must stay sorry-free (kernel axioms only).
