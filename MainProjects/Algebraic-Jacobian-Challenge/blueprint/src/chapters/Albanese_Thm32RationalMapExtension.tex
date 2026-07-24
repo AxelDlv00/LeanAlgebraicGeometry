@@ -18,7 +18,6 @@ if \(\varphi_U\) and \(\varphi_{U'}\) agree on \(U \cap U'\).
 [Milne Theorem~3.2: a rational map from a nonsingular variety to an abelian variety extends]
   \label{thm:rational_map_to_av_extends}
   \lean{AlgebraicGeometry.Scheme.RationalMap.extend_to_av}
-  \uses{thm:codim_one_extension, lem:milne_codim1_indeterminacy, lem:av_indeterminacyLocus_eq_empty}
   \source{abelian-varieties:page-0023}
 
   Let \(X\) be a nonsingular variety over an algebraically closed field \(\bar k\), let \(A\) be
@@ -29,13 +28,9 @@ if \(\varphi_U\) and \(\varphi_{U'}\) agree on \(U \cap U'\).
 \end{theorem}
 
 \begin{proof}
+  \uses{lem:av_indeterminacyLocus_eq_empty}
   Let \(U\) be the maximal open subset on which \(f\) is defined, and put
-  \(Z=X\setminus U\).  Since a nonsingular variety is normal and \(A\) is
-  complete, \cref{thm:codim_one_extension} shows that every point of \(Z\)
-  has codimension at least two.  On the other hand,
-  \cref{lem:milne_codim1_indeterminacy} says that, for a rational map into a
-  group variety, \(Z\) is either empty or pure of codimension one.  The
-  second alternative is incompatible with the first conclusion, so
+  \(Z=X\setminus U\).  By \cref{lem:av_indeterminacyLocus_eq_empty},
   \(Z=\varnothing\).  Hence \(U=X\), and the representative of \(f\) on
   \(U\) is the desired morphism \(\widetilde f\colon X\to A\).
 
@@ -129,12 +124,12 @@ We record the reductions concerning the target and the indeterminacy locus.
 [Integrality of the abelian variety]
   \label{lem:av_isIntegral_of_smooth_geomIrred}
   \lean{AlgebraicGeometry.Scheme.RationalMap.av_isIntegral_of_smooth_geomIrred}
-  \uses{lem:isReduced_of_smooth_over_field}
   An abelian variety \(A\) over an algebraically closed field \(\bar k\) is
   integral.  Indeed, it is geometrically irreducible and smooth over
   \(\bar k\), hence irreducible and reduced.
 \end{lemma}
 \begin{proof}
+  \uses{lem:isReduced_of_smooth_over_field}
   The spectrum of \(\bar k\) consists of one point.  Geometric
   irreducibility of the structure morphism therefore implies that the
   underlying topological space of \(A\) is irreducible.  By
@@ -147,12 +142,12 @@ We record the reductions concerning the target and the indeterminacy locus.
 [Emptiness of the indeterminacy locus of a rational map into an abelian variety]
   \label{lem:av_indeterminacyLocus_eq_empty}
   \lean{AlgebraicGeometry.Scheme.RationalMap.av_indeterminacyLocus_eq_empty}
-  \uses{lem:av_isIntegral_of_smooth_geomIrred, lem:milne_codim1_indeterminacy, thm:codim_one_extension}
   For a rational map \(f \colon X \dashrightarrow A\) from a nonsingular variety
   \(X\) to an abelian variety \(A\) over an algebraically closed field \(\bar k\),
   the indeterminacy locus \(Z(f)\) is empty.
 \end{lemma}
 \begin{proof}
+  \uses{lem:av_isIntegral_of_smooth_geomIrred, lem:milne_codim1_indeterminacy, thm:codim_one_extension}
   The abelian variety \(A\) is integral
   (\cref{lem:av_isIntegral_of_smooth_geomIrred}), so Milne's Lemma~3.3
   (\cref{lem:milne_codim1_indeterminacy}) applies and gives the dichotomy: either
