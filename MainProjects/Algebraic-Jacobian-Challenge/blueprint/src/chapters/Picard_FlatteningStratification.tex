@@ -1,21 +1,5 @@
 \chapter{Flattening Stratification of a Coherent Sheaf}
 \label{chap:Picard_FlatteningStratification}
-% archon:covers AlgebraicJacobian/Picard/FlatteningStratification.lean
-
-% STRATEGY NOTE (iter-174). This chapter is the A.2.a sub-row of Route~A
-% (positive-genus arm of nonempty_jacobianWitness). It packages the
-% Nitsure~\S4 flattening-stratification theorem, the technical heart that
-% turns the absolute Quot-functor representability problem on a projective
-% morphism \(X \to S\) with coherent input \(\F\) into a finite collection of
-% locally-closed strata over which \(\F\) becomes flat. Mathlib (master
-% \texttt{b80f227}) has neither a coherent-sheaf flatness predicate over a
-% scheme base nor the flattening-stratification construction; this chapter
-% is the prover-ready specification for the new file
-% \texttt{AlgebraicJacobian/Picard/FlatteningStratification.lean} which a
-% subsequent iter (file-skeleton lane) will scaffold.
-%
-% This chapter is independently parallel-startable: it does not gate on the
-% Route~A.1.a relative-Spec chapter \cref{chap:Picard_RelativeSpec}.
 
 \section{Setup and motivation}
 \label{sec:flatstrat_setup}
@@ -30,19 +14,12 @@ locus uses, as a primary technical input, the existence of the
 \(S\)-scheme: a finite collection of locally-closed subschemes of \(S\) on each of which
 the restriction of \(\F\) becomes flat.
 
-This chapter packages the Nitsure~\S4 flattening-stratification theorem as the
-foundational A.2.a building block. The Quot-scheme construction itself (A.2.b),
-the relative Picard functor (A.1.c), and the assembly of the Picard scheme
-representability theorem on a smooth proper curve (A.2.c) live in separate sibling
-chapters.
-
 We work throughout with a noetherian base scheme \(S\), a projective morphism
 \(\pi : X \to S\), and a coherent \(\OO_X\)-module \(\F\). The conclusion of Nitsure's
 theorem covers an arbitrary noetherian base with a projective \(X \to S\), which
-specialises directly to the Route~A consumer setting where \(S = T\) is an arbitrary
-\(k\)-scheme, \(X = C \times_k T\) for \(C\) a smooth proper curve over the base field
-\(k\), and \(\F\) is a coherent quotient sheaf produced by the Grassmannian embedding
-of the Quot functor (cf.\ \ below).
+applies in particular to \(X = C \times_k T\), where \(C\) is a smooth proper
+curve over a field \(k\), \(T\) is a noetherian \(k\)-scheme, and \(\F\) is a
+coherent sheaf on the relative curve.
 
 \section{Coherent flatness over a base}
 \label{sec:coh_flat}
@@ -79,8 +56,9 @@ of the Quot functor (cf.\ \ below).
     \end{tikzcd}
   \]
   yields a coherent \(\OO_{X'}\)-module \(\F' := (g')^* \F\) which is \(S'\)-flat
-  whenever \(\F\) is \(S\)-flat.  This is the routine cancellation of tensor-product
-  associativity at the level of stalks. The converse fails in general.
+  whenever \(\F\) is \(S\)-flat.  Indeed, at each stalk the pullback is an
+  extension of scalars of the original flat module, and extension of scalars
+  preserves flatness. The converse fails in general.
 \end{remark}
 
 \section{Generic flatness}
@@ -591,14 +569,6 @@ structures, and a two-layer basic-open reduction.
   \label{thm:generic_flatness}
   \lean{AlgebraicGeometry.genericFlatness}
   \uses{thm:generic_flatness_algebraic}
-  % SOURCE: [Nitsure], \S4, Theorem ``generic flatness''
-  % (read from references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex, L1781-L1787).
-  % SOURCE QUOTE:
-  % "Let \(S\) be a noetherian and integral scheme.
-  %  Let \(p: X\to S\) be a finite type morphism, and let \(\F\) be a
-  %  coherent sheaf of \({\mathcal O}_X\)-modules. Then there exists a non-empty
-  %  open subscheme \(U\subset S\) such that the restriction of \(\F\)
-  %  to \(X_U = p^{-1}(U)\) is flat over \({\mathcal O}_U\)."
   \textit{Source: [Nitsure], \S4, Theorem ``generic flatness''.}
   Let \(S\) be an integral locally noetherian scheme, \(p : X \to S\) a
   finite-type morphism (that is, quasi-compact and locally of finite type —
@@ -610,13 +580,6 @@ structures, and a two-layer basic-open reduction.
   \(X_U = p^{-1}(U)\) is \(\OO_U\)-flat.
 \end{theorem}
 
-% SOURCE QUOTE PROOF: "The above theorem has the following consequence, which
-% follows by restricting attention to a non-empty affine open subscheme of \(S\)."
-% (Source: nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex, L1776-L1777. The
-% Nitsure proof is the single sentence quoted: deduce the geometric form from
-% the algebraic generic flatness statement (\cref{thm:generic_flatness_algebraic})
-% by restricting to a non-empty
-% affine open of \(S\), where the situation reduces to the algebraic statement.)
 \begin{proof}
   \leanok
   \uses{thm:generic_flatness_algebraic, lem:flat_section_pair,
@@ -647,47 +610,10 @@ structures, and a two-layer basic-open reduction.
 
 \begin{theorem}
 
-\leanok
 [Existence of the flattening stratification]
   \label{thm:flattening_stratification_exists}
-  \lean{AlgebraicGeometry.flatteningStratification}
   \uses{def:coherent_sheaf_flat, lem:flat_locus_open, lem:nonflat_locus_proper,
     lem:noetherian_induction_strata, thm:generic_flatness}
-
-  % SOURCE: [Nitsure], \S4, Theorem ``flattening stratification''
-  % (read from references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex, L1811-L1841).
-  % Parallel pointer: [Stacks Project], tag 052H (verbatim text not yet
-  % retrieved into a local references/ file; see ``Notes for Plan Agent'').
-  % SOURCE QUOTE:
-  % "Let \(S\) be a noetherian scheme, and let
-  %  \(\F\) be a coherent sheaf on the projective space \(\PP^n_S\)
-  %  over \(S\). Then the set \(I\) of Hilbert polynomials of
-  %  restrictions of \(\F\) to fibers of \(\PP^n_S\to S\)
-  %  is a finite set. Moreover, for each \(f\in I\) there exist
-  %  a locally closed subscheme \(S_f\) of \(S\),
-  %  such that the following conditions are satisfied.
-  %
-  %  \textbf{(i) Point-set: } The underlying set \(|S_f|\) of \(S_f\) consists of
-  %  all points \(s\in S\) where the Hilbert polynomial of the
-  %  restriction of \(\F\) to \(\PP^n_s\) is \(f\). In particular,
-  %  the subsets \(|S_f|\subset |S|\) are disjoint,
-  %  and their set-theoretic union is \(|S|\).
-  %
-  %  \textbf{(ii) Universal property: }
-  %  Let \(S'=\coprod S_f\) be the coproduct of the \(S_f\), and let
-  %  \(i:S'\to S\) be the morphism induced by the inclusions
-  %  \(S_f\hra S\). Then the sheaf \(i^*(\F)\) on \(\PP^n_{S'}\)
-  %  is flat over \(S'\). Moreover, \(i:S'\to S\) has the universal property that
-  %  for any morphism \(\varphi :T\to S\) the pullback \(\varphi^*(\F)\) on
-  %  \(\PP^n_T\) is flat over \(T\) if and only if \(\varphi\) factors through
-  %  \(i:S'\to S\).  The subscheme \(S_f\) is
-  %  uniquely determined by the polynomial \(f\).
-  %
-  %  \textbf{(iii) Closure of strata: }
-  %  Let the set \(I\) of Hilbert polynomials be given a total
-  %  ordering, defined by putting \(f<g\) whenever \(f(n) < g(n)\) for all
-  %  \(n \gg  0\). Then the closure in \(S\) of the subset \(|S_f|\)
-  %  is contained in the union of all \(|S_g|\) where \(f\le g\)."
   \textit{Source: [Nitsure], \S4, Theorem ``flattening stratification'';
   cf.\ [Stacks Project], tag 052H.}
   Let \(S\) be a noetherian scheme and \(\F\) a coherent sheaf on the relative
@@ -711,26 +637,13 @@ structures, and a two-layer basic-open reduction.
   \end{enumerate}
 \end{theorem}
 
-% SOURCE QUOTE PROOF: "It is enough to prove the theorem for open subschemes of
-% $S$ which cover $S$, as the resulting strata will then glue together by their
-% universal property. [...] \textbf{General case: } We now allow the integer
-% $n$ to be arbitrary. The idea of the proof is as follows: We show the
-% existence of a stratification of $S$ which is a `g.c.d.' of the flattening
-% stratifications for direct images $\pi_*\F(i)$ for all $i \ge N$ for some
-% integer $N$ (where the flattening stratifications for $\pi_*\F(i)$ exist by
-% case $n=0$ which we have treated above). This is the desired flattening
-% stratification of $\F$ over $S$, as follows from Lemma \ref{graded module is flat}."
-% (Source: nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex, L1844-L1900; the
-% full body L1844-L2090 is distributed across the sub-lemmas below, each of
-% which carries its own verbatim % SOURCE QUOTE PROOF.)
 \begin{proof}
   \uses{def:coherent_sheaf_flat, lem:flat_locus_open, lem:nonflat_locus_proper,
     lem:noetherian_induction_strata, thm:generic_flatness}
-  Following [Nitsure], \S4, the construction reduces to the special case
-  \(n = 0\), assembled over the relative twists \(\pi_* \F(N+i)\).  As the
-  argument is local on \(S\) (the strata glue by their universal property, part
-  (ii)), and as the three conclusions are proved through the sub-lemmas below,
-  we assemble them in the order (i), (ii), (iii).
+  Following [Nitsure], \S4, reduce to the special case \(n = 0\) and assemble
+  the resulting strata over the relative twists \(\pi_* \F(N+i)\).  The
+  construction is local on \(S\), since the strata glue by their universal
+  property.  We establish the three conclusions in order.
 
   \emph{Part (i): finiteness of the Hilbert-polynomial set.}
   By Lemma~\ref{lem:nonflat_locus_proper}, Noetherian induction on \(S\) (whose
@@ -789,54 +702,15 @@ structures, and a two-layer basic-open reduction.
   contained in \(\bigcup_{g \ge f} |S_g|\).
 \end{proof}
 
-The proof is long; we split it into sub-lemmas below.  The first sub-lemma is
-the special case \(n = 0\) (when \(\PP^n_S = S\) and \(\F\) is just a coherent sheaf
-on \(S\)), which already contains the flat-locus-as-locally-closed-subscheme
-mechanism. The remaining inputs are (A) the Noetherian-induction reduction to
-the flat case via generic flatness; (B) uniform vanishing of higher cohomology
-of \(\F(m)\) for \(m \gg 0\) on \(\F_{V_i}\) for the flat pieces; and (C) base-change
-isomorphisms for the direct images \(\pi_* \F(m)\), which allow comparing
-strata for different twists.
+The construction begins with the special case \(n = 0\), where
+\(\PP^n_S = S\) and \(\F\) is a coherent sheaf on \(S\).  Its remaining
+ingredients are the Noetherian-induction reduction to the flat case, uniform
+vanishing of the higher cohomology of \(\F(m)\) for \(m \gg 0\) on the flat
+pieces, and base-change isomorphisms for the direct images \(\pi_*\F(m)\).
 
 \begin{lemma}
 [Flat locus on \(S\) for a coherent sheaf is a locally-closed stratification]
   \label{lem:flat_locus_open}
-  \lean{AlgebraicGeometry.TODO.flatLocusOpen}
-
-  % SOURCE: [Nitsure], \S4, Theorem ``flattening stratification'', Special case
-  % \(n=0\) (read from references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex,
-  % L1849-L1885).
-  % SOURCE QUOTE:
-  % "\textbf{Special case: } Let \(n=0\), so that \(\PP^n_S=S\).
-  %  For any \(s\in S\), the \textbf{fiber} \(\F|_s\) of \(\F\) over \(s\)
-  %  will mean the pull-back of \(\F\) to the subscheme
-  %  \(\spec \kappa(s)\) [...]. The Hilbert polynomial of the
-  %  restriction of \(\F\) to the fiber over \(s\) is the degree \(0\)
-  %  polynomial \(e \in \Q[\lambda]\), where \(e = \dim_{\kappa(s)}\F|_s\).
-  %
-  %  By Nakayama lemma, any basis of \(\F|_s\) prolongs to a neighbourhood \(U\) of \(s\)
-  %  to give a set of generators for \(F|_U\). Repeating this argument,
-  %  we see that there exists a smaller neighbourhood \(V\) of \(s\) in which
-  %  there is a right-exact sequence
-  %  ${\mathcal O}_V^{\oplus m} \stackrel{\psi}{\to} {\mathcal O}_V^{\oplus e}
-  %  \stackrel{\phi}{\to} \F \to 0$.
-  %  Let \(I_e\subset {\mathcal O}_V\) be the ideal sheaf
-  %  formed by the entries of the \(e\times m\) matrix
-  %  \((\psi_{i,j})\) [...].
-  %  Let \(V_e\) be the closed subscheme of \(V\) defined by \(I_e\).
-  %  For any morphism of schemes
-  %  \(f: T\to V\), the pull-back sequence [...]
-  %  is exact, by right-exactness of tensor products.
-  %  Hence the pull-back \(f^*\F\) is a locally free \({\mathcal O}_T\)-module of
-  %  rank \(e\) if and only if \(f^*\psi =0\), that is,
-  %  \(f\) factors via the subscheme \(V_e\hra V\) defined by the vanishing of all
-  %  entries \(\psi_{i,j}\).
-  %  Thus we have proved assertions \textbf{(i)} and \textbf{(ii)} of the theorem.
-  %
-  %  As the rank of the matrix \((\psi_{i,j})\) is lower semi-continuous,
-  %  it follows that the function \(e\) is upper semi-continuous, which
-  %  proves the assertion \textbf{(iii)} of the theorem, completing its proof
-  %  when \(n=0\)."
   \textit{Source: [Nitsure], \S4 (special case \(n=0\) of the main theorem).}
   Let \(S\) be a noetherian scheme and let \(\F\) be a coherent \(\OO_S\)-module.
   For each integer \(e \ge 0\), there exists a locally-closed subscheme
@@ -849,8 +723,7 @@ strata for different twists.
 \end{lemma}
 
 \begin{proof}
-  
-  By [Nitsure], \S4 (verbatim above): for \(s \in S\), Nakayama produces a
+  By [Nitsure], \S4, for \(s \in S\), Nakayama produces a
   neighbourhood \(V\) of \(s\) and a right-exact local presentation
   \(\OO_V^{\oplus m} \xrightarrow{\psi} \OO_V^{\oplus e} \to \F|_V \to 0\) where
   \(e = \dim_{\kappa(s)} \F|_s\).  The closed subscheme \(V_e \hookrightarrow V\)
@@ -868,48 +741,7 @@ strata for different twists.
 \begin{lemma}
 [Noetherian induction reduction to the flat case]
   \label{lem:nonflat_locus_proper}
-  \lean{AlgebraicGeometry.TODO.nonflatLocusProper}
   \uses{thm:generic_flatness}
-
-  % SOURCE: [Nitsure], \S4, Theorem ``flattening stratification'', General case
-  % opening paragraphs (read from
-  % references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex, L1888-L1929).
-  % SOURCE QUOTE:
-  % "\textbf{General case: } We now allow the integer \(n\) to be arbitrary.
-  %  The idea of the proof is as follows:
-  %  We show the existence of a stratification
-  %  of \(S\) which is a `g.c.d.' of the flattening
-  %  stratifications for direct images \(\pi_*\F(i)\) for all \(i \ge N\) for some
-  %  integer \(N\) [...].
-  %
-  %  As \(S\) is noetherian, it is a finite union of irreducible components,
-  %  and these are closed in \(S\).
-  %  Let \(Y\) be an irreducible component of \(S\), and let \(U\) be the
-  %  non-empty open subset of \(Y\) which consists of all points which do not
-  %  lie on any other irreducible component of \(S\).
-  %  Let \(U\) be given the reduced subscheme
-  %  structure. Note that this makes \(U\) an integral scheme, which is a
-  %  locally closed subscheme of \(S\).
-  %  By Theorem \ref{generic flatness} on generic flatness,
-  %  \(U\) has a non-empty open subscheme \(V\) such that
-  %  the restriction of \(\F\) to \(\PP^n_V\) is flat over \({\mathcal O}_V\).
-  %  Now repeating the argument with \(S\) replaced by its reduced
-  %  closed subscheme \(S-V\),
-  %  it follows by noetherian induction on \(S\) that there exist
-  %  finitely many reduced, locally closed, mutually disjoint subschemes
-  %  \(V_i\) of \(S\) such that set-theoretically
-  %  \(|S|\) is the union of the \(|V_i|\) and
-  %  the restriction of \(\F\) to \(\PP^n_{V_i}\) is flat over \({\mathcal O}_{V_i}\).
-  %  As each \(V_i\) is a noetherian scheme, and as the Hilbert polynomials
-  %  are locally constant for a flat family of sheaves, it follows
-  %  that only finitely many polynomials occur in \(V_i\)
-  %  in the family of Hilbert polynomials \(P_s(m) = \chi(\PP^n_s,\F_s(m))\)
-  %  as \(s\) varies over points of \(V_i\). This allows us to conclude
-  %  the following:
-  %
-  %  \textbf{(A) } Only finitely many distinct Hilbert polynomials
-  %  \(P_s(m) = \chi(\PP^n_s,\F_s(m))\) occur, as \(s\)
-  %  varies over all of \(S\)."
   \textit{Source: [Nitsure], \S4 (general case, reduction by Noetherian induction).}
   Let \(S\) be a noetherian scheme, \(\pi : \PP^n_S \to S\) the relative projective
   space, and \(\F\) a coherent sheaf on \(\PP^n_S\).  Then there exist finitely many
@@ -921,7 +753,6 @@ strata for different twists.
 \end{lemma}
 
 \begin{proof}
-  
   By [Nitsure], \S4: \(S\) being noetherian, decompose \(|S| = \bigcup Y_j\) into
   finitely many irreducible components, each closed.  For an irreducible
   component \(Y\), let \(U \subseteq Y\) be the open subset not lying on any other
@@ -939,39 +770,7 @@ strata for different twists.
 \begin{lemma}
 [Assembly of the strata by Noetherian induction]
   \label{lem:noetherian_induction_strata}
-  \lean{AlgebraicGeometry.TODO.noetherianInductionStrata}
   \uses{lem:flat_locus_open, lem:nonflat_locus_proper, thm:flat_base_change_cohomology}
-
-  % SOURCE: [Nitsure], \S4, Theorem ``flattening stratification'', Assembly via
-  % direct images \(E_i = \pi_*\F(N+i)\) (read from
-  % references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex, L1992-L2090).
-  % SOURCE QUOTE:
-  % "Let \(\pi : \PP^n_S \to S\) denote the projection. Consider the
-  %  coherent sheaves \(E_0, \ldots, E_n\) on \(S\), defined by
-  %  \(E_i = \pi_*\F(N+i)\mbox{ for } i=0,\ldots,n.\)
-  %  By applying the special case of of the theorem (where the relative dimension
-  %  \(n\) of \(\PP^n_S\) is \(0\)) to the sheaf \(E_0\) on \(\PP^0_S=S\), we get
-  %  a stratification \((W_{e_0})\) of \(S\)
-  %  indexed by integers \(e_0\), such that for any morphism
-  %  \(f: T\to S\) the pull-back \(f^*E_0\) is a locally free \({\mathcal O}_T\)-module
-  %  of rank \(e_0\) if and only if \(f\) factors via \(W_{e_0} \hra S\).
-  %  Next, for each stratum \(W_{e_0}\), we take the
-  %  flattening stratification \((W_{e_0,e_1})\) for \(E_1|_{W_{e_0}}\), and so on.
-  %  Thus in \(n+1\) steps, we obtain finitely many
-  %  locally closed subschemes
-  %  \(W_{e_0,\ldots,e_n} \subset S\)
-  %  such that for any morphism \(f:T\to S\) the pull-back
-  %  \(f^*E_i\) for \(i=0,\ldots,n\) is a locally free \({\mathcal O}_T\)-modules of
-  %  of constant rank \(e_i\) if and only if \(f\) factors
-  %  via \(W_{e_0,\ldots,e_n} \hra S\). [...]
-  %  This shows that at any point \(s\in W_f\), the Hilbert polynomial
-  %  \(P_s(m)\) equals \(f\). The desired locally closed subscheme \(S_f \subset S\),
-  %  whose existence is asserted by the theorem,
-  %  will turn out to be a certain closed subscheme \(S_f \subset W_f\) whose
-  %  underlying subset is all of \(|W_f|\). [...]
-  %  As \(S_f\) is the flattening stratification for \(\pi_*\F(p)\),
-  %  the property (iii) of the theorem follows from the corresponding property in
-  %  the case \(n=0\), applied to the sheaf \(\pi_*\F(p)\) on \(S\)."
   \textit{Source: [Nitsure], \S4 (assembly step combining the \(n=0\) special case
   applied to direct images \(\pi_*\F(N+i)\)).}
   Let \(S\), \(\pi : \PP^n_S \to S\), \(\F\) be as in
@@ -993,14 +792,7 @@ strata for different twists.
   (terminating by Noetherianity).
 \end{lemma}
 
-% SOURCE QUOTE PROOF: full proof is the long body of [Nitsure], \S4, Theorem
-% ``flattening stratification'', spanning L1844-L2090 (~250 lines: special
-% case, Noetherian induction, statements (A)/(B)/(C), then the assembly via
-% direct images and the closed-subscheme construction inside each \(W_f\)).
-% Verbatim retrieved per-sub-lemma above; the structural restatement below in
-% project notation is the canonical Nitsure-style restated proof.
 \begin{proof}
-  
   By \cref{lem:nonflat_locus_proper}, the family of Hilbert polynomials
   \(\{P_s\}\) on \(S\) is finite, and there is a finite stratification
   \(\{V_i\}\) of \(S\) on each of which \(\F\) is flat with locally-constant
@@ -1047,13 +839,13 @@ strata for different twists.
   Hilbert polynomials.
 \end{proof}
 
-\subsection{Lean-side encodings of the sub-lemmas}
+\subsection{Consequences of the flattening construction}
 \label{sec:flatstrat_lean_helpers}
 
-The three sub-lemmas above are realised in Lean by the following helper
-declarations, which carry the substantive type signatures consumed by the
-existence theorem. Each is an internal project helper with no external source
-beyond Nitsure~\S4 already cited above.
+The flattening construction also yields a countably indexed flat
+stratification.  Further transfer lemmas give a direct Noetherian-induction
+construction for proper morphisms and allow the resulting finite family to
+be indexed injectively by integer-valued functions.
 
 \begin{lemma}
 
@@ -1067,12 +859,9 @@ beyond Nitsure~\S4 already cited above.
   \(e \in \mathbb{N}\) whose images are pairwise disjoint and set-theoretically
   cover \(|S|\), and such that for each \(e\) the pullback of \(\F\) along
   \(\iota_e\) is flat over \(S_e\) in the sense of
-  \cref{def:coherent_sheaf_flat}.  This is the Lean encoding of the special
-  case \(n = 0\) of the flattening stratification
-  (\cref{lem:flat_locus_open}), the rank index \(e\) playing the role of
-  \(\dim_{\kappa(s)} \F|_s\); the statement itself does not carry the rank
-  labelling, so any \(\mathbb{N}\)-indexed disjoint flat family of immersions
-  witnesses it.
+  \cref{def:coherent_sheaf_flat}.  The index \(e\) is merely an enumeration;
+  unlike the canonical strata of \cref{lem:flat_locus_open}, it is not
+  required to equal \(\dim_{\kappa(s)} \F|_s\).
 \end{lemma}
 
 \begin{proof}
@@ -1104,20 +893,16 @@ beyond Nitsure~\S4 already cited above.
 \subsection{Flatness transfer to strata}
 \label{subsec:flat_transfer_strata}
 
-The Noetherian-induction reduction is assembled from four transfer lemmas
-(run 0010, T12 r6): flatness under pushout base change, the affine piece
-analysis of a fibre product, affine-locality of flatness over the base, and
-the flat stratum over one irreducible component.
+The Noetherian-induction reduction is assembled from four transfer lemmas:
+flatness under pushout base change, the affine-piece analysis of a fibre
+product, affine-locality of flatness over the base, and the existence of a
+flat stratum over one irreducible component.
 
 \begin{lemma}[Flatness under pushout base change]
 
-\leanok
+  \leanok
   \label{lem:flat_pushout_base_change}
   \lean{Module.Flat.of_isPushout}
-  % Module form of Stacks 00HI (3): flatness is stable under arbitrary base
-  % change. Mathlib has the special case A = R, B = S
-  % (\texttt{Module.Flat.baseChange}) and the ring form
-  % (\texttt{RingHom.Flat.isStableUnderBaseChange}).
   Let \(R \to S\) and \(R \to A\) be commutative ring maps with pushout
   \(B = S \otimes_R A\), let \(M\) be an \(A\)-module which is flat over
   \(R\), and let \(N\) be a \(B\)-module which is a base change of \(M\)
@@ -1183,11 +968,9 @@ the flat stratum over one irreducible component.
   \leanok
   Restricting the cartesian square over the affine cospan
   \(U_X \to U_S \leftarrow U_T\) exhibits \(U_Y\) as the fibre product
-  \(U_X \times_{U_S} U_T\) of affine schemes
-  (Mathlib: \texttt{Scheme.Hom.isPullback\_resLE}), which is affine; applying
-  global sections to this pullback of affines and reflecting along
-  \(\Spec\) yields the pushout of section rings (Mathlib:
-  \texttt{AlgebraicGeometry.isIso\_pushoutSection\_of\_isAffineOpen}).
+  \(U_X \times_{U_S} U_T\) of affine schemes, which is affine.  Applying
+  global sections to this pullback and using the anti-equivalence between
+  affine schemes and commutative rings yields the pushout of section rings.
   Since \(U_Y \subseteq g^{-1}(U_X)\) with \(U_X\), \(U_Y\) affine and
   \(\F\) quasi-coherent, the base-change section formula
   (\cref{def:pullback_app_isoTensor_sigma}, Stacks 01HQ/01I8) identifies
@@ -1334,9 +1117,8 @@ the flat stratum over one irreducible component.
   immersions \(\iota_i : V_i \to S\) with pairwise disjoint images
   set-theoretically covering \(|S|\), such that for each \(i\) the pullback of
   \(\F\) to \(X \times_S V_i\) is flat over \(V_i\) in the sense of
-  \cref{def:coherent_sheaf_flat}.  This is the Lean encoding of the
-  Noetherian-induction reduction (\cref{lem:nonflat_locus_proper}), obtained by
-  peeling off non-empty flat open patches via generic flatness
+  \cref{def:coherent_sheaf_flat}.  The strata are obtained by successively
+  removing non-empty flat open patches supplied by generic flatness
   (\cref{thm:generic_flatness}).
 
   Noetherianity of \(S\) (rather than mere local noetherianity) is necessary
@@ -1401,7 +1183,7 @@ the flat stratum over one irreducible component.
 \begin{lemma}
 
 \leanok
-[Assembly of the Hilbert-polynomial-indexed strata]
+[Assembly with injectively labelled strata]
   \label{lem:flat_locus_assembly_lean}
   \lean{AlgebraicGeometry.flatLocusAssembly}
   \uses{def:coherent_sheaf_flat}
@@ -1411,10 +1193,7 @@ the flat stratum over one irreducible component.
   images set-theoretically covering \(|S|\), and an injective label map
   \(P : I \to (\mathbb{N} \to \Z)\) (so \(f = g \iff P_f = P_g\)), such that for
   each \(f\) the pullback of \(\F\) to \(X \times_S S_f\) is flat over \(S_f\) in
-  the sense of \cref{def:coherent_sheaf_flat}.  In the intended refinement
-  (\cref{lem:noetherian_induction_strata}) the label \(P_f\) is the Hilbert
-  polynomial of the fibres over \(S_f\); the present statement records only
-  the injective labelling of the strata.
+  the sense of \cref{def:coherent_sheaf_flat}.
 \end{lemma}
 
 \begin{proof}
@@ -1424,8 +1203,9 @@ the flat stratum over one irreducible component.
   reduction \cref{lem:flat_locus_reduction_lean}: take its stratification and
   label the finitely many strata by any injection
   \(I \hookrightarrow \mathbb{N} \to \Z\) (for instance constant functions
-  with pairwise distinct values).  The genuinely Hilbert-polynomial-indexed
-  refinement is the content of \cref{lem:noetherian_induction_strata}.
+  with pairwise distinct values).  Requiring these labels to be the fibrewise
+  Hilbert polynomials gives the refinement of
+  \cref{lem:noetherian_induction_strata}.
 \end{proof}
 
 \section{The entry ideal of a matrix presentation}
@@ -1586,9 +1366,8 @@ of fiber rank \(e\).  Throughout, \(R\) is a commutative ring and \(M\) an
   Let \(M\) carry a matrix presentation \((\psi, \pi)\) by \(e\) generators.
   If \(M\) is flat and \(M_{\mathfrak p}\) has rank \(e\) over
   \(R_{\mathfrak p}\) for every prime \(\mathfrak p\), then \(\psi = 0\).
-  (This is the direction of Nitsure's local universal property left implicit
-  in the source: a surjection \(R^{\oplus e} \twoheadrightarrow M\) onto a
-  locally free module of everywhere-rank \(e\) has zero kernel.)
+  Equivalently, a surjection \(R^{\oplus e} \twoheadrightarrow M\) onto a
+  locally free module of everywhere-rank \(e\) has zero kernel.
 \end{theorem}
 
 \begin{proof}
@@ -1753,7 +1532,7 @@ of fiber rank \(e\).  Throughout, \(R\) is a commutative ring and \(M\) an
   generators.
 \end{proof}
 
-\section{The rank-\(e\) stratum as a closed subscheme}
+\section{Rank strata as closed subschemes}
 \label{sec:flatstrat_rank_stratum}
 
 The entry-ideal commutative algebra of \cref{sec:entry_ideal} is local to an
@@ -2842,22 +2621,17 @@ over \(T\) via the identity morphism of \(T\), in the affine-local sense of
   \(\varphi^* \F\) is flat over \(T\) factors \emph{uniquely} through
   \(i\).
 
-  This is part (ii) of Nitsure's flattening-stratification theorem in the
-  special case \(n = 0\), stated with flatness in place of local freeness of
-  constant rank: for a finitely presented module the two notions agree
-  locally, the rank decomposing \(T\) into clopen pieces.  Nitsure states an
-  ``if and only if''; the converse direction --- any morphism factoring
-  through \(i\) has flat pullback --- is stability of flatness under base
-  change (\cref{lem:sheaf_flat_pullback}) and is not part of this statement.
-  The universal property for a relative family (Nitsure's part (ii) for
-  \(\F\) on \(\PP^n_S\), hence for projective \(\pi : X \to S\))
-  additionally requires the cohomology-and-base-change layer of
-  \cref{lem:noetherian_induction_strata} and is not stated separately here;
-  for a general \emph{proper} family the universal property is not asserted
-  here, and the reduced strata of \cref{lem:flat_locus_reduction_lean} do
-  not witness it (over \(S = \Spec k[\varepsilon]\) with \(\F = \OO_S\)
-  flat, the identity must factor through the stratification, forcing the
-  canonical non-reduced stratum structure).
+  For a finitely presented module, flatness is locally equivalent to local
+  freeness, and the rank decomposes \(T\) into clopen pieces.  Conversely,
+  every morphism factoring through \(i\) has flat pullback by stability of
+  flatness under base change (\cref{lem:sheaf_flat_pullback}).  For a relative
+  projective family, the analogous universal property additionally uses the
+  cohomology-and-base-change layer of
+  \cref{lem:noetherian_induction_strata}.  Reduced strata alone do not give
+  such a universal property for an arbitrary proper family: over
+  \(S = \Spec k[\varepsilon]\) with the flat module \(\F = \OO_S\), the
+  identity must factor through the flattening stratum, which forces its
+  canonical non-reduced scheme structure.
 \end{theorem}
 
 \begin{proof}
@@ -2920,24 +2694,13 @@ over \(T\) via the identity morphism of \(T\), in the affine-local sense of
 \section{Application: relative curves}
 \label{sec:flatstrat_curve_application}
 
-In the Route~A consumer setting, the input to the flattening-stratification
-machinery is the pullback \(C \times_k T \to T\) where \(C\) is a smooth proper
-curve over a field \(k\) and \(T\) is any \(k\)-scheme.  The hypotheses of
-Nitsure's \cref{thm:flattening_stratification_exists} demand
-\emph{projective} relative dimension, not merely \emph{proper}; we record that
-no extra work is required to instantiate the theorem in our setting.
+Let \(C\) be a smooth proper curve over a field \(k\) and \(T\) a noetherian
+\(k\)-scheme.  To apply \cref{thm:flattening_stratification_exists} to
+\(C \times_k T \to T\), it remains to pass from properness to projectivity.
 
 \begin{lemma}
 [Smooth proper curve over \(k\) is projective]
   \label{lem:smooth_proper_curve_projective}
-  \lean{AlgebraicGeometry.TODO.smoothProperCurveProjective}
-  % SOURCE: [Hartshorne], II.6.7 / II.7.6 (curve \(\Rightarrow\) quasi-projective;
-  % proper \(\Rightarrow\) projective for curves), and standard consequences in
-  % chapter III. The precise statement ``every smooth proper curve over a field
-  % is projective'' is one of the classical equivalences for \(\dim 1\) and is
-  % textbook material; this block is project-bespoke (no verbatim source
-  % quote is reproduced here as the result is folklore-level and cited only
-  % structurally for the Route~A reduction).
   \textit{Source: classical; cf.\ [Hartshorne], II.6.7 \& II.7.6 (curves).}
   Let \(C\) be a smooth proper curve over a field \(k\).  Then \(C \to \Spec k\) is
   projective.  Consequently, for any noetherian \(k\)-scheme \(T\), the relative
@@ -2956,10 +2719,8 @@ no extra work is required to instantiate the theorem in our setting.
 
 \begin{corollary}
 
-\leanok
 [Flattening stratification for a coherent sheaf on a relative curve]
   \label{cor:flattening_stratification_curve}
-  \lean{AlgebraicGeometry.flatteningStratification.ofCurve}
   \uses{lem:smooth_proper_curve_projective, thm:flattening_stratification_exists}
   Let \(k\) be a field, \(C\) a smooth proper curve over \(k\), and \(T\) a noetherian
   \(k\)-scheme.  Let \(\F\) be a coherent sheaf on \(C \times_k T\). Then the
@@ -2968,13 +2729,13 @@ no extra work is required to instantiate the theorem in our setting.
   set \(I\) of Hilbert polynomials and locally-closed subschemes
   \(T_f \hookrightarrow T\) for \(f \in I\), set-theoretically covering \(T\)
   disjointly, such that (a) \(\F|_{C \times_k T_f}\) is flat over \(T_f\) for
-  each \(f\), and (b) any morphism \(\varphi : T' \to T\) such that
-  \(\varphi^* \F\) on \(C \times_k T'\) is \(T'\)-flat factors uniquely through some
-  \(T_f\).
+  each \(f\), and (b), after setting \(T'':=\coprod_{f\in I}T_f\), any
+  morphism \(\varphi : T' \to T\) such that \(\varphi^* \F\) on
+  \(C \times_k T'\) is \(T'\)-flat factors uniquely through the canonical
+  morphism \(T'' \to T\).
 \end{corollary}
 
 \begin{proof}
-  
   By \cref{lem:smooth_proper_curve_projective}, \(C \times_k T \to T\) is
   projective, hence factors through a closed immersion into \(\PP^n_T\) for some
   \(n \ge 0\).  Push \(\F\) forward along the closed immersion (extending by zero
@@ -2985,127 +2746,32 @@ no extra work is required to instantiate the theorem in our setting.
   \(\PP^n_T\) to obtain \(\{T_f\}\) with the stated universal property.
 \end{proof}
 
-\section{Mathlib status}
+\section{Mathematical ingredients}
 \label{sec:flatstrat_mathlib_status}
 
-\emph{Formalization status (run 0010, T12 r7).}  The Lean-typed existence
-statement (\texttt{AlgebraicGeometry.flatteningStratification}: finite
-disjoint locally-closed cover with flat pullbacks, without the
-Hilbert-polynomial indexing) is proved sorry-free and axiom-clean, through
-\cref{lem:flat_locus_reduction_lean} and the transfer lemmas of
-\cref{subsec:flat_transfer_strata}; the Lean sections \S3--\S6 of the
-statements live in \texttt{GenericFlatnessGeometric.lean} because the proof
-consumes generic flatness, whose glue needs the QuotScheme engine.  The
-\(n = 0\) stratification \texttt{flatLocusStratification}
-(\cref{lem:flat_locus_stratification_lean}) is likewise proved axiom-clean,
-derived from the existence theorem at \(\pi = \mathrm{id}_S\) through the
-iso-insensitivity of the flatness predicate
-(\texttt{coherentSheafFlat\_of\_comp\_isIso}) and empty-scheme padding of
-the index set.  The \(n = 0\) universal property
-(\texttt{flatLocusStratification\_universal},
-\cref{thm:flattening_stratification_universal}, the canonical entry-ideal
-strata) is proved sorry-free and axiom-clean through the representability
-layer of \cref{sec:flatstrat_representability}
-(\texttt{FlatteningStratificationUniversal.lean}).  The remaining Lean gap
-in this chapter is the Hilbert-polynomial-indexed refinement of the main
-statement, which additionally awaits the coherent-\(\chi\) substrate.
+The construction combines four kinds of input.  First, module flatness is
+stable under localization and arbitrary base change, and flatness of a
+quasi-coherent module over a base may be checked on affine charts.  Second,
+generic freeness over a noetherian domain supplies the dense flat open used
+in the Noetherian induction of \cref{lem:flat_locus_reduction_lean}.  Third,
+entry ideals of finite presentations define the rank strata and their
+universal property, as developed in \cref{sec:entry_ideal}--
+\cref{sec:flatstrat_representability}.  Finally, for a projective family,
+Serre vanishing and cohomology and base change compare the fibre Hilbert
+polynomial with the ranks of the finitely many direct images
+\(\pi_*\F(N),\ldots,\pi_*\F(N+n)\).  These inputs produce the canonical
+Hilbert-polynomial indexing in
+\cref{thm:flattening_stratification_exists}.
 
-Mathlib (master \texttt{b80f227}) provides:
-\begin{itemize}
-  \item \texttt{Module.Flat} (\texttt{Mathlib.RingTheory.Flat.Basic}) --- the
-    module-theoretic notion of flatness, applicable affine-locally to the
-    stalks \(\F_x\).
-  \item \texttt{Mathlib.AlgebraicGeometry.Morphisms.Flat} ---
-    \texttt{IsFlat} as a morphism property and basic stability lemmas; this is
-    flatness of the structure morphism, \emph{not} flatness of a quasi-coherent
-    module over the base.
-  \item \texttt{Module.FaithfullyFlat} and the descent infrastructure that
-    consumes it.
-\end{itemize}
-
-\noindent What Mathlib does \emph{not} yet have, and that this chapter will
-introduce in the new file
-\texttt{AlgebraicJacobian/Picard/FlatteningStratification.lean}:
-\begin{itemize}
-  \item A predicate \texttt{AlgebraicGeometry.Scheme.CoherentSheafFlat}
-    capturing \(S\)-flatness of a coherent \(\OO_X\)-module on a finite-type
-    \(S\)-scheme (\cref{def:coherent_sheaf_flat}). This is the
-    sheaf-level lift of \texttt{Module.Flat} via the affine-local
-    characterization in the second paragraph of the definition.
-  \item The constructive existence proof
-    \texttt{AlgebraicGeometry.flatteningStratification}
-    (\cref{thm:flattening_stratification_exists}) from Nitsure~\S4, proved
-    through \texttt{flatLocusReduction}
-    (\cref{lem:flat_locus_reduction_lean}, the Noetherian-induction
-    reduction via generic flatness) and packaged with injective labels by
-    \texttt{flatLocusAssembly} (\cref{lem:flat_locus_assembly_lean}); the
-    \(n = 0\) case \texttt{flatLocusStratification}
-    (\cref{lem:flat_locus_stratification_lean}) is derived back from the
-    existence theorem at \(\pi = \mathrm{id}_S\).
-  \item The universal-property packaging
-    \texttt{AlgebraicGeometry.flatLocusStratification\_universal}
-    (\cref{thm:flattening_stratification_universal}), bundling the \(n = 0\)
-    stratification with the unique factorisation of morphisms with flat
-    pullback through the stratum coproduct \(\coprod_f S_f \to S\); the
-    projective-family upgrade needs \(\PP^n_S\) vocabulary and
-    cohomology-and-base-change, and an eventual
-    \texttt{CategoryTheory.Functor.RepresentableBy}-style refinement remains
-    future work.
-  \item The dévissage layer of the algebraic generic-freeness lemma
-    (\cref{sec:generic_freeness_devissage}) is formalized and proved
-    (splicing, torsion base case, transport, prime-filtration assembly
-    \texttt{GenericFreeness.genericFlatnessAlgebraic}); the sole remaining
-    algebraic gap is the normalisation core
-    (\cref{lem:generically_free_domain_core}).
-  \item The relative-curve specialisation
-    \texttt{AlgebraicGeometry.flatteningStratification.ofCurve}
-    (\cref{cor:flattening_stratification_curve}) for the Route~A
-    consumer.
-\end{itemize}
-
-Inputs from Mathlib that the proof consumes:
-\begin{itemize}
-  \item \texttt{CategoryTheory.Limits.Cofan} / \texttt{Sigma} for the coproduct
-    \(\coprod_f S_f\).
-  \item \texttt{AlgebraicGeometry.IsLocallyClosedImmersion} (and the locally-closed
-    subscheme API) for the strata \(S_f \hookrightarrow S\).
-  \item \texttt{IsNoetherian} / \texttt{Mathlib.RingTheory.Noetherian} for the
-    Noetherian-induction termination argument.
-  \item \texttt{AlgebraicGeometry.IsProjective} (or
-    \texttt{ProjectiveMorphism}) and the relative-\(\PP^n\) construction, to
-    state and unpack the projective-morphism hypothesis on
-    \(\pi : \PP^n_S \to S\).
-  \item Higher-direct-image base-change lemmas (\texttt{Mathlib.AlgebraicGeometry
-    .Cohomology}, or a Stacks-tag-02KH-shaped lemma; cf.\ the existing
-    \cref{chap:Picard_RelativeSpec} use of the same tag) for the \(E_i = \pi_*\F(N+i)\)
-    construction in \cref{lem:noetherian_induction_strata}.
-  \item Castelnuovo--Mumford regularity / Serre vanishing for the
-    \texttt{N\_1}-existence step.  Mathlib does not yet have these in the
-    relative form needed; a future sub-lemma may stub them or rely on
-    \texttt{Module.IsTorsion} arguments on the graded module
-    \(\bigoplus_{m \ge N} \pi_* \F(m)\).
-\end{itemize}
-
-\section{Out of scope}
+\section{Relation to adjacent constructions}
 \label{sec:flatstrat_out_of_scope}
 
-This chapter packages \emph{only} the flattening stratification of a coherent
-sheaf on a projective morphism, plus the relative-curve specialisation. The
-following downstream / parallel constructions live in separate sibling
-chapters and are explicitly out of scope here:
-\begin{itemize}
-  \item \textbf{Castelnuovo--Mumford regularity} (Nitsure~\S2) --- input to the
-    Quot construction, used implicitly inside the proof of
-    \cref{lem:noetherian_induction_strata} as the assertion that the
-    Hilbert function stabilises beyond a uniform \(N\).  Its own blueprint home
-    is the planned chapter \texttt{Picard\_CastelnuovoMumford.tex} (not yet
-    scaffolded).
-  \item \textbf{Quot scheme construction} (Nitsure~\S5, A.2.b) --- consumer of
-    the present chapter; its home is the planned \texttt{Picard\_QuotScheme.tex}.
-  \item \textbf{Relative Picard functor} (A.1.c) ---
-    \texttt{Picard\_RelPicFunctor.tex} (planned).
-  \item \textbf{Picard scheme representability for a smooth proper curve}
-    (A.2.c) --- the assembly theorem fed by both the Quot construction (which
-    consumes this chapter) and the relative Picard functor; home is the
-    planned \texttt{Picard\_FGAPicRepresentability.tex}.
-\end{itemize}
+Castelnuovo--Mumford regularity supplies the uniform twists used in the
+projective cohomology argument, while flattening stratification supplies the
+locally closed condition in the construction of Quot schemes: a family of
+quotients has prescribed Hilbert polynomial precisely after its classifying
+morphism factors through the corresponding stratum.  For a smooth proper
+curve, \cref{cor:flattening_stratification_curve} gives this input after base
+change to an arbitrary noetherian scheme.  Combining the resulting Quot
+spaces with the relative Picard functor is a separate representability
+argument; it does not alter the flattening construction proved here.

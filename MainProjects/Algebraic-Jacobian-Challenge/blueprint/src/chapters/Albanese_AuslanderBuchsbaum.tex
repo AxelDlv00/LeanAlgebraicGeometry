@@ -319,10 +319,8 @@ Both statements follow by splitting or splicing finite projective resolutions.
 
 \begin{lemma}
 
-\leanok
   [Depth drops by one under a regular element]
   \label{lem:depth_drops_by_one}
-  \lean{RingTheory.Module.depth_quotSMulTop_succ_eq_depth_of_isSMulRegular}
   \uses{def:depth, lem:depth_via_ext}
   \textit{Source: [Stacks Project], tag 00LL (\texttt{lemma-depth-drops-by-one}).}
 
@@ -334,7 +332,6 @@ Both statements follow by splitting or splicing finite projective resolutions.
 \end{lemma}
 \begin{proof}
 
-\leanok
   Reduces to the Ext characterisation
   (\cref{lem:depth_via_ext}) on both sides; the short exact sequence
   \(0 \to M \xrightarrow{\,\cdot x\,} M \to M/xM \to 0\) gives a
@@ -489,10 +486,8 @@ control in the syzygy sequence and the corresponding lower bound on depth.
   \(\texttt{pd}\,M = k+1\) exactly.
 \end{lemma}
 \begin{lemma}
-\leanok
 [Depth lower bound on the kernel of a finite-free surjection]
   \label{lem:depth_ker_ge_min_of_surjection_finite_localRing}
-  \lean{RingTheory.Module.depth_ker_ge_min_of_surjection_finite_localRing}
   \uses{lem:depth_short_exact_sequence, lem:depth_pi_const_eq_depth_of_nonempty}
   \textit{Source: \(\texttt{depth\_of\_short\_exact}\) part (3) +
   \(\texttt{depth\_pi\_const\_eq\_depth\_of\_nonempty}\).}
@@ -691,10 +686,9 @@ used in the proofs above.
 \subsection{Surjection and projective-dimension substrate for the inductive step}
 \label{subsec:ab_surjection_substrate}
 
-\begin{lemma}\leanok
+\begin{lemma}
 [A regular element exists when depth is positive]
   \label{lem:exists_isSMulRegular_of_one_le_depth}
-  \lean{RingTheory.Module.exists_isSMulRegular_of_one_le_depth}
   \uses{def:depth}
   For a Noetherian local ring \((R, \mathfrak m)\) and a nonzero finitely generated
   \(R\)-module \(M\), if \(1 \leq \text{depth}(M)\) then there exists \(x \in \mathfrak m\)
@@ -703,7 +697,6 @@ used in the proofs above.
 \end{lemma}
 \begin{proof}
 
-\leanok
   Nakayama gives \(\mathfrak mM\neq M\). Since depth is at least one,
   its defining supremum contains a regular sequence of positive length.
   The first element of that sequence lies in \(\mathfrak m\) and is
