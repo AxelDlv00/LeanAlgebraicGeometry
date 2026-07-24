@@ -1,0 +1,29 @@
+id: AJC.maintenance.blueprint.prose
+title: Remaining chapter prose cleanup
+projects:
+- Algebraic-Jacobian-Challenge
+summary: Continue bounded timeless-mathematics passes over marker-heavy chapters,
+  preserving valid statements, complete proofs, source anchors, dependencies, and
+  faithful Lean pins.
+status: pending
+kind: blueprint
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-24T13:48:47.351057+00:00'
+  provenance:
+    run: '0046'
+    session: 0038-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.blueprint

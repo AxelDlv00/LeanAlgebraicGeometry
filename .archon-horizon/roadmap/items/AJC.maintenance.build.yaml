@@ -2,10 +2,9 @@ id: AJC.maintenance.build
 title: Project-wide build and warning budgets
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Profile the remaining expensive dependency closures, remove unjustified heartbeat
-  overrides and unused imports, and maintain clean LSP/module-build baselines. The
-  current Cech capstone and RelativeSpec targets are clean; a fresh full-project timing
-  run remains.
+summary: Measure the project build, minimize stable-module dependency closures, and
+  replace unexplained resource overrides by structural proofs or documented local
+  budgets.
 status: pending
 kind: refactor
 priority: normal
@@ -28,3 +27,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
+  updated_at: '2026-07-24T13:50:17.325265+00:00'
