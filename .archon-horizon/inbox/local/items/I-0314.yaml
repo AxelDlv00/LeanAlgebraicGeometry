@@ -4,16 +4,15 @@ kind: issue
 body: 'Blueprint journal cleanup
 
 
-  Three bounded chapter passes are complete. Albanese_CodimOneExtension, Picard_FGAPicRepresentability,
-  and Albanese_AuslanderBuchsbaum now read as timeless mathematics while preserving
-  their labels, dependency lists, Lean pins, completion markers, and theorem/proof
-  inventories. The Auslander--Buchsbaum pass removed eleven raw source-quote blocks,
-  the route and budget diary, and 29 Lean-only proof placeholders. Fresh review also
-  removed the phantom claim that depth-two Hartogs gates Albanese extension; the valid
-  consequence is extension of regular functions, while the rational-map theorem uses
-  the independent group-scheme indeterminacy chain. Three full LuaLaTeX passes succeeded.
-  Commits: bd9f91a59, 2697d9062, 1878c9047, and 6fe285748. Continue bounded cleanup
-  with Picard_RelativeSpec and other marker-heavy chapters while preserving formalization
+  Four bounded chapter passes are complete: `Albanese_CodimOneExtension`, `Picard_FGAPicRepresentability`,
+  `Albanese_AuslanderBuchsbaum`, and `Picard_RelativeSpec` now read as timeless mathematics.
+  Their mathematical labels and dependency structure remain intact; Lean pins and
+  completion markers are retained only where faithful. The cleanup removed source-quote
+  blocks, route and budget diaries, Lean-only proof placeholders, and a false depth-two
+  Hartogs dependency, while the Relative Spec proof now distinguishes its reconstructed
+  algebra from ordinary pullback. Three full LuaLaTeX passes succeed. Key commits:
+  `bd9f91a59`, `2697d9062`, `1878c9047`, `6fe285748`, `2482721ad`, and `7e7226fc8`.
+  Continue bounded cleanup with other marker-heavy chapters while preserving formalization
   anchors.'
 labels:
 - agent-ready
@@ -25,7 +24,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-24T00:59:37.386102+00:00'
-updated_at: '2026-07-24T11:31:11.996036+00:00'
+updated_at: '2026-07-24T13:34:49.504665+00:00'
 metadata:
   provenance:
     run: '0046'
