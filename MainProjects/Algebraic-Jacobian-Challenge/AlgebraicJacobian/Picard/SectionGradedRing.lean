@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Archon Horizon. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Horizon (Archon Horizon)
+-/
 import Mathlib.Algebra.GradedMonoid
 import Mathlib.Algebra.DirectSum.Ring
 import Mathlib.Algebra.DirectSum.Module
@@ -618,8 +623,7 @@ noncomputable def relTensorActL (P Q : X.PresheafOfModules) :
     dsimp only [relTensorTriplePresheaf, relTensorDomainPresheaf]
     ext z
     have hz := LinearMap.congr_fun key z
-    simp only [AddCommGrpCat.hom_comp, AddCommGrpCat.hom_ofHom, AddMonoidHom.comp_apply,
-      LinearMap.toAddMonoidHom_coe, LinearMap.comp_apply] at hz
+    simp only [LinearMap.comp_apply] at hz
     exact hz
 
 /-- The **right-action** natural transformation of the coequalizer rows
@@ -658,8 +662,7 @@ noncomputable def relTensorActR (P Q : X.PresheafOfModules) :
     dsimp only [relTensorTriplePresheaf, relTensorDomainPresheaf]
     ext z
     have hz := LinearMap.congr_fun key z
-    simp only [AddCommGrpCat.hom_comp, AddCommGrpCat.hom_ofHom, AddMonoidHom.comp_apply,
-      LinearMap.toAddMonoidHom_coe, LinearMap.comp_apply] at hz
+    simp only [LinearMap.comp_apply] at hz
     exact hz
 
 /-- The **projection** natural transformation (`relTensorProj`):
@@ -701,8 +704,7 @@ noncomputable def relTensorProj (P Q : X.PresheafOfModules) :
     apply AddCommGrpCat.hom_ext
     ext z
     have hz := LinearMap.congr_fun key z
-    simp only [AddCommGrpCat.hom_comp, AddCommGrpCat.hom_ofHom, AddMonoidHom.comp_apply,
-      LinearMap.toAddMonoidHom_coe, LinearMap.comp_apply, AddMonoidHom.coe_toIntLinearMap] at hz
+    simp only [LinearMap.comp_apply] at hz
     exact hz
 
 /-- The cofork condition for the presheaf-level relative-tensor coequalizer: the left- and
@@ -1113,6 +1115,7 @@ private noncomputable def uDomIso (P R : X.PresheafOfModules) :
         exact congrArg₂ (fun x y => x + y) ha hb)
 
 set_option maxHeartbeats 800000 in
+-- Naturality for the nested tensor equivalence traverses three transported module structures.
 /-- The abelian presheaf underlying `uModPresheaf P ⊗ (uModRingPresheaf X ⊗ uModPresheaf R)`
 is the `ℤ`-tensor triple presheaf `relTensorTriplePresheaf P R` (componentwise
 `uTripleEquiv`). -/
@@ -1201,7 +1204,7 @@ private lemma W_domWhisker {P Q : X.PresheafOfModules} (f : P ⟶ Q)
   have h2 := (W_whiskerRight_modToAb_iff (opensTopology X) _).mpr h1
   refine (((opensTopology X).W).arrow_mk_iso_iff
     (Arrow.isoMk (uDomIso P R) (uDomIso Q R) ?_)).mp h2
-  show (uDomIso P R).hom ≫ domWhisker f R
+  change (uDomIso P R).hom ≫ domWhisker f R
     = Functor.whiskerRight (MonoidalCategory.whiskerRight (uModHom f) (uModPresheaf R))
         modToAb.{u} ≫ (uDomIso Q R).hom
   exact (uDomIso P R).hom_inv_id_assoc _
@@ -1218,7 +1221,7 @@ private lemma W_tripWhisker {P Q : X.PresheafOfModules} (f : P ⟶ Q)
   have h2 := (W_whiskerRight_modToAb_iff (opensTopology X) _).mpr h1
   refine (((opensTopology X).W).arrow_mk_iso_iff
     (Arrow.isoMk (uTripIso P R) (uTripIso Q R) ?_)).mp h2
-  show (uTripIso P R).hom ≫ tripWhisker f R
+  change (uTripIso P R).hom ≫ tripWhisker f R
     = Functor.whiskerRight
         (MonoidalCategory.whiskerRight (uModHom f)
           (MonoidalCategory.tensorObj (uModRingPresheaf X) (uModPresheaf R))) modToAb.{u} ≫
@@ -1373,11 +1376,11 @@ lemma ztensor_whisker_localIso {P Q : X.PresheafOfModules}
       (actL_domWhisker f R) (actR_domWhisker f R)
   have hβ : ∀ j, IsIso ((Functor.whiskerRight β a).app j) := by
     rintro (_ | _)
-    · show IsIso (a.map (β.app Limits.WalkingParallelPair.zero))
+    · change IsIso (a.map (β.app Limits.WalkingParallelPair.zero))
       rw [show β.app Limits.WalkingParallelPair.zero = tripWhisker f R from
         Limits.parallelPairHom_app_zero ..]
       exact ((opensTopology X).W_iff _).mp hWtrip
-    · show IsIso (a.map (β.app Limits.WalkingParallelPair.one))
+    · change IsIso (a.map (β.app Limits.WalkingParallelPair.one))
       rw [show β.app Limits.WalkingParallelPair.one = domWhisker f R from
         Limits.parallelPairHom_app_one ..]
       exact ((opensTopology X).W_iff _).mp hWdom
@@ -1400,7 +1403,7 @@ lemma ztensor_whisker_localIso {P Q : X.PresheafOfModules}
             (relTensorActL_proj_eq P R))).ι.app Limits.WalkingParallelPair.one ≫
           a.map ((PresheafOfModules.toPresheaf X.ringCatSheaf.obj).map
             (MonoidalCategory.whiskerRight (C := MonoidalPresheaf X) f R)) := by
-      show a.map (β.app Limits.WalkingParallelPair.one) ≫ a.map (relTensorProj Q R)
+      change a.map (β.app Limits.WalkingParallelPair.one) ≫ a.map (relTensorProj Q R)
         = a.map (relTensorProj P R) ≫ a.map _
       rw [show β.app Limits.WalkingParallelPair.one = domWhisker f R from
         Limits.parallelPairHom_app_one .., ← Functor.map_comp, ← Functor.map_comp]
@@ -1665,9 +1668,9 @@ private lemma tensorObjUnitIso_eq (G : X.Modules) :
   simp only [Category.assoc]
   -- v4.31: the leading `⊗ₘ`-vs-whisker pair is `tensorHom_def'` (a theorem, not a defeq in the
   -- transported structure).  `simp`/`erw` congruence cannot descend into the goal (type-incorrect
-  -- at `instances` transparency via `X.ringCatSheaf.obj`), so restate by `show` (checked at
+  -- at `instances` transparency via `X.ringCatSheaf.obj`), so use `change` (checked at
   -- default transparency) to expose the `⊗ₘ` head syntactically, then rewrite at top level.
-  show (((unitModule X).sheafificationCounitIso.inv ⊗ₘ G.sheafificationCounitIso.inv) ≫
+  change (((unitModule X).sheafificationCounitIso.inv ⊗ₘ G.sheafificationCounitIso.inv) ≫
       (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
         ((toPresheafOfModules X).obj (unitModule X)) ((toPresheafOfModules X).obj G)).hom) ≫
       (sheafification.map (MonoidalCategory.leftUnitor (C := MonoidalPresheaf X)
@@ -1707,10 +1710,10 @@ private lemma tensorBraiding_eq (F G : X.Modules) :
   dsimp only [tensorBraiding, tensorObjIso, Iso.trans_hom, Functor.mapIso_hom,
     MonoidalCategory.tensorIso_hom, Iso.symm_hom]
   -- v4.31: subterm congruence is dead on this goal (type-incorrect at `instances` transparency via
-  -- `X.ringCatSheaf.obj`), so restate by `show` (checked at default transparency) to expose the
+  -- `X.ringCatSheaf.obj`), so use `change` (checked at default transparency) to expose the
   -- `⊗ₘ`/`≫` heads syntactically; then the top-level rewrites and the cancellation simp fire
   -- (cf. `tensorObjUnitIso_eq`).
-  show ((F.sheafificationCounitIso.inv ⊗ₘ G.sheafificationCounitIso.inv) ≫
+  change ((F.sheafificationCounitIso.inv ⊗ₘ G.sheafificationCounitIso.inv) ≫
       (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
         ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).obj G)).hom) ≫
       sheafification.map (BraidedCategory.braiding (C := MonoidalPresheaf X)
@@ -1903,8 +1906,8 @@ private lemma tensorObjWhiskerLeftIso_eq (F : X.Modules) {G G' : X.Modules} (e :
       ((toPresheafOfModules X).map e.hom))
   dsimp only [tensorObjWhiskerLeftIso, tensorObjIso, Iso.trans_hom, Functor.mapIso_hom,
     MonoidalCategory.tensorIso_hom, Iso.symm_hom, MonoidalCategory.whiskerLeftIso_hom]
-  -- v4.31: restate by `show` to expose the `⊗ₘ`/`≫` heads (cf. `tensorObjUnitIso_eq`).
-  show ((F.sheafificationCounitIso.inv ⊗ₘ G.sheafificationCounitIso.inv) ≫
+  -- v4.31: use `change` to expose the `⊗ₘ`/`≫` heads (cf. `tensorObjUnitIso_eq`).
+  change ((F.sheafificationCounitIso.inv ⊗ₘ G.sheafificationCounitIso.inv) ≫
       (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
         ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).obj G)).hom) ≫
       sheafification.map (MonoidalCategory.whiskerLeft (C := MonoidalPresheaf X)
@@ -1957,8 +1960,8 @@ private lemma tensorObjWhiskerRightIso_eq {F F' : X.Modules} (e : F ≅ F') (G :
       ((toPresheafOfModules X).obj G))
   dsimp only [tensorObjWhiskerRightIso, tensorObjIso, Iso.trans_hom, Functor.mapIso_hom,
     MonoidalCategory.tensorIso_hom, Iso.symm_hom, MonoidalCategory.whiskerRightIso_hom]
-  -- v4.31: restate by `show` to expose the `⊗ₘ`/`≫` heads (cf. `tensorObjUnitIso_eq`).
-  show ((F.sheafificationCounitIso.inv ⊗ₘ G.sheafificationCounitIso.inv) ≫
+  -- v4.31: use `change` to expose the `⊗ₘ`/`≫` heads (cf. `tensorObjUnitIso_eq`).
+  change ((F.sheafificationCounitIso.inv ⊗ₘ G.sheafificationCounitIso.inv) ≫
       (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
         ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).obj G)).hom) ≫
       sheafification.map (MonoidalCategory.whiskerRight (C := MonoidalPresheaf X)
@@ -2487,6 +2490,7 @@ private lemma tensorObjAssoc_associator_counit_coherence_stage0
 -- `set_option maxHeartbeats 800000` at the top of this file).  NOT the forbidden 1e6, and NOT papering
 -- over a missing proof — the proof is complete; this is the genuine elaboration cost of the big term.
 set_option maxHeartbeats 800000 in
+-- The assembled coherence term requires the larger elaboration budget described above.
 /-- **Abstract associator-naturality coherence** (mechanical core of `★ tensorObjAssoc_eta_factor_sheaf`).
 Stated over a *generic* monoidal category `M` so that all `≫`/`▷`/`◁`/`α_` resolve to a single uniform
 category instance (no `LocalizedMonoidal`/`X.Modules` comp-instance diamond), making the standard
