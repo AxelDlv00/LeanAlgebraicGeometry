@@ -146,12 +146,12 @@ contained in a cover member** (blueprint `lem:cechSection_isZero_homology`).
 
 For `V ≤ coverOpen 𝒰 i`, the augmented Čech complex `cechAugmentedComplex 𝒰 F`, pushed
 through the forgetful/restrict-scalars adapter and evaluated at `V`, has zero homology in
-every degree.  This is the consumer-facing packaging of the Sub-brick A chain in
-`CechSectionIdentification.lean`: the evaluated complex is identified with the concrete
-augmented section Čech complex (`cechSection_complex_iso`), which carries the
-prepend-`i` contracting homotopy (`cechSection_contractible`, valid since
-`V ≤ coverOpen 𝒰 i`); the in-file glue `isZero_homology_of_iso_homotopy_id_zero`
-combines the pair. -/
+every degree.  This is the consumer-facing packaging of the Sub-brick A chain: the
+evaluated complex is identified with the concrete augmented section Čech complex by
+`cechSection_complex_iso` from `CechSectionIdentification.lean`, and
+`cechSection_contractible` from `CechSectionContractibility.lean` supplies the prepend-`i`
+contracting homotopy when `V ≤ coverOpen 𝒰 i`.  The in-file glue
+`isZero_homology_of_iso_homotopy_id_zero` combines the pair. -/
 lemma cechSection_isZero_homology (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
     (V : TopologicalSpace.Opens X) (i : 𝒰.I₀) (hiV : V ≤ coverOpen 𝒰 i) (p : ℕ) :
     let α : X.ringCatSheaf.obj ⟶ X.ringCatSheaf.obj := 𝟙 X.ringCatSheaf.obj
@@ -238,8 +238,8 @@ theorem cechAugmented_exact (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
     -- homotopy `d∘h + h∘d = id` on the section complex (template
     -- `CombinatorialCech.combHomotopy` / the objectwise homotopy of FreePresheafComplex),
     -- so every homology object vanishes.  F-agnostic, cover-agnostic.
-    -- Step 3(d): discharged by `cechSection_isZero_homology` above (the Sub-brick A chain
-    -- of `CechSectionIdentification.lean`, packaged via `isZero_homology_of_iso_homotopy_id_zero`).
+    -- Step 3(d): discharged by `cechSection_isZero_homology` above, combining the
+    -- identification and contractibility modules via `isZero_homology_of_iso_homotopy_id_zero`.
     exact cechSection_isZero_homology 𝒰 F V i hiV p
   -- Assemble the covering sieve `{g : V ⟶ U | V ≤ some Uᵢ}` of every open `U`.
   intro U
