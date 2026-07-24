@@ -706,14 +706,15 @@ end BaseRingDescent
 /-! ## Project-local Mathlib supplement — Route B keystone: per-tile section localization
 
 `tile_section_localization` (Stacks 01HV(4)/01I8, the last keystone leaf) shows that for a
-quasi-coherent `F` on `Spec R` and elements `f g : R` with the tile `F_{(g)}` globally presented, the
-section-restriction `Γ(D(g), F) → Γ(D(gf), F)` exhibits its target as the localization of its source
-at the powers of `f`.  It is the per-tile localization datum the sheaf-axiom kernel comparison
-consumes (`analogies/keystone-descent.md`).
+quasi-coherent `F` on `Spec R` and elements `f g : R` with the tile `F_{(g)}` globally presented,
+the section-restriction `Γ(D(g), F) → Γ(D(gf), F)` exhibits its target as the localization of its
+source at the powers of `f`.  It is the per-tile localization datum the sheaf-axiom kernel
+comparison consumes (`analogies/keystone-descent.md`).
 
-The naive recipe "the section comparison is the `restrict_obj` rfl" is UNSOUND: `restrict_obj` is rfl
-only for the local-ring `SheafOfModules` section functor `Γ(M,-)`, whereas the localization lives in
-the global-ring functor `modulesSpecToSheaf.obj`, which does NOT commute with restriction
+The naive recipe "the section comparison is the `restrict_obj` rfl" is UNSOUND:
+`restrict_obj` is rfl only for the local-ring `SheafOfModules` section functor `Γ(M,-)`, whereas
+the localization lives in the global-ring functor `modulesSpecToSheaf.obj`, which does NOT commute
+with restriction
 definitionally.  Hence the honest base-ring descent: Sub-lemma A (opens identities,
 `tile_image_opens_identities`) + Sub-lemma B (the load-bearing natural section comparison,
 `tile_section_comparison`) + the DONE base-ring descent
@@ -730,7 +731,7 @@ the genuine `Γ(W, 𝒪)`-module action of `F.val`.  Project-local: the entry po
 reconciliation. -/
 lemma modulesSpecToSheaf_smul_eq (F : (Spec R).Modules) (W : (Spec R).Opens) (r : R)
     (x : (modulesSpecToSheaf.obj F).presheaf.obj (Opposite.op W)) :
-    r • x = (((Spec R).ringCatSheaf.val.map (homOfLE (le_top : W ≤ ⊤)).op).hom
+    r • x = (((Spec R).ringCatSheaf.obj.map (homOfLE (le_top : W ≤ ⊤)).op).hom
               ((StructureSheaf.globalSectionsIso R).hom.hom r)
             • (show F.val.obj (Opposite.op W) from x)) :=
   rfl
@@ -739,7 +740,7 @@ lemma modulesSpecToSheaf_smul_eq (F : (Spec R).Modules) (W : (Spec R).Opens) (r 
 `F.val` structure-sheaf action via the two open-immersion `appIso` ring maps of the iterated
 restriction.  Project-local: the second rfl bridge of the tile scalar reconciliation. -/
 lemma modulesRestrictBasicOpen_smul_eq (F : (Spec R).Modules) (g : R)
-    (c : (Spec (.of (Localization.Away g))).ringCatSheaf.val.obj
+    (c : (Spec (.of (Localization.Away g))).ringCatSheaf.obj.obj
           (Opposite.op (⊤ : (Spec (.of (Localization.Away g))).Opens)))
     (m : (modulesRestrictBasicOpen g F).val.obj
           (Opposite.op (⊤ : (Spec (.of (Localization.Away g))).Opens))) :
@@ -756,7 +757,7 @@ iterated image open `ι ''ᵁ V`.  Project-local: needed for the scalar reconcil
 open `V = D(f̄)` of the per-tile section localization. -/
 lemma modulesRestrictBasicOpen_smul_eq' (F : (Spec R).Modules) (g : R)
     (V : (Spec (.of (Localization.Away g))).Opens)
-    (c : (Spec (.of (Localization.Away g))).ringCatSheaf.val.obj (Opposite.op V))
+    (c : (Spec (.of (Localization.Away g))).ringCatSheaf.obj.obj (Opposite.op V))
     (m : (modulesRestrictBasicOpen g F).val.obj (Opposite.op V)) :
     c • m = (((specBasicOpen g).ι.appIso _).inv.hom
               (((basicOpenIsoSpecAway g).inv.appIso _).inv.hom c))
@@ -811,7 +812,8 @@ lemma tile_image_opens_identities (g f : R) :
 
 /-- For an open immersion `f : X ⟶ Y`, post-composing the global-sections map `f.appTop` with the
 inverse of the section iso `f.appIso ⊤` recovers the structure-sheaf restriction from `⊤` to the
-image open `f ''ᵁ ⊤`.  Project-local: the section-restriction reading of the open-immersion `appIso`,
+image open `f ''ᵁ ⊤`.  Project-local: the section-restriction reading of the open-immersion
+`appIso`,
 the geometric brick of the structure-sheaf ring identity inside `tile_scalar_compat`. -/
 theorem appTop_appIso_inv_eq_res {X Y : Scheme} (f : X ⟶ Y) [IsOpenImmersion f] :
     Scheme.Hom.appTop f ≫ (Scheme.Hom.appIso f ⊤).inv
@@ -854,10 +856,11 @@ theorem tile_appIso_comp (g : R) :
   rw [hc]; simp [Iso.trans_inv, eqToHom_map, eqToHom_op]
 
 /-- **The structure-sheaf ring identity of Sub-lemma B (morphism form).**  Combining `key_morph`
-(`ΓSpec` naturality) and `tile_appIso_comp` (`comp_appIso` bookkeeping): the restriction to the tile
-image open `D(g)` of the `Spec R` global-sections identification equals the localization map `R → R_g`
-followed by the `Spec R_g` global-sections identification and the two (inverse) open-immersion section
-isos of the tile.  Project-local: the morphism-level content closed elementwise in
+(`ΓSpec` naturality) and `tile_appIso_comp` (`comp_appIso` bookkeeping): restriction to the tile
+image open `D(g)` of the `Spec R` global-sections identification equals the localization map
+`R → R_g`, followed by the `Spec R_g` global-sections identification and the two inverse
+open-immersion section isomorphisms of the tile.  Project-local: the morphism-level content closed
+elementwise in
 `tile_scalar_compat`. -/
 theorem tile_section_ring_identity (g : R) :
     (Scheme.ΓSpecIso R).inv ≫ (Spec R).presheaf.map (homOfLE (le_top :
@@ -877,10 +880,9 @@ theorem tile_section_ring_identity (g : R) :
   rw [tile_appIso_comp, ← hr, ← Functor.map_comp]
   congr 1
 
--- The `convert … using 2` defeq check on the tile section carriers (global-ring `modulesSpecToSheaf`
--- functor) is heartbeat-heavy; the default limit is insufficient.
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1000000 in
+-- The `convert … using 2` check on global-ring tile section carriers exceeds the default budget.
 /-- **Sub-lemma B scalar compatibility (Stacks 01I8).**  For a quasi-coherent `F` on `Spec R` and
 `g r : R`, the native `R`-action of `r` on a section of `F` over the tile image open `D(g)`
 coincides with the `R_g`-action of `algebraMap R R_g r` on the corresponding section of the affine
@@ -928,11 +930,11 @@ private lemma appIso_inv_res_assoc {X Y : Scheme} (f : X ⟶ Y) [IsOpenImmersion
       = X.presheaf.map (homOfLE h).op ≫ (f.appIso U').inv ≫ k := by
   rw [← Category.assoc, appIso_inv_res, Category.assoc]
 
-/-- General-open form of `tile_section_ring_identity`: the same structure-sheaf ring identity for the
-restriction to the image of an arbitrary open `V ⊆ Spec R_g`.  Obtained from the `V = ⊤` case by
+/-- General-open form of `tile_section_ring_identity`: the same structure-sheaf ring identity for
+the restriction to the image of an arbitrary open `V ⊆ Spec R_g`.  Obtained from the `V = ⊤` case by
 post-composing with the restriction `ι ''ᵁ V ≤ ι ''ᵁ ⊤` and pushing it through the two
-open-immersion section isos via `Scheme.Hom.appIso_inv_naturality`.  Project-local: supplies the ring
-identity at the target open `V = D(f̄)` for the scalar reconciliation `tile_scalar_compat'`. -/
+open-immersion section isos via `Scheme.Hom.appIso_inv_naturality`.  Project-local: supplies the
+ring identity at the target open `V = D(f̄)` for the scalar reconciliation `tile_scalar_compat'`. -/
 theorem tile_section_ring_identity' (g : R) (V : (Spec (.of (Localization.Away g))).Opens) :
     (Scheme.ΓSpecIso R).inv ≫ (Spec R).presheaf.map (homOfLE (le_top :
         ((specBasicOpen g).ι ''ᵁ ((basicOpenIsoSpecAway g).inv ''ᵁ V)) ≤ ⊤)).op
@@ -967,23 +969,24 @@ theorem tile_section_ring_identity' (g : R) (V : (Spec (.of (Localization.Away g
           ≫ ((basicOpenIsoSpecAway g).inv.appIso V).inv
           ≫ ((specBasicOpen g).ι.appIso ((basicOpenIsoSpecAway g).inv ''ᵁ V)).inv := by
         rw [show (Spec (.of (Localization.Away g))).presheaf.map
-              (homOfLE (le_top : (⊤ : (Spec (.of (Localization.Away g))).Opens) ≤ ⊤)).op = 𝟙 _ from by
+              (homOfLE
+                (le_top : (⊤ : (Spec (.of (Localization.Away g))).Opens) ≤ ⊤)).op = 𝟙 _ from by
             rw [Subsingleton.elim (homOfLE (le_top :
               (⊤ : (Spec (.of (Localization.Away g))).Opens) ≤ ⊤)) (𝟙 ⊤)]; simp, Category.id_comp]
         simp only [Category.assoc]
         rw [appIso_inv_res (specBasicOpen g).ι hV1 hV,
           appIso_inv_res_assoc (basicOpenIsoSpecAway g).inv (le_top : V ≤ ⊤) hV1]
 
--- The `convert … using 2` defeq check on the tile section carriers (global-ring `modulesSpecToSheaf`
--- functor) is heartbeat-heavy; the default limit is insufficient.
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1000000 in
-/-- **General-open form of `tile_scalar_compat` (Stacks 01I8).**  For a quasi-coherent `F` on `Spec R`,
-`g r : R`, and an arbitrary open `V ⊆ Spec R_g`, the native `R`-action of `r` on a section of `F` over
+-- The `convert … using 2` check on global-ring tile section carriers exceeds the default budget.
+/-- **General-open form of `tile_scalar_compat` (Stacks 01I8).**  For a quasi-coherent `F` on
+`Spec R`, `g r : R`, and an arbitrary open `V ⊆ Spec R_g`, the native `R`-action of `r` on a section
+of `F` over
 the tile image open `ι ''ᵁ V` coincides with the `R_g`-action of `algebraMap R R_g r` on the
 corresponding section of the affine tile `modulesRestrictBasicOpen g F` over `V`.  The `V = D(f̄)`
 instance is the scalar-tower compatibility at the *target* open of the per-tile section localization
-(`tile_section_localization`); the `V = ⊤` case is `tile_scalar_compat`.  Proved by the same two `rfl`
+(`tile_section_localization`); the `V = ⊤` case is `tile_scalar_compat`.  Proved by two `rfl`
 smul bridges (now `modulesRestrictBasicOpen_smul_eq'`) reducing to the structure-sheaf ring identity
 `tile_section_ring_identity'` at `V`.  Project-local. -/
 lemma tile_scalar_compat' (F : (Spec R).Modules) (g r : R)
@@ -1003,11 +1006,11 @@ lemma tile_scalar_compat' (F : (Spec R).Modules) (g r : R)
   simp only [CommRingCat.comp_apply] at hG
   exact hG
 
-/-- `IsScalarTower R S` on a bundled restriction-of-scalars module object, supplied as a `Prop` (a
-proof, hence no codegen, so it never hoists to a noncomputable auxiliary `def`).  Project-local: lets
-the base-ring descent `isLocalizedModule_powers_restrictScalars_of_algebraMap` find its scalar-tower
-argument *structurally* on the `ModuleCat.restrictScalars (algebraMap R S)` carrier, instead of via a
-`letI`/`haveI` install of a `Spec`-noncomputable instance (the iter-045 W1/W2 anti-pattern). -/
+/-- `IsScalarTower R S` on a bundled restriction-of-scalars module object, supplied as a `Prop`
+(a proof, hence no code generation or noncomputable auxiliary definition).  Project-local: lets the
+base-ring descent `isLocalizedModule_powers_restrictScalars_of_algebraMap` find its scalar-tower
+argument structurally on the `ModuleCat.restrictScalars (algebraMap R S)` carrier, without
+installing a noncomputable local instance. -/
 instance isScalarTower_restrictScalars_obj {R S : Type u} [CommRing R] [CommRing S] [Algebra R S]
     (M : ModuleCat.{u} S) :
     IsScalarTower R S ((ModuleCat.restrictScalars (algebraMap R S)).obj M) :=
@@ -1015,9 +1018,9 @@ instance isScalarTower_restrictScalars_obj {R S : Type u} [CommRing R] [CommRing
     (ModuleCat.restrictScalars.smul_def' (algebraMap R S) r m).symm
 
 -- The `toFun := id` carrier identity unifies the tile section against `F.val.obj (op (ι ''ᵁ V))`
--- through the `modulesSpecToSheaf` ∘ restrict tower; this `isDefEq` is heartbeat-heavy.
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1000000 in
+-- Reconciliation through the `modulesSpecToSheaf` restriction tower exceeds the default budget.
 /-- The reconciliation `R`-linear equivalence underlying the tile section comparison: on the common
 underlying carrier `F.val.obj (op (ι ''ᵁ V))` (the tile section over `V` IS `F`'s section over the
 image open `ι ''ᵁ V`, by the restriction `rfl`), the `R`-module structure obtained by restriction of
@@ -1052,9 +1055,9 @@ noncomputable def tileReconcileEquiv (F : (Spec R).Modules) (g : R)
     (tileReconcileEquiv F g V).symm z = z := rfl
 
 -- The `rfl` checks the tile restriction against `F`'s restriction over the iterated image opens
--- through the `modulesSpecToSheaf` ∘ restrict tower; this `isDefEq` is heartbeat-heavy.
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1000000 in
+-- Reconciliation through the `modulesSpecToSheaf` restriction tower exceeds the default budget.
 /-- The tile restriction map IS `F`'s restriction over the iterated image opens (the restriction
 `rfl` underlying the smul bridges, read at the level of the section-restriction morphism).
 Project-local glue for the transport step of `tile_section_localization`. -/
@@ -1067,10 +1070,9 @@ private lemma tile_restrict_map_apply (F : (Spec R).Modules) (g : R)
       = ((modulesSpecToSheaf.obj F).presheaf.map (homOfLE himg).op).hom y :=
   rfl
 
--- The base-ring descent + transport unify tile sections against `F.val` sections through the
--- `modulesSpecToSheaf` ∘ restrict tower (descent carriers, reconcile equivs); these are heartbeat-heavy.
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1000000 in
+-- Base-ring descent through the tile reconciliation equivalences exceeds the default budget.
 /-- **Per-tile section localisation at `f` (Stacks 01HV(4)/01I8, the last keystone leaf).**  Let
 `F` be an `𝒪_{Spec R}`-module, `f g : R`, and suppose `D(g) ⊆ U` with `F.over U` globally presented.
 Then the section-restriction `Γ(D(g), F) → Γ(D(gf), F)` exhibits its target as the localisation of
@@ -1078,7 +1080,7 @@ its source at the powers of `f`.  Proved by the base-ring descent of the recipe
 `analogies/tile-descent-instance-shape.md`: the tile `F_{(g)}` is globally presented over `R_g`
 (B4), so its section-restriction localises over `R_g` (`section_isLocalizedModule_of_presentation`);
 descend the base ring `R_g → R` (`isLocalizedModule_powers_restrictScalars_of_algebraMap`) through
-the bundled `ModuleCat.restrictScalars` carrier, then transport along the tile image-opens identities
+the bundled `ModuleCat.restrictScalars` carrier, then transport along the tile image-open identities
 and the scalar-tower compatibilities.  Project-local; the per-tile localisation datum the keystone
 kernel comparison consumes (non-circular: the localisation lives entirely on the globally-presented
 tile, never on global `Γ(X, F)`). -/
@@ -1097,7 +1099,8 @@ lemma tile_section_localization (F : (Spec R).Modules) (U : (Spec R).Opens)
   -- retype σ between the bundled restriction-of-scalars carriers
   let σ' : (ModuleCat.restrictScalars (algebraMap (R : Type u) (Localization.Away g))).obj
         ((modulesSpecToSheaf.obj (modulesRestrictBasicOpen g F)).presheaf.obj
-          (Opposite.op (⊤ : (Spec (CommRingCat.of (Localization.Away g))).Opens))) →ₗ[Localization.Away g]
+          (Opposite.op (⊤ : (Spec (CommRingCat.of (Localization.Away g))).Opens)))
+            →ₗ[Localization.Away g]
       (ModuleCat.restrictScalars (algebraMap (R : Type u) (Localization.Away g))).obj
         ((modulesSpecToSheaf.obj (modulesRestrictBasicOpen g F)).presheaf.obj
           (Opposite.op (PrimeSpectrum.basicOpen
@@ -1129,7 +1132,7 @@ lemma tile_section_localization (F : (Spec R).Modules) (U : (Spec R).Opens)
   haveI := h1
   have h2 := IsLocalizedModule.of_linearEquiv (Submonoid.powers f)
     (LinearMap.restrictScalars (R : Type u) σ' ∘ₗ eSrc.toLinearMap) eTgt
-  -- the reconciled composite is exactly `F`'s restriction over the image opens `ι ''ᵁ D(f̄) ≤ ι ''ᵁ ⊤`
+  -- The reconciled composite is `F`'s restriction over `ι ''ᵁ D(f̄) ≤ ι ''ᵁ ⊤`.
   have key : (eTgt.toLinearMap ∘ₗ
         (LinearMap.restrictScalars (R : Type u) σ' ∘ₗ eSrc.toLinearMap))
       = ((modulesSpecToSheaf.obj F).presheaf.map (homOfLE himg).op).hom := by
@@ -1143,7 +1146,7 @@ lemma tile_section_localization (F : (Spec R).Modules) (U : (Spec R).Opens)
   have hμ : IsLocalizedModule (Submonoid.powers f)
       ((modulesSpecToSheaf.obj F).presheaf.map (homOfLE himg).op).hom := key ▸ h2
   haveI := hμ
-  -- opens transport: identify the image opens `ι ''ᵁ ⊤ = D(g)`, `ι ''ᵁ D(f̄) = D(gf)` (presheaf `mapIso`)
+  -- Identify the image opens `ι ''ᵁ ⊤ = D(g)` and `ι ''ᵁ D(f̄) = D(gf)` via `mapIso`.
   let eqSrc := ((modulesSpecToSheaf.obj F).presheaf.mapIso
     (eqToIso (congrArg Opposite.op hop.1.symm))).toLinearEquiv
   let eqTgt := ((modulesSpecToSheaf.obj F).presheaf.mapIso
@@ -1465,10 +1468,11 @@ end KernelComparisonAssembly
 `Spec R` the tilde–Γ counit `fromTildeΓ : tilde(Γ F) ⟶ F` is an isomorphism.  It is checked on the
 basis of distinguished opens `{D(r)}`: the `D(r)`-component of the underlying sheaf morphism is the
 localization lift of the section-restriction `ρ_r` along `tilde.toOpen` (Mathlib's
-`toOpen_fromTildeΓ_app`), and since both `tilde.toOpen` (Mathlib instance) and `ρ_r` (the keystone
-`qcoh_section_isLocalizedModule`) are localizations of `Γ(X,F)` at the powers of `r`, that lift is an
-iso (`IsLocalizedModule.linearEquiv_of_isLocalizedModule_comp`).  Registered as an `instance`, so the
-conditional `qcoh_iso_tilde_sections F` becomes available unconditionally for quasi-coherent `F`. -/
+`toOpen_fromTildeΓ_app`).  Both `tilde.toOpen` (Mathlib instance) and `ρ_r` (the keystone
+`qcoh_section_isLocalizedModule`) localize `Γ(X,F)` at the powers of `r`, so that lift is an
+isomorphism (`IsLocalizedModule.linearEquiv_of_isLocalizedModule_comp`).  Registered as an
+`instance`, it makes `qcoh_iso_tilde_sections F` available unconditionally for quasi-coherent
+`F`. -/
 
 section IsoFromTildeGammaAssembly
 
