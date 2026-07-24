@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.DivisorAdaptation.isCertified_of_noLeak_kernel_spanning
 type: lean
-updated: '2026-07-20T16:02:15'
+updated: '2026-07-24T14:02:21'
 ---
 theorem isCertified_of_noLeak_kernel_spanning [IsNoetherianRing R] {n : Nat}
     (hnoLeak : forall (j : A.index) (s : Spec (.of R)),
@@ -41,3 +41,13 @@ theorem isCertified_of_noLeak_kernel_spanning [IsNoetherianRing R] {n : Nat}
   A.isCertified_of_kernel_spanning
     (fun j => A.finite_colength_of_forall_fibre_closure_subset j (hnoLeak j))
     hregular hovlFinite hovlFlat L hle hspan hdim
+
+end DivisorAdaptation
+
+namespace ThetaGeneratorSeed
+
+variable {k : Type u} [Field k] {C : Over (Spec (.of k))} [IsProper C.hom]
+variable {R : Type u} [CommRing R] [Algebra k R] [IsNoetherianRing R]
+variable {pi : C.left ⟶ P1 k} [IsFinite pi]
+variable {a n : Nat} {K : Submodule R (relThetaSections C R pi a)}
+variable {D : ThetaGeneratorSeed C R pi a K}

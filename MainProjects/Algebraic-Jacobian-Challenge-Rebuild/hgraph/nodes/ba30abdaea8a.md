@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FinCoverData.ovlMap_eq_conj
 type: lean
-updated: '2026-07-17T16:57:13'
+updated: '2026-07-24T13:02:30'
 ---
 lemma ovlMap_eq_conj (i j : D.index) (s : Γ(relCurve C R, D.pieces i ⊓ D.pieces j)) :
     D.ovlMap R' i j s =
@@ -32,4 +32,4 @@ lemma ovlMap_eq_conj (i j : D.index) (s : Γ(relCurve C R, D.pieces i ⊓ D.piec
   rw [relResCongrAlg_apply, relResCongrAlg_symm_apply]
   exact happ.symm
 
-/-! ## The overlap-quotient transport (the overlap linchpin) -/
+/-! ## The overlap-section transport -/
