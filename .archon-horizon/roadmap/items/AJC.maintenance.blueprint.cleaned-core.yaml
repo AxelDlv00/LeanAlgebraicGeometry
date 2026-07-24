@@ -2,9 +2,10 @@ id: AJC.maintenance.blueprint.cleaned-core
 title: Completed timeless-mathematics chapter passes
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Albanese codimension-one extension, Auslander--Buchsbaum, FGA Picard representability,
-  and Relative Spec have been rewritten as timeless mathematics with their valid dependency
-  structure preserved.
+summary: 'Five bounded chapters now read as timeless mathematics: Albanese codimension-one
+  extension, Auslander--Buchsbaum, FGA Picard representability, Relative Spec, and
+  Flattening Stratification. Valid statements, dependencies, source anchors, and faithful
+  Lean pins remain.'
 status: done
 kind: blueprint
 priority: normal
@@ -27,4 +28,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint
-  updated_at: '2026-07-24T13:48:46.545929+00:00'
+  updated_at: '2026-07-24T14:56:10.089731+00:00'
+  pinned_commits:
+  - 7bc2b2e6b

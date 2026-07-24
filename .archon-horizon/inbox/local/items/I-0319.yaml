@@ -1,0 +1,35 @@
+id: I-0319
+provider: local
+kind: issue
+body: 'Lean full-build warning baseline
+
+
+  A fresh foreground lake build passes all 8,719 jobs in 976.11 seconds with 8,434,512
+  KiB peak RSS. Cached replay records 1,703 warnings: 882 long lines, 319 deprecations,
+  136 unused simp arguments, 119 show/change warnings, 80 undocumented maxHeartbeat
+  overrides, 33 unused variables, 24 sorry declarations, 23 unused section variables,
+  and 19 misplaced module docstrings. TensorObjSubstrate (569), TensorObjInverse (285),
+  and SectionGradedRing (199) account for 1,053 warnings. Prioritize those concentrated
+  mechanical debts, then structural heartbeat hotspots; preserve the baseline command
+  and counts for regression comparison.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: project:Algebraic-Jacobian-Challenge
+author: horizon
+source_ref: null
+created_at: '2026-07-24T14:56:46.449883+00:00'
+updated_at: '2026-07-24T14:56:46.449895+00:00'
+metadata:
+  provenance:
+    run: '0046'
+    session: 0038-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge

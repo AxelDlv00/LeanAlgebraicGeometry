@@ -2,8 +2,10 @@ id: AJC.maintenance.build.umbrella-imports
 title: Remaining umbrella-import audit
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Apply the import linter to stable high-fanout modules and keep only changes
-  that improve measured dependency size, memory, or wall time.
+summary: 'The first four stable import frontiers are measured: AcyclicResolution and
+  HigherDirectImagePresheaf no longer import Mathlib, AbsoluteCohomology has an irredundant
+  two-import frontier, and the Cech capstone drops two redundant direct imports. Continue
+  with other stable high-fanout modules.'
 status: pending
 kind: refactor
 priority: normal
@@ -26,3 +28,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
+  updated_at: '2026-07-24T14:56:15.265056+00:00'

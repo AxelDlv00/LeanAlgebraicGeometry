@@ -2,8 +2,10 @@ id: AJC.maintenance.build.heartbeats
 title: Heartbeat and recursion-budget audit
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Profile remaining local resource overrides; remove redundant budgets, explain
-  unavoidable ones, and prefer reusable structural lemmas over larger limits.
+summary: 'The full build reports 80 undocumented maxHeartbeat overrides. Do not lower
+  budgets mechanically: rawPushPullMap_self_gen already fails at 200k and 800k, while
+  CechSectionContractibility and PresheafDualPullbackComparison_restrict require structural
+  equality-transport refactors before budget reduction.'
 status: pending
 kind: refactor
 priority: normal
@@ -26,3 +28,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
+  updated_at: '2026-07-24T14:56:16.739461+00:00'

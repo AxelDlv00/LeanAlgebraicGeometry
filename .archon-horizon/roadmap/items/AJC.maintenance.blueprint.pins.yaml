@@ -2,8 +2,10 @@ id: AJC.maintenance.blueprint.pins
 title: Lean-pin declaration audit
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Classify and repair the 69 unresolved Lean pins chapter by chapter: stale
-  names, forward declarations, and scanner defects must not be conflated.'
+summary: 'The explicit graph-sync warning set is classified and reduced from 69 to
+  43: seven are scanner limitations around valid universe-qualified or instance declarations,
+  and 36 are genuine forward declarations grouped by mathematical workstream. No known
+  stale pins remain.'
 status: pending
 kind: blueprint
 priority: normal
@@ -26,3 +28,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint
+  updated_at: '2026-07-24T14:56:11.620645+00:00'

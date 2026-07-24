@@ -2,9 +2,11 @@ id: AJC.maintenance.build.baseline
 title: Full-project build baseline
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Run a fresh complete build in the foreground, record wall time, peak memory,
-  warnings, and rebuilt modules, then make regressions measurable.
-status: pending
+summary: A fresh foreground lake build passed all 8,719 jobs in 976.11 seconds at
+  8,434,512 KiB peak RSS. Cached replay records 1,703 warnings, led by 882 long lines,
+  319 deprecations, 136 unused simp arguments, 119 show/change warnings, 80 undocumented
+  heartbeat overrides, and 24 sorry declarations.
+status: done
 kind: workspace
 priority: normal
 depends_on: []
@@ -26,3 +28,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
+  updated_at: '2026-07-24T14:56:13.848467+00:00'
