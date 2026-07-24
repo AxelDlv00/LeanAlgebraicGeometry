@@ -5,11 +5,11 @@ content_type: lemma
 created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:section_isLocalizedModule_of_isIso_fromTildeGamma
-lean_status: empty
+lean_status: lean_ok
 order: 255
 title: Section restriction localizes when the counit is an isomorphism
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-24T17:02:58'
 ---
 Let \(\mathcal{F}\) be an \(\mathcal{O}_{\operatorname{Spec} R}\)-module for which the
   tilde--\(\Gamma\) counit \(\operatorname{fromTilde\Gamma}\) is an isomorphism, and let \(f \in R\).

@@ -6,7 +6,7 @@ projects:
 summary: 'A-1 datum-level: reduction to the Leg-4 core LANDED (commit ea4ed5c97, Picard/JacobianDataBaseChangeAbel.lean,
   axiom-clean); accessor re-pinned .hom.hom.hom (L implicit). REMAINING: hCore, the
   shuffle-on-graph identity. Frozen closure after DAT-J.'
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -19,4 +19,4 @@ metadata:
   author: human
   created_at: '2026-07-17T07:56:00.238639+00:00'
   parent: AJCR.w7-functor
-  updated_at: '2026-07-17T17:24:43.261696+00:00'
+  updated_at: '2026-07-24T09:13:14.947811+00:00'

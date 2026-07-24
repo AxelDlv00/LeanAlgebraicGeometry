@@ -15,9 +15,10 @@ docstring: 'Degree-zero compatibility of `Abelian.Ext.linearEquiv₀` with postc
 file: AlgebraicJacobian/Cohomology/StructureSheafModuleK/SectionsBridge.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.Abelian.Ext.linearEquiv
 type: lean
-updated: '2026-07-24T14:32:33'
+updated: '2026-07-24T17:03:00'
 ---
 lemma linearEquiv₀_comp_mk₀ {X Y Y' : C} (x : Ext X Y 0) (g : Y ⟶ Y') :
     linearEquiv₀ (R := R) (x.comp (mk₀ g) (add_zero 0)) =

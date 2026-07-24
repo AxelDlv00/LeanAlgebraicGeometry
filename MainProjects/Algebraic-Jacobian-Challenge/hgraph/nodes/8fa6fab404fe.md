@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.isDedekindDomain_of_forall_localization_dvr
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-07-24T17:02:57'
 ---
 theorem isDedekindDomain_of_forall_localization_dvr {R : Type*} [CommRing R]
     [IsDomain R] [IsNoetherianRing R]
@@ -31,14 +31,3 @@ theorem isDedekindDomain_of_forall_localization_dvr {R : Type*} [CommRing R]
     haveI := hPp
     exact h P hP
   infer_instance
-
-/-- **N1 (gate) — `HasDedekindChart`.** Packages "every nonempty affine chart of
-`X` has a Dedekind coordinate ring". On a smooth (or normal) curve this holds
-because each chart is a one-dimensional regular Noetherian domain; where mathlib's
-`smooth ⇒ regular chart` bridge is unavailable we supply this as a `HasPicScheme`-
-style gate class (no global instance — an honest hypothesis), to be discharged
-later via `isDedekindDomain_of_forall_localization_dvr` (design §4). -/
-class HasDedekindChart (X : Scheme.{u}) [IsIntegral X] : Prop where
-  /-- Every nonempty affine chart is a Dedekind domain. -/
-  isDedekindDomain : ∀ (U : X.Opens), IsAffineOpen U → [Nonempty U] →
-    IsDedekindDomain Γ(X, U)

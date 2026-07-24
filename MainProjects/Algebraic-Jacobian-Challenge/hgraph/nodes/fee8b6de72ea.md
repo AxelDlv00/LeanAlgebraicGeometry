@@ -1,0 +1,19 @@
+---
+author: sync
+content_type: lemma
+created: '2026-07-24T17:02:57'
+decl: AlgebraicGeometry.Scheme.AffineCoverMVSquare.prodOpens_single₁
+docstring: The Čech single intersection at the multi-index `(1)` is the second cover
+  member.
+file: AlgebraicJacobian/RiemannRoch/Adelic/Cokernel.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.Scheme.AffineCoverMVSquare.prodOpens_single₁
+type: lean
+updated: '2026-07-24T17:02:57'
+---
+lemma AffineCoverMVSquare.prodOpens_single₁ :
+    (∏ᶜ ((FormalCoproduct.mk _ S.coverFamily).obj ∘ ![⟨1⟩])
+        : TopologicalSpace.Opens C.left.toTopCat)
+      = S.coverFamily ⟨1⟩ := by
+  rw [prodOpens_fin_one, Matrix.cons_val_zero]

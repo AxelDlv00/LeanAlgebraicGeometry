@@ -35,7 +35,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.smoothProperQuotient
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-24T17:02:56'
 ---
 theorem smoothProperQuotient {k : Type u} [Field k]
     {Z P : (Over (Spec (.of k)))ᵒᵖ ⥤ Type (u+1)}
@@ -61,14 +61,3 @@ transported through Kleiman §2 Thm 2.5 to the plain relative functor under
 the rational-point hypothesis: `picSharp C` is representable by `PicScheme C`.
 
 Blueprint reference: `thm:fga_pic_representability`. -/
-
-/-- Typeclass asserting that `picSharp C` is representable by `PicScheme C`.
-
-Run-0008: this is now PROVED from `HasPicScheme` (the representing witness is
-`Classical.choose`-extracted, so its `choose_spec` is exactly this
-statement); the class survives only to preserve the blueprint-pinned
-consumer signature of `representable`. -/
-class PicSharpRepresentable {k : Type u} [Field k] (C : Over (Spec (.of k)))
-    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIntegral C.hom] [HasPicScheme C] : Prop where
-  has_representable : Nonempty ((picSharp C).RepresentableBy (PicScheme C))

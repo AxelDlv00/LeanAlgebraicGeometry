@@ -6,11 +6,11 @@ content_type: definition
 created: '2026-07-16T21:14:29'
 generated: blueprint
 label: def:Scheme_AffineCoverMVSquare_HModule_prime_X4_linearEquiv_curve
-lean_status: empty
+lean_status: lean_ok
 order: 91
 title: \(X_4\) corner bridge, curve form
 type: tex
-updated: '2026-07-24T03:02:13'
+updated: '2026-07-24T17:02:58'
 ---
 Let \(C\) be a scheme over \(\Spec k\) and \(S\) a two-affine cover of \(C\). There is a \(k\)-linear isomorphism
   \[

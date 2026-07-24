@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pushforwardSliceAdjunctionH1
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-24T17:32:44'
 ---
 lemma pushforwardSliceAdjunctionH1 :
     Functor.whiskerRight (NatTrans.op (sliceOversEquiv φ Ui).symm.toAdjunction.counit)
@@ -28,13 +28,18 @@ lemma pushforwardSliceAdjunctionH1 :
         (sliceOversEquiv φ Ui).symm.inverse.op.whiskerLeft (sliceReverseRingMap φ Ui).hom := by
   ext U x
   simp only [sliceReverseRingMap, sliceStructureSheafHom]
-  simp [Scheme.Hom.toRingCatSheafHom]
+  simp only [Equivalence.toAdjunction_counit, Equivalence.symm_counit,
+    Functor.whiskerRight_app, NatTrans.op_app, Functor.id_obj,
+    Functor.sheafPushforwardContinuous_obj_obj_map, Over.forget_obj, Over.forget_map,
+    ObjectProperty.ι_obj, Iso.symm_inv, NatTrans.comp_app,
+    Functor.sheafPushforwardContinuous_map_hom_app, Functor.whiskerLeft_app]
   -- The two structure-sheaf comparisons `φ.inv.c` and `φ.hom.c` compose to the restriction of
-  -- `𝒪_X` along the open identity `φ.hom⁻¹ᵁ φ.inv⁻¹ᵁ W = W` (`comp_app` + `congr_app φ.hom_inv_id`).
+  -- `𝒪_X` along the identity `φ.hom⁻¹ᵁ φ.inv⁻¹ᵁ W = W`
+  -- (`comp_app` + `congr_app φ.hom_inv_id`).
   have key : φ.inv.c.app (op ((unop U).left)) ≫
       φ.hom.c.app (op (((sliceOversEquiv φ Ui).functor.obj (unop U)).left))
       = X.sheaf.obj.map (Over.Hom.left ((sliceOversEquiv φ Ui).unitInv.app (unop U))).op := by
-    show φ.inv.app ((unop U).left) ≫ φ.hom.app _ = _
+    change φ.inv.app ((unop U).left) ≫ φ.hom.app _ = _
     rw [← Scheme.Hom.comp_app, Scheme.Hom.congr_app φ.hom_inv_id]
     simp only [Scheme.Hom.id_app]
     congr 1

@@ -10,9 +10,10 @@ docstring: 'Action of the engine differential on a coproduct injection: `ι_σ �
 file: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.cechEngineD_
 type: lean
-updated: '2026-07-24T14:32:33'
+updated: '2026-07-24T17:03:00'
 ---
 lemma cechEngineD_ιFam (V : TopologicalSpace.Opens ↥X) (p : ℕ)
     (σ : Fin (p + 2) → {i : ι // V ≤ U i}) :

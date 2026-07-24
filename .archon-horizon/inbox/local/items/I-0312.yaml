@@ -32,3 +32,5 @@ metadata:
     task: ajc-optimize
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - AJCR.w4-rep

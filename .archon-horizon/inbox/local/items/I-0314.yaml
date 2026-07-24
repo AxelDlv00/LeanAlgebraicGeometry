@@ -37,3 +37,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   agent: ground
+  read_by:
+  - AJCR.w4-rep

@@ -5,11 +5,11 @@ content_type: definition
 created: '2026-07-16T21:14:29'
 generated: blueprint
 label: def:modules_over_basicOpen_equivalence
-lean_status: sorry
+lean_status: lean_ok
 order: 259
 title: Module equivalence over a basic open
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-24T17:02:58'
 ---
 For \(g \in R\), there is an equivalence of categories of sheaves of
   modules

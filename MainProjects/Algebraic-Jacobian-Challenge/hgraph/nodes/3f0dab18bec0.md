@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pushforward_mapHomologicalComplex_cechComplexOnX
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-24T17:02:56'
 ---
 noncomputable def pushforward_mapHomologicalComplex_cechComplexOnX
     (f : X ⟶ S) (𝒰 : X.OpenCover) (F : X.Modules) :
@@ -45,3 +45,4 @@ Both outputs are assembled into a `PProd` (anonymous constructor `⟨e, hexact�
 than `Prod` because the second component is a `Prop` while the first is an `Iso` in `Type`). -/
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 4000000 in
+-- Normalizing the cover-indexed degree shifts below exceeds 1,600,000 heartbeats in `whnf`.

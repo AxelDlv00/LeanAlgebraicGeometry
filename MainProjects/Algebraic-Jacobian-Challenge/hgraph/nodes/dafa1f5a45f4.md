@@ -15,9 +15,10 @@ docstring: 'Reduce-to-noetherian helper (the point of `B2` for the `B4`/`B3`
 file: AlgebraicJacobian/Picard/FinitePresentationFunctor.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme._root_.Subalgebra.FG.isNoetherianRing
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-24T17:03:00'
 ---
 theorem _root_.Subalgebra.FG.isNoetherianRing {A : Type u} [CommRing A]
     [Algebra k A] {S : Subalgebra k A} (hS : S.FG) :

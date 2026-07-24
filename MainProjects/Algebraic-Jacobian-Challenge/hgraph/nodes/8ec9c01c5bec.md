@@ -22,9 +22,10 @@ docstring: '**The `Γ(X,U)`-linear section restriction map of a sheaf of modules
 file: AlgebraicJacobian/Picard/QuotScheme.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.Modules.restrict
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-24T17:03:00'
 ---
 noncomputable def restrictₗ {X : Scheme.{u}} (M : X.Modules) {U V : X.Opens} (i : V ⟶ U) :
     letI : Module Γ(X, U) Γ(M, V) := Module.compHom _ (X.presheaf.map i.op).hom

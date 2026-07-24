@@ -5,11 +5,11 @@ content_type: definition
 created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:pic_scheme_lft
-lean_status: empty
+lean_status: lean_ok
 order: 1540
 title: Local finite type of \(\Pic_{C/k}\)
 type: tex
-updated: '2026-07-24T14:02:30'
+updated: '2026-07-24T17:02:58'
 ---
 The predicate
   \[

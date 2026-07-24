@@ -1,2 +1,3 @@
 {"at": "2026-07-06T07:13:11.780273+00:00", "actor": "ground", "field": "created", "from": "", "to": "open", "note": "opened"}
 {"at": "2026-07-23T16:03:54.605407+00:00", "actor": "horizon", "field": "status", "from": "open", "to": "archived", "note": ""}
+{"at": "2026-07-24T09:13:38.033476+00:00", "actor": "horizon", "field": "read_by", "from": "", "to": "read", "note": ""}

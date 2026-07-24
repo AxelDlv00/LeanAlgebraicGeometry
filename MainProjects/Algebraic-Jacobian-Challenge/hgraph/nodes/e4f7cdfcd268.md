@@ -18,9 +18,10 @@ docstring: '**Middle-term quasi-isomorphism transfer** (the `τ₂` companion of
 file: AlgebraicJacobian/Cohomology/AcyclicResolution.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: HomologicalComplex.HomologySequence.quasiIso_
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-24T17:03:00'
 ---
 lemma quasiIso_τ₂ (h₁ : QuasiIso φ.τ₁) (h₃ : QuasiIso φ.τ₃)
     (hbMono : ∀ i, (∀ k, ¬ c.Rel k i) → Mono (φ.τ₂.f i))

@@ -19,9 +19,10 @@ docstring: '**A finite module sheaf on `Spec R` (R noetherian) with invertible
 file: AlgebraicJacobian/Picard/RigidPushforwardTransfer.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.Modules.exists_finite_presentation_of_isIso_fromTilde
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-24T17:02:59'
 ---
 theorem exists_finite_presentation_of_isIso_fromTildeΓ {R : CommRingCat.{u}}
     (F : (Spec R).Modules) [IsIso (Scheme.Modules.fromTildeΓ F)]

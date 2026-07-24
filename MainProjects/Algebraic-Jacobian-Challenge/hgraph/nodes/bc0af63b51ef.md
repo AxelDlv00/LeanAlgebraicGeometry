@@ -11,9 +11,10 @@ docstring: 'The augmentation `β : B ⟶ I_A^0 ⊞ I_C^0` is a monomorphism (the
 file: AlgebraicJacobian/Cohomology/AcyclicResolution.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.InjectiveResolution.mono_horseshoe
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-24T17:03:00'
 ---
 lemma mono_horseshoeβ : Mono (horseshoeβ hses I_A I_C) := by
   haveI := hses.mono_f

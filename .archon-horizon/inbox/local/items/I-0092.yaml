@@ -54,9 +54,11 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-03T17:17:42.927179+00:00'
-updated_at: '2026-07-03T17:17:42.927186+00:00'
+updated_at: '2026-07-24T09:15:56.759992+00:00'
 metadata:
   provenance:
     run: '0010'
     session: 0023-horizon-T12
     role: horizon
+  read_by:
+  - AJCR.w4-rep

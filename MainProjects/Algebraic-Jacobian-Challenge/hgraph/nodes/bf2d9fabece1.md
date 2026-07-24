@@ -31,7 +31,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.HModule'_zero_sectionsLinearEquiv_naturality
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-24T17:02:56'
 ---
 lemma HModule'_zero_sectionsLinearEquiv_naturality
     (F : Sheaf J (ModuleCat.{u} k)) {U V : C} (g : V ⟶ U) (x : HModule' k F 0 U) :
@@ -52,3 +52,6 @@ lemma HModule'_zero_sectionsLinearEquiv_naturality
   exact freeYonedaSectionsLinearEquiv_naturality k F.obj g _
 
 set_option backward.isDefEq.respectTransparency false in
+/-- **Naturality of the H⁰-sections bridge in the object `U` (consumable
+form).**  For `g : V ⟶ U` in `C`, the restriction map
+`(HModule'_cohomologyPresheaf k F 0).map g.op` — the exact shape of the four

@@ -1,0 +1,18 @@
+---
+author: sync
+content_type: lemma
+created: '2026-07-24T17:02:57'
+decl: AlgebraicGeometry.Scheme.ZariskiDescent.eqToHom_comp_ι_assoc
+docstring: Reassociated form of `eqToHom_comp_ι`.
+file: AlgebraicJacobian/Picard/ZariskiDescentRepresentability.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.Scheme.ZariskiDescent.eqToHom_comp_ι_assoc
+type: lean
+updated: '2026-07-24T17:02:57'
+---
+lemma eqToHom_comp_ι_assoc {T : Scheme.{0}} {V V' : T.Opens} (hV : V = V')
+    (h : V.toScheme = V'.toScheme) {Z : Scheme.{0}} (g : T ⟶ Z) :
+    eqToHom h ≫ V'.ι ≫ g = V.ι ≫ g := by
+  subst hV
+  simp

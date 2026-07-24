@@ -9,9 +9,10 @@ docstring: 'The lax-monoidal tensorator `μ` of `restrictScalars α`, assembled 
 file: AlgebraicJacobian/Picard/TensorObjSubstrate/PresheafInternalHom.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: PresheafOfModules.restrictScalarsLax
 type: lean
-updated: '2026-07-24T14:32:34'
+updated: '2026-07-24T17:03:00'
 ---
 noncomputable def restrictScalarsLaxμ
     (α : R ⋙ forget₂ CommRingCat RingCat ⟶ S ⋙ forget₂ CommRingCat RingCat)

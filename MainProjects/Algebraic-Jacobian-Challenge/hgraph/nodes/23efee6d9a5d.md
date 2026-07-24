@@ -17,9 +17,10 @@ docstring: '**Flatness under pushout base change** [Stacks 00HI, module form].  
 file: AlgebraicJacobian/Picard/GenericFlatnessGeometric.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry._root_.Module.Flat.of_isPushout
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-24T17:02:59'
 ---
 theorem _root_.Module.Flat.of_isPushout [h : Algebra.IsPushout R S A B]
     {N : Type v} [AddCommGroup N] [Module A N] [Module B N] [Module S N]

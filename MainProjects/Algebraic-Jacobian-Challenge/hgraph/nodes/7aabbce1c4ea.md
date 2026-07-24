@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Scheme.Modules.pullbackKernelComparison_comp_
 file: AlgebraicJacobian/Picard/FlatKernelBase.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.Modules.pullbackKernelComparison_comp_
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-24T17:03:00'
 ---
 lemma Modules.pullbackKernelComparison_comp_ι
     {X' X : Scheme.{u}} (g' : X' ⟶ X) {E F : X.Modules} (q : E ⟶ F) :

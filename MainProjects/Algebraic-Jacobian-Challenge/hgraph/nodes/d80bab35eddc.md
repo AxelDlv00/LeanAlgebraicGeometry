@@ -1,0 +1,29 @@
+---
+author: sync
+content_type: theorem
+created: '2026-07-24T17:02:56'
+decl: AlgebraicGeometry.stalkMapₗ_injective
+docstring: '**Stalkwise injectivity of `~f` for a monomorphism `f`.**  For an injective
+  `R`-module map
+
+  `f`, the `R`-linear `Ab`-stalk map `σ_x = stalkMapₗ f x` of `~f` is injective at
+  every point `x`.
+
+  This is the stalkwise-flatness contribution to mono-preservation of `~`, now stated
+  on the genuine
+
+  linear stalk map: it combines the identification `stalkMapₗ_eq` with the localisation
+  injectivity
+
+  `tilde_toStalk_map_injective`.  Project-local stepping stone toward `tildePreservesFiniteLimits`.'
+file: AlgebraicJacobian/Cohomology/TildeExactness.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.stalkMapₗ_injective
+type: lean
+updated: '2026-07-24T17:02:56'
+---
+theorem stalkMapₗ_injective {M N : ModuleCat R} (f : M ⟶ N) (hf : Function.Injective f.hom)
+    (x : PrimeSpectrum.Top R) : Function.Injective (stalkMapₗ f x) := by
+  rw [stalkMapₗ_eq]
+  exact tilde_toStalk_map_injective f hf x

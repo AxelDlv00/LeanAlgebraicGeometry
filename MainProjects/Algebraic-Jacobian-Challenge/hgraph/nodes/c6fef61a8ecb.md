@@ -6,11 +6,11 @@ content_type: theorem
 created: '2026-07-16T21:14:29'
 generated: blueprint
 label: thm:Scheme_AffineCoverMVSquare_finrank_HModule_eq_HModule_prime_X4
-lean_status: empty
+lean_status: lean_ok
 order: 92
 title: Finite rank via the \(X_4\) corner, abstract sheaf form
 type: tex
-updated: '2026-07-24T03:02:13'
+updated: '2026-07-24T17:02:58'
 ---
 Let \(S\) be a two-affine cover of \(X\) and \(\mathcal F\) a sheaf of \(k\)-modules. Then
   \[

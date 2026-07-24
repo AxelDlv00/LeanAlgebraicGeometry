@@ -10,9 +10,10 @@ docstring: 'Projecting the canonical comparison `coprodToProdMap` onto a factor 
 file: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.coprodToProdMap_comp_
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-24T17:03:00'
 ---
 private lemma coprodToProdMap_comp_π {ι : Type*} (F : X.Modules) (legs : ι → Over X)
     [HasCoproduct (fun i => (legs i).left)] [HasProduct (fun i => pushPullObj F (legs i))]

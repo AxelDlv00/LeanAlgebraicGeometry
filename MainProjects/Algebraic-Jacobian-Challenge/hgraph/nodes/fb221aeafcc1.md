@@ -21,9 +21,10 @@ docstring: '**Pure-tensor value of the presheaf `restrictScalars` *oplax* tensor
 file: AlgebraicJacobian/Picard/TensorObjSubstrate.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.Modules.restrictScalars_
 type: lean
-updated: '2026-07-24T14:32:34'
+updated: '2026-07-24T17:03:00'
 ---
 private lemma restrictScalars_δ_app_tmul
     {C : Type u} [Category.{u} C] {R S : Cᵒᵖ ⥤ CommRingCat.{u}}

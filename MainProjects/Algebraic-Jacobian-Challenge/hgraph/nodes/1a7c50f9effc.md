@@ -18,9 +18,10 @@ docstring: '**Reduced action of the engine identification on a surviving injecti
 file: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.cechFreeEvalEngine_X_inv_hom_
 type: lean
-updated: '2026-07-24T14:32:33'
+updated: '2026-07-24T17:02:59'
 ---
 private lemma cechFreeEvalEngine_X_inv_hom_ιFam
     (V : TopologicalSpace.Opens ↥X) (p : ℕ) (σ : Fin (p + 1) → ι)

@@ -19,9 +19,10 @@ docstring: '**The schematic-support descent: the unit `F ⟶ i_* i^* F` is an
 file: AlgebraicJacobian/Picard/SchematicSupport.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.Modules.isIso_unit_schematicSupport
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-24T17:02:59'
 ---
 theorem isIso_unit_schematicSupportι
     {Y : Scheme.{u}} (F : Y.Modules) [F.IsQuasicoherent] :
