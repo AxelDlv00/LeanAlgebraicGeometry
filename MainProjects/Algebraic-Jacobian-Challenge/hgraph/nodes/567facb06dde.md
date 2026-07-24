@@ -9,7 +9,7 @@ lean_status: empty
 order: 902
 title: rem:coh_flat_pullback
 type: tex
-updated: '2026-07-24T11:03:44'
+updated: '2026-07-24T21:56:56'
 ---
 The condition is stable under base change: for any morphism \(g : S' \to S\),
   pulling back along the cartesian square
@@ -20,5 +20,6 @@ The condition is stable under base change: for any morphism \(g : S' \to S\),
     \end{tikzcd}
   \]
   yields a coherent \(\OO_{X'}\)-module \(\F' := (g')^* \F\) which is \(S'\)-flat
-  whenever \(\F\) is \(S\)-flat.  This is the routine cancellation of tensor-product
-  associativity at the level of stalks. The converse fails in general.
+  whenever \(\F\) is \(S\)-flat.  Indeed, at each stalk the pullback is an
+  extension of scalars of the original flat module, and extension of scalars
+  preserves flatness. The converse fails in general.

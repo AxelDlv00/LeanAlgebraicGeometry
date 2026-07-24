@@ -31,7 +31,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.isIntegral_pullback_self
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-24T22:10:32'
 ---
 theorem isIntegral_pullback_self
     {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
@@ -41,7 +41,8 @@ theorem isIntegral_pullback_self
   -- The composite structure map `X ×_{k̄} X → Spec k̄` is smooth (`smooth_comp` of
   -- the base-change-smooth projection with `X.hom`); package it as an `Over` object.
   haveI hsm : Smooth (Over.mk (pullback.fst X.hom X.hom ≫ X.hom)).hom := by
-    show Smooth (pullback.fst X.hom X.hom ≫ X.hom); infer_instance
+    change Smooth (pullback.fst X.hom X.hom ≫ X.hom)
+    infer_instance
   haveI hred : IsReduced (pullback X.hom X.hom) :=
     isReduced_of_smooth_of_isAlgClosed (Over.mk (pullback.fst X.hom X.hom ≫ X.hom))
   -- Irreducibility of `X ×_{k̄} X` from geometric irreducibility of `X.hom` (the
@@ -51,7 +52,9 @@ theorem isIntegral_pullback_self
   haveI : UniversallyOpen X.hom := inferInstance
   exact isIntegral_of_irreducibleSpace_of_isReduced (pullback X.hom X.hom)
 
-/-! ## §3.C. Project-local Mathlib supplement — Matsumura regular-sequence bridge (iter-203, Step A1)
+/-! ## §3.C. Project-local Mathlib supplement
+
+### Matsumura regular-sequence bridge (iter-203, Step A1)
 
 Lane COE Step A1 substrate (Matsumura *Commutative Ring Theory* Thm 14.2 /
 Stacks 00NQ). The goal of this section is the criterion: on a regular local

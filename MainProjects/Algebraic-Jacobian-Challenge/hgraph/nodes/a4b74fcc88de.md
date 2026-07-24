@@ -10,11 +10,10 @@ order: 943
 ref: nitsure-hilbert-quot
 title: "Flat everywhere-rank-\\(e\\) modules have vanishing relation\n  matrix"
 type: tex
-updated: '2026-07-24T11:03:44'
+updated: '2026-07-24T21:56:56'
 ---
 Let \(M\) carry a matrix presentation \((\psi, \pi)\) by \(e\) generators.
   If \(M\) is flat and \(M_{\mathfrak p}\) has rank \(e\) over
   \(R_{\mathfrak p}\) for every prime \(\mathfrak p\), then \(\psi = 0\).
-  (This is the direction of Nitsure's local universal property left implicit
-  in the source: a surjection \(R^{\oplus e} \twoheadrightarrow M\) onto a
-  locally free module of everywhere-rank \(e\) has zero kernel.)
+  Equivalently, a surjection \(R^{\oplus e} \twoheadrightarrow M\) onto a
+  locally free module of everywhere-rank \(e\) has zero kernel.
