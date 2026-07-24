@@ -253,10 +253,12 @@ The `q`-th right derived functor of the additive Hom-functor `Hom(P,-) = preaddi
 evaluated at `H`, is computed (via the chosen injective resolution `I•` of `H`,
 `InjectiveResolution.isoRightDerivedObj`) as the homology at degree `q` of the cochain complex of
 abelian groups `n ↦ (P ⟶ Iⁿ)`.  By `InjectiveResolution.extMk` / `extMk_eq_zero_iff`, that homology
-*is* `Ext P H q`: a degree-`q` cocycle is a map `f : P ⟶ Iq` with `f ≫ d = 0`, and it is a coboundary
+*is* `Ext P H q`: a degree-`q` cocycle is a map `f : P ⟶ Iq` with `f ≫ d = 0`, and it is a
+coboundary
 iff the class `extMk f` vanishes in `Ext`.  Hence if every class of `Ext P H q` vanishes (`q ≥ 1`),
-the Hom-complex is exact at `q` and the right-derived object is a zero object.  Project-local: Mathlib's
-`Ext` is built on the derived category, not on `Functor.rightDerived`, so this bridge is absent. -/
+the Hom-complex is exact at `q` and the right-derived object is a zero object.  Project-local:
+Mathlib's `Ext` is built on the derived category, not on `Functor.rightDerived`, so this bridge is
+absent. -/
 
 /-- The differential of the Hom-cochain-complex `n ↦ (P ⟶ Iⁿ)` (the image of a cochain complex `K`
 under `preadditiveCoyoneda(op P)`) acts by post-composition with the differential of `K`. -/
@@ -350,7 +352,8 @@ lemma ext_jShriekOU_eq_zero_of_specIso {R : CommRingCat.{u}} (U : Scheme.{u})
 /-! ## Project-local Mathlib supplement — `jShriekOU` transport along a scheme iso (Need #1)
 
 The corepresenting object `jShriekOU V` of `Γ(V,-)` is carried along a scheme isomorphism
-`φ : X ≅ Y` by the induced pushforward equivalence: `Φ.functor (jShriekOU V) ≅ jShriekOU (φ.inv⁻¹V)`.
+`φ : X ≅ Y` by the induced pushforward equivalence:
+`Φ.functor (jShriekOU V) ≅ jShriekOU (φ.inv⁻¹V)`.
 The argument is pure corepresentability transport — `jShriekOU V` is never unfolded.  Both sides
 corepresent the *same* `Type`-valued sections functor `Γ(φ.inv⁻¹V,-)`: the right side directly (the
 additive corepresentability `jShriekOU_homEquiv`), the left side via the pushforward adjunction
@@ -383,11 +386,12 @@ private noncomputable def sectionsCorepPushforward {X Y : Scheme.{u}} (φ : X �
       ((Scheme.Modules.pushforwardEquivOfIso φ).toAdjunction.homEquiv (jShriekOU V) B f)
       ((Scheme.Modules.pushforwardEquivOfIso φ).inverse.map g)]
 
-/-- **A scheme isomorphism carries `jShriekOU` along** (blueprint `lem:jshriek_transport_along_iso`).
-For `φ : X ≅ Y` and an open `V ⊆ X`, the pushforward equivalence sends the corepresenting object of
+/-- **A scheme isomorphism carries `jShriekOU` along** (blueprint
+`lem:jshriek_transport_along_iso`). For `φ : X ≅ Y` and an open `V ⊆ X`, the pushforward
+equivalence sends the corepresenting object of
 `Γ(V,-)` to that of `Γ(φ.inv⁻¹V,-)`:
-`Φ.functor (jShriekOU V) ≅ jShriekOU (φ.inv⁻¹V)`.  Project-local: the geometric naturality of `j_!`
-under a scheme iso (the first-`Ext`-argument transport of Need #1). -/
+`Φ.functor (jShriekOU V) ≅ jShriekOU (φ.inv⁻¹V)`.  Project-local: the geometric naturality
+of `j_!` under a scheme iso (the first-`Ext`-argument transport of Need #1). -/
 noncomputable def jShriekOU_transport_along_iso {X Y : Scheme.{u}} (φ : X ≅ Y)
     (V : TopologicalSpace.Opens X) :
     (Scheme.Modules.pushforwardEquivOfIso φ).functor.obj (jShriekOU V) ≅
@@ -412,6 +416,7 @@ private lemma coversTop_preimage_of_iso {X Y : Scheme.{u}} (φ : X ≅ Y) {I : T
   exact hxZ
 
 set_option synthInstance.maxHeartbeats 1000000 in
+-- `of_coversTop` synthesizes instances for doubly sliced opens beyond the default budget.
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
 -- The heartbeat bumps are required: `SheafOfModules.IsQuasicoherent.of_coversTop` triggers
@@ -493,6 +498,7 @@ instance sliceStructureSheafHom_pre_isRightAdjoint :
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 4000000 in
+-- Constructing the sheaf-level adjoint from the presheaf adjoint exceeds the default budget.
 set_option synthInstance.maxHeartbeats 2000000 in
 -- The heartbeat bumps are required: the derivation triggers synthesis of the sliced-site
 -- `HasWeakSheafify`/`WEqualsLocallyBijective` instances for `(gt Y).over Vᵢ`, whose
@@ -615,13 +621,18 @@ lemma pushforwardSliceAdjunctionH1 :
         (sliceOversEquiv φ Ui).symm.inverse.op.whiskerLeft (sliceReverseRingMap φ Ui).hom := by
   ext U x
   simp only [sliceReverseRingMap, sliceStructureSheafHom]
-  simp [Scheme.Hom.toRingCatSheafHom]
+  simp only [Equivalence.toAdjunction_counit, Equivalence.symm_counit,
+    Functor.whiskerRight_app, NatTrans.op_app, Functor.id_obj,
+    Functor.sheafPushforwardContinuous_obj_obj_map, Over.forget_obj, Over.forget_map,
+    ObjectProperty.ι_obj, Iso.symm_inv, NatTrans.comp_app,
+    Functor.sheafPushforwardContinuous_map_hom_app, Functor.whiskerLeft_app]
   -- The two structure-sheaf comparisons `φ.inv.c` and `φ.hom.c` compose to the restriction of
-  -- `𝒪_X` along the open identity `φ.hom⁻¹ᵁ φ.inv⁻¹ᵁ W = W` (`comp_app` + `congr_app φ.hom_inv_id`).
+  -- `𝒪_X` along the identity `φ.hom⁻¹ᵁ φ.inv⁻¹ᵁ W = W`
+  -- (`comp_app` + `congr_app φ.hom_inv_id`).
   have key : φ.inv.c.app (op ((unop U).left)) ≫
       φ.hom.c.app (op (((sliceOversEquiv φ Ui).functor.obj (unop U)).left))
       = X.sheaf.obj.map (Over.Hom.left ((sliceOversEquiv φ Ui).unitInv.app (unop U))).op := by
-    show φ.inv.app ((unop U).left) ≫ φ.hom.app _ = _
+    change φ.inv.app ((unop U).left) ≫ φ.hom.app _ = _
     rw [← Scheme.Hom.comp_app, Scheme.Hom.congr_app φ.hom_inv_id]
     simp only [Scheme.Hom.id_app]
     congr 1
@@ -645,7 +656,13 @@ lemma pushforwardSliceAdjunctionH2 :
       𝟙 (Sheaf.over Y.ringCatSheaf (φ.inv ⁻¹ᵁ Ui)).obj := by
   ext U x
   simp only [sliceReverseRingMap, sliceStructureSheafHom]
-  simp [Scheme.Hom.toRingCatSheafHom]
+  simp only [Iso.symm_inv, ObjectProperty.ι_obj, Equivalence.toAdjunction_unit,
+    Equivalence.symm_unit, NatTrans.comp_app,
+    Functor.sheafPushforwardContinuous_map_hom_app, Over.forget_obj,
+    Functor.whiskerLeft_app, Functor.whiskerRight_app, NatTrans.op_app,
+    Functor.id_obj, Functor.sheafPushforwardContinuous_obj_obj_map,
+    Over.forget_map, RingCat.hom_comp, RingHom.coe_comp,
+    Function.comp_apply, NatTrans.id_app]
   have key : φ.hom.c.app (op ((unop U).left)) ≫
       φ.inv.c.app (op (((sliceOversEquiv φ Ui).inverse.obj (unop U)).left)) ≫
         Y.sheaf.obj.map (Over.Hom.left ((sliceOversEquiv φ Ui).counitInv.app (unop U))).op
@@ -687,9 +704,10 @@ noncomputable def pushforwardSliceTwoAdjunction :
     (sliceReverseRingMap φ Ui) (sliceStructureSheafHom φ Ui)
     (pushforwardSliceAdjunctionH1 φ Ui) (pushforwardSliceAdjunctionH2 φ Ui)
 
-/-- **The slice pullback comparison iso** (blueprint `lem:pushforward_slice_pullback_iso`).  Applying
-the pullback `pullback ψ_r` to the slice `H.over Uᵢ` is isomorphic to the restricted pushforward
-`(Φ H).over Vᵢ`.  Step 1: `pullback ψ_r ≅ pushforward φ''` by uniqueness of left adjoints
+/-- **The slice pullback comparison iso** (blueprint
+`lem:pushforward_slice_pullback_iso`). Applying the pullback `pullback ψ_r` to the slice `H.over Uᵢ`
+is isomorphic to the restricted pushforward `(Φ H).over Vᵢ`.  Step 1:
+`pullback ψ_r ≅ pushforward φ''` by uniqueness of left adjoints
 (`leftAdjointUniq` of `pullbackPushforwardAdjunction ψ_r` against `pushforwardSliceTwoAdjunction`).
 Step 2: the rfl-clean section identity `(pushforward φ'').obj (H.over Uᵢ) ≅ (Φ H).over Vᵢ`
 (both sides have sections `Γ(H, φ.hom⁻¹ᵁ W.left)` by `pushforward_obj_obj`). -/
@@ -702,6 +720,7 @@ noncomputable def pushforwardSlicePullbackIso (H : X.Modules) :
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 4000000 in
+-- Transporting a presentation through the slice pullback exceeds the default heartbeat budget.
 set_option synthInstance.maxHeartbeats 2000000 in
 -- Heartbeat bumps: the per-slice presentation transport triggers synthesis of the sliced/doubly
 -- sliced `HasSheafify`/`WEqualsLocallyBijective`/`HasSheafCompose` instances over `(gt Y).over Vᵢ`,
@@ -719,7 +738,7 @@ lemma pushforward_iso_preserves_qcoh {X Y : Scheme.{u}} (φ : X ≅ Y) (H : X.Mo
   refine pushforward_iso_qcoh_of_slice_qcoh φ H qcd (fun i => ?_)
   -- Per-slice: build a presentation of `(Φ H).over (φ.inv⁻¹ᵁ qcd.X i)`.
   haveI hFinal : (sliceOversEquiv φ (qcd.X i)).functor.Final := inferInstance
-  -- the unit comparison `η : (pullback ψ_r).obj (unit) ≅ unit` (iso since the slice functor is Final).
+  -- The unit comparison is an iso because the slice functor is final.
   have η : (SheafOfModules.pullback.{u} (sliceStructureSheafHom φ (qcd.X i))).obj
         (SheafOfModules.unit (X.ringCatSheaf.over (qcd.X i))) ≅
       SheafOfModules.unit (Y.ringCatSheaf.over (φ.inv ⁻¹ᵁ qcd.X i)) :=
@@ -727,7 +746,8 @@ lemma pushforward_iso_preserves_qcoh {X Y : Scheme.{u}} (φ : X ≅ Y) (H : X.Mo
   -- transport the local presentation of `H.over Uᵢ` across the colimit-preserving pullback...
   have P1 : ((SheafOfModules.pullback.{u} (sliceStructureSheafHom φ (qcd.X i))).obj
       (H.over (qcd.X i))).Presentation :=
-    SheafOfModules.Presentation.map.{u} (qcd.presentation i) (SheafOfModules.pullback.{u} (sliceStructureSheafHom φ (qcd.X i))) η.symm
+    SheafOfModules.Presentation.map.{u} (qcd.presentation i)
+      (SheafOfModules.pullback.{u} (sliceStructureSheafHom φ (qcd.X i))) η.symm
   -- ...then across the comparison iso to a presentation of `(Φ H).over Vᵢ`, whence quasi-coherence.
   exact (P1.ofIsIso (pushforwardSlicePullbackIso φ (qcd.X i) H).hom).isQuasicoherent
 
@@ -848,9 +868,8 @@ theorem higherDirectImage_openImmersion_acyclic [HasInjectiveResolutions U.Modul
     -- `q`-th right derived functor agrees with that of `Hom(jShriekOU (j ⁻¹ᵁ W), -)`.  This
     -- discharges the *geometric* corepresentability half of Bridge (1)/(2).
     refine IsZero.of_iso ?_ ((rightDerivedNatIso (sectionsFunctorCorepIso (j ⁻¹ᵁ W)) q).app H)
-    -- Bridge (1)/(2) HOMOLOGICAL remainder DISCHARGED: `isZero_coyoneda_rightDerived_of_forall_ext_eq_zero`
-    -- (built above, axiom-clean) reduces the right-derived vanishing of `Hom(jShriekOU (j⁻¹W), -)` to
-    -- the `Ext`-vanishing `∀ e : Ext (jShriekOU (j⁻¹W)) H q, e = 0`.
+    -- Bridge (1)/(2) homological remainder: the lemma below reduces right-derived vanishing of
+    -- `Hom(jShriekOU (j⁻¹W), -)` to `∀ e : Ext (jShriekOU (j⁻¹W)) H q, e = 0`.
     refine isZero_coyoneda_rightDerived_of_forall_ext_eq_zero (jShriekOU (j ⁻¹ᵁ W)) H q hq ?_
     intro e
     -- Discharged by `ext_jShriekOU_eq_zero_of_specIso`; all three goals (`hV'`, `hjt`, `hqc`)
