@@ -109,7 +109,7 @@ object over every `V` contained in a cover member, and those `V` are a covering 
 The local injectivity of `0 : Q ⟶ Z` (`Z` the constant zero presheaf) comes from the
 hypothesis (each member's section group is a subsingleton); the local surjectivity is
 free (the target is a zero object). Project-local Mathlib supplement (site theory). -/
-lemma isZero_presheafToSheaf_of_locally_isZero {C : Type*} [Category C]
+lemma isZero_presheafToSheaf_of_locally_isZero {C : Type u} [Category C]
     (J : GrothendieckTopology C) [HasSheafify J AddCommGrpCat.{u}]
     [J.WEqualsLocallyBijective AddCommGrpCat.{u}]
     {Q : Cᵒᵖ ⥤ AddCommGrpCat.{u}}
@@ -200,8 +200,8 @@ complex `cechAugmentedComplex 𝒰 F` is zero:
 ```
 Equivalently, the {\v C}ech nerve of `𝒰` is a resolution of `F` in `X.Modules`. -/
 theorem cechAugmented_exact (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
-    (h𝒰 : ∀ i, IsAffine (𝒰.X i)) [X.IsSeparated]
-    (F : X.Modules) (hF : F.IsQuasicoherent) :
+    (_h𝒰 : ∀ i, IsAffine (𝒰.X i)) [X.IsSeparated]
+    (F : X.Modules) (_hF : F.IsQuasicoherent) :
     ∀ p, IsZero ((cechAugmentedComplex 𝒰 F).homology p) := by
   intro p
   -- Step 1: reflect through the faithful, zero-preserving `toSheaf`.
