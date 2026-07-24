@@ -521,6 +521,21 @@ discharged by section-level computations.
   \(\iota_i^{*}\mathcal{M}\).
 \end{definition}
 
+\begin{lemma}\leanok
+[The candidate family recovers each chart component]
+  \label{lem:gr_glueChartFamily_pullback_map_pi}
+  \lean{AlgebraicGeometry.Scheme.Modules.glueChartFamily_pullback_map_π}
+  \uses{def:gr_glueChartComponent, def:gr_glueChartFamily}
+  For chart indices \(i,j\), composing the candidate family with the pullback of the
+  \(j\)-th product projection recovers its \(j\)-th component:
+  \[
+    \mathrm{s}_i^{\mathrm{fam}}\circ
+      \iota_i^*(\pi_j)=\mathrm{s}_i^{(j)}.
+  \]
+  This is the component formula for the product-preservation comparison used to
+  define \cref{def:gr_glueChartFamily}.
+\end{lemma}
+
 \subsection{The triple-overlap toolkit}
 
 The first descent obligation (\cref{lem:gr_glueChartFamily_equalizes}) reduces, factor
@@ -577,6 +592,19 @@ is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBase
   factorisation, the pullback condition, the involutivity \(t_{ik}\circ t_{ki}=\mathrm{id}\)
   and the cocycle condition of \cref{def:scheme_modules_glue}.
 \end{proof}
+
+\begin{lemma}\leanok
+[Pair component of the equalizing condition]
+  \label{lem:gr_glueChartComponent_leg_compat}
+  \lean{AlgebraicGeometry.Scheme.Modules.glueChartComponent_leg_compat}
+  \uses{def:gr_glueChartComponent, def:scheme_modules_glue,
+    lem:gr_glueData_bridges}
+  For chart indices \(i,p,q\), the \(p\)-th candidate component followed by the
+  restricted first descent-leg factor equals the \(q\)-th candidate component followed
+  by the restricted second descent-leg factor.  After transposing to the triple overlap
+  \(V_{ipq}\), this is precisely the cocycle multiplicativity condition (C2), with the
+  endpoint identifications supplied by \cref{lem:gr_glueData_bridges}.
+\end{lemma}
 
 
 \subsection{The first descent obligation}
