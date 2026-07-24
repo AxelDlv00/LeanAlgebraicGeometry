@@ -109,6 +109,7 @@ Both outputs are assembled into a `PProd` (anonymous constructor `‚ü®e, hexact‚ü
 than `Prod` because the second component is a `Prop` while the first is an `Iso` in `Type`). -/
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 4000000 in
+-- Normalizing the cover-indexed degree shifts below exceeds 1,600,000 heartbeats in `whnf`.
 /-- **From augmented exactness to the P4 input data**
 (blueprint `lem:cechAugmented_to_acyclicResolutionInput`).
 
