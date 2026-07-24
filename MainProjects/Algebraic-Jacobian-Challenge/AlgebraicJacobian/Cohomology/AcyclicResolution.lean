@@ -3,7 +3,14 @@ Copyright (c) 2026 Christian Merten. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Christian Merten
 -/
-import Mathlib
+import Mathlib.Algebra.Homology.Augment
+import Mathlib.Algebra.Homology.HomologicalComplexAbelian
+import Mathlib.Algebra.Homology.HomologySequenceLemmas
+import Mathlib.CategoryTheory.Abelian.RightDerived
+import Mathlib.CategoryTheory.EffectiveEpi.Comp
+import Mathlib.CategoryTheory.ExtremalEpi
+import Mathlib.Combinatorics.Quiver.ReflQuiver
+import Lean.Elab.Tactic.Omega
 
 /-!
 # Acyclic resolutions compute right-derived functors
@@ -22,8 +29,7 @@ additive functor.
 * Instance: every injective object is right-acyclic (from Mathlib's
   `Functor.isZero_rightDerived_obj_injective_succ`).
 
-The following declarations are all constructed and proved axiom-clean in this file
-(P4 complete — see the marker at the end of the file):
+The main declarations constructed in this file are:
 
 * `CategoryTheory.InjectiveResolution.ofShortExact` — dual Horseshoe Lemma:
   lift `0 → A → B → C → 0` to a degreewise-split SES of injective resolutions.
@@ -32,10 +38,10 @@ The following declarations are all constructed and proved axiom-clean in this fi
 * `CategoryTheory.Functor.rightDerivedIsoOfAcyclicResolution` — main theorem:
   `(Rⁿ G)(A) ≅ Hⁿ(G(J•))` for any acyclic resolution `J•` of `A`.
 
-See `blueprint/src/chapters/Cohomology_AcyclicResolution.tex` and
-`.archon/analogies/p4-derived-les.md` for the full informal argument.
+See `blueprint/src/chapters/Cohomology_AcyclicResolution.tex` for the full
+mathematical argument.
 
-## Mathlib building blocks (all verified present)
+## Mathlib building blocks
 
 All from `Mathlib/CategoryTheory/Abelian/RightDerived.lean`:
 - `CategoryTheory.InjectiveResolution.isoRightDerivedObj` — iso
@@ -975,7 +981,5 @@ noncomputable def Functor.rightDerivedIsoOfAcyclicAugmentation
   G.rightDerivedIsoOfAcyclicResolution K A
     (CochainComplex.cyclesZeroIsoOfAugmentExact K ε hε hexact)
     (CochainComplex.exactAt_succ_of_augment_exact K ε hε hexact) n
-
-/-! ### P4 complete — `rightDerivedIsoOfAcyclicResolution` is proved axiom-clean above. -/
 
 end CategoryTheory
