@@ -2,10 +2,12 @@ id: AJC.maintenance.build.umbrella-imports
 title: Remaining umbrella-import audit
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The first four stable import frontiers are measured: AcyclicResolution and
-  HigherDirectImagePresheaf no longer import Mathlib, AbsoluteCohomology has an irredundant
-  two-import frontier, and the Cech capstone drops two redundant direct imports. Continue
-  with other stable high-fanout modules.'
+summary: 'Three more high-fanout Cech frontiers are explicit: CechCoboundarySplitting
+  inherits CechAcyclic, CechBridge names three Mathlib modules plus two project modules,
+  and CechToCohomology no longer imports the bridge. Full-build-discovered clients
+  now declare their own Cech, Ext, separatedness, and site dependencies. Isolated
+  frontend probes reduce peak RSS from about 6.7 GiB to 3.1-3.2 GiB; continue with
+  other stable high-fanout modules.'
 status: pending
 kind: refactor
 priority: normal
@@ -28,4 +30,8 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-24T14:56:15.265056+00:00'
+  updated_at: '2026-07-24T17:17:37.776515+00:00'
+  pinned_commits:
+  - 72d3f23c5
+  - 023d894d0
+  - 8eb8f9cd3

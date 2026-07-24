@@ -2,10 +2,10 @@ id: AJC.maintenance.build.baseline
 title: Full-project build baseline
 projects:
 - Algebraic-Jacobian-Challenge
-summary: A fresh foreground lake build passed all 8,719 jobs in 976.11 seconds at
-  8,434,512 KiB peak RSS. Cached replay records 1,703 warnings, led by 882 long lines,
-  319 deprecations, 136 unused simp arguments, 119 show/change warnings, 80 undocumented
-  heartbeat overrides, and 24 sorry declarations.
+summary: 'Post-cleanup foreground lake build passes all 8,719 jobs in 981.70 seconds
+  at 8,514,296 KiB peak RSS. The replay records 1,459 warnings, down 244 from 1,703:
+  873 long lines, 127 deprecations, 120 unused simp arguments, 109 show/change warnings,
+  68 undocumented heartbeat overrides, and 24 sorry declarations.'
 status: done
 kind: workspace
 priority: normal
@@ -28,4 +28,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-24T14:56:13.848467+00:00'
+  updated_at: '2026-07-24T17:17:01.480724+00:00'
+  pinned_commits:
+  - 2e6d3c83e

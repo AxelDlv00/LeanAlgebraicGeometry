@@ -4,14 +4,15 @@ kind: issue
 body: 'Lean full-build warning baseline
 
 
-  A fresh foreground lake build passes all 8,719 jobs in 976.11 seconds with 8,434,512
-  KiB peak RSS. Cached replay records 1,703 warnings: 882 long lines, 319 deprecations,
-  136 unused simp arguments, 119 show/change warnings, 80 undocumented maxHeartbeat
-  overrides, 33 unused variables, 24 sorry declarations, 23 unused section variables,
-  and 19 misplaced module docstrings. TensorObjSubstrate (569), TensorObjInverse (285),
-  and SectionGradedRing (199) account for 1,053 warnings. Prioritize those concentrated
-  mechanical debts, then structural heartbeat hotspots; preserve the baseline command
-  and counts for regression comparison.'
+  The post-cleanup foreground lake build passes all 8,719 jobs in 981.70 seconds with
+  8,514,296 KiB peak RSS. Its replay records 1,459 warnings, down 244 from 1,703:
+  873 long lines, 127 deprecations, 120 unused simp arguments, 109 show/change warnings,
+  68 undocumented heartbeat overrides, 31 unused variables, 24 sorry declarations,
+  23 unused section variables, and 19 misplaced module docstrings. TensorObjSubstrate
+  fell from 569 to 350 warnings and SectionGradedRing from 199 to 174; together with
+  TensorObjInverse at 285, the top three now account for 809 warnings. Prioritize
+  TensorObjInverse next, then the structural heartbeat hotspots. Preserve lake build
+  and these counts for regression comparison.'
 labels:
 - agent-ready
 status: open
@@ -22,7 +23,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-24T14:56:46.449883+00:00'
-updated_at: '2026-07-24T15:01:40.862908+00:00'
+updated_at: '2026-07-24T17:18:08.271603+00:00'
 metadata:
   provenance:
     run: '0046'
