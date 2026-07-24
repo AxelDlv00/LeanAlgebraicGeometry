@@ -458,6 +458,7 @@ private lemma pullback_app_isoTensor_baseMap_congr
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- The composed-adjunction unit expands nested pullback and restriction transports.
 /-- **(N2) `baseMap` compatibility with `pullbackComp`**: iterated base maps along a
 composable pair compose (through `pullbackComp`) to the base map of the composite.
 From `unit_conjugateEquiv` and Mathlib's `conjugateEquiv_pullbackComp_inv`. -/
@@ -1249,18 +1250,18 @@ noncomputable def overRestrictEquiv :
   (SheafOfModules.pushforwardPushforwardEquivalence
       (J := (Opens.grothendieckTopology ↥X).over U) (K := Opens.grothendieckTopology ↥U) eqv
     (S := X.ringCatSheaf.over U) (R := U.toScheme.ringCatSheaf)
-    (Sheaf.Hom.mk (Functor.whiskerRight (NatTrans.op eqv.unitIso.inv) (X.ringCatSheaf.over U).obj))
-    (Sheaf.Hom.mk (𝟙 _))
+    (ObjectProperty.homMk
+      (Functor.whiskerRight (NatTrans.op eqv.unitIso.inv) (X.ringCatSheaf.over U).obj))
+    (ObjectProperty.homMk (𝟙 _))
     (by ext : 2
-        simp only [Sheaf.Hom.mk, Functor.comp_obj, Functor.whiskerLeft_app,
+        simp only [Functor.whiskerLeft_app,
           Functor.whiskerRight_app, NatTrans.op_app, NatTrans.id_app,
           ObjectProperty.homMk_hom, NatTrans.comp_app]
         exact congrArg (Sheaf.over X.ringCatSheaf U).obj.map
           (congrArg Quiver.Hom.op (Equivalence.unitInv_app_inverse eqv _).symm))
     (by ext : 2
-        simp only [Sheaf.Hom.mk, Functor.whiskerLeft_app, Functor.whiskerRight_app,
-          NatTrans.op_app, ObjectProperty.homMk_hom, NatTrans.comp_app, NatTrans.id_app,
-          Functor.comp_obj]
+        simp only [Functor.whiskerLeft_app, Functor.whiskerRight_app,
+          NatTrans.op_app, ObjectProperty.homMk_hom, NatTrans.comp_app, NatTrans.id_app]
         erw [Category.id_comp, ← Functor.map_comp]
         rename_i x
         have h : (eqv.unitIso.inv.app (Opposite.unop x)).op ≫ (eqv.unit.app (Opposite.unop x)).op
@@ -1415,6 +1416,7 @@ noncomputable def overRestrictPresentation (U : X.Opens) (M : X.Modules)
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
+-- Reconstructing a global presentation expands the cover colimit and sheafification instances.
 set_option synthInstance.maxHeartbeats 800000 in
 set_option backward.isDefEq.respectTransparency false in
 /-- **Geometric restriction to a cover member is globally presented** (gap1, P1).
@@ -1426,7 +1428,8 @@ to the slice presentation `q.presentation i : (M.over (q.X i)).Presentation` sup
 quasi-coherence datum.
 
 This is the per-cover-member output that feeds the affine descent of the gap1 transport
-`lem:isIso_fromTildeΓ_basicOpen_of_quasicoherent` (P1): for `D(r) ≤ q.X i` one further restricts this
+`lem:isIso_fromTildeΓ_basicOpen_of_quasicoherent` (P1): for `D(r) ≤ q.X i` one further
+restricts this
 presentation to the basic affine `D(r) ≅ Spec R_r` and concludes via
 `isIso_fromTildeΓ_of_presentation`. The heartbeat headroom tames the slice-site
 `IsRightAdjoint`/`HasSheafify` synthesis blow-up that `Presentation.map` triggers across the
@@ -1466,7 +1469,8 @@ transport of the previous section:
 5. A global presentation forces `fromTildeΓ` to be an isomorphism
    (`isIso_fromTildeΓ_of_presentation`).
 
-Mathlib (at the pinned commit) carries no `QCoh(Spec R) ≃ Mod R` essential-image bridge; this descent
+Mathlib (at the pinned commit) carries no `QCoh(Spec R) ≃ Mod R` essential-image bridge;
+this descent
 is project-local. -/
 
 section BasicOpenPresentationDescent
@@ -1479,9 +1483,11 @@ variable {X : Scheme.{u}}
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
+-- Transporting a presentation through the slice/open equivalence unfolds both sites.
 set_option synthInstance.maxHeartbeats 800000 in
 set_option backward.isDefEq.respectTransparency false in
-/-- **Presentation of the geometric restriction of `M` to an open `W` of a cover member** (gap1, P1).
+/-- **Presentation of the geometric restriction of `M` to an open `W` of a cover member**
+(gap1, P1).
 
 For a sheaf of modules `M` on `X` with quasi-coherence data `q`, an index `i`, and *any* open
 `W ⊆ (q.X i).toScheme` of the cover-member subscheme, the geometric restriction
@@ -1550,15 +1556,18 @@ noncomputable def pullbackSchemeIsoUnitIso {Y Z : Scheme.{u}} (φ : Y ≅ Z) :
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
+-- Mapping the presentation through pullback requires the colimit-preservation instance chain.
 set_option synthInstance.maxHeartbeats 800000 in
 set_option backward.isDefEq.respectTransparency false in
 /-- **A presentation transports across the pullback by an iso of schemes** (gap1, P1, step 4).
 
 Given an isomorphism of schemes `φ : Y ≅ Z` and a `SheafOfModules.Presentation` of a module `N` on
 `Y`, the geometric pullback `(pullback φ.inv).obj N` of `N` to `Z` admits a presentation. It is
-`Presentation.map` along the colimit-preserving pullback functor `pullback φ.inv`, using the unit-iso
+`Presentation.map` along the colimit-preserving pullback functor `pullback φ.inv`, using
+the unit-iso
 `pullbackSchemeIsoUnitIso φ`. This is the affine-identification transport step of the gap1 keystone:
-applied with `φ` the `IsAffineOpen.isoSpec` of the affine restriction, it moves the presentation onto
+applied with `φ` the `IsAffineOpen.isoSpec` of the affine restriction, it moves the
+presentation onto
 a genuine `Spec`. Project-local. -/
 noncomputable def presentationPullbackOfSchemeIso {Y Z : Scheme.{u}} (φ : Y ≅ Z)
     (N : Y.Modules) (P : N.Presentation) :
@@ -1570,6 +1579,7 @@ noncomputable def presentationPullbackOfSchemeIso {Y Z : Scheme.{u}} (φ : Y ≅
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
+-- The affine counit comparison unfolds the transported presentation and tilde equivalence.
 set_option synthInstance.maxHeartbeats 800000 in
 set_option backward.isDefEq.respectTransparency false in
 /-- **Quasi-coherent restricts to a tilde on every affine open of a cover member** (gap1, P1).
@@ -1577,13 +1587,15 @@ set_option backward.isDefEq.respectTransparency false in
 For a sheaf of modules `M` on `X` with quasi-coherence data `q`, an index `i`, and an *affine* open
 `W ⊆ (q.X i).toScheme` of the cover-member subscheme, the geometric restriction of `M` to the affine
 `Spec Γ((q.X i).toScheme, W) ≅ W` (pulled back to `Z := (q.X i).toScheme`, then to `W`, then across
-the affine identification `IsAffineOpen.isoSpec`) has an isomorphism `fromTildeΓ` counit — i.e. it is
+the affine identification `IsAffineOpen.isoSpec`) has an isomorphism `fromTildeΓ` counit;
+that is, it is
 a geometric tilde.
 
 This is the geometric heart of the gap1 per-element transport: the slice presentation supplied by
 the quasi-coherence datum geometrizes (`presentationPullbackιRestrict`) to a global presentation on
 `W.toScheme`, which transports across the affine iso (`presentationPullbackOfSchemeIso`) to a global
-presentation on the genuine affine `Spec Γ(Z, W)`; a global presentation forces `fromTildeΓ` to be an
+presentation on the genuine affine `Spec Γ(Z, W)`; a global presentation forces
+`fromTildeΓ` to be an
 isomorphism (`isIso_fromTildeΓ_of_presentation`). Project-local: Mathlib has no
 `QCoh(Spec R) ≃ Mod R` essential-image bridge. -/
 theorem isIso_fromTildeΓ_presentationPullback (M : X.Modules)
@@ -1600,6 +1612,7 @@ theorem isIso_fromTildeΓ_presentationPullback (M : X.Modules)
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
+-- Specializing the counit comparison to a basic open triggers the slice-site instance search.
 set_option synthInstance.maxHeartbeats 800000 in
 set_option backward.isDefEq.respectTransparency false in
 /-- **Quasi-coherent restricts to a tilde on each basic open of the cover** (gap1, P1 keystone,
@@ -1977,7 +1990,8 @@ unavailable for it — while the sheaf-gluing engines `descent_surj`/`descent_sm
 consult `Hfr` at the basic opens `D(r)` and the overlaps `D(r) ⊓ D(r') = D(r·r')`.
 
 It rebuilds the three `IsLocalizedModule` fields directly: `map_units` is
-`map_units_restrict_basicOpen` (holds for arbitrary `M`), `surj` is `descent_surj` fed the basic-open
+`map_units_restrict_basicOpen` (holds for arbitrary `M`), `surj` is `descent_surj` fed
+the basic-open
 `Hfr` (the open `U` it consults is always `D(s)`, so `Hfr s` supplies the datum after `U = D(s)` is
 substituted), and `exists_of_eq` is `descent_smul_eq_zero` fed `Hfr` at each `D(r)`.  Project-local:
 the named gap1 keystone `isLocalizedModule_basicOpen_descent` for quasi-coherent `M` is this lemma
@@ -2248,7 +2262,8 @@ theorem isLocalizedModule_powers_transport
 /-- **`IsIso M.fromTildeΓ` is invariant under isomorphism of modules.** If `M ≅ M'` as sheaves of
 modules on `Spec R` and `M.fromTildeΓ` is an isomorphism, then so is `M'.fromTildeΓ`.
 
-Immediate from `isIso_fromTildeΓ_iff` (`IsIso M.fromTildeΓ ↔ M ∈ essImage (tilde.functor R)`) and the
+Immediate from `isIso_fromTildeΓ_iff`
+(`IsIso M.fromTildeΓ ↔ M ∈ essImage (tilde.functor R)`) and the
 fact that the essential image is closed under isomorphism (`Functor.essImage.ofIso`). This is the
 transport that lets P1's `IsIso fromTildeΓ` for the iterated-pullback module
 `(pullback isoSpec.inv).obj ((pullback ι_W).obj ((pullback ι).obj M))` be carried to the pullback
@@ -2602,7 +2617,8 @@ noncomputable def restrictBasicOpenₗ {X : Scheme.{u}} (M : X.Modules) {U : X.O
 the `eqToHom`-transport `Γ(X, hU.fromSpec ''ᵁ ⊤) → Γ(X, U)` (along the equality
 `hU.fromSpec ''ᵁ ⊤ = U`) equals the composite ring iso
 `(hU.fromSpec.appIso ⊤).hom ≫ (ΓSpecIso Γ(X, U)).hom`. Equivalently, the section ring iso
-`σ = (ΓSpecIso)⁻¹ ≫ gammaImageRingEquiv (fromSpec) ⊤` underlying the gap2 section comparison is, up to
+`σ = (ΓSpecIso)⁻¹ ≫ gammaImageRingEquiv (fromSpec) ⊤` underlying the gap2 section
+comparison is, up to
 this `eqToHom` transport, the identity. This is the coherence needed to read the gap2-core
 localization (over `Γ(X, hU.fromSpec ''ᵁ ⊤)`, at `powers (σ f)`) back as a localization over
 `Γ(X, U)` at `powers f`. Proof: `fromSpec_app_self` + `appIso_hom'` + cancellation of the
@@ -2869,7 +2885,8 @@ theorem isLocalizedModule_basicOpen_of_hP1 {X : Scheme.{u}} (M : X.Modules)
 /-! ## Project-local Mathlib supplement — pullback of QC along an open immersion (gap2, Piece A)
 
 Route-1 chain L1–L6 building `isQuasicoherent_pullback_fromSpec`: the pullback of a quasi-coherent
-sheaf of modules along the affine immersion `hU.fromSpec : Spec Γ(X, U) → X` is again quasi-coherent.
+sheaf of modules along the affine immersion `hU.fromSpec : Spec Γ(X, U) → X` is again
+quasi-coherent.
 This is the QC-pullback input the gap2 final close `isLocalizedModule_basicOpen` feeds to gap1
 (`isIso_fromTildeΓ_of_isQuasicoherent`). -/
 
@@ -2890,7 +2907,8 @@ noncomputable def overRestrictUnitIsoInv (V : X.Opens) :
 Dual to `overRestrictPresentation`: a presentation of the geometric pullback `(V.ι^*) M` yields a
 presentation of the abstract Grothendieck slice `M.over V`. Transport the given presentation across
 `(overRestrictPullbackIso V M).inv` (`Presentation.ofIsIso`), `Presentation.map` along the inverse
-slice-equivalence functor (using `overRestrictUnitIsoInv V`), then collapse the round trip across the
+slice-equivalence functor (using `overRestrictUnitIsoInv V`), then collapse the round trip
+across the
 equivalence unit iso. Project-local. -/
 noncomputable def overRestrictPresentationInv (V : X.Opens) (M : X.Modules)
     (P : ((Scheme.Modules.pullback V.ι).obj M).Presentation) : (M.over V).Presentation :=
@@ -2943,7 +2961,8 @@ set_option backward.isDefEq.respectTransparency false in
 For an open immersion `g : Y ⟶ X`, `M` quasi-coherent with datum `q`, and index `i`, the geometric
 restriction `(W_i.ι^*) ((pullback g).obj M)` of `N := (pullback g).obj M` to the preimage
 `W_i := g ⁻¹ᵁ (q.X i)` admits a presentation. Build it by mapping the global presentation
-`presentationPullbackιOfQuasicoherentData M q i` of `(q.X i).ι^* M` along the pullback of the induced
+`presentationPullbackιOfQuasicoherentData M q i` of `(q.X i).ι^* M` along the pullback
+of the induced
 open immersion `k := g.resLE (q.X i) W_i` (unit datum `pullbackOpenImmersionUnitIso`), then
 transporting across the pseudofunctoriality iso `pullbackPreimageιIso`. Project-local. -/
 noncomputable def presentationPullbackιPreimage {Y : Scheme.{u}} (g : Y ⟶ X) [IsOpenImmersion g]
@@ -2978,7 +2997,8 @@ theorem isQuasicoherent_over_preimage {Y : Scheme.{u}} (g : Y ⟶ X) [IsOpenImme
     (presentationPullbackιPreimage g M q i)).isQuasicoherent
 
 /-- **(Piece A, L5) The preimage family of a quasi-coherence cover covers the source.**
-For a morphism `g : Y ⟶ X` and quasi-coherence datum `q` for `M` on `X` (whose cover `{q.X i}` covers
+For a morphism `g : Y ⟶ X` and quasi-coherence datum `q` for `M` on `X` (whose cover
+`{q.X i}` covers
 `X`), the preimage family `{g ⁻¹ᵁ (q.X i)}` covers `Y`. Direct from the opens-topology covering
 characterization: any `y ∈ W` has `g y ∈ q.X i` for some `i` (since `{q.X i}` covers `⊤`), so
 `W ⊓ g ⁻¹ᵁ (q.X i)` is a neighbourhood of `y` in the sieve. Project-local. -/
@@ -3000,7 +3020,8 @@ set_option maxHeartbeats 1600000 in
 -- Heartbeat headroom for the slice-site `of_coversTop` `bind` synthesis.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- **(Piece A, L6) Pullback of a quasi-coherent sheaf along an open immersion is quasi-coherent.**
-For an open immersion `g : Y ⟶ X` and `M` quasi-coherent on `X`, the pullback `(pullback g).obj M` is
+For an open immersion `g : Y ⟶ X` and `M` quasi-coherent on `X`, the pullback
+`(pullback g).obj M` is
 quasi-coherent. Choose quasi-coherence data `q` for `M` (index shrunk to the site universe); the
 preimage family `{g ⁻¹ᵁ (q.X i)}` covers `Y` (`coversTop_preimage`) and on each member the slice is
 quasi-coherent (`isQuasicoherent_over_preimage`), so `IsQuasicoherent.of_coversTop` applies.
@@ -3114,7 +3135,7 @@ theorem exists_pow_smul_res_eq_zero_of_isCompact
         (X.basicOpen_le gV) ((X.basicOpen_le gV).trans le_sup_right) x
       have h2 := res_res M (inf_le_left : (S ⊔ V.1) ⊓ X.basicOpen g ≤ S ⊔ V.1)
         hB1A ((X.basicOpen_le gV).trans le_sup_right) x
-      show M.presheaf.map (homOfLE (X.basicOpen_le gV)).op xV = 0
+      change M.presheaf.map (homOfLE (X.basicOpen_le gV)).op xV = 0
       rw [hxV, h1, ← h2, hx, map_zero]
     obtain ⟨c, hc⟩ := IsLocalizedModule.exists_of_eq
       (S := Submonoid.powers gV) (f := restrictBasicOpenₗ M gV)
@@ -3137,12 +3158,12 @@ theorem exists_pow_smul_res_eq_zero_of_isCompact
     intro b
     cases b
     · -- on V
-      show M.presheaf.map (homOfLE (le_sup_right : V.1 ≤ S ⊔ V.1)).op
+      change M.presheaf.map (homOfLE (le_sup_right : V.1 ≤ S ⊔ V.1)).op
         (X.presheaf.map (homOfLE hUW).op g ^ max n₁ n₂ • x) = M.presheaf.map _ 0
       rw [map_zero, map_smul, map_pow, resRing_res hUW le_sup_right hVW g, ← hgV,
         ← hxV, ← Nat.sub_add_cancel (le_max_right n₁ n₂), pow_add, mul_smul, hcV, smul_zero]
     · -- on S
-      show M.presheaf.map (homOfLE (le_sup_left : S ≤ S ⊔ V.1)).op
+      change M.presheaf.map (homOfLE (le_sup_left : S ≤ S ⊔ V.1)).op
         (X.presheaf.map (homOfLE hUW).op g ^ max n₁ n₂ • x) = M.presheaf.map _ 0
       rw [map_zero, map_smul, map_pow, resRing_res hUW le_sup_left hSW g, ← hxS,
         ← Nat.sub_add_cancel (le_max_left n₁ n₂), pow_add, mul_smul, hn₁, smul_zero]
@@ -3310,7 +3331,7 @@ theorem exists_res_eq_pow_smul_of_isCompact
       · exact congrArg (fun (h : V.1 ⊓ V.1 ⟶ V.1) => M.presheaf.map h.op (gV ^ m • xV'))
           (Subsingleton.elim _ _)
       · -- `V` against `S`: transport `hglue` along `V ⊓ S ≤ S ⊓ V`
-        show M.presheaf.map (homOfLE (inf_le_left : V.1 ⊓ S ≤ V.1)).op (gV ^ m • xV')
+        change M.presheaf.map (homOfLE (inf_le_left : V.1 ⊓ S ≤ V.1)).op (gV ^ m • xV')
           = M.presheaf.map (homOfLE (inf_le_right : V.1 ⊓ S ≤ S)).op
               (X.presheaf.map (homOfLE hSW).op g ^ m • xS')
         rw [← res_res M (inf_le_right : S ⊓ V.1 ≤ V.1)
@@ -3318,7 +3339,7 @@ theorem exists_res_eq_pow_smul_of_isCompact
           ← res_res M (inf_le_left : S ⊓ V.1 ≤ S)
             (le_inf inf_le_right inf_le_left : V.1 ⊓ S ≤ S ⊓ V.1) inf_le_right, hglue]
       · -- `S` against `V`: `hglue`
-        show M.presheaf.map (homOfLE (inf_le_left : S ⊓ V.1 ≤ S)).op
+        change M.presheaf.map (homOfLE (inf_le_left : S ⊓ V.1 ≤ S)).op
               (X.presheaf.map (homOfLE hSW).op g ^ m • xS')
           = M.presheaf.map (homOfLE (inf_le_right : S ⊓ V.1 ≤ V.1)).op (gV ^ m • xV')
         exact hglue
@@ -3359,7 +3380,7 @@ theorem exists_res_eq_pow_smul_of_isCompact
     intro b
     cases b
     · -- on `D(g|_V)`
-      show M.presheaf.map (homOfLE hB1A).op
+      change M.presheaf.map (homOfLE hB1A).op
           (M.presheaf.map (homOfLE (inf_le_left : (S ⊔ V.1) ⊓ X.basicOpen g ≤ S ⊔ V.1)).op x')
         = M.presheaf.map (homOfLE hB1A).op
           (X.presheaf.map (homOfLE ((inf_le_left : (S ⊔ V.1) ⊓ X.basicOpen g ≤ S ⊔ V.1).trans
@@ -3374,7 +3395,7 @@ theorem exists_res_eq_pow_smul_of_isCompact
         resRing_res ((inf_le_left : (S ⊔ V.1) ⊓ X.basicOpen g ≤ S ⊔ V.1).trans hUW) hB1A
           hB1W g, ← hyV, Nat.add_comm m n]
     · -- on `S ⊓ D(g)`
-      show M.presheaf.map (homOfLE (inf_le_inf le_sup_left le_rfl :
+      change M.presheaf.map (homOfLE (inf_le_inf le_sup_left le_rfl :
             S ⊓ X.basicOpen g ≤ (S ⊔ V.1) ⊓ X.basicOpen g)).op
           (M.presheaf.map (homOfLE (inf_le_left : (S ⊔ V.1) ⊓ X.basicOpen g ≤ S ⊔ V.1)).op x')
         = M.presheaf.map (homOfLE (inf_le_inf le_sup_left le_rfl)).op
@@ -3423,11 +3444,11 @@ private lemma isUnit_algebraMap_end_of_isUnit_algebraMap
        map_add' := fun a b => smul_add _ a b,
        map_smul' := fun c m => by simpa using hcomm c m }, ?_, ?_⟩
   · ext m
-    show algebraMap R (Module.End R N) r ((↑u⁻¹ : S) • m) = m
+    change algebraMap R (Module.End R N) r ((↑u⁻¹ : S) • m) = m
     rw [Module.algebraMap_end_apply, ← algebraMap_smul S r, ← hu, ← mul_smul,
       Units.mul_inv, one_smul]
   · ext m
-    show (↑u⁻¹ : S) • (algebraMap R (Module.End R N) r m) = m
+    change (↑u⁻¹ : S) • (algebraMap R (Module.End R N) r m) = m
     rw [Module.algebraMap_end_apply, ← algebraMap_smul S r m, ← hu, ← mul_smul,
       Units.inv_mul, one_smul]
 
@@ -3469,7 +3490,7 @@ theorem isLocalizedModule_basicOpen_of_isCompact
         (X.basicOpen_le g) g,
       res_res M (inf_le_right : W ⊓ X.basicOpen g ≤ X.basicOpen g) hDW le_rfl y,
       res_self M y] at e2
-    show (g ^ k : Γ(X, W)) • y = M.presheaf.map (homOfLE (X.basicOpen_le g)).op x
+    change (g ^ k : Γ(X, W)) • y = M.presheaf.map (homOfLE (X.basicOpen_le g)).op x
     rw [e1, e2]
   exists_of_eq {x₁ x₂} h := by
     have h' := congrArg
@@ -3635,7 +3656,7 @@ theorem isIso_fromTildeΓ_pullback_fromSpec_of_isLocalizedModule
     have hres : (Y.presheaf.map (eqToHom eT.symm).op).hom
         (Y.presheaf.map (homOfLE eT.le).op a) = a := by
       rw [Subsingleton.elim (eqToHom eT.symm) (homOfLE eT.ge)]
-      show Y.presheaf.map (homOfLE eT.ge).op (Y.presheaf.map (homOfLE eT.le).op a) = a
+      change Y.presheaf.map (homOfLE eT.ge).op (Y.presheaf.map (homOfLE eT.le).op a) = a
       rw [resRing_res eT.le eT.ge le_rfl a, resRing_self a]
     rw [hres] at happ
     -- happ : a = ΓSpecIso.hom (appIso.hom (res a))
@@ -3646,7 +3667,7 @@ theorem isIso_fromTildeΓ_pullback_fromSpec_of_isLocalizedModule
       (Scheme.ΓSpecIso Γ(Y, U)).inv_hom_id
     simp only [CommRingCat.hom_comp, RingHom.comp_apply, CommRingCat.hom_id,
       RingHom.id_apply] at hcancel
-    show (Scheme.ΓSpecIso Γ(Y, U)).hom.hom ((j.appIso ⊤).hom.hom
+    change (Scheme.ΓSpecIso Γ(Y, U)).hom.hom ((j.appIso ⊤).hom.hom
         (Y.presheaf.map (homOfLE eT.le).op a))
       = (Scheme.ΓSpecIso Γ(Y, U)).hom.hom ((Scheme.ΓSpecIso Γ(Y, U)).inv.hom a)
     rw [← happ, hcancel]
@@ -3657,7 +3678,7 @@ theorem isIso_fromTildeΓ_pullback_fromSpec_of_isLocalizedModule
     have hN : (N.resAddEquivOfEq eT.symm) (a • x)
         = (gammaImageRingEquiv j ⊤) ((Scheme.ΓSpecIso Γ(Y, U)).inv a)
           • (N.resAddEquivOfEq eT.symm) x := by
-      show N.presheaf.map (homOfLE eT.le).op (a • x)
+      change N.presheaf.map (homOfLE eT.le).op (a • x)
         = _ • N.presheaf.map (homOfLE eT.le).op x
       rw [Scheme.Modules.map_smul N (homOfLE eT.le) a x, C1 a]
     rw [hN]
@@ -3690,7 +3711,7 @@ theorem isIso_fromTildeΓ_pullback_fromSpec_of_isLocalizedModule
               (homOfLE (le_top : PrimeSpectrum.basicOpen f' ≤ ⊤)).op
               ((Scheme.ΓSpecIso Γ(Y, U)).inv a))
           • (N.resAddEquivOfEq eB.symm) x := by
-      show N.presheaf.map (homOfLE eB.le).op
+      change N.presheaf.map (homOfLE eB.le).op
           ((Y.presheaf.map (homOfLE (Y.basicOpen_le f')).op a) • x)
         = _ • N.presheaf.map (homOfLE eB.le).op x
       rw [Scheme.Modules.map_smul N (homOfLE eB.le), resRing_res (Y.basicOpen_le f')
@@ -3728,7 +3749,7 @@ theorem isIso_fromTildeΓ_pullback_fromSpec_of_isLocalizedModule
       exact (gammaPullbackImageIso j N
         (PrimeSpectrum.basicOpen f')).addCommGroupIsoToAddEquiv.apply_symm_apply _
     rw [hL, hR]
-    show N.presheaf.map (homOfLE (leOfHom (j.opensFunctor.map
+    change N.presheaf.map (homOfLE (leOfHom (j.opensFunctor.map
           (homOfLE (le_top : PrimeSpectrum.basicOpen f' ≤ ⊤))))).op
         (N.presheaf.map (homOfLE eT.le).op x)
       = N.presheaf.map (homOfLE eB.le).op
@@ -3803,7 +3824,7 @@ theorem isLocalizedModule_basicOpen_pushforward
   -- ring coherence: restricting `π♯ f'` matches `π♯` of the restriction
   have hring : X.presheaf.map (homOfLE hle).op g
       = π.app (S.basicOpen f') (algebraMap Γ(S, U) Γ(S, S.basicOpen f') f') := by
-    show X.presheaf.map (homOfLE hle).op g
+    change X.presheaf.map (homOfLE hle).op g
       = π.app (S.basicOpen f') (S.presheaf.map (homOfLE (S.basicOpen_le f')).op f')
     have hnat := congrArg
       (fun (φ : Γ(S, U) ⟶ Γ(X, π ⁻¹ᵁ (S.basicOpen f'))) => φ.hom f')
@@ -3836,7 +3857,7 @@ theorem isLocalizedModule_basicOpen_pushforward
     have hcL : F.presheaf.map (homOfLE hpre.le).op
         ((c : Γ(X, π ⁻¹ᵁ U)) • (F.presheaf.map (homOfLE hpre.ge).op yF))
         = (X.presheaf.map (homOfLE hle).op (c : Γ(X, π ⁻¹ᵁ U))) • yF := by
-      show F.presheaf.map (homOfLE hpre.le).op
+      change F.presheaf.map (homOfLE hpre.le).op
           ((X.presheaf.map (homOfLE (X.basicOpen_le g)).op (c : Γ(X, π ⁻¹ᵁ U)))
             • (F.presheaf.map (homOfLE hpre.ge).op yF))
         = (X.presheaf.map (homOfLE hle).op (c : Γ(X, π ⁻¹ᵁ U))) • yF
@@ -3845,18 +3866,18 @@ theorem isLocalizedModule_basicOpen_pushforward
         res_res F hpre.ge hpre.le le_rfl yF, res_self F yF]
     have hcR : F.presheaf.map (homOfLE hpre.le).op (restrictBasicOpenₗ F g x)
         = F.presheaf.map (homOfLE hle).op x := by
-      show F.presheaf.map (homOfLE hpre.le).op
+      change F.presheaf.map (homOfLE hpre.le).op
           (F.presheaf.map (homOfLE (X.basicOpen_le g)).op x)
         = F.presheaf.map (homOfLE hle).op x
       exact res_res F (X.basicOpen_le g) hpre.le hle x
     rw [hcL, hcR] at hc'
     -- identify with the pushforward-side statement
-    show (f' ^ c.2.choose : Γ(S, U)) • y
+    change (f' ^ c.2.choose : Γ(S, U)) • y
       = ((Scheme.Modules.pushforward π).obj F).presheaf.map
           (homOfLE (S.basicOpen_le f')).op x
     have hact : (f' ^ c.2.choose : Γ(S, U)) • y
         = (X.presheaf.map (homOfLE hle).op (c : Γ(X, π ⁻¹ᵁ U))) • yF := by
-      show (π.app (S.basicOpen f')
+      change (π.app (S.basicOpen f')
           (algebraMap Γ(S, U) Γ(S, S.basicOpen f') (f' ^ c.2.choose))) • yF
         = (X.presheaf.map (homOfLE hle).op (c : Γ(X, π ⁻¹ᵁ U))) • yF
       rw [map_pow, map_pow, ← hring, ← map_pow]
@@ -3876,7 +3897,7 @@ theorem isLocalizedModule_basicOpen_pushforward
         res_hom_eq_res F ((Opens.map π.base).map (homOfLE (S.basicOpen_le f'))) x₂
       exact e1.symm.trans (h.trans e2)
     have h'' : restrictBasicOpenₗ F g x₁ = restrictBasicOpenₗ F g x₂ := by
-      show F.presheaf.map (homOfLE (X.basicOpen_le g)).op x₁
+      change F.presheaf.map (homOfLE (X.basicOpen_le g)).op x₁
         = F.presheaf.map (homOfLE (X.basicOpen_le g)).op x₂
       have r1 := res_res F hle hpre.ge (X.basicOpen_le g) x₁
       have r2 := res_res F hle hpre.ge (X.basicOpen_le g) x₂
@@ -3887,9 +3908,9 @@ theorem isLocalizedModule_basicOpen_pushforward
     refine ⟨⟨f' ^ c.2.choose, c.2.choose, rfl⟩, ?_⟩
     let xF₁ : ToType Γ(F, π ⁻¹ᵁ U) := x₁
     let xF₂ : ToType Γ(F, π ⁻¹ᵁ U) := x₂
-    show (π.app U (f' ^ c.2.choose)) • xF₁ = (π.app U (f' ^ c.2.choose)) • xF₂
+    change (π.app U (f' ^ c.2.choose)) • xF₁ = (π.app U (f' ^ c.2.choose)) • xF₂
     rw [map_pow]
-    show (g : Γ(X, π ⁻¹ᵁ U)) ^ c.2.choose • xF₁ = g ^ c.2.choose • xF₂
+    change (g : Γ(X, π ⁻¹ᵁ U)) ^ c.2.choose • xF₁ = g ^ c.2.choose • xF₂
     rw [hk]
     exact hc
 
@@ -3905,6 +3926,7 @@ private theorem coversTop_affineOpens (S : Scheme.{u}) :
   exact ⟨⟨V, hVaff⟩, ⟨𝟙 V⟩⟩
 
 set_option maxHeartbeats 1600000 in
+-- The affine pushforward slice proof combines localization with the tilde counit transport.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- **Per-affine slice quasi-coherence of a qcqs pushforward.** For qcqs `π : X ⟶ S`, `F`
 quasi-coherent on `X`, and an affine open `U ⊆ S`, the slice `(π_* F).over U` is
@@ -3943,6 +3965,7 @@ theorem pushforward_isQuasicoherent_over_affine
   exact (Scheme.Modules.overRestrictPresentationInv U N P_ι).isQuasicoherent
 
 set_option maxHeartbeats 1600000 in
+-- Cover-wise quasi-coherence assembly synthesizes the affine-slice sheafification data.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- **Pushforward preserves quasi-coherence** (Stacks tag 01XJ). For a quasi-compact
 quasi-separated morphism of schemes `π : X ⟶ S` and a quasi-coherent sheaf of modules `F` on
@@ -4047,7 +4070,7 @@ set_option backward.isDefEq.respectTransparency false in
 private lemma pullbackTilde_gammaBridgeHom_isIso {A B : CommRingCat.{u}}
     (φ : A ⟶ B) (N : (Spec B).Modules) : IsIso (pullbackTilde_gammaBridgeHom φ N) := by
   rw [ConcreteCategory.isIso_iff_bijective]
-  show Function.Bijective (fun x => (N.presheaf.map (homOfLE (le_top :
+  change Function.Bijective (fun x => (N.presheaf.map (homOfLE (le_top :
     (⊤ : (Spec B).Opens) ≤ Spec.map φ ⁻¹ᵁ ⊤)).op).hom x)
   rw [modules_restr_preimage_top_eq_id (Spec.map φ) N le_top]
   exact Function.bijective_id
@@ -4072,6 +4095,7 @@ private noncomputable def pullbackTilde_gammaBridge {A B : CommRingCat.{u}}
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- The Spec pullback formula normalizes tensor, tilde, and pullback comparison isomorphisms.
 /-- **Spec-level pullback-of-tilde formula** (iter-187 Lane F NAMED HELPER,
 PROVED axiom-clean this session).
 
@@ -4415,6 +4439,7 @@ private theorem tildeIso_of_isQuasicoherent_isAffineOpen
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- Section transport through `fromSpec` expands the affine tilde equivalence and open transports.
 /-- **Step 3 pin (transport)**: section-level transport for pullback along
 the affine-open's `fromSpec` map.
 
@@ -4611,6 +4636,7 @@ private theorem pullback_of_openImmersion_iso_restrict
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 3200000 in
+-- Building the section linear equivalence unfolds both tilde routes and their scalar actions.
 /-- **Section-level LinearEquiv via the Tilde route** (iter-188 Lane F NAMED
 HELPER, iter-189 unbundling refactor).
 
@@ -4875,7 +4901,7 @@ theorem pullback_app_isoTensor_baseMap_sectionLinearEquiv
     (_step3_symm_apply (pullback_app_isoTensor_baseMap g N e x)).symm).trans
     (step3.apply_symm_apply (pullback_app_isoTensor_baseMap g N e x))
   -- ## Assembly: decompose `f (1 ⊗ x)` through the iso chain and chain the stages.
-  show step3
+  change step3
     ((Scheme.Modules.Hom.app
         ((Scheme.Modules.pullbackComp _hU.fromSpec g).inv.app N) ⊤).hom
       ((Scheme.Modules.Hom.app
@@ -5053,7 +5079,7 @@ private lemma pullback_app_isoTensor_baseMap_le_refl
     pullback_app_isoTensor_baseMap g N (le_refl (g ⁻¹ᵁ V)) x =
       (Scheme.Modules.Hom.app
         ((Scheme.Modules.pullbackPushforwardAdjunction g).unit.app N) V).hom x := by
-  show ((((Scheme.Modules.pullback g).obj N).presheaf.map
+  change ((((Scheme.Modules.pullback g).obj N).presheaf.map
       (homOfLE (le_refl (g ⁻¹ᵁ V))).op).hom)
       ((Scheme.Modules.Hom.app
         ((Scheme.Modules.pullbackPushforwardAdjunction g).unit.app N) V).hom x) = _
@@ -5063,6 +5089,7 @@ private lemma pullback_app_isoTensor_baseMap_le_refl
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 3200000 in
+-- The Beck--Chevalley calculation expands the mate, adjunction units, and restriction transports.
 /-- **KEY-BC: elementwise Beck-Chevalley compatibility of the canonical
 base-change mate with the adjunction-unit base maps** (T12 fbc-leaves front,
 PROVED 2026-07-06).
@@ -5163,7 +5190,7 @@ theorem canonicalBaseChangeMap_app_baseMap_compat
       (f ⁻¹ᵁ V)).hom w) h6a).trans h6b
   -- Decompose the canonical mate elementwise (all unitor/associator components
   -- are identities in `Cat`; compositions of section maps are definitional).
-  show (Scheme.Modules.Hom.app ((Scheme.Modules.pullback g').map
+  change (Scheme.Modules.Hom.app ((Scheme.Modules.pullback g').map
         ((Scheme.Modules.pullbackPushforwardAdjunction f).counit.app F)) (f' ⁻¹ᵁ U)).hom
       ((Scheme.Modules.Hom.app ((Scheme.Modules.pullbackComp g' f).inv.app
           ((Scheme.Modules.pushforward f).obj F)) (f' ⁻¹ᵁ U)).hom
@@ -5290,7 +5317,7 @@ private lemma appLE_smul_res {X S : Scheme.{u}} (f : X ⟶ S) (N : X.Modules) {V
       = (f.appLE V W₁ p₁).hom r • N.presheaf.map (homOfLE h).op ξ := by
   rw [Scheme.Modules.map_smul N (homOfLE h) ((f.appLE V W₂ p₂).hom r) ξ]
   refine congrArg (· • N.presheaf.map (homOfLE h).op ξ) ?_
-  show X.presheaf.map (homOfLE h).op (X.presheaf.map (homOfLE p₂).op ((f.app V).hom r))
+  change X.presheaf.map (homOfLE h).op (X.presheaf.map (homOfLE p₂).op ((f.app V).hom r))
       = X.presheaf.map (homOfLE p₁).op ((f.app V).hom r)
   exact Scheme.Modules.resRing_res p₂ h p₁ ((f.app V).hom r)
 
@@ -5348,7 +5375,7 @@ private lemma pullback_app_isoTensor_baseMap_res {X Y : Scheme.{u}} (g : Y ⟶ X
     (homOfLE hW'') ((Opens.map g.base).map (homOfLE hV)) (homOfLE (hW.trans hW'))
     ((Scheme.Modules.Hom.app
       ((Scheme.Modules.pullbackPushforwardAdjunction g).unit.app N) V').hom x)
-  show (((Scheme.Modules.pullback g).obj N).presheaf.map (homOfLE hW).op).hom
+  change (((Scheme.Modules.pullback g).obj N).presheaf.map (homOfLE hW).op).hom
       ((((Scheme.Modules.pullback g).obj N).presheaf.map (homOfLE hW').op).hom
         ((Scheme.Modules.Hom.app
           ((Scheme.Modules.pullbackPushforwardAdjunction g).unit.app N) V').hom x))
@@ -5391,7 +5418,7 @@ private noncomputable def baseMapALin {X X' S S' : Scheme.{u}}
       = (f'.appLE U W' hW'U).hom ((g.appLE V U e).hom r) :=
     congrArg (fun (ρ : Γ(S, V) →+* Γ(X', W')) => ρ r)
       (appLE_square_comm sq e hV' hW'V hW'U)
-  show pullback_app_isoTensor_baseMap g' F hW'V ((f.appLE V V' hV').hom r • m)
+  change pullback_app_isoTensor_baseMap g' F hW'V ((f.appLE V V' hV').hom r • m)
       = (f'.appLE U W' hW'U).hom ((g.appLE V U e).hom r) •
           pullback_app_isoTensor_baseMap g' F hW'V m
   exact hsm.trans
@@ -5442,12 +5469,13 @@ private lemma sectionBaseChangeθ_one_tmul {X X' S S' : Scheme.{u}}
   letI : Module Γ(S, V) Γ(F, V') := Module.compHom _ (f.appLE V V' hV').hom
   letI : Module Γ(S', U) Γ((Scheme.Modules.pullback g').obj F, W') :=
     Module.compHom _ (f'.appLE U W' hW'U).hom
-  show (1 : Γ(S', U)) • pullback_app_isoTensor_baseMap g' F hW'V m
+  change (1 : Γ(S', U)) • pullback_app_isoTensor_baseMap g' F hW'V m
       = pullback_app_isoTensor_baseMap g' F hW'V m
   exact one_smul _ _
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 800000 in
+-- The affine comparison combines a ring pushout with scalar-extension associativity.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- **`sectionBaseChangeθ` is bijective on an affine piece**: `W' = V' ×_V U` is affine,
 `Γ(X', W')` is the ring pushout of the section square
@@ -5516,7 +5544,7 @@ private theorem sectionBaseChangeθ_bijective {X X' S S' : Scheme.{u}}
         (1 : Γ(X', g' ⁻¹ᵁ V' ⊓ f' ⁻¹ᵁ U)) ⊗ₜ[Γ(X, V')] m := by
       rw [LinearEquiv.symm_apply_eq]
       exact (hψ m).symm
-    show ψ.symm (sectionBaseChangeθ sq F e hV' inf_le_left inf_le_right
+    change ψ.symm (sectionBaseChangeθ sq F e hV' inf_le_left inf_le_right
         (b ⊗ₜ[Γ(S, V)] m)) = _
     rw [h1, map_smul, h3, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
   have hsbij : Function.Bijective s :=
@@ -5530,6 +5558,7 @@ private theorem sectionBaseChangeθ_bijective {X X' S S' : Scheme.{u}}
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 800000 in
+-- Finite-cover injectivity combines tensor flatness with separatedness on every overlap.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- **`sectionBaseChangeθ` is injective on a quasi-compact piece**: cover by finitely
 many affines, compare with the bijective affine comparisons, and use sheaf
@@ -5602,7 +5631,7 @@ private theorem sectionBaseChangeθ_injective_of_isCompact {X X' S S' : Scheme.{
       (inf_le_left : g' ⁻¹ᵁ ((t : X.affineOpens) : X.Opens) ⊓ f' ⁻¹ᵁ U ≤
         g' ⁻¹ᵁ ((t : X.affineOpens) : X.Opens))
       (hTle t) (hWt t) m
-    show (((Scheme.Modules.pullback g').obj F).presheaf.map (homOfLE (hWt t)).op).hom
+    change (((Scheme.Modules.pullback g').obj F).presheaf.map (homOfLE (hWt t)).op).hom
         (sectionBaseChangeθ sq F e hV' inf_le_left inf_le_right
           ((1 : Γ(S', U)) ⊗ₜ[Γ(S, V)] m))
       = sectionBaseChangeθ sq F e (hTfV t) inf_le_left inf_le_right
@@ -5612,6 +5641,7 @@ private theorem sectionBaseChangeθ_injective_of_isCompact {X X' S S' : Scheme.{
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- The equalizer ladder elaborates both finite affine covers and all pairwise restrictions.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- **The 02KE ladder over a given finite affine cover** of `f ⁻¹ᵁ V` with
 quasi-compact pairwise overlaps: instantiates the abstract equalizer ladder
@@ -5793,6 +5823,7 @@ private theorem pullback_baseMap_sectionLinearEquiv_of_cover {X X' S S' : Scheme
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- The H⁰ comparison packages the finite-cover ladder into the canonical section map.
 /-- **H⁰ flat base change over a compatible affine pair** (Stacks tag 02KE,
 `i = 0` form; Σ-pair dialect). CLOSED (T13, 2026-07-07): proof via the
 finite-affine-cover equalizer ladder `pullback_baseMap_sectionLinearEquiv_of_cover`
@@ -5881,6 +5912,7 @@ end SectionBaseChangeLadder
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- Identifying the canonical mate at an affine pair unfolds both section trivializations.
 /-- **Workhorse: the canonical base-change section map is an iso at every
 compatible affine pair** (Stacks 02KH(ii) at `i = 0`, affine-pair form;
 T12 fbc-leaves front, 2026-07-06).
@@ -6234,9 +6266,8 @@ theorem module_finite_of_tilde_genSections {R : CommRingCat.{u}} (N : ModuleCat.
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
+-- Mapping generating sections across the slice equivalence triggers `HasSheafify` synthesis.
 set_option synthInstance.maxHeartbeats 800000 in
--- Heartbeat headroom for the slice-site `HasSheafify` synthesis triggered by
--- `GeneratingSections.map` across the slice equivalence, as elsewhere in this file.
 /-- **Affine sections of a finitely presented module sheaf are finitely generated**
 (Stacks 01PC, finite-type half; chart-level form). If `F` is quasi-coherent, `q` is
 a quasi-coherence datum with finite presentations, and `V ≤ q.X i` is an affine
@@ -6321,4 +6352,3 @@ theorem exists_affine_finite_sections_nhds {X : Scheme.{u}} (F : X.Modules)
 end Scheme.Modules
 
 end AlgebraicGeometry
-
