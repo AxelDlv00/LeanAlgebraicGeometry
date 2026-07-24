@@ -22,6 +22,39 @@ open Scheme.Modules
 
 variable {X : Scheme.{u}}
 
+/-! ### Additive product coordinates -/
+
+/-- The additive form of the dependent product coordinates used by the concrete section Čech
+complex.  Keeping the product equivalence bundled avoids repeating its additivity proof at each
+coordinatewise contracting identity. -/
+noncomputable def sectionCechProductAddEquiv {ι : Type u}
+    (U : ι → TopologicalSpace.Opens X) (F : X.PresheafOfModules) (p : ℕ) :
+    ToType ((sectionCechCosimplicial U F).obj (SimplexCategory.mk p)) ≃+
+      (∀ σ : Fin (p + 1) → ι,
+        ToType (F.presheaf.obj (Opposite.op (⨅ k, U (σ k))))) where
+  toFun := sectionCechProductEquiv U F p
+  invFun := (sectionCechProductEquiv U F p).symm
+  left_inv := (sectionCechProductEquiv U F p).left_inv
+  right_inv := (sectionCechProductEquiv U F p).right_inv
+  map_add' x y := by
+    funext σ
+    calc
+      sectionCechProductEquiv U F p (x + y) σ =
+          ConcreteCategory.hom
+            (Pi.π (fun σ : Fin (p + 1) → ι =>
+              F.presheaf.obj (Opposite.op (⨅ k, U (σ k)))) σ) (x + y) :=
+        sectionCechProductEquiv_apply U F p (x + y) σ
+      _ = ConcreteCategory.hom
+            (Pi.π (fun σ : Fin (p + 1) → ι =>
+              F.presheaf.obj (Opposite.op (⨅ k, U (σ k)))) σ) x +
+          ConcreteCategory.hom
+            (Pi.π (fun σ : Fin (p + 1) → ι =>
+              F.presheaf.obj (Opposite.op (⨅ k, U (σ k)))) σ) y := by
+        exact map_add _ x y
+      _ = sectionCechProductEquiv U F p x σ +
+          sectionCechProductEquiv U F p y σ := by
+        rw [sectionCechProductEquiv_apply, sectionCechProductEquiv_apply]
+
 /-! ## Contracting homotopy on the augmented concrete section Čech complex -/
 
 /-! ### Restriction engine
