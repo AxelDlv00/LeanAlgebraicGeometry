@@ -5,11 +5,11 @@ content_type: theorem
 created: '2026-07-16T21:33:29'
 generated: blueprint
 label: thm:qcohOn_isLocalizedModule
-lean_status: empty
+lean_status: lean_ok
 order: 324
 title: The packaging axioms are the localisation axioms
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-07-24T17:02:48'
 ---
 Let \(U\) be an affine open of a scheme \(X\), let \(F\) be a sheaf of \(k\)-modules with
   a quasi-coherence packaging on \(U\), and let \(g \in \Gamma(X, U)\) act invertibly on

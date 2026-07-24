@@ -5,11 +5,11 @@ content_type: definition
 created: '2026-07-16T21:33:29'
 generated: blueprint
 label: def:fiberCoordUnit
-lean_status: sorry
+lean_status: lean_ok
 order: 641
 title: The fibre unit
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-07-24T17:02:48'
 ---
 Let \(t_1 = \pi^{\sharp}(t_{10}) \in \Gamma(Y, V_1)\) be the pullback of the chart-\(1\) coordinate
   \(t_{10} = X_0/X_1\) (\ref{def:P1_chartCoord}), a regular section on \(V_1\). On the overlap the

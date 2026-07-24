@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: RingTheory.Module.exists_minimalSurjection_finite_localRing
 type: lean
-updated: '2026-07-17T08:41:24'
+updated: '2026-07-24T17:02:46'
 ---
 lemma exists_minimalSurjection_finite_localRing
     (R : Type u) [CommRing R] [IsLocalRing R]
@@ -94,10 +94,3 @@ lemma exists_minimalSurjection_finite_localRing
 
 Converts the `Module.projectiveDimension R M = ((n : ℕ) : WithBot ℕ∞)` hypothesis
 (the carrier used in `auslander_buchsbaum_formula` / `_succ_pd`) to Mathlib's
-inductive Ext-vanishing predicate `HasProjectiveDimensionLT (ModuleCat.of R M) (n+1)`.
-This single rewrite via `CategoryTheory.projectiveDimension_lt_iff` is the entry
-point for the SES-descent path: once we have `HasProjectiveDimensionLT M (n+1)`,
-the SES `0 → K → R^n → M → 0` plus
-`ShortComplex.ShortExact.hasProjectiveDimensionLT_X₁` deliver the syzygy descent
-(`HasProjectiveDimensionLT K n`) abstractly, with no minimal-resolution carving
-required. -/

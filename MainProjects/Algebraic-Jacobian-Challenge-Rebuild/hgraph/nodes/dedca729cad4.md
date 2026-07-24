@@ -5,11 +5,11 @@ content_type: theorem
 created: '2026-07-16T21:33:29'
 generated: blueprint
 label: thm:moduleFinite_aeval_relFiberCoord
-lean_status: empty
+lean_status: lean_ok
 order: 473
 title: 'The relative E-i: chart-lattice finiteness over the test ring'
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-07-24T17:02:48'
 ---
 In the setting of \ref{thm:moduleFinite_aeval_fiberCoord}, for every commutative
   \(k\)-algebra \(R\): the relative chart sections \(\Gamma(C_R, V_i^R)\) are finite

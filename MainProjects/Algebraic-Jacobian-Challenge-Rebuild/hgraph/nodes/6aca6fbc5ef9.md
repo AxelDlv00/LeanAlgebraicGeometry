@@ -5,11 +5,11 @@ content_type: definition
 created: '2026-07-16T21:33:29'
 generated: blueprint
 label: def:pieceTrivialization
-lean_status: sorry
+lean_status: lean_ok
 order: 951
 title: A piece trivialization
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-07-24T17:02:48'
 ---
 A \emph{piece trivialization} of a representing cocycle \(\gamma\) on a pointed cover \(\mathcal N\)
   of \(X_B\), over a piece \(V \subseteq X_A\), is a trivializing \(0\)-cochain \(t\) of \(\gamma\)

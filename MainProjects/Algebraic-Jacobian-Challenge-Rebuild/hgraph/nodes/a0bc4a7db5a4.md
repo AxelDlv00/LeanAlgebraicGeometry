@@ -10,9 +10,10 @@ docstring: '**Chart-1 trivialization**: `h ∈ 𝒪(n·F)(W)` is already integra
 file: AlgebraicJacobian/RiemannRoch/ThetaSections.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.thetaElem_mul_mem_zero
 type: lean
-updated: '2026-07-24T03:34:21'
+updated: '2026-07-24T17:02:51'
 ---
 lemma thetaElem_mul_mem_zero₁ {W : Y.Opens} (hηW : genericPoint Y ∈ W)
     {h : Y.functionField} (hh : h ∈ divisorSections K (n • fiberWeilDivisor π) W) :

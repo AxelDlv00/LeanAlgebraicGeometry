@@ -7,9 +7,10 @@ docstring: '**Projectivity of the chart-1 glued sections over `B`**.'
 file: AlgebraicJacobian/Cohomology/GluedSheafEngine.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.projective_sections
 type: lean
-updated: '2026-07-24T03:34:20'
+updated: '2026-07-24T17:02:50'
 ---
 theorem projective_sections₁ :
     Module.Projective B

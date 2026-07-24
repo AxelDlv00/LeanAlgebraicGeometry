@@ -7,9 +7,10 @@ docstring: The composite intertwining for the insertion `f₁₃ ≫ q₂`.
 file: AlgebraicJacobian/Picard/WitnessAway.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Over.hom_f
 type: lean
-updated: '2026-07-24T03:34:21'
+updated: '2026-07-24T17:02:50'
 ---
 private lemma hom_f₁₃_q₂_appTop (x : Γ(XB, ⊤)) :
     (Scheme.ΓSpecIso (CommRingCat.of (B ⊗[A] (B ⊗[A] B)))).hom.hom

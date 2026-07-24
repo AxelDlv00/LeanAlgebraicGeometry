@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Scheme.TwoCoverPairData.pair_t
 file: AlgebraicJacobian/Cohomology/RigidEngine4Assembly.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.TwoCoverPairData.pair_t
 type: lean
-updated: '2026-07-24T03:34:20'
+updated: '2026-07-24T17:02:50'
 ---
 lemma pair_t₁ : (dat.pair hU₀ hU₁).t₁ = dat.end₁ (le_refl U₁) := rfl
 

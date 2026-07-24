@@ -5,11 +5,11 @@ content_type: lemma
 created: '2026-07-16T21:33:29'
 generated: blueprint
 label: lem:P1_basicOpen_iota_eq
-lean_status: empty
+lean_status: lean_ok
 order: 362
 title: The basic-open inclusion factors through its affine model
 type: tex
-updated: '2026-07-17T16:57:15'
+updated: '2026-07-24T17:02:48'
 ---
 Let \(f \in k[X_0, X_1]\) be homogeneous of positive degree. The inclusion
   \(D_+(f) \to \PP^1\) is the composite of the canonical identification

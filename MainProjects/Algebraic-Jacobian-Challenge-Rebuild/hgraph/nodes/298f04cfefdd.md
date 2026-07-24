@@ -10,9 +10,10 @@ docstring: '**KeyChart at the campaign windows**: the kernel ideal sheaf of `div
 file: AlgebraicJacobian/Picard/DivSchemeKeyChart.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.ker_divScheme
 type: lean
-updated: '2026-07-19T10:01:16'
+updated: '2026-07-24T17:02:50'
 ---
 theorem ker_divSchemeι_ideal_pairChartOpen
     (i : (glueData k g r₁).J) (j : (glueData k g r₂).J) :

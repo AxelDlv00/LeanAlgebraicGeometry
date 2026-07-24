@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamZar.ext_of_le_cover
 type: lean
-updated: '2026-07-17T23:01:28'
+updated: '2026-07-24T17:02:47'
 ---
 theorem ext_of_le_cover {T : Over (Spec (.of k))} {ι' : Type*}
     (O : ι' → T.left.Opens) (hcov : ∀ p : T.left, ∃ i, p ∈ O i)
@@ -42,17 +42,3 @@ theorem ext_of_le_cover {T : Over (Spec (.of k))} {ι' : Type*}
 variable {T : Over (Spec (.of k))} {ι : Type u} (O : ι → T.left.Opens)
 
 /-- **Compatible local data** on an open cover `O` of `T.left`: a locally certified
-class at every affine open subordinate to a cover member, restricting correctly within
-a member (`res`) and agreeing across members on shared affine opens (`glue`).  This is
-the input of the gluing half — the vehicle-native spelling of a compatible family of
-local sections of `divFamZar` over the cover. -/
-structure LocalData (v : ∀ (i : ι) (W : T.left.affineOpens), W.1 ≤ O i →
-    DivFamZar C Γ(T.left, W.1) π n) : Prop where
-  res : ∀ (i : ι) (W W' : T.left.affineOpens) (hW : W.1 ≤ O i) (hW' : W'.1 ≤ O i)
-    (h : W.1 ≤ W'.1),
-      DivFamZar.mapAlgHom (Over.resAlgHom T h) (v i W' hW') = v i W hW
-  glue : ∀ (i j : ι) (W : T.left.affineOpens) (hi : W.1 ≤ O i) (hj : W.1 ≤ O j),
-      v i W hi = v j W hj
-
-variable (v : ∀ (i : ι) (W : T.left.affineOpens), W.1 ≤ O i →
-  DivFamZar C Γ(T.left, W.1) π n)

@@ -10,9 +10,10 @@ docstring: 'Over a Noetherian ring, the chart-1 kernel lattice of a map out of a
 file: AlgebraicJacobian/Cohomology/RigidEngineLatticeCoherence.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: TwoLatticePair.Hom.moduleFinite_aeval_kernelPair_t
 type: lean
-updated: '2026-07-24T03:34:20'
+updated: '2026-07-24T17:02:50'
 ---
 theorem moduleFinite_aeval_kernelPair_t₁ [IsNoetherianRing R]
     [Module.Finite R[X] (Module.AEval' P.t₁)] (f : P.Hom P') :

@@ -5,11 +5,11 @@ content_type: definition
 created: '2026-07-16T21:33:29'
 generated: blueprint
 label: def:cechPicClass_affineOpen
-lean_status: sorry
+lean_status: lean_ok
 order: 965
 title: The affine-open \v Cech--Picard class
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-07-24T17:02:48'
 ---
 Let \(Z\) be a scheme and \(O \subseteq Z\) an affine open. Pullback along the open immersion \(O
   \hookrightarrow Z\) identifies the ambient sections \(\Gamma(Z, O)\) with the global sections

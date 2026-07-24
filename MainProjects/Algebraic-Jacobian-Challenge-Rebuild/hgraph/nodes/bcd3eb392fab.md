@@ -5,11 +5,11 @@ content_type: definition
 created: '2026-07-16T21:33:29'
 generated: blueprint
 label: def:fiberTwoCover
-lean_status: sorry
+lean_status: lean_ok
 order: 464
 title: The pinned affine two-cover
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-07-24T17:02:48'
 ---
 For an affine morphism \(\pi : Y \to \PP^1\), the chart preimages
   \(V_0 = \pi^{-1}D_+(X_0)\), \(V_1 = \pi^{-1}D_+(X_1)\) form an \emph{affine two-cover}

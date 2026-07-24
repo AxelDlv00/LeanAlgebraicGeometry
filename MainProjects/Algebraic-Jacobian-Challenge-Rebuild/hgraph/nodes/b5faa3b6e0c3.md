@@ -5,11 +5,11 @@ content_type: theorem
 created: '2026-07-16T21:33:29'
 generated: blueprint
 label: thm:exists_trimmed_trivializing
-lean_status: empty
+lean_status: lean_ok
 order: 969
 title: The trimmed trivializing cochain of a class trivial on an open subscheme
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-07-24T17:02:48'
 ---
 Let \(Z\) be a scheme, \(\mathcal N\) a pointed cover of \(Z\), \(\gamma\) a unit \(1\)-cocycle on
   \(\mathcal N\), and \(D \subseteq Z\) an open subscheme. If the class \([\gamma]\) restricts

@@ -18,7 +18,7 @@ body: 'Blueprint graph sync is destructive in slice mode
   as advisory.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -26,7 +26,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-23T18:40:08.891367+00:00'
-updated_at: '2026-07-24T03:48:01.523679+00:00'
+updated_at: '2026-07-24T08:48:43.180674+00:00'
 metadata:
   provenance:
     run: '0046'

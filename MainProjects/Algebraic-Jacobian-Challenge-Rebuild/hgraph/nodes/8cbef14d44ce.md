@@ -5,11 +5,11 @@ content_type: definition
 created: '2026-07-16T21:33:29'
 generated: blueprint
 label: def:picEt_LocalData
-lean_status: sorry
+lean_status: lean_ok
 order: 1075
 title: Compatible local data on an open cover
 type: tex
-updated: '2026-07-17T21:42:07'
+updated: '2026-07-24T17:02:48'
 ---
 Let \(T\) be a test object and \((O_i)_{i \in \iota}\) an open cover of
   \(T_{\mathrm{left}}\). \emph{Compatible local data} on the cover is a family assigning to

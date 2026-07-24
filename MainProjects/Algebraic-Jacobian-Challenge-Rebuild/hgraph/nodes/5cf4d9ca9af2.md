@@ -1,0 +1,12 @@
+---
+author: sync
+content_type: class
+created: '2026-07-24T17:02:46'
+decl: AlgebraicGeometry.form
+file: AlgebraicJacobian/Curve/MapToP1.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.form
+type: lean
+updated: '2026-07-24T17:02:46'
+---

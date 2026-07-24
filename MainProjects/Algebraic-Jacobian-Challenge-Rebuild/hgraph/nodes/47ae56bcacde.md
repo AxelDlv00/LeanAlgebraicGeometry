@@ -1,0 +1,50 @@
+---
+author: sync
+content_type: lemma
+created: '2026-07-24T17:02:46'
+decl: AlgebraicGeometry.stepG_R₁₃
+docstring: 'The `w₁₃`-pullback of the descended comparison unit, in canonical three-insertions
+
+  normal form (both `α`-terms collapse onto the `w₂₃ ≫ u₂` and `w₁₂ ≫ u₁` insertions).'
+file: AlgebraicJacobian/Picard/CoherentWitnessExists.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.stepG_R₁₃
+type: lean
+updated: '2026-07-24T17:02:46'
+---
+private lemma stepG_R₁₃ (𝒲 : (Sq).PointedCover) (θ₀ : ∀ x : Sq, Γ(Sq, 𝒲.opens x)ˣ)
+    (𝒜 : (XB).PointedCover) (α : ∀ v : XB, Γ(XB, 𝒜.opens v)ˣ)
+    (ψ : Γ(Xq, ⊤)ˣ)
+    (hψ : ∀ s : Xq,
+      (Xq).unitsRestrict le_top ψ = Over.comparisonCochain C 𝒲 θ₀ 𝒜 α s)
+    (x : Xcb) :
+    (w₁₃).unitsAppLE ⊤ ((stepGCover C 𝒲 𝒜).opens x) le_top ψ
+      = (w₁₃ ≫ (p₂)).unitsAppLE (𝒲.opens ((w₁₃ ≫ (p₂)).base x))
+          ((stepGCover C 𝒲 𝒜).opens x)
+          ((stepGCover_le_w₁₃ C 𝒲 𝒜 x).trans
+            ((w₁₃).preimage_mono inf_le_left))
+          (θ₀ ((w₁₃ ≫ (p₂)).base x))
+        * ((w₂₃ ≫ (u₂)).unitsAppLE (𝒜.opens ((w₂₃ ≫ (u₂)).base x))
+            ((stepGCover C 𝒲 𝒜).opens x)
+            ((stepGCover_le_w₂₃ C 𝒲 𝒜 x).trans
+              ((w₂₃).preimage_mono (inf_le_right.trans inf_le_right)))
+            (α ((w₂₃ ≫ (u₂)).base x))
+          / (w₁₂ ≫ (u₁)).unitsAppLE (𝒜.opens ((w₁₂ ≫ (u₁)).base x))
+            ((stepGCover C 𝒲 𝒜).opens x)
+            ((stepGCover_le_w₁₂ C 𝒲 𝒜 x).trans
+              ((w₁₂).preimage_mono (inf_le_right.trans inf_le_left)))
+            (α ((w₁₂ ≫ (u₁)).base x))) := by
+  exact unitsAppLE_ratio_pullback (w₁₃) (p₂) (u₂) (u₁)
+    (w₁₃ ≫ (p₂)) (w₂₃ ≫ (u₂)) (w₁₂ ≫ (u₁)) θ₀ α ψ
+    (stepGCover_le_w₁₃ C 𝒲 𝒜 x) x
+    inf_le_left (inf_le_right.trans inf_le_right) (inf_le_right.trans inf_le_left)
+    (hψ ((w₁₃).base x))
+    rfl
+    (Over.whiskerLeft_face₁₃_inr (k := k) (A := A) (B := B) C)
+    (Over.whiskerLeft_face₁₂_inl (k := k) (A := A) (B := B) C).symm
+    ((stepGCover_le_w₁₃ C 𝒲 𝒜 x).trans ((w₁₃).preimage_mono inf_le_left))
+    ((stepGCover_le_w₂₃ C 𝒲 𝒜 x).trans
+      ((w₂₃).preimage_mono (inf_le_right.trans inf_le_right)))
+    ((stepGCover_le_w₁₂ C 𝒲 𝒜 x).trans
+      ((w₁₂).preimage_mono (inf_le_right.trans inf_le_left)))

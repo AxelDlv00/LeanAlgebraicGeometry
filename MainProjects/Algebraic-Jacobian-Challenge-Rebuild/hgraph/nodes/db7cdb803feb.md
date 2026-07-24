@@ -37,7 +37,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.TwoCover.h1AddEquivTruncExpCechKernel
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-24T17:02:48'
 ---
 noncomputable def h1AddEquivTruncExpCechKernel (hcov : U₀ ⊔ U₁ = ⊤)
     (hU₀ : IsAffineOpen U₀) (hU₁ : IsAffineOpen U₁) :
@@ -48,3 +48,6 @@ noncomputable def h1AddEquivTruncExpCechKernel (hcov : U₀ ⊔ U₁ = ⊤)
         (X.resHom (inf_le_right : U₀ ⊓ U₁ ≤ U₁))))
 
 variable (hcov : U₀ ⊔ U₁ = ⊤) (hU₀ : IsAffineOpen U₀) (hU₁ : IsAffineOpen U₁)
+
+/-- **Generator formula for the keystone**: the H¹ ↔ ε-kernel identification sends the
+connecting class `delta s` of an overlap section `s` to the truncated-exponential

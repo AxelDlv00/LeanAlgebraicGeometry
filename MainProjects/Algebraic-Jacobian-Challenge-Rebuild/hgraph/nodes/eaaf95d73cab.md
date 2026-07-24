@@ -16,9 +16,10 @@ docstring: 'Precomposition with `mk₀ f` corresponds to composition with `f` un
 file: AlgebraicJacobian/Picard/DivisorFamilyWindowBaseChange.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: CategoryTheory.Abelian.Ext.linearEquiv
 type: lean
-updated: '2026-07-24T03:34:21'
+updated: '2026-07-24T17:02:51'
 ---
 private lemma Abelian.Ext.linearEquiv₀_mk₀_comp' {X Y Z : D} (f : X ⟶ Y)
     (x : Abelian.Ext Y Z 0) :

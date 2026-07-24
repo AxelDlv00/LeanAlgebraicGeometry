@@ -5,11 +5,11 @@ content_type: definition
 created: '2026-07-16T21:33:29'
 generated: blueprint
 label: def:DescentClassRep
-lean_status: empty
+lean_status: lean_ok
 order: 882
 title: The \v Cech representative of a descended class
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-07-24T17:02:48'
 ---
 Let \(w\) be a global unit of \(\Spec(B \otimes_A B)\) whose avatar is a descent
   \(1\)-cocycle.  A \emph{\v Cech representative} of the descended class consists of a pointed

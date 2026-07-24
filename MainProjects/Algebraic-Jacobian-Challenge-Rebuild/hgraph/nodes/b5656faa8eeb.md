@@ -5,11 +5,11 @@ content_type: lemma
 created: '2026-07-16T21:33:29'
 generated: blueprint
 label: lem:tensorFace_comp
-lean_status: empty
+lean_status: lean_ok
 order: 813
 title: Simplicial coincidences of the cofaces
 type: tex
-updated: '2026-07-17T18:01:33'
+updated: '2026-07-24T17:02:48'
 ---
 The six composites \(\mathrm{tensorFace} \circ \mathrm{coprojection} \colon B \to B \otimes_A
   (B \otimes_A B)\) collapse onto the three insertions \(x \mapsto x \otimes (1 \otimes 1)\),

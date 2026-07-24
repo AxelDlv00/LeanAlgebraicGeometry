@@ -5,11 +5,11 @@ content_type: definition
 created: '2026-07-16T21:33:29'
 generated: blueprint
 label: def:relTwistPairData
-lean_status: sorry
+lean_status: lean_ok
 order: 475
 title: The pair data of the relative twisted sheaf
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-07-24T17:02:48'
 ---
 The relative twisted sheaf is packaged quasi-coherently on both base-changed charts
   (\ref{thm:twistSheaf_qcohOn}, read on the cover of \(C_R\)), and the relative chart

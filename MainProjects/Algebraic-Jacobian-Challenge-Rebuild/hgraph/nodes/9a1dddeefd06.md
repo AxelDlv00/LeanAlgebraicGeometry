@@ -5,11 +5,11 @@ content_type: definition
 created: '2026-07-16T21:33:29'
 generated: blueprint
 label: def:fiberWeilDivisor
-lean_status: sorry
+lean_status: lean_ok
 order: 643
 title: The fibre Weil divisor
 type: tex
-updated: '2026-07-17T16:57:16'
+updated: '2026-07-24T17:02:48'
 ---
 The \emph{fibre Weil divisor} \(F\) is the effective part of \(\mathrm{div}(u)\): the Weil divisor
   (\ref{def:curveDivisor}) with coefficient \(F_x = \max(\mathrm{ord}_x(u), 0)\) at each closed point
