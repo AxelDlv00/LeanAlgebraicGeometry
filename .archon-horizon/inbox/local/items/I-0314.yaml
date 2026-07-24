@@ -1,18 +1,18 @@
 id: I-0314
 provider: local
 kind: issue
-body: 'Blueprint remains a formalization journal despite successful PDF build
+body: 'Blueprint journal cleanup
 
 
-  The current 70,083-line chapter corpus still has at least 284 `iter-*` and 67 `run-*`
-  references, plus status/planner prose that violates the timeless-mathematics convention.
-  The worst concentrations are `Albanese_CodimOneExtension.tex` (89 matches), `Picard_FGAPicRepresentability.tex`
-  (41), `Albanese_AuslanderBuchsbaum.tex` (40), and `Picard_RelativeSpec.tex` (28).
-  This is distinct from printable-reference debt `I-0312`: the PDF can build while
-  the mathematical exposition remains a development log. Next action: clean those
-  chapters in descending concentration, moving implementation history/dead ends to
-  hgraph comments while preserving statements, complete proofs, `\uses`, `\lean`,
-  and source anchors; rebuild and graph-check each bounded chapter slice.'
+  Two bounded chapter passes are complete. Albanese_CodimOneExtension is now timeless
+  mathematics with all 83 labels, 46 dependency lists, and 75 leanok markers preserved;
+  only the stable label subsec:stage6_iib_substrate_iter200 retains an iteration-shaped
+  token, and its isolated LuaLaTeX build succeeds. Picard_FGAPicRepresentability is
+  now timeless as well: 48 labels, 27 uses, 21 Lean pins, 29 semantic leanok markers,
+  and 50 environment sets are unchanged; its journal scan is empty. Commits: bd9f91a59
+  and 2697d9062. Remaining chapter-wide iter/run markers are 217 across 19 files,
+  concentrated next in Albanese_AuslanderBuchsbaum and Picard_RelativeSpec; continue
+  bounded cleanup there while preserving formalization anchors.'
 labels:
 - agent-ready
 status: open
@@ -23,7 +23,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-24T00:59:37.386102+00:00'
-updated_at: '2026-07-24T02:42:54.579882+00:00'
+updated_at: '2026-07-24T06:01:19.731839+00:00'
 metadata:
   provenance:
     run: '0046'
