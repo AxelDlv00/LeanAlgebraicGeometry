@@ -28,8 +28,8 @@ namespace AlgebraicGeometry
 Mathlib provides `TopologicalSpace.Opens.overEquivalence U : Over U ≌ Opens ↥U` but, as recorded in
 its source `## TODO`, does *not* yet prove that the two functors are continuous for the relevant
 Grothendieck topologies.  These instances supply exactly that (the gateway brick for the Route B
-restrict–over bridge B3): both functors are cover-preserving, and `CompatiblePreserving` is automatic
-for the cover-dense functors of an equivalence, so `Functor.IsContinuous` follows. -/
+restrict–over bridge B3): both functors are cover-preserving, and `CompatiblePreserving` is
+automatic for the cover-dense functors of an equivalence, so `Functor.IsContinuous` follows. -/
 
 open TopologicalSpace in
 /-- The forward functor of `Opens.overEquivalence U` preserves covers. -/
@@ -44,7 +44,7 @@ theorem Opens.overEquivalence_functor_coverPreserving
     obtain ⟨W, h, h', hSh, hfeq⟩ := hVf
     refine ⟨(Opens.overEquivalence U).functor.obj W,
       (Opens.overEquivalence U).functor.map h, ⟨W, h, 𝟙 _, hSh, by simp⟩, ?_⟩
-    show y.1 ∈ W.left
+    change y.1 ∈ W.left
     exact leOfHom h' hyV
 
 open TopologicalSpace in
@@ -193,7 +193,7 @@ noncomputable def overBasicOpenRingHom (g : R) :
         ((Opens.grothendieckTopology ↥(Spec R)).over (specBasicOpen g))
         (Opens.grothendieckTopology ↥(specBasicOpen g).toScheme)).obj
       (specBasicOpen g).toScheme.ringCatSheaf :=
-  ⟨Functor.whiskerRight (NatTrans.op (overForgetIso g).inv) (Spec R).ringCatSheaf.val⟩
+  ⟨Functor.whiskerRight (NatTrans.op (overForgetIso g).inv) (Spec R).ringCatSheaf.obj⟩
 
 /-- The inverse over-site equivalence followed by `Over.forget` is *definitionally* the
 open-immersion `opensFunctor` (`overEquivalence.inverse` sends `W` to `⟨Subtype.val '' W, _⟩`, whose
@@ -203,22 +203,24 @@ noncomputable def overForgetInvIso (g : R) :
       (specBasicOpen g).ι.opensFunctor :=
   Iso.refl _
 
-/-- The reverse structure-sheaf comparison `ψ` feeding `pushforwardPushforwardEquivalence` (whiskering
-of `overForgetInvIso.inv`, which is the identity). -/
+/-- The reverse structure-sheaf comparison `ψ` feeding `pushforwardPushforwardEquivalence`
+(whiskering of `overForgetInvIso.inv`, which is the identity). -/
 noncomputable def overBasicOpenRingInvHom (g : R) :
     (specBasicOpen g).toScheme.ringCatSheaf ⟶
       ((Opens.overEquivalence (specBasicOpen g)).inverse.sheafPushforwardContinuous RingCat
         (Opens.grothendieckTopology ↥(specBasicOpen g).toScheme)
         ((Opens.grothendieckTopology ↥(Spec R)).over (specBasicOpen g))).obj
       (Sheaf.over (Spec R).ringCatSheaf (specBasicOpen g)) :=
-  ⟨Functor.whiskerRight (NatTrans.op (overForgetInvIso g).inv) (Spec R).ringCatSheaf.val⟩
+  ⟨Functor.whiskerRight (NatTrans.op (overForgetInvIso g).inv) (Spec R).ringCatSheaf.obj⟩
 
-/-- **Route B, step B3 (the load-bearing bridge — engine).** The equivalence of categories of sheaves
-of modules between the open subscheme `D(g)` and the over-site `(Spec R).ringCatSheaf.over D(g)`,
+/-- **Route B, step B3 (the load-bearing bridge — engine).** The equivalence of categories of
+sheaves of modules between the open subscheme `D(g)` and the over-site
+`(Spec R).ringCatSheaf.over D(g)`,
 obtained from `pushforwardPushforwardEquivalence` along the (continuous) over-site equivalence
 `Opens.overEquivalence (specBasicOpen g)` fed the structure-sheaf comparison data
 `overBasicOpenRingHom`/`overBasicOpenRingInvHom`. Its functor sends a subscheme module
-`F.restrict ι` to the over-picture restriction `F.over D(g)` (agreeing on sections by `restrict_obj`);
+`F.restrict ι` to the over-picture restriction `F.over D(g)` (agreeing on sections by
+`restrict_obj`);
 this object correspondence is the bridge `overBasicOpenIsoRestrict` consumed by B4. -/
 noncomputable def modulesOverBasicOpenEquivalence (g : R) :
     (specBasicOpen g).toScheme.Modules ≌
@@ -227,18 +229,18 @@ noncomputable def modulesOverBasicOpenEquivalence (g : R) :
     (overBasicOpenRingHom g) (overBasicOpenRingInvHom g)
     (by
       refine NatTrans.ext (funext fun (V : (Opens ↥(specBasicOpen g))ᵒᵖ) => ?_)
-      simp only [overBasicOpenRingHom, overBasicOpenRingInvHom, NatTrans.comp_app, Functor.whiskerRight_app, NatTrans.op_app,
-        Functor.whiskerLeft_app, Functor.comp_obj, Functor.op_obj]
+      simp only [overBasicOpenRingHom, overBasicOpenRingInvHom, NatTrans.comp_app,
+        Functor.whiskerRight_app, NatTrans.op_app, Functor.whiskerLeft_app]
       erw [← Functor.map_comp]
-      exact congrArg (Spec R).ringCatSheaf.val.map (Subsingleton.elim _ _))
+      exact congrArg (Spec R).ringCatSheaf.obj.map (Subsingleton.elim _ _))
     (by
       refine NatTrans.ext (funext fun (V : (Over (specBasicOpen g))ᵒᵖ) => ?_)
-      simp only [overBasicOpenRingHom, overBasicOpenRingInvHom, NatTrans.comp_app, Functor.whiskerRight_app, NatTrans.op_app,
-        Functor.whiskerLeft_app, Functor.comp_obj, Functor.op_obj, NatTrans.id_app,
-        overForgetInvIso, Iso.refl_inv]
+      simp only [overBasicOpenRingHom, overBasicOpenRingInvHom, NatTrans.comp_app,
+        Functor.whiskerRight_app, NatTrans.op_app, Functor.whiskerLeft_app,
+        NatTrans.id_app, overForgetInvIso, Iso.refl_inv]
       erw [← Functor.map_comp]
-      exact (congrArg (Spec R).ringCatSheaf.val.map (Subsingleton.elim _ (𝟙 _))).trans
-        ((Spec R).ringCatSheaf.val.map_id _))
+      exact (congrArg (Spec R).ringCatSheaf.obj.map (Subsingleton.elim _ (𝟙 _))).trans
+        ((Spec R).ringCatSheaf.obj.map_id _))
 
 set_option backward.isDefEq.respectTransparency false in
 /-- **Route B, step B3 object iso.** The bridge: the inverse engine applied to the over-picture
@@ -275,8 +277,9 @@ instance pullbackObjUnitToUnit_isIso_basicOpen (g : R) :
   infer_instance
 
 /-- The restriction-along-the-affine-identification functor sends the structure-sheaf unit to the
-structure-sheaf unit: `(restrict (basicOpenIsoSpecAway g).inv).obj 𝟙_{D(g)} ≅ 𝟙_{Spec R_g}`. Built
-from `restrictFunctorIsoPullback` + `pullbackObjUnitToUnit` (an iso since `(basicOpenIsoSpecAway g).inv`
+structure-sheaf unit: `(restrict (basicOpenIsoSpecAway g).inv).obj 𝟙_{D(g)} ≅ 𝟙_{Spec R_g}`.
+Built from `restrictFunctorIsoPullback` + `pullbackObjUnitToUnit` (an iso since
+`(basicOpenIsoSpecAway g).inv`
 is an isomorphism, hence its `Opens.map` is final). Extracted as its own declaration so the
 instance search runs in a clean context. -/
 noncomputable def restrictBasicOpenUnitIso (g : R) :
@@ -286,10 +289,9 @@ noncomputable def restrictBasicOpenUnitIso (g : R) :
   (Scheme.Modules.restrictFunctorIsoPullback (basicOpenIsoSpecAway g).inv).app _ ≪≫
     @asIso _ _ _ _ _ (pullbackObjUnitToUnit_isIso_basicOpen g)
 
--- The transport of a presentation across the engine equivalence and the affine restriction drives a
--- deep instance search (sheafification + colimit-preservation over the localized site); the default
--- `synthInstance.maxHeartbeats` is insufficient.
 set_option synthInstance.maxHeartbeats 400000 in
+-- The transport crosses sheafification and colimit-preservation on the localized site; the default
+-- synthesis budget is insufficient for this instance search.
 open SheafOfModules in
 /-- **Route B, step B4.** If `M.over U` carries a presentation and `D(g) ⊆ U`, then the affine
 restriction `modulesRestrictBasicOpen g M`, as a `(Spec R_g).Modules`-object, admits a global
