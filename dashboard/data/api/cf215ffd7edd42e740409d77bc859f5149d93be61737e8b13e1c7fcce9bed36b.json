@@ -1,1 +1,1 @@
-{"markdown": "The capstone remains stable at roughly 1h10m; no heartbeat or kernel error has surfaced. I\u2019m keeping the same process and will not claim the 3.2M reduction until Lean exits.", "recommendation": ""}
+{"markdown": "LSP now reports no warnings in the elaborated portion; only the final heavy declarations are still processing, with no errors. I\u2019m running the authoritative `CechTermAcyclic` module build now and will wait to its final exit and full warning output.", "recommendation": ""}

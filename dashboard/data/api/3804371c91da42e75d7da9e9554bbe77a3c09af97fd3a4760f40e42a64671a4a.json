@@ -1,1 +1,1 @@
-{"markdown": "The final induction job is still running at full load and has not emitted an error. Its peers in this chain routinely take 10 to 16 minutes, so I\u2019m continuing the foreground wait rather than treating silence as failure.", "recommendation": ""}
+{"markdown": "The project source and AJCR ledger state are clean. Graph sync generated the expected declaration-node files plus broad deterministic metadata churn; I\u2019m isolating only the nodes for declarations added in this session and will leave the unrelated graph rewrites uncommitted.", "recommendation": ""}
