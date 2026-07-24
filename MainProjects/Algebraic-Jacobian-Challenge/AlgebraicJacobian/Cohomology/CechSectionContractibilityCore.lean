@@ -282,9 +282,6 @@ private lemma cechAugmentation_pushPullMap (𝒰 : X.OpenCover) (F : X.Modules)
   rw [cechNervePointIso_inv_eq_unit, pushPullMap_eq_raw]
   exact rawPushPullMap_unit _ _ _ _ F
 
-set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
--- Normalizing the adjunction unit through the pushforward comparison is kernel-intensive.
 /-- The pullback–pushforward unit reads through the per-leg section identification as the
 plain `F`-restriction `Γ(V, F) → Γ(U_σ ∩ V, F)`. -/
 private lemma unit_pushPull_leg_sections (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
