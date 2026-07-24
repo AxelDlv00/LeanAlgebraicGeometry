@@ -39,10 +39,6 @@ noncomputable def sectionCechAugV (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X
       PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map (cechAugmentation 𝒰 F)) ≫
     (coreIso_objIso 𝒰 F 0 V).hom
 
-set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
--- raised: the reverse `← Functor.map_comp` folds over the 5-fold composite `GV ∘ Ψ` are
--- whnf-intensive on the heavily-whiskered section/pushforward types.
 /-- The canonical section-Čech augmentation composes to zero with the first differential.
 Transported from the backbone identity `cechAugmentation_comp_d` through `coreIso_comm`. -/
 lemma sectionCechAugV_comp_d (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
