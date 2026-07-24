@@ -385,6 +385,8 @@ section OfShortExact
 variable {ses : ShortComplex 𝒜} (hses : ses.ShortExact)
   (I_A : InjectiveResolution ses.X₁) (I_C : InjectiveResolution ses.X₃)
 
+omit [HasInjectiveResolutions 𝒜]
+
 /-- First component `B ⟶ I_A^0` of the horseshoe augmentation: the injective extension of the
 augmentation `A ⟶ I_A^0` along the monomorphism `A ↪ B`. -/
 noncomputable def horseshoeβ₁ : ses.X₂ ⟶ I_A.cocomplex.X 0 :=
@@ -538,7 +540,7 @@ noncomputable def horseshoeι :
     (CochainComplex.single₀ 𝒜).obj ses.X₂ ⟶ horseshoeMid hses I_A I_C :=
   (CochainComplex.fromSingle₀Equiv (horseshoeMid hses I_A I_C) ses.X₂).symm
     ⟨horseshoeβ hses I_A I_C, by
-      show horseshoeβ hses I_A I_C ≫
+      change horseshoeβ hses I_A I_C ≫
           (twistedBiprod (horseshoeτ hses I_A I_C) (horseshoeτ_cocycle hses I_A I_C)).d 0 1 = 0
       rw [twistedBiprod_d]
       exact horseshoeβ_comp_d hses I_A I_C⟩
@@ -859,7 +861,7 @@ noncomputable def Functor.cohomologyAppliedResolutionIso (G : 𝒜 ⥤ ℬ) [G.A
     cokernel.mapIso _ (G.map (K.toCycles m (m + 1))) (Iso.refl _)
       (G.gCosyzygyIsoCocycles K (m + 1)).symm (by
         simp only [Iso.symm_hom, Iso.refl_hom, Iso.comp_inv_eq]
-        simp [G.gCosyzygyIsoCocycles_toCycles K m]
+        rw [Category.assoc, G.gCosyzygyIsoCocycles_toCycles K m]
         exact (Category.id_comp _).symm)
   Limits.IsColimit.coconePointUniqueUpToIso
       (((G.mapHomologicalComplex (ComplexShape.up ℕ)).obj K).homologyIsCokernel m (m + 1) (by simp))
