@@ -1,1 +1,1 @@
-{"markdown": "The named build completed successfully: all 8,896 jobs passed, including the new companion module. I\u2019m doing the final editor diagnostic and axiom/source scans now, then I\u2019ll commit this checkpoint and record it in Horizon state.", "recommendation": ""}
+{"markdown": "The next overlap-finiteness prototype needs the freshly added ideal theorem as an import, so the editor requires its compiled object. I\u2019m rebuilding only `DivisorThetaDatum`, then I\u2019ll validate the pairwise finite-overlap argument.", "recommendation": ""}
