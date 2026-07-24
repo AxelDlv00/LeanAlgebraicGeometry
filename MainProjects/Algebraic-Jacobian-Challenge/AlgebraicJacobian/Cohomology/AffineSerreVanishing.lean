@@ -219,11 +219,14 @@ theorem standard_cover_cofinal {R : CommRingCat.{u}} (f : R) {α : Type u}
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- The local-lift assembly unfolds the sheaf-to-presheaf map and finite-cover restrictions;
+-- this exceeds the default kernel reduction budget.
 /-- **Section surjectivity for the affine cover system** (Stacks 02KG, `surj_of_vanishing` field;
 Stacks `lemma-ses-cech-h1`). Let `S : 0 → S₁ → S₂ → S₃ → 0` be a short exact sequence of
 `O_X`-modules on `Spec R` whose left term `S₁` has vanishing positive Čech cohomology over every
 standard cover `i ↦ D(gᵢ)` (`hvanish`). Then the section map `S₂(D f) → S₃(D f)` is surjective over
-every distinguished open `D f`. This discharges the `surj_of_vanishing` field of `affineCoverSystem`.
+every distinguished open `D f`. This discharges the `surj_of_vanishing` field of
+`affineCoverSystem`.
 
 Proof: `S.g` is an epi of `O_X`-modules, so (via `toSheaf_preservesEpimorphisms` + the sheaf
 local-surjectivity criterion) the underlying map of abelian presheaves is locally surjective. A
@@ -298,7 +301,7 @@ theorem affine_surj_of_vanishing {R : CommRingCat.{u}}
       rw [hfι, hgπ, ← Functor.map_comp, ← Functor.map_comp, S.zero,
         Functor.map_zero, Functor.map_zero]
     have h := congrArg (fun (ψ : FX.presheaf ⟶ HX.presheaf) => ConcreteCategory.hom (ψ.app V) x) hz
-    simp at h ⊢
+    simp only [PresheafOfModules.toPresheaf_obj_coe] at h ⊢
     exact h
   have hmono : ∀ (V : (TopologicalSpace.Opens ↥(Spec R))ᵒᵖ),
       Function.Injective (ConcreteCategory.hom (fι.app V)) := by
@@ -335,7 +338,7 @@ theorem affine_surj_of_vanishing {R : CommRingCat.{u}}
     intro i
     simp only [hsLoc, hs]
     erw [gπ.naturality_apply (homOfLE (hgle i.down)).op (sLift (φ i.down)), hsLift (φ i.down)]
-    show ConcreteCategory.hom (HX.presheaf.map (homOfLE (hgle i.down)).op)
+    change ConcreteCategory.hom (HX.presheaf.map (homOfLE (hgle i.down)).op)
         (ConcreteCategory.hom (HX.presheaf.map (homOfLE (hWle (φ i.down))).op) t)
       = ConcreteCategory.hom (HX.presheaf.map (TopologicalSpace.Opens.leSupr U i).op)
         (ConcreteCategory.hom (HX.presheaf.map (eqToHom hopV.symm)) t)
@@ -353,7 +356,7 @@ theorem affine_surj_of_vanishing {R : CommRingCat.{u}}
   -- transport the global lift back to `V₀`
   refine ⟨ConcreteCategory.hom (GX.presheaf.map (eqToHom hopV)) glob, ?_⟩
   erw [gπ.naturality_apply (eqToHom hopV) glob, hglob]
-  show ConcreteCategory.hom (HX.presheaf.map (eqToHom hopV))
+  change ConcreteCategory.hom (HX.presheaf.map (eqToHom hopV))
       (ConcreteCategory.hom (HX.presheaf.map (eqToHom hopV.symm)) t) = t
   rw [← ConcreteCategory.comp_apply, ← HX.presheaf.map_comp]
   simp only [eqToHom_trans, eqToHom_refl, CategoryTheory.Functor.map_id]
@@ -363,15 +366,20 @@ theorem affine_surj_of_vanishing {R : CommRingCat.{u}}
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
+-- The cover-system structure literal elaborates three large fields at once; the default
+-- kernel reduction budget is insufficient for their presheaf and finite-cover transports.
 /-- **The affine cover system** (Stacks 02KG, `def:affine_cover_system`). For `X = Spec R`, the
 basis `B` is the distinguished opens `D f` (`f : R`) and the admissible coverings `Cov` are the
-standard finite covers `i ↦ D(gᵢ)` (indexed by `ULift (Fin n)`, so as to land in `Type u`). The
-three nontrivial fields are discharged by:
+standard finite covers `i ↦ D(gᵢ)` (indexed by `ULift (Fin n)`, so as to land in `Type u`).
+The three nontrivial fields are discharged by:
 - `faces_mem` ← `affine_faces_mem` (finite intersections of distinguished opens are distinguished);
-- `surj_of_vanishing` ← `affine_surj_of_vanishing` (the `ses_cech_h1` section-surjectivity criterion);
-- `injective_acyclic` ← `injective_cech_acyclicFam` (cover-agnostic injective Čech-acyclicity, applied
-  directly to the distinguished opens of each standard cover — no `Spec R_f` restriction detour).
-Project-local: the affine instantiation of `BasisCovSystem` consumed by `cech_eq_cohomology_of_basis`. -/
+- `surj_of_vanishing` ← `affine_surj_of_vanishing` (the `ses_cech_h1` section-surjectivity
+  criterion);
+- `injective_acyclic` ← `injective_cech_acyclicFam` (cover-agnostic injective Čech-acyclicity,
+  applied directly to the distinguished opens of each standard cover — no `Spec R_f` restriction
+  detour).
+Project-local: the affine instantiation of `BasisCovSystem` consumed by
+`cech_eq_cohomology_of_basis`. -/
 noncomputable def affineCoverSystem (R : CommRingCat.{u}) : BasisCovSystem (Spec R) where
   B := Set.range (fun f : R => (PrimeSpectrum.basicOpen f : (Spec R).Opens))
   Cov := { c : CovDatum (Spec R) | ∃ (n : ℕ) (g : Fin n → R) (f : R),
@@ -461,10 +469,11 @@ Instantiates the basis-comparison criterion `cech_eq_cohomology_of_basis` (01EO)
 cover system `affineCoverSystem R`, taking the whole affine `⊤ = D(1)` for the basic open: the
 absolute cohomology `Hᵖ(Spec R, F) = Extᵖ(jShriekOU ⊤, F)` of a quasi-coherent `F` vanishes for
 `p > 0`, modulo the standard-cover tilde {\v C}ech vanishing `htilde`.  Carries
-`[EnoughInjectives (Spec R).Modules]` exactly as `cech_eq_cohomology_of_basis` does.  Project-local:
-verifies the full Lane-1 assembly end-to-end, so that the blueprint targets `affine_cech_vanishing_qcoh`
-and `affine_serre_vanishing` both reduce to the single residual `htilde` (the change-of-base-to-`R_f`
-leaf). -/
+`[EnoughInjectives (Spec R).Modules]` exactly as `cech_eq_cohomology_of_basis` does.
+Project-local: verifies the full Lane-1 assembly end-to-end, so that the blueprint targets
+`affine_cech_vanishing_qcoh`
+and `affine_serre_vanishing` both reduce to the single residual `htilde` (the change-of-base to
+`R_f` leaf). -/
 theorem affine_serre_vanishing_of_tildeVanishing {R : CommRingCat.{u}}
     [EnoughInjectives (Spec R).Modules] (F : (Spec R).Modules) [F.IsQuasicoherent]
     (htilde : ∀ (n : ℕ) (g : Fin n → R) (f : R),
@@ -684,7 +693,7 @@ theorem affine_surj_of_vanishing_affine {R : CommRingCat.{u}}
       rw [hfι, hgπ, ← Functor.map_comp, ← Functor.map_comp, S.zero,
         Functor.map_zero, Functor.map_zero]
     have h := congrArg (fun (ψ : FX.presheaf ⟶ HX.presheaf) => ConcreteCategory.hom (ψ.app V) x) hz
-    simp at h ⊢
+    simp only [PresheafOfModules.toPresheaf_obj_coe] at h ⊢
     exact h
   have hmono : ∀ (V : (TopologicalSpace.Opens ↥(Spec R))ᵒᵖ),
       Function.Injective (ConcreteCategory.hom (fι.app V)) := by
@@ -717,7 +726,7 @@ theorem affine_surj_of_vanishing_affine {R : CommRingCat.{u}}
     intro i
     simp only [hsLoc, hs]
     erw [gπ.naturality_apply (homOfLE (hgle i.down)).op (sLift (φ i.down)), hsLift (φ i.down)]
-    show ConcreteCategory.hom (HX.presheaf.map (homOfLE (hgle i.down)).op)
+    change ConcreteCategory.hom (HX.presheaf.map (homOfLE (hgle i.down)).op)
         (ConcreteCategory.hom (HX.presheaf.map (homOfLE (hWle (φ i.down))).op) t)
       = ConcreteCategory.hom (HX.presheaf.map (TopologicalSpace.Opens.leSupr U i).op)
         (ConcreteCategory.hom (HX.presheaf.map (eqToHom hopV.symm)) t)
@@ -735,7 +744,7 @@ theorem affine_surj_of_vanishing_affine {R : CommRingCat.{u}}
   -- transport the global lift back to `V₀`
   refine ⟨ConcreteCategory.hom (GX.presheaf.map (eqToHom hopV)) glob, ?_⟩
   erw [gπ.naturality_apply (eqToHom hopV) glob, hglob]
-  show ConcreteCategory.hom (HX.presheaf.map (eqToHom hopV))
+  change ConcreteCategory.hom (HX.presheaf.map (eqToHom hopV))
       (ConcreteCategory.hom (HX.presheaf.map (eqToHom hopV.symm)) t) = t
   rw [← ConcreteCategory.comp_apply, ← HX.presheaf.map_comp]
   simp only [eqToHom_trans, eqToHom_refl, CategoryTheory.Functor.map_id]
