@@ -27,25 +27,25 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isIso_sheafifyEta_of_unitSquare
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-24T23:32:26'
 ---
 lemma isIso_sheafifyEta_of_unitSquare {X Y : Scheme.{u}} (f : Y ⟶ X)
     (hsq : letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
           (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
           (f.toRingCatSheafHom).hom
         (pullbackValIso f (SheafOfModules.unit X.ringCatSheaf)).inv ≫
-          (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).map
+          (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).map
             (Functor.OplaxMonoidal.η (PresheafOfModules.pullback φ')) ≫ sheafifyUnitIso.hom
           = SheafOfModules.pullbackObjUnitToUnit f.toRingCatSheafHom) :
     letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
         (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
         (f.toRingCatSheafHom).hom
-    IsIso ((PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).map
+    IsIso ((PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).map
       (Functor.OplaxMonoidal.η (PresheafOfModules.pullback φ'))) := by
   letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
       (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
       (f.toRingCatSheafHom).hom
-  set a_Y := PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val) with ha
+  set a_Y := PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj) with ha
   set F := PresheafOfModules.pullback φ' with hF
   haveI hfin : (TopologicalSpace.Opens.map f.base).Final := final_of_representablyFlat _
   haveI hpbu : IsIso (SheafOfModules.pullbackObjUnitToUnit f.toRingCatSheafHom) :=

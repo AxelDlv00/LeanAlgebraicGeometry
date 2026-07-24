@@ -27,7 +27,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.Modules.pullbackTensorMap_restrict
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-25T00:32:28'
 ---
 lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X)
     (M N : X.Modules) :
@@ -143,7 +143,6 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
   -- plain `rw [Category.assoc]` reassociates the `D ≫ E` cancellation (a `let`-fvar `aZ.obj …` vs
   -- explicit `(sheafification …).obj …` mismatch was what blocked the keyed `rw`/`simp` and forced the
   -- `whnf`-bombing `erw [Category.assoc]`).
-  set_option maxHeartbeats 1600000 in
   let φfh := (Hom.toRingCatSheafHom (h ≫ f)).hom
   let φf := (Hom.toRingCatSheafHom f).hom
   let φh := (Hom.toRingCatSheafHom h).hom
@@ -169,17 +168,17 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
       (C := _root_.PresheafOfModules (Z.presheaf ⋙ forget₂ CommRingCat RingCat))
       (pb.hom.app M.val) (pb.hom.app N.val)
   have hδ :
-      (PresheafOfModules.sheafification (𝟙 (Sheaf.val Z.ringCatSheaf))).map δfh =
-        (PresheafOfModules.sheafification (𝟙 (Sheaf.val Z.ringCatSheaf))).map
+      (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map δfh =
+        (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map
             ((PresheafOfModules.pullbackComp (Hom.toRingCatSheafHom f).hom
               (Hom.toRingCatSheafHom h).hom).inv.app
               (PresheafOfModules.Monoidal.tensorObj M.val N.val)) ≫
-        (PresheafOfModules.sheafification (𝟙 (Sheaf.val Z.ringCatSheaf))).map δcomp ≫
-        (PresheafOfModules.sheafification (𝟙 (Sheaf.val Z.ringCatSheaf))).map tcomp := by
+        (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map δcomp ≫
+        (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map tcomp := by
     -- RESOLVED (iter-006): the Sq2b content is exactly the CLOSED `pullbackComp_δ` under
     -- `congrArg aZ.map`.  The forward `rw [Functor.map_comp] at` route does NOT fire (the inner
-    -- `≫` lives at the `Sheaf.val Z` spelling of the presheaf category, an instance-level
-    -- mismatch); instead FOLD the goal's RHS by `← Functor.map_comp` (the explicit `aZ.map _ ≫
+    -- `≫` carries a distinct inferred instance for the presheaf category); instead FOLD the goal's
+    -- RHS by `← Functor.map_comp` (the explicit `aZ.map _ ≫
     -- aZ.map _` heads match syntactically) and close by defeq against the congrArg image
     -- (`show`-pinned ring maps are defeq to the bare `(Hom.toRingCatSheafHom ·).hom`, and
     -- `φfh = φf ≫ whiskerLeft φh` is `rfl` by `toRingCatSheafHom_comp_hom_reconcile`).
@@ -191,7 +190,7 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
           (TopologicalSpace.Opens.map h.base).op ⋙ (Z.presheaf ⋙ forget₂ CommRingCat RingCat)
         from (Hom.toRingCatSheafHom h).hom) M.val N.val
     rw [← Functor.map_comp, ← Functor.map_comp]
-    exact congrArg (PresheafOfModules.sheafification (𝟙 (Sheaf.val Z.ringCatSheaf))).map hd
+    exact congrArg (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map hd
   -- ── STEP (i) — the combined `S1 ≫ a.map δfh` brick (`hmain`), proved in a CLEAN context ──
   -- iter-015 root-cause: in the *main* goal `S1` came from `simp only [pullbackTensorMap]`, whose
   -- internal spelling is defeq-but-not-syntactic to `h1`'s LHS, so `rw [h1]` could not fire there and
@@ -205,9 +204,9 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
   have hmain :
       ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom (h ≫ f))).app
           (PresheafOfModules.Monoidal.tensorObj M.val N.val)).hom ≫
-        (PresheafOfModules.sheafification (𝟙 (Sheaf.val Z.ringCatSheaf))).map δfh =
+        (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map δfh =
       (SheafOfModules.pullbackComp (Hom.toRingCatSheafHom f) (Hom.toRingCatSheafHom h)).inv.app
-          ((PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.val)).obj
+          ((PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)).obj
             (PresheafOfModules.Monoidal.tensorObj M.val N.val)) ≫
         (SheafOfModules.pullback (Hom.toRingCatSheafHom h)).map
           ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom f)).app
@@ -215,8 +214,8 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
         ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom h)).app
           ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj
             (PresheafOfModules.Monoidal.tensorObj M.val N.val))).hom ≫
-        (PresheafOfModules.sheafification (𝟙 (Sheaf.val Z.ringCatSheaf))).map δcomp ≫
-        (PresheafOfModules.sheafification (𝟙 (Sheaf.val Z.ringCatSheaf))).map tcomp := by
+        (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map δcomp ≫
+        (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map tcomp := by
     -- `rw [h1]` cannot fire: `h1` is the lemma `sheafificationCompPullback_comp` applied with `P`
     -- substituted, so its LHS instance differs (defeq, not syntactic) from the goal's `S1`.  Re-state it
     -- as `h1'` with a FRESHLY-elaborated type (accepted from `h1` up to defeq) so its LHS matches the
@@ -227,7 +226,7 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
         ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom (h ≫ f))).app
             (PresheafOfModules.Monoidal.tensorObj M.val N.val)).hom =
           (SheafOfModules.pullbackComp (Hom.toRingCatSheafHom f) (Hom.toRingCatSheafHom h)).inv.app
-              ((PresheafOfModules.sheafification (𝟙 (Sheaf.val X.ringCatSheaf))).obj
+              ((PresheafOfModules.sheafification (𝟙 (X.ringCatSheaf.obj))).obj
                 (PresheafOfModules.Monoidal.tensorObj M.val N.val)) ≫
             (SheafOfModules.pullback (Hom.toRingCatSheafHom h)).map
               ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom f)).app
@@ -235,7 +234,7 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
             ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom h)).app
               ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj
                 (PresheafOfModules.Monoidal.tensorObj M.val N.val))).hom ≫
-            (PresheafOfModules.sheafification (𝟙 (Sheaf.val Z.ringCatSheaf))).map
+            (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map
               ((PresheafOfModules.pullbackComp (Hom.toRingCatSheafHom f).hom
                 (Hom.toRingCatSheafHom h).hom).hom.app
                 (PresheafOfModules.Monoidal.tensorObj M.val N.val)) := h1
@@ -278,7 +277,7 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
   --          parts by counit naturality.
   --        Then interleave (slide `S1_h` past the `f`-block by `δ_natural` + `sheafificationCompPullback h`
   --          naturality, exactly as the D1′ paste `pullbackTensorMap_natural`).  Every splice is `erw`
-  --          (the `Sheaf.val Z` carrier-spelling).  The `comp_cancel_mid`-`exact` device generalises to
+  --          across the underlying `Z.ringCatSheaf.obj` carrier.  The `comp_cancel_mid`-`exact` device generalises to
   --          any further instance-boundary cancellation in this merge.
   -- STEP (ii) SPLICED (this iter): split `a_Z.map δcomp` by the `comp_δ` brick
   -- `sheafifyMap_δcomp_split` (`erw` unfolds the `δcomp` let to match the brick's unfolded LHS).
@@ -340,7 +339,7 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
       ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom h)).app
             ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj
               (PresheafOfModules.Monoidal.tensorObj M.val N.val))).hom ≫
-          (PresheafOfModules.sheafification (𝟙 (Sheaf.val Z.ringCatSheaf))).map
+          (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map
             ((PresheafOfModules.pullback
                 (show (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
                     (TopologicalSpace.Opens.map h.base).op ⋙ (Z.presheaf ⋙ forget₂ CommRingCat RingCat)
@@ -350,7 +349,7 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
                     (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
                   from (Hom.toRingCatSheafHom f).hom)) M.val N.val))
         = (SheafOfModules.pullback (Hom.toRingCatSheafHom h)).map
-              ((PresheafOfModules.sheafification (𝟙 (Sheaf.val Y.ringCatSheaf))).map
+              ((PresheafOfModules.sheafification (𝟙 (Y.ringCatSheaf.obj))).map
                 (Functor.OplaxMonoidal.δ (PresheafOfModules.pullback
                   (show (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
                       (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
@@ -434,10 +433,10 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
     MonoidalCategory.tensorHom
         (C := _root_.PresheafOfModules (Y.presheaf ⋙ forget₂ CommRingCat RingCat))
         ((PresheafOfModules.sheafificationAdjunction
-          (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).unit.app
+          (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).unit.app
           ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj M.val))
         ((PresheafOfModules.sheafificationAdjunction
-          (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).unit.app
+          (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).unit.app
           ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj N.val)) ≫
       MonoidalCategory.tensorHom
         (C := _root_.PresheafOfModules (Y.presheaf ⋙ forget₂ CommRingCat RingCat))
@@ -446,11 +445,11 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
     with hgg
   -- `a_Y.map gg = S3_f ≫ S4_f` (first factor by `sheafifyTensorUnitIso_hom_eq'`, second is `S4_f`).
   have hg :
-      (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).map gg
+      (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).map gg
         = (sheafifyTensorUnitIso
               ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj M.val)
               ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj N.val)).hom ≫
-          (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).map
+          (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).map
             (MonoidalCategory.tensorHom
               (C := _root_.PresheafOfModules (Y.presheaf ⋙ forget₂ CommRingCat RingCat))
               ((SheafOfModules.forget Y.ringCatSheaf).map (pullbackValIso f M).hom)
@@ -458,36 +457,36 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
     -- Split `a_Y.map (A ≫ B)` as a defeq `exact` (the `≫` in `gg` lives in the `forget₂`-carrier
     -- monoidal instance, defeq-but-not-syntactic to `a_Y`'s domain — bridged by `exact`, not `rw`).
     have hsplit :
-        (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).map gg
-          = (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).map
+        (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).map gg
+          = (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).map
               (MonoidalCategory.tensorHom
                 (C := _root_.PresheafOfModules (Y.presheaf ⋙ forget₂ CommRingCat RingCat))
                 ((PresheafOfModules.sheafificationAdjunction
-                  (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).unit.app
+                  (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).unit.app
                   ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj M.val))
                 ((PresheafOfModules.sheafificationAdjunction
-                  (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).unit.app
+                  (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).unit.app
                   ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj N.val))) ≫
-            (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).map
+            (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).map
               (MonoidalCategory.tensorHom
                 (C := _root_.PresheafOfModules (Y.presheaf ⋙ forget₂ CommRingCat RingCat))
                 ((SheafOfModules.forget Y.ringCatSheaf).map (pullbackValIso f M).hom)
                 ((SheafOfModules.forget Y.ringCatSheaf).map (pullbackValIso f N).hom)) := by
       rw [hgg]
       exact (PresheafOfModules.sheafification
-        (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).map_comp _ _
+        (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).map_comp _ _
     rw [hsplit]
     congr 1
     exact (sheafifyTensorUnitIso_hom_eq' _ _).symm
   -- Splice the slide: `m3 ≫ m4 ≫ vv = v ≫ a_Z.map (Fp_h.map gg)` from `hg` + naturality of
   -- `sheafificationCompPullback h` at `gg`.
   refine comp_slide_three _ _ _ _ _ _ _ _ _ _ _ _
-    ((PresheafOfModules.sheafification (R := Z.ringCatSheaf) (𝟙 Z.ringCatSheaf.val)).map
+    ((PresheafOfModules.sheafification (R := Z.ringCatSheaf) (𝟙 Z.ringCatSheaf.obj)).map
       ((PresheafOfModules.pullback (Hom.toRingCatSheafHom h).hom).map gg)) ?_ ?_
   · -- hcomb : m3 ≫ m4 ≫ vv = v ≫ a_Z.map (Fp_h.map gg).  The merge/reassoc runs inside the abstract
     -- `map_comp_slide` (clean vars), then naturality of `sheafificationCompPullback h` at `gg` closes it.
     exact map_comp_slide (Scheme.Modules.pullback h) _ _
-      ((PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).map gg)
+      ((PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).map gg)
       _ _ hg
       ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom h)).hom.naturality gg)
   · -- ── STEP (iii)b.3 — THE FOLDED Sq3/Sq4 PRESHEAF CORE (the sole remaining residual). ──────────
@@ -521,11 +520,11 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
         MonoidalCategory.tensorHom
           (C := _root_.PresheafOfModules (Y.presheaf ⋙ forget₂ CommRingCat RingCat))
           ((PresheafOfModules.sheafificationAdjunction
-              (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).unit.app
+              (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).unit.app
               ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj M.val) ≫
             (SheafOfModules.forget Y.ringCatSheaf).map (pullbackValIso f M).hom)
           ((PresheafOfModules.sheafificationAdjunction
-              (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).unit.app
+              (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).unit.app
               ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj N.val) ≫
             (SheafOfModules.forget Y.ringCatSheaf).map (pullbackValIso f N).hom) := by
       rw [hgg]
@@ -542,11 +541,11 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
             (TopologicalSpace.Opens.map h.base).op ⋙ (Z.presheaf ⋙ forget₂ CommRingCat RingCat)
           from (Hom.toRingCatSheafHom h).hom))
       ((PresheafOfModules.sheafificationAdjunction
-          (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).unit.app
+          (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).unit.app
           ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj M.val) ≫
         (SheafOfModules.forget Y.ringCatSheaf).map (pullbackValIso f M).hom)
       ((PresheafOfModules.sheafificationAdjunction
-          (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).unit.app
+          (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).unit.app
           ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj N.val) ≫
         (SheafOfModules.forget Y.ringCatSheaf).map (pullbackValIso f N).hom)
     erw [← reassoc_of% hδnat]

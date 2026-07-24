@@ -25,13 +25,13 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isIso_pullbackTensorMap_unitPair_of_isIso_sheafifyEta
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-24T23:32:26'
 ---
 lemma isIso_pullbackTensorMap_unitPair_of_isIso_sheafifyEta {X Y : Scheme.{u}} (f : Y ⟶ X)
     (h : letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
           (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
           (f.toRingCatSheafHom).hom
-        IsIso ((PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).map
+        IsIso ((PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).map
           (Functor.OplaxMonoidal.η (PresheafOfModules.pullback φ')))) :
     IsIso (pullbackTensorMap f (SheafOfModules.unit X.ringCatSheaf)
       (SheafOfModules.unit X.ringCatSheaf)) := by

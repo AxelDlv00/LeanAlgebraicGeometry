@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.tensorObjWhiskerLeftIso_eq
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-24T23:32:26'
 ---
 private lemma tensorObjWhiskerLeftIso_eq (F : X.Modules) {G G' : X.Modules} (e : G ≅ G') :
     tensorObjWhiskerLeftIso F e
@@ -55,8 +55,8 @@ private lemma tensorObjWhiskerLeftIso_eq (F : X.Modules) {G G' : X.Modules} (e :
       ((toPresheafOfModules X).map e.hom))
   dsimp only [tensorObjWhiskerLeftIso, tensorObjIso, Iso.trans_hom, Functor.mapIso_hom,
     MonoidalCategory.tensorIso_hom, Iso.symm_hom, MonoidalCategory.whiskerLeftIso_hom]
-  -- v4.31: restate by `show` to expose the `⊗ₘ`/`≫` heads (cf. `tensorObjUnitIso_eq`).
-  show ((F.sheafificationCounitIso.inv ⊗ₘ G.sheafificationCounitIso.inv) ≫
+  -- v4.31: use `change` to expose the `⊗ₘ`/`≫` heads (cf. `tensorObjUnitIso_eq`).
+  change ((F.sheafificationCounitIso.inv ⊗ₘ G.sheafificationCounitIso.inv) ≫
       (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
         ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).obj G)).hom) ≫
       sheafification.map (MonoidalCategory.whiskerLeft (C := MonoidalPresheaf X)

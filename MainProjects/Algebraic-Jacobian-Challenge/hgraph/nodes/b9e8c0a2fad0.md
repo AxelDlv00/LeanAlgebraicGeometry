@@ -34,7 +34,7 @@ docstring: '**The sheaf-level dual `M^∨ := ℋom_{𝒪_X}(M, 𝒪_X)`** of an 
 
   `tensorObj` already takes `(R := X.presheaf)` over the same CommRingCat presheaf
 
-  and `X.ringCatSheaf.val = X.presheaf ⋙ forget₂ CommRingCat RingCat` definitionally.
+  and `X.ringCatSheaf.obj = X.presheaf ⋙ forget₂ CommRingCat RingCat` definitionally.
 
 
   The sheafification functor already lands in `SheafOfModules`, so no manual
@@ -54,9 +54,9 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.dual
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-24T23:32:26'
 ---
 noncomputable def dual {X : Scheme.{u}} (M : X.Modules) : X.Modules :=
-  ((PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.val)).obj
+  ((PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).obj
       (PresheafOfModules.dual (R₀ := X.presheaf) M.val) :
     SheafOfModules X.ringCatSheaf)

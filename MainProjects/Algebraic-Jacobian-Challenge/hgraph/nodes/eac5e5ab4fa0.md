@@ -30,14 +30,14 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.pullbackEtaUnitSquare
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-24T23:32:26'
 ---
 lemma pullbackEtaUnitSquare {X Y : Scheme.{u}} (f : Y ⟶ X) :
     letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
         (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
         (f.toRingCatSheafHom).hom
     (pullbackValIso f (SheafOfModules.unit X.ringCatSheaf)).inv ≫
-        (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).map
+        (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).map
           (Functor.OplaxMonoidal.η (PresheafOfModules.pullback φ')) ≫ sheafifyUnitIso.hom
         = SheafOfModules.pullbackObjUnitToUnit f.toRingCatSheafHom := by
   letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
@@ -65,9 +65,9 @@ lemma pullbackEtaUnitSquare {X Y : Scheme.{u}} (f : Y ⟶ X) :
           ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom f)).app
             (SheafOfModules.unit X.ringCatSheaf).val).hom
         = ((PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-              (𝟙 X.ringCatSheaf.val)).homEquiv _ _).symm
+              (𝟙 X.ringCatSheaf.obj)).homEquiv _ _).symm
             (((PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
-                (𝟙 X.ringCatSheaf.val)).comp
+                (𝟙 X.ringCatSheaf.obj)).comp
                 (SheafOfModules.pullbackPushforwardAdjunction φ)).homEquiv _ _
               ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom f)).app
                 (SheafOfModules.unit X.ringCatSheaf).val).hom) := by
@@ -78,24 +78,24 @@ lemma pullbackEtaUnitSquare {X Y : Scheme.{u}} (f : Y ⟶ X) :
   erw [← Adjunction.homEquiv_naturality_right_symm]
   -- X-triangle (`right_triangle_components`): the sheafification unit/counit on the sheaf `𝒪_X`
   -- cancel, collapsing `homEquiv (c.hom ≫ unitToPushforwardObjUnit φ)` to `(unitToPushforwardObjUnit φ).val`.
-  have hXtri : (PresheafOfModules.sheafificationAdjunction (𝟙 (Sheaf.val X.ringCatSheaf))).unit.app
+  have hXtri : (PresheafOfModules.sheafificationAdjunction (𝟙 (X.ringCatSheaf.obj))).unit.app
         (SheafOfModules.unit X.ringCatSheaf).val ≫
-      (PresheafOfModules.restrictScalars (𝟙 (Sheaf.val X.ringCatSheaf))).map
+      (PresheafOfModules.restrictScalars (𝟙 (X.ringCatSheaf.obj))).map
         ((SheafOfModules.forget X.ringCatSheaf).map
           ((asIso (PresheafOfModules.sheafificationAdjunction
-              (𝟙 (Sheaf.val X.ringCatSheaf))).counit).app (SheafOfModules.unit X.ringCatSheaf)).hom)
+              (𝟙 (X.ringCatSheaf.obj))).counit).app (SheafOfModules.unit X.ringCatSheaf)).hom)
       = 𝟙 _ := by
     have h := (PresheafOfModules.sheafificationAdjunction
-        (𝟙 (Sheaf.val X.ringCatSheaf))).right_triangle_components (SheafOfModules.unit X.ringCatSheaf)
+        (𝟙 (X.ringCatSheaf.obj))).right_triangle_components (SheafOfModules.unit X.ringCatSheaf)
     simp only [Iso.app_hom, asIso_hom, Functor.comp_map] at h ⊢
     exact h
-  have hrhs : ((PresheafOfModules.sheafificationAdjunction (𝟙 (Sheaf.val X.ringCatSheaf))).homEquiv
+  have hrhs : ((PresheafOfModules.sheafificationAdjunction (𝟙 (X.ringCatSheaf.obj))).homEquiv
         (SheafOfModules.unit X.ringCatSheaf).val
         ((SheafOfModules.pushforward φ).obj (SheafOfModules.unit Y.ringCatSheaf)))
-      (((asIso (PresheafOfModules.sheafificationAdjunction (𝟙 (Sheaf.val X.ringCatSheaf))).counit).app
+      (((asIso (PresheafOfModules.sheafificationAdjunction (𝟙 (X.ringCatSheaf.obj))).counit).app
           (SheafOfModules.unit X.ringCatSheaf)).hom ≫ SheafOfModules.unitToPushforwardObjUnit φ)
       = (SheafOfModules.forget X.ringCatSheaf ⋙
-          PresheafOfModules.restrictScalars (𝟙 (Sheaf.val X.ringCatSheaf))).map
+          PresheafOfModules.restrictScalars (𝟙 (X.ringCatSheaf.obj))).map
           (SheafOfModules.unitToPushforwardObjUnit φ) := by
     rw [Adjunction.homEquiv_unit]
     simp only [Functor.comp_map, Functor.map_comp]
