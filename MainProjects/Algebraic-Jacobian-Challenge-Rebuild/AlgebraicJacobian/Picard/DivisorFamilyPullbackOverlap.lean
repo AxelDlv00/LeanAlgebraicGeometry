@@ -300,6 +300,40 @@ lemma ovlMap_eq_conj (i j : D.index) (s : Γ(relCurve C R, D.pieces i ⊓ D.piec
   rw [relResCongrAlg_apply, relResCongrAlg_symm_apply]
   exact happ.symm
 
+/-! ## The overlap-section transport -/
+
+/-- Base change of an overlap section ring, obtained by conjugating the generic
+basic-open transport with the identifications of the overlap as `D(ovlGen)`. -/
+noncomputable def ovlTermBaseChange (i j : D.index) :
+    R' ⊗[R] Γ(relCurve C R, D.pieces i ⊓ D.pieces j) ≃ₐ[R']
+      Γ(relCurve C R', (D.baseChange R').pieces i ⊓ (D.baseChange R').pieces j) :=
+  (Algebra.TensorProduct.congr AlgEquiv.refl
+    (relResCongrAlg C R (D.basicOpen_ovlGen i j)).symm).trans
+  ((pieceTermBaseChangeAlg R' (D.chart i ⊓ D.chart j)
+      (D.isAffineOpen_chart_inf i j).isCompact
+      (D.isAffineOpen_chart_inf i j).isQuasiSeparated
+      (D.isAffineOpen_preimage_chart_inf R i j)
+      (D.isAffineOpen_preimage_chart_inf R' i j)
+      (D.ovlGen i j)).trans
+    (relResCongrAlg C R' (D.basicOpen_relSectionsMap_ovlGen R' i j)))
+
+/-- The overlap-section transport sends `1 ⊗ s` to the indexed overlap comparison of
+`s`. -/
+lemma ovlTermBaseChange_one_tmul (i j : D.index)
+    (s : Γ(relCurve C R, D.pieces i ⊓ D.pieces j)) :
+    D.ovlTermBaseChange R' i j ((1 : R') ⊗ₜ[R] s) = D.ovlMap R' i j s := by
+  change relResCongrAlg C R' (D.basicOpen_relSectionsMap_ovlGen R' i j)
+      (pieceTermBaseChangeAlg R' (D.chart i ⊓ D.chart j)
+        (D.isAffineOpen_chart_inf i j).isCompact
+        (D.isAffineOpen_chart_inf i j).isQuasiSeparated
+        (D.isAffineOpen_preimage_chart_inf R i j)
+        (D.isAffineOpen_preimage_chart_inf R' i j)
+        (D.ovlGen i j)
+        ((1 : R') ⊗ₜ[R]
+          (relResCongrAlg C R (D.basicOpen_ovlGen i j)).symm s)) = _
+  rw [pieceTermBaseChangeAlg_one_tmul]
+  exact (D.ovlMap_eq_conj R' i j s).symm
+
 /-! ## The overlap-quotient transport (the overlap linchpin) -/
 
 /-- **The overlap linchpin** (`informal/spec-dd-1.md` §3 stage (c), overlap row): base
@@ -356,4 +390,3 @@ lemma ovlQuotBaseChange_one_tmul_mk (i j : D.index)
 end FinCoverData
 
 end AlgebraicGeometry
-
