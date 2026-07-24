@@ -1,0 +1,33 @@
+id: AJC.maintenance.build.warnings.tensor
+title: Tensor and dual substrate warnings
+projects:
+- Algebraic-Jacobian-Challenge
+summary: TensorObjInverse and TensorObjSubstrate are directly warning-free after API
+  modernization, proof-style cleanup, line wrapping, heartbeat documentation, and
+  stable mathematical documentation passes.
+status: done
+kind: refactor
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-24T22:39:50.691651+00:00'
+  provenance:
+    run: '0046'
+    session: 0046-horizon-ajc-optimize
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.build.warnings
+  updated_at: '2026-07-24T22:39:54.222369+00:00'
+  pinned_commits:
+  - 98353cd99
+  - dea2b7c2f

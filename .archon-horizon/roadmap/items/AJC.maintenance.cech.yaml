@@ -2,9 +2,10 @@ id: AJC.maintenance.cech
 title: Cech elaboration and dependency cleanup
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Separate the completed Cech consumer closure from the still-open CechSectionContractibility
-  elaboration hotspot. The capstone and consumer dependency work is complete; coordinate
-  extraction, narrow profiling, and heartbeat reduction remain.
+summary: 'The Cech consumer closure is complete. Contractibility work is now split
+  into a completed positive-degree coordinate cleanup and three open fronts: the degree-one
+  identity, coinductive packaging, and a controlled wrapper benchmark with lower-budget
+  retesting.'
 status: pending
 kind: refactor
 priority: high
@@ -27,4 +28,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
-  updated_at: '2026-07-24T21:56:31.776959+00:00'
+  updated_at: '2026-07-24T22:41:30.768634+00:00'
+  pinned_commits:
+  - ae9fe71c8

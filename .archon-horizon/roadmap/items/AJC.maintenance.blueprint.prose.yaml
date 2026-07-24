@@ -2,9 +2,11 @@ id: AJC.maintenance.blueprint.prose
 title: Remaining chapter prose cleanup
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Continue bounded timeless-mathematics passes over marker-heavy chapters,
-  preserving valid statements, complete proofs, source anchors, dependencies, and
-  faithful Lean pins.
+summary: 'Six bounded chapter passes now present timeless mathematics: Albanese codimension
+  one, rational-map extension, Auslander--Buchsbaum, FGA Picard representability,
+  Relative Spec, and Flattening Stratification. Continue with the remaining marker-heavy
+  chapters while preserving statements, complete proofs, source anchors, dependencies,
+  and honest Lean pins.'
 status: pending
 kind: blueprint
 priority: normal
@@ -27,3 +29,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint
+  updated_at: '2026-07-24T22:41:28.257591+00:00'
+  pinned_commits:
+  - bfaac46ec

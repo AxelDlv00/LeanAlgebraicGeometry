@@ -1,0 +1,29 @@
+id: AJC.maintenance.cech.contractibility.degree-one
+title: Degree-one contracting identity
+projects:
+- Algebraic-Jacobian-Challenge
+summary: Isolate and profile cechSection_comm_one, whose dependent product coordinates
+  and augmentation seam remain the dominant wrapper proof. Extract reusable coordinate
+  lemmas before retesting its 1.6M heartbeat and 4,000 recursion budgets.
+status: pending
+kind: refactor
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-24T22:40:21.628019+00:00'
+  provenance:
+    run: '0046'
+    session: 0046-horizon-ajc-optimize
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.cech.contractibility

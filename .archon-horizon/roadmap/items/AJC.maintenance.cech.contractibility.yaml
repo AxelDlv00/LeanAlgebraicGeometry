@@ -2,10 +2,10 @@ id: AJC.maintenance.cech.contractibility
 title: Cech contractibility elaboration hotspot
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Extract the coordinate calculations from CechSectionContractibility, profile
-  the isolated declarations under controlled host load, then retest lower heartbeat
-  budgets. The last clean-build observation was 1,473 seconds and is not yet a stable
-  benchmark.
+summary: Separate the remaining wrapper hotspot into three measurable fronts. The
+  positive-degree coordinate identity now reuses the additive product equivalence;
+  the degree-one identity, coinductive packaging, and a controlled wrapper benchmark
+  remain open.
 status: pending
 kind: refactor
 priority: high
@@ -28,3 +28,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.cech
+  updated_at: '2026-07-24T22:40:25.739324+00:00'

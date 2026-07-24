@@ -1,0 +1,32 @@
+id: AJC.maintenance.build.warnings.section-graded
+title: Section graded ring warnings
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'SectionGradedRing is warning-free under LSP and direct kernel elaboration:
+  139 long lines, 31 redundant simplifier inputs, and four tactic-style findings were
+  removed without changing declaration signatures.'
+status: done
+kind: refactor
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-24T22:39:51.528116+00:00'
+  provenance:
+    run: '0046'
+    session: 0046-horizon-ajc-optimize
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.build.warnings
+  updated_at: '2026-07-24T22:39:55.043567+00:00'
+  pinned_commits:
+  - e142308c0
