@@ -27,9 +27,6 @@ section ContractingHomotopy
 variable (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules) (V : TopologicalSpace.Opens X)
 variable (i_fix : 𝒰.I₀) (hiV : V ≤ coverOpen 𝒰 i_fix)
 
-set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
--- Product extensionality and the dependent alternating-sum identity need the larger budget.
 /-- **(In)** The positive-degree contracting identities, from the dependent engine
 (`CombinatorialCech.depHomotopy_spec`). -/
 lemma cechSection_comm_succ (n : ℕ) :
