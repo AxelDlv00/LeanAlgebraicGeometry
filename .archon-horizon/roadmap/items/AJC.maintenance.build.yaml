@@ -1,0 +1,30 @@
+id: AJC.maintenance.build
+title: Project-wide build and warning budgets
+projects:
+- Algebraic-Jacobian-Challenge
+summary: Profile the remaining expensive dependency closures, remove unjustified heartbeat
+  overrides and unused imports, and maintain clean LSP/module-build baselines. The
+  current Cech capstone and RelativeSpec targets are clean; a fresh full-project timing
+  run remains.
+status: pending
+kind: refactor
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-24T11:32:20.472564+00:00'
+  provenance:
+    run: '0046'
+    session: 0035-horizon-ajc-optimize
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance

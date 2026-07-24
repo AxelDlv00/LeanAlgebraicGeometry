@@ -1,0 +1,40 @@
+id: I-0316
+provider: local
+kind: issue
+body: 'Project-wide blueprint pins need declaration audit
+
+
+  After the Relative Spec scanner fix, an explicit full graph sync still reports **69**
+  `\lean{...} not found in Lean sources` warnings. They span older Cohomology pins,
+  TODO Picard/Quot nodes, Albanese infrastructure, and Adelic nodes; some are forward
+  declarations while others may be stale names or further comment-parser false positives.
+
+
+  Reproduce with `horizon graph -p Algebraic-Jacobian-Challenge sync --blueprint MainProjects/Algebraic-Jacobian-Challenge/blueprint/src/content.tex
+  --lean MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian`. Audit chapter
+  by chapter, removing or correcting pins whose signatures do not match and repairing
+  scanner-sensitive source comments before trusting coverage.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: project:Algebraic-Jacobian-Challenge
+author: horizon
+source_ref: null
+created_at: '2026-07-24T11:19:30.012968+00:00'
+updated_at: '2026-07-24T11:46:15.455171+00:00'
+metadata:
+  provenance:
+    run: '0046'
+    session: 0035-horizon-ajc-optimize
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-optimize
+  - AJCR.w4-rep
