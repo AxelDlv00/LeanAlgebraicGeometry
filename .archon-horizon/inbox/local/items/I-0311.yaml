@@ -4,18 +4,18 @@ kind: issue
 body: 'Blueprint graph sync is destructive in slice mode
 
 
-  A full sync parses 1868 blueprint nodes, 4040 Lean nodes, and 6366 edges but reports
-  broad stale or nonexistent Lean mappings plus two dangling Grassmannian dependencies.
-  During this run, the slice/full sync sequence first produced 6345 tracked edge deletions,
-  5895 node modifications, and 7 untracked files; slice-generated LineBundle nodes
-  had invalid local order values 0 through 8, and four live HigherDirectImage nodes
-  were incorrectly marked stale (repaired in 02199af1d). A later concurrent canonical
-  regeneration restored all deleted edges and safely refreshed the four scoped HigherDirectImage
-  nodes, but 5895 unrelated node modifications and 7 untracked graph files remain
-  at the session boundary. Do not bulk-commit or blindly revert this shared-worktree
-  state. Next action: reproduce slice sync in an isolated worktree, establish safe
-  canonical regeneration semantics, then reconcile stale declaration mappings and
-  dangling dependencies.'
+  Slice and full graph syncs have repeatedly rewritten thousands of unrelated nodes
+  and edges, generated invalid local ordering, and marked live Lean declarations stale.
+  A system integration commit also captured part of a quarantined regeneration, so
+  the tracked AJC graph baseline is not yet known canonical. Transient worktree counts
+  are recorded in comments rather than this description.
+
+
+  Do not run, stage, or commit graph-sync output in the shared worktree. Next action:
+  reproduce slice sync in an isolated worktree, establish reviewed canonical regeneration
+  semantics, then reconcile stale declaration mappings and dangling dependencies in
+  a graph-only commit. Until that lands, treat graph frontier and coverage results
+  as advisory.'
 labels:
 - agent-ready
 status: open
@@ -26,7 +26,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-23T18:40:08.891367+00:00'
-updated_at: '2026-07-24T00:49:25.471058+00:00'
+updated_at: '2026-07-24T03:48:01.523679+00:00'
 metadata:
   provenance:
     run: '0046'
