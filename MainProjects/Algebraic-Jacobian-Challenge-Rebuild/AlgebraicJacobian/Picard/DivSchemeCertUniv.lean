@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Algebra.PiLocalization
 import AlgebraicJacobian.Picard.SlicingFlatKernel
 import AlgebraicJacobian.Picard.SupportTubeFinite
+import AlgebraicJacobian.Picard.DivSchemeCertOverlapFinite
 
 /-! 
 # The universal-family certificate assembly
@@ -127,5 +128,49 @@ theorem isCertified_of_noLeak_kernel_spanning [IsNoetherianRing R] {n : Nat}
     hregular hovlFinite hovlFlat L hle hspan hdim
 
 end DivisorAdaptation
+
+namespace ThetaGeneratorSeed
+
+variable {k : Type u} [Field k] {C : Over (Spec (.of k))} [IsProper C.hom]
+variable {R : Type u} [CommRing R] [Algebra k R] [IsNoetherianRing R]
+variable {pi : C.left ⟶ P1 k} [IsFinite pi]
+variable {a n : Nat} {K : Submodule R (relThetaSections C R pi a)}
+variable {D : ThetaGeneratorSeed C R pi a K}
+
+/-- Assemble the certificate of the adaptation extracted from a theta-generator seed.
+Seed regularity supplies both chart regularity and overlap flatness, while no-leak
+supplies both chart and overlap finiteness.  Thus only no-leak, relative kernel
+spanning, and the fibre dimension remain as substantive inputs. -/
+theorem divisorAdaptation_isCertified_of_noLeak_kernel_spanning
+    (hD : D.IsGenerator)
+    (hnoLeak : forall (j : (D.divisorAdaptation hD).index) (s : Spec (.of R)),
+      ((relCurve C R) ↘ Spec (.of R)).base ⁻¹' {s}
+          ∩ closure
+            ((D.localEquations hD).supportLocus ∩
+              ((D.divisorAdaptation hD).pieces j : Set (relCurve C R))) ⊆
+        ((D.divisorAdaptation hD).pieces j : Set (relCurve C R)))
+    (L : Submodule R (D.divisorAdaptation hD).chartProd)
+    (hle : L ≤ LinearMap.ker
+      ((D.divisorAdaptation hD).deltaLeft - (D.divisorAdaptation hD).deltaRight))
+    (hspan : forall p : PrimeSpectrum R,
+      LinearMap.ker
+          (((D.divisorAdaptation hD).deltaLeft -
+            (D.divisorAdaptation hD).deltaRight).rTensor p.asIdeal.ResidueField) ≤
+        LinearMap.range (L.subtype.rTensor p.asIdeal.ResidueField))
+    (hdim : forall p : PrimeSpectrum R,
+      Module.finrank p.asIdeal.ResidueField
+          (LinearMap.ker
+            (((D.divisorAdaptation hD).deltaLeft -
+              (D.divisorAdaptation hD).deltaRight).baseChange
+                p.asIdeal.ResidueField)) = n) :
+    (D.divisorAdaptation hD).IsCertified n :=
+  (D.divisorAdaptation hD).isCertified_of_noLeak_kernel_spanning
+    hnoLeak
+    (D.divisorAdaptation_fibre_regular hD)
+    ((D.divisorAdaptation hD).finite_ovlProd_of_noLeak hnoLeak)
+    ((D.divisorAdaptation hD).flat_ovlProd_of_seed hD)
+    L hle hspan hdim
+
+end ThetaGeneratorSeed
 
 end AlgebraicGeometry
