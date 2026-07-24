@@ -1,1 +1,1 @@
-{"markdown": "The leaf rebuild is now through the relation fibre equivalences with 15 jobs remaining. This target is unusually expensive because one upstream fibre-point change invalidates several large dependent proofs, but it is still progressing normally.", "recommendation": ""}
+{"markdown": "The final induction job is still running at full load and has not emitted an error. Its peers in this chain routinely take 10 to 16 minutes, so I\u2019m continuing the foreground wait rather than treating silence as failure.", "recommendation": ""}

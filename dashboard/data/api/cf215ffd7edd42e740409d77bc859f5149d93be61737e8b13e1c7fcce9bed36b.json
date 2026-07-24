@@ -1,1 +1,1 @@
-{"markdown": "The build is still at full CPU around 41 minutes. Memory pressure remains acceptable (~21 GiB available), so there is no operational reason to kill it; I\u2019m continuing the foreground wait as required.", "recommendation": ""}
+{"markdown": "The capstone remains stable at roughly 1h10m; no heartbeat or kernel error has surfaced. I\u2019m keeping the same process and will not claim the 3.2M reduction until Lean exits.", "recommendation": ""}
