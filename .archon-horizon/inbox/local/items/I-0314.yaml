@@ -1,0 +1,37 @@
+id: I-0314
+provider: local
+kind: issue
+body: 'Blueprint remains a formalization journal despite successful PDF build
+
+
+  The current 70,083-line chapter corpus still has at least 284 `iter-*` and 67 `run-*`
+  references, plus status/planner prose that violates the timeless-mathematics convention.
+  The worst concentrations are `Albanese_CodimOneExtension.tex` (89 matches), `Picard_FGAPicRepresentability.tex`
+  (41), `Albanese_AuslanderBuchsbaum.tex` (40), and `Picard_RelativeSpec.tex` (28).
+  This is distinct from printable-reference debt `I-0312`: the PDF can build while
+  the mathematical exposition remains a development log. Next action: clean those
+  chapters in descending concentration, moving implementation history/dead ends to
+  hgraph comments while preserving statements, complete proofs, `\uses`, `\lean`,
+  and source anchors; rebuild and graph-check each bounded chapter slice.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: project:Algebraic-Jacobian-Challenge
+author: horizon
+source_ref: null
+created_at: '2026-07-24T00:59:37.386102+00:00'
+updated_at: '2026-07-24T02:42:54.579882+00:00'
+metadata:
+  provenance:
+    run: '0046'
+    session: 0029-horizon-ajc-optimize
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  agent: ground

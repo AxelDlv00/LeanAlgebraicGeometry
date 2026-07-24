@@ -4,12 +4,12 @@ kind: issue
 body: 'Printable blueprint warning debt
 
 
-  Two consecutive LuaLaTeX passes now succeed and produce a 648-page PDF, but the
-  settled print.log still contains 45 undefined-reference warnings, 2 undefined citations,
-  2 multiply defined labels (`lem:isQuasicoherent_pullback_opens` and `lem:gr_glueData_bridges`),
-  970 overfull boxes, and 2 underfull boxes. Next action: fix duplicate labels and
-  malformed multi-label references first, wire the missing bibliography citations,
-  then address the worst layout overflows by chapter.'
+  Two consecutive LuaLaTeX passes now succeed and produce a 649-page PDF. The settled
+  log has zero undefined-label warnings and zero duplicate-label warnings after adding
+  the two GlueDescent helper nodes and retaining one canonical site-equivalence node.
+  The remaining undefined-reference summary is caused by two unresolved `nitsure-hilbert-quot`
+  bibliography citations; 970 overfull boxes and 2 underfull boxes remain. Next action:
+  wire the missing citations, then address the worst layout overflows by chapter.'
 labels:
 - agent-ready
 status: open
@@ -20,7 +20,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-23T19:07:53.865283+00:00'
-updated_at: '2026-07-23T19:57:33.145547+00:00'
+updated_at: '2026-07-24T02:41:37.611954+00:00'
 metadata:
   provenance:
     run: '0046'
