@@ -36,3 +36,4 @@
 {"at": "2026-07-24T11:32:23.446924+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "roadmap_refs, inbox_refs updated"}
 {"at": "2026-07-24T11:48:52.681574+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-07-24T13:28:08.908278+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-07-24T15:01:29.060097+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "inbox_refs updated"}
