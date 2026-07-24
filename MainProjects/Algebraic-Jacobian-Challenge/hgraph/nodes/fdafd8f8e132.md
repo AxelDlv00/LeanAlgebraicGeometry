@@ -3,7 +3,9 @@ author: sync
 content_type: lemma
 created: '2026-07-16T21:14:28'
 decl: AlgebraicGeometry.Scheme.Modules.braiding_comp_unit_eq_unit_of_isInvertible
-docstring: '**Descent equation for the self-braiding** (helper for `tensorBraiding_self_eq_id_of_isInvertible`):
+docstring: '**Descent equation for the self-braiding**
+
+  (helper for `tensorBraiding_self_eq_id_of_isInvertible`):
 
   the presheaf self-braiding `β^{pre}` composed with the sheafification unit equals
   the unit.  Both
@@ -20,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.braiding_comp_unit_eq_unit_of_isInvertible
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-25T06:32:31'
 ---
 private lemma braiding_comp_unit_eq_unit_of_isInvertible (L : X.Modules) [IsInvertibleGr L] :
     (BraidedCategory.braiding (C := MonoidalPresheaf X)

@@ -27,7 +27,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.exists_res_eq_pow_smul_of_isCompact
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-25T06:32:31'
 ---
 theorem exists_res_eq_pow_smul_of_isCompact
     (M : X.Modules) [M.IsQuasicoherent] {W : X.Opens} (g : Γ(X, W))
@@ -185,7 +185,7 @@ theorem exists_res_eq_pow_smul_of_isCompact
       · exact congrArg (fun (h : V.1 ⊓ V.1 ⟶ V.1) => M.presheaf.map h.op (gV ^ m • xV'))
           (Subsingleton.elim _ _)
       · -- `V` against `S`: transport `hglue` along `V ⊓ S ≤ S ⊓ V`
-        show M.presheaf.map (homOfLE (inf_le_left : V.1 ⊓ S ≤ V.1)).op (gV ^ m • xV')
+        change M.presheaf.map (homOfLE (inf_le_left : V.1 ⊓ S ≤ V.1)).op (gV ^ m • xV')
           = M.presheaf.map (homOfLE (inf_le_right : V.1 ⊓ S ≤ S)).op
               (X.presheaf.map (homOfLE hSW).op g ^ m • xS')
         rw [← res_res M (inf_le_right : S ⊓ V.1 ≤ V.1)
@@ -193,7 +193,7 @@ theorem exists_res_eq_pow_smul_of_isCompact
           ← res_res M (inf_le_left : S ⊓ V.1 ≤ S)
             (le_inf inf_le_right inf_le_left : V.1 ⊓ S ≤ S ⊓ V.1) inf_le_right, hglue]
       · -- `S` against `V`: `hglue`
-        show M.presheaf.map (homOfLE (inf_le_left : S ⊓ V.1 ≤ S)).op
+        change M.presheaf.map (homOfLE (inf_le_left : S ⊓ V.1 ≤ S)).op
               (X.presheaf.map (homOfLE hSW).op g ^ m • xS')
           = M.presheaf.map (homOfLE (inf_le_right : S ⊓ V.1 ≤ V.1)).op (gV ^ m • xV')
         exact hglue
@@ -234,7 +234,7 @@ theorem exists_res_eq_pow_smul_of_isCompact
     intro b
     cases b
     · -- on `D(g|_V)`
-      show M.presheaf.map (homOfLE hB1A).op
+      change M.presheaf.map (homOfLE hB1A).op
           (M.presheaf.map (homOfLE (inf_le_left : (S ⊔ V.1) ⊓ X.basicOpen g ≤ S ⊔ V.1)).op x')
         = M.presheaf.map (homOfLE hB1A).op
           (X.presheaf.map (homOfLE ((inf_le_left : (S ⊔ V.1) ⊓ X.basicOpen g ≤ S ⊔ V.1).trans
@@ -249,7 +249,7 @@ theorem exists_res_eq_pow_smul_of_isCompact
         resRing_res ((inf_le_left : (S ⊔ V.1) ⊓ X.basicOpen g ≤ S ⊔ V.1).trans hUW) hB1A
           hB1W g, ← hyV, Nat.add_comm m n]
     · -- on `S ⊓ D(g)`
-      show M.presheaf.map (homOfLE (inf_le_inf le_sup_left le_rfl :
+      change M.presheaf.map (homOfLE (inf_le_inf le_sup_left le_rfl :
             S ⊓ X.basicOpen g ≤ (S ⊔ V.1) ⊓ X.basicOpen g)).op
           (M.presheaf.map (homOfLE (inf_le_left : (S ⊔ V.1) ⊓ X.basicOpen g ≤ S ⊔ V.1)).op x')
         = M.presheaf.map (homOfLE (inf_le_inf le_sup_left le_rfl)).op

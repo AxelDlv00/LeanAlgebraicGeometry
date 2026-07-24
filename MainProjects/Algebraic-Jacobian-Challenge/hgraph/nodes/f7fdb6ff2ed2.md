@@ -31,7 +31,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isLocalizedModule_basicOpen_of_isCompact
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-25T06:32:31'
 ---
 theorem isLocalizedModule_basicOpen_of_isCompact
     (M : X.Modules) [M.IsQuasicoherent] {W : X.Opens}
@@ -62,7 +62,7 @@ theorem isLocalizedModule_basicOpen_of_isCompact
         (X.basicOpen_le g) g,
       res_res M (inf_le_right : W ⊓ X.basicOpen g ≤ X.basicOpen g) hDW le_rfl y,
       res_self M y] at e2
-    show (g ^ k : Γ(X, W)) • y = M.presheaf.map (homOfLE (X.basicOpen_le g)).op x
+    change (g ^ k : Γ(X, W)) • y = M.presheaf.map (homOfLE (X.basicOpen_le g)).op x
     rw [e1, e2]
   exists_of_eq {x₁ x₂} h := by
     have h' := congrArg

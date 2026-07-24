@@ -38,7 +38,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.overRestrictPresentation
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-25T06:32:31'
 ---
 noncomputable def overRestrictPresentation (U : X.Opens) (M : X.Modules)
     (P : (M.over U).Presentation) : ((Scheme.Modules.pullback U.ι).obj M).Presentation :=
@@ -47,5 +47,6 @@ noncomputable def overRestrictPresentation (U : X.Opens) (M : X.Modules)
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
+-- Reconstructing a global presentation expands the cover colimit and sheafification instances.
 set_option synthInstance.maxHeartbeats 800000 in
 set_option backward.isDefEq.respectTransparency false in

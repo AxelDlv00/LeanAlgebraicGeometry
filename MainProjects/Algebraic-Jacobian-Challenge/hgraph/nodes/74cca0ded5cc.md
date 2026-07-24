@@ -29,7 +29,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.pullback_app_isoTensor_baseMap_sectionLinearEquiv
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-25T06:32:31'
 ---
 theorem pullback_app_isoTensor_baseMap_sectionLinearEquiv
     {X Y : Scheme.{u}} (g : Y ⟶ X) (N : X.Modules) [N.IsQuasicoherent]
@@ -262,7 +262,7 @@ theorem pullback_app_isoTensor_baseMap_sectionLinearEquiv
     (_step3_symm_apply (pullback_app_isoTensor_baseMap g N e x)).symm).trans
     (step3.apply_symm_apply (pullback_app_isoTensor_baseMap g N e x))
   -- ## Assembly: decompose `f (1 ⊗ x)` through the iso chain and chain the stages.
-  show step3
+  change step3
     ((Scheme.Modules.Hom.app
         ((Scheme.Modules.pullbackComp _hU.fromSpec g).inv.app N) ⊤).hom
       ((Scheme.Modules.Hom.app

@@ -15,7 +15,9 @@ docstring: '**(Piece A, L2) Geometric presentation back-transported to a slice p
   along the inverse
 
   slice-equivalence functor (using `overRestrictUnitIsoInv V`), then collapse the
-  round trip across the
+  round trip
+
+  across the
 
   equivalence unit iso. Project-local.'
 file: AlgebraicJacobian/Picard/QuotScheme.lean
@@ -23,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.overRestrictPresentationInv
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-25T06:32:31'
 ---
 noncomputable def overRestrictPresentationInv (V : X.Opens) (M : X.Modules)
     (P : ((Scheme.Modules.pullback V.ι).obj M).Presentation) : (M.over V).Presentation :=

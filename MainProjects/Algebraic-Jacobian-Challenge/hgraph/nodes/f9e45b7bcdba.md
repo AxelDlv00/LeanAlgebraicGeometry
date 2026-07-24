@@ -33,7 +33,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.tensorPowAdd_assoc_succ_core
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-25T06:32:31'
 ---
 private lemma tensorPowAdd_assoc_succ_core
     {M : Type*} [Category M] [MonoidalCategory M]
@@ -55,7 +55,8 @@ private lemma tensorPowAdd_assoc_succ_core
     (hμ5 : iA_S.hom ≫ μ5
         = a ◁ iBC_L.inv ≫ (α_ a bc l).inv ≫ iA_bc.hom ▷ l ≫ μ3 ▷ l ≫ iR_L.hom) :
     -- v4.31 statement shape: the goal this is `exact`ed against is now fully flattened with the
-    -- `iab_CL`/`iABC_L` hom/inv pairs already cancelled, and the right-hand `a ◁ (…)` factor split at
+    -- `iab_CL`/`iABC_L` hom/inv pairs already cancelled, and the right-hand `a ◁ (…)`
+    -- factor split at
     -- the bridge `iT` — mirror that shape here (the proof normalises both forms identically).
     iAB_CL.inv ≫ Pab ◁ iCL.inv ≫ (α_ Pab cc l).inv ≫ iAB_C.hom ▷ l
         ≫ (iAB_C.inv ≫ μ1 ▷ cc ≫ iab_C.hom) ▷ l ≫ iab_C.inv ▷ l ≫ (α_ ab cc l).hom
@@ -67,19 +68,21 @@ private lemma tensorPowAdd_assoc_succ_core
         ≫ iA_S.hom ≫ μ5 := by
   rw [hμ5]
   have foldhyp' := (cancel_epi iABCL.inv).mp foldhyp
-  simp only [Category.assoc, Iso.hom_inv_id_assoc,
+  simp only [Iso.hom_inv_id_assoc,
     MonoidalCategory.whiskerLeft_hom_inv_assoc, MonoidalCategory.inv_hom_whiskerRight_assoc]
   rw [foldhyp']
   simp only [Category.assoc, MonoidalCategory.comp_whiskerRight, MonoidalCategory.whiskerLeft_comp,
     MonoidalCategory.hom_inv_whiskerRight_assoc,
     MonoidalCategory.whiskerLeft_hom_inv_assoc]
   rw [← MonoidalCategory.associator_inv_naturality_left_assoc]
-  simp only [Category.assoc, MonoidalCategory.whisker_assoc, MonoidalCategory.whisker_exchange_assoc]
+  simp only [Category.assoc, MonoidalCategory.whisker_assoc,
+    MonoidalCategory.whisker_exchange_assoc]
   monoidal
 
 -- The final `exact tensorPowAdd_assoc_succ_core (M := LocalizedMonoidal …) …` in the succ branch
 -- discharges the canonical pentagon via a head-aligned `isDefEq` across the `instCategory`/
--- `LocalizedMonoidal` rfl-diamond; pinning `M` makes it short-circuit, but it still recurses past the
+-- `LocalizedMonoidal` rfl-diamond; pinning `M` makes it short-circuit, but it still
+-- recurses past the
 -- default `maxRecDepth = 512` (a stack-depth bound, NOT the forbidden heartbeat bump).
 set_option maxRecDepth 4000 in
 set_option backward.isDefEq.respectTransparency false in

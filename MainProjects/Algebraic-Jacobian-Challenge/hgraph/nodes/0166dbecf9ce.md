@@ -27,7 +27,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_eta_factor
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-25T06:32:31'
 ---
 private lemma tensorObjAssoc_eta_factor (A B C : X.Modules) :
     (MonoidalCategory.whiskerRight (C := MonoidalPresheaf X)
@@ -49,7 +49,8 @@ private lemma tensorObjAssoc_eta_factor (A B C : X.Modules) :
                 ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))) ≫
           (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
             (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
-              ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj (sheafTensorObj B C)))) := by
+              ((toPresheafOfModules X).obj A)
+              ((toPresheafOfModules X).obj (sheafTensorObj B C)))) := by
   -- REDUCTION (B4 → sheaf-level core).  `T := toPresheafOfModules X = SheafOfModules.forget` sends
   -- `f ↦ f.val`, and the unit `η` of the sheafification adjunction is natural.  By `η`-naturality
   -- both sides collapse to `η_{(A⊗ₚB)⊗ₚC} ≫ T.map Φ`, and the sheaf-level core
