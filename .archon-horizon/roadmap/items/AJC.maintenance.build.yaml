@@ -2,10 +2,12 @@ id: AJC.maintenance.build
 title: Project-wide build and warning budgets
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The project-wide build is green with a 1,459-warning baseline, 244 below
-  the prior checkpoint. Stable Cech frontiers now avoid accidental umbrella imports
-  and isolated frontend memory is roughly halved. Remaining work is concentrated in
-  TensorObjInverse, long-line debt, and 68 structurally sensitive heartbeat scopes.
+summary: The clean project-wide build passes 8,727 jobs with 1,174 warnings, exactly
+  285 below the inherited 1,459-warning baseline. TensorObjInverse is warning-free;
+  remaining warnings are led by TensorObjSubstrate (350), SectionGradedRing (174),
+  QuotScheme (85), and 58 undocumented heartbeat scopes. CechSectionContractibility
+  is the highest observed elaboration hotspot; the contended clean-build timing is
+  not a performance benchmark.
 status: pending
 kind: refactor
 priority: normal
@@ -28,4 +30,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
-  updated_at: '2026-07-24T17:17:45.027257+00:00'
+  updated_at: '2026-07-24T20:53:03.379668+00:00'

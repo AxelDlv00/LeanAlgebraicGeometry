@@ -2,11 +2,12 @@ id: AJC.maintenance.build.heartbeats
 title: Heartbeat and recursion-budget audit
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The full-build count is now 68 undocumented heartbeat overrides, down from
-  80. Touched Picard budgets are locally justified and one redundant nested 1.6M scope
-  was removed. Do not lower the remaining budgets mechanically: cechSection_comm_one
-  alone exceeds a 300-second prefix probe; extract its hpiece1/hpiece2 coordinate
-  lemmas before retesting the contractibility facade.'
+summary: 'TensorObjInverse now documents all 10 of its heartbeat scopes, and the clean
+  build reports 58 undocumented heartbeat warnings elsewhere, down from 68. The structural
+  audit remains open across 188 maxHeartbeats and 8 maxRecDepth scopes. Do not lower
+  budgets mechanically: CechSectionContractibility is the highest observed elaboration
+  hotspot, and its coordinate arguments should be extracted before retesting lower
+  budgets.'
 status: pending
 kind: refactor
 priority: normal
@@ -29,6 +30,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-24T17:17:16.859986+00:00'
+  updated_at: '2026-07-24T20:53:05.015072+00:00'
   pinned_commits:
   - 2e6d3c83e
