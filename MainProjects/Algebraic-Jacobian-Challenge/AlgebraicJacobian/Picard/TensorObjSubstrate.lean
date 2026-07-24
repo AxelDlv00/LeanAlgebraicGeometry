@@ -9,18 +9,12 @@ import AlgebraicJacobian.Picard.TensorObjSubstrate.PresheafInternalHom
 import AlgebraicJacobian.Picard.LineBundlePullback
 
 /-!
-# The `Scheme.Modules.tensorObj` substrate (A.1.c.SubT)
+# Tensor products in `Scheme.Modules`
 
-This file is the **A.1.c.SubT** file-skeleton sub-build chapter for the
-positive-genus arm of `nonempty_jacobianWitness`. It records the dedicated
-substrate on which the abelian-group instance of the relative Picard quotient
-`Pic^♯_{C/k}(T) := Pic(C ×_k T) / π_T^* Pic(T)` rests (the residual `sorry`
-of `AlgebraicJacobian/Picard/RelPicFunctor.lean`).
-
-The mathematics is straightforward; the obstacle to formalisation is purely
-infrastructural. The Lean construction of the abelian-group law
-`[L] + [L'] := [L ⊗ L']` on isomorphism classes of line bundles requires three
-ingredients on the Lean carrier:
+The relative Picard group law sends two line bundles to their tensor product.
+At the pinned Mathlib revision, tensor products are available for presheaves of
+modules but not directly for `Scheme.Modules`. This file supplies the required
+scheme-level operations:
 
 1. a binary tensor-product operation
    `⊗ : Scheme.Modules X × Scheme.Modules X → Scheme.Modules X`;
@@ -28,63 +22,12 @@ ingredients on the Lean carrier:
 3. an inverse operation on the full subcategory of invertible objects, i.e.
    the dual `L⁻¹ = Hom(L, O_X)` of an invertible sheaf.
 
-At Mathlib's pinned commit (`b80f227`), only a presheaf-level version of (1)
-is available (`PresheafOfModules.Monoidal.tensorObj`); (2) and (3) are present
-as scheme-level objects, but the binary operation in (1) that ties them
-together at the `Scheme.Modules` level is missing, and there is no
-`MonoidalCategory` instance on `Scheme.Modules X`. This file records the
-project-side substrate that supplies (1) and consequently lifts (2) + (3)
-into a monoidal-category structure on `Scheme.Modules X`.
+The construction sheafifies `PresheafOfModules.Monoidal.tensorObj` on the small
+Zariski site. It develops functoriality, unitors, symmetry, associativity, duals,
+evaluation, local triviality, and compatibility with pullback and restriction.
+The tensor-inverse theorem is proved downstream in `TensorObjInverse.lean`.
 
-## Status (current)
-
-`tensorObj` and `tensorObj_functoriality` are fully defined (no `sorry`), lifting
-`PresheafOfModules.Monoidal.tensorObj` through sheafification on the small Zariski
-site. There are now THREE tracked typed-`sorry` residuals (iter-262): (a) the deferred
-`⊗`-inverse lane (`exists_tensorObj_inverse`, ~L690, cross-file gated — closes via the
-dual chain in `DualInverse.lean`); (b) the D3′ Sq1 sub-lemma `sheafificationCompPullback_comp`
-(the `leftAdjointUniq` composition-coherence of the sheafification–pullback comparison — reduced
-to the concrete unit identity, with the verified `conv_rhs` distribution applied and the
-`R0`-peel building block `sheaf_unit_comp_pushforward_pullbackComp_inv` in place; see its proof);
-and (c) the D3′-outer `pullbackTensorMap_restrict` (~L2620, the 4-square composition paste, gated
-on Sq1 + the Sq4 connecting-iso coherence).  **D1′ (`pullbackTensorMap_natural`) is CLOSED
-axiom-clean (iter-255)** via the mapin255 LIGHT `show…from` `δ_natural` `F`-ascription
-(Sq2) plus the `.val`/`.obj` `erw`/`refine`-isDefEq Sq3/Sq4 assembly (see its proof
-below).  **STEP A — the D1′-helper
-`sheafifyTensorUnitIso_hom_natural` — is CLOSED axiom-clean (iter-254)** via the tscmp254
-`tensorHom`-pin: `sheafifyTensorUnitIso_hom_eq'` states the comparison as ONE `a.map (η ⊗ η)`
-(single monoidal instance on the `⋙ forget₂` carrier), and the naturality reduces to
-bifunctoriality (`tensorHom_comp_tensorHom`, applied as a defeq-matched TERM with explicit
-`(C := …)` to bridge the non-canonical instance) + the two single-component unit squares.
-**D2′ is CLOSED axiom-clean** (iter-250):
-the unit-square `(∗∗)` presheaf residual inside `pullbackEtaUnitSquare` is discharged,
-so `pullbackEtaUnitSquare` → `pullbackTensorMap_unit_isIso` are sorry-free
-(`pullbackTensorMap_unit_isIso` verified axiom-clean: only `propext`/`Classical.choice`/
-`Quot.sound`). The `(∗∗)` close is the assembly of three project lemmas — the Y-side
-sheafification right-triangle `pullbackSheafifyUnitEtaTriangle`, the presheaf mate
-`presheafUnit_comp_map_eta`, and the step-7 `ε`-reconciliation `epsilonPresheafToSheafUnit`
-(both sides act sectionwise as `φ.hom.app X`) — after the substep-(i) `.val` reshaping and a
-SYNTACTIC `restrictScalars (𝟙)`-strip via the project lemma `restrictScalarsId_map` (stripping
-`restrictScalars (𝟙)` by `whnf`/`show` on the sheafification-laden composites is catastrophic;
-the propositional rewrite + `erw` reassociation sidesteps it). The whole abstract mate-calculus
-telescope (steps 1–6: `homEquiv` transposition, `compHomEquivFactor`/`leftAdjointUniqUnitEta` via
-`hkey`, the two `homEquiv_naturality` folds, the X-side triangle `hXtri`, the X-side `homEquiv`
-collapse `hrhs`) is upstream of the close. (The route-(e)
-whiskering residual `isLocallyInjective_whiskerLeft_of_W` was CLOSED iter-237 in
-`Vestigial.lean`, so `tensorObj_assoc_iso` is now unconditional and axiom-clean.)
-The dual-block is now
-complete axiom-clean: the value layer (`InternalHom.internalHom`, `dual`,
-`evalLin`/`internalHomEvalApp`) plus the evaluation morphism `internalHomEval`
-(its naturality CLOSED iter-224, see below). The consumer `PicSharp.addCommGroup`
-was rewired downstream in `RelPicFunctor.lean` (iter-247).
-
-iter-224 on `internalHomEval`'s naturality: CLOSED axiom-clean. The iter-222/223 `whnf`
-heartbeat-bomb diagnosis (the codomain `𝟙_` forcing `kabstract` to whnf the monoidal-unit
-machinery on the first rewrite) was STALE — a Mathlib update made the composition split cleanly
-with `erw [ModuleCat.hom_comp, …]`, after which the six-step `evalLin`/`naturality_apply`/`hdt`
-reduction goes through with no bomb, no `with_reducible`, and no `maxHeartbeats` bump.
-
-The 2 blueprint-pinned declarations are:
+The principal blueprint-pinned declarations are:
 
 1. `AlgebraicGeometry.Scheme.Modules.tensorObj` (def) — the substrate binary
    operation `⊗ : Scheme.Modules X × Scheme.Modules X → Scheme.Modules X`,
@@ -97,46 +40,27 @@ The 2 blueprint-pinned declarations are:
    determines `f ⊗ g : tensorObj M N ⟶ tensorObj M' N'`.
    Per blueprint `lem:scheme_modules_tensorobj_functoriality`.
 
-(A full `MonoidalCategory (Scheme.Modules X)` instance is **deliberately not
-built** — see §2 and blueprint `rem:scheme_modules_monoidal_off_path`. The group
-law on iso-classes consumes only the *existence* of the three coherence
-isomorphisms, never a coherent monoidal category, so no such instance is on the
-critical path.)
-
-The consumer `tensorObjOnProduct` and the `addCommGroup_via_tensorObj` stub now
-live downstream in `RelPicFunctor.lean` (iter-247 import-cycle fix).
-
-Plus (PUSH-BEYOND) the supporting helper lemmas of the lift section
-(`lem:tensorobj_preserves_locally_trivial`,
-`lem:tensorobj_inverse_invertible`, `lem:tensorobj_lift_onproduct`,
-`lem:pullback_compatible_with_tensorobj`).
+A full `MonoidalCategory (Scheme.Modules X)` instance is deliberately omitted;
+the group law on isomorphism classes only needs the relevant coherence
+isomorphisms. See blueprint `rem:scheme_modules_monoidal_off_path`.
 
 ## References
 
-Blueprint: `blueprint/src/chapters/Picard_TensorObjSubstrate.tex` (740 LOC,
-4 pins). Source: [Kleiman], "The Picard scheme", §2 (FGA Explained Ch.9 §9.2),
-Defs. `df:aPf` + `df:Pfs`; Stacks tags 01CR (Picard group), 03DM (relative
-tensor product of `O_X`-modules). Mathlib module
+Blueprint: `blueprint/src/chapters/Picard_TensorObjSubstrate.tex`. Source:
+[Kleiman], "The Picard scheme", §2 (FGA Explained, Chapter 9, §9.2), and
+Stacks tags 01CR and 03DM. The underlying Mathlib construction is in
 `Mathlib.CategoryTheory.Monoidal.PresheafOfModules`
 (`PresheafOfModules.Monoidal.tensorObj`).
 
-## Sub-module layout (iter-232 split)
+## Sub-module layout
 
-The 2375-line monolith was split into sub-files under
-`AlgebraicJacobian/Picard/TensorObjSubstrate/` (all imported by this file):
+Supporting constructions live under `AlgebraicJacobian/Picard/TensorObjSubstrate/`:
 
-- `StalkTensor.lean` — the d.2 ingredient `stalkTensorIso` (`(A⊗ᵖB).stalk ≅ A.stalk ⊗ B.stalk`).
-- `Vestigial.lean` — quarantined vestigial/route-(e) sections:
-  `FlatWhisker`/`WhiskerOfW` (the route-(e) whisker sorry was CLOSED iter-237;
-  `isIso_sheafification_map_of_W` lives here), `StalkLinearMap`, `OverSliceSheafEquiv`.
-- `PresheafInternalHom.lean` — foundational presheaf algebra + C-bridge substrate:
+- `StalkTensor.lean` proves the stalk tensor comparison.
+- `Vestigial.lean` contains auxiliary local-injectivity and stalk constructions.
+- `PresheafInternalHom.lean` develops the presheaf algebra used here:
   `RestrictScalarsRingIsoTensor`, lax-monoidal `restrictScalars`, pushforward
   adjunction (H1), `StrongMonoidalRestrictScalars` (H2), `InternalHom`, `Dual`.
-- `TensorObjSubstrate.lean` (this file) — public API:
-  `Scheme.Modules.tensorObj`, unitors/braiding/assoc, `tensorObj_restrict_iso`,
-  `isIso_of_isIso_restrict`, `homMk`, `exists_tensorObj_inverse` (sorry).
-  Consumer `tensorObjOnProduct` and the `addCommGroup_via_tensorObj` stub now live
-  downstream in `RelPicFunctor.lean` (iter-247 import-cycle fix).
 -/
 
 set_option autoImplicit false
@@ -162,7 +86,7 @@ product `PresheafOfModules.Monoidal.tensorObj` of the underlying presheaves of
 
 Per blueprint `def:scheme_modules_tensorobj`. The body lifts
 `PresheafOfModules.Monoidal.tensorObj` through the sheafification functor on
-the small Zariski site of `X` (fully defined, no `sorry`). -/
+the small Zariski site of `X`. -/
 noncomputable def tensorObj {X : Scheme.{u}} (M N : X.Modules) : X.Modules :=
   ((PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).obj
       (PresheafOfModules.Monoidal.tensorObj (R := X.presheaf) M.val N.val) :
@@ -177,7 +101,7 @@ bifunctor `X.Modules × X.Modules ⥤ X.Modules` natural in both arguments.
 
 Per blueprint `lem:scheme_modules_tensorobj_functoriality`. The body inherits
 the morphism action from `PresheafOfModules.Monoidal.tensorObj` under
-sheafification (fully defined, no `sorry`). -/
+sheafification. -/
 noncomputable def tensorObj_functoriality {X : Scheme.{u}} {M M' N N' : X.Modules}
     (f : M ⟶ M') (g : N ⟶ N') : tensorObj M N ⟶ tensorObj M' N' :=
   (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map
@@ -201,9 +125,8 @@ sheafification of the presheaf-of-modules dual `PresheafOfModules.dual` of the
 underlying presheaf of `M` (the internal hom into the structure presheaf,
 `M^∨(U) = ℋom_{𝒪_X|_U}(M|_U, 𝒪_X|_U)`).
 
-Construction = the **exact dual analogue of `tensorObj`** (this file, `tensorObj`):
-apply the sheafification functor `PresheafOfModules.sheafification (𝟙 …)` on the
-small Zariski site of `X` to the (axiom-clean, sub-step-3) presheaf dual
+The construction is the dual analogue of `tensorObj`: apply
+`PresheafOfModules.sheafification (𝟙 …)` on the small Zariski site to the presheaf dual
 `PresheafOfModules.dual M.val`. The scheme's structure presheaf `X.presheaf` is
 `CommRingCat`-valued over the single-universe topological site `Opens X`, hence is
 exactly the base `R₀ : Dᵒᵖ ⥤ CommRingCat.{u}` that `PresheafOfModules.dual`
@@ -236,26 +159,20 @@ noncomputable def dualIsoOfIso {X : Scheme.{u}} {M M' : X.Modules} (e : M ≅ M'
     (PresheafOfModules.dualIsoOfIso (R₀ := X.presheaf)
       ((SheafOfModules.forget X.ringCatSheaf).mapIso e))
 
-/-! ## §2. (Off the critical path) the full monoidal-category structure
+/-! ## §2. Why no full monoidal-category instance is needed
 
-iter-206 PIVOT: the full `MonoidalCategory (X.Modules)` instance is
-**deliberately not built**. Per blueprint `rem:scheme_modules_monoidal_off_path`,
+The full `MonoidalCategory (X.Modules)` instance is deliberately not built. Per
+blueprint `rem:scheme_modules_monoidal_off_path`,
 the relative Picard group law is a structure on *isomorphism classes* of line
 bundles — every group axiom is a `Nonempty (… ≅ …)` proposition, so no monoidal
-coherence (pentagon/triangle/hexagon) and no `MonoidalClosed` structure is ever
-consumed. The earlier `monoidalCategory := sorry` instance (and the two
-localization-transport supplements `isMonoidal_W_of_whiskerLeft`,
-`monoidalCategoryOfIsMonoidalW`) routed through the verified-absent
-`MonoidalClosed (PresheafOfModules R₀)` wall; they are removed here. The group
-law is built directly on the line-bundle subcategory from the four
-existence-of-iso lemmas below, mirroring Mathlib's `CommRing.Pic`. -/
+coherence and no `MonoidalClosed` structure is consumed. The group law is built
+directly on the line-bundle subcategory from the coherence isomorphisms below,
+mirroring Mathlib's `CommRing.Pic`. -/
 
-/-! ## §3. The lift through `LineBundle.OnProduct` (PUSH-BEYOND supporting lemmas)
+/-! ## §3. The lift through `LineBundle.OnProduct`
 
 The following helper lemmas record the lift of the substrate to the
-locally-trivial subcategory used by the relative Picard consumer. They are not
-`\lean{...}`-pinned in the blueprint (their statements are descriptive); the
-typed signatures here scaffold the iter-203+ bodies. -/
+locally-trivial subcategory used by the relative Picard consumer. -/
 
 /-- **The substrate operation respects isomorphisms in both arguments.**
 
@@ -284,18 +201,9 @@ sheafification-adjunction counit isomorphism on the (already-sheaf) unit. -/
 noncomputable def tensorObj_unit_iso {X : Scheme.{u}} :
     tensorObj (SheafOfModules.unit X.ringCatSheaf) (SheafOfModules.unit X.ringCatSheaf)
       ≅ SheafOfModules.unit X.ringCatSheaf := by
-  -- v4.31.0 ISOLATION (Thread-1): term-level Application type mismatch in
-  -- `(sheafification).mapIso (λ_ (𝟙_ …)) ≪≫ (asIso counit).app …` (monoidal-unit `𝟙_`/`λ_`/counit
-  -- types shifted in v4.31.0). Needs goal-state. ORIGINAL TERM (recoverable from git):
-  -- `(PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).mapIso`
-  -- `    (λ_ (𝟙_ (_root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)))) ≪≫`
-  -- `  (asIso (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).counit).app`
-  -- `    (SheafOfModules.unit X.ringCatSheaf)`
-  -- v4.31.0 fix: the original `λ_ (𝟙_ …)` puts the monoidal unit `𝟙_` in BOTH tensor slots, so
-  -- `mapIso` now needs `Monoidal.tensorObj unit.val unit.val ≡ 𝟙_ ⊗ 𝟙_` in the *second* slot too —
-  -- a defeq v4.31.0 no longer discharges. Use the `monoidalCategoryStruct.leftUnitor unit.val`
-  -- spelling (exactly as the sibling `tensorObj_left_unitor`, which compiles): it keeps the second
-  -- slot the literal `unit.val`, leaving only the `unit.val ≡ 𝟙_` first-slot defeq that holds.
+  -- Use the explicit monoidal structure so the second tensor factor remains the literal
+  -- structure-presheaf carrier; this avoids an unnecessary definitional equality between
+  -- two presentations of the monoidal unit.
   exact
     (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).mapIso
         ((PresheafOfModules.monoidalCategoryStruct (R := X.presheaf)).leftUnitor
@@ -340,9 +248,8 @@ For arbitrary `M, N, P : X.Modules` there is an isomorphism
 `(M ⊗_X N) ⊗_X P ≅ M ⊗_X (N ⊗_X P)`. This is the objectwise existence-of-iso datum the
 group law consumes (associativity as a `Nonempty (… ≅ …)`).
 
-**UNCONDITIONAL and axiom-clean (iter-238 ROUTE (d)).** No flatness or local-triviality
-hypothesis is used: the earlier flatness route (`W_whisker{Right,Left}_of_flat`, needing
-sectionwise flatness — false for a general line bundle on a non-affine open) is RETIRED.
+No flatness or local-triviality hypothesis is used. Instead, the proof uses stability of
+the class inverted by sheafification under left and right whiskering.
 Writing `a = PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)` and `η` the
 sheafification-adjunction unit, the three-step composite is:
   1. `a(η_{M.val ⊗ᵖ N.val} ▷ P.val)` is iso, giving
@@ -359,10 +266,7 @@ functor IS the localization at `J.W.inverseImage (toPresheaf _)`). The defeq car
 `letI instMS` below. -/
 noncomputable def tensorObj_assoc_iso {X : Scheme.{u}} {M N P : X.Modules} :
     tensorObj (tensorObj M N) P ≅ tensorObj M (tensorObj N P) := by
-  -- UNCONDITIONAL (iter-238, step 0): the locally-trivial hypotheses are dropped —
-  -- the body never consumed them (the whiskered-unit localizer fact holds for
-  -- arbitrary modules under ROUTE (d)). Matches the blueprint `lem:tensorobj_assoc_iso`
-  -- framed unconditional and enables `tensorObj_assoc_iso_invertible`.
+  -- The whiskered sheafification units are inverted for arbitrary modules.
   -- Bridge the monoidal structure across the `rfl`-defeq carrier
   -- `X.ringCatSheaf.obj = X.presheaf ⋙ forget₂ CommRingCat RingCat`.
   letI instMS : MonoidalCategoryStruct (_root_.PresheafOfModules (X.ringCatSheaf.obj)) :=
@@ -439,29 +343,27 @@ noncomputable def restrictIsoUnitOfLE {X : Scheme.{u}} {M : X.Modules} {U W : X.
 For an open immersion `f : Y ⟶ X` and `M N : X.Modules`,
 `(tensorObj M N).restrict f ≅ tensorObj (M.restrict f) (N.restrict f)`.
 
-This is the single substrate linchpin of `A.1.c.SubT` — **CLOSED, axiom-clean**
-(iter-217). It says the substrate `⊗` (sheafification of the presheaf-of-modules
-tensor) commutes with the restriction functor along an open immersion. The proof
-is the blueprint's four-step composite:
+The substrate tensor is a sheafification of the presheaf tensor, and it commutes
+with restriction along an open immersion. The proof is the following composite:
   Step 1 (`restrictFunctorIsoPullback`): reduce `restrict` to the abstract pullback.
   Step 2 (`SheafOfModules.sheafificationCompPullback`): move the pullback inside the
     sheafification (sheafification commutes with pullback).
   Step 3: strip the outer sheafification (`.mapIso`), descending to the presheaf goal
     `(pullback φ).obj (M.val ⊗ₚ N.val) ≅ (M.restrict f).val ⊗ₚ (N.restrict f).val`.
   Step 4: close that presheaf goal by **H1 ∘ H2**:
-    • H1 (the sole Mathlib-ABSENT ingredient, BUILT this iter): the presheaf-level iso
+    • H1: the presheaf-level iso
       `pushforward β ≅ pullback φ`, obtained from the de-sheafified presheaf
       `PresheafOfModules.pushforwardPushforwardAdj` (adjunction along the open-immersion
       pair `f.opensFunctor ⊣ Opens.map f.base`) against the existing
       `pullbackPushforwardAdjunction` via `Adjunction.leftAdjointUniq`. Here `β` is the
-      `restrictFunctor` structure map, so `(M.restrict f).val = (pushforward β).obj M.val`
+      restriction structure map, so `(M.restrict f).val = (pushforward β).obj M.val`
       definitionally.
     • H2 (strong-monoidal tensorator): `pushforward β = pushforward₀ ⋙ restrictScalars β`
-      with `β` sectionwise the open-immersion ring ISO `f.appIso`, so `restrictScalars β`
-      is STRONG monoidal (`restrictScalarsMonoidalOfBijective`, resting on the closed
-      `restrictScalarsRingIsoTensorEquiv` / `restrictScalars_isIso_{μ,ε}`); the composite
+      with `β` sectionwise the open-immersion ring isomorphism `f.appIso`, so
+      `restrictScalars β` is strong monoidal (`restrictScalarsMonoidalOfBijective`); the
+      composite
       `μIso` is the tensorator.
-The superseded `Localization.Monoidal` / `J.W.IsMonoidal` route is NOT used. -/
+-/
 noncomputable def tensorObj_restrict_iso {X Y : Scheme.{u}} (f : Y ⟶ X)
     [IsOpenImmersion f] (M N : X.Modules) :
     (tensorObj M N).restrict f ≅ tensorObj (M.restrict f) (N.restrict f) := by
@@ -489,7 +391,7 @@ noncomputable def tensorObj_restrict_iso {X Y : Scheme.{u}} (f : Y ⟶ X)
   -- comparison at the PRESHEAF level and sheafify it. This is a genuine reduction
   -- step (verified: the goal below has no sheafification).
   refine (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).mapIso ?_
-  -- Step 4 (RESIDUAL CLOSURE — iter-217 H1 build). The remaining presheaf goal is
+  -- Step 4. The remaining presheaf goal is
   --   `(PresheafOfModules.pullback φ).obj (M.val ⊗ₚ N.val)
   --      ≅ (M.restrict f).val ⊗ₚ (N.restrict f).val`
   -- where `φ = (Scheme.Hom.toRingCatSheafHom f).hom` and `⊗ₚ =
@@ -509,9 +411,7 @@ noncomputable def tensorObj_restrict_iso {X Y : Scheme.{u}} (f : Y ⟶ X)
   -- The restrictFunctor structure map `β` (so `(M.restrict f).val = (pushforward β).obj M.val`).
   let α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf :=
     { app := fun U => (f.appIso U.unop).inv
-      -- v4.31.0 fix (pattern axis #1): the `naturality` default `by aesop_cat` no longer discharges
-      -- (appIso-inverse naturality form changed); supply it explicitly via the open-immersion
-      -- structure-presheaf inverse-naturality lemma.
+      -- Supply inverse naturality explicitly in the form used by the open-immersion API.
       naturality := fun _ _ i => f.appIso_inv_naturality i }
   let β : Y.ringCatSheaf.obj ⟶ f.opensFunctor.op ⋙ X.ringCatSheaf.obj :=
     Functor.whiskerRight α (forget₂ CommRingCat RingCat)
@@ -524,9 +424,10 @@ noncomputable def tensorObj_restrict_iso {X Y : Scheme.{u}} (f : Y ⟶ X)
   refine (H1.app (PresheafOfModules.Monoidal.tensorObj M.val N.val)).symm ≪≫ ?_
   -- H2: the strong-monoidal tensorator of `pushforward β = pushforward₀ ⋙ restrictScalars β`.
   -- `β` is sectionwise bijective (it is the `forget₂`-image of the open-immersion structure ring
-  -- ISO `f.appIso`), so `restrictScalars β` is STRONG monoidal (`restrictScalarsMonoidalOfBijective`),
-  -- and `pushforward₀OfCommRingCat` is `Monoidal` (Mathlib); the composite's `μIso` is the tensorator.
-  -- It is built over the SYNTACTIC `_ ⋙ forget₂` base form (where the `MonoidalCategory` instance is
+  -- iso `f.appIso`), so `restrictScalars β` is strong monoidal
+  -- (`restrictScalarsMonoidalOfBijective`), and `pushforward₀OfCommRingCat` is monoidal.
+  -- The composite's `μIso` is the tensorator. It is built over the syntactic `_ ⋙ forget₂`
+  -- base form, where the `MonoidalCategory` instance is
   -- found canonically); the result is DEFEQ to the goal — whose base `X.ringCatSheaf.obj` is only
   -- defeq, not syntactically, `X.presheaf ⋙ forget₂` — and `(pushforward β).obj M.val =
   -- (M.restrict f).val` definitionally, so `exact` closes it without any instance diamond.
@@ -554,8 +455,7 @@ a common affine open `W ∋ x` contained in trivialising opens `U` (for `M`) and
 `U'` (for `N`), refines both trivialisations to `W` via `restrictIsoUnitOfLE`,
 then transports through `tensorObj_restrict_iso`, the bifunctoriality
 `tensorObjIsoOfIso`, and the unit isomorphism `tensorObj_unit_iso`:
-`(M ⊗ N)|_W ≅ M|_W ⊗ N|_W ≅ 𝒪_W ⊗ 𝒪_W ≅ 𝒪_W`. The only residual gap is the
-substrate-restriction compatibility `tensorObj_restrict_iso`. -/
+`(M ⊗ N)|_W ≅ M|_W ⊗ N|_W ≅ 𝒪_W ⊗ 𝒪_W ≅ 𝒪_W`. -/
 lemma tensorObj_isLocallyTrivial {X : Scheme.{u}} {M N : X.Modules}
     (hM : LineBundle.IsLocallyTrivial M) (hN : LineBundle.IsLocallyTrivial N) :
     LineBundle.IsLocallyTrivial (tensorObj M N) := by
@@ -643,53 +543,8 @@ noncomputable def homMk {X : Scheme.{u}} {M N : X.Modules}
     (Scheme.Modules.toPresheaf X).map (homMk g hg) = g :=
   rfl
 
-/-! ### iter-230 C-wiring diagnostic (the binding probe) — OUTCOME (ii)
-
-The PRIMARY `dual_isLocallyTrivial` reduces, exactly as `tensorObj_isLocallyTrivial`
-does, to a `dual_restrict_iso : (dual M).restrict f ≅ dual (M.restrict f)` for an open
-immersion `f : Y ⟶ X`. Mirroring `tensorObj_restrict_iso` verbatim (Step 1
-`restrictFunctorIsoPullback`, Step 2 `sheafificationCompPullback`, Step 3 strip the
-outer sheafification, Step 4 H1 `pushforwardPushforwardAdj`∘`leftAdjointUniq`) all
-TYPECHECK and leave the residual presheaf goal — verified live this iter:
-
-  `(PresheafOfModules.pushforward β).obj (PresheafOfModules.dual M.val)
-      ≅ PresheafOfModules.dual ((PresheafOfModules.pushforward β).obj M.val)`
-
-(`(M.restrict f).val = (pushforward β).obj M.val` definitionally, `change`-confirmed).
-
-**This residual CANNOT be discharged by the shared root `overSliceSheafEquiv`** —
-outcome (ii), not (i):
-  • The root is a `Sheaf`-category equivalence `Sheaf ((gt X).over U) A ≌
-    Sheaf (gt ↥U) A`; the residual is a `PresheafOfModules`-level iso (Step 3 already
-    stripped the outer sheafification). Different categories — no direct application
-    (`overSliceSheafEquiv` is not even in scope here, and its codomain type is
-    `Sheaf`, not `PresheafOfModules`).
-  • The root is value-category-FIXED (arbitrary `A`); the residual is an iso of
-    `ModuleCat` over the VARYING ring `𝒪_Y(V) = R_Y(V)`. The per-`V` module action
-    (`internalHomObjModule` over `Over V`) is exactly what a fixed-value-cat site
-    equivalence does NOT transport for free.
-  • The dual's value uses the per-open slice `restr W = pushforward₀ (Over.forget W)`
-    (slice over a single `W`), a finer slicing than the whole-`U` slice site
-    `(gt X).over U` the root is built over.
-
-**Precise decomposition of what (ii) actually needs** (the genuine new build; the
-substrate has grown a 4th time, as strategy-critic ts230 anticipated): a
-PRESHEAF-level, `R`-linear slice comparison
-  `Hom_{Over_X (fV)}(restr (fV) A, restr (fV) 𝟙_X)
-     ≅  Hom_{Over_Y V}(restr V ((pushforward β) A), restr V 𝟙_Y)`
-natural in `V` and `𝒪_Y(V)`-linear, induced by the slice equivalence
-`Over_Y V ≌ Over_X (fV)` (the per-`V` shadow of `Opens.overEquivalence`, valid because
-`f.opensFunctor` is fully faithful with image `= {W ≤ U}` and `fV ≤ U`), TOGETHER WITH
-the identification `restr (fV) A ≅ G^* (restr V (pushforward β A))` under that
-equivalence `G` and the ring-iso transport `β = f.appIso`. This is the presheaf+module
-analogue of `overSliceSheafEquiv`; the sheaf-level root does not cover it. See the
-task result for the full statement of the missing ingredient.
-
-The diagnostic def is intentionally NOT committed (it would pin a new `sorry`, which
-the iter-230 HARD-TRIPWIRE directive forbids). -/
-
--- NOTE: the tensor-inverse existence lemma now lives (axiom-clean) in TensorObjInverse.lean:
--- `Modules.exists_tensorObj_inverse`. The former private stub here was a dead duplicate (sorry) and was removed.
+-- Tensor-inverse existence is proved downstream as `Modules.exists_tensorObj_inverse` in
+-- `TensorObjInverse.lean`.
 
 /-! ## §5. The invertibility-carrier Picard group `picCommGroup`
 
@@ -972,36 +827,16 @@ lemma pullbackObjUnitToUnit_comp {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
   erw [← Category.assoc, hcomp']
   erw [Category.assoc]
 
-/-! ### Phase 1 — `pullbackUnitIso` (`f^*𝒪_X ≅ 𝒪_Y`), blueprint `lem:pullback_unit_iso`
+/-! ### Pullback of the structure sheaf
 
-**iter-241 RESOLUTION (the chart-chase is NOT needed).** The unit comparison
-`SheafOfModules.pullbackObjUnitToUnit f` is an isomorphism for *every* morphism of
-schemes `f`, not just for `Final`-chart morphisms. The Mathlib instance
-`SheafOfModules.instIsIsoPullbackObjUnitToUnitOfFinal` fires whenever the comparison
-functor `Opens.map f.base` is `Final`, and that functor is **always** `Final`: the
-preimage functor on opens preserves finite limits (it is a frame homomorphism), so it is
-representably flat, whence `final_of_representablyFlat` supplies `(Opens.map f.base).Final`
-unconditionally. (Verified axiom-clean for a general `f`.) The elaborate affine
-chart-chase contemplated by the blueprint proof — and the iter-240 coherence linchpin
-`pullbackObjUnitToUnit_comp` — are therefore unnecessary for this lemma (the linchpin is
-retained above as it is the genuine Mathlib-absent pseudofunctor coherence, of independent
-use for the harder Phase-2 tensor comparison).
-
-The remaining friction was purely a Lean typeclass-resolution accident: in a context with
-several `(Opens.map _).Final` hypotheses (or after a `pullbackObjUnitToUnit_comp` rewrite)
-the buried implicit instance args of `pullbackObjUnitToUnit` (`[F.IsContinuous]`,
-`[(pushforward φ).IsRightAdjoint]`) are defeq-but-not-syntactic, so `asIso`/`infer_instance`
-fails to synthesise `IsIso (pbu f)`. The fix (mathlib-analogist `pbu-canon`, the
-`Functor.Monoidal.μIso` idiom): isolate the single `Final` hypothesis in the helper
-`isIso_pbu_of_final` whose body `inferInstance` runs at a clean site, then transport the
-resulting witness through `asIso` by passing it *explicitly* (`@asIso … (isIso_pbu_of_final g)`)
-— the application's defeq check runs at default transparency and succeeds, whereas instance
-synthesis (reducible transparency) does not. -/
+The comparison `SheafOfModules.pullbackObjUnitToUnit f` is an isomorphism for every
+scheme morphism. Indeed, preimage on opens is representably flat, hence the comparison
+functor `Opens.map f.base` is final. The helper below isolates that finality instance so
+the implicit adjunction data of `pullbackObjUnitToUnit` are synthesized canonically. -/
 
 /-- **`IsIso (pullbackObjUnitToUnit g)` from a single `Final` hypothesis, at a clean site.**
 Project-local: isolates the lone `(Opens.map g.base).Final` instance so that the Mathlib
-`OfFinal` instance synthesises without colliding with other in-scope `Final`/`IsIso`
-hypotheses (see the section note). -/
+`OfFinal` instance synthesises without colliding with other finality hypotheses. -/
 private lemma isIso_pbu_of_final {X Y : Scheme.{u}} (g : Y ⟶ X)
     [(TopologicalSpace.Opens.map g.base).Final] :
     IsIso (SheafOfModules.pullbackObjUnitToUnit g.toRingCatSheafHom) := inferInstance
@@ -1095,9 +930,8 @@ middle presheaf is keyed on the *outer* association `(F.op ⋙ R₀) ⋙ forget�
 `pushforward₀OfCommRingCat`'s target carries). The two are defeq; bridging them with a local
 `MonoidalCategory` instance triggers a kernel-rejected diamond, so instead `φ` is defeq-cast
 to the outer form (`φ'`) for the `restrictScalars` factor, and the resulting composite — defeq
-to `pushforward φ` — is transported back by `exact`. This is the right-adjoint lax structure
-that an eventual oplax comparison `δ` on the abstract left-adjoint pullback would inherit.
-Project-local supplement; reusable for the general pullback-monoidality build. -/
+to `pushforward φ` — is transported back by `exact`. Its mate supplies the oplax
+comparison `δ` on the abstract left-adjoint pullback below. -/
 noncomputable instance presheafPushforwardLaxMonoidal
     {C D : Type u} [Category.{u} C] [Category.{u} D] {F : C ⥤ D}
     {R₀ : Dᵒᵖ ⥤ CommRingCat.{u}} {S₀ : Cᵒᵖ ⥤ CommRingCat.{u}}
@@ -1114,12 +948,10 @@ noncomputable instance presheafPushforwardLaxMonoidal
 comparison map `δ_{A,B} : f^*(A ⊗ B) ⟶ f^*A ⊗ f^*B`. This is the mate of the lax
 tensorator of `pushforward φ` (`presheafPushforwardLaxMonoidal`) across the
 pullback–pushforward adjunction, via Mathlib's doctrinal `leftAdjointOplaxMonoidal`. It
-supplies the canonical comparison map that the eventual `pullbackTensorIso` upgrades to an
-isomorphism — note the map exists for the *abstract* left adjoint with no sectionwise value
-(no `MonoidalCategory (SheafOfModules)` is needed, contra the earlier reading: the comparison
-lives at the presheaf level where `PresheafOfModules` IS monoidal). Project-local supplement;
-what remains Mathlib-absent is the concrete inverse-image model needed to prove `δ` is an
-iso (see the Phase-2 note below). -/
+supplies the canonical comparison map for the abstract left adjoint without a sectionwise
+model. No `MonoidalCategory (SheafOfModules)` instance is needed: the comparison lives in
+the monoidal category of presheaves of modules. Its sheafification is proved invertible on
+line bundles below by reducing to the unit case on a trivializing cover. -/
 noncomputable instance presheafPullbackOplaxMonoidal
     {C D : Type u} [Category.{u} C] [Category.{u} D] {F : C ⥤ D}
     {R₀ : Dᵒᵖ ⥤ CommRingCat.{u}} {S₀ : Cᵒᵖ ⥤ CommRingCat.{u}}
@@ -1129,39 +961,14 @@ noncomputable instance presheafPullbackOplaxMonoidal
     (PresheafOfModules.pullback φ).OplaxMonoidal :=
   (PresheafOfModules.pullbackPushforwardAdjunction φ).leftAdjointOplaxMonoidal
 
-/-! ### Phase 2 — `pullbackTensorIso` status (iter-242 finding)
+/-! ### Pullback and tensor products
 
-`pullbackUnitIso` (Phase 1) is DONE (above). The remaining `pullbackTensorIso`
-(`f^*(M ⊗ N) ≅ f^*M ⊗ f^*N`, general `f`) is a genuine Mathlib-scale build, blocked
-on a Mathlib-absent ingredient confirmed this iter:
-
-  • `Scheme.Modules.pullback f` and the underlying `PresheafOfModules.pullback φ.hom`
-    are BOTH `(pushforward _).leftAdjoint` — an ABSTRACT left adjoint with no sectionwise
-    value. The blueprint route "build a concrete strong-monoidal `P` ≅ pullback, then
-    transport via `leftAdjointUniq`" requires a CONCRETE model `P` of the pullback.
-  • For an OPEN immersion (`tensorObj_restrict_iso`) the concrete model was
-    `pushforward β` (β = the structure ring ISO), strong-monoidal via
-    `restrictScalarsMonoidalOfBijective`. For a GENERAL `f` the concrete left adjoint is
-    the inverse-image `(inverse-image presheaf) ⋙ extendScalars`: the underlying-presheaf
-    inverse image is a LEFT KAN EXTENSION along `(Opens.map f.base).op` (a colimit, NOT
-    sectionwise), and neither `PresheafOfModules.extendScalars` nor a concrete
-    inverse-image-of-presheaves-of-modules functor exists in Mathlib at the pin. Building
-    that concrete strong-monoidal functor + its adjunction to `pushforward` is the genuine
-    multi-hundred-LOC obligation (Mathlib-scale; the `distribBaseChange` strong-monoidal
-    core exists only at `ModuleCat.extendScalars`, the topological inverse image does not).
-
-The reusable presheaf-level prerequisites toward that build are supplied just below
-(`PresheafOfModules.pushforward` is LAX monoidal; hence the abstract presheaf pullback is
-OPLAX monoidal with a canonical comparison map `δ`).
-
-**SUPERSEDED (iter-243 pivot, see §D1'–D4' below).** The general-`f` concrete-model route is
-ABANDONED and off-path. The relative Picard consumer only ever needs `δ` to be an iso on LINE
-BUNDLES, and there iso-ness comes via the **local-trivialisation chart-chase** (D2'–D4'), NOT via a
-concrete inverse-image model: the oplax `δ` is sheafified (`pullbackTensorMap`), reduced to the
-single sheafified-presheaf comparison (`isIso_pullbackTensorMap_of_isIso_sheafifyDelta`), shown iso
-on the unit pair (D2'), and globalised over a trivialising cover (D4', `isIso_of_isIso_restrict`).
-The "no free oplax ⇒ preserves invertibles" obstruction (`Γ(ℙ¹,𝒪(1)) = 0`) is real for a GENERAL
-module but is sidestepped for line bundles by the chart-chase — no concrete model is built. -/
+The abstract presheaf pullback is oplax monoidal, so it carries a canonical comparison
+map `δ : f^*(M ⊗ N) ⟶ f^*M ⊗ f^*N`. For arbitrary modules this map need not be an
+isomorphism. The relative Picard construction only needs the result for line bundles;
+there it follows locally from the unit case and globally from local triviality. Thus the
+proof below sheafifies `δ`, proves the unit comparison, and descends isomorphism along a
+trivializing cover, without constructing a concrete strong-monoidal inverse-image functor. -/
 
 /-- **Identifying the sheafified presheaf-pullback of `M.val` with the abstract pullback.**
 For `f : Y ⟶ X` and `M : X.Modules`, sheafifying the presheaf-level pullback of the
@@ -1219,12 +1026,8 @@ exist. The decomposition `pullback φ ≅ extendScalars φ ⋙ pullback₀` then
 definitional factorisation `pushforward φ = pushforward₀ F R ⋙ restrictScalars φ` by
 uniqueness of left adjoints (`Adjunction.leftAdjointCompIso`).
 
-Per blueprint `lem:pullback_lan_decomposition` (D1). **OFF-PATH (iter-243 pivot).** D1 is
-axiom-clean and self-contained, but it was the first brick of the ABANDONED general
-strong-monoidal pullback build (`sec:tensorobj_pullback_monoidality`, route (e)); the active
-route is the loc-triv chart-chase D1'–D4' (§below), which does NOT consume `extendScalars`/
-`pullback₀`. Retained as a correct, reusable presheaf-level decomposition; do NOT extend it
-toward the general build (D2 scalar-strong / D3 topological-interchange are NOT pursued). -/
+Per blueprint `lem:pullback_lan_decomposition` (D1). The local-triviality argument below
+does not use this decomposition, but it is retained as reusable presheaf infrastructure. -/
 
 section PullbackLanDecomposition
 
@@ -1297,10 +1100,11 @@ The locally-trivial-restricted upgrade of the oplax comparison map
 
 section LocTrivPullbackTensor
 
-/-- **The sheafified `⊗ₘ` of the two `pullbackValIso`s (piece 4 of `pullbackTensorMap`) is an
-iso.** Factored out as a top-level lemma so the `tensorIso (C := _ ⋙ forget₂)` elaboration mirrors
-the proven `tensorObjIsoOfIso` (it does not elaborate cleanly inside a tactic block carrying
-`extract_lets` locals). Project-local helper for `isIso_pullbackTensorMap_of_isIso_sheafifyDelta`. -/
+/-- **The sheafified `⊗ₘ` of the two `pullbackValIso`s is an isomorphism.**
+Factored out so the `tensorIso (C := _ ⋙ forget₂)` elaboration mirrors
+`tensorObjIsoOfIso`; elaborating it inside a tactic block with `extract_lets` locals is
+prohibitively expensive. This supports
+`isIso_pullbackTensorMap_of_isIso_sheafifyDelta`. -/
 private lemma isIso_sheafify_tensorHom_pullbackValIso {X Y : Scheme.{u}}
     (f : Y ⟶ X) (M N : X.Modules) :
     IsIso ((PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).map
@@ -1317,12 +1121,13 @@ private lemma isIso_sheafify_tensorHom_pullbackValIso {X Y : Scheme.{u}}
 /-- **Reduction of `pullbackTensorMap` iso-ness to the sheafified presheaf δ.**
 
 `pullbackTensorMap f M N` is the four-fold composite
-`(sheafificationCompPullback).hom ≫ a_Y.map δ ≫ (sheafifyTensorUnitIso).hom ≫ a_Y.map (tensorHom …)`.
+`(sheafificationCompPullback).hom ≫ a_Y.map δ ≫ (sheafifyTensorUnitIso).hom ≫
+  a_Y.map (tensorHom …)`.
 Three of the four factors (`sheafificationCompPullback`, `sheafifyTensorUnitIso`,
 and the `tensorHom` of the two `pullbackValIso`s) are isomorphisms unconditionally;
 the only conditional factor is the sheafification `a_Y.map δ` of the presheaf-level
 oplax comparison `δ`. Hence `pullbackTensorMap f M N` is an iso whenever that
-sheafified δ is an iso. This isolates the SOLE remaining content (the sheafified δ)
+sheafified δ is an iso. This isolates the only remaining content, the sheafified `δ`,
 for D2' (unit pair) and D4' (chart-chase). Project-local. -/
 lemma isIso_pullbackTensorMap_of_isIso_sheafifyDelta {X Y : Scheme.{u}}
     (f : Y ⟶ X) (M N : X.Modules)
@@ -1436,45 +1241,18 @@ lemma isIso_pullbackTensorMap_unitPair_of_isIso_sheafifyEta {X Y : Scheme.{u}} (
   apply isIso_pullbackTensorMap_of_isIso_sheafifyDelta
   exact isIso_sheafifyDelta_unitPair_of_isIso_sheafifyEta f h
 
-/-! **D2' onward — handoff (iter-246).** The δ-wrapping half of D2' is now LANDED axiom-clean:
-`isIso_sheafifyDelta_unitPair_of_isIso_sheafifyEta` reduces the sheafified `δ` on the unit pair to
-the η-bridge `IsIso (a_Y.map (η (pullback φ')))` (via `left_unitality_hom` + the W-stable
-right-whiskering `W_whiskerRight_of_W` fed by the new converse `W_of_isIso_sheafification`), and
-`isIso_pullbackTensorMap_unitPair_of_isIso_sheafifyEta` chains it into the reduction brick. So the
-SOLE remaining content of D2' is the **η-bridge**
+/-! ### The unit comparison
 
-  `IsIso (a_Y.map (η (PresheafOfModules.pullback φ')))`.
-
-This is the commuting square (`sheafifyUnitIso` is its right vertical, built above)
-`a_Y.map (η F) ≫ sheafifyUnitIso.hom = (pullbackValIso f 𝒪_X).hom ≫ pullbackObjUnitToUnit φ`.
-Transposing across `SheafOfModules.pullbackPushforwardAdjunction φ` (apply `.homEquiv.injective`,
-then `pullbackPushforwardAdjunction_homEquiv_pullbackObjUnitToUnit`, `homEquiv_unit`,
-`leftAdjointOplaxMonoidal_η`, `homEquiv_counit`) reduces the square to the concrete pushforward-side
-identity (sheafification-mate bridge):
-
-  `sheafAdj.unit.app 𝒪_X ≫ (pushforward φ).map ((pullbackValIso).inv ≫
-      a_Y.map (pullback_pre.map ε_pre ≫ presheafAdj.counit) ≫ sheafifyUnitIso.hom)
-    = unitToPushforwardObjUnit φ`,
-
-where `ε_pre = LaxMonoidal.ε (PresheafOfModules.pushforward φ.hom)`. The glue is the leftAdjointUniq
-compatibility of `SheafOfModules.sheafificationCompPullback`/`pullbackIso` (the bridges inside
-`pullbackValIso`) — `Adjunction.{homEquiv_,unit_,}leftAdjointUniq_hom_app`,
-`leftAdjointUniq_hom_app_counit` — relating the presheaf and sheaf adjunction units; this is the
-unit-side analog of `pullbackObjUnitToUnit_comp`, NOT yet assembled (a self-contained next step).
-
-* **D3'/D4'** (the chart-chase): use `isIso_of_isIso_restrict` (L546) over the common trivialising
-  cover; on each chart D3' (δ commutes with the open-immersion base-change square — the sole
-  genuinely-new mate calculus, analog of `pullbackObjUnitToUnit_comp`) localises the sheafified δ,
-  the naturality D1' transports to the unit pair, and D2' closes. Each stays inside
-  `IsIso (a_Y.map δ …)`, so `isIso_pullbackTensorMap_of_isIso_sheafifyDelta` is the shared entry. -/
+The following lemmas identify the sheafified oplax unit with the sheaf-level structure
+sheaf comparison. This proves that `pullbackTensorMap` is an isomorphism on the unit pair,
+which is the local input for the line-bundle argument. -/
 
 /-- **Codomain identification for the D2' η-bridge.** The sheafification counit identifies the
 sheafified presheaf monoidal unit `a_Y.obj 𝟙_` with the sheaf-level structure module
 `𝒪_Y = SheafOfModules.unit Y.ringCatSheaf` (`𝟙_ = (unit Y).val` definitionally, and `unit Y` is
 already a sheaf, so the counit at it is an isomorphism). This is the right-hand vertical of the
 η-bridge square `a_Y.map (η (pullback φ')) ≫ sheafifyUnitIso.hom
-= (pullbackValIso f 𝒪_X).hom ≫ pullbackObjUnitToUnit φ` whose commutativity is the remaining
-content of D2' (see the handoff note above and `task_results`). Project-local building block. -/
+= (pullbackValIso f 𝒪_X).hom ≫ pullbackObjUnitToUnit φ`. -/
 noncomputable def sheafifyUnitIso {Y : Scheme.{u}} :
     (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).obj
         (𝟙_ (_root_.PresheafOfModules (Y.presheaf ⋙ forget₂ CommRingCat RingCat)))
@@ -1508,13 +1286,13 @@ lemma presheafUnit_comp_map_eta {X Y : Scheme.{u}} (f : Y ⟶ X) :
     (PresheafOfModules.pullbackPushforwardAdjunction φ').isRightAdjoint
   exact Adjunction.unit_app_unit_comp_map_η (PresheafOfModules.pullbackPushforwardAdjunction φ')
 
-/-- **D2' η-bridge — IsIso reduction to the unit comparison square** (axiom-clean plumbing).
+/-- **D2' η-bridge: reduction to the unit comparison square.**
 Given the commuting square identifying the sheafified presheaf unit comparison `a_Y.map (η F)`
 with the sheaf-level `pullbackObjUnitToUnit φ` through the canonical isos `pullbackValIso` and
 `sheafifyUnitIso`, the η-bridge `IsIso (a_Y.map (η (pullback φ')))` follows (the comparison
 `pullbackObjUnitToUnit φ` is an iso since `Opens.map f.base` is always `Final`). This isolates the
-SOLE remaining mathematical content of the η-bridge as the square hypothesis `hsq` (= the unit-side
-analog of `pullbackObjUnitToUnit_comp`, see handoff in `task_results`). Project-local. -/
+only mathematical content of the η-bridge as the square hypothesis `hsq`, the unit-side
+analogue of `pullbackObjUnitToUnit_comp`. -/
 lemma isIso_sheafifyEta_of_unitSquare {X Y : Scheme.{u}} (f : Y ⟶ X)
     (hsq : letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
           (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
@@ -1629,14 +1407,12 @@ lemma leftAdjointUniqUnitEta {X Y : Scheme.{u}} (f : Y ⟶ X) :
   rw [hB, Adjunction.comp_unit_app]
   rfl
 
-/-- **leftAdjointUniq transport of the composite unit, general object** (the `P`-general form of
-`leftAdjointUniqUnitEta`, ma-d3264 step 1). For the two composite adjunctions `A`, `B` of the unit
-square and ANY presheaf of modules `P`, applying `A.homEquiv` to the `P`-component of the comparison
-`sheafificationCompPullback φ` recovers `B.unit.app P`, expanded by `Adjunction.comp_unit_app` on `B`
-as `PrPbPushAdj φ' .unit P ≫ pushforward φ' .map (sheafAdj_Y.unit (pullback φ' P))`. This is the
-R1/R5-recovery brick of `sheafificationCompPullback_comp_tail`: it identifies the `sheafCompPb f .hom.app P`
-factor with the composite-adjunction `B_f`-unit. The proof is the object-generic version of
-`leftAdjointUniqUnitEta` (which is the `P := 𝟙_` specialization); nothing about `𝟙_` is used. -/
+/-- **Transport of the composite unit by `leftAdjointUniq`, at a general object.**
+For the two composite adjunctions `A` and `B` of the unit square, applying
+`A.homEquiv` to the `P`-component of `sheafificationCompPullback φ` recovers
+`B.unit.app P`. Expanding by `Adjunction.comp_unit_app` identifies the comparison with
+the composite-adjunction unit. This is the object-generic form of
+`leftAdjointUniqUnitEta`, whose argument is the monoidal unit. -/
 lemma leftAdjointUniqUnitEta_app {X Y : Scheme.{u}} (f : Y ⟶ X)
     (P : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) :
     letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
@@ -1668,11 +1444,9 @@ lemma leftAdjointUniqUnitEta_app {X Y : Scheme.{u}} (f : Y ⟶ X)
   rw [hB, Adjunction.comp_unit_app]
   rfl
 
-/-- **`restrictScalars (𝟙 R)` is the identity on morphisms.** `restrictScalars (𝟙 R)` is defeq to the
-identity functor `𝟭`, so its action on a morphism is the morphism itself. Stated as a *propositional*
-rewrite (proved once over an abstract `g`, hence cheap) so that the `restrictScalars (𝟙)` wrappers in
-the D2′ `(∗∗)` goal can be stripped by a single SYNTACTIC `rw` — avoiding the catastrophic whole-term
-`whnf` that a `show`/`rfl` triggers on the sheafification-laden composites. Project-local. -/
+/-- **`restrictScalars (𝟙 R)` is the identity on morphisms.**
+The functor is definitionally the identity, but this propositional form lets proofs remove
+its wrappers by a syntactic rewrite without normalizing a sheafification-laden composite. -/
 lemma restrictScalarsId_map {C : Type u} [Category.{u} C] {R : Cᵒᵖ ⥤ RingCat.{u}}
     {M N : _root_.PresheafOfModules R} (g : M ⟶ N) :
     (PresheafOfModules.restrictScalars (𝟙 R)).map g = g := rfl
@@ -1712,18 +1486,19 @@ lemma epsilonPresheafToSheafUnit {X Y : Scheme.{u}} (f : Y ⟶ X) :
   erw [SheafOfModules.unitToPushforwardObjUnit_val_app_apply, ModuleCat.restrictScalars_η]
   rfl
 
--- The sheafification-adjunction right-triangle / unit-naturality composites force `whnf` on the heavy
--- sheafification machinery (`𝟙_Yp` vs `(unit Y).val` defeq), exceeding the default 200000 budget.
+-- The right-triangle and unit-naturality composites normalize the sheafification machinery,
+-- including the definitionally equal carriers `𝟙_Yp` and `(unit Y).val`.
 set_option maxHeartbeats 1600000 in
 -- The sheafification right triangle forces normalization across the unit-presheaf carrier.
 /-- **Y-side sheafification right-triangle for the oplax unit comparison** (substep (ii) of the D2′
 `(∗∗)` close). For `f : Y ⟶ X` with `φ' = f.toRingCatSheafHom.hom` and `F = pullback φ'`, the
-sheafification unit at `F.obj 𝟙ᵖ`, post-composed with the underlying presheaf maps of `a_Y.map (η F)`
+sheafification unit at `F.obj 𝟙ᵖ`, post-composed with the presheaf maps of
+`a_Y.map (η F)`
 and `sheafifyUnitIso.hom`, recovers the oplax unit comparison `η F`. This is exactly
 `Equiv.apply_symm_apply` for the presheaf sheafification adjunction `homEquiv`: the second factor
-`a_Y.map (η F) ≫ sheafifyUnitIso.hom` is `homEquiv.symm (η F)` (its counit factor `sheafifyUnitIso.hom`
-is the adjunction counit at the sheaf `𝒪_Y`), so `homEquiv` of it is `η F`. Extracted as a standalone
-lemma so its elaboration cost does not bloat the heavy `pullbackEtaUnitSquare` telescope. Project-local. -/
+`a_Y.map (η F) ≫ sheafifyUnitIso.hom` is `homEquiv.symm (η F)`: its second factor is
+the adjunction counit at `𝒪_Y`. Hence applying `homEquiv` recovers `η F`.
+The separate lemma keeps this normalization out of `pullbackEtaUnitSquare`. -/
 lemma pullbackSheafifyUnitEtaTriangle {X Y : Scheme.{u}} (f : Y ⟶ X) :
     letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
         (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
@@ -1732,11 +1507,12 @@ lemma pullbackSheafifyUnitEtaTriangle {X Y : Scheme.{u}} (f : Y ⟶ X) :
         ((PresheafOfModules.pullback φ').obj
           (𝟙_ (_root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat))))
       ≫ (((PresheafOfModules.sheafification (𝟙 (Y.ringCatSheaf.obj))).map
-            (Functor.OplaxMonoidal.η (PresheafOfModules.pullback φ'))).val ≫ sheafifyUnitIso.hom.val)
+            (Functor.OplaxMonoidal.η (PresheafOfModules.pullback φ'))).val ≫
+          sheafifyUnitIso.hom.val)
       = Functor.OplaxMonoidal.η (PresheafOfModules.pullback φ') := by
   letI : (PresheafOfModules.pushforward (Hom.toRingCatSheafHom f).hom).IsRightAdjoint :=
     (PresheafOfModules.pullbackPushforwardAdjunction _).isRightAdjoint
-  -- Reassociate, fold the sheafification-unit naturality at `η F`, then the right-triangle on `𝒪_Y`.
+  -- Fold sheafification-unit naturality at `η F`, then use the right triangle on `𝒪_Y`.
   rw [← Category.assoc]
   erw [← (PresheafOfModules.sheafificationAdjunction (𝟙 (Y.ringCatSheaf.obj))).unit.naturality,
     Category.assoc, Functor.id_map]
@@ -1751,13 +1527,14 @@ lemma pullbackSheafifyUnitEtaTriangle {X Y : Scheme.{u}} (f : Y ⟶ X) :
     exact h
   -- `rw [htri]` cannot fire on the LHS (the codomain `𝟙_Yp` vs `(unit Y).val` are defeq only at
   -- non-reducible transparency).  Expand the RHS `η F` to `η F ≫ 𝟙` via `Category.comp_id` (its
-  -- `η F` is read off the goal — no `OplaxMonoidal` re-synthesis), then `congr 1` reduces to `htri`.
+  -- `η F` is read from the goal without resynthesizing `OplaxMonoidal`; `congr 1` then
+  -- reduces the result to `htri`.
   refine Eq.trans ?_ (Category.comp_id _)
   congr 1
 
 -- The mate-calculus telescope (steps 1–6) plus the substep-(i) `.val` reshaping and the syntactic
--- `restrictScalars (𝟙)`-strip (`kabstract` on the sheafification-laden composites) exceed the default
--- 200000 budget; 3200000 is comfortably sufficient for the assembled proof.
+-- Removing `restrictScalars (𝟙)` across the sheafification-laden mate telescope exceeds the
+-- default budget; 3,200,000 heartbeats is sufficient for the assembled proof.
 set_option maxHeartbeats 3200000 in
 -- The mate telescope normalizes six sheafification and restriction-scalar comparison steps.
 /-- **The unit square** (blueprint `lem:eta_bridge_unit_square`, the assembly target). The
@@ -1787,13 +1564,16 @@ lemma pullbackEtaUnitSquare {X Y : Scheme.{u}} (f : Y ⟶ X) :
   rw [SheafOfModules.pullbackPushforwardAdjunction_homEquiv_pullbackObjUnitToUnit]
   -- We keep the goal in `homEquiv` form (NOT unfolding via `homEquiv_unit`), driving the
   -- telescope through the closed mate-lemmas `compHomEquivFactor`, `leftAdjointUniqUnitEta`,
-  -- `presheafUnit_comp_map_eta` and the `rfl`-linchpin `sheafificationCompPullback_eq_leftAdjointUniq`.
-  -- Step 1: decompose `pullbackValIso.inv` into `(pullback φ).map c⁻¹ ≫ (sheafificationCompPullback φ).hom`
+  -- `presheafUnit_comp_map_eta` and
+  -- `sheafificationCompPullback_eq_leftAdjointUniq`.
+  -- Step 1: decompose `pullbackValIso.inv` into `(pullback φ).map c⁻¹` followed by
+  -- `(sheafificationCompPullback φ).hom`
   -- where `c = (asIso (sheafification-counit_X)).app 𝒪_X`.
   simp only [pullbackValIso, Iso.trans_inv, Iso.symm_inv, Functor.mapIso_inv]
   rw [Category.assoc]
   -- Step 2: pull the leading `(pullback φ).map c⁻¹` out of `homEquiv` (`homEquiv_naturality_left`),
-  -- then peel off the trailing `rest = a_Y.map (η F) ≫ sheafifyUnitIso.hom` (`homEquiv_naturality_right`).
+  -- then peel off `rest = a_Y.map (η F) ≫ sheafifyUnitIso.hom` using
+  -- `homEquiv_naturality_right`.
   erw [Adjunction.homEquiv_naturality_left, Adjunction.homEquiv_naturality_right]
   -- Steps 3+4: rewrite `sheafAdj.homEquiv (sheafificationCompPullback φ).hom.app 𝟙ᵖ` via the
   -- composite-adjunction factorisation `compHomEquivFactor` and then `leftAdjointUniqUnitEta`.
@@ -1814,7 +1594,8 @@ lemma pullbackEtaUnitSquare {X Y : Scheme.{u}} (f : Y ⟶ X) :
   -- (`homEquiv_naturality_right_symm`): `symm(x) ≫ k = symm(x ≫ R_X.map k)`.
   erw [← Adjunction.homEquiv_naturality_right_symm]
   -- X-triangle (`right_triangle_components`): the sheafification unit/counit on the sheaf `𝒪_X`
-  -- cancel, collapsing `homEquiv (c.hom ≫ unitToPushforwardObjUnit φ)` to `(unitToPushforwardObjUnit φ).val`.
+  -- cancel, collapsing the `homEquiv` composite to
+  -- `(unitToPushforwardObjUnit φ).val`.
   have hXtri : (PresheafOfModules.sheafificationAdjunction (𝟙 (X.ringCatSheaf.obj))).unit.app
         (SheafOfModules.unit X.ringCatSheaf).val ≫
       (PresheafOfModules.restrictScalars (𝟙 (X.ringCatSheaf.obj))).map
@@ -1842,7 +1623,7 @@ lemma pullbackEtaUnitSquare {X Y : Scheme.{u}} (f : Y ⟶ X) :
   -- whose RHS is `(unitToPushforwardObjUnit φ).val`.
   rw [Iso.inv_comp_eq, Equiv.symm_apply_eq]
   refine Eq.trans ?_ hrhs.symm
-  -- REMAINING (∗∗): the concrete pushforward-side presheaf identity.  Substep (i): split the `.val`
+  -- For the pushforward-side identity, first split the underlying-presheaf map
   -- of `g = a_Y.map (η F) ≫ sheafifyUnitIso.hom` and reduce `R_X.map ((pushforward φ).map g)`.
   simp only [Functor.comp_map, SheafOfModules.forget_map, SheafOfModules.pushforward_map_val,
     SheafOfModules.comp_val]
@@ -1852,22 +1633,23 @@ lemma pullbackEtaUnitSquare {X Y : Scheme.{u}} (f : Y ⟶ X) :
   --   `(u ≫ pf₁.map toSheafify_Y) ≫ pf₂.map ((a_Y.map (η F)).val ≫ sheafifyUnitIso.hom.val)
   --      = (unitToPushforwardObjUnit (Hom.toRingCatSheafHom f)).val`,
   -- where `pf₁ = pushforward (Hom.toRingCatSheafHom f).hom` and `pf₂ = pushforward φ.hom` are DEFEQ
-  -- but spelled differently (`Hom.toRingCatSheafHom f` from `leftAdjointUniqUnitEta` vs the `set`-local
-  -- `φ`).  The remaining math is exactly: merge the two `pushforward`-images via `Functor.map_comp`,
+  -- but spelled differently: `Hom.toRingCatSheafHom f` from `leftAdjointUniqUnitEta`
+  -- versus the local `φ`. The remaining calculation merges the two pushforward images via
+  -- `Functor.map_comp`,
   -- fold `toSheafify_Y ≫ (a_Y.map (η F)).val ≫ sheafifyUnitIso.hom.val = η F` by the (closed)
   -- `pullbackSheafifyUnitEtaTriangle f`, then `presheafUnit_comp_map_eta f` and (closed)
   -- `epsilonPresheafToSheafUnit f` collapse to `(unitToPushforwardObjUnit φ).val`.
   rw [restrictScalarsId_map, restrictScalarsId_map]
-  -- Reassociate and merge the two `pushforward φ'`-images via `erw` (keyed-defeq matching tolerates the
-  -- `pf₁`/`pf₂` zeta-spelling at the connecting object), fold the argument to `η F` (ii), and collapse
-  -- to `(unitToPushforwardObjUnit φ).val` via (6) `presheafUnit_comp_map_eta` + (iii) `epsilonPresheafToSheafUnit`.
+  -- Reassociate and merge the two `pushforward φ'` images. Definitional matching handles
+  -- the two local spellings at the connecting object. Fold the argument to `η F`, then use
+  -- `presheafUnit_comp_map_eta` and `epsilonPresheafToSheafUnit`.
   erw [Category.assoc, ← Functor.map_comp, pullbackSheafifyUnitEtaTriangle f,
     presheafUnit_comp_map_eta f, epsilonPresheafToSheafUnit f]
 
 /-- **D2′ — the pullback–tensor comparison on the unit pair is an isomorphism** (blueprint
 `lem:pullback_tensor_iso_unit`). Feeds the unit square `pullbackEtaUnitSquare` into the IsIso
 plumbing `isIso_sheafifyEta_of_unitSquare` (yielding `IsIso (a_Y.map (η (pullback φ')))`), then into
-the iter-246 δ-wrapping `isIso_pullbackTensorMap_unitPair_of_isIso_sheafifyEta`. Project-local. -/
+`isIso_pullbackTensorMap_unitPair_of_isIso_sheafifyEta`. -/
 lemma pullbackTensorMap_unit_isIso {X Y : Scheme.{u}} (f : Y ⟶ X) :
     IsIso (pullbackTensorMap f (SheafOfModules.unit X.ringCatSheaf)
       (SheafOfModules.unit X.ringCatSheaf)) :=
@@ -1894,11 +1676,12 @@ private lemma sheafifyTensorUnitIso_hom_eq {X : Scheme.{u}}
               (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).unit.app Q)) := by
   rfl
 
-/-- **`sheafifyTensorUnitIso.hom` as `a.map` of a single `tensorHom`** (tscmp254 carrier-pin). The
+/-- **`sheafifyTensorUnitIso.hom` as `a.map` of a single `tensorHom`.** The
 two whisker factors of `sheafifyTensorUnitIso_hom_eq` merge (`← Functor.map_comp`) into a single
 `a.map` of `η_P ▷ Q ≫ (aP).val ◁ η_Q`, which is the `tensorHom` `η_P ⊗ η_Q` of the two
-sheafification-unit components by `tensorHom_def` (the `exact` absorbs the defeq `restrictScalars (𝟙)`
-wrapper on `η`'s codomain that blocks a syntactic `← tensorHom_def`).  Stating the comparison as ONE
+sheafification-unit components by `tensorHom_def`. The final `exact` absorbs the
+definitionally equal `restrictScalars (𝟙)`
+wrapper on `η`'s codomain that blocks a syntactic `← tensorHom_def`. Stating the comparison as one
 `tensorHom` keeps every term in the single monoidal instance on the `⋙ forget₂` carrier, so the
 naturality reduces to plain bifunctoriality (`← tensor_comp`) + the two single-component unit
 squares — no `whisker_exchange`, no cross-instance crossing. -/
@@ -1980,10 +1763,9 @@ lemma sheafifyTensorUnitIso_hom_natural {X : Scheme.{u}}
             ((SheafOfModules.forget X.ringCatSheaf).map
               ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
                 (𝟙 X.ringCatSheaf.obj)).map q))) := by
-  -- Pin both comparison factors as a single `a.map (η ⊗ η)` (tscmp254 `sheafifyTensorUnitIso_hom_eq'`):
-  -- the naturality is then a `Functor.map_comp` merge + plain bifunctoriality, with every term in the
-  -- ONE monoidal instance on the `⋙ forget₂` carrier — no `whisker_exchange`, no cross-instance
-  -- crossing, no `erw`-on-`restrictScalars (𝟙)`-over-sheafification `whnf`.
+  -- Pin both comparison factors as one `a.map (η ⊗ η)` using
+  -- `sheafifyTensorUnitIso_hom_eq'`. Naturality then follows from `Functor.map_comp`,
+  -- bifunctoriality, and a single monoidal instance on the `⋙ forget₂` carrier.
   rw [sheafifyTensorUnitIso_hom_eq', sheafifyTensorUnitIso_hom_eq']
   -- Merge both `a.map _ ≫ a.map _` (`erw`: the connecting tensor object is defeq-but-not-syntactic
   -- — `Monoidal.tensorObj` vs the `⋙ forget₂` instance, plus the `restrictScalars (𝟙)` wrapper on
@@ -2010,9 +1792,9 @@ lemma sheafifyTensorUnitIso_hom_natural {X : Scheme.{u}}
         (𝟙 (X.ringCatSheaf.obj))).unit.naturality q
     simp only [Functor.id_map, Functor.comp_map, restrictScalarsId_map] at h ⊢
     exact h
-  -- Split the LHS `tensorHom`-composite (`tensorHom_comp_tensorHom`, applied as a defeq-matched TERM
-  -- since `rw` cannot bridge the non-canonical monoidal instance baked into the goal), apply the two
-  -- unit squares, then reassemble into the RHS `tensorHom`-composite.  `(C := …)` is supplied so the
+  -- Split the left `tensorHom` composite using a definitionally matched term, because `rw`
+  -- cannot bridge the noncanonical monoidal instance in the goal. Apply the two unit
+  -- squares, then reassemble the right composite. `(C := …)` ensures that the
   -- `MonoidalCategory` instance resolves (the underscore form leaves it a stuck metavariable).
   refine (MonoidalCategory.tensorHom_comp_tensorHom
     (C := _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) _ _ _ _).trans ?_
@@ -2041,14 +1823,14 @@ lemma pullbackTensorMap_natural {X Y : Scheme.{u}} (f : Y ⟶ X)
   -- Naturality is the paste of four squares:
   --   • S1 : naturality of `sheafificationCompPullback φ` at `tensorHom a.val b.val` (NatTrans);
   --   • S2 : `Functor.OplaxMonoidal.δ_natural` for `pullback φ'`, under `a_Y.map`;
-  --   • S3 : `sheafifyTensorUnitIso_hom_natural` (helper above, CLOSED);
-  --   • S4 : `pullbackValIso_hom_natural` (helper above, CLOSED) + bifunctoriality of `⊗`.
+  --   • S3 : `sheafifyTensorUnitIso_hom_natural`;
+  --   • S4 : `pullbackValIso_hom_natural` and bifunctoriality of `⊗`.
   -- The cleaner route (avoiding the sheaf-level carrier friction at S1) is to merge
   -- `a_Y.map δ ≫ S3 ≫ S4` into a single `a_Y.map Ψ` (Ψ presheaf-level), move S1 by its NatTrans
   -- naturality, and discharge the resulting PRESHEAF equation by `δ_natural` + the η-naturality of
   -- the two helpers — the same merge that `sheafifyTensorUnitIso_hom_natural` reduces to.
   simp only [pullbackTensorMap, tensorObj_functoriality]
-  -- Square 1 (S1) — CLOSED: naturality of the `sheafificationCompPullback φ` natural iso at
+  -- Square 1 is naturality of the `sheafificationCompPullback φ` natural isomorphism at
   -- `a.val ⊗ₘ b.val`.  After this the goal is
   --   S1 ≫ a_Y.map (Fp.map (a.val ⊗ b.val)) ≫ a_Y.map δ' ≫ S3' ≫ S4'
   --     = (S1 ≫ a_Y.map δ ≫ S3 ≫ S4) ≫ Q0,   Fp = PresheafOfModules.pullback φ'.
@@ -2057,22 +1839,22 @@ lemma pullbackTensorMap_natural {X Y : Scheme.{u}} (f : Y ⟶ X)
   -- Square 2 (S2): `Functor.comp_map` leaves both factors over the same directly spelled
   -- sheafification functor. Merge them, then commute `δ` past `Fp.map (a.val ⊗ b.val)` by
   -- `δ_natural` (reverse) and split.
-  -- Square 2 merge — SOLVED (iter-254): the `← Functor.map_comp` of the iter-253 BLOCKER fails because
-  -- the two `a_Y.map`s are right-associated (`a.map A ≫ (a.map B ≫ rest)`), so `A`/`B` are not the
-  -- direct operands of one `≫`.  The fix is the *reassoc* form `← Functor.map_comp_assoc` (`erw`, to
-  -- bridge the non-canonical monoidal instance baked into the goal exactly as STEP A does): it merges
+  -- The two `a_Y.map` factors are right-associated, so use the reassociated form of
+  -- `Functor.map_comp`. Definitional rewriting bridges the noncanonical monoidal instance:
   -- `a.map (Fp.map (a.val ⊗ b.val)) ≫ a.map (δ_{M',N'}) ≫ rest`
-  --   into `a.map (Fp.map (a.val ⊗ b.val) ≫ δ_{M',N'}) ≫ rest`, with `Fp = PresheafOfModules.pullback φ'`.
+  -- into `a.map (Fp.map (a.val ⊗ b.val) ≫ δ_{M',N'}) ≫ rest`, where
+  -- `Fp = PresheafOfModules.pullback φ'`.
   erw [← Functor.map_comp_assoc]
-  -- ── REMAINING (Square 2 — δ commutation): under the merged `a.map (…)` the argument is
+  -- For square 2, under the merged `a.map (…)`, the argument is
   --   `Fp.map (a.val ⊗ b.val) ≫ δ_{M'.val,N'.val}`,  Fp = PresheafOfModules.pullback φ',
   -- which by oplax naturality `Functor.OplaxMonoidal.δ_natural` equals
   --   `δ_{M.val,N.val} ≫ (Fp.map a.val ⊗ Fp.map b.val)`.
-  -- Square 2 (δ commutation) — CLOSED via the mapin255 LIGHT fix: re-present `F`'s ring-hom at the
-  -- canonical `⋙ forget₂` spelling with a `show … from` ascription inside the `δ_natural` application,
+  -- Re-present `F`'s ring hom at the
+  -- canonical `⋙ forget₂` spelling with a `show … from` ascription inside the
+  -- `δ_natural` application,
   -- so the registered `MonoidalCategory` instance synthesizes.  `erw` (not `rw`): the ascription
   -- pretty-prints as `have this := …; this`, whose reducible-defeq match to the bare hom only `erw`
-  -- bridges.  After this Square 2 is done; `dsimp only []` strips the cosmetic `have this := …; this`.
+  -- bridges. `dsimp only []` then removes the reducible ascription.
   erw [← Functor.OplaxMonoidal.δ_natural
     (F := PresheafOfModules.pullback
       (show (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
@@ -2095,21 +1877,23 @@ lemma pullbackTensorMap_natural {X Y : Scheme.{u}} (f : Y ⟶ X)
     ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).map a.val)
     ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).map b.val))]
   -- Now: S3(M,N) ≫ a_Y.map (forget(a_Y(Fp a.val)) ⊗ forget(a_Y(Fp b.val))) ≫ S4(M',N')
-  --    = S3(M,N) ≫ a_Y.map (forget(pullbackValIso M).hom ⊗ forget(pullbackValIso N).hom) ≫ a_Y.map (a^* ⊗ b^*).
+  --    = S3(M,N) ≫ a_Y.map (forget(pullbackValIso M).hom ⊗
+  --        forget(pullbackValIso N).hom) ≫ a_Y.map (a^* ⊗ b^*).
   -- `erw [Category.assoc]` bridges the instance-level mismatch between the two presentations of
   -- the connecting object; plain `rw` cannot see the `(f ≫ g) ≫ h` pattern across it.
   erw [Category.assoc]
   -- Cancel the common `S3(M,N)` iso prefix, then merge each side's two `a_Y.map`s into a single
-  -- `a_Y.map (_ ≫ _)` via `Functor.map_comp` (applied as defeq-matched TERMS so `refine`'s `isDefEq`
+  -- `a_Y.map (_ ≫ _)` via definitionally matched forms of `Functor.map_comp`, so `refine`
   -- bridges the same inferred-instance gap that blocks `rw`).
   erw [Iso.cancel_iso_hom_left]
   refine ((Functor.map_comp _ _ _).symm.trans ?_).trans (Functor.map_comp _ _ _)
   congr 1
   -- Square 4 (presheaf-level): bifunctoriality of `⊗` + naturality of `pullbackValIso` per leg.
-  --   (forget(a_Y(Fp a.val)) ⊗ forget(a_Y(Fp b.val))) ≫ (forget(pullbackValIso M').hom ⊗ forget(pullbackValIso N').hom)
+  --   (forget(a_Y(Fp a.val)) ⊗ forget(a_Y(Fp b.val))) ≫
+  --     (forget(pullbackValIso M').hom ⊗ forget(pullbackValIso N').hom)
   -- = (forget(pullbackValIso M).hom ⊗ forget(pullbackValIso N).hom) ≫ (a^*.val ⊗ b^*.val).
-  -- Per-leg naturality of `pullbackValIso` (= `pullbackValIso_hom_natural` under `forget`): merge the two
-  -- `forget.map`s, apply the sheaf-level naturality, split back.  `((pullback f).map u).val` is `forget`
+  -- Per-leg naturality of `pullbackValIso` under `forget`: merge the two `forget.map`s,
+  -- apply sheaf-level naturality, then split them again. `((pullback f).map u).val` is
   -- of `(pullback f).map u`, so the closing `rfl` discharges the `forget`/`.val` boundary.
   have hleg : ∀ {P P' : X.Modules} (u : P ⟶ P'),
       (SheafOfModules.forget Y.ringCatSheaf).map
@@ -2123,8 +1907,9 @@ lemma pullbackTensorMap_natural {X Y : Scheme.{u}} (f : Y ⟶ X)
     erw [pullbackValIso_hom_natural]
     rw [Functor.map_comp]
     rfl
-  -- Split the LHS `tensorHom`-composite by bifunctoriality, rewrite each leg by `hleg`, reassemble into
-  -- the RHS `tensorHom`-composite.  `(C := …)` pins the monoidal instance on the `⋙ forget₂` carrier;
+  -- Split the left `tensorHom` composite by bifunctoriality, rewrite each leg by `hleg`,
+  -- and reassemble the right composite. `(C := …)` pins the monoidal instance on the
+  -- `⋙ forget₂` carrier;
   -- `erw` bridges the connecting object's inferred-instance gap that blocks `rw [hleg …]`.
   refine (MonoidalCategory.tensorHom_comp_tensorHom
     (C := _root_.PresheafOfModules (Y.presheaf ⋙ forget₂ CommRingCat RingCat)) _ _ _ _).trans ?_
@@ -2145,8 +1930,9 @@ private lemma toRingCatSheafHom_comp_hom_reconcile {X Y Z : Scheme.{u}} (h : Z �
 set_option backward.isDefEq.respectTransparency false in
 /-- **Sectionwise value of the presheaf `restrictScalars` lax tensorator.** The lax μ of
 `PresheafOfModules.restrictScalars α`, evaluated at a section `W`, is by definition the `ModuleCat`
-lax μ of `restrictScalars (α.app W).hom`. Exposed as a `rfl`-lemma so the heavy ambient term need not
-be `whnf`-ed: rewriting with it turns `(μ (restrictScalars α) M₁ M₂).app W` into a `ModuleCat` μ on
+lax μ of `restrictScalars (α.app W).hom`. This `rfl` lemma keeps the ambient term from
+being normalized: rewriting with it turns `(μ (restrictScalars α) M₁ M₂).app W` into a
+`ModuleCat` μ on
 which `ModuleCat.restrictScalars_μ_tmul` matches syntactically (a direct `erw` on the presheaf form
 `whnf`-explodes). -/
 private lemma restrictScalars_μ_app
@@ -2242,25 +2028,15 @@ private lemma pushforward_μ_eq
           ((PresheafOfModules.pushforward₀OfCommRingCat F R₀).obj B) := by
   rfl
 
-/-- **Sq2b residual — the lax-μ composition coherence of `PresheafOfModules.pushforward`
-(monoidality of `pushforwardComp`).** Since `PresheafOfModules.pushforwardComp φ ψ = Iso.refl`,
-the right-adjoint side of Sq2b reduces to the statement that the lax tensorator `μ` of the
-*composite* pushforward `pushforward ψ ⋙ pushforward φ` (built by `Functor.LaxMonoidal.comp`)
-agrees with the lax tensorator of the *single* pushforward `pushforward (φ ≫ F.op ◁ ψ)` (built by
-`presheafPushforwardLaxMonoidal`).
+/-- **Lax tensorator coherence for composition of presheaf pushforwards.**
+Since `PresheafOfModules.pushforwardComp φ ψ = Iso.refl`, the tensorator of the
+composite `pushforward ψ ⋙ pushforward φ` agrees with that of the single pushforward
+along `φ ≫ F.op ◁ ψ`.
 
-**Status (iter-261): CLOSED, axiom-clean.** The equality is genuinely *not* `rfl`/`simp` at the
-presheaf level (the `restrictScalars` μ on a pure tensor is real `ModuleCat` base-change content,
-`ModuleCat.restrictScalars_μ_tmul`, not definitional).  The working route is sectionwise +
-pure-tensor reduction: `Functor.LaxMonoidal.comp_μ` unfolds the composite μ, `pushforward_μ_eq`
-lightens each `μ (pushforward _)` to a `restrictScalars` μ, and each leg is then collapsed to the
-identity by the atomic-object helpers `forget₂_restrictScalars_μ_hom_tmul` (inner) and
-`pushforward_map_restrictScalars_μ_app_tmul` (the `(pushforward φ).map …` leg, reindexed by
-`pushforward_map_app_apply`).  Both helpers are applied to the goal's concrete objects as explicit
-arguments and matched by `erw` — this is the only way to avoid the `whnf`-explosion that a direct
-`rw`/`erw`/`simp` of `ModuleCat.restrictScalars_μ_tmul` triggers on the heavy `pushforward₀`
-sections.  After both legs collapse, the LHS pure tensor is defeq to the RHS single-pushforward μ on
-the same tensor, closing the goal. -/
+This is not definitional: it contains the change-of-rings map
+`ModuleCat.restrictScalars_μ_tmul`. The proof works sectionwise and on pure tensors,
+uses `Functor.LaxMonoidal.comp_μ` and `pushforward_μ_eq`, and reduces the inner and
+outer restriction-of-scalars maps with the two pure-tensor helper lemmas. -/
 private lemma pushforwardComp_lax_μ
     {C D E : Type u} [Category.{u} C] [Category.{u} D] [Category.{u} E]
     {F : C ⥤ D} {G : D ⥤ E}
@@ -2277,14 +2053,14 @@ private lemma pushforwardComp_lax_μ
       Functor.LaxMonoidal.μ
         (PresheafOfModules.pushforward (F := F ⋙ G)
           (R := T₀ ⋙ forget₂ CommRingCat RingCat) (φ ≫ F.op.whiskerLeft ψ)) X Y := by
-  -- PROOF (iter-261): the equality is checked sectionwise (`hom_ext`) and on pure tensors
-  -- (`tensor_ext`).  `Functor.LaxMonoidal.comp_μ` unfolds the composite μ to
+  -- Check the equality sectionwise and on pure tensors. `Functor.LaxMonoidal.comp_μ`
+  -- unfolds the composite tensorator to
   --   `μ (pushforward φ) (..) (..)  ≫  (pushforward φ).map (μ (pushforward ψ) X Y)`,
   -- and `pushforward_μ_eq` (×2) reduces each `μ (pushforward _)` to the lighter
   -- `μ (restrictScalars _)` on the strong-monoidal `pushforward₀` objects.  On a pure tensor every
   -- `restrictScalars` μ is the identity (`ModuleCat.restrictScalars_μ_tmul`): the inner leg is
   -- collapsed by `forget₂_restrictScalars_μ_hom_tmul` (`hinner`) and the `(pushforward φ).map …`
-  -- leg by `pushforward_map_restrictScalars_μ_app_tmul` (`houter`, which reindexes the section map to
+  -- leg by `pushforward_map_restrictScalars_μ_app_tmul`; this reindexes the section map to
   -- `F.op.obj W` via `pushforward_map_app_apply` and collapses there).  After both legs the LHS is
   -- `m ⊗ₜ n`, which is defeq to the RHS single-pushforward μ on the same pure tensor — so the final
   -- `erw [houter]` closes the goal by its trailing `rfl`.  The heavy `pushforward₀` sections never
@@ -2299,8 +2075,10 @@ private lemma pushforwardComp_lax_μ
   erw [ModuleCat.hom_comp, LinearMap.comp_apply]
   rw [restrictScalars_μ_app (R := S₀) (S := F.op ⋙ R₀)]
   have hinner := forget₂_restrictScalars_μ_hom_tmul (Rc := S₀) (Sc := F.op ⋙ R₀) (φ.app W)
-    (((PresheafOfModules.pushforward₀OfCommRingCat F R₀).obj ((PresheafOfModules.pushforward ψ).obj X)).obj W)
-    (((PresheafOfModules.pushforward₀OfCommRingCat F R₀).obj ((PresheafOfModules.pushforward ψ).obj Y)).obj W)
+    (((PresheafOfModules.pushforward₀OfCommRingCat F R₀).obj
+      ((PresheafOfModules.pushforward ψ).obj X)).obj W)
+    (((PresheafOfModules.pushforward₀OfCommRingCat F R₀).obj
+      ((PresheafOfModules.pushforward ψ).obj Y)).obj W)
     m n
   erw [hinner]
   have houter := pushforward_map_restrictScalars_μ_app_tmul φ ψ
@@ -2341,15 +2119,14 @@ private lemma pullbackComp_δ
           (PresheafOfModules.pullback φ ⋙ PresheafOfModules.pullback ψ) M N ≫
         ((PresheafOfModules.pullbackComp φ ψ).hom.app M ⊗ₘ
           (PresheafOfModules.pullbackComp φ ψ).hom.app N) := by
-  -- MATE CALCULUS (iter-259 derivation; reduces Sq2b to `pushforwardComp_lax_μ`).
-  -- Transpose both sides under `aχ.homEquiv` (`aχ := pullbackPushforwardAdjunction (φ ≫ F.op ◁ ψ)`):
+  -- Transpose both sides under the adjunction for the composite ring map.
   apply (PresheafOfModules.pullbackPushforwardAdjunction
     (F := F ⋙ G) (R := T₀ ⋙ forget₂ CommRingCat RingCat)
     (φ ≫ F.op.whiskerLeft ψ)).homEquiv _ _ |>.injective
   -- Both sides become `aχ.unit (M⊗N) ≫ (pushforward χ).map (…)`:
   rw [Adjunction.homEquiv_unit, Adjunction.homEquiv_unit]
-  -- The remaining reduction (verified on paper; the wiring `rw`s are mechanical but fragile, and
-  -- the *only* genuine gap is `pushforwardComp_lax_μ`, which is `rfl`-FALSE — see below):
+  -- The reduction uses the mate of `pullbackComp.inv`, the monoidality of the composite
+  -- adjunction, naturality of the tensorator, and the triangle identity:
   --
   --   LHS = aχ.unit(M⊗N) ≫ (pushforward χ).map (δ (pullback χ) M N)
   --       = (aχ.unit M ⊗ₘ aχ.unit N) ≫ μ(pushforward χ) (pullback χ M) (pullback χ N)
@@ -2358,28 +2135,22 @@ private lemma pullbackComp_δ
   --   RHS = aχ.unit(M⊗N) ≫ (pushforward χ).map (c.inv(M⊗N) ≫ comp_δ ≫ (c.hom M ⊗ₘ c.hom N))
   --       where c := pullbackComp φ ψ.  Expand `map_comp`, then:
   --   (MATE)   aχ.unit(M⊗N) ≫ (pushforward χ).map (c.inv(M⊗N)) = aC.unit(M⊗N)
-  --                              [Adjunction.unit_conjugateEquiv + conjugateEquiv_leftAdjointCompIso_inv;
-  --                               here pushforwardComp = Iso.refl ⇒ the conjugate of c.inv is 𝟙, so the
-  --                               `pc.hom` factor vanishes]   (aC := aφ.comp aψ)
+  --                              [the mate of c.inv is the identity; aC := aφ.comp aψ]
   --   (U-C)    aC.unit(M⊗N) ≫ (pushforward ψ ⋙ pushforward φ).map (comp_δ) =
   --              (aC.unit M ⊗ₘ aC.unit N) ≫ μ(pushforward ψ ⋙ pushforward φ) (LM) (LN)
-  --                              [Adjunction.unit_app_tensor_comp_map_δ (adj := aC); aC.IsMonoidal via
-  --                               Adjunction.isMonoidal_comp; (pushforward χ).map ≡ (G'⋙G).map defeq]
+  --                              [unit_app_tensor_comp_map_δ for the composite adjunction]
   --   (μ-NAT)  μ(pushforward χ) (LM)(LN) ≫ (pushforward χ).map (c.hom M ⊗ₘ c.hom N) =
   --              ((pushforward χ).map (c.hom M) ⊗ₘ (pushforward χ).map (c.hom N)) ≫
   --                μ(pushforward χ) (pullback χ M) (pullback χ N)   [Functor.LaxMonoidal.μ_natural]
   --   (TRI)    aC.unit P ≫ (pushforward χ).map (c.hom P) = aχ.unit P   [(MATE) + c.inv ≫ c.hom = 𝟙]
   --   tensorHom_comp_tensorHom merges the three ⊗ₘ legs; with (TRI) the RHS becomes
-  --              (aχ.unit M ⊗ₘ aχ.unit N) ≫ μ(pushforward ψ ⋙ pushforward φ) (pullback χ M)(pullback χ N).
+  --              (aχ.unit M ⊗ₘ aχ.unit N) ≫
+  --                μ(pushforward ψ ⋙ pushforward φ) (pullback χ M) (pullback χ N).
   --
   -- LHS = RHS then holds IFF
   --   μ(pushforward ψ ⋙ pushforward φ) X Y = μ(pushforward χ) X Y   (= `pushforwardComp_lax_μ`).
-  -- This is the SOLE residual.  It is NOT `rfl` (the `d3sq2b258` recipe's "rfl/short ext" prediction
-  -- is empirically false): it is a genuine `ModuleCat` change-of-rings base-change coherence
-  -- (`ModuleCat.restrictScalarsComp` / `homEquiv_extendScalarsComp`), with NO analog in the
-  -- `rfl`-closed unit twin `unitToPushforwardObjUnit_comp`.  Pinned as `pushforwardComp_lax_μ` above.
-  -- The mate-`rw` wiring of the steps above is left for the follow-up (each step's Mathlib lemma is
-  -- named); the reduction itself is complete.  The LHS step (U) is wired here:
+  -- The final equality of tensorators is `pushforwardComp_lax_μ` above; it contains the
+  -- genuine `ModuleCat` change-of-rings coherence absent from the unit comparison.
   erw [Adjunction.unit_app_tensor_comp_map_δ
     (adj := PresheafOfModules.pullbackPushforwardAdjunction
       (F := F ⋙ G) (R := T₀ ⋙ forget₂ CommRingCat RingCat) (φ ≫ F.op.whiskerLeft ψ))]
@@ -2443,15 +2214,12 @@ private lemma pullbackComp_δ
     (C := _root_.PresheafOfModules (S₀ ⋙ forget₂ CommRingCat RingCat))]
   exact Category.assoc _ _ _
 
-/-- **Mate compatibility of `homEquiv` (project-local copy of `GlueDescent`'s device).** For
-adjunctions `adj₁ : L₁ ⊣ R₁`, `adj₂ : L₂ ⊣ R₂` and `α : L₂ ⟶ L₁`, transposing `α.app c ≫ f` under
-`adj₂` equals transposing `f` under `adj₁` post-composed with the conjugate transformation
-`conjugateEquiv adj₁ adj₂ α` at `d`. This is the anti-circularity device of the D3′ Sq1 mate
-calculus: it lets the leading `pullbackComp` factor of the transposed `sheafificationCompPullback_comp`
-goal be peeled while keeping `pullbackComp` OPAQUE (term-mode `.trans`, no `rw` on the iso). It is a
-verbatim copy of `AlgebraicGeometry.Scheme.Modules.homEquiv_conjugateEquiv_app`
-(`GlueDescent.lean:367`), reproduced here because `GlueDescent` is not imported by this file.
-Derived from `CategoryTheory.unit_conjugateEquiv` + naturality of the conjugate. Project-local. -/
+/-- **Compatibility of `homEquiv` with mates.**
+For adjunctions `adj₁ : L₁ ⊣ R₁`, `adj₂ : L₂ ⊣ R₂`, and `α : L₂ ⟶ L₁`,
+transposing `α.app c ≫ f` under `adj₂` is the transpose of `f` under `adj₁`,
+followed by `conjugateEquiv adj₁ adj₂ α`. This peels the leading `pullbackComp`
+factor while leaving the isomorphism opaque. The proof uses `unit_conjugateEquiv` and
+naturality of the conjugate transformation. -/
 private lemma homEquiv_conjugateEquiv_app' {𝒞 𝒟 : Type*} [CategoryTheory.Category 𝒞]
     [CategoryTheory.Category 𝒟] {L₁ L₂ : 𝒞 ⥤ 𝒟} {R₁ R₂ : 𝒟 ⥤ 𝒞}
     (adj₁ : L₁ ⊣ R₁) (adj₂ : L₂ ⊣ R₂) (α : L₂ ⟶ L₁) {c : 𝒞} {d : 𝒟}
@@ -2482,16 +2250,15 @@ private lemma homEquiv_conjugateEquiv_app' {𝒞 𝒟 : Type*} [CategoryTheory.C
 /-- **Sheaf-level conjugate/mate of `pullbackComp.inv` (the R0-peel building block for Sq1).**
 For composable scheme morphisms `h : Z ⟶ Y`, `f : Y ⟶ X` and any `Q : X.Modules`, the unit of the
 composite-pullback adjunction `pullbackPushforwardAdjunction (h ≫ f)`, post-composed with the
-pushforward of `pullbackComp.inv`, equals the unit of the *composite* of the `f`- and `h`-adjunctions,
-post-composed with `pushforwardComp.hom`.  This is the `Scheme.Modules` (sheaf-level) instance of
-`unit_conjugateEquiv` combined with `conjugateEquiv_pullbackComp_inv` (the mate of `pullbackComp.inv`
-is `pushforwardComp.hom`); it is the cheap, sheafification-free piece of the Sq1 mate calculus that
-peels the leading `R0 = pullbackComp.inv` factor.  Extracted from the inline `conj` of
-`pullbackObjUnitToUnit_comp` so the (expensive, sheafification-laden) Sq1 reassembly can cite it
-directly.  Project-local. -/
+pushforward of `pullbackComp.inv`, equals the unit of the composite adjunctions for `f`
+and `h`, post-composed with `pushforwardComp.hom`. This follows from
+`unit_conjugateEquiv` and `conjugateEquiv_pullbackComp_inv`, since the mate of
+`pullbackComp.inv` is `pushforwardComp.hom`. It supplies the sheafification-free first
+step of the Sq1 mate calculation. -/
 private lemma sheaf_unit_comp_pushforward_pullbackComp_inv {X Y Z : Scheme.{u}}
     (h : Z ⟶ Y) (f : Y ⟶ X) (Q : X.Modules) :
-    (SheafOfModules.pullbackPushforwardAdjunction (Scheme.Hom.toRingCatSheafHom (h ≫ f))).unit.app Q ≫
+    (SheafOfModules.pullbackPushforwardAdjunction
+      (Scheme.Hom.toRingCatSheafHom (h ≫ f))).unit.app Q ≫
         (SheafOfModules.pushforward (Scheme.Hom.toRingCatSheafHom (h ≫ f))).map
           ((Scheme.Modules.pullbackComp h f).inv.app Q) =
       ((Scheme.Modules.pullbackPushforwardAdjunction f).comp
@@ -2515,8 +2282,9 @@ for any morphism `g` of sheaves of modules over `R`,
 This is the compatibility named in the blueprint's `lem:pullback_tensor_map_basechange` Sq1-tail
 binding-obligation paragraph: it is what lets the recovered sheaf-level `B_f`/`B_h` unit factors
 (which live under `SheafOfModules.pushforward`) be slid across into the presheaf-level
-`PresheafOfModules.pushforward` of the unit identity.  It is *definitional* — `SheafOfModules.pushforward`
-is built sectionwise from `PresheafOfModules.pushforward` (`pushforward_map_val`) and `forget` is the
+`PresheafOfModules.pushforward` of the unit identity. This is definitional:
+`SheafOfModules.pushforward` is built sectionwise from `PresheafOfModules.pushforward`, and
+`forget` is the
 `.val` projection (`forget_map`), so the two sides are equal by `rfl`. -/
 private lemma forget_map_pushforward_map
     {C : Type u} [Category.{u} C] {D : Type u} [Category.{u} D]
@@ -2531,11 +2299,9 @@ private lemma forget_map_pushforward_map
 -- The mate-calculus telescope (transpose under the composite adjunction `A_{h≫f}`, the R0-kill via
 -- `homEquiv_conjugateEquiv_app'`, the adj₁ split, and the R1-peel `hnatL`) elaborates the heavy
 -- sheafification-laden `homEquiv` composites, exceeding the default 200000 heartbeat budget.
--- iter-310 SHARED KEY (`analogies/pullback-spelling-310.md`): the back-compat isDefEq path re-runs the
--- expensive transparency-respecting unfold loop on the opaque `Lan`-built `leftAdjoint`
--- (`Scheme.Modules.pullback f = SheafOfModules.pullback f.toRingCatSheafHom`).  Mathlib applies this
--- knob to EXACTLY these pullback-cocycle lemmas (Sheaf.lean:244/261/275/289); it stops the monolithic
--- `Scheme.Modules.pullback f ≟ SheafOfModules.pullback (toRingCatSheafHom f)` defeq from detonating.
+-- The transparency-respecting path repeatedly unfolds the opaque `Lan`-built left adjoint
+-- when comparing the Scheme and sheaf pullback spellings. Disabling that path matches the
+-- setting used by Mathlib's pullback-cocycle lemmas.
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 3200000 in
 -- The mate calculation compares nested and composite pullbacks through two opaque left adjoints.
@@ -2547,7 +2313,8 @@ through the comparisons of `f` and `h`, conjugated by the sheaf-level pullback p
 `PresheafOfModules.pullbackComp φ'_f φ'_h` (sheafified) on the right. Mathlib-absent at the pin;
 the S1-foundational composition coherence consumed by `pullbackTensorMap_restrict`. It is the
 `sheafificationCompPullback` twin of `pullbackObjUnitToUnit_comp`: both `sheafificationCompPullback`
-isos are `leftAdjointUniq` of composite adjunctions (`sheafificationCompPullback_eq_leftAdjointUniq`),
+isos are `leftAdjointUniq` comparisons of composite adjunctions
+(`sheafificationCompPullback_eq_leftAdjointUniq`),
 so the coherence is proved by the adjunction-mate calculus, transposing under the composite
 `A_{h≫f} = (sheafAdj_X).comp (pullbackPushforwardAdjunction (h≫f))`. -/
 lemma sheafificationCompPullback_comp {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X)
@@ -2562,17 +2329,9 @@ lemma sheafificationCompPullback_comp {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y 
         (PresheafOfModules.sheafification (𝟙 Z.ringCatSheaf.obj)).map
           ((PresheafOfModules.pullbackComp (Hom.toRingCatSheafHom f).hom
             (Hom.toRingCatSheafHom h).hom).hom.app P) := by
-  -- **iter-310 conjugate-calculus RECAST (replaces the walled homEquiv telescope).**
-  -- The telescope (transpose under `A_{h≫f}`, R0-kill, R1-peel) reaches a residual whose h-comparison
-  -- has NO sheafification partner free in a single transpose (`sheafAdj_Y` must be slid in by hand) —
-  -- the iter-308 wall.  The recast (`analogies/d3-mate-recast-309.md`) sidesteps it: reduce to the
-  -- NatTrans-level cocycle `key`, whose proof is the free-middle `conjugateEquiv_comp` fusion (the
-  -- middle adjunction absorbs `sheafAdj_Y`).  Reducing the goal to `key` is the iter-309 wall
-  -- (`NatTrans.congr_app` `isDefEq`-detonating on `Scheme.Modules.pullback ≟ SheafOfModules.pullback
-  -- (toRingCatSheafHom ·)` at the whisker junctions); the iter-310 shared knob
-  -- `backward.isDefEq.respectTransparency false` (now set on this lemma) is what lets it through.
-  -- iter-309 TOOLING UNBLOCK: the `a_Z = sheafification (𝟙)` whisker needs `IsLocallyInjective (𝟙)`,
-  -- which global synthesis misses (it finds only `IsLocallySurjective (𝟙)`); supply it (𝟙 is iso).
+  -- Work at the natural-transformation level so the middle adjunction absorbs the
+  -- sheafification adjunction over `Y`. The local identity instances below provide both
+  -- local injectivity and surjectivity needed for the final sheafification whisker.
   haveI : Presheaf.IsLocallyInjective (Opens.grothendieckTopology ↥Z) (𝟙 (Z.ringCatSheaf.obj)) :=
     Presheaf.instIsLocallyInjectiveOfIsIsoFunctorOpposite _ _
   haveI : Presheaf.IsLocallySurjective (Opens.grothendieckTopology ↥Z) (𝟙 (Z.ringCatSheaf.obj)) :=
@@ -2589,11 +2348,8 @@ lemma sheafificationCompPullback_comp {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y 
             (PresheafOfModules.pullbackComp (Hom.toRingCatSheafHom f).hom
               (Hom.toRingCatSheafHom h).hom).hom
             (PresheafOfModules.sheafification (𝟙 Z.ringCatSheaf.obj)) := by
-    -- v4.31.0 recovery: port of the ported `sheafificationCompPullback_comp_natTrans`
-    -- proof (parent `main`): the mate-cocycle calculus via three
-    -- `Adjunction.leftAdjointCompNatTrans_assoc` instances.
-    -- The six adjunctions of the first (sheaf-legged) `leftAdjointCompNatTrans_assoc` instance,
-    -- exactly as in `sheafificationCompPullback_comp` (verified to elaborate there).
+    -- Express the mate cocycle through three instances of
+    -- `Adjunction.leftAdjointCompNatTrans_assoc`. The first uses the sheaf pullback leg.
     let adj01 := PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
       (𝟙 X.ringCatSheaf.obj)
     let adj12 := SheafOfModules.pullbackPushforwardAdjunction (Hom.toRingCatSheafHom f)
@@ -2757,9 +2513,8 @@ lemma sheafificationCompPullback_comp {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y 
     rw [I1, I2, I3] at E1
     simp only [I4, I5] at E2
     simp only [J1, J2, J3] at E3
-    -- Assemble: evaluate both pasted identities at a component `P` (the FIRST and ONLY
-    -- component evaluation), eliminate the mixed comparison `X023 = adj02.lacnt adj23 adj03 τ023`
-    -- between them, and peel the invertible `pullbackComp`-whisker.
+    -- Evaluate the pasted identities at `P`, eliminate the mixed comparison, and peel the
+    -- invertible `pullbackComp` whisker.
     apply NatTrans.ext
     funext P
     have e1 := congr_app E1 P
@@ -2767,22 +2522,11 @@ lemma sheafificationCompPullback_comp {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y 
     have e3 := congr_app E3 P
     simp only [NatTrans.comp_app, Functor.whiskerLeft_app, Functor.whiskerRight_app,
       Functor.associator_inv_app, NatTrans.id_app] at e1 e2 e3 ⊢
-    -- Normalize the (defeq-coerced) object spellings so the `𝟙`-junk factors match `id_comp`.
-    -- v4.31.0: the preceding `simp only` already lands the object spellings, so this `dsimp` may be
-    -- a no-op; guard with `try` so "made no progress" is not fatal.
+    -- Normalize the definitionally equal object spellings before removing identity factors.
     try dsimp only [Functor.comp_obj] at e1 e2 e3 ⊢
     simp only [CategoryTheory.Functor.map_id, Category.id_comp, Category.comp_id] at e1 e2 e3
-    -- Eliminate the mixed comparison `X023.app P` between the first two pasted identities,
-    -- then resolve the mixed `(01',13',03)`-comparison component via the third.
-    -- (The h-leg comparison stays in its `leftAdjointCompNatTrans` spelling; `I4` shows it is
-    -- DEFINITIONALLY `(sheafificationCompPullback (toRingCatSheafHom h)).hom`, so the final
-    -- `exact` closes the residual difference by defeq.)
-    -- v4.31.0: the bulk `simp only [Category.id_comp]` above no longer clears the leading
-    -- `𝟙 _ ≫` of `e2`/`e3` (the identity sits at a `Functor.obj`-spelled object the simp
-    -- discrimination tree misses), so `rw [← e2]` would look for `𝟙 _ ≫ X023` while `e1` carries
-    -- the bare `X023`.  Clear the identities by `erw` (full-defeq matching) FIRST.  `J1` has
-    -- already fired at the `NatTrans` level (the `simp only [J1, J2, J3] at E3`), so `e3` already
-    -- presents its `J1`-leg as a literal `𝟙`; no further `erw [J1]` is needed.
+    -- Remove the leading identities with definitional matching, eliminate the mixed
+    -- comparison between `e1` and `e2`, then resolve it with `e3`.
     erw [Category.id_comp] at e2
     erw [Category.id_comp] at e3
     rw [← e2] at e1
@@ -2792,19 +2536,17 @@ lemma sheafificationCompPullback_comp {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y 
     exact (Iso.eq_inv_comp ((Scheme.Modules.pullbackComp h f).app
       ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
         (𝟙 X.ringCatSheaf.obj)).obj P))).mpr e1
-  -- Reduce the goal to `key` evaluated at `P`.  `NatTrans.congr_app` is the iter-309 wall; the knob
-  -- (set on this lemma) tames the `Scheme.Modules.pullback ≟ SheafOfModules.pullback` defeq.
+  -- Evaluate `key` at `P`; the local transparency setting controls the comparison between
+  -- the Scheme and sheaf pullback spellings.
   have happ := NatTrans.congr_app key P
   simp only [NatTrans.comp_app, Functor.whiskerLeft_app, Functor.whiskerRight_app] at happ ⊢
   exact happ
 
-/-- **Brick 1 (Sq-cancellation) — sheafification kills the presheaf `pullbackComp` hom∘inv round-trip.**
+/-- **Brick 1 (Sq-cancellation).**
 For composable scheme morphisms `h : Z ⟶ Y`, `f : Y ⟶ X` and any presheaf `T` over `X`, the
-sheafification functor `aZ = sheafification (𝟙 Z.ringCatSheaf.obj)` sends the `hom ≫ inv` round-trip
-of the Mathlib presheaf coherence `PresheafOfModules.pullbackComp φf φh` to the identity.  This is the
-`D ≫ E = 𝟙` cancellation consumed by step (i) of the four-square interleave in
-`pullbackTensorMap_restrict` (where `D = aZ.map (pbComp.hom.app T)` comes from the Sq1 brick
-`sheafificationCompPullback_comp` and `E = aZ.map (pb.inv.app T)` from the Sq2b splice `hδ`). -/
+sheafification functor sends the `hom ≫ inv` round trip of
+`PresheafOfModules.pullbackComp` to the identity. This supplies the middle cancellation in
+`pullbackTensorMap_restrict`. -/
 private lemma sheafifyMap_pullbackComp_hom_inv_id {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X)
     (T : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) :
     (PresheafOfModules.sheafification (R := Z.ringCatSheaf) (𝟙 Z.ringCatSheaf.obj)).map
@@ -2815,16 +2557,15 @@ private lemma sheafifyMap_pullbackComp_hom_inv_id {X Y Z : Scheme.{u}} (h : Z �
           (Hom.toRingCatSheafHom h).hom).inv.app T) = 𝟙 _ := by
   rw [← Functor.map_comp]
   erw [Iso.hom_inv_id_app]
-  exact (PresheafOfModules.sheafification (R := Z.ringCatSheaf) (𝟙 Z.ringCatSheaf.obj)).map_id _
+  exact
+    (PresheafOfModules.sheafification
+      (R := Z.ringCatSheaf) (𝟙 Z.ringCatSheaf.obj)).map_id _
 
-/-- **Step-(i) middle-cancellation skeleton (instance-agnostic).** A purely categorical reassociation:
-in any category, a 4-fold prefix ending in `d` composed with a tail beginning in its inverse `e`
-(`d ≫ e = 𝟙`) collapses the cancelling pair, leaving the prefix glued to the tail.  Stated and proved
-generically so every `≫` shares ONE `Category` instance and `Category.assoc` reassociates freely; it is
-then `exact`-applied (NOT `rw`-applied) against the concrete D3′ goal, where the `sheafificationCompPullback`
-/`pullbackComp` `.app`-components compose through DEFEQ-but-not-syntactic `SheafOfModules` instances —
-`exact` unifies up to defeq and so crosses the instance gap that blocks every `rw/simp [Category.assoc]`.
-This is the device that lands step (i) of `pullbackTensorMap_restrict` without the mate-`whnf` bomb. -/
+/-- Cancel a middle inverse pair in a fourfold categorical composite.
+
+The abstract formulation gives all compositions the same `Category` instance. It can therefore be
+applied by definitional equality to composites whose concrete `SheafOfModules` presentations differ.
+-/
 private lemma comp_cancel_mid {C : Type*} [Category C] {A₀ B₀ C₀ D₀ E₀ F₀ : C}
     (r0 : A₀ ⟶ B₀) (r1 : B₀ ⟶ C₀) (r5 : C₀ ⟶ D₀) (d : D₀ ⟶ E₀) (e : E₀ ⟶ D₀)
     (rest : D₀ ⟶ F₀) (hde : d ≫ e = 𝟙 D₀) :
@@ -2832,15 +2573,10 @@ private lemma comp_cancel_mid {C : Type*} [Category C] {A₀ B₀ C₀ D₀ E₀
   simp only [Category.assoc]
   rw [← Category.assoc d e rest, hde, Category.id_comp]
 
-/-- **Generic nested slide (mirrors the post-step-(ii) goal nesting exactly).** Substitutes the
-buried pair `r5 ≫ p` (the `S1^h`-then-`a.map (Fp_h.map δ_f)` factor) by `u ≫ v` through a different
-intermediate object `d'`, leaving the post-substitution equation as the residual goal.  Applied by
-`refine comp_slide_nested … hslide ?_`: the conclusion is written to mirror the goal's *literal*
-parenthesisation `(r0 ≫ r1 ≫ r5 ≫ (p ≫ q) ≫ rtc) ≫ s3 ≫ s4`, so `refine` unifies it against the
-goal by *metavariable assignment only* — no keyed `simp`/`rw`/`erw` matching, hence no
-`whnf`-bomb across the defeq-but-not-syntactic `SheafOfModules` instance boundary (the same reason
-`comp_cancel_mid` lands step (i) by `exact`).  The actual `rw` runs on this lemma's own
-single-`[Category C]` variables, where assoc is trivial. -/
+/-- Substitute a buried pair in a nested categorical composite.
+
+The conclusion deliberately preserves the nesting used by `pullbackTensorMap_restrict`, allowing
+definitional unification across alternate presentations of `SheafOfModules` composition. -/
 private lemma comp_slide_nested {C : Type*} [Category C] {a b c d e k m n g d' : C}
     (r0 : a ⟶ b) (r1 : b ⟶ c) (r5 : c ⟶ d) (p : d ⟶ e) (q : e ⟶ k) (rtc : k ⟶ m)
     (s3 : m ⟶ n) (s4 : n ⟶ g) (u : c ⟶ d') (v : d' ⟶ e) (rhs : a ⟶ g)
@@ -2851,13 +2587,10 @@ private lemma comp_slide_nested {C : Type*} [Category C] {a b c d e k m n g d' :
     simp only [Category.assoc]
   rw [hassoc, hsl]; exact hrest
 
-/-- **Generic three-prefix cancellation across an L/R-defeq boundary.** The post-slide D3′ residual
-has the form `(r0 ≫ r1 ≫ (u ≫ v) ≫ q ≫ rtc) ≫ s3 ≫ s4 = r0' ≫ (m1 ≫ m2 ≫ m3 ≫ m4) ≫ …` where the
-first three left factors `r0,r1,u` are *defeq-but-not-syntactically-equal* to the first three right
-factors `r0',m1,m2` (the `SheafOfModules` vs `Scheme.Modules` pullback spellings).  Passing `rfl` for
-`hr0/hr1/hu` discharges those leaf defeqs (small terms — no big-composite `whnf`), then the generic
-`subst`+assoc reduces the goal to the pure `hcore` (the merged Sq3/Sq4 chase).  Applied by
-`refine comp_cancel_three_lr … rfl rfl rfl ?_`. -/
+/-- Cancel three equal prefix factors before comparing the remaining categorical composites.
+
+The explicit prefix equalities accommodate the definitionally equal `SheafOfModules` and
+`Scheme.Modules` presentations used by the caller. -/
 private lemma comp_cancel_three_lr {C : Type*} [Category C]
     {a b cc c' e kk mm nn g c4 c5 c6 c7 c8 c9 : C}
     (r0 : a ⟶ b) (r1 : b ⟶ cc) (u : cc ⟶ c') (v : c' ⟶ e) (q : e ⟶ kk) (rtc : kk ⟶ mm)
@@ -2872,17 +2605,10 @@ private lemma comp_cancel_three_lr {C : Type*} [Category C]
   simp only [Category.assoc]
   rw [hcore]
 
-/-- **Generic slide-then-cancel for the merged Sq3/Sq4 core (instance-agnostic).** The
-post-`comp_cancel_three_lr` residual of `pullbackTensorMap_restrict` has the form
-`v ≫ q ≫ rtc ≫ s3 ≫ s4 = m3 ≫ m4 ≫ vv ≫ dh ≫ sh3 ≫ sh4 ≫ tf`, where the RHS prefix
-`m3 ≫ m4 ≫ vv` (`= (pullback h).map S3_f ≫ (pullback h).map S4_f ≫ S1_h''`) equals, by the
-naturality of the connecting iso `sheafificationCompPullback h` at the morphism `gg`
-(`a_Y.map gg = S3_f ≫ S4_f`), the slid form `v ≫ vtail` with `v = S1_h` (presheaf args) and
-`vtail = a_Z.map (Fp_h.map gg)`.  Splicing that equation (`hcomb`) plus the resulting folded
-presheaf core (`hcore2`) closes the goal.  Stated generically over one `[Category C]` so the
-`subst`/`assoc` algebra never crosses the defeq-but-not-syntactic `SheafOfModules` instance
-boundary that whnf-bombs `simp`/`rw`/`erw` on the concrete goal; applied by
-`refine comp_slide_three … hcomb ?_` (assignment-only unification). -/
+/-- Replace a threefold prefix by a slid pair, then compare the residual composites.
+
+This is the categorical skeleton of the merged Sq3/Sq4 argument in
+`pullbackTensorMap_restrict`. -/
 private lemma comp_slide_three {C : Type*} [Category C]
     {a b b3 c1 c2 c3 d1 d2 d3 d4 d5 g : C}
     (v : a ⟶ b) (q : b ⟶ c1) (rtc : c1 ⟶ c2) (s3 : c2 ⟶ c3) (s4 : c3 ⟶ g)
@@ -2894,12 +2620,7 @@ private lemma comp_slide_three {C : Type*} [Category C]
   rw [hcore2, ← Category.assoc v vtail, ← hcomb]
   simp only [Category.assoc]
 
-/-- **Generic merge-then-slide for the `hcomb` leg (instance-agnostic).** Over an abstract functor
-`G`, `G.map s3f ≫ G.map s4f ≫ vv` merges (`Functor.map_comp`) and rewrites by `hg : gmap = s3f ≫ s4f`
-to `G.map gmap ≫ vv`, closed by the naturality `hnat`.  Stated generically so the `assoc`/`map_comp`
-algebra runs on clean abstract variables, never crossing the defeq-but-not-syntactic `SheafOfModules`
-instance boundary that whnf-bombs `rw [← Category.assoc]` / `rw [← Functor.map_comp]` on the concrete
-post-step-(ii) goal; applied by `exact map_comp_slide G _ _ gmap _ _ hg hnat`. -/
+/-- Merge two mapped morphisms and finish with a supplied naturality equation. -/
 private lemma map_comp_slide {C D : Type*} [Category C] [Category D] (G : C ⥤ D)
     {x y z : C} {w : D} (s3f : x ⟶ y) (s4f : y ⟶ z) (gmap : x ⟶ z)
     (vv : G.obj z ⟶ w) (rhs : G.obj x ⟶ w)
@@ -2911,13 +2632,7 @@ private lemma map_comp_slide {C D : Type*} [Category C] [Category D] (G : C ⥤ 
     _ = G.map gmap ≫ vv := by rw [e]
     _ = rhs := hnat
 
-/-- **Generic fold-4-vs-5-under-a-functor reduction (instance-agnostic).** A 4-fold `F.map`-composite
-equals a 5-fold `F.map`-composite as soon as the underlying presheaf composites agree (`hcore`).  The
-`← Functor.map_comp` merge runs on this lemma's own clean `[Category C]` variables, where the
-discrimination-tree match is trivial; it is then applied to the merged Sq3/Sq4 core of
-`pullbackTensorMap_restrict` by `refine map_comp4_eq_comp5 _ _ _ _ _ _ _ _ _ _ ?_`
-(assignment-only unification), crossing the defeq-but-not-syntactic `SheafOfModules` instance boundary
-that whnf-bombs `simp`/`rw [← Functor.map_comp]` on the concrete folded goal. -/
+/-- Lift an equality between fourfold and fivefold composites through a functor. -/
 private lemma map_comp4_eq_comp5 {C D : Type*} [Category C] [Category D] (F : C ⥤ D)
     {x₀ x₁ x₂ x₃ x₄ : C} (a₁ : x₀ ⟶ x₁) (a₂ : x₁ ⟶ x₂) (a₃ : x₂ ⟶ x₃) (a₄ : x₃ ⟶ x₄)
     {z₁ z₂ z₃ z₄ : C} (b₁ : x₀ ⟶ z₁) (b₂ : z₁ ⟶ z₂) (b₃ : z₂ ⟶ z₃) (b₄ : z₃ ⟶ z₄) (b₅ : z₄ ⟶ x₄)
@@ -2927,13 +2642,7 @@ private lemma map_comp4_eq_comp5 {C D : Type*} [Category C] [Category D] (F : C 
   simp only [← Functor.map_comp]
   rw [hcore]
 
-/-- **Generic bifunctorial collapse of a 3-vs-4 `tensorHom` chain to its two legs (instance-agnostic).**
-A 3-fold composite of `tensorHom`s equals a 4-fold one as soon as the two underlying leg composites
-agree (`hM`, `hN`).  The `tensorHom_comp_tensorHom` interchange runs on this lemma's own clean
-`[MonoidalCategory C]` variables, then it is applied to the merged Sq3/Sq4 core of
-`pullbackTensorMap_restrict` by `refine tensorHom_collapse_3_4 … ?_ ?_` (assignment-only unification),
-crossing the non-canonical `MonoidalCategoryStruct` instance baked into the concrete goal on which
-`simp`/`rw [tensorHom_comp_tensorHom]` makes no progress. -/
+/-- Compare threefold and fourfold `tensorHom` chains from equal composites on both legs. -/
 private lemma tensorHom_collapse_3_4 {C : Type*} [Category C] [MonoidalCategory C]
     {xM₀ xM₁ xM₂ xM₃ xN₀ xN₁ xN₂ xN₃ : C}
     (p₁ : xM₀ ⟶ xM₁) (p₂ : xM₁ ⟶ xM₂) (p₃ : xM₂ ⟶ xM₃)
@@ -2949,38 +2658,22 @@ private lemma tensorHom_collapse_3_4 {C : Type*} [Category C] [MonoidalCategory 
           MonoidalCategory.tensorHom r₃ s₃ ≫ MonoidalCategory.tensorHom r₄ s₄ := by
   simp only [MonoidalCategory.tensorHom_comp_tensorHom, hM, hN]
 
-/-- **Generic adjunction unit-counit triangle (instance-agnostic).** For an adjunction `L ⊣ R` and
-any `k : L.obj P ⟶ M`, sheafifying the unit-into-`R k` composite and post-composing the counit
-recovers `k`.  This is the abstract triangle identity behind the `pullbackValIso` counit reassembly
-(blueprint `lem:pullback_val_iso_comp_counit`, the (T) step): with `L = sheafification`,
-`R = forget`, `P = pullback presheaf`, `M = sheaf pullback`, `k = (pullbackValIso _ _).hom`, it states
-`a(η ≫ forget k) ≫ ε = k`.  Stated generically over one pair `[Category C]`/`[Category D]` so the
-`Functor.map_comp`/`counit_naturality`/`left_triangle_components` algebra never crosses the
-defeq-but-not-syntactic `SheafOfModules`/`Scheme.Modules` instance boundary; applied by `exact`. -/
+/-- The adjunction triangle in the form `L.map (η ≫ R.map k) ≫ ε = k`.
+
+For sheafification this reassembles the counit factor in `pullbackValIso_comp_leg`. -/
 private lemma adj_unit_map_counit {C D : Type*} [Category C] [Category D] {L : C ⥤ D} {R : D ⥤ C}
     (adj : L ⊣ R) (P : C) (M : D) (k : L.obj P ⟶ M) :
     L.map (adj.unit.app P ≫ R.map k) ≫ adj.counit.app M = k :=
   (adj.homEquiv P M).left_inv k
 
-/-- **Generic forget-image cocycle reassembly (instance-agnostic).** Given the sheaf-level cocycle
-`x ≫ y = x' ≫ y' ≫ z'` in `C`, its `F`-image, prefixed by any `η`, reassembles as the matching
-forget-image composite.  Stated over one `[Category C]`/`[Category D]` so the `Functor.map_comp`
-  merges run on clean abstract variables; applied to the concrete D3′ reduction goal by `exact`, whose
-  defeq unification crosses the concrete sheafification-carrier instance boundary that blocks
-  `rw [← Functor.map_comp]` on the forget-images.  This is the (T)/(H)→goal bridge in
-`pullbackValIso_comp_leg` (blueprint `lem:pullback_val_iso_comp`). -/
+/-- Map a cocycle equality through a functor and prefix both sides by the same morphism. -/
 private lemma comp_forget_cocycle {C D : Type*} [Category C] [Category D] (F : C ⥤ D)
     {a b c a' d' : C} {Wd : D} (η : Wd ⟶ F.obj a) (x : a ⟶ b) (y : b ⟶ c)
     (x' : a ⟶ a') (y' : a' ⟶ d') (z' : d' ⟶ c) (h : x ≫ y = x' ≫ y' ≫ z') :
     η ≫ F.map x ≫ F.map y = η ≫ F.map x' ≫ F.map y' ≫ F.map z' := by
   rw [← Functor.map_comp, h, Functor.map_comp, Functor.map_comp]
 
-/-- **Generic interleaved 3-pair telescope (instance-agnostic).** A palindromic composite collapses to
-its centre `g` once the three nested pairs cancel (`A≫A' = B≫B' = C≫C' = 𝟙`).  Stated over one
-`[Category C]` so the `Category.assoc` flattening runs on clean abstract variables — never on the
-`SheafOfModules` carrier where `simp/rw [Category.assoc]` whnf-bombs — then applied to the inverse of
-`sheafificationCompPullback_comp` by `exact`.  This is the Sq4a telescope of
-`sheafificationCompPullback_comp_inv`. -/
+/-- Collapse a palindromic composite when its three nested pairs are inverse. -/
 private lemma inv_telescope {C : Type*} [Category C] {w x y z t : C}
     (A : w ⟶ x) (A' : x ⟶ w) (B : x ⟶ y) (B' : y ⟶ x) (Cc : y ⟶ z) (C' : z ⟶ y) (g : w ⟶ t)
     (hA : A ≫ A' = 𝟙 w) (hB : B ≫ B' = 𝟙 x) (hC : Cc ≫ C' = 𝟙 y) :
@@ -2989,12 +2682,7 @@ private lemma inv_telescope {C : Type*} [Category C] {w x y z t : C}
   rw [← Category.assoc Cc C', hC, Category.id_comp, ← Category.assoc B B', hB, Category.id_comp,
     ← Category.assoc A A', hA, Category.id_comp]
 
-/-- **Generic cocycle assembly (instance-agnostic).** The algebraic skeleton of the `pullbackValIso`
-composition coherence `hH` in `pullbackValIso_comp_leg`: the LHS reassembles via the Sq4a inverse
-(`h1`) and `pullbackComp` naturality (`h2`); the RHS via `sheafificationCompPullback h` naturality
-(`h3`); the two meet through the adjunction triangle `h4`.  Stated over one `[Category C]`/`[Category D]`
-with abstract `F` so the `Functor.map_comp` merges and `Category.assoc` reshuffles run on clean
-variables (no `SheafOfModules` whnf-bomb); applied by `exact`. -/
+/-- Assemble the two naturality paths and their shared adjunction triangle into one cocycle. -/
 private lemma cocycle_assemble {C D : Type*} [Category C] [Category D] (F : C ⥤ D)
     {dA dB dC dD dQ : D} {cP cQ cR cS : C}
     (p : dA ⟶ dB) (sf : dB ⟶ dC) (m1 : dC ⟶ dD)
@@ -3008,61 +2696,62 @@ private lemma cocycle_assemble {C D : Type*} [Category C] [Category D] (F : C �
 
 set_option maxHeartbeats 1600000 in
 -- Expanding `comp_δ` retains the full sheafification and monoidal-instance telescope.
-/-- **Step-(ii) — the `comp_δ` split of `δcomp` under `a_Z.map`.** The oplax tensorator of the
-*composite* presheaf pullback `pullback φ'_f ⋙ pullback φ'_h`, sheafified, decomposes (by the Mathlib
-oplax-monoidal coherence `Functor.OplaxMonoidal.comp_δ` of a composite of left adjoints) into the
-sheafification of `(pullback φ'_h).map δ_f` followed by the sheafification of `δ_h` on the pulled-back
-arguments. This is the mechanical step (ii) of the four-square interleave in
-`pullbackTensorMap_restrict`; stated with the same `show … from` ring-map ascriptions as the proof's
-`δcomp` binding so the `MonoidalCategory`/`forget₂` instances pin identically (iter-257 finding (3)).
-Project-local. -/
+/-- Split the oplax tensorator of a composite presheaf pullback after sheafification.
+
+The explicit ring-map ascriptions keep the monoidal instances aligned with those in
+`pullbackTensorMap_restrict`. -/
 private lemma sheafifyMap_δcomp_split {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X)
     (M N : X.Modules) :
     (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map
         (Functor.OplaxMonoidal.δ
           (PresheafOfModules.pullback
               (show (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
-                  (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
+                  (TopologicalSpace.Opens.map f.base).op ⋙
+                    (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
                 from (Hom.toRingCatSheafHom f).hom) ⋙
             PresheafOfModules.pullback
               (show (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
-                  (TopologicalSpace.Opens.map h.base).op ⋙ (Z.presheaf ⋙ forget₂ CommRingCat RingCat)
+                  (TopologicalSpace.Opens.map h.base).op ⋙
+                    (Z.presheaf ⋙ forget₂ CommRingCat RingCat)
                 from (Hom.toRingCatSheafHom h).hom))
           M.val N.val) =
       (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map
           ((PresheafOfModules.pullback
               (show (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
-                  (TopologicalSpace.Opens.map h.base).op ⋙ (Z.presheaf ⋙ forget₂ CommRingCat RingCat)
+                  (TopologicalSpace.Opens.map h.base).op ⋙
+                    (Z.presheaf ⋙ forget₂ CommRingCat RingCat)
                 from (Hom.toRingCatSheafHom h).hom)).map
             (Functor.OplaxMonoidal.δ
               (PresheafOfModules.pullback
                 (show (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
-                    (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
+                    (TopologicalSpace.Opens.map f.base).op ⋙
+                      (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
                   from (Hom.toRingCatSheafHom f).hom))
               M.val N.val)) ≫
         (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map
           (Functor.OplaxMonoidal.δ
             (PresheafOfModules.pullback
               (show (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
-                  (TopologicalSpace.Opens.map h.base).op ⋙ (Z.presheaf ⋙ forget₂ CommRingCat RingCat)
+                  (TopologicalSpace.Opens.map h.base).op ⋙
+                    (Z.presheaf ⋙ forget₂ CommRingCat RingCat)
                 from (Hom.toRingCatSheafHom h).hom))
             ((PresheafOfModules.pullback
               (show (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
-                  (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
+                  (TopologicalSpace.Opens.map f.base).op ⋙
+                    (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
                 from (Hom.toRingCatSheafHom f).hom)).obj M.val)
             ((PresheafOfModules.pullback
               (show (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
-                  (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
+                  (TopologicalSpace.Opens.map f.base).op ⋙
+                    (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
                 from (Hom.toRingCatSheafHom f).hom)).obj N.val)) := by
-  -- `δ (F ⋙ G)` is *definitionally* `G.map (δ F) ≫ δ G` (the `Functor.OplaxMonoidal.comp`
-  -- instance), so after folding the two `a.map`s by `← Functor.map_comp` the `congr 1` closes by `rfl`.
+  -- The composite oplax structure defines `δ (F ⋙ G)` as `G.map (δ F) ≫ δ G`.
   rw [← Functor.map_comp]
   congr 1
 
-/-- **Sq4a — inverse of the Sq1 coherence `sheafificationCompPullback_comp`** (blueprint
-`lem:pullback_val_iso_comp_scpb`).  Taking inverses of the four-factor `sheafificationCompPullback_comp`
-identity and cancelling `a_Z.map(PrPbComp.hom)` against the leading `a_Z.map(Pc)` gives the
-`sheafCompPb⁻¹` reassembly consumed by `pullbackValIso_comp_leg`.  Project-local. -/
+/-- Inverse form of `sheafificationCompPullback_comp`.
+
+Cancelling its three inverse pairs gives the reassembly used by `pullbackValIso_comp_leg`. -/
 private lemma sheafificationCompPullback_comp_inv {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X)
     (P : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) :
     (PresheafOfModules.sheafification (𝟙 Z.ringCatSheaf.obj)).map
@@ -3083,9 +2772,12 @@ private lemma sheafificationCompPullback_comp_inv {X Y Z : Scheme.{u}} (h : Z �
   have hB : (SheafOfModules.pullback (Hom.toRingCatSheafHom h)).map
           ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom f)).app P).inv ≫
         (SheafOfModules.pullback (Hom.toRingCatSheafHom h)).map
-          ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom f)).app P).hom = 𝟙 _ := by
+          ((SheafOfModules.sheafificationCompPullback
+            (Hom.toRingCatSheafHom f)).app P).hom = 𝟙 _ := by
     rw [← Functor.map_comp, Iso.inv_hom_id, CategoryTheory.Functor.map_id]
-  have hC : (SheafOfModules.pullbackComp (Hom.toRingCatSheafHom f) (Hom.toRingCatSheafHom h)).hom.app
+  have hC :
+      (SheafOfModules.pullbackComp
+        (Hom.toRingCatSheafHom f) (Hom.toRingCatSheafHom h)).hom.app
           ((PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)).obj P) ≫
         (SheafOfModules.pullbackComp (Hom.toRingCatSheafHom f) (Hom.toRingCatSheafHom h)).inv.app
           ((PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)).obj P) = 𝟙 _ :=
@@ -3093,91 +2785,14 @@ private lemma sheafificationCompPullback_comp_inv {X Y Z : Scheme.{u}} (h : Z �
   rw [Iso.comp_inv_eq, sheafificationCompPullback_comp h f P]
   exact inv_telescope _ _ _ _ _ _ _ hA hB hC
 
-/- Planner strategy (iter-019): closing the sole remaining `sorry` in `pullbackValIso_comp_leg`
-   (blueprint `lem:pullback_val_iso_comp`, `lem:pullback_val_iso_comp_scpb`,
-   `lem:pullback_val_iso_comp_counit`).
-
-   **Post-split goal** (after both `simp only` lines at the bottom of the proof body — the
-   pVI-unfold pass and the `Functor.map_comp`/`Category.assoc` atomic-split pass).  The goal is
-   exactly the fully-atomic identity written in the in-proof comments at L3206–3208:
-     pbᵖ.hom.app W.val ≫ η^Z ≫ FZ[SCPb(h≫f)⁻¹] ≫ FZ[ph_{h≫f}(cuX W)]
-       = ph_h(η^Y) ≫ ph_h(FY[SCPb f⁻¹]) ≫ ph_h(FY[ph_f(cuX W)]) ≫ η^Z
-           ≫ FZ[SCPb h⁻¹] ≫ FZ[ph_h(cuY (f*W))] ≫ FZ[(pullbackComp h f).app W .hom]
-   (Notation: FZ = `SheafOfModules.forget Z.ringCatSheaf`, SCPb g =
-   `SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom g)`, ph_g = sheaf pullback map,
-   η^Z = sheafification unit, cuX W = sheafification counit at W, pbᵖ = `PresheafOfModules.pullbackComp`.)
-
-   **Strategy: two in-proof `have`s, then assembly.**  Do NOT use blind multi-`erw`; instance
-   boundaries between `SheafOfModules` and `Scheme.Modules` spellings cause `whnf`-bombs under
-   `rw`/`erw [Category.assoc]`.  Use the existing instance-agnostic generic lemmas (stated once
-   over a single `[Category C]` variable so Lean's defeq unification — not rewriting — crosses the
-   boundary): `comp_cancel_mid` (L2988), `comp_slide_nested` (L3004), `comp_cancel_three_lr` (L3021),
-   `comp_slide_three` (L3046), `map_comp_slide` (L3063), `map_comp4_eq_comp5` (L3081).  Apply
-   each by `exact` or `refine … ?_` so the assignment is pure unification.  Region rewrites that
-   stay inside the underlying `Z.ringCatSheaf.obj` carrier still need `erw`.
-
-   **Sub-coherence 1 — SCPb⁻¹ reassembly (blueprint `lem:pullback_val_iso_comp_scpb`).**
-   Derive from the PROVEN Sq1 coherence `sheafificationCompPullback_comp h f W.val` (private,
-   L2795, same file).  That lemma states (with `P := W.val`):
-     `(SCPb (h≫f)).app P .hom = pullbackComp(f,h)^{-1}.app(a_X.obj P)
-       ≫ ph_h.map ((SCPb f).app P .hom) ≫ (SCPb h).app(pb_f P) .hom ≫ a_Z.map(pbᵖ.hom.app P)`
-   Invert both sides to obtain `(SCPb (h≫f)).app P .inv`; then use
-   `IsIso.inv_comp_eq`, `Iso.comp_inv_eq`, and `Category.assoc` to express the three SCPb⁻¹
-   factors on the RHS of the post-split goal (the `FZ[SCPb(h≫f)⁻¹]` on the LHS plus
-   `FZ[SCPb h⁻¹]` and `ph_h(FY[SCPb f⁻¹])` on the RHS) in terms of the Sq1 equation.
-   State as:
-     have hSCPb : <LHS SCPb-slice> = <RHS SCPb-slice> := by
-       have h1 := sheafificationCompPullback_comp h f W.val
-       -- invert, reassociate, cancel
-
-   **Sub-coherence 2 — counit reassembly (blueprint `lem:pullback_val_iso_comp_counit`).**
-   Use naturality of the sheafification adjunction counit
-     `(PresheafOfModules.sheafificationAdjunction (𝟙 (Z.ringCatSheaf.obj))).counit`
-   across the morphism `(pullbackComp h f).app W` (in the category of presheaves of modules
-   over Z), which moves `FZ[(pullbackComp h f).app W .hom]` past the pulled-back counit factors.
-   Apply via `NatTrans.naturality` (or equivalently `Adjunction.counit_naturality`).
-   State as:
-     have hCounit : <LHS counit-slice> = <RHS counit-slice> := by
-       have h2 := (PresheafOfModules.sheafificationAdjunction
-         (𝟙 (Z.ringCatSheaf.obj))).counit.naturality
-         ((pullbackComp h f).app W)   -- or the appropriate component
-       -- reassociate as needed
-
-   **Assembly.**  After both `have`s, rewrite using `hSCPb` and `hCounit`, then close by
-   `Functor.map_comp`, `Category.assoc`, and — for any remaining instance-boundary
-   reassociation — a `refine`+`exact` against one of the abstract generic lemmas above.
-
-   **INSTANCE-BOUNDARY DEVICE** (reuse pattern documented throughout the file): whenever a `≫`
-   in the concrete goal joins terms whose types are definitionally but not syntactically equal
-   (e.g. `SheafOfModules Z.ringCatSheaf` vs `Scheme.Modules Z`), stating the required
-   reassociation or cancellation as a fresh `private` single-`[Category C]` lemma (analogous to
-   `comp_cancel_mid`, `comp_slide_three`, `map_comp_slide`) and discharging by `exact` (pure
-   defeq unification, no rewriting) is the correct device.  Keep ALL new helpers as `private`
-   at top-level — the carrier-instance trap is an elaboration-time problem that only bites at
-   top level when the type ascription fixes the concrete category; it does NOT bite inside an
-   in-proof `have` whose type is inferred.  If the in-proof chase hits a class that the
-   `exact`-device cannot cross, report: exact tactic used, full elaborated goal — do NOT pile
-   on additional `erw` layers. -/
--- v4.31.0: the `simpa … using …unit.naturality` steps `hUZ1`/`hUZ2` reconcile the composite
--- ring-map spelling `(φf ≫ whiskerLeft … φh)` / `(pullback φf ⋙ pullback φh)` of the naturality
--- term against the `(toRingCatSheafHom (h ≫ f))` / nested-`pullback.obj` spelling of the goal —
--- a `rfl`-reconciliation (toRingCatSheafHom is functorial on the nose) that stricter v4.31 defeq no
--- longer sees through during `simpa`'s closing unification.  The transparency knob restores it.
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- Closing unification reconciles the composite ring-map and nested pullback spellings.
-/-- **Sq4 — the per-leg `pullbackValIso` composition coherence** (blueprint `lem:pullback_val_iso_comp`).
-For composable `h : Z ⟶ Y`, `f : Y ⟶ X` and `W : X.Modules`, the canonical "sheafification-unit into the
-underlying presheaf of the pullback" — `η ≫ forget (pullbackValIso · W).hom` — composes
-pseudofunctorially across `h ≫ f`, reconciling `pullbackValIso (h ≫ f)`, `pullbackValIso h`,
-`pullbackValIso f`, the presheaf coherence `PresheafOfModules.pullbackComp` and the sheaf coherence
-`pullbackComp h f`. This is the single per-leg residual of the merged Sq3/Sq4 presheaf core of
-`pullbackTensorMap_restrict` (applied once for `M` and once for `N`).
+/-- Per-leg composition coherence for `pullbackValIso`.
 
-By `def:pullback_val_iso`, `pullbackValIso f W = (sheafificationCompPullback f).symm.app W.val ≪≫
-(pullback f).mapIso (sheafification counit at W)`; substituting this factorisation on every leg, the
-`sheafCompPb⁻¹` parts reassemble via the Sq1 coherence `sheafificationCompPullback_comp` and the counit
-parts via counit naturality. -/
+The sheafification unit followed by the underlying map of `pullbackValIso` composes
+pseudofunctorially. The inverse comparison factors reassemble by
+`sheafificationCompPullback_comp`, while the counit factors reassemble by naturality. -/
 lemma pullbackValIso_comp_leg {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X) (W : X.Modules) :
     (PresheafOfModules.pullbackComp (Hom.toRingCatSheafHom f).hom
           (Hom.toRingCatSheafHom h).hom).hom.app W.val ≫
@@ -3193,16 +2808,7 @@ lemma pullbackValIso_comp_leg {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X) (
                 ((pullback f).obj W).val) ≫
             (SheafOfModules.forget Z.ringCatSheaf).map (pullbackValIso h ((pullback f).obj W)).hom ≫
               (SheafOfModules.forget Z.ringCatSheaf).map ((pullbackComp h f).app W).hom := by
-  -- ITER-019+ (prover): full chase via the SHEAF-LEVEL cocycle `hH` (blueprint `lem:pullback_val_iso_comp`).
-  -- The leading sheafification unit `η^Z_{phh(phf W.val)}` and the forgetful functor `forget Z` are
-  -- factored out by unit naturality; what remains is the clean `SheafOfModules Z`-level identity `hH`,
-  -- proved by Sq4a (`sheafificationCompPullback_comp`, inverted), naturality of `pullbackComp h f` at the
-  -- counit `ε^X_W`, naturality of `sheafificationCompPullback h`, and the adjunction triangle
-  -- `adj_unit_map_counit` (the (T) step).  See task_results for the paper proof.
-  -- Abbreviations used in comments: aZ/aY = sheafification, FZ/FY = forget, phf/phh/phhf = presheaf
-  -- pullbacks, ηZ/ηY = sheafification units, εX/εY = sheafification counits, Pc = PrPbComp.hom.app W.val,
-  -- b = ηY.app(phf W.val) ≫ FY.map (pVI f W).hom, SCg = sheafificationCompPullback, PBg = sheaf pullback.
-  -- Unit naturality of η^Z at `Pc` (LHS) and at `phh.map b` (RHS).
+  -- Move both leading units by naturality, then prove the remaining sheaf-level cocycle.
   have hUZ1 :
       (PresheafOfModules.pullbackComp (Hom.toRingCatSheafHom f).hom
             (Hom.toRingCatSheafHom h).hom).hom.app W.val ≫
@@ -3215,10 +2821,7 @@ lemma pullbackValIso_comp_leg {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X) (
               ((PresheafOfModules.sheafification (𝟙 Z.ringCatSheaf.obj)).map
                 ((PresheafOfModules.pullbackComp (Hom.toRingCatSheafHom f).hom
                   (Hom.toRingCatSheafHom h).hom).hom.app W.val)) := by
-    -- v4.31.0: `simpa … using` closes with reducible-transparency `isDefEq`, which no longer bridges
-    -- the `Functor.comp.obj` object-spelling and the `toRingCatSheafHom (h ≫ f) = φf ≫ whiskerLeft φh`
-    -- reconciliation (a `def`-level `rfl`).  Land the naturality into a hypothesis, normalize it, and
-    -- close by a bare `exact` (default-transparency `isDefEq`, which sees through both).
+    -- Normalize the functor composition before unifying the two object presentations.
     have hnat := (PresheafOfModules.sheafificationAdjunction
         (𝟙 (Z.ringCatSheaf.obj))).unit.naturality
           ((PresheafOfModules.pullbackComp (Hom.toRingCatSheafHom f).hom
@@ -3271,7 +2874,9 @@ lemma pullbackValIso_comp_leg {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X) (
     have h2 := ((Scheme.Modules.pullbackComp h f).hom.naturality
       (((asIso (PresheafOfModules.sheafificationAdjunction
         (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).counit).app W).hom)).symm
-    have h3 := (SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom h)).inv.naturality b
+    have h3 :=
+      (SheafOfModules.sheafificationCompPullback
+        (Hom.toRingCatSheafHom h)).inv.naturality b
     -- (T): the adjunction triangle for the sheafification adjunction on `Y`.
     have h4 : (PresheafOfModules.sheafification (𝟙 Y.ringCatSheaf.obj)).map b ≫
           (((asIso (PresheafOfModules.sheafificationAdjunction
@@ -3290,27 +2895,12 @@ lemma pullbackValIso_comp_leg {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X) (
 
 set_option maxHeartbeats 3200000 in
 -- The tensorator coherence interleaves four sheafified comparison squares.
-/-- **D3′ — composition coherence of the sheaf-level pullback–tensor comparison `pullbackTensorMap`**
-(blueprint `lem:pullback_tensor_map_basechange`).
+/-- Composition coherence of the sheaf-level pullback tensorator.
 
-This is the *tensorator* analog of the unit composition coherence
-`pullbackObjUnitToUnit_comp`: for composable scheme morphisms `h : Z ⟶ Y`, `f : Y ⟶ X` and
-arbitrary `M N : X.Modules`, the comparison `δ_sheaf = pullbackTensorMap (h ≫ f)` of the composite
-factors through the comparisons of `f` and `h` and the pullback pseudofunctor coherence
-`pullbackComp`:
-`pullbackTensorMap (h≫f) M N = (pullbackComp h f).inv ≫ (pullback h).map (pullbackTensorMap f) ≫
-  pullbackTensorMap h (f^*M) (f^*N) ≫ tensorObjIsoOfIso (pullbackComp h f) (pullbackComp h f)`.
-
-  The base-change-square form of the blueprint (`f ∘ j' = j ∘ g` with `j, j'` open immersions) is the
-  specialisation `h := j'`, `f`, applied to the two factorisations `j' ≫ f = g ≫ j` of the equal
-  underlying morphisms; the displayed identity of the restricted comparisons follows by equating the
-  two instances of this coherence. Consumed by D4′ `pullbackTensorIsoOfLocallyTrivial`.
-
-Mathlib-absent at the pinned commit; NOT a sectionwise statement (the left-adjoint pullback exposes
-no sectionwise value). Proved by the mate calculus through the oplax comparison `δ` of a composite of
-left adjoints (`Functor.OplaxMonoidal.comp_δ`) and the adjunction-mate identity
-`conjugateEquiv_pullbackComp_inv` (`pullbackComp` for the left adjoints ↔ `pushforwardComp` for the
-right adjoints), exactly mirroring `pullbackObjUnitToUnit_comp`. -/
+For composable scheme morphisms, `pullbackTensorMap` for the composite factors through the
+comparisons for the two morphisms and the pullback pseudofunctor coherence. Specializing this
+identity to the two factorizations of a base-change square gives the blueprint's restricted
+comparison. -/
 lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X)
     (M N : X.Modules) :
     pullbackTensorMap (h ≫ f) M N =
@@ -3320,111 +2910,24 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
         ((Scheme.Modules.pullback f).obj N) ≫
       (tensorObjIsoOfIso ((Scheme.Modules.pullbackComp h f).app M)
         ((Scheme.Modules.pullbackComp h f).app N)).hom := by
-  -- ROADMAP (iter-256 handoff). Unfolding `pullbackTensorMap` on both sides (verified) exposes the
-  -- four-fold composite `S1 ≫ a.map δ ≫ S3 ≫ S4` with
-  --   S1 = (sheafificationCompPullback φ_{·}).app (M.val ⊗ₚ N.val) .hom,
-  --   S2 = a_·.map (Functor.OplaxMonoidal.δ (PresheafOfModules.pullback φ'_{·}) M.val N.val),
-  --   S3 = (sheafifyTensorUnitIso (Fp M.val) (Fp N.val)).hom,
-  --   S4 = a_·.map (forget(pullbackValIso · M).hom ⊗ₘ forget(pullbackValIso · N).hom).
-  -- Unlike D1′ (naturality, a 4-square *paste*), this is a 4-square *composition*-coherence: the LHS
-  -- is the composite-morphism `· = h ≫ f` instance, the RHS interleaves the `f` instance (pushed
-  -- forward by `(pullback h).map`) with the `h` instance (on the pulled-back modules `(pullback f).obj`),
-  -- all conjugated by the pseudofunctoriality iso `pullbackComp h f`.
-  --
-  -- **Why the unit-analog mirror does NOT transfer.** `pullbackObjUnitToUnit_comp` (L907) works because
-  -- `pullbackObjUnitToUnit` is BY DEFINITION an adjunction transpose, so its composition coherence is
-  -- obtained by transposing through `pullbackPushforwardAdjunction.homEquiv` and invoking the bridge
-  -- `pullbackPushforwardAdjunction_homEquiv_pullbackObjUnitToUnit`. `pullbackTensorMap` is NOT a
-  -- transpose — it is the hand-built 4-fold composite above — and there is NO analogous
-  -- `…homEquiv_pullbackTensorMap` bridge. Hence the mirror's very first move
-  -- (`(pullbackPushforwardAdjunction (h≫f)).homEquiv.injective`) leaves an un-evaluable transpose of a
-  -- concrete composite and stalls. This is the planner's anticipated "genuinely new obstacle beyond the
-  -- unit-analog pattern" — per the iter-256 reversing signal, the scaffolded statement is retained with
-  -- this typed `sorry` rather than forcing a non-applicable device.
-  --
-  -- **The genuine route (four composition-coherence squares; each its own sub-lemma).**
-  --  • Sq2 (the δ core): `δ (PresheafOfModules.pullback φ'_{h≫f})` decomposes via
-  --    `CategoryTheory.Functor.OplaxMonoidal.comp_δ` once `pullback φ'_{h≫f}` is identified with
-  --    `pullback φ'_f ⋙ pullback φ'_h` through the Mathlib presheaf coherence
-  --    `PresheafOfModules.pullbackComp φ'_f ψ` (verified to exist; composite ring map
-  --    `φ'_f ≫ F.op.whiskerLeft ψ`), which requires the ring-map reconciliation
-  --    `(toRingCatSheafHom (h≫f)).hom = φ'_f ≫ (Opens.map f.base).op.whiskerLeft φ'_h` (functoriality
-  --    of `toRingCatSheafHom` under `≫`).  `PresheafOfModules.{pullbackId, pullback_assoc}` are the
-  --    coherence-bookkeeping lemmas.
-  --  • Sq1 (sheafification ↔ pullback): the composition coherence of
-  --    `SheafOfModules.sheafificationCompPullback` across `h≫f` (analog of `pullbackComp` for the
-  --    `sheafification ⋙ pullback` natural iso) — Mathlib-absent, a project sub-lemma.
-  --  • Sq3: `sheafifyTensorUnitIso` carried through the same `pullbackComp` identification.
-  --  • Sq4 (the connecting iso): a Scheme-level `pullbackValIso` composition coherence relating
-  --    `pullbackValIso (h≫f) M` to `(pullback h).map (pullbackValIso f M)`, `pullbackValIso h (f^*M)`
-  --    and `(pullbackComp h f).app M` — Mathlib-absent, the second project sub-lemma; it is the
-  --    bookkeeping that produces the final `tensorObjIsoOfIso (pullbackComp h f) (pullbackComp h f)`.
-  -- The two project sub-lemmas (Sq1, Sq4 composition coherences) + the Sq2 ring-map reconciliation are
-  -- the missing ingredients; they are the iter-257 work items (each ~40-120 LOC, mate-calculus style).
-  --
-  -- ITER-257 FINDINGS (prover):
-  --  (1) The Sq2 RING-MAP RECONCILIATION IS DEFINITIONAL — `toRingCatSheafHom_comp_hom_reconcile`
-  --      (just above) closes by `rfl`: `(toRingCatSheafHom (h≫f)).hom =
-  --      (toRingCatSheafHom f).hom ≫ (Opens.map f.base).op.whiskerLeft (toRingCatSheafHom h).hom`.
-  --      The blueprint's "non-trivial because the two sides live in functor categories that agree only
-  --      up to Opens.map_comp" is in fact a `rfl` (the `Opens.map`/`Scheme` comp defeqs hold). This
-  --      means `PresheafOfModules.pullbackComp φ'_f φ'_h` lands in `pullback φ'_{h≫f}` ON THE NOSE.
-  --  (2) The genuine Sq2 content is "Sq2b": the MONOIDALITY of `pullbackComp` — that `δ` of the single
-  --      `pullback φ'_{h≫f}` (leftAdjoint-oplax of the composite adjunction) transports, through
-  --      `pullbackComp`, to `δ` of the composite functor `pullback φ'_f ⋙ pullback φ'_h`
-  --      (`Functor.OplaxMonoidal.comp_δ`). Mathlib has NO ready lemma for the δ-transport of
-  --      `Adjunction.leftAdjointCompIso` (searched: no `leftAdjointOplaxMonoidal`-of-composite lemma).
-  --      It must be proved by the mate calculus (mirror `Adjunction.isMonoidal_comp`, Functor.lean:990).
-  --  (3) STATEMENT-LEVEL FRICTION to budget for: (a) `Functor.OplaxMonoidal.δ (pullback φ')` needs the
-  --      CommRingCat/forget₂ monoidal-instance pinning (the D1′ `show … from`/`let φ' : … ⋙ forget₂`
-  --      device — bare `δ (pullback (toRingCatSheafHom f).hom)` leaves `MonoidalCategory` metavars
-  --      stuck); (b) `pullbackComp φ'_f φ'_h` pins `(F := Opens.map f.base ⋙ Opens.map h.base)` with the
-  --      morphism `φ'_f ≫ whiskerLeft (Opens.map f.base).op φ'_h`, and unifying the standalone δ's
-  --      pullback against that codomain needs explicit `(F := …)` + the associativity defeq
-  --      `(F⋙G).op⋙T = F.op⋙(G.op⋙T)` — write the LHS δ over `pullback (F := _ ⋙ _) (toRingCatSheafHom
-  --      (h≫f)).hom` (typechecks) and bridge the RHS connecting object by `eqToHom` via finding (1).
-  -- ITER-261 (prover): the proof is now OPENED to the paste-ready form.  `simp only` unfolds
-  -- `pullbackTensorMap` on BOTH sides into the four-fold composite `S1 ≫ a.map δ ≫ S3 ≫ S4`; the RHS
-  -- `(pullback h).map (S1_f ≫ … ≫ S4_f)` is distributed by `Functor.map_comp` and everything
-  -- right-associated.  The goal is then the explicit 4-vs-10 factor identity
-  --   S1_{hf} ≫ a_Z.map δ_{hf} ≫ S3_{hf} ≫ S4_{hf}
-  --     = R0 ≫ (pullback h).map S1_f ≫ (pullback h).map (a_Y.map δ_f) ≫ (pullback h).map S3_f
-  --        ≫ (pullback h).map S4_f ≫ S1_h ≫ a_Z.map δ_h ≫ S3_h ≫ S4_h ≫ a_Z.mapIso(pbComp ⊗ pbComp).hom
-  -- with R0 = (pullbackComp h f).inv.app (M⊗N).  This is the four-square *composition* paste:
-  --   • Sq1 (the S1 connecting iso):  `sheafificationCompPullback_comp` (stated+opened just above —
-  --     the foundational Mathlib-absent coherence; LHS already reduced to the unit identity).
-  --   • Sq2b (the δ core):           `pullbackComp_δ` (CLOSED, axiom-clean) under `a_Z.map`.
-  --   • Sq3 (the unit iso):          `sheafifyTensorUnitIso` carried through `pullbackComp`.
-  --   • Sq4 (the connecting iso):    a `pullbackValIso` composition coherence (Mathlib-absent; it
-  --     factors through Sq1 since `pullbackValIso = sheafCompPb.symm ≪≫ pullback.mapIso counit`).
-  -- The squares INTERLEAVE (e.g. `S1_h` here acts on `tensorObj ((pullback f).obj M) …`, NOT on
-  -- `PrPb_f (M⊗N)`), so the paste slides factors past each other by `δ_natural` / NatTrans naturality
-  -- exactly as the D1′ naturality paste (`pullbackTensorMap_natural`, L2007) does — merging
-  -- `a.map δ ≫ S3 ≫ S4` into a single `a.map Ψ` to move S1 by its mate coherence.  The remaining work
-  -- is: finish Sq1's unit reassembly, build Sq4, then run the interleaved merge.  Typed sorry retained
-  -- (race-safe: file compiles; `DualInverse.lean` imports it).
+  -- Expand each tensorator comparison into its four defining factors. The proof then pastes:
+  -- sheafification-pullback coherence, the composite oplax tensorator, the tensor-unit
+  -- comparison, and `pullbackValIso` coherence. The latter two squares must be interleaved because
+  -- their arguments use different presentations of the pulled-back underlying presheaves.
   simp only [pullbackTensorMap, tensorObjIsoOfIso]
   rw [Functor.map_comp, Functor.map_comp, Functor.map_comp]
   simp only [Category.assoc]
-  -- ITER-013 (prover) — PREFIX RE-CANONICALIZED.  The iter-006 prefix spliced `h1` via
-  -- `erw [reassoc_of% h1]`, which introduced a NON-`Category.toCategoryStruct` boundary `≫` separating
-  -- the cancellable pair `D = aZ.map (PrPbComp.hom.app P)` (last factor of the expanded S1) from
-  -- `E = aZ.map (pb.inv.app P)` (head of the `hδ` group); no canonical-assoc tactic could bring them
-  -- adjacent.  We now KEEP S1 FOLDED in the goal and discharge step (i) through the clean combined
-  -- brick `hcancel : S1 ≫ E = R0 ≫ R1 ≫ R5` proved in a fresh `have`-context (where `rw [h1]` +
-  -- `Category.assoc` stay canonical and `sheafifyMap_pullbackComp_hom_inv_id` cancels `D ≫ E`).  No
-  -- `reassoc_of%`, so no instance drift.
+  -- Keep the first comparison folded while assembling the adjacent inverse pair.
   have h1 := sheafificationCompPullback_comp h f (PresheafOfModules.Monoidal.tensorObj M.val N.val)
-  letI instMSX : MonoidalCategoryStruct (_root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) :=
+  letI instMSX :
+      MonoidalCategoryStruct
+        (_root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) :=
     inferInstance
-  letI instMSZ : MonoidalCategoryStruct (_root_.PresheafOfModules (Z.presheaf ⋙ forget₂ CommRingCat RingCat)) :=
+  letI instMSZ :
+      MonoidalCategoryStruct
+        (_root_.PresheafOfModules (Z.presheaf ⋙ forget₂ CommRingCat RingCat)) :=
     inferInstance
-  -- ITER-013 (prover): `aZ`/`pb` are spelled out EXPLICITLY below (no `let`-fvar) so that `hδ`'s `E`,
-  -- `h1`'s `D`, the Brick-1 lemma `sheafifyMap_pullbackComp_hom_inv_id`, and `hcancel` ALL share the
-  -- identical sheafification/pullbackComp spelling — `cod D = dom E` then matches SYNTACTICALLY and a
-  -- plain `rw [Category.assoc]` reassociates the `D ≫ E` cancellation (a `let`-fvar `aZ.obj …` vs
-  -- explicit `(sheafification …).obj …` mismatch was what blocked the keyed `rw`/`simp` and forced the
-  -- `whnf`-bombing `erw [Category.assoc]`).
+  -- Explicit functor spellings keep the cancellation factors syntactically aligned.
   let φfh := (Hom.toRingCatSheafHom (h ≫ f)).hom
   let φf := (Hom.toRingCatSheafHom f).hom
   let φh := (Hom.toRingCatSheafHom h).hom
@@ -3457,13 +2960,7 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
               (PresheafOfModules.Monoidal.tensorObj M.val N.val)) ≫
         (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map δcomp ≫
         (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map tcomp := by
-    -- RESOLVED (iter-006): the Sq2b content is exactly the CLOSED `pullbackComp_δ` under
-    -- `congrArg aZ.map`.  The forward `rw [Functor.map_comp] at` route does NOT fire (the inner
-    -- `≫` carries a distinct inferred instance for the presheaf category); instead FOLD the goal's
-    -- RHS by `← Functor.map_comp` (the explicit `aZ.map _ ≫
-    -- aZ.map _` heads match syntactically) and close by defeq against the congrArg image
-    -- (`show`-pinned ring maps are defeq to the bare `(Hom.toRingCatSheafHom ·).hom`, and
-    -- `φfh = φf ≫ whiskerLeft φh` is `rfl` by `toRingCatSheafHom_comp_hom_reconcile`).
+    -- Apply `pullbackComp_δ` under sheafification, folding mapped composites first.
     have hd := pullbackComp_δ
       (show (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
           (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
@@ -3473,16 +2970,7 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
         from (Hom.toRingCatSheafHom h).hom) M.val N.val
     rw [← Functor.map_comp, ← Functor.map_comp]
     exact congrArg (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map hd
-  -- ── STEP (i) — the combined `S1 ≫ a.map δfh` brick (`hmain`), proved in a CLEAN context ──
-  -- iter-015 root-cause: in the *main* goal `S1` came from `simp only [pullbackTensorMap]`, whose
-  -- internal spelling is defeq-but-not-syntactic to `h1`'s LHS, so `rw [h1]` could not fire there and
-  -- `erw [h1]` left a non-canonical `D ≫ E` boundary that `Category.assoc` could not cross.  The fix is
-  -- to AVOID splicing `h1` into the unfolded main goal: state `hmain` with `S1`/`a.map δfh` written
-  -- *verbatim* as `h1`/`hδ`'s LHS, so inside `hmain` plain `rw [h1, hδ]` fires (syntactic match) and the
-  -- connecting `≫` stays the canonical `SheafOfModules Z` comp.  Then `simp only [Category.assoc]`
-  -- flattens, `reassoc_of% sheafifyMap_pullbackComp_hom_inv_id` cancels the now-adjacent `D ≫ E`, and the
-  -- WHOLE brick is spliced into the main goal by `erw [reassoc_of% hmain]` (defeq matching crosses the
-  -- main goal's hidden-instance `S1` — verified to land the canonical step-(i) form in iter-015).
+  -- Combine the first comparison and the composite tensorator in one canonical category instance.
   have hmain :
       ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom (h ≫ f))).app
           (PresheafOfModules.Monoidal.tensorObj M.val N.val)).hom ≫
@@ -3498,12 +2986,7 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
             (PresheafOfModules.Monoidal.tensorObj M.val N.val))).hom ≫
         (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map δcomp ≫
         (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map tcomp := by
-    -- `rw [h1]` cannot fire: `h1` is the lemma `sheafificationCompPullback_comp` applied with `P`
-    -- substituted, so its LHS instance differs (defeq, not syntactic) from the goal's `S1`.  Re-state it
-    -- as `h1'` with a FRESHLY-elaborated type (accepted from `h1` up to defeq) so its LHS matches the
-    -- goal's `S1` syntactically and plain `rw` fires, keeping every `≫` the canonical `SheafOfModules Z`
-    -- comp.  Then `simp [Category.assoc]` flattens and `reassoc_of% (D ≫ E = 𝟙)` cancels the now-adjacent
-    -- pair.
+    -- Restate the coherence so its concrete category instance matches this local composite.
     have h1' :
         ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom (h ≫ f))).app
             (PresheafOfModules.Monoidal.tensorObj M.val N.val)).hom =
@@ -3520,103 +3003,16 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
               ((PresheafOfModules.pullbackComp (Hom.toRingCatSheafHom f).hom
                 (Hom.toRingCatSheafHom h).hom).hom.app
                 (PresheafOfModules.Monoidal.tensorObj M.val N.val)) := h1
-    -- Expose `S1` (via `h1'`) and `a.map δfh` (via `erw [hδ]`) as the explicit `(R0 ≫ R1 ≫ R5 ≫ D) ≫
-    -- (E ≫ a.map δcomp ≫ a.map tcomp)`.  The cancelling pair `D ≫ E` is now in place but buried under a
-    -- DEFEQ-but-not-syntactic `SheafOfModules` instance boundary, so no `rw/simp [Category.assoc]` can
-    -- bring it adjacent.  `comp_cancel_mid` does the reassociation+cancellation generically (one
-    -- instance) and is `exact`-applied: `exact` unifies up to defeq, crossing the instance gap that
-    -- blocks `rw`, and `sheafifyMap_pullbackComp_hom_inv_id` supplies `D ≫ E = 𝟙`.
+    -- Expose the inverse pair and cancel it through the abstract categorical helper.
     rw [h1']
     erw [hδ]
     exact comp_cancel_mid _ _ _ _ _ _
       (sheafifyMap_pullbackComp_hom_inv_id h f (PresheafOfModules.Monoidal.tensorObj M.val N.val))
-  -- Splice the step-(i) brick into the main goal; lands the canonical
-  -- `R0 ≫ R1 ≫ R5 ≫ a.map δcomp ≫ a.map tcomp ≫ S3 ≫ S4` form.
+  -- Splice the cancelled prefix into the main composite.
   erw [reassoc_of% hmain]
-  -- ── STEP (i) CLOSED (iter-015). ───────────────────────────────────────────────────────────────
-  -- The long-standing `D ≫ E = 𝟙` cancellation wall (blocking iters 012–015) is GONE: `hmain` packages
-  -- `S1 ≫ a.map δfh = R0 ≫ R1 ≫ R5 ≫ a.map δcomp ≫ a.map tcomp` and is spliced by `erw [reassoc_of%
-  -- hmain]`.  The breakthrough is the instance-agnostic skeleton `comp_cancel_mid` applied by `exact`
-  -- (not `rw`): the `sheafificationCompPullback`/`pullbackComp` `.app`-components compose through
-  -- DEFEQ-but-not-syntactic `SheafOfModules` instances, which defeats every `rw/simp [Category.assoc]`
-  -- and bombs `erw [Category.assoc]` (mate-`whnf`); `exact` unifies up to defeq and crosses it cleanly.
-  --
-  -- ── REMAINING: steps (ii) + (iii) — the interleaved four-square merge. ─────────────────────────
-  -- The goal is now `R0 ≫ R1 ≫ R5 ≫ a.map δcomp ≫ a.map tcomp ≫ S3 ≫ S4 = RHS`, where the RHS is the
-  -- distributed `(pullback h).map (S1_f ≫ a_Y.map δ_f ≫ S3_f ≫ S4_f) ≫ S1_h ≫ a.map δ_h ≫ S3_h ≫ S4_h ≫
-  -- a.mapIso(pbComp ⊗ pbComp).hom` (R0 cancels on both sides).  To finish:
-  --   (ii) split `a.map δcomp` via `Functor.OplaxMonoidal.comp_δ` (δcomp = `δ (pullback φf ⋙ pullback φh)
-  --        M.val N.val`) into `(pullback φh).map (δ_f) ≫ δ_h`, then `Functor.map_comp` under `a.map`.
-  --        Support: `pullbackComp_δ` (L2282, CLOSED) already gives the `δ`-twin; the friction is the
-  --        monoidal-instance pinning (iter-257 finding (3)).
-  --   (iii) the Sq3/Sq4 bricks DO NOT EXIST as Lean decls yet — they must be built first:
-  --        • `sheafifyTensorUnitIso_comp` (Sq3, blueprint `lem:sheafify_tensor_unit_iso_comp`): hom-leg
-  --          is one `a.map (η ⊗ η)` via `sheafifyTensorUnitIso_hom_eq'` (L1860, EXISTS), reduces to
-  --          η-naturality vs `PrPbComp` recombined by `⊗` bifunctoriality.
-  --        • `pullbackValIso_comp` (Sq4, blueprint `lem:pullback_val_iso_comp`): substitute
-  --          `pullbackValIso = sheafCompPb.symm ≪≫ pullback.mapIso counit`; `sheafCompPb⁻¹` parts
-  --          reassemble by `sheafificationCompPullback_comp` (now usable — see step (i) device), counit
-  --          parts by counit naturality.
-  --        Then interleave (slide `S1_h` past the `f`-block by `δ_natural` + `sheafificationCompPullback h`
-  --          naturality, exactly as the D1′ paste `pullbackTensorMap_natural`).  Every splice is `erw`
-  --          across the underlying `Z.ringCatSheaf.obj` carrier.  The `comp_cancel_mid`-`exact` device generalises to
-  --          any further instance-boundary cancellation in this merge.
-  -- STEP (ii) SPLICED (this iter): split `a_Z.map δcomp` by the `comp_δ` brick
-  -- `sheafifyMap_δcomp_split` (`erw` unfolds the `δcomp` let to match the brick's unfolded LHS).
-  -- Goal now reads `R0 ≫ R1 ≫ R5 ≫ a.map ((pullback φh).map δ_f) ≫ a.map δ_h ≫ a.map tcomp ≫ S3 ≫ S4
-  --   = RHS`, the paste-ready form for the step-(iii) interleave.
+  -- Split the composite oplax tensorator into the two pullback tensorators.
   erw [sheafifyMap_δcomp_split h f M N]
-  -- ── STEP (iii) — REMAINING: the interleaved four-square merge. ─────────────────────────────────
-  -- Exact post-step-(ii) goal (extracted iter-016 via a forced type-mismatch). Writing
-  --   a? = sheafification, Fp_· = PresheafOfModules.pullback φ'_·, S1_· = sheafCompPb · .app _ .hom,
-  --   δ_· = Functor.OplaxMonoidal.δ (Fp_·), S3_· = sheafifyTensorUnitIso _ _ .hom,
-  --   S4_· = a.map (forget (pullbackValIso · _).hom ⊗ₘ forget (pullbackValIso · _).hom):
-  --
-  -- LHS = R0 ≫ R1 ≫ R5 ≫ aZ.map (Fp_h.map δ_f) ≫ aZ.map δ_h' ≫ aZ.map tcomp ≫ S3_g ≫ S4_g
-  --   R0 = (SheafOfModules.pullbackComp φf φh).inv.app (aX (M.val⊗N.val))
-  --   R1 = (pullback h).map (S1_f at (M.val⊗N.val)),  R5 = S1_h at (Fp_f (M.val⊗N.val))
-  --   δ_h' = δ_h (Fp_f M.val) (Fp_f N.val),  tcomp = (pb.hom.app M.val ⊗ₘ pb.hom.app N.val),
-  --     pb = PresheafOfModules.pullbackComp φf φh
-  --   S3_g = sheafifyTensorUnitIso (Fp_{h≫f} M.val) (Fp_{h≫f} N.val) .hom
-  --   S4_g = aZ.map (forget(pullbackValIso (h≫f) M).hom ⊗ₘ forget(pullbackValIso (h≫f) N).hom)
-  -- RHS = R0' ≫ (pullback h).map S1_f ≫ (pullback h).map (aY.map δ_f) ≫ (pullback h).map S3_f
-  --        ≫ (pullback h).map S4_f ≫ S1_h'' ≫ aZ.map δ_h'' ≫ S3_h ≫ S4_h ≫ Tfinal
-  --   R0' = (pullbackComp h f).inv.app (M.tensorObj N)  [Scheme.Modules spelling of R0, defeq]
-  --   S3_f = sheafifyTensorUnitIso (Fp_f M.val) (Fp_f N.val) .hom  [over Y]
-  --   S1_h'' = S1_h at (Monoidal.tensorObj ((pullback f).obj M).val ((pullback f).obj N).val)
-  --   δ_h'' = δ_h ((pullback f).obj M).val ((pullback f).obj N).val
-  --   S3_h = sheafifyTensorUnitIso (Fp_h ((pullback f).obj M).val) (Fp_h ((pullback f).obj N).val) .hom
-  --   S4_h = aZ.map (forget(pullbackValIso h ((pullback f).obj M)).hom ⊗ₘ forget(pullbackValIso h …N).hom)
-  --   Tfinal = (aZ.mapIso (forget.mapIso (pullbackComp h f .app M) ⊗ᵢ forget.mapIso (pullbackComp h f .app N))).hom
-  --
-  -- NEXT CONCRETE STEP (the first slide, mirroring the D1′ paste): R0/R1 match the RHS heads (defeq,
-  -- SheafOfModules vs Scheme.Modules spelling).  The LHS middle `R5 ≫ aZ.map (Fp_h.map δ_f)` is the RHS
-  -- of the `sheafCompPb h` NATURALITY square at `δ_f`:
-  --   (pullback h).map (aY.map δ_f) ≫ (S1_h at (Fp_f M ⊗ Fp_f N))  =  R5 ≫ aZ.map (Fp_h.map δ_f),
-  -- which slides S1_h from before δ to after it (`(sheafificationCompPullback (toRingCatSheafHom h)).hom.naturality δ_f`,
-  -- `erw` to bridge the `have this:=` ascription on δ_f).  After the slide the residual is exactly
-  -- Sq3 (`sheafifyTensorUnitIso_comp`) + Sq4 (`pullbackValIso_comp`) + bifunctoriality, whose arguments
-  -- on the RHS use the SHEAF-pullback underlying presheaf `((pullback f).obj M).val` while the LHS uses the
-  -- PRESHEAF pullback `Fp_f M.val`; the two are bridged by `pullbackValIso f` (the S4_f factor) — this is
-  -- why Sq3/Sq4 are *interleaved* (not separately pluggable) and must be discharged together with the slide.
-  -- RISK flag (progress-critic conv016): the `pullbackValIso`-bridged Sq3/Sq4 entanglement is a NEW class
-  -- of boundary beyond the `comp_cancel_mid` device — flagged for the next pass per the escalation protocol.
-  -- FIRST-SLIDE ATTEMPT (iter-016, FAILED — exact failing tactic recorded for the next pass):
-  --   simp only [Category.assoc]
-  --   erw [← reassoc_of% ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom h)).hom.naturality
-  --     (Functor.OplaxMonoidal.δ (PresheafOfModules.pullback (show … from (Hom.toRingCatSheafHom f).hom))
-  --       M.val N.val))]
-  -- → `rewrite failed: Did not find an occurrence of the pattern` (NOT a whnf-bomb — benign mismatch).
-  -- Cause: the naturality RHS pattern is `(sheafCompPb h).hom.app P ≫ (pullback φ'_h ⋙ a_Z).map δ_f`, but
-  -- the goal carries `R5 = ((sheafCompPb h).app P).hom` (the `.app _ .hom` spelling, not `.hom.app _`) and
-  -- `a_Z.map (Fp_h.map δ_f)` (the `Functor.comp_map`-UNFOLDED form `G.map (F.map δ_f)`, not `(F⋙G).map δ_f`).
-  -- FIX for next pass: state the slide as a bespoke `have hslide : R5 ≫ a_Z.map (Fp_h.map δ_f) =
-  --   (pullback h).map (a_Y.map δ_f) ≫ (sheafCompPb h .app (Fp_f M ⊗ Fp_f N)).hom` in the goal's EXACT
-  --   `.app _ .hom`/unfolded spelling (proved from `.hom.naturality` + `Functor.comp_map` + the NatIso
-  --   `.app.hom = .hom.app` defeq), then `erw [reassoc_of% hslide]` — mirrors how D1′
-  --   `pullbackTensorMap_natural` discharges its S1 square via the `.hom.naturality_assoc` forward form.
-  -- SLIDE (iter-016, bespoke `hslide` in the goal's exact spelling, proved by `.symm` of the naturality
-  -- up to defeq): moves `S1_h` from before `δ_f` to after it.
+  -- Slide the second sheafification comparison past the first pullback tensorator by naturality.
   have hslide :
       ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom h)).app
             ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj
@@ -3624,17 +3020,20 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
           (PresheafOfModules.sheafification (𝟙 (Z.ringCatSheaf.obj))).map
             ((PresheafOfModules.pullback
                 (show (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
-                    (TopologicalSpace.Opens.map h.base).op ⋙ (Z.presheaf ⋙ forget₂ CommRingCat RingCat)
+                    (TopologicalSpace.Opens.map h.base).op ⋙
+                      (Z.presheaf ⋙ forget₂ CommRingCat RingCat)
                   from (Hom.toRingCatSheafHom h).hom)).map
               (Functor.OplaxMonoidal.δ (PresheafOfModules.pullback
                 (show (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
-                    (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
+                    (TopologicalSpace.Opens.map f.base).op ⋙
+                      (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
                   from (Hom.toRingCatSheafHom f).hom)) M.val N.val))
         = (SheafOfModules.pullback (Hom.toRingCatSheafHom h)).map
               ((PresheafOfModules.sheafification (𝟙 (Y.ringCatSheaf.obj))).map
                 (Functor.OplaxMonoidal.δ (PresheafOfModules.pullback
                   (show (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
-                      (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
+                      (TopologicalSpace.Opens.map f.base).op ⋙
+                        (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
                     from (Hom.toRingCatSheafHom f).hom)) M.val N.val)) ≫
             ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom h)).app
               (PresheafOfModules.Monoidal.tensorObj
@@ -3643,70 +3042,14 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
     ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom h)).hom.naturality
       (Functor.OplaxMonoidal.δ (PresheafOfModules.pullback
         (show (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
-            (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
+            (TopologicalSpace.Opens.map f.base).op ⋙
+              (Y.presheaf ⋙ forget₂ CommRingCat RingCat)
           from (Hom.toRingCatSheafHom f).hom)) M.val N.val)).symm
-  -- `hslide` TYPECHECKS (the `.symm`-of-naturality term has the stated goal-spelling type by defeq), so
-  -- the slide equation is PROVEN.  The remaining gap is purely splicing it: `rw`/`erw [reassoc_of% hslide]`
-  -- (even after `simp only [Category.assoc]`) reports `Did not find an occurrence of the pattern`, i.e. the
-  -- post-`sheafifyMap_δcomp_split` goal does not present `R5 ≫ a_Z.map (Fp_h.map δ_f)` in `hslide`'s LHS
-  -- spelling.  NEXT PASS: re-extract the post-split goal (forced type-mismatch) and adjust `hslide`'s LHS to
-  -- the verbatim goal spelling so `erw [reassoc_of% hslide]` keys; then continue the interleave with Sq3/Sq4.
-  -- ── STEP (iii)a — THE SLIDE IS SPLICED (this iter). ────────────────────────────────────────────
-  -- The `S1^h` slide is now landed in the main goal via the generic nested-slide device
-  -- `comp_slide_nested` applied by `refine … hslide ?_`.  The breakthrough over iters 016–017: EVERY
-  -- keyed-matching tactic (`simp only [Category.assoc]`, `rw`/`erw [reassoc_of% hslide]`) whnf-BOMBS on
-  -- the post-step-(ii) goal — the `erw [sheafifyMap_δcomp_split]` of step (ii) introduced a
-  -- defeq-but-not-syntactic `SheafOfModules Z` instance boundary that the discrimination-tree matcher
-  -- whnf-loops across.  `comp_slide_nested` sidesteps it: its conclusion mirrors the goal's *literal*
-  -- nesting `(r0 ≫ r1 ≫ r5 ≫ (p ≫ q) ≫ rtc) ≫ s3 ≫ s4`, so `refine` unifies by metavariable
-  -- *assignment only* (no whnf), and the slide `rw` runs on the lemma's own clean `[Category C]` vars.
-  -- (NB: `hslide` MUST keep its `show … from` ring-map ascriptions — the `have this := …; this` spelling
-  -- makes its `:= …naturality.symm` defeq-check whnf-bomb.)
+  -- The explicit ring-map ascriptions make this equation definitionally match the nested slide.
   refine comp_slide_nested _ _ _ _ _ _ _ _ _ _ _ hslide ?_
-  -- ── STEP (iii)b — REMAINING: the merged Sq3/Sq4 core (post-slide goal, extracted this iter). ────
-  -- After the slide, R0, R1, U match the RHS heads (defeq):
-  --   R0 = (pullbackComp φf φh).inv.app (aX (M⊗N))                = R0' (Scheme.Modules spelling)
-  --   R1 = (pullback h).map (S1_f at M⊗N)                          = (pullback h).map S1_f
-  --   U  = (pullback h).map (a_Y.map δ_f)                          = (pullback h).map (a_Y.map δ_f)
-  -- so the residual core (after cancelling R0 ≫ R1 ≫ U on both sides) is:
-  --   V ≫ a_Z.map δ_h' ≫ a_Z.map tcomp ≫ S3_g ≫ S4_g
-  --     = (pullback h).map S3_f ≫ (pullback h).map S4_f ≫ S1_h'' ≫ a_Z.map δ_h'' ≫ S3_h ≫ S4_h ≫ Tfinal
-  -- where (KEY MISMATCH, the `pullbackValIso` bridge — blueprint "merged Sq3/Sq4 chase"):
-  --   • V       = S1_h on the *presheaf*-pullback tensor args  (sheafCompPb h).app (Fp_f M ⊗ Fp_f N) .hom
-  --   • S1_h''  = S1_h on the *sheaf*-pullback   tensor args  (sheafCompPb h).app (((pb f).obj M).val ⊗ …) .hom
-  --     V ≠ S1_h'' — bridged by `pullbackValIso f` (the (pullback h).map S4_f / S4 factors).
-  --   • a_Z.map δ_h'  has presheaf args (Fp_f M.val)(Fp_f N.val); a_Z.map δ_h'' has sheaf args
-  --     (((pb f).obj M).val)(((pb f).obj N).val) — same `pullbackValIso f` bridge.
-  --   • S3_g = sheafifyTensorUnitIso (Fp_{h≫f} M)(Fp_{h≫f} N).hom; S4_g = a_Z.map (forget(pVI (h≫f) M) ⊗ₘ …);
-  --     Tfinal = (a_Z.mapIso (forget.mapIso(pbComp.app M) ⊗ᵢ forget.mapIso(pbComp.app N))).hom.
-  -- This is the genuine D1′-style naturality paste of `pullbackTensorMap_natural` (L2007), now for the
-  -- *composition* coherence: slide V (=S1_h, presheaf-args) rightward past `(pullback h).map S3_f ≫
-  -- (pullback h).map S4_f` by the naturality of `sheafificationCompPullback h` (converting presheaf→sheaf
-  -- args, i.e. realigning V to S1_h''), then fold `a.map δ ≫ S3 ≫ S4` into a single `a.map Ψ` on each side
-  -- and reduce to a presheaf identity closed by `presheaf_pullback_oplaxmonoidal` (δ-naturality) +
-  -- `sheafifyTensorUnitIso_hom_eq'` (L1860) + the `pullbackValIso` factorisation (`def:pullback_val_iso`).
-  -- DEVICE THAT CROSSES THE BOUNDARY: continue with generic single-`[Category C]` lemmas whose conclusions
-  -- mirror the goal nesting, applied by `refine`/`exact` (assignment-only unification) — NOT `simp`/`rw`/
-  -- `erw`, which all whnf-bomb here.  The slide above is the worked template.
-  -- STEP (iii)b.1 — cancel the R0 ≫ R1 ≫ U prefix (defeq to R0' ≫ m1 ≫ m2) via the generic
-  -- L/R-cancellation device; the three `rfl`s discharge the SheafOfModules-vs-Scheme.Modules leaf defeqs.
+  -- Cancel the common prefix, using definitional equality for its two presentations.
   refine comp_cancel_three_lr _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ rfl rfl rfl ?_
-  -- THE PURE MERGED Sq3/Sq4 CORE (post-prefix-cancellation):
-  --   V ≫ a_Z.map δ_h' ≫ a_Z.map tcomp ≫ S3_g ≫ S4_g
-  --     = (pullback h).map S3_f ≫ (pullback h).map S4_f ≫ S1_h'' ≫ a_Z.map δ_h'' ≫ S3_h ≫ S4_h ≫ Tfinal
-  -- (notation as in the STEP (iii)b block above).  This is the D1′-style naturality paste of
-  -- `pullbackTensorMap_natural`, now for the composition coherence and `pullbackValIso`-bridged.  Next:
-  -- slide V (=S1_h on presheaf args) rightward past `(pullback h).map (S3_f ≫ S4_f)` by the naturality
-  -- of `sheafificationCompPullback h`, realigning it to S1_h'' (sheaf args); then fold each side's
-  -- `a.map δ ≫ S3 ≫ S4` tail into a single `a.map Ψ` and reduce to a presheaf identity closed by
-  -- `presheaf_pullback_oplaxmonoidal` + `sheafifyTensorUnitIso_hom_eq'` + the `pullbackValIso` factn.
-  -- ── STEP (iii)b.2 — THE SLIDE OF V (S1_h presheaf-args → S1_h'' sheaf-args). ──────────────────
-  -- The RHS prefix `m3 ≫ m4 ≫ vv = (pullback h).map S3_f ≫ (pullback h).map S4_f ≫ S1_h''` is, by the
-  -- naturality of the connecting iso `sheafificationCompPullback h` at the presheaf morphism `gg`
-  -- (`a_Y.map gg = S3_f ≫ S4_f`), equal to `v ≫ a_Z.map (Fp_h.map gg)` with `v = S1_h` on the PRESHEAF
-  -- args.  Splicing this (`hcomb`) via the generic `comp_slide_three` leaves the folded presheaf core
-  -- `hcore2 : a.map δ_h' ≫ a.map tcomp ≫ S3_g ≫ S4_g = a_Z.map (Fp_h.map gg) ≫ a.map δ_h'' ≫ S3_h ≫ S4_h
-  --   ≫ Tfinal`, all `a_Z.map`-foldable.  `gg = (η ⊗ η) ≫ (forget pVI_M ⊗ forget pVI_N)` over Y.
+  -- Package the tensor-unit and `pullbackValIso` legs over `Y` as one presheaf morphism.
   set gg :
       PresheafOfModules.Monoidal.tensorObj
           ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj M.val)
@@ -3765,39 +3108,16 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
   refine comp_slide_three _ _ _ _ _ _ _ _ _ _ _ _
     ((PresheafOfModules.sheafification (R := Z.ringCatSheaf) (𝟙 Z.ringCatSheaf.obj)).map
       ((PresheafOfModules.pullback (Hom.toRingCatSheafHom h).hom).map gg)) ?_ ?_
-  · -- hcomb : m3 ≫ m4 ≫ vv = v ≫ a_Z.map (Fp_h.map gg).  The merge/reassoc runs inside the abstract
-    -- `map_comp_slide` (clean vars), then naturality of `sheafificationCompPullback h` at `gg` closes it.
+  · -- Merge the mapped factors, then use naturality at `gg`.
     exact map_comp_slide (Scheme.Modules.pullback h) _ _
       ((PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.obj)).map gg)
       _ _ hg
       ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom h)).hom.naturality gg)
-  · -- ── STEP (iii)b.3 — THE FOLDED Sq3/Sq4 PRESHEAF CORE (the sole remaining residual). ──────────
-    -- Verbatim goal (extracted iter-018 via forced type-mismatch); a_Z = sheafification over Z,
-    -- Fp_· = PresheafOfModules.pullback φ'_·, δ_· = Functor.OplaxMonoidal.δ (Fp_·):
-    --   a_Z.map (δ_h (Fp_f M.val) (Fp_f N.val))                       -- δ_h'  (presheaf-f args)
-    --     ≫ a_Z.map tcomp                                              -- tcomp = pb.hom.app M.val ⊗ₘ pb.hom.app N.val
-    --     ≫ (sheafifyTensorUnitIso (Fp_{h≫f} M.val) (Fp_{h≫f} N.val)).hom        -- S3_g
-    --     ≫ a_Z.map (forget (pVI (h≫f) M).hom ⊗ₘ forget (pVI (h≫f) N).hom)        -- S4_g
-    --   = a_Z.map (Fp_h.map gg)                                        -- vtail (the slid factor)
-    --     ≫ a_Z.map (δ_h ((pb f).obj M).val ((pb f).obj N).val)        -- δ_h'' (sheaf-f args)
-    --     ≫ (sheafifyTensorUnitIso (Fp_h ((pb f).obj M).val) (Fp_h ((pb f).obj N).val)).hom    -- S3_h
-    --     ≫ a_Z.map (forget (pVI h ((pb f).obj M)).hom ⊗ₘ forget (pVI h ((pb f).obj N)).hom)   -- S4_h
-    --     ≫ (a_Z.mapIso (forget.mapIso (pbComp h f .app M) ⊗ᵢ forget.mapIso (pbComp h f .app N))).hom  -- Tfinal
-    -- RECIPE (D1′-mirror, `pullback_tensor_map_natural` L1984): fold each side into one `a_Z.map Ψ`
-    -- (`sheafifyTensorUnitIso_hom_eq'` turns S3_g,S3_h into `a_Z.map (η⊗η)`; `Tfinal =
-    -- a_Z.map (tensorHom (forget pbComp.app M)(forget pbComp.app N))`; the δ's,tcomp,S4's,vtail are
-    -- already `a_Z.map`), MERGE via `← Functor.map_comp` (as a defeq `exact`/generic lemma — NOT `rw`,
-    -- which whnf-bombs the instance boundary, cf. `map_comp_slide`), `congr 1` to the PRESHEAF identity
-    -- `Ψ_L = Ψ_R` over Z, and close it by δ-naturality (`presheaf_pullback_oplaxmonoidal` / `δ_natural`
-    -- of `δ_h` at `gg`) + `MonoidalCategory.tensorHom_comp_tensorHom` bifunctoriality + the
-    -- `pullbackValIso` factorisation (`def:pullback_val_iso`: `pVI = sheafCompPb.symm ≪≫ pullback.mapIso
-    -- counit`) reconciling `pVI (h≫f)`, `pVI h`, `pVI f`, and `pbComp h f`.
+  · -- Fold the remaining Sq3/Sq4 comparison into a presheaf equality over `Z`.
     rw [sheafifyTensorUnitIso_hom_eq', sheafifyTensorUnitIso_hom_eq']
     simp only [Functor.mapIso_hom, MonoidalCategory.tensorIso_hom]
     refine map_comp4_eq_comp5 _ _ _ _ _ _ _ _ _ _ ?_
-    -- Now the pure PRESHEAF identity `Ψ_L = Ψ_R` over `Z`. Expose `gg = u ⊗ v` (`u`, `v` the per-leg
-    -- composites `η ≫ forget pVI_f`) and apply δ-naturality of `δ_h = δ (pullback φh)` at `gg`,
-    -- aligning both heads to `δ_h (Fp_f M.val) (Fp_f N.val)`.
+    -- Expose `gg` as a tensor of its two legs before applying tensorator naturality.
     have hgg2 : gg =
         MonoidalCategory.tensorHom
           (C := _root_.PresheafOfModules (Y.presheaf ⋙ forget₂ CommRingCat RingCat))
@@ -3813,10 +3133,7 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
       exact MonoidalCategory.tensorHom_comp_tensorHom
         (C := _root_.PresheafOfModules (Y.presheaf ⋙ forget₂ CommRingCat RingCat)) _ _ _ _
     rw [hgg2]
-    -- δ-naturality of `δ_h` at the legs `u`, `v` as a CONCRETE fully-applied equation (the
-    -- `OplaxMonoidal` instance on `pullback φh` is resolved ONCE here via the `show … from` pin), so the
-    -- subsequent `rw` matches syntactically and never re-synthesises the instance under the matcher
-    -- (which whnf-bombs `erw [reassoc_of% δ_natural]`).
+    -- Pin the pullback functor so tensorator naturality uses the intended monoidal instance.
     have hδnat := Functor.OplaxMonoidal.δ_natural
       (F := PresheafOfModules.pullback
         (show (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
@@ -3831,9 +3148,7 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
           ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj N.val) ≫
         (SheafOfModules.forget Y.ringCatSheaf).map (pullbackValIso f N).hom)
     erw [← reassoc_of% hδnat]
-    -- Both sides now share the head `δ_h (Fp_f M.val) (Fp_f N.val)`; cancel it and expose `tcomp` as a
-    -- `tensorHom`.  Every remaining factor is a `tensorHom`, so bifunctoriality collapses each side to a
-    -- single `tensorHom` of per-leg composites; `congr 1` then splits into the two per-leg identities.
+    -- Cancel the common tensorator and reduce the remaining tensor morphisms to their two legs.
     rw [show tcomp = MonoidalCategory.tensorHom
       (C := _root_.PresheafOfModules (Z.presheaf ⋙ forget₂ CommRingCat RingCat))
       (pb.hom.app M.val) (pb.hom.app N.val) from rfl]
@@ -3847,17 +3162,13 @@ lemma pullbackTensorMap_restrict {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X
     · exact pullbackValIso_comp_leg h f N
 
 
-/-! ## v4.31.0 recovery — re-ported δ/η-collapse machinery (dropped by the bump).
-Ported verbatim from v4.30 `117100c4` (L4077–4768) + the transitive dep
-`restrictScalars_δ_app_tmul` (v4.30 L2130). Unblocks K1 + B1. -/
+/-! ## Pure-tensor calculations for pushforward coherence -/
 
 set_option backward.isDefEq.respectTransparency false in
-/-- **Pure-tensor value of the presheaf `restrictScalars` *oplax* tensorator `δ` (strong case).**
-For a sectionwise-bijective `α`, `restrictScalars α` is strong monoidal, so its oplax `δ` is the
-two-sided inverse of the lax `μ` (`Functor.Monoidal.μ_δ`).  On a pure tensor `μ` is the identity
-(`restrictScalars_μ_app_tmul`, the base-change tensorator `m ⊗ₜ n ↦ m ⊗ₜ n` modulo the ring relabel),
-hence so is `δ`: it sends `m ⊗ₜ[S] n ↦ m ⊗ₜ[R] n`.  This is the δ-twin of `restrictScalars_μ_app_tmul`
-and discharges the `δ Gβ` leg of the K1 `lhs_tmul` telescope (step (3)). -/
+/-- Pure-tensor value of the oplax tensorator for a strong `restrictScalars` functor.
+
+For sectionwise-bijective `α`, the oplax tensorator is inverse to the lax tensorator and therefore
+sends the relabelled pure tensor over `S` to the corresponding pure tensor over `R`. -/
 private lemma restrictScalars_δ_app_tmul
     {C : Type u} [Category.{u} C] {R S : Cᵒᵖ ⥤ CommRingCat.{u}}
     (α : (R ⋙ forget₂ CommRingCat RingCat) ⟶ (S ⋙ forget₂ CommRingCat RingCat))
@@ -3986,9 +3297,8 @@ lemma restrictScalars_oplaxMonoidal_η_app_one {C : Type u} [Category.{u} C]
 `f : Y ⟶ X`, presheaf structure map `φ'`, structure-ring iso `β`/`β'`, strong-monoidal restriction
 functor `Gβ = pushforward₀OfCommRingCat f.opensFunctor X.presheaf ⋙ restrictScalars β'`, and the
 `leftAdjointUniq` iso `H1 : Gβ ≅ pullback φ'`), the strong unit comparison `η Gβ` agrees, under
-`H1`, with the oplax unit comparison `η (pullback φ')`. This is the η/ε-side twin of the proved D2′
-template `presheafUnit_comp_map_eta`; sectionwise it is the `f.appIso` structure-ring identity on the
-unit module. -/
+`H1`, with the oplax unit comparison `η (pullback φ')`. This is the unit-side counterpart of
+`presheafUnit_comp_map_eta`; sectionwise it is the `f.appIso` identity on the unit module. -/
 private lemma pushforward_eta_appIso_collapse {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f] :
     letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
         (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
@@ -4048,84 +3358,41 @@ private lemma pushforward_eta_appIso_collapse {X Y : Scheme.{u}} (f : Y ⟶ X) [
   letI Gβ := PresheafOfModules.pushforward₀OfCommRingCat f.opensFunctor X.presheaf ⋙
     PresheafOfModules.restrictScalars β'
   let hadj' : Gβ ⊣ PresheafOfModules.pushforward φ' := hadj
-  -- η/ε-side of "H1 is a monoidal natural iso": the open-immersion analogue of the proved D2′
-  -- template `presheafUnit_comp_map_eta`.  Sectionwise the `f.appIso` structure-ring identity.
-  --
-  -- ROUTE (iter-026): transpose across the adjunction `hadj' : Gβ ⊣ pushforward φ'` (its `homEquiv`
-  -- is injective).  Under `homEquiv_unit` the RHS becomes
-  --   `hadj'.unit 𝟙_ ≫ G.map (H1.hom 𝟙_) ≫ G.map (η pullback)`;
-  -- the first two factors contract to `adj₀.unit 𝟙_` (`unit_leftAdjointUniq_hom_app`), and
-  -- `adj₀.unit 𝟙_ ≫ G.map (η pullback) = ε (pushforward φ')` is the PROVED D2′ template
-  -- `presheafUnit_comp_map_eta`.  The LHS becomes `hadj'.unit 𝟙_ ≫ G.map (η Gβ)`, so the goal
-  -- reduces to the single ε-comparison `(★η)` below.
+  -- Transpose across `hadj'`; the uniqueness comparison contracts the units, and
+  -- `presheafUnit_comp_map_eta` identifies the resulting right-adjoint unit comparison.
   apply (hadj'.homEquiv _ _).injective
   rw [Adjunction.homEquiv_unit, Adjunction.homEquiv_unit, Functor.map_comp]
   erw [reassoc_of% (Adjunction.unit_leftAdjointUniq_hom_app hadj'
     (PresheafOfModules.pullbackPushforwardAdjunction φ') (𝟙_ _))]
   erw [presheafUnit_comp_map_eta f]
-  -- (★η): `hadj'.unit 𝟙_ ≫ (pushforward φ').map (η Gβ) = ε (pushforward φ')`.
-  -- Reduce the RHS `ε (pushforward φ')` to the concrete unit comparison `unitToPushforwardObjUnit`
-  -- (proved D2′ lemma `epsilonPresheafToSheafUnit`), then verify sectionwise.  Sectionwise the
-  -- presheaf-of-modules unit `𝟙ᵖ` over `X.presheaf ⋙ forget₂` is the structure ring as a module
-  -- over itself, so a linear map out of it is determined by its value on `1` (`LinearMap.ext_ring`);
-  -- both sides send `1 ↦ 1` (the `ε`/unit structure maps preserve the ring unit).
+  -- Identify the right-adjoint unit comparison and verify it sectionwise on the ring generator `1`.
   erw [epsilonPresheafToSheafUnit f]
   refine PresheafOfModules.hom_ext (fun U => ?_)
   apply ModuleCat.hom_ext
   ext
   erw [SheafOfModules.unitToPushforwardObjUnit_val_app_apply]
-  -- residual: `((hadj'.unit 𝟙ᵖ ≫ (pushforward φ').map (η Gβ)).app U) 1 = (φ'.app U) 1`.
-  -- RHS `= 1` (`φ'.app U` is a ring hom); the LHS is the `rightAdjointLaxMonoidal hadj'` unit `ε`
-  -- read sectionwise on `1`, which is likewise `1`.
-  -- Split the composite, then reduce each factor: `η Gβ = (restrictScalars β').map (η pushforward₀)
-  -- ≫ η (restrictScalars β')` with `η pushforward₀ = 𝟙`; the `(pushforward φ').map` reindexes the
-  -- section to `op (f ⁻¹ᵁ U)`; the presheaf-level unit value lemma collapses `hadj'.unit` to the
-  -- unit-module restriction map of `M = 𝟙ᵖ` along `adj.counit`, which preserves `1`.
+  -- Split the composite unit and reindex the section through the pushforward.
   rw [PresheafOfModules.comp_app]
   erw [ModuleCat.hom_comp, LinearMap.comp_apply]
   rw [Functor.OplaxMonoidal.comp_η,
-    show Functor.OplaxMonoidal.η
-        (PresheafOfModules.pushforward₀OfCommRingCat (Hom.opensFunctor f) X.presheaf) = 𝟙 _ from rfl]
+      show Functor.OplaxMonoidal.η
+        (PresheafOfModules.pushforward₀OfCommRingCat
+          (Hom.opensFunctor f) X.presheaf) = 𝟙 _ from rfl]
   erw [PresheafOfModules.pushforward_map_app_apply]
   -- The preceding pushforward value lemma has exposed the unit-module restriction map; it preserves
   -- the ring unit.
   erw [PresheafOfModules.unit_map_one]
-  -- The η-collapse leaves the single clean sectionwise identity (`W := op (f ⁻¹ᵁ U)`):
-  --   `((restrictScalars β').map 𝟙 ≫ η (restrictScalars β')).app W).hom 1 = (φ'.app U) 1`.
-  -- BOTH sides are the ring unit `1`:
-  --   • LHS: `(restrictScalars β').map 𝟙 = 𝟙`, and the strong-monoidal oplax unit
-  --     `η (restrictScalars β') = inv (ε (restrictScalars β'))` (`Functor.OplaxMonoidal.inv_ε`)
-  --     preserves `1`, because `ε ≫ η = 𝟙` (`Functor.Monoidal.ε_η _`, CONFIRMED to typecheck here)
-  --     and the lax `ε` sends `1 ↦ (β'.app W) 1 = 1` (`ModuleCat.restrictScalars_η` + `map_one`),
-  --     whence `η 1 = η (ε 1) = (ε ≫ η) 1 = 1` by injectivity of the iso `ε.app W`.
-  --   • RHS: `φ'.app U` is a ring hom, so `(φ'.app U) 1 = 1`.
-  -- The remaining Lean obstacle is purely coercion/`OfNat` plumbing, NOT mathematics:
-  --   (a) `map_one` does not fire on `ConcreteCategory.hom (φ'.app U)` (RingCat-morphism coercion
-  --       form); need the `RingCat`/`CommRingCat`-flavoured `map_one`/`RingHom.map_one` or to
-  --       expose the `RingHom`.
-  --   (b) the `ε`-value step needs `1 : (𝟙_ _).obj W`, whose carrier `One` instance Lean will not
-  --       synthesize without reducing `𝟙_ = unit _` (the same `OfNat` failure that blocks stating a
-  --       standalone `restrictScalars`-oplax-`η`-on-unit helper — see iter-027 task_result).
-  -- RESOLVED (iter-028): the LHS oplax-unit-on-`1` collapses to `1` via the standalone helper
-  -- `restrictScalars_oplaxMonoidal_η_app_one` (states the unit through the genuine ring
-  -- `(S ⋙ forget₂ …).obj W` to dodge the `OfNat` synthesis (b), proof = lax `ε(1)=1` +
-  -- `Functor.Monoidal.ε_η`); the RHS ring-hom `(φ'.app U) 1 = 1` via `map_one` (the `erw`
-  -- defeq-matches the `(restrictScalars β').map 𝟙 ≫ η` composite against the helper's `η`).
+  -- Both remaining maps preserve the ring unit.
   erw [restrictScalars_oplaxMonoidal_η_app_one β' hβ (Opposite.op (f ⁻¹ᵁ Opposite.unop U)),
     map_one]
   rfl
 
 set_option backward.isDefEq.respectTransparency false in
-/-- **Sectionwise value of the RHS composition tensorator on a pure tensor (blueprint
-`lem:pushforward_lax_mu_comparison_rhs_tmul`).** The directly-defined composition lax tensorator
-`μ (presheafPushforwardLaxMonoidal φ)` (= the ambient `Functor.LaxMonoidal.μ (pushforward φ)`),
-evaluated on a section `W` at a pure tensor `m ⊗ₜ n`, is the base-change value `m ⊗ₜ n`. By
-`pushforward_μ_eq` (a `rfl`-identity) the single-pushforward μ is *defeq* to the `restrictScalars φ'`
-μ on the `pushforward₀OfCommRingCat`-reindexed objects, which collapses on a pure tensor by
-`restrictScalars_μ_app_tmul` (the same helper family as `pushforwardComp_lax_μ`). Stated with abstract
-base ring functors and objects (so the section module instances resolve cleanly, exactly as in
-`restrictScalars_μ_app_tmul`); applied in the K1 assembly to `T₀ := (Opens.map f.base).op ⋙ Y.presheaf`,
-`M₁ := pushforward₀.obj (Gβ.obj A)` etc. by definitional equality. -/
+/-- Pure-tensor value of the directly defined pushforward composition tensorator.
+
+After reindexing by `pushforward₀OfCommRingCat`, `pushforward_μ_eq` identifies this tensorator with
+the tensorator of `restrictScalars`, whose pure-tensor value is
+`restrictScalars_μ_app_tmul`. -/
 lemma pushforward_lax_mu_comparison_rhs_tmul
     {C : Type u} [Category.{u} C] {S₀ T₀ : Cᵒᵖ ⥤ CommRingCat.{u}}
     (φ' : (S₀ ⋙ forget₂ CommRingCat RingCat) ⟶ (T₀ ⋙ forget₂ CommRingCat RingCat))
@@ -4133,28 +3400,16 @@ lemma pushforward_lax_mu_comparison_rhs_tmul
     (m : (M₁.obj W)) (n : (M₂.obj W)) :
     ((Functor.LaxMonoidal.μ (PresheafOfModules.restrictScalars φ') M₁ M₂).app W).hom
         (m ⊗ₜ[(S₀ ⋙ forget₂ CommRingCat RingCat).obj W] n) = m ⊗ₜ n :=
-  -- The RHS composition tensorator `μ (presheafPushforwardLaxMonoidal φ)` is, by `pushforward_μ_eq`
-  -- (a `rfl`-identity), exactly this `restrictScalars φ'` μ on the `pushforward₀`-reindexed objects;
-  -- `restrictScalars_μ_app_tmul` collapses it on a pure tensor.  The base ring functors `S₀ T₀` and the
-  -- objects `M₁ M₂` are abstract (as in `restrictScalars_μ_app_tmul`) so the section module instances
-  -- resolve cleanly; in the K1 assembly it is applied to `T₀ := (Opens.map f.base).op ⋙ Y.presheaf`,
-  -- `M₁ := pushforward₀.obj (Gβ.obj A)` etc. by definitional equality (`pushforward_μ_eq` is `rfl`).
+  -- The abstract parameters keep the section-module instances canonical.
   restrictScalars_μ_app_tmul φ' M₁ M₂ W m n
 
 set_option maxHeartbeats 1600000 in
 -- The mate tensorator expands through the sectionwise unit, tensorator, and counit legs.
 set_option backward.isDefEq.respectTransparency false in
-/-- **Sectionwise value of the LHS mate tensorator on a pure tensor (blueprint
-`lem:pushforward_lax_mu_comparison_lhs_tmul`), packaged as the per-section comparison.** In the K1
-setting, on a fixed open `W` the adjoint-transported tensorator `μ (rightAdjointLaxMonoidal hadj')`
-agrees with the directly-defined composition tensorator `μ (presheafPushforwardLaxMonoidal φ')` on the
-objects `Gβ.obj A`, `Gβ.obj B`.  We work sectionwise via `tensor_ext`: the RHS pure-tensor value is
-`m ⊗ₜ n` by `pushforward_lax_mu_comparison_rhs_tmul`, and the genuine geometric residual is the LHS
-*mate* value, obtained by unfolding the mate (`rightAdjointLaxMonoidal_μ` + `homEquiv_unit`) and
-computing the three legs sectionwise (unit acts by `M.map counit.op` via
-`pushforwardPushforwardAdj_unit_app_app_apply`; `δ Gβ` is the identity on pure tensors via the
-`restrictScalars`-μ helper family; the counit pair is the bijective `f.appIso`).  The parent assembles
-this with `PresheafOfModules.hom_ext`.  The LHS mate pure-tensor value remains the sole open residual. -/
+/-- Sectionwise equality of the transported and directly defined pushforward tensorators.
+
+On pure tensors, unfold the adjunction mate and compute its unit, tensorator, and counit legs. The
+directly defined side is handled by `pushforward_lax_mu_comparison_rhs_tmul`. -/
 lemma pushforward_lax_mu_comparison_lhs_tmul {X Y : Scheme.{u}} (f : Y ⟶ X)
     [IsOpenImmersion f]
     (A B : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat))
@@ -4190,44 +3445,22 @@ lemma pushforward_lax_mu_comparison_lhs_tmul {X Y : Scheme.{u}} (f : Y ⟶ X)
       = (@Functor.LaxMonoidal.μ _ _ _ _ _ _ (PresheafOfModules.pushforward φ')
         (presheafPushforwardLaxMonoidal φ') (Gβ.obj A) (Gβ.obj B)).app W := by
   intro α β hadj hβ β' hadj'
-  -- Sectionwise: `(G(Gβ A) ⊗ G(Gβ B)).obj W` is a genuine `ModuleCat` tensor, so `tensor_ext` fires.
+  -- Work on pure tensors in the section module at `W`.
   refine ModuleCat.MonoidalCategory.tensor_ext (fun m n => ?_)
   rw [Adjunction.rightAdjointLaxMonoidal_μ, Adjunction.homEquiv_unit]
   rw [PresheafOfModules.comp_app]
   erw [ModuleCat.hom_comp, LinearMap.comp_apply]
-  -- INNER UNIT LEG — wall #1 CRACKED (iter-036).  `pushforwardPushforwardAdj_unit_app_app_apply`
-  -- (an `rfl`) refuses to fire via `rw`/`simp`/`erw` on the heavy tensor object
-  -- `M = G(Gβ A) ⊗ G(Gβ B)` through the `hadj'`/`hadj` let-fvar (the documented double-wall #1).
-  -- FIX: package the value as a ∀-`have` keyed *on the goal's own `hadj'.unit` fvar* (so no
-  -- `⊗` re-elaboration → no carrier diamond, contra wall #2), proven by `exact … _ _ _ _ _ M U x`
-  -- (defeq to the lemma, all leading args inferred from the expected type).  Then `erw [hU]`
-  -- (NOT `rw` — needs the coercion/instance defeq) discharges the inner unit, replacing it with the
-  -- tensor-presheaf restriction `(G(Gβ A) ⊗ G(Gβ B)).map (adj.counit.app W.unop).op` on `m ⊗ₜ n`.
+  -- Evaluate the adjunction unit through a polymorphic local statement to preserve its instance.
   have hU : ∀ (M : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat))
       (U : (TopologicalSpace.Opens ↥X)ᵒᵖ) (x : (M.obj U)),
       ((hadj'.unit.app M).app U).hom x
         = (M.map (f.isOpenEmbedding.isOpenMap.adjunction.counit.app U.unop).op).hom x :=
     fun M U x => pushforwardPushforwardAdj_unit_app_app_apply _ _ _ _ _ M U x
   erw [hU]
-  -- REMAINING TELESCOPE (outer leg, now unblocked; LHS = `m ⊗ₜ n = RHS`).  After `erw [hU]` the LHS is
-  --   `(pushforward φ').map (δ Gβ (GX)(GY) ≫ (ε_A ⊗ₘ ε_B)) .app W .hom`
-  --      applied to `(G(Gβ A) ⊗ G(Gβ B)).map (adj.counit.app W.unop).op .hom (m ⊗ₜ n)`,
-  -- with `ε = hadj'.counit`, `GX = G(Gβ A)`, `G = pushforward φ'`, `Gβ = pushforward₀ ⋙ restrictScalars β'`.
-  --
-  -- TELESCOPE STEP (2)-split: `G.map (δ ≫ ε⊗ε) = G.map δ ≫ G.map (ε⊗ε)` (`Functor.map_comp`), then the
-  -- section-evaluation `comp_app`/`hom_comp`/`comp_apply` so the LHS becomes the nested application
-  --   `(G.map (ε⊗ε)).app W .hom ((G.map δ).app W .hom ((GX ⊗ GY).map (adj.counit.app W.unop).op .hom (m ⊗ₜ n)))`.
+  -- Split the mapped tensorator-counit composite and evaluate it on the section.
   rw [Functor.map_comp, PresheafOfModules.comp_app]
   erw [ModuleCat.hom_comp, LinearMap.comp_apply]
-  -- TELESCOPE STEP (1) — inner tensor-presheaf restriction on the pure tensor [VERIFIED iter-037]:
-  --   `(GX ⊗ GY).map g .hom (m⊗ₜn) = (GX.map g .hom m) ⊗ₜ (GY.map g .hom n)`.
-  -- The value lemma `PresheafOfModules.Monoidal.tensorObj_map_tmul` (an `rfl`) will NOT fire via bare
-  -- `rw`/`erw` on the heavy `⊗` object (carrier-diamond: the goal's tensor objects carry type
-  -- `PresheafOfModules X.ringCatSheaf.obj`, defeq-but-not-syntactic to `… ⋙ forget₂ …`).  RECIPE:
-  -- state a ∀-`have h1` keyed on an ABSTRACT ring functor `R` (so `R ⋙ forget₂ _ _` matches the
-  -- `MonoidalCategoryStruct` instance head syntactically — dodges the diamond, cf. wall #1), proven by
-  -- `exact tensorObj_map_tmul …`; then INSTANTIATE it at the goal's concrete objects (`h1c`) and
-  -- `erw [h1c]` (the residual `X.presheaf` vs `(sheafToPresheaf …).obj X.sheaf` defeq is bridged by erw).
+  -- Evaluate the tensor-presheaf restriction on a pure tensor over an abstract ring functor.
   have h1 : ∀ {R : (TopologicalSpace.Opens ↑X)ᵒᵖ ⥤ CommRingCat.{u}}
       (P Q : _root_.PresheafOfModules (R ⋙ forget₂ CommRingCat RingCat))
       {V : (TopologicalSpace.Opens ↑X)ᵒᵖ} (g : W ⟶ V) (p : P.obj W) (q : Q.obj W),
@@ -4241,38 +3474,9 @@ lemma pushforward_lax_mu_comparison_lhs_tmul {X Y : Scheme.{u}} (f : Y ⟶ X)
         PresheafOfModules.restrictScalars β').obj B))
     (f.isOpenEmbedding.isOpenMap.adjunction.counit.app W.unop).op m n
   erw [h1c]
-  -- TELESCOPE STEP (2)-reindex [VERIFIED iter-037]: `(G.map (ε⊗ε)).app W` is `((pushforward φ').map _).app W`,
-  -- so `pushforward_map_app_apply` (`rfl`) reindexes it to `(ε_A ⊗ₘ ε_B).app (op ((Opens.map f.base).obj W.unop))`.
-  -- (Plain `rw` fires on this OUTER leg; the inner `(G.map δ).app W` leg is NOT matched by a second `rw` of
-  -- the same lemma — after the first rewrite its coercion is `ConcreteCategory.hom`, not `ModuleCat.Hom.hom`,
-  -- so the next prover must reindex the inner δ leg via `conv` into the inner application + `rw`, or via the
-  -- instantiate-then-`erw` template — see residual roadmap below.)
+  -- Reindex the outer counit pair through the pushforward.
   rw [PresheafOfModules.pushforward_map_app_apply]
-  -- REMAINING TELESCOPE (LHS now
-  --   `(ε_A ⊗ₘ ε_B).app V' .hom ((G.map δ).app W .hom (m' ⊗ₜ n'))`,  `V' = op ((Opens.map f.base).obj W.unop)`,
-  --   with `m' = GX.map (adj.counit.app W.unop).op .hom m`, `n' = GY.map … .hom n`).  Tools now in-file:
-  --   (3) δ leg — reindex `(G.map δ).app W` (`pushforward_map_app_apply`, on the inner application), then
-  --       `δ Gβ` on a pure tensor is the identity: `Functor.OplaxMonoidal.comp` gives `δ (pf0 ⋙ RS) =
-  --       RS.map (δ pf0) ≫ δ RS` with `δ pf0 = 𝟙` (`rfl`), leaving the strong-`restrictScalars` δ, which on
-  --       the pure tensor is the NEW helper `restrictScalars_δ_app_tmul` (built iter-037: `δ = inv μ` via
-  --       `Functor.Monoidal.μ_δ` + `restrictScalars_μ_app_tmul`) — apply via the instantiate-then-`erw`
-  --       template used for step (1)/`h1c`.
-  --   (4) counit pair `ε_A ⊗ₘ ε_B`: split the `tensorHom` on the pure tensor
-  --       (`ModuleCat.MonoidalCategory.tensorHom_tmul`), then collapse each `hadj'.counit.app _` leg by the
-  --       NEW counit value lemma `pushforwardPushforwardAdj_counit_app_app_apply` (built iter-037, the dual
-  --       of the unit `rfl`-lemma; counit acts sectionwise by `N.map (adj.unit.app U.unop).op`), via the
-  --       same instantiate-then-`erw` template.  After (3)-(4) the unit `adj.counit` restriction of step `hU`
-  --       composes with the counit-pair `adj.unit` restriction; for the open immersion these are mutually
-  --       inverse on the image (`Functor.map_comp` + `adj.left/right_triangle` on opens), leaving
-  --       `m ⊗ₜ n`, which equals the RHS by `pushforward_lax_mu_comparison_rhs_tmul` (PROVEN, via
-  --       `pushforward_μ_eq` defeq).
-  -- STEP 3 (δ leg).  Reindex the inner `(G.map δ).app W` to `δ Gβ .app V'` via
-  -- `pushforward_map_app_apply` (its coercion is now `ConcreteCategory.hom`, so plain `rw` misses → `erw`),
-  -- then collapse `δ Gβ` on the pure tensor by the in-file helper `restrictScalars_δ_app_tmul`.  No manual
-  -- `comp_δ`/`map_id`/`id_comp` is needed: under `respectTransparency false` (active for this lemma) `erw`
-  -- defeq-matches the composite `δ Gβ = (restrictScalars β').map (δ pf0) ≫ δ (restrictScalars β')`
-  -- (with `δ pf0 = 𝟙`) against the helper's `δ (restrictScalars β')` directly — exactly as the η-collapse
-  -- `pushforward_eta_appIso_collapse` (L4311) matches `(restrictScalars β').map 𝟙 ≫ η` against `η`.
+  -- Reindex the inner tensorator and collapse its value on the pure tensor.
   erw [PresheafOfModules.pushforward_map_app_apply,
     restrictScalars_δ_app_tmul β' hβ
       ((PresheafOfModules.pushforward₀OfCommRingCat (Hom.opensFunctor f) X.presheaf).obj
@@ -4284,27 +3488,19 @@ lemma pushforward_lax_mu_comparison_lhs_tmul {X Y : Scheme.{u}} (f : Y ⟶ X)
           ((PresheafOfModules.pushforward₀OfCommRingCat (Hom.opensFunctor f) X.presheaf ⋙
             PresheafOfModules.restrictScalars β').obj B)))
       (Opposite.op ((TopologicalSpace.Opens.map f.base).obj (Opposite.unop W)))]
-  -- STEP 4 (counit pair).  Split the `tensorHom` `ε_A ⊗ₘ ε_B` on the pure tensor:
-  -- `tensorHom_app` pushes `.app V'` through `⊗ₘ`, `tensorHom_tmul` splits the pure tensor.
+  -- Split the counit tensor morphism into its two sectionwise legs.
   erw [PresheafOfModules.Monoidal.tensorHom_app, ModuleCat.MonoidalCategory.tensorHom_tmul]
-  -- Collapse each `hadj'.counit.app _` leg by the in-file value lemma
-  -- `pushforwardPushforwardAdj_counit_app_app_apply` (counit acts sectionwise by
-  -- `N.map (adj.unit.app U.unop).op`), packaged as a ∀-`have hC` keyed on the goal's own
-  -- `hadj'.counit` fvar (the binder for `y` is the BIG composite object `(pushforward φ' ⋙ Gβ).obj N`,
-  -- NOT `N.obj U` — the counit's domain), mirroring the unit-side `hU`.
+  -- Express each adjunction counit leg as restriction along the topological unit.
   have hC : ∀ (N : _root_.PresheafOfModules (Y.presheaf ⋙ forget₂ CommRingCat RingCat))
       (U : (TopologicalSpace.Opens ↥Y)ᵒᵖ)
       (y : (((PresheafOfModules.pushforward (Hom.toRingCatSheafHom f).hom ⋙
           (PresheafOfModules.pushforward₀OfCommRingCat (Hom.opensFunctor f) X.presheaf ⋙
             PresheafOfModules.restrictScalars β')).obj N).obj U)),
-      ConcreteCategory.hom ((hadj'.counit.app N).app U) y
-        = ConcreteCategory.hom (N.map (f.isOpenEmbedding.isOpenMap.adjunction.unit.app U.unop).op) y :=
+      ConcreteCategory.hom ((hadj'.counit.app N).app U) y =
+        ConcreteCategory.hom
+          (N.map (f.isOpenEmbedding.isOpenMap.adjunction.unit.app U.unop).op) y :=
     fun N U y => pushforwardPushforwardAdj_counit_app_app_apply _ _ _ _ _ N U y
-  -- Apply `hC` to each leg with ALL THREE args (`N := Gβ.obj A / Gβ.obj B`,
-  -- `U := V' = op ((Opens.map f.base).obj W.unop)`, and the explicit `y` = the section element):
-  -- leaving `N`/`U`/`y` as metavars makes `erw` whnf-explode on the heavy composite `y`-type search;
-  -- pinning all three reduces it to a direct (bounded) match.  Two separate `erw`s (one per leg) so the
-  -- second does not rescan the now-heavier collapsed first leg.
+  -- Pin the presheaf, open, and section element when applying the counit formula to each leg.
   erw [hC ((PresheafOfModules.pushforward₀OfCommRingCat (Hom.opensFunctor f) X.presheaf ⋙
         PresheafOfModules.restrictScalars β').obj A)
       (Opposite.op ((TopologicalSpace.Opens.map f.base).obj (Opposite.unop W)))
@@ -4319,33 +3515,21 @@ lemma pushforward_lax_mu_comparison_lhs_tmul {X Y : Scheme.{u}} (f : Y ⟶ X)
             ((PresheafOfModules.pushforward₀OfCommRingCat (Hom.opensFunctor f) X.presheaf ⋙
               PresheafOfModules.restrictScalars β').obj B)).map
           (f.isOpenEmbedding.isOpenMap.adjunction.counit.app (Opposite.unop W)).op)) n)]
-  -- CLOSING.  RHS → `m ⊗ₜ n` by `pushforward_lax_mu_comparison_rhs_tmul` (PROVEN, via `pushforward_μ_eq`
-  -- defeq; `erw` bridges `μ (pushforward φ')` ≡ `μ (restrictScalars φ')`).
+  -- The directly defined tensorator also sends the pure tensor to itself.
   erw [pushforward_lax_mu_comparison_rhs_tmul]
-  -- Each pure-tensor factor is the adjunction-triangle composite read sectionwise: the unit-restriction
-  -- (`hU` discharge, `adj.counit`) and the counit-restriction (`hC`, `adj.unit`) are mutually inverse.
-  -- `Opens X`/`Opens Y` are POSETS (thin categories), so after pushing both legs onto `A`/`B` via
-  -- `pushforward_obj_map_apply` and combining (`← Functor.map_comp`), the net opens endomorphism is `𝟙`
-  -- by `Subsingleton.elim`, leaving `A.map 𝟙 = 𝟙` ⇒ the section unchanged.
-  -- Both factors are the SAME triangle composite (`adj.unit`-restriction after `adj.counit`-restriction)
-  -- on an arbitrary presheaf `P` over `Y`'s site.  Factor it into a helper `hfac` keyed on an ABSTRACT `P`
-  -- (the concrete `Gβ.obj A`/`Gβ.obj B` carry a carrier diamond + a propositional opens identity
-  -- `f⁻¹(f(f⁻¹W)) = f⁻¹W` that block `comp_apply`/`map_comp` matching).  In the abstract context the two
-  -- restriction legs share `P`, so they compose; the composite opens endomorphism is `𝟙` by
-  -- `Subsingleton.elim` (`Opens Y` is a poset), whence `P.map 𝟙 = 𝟙`.
+  -- The two restrictions compose to the identity because the category of opens is thin.
   have hfac : ∀ (P : _root_.PresheafOfModules (Y.presheaf ⋙ forget₂ CommRingCat RingCat))
       (z : ↑(P.obj (Opposite.op ((TopologicalSpace.Opens.map f.base).obj (Opposite.unop W))))),
       ConcreteCategory.hom
           (P.map (f.isOpenEmbedding.isOpenMap.adjunction.unit.app
             ((TopologicalSpace.Opens.map f.base).obj (Opposite.unop W))).op)
         (ConcreteCategory.hom
-          (P.map ((TopologicalSpace.Opens.map f.base).map
-            (f.isOpenEmbedding.isOpenMap.adjunction.counit.app (Opposite.unop W)).op.unop).op) z) = z := by
+          (P.map
+            ((TopologicalSpace.Opens.map f.base).map
+              (f.isOpenEmbedding.isOpenMap.adjunction.counit.app
+                (Opposite.unop W)).op.unop).op) z) = z := by
     intro P z
-    -- `co ≫ uo = 𝟙` in the poset `Opens Y` (Subsingleton).  Manually forming `P.map co ≫ P.map uo`
-    -- fails to typecheck (the intermediate object `f⁻¹(f(f⁻¹W))` is defeq to `f⁻¹W` only after unfolding
-    -- `⋙`, which `≫`'s elaborator won't do), so the composite is built indirectly through `P.map_comp`
-    -- (which carries its own well-typed `≫`); `comp_apply` is rfl on `ModuleCat`, bridging by defeq.
+    -- Use `P.map_comp` to retain the definitionally equal intermediate open.
     have step : ConcreteCategory.hom (P.map
           (((TopologicalSpace.Opens.map f.base).map
               (f.isOpenEmbedding.isOpenMap.adjunction.counit.app (Opposite.unop W)).op.unop).op ≫
@@ -4367,14 +3551,8 @@ lemma pushforward_lax_mu_comparison_lhs_tmul {X Y : Scheme.{u}} (f : Y ⟶ X)
   · simp only [PresheafOfModules.pushforward_obj_map_apply]; exact hfac _ m
   · simp only [PresheafOfModules.pushforward_obj_map_apply]; exact hfac _ n
 
-/- Planner strategy (iter-027): genuine non-circular residual of K1's μ-collapse, extracted by
-effort-break. PROVE THIS by mirroring the PROVED in-project `pushforwardComp_lax_μ` (L2197) ONE-TO-ONE:
-`hom_ext` to an open U; thread pure-tensor extensionality through `pushforward₀OfCommRingCat` sections
-(Gβ.obj (A⊗B) is a pushforward of a tensor, NOT syntactic — `tensor_ext` will NOT fire); expose μ via
-`restrictScalars_μ_app`; collapse both legs to the common `f.appIso` base-change value via
-`forget₂_restrictScalars_μ_hom_tmul` / `pushforward_map_restrictScalars_μ_app_tmul` (use `erw`, no whnf).
-Do NOT route through `hadj'.IsMonoidal`/`unit_app_tensor_comp_map_δ` — empirically circular (iter-026).
-Blueprint: chapters/Picard_TensorObjSubstrate.tex `lem:pushforward_lax_mu_comparison`. -/
+/- The transported and directly defined pushforward tensorators agree sectionwise by the preceding
+pure-tensor calculation. -/
 lemma pushforward_lax_mu_comparison {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
     (A B : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) :
     letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
@@ -4408,25 +3586,14 @@ lemma pushforward_lax_mu_comparison {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImme
       = @Functor.LaxMonoidal.μ _ _ _ _ _ _ (PresheafOfModules.pushforward φ')
         (presheafPushforwardLaxMonoidal φ') (Gβ.obj A) (Gβ.obj B) := by
   intro α β hadj hβ β' hadj'
-  -- ASSEMBLY (iter-029, blueprint decomposition): the two lax structures on `pushforward φ'` agree on
-  -- `Gβ.obj A`, `Gβ.obj B` as a *morphism* equality.  Reduce to the per-section comparison by
-  -- `PresheafOfModules.hom_ext`, then defer each open `W` to `pushforward_lax_mu_comparison_lhs_tmul`,
-  -- which works sectionwise via `tensor_ext`: the RHS pure-tensor value is `m ⊗ₜ n` by
-  -- `pushforward_lax_mu_comparison_rhs_tmul` (PROVEN), and the LHS *mate* pure-tensor value is the sole
-  -- residual (the genuine NON-circular geometric seam; routing through `hadj'.IsMonoidal` is CIRCULAR).
+  -- Reduce the morphism equality to the sectionwise comparison.
   exact PresheafOfModules.hom_ext (fun W => pushforward_lax_mu_comparison_lhs_tmul f A B W)
 
-/-- **Abstract mate-conjugation of two oplax tensorators sharing a right adjoint.** Let
-`adj₁ : F₁ ⊣ G` and `adj₂ : F₂ ⊣ G` be two adjunctions onto the same lax-monoidal functor `G`, with
-`F₁` (strong/oplax) and `F₂` oplax monoidal and `adj₂` a monoidal adjunction. If the right-adjoint-lax
-tensorator `μ (rightAdjointLaxMonoidal adj₁)` agrees, on the objects `F₁ A`, `F₁ B`, with the ambient
-lax tensorator `μ G` (the only genuine input, supplied non-circularly), then the strong oplax
-tensorator `δ F₁` equals the `leftAdjointUniq`-conjugate of `δ F₂`. This is the abstract heart of the
-K1 μ/δ-collapse, stated with clean fvars so the mate `rw`-calculus carries no let-unfolding friction.
-Proof: transpose across `adj₁.homEquiv`; `δ F₁` becomes `μ (rightAdjointLaxMonoidal adj₁)` by the
-adjoint-mate identity `unit_app_tensor_comp_map_δ`; the conjugate `δ F₂` leg contracts via
-`unit_leftAdjointUniq_hom_app` (both ends) + `unit_app_tensor_comp_map_δ` for `adj₂` + `μ`-naturality;
-the residual is exactly the hypothesis `hμ`. -/
+/-- Mate conjugation for two oplax tensorators sharing a right adjoint.
+
+If the transported right-adjoint tensorator agrees with the ambient lax tensorator on `F₁ A` and
+`F₁ B`, then `δ F₁` is the `leftAdjointUniq` conjugate of `δ F₂`. The proof transposes through
+`adj₁`, contracts the uniqueness comparisons, and applies the supplied tensorator equality. -/
 lemma deltaConjOfMuComparison {C D : Type*} [Category C] [Category D]
     [MonoidalCategory C] [MonoidalCategory D]
     {F₁ F₂ : C ⥤ D} {G : D ⥤ C} (adj₁ : F₁ ⊣ G) (adj₂ : F₂ ⊣ G)
@@ -4437,7 +3604,7 @@ lemma deltaConjOfMuComparison {C D : Type*} [Category C] [Category D]
     Functor.OplaxMonoidal.δ F₁ A B
       = (adj₁.leftAdjointUniq adj₂).hom.app (A ⊗ B) ≫ Functor.OplaxMonoidal.δ F₂ A B
         ≫ ((adj₁.leftAdjointUniq adj₂).inv.app A ⊗ₘ (adj₁.leftAdjointUniq adj₂).inv.app B) := by
-  -- (TRI⁻¹): `adj₂.unit P ≫ G.map (H1.inv P) = adj₁.unit P` (since `H1.inv = (leftAdjointUniq adj₂ adj₁).hom`).
+  -- The inverse uniqueness comparison carries the `adj₂` unit to the `adj₁` unit.
   have htri' : ∀ P, adj₂.unit.app P ≫ G.map ((adj₁.leftAdjointUniq adj₂).inv.app P)
       = adj₁.unit.app P := by
     intro P
@@ -4455,27 +3622,16 @@ lemma deltaConjOfMuComparison {C D : Type*} [Category C] [Category D]
   -- whiskering-based and do not fire on the `⊗ₘ` form, so we feed the combined `μ_natural` by hand.
   have hnat := Functor.LaxMonoidal.μ_natural G ((adj₁.leftAdjointUniq adj₂).inv.app A)
     ((adj₁.leftAdjointUniq adj₂).inv.app B)
-  -- Transpose across `adj₁`; `rw [hLHS]` turns the LHS `δ F₁` into the mate `μ (rightAdjointLaxMonoidal
-  -- adj₁)`; `simp` runs the two `@[simp]` mate reductions (`unit_leftAdjointUniq_hom_app_assoc` on the
-  -- `H1.hom` leg, `unit_app_tensor_comp_map_δ_assoc` on the `δ F₂` leg) to the bare-μ normal form.
+  -- Transpose across `adj₁` and replace the left tensorator by its right-adjoint mate.
   apply (adj₁.homEquiv _ _).injective
   rw [Adjunction.homEquiv_unit, Adjunction.homEquiv_unit]
-  -- Re-establish the goal in clean instance form (load-bearing: makes `rw [hLHS]` match syntactically).
+  -- Restate the goal with the monoidal instance used by `hLHS`.
   change adj₁.unit.app (A ⊗ B) ≫ G.map (Functor.OplaxMonoidal.δ F₁ A B) =
     adj₁.unit.app (A ⊗ B) ≫ G.map ((adj₁.leftAdjointUniq adj₂).hom.app (A ⊗ B) ≫
       Functor.OplaxMonoidal.δ F₂ A B ≫
         ((adj₁.leftAdjointUniq adj₂).inv.app A ⊗ₘ (adj₁.leftAdjointUniq adj₂).inv.app B))
   rw [hLHS]
-  -- v4.31.0 fix (axis: simp no longer fires the `_assoc` mate reductions automatically): run the two
-  -- mate contractions by explicit `reassoc_of%` rewrites instead of `simp [..._δ_assoc]`, but inside
-  -- `conv_rhs` so the rewrite motive is built over the RHS only — after `rw [hLHS]` the LHS carries the
-  -- mate `μ (rightAdjointLaxMonoidal adj₁)` which is not type-correct under `instances` transparency, so
-  -- a full-goal `rw` whose motive spans the LHS fails.  Distribute `G.map` over the RHS composite,
-  -- contract `adj₁.unit ≫ G.map (H1.hom)` to `adj₂.unit` (`unit_leftAdjointUniq_hom_app`), then
-  -- transpose `adj₂.unit ≫ G.map (δ F₂)` to the bare μ (`unit_app_tensor_comp_map_δ` for `adj₂`).
-  -- Then slide `μ` past the `H1.inv` legs (`← hnat`) and merge the tensor; the residual is the
-  -- per-factor contraction `htri'` and the bare tensorator comparison `hμ`, assembled defeq via
-  -- `congr_arg₂` (a direct `rw`/`simp` of these last two legs is blocked by the instance-path quirk).
+  -- Contract the two mates on the right, then slide `μ` past the inverse comparison legs.
   conv_rhs =>
     rw [Functor.map_comp, Functor.map_comp]
     -- the unit's source object prints as `(𝟭 C).obj (A ⊗ B)` (not `A ⊗ B`), so the `reassoc_of%`
@@ -4524,8 +3680,10 @@ lemma pushforward_mu_appIso_collapse {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImm
     Functor.OplaxMonoidal.δ Gβ A B
       = (hadj'.leftAdjointUniq (PresheafOfModules.pullbackPushforwardAdjunction φ')).hom.app (A ⊗ B)
         ≫ Functor.OplaxMonoidal.δ (PresheafOfModules.pullback φ') A B
-        ≫ ((hadj'.leftAdjointUniq (PresheafOfModules.pullbackPushforwardAdjunction φ')).inv.app A
-            ⊗ₘ (hadj'.leftAdjointUniq (PresheafOfModules.pullbackPushforwardAdjunction φ')).inv.app B) := by
+        ≫ ((hadj'.leftAdjointUniq
+              (PresheafOfModules.pullbackPushforwardAdjunction φ')).inv.app A
+            ⊗ₘ (hadj'.leftAdjointUniq
+              (PresheafOfModules.pullbackPushforwardAdjunction φ')).inv.app B) := by
   letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
       (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
       (f.toRingCatSheafHom).hom
@@ -4554,10 +3712,7 @@ lemma pushforward_mu_appIso_collapse {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImm
   letI Gβ := PresheafOfModules.pushforward₀OfCommRingCat f.opensFunctor X.presheaf ⋙
     PresheafOfModules.restrictScalars β'
   let hadj' : Gβ ⊣ PresheafOfModules.pushforward φ' := hadj
-  -- δ-side of "H1 is a monoidal natural iso": the genuine geometric content of K1, discharged by the
-  -- abstract mate-conjugation `deltaConjOfMuComparison` (clean fvars — no let-fold/instance friction),
-  -- fed the bare tensorator comparison `pushforward_lax_mu_comparison`.  Routing through
-  -- `hadj'.IsMonoidal` would be circular, as that instance (K1's `hmon`) consumes this lemma.
+  -- Apply mate conjugation to the sectionwise tensorator comparison.
   exact deltaConjOfMuComparison hadj' (PresheafOfModules.pullbackPushforwardAdjunction φ') A B
     (pushforward_lax_mu_comparison f A B)
 
