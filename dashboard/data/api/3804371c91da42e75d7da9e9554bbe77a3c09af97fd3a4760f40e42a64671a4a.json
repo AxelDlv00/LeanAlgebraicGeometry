@@ -1,1 +1,1 @@
-{"markdown": "The generic proof is otherwise clean; the only diagnostic is an implicit-argument mismatch at its self-call. I\u2019m making the residue algebra explicit by name and rechecking.", "recommendation": ""}
+{"markdown": "The companion module is in place. Its direct Lean compilation is still elaborating the universal-span equality and generator specialization; there is no diagnostic output yet, so I\u2019m letting the foreground check finish before adjusting anything.", "recommendation": ""}
