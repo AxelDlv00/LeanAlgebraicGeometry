@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.divUniversalFibreKM_le_pointwiseFibrePoleDivisor
 type: lean
-updated: '2026-07-21T19:02:02'
+updated: '2026-07-24T19:02:29'
 ---
 theorem divUniversalFibreKM_le_pointwiseFibrePoleDivisor
     (z : relCurve C RZ) :
