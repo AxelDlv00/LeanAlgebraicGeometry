@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 639
 title: Unconditional left-whiskering of the localizer, via d.2
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:43'
 ---
 Let \(R\), \(J\) be as above with \(J.\mathtt{WEqualsLocallyBijective}\,\mathtt{Ab}\),
   let \(F\) be an \emph{arbitrary} presheaf of \(R\)-modules, and let \(g : M \to N\)

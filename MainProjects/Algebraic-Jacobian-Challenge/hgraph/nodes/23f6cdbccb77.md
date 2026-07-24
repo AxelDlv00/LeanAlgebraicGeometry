@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 455
 title: Pullback along $\psi_r$ realizes the per-slice pushforward
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T11:03:43'
 ---
 Let \(\varphi : X \cong Y\), \(U_i \subseteq X\), \(V_i = \varphi.\mathrm{inv}^{-1}\,U_i\), let
   \(\psi_r\) be the slice structure-sheaf ring map of Lemma~\ref{lem:slice_structureSheaf_hom}, and write

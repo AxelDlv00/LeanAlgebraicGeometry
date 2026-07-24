@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 277
 title: Scalar tower on a bundled restriction-of-scalars module
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T11:03:43'
 ---
 Let \(R \to S\) be a ring map and let \(M\) be an \(S\)-module. Then the \(R\)-module obtained from
   \(M\) by restriction of scalars along \(R \to S\), written

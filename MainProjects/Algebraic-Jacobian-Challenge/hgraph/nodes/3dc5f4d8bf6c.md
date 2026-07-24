@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:principal_hom
 lean_status: lean_ok
-order: 1800
+order: 1801
 title: The principal-divisor map is a group homomorphism
 type: tex
-updated: '2026-07-24T04:02:12'
+updated: '2026-07-24T10:32:51'
 ---
 \textit{Source: Hartshorne, II.6, p.~131 (group-homomorphism remark).}
   Let \(X\) satisfy \((*)\). The principal-divisor map

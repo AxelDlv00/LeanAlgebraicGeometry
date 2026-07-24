@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:order_eq_order_restrict
 lean_status: lean_ok
-order: 1775
+order: 1776
 title: Order is invariant under restriction to an open chart
 type: tex
-updated: '2026-07-24T04:02:12'
+updated: '2026-07-24T10:32:51'
 ---
 Under \([\texttt{IsIntegral}\,X]\,[\texttt{IsLocallyNoetherian}\,X]\,
   [\texttt{IsRegularInCodimensionOne}\,X]\), for a nonempty integral

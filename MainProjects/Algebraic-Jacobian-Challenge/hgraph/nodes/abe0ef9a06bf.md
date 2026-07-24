@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 320
 title: Quotient preserves vanishing positive homology (homological core)
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T11:03:43'
 ---
 \textit{Abstract homological core of Lemma~\ref{lem:quotient_vanishing_cech}.}
   Let \(T : 0 \to T_1 \to T_2 \to T_3 \to 0\) be a short exact sequence of cochain complexes

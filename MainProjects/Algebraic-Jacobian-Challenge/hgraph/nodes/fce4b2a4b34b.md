@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1063
 title: Polynomial-ring module structure on $M$
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:44'
 ---
 The \emph{polynomial-module structure} is the \(\kappa[t_0, \dots, t_{r-1}]\)-module
   structure on \(M\) obtained by restricting scalars along

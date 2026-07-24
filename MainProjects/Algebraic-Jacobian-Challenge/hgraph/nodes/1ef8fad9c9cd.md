@@ -9,7 +9,7 @@ lean_status: empty
 order: 255
 title: Section restriction localizes when the counit is an isomorphism
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T11:03:43'
 ---
 Let \(\mathcal{F}\) be an \(\mathcal{O}_{\operatorname{Spec} R}\)-module for which the
   tilde--\(\Gamma\) counit \(\operatorname{fromTilde\Gamma}\) is an isomorphism, and let \(f \in R\).

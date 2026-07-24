@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 538
 title: Scheme-level gluing core of the Rigidity Lemma
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:43'
 ---
 Let \(\bar k\) be algebraically closed, \(X\) proper, \(X \times Y\) geometrically irreducible,
   reduced and locally of finite type over \(\bar k\), and \(Z\) separated. Let

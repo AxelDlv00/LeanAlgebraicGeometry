@@ -11,7 +11,7 @@ mathlib_name:
 order: 1028
 title: Multiplication by a homogeneous element shifts degree
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:44'
 ---
 \textit{Provided by Mathlib (\texttt{Mathlib.Algebra.GradedMulAction}).}
   Let \(\mathcal{A}\) be a graded family acting on a graded family \(\mathcal{M}\)

@@ -11,7 +11,7 @@ mathlib_name:
 order: 250
 title: The over-site of a topological space is equivalent to its subspace site
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T11:03:43'
 ---
 \textit{Provided by Mathlib.}
   For a topological space \(T\) and an open \(U \subseteq T\), the over-category

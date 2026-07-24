@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:tensorObjUnitIso_hom_sectionsMul
 lean_status: lean_ok
-order: 1296
+order: 1295
 title: Left unitor through the section multiplication
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T10:32:51'
 ---
 Let \(G\) be a sheaf of \(\mathcal{O}_X\)-modules and \(a \in \Gamma(X, G)\).
   Then

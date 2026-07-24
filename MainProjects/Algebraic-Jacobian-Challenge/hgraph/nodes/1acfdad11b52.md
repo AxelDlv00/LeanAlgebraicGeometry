@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 986
 title: Rank bound on the chart locus
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:44'
 ---
 Let \(\F\) be a quasi-coherent \(\OO_S\)-module.  Every point of \(W_e\)
   has point rank at most \(e\).

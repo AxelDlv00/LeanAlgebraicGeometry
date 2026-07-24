@@ -11,7 +11,7 @@ mathlib_name:
 order: 445
 title: Continuity is closed under composition
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T11:03:43'
 ---
 \textit{Provided by Mathlib.}
   If \(F : (\mathcal{C}, J) \to (\mathcal{D}, K)\) and \(G : (\mathcal{D}, K) \to (\mathcal{E}, L)\)

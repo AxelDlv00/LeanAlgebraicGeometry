@@ -11,7 +11,7 @@ mathlib_name:
 order: 342
 title: The underlying object of a slice binary product is the pullback
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T11:03:43'
 ---
 \textit{Provided by Mathlib.}
   For \(S \in \mathcal{C}\) and two objects \(Y, Z \in \operatorname{Over} S\) (with \(\mathcal{C}\)

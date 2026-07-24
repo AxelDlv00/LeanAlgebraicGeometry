@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 920
 title: Two-layer basic-open reduction
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:44'
 ---
 Let \(p : X \to S\), \(\mathcal F\) quasi-coherent on \(X\),
   \(U_0 \subseteq S\) an affine open with \(A := \Gamma(S, U_0)\), and let

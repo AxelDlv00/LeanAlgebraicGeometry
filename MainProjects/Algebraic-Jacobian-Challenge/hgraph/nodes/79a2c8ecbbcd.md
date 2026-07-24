@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 682
 title: The tensor inverse is determined up to isomorphism
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:43'
 ---
 \textit{Source: [Stacks Project], Tag 01CR, Lemma~\texttt{lemma-invertible}: when
   \(\mathcal{L}\) is invertible the module \(\mathcal{N}\) with

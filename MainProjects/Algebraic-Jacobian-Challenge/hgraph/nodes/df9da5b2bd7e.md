@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 748
 title: Restrict-side conjugate of the restriction-composition isomorphism
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:43'
 ---
 Let \(f : X \hookrightarrow Y\) and \(g : Y \hookrightarrow Z\) be open immersions. Under the
   conjugation equivalence between the composite restriction adjunction

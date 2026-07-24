@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: rmk:thm32_role_of_ab
 lean_status: empty
-order: 1734
+order: 1735
 title: rmk:thm32_role_of_ab
 type: tex
-updated: '2026-07-24T04:02:12'
+updated: '2026-07-24T10:32:51'
 ---
 \textbf{Where Auslander--Buchsbaum enters.} The combination above relies on
   \cref{thm:codim_one_extension}, which is itself proved in

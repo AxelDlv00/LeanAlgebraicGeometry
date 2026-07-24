@@ -7,14 +7,14 @@ docstring: 'Coordinatewise value of the homotopy component: the `τ`-coordinate 
   `h(t)` is the
 
   engine prepend map applied to the `(i_fix :: τ)`-coordinate of `t`.'
-file: AlgebraicJacobian/Cohomology/CechSectionIdentification.lean
+file: AlgebraicJacobian/Cohomology/CechSectionContractibilityCore.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechSectionHomotopyComp_coord
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-24T10:02:45'
 ---
-private lemma cechSectionHomotopyComp_coord (m : ℕ)
+lemma cechSectionHomotopyComp_coord (m : ℕ)
     (t : ToType ((sectionCechComplexV 𝒰 F V).X (m + 1))) (τ : Fin (m + 1) → 𝒰.I₀) :
     sectionCechProductEquiv (fun a => coverOpen 𝒰 a ⊓ V)
         ((SheafOfModules.forget X.ringCatSheaf).obj F) m

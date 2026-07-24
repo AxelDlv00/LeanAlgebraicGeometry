@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 270
 title: $\Gamma$--$\Spec$ naturality of the localisation immersion, section form
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T11:03:43'
 ---
 Let \(g \in R\), write \(R_g = R[g^{-1}]\), let \(\lambda : R \to R_g\) be the localisation map, and let
   \(\iota = \Spec(\lambda) : \Spec R_g \to \Spec R\) be the induced affine morphism (it is the open

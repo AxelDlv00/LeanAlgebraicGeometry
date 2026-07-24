@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 511
 title: The restricted square carves into a ring pushout
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:43'
 ---
 In the setting of \cref{lem:pushpullobj_coverinter_basechange}, write
   \(V = \operatorname{Spec} A_\sigma\) for the affine intersection open

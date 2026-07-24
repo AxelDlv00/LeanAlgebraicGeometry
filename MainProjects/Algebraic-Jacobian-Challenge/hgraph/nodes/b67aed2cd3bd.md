@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 891
 title: 'Engine bridge: line-bundle over--restrict trivialisation'
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:44'
 ---
 The line-bundle engine's local over--restrict trivialisation bridge: given
   \(M \in \Scheme.\mathtt{Modules}\,X\), an open \(U \subseteq X\), and a

@@ -9,7 +9,7 @@ lean_status: empty
 order: 873
 title: Sq2b residual --- monoidality of the \(\mathtt{pushforward}\) composition cell
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:44'
 ---
 The change-of-rings coherence ``\(\mathtt{pushforwardComp}\) is monoidal'': the lax
   tensorator \(\mu\) of the composite pushforward

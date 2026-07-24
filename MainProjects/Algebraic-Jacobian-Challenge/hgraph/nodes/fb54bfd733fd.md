@@ -10,7 +10,7 @@ order: 801
 title: '$\delta$ mate-identification: the tensor comparison is the sheafified cotensorator
   (Cone A)'
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:44'
 ---
 Let \(f : Y \to X\) and \(M, N \in \Scheme.\mathtt{Modules}\,X\). The sheaf-level tensor comparison
   \(\mathtt{pullbackTensorMap}\,f\,M\,N\) (\cref{lem:pullback_tensor_map}) is the sheafification

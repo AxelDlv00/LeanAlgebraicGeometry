@@ -1,6 +1,6 @@
 ---
 author: sync
-chapter: The Quot scheme
+chapter: '{\v C}ech computation of higher direct images $R^i f_*$ (unconditional)'
 content_type: lemma
 created: '2026-07-16T21:14:29'
 generated: blueprint
@@ -8,17 +8,16 @@ label: lem:pushforwardPushforwardEquivalence_mathlib
 lean_status: mathlib_ok
 mathlib_name:
 - SheafOfModules.pushforwardPushforwardEquivalence
-order: 1094
-title: Module sheaves transport across an equivalence of ringed sites
+order: 249
+title: Site-equivalence transport of sheaves of modules
 type: tex
-updated: '2026-07-24T08:32:09'
+updated: '2026-07-24T11:03:43'
 ---
-\textit{Provided by Mathlib
-  (\texttt{Mathlib.Algebra.Category.ModuleCat.Sheaf.PushforwardContinuous}).}
-  Let \(e : C \simeq D\) be an equivalence of sites with both \(e.\mathrm{functor}\) and
-  \(e.\mathrm{inverse}\) continuous, and let \(S\) (a sheaf of rings on \(J\)) and \(R\) (a sheaf
-  of rings on \(K\)) be related by mutually inverse comparison maps across the continuous
-  pushforwards. Then the categories of sheaves of modules are equivalent,
-  \(\mathrm{SheafOfModules}\,R \simeq \mathrm{SheafOfModules}\,S\), compatibly with the
-  underlying ring-sheaf identification. This is the module-level lift used in step~3 of
-  \cref{lem:over_restrict_iso}.
+\textit{Provided by Mathlib.}
+  Let \(e : \mathcal{C} \simeq \mathcal{D}\) be an equivalence of sites whose functor and inverse
+  are continuous.  If \(\mathcal{O}_{\mathcal{C}}\) and \(\mathcal{O}_{\mathcal{D}}\) are sheaves of
+  rings related by mutually inverse comparison maps along the two pushforwards, then \(e\) induces
+  an equivalence of categories of sheaves of modules
+  \(\operatorname{SheafOfModules} \mathcal{O}_{\mathcal{C}} \simeq
+  \operatorname{SheafOfModules} \mathcal{O}_{\mathcal{D}}\), compatible with those pushforwards.
+  This is the engine that bridges two pictures of ``restriction to an open''.

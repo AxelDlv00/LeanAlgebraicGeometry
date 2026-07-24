@@ -11,7 +11,7 @@ mathlib_name:
 order: 415
 title: The canonical isomorphism of an affine scheme with its spectrum
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T11:03:43'
 ---
 \textit{Provided by Mathlib.}
   Let \(U\) be a scheme with \([\,\mathrm{IsAffine}\ U\,]\). Then there is a canonical

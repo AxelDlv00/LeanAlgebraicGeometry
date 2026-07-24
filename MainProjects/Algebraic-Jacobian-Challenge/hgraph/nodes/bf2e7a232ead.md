@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:tensorObj_iso_sheafTensorObj
 lean_status: lean_ok
-order: 1135
+order: 1134
 title: The substrate tensor and the section-graded tensor coincide
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T10:32:51'
 ---
 The substrate tensor \(\mathrm{tensorObj}(A,B)\)
   (\cref{def:scheme_modules_tensorobj}) and the section-graded tensor

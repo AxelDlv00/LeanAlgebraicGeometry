@@ -10,7 +10,7 @@ order: 814
 title: 'Seam 1 keystone: the unit-of-\(\le\) restriction iso is the chart restriction
   of \(e^M\)'
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:44'
 ---
 \textit{Source: internal categorical construction; no external reference.}
   Let \(j : V \hookrightarrow U\) be the chart morphism (\(j \mathbin{;} \iota_U = \iota_V\)) and

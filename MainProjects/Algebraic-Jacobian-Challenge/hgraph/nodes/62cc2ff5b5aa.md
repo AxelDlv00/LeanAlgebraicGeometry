@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:identity_component_group_scheme
 lean_status: lean_ok
-order: 1541
+order: 1542
 title: Identity component of a group scheme
 type: tex
-updated: '2026-07-24T04:02:12'
+updated: '2026-07-24T10:32:51'
 ---
 \textit{Source: [Kleiman], ``The Picard scheme'', \S 5, Lem.~5.1.}
   Let \(k\) be a field and \(G\) a \(k\)-group scheme locally of finite type

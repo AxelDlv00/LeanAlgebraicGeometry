@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:gr_diagonalRingMap_right
 lean_status: lean_ok
-order: 1401
+order: 1400
 title: Right component of \(\delta_{I,J}\)
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T10:32:51'
 ---
 For \(b \in \mathbb{Z}[X^J]\), the comorphism \(\delta_{I,J}\)
   (\cref{def:gr_diagonalRingMap}) acts on the right factor by the pre-localisation

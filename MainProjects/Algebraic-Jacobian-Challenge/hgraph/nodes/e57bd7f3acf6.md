@@ -9,7 +9,7 @@ lean_status: sorry
 order: 259
 title: Module equivalence over a basic open
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T11:03:43'
 ---
 For \(g \in R\), there is an equivalence of categories of sheaves of
   modules

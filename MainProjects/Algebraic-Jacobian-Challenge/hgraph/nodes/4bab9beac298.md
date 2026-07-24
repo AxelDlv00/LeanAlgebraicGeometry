@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:gr_transitionPreMap_minorDet
 lean_status: lean_ok
-order: 1361
+order: 1360
 title: Image of a cross minor under \(\tilde\theta_{I,J}\)
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T10:32:51'
 ---
 For a third size-\(d\) subset \(K\), the pre-hom \(\tilde\theta_{I,J}\) sends the
   minor determinant \(P^J_K\) (\cref{def:gr_minor_det}) to the determinant of the

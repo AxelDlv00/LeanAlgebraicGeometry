@@ -10,7 +10,7 @@ order: 508
 title: 'Base-change cancellation: the restricted corner module is the tensor base
   change of \(N\)'
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:43'
 ---
 Let \(\varphi : R \to A_\sigma\), \(\rho : A_\sigma \to B\), \(\psi : R \to R'\),
   \(\sigma' : R' \to B\) be commutative-ring homomorphisms forming a pushout (cocartesian)

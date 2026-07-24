@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 254
 title: Section restriction of \(\widetilde{M}\) localizes
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T11:03:43'
 ---
 Let \(M\) be an \(R\)-module and \(f \in R\). The section-restriction map
   \(\Gamma(\operatorname{Spec} R, \widetilde{M}) \to \Gamma(D(f), \widetilde{M})\) of the associated

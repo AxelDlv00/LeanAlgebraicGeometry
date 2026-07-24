@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 521
 title: 'Stage 2, assembly: \(\operatorname{bareBC}\) is an isomorphism'
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:43'
 ---
 For the cartesian square \(p' \cdot g' = g'_V \cdot p\) of \cref{lem:openimm_beckchevalley} with
   \(p\) an open immersion, \(V\) affine (\([\mathrm{IsAffine}\,V]\)), \(X\) separated, and

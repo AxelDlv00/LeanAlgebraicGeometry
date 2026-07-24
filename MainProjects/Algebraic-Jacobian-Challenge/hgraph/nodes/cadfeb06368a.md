@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:weil_divisor_obstruction
 lean_status: empty
-order: 1680
+order: 1681
 title: Weil-divisor characterisation of the codim-1 extension obstruction
 type: tex
-updated: '2026-07-24T04:02:12'
+updated: '2026-07-24T10:32:51'
 ---
 \textit{Source: Hartshorne, II.6, pp.~130--131 (valuation \(v_Y\) and the order map).}
   Let \(X\) be a nonsingular variety over \(\bar k\), let \(Y\) be a variety over \(\bar k\),

@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 976
 title: Flatness over the identity from an affine cover
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:44'
 ---
 Let \(\mathcal G\) be a quasi-coherent \(\OO_T\)-module and \((W_j)_j\) an
   affine open cover of \(T\) such that each \(\Gamma(\mathcal G, W_j)\) is

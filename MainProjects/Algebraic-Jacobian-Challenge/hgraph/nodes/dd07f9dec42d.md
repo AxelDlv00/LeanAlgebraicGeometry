@@ -11,7 +11,7 @@ mathlib_name:
 order: 349
 title: Restrict--stalk comparison along an open immersion
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T11:03:43'
 ---
 \textit{Provided by Mathlib
   (\texttt{Mathlib.AlgebraicGeometry.Modules.Sheaf}).}

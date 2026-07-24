@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 993
 title: Openness of the rank fibers of a flat pullback
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:44'
 ---
 Let \(S\) be locally noetherian, \(\F\) a finitely presented
   \(\OO_S\)-module, and \(\varphi : T \to S\) a morphism with

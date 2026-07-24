@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 812
 title: 'S4c: global-unit comparison \(u_\iota\) commutes with further restriction'
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:44'
 ---
 With \(j : V \hookrightarrow U\) as above, the global-unit comparison
   \[

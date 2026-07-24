@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 626
 title: Tensor product commutes with restriction along an open immersion
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:43'
 ---
 Let \(X\) be a scheme, let \(M, N \in \Scheme.\mathtt{Modules}\,X\) be
   \emph{arbitrary} \(\mathcal{O}_X\)-modules, and let

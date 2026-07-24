@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 363
 title: Canonical coproduct-to-product comparison of push--pull objects
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-24T11:03:43'
 ---
 In the setting of Definition~\ref{def:coprodOverIncl}, assume in addition that the product
   \(\prod_i \operatorname{pushPullObj}\mathcal{F}\,(\mathrm{legs}\,i)\) exists. The \emph{canonical

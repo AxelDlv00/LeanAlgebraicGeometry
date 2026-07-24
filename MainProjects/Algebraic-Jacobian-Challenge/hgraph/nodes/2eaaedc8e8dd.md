@@ -10,7 +10,7 @@ order: 914
 ref: nitsure-hilbert-quot
 title: Generic flatness, algebraic form
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:44'
 ---
 \textit{Source: [Nitsure], \S4, ``Lemma on Generic Flatness''.}
   Let \(A\) be a noetherian domain, \(B\) a finite-type \(A\)-algebra, and \(M\) a finite

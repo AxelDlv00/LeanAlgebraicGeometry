@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 977
 title: Flatness over the base is stable under pullback
 type: tex
-updated: '2026-07-24T04:02:11'
+updated: '2026-07-24T11:03:44'
 ---
 Let \(\mathcal G\) be a quasi-coherent \(\OO_T\)-module flat over \(T\),
   and \(g : T' \to T\) a morphism of schemes.  Then \(g^*\mathcal G\) is
