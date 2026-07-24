@@ -8,37 +8,15 @@
 \chapter{Codimension-1 indeterminacy extension (A.4.a)}
 \label{chap:Albanese_CodimOneExtension}
 
-% STRATEGY NOTE (iter-174). This chapter is the A.4.a sub-row of Route A
-% (the positive-genus arm of \texttt{nonempty\_jacobianWitness}). Per
-% STRATEGY.md L29 it is the \emph{risk-dominant} A.4 sub-row
-% ("project-fatal if it stalls"). The chapter has two outputs:
-% (i) \cref{thm:codim_one_extension} --- Milne Theorem~3.1: a rational map
-%     from a normal variety to a complete variety is defined on the complement
-%     of a codimension-\(\geq 2\) closed subset. Specialised below to the
-%     smooth-variety setting where the prover can phrase it as
-%     "no codim-1 indeterminacy \(\Rightarrow\) extension". This is one of the
-%     two inputs to Milne Theorem~3.2 in the sibling chapter
-%     \cref{chap:Albanese_Thm32RationalMapExtension}.
-% (ii) \cref{lem:milne_codim1_indeterminacy} --- Milne Lemma~3.3: for a
-%     rational map from a nonsingular variety to a group variety, the
-%     indeterminacy locus is either empty or of pure codimension \(1\). This is
-%     the second input to Milne Theorem~3.2; it consumes nothing from A.4.b.
-% A bonus output is \cref{thm:weil_divisor_obstruction}: the Weil-divisor
-% reformulation of (i) that a smooth-surface codim-2 extension is obstructed
-% exactly by the order of the pulled-back coordinates of \(f\) being negative
-% at a prime divisor. This is the lemma A.4.a uses to align with the project's
-% \cref{chap:RiemannRoch_WeilDivisor} machinery.
-%
-% Depth-\(\geq 2\) extension on a smooth surface, used in the proof body of
-% \cref{thm:codim_one_extension} when reducing the general-codim case to the
-% normal-DVR-codim-1 case, consumes
-% \cref{cor:regular_cohen_macaulay} of
-% \cref{chap:Albanese_AuslanderBuchsbaum} (the A.4.b sub-row). The chapter
-% records the dependency but does not re-prove it.
-%
-% The Lean target file \texttt{AlgebraicJacobian/Albanese/CodimOneExtension.lean}
-% does not yet exist; this chapter is the prover-ready specification for
-% creating it.
+This chapter isolates two codimension-one inputs to the extension theorem for rational
+maps.  A rational map from a normal variety to a complete variety is defined away from a
+closed subset of codimension at least two, while a map to a group variety has indeterminacy
+that is either empty or purely codimension one.  We also record the equivalent
+Weil-divisor obstruction in terms of orders along prime divisors.
+The depth-\(\geq 2\) reduction uses
+\cref{cor:regular_cohen_macaulay} from
+\cref{chap:Albanese_AuslanderBuchsbaum}, and the two codimension-one outputs
+feed the extension theorem in \cref{chap:Albanese_Thm32RationalMapExtension}.
 
 \section{Setup and motivation}
 \label{sec:codim1_setup}
@@ -203,7 +181,7 @@ direction of Stacks tag \texttt{00TT}; we package it as a separate sub-lemma so 
 \cref{lem:smooth_codim_one_dvr} below reads cleanly as ``regular local of dimension
 \(1\) is a DVR'', with the regularity prerequisite supplied by the sub-lemma.
 
-\subsection{Stages 5a/5b: K\"ahler-differentials localisation substrate (iter-193)}
+\subsection{Stages 5a/5b: K\"ahler-differentials localisation substrate}
 \label{subsec:kaehler_localisation_substrate}
 
 The Jacobian-criterion direction of Stacks tag \texttt{00TT}
@@ -358,7 +336,7 @@ Stages~1--4 of the chain are recorded below as named substrate lemmas, feeding
   \(\mathrm{rank}_{S_M}(\Omega_{S_M / R}) = n\) as required.
 \end{proof}
 
-\subsection{Stage 6 sub-decomposition: 00OE + 02JK chain (iter-198)}
+\subsection{Stage 6 sub-decomposition: 00OE + 02JK chain}
 \label{subsec:stage6_subgap_decomposition}
 
 Stage 6 is the residual gap inside
@@ -830,7 +808,7 @@ consumed by \cref{thm:weil_divisor_obstruction} and Sub-step~3 of
 Stage 6 work, so the three sub-lemmas above are a self-contained
 mathlib-analogist target.
 
-\subsection{Stage 6.A iter-200 substrate: Stacks 00OE 3-step decomposition}
+\subsection{Stage 6.A substrate: Stacks 00OE 3-step decomposition}
 \label{subsec:stage6_iib_substrate_iter200}
 \textit{Source: \texttt{coe-stacks00oe} mathlib-analogist
 cross-domain-inspiration recipe (iter-200, persistent
