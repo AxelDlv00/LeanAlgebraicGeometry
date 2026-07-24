@@ -7,9 +7,9 @@ generated: blueprint
 label: lem:isLocalization_atPrime_stalk_of_affineOpen
 lean_status: lean_ok
 order: 1644
-title: Step B.b --- affine-open stalk is a localisation
+title: An affine-open stalk is a localisation
 type: tex
-updated: '2026-07-24T10:32:51'
+updated: '2026-07-24T12:03:09'
 ---
 For an affine open \(V \ni z\) of a scheme \(X\), the stalk \(\mathcal O_{X,z}\) is
   the localisation of the section ring \(\Gamma(X, V)\) at the prime ideal of \(z\).

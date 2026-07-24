@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.homCechComplex_d_eq
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-24T13:02:37'
 ---
 private lemma homCechComplex_d_eq (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
     (F : X.PresheafOfModules) (p : ℕ) :
@@ -30,10 +30,12 @@ private lemma homCechComplex_d_eq (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
           (HomologicalComplex.op (cechFreePresheafComplex 𝒰))).d p (p + 1) := by
   have hL : (homCechComplex 𝒰 F).d p (p + 1)
       = AlgebraicTopology.AlternatingCofaceMapComplex.objD (homCechCosimplicial 𝒰 F) p :=
-    CochainComplex.of_d (fun n => (homCechCosimplicial 𝒰 F).obj (SimplexCategory.mk n)) (AlgebraicTopology.AlternatingCofaceMapComplex.objD (homCechCosimplicial 𝒰 F)) p
+    CochainComplex.of_d (fun n => (homCechCosimplicial 𝒰 F).obj (SimplexCategory.mk n))
+      (AlgebraicTopology.AlternatingCofaceMapComplex.objD (homCechCosimplicial 𝒰 F)) p
   have hR : (cechFreePresheafComplex 𝒰).d (p + 1) p
       = AlgebraicTopology.AlternatingFaceMapComplex.objD (cechFreeSimplicial 𝒰) p :=
-    ChainComplex.of_d (fun n => (cechFreeSimplicial 𝒰).obj (Opposite.op (SimplexCategory.mk n))) (AlgebraicTopology.AlternatingFaceMapComplex.objD (cechFreeSimplicial 𝒰)) p
+    ChainComplex.of_d (fun n => (cechFreeSimplicial 𝒰).obj (Opposite.op (SimplexCategory.mk n)))
+      (AlgebraicTopology.AlternatingFaceMapComplex.objD (cechFreeSimplicial 𝒰)) p
   rw [hL, AlgebraicTopology.AlternatingCofaceMapComplex.objD,
     Functor.mapHomologicalComplex_obj_d, HomologicalComplex.op_d, hR,
     AlgebraicTopology.AlternatingFaceMapComplex.objD]

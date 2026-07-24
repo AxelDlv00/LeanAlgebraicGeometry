@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.qcoh_section_kernel_comparison
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-24T13:02:37'
 ---
 noncomputable def qcoh_section_kernel_comparison (F : (Spec R).Modules) [F.IsQuasicoherent]
     (f : R) :
@@ -42,10 +42,11 @@ end KernelComparisonAssembly
 `Spec R` the tilde–Γ counit `fromTildeΓ : tilde(Γ F) ⟶ F` is an isomorphism.  It is checked on the
 basis of distinguished opens `{D(r)}`: the `D(r)`-component of the underlying sheaf morphism is the
 localization lift of the section-restriction `ρ_r` along `tilde.toOpen` (Mathlib's
-`toOpen_fromTildeΓ_app`), and since both `tilde.toOpen` (Mathlib instance) and `ρ_r` (the keystone
-`qcoh_section_isLocalizedModule`) are localizations of `Γ(X,F)` at the powers of `r`, that lift is an
-iso (`IsLocalizedModule.linearEquiv_of_isLocalizedModule_comp`).  Registered as an `instance`, so the
-conditional `qcoh_iso_tilde_sections F` becomes available unconditionally for quasi-coherent `F`. -/
+`toOpen_fromTildeΓ_app`).  Both `tilde.toOpen` (Mathlib instance) and `ρ_r` (the keystone
+`qcoh_section_isLocalizedModule`) localize `Γ(X,F)` at the powers of `r`, so that lift is an
+isomorphism (`IsLocalizedModule.linearEquiv_of_isLocalizedModule_comp`).  Registered as an
+`instance`, it makes `qcoh_iso_tilde_sections F` available unconditionally for quasi-coherent
+`F`. -/
 
 section IsoFromTildeGammaAssembly
 
