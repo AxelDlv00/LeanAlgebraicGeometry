@@ -2,10 +2,10 @@ id: AJC.maintenance.cech
 title: Cech elaboration and dependency cleanup
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Done for the capstone closure: generic exact-augmentation lemmas replace
-  the specialized 4M-heartbeat adapter; CechTermAcyclic no longer imports the contractibility
-  chain; targeted builds and LSP diagnostics are clean.'
-status: done
+summary: Separate the completed Cech consumer closure from the still-open CechSectionContractibility
+  elaboration hotspot. The capstone and consumer dependency work is complete; coordinate
+  extraction, narrow profiling, and heartbeat reduction remain.
+status: pending
 kind: refactor
 priority: high
 depends_on: []
@@ -27,6 +27,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
-  updated_at: '2026-07-24T11:32:21.266689+00:00'
-  pinned_commits:
-  - 96916900a
+  updated_at: '2026-07-24T21:56:31.776959+00:00'
