@@ -6,19 +6,10 @@ Authors: Christian Merten
 import AlgebraicJacobian.Cohomology.CechSectionIdentificationLegAux
 
 /-!
-# Sub-brick A — Rest: section identification, augmentation, contractibility
+# Sectionwise Čech comparison and contractibility
 
-The section/augmentation + contractibility block:
-`sectionCechAugV`, `sectionCechAugV_comp_d`, `cechSection_complex_iso`,
-the `stub*`/`cechSection*` private engine, `sectionCechAugV_π` (closed iter-074:
-degree-0 augmentation seam through the terminal object of `Over X` and the
-pullback–pushforward adjunction unit), the Stub6 homotopy engine, and
-`cechSection_contractible`.
-Depends on `CechSectionIdentificationLeg` (transitively Base).
-
-**0 sorries.**  (`cechSection_complex_iso`/`cechSection_contractible` remain
-`sorryAx`-tainted only through the upstream `coreIso_comm_leg` sorry in
-`CechSectionIdentificationLeg.lean`.)
+This file transports the evaluated augmented Čech complex to the concrete section complex
+and constructs its contracting homotopy over an open contained in a member of the cover.
 -/
 
 universe u
@@ -78,49 +69,7 @@ lemma sectionCechAugV_comp_d (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modu
   exact (Category.assoc _ _ _).symm.trans
     ((congrArg (· ≫ (coreIso_objIso 𝒰 F 1 V).hom) key).trans Limits.zero_comp)
 
-/- Planner strategy:
-Goal: `D ≅ (sectionCechComplexV 𝒰 F V).augment ε hε` as `CochainComplex AddCommGrpCat ℕ`, where
-  - `D = (GV.mapHomologicalComplex cc).obj Kp` is the evaluated augmented Čech section complex
-    (GV = `PresheafOfModules.toPresheaf ⋙ evaluation(op V)`,
-     Kp = `(SheafOfModules.forget ⋙ PresheafOfModules.restrictScalars (𝟙 ·)).mapHC.obj K`,
-     K = `cechAugmentedComplex 𝒰 F`);
-  - `sectionCechComplexV 𝒰 F V = sectionCechComplex (fun i => coverOpen 𝒰 i ⊓ V) Fp` is the
-    non-augmented concrete section Čech complex (with `Fp = (SheafOfModules.forget X.ringCatSheaf).obj F`);
-  - `ε : Fp.presheaf.obj (op V) ⟶ (sectionCechComplexV 𝒰 F V).X 0` is the augmentation map
-    (the restriction `t ↦ (t|_{U'_i})_i`); and
-  - `hε : ε ≫ (sectionCechComplexV 𝒰 F V).d 0 1 = 0`.
-
-Route (promote degreewise isos to a complex iso):
-
-(A) DEGREEWISE OBJECT ISO: `pushPull_eval_prod_iso` (Stub 4) gives, for each `p`,
-    `D.X (p+1) ≅ (sectionCechComplexV 𝒰 F V).X p` as `Ab` objects — both equal `∏_σ Γ(U_σ ∩ V, F)`;
-    and `D.X 0 = Fp.presheaf.obj (op V)` matches the augmentation object.
-
-(B) DIFFERENTIAL MATCH: The differential of `D'` is, read through `sectionCechProductEquiv`
-    (`CechAcyclic.lean:1438`), the alternating sum `∑_i (-1)^i • sectionCechFaceRestr(σ,i)`
-    (`sectionCech_objD_apply`, `CechAcyclic.lean:1513`). The differential of `D` is the
-    evaluation-at-`V` of the Čech-nerve coface maps; under the degreewise identification
-    (A), each coface of `D` becomes the corresponding face restriction of `D'`. REUSE
-    `sectionCech_objD_apply` rather than rebuilding the alternating-sum bookkeeping.
-
-(C) ASSEMBLE: Build the `HomologicalComplex.mkIso` (or `HomologicalComplex.Hom` iso) from
-    the degreewise components, checking the `comm` condition via the differential match.
-
-AMBIGUITY FLAG: The type of `Kp` in the definition of `D` uses
-`PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)` as a technical adapter between
-`SheafOfModules.forget` landing in `PresheafOfModules X.ringCatSheaf.val` and the
-`PresheafOfModules.toPresheaf X.ringCatSheaf.obj` that the evaluation uses. The prover
-should verify this adapter type carefully; if the exact path differs from the scaffold,
-adjust `Kp` accordingly. Checking how `hSec` in `CechAugmentedResolution.lean:185-205`
-constructs `Kp` provides the canonical reference.
-
-Key Lean names:
-- `pushPull_eval_prod_iso` (Stub 4)
-- `sectionCech_objD_apply` (CechAcyclic.lean:1513)
-- `sectionCechProductEquiv` (CechAcyclic.lean:1438)
-- `HomologicalComplex.mkIso` or `HomologicalComplex.Hom.isoOfComponents`
-
-Difficulty: MEDIUM (assembly + differential bookkeeping via sectionCech_objD_apply). -/
+/-- The evaluated augmented Čech complex is the augmented concrete section complex. -/
 noncomputable def cechSection_complex_iso (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
     (F : X.Modules) (V : TopologicalSpace.Opens X) :
     let α : X.ringCatSheaf.obj ⟶ X.ringCatSheaf.obj := 𝟙 X.ringCatSheaf.obj
@@ -267,7 +216,7 @@ private def stubOpen : (m : ℕ) → (Fin m → 𝒰.I₀) → TopologicalSpace.
 private lemma stubOpen_le_coface : ∀ {m : ℕ} (σ : Fin (m + 1) → 𝒰.I₀) (j : Fin (m + 1)),
     stubOpen 𝒰 V (m + 1) σ ≤ stubOpen 𝒰 V m (σ ∘ j.succAbove)
   | 0, σ, _ => stubInterLeV 𝒰 V σ
-  | _ + 1, σ, j => le_iInf fun l => iInf_le _ (j.succAbove l)
+  | _ + 1, _, j => le_iInf fun l => iInf_le _ (j.succAbove l)
 
 /-- The prepend inclusion of the Stub-6 opens (prepending `i_fix` does not shrink the
 open, because `V ≤ coverOpen 𝒰 i_fix`). -/
@@ -457,6 +406,7 @@ private lemma cechAugmentation_pushPullMap (𝒰 : X.OpenCover) (F : X.Modules)
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- Normalizing the adjunction unit through the pushforward comparison is kernel-intensive.
 /-- The pullback–pushforward unit reads through the per-leg section identification as the
 plain `F`-restriction `Γ(V, F) → Γ(U_σ ∩ V, F)`. -/
 private lemma unit_pushPull_leg_sections (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
@@ -560,12 +510,6 @@ private lemma unit_pushPull_leg_sections (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
 
 end AugSeam
 
-set_option backward.isDefEq.respectTransparency false in
--- TODO(v4.31.0): kernel deterministic-timeout on this term at 1.6M; raised to unlimited to keep the proof (slow kernel-check, ~one-time then cached)
-set_option maxHeartbeats 0 in
-set_option synthInstance.maxHeartbeats 1000000 in
--- raised: instance synthesis (`HasLimit`/`PreservesLimitsOfShape` over the heavy
--- push–pull product types) exceeds the default budget on this file.
 /-- **Coordinatewise identification of the canonical augmentation** (the degree-`0`
 augmentation seam of `lem:cechSection_contractible`): the `σ`-coordinate of
 `sectionCechAugV` is the plain restriction `Γ(V, F) → Γ(U'_σ, F)`.  This is the `p = 0`
@@ -580,117 +524,9 @@ lemma sectionCechAugV_π (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
           (Opposite.op (⨅ l, (coverOpen 𝒰 (τ l) ⊓ V)))) σ =
       ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.map
         (homOfLE (stubInterLeV 𝒰 V σ)).op := by
-  -- Instances for the evaluated-product seam (mirrors `pushPull_eval_prod_iso`).
-  haveI hT : Limits.PreservesLimitsOfShape (Discrete (Fin (0 + 1) → 𝒰.I₀))
-      (Scheme.Modules.toPresheaf X) := inferInstance
-  haveI : Limits.HasLimitsOfShape (Discrete (Fin (0 + 1) → 𝒰.I₀)) (Ab.{u}) :=
-    inferInstance
-  haveI hE2 : Limits.PreservesLimitsOfShape (Discrete (Fin (0 + 1) → 𝒰.I₀))
-      ((CategoryTheory.evaluation (TopologicalSpace.Opens X)ᵒᵖ (Ab.{u})).obj
-        (Opposite.op V)) :=
-    Limits.evaluation_preservesLimitsOfShape _
-  haveI : Limits.PreservesLimitsOfShape (Discrete (Fin (0 + 1) → 𝒰.I₀))
-      (Scheme.Modules.toPresheaf X ⋙
-        (CategoryTheory.evaluation (TopologicalSpace.Opens X)ᵒᵖ (Ab.{u})).obj
-          (Opposite.op V)) :=
-    @Limits.comp_preservesLimitsOfShape _ _ _ _ (Discrete (Fin (0 + 1) → 𝒰.I₀)) _ _ _
-      (Scheme.Modules.toPresheaf X)
-      ((CategoryTheory.evaluation (TopologicalSpace.Opens X)ᵒᵖ (Ab.{u})).obj
-        (Opposite.op V)) hT hE2
-  -- (1) The degree-`0` object iso is `pushPull_eval_prod_iso` reindexed (definitional).
-  have hcoreDef : (coreIso_objIso 𝒰 F 0 V).hom =
-      (pushPull_eval_prod_iso 𝒰 F 0 V).hom ≫
-        (Limits.Pi.mapIso (fun τ : Fin (0 + 1) → 𝒰.I₀ =>
-          eqToIso (congrArg
-            (fun W => ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj
-              (Opposite.op W))
-            (coverInterOpen_inf_eq_iInf_inf 𝒰 τ V)))).hom := rfl
-  -- (2) `pushPull_eval_prod_iso` decomposed into its three factors (definitional).
-  have hevalDef : (pushPull_eval_prod_iso 𝒰 F 0 V).hom =
-      ((Scheme.Modules.toPresheaf X ⋙
-          (CategoryTheory.evaluation (TopologicalSpace.Opens X)ᵒᵖ (Ab.{u})).obj
-            (Opposite.op V)).mapIso (pushPull_sigma_iso 𝒰 F 0)).hom ≫
-        (Limits.PreservesProduct.iso (Scheme.Modules.toPresheaf X ⋙
-            (CategoryTheory.evaluation (TopologicalSpace.Opens X)ᵒᵖ (Ab.{u})).obj
-              (Opposite.op V))
-          (fun τ : Fin (0 + 1) → 𝒰.I₀ =>
-            pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ))))).hom ≫
-        (Limits.Pi.mapIso (fun τ : Fin (0 + 1) → 𝒰.I₀ =>
-          pushPull_leg_sections 𝒰 F τ V)).hom := rfl
-  -- (3) π-extraction through the reindexing `Pi.mapIso` (the `eqToIso` family).
-  have hmapiso1 : (Limits.Pi.mapIso (fun τ : Fin (0 + 1) → 𝒰.I₀ =>
-        eqToIso (congrArg
-          (fun W => ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj
-            (Opposite.op W))
-          (coverInterOpen_inf_eq_iInf_inf 𝒰 τ V)))).hom =
-      Limits.Pi.map (fun τ : Fin (0 + 1) → 𝒰.I₀ =>
-        eqToHom (congrArg
-          (fun W => ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj
-            (Opposite.op W))
-          (coverInterOpen_inf_eq_iInf_inf 𝒰 τ V))) := rfl
-  -- (4) π-extraction through the per-leg `Pi.mapIso`.
-  have hmapiso2 : (Limits.Pi.mapIso (fun τ : Fin (0 + 1) → 𝒰.I₀ =>
-        pushPull_leg_sections 𝒰 F τ V)).hom =
-      Limits.Pi.map (fun τ : Fin (0 + 1) → 𝒰.I₀ =>
-        (pushPull_leg_sections 𝒰 F τ V).hom) := rfl
-  -- (5) The evaluated `GV ∘ Ψ` augmentation is the evaluation of `cechAugmentation`
-  -- (definitional: `restrictScalars (𝟙 ·)` and `toPresheaf` commute with `forget`).
-  have hGE : (PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
-        (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj (Opposite.op V)).map
-      ((SheafOfModules.forget X.ringCatSheaf ⋙
-        PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map
-          (cechAugmentation 𝒰 F)) =
-      (Scheme.Modules.toPresheaf X ⋙
-        (CategoryTheory.evaluation (TopologicalSpace.Opens X)ᵒᵖ (Ab.{u})).obj
-          (Opposite.op V)).map (cechAugmentation 𝒰 F) := rfl
-  -- (6) Unwind `coreIso_objIso 0 ≫ Pi.π σ` down to the Base seams (term-chained:
-  -- `rw` cannot re-match composites whose stored middle objects are
-  -- defeq-but-not-syntactic across the evaluated-product presentations).
-  have hproj : (coreIso_objIso 𝒰 F 0 V).hom ≫
-      Pi.π (fun τ : Fin 1 → 𝒰.I₀ =>
-        ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj
-          (Opposite.op (⨅ l, (coverOpen 𝒰 (τ l) ⊓ V)))) σ =
-      (Scheme.Modules.toPresheaf X ⋙
-        (CategoryTheory.evaluation (TopologicalSpace.Opens X)ᵒᵖ (Ab.{u})).obj
-          (Opposite.op V)).map
-        (pushPullMap F (coprodOverIncl (fun τ : Fin (0 + 1) → 𝒰.I₀ =>
-            Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ))) σ ≫
-          (overSigmaDescIso (fun τ : Fin (0 + 1) → 𝒰.I₀ =>
-            (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ))).hom)).inv ≫
-          (cechBackbone_left_sigma 𝒰 0).inv)) ≫
-        (pushPull_leg_sections 𝒰 F σ V).hom ≫
-        eqToHom (congrArg
-          (fun W => ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj
-            (Opposite.op W))
-          (coverInterOpen_inf_eq_iInf_inf 𝒰 σ V)) := by
-    refine Eq.trans (congrArg (fun m => m ≫ _) hcoreDef) ?_
-    refine Eq.trans (Category.assoc _ _ _) ?_
-    refine Eq.trans (congrArg (fun m => _ ≫ m)
-      (Eq.trans (congrArg (fun m => m ≫ _) hmapiso1) (Limits.Pi.map_π _ σ))) ?_
-    refine Eq.trans (Category.assoc _ _ _).symm ?_
-    refine Eq.trans (congrArg (fun m => m ≫ _) (?_ :
-      (pushPull_eval_prod_iso 𝒰 F 0 V).hom ≫
-        Pi.π (fun τ : Fin (0 + 1) → 𝒰.I₀ =>
-          ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj
-            (Opposite.op (coverInterOpen 𝒰 τ ⊓ V))) σ = _ ≫ _)) (Category.assoc _ _ _)
-    refine Eq.trans (congrArg (fun m => m ≫ _) hevalDef) ?_
-    refine Eq.trans (Category.assoc _ _ _) ?_
-    refine Eq.trans (congrArg (fun m => _ ≫ m) (Category.assoc _ _ _)) ?_
-    refine Eq.trans (congrArg (fun m => _ ≫ _ ≫ m)
-      (Eq.trans (congrArg (fun m => m ≫ _) hmapiso2) (Limits.Pi.map_π _ σ))) ?_
-    refine Eq.trans (congrArg (fun m => _ ≫ m) (Category.assoc _ _ _).symm) ?_
-    refine Eq.trans (congrArg (fun m => _ ≫ (m ≫ _))
-      (Eq.trans (congrArg (fun m => m ≫ _) (Limits.PreservesProduct.iso_hom _ _))
-        (Limits.piComparison_comp_π _ _ _))) ?_
-    refine Eq.trans (Category.assoc _ _ _).symm ?_
-    refine congrArg (fun m => m ≫ (pushPull_leg_sections 𝒰 F σ V).hom) ?_
-    refine Eq.trans (((Scheme.Modules.toPresheaf X ⋙
-      (CategoryTheory.evaluation (TopologicalSpace.Opens X)ᵒᵖ (Ab.{u})).obj
-        (Opposite.op V)).map_comp _ _).symm) ?_
-    exact congrArg (Scheme.Modules.toPresheaf X ⋙
-      (CategoryTheory.evaluation (TopologicalSpace.Opens X)ᵒᵖ (Ab.{u})).obj
-        (Opposite.op V)).map (pushPull_sigma_iso_π 𝒰 F 0 σ)
-  -- (7) Final assembly: the augmentation collapses through the terminal object to the
+  have hproj := coreIso_objIso_π 𝒰 F 0 V σ
+  have hGE := GVΨ_map_eq V (cechAugmentation 𝒰 F)
+  -- The augmentation collapses through the terminal object to the
   -- adjunction unit, which reads as the plain restriction; the residual transports are
   -- parallel restriction chains between the same opens.
   refine Eq.trans (congrArg (fun m => m ≫ _) (rfl :
@@ -716,12 +552,7 @@ lemma sectionCechAugV_π (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
         (congrArg (Scheme.Modules.toPresheaf X ⋙
             (CategoryTheory.evaluation (TopologicalSpace.Opens X)ᵒᵖ (Ab.{u})).obj
               (Opposite.op V)).map
-          (cechAugmentation_pushPullMap 𝒰 F
-            (coprodOverIncl (fun τ : Fin (0 + 1) → 𝒰.I₀ =>
-                Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ))) σ ≫
-              (overSigmaDescIso (fun τ : Fin (0 + 1) → 𝒰.I₀ =>
-                (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ))).hom)).inv ≫
-              (cechBackbone_left_sigma 𝒰 0).inv)))))) ?_
+          (cechAugmentation_pushPullMap 𝒰 F (backboneIncl 𝒰 0 σ)))))) ?_
   refine Eq.trans (Category.assoc _ _ _).symm ?_
   refine Eq.trans (congrArg (fun m => m ≫ eqToHom (congrArg
       (fun W => ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj
@@ -805,7 +636,12 @@ private lemma cechSectionD_coord (m : ℕ)
       AlgebraicTopology.AlternatingCofaceMapComplex.objD
         (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V)
           ((SheafOfModules.forget X.ringCatSheaf).obj F)) m :=
-    CochainComplex.of_d (fun n => (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V) ((SheafOfModules.forget X.ringCatSheaf).obj F)).obj (SimplexCategory.mk n)) (AlgebraicTopology.AlternatingCofaceMapComplex.objD (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V) ((SheafOfModules.forget X.ringCatSheaf).obj F))) m
+    CochainComplex.of_d
+      (fun n => (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V)
+        ((SheafOfModules.forget X.ringCatSheaf).obj F)).obj (SimplexCategory.mk n))
+      (AlgebraicTopology.AlternatingCofaceMapComplex.objD
+        (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V)
+          ((SheafOfModules.forget X.ringCatSheaf).obj F))) m
   refine Eq.trans (congrArg (fun y => sectionCechProductEquiv (fun a => coverOpen 𝒰 a ⊓ V)
     ((SheafOfModules.forget X.ringCatSheaf).obj F) (m + 1) y σ)
     (ConcreteCategory.congr_hom hd t)) ?_
@@ -813,6 +649,7 @@ private lemma cechSectionD_coord (m : ℕ)
     ((SheafOfModules.forget X.ringCatSheaf).obj F) m t σ) ?_
   exact Finset.sum_congr rfl fun j _ => rfl
 
+omit [Finite 𝒰.I₀] in
 /-- The `m = 0` engine differential is the single augmentation restriction. -/
 private lemma cechSectionDepDiff_zero
     (u : ∀ ρ : Fin 0 → 𝒰.I₀, cechSectionCoeff 𝒰 F V 0 ρ) (σ : Fin 1 → 𝒰.I₀) :
@@ -833,7 +670,6 @@ private lemma cechSection_comm_zero :
     (· ≫ ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.map
       (homOfLE (stubOpen_le_prepend 𝒰 V i_fix hiV Fin.elim0)).op)
     (sectionCechAugV_π 𝒰 F V (Fin.cons i_fix Fin.elim0))) ?_
-  beta_reduce
   refine Eq.trans ((((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.map_comp
     (homOfLE (stubInterLeV 𝒰 V (Fin.cons i_fix Fin.elim0))).op
     (homOfLE (stubOpen_le_prepend 𝒰 V i_fix hiV Fin.elim0)).op).symm) ?_
@@ -850,6 +686,7 @@ private lemma cechSection_comm_zero :
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- Product extensionality and the dependent alternating-sum identity need the larger budget.
 /-- **(In)** The positive-degree contracting identities, from the dependent engine
 (`CombinatorialCech.depHomotopy_spec`). -/
 private lemma cechSection_comm_succ (n : ℕ) :
@@ -930,6 +767,7 @@ private lemma cechSection_comm_succ (n : ℕ) :
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- The augmentation-node identity expands two dependent product coordinates and their sums.
 set_option maxRecDepth 4000 in
 /-- **(I1)** The augmentation-node contracting identity:
 `𝟙 = π_{i_fix} ≫ ε + d⁰ ≫ h₁` on `Č⁰`. -/
@@ -1062,57 +900,12 @@ private lemma cechSection_succ_step (n : ℕ)
 
 end Stub6Homotopy
 
-/- Planner strategy:
-Goal: `Homotopy (𝟙 ((sectionCechComplexV 𝒰 F V).augment ε hε)) 0`
-assuming `V ≤ coverOpen 𝒰 i_fix`, where
-  `sectionCechComplexV 𝒰 F V = sectionCechComplex (fun i : 𝒰.I₀ => coverOpen 𝒰 i ⊓ V) Fp`
-is the non-augmented complex and `ε`, `hε` are the augmentation data.
-
-This is PURELY COMBINATORIAL — no affine vanishing, no qcoh, no tilde.
-
-Route:
-
-(A) IDENTIFY THE FAMILY: `U'_σ := coverInterOpen 𝒰 σ ⊓ V = ⨅ k, (coverOpen 𝒰 (σ k) ⊓ V)`.
-    `D'` is the alternating coface complex of the cosimplicial object
-    `sectionCechCosimplicial (fun i => coverOpen 𝒰 i ⊓ V) Fp`.
-
-(B) MAXIMUM PROPERTY: Since `V ≤ coverOpen 𝒰 i_fix`, we have
-    `coverOpen 𝒰 i_fix ⊓ V = V`. Therefore `U'_{i_fix..σ} = U'_σ` for any `σ`
-    (prepending `i_fix` does not shrink the open). Equivalently, the prepend map
-    `σ ↦ Fin.cons i_fix σ` is the IDENTITY at the coefficient level:
-    for each multi-index `σ : Fin m → 𝒰.I₀`:
-      `⨅ k, (coverOpen 𝒰 (Fin.cons i_fix σ k) ⊓ V) = ⨅ k, (coverOpen 𝒰 (σ k) ⊓ V)`.
-    This is because the `k=0` factor is `coverOpen 𝒰 i_fix ⊓ V = V`, which is ≥ every
-    other factor (since `U'_j = coverOpen 𝒰 j ⊓ V ≤ V`); hence the iInf is unchanged.
-
-(C) INSTANTIATE THE DEPENDENT ENGINE: Set
-    `A m σ := Fp.presheaf.obj (op (⨅ k, (coverOpen 𝒰 (σ k) ⊓ V)))`
-    `δ m σ j := F.presheaf.map (homOfLE (le_iInf ...)).op`  (face restriction)
-    `c m σ := 𝟙` (or the identity map via the equality from (B))
-    Then the Dependent engine hypotheses hold:
-    * `hu`: unit identity `c ∘ δ₀ = id` — follows from (B) (prepending `i_fix` at position 0
-      recovers the same open, so the restriction is the identity).
-    * `hsh`: shift identity `c ∘ δ_{k+1} = δ_k ∘ c` — follows from `cons_comp_succAbove_succ`.
-    Call `CombinatorialCech.depHomotopy i_fix δ c` to get the homotopy maps, and
-    `CombinatorialCech.depHomotopy_spec` to obtain `d∘h + h∘d = id`.
-
-(D) PACKAGE: Wrap the pointwise identity `depHomotopy_spec` as a `Homotopy (𝟙 D') 0` using
-    `CochainComplex.homotopyOfEq` or by constructing the `Homotopy` directly from the maps.
-
-Key Lean names:
-- `CombinatorialCech.depDiff` (CechAcyclic.lean, namespace `CombinatorialCech`)
-- `CombinatorialCech.depHomotopy`
-- `CombinatorialCech.depHomotopy_spec`
-- `sectionCechCosimplicial`, `sectionCechComplex` (PresheafCech.lean)
-- `le_coverInterOpen_iff` (FreePresheafComplex.lean:729)
-
-NOTE: The `\uses{lem:cech_acyclic_affine}` edge in the blueprint is ONLY the Lean home of
-the `Dependent` engine — NOT a math dependency. Invoke no affine vanishing.
-
-Difficulty: MEDIUM (combinatorial assembly; the Dependent engine does the heavy lifting). -/
 set_option maxRecDepth 8000 in
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- Coinductive homotopy packaging has deeply nested dependent degree equalities.
+/-- The concrete augmented section Čech complex is contractible after choosing a cover member
+that contains `V`. -/
 noncomputable def cechSection_contractible (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
     (F : X.Modules) (V : TopologicalSpace.Opens X)
     (i_fix : 𝒰.I₀) (hiV : V ≤ coverOpen 𝒰 i_fix) :
