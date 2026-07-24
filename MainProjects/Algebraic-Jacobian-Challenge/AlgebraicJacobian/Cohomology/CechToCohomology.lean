@@ -54,7 +54,7 @@ noncomputable def sectionCechCosimplicialFunctor {ι : Type u}
   map_id F := by
     apply NatTrans.ext
     funext n
-    show (Limits.Pi.map fun σ : Fin (n.len + 1) → ι =>
+    change (Limits.Pi.map fun σ : Fin (n.len + 1) → ι =>
       ((PresheafOfModules.toPresheaf X.ringCatSheaf.obj).map (𝟙 F)).app
         (Opposite.op (⨅ k, U (σ k)))) = 𝟙 _
     rw [show (fun σ : Fin (n.len + 1) → ι =>
@@ -67,16 +67,20 @@ noncomputable def sectionCechCosimplicialFunctor {ι : Type u}
   map_comp φ ψ := by
     apply NatTrans.ext
     funext n
-    show (Limits.Pi.map fun σ : Fin (n.len + 1) → ι =>
+    change (Limits.Pi.map fun σ : Fin (n.len + 1) → ι =>
       ((PresheafOfModules.toPresheaf X.ringCatSheaf.obj).map (φ ≫ ψ)).app
         (Opposite.op (⨅ k, U (σ k)))) = _
     rw [show (fun σ : Fin (n.len + 1) → ι =>
         ((PresheafOfModules.toPresheaf X.ringCatSheaf.obj).map (φ ≫ ψ)).app
           (Opposite.op (⨅ k, U (σ k))))
       = (fun σ : Fin (n.len + 1) → ι =>
-        ((PresheafOfModules.toPresheaf X.ringCatSheaf.obj).map φ).app (Opposite.op (⨅ k, U (σ k))) ≫
+          ((PresheafOfModules.toPresheaf X.ringCatSheaf.obj).map φ).app
+              (Opposite.op (⨅ k, U (σ k))) ≫
           ((PresheafOfModules.toPresheaf X.ringCatSheaf.obj).map ψ).app
-            (Opposite.op (⨅ k, U (σ k)))) from by funext σ; rw [CategoryTheory.Functor.map_comp]; rfl]
+              (Opposite.op (⨅ k, U (σ k)))) from by
+        funext σ
+        rw [CategoryTheory.Functor.map_comp]
+        rfl]
     exact (Limits.Pi.map_comp_map _ _).symm
 
 /-- The section Čech cochain complex as a functor in the coefficient presheaf of modules.
@@ -132,7 +136,7 @@ theorem shortExact_piMap {J : Type u} (S : J → ShortComplex Ab.{u}) (h : ∀ j
   haveI hmono : Mono (Limits.Pi.map (fun j => (S j).f)) := inferInstance
   refine ShortComplex.ShortExact.mk ?_
   rw [ShortComplex.ab_exact_iff_function_exact]
-  show Function.Exact (Limits.Pi.map (fun j => (S j).f)) (Limits.Pi.map (fun j => (S j).g))
+  change Function.Exact (Limits.Pi.map (fun j => (S j).f)) (Limits.Pi.map (fun j => (S j).g))
   intro x
   constructor
   · intro hx
@@ -177,7 +181,7 @@ noncomputable def sectionCechComplexShortComplex {ι : Type u} (U : ι → Topol
     apply HomologicalComplex.hom_ext
     intro i
     rw [HomologicalComplex.comp_f, HomologicalComplex.zero_f]
-    show (Limits.Pi.map fun σ : Fin (i + 1) → ι =>
+    change (Limits.Pi.map fun σ : Fin (i + 1) → ι =>
         (faceShortComplex U P σ).f) ≫ (Limits.Pi.map fun σ : Fin (i + 1) → ι =>
         (faceShortComplex U P σ).g) = 0
     rw [Limits.Pi.map_comp_map,
