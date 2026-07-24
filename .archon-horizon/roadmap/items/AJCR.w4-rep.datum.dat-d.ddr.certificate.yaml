@@ -3,12 +3,15 @@ title: 'DD-R certificate: inherited certificate, epsilon projection, U1/U2, and 
   laws'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Unconditional high-window generator is landed. The generic assembler DivisorAdaptation.isCertified_of_noLeak_kernel_spanning
-  exists, but no specialization reaches the extracted adaptation. First missing bridge:
-  transport the generator''s fibre_regular law through divisorAdaptation/eqn_rel to
-  fibrewise regularity of every adaptation equation. No-leak, finite/flat overlap
-  apparatus, residue-fibre delta-kernel spanning, and kernel dimension g remain after
-  that; a conditional seven-hypothesis wrapper would add no mathematics.'
+summary: The extracted generator adaptation now has fibre-regular chart equations.
+  No-leak supplies chart and overlap finiteness, seed regularity supplies overlap
+  flatness, and pulled divisor degree supplies the Cech-kernel fibre rank; seed-specific
+  assemblers reduce the certificate to no-leak, a relative submodule L inside ker(deltaLeft-deltaRight)
+  spanning every residue-fibre kernel, and degree g for the pulled presentation divisor.
+  Universal second-window containment and arbitrary residue-fibre point reindexing
+  are landed. The degree residual is local unit/order transport from the pointwise
+  achiever; generic adaptation extraction still does not preserve closed support traces.
+  The full certificate and epsilon inverse laws remain open.
 status: active
 kind: proof
 priority: normal
@@ -31,4 +34,4 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-23T19:26:43.138951+00:00'
+  updated_at: '2026-07-24T06:49:52.026761+00:00'

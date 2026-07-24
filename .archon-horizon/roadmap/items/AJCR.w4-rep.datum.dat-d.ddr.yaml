@@ -3,11 +3,13 @@ title: 'DD-R: the relative endgame — Z(♦), local generators via lm:ctn/Nakay
   inherited from the ambient summand, inverse laws, divRep'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'High-window relations, fibre models, quotient flatness, chart quotient transfer,
-  pointwise RD-N, and an unconditional product-cutter theta generator are complete.
-  Certificate production is now the active gate: first transport fibre regularity
-  through the extracted adaptation, then discharge no-leak and overlap/delta kernel
-  spanning/rank data. Epsilon/U1/U2, divRep, and datum assembly remain downstream.'
+summary: High-window relations, fibre models, nonreduced quotient flatness, chart
+  quotient transfer, pointwise RD-N, the unconditional generator, adapted fibre regularity,
+  overlap finite/flat reductions, universal second-window containment, and fibre-rank
+  reduction are complete. Certificate production is active only at no-leak for extracted
+  pieces, relative Cech-kernel spanning, and pulled divisor degree g; arbitrary fibre-point
+  reindexing is available for the degree proof. The full epsilon inverse laws, divRep,
+  and datum assembly remain downstream.
 status: active
 kind: proof
 priority: normal
@@ -21,4 +23,4 @@ metadata:
   author: horizon
   created_at: '2026-07-16T08:26:37.867341+00:00'
   parent: AJCR.w4-rep.datum.dat-d
-  updated_at: '2026-07-23T19:26:51.451314+00:00'
+  updated_at: '2026-07-24T06:50:23.770445+00:00'
