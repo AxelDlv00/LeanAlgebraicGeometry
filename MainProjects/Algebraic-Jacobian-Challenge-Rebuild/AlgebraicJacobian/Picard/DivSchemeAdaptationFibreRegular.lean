@@ -129,6 +129,22 @@ lemma relPinnedPieceSectionsMap_eq_appLE
         (relPinnedSectionsMap_basicOpen (C := C) (R := R) (pi := pi) L b g).le).hom s := by
   cases b <;> rfl
 
+/-- The side-uniform piece comparison carries the restriction of a pinned-chart section
+to the restriction of its transported section. -/
+lemma relPinnedPieceSectionsMap_algebraMap
+    (L : Type u) [CommRing L] [Algebra k L] [Algebra R L] [IsScalarTower k R L]
+    (b : Bool) (g s : Γ(relCurve C R, relPinnedChart C R pi b)) :
+    relPinnedPieceSectionsMap (C := C) (R := R) (pi := pi) L b g
+        (algebraMap Γ(relCurve C R, relPinnedChart C R pi b)
+          Γ(relCurve C R, (relCurve C R).basicOpen g) s) =
+      algebraMap Γ(relCurve C L, relPinnedChart C L pi b)
+        Γ(relCurve C L,
+          (relCurve C L).basicOpen (relPinnedSectionsMap C R L pi b g))
+        (relPinnedSectionsMap C R L pi b s) := by
+  cases b with
+  | false => exact pieceSectionsMap_algebraMap L (fiberChart₀ pi) g s
+  | true => exact pieceSectionsMap_algebraMap L (fiberChart₁ pi) g s
+
 namespace ThetaGeneratorSeed
 
 variable {D : ThetaGeneratorSeed C R pi a K}
@@ -144,6 +160,129 @@ theorem eqn_tmul_one_mem_nonZeroDivisors (hD : D.IsGenerator)
     (hD.fibre_regular z p (1 : Γ(relCurve C R, D.piece z)))
 
 variable [IsNoetherianRing R]
+
+/-- Restricting the pulled seed equation to the base-changed seed piece is exactly the
+side-uniform base change of the original seed equation.  This is the section-level bridge
+from the pulled presentation divisor to the residue-fibre reading of the pointwise seed. -/
+theorem pullbackEqn_res_self_eq_relPinnedPieceSectionsMap (hD : D.IsGenerator)
+    (p : PrimeSpectrum R) (z : relCurve C p.asIdeal.ResidueField) :
+    (relCurve C p.asIdeal.ResidueField).resHom
+        (relPinnedSectionsMap_basicOpen (C := C) (R := R) (pi := pi)
+          p.asIdeal.ResidueField
+          (D.side ((relCurveMap C R p.asIdeal.ResidueField).base z))
+          (D.h ((relCurveMap C R p.asIdeal.ResidueField).base z))).le
+        (Scheme.LocalEquations.pullbackEqn
+          (relCurveMap C R p.asIdeal.ResidueField) (D.localEquations hD) z) =
+      relPinnedPieceSectionsMap (C := C) (R := R) (pi := pi)
+        p.asIdeal.ResidueField
+        (D.side ((relCurveMap C R p.asIdeal.ResidueField).base z))
+        (D.h ((relCurveMap C R p.asIdeal.ResidueField).base z))
+        (D.eqn ((relCurveMap C R p.asIdeal.ResidueField).base z)) := by
+  let y : relCurve C R := (relCurveMap C R p.asIdeal.ResidueField).base z
+  let hopen := relPinnedSectionsMap_basicOpen (C := C) (R := R) (pi := pi)
+    p.asIdeal.ResidueField (D.side y) (D.h y)
+  calc
+    _ = ((relCurveMap C R p.asIdeal.ResidueField).appLE
+          ((relCurve C R).basicOpen (D.h y))
+          ((relCurve C p.asIdeal.ResidueField).basicOpen
+            (relPinnedSectionsMap C R p.asIdeal.ResidueField pi (D.side y) (D.h y)))
+          hopen.le).hom (D.eqn y) :=
+      Scheme.LocalEquations.pullbackEqn_res
+        (relCurveMap C R p.asIdeal.ResidueField) (D.localEquations hD) z hopen.le
+    _ = _ := (relPinnedPieceSectionsMap_eq_appLE
+      (C := C) (R := R) (pi := pi) p.asIdeal.ResidueField
+      (D.side y) (D.h y) (D.eqn y)).symm
+
+/-- At a residue-fibre point, the germ of the pulled local equation is the germ of the
+transported pinned-chart reading of the seed section indexed by the image point. -/
+theorem germ_self_pullbackEqn_eq_germ_relPinnedSectionsMap (hD : D.IsGenerator)
+    (p : PrimeSpectrum R) (z : relCurve C p.asIdeal.ResidueField)
+    (hzPiece : z ∈ (relCurve C p.asIdeal.ResidueField).basicOpen
+      (relPinnedSectionsMap C R p.asIdeal.ResidueField pi
+        (D.side ((relCurveMap C R p.asIdeal.ResidueField).base z))
+        (D.h ((relCurveMap C R p.asIdeal.ResidueField).base z))))
+    (hzSide : z ∈ relPinnedChart C p.asIdeal.ResidueField pi
+      (D.side ((relCurveMap C R p.asIdeal.ResidueField).base z))) :
+    ((relCurve C p.asIdeal.ResidueField).presheaf.germ
+        (((D.localEquations hD).cover.pullback
+          (relCurveMap C R p.asIdeal.ResidueField)).opens z) z
+        (((D.localEquations hD).cover.pullback
+          (relCurveMap C R p.asIdeal.ResidueField)).mem_opens z)).hom
+        (Scheme.LocalEquations.pullbackEqn
+          (relCurveMap C R p.asIdeal.ResidueField) (D.localEquations hD) z) =
+      ((relCurve C p.asIdeal.ResidueField).presheaf.germ
+        (relPinnedChart C p.asIdeal.ResidueField pi
+          (D.side ((relCurveMap C R p.asIdeal.ResidueField).base z))) z hzSide).hom
+        (relPinnedSectionsMap C R p.asIdeal.ResidueField pi
+          (D.side ((relCurveMap C R p.asIdeal.ResidueField).base z))
+          (relThetaResSide a
+            (D.side ((relCurveMap C R p.asIdeal.ResidueField).base z)) le_rfl
+            (D.sec ((relCurveMap C R p.asIdeal.ResidueField).base z)))) := by
+  let y : relCurve C R := (relCurveMap C R p.asIdeal.ResidueField).base z
+  let hopen := relPinnedSectionsMap_basicOpen (C := C) (R := R) (pi := pi)
+    p.asIdeal.ResidueField (D.side y) (D.h y)
+  have hres := D.pullbackEqn_res_self_eq_relPinnedPieceSectionsMap hD p z
+  have hgerm := congrArg
+    (((relCurve C p.asIdeal.ResidueField).presheaf.germ
+      ((relCurve C p.asIdeal.ResidueField).basicOpen
+        (relPinnedSectionsMap C R p.asIdeal.ResidueField pi (D.side y) (D.h y)))
+      z hzPiece).hom) hres
+  have heqn : D.eqn y =
+      algebraMap Γ(relCurve C R, relPinnedChart C R pi (D.side y))
+        Γ(relCurve C R, (relCurve C R).basicOpen (D.h y))
+        (relThetaResSide a (D.side y) le_rfl (D.sec y)) := by
+    change relThetaResSide a (D.side y) (D.piece_le y) (D.sec y) =
+      (relCurve C R).resHom (D.piece_le y)
+        (relThetaResSide a (D.side y) le_rfl (D.sec y))
+    exact (resHom_relThetaResSide a (D.side y) le_rfl (D.piece_le y) (D.sec y)).symm
+  have hpiece : relPinnedPieceSectionsMap (C := C) (R := R) (pi := pi)
+      p.asIdeal.ResidueField (D.side y) (D.h y) (D.eqn y) =
+      algebraMap
+        Γ(relCurve C p.asIdeal.ResidueField,
+          relPinnedChart C p.asIdeal.ResidueField pi (D.side y))
+        Γ(relCurve C p.asIdeal.ResidueField,
+          (relCurve C p.asIdeal.ResidueField).basicOpen
+            (relPinnedSectionsMap C R p.asIdeal.ResidueField pi (D.side y) (D.h y)))
+        (relPinnedSectionsMap C R p.asIdeal.ResidueField pi (D.side y)
+          (relThetaResSide a (D.side y) le_rfl (D.sec y))) := by
+    rw [heqn]
+    exact relPinnedPieceSectionsMap_algebraMap
+      (C := C) (R := R) (pi := pi) p.asIdeal.ResidueField
+      (D.side y) (D.h y) (relThetaResSide a (D.side y) le_rfl (D.sec y))
+  rw [hpiece] at hgerm
+  have hleft := TopCat.Presheaf.germ_res_apply
+    (relCurve C p.asIdeal.ResidueField).presheaf (homOfLE hopen.le) z hzPiece
+    (Scheme.LocalEquations.pullbackEqn
+      (relCurveMap C R p.asIdeal.ResidueField) (D.localEquations hD) z)
+  have hright := TopCat.Presheaf.germ_res_apply
+    (relCurve C p.asIdeal.ResidueField).presheaf
+    (homOfLE ((relCurve C p.asIdeal.ResidueField).basicOpen_le
+      (relPinnedSectionsMap C R p.asIdeal.ResidueField pi (D.side y) (D.h y))))
+    z hzPiece
+    (relPinnedSectionsMap C R p.asIdeal.ResidueField pi (D.side y)
+      (relThetaResSide a (D.side y) le_rfl (D.sec y)))
+  change
+    ((relCurve C p.asIdeal.ResidueField).presheaf.germ
+        ((relCurve C p.asIdeal.ResidueField).basicOpen
+          (relPinnedSectionsMap C R p.asIdeal.ResidueField pi (D.side y) (D.h y)))
+        z hzPiece).hom
+        (((relCurve C p.asIdeal.ResidueField).presheaf.map
+          (homOfLE hopen.le).op).hom
+          (Scheme.LocalEquations.pullbackEqn
+            (relCurveMap C R p.asIdeal.ResidueField) (D.localEquations hD) z)) =
+      ((relCurve C p.asIdeal.ResidueField).presheaf.germ
+        ((relCurve C p.asIdeal.ResidueField).basicOpen
+          (relPinnedSectionsMap C R p.asIdeal.ResidueField pi (D.side y) (D.h y)))
+        z hzPiece).hom
+        (((relCurve C p.asIdeal.ResidueField).presheaf.map
+          (homOfLE ((relCurve C p.asIdeal.ResidueField).basicOpen_le
+            (relPinnedSectionsMap C R p.asIdeal.ResidueField pi
+              (D.side y) (D.h y)))).op).hom
+          (relPinnedSectionsMap C R p.asIdeal.ResidueField pi (D.side y)
+            (relThetaResSide a (D.side y) le_rfl (D.sec y)))) at hgerm
+  rw [hleft, hright] at hgerm
+  simpa only [y, Scheme.PointedCover.pullback_opens,
+    ThetaGeneratorSeed.localEquations_cover_opens, ThetaGeneratorSeed.piece] using hgerm
 
 /-- The pullback of the seed local equation to a residue-field fibre is regular at its
 own indexed point.  The whole-piece tensor regularity is carried through the affine
@@ -197,17 +336,8 @@ theorem germ_self_pullbackEqn_mem_nonZeroDivisors (hD : D.IsGenerator)
         (relCurveMap C R p.asIdeal.ResidueField) (D.localEquations hD) z) =
       relPinnedPieceSectionsMap (C := C) (R := R) (pi := pi)
         p.asIdeal.ResidueField (D.side y) (D.h y) (D.eqn y) := by
-    calc
-      _ = ((relCurveMap C R p.asIdeal.ResidueField).appLE
-          ((relCurve C R).basicOpen (D.h y))
-          ((relCurve C p.asIdeal.ResidueField).basicOpen
-            (relPinnedSectionsMap C R p.asIdeal.ResidueField pi
-              (D.side y) (D.h y))) hopen.le).hom (D.eqn y) :=
-        Scheme.LocalEquations.pullbackEqn_res
-          (relCurveMap C R p.asIdeal.ResidueField) (D.localEquations hD) z hopen.le
-      _ = _ := (relPinnedPieceSectionsMap_eq_appLE
-        (C := C) (R := R) (pi := pi) p.asIdeal.ResidueField
-        (D.side y) (D.h y) (D.eqn y)).symm
+    simpa only [y, hopen] using
+      D.pullbackEqn_res_self_eq_relPinnedPieceSectionsMap hD p z
   rw [← hres] at hgerm
   have hgres := TopCat.Presheaf.germ_res_apply
     (relCurve C p.asIdeal.ResidueField).presheaf (homOfLE hopen.le) z hzW
