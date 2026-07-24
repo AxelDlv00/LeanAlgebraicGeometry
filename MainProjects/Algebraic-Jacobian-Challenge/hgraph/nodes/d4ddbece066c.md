@@ -5,11 +5,11 @@ content_type: theorem
 created: '2026-07-16T21:14:29'
 generated: blueprint
 label: thm:relative_spec_exists
-lean_status: lean_ok
+lean_status: empty
 order: 574
 title: Relative spectrum exists
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-24T19:02:37'
 ---
 \textit{Source: [Stacks Project], tag 01LQ (lemma-glue-relative-spec);
   cf.\ [Hartshorne], II~Ex.~5.17(a).}

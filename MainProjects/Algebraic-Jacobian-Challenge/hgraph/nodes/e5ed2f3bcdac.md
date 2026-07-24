@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Functor.gHomologyZeroIso
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-24T18:32:27'
 ---
 noncomputable def Functor.gHomologyZeroIso (G : 𝒜 ⥤ ℬ) [G.Additive]
     [Limits.PreservesFiniteLimits G] (K : CochainComplex 𝒜 ℕ) :
@@ -36,3 +36,5 @@ noncomputable def Functor.gHomologyZeroIso (G : 𝒜 ⥤ ℬ) [G.Additive]
 end Cosyzygy
 
 /-! ## Project-local Mathlib supplement — the acyclic-resolution comparison theorem -/
+
+omit [HasInjectiveResolutions 𝒜] in

@@ -1,8 +1,8 @@
 ---
 author: sync
 content_type: lemma
-created: '2026-07-16T21:14:27'
-decl: AlgebraicGeometry.Scheme.so.QcohAlgebra.pullback_fst_isAffineHom
+created: '2026-07-24T19:18:18'
+decl: AlgebraicGeometry.Scheme.QcohAlgebra.pullback_fst_isAffineHom
 docstring: '**Affineness of the structural pullback projection.**
 
 
@@ -20,10 +20,9 @@ docstring: '**Affineness of the structural pullback projection.**
 file: AlgebraicJacobian/Picard/RelativeSpec.lean
 generated: lean
 lean_status: lean_ok
-stale: true
-title: AlgebraicGeometry.Scheme.so.QcohAlgebra.pullback_fst_isAffineHom
+title: AlgebraicGeometry.Scheme.QcohAlgebra.pullback_fst_isAffineHom
 type: lean
-updated: '2026-07-24T19:18:20'
+updated: '2026-07-24T19:18:18'
 ---
 lemma QcohAlgebra.pullback_fst_isAffineHom {X T : Scheme.{u}} (g : T ⟶ X)
     (𝒜 : X.QcohAlgebra) :

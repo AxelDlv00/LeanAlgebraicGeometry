@@ -1,8 +1,8 @@
 ---
 author: sync
 content_type: theorem
-created: '2026-07-16T21:14:27'
-decl: AlgebraicGeometry.Scheme.so.RelativeSpec.pullback_iso
+created: '2026-07-24T19:18:18'
+decl: AlgebraicGeometry.Scheme.RelativeSpec.pullback_iso
 docstring: '**Canonical base-change isomorphism (Nonempty form).** The pullback
 
   `pullback g (structureMorphism 𝒜)` (formed in `Scheme`) is canonically
@@ -13,10 +13,9 @@ docstring: '**Canonical base-change isomorphism (Nonempty form).** The pullback
 file: AlgebraicJacobian/Picard/RelativeSpec.lean
 generated: lean
 lean_status: lean_ok
-stale: true
-title: AlgebraicGeometry.Scheme.so.RelativeSpec.pullback_iso
+title: AlgebraicGeometry.Scheme.RelativeSpec.pullback_iso
 type: lean
-updated: '2026-07-24T19:18:21'
+updated: '2026-07-24T19:18:18'
 ---
 theorem pullback_iso {X T : Scheme.{u}} (g : T ⟶ X)
     (𝒜 : X.QcohAlgebra) :

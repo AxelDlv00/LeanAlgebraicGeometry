@@ -5,12 +5,13 @@ content_type: lemma
 created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:relspec_pullback_iso_desc_isiso
-lean_status: empty
+lean_status: lean_ok
 order: 585
-title: The base-change descent is an isomorphism
+title: Base-change descent is invertible
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-24T19:18:19'
 ---
 The colimit descent map
-  \(\underline{\Spec}_T(g^*\mathcal{A}) \to T \times_X \underline{\Spec}_X(\mathcal{A})\)
+  \(\underline{\Spec}_T(\mathcal{A}_g) \to
+    T \times_X \underline{\Spec}_X(\mathcal{A})\)
   determined by the pullback cocone is an isomorphism of schemes.

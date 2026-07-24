@@ -1,13 +1,9 @@
 ---
 author: sync
 content_type: lemma
-created: '2026-07-16T21:14:27'
-decl: AlgebraicGeometry.Scheme.so.RelativeSpec.pullback_iso_desc_isIso
-docstring: '**The descent map is an isomorphism** (iter-183 Lane D helper 5,
-
-  substantive — axiom-clean modulo upstream `pullback_cocone_desc_comp_fst`
-
-  and per-piece restrict-iso identification).
+created: '2026-07-24T19:18:18'
+decl: AlgebraicGeometry.Scheme.RelativeSpec.pullback_iso_desc_isIso
+docstring: '**The descent map is an isomorphism.**
 
 
   The canonical descent map `T.RelativeSpec(g^*𝒜) ⟶ pullback g (structureMorphism
@@ -27,10 +23,9 @@ docstring: '**The descent map is an isomorphism** (iter-183 Lane D helper 5,
 file: AlgebraicJacobian/Picard/RelativeSpec.lean
 generated: lean
 lean_status: lean_ok
-stale: true
-title: AlgebraicGeometry.Scheme.so.RelativeSpec.pullback_iso_desc_isIso
+title: AlgebraicGeometry.Scheme.RelativeSpec.pullback_iso_desc_isIso
 type: lean
-updated: '2026-07-24T19:18:21'
+updated: '2026-07-24T19:18:18'
 ---
 lemma pullback_iso_desc_isIso {X T : Scheme.{u}} (g : T ⟶ X)
     (𝒜 : X.QcohAlgebra) :
@@ -75,7 +70,7 @@ lemma pullback_iso_desc_isIso {X T : Scheme.{u}} (g : T ⟶ X)
     --   (2) `colim.ι U .isoOpensRange.symm`:
     --       `(colim.ι U).opensRange.toScheme ≅ d.functor.obj U`
     --   (3) `(pullback_iso_affine_piece g 𝒜 U).symm`:
-    --       `d.functor.obj U ≅ Spec((g^*𝒜)(U)) ≅ (q⁻¹U.1).toScheme`
+    --       `d.functor.obj U ≅ Spec(𝒜_g(U)) ≅ (q⁻¹U.1).toScheme`
     --       (the inverse via `IsAffineOpen.isoSpec.inv ≫ ι`).
     -- Commute the chain through `(q⁻¹U.1).ι` by canceling the mono ι.
     let iso_chain : (desc ⁻¹ᵁ q ⁻¹ᵁ U.1).toScheme ≅ (q ⁻¹ᵁ U.1).toScheme :=
