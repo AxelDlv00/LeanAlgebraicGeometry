@@ -8,76 +8,22 @@ import Mathlib
 /-!
 # Relative spectrum of a quasi-coherent sheaf of algebras (A.1.a)
 
-This file is the **A.1.a** file-skeleton sub-build chapter for the project's
-positive-genus arm of `nonempty_jacobianWitness`. It packages the relative-spectrum
-functor `Spec_X(𝒜) : QcohAlg(X)^op ⥤ Sch/X` used by the relative Picard functor on a
-product `C ×_k T`.
+This file constructs the relative spectrum from Mathlib's affine-Zariski gluing data. A
+`QcohAlgebra X` consists of a sheaf of commutative rings, an `O_X`-algebra unit, and the
+`NatTrans.Coequifibered` localization condition consumed by
+`Scheme.AffineZariskiSite.relativeGluingData`.
 
-## Status (iter-179 Block A — Mathlib `relativeGluingData` adopted)
+The construction provides:
 
-iter-173 Lane B scaffolded the six pinned declarations with `sorry` bodies and
-a type-level `sorry` on `QcohAlgebra`. iter-174 Lane G replaced the type-level
-`sorry` on `QcohAlgebra` with the **Encoding I** structure (sheafified
-`Under`-object form: `sheaf` + `unit`). iter-176 closed the body of
-`RelativeSpec`/`structureMorphism` with the silently-discarding placeholder
-`RelativeSpec _𝒜 := X`, `structureMorphism _ := 𝟙 X`; the lean-auditor iter-177
-flagged both CRITICAL "weakened-wrong". The iter-178 mathlib-analogist consult
-(`analogies/relative-spec-encoding.md`) identified that **Mathlib already ships
-the construction** under a different name —
-`Scheme.AffineZariskiSite.relativeGluingData`
-(`Mathlib/AlgebraicGeometry/Sites/SmallAffineZariski.lean:293`).
-
-**iter-179 Block A** lands the carrier upgrade: `QcohAlgebra` gains the
-third `coequifibered` field (Stacks 01LL form of quasi-coherence — strictly
-weaker than `SheafOfModules.IsQuasicoherent` and provably equivalent under
-the dense-subsite equivalence `AffineZariskiSite.sheafEquiv`), and the bodies
-of `RelativeSpec` and `RelativeSpec.structureMorphism` are now the Mathlib
-canonical values `(relativeGluingData _).glued` and `.toBase`. Each of the
-three downstream theorems (`UniversalProperty`, `affine_base_iff`,
-`base_change`) previously discharged the trivialized goal against the
-placeholder; they now carry honest `sorry` bodies pending iter-179+ Block B
-rewrites against `RelativeGluingData.cover` /
-`HasAffineProperty.iff_of_iSup_eq_top` /
-`SmallAffineZariski.isColimitCocone` (see consult Block B).
-
-The 6 pinned declarations are:
-
-1. `AlgebraicGeometry.Scheme.QcohAlgebra` (**structure**, Block A iter-179)
-   — a sheaf of commutative rings on `X`, an `O_X`-algebra unit
-   `X.sheaf ⟶ sheaf`, and the Stacks-01LL `Coequifibered` overlay consumed
-   by `relativeGluingData`. See `analogies/relative-spec-encoding.md`
-   Decision 2.
-2. `AlgebraicGeometry.Scheme.RelativeSpec` (noncomputable def, ~3 LOC body)
-   — the relative-spectrum scheme,
-   `(AffineZariskiSite.relativeGluingData 𝒜.coequifibered).glued`.
-3. `AlgebraicGeometry.Scheme.RelativeSpec.UniversalProperty` (theorem, ~15 LOC)
-   — the structure morphism `Spec_X(𝒜) → X` is an affine morphism; this is the
-     substantive consequence of the representability statement of Stacks 01LQ.
-4. `AlgebraicGeometry.Scheme.RelativeSpec.affine_base_iff` (theorem, ~8 LOC)
-   — when `X = Spec R` the relative spectrum is affine (Stacks 01LO).
-5. `AlgebraicGeometry.Scheme.RelativeSpec.base_change` (theorem, ~10 LOC)
-   — `RelativeSpec` commutes with base change (Stacks 01LS).
-6. `AlgebraicGeometry.Scheme.RelativeSpec.functor` (def, ~8 LOC)
-   — the object-level functorial assignment `QcohAlg(X) → Over X`.
-
-## Note on type expressivity
-
-With Lane G landed, `QcohAlgebra X` carries a non-tautological structure
-(sheaf-of-CommRings + unit). The remaining 5 sorry bodies still encode each
-theorem by its *intended substantive consequence* (e.g. the universal property
-is encoded as "the structure morphism is affine", which the representability
-statement of Stacks 01LQ structurally implies; base change is encoded as an
-existential on the pulled-back algebra). Following the project rule "Never
-weaken the type to dodge the proof", the litmus test for each declaration is
-that unfolding it reveals a non-tautological claim, not `Iso.refl _` or
-`trivial`. iter-175+ will refine `UniversalProperty` to a
-`CategoryTheory.Functor.RepresentableBy` witness once the
-`O_X`-algebra Hom-set is wired up via the under-category form
-`Under X.sheaf ⊆ TopCat.Sheaf CommRingCat X`.
+* `Scheme.RelativeSpec` and `RelativeSpec.structureMorphism`;
+* affineness of the structure morphism and of the total space over an affine base;
+* an explicit algebra reconstructed from a base-changed relative spectrum;
+* a canonical isomorphism between that spectrum and the scheme-theoretic pullback;
+* the object assignment from quasi-coherent algebras to schemes over the base.
 
 ## References
 
-Blueprint: `blueprint/src/chapters/Picard_RelativeSpec.tex` (450 LOC, 6 pins).
+Blueprint: `blueprint/src/chapters/Picard_RelativeSpec.tex`.
 Stacks Project, tags 01LL (situation), 01LO (affine-base case), 01LQ (existence +
 universal property), 01LR (definition + functoriality), 01LS (base change).
 Hartshorne, *Algebraic Geometry*, II Exercise 5.17.
@@ -101,24 +47,15 @@ For a scheme `X`, a quasi-coherent sheaf of `O_X`-algebras is a sheaf of
 commutative rings together with a unit map from the structure sheaf
 $\mathcal{O}_X$, plus the quasi-coherence requirement.
 
-iter-179 (Block A) packages this as a triple of (i) a sheaf of CommRings,
-(ii) an `O_X`-algebra unit from the structure sheaf, and (iii) the
-`Coequifibered` overlay (Stacks 01LL form): the affine restriction of the
-unit is `NatTrans.Coequifibered`, i.e. on every affine open `U` and section
-`f`, the restriction-to-basic-open `D(f) ⊆ U` is `IsLocalization.Away f`.
-This is the strictly-weaker, sheafified-tensor-free formulation that
-Mathlib's `Scheme.AffineZariskiSite.relativeGluingData` consumes
-(`Mathlib/AlgebraicGeometry/Sites/SmallAffineZariski.lean:293`); it is
-equivalent to the full `SheafOfModules.IsQuasicoherent` predicate under the
-dense-subsite equivalence `AffineZariskiSite.sheafEquiv`. See
-`analogies/relative-spec-encoding.md` for the iter-178 consult that
-identified this idiom.
+We use the `Coequifibered` formulation: on every affine open `U` and section `f`,
+restriction to the basic open `D(f)` is an `IsLocalization.Away f`. This is the
+condition required by Mathlib's relative-gluing construction.
 
 Blueprint reference: `def:qc_sheaf_of_algebras` (Stacks 01LL,
 situation-relative-spec). -/
 
-/-- A **quasi-coherent sheaf of `O_X`-algebras** (iter-179 Block A,
-Mathlib-aligned form).
+/-- A **quasi-coherent sheaf of `O_X`-algebras** in the form used by Mathlib's
+relative-gluing construction.
 
 A triple of
 - `sheaf` : a sheaf of commutative rings on the underlying topological space
@@ -133,13 +70,7 @@ A triple of
 
 The shape matches the input of Mathlib's relative-gluing construction
 verbatim, so `RelativeSpec` is defined directly as
-`(relativeGluingData 𝒜.coequifibered).glued`. The
-`NatTrans.Coequifibered` predicate is strictly weaker than the full
-sheaf-of-modules quasi-coherence predicate
-`SheafOfModules.IsQuasicoherent`, but equivalent under the dense-subsite
-equivalence `AffineZariskiSite.sheafEquiv`, so no information is lost. See
-`analogies/relative-spec-encoding.md` Decision 2 for the consult that
-identified this carrier shape. -/
+`(relativeGluingData 𝒜.coequifibered).glued`. -/
 structure QcohAlgebra (X : Scheme.{u}) where
   /-- The underlying sheaf of commutative rings on `X`. -/
   sheaf : TopCat.Sheaf CommRingCat.{u} X.toPresheafedSpace
@@ -148,12 +79,7 @@ structure QcohAlgebra (X : Scheme.{u}) where
   unit : X.sheaf ⟶ sheaf
   /-- **Stacks 01LL quasi-coherence overlay (`Coequifibered` form)**: every
   restriction of `sheaf` to a basic-open `D(f) ⊆ U` is `IsLocalization.Away f`.
-  Strictly weaker than `SheafOfModules.IsQuasicoherent` (which needs
-  sheafified-tensor infrastructure not yet in Mathlib); equivalent under the
-  dense-subsite equivalence `Scheme.AffineZariskiSite.sheafEquiv`. This is the
-  exact predicate consumed by `AffineZariskiSite.relativeGluingData`
-  (`Mathlib/AlgebraicGeometry/Sites/SmallAffineZariski.lean:293`); see
-  `analogies/relative-spec-encoding.md` Decision 2. -/
+  This is the exact predicate consumed by `AffineZariskiSite.relativeGluingData`. -/
   coequifibered : NatTrans.Coequifibered
     (Functor.whiskerLeft (AffineZariskiSite.toOpensFunctor X).op unit.hom)
 
@@ -167,49 +93,26 @@ pieces glue compatibly because `𝒜` is quasi-coherent (the transition isomorph
 `𝒜(U) ⊗_R S ≅ 𝒜(V)` for `V = Spec S ⊆ U` gives an open immersion of the
 corresponding Specs).
 
-Blueprint reference: `thm:relative_spec_exists` (Stacks 01LQ
-lemma-glue-relative-spec). -/
+Blueprint reference: `thm:relative_spec_exists` (Stacks 01LQ,
+`lemma-glue-relative-spec`). -/
 
 end RelativeSpec
 
 /-- The **relative spectrum** scheme `Spec_X(𝒜)` of a quasi-coherent sheaf of
 `O_X`-algebras `𝒜`.
 
-**iter-179 body (Block A)**: built as the canonical Mathlib value
-`(AffineZariskiSite.relativeGluingData 𝒜.coequifibered).glued`
-(`Mathlib/AlgebraicGeometry/RelativeGluing.lean:102`,
-`Mathlib/AlgebraicGeometry/Sites/SmallAffineZariski.lean:293`). The
-`coequifibered` field of `QcohAlgebra` is precisely the Stacks-01LL form of
-quasi-coherence that Mathlib's `relativeGluingData` consumes: the affine
-restriction of the `O_X`-algebra unit is `NatTrans.Coequifibered`, i.e. every
-basic-open restriction is an `IsLocalization.Away`. The construction glues the
-affine pieces `Spec(𝒜(U))` along the directed affine open cover
-`Scheme.AffineZariskiSite.directedCover X` and is the exact Mathlib-aligned
-template used in `Hom.normalization`
-(`Mathlib/AlgebraicGeometry/Normalization.lean:120`); see
-`analogies/relative-spec-encoding.md` for the consult that identified this
-idiom. -/
+It is the glued scheme of `AffineZariskiSite.relativeGluingData 𝒜.coequifibered`,
+whose affine pieces are `Spec(𝒜(U))`. -/
 noncomputable def RelativeSpec {X : Scheme.{u}} (𝒜 : X.QcohAlgebra) : Scheme.{u} :=
   (AffineZariskiSite.relativeGluingData 𝒜.coequifibered).glued
 
-/-- The **structure morphism** `π : Spec_X(𝒜) → X` of the relative spectrum.
-
-This auxiliary declaration (not in the 6 blueprint pins) is needed to express
-the intended substantive types of `UniversalProperty`, `base_change`, and
-`functor` — they all reference the structure morphism.
-
-**iter-179 body (Block A)**: built as the canonical Mathlib value
-`(AffineZariskiSite.relativeGluingData 𝒜.coequifibered).toBase`
-(`Mathlib/AlgebraicGeometry/RelativeGluing.lean:114`). The map is the colimit
-descent of the natural transformation `Spec(𝒜(U)) → U` over the directed
-affine open cover; see `analogies/relative-spec-encoding.md` Decision 3.
-
-Blueprint reference: implicit in `thm:relative_spec_exists`. -/
+/-- The **structure morphism** `π : Spec_X(𝒜) → X`, obtained by descending the affine-local
+maps `Spec(𝒜(U)) → U`. -/
 noncomputable def RelativeSpec.structureMorphism {X : Scheme.{u}}
     (𝒜 : X.QcohAlgebra) : X.RelativeSpec 𝒜 ⟶ X :=
   (AffineZariskiSite.relativeGluingData 𝒜.coequifibered).toBase
 
-/-! ### Note: `QcohAlgebra.pullback` constructor (iter-179 Lane B helper)
+/-! ### Algebra reconstructed from a base-changed relative spectrum
 
 Given a morphism `g : T ⟶ X` and a quasi-coherent `O_X`-algebra `𝒜`, the
 pulled-back qcoh algebra `g^* 𝒜 : T.QcohAlgebra` is realised as the
@@ -217,18 +120,13 @@ pushforward of the structure sheaf of the relative-spec pullback. The
 `sheaf` and `unit` fields are concrete (the topological pushforward of the
 pullback's structure sheaf and the canonical natural transformation `q.c`
 respectively, where `q := pullback.fst g (structureMorphism 𝒜)`). The
-`coequifibered` field is the Mathlib-gap claim that pushforward along an
-affine morphism preserves the Stacks-01LL Coequifibered overlay
-(Stacks 01LR pullback compatibility): `q` is affine via
+`coequifibered` field records that pushforward along the affine projection preserves the
+Stacks-01LL localization condition: `q` is affine via
 `MorphismProperty.pullback_fst` applied to `UniversalProperty 𝒜`, so on
 every affine `U ⊆ T` with section `f ∈ Γ(T, U)` we have
 `Γ(P, q⁻¹(D(f))) = Γ(P, q⁻¹U)[1/q.app f]`, i.e. the basic-open restriction
-of the pushforward is the relevant `IsLocalization.Away`. iter-180 Lane C
-factors this into two named helpers
-(`QcohAlgebra.pullback_fst_isAffineHom`,
-`QcohAlgebra.pullback_coequifibered`) declared after the universal
-property has landed; the definition itself is also placed after the
-namespace so it can consume those helpers. -/
+of the pushforward is the relevant `IsLocalization.Away`. The two facts are packaged by
+`QcohAlgebra.pullback_fst_isAffineHom` and `QcohAlgebra.pullback_coequifibered`. -/
 
 namespace RelativeSpec
 
@@ -237,15 +135,8 @@ namespace RelativeSpec
 The Stacks 01LQ universal property says `Spec_X(𝒜)` represents the functor
 sending an `X`-scheme `g : T → X` to the set of `O_X`-algebra maps
 `𝒜 → g_* O_T`. A direct structural consequence of representability is that the
-structure morphism `π : Spec_X(𝒜) → X` is *affine* (Stacks 01LR
-lemma-spec-properties, immediate corollary). For the iter-173 file-skeleton we
-encode the universal property by this affine-morphism consequence — the
-substantive content is the same up to body unfolding, and the type is
-non-tautological.
-
-iter-174+: refine the signature to a `CategoryTheory.Functor.RepresentableBy`
-witness against the functor of `O_X`-algebra maps once `QcohAlgebra` is
-unpacked and the Hom-set on algebras is available.
+relative-spectrum structure morphism `π : Spec_X(𝒜) → X` is affine (Stacks 01LR,
+`lemma-spec-properties`). The theorem below records this structural consequence.
 
 Blueprint reference: `thm:relative_spec_univ` (Stacks 01LQ lemma-spec). -/
 
@@ -254,17 +145,10 @@ Blueprint reference: `thm:relative_spec_univ` (Stacks 01LQ lemma-spec). -/
 The structure morphism `π : Spec_X(𝒜) → X` of the relative spectrum is affine.
 This is the substantive consequence of the Stacks 01LQ representability
 statement (an `X`-scheme is the relative spectrum of some quasi-coherent
-algebra iff its structure morphism is affine).
-
-iter-174+: refine the type signature to the full Yoneda-bijection statement
-`Hom_X(T, Spec_X(𝒜)) ≃ Hom_{O_X-alg}(𝒜, g_* O_T)` once `QcohAlgebra` is
-unpacked and an `O_X`-algebra Hom-set is in scope. The current type is the
-non-tautological structural consequence used downstream by `affine_base_iff`
-and `base_change`. -/
+algebra iff its structure morphism is affine). -/
 theorem UniversalProperty {X : Scheme.{u}} (𝒜 : X.QcohAlgebra) :
     IsAffineHom (RelativeSpec.structureMorphism 𝒜) := by
-  -- Mathlib `relativeGluingData` builder; per `analogies/relative-spec-encoding.md`
-  -- Block B. We invoke `isAffineHom_of_forall_exists_isAffineOpen`: for each `x : X`
+  -- For each `x : X`, choose an affine open `U` containing it
   -- pick an affine open `U ∋ x` (every `X` has such by `exists_isAffineOpen_mem_and_subset`),
   -- and identify the structure-morphism preimage of `U` with the range of the colimit
   -- inclusion of the affine fiber `Spec(𝒜(U))` (via
@@ -293,22 +177,15 @@ theorem UniversalProperty {X : Scheme.{u}} (𝒜 : X.QcohAlgebra) :
 
 When the base `X = Spec R` is affine, `Spec_X(𝒜)` reduces to the absolute
 spectrum of the global sections: `Spec_X(𝒜) ≅ Spec(Γ(X, 𝒜))`. The substantive
-content for the iter-173 scaffold is that the relative spectrum is itself
-affine. This is Stacks 01LO lemma-spec-affine.
+consequence formalized here is that the relative spectrum is affine. This is
+Stacks 01LO, `lemma-spec-affine`.
 
 Blueprint reference: `thm:relative_spec_affine_base`. -/
 
 /-- **Affine-base reduction of the relative spectrum.**
 
 For an affine scheme `X = Spec R` and a quasi-coherent `O_X`-algebra `𝒜`,
-the relative spectrum `Spec_X(𝒜)` is itself an affine scheme. (More precisely,
-there is a canonical isomorphism `Spec_X(𝒜) ≅ Spec(Γ(X, 𝒜))`, but extracting
-`Γ(X, 𝒜) : CommRingCat` requires the unpacked structure of `QcohAlgebra`,
-which is iter-174+ work.)
-
-iter-174+: refine to the full statement
-`Nonempty ((Spec R).RelativeSpec 𝒜 ≅ Spec (Γ((Spec R), 𝒜)))`
-once `Γ` for `QcohAlgebra` is in scope. -/
+the relative spectrum `Spec_X(𝒜)` is itself an affine scheme. -/
 theorem affine_base_iff {R : CommRingCat.{u}} (𝒜 : (Spec R).QcohAlgebra) :
     IsAffine ((Spec R).RelativeSpec 𝒜) := by
   -- Affineness of the relative-spec total space when the base is affine is the
@@ -320,10 +197,10 @@ theorem affine_base_iff {R : CommRingCat.{u}} (𝒜 : (Spec R).QcohAlgebra) :
 
 end RelativeSpec
 
-/-! ## §4.5 `QcohAlgebra.pullback` helpers (iter-180 Lane C)
+/-! ## §4.5 Helpers for the reconstructed algebra
 
 Two named helpers feeding the `coequifibered` field of the `QcohAlgebra.pullback`
-constructor below. Helper budget = 2 per iter-180 plan. -/
+constructor below. -/
 
 /-- **Affineness of the structural pullback projection.**
 
@@ -342,7 +219,7 @@ lemma QcohAlgebra.pullback_fst_isAffineHom {X T : Scheme.{u}} (g : T ⟶ X)
   exact MorphismProperty.pullback_fst _ _ inferInstance
 
 /-- **Stacks 01LL Coequifibered overlay for the pushforward of `O_P` along an
-affine `q : P ⟶ T`** (iter-180 Lane C, Stacks 01LR pushforward compatibility).
+affine `q : P ⟶ T`.**
 
 Per the Mathlib characterization
 `Scheme.AffineZariskiSite.coequifibered_iff_forall_isLocalizationAway`, the
@@ -377,11 +254,11 @@ lemma QcohAlgebra.pullback_coequifibered {X T : Scheme.{u}} (g : T ⟶ X)
   exact hqU.isLocalization_of_eq_basicOpen (q.app U.1 r)
     (homOfLE (q.preimage_mono hle)) (q.preimage_basicOpen r)
 
-/-- **Base change of a quasi-coherent algebra (pushforward formulation).**
+/-- **Algebra reconstructed from the base-changed relative spectrum.**
 
 Given a morphism `g : T ⟶ X` and a quasi-coherent `O_X`-algebra `𝒜`, the
-pulled-back qcoh algebra `g^* 𝒜 : T.QcohAlgebra` is realised as the
-pushforward of the structure sheaf of the relative-spec pullback. The
+reconstructed algebra is the pushforward of the structure sheaf of the
+scheme-theoretic pullback. The
 `sheaf` and `unit` fields are concrete (the topological pushforward of the
 pullback's structure sheaf and the canonical natural transformation `q.c`
 respectively, where `q := pullback.fst g (structureMorphism 𝒜)`). The
@@ -401,23 +278,21 @@ namespace RelativeSpec
 
 /-! ## §5. Base change
 
-The relative spectrum commutes with base change: for a morphism `g : T → X`
-and a quasi-coherent `O_X`-algebra `𝒜`, the pullback `g^* 𝒜` is a
-quasi-coherent `O_T`-algebra and
-`T ×_X Spec_X(𝒜) ≅ Spec_T(g^* 𝒜)`.
+For a morphism `g : T → X`, let `𝒜_g` be `QcohAlgebra.pullback g 𝒜`, the algebra
+reconstructed from the pullback scheme. This section constructs
+`T ×_X Spec_X(𝒜) ≅ Spec_T(𝒜_g)`.
 
-Blueprint reference: `thm:relative_spec_base_change` (Stacks 01LS
-lemma-spec-base-change). -/
+Blueprint reference: `thm:relative_spec_base_change` (Stacks 01LS,
+`lemma-spec-base-change`). -/
 
-/-! ### Helpers for `base_change` (iter-179 Lane B + iter-181 Lane D)
+/-! ### Helpers for `base_change`
 
 The base-change theorem packages the canonical iso content into named helpers
 (`pullback_iso_affine_piece`, `pullback_iso_construction`, and `pullback_iso`,
 below) and consumes the file-level `Scheme.QcohAlgebra.pullback` constructor
 declared just above the namespace. -/
 
-/-- **Per-affine-open identification for the base-change iso (iter-181 Lane D
-helper 1, axiom-clean).**
+/-- **Per-affine-open identification for the base-change isomorphism.**
 
 For an affine open `U : T.AffineZariskiSite`, the preimage
 `q ⁻¹ᵁ U.1` under `q := pullback.fst g (structureMorphism 𝒜)` is itself affine
@@ -428,8 +303,8 @@ matches `Spec((QcohAlgebra.pullback g 𝒜).sheaf.val(.op U.1))`
 (`(QcohAlgebra.pullback g 𝒜).sheaf := (pushforward q.base).obj (pullback _).sheaf`,
 so its value at `U` is `(pullback _).sheaf.val(.op (q ⁻¹ᵁ U.1))` defeq).
 
-This is the per-affine-piece iso feeding into the global `pullback_iso`
-construction. Body is a single `(U.2.preimage q).isoSpec` invocation. -/
+This is the per-affine-piece isomorphism used in the global `pullback_iso`
+construction. -/
 noncomputable def pullback_iso_affine_piece {X T : Scheme.{u}} (g : T ⟶ X)
     (𝒜 : X.QcohAlgebra) (U : T.AffineZariskiSite) :
     ((CategoryTheory.Limits.pullback.fst g
@@ -440,12 +315,12 @@ noncomputable def pullback_iso_affine_piece {X T : Scheme.{u}} (g : T ⟶ X)
     QcohAlgebra.pullback_fst_isAffineHom g 𝒜
   (U.2.preimage _).isoSpec
 
-/-! ### iter-183 Lane D structural decomposition
+/-! ### Structural decomposition of the base-change isomorphism
 
 Five helpers feeding `pullback_iso_construction`:
 
-* `pullback_iso_affine_piece` (already declared above, axiom-clean) — per-affine
-  iso `(q ⁻¹ᵁ U.1).toScheme ≅ Spec((g^*𝒜)(U))`.
+* `pullback_iso_affine_piece` — the per-affine isomorphism
+  `(q ⁻¹ᵁ U.1).toScheme ≅ Spec(𝒜_g(U))`.
 * `pullback_cocone` — cocone on `(relativeGluingData _).functor` with point
   `pullback g (structureMorphism 𝒜)` whose components are the `fromSpec` maps
   of the pulled-back affine opens.
@@ -459,16 +334,12 @@ Five helpers feeding `pullback_iso_construction`:
 
 set_option backward.isDefEq.respectTransparency false in
 /-- **Cocone on `(relativeGluingData _).functor` with point
-`pullback g (structureMorphism 𝒜)`** (iter-183 Lane D helper 3,
-axiom-clean modulo naturality unfolding).
+`pullback g (structureMorphism 𝒜)`.**
 
 The components are the `IsAffineOpen.fromSpec` maps of the pulled-back affine
 opens `q⁻¹U.1`. Naturality follows from `IsAffineOpen.map_fromSpec` once
 the relative-gluing-data functor's `map` action is unfolded as
-`Spec.map (P.presheaf.map ((q.preimage_mono ...).op))`. The unfolding chase
-is intricate (deep definitional unfolding of `pushforward` and `rightOp`);
-deferred to iter-184+ as the only remaining work for axiom-clean closure
-of the entire base-change iso. -/
+`Spec.map (P.presheaf.map ((q.preimage_mono ...).op))`. -/
 noncomputable def pullback_cocone {X T : Scheme.{u}} (g : T ⟶ X)
     (𝒜 : X.QcohAlgebra) :
     haveI : IsAffineHom (CategoryTheory.Limits.pullback.fst g
@@ -491,13 +362,11 @@ noncomputable def pullback_cocone {X T : Scheme.{u}} (g : T ⟶ X)
         -- which is `IsAffineOpen.map_fromSpec` + `Category.comp_id`.
         set q := CategoryTheory.Limits.pullback.fst g
           (RelativeSpec.structureMorphism 𝒜)
-        simp only [AffineZariskiSite.relativeGluingData, Functor.comp_obj,
-          Functor.comp_map, Functor.rightOp_map, Functor.const_obj_obj,
-          Functor.const_obj_map]
+        simp only [AffineZariskiSite.relativeGluingData, Functor.comp_map,
+          Functor.rightOp_map, Functor.const_obj_map]
         exact (V.2.preimage q).map_fromSpec (U.2.preimage q) _ } }
 
-/-- **The descent composed with `q` equals `d.toBase`** (iter-183 Lane D
-helper 4, axiom-clean).
+/-- **The descent composed with `q` equals `d.toBase`.**
 
 The pullback-cocone descent `T.RelativeSpec(g^*𝒜) ⟶ pullback g _`, composed
 with the pullback projection `q := pullback.fst _ _`, equals the relative-
@@ -532,9 +401,7 @@ lemma pullback_cocone_desc_comp_fst {X T : Scheme.{u}} (g : T ⟶ X)
     Scheme.Hom.appLE_eq_app, ← IsAffineOpen.isoSpec_inv_ι, ← Category.assoc]
   rfl
 
-/-- **The descent map is an isomorphism** (iter-183 Lane D helper 5,
-substantive — axiom-clean modulo upstream `pullback_cocone_desc_comp_fst`
-and per-piece restrict-iso identification).
+/-- **The descent map is an isomorphism.**
 
 The canonical descent map `T.RelativeSpec(g^*𝒜) ⟶ pullback g (structureMorphism 𝒜)`
 defined by the cocone `pullback_cocone g 𝒜` is an isomorphism. Proof:
@@ -586,7 +453,7 @@ lemma pullback_iso_desc_isIso {X T : Scheme.{u}} (g : T ⟶ X)
     --   (2) `colim.ι U .isoOpensRange.symm`:
     --       `(colim.ι U).opensRange.toScheme ≅ d.functor.obj U`
     --   (3) `(pullback_iso_affine_piece g 𝒜 U).symm`:
-    --       `d.functor.obj U ≅ Spec((g^*𝒜)(U)) ≅ (q⁻¹U.1).toScheme`
+    --       `d.functor.obj U ≅ Spec(𝒜_g(U)) ≅ (q⁻¹U.1).toScheme`
     --       (the inverse via `IsAffineOpen.isoSpec.inv ≫ ι`).
     -- Commute the chain through `(q⁻¹U.1).ι` by canceling the mono ι.
     let iso_chain : (desc ⁻¹ᵁ q ⁻¹ᵁ U.1).toScheme ≅ (q ⁻¹ᵁ U.1).toScheme :=
@@ -631,14 +498,14 @@ lemma pullback_iso_desc_isIso {X T : Scheme.{u}} (g : T ⟶ X)
             simp [iso_chain, Iso.trans_hom, Iso.symm_hom, Category.assoc]
     exact (cancel_mono (q ⁻¹ᵁ U.1).ι).mp h_post
 
-/-- **Canonical base-change iso construction** (iter-181 Lane D helper 2,
-iter-183 Lane D structural close).
+/-- **Canonical base-change isomorphism.**
 
-Builds the iso `pullback g (structureMorphism 𝒜) ≅ T.RelativeSpec(g^*𝒜)`.
+Builds the isomorphism
+`pullback g (structureMorphism 𝒜) ≅ T.RelativeSpec (QcohAlgebra.pullback g 𝒜)`.
 
 **Construction**: the cocone `pullback_cocone g 𝒜` on the relative-gluing-data
-functor of `g^*𝒜` has point `pullback g (structureMorphism 𝒜)`. The colimit
-descent map `T.RelativeSpec(g^*𝒜) ⟶ pullback g _` from this cocone is an
+functor of `𝒜_g` has point `pullback g (structureMorphism 𝒜)`. The colimit
+descent map `T.RelativeSpec(𝒜_g) ⟶ pullback g _` from this cocone is an
 isomorphism by `pullback_iso_desc_isIso`; the result is the inverse iso. -/
 noncomputable def pullback_iso_construction {X T : Scheme.{u}} (g : T ⟶ X)
     (𝒜 : X.QcohAlgebra) :
@@ -671,11 +538,9 @@ theorem pullback_iso {X T : Scheme.{u}} (g : T ⟶ X)
 /-- **Base change of the relative spectrum.**
 
 For a morphism `g : T → X` and a quasi-coherent `O_X`-algebra `𝒜`, there
-exists a quasi-coherent `O_T`-algebra `𝒜' = g^* 𝒜` and a canonical isomorphism
-of `T`-schemes `T ×_X Spec_X(𝒜) ≅ Spec_T(g^* 𝒜)`.
-
-iter-179 body (Block B): witnessed by the named helpers `QcohAlgebra.pullback`
-and `pullback_iso`. -/
+exists a quasi-coherent `O_T`-algebra `𝒜'` and an isomorphism of `T`-schemes
+`T ×_X Spec_X(𝒜) ≅ Spec_T(𝒜')`. The witness is the reconstructed algebra
+`QcohAlgebra.pullback g 𝒜`. -/
 theorem base_change {X T : Scheme.{u}} (g : T ⟶ X) (_𝒜 : X.QcohAlgebra) :
     ∃ (𝒜' : T.QcohAlgebra),
       Nonempty (pullback g (RelativeSpec.structureMorphism _𝒜) ≅
@@ -684,11 +549,8 @@ theorem base_change {X T : Scheme.{u}} (g : T ⟶ X) (_𝒜 : X.QcohAlgebra) :
 
 /-! ## §6. Functoriality
 
-The construction `𝒜 ↦ Spec_X(𝒜)` extends to a contravariant functor
-`Spec_X : QcohAlg(X)^op ⥤ Over X`. The iter-173 file-skeleton encodes the
-object-level functorial assignment as `X.QcohAlgebra → Over X`; the
-morphism-level action and full `Functor` packaging are iter-174+ work after
-`QcohAlgebra` is unpacked to a category.
+The definition below records the object assignment
+`𝒜 ↦ (Spec_X(𝒜) → X)` in the over category.
 
 Blueprint reference: `thm:relative_spec_functorial` (Stacks 01LR
 definition-relative-spec + lemma-glueing-gives-functor-spec). -/
@@ -696,14 +558,7 @@ definition-relative-spec + lemma-glueing-gives-functor-spec). -/
 /-- **The relative-spectrum functor (object level).**
 
 The object-level functorial action `𝒜 ↦ Over.mk (π_𝒜) : Over X`, packaging
-the relative spectrum together with its structure morphism over `X`.
-
-iter-174+: the body is concrete via `Over.mk (RelativeSpec.structureMorphism 𝒜)`
-but is left as `sorry` here because `RelativeSpec.structureMorphism` is itself
-a typed `sorry`; once the structure morphism lands the body collapses to
-`fun 𝒜 => Over.mk (structureMorphism 𝒜)`. The full categorical functor
-`X.QcohAlgebra ⥤ Over X` (with `map` action induced by the universal property)
-becomes expressible once `QcohAlgebra` carries its category structure. -/
+the relative spectrum together with its structure morphism over `X`. -/
 noncomputable def functor (X : Scheme.{u}) :
     X.QcohAlgebra → Over X :=
   fun 𝒜 => Over.mk (RelativeSpec.structureMorphism 𝒜)
