@@ -396,7 +396,7 @@ stalk-side localisation is not preserved by that class (Mathlib commit
 -/
 private theorem finrank_residueField_tensor_kaehlerDifferential_of_free_rank_eq
     {R : Type u} [CommRing R]
-    {Sₘ : Type u} [CommRing Sₘ] [IsLocalRing Sₘ] [Nontrivial Sₘ] [Algebra R Sₘ]
+    {Sₘ : Type u} [CommRing Sₘ] [IsLocalRing Sₘ] [Algebra R Sₘ]
     [Module.Free Sₘ (Ω[Sₘ⁄R])] (n : ℕ) (hrank : Module.rank Sₘ (Ω[Sₘ⁄R]) = n) :
     Module.finrank (IsLocalRing.ResidueField Sₘ)
       (TensorProduct Sₘ (IsLocalRing.ResidueField Sₘ) (Ω[Sₘ⁄R])) = n := by
@@ -442,8 +442,7 @@ Axiom-clean: composes
 `Mathlib/RingTheory/Smooth/Basic.lean`),
 `KaehlerDifferential.exact_kerCotangentToTensor_mapBaseChange` (Mathlib;
 `Mathlib/RingTheory/Kaehler/Basic.lean`), and `LinearEquiv.ofBijective`. -/
-private noncomputable def
-    cotangent_iso_residue_tensor_kaehler_of_formallySmooth_residue
+noncomputable def cotangent_iso_residue_tensor_kaehler_of_formallySmooth_residue
     {R Sₘ : Type*} [CommRing R] [CommRing Sₘ] [IsLocalRing Sₘ] [Algebra R Sₘ]
     [Algebra.FormallySmooth R Sₘ]
     [Algebra.FormallySmooth R (IsLocalRing.ResidueField Sₘ)]
@@ -494,8 +493,7 @@ instance via `IsLocalRing.instModuleResidueFieldCotangentSpace`, so this
 repackaging is what downstream κ-finrank computations want to consume.
 
 Axiom-clean: `rw`-transports the iso above along the ideal equality. -/
-private noncomputable def
-    cotangent_iso_maximalIdeal_residue_tensor_kaehler_of_formallySmooth_residue
+noncomputable def cotangent_iso_maximalIdeal_residue_tensor_kaehler_of_formallySmooth_residue
     {R Sₘ : Type*} [CommRing R] [CommRing Sₘ] [IsLocalRing Sₘ] [Algebra R Sₘ]
     [Algebra.FormallySmooth R Sₘ]
     [Algebra.FormallySmooth R (IsLocalRing.ResidueField Sₘ)]
@@ -531,7 +529,7 @@ Axiom-clean: composes the Sₘ-linear iso with `LinearEquiv.extendScalarsOfSurje
 (promotion to κ-linear via the residue surjection), `LinearEquiv.finrank_eq`,
 and the 6.B-RHS substrate `finrank_baseChange + finrank_eq_of_rank_eq`. -/
 private theorem finrank_cotangentSpace_of_formallySmooth_residue
-    {R Sₘ : Type u} [CommRing R] [CommRing Sₘ] [IsLocalRing Sₘ] [Nontrivial Sₘ]
+    {R Sₘ : Type u} [CommRing R] [CommRing Sₘ] [IsLocalRing Sₘ]
     [Algebra R Sₘ]
     [Algebra.FormallySmooth R Sₘ]
     [Algebra.FormallySmooth R (IsLocalRing.ResidueField Sₘ)]
@@ -583,7 +581,7 @@ The proof:
 
 Axiom-clean: composes Mathlib bridges with the iter-199 helper above. -/
 private theorem finrank_cotangentSpace_of_bijective_algebraMap_residue
-    {R Sₘ : Type u} [CommRing R] [CommRing Sₘ] [IsLocalRing Sₘ] [Nontrivial Sₘ]
+    {R Sₘ : Type u} [CommRing R] [CommRing Sₘ] [IsLocalRing Sₘ]
     [Algebra R Sₘ]
     [Algebra.FormallySmooth R Sₘ]
     [Module.Free Sₘ (Ω[Sₘ⁄R])]
@@ -929,7 +927,8 @@ theorem isIntegral_pullback_self
   -- The composite structure map `X ×_{k̄} X → Spec k̄` is smooth (`smooth_comp` of
   -- the base-change-smooth projection with `X.hom`); package it as an `Over` object.
   haveI hsm : Smooth (Over.mk (pullback.fst X.hom X.hom ≫ X.hom)).hom := by
-    show Smooth (pullback.fst X.hom X.hom ≫ X.hom); infer_instance
+    change Smooth (pullback.fst X.hom X.hom ≫ X.hom)
+    infer_instance
   haveI hred : IsReduced (pullback X.hom X.hom) :=
     isReduced_of_smooth_of_isAlgClosed (Over.mk (pullback.fst X.hom X.hom ≫ X.hom))
   -- Irreducibility of `X ×_{k̄} X` from geometric irreducibility of `X.hom` (the
@@ -939,7 +938,9 @@ theorem isIntegral_pullback_self
   haveI : UniversallyOpen X.hom := inferInstance
   exact isIntegral_of_irreducibleSpace_of_isReduced (pullback X.hom X.hom)
 
-/-! ## §3.C. Project-local Mathlib supplement — Matsumura regular-sequence bridge (iter-203, Step A1)
+/-! ## §3.C. Project-local Mathlib supplement
+
+### Matsumura regular-sequence bridge (iter-203, Step A1)
 
 Lane COE Step A1 substrate (Matsumura *Commutative Ring Theory* Thm 14.2 /
 Stacks 00NQ). The goal of this section is the criterion: on a regular local
@@ -1017,7 +1018,7 @@ lemmas but not this regular-local descent packaging. Axiom-clean. -/
 private theorem matsumura_descent_cotangent
     {A : Type u} [CommRing A] [IsLocalRing A]
     (m : ℕ) (rs : Fin (m + 1) → A) (hmem : ∀ i, rs i ∈ IsLocalRing.maximalIdeal A)
-    [Nontrivial (A ⧸ Ideal.span ({rs 0} : Set A))] [IsLocalRing (A ⧸ Ideal.span ({rs 0} : Set A))]
+    [IsLocalRing (A ⧸ Ideal.span ({rs 0} : Set A))]
     (hlin : LinearIndependent (IsLocalRing.ResidueField A)
        (fun i => (IsLocalRing.maximalIdeal A).toCotangent ⟨rs i, hmem i⟩))
     (hg'mem : ∀ i : Fin m, (Ideal.Quotient.mk (Ideal.span ({rs 0} : Set A)) (rs i.succ))
@@ -1133,7 +1134,7 @@ Project-local because Mathlib at commit `b80f227` ships neither this criterion
 nor the regular-local⟹domain / regular-local-quotient facts it consumes.
 Axiom-clean. -/
 private theorem matsumura_isRegular_of_linearIndependent_cotangent
-    {A : Type u} [CommRing A] [IsLocalRing A] [IsNoetherianRing A] [IsRegularLocalRing A]
+    {A : Type u} [CommRing A] [IsRegularLocalRing A]
     (n : ℕ) (rs : Fin n → A) (hrs_mem : ∀ i, rs i ∈ IsLocalRing.maximalIdeal A)
     (h_lin : LinearIndependent (IsLocalRing.ResidueField A)
                (fun i => (IsLocalRing.maximalIdeal A).toCotangent ⟨rs i, hrs_mem i⟩)) :
@@ -1466,7 +1467,6 @@ theorem indeterminacy_codimGe2_of_smooth_of_complete
     [IsIntegral X.left] [IsReduced X.left]
     {Y : Over (Spec (.of kbar))}
     [IsProper Y.hom] [GeometricallyIrreducible Y.hom]
-    [IsSeparated Y.hom] [LocallyOfFiniteType Y.hom]
     [IsIntegral Y.left] [IsReduced Y.left]
     (f : X.left.RationalMap Y.left)
     (hf : f.compHom Y.hom = X.hom.toRationalMap) :
@@ -1575,7 +1575,6 @@ theorem codimOneFree_of_smooth_of_complete
     [IsIntegral X.left] [IsReduced X.left]
     {Y : Over (Spec (.of kbar))}
     [IsProper Y.hom] [GeometricallyIrreducible Y.hom]
-    [IsSeparated Y.hom] [LocallyOfFiniteType Y.hom]
     [IsIntegral Y.left] [IsReduced Y.left]
     (f : X.left.RationalMap Y.left)
     (hf : f.compHom Y.hom = X.hom.toRationalMap) :
