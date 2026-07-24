@@ -74,6 +74,28 @@ theorem isUnit_germ_iff_ordZ_eq_one {U : X.Opens} (hη : genericPoint X ∈ U)
   rw [hg, hgs, hord, IsDedekindDomain.HeightOneSpectrum.valuation_eq_one_iff_notMem]
   exact (IsLocalRing.notMem_maximalIdeal).symm
 
+/-- A unit in a closed-point stalk remains a unit in the function field, hence has
+trivial `ordZ`.  This is the valuation form of the stalk-unit transition bridge used
+when comparing a pulled local equation with a theta-chart reading. -/
+theorem ordZ_unitsMap_stalk_eq_one {z : X} (hz : z ≠ genericPoint X)
+    (v : (X.presheaf.stalk z)ˣ) :
+    Scheme.ordZ (X ↘ Spec (CommRingCat.of K)) hz
+      (Units.map (algebraMap (X.presheaf.stalk z) X.functionField).toMonoidHom v) = 1 := by
+  rw [Scheme.ordZ_eq_one_iff (X ↘ Spec (CommRingCat.of K)) hz]
+  exact Valuation.Integers.one_of_isUnit'
+    (v := Scheme.ord (X ↘ Spec (CommRingCat.of K)) hz)
+    v.isUnit (fun y => Scheme.ord_algebraMap_stalk_le_one K hz y)
+
+/-- Multiplication by the function-field image of a stalk unit does not change the
+additive order at the closed point. -/
+theorem toAdd_ordZ_mul_unitsMap_stalk {z : X} (hz : z ≠ genericPoint X)
+    (a : X.functionFieldˣ) (v : (X.presheaf.stalk z)ˣ) :
+    Multiplicative.toAdd
+        (Scheme.ordZ (X ↘ Spec (CommRingCat.of K)) hz
+          (a * Units.map (algebraMap (X.presheaf.stalk z) X.functionField).toMonoidHom v))
+      = Multiplicative.toAdd (Scheme.ordZ (X ↘ Spec (CommRingCat.of K)) hz a) := by
+  rw [map_mul, ordZ_unitsMap_stalk_eq_one K hz v, mul_one]
+
 end Scheme
 
 attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
