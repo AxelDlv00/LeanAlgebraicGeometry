@@ -284,6 +284,29 @@ theorem germ_self_pullbackEqn_eq_germ_relPinnedSectionsMap (hD : D.IsGenerator)
   simpa only [y, Scheme.PointedCover.pullback_opens,
     ThetaGeneratorSeed.localEquations_cover_opens, ThetaGeneratorSeed.piece] using hgerm
 
+/-- Version of `germ_self_pullbackEqn_eq_germ_relPinnedSectionsMap` indexed by an
+explicit total-space point equal to the image of the residue-fibre point. -/
+theorem germ_self_pullbackEqn_eq_germ_relPinnedSectionsMap_of_map_eq
+    (hD : D.IsGenerator) (p : PrimeSpectrum R)
+    (z : relCurve C p.asIdeal.ResidueField) (y : relCurve C R)
+    (hy : (relCurveMap C R p.asIdeal.ResidueField).base z = y)
+    (hzPiece : z ∈ (relCurve C p.asIdeal.ResidueField).basicOpen
+      (relPinnedSectionsMap C R p.asIdeal.ResidueField pi (D.side y) (D.h y)))
+    (hzSide : z ∈ relPinnedChart C p.asIdeal.ResidueField pi (D.side y)) :
+    ((relCurve C p.asIdeal.ResidueField).presheaf.germ
+        (((D.localEquations hD).cover.pullback
+          (relCurveMap C R p.asIdeal.ResidueField)).opens z) z
+        (((D.localEquations hD).cover.pullback
+          (relCurveMap C R p.asIdeal.ResidueField)).mem_opens z)).hom
+        (Scheme.LocalEquations.pullbackEqn
+          (relCurveMap C R p.asIdeal.ResidueField) (D.localEquations hD) z) =
+      ((relCurve C p.asIdeal.ResidueField).presheaf.germ
+        (relPinnedChart C p.asIdeal.ResidueField pi (D.side y)) z hzSide).hom
+        (relPinnedSectionsMap C R p.asIdeal.ResidueField pi (D.side y)
+          (relThetaResSide a (D.side y) le_rfl (D.sec y))) := by
+  subst y
+  exact D.germ_self_pullbackEqn_eq_germ_relPinnedSectionsMap hD p z hzPiece hzSide
+
 /-- The pullback of the seed local equation to a residue-field fibre is regular at its
 own indexed point.  The whole-piece tensor regularity is carried through the affine
 basic-open base-change equivalence, then compared with `pullbackEqn` by restriction
