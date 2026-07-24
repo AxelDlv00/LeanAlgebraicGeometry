@@ -37,9 +37,10 @@ private lemma cechSection_comm_one :
     𝟙 ((cechSectionAugComplex 𝒰 F V).X 1) =
       cechSectionHomotopyZero 𝒰 F V i_fix hiV ≫ (cechSectionAugComplex 𝒰 F V).d 0 1 +
         (cechSectionAugComplex 𝒰 F V).d 1 2 ≫ cechSectionHomotopyComp 𝒰 F V i_fix hiV 0 := by
+  let E := sectionCechProductAddEquiv (fun a => coverOpen 𝒰 a ⊓ V)
+    ((SheafOfModules.forget X.ringCatSheaf).obj F) 0
   ext t
-  apply (sectionCechProductAddEquiv (fun a => coverOpen 𝒰 a ⊓ V)
-    ((SheafOfModules.forget X.ringCatSheaf).obj F) 0).injective
+  apply E.injective
   funext σ
   refine Eq.symm ?_
   have hsplit : ConcreteCategory.hom
@@ -50,12 +51,8 @@ private lemma cechSection_comm_one :
         ConcreteCategory.hom ((cechSectionAugComplex 𝒰 F V).d 1 2 ≫
           cechSectionHomotopyComp 𝒰 F V i_fix hiV 0) t := by
     rw [AddCommGrpCat.hom_add_apply]
-  refine Eq.trans (congrArg (fun y => sectionCechProductAddEquiv
-    (fun a => coverOpen 𝒰 a ⊓ V) ((SheafOfModules.forget X.ringCatSheaf).obj F) 0 y σ)
-    hsplit) ?_
-  refine Eq.trans (congrArg (fun y => y σ)
-    (map_add (sectionCechProductAddEquiv (fun a => coverOpen 𝒰 a ⊓ V)
-      ((SheafOfModules.forget X.ringCatSheaf).obj F) 0) _ _)) ?_
+  refine Eq.trans (congrArg (fun y => E y σ) hsplit) ?_
+  refine Eq.trans (congrArg (fun y => y σ) (map_add E _ _)) ?_
   -- piece 1: `π_{i_fix} ≫ ε` is `depDiff (depHomotopy t̃)` at the bottom level
   have hpiece1 : sectionCechProductEquiv (fun a => coverOpen 𝒰 a ⊓ V)
       ((SheafOfModules.forget X.ringCatSheaf).obj F) 0

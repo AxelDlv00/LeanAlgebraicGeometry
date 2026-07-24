@@ -38,22 +38,8 @@ noncomputable def sectionCechProductAddEquiv {ι : Type u}
   right_inv := (sectionCechProductEquiv U F p).right_inv
   map_add' x y := by
     funext σ
-    calc
-      sectionCechProductEquiv U F p (x + y) σ =
-          ConcreteCategory.hom
-            (Pi.π (fun σ : Fin (p + 1) → ι =>
-              F.presheaf.obj (Opposite.op (⨅ k, U (σ k)))) σ) (x + y) :=
-        sectionCechProductEquiv_apply U F p (x + y) σ
-      _ = ConcreteCategory.hom
-            (Pi.π (fun σ : Fin (p + 1) → ι =>
-              F.presheaf.obj (Opposite.op (⨅ k, U (σ k)))) σ) x +
-          ConcreteCategory.hom
-            (Pi.π (fun σ : Fin (p + 1) → ι =>
-              F.presheaf.obj (Opposite.op (⨅ k, U (σ k)))) σ) y := by
-        exact map_add _ x y
-      _ = sectionCechProductEquiv U F p x σ +
-          sectionCechProductEquiv U F p y σ := by
-        rw [sectionCechProductEquiv_apply, sectionCechProductEquiv_apply]
+    simp only [sectionCechProductEquiv_apply, Pi.add_apply]
+    exact map_add _ x y
 
 /-! ## Contracting homotopy on the augmented concrete section Čech complex -/
 
