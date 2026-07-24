@@ -176,6 +176,7 @@ section AffineHomAcyclic
 variable {U Z : Scheme.{u}}
 
 set_option synthInstance.maxHeartbeats 1000000 in
+-- The Ext/sheafification transport expands localized-hom and affine-basis instances.
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 4000000 in
 /-- **Higher direct images along an affine morphism from an affine scheme vanish**
@@ -356,7 +357,7 @@ noncomputable def overOpensRingHom :
         ((Opens.grothendieckTopology ↥X).over W)
         (Opens.grothendieckTopology ↥W.toScheme)).obj
       W.toScheme.ringCatSheaf :=
-  ⟨Functor.whiskerRight (NatTrans.op (overOpensForgetIso W).inv) X.ringCatSheaf.val⟩
+  ⟨Functor.whiskerRight (NatTrans.op (overOpensForgetIso W).inv) X.ringCatSheaf.obj⟩
 
 /-- The inverse over-site equivalence followed by `Over.forget` is definitionally the
 open-immersion `opensFunctor` (general-opens port of `overForgetInvIso`). -/
@@ -372,7 +373,7 @@ noncomputable def overOpensRingInvHom :
         (Opens.grothendieckTopology ↥W.toScheme)
         ((Opens.grothendieckTopology ↥X).over W)).obj
       (Sheaf.over X.ringCatSheaf W) :=
-  ⟨Functor.whiskerRight (NatTrans.op (overOpensForgetInvIso W).inv) X.ringCatSheaf.val⟩
+  ⟨Functor.whiskerRight (NatTrans.op (overOpensForgetInvIso W).inv) X.ringCatSheaf.obj⟩
 
 /-- **The general-opens restrict–over bridge engine** (port of
 `modulesOverBasicOpenEquivalence`): the equivalence between modules on the open subscheme
@@ -384,18 +385,17 @@ noncomputable def modulesOverOpensEquivalence :
     (by
       refine NatTrans.ext (funext fun (V' : (Opens ↥W)ᵒᵖ) => ?_)
       simp only [overOpensRingHom, overOpensRingInvHom, NatTrans.comp_app,
-        Functor.whiskerRight_app, NatTrans.op_app, Functor.whiskerLeft_app, Functor.comp_obj,
-        Functor.op_obj]
+        Functor.whiskerRight_app, NatTrans.op_app, Functor.whiskerLeft_app]
       erw [← Functor.map_comp]
-      exact congrArg X.ringCatSheaf.val.map (Subsingleton.elim _ _))
+      exact congrArg X.ringCatSheaf.obj.map (Subsingleton.elim _ _))
     (by
       refine NatTrans.ext (funext fun (V' : (Over W)ᵒᵖ) => ?_)
       simp only [overOpensRingHom, overOpensRingInvHom, NatTrans.comp_app,
-        Functor.whiskerRight_app, NatTrans.op_app, Functor.whiskerLeft_app, Functor.comp_obj,
-        Functor.op_obj, NatTrans.id_app, overOpensForgetInvIso, Iso.refl_inv]
+        Functor.whiskerRight_app, NatTrans.op_app, Functor.whiskerLeft_app,
+        NatTrans.id_app, overOpensForgetInvIso, Iso.refl_inv]
       erw [← Functor.map_comp, ← Functor.map_comp]
-      exact (congrArg X.ringCatSheaf.val.map (Subsingleton.elim _ (𝟙 _))).trans
-        (X.ringCatSheaf.val.map_id _))
+      exact (congrArg X.ringCatSheaf.obj.map (Subsingleton.elim _ (𝟙 _))).trans
+        (X.ringCatSheaf.obj.map_id _))
 
 set_option backward.isDefEq.respectTransparency false in
 /-- **Bridge object iso** (general-opens port of `overBasicOpenIsoRestrict`): the inverse engine
@@ -415,7 +415,8 @@ noncomputable def overOpensIsoRestrict (M : X.Modules) :
     (𝟙 (X.ringCatSheaf.over W))).app M ≪≫ ?_
   refine (SheafOfModules.pushforwardCongr (F := W.ι.opensFunctor) ?heq).app M
   ext U' : 3
-  simp [overOpensRingInvHom, overOpensForgetInvIso, Scheme.Opens.ι_appIso]
+  simp only [CategoryTheory.Functor.map_id, Category.comp_id, Opposite.op_unop,
+    Scheme.Opens.ι_appIso, Iso.refl_inv, Functor.whiskerRight_app]
   exact congrArg (forget₂ CommRingCat RingCat).map
     ((congrArg X.sheaf.obj.map (Subsingleton.elim _ (𝟙 _))).trans (X.sheaf.obj.map_id _))
 
@@ -447,6 +448,7 @@ noncomputable def presentationOverOpens
     SheafOfModules.Presentation.ofIsIso.{u, u, u} iso.hom P2
 
 set_option synthInstance.maxHeartbeats 400000 in
+-- Synthesizing the adjunction data expands both directions of the over-site equivalence.
 /-- The engine's functor `pushforward (overOpensRingHom W)` is a right adjoint (it is an
 equivalence functor). Project-local instance enabling `pullback (overOpensRingHom W)`. -/
 instance pushforward_overOpensRingHom_isRightAdjoint :
@@ -458,6 +460,7 @@ instance pushforward_overOpensRingHom_isRightAdjoint :
     ⟨(modulesOverOpensEquivalence W).symm.toAdjunction⟩⟩⟩
 
 set_option synthInstance.maxHeartbeats 400000 in
+-- Synthesizing the adjunction data expands both directions of the over-site equivalence.
 /-- The engine's inverse `pushforward (overOpensRingInvHom W)` is a right adjoint. -/
 instance pushforward_overOpensRingInvHom_isRightAdjoint :
     (SheafOfModules.pushforward.{u} (F := (Opens.overEquivalence W).inverse)
@@ -469,6 +472,7 @@ instance pushforward_overOpensRingInvHom_isRightAdjoint :
 
 set_option backward.isDefEq.respectTransparency false in
 set_option synthInstance.maxHeartbeats 400000 in
+-- Left-adjoint uniqueness unfolds the over-site equivalence during instance synthesis.
 /-- **Unit comparison for the engine inverse**: the inverse engine sends the over-picture
 structure-sheaf unit to the subscheme structure-sheaf unit.  Built by identifying the inverse
 (a left adjoint of the engine functor) with `pullback (overOpensRingHom W)` via uniqueness of
@@ -491,6 +495,7 @@ noncomputable def overOpensInverseUnitIso :
 
 set_option backward.isDefEq.respectTransparency false in
 set_option synthInstance.maxHeartbeats 400000 in
+-- Left-adjoint uniqueness unfolds the over-site equivalence during instance synthesis.
 /-- **Unit comparison for the engine functor**: the forward engine sends the subscheme
 structure-sheaf unit to the over-picture structure-sheaf unit (same `leftAdjointUniq` +
 `pullbackObjUnitToUnit` route, with the roles of the two ring comparisons swapped). -/
@@ -511,6 +516,7 @@ noncomputable def overOpensFunctorUnitIso :
 
 set_option backward.isDefEq.respectTransparency false in
 set_option synthInstance.maxHeartbeats 400000 in
+-- Presentation transport synthesizes colimit and adjunction data through the equivalence.
 /-- **Presentation of a restriction from an over-presentation** (general-opens port of
 `presentationModulesRestrictBasicOpen` minus the affine identification step): if `M.over U`
 carries a presentation and `W ≤ U`, the subscheme restriction `M.restrict W.ι` admits a global
@@ -553,7 +559,7 @@ noncomputable def restrictIsoUnitIso {T T' : Scheme.{u}} (φ : T ⟶ T') [IsIso 
 
 set_option backward.isDefEq.respectTransparency false in
 set_option synthInstance.maxHeartbeats 1000000 in
-set_option backward.isDefEq.respectTransparency false in
+-- Two restriction equivalences and their unit comparisons elaborate simultaneously.
 set_option maxHeartbeats 2000000 in
 /-- **The per-slice presentation of the restriction to an open subscheme**: a presentation of
 `F.over A` induces a presentation of the slice `(F.restrict V.ι).over (V.ι ⁻¹ᵁ A)`.
@@ -608,12 +614,11 @@ noncomputable def presentationRestrictSliceOfOver (V : X.Opens) (F : X.Modules)
 
 /-! ## Quasi-coherence of the restriction to an open subscheme -/
 
--- The heartbeat bumps are required: `of_coversTop` triggers synthesis of the doubly-sliced
--- opens `HasSheafify`/`WEqualsLocallyBijective` instances, whose default-heartbeat search
--- times out (same pattern as `pushforward_iso_qcoh_of_slice_qcoh`).
 set_option synthInstance.maxHeartbeats 1000000 in
+-- `of_coversTop` synthesizes doubly sliced `HasSheafify` instances beyond the default budget.
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
+-- Elaborating the resulting slice presentations also exceeds the default heartbeat budget.
 /-- **Restriction of a quasi-coherent module to an open subscheme is quasi-coherent**
 (Stacks 01XZ-adjacent; project-local Mathlib supplement — Mathlib's `IsQuasicoherent` has no
 restriction stability lemma).
@@ -665,7 +670,7 @@ lemma pushPullObj_opens_pushforward_acyclic [HasInjectiveResolutions X.Modules]
   constructor
   intro k
   -- `pushPullObj F (Over.mk V.ι)` is definitionally `(V.ι)_* ((V.ι)^* F)`.
-  show IsZero (((Scheme.Modules.pushforward f).rightDerived (k + 1)).obj
+  change IsZero (((Scheme.Modules.pushforward f).rightDerived (k + 1)).obj
     ((Scheme.Modules.pushforward V.ι).obj ((Scheme.Modules.pullback V.ι).obj F)))
   haveI : IsAffineHom (V.ι ≫ f) := isAffineHom_of_isAffine_of_isSeparated _
   exact (higherDirectImage_affineHom_acyclic (V.ι ≫ f) _ hFV (k + 1) k.succ_pos).of_iso
@@ -685,9 +690,8 @@ hence an AFFINE morphism (this is where `[S.IsSeparated]` is REQUIRED — see th
 docstring for the counterexample without it).  Relative Serre vanishing for affine morphisms
 (`higherDirectImage_affineHom_acyclic`) kills `H^k` for `k ≥ 1`.
 Assembling: `R^k f_*(Cᵖ) = 0` for all `k ≥ 1`. -/
--- Instance synthesis for the `σ`-indexed product over the Čech backbone exceeds the default
--- budget (same bump as `pushPull_sigma_iso` in `CechSectionIdentificationBase.lean`).
 set_option synthInstance.maxHeartbeats 800000 in
+-- The `σ`-indexed Čech product exceeds the default instance-synthesis budget.
 /-- **Each Čech term is right-`(f_*)`-acyclic** (blueprint `lem:cech_term_pushforward_acyclic`;
 Stacks `lemma-relative-affine-vanishing`).
 
