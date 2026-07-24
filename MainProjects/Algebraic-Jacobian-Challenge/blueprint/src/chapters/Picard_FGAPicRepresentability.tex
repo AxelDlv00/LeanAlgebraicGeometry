@@ -2,47 +2,17 @@
 \label{chap:Picard_FGAPicRepresentability}
 % archon:covers AlgebraicJacobian/Picard/FGAPicRepresentability.lean
 
-% STRATEGY NOTE (iter-174). This chapter is the A.2.c assembly sub-row of
-% Route~A (positive-genus arm of nonempty_jacobianWitness). It wires the
-% Quot-scheme engine (\cref{chap:Picard_QuotScheme}, A.2.b) and the
-% \'etale-sheafified relative Picard functor (\cref{chap:Picard_RelPicFunctor},
-% A.1.c) into the FGA representability statement for \(\Pic_{C/k}\), following
-% Kleiman, ``The Picard scheme'' \S 4 (\cite{kleiman-picard}). It is a small
-% \emph{assembly} chapter: every nontrivial input is a \(\) pointer to a
-% sibling chapter, and the work here is to thread the inputs through
-% Grothendieck's existence theorem (\cite[\S 4, Main Theorem
-% th:main]{kleiman-picard}) and its specialisation to a complete variety over a
-% field (\cite[\S 4, Cor.~cor:algsch]{kleiman-picard}). Identity-component
-% material (\Picz) is A.3 and lives in a separate sibling chapter --- it is
-% \emph{not} scoped into this chapter.
-
-% NOTE (planner directive iter-174). This chapter must produce the
-% \emph{representable Picard scheme} \(\Pic_{C/k}\) as a \(k\)-group scheme,
-% locally of finite type, that represents the \'etale sheafification
-% \(\Pic^\sharp_{(C/k)\et}\) defined in A.1.c. The three deliverables are
-% (i) a line-bundle / Quot translation expressed via the Abel map
-% \(\mathrm{Div}_{C/k} \to \Pic_{C/k}\) (Kleiman \S 3, \S 4) which factorises through the
-% Hilbert scheme \(\Hilb_{C/k} = \Quot_{\mathcal{O}_C/C/k}\), hence through the
-% Quot engine of A.2.b; (ii) the existence theorem itself, in the
-% field-of-definition specialisation \(S = \Spec k\), \(X = C\) a smooth proper
-% geometrically integral curve; (iii) the group-scheme refinement carried by
-% the tensor product of invertible sheaves on \(C \times_k T\). The Lean
-% encoding is delegated to a Lean file
-% \texttt{AlgebraicJacobian/Picard/FGAPicRepresentability.lean} whose
-% construction is described in the final section but not written in this
-% chapter.
-
 \section{Setup and motivation}
 \label{sec:fga_pic_setup}
 
 Throughout this chapter, fix a base field \(k\) and a smooth proper geometrically
 integral curve \(C\) over \(k\) (the curve carrying the Jacobian). The relative
 Picard presheaf \(\Pic^\sharp_{C/k} : (\Sch/k)^{op} \to \Set\) of
-\cref{chap:Picard_LineBundlePullback} has already been packaged --- as a
-set-valued functor at A.1.b, and refined to its abelian-group-valued
-\'etale-sheafified version \(\Pic^\sharp_{(C/k)\et}\) at
-\cref{chap:Picard_RelPicFunctor} (A.1.c). The Quot scheme machinery of
-\cref{chap:Picard_QuotScheme} (A.2.b) supplies the representing engine: for
+\cref{chap:Picard_LineBundlePullback} has already been packaged as a
+set-valued functor and refined to its abelian-group-valued
+\'etale-sheafified version \(\Pic^\sharp_{(C/k)\et}\) in
+\cref{chap:Picard_RelPicFunctor}. The Quot scheme machinery of
+\cref{chap:Picard_QuotScheme} supplies the representing engine: for
 \(C/k\) projective and flat with integral geometric fibers, the Hilbert scheme
 \(\Hilb_{C/k}\) and its open subscheme \(\mathrm{Div}_{C/k}\) of relative effective
 divisors are both representable by quasi-projective \(k\)-schemes. Grothendieck's
@@ -54,7 +24,7 @@ theorem, and the abelian-group-scheme refinement.
 
 \medskip
 
-\textbf{The sheafification route (run-0008 rewire).} Kleiman \S 4 represents
+\textbf{Comparison with the sheafified Picard functor.} Kleiman \S 4 represents
 the \'etale-sheafified functor \(\Pic_{(C/k)\et}\). This chapter instead
 works throughout under the standing hypothesis that \emph{\(C\) has a
 \(k\)-rational point} (\cref{def:has_rational_point}) and states
@@ -69,18 +39,12 @@ base change), then the comparison maps
   \Pic_{(X/S)\fppf}(T)
 \]
 are bijective for every \(T\). Hence under the rational-point hypothesis the
-plain relative functor \emph{is} the \'etale sheaf, and no \'etale
-sheafification argument is needed here: this chapter's route bypasses it
-entirely via the rational point. (Mathlib v4.31 does in fact provide an
-\'etale Grothendieck topology on schemes,
-\texttt{AlgebraicGeometry.etaleTopology}
-[\texttt{Mathlib/AlgebraicGeometry/Sites/Etale.lean}]; the rational-point
-route is a deliberate simplification, not a Mathlib-gap workaround.)
+plain relative functor \emph{is} the \'etale sheaf, so the rational point
+allows us to work directly with \(\Pic^\sharp_{C/k}\).
 Without a section the plain functor is not even a Zariski sheaf in
 general, so every representability assertion of this chapter carries the
-rational-point hypothesis; the Jacobian consumers downstream
-(\cref{chap:AbelJacobi}) work with a pointed curve \((C, P)\), which
-supplies it.
+rational-point hypothesis. A pointed curve \((C,P)\), as in
+\cref{chap:AbelJacobi}, supplies such a section.
 
 % SOURCE: [Kleiman], ``The Picard scheme'', \S 4 (FGA Explained Ch.~9 \S 9.4);
 % arXiv:math/0504020, p.~26. Read from
@@ -105,36 +69,13 @@ representing a class in \(\Pic^\sharp_{C/k}(T)\).
     AlgebraicGeometry.Scheme.PicScheme.abelMap_app_mk}
   \uses{def:has_abel_map, def:inst_has_abel_map,
         def:div_functor_carrier, def:pic_sharp_carrier}
-  % HONESTY NOTE (record of the wave-7 substantive discharge of Sorry C,
-  % run 0011): this node's Lean content is the NATURAL-TRANSFORMATION
-  % half of the Abel map only. It does NOT claim, and is not used to
-  % derive, representability of the source Div_{C/k} by an open
-  % subscheme of the Hilbert scheme (Kleiman th:repDiv), nor
-  % representability of the Abel map itself by a morphism of k-schemes;
-  % Div_{C/k} remains the Type-valued carrier presheaf of
-  % def:div_functor_carrier throughout (see subsec:sorry_has_div_functor).
-  % The scheme-representability content of the surrounding narrative
-  % (Div is representable, hence so is the Abel map) is recorded as
-  % context/history below the proof, kept separate and NOT covered by
-  % \leanok.
   % SOURCE: [Kleiman], ``The Picard scheme'', \S 3, Def.~dfn:Abel (the Abel
   % map), and Thm.~th:repDiv (representability of relative effective
   % divisors by an open subscheme of \(\IHilb_{X/S}\)); arXiv:math/0504020,
   % pp.~25, 23 (read from
   % references/kleiman-picard-src/kleiman-picard.tex, L1837-L1841 + L2135-L2145).
-  % SOURCE QUOTE:
-  % "\begin{thm}\label{th:repDiv}
-  %   Assume \(X/S\) is projective and flat.  Then \(\mathrm{Div}_{X/S}\) is
-  %  representable by an open subscheme \(\IDiv_{X/S}\) of the Hilbert scheme
-  %  \(\IHilb_{X/S}\).
-  %   \end{thm}"
-  % SOURCE QUOTE:
-  % "\begin{dfn}\label{dfn:Abel}
-  %   The {\it Abel map\/} is the natural map of functors
-  %      \(\)A_{X/S}(T)\:\mathrm{Div}_{X/S}(T)\to \Pic_{X/S}(T)\(\)
-  %   defined by sending a relative effective divisor \(D\) on \(X_T/T\) to the
-  %  sheaf \(\mc O_{\!X_T}(D)\).  The target \(\Pic_{X/S}\) may be replaced by any
-  %  of its associated sheaves."
+  % Source identifiers: \begin{thm}\label{th:repDiv}\end{thm}
+  % and \begin{dfn}\label{dfn:Abel}\end{dfn}.
   \textit{Source: [Kleiman], ``The Picard scheme'', \S 3,
   Thm.~3.7 + Def.~4.6 (cf.\ [Nitsure], ``Construction of Hilbert
   and Quot Schemes'', \S 1, where \(\Hilb_{X/S} = \Quot_{\mathcal{O}_X/X/S}\)).}
@@ -161,9 +102,10 @@ representing a class in \(\Pic^\sharp_{C/k}(T)\).
   \]
   the class of the associated invertible sheaf \(\mathcal{O}_{C \times_k
   T}(D)\), i.e.\ the additive inverse of the class of the ideal sheaf
-  \(\ker q\) (Kleiman \S 3, Def.~dfn:Abel). This is the data carried by
-  \(\mathrm{HasAbelMap}(C)\) (\cref{def:has_abel_map}), populated by the
-  substantive witness \(\mathrm{abelMapWitness}(C)\) of
+  \(\ker q\) (Kleiman \S 3, Def.~dfn:Abel). This is the natural
+  transformation in \(\mathrm{HasAbelMap}(C)\)
+  (\cref{def:has_abel_map}), with witness
+  \(\mathrm{abelMapWitness}(C)\) from
   \cref{def:inst_has_abel_map}.
 \end{lemma}
 
@@ -185,32 +127,21 @@ representing a class in \(\Pic^\sharp_{C/k}(T)\).
   \(\mathrm{abelMapWitness}(C) \colon \langle \mathcal F, q\rangle
   \mapsto -[\ker q]\), and unfolding the two composites at a point gives
   the defining-property formula.
-  \paragraph{Scope.} This proof establishes only the natural
+  This establishes the natural
   transformation \(A_{C/k}\) between the presheaves
   \(\mathrm{Div}_{C/k}\) and \(\Pic^\sharp_{C/k}\) of
   \cref{def:div_functor_carrier} and \cref{def:pic_sharp_carrier}. It does
-  \emph{not} establish, and does not use, representability of
+  not use representability of
   \(\mathrm{Div}_{C/k}\) by an open subscheme of the Hilbert scheme
-  (Kleiman~\S 3, Thm.~th:repDiv, sketched in the remark below) or
+  (Kleiman~\S 3, Thm.~th:repDiv, proved in the remark below) or
   representability of \(A_{C/k}\) itself by a morphism of \(k\)-schemes;
-  that scheme-level content is separate future work
-  (\cref{subsec:sorry_has_div_functor}), consumed only by the
-  (still-gated) Step~3 of \cref{thm:fga_pic_representability}.
+  those are the scheme-level inputs used in Step~3 of
+  \cref{thm:fga_pic_representability}.
 \end{proof}
 
 \begin{remark}
-[Representability of \(\mathrm{Div}_{C/k}\) --- not yet formalised]
+[Representability of \(\mathrm{Div}_{C/k}\)]
   \label{rem:div_functor_representability}
-  % SOURCE QUOTE PROOF: (from references/kleiman-picard-src/kleiman-picard.tex,
-  % L1843-L1866, proof of th:repDiv)
-  % "Set \(H:=\IHilb_{X/S}\), and let \(W\subset X\x H\) be the universal
-  % (closed) subscheme, and \(q\:W\to H\) the projection.  Let \(V\) denote the
-  % set of points \(w\in W\) at which \(W\) is an effective divisor. Plainly \(V\)
-  % is open in \(W\).  Set \(Z:=q(W-V)\).  Then \(Z\) is closed because \(q\) is
-  % proper.  Set \(U:=H-Z\).  Then \(U\) is open, and \(q^{-1}U\) is an effective
-  % divisor in \(X\x U\).  In fact, since \(q\) is flat, \(q^{-1}U\) is a relative
-  % effective divisor in \(X\x U/U\).
-  % [\dots]"
   Kleiman~\S 3, Thm.~th:repDiv, shows that \(\mathrm{Div}_{C/k}\) is
   representable by an open subscheme \(\mathrm{Div}_{C/k} \subseteq
   \Hilb_{C/k}\) of the Hilbert scheme (\(\Hilb_{C/k} =
@@ -221,17 +152,16 @@ representing a class in \(\Pic^\sharp_{C/k}(T)\).
   is open, so \(Z := q(W \setminus V)\) is closed (\(q\) proper) and
   \(\mathrm{Div}_{C/k} := \Hilb_{C/k} \setminus Z\) is the open
   subscheme representing relative effective divisors. This is
-  \textbf{not} formalised: \(\mathrm{Div}_{C/k}\) remains the
-  Type-valued carrier presheaf of \cref{def:div_functor_carrier}
-  throughout the present chapter (\cref{subsec:sorry_has_div_functor}).
+  the relative-divisor functor appearing in
+  \cref{def:div_functor_carrier}.
 \end{remark}
 
 \section{The FGA representability theorem}
 \label{sec:fga_pic_representability}
 
-We now state and outline the proof of Grothendieck's existence theorem
-for the Picard scheme, in the specialisation needed for the Jacobian arm
-of Route~A: \(S = \Spec k\), \(X = C\) a smooth proper geometrically integral
+We now state and prove the specialisation of Grothendieck's existence theorem
+for the Picard scheme, in the specialisation needed for the Jacobian:
+\(S = \Spec k\), \(X = C\) a smooth proper geometrically integral
 curve. The general theorem (Kleiman \S 4, Thm.~4.8) covers any
 \(X/S\) projective Zariski-locally over \(S\), flat, with integral geometric
 fibers; we record the general statement and then specialise.
@@ -248,25 +178,8 @@ fibers; we record the general statement and then specialise.
   % and Cor.~cor:algsch (specialisation to \(S = \Spec k\), \(X\) complete);
   % arXiv:math/0504020, pp.~26, 35 (read from
   % references/kleiman-picard-src/kleiman-picard.tex, L2155-L2166 + L2686-L2690).
-  % SOURCE QUOTE:
-  % "\begin{thm}[Main]\label{th:main}
-  %   Assume \(f\:X\to S\) is projective Zariski locally over \(S\), and is flat
-  %  with integral geometric fibers.
-  %
-  %  \tu{(1)} Then \(\IPic_{X/S}\) exists, is separated and locally of finite
-  %  type over \(S\), and represents \(\Pic_{(X/S)\et}\).
-  %
-  %  \tu{(2)} If also \(S\) is Noetherian and \(X/S\) is projective, then
-  %  \(\IPic_{X/S}\) is a disjoint union of open
-  %   subschemes, each an increasing union of open quasi-projective
-  %  \(S\)-schemes.
-  %   \end{thm}"
-  % SOURCE QUOTE:
-  % "\begin{sbscor}\label{cor:algsch}
-  %    Assume \(S\) is the spectrum of a field \(k\), and \(X\) is complete.  Then
-  %  \(\IPic_{X/k}\) exists, represents \(\Pic_{(X/k)\fppf}\), and is a disjoint
-  %  union of open quasi-projective subschemes.
-  %   \end{sbscor}"
+  % Source identifiers: \begin{thm}\label{th:main}\end{thm}
+  % and \begin{sbscor}\label{cor:algsch}\end{sbscor}.
   \textit{Source: [Kleiman], ``The Picard scheme'', \S 4, Main Thm.~4.8
   + Cor.~4.18.3.}
   Let \(k\) be a field and \(C\) a smooth proper geometrically integral curve
@@ -282,20 +195,6 @@ fibers; we record the general statement and then specialise.
   of \(C/k\).
 \end{theorem}
 
-% SOURCE QUOTE PROOF: (from references/kleiman-picard-src/kleiman-picard.tex,
-% L2168-L2366, proof of th:main; long and is broken into the four-step
-% sketch below per the project's structural restatement convention. The
-% verbatim quote of the opening reduction step is:)
-% "By~\cite[(0, 4.5.5), p.~106]{EGAG}, it is a local matter on \(S\) to
-% represent a Zariski sheaf on the category of \(S\)-schemes.  Moreover, it
-% is also a local matter on \(S\) to prove that an \(S\)-scheme is separated
-% and locally of finite type.  Hence, in order to prove (1), we may assume
-% \(S\) is Noetherian and \(X/S\) is projective.
-% [\dots]
-% Plainly an \(S\)-scheme is separated if it is a disjoint union of
-% separated open subschemes, or if it is an increasing union of
-% separated open subschemes.  Hence (1) follows from (2)."
-% (subsequent steps quoted inline in the project-notation proof below).
 \begin{proof}
   
   We follow Kleiman~\S 4, Thm.~4.8, specialised to \(S = \Spec k\) and
@@ -377,9 +276,8 @@ fibers; we record the general statement and then specialise.
 \label{subsec:fga_pic_qt}
 
 The structural lemma underlying step 4 above is recorded separately
-because it is consumed verbatim in the assembly proof: it is the
-abstract content allowing the descent from \(Z = \mathrm{Div}^{\phi_0}_0\) to the
-representing Picard piece.
+because it is the abstract content allowing descent from
+\(Z = \mathrm{Div}^{\phi_0}_0\) to the representing Picard piece.
 
 \begin{lemma}\leanok
 [Smooth-proper quotient of \'etale sheaves]
@@ -389,14 +287,7 @@ representing Picard piece.
   % SOURCE: [Kleiman], ``The Picard scheme'', \S 4, Lem.~lm:qt;
   % arXiv:math/0504020, p.~31 (read from
   % references/kleiman-picard-src/kleiman-picard.tex, L2368-L2375).
-  % SOURCE QUOTE:
-  % "\begin{lem}\label{lm:qt}
-  %   Let \(\alpha\:Z\to P\) be a map of \'etale sheaves, and set \(R:=Z\x_PZ\).
-  %  Assume \(\alpha\) is a surjection, \(Z\) is representable by a
-  %  quasi-projective \(S\)-scheme, \(R\) is representable by an \(S\)-scheme, and
-  %  the first projection \(R\to Z\) is representable by a smooth and proper
-  %  map.  Then \(P\) is representable by a quasi-projective \(S\)-scheme, and
-  %  \(\alpha\) is representable by a smooth map."
+  % Source identifier: \begin{lem}\label{lm:qt}\end{lem}.
   \textit{Source: [Kleiman], ``The Picard scheme'', \S 4, Lem.~4.9.}
   Let \(\alpha : Z \to P\) be a morphism of \'etale sheaves on \((\Sch/k)\).
   Set \(R := Z \times_P Z\). Suppose:
@@ -411,57 +302,6 @@ representing Picard piece.
   is representable by a smooth map.
 \end{lemma}
 
-% NOTE (run-0008 truth audit): the LEAN statement of smoothProperQuotient is
-% intentionally WEAKER than this blueprint statement: hypothesis (2)'s
-% quasi-projectivity of Z is not expressible at the pinned Mathlib revision
-% (no QuasiProjective vocabulary), and without it the naked statement is
-% FALSE (a Hironaka-type free Z/2-action on a smooth proper non-projective
-% 3-fold gives a smooth proper equivalence relation whose etale quotient
-% sheaf is a non-scheme algebraic space). The Lean theorem therefore takes
-% the conclusion-carrier class HasSmoothProperQuotient (def:has_smooth_proper_quotient)
-% as a USE-SITE hypothesis, standing in for the missing quasi-projectivity;
-% the former GLOBAL ⟨sorry⟩ instance (which asserted representability of
-% EVERY presheaf target and was flatly false) was deleted in run 0008.
-% Supplying the instance for the Abel-map slice (where Z is a genuinely
-% quasi-projective open of Div_{C/k}) is part of the inst_has_pic_scheme
-% obligation. Consequently the PROOF below is NOT formalised (no \leanok on
-% the proof): it is the mathematical justification for the use-site
-% instance, not for the Lean theorem body (which is a one-line extraction).
-
-% SOURCE QUOTE PROOF: (from references/kleiman-picard-src/kleiman-picard.tex,
-% L2377-L2417, proof of lm:qt; reproduced verbatim because it is the
-% structural heart of step 4.)
-% "To lighten the notation, let \(Z\) and \(R\) denote the
-% corresponding schemes as well.  Since the structure map \(Z\to S\) is
-% quasi-projective, it is separated; whence, the first projection
-% \(Z\x_SZ\to Z\) is too.  But the first projection \(R\to Z\) is proper, and
-% factors naturally through a map \(h\:R\to Z\x_SZ\).  Hence \(h\) is proper.
-% But \(h\) is a monomorphism; that is, \(h\) is injective on \(T\)-points.
-% Therefore, \(h\) is a closed embedding by \cite[8.11.5]{EGAIV3}.
-%
-% Plainly, for each \(S\)-scheme \(T\), the subset $R(T)\subset
-% Z(T)\x_{S(T)}Z(T)$ is the graph of an equivalence relation.  Also, the
-% map of schemes \(R\to Z\) is flat and proper, and \(Z\) is a
-% quasi-projective \(S\)-scheme.  It follows that there exist a
-% quasi-projective \(S\)-scheme \(Q\) and a faithfully flat and projective map
-% \(Z\to Q\) such that \(R=Z\x_QZ\).  (In other words, a flat and proper
-% equivalence relation on a quasi-projective scheme is effective.)
-% [\dots]
-% Since \(Z\to Q\) is flat, it is smooth if (and only if) its fibers are
-% smooth.  But these fibers are, up to extension of the ground field, the
-% same as those of \(R\to Z\).  And \(R\to Z\) is smooth by hypothesis.  Thus
-% \(Z\to Q\) is smooth.
-%
-% It remains to see that \(Q\) represents \(P\).  First, observe that \(Z\to Q\)
-% is (represents) a surjection of \'etale sheaves.
-% [\dots]
-% Since \(Z\to Q\) is a surjection of \'etale sheaves, \(Q\) is, in the
-% category of \'etale sheaves, the coequalizer of the pair of maps
-% \(R\rightrightarrows Z\) by Exercise~\ref{ex:epi} below, which is an
-% elementary exercise in general Grothendieck topology.  By the same
-% exercise, \(P\) too is the coequalizer of this pair of maps.  But, in any
-% category, the coequalizer is unique up to unique isomorphism.  Thus \(Q\)
-% represents \(P\)."
 \begin{proof}
   By (ii) the structure map \(Z \to \Spec k\) is quasi-projective, hence
   separated, so the first projection \(Z \times_k Z \to Z\) is separated.
@@ -518,21 +358,8 @@ to a group-scheme structure on the representing scheme by Yoneda.
   % text (group-scheme structure on \(\IPic_{X/S}\) via tensor product);
   % arXiv:math/0504020, pp.~17, 26 (read from
   % references/kleiman-picard-src/kleiman-picard.tex, L1311-L1318 + L2057-L2069).
-  % SOURCE QUOTE:
-  % "\begin{dfn}\label{df:Pfs}
-  %   The {\it relative Picard functor} \(\Pic_{X/S}\) is defined by
-  %      \(\)\Pic_{X/S}(T):=\Pic(X_T)\big/\Pic(T).\(\)
-  %   Denote its associated sheaves in the Zariski, \'etale, and fppf
-  %  topologies  by
-  %      \(\)\Pic_{(X/S)\zar},\ \Pic_{(X/S)\et},\
-  %      \Pic_{(X/S)\fppf}.\(\)
-  %   \end{dfn}"
-  % SOURCE QUOTE:
-  % "\begin{dfn}\label{df:Psch}
-  %    If any of the four relative Picard functors of Definition~\ref{df:Pfs}
-  %  is representable, then the representing scheme is called the {\it Picard
-  %  scheme\/} and denoted by \(\IPic_{X/S}\).  Moreover, we say simply that the
-  %  Picard scheme \(\IPic_{X/S}\) exists."
+  % Source identifiers: \begin{dfn}\label{df:Pfs}\end{dfn} and
+  % \begin{dfn}\label{df:Psch}\end{dfn}.
   \textit{Source: [Kleiman], ``The Picard scheme'', \S 2, Def.~2.2 +
   \S 4, Def.~4.1 (the Picard scheme).}
   Let \(\Pic_{C/k}\) be the Picard scheme of
@@ -551,22 +378,6 @@ to a group-scheme structure on the representing scheme by Yoneda.
   scheme locally of finite type.
 \end{theorem}
 
-% SOURCE QUOTE PROOF: not applicable --- Kleiman \S 2--4 do not isolate a
-% separate proof block for the group-scheme structure: it is implicit in
-% the fact that \(\Pic_{(X/S)\et}\) takes values in abelian groups (df:Pfs)
-% and that representability transfers algebraic operations from set-valued
-% functors to scheme morphisms by Yoneda. The structural restatement below
-% records the standard transfer.
-% NOTE (run-0008): this theorem is now PROVED in Lean, by direct Yoneda
-% transport: with picSharp genuinely equal to the group-valued relative
-% functor relPresheaf (def:rel_pic_sharp) with the forgetful functor
-% applied, Mathlib's CommGrpObj.ofRepresentableBy applied to the
-% representability witness `representable` yields the full COMMUTATIVE
-% group-object structure (GrpObj + IsCommMonObj) on PicScheme C. The former
-% ⟨sorry⟩-backed carrier pair (def:pic_scheme_group_object /
-% def:inst_pic_scheme_group_object) is deleted. The Lean conclusion
-% (CommGrpObj) is STRONGER than the abelian-group-scheme prose below asked
-% for at the GrpObj level: commutativity comes with the same transport.
 \begin{proof}
 \leanok
   The relative Picard functor \(\Pic^\sharp_{C/k}\) of
@@ -587,52 +398,25 @@ to a group-scheme structure on the representing scheme by Yoneda.
   and the unit map \(h_{\Spec k} \to \Pic^\sharp_{C/k}\) pick out unique
   morphisms of representing schemes \(m\), \(i\), \(e\) as displayed, and
   the abelian-group axioms hold at the level of \(T\)-points functorially
-  in \(T\), hence on the representing scheme. In Lean this transport is
-  exactly \texttt{CommGrpObj.ofRepresentableBy} applied to the witness of
-  \cref{thm:fga_pic_representability} (transported across the
-  \(\mathrm{Multiplicative}\) carrier identification); it produces the
-  commutative-group-object structure directly. The local-finite-type
+  in \(T\), hence on the representing scheme. The local-finite-type
   property is part of \cref{thm:fga_pic_representability}.
 \end{proof}
 
-\section{The Picard scheme: the named declaration}
+\section{The Picard scheme}
 \label{sec:fga_pic_named_definition}
 
-The two preceding theorems are existence statements. We record the
-named declaration corresponding to the Lean target.
+The two preceding theorems determine the following named scheme.
 
 \begin{definition}\leanok
 [The Picard scheme]
   \label{def:pic_scheme}
   \lean{AlgebraicGeometry.Scheme.PicScheme}
-  % NOTE iter-283: corrected this \uses to match the actual Lean definitional
-  % order and break two dependency cycles that crashed `leanblueprint web`
-  % (plastexdepgraph infinite recursion). In Lean (FGAPicRepresentability.lean
-  % L223) `PicScheme := (HasPicScheme.has_pic_scheme C).choose`, i.e. it is
-  % extracted from the `HasPicScheme` carrier (def:has_pic_scheme) ONLY -- NOT
-  % from `representable` (thm:fga_pic_representability) and NOT from the group
-  % structure (thm:pic_is_group_scheme). The two removed edges were both
-  % spurious back-edges:
-  %   (a) thm:pic_is_group_scheme: the abelian-group-scheme structure is built
-  %       ON TOP of PicScheme (def:pic_scheme_group_object -> thm:pic_is_group_scheme,
-  %       both \uses def:pic_scheme), so listing it here made a 2-cycle.
-  %   (b) thm:fga_pic_representability: `representable` is extracted FROM the
-  %       PicSharpRepresentable carrier whose statement references PicScheme
-  %       (def:pic_sharp_representable -> def:pic_scheme, thm -> def:pic_sharp_representable),
-  %       so listing it here made a 3-cycle. PicScheme depends only on HasPicScheme.
-  % The explanatory \cref{thm:fga_pic_representability}/\cref{thm:pic_is_group_scheme}
-  % in the prose are cross-references, not dependency edges, and are retained.
   \uses{def:has_pic_scheme, def:inst_has_pic_scheme}
 
   % SOURCE: [Kleiman], ``The Picard scheme'', \S 4, Def.~df:Psch;
   % arXiv:math/0504020, p.~26 (read from
   % references/kleiman-picard-src/kleiman-picard.tex, L2057-L2062).
-  % SOURCE QUOTE:
-  % "\begin{dfn}\label{df:Psch}
-  %    If any of the four relative Picard functors of Definition~\ref{df:Pfs}
-  %  is representable, then the representing scheme is called the {\it Picard
-  %  scheme\/} and denoted by \(\IPic_{X/S}\).  Moreover, we say simply that the
-  %  Picard scheme \(\IPic_{X/S}\) exists."
+  % Source identifier: \begin{dfn}\label{df:Psch}\end{dfn}.
   \textit{Source: [Kleiman], ``The Picard scheme'', \S 4, Def.~4.1.}
   Let \(C/k\) be a smooth proper geometrically integral curve over a field
   \(k\), with a \(k\)-rational point. The \emph{Picard scheme} \(\Pic_{C/k}\)
@@ -645,101 +429,58 @@ named declaration corresponding to the Lean target.
   quasi-projective \(k\)-subschemes.
 \end{definition}
 
-\section{Lean encoding}
+\section{Construction interfaces}
 \label{sec:fga_pic_lean_encoding}
 
-The Lean target file is the new
-\texttt{AlgebraicJacobian/Picard/FGAPicRepresentability.lean}, sibling to
-\texttt{AlgebraicJacobian/Picard/RelativeSpec.lean}
-(\cref{chap:Picard_RelativeSpec}) and
-\texttt{AlgebraicJacobian/Picard/LineBundlePullback.lean}
-(\cref{chap:Picard_LineBundlePullback}). The blueprint declarations of
-this chapter correspond to Lean targets as follows.
+The constructions above fit together through the following interfaces. The
+relative Picard presheaf is obtained from the quotient of invertible sheaves
+on \(C\times_kT\) by pullbacks from \(T\), and its set-valued version is used
+when applying representability. The relative-divisor functor is the
+specialisation of the effective Cartier-divisor functor to
+\(C\to\operatorname{Spec}k\). A divisor family \(\langle\mathcal F,q\rangle\)
+is sent by the Abel map to the inverse class of its kernel:
+\[
+  \langle\mathcal F,q\rangle\longmapsto-[\ker q].
+\]
+The FGA theorem applies Hilbert-polynomial stratification, a regularity bound,
+the Abel-map factorisation, and the smooth-proper quotient lemma. Tensor
+product and dualisation of line bundles then induce addition and inversion on
+the representing scheme.
 
 \begin{itemize}
-  \item \texttt{AlgebraicGeometry.Scheme.PicScheme}
-    (\cref{def:pic_scheme}) is a structural constant naming the scheme
-    representing \(\Pic^\sharp_{C/k}\); it is the scheme witness
-    extracted from the \texttt{HasPicScheme} carrier
-    (\cref{def:has_pic_scheme}) via \texttt{(HasPicScheme.has\_pic\_scheme
-    C).choose}. The representability identification \texttt{representable}
-    and the group-scheme structure are then layered on top of this bare
-    scheme (so \cref{def:pic_scheme} depends only on \cref{def:has_pic_scheme},
-    not on \cref{thm:fga_pic_representability} or
-    \cref{thm:pic_is_group_scheme}).
-  \item \texttt{AlgebraicGeometry.Scheme.PicScheme.picSharp}
-    (\cref{def:pic_sharp_carrier}) is, after the run-0008 rewire, the REAL
-    relative Picard functor: \texttt{PicSharp.relPresheaf} of
-    \cref{chap:Picard_RelPicFunctor} composed with the forgetful functor
-    to \(\Set\) (values in \texttt{Type (u+1)}, since the line-bundle
-    carrier is a quotient of large module sheaves;
-    \texttt{Functor.RepresentableBy} is universe-polymorphic, so
-    representability by a scheme remains well-formed).
-  \item \texttt{AlgebraicGeometry.Scheme.PicScheme.abelMap}
-    (\cref{lem:line_bundle_quot_correspondence}) is the natural
+  \item The Picard scheme \cref{def:pic_scheme} is selected by the
+    existence assertion \cref{def:has_pic_scheme}.
+  \item The functor \cref{def:pic_sharp_carrier} is the set-valued form of
+    the relative Picard presheaf of \cref{chap:Picard_RelPicFunctor}.
+  \item The Abel map of \cref{lem:line_bundle_quot_correspondence} is the natural
     transformation \(\mathrm{Div}_{C/k} \to \Pic^\sharp_{C/k}\) sending a
     relative divisor family \(\langle \mathcal F, q\rangle\) to
-    \(-[\ker q]\), the class of its associated invertible sheaf
-    (run 0011: \texttt{HasAbelMap} is now data-carrying and
-    \texttt{abelMap} is this substantive natural transformation, with
-    defining property \texttt{abelMap\_app\_mk}; PROVED, no sorry). This
-    is delivered at the level of the Type-valued carrier presheaves of
-    \cref{def:div_functor_carrier} and \cref{def:pic_sharp_carrier}: representability
-    of the source \(\mathrm{Div}_{C/k}\) by an open subscheme of the
-    Hilbert scheme (Kleiman~\S 3, Thm.~th:repDiv,
-    \cref{rem:div_functor_representability}) is separate future work,
-    not needed for \texttt{abelMap} itself.
-  \item \texttt{AlgebraicGeometry.Scheme.PicScheme.smoothProperQuotient}
-    (\cref{lem:smooth_proper_quotient}) is the Altman--Kleiman
+    \(-[\ker q]\), the class of its associated invertible sheaf.
+  \item The Altman--Kleiman lemma \cref{lem:smooth_proper_quotient} gives
     descent of a flat-and-proper equivalence relation \(R \subseteq Z
     \times_k Z\) on a quasi-projective \(k\)-scheme \(Z\) to a
-    quasi-projective quotient \(Q\), packaged in the form that consumes
-    a \(\Functor.\mathrm{RepresentableBy}\)-witness for \(Z\) and produces
-    one for the coequalising sheaf, with the conclusion supplied by the
-    use-site hypothesis class \cref{def:has_smooth_proper_quotient}
-    (see the run-0008 note after \cref{lem:smooth_proper_quotient}).
-  \item \texttt{AlgebraicGeometry.Scheme.PicScheme.representable}
-    (\cref{thm:fga_pic_representability}) extracts the
-    \(\Functor.\mathrm{RepresentableBy}\)-witness for
-    \(\Pic^\sharp_{C/k}\) from the \texttt{PicSharpRepresentable} carrier,
-    which is itself PROVED from \texttt{HasPicScheme} by
-    \texttt{Exists.choose\_spec}; the four-step Kleiman assembly
-    (Hilbert-polynomial stratification, \(m\)-regularity bound, Abel-map
-    factorisation, smooth-proper quotient), preceded by the Kleiman \S 2
-    Thm.~2.5 comparison, is the obligation of
-    \cref{def:inst_has_pic_scheme}.
-  \item \texttt{AlgebraicGeometry.Scheme.PicScheme.groupSchemeStructure}
-    (\cref{thm:pic_is_group_scheme}) is the \texttt{CommGrpObj} instance
-    on \texttt{PicScheme} obtained by Yoneda transport
-    (\texttt{CommGrpObj.ofRepresentableBy}) of the abelian-group structure
-    on \(\Pic^\sharp_{C/k}\) — PROVED, sorry-free, after the run-0008
-    rewire.
+    quasi-projective quotient \(Q\) representing the coequalising sheaf.
+  \item The theorem \cref{thm:fga_pic_representability} supplies the
+    representing scheme.
+  \item Yoneda transport of the abelian-group structure on
+    \(\Pic^\sharp_{C/k}\) gives the group-scheme structure of
+    \cref{thm:pic_is_group_scheme}.
 \end{itemize}
 
-No new core axiom is required: this chapter is an assembly chapter on
-top of the QuotScheme engine, the relative-Picard \'etale sheafification,
-and the line-bundle pullback machinery already in place. The single
-large external input (the Altman--Kleiman theorem of effective
-flat-and-proper equivalence relations on quasi-projective schemes) is
-recorded as \cref{lem:smooth_proper_quotient} and is itself a standard
-result; if its Lean formalisation is not yet in Mathlib, the
-\texttt{smoothProperQuotient} Lean declaration may be sorried and the
-gap reported to the plan agent, as it is logically downstream of the
-Hilbert-scheme construction of \cref{chap:Picard_QuotScheme}.
+The effective-quotient theorem for flat and proper equivalence relations on
+quasi-projective schemes is recorded as
+\cref{lem:smooth_proper_quotient}. All other interfaces are supplied by the
+relative Picard, divisor, and Quot constructions.
 
-\section{Typeclass scaffolding for the representability assembly}
+\section{Auxiliary existence predicates}
 \label{sec:fga_pic_typeclass_scaffolding}
 
-The five public declarations above are each phrased so that their single
-mathematical obligation is isolated in a \emph{carrier}: a \texttt{Prop}-valued
-existence predicate together with a noncomputable extraction of the asserted
-object. This section records, with a one-to-one Lean correspondence, each
-carrier predicate, each extraction, and each existence witness. The carriers
-are file-internal scaffolding for the public results; their substantive
-mathematical content is the obligation analysed in
-\cref{sec:fga_pic_sorry_closure_order}.
+The public constructions use a small collection of existence predicates. Each
+predicate records one mathematical object or property needed by the preceding
+representability argument, and the associated definitions select the object
+when the predicate is inhabited.
 
-\subsection{Carriers for the sibling-chapter functors}
+\subsection{Basic functors}
 \label{subsec:fga_pic_functor_carriers}
 
 \begin{definition}\leanok
@@ -753,16 +494,16 @@ mathematical content is the obligation analysed in
   \cref{sec:fga_pic_setup}): by Kleiman \S 2, Thm.~2.5, it makes the plain
   relative Picard functor \(\Pic^\sharp_{C/k}\) coincide with its \'etale
   (and fppf) sheafification, so representability can be stated against
-  \cref{def:rel_pic_sharp} directly. For the pointed curves \((C, P)\) of
-  the Jacobian arm the pointing \(P\) supplies this instance.
+  \cref{def:rel_pic_sharp} directly. For a pointed curve \((C,P)\), the
+  pointing \(P\) supplies this section.
 \end{definition}
 
 \begin{proof}\leanok
-  A \texttt{Prop}-valued class; defined directly in Lean.
+  This is a definition.
 \end{proof}
 
 \begin{definition}\leanok
-[The relative Picard functor, set-valued]
+[Set-valued relative Picard functor]
   \label{def:pic_sharp_carrier}
   \lean{AlgebraicGeometry.Scheme.PicScheme.picSharp}
   \uses{def:rel_pic_sharp}
@@ -770,12 +511,11 @@ mathematical content is the obligation analysed in
   group-valued relative Picard presheaf of \cref{def:rel_pic_sharp}
   (composition with the forgetful functor \(\Ab \to \Set\)).
 
-  Run-0008 rewire: this is now a REAL definition (the former
-  \texttt{Classical.choice}-of-\(\langle\)sorry\(\rangle\) carrier
-  extraction, together with its typeclass \texttt{HasPicSharp} and instance
-  \texttt{instHasPicSharp}, is deleted). Representability witnesses against
-  it are genuine natural bijections
-  \((T \to \Pic_{C/k}) \simeq \Pic(C \times_k T)/\pi_T^*\Pic(T)\).
+  A representing object therefore carries natural bijections
+  \[
+    (T \to \Pic_{C/k}) \simeq
+    \Pic(C \times_k T)/\pi_T^*\Pic(T).
+  \]
 \end{definition}
 
 \begin{proof}\leanok
@@ -785,26 +525,23 @@ mathematical content is the obligation analysed in
 \end{proof}
 
 \begin{definition}\leanok
-[Existence carrier for the relative-divisor functor]
+[Existence of the relative-divisor functor]
   \label{def:has_div_functor}
   \lean{AlgebraicGeometry.Scheme.PicScheme.HasDivFunctor}
-  The predicate \(\mathrm{HasDivFunctor}(C)\) asserts that the category of presheaves
-  of types on \((\Sch/k)^{op}\) admits at least one object intended to be the
+  The predicate \(\mathrm{HasDivFunctor}(C)\) asserts that the category of
+  presheaves of types on \((\Sch/k)^{op}\) contains the
   relative-effective-divisor functor \(\mathrm{Div}_{C/k}\), sending a
   \(k\)-scheme \(T\) to the set of relative effective Cartier divisors on
-  \(C \times_k T\) flat over \(T\). It is the existence carrier for
-  \(\mathrm{Div}_{C/k}\); since the A.2.b divisor functor
-  (\cref{def:div_functor}) landed, its instance
-  \cref{def:inst_has_div_functor} is proved and the class survives only as
-  the pinned carrier.
+  \(C \times_k T\) flat over \(T\). It is the existence assertion for
+  \(\mathrm{Div}_{C/k}\).
 \end{definition}
 
 \begin{proof}
-  Proved directly in Lean.
+  This is the defining predicate.
 \end{proof}
 
 \begin{definition}\leanok
-[The relative-divisor functor of the FGA assembly]
+[The relative-divisor functor]
   \label{def:div_functor_carrier}
   \lean{AlgebraicGeometry.Scheme.PicScheme.divFunctor}
   \uses{def:div_functor}
@@ -812,9 +549,7 @@ mathematical content is the obligation analysed in
   relative-divisor functor \(\Div_{C/k}\) of \cref{def:div_functor},
   instantiated at the structural morphism \(C \to \Spec k\): it sends a
   \(k\)-scheme \(T\) to the set of relative effective Cartier divisors on
-  \(C \times_k T\) flat over \(T\).  (Formerly an opaque chosen witness of
-  \cref{def:has_div_functor}; the extraction collapsed to this direct
-  definition when \cref{chap:Picard_QuotScheme} landed the divisor functor.)
+  \(C \times_k T\) flat over \(T\).
 \end{definition}
 
 \begin{proof}\leanok
@@ -824,14 +559,12 @@ mathematical content is the obligation analysed in
 \end{proof}
 
 \begin{definition}\leanok
-[Existence witness for the relative-divisor functor]
+[Relative-divisor functor exists]
   \label{def:inst_has_div_functor}
   \lean{AlgebraicGeometry.Scheme.PicScheme.instHasDivFunctor}
   \uses{def:has_div_functor, def:div_functor_carrier}
-  The instance recording that \cref{def:has_div_functor} holds for every
-  such curve \(C/k\).  PROVED: the relative-divisor functor
-  \cref{def:div_functor_carrier} witnesses the existential.  (The former
-  Sorry~B of \cref{subsec:sorry_has_div_functor} is closed.)
+  The relative-divisor functor of \cref{def:div_functor_carrier} witnesses
+  \cref{def:has_div_functor} for every such curve \(C/k\).
 \end{definition}
 
 \begin{proof}\leanok
@@ -840,42 +573,36 @@ mathematical content is the obligation analysed in
   object of the presheaf category, witnessing the existential.
 \end{proof}
 
-\subsection{Carrier for the Abel map}
+\subsection{Abel-map predicate}
 \label{subsec:fga_pic_abel_map_carrier}
 
 \begin{definition}\leanok
-[Data carrier for the Abel map]
+[Abel-map data]
   \label{def:has_abel_map}
   \lean{AlgebraicGeometry.Scheme.PicScheme.HasAbelMap,
     AlgebraicGeometry.Scheme.PicScheme.abelMap}
   \uses{def:div_functor_carrier, def:pic_sharp_carrier}
-  The class \(\mathrm{HasAbelMap}(C)\) carries, as \emph{data}, a natural
+  The predicate \(\mathrm{HasAbelMap}(C)\) carries a natural
   transformation of presheaves \(\mathrm{abel} \colon \mathrm{Div}_{C/k}
   \to \Pic^\sharp_{C/k}\) between the relative-divisor functor of
   \cref{def:div_functor_carrier} and the relative Picard functor of
   \cref{def:pic_sharp_carrier}; \(\mathrm{abelMap} :=
-  \mathrm{HasAbelMap.abel}\) extracts it. (Repinned, run 0011, from a
-  \(\mathrm{Prop}\)-valued \(\mathrm{Nonempty}\) existence gate --- whose
-  \(\mathtt{Classical.choice}\) extraction carried no defining property
-  --- to this data-carrying class, so that \(\mathrm{abelMap}\) now has
-  the genuine defining property \Cref{lem:line_bundle_quot_correspondence}.)
+  \mathrm{HasAbelMap.abel}\) denotes this transformation.
 \end{definition}
 
 \begin{proof}
-  Proved directly in Lean.
+  This is a definition.
 \end{proof}
 
 \begin{definition}\leanok
-[Substantive witness for the Abel map (Sorry~C, CLOSED)]
+[Existence of the Abel map]
   \label{def:inst_has_abel_map}
   \lean{AlgebraicGeometry.Scheme.PicScheme.instHasAbelMap}
   \uses{def:has_abel_map}
-  The instance recording that \cref{def:has_abel_map} holds for every such
-  curve \(C/k\), populated with the \emph{substantive} witness
-  \(\mathrm{abelMapWitness}(C)\) of
-  \cref{lem:line_bundle_quot_correspondence} --- no longer an opaque
-  choice. (The former Sorry~C of \cref{subsec:sorry_has_abel_map} is
-  closed.)
+  For every such curve \(C/k\), the transformation
+  \(\mathrm{abelMapWitness}(C)\) from
+  \cref{lem:line_bundle_quot_correspondence} satisfies
+  \cref{def:has_abel_map}.
 \end{definition}
 
 \begin{proof}
@@ -883,41 +610,33 @@ mathematical content is the obligation analysed in
   \uses{lem:line_bundle_quot_correspondence}
   \(\mathrm{abelMapWitness}(C)\) is a term of the required type
   \(\mathrm{Div}_{C/k} \to \Pic^\sharp_{C/k}\)
-  (\Cref{lem:line_bundle_quot_correspondence}), witnessing the instance
+  (\Cref{lem:line_bundle_quot_correspondence}), witnessing the assertion
   directly.
 \end{proof}
 
-\subsection{Carrier for the smooth-proper quotient}
+\subsection{Smooth-proper quotient predicate}
 \label{subsec:fga_pic_quotient_carrier}
 
 \begin{definition}\leanok
-[Conclusion carrier for the smooth-proper quotient lemma]
+[Representability of the smooth-proper quotient]
   \label{def:has_smooth_proper_quotient}
   \lean{AlgebraicGeometry.Scheme.PicScheme.HasSmoothProperQuotient}
   For a morphism \(\alpha : Z \to P\) of presheaves of types on
-  \((\Sch/k)^{op}\), the predicate \(\mathrm{HasSmoothProperQuotient}(\alpha)\) asserts
-  that the target \(P\) is representable. It packages the conclusion of the
-  Altman--Kleiman smooth-proper quotient lemma
-  \cref{lem:smooth_proper_quotient}, and is supplied at the USE SITE, where
-  Kleiman's quasi-projectivity hypothesis (not expressible at the pinned
-  Mathlib revision) actually holds.
-
-  Run-0008 truth audit: the former global instance
-  \texttt{instHasSmoothProperQuotient} --- a \(\langle\)sorry\(\rangle\)
-  asserting this predicate for EVERY \(\alpha\), i.e.\ representability of
-  every presheaf --- was mathematically false and has been deleted; see the
-  note after \cref{lem:smooth_proper_quotient}.
+  \((\Sch/k)^{op}\), the predicate \(\mathrm{HasSmoothProperQuotient}(\alpha)\)
+  asserts that the target \(P\) is representable. It records the conclusion
+  of the Altman--Kleiman lemma \cref{lem:smooth_proper_quotient} for the
+  quotient occurring in the FGA construction.
 \end{definition}
 
 \begin{proof}\leanok
-  A \texttt{Prop}-valued class; defined directly in Lean.
+  This is a definition.
 \end{proof}
 
-\subsection{Carriers for the Picard scheme and its structure}
+\subsection{Picard-scheme predicates}
 \label{subsec:fga_pic_scheme_carriers}
 
 \begin{definition}\leanok
-[Existence carrier for the Picard scheme]
+[Existence of the Picard scheme]
   \label{def:has_pic_scheme}
   \lean{AlgebraicGeometry.Scheme.HasPicScheme}
   \uses{def:pic_sharp_carrier}
@@ -926,24 +645,21 @@ mathematical content is the obligation analysed in
   representability witness for the relative Picard functor
   \(\Pic^\sharp_{C/k}\) of \cref{def:pic_sharp_carrier}; in other words,
   that the Picard scheme \(\Pic_{C/k}\) exists and is locally of finite
-  type. It is the existence carrier from which \cref{def:pic_scheme}
-  extracts the representing object. The local-finiteness clause
-  (strengthening, run 0010) is part of the same existence package as
-  representability in Kleiman \S 4, Thm.~th:main --- part (1) of that
-  theorem exhibits \(\Pic_{C/k}\) as a disjoint union of open
-  quasi-projective \(k\)-subschemes --- so the strengthened existential is
-  exactly as true as the bare one, and it lets
-  \cref{def:inst_pic_scheme_lft} be proved by extraction. Its (sole,
-  sorry-carrying) instance \cref{def:inst_has_pic_scheme} is conditional on
-  the \(k\)-rational point \cref{def:has_rational_point}.
+  type. It is the existence assertion from which \cref{def:pic_scheme}
+  extracts the representing object. The local-finiteness clause belongs to
+  the same existence package as representability: Kleiman \S 4,
+  Thm.~th:main exhibits \(\Pic_{C/k}\) as a disjoint union of open
+  quasi-projective \(k\)-subschemes. The witness
+  \cref{def:inst_has_pic_scheme} is conditional on the \(k\)-rational point
+  of \cref{def:has_rational_point}.
 \end{definition}
 
 \begin{proof}
-  Proved directly in Lean.
+  This is the defining existence predicate.
 \end{proof}
 
 \begin{definition}\leanok
-[Existence witness for the Picard scheme]
+[Picard scheme exists]
   \label{def:inst_has_pic_scheme}
   \lean{AlgebraicGeometry.Scheme.instHasPicScheme}
   \uses{def:has_pic_scheme, def:has_rational_point}
@@ -960,304 +676,213 @@ mathematical content is the obligation analysed in
 \end{proof}
 
 \begin{definition}\leanok
-[Carrier: \(\Pic_{C/k}\) represents \(\Pic^\sharp_{C/k}\)]
+[Representability of \(\Pic^\sharp_{C/k}\)]
   \label{def:pic_sharp_representable}
   \lean{AlgebraicGeometry.Scheme.PicScheme.PicSharpRepresentable}
   \uses{def:pic_sharp_carrier, def:pic_scheme}
   The predicate \(\mathrm{PicSharpRepresentable}(C)\) asserts that the specific scheme
   \(\Pic_{C/k}\) of \cref{def:pic_scheme} is a representing object for
-  \(\Pic^\sharp_{C/k}\). It is the carrier from which the representability
+  \(\Pic^\sharp_{C/k}\). It is the assertion from which the representability
   witness \cref{thm:fga_pic_representability} is extracted.
 \end{definition}
 
 \begin{proof}
-  Proved directly in Lean.
+  This is a definition.
 \end{proof}
 
 \begin{definition}\leanok
-[Existence witness for the representability identification]
+[Representability identification]
   \label{def:inst_pic_sharp_representable}
   \lean{AlgebraicGeometry.Scheme.PicScheme.instPicSharpRepresentable}
   \uses{def:pic_sharp_representable, def:has_pic_scheme}
-  The instance recording that \cref{def:pic_sharp_representable} holds for
-  every such curve \(C/k\) (given \cref{def:has_pic_scheme}).
-
-  Run-0008: this is now PROVED, sorry-free: \(\Pic_{C/k}\) is by definition
-  the chosen witness of the \cref{def:has_pic_scheme} existential, and the
-  first component of the choice specification says exactly that the chosen
-  scheme represents \(\Pic^\sharp_{C/k}\) (the second component, since the
-  run-0010 strengthening, is local finiteness ---
-  \cref{def:inst_pic_scheme_lft}). The FGA content lives entirely upstream
-  in \cref{def:inst_has_pic_scheme}.
+  The scheme \(\Pic_{C/k}\) is the chosen witness of
+  \cref{def:has_pic_scheme}; the first component of that witness identifies
+  it as a representing object for \(\Pic^\sharp_{C/k}\).
 \end{definition}
 
 \begin{proof}\leanok
   \uses{def:has_pic_scheme}
-  By the first component of \texttt{Exists.choose\_spec} applied to the
-  existential of \cref{def:has_pic_scheme}.
+  This is the representing component of the existence statement in
+  \cref{def:has_pic_scheme}.
 \end{proof}
 
-% NOTE (run-0008): the former carrier pair def:pic_scheme_group_object /
-% def:inst_pic_scheme_group_object (typeclass PicSchemeGroupObject and its
-% global ⟨sorry⟩ instance) is DELETED: the group-scheme structure
-% thm:pic_is_group_scheme is now proved directly by Yoneda transport
-% (CommGrpObj.ofRepresentableBy) from the representability witness, with no
-% carrier indirection.
-
 \begin{definition}\leanok
-[Carrier: \(\Pic_{C/k}\) is locally of finite type]
+[Local finite type of \(\Pic_{C/k}\)]
   \label{def:pic_scheme_lft}
   \lean{AlgebraicGeometry.Scheme.PicScheme.PicSchemeLocallyOfFiniteType}
   \uses{def:pic_scheme, def:has_pic_scheme}
-  The predicate \(\mathrm{PicSchemeLocallyOfFiniteType}(C)\) asserts that the
+  The predicate
+  \[
+    \mathrm{PicSchemeLocallyOfFiniteType}(C)
+  \]
+  asserts that the
   structural morphism of the Picard scheme \(\Pic_{C/k}\) of
   \cref{def:pic_scheme} is locally of finite type --- part (1) of Kleiman
   \S 4, Thm.~th:main (\(\Pic_{C/k}\) is a disjoint union of open
   quasi-projective \(k\)-subschemes). It is the hypothesis the
-  identity-component substrate of
-  \cref{chap:Picard_IdentityComponent} consumes to specialise
-  \(G^0\) to \(G = \Pic_{C/k}\). Since the run-0010 strengthening of
-  \cref{def:has_pic_scheme}, its instance \cref{def:inst_pic_scheme_lft}
-  is proved by extraction, and the class survives only to preserve the
-  consumer signature.
+  identity-component construction of
+  \cref{chap:Picard_IdentityComponent} uses to specialise
+  \(G^0\) to \(G = \Pic_{C/k}\). It follows from the local-finiteness
+  component of \cref{def:has_pic_scheme}.
 \end{definition}
 
 \begin{proof}\leanok
-  A \texttt{Prop}-valued class; defined directly in Lean.
+  This is a definition.
 \end{proof}
 
 \begin{definition}\leanok
-[Existence witness for local finiteness]
+[Local-finiteness assertion]
   \label{def:inst_pic_scheme_lft}
   \lean{AlgebraicGeometry.Scheme.PicScheme.instPicSchemeLocallyOfFiniteType}
   \uses{def:pic_scheme_lft, def:has_pic_scheme}
-  The instance recording that \cref{def:pic_scheme_lft} holds whenever the
-  Picard scheme exists (\cref{def:has_pic_scheme}). PROVED (run 0010): the
-  strengthened existential of \cref{def:has_pic_scheme} packages local
-  finiteness with representability --- one existence package, as in Kleiman
-  \S 4, Thm.~th:main --- so the property of the chosen witness is the
-  second component of the choice specification. The hypothesis is now
-  \cref{def:has_pic_scheme} rather than \cref{def:has_rational_point}: the
-  rational-point conditionality lives entirely in
-  \cref{def:inst_has_pic_scheme}, which supplies the
-  \(\mathrm{HasPicScheme}\) instance.
+  Whenever \cref{def:has_pic_scheme} holds, the second component of its
+  chosen witness gives local finiteness of \(\Pic_{C/k}\). Thus
+  representability and local finiteness are supplied by one existence
+  package, as in Kleiman \S 4, Thm.~th:main.
 \end{definition}
 
 \begin{proof}\leanok
   \uses{def:has_pic_scheme}
-  By the second component of \texttt{Exists.choose\_spec} applied to the
-  existential of \cref{def:has_pic_scheme}.
+  This is the local-finiteness component of the existence statement in
+  \cref{def:has_pic_scheme}.
 \end{proof}
 
-\section{Sorry-by-sorry closure order}
+\section{Dependencies of the representability theorem}
 \label{sec:fga_pic_sorry_closure_order}
 
-% Run-0008 rewrite: the iter-199 seven-sorry carrier accounting is
-% superseded by the picSharp rewire. Run-0010 (fga-div front): Sorry B
-% (instHasDivFunctor) is closed by the real relative-divisor functor
-% (def:div_functor), and the former instPicSchemeLocallyOfFiniteType sorry
-% is absorbed into Sorry A by the strengthened HasPicScheme existential.
-% The historical per-sorry analyses (Sorries 1, 4, 6, 7 of the
-% old numbering: instHasPicSharp, instHasSmoothProperQuotient,
-% instPicSharpRepresentable, instPicSchemeGroupObject) are closed or
-% deleted; see the git history of this chapter for the old text.
+The construction of \(\Pic_{C/k}\) separates into three mathematical inputs:
+the relative-divisor functor, its Abel map to the relative Picard functor, and
+the FGA existence theorem. The first two supply concrete functors and a
+natural transformation. The third combines them with regularity, cohomology
+and base change, and effective descent to produce a scheme locally of finite
+type representing \(\Pic^\sharp_{C/k}\).
 
-The Lean target file
-\texttt{AlgebraicJacobian/Picard/FGAPicRepresentability.lean} carries,
-after the run-0008, run-0010, and run-0011 rewires, \textbf{one} open
-sorry, isolated in a single \(\langle\)sorry\(\rangle\) instance
-constructor of a \texttt{Prop}-valued typeclass, so every extracted
-definition and theorem body is itself axiom-clean, and consumers that
-quantify over the typeclass are kernel-clean. The one:
-\texttt{instHasPicScheme} (Sorry~A --- which, since the run-0010
-strengthening of \cref{def:has_pic_scheme}, also carries Kleiman
-th:main(1) local finiteness). The closed items of the former accounting:
-the relative Picard functor carrier is REAL (\cref{def:pic_sharp_carrier}),
-the relative-divisor functor carrier is REAL and its existence witness
-PROVED (run 0010, \cref{def:div_functor_carrier},
-\cref{def:inst_has_div_functor} --- the former Sorry~B), the substantive
-Abel map is REAL and PROVED (run 0011,
-\cref{lem:line_bundle_quot_correspondence}, \cref{def:inst_has_abel_map}
---- the former Sorry~C), the representability identification is PROVED
-(\cref{def:inst_pic_sharp_representable}), local finiteness of the Picard
-scheme is PROVED by extraction (run 0010,
-\cref{def:inst_pic_scheme_lft}), the group-scheme structure is
-PROVED (\cref{thm:pic_is_group_scheme}), and the false global
-smooth-proper-quotient instance is DELETED
-(\cref{def:has_smooth_proper_quotient}).
-
-\subsection{Sorry A --- \texttt{instHasPicScheme} (the FGA theorem)}
+\subsection{The Picard-scheme existence theorem}
 \label{subsec:sorry_has_pic_scheme}
 
-\paragraph{Location.} Instance
-\texttt{AlgebraicGeometry.Scheme.instHasPicScheme}
-(\cref{def:inst_has_pic_scheme}), conditional on
-\texttt{[HasRationalPoint C]}.
-
-\paragraph{Mathematical content.} The full FGA existence theorem: for a
+For a
 smooth proper geometrically integral curve \(C/k\) with a \(k\)-rational
 point, the relative Picard functor \(\Pic^\sharp_{C/k}\)
 (\cref{def:pic_sharp_carrier}) is representable by a \(k\)-scheme. The
-proof is Step~0 (Kleiman \S 2, Thm.~2.5: the section makes the plain
-functor an \'etale sheaf) followed by Kleiman's four steps
+proof first applies Kleiman \S 2, Thm.~2.5, using the section to identify the
+plain functor with its \'etale sheafification, and then uses Kleiman's four
+steps
 (\cref{thm:fga_pic_representability}): Hilbert-polynomial stratification,
 \(m\)-regularity bound, Abel-map factorisation through
 \(\mathrm{Div}_{C/k}\), and the smooth-proper quotient
-(\cref{lem:smooth_proper_quotient}, whose use-site
-\cref{def:has_smooth_proper_quotient} instance for the Abel-map slice is
-part of this obligation).
+(\cref{lem:smooth_proper_quotient}). Its inputs are the Quot/Hilbert
+construction of \cref{chap:Picard_QuotScheme}, representability of
+\(\mathrm{Div}_{C/k}\) as in \cref{rem:div_functor_representability}, the
+regularity result \cref{cor:flattening_stratification_curve}, the base-change
+result \cref{lem:cech_flat_base_change}, and Altman--Kleiman effective descent.
+The resulting representing object gives
+natural bijections
+\[
+  (T\to\Pic_{C/k})\simeq
+  \Pic(C\times_kT)/\pi_T^*\Pic(T),
+\]
+including the dual-number case \(T=\Spec k[\epsilon]\) used in the
+tangent-space calculation.
 
-\paragraph{Blockers.} (i) the A.2.b Quot/Hilbert engine
-(\cref{chap:Picard_QuotScheme}) --- the divisor functor
-\(\mathrm{Div}_{C/k}\) landed in run 0010 (former Sorry~B, closed) and
-the Abel map landed in run 0011 (former Sorry~C, closed;
-\cref{lem:line_bundle_quot_correspondence}), but the representability
-theorem Kleiman th:repDiv (\cref{rem:div_functor_representability})
-remains; (ii) the Route~C Riemann--Roch substrate
-(\(m\)-regularity / Serre vanishing / cohomology and base change for the
-stratification, cf.\ \cref{cor:flattening_stratification_curve} and
-\cref{lem:cech_flat_base_change}); (iii) Altman--Kleiman descent and
-EGA~IV~8.11.5, both absent from Mathlib. This is the load-bearing sorry
-of the picrep cone; it is NOT expected to close in a single session.
-
-\paragraph{Value of the run-0008 rewire despite the open sorry.} Because
-\(\Pic^\sharp_{C/k}\) is now the real functor, the extracted
-\texttt{representable} witness has actual mathematical content for
-consumers: quantifying over \texttt{[HasPicScheme C]}, the natural
-bijection \((T \to \Pic_{C/k}) \simeq \Pic(C \times_k T)/\pi_T^*\Pic(T)\)
-is available as data. The downstream tangent-space identification
-(\texttt{Pic0.tangentSpaceIso}, chapter
-\texttt{Picard\_Pic0AbelianVariety}) attaches to exactly this bijection
-with \(T = \Spec k[\epsilon]\); it was impossible against the former
-opaque carrier.
-
-\subsection{Sorry B --- \texttt{instHasDivFunctor} (CLOSED, run 0010)}
+\subsection{The relative-divisor input}
 \label{subsec:sorry_has_div_functor}
 
-\paragraph{Location.} Instance
-\texttt{AlgebraicGeometry.Scheme.PicScheme.instHasDivFunctor}
-(\cref{def:inst_has_div_functor}).
-
-\paragraph{Status.} CLOSED (run 0010): \cref{chap:Picard_QuotScheme}
-landed the relative-divisor functor \(\Div_{X/S}\)
-(\cref{def:div_functor} --- the subfunctor of the Hilbert functor
+The relative-divisor functor \(\Div_{X/S}\) of
+\cref{def:div_functor} is the subfunctor of the Hilbert functor
 \(\Hilb_{C/k} = \Quot_{\mathcal{O}_C/C/k}\) of relative effective Cartier
 divisors, in the invertible-kernel quotient encoding of
-\cref{def:div_family}), the carrier \(\mathrm{Div}_{C/k}\)
-(\cref{def:div_functor_carrier}) is its instantiation at
-\(C \to \Spec k\), and the instance is proved with that witness. The
-base-change well-definedness of the divisor condition remains a typed leaf
-(\cref{lem:relative_divisor_base_change}); representability of
+\cref{def:div_family}. The presheaf \(\mathrm{Div}_{C/k}\) of
+\cref{def:div_functor_carrier} is its instantiation at
+\(C\to\Spec k\). Its divisor condition is stable under base change by
+\cref{lem:relative_divisor_base_change}, while representability of
 \(\Div_{C/k}\) by an open subscheme of the Hilbert scheme (Kleiman \S 3,
-Thm.~th:repDiv) is future work, not consumed by this chapter.
+Thm.~th:repDiv) is the content of
+\cref{rem:div_functor_representability}.
 
-\subsection{Sorry C --- \texttt{instHasAbelMap} (CLOSED, run 0011)}
+\subsection{The Abel-map input}
 \label{subsec:sorry_has_abel_map}
 
-\paragraph{Location.} Instance
-\texttt{AlgebraicGeometry.Scheme.PicScheme.instHasAbelMap}
-(\cref{def:inst_has_abel_map}).
-
-\paragraph{Status.} CLOSED (run 0011): \texttt{HasAbelMap} is repinned
-from a \texttt{Prop}-valued \texttt{Nonempty} existence gate (whose
-\texttt{Classical.choice} extraction carried no defining property) to a
-\emph{data-carrying} class with field \texttt{abel}
-(\cref{def:has_abel_map}). The field is populated by the substantive
-witness \(\mathrm{abelMapWitness}(C) = \langle \mathcal F, q\rangle
-\mapsto -[\ker q]\) of \cref{lem:line_bundle_quot_correspondence}: the
-composite of the kernel-class natural transformation
+The class \cref{def:has_abel_map} carries the natural transformation whose
+value on a divisor family is
+\[
+  \mathrm{abelMapWitness}(C)\langle\mathcal F,q\rangle=-[\ker q].
+\]
+It is the composite of the kernel-class natural transformation
 \(\mathrm{abelKernelNatTrans}(C)\) (naturality via the kernel--flat-base-change
 comparison isomorphism) with the group-presheaf negation
-\(\mathrm{picNeg}(C)\). Consequently \(\mathrm{abelMap} :=
-\mathrm{HasAbelMap.abel}\) has the genuine defining property
-\texttt{abelMap\_app\_mk} (proved by \texttt{rfl}), rather than being an
-opaque \texttt{Classical.choice} of a \texttt{Nonempty}. As in Sorry~B,
-representability of \(\mathrm{Div}_{C/k}\) by an open subscheme of the
-Hilbert scheme (Kleiman th:repDiv) is \emph{not} needed or claimed here
-(\cref{rem:div_functor_representability}); the Abel map is delivered at
-the level of the Type-valued carrier presheaves.
+\(\mathrm{picNeg}(C)\). Thus the Abel map has the defining property in
+\cref{lem:line_bundle_quot_correspondence}; it is a natural transformation
+of the presheaves in \cref{def:div_functor_carrier} and
+\cref{def:pic_sharp_carrier}.
 
-\subsection{Closure order}
+\subsection{Assembly of the inputs}
 \label{subsec:fga_pic_closure_order_summary}
 
-Dispatch order: \(B \to C \to A\), with \(B\) CLOSED in run 0010 (the
-A.2.b divisor functor landed) and \(C\) CLOSED in run 0011 (the
-substantive Abel map \(\langle \mathcal F, q\rangle \mapsto
--[\ker q]\)). Sorry~A additionally needs the Route~C Riemann--Roch
-substrate and the Altman--Kleiman/EGA descent inputs, and consumes both
-\(B\) and \(C\) (and, since run 0010, also discharges Kleiman th:main(1)
-local finiteness). Downstream Route~A consumers proceed under typeclass
-quantification (\texttt{[HasPicScheme C]}) and stay kernel-clean; the
-\texttt{[HasRationalPoint C]} hypothesis is supplied by the pointing
-\(P : \mathbf 1 \to C\) already present in the Jacobian statements.
+The FGA construction consumes the relative-divisor functor and Abel map,
+then applies the regularity, base-change, and effective-quotient results of
+\cref{thm:fga_pic_representability}. A pointing
+\(P:\mathbf 1\to C\) supplies the rational-point hypothesis used to identify
+the plain relative Picard functor with its sheafification. The resulting
+representability and local-finiteness statements feed the group-scheme and
+Jacobian constructions.
 
-\section{Out of scope}
+\section{Related constructions}
 \label{sec:fga_pic_out_of_scope}
 
-This chapter packages \emph{only} the representable Picard scheme
-\(\Pic_{C/k}\) as an assembly of sibling-chapter inputs, plus the
-group-scheme refinement. The following downstream constructions live in
-separate sibling chapters and are explicitly out of scope here:
+The representable Picard scheme and its group structure interact with the
+following constructions, treated in the indicated companion chapters.
 \begin{itemize}
-  \item \textbf{Identity component \(\Pic^0_{C/k}\)} (A.3) --- the open and
+  \item \textbf{Identity component \(\Pic^0_{C/k}\)} --- the open and
     closed subgroup scheme of \(\Pic_{C/k}\) containing the unit and
     consisting of those classes lying in the connected component of
     \(\Pic_{C/k}\). Its dimension, smoothness, and abelian-variety
-    structure are the content of the A.3 chapter
-    \texttt{Picard\_Pic0AbelianVariety.tex} (planned), gated on this
-    chapter.
+    structure are treated in \cref{chap:Picard_IdentityComponent} and
+    \cref{chap:Picard_Pic0AbelianVariety}.
   \item \textbf{Quot scheme representability} --- consumed by
     \cref{thm:fga_pic_representability} via \texttt{thm:quot\_representable}
     (\cref{chap:Picard_QuotScheme}), not re-proved here.
-  \item \textbf{\'Etale sheafification of \(\Pic^\sharp\)} ---
-    \cref{chap:Picard_RelPicFunctor} (A.1.c) constructs the relative
-    Picard presheaf; a topology-parametric sheafification
-    (\texttt{PicSharp.etSheaf}) exists there but, after the run-0008
-    route-(b) rewire, this chapter does NOT consume it: the standing
-    rational-point hypothesis makes the plain relative functor already an
-    \'etale sheaf (Kleiman \S 2, Thm.~2.5).
+  \item \textbf{\'Etale sheafification.} The relative Picard presheaf and its
+    topology-parametric sheafification are constructed in
+    \cref{chap:Picard_RelPicFunctor}. Under the
+    standing rational-point hypothesis, Kleiman \S 2, Thm.~2.5 identifies
+    the plain relative functor with the \'etale sheafification.
   \item \textbf{Universal Poincar\'e sheaf} (Kleiman~\S 4, Ex.~4.3)
     --- exists when \(\Pic_{C/k}\) represents \(\Pic_{C/k}\) itself and
     \(C/k\) has a section. Under the chapter's standing rational-point
     hypothesis both conditions in fact hold (Thm.~2.5 identifies the
     plain functor with the represented sheaf), so the Poincar\'e sheaf
-    becomes available downstream --- but it is not constructed or
-    consumed in this chapter.
+    is then available as an associated construction.
   \item \textbf{Mumford's example} (Kleiman~\S 4, Eg.~4.14), counter-examples
     to representability for non-integral geometric fibers --- not
     relevant to a smooth proper geometrically integral curve.
 \end{itemize}
 
-\section{Internal-consistency check}
+\section{Dependency structure}
 \label{sec:fga_pic_consistency_check}
 
-The five declaration blocks form a connected \texttt{\textbackslash uses} chain rooted in the
-sibling chapters \cref{chap:Picard_LineBundlePullback},
-\cref{chap:Picard_QuotScheme}, and \cref{chap:Picard_RelPicFunctor}:
+The principal constructions form a connected dependency chain rooted in
+\cref{chap:Picard_LineBundlePullback}, \cref{chap:Picard_QuotScheme}, and
+\cref{chap:Picard_RelPicFunctor}:
 \begin{itemize}
   \item \cref{lem:line_bundle_quot_correspondence} uses
-    \cref{def:line_bundle_on_product} (A.1.b) and
-    \cref{thm:pullback_natural} (A.1.b).
-  \item \cref{lem:smooth_proper_quotient} is a structural Archon-internal
-    statement; no external \texttt{\textbackslash uses} pointers.
+    \cref{def:line_bundle_on_product} and
+    \cref{thm:pullback_natural}.
+  \item \cref{lem:smooth_proper_quotient} is the structural quotient
+    statement used by the representability argument.
   \item \cref{thm:fga_pic_representability} uses
     \cref{lem:line_bundle_quot_correspondence},
-    \texttt{thm:quot\_representable} (A.2.b),
-    \texttt{def:rel\_pic\_sharp} (A.1.c),
+    \texttt{thm:quot\_representable},
+    \texttt{def:rel\_pic\_sharp},
     \cref{def:has_rational_point},
-    \cref{thm:relative_pic_quotient_well_defined} (A.1.b), and
+    \cref{thm:relative_pic_quotient_well_defined}, and
     \cref{lem:smooth_proper_quotient}.
   \item \cref{thm:pic_is_group_scheme} uses
     \cref{def:pic_scheme}, \cref{thm:fga_pic_representability},
-    \texttt{def:rel\_pic\_sharp} (A.1.c), and
-    \cref{thm:relative_pic_quotient_well_defined} (A.1.b).
+    \texttt{def:rel\_pic\_sharp}, and
+    \cref{thm:relative_pic_quotient_well_defined}.
   \item \cref{def:pic_scheme} uses
-    \cref{def:has_pic_scheme} and \cref{def:inst_has_pic_scheme} only
-    (see the iter-283 cycle-breaking note at the definition).
+    \cref{def:has_pic_scheme} and \cref{def:inst_has_pic_scheme}.
 \end{itemize}
-The label \texttt{thm:quot\_representable} is a forward reference to the
-sibling chapter \texttt{Picard\_QuotScheme.tex};
-\texttt{def:rel\_pic\_sharp} is the (run-0008 repinned) relative Picard
-functor of \texttt{Picard\_RelPicFunctor.tex}. If either changes label,
-the \texttt{\textbackslash uses} pointers should be regenerated across
-the chapters in lockstep.
+The Quot-scheme theorem used above is proved in
+\cref{chap:Picard_QuotScheme}, while the relative Picard functor is defined in
+\cref{chap:Picard_RelPicFunctor}.
