@@ -30,7 +30,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.pullbackEtaUnitSquare
 type: lean
-updated: '2026-07-24T23:32:26'
+updated: '2026-07-25T05:32:31'
 ---
 lemma pullbackEtaUnitSquare {X Y : Scheme.{u}} (f : Y ⟶ X) :
     letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
@@ -50,13 +50,16 @@ lemma pullbackEtaUnitSquare {X Y : Scheme.{u}} (f : Y ⟶ X) :
   rw [SheafOfModules.pullbackPushforwardAdjunction_homEquiv_pullbackObjUnitToUnit]
   -- We keep the goal in `homEquiv` form (NOT unfolding via `homEquiv_unit`), driving the
   -- telescope through the closed mate-lemmas `compHomEquivFactor`, `leftAdjointUniqUnitEta`,
-  -- `presheafUnit_comp_map_eta` and the `rfl`-linchpin `sheafificationCompPullback_eq_leftAdjointUniq`.
-  -- Step 1: decompose `pullbackValIso.inv` into `(pullback φ).map c⁻¹ ≫ (sheafificationCompPullback φ).hom`
+  -- `presheafUnit_comp_map_eta` and
+  -- `sheafificationCompPullback_eq_leftAdjointUniq`.
+  -- Step 1: decompose `pullbackValIso.inv` into `(pullback φ).map c⁻¹` followed by
+  -- `(sheafificationCompPullback φ).hom`
   -- where `c = (asIso (sheafification-counit_X)).app 𝒪_X`.
   simp only [pullbackValIso, Iso.trans_inv, Iso.symm_inv, Functor.mapIso_inv]
   rw [Category.assoc]
   -- Step 2: pull the leading `(pullback φ).map c⁻¹` out of `homEquiv` (`homEquiv_naturality_left`),
-  -- then peel off the trailing `rest = a_Y.map (η F) ≫ sheafifyUnitIso.hom` (`homEquiv_naturality_right`).
+  -- then peel off `rest = a_Y.map (η F) ≫ sheafifyUnitIso.hom` using
+  -- `homEquiv_naturality_right`.
   erw [Adjunction.homEquiv_naturality_left, Adjunction.homEquiv_naturality_right]
   -- Steps 3+4: rewrite `sheafAdj.homEquiv (sheafificationCompPullback φ).hom.app 𝟙ᵖ` via the
   -- composite-adjunction factorisation `compHomEquivFactor` and then `leftAdjointUniqUnitEta`.
@@ -77,7 +80,8 @@ lemma pullbackEtaUnitSquare {X Y : Scheme.{u}} (f : Y ⟶ X) :
   -- (`homEquiv_naturality_right_symm`): `symm(x) ≫ k = symm(x ≫ R_X.map k)`.
   erw [← Adjunction.homEquiv_naturality_right_symm]
   -- X-triangle (`right_triangle_components`): the sheafification unit/counit on the sheaf `𝒪_X`
-  -- cancel, collapsing `homEquiv (c.hom ≫ unitToPushforwardObjUnit φ)` to `(unitToPushforwardObjUnit φ).val`.
+  -- cancel, collapsing the `homEquiv` composite to
+  -- `(unitToPushforwardObjUnit φ).val`.
   have hXtri : (PresheafOfModules.sheafificationAdjunction (𝟙 (X.ringCatSheaf.obj))).unit.app
         (SheafOfModules.unit X.ringCatSheaf).val ≫
       (PresheafOfModules.restrictScalars (𝟙 (X.ringCatSheaf.obj))).map
@@ -105,7 +109,7 @@ lemma pullbackEtaUnitSquare {X Y : Scheme.{u}} (f : Y ⟶ X) :
   -- whose RHS is `(unitToPushforwardObjUnit φ).val`.
   rw [Iso.inv_comp_eq, Equiv.symm_apply_eq]
   refine Eq.trans ?_ hrhs.symm
-  -- REMAINING (∗∗): the concrete pushforward-side presheaf identity.  Substep (i): split the `.val`
+  -- For the pushforward-side identity, first split the underlying-presheaf map
   -- of `g = a_Y.map (η F) ≫ sheafifyUnitIso.hom` and reduce `R_X.map ((pushforward φ).map g)`.
   simp only [Functor.comp_map, SheafOfModules.forget_map, SheafOfModules.pushforward_map_val,
     SheafOfModules.comp_val]
@@ -115,14 +119,15 @@ lemma pullbackEtaUnitSquare {X Y : Scheme.{u}} (f : Y ⟶ X) :
   --   `(u ≫ pf₁.map toSheafify_Y) ≫ pf₂.map ((a_Y.map (η F)).val ≫ sheafifyUnitIso.hom.val)
   --      = (unitToPushforwardObjUnit (Hom.toRingCatSheafHom f)).val`,
   -- where `pf₁ = pushforward (Hom.toRingCatSheafHom f).hom` and `pf₂ = pushforward φ.hom` are DEFEQ
-  -- but spelled differently (`Hom.toRingCatSheafHom f` from `leftAdjointUniqUnitEta` vs the `set`-local
-  -- `φ`).  The remaining math is exactly: merge the two `pushforward`-images via `Functor.map_comp`,
+  -- but spelled differently: `Hom.toRingCatSheafHom f` from `leftAdjointUniqUnitEta`
+  -- versus the local `φ`. The remaining calculation merges the two pushforward images via
+  -- `Functor.map_comp`,
   -- fold `toSheafify_Y ≫ (a_Y.map (η F)).val ≫ sheafifyUnitIso.hom.val = η F` by the (closed)
   -- `pullbackSheafifyUnitEtaTriangle f`, then `presheafUnit_comp_map_eta f` and (closed)
   -- `epsilonPresheafToSheafUnit f` collapse to `(unitToPushforwardObjUnit φ).val`.
   rw [restrictScalarsId_map, restrictScalarsId_map]
-  -- Reassociate and merge the two `pushforward φ'`-images via `erw` (keyed-defeq matching tolerates the
-  -- `pf₁`/`pf₂` zeta-spelling at the connecting object), fold the argument to `η F` (ii), and collapse
-  -- to `(unitToPushforwardObjUnit φ).val` via (6) `presheafUnit_comp_map_eta` + (iii) `epsilonPresheafToSheafUnit`.
+  -- Reassociate and merge the two `pushforward φ'` images. Definitional matching handles
+  -- the two local spellings at the connecting object. Fold the argument to `η F`, then use
+  -- `presheafUnit_comp_map_eta` and `epsilonPresheafToSheafUnit`.
   erw [Category.assoc, ← Functor.map_comp, pullbackSheafifyUnitEtaTriangle f,
     presheafUnit_comp_map_eta f, epsilonPresheafToSheafUnit f]

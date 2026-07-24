@@ -15,11 +15,10 @@ docstring: '**The sheaf-level dual `M^∨ := ℋom_{𝒪_X}(M, 𝒪_X)`** of an 
   `M^∨(U) = ℋom_{𝒪_X|_U}(M|_U, 𝒪_X|_U)`).
 
 
-  Construction = the **exact dual analogue of `tensorObj`** (this file, `tensorObj`):
+  The construction is the dual analogue of `tensorObj`: apply
 
-  apply the sheafification functor `PresheafOfModules.sheafification (𝟙 …)` on the
-
-  small Zariski site of `X` to the (axiom-clean, sub-step-3) presheaf dual
+  `PresheafOfModules.sheafification (𝟙 …)` on the small Zariski site to the presheaf
+  dual
 
   `PresheafOfModules.dual M.val`. The scheme''s structure presheaf `X.presheaf` is
 
@@ -54,7 +53,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.dual
 type: lean
-updated: '2026-07-24T23:32:26'
+updated: '2026-07-25T05:32:31'
 ---
 noncomputable def dual {X : Scheme.{u}} (M : X.Modules) : X.Modules :=
   ((PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).obj

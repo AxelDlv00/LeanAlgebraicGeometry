@@ -3,8 +3,7 @@ author: sync
 content_type: lemma
 created: '2026-07-16T21:14:28'
 decl: AlgebraicGeometry.Scheme.Modules.isIso_sheafifyEta_of_unitSquare
-docstring: '**D2'' η-bridge — IsIso reduction to the unit comparison square** (axiom-clean
-  plumbing).
+docstring: '**D2'' η-bridge: reduction to the unit comparison square.**
 
   Given the commuting square identifying the sheafified presheaf unit comparison `a_Y.map
   (η F)`
@@ -18,16 +17,15 @@ docstring: '**D2'' η-bridge — IsIso reduction to the unit comparison square**
   `pullbackObjUnitToUnit φ` is an iso since `Opens.map f.base` is always `Final`).
   This isolates the
 
-  SOLE remaining mathematical content of the η-bridge as the square hypothesis `hsq`
-  (= the unit-side
+  only mathematical content of the η-bridge as the square hypothesis `hsq`, the unit-side
 
-  analog of `pullbackObjUnitToUnit_comp`, see handoff in `task_results`). Project-local.'
+  analogue of `pullbackObjUnitToUnit_comp`.'
 file: AlgebraicJacobian/Picard/TensorObjSubstrate.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isIso_sheafifyEta_of_unitSquare
 type: lean
-updated: '2026-07-24T23:32:26'
+updated: '2026-07-25T05:59:05'
 ---
 lemma isIso_sheafifyEta_of_unitSquare {X Y : Scheme.{u}} (f : Y ⟶ X)
     (hsq : letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶

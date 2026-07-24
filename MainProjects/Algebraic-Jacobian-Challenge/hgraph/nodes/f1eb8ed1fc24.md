@@ -20,15 +20,13 @@ docstring: '**Tensor product of locally-trivial modules is locally trivial.**
 
   `tensorObjIsoOfIso`, and the unit isomorphism `tensorObj_unit_iso`:
 
-  `(M ⊗ N)|_W ≅ M|_W ⊗ N|_W ≅ 𝒪_W ⊗ 𝒪_W ≅ 𝒪_W`. The only residual gap is the
-
-  substrate-restriction compatibility `tensorObj_restrict_iso`.'
+  `(M ⊗ N)|_W ≅ M|_W ⊗ N|_W ≅ 𝒪_W ⊗ 𝒪_W ≅ 𝒪_W`.'
 file: AlgebraicJacobian/Picard/TensorObjSubstrate.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.tensorObj_isLocallyTrivial
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-25T05:59:05'
 ---
 lemma tensorObj_isLocallyTrivial {X : Scheme.{u}} {M N : X.Modules}
     (hM : LineBundle.IsLocallyTrivial M) (hN : LineBundle.IsLocallyTrivial N) :

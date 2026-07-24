@@ -26,7 +26,9 @@ docstring: '**Sq1 — composition coherence of `SheafOfModules.sheafificationCom
 
   `sheafificationCompPullback` twin of `pullbackObjUnitToUnit_comp`: both `sheafificationCompPullback`
 
-  isos are `leftAdjointUniq` of composite adjunctions (`sheafificationCompPullback_eq_leftAdjointUniq`),
+  isos are `leftAdjointUniq` comparisons of composite adjunctions
+
+  (`sheafificationCompPullback_eq_leftAdjointUniq`),
 
   so the coherence is proved by the adjunction-mate calculus, transposing under the
   composite
@@ -37,7 +39,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_comp
 type: lean
-updated: '2026-07-25T00:02:25'
+updated: '2026-07-25T05:59:05'
 ---
 lemma sheafificationCompPullback_comp {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X)
     (P : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) :
@@ -51,17 +53,9 @@ lemma sheafificationCompPullback_comp {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y 
         (PresheafOfModules.sheafification (𝟙 Z.ringCatSheaf.obj)).map
           ((PresheafOfModules.pullbackComp (Hom.toRingCatSheafHom f).hom
             (Hom.toRingCatSheafHom h).hom).hom.app P) := by
-  -- **iter-310 conjugate-calculus RECAST (replaces the walled homEquiv telescope).**
-  -- The telescope (transpose under `A_{h≫f}`, R0-kill, R1-peel) reaches a residual whose h-comparison
-  -- has NO sheafification partner free in a single transpose (`sheafAdj_Y` must be slid in by hand) —
-  -- the iter-308 wall.  The recast (`analogies/d3-mate-recast-309.md`) sidesteps it: reduce to the
-  -- NatTrans-level cocycle `key`, whose proof is the free-middle `conjugateEquiv_comp` fusion (the
-  -- middle adjunction absorbs `sheafAdj_Y`).  Reducing the goal to `key` is the iter-309 wall
-  -- (`NatTrans.congr_app` `isDefEq`-detonating on `Scheme.Modules.pullback ≟ SheafOfModules.pullback
-  -- (toRingCatSheafHom ·)` at the whisker junctions); the iter-310 shared knob
-  -- `backward.isDefEq.respectTransparency false` (now set on this lemma) is what lets it through.
-  -- iter-309 TOOLING UNBLOCK: the `a_Z = sheafification (𝟙)` whisker needs `IsLocallyInjective (𝟙)`,
-  -- which global synthesis misses (it finds only `IsLocallySurjective (𝟙)`); supply it (𝟙 is iso).
+  -- Work at the natural-transformation level so the middle adjunction absorbs the
+  -- sheafification adjunction over `Y`. The local identity instances below provide both
+  -- local injectivity and surjectivity needed for the final sheafification whisker.
   haveI : Presheaf.IsLocallyInjective (Opens.grothendieckTopology ↥Z) (𝟙 (Z.ringCatSheaf.obj)) :=
     Presheaf.instIsLocallyInjectiveOfIsIsoFunctorOpposite _ _
   haveI : Presheaf.IsLocallySurjective (Opens.grothendieckTopology ↥Z) (𝟙 (Z.ringCatSheaf.obj)) :=
@@ -78,11 +72,8 @@ lemma sheafificationCompPullback_comp {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y 
             (PresheafOfModules.pullbackComp (Hom.toRingCatSheafHom f).hom
               (Hom.toRingCatSheafHom h).hom).hom
             (PresheafOfModules.sheafification (𝟙 Z.ringCatSheaf.obj)) := by
-    -- v4.31.0 recovery: port of the ported `sheafificationCompPullback_comp_natTrans`
-    -- proof (parent `main`): the mate-cocycle calculus via three
-    -- `Adjunction.leftAdjointCompNatTrans_assoc` instances.
-    -- The six adjunctions of the first (sheaf-legged) `leftAdjointCompNatTrans_assoc` instance,
-    -- exactly as in `sheafificationCompPullback_comp` (verified to elaborate there).
+    -- Express the mate cocycle through three instances of
+    -- `Adjunction.leftAdjointCompNatTrans_assoc`. The first uses the sheaf pullback leg.
     let adj01 := PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
       (𝟙 X.ringCatSheaf.obj)
     let adj12 := SheafOfModules.pullbackPushforwardAdjunction (Hom.toRingCatSheafHom f)
@@ -246,9 +237,8 @@ lemma sheafificationCompPullback_comp {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y 
     rw [I1, I2, I3] at E1
     simp only [I4, I5] at E2
     simp only [J1, J2, J3] at E3
-    -- Assemble: evaluate both pasted identities at a component `P` (the FIRST and ONLY
-    -- component evaluation), eliminate the mixed comparison `X023 = adj02.lacnt adj23 adj03 τ023`
-    -- between them, and peel the invertible `pullbackComp`-whisker.
+    -- Evaluate the pasted identities at `P`, eliminate the mixed comparison, and peel the
+    -- invertible `pullbackComp` whisker.
     apply NatTrans.ext
     funext P
     have e1 := congr_app E1 P
@@ -256,22 +246,11 @@ lemma sheafificationCompPullback_comp {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y 
     have e3 := congr_app E3 P
     simp only [NatTrans.comp_app, Functor.whiskerLeft_app, Functor.whiskerRight_app,
       Functor.associator_inv_app, NatTrans.id_app] at e1 e2 e3 ⊢
-    -- Normalize the (defeq-coerced) object spellings so the `𝟙`-junk factors match `id_comp`.
-    -- v4.31.0: the preceding `simp only` already lands the object spellings, so this `dsimp` may be
-    -- a no-op; guard with `try` so "made no progress" is not fatal.
+    -- Normalize the definitionally equal object spellings before removing identity factors.
     try dsimp only [Functor.comp_obj] at e1 e2 e3 ⊢
     simp only [CategoryTheory.Functor.map_id, Category.id_comp, Category.comp_id] at e1 e2 e3
-    -- Eliminate the mixed comparison `X023.app P` between the first two pasted identities,
-    -- then resolve the mixed `(01',13',03)`-comparison component via the third.
-    -- (The h-leg comparison stays in its `leftAdjointCompNatTrans` spelling; `I4` shows it is
-    -- DEFINITIONALLY `(sheafificationCompPullback (toRingCatSheafHom h)).hom`, so the final
-    -- `exact` closes the residual difference by defeq.)
-    -- v4.31.0: the bulk `simp only [Category.id_comp]` above no longer clears the leading
-    -- `𝟙 _ ≫` of `e2`/`e3` (the identity sits at a `Functor.obj`-spelled object the simp
-    -- discrimination tree misses), so `rw [← e2]` would look for `𝟙 _ ≫ X023` while `e1` carries
-    -- the bare `X023`.  Clear the identities by `erw` (full-defeq matching) FIRST.  `J1` has
-    -- already fired at the `NatTrans` level (the `simp only [J1, J2, J3] at E3`), so `e3` already
-    -- presents its `J1`-leg as a literal `𝟙`; no further `erw [J1]` is needed.
+    -- Remove the leading identities with definitional matching, eliminate the mixed
+    -- comparison between `e1` and `e2`, then resolve it with `e3`.
     erw [Category.id_comp] at e2
     erw [Category.id_comp] at e3
     rw [← e2] at e1
@@ -281,8 +260,8 @@ lemma sheafificationCompPullback_comp {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y 
     exact (Iso.eq_inv_comp ((Scheme.Modules.pullbackComp h f).app
       ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
         (𝟙 X.ringCatSheaf.obj)).obj P))).mpr e1
-  -- Reduce the goal to `key` evaluated at `P`.  `NatTrans.congr_app` is the iter-309 wall; the knob
-  -- (set on this lemma) tames the `Scheme.Modules.pullback ≟ SheafOfModules.pullback` defeq.
+  -- Evaluate `key` at `P`; the local transparency setting controls the comparison between
+  -- the Scheme and sheaf pullback spellings.
   have happ := NatTrans.congr_app key P
   simp only [NatTrans.comp_app, Functor.whiskerLeft_app, Functor.whiskerRight_app] at happ ⊢
   exact happ
