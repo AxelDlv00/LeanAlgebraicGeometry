@@ -3,7 +3,6 @@ Copyright (c) 2026 Christian Merten. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Christian Merten
 -/
-import Mathlib
 import AlgebraicJacobian.Cohomology.HigherDirectImage
 import AlgebraicJacobian.Cohomology.CechHigherDirectImage
 
