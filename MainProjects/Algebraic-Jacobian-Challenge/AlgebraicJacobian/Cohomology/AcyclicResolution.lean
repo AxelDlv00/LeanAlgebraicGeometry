@@ -884,6 +884,39 @@ end Cosyzygy
 
 /-! ## Project-local Mathlib supplement — the acyclic-resolution comparison theorem -/
 
+omit [HasInjectiveResolutions 𝒜] in
+/-- Exactness of an augmented cochain complex implies exactness of the original complex in every
+positive degree. -/
+theorem CochainComplex.exactAt_succ_of_augment_exact (K : CochainComplex 𝒜 ℕ) {A : 𝒜}
+    (ε : A ⟶ K.X 0) (hε : ε ≫ K.d 0 1 = 0)
+    (h : ∀ n, (K.augment ε hε).ExactAt n) (n : ℕ) : K.ExactAt (n + 1) := by
+  have hn : (K.augment ε hε).ExactAt (n + 2) := h (n + 2)
+  have hn' : ((K.augment ε hε).sc' (n + 1) (n + 2) (n + 3)).Exact :=
+    ((K.augment ε hε).exactAt_iff' (n + 1) (n + 2) (n + 3)
+      ((ComplexShape.up ℕ).prev_eq' rfl) ((ComplexShape.up ℕ).next_eq' rfl)).mp hn
+  have hn'' : (K.sc' n (n + 1) (n + 2)).Exact := hn'
+  exact (K.exactAt_iff' n (n + 1) (n + 2)
+    ((ComplexShape.up ℕ).prev_eq' rfl) ((ComplexShape.up ℕ).next_eq' rfl)).mpr hn''
+
+omit [HasInjectiveResolutions 𝒜] in
+/-- The augmentation object of an exact augmented cochain complex is canonically isomorphic to
+the degree-zero cycles of the original complex. -/
+noncomputable def CochainComplex.cyclesZeroIsoOfAugmentExact (K : CochainComplex 𝒜 ℕ) {A : 𝒜}
+    (ε : A ⟶ K.X 0) (hε : ε ≫ K.d 0 1 = 0)
+    (h : ∀ n, (K.augment ε hε).ExactAt n) : A ≅ K.cycles 0 := by
+  have h0 : ((K.augment ε hε).sc' 0 0 1).Exact :=
+    ((K.augment ε hε).exactAt_iff' 0 0 1 CochainComplex.prev_nat_zero
+      ((ComplexShape.up ℕ).next_eq' rfl)).mp (h 0)
+  haveI hmono : Mono ε := h0.mono_g ((K.augment ε hε).shape 0 0 (by simp))
+  have h1 : ((K.augment ε hε).sc' 0 1 2).Exact :=
+    ((K.augment ε hε).exactAt_iff' 0 1 2
+      ((ComplexShape.up ℕ).prev_eq' rfl) ((ComplexShape.up ℕ).next_eq' rfl)).mp (h 1)
+  have h1' : (ShortComplex.mk ε (K.d 0 1) hε).Exact := h1
+  let hom := K.liftCycles ε 1 (by simp) hε
+  haveI : IsIso hom :=
+    (CochainComplex.isIso_liftCycles_iff K ε hε).2 ⟨h1', hmono⟩
+  exact asIso hom
+
 /-- **An acyclic resolution computes the right-derived functor** (blueprint
 `lem:acyclic_resolution_computes_derived`, TARGET 3; Stacks Tag 015E, Leray's acyclicity lemma).
 Let `G` be an additive, finite-limit-preserving (hence left-exact) functor, and let `K` be a cochain
@@ -930,6 +963,18 @@ noncomputable def Functor.rightDerivedIsoOfAcyclicResolution
         eqToIso (congrArg (fun i => (G.rightDerived 1).obj (K.cycles i)) (by omega : 0 + m = m)) ≪≫
         G.rightDerivedOneIsoCokerOfAcyclic (Functor.cosyzygyShortExact K m (hexact m)) ≪≫
         (G.cohomologyAppliedResolutionIso K m).symm
+
+/-- An exact augmentation by right-`G`-acyclic objects computes the right-derived functor. This is
+the augmented-complex form of `Functor.rightDerivedIsoOfAcyclicResolution`. -/
+noncomputable def Functor.rightDerivedIsoOfAcyclicAugmentation
+    (G : 𝒜 ⥤ ℬ) [G.Additive] [PreservesFiniteLimits G]
+    (K : CochainComplex 𝒜 ℕ) (A : 𝒜) (ε : A ⟶ K.X 0) (hε : ε ≫ K.d 0 1 = 0)
+    (hexact : ∀ n, (K.augment ε hε).ExactAt n) [∀ n, G.IsRightAcyclic (K.X n)] (n : ℕ) :
+    (G.rightDerived n).obj A ≅
+      ((G.mapHomologicalComplex (ComplexShape.up ℕ)).obj K).homology n :=
+  G.rightDerivedIsoOfAcyclicResolution K A
+    (CochainComplex.cyclesZeroIsoOfAugmentExact K ε hε hexact)
+    (CochainComplex.exactAt_succ_of_augment_exact K ε hε hexact) n
 
 /-! ### P4 complete — `rightDerivedIsoOfAcyclicResolution` is proved axiom-clean above. -/
 

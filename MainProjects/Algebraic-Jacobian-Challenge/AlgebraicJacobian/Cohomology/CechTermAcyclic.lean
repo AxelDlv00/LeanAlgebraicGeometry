@@ -4,27 +4,26 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Christian Merten
 -/
 import Mathlib
-import AlgebraicJacobian.Cohomology.CechAugmentedResolution
 import AlgebraicJacobian.Cohomology.OpenImmersionPushforward
 import AlgebraicJacobian.Cohomology.AcyclicResolution
 import AlgebraicJacobian.Cohomology.CechSectionIdentificationBase
 
 /-! # Čech term acyclicity for the pushforward
 
-## IMPORTANT signature correction (iter-077 prover)
+## Separatedness of the base
 
-The originally-planned signature of `cechTerm_pushforward_acyclic` (no hypothesis on `S`) is
-**mathematically false**.  Counterexample: let `S` be the affine plane with a doubled origin,
+The conclusion of `cechTerm_pushforward_acyclic` is false without a hypothesis on `S`.
+For a counterexample, let `S` be the affine plane with a doubled origin,
 `X = 𝔸²` and `f : X ⟶ S` the open immersion onto the first copy (an open immersion is separated,
 and `f` is quasi-compact since everything is noetherian); `X` is affine and separated, so the
 one-element cover `𝒰 = {𝟙 X}` is a finite affine cover.  Every Čech term is then isomorphic to
 `F`, so the claimed conclusion specializes to `R^k f_* F = 0` for `k ≥ 1` — but for `F = O_X`
 the stalk of `R^1 f_* O_X` at the doubled origin `o₂` is
 `colim_{W ∋ 0} H^1(W \ {0}, O) ≅ H²_𝔪(A) ≠ 0` (`A` the local ring of the plane at the origin).
-The underlying error in the informal proof: for affine `U ⊆ X` and affine `V ⊆ S`,
+For affine `U ⊆ X` and affine `V ⊆ S`,
 `U ∩ f⁻¹(V) ≅ U ×_S V` is affine only when the *diagonal of `S`* is affine (e.g. `S`
-separated); `f` separated does not suffice.  Accordingly the lemma below carries the extra
-hypothesis `[S.IsSeparated]` (what is really used is that `S` has affine diagonal, so any
+separated); `f` separated does not suffice. The lemma therefore assumes `[S.IsSeparated]`
+(what is really used is that `S` has affine diagonal, so any
 morphism from an affine scheme to `S` is affine).  The same hypothesis is consequently REQUIRED
 by the capstone `cech_computes_higherDirectImage` (same counterexample: the Čech
 complex of the trivial cover is `f_* F` in degree 0, with vanishing `H^1`, while
