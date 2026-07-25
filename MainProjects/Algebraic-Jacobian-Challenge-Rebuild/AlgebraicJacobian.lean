@@ -323,7 +323,7 @@ import AlgebraicJacobian.Picard.DivSchemeSeedUnivBridge
 import AlgebraicJacobian.Picard.DivSchemeUnivFibreKerInj
 import AlgebraicJacobian.Picard.DivSchemeCertificate
 import AlgebraicJacobian.Picard.DivSchemeCertificateEngine
-import AlgebraicJacobian.Picard.DivSchemeCertZarTransport
+import AlgebraicJacobian.Picard.DivSchemeCertZarConverse
 import AlgebraicJacobian.Picard.DivSchemeCertZarChartTrace
 import AlgebraicJacobian.Picard.DivSchemeCertZarSwallow
 import AlgebraicJacobian.Picard.DivSchemeCertZarConn
