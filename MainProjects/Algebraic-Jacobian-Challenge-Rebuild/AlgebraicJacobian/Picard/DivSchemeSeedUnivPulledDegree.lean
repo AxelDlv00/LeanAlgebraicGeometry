@@ -293,6 +293,78 @@ theorem coeffAt_pulledEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreD
   exact germ_pullbackEqn_pointwiseGeneratorSeed_eq_pointwiseFibreReadGerm
     C hpi g r1 r2 b1 b2 i j hO hchi hrdn z
 
+set_option maxHeartbeats 8000000 in
+-- Reindexing an arbitrary residue-fibre point through the total curve transports the
+-- residue field, the point, and both divisor coefficients dependently.
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The pulled pointwise-seed presentation and the universal fibre divisor have equal
+coefficients at every closed point of every residue fibre. -/
+theorem coeffAt_pulledEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor_at
+    (hrdn : PointwiseSeedRDN C hpi g r1 r2 b1 b2 i j hO hchi)
+    (p : PrimeSpectrum RZ)
+    (A : DivisorAdaptation C RZ pi
+      ((pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn).localEquations
+        (isGenerator_pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn)))
+    (hproj : ∀ q : A.index, Module.Projective RZ (A.colength q))
+    {x : relCurve C p.asIdeal.ResidueField}
+    (hxg : x ≠ genericPoint (relCurve C p.asIdeal.ResidueField)) :
+    coeffAt hxg (Scheme.presentationDivisor p.asIdeal.ResidueField
+        ((A.pulledEquations p.asIdeal.ResidueField hproj).presentation)) =
+      coeffAt hxg (divUniversalSeedFibreDivisor
+        C hpi g r1 r2 b1 b2 i j hO hchi p) := by
+  generalize hz : (relCurveMap C RZ p.asIdeal.ResidueField).base x = z
+  have hp : relCurveBasePoint C RZ z = p :=
+    hz ▸ relCurveBasePoint_relCurveMap_residueField C RZ p x
+  have hxcast : Eq.ndrec
+      (motive := fun q : PrimeSpectrum RZ => relCurve C q.asIdeal.ResidueField)
+      (relCurveResiduePoint C RZ z) hp = x := by
+    subst z
+    exact relCurveResiduePoint_map_cast C RZ p x
+  clear hz
+  subst p
+  have hzg : relCurveResiduePoint C RZ z ≠
+      genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField) := by
+    simpa only [hxcast] using hxg
+  subst x
+  exact coeffAt_pulledEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor
+    C hpi g r1 r2 b1 b2 i j hO hchi hrdn z hzg A hproj
+
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- On every residue fibre, the pulled pointwise-seed presentation divisor is the
+universal fibre divisor. -/
+theorem presentationDivisor_pulledEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor
+    (hrdn : PointwiseSeedRDN C hpi g r1 r2 b1 b2 i j hO hchi)
+    (p : PrimeSpectrum RZ)
+    (A : DivisorAdaptation C RZ pi
+      ((pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn).localEquations
+        (isGenerator_pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn)))
+    (hproj : ∀ q : A.index, Module.Projective RZ (A.colength q)) :
+    Scheme.presentationDivisor p.asIdeal.ResidueField
+        ((A.pulledEquations p.asIdeal.ResidueField hproj).presentation) =
+      divUniversalSeedFibreDivisor C hpi g r1 r2 b1 b2 i j hO hchi p := by
+  refine CurveDivisor.ext_coeffAt (fun x hxg => ?_)
+  exact coeffAt_pulledEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor_at
+    C hpi g r1 r2 b1 b2 i j hO hchi hrdn p A hproj hxg
+
+set_option maxHeartbeats 8000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- Every pulled pointwise-seed presentation divisor has the prescribed fibre degree
+`g`; this supplies the degree gate in the divisor-adaptation certificate. -/
+theorem deg_presentationDivisor_pulledEquations_pointwiseGeneratorSeed
+    (hrdn : PointwiseSeedRDN C hpi g r1 r2 b1 b2 i j hO hchi)
+    (p : PrimeSpectrum RZ)
+    (A : DivisorAdaptation C RZ pi
+      ((pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn).localEquations
+        (isGenerator_pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn)))
+    (hproj : ∀ q : A.index, Module.Projective RZ (A.colength q)) :
+    CurveDivisor.deg p.asIdeal.ResidueField
+        (Scheme.presentationDivisor p.asIdeal.ResidueField
+          ((A.pulledEquations p.asIdeal.ResidueField hproj).presentation)) = (g : ℤ) := by
+  rw [presentationDivisor_pulledEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor
+    C hpi g r1 r2 b1 b2 i j hO hchi hrdn p A hproj]
+  exact (divUniversalSeedFibreDivisor_spec C hpi g r1 r2 b1 b2 i j hO hchi p).2.1
+
 end SeedContext
 
 end PointwiseAchiever
