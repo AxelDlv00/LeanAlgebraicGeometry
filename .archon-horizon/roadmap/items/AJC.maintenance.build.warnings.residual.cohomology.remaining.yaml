@@ -2,9 +2,10 @@ id: AJC.maintenance.build.warnings.residual.cohomology.remaining
 title: Remaining cohomology warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'A warm full build verifies 35 remaining cohomology warnings: 27 in CechHigherDirectImageUnconditional
-  and eight auxiliary warnings. The former eight missing-rationale heartbeat diagnostics
-  in Cech and PullbackQuasicoherent are eliminated.'
+summary: The verified warm allocation was 35 warnings. Commit f73c10133 removes 29
+  from the unconditional Cech target cone, leaving its three genuine sorries plus
+  three warnings elsewhere in the prior allocation. Keep this leaf open until those
+  residuals are classified and a full build confirms the new global count.
 status: pending
 kind: refactor
 priority: normal
@@ -27,6 +28,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual.cohomology
-  updated_at: '2026-07-25T07:25:08.571609+00:00'
+  updated_at: '2026-07-25T12:08:57.292976+00:00'
   pinned_commits:
+  - f73c10133
   - 00b4c44ed

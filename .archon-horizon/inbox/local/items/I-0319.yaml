@@ -6,15 +6,17 @@ body: 'Lean full-build warning and resource baseline
 
   The controlled clean-build baseline passes all 8,720 jobs with 578 project warnings
   across 49 files, down 596 from the verified 1,174-warning baseline. After targeted
-  cleanup, the latest warm whole-project build passes all 8,721 jobs with exactly
-  291 warning heads across 38 project files in 15:09.20 wall time at 8,546,200 KiB
-  peak RSS. The full 207-warning duality allocation remains clean. The inherited heartbeat-rationale
-  audit and recursion-depth audit are complete: 31 obsolete scopes were removed, seven
-  required heartbeat scopes have measured rationales, and all nine recursion scopes
-  were tested. Structural elaboration-budget work remains open at 201 documented sites:
-  157 `maxHeartbeats` settings and 44 synthesis heartbeat scopes. CechSectionContractibility
-  degree one remains the main cold-build hotspot at about 15:03 and 10.1 GiB; residual
-  warning and umbrella-import work also remain open. Latest optimization commit: `db85e701c`.'
+  cleanup, the latest measured warm whole-project build passes all 8,721 jobs with
+  exactly 291 warning heads across 38 project files in 15:09.20 wall time at 8,546,200
+  KiB peak RSS. Post-baseline commit `f73c10133` removes 29 diagnostics from the unconditional
+  Cech target cone, but an exact new whole-project count still requires a recount.
+  The inherited heartbeat-rationale audit and recursion-depth audit are complete:
+  31 obsolete scopes were removed, seven required heartbeat scopes have measured rationales,
+  and all nine recursion scopes were tested. Structural elaboration-budget work remains
+  open at 201 documented sites: 157 `maxHeartbeats` settings and 44 synthesis heartbeat
+  scopes. CechSectionContractibility degree one remains the main cold-build hotspot
+  at about 15:03 and 10.1 GiB; residual warning and umbrella-import work also remain
+  open. Latest optimization commits: `db85e701c`, `f73c10133`.'
 labels:
 - agent-ready
 status: open
@@ -25,7 +27,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-24T14:56:46.449883+00:00'
-updated_at: '2026-07-25T11:31:03.586192+00:00'
+updated_at: '2026-07-25T12:09:26.178127+00:00'
 metadata:
   provenance:
     run: '0046'

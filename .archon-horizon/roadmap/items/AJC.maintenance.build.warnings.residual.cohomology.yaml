@@ -2,9 +2,10 @@ id: AJC.maintenance.build.warnings.residual.cohomology
 title: Cohomology warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The clean-build allocation began at 72 warnings. FlatBaseChange removed 29
-  and the resource-budget audit removed eight more; a warm full build now verifies
-  35 cohomology warnings, with no heartbeat-rationale diagnostics.
+summary: 'The verified warm-build allocation was 35 cohomology warnings. The unconditional
+  Cech cone pass subsequently removes 29: 24 local style diagnostics and five replayed
+  dependency diagnostics. Its configured target now reports only three genuine sorries;
+  an exact six-warning residual allocation awaits the next full-build recount.'
 status: pending
 kind: refactor
 priority: normal
@@ -27,6 +28,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual
-  updated_at: '2026-07-25T07:25:07.646420+00:00'
+  updated_at: '2026-07-25T12:08:56.377039+00:00'
   pinned_commits:
+  - f73c10133
   - 00b4c44ed
