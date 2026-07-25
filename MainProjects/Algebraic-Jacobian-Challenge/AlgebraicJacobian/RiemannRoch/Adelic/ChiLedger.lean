@@ -122,7 +122,7 @@ This is the concrete kernel computation showing the window map
 two left `L`-terms).  Pure `AddSubgroup` lattice algebra over `K`: on the overlap
 the `D`-bound comes from membership in `𝒜(D)`; off the overlap `D(P) = D'(P)`, so
 the global `D'`-bound *is* the `D`-bound. -/
-theorem linearSystem_inf_overlap_eq (hcov : U₀ ⊔ U₁ = ⊤) {D D' : X.WeilDivisor}
+theorem linearSystem_inf_overlap_eq {D D' : X.WeilDivisor}
     (hle : ∀ P : X.PrimeDivisor, (show X.PrimeDivisor →₀ ℤ from D) P ≤
       (show X.PrimeDivisor →₀ ℤ from D') P)
     (hsupp : ∀ P : X.PrimeDivisor, P.point ∉ (U₀ ⊓ U₁ : X.Opens) →
@@ -134,7 +134,7 @@ theorem linearSystem_inf_overlap_eq (hcov : U₀ ⊔ U₁ = ⊤) {D D' : X.WeilD
     have hf1' : f ∈ sectionOfDivisor (⊤ : X.Opens) D' := hf1
     rcases eq_or_ne f 0 with rfl | hfne
     · exact (linearSystem D).zero_mem
-    show f ∈ sectionOfDivisor (⊤ : X.Opens) D
+    change f ∈ sectionOfDivisor (⊤ : X.Opens) D
     rw [mem_sectionOfDivisor_of_ne_zero hfne]
     intro P _
     by_cases hPV : P.point ∈ (U₀ ⊓ U₁ : X.Opens)
@@ -185,9 +185,7 @@ noncomputable def H1Twist {D D' : X.WeilDivisor}
 global sections into the overlap sections `L(D') ⊆ 𝒜(D')` (`linearSystem_le_overlap`),
 compatibly with `L(D) ⊆ 𝒜(D)`.  This is the left-hand map of the ledger sequence
 `0 → L(D')/L(D) → 𝒜(D')/𝒜(D) → …` (the AG mirror of the DG `windowMap`). -/
-noncomputable def windowMap {D D' : X.WeilDivisor}
-    (hle : ∀ P : X.PrimeDivisor, (show X.PrimeDivisor →₀ ℤ from D) P ≤
-      (show X.PrimeDivisor →₀ ℤ from D') P) :
+noncomputable def windowMap {D D' : X.WeilDivisor} :
     (linearSystem D' ⧸
         (linearSystem D).addSubgroupOf (linearSystem D')) →+
       (sectionOfDivisor (U₀ ⊓ U₁) D' ⧸
@@ -204,12 +202,12 @@ Under `D ≤ D'` with `D' − D` supported on the overlap, the window map
 `L(D')/L(D) → 𝒜(D')/𝒜(D)` is injective.  This is `linearSystem_inf_overlap_eq`
 transported into the quotient language: the ledger sequence is exact at both
 `L`-terms. -/
-theorem windowMap_injective (hcov : U₀ ⊔ U₁ = ⊤) {D D' : X.WeilDivisor}
+theorem windowMap_injective {D D' : X.WeilDivisor}
     (hle : ∀ P : X.PrimeDivisor, (show X.PrimeDivisor →₀ ℤ from D) P ≤
       (show X.PrimeDivisor →₀ ℤ from D') P)
     (hsupp : ∀ P : X.PrimeDivisor, P.point ∉ (U₀ ⊓ U₁ : X.Opens) →
       (show X.PrimeDivisor →₀ ℤ from D) P = (show X.PrimeDivisor →₀ ℤ from D') P) :
-    Function.Injective (windowMap U₀ U₁ hle) := by
+    Function.Injective (windowMap (D := D) (D' := D') U₀ U₁) := by
   rw [injective_iff_map_eq_zero]
   intro q
   induction q using QuotientAddGroup.induction_on with
@@ -220,7 +218,7 @@ theorem windowMap_injective (hcov : U₀ ⊔ U₁ = ⊤) {D D' : X.WeilDivisor}
     rw [QuotientAddGroup.eq_zero_iff, AddSubgroup.mem_addSubgroupOf]
     have hmem : (g : X.functionField) ∈ linearSystem D' ⊓ sectionOfDivisor (U₀ ⊓ U₁) D :=
       AddSubgroup.mem_inf.mpr ⟨g.2, hq⟩
-    rwa [linearSystem_inf_overlap_eq U₀ U₁ hcov hle hsupp] at hmem
+    rwa [linearSystem_inf_overlap_eq U₀ U₁ hle hsupp] at hmem
 
 end Ledger
 
@@ -490,9 +488,9 @@ def sectionSub (U : X.Opens) (D : X.WeilDivisor) : Submodule k X.functionField w
   smul_mem' c f hf := by
     rw [Algebra.smul_def]
     rcases eq_or_ne c 0 with rfl | hc
-    · simpa using (sectionOfDivisor U D).zero_mem
+    · simp
     rcases eq_or_ne f 0 with rfl | hf0
-    · simpa using (sectionOfDivisor U D).zero_mem
+    · simp
     refine Or.inr fun P hP => ?_
     rw [Scheme.RationalMap.order_mul_of_ne_zero P
         (by simpa using (map_ne_zero (algebraMap k X.functionField)).mpr hc) hf0,
@@ -507,9 +505,9 @@ def orderGeSub (P : X.PrimeDivisor) (m : ℤ) : Submodule k X.functionField wher
   smul_mem' c f hf := by
     rw [Algebra.smul_def]
     rcases eq_or_ne c 0 with rfl | hc
-    · simpa using (orderGe P m).zero_mem
+    · simp
     rcases eq_or_ne f 0 with rfl | hf0
-    · simpa using (orderGe P m).zero_mem
+    · simp
     refine Or.inr ?_
     rw [Scheme.RationalMap.order_mul_of_ne_zero P
         (by simpa using (map_ne_zero (algebraMap k X.functionField)).mpr hc) hf0,
@@ -841,8 +839,7 @@ section ExactDim
 variable {k A B C E : Type*} [DivisionRing k]
     [AddCommGroup A] [Module k A] [AddCommGroup B] [Module k B]
     [AddCommGroup C] [Module k C] [AddCommGroup E] [Module k E]
-    [FiniteDimensional k A] [FiniteDimensional k B] [FiniteDimensional k C]
-    [FiniteDimensional k E]
+    [FiniteDimensional k B] [FiniteDimensional k C]
 
 /-- **Alternating dimension identity of a 4-term exact sequence.** For a four-term
 exact sequence of finite-dimensional `k`-vector spaces
@@ -1111,6 +1108,7 @@ noncomputable def divisorOfList : List X.PrimeDivisor → X.WeilDivisor
   | [] => 0
   | P :: L => pointDivisor P + divisorOfList L
 
+omit [IsIntegral X] [IsLocallyNoetherian X] [X.IsRegularInCodimensionOne] in
 /-- **Coordinatewise addition of Weil divisors.** `(D₁ + D₂)(P) = D₁(P) + D₂(P)`;
 the `X.WeilDivisor` group law is the pointwise `Finsupp` one. -/
 theorem weilDivisor_add_apply (D₁ D₂ : X.WeilDivisor) (Q : X.PrimeDivisor) :
@@ -1118,6 +1116,7 @@ theorem weilDivisor_add_apply (D₁ D₂ : X.WeilDivisor) (Q : X.PrimeDivisor) :
       (show X.PrimeDivisor →₀ ℤ from D₁) Q + (show X.PrimeDivisor →₀ ℤ from D₂) Q :=
   Finsupp.add_apply _ _ _
 
+omit [IsIntegral X] [IsLocallyNoetherian X] [X.IsRegularInCodimensionOne] in
 /-- **The one-point bump raises the coefficient at `P` by one** — the `hstep`
 hypothesis of `chi_add_eq_residueDeg` for the telescope step `E ↦ 1·P + E`. -/
 theorem add_pointDivisor_apply_self (E : X.WeilDivisor) (P : X.PrimeDivisor) :
@@ -1125,6 +1124,7 @@ theorem add_pointDivisor_apply_self (E : X.WeilDivisor) (P : X.PrimeDivisor) :
       (show X.PrimeDivisor →₀ ℤ from E) P + 1 := by
   rw [weilDivisor_add_apply, pointDivisor, Finsupp.single_eq_same, add_comm]
 
+omit [IsIntegral X] [IsLocallyNoetherian X] [X.IsRegularInCodimensionOne] in
 /-- **The one-point bump changes nothing off `P`** — the `hoff` hypothesis of
 `chi_add_eq_residueDeg` for the telescope step `E ↦ 1·P + E`. -/
 theorem add_pointDivisor_apply_of_ne (E : X.WeilDivisor) {P Q : X.PrimeDivisor}
@@ -1133,6 +1133,7 @@ theorem add_pointDivisor_apply_of_ne (E : X.WeilDivisor) {P Q : X.PrimeDivisor}
       (show X.PrimeDivisor →₀ ℤ from E) Q := by
   rw [weilDivisor_add_apply, pointDivisor, Finsupp.single_eq_of_ne h, zero_add]
 
+omit [IsIntegral X] [IsLocallyNoetherian X] [X.IsRegularInCodimensionOne] in
 /-- **The one-point bump is monotone** — the `hle` hypothesis of
 `chi_add_eq_residueDeg` for the telescope step `E ↦ 1·P + E`. -/
 theorem le_add_pointDivisor (E : X.WeilDivisor) (P Q : X.PrimeDivisor) :
