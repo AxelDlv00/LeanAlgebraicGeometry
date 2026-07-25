@@ -2,10 +2,9 @@ id: AJC.maintenance.build.warnings.residual
 title: Residual project warning debt
 projects:
 - Algebraic-Jacobian-Challenge
-summary: A warm whole-project build verifies the 291-warning baseline across 38 files,
-  allocated as 149 representability, 56 Picard core, 35 cohomology, and 51 Albanese/Riemann--Roch
-  entry warnings. Post-baseline commit f73c10133 removes 29 cohomology-cone diagnostics;
-  run a new whole-project recount before rebasing the exact global allocation.
+summary: 'The latest configured whole-project build verifies exactly 262 warning heads
+  across 36 files: 149 representability, 56 Picard core, six cohomology, and 51 Albanese/Riemann--Roch
+  entry warnings. All 8,721 jobs pass; continue through the explicit area children.'
 status: pending
 kind: refactor
 priority: normal
@@ -28,7 +27,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings
-  updated_at: '2026-07-25T12:08:58.215694+00:00'
+  updated_at: '2026-07-25T12:37:43.497483+00:00'
   pinned_commits:
   - f73c10133
   - 00b4c44ed

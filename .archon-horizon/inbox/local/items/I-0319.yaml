@@ -5,11 +5,11 @@ body: 'Lean full-build warning and resource baseline
 
 
   The controlled clean-build baseline passes all 8,720 jobs with 578 project warnings
-  across 49 files, down 596 from the verified 1,174-warning baseline. After targeted
-  cleanup, the latest measured warm whole-project build passes all 8,721 jobs with
-  exactly 291 warning heads across 38 project files in 15:09.20 wall time at 8,546,200
-  KiB peak RSS. Post-baseline commit `f73c10133` removes 29 diagnostics from the unconditional
-  Cech target cone, but an exact new whole-project count still requires a recount.
+  across 49 files, down 596 from the verified 1,174-warning baseline. The latest configured
+  warm whole-project build passes all 8,721 jobs with exactly 262 warning heads across
+  36 project files, 29 below the preceding 291-warning baseline and 316 below the
+  controlled clean baseline. The run took a contended 25:28.97 at 9,596,892 KiB peak
+  RSS because the concurrent Rebuild run and initial LSP workers shared the host.
   The inherited heartbeat-rationale audit and recursion-depth audit are complete:
   31 obsolete scopes were removed, seven required heartbeat scopes have measured rationales,
   and all nine recursion scopes were tested. Structural elaboration-budget work remains
@@ -27,7 +27,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-24T14:56:46.449883+00:00'
-updated_at: '2026-07-25T12:09:26.178127+00:00'
+updated_at: '2026-07-25T12:38:09.733761+00:00'
 metadata:
   provenance:
     run: '0046'
