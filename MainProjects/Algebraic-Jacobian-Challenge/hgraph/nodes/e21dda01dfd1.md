@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:higher_direct_image_presheaf
 lean_status: lean_ok
-order: 403
+order: 404
 title: Presheaf description of the higher direct images
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-26T00:08:21'
 ---
 \textit{Source: Stacks Project, Cohomology, Tag 01XJ
   (\texttt{lemma-describe-higher-direct-images}).}

@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:charts_cover
 lean_status: lean_ok
-order: 967
+order: 968
 title: Charts-cover hypothesis
 type: tex
-updated: '2026-07-25T20:41:02'
+updated: '2026-07-26T00:08:22'
 ---
 The module \(\mathcal G\) \emph{admits \(e\)-presentation charts} if every
   point of \(X\) lies in an \(e\)-presentation chart.  This is the standing

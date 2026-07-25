@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:standard_cover_cofinal_affine
 lean_status: lean_ok
-order: 419
+order: 420
 title: Standard covers are cofinal among open covers of a general affine open
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-26T00:08:21'
 ---
 \textit{Source: Stacks Project, Sheaves on Spaces, Tag 009L,
   \texttt{lemma-cofinal-systems-coverings-standard-case}.}

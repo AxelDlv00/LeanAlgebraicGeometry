@@ -6,9 +6,9 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:relpic_setoid_symm
 lean_status: lean_ok
-order: 608
+order: 609
 title: Symmetry of the \(H_T\)-relation
 type: tex
-updated: '2026-07-25T20:41:01'
+updated: '2026-07-26T00:08:21'
 ---
 If \(L \sim L'\) then \(L' \sim L\).

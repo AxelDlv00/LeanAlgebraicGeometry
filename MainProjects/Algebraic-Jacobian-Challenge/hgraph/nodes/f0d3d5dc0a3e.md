@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:gr_glueRestriction_overlap_compat
 lean_status: lean_ok
-order: 1455
+order: 1456
 title: Overlap compatibility of the restriction morphisms
 type: tex
-updated: '2026-07-25T20:41:02'
+updated: '2026-07-26T00:08:22'
 ---
 The \((i,j)\)-component of the descent-equalizer condition, transposed to the
   pullback level, states that over the overlap \(V_{ij}\) the two restriction

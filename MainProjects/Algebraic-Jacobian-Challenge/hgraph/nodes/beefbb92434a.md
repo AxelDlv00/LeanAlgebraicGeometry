@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: def:cech_resolution_bicomplex
 lean_status: empty
-order: 470
+order: 471
 title: '{\v C}ech bicomplex of an injective resolution'
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-26T00:08:21'
 ---
 \textit{Source: Stacks Project, Cohomology, Tag 03OW
   (\texttt{lemma-cech-spectral-sequence}); the bicomplex is the explicit model of the

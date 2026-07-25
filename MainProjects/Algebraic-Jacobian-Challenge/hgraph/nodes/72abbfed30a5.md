@@ -8,10 +8,10 @@ label: lem:extendScalars_pfl_flat_mathlib
 lean_status: mathlib_ok
 mathlib_name:
 - ModuleCat.preservesFiniteLimits_extendScalars_of_flat
-order: 482
+order: 483
 title: Flat extension of scalars is left-exact
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-26T00:08:21'
 ---
 \textit{Provided by Mathlib (\texttt{Mathlib.Algebra.Category.ModuleCat.Descent}).}
   If \(A \to B\) is a flat ring homomorphism then the extension-of-scalars functor

@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:pushforward_slice_pullback_iso
 lean_status: lean_ok
-order: 455
+order: 456
 title: Pullback along $\psi_r$ realizes the per-slice pushforward
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-26T00:08:21'
 ---
 Let \(\varphi : X \cong Y\), \(U_i \subseteq X\), \(V_i = \varphi.\mathrm{inv}^{-1}\,U_i\), let
   \(\psi_r\) be the slice structure-sheaf ring map of Lemma~\ref{lem:slice_structureSheaf_hom}, and write

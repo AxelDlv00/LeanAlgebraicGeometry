@@ -8,10 +8,10 @@ label: lem:instIsContinuousOverMapOver_mathlib
 lean_status: mathlib_ok
 mathlib_name:
 - CategoryTheory.GrothendieckTopology.instIsContinuousOverMapOver
-order: 444
+order: 445
 title: Over-map functors are continuous
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-26T00:08:21'
 ---
 \textit{Provided by Mathlib.}
   For a Grothendieck topology \(J\) on \(\mathcal{C}\) and a morphism \(f : X \to X'\) in

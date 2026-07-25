@@ -7,24 +7,17 @@ generated: blueprint
 label: def:sectionCechAugV
 lean_status: lean_ok
 order: 384
-title: Canonical augmentation of the section {\v C}ech complex over \(V\)
+title: Augmentation of the section {\v C}ech complex over \(V\)
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-26T00:08:21'
 ---
-\textit{Project-local.}
-  Fix an open \(V \subseteq X\). The \emph{canonical augmentation}
+Fix an open \(V \subseteq X\). The augmentation of the concrete section {\v C}ech complex for
+  the restricted family \(U'_i=U_i\cap V\) is the product of the restriction maps
   \[
-    \varepsilon_{\mathrm{can}} : \Gamma(V, \mathcal{F}) \longrightarrow
-      \prod_i \Gamma(U_i \cap V, \mathcal{F})
+    \varepsilon_V : \Gamma(V, \mathcal{F}) \longrightarrow
+      \prod_{\sigma:\operatorname{Fin}1\to I}
+        \Gamma\!\left(\bigcap_k(U_{\sigma(k)}\cap V),\mathcal{F}\right),
+    \qquad
+    t\longmapsto
+      \left(t\big|_{\cap_k(U_{\sigma(k)}\cap V)}\right)_{\sigma}.
   \]
-  of the concrete section {\v C}ech complex over the restricted family
-  \(U'_i = \operatorname{coverOpen}\mathcal{U}\,i \cap V\) is the evaluation at \(V\) of the {\v C}ech
-  augmentation \(\mathcal{F} \to \mathcal{C}^0\) of Definition~\ref{def:cech_augmentation},
-  transported across the degree-\(0\) object isomorphism of Lemma~\ref{lem:coreIso_obj_iso}.
-  Concretely it is the composite
-  \(G_V\bigl(\Psi(\operatorname{cechAugmentation})\bigr) \cdot (\mathrm{objIso}\,0).\mathrm{hom}\),
-  where \(\Psi = \operatorname{forget}\cdot\operatorname{restrictScalars}(\mathrm{id})\) is the
-  push--pull adapter, \(G_V = \operatorname{toPresheaf}\cdot\operatorname{ev}_V\) is the
-  section-at-\(V\) functor, and \(\mathrm{objIso}\,0\) is the degree-\(0\) instance of
-  Lemma~\ref{lem:coreIso_obj_iso}. It carries no free parameter: this is the unique augmentation
-  for which the comparisons below hold.

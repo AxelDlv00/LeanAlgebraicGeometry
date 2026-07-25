@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:rigidity_eqOn_dense_open
 lean_status: lean_ok
-order: 539
+order: 540
 ref: mumford-abelian-varieties:page-0054
 title: Dense-open agreement
 type: tex
-updated: '2026-07-25T19:00:18'
+updated: '2026-07-26T00:08:21'
 ---
 Let \(X\) be proper, suppose that \(X\times Y\) is reduced, geometrically
   irreducible, and locally of finite type over \(\bar k\), and let \(Z\) be separated.

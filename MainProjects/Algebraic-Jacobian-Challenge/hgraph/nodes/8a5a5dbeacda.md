@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:flat_section_pair
 lean_status: lean_ok
-order: 921
+order: 922
 title: Two-layer basic-open reduction
 type: tex
-updated: '2026-07-25T20:41:02'
+updated: '2026-07-26T00:08:22'
 ---
 Let \(p : X \to S\), \(\mathcal F\) quasi-coherent on \(X\),
   \(U_0 \subseteq S\) an affine open with \(A := \Gamma(S, U_0)\), and let

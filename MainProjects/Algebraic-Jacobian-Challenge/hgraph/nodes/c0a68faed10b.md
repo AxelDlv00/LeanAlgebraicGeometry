@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:isLocalizedModule_baseChange_away
 lean_status: lean_ok
-order: 422
+order: 423
 title: Localised base change is a localisation away
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-26T00:08:21'
 ---
 \textit{Project-local infrastructure, assembled from Mathlib base-change primitives.}
   Let \(\varphi : R \to S\) be a ring map, \(M\) an \(R\)-module, and \(g \in R\) with image

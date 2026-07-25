@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:sectionsFunctorCorepIso
 lean_status: lean_ok
-order: 413
+order: 414
 title: The sections functor is corepresented by \(j_!\mathcal{O}_V\)
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-26T00:08:21'
 ---
 For an open \(V \subseteq X\) there is a natural isomorphism of additive functors
   \[

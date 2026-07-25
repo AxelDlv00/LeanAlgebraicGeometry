@@ -1,7 +1,7 @@
 ---
 generated: blueprint
 hard: true
-source: 76da4af1ae95
-target: 08771949b99f
+source: 2a677fea705d
+target: bbf7bdbbbfa1
 type: uses
 ---

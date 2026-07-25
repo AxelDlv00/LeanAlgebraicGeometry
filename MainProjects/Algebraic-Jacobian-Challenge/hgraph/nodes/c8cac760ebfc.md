@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:primeDivisor_ext
 lean_status: lean_ok
-order: 1762
+order: 1763
 title: Extensionality for prime divisors
 type: tex
-updated: '2026-07-25T20:41:02'
+updated: '2026-07-26T00:08:22'
 ---
 Two prime divisors \(Y, Y' : X.\texttt{PrimeDivisor}\)
   (\ref{def:prime_divisor}) on a scheme \(X\) are equal as soon as their

@@ -8733,119 +8733,108 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \(\mathrm{coreIso} := \operatorname{isoOfComponents}(\mathrm{objIso},\,\cdot)\) into an
   isomorphism of cochain complexes.
 
-  The degree-\(0\) compatibility datum \(h_{\mathrm{compat}}\) of
-  Lemma~\ref{lem:cechSection_complex_iso} is the bottom-degree instance of this same match: the
-  evaluated {\v C}ech augmentation \(G_V(\Psi(\operatorname{cechAugmentation}))\), read through
-  the \(p=0\) object iso \(\mathrm{objIso}\,0\) (Lemma~\ref{lem:coreIso_obj_iso} at \(p=0\)), is
-  the restriction-product map \(\varepsilon\colon t \mapsto (t|_{U'_i})_i\) on the nose, because
-  both are induced by the inclusions \(\operatorname{coverOpen}\mathcal{U}\,i \cap V
-  \hookrightarrow V\). Thus \(h_{\mathrm{compat}}\) is the \(p=0\) instance of this intertwining
-  identity.
 \end{proof}
 
 \begin{definition}
 
 \leanok
-[Canonical augmentation of the section {\v C}ech complex over \(V\)]
+[Augmentation of the section {\v C}ech complex over \(V\)]
   \label{def:sectionCechAugV}
   \lean{AlgebraicGeometry.sectionCechAugV}
-  \uses{lem:coreIso_obj_iso, def:cech_augmentation}
-  \textit{Project-local.}
-  Fix an open \(V \subseteq X\). The \emph{canonical augmentation}
+  \uses{def:section_cech_complex}
+  Fix an open \(V \subseteq X\). The augmentation of the concrete section {\v C}ech complex for
+  the restricted family \(U'_i=U_i\cap V\) is the product of the restriction maps
   \[
-    \varepsilon_{\mathrm{can}} : \Gamma(V, \mathcal{F}) \longrightarrow
-      \prod_i \Gamma(U_i \cap V, \mathcal{F})
+    \varepsilon_V : \Gamma(V, \mathcal{F}) \longrightarrow
+      \prod_{\sigma:\operatorname{Fin}1\to I}
+        \Gamma\!\left(\bigcap_k(U_{\sigma(k)}\cap V),\mathcal{F}\right),
+    \qquad
+    t\longmapsto
+      \left(t\big|_{\cap_k(U_{\sigma(k)}\cap V)}\right)_{\sigma}.
   \]
-  of the concrete section {\v C}ech complex over the restricted family
-  \(U'_i = \operatorname{coverOpen}\mathcal{U}\,i \cap V\) is the evaluation at \(V\) of the {\v C}ech
-  augmentation \(\mathcal{F} \to \mathcal{C}^0\) of Definition~\ref{def:cech_augmentation},
-  transported across the degree-\(0\) object isomorphism of Lemma~\ref{lem:coreIso_obj_iso}.
-  Concretely it is the composite
-  \(G_V\bigl(\Psi(\operatorname{cechAugmentation})\bigr) \cdot (\mathrm{objIso}\,0).\mathrm{hom}\),
-  where \(\Psi = \operatorname{forget}\cdot\operatorname{restrictScalars}(\mathrm{id})\) is the
-  push--pull adapter, \(G_V = \operatorname{toPresheaf}\cdot\operatorname{ev}_V\) is the
-  section-at-\(V\) functor, and \(\mathrm{objIso}\,0\) is the degree-\(0\) instance of
-  Lemma~\ref{lem:coreIso_obj_iso}. It carries no free parameter: this is the unique augmentation
-  for which the comparisons below hold.
 \end{definition}
 
 \begin{lemma}
-
-\leanok
-[The canonical section augmentation kills the first differential]
-  \label{lem:sectionCechAugV_comp_d}
-  \lean{AlgebraicGeometry.sectionCechAugV_comp_d}
-  \uses{def:sectionCechAugV, lem:cech_augmentation_comp_d, lem:coreIso_comm}
-  \textit{Project-local.}
-  For the canonical augmentation \(\varepsilon_{\mathrm{can}}\) of
-  Definition~\ref{def:sectionCechAugV} the composite with the first section {\v C}ech
-  differential vanishes,
-  \[
-    \varepsilon_{\mathrm{can}} \cdot d^0 \;=\; 0.
-  \]
-\end{lemma}
-\begin{proof}
-  \uses{def:sectionCechAugV, lem:cech_augmentation_comp_d, lem:coreIso_comm}
-  \leanok
-  Conjugating \(\varepsilon_{\mathrm{can}} \cdot d^0\) by the degree-\(0\) and degree-\(1\) object
-  isomorphisms turns it, via the differential-match squares of Lemma~\ref{lem:coreIso_comm}, into
-  the evaluation at \(V\) of the backbone augmentation composite
-  \(G_V\bigl(\Psi(\operatorname{cechAugmentation})\bigr) \cdot
-  G_V\bigl(\Psi(d^0)\bigr)\). Since \(G_V\circ\Psi\) is a functor and the backbone identity
-  \(\operatorname{cechAugmentation}\cdot d^0 = 0\) of Lemma~\ref{lem:cech_augmentation_comp_d}
-  holds, this composite is the functorial image of zero, hence zero; post-composing with the
-  degree-\(1\) object iso preserves the vanishing. This is exactly the augmented-complex identity
-  \(\mathcal{F} \to \mathcal{C}^0 \to \mathcal{C}^1\) read at \(V\) through the object isos.
-\end{proof}
-
-\begin{lemma}
-[Coordinatewise value of the canonical section augmentation]
+[Coordinatewise value of the section augmentation]
   \label{lem:sectionCechAugV_π}
-  \lean{AlgebraicGeometry.sectionCechAugV_π, AlgebraicGeometry.cechAugmentation_pushPullMap,
-    AlgebraicGeometry.cechNervePointIso_inv_eq_unit, AlgebraicGeometry.rawPushPullMap_unit,
-    AlgebraicGeometry.unit_pushPull_leg_sections}
-  \uses{def:sectionCechAugV, lem:coreIso_obj_iso, lem:pushPull_sigma_iso,
-    lem:pushPull_leg_sections, lem:pushPull_eval_prod_iso}
-  \textit{Project-local.}
+  \lean{AlgebraicGeometry.sectionCechAugV_π}
+  \uses{def:sectionCechAugV}
+  \leanok
   Fix an open \(V \subseteq X\) and a one-element multi-index \(\sigma : \mathrm{Fin}\,1 \to I\).
-  The \(\sigma\)-coordinate of the canonical augmentation
-  \(\varepsilon_{\mathrm{can}} = \operatorname{sectionCechAugV}\mathcal{U}\,\mathcal{F}\,V\) of
-  Definition~\ref{def:sectionCechAugV}, namely the composite with the projection
-  \(\operatorname{Pi.\pi}(\cdots)\,\sigma\) onto the \(\sigma\)-factor of
+  The \(\sigma\)-coordinate of the augmentation \(\varepsilon_V\) of
+  Definition~\ref{def:sectionCechAugV}, namely its composite with the projection onto the
+  \(\sigma\)-factor of
   \(\prod_\tau \Gamma\bigl(\bigcap_l(U_{\tau l}\cap V),\mathcal{F}\bigr)\), is the plain presheaf
   restriction of \(\mathcal{F}\) along the inclusion of intersection opens
   \(\bigcap_l(U_{\sigma l}\cap V) \subseteq V\):
   \[
-    \varepsilon_{\mathrm{can}} \cdot \operatorname{Pi.\pi}(\cdots)\,\sigma
+    \operatorname{pr}_{\sigma}\circ\varepsilon_V
       \;=\;
     \mathcal{F}\bigl(\,\textstyle\bigcap_l(U_{\sigma l}\cap V)\subseteq V\,\bigr)
       \;:\; \Gamma(V,\mathcal{F}) \longrightarrow
       \Gamma\bigl(\textstyle\bigcap_l(U_{\sigma l}\cap V),\mathcal{F}\bigr).
   \]
-  This is the degree-\(0\) sibling of the per-leg naturality of
-  Lemma~\ref{lem:coreIso_comm_leg}, and is the augmentation compatibility used by
-  Lemma~\ref{lem:cechSection_contractible} for its degree-\(0\) contracting identities.
 \end{lemma}
 \begin{proof}
-  \uses{def:sectionCechAugV, lem:coreIso_obj_iso, lem:coreIso_objIso_π,
-    lem:pushPull_sigma_iso, lem:pushPull_leg_sections, lem:pushPull_eval_prod_iso}
-  By Definition~\ref{def:sectionCechAugV} the canonical augmentation is the evaluated push--pull
-  {\v C}ech augmentation read through the degree-\(0\) object isomorphism
-  \(\mathrm{objIso}\,0\) of Lemma~\ref{lem:coreIso_obj_iso}. Projecting onto the \(\sigma\)-factor
-  uses the \(\sigma\)-leg projection seam \(\operatorname{pushPull\_sigma\_iso\_\pi}\) of
-  Lemma~\ref{lem:pushPull_sigma_iso}, which exhibits this coordinate as the section over \(V\) of
-  the single push--pull leg \(\operatorname{pushPullObj}\mathcal{F}\,(\operatorname{Over.mk}
-  j_\sigma)\). Unlike the higher-degree cofaces, no coface combinatorics intervene at degree \(0\):
-  the {\v C}ech augmentation \(\mathcal{F} \to \mathcal{C}^0\) factors through the terminal object
-  \(\operatorname{Over.mk}(\mathbf{1}_X)\) of \(\operatorname{Over}X\), so the augmentation leg
-  \(a_0(\sigma)\) composed with it collapses to the canonical map
-  \(\operatorname{Over.mk} j_\sigma \to \operatorname{Over.mk}(\mathbf{1}_X)\) with no unwinding of
-  \(a_0\). The per-leg section identification
-  \(\Gamma(V,\operatorname{pushPullObj}\mathcal{F}\,(\operatorname{Over.mk} j_\sigma)) \cong
-  \Gamma(U_\sigma \cap V,\mathcal{F})\) of Lemma~\ref{lem:pushPull_leg_sections} (the leg of the
-  evaluated product iso of Lemma~\ref{lem:pushPull_eval_prod_iso}) then computes this section as
-  the value of \(\mathcal{F}\) on the inclusion \(\bigcap_l(U_{\sigma l}\cap V)\subseteq V\) — the
-  plain presheaf restriction, as claimed.
+  \uses{def:sectionCechAugV}
+  \leanok
+  This is the defining property of a map into a product: composing the product of the
+  restrictions with its \(\sigma\)-projection gives the restriction indexed by \(\sigma\).
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[The section augmentation kills the first differential]
+  \label{lem:sectionCechAugV_comp_d}
+  \lean{AlgebraicGeometry.sectionCechAugV_comp_d}
+  \uses{def:sectionCechAugV, lem:sectionCechAugV_π, lem:section_cech_objd_apply}
+  For the augmentation \(\varepsilon_V\) of Definition~\ref{def:sectionCechAugV},
+  \[
+    \varepsilon_V \cdot d^0 \;=\; 0.
+  \]
+\end{lemma}
+\begin{proof}
+  \uses{lem:sectionCechAugV_π, lem:section_cech_objd_apply}
+  \leanok
+  It suffices to check every coordinate indexed by \(\sigma:\operatorname{Fin}2\to I\).
+  The alternating differential has two terms. By
+  Lemma~\ref{lem:sectionCechAugV_π}, each is the composite restriction from \(V\), first to one
+  of \(U_{\sigma(0)}\cap V\) and \(U_{\sigma(1)}\cap V\), and then to their intersection.
+  Transitivity of restriction identifies both composites with the restriction from \(V\) to
+  \((U_{\sigma(0)}\cap V)\cap(U_{\sigma(1)}\cap V)\). They occur with opposite signs, so their
+  sum is zero.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Comparison of the evaluated and concrete section augmentations]
+  \label{lem:mappedSectionCechAugV_eq}
+  \lean{AlgebraicGeometry.mappedSectionCechAugV_eq}
+  \uses{def:cech_augmentation, def:sectionCechAugV, lem:sectionCechAugV_π,
+    lem:coreIso_obj_iso, lem:coreIso_objIso_π, lem:pushPull_sigma_iso,
+    lem:pushPull_leg_sections, lem:pushPull_eval_prod_iso}
+  Let \(\Psi=\operatorname{forget}\cdot\operatorname{restrictScalars}(\mathrm{id})\), let
+  \(G_V=\operatorname{toPresheaf}\cdot\operatorname{ev}_V\), and let
+  \(\mathrm{objIso}\,0\) be the degree-zero isomorphism of
+  Lemma~\ref{lem:coreIso_obj_iso}. Then
+  \[
+    G_V\bigl(\Psi(\operatorname{cechAugmentation})\bigr)
+      \cdot (\mathrm{objIso}\,0).\mathrm{hom}=\varepsilon_V.
+  \]
+\end{lemma}
+\begin{proof}
+  \uses{lem:sectionCechAugV_π, lem:coreIso_objIso_π, lem:pushPull_sigma_iso,
+    lem:pushPull_leg_sections, lem:pushPull_eval_prod_iso}
+  \leanok
+  Maps into the product are equal if all their coordinates are equal. Fix
+  \(\sigma:\operatorname{Fin}1\to I\). The \(\sigma\)-projection of
+  \(\mathrm{objIso}\,0\) identifies the corresponding push--pull term with sections over
+  \(U_{\sigma(0)}\cap V\). The augmentation followed by this leg is the unit for the open
+  immersion \(U_{\sigma(0)}\hookrightarrow X\); under the section identification, that unit is
+  restriction from \(V\) to \(U_{\sigma(0)}\cap V\). This is the \(\sigma\)-coordinate of
+  \(\varepsilon_V\) by Lemma~\ref{lem:sectionCechAugV_π}.
 \end{proof}
 
 \begin{lemma}
@@ -8858,7 +8847,8 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
     lem:section_cech_product_equiv, def:cech_augmented_complex,
     def:cech_augmentation, lem:cech_augmentation_comp_d,
     def:sectionCechAugV, lem:sectionCechAugV_comp_d,
-    lem:coreIso_obj_iso, lem:coreIso_comm, lem:coverInterOpen_inf_distrib,
+    lem:mappedSectionCechAugV_eq, lem:coreIso_obj_iso, lem:coreIso_comm,
+    lem:coverInterOpen_inf_distrib,
     lem:mapHC_augment_iso, lem:map_augment_cond, lem:augmentCochainIso}
   Fix an open \(V \subseteq X\). The augmented {\v C}ech complex of
   Definition~\ref{def:cech_augmented_complex} evaluated at \(V\) (through
@@ -8878,10 +8868,11 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \begin{itemize}
     \item the restriction product map \(\varepsilon : \Gamma(V, \mathcal{F}) \to
       \prod_i \Gamma(U_i \cap V, \mathcal{F})\), \(t \mapsto \bigl(t|_{U_i \cap V}\bigr)_i\)
-      --- the evaluation at \(V\) of the {\v C}ech augmentation
-      \(\mathcal{F} \to \mathcal{C}^0\) of Definition~\ref{def:cech_augmentation}; and
+      of Definition~\ref{def:sectionCechAugV}; by
+      Lemma~\ref{lem:mappedSectionCechAugV_eq}, this is the evaluation at \(V\) of the {\v C}ech
+      augmentation \(\mathcal{F} \to \mathcal{C}^0\) of Definition~\ref{def:cech_augmentation}; and
     \item the augmentation identity \(h_\varepsilon : \varepsilon \cdot d^0 = 0\), the
-      evaluation at \(V\) of Lemma~\ref{lem:cech_augmentation_comp_d}.
+      content of Lemma~\ref{lem:sectionCechAugV_comp_d}.
   \end{itemize}
   Concretely: at the augmentation node both complexes carry \(\Gamma(V, \mathcal{F})\),
   identified by the identity map; at {\v C}ech degree \(p\) the object isomorphism
@@ -8893,6 +8884,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \uses{lem:pushPull_eval_prod_iso, lem:section_cech_objd_apply,
     lem:section_cech_product_equiv, def:cech_augmentation, lem:cech_augmentation_comp_d,
     lem:mapHC_augment_iso, lem:map_augment_cond, lem:augmentCochainIso,
+    lem:mappedSectionCechAugV_eq, lem:sectionCechAugV_comp_d,
     lem:coreIso_obj_iso, lem:coreIso_comm, lem:coverInterOpen_inf_distrib}
   The augmentation node of both complexes is \(\Gamma(V, \mathcal{F})\), matched by the
   identity. At {\v C}ech degree \(p\) the object isomorphism between
@@ -8947,18 +8939,13 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \emph{Augmentation differential.} The lowest differential of \(D^\bullet\) is the evaluation
   at \(V\) of the {\v C}ech augmentation \(\varepsilon : \mathcal{F} \to \mathcal{C}^0\)
   (Definition~\ref{def:cech_augmentation}); read through the degree-\(0\) instance of
-  Lemma~\ref{lem:pushPull_eval_prod_iso} it is exactly the restriction product map
-  \(t \mapsto (t|_{U_i \cap V})_i\), which is the augmentation map \(\varepsilon\) of
-  \(D'^\bullet_{\mathrm{aug}}\) by construction. The compatibility square \(h_{\mathrm{compat}}\)
-  fed to Lemma~\ref{lem:augmentCochainIso} is \emph{canonical up to the section-functor
-  adapter}: once the adapter path \(\Psi = \operatorname{forget} \cdot
-  \operatorname{restrictScalars}(\mathrm{id})\) followed by \(G_V = \operatorname{toPresheaf}
-  \cdot \operatorname{ev}_{V}\) is unfolded, \(G_V(\Psi(\operatorname{cechAugmentation}))\)
-  \emph{is} the restriction product \(\varepsilon\) on the nose, so the square closes by
-  construction --- it is precisely the degree-\(0\) instance of the differential match carried
-  by \(\mathrm{coreIso}\). Both augmented
-  complexes are well-formed by the shared identity \(\varepsilon \cdot d^0 = 0\)
-  (Lemma~\ref{lem:cech_augmentation_comp_d}). Hence the degreewise maps assemble to an
+  Lemma~\ref{lem:pushPull_eval_prod_iso} it is the restriction product map
+  \(t \mapsto (t|_{U_i \cap V})_i\) by
+  Lemma~\ref{lem:mappedSectionCechAugV_eq}. This supplies the compatibility square
+  \(h_{\mathrm{compat}}\) for Lemma~\ref{lem:augmentCochainIso}. The source augmentation is a
+  complex differential by Lemma~\ref{lem:cech_augmentation_comp_d}, while the concrete
+  restriction product is one by Lemma~\ref{lem:sectionCechAugV_comp_d}. Hence the degreewise maps
+  assemble to an
   isomorphism of cochain complexes \(D^\bullet \cong D'^\bullet_{\mathrm{aug}}\).
 \end{proof}
 

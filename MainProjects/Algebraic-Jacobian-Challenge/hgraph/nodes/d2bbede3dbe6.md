@@ -8,10 +8,10 @@ label: lem:over_mkIdTerminal_mathlib
 lean_status: mathlib_ok
 mathlib_name:
 - CategoryTheory.Over.mkIdTerminal
-order: 400
+order: 401
 title: The identity arrow is terminal in the slice category
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-26T00:08:21'
 ---
 \textit{Provided by Mathlib.}
   For an object \(S\) of a category, \(\operatorname{Over.mk}(\mathrm{id}_S)\) is a terminal object

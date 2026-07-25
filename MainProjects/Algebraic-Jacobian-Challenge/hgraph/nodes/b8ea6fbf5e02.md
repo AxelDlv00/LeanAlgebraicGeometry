@@ -8,10 +8,10 @@ label: lem:isoSpec_scheme_mathlib
 lean_status: mathlib_ok
 mathlib_name:
 - AlgebraicGeometry.Scheme.isoSpec
-order: 415
+order: 416
 title: The canonical isomorphism of an affine scheme with its spectrum
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-26T00:08:21'
 ---
 \textit{Provided by Mathlib.}
   Let \(U\) be a scheme with \([\,\mathrm{IsAffine}\ U\,]\). Then there is a canonical

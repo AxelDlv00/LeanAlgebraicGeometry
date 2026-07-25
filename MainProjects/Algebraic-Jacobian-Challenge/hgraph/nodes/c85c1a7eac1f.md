@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:openimm_bareBC_isIso
 lean_status: lean_ok
-order: 521
+order: 522
 title: 'Stage 2, assembly: \(\operatorname{bareBC}\) is an isomorphism'
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-26T00:08:21'
 ---
 For the cartesian square \(p' \cdot g' = g'_V \cdot p\) of \cref{lem:openimm_beckchevalley} with
   \(p\) an open immersion, \(V\) affine (\([\mathrm{IsAffine}\,V]\)), \(X\) separated, and
