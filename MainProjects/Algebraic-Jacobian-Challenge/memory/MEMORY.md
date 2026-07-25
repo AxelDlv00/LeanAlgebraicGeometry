@@ -1,4 +1,8 @@
-# Memory index
+# Historical memory index
+
+These iteration-era notes preserve investigation context; file locations and
+open-goal claims may now be obsolete. Use `horizon roadmap list --focus
+AJC.jacobian` and the project inbox for current status.
 
 - [iter-225 blueprint audit findings](ts225-blueprint-audit.md) — iter-225 whole-blueprint audit: HARD GATE CLEARS for sub-step 4 (`lem:internal_hom_isSheaf` → `AlgebraicGeometry.Scheme.Modules.dual`). Key finding: the sheaf-condition proof is adequate but elides one sentence about sheafification universal property for the descended evaluation. Minor gap, formalizable. `lem:dual_isLocallyTrivial` and `rem:dual_discharges_inverse` coherent with sub-step 4. Dual pin inconsistency between AbelianVarietyRigidity.tex (old `rationalMap_to_av_extends`) and Thm32RationalMapExtension.tex (canonical `Scheme.RationalMap.extend_to_av`) — soon-fix. 6 partial chapters all in held/paused routes.
 
