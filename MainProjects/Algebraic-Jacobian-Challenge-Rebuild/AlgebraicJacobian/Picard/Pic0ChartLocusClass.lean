@@ -7,36 +7,41 @@ import AlgebraicJacobian.Picard.Pic0ChartLocusOpen
 import AlgebraicJacobian.Picard.Pic0ChartLocusFibreField
 
 /-!
-# `chartLocus`: the class-indexed chart locus and its openness (C9a)
+# The class-indexed witness locus and its openness (the untwisted predecessor of `chartLocus`)
 
 `Picard/Pic0ChartLocusOpen.lean` proves openness of the witness locus of a *chosen*
-basic-open cocycle datum `D`, and `Picard/Pic0ChartLocusFibreField.lean` proves that the
-witness predicate is intrinsic to the *fibre class* of the datum.  Neither file defines
-`chartLocus` — until this one, the name occurred only in doc comments across the tree
-(one of which, `Pic0ChartLocusFibreField.lean:20`, calls it "the still-undefined
-`chartLocus`").
+basic-open cocycle datum `D`; `Picard/Pic0ChartLocusFibreField.lean` proves that the witness
+predicate is intrinsic to the *fibre class* of the datum.  Both are stated per datum.  This
+file makes the step neither takes: it indexes the locus by a **class**.
 
-This file defines it, at the carrier level the consumers need — a locus in the parameter
-space `Spec B`, indexed by a **class**, not by a datum — and proves the two facts the C9
-consumers ask for:
+* `AlgebraicGeometry.cechWitnessLocus π c` — `{q : Spec B | every basic-open cocycle datum
+  with fibre class `c` has an effective witness divisor with vanishing `H¹` at `κ(q)`}`.
+* `AlgebraicGeometry.mem_cechWitnessLocus_iff_of_datum` — any ONE presenting datum is a
+  sound and complete test (class-intrinsicity).
+* `AlgebraicGeometry.mem_cechWitnessLocus_iff_exists` — the ∀-form and the ∃-form agree
+  (every class is presented, `BasicOpenCocycleDatum.exists_cechPicClass_eq`).
+* `AlgebraicGeometry.isOpen_cechWitnessLocus` — the openness.
 
-* `AlgebraicGeometry.chartLocus` — `{q | every datum with fibre class `c` has a witness
-  divisor with vanishing `H¹` at `κ(q)`}`.  A datum-choice-free predicate on
-  `PrimeSpectrum B`.
-* `AlgebraicGeometry.mem_chartLocus_iff_exists` — the ∀-form and the ∃-form agree: since
-  the witness predicate is class-intrinsic, quantifying over all data representing `c`
-  and over some datum representing `c` give the same locus.  (Every class IS represented,
-  by `BasicOpenCocycleDatum.exists_cechPicClass_eq`.)
-* `AlgebraicGeometry.isOpen_chartLocus` — **the openness**, reduced to
-  `BasicOpenCocycleDatum.isOpen_setOf_exists_witness_h1_vanishing` at any one
-  representing datum.
+## THIS IS NOT `chartLocus`, AND NOT `isOpen_chartLocus`
 
-Everything here is free of the DD-R certificate lane and of `divRep`: no
-`DivFamZar`, no `IsCertified`, no `RepresentableBy` datum appears.  What is *not* here
-is the C9 deliverable `f_c` (the chart morphism), which is genuinely gated on a
-universal family; see the roadmap row `AJCR.w4-rep.datum.dat-c.c9-chartlocus`.
+Those two names are RESERVED, and co-signed between two lanes: `informal/w4-datc-worksheet.md`
+§3.3 (CHART-U(a)) freezes `chartLocus c λ` for a locus over a general test `T`, indexed by a
+**plus class** `λ ∈ pic0Subgroup C (Over.mk a)`, at the **twisted** fibre class
+`λ_t · θ^m · (−Σ)`; `informal/w4-datb-worksheet.md` §1.6 co-signs it with two binding
+amendments — the predicate for arbitrary plus classes is the SPLIT form over a finite
+separable `L/κ(t)`, and the openness route of record is a three-transport chain — and row B-4
+owns `isOpen_chartLocus` as the *assembly* of DAT-B's transports (i)/(ii) against DAT-C's
+shifted-datum half.  None of that is here.
+
+What IS here is the step those amendments presuppose and nobody had written: over an affine
+base, for an UNTWISTED `CechPic` class, the engine's per-datum output is a locus of the class.
+Call it transport (0).  Still missing for `chartLocus` proper: the shifted-datum constructor
+(DAT-C GAP-1 — no `BasicOpenCocycleDatum.mul`/tensor exists), the split predicate
+(a-amendment), and transports (i) descent and (ii) étale image (DAT-B).
+
+Free of the DD-R certificate lane and of `divRep`: no `DivFamZar`, no `IsCertified`, no
+`RepresentableBy` datum appears in the cone.
 -/
-
 set_option autoImplicit false
 
 universe u
@@ -60,59 +65,65 @@ variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
   [GeometricallyIrreducible C.hom]
 
 variable (π) in
-/-- **The chart locus of a class** (C9, `w4-datc` §3.3): the set of points of the
-parameter space `Spec B` at which the fibre of the class `c` admits an effective witness
-divisor with vanishing `H¹` — i.e. at which `c` is "seen by the chart".
+/-- **The witness locus of an untwisted class over an affine base**: the set of points of
+`Spec B` at which the fibre of the Čech class `c` admits an effective witness divisor with
+vanishing `H¹`.
 
-Stated over *classes*, not over data: a basic-open cocycle datum is a presentation, and
-the campaign's consumers (dat-b B-6, dat-glue) index charts by the Picard class.  The
-quantifier is harmless because the predicate is class-intrinsic
-(`BasicOpenCocycleDatum.hasWitnessH1Vanishing_congr_of_cechPicClass_eq`) and every class
-is presented (`BasicOpenCocycleDatum.exists_cechPicClass_eq`) — see
-`mem_chartLocus_iff_exists`. -/
-def chartLocus (c : (relCurve C B).CechPic) : Set (PrimeSpectrum B) :=
+Stated over *classes*, not over data: a basic-open cocycle datum is a presentation, and the
+campaign's consumers index charts by a Picard class.  The ∀-quantifier is harmless because
+the predicate is class-intrinsic
+(`BasicOpenCocycleDatum.hasWitnessH1Vanishing_congr_of_cechPicClass_eq`) and every class is
+presented (`BasicOpenCocycleDatum.exists_cechPicClass_eq`) — see
+`mem_cechWitnessLocus_iff_exists`.
+
+NOT the co-signed `chartLocus c λ` of `w4-datc` §3.3 / `w4-datb` §1.6: that one lives over a
+general test, is indexed by a plus class, and reads the TWISTED fibre class.  See the module
+header. -/
+def cechWitnessLocus (c : (relCurve C B).CechPic) : Set (PrimeSpectrum B) :=
   {q : PrimeSpectrum B | ∀ D : BasicOpenCocycleDatum C B π,
     D.cechPicClass = c → D.HasWitnessH1Vanishing q.asIdeal.ResidueField}
 
-theorem mem_chartLocus_iff (c : (relCurve C B).CechPic) (q : PrimeSpectrum B) :
-    q ∈ chartLocus π c ↔ ∀ D : BasicOpenCocycleDatum C B π,
+theorem mem_cechWitnessLocus_iff (c : (relCurve C B).CechPic) (q : PrimeSpectrum B) :
+    q ∈ cechWitnessLocus π c ↔ ∀ D : BasicOpenCocycleDatum C B π,
       D.cechPicClass = c → D.HasWitnessH1Vanishing q.asIdeal.ResidueField :=
   Iff.rfl
 
 /-- **Membership is testable at any one presentation**: a datum `D` presenting `c` is a
-sound and complete test for membership of the chart locus.  This is the class-intrinsicity
+sound and complete test for membership of the witness locus.  This is the class-intrinsicity
 of the witness predicate, `hasWitnessH1Vanishing_congr_of_cechPicClass_eq`, in the form
 the consumers use. -/
-theorem mem_chartLocus_iff_of_datum {c : (relCurve C B).CechPic}
+theorem mem_cechWitnessLocus_iff_of_datum {c : (relCurve C B).CechPic}
     (D : BasicOpenCocycleDatum C B π) (hD : D.cechPicClass = c) (q : PrimeSpectrum B) :
-    q ∈ chartLocus π c ↔ D.HasWitnessH1Vanishing q.asIdeal.ResidueField := by
+    q ∈ cechWitnessLocus π c ↔ D.HasWitnessH1Vanishing q.asIdeal.ResidueField := by
   refine ⟨fun h => h D hD, fun h D' hD' => ?_⟩
   refine (D'.hasWitnessH1Vanishing_congr_of_cechPicClass_eq D
     q.asIdeal.ResidueField ?_).mpr h
   exact congrArg (Scheme.CechPic.map (relCurveMap C B q.asIdeal.ResidueField))
     (hD'.trans hD.symm)
 
-/-- **The ∀-form and the ∃-form of the chart locus agree**: every class is presented by
+/-- **The ∀-form and the ∃-form of the witness locus agree**: every class is presented by
 some datum, and the witness predicate does not depend on which. -/
-theorem mem_chartLocus_iff_exists (c : (relCurve C B).CechPic) (q : PrimeSpectrum B) :
-    q ∈ chartLocus π c ↔ ∃ D : BasicOpenCocycleDatum C B π,
+theorem mem_cechWitnessLocus_iff_exists (c : (relCurve C B).CechPic) (q : PrimeSpectrum B) :
+    q ∈ cechWitnessLocus π c ↔ ∃ D : BasicOpenCocycleDatum C B π,
       D.cechPicClass = c ∧ D.HasWitnessH1Vanishing q.asIdeal.ResidueField := by
   obtain ⟨D₀, hD₀⟩ := BasicOpenCocycleDatum.exists_cechPicClass_eq (C := C) (π := π) c
   refine ⟨fun h => ⟨D₀, hD₀, h D₀ hD₀⟩, fun ⟨D, hD, h⟩ => ?_⟩
-  exact (mem_chartLocus_iff_of_datum D hD q).mpr h
+  exact (mem_cechWitnessLocus_iff_of_datum D hD q).mpr h
 
-/-- **The chart locus is open** (C9a, the keystone the consumers cite): the class-indexed
-locus is the witness locus of any one presenting datum, and that is open by
+/-- **The class-indexed witness locus is open**: it is the witness locus of any one
+presenting datum, and that is open by
 `BasicOpenCocycleDatum.isOpen_setOf_exists_witness_h1_vanishing` (the audited,
 Noetherian-free openness engine).
 
-This is the first *datum-choice-free* openness statement of the C9 row — the earlier
-engine output is stated for a chosen `D`, which is not what a chart indexed by a Picard
-class may depend on. -/
-theorem isOpen_chartLocus (hπ : π ≫ P1.structureMap k = C.hom)
-    (c : (relCurve C B).CechPic) : IsOpen (chartLocus π c) := by
+This is the first *datum-choice-free* openness statement in the campaign — the engine output
+is stated for a chosen `D`, which is not something a locus indexed by a Picard class may
+depend on.  It is strictly weaker than the reserved `isOpen_chartLocus` (dat-b row B-4),
+which assembles this with the shifted-datum constructor and the descent/étale-image
+transports; do not cite it as that. -/
+theorem isOpen_cechWitnessLocus (hπ : π ≫ P1.structureMap k = C.hom)
+    (c : (relCurve C B).CechPic) : IsOpen (cechWitnessLocus π c) := by
   obtain ⟨D₀, hD₀⟩ := BasicOpenCocycleDatum.exists_cechPicClass_eq (C := C) (π := π) c
-  have hset : chartLocus π c
+  have hset : cechWitnessLocus π c
       = {q : PrimeSpectrum B |
           ∃ W : ((C ⊗ overSpec k q.asIdeal.ResidueField).left).CurveDivisor,
             Scheme.CurveDivisor.picClass q.asIdeal.ResidueField W
@@ -121,7 +132,7 @@ theorem isOpen_chartLocus (hπ : π ≫ P1.structureMap k = C.hom)
               ∧ Subsingleton (Sheaf.HModule
                   ((C ⊗ overSpec k q.asIdeal.ResidueField).left.divisorSheaf
                     q.asIdeal.ResidueField W) 1)} :=
-    Set.ext fun q => mem_chartLocus_iff_of_datum D₀ hD₀ q
+    Set.ext fun q => mem_cechWitnessLocus_iff_of_datum D₀ hD₀ q
   rw [hset]
   exact D₀.isOpen_setOf_exists_witness_h1_vanishing hπ
 

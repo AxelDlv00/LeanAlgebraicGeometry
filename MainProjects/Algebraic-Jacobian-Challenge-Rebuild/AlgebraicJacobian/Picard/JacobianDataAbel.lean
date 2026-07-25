@@ -32,6 +32,13 @@ Nothing here assumes a producer for `jacobianData`; everything is stated for an 
 `d : JacobianData C`, in the section-variable discipline `JacobianData.lean` fixes.  The
 universal-property half of Wave 6 (`exists_unique_ofCurve_comp`, `Challenge.lean:141`) is
 NOT addressed here and has no avatar anywhere.
+
+## The coupling the frozen discharge depends on
+
+`comp_ofCurve` transfers to `Challenge.lean:130` only if the frozen `Jacobian.instGrpObj`
+is discharged **as** `(jacobianData C).grpObj`.  If DAT-J ever supplies a different `GrpObj
+(Jacobian C)` instance, `η[Jacobian C]` there is a different unit and this avatar does not
+apply.  That is a constraint on DAT-J, recorded here because this is where it bites.
 -/
 
 set_option autoImplicit false
