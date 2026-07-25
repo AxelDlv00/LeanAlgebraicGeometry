@@ -2,10 +2,10 @@ id: AJC.maintenance.build.warnings.residual
 title: Residual project warning debt
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The controlled clean-build allocation covers 565 of 578 warnings outside
-  QuotScheme. Warning-free target builds have since removed 37 dual-unit, 29 FlatBaseChange,
-  80 presheaf dual pullback, 57 DualInverse, and 33 duality-support warnings; the
-  estimated residual total is 329 pending the next controlled recount.
+summary: A warm whole-project build verifies the residual at exactly 329 warning heads
+  across 40 project files after passing all 8,721 jobs. This is 249 below the 578-warning
+  controlled clean-build baseline. The remaining debt is partitioned into representability,
+  cohomology, Picard core, and Albanese/Riemann-Roch entry areas.
 status: pending
 kind: refactor
 priority: normal
@@ -28,4 +28,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings
-  updated_at: '2026-07-25T05:13:02.702180+00:00'
+  updated_at: '2026-07-25T05:56:50.768182+00:00'

@@ -4,14 +4,15 @@ kind: issue
 body: 'Lean full-build warning baseline
 
 
-  A controlled clean package build passes all 8,720 jobs with 578 project warnings
-  across 49 files, down 596 from the verified 1,174-warning baseline. Subsequent warning-free
-  target builds remove 13 QuotScheme, 37 PresheafDualUnitPullback, 29 FlatBaseChange,
-  80 PresheafDualPullback, 57 DualInverse, and 33 duality-support warnings. The current
-  arithmetic projection is therefore 329 warnings; it is not yet a clean-build recount.
-  The complete 207-warning duality allocation is closed. The heartbeat audit projects
-  38 missing-rationale diagnostics. CechSectionContractibility degree one remains
-  the main structural elaboration hotspot, with its wrapper split and cheap.'
+  The controlled clean-build baseline passes all 8,720 jobs with 578 project warnings
+  across 49 files, down 596 from the verified 1,174-warning baseline. After targeted
+  cleanup, a warm whole-project build passes all 8,721 jobs with exactly 329 warning
+  heads across 40 project files. It completed in 28:46.24 wall time at 9,823,932 KiB
+  peak RSS under shared-host contention. The complete 207-warning duality allocation
+  is closed, and every file changed in that campaign emits zero warnings. The heartbeat
+  audit projects 38 missing-rationale diagnostics. CechSectionContractibility degree
+  one remains the main structural elaboration hotspot, with its wrapper split and
+  cheap.'
 labels:
 - agent-ready
 status: open
@@ -22,7 +23,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-24T14:56:46.449883+00:00'
-updated_at: '2026-07-25T05:15:57.242959+00:00'
+updated_at: '2026-07-25T05:57:36.778601+00:00'
 metadata:
   provenance:
     run: '0046'

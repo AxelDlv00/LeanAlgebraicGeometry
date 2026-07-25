@@ -2,12 +2,11 @@ id: AJC.maintenance.build
 title: Project-wide build and warning budgets
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The controlled package-qualified clean build passes 8,720 jobs with 578 project
-  warnings across 49 files, down 596 from the previous baseline; warning-free target
-  cleanups give an estimated current total of 329 and close the full 207-warning duality
-  allocation. Cech degree-one work is isolated from an 11-second cached wrapper, and
-  the dual pullback split reduces its base target from 2:38.03 to 22.68 seconds while
-  the 1:37.28 composition target runs independently. Warning, heartbeat, and umbrella-import
+summary: The controlled clean-build baseline passes 8,720 jobs with 578 project warnings
+  across 49 files. After targeted cleanup, a warm whole-project build passes 8,721
+  jobs with 329 warnings across 40 files in 28:46.24 wall time at 9,823,932 KiB peak
+  RSS; the full 207-warning duality allocation is clean. Cech degree-one work remains
+  isolated from an 11-second cached wrapper, and warning, heartbeat, and umbrella-import
   work remain explicit open children.
 status: pending
 kind: refactor
@@ -31,7 +30,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
-  updated_at: '2026-07-25T05:24:52.194218+00:00'
+  updated_at: '2026-07-25T05:56:13.916918+00:00'
   pinned_commits:
   - df5192767
   - afbd88600
