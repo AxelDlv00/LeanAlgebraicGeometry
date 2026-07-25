@@ -1,0 +1,73 @@
+id: I-0337
+provider: local
+kind: memory
+body: "DURABLE — THE DD-R CERTIFICATE INTERFACE IS NOT THE DIVISOR FUNCTOR, AND THE\
+  \ I-0213 REPAIR DOES NOT SAVE IT (Ground, run 0048 r0).\n\nCHAIN OF FACTS, each\
+  \ verified on disk:\n 1. divFunctor (Picard/DivisorFamilyZarFunctor.lean:45) unfolds\
+  \ definitionally to DivFamZar -> IsLocallyCertified -> CertifiedDivisorFamily ->\
+  \ DivisorAdaptation.IsCertified (DivisorFamily.lean:426). Nothing pins it to an\
+  \ honest relative effective Cartier divisor over a general base. The ONLY bridge\
+  \ to standard mathematics is at FIELD-valued tests: divFamFieldEquiv (DivisorFamilyFieldSurj.lean:162)\
+  \ identifies DivFam C K π n with effective degree-n divisors, because over a field\
+  \ every module is projective (isCertified_of_deg, :104). Over a general base there\
+  \ is no theorem relating IsCertified to a finite flat closed subscheme, and no producer\
+  \ of a certified family from any honest geometric input.\n 2. There is no Lean declaration\
+  \ named `divRep`. Both representability packagings are hypothesis bundles with no\
+  \ producer: DivRepGlobalData (DivRepKit.lean:68, `representableBy` at :115) and\
+  \ DivRepAffinePullback (DivRepAffKit.lean:167). Neither is instantiated anywhere.\n\
+  \ 3. The blueprint says NOTHING about any of this: zero hits for divFunctor / divRep\
+  \ / DivFamZar / DivFam / IsCertified / DivScheme / carve across blueprint/src. The\
+  \ claim lives only in informal/spec-dd-r.md:272 and Addendum 1. So there is no blueprint\
+  \ statement to contradict — but also no mathematical specification of what divRep\
+  \ is supposed to represent.\n 4. I-0213 already conceded that the GLOBAL certificate\
+  \ excludes an honest degree-1 relative effective divisor (the diagonal of C_R over\
+  \ R = Γ(C minus a point)). Its repair was IsLocallyCertified, i.e. localize the\
+  \ BASE — and that repair does defeat the diagonal, because the diagonal locally\
+  \ stays in one chart.\n 5. THE NEW FACT (this session, DivSchemeCertZarConn.lean,\
+  \ commit 40f357de8): connectedness of the divisor defeats the repair. Base localization\
+  \ does not disconnect an integral divisor scheme, so the counter-model V(t x² +\
+  \ x y + t y²) ⊆ P¹ over k[t] — section ring k[t][x]/(t x² + x + t), a domain, fibre\
+  \ {0, ∞} at t = 0 — is chart-crossing over EVERY basic open of the base. Hence DivFamZar\
+  \ is still a proper subfunctor of the honest relative-divisor functor.\n 6. Fact\
+  \ 5 is currently one lemma short of being formal: the step \"(c1) forces leak-freeness\"\
+  \ is asserted (Conn.lean:125, I-0209, I-0327, roadmap chart-avoid) and proved NOWHERE.\
+  \ See I-0334 for the exact statement and a complete proof route.\n\nCONSEQUENCE\
+  \ FOR THE LANE. chart-avoid is not a bookkeeping lemma and cannot be one: no lemma\
+  \ about the DD-R atlas can make an arbitrary chart-crossing relative divisor chart-confined,\
+  \ because such divisors exist and are honest. So chart-avoid is a CARVE or a REDESIGN,\
+  \ never a lemma. Independently verified this session: the DD-R chart construction\
+  \ contains NO fibre-avoidance condition anywhere — not in ThetaGeneratorSeed (DivSchemeFamily.lean:74,\
+  \ five fields, `side z` merely picks SOME chart containing z), not in relThetaSections,\
+  \ not in FinCoverData/DivisorAdaptation/IsCertified/DivFamZar, not in DivCarveChartRing/DivScheme/DivSchemeAtlasFactor.\
+  \ The only occurrences of π⁻¹(0)/π⁻¹(∞) in the entire Lean tree are five doc-comment\
+  \ lines in Swallow.lean and Conn.lean. And informal/spec-dd-r.md §Discipline (2)\
+  \ explicitly FORBIDS support-separation hypotheses (\"never a support condition\
+  \ supp D ∩ π⁻¹(Gm) = ∅\"), while spec-dd-r ADDENDUM 1 asserts the universal family\
+  \ \"is honestly certified over each Z(♦)-chart ring\" — a claim backed by NO unconditional\
+  \ Lean theorem (every landed route to IsCertified takes hnoLeak, kernel-spanning,\
+  \ or separation as a hypothesis).\n\nSo the spec and the landed mathematics now\
+  \ contradict each other, and that is a decision for the human, not a proof obligation\
+  \ for the next session."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T14:12:22.498779+00:00'
+updated_at: '2026-07-25T14:15:28.791669+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-optimize

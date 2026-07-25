@@ -1,0 +1,67 @@
+id: I-0335
+provider: local
+kind: issue
+body: "GROUND (run 0048 r0 checkpoint) — three defects in the run-0048 certificate-lane\
+  \ slice; all cheap to fix, one is a dangling reference to a file that does not exist.\n\
+  \n(1) DANGLING REFERENCE + UNPROVED SUFFICIENCY CLAIM.\nAlgebraicJacobian/Picard/DivSchemeCertZarChartTrace.lean:33-35\
+  \ claims:\n  \"supportLocus ∩ V₀ and supportLocus ∩ V₁ closed is not merely necessary,\
+  \ it is *sufficient*,\n   because the two-piece adaptation whose pieces are the\
+  \ pinned charts themselves realizes it\n   (`DivSchemeCertZarChartPair.lean`).\"\
+  \nThat file DOES NOT EXIST (find/grep over the whole workspace: the string occurs\
+  \ only in this docstring). Worse, the claim is not obviously true: taking pieces\
+  \ = V₀, V₁ requires a DivisorAdaptation, whose `eqn_rel` field (DivisorFamily.lean:241)\
+  \ demands a SINGLE section of Γ(relCurve, V_b) agreeing with d up to a unit on the\
+  \ overlap with every member of d.cover — i.e. principality of the divisor ideal\
+  \ on the whole pinned chart. That is not free; it is essentially the content of\
+  \ swallow-adapt step (b). Either delete the sentence or state the missing hypothesis.\n\
+  \n(2) THE NEW CHAIN chart-avoid -> swallow-adapt IS UNDER-SPECIFIED AND WILL NOT\
+  \ COMPOSE AS WRITTEN.\nchart-avoid is titled \"is the DD-R chart s divisor confined\
+  \ to ONE pinned chart?\" and states its goal as\n  supportLocus ⊆ V₀ (or the V₁\
+  \ twin).\nswallow-adapt consumes forall_noLeak_of_forall_subset_or_disjoint, whose\
+  \ hypothesis is swallow-or-miss at EVERY piece. Those do not match. Chase the dichotomies\
+  \ of DivSchemeCertZarSwallow.lean (subset_chart₀_or_disjoint_chart₀ + the V₁ twin)\
+  \ to their four cases: swallow-or-miss holds iff\n  supportLocus ⊆ V₀ ⊓ V₁   (avoid\
+  \ BOTH vertical fibres),  or\n  supportLocus ⊆ π⁻¹(0),  or  supportLocus ⊆ π⁻¹(∞)\
+  \   (inside ONE fibre),  or  empty.\n\"Confined to one chart\" alone is NOT sufficient:\
+  \ if supp ⊆ V₀ but supp meets π⁻¹(0), no chart-1 piece can swallow supp (pieces\
+  \ of chart 1 lie in V₁), so all chart-1 pieces must miss it, forcing supp ∩ V₁ =\
+  \ ∅, i.e. supp inside π⁻¹(0). So chart-avoid must deliver the V₀ ⊓ V₁ form (the\
+  \ Swallow module docstring at :29-33 and :150 says so correctly; the roadmap leaf\
+  \ title and stated goal do not). Retitle/restate the leaf to the V₀ ⊓ V₁ target\
+  \ before any session works it, or swallow-adapt will stall on a mismatched input.\n\
+  \nNote also that DivSchemeCertZarConn.supportLocus_subset_chart_of_isPreconnected\
+  \ proves only the WEAKER \"⊆ V₀ ∨ ⊆ V₁\" disjunction, while the Swallow dichotomies\
+  \ already give the sharper four-case split. Conn s headline theorem is therefore\
+  \ weaker than what was landed one file earlier; the sharp version is the one chart-avoid\
+  \ needs.\n\n(3) ROADMAP ANCHOR IS WRONG.\nAJCR.w4-rep.datum.dat-c.c9-chartlocus\
+  \ says \"`chartLocus` is referenced at Picard/Pic0SigmaSheaf.lean:162-164\". Verified:\
+  \ `grep -n chartLocus AlgebraicJacobian/Picard/Pic0SigmaSheaf.lean` returns NOTHING;\
+  \ lines 155-170 of that file are pic0RepresentableByOfCharts. The 8 tree-wide occurrences\
+  \ of `chartLocus` are all doc comments in Pic0ChartLocusFibreField.lean (:9,20,21,50,56)\
+  \ and Pic0ChartLocusOpen.lean (:13,32,75). The leaf s CONCLUSION (no definition,\
+  \ no producer, no consumer) is correct; only the pointer is wrong. Fix it to Pic0ChartLocusOpen.lean:12-32\
+  \ + informal/w4-datc-worksheet.md §3.3 so the next session does not lose a round\
+  \ chasing it."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T14:11:28.900628+00:00'
+updated_at: '2026-07-25T14:15:32.323092+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-optimize

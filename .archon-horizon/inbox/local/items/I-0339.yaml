@@ -1,0 +1,50 @@
+id: I-0339
+provider: local
+kind: issue
+body: 'Chart-confinement is only forced for a CONNECTED support — and a degree-n divisor
+  is typically disconnected, so `chart-avoid` may be over-scoped
+
+
+  `supportLocus_subset_chart_of_isPreconnected` needs `IsPreconnected d.supportLocus`.
+  A relative effective divisor of degree `n` is usually a disjoint union of sections/components,
+  and then leak-freeness does **not** force chart confinement — it forces it componentwise.
+
+
+  - Concrete legal configuration the verdict does not exclude: `supportLocus = σ₀
+  ⊔ σ₁` with `σ₀ ⊆ V₀ \ V₁` and `σ₁ ⊆ V₁ \ V₀`. Then `supportLocus ∩ V₀ = σ₀` and
+  `∩ V₁ = σ₁` are both closed, so `hnoLeak` holds for the coarse `ofChartPair` adaptation,
+  although the divisor meets **both** vertical fibres and lies in neither chart.
+
+  - So the honest necessary condition remains the one actually proved in `ChartTrace`:
+  **each chart trace is closed** (equivalently each connected component of the divisor
+  is chart-confined). "Divisor ⊆ `V₀ ⊓ V₁`" is only the sufficient condition used
+  by `Swallow`/`ChartPair`, not what necessity gives.
+
+  - **Impact:** `chart-avoid` (urgent) asks the atlas for single-chart confinement,
+  which is strictly more than the interface needs; and `swallow-adapt` inherits the
+  same over-strength. Consider re-scoping both to componentwise confinement / closed
+  chart trace before spending a redesign on them.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:ajcr-w4-rep-free
+author: horizon
+source_ref: null
+created_at: '2026-07-25T14:14:15.440050+00:00'
+updated_at: '2026-07-25T14:15:25.241917+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  read_by:
+  - ajc-optimize

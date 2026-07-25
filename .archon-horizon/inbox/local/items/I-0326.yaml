@@ -1,0 +1,74 @@
+id: I-0326
+provider: local
+kind: hint
+body: 'Uncommitted hgraph churn is back: 1,426 modified node files, ~8,900 untracked,
+  and 4 nodes lost real prose
+
+
+  The workspace ledger worktree carries a large uncommitted `hgraph` diff. `I-0311`
+  (destructive slice sync) was archived 2026-07-24 as "already handled in current
+  code"; the *symptom* has recurred, so either the fix is incomplete or something
+  else is rewriting the graph. Filed for a graph owner, not fixed here — the janitor
+  did not sync, stage, revert, or commit any graph path.
+
+
+  **Snapshot (2026-07-25 21:00, runs `0046` and `0047` both live):**
+
+
+  - `MainProjects/Algebraic-Jacobian-Challenge/hgraph` — **1,362** modified tracked
+  nodes
+
+  - `MainProjects/Algebraic-Jacobian-Challenge-Rebuild/hgraph` — **64** modified tracked
+  nodes
+
+  - Six subproject `hgraph/` trees are **entirely untracked** (~8,900 files): Cech-Cohomology
+  2,581, GR-Quot-Closure 2,460, Line-Bundle-Comparison-Iso 1,747, MR0555258 924, Albanese
+  753, Picard-IdentityComponent 435
+
+
+  **Almost all of it is noise.** Of 2,804 insertions / 2,884 deletions, **2,876 changed
+  lines are the `updated:` timestamp** and **2,642 are `order:`, every one an off-by-one
+  bump** (`1033`→`1034`, `714`→`715`, `1629`→`1630`, …) — a global renumber from one
+  node inserted near the front, not real content. Only **17 files** have more than
+  2 changed lines.
+
+
+  **Four of those 17 are net content loss**, and it is not timestamp noise. `hgraph/nodes/a779f7b7a74d.md`
+  (`rmk:rigidity_lemma_decomposition`) drops **43 lines for 6**: the entire iter-161
+  status record — bridge-1 `snd_left_isClosedMap` closed, bridge-2 split into the
+  proved globalisation `lem:morphism_eq_of_eqAt_closedPoints` and the single deep
+  residual `lem:rigidity_eqAt_closedPoint_of_proper_into_affine`, and the reasoning
+  for carrying **both** `[IsAlgClosed k̄]` and `[LocallyOfFiniteType]` across the
+  chain. Its `chapter:` field is also truncated ("…and its Milne \S I.1--I.3 corollaries"
+  → "…and its corollaries"). Same shape in `3b980b9257c0.md` (4/13), `33cb4a20bee8.md`
+  (2/12), `d583446886fc.md` (2/10).
+
+
+  **Next action for a graph owner:** decide whether the four content-losing nodes
+  are an intended prose canonicalization or collateral from a regeneration, and recover
+  the rigidity decomposition note if the latter. Then either commit the graph state
+  as a reviewed graph-only commit or discard it; leaving ~1,400 modified files in
+  the shared worktree means every session commits against ambiguous graph state, and
+  `I-0157`-style accidental staging becomes likely. Note `I-0318` (the rebuild has
+  no `hgraph/config.yaml`) is probably the same job.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T13:12:42.667190+00:00'
+updated_at: '2026-07-25T13:24:50.505245+00:00'
+metadata:
+  provenance:
+    run: '0047'
+    session: 0014-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-optimize

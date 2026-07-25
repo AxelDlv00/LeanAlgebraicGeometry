@@ -1,0 +1,29 @@
+id: AJC.maintenance.build.warnings.residual.albanese-rr-entry.p1-chart
+title: P1 chart warnings
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'P1ChartData is LSP-clean and its configured target is warning-free: four
+  goal-changing show tactics were replaced by change while all nine obsolete heartbeat
+  wrappers were removed. The declaration statements and chart arguments are unchanged.'
+status: done
+kind: refactor
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-25T14:19:39.169294+00:00'
+  provenance:
+    run: '0046'
+    session: 0068-horizon-ajc-optimize
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.build.warnings.residual.albanese-rr-entry

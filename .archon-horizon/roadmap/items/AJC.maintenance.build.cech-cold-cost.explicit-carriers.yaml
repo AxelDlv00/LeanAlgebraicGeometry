@@ -1,0 +1,31 @@
+id: AJC.maintenance.build.cech-cold-cost.explicit-carriers
+title: Explicit-carrier bottom homotopy
+projects:
+- Algebraic-Jacobian-Challenge
+summary: Rejected after a faithful experiment. Re-spelling the bottom homotopy and
+  its coordinate helpers on explicit section-complex carriers, with a categorical
+  comp_apply proof, still times out in the kernel at 200k and 400k; the 400k target
+  failed after 7:20 and also exposed a public HAdd carrier mismatch. The source was
+  fully restored and the original 1.6M target rebuilt green.
+status: rejected
+kind: refactor
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-25T14:12:55.565822+00:00'
+  provenance:
+    run: '0046'
+    session: 0068-horizon-ajc-optimize
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.build.cech-cold-cost

@@ -1,0 +1,92 @@
+id: I-0332
+provider: local
+kind: info
+body: 'TWO TEAMS CONVERGED ON THE SAME DD-R VERDICT INDEPENDENTLY (2026-07-25; run
+  0047 session 0014 and a later run''s session 0002, both on task ajcr-w4-rep-free).
+
+
+  We reached overlapping conclusions from different directions, and the two results
+  should be read together
+
+  rather than as duplicates:
+
+
+  MINE (run 0047 r6, DivSchemeCertZarSep.lean): support-SEPARATED adaptations certify
+  with no
+
+  kernel-spanning and no flat-cokernel input (isCertified_of_separated), but separation
+  is impossible once
+
+  a support point lies in V0 cap V1 (supportLocus_disjoint_chart_inter_of_separated),
+  because both pinned
+
+  charts'' partitions of unity force a piece of each. Plus: no-leak IS the Z-clopen
+  condition of I-0209
+
+  proved both ways, and the idempotent brick (idempotent cut => direct summand =>
+  projective/flat).
+
+
+  THEIRS (DivSchemeCertZarChartTrace/Swallow/Conn.lean): strictly STRONGER and subsumes
+  the direction of
+
+  my no-go. Leak-freeness at a piece makes the trace clopen in the support, so a PRECONNECTED
+  support
+
+  forces swallow-or-miss, and hence a connected divisor with a leak-free adaptation
+  lies inside V0 or
+
+  inside V1 (supportLocus_subset_chart_of_isPreconnected). Their verdict applies to
+  ANY leak-free
+
+  adaptation, not just separated ones, and correctly notes base localization cannot
+  disconnect the divisor
+
+  (k[t], x^2 = t counterexample), so the I-0209 clopen-packet programme is available
+  exactly when the
+
+  divisor is already chart-confined.
+
+
+  NET: the certificate interface as currently designed can only be satisfied by chart-confined
+  divisors.
+
+  That is a CHART-DESIGN condition on the DD-R atlas, not a fibre or flatness obligation.
+  My separated
+
+  route is the degenerate special case of their verdict.
+
+
+  STILL MINE AND STILL NEEDED, not covered by their work: the pullback transport
+
+  supportLocus_pullback / unitLocus_pullback (DivSchemeCertZarTransport.lean). Every
+  support/no-leak/clopen
+
+  lemma in the lane -- theirs included -- is stated for a system on relCurve C R,
+  while the pointwise gate
+
+  consumes the PULLED system over Localization.Away r. Without the transport none
+  of these verdicts can be
+
+  composed with the gate. It is now landed and in the default build (9075 jobs green).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T14:08:08.318256+00:00'
+updated_at: '2026-07-25T14:15:38.037286+00:00'
+metadata:
+  provenance:
+    run: '0047'
+    session: 0014-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-optimize

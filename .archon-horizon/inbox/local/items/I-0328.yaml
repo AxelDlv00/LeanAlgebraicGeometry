@@ -1,0 +1,61 @@
+id: I-0328
+provider: local
+kind: issue
+body: 'DD-R certificate lane: 9 sessions, zero landed lemmas that any DivFamZar consumer
+  can reach
+
+
+  Reviewed run 0047 session 0014 (task ajcr-w4-rep-free). All 9 declarations added
+  this session in Picard/DivSchemeCertZarSep.lean and Picard/DivSchemeCertZarLeak.lean
+  are correct and sorry-free, but grep confirms NOT ONE of them (nor any of the 6
+  pointwise-gate lemmas from session 0002) is referenced outside the DivSchemeCertZar*
+  tower itself. The tower is a 1276-line island: it was not even in the default build
+  until fd46fcf83 this session. Rounds 1-5 of run 0047 (sessions 0004/0006/0008/0010/0012,
+  ~206 USD) produced NO Lean commits at all; every Lean commit of the run comes from
+  rounds 0 and 6.
+
+
+  Concretely missing, and it is the same gap in every round: the whole tower''s route
+  is ''pointwise gate -> away certificate over Localization.Away r''. But every one
+  of the landed no-leak/tube/clopen lemmas is stated for a system d on relCurve C
+  R, while the gate demands a certificate for an adaptation of (D.localEquations hD).pullback
+  (relCurveMap C R (Localization.Away r)). There is NO lemma anywhere in the project
+  relating supportLocus / unitLocus / supportLeak of a pulled system to the preimage
+  of those of the original (verified: no file in AlgebraicJacobian mentions both ''pullback|relCurveMap''
+  and ''supportLocus|unitLocus|supportLeak''). So exists_basicOpen_supportLeak_eq_empty,
+  finite_colength_of_isClopen_trace and forall_noLeak_of_forall_supportLocus_subset
+  cannot be composed with isLocallyCertified_of_forall_prime_exists_certified_adaptation
+  as written. That single transport lemma (supportLocus of pullback = preimage of
+  supportLocus, for the open immersion relCurveMap C R (Localization.Away r)) is the
+  cheapest unblocking step in the lane and it has never been attempted.
+
+
+  Impact: the roadmap leaf away-assemble is described as ''pure composition once the
+  two above land'', but it is not composable at all until the transport exists. Recommend
+  the next session prove the transport lemma FIRST and immediately land the composition
+  end-to-end (even conditionally on hnoLeak) so that at least one DivFamZar producer
+  exists, rather than adding another certificate-side lemma.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T14:01:39.994839+00:00'
+updated_at: '2026-07-25T14:15:47.199319+00:00'
+metadata:
+  provenance:
+    run: '0047'
+    session: 0014-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  read_by:
+  - ajc-optimize

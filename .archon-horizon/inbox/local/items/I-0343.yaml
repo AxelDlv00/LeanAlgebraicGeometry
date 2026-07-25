@@ -1,0 +1,53 @@
+id: I-0343
+provider: local
+kind: issue
+body: "TWO TEAMS PROVED THE SAME KEYSTONE LEMMA CONCURRENTLY — A COORDINATION GAP\
+  \ WORTH A DECISION (2026-07-25).\n\nWHAT HAPPENED. Run 0047 session 0014 (me) and\
+  \ a later run's session on the SAME task\n(ajcr-w4-rep-free) were live on the workspace\
+  \ simultaneously. Both read Ground's I-0334, both\nidentified the same missing keystone\
+  \ ((c1) forces leak-freeness), and both proved it by the same\nroute (finiteness\
+  \ => Spec finite over the base => universally closed => cancel against the SEPARATED\n\
+  ambient => closed map => the trace is closed). Two files, one fact:\n  - theirs:\
+  \ DivSchemeCertZarC1.lean (isClosed_zeroLocus_inter_of_finite_quotient,\n    supportLeak_eq_empty_iff_finite_colength,\
+  \ supportLocus_subset_chart_of_isCertified)\n  - mine:  DivSchemeCertZarConverse.lean\
+  \ (isClosed_zeroLocus_of_finite_quotient,\n    supportLeak_eq_empty_of_finite_colength,\
+  \ IsCertified.forall_supportLeak_eq_empty)\nI deleted mine (commit 7f29687ca) since\
+  \ theirs is strictly richer (an iff, plus the composed\nverdict) and kept only the\
+  \ piece neither had: the obstruction in witness form\n(not_isCertified_of_isPreconnected_of_witnesses).\
+  \ No work was lost and the build is green (9078\njobs), but roughly a session's\
+  \ worth of compute was spent twice.\n\nWHY IT HAPPENED, and it is not the agents'\
+  \ fault. The horizon skill says teams coordinate through\nshared state, and we did\
+  \ read it -- but the shared state had no marker for 'a keystone lemma is\nbeing\
+  \ proved right now'. The roadmap records ITEMS, not in-flight lemmas; the inbox\
+  \ item that\ntriggered us both (I-0334) is an issue describing work to do, with\
+  \ no claim mechanism. Two teams on\nthe SAME task id is the aggravating factor:\
+  \ nothing in the CLI warns 'another run holds your task',\nonly 'another run is\
+  \ live on this workspace'.\n\nSUGGESTIONS, for you to decide:\n (a) do not schedule\
+  \ two runs on the same task id concurrently, or\n (b) give inbox items an explicit\
+  \ claim/owner (like roadmap --owner) so 'I am proving I-0334 now' is\n     recordable,\
+  \ and have the synchronizer digest warn when another live run shares your task id.\n\
+  \nAlso worth noting: rounds 1-5 of run 0047 produced empty reports and zero Lean\
+  \ commits (~206 USD).\nRounds 0 and 6 did all the work. That looks like a harness\
+  \ fault rather than agent behaviour, and it\nis the larger waste of the two. A separate\
+  \ report (I-0333) raised the same point."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-25T14:20:27.574365+00:00'
+updated_at: '2026-07-25T14:21:18.445888+00:00'
+metadata:
+  provenance:
+    run: '0047'
+    session: 0014-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-optimize

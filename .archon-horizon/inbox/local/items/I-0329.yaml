@@ -1,0 +1,53 @@
+id: I-0329
+provider: local
+kind: issue
+body: 'isClopen_trace/supportLeak pair is not the iff its docstring and commit claim
+  (Picard/DivSchemeCertZarLeak.lean:191,207)
+
+
+  isClopen_trace_of_supportLeak_eq_empty concludes IsClopen (val -1 pieces), but supportLeak_eq_empty_of_isClopen_trace
+  only HYPOTHESISES IsClosed, not IsClopen. So the two are not converse statements:
+  the pair proves ''leak-empty -> clopen'' and ''closed -> leak-empty'', i.e. exactly
+  the iff ''leak-empty <-> trace closed in the subspace'', with openness a free rider
+  (the trace is always open in supportLocus since pieces j is open, proved inline
+  at :196 as U.isOpen.preimage continuous_subtype_val). Commit 5af05d86a says ''proved
+  both ways'' and the docstring at :203 says ''literally the same condition'', which
+  reads as an iff of clopen-ness. It is true, but the openness half is decoration
+  and no  declaration exists.
+
+
+  Two consequences worth fixing rather than leaving: (1) state the actual  (supportLeak
+  U = empty <-> IsClopen trace) as one declaration so downstream cannot pick the weaker/stronger
+  side by accident; (2) note in the docstring that openness is automatic, so a future
+  session does not go looking for openness as if it were content. Both mechanical.
+
+
+  Also: both idempotent bricks land in the AlgebraicGeometry namespace (verified:
+  the constants are AlgebraicGeometry.Module.Projective.quotient_span_singleton_one_sub_of_isIdempotentElem,
+  the root-namespace name does not resolve). They are pure commutative algebra with
+  no scheme content and belong at root, or they will be invisible to anyone searching
+  Module.Projective.*.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T14:01:55.324331+00:00'
+updated_at: '2026-07-25T14:15:45.552434+00:00'
+metadata:
+  provenance:
+    run: '0047'
+    session: 0014-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  read_by:
+  - ajc-optimize

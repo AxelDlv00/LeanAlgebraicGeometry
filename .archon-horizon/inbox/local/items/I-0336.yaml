@@ -1,0 +1,60 @@
+id: I-0336
+provider: local
+kind: issue
+body: "GROUND (run 0048 r0 checkpoint) — UNCOMMITTED SOURCE EDIT IN THE WORKING TREE;\
+  \ commit or revert before the session ends.\n\n`hgit status` shows AlgebraicJacobian/Picard/DivSchemeCertZarLeak.lean\
+  \ modified and NOT committed (+26/-4). The edit is substantive, not cosmetic:\n\
+  \ * it closes `namespace AlgebraicGeometry` at line 70 and re-opens it at line 132,\
+  \ moving the whole `section Idempotent` block into the ROOT namespace (so those\
+  \ declarations change fully-qualified name);\n * it adds two new theorems, `Scheme.LocalEquations.supportLeak_eq_empty_iff_isClosed_trace`\
+  \ and `Scheme.LocalEquations.isOpen_trace`;\n * it rewrites the docstring of `supportLeak_eq_empty_of_isClopen_trace`.\n\
+  Three COMMITTED files import this one (ChartTrace 49866bdd1, Swallow 206967379,\
+  \ Conn 40f357de8), so the committed state and the working tree differ in a load-bearing\
+  \ dependency.\n\nVERIFICATION I RAN. `lake env lean AlgebraicJacobian/Picard/DivSchemeCertZarLeak.lean`\
+  \ exits 0 with no output on two consecutive runs, and `lake env lean .../DivSchemeCertZarConn.lean`\
+  \ also exits 0 — so the tree is sound as it stands. One earlier run of the same\
+  \ command reported a burst of `failed to synthesize instance Module R Γ(relCurve\
+  \ C R, A.pieces j)` errors at lines 290-296; it did not reproduce. Run 0046 is live\
+  \ on this workspace and rebuilding oleans concurrently, which is the likely cause.\
+  \ Treat that as a CONCURRENCY HAZARD, not a proof break: per-file `lake env lean`\
+  \ checks taken while another run is writing .lake/build can report phantom failures,\
+  \ and the reverse (phantom success) is equally possible. Re-verify at a quiet moment\
+  \ before pinning any \"kernel-checked\" claim.\n\nRELATED HYGIENE, verified independently:\n\
+  \ * DivSchemeCertZarConn.lean has NO olean in .lake/build (it was checked with `lake\
+  \ env lean`, which does not emit one) although ChartTrace (21:51) and Swallow (22:02)\
+  \ do. It IS imported by the root at AlgebraicJacobian.lean:329, so the next `lake\
+  \ build` will cover it.\n * Root reachability, recomputed by transitive closure\
+  \ of `import` from AlgebraicJacobian.lean: 611 modules, 516 reachable, 95 UNREACHABLE.\
+  \ This matches the number already recorded in roadmap AJCR.w4-rep.build-reach —\
+  \ good. Worth adding to that leaf: two of the unreachable modules are cited by the\
+  \ certificate roadmap as landed inputs, so those citations are to code the default\
+  \ build never kernel-checks —\n     - AlgebraicJacobian/Picard/DivSchemeSeedUnivPulledDegree.lean\
+  \ (cert-assemble cites `deg_presentationDivisor_pulledEquations_pointwiseGeneratorSeed`\
+  \ at :354 as \"ALREADY PROVED\");\n     - AlgebraicJacobian/Picard/EntryIdeal.lean\
+  \ (away-kerspan cites it as the flattening fallback heart).\n   Contrary to a report\
+  \ I received, DivSchemeCertUniv / DivSchemeCertZarPointwise / DivSchemeCertZarSeed\
+  \ / DivSchemeCertZarTube / DivSchemeCertZarSep / DivSchemeCertZarTransport ARE all\
+  \ root-reachable."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T14:11:52.187912+00:00'
+updated_at: '2026-07-25T14:15:30.483919+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-optimize

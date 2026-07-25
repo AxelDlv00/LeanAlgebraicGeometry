@@ -1,0 +1,66 @@
+id: I-0334
+provider: local
+kind: issue
+body: "GROUND (run 0048 r0 checkpoint) — THE MISSING KEYSTONE OF THE CERTIFICATE VERDICT:\
+  \ (c1) => leak-free is asserted everywhere but PROVED NOWHERE.\n\nDivSchemeCertZarConn.lean:125\
+  \ states in its docstring \"the certificate interface IsCertified — whose per-piece\
+  \ clause (c1) forces leak-freeness — is satisfiable for a connected divisor only\
+  \ if ...\". The same step is asserted in roadmap AJCR.w4-rep.datum.dat-d.ddr.certificate.chart-avoid\
+  \ (\"which certificate clause (c1) forces\") and in memory I-0209 (\"(c1) ... IFF\
+  \ the piece trace is CLOPEN in Z\"). NO LEAN DECLARATION PROVES IT. `horizon search`\
+  \ returns only the three SUFFICIENT directions: finite_colength_of_supportLeak_eq_empty\
+  \ (SupportTubeFinite.lean:296), finite_colength_of_isClosed_supportLocus_inter (:287),\
+  \ finite_colength_of_isClopen_trace (DivSchemeCertZarLeak.lean:251). There is no\
+  \ converse anywhere in the tree.\n\nWHY THIS IS THE WHOLE BALL GAME. Without it,\
+  \ ChartTrace/Swallow/Conn are theorems about ONE SUFFICIENT-CONDITION ASSEMBLER\
+  \ (the hnoLeak hypothesis of isCertified_of_noLeak_kernel_spanning). They say \"\
+  this route is unavailable\", not \"IsCertified is unsatisfiable\". With it, they\
+  \ become a DESIGN REFUTATION: IsCertified — hence IsLocallyCertified, hence DivFamZar,\
+  \ hence divFunctor — provably excludes honest relative effective divisors, and no\
+  \ base shrink evades it (closedness is Zariski-local on the base; supportLocus is\
+  \ DivEq-invariant).\n\nSTATEMENT TO PROVE (one lemma, per piece):\n  theorem supportLeak_eq_empty_of_finite_colength\
+  \ (j : A.index) [IsProper C.hom]\n      (h : Module.Finite R (A.colength j)) : d.supportLeak\
+  \ (A.pieces j) = ∅\nequivalently IsClosed (d.supportLocus ∩ (A.pieces j : Set (relCurve\
+  \ C R))).\n\nPROOF ROUTE (standard, no new geometry). colength j = Γ(relCurve C\
+  \ R, A.pieces j) ⧸ span {A.eqn j} (DivisorFamily.lean:334). pieces j is a basic\
+  \ open of the AFFINE pinned chart V_b, so Spec (colength j) is the closed subscheme\
+  \ of pieces j cut by eqn j, whose underlying set is exactly supportLocus ∩ pieces\
+  \ j. Module.Finite R (colength j) => R → colength j finite => Spec (colength j)\
+  \ → Spec R is a finite morphism => universally closed. relCurve C R → Spec R is\
+  \ separated (properness licence instIsProperRelCurveHom is already in scope, used\
+  \ by finite_colength_of_isClosed_supportLocus_inter). Universally closed over a\
+  \ separated target => Spec (colength j) → relCurve C R is a closed map => its image\
+  \ supportLocus ∩ pieces j is closed. QED.\n\nCONSEQUENCE IF IT LANDS. Compose with\
+  \ DivSchemeCertZarConn.supportLocus_subset_chart_of_isPreconnected to get, with\
+  \ NO leak hypothesis:\n  IsCertified n + IsPreconnected supportLocus  =>  supportLocus\
+  \ ⊆ V₀ ∨ supportLocus ⊆ V₁\nand then the counter-model already written into Conn.lean:151\
+  \ (V(t x² + x y + t y²) ⊆ P¹ over k[t]; section ring a domain, so connected over\
+  \ EVERY basic open of the base; fibre {0, ∞} at t = 0) is a formal proof that DivFamZar\
+  \ is a PROPER SUBFUNCTOR of the honest relative-divisor functor. That is a strictly\
+  \ stronger fact than I-0213 established: I-0213 conceded the GLOBAL certificate\
+  \ misses the diagonal divisor, but its repair (base localization = IsLocallyCertified)\
+  \ defeated that counterexample. The connected counter-model defeats the repair too,\
+  \ because base localization does not disconnect an integral divisor scheme."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T14:11:01.666619+00:00'
+updated_at: '2026-07-25T14:15:48.582945+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-optimize

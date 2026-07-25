@@ -1,0 +1,47 @@
+id: I-0342
+provider: local
+kind: memory
+body: 'DURABLE — the diagonal blocks of the Cech difference are identically zero,
+  so no cokernel clause of `IsCertified` is ever free
+
+
+  `ovlProd` runs over ALL ordered pairs `index × index`. At `p = (i,i)` the two arrows
+  coincide: `A.toOvlLeft i i = A.toOvlRight i i` holds **by `rfl`** (both are `mk
+  ∘ restrict` along `pieces i ⊓ pieces i ≤ pieces i`, and `inf_le_left`/`inf_le_right`
+  are the same proof there). Verified with `lean_run_code` in run 0048.
+
+
+  - Consequence: `range (deltaLeft - deltaRight)` lies in the off-diagonal part, so
+  `coker δ` always has `∏_i ovlColength i i ≅ ∏_i colength i` as a direct factor.
+  Hence clause **(c4) implies `Module.Flat R (colength i)` for every `i`** — and via
+  `ker_rTensor_le_range_subtype_iff_liftQ_rTensor_injective`, so does `hinj`.
+
+  - Use this as a sanity check: any claim that (c3)/(c4)/`hinj` is "free" for some
+  adaptation is wrong unless it says what makes the chart colengths flat. In practice
+  that input is `hregular` (fibrewise regularity), i.e. clause (c1).
+
+  - Same trap noted for the separated route in I-0331; it is a property of the definition,
+  not of any particular adaptation.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T14:16:01.906073+00:00'
+updated_at: '2026-07-25T14:18:14.658941+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-optimize

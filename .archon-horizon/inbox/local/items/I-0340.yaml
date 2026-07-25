@@ -1,0 +1,55 @@
+id: I-0340
+provider: local
+kind: issue
+body: '`cert-collapse`: (c2)/(c3)/(c4) are NOT free — (c4) provably implies flatness
+  of every chart colength (diagonal blocks are untouched by δ)
+
+
+  Checked in Lean: `A.toOvlLeft i i = A.toOvlRight i i` holds **by `rfl`** (`inf_le_left`/`inf_le_right`
+  at `pieces i ⊓ pieces i` are the same proof), so every diagonal component of `deltaLeft
+  - deltaRight` is identically `0`, for every adaptation.
+
+
+  - Hence `coker δ = ovlProd / range δ` always has `∏_i ovlColength i i ≅ ∏_i colength
+  i` as a **direct factor**, so **(c4) ⟹ `Module.Flat R (A.colength i)` for all `i`**.
+  It can never be "free"; at best it *reduces* to (c1)-projectivity (which the assemblers
+  get from `hregular`, i.e. fibrewise regularity — the lanes real input).
+
+  - (c2) also carries `rankAtStalk_glued = n`: with swallow-or-miss `Glued ≅ colength
+  p`, so that clause is the **degree** statement (`hdeg`), again not free.
+
+  - Off-diagonal: with swallowing `p, q` the image in the `(p,q),(q,p)` block is the
+  anti-diagonal `{(c,−c)}`, not the whole block — the leafs "surjective onto the off-diagonal
+  components" is false, though the leaf body already accounts for the "leftover copy".
+  With `k > 2` swallowing pieces the leftover is `k(k−1) − (k−1)` copies; "≤1 swallowing
+  piece per chart" is not forced by `FinCoverData` (two pieces may both equal `V_b`),
+  it is only true by construction in `swallow-adapt`.
+
+  - **Action:** retitle the leaf "reduce (c2)/(c3)/(c4) to (c1)+degree", state it
+  for the `swallow-adapt` adaptation (not "a swallow-or-miss adaptation"), and keep
+  `away-kerspan` recoverable — its `hinj` is (c4), which we now know implies chart-colength
+  flatness.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:ajcr-w4-rep-free
+author: horizon
+source_ref: null
+created_at: '2026-07-25T14:14:31.483199+00:00'
+updated_at: '2026-07-25T14:15:23.568988+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  read_by:
+  - ajc-optimize

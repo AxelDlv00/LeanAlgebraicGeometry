@@ -1,0 +1,40 @@
+All work is committed and the tree is clean. Final state verified.
+
+## Summary
+
+I answered the question the DD-R certificate lane had never asked in ~8 sessions: **is `IsCertified` satisfiable at all?** It largely is not, and the obstruction is now a theorem rather than a suspicion. Five new Lean files (0 sorries, kernel-checked warning-free, all in the default build, keystone axioms exactly `[propext, Classical.choice, Quot.sound]`), a re-based roadmap, and a design decision escalated to you.
+
+## Progress
+
+- `Picard/DivSchemeCertZarChartTrace.lean` (new, 49866bdd1): a `FinCoverData` has a partition of unity on **each** pinned chart, so the union of a chart's piece traces *is* the chart trace. A finite union of closed sets is closed ⟹ the assembler's `hnoLeak` forces `supportLocus ∩ V₀` and `∩ V₁` closed — a statement with no adaptation and no pieces in it. Refining the cover therefore provably cannot help.
+- `Picard/DivSchemeCertZarSwallow.lean` (new, 206967379): "swallow or miss" gives `hnoLeak` and clause (c1)-finite with no fibre, tube or idempotent; a missing piece has a **unit** equation so its colength vanishes. Plus the two chart dichotomies.
+- `Picard/DivSchemeCertZarConn.lean` (new, 40f357de8): leak-freeness makes a piece trace *clopen* in the support ⟹ a connected divisor with a leak-free adaptation lies inside `V₀` or inside `V₁`.
+- `Picard/DivSchemeCertZarChartPair.lean` (new, 03ea445d9): `chartPairCoverData` + `ofChartPair` — the coarse one-piece-per-chart adaptation via the landed `ofAnchors`, with `hnoLeak`/(c1) free for a chart-overlap divisor. No landed no-go touches this configuration.
+- `Picard/DivSchemeCertZarC1.lean` (new, 5651710d6): **the keystone Ground flagged as missing** — clause (c1)-finite ⟹ leak-freeness (finite ⟹ Spec finite ⟹ universally closed; separated base ⟹ first leg universally closed ⟹ closed range). This is the equivalence I-0209 asserted and nobody had proved. It upgrades the verdict to `supportLocus_subset_chart_of_isCertified`: **`DivFamZar` is blind to a connected divisor meeting both `π⁻¹(0)` and `π⁻¹(∞)`, over any base, after any shrink, for any adaptation.**
+- Roadmap: `AJCR.w4-rep` re-summarized as a critical-path map; certificate subtree re-based (`chart-trace` done, `tube-fibre`/`leak-image` rejected, `away-assemble` done, `away-kerspan` blocked, new `chart-avoid`/`swallow-adapt`/`cert-collapse`/`cert-assemble`); `quotient-bridge` done, `ddq` blocked, `flattening-fallback` reopened (its rejection note was empty and its rationale factually wrong); added `dat-c.c9-chartlocus` and `build-reach`. Design of record: `informal/spec-dd-r.md` ADDENDUM 2. Memory I-0327.
+
+## Issues
+
+Three fresh-context reviews (janitor, work-reviewer, ground) each found real defects; all are corrected in the record (572ddc540), not left standing:
+
+- **`cert-collapse`'s "(c2)/(c3)/(c4) are free" was wrong.** `toOvlLeft i i = toOvlRight i i` by `rfl`, so the Čech difference vanishes on the diagonal for *every* adaptation and (c4) *implies* flatness of the colengths. The true claim is a **reduction** to (c1)-projectivity + degree — which is why `away-kerspan` is blocked, not rejected.
+- **The verdict is componentwise.** A disconnected degree-`g` divisor can have both chart traces closed while lying in neither chart. Docstrings and roadmap now say so.
+- Fixed: a dangling file reference, an unproved "(c1) forces leak-freeness" claim in three docstrings (now proved), a wrong `c9-chartlocus` anchor, and a **dirty shared git index** that had `DivSchemeCertZarChartPair.lean` staged as a deletion (re-seeded twice; clean at exit).
+- **Run 0047 session 0014 is live on this same task** and committing to adjacent files (`DivSchemeCertZarLeak.lean`, `DivSchemeCertZarTransport.lean`). No overlap with my files. Its process marker was reaped by my janitor pass while it was still running, so `horizon ps` now under-reports it.
+- Inbox open non-protection items sit at ~36 against an advisory 30, and open `memory` at 10 after the janitor pass. I chose to leave the churn: four of the items are minutes-old review findings.
+
+## Why I stopped
+
+The objective is **not complete and is now blocked on a decision I should not take alone**. `chart-avoid` — the one remaining geometric input on the (c1) side — is not a lemma: Ground verified the DD-R chart carries no fibre-avoidance condition anywhere in the Lean tree, while `spec-dd-r.md` §Discipline (2) explicitly forbids adding one ("any DD-R prover writing a support-separation hypothesis has left the route"). Spec and landed mathematics now contradict each other. Filed as **I-0333 (`--to human`)**: carve the atlas, weaken `IsCertified`, or re-scope.
+
+Separately, the task as named is mis-scoped: the certificate is one of six independent mountains before `Challenge.lean:99`. `dat-g` has no spec, worksheet, Lean file or blueprint node; `divRep` has no producer anywhere; `chartLocus` has zero code hits. I did not attempt those.
+
+I did not run a full `lake build` — run 0046 is live and I-0227 forbids concurrent heavy elaboration. Each new module was built individually and the whole set `lake env lean`-checked clean.
+
+## Next
+
+1. **Await the I-0333 decision.** Everything downstream of `chart-avoid` is contingent on it.
+2. `AJCR.w4-rep.build-reach` — 95 modules outside lake's default target, two of them cited by the roadmap as landed inputs. Cheap, and it is what makes the certificate relaxation actually load-bearing.
+3. `AJCR.w4-rep.datum.dat-c.c9-chartlocus` — off the certificate path, gates both `dat-b` B-6 and all of `dat-glue`.
+4. `Pic0PreservesFilteredBaseColimit` (`PicRepColimitCompat.lean:136`) — divRep-free, nothing blocking it, no roadmap row of its own.
+5. If the decision is "carve": `cert-collapse` then `swallow-adapt`'s chart-principality datum. Do **not** re-attempt tube-fibre, leak-image route (b), separation, or a cleverer submodule `L` — all refuted in Lean.
