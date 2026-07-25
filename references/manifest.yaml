@@ -288,6 +288,7 @@ references:
       - { path: abelian-varieties/tex/page-0022.tex, format: tex }
       - { path: abelian-varieties/tex/page-0023.tex, format: tex }
       - { path: abelian-varieties/tex/page-0024.tex, format: tex }
+      - { path: abelian-varieties/tex/page-0100.tex, format: tex }
       - { path: abelian-varieties/tex/page-0107.tex, format: tex }
       - { path: abelian-varieties/tex/page-0108.tex, format: tex }
       - { path: abelian-varieties/tex/page-0109.tex, format: tex }
@@ -308,6 +309,12 @@ references:
       both axes), Remark 1.3, Corollary 1.4 (commutativity), Corollary 1.5
       (statement + proof start). Cite as abelian-varieties:page-0014,
       abelian-varieties:page-0015.
+      PAGE 100 (doc p. 94, Chapter III Section 3) transcribed 2026-07-26 via
+      vision from a 200 dpi render (no OCR): Proposition 3.1 constructs the
+      symmetric power, gives its quotient topology, affine invariant charts,
+      universal property, and finite, surjective, separable projection;
+      Proposition 3.2 proves a symmetric power of a nonsingular curve is
+      nonsingular. Cite as abelian-varieties:page-0100.
       PAGES 107-110 (doc pp. 101-104, Chapter III Sections 5-6) transcribed
       2026-07-16 via vision from rendered pages (pdftoppm 200dpi, no OCR),
       offset +6 re-verified on the printed page numbers. Statement map --

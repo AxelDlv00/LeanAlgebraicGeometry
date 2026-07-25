@@ -1,0 +1,90 @@
+% source: J. S. Milne, "Abelian Varieties" (course notes), v2.00, 2008, www.jmilne.org
+% pdf_page: 0100
+% doc_page: 94 (Chapter III, Section 3, "The symmetric powers of a curve"; Propositions 3.1 and 3.2)
+% retrieved: 2026-06-17
+% transcribed_by: Codex GPT-5 (vision, rendered at 200dpi via pdftoppm)
+
+% [running head: CHAPTER III. JACOBIAN VARIETIES, page 94]
+
+\section*{3 \quad The symmetric powers of a curve}
+
+Both in order to understand the structure of the Jacobian, and as an aid in
+its construction, we shall need to study the symmetric powers of $C$.
+
+For any variety $V$, the symmetric group $S_r$ on $r$ letters acts on the
+product of $r$ copies $V^r$ of $V$ by permuting the factors, and we want to
+define the $r$th symmetric power $V^{(r)}$ of $V$ to be the quotient
+$S_r \backslash V^r$. The next proposition demonstrates the existence of
+$V^{(r)}$ and lists its main properties.
+
+A morphism $\varphi \colon V^r \to T$ is said to be \textit{symmetric} if
+$\varphi\sigma = \varphi$ for all $\sigma$ in $S_r$.
+
+\paragraph{Proposition 3.1.}
+\textit{Let $V$ be a variety over $k$. Then there exists a variety $V^{(r)}$
+and a symmetric morphism $\pi \colon V^r \to V^{(r)}$ having the following
+properties:}
+
+\begin{enumerate}
+\item[(a)] \textit{as a topological space, $(V^{(r)}, \pi)$ is the quotient
+of $V^r$ by $S_r$;}
+\item[(b)] \textit{for any open affine subset $U$ of $V$, $U^{(r)}$ is an
+open affine subset of $V^{(r)}$ and}
+\[
+  \Gamma(U^{(r)}, \mathcal{O}_{V^{(r)}})
+  = \Gamma(U^r, \mathcal{O}_{V^r})^{S_r}
+\]
+\textit{(set of elements fixed by the action of $S_r$).}
+\end{enumerate}
+
+\textit{The pair $(V^{(r)}, \pi)$ has the following universal property:
+every symmetric $k$-morphism $\varphi \colon V^r \to T$ factors uniquely
+through $\pi$.}
+
+\textit{The map $\pi$ is finite, surjective, and separable.}
+
+\paragraph{Proof.}
+If $V$ is affine, say $V = \operatorname{Specm}(A)$, define $V^{(r)}$ to be
+$\operatorname{Specm}((A \otimes_k \cdots \otimes_k A)^{S_r})$. In the
+general case, write $V$ as a union $\bigcup U_i$ of open affines, and construct
+% [sic: printed "construct V"; the context requires "construct V^{(r)}".]
+$V$ by patching together the $U_i^{(r)}$. See Mumford 1970, II, \S 7, p66,
+and III, \S 11, p112, for the details. \hfill $\square$
+
+The pair $(V^{(r)}, \pi)$ is uniquely determined up to a unique isomorphism
+by its universal property. It is called the $r$th \textit{symmetric power} of
+$V$.
+
+\paragraph{Proposition 3.2.}
+\textit{The symmetric power $C^{(r)}$ of a nonsingular curve is nonsingular.}
+
+\paragraph{Proof.}
+We may assume that $k$ is algebraically closed. The most likely candidate for
+a singular point on $C^{(r)}$ is the image $Q$ of a fixed point
+$(P, \ldots, P)$ of $S_r$ on $C^r$, where $P$ is a closed point of $C$. The
+completion $\widehat{\mathcal{O}}_P$ of the local ring at $P$ is isomorphic to
+$k[[X]]$, and so
+\[
+  \widehat{\mathcal{O}}_{(P,\ldots,P)}
+  \approx k[[X]] \widehat{\otimes} \cdots \widehat{\otimes} k[[X]]
+  \approx k[[X_1, \ldots, X_r]].
+\]
+It follows that
+$\widehat{\mathcal{O}}_Q \approx k[[X_1, \ldots, X_r]]^{S_r}$, where $S_r$
+acts by permuting the variables. The fundamental theorem on symmetric
+functions says that, over any ring, a symmetric polynomial can be expressed
+as a polynomial in the elementary symmetric functions
+$\sigma_1, \ldots, \sigma_r$. This implies that
+\[
+  k[[X_1, \ldots, X_r]]^{S_r} = k[[\sigma_1, \ldots, \sigma_r]],
+\]
+which is regular, and so $Q$ is nonsingular.
+
+For a general point $Q = \pi(P, P, \ldots, P', \ldots)$ with $P$ occurring
+$r'$ times, $P'$ occurring $r''$ times, and so on,
+\[
+  \widehat{\mathcal{O}}_Q
+  \approx k[[X_1, \ldots, X_{r'}]]^{S_{r'}} \widehat{\otimes}
+  k[[X_1, \ldots, X_{r''}]]^{S_{r''}} \widehat{\otimes} \cdots,
+\]
+which the same argument shows to be regular. \hfill $\square$
