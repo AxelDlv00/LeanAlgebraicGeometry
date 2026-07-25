@@ -30,7 +30,10 @@ which carries the full charter (target, constraints, working model, and phases).
 - `AlgebraicJacobian/` — the infrastructure that discharges the statement (added as the rebuild
   proceeds; house limit 500 lines per file, currently exceeded by 14 files tracked in inbox
   `I-0220`; layout mirrors the mathematical structure of the paper).
-- `AlgebraicJacobian.lean` — the library root import list.
+- `AlgebraicJacobian.lean` — the library root import list, and the index of what is actually
+  checked: `lake build`'s default target is this module, so a new file is **not** elaborated by a
+  bare `lake build` until it is imported here. Add the import, or check the file explicitly by
+  module name.
 - `blueprint/` — a clean **mathematical** blueprint (no Lean code in the prose; nodes carry `\lean{}`
   and `\source{}` anchors). Build with `leanblueprint pdf` / `leanblueprint web`.
 - `archon-protected.yaml` — the mathematician-owned signatures agents must not modify.
