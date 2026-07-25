@@ -168,7 +168,7 @@ Assembled from three Mathlib pieces, mirroring the structure
    `(Functor.const Cᵒᵖ).obj PUnit ⋙ ModuleCat.free k =
     (Functor.const Cᵒᵖ).obj ((ModuleCat.free k).obj PUnit)`
    packaged as an iso.
-3. `(Finsupp.LinearEquiv.finsuppUnique k k PUnit).toModuleIso` —
+3. `(Finsupp.uniqueLinearEquiv k k PUnit.unit).toModuleIso` —
    `(ModuleCat.free k).obj PUnit ≅ ModuleCat.of k k`. -/
 noncomputable def HModule'_top_sourceIso
     (k : Type u) [Field k]
@@ -189,7 +189,7 @@ noncomputable def HModule'_top_sourceIso
         (ModuleCat.free k) ≪≫
       Functor.constComp _ PUnit.{u+1} (ModuleCat.free k) ≪≫
       (Functor.const Cᵒᵖ).mapIso
-        (Finsupp.LinearEquiv.finsuppUnique k k PUnit).toModuleIso)
+        (Finsupp.uniqueLinearEquiv k k PUnit.unit).toModuleIso)
 
 /-- Iter-032 cover-totality Ext-transport at universe `u+1`. Combining the
 iter-031 `HModule'_top_sourceIso` (a sheaf-level natural iso between source

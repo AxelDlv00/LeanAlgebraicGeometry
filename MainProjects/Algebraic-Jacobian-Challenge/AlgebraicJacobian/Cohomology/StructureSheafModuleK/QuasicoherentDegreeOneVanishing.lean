@@ -213,7 +213,7 @@ noncomputable def Scheme.Modules.basicOpenResₗ (M : X.Modules) {f₁ f₂ : Γ
   { toFun := fun z => M.presheaf.map (homOfLE h).op z
     map_add' := fun z₁ z₂ => map_add _ z₁ z₂
     map_smul' := fun r z => by
-      show M.presheaf.map (homOfLE h).op
+      change M.presheaf.map (homOfLE h).op
             ((algebraMap Γ(X, U) Γ(X, X.basicOpen f₁) r) • z)
         = (algebraMap Γ(X, U) Γ(X, X.basicOpen f₂) r) •
             M.presheaf.map (homOfLE h).op z

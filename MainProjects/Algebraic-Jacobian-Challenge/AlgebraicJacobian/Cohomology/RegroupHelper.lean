@@ -90,8 +90,9 @@ noncomputable def base_change_regroup_linearEquiv
       change (TensorProduct.comm R M R') (TensorProduct.AlgebraTensorModule.cancelBaseChange
           R A A M R' ((TensorProduct.comm A (A ⊗[R] R') M) ((a ⊗ₜ[R] (r' * s)) ⊗ₜ[A] m)))
         = r' • g ((a ⊗ₜ[R] s) ⊗ₜ[A] m)
-      show _ = r' • (TensorProduct.comm R M R') (TensorProduct.AlgebraTensorModule.cancelBaseChange
-          R A A M R' ((TensorProduct.comm A (A ⊗[R] R') M) ((a ⊗ₜ[R] s) ⊗ₜ[A] m)))
+      change _ = r' • (TensorProduct.comm R M R')
+        (TensorProduct.AlgebraTensorModule.cancelBaseChange R A A M R'
+          ((TensorProduct.comm A (A ⊗[R] R') M) ((a ⊗ₜ[R] s) ⊗ₜ[A] m)))
       simp only [TensorProduct.comm_tmul, TensorProduct.AlgebraTensorModule.cancelBaseChange_tmul,
         TensorProduct.smul_tmul']
       rw [smul_eq_mul]
