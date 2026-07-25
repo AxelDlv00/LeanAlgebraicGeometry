@@ -326,6 +326,7 @@ import AlgebraicJacobian.Picard.DivSchemeCertificateEngine
 import AlgebraicJacobian.Picard.DivSchemeCertZarLeak
 import AlgebraicJacobian.Picard.DivSchemeCertZarChartTrace
 import AlgebraicJacobian.Picard.DivSchemeCertZarSwallow
+import AlgebraicJacobian.Picard.DivSchemeCertZarConn
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularityStep
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularity
 import AlgebraicJacobian.Picard.FlatCokernel
