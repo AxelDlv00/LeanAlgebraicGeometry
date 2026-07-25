@@ -134,6 +134,46 @@ lemma flat_coker_diff_of_separated [Module.Flat R A.ovlProd]
   rw [hzero, LinearMap.range_zero]
   exact Module.Flat.of_linearEquiv (Submodule.quotEquivOfEqBot ⊥ rfl)
 
+/-! ## Separation is a statement about the support, not about the equations
+
+The hypothesis `hsep` above is checkable geometrically: an overlap whose points all avoid
+the family support carries a unit equation, hence a unit overlap ideal, hence a vanishing
+overlap colength.  In particular an adaptation in which **at most one piece meets the
+support** is automatically separated. -/
+
+/-- **Overlaps that miss the support are separated.** If no point of `pieces i ⊓ pieces j`
+lies in the support locus, then `A.eqn i` restricts to a unit there (its germ is a unit at
+every point, `RingedSpace.isUnit_of_isUnit_germ`), so the overlap ideal is the unit ideal
+and the overlap colength vanishes. -/
+lemma subsingleton_ovlColength_of_disjoint_supportLocus (i j : A.index)
+    (hdisj : ∀ z : relCurve C R, z ∈ A.pieces i ⊓ A.pieces j → z ∉ d.supportLocus) :
+    Subsingleton (A.ovlColength i j) := by
+  have hunit : IsUnit (relResAlgHom C R
+      (inf_le_left : A.pieces i ⊓ A.pieces j ≤ A.pieces i) (A.eqn i)) := by
+    rw [relResAlgHom_apply]
+    apply (relCurve C R).toRingedSpace.isUnit_of_isUnit_germ
+    intro z hz
+    rw [(relCurve C R).presheaf.germ_res_apply]
+    have hU : z ∈ d.unitLocus := not_not.mp (hdisj z hz)
+    exact (A.isUnit_germ_eqn_iff i hz.1).mpr
+      ((d.mem_unitLocus_iff_isUnit_germ (d.cover.mem_opens z)).mp hU)
+  have htop : A.ovlIdeal i j = ⊤ :=
+    Ideal.eq_top_of_isUnit_mem _ (Ideal.subset_span (Set.mem_insert _ _)) hunit
+  exact Ideal.Quotient.subsingleton_iff.mpr htop
+
+/-- **One support-meeting piece suffices.** If every piece other than `j₀` avoids the
+support entirely, the adaptation is separated: any off-diagonal overlap involves a piece
+missing the support, so the overlap misses it too. -/
+lemma forall_subsingleton_ovlColength_of_unique_support_piece (j₀ : A.index)
+    (hother : ∀ j : A.index, j ≠ j₀ →
+      ∀ z : relCurve C R, z ∈ A.pieces j → z ∉ d.supportLocus) :
+    ∀ i j : A.index, i ≠ j → Subsingleton (A.ovlColength i j) := by
+  intro i j hij
+  refine A.subsingleton_ovlColength_of_disjoint_supportLocus i j fun z hz => ?_
+  by_cases hi : i = j₀
+  · exact hother j (by rw [← hi]; exact fun h => hij h.symm) z hz.2
+  · exact hother i hi z hz.1
+
 /-! ## The certificate -/
 
 /-- **The certificate of a support-separated adaptation.** With the off-diagonal overlap
