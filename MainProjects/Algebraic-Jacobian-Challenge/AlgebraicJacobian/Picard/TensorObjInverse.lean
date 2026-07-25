@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Christian Merten
 -/
 import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse
-import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse.PresheafDualPullback
+import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse.PresheafDualPullbackComposition
 import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse.PresheafDualUnitPullback
 import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse.PresheafDualPullbackNatural
 import AlgebraicJacobian.Picard.TensorObjSubstrate.PullbackTensorMapIso
