@@ -1,0 +1,36 @@
+id: I-0344
+provider: local
+kind: issue
+body: 'Historical AJC design-note corpus needs consolidation
+
+
+  `analogies/` contains 123 tracked Markdown investigations, including iteration-numbered
+  journals and references to old declarations or file layouts. A short `analogies/README.md`
+  now distinguishes this history from the live roadmap, inbox, graph, and blueprint.
+  A future bounded pass should classify which notes still carry unique dead-end or
+  API knowledge, migrate that knowledge to graph comments or inbox memory, and archive
+  the rest; deleting or moving the corpus wholesale would risk losing useful rationale.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: project:Algebraic-Jacobian-Challenge
+author: horizon
+source_ref: null
+created_at: '2026-07-25T15:00:48.870695+00:00'
+updated_at: '2026-07-25T15:01:32.992800+00:00'
+metadata:
+  provenance:
+    run: '0046'
+    session: 0070-horizon-ajc-optimize
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  agent: janitor
+  read_by:
+  - ajc-optimize

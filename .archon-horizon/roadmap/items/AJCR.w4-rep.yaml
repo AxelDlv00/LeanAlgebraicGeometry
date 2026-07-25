@@ -2,42 +2,71 @@ id: AJCR.w4-rep
 title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "THE CRITICAL PATH TO Challenge.lean:99, as re-audited 2026-07-25 (run 0048,\
-  \ seven parallel recon\nagents + a formal result in the certificate lane). Read\
-  \ this before choosing work in this subtree.\n\nTARGET: AlgebraicGeometry.Jacobian\
+summary: "THE CRITICAL PATH TO Challenge.lean:99, re-audited 2026-07-25 (run 0048\
+  \ round 1: six parallel\nrecon agents, each adversarially verified by an independent\
+  \ refuter). Read this before choosing\nwork in this subtree. Claims below that the\
+  \ refuters corrected are marked CORRECTED.\n\nTARGET: AlgebraicGeometry.Jacobian\
   \ (Challenge.lean:96-99, a bare sorry). Its blueprint node\ndef:jacobian (Challenge.tex:34-40)\
-  \ has NO \\uses and NO \\leanok, and the only representability node in\nthe blueprint,\
-  \ def:pic0RepresentableByOfCharts (PicardEtale.tex:10678), is CONDITIONAL on a chart\n\
-  family that no blueprint node produces. The real design lives in ~40 informal/*.md\
-  \ docs\n(spec-w4-gates.md's \"corrected full map\" is the master plan) and is detailed,\
-  \ not sketched — but it\nis unreviewable as mathematics where it sits. The blueprint\
-  \ owes about five nodes: divRep, the\nSigma-charts, coverage/injectivity, the K_s\
-  \ -> k' transfer, and JacobianData existence.\n\nTHERE ARE SIX INDEPENDENT MOUNTAINS,\
-  \ not one. In dependency order:\n 1. ddr.certificate — re-based this session; see\
-  \ its own summary. NOT the last link.\n 2. ddr.divrep — DivRepAffinePullback (4\
-  \ fields) and DivRepGlobalData (5 fields) have ZERO producers\n    anywhere in the\
-  \ tree; no `def divRep` / `divRepAff` exists. Three of the four affine fields are\n\
-  \    pre-certificate launchable (the two inverse laws + naturality).\n 3. dat-c\
-  \ C9 — `chartLocus` (Pic0SigmaSheaf.lean:162-164) has ZERO hits tree-wide, yet four\
-  \ roadmap\n    comments call the remainder \"C9-gated plumbing, no math left\".\
-  \ It is the sole gate of dat-b B-6\n    AND of the whole dat-glue assembly: the\
-  \ highest-leverage single row outside DD-R.\n 4. dat-b, 5. dat-g (no spec, no worksheet,\
-  \ no Lean file, unfrozen handoff shape — the true\n    bottleneck), 6. dat-j.\n\
-  \ Plus DAT-G0.beta1 (pic0 commutes with the base-field filtered colimit), the ONE\
-  \ genuinely\n undesigned mathematical question of the endgame (spec-datg0.md §4.3\
-  \ probe, scheduled 6 days ago, no\n verdict recorded); and the I-0234 windowS budget\
-  \ strengthening b+2g -> b+3g, which is not a\n mathematical unknown but an unscheduled\
-  \ wide refactor gating G-4.\n\nCHEAPEST REAL ADVANCE OFF THE CERTIFICATE PATH: Pic0PreservesFilteredBaseColimit\n\
-  (PicRepColimitCompat.lean:136) — explicitly divRep-free, mathlib avatars pinned,\
-  \ reduction landed,\nnothing blocking it.\n\nTOOLING WARNING: do not steer this\
-  \ subtree from `graph frontier`. Its top items are \\lean{} name-drift\nartifacts\
-  \ (anonymous instances), the Rebuild cannot be graph-synced at all (I-0318, no\n\
-  hgraph/config.yaml), and the graph carries one comment in 8,024 nodes, so no failure\
-  \ history is\nrecoverable from it. Also: 95 modules (every DivRep*/HighWindow*/Redesign*\
-  \ file) sit outside lake's\ndefault target, and DivRepAffKitZar.lean has no olean\
-  \ at all — see the build-reach row.\n\nOPERATIONAL: run 0047 rounds 1-5 landed ZERO\
-  \ commits (2.9h, ~$206, 101-byte empty reports). The lane\nharness, not the mathematics,\
-  \ ate that run.\n"
+  \ has NO \\uses and NO \\leanok, and the only representability\nnode in the blueprint,\
+  \ def:pic0RepresentableByOfCharts (PicardEtale.tex:10678), is CONDITIONAL\non a\
+  \ chart family no blueprint node produces. The real design lives in ~40 informal/*.md\
+  \ docs\n(spec-w4-gates.md's \"corrected full map\" is the master plan). The blueprint\
+  \ owes about five\nnodes: divRep, the Sigma-charts, coverage/injectivity, the K_s\
+  \ -> k' transfer, and JacobianData\nexistence.\n\nSIX INDEPENDENT MOUNTAINS, in\
+  \ dependency order:\n\n 1. ddr.certificate — THE GATE IS ANSWERED, NOT BLOCKED (this\
+  \ round). chart-avoid = NO, with an\n    explicit counterexample; the obstruction\
+  \ is DivEq-stable so it bites DivFamZar itself; the\n    binding constraint is FinCoverData,\
+  \ not pi and not the cover. Repair R1 (vary the\n    P^1-coordinate) is chosen and\
+  \ costed: new leaves p1-aut -> fibre-avoid -> cert-relocalize.\n    See that node's\
+  \ summary and informal/spec-dd-r.md ADDENDUM 3. NOT the last link.\n\n 2. ddr.divrep\
+  \ — DivRepAffinePullback (DivRepAffKit.lean:167) and DivRepGlobalData\n    (DivRepKit.lean:68)\
+  \ still have ZERO producers. CORRECTED: only ONE of the four affine\n    fields\
+  \ (pull_naturality) is provable from inputs that exist today; pull_classify and\n\
+  \    isDivRepClassify_pull additionally need the DDR9-U \"U2\" eps-identity, which\
+  \ exists in NO\n    Lean declaration at any level. ALSO CORRECTED: there IS certificate-free,\
+  \ U-free work\n    landable today — eq_of_isDivRepClassify (the class-side separation\
+  \ lemma) and its corollary\n    divRepClassifyZar_injective, after which pull_classify\
+  \ is a 3-line corollary of field 3.\n    Start there. WARNING: DivRepGlobalData's\
+  \ `equiv` field asserts a full equivalence for a\n    FIXED pi and therefore cannot\
+  \ hold as stated — it must be re-pinned by cert-relocalize.\n\n 3. dat-c C9 — CORRECTED,\
+  \ and the roadmap was wrong here. C9 is NOT independent of DD-R: its\n    deliverable\
+  \ f_c needs the universal family from a DivRepGlobalData term, of which there are\n\
+  \    zero. The refuter's counter-correction: it CAN be developed today PARAMETRICALLY,\
+  \ over a\n    section variable (divRep : (divFunctor C pi g).RepresentableBy DivOver)\
+  \ — the idiom is\n    already landed at DivRepKit.lean:113 (DivRepGlobalData.representableBy).\
+  \ Split the row into\n    c9a (the chartLocus predicate + openness, divRep-free)\
+  \ and c9b (f_c, divRep-gated), and\n    delete the claim that C9 gates dat-b B-6\
+  \ independently of DD-R.\n\n 4. dat-b, 5. dat-g, 6. dat-j. DAT-G is no longer the\
+  \ blank it was described as: the sibling\n    read-only project MainProjects/Algebraic-Jacobian-Challenge\
+  \ holds ~2,600 sorry-free lines of\n    Galois-descent substrate (Speiser for modules\
+  \ and algebras, isGaloisQuotient_spec,\n    hasStableAffineCover_of_orbitsInAffineOpen)\
+  \ on the IDENTICAL toolchain and mathlib rev —\n    portable. CORRECTED: the Rebuild\
+  \ already has its own root-imported flat-descent stack\n    (AlgebraicJacobian/Descent/,\
+  \ 1,786 lines, sorry-free), so the module half of the port is\n    already there\
+  \ in greater generality; port the ALGEBRA half only. The DAT-G producer end is\n\
+  \    as divRep-gated as dat-c/dat-b; what is unblocked is the upstream bricks.\n\
+  \n Plus DAT-G0.beta1. CORRECTED, and the previous \"cheapest real advance\" claim\
+  \ was WRONG:\n Pic0PreservesFilteredBaseColimit (PicRepColimitCompat.lean:136) is\
+  \ a bare `def ... : Prop` with\n ZERO producers, and its pinned mathlib avatars\
+  \ (coyoneda/EssFiniteType/morphism-spreading) do\n not apply to pic0TypeFunctor,\
+  \ which is a bespoke quotient tower. Do NOT launch a lane against\n it. Retarget\
+  \ to the delta-substrate; note deltaSchemeIsLimit does not exist either (only\n\
+  \ HasLimit instances, PicRepColimitMountain.lean:185/:195). The genuinely cheap\
+  \ items here are\n PicEtAff.degAff_mapAlg (size S, verbatim template at Pic0ThetaAssembly.lean:67-85)\
+  \ and\n mem_pic0Subgroup_overSpec_iff.\n\nBUILD REACH: 95 of 615 modules are unreachable\
+  \ from the root aggregator. CONFIRMED GOOD NEWS:\nnone of the 19 Picard/DivSchemeCert*.lean\
+  \ is among them, so the certificate lane's\n\"kernel-checked, in the default build\"\
+  \ claims are true. CONFIRMED BAD NEWS: three roadmap\ncitations point INTO the unreachable\
+  \ set — cert-assemble's hdeg\n(DivSchemeSeedUnivPulledDegree.lean:354), away-kerspan's\
+  \ EntryIdeal, and flattening-fallback's\nDivSchemeFlatteningBridge — so those are\
+  \ source-level only, with stale or missing oleans. Three\none-line root imports\
+  \ fix all three. Also found: Picard/Pic0ThetaCocycle.lean DOES NOT PARSE\n(a bare\
+  \ `by` at :193-194); it is invisible today only because it is unreachable.\n\nTOOLING\
+  \ WARNING: do not steer this subtree from `graph frontier`. Its top items are \\\
+  lean{}\nname-drift artifacts, the Rebuild cannot be graph-synced at all (I-0318,\
+  \ no hgraph/config.yaml),\nand the graph carries one comment in 8,024 nodes.\n\n\
+  OPERATIONAL: run 0047 rounds 1-5 landed ZERO commits (2.9h, ~$206, 101-byte empty\
+  \ reports). The\nlane harness, not the mathematics, ate that run.\n"
 status: active
 kind: proof
 priority: normal
@@ -51,4 +80,4 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:10.654781+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-25T13:56:55.112173+00:00'
+  updated_at: '2026-07-25T15:11:13.161669+00:00'

@@ -1,0 +1,79 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.p1-aut
+title: 'P1-aut: the GL_2(k) action on P^1 — the one missing input of repair R1'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'THE COST OF REPAIR R1 (spec-dd-r ADDENDUM 3 §3). Every declaration in the
+  DD-R chain is generic
+
+  in pi, constrained only by [IsFinite pi] / [IsAffineHom pi] (+ [IsDominant pi])
+  and
+
+  hpi : pi >> P1.structureMap k = C.left -> Spec k (DivSchemeSeedUnivFields.lean:58).
+  So replacing
+
+  pi by gamma . pi for gamma in Aut(P^1_k) costs NOTHING in the landed material: every
+  lemma
+
+  applies verbatim to the twisted map, and the twisted charts pi^-1(P^1 \ {c}) are
+  affine because
+
+  pi is affine.
+
+
+  WHAT IS MISSING: Aut(P^1) does not exist in this project. P1 k is a Proj (Curve/P1.lean:135)
+
+  with chartOpen : Fin 2 -> Opens (:200); a workspace-wide search finds no PGL_2 action,
+  no Mobius
+
+  transformation and no automorphism of P1 anywhere.
+
+
+  OBLIGATION. (i) The GL_2(k) action on Proj (k[X_0,X_1]) as a scheme automorphism
+  — mathlib''s
+
+  Proj functoriality for graded ring isomorphisms is the intended route; check what
+  this exact
+
+  mathlib rev ships before hand-rolling. (ii) Transitivity on P^1(k), or the weaker
+  form actually
+
+  needed: for any two distinct c_0, c_1 in P^1(k) an automorphism carrying them to
+  [1:0], [0:1].
+
+  (iii) The compatibility hpi is preserved (gamma is over k), and fiberTwoCover (gamma
+  . pi) is the
+
+  gamma-twisted two-chart cover.
+
+
+  ALTERNATIVE IF THIS IS TOO EXPENSIVE: repair R2 (generalize FinCoverData to sigma-charts,
+  the
+
+  non-vanishing loci of theta sections). Wider refactor, stays inside the relThetaSections
+
+  vocabulary, owes affineness of the complement of an ample divisor. Do not attempt
+  both.
+
+  '
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T15:09:46.499667+00:00'
+  provenance:
+    run: 0048
+    session: 0004-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate

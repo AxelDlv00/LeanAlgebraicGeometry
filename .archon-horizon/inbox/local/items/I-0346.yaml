@@ -1,0 +1,58 @@
+id: I-0346
+provider: local
+kind: issue
+body: "CORRECTION TO MY ANSWER ON I-0333, filed in the same round after an adversarial\
+  \ pass. The\nNEGATIVE half of that answer stands unchanged: chart-avoid is NO, decisively,\
+  \ and you do not\nhave to take that decision. The POSITIVE half — \"the repair is\
+  \ cheap and it is not a decision\" —\nwas too optimistic in three ways, and one\
+  \ of them puts a DIFFERENT question back to you.\n\nWHAT SURVIVED. The Z(diamond)\
+  \ chart does not confine its divisors; the counterexample is real;\nthe obstruction\
+  \ is DivEq-invariant and therefore bites DivFamZar itself; confinement is an open\n\
+  condition on the base, so an atlas may legitimately record avoidance. All kernel-checked\
+  \ or\nargued in informal/spec-dd-r.md ADDENDUM 3.\n\nWHAT DID NOT.\n 1. The counterexample\
+  \ is FIELD-INDEPENDENT (irreducibility of s(x^2+1)+x needs nothing of k),\n    so\
+  \ it also kills the \"assume k infinite\" escape I proposed. Enlarging the field\
+  \ does not\n    help.\n 2. The repair RELOCATES the forbidden geometric input rather\
+  \ than removing it: fibrewise-finite\n    support is not implied by anything a LocalEquations\
+  \ carries, and must be discharged from the\n    seed's own degree data.\n 3. My\
+  \ diagnosis \"the binding constraint is FinCoverData\" was too narrow. Per-piece\n\
+  \    swallow-or-miss follows from (c1)-finiteness for ANY cover by opens; only the\
+  \ chart-wise\n    partitions of unity upgrade \"inside one piece\" to \"inside one\
+  \ chart\". Sharp form: no repair\n    keeping pieces inside the preimages of a FIXED\
+  \ PAIR of points of P^1 can work. A cheaper\n    option I had missed: relaxing just\
+  \ the chart-wise partitions to a joint covering drops the\n    requirement from\
+  \ two avoided points to ONE. Worth trying before anyone builds PGL_2.\n\nTHE QUESTION\
+  \ THAT IS NOW YOURS, and it is a different one from I-0333's:\n\n  OVER A SMALL\
+  \ FINITE FIELD, WHERE |P^1(k)| = q + 1 < n + 2, WHAT IS DivFamZar SUPPOSED TO BE?\n\
+  \nCertifiability needs two k-rational points of P^1 off the support's image at every\
+  \ base point.\nChallenge.lean:96-99 states the Jacobian over an ARBITRARY field,\
+  \ and nothing in Picard/ or\nRiemannRoch/ assumes more than [Field k]. Three options,\
+  \ not comparable on mathematical grounds\nalone:\n (a) accept |P^1(k)| >= n + 2\
+  \ as a hypothesis and record that the challenge as stated is then\n     not solved\
+  \ for small q;\n (b) plan a descent lane — divQProj (Picard/DivSchemeQProj.lean)\
+  \ is the right lever for fpqc\n     descent from a big enough k'/k;\n (c) generalize\
+  \ the pinned charts to closed points of degree d >= 2, paying\n     Gamma(P1 k,\
+  \ chartOpen k i) iso Polynomial k (Curve/P1Charts.lean:234,239) and\n     isPrincipalIdealRing_chartSections\
+  \ (Curve/P1Points.lean:64), since Cl(P^1 minus a degree-d\n     point) = Z/d.\n\n\
+  Roadmap leaf: AJCR.w4-rep.datum.dat-d.ddr.certificate.field-size (blocked, high).\
+  \ It should be\nsettled BEFORE anyone builds the GL_2(k) action on P^1 (leaf p1-aut)\
+  \ — it decides whether that\nwork is worth doing at all."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-25T15:17:21.873800+00:00'
+updated_at: '2026-07-25T15:17:21.873809+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0004-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,67 @@
+id: I-0345
+provider: local
+kind: info
+body: "ANSWER TO I-0333 ITEM 1 (run 0048 round 1). The design decision you were asked\
+  \ to take is no\nlonger needed: the question is settled by mathematics, and the\
+  \ lane is now blocked on ordinary\nwork rather than on you. Deliverable of record:\
+  \ informal/spec-dd-r.md ADDENDUM 3; Lean:\nPicard/DivSchemeCertZarConfine.lean (6\
+  \ declarations, 0 sorries, axioms exactly\n[propext, Classical.choice, Quot.sound],\
+  \ in the default build).\n\nTHE ANSWER IS (b), AND SHARPER THAN (b). The Z(diamond)\
+  \ chart does NOT confine its divisors:\n\n * the seed carries no exactness datum,\
+  \ and every universal instantiation of its `side` field\n   picks an ARBITRARY chart\
+  \ containing the point, so a point of pi^-1(infinity) is legal;\n * option (a) was\
+  \ never available: Theta = fiberWeilDivisor pi is supported on V_0 \\ V_1, so\n\
+  \   set-theoretically Theta = V_1^c and the \"theta side\" of ADDENDUM 2 §4 is one\
+  \ WHOLE disjunct\n   of the verdict, not a tractable half of it — and its argument\
+  \ is circular;\n * there is an explicit counterexample: over k[t], F = t X^2 + X\
+  \ Y + t Y^2 cuts an IRREDUCIBLE\n   relative Cartier divisor of degree 2 whose fibre\
+  \ at t = 0 is {0, infinity}, and which stays\n   irreducible over every nonempty\
+  \ open of the base. No Zariski shrink separates the witnesses.\n   (The witness\
+  \ the lane had been citing for this, Spec R[x]/(x^2-t), never meets\n   pi^-1(infinity)\
+  \ and is chart-confined — it does not exhibit the phenomenon.)\n * and the obstruction\
+  \ is DivEq-invariant (landed this round), so it bites the DivFamZar\n   QUOTIENT,\
+  \ not merely a chosen representative. DivFamZar is not the relative-divisor functor.\n\
+  \nWHY YOU DO NOT HAVE TO CHOOSE. The two branches you were offered are not alternatives:\
+  \ the\ncarve IS the redesign, and it is legitimate for a reason that is now a theorem.\
+  \ The binding\nconstraint is FinCoverData (pieces are basic opens of the two PINNED\
+  \ charts, with a partition of\nunity on each) — not pi, not the cover's fineness,\
+  \ not the submodule L, not the base. So a\nrepair must introduce a piece not inside\
+  \ a single pinned chart, and the cheapest such repair is\nto let the atlas vary\
+  \ the P^1-coordinate (pi becomes gamma . pi). That is FREE in every landed\ndeclaration,\
+  \ because the whole chain is generic in pi. Its one missing input is Aut(P^1), which\n\
+  this project does not have (P1 k is a Proj; no PGL_2 action anywhere) — a self-contained\
+  \ piece\nof ordinary mathematics, now roadmap leaf ...certificate.p1-aut.\n\nAnd\
+  \ the carve does not lose points: chart confinement is an OPEN condition on the\
+  \ base\n(isOpen_setOf_fibre_subset_chartInter, landed), and confinement at one fibre\
+  \ spreads to a\nZariski neighbourhood. That is exactly what distinguishes an atlas\
+  \ RECORDING avoidance from a\nprover ASSUMING it, which §Discipline (2) rightly\
+  \ forbids.\n\nWHAT REMAINS, AND IT IS NOT A DECISION: p1-aut (the GL_2(k) action\
+  \ on P^1) -> fibre-avoid (every\nrelative divisor avoids two k-points of P^1 Zariski-locally\
+  \ on the base) -> cert-relocalize\n(restate IsLocallyCertified/DivFamZar to quantify\
+  \ over the twist) -> swallow-adapt ->\ncert-collapse -> cert-assemble. Two hypotheses\
+  \ need YOUR eye, but later and separately:\n (i) the avoidance argument wants k\
+  \ INFINITE, while Challenge.lean states the Jacobian over an\n     arbitrary field.\
+  \ A finite-field route needs |P^1(k)| > deg D — a base change to k(T) or a\n   \
+  \  degree-d point. Flagging now so it is scheduled, not discovered late.\n (ii)\
+  \ DivRepGlobalData's `equiv` field asserts a full equivalence for a FIXED pi and\
+  \ therefore\n     cannot hold as stated; cert-relocalize must re-pin it.\n\nITEM\
+  \ 2 OF I-0333 (the harness problem) is untouched by this and still stands."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-25T15:12:43.815459+00:00'
+updated_at: '2026-07-25T15:12:43.815469+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0004-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild

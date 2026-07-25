@@ -1,0 +1,46 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.confine-open
+title: 'Confine-open: chart confinement is a divisor invariant and an OPEN condition
+  on the base — LANDED'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: "LANDED 2026-07-25 (run 0048 round 1), Picard/DivSchemeCertZarConfine.lean,\
+  \ 6 declarations,\n0 sorries, axioms exactly [propext, Classical.choice, Quot.sound],\
+  \ in the default build.\n\nWHY IT MATTERS. spec-dd-r §Discipline (2) forbids a support-separation\
+  \ HYPOTHESIS, and is right\nto: assuming supp D cap pi^-1({0,infinity}) = empty\
+  \ about an arbitrary divisor assumes the\nconclusion. The repair does something\
+  \ different — the ATLAS RECORDS which vertical fibres its\ndivisors avoid — and\
+  \ this leaf proves that is legitimate, because the recorded condition is OPEN\n\
+  on the base:\n\n* isOpen_setOf_fibre_subset_chartInter — the base points whose support\
+  \ fibre lies in V_0 inf V_1\n  form an OPEN subset of Spec R (support closed + relative\
+  \ curve proper over the test ring).\n* exists_opens_supportLocus_subset_chartInter\
+  \ — confinement at ONE fibre spreads to a Zariski\n  neighbourhood of that base\
+  \ point (the chart instance of the landed exists_supportTube).\n* supportLocus_subset_of_forall_fibre\
+  \ — fibrewise confinement at every base point IS the global\n  hypothesis forall_finite_colength_of_pieces_eq_chart\
+  \ wants, so (c1) can be discharged fibre by\n  fibre from the seed's fibrewise geometry.\n\
+  * DivEq.unitLocus_eq / DivEq.supportLocus_eq and\n  not_isCertified_of_divEq_of_isPreconnected_of_witnesses\
+  \ — the no-go is about the divisor class,\n  not a representative.\n\nWHAT IT DOES\
+  \ NOT SUPPLY: that the carved opens COVER. With the two pinned charts fixed once\
+  \ and\nfor all they provably do not (chart-avoid (c)). Covering is what p1-aut +\
+  \ fibre-avoid buy.\n"
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T15:09:45.602696+00:00'
+  provenance:
+    run: 0048
+    session: 0004-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate

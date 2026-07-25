@@ -1,0 +1,46 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.fibre-avoid
+title: 'Fibre-avoid: every relative divisor avoids two k-points of P^1 Zariski-locally
+  on the base'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: "THE COVERING OBLIGATION — what makes the atlas carve legitimate rather than\
+  \ lossy\n(spec-dd-r ADDENDUM 3 §5). With p1-aut, this closes the certificate lane's\
+  \ geometric gate.\n\nSTATEMENT. For a relative divisor whose support is finite over\
+  \ Spec R, and any s in Spec R: the\nfibre D_s is finite, so pi(D_s) is a finite\
+  \ subset of P^1 over kappa(s); if k is INFINITE then\nP^1(k) is infinite, so two\
+  \ distinct c_0, c_1 in P^1(k) avoid pi(D_s). relCurve C R -> Spec R is\nproper (instIsProperRelCurveHom,\
+  \ SupportTube.lean:194) hence closed, so the image of\nsupportLocus cap pi^-1({c_0,c_1})\
+  \ is closed and misses s. Over the open complement the divisor is\nconfined to pi^-1(P^1\
+  \ \\ {c_0,c_1}) = V_0 inf V_1 for the gamma-twist carrying {c_0,c_1} to\n{0,infinity}.\n\
+  \nPAYOFF, ALREADY LANDED: chartPairCoverData / ofChartPair and\nforall_finite_colength_of_pieces_eq_chart\
+  \ (Picard/DivSchemeCertZarChartPair.lean) then give\nclause (c1) FREE — no fibre,\
+  \ no tube, no packet idempotent. The base-open spread it needs is\nconfine-open's\
+  \ exists_opens_supportLocus_subset_chartInter.\n\nTWO HYPOTHESES TO WATCH, both\
+  \ real risks, neither to be assumed silently:\n (i) k INFINITE. Challenge.lean states\
+  \ the Jacobian over an arbitrary field. A finite-field route\n     needs |P^1(k)|\
+  \ > deg D, i.e. a base change to k(T) or a degree-d point; schedule it, do not\n\
+  \     assume it.\n (ii) FINITENESS OF THE SUPPORT OVER THE BASE must come from the\
+  \ seed's own degree data, NOT from\n     the certificate — otherwise the argument\
+  \ is circular. This is the one genuinely load-bearing\n     input of this leaf.\n"
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T15:09:47.456688+00:00'
+  provenance:
+    run: 0048
+    session: 0004-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate

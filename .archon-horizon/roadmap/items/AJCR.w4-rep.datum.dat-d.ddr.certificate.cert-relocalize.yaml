@@ -1,0 +1,76 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.cert-relocalize
+title: 'Cert-relocalize: restate IsLocallyCertified/DivFamZar to quantify over the
+  coordinate twist'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'THE INTERFACE CHANGE (spec-dd-r ADDENDUM 3 §3, repair R1). Restate IsLocallyCertified
+  — hence
+
+  DivFamZar and divFunctor — to quantify over the P^1-coordinate twist as well as
+  over the Zariski
+
+  cover of the base: "locally on Spec R there is a gamma such that the adaptation
+  is certified for
+
+  gamma . pi".
+
+
+  WHY THE SHAPE IS FORCED: chart-avoid (c) exhibits a relative divisor that is certified
+  for NO
+
+  gamma-free cover, and confine-open shows the avoidance condition is open on the
+  base, so the
+
+  quantifier must sit inside the base-local one, not outside it.
+
+
+  BLAST RADIUS TO AUDIT (the S6 spelling freeze is a two-lane coordination point,
+  ADDENDUM 1 item
+
+  1 — the DD-R lane must sign off before S6 freezes): IsLocallyCertified (DivisorFamilyZar.lean),
+
+  DivFamZar / DivFamZar.mk / mapAlg / toZar / exists_glue_of_away_compat / eq_of_away_eq,
+
+  divFamZar.eval (DivisorFamilyZarVehicle.lean:209), divFunctor
+
+  (DivisorFamilyZarFunctor.lean:45), DivFamZar.exists_certified_away_rep
+
+  (DivRepClassifyZarKit.lean:79), DivFamZar.exists_certChartCover (DivRepClassifyZarKit.lean:433),
+
+  IsLocallyCertified.of_divEq (DivisorFamilyZar.lean:86), and DivRepGlobalData''s
+  `equiv` field
+
+  (DivRepKit.lean:83) — which asserts a full equivalence for a FIXED pi and therefore
+  CANNOT hold
+
+  as stated; it must be re-pinned in the same pass.
+
+
+  GATED ON p1-aut + fibre-avoid. Do not start before both land: the restatement is
+  only worth
+
+  making once the twisted charts are known to cover.
+
+  '
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T15:09:48.432715+00:00'
+  provenance:
+    run: 0048
+    session: 0004-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate

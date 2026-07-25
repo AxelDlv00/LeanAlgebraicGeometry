@@ -1,44 +1,115 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.chart-avoid
-title: 'Chart-avoid: BLOCKED on a human design decision — the spec forbids the condition
-  the mathematics forces'
+title: 'Chart-avoid: ANSWERED — NO. The Z(diamond) chart does not confine its divisors;
+  the binding constraint is FinCoverData'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "THE GEOMETRIC INPUT OF THE CERTIFICATE, now known to be forced — but COMPONENTWISE,\
-  \ not globally.\n\nTHE VERDICT (Picard/DivSchemeCertZarC1.lean + DivSchemeCertZarConn.lean,\
-  \ both kernel-checked):\n  supportLocus_subset_chart_of_isCertified :\n    IsPreconnected\
-  \ supportLocus -> A.IsCertified n -> supportLocus subset V_0 or supportLocus subset\
-  \ V_1.\nThe (c1) half is now PROVED in both directions (supportLeak_eq_empty_iff_finite_colength),\
-  \ so this\nis a statement about IsCertified itself, not merely about the landed\
-  \ assemblers. Contrapositive: a\nCONNECTED divisor meeting both pi^{-1}(0) and pi^{-1}(infinity)\
-  \ has NO certified adaptation, over any\nbase, after any Zariski shrink. Base localization\
-  \ cannot evade it (Spec R[x]/(x^2-t) over k[t] is\nconnected over every basic open),\
-  \ and DivEq re-spelling cannot (supportLocus is a germ-unit locus,\ninvariant under\
-  \ unit rescaling — though no in-project lemma states that yet; worth adding).\n\n\
-  SCOPE CORRECTION (work-reviewer, I-0339). The hypothesis is CONNECTEDNESS, and a\
-  \ degree-g relative\ndivisor is typically DISCONNECTED: two disjoint sections, one\
-  \ inside V_0 \\ V_1 and one inside\nV_1 \\ V_0, have both chart traces closed while\
-  \ the divisor lies in neither chart and meets both\nfibres. So the honest necessary\
-  \ condition is that EACH CONNECTED COMPONENT of the support is\nchart-confined,\
-  \ not the whole support. Do not state this leaf as \"supp subset V_0 or supp subset\
-  \ V_1\".\n\nWHAT THIS LEAF MUST NOW DECIDE. The DD-R chart contains NO fibre-avoidance\
-  \ condition anywhere — the\nground checkpoint verified this across ThetaGeneratorSeed\
-  \ (DivSchemeFamily.lean:74, whose `side`\nfield merely picks SOME chart containing\
-  \ each point, so a point of pi^{-1}(0) is legal), IsGenerator,\nrelThetaSections,\
-  \ FinCoverData, DivisorAdaptation, IsCertified, DivCarveChartRing, DivScheme and\n\
-  DivSchemeAtlasFactor. The only occurrences of pi^{-1}(0)/pi^{-1}(infinity) in the\
-  \ whole Lean tree are\ndoc comments in the run-0048 files. AND THE SPEC FORBIDS\
-  \ ADDING ONE: informal/spec-dd-r.md\n§Discipline (2) and §1 ADJUDICATION A say \"\
-  never a support condition supp D cap pi^{-1}(Gm) = empty\n... any DD-R prover writing\
-  \ a support-separation hypothesis has left the route.\" Meanwhile ADDENDUM 1\nitem\
-  \ 2 asserts the universal family \"is honestly certified over each Z(diamond)-chart\
-  \ ring\", which no\nunconditional Lean theorem backs — every landed producer of\
-  \ IsCertified takes hnoLeak,\nkernel-spanning or separation as a HYPOTHESIS.\n\n\
-  So the spec and the landed mathematics now contradict each other, and this is NOT\
-  \ a lemma to grind:\nit is carve-the-atlas, weaken-IsCertified, or re-scope. Escalated\
-  \ to the human as inbox I-0333.\n"
-status: blocked
+summary: 'ANSWERED 2026-07-25 (run 0048 round 1). The answer is NO, on three independent
+  grounds, and
+
+  nothing downstream is blocked on a human any more. Deliverable of record: informal/spec-dd-r.md
+
+  ADDENDUM 3, which supersedes ADDENDUM 2 §4 and ADDENDUM 1 item 2. Inbox I-0333 is
+  answered.
+
+
+  (a) THE SEED CARRIES NO EXACTNESS DATUM. ThetaGeneratorSeed (Picard/DivSchemeFamily.lean:74)
+
+  has five fields, IsGenerator (:129) two; none mentions Theta, pole order or a chart.
+  Every
+
+  universal instantiation of `side` picks an ARBITRARY chart containing the point
+  (seedUniv
+
+  DivSchemeSeedUnivGen.lean:283, seedUniv'' DivSchemeRedesignSeedUniv.lean:180, pointwiseSide
+
+  DivSchemeSeedUnivPointwise.lean:88), so a point of pi^-1(infinity) is legal everywhere.
+
+
+  (b) ADDENDUM 2 §4''s "tractable half" IS A WHOLE DISJUNCT, AND ITS ARGUMENT IS CIRCULAR.
+  Theta =
+
+  fiberWeilDivisor pi is supported on V_0 \ V_1 (FLVFiberToolkit.lean:292/:311/:254),
+  so
+
+  set-theoretically Theta = V_1^c and "supportLocus cap pi^-1(infinity) = empty" IS
+  the disjunct
+
+  supportLocus subset V_1. And IsGenerator.dvd makes supportLocus the base locus of
+  K, so "a
+
+  generator of exact pole order a exists at y in Theta" holds iff the base locus misses
+  y:
+
+  premise = conclusion.
+
+
+  (c) EXPLICIT COUNTEREXAMPLE, STABLE UNDER EVERY ZARISKI SHRINK. Over k[t] with C
+  = P^1, pi = id,
+
+  F = t X^2 + X Y + t Y^2 cuts a relative effective Cartier divisor, finite flat of
+  degree 2
+
+  (coefficients (t,1,t) generate the unit ideal). F(1,0) = F(0,1) = t, so the fibre
+  at t = 0 is
+
+  Z(XY) = {0, infinity}: it meets BOTH vertical fibres. In the chart Y = 1, F = t(x^2+1)
+  + x is
+
+  degree 1 in t with coprime coefficients, hence irreducible in k[x,t]; the only point
+  over Y = 0
+
+  is (infinity, 0), in the closure. So D is IRREDUCIBLE, D -> A^1_t is finite surjective,
+  and over
+
+  EVERY nonempty open of the base D stays irreducible hence preconnected. Every Zariski
+  cover has
+
+  a member containing t = 0. By supportLocus_subset_chart_of_isCertified this divisor
+  is NOT
+
+  IsLocallyCertified.
+
+
+  CORRECTION TO THE RECORD: the witness this leaf previously cited, Spec R[x]/(x^2
+  - t) over k[t],
+
+  does NOT meet pi^-1(infinity) (its points x = +-sqrt t are always finite), so it
+  is chart-confined
+
+  and is not a witness. The conclusion stands; the witness above is the correct one.
+
+
+  (d) THE OBSTRUCTION SURVIVES THE DivEq QUOTIENT (landed this round, kernel-checked,
+
+  Picard/DivSchemeCertZarConfine.lean): DivEq.supportLocus_eq — the support locus
+  is a divisor
+
+  invariant — hence not_isCertified_of_divEq_of_isPreconnected_of_witnesses: NO representative
+  of
+
+  the class admits a certified adaptation. DivFamZar is a DivEq quotient, so DivFamZar
+  is not the
+
+  relative-divisor functor and divRep against it would represent the wrong object.
+
+
+  THE BINDING CONSTRAINT is FinCoverData (DivisorFamily.lean:160-176), which hardwires
+
+  h_0 : Fin m_0 -> Gamma(V_0), h_1 : Fin m_1 -> Gamma(V_1) with a partition of unity
+  on EACH pinned
+
+  chart. Not pi, not the cover''s fineness, not the submodule L, not the base. Any
+  repair must
+
+  introduce an adaptation piece NOT contained in a single pinned chart. Successor
+  leaves: p1-aut,
+
+  fibre-avoid, cert-relocalize, confine-open.
+
+  '
+status: done
 kind: proof
-priority: urgent
+priority: normal
 depends_on: []
 inbox_refs: []
 task_refs: []
@@ -58,4 +129,4 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-25T14:19:51.028970+00:00'
+  updated_at: '2026-07-25T15:10:17.160514+00:00'

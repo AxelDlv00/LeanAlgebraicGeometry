@@ -3,36 +3,105 @@ title: 'DD-R certificate: inherited certificate, epsilon projection, U1/U2, and 
   laws'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "ROUTE RE-BASED (2026-07-25, run 0048) — the lane's gate is now a single\
-  \ geometric statement\nabout the divisor, and it is PROVED to be irreducible.\n\n\
-  THE NECESSITY (landed, kernel-checked, commit 49866bdd1, Picard/DivSchemeCertZarChartTrace.lean).\n\
-  A FinCoverData carries a partition of unity on each pinned chart, so the chart-b\
-  \ pieces cover\nALL of V_b and the union of their traces is the whole chart trace\
-  \ supportLocus cap V_b. A finite\nunion of closed sets is closed, hence\n\n  the\
-  \ assembler's hnoLeak at every piece  ==>  supportLocus cap V_0 and supportLocus\
-  \ cap V_1 are\n  CLOSED in the relative curve\n\n(isClosed_supportLocus_inter_chart_of_forall_noLeak).\
-  \ That mentions neither the adaptation nor its\npieces. Contrapositive not_forall_noLeak_of_not_isClosed_chart0:\
-  \ a system whose chart trace is not\nclosed admits NO adaptation satisfying the\
-  \ assembler's hypothesis. So refining the cover can only\nadd constraints, and shrinking\
-  \ the base only re-states the same condition over the smaller base.\n\nTHE SUFFICIENCY\
-  \ (landed, commit 206967379, Picard/DivSchemeCertZarSwallow.lean). If every piece\n\
-  either SWALLOWS the support (supportLocus subset pieces j) or MISSES it, then no-leak\
-  \ holds at every\npiece and clause (c1)-finite follows, with no fibre, no tube and\
-  \ no packet idempotent. A missing\npiece has a UNIT equation, so its colength module\
-  \ VANISHES\n(subsingleton_colength_of_disjoint_supportLocus) and needs no fibrewise\
-  \ regularity input either.\nThe two dichotomy theorems pin the shape: a swallow-or-miss\
-  \ adaptation exists only for a divisor\ninside a pinned chart or disjoint from it,\
-  \ so (V_0 sup V_1 = top) a nonempty support lies in\nV_0 cap V_1 — the divisor avoids\
-  \ BOTH vertical fibres of pi — or is confined to one of them.\n\nCONSEQUENCE FOR\
-  \ THE OLD LEAVES. tube-fibre and leak-image are both superseded: their common\n\
-  obligation is exactly chart-trace closedness, which is a CHART-DESIGN input, not\
-  \ something the\nsupport tube / idempotent packets / base shrinking can manufacture.\
-  \ away-kerspan (hinj) is\nsuspected to be an ARTIFACT of certifying the arbitrary\
-  \ `.some` extraction adaptation: for a\nswallow-or-miss adaptation the Cech complex\
-  \ has at most one nontrivial piece per chart and its\ndifference map is surjective\
-  \ onto the off-diagonal overlaps, so (c3)/(c4) should be free — see the\nnew cert-collapse\
-  \ leaf. That is the single highest-value experiment in the lane.\n\nTHE NEW CHAIN:\
-  \ chart-avoid -> swallow-adapt -> cert-collapse -> cert-assemble.\n"
+summary: 'ROUTE RE-BASED AGAIN 2026-07-25 (run 0048 round 1). The lane''s gate is
+  no longer a question: it
+
+  is answered, and the lane is blocked on ordinary mathematics rather than on a human
+  decision.
+
+  Deliverable of record: informal/spec-dd-r.md ADDENDUM 3 (supersedes ADDENDUM 2 §4
+  and ADDENDUM 1
+
+  item 2). Inbox I-0333 is answered.
+
+
+  THE VERDICT (chart-avoid). The Z(diamond) chart does NOT confine its divisors. Three
+  independent
+
+  grounds: the seed carries no exactness datum and cannot honestly be given one; ADDENDUM
+  2 §4''s
+
+  "tractable half" is a whole disjunct (Theta = V_1^c set-theoretically) and its argument
+  is
+
+  circular; and there is an explicit counterexample — F = t X^2 + X Y + t Y^2 over
+  k[t] cuts an
+
+  IRREDUCIBLE relative Cartier divisor of degree 2 whose fibre at t = 0 is {0, infinity},
+  and it
+
+  stays irreducible over every nonempty open of the base, so no Zariski shrink evades
+  the no-go.
+
+  Landed this round: the obstruction is DivEq-invariant, so it bites the DivFamZar
+  QUOTIENT and
+
+  not merely a representative (DivSchemeCertZarConfine.lean).
+
+
+  THE DIAGNOSIS. The binding constraint is FinCoverData (DivisorFamily.lean:160-176):
+  pieces are
+
+  basic opens of the two PINNED charts with a partition of unity on each. Since clause
+
+  (c1)-finiteness IS leak-freeness, every piece trace is clopen in the support, so
+  a connected
+
+  support lands inside one piece hence one chart. Refining the cover, shrinking the
+  base, choosing
+
+  a cleverer L and re-spelling the equations are all provably useless. Any repair
+  must introduce a
+
+  piece NOT contained in a single pinned chart.
+
+
+  THE REPAIR (R1, chosen). Vary the P^1-coordinate: every declaration in the chain
+  is generic in
+
+  pi, so replacing pi by gamma . pi for gamma in Aut(P^1_k) is free in the landed
+  material. Its
+
+  one missing input is Aut(P^1) itself, which does not exist in this project (P1 k
+  is a Proj; no
+
+  PGL_2 action anywhere) — leaf p1-aut. Its covering obligation is leaf fibre-avoid.
+  Then the
+
+  interface restatement is leaf cert-relocalize, after which the LANDED chartPairCoverData
+  /
+
+  ofChartPair / forall_finite_colength_of_pieces_eq_chart give clause (c1) FREE.
+
+  R2 (generalize FinCoverData to sigma-charts) is the recorded alternative; do not
+  attempt both.
+
+  REJECTED: deleting clause (c1) from IsCertified — Module.Flat colength is free from
+  fibrewise
+
+  regularity alone, but the (c2)/(c3)/(c4) keystones in SlicingFlatKernel.lean (variable
+  block
+
+  :221-224) all carry [Module.Finite R chartProd], which IS finite colengths.
+
+
+  THE NEW CHAIN: p1-aut -> fibre-avoid -> cert-relocalize -> swallow-adapt -> cert-collapse
+  ->
+
+  cert-assemble.  confine-open and chart-avoid are done; tube-fibre and leak-image
+  stay rejected;
+
+  away-kerspan stays blocked behind cert-collapse.
+
+
+  BUILD-REACH HAZARD affecting this subtree: cert-assemble cites hdeg at
+
+  Picard/DivSchemeSeedUnivPulledDegree.lean:354, and that module is NOT reachable
+  from the root
+
+  aggregator, so the citation is source-level only and its olean is stale. See AJCR.w4-rep.build-reach.
+
+  '
 status: active
 kind: proof
 priority: normal
@@ -55,7 +124,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-25T13:55:19.510811+00:00'
+  updated_at: '2026-07-25T15:10:18.158556+00:00'
   pinned_commits:
   - c843eafd7
   - 359c0a38d

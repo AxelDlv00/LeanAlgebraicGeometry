@@ -1,0 +1,61 @@
+id: I-0347
+provider: local
+kind: memory
+body: "DD-R CERTIFICATE LANE — DURABLE FINDINGS (run 0048 r1, 2026-07-25). Supersedes\
+  \ I-0327.\n\n1. chart-avoid is ANSWERED: NO. The Z(diamond) chart does not confine\
+  \ its divisors. Do not\n   re-open it, and do not re-attempt the \"theta side\"\
+  \ of spec-dd-r ADDENDUM 2 §4: Theta =\n   fiberWeilDivisor pi is supported on V_0\
+  \ \\ V_1, so set-theoretically Theta = V_1^c and the\n   \"tractable half\" is a\
+  \ WHOLE DISJUNCT of the verdict; and IsGenerator.dvd makes supportLocus\n   the\
+  \ base locus of K, so the hypothesised exact-pole generator exists iff the conclusion\n\
+  \   already holds. Circular.\n\n2. THE COUNTEREXAMPLE IS FIELD-INDEPENDENT. F =\
+  \ s X_0^2 + X_0 X_1 + s X_1^2 over k[s] cuts an\n   irreducible degree-2 relative\
+  \ Cartier divisor whose fibre at s = 0 is {0, infinity}, and it\n   stays irreducible\
+  \ over every nonempty open of the base. s(x^2+1) + x is degree 1 in s with\n   coprime\
+  \ coefficients over ANY field, so this works over F_2. Consequence: \"assume k infinite\"\
+  \n   is NOT an escape from the obstruction, and small finite fields are a genuine\
+  \ hole in every\n   avoidance-based repair. (The example was already in the tree\
+  \ as a docstring model at\n   Picard/DivSchemeCertZarConn.lean:170-175.)\n\n3. THE\
+  \ OBSTRUCTION NEEDS NO CONNECTIVITY. isClosed_supportLocus_inter_chart_of_isCertified\n\
+  \   (Picard/DivSchemeCertZarConfine.lean, landed this round): a certificate forces\
+  \ BOTH pinned\n   chart traces closed, full stop. Use this form, not the preconnected\
+  \ one, when refuting.\n   And it is DivEq-invariant (DivEq.supportLocus_eq, same\
+  \ file), so it bites the DivFamZar\n   QUOTIENT — re-spelling the equations is not\
+  \ an escape either.\n\n4. TWO CONSTRAINTS, NOT ONE. (c1)-finiteness = leak-freeness\
+  \ gives per-piece swallow-or-miss for\n   ANY cover by opens, so a connected support\
+  \ lies inside a single PIECE no matter how\n   FinCoverData is reshaped. Only the\
+  \ chart-wise partitions of unity (DivisorFamily.lean:174,176)\n   upgrade that to\
+  \ a single CHART. Sharp form: no repair keeping pieces inside the preimages of\n\
+  \   a FIXED PAIR of points of P^1 can work. UNTRIED CHEAP OPTION: relax the partitions\
+  \ to a joint\n   ⨆ pieces = top — drops the requirement from two avoided points\
+  \ to one.\n\n5. DEAD END, with a reason: deleting clause (c1) from IsCertified.\
+  \ Module.Flat R (colength j) is\n   free from fibrewise regularity alone (flat_colength_of_forall_tmul_residueField,\n\
+  \   SupportTube.lean:313 — no finiteness, no no-leak), so it looks like finiteness\
+  \ is the only\n   culprit. It is not usable: every (c2)/(c3)/(c4) keystone in SlicingFlatKernel.lean\
+  \ (variable\n   block :221-224) carries [Module.Finite R M] with M = chartProd,\
+  \ which IS finite colengths.\n\n6. pi-GENERICITY IS TOTAL, and DivScheme is pi-FREE.\
+  \ The only constraints on pi anywhere are\n   [IsFinite pi], [IsDominant pi], [IsAffineHom\
+  \ pi] and the propositional triangle hpi; DivScheme\n   (DivScheme.lean:144) takes\
+  \ two abstract CurveDivisors and pi enters only at the instantiation.\n   So a coordinate\
+  \ twist needs no atlas gluing. But Aut(P^1) does not exist in this project, and\n\
+  \   mathlib has Proj.map without Proj.mapIso; and the project has no k-rational\
+  \ points of P^1 at\n   all."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T15:17:23.572213+00:00'
+updated_at: '2026-07-25T15:17:23.572223+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0004-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
