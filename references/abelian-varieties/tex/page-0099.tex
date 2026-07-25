@@ -1,0 +1,91 @@
+% source: J. S. Milne, "Abelian Varieties" (course notes), v2.00, 2008, www.jmilne.org
+% pdf_page: 0099
+% doc_page: 93 (Chapter III, Section 2; conclusion of Proposition 2.3 and Theorem 2.5)
+% retrieved: 2026-06-17
+% transcribed_by: Codex GPT-5 (vision, rendered at 200dpi via pdftoppm)
+
+% [running head: 2. THE CANONICAL MAPS FROM C TO ITS JACOBIAN VARIETY, page 93]
+% [continuation of the proof of Proposition 2.3]
+
+where $h_C$ is the canonical map, and it remains to show that $h_C$ is
+surjective. The kernel of $h_C$ is
+$\{\omega \in \Gamma(C, \Omega^1) \mid \omega(P) = 0\}
+= \Gamma(C, \Omega^1(-P))$, which is dual to
+$H^1(C, \mathcal{L}(P))$. The Riemann-Roch theorem shows that this last group
+has dimension $g-1$, and so
+$\operatorname{Ker}(h_C) \ne \Gamma(C, \Omega^1)$: $h_C$ is surjective, and
+the proof is complete. \hfill $\square$
+
+We now assume that $k = \mathbb{C}$ and sketch the relation between the
+abstract and classical definitions of the Jacobian. In this case,
+$\Gamma(C(\mathbb{C}), \Omega^1)$ (where $\Omega^1$ denotes the sheaf of
+holomorphic differentials in the sense of complex analysis) is a complex
+vector space of dimension $g$, and one shows in the theory of abelian
+integrals that the map
+$\sigma \mapsto (\omega \mapsto \int_\sigma \omega)$ embeds
+$H_1(C(\mathbb{C}), \mathbb{Z})$ as a lattice into the dual space
+$\Gamma(C(\mathbb{C}), \Omega^1)^\vee$. Therefore
+\[
+  J^{\mathrm{an}} \overset{\mathrm{df}}{=}
+  \Gamma(C(\mathbb{C}), \Omega^1)^\vee/H_1(C(\mathbb{C}), \mathbb{Z})
+\]
+is a complex torus, and the pairing
+\[
+  H_1(C(\mathbb{C}), \mathbb{Z}) \times
+  H_1(C(\mathbb{Z}), \mathbb{Z}) \to \mathbb{Z}
+\]
+% [sic: the second factor is printed C(\mathbb{Z}), rather than C(\mathbb{C})]
+defined by Poincar\'e duality gives a nondegenerate Riemann form on
+$J^{\mathrm{an}}$. Therefore $J^{\mathrm{an}}$ is an abelian variety over
+$\mathbb{C}$. For each $P$ there is a canonical map
+$g^P \colon C \to J^{\mathrm{an}}$ sending a point $Q$ to the element
+represented by $(\omega \mapsto \int_\gamma \omega)$, where $\gamma$ is any
+path from $P$ to $Q$. Define
+$e \colon \Gamma(C(\mathbb{C}), \Omega^1)^\vee \to J(\mathbb{C})$ to be the
+surjection in the diagram:
+\[
+\begin{array}{ccc}
+  \Gamma(C(\mathbb{C}), \Omega^1)^\vee &
+    \xrightarrow{\ \mathrm{onto}\ } & J(\mathbb{C}) \\
+  {}_{\simeq}\!\downarrow^{f^{*\vee}} && \uparrow^{\exp} \\
+  \Gamma(J, \Omega^1)^\vee & \xrightarrow{\ \simeq\ } & T_0(J).
+\end{array}
+\]
+
+Note that if $\Gamma(C(\mathbb{C}), \Omega^1)^\vee$ is identified with
+$T_P(C)$, then $(de)_0 = (df^P)_P$. It follows that if $\gamma$ is a path
+from $P$ to $Q$ and $\ell = (\omega \mapsto \int_\gamma \omega)$, then
+$e(\ell) = f^P(Q)$.
+
+\paragraph{Theorem 2.5.}
+\textit{The canonical surjection
+$e \colon \Gamma(C(\mathbb{C}), \Omega^1)^\vee \twoheadrightarrow
+J(\mathbb{C})$ induces an isomorphism $J^{\mathrm{an}} \to J$ carrying
+$g^P$ into $f^P$.}
+
+\paragraph{Proof.}
+We have to show that the kernel of $e$ is $H_1(C(\mathbb{C}), \mathbb{Z})$,
+but this follows from Abel's theorem and the Jacobi inversion theorem.
+
+(Abel): Let $P_1, \ldots, P_r$ and $Q_1, \ldots, Q_r$ be elements of
+$C(\mathbb{C})$; then there is a meromorphic function on $C(\mathbb{C})$
+with its poles at the $P_i$ and its zeros at the $Q_i$ if and only if for any
+paths $\gamma_i$ from $P$ to $P_i$ and $\gamma_i'$ from $P$ to $Q_i$ there
+exists a $\gamma$ in $H_1(C(\mathbb{C}), \mathbb{Z})$ such that
+\[
+  \sum \int_{\gamma_i} \omega - \sum \int_{\gamma_i'} \omega
+  = \int_\gamma \omega \quad \text{all } \omega.
+\]
+
+(Jacobi) Let $\ell$ be a linear mapping
+$\Gamma(C(\mathbb{C}), \Omega^1) \to \mathbb{C}$. Then there exist $g$
+points $P_1, \ldots, P_g$ on $C(\mathbb{C})$ and paths
+$\gamma_1, \ldots, \gamma_g$ from $P$ to $P_i$ such that
+$\ell(\omega) = \sum_i \int_{\gamma_i} \omega$ for all
+$\omega \in \Gamma(C(\mathbb{C}), \Omega^1)$.
+
+Let $\ell \in \Gamma(C(\mathbb{C}), \Omega^1)^\vee$; we may assume it is
+defined by $g$ points $P_1, \ldots, P_g$. Then $\ell$ maps to zero in
+$J(\mathbb{C})$ if and only if the divisor $\sum P_i-gP$ is linearly
+equivalent to zero, and Abel's theorem shows that this is equivalent to
+$\ell$ lying in $H_1(C(\mathbb{C}), \mathbb{Z})$. \hfill $\square$

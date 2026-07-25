@@ -1,0 +1,81 @@
+% source: J. S. Milne, "Abelian Varieties" (course notes), v2.00, 2008, www.jmilne.org
+% pdf_page: 0098
+% doc_page: 92 (Chapter III, Section 2; Proposition 2.2, Proposition 2.3, and Lemma 2.4)
+% retrieved: 2026-06-17
+% transcribed_by: Codex GPT-5 (vision, rendered at 200dpi via pdftoppm)
+
+% [running head: CHAPTER III. JACOBIAN VARIETIES, page 92]
+% [continuation from the preceding page]
+
+class $[Q-P]$ of $Q-P$). Note that the map
+$\sum_Q n_QQ \mapsto \sum_Q n_Qf^P(Q) = [\sum_Q n_QQ]$ from the group of
+divisors of degree zero on $C$ to $J(k)$ induced by $f^P$ is simply the map
+defined by $\iota$. In particular, it is independent of $P$, is surjective,
+and its kernel consists of the principal divisors.
+
+From its definition (or from the above descriptions of its action on the
+points) it is clear that if $P'$ is a second point on $C$, then $f^{P'}$ is
+the composite of $f^P$ with the translation map $t_{[P-P']}$, and that if
+$P$ is defined over a Galois extension $k'$ of $k$, then
+$\sigma f^P = f^{\sigma P}$ for all $\sigma \in \operatorname{Gal}(k'/k)$.
+
+If $C$ has genus zero, then (1.6) shows that $J = 0$. From now on we assume
+that $C$ has genus $g > 0$.
+
+\paragraph{Proposition 2.2.}
+\textit{The map
+$f^* \colon \Gamma(J, \Omega_J^1) \to \Gamma(C, \Omega_C^1)$ is an
+isomorphism.}
+
+\paragraph{Proof.}
+As for any group variety, the canonical map
+$h_J \colon \Gamma(J, \Omega_J^1) \to T_0(J)^\vee$ is an isomorphism
+Shafarevich 1994, III, 5.2. Also there is a well known duality between
+$\Gamma(C, \Omega_C^1)$ and $H^1(C, \mathcal{O}_C)$. We leave it as an
+exercise to the reader (unfortunately rather complicated) to show that the
+following diagram commutes:
+\[
+\begin{array}{ccc}
+  \Gamma(J, \Omega_J^1) & \xrightarrow{\ f^*\ } &
+    \Gamma(C, \Omega_C^1) \\
+  {}_{h_J}\!\downarrow^{\simeq} && \downarrow^{\simeq} \\
+  T_0(J)^\vee & \xrightarrow{\ \simeq\ } & H^1(C, \mathcal{O}_C)^\vee
+\end{array}
+\]
+(the bottom isomorphism is the dual of the isomorphism in (1.6)).
+\hfill $\square$
+
+\paragraph{Proposition 2.3.}
+\textit{The map $f^P$ is a closed immersion (that is, its image $f^P(C)$ is
+closed and $f^P$ is an isomorphism from $C$ onto $f^P(C)$); in particular,
+$f^P(C)$ is nonsingular.}
+
+It suffices to prove this in the case that $k$ is algebraically closed.
+
+\paragraph{Lemma 2.4.}
+\textit{Let $f \colon V \to W$ be a map of varieties over an algebraically
+closed field $k$, and assume that $V$ is complete. If the map
+$V(k) \to W(k)$ is injective and, for all points $Q$ of $V$, the map on
+tangent spaces $T_Q(V) \to T_{fQ}(W)$ is injective, then $f$ is a closed
+immersion.}
+
+\paragraph{Proof.}
+The image of $f$ is closed because $V$ is complete, and the condition on the
+tangent spaces (together with Nakayama's lemma) shows that the maps
+$\mathcal{O}_{fQ} \to \mathcal{O}_Q$ on the local rings are surjective.
+\hfill $\square$
+
+\paragraph{Proof (of 2.3).}
+We apply the lemma to $f = f^P$. If $f(Q) = f(Q')$ for some $Q$ and $Q'$ in
+$C(k)$, then the divisors $Q-P$ and $Q'-P$ are linearly equivalent. This
+implies that $Q-Q'$ is linearly equivalent to zero, which is impossible if
+$Q \ne Q'$ because $C$ has genus $> 0$. Consequently, $f$ is injective, and
+it remains to show that the maps on tangent spaces
+$(df^P)_Q \colon T_Q(C) \to T_{fQ}(J)$ are injective. Because $f^Q$ differs
+from $f^P$ by a translation, it suffices to do this in the case that $Q=P$.
+The dual of $(df^P)_P \colon T_P(C) \to T_0(J)$ is clearly
+\[
+  \Gamma(J, \Omega^1) \xrightarrow{\ f^*\ } \Gamma(C, \Omega^1)
+  \xrightarrow{\ h_C\ } T_P(C)^\vee,
+\]
+% [proof continues on the next page]
