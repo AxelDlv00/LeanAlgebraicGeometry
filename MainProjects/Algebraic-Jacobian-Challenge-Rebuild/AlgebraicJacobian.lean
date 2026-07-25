@@ -453,6 +453,7 @@ import AlgebraicJacobian.Picard.SupportTubeFinite
 import AlgebraicJacobian.Picard.PicEtCrossBase
 import AlgebraicJacobian.Picard.PicEtCrossBaseGraph
 import AlgebraicJacobian.Picard.Pic0ThetaAssembly
+import AlgebraicJacobian.Picard.JacobianDataAbel
 import AlgebraicJacobian.Picard.JacobianDataBaseChange
 import AlgebraicJacobian.Picard.JacobianDataBaseChangeAbel
 import AlgebraicJacobian.Picard.DivSchemeQProj
