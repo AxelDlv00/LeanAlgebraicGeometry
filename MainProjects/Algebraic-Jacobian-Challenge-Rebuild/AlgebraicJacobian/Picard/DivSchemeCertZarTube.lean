@@ -151,4 +151,38 @@ end DivisorAdaptation
 
 end NoLeakOverTube
 
+/-! ## The tube-fibre reduction
+
+Combining the two halves: to obtain the certificate assembler's `hnoLeak` input over an
+`Away` chart, it is enough to check at ONE base prime that the support fibre lies in an
+open — the tube spreads it to a basic-open neighbourhood, and containment there upgrades to
+the fibrewise clause. This is the precise statement the remaining geometric work has to
+feed, and it mentions only a single fibre. -/
+
+section TubeFibre
+
+variable {k : Type u} [Field k] (C : Over (Spec (.of k))) [IsProper C.hom]
+variable (R : Type u) [CommRing R] [Algebra k R]
+
+/-- **The tube-fibre reduction.** If at a base prime `p` the support fibre of the system
+lies inside an open `U`, then some `r ∉ p` has the entire support over `D(r)` inside `U`.
+
+Stated so that the remaining certificate obligation is *purely fibrewise*: check one fibre,
+get a Zariski chart.  The consumer chain is
+`exists_notMem_supportLocus_subset_of_fibre` → the pulled system's support over `D(r)` →
+`DivisorAdaptation.forall_noLeak_of_forall_supportLocus_subset` → the assembler's
+`hnoLeak`, and then `isLocallyCertified_of_forall_prime_exists_certified_adaptation`
+consumes the resulting away-certificate. -/
+theorem exists_away_supportLocus_subset_of_fibre_subset
+    (d : (relCurve C R).LocalEquations) (U : (relCurve C R).Opens) {p : PrimeSpectrum R}
+    (hfib : ((relCurve C R) ↘ Spec (CommRingCat.of R)).base ⁻¹'
+        {(p : Spec (CommRingCat.of R))} ∩ d.supportLocus ⊆ (U : Set (relCurve C R))) :
+    ∃ r : R, r ∉ p.asIdeal ∧
+      ((relCurve C R) ↘ Spec (CommRingCat.of R)).base ⁻¹'
+          (PrimeSpectrum.basicOpen r : Set (PrimeSpectrum R)) ∩ d.supportLocus
+        ⊆ (U : Set (relCurve C R)) :=
+  exists_notMem_supportLocus_subset_of_fibre C R d U.isOpen hfib
+
+end TubeFibre
+
 end AlgebraicGeometry
