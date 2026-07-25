@@ -3,8 +3,6 @@ Copyright (c) 2026 Christian Merten. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Christian Merten
 -/
-import AlgebraicJacobian.RiemannRoch.Adelic.Cokernel
-import AlgebraicJacobian.RiemannRoch.Adelic.CechAcyclicInstance
 import AlgebraicJacobian.RiemannRoch.Adelic.NonconstantToP1
 import AlgebraicJacobian.RiemannRoch.Adelic.P1ChartData
 import AlgebraicJacobian.Cohomology.StructureSheafModuleK.AffineDegreeOneVanishing

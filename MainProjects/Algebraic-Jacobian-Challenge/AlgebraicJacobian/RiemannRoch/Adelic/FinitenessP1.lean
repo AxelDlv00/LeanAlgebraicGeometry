@@ -452,10 +452,6 @@ noncomputable def LaurentChartData.pullbackSquare (D : LaurentChartData Y)
     rw [D.cover]
     rfl
 
-set_option maxHeartbeats 800000 in
--- `maxHeartbeats`: the proof repeatedly crosses the `Scheme.Opens` vs
--- `Opens X.toTopCat` presentation diamond and the `ModuleCat.of`/`Γ`-carrier
--- identifications, whose defeq checks are expensive (fleet elaboration recipe).
 /-- **The keystone (node `N11`): `H¹` finiteness of the curve over the Laurent
 chart target.**  For a finite morphism `π : C ⟶ Y` of `Spec k`-schemes to a
 target with Laurent chart data `D`, the two-cover Čech cokernel
@@ -469,10 +465,8 @@ many generators spans; positive rungs come from `Γ(U₀)`, sufficiently negativ
 rungs from `Γ(U₁)` (the extension lemma at the `y`-chart), leaving a finite
 middle band to span the cokernel.
 
-(`maxHeartbeats` is raised because the proof repeatedly crosses the
-`Scheme.Opens` vs `Opens X.toTopCat` presentation diamond and the
-`ModuleCat.of`/`Γ`-carrier identifications, whose defeq checks are expensive —
-fleet elaboration recipe.) -/
+The proof crosses the `Scheme.Opens` versus `Opens X.toTopCat` presentation
+diamond and the `ModuleCat.of`/`Γ` carrier identifications explicitly. -/
 theorem LaurentChartData.module_finite_H1Cok (D : LaurentChartData Y)
     (π : C ⟶ Y) [IsFinite π.left] :
     Module.Finite k ((D.pullbackSquare π).H1Cok (Scheme.toModuleKSheaf C)) := by
