@@ -54,6 +54,49 @@ namespace AlgebraicGeometry
 
 attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
 
+/-! ## The idempotent brick
+
+I-0209 predicted the shape of the missing construction: the canonical idempotents of a
+finite projective colength algebra split the divisor scheme into packets, and a piece
+swallowing a packet has a clopen trace, hence carries the certificate.  The algebraic core
+of that is elementary and is recorded here: cutting by an idempotent produces a **direct
+summand**, so projectivity is inherited with no flatness or finiteness input. -/
+
+section Idempotent
+
+variable {R B : Type u} [CommRing R] [CommRing B] [Algebra R B]
+
+set_option maxHeartbeats 1000000 in
+-- The `Ideal`-to-`Submodule` coercion in the quotient makes `liftQ` elaboration expensive.
+/-- **Cutting by an idempotent gives a direct summand.** For `e` idempotent, multiplication
+by `e` is a well-defined `R`-linear section of `B ↠ B ⧸ (1 - e)`, so the quotient is a
+retract of `B` and inherits projectivity.
+
+This is the algebraic core of the packet-splitting construction I-0209 asks for: an
+idempotent of the colength algebra cuts out a clopen packet, and the corresponding quotient
+is projective for free. -/
+theorem Module.Projective.quotient_span_singleton_one_sub_of_isIdempotentElem
+    [Module.Projective R B] (e : B) (he : IsIdempotentElem e) :
+    Module.Projective R (B ⧸ (Ideal.span {1 - e}).restrictScalars R) := by
+  set P := (Ideal.span {1 - e}).restrictScalars R with hP
+  set s : (B ⧸ P) →ₗ[R] B :=
+    P.liftQ (LinearMap.mulLeft R e) (by
+      intro x hx
+      have hx' : x ∈ Ideal.span {1 - e} := hx
+      rw [Ideal.mem_span_singleton] at hx'
+      obtain ⟨c, rfl⟩ := hx'
+      change e * ((1 - e) * c) = 0
+      rw [← mul_assoc, mul_sub, mul_one, he.eq, sub_self, zero_mul]) with hs
+  refine Module.Projective.of_split s P.mkQ (LinearMap.ext fun y => ?_)
+  obtain ⟨b, rfl⟩ := P.mkQ_surjective y
+  change P.mkQ (e * b) = P.mkQ b
+  rw [← sub_eq_zero, ← map_sub, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
+  change e * b - b ∈ Ideal.span {1 - e}
+  rw [Ideal.mem_span_singleton]
+  exact ⟨-b, by ring⟩
+
+end Idempotent
+
 namespace Scheme.LocalEquations
 
 variable {X : Scheme.{u}} {R : Type u} [CommRing R] (d : X.LocalEquations)
