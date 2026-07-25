@@ -2,11 +2,11 @@ id: AJC.maintenance.build.baseline
 title: Full-project build baseline
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Fresh clean-build verification passes all 8,727 jobs with 1,174 warnings
-  across 51 project files, exactly 285 below the inherited 1,459-warning baseline.
-  TensorObjInverse contributes zero warnings. The 2:16:31 wall time and 10,269,996
-  KiB peak RSS are retained only as a contended-run observation because a stale LSP
-  worker and shared-host load invalidate performance comparison.
+summary: Controlled root-package clean verification at b5e180854 passes all 8,720
+  jobs with 578 project warnings across 49 files, down 596 from the previous 1,174-warning
+  baseline. Shared dependency builds were preserved. The 39:56.95 wall time and 10,151,432
+  KiB peak RSS are contended-run observations because another workspace run began
+  compiling during the build; Cech degree one took 1,531s and its wrapper 11s.
 status: done
 kind: workspace
 priority: normal
@@ -29,6 +29,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-24T20:53:04.200895+00:00'
+  updated_at: '2026-07-25T02:49:20.679265+00:00'
   pinned_commits:
   - 2e6d3c83e
