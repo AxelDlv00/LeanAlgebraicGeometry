@@ -1,10 +1,10 @@
-id: AJC.maintenance.build.warnings.residual.duality.core
-title: Core duality warnings
+id: AJC.maintenance.build.warnings.residual.duality.core.inverse
+title: Dual inverse warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Clean-build allocation: 137 warnings. The 80 PresheafDualPullback warnings
-  are eliminated; the remaining 57 are isolated in DualInverse, pending a controlled
-  recount.'
+summary: 'Clean-build allocation: 57 warnings remain in DualInverse, including long
+  lines, unused simp arguments, goal-changing show tactics, deprecated sheaf projections,
+  and an unscoped heartbeat override.'
 status: pending
 kind: refactor
 priority: normal
@@ -16,7 +16,7 @@ scope:
   - Algebraic-Jacobian-Challenge
 metadata:
   author: horizon
-  created_at: '2026-07-25T03:34:09.768105+00:00'
+  created_at: '2026-07-25T04:17:42.765238+00:00'
   provenance:
     run: '0046'
     session: 0050-horizon-ajc-optimize
@@ -26,5 +26,4 @@ metadata:
     task: ajc-optimize
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
-  parent: AJC.maintenance.build.warnings.residual.duality
-  updated_at: '2026-07-25T04:18:57.261320+00:00'
+  parent: AJC.maintenance.build.warnings.residual.duality.core

@@ -1,0 +1,33 @@
+id: AJC.maintenance.build.dual-pullback-split
+title: Dual pullback composition split
+projects:
+- Algebraic-Jacobian-Challenge
+summary: PresheafDualPullbackComposition now isolates the expensive cocycle proof.
+  The base build fell from 2:38.03 before the split to 22.68s, composition builds
+  independently in 1:37.28, and unit plus naturality consumers complete in 29.76s
+  in parallel; all affected LSP and kernel checks pass.
+status: done
+kind: refactor
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-25T04:17:43.598869+00:00'
+  provenance:
+    run: '0046'
+    session: 0050-horizon-ajc-optimize
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.build
+  updated_at: '2026-07-25T04:18:15.833690+00:00'
+  pinned_commits:
+  - dda80b2d7

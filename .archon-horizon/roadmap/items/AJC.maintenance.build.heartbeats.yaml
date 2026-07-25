@@ -2,11 +2,11 @@ id: AJC.maintenance.build.heartbeats
 title: Heartbeat and recursion-budget audit
 projects:
 - Algebraic-Jacobian-Challenge
-summary: A source audit finds 196 numeric heartbeat/recursion scopes across 45 files,
-  including 6 suspect recursion-depth sites. The controlled clean build replaces the
-  stale 58-warning count with 40 missing-rationale heartbeat diagnostics plus one
-  unscoped maxHeartbeats option in DualInverse. The Cech wrapper has no heartbeat;
-  its isolated degree-one proof retains one documented 1.6M conversion scope.
+summary: A source audit finds 196 numeric heartbeat or recursion scopes across 45
+  files, including 6 suspect recursion-depth sites. After the controlled clean build,
+  the PresheafDualPullback override now has a timeless declaration-scoped rationale;
+  an estimated 39 missing-rationale diagnostics and the unscoped DualInverse maxHeartbeats
+  option remain pending the next recount.
 status: pending
 kind: refactor
 priority: normal
@@ -29,7 +29,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-25T02:49:26.674521+00:00'
+  updated_at: '2026-07-25T04:19:00.664778+00:00'
   pinned_commits:
   - ce7e4a001
   - e142308c0

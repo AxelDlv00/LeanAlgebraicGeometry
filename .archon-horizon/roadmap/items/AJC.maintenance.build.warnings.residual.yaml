@@ -3,9 +3,9 @@ title: Residual project warning debt
 projects:
 - Algebraic-Jacobian-Challenge
 summary: The controlled clean-build allocation covers 565 of 578 warnings outside
-  QuotScheme. Warning-free target builds have since removed 37 dual-unit and 29 FlatBaseChange
-  warnings from this allocation; the remaining groups stay open until the next controlled
-  clean recount.
+  QuotScheme. Warning-free target builds have since removed 37 dual-unit, 29 FlatBaseChange,
+  and 80 presheaf dual pullback warnings; the estimated residual total is 419 pending
+  the next controlled recount.
 status: pending
 kind: refactor
 priority: normal
@@ -28,4 +28,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings
-  updated_at: '2026-07-25T03:35:28.474868+00:00'
+  updated_at: '2026-07-25T04:18:59.010356+00:00'
