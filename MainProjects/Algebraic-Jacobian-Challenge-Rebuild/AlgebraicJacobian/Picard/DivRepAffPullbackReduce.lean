@@ -74,6 +74,43 @@ local notation "DivOver" =>
     (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1
     (b2.map (windowShiftEquiv hpi g).symm)
 
+local notation "ChartRing" => fun i j =>
+  DivCarveChartRing k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+    (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1
+    (b2.map (windowShiftEquiv hpi g).symm) i j
+
+local notation "ChartMap" => fun i j =>
+  divCarveChartToDivScheme k (windowS_choice pi hpi g • fiberWeilDivisor pi)
+    (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1
+    (b2.map (windowShiftEquiv hpi g).symm) i j
+
+include hO hchi in
+/-- **The F5 overlap obligation collapses to a per-chart clause** (the corollary the
+separation theorem was for): if each chart pullback of `U` satisfies the characterizing
+clause for its own chart morphism, then `U` is compatible.
+
+`DivRepChartFamily.IsCompatible`'s docstring says the universal family will prove it "from
+its ε identity AND the total mono theorem".  The mono leg is now unnecessary: two chart
+points presenting the SAME morphism `q` give two classes both classified by `q`, and
+`eq_of_isDivRepClassify` identifies them.  What is left is exactly the per-chart clause —
+i.e. exactly the DDR9-U ε-identity U2 — so the F5 overlap obligation is no longer a second,
+separate thing to prove. -/
+theorem isCompatible_of_isDivRepClassify_divRepPullAt
+    (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
+      CertifiedDivisorFamily C (ChartRing i j) pi g)
+    (hcl : ∀ {S : Type u} [CommRing S] [Algebra k S]
+      (i : (glueData k g r1).J) (j : (glueData k g r2).J)
+      (omega : ChartRing i j →ₐ[k] S),
+      IsDivRepClassify hpi g r1 r2 b1 b2
+        (divRepPullAt (hpi := hpi) g r1 r2 b1 b2 U i j omega)
+        (Spec.map (CommRingCat.ofHom omega.toRingHom) ≫ ChartMap i j)) :
+    DivRepChartFamily.IsCompatible (hpi := hpi) g r1 r2 b1 b2 U := by
+  intro S _ _ i j i' j' omega omega' hq
+  refine eq_of_isDivRepClassify hpi g hO hchi r1 r2 b1 b2 _ _ (v := ?_) ?_ ?_
+  · exact Spec.map (CommRingCat.ofHom omega.toRingHom) ≫ ChartMap i j
+  · exact hcl i j omega
+  · exact hq ▸ hcl i' j' omega'
+
 include hO hchi in
 /-- **The round-trip law is free once the clause law holds** (F6, via the separation
 theorem): if `pull` produces, for every morphism `v`, a class classified by `v`, then it
