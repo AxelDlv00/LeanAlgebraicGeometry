@@ -3,12 +3,14 @@ title: 'Tube-fibre: at one base prime, put the family support of the pointwise s
   system inside a single adaptation piece'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'The remaining geometric obligation of the relaxed gate. Feed exists_notMem_supportLocus_subset_of_fibre
-  (DivSchemeCertZarTube.lean) with fibrewise containment at a prime p: the support
-  fibre of the seed system over p is a finite set of closed points, each in a piece;
-  shrink/merge pieces so one contains the fibre. Output: r not in p with support over
-  D(r) inside the piece, then forall_noLeak_of_forall_supportLocus_subset gives hnoLeak
-  over Localization.Away r.'
+summary: 'REDUCED TO ONE FIBRE (commit 7ca4cf17c). exists_away_supportLocus_subset_of_fibre_subset
+  (Picard/DivSchemeCertZarTube.lean) takes containment of the support fibre at a SINGLE
+  base prime in an open piece and returns an element outside that prime whose whole
+  basic open has the support inside the piece; DivisorAdaptation.forall_noLeak_of_forall_supportLocus_subset
+  then gives the assembler''s hnoLeak. REMAINING: the fibrewise input itself -- at
+  one prime p, the support fibre of the pointwise seed system is a finite set of closed
+  points (degree-g divisor, divUniversalSeedFibreDivisor_spec) that can be enclosed
+  in a single adaptation piece, possibly after refining the extraction.'
 status: pending
 kind: proof
 priority: normal
@@ -31,3 +33,4 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
+  updated_at: '2026-07-25T07:34:19.592993+00:00'

@@ -2,12 +2,15 @@ id: AJCR.w4-rep.datum.dat-d.ddr.certificate.away-kerspan
 title: 'Away-kerspan: the relative Cech-kernel spanning submodule L over an Away localization'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'The second substantive input of isCertified_of_kernel_spanning, now only
-  needed over the shrunken base. Landed reductions: ker_rTensor_le_range_subtype_iff_liftQ_rTensor_injective
-  and liftQ_baseChange_injective_of_boundary (DivSchemeHighWindowSyzygy.lean) reduce
-  hspan to fibre injectivity of the injectivized map, or to an independent boundary
-  presentation. Over Away r the Koszul/relation machinery of the high-window lane
-  applies.'
+summary: 'SUBMODULE ELIMINATED (commit 983730622, Picard/DivSchemeCertZarKerSpan.lean,
+  kernel-checked). Both assemblers now read with NO submodule argument: isCertified_of_noLeak_of_forall_liftQ_injective
+  and divisorAdaptation_isCertified_of_noLeak_liftQ_degree take the actual kernel
+  of the Cech difference, so hle is le_rfl and hspan becomes residue-fibre injectivity
+  of the injectivized map. REMAINING (genuine relative geometry, not evadable): that
+  injectivity at each prime of the Away chart. Note divUniversalHighWindowKernelSyzygySpans_iff
+  (DivSchemeHighWindowSyzygy.lean) proves the condition equivalent to the flat-cokernel
+  clause, so a cleverer L cannot help; use the Koszul/relation machinery over the
+  shrunken base.'
 status: pending
 kind: proof
 priority: normal
@@ -30,3 +33,4 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
+  updated_at: '2026-07-25T07:34:18.749796+00:00'
