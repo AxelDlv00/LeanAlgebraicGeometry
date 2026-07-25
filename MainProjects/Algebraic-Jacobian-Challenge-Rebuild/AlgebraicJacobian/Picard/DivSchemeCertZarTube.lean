@@ -96,4 +96,59 @@ theorem exists_notMem_supportLocus_subset_of_fibre
 
 end RelCurve
 
+/-! ## No-leak over a shrunken base, from one fibre
+
+The point of the tube in the certificate lane: the no-leak hypothesis that is false
+globally becomes *true over the tube*, because the support over the tube is already inside
+the piece — so its closure is too, and the fibre clause holds for every base point of the
+tube rather than only the one it was checked at. -/
+
+section NoLeakOverTube
+
+variable {k : Type u} [Field k] {C : Over (Spec (.of k))} [IsProper C.hom]
+variable {R : Type u} [CommRing R] [Algebra k R]
+variable {pi : C.left ⟶ P1 k} [IsAffineHom pi]
+variable {d : (relCurve C R).LocalEquations}
+
+namespace DivisorAdaptation
+
+variable (A : DivisorAdaptation C R pi d)
+
+omit [IsProper C.hom]
+
+/-- **Support containment upgrades to the fibrewise no-leak clause.** If the whole family
+support lies in the piece `j`, then over every base point the fibre of the *closure* of the
+piece trace stays in the piece: the trace is then all of the support, which is closed.
+
+This is the bridge between what the tube delivers (support containment over a shrunken
+base) and what the certificate assembler consumes (the fibrewise clause of
+`finite_colength_of_forall_fibre_closure_subset`). -/
+theorem forall_fibre_closure_subset_of_supportLocus_subset (j : A.index)
+    (hsub : d.supportLocus ⊆ (A.pieces j : Set (relCurve C R))) :
+    ∀ s : Spec (CommRingCat.of R),
+      ((relCurve C R) ↘ Spec (CommRingCat.of R)).base ⁻¹' {s}
+          ∩ closure (d.supportLocus ∩ (A.pieces j : Set (relCurve C R)))
+        ⊆ (A.pieces j : Set (relCurve C R)) := by
+  intro s x hx
+  have htrace : d.supportLocus ∩ (A.pieces j : Set (relCurve C R)) = d.supportLocus :=
+    Set.inter_eq_left.mpr hsub
+  rw [htrace, d.isClosed_supportLocus.closure_eq] at hx
+  exact hsub hx.2
+
+/-- The no-leak clause for **every** piece, from containment of the support in each: the
+exact `hnoLeak` input of the certificate assemblers
+(`DivisorAdaptation.isCertified_of_noLeak_kernel_spanning`,
+`ThetaGeneratorSeed.divisorAdaptation_isCertified_of_noLeak_kernel_spanning`). -/
+theorem forall_noLeak_of_forall_supportLocus_subset
+    (hsub : ∀ j : A.index, d.supportLocus ⊆ (A.pieces j : Set (relCurve C R))) :
+    ∀ (j : A.index) (s : Spec (CommRingCat.of R)),
+      ((relCurve C R) ↘ Spec (CommRingCat.of R)).base ⁻¹' {s}
+          ∩ closure (d.supportLocus ∩ (A.pieces j : Set (relCurve C R)))
+        ⊆ (A.pieces j : Set (relCurve C R)) :=
+  fun j => A.forall_fibre_closure_subset_of_supportLocus_subset j (hsub j)
+
+end DivisorAdaptation
+
+end NoLeakOverTube
+
 end AlgebraicGeometry
