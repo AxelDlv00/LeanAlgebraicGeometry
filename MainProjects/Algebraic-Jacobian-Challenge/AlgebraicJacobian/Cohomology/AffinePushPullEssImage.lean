@@ -110,13 +110,13 @@ lemma opensInter_image_eq (V₀ U : X.Opens) (O : (↑U : Scheme.{u}).Opens) :
       rw [hyx', ← Scheme.Opens.range_ι V₀]; exact Set.mem_range_self x
     have hy' : y ∈ (U.ι ⁻¹ᵁ V₀ : (↑U : Scheme.{u}).Opens) := hyV
     refine ⟨⟨y, hy'⟩, hyO, ?_⟩
-    show opensInterLift V₀ U ⟨y, hy'⟩ = x
+    change opensInterLift V₀ U ⟨y, hy'⟩ = x
     apply V₀.ι.isOpenEmbedding.injective
     show V₀.ι (opensInterLift V₀ U ⟨y, hy'⟩) = V₀.ι x
     rw [hpt ⟨y, hy'⟩, ← hyx']
     rfl
   · rintro ⟨z, hzO, rfl⟩
-    show V₀.ι (opensInterLift V₀ U z) ∈ U.ι ''ᵁ O
+    change V₀.ι (opensInterLift V₀ U z) ∈ U.ι ''ᵁ O
     rw [hpt z]
     exact Set.mem_image_of_mem _ hzO
 
@@ -262,7 +262,7 @@ theorem pullback_pushforward_affineOpen_essImage {W Y : Scheme.{u}} (gU : W ⟶ 
     · rintro ⟨b, rfl⟩
       have hb : gU (q b) = hVU.fromSpec (Spec.map ρ b) := by
         rw [← Scheme.Hom.comp_apply, m6, Scheme.Hom.comp_apply]
-      show gU (q b) ∈ (VU : Set Y)
+      change gU (q b) ∈ (VU : Set Y)
       rw [hb, ← hVU.range_fromSpec]
       exact Set.mem_range_self _
     · intro hx
@@ -272,7 +272,7 @@ theorem pullback_pushforward_affineOpen_essImage {W Y : Scheme.{u}} (gU : W ⟶ 
       obtain ⟨t, ht⟩ := hx'
       have hWx : W.isoSpec.hom x ∈ Set.range (Spec.map σ) := by
         rw [h1]
-        show Spec.map ψ (W.isoSpec.hom x) ∈ (Spec.map φ).opensRange
+        change Spec.map ψ (W.isoSpec.hom x) ∈ (Spec.map φ).opensRange
         rw [Scheme.Hom.mem_opensRange]
         refine ⟨t, ?_⟩
         have hl : Spec.map φ t = Y.isoSpec.hom (gU x) := by

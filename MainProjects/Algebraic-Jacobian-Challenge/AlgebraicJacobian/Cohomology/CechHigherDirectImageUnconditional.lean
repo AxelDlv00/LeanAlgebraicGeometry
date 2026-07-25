@@ -12,16 +12,6 @@ import AlgebraicJacobian.Cohomology.ModulesCoverConservativity
 import AlgebraicJacobian.Cohomology.AffinePushPullEssImage
 import AlgebraicJacobian.Cohomology.PullbackQuasicoherent
 
-/- USER (2026-06-29): `cech_flatBaseChange` (Stacks 02KH) is the Kleiman-4.8 Step-1 prerequisite and the
-   active target. PER USER, close it via the ČECH-TO-COHOMOLOGY SPECTRAL SEQUENCE: build the relative SS
-   `E₂^{p,q}=Ȟ^p(𝒰,R^q f_*F) ⟹ R^{p+q}f_*F` (Stacks 01EO/03OW, Cohomology 20.11.5) from Mathlib's
-   abstract `Algebra.Homology.SpectralObject.*` / `SpectralSequence.Basic` / `TotalComplex` (total of the
-   Čech×resolution bicomplex; the Čech side = `cechComplexOnX`/`cech_computes_higherDirectImage`). The
-   SS's base-change functoriality (E₂ = Čech cohomology of `R^q f_*`, base-changed via the termwise
-   affine iso `cechComplex_baseChange_iso` / concrete-tilde route) yields FBC and lifts the separated
-   case to general — replacing the walled termwise mate-calculus. Scope the SS as a new blueprint node
-   `lem:cech_to_derived_pushforward_ss`. Full plan + anchors: `.archon/USER_HINTS.md` temporary hint. -/
-
 /-!
 # Unconditional `Rⁱ f_*` via Čech + flat base change (target-local roadmap)
 
@@ -183,16 +173,6 @@ by extension of scalars along the flat ring map (left-exact, cf.
 nor its left-exactness is packaged. Closing it is a genuine multi-hundred-LOC Mathlib
 development (assembling it via `pullbackIso` additionally requires resolving the
 `sheafification`/`HasSheafify` instances for the concrete scheme site). -/
-/- USER (Stacks 02KH leaf 1/2): close via the reduction proved out in the docstring —
-   transfer along `SheafOfModules.pullbackIso` and discharge `forget` + `sheafification`
-   (both already preserve finite limits in Mathlib: `SheafOfModules.forgetPreservesFiniteLimits`,
-   the `sheafification` instance in `Presheaf/Sheafification.lean`). The irreducible core is
-   that `PresheafOfModules.pullback` is left-exact under flat (mathematically `g⁻¹` exact,
-   then flat `extendScalars` left-exact via `ModuleCat.preservesFiniteLimits_extendScalars_of_flat`).
-   Likely path: stalkwise (stalk of pullback = `extendScalars` of stalk + pointwise flat
-   exactness). This is pure exactness of flat pullback — no Čech/cohomology or spectral
-   sequence is involved here (those belong to the base-change *assembly*, not this leaf).
-   Reference: Stacks 02KH (the flatness input). -/
 instance pullback_preservesFiniteLimits (g : S' ⟶ S) [Flat g] :
     Limits.PreservesFiniteLimits (Scheme.Modules.pullback g) := sorry
 
@@ -262,10 +242,7 @@ The degreewise components are identities (the degree-`n` terms are `F.obj (Y.obj
 both sides) and the differential compatibility is `map_alternatingCofaceMapComplex_objD`.
 This is the cosimplicial-altitude brick (step (b)) used to push `g^*` into the relative
 Čech complex `relativeCechComplexOfNerve`. Project-local Mathlib supplement. -/
--- (v4.31.0: `CechToHigherDirectImage` also defines a public `mapAlternatingCofaceMapComplexIso`
--- — that file never compiled before the migration so the name clash was latent; now that it
--- builds, both being public collides at the root import. This copy is used only inside this file,
--- so mark it `private` to resolve the clash without rebuilding the 4.3 h `CechToHigherDirectImage`.)
+-- Keep this local: `CechToHigherDirectImage` exports the same helper independently.
 private noncomputable def mapAlternatingCofaceMapComplexIso (F : C ⥤ D) [F.Additive]
     (Y : CosimplicialObject C) :
     (F.mapHomologicalComplex (ComplexShape.up ℕ)).obj ((alternatingCofaceMapComplex C).obj Y)
@@ -383,8 +360,9 @@ the two well-typed altitudes flagged in `analogies/fbc-pushpull-tilde-317.md`:
   iso `isoSpec` (`pushforward_iso_preserves_qcoh`), so the affine structure theorem 01I8
   (`qcoh_iso_tilde_sections`, unconditional via the live instance
   `isIso_fromTildeΓ_of_quasicoherent`) applies.
-* **altitude 2** (`pushPullObj_pushforward_iso_tilde`): over the affine base `S = Spec R`, the
-  pushed-forward push–pull object `f_*(p_* p^* F) = f_*((V.ι)_* (V.ι)^* F)` is `(Spec φ)_* (tilde N)`
+* **altitude 2** (`pushPullObj_pushforward_iso_tilde`): over the affine base `S = Spec R`,
+  the pushed-forward push–pull object `f_*(p_* p^* F) = f_*((V.ι)_* (V.ι)^* F)` is
+  `(Spec φ)_* (tilde N)`
   — collapse `f_* ∘ (V.ι)_*` to `(V.ι ≫ f)_*` by `pushforwardComp`, factor
   `V.ι ≫ f = isoSpec.hom ≫ Spec.map φ` (with `φ := Spec.preimage (fromSpec ≫ f)`,
   `Spec.map_preimage`), split off `(Spec.map φ)_*` by `pushforwardComp` again, and feed altitude 1
@@ -410,8 +388,9 @@ theorem pullback_isQuasicoherent (V : X.Opens) (F : X.Modules) (hF : F.IsQuasico
 
 /-- **Altitude 1 of the bridge: `(V.ι)^* F` pushed to `Spec Γ(X,V)` is `tilde N`** (Stacks 01I8).
 For a quasi-coherent `F : X.Modules` and an affine open `V` of `X`, the restriction `(V.ι)^* F`,
-pushed forward along the whole-scheme iso `isoSpec : V ≅ Spec Γ(X, V)`, is canonically isomorphic to
-the `tilde` of its module of global sections `N = Γ(Spec Γ(X,V), -)`.  The pullback is quasi-coherent
+pushed forward along the whole-scheme iso `isoSpec : V ≅ Spec Γ(X, V)`, is canonically
+isomorphic to the `tilde` of its module of global sections `N = Γ(Spec Γ(X,V), -)`.
+The pullback is quasi-coherent
 (`pullback_isQuasicoherent`) and quasi-coherence is preserved by the iso-pushforward
 (`pushforward_iso_preserves_qcoh`), so the unconditional affine structure theorem 01I8
 (`qcoh_iso_tilde_sections`, via the live instance `isIso_fromTildeΓ_of_quasicoherent`) applies.
@@ -439,14 +418,16 @@ The construction: collapse `f_* ∘ (V.ι)_*` to `(V.ι ≫ f)_*` by `pushforwar
 `pushforwardCongr`; split off `(Spec.map φ)_*` by `pushforwardComp` again (leaving the altitude-1
 domain `(isoSpec.hom)_* ((V.ι)^* F)`); then push altitude 1 (`pullbackRestrict_iso_tilde`) through
 `(Spec.map φ)_*`.  The right-hand side is exactly the form consumed by the brick
-`cech_degree_affine_baseChange`.  Project-local; blueprint `lem:pushPullObj_iso_tilde` (altitude 2). -/
+`cech_degree_affine_baseChange`. Project-local; blueprint
+`lem:pushPullObj_iso_tilde` (altitude 2). -/
 noncomputable def pushPullObj_pushforward_iso_tilde {R : CommRingCat.{u}}
     (f : X ⟶ Spec R) (F : X.Modules) (hF : F.IsQuasicoherent)
     {V : X.Opens} (hV : IsAffineOpen V) :
     (Scheme.Modules.pushforward f).obj (pushPullObj F (Over.mk V.ι)) ≅
       (Scheme.Modules.pushforward (Spec.map (Spec.preimage (hV.fromSpec ≫ f)))).obj
         (tilde (moduleSpecΓFunctor.obj
-          ((Scheme.Modules.pushforward hV.isoSpec.hom).obj ((Scheme.Modules.pullback V.ι).obj F)))) :=
+          ((Scheme.Modules.pushforward hV.isoSpec.hom).obj
+            ((Scheme.Modules.pullback V.ι).obj F)))) :=
   have heq : V.ι ≫ f = hV.isoSpec.hom ≫ Spec.map (Spec.preimage (hV.fromSpec ≫ f)) := by
     rw [Spec.map_preimage, ← IsAffineOpen.isoSpec_inv_ι hV, Category.assoc, Iso.hom_inv_id_assoc]
   (pushforwardComp V.ι f).app ((Scheme.Modules.pullback V.ι).obj F) ≪≫
@@ -457,8 +438,9 @@ noncomputable def pushPullObj_pushforward_iso_tilde {R : CommRingCat.{u}}
       (pullbackRestrict_iso_tilde F hF hV)
 
 /-- **Altitude 2 over an abstract affine base** (Stacks 01I8, abstract-`S` generalization of
-`pushPullObj_pushforward_iso_tilde`).  For a *separated* `f : X ⟶ S` with `S` an **abstract** affine
-scheme (`[IsAffine S]`, so `S` need not be a literal `Spec`), write `e_S := S.isoSpec : S ≅ Spec Γ(S)`
+`pushPullObj_pushforward_iso_tilde`). For a *separated* `f : X ⟶ S` with `S` an
+**abstract** affine scheme (`[IsAffine S]`, so `S` need not be a literal `Spec`), write
+`e_S := S.isoSpec : S ≅ Spec Γ(S)`
 for the canonical affine identification.  The pushed-forward push–pull object
 `(pushforward f).obj (pushPullObj F (Over.mk V.ι))` is canonically isomorphic to the altitude-2
 `(Spec φ)_*(tilde N)` form, **transported back along `e_S⁻¹`** so it lands in `O_S`-modules rather
@@ -546,9 +528,10 @@ theorem restrictedCartesianAffinePushout (g' : X' ⟶ X)
   (IsPullback.of_hasPullback g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).flip
 
 /-- **LHS abstract → tilde for a single intersection open** (carved block
-`lem:coverinter_lhs_iso_tilde`).  Over the affine base `S = Spec R`, for a separated `f : X ⟶ Spec R`,
-an affine open-immersion cover `𝒰` and a finite nonempty multi-index `σ`, the intersection open
-`V = coverInterOpen 𝒰 σ` is affine (`coverInterOpen_isAffine`) and the pushed-forward push–pull object
+`lem:coverinter_lhs_iso_tilde`). Over the affine base `S = Spec R`, for a separated
+`f : X ⟶ Spec R`, an affine open-immersion cover `𝒰` and a finite nonempty multi-index
+`σ`, the intersection open `V = coverInterOpen 𝒰 σ` is affine
+(`coverInterOpen_isAffine`) and the pushed-forward push–pull object
 `f_*(pushPullObj F (Over.mk j_σ)) = f_*((j_σ)_* (j_σ)^* F)` is the affine pushforward
 `(Spec φ)_*(tilde N)` of the tilde of its global sections, where `φ = Spec.preimage (fromSpec ≫ f)`
 presents `f ∘ j_σ` as `Spec φ`.  This is the LHS comparison side of the per-intersection-open base
@@ -717,8 +700,9 @@ noncomputable def openImmersion_bc_telescope {V V' : Scheme.{u}}
 For the cartesian square `hsq : IsPullback gV p' p g'` (so `p' : V' ⟶ X'` is the base change of
 `p` along `g'`), if `p` is an open immersion then so is `p'` — open immersions are stable under
 base change (`MorphismProperty.IsStableUnderBaseChange @IsOpenImmersion`).  This is the
-open-immersion-ness of the *left* edge of the square that the sectionwise cover-refinement route
-of `openImmersion_beckChevalley` (Stage 2) consumes: it is what lets `pushforward p'` / `pullback p'`
+open-immersion-ness of the *left* edge of the square that the sectionwise cover-refinement
+route of `openImmersion_beckChevalley` (Stage 2) consumes: it is what lets
+`pushforward p'` / `pullback p'`
 be identified with restriction along `p'` (`restrictFunctorIsoPullback p'`) on the target side of
 the bare Beck–Chevalley mate.  Project-local; blueprint `lem:openimm_beckchevalley` (left-edge
 open-immersion side-condition). -/
@@ -782,7 +766,7 @@ theorem openImmersion_bareBC_app_eq {V V' : Scheme.{u}}
           ((pullbackComp gV p).inv.app ((Scheme.Modules.pushforward p).obj c)) ≫
         (Scheme.Modules.pushforward p').map ((Scheme.Modules.pullback gV).map
           ((Scheme.Modules.pullbackPushforwardAdjunction p).counit.app c)) := by
-  simp [openImmersion_bareBC, mateEquiv_apply]
+  simp only [openImmersion_bareBC, mateEquiv_apply, Functor.id_obj]
   erw [Category.id_comp, Category.id_comp, Category.comp_id]
   rfl
 
@@ -890,7 +874,7 @@ theorem essImage_pushforward_of_openCover {V' : Scheme.{u}} (p' : V' ⟶ X')
         = p' ''ᵁ (p' ⁻¹ᵁ ((𝒞.f j) ''ᵁ O)) := by
       rw [Scheme.Hom.image_preimage_eq_opensRange_inf]
       apply TopologicalSpace.Opens.ext
-      show ((𝒞.f j) '' (O ∩ (𝒞.f j) ⁻¹' p'.opensRange) : Set X') = _
+      change ((𝒞.f j) '' (O ∩ (𝒞.f j) ⁻¹' p'.opensRange) : Set X') = _
       rw [Set.image_inter_preimage, TopologicalSpace.Opens.coe_inf, Set.inter_comm]
       rfl
     -- factor the unit component through the member restriction map + a cast
@@ -1724,17 +1708,20 @@ noncomputable def twisted_cech_nerve_iso
   --     `∏_σ (pullback g').obj (pushPullObj F (Over.mk j_σ)) ≅ pushPullObj (g'^* F) Y'ₙ`.
   -- The per-σ X-level Beck–Chevalley iso `(pullback g').obj (pushPullObj F (Over.mk j_σ)) ≅
   -- pushPullObj (g'^* F) (Over.mk j'_σ)` (base change of push–pull along the open immersion j_σ,
-  -- for the restricted cartesian square over `U_σ`) is the per-σ content; reassembling the σ-product
-  -- on the RHS would use `(pushPull_sigma_iso 𝒰' (g'^* F) n.len).symm`, but that needs
+  -- for the restricted cartesian square over `U_σ`) is the per-σ content; reassembling
+  -- the σ-product on the RHS would use `(pushPull_sigma_iso 𝒰' (g'^* F) n.len).symm`, but
+  -- that needs
   -- `[Finite 𝒰'.I₀]` and `[∀ i, IsAffine (𝒰'.X i)]` for the base-changed cover `𝒰'`, which are NOT
-  -- available in this signature (the X-level leaf carries no `[IsAffine S']`; the base-changed cover
-  -- members' affineness is the geometric cover-base-change route `coverInterOpen 𝒰' σ = g'⁻¹(U_σ)`).
+  -- available in this signature (the X-level leaf carries no `[IsAffine S']`; the
+  -- base-changed cover members' affineness is the geometric cover-base-change route
+  -- `coverInterOpen 𝒰' σ = g'⁻¹(U_σ)`).
   -- That cover-base-change identification is the residual Beck–Chevalley heart of this leaf.
   -- STEP-1 sig extension landed `[Finite 𝒰'.I₀]`/`[∀ i, IsAffine (𝒰'.X i)]` for the base-changed
   -- cover `𝒰'`, so the σ-product on the RHS *can now* be reassembled by
   -- `(pushPull_sigma_iso 𝒰' (g'^* F) n.len).symm`.  The residual per-σ content is isolated into the
-  -- named leaf `twisted_cech_nerve_per_sigma` (the open-immersion Beck–Chevalley + cover-base-change
-  -- identification).  Only the cosimplicial `naturality` remains beyond that leaf.
+  -- named leaf `twisted_cech_nerve_per_sigma` (the open-immersion Beck–Chevalley and
+  -- cover-base-change identification). Only the cosimplicial `naturality` remains beyond
+  -- that leaf.
   NatIso.ofComponents
     (fun n =>
       (Scheme.Modules.pullback g').mapIso (pushPull_sigma_iso 𝒰 F n.len) ≪≫
@@ -1782,18 +1769,13 @@ Beck–Chevalley iso `cechComplex_baseChange_cosimplicialIso`: the live route is
 composite of `cech_pushforward_baseChange_natIso` (degreewise → the per-σ affine-reduction heart
 `pushPullObj_coverInter_baseChange`, which routes through the altitude-2 bridge
 `pushPullObj_pushforward_iso_tilde` to the **sorry-free** affine termwise base change
-`affinePushforwardPullbackBaseChange` via the carved ring-pushout `restrictedCartesianAffinePushout`)
+`affinePushforwardPullbackBaseChange` via the carved ring-pushout
+`restrictedCartesianAffinePushout`)
 with the twisted-nerve identification `twisted_cech_nerve_iso` (per-σ
 `twisted_cech_nerve_per_sigma`, the X-level open-immersion Beck–Chevalley
 `openImmersion_beckChevalley` over the cover-base-change identity `coverInterOpen_baseChange_eq`).
 The route uses the concrete-tilde non-mate brick, NOT the walled adjoint-mate machinery. *(STUB —
 the residual content is the named per-σ leaves above; the genuine open content of 02KH/02KG.)* -/
-/- USER (Stacks 02KH leaf 2/2 — the LOAD-BEARING one, Stacks 02KG): close
-   `affineBaseChange_pushforward_iso` (`Cohomology/FlatBaseChange.lean`) FIRST — that is
-   the termwise affine `i = 0` base change over each finite affine intersection — then
-   assemble the per-degree isos into a chain isomorphism compatible with the alternating
-   Čech differentials, taking `𝒰'` = base change of `𝒰` along `g'`. Reference: Stacks
-   02KG/02KH. Use the concrete-tilde isos, NOT the adjoint-mate machinery that walled FBC-B. -/
 noncomputable def cechComplex_baseChange_iso
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
     (h : IsPullback g' f' f g) [QuasiCompact f] [IsSeparated f]

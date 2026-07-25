@@ -1,6 +1,7 @@
 /-
 Copyright (c) 2026 The AlgebraicJacobian Project. All rights reserved.
-Released under Apache 2.0 license.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Horizon (Archon Horizon)
 -/
 import Mathlib
 import AlgebraicJacobian.Cohomology.CechTermAcyclic
