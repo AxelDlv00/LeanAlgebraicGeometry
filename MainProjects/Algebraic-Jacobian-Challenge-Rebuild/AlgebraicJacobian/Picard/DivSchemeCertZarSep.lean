@@ -174,6 +174,80 @@ lemma forall_subsingleton_ovlColength_of_unique_support_piece (j₀ : A.index)
   · exact hother j (by rw [← hi]; exact fun h => hij h.symm) z hz.2
   · exact hother i hi z hz.1
 
+/-! ## The scope guard: separation forces a fibre-confined support
+
+The converse direction bounds this route honestly.  Both pinned charts carry a partition
+of unity, so a support point lying in `V₀ ⊓ V₁` lies in a piece of **each** chart — an
+off-diagonal pair whose overlap then meets the support.  Hence a separated adaptation
+exists only for a system whose support avoids the chart overlap, i.e. is confined to the
+two vertical fibres of `pi`.  No refinement of the cover repairs this, and the pointwise
+gate does not help: shrinking the base deletes fibres, it does not move a support point
+out of `V₀ ⊓ V₁`.
+
+The field lane recorded the same obstruction and routed around it
+(`DivisorFamilyFieldSurj.lean`, deviation note): over a field every module is free, so the
+certificate is discharged on the plain extraction adaptation instead.  Over a nonreduced
+base that escape is unavailable, which is exactly why the flat-cokernel content of
+`DivSchemeHighWindowSyzygy.lean` is unavoidable for a general degree-`g` system. -/
+
+/-- **Separation confines the support to the chart overlap's complement.** If a support
+point `z` lies in both pinned charts, the chart-0 pieces cover `V₀` and the chart-1 pieces
+cover `V₁`, so `z` lies in a chart-0 piece `i` and a chart-1 piece `j`; these are distinct
+(`Sum.inl ≠ Sum.inr`), and both equations have non-unit germ at `z`, so the overlap ideal
+is proper and `ovlColength i j` is **not** subsingleton.
+
+So `isCertified_of_separated` applies only to fibre-confined systems.  It is stated to
+record the scope of the separated route, not to suggest the hypothesis is generic. -/
+theorem supportLocus_disjoint_chart_inter_of_separated
+    (hsep : ∀ i j : A.index, i ≠ j → Subsingleton (A.ovlColength i j))
+    {z : relCurve C R} (hz : z ∈ d.supportLocus)
+    (hz₀ : z ∈ (relCover C R (fiberTwoCover pi)).V₀)
+    (hz₁ : z ∈ (relCover C R (fiberTwoCover pi)).V₁) : False := by
+  classical
+  -- the two charts' partitions of unity put `z` in a piece of each chart
+  obtain ⟨i₀, hi₀⟩ := Opens.mem_iSup.mp (A.toFinCoverData.cover₀ hz₀)
+  obtain ⟨j₀, hj₀⟩ := Opens.mem_iSup.mp (A.toFinCoverData.cover₁ hz₁)
+  set i : A.index := Sum.inl i₀ with hi
+  set j : A.index := Sum.inr j₀ with hj
+  have hzi : z ∈ A.pieces i := hi₀
+  have hzj : z ∈ A.pieces j := hj₀
+  -- the germs of both equations at `z` are non-units, since `z` is in the support
+  have hnu : ∀ l : A.index, ∀ hzl : z ∈ A.pieces l,
+      ¬ IsUnit (((relCurve C R).presheaf.germ (A.pieces l) z hzl).hom (A.eqn l)) := by
+    intro l hzl hu
+    exact hz ((A.mem_basicOpen_eqn_iff_mem_unitLocus l hzl).mp
+      (((relCurve C R).mem_basicOpen (A.eqn l) z hzl).mpr hu))
+  -- but separation makes the overlap colength trivial, i.e. the overlap ideal is `⊤`
+  haveI := hsep i j (by simp [hi, hj])
+  have htop : A.ovlIdeal i j = ⊤ := Ideal.Quotient.subsingleton_iff.mp ‹_›
+  -- evaluating `1 ∈ ovlIdeal i j` at the germ of `z` contradicts non-unitness
+  have hzW : z ∈ A.pieces i ⊓ A.pieces j := ⟨hzi, hzj⟩
+  have hone : (1 : Γ(relCurve C R, A.pieces i ⊓ A.pieces j)) ∈ A.ovlIdeal i j := by
+    rw [htop]; exact Submodule.mem_top
+  rw [Ideal.mem_span_pair] at hone
+  obtain ⟨a, b, hab⟩ := hone
+  -- push the identity into the local ring at `z`
+  have hgerm := congrArg
+    (((relCurve C R).presheaf.germ (A.pieces i ⊓ A.pieces j) z hzW).hom) hab
+  rw [map_one, map_add, map_mul, map_mul] at hgerm
+  -- both germ images lie in the maximal ideal, so their combination cannot be `1`
+  have hmi : ((relCurve C R).presheaf.germ (A.pieces i ⊓ A.pieces j) z hzW).hom
+      (relResAlgHom C R (inf_le_left : A.pieces i ⊓ A.pieces j ≤ A.pieces i) (A.eqn i))
+      ∈ IsLocalRing.maximalIdeal ((relCurve C R).presheaf.stalk z) := by
+    rw [relResAlgHom_apply, (relCurve C R).presheaf.germ_res_apply]
+    exact not_not.mp (fun h => hnu i hzi (IsLocalRing.notMem_maximalIdeal.mp h))
+  have hmj : ((relCurve C R).presheaf.germ (A.pieces i ⊓ A.pieces j) z hzW).hom
+      (relResAlgHom C R (inf_le_right : A.pieces i ⊓ A.pieces j ≤ A.pieces j) (A.eqn j))
+      ∈ IsLocalRing.maximalIdeal ((relCurve C R).presheaf.stalk z) := by
+    rw [relResAlgHom_apply, (relCurve C R).presheaf.germ_res_apply]
+    exact not_not.mp (fun h => hnu j hzj (IsLocalRing.notMem_maximalIdeal.mp h))
+  have hmem : (1 : (relCurve C R).presheaf.stalk z)
+      ∈ IsLocalRing.maximalIdeal ((relCurve C R).presheaf.stalk z) := by
+    rw [← hgerm]
+    exact Ideal.add_mem _ (Ideal.mul_mem_left _ _ hmi) (Ideal.mul_mem_left _ _ hmj)
+  exact (IsLocalRing.maximalIdeal ((relCurve C R).presheaf.stalk z)).ne_top_iff_one.mp
+    (IsLocalRing.maximalIdeal.isMaximal _).ne_top hmem
+
 /-! ## The certificate -/
 
 /-- **The certificate of a support-separated adaptation.** With the off-diagonal overlap
