@@ -46,6 +46,9 @@ produces, so the chart-shaped adaptation's clause (c1) can be discharged fibre b
 
 * `AlgebraicGeometry.Scheme.LocalEquations.DivEq.unitLocus_eq` /
   `DivEq.supportLocus_eq` — the unit locus and the support locus are divisor invariants.
+* `AlgebraicGeometry.DivisorAdaptation.isClosed_supportLocus_inter_chart_of_isCertified` /
+  `not_isCertified_of_not_isClosed_inter_chart₀` — the obstruction with NO connectivity
+  hypothesis: a certificate forces both chart traces closed.
 * `AlgebraicGeometry.DivisorAdaptation.not_isCertified_of_divEq_of_isPreconnected_of_witnesses`
   — the obstruction descends to the `DivEq` quotient the functor is built from.
 * `AlgebraicGeometry.Scheme.LocalEquations.exists_opens_supportLocus_subset_chartInter` —
@@ -172,6 +175,36 @@ namespace DivisorAdaptation
 variable {k : Type u} [Field k] {C : Over (Spec (.of k))} [IsProper C.hom]
 variable {R : Type u} [CommRing R] [Algebra k R]
 variable {π : C.left ⟶ P1 k} [IsFinite π]
+
+/-- **The chart obstruction in its strongest form: no connectivity hypothesis at all.**  A
+certified adaptation forces BOTH pinned-chart traces of the support to be closed in the relative
+curve — a statement in which neither the adaptation nor its pieces nor any connectivity
+assumption appears.
+
+This is the honest shape of the design failure.  `supportLocus_subset_chart_of_isCertified`
+derives the chart *containment* from it, but needs the support preconnected; the closedness
+itself does not, and already refutes certifiability for any divisor whose chart trace is dense
+and not closed — for instance the degree-two divisor `V(t·x² + x·y + t·y²)` over `k[t]`, whose
+fibre at `t = 0` is `{0, ∞}` (the model recorded at
+`DivSchemeCertZarConn.not_forall_supportLeak_eq_empty_of_isPreconnected`), where
+`supportLocus ∩ V₀` is the irreducible support minus one point. -/
+theorem isClosed_supportLocus_inter_chart_of_isCertified {n : ℕ}
+    {d : (relCurve C R).LocalEquations} (A : DivisorAdaptation C R π d) (hc : A.IsCertified n) :
+    IsClosed (d.supportLocus ∩ ((relCover C R (fiberTwoCover π)).V₀ : Set (relCurve C R))) ∧
+      IsClosed (d.supportLocus ∩ ((relCover C R (fiberTwoCover π)).V₁ : Set (relCurve C R))) :=
+  ⟨A.isClosed_supportLocus_inter_chart₀_of_forall_supportLeak_eq_empty fun j =>
+      A.supportLeak_eq_empty_of_finite_colength _ (hc.finite_colength (Sum.inl j)),
+    A.isClosed_supportLocus_inter_chart₁_of_forall_supportLeak_eq_empty fun j =>
+      A.supportLeak_eq_empty_of_finite_colength _ (hc.finite_colength (Sum.inr j))⟩
+
+/-- **The obstruction with no connectivity hypothesis, in refuting form.**  A divisor one of
+whose pinned-chart traces fails to be closed admits no certified adaptation, in any degree. -/
+theorem not_isCertified_of_not_isClosed_inter_chart₀ {n : ℕ}
+    {d : (relCurve C R).LocalEquations} (A : DivisorAdaptation C R π d)
+    (h : ¬ IsClosed (d.supportLocus ∩
+      ((relCover C R (fiberTwoCover π)).V₀ : Set (relCurve C R)))) :
+    ¬ A.IsCertified n :=
+  fun hc => h (A.isClosed_supportLocus_inter_chart_of_isCertified hc).1
 
 /-- **The chart obstruction is a statement about the divisor class.**  If *some* representative
 `d₁` of the class has connected support with a point off `V₀` and a point off `V₁`, then *no*

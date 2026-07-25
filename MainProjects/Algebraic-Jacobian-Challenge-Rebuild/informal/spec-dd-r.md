@@ -636,3 +636,90 @@ argument is circular.
 
 *Nothing downstream of `chart-avoid` is blocked on a human any more; it is blocked on
 `p1-aut` + `fibre-avoid`, both of which are ordinary mathematics.*
+
+### ADDENDUM 3 — CORRIGENDUM (same round, after an adversarial pass)
+
+The negative half above (§1, §2, §4) survived refutation. The positive half (§3, §5) did not
+survive intact. Four corrections, all binding; the last one is a question for the human.
+
+**C1. The counterexample is FIELD-INDEPENDENT, and it is not new.** `s(x²+1) + x` is degree 1
+in `s` with coprime coefficients over *any* field, so `Z(sX₀² + X₀X₁ + sX₁²)` is irreducible
+over `𝔽₂` just as over `ℚ`. §1(c)'s appeal to an infinite `k` is superfluous — and that is bad
+news, not good: it means the obstruction cannot be escaped by enlarging the field. Also, the
+example is already recorded in the tree, as the model in the docstring of
+`not_forall_supportLeak_eq_empty_of_isPreconnected` (`Picard/DivSchemeCertZarConn.lean:170-175`);
+this addendum supplies the flatness, irreducibility and shrink-stability it did not. It remains
+a *paper* argument: no Lean declaration instantiates it. The three transport bricks to make it
+kernel-checked are landed (`supportLocus_pullback`, `DivEq.supportLocus_eq`, `IsLocallyCertified`
+unfolding to a span-⊤ family), but building the concrete `LocalEquations` on
+`relCurve (P1.asOver k) k[s]` is real work (~500 lines).
+
+**C2. There are TWO constraints, not one; §2 named only the second.**
+ * **(β1) per-piece.** (c1)-finite ⟺ leak-free ⟹ every piece trace is clopen in the support
+   ⟹ a connected support lies inside a SINGLE PIECE. This holds for *any* cover by opens and
+   therefore survives every reshaping of `FinCoverData`. §2's "the binding constraint is
+   `FinCoverData`" is wrong as stated.
+ * **(β2) chart-wise covering.** `partition₀`/`partition₁` (`DivisorFamily.lean:174,176`) make
+   the chart-`b` pieces cover all of `V_b`, which upgrades (β1)'s *one piece* to *one chart*.
+ The sharp statement is therefore: **no repair keeping the pieces inside the preimages of a
+ FIXED PAIR of points of `P¹` can work** — which is why moving the points is the only structural
+ way out. A CHEAPER OPTION §3 MISSED: relaxing (β2) alone, to a single joint covering condition
+ `⨆ pieces = ⊤`, drops the requirement from "avoid two points" to "avoid ONE point". That is a
+ small local edit to `DivisorFamily.lean` + `DivSchemeCertZarChartTrace.lean:80,92`; check first
+ whether `Cohomology/GluedSheafEngine.lean:78,85,89`, which consumes the partitions as
+ `Ideal.span_range_eq_top`, really needs them chart-wise. Try this before building `PGL₂`.
+
+**C3. R1's genericity is confirmed exhaustively; its price is higher than §3 said.** The only
+constraints on `π` anywhere are `[IsFinite π]` (286×), `[IsDominant π]` (176×),
+`[IsAffineHom π]` (75×) and the propositional triangle `hπ` (148×) — no flatness, separability
+or degree bound — and all are stable under `π ↦ π ≫ γ`. Better still, **`DivScheme` is π-free**
+(`Picard/DivScheme.lean:144` takes two abstract `CurveDivisor`s; `π` enters only at the
+instantiation), so the γ-family needs NO gluing over γ for the representing object — only the
+predicate changes. But: mathlib has `Proj.map` for graded ring homs and no `Proj.mapIso`, so
+`γ`, `IsIso γ` and `γ ≫ P1.structureMap k = P1.structureMap k` are all new work; and this
+project has **no `k`-rational points of `P¹` at all** (`Curve/P1Points.lean` has
+`P1.fromSpecChart`, never instantiated at `A := k`). The predicate change touches
+`IsLocallyCertified` and 24 dependent files.
+
+**C4. §5's avoidance argument relocates the geometric input; it does not remove it — and it
+fails over small finite fields.** Three defects:
+ (i) `ofChartPair` is the wrong constructor for the general case. It needs chart *principality*
+     (`Picard/DivSchemeCertZarChartPair.lean:116-127`). That holds for the seed's own family
+     `D ∈ |mΘ|`, but for an arbitrary degree-`n` divisor on a curve of genus ≥ 1 it is false:
+     `Cl(V_b) = Cl(C)/⟨components of π⁻¹(c_b)⟩ ≠ 0`, and shrinking `Spec R` does not change a
+     fibre class. The `swallow-adapt` shape (`σ_b + τ_b = 1`) is the correct adaptation, and it
+     needs "`D` is principal on some open containing its support, inside one cover member" over
+     a possibly non-Noetherian test ring. The docstring licence at `ChartPair.lean:44-47` is
+     wrong for the backward (classify-an-arbitrary-family) direction.
+ (ii) "the support is finite over the base" is NOT available and is implied by nothing a
+     `LocalEquations` carries: `d.eqn ≡ r` for a non-unit `r ∈ R` is germ-regular and has
+     `supportLocus` containing a whole fibre curve, which no `γ` avoids. So the repaired
+     predicate still needs fibrewise-finite support as an input. It is not circular — it is
+     true for honest relative Cartier divisors — but it is unproved for the DD-R seed, and it
+     is the input §Discipline (2) forbids writing as a hypothesis. **The repair moves the
+     forbidden input into the atlas; it does not make it free.**
+ (iii) **`k` infinite is INADMISSIBLE, and this is the real blocker.** There is no hypothesis
+     on `k` stronger than `[Field k]` anywhere in `Picard/` or `RiemannRoch/` (510 `Field k`,
+     zero `Infinite`/`IsAlgClosed`/`PerfectField`), and `Challenge.lean:96-99` states the
+     Jacobian over an arbitrary field. The repair needs two `k`-rational points of `P¹` off
+     `π(supp_s)` at every base point, i.e. `|P¹(k)| = q + 1 ≥ n + 2`; for `k = 𝔽_q` with small
+     `q` and `n ≈ 2g` no such pair exists, and by C1 the obstruction is real there. Replacing
+     the pinned points by a closed point of degree `d ≥ 2` destroys the two facts the design
+     rests on: `Γ(P1 k, chartOpen k i) ≃+* Polynomial k` (`Curve/P1Charts.lean:234,239`) and
+     `isPrincipalIdealRing_chartSections` (`Curve/P1Points.lean:64`), since `Cl(P¹∖{c}) = ℤ/d`.
+
+**THE QUESTION THAT GOES BACK TO THE HUMAN** is therefore not "chart-avoid: yes or no" — that is
+answered — but: *over a small finite field, what is `DivFamZar` supposed to be?* Three options:
+ (a) accept a hypothesis `|P¹(k)| ≥ n + 2` and record that `Challenge.lean:96-99` is then
+     unreachable for small `q`, i.e. the challenge as stated is not solved;
+ (b) plan a descent lane — `divQProj` (`Picard/DivSchemeQProj.lean`) is the right lever for
+     fpqc descent from `k'/k`;
+ (c) generalize the pinned charts to complements of degree-`d` closed points, paying
+     `Curve/P1Charts.lean:234,239`, `Curve/P1Points.lean:64` and all the `Γ ≅ k[t]` machinery.
+
+**Revised order of work.** (1) `confine-open` — LANDED, including the connectivity-free form
+`isClosed_supportLocus_inter_chart_of_isCertified`. (2) Try the (β2) relaxation (C2) before
+`p1-aut`; it may halve the requirement for a local edit. (3) Settle the finite-field question
+(C4 iii) BEFORE building `PGL₂` — it decides whether `p1-aut` is worth building at all.
+(4) Only then `p1-aut` → `fibre-avoid` → `cert-relocalize`, with `swallow-adapt` (not
+`ofChartPair`) as the adaptation and fibrewise-finite support as an explicit seed obligation.
