@@ -446,8 +446,6 @@ noncomputable def presentationOverOpens
   show (M.over Wo.left).Presentation from
     SheafOfModules.Presentation.ofIsIso.{u, u, u} iso.hom P2
 
-set_option synthInstance.maxHeartbeats 400000 in
--- Synthesizing the adjunction data expands both directions of the over-site equivalence.
 /-- The engine's functor `pushforward (overOpensRingHom W)` is a right adjoint (it is an
 equivalence functor). Project-local instance enabling `pullback (overOpensRingHom W)`. -/
 instance pushforward_overOpensRingHom_isRightAdjoint :
@@ -458,8 +456,6 @@ instance pushforward_overOpensRingHom_isRightAdjoint :
   exact ⟨⟨(modulesOverOpensEquivalence W).inverse,
     ⟨(modulesOverOpensEquivalence W).symm.toAdjunction⟩⟩⟩
 
-set_option synthInstance.maxHeartbeats 400000 in
--- Synthesizing the adjunction data expands both directions of the over-site equivalence.
 /-- The engine's inverse `pushforward (overOpensRingInvHom W)` is a right adjoint. -/
 instance pushforward_overOpensRingInvHom_isRightAdjoint :
     (SheafOfModules.pushforward.{u} (F := (Opens.overEquivalence W).inverse)
@@ -470,8 +466,6 @@ instance pushforward_overOpensRingInvHom_isRightAdjoint :
     ⟨(modulesOverOpensEquivalence W).toAdjunction⟩⟩⟩
 
 set_option backward.isDefEq.respectTransparency false in
-set_option synthInstance.maxHeartbeats 400000 in
--- Left-adjoint uniqueness unfolds the over-site equivalence during instance synthesis.
 /-- **Unit comparison for the engine inverse**: the inverse engine sends the over-picture
 structure-sheaf unit to the subscheme structure-sheaf unit.  Built by identifying the inverse
 (a left adjoint of the engine functor) with `pullback (overOpensRingHom W)` via uniqueness of
@@ -493,8 +487,6 @@ noncomputable def overOpensInverseUnitIso :
     @asIso _ _ _ _ _ hIso
 
 set_option backward.isDefEq.respectTransparency false in
-set_option synthInstance.maxHeartbeats 400000 in
--- Left-adjoint uniqueness unfolds the over-site equivalence during instance synthesis.
 /-- **Unit comparison for the engine functor**: the forward engine sends the subscheme
 structure-sheaf unit to the over-picture structure-sheaf unit (same `leftAdjointUniq` +
 `pullbackObjUnitToUnit` route, with the roles of the two ring comparisons swapped). -/
@@ -514,8 +506,6 @@ noncomputable def overOpensFunctorUnitIso :
     @asIso _ _ _ _ _ hIso
 
 set_option backward.isDefEq.respectTransparency false in
-set_option synthInstance.maxHeartbeats 400000 in
--- Presentation transport synthesizes colimit and adjunction data through the equivalence.
 /-- **Presentation of a restriction from an over-presentation** (general-opens port of
 `presentationModulesRestrictBasicOpen` minus the affine identification step): if `M.over U`
 carries a presentation and `W ≤ U`, the subscheme restriction `M.restrict W.ι` admits a global

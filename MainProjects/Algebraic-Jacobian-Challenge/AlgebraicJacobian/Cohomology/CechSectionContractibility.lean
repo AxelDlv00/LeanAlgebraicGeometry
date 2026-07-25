@@ -62,8 +62,6 @@ private lemma cechSection_succ_step (n : ℕ)
 
 end ContractingHomotopy
 
--- Matching the degree-one identity into the coinductive package exceeds the default depth.
-set_option maxRecDepth 2000 in
 /-- The concrete augmented section Čech complex is contractible after choosing a cover member
 that contains `V`. -/
 noncomputable def cechSection_contractible (𝒰 : X.OpenCover) [Finite 𝒰.I₀]

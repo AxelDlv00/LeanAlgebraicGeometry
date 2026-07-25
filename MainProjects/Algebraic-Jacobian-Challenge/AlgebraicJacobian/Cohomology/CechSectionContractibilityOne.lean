@@ -67,8 +67,6 @@ lemma cechSectionHomotopyZeroAug_apply
         (ConcreteCategory.hom (cechSectionHomotopyZero 𝒰 F V i_fix hiV) t) := by
   rfl
 
--- Unifying the product projection with the dependent restriction exceeds the default depth.
-set_option maxRecDepth 2000 in
 /-- The coordinate of the section Cech augmentation is its corresponding coface restriction. -/
 lemma sectionCechAugV_coord
     (x : ToType ((cechSectionAugComplex 𝒰 F V).X 0)) (σ : Fin 1 → 𝒰.I₀) :
@@ -118,9 +116,6 @@ lemma cechSectionDepDiff_depHomotopy_zero
   exact DFunLike.congr_arg (cechSectionCoface 𝒰 F V 0 σ 0)
     (htuple (σ ∘ (0 : Fin 1).succAbove))
 
--- Matching the opaque augmentation coordinate through the bottom homotopy needs deeper
--- unification, but no enlarged deterministic budget.
-set_option maxRecDepth 2000 in
 /-- The augmentation coordinate of the bottom homotopy followed by the differential is the
 corresponding coface restriction. -/
 lemma cechSectionHomotopyZero_comp_d_restriction_coord
