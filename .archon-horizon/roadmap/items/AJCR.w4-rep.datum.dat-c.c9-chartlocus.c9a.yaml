@@ -1,25 +1,56 @@
 id: AJCR.w4-rep.datum.dat-c.c9-chartlocus.c9a
-title: 'C9a: the class-indexed chartLocus and its openness (divRep-free)'
+title: 'C9a-0: the class-indexed witness locus over an affine base (transport 0, untwisted)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "DONE 2026-07-26 (run 0048 round 2), commit e47d57de1, Picard/Pic0ChartLocusClass.lean.\n\
-  \n`chartLocus` EXISTS.  Before this commit it had zero code hits tree-wide: eight\n\
-  occurrences, all doc comments, one of which (Pic0ChartLocusFibreField.lean:20) called\
-  \ it\n\"the still-undefined chartLocus\".\n\n  chartLocus pi c : Set (PrimeSpectrum\
-  \ B)\n    := {q | every basic-open cocycle datum with fibre class c has an effective\
-  \ witness\n            divisor with vanishing H^1 at kappa(q)}\n  mem_chartLocus_iff_of_datum\
-  \ -- any ONE presenting datum is a sound and complete test\n  mem_chartLocus_iff_exists\
-  \   -- the forall-form and the exists-form agree\n  isOpen_chartLocus          \
-  \ -- OPENNESS\n\nTHE DESIGN DECISION THE ROW ASKED FOR IS TAKEN: chartLocus is a\
-  \ locus in the PARAMETER\nspace Spec B indexed by a Picard CLASS, not a predicate\
-  \ attached to a chosen datum.  That\ndistinction is the whole content of the commit\
-  \ -- the landed openness engine\n(BasicOpenCocycleDatum.isOpen_setOf_exists_witness_h1_vanishing,\
-  \ Pic0ChartLocusOpen.lean:80)\nis stated for a chosen D, and a chart indexed by\
-  \ a class may not depend on a presentation.\nThe two are reconciled through the\
-  \ fibre-field / class-intrinsicity layer\n(Pic0ChartLocusFibreField.lean:177), which\
-  \ had been landed and left unused.\n\nCertificate-free and divRep-free: no DivFamZar,\
-  \ no IsCertified, no RepresentableBy datum in\nthe cone.  Axioms exactly [propext,\
-  \ Classical.choice, Quot.sound].\n"
+summary: 'DONE 2026-07-26 (run 0048 round 2), commits e47d57de1 + 503a50905,
+
+  Picard/Pic0ChartLocusClass.lean.  RESCOPED the same round after a fresh-context
+  audit: this
+
+  is NOT CHART-U(b), and the declaration was renamed to give the reserved name back.
+
+
+  WHAT LANDED: `cechWitnessLocus pi c : Set (PrimeSpectrum B)` -- over an AFFINE base,
+  for an
+
+  UNTWISTED CechPic class, the set of points where the fibre class has an effective
+  witness
+
+  divisor with vanishing H^1 -- with `mem_cechWitnessLocus_iff_of_datum` (any one
+  presenting
+
+  datum is a sound and complete test), `mem_cechWitnessLocus_iff_exists`, and
+
+  `isOpen_cechWitnessLocus`.  Certificate-free, divRep-free, axioms clean.
+
+
+  WHY IT MATTERS ANYWAY: it is the first datum-choice-free openness statement in the
+  campaign.
+
+  The landed engine (BasicOpenCocycleDatum.isOpen_setOf_exists_witness_h1_vanishing)
+  is stated
+
+  for a CHOSEN datum, and a locus indexed by a Picard class may not depend on a presentation.
+
+  Call it transport (0); both of DAT-B''s §1.6 amendments presuppose it and neither
+  states it.
+
+
+  WHAT IT IS NOT, and this matters because two lanes co-signed the name: `chartLocus
+  c lambda`
+
+  (w4-datc §3.3 CHART-U(a)) lives over a GENERAL TEST, is indexed by a PLUS CLASS,
+  and reads
+
+  the TWISTED fibre class lambda_t . theta^m . (-Sigma); w4-datb §1.6 amends it to
+  the SPLIT
+
+  predicate over a finite separable L/kappa(t); and `isOpen_chartLocus` is dat-b row
+  B-4''s
+
+  ASSEMBLY.  Three of its four inputs are still missing -- see leaf `chart-u`.
+
+  '
 status: done
 kind: proof
 priority: normal
@@ -43,6 +74,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
   owner: ajcr-w4-rep-free
-  updated_at: '2026-07-25T16:19:14.523052+00:00'
+  updated_at: '2026-07-25T16:32:38.220172+00:00'
   pinned_commits:
+  - 503a50905
   - e47d57de1
