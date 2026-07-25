@@ -8,7 +8,9 @@
 - **Cohomology frontier.** Flat base change still has three proof obligations:
   flat pullback must preserve finite limits, and the two degreewise base-change
   isomorphisms must be proved natural in the Cech nerve.  The Cech comparison
-  itself is complete, but its cold build remains the main performance hotspot.
+  itself is complete, and its former degree-one elaboration hotspot is now
+  isolated and optimized; remaining resource work is tracked as bounded
+  heartbeat, synthesis, and import audits.
 
 - **Jacobian frontier.** The remaining direct `sorry` sites are organized under
   the nested `AJC.jacobian` roadmap: Picard representability
