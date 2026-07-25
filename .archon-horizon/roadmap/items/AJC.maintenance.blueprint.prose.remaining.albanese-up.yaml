@@ -2,11 +2,14 @@ id: AJC.maintenance.blueprint.prose.remaining.albanese-up
 title: Albanese universal-property truth pass
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Audit Albanese_AlbaneseUP as a bounded truth pass: remove route and implementation
-  journals, correct unsupported completion markers, split the universal-property argument
-  into complete mathematical sublemmas, and make the positive-characteristic birational
-  differential step explicit before restoring any proof-level completion claims.'
-status: pending
+summary: 'Albanese_AlbaneseUP is now a 625-line timeless proof chapter. It removes
+  the route and Lean-development journal, separates seven Lean construction/theorem
+  pins from stronger unformalized geometry, and gives a characteristic-free symmetric-power
+  argument: finite separable quotient, nonsingularity, generic h^0=1, the differential
+  criterion excluding pure inseparability, birational descent, and the basepoint connector.
+  The open Serre-duality and Riemann--Roch gates are explicit dependencies; no false
+  completion marker remains. Full graph sync and the settled print build pass.'
+status: done
 kind: blueprint
 priority: high
 depends_on: []
@@ -28,3 +31,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint.prose.remaining
+  updated_at: '2026-07-25T17:37:06.036280+00:00'
+  pinned_commits:
+  - 322cbb7b9
+  - 21eefaf60

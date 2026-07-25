@@ -3,3 +3,4 @@
 {"at": "2026-07-23T13:46:36.753778+00:00", "actor": "horizon", "field": "nested", "from": "", "to": "", "note": "parent=AJC.jacobian"}
 {"at": "2026-07-23T13:46:36.753878+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-24T00:49:32.795305+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, title updated"}
+{"at": "2026-07-25T17:38:46.971209+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, pinned_commits updated"}

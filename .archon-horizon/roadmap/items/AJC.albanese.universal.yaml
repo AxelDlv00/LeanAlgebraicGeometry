@@ -2,8 +2,12 @@ id: AJC.albanese.universal
 title: Albanese universal property
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Assemble existence and uniqueness of the factorisation of every pointed map
-  from C to an abelian variety through Pic0.
+summary: 'Complete descent through the birational g-th symmetric power and the factorisation
+  biconditional. The connector now has the correct two directions: pointed rigidity
+  plus quotient uniqueness forward, and restriction along Q |-> Q+(g-1)P0 backward.
+  Once these two typed-sorry bridges close, the existing headline theorem supplies
+  existence and uniqueness without another sorry; the homomorphism conclusion is a
+  separate pointed-rigidity corollary.'
 status: pending
 kind: proof
 priority: high
@@ -26,3 +30,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
+  updated_at: '2026-07-25T17:39:07.691633+00:00'
+  pinned_commits:
+  - 21eefaf60

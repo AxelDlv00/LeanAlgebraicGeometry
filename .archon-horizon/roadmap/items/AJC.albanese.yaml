@@ -2,9 +2,12 @@ id: AJC.albanese
 title: Albanese and abelian-variety leg
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Prove the rational-map extension machinery and the Abel-Jacobi factorisation
-  through Pic^0. The remaining leaves are codimension-one extension, symmetric-power
-  constructions, and universal-property assembly.
+summary: The characteristic-free symmetric-power route is now specified cleanly in
+  the blueprint. Lean still needs the Abel--Jacobi and symmetric-power constructions,
+  the differential/birational comparison, rational-map descent, and the connector;
+  the headline universal-property theorem is already sorry-free assembly from the
+  last two bridge theorems. Codimension-one extension remains a separate upstream
+  leaf.
 status: pending
 kind: proof
 priority: normal
@@ -17,5 +20,7 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:47.569594+00:00'
-  updated_at: '2026-07-24T00:49:32.795494+00:00'
+  updated_at: '2026-07-25T17:38:46.971400+00:00'
   parent: AJC.jacobian
+  pinned_commits:
+  - 21eefaf60

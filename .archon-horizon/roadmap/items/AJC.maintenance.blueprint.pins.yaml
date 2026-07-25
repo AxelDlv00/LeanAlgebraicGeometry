@@ -2,10 +2,12 @@ id: AJC.maintenance.blueprint.pins
 title: Lean-pin declaration audit
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The explicit full graph sync remains at 43 classified warnings: seven scanner
-  limitations and 36 genuine forward declarations. The Cech augmentation refactor
-  adds a faithful lean_ok comparison node, rewires the augmented-complex dependency,
-  and removes all scratch-generated nodes; no known stale pin remains.'
+summary: 'The explicit full graph sync remains at the same 43 classified warnings:
+  seven scanner limitations and 36 genuine forward declarations. The Albanese pass
+  narrows its seven pins to the actual Lean declarations, leaves stronger formula,
+  separability, birationality, and homomorphism claims unpinned, removes ten obsolete
+  journal nodes, and exposes all open mathematical gates. No new unresolved pin or
+  stale blueprint node was introduced.'
 status: pending
 kind: blueprint
 priority: normal
@@ -28,8 +30,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint
-  updated_at: '2026-07-25T16:21:47.219220+00:00'
+  updated_at: '2026-07-25T17:37:53.874304+00:00'
   pinned_commits:
+  - 21eefaf60
   - 6aff13c82
   - 3d7c61a1b
   - b8090e839

@@ -2,8 +2,12 @@ id: AJC.albanese.symmetric
 title: Abel-Jacobi and symmetric-power factorisation
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Construct the Abel-Jacobi morphism and the symmetric-power comparison maps,
-  then prove the factorisation equivalence used by the universal property.
+summary: 'Formalize the six honest construction and bridge gaps exposed by the rewritten
+  chapter: Abel--Jacobi, the symmetric-power carrier and quotient API, symmetric sums,
+  the map to Pic0, birational descent, and the factorisation connector. The stronger
+  divisor formula, separability/nonsingularity, one-form differential, and characteristic-p
+  birationality statements are deliberately separate unpinned mathematical nodes,
+  downstream of Serre duality and Riemann--Roch.'
 status: pending
 kind: proof
 priority: high
@@ -26,3 +30,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
+  updated_at: '2026-07-25T17:39:00.718412+00:00'
+  pinned_commits:
+  - 21eefaf60

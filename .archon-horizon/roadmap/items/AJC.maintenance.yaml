@@ -2,9 +2,12 @@ id: AJC.maintenance
 title: Project quality and documentation
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Keep the ambitious AJC route maintainable: remove elaboration hot spots
-  and arbitrary heartbeat budgets, rewrite blueprint chapters as timeless mathematics,
-  keep formalization pins honest, and maintain reproducible build and warning baselines.'
+summary: Keep the ambitious AJC route maintainable through measured elaboration work,
+  bounded warning and heartbeat audits, timeless blueprint truth passes, faithful
+  formalization pins, and reproducible print/build baselines. The dominant Cech hotspot
+  is closed and the Albanese chapter is now characteristic-free; remaining work stays
+  split across build budgets, warning debt, pin debt, print debt, and the explicit
+  Weil-divisor prose pass.
 status: active
 kind: refactor
 priority: normal
@@ -27,3 +30,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
+  updated_at: '2026-07-25T17:39:36.782971+00:00'
+  pinned_commits:
+  - 08c03cbf0
+  - 21eefaf60
