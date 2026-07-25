@@ -64,7 +64,7 @@ audience: human
 author: horizon
 source_ref: null
 created_at: '2026-07-25T15:17:21.873800+00:00'
-updated_at: '2026-07-25T16:22:15.053616+00:00'
+updated_at: '2026-07-25T17:15:06.279190+00:00'
 metadata:
   provenance:
     run: 0048
@@ -75,3 +75,5 @@ metadata:
     task: ajcr-w4-rep-free
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-optimize
