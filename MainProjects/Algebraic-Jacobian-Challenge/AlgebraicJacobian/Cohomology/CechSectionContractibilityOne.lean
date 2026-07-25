@@ -59,10 +59,6 @@ lemma cechSectionHomotopyZeroAug_eq :
       cechSectionHomotopyZero 𝒰 F V i_fix hiV ≫ sectionCechAugV 𝒰 F V :=
   rfl
 
-set_option maxHeartbeats 1600000 in
--- Identifying the dependent source and target objects currently requires this budget:
--- 400k and 800k deterministic limits time out, while 1.6M is verified.
-set_option maxRecDepth 2000 in
 /-- Evaluation of the opaque bottom composite is ordinary morphism composition. -/
 lemma cechSectionHomotopyZeroAug_apply
     (t : ToType ((cechSectionAugComplex 𝒰 F V).X 1)) :

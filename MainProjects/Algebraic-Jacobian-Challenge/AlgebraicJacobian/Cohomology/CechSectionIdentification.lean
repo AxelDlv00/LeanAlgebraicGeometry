@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Christian Merten
 -/
 import AlgebraicJacobian.Cohomology.CechSectionIdentificationLegAux
+import AlgebraicJacobian.Cohomology.CechSectionAugmentationComparison
 
 /-!
 # Sectionwise Čech comparison
@@ -20,49 +21,6 @@ namespace AlgebraicGeometry
 open Scheme.Modules
 
 variable {X : Scheme.{u}}
-
-/-- **Canonical augmentation of the concrete section Čech complex over `V`.**  The evaluated
-Čech augmentation `G_V(Ψ(cechAugmentation))` (the restriction-product map `Γ(V, F) → ∏_i
-Γ(U_i ∩ V, F)`) transported across the degree-`0` object iso `coreIso_objIso`.  This is the
-shared augmentation node `D'_aug = (sectionCechComplexV …).augment ε hε` used by BOTH
-`cechSection_complex_iso` (`D ≅ D'_aug`) and `cechSection_contractible`
-(`Homotopy (𝟙 D'_aug) 0`), so the consumer glue `isZero_homology_of_iso_homotopy_id_zero`
-matches their `D'`.  (The scaffold previously took `ε` as a free parameter, which makes both
-lemmas false for a non-canonical `ε`; the consumer `hSec` calls them with no `ε`.) -/
-noncomputable def sectionCechAugV (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
-    (V : TopologicalSpace.Opens X) :
-    ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op V) ⟶
-      (sectionCechComplexV 𝒰 F V).X 0 :=
-  (PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
-      (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj (Opposite.op V)).map
-    ((SheafOfModules.forget X.ringCatSheaf ⋙
-      PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map (cechAugmentation 𝒰 F)) ≫
-    (coreIso_objIso 𝒰 F 0 V).hom
-
-/-- The canonical section-Čech augmentation composes to zero with the first differential.
-Transported from the backbone identity `cechAugmentation_comp_d` through `coreIso_comm`. -/
-lemma sectionCechAugV_comp_d (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
-    (V : TopologicalSpace.Opens X) :
-    sectionCechAugV 𝒰 F V ≫ (sectionCechComplexV 𝒰 F V).d 0 1 = 0 := by
-  rw [sectionCechAugV, Category.assoc]
-  erw [coreIso_comm 𝒰 F V 0 1 rfl]
-  rw [Functor.mapHomologicalComplex_obj_d, Functor.mapHomologicalComplex_obj_d]
-  -- The leading composite `(GV∘Ψ)(cechAug) ≫ (GV∘Ψ)(d⁰)` is zero because `cechAug ≫ d⁰ = 0`
-  -- (`cechAugmentation_comp_d`) and `GV ∘ Ψ` is a functor.  We assemble this in pure term mode
-  -- (`Functor.map_comp`/`map_zero`/`Category.assoc`) since `rw`/`simp`/`erw` stall on the
-  -- bundled-`AddCommGrpCat`-hom representation of the composite functors' `.map`.
-  set Ψ := SheafOfModules.forget X.ringCatSheaf ⋙
-    PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj) with hΨ
-  set GV := PresheafOfModules.toPresheaf X.ringCatSheaf.obj ⋙
-    (evaluation (TopologicalSpace.Opens ↥X)ᵒᵖ AddCommGrpCat).obj (op V) with hGV
-  have hXY : Ψ.map (cechAugmentation 𝒰 F) ≫ Ψ.map ((cechComplexOnX 𝒰 F).d 0 1) = 0 :=
-    (Ψ.map_comp _ _).symm.trans
-      ((congrArg Ψ.map (cechAugmentation_comp_d 𝒰 F)).trans (Functor.map_zero Ψ _ _))
-  have key : GV.map (Ψ.map (cechAugmentation 𝒰 F)) ≫
-      GV.map (Ψ.map ((cechComplexOnX 𝒰 F).d 0 1)) = 0 :=
-    (GV.map_comp _ _).symm.trans ((congrArg GV.map hXY).trans (Functor.map_zero GV _ _))
-  exact (Category.assoc _ _ _).symm.trans
-    ((congrArg (· ≫ (coreIso_objIso 𝒰 F 1 V).hom) key).trans Limits.zero_comp)
 
 /-- The evaluated augmented Čech complex is the augmented concrete section complex. -/
 noncomputable def cechSection_complex_iso (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
@@ -85,14 +43,8 @@ noncomputable def cechSection_complex_iso (𝒰 : X.OpenCover) [Finite 𝒰.I₀
       (SheafOfModules.forget X.ringCatSheaf ⋙ PresheafOfModules.restrictScalars α).Additive :=
     inferInstance
   haveI : GV.Additive := inferInstance
-  -- (CORE, residual) Non-augmented degreewise iso + differential match: the evaluated
-  -- non-augmented Čech complex `Γ(V, C•)` is the concrete section Čech complex over the
-  -- restricted family `U'_σ = coverInterOpen 𝒰 σ ⊓ V`.  Degreewise object iso is
-  -- `pushPull_eval_prod_iso` (Stub 4); the differential match is via `sectionCech_objD_apply`.
-  -- `coreIso` and `eY` are kept as `let`-bindings (transparent), so the degree-`0` identity
-  -- `(isoApp coreIso 0).hom = (coreIso_objIso 𝒰 F 0 V).hom` and `eY.hom = 𝟙` hold definitionally,
-  -- which is what makes `hcompat` close (the canonical `sectionCechAugV` is exactly the evaluated
-  -- Čech augmentation transported across `coreIso_objIso 0`).
+  -- The non-augmented evaluated Cech complex is identified degreewise with the concrete
+  -- section complex over the restricted family `U'_σ = coverInterOpen 𝒰 σ ⊓ V`.
   let coreIso : (GV.mapHomologicalComplex cc).obj
         (((SheafOfModules.forget X.ringCatSheaf ⋙
           PresheafOfModules.restrictScalars α).mapHomologicalComplex cc).obj
@@ -105,16 +57,15 @@ noncomputable def cechSection_complex_iso (𝒰 : X.OpenCover) [Finite 𝒰.I₀
   let eY : GV.obj ((SheafOfModules.forget X.ringCatSheaf ⋙
         PresheafOfModules.restrictScalars α).obj F) ≅
       ((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.obj (Opposite.op V) := Iso.refl _
-  -- (compat) The evaluated Čech augmentation equals the canonical `sectionCechAugV` read through
-  -- `coreIso_objIso 0`; definitional, since `sectionCechAugV` is by construction
-  -- `GV(Ψ(cechAugmentation)) ≫ (coreIso_objIso 𝒰 F 0 V).hom` and `eY.hom = 𝟙`.
+  -- The comparison theorem isolates the mate calculus equating the evaluated augmentation with
+  -- the direct product of section restrictions.
   have hcompat : GV.map ((SheafOfModules.forget X.ringCatSheaf ⋙
         PresheafOfModules.restrictScalars α).map (cechAugmentation 𝒰 F)) ≫
         (HomologicalComplex.Hom.isoApp coreIso 0).hom = eY.hom ≫ sectionCechAugV 𝒰 F V := by
     have happ : (HomologicalComplex.Hom.isoApp coreIso 0).hom = (coreIso_objIso 𝒰 F 0 V).hom :=
       congrArg Iso.hom (HomologicalComplex.Hom.isoOfComponents_app _ _ 0)
-    rw [happ, sectionCechAugV]
-    exact (Category.id_comp _).symm
+    rw [happ]
+    exact (mappedSectionCechAugV_eq 𝒰 F V).trans (Category.id_comp _).symm
   -- Peel the augmentation node off `D` with `mapHC_augment_iso` (twice), then glue the
   -- non-augmented `coreIso` to the augmentation data with `augmentCochainIso`.
   exact (GV.mapHomologicalComplex cc).mapIso

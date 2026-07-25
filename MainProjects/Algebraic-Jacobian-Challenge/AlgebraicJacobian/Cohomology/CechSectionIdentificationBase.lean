@@ -7,6 +7,7 @@ import Mathlib.Topology.Sheaves.Abelian
 import AlgebraicJacobian.Cohomology.CechHigherDirectImage
 import AlgebraicJacobian.Cohomology.CechAcyclic
 import AlgebraicJacobian.Cohomology.FreePresheafComplex
+import AlgebraicJacobian.Cohomology.CechSectionComplex
 
 /-!
 # Sub-brick A: identifying the evaluated augmented Čech section complex
@@ -1361,17 +1362,9 @@ noncomputable def pushPull_eval_prod_iso (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
         pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))) ≪≫
     Limits.Pi.mapIso (fun σ => pushPull_leg_sections 𝒰 F σ V)
 
-/-! ## Stub 5 — Complex-level Čech iso -/
+/-! ## Complex-level Cech comparison
 
-/-- The concrete (non-augmented) section Čech complex over `V` for the restricted cover.
-Used as the base for the augmented complex in `cechSection_complex_iso` and
-`cechSection_contractible`. -/
-noncomputable abbrev sectionCechComplexV (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
-    (F : X.Modules) (V : TopologicalSpace.Opens X) : CochainComplex Ab.{u} ℕ :=
-  sectionCechComplex (fun i : 𝒰.I₀ => coverOpen 𝒰 i ⊓ V)
-    ((SheafOfModules.forget X.ringCatSheaf).obj F)
-
-/-! ### Structural helpers reducing the augmented complex iso to a non-augmented one. -/
+### Structural helpers reducing the augmented complex iso to a non-augmented one -/
 
 -- `respectTransparency false`: the differential square identities reduce to `𝟙 ≫ d = d ≫ 𝟙`
 -- with the two `d`s defeq (via `augment_d_zero_one`/`_succ_succ`) but the `𝟙` objects and the

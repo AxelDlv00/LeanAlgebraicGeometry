@@ -11,6 +11,7 @@ import AlgebraicJacobian.Cohomology.HigherDirectImagePresheaf
 import AlgebraicJacobian.Cohomology.AffineSerreVanishing
 import AlgebraicJacobian.Cohomology.QcohTildeSections
 import AlgebraicJacobian.Cohomology.CechSectionContractibility
+import AlgebraicJacobian.Cohomology.CechSectionIdentification
 
 /-!
 # The augmented Čech complex is exact (blueprint `lem:cech_augmented_resolution`)
