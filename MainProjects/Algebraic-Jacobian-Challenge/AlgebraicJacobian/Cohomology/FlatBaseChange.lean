@@ -5,20 +5,6 @@ Authors: Christian Merten
 -/
 import Mathlib
 
-/- USER (2026-06-29): TWO standing directives for this file.
-   (A) FBC PIVOT — prove flat base change via the ČECH-TO-COHOMOLOGY SPECTRAL SEQUENCE, not the
-       walled mate-calculus naturality (`pullbackSpecTildeNatIso_comp` /
-       `pushforwardPullbackBaseChange_restrict_naturality`). Build the relative SS
-       `E₂^{p,q}=Ȟ^p(𝒰,R^q f_*F) ⟹ R^{p+q}f_*F` (Stacks 01EO/03OW, Cohomology 20.11.5) on Mathlib's
-       `Algebra.Homology.SpectralObject.*` / `SpectralSequence.Basic` / `TotalComplex` scaffold; use its
-       base-change functoriality to close `cech_flatBaseChange` (02KH), then Kleiman 4.8
-       (`Scheme.PicScheme.representable`). Full plan + anchors: `.archon/USER_HINTS.md` temporary hint.
-   (B) Mate-calc chain deleted iter-312 in favor of the SS route; the two canonical-mate stubs
-       (`affineBaseChange_pushforward_iso`, `flatBaseChange_pushforward_isIso`) were pruned in
-       run 0009 (superseded, zero consumers — the live route is the concrete-tilde
-       `affinePushforwardPullbackBaseChange` consumed by `cech_flatBaseChange`).
-       This file is now sorry-free. -/
-
 /-!
 # Flat base change for the pushforward of a quasi-coherent sheaf (`i = 0`)
 
@@ -303,7 +289,8 @@ noncomputable def gammaPushforwardIso {R R' : CommRingCat.{u}} (φ : R ⟶ R')
       (ModuleCat.restrictScalars φ.hom).obj ((moduleSpecΓFunctor (R := R')).obj N) := by
   set SecN : ModuleCat ↑((Spec R').ringCatSheaf.obj.obj (Opposite.op ⊤)) :=
     (((SheafOfModules.forgetToSheafModuleCat (Spec R').ringCatSheaf (Opposite.op ⊤)
-        (Limits.initialOpOfTerminal Limits.isTerminalTop)).obj N).val.obj (Opposite.op ⊤)) with hSecN
+        (Limits.initialOpOfTerminal Limits.isTerminalTop)).obj N).obj.obj
+          (Opposite.op ⊤)) with hSecN
   set gsRhom := (StructureSheaf.globalSectionsIso ↑R).hom.hom with hgsR
   set gsR'hom := (StructureSheaf.globalSectionsIso ↑R').hom.hom with hgsR'
   set pushTop := ((Spec.map φ).toRingCatSheafHom.hom.app (Opposite.op ⊤)).hom with hpush
@@ -343,14 +330,14 @@ twice plus the same `⊤`-level ring equation `globalSectionsIso_hom_comp_specMa
 the evaluation open changed from `⊤` to `U` / `V`. Project-local. -/
 noncomputable def gammaPushforwardIsoAt {R R' : CommRingCat.{u}} (φ : R ⟶ R')
     (N : (Spec R').Modules) (U : (Spec R).Opens) :
-    (modulesSpecToSheaf.obj ((Scheme.Modules.pushforward (Spec.map φ)).obj N)).val.obj
+    (modulesSpecToSheaf.obj ((Scheme.Modules.pushforward (Spec.map φ)).obj N)).obj.obj
         (Opposite.op U) ≅
       (ModuleCat.restrictScalars φ.hom).obj
-        ((modulesSpecToSheaf.obj N).val.obj
+        ((modulesSpecToSheaf.obj N).obj.obj
           (Opposite.op ((TopologicalSpace.Opens.map (Spec.map φ).base).obj U))) := by
   set SecN : ModuleCat ↑((Spec R').ringCatSheaf.obj.obj (Opposite.op ⊤)) :=
     (((SheafOfModules.forgetToSheafModuleCat (Spec R').ringCatSheaf (Opposite.op ⊤)
-        (Limits.initialOpOfTerminal Limits.isTerminalTop)).obj N).val.obj
+        (Limits.initialOpOfTerminal Limits.isTerminalTop)).obj N).obj.obj
           (Opposite.op ((TopologicalSpace.Opens.map (Spec.map φ).base).obj U))) with hSecN
   set gsRhom := (StructureSheaf.globalSectionsIso ↑R).hom.hom with hgsR
   set gsR'hom := (StructureSheaf.globalSectionsIso ↑R').hom.hom with hgsR'
@@ -381,7 +368,7 @@ the level of `fromTildeΓ`. -/
 lemma fromTildeΓ_app_isIso_of_isLocalizedModule {R : CommRingCat.{u}} (N : (Spec R).Modules)
     (a : R)
     [IsLocalizedModule (Submonoid.powers a)
-      ((modulesSpecToSheaf.obj N).val.map
+      ((modulesSpecToSheaf.obj N).obj.map
         (homOfLE (show PrimeSpectrum.basicOpen a ≤ ⊤ from le_top)).op).hom] :
     IsIso (Scheme.Modules.Hom.app N.fromTildeΓ (PrimeSpectrum.basicOpen a)) := by
   -- The underlying function of `Hom.app` agrees (by `rfl`) with that of the `modulesSpecToSheaf`
@@ -395,9 +382,9 @@ lemma fromTildeΓ_app_isIso_of_isLocalizedModule {R : CommRingCat.{u}} (N : (Spe
   rw [hfun]
   -- Abbreviations: `j` is the tilde localization map, `ρ` the structure-sheaf restriction, both
   -- localizations of `Γ(N, ⊤)` at `powers a`; `L` is the section map of the counit.
-  set j := (tilde.toOpen ((modulesSpecToSheaf.obj N).val.obj (Opposite.op ⊤))
+  set j := (tilde.toOpen ((modulesSpecToSheaf.obj N).obj.obj (Opposite.op ⊤))
     (PrimeSpectrum.basicOpen a)).hom with hj
-  set ρ := ((modulesSpecToSheaf.obj N).val.map
+  set ρ := ((modulesSpecToSheaf.obj N).obj.map
     (homOfLE (show PrimeSpectrum.basicOpen a ≤ ⊤ from le_top)).op).hom with hρ
   haveI hρinst : IsLocalizedModule (Submonoid.powers a) ρ := by rw [hρ]; infer_instance
   clear_value ρ
@@ -446,7 +433,8 @@ pushforward over `D(a)` with restriction of scalars along `φ` of the `R'`-local
 noncomputable def pushforward_spec_tilde_iso_of_isLocalizedModule {R R' : CommRingCat.{u}}
     (φ : R ⟶ R') (M : ModuleCat.{u} R')
     (hloc : ∀ a : R, IsLocalizedModule (Submonoid.powers a)
-      ((modulesSpecToSheaf.obj ((Scheme.Modules.pushforward (Spec.map φ)).obj (tilde M))).val.map
+      ((modulesSpecToSheaf.obj
+          ((Scheme.Modules.pushforward (Spec.map φ)).obj (tilde M))).obj.map
         (homOfLE (show PrimeSpectrum.basicOpen a ≤ ⊤ from le_top)).op).hom) :
     (Scheme.Modules.pushforward (Spec.map φ)).obj (tilde M) ≅
       tilde ((ModuleCat.restrictScalars φ.hom).obj M) := by
@@ -497,7 +485,7 @@ triangle identity `tilde.toOpen_res` and the fact that `M → Γ(M^~, ⊤)` is b
 at the trivial submonoid `powers 1`). Project-local. -/
 lemma tildeRestriction_isLocalizedModule {R' : CommRingCat.{u}} (M : ModuleCat.{u} R') (b : R') :
     IsLocalizedModule (Submonoid.powers b)
-      ((modulesSpecToSheaf.obj (tilde M)).val.map
+      ((modulesSpecToSheaf.obj (tilde M)).obj.map
         (homOfLE (show PrimeSpectrum.basicOpen b ≤ ⊤ from le_top)).op).hom := by
   -- `toOpen M ⊤` is a localization at `powers (1 : R')` (since `basicOpen 1 = ⊤`), hence bijective.
   haveI inst1 : IsLocalizedModule (Submonoid.powers (1 : R')) (tilde.toOpen M ⊤).hom := by
@@ -524,10 +512,10 @@ lemma tildeRestriction_isLocalizedModule {R' : CommRingCat.{u}} (M : ModuleCat.{
   have htri := tilde.toOpen_res M (⊤ : (Spec R').Opens) (PrimeSpectrum.basicOpen b)
     (homOfLE (le_top))
   -- The inverse equivalence `Γ(M^~, ⊤) ≃ M`.
-  set le : M ≃ₗ[R'] ((modulesSpecToSheaf.obj (tilde M)).val.obj (Opposite.op ⊤)) :=
+  set le : M ≃ₗ[R'] ((modulesSpecToSheaf.obj (tilde M)).obj.obj (Opposite.op ⊤)) :=
     LinearEquiv.ofBijective (tilde.toOpen M ⊤).hom hbij with hle
   -- The triangle at the level of linear maps: `restriction ∘ₗ le = toOpen (D b)`.
-  have htri2 : ((modulesSpecToSheaf.obj (tilde M)).val.map
+  have htri2 : ((modulesSpecToSheaf.obj (tilde M)).obj.map
         (homOfLE (show PrimeSpectrum.basicOpen b ≤ ⊤ from le_top)).op).hom ∘ₗ le.toLinearMap
       = (tilde.toOpen M (PrimeSpectrum.basicOpen b)).hom := by
     have h := congrArg ModuleCat.Hom.hom htri
@@ -535,7 +523,7 @@ lemma tildeRestriction_isLocalizedModule {R' : CommRingCat.{u}} (M : ModuleCat.{
     exact h
   -- Hence `restriction = toOpen (D b) ∘ₗ le⁻¹`, a localization at `powers b` precomposed with
   -- a linear equivalence.
-  have key : ((modulesSpecToSheaf.obj (tilde M)).val.map
+  have key : ((modulesSpecToSheaf.obj (tilde M)).obj.map
         (homOfLE (show PrimeSpectrum.basicOpen b ≤ ⊤ from le_top)).op).hom
       = (tilde.toOpen M (PrimeSpectrum.basicOpen b)).hom ∘ₗ le.symm.toLinearMap :=
     (LinearEquiv.eq_comp_toLinearMap_symm _ _).mpr htri2
@@ -556,49 +544,30 @@ noncomputable def pushforward_spec_tilde_iso {R R' : CommRingCat.{u}}
       tilde ((ModuleCat.restrictScalars φ.hom).obj M) := by
   apply pushforward_spec_tilde_iso_of_isLocalizedModule φ M
   intro a
-  -- STRATEGY (`of_linearEquiv`): the restriction map `ρ : Γ(N,⊤) → Γ(N,D(a))` of
-  -- `N := (Spec φ)_* (M^~)` is, under the isomorphisms
-  -- `gammaPushforwardIsoAt φ (tilde M) ⊤` and `gammaPushforwardIsoAt φ (tilde M) (D a)`,
-  -- identified with the restriction of scalars along `φ` of the `R'`-side tilde restriction
-  -- `σ : Γ(M^~, ⊤) → Γ(M^~, D(φ a))`. That `σ` is a localization at `powers (φ a)`
-  -- (`tildeRestriction_isLocalizedModule`), so its restriction of scalars along `φ` is a
-  -- localization at `powers a` (`IsLocalizedModule.powers_restrictScalars`); transporting along
-  -- the two isomorphisms then yields `hloc(a)`.
-  -- The two bricks for this discharge are now in place and axiom-clean:
-  --   • `gammaPushforwardIsoAt φ (tilde M) U : Γ(N, U) ≅ restrictScalars φ (Γ(M^~, (Spec φ)⁻¹ U))`
-  --     — the open-indexed `e_{D(a)}` isomorphism (blueprint movement (1)); and
-  --   • `tildeRestriction_isLocalizedModule M (φ a)` — the `R'`-side restriction
-  --     `Γ(M^~, ⊤) → Γ(M^~, D(φ a))` is a localization at `powers (φ a)`.
-  -- The `of_linearEquiv` finish is: with `e₁ = gammaPushforwardIsoAt φ (tilde M) ⊤` and
-  -- `e₂ = gammaPushforwardIsoAt φ (tilde M) (D a)`, the naturality square
-  -- `e₂.hom ∘ ρ = (restrictScalars φ σ) ∘ e₁.hom` (where `σ` is the `R'`-side restriction and
-  -- `ρ` the pushforward-side one) gives `ρ = e₂.symm ∘ₗ (restrictScalars φ σ) ∘ₗ e₁`; then
-  -- `IsLocalizedModule.powers_restrictScalars` upgrades `σ` (localization at `powers (φ a)`,
-  -- since `algebraMapSubmonoid R' (powers a) = powers (φ a)` along `φ.hom.toAlgebra`) to a
-  -- localization at `powers a` of `restrictScalars φ σ`, and two applications of
-  -- `IsLocalizedModule.of_linearEquiv` / `of_linearEquiv_right` transport this to `ρ`.
-  --
-  -- iter-240 PIVOT (`algebraize`): preimage opens are *definitionally* the basic opens
-  -- (`AlgebraicGeometry.SpecMap_preimage_basicOpen` is `rfl`), so the `R'`-side restriction
-  -- `σ` is literally `tilde M`'s restriction `⊤ → D(φ a)`, and `algebraize [φ.hom]` supplies the
-  -- honest `Algebra ↑R ↑R'`/`IsScalarTower` instances that `powers_restrictScalars` needs.
+  -- Under `gammaPushforwardIsoAt` at `⊤` and `D(a)`, the pushforward restriction is
+  -- conjugate to restriction of scalars of the tilde restriction at `D(φ(a))`.
+  -- The latter is a localization by `tildeRestriction_isLocalizedModule`; after
+  -- `powers_restrictScalars`, transport through the two comparison isomorphisms gives
+  -- the required localization on the pushforward side.
   algebraize [φ.hom]
   -- `σ` : the `R'`-side restriction map `Γ(M^~, ⊤) → Γ(M^~, D(φ a))` of `tilde M`.
-  set σmor := (modulesSpecToSheaf.obj (tilde M)).val.map
+  set σmor := (modulesSpecToSheaf.obj (tilde M)).obj.map
       (homOfLE (show PrimeSpectrum.basicOpen (φ.hom a) ≤ ⊤ from le_top)).op with hσmor
   -- Re-expose the `compHom`-via-`φ` `R`-module/scalar-tower instances (the ones the
   -- `ModuleCat.restrictScalars φ.hom` objects carry) on the bare section carriers, so that
   -- `powers_restrictScalars` can see them.
-  letI mTop : Module R ↑((modulesSpecToSheaf.obj (tilde M)).val.obj (Opposite.op ⊤)) :=
+  letI mTop : Module R ↑((modulesSpecToSheaf.obj (tilde M)).obj.obj (Opposite.op ⊤)) :=
     inferInstanceAs (Module R ((ModuleCat.restrictScalars φ.hom).obj
-      ((modulesSpecToSheaf.obj (tilde M)).val.obj (Opposite.op ⊤))))
-  letI mDa : Module R ↑((modulesSpecToSheaf.obj (tilde M)).val.obj
+      ((modulesSpecToSheaf.obj (tilde M)).obj.obj (Opposite.op ⊤))))
+  letI mDa : Module R ↑((modulesSpecToSheaf.obj (tilde M)).obj.obj
       (Opposite.op (PrimeSpectrum.basicOpen (φ.hom a)))) :=
     inferInstanceAs (Module R ((ModuleCat.restrictScalars φ.hom).obj
-      ((modulesSpecToSheaf.obj (tilde M)).val.obj (Opposite.op (PrimeSpectrum.basicOpen (φ.hom a))))))
-  haveI tTop : IsScalarTower R R' ↑((modulesSpecToSheaf.obj (tilde M)).val.obj (Opposite.op ⊤)) :=
+      ((modulesSpecToSheaf.obj (tilde M)).obj.obj
+        (Opposite.op (PrimeSpectrum.basicOpen (φ.hom a))))))
+  haveI tTop : IsScalarTower R R'
+      ↑((modulesSpecToSheaf.obj (tilde M)).obj.obj (Opposite.op ⊤)) :=
     ⟨fun x y z => by rw [Algebra.smul_def, mul_smul]; rfl⟩
-  haveI tDa : IsScalarTower R R' ↑((modulesSpecToSheaf.obj (tilde M)).val.obj
+  haveI tDa : IsScalarTower R R' ↑((modulesSpecToSheaf.obj (tilde M)).obj.obj
       (Opposite.op (PrimeSpectrum.basicOpen (φ.hom a)))) :=
     ⟨fun x y z => by rw [Algebra.smul_def, mul_smul]; rfl⟩
   -- `σ` is a localization at `powers (φ a)`.
@@ -617,7 +586,7 @@ noncomputable def pushforward_spec_tilde_iso {R R' : CommRingCat.{u}}
   -- `Gmor.hom` is `σmor.hom.restrictScalars R`, hence a localization at `powers a`.
   haveI hG : IsLocalizedModule (Submonoid.powers a) Gmor.hom := hGloc
   -- The pushforward restriction `ρ` (a `ModuleCat R` morphism).
-  set ρ := (modulesSpecToSheaf.obj ((pushforward (Spec.map φ)).obj (tilde M))).val.map
+  set ρ := (modulesSpecToSheaf.obj ((pushforward (Spec.map φ)).obj (tilde M))).obj.map
       (homOfLE (show PrimeSpectrum.basicOpen a ≤ ⊤ from le_top)).op with hρdef
   -- The two open-indexed comparison isos (`e_{⊤}`, `e_{D(a)}`), via `gammaPushforwardIsoAt`.
   set e₁ := gammaPushforwardIsoAt φ (tilde M) ⊤ with he₁
@@ -627,7 +596,7 @@ noncomputable def pushforward_spec_tilde_iso {R R' : CommRingCat.{u}}
   -- The common underlying `R'`-side forget restriction map (with `FN` inlined so it matches
   -- the unfolded `gammaPushforwardIsoAt`).
   set tForget := ((SheafOfModules.forgetToSheafModuleCat (Spec R').ringCatSheaf (Opposite.op ⊤)
-        (Limits.initialOpOfTerminal Limits.isTerminalTop)).obj (tilde M)).val.map
+        (Limits.initialOpOfTerminal Limits.isTerminalTop)).obj (tilde M)).obj.map
       (homOfLE (show (TopologicalSpace.Opens.map (Spec.map φ).base).obj
         (PrimeSpectrum.basicOpen a) ≤ ⊤ from le_top)).op with htForget
   -- Structural identifications (peel `modulesSpecToSheaf`/pushforward through `restrictScalars`),
@@ -710,7 +679,7 @@ noncomputable def pullback_spec_tilde_iso {R R' : CommRingCat.{u}}
   let adjR := (ModuleCat.extendRestrictScalarsAdj φ.hom).comp (tilde.adjunction (R := R'))
   (((conjugateIsoEquiv adjL adjR).symm (gammaPushforwardNatIso φ)).symm).app M
 
-/-! ## Project-local Mathlib supplement — affine termwise base-change brick (IN PROGRESS)
+/-! ## Project-local Mathlib supplement — affine termwise base-change brick
 
 The concrete-tilde route to flat base change (Stacks 02KH) builds a *fresh* base-change
 isomorphism `e : g^* ∘ f_* ≅ f'_* ∘ (g')^*` by gluing affine-local isomorphisms, instead of
@@ -723,27 +692,17 @@ over the fully affine pushout square
   v                            v
   Spec R'      ----Spec ψ---->  Spec R
 ```
-(`φ : R → A`, `ψ : R → R'`, `ρ = includeLeft`, `σ = includeRight` into `A ⊗_R R'`) it produces the
-termwise isomorphism `g^*(f_* M̃) ≅ f'_*((g')^* M̃)`, assembled from the two sorry-free tilde
-dictionaries `pushforward_spec_tilde_iso` / `pullback_spec_tilde_iso` and the pure
-commutative-algebra cancellation `Algebra.IsPushout.cancelBaseChange`, never forming the adjoint
-mate.
+(`φ : R → A`, `ψ : R → R'`, `ρ = includeLeft`, `σ = includeRight` into
+`A ⊗_R R'`) it produces the termwise isomorphism
+`g^*(f_* M̃) ≅ f'_*((g')^* M̃)`. The construction combines the two tilde
+dictionaries `pushforward_spec_tilde_iso` and `pullback_spec_tilde_iso` with
+`Algebra.IsPushout.cancelBaseChange`; it never forms the adjoint mate.
 
-STATUS (iter-305): the load-bearing module-level core — the `R'`-linear iso
-`(extendScalars ψ) ∘ (restrictScalars φ) ≅ (restrictScalars σ) ∘ (extendScalars ρ)` realising
-`R' ⊗_R M ≅ (A ⊗_R R') ⊗_A M` — was PROVEN to typecheck axiom-clean in the **CommRingCat framing**
-(ambient algebras supplied as `φ.hom.toAlgebra` / `ψ.hom.toAlgebra`), by `@`-threading the
-`RingHom.toAlgebra` instances through `Algebra.IsPushout.cancelBaseChange` (so its output is defeq to
-the `compHom`-based `ModuleCat.extendScalars`/`restrictScalars` objects) with `IsPushout` transported
-from `TensorProduct.isPushout'` via `Algebra.algebra_ext`. See `task_results` for the full working
-construction. It is NOT yet landed as a top-level declaration: stating the tensor `A ⊗_R R'` in the
-signature forces a Type-u framing whose *opaque* ambient `[Algebra R A]`/`[Algebra R R']` lets the
-GLOBAL `Algebra.TensorProduct.leftAlgebra`/`rightAlgebra` instances win over the `toAlgebra` `letI`s,
-breaking the `compHom`-defeq on the inner `Module A (A⊗_R R')` and outer `Module R' (·)`. The
-recommended fix (iter-306) is the abstract-`B` framing: take `ρ : A ⟶ B`, `σ : R' ⟶ B` and a
-`CategoryTheory.IsPushout φ ψ ρ σ` (or `IsPullback` of the Spec square) hypothesis, derive
-`Algebra.IsPushout` in the proof with all algebras `toAlgebra` (no global tensor instances to shadow),
-and assemble the 5-step chain. See blueprint `lem:affine_pushforward_pullback_baseChange`. -/
+The abstract-`B` formulation below equips every ambient algebra through the maps
+of the pushout square. This keeps the module structures produced by
+`cancelBaseChange` definitionally aligned with the `compHom`-based
+`ModuleCat.extendScalars` and `ModuleCat.restrictScalars` objects. See blueprint
+`lem:affine_pushforward_pullback_baseChange`. -/
 
 /-- **Module-level base-change cancellation iso (abstract-`B` framing).** Given a pushout square of
 commutative rings
