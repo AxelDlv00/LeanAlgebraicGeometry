@@ -51,6 +51,12 @@ lake exe cache get
 lake build
 ```
 
+For faithful checks, prefer the configured module target. `lake env lean <file>`
+does not apply every option from the lakefile's `[leanOptions]`; in particular,
+a direct-file-only instance-synthesis failure can be an option mismatch rather
+than a source regression. Files that rely on `maxSynthPendingDepth` carry a
+local `set_option` so direct-file, LSP, and module checks agree.
+
 This project is part of an Archon Horizon workspace.  Roadmap, task, inbox, and
 cross-project state live at the workspace root and are accessed through the
 `horizon` CLI.
