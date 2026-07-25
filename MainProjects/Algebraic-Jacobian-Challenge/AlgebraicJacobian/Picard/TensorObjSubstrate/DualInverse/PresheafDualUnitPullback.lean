@@ -5,6 +5,15 @@ Authors: Christian Merten
 -/
 import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse.PresheafDualPullback
 
+/-!
+# Compatibility of dual units with open pullback
+
+For an open immersion, the presheaf pushforward is strongly monoidal because its
+sectionwise scalar maps are isomorphisms. This identifies the unit comparators for
+pushforward and its adjoint pullback, and proves that the presheaf dual pullback
+comparison carries the dual of the unit object to the canonical unit duality.
+-/
+
 set_option autoImplicit false
 
 universe u
@@ -31,7 +40,8 @@ strong by `restrictScalarsMonoidalOfBijective`).  This upgrades the ambient lax 
 noncomputable def presheafPushforwardBetaMonoidal {X Y : Scheme.{u}} (f : Y ⟶ X)
     [IsOpenImmersion f] :
     letI α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf :=
-      { app := fun U => (f.appIso U.unop).inv, naturality := fun _ _ i => f.appIso_inv_naturality i }
+      { app := fun U => (f.appIso U.unop).inv
+        naturality := fun _ _ i => f.appIso_inv_naturality i }
     letI β : (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
         f.opensFunctor.op ⋙ (X.presheaf ⋙ forget₂ CommRingCat RingCat) :=
       Functor.whiskerRight α (forget₂ CommRingCat RingCat)
@@ -62,7 +72,8 @@ The inverse of the lax-monoidal unit map `ε (pushforward β)`, packaged as an i
 `presheafPushforwardBetaMonoidal`. -/
 noncomputable def presheafPushforwardUnitIso {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f] :
     letI α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf :=
-      { app := fun U => (f.appIso U.unop).inv, naturality := fun _ _ i => f.appIso_inv_naturality i }
+      { app := fun U => (f.appIso U.unop).inv
+        naturality := fun _ _ i => f.appIso_inv_naturality i }
     letI β : (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
         f.opensFunctor.op ⋙ (X.presheaf ⋙ forget₂ CommRingCat RingCat) :=
       Functor.whiskerRight α (forget₂ CommRingCat RingCat)
@@ -77,11 +88,12 @@ noncomputable def presheafPushforwardUnitIso {X Y : Scheme.{u}} (f : Y ⟶ X) [I
   letI _hm : (PresheafOfModules.pushforward β).Monoidal := presheafPushforwardBetaMonoidal f
   exact (Functor.Monoidal.εIso (PresheafOfModules.pushforward β)).symm
 
-/-- **Sectionwise carrier value of the lax-monoidal unit `ε (restrictScalars α)`.**  Abstract twin of
-`restrictScalars_oplaxMonoidal_η_app_one`: stated at the `CommRingCat`-valued base functors `R, S`
-(so the unit-object `CommRing` instances are native, avoiding the post-`forget₂` `CommRing`-synthesis
-failure of the concrete Scheme spelling).  The `ε` of `restrictScalars α` is sectionwise the
-`ModuleCat`-level `ε`, whose carrier action is the ring map `α.app W` (`ModuleCat.restrictScalars_η`). -/
+/-- **Sectionwise carrier value of the lax-monoidal unit `ε (restrictScalars α)`.**
+Abstract twin of `restrictScalars_oplaxMonoidal_η_app_one`, stated at the
+`CommRingCat`-valued base functors `R, S`, so the unit-object `CommRing` instances
+are native. The `ε` of `restrictScalars α` is sectionwise the `ModuleCat`-level
+`ε`, whose carrier action is the ring map `α.app W`
+(`ModuleCat.restrictScalars_η`). -/
 lemma restrictScalars_laxMonoidal_ε_app {C : Type u} [Category.{u} C]
     {R S : Cᵒᵖ ⥤ CommRingCat.{u}}
     (α : R ⋙ forget₂ CommRingCat RingCat ⟶ S ⋙ forget₂ CommRingCat RingCat) (W : Cᵒᵖ)
@@ -100,8 +112,9 @@ lemma presheafPushforwardUnitIso_inv_app {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpe
     (w : ((𝟙_ (_root_.PresheafOfModules.{u}
         (Y.presheaf ⋙ forget₂ CommRingCat RingCat))).obj V : Type u)) :
     letI α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf :=
-      { app := fun U => (f.appIso U.unop).inv, naturality := fun _ _ i => f.appIso_inv_naturality i }
-    letI β : (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+      { app := fun U => (f.appIso U.unop).inv
+        naturality := fun _ _ i => f.appIso_inv_naturality i }
+    letI _β : (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
         f.opensFunctor.op ⋙ (X.presheaf ⋙ forget₂ CommRingCat RingCat) :=
       Functor.whiskerRight α (forget₂ CommRingCat RingCat)
     ((presheafPushforwardUnitIso f).inv.app V).hom w
@@ -115,7 +128,7 @@ lemma presheafPushforwardUnitIso_inv_app {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpe
   have hq : (presheafPushforwardUnitIso f).inv
       = Functor.LaxMonoidal.ε (PresheafOfModules.pushforward β) := rfl
   rw [hq]
-  show (ModuleCat.Hom.hom ((Functor.LaxMonoidal.ε
+  change (ModuleCat.Hom.hom ((Functor.LaxMonoidal.ε
       (PresheafOfModules.pushforward₀OfCommRingCat f.opensFunctor X.presheaf ⋙
         PresheafOfModules.restrictScalars
           (Functor.whiskerRight α (forget₂ CommRingCat RingCat)))).app V)) w
@@ -132,12 +145,14 @@ lemma presheafPushforwardUnitIso_inv_app {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpe
   rfl
 
 set_option backward.isDefEq.respectTransparency false in
-/-- **Unit-value of the pushforward comparator `q` (blueprint `lem:pushforward_beta_unit_eps_app_one`).**
+/-- **Unit-value of the pushforward comparator `q`
+(blueprint `lem:pushforward_beta_unit_eps_app_one`).**
 The sectionwise carrier action of `q.hom = (εIso (pushforward β)).inv = η (pushforward β)` at a
 section `V` is the `f.appIso`-conjugation: it is the structure-ring isomorphism `(f.appIso V).hom`.
 This is the unit-side analogue of the tensorator collapse `pushforward_mu_appIso_collapse`.  Proved
-sectionwise: `q.hom = OplaxMonoidal.η (pushforward β)`; under the composite monoidal instance
-(`pushforward β = pushforward₀ ⋙ restrictScalars β`, via `presheafPushforwardBetaMonoidal`) the oplax
+sectionwise: `q.hom = OplaxMonoidal.η (pushforward β)`; under the composite monoidal
+instance (`pushforward β = pushforward₀ ⋙ restrictScalars β`, via
+`presheafPushforwardBetaMonoidal`) the oplax
 unit splits by `comp_η` with `η pushforward₀ = 𝟙`, leaving `η (restrictScalars β)`, whose section is
 `inv (ε (restrictScalars (β.app V)))`; that is exactly `dualUnitRingSwap f V` whose carrier value is
 `(f.appIso V).hom` (`dualUnitRingSwap_apply`).  Stated for an arbitrary carrier element `y` (the
@@ -145,7 +160,8 @@ blueprint's `1`-instance is the special case `y = 1`). -/
 lemma pushforwardBetaUnitEpsAppOne {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
     (V : (TopologicalSpace.Opens ↥Y)ᵒᵖ)
     (y : letI α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf :=
-           { app := fun U => (f.appIso U.unop).inv, naturality := fun _ _ i => f.appIso_inv_naturality i }
+           { app := fun U => (f.appIso U.unop).inv
+             naturality := fun _ _ i => f.appIso_inv_naturality i }
          letI β : (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
              f.opensFunctor.op ⋙ (X.presheaf ⋙ forget₂ CommRingCat RingCat) :=
            Functor.whiskerRight α (forget₂ CommRingCat RingCat)
@@ -186,8 +202,8 @@ The oplax-monoidal unit map `η (pullback φR) : (pullback φR).obj 𝟙_X ≅ �
 the **H1 reconciliation**: the pullback `(pullback φR).obj 𝟙_X` is identified with the pushforward
 `(pushforward β).obj 𝟙_X` by the left-adjoint-uniqueness iso `H1` (both are left adjoints of
 `pushforward φR`), and the latter is contracted to `𝟙_Y` by the pushforward unit comparator `q`
-(`presheafPushforwardUnitIso`).  This is exactly the H1 identification the blueprint invokes to match
-the two flank comparators at the structure-sheaf unit. -/
+(`presheafPushforwardUnitIso`). This is exactly the H1 identification the blueprint
+invokes to match the two flank comparators at the structure-sheaf unit. -/
 noncomputable def presheafPullbackUnitIso {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f] :
     letI φR : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
         (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
@@ -250,9 +266,11 @@ lemma presheafDualUnitIso_pullback_natural {X Y : Scheme.{u}} (f : Y ⟶ X) [IsO
   -- The pushforward-flank identity (★): the genuine eval-at-`1` content, after the two `H1` factors
   -- have been telescoped away by naturality.  `sDT = isoMk (sliceDualTransport f 𝟙_X)`.
   -- This is the immersion analogue of `presheafDualUnitIso_naturality`, proved sectionwise by
-  -- `sliceDualTransport_app_apply` + eval-at-`1` (`internalHomEval`/`evalLin`) + `dualUnitRingSwap`.
+  -- `sliceDualTransport_app_apply` + eval-at-`1` (`internalHomEval`/`evalLin`) +
+  -- `dualUnitRingSwap`.
   have FLANK :
-      (PresheafOfModules.isoMk (fun V => sliceDualTransport f (SheafOfModules.unit X.ringCatSheaf) V)
+      (PresheafOfModules.isoMk
+            (fun V => sliceDualTransport f (SheafOfModules.unit X.ringCatSheaf) V)
             (by intro V W g; subsingleton)).hom ≫
           (PresheafOfModules.dualIsoOfIso (presheafPushforwardUnitIso f)).inv
             ≫ (presheafDualUnitIso (Y := Y)).hom
@@ -261,9 +279,11 @@ lemma presheafDualUnitIso_pullback_natural {X Y : Scheme.{u}} (f : Y ⟶ X) [IsO
     -- Sectionwise (the immersion analogue of `presheafDualUnitIso_naturality`).  At a section `V`
     -- and dual section `φ`, the LHS is: transport `φ` by `sliceDualTransport` (reindexing across
     -- `f.opensFunctor`, conjugating by `f.appIso`), precompose by `q.hom` (`dualIsoOfIso` is
-    -- precomposition, `dualPrecompEquiv`), then evaluate at `1` (`presheafDualUnitIso = dualUnitIsoGen`,
-    -- `evalLin · 1`).  The RHS pushes `φ`'s eval-at-`1` forward by `β`/`f.appIso` then applies the unit
-    -- comparator `q.hom`.  Both reduce to `(f.appIso V).hom.hom (evalLin (𝟙_X) (op fV) φ 1)`; equality is
+    -- precomposition, `dualPrecompEquiv`), then evaluate at `1`
+    -- (`presheafDualUnitIso = dualUnitIsoGen`, `evalLin · 1`). The RHS pushes `φ`'s
+    -- eval-at-`1` forward by `β`/`f.appIso` and then applies the unit comparator
+    -- `q.hom`. Both reduce to
+    -- `(f.appIso V).hom.hom (evalLin (𝟙_X) (op fV) φ 1)`; equality is
     -- `linearEndo_apply_comm`-style commutativity of `𝒪`-linear endomorphisms of the (commutative)
     -- structure ring, exactly as in `presheafDualUnitIso_naturality` (DualInverse.lean:317).
     apply PresheafOfModules.hom_ext
@@ -279,7 +299,8 @@ lemma presheafDualUnitIso_pullback_natural {X Y : Scheme.{u}} (f : Y ⟶ X) [IsO
       PresheafOfModules.isoMk_hom_app]
     erw [sliceDualTransport_app_apply f (SheafOfModules.unit X.ringCatSheaf) V φ]
     -- LHS: `dualUnitRingSwap` carrier value is `(f.appIso V).hom`.  RHS: split the composite, fire
-    -- the linchpin `pushforwardBetaUnitEpsAppOne` (carrier value of `q.hom` = `(f.appIso V).hom`), then
+    -- the linchpin `pushforwardBetaUnitEpsAppOne` (the carrier value of `q.hom` is
+    -- `(f.appIso V).hom`), then
     -- `pushforward_map_app_apply` reindexes `(pushforward β).map pdX.hom` to `pdX.hom.app (op fV)`.
     rw [dualUnitRingSwap_apply]
     erw [pushforwardBetaUnitEpsAppOne f V
