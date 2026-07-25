@@ -4,12 +4,13 @@ kind: issue
 body: 'Project-wide blueprint pins need declaration audit
 
 
-  The latest explicit full graph sync reports 1,912 blueprint nodes, 4,327 Lean nodes,
-  6,670 edges, and 33 classified unresolved-pin warnings, down from 43. None is in
-  the Adelic chapter. The sync records the named constant-field theorem, cleaned Chi-ledger
-  signatures, eight new mathematical comparison and duality nodes, and removal of
-  obsolete false dependencies. Keep this issue open for the remaining scanner coverage
-  and genuine forward contracts. Latest graph commit: 03889996b.'
+  The current full graph contains 1,912 blueprint nodes, 4,327 Lean nodes, 6,239 live
+  nodes total, and 6,670 edges. The generated-node ledger is stale-free after pruning
+  188 vanished nodes (182 Lean and 6 blueprint); 33 classified unresolved-pin warnings
+  remain. None is in the Adelic chapter, and the Grassmannian signature generalization
+  plus Cech option cleanup introduced no new unresolved pin. Keep this issue open
+  for remaining scanner coverage and genuine forward contracts. Graph commits: ec8301ef0,
+  0cd05df34.'
 labels:
 - agent-ready
 status: open
@@ -20,7 +21,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-24T11:19:30.012968+00:00'
-updated_at: '2026-07-25T20:30:30.913329+00:00'
+updated_at: '2026-07-25T21:49:30.369179+00:00'
 metadata:
   provenance:
     run: '0046'

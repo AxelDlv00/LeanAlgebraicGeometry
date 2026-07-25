@@ -2,13 +2,11 @@ id: AJC.maintenance.blueprint.pins
 title: Lean-pin declaration audit
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The explicit full graph sync now has 1,890 blueprint nodes, 4,326 Lean nodes,
-  and 6,604 edges while retaining exactly the same 43 classified warnings: seven scanner
-  limitations and 36 genuine forward declarations. The Weil pass makes six reusable
-  order/naturality declarations public, marks principal_degree_zero as the sole local
-  sorry, and splits adelic valuation, additive order, residue field, and weighted
-  degree so every green pin has only checked dependencies. No new unresolved pin was
-  introduced.'
+summary: The current full graph contains 1,912 blueprint nodes, 4,327 Lean nodes,
+  6,239 live nodes total, and 6,670 edges. The generated-node ledger is stale-free
+  after pruning 188 vanished nodes (182 Lean and 6 blueprint); 33 classified unresolved-pin
+  warnings remain. None is in the Adelic chapter. Keep this branch open for remaining
+  scanner coverage and genuine forward contracts.
 status: pending
 kind: blueprint
 priority: normal
@@ -31,8 +29,10 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint
-  updated_at: '2026-07-25T18:52:39.439571+00:00'
+  updated_at: '2026-07-25T21:47:59.531772+00:00'
   pinned_commits:
+  - 0cd05df34
+  - ec8301ef0
   - 9dac093df
   - a49bf3c38
   - f5e9c3b5e

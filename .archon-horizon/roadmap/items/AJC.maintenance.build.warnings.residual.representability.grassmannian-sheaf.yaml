@@ -1,0 +1,35 @@
+id: AJC.maintenance.build.warnings.residual.representability.grassmannian-sheaf
+title: Grassmannian sheaf warnings
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'All 44 diagnostics in GrassmannianZariskiSheaf are eliminated: 14 stale
+  simp inputs, 10 original unused section variables plus the generalized helper cascade,
+  15 long lines, and 5 goal-changing show tactics. The direct kernel check, representability
+  consumer, and full 8,723-job build pass with no local warning.'
+status: done
+kind: refactor
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-25T21:33:05.724109+00:00'
+  provenance:
+    run: '0046'
+    session: 0078-horizon-ajc-optimize
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.build.warnings.residual.representability
+  owner: ajc-optimize
+  milestone: ajc-optimize
+  updated_at: '2026-07-25T21:33:06.690418+00:00'
+  pinned_commits:
+  - 773efe164

@@ -1,5 +1,5 @@
 id: AJC.maintenance.blueprint.prose.remaining
-title: Remaining marker-heavy chapters
+title: Marker-heavy chapter truth passes
 projects:
 - Algebraic-Jacobian-Challenge
 summary: 'All three marker-heavy chapter truth passes are complete: Albanese universal
@@ -27,7 +27,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint.prose
-  updated_at: '2026-07-25T20:29:27.967888+00:00'
+  updated_at: '2026-07-25T21:32:54.089642+00:00'
   pinned_commits:
   - 03889996b
   - 053970b58

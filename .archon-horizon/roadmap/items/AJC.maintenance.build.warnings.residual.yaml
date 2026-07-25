@@ -2,12 +2,9 @@ id: AJC.maintenance.build.warnings.residual
 title: Residual project warning debt
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The last configured whole-project allocation was 262 warnings: 149 representability,
-  56 Picard core, six cohomology, and 51 Albanese/Riemann--Roch entry warnings. Area
-  children now certify seven of those diagnostics gone (three cohomology, four P1
-  chart), while genuine placeholders and other style debt remain explicit. Do not
-  infer a current global total until the next whole-project recount, especially across
-  concurrent source additions.'
+summary: The current whole-project total is 201 warning heads. GrassmannianZariskiSheaf
+  is now warning-free, removing the largest prior 44-warning block. Area children
+  track the remaining 24 genuine sorry notices and 177 style, API, or binder diagnostics.
 status: pending
 kind: refactor
 priority: normal
@@ -30,7 +27,8 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings
-  updated_at: '2026-07-25T14:31:32.800220+00:00'
+  updated_at: '2026-07-25T21:33:03.762632+00:00'
   pinned_commits:
+  - 773efe164
   - f73c10133
   - 00b4c44ed

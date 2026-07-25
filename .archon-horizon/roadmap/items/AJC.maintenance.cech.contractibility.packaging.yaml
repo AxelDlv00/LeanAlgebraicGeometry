@@ -2,10 +2,10 @@ id: AJC.maintenance.cech.contractibility.packaging
 title: Coinductive homotopy packaging
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The coinductive wrapper now packages through a local C alias, with no heartbeat
-  or backward-transparency override and maxRecDepth reduced from 8,000 to 2,000. Its
-  module target builds warning-free in 10.61s at 3,229,344 KiB; the downstream augmented
-  resolution target also passes warning-free.
+summary: The coinductive wrapper packages through a local complex alias with no heartbeat,
+  recursion-depth, or backward-transparency override. Its direct source check passes
+  at Lean defaults in 4.49 seconds; the umbrella rebuild closes CechAugmentedResolution
+  in 6.1 seconds.
 status: done
 kind: refactor
 priority: normal
@@ -28,6 +28,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.cech.contractibility
-  updated_at: '2026-07-25T01:57:18.501000+00:00'
+  updated_at: '2026-07-25T21:33:01.697771+00:00'
   pinned_commits:
+  - 5edda3284
   - ce7e4a001

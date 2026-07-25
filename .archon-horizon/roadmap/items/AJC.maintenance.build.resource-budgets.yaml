@@ -2,11 +2,11 @@ id: AJC.maintenance.build.resource-budgets
 title: Structural elaboration-budget reduction
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The source now contains 186 numeric elaboration-budget sites: 142 maxHeartbeats
-  scopes and 44 synthesis-heartbeat scopes. P1ChartData shed all nine wrappers, and
-  the six-declaration QcohTildeSections localization chain shed all six 1M wrappers
-  after staged 400k/800k threshold tests. Both rebuilt modules emit no warnings and
-  elaborate at Lean defaults; continue cone-by-cone testing and structural proof simplification.'
+summary: 'The source now contains 179 heartbeat scopes: 140 maxHeartbeats and 39 synthesis-heartbeat
+  scopes. It also has 15 synthesis-pending-depth and 5 recursion-depth overrides.
+  P1ChartData, QcohTildeSections, five CechTerm adjunction/presentation declarations,
+  and three Cech contraction declarations now elaborate at defaults; continue cone-by-cone
+  threshold testing and structural simplification.'
 status: pending
 kind: refactor
 priority: normal
@@ -29,7 +29,8 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-25T14:42:26.883799+00:00'
+  updated_at: '2026-07-25T21:32:56.065513+00:00'
   pinned_commits:
+  - 5edda3284
   - 885608a29
   - 1396cfbb4

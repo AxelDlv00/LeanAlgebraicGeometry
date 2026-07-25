@@ -2,12 +2,10 @@ id: AJC.maintenance.blueprint
 title: Blueprint prose and formalization pins
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Keep the mathematical blueprint timeless and mechanically trustworthy through
-  separate bounded prose, Lean-pin, and print passes. The Weil-divisor substrate is
-  now source-checked, dependency-honest, and explicit about coefficient versus residue-weighted
-  degree; RiemannRoch_Adelic is the next prose target. Project-wide pin debt remains
-  at 43 classified warnings and global print debt at 759 overfull plus 96 missing-glyph
-  notices.
+summary: All eleven bounded prose and truth passes are complete. Remaining blueprint
+  work is the 33 classified unresolved-pin warnings and printable debt at 742 overfull
+  boxes plus 96 missing-glyph notices; the latest settled 619-page build has no unresolved
+  references, citations, or TeX errors.
 status: pending
 kind: blueprint
 priority: normal
@@ -30,7 +28,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
-  updated_at: '2026-07-25T18:52:56.673012+00:00'
+  updated_at: '2026-07-25T21:32:50.118875+00:00'
   pinned_commits:
   - 9dac093df
   - a49bf3c38
