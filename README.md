@@ -51,7 +51,7 @@ The workspace currently registers these projects, in priority order:
 | `Albanese` | Albanese universal property, rigidity, and rational-map-extension infrastructure. |
 | `Cech-Cohomology` | Čech computation of higher direct images and its cohomological substrate. |
 | `GR-Quot-Closure` | Relative Grassmannian and quotient-representability infrastructure. |
-| `MR0555258-Compactifying-Picard` | Formalization work related to compactifying the Picard scheme. |
+| `MR0555258-Compactifying-Picard` | Compactifying the Picard scheme (D'Souza), under `SubProjects/RelatedPapersFormalisation/`. |
 | `Picard-IdentityComponent` | Extracted Picard identity-component and `Pic^0` development. |
 
 These member projects remain useful sources of proved APIs, mathematical designs, and failure

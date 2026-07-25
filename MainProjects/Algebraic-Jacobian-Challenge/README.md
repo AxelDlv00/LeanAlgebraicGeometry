@@ -20,6 +20,8 @@ Serre-finiteness, Quot, Picard, Picard-identity-component, and Albanese cones.
 - [`AlgebraicJacobian/Jacobian.lean`](AlgebraicJacobian/Jacobian.lean): final Jacobian witness
   interface and assembly point.
 - [`blueprint/web/index.html`](blueprint/web/index.html): generated mathematical blueprint.
+- [`analogies/README.md`](analogies/README.md): index to historical design investigations and
+  route comparisons.
 - [`../Algebraic-Jacobian-Challenge-Rebuild/README.md`](../Algebraic-Jacobian-Challenge-Rebuild/README.md):
   the alternative Rebuild route.
 - `horizon roadmap list --focus AJC.jacobian`: current nested completion roadmap.
