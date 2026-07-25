@@ -31,7 +31,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint.prose.remaining
-  updated_at: '2026-07-25T17:37:06.036280+00:00'
+  updated_at: '2026-07-25T17:56:28.954223+00:00'
   pinned_commits:
+  - 782cf8eb9
+  - e5eb2e3c2
   - 322cbb7b9
   - 21eefaf60
