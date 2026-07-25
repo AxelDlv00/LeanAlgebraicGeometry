@@ -23,9 +23,26 @@ the chart dichotomies of `DivSchemeCertZarSwallow.lean` and `relCover_sup` gives
 > **a connected divisor whose adaptation is leak-free at every piece lies inside `V₀` or
 > inside `V₁`.**
 
-That is the satisfiability verdict the lane never obtained.  It is not a statement about
-pieces, adaptations, tubes or fibres: it says the certificate interface can only ever be
-satisfied by divisors confined to one pinned chart of `pi` — a **chart-design** condition.
+That is the verdict the lane never obtained.  It is not a statement about pieces, adaptations,
+tubes or fibres: it says the **assembler route** — every landed producer of `IsCertified` goes
+through the per-piece no-leak clause — can only ever be driven for divisors confined to one
+pinned chart of `pi`, a **chart-design** condition.
+
+Scope, stated precisely so it is not overread.  What is proved here constrains *leak-freeness*,
+which is the hypothesis `hnoLeak` of `isCertified_of_noLeak_kernel_spanning` and of every
+assembler downstream of it.  It does **not** yet constrain `IsCertified` itself, because the
+converse implication
+
+  `(∀ j, Module.Finite R (A.colength j))  →  ∀ j, d.supportLeak (A.pieces j) = ∅`
+
+is **not proved anywhere in this project**: only the three sufficient directions exist
+(`finite_colength_of_supportLeak_eq_empty`, `finite_colength_of_isClosed_supportLocus_inter`,
+`finite_colength_of_isClopen_trace`).  Its expected proof is that a finite `R`-algebra has a
+universally closed spectrum, so the locally closed image `supportLocus ∩ pieces j` of
+`Spec (Γ(pieces j) ⧸ (eqn j))` in the separated `relCurve C R` is closed — real mathlib
+plumbing, not a corollary.  Until it lands, "`IsCertified` is unsatisfiable off the charts" is a
+conjecture; "the assembler route is unavailable off the charts" is a theorem.  Roadmap:
+`…certificate.c1-necessity`.
 
 Nor can a shrink of the base repair it, because base localization does not disconnect the
 divisor: `Spec (R[x]/(x² − t))` over `R = k[t]` is connected over every basic open of
@@ -122,11 +139,13 @@ verdict the certificate lane needed: the chart-0 dichotomy of `DivSchemeCertZarS
 either puts the support in `V₀` outright, or makes it miss `V₀` entirely — and then
 `V₀ ⊔ V₁ = ⊤` (`relCover_sup`) puts it in `V₁`.  No nonemptiness is required.
 
-Consequently the certificate interface `IsCertified` — whose per-piece clause (c1) forces
-leak-freeness — is satisfiable for a connected divisor **only** if that divisor avoids
+Consequently every landed route to `IsCertified` — all of which go through the per-piece
+no-leak clause — is available for a connected divisor **only** if that divisor avoids
 `pi⁻¹(∞)` (so it sits in `V₀`) or avoids `pi⁻¹(0)` (so it sits in `V₁`).  This is a
 condition on the divisor and the chosen `pi`; the adaptation, the support tube, the packet
-idempotents and the base shrink are all irrelevant to it. -/
+idempotents and the base shrink are all irrelevant to it.  Whether `IsCertified` itself (as
+opposed to its only known producers) is likewise constrained needs the unproved converse
+`(c1) → leak-free` discussed in this file's header. -/
 theorem supportLocus_subset_chart_of_isPreconnected
     (hconn : _root_.IsPreconnected d.supportLocus)
     (hleak : ∀ j : A.index, d.supportLeak (A.pieces j) = ∅) :
@@ -145,8 +164,8 @@ theorem supportLocus_subset_chart_of_isPreconnected
   · exact h
 
 /-- **The obstruction.** A connected divisor lying in neither pinned chart — i.e. meeting
-both `pi⁻¹(0)` and `pi⁻¹(∞)` — admits **no** adaptation that is leak-free at every piece,
-hence no certificate, over any base and after any shrink.
+both `pi⁻¹(0)` and `pi⁻¹(∞)` — admits **no** adaptation that is leak-free at every piece, over
+any base and after any shrink; so no landed assembler can certify it.
 
 Model to keep in mind: the degree-two relative divisor `V(t x² + x y + t y²) ⊆ ℙ¹` over
 `k[t]`, whose section ring is a domain (so it is connected over every basic open of

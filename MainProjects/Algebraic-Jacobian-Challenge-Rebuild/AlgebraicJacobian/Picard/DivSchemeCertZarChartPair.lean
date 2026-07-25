@@ -9,9 +9,9 @@ import AlgebraicJacobian.Picard.DivSchemeCertZarConn
 /-!
 # The coarse adaptation: one piece per pinned chart
 
-`DivSchemeCertZarConn.lean` decides which divisors the certificate interface can see at all:
-a connected one must lie inside a single pinned chart.  This file supplies the adaptation to
-use once that holds, and it is the coarsest one possible — **one piece per chart, the chart
+`DivSchemeCertZarConn.lean` decides which divisors the assembler route can reach at all: a
+connected one must lie inside a single pinned chart.  This file supplies the adaptation to use
+once that holds, and it is the coarsest one possible — **one piece per chart, the chart
 itself**.
 
 `FinCoverData` asks for a partition of unity on each pinned chart; taking a single generator

@@ -30,9 +30,12 @@ framing (put the support inside one piece — impossible once the support meets 
 `not_exists_unique_support_piece`) and the refuted separated framing
 (`DivSchemeCertZarSep.lean`) with a single geometric statement about the divisor.
 
-Read positively, it also says where to aim: `supportLocus ∩ V₀` and `supportLocus ∩ V₁`
-closed is not merely necessary, it is *sufficient*, because the two-piece adaptation whose
-pieces are the pinned charts themselves realizes it (`DivSchemeCertZarChartPair.lean`).
+Read positively, it says where to aim, but the converse is **not** the mirror image and this
+file does not claim it: closed chart traces alone do not produce a leak-free adaptation.  What
+does is `DivSchemeCertZarChartPair.lean`, and it needs two further inputs — the support inside
+the chart *overlap* `V₀ ⊓ V₁`, and a chart-principality datum making the two pinned charts
+themselves legal pieces.  Both are recorded there and on the roadmap
+(`…certificate.chart-avoid`, `…certificate.swallow-adapt`).
 
 ## Main declarations
 
