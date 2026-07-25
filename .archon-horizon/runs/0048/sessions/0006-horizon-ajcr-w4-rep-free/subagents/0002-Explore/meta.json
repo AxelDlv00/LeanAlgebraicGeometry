@@ -1,0 +1,11 @@
+{
+  "name": "Explore",
+  "native_subagent_id": "toolu_01QaiNchP6SNZW6CThVPit1u",
+  "parent_session": "0006-horizon-ajcr-w4-rep-free",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}

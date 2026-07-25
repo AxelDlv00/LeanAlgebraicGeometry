@@ -14,7 +14,7 @@ explanation: "The representability has been worked on for a few sessions already
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 priority: normal
-status: running
+status: queued
 write_set:
   files: []
   projects:
@@ -35,7 +35,7 @@ inbox_refs:
 - I-0320
 artifact_refs: []
 created_at: '2026-07-25T06:04:25.679374+00:00'
-updated_at: '2026-07-25T15:28:17.256103+00:00'
+updated_at: '2026-07-25T16:52:42.126446+00:00'
 metadata:
   updated_at: '2026-07-25T06:04:25.679374+00:00'
   author: Axel
