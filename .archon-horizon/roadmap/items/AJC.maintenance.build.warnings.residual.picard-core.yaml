@@ -2,9 +2,10 @@ id: AJC.maintenance.build.warnings.residual.picard-core
 title: Picard core warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Clean-build allocation: 61 warnings, led by GradedHilbertSerre (24) and
-  IdentityComponent (16); includes unused binders, goal-changing show tactics, and
-  expected sorry declarations.'
+summary: A warm full build verifies 56 Picard-core warnings, led by GradedHilbertSerre
+  (24) and IdentityComponent (16). Five missing-rationale warnings in SerreTwist and
+  SerreTwistSections are gone; remaining debt includes unused binders, goal-changing
+  show tactics, and expected sorry declarations.
 status: pending
 kind: refactor
 priority: normal
@@ -27,3 +28,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual
+  updated_at: '2026-07-25T07:25:09.444690+00:00'
+  pinned_commits:
+  - 00b4c44ed

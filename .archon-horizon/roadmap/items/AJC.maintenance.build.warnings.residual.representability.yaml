@@ -2,10 +2,10 @@ id: AJC.maintenance.build.warnings.residual.representability
 title: Representability warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Clean-build allocation: 174 warnings led by GrassmannianZariskiSheaf (49),
-  GrassmannianQuot (32), QuotFunctorDef (19), and FlatteningStratificationUniversal
-  (17). Main classes are goal-changing show, unused simp arguments, long lines, heartbeat
-  comments, and unused section variables.'
+summary: A warm full build verifies 149 representability warnings, led by GrassmannianZariskiSheaf
+  (44), GrassmannianQuot (27), QuotFunctorDef (17), and FlatteningStratificationUniversal
+  (12). Twenty-five missing-rationale heartbeat diagnostics across this stack are
+  eliminated.
 status: pending
 kind: refactor
 priority: normal
@@ -28,3 +28,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual
+  updated_at: '2026-07-25T07:25:10.342658+00:00'
+  pinned_commits:
+  - 00b4c44ed

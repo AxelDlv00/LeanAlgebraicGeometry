@@ -2,11 +2,11 @@ id: AJC.maintenance.build.heartbeats
 title: Heartbeat and recursion-budget audit
 projects:
 - Algebraic-Jacobian-Challenge
-summary: A source audit finds 196 numeric heartbeat or recursion scopes across 45
-  files, including 6 suspect recursion-depth sites. PresheafDualPullback and DualInverse
-  now have timeless declaration-scoped rationales, and the DualInverse override is
-  syntactically scoped to its lemma. An estimated 38 missing-rationale diagnostics
-  remain pending the next recount.
+summary: 'All 38 inherited missing-rationale diagnostics are resolved by declaration-level
+  replay: 31 obsolete scopes were removed and seven required scopes now record the
+  measured timeout. The 8,721-job build emits zero heartbeat-rationale warnings. InvertibleSectionLocalization
+  maxRecDepth fell from 8000 to the sufficient 1000; three SectionGradedRing recursion
+  scopes remain for a separate measured audit.'
 status: pending
 kind: refactor
 priority: normal
@@ -29,8 +29,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-25T04:44:44.410617+00:00'
+  updated_at: '2026-07-25T07:25:04.250808+00:00'
   pinned_commits:
+  - 00b4c44ed
   - afbd88600
   - ce7e4a001
   - e142308c0

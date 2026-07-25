@@ -2,8 +2,9 @@ id: AJC.maintenance.build.warnings.residual.cohomology.remaining
 title: Remaining cohomology warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Clean-build allocation: 43 warnings after separating FlatBaseChange, led
-  by CechHigherDirectImageUnconditional (32) and 11 auxiliary warnings.'
+summary: 'A warm full build verifies 35 remaining cohomology warnings: 27 in CechHigherDirectImageUnconditional
+  and eight auxiliary warnings. The former eight missing-rationale heartbeat diagnostics
+  in Cech and PullbackQuasicoherent are eliminated.'
 status: pending
 kind: refactor
 priority: normal
@@ -26,3 +27,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual.cohomology
+  updated_at: '2026-07-25T07:25:08.571609+00:00'
+  pinned_commits:
+  - 00b4c44ed

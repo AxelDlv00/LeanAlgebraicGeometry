@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.glueTransition_self
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-25T15:02:37'
 ---
 lemma glueTransition_self (k : κ) :
     glueTransition hcpt k k = eqToIso (congrArg
@@ -29,5 +29,3 @@ lemma glueTransition_self (k : κ) :
             (covGD W hW).f k k by
         rw [(covGD W hW).t_id k, Category.id_comp])
       rfl (glueSnd_ι W hW k k))
-
-set_option maxHeartbeats 800000 in

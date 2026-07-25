@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.overResHom_fromGluedHom
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-25T15:02:37'
 ---
 lemma overResHom_fromGluedHom (k : κ) :
     Scheme.overResHom T (W k) ≫ fromGluedHom W hW = glueChartHom W hW k := by
@@ -21,4 +21,3 @@ lemma overResHom_fromGluedHom (k : κ) :
   exact (Scheme.Cover.ι_fromGlued (opensCover T.left W hW) k).symm
 
 set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in

@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.exists_pointRank_le
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-25T15:02:37'
 ---
 theorem exists_pointRank_le [IsNoetherian S] (F : S.Modules)
     [F.IsFinitePresentation] : ∃ N : ℕ, ∀ s : S, pointRank S F s ≤ N := by
@@ -30,5 +30,3 @@ theorem exists_pointRank_le [IsNoetherian S] (F : S.Modules)
         rw [pointRank_eq_chartFiberRank F (V := Vc s) x hxs]
         exact P.fiberRank_le _
     _ ≤ t.sup (fun s => pointRank S F s) := Finset.le_sup hst
-
-set_option maxHeartbeats 800000 in

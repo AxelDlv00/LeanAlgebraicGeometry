@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pushPullObj_coverInter_baseChange_spec
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-25T14:32:45'
 ---
 noncomputable def pushPullObj_coverInter_baseChange_spec
     (h : IsPullback g' f' f g) [IsSeparated f] [IsSeparated f']
@@ -58,9 +58,3 @@ noncomputable def pushPullObj_coverInter_baseChange_spec
         (tilde.functor _).mapIso
           (coverInter_baseChanged_sections_tensor_rewrite f g f' g' h 𝒰 F hF σ).symm) ≪≫
     (pushPullObj_coverInter_baseChanged_pushforward_iso_tilde f g f' g' h 𝒰 F hF σ).symm
-
-end LiteralSpec2
-
--- The long `≪≫`-chains of sheaf-of-modules isos here elaborate through the instance wall
--- slowly; the default heartbeat limit is not enough.
-set_option maxHeartbeats 800000 in

@@ -3,9 +3,9 @@ title: Lean warning reduction
 projects:
 - Algebraic-Jacobian-Challenge
 summary: The controlled clean build certifies 578 warnings across 49 files, down 596
-  from 1,174. Subsequent target cleanups remove 249 more warnings, and a warm whole-project
-  build now verifies exactly 329 warning heads across 40 project files while passing
-  all 8,721 jobs. Residual debt remains partitioned by mathematical area.
+  from 1,174. Subsequent cleanups remove 287 more warnings, and a warm whole-project
+  build now verifies exactly 291 warning heads across 38 files while passing all 8,721
+  jobs. Residual debt remains partitioned by mathematical area.
 status: pending
 kind: refactor
 priority: normal
@@ -28,4 +28,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-25T05:56:34.760898+00:00'
+  updated_at: '2026-07-25T07:25:05.950111+00:00'
+  pinned_commits:
+  - 00b4c44ed
