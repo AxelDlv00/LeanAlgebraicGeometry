@@ -139,6 +139,37 @@ theorem pointwiseSectionVector_fibreAchieverData
   rw [hsec_eq]
   exact ⟨hsec_ne, hach⟩
 
+set_option maxHeartbeats 4800000 in
+-- The pointwise residue-field tower is reconstructed in both input theorems.
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+set_option maxRecDepth 8000 in
+/-- The compared pointwise achiever has zero residual coefficient at the canonical
+residue-fibre point. -/
+theorem pointwiseSectionVector_fibreCoefficient_eq_zero
+    (z : relCurve C RZ)
+    (hzg : relCurveResiduePoint C RZ z ≠
+      genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField)) :
+    let K := (relCurveBasePoint C RZ z).asIdeal.ResidueField
+    let A := pointwiseFibrePoleDivisor C hπ g r₁ r₂ b₁ b₂ i j hO hχ z
+    ∃ hr : divFamPhi C K π (windowM_choice π hπ g)
+        (relThetaPairH1_windowM C π hπ g)
+        (windowCompare RZ K
+          (pointwiseSectionVector C hπ g r₁ r₂ b₁ b₂ i j hO hχ z)) ≠ 0,
+      coeffAt hzg
+          (A + Scheme.divOf (relCurve C K ↘ Spec (CommRingCat.of K))
+            (Units.mk0 (divFamPhi C K π (windowM_choice π hπ g)
+              (relThetaPairH1_windowM C π hπ g)
+              (windowCompare RZ K
+                (pointwiseSectionVector C hπ g r₁ r₂ b₁ b₂ i j hO hχ z))) hr)) = 0 := by
+  dsimp only
+  obtain ⟨hr, hcoeff⟩ := pointwiseSectionVector_fibreAchieverData
+    C hπ g r₁ r₂ b₁ b₂ i j hO hχ z hzg
+  refine ⟨hr, hcoeff.trans ?_⟩
+  simpa only [pointwiseFibrePoleDivisor] using
+    divUniversalSeedFibreDivisor_residual_baseDivisorAt_eq_zero
+      C hπ g r₁ r₂ b₁ b₂ i j hO hχ (relCurveBasePoint C RZ z) hzg
+
 end SeedContext
 
 end PointwiseAchiever
