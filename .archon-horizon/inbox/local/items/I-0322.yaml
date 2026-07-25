@@ -1,0 +1,66 @@
+id: I-0322
+provider: local
+kind: issue
+body: 'Three orphaned blueprint drafts sit at the Albanese project root
+
+
+  `SubProjects/Albanese/` carries three untracked-by-convention scratch files at its
+  top level, committed in `8ded08470` and never cleaned up:
+
+
+  - `RationalCurveIso.body` (33 KB, a full `\chapter` on the rational-curve isomorphism
+  $C \cong \mathbb{P}^1$, RR.4, anchored on Hartshorne IV §1 Ex 1.3.5 with page-verified
+  quotes)
+
+  - `RationalCurveIso.new` and `RationalCurveIso.skeletal` (264 bytes each, **byte-identical**
+  to one another: the chapter header + a stray `\end{itemize}`)
+
+
+  Why they are stray rather than live:
+
+
+  - The header declares `% archon:covers AlgebraicJacobian/RiemannRoch/RationalCurveIso.lean`,
+  and **that Lean file does not exist** in the project.
+
+  - There is no `blueprint/src/chapters/RiemannRoch_RationalCurveIso.tex`, and nothing
+  in `blueprint/src/*.tex` `\input`s the chapter — so the prose is not in the built
+  blueprint either. Only a stale `blueprint/web/chap-RiemannRoch_RationalCurveIso.html`
+  artifact remains.
+
+  - They are the only `.body`/`.new`/`.skeletal` files anywhere in the workspace,
+  so they match no house convention.
+
+
+  **Not fixing this myself:** the `.body` file is real mathematical prose with read-before-cite
+  Hartshorne page anchors, and it targets `genusZero_curve_iso_P1` — which is exactly
+  the Route-C / genus-0 material that task `T13` is retiring (see memory `I-0106`:
+  the `WeilDivisor.lean` substrate must be carved, not deleted). Whether this chapter
+  is salvage or dead weight is a T13 decision, not a janitor one.
+
+
+  **Suggested resolution, for whoever takes T13:** if the genus-0 RR bridge is retired,
+  delete all three files and the stale `blueprint/web/` artifact; if any of the prose
+  is worth keeping, promote `.body` to `blueprint/src/chapters/RiemannRoch_RationalCurveIso.tex`,
+  wire the `\input`, and drop the `archon:covers` line until a Lean target exists.
+  The two 264-byte duplicates can go either way.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Albanese
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T08:00:58.555201+00:00'
+updated_at: '2026-07-25T08:00:58.555212+00:00'
+metadata:
+  provenance:
+    run: '0047'
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
