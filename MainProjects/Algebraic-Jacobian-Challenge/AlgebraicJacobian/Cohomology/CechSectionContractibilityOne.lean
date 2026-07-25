@@ -60,8 +60,8 @@ lemma cechSectionHomotopyZeroAug_eq :
   rfl
 
 set_option maxHeartbeats 1600000 in
--- Identifying the dependent source and target objects is the irreducible augmentation seam:
--- 400k and 800k deterministic budgets time out, while 1.6M is the verified inherited ceiling.
+-- Identifying the dependent source and target objects currently requires this budget:
+-- 400k and 800k deterministic limits time out, while 1.6M is verified.
 set_option maxRecDepth 2000 in
 /-- Evaluation of the opaque bottom composite is ordinary morphism composition. -/
 lemma cechSectionHomotopyZeroAug_apply
