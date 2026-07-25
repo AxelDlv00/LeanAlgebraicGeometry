@@ -413,6 +413,8 @@ import AlgebraicJacobian.Picard.DivRepClassifyZarKit
 import AlgebraicJacobian.Picard.DivRepClassifyZarCompat
 import AlgebraicJacobian.Picard.DivRepClassifyZar
 import AlgebraicJacobian.Picard.DivRepClassifyZarSep
+import AlgebraicJacobian.Picard.DivRepAffKit
+import AlgebraicJacobian.Picard.DivRepAffPullbackReduce
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
 import AlgebraicJacobian.Algebra.ABDepthSES
