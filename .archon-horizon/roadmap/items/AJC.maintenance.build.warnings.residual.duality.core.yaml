@@ -2,10 +2,10 @@ id: AJC.maintenance.build.warnings.residual.duality.core
 title: Core duality warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Clean-build allocation: 137 warnings. The 80 PresheafDualPullback warnings
-  are eliminated; the remaining 57 are isolated in DualInverse, pending a controlled
-  recount.'
-status: pending
+summary: 'The 137-warning core duality allocation is clean: 80 warnings removed from
+  PresheafDualPullback and 57 from DualInverse. Both canonical targets and the required
+  LSP checks pass warning-free.'
+status: done
 kind: refactor
 priority: normal
 depends_on: []
@@ -27,4 +27,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual.duality
-  updated_at: '2026-07-25T04:18:57.261320+00:00'
+  updated_at: '2026-07-25T04:43:54.704570+00:00'
+  pinned_commits:
+  - afbd88600

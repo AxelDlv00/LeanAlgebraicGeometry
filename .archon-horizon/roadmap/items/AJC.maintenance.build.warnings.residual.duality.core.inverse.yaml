@@ -2,10 +2,12 @@ id: AJC.maintenance.build.warnings.residual.duality.core.inverse
 title: Dual inverse warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Clean-build allocation: 57 warnings remain in DualInverse, including long
-  lines, unused simp arguments, goal-changing show tactics, deprecated sheaf projections,
-  and an unscoped heartbeat override.'
-status: pending
+summary: 'Eliminated all 57 clean-build warnings in DualInverse: wrapped long lines,
+  removed linter-certified simp arguments, replaced deprecated sheaf projections,
+  scoped and documented the heartbeat override, and removed obsolete proof journals.
+  LSP is warning-free and the canonical target build passed in 1:06 wall time with
+  7.1 GB peak RSS.'
+status: done
 kind: refactor
 priority: normal
 depends_on: []
@@ -27,3 +29,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual.duality.core
+  updated_at: '2026-07-25T04:43:29.219867+00:00'
+  pinned_commits:
+  - afbd88600
