@@ -116,7 +116,8 @@ establish the Albanese universal property. The structured roadmap command
   - [x] Optimize the Cech capstone and prune its unnecessary import chain.
   - [x] Record controlled-clean and warm full-project build and warning baselines.
   - [ ] Continue bounded blueprint prose and formalization-pin audits.
-  - [ ] Reduce the remaining warning and resource-budget cones, especially Cech cold cost.
+  - [ ] Reduce the remaining warning and resource-budget cones, especially Cech term synthesis,
+    Quot presentation, and umbrella-import debt.
 
 ## Cech-Cohomology  *(✅ complete — deliverable merged sorry-free into AJC ✨ 2026-06-19; standalone fully green + sorry-free — the 16 v4.31-interim `sorry`s were closed and the full build (incl. the `CechToHigherDirectImage` capstone) verified 2026-07-03)*
 
