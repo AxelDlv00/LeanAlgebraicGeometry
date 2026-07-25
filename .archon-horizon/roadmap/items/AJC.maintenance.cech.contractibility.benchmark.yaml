@@ -2,9 +2,11 @@ id: AJC.maintenance.cech.contractibility.benchmark
 title: Controlled contractibility benchmark
 projects:
 - Algebraic-Jacobian-Challenge
-summary: After structural cleanup, run the wrapper build with no competing LSP workers
-  and record wall time, peak memory, and the lowest verified local budgets.
-status: pending
+summary: A controlled module-target run measured the split degree-one module at 15:03.24
+  and 10,138,948 KiB, then the cached wrapper at 10.61s and 3,229,344 KiB. Combined
+  wall time is about 23.5-31.1% below the historical 19:54.57-22:05.97 monolith targets;
+  peak memory is essentially unchanged. This is not a clean-project benchmark.
+status: done
 kind: refactor
 priority: normal
 depends_on: []
@@ -26,3 +28,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.cech.contractibility
+  updated_at: '2026-07-25T01:57:20.049169+00:00'
+  pinned_commits:
+  - ce7e4a001

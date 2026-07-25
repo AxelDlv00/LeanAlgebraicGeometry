@@ -2,11 +2,12 @@ id: AJC.maintenance.build.heartbeats
 title: Heartbeat and recursion-budget audit
 projects:
 - Algebraic-Jacobian-Challenge
-summary: TensorObjInverse, TensorObjSubstrate, and QuotScheme now document every local
-  heartbeat scope; SectionGradedRing documents its remaining 800k scope. The last
-  full-build baseline still reports 58 undocumented overrides elsewhere, so the global
-  count remains unchanged until a clean recount. The structural audit remains open
-  across the project, led by the degree-one Cech contraction and its coinductive packaging.
+summary: A source audit finds 196 numeric heartbeat/recursion scopes across 45 files,
+  including 26 currently undocumented heartbeat sites and 6 suspect recursion-depth
+  sites. The Cech wrapper now has no heartbeat; its isolated degree-one proof retains
+  one documented, measured 1.6M conversion scope after 400k and 800k timed out. The
+  last clean-build baseline still reports 58 undocumented overrides, so the global
+  count remains unchanged pending a clean recount.
 status: pending
 kind: refactor
 priority: normal
@@ -29,8 +30,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-24T22:41:29.954001+00:00'
+  updated_at: '2026-07-25T01:57:24.077957+00:00'
   pinned_commits:
+  - ce7e4a001
   - e142308c0
   - fb29d460b
   - 98353cd99

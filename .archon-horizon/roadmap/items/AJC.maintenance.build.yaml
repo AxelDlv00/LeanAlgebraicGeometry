@@ -2,11 +2,11 @@ id: AJC.maintenance.build
 title: Project-wide build and warning budgets
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The last verified clean project build passes 8,727 jobs with 1,174 warnings.
-  Since that recount, the former top sources TensorObjSubstrate, SectionGradedRing,
-  and QuotScheme have each been made directly warning-free; no global total is inferred
-  without the pending clean recount. CechSectionContractibility remains the main structural
-  elaboration hotspot.
+summary: The last verified clean project build remains 8,727 jobs with 1,174 warnings;
+  no new global total is inferred without the pending recount. The former Cech contractibility
+  monolith is now an isolated 15-minute degree-one module plus a warning-free wrapper
+  that rebuilds in 10.61s from cache, with peak memory essentially unchanged. Project-wide
+  warning, import, and heartbeat work remains open.
 status: pending
 kind: refactor
 priority: normal
@@ -29,8 +29,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
-  updated_at: '2026-07-24T22:41:29.074287+00:00'
+  updated_at: '2026-07-25T01:57:24.908059+00:00'
   pinned_commits:
+  - ce7e4a001
   - fb29d460b
   - e142308c0
   - 98353cd99

@@ -2,11 +2,11 @@ id: AJC.maintenance.cech
 title: Cech elaboration and dependency cleanup
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The Cech consumer closure is complete. Contractibility work is now split
-  into a completed positive-degree coordinate cleanup and three open fronts: the degree-one
-  identity, coinductive packaging, and a controlled wrapper benchmark with lower-budget
-  retesting.'
-status: pending
+summary: 'The Cech maintenance subtree is complete: consumer closure, positive-degree
+  coordinates, the isolated degree-one contraction, lightweight coinductive packaging,
+  and controlled module benchmarks all pass. The expensive proof is now cached in
+  its own module; the wrapper and downstream resolution rebuild in seconds.'
+status: done
 kind: refactor
 priority: high
 depends_on: []
@@ -28,6 +28,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
-  updated_at: '2026-07-24T22:41:30.768634+00:00'
+  updated_at: '2026-07-25T01:57:23.224716+00:00'
   pinned_commits:
+  - ce7e4a001
   - ae9fe71c8

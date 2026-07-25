@@ -2,10 +2,11 @@ id: AJC.maintenance.cech.contractibility.packaging
 title: Coinductive homotopy packaging
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Profile the coinductive Homotopy.mkCoinductive assembly independently from
-  the coordinate proofs, simplify nested degree transports, and retest its local heartbeat
-  and recursion budgets.
-status: pending
+summary: The coinductive wrapper now packages through a local C alias, with no heartbeat
+  or backward-transparency override and maxRecDepth reduced from 8,000 to 2,000. Its
+  module target builds warning-free in 10.61s at 3,229,344 KiB; the downstream augmented
+  resolution target also passes warning-free.
+status: done
 kind: refactor
 priority: normal
 depends_on: []
@@ -27,3 +28,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.cech.contractibility
+  updated_at: '2026-07-25T01:57:18.501000+00:00'
+  pinned_commits:
+  - ce7e4a001

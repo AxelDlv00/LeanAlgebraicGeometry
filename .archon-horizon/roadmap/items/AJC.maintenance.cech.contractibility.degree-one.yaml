@@ -2,10 +2,12 @@ id: AJC.maintenance.cech.contractibility.degree-one
 title: Degree-one contracting identity
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Isolate and profile cechSection_comm_one, whose dependent product coordinates
-  and augmentation seam remain the dominant wrapper proof. Extract reusable coordinate
-  lemmas before retesting its 1.6M heartbeat and 4,000 recursion budgets.
-status: pending
+summary: cechSection_comm_one is isolated in CechSectionContractibilityOne behind
+  named coordinate and opaque composite helpers. Its module target builds warning-free
+  in 15:03.24 at 10,138,948 KiB peak RSS; 400k and 800k deterministic limits time
+  out, so one documented 1.6M scope remains. Local recursion scopes are reduced to
+  2,000.
+status: done
 kind: refactor
 priority: high
 depends_on: []
@@ -27,3 +29,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.cech.contractibility
+  updated_at: '2026-07-25T01:57:16.921165+00:00'
+  pinned_commits:
+  - ce7e4a001
