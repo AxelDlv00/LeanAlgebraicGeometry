@@ -1,0 +1,70 @@
+% source: Robin Hartshorne, "Algebraic Geometry", GTM 52 (1977)
+% pdf_page: 0148
+% doc_page: 131 (Chapter II, Section 6, "Divisors")
+% retrieved: 2026-07-26
+% transcribed_by: codex/gpt-5 (vision, rendered at 200dpi via pdftoppm)
+
+% running head: 6 Divisors / p. 131
+
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\Cl}{Cl}
+
+% [continuation from page-0147.tex]
+
+mined by its valuation (Ex. 4.5). Now let $f \in K^*$ be any nonzero rational
+function on $X$. Then $v_Y(f)$ is an integer. If it is positive, we say $f$
+has a \emph{zero} along $Y$, of that order; if it is negative, we say $f$
+has a \emph{pole} along $Y$, of order $-v_Y(f)$.
+
+\begin{lemma}[6.1]
+Let $X$ satisfy $(*)$, and let $f \in K^*$ be a nonzero function on $X$.
+Then $v_Y(f) = 0$ for all except finitely many prime divisors $Y$.
+\end{lemma}
+
+\begin{proof}
+Let $U = \Spec A$ be an open affine subset of $X$ on which $f$ is regular.
+Then $Z = X - U$ is a proper closed subset of $X$. Since $X$ is noetherian,
+$Z$ can contain at most finitely many prime divisors of $X$; all the others
+must meet $U$. Thus it will be sufficient to show that there are only
+finitely many prime divisors $Y$ of $U$ for which $v_Y(f) \ne 0$. Since $f$
+is regular on $U$, we have $v_Y(f) \ge 0$ in any case. And $v_Y(f) > 0$ if
+and only if $Y$ is contained in the closed subset of $U$ defined by the ideal
+$Af$ in $A$. Since $f \ne 0$, this is a proper closed subset, hence contains
+only finitely many closed irreducible subsets of codimension one of $U$.
+\end{proof}
+
+\begin{definition}
+Let $X$ satisfy $(*)$ and let $f \in K^*$. We define the \emph{divisor of
+$f$}, denoted $(f)$, by
+\[
+  (f) = \sum v_Y(f) \cdot Y,
+\]
+where the sum is taken over all prime divisors of $X$. By the lemma, this is a
+finite sum, hence it is a divisor. Any divisor which is equal to the divisor
+of a function is called a \emph{principal divisor}.
+\end{definition}
+
+Note that if $f,g \in K^*$, then $(f/g) = (f) - (g)$ because of the
+properties of valuations. Therefore sending a function $f$ to its divisor
+$(f)$ gives a homomorphism of the multiplicative group $K^*$ to the additive
+group $\Div X$, and the image, which consists of the principal divisors, is a
+subgroup of $\Div X$.
+
+\begin{definition}
+Let $X$ satisfy $(*)$. Two divisors $D$ and $D'$ are said to be
+\emph{linearly equivalent}, written $D \sim D'$, if $D - D'$ is a principal
+divisor. The group $\Div X$ of all divisors divided by the subgroup of
+principal divisors is called the \emph{divisor class group} of $X$, and is
+denoted by $\Cl X$.
+\end{definition}
+
+The divisor class group of a scheme is a very interesting invariant. In
+general it is not easy to calculate. However, in the following propositions
+and examples we will calculate a number of special cases to give some idea of
+what it is like.
+
+\begin{proposition}[6.2]
+Let $A$ be a noetherian domain. Then $A$ is a unique factorization domain if
+and only if $X = \Spec A$ is normal and $\Cl X = 0$.
+\end{proposition}

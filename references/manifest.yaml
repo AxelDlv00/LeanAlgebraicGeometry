@@ -78,6 +78,8 @@ references:
     files:
       - { path: hartshorne-algebraic-geometry.pdf, format: pdf }
       - { path: hartshorne-algebraic-geometry.md, format: md }
+      - { path: hartshorne-algebraic-geometry/tex/page-0147.tex, format: tex }
+      - { path: hartshorne-algebraic-geometry/tex/page-0148.tex, format: tex }
       - { path: hartshorne-algebraic-geometry/tex/page-0154.tex, format: tex }
       - { path: hartshorne-algebraic-geometry/tex/page-0155.tex, format: tex }
       - { path: hartshorne-algebraic-geometry/tex/page-0242.tex, format: tex }
@@ -86,7 +88,18 @@ references:
     read: >-
       PDF; blueprints cite e.g. II Ex 5.17. NOTE: some blueprints cite the
       stale alias references/hartshorne-ag.md which does not exist -- use
-      hartshorne-algebraic-geometry.md. Pages 242-243 (doc pp. 225-226,
+      hartshorne-algebraic-geometry.md. Pages 147-148 (printed pp. 130-131,
+      page_offset: printed page N -> PDF page N+17) transcribed 2026-07-26
+      via vision from the rendered scans (pdftoppm 200dpi, no OCR): the
+      opening of II.6 "Weil Divisors"; regularity in codimension one and
+      condition (*); prime divisors and Weil divisors as finite integer sums
+      of codimension-one integral closed subschemes; the associated DVR
+      valuations; Lemma II.6.1 proving that v_Y(f) is nonzero for only
+      finitely many prime divisors; principal divisors (f); and linear
+      equivalence with divisor class group Cl X, followed by the statement
+      of Proposition II.6.2. Cite as
+      hartshorne-algebraic-geometry:page-0147,
+      hartshorne-algebraic-geometry:page-0148. Pages 242-243 (doc pp. 225-226,
       Theorem III.5.1 and its proof, "The Cohomology of Projective Space")
       transcribed 2026-07-11 via vision from the rendered scanned pages
       (PyMuPDF render, no OCR): the Cech complex of the standard affine
