@@ -12,9 +12,9 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>FGA representability of the Picard scheme</title>
-<link rel="next" href="chap-Picard_IdentityComponent.html" title="The identity component of the Picard scheme" />
-<link rel="prev" href="chap-Picard_GrassmannianQuot.html" title="The tautological quotient and the universal property of Gr(r,d)" />
+<title>Effective descent: restriction of the glued sheaf to a chart</title>
+<link rel="next" href="chap-Picard_GrassmannianQuot.html" title="The tautological quotient and the universal property of Gr(r,d)" />
+<link rel="prev" href="chap-Picard_GrassmannianCells.html" title="The Grassmannian over Z: affine charts and gluing" />
 <link rel="up" href="index.html" title="AlgebraicJacobian" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
@@ -1136,10 +1136,10 @@
 
   </ul>
  </li>
-<li class="">
+<li class=" active current">
   <a href="chap-Picard_GlueDescent.html"><span class="toc_ref">23</span> <span class="toc_entry">Effective descent: restriction of the glued sheaf to a chart</span></a>
-  <span class="expand-toc">▶</span>
-  <ul class="sub-toc-1">
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
      <li class="">
   <a href="chap-Picard_GlueDescent.html#sec:gd_equalizer"><span class="toc_ref">23.1</span> <span class="toc_entry">The descent equalizer and its overlap base change</span></a>
  </li>
@@ -1220,10 +1220,10 @@
 
   </ul>
  </li>
-<li class=" active current">
+<li class="">
   <a href="chap-Picard_FGAPicRepresentability.html"><span class="toc_ref">25</span> <span class="toc_entry">FGA representability of the Picard scheme</span></a>
-  <span class="expand-toc">▼</span>
-  <ul class="sub-toc-1 active">
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
      <li class="">
   <a href="chap-Picard_FGAPicRepresentability.html#sec:fga_pic_setup"><span class="toc_ref">25.1</span> <span class="toc_entry">Setup and motivation</span></a>
  </li>
@@ -1708,26 +1708,22 @@
 
 
 <div class="main-text">
-<h1 id="chap:Picard_FGAPicRepresentability">25 FGA representability of the Picard scheme</h1>
+<h1 id="chap:Picard_GlueDescent">23 Effective descent: restriction of the glued sheaf to a chart</h1>
 
-<h1 id="sec:fga_pic_setup">25.1 Setup and motivation</h1>
 
-<p>Throughout this chapter, fix a base field \(k\) and a smooth proper geometrically integral curve \(C\) over \(k\) (the curve carrying the Jacobian). The relative Picard presheaf \(\operatorname{Pic}^\sharp _{C/k} : (\operatorname{Sch}/k)^{op} \to \mathrm{Set}\) of <a href="chap-Picard_LineBundlePullback.html">14</a> has already been packaged as a set-valued functor and refined to its abelian-group-valued étale-sheafified version \(\operatorname{Pic}^\sharp _{(C/k)\mathrm{\acute{e}t}}\) in <a href="chap-Picard_RelPicFunctor.html">15</a>. The Quot scheme machinery of <a href="chap-Picard_QuotScheme.html">20</a> supplies the representing engine: for \(C/k\) projective and flat with integral geometric fibers, the Hilbert scheme \(\operatorname {Hilb}_{C/k}\) and its open subscheme \(\mathrm{Div}_{C/k}\) of relative effective divisors are both representable by quasi-projective \(k\)-schemes. Grothendieck’s existence theorem for \(\operatorname{Pic}\) assembles these two ingredients via the Abel map \(\mathrm{Div}_{C/k} \to \operatorname{Pic}^\sharp _{C/k}\) to produce a representing scheme, the <em>Picard scheme</em> \(\operatorname{Pic}_{C/k}\). The present chapter packages this assembly: a line-bundle / Quot correspondence, the FGA representability theorem, and the abelian-group-scheme refinement. </p>
-
-<p><b class="bfseries">Comparison with the sheafified Picard functor.</b> Kleiman §4 represents the étale-sheafified functor \(\operatorname{Pic}_{(C/k)\mathrm{\acute{e}t}}\). This chapter instead works throughout under the standing hypothesis that <em>\(C\) has a \(k\)-rational point</em> (<a href="chap-Picard_FGAPicRepresentability.html#def:has_rational_point">1537</a>) and states representability against the <em>plain</em> relative Picard functor \(\operatorname{Pic}^\sharp _{C/k}\) of <a href="chap-Picard_RelPicFunctor.html#def:rel_pic_sharp">621</a>. This is justified by Kleiman §2, Thm.&#160;2.5 (<span class="ttfamily">th:comp</span>): if \(f : X \to S\) has a section and \(\mathcal O_{S'} = f'_* \mathcal O_{X'}\) holds for all base changes (automatic for our proper geometrically integral curve, by cohomology and base change), then the comparison maps </p>
-<div class="displaymath" id="a0000002224">
-  \[  \operatorname{Pic}_{X/S}(T) \longrightarrow \operatorname{Pic}_{(X/S)\mathrm{\acute{e}t}}(T) \longrightarrow \operatorname{Pic}_{(X/S)\mathrm{fppf}}(T)  \]
+<p>The gluing primitive <a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">1467</a> produces, out of a glue datum \(D\) of schemes (index set \(J\), charts \(U_i\), overlaps \(V_{ij}\), overlap immersions \(f_{ij} : V_{ij} \hookrightarrow U_i\), transition isomorphisms \(t_{ij} : V_{ij} \xrightarrow {\sim } V_{ji}\), glued scheme \(X\) with chart immersions \(\iota _i : U_i \hookrightarrow X\)), a sheaf of \(\mathcal{O}_X\)-modules \(\mathcal{M}\) as the descent equalizer </p>
+<div class="displaymath" id="a0000002087">
+  \[  \mathcal{M} \; =\;  \operatorname {eq}(a, b) \; \hookrightarrow \;  \prod _{i} (\iota _i)_{*}\, \mathcal{M}_i  \]
 </div>
-<p> are bijective for every \(T\). Hence under the rational-point hypothesis the plain relative functor <em>is</em> the étale sheaf, so the rational point allows us to work directly with \(\operatorname{Pic}^\sharp _{C/k}\). Without a section the plain functor is not even a Zariski sheaf in general, so every representability assertion of this chapter carries the rational-point hypothesis. A pointed curve \((C,P)\), as in <a href="chap-AbelJacobi.html">12</a>, supplies such a section. </p>
-<h1 id="sec:fga_pic_line_bundle_quot">25.2 Line bundles and the Quot / Hilbert scheme</h1>
+<p> of two parallel maps into the overlap product. That construction makes \(\mathcal{M}\) but does <em>not</em> yet consume the cocycle conditions (C1)/(C2) on the transition family \((g_{ij})\). This chapter discharges the remaining content of descent: it shows that restricting the glued sheaf back to a chart recovers the input sheaf there. Concretely, the canonical <em>restriction morphism</em> \(\iota _i^{*}\mathcal{M} \to \mathcal{M}_i\) – the adjoint transpose along the chart immersion \(\iota _i\) of the \(i\)-th equalizer projection – is an isomorphism, and it is here that (C1)/(C2) are used. The engine is that pullback along an open immersion is, up to natural isomorphism, the site-level restriction functor (<a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">1099</a>); being a right adjoint it preserves the descent equalizer and the pushforward product, so the chart restriction of \(\mathcal{M}\) is computed factor by factor. The non-formal input is the <em>overlap base change</em> \(\beta _{ij}\), which identifies the restricted pushforward factor \(\iota _i^{*}(\iota _j)_{*}\mathcal{M}_j\) with a pushforward of a restriction of \(\mathcal{M}_j\) to the overlap, using the cartesianness of the chart–overlap square. </p>
+<h1 id="sec:gd_equalizer">23.1 The descent equalizer and its overlap base change</h1>
 
-<p>The bridge from line bundles on \(C \times _k T\) to the Quot scheme is the Abel map: a relative effective divisor \(D \subset C \times _k T\) over \(T\) (a \(T\)-flat closed subscheme whose ideal is invertible) determines a closed subscheme of \(C \times _k T\) flat over \(T\), hence a \(T\)-point of the Hilbert functor \(\operatorname {Hilb}_{C/k}(T)\), which is the special case \(\operatorname {Quot}_{\mathcal{O}_C/C/k}\) of the Quot functor of <a href="chap-Picard_QuotScheme.html">20</a>; and it determines an invertible sheaf \(\mathcal{O}_{C \times _k T}(D)\) on the relative curve, representing a class in \(\operatorname{Pic}^\sharp _{C/k}(T)\). </p>
-<div class="definition_thmwrapper theorem-style-definition" id="def:abel_map_witness">
+<div class="definition_thmwrapper theorem-style-definition" id="def:gr_glue_equalizer">
   <div class="definition_thmheading">
     <span class="definition_thmcaption">
     Definition
     </span>
-    <span class="definition_thmlabel">1530</span>
+    <span class="definition_thmlabel">1434</span>
     <div class="thm_header_extras">
 
     
@@ -1735,10 +1731,7 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:abel_map_witness">#</a>
-    
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002225"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#def:gr_glue_equalizer">#</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -1753,9 +1746,7 @@
         
         <ul class="uses">
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:div_functor_carrier">Definition 1540</a></li>
-          
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:pic_sharp_carrier">Definition 1538</a></li>
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
           
         </ul>
     
@@ -1775,7 +1766,7 @@
         
         <ul class="uses">
           
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.abelMapWitness" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.abelMapWitness</a></li>
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueProd" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueProd</a></li>
           
         </ul>
     
@@ -1786,40 +1777,34 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>[Abel-map witness]    Let \(C/k\) be a smooth proper curve. Define a natural transformation </p>
-<div class="displaymath" id="a0000002226">
-  \[  A^{\mathrm{raw}}_{C/k} \colon \mathrm{Div}_{C/k} \longrightarrow \operatorname{Pic}^\sharp _{C/k}  \]
+  <p>[The pushforward product carrying the descent equalizer]    Let \(D\) be a glue datum and \((\mathcal{M}_i)_{i \in J}\) a family of sheaves of modules with \(\mathcal{M}_i\) on the chart \(U_i\). Write </p>
+<div class="displaymath" id="a0000002088">
+  \[  P \; =\;  \prod _{i} (\iota _i)_{*}\, \mathcal{M}_i \qquad \text{and}\qquad Q \; =\;  \prod _{(i,j)} (f_{ij} \circ \iota _i)_{*}\, \bigl(f_{ij}^{*}\mathcal{M}_i\bigr)  \]
 </div>
-<p> as the composite \( \mathrm{abelKernelNatTrans}(C) \mathbin {;} \mathrm{picNeg}(C) \). </p>
+<p> for the <em>pushforward product</em> and the <em>overlap product</em> of sheaves of \(\mathcal{O}_X\)-modules. The two descent legs of <a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">1467</a>, </p>
+<div class="displaymath" id="a0000002089">
+  \[  P \; \underset {b}{\overset {a}{\rightrightarrows }}\;  Q,  \]
+</div>
+<p> are: on the \((i,j)\)-component, leg \(a\) restricts the \(i\)-th chart factor to the overlap \(V_{ij}\) using the unit of the pullback–pushforward adjunction along \(f_{ij}\) and the pushforward-composition comparison \((\iota _i)_{*} \cong (f_{ij} \circ \iota _i)_{*} \circ f_{ij}^{*}\); leg \(b\) restricts the \(j\)-th chart factor, transports it across the inverse transition isomorphism \(g_{ij}^{-1}\), and reindexes the immersion via the glue condition \((t_{ij} \circ f_{ji}) \circ \iota _j = f_{ij} \circ \iota _i\). The glued sheaf \(\mathcal{M} = \operatorname {eq}(a,b)\) is the equalizer of this parallel pair; \(P\) is the object it embeds into and \(Q\) the object detecting the overlap agreement. The product \(P\) is the carrier on which the \(i\)-th projection (and, through it, the restriction morphism) is defined. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000002225">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
-    </span>
-    <span class="expand-proof">▶</span>
-  </div>
-  <div class="proof_content">
-  <p>The first transformation sends the class represented by \(\langle \mathcal F,q\rangle \) to \([\ker q]\). It is well defined because equivalent divisor families induce isomorphic kernels. It is natural under arbitrary base change because the kernel–pullback comparison is an isomorphism for an epimorphic quotient with finitely presented, base-flat target and invertible kernel. The second transformation is pointwise inversion in the group-valued presheaf \(\operatorname{Pic}^\sharp _{C/k}\). Their composite is therefore natural and sends \(\langle \mathcal F,q\rangle \) to \(-[\ker q]\). </p>
-
-  </div>
-</div>
-<div class="lemma_thmwrapper theorem-style-plain" id="lem:line_bundle_quot_correspondence">
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:glueOverlapBaseChangeIso">
   <div class="lemma_thmheading">
     <span class="lemma_thmcaption">
     Lemma
     </span>
-    <span class="lemma_thmlabel">1531</span>
+    <span class="lemma_thmlabel">1435</span>
     <div class="thm_header_extras">
 
+    
+    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#lem:line_bundle_quot_correspondence">#</a>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">#</a>
     
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002227"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002090"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -1835,15 +1820,11 @@
         
         <ul class="uses">
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:abel_map_witness">Definition 1530</a></li>
+          <li><a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">Lemma 1099</a></li>
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:inst_has_abel_map">Definition 1543</a></li>
+          <li><a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">Lemma 1099</a></li>
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:has_abel_map">Definition 1542</a></li>
-          
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:div_functor_carrier">Definition 1540</a></li>
-          
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:pic_sharp_carrier">Definition 1538</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_overlap_appIso_compat">Lemma 1439</a></li>
           
         </ul>
     
@@ -1863,7 +1844,7 @@
         
         <ul class="uses">
           
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.abelMap_app_mk" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.abelMap_app_mk</a></li>
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueOverlapBaseChangeIso" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueOverlapBaseChangeIso</a></li>
           
         </ul>
     
@@ -1874,19 +1855,15 @@
         </div>
   </div>
   <div class="lemma_thmcontent">
-  <p>[Line bundle / Quot correspondence via the Abel map]    <i class="itshape">Source: [Kleiman], “The Picard scheme”, §3, Thm.&#160;3.7 + Def.&#160;4.6 (cf. [Nitsure], “Construction of Hilbert and Quot Schemes”, §1, where \(\operatorname {Hilb}_{X/S} = \operatorname {Quot}_{\mathcal{O}_X/X/S}\)).</i> Let \(C/k\) be a smooth proper geometrically integral curve. There is a natural transformation of presheaves on \((\operatorname{Sch}/k)^{op}\) </p>
-<div class="displaymath" id="a0000002228">
-  \[  A_{C/k} = \mathrm{abelMap} \; \colon \;  \mathrm{Div}_{C/k} \; \longrightarrow \;  \operatorname{Pic}^\sharp _{C/k}  \]
+  <p>[Overlap base change of the chart square (\(\beta _{ij}\))]    For chart indices \(i, j \in J\) there is a natural isomorphism of functors \(\mathrm{SheafOfModules}(\mathcal{O}_{U_j}) \to \mathrm{SheafOfModules}(\mathcal{O}_{U_i})\), </p>
+<div class="displaymath" id="a0000002091">
+  \[  \beta _{ij} \; :\;  \iota _i^{*}\, (\iota _j)_{*} \; \xrightarrow {\  \sim \  }\;  (f_{ij})_{*}\, (t_{ij} \circ f_{ji})^{*},  \]
 </div>
-<p> (\(\mathrm{Div}_{C/k}\) the relative-divisor functor of <a href="chap-Picard_FGAPicRepresentability.html#def:div_functor_carrier">1540</a>, \(\operatorname{Pic}^\sharp _{C/k}\) the relative Picard functor of <a href="chap-Picard_FGAPicRepresentability.html#def:pic_sharp_carrier">1538</a>), with the following <em>defining property</em>: at a \(T\)-point represented by a family \(\langle \mathcal F, q\rangle \) (<a href="chap-Picard_QuotScheme.html#def:div_family">1147</a>: a finitely presented, \(T\)-flat quotient \(q \colon \mathcal O_{C\times _kT}\twoheadrightarrow \mathcal F\) whose kernel is an invertible ideal sheaf cutting out a relative effective divisor \(D\subseteq C\times _kT\)), </p>
-<div class="displaymath" id="a0000002229">
-  \[  A_{C/k}(T)\bigl(\langle \mathcal F, q\rangle \bigr) \; =\;  -[\ker q] \; =\;  [(\ker q)^{-1}] \; =\;  \bigl[\mathcal{O}_{C \times _k T}(D)\bigr] \; \in \;  \operatorname{Pic}^\sharp _{C/k}(T),  \]
-</div>
-<p> the class of the associated invertible sheaf \(\mathcal{O}_{C \times _k T}(D)\), i.e. the additive inverse of the class of the ideal sheaf \(\ker q\) (Kleiman §3, Def.&#160;dfn:Abel). This transformation is the required witness for \(\mathrm{HasAbelMap}(C)\) (<a href="chap-Picard_FGAPicRepresentability.html#def:has_abel_map">1542</a>). </p>
+<p> identifying, for any sheaf \(\mathcal{N}\) on the chart \(U_j\), the restriction to the chart \(U_i\) of the pushforward \((\iota _j)_{*}\mathcal{N}\) with the pushforward along \(f_{ij}\) of the restriction of \(\mathcal{N}\) to the overlap \(V_{ij}\) along \(t_{ij} \circ f_{ji}\). Here the chart restriction \(\iota _i^{*}\) and the overlap restriction \((t_{ij} \circ f_{ji})^{*}\) are realised as the site-level restriction functors, isomorphic to the geometric pullbacks by <a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">1099</a>. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000002227">
+<div class="proof_wrapper" id="a0000002090">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -1894,50 +1871,44 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p>The instance of <a href="chap-Picard_FGAPicRepresentability.html#def:inst_has_abel_map">1543</a> identifies \(A_{C/k}\) with the witness of <a href="chap-Picard_FGAPicRepresentability.html#def:abel_map_witness">1530</a>. Evaluating its two factors at \(\langle \mathcal F,q\rangle \) first gives the kernel class \([\ker q]\) and then its inverse. Since the kernel is the ideal sheaf of \(D\), its inverse is \(\mathcal O_{C\times _kT}(D)\), which gives the stated formula. </p>
+  <p> The isomorphism is the cartesianness of the chart–overlap square, made site-level. The square </p>
+<div class="displaymath" id="a0000002092">
+  \[  \begin{array}{ccc} V_{ij} &  \xrightarrow {\  t_{ij} \circ f_{ji}\  } &  U_j \\ \  \downarrow {\scriptstyle f_{ij}} & &  \downarrow {\scriptstyle \iota _j} \\ U_i &  \xrightarrow {\  \  \iota _i\  \  } &  X \end{array}  \]
+</div>
+<p> is cartesian, and its cartesianness is visible already on underlying opens: for an open \(V \subseteq U_i\), </p>
+<div class="displaymath" id="a0000002093">
+  \[  \iota _j^{-1}\bigl(\iota _i(V)\bigr) \; =\;  (t_{ij} \circ f_{ji})\bigl(f_{ij}^{-1}(V)\bigr),  \]
+</div>
+<p> a point of \(U_j\) lands in the image of \(V\) under \(\iota _i\) precisely when it comes, via the glue relation, from a point of the overlap lying over \(V\). Hence the two composite opens functors </p>
+<div class="displaymath" id="a0000002094">
+  \[  (\iota _i)_{!} \circ \iota _j^{-1} \; =\;  f_{ij}^{-1} \circ (t_{ij} \circ f_{ji})_{!}  \]
+</div>
+<p> agree on objects, and – morphisms of the opens poset being proof-irrelevant – as functors. Both \(\iota _i^{*}(\iota _j)_{*}\) and \((f_{ij})_{*}(t_{ij}\circ f_{ji})^{*}\) are site-level pushforwards along these two (equal) opens functors, so the comparison is assembled from the pushforward-composition isomorphisms together with the natural isomorphism transporting one opens functor to the other: </p>
+<div class="displaymath" id="a0000002095">
+  \[  \beta _{ij} \; =\;  (\text{pushforwardComp}) \; \circ \;  (\text{pushforward of the opens-functor equality}) \; \circ \;  (\text{pushforwardCongr}) \; \circ \;  (\text{pushforwardComp})^{-1}.  \]
+</div>
+<p> The one substantive coherence to check is that the comparison glued from the object-level opens equality is natural in the open \(V\): on the section level the two restriction maps induced by the equal composite functors coincide because the connecting morphisms are the unique arrows of the opens poset between the identified opens. This is the pointwise compatibility that completes the \(\mathrm{pushforwardCongr}\) factor. </p>
 
   </div>
 </div>
-<div class="remark_thmwrapper theorem-style-definition" id="rem:div_functor_representability">
-  <div class="remark_thmheading">
-    <span class="remark_thmcaption">
-    Remark
+<h1 id="sec:gd_descent">23.2 The restriction morphism and effective descent</h1>
+
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:glueRestrictionHom">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
     </span>
-    <span class="remark_thmlabel">1532</span>
-    <span class="remark_thmtitle">Representability of \(\mathrm{Div}_{C/k}\)</span>
+    <span class="lemma_thmlabel">1436</span>
     <div class="thm_header_extras">
 
+    
+    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#rem:div_functor_representability">#</a>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:glueRestrictionHom">#</a>
     
-    
-    
-        </div>
-  </div>
-  <div class="remark_thmcontent">
-  <p>  Kleiman&#160;§3, Thm.&#160;th:repDiv, shows that \(\mathrm{Div}_{C/k}\) is representable by an open subscheme \(\mathrm{Div}_{C/k} \subseteq \operatorname {Hilb}_{C/k}\) of the Hilbert scheme (\(\operatorname {Hilb}_{C/k} = \operatorname {Quot}_{\mathcal{O}_C/C/k}\), <a href="chap-Picard_QuotScheme.html">20</a>): letting \(W \subseteq C \times _k \operatorname {Hilb}_{C/k}\) be the universal closed subscheme and \(q \colon W \to \operatorname {Hilb}_{C/k}\) the projection, the locus \(V \subseteq W\) where \(W\) is locally an effective Cartier divisor is open, so \(Z := q(W \setminus V)\) is closed (\(q\) proper) and \(\mathrm{Div}_{C/k} := \operatorname {Hilb}_{C/k} \setminus Z\) is the open subscheme representing relative effective divisors. This is the relative-divisor functor appearing in <a href="chap-Picard_FGAPicRepresentability.html#def:div_functor_carrier">1540</a>. </p>
-
-  </div>
-</div>
-<h1 id="sec:fga_pic_representability">25.3 The FGA representability theorem</h1>
-
-<p>We now state and prove the specialisation of Grothendieck’s existence theorem for the Picard scheme, in the specialisation needed for the Jacobian: \(S = \operatorname{Spec}k\), \(X = C\) a smooth proper geometrically integral curve. The general theorem (Kleiman §4, Thm.&#160;4.8) covers any \(X/S\) projective Zariski-locally over \(S\), flat, with integral geometric fibers; we record the general statement and then specialise. </p>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:fga_pic_representability">
-  <div class="theorem_thmheading">
-    <span class="theorem_thmcaption">
-    Theorem
-    </span>
-    <span class="theorem_thmlabel">1533</span>
-    <div class="thm_header_extras">
-
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#thm:fga_pic_representability">#</a>
-    
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002230"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002096"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -1953,23 +1924,13 @@
         
         <ul class="uses">
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#lem:line_bundle_quot_correspondence">Lemma 1531</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glue_equalizer">Definition 1434</a></li>
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#lem:smooth_proper_quotient">Lemma 1534</a></li>
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
           
-          <li><a href="chap-Picard_QuotScheme.html#thm:quot_representable">Theorem 1217</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glue_equalizer">Definition 1434</a></li>
           
-          <li><a href="chap-Picard_RelPicFunctor.html#def:rel_pic_sharp">Definition 621</a></li>
-          
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:has_rational_point">Definition 1537</a></li>
-          
-          <li><a href="chap-Picard_FlatteningStratification.html#cor:flattening_stratification_curve">Corollary 1005</a></li>
-          
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:pic_sharp_representable">Definition 1547</a></li>
-          
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:inst_pic_sharp_representable">Definition 1548</a></li>
-          
-          <li><a href="chap-Cohomology_CechHigherDirectImage.html#lem:cech_flat_base_change">Lemma 480</a></li>
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
           
         </ul>
     
@@ -1989,7 +1950,131 @@
         
         <ul class="uses">
           
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.representable" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.representable</a></li>
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueRestrictionHom" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueRestrictionHom</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>[The chart restriction morphism of the glued sheaf]    Let \(\mathcal{M}\) be the glued sheaf of <a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">1467</a>. The \(i\)-th <em>projection</em> of \(\mathcal{M}\), </p>
+<div class="displaymath" id="a0000002097">
+  \[  \pi _i \; :\;  \mathcal{M} \longrightarrow (\iota _i)_{*}\, \mathcal{M}_i,  \]
+</div>
+<p> is the equalizer inclusion \(\mathcal{M} \hookrightarrow P\) (<a href="chap-Picard_GlueDescent.html#def:gr_glue_equalizer">1434</a>) followed by the \(i\)-th product projection. Its adjoint transpose along the chart immersion \(\iota _i\), under the pullback–pushforward adjunction \(\iota _i^{*} \dashv (\iota _i)_{*}\), is the <em>restriction morphism</em> </p>
+<div class="displaymath" id="a0000002098">
+  \[  \mathrm{r}_i \; :\;  \iota _i^{*}\, \mathcal{M} \longrightarrow \mathcal{M}_i .  \]
+</div>
+<p> Equivalently, \(\mathrm{r}_i\) is the unique morphism whose pushforward, precomposed with the unit, recovers \(\pi _i\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000002096">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> The projection \(\pi _i\) is well-defined by <a href="chap-Picard_GlueDescent.html#def:gr_glue_equalizer">1434</a>: the glued sheaf is the equalizer \(\operatorname {eq}(a,b) \hookrightarrow P\), and composing the inclusion with the \(i\)-th projection of the product \(P = \prod _i (\iota _i)_{*}\mathcal{M}_i\) gives a map to \((\iota _i)_{*}\mathcal{M}_i\). The restriction morphism is then its image under the natural bijection </p>
+<div class="displaymath" id="a0000002099">
+  \[  \operatorname {Hom}_{\mathcal{O}_X}\bigl(\mathcal{M}, (\iota _i)_{*}\mathcal{M}_i\bigr) \; \cong \;  \operatorname {Hom}_{\mathcal{O}_{U_i}}\bigl(\iota _i^{*}\mathcal{M}, \mathcal{M}_i\bigr)  \]
+</div>
+<p> supplied by the adjunction \(\iota _i^{*} \dashv (\iota _i)_{*}\). The stated equivalent description is the unit–counit form of this transpose. </p>
+
+  </div>
+</div>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:isIso_glueRestrictionHom">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">1437</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#thm:isIso_glueRestrictionHom">#</a>
+    
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002100"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:glueRestrictionHom">Lemma 1436</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">Lemma 1435</a></li>
+          
+          <li><a href="chap-Picard_QuotScheme.html#lem:isLimitPullbackCone_mathlib">Lemma 1095</a></li>
+          
+          <li><a href="chap-Picard_QuotScheme.html#lem:eq_of_locally_eq_mathlib">Lemma 1096</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueRestrictionInv">Definition 1454</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueRestrict_hom_ext">Lemma 1457</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueChartComponent_self_counit">Lemma 1459</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueRestrictionHom_glueChartComponent">Lemma 1463</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueRestrictionInv_proj">Lemma 1456</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:glueRestrictionHom">Lemma 1436</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">Lemma 1435</a></li>
+          
+          <li><a href="chap-Picard_QuotScheme.html#lem:isLimitPullbackCone_mathlib">Lemma 1095</a></li>
+          
+          <li><a href="chap-Picard_QuotScheme.html#lem:eq_of_locally_eq_mathlib">Lemma 1096</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueRestrictionInv">Definition 1454</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueRestrict_hom_ext">Lemma 1457</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueChartComponent_self_counit">Lemma 1459</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueRestrictionHom_glueChartComponent">Lemma 1463</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueRestrictionInv_proj">Lemma 1456</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.isIso_glueRestrictionHom" class="lean_decl">AlgebraicGeometry.Scheme.Modules.isIso_glueRestrictionHom</a></li>
           
         </ul>
     
@@ -2000,11 +2085,11 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>[FGA representability of the Picard scheme]    <i class="itshape">Source: [Kleiman], “The Picard scheme”, §4, Main Thm.&#160;4.8 + Cor.&#160;4.18.3.</i> Let \(k\) be a field and \(C\) a smooth proper geometrically integral curve over \(k\) <em>with a \(k\)-rational point</em> (<a href="chap-Picard_FGAPicRepresentability.html#def:has_rational_point">1537</a>). Then the relative Picard functor \(\operatorname{Pic}^\sharp _{C/k}\) of <a href="chap-Picard_RelPicFunctor.html#def:rel_pic_sharp">621</a> — which under the rational-point hypothesis coincides with its étale sheafification \(\operatorname{Pic}_{(C/k)\mathrm{\acute{e}t}}\), by Kleiman §2, Thm.&#160;2.5 — is representable by a \(k\)-scheme \(\operatorname{Pic}_{C/k}\), separated and locally of finite type over \(k\), which is a disjoint union of open quasi-projective \(k\)-subschemes, each an increasing union of open quasi-projective subschemes. The scheme \(\operatorname{Pic}_{C/k}\) is called the <em>Picard scheme</em> of \(C/k\). </p>
+  <p>[Effective descent: the chart restriction morphism is an isomorphism]    Assume the transition family \((g_{ij})\) satisfies the cocycle conditions (C1) and (C2) of <a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">1467</a>. Then for every chart index \(i\) the restriction morphism \(\mathrm{r}_i : \iota _i^{*}\mathcal{M} \to \mathcal{M}_i\) (<a href="chap-Picard_GlueDescent.html#lem:glueRestrictionHom">1436</a>) is an isomorphism of sheaves of \(\mathcal{O}_{U_i}\)-modules. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000002230">
+<div class="proof_wrapper" id="a0000002100">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2012,32 +2097,93 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p>We follow Kleiman&#160;§4, Thm.&#160;4.8, specialised to \(S = \operatorname{Spec}k\) and \(X = C\). The proof proceeds in four conceptual steps, preceded by a comparison step; the underlying algebraic engine is the Quot scheme of <a href="chap-Picard_QuotScheme.html">20</a> and the relative Picard functor of <a href="chap-Picard_RelPicFunctor.html">15</a>, together with the line-bundle / Quot correspondence of <a href="chap-Picard_FGAPicRepresentability.html#lem:line_bundle_quot_correspondence">1531</a>. </p>
-<p><em>Step 0: reduce to the étale sheaf via the rational point.</em> By Kleiman §2, Thm.&#160;2.5, since \(C \to \operatorname{Spec}k\) has a section (<a href="chap-Picard_FGAPicRepresentability.html#def:has_rational_point">1537</a>) and \(\mathcal O_T = \pi _{T*} \mathcal O_{C \times _k T}\) holds for every \(k\)-scheme \(T\) (cohomology and base change for the proper geometrically integral fibers of \(C\times _k T/T\)), the comparison map \(\operatorname{Pic}^\sharp _{C/k}(T) \to \operatorname{Pic}_{(C/k)\mathrm{\acute{e}t}}(T)\) is bijective for all \(T\). It therefore suffices to represent the étale sheaf \(\operatorname{Pic}_{(C/k)\mathrm{\acute{e}t}}\), which is what Kleiman’s theorem produces; the same scheme then represents \(\operatorname{Pic}^\sharp _{C/k}\). </p>
-<p><em>Step 1: stratify by Hilbert polynomial.</em> For each polynomial \(\phi \in \mathbb {Q}[n]\), let \(P^\phi \subseteq \operatorname{Pic}^\sharp _{(C/k)\mathrm{\acute{e}t}}\) be the étale subsheaf whose \(T\)-points are represented by invertible sheaves \(\mathcal{L}\) on \(C \times _k T\) with \(\chi (C_t, \mathcal{L}_t^{-1}(n)) = \phi (n)\) for all \(t \in T\) (the Hilbert polynomial relative to the chosen polarisation \(\mathcal{O}_C(1)\) on the projective curve \(C\)). The \(P^\phi \) form a disjoint open cover of \(\operatorname{Pic}^\sharp _{(C/k)\mathrm{\acute{e}t}}\) (openness via Kleiman’s flat-base-change argument, <a href="chap-Cohomology_CechHigherDirectImage.html#lem:cech_flat_base_change">480</a> / Stacks Tag 02KH; cf. EGA III 7.9.11). It suffices to represent each \(P^\phi \) by an increasing union of open quasi-projective \(k\)-schemes. </p>
-<p><em>Step 2: bound twists by \(m\)-regularity.</em> Given \(\phi \), fix \(m\) large enough that the \(T\)-points of \(P^\phi \) are representable by \(\mathcal{L}\) on \(C \times _k T\) satisfying \(R^i \pi _{T*} \mathcal{L}(n) = 0\) for all \(i \ge 1\), \(n \ge m\). Twisting by \(\mathcal{O}_C(m)\) defines an automorphism of \(\operatorname{Pic}^\sharp _{(C/k)\mathrm{\acute{e}t}}\) that carries \(P^\phi \) to \(P^{\phi _0}_0\) for \(\phi _0(n) := \phi (m + n)\). Hence it suffices to represent each \(P^{\phi _0}_0\) by a quasi-projective \(k\)-scheme. </p>
-<p><em>Step 3: factor through the Abel map.</em> Consider the Abel map \(A_{C/k} : \mathrm{Div}_{C/k} \to \operatorname{Pic}^\sharp _{(C/k)\mathrm{\acute{e}t}}\) of <a href="chap-Picard_FGAPicRepresentability.html#lem:line_bundle_quot_correspondence">1531</a>. The source \(\mathrm{Div}_{C/k}\) is representable by an open subscheme of \(\operatorname {Hilb}_{C/k}\) (and hence by an open subscheme of the Quot scheme of <a href="chap-Picard_QuotScheme.html#thm:quot_representable">1217</a>), and is quasi-projective over \(k\). Pulling back along \(P^{\phi _0}_0 \hookrightarrow \operatorname{Pic}^\sharp _{(C/k)\mathrm{\acute{e}t}}\) yields an open subscheme \(Z := P^{\phi _0}_0 \times _{\operatorname{Pic}^\sharp _{(C/k)\mathrm{\acute{e}t}}} \mathrm{Div}_{C/k}\) of \(\mathrm{Div}_{C/k}\), which is again quasi-projective. The projection \(\alpha : Z \to P^{\phi _0}_0\) is a surjection of étale sheaves: given a \(T\)-point \(\lambda \) of \(P^{\phi _0}_0\) represented by an étale cover \(T' \to T\) and an invertible sheaf \(\mathcal{L}'\) on \(C \times _k T'\) with \(H^1(C_{t'}, \mathcal{L}'_{t'}) = 0\), the projective bundle \(\mathbb {P}(\mathcal{Q}) \to T'\) associated to \(\mathcal{Q} := \pi _{T'*}\mathcal{L}'\) is smooth over \(T'\); an étale cover \(T_1 \to T'\) admits a \(T'\)-map \(T_1 \to \mathbb {P}(\mathcal{Q})\) (EGA IV 17.16.3 (ii)) whose composition with the universal divisor map \(\mathbb {P}(\mathcal{Q}) \to Z\) produces the required \(T_1\)-point of \(Z\). Moreover, the first projection \(Z \times _{P^{\phi _0}_0} Z \to Z\) is smooth and proper. </p>
-<p><em>Step 4: descend by the smooth-proper quotient lemma.</em> Apply Kleiman&#160;§4, Lem.&#160;4.9: given a surjection \(\alpha : Z \to P\) of étale sheaves with \(Z\) quasi-projective, \(R := Z \times _P Z\) representable, and the first projection \(R \to Z\) smooth and proper, \(P\) is representable by a quasi-projective scheme. In our case \(P = P^{\phi _0}_0\), \(Z\) and \(R\) as above, so \(P^{\phi _0}_0\) is quasi-projective. Reassembling over \(\phi \in \mathbb {Q}[n]\) and over \(m\), the disjoint union of representable \(P^\phi \) pieces represents \(\operatorname{Pic}^\sharp _{(C/k)\mathrm{\acute{e}t}}\). The total scheme is separated (as a disjoint union of separated quasi-projectives) and locally of finite type. This is Kleiman&#160;§4, Cor.&#160;4.18.3 in the \(S = \operatorname{Spec}k\), \(X = C\) complete case. </p>
+  <p> The chart pullback \(\iota _i^{*}\) is naturally isomorphic to the site-level restriction functor (<a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">1099</a>), which is a right adjoint; consequently \(\iota _i^{*}\) <em>preserves limits</em>. Applying it to the descent equalizer \(\mathcal{M} = \operatorname {eq}(a,b)\) exhibits \(\iota _i^{*}\mathcal{M}\) as the equalizer of the restricted legs \(\iota _i^{*}a, \iota _i^{*}b\), and applying it to the product \(P = \prod _j (\iota _j)_{*}\mathcal{M}_j\) exhibits \(\iota _i^{*}P\) as the product \(\prod _j \iota _i^{*}(\iota _j)_{*}\mathcal{M}_j\). The overlap base change \(\beta _{ij}\) of <a href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">1435</a> then identifies the \(j\)-th factor \(\iota _i^{*}(\iota _j)_{*}\mathcal{M}_j\) with \((f_{ij})_{*}\bigl((t_{ij} \circ f_{ji})^{*}\mathcal{M}_j\bigr)\). Under these identifications the restricted descent data becomes the data attached to the chart \(U_i\) by the cover \(\{ f_{ij}\} \) of \(U_i\), and the \(i\)-th factor (where \(j = i\)) is, by (C1), \(\mathcal{M}_i\) itself. </p>
+<p>We produce an inverse \(\mathrm{s}_i : \mathcal{M}_i \to \iota _i^{*}\mathcal{M}\). Because \(\iota _i^{*}\mathcal{M}\) is the equalizer of the restricted legs, it suffices to give a morphism \(\mathcal{M}_i \to \iota _i^{*}P\) – equivalently a compatible family of morphisms into the factors – that equalizes \(\iota _i^{*}a\) and \(\iota _i^{*}b\). The \(j\)-th component is </p>
+<div class="displaymath" id="a0000002101">
+  \[  \mathcal{M}_i \xrightarrow {\  \eta _{f_{ij}}\  } (f_{ij})_{*}\, f_{ij}^{*}\mathcal{M}_i \xrightarrow {\  (f_{ij})_{*} g_{ij}\  } (f_{ij})_{*}\, (t_{ij} \circ f_{ji})^{*}\mathcal{M}_j \xrightarrow {\  \beta _{ij}^{-1}\  } \iota _i^{*}(\iota _j)_{*}\mathcal{M}_j ,  \]
+</div>
+<p> the unit of the pullback–pushforward adjunction along \(f_{ij}\), followed by the pushforward of the transition isomorphism \(g_{ij}\), followed by the inverse of the overlap base change. That this family equalizes the two restricted legs is exactly the triple-overlap multiplicativity (C2), transported through \(\beta \); and the composite \(\mathrm{r}_i \circ \mathrm{s}_i = \mathrm{id}_{\mathcal{M}_i}\) reduces, via the \(j = i\) component, to the self-identity (C1) together with the counit triangle identity of the adjunction. The reverse composite \(\mathrm{s}_i \circ \mathrm{r}_i = \mathrm{id}\) holds because both sides are equalizer maps with the same components into \(P\); two such agree once their factors agree, which is the separatedness of the sheaf equalizer over the chart cover. The limit computation underlying these equalities is the sheaf Mayer–Vietoris pullback square (<a href="chap-Picard_QuotScheme.html#lem:isLimitPullbackCone_mathlib">1095</a>), and the final identification of sections is the uniqueness-over-a-cover principle (<a href="chap-Picard_QuotScheme.html#lem:eq_of_locally_eq_mathlib">1096</a>). Hence \(\mathrm{r}_i\) is an isomorphism. </p>
 
   </div>
 </div>
-<h2 id="subsec:fga_pic_qt">25.3.1 The smooth-proper quotient lemma</h2>
+<h1 id="sec:gd_inverse">23.3 Construction of the inverse: the descent obligations</h1>
 
-<p>The structural lemma underlying step 4 above is recorded separately because it is the abstract content allowing descent from \(Z = \mathrm{Div}^{\phi _0}_0\) to the representing Picard piece. </p>
-<div class="lemma_thmwrapper theorem-style-plain" id="lem:smooth_proper_quotient">
+<p>This section records, as sublemmas of <a href="chap-Picard_GlueDescent.html#thm:isIso_glueRestrictionHom">1437</a>, the internal machinery of the proof: the structure-sheaf compatibilities feeding the overlap base change \(\beta _{ij}\), the bridges between the geometric and the site-level pullback–pushforward adjunctions, the explicit construction of the candidate inverse \(\mathrm{s}_i\) as an equalizer lift, and the three obligations that consume the cocycle conditions (C1)/(C2). Every block carries a one-to-one Lean declaration. </p>
+<h2 id="a0000000118">23.3.1 Section-level compatibilities of the overlap square</h2>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_appLE_congr_mor">
   <div class="lemma_thmheading">
     <span class="lemma_thmcaption">
     Lemma
     </span>
-    <span class="lemma_thmlabel">1534</span>
+    <span class="lemma_thmlabel">1438</span>
     <div class="thm_header_extras">
 
+    
+    ✓
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#lem:smooth_proper_quotient">#</a>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_appLE_congr_mor">#</a>
     
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002231"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002102"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.appLE_congr_mor" class="lean_decl">AlgebraicGeometry.Scheme.Modules.appLE_congr_mor</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>[Transport of \(\mathrm{appLE}\) along equal morphisms]   Let \(f, g : A \to B\) be morphisms of schemes with \(f = g\), let \(U\) be an open of \(B\) and \(W\) an open of \(A\) with \(W \subseteq f^{-1}(U)\) (equivalently \(W \subseteq g^{-1}(U)\)). Then the two induced section maps \(\Gamma (B, U) \to \Gamma (A, W)\) along \(f\) and along \(g\) coincide: \(f^{\mathrm{LE}}_{U,W} = g^{\mathrm{LE}}_{U,W}\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000002102">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Substituting the equality \(f = g\) reduces both sides to the same map; the two open-inclusion witnesses \(W \subseteq f^{-1}(U)\) and \(W \subseteq g^{-1}(U)\) are proof-irrelevant. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_overlap_appIso_compat">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">1439</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_overlap_appIso_compat">#</a>
+    
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002103"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2053,7 +2199,13 @@
         
         <ul class="uses">
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:has_smooth_proper_quotient">Definition 1544</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_appLE_congr_mor">Lemma 1438</a></li>
+          
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_appLE_congr_mor">Lemma 1438</a></li>
+          
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
           
         </ul>
     
@@ -2073,7 +2225,7 @@
         
         <ul class="uses">
           
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.smoothProperQuotient" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.smoothProperQuotient</a></li>
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueData_overlap_appIso_compat" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueData_overlap_appIso_compat</a></li>
           
         </ul>
     
@@ -2084,22 +2236,907 @@
         </div>
   </div>
   <div class="lemma_thmcontent">
-  <p>[Smooth-proper quotient of étale sheaves]    <i class="itshape">Source: [Kleiman], “The Picard scheme”, §4, Lem.&#160;4.9.</i> Let \(\alpha : Z \to P\) be a morphism of étale sheaves on \((\operatorname{Sch}/k)\). Set \(R := Z \times _P Z\). Suppose: </p>
+  <p>[Structure-sheaf compatibility of the chart–overlap square]    For chart indices \(i, j\) and an open \(V \subseteq U_i\), the two composite section maps </p>
+<div class="displaymath" id="a0000002104">
+  \[  \Gamma (U_i, V)\; \longrightarrow \;  \Gamma \bigl(U_j,\  (t_{ij}\circ f_{ji})\bigl(f_{ij}^{-1}(V)\bigr)\bigr)  \]
+</div>
+<p> of the chart–overlap square agree. The first goes “through the glued scheme”: the inverse of the comparison isomorphism of \(\iota _i\) on \(V\), the section map of \(\iota _j\) over \(\iota _i(V)\), and the restriction along the opens identity \(\iota _j^{-1}(\iota _i(V)) = (t_{ij}\circ f_{ji})(f_{ij}^{-1}(V))\). The second goes “through the overlap”: the section map of \(f_{ij}\) over \(V\) followed by the inverse comparison isomorphism of \(t_{ij}\circ f_{ji}\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000002103">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> Both composites are \(\mathrm{appLE}\)s of the two composite morphisms of the square, which are equal by the glue condition \((t_{ij}\circ f_{ji})\circ \iota _j = f_{ij}\circ \iota _i\) of <a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">1467</a>. Moving the two comparison isomorphisms to \(\mathrm{appLE}\) form (using \(\mathrm{appIso}\) as an \(\mathrm{appLE}\), the composition law \(g^{\mathrm{LE}}\circ f^{\mathrm{LE}} = (f\circ g)^{\mathrm{LE}}\), and the absorption of presheaf restrictions into the open-inclusion witness) reduces the claim to the equality of the two \(\mathrm{appLE}\)s of the equal composites, which is <a href="chap-Picard_GlueDescent.html#lem:gr_appLE_congr_mor">1438</a>. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_overlapBaseChange_inv_app">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">1440</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_overlapBaseChange_inv_app">#</a>
+    
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002105"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">Lemma 1435</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">Lemma 1435</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueOverlapBaseChangeIso_inv_app_app" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueOverlapBaseChangeIso_inv_app_app</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>[Sections of the overlap base change, inverse side]    For a sheaf \(\mathcal{N}\) on \(U_j\) and an open \(V \subseteq U_i\), the inverse of the overlap base change \(\beta _{ij}^{-1}\), evaluated on sections over \(V\), is the restriction map of \(\mathcal{N}\) along the opens identity \(\iota _j^{-1}(\iota _i(V)) = (t_{ij}\circ f_{ji})(f_{ij}^{-1}(V))\) of <a href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">1435</a>: </p>
+<div class="displaymath" id="a0000002106">
+  \[  (\beta _{ij}^{-1})_{\mathcal{N}}\big|_V \; =\;  \mathcal{N}\! \left(\, (t_{ij}\circ f_{ji})(f_{ij}^{-1}V) \; =\;  \iota _j^{-1}(\iota _i V)\, \right).  \]
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000002105">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> Each of the four functorial factors of \(\beta _{ij}\) (<a href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">1435</a>) acts on sections over \(V\) either as the identity or as a single presheaf restriction along the opens identity; composing them leaves exactly the named restriction map. The verification is pointwise on sections. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_overlapBaseChange_hom_app">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">1441</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_overlapBaseChange_hom_app">#</a>
+    
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002107"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">Lemma 1435</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">Lemma 1435</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueOverlapBaseChangeIso_hom_app_app" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueOverlapBaseChangeIso_hom_app_app</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>[Sections of the overlap base change, forward side]    Symmetrically, the forward overlap base change \(\beta _{ij}\), evaluated on sections over an open \(V \subseteq U_i\), is the restriction map of \(\mathcal{N}\) along the reverse opens identity \(\iota _j^{-1}(\iota _i(V)) = (t_{ij}\circ f_{ji})(f_{ij}^{-1}(V))\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000002107">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> Identical to <a href="chap-Picard_GlueDescent.html#lem:gr_overlapBaseChange_inv_app">1440</a> with the roles of source and target opens exchanged: pointwise on sections, the composite of the four factors is the single presheaf restriction along the (reversed) opens identity. </p>
+
+  </div>
+</div>
+<h2 id="a0000000119">23.3.2 Bridges between the geometric and the site-level adjunction</h2>
+<p>The chart pullback \(\iota ^{*}\) is built by sheafification and carries the <em>geometric</em> adjunction \(\iota ^{*} \dashv \iota _{*}\); along an open immersion the <em>site-level</em> restriction functor \(\iota ^{\mathrm{res}}\) carries a second adjunction with concrete unit and counit. They share the right adjoint \(\iota _{*}\), and <a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">1099</a> is the uniqueness comparison of left adjoints between them. The next blocks transport units, counits and congruence casts across that comparison, so that the descent obligations can be discharged by section-level computations. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_restrictAdjunction_unit_iso">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">1442</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_restrictAdjunction_unit_iso">#</a>
+    
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002108"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">Lemma 1099</a></li>
+          
+          <li><a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">Lemma 1099</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.restrictAdjunction_unit_app_iso" class="lean_decl">AlgebraicGeometry.Scheme.Modules.restrictAdjunction_unit_app_iso</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>[Unit comparison across the adjunctions]    For an open immersion \(f\) and a sheaf \(\mathcal{N}\) on the target, the geometric unit is the site-level unit followed by the pushforward of the left-adjoint comparison isomorphism: </p>
+<div class="displaymath" id="a0000002109">
+  \[  \eta ^{\mathrm{res}}_{\mathcal{N}}\  \circ  f_{*}\bigl((\text{comparison})_{\mathcal{N}}\bigr) \; =\;  \eta ^{\mathrm{geo}}_{\mathcal{N}}.  \]
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000002108">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> This is the general identity relating the unit of an adjunction to the unit of any other adjunction with the same right adjoint, transported by the uniqueness isomorphism of left adjoints (<a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">1099</a>). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_restrictIsoPullback_counit">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">1443</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_restrictIsoPullback_counit">#</a>
+    
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002110"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">Lemma 1099</a></li>
+          
+          <li><a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">Lemma 1099</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback_hom_app_counit" class="lean_decl">AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback_hom_app_counit</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>[Counit comparison across the adjunctions]    Dually, the left-adjoint comparison isomorphism on \(f_{*}\mathcal{N}\) followed by the geometric counit equals the site-level counit: </p>
+<div class="displaymath" id="a0000002111">
+  \[  (\text{comparison})_{f_{*}\mathcal{N}}\  \circ \  \varepsilon ^{\mathrm{geo}}_{\mathcal{N}} \; =\;  \varepsilon ^{\mathrm{res}}_{\mathcal{N}}.  \]
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000002110">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> The dual of <a href="chap-Picard_GlueDescent.html#lem:gr_restrictAdjunction_unit_iso">1442</a>: the counit of one adjunction is conjugated to the counit of the other by the uniqueness comparison of left adjoints. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_pullbackCongr_hom_eqToHom">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">1444</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_pullbackCongr_hom_eqToHom">#</a>
+    
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002112"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.pullbackCongr_hom_app_eqToHom" class="lean_decl">AlgebraicGeometry.Scheme.Modules.pullbackCongr_hom_app_eqToHom</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>[Congruence cast at the pullback level]   For equal morphisms \(\varphi = \psi : X \to Y\) and a sheaf \(\mathcal{N}\) on \(Y\), the congruence isomorphism \(\varphi ^{*}\mathcal{N} \cong \psi ^{*}\mathcal{N}\) induced by \(\varphi = \psi \) is the canonical transport (the \(\mathrm{eqToHom}\) of the object-level equality \(\varphi ^{*}\mathcal{N} = \psi ^{*}\mathcal{N}\)). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000002112">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Substituting \(\varphi = \psi \) reduces the congruence cast to the identity, which is the canonical transport of a reflexivity. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_restrictFunctorCongr_rfl">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">1445</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_restrictFunctorCongr_rfl">#</a>
+    
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002113"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.restrictFunctorCongr_rfl_hom_app" class="lean_decl">AlgebraicGeometry.Scheme.Modules.restrictFunctorCongr_rfl_hom_app</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>[Trivial site-level congruence cast]   For an open immersion \(\varphi \) the site-level congruence cast associated to the reflexivity \(\varphi = \varphi \) is the identity natural transformation. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000002113">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Pointwise on sections the cast is the presheaf restriction along a self-equality of opens, which is the identity by functoriality. </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_restrictIsoPullback_congr">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">1446</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_restrictIsoPullback_congr">#</a>
+    
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002114"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_pullbackCongr_hom_eqToHom">Lemma 1444</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_restrictFunctorCongr_rfl">Lemma 1445</a></li>
+          
+          <li><a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">Lemma 1099</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_pullbackCongr_hom_eqToHom">Lemma 1444</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_restrictFunctorCongr_rfl">Lemma 1445</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback_congr" class="lean_decl">AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback_congr</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>[Comparison intertwines the two congruence casts]    For equal open immersions \(\varphi = \psi : X \to Y\) the left-adjoint comparison isomorphism intertwines the site-level and the pullback-level congruence casts: </p>
+<div class="displaymath" id="a0000002115">
+  \[  (\text{comparison}_\varphi )_{\mathcal{N}}\  \circ  (\varphi ^{*}\! =\psi ^{*})_{\mathcal{N}} \; =\;  (\varphi ^{\mathrm{res}}\! =\psi ^{\mathrm{res}})_{\mathcal{N}}\  \circ  (\text{comparison}_\psi )_{\mathcal{N}}.  \]
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000002114">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> Substituting \(\varphi = \psi \) collapses both congruence casts to identities (<a href="chap-Picard_GlueDescent.html#lem:gr_pullbackCongr_hom_eqToHom">1444</a>, <a href="chap-Picard_GlueDescent.html#lem:gr_restrictFunctorCongr_rfl">1445</a>), and the two comparison isomorphisms then coincide. </p>
+
+  </div>
+</div>
+<h2 id="a0000000120">23.3.3 The candidate inverse</h2>
+<div class="definition_thmwrapper theorem-style-definition" id="def:gr_glueOverlapFactorIso">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">1447</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#def:gr_glueOverlapFactorIso">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">Lemma 1435</a></li>
+          
+          <li><a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">Lemma 1099</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueOverlapFactorIso" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueOverlapFactorIso</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>[Overlap base change in pullback form]    Conjugating the overlap base change \(\beta _{ij}\) (<a href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">1435</a>) on both sides by the comparison <a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">1099</a> between the site-level restriction and the geometric pullback yields the isomorphism, in geometric form, </p>
+<div class="displaymath" id="a0000002116">
+  \[  \gamma _{ij} \; :\;  \iota _i^{*}\bigl((\iota _j)_{*}\, \mathcal{M}_j\bigr) \; \xrightarrow {\  \sim \  }\;  (f_{ij})_{*}\bigl((t_{ij}\circ f_{ji})^{*}\, \mathcal{M}_j\bigr),  \]
+</div>
+<p> evaluated at the input sheaf \(\mathcal{M}_j\). </p>
+
+  </div>
+</div>
+<div class="definition_thmwrapper theorem-style-definition" id="def:gr_glueChartComponent">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">1448</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#def:gr_glueChartComponent">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueOverlapFactorIso">Definition 1447</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueChartComponent" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueChartComponent</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>[The \(j\)-th component of the candidate inverse]    Given the transition isomorphisms \(g_{ij} : f_{ij}^{*}\mathcal{M}_i \xrightarrow {\sim } (t_{ij}\circ f_{ji})^{*}\mathcal{M}_j\), the \(j\)-th component of the candidate inverse \(\mathrm{s}_i\) is the composite </p>
+<div class="displaymath" id="a0000002117">
+  \[  \mathcal{M}_i \xrightarrow {\  \eta _{f_{ij}}\  } (f_{ij})_{*}\, f_{ij}^{*}\mathcal{M}_i \xrightarrow {\  (f_{ij})_{*}g_{ij}\  } (f_{ij})_{*}\, (t_{ij}\circ f_{ji})^{*}\mathcal{M}_j \xrightarrow {\  \gamma _{ij}^{-1}\  } \iota _i^{*}\bigl((\iota _j)_{*}\mathcal{M}_j\bigr),  \]
+</div>
+<p> i.e. the geometric unit along \(f_{ij}\), the pushforward of the transition \(g_{ij}\), and the inverse of \(\gamma _{ij}\) (<a href="chap-Picard_GlueDescent.html#def:gr_glueOverlapFactorIso">1447</a>). </p>
+
+  </div>
+</div>
+<div class="definition_thmwrapper theorem-style-definition" id="def:gr_glueChartFamily">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">1449</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#def:gr_glueChartFamily">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueChartComponent">Definition 1448</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glue_equalizer">Definition 1434</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueChartFamily" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueChartFamily</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>[The candidate-inverse family]    Assembling the components <a href="chap-Picard_GlueDescent.html#def:gr_glueChartComponent">1448</a> through the product-preservation comparison of \(\iota _i^{*}\) on the pushforward product \(P = \prod _j (\iota _j)_{*}\mathcal{M}_j\) (<a href="chap-Picard_GlueDescent.html#def:gr_glue_equalizer">1434</a>) gives a single morphism </p>
+<div class="displaymath" id="a0000002118">
+  \[  \mathcal{M}_i \; \longrightarrow \;  \iota _i^{*}P,  \]
+</div>
+<p> the candidate inverse before it is corrected to land in the equalizer \(\iota _i^{*}\mathcal{M}\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_glueChartFamily_pullback_map_pi">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">1450</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_glueChartFamily_pullback_map_pi">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueChartComponent">Definition 1448</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueChartFamily">Definition 1449</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueChartFamily_pullback_map_π" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueChartFamily_pullback_map_π</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>[The candidate family recovers each chart component]    For chart indices \(i,j\), composing the candidate family with the pullback of the \(j\)-th product projection recovers its \(j\)-th component: </p>
+<div class="displaymath" id="a0000002119">
+  \[  \mathrm{s}_i^{\mathrm{fam}}\circ \iota _i^*(\pi _j)=\mathrm{s}_i^{(j)}.  \]
+</div>
+<p> This is the component formula for the product-preservation comparison used to define <a href="chap-Picard_GlueDescent.html#def:gr_glueChartFamily">1449</a>. </p>
+
+  </div>
+</div>
+<h2 id="a0000000121">23.3.4 The triple-overlap toolkit</h2>
+<p>The first descent obligation (<a href="chap-Picard_GlueDescent.html#lem:gr_glueChartFamily_equalizes">1453</a>) reduces, factor by factor of the restricted overlap product, to a single equation over a <em>triple overlap</em>. This subsection records that machinery. Fix three chart indices \(i, p, q\) and form the triple overlap </p>
+<div class="displaymath" id="a0000002120">
+  \[  V_{ipq} \; =\;  V_{ip} \times _{U_i} V_{iq},  \]
+</div>
+<p> with first projection \(\mathrm{fst} : V_{ipq} \to V_{ip}\). Two morphisms out of \(V_{ipq}\) organise everything: the <em>chart leg</em> \(q_{pq} = \mathrm{fst}\circ f_{ip} : V_{ipq} \to U_i\) (down to \(U_i\)), and the <em>transport leg</em> \(\tau = t'_{ipq}\circ \mathrm{fst}_{pq} : V_{ipq} \to V_{pq}\) (across to the pair overlap, through the cocycle transport \(t'_{ipq}\)). The square </p>
+<div class="displaymath" id="a0000002121">
+  \[  \begin{array}{ccc} V_{ipq} &  \xrightarrow {\  \  \tau \  \  } &  V_{pq} \\ \  \downarrow {\scriptstyle q_{pq}} & &  \downarrow {\scriptstyle f_{pq}\circ \iota _p} \\ U_i &  \xrightarrow {\  \  \iota _i\  \  } &  X \end{array}  \]
+</div>
+<p> is the triple analogue of the chart–overlap square of <a href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">1435</a>. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_glueData_bridges">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">1451</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_glueData_bridges">#</a>
+    
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002122"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueData_bridge_src" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueData_bridge_src</a></li>
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueData_bridge_mid" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueData_bridge_mid</a></li>
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueData_bridge_tgt" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueData_bridge_tgt</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  
+<p>[Triple-overlap bridges of the glue datum]   On the triple overlap \(V_{ijk} = V_{ij}\times _{U_i} V_{ik}\) the following three identities of morphisms hold, lining up the endpoints of the three base-change transports of the cocycle equation (C2): </p>
 <ol class="enumerate">
-  <li><p>\(\alpha \) is a surjection of étale sheaves; </p>
+  <li><p><em>(source)</em> the two projections of \(V_{ijk}\) to \(V_{ij}\) and \(V_{ik}\), followed by the overlap immersions \(f_{ij}\) and \(f_{ik}\) into \(U_i\), agree; </p>
 </li>
-  <li><p>\(Z\) is representable by a quasi-projective \(k\)-scheme; </p>
+  <li><p><em>(middle)</em> the \(ij\)-transport’s target leg \((t_{ij}\circ f_{ji})\) and the \(jk\)-transport’s source leg (through the cocycle transport \(t'_{ijk}\) and \(f_{jk}\)) agree as morphisms to \(U_j\); </p>
 </li>
-  <li><p>\(R\) is representable by a \(k\)-scheme; </p>
-</li>
-  <li><p>the first projection \(R \to Z\) is representable by a smooth and proper map. </p>
+  <li><p><em>(target)</em> the composite \(jk\)-after-\(ij\) transport’s target leg \((t_{jk}\circ f_{kj})\) and the \(ik\)-transport’s target leg \((t_{ik}\circ f_{ki})\) agree as morphisms to \(U_k\). </p>
 </li>
 </ol>
-<p> Then \(P\) is representable by a quasi-projective \(k\)-scheme, and \(\alpha \) is representable by a smooth map. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000002231">
+<div class="proof_wrapper" id="a0000002122">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2107,22 +3144,16 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p>By (ii) the structure map \(Z \to \operatorname{Spec}k\) is quasi-projective, hence separated, so the first projection \(Z \times _k Z \to Z\) is separated. By (iv) the first projection \(R \to Z\) is proper; it factors through \(h : R \to Z \times _k Z\) over the diagonal embedding (the second component is the second projection of \(R \to Z \times _P Z\)). The map \(h\) is therefore proper, and a monomorphism (because \(R\) is the graph of an equivalence relation on \(Z\), hence injective on \(T\)-points). By EGA IV 8.11.5, a proper monomorphism is a closed immersion: \(h\) is a closed embedding. </p>
-<p>Hence \(R \hookrightarrow Z \times _k Z\) is a flat (by (iv)) and proper equivalence relation on the quasi-projective \(k\)-scheme \(Z\). By the theory of flat-and-proper effective equivalence relations on quasi-projective schemes (Altman–Kleiman; the construction places the graph \(R \subseteq Z \times _k Z\) inside the universal subscheme of the Hilbert scheme \(\operatorname {Hilb}_{Z/k}\) and descends to a closed subscheme \(Q \subseteq \operatorname {Hilb}_{Z/k}\) representing the quotient), there exist a quasi-projective \(k\)-scheme \(Q\) and a faithfully flat, projective map \(Z \to Q\) with \(R = Z \times _Q Z\). </p>
-<p>The map \(Z \to Q\) is flat and proper; its fibers, up to field extension, coincide with those of \(R \to Z\), which are smooth by hypothesis. Hence \(Z \to Q\) is smooth. </p>
-<p>Finally, \(Z \to Q\) is a surjection of étale sheaves (an étale cover of any \(T\)-point of \(Q\) pulls back to a \(T'\)-point of \(Z\), by EGA IV 17.16.3 (ii) applied to \(Z \times _Q T \to T\)). In the category of étale sheaves, both \(Q\) and \(P\) are coequalisers of the pair \(R \rightrightarrows Z\); the coequaliser is unique up to unique isomorphism, so \(Q\) represents \(P\). Smoothness of \(\alpha : Z \to P\) is the smoothness of \(Z \to Q\) just shown. </p>
+  <p>The source identity is the universal property (pullback condition) of \(V_{ijk}\). The middle identity follows from the transition factorisation \(t'_{ijk}\) in the glue datum together with the pullback condition. The target identity – the heart of the cocycle – combines the same transition factorisation, the pullback condition, the involutivity \(t_{ik}\circ t_{ki}=\mathrm{id}\) and the cocycle condition of the glue datum. </p>
 
   </div>
 </div>
-<h1 id="sec:fga_pic_group_structure">25.4 Group-scheme structure</h1>
-
-<p>The Picard scheme \(\operatorname{Pic}_{C/k}\) inherits an abelian group structure from the tensor product of invertible sheaves on \(C \times _k T\). The relative Picard presheaf \(T \mapsto \operatorname{Pic}(C \times _k T)/H_T\) is already an abelian group at every \(T\) (the quotient of an abelian group by a subgroup), functorially in \(T\); this lifts to the étale sheafification, and then to a group-scheme structure on the representing scheme by Yoneda. </p>
-<div class="theorem_thmwrapper theorem-style-plain" id="thm:pic_is_group_scheme">
-  <div class="theorem_thmheading">
-    <span class="theorem_thmcaption">
-    Theorem
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_glueChartComponent_leg_compat">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
     </span>
-    <span class="theorem_thmlabel">1535</span>
+    <span class="lemma_thmlabel">1452</span>
     <div class="thm_header_extras">
 
     
@@ -2130,10 +3161,7 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#thm:pic_is_group_scheme">#</a>
-    
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002232"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_glueChartComponent_leg_compat">#</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -2148,13 +3176,11 @@
         
         <ul class="uses">
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#thm:fga_pic_representability">Theorem 1533</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueChartComponent">Definition 1448</a></li>
           
-          <li><a href="chap-Picard_LineBundlePullback.html#thm:relative_pic_quotient_well_defined">Theorem 604</a></li>
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:pic_scheme">Definition 1536</a></li>
-          
-          <li><a href="chap-Picard_RelPicFunctor.html#def:rel_pic_sharp">Definition 621</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueData_bridges">Lemma 1451</a></li>
           
         </ul>
     
@@ -2174,7 +3200,7 @@
         
         <ul class="uses">
           
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.groupSchemeStructure" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.groupSchemeStructure</a></li>
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueChartComponent_leg_compat" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueChartComponent_leg_compat</a></li>
           
         </ul>
     
@@ -2184,34 +3210,18 @@
     
         </div>
   </div>
-  <div class="theorem_thmcontent">
-  <p>[\(\operatorname{Pic}_{C/k}\) is a \(k\)-group scheme]    </p>
-<p><i class="itshape">Source: [Kleiman], “The Picard scheme”, §2, Def.&#160;2.2 + §4, Def.&#160;4.1 (the Picard scheme).</i> Let \(\operatorname{Pic}_{C/k}\) be the Picard scheme of <a href="chap-Picard_FGAPicRepresentability.html#thm:fga_pic_representability">1533</a>. Then \(\operatorname{Pic}_{C/k}\) is canonically an abelian group scheme over \(k\): the tensor product \([\mathcal{L}] + [\mathcal{M}] := [\mathcal{L} \otimes \mathcal{M}]\) and inverse \(-[\mathcal{L}] := [\mathcal{L}^{-1}]\) on \(\operatorname{Pic}^\sharp _{C/k}(T)\) (well defined because both operations preserve isomorphism classes and descend through the subgroup \(H_T = \pi _T^*\operatorname{Pic}(T)\) of <a href="chap-Picard_LineBundlePullback.html#thm:relative_pic_quotient_well_defined">604</a>) are natural in \(T\), hence by Yoneda are represented by morphisms \(m : \operatorname{Pic}_{C/k} \times _k \operatorname{Pic}_{C/k} \to \operatorname{Pic}_{C/k}\), \(i : \operatorname{Pic}_{C/k} \to \operatorname{Pic}_{C/k}\), and \(e : \operatorname{Spec}k \to \operatorname{Pic}_{C/k}\) (the trivial line bundle class) satisfying the abelian-group axioms. In particular, \(\operatorname{Pic}_{C/k}\) is a \(k\)-group scheme locally of finite type. </p>
+  <div class="lemma_thmcontent">
+  <p>[Pair component of the equalizing condition]    For chart indices \(i,p,q\), the \(p\)-th candidate component followed by the restricted first descent-leg factor equals the \(q\)-th candidate component followed by the restricted second descent-leg factor. After transposing to the triple overlap \(V_{ipq}\), this is precisely the cocycle multiplicativity condition (C2), with the endpoint identifications supplied by <a href="chap-Picard_GlueDescent.html#lem:gr_glueData_bridges">1451</a>. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000002232">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
+<h2 id="a0000000122">23.3.5 The first descent obligation</h2>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_glueChartFamily_equalizes">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
     </span>
-    <span class="expand-proof">▶</span>
-  </div>
-  <div class="proof_content">
-  <p>The relative Picard functor \(\operatorname{Pic}^\sharp _{C/k}\) of <a href="chap-Picard_RelPicFunctor.html#def:rel_pic_sharp">621</a> is abelian-group valued, with sum \([\mathcal{L}] + [\mathcal{M}] = [\mathcal{L} \otimes \mathcal{M}]\), inverse \(-[\mathcal{L}] = [\mathcal{L}^{-1}]\), and unit \(0 = [\mathcal{O}_{C \times _k T}]\); these operations descend through the quotient by \(H_T = \pi _T^*\operatorname{Pic}(T)\) because \(\pi _T^*\) is itself a group homomorphism (<a href="chap-Picard_TensorObjSubstrate.html#thm:rel_pic_addcommgroup_via_tensorobj">691</a>). </p>
-<p>By <a href="chap-Picard_FGAPicRepresentability.html#thm:fga_pic_representability">1533</a>, \(\operatorname{Pic}^\sharp _{C/k}\) is represented by the scheme \(\operatorname{Pic}_{C/k}\). The Yoneda embedding is fully faithful and preserves limits, so a representing object of a group-valued presheaf is canonically a group object: the natural transformations \(\operatorname{Pic}^\sharp _{C/k} \times \operatorname{Pic}^\sharp _{C/k} \to \operatorname{Pic}^\sharp _{C/k}\) (multiplication), \(\operatorname{Pic}^\sharp _{C/k} \to \operatorname{Pic}^\sharp _{C/k}\) (inverse), and the unit map \(h_{\operatorname{Spec}k} \to \operatorname{Pic}^\sharp _{C/k}\) pick out unique morphisms of representing schemes \(m\), \(i\), \(e\) as displayed, and the abelian-group axioms hold at the level of \(T\)-points functorially in \(T\), hence on the representing scheme. The local-finite-type property is part of <a href="chap-Picard_FGAPicRepresentability.html#thm:fga_pic_representability">1533</a>. </p>
-
-  </div>
-</div>
-<h1 id="sec:fga_pic_named_definition">25.5 The Picard scheme</h1>
-
-<p>The two preceding theorems determine the following named scheme. </p>
-<div class="definition_thmwrapper theorem-style-definition" id="def:pic_scheme">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
-    </span>
-    <span class="definition_thmlabel">1536</span>
+    <span class="lemma_thmlabel">1453</span>
     <div class="thm_header_extras">
 
     
@@ -2219,7 +3229,10 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:pic_scheme">#</a>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_glueChartFamily_equalizes">#</a>
+    
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002123"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
     
     
     <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
@@ -2234,9 +3247,25 @@
         
         <ul class="uses">
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:has_pic_scheme">Definition 1545</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueChartFamily">Definition 1449</a></li>
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:inst_has_pic_scheme">Definition 1546</a></li>
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueData_bridges">Lemma 1451</a></li>
+          
+          <li><a href="chap-Picard_GrassmannianQuot.html#lem:modules_pullback_basechange_transport">Lemma 1466</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_overlap_appIso_compat">Lemma 1439</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueChartComponent_self_counit">Lemma 1459</a></li>
+          
+          <li><a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">Lemma 1099</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueChartFamily">Definition 1449</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueChartFamily_pullback_map_pi">Lemma 1450</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueChartComponent_leg_compat">Lemma 1452</a></li>
           
         </ul>
     
@@ -2256,7 +3285,7 @@
         
         <ul class="uses">
           
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme</a></li>
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueChartFamily_equalizes" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueChartFamily_equalizes</a></li>
           
         </ul>
     
@@ -2266,45 +3295,33 @@
     
         </div>
   </div>
-  <div class="definition_thmcontent">
-  <p>[The Picard scheme]    </p>
-<p><i class="itshape">Source: [Kleiman], “The Picard scheme”, §4, Def.&#160;4.1.</i> Let \(C/k\) be a smooth proper geometrically integral curve over a field \(k\), with a \(k\)-rational point. The <em>Picard scheme</em> \(\operatorname{Pic}_{C/k}\) is the \(k\)-scheme representing the relative Picard functor \(\operatorname{Pic}^\sharp _{C/k}\) (equivalently, by Kleiman §2 Thm.&#160;2.5 under the rational point, its étale sheafification), supplied by <a href="chap-Picard_FGAPicRepresentability.html#thm:fga_pic_representability">1533</a>, equipped with the abelian-group-scheme structure of <a href="chap-Picard_FGAPicRepresentability.html#thm:pic_is_group_scheme">1535</a>. The scheme is separated, locally of finite type over \(k\), and a disjoint union of open quasi-projective \(k\)-subschemes. </p>
+  <div class="lemma_thmcontent">
+  <p>[The candidate-inverse family equalizes the restricted legs (C2 transported)]    The family <a href="chap-Picard_GlueDescent.html#def:gr_glueChartFamily">1449</a> equalizes the two restricted descent legs \(\iota _i^{*}a\) and \(\iota _i^{*}b\); equivalently, it lands in the restricted equalizer \(\iota _i^{*}\mathcal{M}\). This is the first descent obligation, where the triple-overlap multiplicativity (C2) of <a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">1467</a> is consumed. </p>
 
   </div>
 </div>
-<h1 id="sec:fga_pic_lean_encoding">25.6 Construction interfaces</h1>
-
-<p>The constructions above fit together through the following interfaces. The relative Picard presheaf is obtained from the quotient of invertible sheaves on \(C\times _kT\) by pullbacks from \(T\), and its set-valued version is used when applying representability. The relative-divisor functor is the specialisation of the effective Cartier-divisor functor to \(C\to \operatorname {Spec}k\). A divisor family \(\langle \mathcal F,q\rangle \) is sent by the Abel map to the inverse class of its kernel: </p>
-<div class="displaymath" id="a0000002233">
-  \[  \langle \mathcal F,q\rangle \longmapsto -[\ker q].  \]
+<div class="proof_wrapper" id="a0000002123">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> It suffices to check equality after projecting to each factor \((p,q)\) of the restricted overlap product, through the product-preservation comparison of \(\iota _i^{*}\) (the same comparison discipline as <a href="chap-Picard_GlueDescent.html#lem:gr_glueRestrict_proj_compat">1455</a>). Folding each restricted leg against the \((p,q)\)-projection – splitting off the \(p\)- and \(q\)-th chart projections and cancelling the comparison via <a href="chap-Picard_GlueDescent.html#lem:gr_glueChartFamily_pullback_map_pi">1450</a> – turns the \((p,q)\)-component into the equation </p>
+<div class="displaymath" id="a0000002124">
+  \[  \mathrm{s}_i^{(p)}\  \circ \  \iota _i^{*}\bigl(a_{(p,q)}\bigr) \; =\;  \mathrm{s}_i^{(q)}\  \circ \  \iota _i^{*}\bigl(b_{(p,q)}\bigr),  \]
 </div>
-<p> The FGA theorem applies Hilbert-polynomial stratification, a regularity bound, the Abel-map factorisation, and the smooth-proper quotient lemma. Tensor product and dualisation of line bundles then induce addition and inversion on the representing scheme. </p>
-<ul class="itemize">
-  <li><p>The Picard scheme <a href="chap-Picard_FGAPicRepresentability.html#def:pic_scheme">1536</a> is selected by the existence assertion <a href="chap-Picard_FGAPicRepresentability.html#def:has_pic_scheme">1545</a>. </p>
-</li>
-  <li><p>The functor <a href="chap-Picard_FGAPicRepresentability.html#def:pic_sharp_carrier">1538</a> is the set-valued form of the relative Picard presheaf of <a href="chap-Picard_RelPicFunctor.html">15</a>. </p>
-</li>
-  <li><p>The Abel map of <a href="chap-Picard_FGAPicRepresentability.html#lem:line_bundle_quot_correspondence">1531</a> is the natural transformation \(\mathrm{Div}_{C/k} \to \operatorname{Pic}^\sharp _{C/k}\) sending a relative divisor family \(\langle \mathcal F, q\rangle \) to \(-[\ker q]\), the class of its associated invertible sheaf. </p>
-</li>
-  <li><p>The Altman–Kleiman lemma <a href="chap-Picard_FGAPicRepresentability.html#lem:smooth_proper_quotient">1534</a> gives descent of a flat-and-proper equivalence relation \(R \subseteq Z \times _k Z\) on a quasi-projective \(k\)-scheme \(Z\) to a quasi-projective quotient \(Q\) representing the coequalising sheaf. </p>
-</li>
-  <li><p>The theorem <a href="chap-Picard_FGAPicRepresentability.html#thm:fga_pic_representability">1533</a> supplies the representing scheme. </p>
-</li>
-  <li><p>Yoneda transport of the abelian-group structure on \(\operatorname{Pic}^\sharp _{C/k}\) gives the group-scheme structure of <a href="chap-Picard_FGAPicRepresentability.html#thm:pic_is_group_scheme">1535</a>. </p>
-</li>
-</ul>
-<p>The effective-quotient theorem for flat and proper equivalence relations on quasi-projective schemes is recorded as <a href="chap-Picard_FGAPicRepresentability.html#lem:smooth_proper_quotient">1534</a>. All other interfaces are supplied by the relative Picard, divisor, and Quot constructions. </p>
-<h1 id="sec:fga_pic_typeclass_scaffolding">25.7 Auxiliary existence predicates</h1>
+<p> which is precisely the pair-component obligation <a href="chap-Picard_GlueDescent.html#lem:gr_glueChartComponent_leg_compat">1452</a>, where the triple-overlap multiplicativity (C2) is consumed. Assembling these componentwise equalities back through the comparison gives the equalizing condition. </p>
 
-<p>The public constructions use a small collection of existence predicates. Each predicate records one mathematical object or property needed by the preceding representability argument, and the associated definitions select the object when the predicate is inhabited. </p>
-<h2 id="subsec:fga_pic_functor_carriers">25.7.1 Basic functors</h2>
-
-<div class="definition_thmwrapper theorem-style-definition" id="def:has_rational_point">
+  </div>
+</div>
+<div class="definition_thmwrapper theorem-style-definition" id="def:gr_glueRestrictionInv">
   <div class="definition_thmheading">
     <span class="definition_thmcaption">
     Definition
     </span>
-    <span class="definition_thmlabel">1537</span>
+    <span class="definition_thmlabel">1454</span>
     <div class="thm_header_extras">
 
     
@@ -2312,11 +3329,30 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:has_rational_point">#</a>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#def:gr_glueRestrictionInv">#</a>
     
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002234"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
     
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueChartFamily">Definition 1449</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueChartFamily_equalizes">Lemma 1453</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
     
     
     <button class="modal lean">L∃∀N</button>
@@ -2330,7 +3366,7 @@
         
         <ul class="uses">
           
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.HasRationalPoint" class="lean_decl">AlgebraicGeometry.Scheme.HasRationalPoint</a></li>
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueRestrictionInv" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueRestrictionInv</a></li>
           
         </ul>
     
@@ -2341,28 +3377,20 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>[\(k\)-rational point]   The predicate \(\mathrm{HasRationalPoint}(C)\) asserts that the structural morphism \(C \to \operatorname{Spec}k\) admits a section \(\sigma : \operatorname{Spec}k \to C\), i.e. that \(C\) has a \(k\)-rational point. This is the standing hypothesis of the chapter (see <a href="chap-Picard_FGAPicRepresentability.html#sec:fga_pic_setup">25.1</a>): by Kleiman §2, Thm.&#160;2.5, it makes the plain relative Picard functor \(\operatorname{Pic}^\sharp _{C/k}\) coincide with its étale (and fppf) sheafification, so representability can be stated against <a href="chap-Picard_RelPicFunctor.html#def:rel_pic_sharp">621</a> directly. For a pointed curve \((C,P)\), the pointing \(P\) supplies this section. </p>
+  <p>[The candidate inverse \(\mathrm{s}_i\)]    Because \(\iota _i^{*}\) preserves the descent equalizer, the equalizing family <a href="chap-Picard_GlueDescent.html#def:gr_glueChartFamily">1449</a> (equalizing by <a href="chap-Picard_GlueDescent.html#lem:gr_glueChartFamily_equalizes">1453</a>) lifts uniquely to a morphism </p>
+<div class="displaymath" id="a0000002125">
+  \[  \mathrm{s}_i \; :\;  \mathcal{M}_i \; \longrightarrow \;  \iota _i^{*}\mathcal{M},  \]
+</div>
+<p> the candidate inverse of the chart restriction morphism. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000002234">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_glueRestrict_proj_compat">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
     </span>
-    <span class="expand-proof">▶</span>
-  </div>
-  <div class="proof_content">
-  <p>This is a definition. </p>
-
-  </div>
-</div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:pic_sharp_carrier">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
-    </span>
-    <span class="definition_thmlabel">1538</span>
+    <span class="lemma_thmlabel">1455</span>
     <div class="thm_header_extras">
 
     
@@ -2370,9 +3398,9 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:pic_sharp_carrier">#</a>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_glueRestrict_proj_compat">#</a>
     
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002235"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002126"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2388,9 +3416,11 @@
         
         <ul class="uses">
           
-          <li><a href="chap-Picard_RelPicFunctor.html#def:rel_pic_sharp">Definition 621</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glue_equalizer">Definition 1434</a></li>
           
-          <li><a href="chap-Picard_RelPicFunctor.html#def:rel_pic_sharp">Definition 621</a></li>
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glue_equalizer">Definition 1434</a></li>
           
         </ul>
     
@@ -2410,7 +3440,7 @@
         
         <ul class="uses">
           
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.picSharp" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.picSharp</a></li>
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueRestrict_proj_compat" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueRestrict_proj_compat</a></li>
           
         </ul>
     
@@ -2420,16 +3450,12 @@
     
         </div>
   </div>
-  <div class="definition_thmcontent">
-  <p>[Set-valued relative Picard functor]    The set-valued shadow \(\operatorname{Pic}^\sharp _{C/k} : (\operatorname{Sch}/k)^{op} \to \mathrm{Set}\) of the group-valued relative Picard presheaf of <a href="chap-Picard_RelPicFunctor.html#def:rel_pic_sharp">621</a> (composition with the forgetful functor \(\mathrm{Ab}\to \mathrm{Set}\)). </p>
-<p>A representing object therefore carries natural bijections </p>
-<div class="displaymath" id="a0000002236">
-  \[  (T \to \operatorname{Pic}_{C/k}) \simeq \operatorname{Pic}(C \times _k T)/\pi _T^*\operatorname{Pic}(T).  \]
-</div>
+  <div class="lemma_thmcontent">
+  <p>[Comparison compatibility of the restricted projection]    Through the equalizer- and product-preservation comparisons of \(\iota _i^{*}\), the restricted equalizer inclusion of \(\iota _i^{*}\mathcal{M}\) into \(\iota _i^{*}P\) followed by the \(j\)-th product projection equals the chart pullback \(\iota _i^{*}(\pi _j)\) of the \(j\)-th descent-equalizer projection (<a href="chap-Picard_GlueDescent.html#def:gr_glue_equalizer">1434</a>). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000002235">
+<div class="proof_wrapper" id="a0000002126">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2437,72 +3463,16 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Immediate from <a href="chap-Picard_RelPicFunctor.html#def:rel_pic_sharp">621</a>: apply the forgetful functor to the group-valued presheaf. </p>
+  <p> Pure limit bookkeeping: the equalizer- and product-comparison isomorphisms associated to a limit-preserving functor send the restricted inclusion and the restricted projection to the pullbacks of the inclusion and the projection respectively, and the composite of pullbacks is the pullback of the composite, which is \(\iota _i^{*}(\pi _j)\). </p>
 
   </div>
 </div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:has_div_functor">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_glueRestrictionInv_proj">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
     </span>
-    <span class="definition_thmlabel">1539</span>
-    <div class="thm_header_extras">
-
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:has_div_functor">#</a>
-    
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002237"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.HasDivFunctor" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.HasDivFunctor</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="definition_thmcontent">
-  <p>[Existence of the relative-divisor functor]   The predicate \(\mathrm{HasDivFunctor}(C)\) asserts that the category of presheaves of types on \((\operatorname{Sch}/k)^{op}\) contains the relative-effective-divisor functor \(\mathrm{Div}_{C/k}\), sending a \(k\)-scheme \(T\) to the set of relative effective Cartier divisors on \(C \times _k T\) flat over \(T\). It is the existence assertion for \(\mathrm{Div}_{C/k}\). </p>
-
-  </div>
-</div>
-<div class="proof_wrapper" id="a0000002237">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
-    </span>
-    <span class="expand-proof">▶</span>
-  </div>
-  <div class="proof_content">
-  <p>This is the defining predicate. </p>
-
-  </div>
-</div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:div_functor_carrier">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
-    </span>
-    <span class="definition_thmlabel">1540</span>
+    <span class="lemma_thmlabel">1456</span>
     <div class="thm_header_extras">
 
     
@@ -2510,9 +3480,9 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:div_functor_carrier">#</a>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_glueRestrictionInv_proj">#</a>
     
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002238"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002127"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2528,9 +3498,15 @@
         
         <ul class="uses">
           
-          <li><a href="chap-Picard_QuotScheme.html#def:div_functor">Definition 1163</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueRestrictionInv">Definition 1454</a></li>
           
-          <li><a href="chap-Picard_QuotScheme.html#def:div_functor">Definition 1163</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueRestrict_proj_compat">Lemma 1455</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueChartComponent">Definition 1448</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueRestrictionInv">Definition 1454</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueRestrict_proj_compat">Lemma 1455</a></li>
           
         </ul>
     
@@ -2550,7 +3526,7 @@
         
         <ul class="uses">
           
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.divFunctor" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.divFunctor</a></li>
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueRestrictionInv_pullback_map_glueProj" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueRestrictionInv_pullback_map_glueProj</a></li>
           
         </ul>
     
@@ -2560,12 +3536,15 @@
     
         </div>
   </div>
-  <div class="definition_thmcontent">
-  <p>[The relative-divisor functor]    The presheaf \(\mathrm{Div}_{C/k} : (\operatorname{Sch}/k)^{op} \to \mathrm{Set}\) is the relative-divisor functor \(\operatorname{Div}_{C/k}\) of <a href="chap-Picard_QuotScheme.html#def:div_functor">1163</a>, instantiated at the structural morphism \(C \to \operatorname{Spec}k\): it sends a \(k\)-scheme \(T\) to the set of relative effective Cartier divisors on \(C \times _k T\) flat over \(T\). </p>
+  <div class="lemma_thmcontent">
+  <p>[The candidate inverse recovers the components]    The candidate inverse <a href="chap-Picard_GlueDescent.html#def:gr_glueRestrictionInv">1454</a> followed by the restricted \(j\)-th projection \(\iota _i^{*}(\pi _j)\) recovers the \(j\)-th component <a href="chap-Picard_GlueDescent.html#def:gr_glueChartComponent">1448</a>: </p>
+<div class="displaymath" id="a0000002128">
+  \[  \mathrm{s}_i\  \circ \  \iota _i^{*}(\pi _j) \; =\;  \mathrm{s}_i^{(j)} .  \]
+</div>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000002238">
+<div class="proof_wrapper" id="a0000002127">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2573,16 +3552,16 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Immediate from <a href="chap-Picard_QuotScheme.html#def:div_functor">1163</a>: instantiate at \(X = C\), \(S = \operatorname{Spec}k\), \(\pi \) the structural morphism. </p>
+  <p> Unfolding the lift <a href="chap-Picard_GlueDescent.html#def:gr_glueRestrictionInv">1454</a> and applying <a href="chap-Picard_GlueDescent.html#lem:gr_glueRestrict_proj_compat">1455</a>, the equalizer- and product-preservation comparisons cancel against the lift, leaving the defining \(j\)-th projection of the family <a href="chap-Picard_GlueDescent.html#def:gr_glueChartFamily">1449</a>, namely \(\mathrm{s}_i^{(j)}\). </p>
 
   </div>
 </div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:inst_has_div_functor">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_glueRestrict_hom_ext">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
     </span>
-    <span class="definition_thmlabel">1541</span>
+    <span class="lemma_thmlabel">1457</span>
     <div class="thm_header_extras">
 
     
@@ -2590,9 +3569,9 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:inst_has_div_functor">#</a>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_glueRestrict_hom_ext">#</a>
     
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002239"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002129"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2608,11 +3587,9 @@
         
         <ul class="uses">
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:has_div_functor">Definition 1539</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueRestrict_proj_compat">Lemma 1455</a></li>
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:div_functor_carrier">Definition 1540</a></li>
-          
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:div_functor_carrier">Definition 1540</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueRestrict_proj_compat">Lemma 1455</a></li>
           
         </ul>
     
@@ -2632,7 +3609,7 @@
         
         <ul class="uses">
           
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.instHasDivFunctor" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.instHasDivFunctor</a></li>
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueRestrict_hom_ext" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueRestrict_hom_ext</a></li>
           
         </ul>
     
@@ -2642,12 +3619,12 @@
     
         </div>
   </div>
-  <div class="definition_thmcontent">
-  <p>[Relative-divisor functor exists]    The relative-divisor functor of <a href="chap-Picard_FGAPicRepresentability.html#def:div_functor_carrier">1540</a> witnesses <a href="chap-Picard_FGAPicRepresentability.html#def:has_div_functor">1539</a> for every such curve \(C/k\). </p>
+  <div class="lemma_thmcontent">
+  <p>[Joint detection of morphisms into the restricted glued sheaf]    Two morphisms \(u, v : \mathcal{Z} \to \iota _i^{*}\mathcal{M}\) that agree after every restricted projection \(\iota _i^{*}(\pi _j)\) are equal. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000002239">
+<div class="proof_wrapper" id="a0000002129">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2655,98 +3632,16 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> The functor \(\mathrm{Div}_{C/k}\) of <a href="chap-Picard_FGAPicRepresentability.html#def:div_functor_carrier">1540</a> is an object of the presheaf category, witnessing the existential. </p>
+  <p> The restricted equalizer inclusion is a monomorphism and the restricted product projections are jointly monic, both through the preservation comparisons; so it suffices to test against \(\iota _i^{*}(\pi _j)\) for every \(j\), which is the hypothesis via <a href="chap-Picard_GlueDescent.html#lem:gr_glueRestrict_proj_compat">1455</a>. </p>
 
   </div>
 </div>
-<h2 id="subsec:fga_pic_abel_map_carrier">25.7.2 Abel-map predicate</h2>
-
-<div class="definition_thmwrapper theorem-style-definition" id="def:has_abel_map">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_modules_glue_unique">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
     </span>
-    <span class="definition_thmlabel">1542</span>
-    <div class="thm_header_extras">
-
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:has_abel_map">#</a>
-    
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002240"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:div_functor_carrier">Definition 1540</a></li>
-          
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:pic_sharp_carrier">Definition 1538</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.HasAbelMap" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.HasAbelMap</a></li>
-          
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.abelMap" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.abelMap</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="definition_thmcontent">
-  <p>[Abel-map data]    The predicate \(\mathrm{HasAbelMap}(C)\) carries a natural transformation of presheaves \(\mathrm{abel} \colon \mathrm{Div}_{C/k} \to \operatorname{Pic}^\sharp _{C/k}\) between the relative-divisor functor of <a href="chap-Picard_FGAPicRepresentability.html#def:div_functor_carrier">1540</a> and the relative Picard functor of <a href="chap-Picard_FGAPicRepresentability.html#def:pic_sharp_carrier">1538</a>; \(\mathrm{abelMap} := \mathrm{HasAbelMap.abel}\) denotes this transformation. </p>
-
-  </div>
-</div>
-<div class="proof_wrapper" id="a0000002240">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
-    </span>
-    <span class="expand-proof">▶</span>
-  </div>
-  <div class="proof_content">
-  <p>This is a definition. </p>
-
-  </div>
-</div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:inst_has_abel_map">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
-    </span>
-    <span class="definition_thmlabel">1543</span>
+    <span class="lemma_thmlabel">1458</span>
     <div class="thm_header_extras">
 
     
@@ -2754,9 +3649,9 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:inst_has_abel_map">#</a>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_modules_glue_unique">#</a>
     
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002241"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002130"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2772,11 +3667,9 @@
         
         <ul class="uses">
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:has_abel_map">Definition 1542</a></li>
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:abel_map_witness">Definition 1530</a></li>
-          
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:abel_map_witness">Definition 1530</a></li>
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
           
         </ul>
     
@@ -2796,7 +3689,7 @@
         
         <ul class="uses">
           
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.instHasAbelMap" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.instHasAbelMap</a></li>
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.pullback_map_jointly_faithful" class="lean_decl">AlgebraicGeometry.Scheme.Modules.pullback_map_jointly_faithful</a></li>
           
         </ul>
     
@@ -2806,12 +3699,12 @@
     
         </div>
   </div>
-  <div class="definition_thmcontent">
-  <p>[Existence of the Abel map]    For every such curve \(C/k\), the transformation \(A^{\mathrm{raw}}_{C/k}\) from <a href="chap-Picard_FGAPicRepresentability.html#def:abel_map_witness">1530</a> supplies <a href="chap-Picard_FGAPicRepresentability.html#def:has_abel_map">1542</a>. </p>
+  <div class="lemma_thmcontent">
+  <p>[Joint faithfulness of the chart restrictions]    Two morphisms \(u, v : \mathcal{W} \to \mathcal{W}'\) of sheaves of modules on the glued scheme \(X\) of a glue datum (<a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">1467</a>) that agree after pullback \(\iota _i^{*}u = \iota _i^{*}v\) to every chart are equal. This is the characterisation of a glued sheaf up to unique isomorphism: a morphism out of the glued sheaf is determined by its chart-local restrictions. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000002241">
+<div class="proof_wrapper" id="a0000002130">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2819,18 +3712,17 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> The natural transformation constructed in <a href="chap-Picard_FGAPicRepresentability.html#def:abel_map_witness">1530</a> is a term of the required type \(\mathrm{Div}_{C/k} \to \operatorname{Pic}^\sharp _{C/k}\), and hence supplies the data of <a href="chap-Picard_FGAPicRepresentability.html#def:has_abel_map">1542</a>. </p>
+  <p> This is the separation half of the sheaf condition over the chart cover \(\{ \iota _i\} \): sections of \(\mathcal{W}'\) are detected on the chart-image opens \(\iota _i''(\iota _i^{-1}O)\), which cover any open \(O\) by the joint surjectivity of the chart immersions of the glue datum. Hence two morphisms agreeing on every chart agree on a covering family of opens, so they agree. </p>
 
   </div>
 </div>
-<h2 id="subsec:fga_pic_quotient_carrier">25.7.3 Smooth-proper quotient predicate</h2>
-
-<div class="definition_thmwrapper theorem-style-definition" id="def:has_smooth_proper_quotient">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
+<h2 id="a0000000123">23.3.6 The three cocycle obligations</h2>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_glueChartComponent_self_counit">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
     </span>
-    <span class="definition_thmlabel">1544</span>
+    <span class="lemma_thmlabel">1459</span>
     <div class="thm_header_extras">
 
     
@@ -2838,67 +3730,9 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:has_smooth_proper_quotient">#</a>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_glueChartComponent_self_counit">#</a>
     
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002242"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.HasSmoothProperQuotient" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.HasSmoothProperQuotient</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="definition_thmcontent">
-  <p>[Representability of the smooth-proper quotient]   For a morphism \(\alpha : Z \to P\) of presheaves of types on \((\operatorname{Sch}/k)^{op}\), the predicate \(\mathrm{HasSmoothProperQuotient}(\alpha )\) asserts that the target \(P\) is representable. It records the conclusion of the Altman–Kleiman lemma <a href="chap-Picard_FGAPicRepresentability.html#lem:smooth_proper_quotient">1534</a> for the quotient occurring in the FGA construction. </p>
-
-  </div>
-</div>
-<div class="proof_wrapper" id="a0000002242">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
-    </span>
-    <span class="expand-proof">▶</span>
-  </div>
-  <div class="proof_content">
-  <p>This is a definition. </p>
-
-  </div>
-</div>
-<h2 id="subsec:fga_pic_scheme_carriers">25.7.4 Picard-scheme predicates</h2>
-
-<div class="definition_thmwrapper theorem-style-definition" id="def:has_pic_scheme">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
-    </span>
-    <span class="definition_thmlabel">1545</span>
-    <div class="thm_header_extras">
-
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:has_pic_scheme">#</a>
-    
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002243"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002131"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2914,7 +3748,33 @@
         
         <ul class="uses">
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:pic_sharp_carrier">Definition 1538</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueChartComponent">Definition 1448</a></li>
+          
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_restrictIsoPullback_congr">Lemma 1446</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_restrictAdjunction_unit_iso">Lemma 1442</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_restrictIsoPullback_counit">Lemma 1443</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_overlapBaseChange_inv_app">Lemma 1440</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_pullbackCongr_hom_eqToHom">Lemma 1444</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueChartComponent">Definition 1448</a></li>
+          
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_restrictIsoPullback_congr">Lemma 1446</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_restrictAdjunction_unit_iso">Lemma 1442</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_restrictIsoPullback_counit">Lemma 1443</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_overlapBaseChange_inv_app">Lemma 1440</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_pullbackCongr_hom_eqToHom">Lemma 1444</a></li>
           
         </ul>
     
@@ -2934,7 +3794,7 @@
         
         <ul class="uses">
           
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.HasPicScheme" class="lean_decl">AlgebraicGeometry.Scheme.HasPicScheme</a></li>
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueChartComponent_self_counit" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueChartComponent_self_counit</a></li>
           
         </ul>
     
@@ -2944,12 +3804,16 @@
     
         </div>
   </div>
-  <div class="definition_thmcontent">
-  <p>[Existence of the Picard scheme]    The predicate \(\mathrm{HasPicScheme}(C)\) asserts that there exists a \(k\)-scheme \(X\), <em>locally of finite type over \(k\)</em>, carrying a representability witness for the relative Picard functor \(\operatorname{Pic}^\sharp _{C/k}\) of <a href="chap-Picard_FGAPicRepresentability.html#def:pic_sharp_carrier">1538</a>; in other words, that the Picard scheme \(\operatorname{Pic}_{C/k}\) exists and is locally of finite type. It is the existence assertion from which <a href="chap-Picard_FGAPicRepresentability.html#def:pic_scheme">1536</a> extracts the representing object. The local-finiteness clause belongs to the same existence package as representability: Kleiman §4, Thm.&#160;th:main exhibits \(\operatorname{Pic}_{C/k}\) as a disjoint union of open quasi-projective \(k\)-subschemes. The witness <a href="chap-Picard_FGAPicRepresentability.html#def:inst_has_pic_scheme">1546</a> is conditional on the \(k\)-rational point of <a href="chap-Picard_FGAPicRepresentability.html#def:has_rational_point">1537</a>. </p>
+  <div class="lemma_thmcontent">
+  <p>[Self-component collapses to the identity (C1 + counit triangle)]    The \((i,i)\)-component <a href="chap-Picard_GlueDescent.html#def:gr_glueChartComponent">1448</a>, transposed back along the chart immersion \(\iota _i\) (post-composed with the geometric counit), is the identity of \(\mathcal{M}_i\): </p>
+<div class="displaymath" id="a0000002132">
+  \[  \mathrm{s}_i^{(i)}\  \circ \  \varepsilon ^{\mathrm{geo}}_{\mathcal{M}_i} \; =\;  \mathrm{id}_{\mathcal{M}_i}.  \]
+</div>
+<p> This is the second descent obligation, consuming the self-identity (C1). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000002243">
+<div class="proof_wrapper" id="a0000002131">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2957,172 +3821,16 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p>This is the defining existence predicate. </p>
+  <p> Since \(f_{ii}\) factors as \(t_{ii}\circ f_{ii}\) (because \(t_{ii} = \mathrm{id}\)), (C1) of <a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">1467</a> says the transition \(g_{ii}\) is the canonical congruence cast; through <a href="chap-Picard_GlueDescent.html#lem:gr_pullbackCongr_hom_eqToHom">1444</a> and <a href="chap-Picard_GlueDescent.html#lem:gr_restrictIsoPullback_congr">1446</a> the three middle factors of the component collapse to a single site-level congruence cast. Rewriting the geometric unit by <a href="chap-Picard_GlueDescent.html#lem:gr_restrictAdjunction_unit_iso">1442</a> and the geometric counit by <a href="chap-Picard_GlueDescent.html#lem:gr_restrictIsoPullback_counit">1443</a> turns the whole composite into the site-level unit, the congruence cast, the section form of \(\beta _{ii}^{-1}\) (<a href="chap-Picard_GlueDescent.html#lem:gr_overlapBaseChange_inv_app">1440</a>), and the site-level counit. On sections over an open this is a cycle of presheaf restrictions along opens identities whose composite open-inclusion is the identity; folding the restrictions and using proof-irrelevance of the open inclusions gives the identity. </p>
 
   </div>
 </div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:inst_has_pic_scheme">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_glueOverlapFactor_transpose">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
     </span>
-    <span class="definition_thmlabel">1546</span>
-    <div class="thm_header_extras">
-
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:inst_has_pic_scheme">#</a>
-    
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002244"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:has_pic_scheme">Definition 1545</a></li>
-          
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:has_rational_point">Definition 1537</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.instHasPicScheme" class="lean_decl">AlgebraicGeometry.Scheme.instHasPicScheme</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="definition_thmcontent">
-  <p>[Picard scheme exists]    Let \(C/k\) be a smooth proper geometrically integral curve with a \(k\)-rational point. Then the relative Picard functor of \(C\) is represented by a scheme locally of finite type over \(k\). </p>
-
-  </div>
-</div>
-<div class="proof_wrapper" id="a0000002244">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
-    </span>
-    <span class="expand-proof">▶</span>
-  </div>
-  <div class="proof_content">
-  <p>Apply the FGA representability construction of <a href="chap-Picard_FGAPicRepresentability.html#thm:fga_pic_representability">1533</a>. The rational point rigidifies line bundles along the section, and the bounded Hilbert-polynomial strata glue to the required locally finite type representing scheme. </p>
-
-  </div>
-</div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:pic_sharp_representable">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
-    </span>
-    <span class="definition_thmlabel">1547</span>
-    <div class="thm_header_extras">
-
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:pic_sharp_representable">#</a>
-    
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002245"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:pic_sharp_carrier">Definition 1538</a></li>
-          
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:pic_scheme">Definition 1536</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.PicSharpRepresentable" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.PicSharpRepresentable</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
-  </div>
-  <div class="definition_thmcontent">
-  <p>[Representability of \(\operatorname{Pic}^\sharp _{C/k}\)]    The predicate \(\mathrm{PicSharpRepresentable}(C)\) asserts that the specific scheme \(\operatorname{Pic}_{C/k}\) of <a href="chap-Picard_FGAPicRepresentability.html#def:pic_scheme">1536</a> is a representing object for \(\operatorname{Pic}^\sharp _{C/k}\). It is the assertion from which the representability witness <a href="chap-Picard_FGAPicRepresentability.html#thm:fga_pic_representability">1533</a> is extracted. </p>
-
-  </div>
-</div>
-<div class="proof_wrapper" id="a0000002245">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
-    </span>
-    <span class="expand-proof">▶</span>
-  </div>
-  <div class="proof_content">
-  <p>This is a definition. </p>
-
-  </div>
-</div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:inst_pic_sharp_representable">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
-    </span>
-    <span class="definition_thmlabel">1548</span>
+    <span class="lemma_thmlabel">1460</span>
     <div class="thm_header_extras">
 
     
@@ -3130,9 +3838,9 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:inst_pic_sharp_representable">#</a>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_glueOverlapFactor_transpose">#</a>
     
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002246"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002133"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -3148,11 +3856,23 @@
         
         <ul class="uses">
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:pic_sharp_representable">Definition 1547</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueOverlapFactorIso">Definition 1447</a></li>
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:has_pic_scheme">Definition 1545</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">Lemma 1435</a></li>
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:has_pic_scheme">Definition 1545</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_overlapBaseChange_hom_app">Lemma 1441</a></li>
+          
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueOverlapFactorIso">Definition 1447</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">Lemma 1435</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_overlapBaseChange_hom_app">Lemma 1441</a></li>
+          
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
+          
+          <li><a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">Lemma 1099</a></li>
           
         </ul>
     
@@ -3172,7 +3892,7 @@
         
         <ul class="uses">
           
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.instPicSharpRepresentable" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.instPicSharpRepresentable</a></li>
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueOverlapFactor_transpose" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueOverlapFactor_transpose</a></li>
           
         </ul>
     
@@ -3182,12 +3902,16 @@
     
         </div>
   </div>
-  <div class="definition_thmcontent">
-  <p>[Representability identification]    The scheme \(\operatorname{Pic}_{C/k}\) is the chosen witness of <a href="chap-Picard_FGAPicRepresentability.html#def:has_pic_scheme">1545</a>; the first component of that witness identifies it as a representing object for \(\operatorname{Pic}^\sharp _{C/k}\). </p>
+  <div class="lemma_thmcontent">
+  <p>[Transpose of the overlap base change (mate core)]    The adjoint transpose along \(\iota _i\) of the pullback-form overlap base change \(\gamma _{ij}\) (<a href="chap-Picard_GlueDescent.html#def:gr_glueOverlapFactorIso">1447</a>) is the canonical four-functor comparison of the glue square: </p>
+<div class="displaymath" id="a0000002134">
+  \[  \widehat{\gamma _{ij}} \; =\;  (\iota _j)_{*}\bigl(\eta _{t_{ij}\circ f_{ji}}\bigr) \  \circ \  \mathrm{pushComp} \  \circ \  \mathrm{pushCongr} \  \circ \  \mathrm{pushComp}^{-1},  \]
+</div>
+<p> the unit along \(t_{ij}\circ f_{ji}\) pushed forward along \(\iota _j\), regrouped by the pushforward-composition comparison, reindexed by the pushforward-congruence along the glue condition \((t_{ij}\circ f_{ji})\circ \iota _j = f_{ij}\circ \iota _i\), and ungrouped by the inverse pushforward-composition. The identity is free of the cocycle hypotheses: it is pure site-level content. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000002246">
+<div class="proof_wrapper" id="a0000002133">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -3195,16 +3919,16 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> This is the representing component of the existence statement in <a href="chap-Picard_FGAPicRepresentability.html#def:has_pic_scheme">1545</a>. </p>
+  <p> Expand the adjoint transpose of \(\gamma _{ij}\): the left-adjoint comparison isomorphisms (<a href="chap-Picard_QuotScheme.html#lem:modules_restrictFunctorIsoPullback_mathlib">1099</a>) conjugating the chart factor cancel against the unit/counit, leaving the bare site-level overlap base change \(\beta _{ij}\) (<a href="chap-Picard_GlueDescent.html#lem:glueOverlapBaseChangeIso">1435</a>). The unit bridge at \(t_{ij}\circ f_{ji}\) and the three naturality squares of the pushforward-composition and pushforward-congruence comparisons rewrite the transpose into the stated four-factor composite up to whiskering and reassociation. The residual site-level core is checked on sections over an open: by <a href="chap-Picard_GlueDescent.html#lem:gr_overlapBaseChange_hom_app">1441</a> the section form of \(\beta _{ij}\) is a presheaf restriction along an opens identity, and the remaining composite is a cycle of such restrictions whose total open inclusion is the identity, folded by proof-irrelevance exactly as in the closing step of <a href="chap-Picard_GlueDescent.html#lem:gr_glueChartComponent_self_counit">1459</a>. </p>
 
   </div>
 </div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:pic_scheme_lft">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_glueOverlapFactor_mate">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
     </span>
-    <span class="definition_thmlabel">1549</span>
+    <span class="lemma_thmlabel">1461</span>
     <div class="thm_header_extras">
 
     
@@ -3212,9 +3936,9 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:pic_scheme_lft">#</a>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_glueOverlapFactor_mate">#</a>
     
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002247"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002135"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -3230,9 +3954,17 @@
         
         <ul class="uses">
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:pic_scheme">Definition 1536</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueOverlapFactor_transpose">Lemma 1460</a></li>
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:has_pic_scheme">Definition 1545</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueOverlapFactorIso">Definition 1447</a></li>
+          
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueOverlapFactor_transpose">Lemma 1460</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueOverlapFactorIso">Definition 1447</a></li>
+          
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
           
         </ul>
     
@@ -3252,7 +3984,7 @@
         
         <ul class="uses">
           
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.PicSchemeLocallyOfFiniteType" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.PicSchemeLocallyOfFiniteType</a></li>
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueOverlapFactor_mate" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueOverlapFactor_mate</a></li>
           
         </ul>
     
@@ -3262,16 +3994,12 @@
     
         </div>
   </div>
-  <div class="definition_thmcontent">
-  <p>[Local finite type of \(\operatorname{Pic}_{C/k}\)]    The predicate </p>
-<div class="displaymath" id="a0000002248">
-  \[  \mathrm{PicSchemeLocallyOfFiniteType}(C)  \]
-</div>
-<p> asserts that the structural morphism of the Picard scheme \(\operatorname{Pic}_{C/k}\) of <a href="chap-Picard_FGAPicRepresentability.html#def:pic_scheme">1536</a> is locally of finite type — part (1) of Kleiman §4, Thm.&#160;th:main (\(\operatorname{Pic}_{C/k}\) is a disjoint union of open quasi-projective \(k\)-subschemes). It is the hypothesis the identity-component construction of <a href="chap-Picard_IdentityComponent.html">26</a> uses to specialise \(G^0\) to \(G = \operatorname{Pic}_{C/k}\). It follows from the local-finiteness component of <a href="chap-Picard_FGAPicRepresentability.html#def:has_pic_scheme">1545</a>. </p>
+  <div class="lemma_thmcontent">
+  <p>[Mate recognition of the factor transpose]    For any morphism \(m : \mathcal{W} \to (\iota _j)_{*}\mathcal{M}_j\) on the glued scheme, the conjugated transport of the inverse transpose of \(m\) along the glue square equals the inverse transpose, along \(f_{ij}\), of \(\iota _i^{*}(m)\) followed by \(\gamma _{ij}\) (<a href="chap-Picard_GlueDescent.html#def:gr_glueOverlapFactorIso">1447</a>). In other words, the factor transpose <a href="chap-Picard_GlueDescent.html#lem:gr_glueOverlapFactor_transpose">1460</a> is the mate of \(\gamma _{ij}\) through the pseudofunctor structure of pullback. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000002247">
+<div class="proof_wrapper" id="a0000002135">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -3279,16 +4007,16 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p>This is a definition. </p>
+  <p> Both sides are computed by transposing twice. By injectivity of the two transpose bijections it suffices to compare the double transposes. Naturality of the transpose in its left argument peels \(m\) off the right-hand side; the conjugate of the pullback-composition isomorphism along the glue condition is the inverse pushforward-composition isomorphism; and folding the unit pair and reindexing along the glue condition of <a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">1467</a> reduces the identity to the factor transpose <a href="chap-Picard_GlueDescent.html#lem:gr_glueOverlapFactor_transpose">1460</a>. </p>
 
   </div>
 </div>
-<div class="definition_thmwrapper theorem-style-definition" id="def:inst_pic_scheme_lft">
-  <div class="definition_thmheading">
-    <span class="definition_thmcaption">
-    Definition
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_glueRestriction_overlap_compat">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
     </span>
-    <span class="definition_thmlabel">1550</span>
+    <span class="lemma_thmlabel">1462</span>
     <div class="thm_header_extras">
 
     
@@ -3296,9 +4024,9 @@
         </div>
     <div class="thm_header_hidden_extras">
 
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#def:inst_pic_scheme_lft">#</a>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_glueRestriction_overlap_compat">#</a>
     
-    <a class="icon proof" href="chap-Picard_FGAPicRepresentability.html#a0000002249"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002136"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -3314,11 +4042,17 @@
         
         <ul class="uses">
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:pic_scheme_lft">Definition 1549</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#lem:glueRestrictionHom">Lemma 1436</a></li>
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:has_pic_scheme">Definition 1545</a></li>
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
           
-          <li><a href="chap-Picard_FGAPicRepresentability.html#def:has_pic_scheme">Definition 1545</a></li>
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glue_equalizer">Definition 1434</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:glueRestrictionHom">Lemma 1436</a></li>
+          
+          <li><a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">Definition 1467</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glue_equalizer">Definition 1434</a></li>
           
         </ul>
     
@@ -3338,7 +4072,179 @@
         
         <ul class="uses">
           
-          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicScheme.instPicSchemeLocallyOfFiniteType" class="lean_decl">AlgebraicGeometry.Scheme.PicScheme.instPicSchemeLocallyOfFiniteType</a></li>
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueRestriction_overlap_compat" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueRestriction_overlap_compat</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>[Overlap compatibility of the restriction morphisms]    The \((i,j)\)-component of the descent-equalizer condition, transposed to the pullback level, states that over the overlap \(V_{ij}\) the two restriction morphisms \(\mathrm{r}_i\) and \(\mathrm{r}_j\) (<a href="chap-Picard_GlueDescent.html#lem:glueRestrictionHom">1436</a>) differ exactly by the transition isomorphism \(g_{ij}\) (through the pseudofunctor congruence casts). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000002136">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> The glued sheaf is the descent equalizer, so its \(i\)- and \(j\)-projections satisfy the overlap-agreement condition of <a href="chap-Picard_GlueDescent.html#def:gr_glue_equalizer">1434</a>. Transposing that condition along \(\iota _i\) and \(\iota _j\) and folding the transposes back through the adjunction bijection turns it into the stated identity between the overlap pullbacks of \(\mathrm{r}_i\) and \(\mathrm{r}_j\), conjugated by the glue-condition casts of <a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">1467</a> and corrected by \(g_{ij}\). </p>
+
+  </div>
+</div>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:gr_glueRestrictionHom_glueChartComponent">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">1463</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#lem:gr_glueRestrictionHom_glueChartComponent">#</a>
+    
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#a0000002137"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueRestriction_overlap_compat">Lemma 1462</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueOverlapFactor_mate">Lemma 1461</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueChartComponent">Definition 1448</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:glueRestrictionHom">Lemma 1436</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueRestriction_overlap_compat">Lemma 1462</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:gr_glueOverlapFactor_mate">Lemma 1461</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#def:gr_glueChartComponent">Definition 1448</a></li>
+          
+          <li><a href="chap-Picard_GlueDescent.html#lem:glueRestrictionHom">Lemma 1436</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueRestrictionHom_glueChartComponent" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueRestrictionHom_glueChartComponent</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>[Pair condition transposed: restriction composed with the component]    The chart restriction morphism \(\mathrm{r}_i\) (<a href="chap-Picard_GlueDescent.html#lem:glueRestrictionHom">1436</a>) followed by the \(j\)-th candidate-inverse component <a href="chap-Picard_GlueDescent.html#def:gr_glueChartComponent">1448</a> equals the restricted \(j\)-th projection: </p>
+<div class="displaymath" id="a0000002138">
+  \[  \mathrm{r}_i\  \circ \  \mathrm{s}_i^{(j)} \; =\;  \iota _i^{*}(\pi _j).  \]
+</div>
+<p> This is the third descent obligation; together with <a href="chap-Picard_GlueDescent.html#lem:gr_glueRestrictionInv_proj">1456</a> and <a href="chap-Picard_GlueDescent.html#lem:gr_glueRestrict_hom_ext">1457</a> it gives \(\mathrm{r}_i \circ \mathrm{s}_i = \mathrm{id}\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000002137">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> Unfold the component <a href="chap-Picard_GlueDescent.html#def:gr_glueChartComponent">1448</a>. By the overlap compatibility <a href="chap-Picard_GlueDescent.html#lem:gr_glueRestriction_overlap_compat">1462</a> the overlap pullback of \(\mathrm{r}_i\) transported across \(g_{ij}\) is the inverse mate transpose of the restricted projection \(\iota _i^{*}(\pi _j)\) through \(\gamma _{ij}\) (<a href="chap-Picard_GlueDescent.html#lem:gr_glueOverlapFactor_mate">1461</a>). Substituting this into the unit-naturality square of \(\mathrm{r}_i\) along \(f_{ij}\) and folding the resulting transpose cancels the factor isomorphism, leaving exactly \(\iota _i^{*}(\pi _j)\). </p>
+
+  </div>
+</div>
+<h2 id="a0000000124">23.3.7 Joint faithfulness of chart restrictions</h2>
+<div class="definition_thmwrapper theorem-style-definition" id="def:glueRestrictionIso">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">1464</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_GlueDescent.html#def:glueRestrictionIso">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Picard_GlueDescent.html#thm:isIso_glueRestrictionHom">Theorem 1437</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.Modules.glueRestrictionIso" class="lean_decl">AlgebraicGeometry.Scheme.Modules.glueRestrictionIso</a></li>
           
         </ul>
     
@@ -3349,76 +4255,14 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>[Local-finiteness assertion]    Whenever <a href="chap-Picard_FGAPicRepresentability.html#def:has_pic_scheme">1545</a> holds, the second component of its chosen witness gives local finiteness of \(\operatorname{Pic}_{C/k}\). Thus representability and local finiteness are supplied by one existence package, as in Kleiman §4, Thm.&#160;th:main. </p>
+  <p>[The restriction isomorphism of the glued sheaf]    Let \(\mathcal{M}\) be the glued sheaf of <a href="chap-Picard_GrassmannianQuot.html#def:scheme_modules_glue">1467</a>, with the transition family \((g_{ij})\) satisfying (C1)/(C2). For each chart index \(i\) the restriction morphism \(\mathrm{r}_i\) (<a href="chap-Picard_GlueDescent.html#lem:glueRestrictionHom">1436</a>) is promoted to the <em>restriction isomorphism</em> </p>
+<div class="displaymath" id="a0000002139">
+  \[  \rho _i \; :\;  \iota _i^{*}\, \mathcal{M} \; \xrightarrow {\  \sim \  }\;  \mathcal{M}_i,  \]
+</div>
+<p> the canonical identification of the chart restriction of the glued sheaf with the \(i\)-th input sheaf, packaged from <a href="chap-Picard_GlueDescent.html#thm:isIso_glueRestrictionHom">1437</a>. Its underlying morphism is the adjoint transpose of the \(i\)-th descent-equalizer projection, and over each overlap \(V_{ij}\) the two restrictions \(\rho _i, \rho _j\) differ exactly by the transition isomorphism \(g_{ij}\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000002249">
-  <div class="proof_heading">
-    <span class="proof_caption">
-    Proof
-    </span>
-    <span class="expand-proof">▶</span>
-  </div>
-  <div class="proof_content">
-  <p> This is the local-finiteness component of the existence statement in <a href="chap-Picard_FGAPicRepresentability.html#def:has_pic_scheme">1545</a>. </p>
-
-  </div>
-</div>
-<h1 id="sec:fga_pic_sorry_closure_order">25.8 Dependencies of the representability theorem</h1>
-
-<p>The construction of \(\operatorname{Pic}_{C/k}\) separates into three mathematical inputs: the relative-divisor functor, its Abel map to the relative Picard functor, and the FGA existence theorem. The first two supply concrete functors and a natural transformation. The third combines them with regularity, cohomology and base change, and effective descent to produce a scheme locally of finite type representing \(\operatorname{Pic}^\sharp _{C/k}\). </p>
-<h2 id="subsec:sorry_has_pic_scheme">25.8.1 The Picard-scheme existence theorem</h2>
-
-<p>For a smooth proper geometrically integral curve \(C/k\) with a \(k\)-rational point, the relative Picard functor \(\operatorname{Pic}^\sharp _{C/k}\) (<a href="chap-Picard_FGAPicRepresentability.html#def:pic_sharp_carrier">1538</a>) is representable by a \(k\)-scheme. The proof first applies Kleiman §2, Thm.&#160;2.5, using the section to identify the plain functor with its étale sheafification, and then uses Kleiman’s four steps (<a href="chap-Picard_FGAPicRepresentability.html#thm:fga_pic_representability">1533</a>): Hilbert-polynomial stratification, \(m\)-regularity bound, Abel-map factorisation through \(\mathrm{Div}_{C/k}\), and the smooth-proper quotient (<a href="chap-Picard_FGAPicRepresentability.html#lem:smooth_proper_quotient">1534</a>). Its inputs are the Quot/Hilbert construction of <a href="chap-Picard_QuotScheme.html">20</a>, representability of \(\mathrm{Div}_{C/k}\) as in <a href="chap-Picard_FGAPicRepresentability.html#rem:div_functor_representability">1532</a>, the regularity result <a href="chap-Picard_FlatteningStratification.html#cor:flattening_stratification_curve">1005</a>, the base-change result <a href="chap-Cohomology_CechHigherDirectImage.html#lem:cech_flat_base_change">480</a>, and Altman–Kleiman effective descent. The resulting representing object gives natural bijections </p>
-<div class="displaymath" id="a0000002250">
-  \[  (T\to \operatorname{Pic}_{C/k})\simeq \operatorname{Pic}(C\times _kT)/\pi _T^*\operatorname{Pic}(T),  \]
-</div>
-<p> including the dual-number case \(T=\operatorname{Spec}k[\epsilon ]\) used in the tangent-space calculation. </p>
-<h2 id="subsec:sorry_has_div_functor">25.8.2 The relative-divisor input</h2>
-
-<p>The relative-divisor functor \(\operatorname{Div}_{X/S}\) of <a href="chap-Picard_QuotScheme.html#def:div_functor">1163</a> is the subfunctor of the Hilbert functor \(\operatorname {Hilb}_{C/k} = \operatorname {Quot}_{\mathcal{O}_C/C/k}\) of relative effective Cartier divisors, in the invertible-kernel quotient encoding of <a href="chap-Picard_QuotScheme.html#def:div_family">1147</a>. The presheaf \(\mathrm{Div}_{C/k}\) of <a href="chap-Picard_FGAPicRepresentability.html#def:div_functor_carrier">1540</a> is its instantiation at \(C\to \operatorname{Spec}k\). Its divisor condition is stable under base change by <a href="chap-Picard_QuotScheme.html#lem:relative_divisor_base_change">1153</a>, while representability of \(\operatorname{Div}_{C/k}\) by an open subscheme of the Hilbert scheme (Kleiman §3, Thm.&#160;th:repDiv) is the content of <a href="chap-Picard_FGAPicRepresentability.html#rem:div_functor_representability">1532</a>. </p>
-<h2 id="subsec:sorry_has_abel_map">25.8.3 The Abel-map input</h2>
-
-<p>The class <a href="chap-Picard_FGAPicRepresentability.html#def:has_abel_map">1542</a> carries the natural transformation whose value on a divisor family is </p>
-<div class="displaymath" id="a0000002251">
-  \[  \mathrm{abelMapWitness}(C)\langle \mathcal F,q\rangle =-[\ker q].  \]
-</div>
-<p> It is the composite of the kernel-class natural transformation \(\mathrm{abelKernelNatTrans}(C)\) (naturality via the kernel–flat-base-change comparison isomorphism) with the group-presheaf negation \(\mathrm{picNeg}(C)\). Thus the Abel map has the defining property in <a href="chap-Picard_FGAPicRepresentability.html#lem:line_bundle_quot_correspondence">1531</a>; it is a natural transformation of the presheaves in <a href="chap-Picard_FGAPicRepresentability.html#def:div_functor_carrier">1540</a> and <a href="chap-Picard_FGAPicRepresentability.html#def:pic_sharp_carrier">1538</a>. </p>
-<h2 id="subsec:fga_pic_closure_order_summary">25.8.4 Assembly of the inputs</h2>
-
-<p>The FGA construction consumes the relative-divisor functor and Abel map, then applies the regularity, base-change, and effective-quotient results of <a href="chap-Picard_FGAPicRepresentability.html#thm:fga_pic_representability">1533</a>. A pointing \(P:\mathbf1\to C\) supplies the rational-point hypothesis used to identify the plain relative Picard functor with its sheafification. The resulting representability and local-finiteness statements feed the group-scheme and Jacobian constructions. </p>
-<h1 id="sec:fga_pic_out_of_scope">25.9 Related constructions</h1>
-
-<p>The representable Picard scheme and its group structure interact with the following constructions, treated in the indicated companion chapters. </p>
-<ul class="itemize">
-  <li><p><b class="bfseries">Identity component \(\operatorname{Pic}^0_{C/k}\)</b> — the open and closed subgroup scheme of \(\operatorname{Pic}_{C/k}\) containing the unit and consisting of those classes lying in the connected component of \(\operatorname{Pic}_{C/k}\). Its dimension, smoothness, and abelian-variety structure are treated in <a href="chap-Picard_IdentityComponent.html">26</a> and <a href="chap-Picard_Pic0AbelianVariety.html">27</a>. </p>
-</li>
-  <li><p><b class="bfseries">Quot scheme representability</b> — consumed by <a href="chap-Picard_FGAPicRepresentability.html#thm:fga_pic_representability">1533</a> via <span class="ttfamily">thm:quot_representable</span> (<a href="chap-Picard_QuotScheme.html">20</a>), not re-proved here. </p>
-</li>
-  <li><p><b class="bfseries">Étale sheafification.</b> The relative Picard presheaf and its topology-parametric sheafification are constructed in <a href="chap-Picard_RelPicFunctor.html">15</a>. Under the standing rational-point hypothesis, Kleiman §2, Thm.&#160;2.5 identifies the plain relative functor with the étale sheafification. </p>
-</li>
-  <li><p><b class="bfseries">Universal Poincaré sheaf</b> (Kleiman&#160;§4, Ex.&#160;4.3) — exists when \(\operatorname{Pic}_{C/k}\) represents \(\operatorname{Pic}_{C/k}\) itself and \(C/k\) has a section. Under the chapter’s standing rational-point hypothesis both conditions in fact hold (Thm.&#160;2.5 identifies the plain functor with the represented sheaf), so the Poincaré sheaf is then available as an associated construction. </p>
-</li>
-  <li><p><b class="bfseries">Mumford’s example</b> (Kleiman&#160;§4, Eg.&#160;4.14), counter-examples to representability for non-integral geometric fibers — not relevant to a smooth proper geometrically integral curve. </p>
-</li>
-</ul>
-<h1 id="sec:fga_pic_consistency_check">25.10 Dependency structure</h1>
-
-<p>The principal constructions form a connected dependency chain rooted in <a href="chap-Picard_LineBundlePullback.html">14</a>, <a href="chap-Picard_QuotScheme.html">20</a>, and <a href="chap-Picard_RelPicFunctor.html">15</a>: </p>
-<ul class="itemize">
-  <li><p><a href="chap-Picard_FGAPicRepresentability.html#lem:line_bundle_quot_correspondence">1531</a> uses <a href="chap-Picard_LineBundlePullback.html#def:line_bundle_on_product">598</a> and <a href="chap-Picard_LineBundlePullback.html#thm:pullback_natural">605</a>. </p>
-</li>
-  <li><p><a href="chap-Picard_FGAPicRepresentability.html#lem:smooth_proper_quotient">1534</a> is the structural quotient statement used by the representability argument. </p>
-</li>
-  <li><p><a href="chap-Picard_FGAPicRepresentability.html#thm:fga_pic_representability">1533</a> uses <a href="chap-Picard_FGAPicRepresentability.html#lem:line_bundle_quot_correspondence">1531</a>, <span class="ttfamily">thm:quot_representable</span>, <span class="ttfamily">def:rel_pic_sharp</span>, <a href="chap-Picard_FGAPicRepresentability.html#def:has_rational_point">1537</a>, <a href="chap-Picard_LineBundlePullback.html#thm:relative_pic_quotient_well_defined">604</a>, and <a href="chap-Picard_FGAPicRepresentability.html#lem:smooth_proper_quotient">1534</a>. </p>
-</li>
-  <li><p><a href="chap-Picard_FGAPicRepresentability.html#thm:pic_is_group_scheme">1535</a> uses <a href="chap-Picard_FGAPicRepresentability.html#def:pic_scheme">1536</a>, <a href="chap-Picard_FGAPicRepresentability.html#thm:fga_pic_representability">1533</a>, <span class="ttfamily">def:rel_pic_sharp</span>, and <a href="chap-Picard_LineBundlePullback.html#thm:relative_pic_quotient_well_defined">604</a>. </p>
-</li>
-  <li><p><a href="chap-Picard_FGAPicRepresentability.html#def:pic_scheme">1536</a> uses <a href="chap-Picard_FGAPicRepresentability.html#def:has_pic_scheme">1545</a> and <a href="chap-Picard_FGAPicRepresentability.html#def:inst_has_pic_scheme">1546</a>. </p>
-</li>
-</ul>
-<p> The Quot-scheme theorem used above is proved in <a href="chap-Picard_QuotScheme.html">20</a>, while the relative Picard functor is defined in <a href="chap-Picard_RelPicFunctor.html">15</a>.  </p>
 
 </div> <!--main-text -->
 </div> <!-- content-wrapper -->
@@ -3430,11 +4274,11 @@
 
   <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
 
-  <a href="chap-Picard_GrassmannianQuot.html" title="The tautological quotient and the universal property of \(\mathrm{Gr}(r,d)\)"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+  <a href="chap-Picard_GrassmannianCells.html" title="The Grassmannian over \(\mathbb {Z}\): affine charts and gluing"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
   <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="chap-Picard_IdentityComponent.html" title="The identity component of the Picard scheme"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="chap-Picard_GrassmannianQuot.html" title="The tautological quotient and the universal property of \(\mathrm{Gr}(r,d)\)"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 
