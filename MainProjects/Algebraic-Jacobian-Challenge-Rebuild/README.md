@@ -28,7 +28,8 @@ which carries the full charter (target, constraints, working model, and phases).
 - `AlgebraicJacobian/Challenge.lean` — the single, reviewable **statement file**: every signature a
   reviewer must trust, and nothing else. Agents own the proofs, never these signatures.
 - `AlgebraicJacobian/` — the infrastructure that discharges the statement (added as the rebuild
-  proceeds; no file exceeds 500 lines; layout mirrors the mathematical structure of the paper).
+  proceeds; house limit 500 lines per file, currently exceeded by 14 files tracked in inbox
+  `I-0220`; layout mirrors the mathematical structure of the paper).
 - `AlgebraicJacobian.lean` — the library root import list.
 - `blueprint/` — a clean **mathematical** blueprint (no Lean code in the prose; nodes carry `\lean{}`
   and `\source{}` anchors). Build with `leanblueprint pdf` / `leanblueprint web`.

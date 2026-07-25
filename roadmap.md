@@ -64,7 +64,9 @@ functor (curve-specialized Kleiman, no Quot schemes), Albanese via Milne III.6.1
   Milne's; Euler-characteristic ledger complete.
 - [x] **Wave 3 — relative Picard functor** ✨ — cocycle `Ȟ¹(𝒪ˣ)` carrier, étale-plus construction.
 - [~] **Wave 4 — representability of `Pic⁰`** (active; `horizon roadmap list --focus AJCR.w4-rep`
-  is the authoritative breakdown — the live gate is the DD-R certificate lane)
+  is the authoritative breakdown — the live gate is the DD-R certificate lane, re-based 2026-07-25
+  on a chart-design condition: the divisor's support must avoid both vertical fibres of `π`, and the
+  adaptation must swallow or miss it)
 - [~] **Waves 5–7** — Pic⁰ abelian-variety package, Abel–Jacobi / Albanese, functoriality and
   base change of fields (each partly landed; see the structured roadmap)
 
