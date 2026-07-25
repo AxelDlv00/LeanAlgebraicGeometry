@@ -405,3 +405,79 @@ globally-certified functor is **unprovable** and is hereby RESTATED:
 
 *Filed by the DD-R orchestrator lane; roadmap comment + I-0213 acknowledgement
 posted in the same pass.*
+
+---
+
+## ADDENDUM 2 (2026-07-25, run 0048) — the certificate lane's satisfiability verdict (BINDING)
+
+ADDENDUM 1 restated DDR-9 against `DivFamZar` and asserted, as item 2, that "the universal
+family of DDR-3/4 is honestly certified over each `Z(♦)`-chart ring". That assertion has never
+been proved, and this addendum records what is now known about it — three theorems, all
+kernel-checked warning-free, all in the default build.
+
+### 1. The per-piece clause is a chart statement
+
+`Picard/DivSchemeCertZarChartTrace.lean` (commit `49866bdd1`). A `FinCoverData` carries a
+partition of unity on **each** pinned chart, so the chart-`b` pieces cover all of `V_b` and
+
+  `supportLocus ∩ V_b = ⋃_j (supportLocus ∩ pieces_b j)`.
+
+A finite union of closed sets is closed, hence the assembler's `hnoLeak`
+(`isCertified_of_noLeak_kernel_spanning`) implies that **both chart traces are closed in the
+relative curve** — a statement in which neither the adaptation nor its pieces appear
+(`isClosed_supportLocus_inter_chart_of_forall_noLeak`). Contrapositive
+`not_forall_noLeak_of_not_isClosed_chart₀`.
+
+Two consequences bind future work. Refining the cover cannot help: the union of the traces is
+the fixed set `supportLocus ∩ V_b`, so a finer cover only imposes more closed-trace
+constraints on the same union. And shrinking the base does not move the condition; it restates
+it over the smaller base.
+
+### 2. The shape that works: swallow or miss
+
+`Picard/DivSchemeCertZarSwallow.lean` (commit `206967379`). If every piece either contains the
+whole support or misses it, `hnoLeak` and clause (c1)-finite follow at every piece with no
+fibre, no tube and no packet idempotent. A missing piece has a **unit** equation, so its
+colength module vanishes and needs no fibrewise regularity input either.
+
+### 3. The verdict
+
+`Picard/DivSchemeCertZarConn.lean` (commit `40f357de8`). Leak-freeness makes a piece trace
+closed and the piece is open, so the trace is **clopen in the support**; a preconnected support
+therefore forces it to be empty or total. Hence, for a connected divisor, swallow-or-miss is
+not an extra hypothesis — it is what leak-freeness already says — and with `relCover_sup`:
+
+> `supportLocus_subset_chart_of_isPreconnected` : a connected divisor whose adaptation is
+> leak-free at every piece satisfies `supportLocus ⊆ V₀` **or** `supportLocus ⊆ V₁`.
+
+So `IsCertified`, whose clause (c1) forces leak-freeness, is satisfiable for a connected
+divisor **only** if that divisor avoids `π⁻¹(0)` or avoids `π⁻¹(∞)`. Base localization cannot
+repair this, because it does not disconnect the divisor: `Spec (R[x]/(x²−t))` over `R = k[t]`
+is connected over every basic open of `Spec R`. The I-0209 clopen-packet programme is therefore
+available exactly when the divisor is already chart-confined.
+
+### 4. What this obliges the DD-R design to decide
+
+Exactly one question, and it is a design question, not a lemma hunt:
+
+**Does the `Z(♦)` chart confine its divisors to a single pinned chart of `π`?**
+
+* **If yes** — then ADDENDUM 1 item 2 is correct and the remaining certificate work is
+  bookkeeping: build the two-piece-per-chart adaptation (a swallowing piece plus its comaximal
+  complement, via `DivisorAdaptation.ofAnchors`), and the Čech complex then has at most one
+  nontrivial piece per chart, so clauses (c2)/(c3)/(c4) — hence `hinj`, which is *provably*
+  clause (c4) — should be free rather than proved. That is roadmap leaf
+  `…certificate.cert-collapse`, and it is the single highest-value experiment in the lane: if
+  it lands, `away-kerspan` is retired, not solved.
+* **If no** — then the atlas must add the avoidance as a carve (it is an open condition, so a
+  carve is legitimate), **or** `IsCertified`/`DivFamZar` must be redesigned, because a functor
+  that cannot see chart-crossing divisors is not the divisor functor and `divRep` against it
+  would represent the wrong thing.
+
+The theta side is the tractable half of the yes-case: `K ⊆ H⁰(Θᵃ)` with `Θ = π⁻¹(∞)`, and a
+generator of exact pole order `a` has no zero on `Θ`, so `supportLocus ∩ π⁻¹(∞) = ∅` should
+follow from the seed's own exactness data.
+
+Roadmap leaves: `…certificate.chart-avoid` (the decision), `…certificate.swallow-adapt` (the
+construction), `…certificate.cert-collapse` (the collapse), `…certificate.cert-assemble` (the
+composition, plus four missing Away-transport bricks). Memory: I-0327.
