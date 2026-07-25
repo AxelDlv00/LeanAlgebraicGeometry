@@ -482,7 +482,6 @@ We write \(\ell(D) = \dim_k L(D)\),
   \label{thm:adelic_affine_h1_vanishing}
   \lean{AlgebraicGeometry.Scheme.subsingleton_hModule'_one_toModuleKSheaf_of_isAffineOpen}
   \leanok
-  \uses{lem:affine_serre_vanishing}
   If \(U\subseteq C\) is affine, then
   \(H^1(U,\struct C|_U)=0\).  In particular this holds for both members
   of an affine Mayer--Vietoris square.
@@ -1004,7 +1003,6 @@ base change from the degree-zero away rings of
     thm:adelic_finiteDimensional_cokernel_zero,
     thm:adelic_exists_finiteMorphismToP1,
     thm:adelic_P1_laurent_chart_data, def:genus}
-  \source{papaioannou-algebraic-rr:page-0009}
   If \(C\) is smooth and proper with geometrically integral fibres, then
   \[
     \Module.\Finite\ k\ \bigl(\HModule\, k\, (\toModuleKSheaf C)\, 1\bigr).
@@ -1301,7 +1299,7 @@ Euler-characteristic calculation.
 [The ground field has order zero]
   \label{thm:adelic_constant_field_order_zero}
   \lean{AlgebraicGeometry.Adelic.IsConstantField,
-    AlgebraicGeometry.Scheme.RationalMap.order_algebraMap_eq_zero_of_isUnit}
+    AlgebraicGeometry.Scheme.isConstantField_functionField}
   \leanok
   \uses{def:adelic_pointValuation}
   The structure morphism embeds \(k\) in \(K\), and every nonzero
@@ -1423,10 +1421,13 @@ Euler-characteristic calculation.
   \]
 \end{proposition}
 \begin{proof}
-  Divisors are finitely supported.  A quasi-coherent sheaf supported on a
-  finite set of closed points is the direct sum of its local pieces: choose
-  pairwise disjoint affine neighbourhoods inside the zero-dimensional
-  support and glue the corresponding stalk sections by zero.
+  Divisors are finitely supported.  The coherent quotient is the pushforward
+  of a module on a finite closed subscheme \(Z\subset C\) with this support.
+  The finite scheme \(Z\) is affine, and its Artinian coordinate ring is the
+  product of its local Artinian factors.  The corresponding module therefore
+  decomposes as the direct sum of its localizations at the points of \(Z\),
+  which are precisely the stalks \(\mathcal T_P\).  Taking global sections of
+  the finite pushforward gives the displayed isomorphism.
 \end{proof}
 
 \begin{proposition}[The one-point stalk quotient]
@@ -1457,7 +1458,6 @@ Euler-characteristic calculation.
   \uses{thm:adelic_finite_support_quotient_sections,
     thm:adelic_twist_stalk_quotient,
     def:adelic_divisor_degree}
-  \source{papaioannou-algebraic-rr:page-0010}
   For \(D \le D'\) the skyscraper section space is finite-dimensional
   with
   \[
@@ -1517,38 +1517,63 @@ Euler-characteristic calculation.
 \end{definition}
 
 \begin{theorem}[Global regular functions are constants]
-  \label{thm:adelic_ell_zero}
+  \label{thm:adelic_global_sections_constants}
   \lean{AlgebraicGeometry.Scheme.globalSectionsAlgEquivBase,
     AlgebraicGeometry.Scheme.unitTopSectionsEquivBase,
     AlgebraicGeometry.Scheme.AffineCoverMVSquare.h0_unit_eq_one}
   \leanok
-  \uses{def:adelic_divisorial_sheaf}
   The structure map induces a \(k\)-algebra equivalence
   \[
     \Gamma(C,\struct C)\simeq_k k.
   \]
-  Consequently \(L(0)=k\) and \(\ell(0)=1\).
+  Equivalently, the zeroth cohomology of the structure sheaf has dimension
+  one on every affine Mayer--Vietoris square.
 \end{theorem}
 \begin{proof}
   \leanok
   Proper geometric integrality identifies the global section ring with the
-  base field.  The zero divisorial sheaf is the structure sheaf, and its
-  valuation description identifies \(L(0)\) with those global sections.
+  base field; the cover kernel is the global section space.
+\end{proof}
+
+\begin{corollary}[The base value of the divisor ledger]
+  \label{thm:adelic_ell_zero}
+  \uses{thm:adelic_global_sections_constants,
+    def:adelic_divisorial_sheaf, def:adelic_sectionOfDivisor}
+  The zero divisorial sheaf is the structure sheaf, its valuation-defined
+  global sections satisfy \(L(0)=k\), and therefore \(\ell(0)=1\).
+\end{corollary}
+\begin{proof}
+  The local condition \(v_P(f)\ge0\) at every prime divisor says precisely
+  that the rational function \(f\) is regular everywhere on the regular
+  curve.  Thus \(L(0)=\Gamma(C,\struct C)\), and
+  \Cref{thm:adelic_global_sections_constants} identifies this space with
+  \(k\).
 \end{proof}
 
 \begin{theorem}
-[The twist-ledger alternating dimension identity]
+[Conditional overlap-ledger identity]
   \label{thm:adelic_ledger_alternating}
   \leanok
   \lean{AlgebraicGeometry.Adelic.ledger_alternating}
-  \uses{lem:adelic_finrank_alternating_exact4, thm:adelic_windowMap_injective, def:adelic_chi_ledger, thm:adelic_twist_exact_sequence}
-  For the four-term exact sequence of
-  \Cref{thm:adelic_twist_exact_sequence}, between finite-dimensional
-  \(k\)-vector spaces,
+  \uses{lem:adelic_finrank_alternating_exact4,
+    thm:adelic_windowMap_injective, def:adelic_chi_ledger}
+  Put \(V=U_0\cap U_1\).  Suppose the four displayed spaces are
+  finite-dimensional and the window, connecting, and twist maps form an
+  exact sequence
+  \[
+    0\longrightarrow L(D')/L(D)
+      \longrightarrow \Gamma(V,\struct C(D'))/\Gamma(V,\struct C(D))
+      \longrightarrow\check H^1_{\mathrm{ff}}(D)
+      \longrightarrow\check H^1_{\mathrm{ff}}(D')\longrightarrow0.
+  \]
+  Then
   \[
     \dim_k\bigl(L(D')/L(D)\bigr) - \dim_k\bigl(\Gamma(V,\struct{C}(D'))/
       \Gamma(V,\struct{C}(D))\bigr) + h^1(D) - h^1(D') = 0.
   \]
+  For the canonical window map, injectivity follows from
+  \Cref{thm:adelic_windowMap_injective} when \(D'-D\) is supported on
+  \(V\); exactness at the other terms remains a separate hypothesis here.
 \end{theorem}
 \begin{proof}
   \leanok
@@ -1565,13 +1590,13 @@ Euler-characteristic calculation.
     AlgebraicGeometry.Adelic.chi_add_eq_residueDeg}
   \uses{thm:adelic_ledger_alternating,
     thm:adelic_local_step_dim_eq_residue_degree}
-  Under the hypotheses of \Cref{thm:adelic_ledger_alternating} for
-  \(D \le D'\),
+  Under the exactness and finite-dimensionality hypotheses of
+  \Cref{thm:adelic_ledger_alternating} for \(D\le D'\),
   \[
     \chi(D') \;=\; \chi(D) + \dim_k\bigl(\Gamma(V,\struct{C}(D'))/
       \Gamma(V,\struct{C}(D))\bigr).
   \]
-  For a one-point bump \(D'=D+P\), the approximation hypothesis of
+  For a one-point bump \(D'=D+P\) with \(P\in V\), the approximation hypothesis of
   \Cref{thm:adelic_local_step_dim_eq_residue_degree} gives
   \(\chi(D+P)=\chi(D)+\deg_P^{\mathrm{val}}\).
 \end{theorem}
@@ -1727,14 +1752,45 @@ Euler-characteristic calculation.
 \section{Weil differentials and duality}
 \label{sec:RiemannRoch_Adelic_duality}
 
-The residue pairing identifies the dual of the twist cokernel with a
-space of Weil differentials.  A fixed nonzero differential then turns
-this space into an ordinary Riemann--Roch space.
+The adelic evaluation pairing identifies the dual of the twist cokernel
+with a space of Weil differentials.  A fixed nonzero differential then
+turns this space into an ordinary Riemann--Roch space.
+
+\begin{proposition}[The principal-parts resolution]
+  \label{thm:adelic_principal_parts_resolution}
+  \notready
+  \uses{def:adelic_divisorial_sheaf, def:adelic_orderGe}
+  Let \(\mathcal K\) be the sheaf of rational functions and let
+  \[
+    \mathcal P_D=
+      \bigoplus_P i_{P,*}
+        \bigl(K/\mathfrak G_P^{\ge-D(P)}\bigr).
+  \]
+  There is an exact sequence
+  \[
+    0\longrightarrow\struct C(D)\longrightarrow\mathcal K
+      \longrightarrow\mathcal P_D\longrightarrow0,
+  \]
+  in which \(\mathcal K\) and \(\mathcal P_D\) are flasque, and
+  \(\Gamma(C,\mathcal P_D)\simeq
+    \mathbb A_K/\mathbb A_K(D)\).
+\end{proposition}
+\begin{proof}
+  Exactness is stalkwise.  At the generic point the first arrow is the
+  identity of \(K\).  At a closed point \(P\), its kernel is the
+  fractional ideal \(\mathfrak G_P^{\ge-D(P)}\), and the quotient is the
+  displayed principal-parts module.  The rational-function sheaf is
+  constant on nonempty opens of the integral curve and is flasque; each
+  skyscraper summand is flasque, and a finite-support section of their
+  direct sum extends componentwise.  Finally an adele modulo
+  \(\mathbb A_K(D)\) records exactly its finitely many nonzero principal
+  parts, which gives the global-section isomorphism.
+\end{proof}
 
 \begin{proposition}[Adelic and two-chart cohomology agree]
   \label{thm:adelic_adele_cover_compare}
   \notready
-  \uses{def:adelic_divisorial_sheaf,
+  \uses{thm:adelic_principal_parts_resolution,
     thm:adelic_function_field_H1_compare}
   For every divisor \(D\),
   \[
@@ -1744,33 +1800,51 @@ this space into an ordinary Riemann--Roch space.
   \]
 \end{proposition}
 \begin{proof}
-  The standard restricted-product adelic complex
-  \[
-    0\longrightarrow K\oplus\mathbb A_K(D)
-      \longrightarrow\mathbb A_K\longrightarrow0
-  \]
-  computes the cohomology of \(\struct C(D)\); its degree-one cohomology is
-  \(\mathbb A_K/(\mathbb A_K(D)+K)\).  Thus the left side is
+  Taking global sections of
+  \Cref{thm:adelic_principal_parts_resolution} identifies its degree-one
+  cohomology with the cokernel of
+  \(K\to\mathbb A_K/\mathbb A_K(D)\), namely
+  \(\mathbb A_K/(\mathbb A_K(D)+K)\).  Thus this quotient is
   \(H^1(C,\struct C(D))\), which is the two-chart quotient by
   \Cref{thm:adelic_function_field_H1_compare}.
 \end{proof}
 
-\begin{proposition}
-[The Weil-differential pairing]
+\begin{definition}[Weil differentials]
+  \label{def:adelic_weil_differentials}
+  \uses{thm:adelic_adele_cover_compare}
+  \source{papaioannou-algebraic-rr:page-0011}
+  A Weil differential is a \(k\)-linear form on \(\mathbb A_K\) that
+  vanishes on \(\mathbb A_K(E)+K\) for some divisor \(E\).  Write
+  \(\Omega_K\) for their union and
+  \[
+    \Omega_K(D)=
+      \{\eta\in\Omega_K:\eta(\mathbb A_K(D)+K)=0\}.
+  \]
+  Multiplication by \(x\in K\) is defined by
+  \((x\eta)(\alpha)=\eta(x\alpha)\).
+\end{definition}
+\begin{proof}[Closure under the vector-space operations]
+  If \(\eta\) vanishes on \(\mathbb A_K(E)+K\) and \(\theta\) vanishes
+  on \(\mathbb A_K(F)+K\), then both vanish on
+  \(\mathbb A_K(\min(E,F))+K\), where the minimum is taken
+  coefficientwise.  Hence so does \(\eta+\theta\).  If \(x\ne0\), then
+  \[
+    x\mathbb A_K(E+\operatorname{div}(x))=\mathbb A_K(E)
+    \quad\text{and}\quad xK=K,
+  \]
+  so \((x\eta)(\alpha)=\eta(x\alpha)\) vanishes on
+  \(\mathbb A_K(E+\operatorname{div}(x))+K\).  The zero scalar is
+  immediate.
+  Thus the displayed operation makes \(\Omega_K\) a \(K\)-vector
+  space.
+\end{proof}
+
+\begin{proposition}[The Weil-differential pairing]
   \label{thm:adelic_residuePairing}
   \notready
-  \uses{def:adelic_sectionOfDivisor,
+  \uses{def:adelic_weil_differentials,
     thm:adelic_adele_cover_compare}
-  \source{papaioannou-algebraic-rr:page-0011,
-    papaioannou-algebraic-rr:page-0012}
-  Let \(\Omega_K\) be the space of Weil differentials: the \(k\)-linear
-  forms on \(\mathbb A_K\) that vanish on \(\mathbb A_K(E)+K\) for some
-  divisor \(E\).  Put
-  \[
-    \Omega_K(D)=\{\eta\in\Omega_K:\eta(\mathbb A_K(D)+K)=0\}.
-  \]
-  Equivalently,
-  \(\Omega_K(D)=\{0\}\cup\{\eta:\operatorname{div}\eta\ge D\}\).
+  \source{papaioannou-algebraic-rr:page-0011}
   Evaluation induces a canonical isomorphism
   \[
     \Omega_K(D)\simeq_k H^1_{\mathbb A}(D)^*,
@@ -1789,26 +1863,109 @@ this space into an ordinary Riemann--Roch space.
   \Cref{thm:adelic_adele_cover_compare} for the displayed pairing.
 \end{proof}
 
-\begin{proposition}[Local residue realization]
-  \label{thm:adelic_residue_realization}
+\begin{theorem}[Eventual vanishing of the adelic index]
+  \label{thm:adelic_index_eventually_zero}
   \notready
-  \uses{thm:adelic_residuePairing, def:adelic_residue_degree}
-  Under the identification of Weil differentials with rational Kähler
-  differentials, the evaluation pairing is the finite sum
-  \[
-    (\alpha,\eta)\longmapsto
-      \sum_P\operatorname{Tr}_{\kappa(P)/k}
-        \operatorname{res}_P(\alpha_P\eta).
-  \]
-  In particular the sum vanishes on principal adeles.
-\end{proposition}
+  \uses{thm:adelic_module_finite_genus,
+    thm:adelic_adele_cover_compare,
+    thm:adelic_riemann_inequality,
+    thm:adelic_principal_degree_zero}
+  There is an integer \(c\) such that
+  \(H^1_{\mathbb A}(D)=0\) whenever \(\deg D\ge c\).
+\end{theorem}
 \begin{proof}
-  If \(\alpha\in\mathbb A_K(D)\) and
-  \(\operatorname{div}\eta\ge D\), then
-  \(v_P(\alpha_P)+v_P(\eta)\ge0\), so every local residue vanishes.  The
-  global residue theorem, with residue-field traces, kills principal
-  adeles.  The construction of these residues and their identification
-  with abstract Weil differentials is the remaining formalization boundary.
+  Choose adele representatives of a basis of the finite-dimensional space
+  \(H^1_{\mathbb A}(0)\).  Every representative belongs to
+  \(\mathbb A_K(B_j)\) for some effective divisor \(B_j\); a common upper
+  bound \(B\) therefore kills the basis under the surjection
+  \(H^1_{\mathbb A}(0)\to H^1_{\mathbb A}(B)\), so the latter space is zero.
+  Put \(c=\deg B+g\).  If \(\deg D\ge c\), the Riemann inequality gives
+  \(\ell(D-B)>0\).  For nonzero \(f\in L(D-B)\), the divisor
+  \(E=D+\operatorname{div}(f)\) satisfies \(E\ge B\), hence
+  \(H^1_{\mathbb A}(E)=0\).  Multiplication by \(f^{-1}\) identifies the
+  quotients for \(D\) and \(E\), proving the claim.
+\end{proof}
+
+\begin{theorem}[The divisor of a Weil differential]
+  \label{thm:adelic_weil_differential_divisor}
+  \notready
+  \uses{def:adelic_weil_differentials,
+    thm:adelic_residuePairing,
+    thm:adelic_index_eventually_zero}
+  \source{papaioannou-algebraic-rr:page-0012}
+  For every nonzero \(\eta\in\Omega_K\) there is a unique divisor
+  \(\operatorname{div}(\eta)\) maximal among the divisors \(D\) for which
+  \(\eta\in\Omega_K(D)\).  Consequently
+  \[
+    \Omega_K(D)=\{0\}\cup
+      \{\eta\ne0:\operatorname{div}(\eta)\ge D\}.
+  \]
+\end{theorem}
+\begin{proof}
+  The set \(M(\eta)=\{D:\eta\in\Omega_K(D)\}\) is nonempty by the
+  definition of a Weil differential.  If \(D\in M(\eta)\), then \(\eta\)
+  gives a nonzero functional on \(H^1_{\mathbb A}(D)\); hence
+  \Cref{thm:adelic_index_eventually_zero} bounds the degrees occurring in
+  \(M(\eta)\).  Choose \(W\in M(\eta)\) of maximal degree.  If
+  \(D_0\in M(\eta)\) and \(D_0(Q)>W(Q)\), decompose any
+  \(\alpha\in\mathbb A_K(W+Q)\) into the adele supported away from \(Q\)
+  and the adele supported at \(Q\).  The first lies in \(\mathbb A_K(W)\)
+  and the second in \(\mathbb A_K(D_0)\), so \(\eta(\alpha)=0\).  Thus
+  \(W+Q\in M(\eta)\), contradicting maximality.  Therefore every
+  \(D\in M(\eta)\) satisfies \(D\le W\), which proves existence,
+  uniqueness, and the displayed characterization.
+\end{proof}
+
+\begin{theorem}[Scaling a differential]
+  \label{thm:adelic_weil_differential_divisor_mul}
+  \notready
+  \uses{thm:adelic_weil_differential_divisor}
+  \source{papaioannou-algebraic-rr:page-0012}
+  For \(x\in K^\times\) and \(0\ne\eta\in\Omega_K\),
+  \[
+    \operatorname{div}(x\eta)
+      =\operatorname{div}(x)+\operatorname{div}(\eta).
+  \]
+\end{theorem}
+\begin{proof}
+  Multiplication by \(x\) carries \(\mathbb A_K(E)\) isomorphically onto
+  \(\mathbb A_K(E-\operatorname{div}(x))\).  Hence
+  \(x\eta\in\Omega_K(E)\) exactly when
+  \(\eta\in\Omega_K(E-\operatorname{div}(x))\).  Comparing the unique
+  maximal divisors on the two sides gives the formula.
+\end{proof}
+
+\begin{theorem}[One-dimensionality of Weil differentials]
+  \label{thm:adelic_weil_differentials_finrank_one}
+  \notready
+  \uses{thm:adelic_residuePairing,
+    thm:adelic_weil_differential_divisor,
+    thm:adelic_weil_differential_divisor_mul,
+    thm:adelic_riemann_inequality,
+    thm:adelic_negative_degree_vanishing,
+    thm:adelic_chi_eq_chi_zero_add_degree}
+  \source{papaioannou-algebraic-rr:page-0011,
+    papaioannou-algebraic-rr:page-0012}
+  The \(K\)-vector space \(\Omega_K\) is one-dimensional.
+\end{theorem}
+\begin{proof}
+  First \(\Omega_K\ne0\): for \(\deg D\ll0\), the identity
+  \(i(D)=\ell(D)-\deg D-1+g\) makes \(i(D)>0\), so
+  \(\Omega_K(D)\simeq H^1_{\mathbb A}(D)^*\) is nonzero.  Choose
+  \(0\ne\eta_i\in\Omega_K(D_i)\) for \(i=1,2\).  For an effective
+  divisor \(B\) of sufficiently large degree, multiplication gives
+  injections
+  \[
+    L(D_i+B)\hookrightarrow\Omega_K(-B),\qquad x\longmapsto x\eta_i.
+  \]
+  The Riemann inequality bounds the two source dimensions below by
+  \(\deg(D_i+B)+1-g\), while negative-degree vanishing and the
+  \(\chi\)-identity give
+  \(\dim_k\Omega_K(-B)=i(-B)=\deg B+g-1\).  For \(\deg B\) large, the
+  two images therefore have positive-dimensional intersection.  Thus
+  \(x_1\eta_1=x_2\eta_2\ne0\) for some \(x_i\in K^\times\), and
+  \(\eta_2=(x_1/x_2)\eta_1\).  Every two nonzero differentials are
+  proportional.
 \end{proof}
 
 \begin{theorem}
@@ -1816,7 +1973,9 @@ this space into an ordinary Riemann--Roch space.
   \label{thm:adelic_serreDuality}
   \notready
   \uses{thm:adelic_residuePairing,
-    thm:adelic_adele_cover_compare}
+    thm:adelic_adele_cover_compare,
+    thm:adelic_weil_differentials_finrank_one,
+    thm:adelic_weil_differential_divisor_mul}
   \source{papaioannou-algebraic-rr:page-0011,
     papaioannou-algebraic-rr:page-0012,
     papaioannou-algebraic-rr:page-0013}
@@ -1831,8 +1990,9 @@ this space into an ordinary Riemann--Roch space.
   so that \(i(D)=\dim_k\check H^1_{\mathrm{ff}}(D)=\ell(K_C-D)\).
 \end{theorem}
 \begin{proof}
-  The space \(\Omega_K\) is one-dimensional over \(K\), so every Weil
-  differential is uniquely \(x\omega\).  Moreover
+  By \Cref{thm:adelic_weil_differentials_finrank_one}, every Weil
+  differential is uniquely \(x\omega\).  By
+  \Cref{thm:adelic_weil_differential_divisor_mul},
   \(\operatorname{div}(x\omega)=\operatorname{div}(x)+K_C\); hence
   \[
     x\omega\in\Omega_K(D)
