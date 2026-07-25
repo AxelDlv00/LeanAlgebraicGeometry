@@ -331,9 +331,20 @@ For every pair chart `(i, j)`, at the campaign instantiation
 * G-4-internal (behind the interface, per spec-w4-gates Addendum 1 G-4): the seed
   from fibrewise P-fib-N (`existsUnique_effective_divisor_of_carve_pack`,
   `RiemannRoch/PFibPack.lean`, I-0233, fed by `divUniversal_carve_residueField`),
-  the certificate discharge, DDR-5's `hle₂` — all gated on the I-0234 windowS
-  strengthening (b+2g → b+3g) and its full-rebuild window.  None of these names
-  crosses the interface.
+  the certificate discharge, DDR-5's `hle₂`.  None of these names crosses the
+  interface.
+  **CORRECTION 2026-07-26 (run 0048 round 2).**  This bullet used to end "all gated on
+  the I-0234 windowS strengthening (b+2g → b+3g) and its full-rebuild window".  THAT
+  STRENGTHENING IS DONE: `windowS_choice` satisfies `windowS_spec_three : windowBound +
+  3g ≤ (s−1)·δ` (`RiemannRoch/WindowLedger.lean:157`; `windowS_spec` is kept at 2g only
+  for byte compatibility with pre-I-0234 consumers), and I-0234 is archived.  The lane
+  quoted this discharged blocker as live for several rounds.  What U2 is *actually*
+  gated on is the certificate discharge — `ThetaGeneratorSeed.certifiedFamily`
+  (`Picard/DivSchemeEps.lean:237`) demands a global `IsCertified` over the chart ring —
+  i.e. mountain 1.  The seed itself exists (`Picard/DivSchemeSeedUnivGen.lean:283`) and
+  the fibrewise keystone is proved
+  (`existsUnique_effective_divisor_divUniversalFibre`,
+  `Picard/DivSchemeSeedUnivAssembleKappa.lean:417`, `:481`).
 
 ### §3.2 DDR-9.F0 — KeyChart + Over packaging (NEW, launchable now)
 

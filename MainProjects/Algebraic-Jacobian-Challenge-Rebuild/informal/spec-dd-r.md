@@ -644,6 +644,28 @@ all, and the counterexample of §1(c) is field-independent, so the obstruction i
 That is roadmap leaf `certificate.field-size` and inbox I-0346. Read the corrigendum before
 acting on §5 or §6.
 
+### ADDENDUM 3 — SECOND CORRIGENDUM (2026-07-26, run 0048 round 2, from the round's ground review)
+
+**The counterexample is off-stratum, and the record should say so.**  `F = tX² + XY + tY²`
+over `k[t]` is a degree-2 divisor with `C = ℙ¹`, `π = id` — i.e. **genus 0**.  But the
+campaign's functor is `DivFamZar C S π g` with `g` pinned to the genus by the standing
+`hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 − g`, and `IsCertified n`'s clause (c2) fixes the
+glued colength's fibre rank to `n = deg D` (`Picard/DivisorFamily.lean:426-437`).  On-stratum:
+`g = 0` is vacuous (empty support), and `g = 1` is a section whose support locus is all of
+`Spec R`, so a base shrink evades it.  **The no-go bites at `g ≥ 2`, and no witness has been
+exhibited there.**
+
+The *structural* argument of §1 is degree-agnostic — every piece of `FinCoverData` is a basic
+open of one of the two pinned charts (`Picard/DivisorFamily.lean:166`, `:168`, `:186`), and
+per-piece swallow-or-miss needs only openness — so the conclusion is very probably right at
+every genus.  But ADDENDUM 3 claims an *explicit counterexample* on the campaign's own
+stratum, and it does not have one.  Either exhibit a genus-≥2 witness or downgrade the claim
+to the structural argument alone.  Filed as I-0356.
+
+Unaffected by this: the DivEq-invariance of the obstruction, the base-openness of
+confinement, and the rejection of the joint-covering repair (which is a typing fact about
+`FinCoverData`, not a degree fact).
+
 ### ADDENDUM 3 — CORRIGENDUM (same round, after an adversarial pass)
 
 The negative half above (§1, §2, §4) survived refutation. The positive half (§3, §5) did not
