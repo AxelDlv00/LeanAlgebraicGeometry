@@ -184,6 +184,7 @@ noncomputable def glueResHom {Z' Z : Scheme.{0}} (p : Z' ⟶ Z) (u : Z ⟶ T.lef
   Over.homMk p (Category.assoc p u T.hom).symm
 
 set_option backward.isDefEq.respectTransparency false in
+omit [IsLocallyNoetherian S] in
 /-- **Composite restriction of a quotient family** — the reusable content of
 the `map_comp` law of the Grassmannian functor: restricting along `φ ≫ ψ` is,
 through the pseudofunctor comparison, the double restriction. -/
@@ -236,11 +237,10 @@ lemma triangleIso_cast_coherence {P Uk Ul G Sb : Scheme.{0}}
   have cohσ := Scheme.Modules.pullback_comp_app_coherence σ ι' rfl a rfl
     (Category.assoc σ ι' a) rfl M
   simp only [Scheme.Modules.pullbackCongr_hom_app, Scheme.Modules.pullbackCongr_inv_app,
-    eqToHom_refl, Category.comp_id, Category.id_comp, Category.assoc,
-    Functor.map_comp] at cohf cohσ
+    eqToHom_refl, Category.comp_id, Category.id_comp] at cohf cohσ
   simp only [pullbackTriangleIso, Iso.trans_hom, Iso.trans_inv, Iso.app_hom, Iso.app_inv,
     Scheme.Modules.pullbackCongr_hom_app, Scheme.Modules.pullbackCongr_inv_app,
-    eqToHom_refl, Category.comp_id, Category.id_comp, Category.assoc]
+    eqToHom_refl, Category.comp_id]
   -- fold the two coherence squares in
   rw [← reassoc_of% cohf]
   -- solve `cohσ` for the pulled-back triangle
@@ -253,15 +253,14 @@ lemma triangleIso_cast_coherence {P Uk Ul G Sb : Scheme.{0}}
         (Scheme.Modules.pullbackComp σ (ι' ≫ a)).inv.app M := by
     have h1 := congrArg
       (· ≫ (Scheme.Modules.pullbackComp σ (ι' ≫ a)).inv.app M) cohσ
-    simp only [Category.assoc, Iso.hom_inv_id_app, Category.comp_id] at h1
+    simp only [Category.assoc, Iso.hom_inv_id_app] at h1
     exact h1.symm
   rw [cohσ']
   simp only [Iso.inv_hom_id_app_assoc]
   -- transport `pullbackComp` along the square `hpc`
   rw [Scheme.Modules.pullbackComp_hom_app_congr_fst hpc a M]
-  simp only [Scheme.Modules.pullbackCongr_hom_app, Category.assoc, eqToHom_trans,
-    eqToHom_trans_assoc, eqToHom_refl, Category.comp_id, Category.id_comp,
-    Iso.inv_hom_id_app_assoc]
+  simp only [Scheme.Modules.pullbackCongr_hom_app, Category.assoc, eqToHom_trans_assoc,
+    eqToHom_refl, Category.id_comp]
 
 variable {κ : Type} (W : κ → T.left.Opens)
 
@@ -290,6 +289,7 @@ namespace IsGlueIso
 
 variable {W y}
 
+omit [IsLocallyNoetherian S] in
 /-- Uniqueness of gluing isomorphisms: the restricted quotient map is an
 epimorphism, so at most one isomorphism intertwines. -/
 lemma eq {k l : κ} {Z : Scheme.{0}} {ρ : Z ⟶ (W k).toScheme}
@@ -302,6 +302,7 @@ lemma eq {k l : κ} {Z : Scheme.{0}} {ρ : Z ⟶ (W k).toScheme}
   exact Scheme.Modules.comm_iso_unique
     (Scheme.LocallyFreeQuotient.pullbackAlong (chartRes W k ρ hρ) (y k)).q hα hβ
 
+omit [IsLocallyNoetherian S] in
 /-- Gluing isomorphisms compose. -/
 lemma trans {k l m : κ} {Z : Scheme.{0}} {ρ : Z ⟶ (W k).toScheme}
     {σ : Z ⟶ (W l).toScheme} {τ : Z ⟶ (W m).toScheme} {u : Z ⟶ T.left}
@@ -316,6 +317,7 @@ lemma trans {k l m : κ} {Z : Scheme.{0}} {ρ : Z ⟶ (W k).toScheme}
       (Scheme.LocallyFreeQuotient.pullbackAlong (chartRes W k ρ hρ) (y k)).q
       α.hom β.hom).symm.trans ((congrArg (· ≫ β.hom) hα).trans hβ)
 
+omit [IsLocallyNoetherian S] in
 /-- Gluing isomorphisms invert. -/
 lemma symm {k l : κ} {Z : Scheme.{0}} {ρ : Z ⟶ (W k).toScheme}
     {σ : Z ⟶ (W l).toScheme} {u : Z ⟶ T.left}
@@ -329,6 +331,7 @@ end IsGlueIso
 
 variable {W} {y}
 
+omit [IsLocallyNoetherian S] in
 /-- The canonical cast is a gluing isomorphism (diagonal case): transporting
 along an equality `ρ = σ` of restriction maps to the *same* chart. -/
 lemma isGlueIso_eqToIso (k : κ) {Z : Scheme.{0}} {ρ σ : Z ⟶ (W k).toScheme}
@@ -340,6 +343,7 @@ lemma isGlueIso_eqToIso (k : κ) {Z : Scheme.{0}} {ρ σ : Z ⟶ (W k).toScheme}
   exact Category.comp_id _
 
 set_option backward.isDefEq.respectTransparency false in
+omit [IsLocallyNoetherian S] in
 /-- **Base change of gluing isomorphisms**: the `pullbackBaseChangeTransport`
 of a gluing isomorphism along `p : Z' ⟶ Z` is again a gluing isomorphism
 (over the total map `p ≫ u`).  This is the naturality input to the
@@ -367,8 +371,7 @@ lemma IsGlueIso.baseChange {k l : κ} {Z : Scheme.{0}} {ρ : Z ⟶ (W k).toSchem
           (Scheme.Modules.pullbackCongr
             (Over.comp_left _ _ _ (glueResHom p u) (chartRes W k ρ hρ))).inv.app (y k).F) := by
     rw [← hAk]
-    simp only [Category.assoc, Iso.inv_hom_id_app_assoc, Iso.hom_inv_id_app,
-      Category.comp_id, Iso.inv_hom_id_app]
+    simp only [Category.assoc, Iso.inv_hom_id_app_assoc, Iso.hom_inv_id_app]
     exact (Category.comp_id _).symm
   have hl' : (Scheme.LocallyFreeQuotient.pullbackAlong
         (glueResHom p u ≫ chartRes W l σ hσ) (y l)).q
@@ -379,8 +382,7 @@ lemma IsGlueIso.baseChange {k l : κ} {Z : Scheme.{0}} {ρ : Z ⟶ (W k).toSchem
           (Scheme.Modules.pullbackCongr
             (Over.comp_left _ _ _ (glueResHom p u) (chartRes W l σ hσ))).inv.app (y l).F) := by
     rw [← hAl]
-    simp only [Category.assoc, Iso.inv_hom_id_app_assoc, Iso.hom_inv_id_app,
-      Category.comp_id, Iso.inv_hom_id_app]
+    simp only [Category.assoc, Iso.inv_hom_id_app_assoc, Iso.hom_inv_id_app]
     exact (Category.comp_id _).symm
   -- restate the goal through the composite restrictions
   change (Scheme.LocallyFreeQuotient.pullbackAlong
@@ -414,7 +416,7 @@ lemma IsGlueIso.baseChange {k l : κ} {Z : Scheme.{0}} {ρ : Z ⟶ (W k).toSchem
   rw [show (Scheme.Modules.pullbackCongr
       (Over.comp_left _ _ _ (glueResHom p u) (chartRes W l σ hσ))).inv.app (y l).F
     = 𝟙 _ from rfl]
-  simp only [Category.id_comp, Category.comp_id, Category.assoc]
+  simp only [Category.comp_id, Category.assoc]
   -- cancel `pullbackComp` against its inverse and fuse the pullback maps
   rw [show (Scheme.Modules.pullbackComp (glueResHom p u).left
       (chartRes W k ρ hρ).left).hom.app (y k).F
@@ -431,6 +433,7 @@ lemma IsGlueIso.baseChange {k l : κ} {Z : Scheme.{0}} {ρ : Z ⟶ (W k).toSchem
   rw [← Functor.map_comp_assoc, hα]
   rfl
 
+omit [IsLocallyNoetherian S] in
 /-- Reindexing the total map of a gluing isomorphism along an equality. -/
 lemma IsGlueIso.reindex {k l : κ} {Z : Scheme.{0}} {ρ : Z ⟶ (W k).toScheme}
     {σ : Z ⟶ (W l).toScheme} {u u' : Z ⟶ T.left}
@@ -450,6 +453,7 @@ lemma _root_.AlgebraicGeometry.Scheme.Modules.pullbackCongr_app_eqToIso
   subst h
   exact Iso.ext (Scheme.Modules.pullbackCongr_hom_app rfl M)
 
+omit [IsLocallyNoetherian S] in
 /-- The `pullbackCongr` cast attached to an equality of restriction maps to the
 same chart is a gluing isomorphism. -/
 lemma isGlueIso_pullbackCongr (k : κ) {Z : Scheme.{0}} {ρ σ : Z ⟶ (W k).toScheme}
@@ -495,6 +499,7 @@ variable {κ : Type} (W : κ → T.left.Opens) (hW : ⨆ k, W k = ⊤)
 @[reducible] noncomputable def covGD : Scheme.GlueData.{0} :=
   (opensCover T.left W hW).gluedCover
 
+omit [IsLocallyNoetherian S] in
 /-- The second projection of the cover overlap, composed with the inclusion of
 its chart, agrees with the first: the glue condition of the cover glue datum
 over `T.left`. -/
@@ -504,6 +509,7 @@ lemma glueSnd_ι (k l : κ) :
       = (covGD W hW).f k l ≫ (W k).ι :=
   gluedCover_glue_base (opensCover T.left W hW) k l
 
+omit [IsLocallyNoetherian S] in
 /-- The chart immersions of the cover glue datum, composed into `S` through
 `fromGlued ≫ T.hom`, are the chart structure maps. -/
 lemma glueChart_w (k : κ) :
@@ -512,6 +518,7 @@ lemma glueChart_w (k : κ) :
       = (W k).ι ≫ T.hom :=
   gluedCover_ι_w (opensCover T.left W hW) k T.hom
 
+omit [IsLocallyNoetherian S] in
 /-- The canonical isomorphism `fromGlued` of the cover glue datum is an
 isomorphism (named access to the mathlib instance). -/
 lemma fromGlued_isIso : IsIso ((opensCover T.left W hW).fromGlued) :=
@@ -522,6 +529,7 @@ datum. -/
 noncomputable def fromGluedInv :=
   @inv Scheme _ _ _ ((opensCover T.left W hW).fromGlued) (fromGlued_isIso W hW)
 
+omit [IsLocallyNoetherian S] in
 @[reassoc]
 lemma fromGluedInv_fromGlued :
     fromGluedInv W hW ≫ (opensCover T.left W hW).fromGlued = 𝟙 T.left :=
@@ -532,8 +540,9 @@ lemma fromGluedInv_fromGlued :
 noncomputable def fromGluedHom :
     T ⟶ Over.mk ((opensCover T.left W hW).fromGlued ≫ T.hom) :=
   Over.homMk (fromGluedInv W hW)
-    (by show fromGluedInv W hW ≫ (opensCover T.left W hW).fromGlued ≫ T.hom = T.hom
-        rw [← Category.assoc, fromGluedInv_fromGlued, Category.id_comp])
+    (by
+      change fromGluedInv W hW ≫ (opensCover T.left W hW).fromGlued ≫ T.hom = T.hom
+      rw [← Category.assoc, fromGluedInv_fromGlued, Category.id_comp])
 
 /-- The `k`-th chart morphism `T|_{W k} ⟶ (glued base)` in `Over S`. -/
 noncomputable def glueChartHom (k : κ) :
@@ -580,10 +589,12 @@ noncomputable def glueTransition (k l : κ) :
       (covGD W hW).f l k)).obj (y l).F :=
   (hcpt k l).choose
 
+omit [IsLocallyNoetherian S] in
 lemma glueTransition_isGlueIso (k l : κ) :
     IsGlueIso W y k l rfl (glueSnd_ι W hW k l) (glueTransition hcpt k l) :=
   (hcpt k l).choose_spec
 
+omit [IsLocallyNoetherian S] in
 /-- **(C1)**: the diagonal transition isomorphism is the canonical cast.  Both
 sides are gluing isomorphisms for the same pair of restrictions, and gluing
 isomorphisms are unique. -/
@@ -602,6 +613,7 @@ lemma glueTransition_self (k : κ) :
         rw [(covGD W hW).t_id k, Category.id_comp])
       rfl (glueSnd_ι W hW k k))
 
+omit [IsLocallyNoetherian S] in
 /-- **(C2)**: the triple-overlap cocycle condition of the descent engine for
 the transition isomorphisms.  Both sides of the cocycle square are gluing
 isomorphisms between the same pair of restricted chart quotients over the
@@ -609,60 +621,92 @@ triple overlap (by base change, cast absorption and composition of gluing
 isomorphisms), hence equal by uniqueness. -/
 lemma glueTransition_cocycle (i j k : κ) :
     Scheme.Modules.pullbackBaseChangeTransport
-        (pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k)) ((covGD W hW).f i j) ((covGD W hW).t i j ≫ (covGD W hW).f j i)
+        (pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k))
+        ((covGD W hW).f i j)
+        ((covGD W hW).t i j ≫ (covGD W hW).f j i)
         (glueTransition hcpt i j) ≪≫
       (Scheme.Modules.pullbackCongr
         (Scheme.Modules.glueData_bridge_mid (covGD W hW) i j k)).app (y j).F ≪≫
       Scheme.Modules.pullbackBaseChangeTransport
-        ((covGD W hW).t' i j k ≫ pullback.fst ((covGD W hW).f j k) ((covGD W hW).f j i)) ((covGD W hW).f j k)
-        ((covGD W hW).t j k ≫ (covGD W hW).f k j) (glueTransition hcpt j k) ≪≫
+        ((covGD W hW).t' i j k ≫
+          pullback.fst ((covGD W hW).f j k) ((covGD W hW).f j i))
+        ((covGD W hW).f j k) ((covGD W hW).t j k ≫ (covGD W hW).f k j)
+        (glueTransition hcpt j k) ≪≫
       (Scheme.Modules.pullbackCongr
         (Scheme.Modules.glueData_bridge_tgt (covGD W hW) i j k)).app (y k).F
     = (Scheme.Modules.pullbackCongr
         (Scheme.Modules.glueData_bridge_src (covGD W hW) i j k)).app (y i).F ≪≫
       Scheme.Modules.pullbackBaseChangeTransport
-        (pullback.snd ((covGD W hW).f i j) ((covGD W hW).f i k)) ((covGD W hW).f i k) ((covGD W hW).t i k ≫ (covGD W hW).f k i)
+        (pullback.snd ((covGD W hW).f i j) ((covGD W hW).f i k))
+        ((covGD W hW).f i k) ((covGD W hW).t i k ≫ (covGD W hW).f k i)
         (glueTransition hcpt i k) := by
   have h1 := (glueTransition_isGlueIso hcpt i j).baseChange
     (pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k))
-  have hσ₁ : (pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫ ((covGD W hW).t i j ≫ (covGD W hW).f j i)) ≫ (W j).ι
-      = pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫ ((covGD W hW).f i j ≫ (W i).ι) := by
+  have hσ₁ :
+      (pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫
+          ((covGD W hW).t i j ≫ (covGD W hW).f j i)) ≫ (W j).ι =
+        pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫
+          ((covGD W hW).f i j ≫ (W i).ι) := by
     rw [Category.assoc, glueSnd_ι W hW i j]
-  have hσ₂ : (((covGD W hW).t' i j k ≫ pullback.fst ((covGD W hW).f j k) ((covGD W hW).f j i)) ≫ (covGD W hW).f j k) ≫ (W j).ι
-      = pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫ ((covGD W hW).f i j ≫ (W i).ι) := by
+  have hσ₂ :
+      (((covGD W hW).t' i j k ≫
+          pullback.fst ((covGD W hW).f j k) ((covGD W hW).f j i)) ≫
+        (covGD W hW).f j k) ≫ (W j).ι =
+        pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫
+          ((covGD W hW).f i j ≫ (W i).ι) := by
     rw [← Scheme.Modules.glueData_bridge_mid (covGD W hW) i j k]
     exact hσ₁
   have h2 := isGlueIso_pullbackCongr (y := y) j
     (Scheme.Modules.glueData_bridge_mid (covGD W hW) i j k) hσ₁ hσ₂
-  have hu₃ : ((covGD W hW).t' i j k ≫ pullback.fst ((covGD W hW).f j k) ((covGD W hW).f j i)) ≫ ((covGD W hW).f j k ≫ (W j).ι)
-      = pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫ ((covGD W hW).f i j ≫ (W i).ι) := by
+  have hu₃ :
+      ((covGD W hW).t' i j k ≫
+        pullback.fst ((covGD W hW).f j k) ((covGD W hW).f j i)) ≫
+          ((covGD W hW).f j k ≫ (W j).ι) =
+        pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫
+          ((covGD W hW).f i j ≫ (W i).ι) := by
     rw [← Category.assoc]
     exact hσ₂
   have h3 := ((glueTransition_isGlueIso hcpt j k).baseChange
-    ((covGD W hW).t' i j k ≫ pullback.fst ((covGD W hW).f j k) ((covGD W hW).f j i))).reindex hu₃
-  have hρ₄ : (((covGD W hW).t' i j k ≫ pullback.fst ((covGD W hW).f j k) ((covGD W hW).f j i)) ≫
-        ((covGD W hW).t j k ≫ (covGD W hW).f k j)) ≫ (W k).ι
-      = pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫ ((covGD W hW).f i j ≫ (W i).ι) := by
+    ((covGD W hW).t' i j k ≫
+      pullback.fst ((covGD W hW).f j k) ((covGD W hW).f j i))).reindex hu₃
+  have hρ₄ :
+      (((covGD W hW).t' i j k ≫
+          pullback.fst ((covGD W hW).f j k) ((covGD W hW).f j i)) ≫
+        ((covGD W hW).t j k ≫ (covGD W hW).f k j)) ≫ (W k).ι =
+        pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫
+          ((covGD W hW).f i j ≫ (W i).ι) := by
     rw [Category.assoc, glueSnd_ι W hW j k, ← Category.assoc]
     exact hσ₂
-  have hσ₄ : (pullback.snd ((covGD W hW).f i j) ((covGD W hW).f i k) ≫ ((covGD W hW).t i k ≫ (covGD W hW).f k i)) ≫ (W k).ι
-      = pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫ ((covGD W hW).f i j ≫ (W i).ι) := by
+  have hσ₄ :
+      (pullback.snd ((covGD W hW).f i j) ((covGD W hW).f i k) ≫
+        ((covGD W hW).t i k ≫ (covGD W hW).f k i)) ≫ (W k).ι =
+        pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫
+          ((covGD W hW).f i j ≫ (W i).ι) := by
     rw [← Scheme.Modules.glueData_bridge_tgt (covGD W hW) i j k]
     exact hρ₄
   have h4 := isGlueIso_pullbackCongr (y := y) k
     (Scheme.Modules.glueData_bridge_tgt (covGD W hW) i j k) hρ₄ hσ₄
   have hL := h1.trans (h2.trans (h3.trans h4))
-  have hρs : (pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫ (covGD W hW).f i j) ≫ (W i).ι
-      = pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫ ((covGD W hW).f i j ≫ (W i).ι) := by
+  have hρs :
+      (pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫
+        (covGD W hW).f i j) ≫ (W i).ι =
+        pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫
+          ((covGD W hW).f i j ≫ (W i).ι) := by
     rw [Category.assoc]
-  have hσs : (pullback.snd ((covGD W hW).f i j) ((covGD W hW).f i k) ≫ (covGD W hW).f i k) ≫ (W i).ι
-      = pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫ ((covGD W hW).f i j ≫ (W i).ι) := by
+  have hσs :
+      (pullback.snd ((covGD W hW).f i j) ((covGD W hW).f i k) ≫
+        (covGD W hW).f i k) ≫ (W i).ι =
+        pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫
+          ((covGD W hW).f i j ≫ (W i).ι) := by
     rw [← Scheme.Modules.glueData_bridge_src (covGD W hW) i j k]
     exact hρs
   have hs := isGlueIso_pullbackCongr (y := y) i
     (Scheme.Modules.glueData_bridge_src (covGD W hW) i j k) hρs hσs
-  have hu' : pullback.snd ((covGD W hW).f i j) ((covGD W hW).f i k) ≫ ((covGD W hW).f i k ≫ (W i).ι)
-      = pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫ ((covGD W hW).f i j ≫ (W i).ι) := by
+  have hu' :
+      pullback.snd ((covGD W hW).f i j) ((covGD W hW).f i k) ≫
+          ((covGD W hW).f i k ≫ (W i).ι) =
+        pullback.fst ((covGD W hW).f i j) ((covGD W hW).f i k) ≫
+          ((covGD W hW).f i j ≫ (W i).ι) := by
     rw [← Category.assoc]
     exact hσs
   have hbc := ((glueTransition_isGlueIso hcpt i k).baseChange
@@ -670,6 +714,7 @@ lemma glueTransition_cocycle (i j k : κ) :
   exact IsGlueIso.eq hL (hs.trans hbc)
 
 set_option backward.isDefEq.respectTransparency false in
+omit [IsLocallyNoetherian S] in
 /-- **The overlap condition of the glued quotient**, in the pullback-level form
 of `Scheme.Modules.glueLift_cond_iff`: over the overlap `V (k,l)`, the two
 restrictions of the chart components agree through the transition
@@ -706,8 +751,7 @@ lemma glueQuot_overlap (k l : κ) :
           (Scheme.Modules.pullback ((covGD W hW).t k l ≫ (covGD W hW).f l k)).map
             (y l).q) ≫ (glueTransition hcpt k l).inv) := by
     rw [← spec]
-    simp only [Category.assoc, Iso.hom_inv_id, Category.comp_id, Iso.hom_inv_id_assoc,
-      Iso.inv_hom_id_assoc]
+    simp only [Category.assoc, Iso.hom_inv_id, Category.comp_id, Iso.hom_inv_id_assoc]
   have tcc := triangleIso_cast_coherence
     ((covGD W hW).f k l) ((covGD W hW).ι k)
     ((covGD W hW).t k l ≫ (covGD W hW).f l k) ((covGD W hW).ι l)
@@ -756,6 +800,7 @@ noncomputable def gluedQuot :
       (glueQuot_overlap hcpt p.1 p.2))
 
 set_option backward.isDefEq.respectTransparency false in
+omit [IsLocallyNoetherian S] in
 /-- **Chart recovery of the glued quotient**: restricting the glued quotient
 to the `k`-th chart and projecting through the descent restriction recovers
 the chart component. -/
@@ -770,6 +815,7 @@ lemma gluedQuot_restrict (k : κ) :
   exact Equiv.symm_apply_apply _ _
 
 set_option backward.isDefEq.respectTransparency false in
+omit [IsLocallyNoetherian S] in
 /-- The glued quotient map is an epimorphism: its chart restrictions are (up
 to the chart isomorphisms) the chart quotients, and epimorphy is detected on
 the chart cover by joint faithfulness. -/
@@ -802,6 +848,7 @@ lemma gluedQuot_epi : Epi (gluedQuot hcpt) := by
     ← Functor.map_comp, ← Functor.map_comp, huv]
 
 set_option backward.isDefEq.respectTransparency false in
+omit [IsLocallyNoetherian S] in
 /-- The glued module is locally free of rank `d`: its chart restrictions are
 the chart sheaves (by effective descent), and rank-`d` local freeness is
 local. -/
@@ -844,12 +891,13 @@ noncomputable def gluedFamily : Scheme.LocallyFreeQuotient V d T :=
   Scheme.LocallyFreeQuotient.pullbackAlong (fromGluedHom W hW) (gluedOverFamily hcpt)
 
 set_option backward.isDefEq.respectTransparency false in
+omit [IsLocallyNoetherian S] in
 /-- The structure morphism of `T|_{W k}` composed with the inverse of
 `fromGlued` is the `k`-th chart morphism of the glue datum. -/
 lemma overResHom_fromGluedHom (k : κ) :
     Scheme.overResHom T (W k) ≫ fromGluedHom W hW = glueChartHom W hW k := by
   apply Over.OverMorphism.ext
-  show (W k).ι ≫ inv (opensCover T.left W hW).fromGlued = (covGD W hW).ι k
+  change (W k).ι ≫ inv (opensCover T.left W hW).fromGlued = (covGD W hW).ι k
   rw [IsIso.comp_inv_eq]
   exact (Scheme.Cover.ι_fromGlued (opensCover T.left W hW) k).symm
 
@@ -911,6 +959,7 @@ variable {S : Scheme.{0}} [IsLocallyNoetherian S] {V : S.Modules} {d : ℕ} {T :
 variable {κ : Type} {W : κ → T.left.Opens}
 
 set_option backward.isDefEq.respectTransparency false in
+omit [IsLocallyNoetherian S] in
 /-- **Separation**: two rank-`d` locally free quotient families on `T` whose
 restrictions to every member of an open cover of `T.left` are equivalent are
 equivalent. -/
@@ -951,7 +1000,7 @@ lemma glueCompat_of_map_eq (hW : ⨆ k, W k = ⊤)
       c ≫ (W k ⊓ W l).ι = (covGD W hW).f k l ≫ (W k).ι := by
     have hrange : Set.range ⇑((covGD W hW).f k l ≫ (W k).ι)
         ⊆ Set.range ⇑(W k ⊓ W l).ι := by
-      show Set.range ⇑(pullback.fst ((W k).ι) ((W l).ι) ≫ (W k).ι)
+      change Set.range ⇑(pullback.fst ((W k).ι) ((W l).ι) ≫ (W k).ι)
         ⊆ Set.range ⇑(W k ⊓ W l).ι
       rw [IsOpenImmersion.range_pullback_to_base_of_left, Scheme.Opens.range_ι,
         Scheme.Opens.range_ι, Scheme.Opens.range_ι]
@@ -1031,7 +1080,7 @@ theorem grassmannian_isZariskiSheafOver (V : S.Modules) (d : ℕ) :
   intro T κ W hW x hx
   refine ⟨Quotient.mk _ (gluedFamily (glueCompat_of_map_eq hW x hx)), fun k => ?_, ?_⟩
   · -- the glued family restricts to the given classes
-    show Quotient.mk _ (Scheme.LocallyFreeQuotient.pullbackAlong
+    change Quotient.mk _ (Scheme.LocallyFreeQuotient.pullbackAlong
         (Scheme.overResHom T (W k)) (gluedFamily (glueCompat_of_map_eq hW x hx)))
       = x k
     rw [← Quotient.out_eq (x k)]
@@ -1043,7 +1092,7 @@ theorem grassmannian_isZariskiSheafOver (V : S.Modules) (d : ℕ) :
       refine Quotient.sound (LocallyFreeQuotient.rel_of_restrict_rel hW (fun k => ?_))
       have hz2 : (Scheme.Grassmannian V d).map (Scheme.overResHom T (W k)).op
           (Quotient.mk _ (gluedFamily (glueCompat_of_map_eq hW x hx))) = x k := by
-        show Quotient.mk _ (Scheme.LocallyFreeQuotient.pullbackAlong
+        change Quotient.mk _ (Scheme.LocallyFreeQuotient.pullbackAlong
             (Scheme.overResHom T (W k)) (gluedFamily (glueCompat_of_map_eq hW x hx)))
           = x k
         rw [← Quotient.out_eq (x k)]
