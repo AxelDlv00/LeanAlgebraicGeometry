@@ -2,11 +2,11 @@ id: AJC.maintenance.build.warnings
 title: Lean warning reduction
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The controlled clean build verifies 578 warnings across 49 files, down 596
-  from 1,174. TensorObjInverse, TensorObjSubstrate, and SectionGradedRing remain warning-free;
-  QuotScheme retains 13 lean-lib multiGoal warnings missed by direct elaboration.
-  Current leaders are PresheafDualPullback (80), DualInverse (57), GrassmannianZariskiSheaf
-  (49), PresheafDualUnitPullback (37), and FlatBaseChange (29).
+summary: The controlled clean build certifies 578 warnings across 49 files, down 596
+  from 1,174. Subsequent warning-free target builds eliminate 13 QuotScheme, 37 PresheafDualUnitPullback,
+  and 29 FlatBaseChange warnings, giving an estimated current total of 499 pending
+  the next controlled recount. Residual debt is partitioned by duality, representability,
+  cohomology, Picard core, and Albanese/Riemann-Roch entry work.
 status: pending
 kind: refactor
 priority: normal
@@ -29,4 +29,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-25T02:49:25.693240+00:00'
+  updated_at: '2026-07-25T03:35:29.421977+00:00'
