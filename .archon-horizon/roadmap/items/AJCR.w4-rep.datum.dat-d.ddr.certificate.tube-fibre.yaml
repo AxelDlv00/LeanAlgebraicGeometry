@@ -1,0 +1,33 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.tube-fibre
+title: 'Tube-fibre: at one base prime, put the family support of the pointwise seed
+  system inside a single adaptation piece'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'The remaining geometric obligation of the relaxed gate. Feed exists_notMem_supportLocus_subset_of_fibre
+  (DivSchemeCertZarTube.lean) with fibrewise containment at a prime p: the support
+  fibre of the seed system over p is a finite set of closed points, each in a piece;
+  shrink/merge pieces so one contains the fibre. Output: r not in p with support over
+  D(r) inside the piece, then forall_noLeak_of_forall_supportLocus_subset gives hnoLeak
+  over Localization.Away r.'
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T07:18:17.004078+00:00'
+  provenance:
+    run: '0047'
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate

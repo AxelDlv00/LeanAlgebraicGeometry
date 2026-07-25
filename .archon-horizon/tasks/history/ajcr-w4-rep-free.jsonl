@@ -1,1 +1,2 @@
 {"at": "2026-07-25T06:04:25.681274+00:00", "actor": "Axel", "field": "created", "from": "", "to": "queued", "note": "opened"}
+{"at": "2026-07-25T06:15:34.916266+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}

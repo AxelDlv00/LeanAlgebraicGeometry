@@ -1,0 +1,30 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.away-assemble
+title: 'Away-assemble: compose tube-fibre + away-kerspan + the landed degree-g theorem
+  into isLocallyCertified_of_forall_prime_exists_certified_adaptation'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Pure composition once the two above land. hdeg is ALREADY PROVED: deg_presentationDivisor_pulledEquations_pointwiseGeneratorSeed
+  (DivSchemeSeedUnivPulledDegree.lean:354). Output: the DivFamZar class of the universal
+  seed system, which is what divRepPullAt / DivRepAffinePullback.pull consume.'
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T07:18:18.667509+00:00'
+  provenance:
+    run: '0047'
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate

@@ -1,0 +1,49 @@
+id: I-0320
+provider: local
+kind: memory
+body: "THE DD-R CERTIFICATE GATE WAS OVER-STRONG FOR ~7 SESSIONS (adjudicated 2026-07-25,\
+  \ run 0047).\n\nThe DD-R certificate lane (AJCR.w4-rep.datum.dat-d.ddr.certificate)\
+  \ was attacking\n`(D.divisorAdaptation hD).IsCertified g` -- a certificate over\
+  \ the WHOLE chart ring R_Z --\nvia `divisorAdaptation_isCertified_of_noLeak_kernel_spanning(_degree)`\
+  \ (DivSchemeCertUniv.lean:144,\nDivSchemeCertSeed.lean:61). Its `hnoLeak` input\
+  \ is FALSE for arbitrary extracted pieces (I-0209),\nso the lane was permanently\
+  \ blocked on an unprovable hypothesis.\n\nNO CONSUMER EVER NEEDED THAT. Every DD-R\
+  \ consumer goes through `DivFamZar`\n(DivisorFamilyZar.lean:242), whose membership\
+  \ predicate is `IsLocallyCertified`\n(DivisorFamilyZar.lean:71): certified families\
+  \ over `Localization.Away (g i)` for SOME span-top\nfamily g, divisor-equal to the\
+  \ pulled system. Check the chain: divRepPullAt (DivRepAffKit.lean:90),\nDivRepAffinePullback.pull\
+  \ (:168), divRepClassifyZar (DivRepClassifyZar.lean:244) -- all take\nDivFamZar,\
+  \ never IsCertified over R.\n\nLANDED THE RELAXATION (commits 2709f44d9, b959b798b,\
+  \ 612b5fae0, f868c9425; files\nPicard/DivSchemeCertZarSeed.lean, DivSchemeCertZarPointwise.lean,\
+  \ DivSchemeCertZarTube.lean;\nall kernel-checked warning-free by lake env lean):\n\
+  1. isLocallyCertified_of_forall_exists_away -- span-top production rule.\n2. isLocallyCertified_of_forall_prime_exists_away\
+  \ -- POINTWISE gate, via quasi-compactness of\n   Spec R (exists_fin_span_eq_top_of_forall_prime):\
+  \ an away certificate at every prime suffices.\n3. isLocallyCertified_of_forall_prime_exists_certified_adaptation\
+  \ -- the adaptation is FREE\n   (exists_divisorAdaptation), so only the certificate\
+  \ over the shrunken base remains.\n4. exists_basicOpen_supportTube / exists_notMem_supportLocus_subset_of_fibre\
+  \ -- the support tube\n   (SupportTube.lean:166) refined to a basic open, i.e. the\
+  \ Away shape the gate consumes.\n5. isLocallyCertified_of_isCertified -- the old\
+  \ global gate is a special case, so this is a\n   genuine weakening, not a parallel\
+  \ track.\n\nRULE: before grinding a certificate/finiteness hypothesis in this project,\
+  \ check what the actual\nCONSUMER's predicate is. The project has both a global\
+  \ (IsCertified) and a Zariski-local\n(IsLocallyCertified) notion, and the downstream\
+  \ interfaces were built on the local one."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T07:16:01.324965+00:00'
+updated_at: '2026-07-25T07:16:01.324977+00:00'
+metadata:
+  provenance:
+    run: '0047'
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild

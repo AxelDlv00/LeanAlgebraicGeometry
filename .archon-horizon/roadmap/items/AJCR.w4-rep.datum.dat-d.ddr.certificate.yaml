@@ -3,16 +3,16 @@ title: 'DD-R certificate: inherited certificate, epsilon projection, U1/U2, and 
   laws'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'The pulled pointwise-generator local equation germ is identified with the
-  canonical residue-fibre achiever reading. Abstract residual normalization is now
-  closed: H0(O(N-D)) has base multiplicity zero relative to N-D for effective degree-g
-  D under the high-window pack. Stalk transition units also have trivial ordZ and
-  preserve additive order. The pulled-degree lane now needs a bounded explicit residue-field
-  wrapper, then presentation-coefficient and degree-g assembly. The certificate separately
-  still needs a relative submodule L inside ker(deltaLeft-deltaRight) spanning every
-  residue-fibre kernel. Arbitrary extracted-piece no-leak is false; use support-isolating
-  localization or flattening strata. Certificate, U1/U2, inverse laws, and divRep
-  remain open.'
+summary: 'ROUTE CHANGED (2026-07-25). The gate is no longer a global certificate over
+  the chart ring. Consumers (DivFamZar, divRepPullAt, DivRepAffinePullback.pull, divRepClassifyZar)
+  need only IsLocallyCertified, so the certificate may be produced one base prime
+  at a time over a Localization.Away chart -- with the adaptation free by extraction.
+  zar-gate is LANDED and kernel-checked (the relaxation, the pointwise gate via quasi-compactness,
+  the Away-form support tube, and no-leak from support containment). The degree input
+  hdeg is also already proved. What remains is exactly: tube-fibre (put the support
+  fibre at one prime inside one piece), away-kerspan (the Cech-kernel spanning submodule
+  over the Away chart), away-assemble (composition). The old I-0209 obstruction blocks
+  only the abandoned global clause.'
 status: active
 kind: proof
 priority: normal
@@ -35,7 +35,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-24T13:09:16.323802+00:00'
+  updated_at: '2026-07-25T07:18:45.074262+00:00'
   pinned_commits:
   - c843eafd7
   - 359c0a38d
