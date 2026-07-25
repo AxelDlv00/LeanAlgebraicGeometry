@@ -329,6 +329,7 @@ import AlgebraicJacobian.Picard.DivSchemeCertZarSwallow
 import AlgebraicJacobian.Picard.DivSchemeCertZarConn
 import AlgebraicJacobian.Picard.DivSchemeCertZarChartPair
 import AlgebraicJacobian.Picard.DivSchemeCertZarC1
+import AlgebraicJacobian.Picard.DivSchemeCertZarConfine
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularityStep
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularity
 import AlgebraicJacobian.Picard.FlatCokernel
