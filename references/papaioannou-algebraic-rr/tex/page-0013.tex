@@ -1,0 +1,132 @@
+% source: An algebraic approach to the Riemann-Roch theorem and the arithmetic theory of function fields (Athanasios Papaioannou), http://www.fen.bilkent.edu.tr/~franz/mat/Riemann-Roch.pdf
+% pdf_page: 0013
+% retrieved: 2026-07-26
+% transcribed_by: page-transcriber (AI vision, no OCR)
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+% Small-caps theorem style matching the source.
+\newtheoremstyle{scplain}{\topsep}{\topsep}{\itshape}{0pt}{\scshape}{.}{ }{\thmname{#1} \thmnote{#3}}
+\theoremstyle{scplain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{conjecture}{Conjecture}
+
+% Small-caps "Proof." to match the source.
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+  \par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax
+  \trivlist\item[\hskip\labelsep\scshape #1\@addpunct{.}]\ignorespaces}%
+  {\popQED\endtrivlist\@endpefalse}
+\makeatother
+\renewcommand{\qedsymbol}{$\square$}
+
+\DeclareMathOperator{\Div}{Div}
+
+\begin{document}
+\setlength{\emergencystretch}{2em}
+
+\begin{flushright}$\square$\end{flushright}
+
+As a final step before essentially completing the proof of Riemann-Roch, we
+must also show the following
+
+\begin{theorem}[1.26]
+Let $D \in \Div(\mathbb{F})$ be an arbitrary divisor and $W=(\omega)$ a
+canonical divisor of $\mathbb{F}/\mathbb{K}$. Then the mapping
+$\mu : L(W-D) \longrightarrow \Omega_{\mathbb{F}}(D)$ defined by
+$x \mapsto x\omega$ is an isomorphism of $\mathbb{K}$-vector spaces. In
+particular,
+\[
+  i(D)=\dim(W-D).
+\]
+\end{theorem}
+
+\begin{proof}
+For $x \in L(W-D)$, we have
+$(x\omega)=(x)+(\omega) \geq -(W-D)+W=D$, hence
+$x\omega \in \Omega_{\mathbb{F}}(D)$. Therefore, $\mu$ maps $L(W-D)$ into
+$\Omega_{\mathbb{F}}(D)$. Clearly, $\mu$ is linear and injective; in order to
+show that $\mu$ is also surjective consider a Weil differential
+$\omega_1 \in \omega_{\mathbb{F}}(D)$. By the fact that
+$\Omega_{\mathbb{F}}$ has dimension $1$ over $\mathbb{F}$, there is
+$x \in \mathbb{F}$ such that $\omega_1=x\omega$, and since
+$(x)+W=(x\omega)=(\omega_1) \geq D$, we obtain $(x) \geq -(W-D)$, hence
+$x \in L(W-D)$ and $\omega_1=\mu(x)$, as desired. Now, we have shown that
+$\dim\Omega_{\mathbb{F}}(D)=i(D)$; this implies that $i(D)=\dim(W-D)$.
+\end{proof}
+
+Now we are ready to reach our goal for this section. Without any effort at all,
+we can reach for the golden apple, namely
+
+\begin{theorem}[1.27 (Riemann-Roch)]
+Let $W$ be a canonical divisor of the function field
+$\mathbb{F}/\mathbb{K}$. Then, for any divisor $D \in \Div(\mathbb{F})$,
+\[
+  \dim D=\deg D+1-g+\dim(W-D).
+\]
+\end{theorem}
+
+\begin{proof}
+This is an immediate consequence of the definition of $i(D)$ and the previous
+theorem.
+\end{proof}
+
+A few obvious corollaries follow immediately:
+
+\begin{corollary}[1.28]
+Any canonical divisor $W$ has degree $2g-2$ and dimension $g$.
+\end{corollary}
+
+\begin{proof}
+For $D=0$, the Riemann-Roch theorem yields $\dim W=g$ and then $D=W$ yields
+$\deg W=2g-2$.
+\end{proof}
+
+\begin{corollary}[1.29]
+If $D \in \Div(\mathbb{F})$ is such that $\deg D \geq 2g-1$, then
+$\dim D=\deg D+1-g$.
+\end{corollary}
+
+\begin{proof}
+We have $\dim D=\deg D+1-g+\dim(W-D)$ for any canonical divisor $W$; since
+$\deg D \geq 2g-1$ and $\deg W=2g-2$ (by the previous corollary), we have
+$\deg(W-D)<0$. This can only occur when $\dim(W-D)=0$, and this yields the
+desired result.
+\end{proof}
+
+\section*{2\quad An arithmetic theory for function fields.}
+
+Having developed some basic material about function fields, we are now going to
+discuss briefly and informally the utility of this algebraic point of view on
+function fields. The material we presented in the first section is usually
+introduced in a geometric manner, function fields corresponding to algebraic
+curves and their extensions to ramified covers of curves; however, we favoured
+the algebraic point of view because it leads very naturally to an arithmetic
+theory of function fields, which bears astonishing similarity to the classical
+theory number fields.
+
+The proofs, however, are significantly easier in the function field setting
+than in the classical one. In fact, there are sweeping results that can be
+proved fairly easily in the case of function fields but are still intractable
+for number fields.
+
+An example of such a theorem is the ABC conjecture of Oesterl\'e and Masser. In
+the case of rational numbers $\mathbb{Q}$, the usual form of the conjecture has
+as follows:
+
+\begin{conjecture}[2.1 (ABC I, by Oesterl\'e and Masser)]
+Assume that $A,B,C \in \mathbb{Z}$ are pairwise prime and satisfy the equation
+$A+B=C$. Given $\epsilon>0$, there is a constant $M_\epsilon \in \mathbb{N}$
+such that
+\[
+  \max\{|A|,|B|,|C|\}
+    \leq \left(\prod_{p\mid ABC}p\right)^{1+\epsilon},
+\]
+where $p$ in the above equation is positive and prime.
+\end{conjecture}
+
+\begin{center}13\end{center}
+
+\end{document}

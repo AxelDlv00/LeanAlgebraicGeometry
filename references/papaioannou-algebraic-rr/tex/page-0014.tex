@@ -1,0 +1,104 @@
+% source: An algebraic approach to the Riemann-Roch theorem and the arithmetic theory of function fields (Athanasios Papaioannou), http://www.fen.bilkent.edu.tr/~franz/mat/Riemann-Roch.pdf
+% pdf_page: 0014
+% retrieved: 2026-07-26
+% transcribed_by: page-transcriber (AI vision, no OCR)
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+% Small-caps theorem style matching the source.
+\newtheoremstyle{scplain}{\topsep}{\topsep}{\itshape}{0pt}{\scshape}{.}{ }{\thmname{#1} \thmnote{#3}}
+\theoremstyle{scplain}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem*{theorem}{Theorem}
+
+\DeclareMathOperator{\Supp}{Supp}
+
+\begin{document}
+\setlength{\emergencystretch}{2em}
+
+This conjecture can be adapted suitably for number fields and has far-reaching
+consequences, c.f. Lang [LA], Chapter IV, section 7, for a relevant discussion
+and a number of references.
+
+We shall now reformulate ABC so that its function field analog becomes apparent.
+Before that, however, we will need a piece of ubiquitous terminology: we define
+the \emph{height} of a rational number $r=m/n$ (where $(m,n)=1$) to be
+$\operatorname{ht}(r)=\max\{\log(|m|),\log(|n|)\}$. Now we have
+
+\begin{conjecture}[2.2 (ABC II)]
+Given $\epsilon>0$, there is a constant $m_\epsilon$ such that for all rational
+numbers $v$ and $u$ that satisfy the equation $v+u=1$ the following relation
+holds:
+\[
+  \max\{\operatorname{ht}(v),\operatorname{ht}(u)\}
+    \leq m_\epsilon+(1+\epsilon)\sum_{p\mid ABC}\log(p).
+\]
+\end{conjecture}
+
+In the function field case, we will need a definition analogous to that of
+height above; let $\mathbb{F}/\mathbb{K}$ be a function field, and let
+$u \in \mathbb{F}^*$ be non-constant. Then, if $M$ is the maximal separable
+extension of $\mathbb{K}(u)$ inside $\mathbb{F}$, we shall call the degree
+$[M:\mathbb{K}(u)]$ of the extension $M/\mathbb{K}(u)$ the \emph{separable
+degree of $u$}; it will be denoted by $\operatorname{ord}_s(u)$. We now have
+
+\begin{theorem}[2.1 (ABC)]
+Let $\mathbb{F}/\mathbb{K}$ be a function field. Then for
+$v,u \in \mathbb{F}^*$ that satisfy the equation $v+u=1$ the following
+inequality holds
+\[
+  \deg_s(v)=\deg_s(u) \leq 2g_{\mathbb{K}}
+    + \sum_{P \in \Supp(A+B+C)}\deg_{\mathbb{K}}P,
+\]
+where $A,B$ are the zero divisors of $v$ and $u$ in $\mathbb{F}$ and $C$ is
+their common pole divisor.
+\end{theorem}
+
+The ABC conjecture for function fields implies the analogs of all classical
+number theoretic conjectures the classical ABC conjecture implies; in
+particular, it implies Fermat's Last Theorem for function fields.
+
+An important result that used in the proof of ABC is the analog of the Hurwitz
+formula:
+
+\begin{theorem}[2.2 (Hurwitz)]
+Let $\mathbb{L}/\mathbb{K}$ be a finite separable extension of function fields.
+Then,
+\[
+  2g_{\mathbb{L}}-2
+    = [\mathbb{L}:\mathbb{K}](2g_{\mathbb{K}}-2)
+      + \deg_{\mathbb{L}}D_{\mathbb{L}/\mathbb{K}};
+\]
+more generally,
+\[
+  2g_{\mathbb{L}}-2
+    \geq [\mathbb{L}:\mathbb{K}](2g_{\mathbb{K}}-2)
+      + \sum_{\mathfrak{p}}(e(\mathfrak{p}/P)-1)\deg_{\mathbb{L}}\mathfrak{p},
+\]
+where the sum is over all primes $\mathfrak{p}$ over $\mathbb{L}$ and equality
+occurs if and only if all ramified primes are tamely ramified.
+\end{theorem}
+
+All the undefined terms appearing above have meaning analogous to their meaning
+in the classical algebraic number theoretic context.
+
+The above examples, however, appear meagre when compared to the other
+achievements of this arithmetic theory for function fields; among its proved
+theorems belong the Riemann Zeta Hypothesis (there is a natural, but advanced,
+proof due to Weil [WE] and an elementary one by Bombieri -- this appears as an
+Appendix to Rosen's book [RO]), the Artin Primitive Roots Conjecture, and the
+Brumer-Stark Conjectures (there are two proofs, one by Tate and Deligne [TA] and
+another by Hayes [HA]). As every other legitimate theory, it also has open
+problems: the Langlands program has not been fully developed in the language of
+function fields (despite important work in this direction by Drinfeld in the
+1970's) and the Birch and Swinnerton-Dyer conjecture remains a mystery. The
+methods one uses to formulate such conjectures and attain their proofs are not
+much different than the ones used here, and it's probable that results unproved
+in context other than that of a function field might be solvable in full
+generality by the same methods used in the function field case \emph{mutatis
+mutandis}.
+
+\begin{center}14\end{center}
+
+\end{document}

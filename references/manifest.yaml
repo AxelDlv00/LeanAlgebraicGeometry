@@ -573,6 +573,9 @@ references:
       - { path: papaioannou-algebraic-rr/tex/page-0010.tex, format: tex }
       - { path: papaioannou-algebraic-rr/tex/page-0011.tex, format: tex }
       - { path: papaioannou-algebraic-rr/tex/page-0012.tex, format: tex }
+      - { path: papaioannou-algebraic-rr/tex/page-0013.tex, format: tex }
+      - { path: papaioannou-algebraic-rr/tex/page-0014.tex, format: tex }
+      - { path: papaioannou-algebraic-rr/tex/page-0015.tex, format: tex }
     read: >-
       Text-extractable PDF, 15 pp. PRIMARY open surrogate for Stichtenoth GTM 254
       Ch. 1 (adele / Weil-differential proof of Riemann-Roch over an arbitrary
@@ -581,8 +584,11 @@ references:
       books"; part 2 follows Rosen [RO]. Section map: 1.1 valuations / valuation
       rings / places; 1.2 Weak Approximation Theorem; 1.3 divisors, dim D = ell(D),
       genus g; 1.4 THE adelic RR proof -- Def 1.11 adele space A_F and A_F(D),
-      Weil differentials Omega_F, Thm 1.18 (Riemann inequality dim D >= deg D + 1 - g),
-      Lemma 1.21/1.22, Thm 1.23 dim_F Omega_F = 1, Thm 1.25 (duality / RR),
+      Weil differentials Omega_F, Thm 1.18 (adelic preliminary formula
+      dim D = deg D + 1 - g + i(D)),
+      Lemma 1.21/1.22, Thm 1.23 dim_F Omega_F = 1, Thm 1.25 (divisor
+      scaling (x omega) = (x) + (omega) and canonical equivalence), Thm 1.26
+      (duality i(D) = dim(W-D)), Thm 1.27 (Riemann-Roch),
       Cor 1.28 canonical divisor W has deg 2g-2 and dim g, Cor 1.29 RR sharp for
       deg D >= 2g-1. Section 2 = Hurwitz genus formula + arithmetic theory. Cite
       by its own Thm/Def numbers (they do NOT match Stichtenoth's). PAGES 3-7
@@ -621,6 +627,18 @@ references:
       of a differential and regularity), and Thm 1.25 ((x omega) = (x) +
       (omega), hence canonical divisors are equivalent). Visible source typos
       on these pages are likewise retained verbatim.
+      PAGES 13-15 transcribed 2026-07-26 via AI vision (no OCR) at 300 DPI,
+      with rendered images retained and standalone LaTeX under the same
+      directories; cite as papaioannou-algebraic-rr:page-0013 ...
+      papaioannou-algebraic-rr:page-0015. Page 13 gives Thm 1.26 (duality:
+      L(W-D) is isomorphic to Omega_F(D), so i(D) = dim(W-D)), Thm 1.27
+      (Riemann-Roch), Cor 1.28-1.29 (deg W = 2g-2, dim W = g, and the
+      high-degree formula for deg D >= 2g-1), and Conj 2.1 (ABC I). Page 14
+      gives Conj 2.2 (height form of ABC II), Thm 2.1 (function-field ABC),
+      Thm 2.2 (Hurwitz formula and the tame-ramification equality criterion),
+      and the closing arithmetic discussion. Page 15 is the complete reference
+      list [AM], [HA], [IW], [LA], [RO], [TA], [ST], [WE]. Visible source typos
+      on these pages are retained verbatim.
     topics: [function-fields, adeles, weil-differentials, riemann-roch, genus, canonical-divisor, valuations, places, divisors, index-of-specialty]
 
   - slug: cff-curves-function-fields
