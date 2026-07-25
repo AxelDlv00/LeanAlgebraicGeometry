@@ -335,6 +335,8 @@ private theorem mapAlg_eq_of_certChartFrames
   exact e₀.symm.trans ((congrArg DivFam.toZar hmk).trans e₁)
 
 set_option maxHeartbeats 800000 in
+-- Two `exists_certChartCover` unfoldings plus the away-tower instance block; the
+-- localization `lift`/`IsScalarTower` synthesis is what costs (I-0227 budget).
 include hO hχ in
 /-- **The separation theorem** (w4-ddr9 §2.1, the class side of step 6): two locally
 certified divisor classes over an affine test that are classified by the SAME morphism
