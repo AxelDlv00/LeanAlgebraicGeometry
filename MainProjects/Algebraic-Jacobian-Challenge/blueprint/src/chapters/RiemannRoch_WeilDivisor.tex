@@ -477,7 +477,6 @@ Let \(U\subseteq X\) be open.
 
 \begin{definition}[Divisor associated with a closed point]
   \label{def:divisor_closed_point}
-  \source{hartshorne-algebraic-geometry:page-0154}
   \lean{AlgebraicGeometry.Scheme.WeilDivisor.ofClosedPoint}
   \leanok
   \uses{def:codim1_cycles}
@@ -491,9 +490,25 @@ Let \(U\subseteq X\) be open.
       0,&\text{otherwise.}
     \end{cases}
   \]
-  On a nonsingular integral curve every closed point has coheight one, so
-  this is the usual prime divisor with multiplicity one.
 \end{definition}
+
+\begin{lemma}[Closed points of a nonsingular curve are prime divisors]
+  \label{lem:curve_closed_point_prime_divisor}
+  \source{hartshorne-algebraic-geometry:page-0154}
+  \uses{def:divisor_closed_point}
+
+  Let \(C\) be a nonsingular integral curve over an algebraically closed
+  field.  Every closed point \(P\in C\) has coheight one, and the divisor
+  \([P]\) of \cref{def:divisor_closed_point} is the corresponding prime
+  divisor with multiplicity one.
+\end{lemma}
+\begin{proof}
+  A closed point of an integral curve is distinct from the generic point.
+  Since the curve has dimension one, the specialization chain from the
+  closed point to the generic point has length one.  Thus
+  \(\operatorname{coheight}(P)=1\), and the positive branch of
+  \cref{def:divisor_closed_point} gives the asserted divisor.
+\end{proof}
 
 \begin{lemma}[Closed point in the codimension-one branch]
   \label{lem:ofClosedPoint_eq_single}
@@ -588,6 +603,7 @@ Let \(U\subseteq X\) be open.
 \end{lemma}
 \begin{proof}
   \leanok
+  \uses{thm:divisor_degree_hom}
   This is additivity in \cref{thm:divisor_degree_hom}.
 \end{proof}
 
@@ -600,6 +616,7 @@ Let \(U\subseteq X\) be open.
 \end{lemma}
 \begin{proof}
   \leanok
+  \uses{thm:divisor_degree_hom}
   Apply the homomorphism of \cref{thm:divisor_degree_hom} to \(-D\).
 \end{proof}
 
@@ -613,6 +630,7 @@ Let \(U\subseteq X\) be open.
 \end{lemma}
 \begin{proof}
   \leanok
+  \uses{lem:degree_add, lem:degree_neg}
   Combine \cref{lem:degree_add} and \cref{lem:degree_neg}.
 \end{proof}
 
@@ -741,7 +759,8 @@ Let \(U\subseteq X\) be open.
   \label{def:finite_curve_divisor_pullback}
   \source{hartshorne-algebraic-geometry:page-0154}
 
-  Let \(\varphi\colon C\to D\) be a finite morphism of nonsingular curves.
+  Let \(\varphi\colon C\to D\) be a finite morphism of nonsingular curves
+  over an algebraically closed field.
   For a closed point \(Q\in D\), choose a local parameter \(t\) at \(Q\) and
   set
   \[
@@ -755,10 +774,11 @@ Let \(U\subseteq X\) be open.
 \begin{theorem}[Degree of a finite pullback]
   \label{thm:finite_curve_degree_pullback}
   \source{hartshorne-algebraic-geometry:page-0155}
-  \uses{def:finite_curve_divisor_pullback}
+  \uses{def:finite_curve_divisor_pullback, def:divisor_degree}
 
   If \(\varphi\colon C\to D\) is a finite morphism of complete nonsingular
-  curves and \(E\in\operatorname{Div}(D)\), then
+  curves over an algebraically closed field and
+  \(E\in\operatorname{Div}(D)\), then
   \[
     \deg(\varphi^*E)=\deg(\varphi)\deg(E).
   \]
@@ -778,8 +798,9 @@ Let \(U\subseteq X\) be open.
 \begin{lemma}[A rational function gives a finite map to the projective line]
   \label{lem:rational_function_finite_map_to_p1}
   \source{hartshorne-algebraic-geometry:page-0155}
+  \uses{def:finite_curve_divisor_pullback, def:principal_divisor}
 
-  Let \(C\) be a complete nonsingular curve and let
+  Let \(C\) be a complete nonsingular curve over a field \(k\), and let
   \(f\in K(C)\setminus k\).  There is a finite morphism
   \(\varphi_f\colon C\to\mathbb P^1_k\) inducing the inclusion
   \(k(f)\subseteq K(C)\), and

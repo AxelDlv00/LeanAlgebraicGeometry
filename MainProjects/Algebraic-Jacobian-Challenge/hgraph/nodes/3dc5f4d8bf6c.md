@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:principal_hom
 lean_status: lean_ok
-order: 1811
+order: 1812
 ref: hartshorne-algebraic-geometry:page-0148
 title: The principal-divisor homomorphism
 type: tex
-updated: '2026-07-26T02:25:43'
+updated: '2026-07-26T02:34:50'
 ---
 The assignment
   \[
