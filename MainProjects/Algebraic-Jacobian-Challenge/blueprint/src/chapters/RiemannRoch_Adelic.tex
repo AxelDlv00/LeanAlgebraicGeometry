@@ -1436,20 +1436,18 @@ the two agree at \(D = 0\).
 \end{definition}
 
 \begin{theorem}
-[N14c: the local step dimension is at most the residue degree]
+[N14c: the local step dimension is bounded by a target dimension]
   \label{thm:adelic_local_step_dim_le_residue_degree}
   \leanok
   \lean{AlgebraicGeometry.Adelic.localStep_finrank_le_residueEmbedding}
   \uses{thm:adelic_local_step_injective, def:adelic_constant_field_gate,
-    def:adelic_pointValuation, def:adelic_residue_degree}
+    def:adelic_pointValuation}
   Fix a field of constants \(k\) (\Cref{def:adelic_constant_field_gate}),
   under which the section subgroups of
   \Cref{thm:adelic_local_step_injective} are \(k\)-subspaces. Given a
   \(k\)-linear embedding \(\iota\) of the single-point quotient
   \(\mathfrak G_P^{\ge -D(P)-1}/\mathfrak G_P^{\ge -D(P)}\) into a
-  finite-dimensional \(k\)-vector space \(V\) (at the use site,
-  \(V = \kappa(P)\) with \(\dim_k V = \deg P\), via
-  \Cref{def:adelic_residue_degree}), the local step satisfies
+  finite-dimensional \(k\)-vector space \(V\), the local step satisfies
   \[
     \dim_k \bigl(\Gamma(U, \struct{C}(D'))/\Gamma(U, \struct{C}(D))\bigr)
       \;\le\; \dim_k V.
@@ -1475,12 +1473,12 @@ the two agree at \(D = 0\).
       \;=\; \deg_k(D' - D)
       \;=\; \sum_P \bigl(D'(P) - D(P)\bigr)\,\deg P .
   \]
-  \emph{Status:} the one-point reduction and the upper bound \(\le \deg
-  P\) at each step are \Cref{thm:adelic_local_step_dim_le_residue_degree};
-  the matching lower bound (surjectivity of the residue evaluation onto
-  \(\kappa(P)\), giving equality rather than \(\le\)) and the
-  finite-support summation are not yet assembled at the sheaf-theoretic
-  level of this proposition.
+  \emph{Status:} the one-point reduction and the generic injected-target
+  upper bound are \Cref{thm:adelic_local_step_dim_le_residue_degree}.  The
+  identification of that target with \(\kappa(P)\), the matching lower bound
+  (surjectivity of residue evaluation, giving equality rather than \(\le\)),
+  and the finite-support summation are not yet assembled at the
+  sheaf-theoretic level of this proposition.
 \end{proposition}
 \begin{proof}
   The quotient sheaf \(\mathcal{T} = \struct{C}(D')/\struct{C}(D)\) is
