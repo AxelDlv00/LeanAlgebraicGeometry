@@ -4535,104 +4535,104 @@ private theorem pullback_of_openImmersion_iso_restrict
       map_add' := map_add' }
   -- Upgrade to a `Γ(Y, U)`-LinearEquiv via the smul compatibility.
   refine ⟨⟨addEq.toLinearEquiv ?_, ?_⟩⟩
-  -- Smul-compatibility:
-  intro r x
-  -- The LHS `r • x` is `Module.compHom`-action: `r • x = (ΓSpecIso _).inv.hom r • x`
-  -- with the natural Γ(Spec Γ(Y, U), ⊤)-action on the pullback module sheaf at ⊤.
-  -- Step A: Reduce r • x on the LHS to (ΓSpecIso).inv.hom r • x with natural action.
-  change (AddCommGrpCat.Hom.hom (N.presheaf.map (eqToHom hImg.symm).op))
-    ((AddCommGrpCat.Hom.hom (Scheme.Modules.Hom.app isoSheaf.hom ⊤))
-      ((CommRingCat.Hom.hom (Scheme.ΓSpecIso _).inv) r • x)) = _
-  -- Step B: Apply Hom.app_smul (Γ(Spec ⊤)-linearity of the SheafOfModules iso),
-  -- which migrates the scalar through `Scheme.Modules.Hom.app isoSheaf.hom ⊤`.
-  rw [Scheme.Modules.Hom.app_smul]
-  -- Step C (iter-192 Lane F closure): the residual identity is the substantive
-  -- Stacks 01HH-style ring compatibility:
-  --   Y.presheaf.map (eqToHom hImg.symm).op
-  --     ((hU.fromSpec.appIso ⊤).inv ((ΓSpecIso _).inv.hom r)) = r,
-  -- combined with `Scheme.Modules.map_smul` to pull the algebra-map image
-  -- through the presheaf restriction.
-  --
-  -- The recipe (per `analogies/lane-f-restrictscalars-smul.md`):
-  -- Step A: aliasing-`let` `y : Γ(N, hU.fromSpec ''ᵁ ⊤)` to make the smul-unfold
-  -- on the restrict-of-N section visible as a Y-side action via
-  -- `restrictFunctor`'s definition (smul is `(appIso ⊤).inv.hom s` on Y-side).
-  -- Step B: `Scheme.Modules.map_smul` to migrate the scalar through the
-  -- presheaf restriction.
-  -- Step C: the categorical key identity
-  --   (ΓSpecIso _).inv ≫ (hU.fromSpec.appIso ⊤).inv ≫
-  --     Y.presheaf.map (eqToHom hImg.symm).op = 𝟙 _
-  -- via `appLE_appIso_inv` + `fromSpec_app_self` + `Hom.appLE` unfolding.
-  -- Step A: aliasing-`let` to bring the Y-side smul into instance scope.
-  set y : ↑Γ(N, hU.fromSpec ''ᵁ ⊤) := (Scheme.Modules.Hom.app isoSheaf.hom ⊤).hom x
-    with hy
-  -- Step A continued: the Γ(Spec _, ⊤)-smul on `y` (under its restrict-of-N
-  -- view) is rfl-equal to the Y-side smul via `(hU.fromSpec.appIso ⊤).inv`.
-  change (N.presheaf.map (eqToHom hImg.symm).op).hom
-    (((hU.fromSpec.appIso ⊤).inv.hom ((Scheme.ΓSpecIso Γ(Y, U)).inv.hom r)) • y) =
-    r • (N.presheaf.map (eqToHom hImg.symm).op).hom y
-  -- Step B: migrate the Y-side scalar through `N.presheaf.map`.
-  rw [Scheme.Modules.map_smul]
-  -- Step C: reduce the scalar identity to the categorical key identity.
-  congr 1
-  -- Goal: (Y.presheaf.map (eqToHom hImg.symm).op).hom
-  --        ((hU.fromSpec.appIso ⊤).inv.hom ((Scheme.ΓSpecIso _).inv.hom r)) = r.
-  -- Build the key categorical identity:
-  --   (ΓSpecIso _).inv ≫ (hU.fromSpec.appIso ⊤).inv ≫
-  --     Y.presheaf.map (eqToHom hImg.symm).op = 𝟙 _.
-  have e₀ : (⊤ : (Spec Γ(Y, U)).Opens) ≤ hU.fromSpec ⁻¹ᵁ U :=
-    le_of_eq hU.fromSpec_preimage_self.symm
-  -- Sub-key: `hU.fromSpec.appLE U ⊤ e₀ = (ΓSpecIso _).inv` (via fromSpec_app_self).
-  have h_appLE : hU.fromSpec.appLE U ⊤ e₀ = (Scheme.ΓSpecIso Γ(Y, U)).inv := by
-    simp [Scheme.Hom.appLE, hU.fromSpec_app_self, ← Functor.map_comp]
-  -- Apply `appLE_appIso_inv` and combine.
-  have h_combine :
-      (Scheme.ΓSpecIso Γ(Y, U)).inv ≫ (hU.fromSpec.appIso ⊤).inv =
-        Y.presheaf.map (homOfLE (le_of_eq hImg)).op := by
-    rw [← h_appLE]
-    exact Scheme.Hom.appLE_appIso_inv hU.fromSpec e₀
-  -- Post-compose with `Y.presheaf.map (eqToHom hImg.symm).op` to collapse to 𝟙.
-  have h_key :
-      (Scheme.ΓSpecIso Γ(Y, U)).inv ≫ (hU.fromSpec.appIso ⊤).inv ≫
-        Y.presheaf.map (eqToHom hImg.symm).op = 𝟙 _ := by
-    rw [← Category.assoc, h_combine, ← Functor.map_comp, ← op_comp]
-    -- The composite `eqToHom hImg.symm ≫ homOfLE _ : U ⟶ U` in `Y.Opens` is `𝟙 U`
-    -- by `Subsingleton` of the poset structure on `Opens Y`.
-    simp
-  -- Apply h_key elementwise to r.
-  exact congr($h_key r)
-  -- (N4) characterization: the inverse of the equiv is the canonical base map.
-  -- Route: the unit-compatibility `Adjunction.unit_leftAdjointUniq_hom_app` for
-  -- `restrictAdjunction` vs `pullbackPushforwardAdjunction` (whose `leftAdjointUniq`
-  -- IS `restrictFunctorIsoPullback`), then naturality of the comparison against the
-  -- restriction `⊤ ≤ fromSpec ⁻¹ᵁ U`, then collapse of the two `N`-restrictions
-  -- (`restrictAdjunction`'s unit component is a plain presheaf restriction, rfl).
-  intro y
-  have hk := congrArg
-    (fun (k : N ⟶ (Scheme.Modules.pushforward hU.fromSpec).obj
-        ((Scheme.Modules.pullback hU.fromSpec).obj N)) =>
-      (Scheme.Modules.Hom.app k U).hom y)
-    (Adjunction.unit_leftAdjointUniq_hom_app
-      (Scheme.Modules.restrictAdjunction hU.fromSpec)
-      (Scheme.Modules.pullbackPushforwardAdjunction hU.fromSpec) N)
-  have hnat := congrArg
-    (fun (k : Γ(N.restrict hU.fromSpec, hU.fromSpec ⁻¹ᵁ U) ⟶
-        Γ((Scheme.Modules.pullback hU.fromSpec).obj N, ⊤)) =>
-      (AddCommGrpCat.Hom.hom k)
-        ((N.presheaf.map (homOfLE (hU.fromSpec.image_preimage_le U)).op).hom y))
-    ((Scheme.Modules.Hom.mapPresheaf
-      ((Scheme.Modules.restrictFunctorIsoPullback hU.fromSpec).hom.app N)).naturality
-      (homOfLE (le_of_eq hU.fromSpec_preimage_self.symm)).op)
-  have hcol := modules_res_res_hom N
-    (hU.fromSpec.opensFunctor.map (homOfLE (le_of_eq hU.fromSpec_preimage_self.symm)))
-    (homOfLE (hU.fromSpec.image_preimage_le U)) (eqToHom hImg) y
-  exact (congrArg (fun w =>
-      (Scheme.Modules.Hom.app
-        ((Scheme.Modules.restrictFunctorIsoPullback hU.fromSpec).hom.app N) ⊤).hom w)
-    hcol.symm).trans
-    (hnat.trans (congrArg (fun w =>
-      ((((Scheme.Modules.pullback hU.fromSpec).obj N).presheaf.map
-        (homOfLE (le_of_eq hU.fromSpec_preimage_self.symm)).op).hom) w) hk))
+  · -- Smul-compatibility:
+    intro r x
+    -- The LHS `r • x` is `Module.compHom`-action: `r • x = (ΓSpecIso _).inv.hom r • x`
+    -- with the natural Γ(Spec Γ(Y, U), ⊤)-action on the pullback module sheaf at ⊤.
+    -- Step A: Reduce r • x on the LHS to (ΓSpecIso).inv.hom r • x with natural action.
+    change (AddCommGrpCat.Hom.hom (N.presheaf.map (eqToHom hImg.symm).op))
+      ((AddCommGrpCat.Hom.hom (Scheme.Modules.Hom.app isoSheaf.hom ⊤))
+        ((CommRingCat.Hom.hom (Scheme.ΓSpecIso _).inv) r • x)) = _
+    -- Step B: Apply Hom.app_smul (Γ(Spec ⊤)-linearity of the SheafOfModules iso),
+    -- which migrates the scalar through `Scheme.Modules.Hom.app isoSheaf.hom ⊤`.
+    rw [Scheme.Modules.Hom.app_smul]
+    -- Step C (iter-192 Lane F closure): the residual identity is the substantive
+    -- Stacks 01HH-style ring compatibility:
+    --   Y.presheaf.map (eqToHom hImg.symm).op
+    --     ((hU.fromSpec.appIso ⊤).inv ((ΓSpecIso _).inv.hom r)) = r,
+    -- combined with `Scheme.Modules.map_smul` to pull the algebra-map image
+    -- through the presheaf restriction.
+    --
+    -- The recipe (per `analogies/lane-f-restrictscalars-smul.md`):
+    -- Step A: aliasing-`let` `y : Γ(N, hU.fromSpec ''ᵁ ⊤)` to make the smul-unfold
+    -- on the restrict-of-N section visible as a Y-side action via
+    -- `restrictFunctor`'s definition (smul is `(appIso ⊤).inv.hom s` on Y-side).
+    -- Step B: `Scheme.Modules.map_smul` to migrate the scalar through the
+    -- presheaf restriction.
+    -- Step C: the categorical key identity
+    --   (ΓSpecIso _).inv ≫ (hU.fromSpec.appIso ⊤).inv ≫
+    --     Y.presheaf.map (eqToHom hImg.symm).op = 𝟙 _
+    -- via `appLE_appIso_inv` + `fromSpec_app_self` + `Hom.appLE` unfolding.
+    -- Step A: aliasing-`let` to bring the Y-side smul into instance scope.
+    set y : ↑Γ(N, hU.fromSpec ''ᵁ ⊤) := (Scheme.Modules.Hom.app isoSheaf.hom ⊤).hom x
+      with hy
+    -- Step A continued: the Γ(Spec _, ⊤)-smul on `y` (under its restrict-of-N
+    -- view) is rfl-equal to the Y-side smul via `(hU.fromSpec.appIso ⊤).inv`.
+    change (N.presheaf.map (eqToHom hImg.symm).op).hom
+      (((hU.fromSpec.appIso ⊤).inv.hom ((Scheme.ΓSpecIso Γ(Y, U)).inv.hom r)) • y) =
+      r • (N.presheaf.map (eqToHom hImg.symm).op).hom y
+    -- Step B: migrate the Y-side scalar through `N.presheaf.map`.
+    rw [Scheme.Modules.map_smul]
+    -- Step C: reduce the scalar identity to the categorical key identity.
+    congr 1
+    -- Goal: (Y.presheaf.map (eqToHom hImg.symm).op).hom
+    --        ((hU.fromSpec.appIso ⊤).inv.hom ((Scheme.ΓSpecIso _).inv.hom r)) = r.
+    -- Build the key categorical identity:
+    --   (ΓSpecIso _).inv ≫ (hU.fromSpec.appIso ⊤).inv ≫
+    --     Y.presheaf.map (eqToHom hImg.symm).op = 𝟙 _.
+    have e₀ : (⊤ : (Spec Γ(Y, U)).Opens) ≤ hU.fromSpec ⁻¹ᵁ U :=
+      le_of_eq hU.fromSpec_preimage_self.symm
+    -- Sub-key: `hU.fromSpec.appLE U ⊤ e₀ = (ΓSpecIso _).inv` (via fromSpec_app_self).
+    have h_appLE : hU.fromSpec.appLE U ⊤ e₀ = (Scheme.ΓSpecIso Γ(Y, U)).inv := by
+      simp [Scheme.Hom.appLE, hU.fromSpec_app_self, ← Functor.map_comp]
+    -- Apply `appLE_appIso_inv` and combine.
+    have h_combine :
+        (Scheme.ΓSpecIso Γ(Y, U)).inv ≫ (hU.fromSpec.appIso ⊤).inv =
+          Y.presheaf.map (homOfLE (le_of_eq hImg)).op := by
+      rw [← h_appLE]
+      exact Scheme.Hom.appLE_appIso_inv hU.fromSpec e₀
+    -- Post-compose with `Y.presheaf.map (eqToHom hImg.symm).op` to collapse to 𝟙.
+    have h_key :
+        (Scheme.ΓSpecIso Γ(Y, U)).inv ≫ (hU.fromSpec.appIso ⊤).inv ≫
+          Y.presheaf.map (eqToHom hImg.symm).op = 𝟙 _ := by
+      rw [← Category.assoc, h_combine, ← Functor.map_comp, ← op_comp]
+      -- The composite `eqToHom hImg.symm ≫ homOfLE _ : U ⟶ U` in `Y.Opens` is `𝟙 U`
+      -- by `Subsingleton` of the poset structure on `Opens Y`.
+      simp
+    -- Apply h_key elementwise to r.
+    exact congr($h_key r)
+  · -- (N4) characterization: the inverse of the equiv is the canonical base map.
+    -- Route: the unit-compatibility `Adjunction.unit_leftAdjointUniq_hom_app` for
+    -- `restrictAdjunction` vs `pullbackPushforwardAdjunction` (whose `leftAdjointUniq`
+    -- IS `restrictFunctorIsoPullback`), then naturality of the comparison against the
+    -- restriction `⊤ ≤ fromSpec ⁻¹ᵁ U`, then collapse of the two `N`-restrictions
+    -- (`restrictAdjunction`'s unit component is a plain presheaf restriction, rfl).
+    intro y
+    have hk := congrArg
+      (fun (k : N ⟶ (Scheme.Modules.pushforward hU.fromSpec).obj
+          ((Scheme.Modules.pullback hU.fromSpec).obj N)) =>
+        (Scheme.Modules.Hom.app k U).hom y)
+      (Adjunction.unit_leftAdjointUniq_hom_app
+        (Scheme.Modules.restrictAdjunction hU.fromSpec)
+        (Scheme.Modules.pullbackPushforwardAdjunction hU.fromSpec) N)
+    have hnat := congrArg
+      (fun (k : Γ(N.restrict hU.fromSpec, hU.fromSpec ⁻¹ᵁ U) ⟶
+          Γ((Scheme.Modules.pullback hU.fromSpec).obj N, ⊤)) =>
+        (AddCommGrpCat.Hom.hom k)
+          ((N.presheaf.map (homOfLE (hU.fromSpec.image_preimage_le U)).op).hom y))
+      ((Scheme.Modules.Hom.mapPresheaf
+        ((Scheme.Modules.restrictFunctorIsoPullback hU.fromSpec).hom.app N)).naturality
+        (homOfLE (le_of_eq hU.fromSpec_preimage_self.symm)).op)
+    have hcol := modules_res_res_hom N
+      (hU.fromSpec.opensFunctor.map (homOfLE (le_of_eq hU.fromSpec_preimage_self.symm)))
+      (homOfLE (hU.fromSpec.image_preimage_le U)) (eqToHom hImg) y
+    exact (congrArg (fun w =>
+        (Scheme.Modules.Hom.app
+          ((Scheme.Modules.restrictFunctorIsoPullback hU.fromSpec).hom.app N) ⊤).hom w)
+      hcol.symm).trans
+      (hnat.trans (congrArg (fun w =>
+        ((((Scheme.Modules.pullback hU.fromSpec).obj N).presheaf.map
+          (homOfLE (le_of_eq hU.fromSpec_preimage_self.symm)).op).hom) w) hk))
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 3200000 in
