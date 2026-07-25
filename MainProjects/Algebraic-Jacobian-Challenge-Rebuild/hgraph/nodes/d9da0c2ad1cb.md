@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.PointwiseAchiever.pointwiseSectionVector_fibreAchieverData
 type: lean
-updated: '2026-07-24T19:02:29'
+updated: '2026-07-25T12:32:31'
 ---
 theorem pointwiseSectionVector_fibreAchieverData
     (z : relCurve C RZ)
@@ -39,3 +39,9 @@ theorem pointwiseSectionVector_fibreAchieverData
     C hπ g r₁ r₂ b₁ b₂ i j hO hχ z hzg
   rw [hsec_eq]
   exact ⟨hsec_ne, hach⟩
+
+set_option maxHeartbeats 4800000 in
+-- The pointwise residue-field tower is reconstructed in both input theorems.
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+set_option maxRecDepth 8000 in
