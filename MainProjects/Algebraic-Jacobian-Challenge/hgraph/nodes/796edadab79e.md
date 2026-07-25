@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.sliceDualTransportInv_app_apply
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-25T13:02:37'
 ---
 lemma sliceDualTransportInv_app_apply {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
     (M : X.Modules) (V : (TopologicalSpace.Opens ↥Y)ᵒᵖ)
@@ -34,7 +34,6 @@ lemma sliceDualTransportInv_app_apply {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenIm
               ((M.val.map (eqToHom (congrArg op he.symm))).hom z))) := rfl
 
 set_option maxHeartbeats 800000 in
--- The `refine LinearEquiv.toModuleIso` carrier + the iter-307 `restrictScalarsLaxε.naturality`
--- (`hε`) term in the `naturality` field involve heavy `whnf` on `restrictScalars`/internal-hom
--- terms; the default 200000 heartbeats is insufficient for this single declaration.
+-- Constructing the carrier equivalence and reducing scalar restriction in its naturality field
+-- exceed the default heartbeat budget for this declaration.
 open PresheafOfModules InternalHom Opposite in

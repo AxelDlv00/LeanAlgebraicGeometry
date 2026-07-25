@@ -4,24 +4,23 @@ content_type: lemma
 created: '2026-07-24T17:02:57'
 decl: AlgebraicGeometry.Scheme.Modules.restrictScalars_laxMonoidal_ε_app
 docstring: '**Sectionwise carrier value of the lax-monoidal unit `ε (restrictScalars
-  α)`.**  Abstract twin of
+  α)`.**
 
-  `restrictScalars_oplaxMonoidal_η_app_one`: stated at the `CommRingCat`-valued base
-  functors `R, S`
+  Abstract twin of `restrictScalars_oplaxMonoidal_η_app_one`, stated at the
 
-  (so the unit-object `CommRing` instances are native, avoiding the post-`forget₂`
-  `CommRing`-synthesis
+  `CommRingCat`-valued base functors `R, S`, so the unit-object `CommRing` instances
 
-  failure of the concrete Scheme spelling).  The `ε` of `restrictScalars α` is sectionwise
-  the
+  are native. The `ε` of `restrictScalars α` is sectionwise the `ModuleCat`-level
 
-  `ModuleCat`-level `ε`, whose carrier action is the ring map `α.app W` (`ModuleCat.restrictScalars_η`).'
+  `ε`, whose carrier action is the ring map `α.app W`
+
+  (`ModuleCat.restrictScalars_η`).'
 file: AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualUnitPullback.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.restrictScalars_laxMonoidal_ε_app
 type: lean
-updated: '2026-07-24T17:02:57'
+updated: '2026-07-25T11:32:39'
 ---
 lemma restrictScalars_laxMonoidal_ε_app {C : Type u} [Category.{u} C]
     {R S : Cᵒᵖ ⥤ CommRingCat.{u}}

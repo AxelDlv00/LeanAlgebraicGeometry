@@ -3,7 +3,7 @@ workspace:
   state_dir: .archon-horizon
   rounds: 8
   horizon_agent:
-    harness: codex
+    harness: opus5
   scheduler:
     max_parallel_sessions: 5
 external_libraries:
@@ -31,6 +31,11 @@ harnesses:
   horizon-opus-ultra:
     kind: claude-code
     model: claude-opus-4-8
+    options:
+      effort: ultracode
+  opus5:
+    kind: claude-code
+    model: claude-opus-5
     options:
       effort: ultracode
   codex:

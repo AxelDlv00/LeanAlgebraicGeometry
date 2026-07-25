@@ -16,13 +16,13 @@ docstring: '**Leg-B atomic claim: the lax-monoidal unit `ε` of `restrictScalars
   is the single load-bearing fact powering `dualUnitRingSwap` (the codomain unit ring
   swap of leg-B),
 
-  phrased at the `CommRingCat` carrier so `CommRing` is native (per `analogies/ma-legb262.md`).'
+  phrased at the `CommRingCat` carrier so `CommRing` is native.'
 file: AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isIso_ε_restrictScalars_appIso
 type: lean
-updated: '2026-07-24T17:02:57'
+updated: '2026-07-25T13:02:37'
 ---
 lemma isIso_ε_restrictScalars_appIso {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
     (W' : TopologicalSpace.Opens ↥Y) :
