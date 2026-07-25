@@ -2,9 +2,9 @@ id: AJC.maintenance.build.warnings.residual
 title: Residual project warning debt
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The current whole-project total is 201 warning heads. GrassmannianZariskiSheaf
-  is now warning-free, removing the largest prior 44-warning block. Area children
-  track the remaining 24 genuine sorry notices and 177 style, API, or binder diagnostics.
+summary: The current whole-project total is 162 warning heads across 28 files. Twenty-four
+  are genuine sorry notices and 138 are style, API, or binder diagnostics; area children
+  partition the remaining work.
 status: pending
 kind: refactor
 priority: normal
@@ -27,8 +27,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings
-  updated_at: '2026-07-25T21:33:03.762632+00:00'
+  updated_at: '2026-07-25T23:09:49.954629+00:00'
   pinned_commits:
+  - 2148ff621
   - 773efe164
   - f73c10133
   - 00b4c44ed

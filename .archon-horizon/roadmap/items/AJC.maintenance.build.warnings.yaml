@@ -2,9 +2,10 @@ id: AJC.maintenance.build.warnings
 title: Lean warning reduction
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The latest full-project build passes all 8,723 jobs and reports 201 warning
-  heads across 30 files, down from 245. Residual debt remains partitioned by mathematical
-  area; use this total until another whole-project recount supersedes it.
+summary: The latest full-project build passes all 8,723 jobs and reports 162 warning
+  heads across 28 files, down from 201. Of these, 24 are genuine sorry notices and
+  138 are style, API, or binder diagnostics; use this total until another whole-project
+  recount supersedes it.
 status: pending
 kind: refactor
 priority: normal
@@ -27,8 +28,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-25T21:33:02.724629+00:00'
+  updated_at: '2026-07-25T23:09:49.007174+00:00'
   pinned_commits:
+  - 2148ff621
   - 773efe164
   - f73c10133
   - 00b4c44ed

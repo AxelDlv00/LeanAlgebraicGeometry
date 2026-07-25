@@ -2,11 +2,11 @@ id: AJC.maintenance.blueprint.prose
 title: Timeless chapter prose and truth passes
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The eleven bounded prose and truth passes are complete. Core, rigidity, Cech
-  augmentation, Albanese, Weil-divisor, and Adelic chapters now separate mathematical
-  proofs from implementation history, use verified sources, place dependencies honestly,
-  and avoid unsupported completion markers.
-status: done
+summary: Eleven earlier scoped truth passes and the Quot affine-base-change pass are
+  complete. A bounded repository scan still finds residual visible development-journal
+  prose in RelPicFunctor and IdentityComponent, plus proof-status notes and comment-only
+  history tracked under the residual-journals child.
+status: pending
 kind: blueprint
 priority: normal
 depends_on: []
@@ -28,8 +28,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint
-  updated_at: '2026-07-25T21:32:53.085597+00:00'
+  updated_at: '2026-07-25T23:09:43.958928+00:00'
   pinned_commits:
+  - 9ee3841b2
   - 03889996b
   - 053970b58
   - 9dac093df

@@ -2,10 +2,10 @@ id: AJC.maintenance.build.warnings.residual.representability.remaining
 title: Remaining representability warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The representability cone retains 105 warning heads after the Grassmannian
-  sheaf cleanup. Prioritize bounded leaves in GrassmannianQuot, QuotFunctorDef, FlatteningStratificationUniversal,
-  and GenericFlatnessGeometric, while keeping genuine sorry obligations separate from
-  mechanical diagnostics.
+summary: The representability cone retains 66 warning heads. Completed children record
+  the 27-warning GrassmannianQuot and 12-warning FlatteningUniversal cleanups; the
+  pending child tracks QuotFunctorDef, GenericFlatnessGeometric, and smaller residual
+  files.
 status: pending
 kind: refactor
 priority: normal
@@ -28,3 +28,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual.representability
+  updated_at: '2026-07-25T23:09:51.934583+00:00'
+  pinned_commits:
+  - 2148ff621

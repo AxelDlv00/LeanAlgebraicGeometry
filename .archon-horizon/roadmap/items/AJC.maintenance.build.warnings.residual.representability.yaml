@@ -2,9 +2,9 @@ id: AJC.maintenance.build.warnings.residual.representability
 title: Representability warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The representability allocation is down from 149 to 105 warnings after GrassmannianZariskiSheaf
-  became warning-free. The remaining leaders are GrassmannianQuot, QuotFunctorDef,
-  FlatteningStratificationUniversal, and GenericFlatnessGeometric.
+summary: The representability allocation is down from 105 to 66 warnings after GrassmannianQuot
+  and FlatteningStratificationUniversal became warning-free. QuotFunctorDef and GenericFlatnessGeometric
+  are now the largest remaining bounded targets.
 status: pending
 kind: refactor
 priority: normal
@@ -27,7 +27,8 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual
-  updated_at: '2026-07-25T21:33:04.756834+00:00'
+  updated_at: '2026-07-25T23:09:50.877279+00:00'
   pinned_commits:
+  - 2148ff621
   - 773efe164
   - 00b4c44ed

@@ -3,11 +3,11 @@ title: Project quality and documentation
 projects:
 - Algebraic-Jacobian-Challenge
 summary: Maintain the ambitious AJC route through measured elaboration, warning and
-  budget reduction, timeless blueprint prose, faithful pins, and reproducible print/build
-  baselines. The dominant Cech hotspot and all eleven bounded prose passes are closed.
-  Open work is 33 classified pin warnings, 742 print overflows plus 96 glyph notices,
-  201 Lean warning heads, 179 heartbeat scopes, 20 depth overrides, umbrella-import
-  review, and historical design-note consolidation.
+  budget reduction, timeless blueprint prose, faithful pins, and reproducible build
+  baselines. The dominant Cech hotspot and twelve bounded prose passes are closed.
+  Open work is residual journal prose, 33 classified pin warnings, 734 print overflows
+  plus 95 glyph notices, 162 Lean warning heads, 179 heartbeat-budget scopes, 20 depth
+  overrides, umbrella-import review, and historical design-note consolidation.
 status: active
 kind: refactor
 priority: normal
@@ -30,8 +30,10 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
-  updated_at: '2026-07-25T21:32:49.163498+00:00'
+  updated_at: '2026-07-25T23:09:54.537217+00:00'
   pinned_commits:
+  - 9ee3841b2
+  - 2148ff621
   - 9dac093df
   - a49bf3c38
   - f5e9c3b5e

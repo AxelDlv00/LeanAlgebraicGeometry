@@ -2,11 +2,10 @@ id: AJC.maintenance.build
 title: Project-wide build and warning budgets
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The controlled clean baseline remains 8,720 jobs with 578 warnings across
-  49 files. The Cech degree-one hotspot is closed at 6.85 seconds and 3.23 GiB. The
-  latest affected-cone full validation passes all 8,723 jobs in 15:48.40 at 8,677,384
-  KiB and reports 201 warning heads across 30 files. Remaining children cover warning
-  reduction, umbrella imports, 179 heartbeat scopes, and 20 depth overrides.
+summary: The Cech degree-one hotspot remains closed at 6.85 seconds and 3.23 GiB.
+  The latest full validation passes all 8,723 jobs in 10:32 at 8,350,104 KiB and reports
+  162 warning heads across 28 files. Remaining children cover warning reduction, umbrella
+  imports, 179 heartbeat-budget scopes, and 20 depth overrides.
 status: pending
 kind: refactor
 priority: normal
@@ -29,8 +28,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
-  updated_at: '2026-07-25T21:32:55.116851+00:00'
+  updated_at: '2026-07-25T23:09:47.947993+00:00'
   pinned_commits:
+  - 2148ff621
   - 5edda3284
   - 773efe164
   - f5e9c3b5e

@@ -4,13 +4,13 @@ kind: issue
 body: 'Printable blueprint warning debt
 
 
-  Two settled full LuaLaTeX passes now produce a 619-page PDF with 742 overfull boxes
-  and 96 missing-character notices. There are zero underfull boxes and no unresolved
-  references or citations, rerun request, duplicate Adelic labels, or TeX error. The
-  rewritten RiemannRoch_Adelic chapter contributes no chapter-local diagnostic. This
-  improves the preceding 618-page, 759-overfull baseline while glyph debt stays flat.
-  Continue with the worst remaining chapter-local overflows and central rendering
-  of Greek glyphs in code-style names. Latest chapter commit: 053970b58.'
+  Two settled full LuaLaTeX passes now produce a 618-page PDF with 734 overfull boxes
+  and 95 missing-character notices. There are zero underfull boxes and no unresolved
+  references or citations, rerun request, or TeX error; the HTML blueprint also renders
+  successfully. The cycle-free Quot affine-base-change truth pass improves the previous
+  742-overfull, 96-glyph baseline. Continue with the worst remaining chapter-local
+  overflows and central rendering of Greek glyphs in code-style names. Latest commit:
+  9ee3841b2.'
 labels:
 - agent-ready
 status: open
@@ -21,7 +21,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-23T19:07:53.865283+00:00'
-updated_at: '2026-07-25T20:30:24.311169+00:00'
+updated_at: '2026-07-25T23:11:13.536126+00:00'
 metadata:
   provenance:
     run: '0046'
