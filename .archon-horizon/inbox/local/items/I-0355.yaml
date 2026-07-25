@@ -1,0 +1,71 @@
+id: I-0355
+provider: local
+kind: issue
+body: "THE divRep GATE IS MIS-STATED IN THREE WAYS. Ground review of run 0048 round\
+  \ 2, 2026-07-26.\nAll four claims below were checked against source, not against\
+  \ docstrings (I-0349).\n\n1) THE I-0234 GATE IS ALREADY DISCHARGED. Roadmap AJCR.w4-rep.datum.dat-d.ddr.divrep.u2\
+  \ and\n   informal/w4-ddr9-worksheet.md:334-338 both say U2 is \"gated on the I-0234\
+  \ windowS\n   strengthening (b+2g -> b+3g) and its full-rebuild window\".  It is\
+  \ not.\n   AlgebraicJacobian/RiemannRoch/WindowLedger.lean:139-163 already defines\n\
+  \   windowS_exists/windowS_choice with `windowBound + 3*g` and proves windowS_spec_three;\n\
+  \   :164 keeps the old b+2g form only for byte-compatibility.  I-0234 is archived\
+  \ because it\n   was DONE.  Nobody is waiting on a rebuild window.  Delete that\
+  \ clause from both places.\n\n2) U1's SUBSTRATE IS FAR MORE COMPLETE THAN THE ROW\
+  \ SAYS, AND U1 IS NOT CERTIFICATE-FREE.\n   The row says only \"`divUniversalFamily`\
+  \ greps empty\".  True, but:\n     * seedUniv : ThetaGeneratorSeed over R_Z EXISTS\
+  \ -- Picard/DivSchemeSeedUnivGen.lean:283.\n     * The fibrewise keystone EXISTS\
+  \ and is proved --\n       existsUnique_effective_divisor_divUniversalFibre (DivSchemeSeedUnivAssembleKappa.lean:417)\n\
+  \       and its residue-field spelling (:481): at every prime of the pair chart\
+  \ ring over the\n       carve ideal, a UNIQUE effective degree-g divisor cuts both\
+  \ universal windows.\n   So U1 = seedUniv + IsGenerator + ThetaGeneratorSeed.certifiedFamily\n\
+  \   (Picard/DivSchemeEps.lean:234), and `certifiedFamily` demands\n   `(D.divisorAdaptation\
+  \ hD).IsCertified g` -- a GLOBAL certificate over R_Z.\n   CONSEQUENCE: ddr.divrep\
+  \ is NOT an independent mountain from ddr.certificate.  The roadmap's\n   \"SIX\
+  \ INDEPENDENT MOUNTAINS\" framing hides that U1 sits directly on the certificate\
+  \ gate the\n   chart-avoid no-go closed.  Fix the master summary.\n   NOTE ALSO\
+  \ that this refutes I-0320's headline \"NO CONSUMER EVER NEEDED [IsCertified over\
+  \ R]\":\n   divRepPullAt (Picard/DivRepAffKit.lean:92) takes\n   `U i j : CertifiedDivisorFamily\
+  \ C (ChartRing i j) pi g`, a global certificate at R_Z.\n\n3) CHEAP EDIT NOBODY\
+  \ HAS MADE: divRepPullAt's `U` can be weakened from CertifiedDivisorFamily\n   to\
+  \ DivFamZar.  Its body is `DivFamZar.mapAlgHom omega (DivFam.mk (U i j)).toZar`\
+  \ -- it only\n   ever uses the toZar image.  Retyping `U : forall i j, DivFamZar\
+  \ C (ChartRing i j) pi g` and\n   `divRepPullAt ... := DivFamZar.mapAlgHom omega\
+  \ (U i j)` is strictly weaker, keeps\n   divRepPullAt_id/_comp and IsCompatible\
+  \ verbatim, and is what makes I-0320's relaxation\n   actually reach U1 (the pointwise\
+  \ gate\n   isLocallyCertified_of_forall_prime_exists_certified_adaptation then applies\
+  \ at R_Z, so the\n   adaptation need not be the opaque `.some`).\n\n4) I-0350's\
+  \ #1 RANKED MOVE, `pull_naturality`, IS ILL-POSED.  It is a FIELD of the structure\n\
+  \   DivRepAffinePullback (DivRepAffKit.lean:174) quantified over another field `pull`,\
+  \ of which\n   there is no producer; there is no standalone theorem to prove.  Its\
+  \ algebraic content is\n   ALREADY LANDED as divRepPullAt_comp (DivRepAffKit.lean:110,\
+  \ \"the algebraic part of F5\n   naturality\").  What is left of naturality is gluing\
+  \ bookkeeping that cannot exist before\n   `pull` does.\n\n   THE MOVE THAT SHOULD\
+  \ REPLACE IT, and which round 2's own theorem makes free:\n   DivRepChartFamily.IsCompatible\
+  \ (DivRepAffKit.lean:123) -- the F5 overlap obligation -- has a\n   docstring saying\
+  \ it is proved \"from its epsilon identity and the total mono theorem\".  With\n\
+  \   eq_of_isDivRepClassify (DivRepClassifyZarSep.lean:352) the mono leg is no longer\
+  \ needed:\n     IsCompatible U  <=  forall S i j omega,\n       IsDivRepClassify\
+  \ (divRepPullAt U i j omega) (Spec omega >> ChartMap i j)\n   is a five-line corollary\
+  \ (both pulled classes are classified by the same q; sep concludes).\n   That converts\
+  \ the whole F5 overlap obligation into ONE per-chart clause, i.e. exactly U2,\n\
+  \   and is landable today.  Do this before anything else on the divrep row."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-25T16:40:58.688070+00:00'
+updated_at: '2026-07-25T16:40:58.688082+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0006-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: ground

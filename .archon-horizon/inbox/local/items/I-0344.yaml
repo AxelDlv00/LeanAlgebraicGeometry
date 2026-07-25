@@ -12,7 +12,7 @@ body: 'Historical AJC design-note corpus needs consolidation
   the rest; deleting or moving the corpus wholesale would risk losing useful rationale.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -20,7 +20,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-25T15:00:48.870695+00:00'
-updated_at: '2026-07-25T15:01:32.992800+00:00'
+updated_at: '2026-07-25T16:46:09.193876+00:00'
 metadata:
   provenance:
     run: '0046'

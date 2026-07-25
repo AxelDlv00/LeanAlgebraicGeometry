@@ -1,0 +1,54 @@
+id: I-0357
+provider: local
+kind: memory
+body: "TWO WORKSPACE-LEVEL BLIND SPOTS ON THE AJCR REPRESENTABILITY CAMPAIGN (Ground,\
+  \ 2026-07-26).\n\n1) THE BLUEPRINT HAS ZERO COVERAGE OF THE DD-R TOWER.\n   Measured\
+  \ over MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/chapters/*.tex:\n\
+  \     DivFamZar | divFunctor | IsCertified | DivisorAdaptation | CertifiedDivisorFamily\
+  \ | DivRep\n       -> 0 hits\n     DivScheme | Grassmannian\n       -> 0 hits\n\
+  \   That is the whole of what the last ~10 sessions produced (300+ Picard modules)\
+  \ and the whole\n   of the certificate no-go.  Meanwhile def:pic0RepresentableByOfCharts\n\
+  \   (blueprint/src/chapters/PicardEtale.tex:10677) is stated conditionally on a\
+  \ chart family, so a\n   blueprint reader concludes representability is one hypothesis\
+  \ away.  I-0333 already asked for\n   ~5 missing nodes; nothing has been commissioned.\
+  \  The blueprint and the Lean tree do not agree\n   about where this project is,\
+  \ and the blueprint is the artifact a human reads.\n\n2) THE LARGEST UNCLAIMED divRep-FREE\
+  \ BLOCK IS IN WAVE 5, NOT WAVE 4, AND IT HAS NO BRIEFING.\n   AJCR.w5-av is pending\
+  \ 8/16 with EIGHT open leaves that all carry EMPTY summaries -- title only:\n  \
+  \   t1 dual-number tangent kit (old-draft port)\n     t3 ker(relPic(k[eps]) -> relPic(k))\
+  \ =+ H^1(C,O) via nilpotent unit-lifting\n     t4 the etale-plus/Zariski kernel\
+  \ crossing at k[eps]\n     t5 dim_k T_0(d.J) = g\n     s1 geometric reducedness\
+  \ at the identity (two-term H^2 = 0 square-zero lifting)\n     s2 Smooth d.J.hom\
+  \ via smooth_of_grpObj\n     s3 SmoothOfRelativeDimension g assembly\n     p1 (blocked\
+  \ on DD shapes freeze)\n   t1/t3/t4 mention no Jacobian at all -- they are deformation\
+  \ theory of relPic -- and substrate\n   is already landed in AlgebraicJacobian/Tangent/\
+  \ (DualNumberBaseChange, TruncExpCech,\n   TruncExpCechH1, TruncExpUnits; w5-av.t2\
+  \ is done).  s2/s3/t5 are datum-level, i.e. stated over a\n   section variable d\
+  \ : JacobianData C, so they are divRep-free by construction.\n   These are the frozen\
+  \ gates Challenge.lean:113 (SmoothOfRelativeDimension (genus C)),\n   :117 (IsProper),\
+  \ :121 (GeometricallyIrreducible) -- the three Challenge sorries that have NO\n\
+  \   datum-level avatar at all (JacobianData carries only J, rep, locallyOfFiniteType,\
+  \ quasiCompact;\n   Picard/JacobianData.lean:87-100).\n   AJCR.w4-rep's summary\
+  \ says \"work at the TOP of the mountain is available and had never been\n   attempted\"\
+  , then points only at Wave 6.  It should point here.  Give these eight leaves\n\
+  \   summaries before briefing anyone on them."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-25T16:41:43.496655+00:00'
+updated_at: '2026-07-25T16:41:43.496664+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0006-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: ground

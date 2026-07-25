@@ -2,11 +2,10 @@ id: AJC.maintenance.cech.contractibility.degree-one
 title: Degree-one contracting identity
 projects:
 - Algebraic-Jacobian-Challenge
-summary: cechSection_comm_one is isolated in CechSectionContractibilityOne behind
-  named coordinate and opaque composite helpers. Its module target builds warning-free
-  in 15:03.24 at 10,138,948 KiB peak RSS; 400k and 800k deterministic limits time
-  out, so one documented 1.6M scope remains. Local recursion scopes are reduced to
-  2,000.
+summary: '`cechSection_comm_one` now consumes the direct restriction-product augmentation.
+  Its forced target runs warning-free in 6.85 seconds at 3,225,180 KiB, down from
+  16:16.30 and 10,138,220 KiB; the former 1.6M heartbeat and recursion-depth overrides
+  are removed.'
 status: done
 kind: refactor
 priority: high
@@ -29,6 +28,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.cech.contractibility
-  updated_at: '2026-07-25T01:57:16.921165+00:00'
+  updated_at: '2026-07-25T16:48:56.421423+00:00'
   pinned_commits:
+  - 08c03cbf0
   - ce7e4a001

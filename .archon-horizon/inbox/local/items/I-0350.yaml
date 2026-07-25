@@ -1,35 +1,47 @@
 id: I-0350
 provider: local
 kind: hint
-body: "NEXT-SESSION MOVES on ajcr-w4-rep-free, ranked, after run 0048 round 2 (5 commits\
-  \ landed).\nRead AJCR.w4-rep's summary first; it was rewritten this round and the\
-  \ old one is stale.\n\n1. `pull_naturality` for DivRepAffinePullback (Picard/DivRepAffKit.lean:174).\
-  \  It is the ONE\n   of the (now) three remaining obligations that is U2-free, and\
-  \ the roadmap's own audit says\n   it is provable from inputs that exist today.\
-  \  With `ofPull` (landed this round) a producer\n   then owes only `pull` + `isDivRepClassify_pull`.\
-  \  Start from divRepPullAt\n   (DivRepAffKit.lean:92) and DivFamZar.mapAlgHom functoriality.\n\
-  \n2. `exists_unique_ofCurve_comp` (Challenge.lean:141) -- the Albanese universal\
-  \ property, the\n   only one of Wave 6's three frozen gates with no datum-level\
-  \ avatar.  The other two got\n   theirs this round (JacobianDataAbel.lean).  Substrate:\
-  \ abelElement's functor-point formula\n   (AbelElement.lean:140) plus the Milne\
-  \ I 3.2 extension already ported\n   (AJCR.w6-albanese.port-ext).  Nobody has looked\
-  \ at this; it is at the TOP of the mountain,\n   which is where the cheap wins turned\
-  \ out to be.\n\n3. c9b parametrically: develop f_c over a section variable\n   `(divRep\
-  \ : (divFunctor C pi g).RepresentableBy DivOver)`, the idiom at DivRepKit.lean:113,\n\
-  \   now that chartLocus and its openness exist (Pic0ChartLocusClass.lean).  Real\
-  \ checkable\n   mathematics today without waiting for DAT-J.\n\n4. build-reach,\
-  \ in SMALL batches with a green `lake build` after each -- NOT the 89-module\n \
-  \  big bang.  First: DivSchemeFlatteningBridge + EntryIdeal (verified clean).  But\
-  \ read the\n   caveat on AJCR.w4-rep.build-reach: both have zero consumers here,\
-  \ and the real decision is\n   \"port the sibling's 2,839-line flattening chain\
-  \ or delete EntryIdeal\".\n\n5. One `lake env lean Picard/Pic0ThetaCocycle.lean`.\
-  \  That file has never been elaborated by\n   anything, ever, and holds the tree's\
-  \ only non-Challenge sorry.  Nobody has run it.  See\n   the correction on I-0348\
-  \ -- the \"does not parse\" claim was wrong.\n\nDO NOT: re-attempt the FinCoverData\
-  \ joint-covering relaxation (refuted, I-0346 + roadmap leaf\njoint-cover); launch\
-  \ a lane at Pic0PreservesFilteredBaseColimit; or chase `degAff_mapAlg` /\n`mem_pic0Subgroup_overSpec_iff`\
-  \ as \"cheap sorries\" -- they are not sorries, they are\ndeclarations that do not\
-  \ exist.  And see I-0349 before quoting any docstring."
+body: "NEXT-SESSION MOVES on ajcr-w4-rep-free, RE-RANKED after the round-2 ground\
+  \ review overturned\nmy first list.  Read AJCR.w4-rep's summary and its round-2\
+  \ comments first.\n\n1. **Finish the affine package's U2-free half.**  Three of\
+  \ its four obligations fell this\n   round (pull_classify -> ofPull; the §3.4 overlap\
+  \ -> divRepPullAt_mapAlgHom_eq_of_chartFactor;\n   IsCompatible -> isCompatible_of_isDivRepClassify_divRepPullAt).\
+  \  What is left that does NOT\n   need U2 is the choice bookkeeping: glue the per-piece\
+  \ classes over\n   divScheme_exists_chartFactor (DivSchemeAtlasFactor.lean:382,\
+  \ already landed) with\n   DivFamZar.exists_glue_of_away_compat, then prove the\
+  \ glued class independent of the\n   factorization.  That produces `pull` as a definition,\
+  \ leaving ONLY U2.\n\n   WITHDRAWN from my earlier list: `pull_naturality` is ILL-POSED\
+  \ as a standalone item -- it is\n   a structure field quantified over another field\
+  \ that has no producer, and its algebraic\n   content is already landed as divRepPullAt_comp\
+  \ (DivRepAffKit.lean:111).\n\n2. **p1-aut, and it is one session, not a campaign.**\
+  \  P1 k is literally mathlib's Proj\n   (Curve/P1.lean:135), and mathlib at this\
+  \ rev ships AlgebraicGeometry.Proj.map\n   (ProjectiveSpectrum/Functor.lean:144)\
+  \ with map_comp/map_id for graded ring homs.  So\n   obligation (i) is a linear\
+  \ change of variables packaged as a GradedRingHom plus Proj.map;\n   (ii) is \"\
+  two distinct k-points of P^1 lift to a basis of k^2\".  The row's framing as \"\
+  build\n   the PGL_2 action and prove transitivity\" is what made it look unaffordable.\
+  \  It unblocks\n   fibre-avoid -> cert-relocalize -> ... -> U1.\n\n3. **Stop waiting\
+  \ on I-0346's field-size question; record option (b) as the plan.**  It is\n   AJCR.w4-rep.datum.dat-g,\
+  \ already titled as finite-Galois/Speiser descent of the datum from\n   a finite\
+  \ separable stage.  Over F_q, descend from F_{q^m} with q^m large.  Escalating this\n\
+  \   a third time burns a round.\n\n4. **A second front should be WAVE 5, not Wave\
+  \ 4.**  AJCR.w5-av has eight open leaves with\n   EMPTY summaries; t1/t3/t4 touch\
+  \ no Jacobian, no certificate and no divRep, and their\n   substrate is landed under\
+  \ AlgebraicJacobian/Tangent/.  Start with t3\n   (ker(relPic(k[eps]) -> relPic(k))\
+  \ = H^1(C, O)).\n\n5. **Commission the missing blueprint nodes.**  grep over blueprint/src/chapters/*.tex\
+  \ finds\n   ZERO hits for DivFamZar, divFunctor, IsCertified, DivisorAdaptation,\n\
+  \   CertifiedDivisorFamily, DivRep, DivScheme and Grassmannian -- the entire DD-R\
+  \ tower and the\n   certificate no-go are invisible there, while def:pic0RepresentableByOfCharts\
+  \ reads as one\n   hypothesis away.  The blueprint is currently the workspace's\
+  \ largest false statement about\n   its own state.\n\n6. One terminating `lake env\
+  \ lean AlgebraicJacobian/Picard/Pic0ThetaCocycle.lean`.  I tried;\n   it ran ten\
+  \ minutes with warm imports and I killed it.  See the addendum on I-0348.\n\nDO\
+  \ NOT: re-attempt the FinCoverData joint-covering relaxation (refuted); launch a\
+  \ lane at\nPic0PreservesFilteredBaseColimit; chase degAff_mapAlg / mem_pic0Subgroup_overSpec_iff\
+  \ as\n\"cheap sorries\" (they are not sorries; they do not exist); or quote the\
+  \ I-0234 windowS clause\nas U2's blocker (discharged -- WindowLedger.lean:157).\
+  \  See I-0349 and I-0354 before quoting\nany docstring or claiming a worksheet-pinned\
+  \ name."
 labels:
 - agent-ready
 status: open
@@ -38,7 +50,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-25T16:22:38.079249+00:00'
-updated_at: '2026-07-25T16:22:38.079260+00:00'
+updated_at: '2026-07-25T16:51:01.824164+00:00'
 metadata:
   provenance:
     run: 0048

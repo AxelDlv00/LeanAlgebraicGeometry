@@ -2,10 +2,12 @@ id: AJC.maintenance.cech.contractibility
 title: Cech contractibility elaboration hotspot
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Contractibility is separated into augmentation, degree-one, and positive-degree
-  identities feeding a lightweight coinductive package. The degree-one proof is isolated
-  behind reusable coordinate lemmas and one measured 1.6M opaque boundary; packaging
-  needs no heartbeat or transparency override. All focused targets pass warning-free.
+summary: 'Contractibility remains split into a concrete augmentation, positive-degree
+  coordinates, the degree-one identity, and lightweight coinductive packaging. Commit
+  `08c03cbf0` replaces the transport-heavy bottom augmentation with the restriction
+  product: the forced degree-one target now runs in 6.85 seconds at 3,225,180 KiB,
+  with its 1.6M heartbeat and recursion-depth overrides removed. Focused targets pass
+  warning-free.'
 status: done
 kind: refactor
 priority: high
@@ -28,6 +30,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.cech
-  updated_at: '2026-07-25T01:57:21.670585+00:00'
+  updated_at: '2026-07-25T16:48:48.695256+00:00'
   pinned_commits:
+  - 08c03cbf0
   - ce7e4a001
