@@ -57,17 +57,15 @@ private lemma natIso_inv_app_naturality {C D : Type*} [Category C] [Category D]
     G.map g ≫ (e.app B).inv = (e.app A).inv ≫ F.map g :=
   e.inv.naturality g
 
-/- Planner strategy (iter-106): θ_M = (H1.app (dual M.val)).symm ≪≫ isoMk(sliceDualTransport f M).
-   Naturality in M = compose two squares: (1) the H1 = leftAdjointUniq square (natural in the
-   object dual M.val, hence in M via dualPrecompHom by contravariance); (2) the isoMk(sliceDualTransport)
-   square, sectionwise via slice_dual_transport_app_apply (reindex + codomain-unit ring-swap, both
-   commute with dualPrecompHom). [prover-mode: mathlib-build] — may need H1-square + slice-square as
-   named aux lemmas first. -/
+/-- The presheaf dual pullback comparison is natural in its module argument. The proof pastes
+naturality of the adjoint-uniqueness isomorphism with the sectionwise `sliceDualTransport`
+square. -/
 lemma presheafDual_pullback_comparison_natural {X Y : Scheme.{u}} (f : Y ⟶ X)
     [IsOpenImmersion f] {M M' : X.Modules} (φ : M ⟶ M') :
     let φR := (Scheme.Hom.toRingCatSheafHom f).hom
     let α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf :=
-      { app := fun U => (f.appIso U.unop).inv, naturality := fun _ _ i => f.appIso_inv_naturality i }
+      { app := fun U => (f.appIso U.unop).inv
+        naturality := fun _ _ i => f.appIso_inv_naturality i }
     let β : Y.ringCatSheaf.obj ⟶ f.opensFunctor.op ⋙ X.ringCatSheaf.obj :=
       Functor.whiskerRight α (forget₂ CommRingCat RingCat)
     (PresheafOfModules.pullback φR).map (PresheafOfModules.dualPrecompHom φ.val)
