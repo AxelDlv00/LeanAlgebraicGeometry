@@ -4,10 +4,11 @@ projects:
 - Algebraic-Jacobian-Challenge
 summary: The controlled package-qualified clean build passes 8,720 jobs with 578 project
   warnings across 49 files, down 596 from the previous baseline; warning-free target
-  cleanups give an estimated current total of 419. Cech degree-one work is isolated
-  from an 11s cached wrapper, and the dual pullback split reduces its base target
-  from 2:38.03 to 22.68s while the 1:37.28 composition target runs independently.
-  Warning, heartbeat, and umbrella-import work remain explicit open children.
+  cleanups give an estimated current total of 329 and close the full 207-warning duality
+  allocation. Cech degree-one work is isolated from an 11-second cached wrapper, and
+  the dual pullback split reduces its base target from 2:38.03 to 22.68 seconds while
+  the 1:37.28 composition target runs independently. Warning, heartbeat, and umbrella-import
+  work remain explicit open children.
 status: pending
 kind: refactor
 priority: normal
@@ -30,8 +31,10 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
-  updated_at: '2026-07-25T04:19:01.528047+00:00'
+  updated_at: '2026-07-25T05:24:52.194218+00:00'
   pinned_commits:
+  - df5192767
+  - afbd88600
   - ce7e4a001
   - fb29d460b
   - e142308c0
