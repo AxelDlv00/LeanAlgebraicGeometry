@@ -3096,3 +3096,6 @@
 {"type": "run.stopped", "id": "b8281cc5bd104f089e914c9cbb57ab56", "created_at": "2026-07-25T17:25:33.226498+00:00", "actor": "orchestrator", "data": {"run_id": "0048", "reason": "usage_limit", "round": 3}}
 {"type": "run.finished", "id": "67f72e59bc4547f68521c9c13a20a96e", "created_at": "2026-07-25T17:25:33.361123+00:00", "actor": "orchestrator", "data": {"run_id": "0048"}}
 {"type": "workspace.run_integrated", "id": "16d2cc5824744453b54d0dd46206e0d7", "created_at": "2026-07-25T17:25:36.465693+00:00", "actor": "orchestrator", "data": {"run_id": "0048", "sha": "d7155ecfb9a39da234096dfc7a93deaeed433e9f", "changed": true}}
+{"type": "report.written", "id": "5ef6f049b410426d86efe3f4e4f00624", "created_at": "2026-07-25T17:59:26.956489+00:00", "actor": "orchestrator", "data": {"name": "task-ajc-optimize", "ref": ".archon-horizon/runs/0046/sessions/0072-horizon-ajc-optimize/report.md"}}
+{"type": "task.incomplete", "id": "961737ecc5dc4f37ab9345f92d747371", "created_at": "2026-07-25T17:59:27.016416+00:00", "actor": "orchestrator", "data": {"task_id": "ajc-optimize", "reason": "no-terminal-status-recorded"}}
+{"type": "task.finished", "id": "e039b901350e47d686973172071e8448", "created_at": "2026-07-25T17:59:27.058097+00:00", "actor": "horizon", "data": {"task_id": "ajc-optimize", "status": "queued"}}
