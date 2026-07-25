@@ -1,0 +1,50 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.leak-image
+title: No-leak inside the leak locus' base image (the reformulated tube-fibre obligation)
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: "NEW LEAF, replacing the refuted one-piece shape of tube-fibre (run 0047\
+  \ r6).\n\nLANDED HALF (Picard/DivSchemeCertZarLeak.lean, kernel-checked, now in\
+  \ the default build):\nthe assembler's per-piece clause is emptiness of the leak\
+  \ locus supportLeak(pieces j) =\nclosure(supp cap pieces j) \\ pieces j. That locus\
+  \ is CLOSED, and under the properness licence its\nBASE IMAGE is closed (isClosed_image_supportLeak).\
+  \ Hence\n - exists_basicOpen_supportLeak_eq_empty: every base point OUTSIDE that\
+  \ image has a basic open over\n   which nothing leaks -- exactly the Localization.Away\
+  \ shape the pointwise gate consumes, with NO\n   fibre analysis whatsoever;\n -\
+  \ forall_fibre_closure_subset_of_supportLeak_inter_eq_empty: leak-freeness over\
+  \ a base open yields\n   the fibrewise closure clause there.\n\nREMAINING OBLIGATION,\
+  \ now sharply localized: the base points INSIDE the closed image\nf.base '' supportLeak(pieces\
+  \ j). The pointwise gate needs an away-certificate at EVERY prime p, so\nthose primes\
+  \ cannot simply be discarded. Two candidate routes:\n (a) show the image is empty\
+  \ for the pieces of the seed's extracted adaptation -- i.e. the support\n     trace\
+  \ on each piece is already closed, which is a statement about the seed's own geometry\n\
+  \     (the divisor scheme is finite over the base, so its trace should not accumulate\
+  \ outside a piece);\n (b) at a prime p inside the image, REFINE the adaptation over\
+  \ a neighbourhood of p so that the\n     refined pieces have empty leak there. Note\
+  \ the no-go of I-0323 does NOT block this: refinement\n     is allowed, only 'at\
+  \ most one support-meeting piece' is forbidden, and no-leak is a per-piece\n   \
+  \  condition compatible with several support-meeting pieces.\n\nRoute (a) is the\
+  \ more likely: leaks are support points outside the piece (supportLeak_subset_sdiff),\n\
+  and properness plus finiteness of the divisor scheme over the base is exactly what\
+  \ should preclude\nthem. Memory I-0323, I-0324."
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T12:51:21.580154+00:00'
+  provenance:
+    run: '0047'
+    session: 0014-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate

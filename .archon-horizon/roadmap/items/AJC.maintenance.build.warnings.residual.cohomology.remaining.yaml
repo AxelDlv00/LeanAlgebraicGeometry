@@ -2,12 +2,12 @@ id: AJC.maintenance.build.warnings.residual.cohomology.remaining
 title: Remaining cohomology warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The latest whole-project build verifies exactly six remaining cohomology
-  warnings: three genuine sorries in CechHigherDirectImageUnconditional, a deprecated
-  Finsupp name in MayerVietorisCover, and goal-changing show tactics in RegroupHelper
-  and QuasicoherentDegreeOneVanishing. The three mechanical auxiliary diagnostics
-  are the next bounded cleanup.'
-status: pending
+summary: 'The three non-mathematical cohomology diagnostics are eliminated: MayerVietorisCover
+  uses Finsupp.uniqueLinearEquiv, and RegroupHelper plus QuasicoherentDegreeOneVanishing
+  use goal-preserving change tactics. All three files are LSP-clean; their configured
+  Lake targets pass 8,623 jobs. The three genuine Cech base-change placeholders remain
+  separately tracked by the parent.'
+status: done
 kind: refactor
 priority: normal
 depends_on: []
@@ -29,7 +29,8 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual.cohomology
-  updated_at: '2026-07-25T12:37:45.535113+00:00'
+  updated_at: '2026-07-25T12:52:24.110290+00:00'
   pinned_commits:
+  - 4a8678264
   - f73c10133
   - 00b4c44ed

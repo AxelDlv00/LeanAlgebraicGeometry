@@ -3,14 +3,29 @@ title: 'Tube-fibre: at one base prime, put the family support of the pointwise s
   system inside a single adaptation piece'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'REDUCED TO ONE FIBRE (commit 7ca4cf17c). exists_away_supportLocus_subset_of_fibre_subset
-  (Picard/DivSchemeCertZarTube.lean) takes containment of the support fibre at a SINGLE
-  base prime in an open piece and returns an element outside that prime whose whole
-  basic open has the support inside the piece; DivisorAdaptation.forall_noLeak_of_forall_supportLocus_subset
-  then gives the assembler''s hnoLeak. REMAINING: the fibrewise input itself -- at
-  one prime p, the support fibre of the pointwise seed system is a finite set of closed
-  points (degree-g divisor, divUniversalSeedFibreDivisor_spec) that can be enclosed
-  in a single adaptation piece, possibly after refining the extraction.'
+summary: 'GOAL REFUTED AS STATED, NEEDS REFORMULATION (run 0047 r6). The leaf asked
+  to ''put the family support of the pointwise seed system inside a SINGLE adaptation
+  piece''. That is impossible whenever a support point lies in the overlap V0 cap
+  V1 of the two pinned charts: both charts carry a partition of unity, so their pieces
+  cover their chart, and such a point lies in a chart-0 piece AND a chart-1 piece
+  -- two distinct support-meeting pieces, for every refinement of the cover. Proved
+  as DivisorAdaptation.not_exists_unique_support_piece and supportLocus_disjoint_chart_inter_of_separated
+  (Picard/DivSchemeCertZarSep.lean, kernel-checked). The degree-g seed divisor is
+  not fibre-confined, so it does meet the overlap in general.
+
+
+  WHAT SURVIVES. The landed machinery of this leaf is still correct and useful: exists_away_supportLocus_subset_of_fibre_subset
+  (DivSchemeCertZarTube.lean) spreads one-fibre containment in an OPEN U to a basic-open
+  neighbourhood, and forall_noLeak_of_forall_supportLocus_subset converts containment
+  into the assembler''s hnoLeak. What must NOT be asked of it is that U be a single
+  piece.
+
+
+  REFORMULATION NEEDED: the assembler consumes hnoLeak PER PIECE (a fibrewise closure
+  clause for each j), not support-in-one-piece. So the honest goal is per-piece: for
+  each j, the fibre of the closure of the piece trace stays in the piece. That is
+  compatible with several support-meeting pieces and does not trigger the no-go. See
+  memory I-0323.'
 status: pending
 kind: proof
 priority: normal
@@ -33,4 +48,4 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-25T07:34:19.592993+00:00'
+  updated_at: '2026-07-25T12:44:15.318082+00:00'
