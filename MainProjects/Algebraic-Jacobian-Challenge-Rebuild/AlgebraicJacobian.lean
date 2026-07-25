@@ -471,6 +471,7 @@ import AlgebraicJacobian.Picard.DivisorDatumRankOne
 import AlgebraicJacobian.Picard.DivisorFamilyMonoH1
 import AlgebraicJacobian.Picard.Pic0ChartLocusOpen
 import AlgebraicJacobian.Picard.Pic0ChartLocusFibreField
+import AlgebraicJacobian.Picard.Pic0ChartLocusClass
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivGen
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivClose
 import AlgebraicJacobian.Picard.DivSchemeUnivFibreKerSpan
