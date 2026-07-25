@@ -1663,12 +1663,13 @@ instance serreTwistGlued_isFinitePresentation (m : ℕ) :
   (serreTwistGlued_isLocallyTrivial n₀ m).isFinitePresentation
 
 set_option synthInstance.maxHeartbeats 400000 in
+-- Integral finite presentation synthesizes the slice-site
+-- `sheafToPresheaf.IsRightAdjoint`; the default instance budget times out.
 /-- **`O(m)` on the integral model is finitely presented** (P0.4). -/
 instance serreTwist_isFinitePresentation (m : ℕ) :
     (serreTwist n₀ m).IsFinitePresentation :=
   (serreTwist_isLocallyTrivial n₀ m).isFinitePresentation
 
-set_option synthInstance.maxHeartbeats 400000 in
 /-- **The relative twisting sheaf `O(m)` on `ℙ(n₀; S)` is finitely presented**
 (P0.4). -/
 instance twistingSheaf_isFinitePresentation (S : Scheme.{0}) (m : ℕ) :
@@ -1676,11 +1677,12 @@ instance twistingSheaf_isFinitePresentation (S : Scheme.{0}) (m : ℕ) :
   (twistingSheaf_isLocallyTrivial n₀ S m).isFinitePresentation
 
 set_option synthInstance.maxHeartbeats 400000 in
+-- Quasi-coherence inference passes through the integral twist's finite-presentation
+-- and slice-site instance chain; the default instance budget times out.
 /-- **`O(m)` on the integral model is quasi-coherent** (P0.4), automatic from
 finite presentation. -/
 example (m : ℕ) : (serreTwist n₀ m).IsQuasicoherent := inferInstance
 
-set_option synthInstance.maxHeartbeats 400000 in
 /-- **The relative twisting sheaf `O(m)` on `ℙ(n₀; S)` is quasi-coherent** (P0.4). -/
 example (S : Scheme.{0}) (m : ℕ) :
     (ProjectiveSpace.twistingSheaf n₀ S m).IsQuasicoherent := inferInstance

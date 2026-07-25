@@ -107,8 +107,6 @@ instance presentationRestrictOfOver_isFinite {X : Scheme.{u}} (W : X.Opens)
 namespace Scheme
 
 set_option backward.isDefEq.respectTransparency false in
-set_option synthInstance.maxHeartbeats 1000000 in
-set_option maxHeartbeats 2000000 in
 /-- Term-mode variant of `presentationPullbackSliceOfOver`
 (`Cohomology/PullbackQuasicoherent.lean`) — the same per-slice transport of a
 presentation of `F.over A` to a presentation of `(g^* F).over (g ⁻¹ᵁ A)`,
@@ -151,7 +149,8 @@ noncomputable def Modules.pullbackSlicePresentation {Y X : Scheme.{u}} (g : Y �
 
 set_option backward.isDefEq.respectTransparency false in
 set_option synthInstance.maxHeartbeats 1000000 in
-set_option maxHeartbeats 2000000 in
+-- Expanding the presentation transport makes instance search traverse every
+-- `Presentation.map` and `Presentation.ofIsIso`; the default synthesis budget times out.
 /-- The per-slice pullback presentation transport preserves finiteness: after
 `delta`-exposing the transport chain, every layer is a `Presentation.map` or a
 `Presentation.ofIsIso` applied to the opaque `presentationRestrictOfOver`

@@ -74,8 +74,6 @@ isomorphism, Mathlib's `[F.Final]` instance in `PullbackFree.lean`). -/
 instance opensMap_final {T T' : TopCat.{u}} (φ : T ⟶ T') : (Opens.map φ).Final :=
   Functor.final_of_isFiltered_structuredArrow _
 
-set_option maxHeartbeats 1000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 /-- **`g^* 𝒪_X ≅ 𝒪_Y` for an arbitrary scheme morphism**: the unit comparison of the
 module pullback along any scheme morphism is an isomorphism (the underlying site functor
 `Opens.map g.base` is final by `opensMap_final`). -/
@@ -93,8 +91,6 @@ noncomputable def pullbackUnitIso {Y X : Scheme.{u}} (g : Y ⟶ X) :
 /-! ## The per-slice presentation of a pullback -/
 
 set_option backward.isDefEq.respectTransparency false in
-set_option synthInstance.maxHeartbeats 1000000 in
-set_option maxHeartbeats 2000000 in
 /-- **The per-slice presentation of a pullback**: a presentation of `F.over A` induces a
 presentation of the slice `(g^* F).over (g ⁻¹ᵁ A)`, for an arbitrary scheme morphism
 `g : Y ⟶ X`.
@@ -149,6 +145,8 @@ noncomputable def presentationPullbackSliceOfOver {Y X : Scheme.{u}} (g : Y ⟶ 
 
 set_option backward.isDefEq.respectTransparency false in
 set_option synthInstance.maxHeartbeats 1000000 in
+-- Cover-local quasi-coherence repeatedly synthesizes right adjoints through the
+-- presentation transport; the default instance and elaboration budgets time out.
 set_option maxHeartbeats 2000000 in
 /-- **Pullback preserves quasi-coherence** (Stacks 01BG, general-morphism case).  For an
 arbitrary morphism of schemes `g : Y ⟶ X` and a quasi-coherent `F : X.Modules`, the module

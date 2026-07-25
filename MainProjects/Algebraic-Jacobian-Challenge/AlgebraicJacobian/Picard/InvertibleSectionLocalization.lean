@@ -73,9 +73,9 @@ Source: [Hartshorne] II.5.14 (a)/(b); Stacks 01PW, 01P0; [Nitsure] §1.
 -/
 
 set_option autoImplicit false
--- The graded-carrier types under the `ModuleCat`/`Ab` coercions recurse deeply during
--- elaboration (as in `SectionGradedRing.lean`); raise the recursion budget file-wide.
-set_option maxRecDepth 8000
+-- Graded-carrier coercion normalization exceeds the default depth at the localization and
+-- finite-generation declarations; `1000` is sufficient for the whole file.
+set_option maxRecDepth 1000
 
 universe u
 

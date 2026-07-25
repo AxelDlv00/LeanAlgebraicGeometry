@@ -665,7 +665,6 @@ section Universe0
 
 variable (n₀ : Type)
 
-set_option maxHeartbeats 800000 in
 /-- **Base cocycle of the transported overlap units** (`m = 1`): in
 `Γ(V(i,j,k), O)`, the images of the three transition units `Xᵢ/Xⱼ`, `Xⱼ/Xₖ`,
 `Xᵢ/Xₖ` under the base-change comorphisms to the common triple overlap satisfy

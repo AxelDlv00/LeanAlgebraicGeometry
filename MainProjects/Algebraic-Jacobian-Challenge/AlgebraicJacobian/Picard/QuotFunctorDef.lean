@@ -911,7 +911,6 @@ lemma pullbackAlong_rel [L.IsQuasicoherent] {T T' : Over S} (ψ : T' ⟶ T)
 end QuotFamily
 
 set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
 /-- The **Quot functor** `Quot^{Φ,L}_{E/X/S}` of coherent quotients of `E`
 on `X ×_S -` with Hilbert polynomial `Φ` (`def:quot_functor`, [Nitsure] §1):
 the contravariant functor `(Sch/S)ᵒᵖ ⥤ Type (u+1)` sending an `S`-scheme
@@ -1073,7 +1072,6 @@ lemma pullbackAlong_rel {T T' : Over S} (ψ : T' ⟶ T)
 end LocallyFreeQuotient
 
 set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
 /-- The **Grassmannian functor** `Grass(V, d) : (Sch/S)ᵒᵖ ⥤ Type (u+1)` of
 rank-`d` locally free quotients of a module `V` on a noetherian base `S`
 (`def:grassmannian_scheme`, [Nitsure] §1, Exercise (2)): an `S`-scheme

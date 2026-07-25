@@ -1128,7 +1128,6 @@ local notation "Tsch" => (Scheme.IdealSheafData.vanishingIdeal Zc).subscheme
 set_option quotPrecheck false in
 local notation "kT" => (Scheme.IdealSheafData.vanishingIdeal Zc).subschemeι
 
-set_option maxHeartbeats 1600000 in
 /-- **Flat stratum over an irreducible component** [Nitsure §4, induction
 step core].  For `Zc ⊆ S` irreducible closed with reduced subscheme `T`,
 there is a non-empty open `Ω ⊆ T` such that every open substratum
@@ -1475,7 +1474,6 @@ because the proof of Lemma 6 (`flatLocusReduction`) consumes
 `FlatteningStratification.lean` deliberately does not import.  Blueprint
 pointers are unchanged (they pin fully qualified declaration names). -/
 
-set_option maxHeartbeats 1200000 in
 /-- **Lemma 6 (Noetherian-induction reduction).** [Nitsure §4 general
 case opening]
 

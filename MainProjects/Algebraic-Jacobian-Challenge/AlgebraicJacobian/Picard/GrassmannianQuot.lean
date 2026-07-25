@@ -1014,7 +1014,6 @@ lemma ιFree_matrixEndRect_projFree {S : Scheme.{0}} {d r : ℕ}
   · rw [Category.assoc, ιFree_projFree, if_neg hk, Limits.comp_zero]
   · rw [Category.assoc, ιFree_projFree, if_pos rfl, Category.comp_id]
 
-set_option maxHeartbeats 800000 in
 /-- **Matrix presentation of a morphism of free sheaves**: any `φ : O_S^r ⟶ O_S^d` is
 `matrixEndRect` of its matrix of unit-component sections. Project-local — the
 extensionality that lets the pullback-naturality of `matrixEndRect` act on arbitrary
@@ -1054,6 +1053,8 @@ lemma pullback_conj_matrixEndRect {W V : Scheme.{0}} (p : W ⟶ V) {d r : ℕ}
   simp only [Category.assoc, Iso.inv_hom_id, Category.comp_id, Iso.inv_hom_id_assoc]
 
 set_option maxHeartbeats 800000 in
+-- Coproduct extensionality expands the seven-step free-pullback comparison across the
+-- `X.Modules` instance diamond; default heartbeats time out in definitional equality.
 /-- The free-pullback comparison intertwines index maps:
 `p^*(freeMap g) ≫ Q_m = Q_n ≫ freeMap g`. Project-local — naturality of
 `pullbackFreeIso` in the index. -/
@@ -3747,7 +3748,6 @@ instance isIso_pullback_chartLocus_map {T : Scheme.{0}} {r d : ℕ} (x : RankQuo
     IsIso ((Scheme.Modules.pullback (chartLocus x I hI).ι).map (chartComposite x I hI)) :=
   isIso_pullback_isoLocus_map (chartComposite x I hI)
 
-set_option maxHeartbeats 800000 in
 /-- **The `I`-minor of the presenting morphism is the identity** (morphism level): the
 `I`-indexed coordinate inclusion composed with `chartMatrixHom` presents the (invertible)
 chart composite against its own inverse, hence is `𝟙`. Project-local — the
@@ -3888,7 +3888,6 @@ lemma unitEndSection_zero {X : Scheme.{0}} :
     unitEndSection (0 : SheafOfModules.unit X.ringCatSheaf ⟶
       SheafOfModules.unit X.ringCatSheaf) = 0 := rfl
 
-set_option maxHeartbeats 800000 in
 /-- **The `I`-minor of the presenting matrix is the identity** (entry level):
 `M^I_{p, ι_I(q)} = δ_{q p}`. Project-local — the entrywise form of
 `freeMap_chartMatrixHom`, the `M^I_I = 1` ingredient of the overlap compatibility. -/
@@ -4665,9 +4664,6 @@ lemma chartLocus_rqPullback {T' T : Scheme.{0}} (ψ : T' ⟶ T) {r d : ℕ}
     exact IsIso.comp_isIso' inferInstance h3
   exact le_sSup hmem
 
-set_option maxHeartbeats 800000 in
-set_option synthInstance.maxHeartbeats 1000000 in
--- the comparison steps traverse the `X.Modules` instance diamond (term-mode throughout)
 /-- **The presented matrix of a pulled-back rank quotient**: presenting `ψ^*y` along
 `j` is the same as presenting `y` along `j ≫ ψ` — the pullback action `rqPullback`
 re-presents the source through `pullbackFreeIso`, and the pseudofunctor comparison

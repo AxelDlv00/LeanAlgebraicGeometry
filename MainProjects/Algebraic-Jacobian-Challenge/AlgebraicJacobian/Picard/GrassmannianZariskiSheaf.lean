@@ -602,7 +602,6 @@ lemma glueTransition_self (k : κ) :
         rw [(covGD W hW).t_id k, Category.id_comp])
       rfl (glueSnd_ι W hW k k))
 
-set_option maxHeartbeats 800000 in
 /-- **(C2)**: the triple-overlap cocycle condition of the descent engine for
 the transition isomorphisms.  Both sides of the cocycle square are gluing
 isomorphisms between the same pair of restricted chart quotients over the
@@ -671,7 +670,6 @@ lemma glueTransition_cocycle (i j k : κ) :
   exact IsGlueIso.eq hL (hs.trans hbc)
 
 set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
 /-- **The overlap condition of the glued quotient**, in the pullback-level form
 of `Scheme.Modules.glueLift_cond_iff`: over the overlap `V (k,l)`, the two
 restrictions of the chart components agree through the transition
@@ -856,7 +854,6 @@ lemma overResHom_fromGluedHom (k : κ) :
   exact (Scheme.Cover.ι_fromGlued (opensCover T.left W hW) k).symm
 
 set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
 /-- **Restriction recovery**: the glued family restricts on each member of
 the cover to the given chart family, up to the equivalence of quotients. -/
 lemma gluedFamily_restrict (k : κ) :
@@ -938,7 +935,6 @@ lemma LocallyFreeQuotient.rel_of_restrict_rel (hW : ⨆ k, W k = ⊤)
   exact Scheme.Modules.exists_iso_of_cover_iso hW z.q z'.q (fun k => f k) he
 
 set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
 /-- **Compatibility transport**: the sheaf-axiom compatibility of a family of
 classes over the intersections `W k ⊓ W l` yields the `GlueCompat` input of
 the gluing construction over the scheme-theoretic overlaps. -/
@@ -1025,7 +1021,6 @@ lemma glueCompat_of_map_eq (hW : ⨆ k, W k = ⊤)
   exact ⟨α, hα⟩
 
 set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
 /-- **The Grassmannian functor is a Zariski sheaf** ([Nitsure] §1; the
 locality behind the chart construction): families of rank-`d` locally free
 quotients of `V_T` glue uniquely along open covers of the parameter scheme.

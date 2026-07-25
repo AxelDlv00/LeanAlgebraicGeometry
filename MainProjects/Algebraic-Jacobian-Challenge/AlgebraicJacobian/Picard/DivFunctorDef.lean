@@ -408,9 +408,8 @@ private noncomputable def Modules.appₗ {X : Scheme.{u}} {M N : X.Modules} (φ 
   map_add' := map_add _
   map_smul' := fun r x => Scheme.Modules.Hom.app_smul φ r x
 
-set_option maxHeartbeats 1600000 in
 set_option maxSynthPendingDepth 3 in
--- Heartbeat/instance headroom: the per-piece instance provisioning mirrors
+-- Instance-search depth: the per-piece instance provisioning mirrors
 -- `flat_section_pullback_piece` (`GenericFlatnessGeometric`), plus the section-equiv
 -- conjugation and pushout reconciliation.
 /-- **Per-piece injectivity of the pulled-back kernel inclusion** (steps 2–3).  On an affine piece `W = g'⁻¹V ⊓ f'⁻¹Ut` of the fibre-product
@@ -538,9 +537,8 @@ private theorem app_injective_on_piece
       (g' ⁻¹ᵁ V ⊓ f' ⁻¹ᵁ Ut)).hom (fK b')
   exact hab
 
-set_option maxHeartbeats 800000 in
 set_option maxSynthPendingDepth 3 in
--- Heartbeat/instance headroom: the per-basic-open localization instances
+-- Instance-search depth: the per-basic-open localization instances
 -- (`isLocalizedModule_basicOpen`) and the localized-map universal property are
 -- provisioned under binders, as in the affine section engines of `QuotScheme`.
 /-- **Descent of section injectivity to a basic open** (globalisation glue).  For a
@@ -862,7 +860,6 @@ end DivFamily
 /-! ## §3. The relative-divisor functor -/
 
 set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
 /-- The **relative-divisor functor** `Div_{X/S}` (Kleiman §3 Def. `df:div`):
 the contravariant functor `(Sch/S)ᵒᵖ ⥤ Type (u+1)` sending an `S`-scheme
 `T → S` to the set of relative effective divisors on `X_T/T` — encoded as

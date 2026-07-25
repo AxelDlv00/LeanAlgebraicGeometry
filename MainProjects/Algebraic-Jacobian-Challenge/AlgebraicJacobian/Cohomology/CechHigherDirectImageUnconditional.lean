@@ -1270,9 +1270,6 @@ theorem isPushout_of_isPullback_SpecMap {A B C P : CommRingCat.{u}} (φ : A ⟶ 
   have H'' := IsPullback.of_map_of_faithful (F := Scheme.Spec) H'
   simpa using H''.unop.flip
 
--- The long `≪≫`-chains of sheaf-of-modules isos here elaborate through the instance wall
--- slowly; the default heartbeat limit is not enough.
-set_option maxHeartbeats 800000 in
 /-- **The slice iso `pullback g' j_σ ≅ V'_σ`.**  The categorical pullback of the base change
 `g'` along the intersection-open immersion `j_σ : V_σ ↪ X` is the base-changed intersection
 open `V'_σ = coverInterOpen 𝒰' σ` of the base-changed cover: `pullback.fst` is an open
@@ -1385,9 +1382,6 @@ lemma coverInterCornerRingMap_SpecMap
   unfold coverInterCornerRingMap
   rw [Spec.map_preimage]
 
--- The long `≪≫`-chains of sheaf-of-modules isos here elaborate through the instance wall
--- slowly; the default heartbeat limit is not enough.
-set_option maxHeartbeats 800000 in
 set_option backward.isDefEq.respectTransparency false in
 /-- The restricted base-change square over the affine intersection open, as a
 pushout of rings `(φ, ψ, ρ, ψ')` with corner `Γ(X', V'_σ)`. -/
@@ -1435,9 +1429,8 @@ section LiteralSpec2
 variable {R R' : CommRingCat.{u}}
 variable (f : X ⟶ Spec R) (g : Spec R' ⟶ Spec R) (f' : X' ⟶ Spec R') (g' : X' ⟶ X)
 
--- The long `≪≫`-chains of sheaf-of-modules isos here elaborate through the instance wall
--- slowly; the default heartbeat limit is not enough.
 set_option maxHeartbeats 800000 in
+-- Normalizing the affine-tilde/pullback isomorphism chain exceeds the default budget.
 /-- **The base-changed section module is the corner extension of scalars**
 (blueprint `lem:coverinter_rhs_tensor_rewrite`).  The module of sections of the base-changed
 restriction `(j'_σ)^*((g')^* F)` over the affine `V'_σ = Spec B` is the extension of scalars
@@ -1512,9 +1505,6 @@ noncomputable def coverInter_baseChanged_sections_tensor_rewrite
         ((Scheme.Modules.pushforward hV.isoSpec.hom).obj
           ((Scheme.Modules.pullback (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).obj F))))).symm
 
--- The long `≪≫`-chains of sheaf-of-modules isos here elaborate through the instance wall
--- slowly; the default heartbeat limit is not enough.
-set_option maxHeartbeats 800000 in
 /-- **Per-intersection-open base change over literal `Spec` bases.**  The assembly of the
 four sorry-free bricks over `S = Spec R`, `S' = Spec R'`: LHS → tilde
 (`pushPullObj_coverInter_pushforward_iso_tilde`), the affine base change
@@ -1559,9 +1549,6 @@ noncomputable def pushPullObj_coverInter_baseChange_spec
 
 end LiteralSpec2
 
--- The long `≪≫`-chains of sheaf-of-modules isos here elaborate through the instance wall
--- slowly; the default heartbeat limit is not enough.
-set_option maxHeartbeats 800000 in
 /-- **Per-intersection-open S-level base change** (the per-σ heart of the degreewise
 Beck–Chevalley leaf, after the product decomposition `pushPull_sigma_iso`).  For a Čech
 fibre-power intersection open `V = coverInterOpen 𝒰 σ` of `X` (affine under `[IsSeparated f]`

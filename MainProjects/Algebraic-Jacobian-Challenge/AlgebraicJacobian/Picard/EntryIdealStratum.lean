@@ -646,7 +646,6 @@ theorem res_mk'_basicOpen {U : X.affineOpens} (f₀ : Γ(X, U.1))
         algebraMap Γ(X, U.1) Γ(X, X.basicOpen f₀) (f₀ ^ n) := hspec.symm
     _ = _ := rfl
 
-set_option maxHeartbeats 1600000 in
 set_option backward.isDefEq.respectTransparency false in
 /-- **The strata ideal localizes along basic opens** (quasi-coherence of
 the strata ideal; the `map_ideal_basicOpen` field of the ideal-sheaf

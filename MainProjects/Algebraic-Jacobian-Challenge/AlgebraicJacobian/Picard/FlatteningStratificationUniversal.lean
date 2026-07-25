@@ -277,7 +277,6 @@ section StageD1
 
 variable {X T : Scheme.{u}} (G : X.Modules) [G.IsQuasicoherent] {e : ℕ}
 
-set_option maxHeartbeats 800000 in
 /-- **The kernel bound** (the hard half of Nitsure's universal property,
 `n = 0`, [Nitsure §4]: "`f^*𝓕` is locally free of rank `e` iff `f^*ψ = 0`
 iff `f` factors through `V_e`"): if the pullback of `G` along `q : T ⟶ X`
@@ -366,7 +365,6 @@ section StageD2
 
 variable {X : Scheme.{u}} (G : X.Modules) [G.IsQuasicoherent] {e : ℕ}
 
-set_option maxHeartbeats 800000 in
 /-- **The rank-`e` stratum flattens `G`** [Nitsure §4, `n = 0`: on `V_e`
 the pulled-back presentation has vanishing relation matrix, so `𝓕|_{V_e}`
 is free of rank `e`]: the pullback of `G` along the stratum immersion is
@@ -696,7 +694,6 @@ theorem exists_pointRank_le [IsNoetherian S] (F : S.Modules)
         exact P.fiberRank_le _
     _ ≤ t.sup (fun s => pointRank S F s) := Finset.le_sup hst
 
-set_option maxHeartbeats 800000 in
 /-- **The rank fibers of a flat pullback are open** (local constancy of the
 rank of a flat, finitely presented module, geometrized through `fromSpec`):
 if `φ^*F` is flat over `T`, the locus where its point rank equals `e` is
@@ -761,7 +758,6 @@ section FactorRankStratum
 
 variable {S : Scheme.{u}} (F : S.Modules) [F.IsQuasicoherent]
 
-set_option maxHeartbeats 800000 in
 /-- **Unique factorization through the rank-`e` stratum of the base**
 [Nitsure §4, part (ii), `n = 0`, single-rank case]: a morphism `φ : T ⟶ S`
 whose pulled-back module is flat with *constant* point rank `e` (measured
@@ -836,6 +832,8 @@ section UniversalTheorem
 open Scheme.Modules Limits
 
 set_option maxHeartbeats 1600000 in
+-- Dependent coproduct uniqueness expands `Sigma.ι`/`Sigma.desc` and open-immersion
+-- transports; the default budget times out in definitional equality checking.
 /-- **Universal property of the flat-locus stratification (the `n = 0`
 flattening stratification)** [Nitsure §4, special case, parts (i) + (ii)].
 
