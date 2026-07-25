@@ -1,0 +1,30 @@
+id: AJC.maintenance.build.resource-budgets.remaining-cones
+title: Remaining budget cones
+projects:
+- Algebraic-Jacobian-Challenge
+summary: After excluding the fifteen completed P1/Qcoh sites and the fifteen explicitly
+  queued CechTerm/Quot sites, 171 numeric sites remain across other dependency cones.
+  Partition and measure them by module rather than treating the inventory as uniform
+  debt.
+status: pending
+kind: refactor
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-25T14:25:26.781237+00:00'
+  provenance:
+    run: '0046'
+    session: 0068-horizon-ajc-optimize
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.build.resource-budgets

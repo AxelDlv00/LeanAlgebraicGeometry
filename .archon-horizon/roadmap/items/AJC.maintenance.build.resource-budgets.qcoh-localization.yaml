@@ -1,0 +1,32 @@
+id: AJC.maintenance.build.resource-budgets.qcoh-localization
+title: Qcoh localization budgets
+projects:
+- Algebraic-Jacobian-Challenge
+summary: All six 1M maxHeartbeats wrappers in the Stacks 01I8 QcohTildeSections localization
+  chain were staged through lower thresholds and removed. The configured target passes
+  2,550 jobs warning-free at Lean defaults in 49.23 seconds.
+status: done
+kind: refactor
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-25T14:25:24.033062+00:00'
+  provenance:
+    run: '0046'
+    session: 0068-horizon-ajc-optimize
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.build.resource-budgets
+  updated_at: '2026-07-25T14:26:01.851988+00:00'
+  pinned_commits:
+  - 885608a29

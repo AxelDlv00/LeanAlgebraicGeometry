@@ -2,9 +2,10 @@ id: AJC.maintenance.build.warnings.residual.albanese-rr-entry.p1-chart
 title: P1 chart warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'P1ChartData is LSP-clean and its configured target is warning-free: four
-  goal-changing show tactics were replaced by change while all nine obsolete heartbeat
-  wrappers were removed. The declaration statements and chart arguments are unchanged.'
+summary: 'P1ChartData is LSP-clean and emits no module-local warnings: four goal-changing
+  show tactics were replaced by change while all nine obsolete heartbeat wrappers
+  were removed. The configured target passes with the declaration statements and chart
+  arguments unchanged; its output also replays pre-existing dependency warnings.'
 status: done
 kind: refactor
 priority: normal
@@ -27,3 +28,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual.albanese-rr-entry
+  updated_at: '2026-07-25T14:42:29.330421+00:00'

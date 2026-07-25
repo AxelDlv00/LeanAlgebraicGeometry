@@ -2,10 +2,11 @@ id: AJC.maintenance.build.warnings.residual.cohomology
 title: Cohomology warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The latest whole-project build verifies exactly six cohomology warnings,
-  down from 35. Three are the genuine flat-pullback and Beck--Chevalley sorries in
-  CechHigherDirectImageUnconditional; the other three are one deprecated name and
-  two goal-changing show tactics in separate auxiliary files.
+summary: The latest whole-project build recorded six cohomology warnings. Subsequent
+  bounded target checks eliminated the three mechanical diagnostics in MayerVietorisCover,
+  RegroupHelper, and QuasicoherentDegreeOneVanishing. The unrecounted residual is
+  exactly three genuine flat-pullback and Beck--Chevalley proof placeholders in CechHigherDirectImageUnconditional,
+  tracked by the pending placeholders child.
 status: pending
 kind: refactor
 priority: normal
@@ -28,7 +29,8 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual
-  updated_at: '2026-07-25T12:37:44.471554+00:00'
+  updated_at: '2026-07-25T14:30:32.393975+00:00'
   pinned_commits:
+  - 4a8678264
   - f73c10133
   - 00b4c44ed
