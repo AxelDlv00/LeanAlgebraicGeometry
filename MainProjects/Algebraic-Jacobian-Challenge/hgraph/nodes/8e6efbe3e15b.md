@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:adelic_chi_eq_chi_zero_add_degree
 lean_status: empty
-order: 1864
+order: 1872
 ref: papaioannou-algebraic-rr, cff-curves-function-fields
 title: '\(\chi\)-KEYSTONE: \(\chi(D) = \deg D + 1 - g\)'
 type: tex
-updated: '2026-07-26T00:08:22'
+updated: '2026-07-26T01:29:35'
 ---
 The Euler characteristic \(\chi(D) = \ell(D) - i(D)\) is additive in the
   degree:

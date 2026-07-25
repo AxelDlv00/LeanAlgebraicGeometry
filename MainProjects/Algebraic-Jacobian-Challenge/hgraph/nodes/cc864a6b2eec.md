@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:codim1_cycles
 lean_status: lean_ok
-order: 1759
+order: 1767
 title: Codim-\(1\) cycle group / Weil divisor group of a scheme
 type: tex
-updated: '2026-07-26T00:08:22'
+updated: '2026-07-26T01:29:35'
 ---
 \textit{Source: Hartshorne, II.6, p.~130 (Weil divisor group).}
   Let \(X\) be a Noetherian integral separated scheme that is regular in

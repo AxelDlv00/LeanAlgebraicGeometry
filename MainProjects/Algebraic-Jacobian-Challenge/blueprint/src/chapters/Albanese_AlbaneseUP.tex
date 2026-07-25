@@ -2,1089 +2,624 @@
 \label{chap:Albanese_AlbaneseUP}
 % archon:covers AlgebraicJacobian/Albanese/AlbaneseUP.lean
 
-% STRATEGY NOTE (iter-174 / refined iter-175). This chapter is the A.4.d
-% sub-row of Route~A (the positive-genus arm of
-% \texttt{nonempty\_jacobianWitness}). It is the join of two preceding rows:
-% A.3 (the identity component \(\Pic^0_{C/k}\) of the Picard scheme together
-% with its degree map; the relevant Picard-scheme representability content
-% is recorded in \cref{chap:Picard_FGAPicRepresentability}, A.2.c), and
-% A.4.c (\cref{chap:Albanese_Thm32RationalMapExtension}, Milne's
-% Theorem~3.2 on rational maps from a nonsingular variety to an abelian
-% variety). The output is Milne's Proposition~6.1 of Chapter~III~\S 6 of
-% \emph{Abelian Varieties}: the Abel--Jacobi morphism
-% \(\iota_{P_0} \colon C \to \Pic^0_{C/k}\) at a marked \(\bar k\)-point
-% \(P_0 \in C(\bar k)\) is the \emph{Albanese morphism} of the pointed curve
-% \((C, P_0)\). Any pointed morphism \(\varphi \colon C \to A\) into an abelian
-% variety with \(\varphi(P_0) = \eta_A\) factors uniquely as
-% \(\varphi = \psi \circ \iota_{P_0}\) for a homomorphism of group schemes
-% \(\psi \colon \Pic^0_{C/k} \to A\).
-%
-% ROUTE DECISION (iter-174, refined iter-175). Two routes were on the table:
-%   (i) MODULI / AUTODUALITY route. Pull the Poincar\'e bundle of \(A\) back
-%       along \(\varphi \times \mathrm{id}_{A^\vee}\), classify the resulting
-%       trivialised relative degree-zero line bundle by the Yoneda map
-%       \(A^\vee \to J\), dualise via the autoduality \(J \cong J^\vee\)
-%       (Milne~III~6.6) and the principal polarisation. This route depends
-%       on the autoduality of \(J\), which gates on the \emph{theorem of the
-%       cube} -- EXCISED from the project in iter-163.
-%  (ii) SYMMETRIC-POWER route. Define $\widetilde\psi \colon \mathrm{Sym}^g
-%       C \to A\( from the symmetric assignment \)(P_1,\ldots,P_g) \mapsto
-%       \varphi(P_1) + \cdots + \varphi(P_g)$, descend through the
-%       birational morphism \(\mathrm{Sym}^g C \dashrightarrow J\), and apply
-%       Milne's Theorem~3.2 (\cref{thm:rational_map_to_av_extends}) to
-%       promote the rational map \(J \dashrightarrow A\) to a regular
-%       morphism. This is Milne's own proof of Proposition~6.1; it uses
-%       \emph{only} proven \cref{thm:rigidity_lemma} (Milne~I~1.1) and
-%       \cref{thm:rational_map_to_av_extends} (Milne~I~3.2), and avoids the
-%       cube entirely.
-% The project commits to Route~(ii). The moduli sub-lemmas from the iter-174
-% draft (Poincar\'e-bundle pullback, moduli classifier of a trivialised line
-% bundle) are retired; an ``Alternative route history'' \% NOTE block at the
-% end of this chapter records the moduli wording for reference.
-%
-% This is the final wiring of the positive-genus Albanese-witness
-% construction: the conclusion supplies, for each \(\bar k\)-rational point
-% \(P_0 \in C(\bar k)\), the universal-factorisation field
-% \(\texttt{isAlbaneseFor}\,P_0\) of an Albanese witness for \((C, P_0)\) in the
-% sense of \cref{def:IsAlbanese} of \cref{chap:Jacobian}; together with the
-% group-object / smooth / proper / geometrically-irreducible structure on
-% \(\Pic^0_{C/k}\) obtained at A.3 and the Abel--Jacobi morphism of
-% \cref{lem:abel_jacobi_morphism} below, this yields a positive-genus
-% \texttt{JacobianWitness} for \(C/\bar k\) which then descends back to \(k\) by
-% Galois descent (\cref{chap:Jacobian}, sub-step C.2.f).
-%
-% The Lean target file is \texttt{AlgebraicJacobian/Albanese/AlbaneseUP.lean}
-% (not yet created); this chapter is the prover-ready specification.
+Let \(k\) be an algebraically closed field, let \(C\) be a smooth proper
+geometrically irreducible curve over \(k\), and let \(P_0\in C(k)\).  Write
+\(g\) for the genus of \(C\) and assume \(g>0\).  This chapter proves that
+the Abel--Jacobi map
+\[
+  \iota_{P_0}\colon C\longrightarrow \Pic^0_{C/k}
+\]
+is the Albanese morphism of the pointed curve \((C,P_0)\).  The proof uses
+the canonical map from the \(g\)-th symmetric power of \(C\) to its
+Jacobian.  In positive characteristic, generic injectivity of this map does
+not by itself imply birationality: a purely inseparable map may also have
+one geometric point in its generic fibre.  The differential calculation
+that excludes this possibility is therefore included explicitly.
 
-\section{Setup and statement}
+\section{The Jacobian and the Abel--Jacobi map}
 \label{sec:albaneseup_setup}
 
-Fix an algebraically closed field \(\bar k\) and a smooth proper geometrically
-irreducible curve \(C\) over \(\bar k\) of genus \(g = g(C) > 0\) (the positive-genus
-hypothesis is essential: it is precisely the standing hypothesis of Milne's
-\S III.6). Fix moreover a \(\bar k\)-rational point \(P_0 \in C(\bar k)\) to serve
-as the basepoint of the Albanese construction.
+The construction of the identity component of the Picard scheme gives
+\[
+  J:=\Pic^0_{C/k}.
+\]
+It is a group scheme by \cref{thm:pic0_group_structure}, smooth by
+\cref{thm:pic0_smooth}, proper by \cref{thm:pic0_proper}, and geometrically
+irreducible by \cref{thm:pic0_geom_irred}.
 
-By the A.3 row of Route~A (the identity-component construction applied to the
-representable Picard scheme of
-\cref{def:pic_scheme} in \cref{chap:Picard_FGAPicRepresentability}) the
-identity component \(\Pic^0_{C/k} \subseteq \Pic_{C/k}\) is a smooth proper
-geometrically irreducible \(\bar k\)-group scheme of dimension \(g\); we write
-\(J := \Pic^0_{C/k}\) and let \(\eta_J \colon \Spec \bar k \to J\) denote its
-identity section, in the project's convention the chosen \(\mathbf 1\)-pointed
-morphism that represents the unit element of the underlying group object on
-\(J\).
-
-The universal \(T\)-points of \(J\) are degree-\(0\) line bundles on \(C \times_{\bar k}
-T\), taken modulo line bundles pulled back from \(T\) (\cref{chap:Picard_LineBundlePullback};
-the identity component then refines this to the degree-zero subfunctor on the
-\'etale sheafification). This moduli interpretation is what underlies the
-Abel--Jacobi morphism \(\iota_{P_0} \colon C \to J\) of
-\cref{lem:abel_jacobi_morphism}. The universal homomorphism \(\psi \colon J
-\to A\) corresponding to a pointed morphism \(\varphi \colon C \to A\) is
-constructed by Milne's symmetric-power route: the symmetric assignment
-\((P_1, \ldots, P_g) \mapsto \varphi(P_1) + \cdots + \varphi(P_g)\) defines a
-regular morphism \(\widetilde \psi \colon \mathrm{Sym}^g C \to A\), the
-birational morphism \(\mathrm{Sym}^g C \dashrightarrow J\) inverts to a
-rational map \(J \dashrightarrow A\), and the rational-map extension theorem
-\cref{thm:rational_map_to_av_extends} promotes that rational map to the
-desired regular morphism \(\psi\).
-
-The goal of the chapter is to establish:
-
-\begin{theorem}
-[Albanese universal property of \(\Pic^0_{C/k}\) -- Milne III~\S 6, Proposition~6.1]
-  \label{thm:albanese_universal_property}
-  \lean{AlgebraicGeometry.Pic0.albanese_universal_property}
-  \uses{lem:abel_jacobi_morphism, lem:symmetric_product_av_map, lem:symmetric_product_to_jacobian, lem:descent_through_birational_sigma, lem:albanese_eq_iff_symmetricPower_eq, thm:rational_map_to_av_extends, thm:rigidity_lemma}
-
-  % SOURCE: [Milne, Abelian Varieties], Proposition~6.1, \S III.6, doc p.~104
-  % (read from references/abelian-varieties.pdf, PDF page 110).
-  % SOURCE QUOTE:
-  % "PROPOSITION 6.1. Let \(P\) be a \(k\)-rational point on \(C\).  The map
-  %  \(f^P\colon C\,\to\,J\) has the following universal property: for any
-  %  map \(\varphi\colon C\to A\) from \(C\) into an abelian variety sending
-  %  \(P\) to \(0\), there is a unique homomorphism \(\psi\colon J\to A\) such
-  %  that \(\varphi=\psi\circ f^P\)."
-  \textit{Source: Milne, \emph{Abelian Varieties}, Proposition~6.1, \S III.6, p.~104.}
-
-  Let \(C\) be a complete nonsingular curve of genus \(g > 0\) over an algebraically
-  closed field \(\bar k\), let \(P_0 \in C(\bar k)\) be a \(\bar k\)-rational point,
-  and write \(J := \Pic^0_{C/k}\), \(\iota_{P_0} \colon C \to J\) for the
-  Abel--Jacobi morphism of \cref{lem:abel_jacobi_morphism}. Then for every
-  abelian variety \(A\) over \(\bar k\) and every pointed morphism
-  \(\varphi \colon C \to A\) with \(\varphi(P_0) = \eta_A\), there exists a unique
-  homomorphism of group schemes \(\psi \colon J \to A\) such that
-  \(\varphi = \psi \circ \iota_{P_0}\).
-\end{theorem}
-
-The rest of this chapter develops the sub-lemmas
-(\cref{lem:abel_jacobi_morphism}, \cref{def:symmetric_power_curve},
-\cref{lem:symmetric_product_av_map}, \cref{lem:symmetric_product_to_jacobian},
-and \cref{lem:descent_through_birational_sigma}) that the proof rests on,
-then gives the proof.
-
-\section{File-internal placeholder for \(\Pic^0_{C/k}\)}
-\label{sec:albaneseup_pic0_placeholder}
-
-The A.3 row of Route~A (the identity-component refinement of the representable
-Picard scheme together with its degree map, \cref{chap:Picard_Pic0AbelianVariety})
-supplies the Jacobian scheme \(J := \Pic^0_{C/k}\) as a smooth proper
-geometrically irreducible \(\bar k\)-group scheme. This section records the
-four structural attributes of \(J\) as a single bundled placeholder, from
-which the underlying scheme and its abelian-variety instances are projected,
-together with the three substrate bridges that discharge the hypotheses of
-the A.3 theorems over an algebraically closed base.
-
-The A.3 theorems of \cref{chap:Picard_Pic0AbelianVariety} are stated for a
-curve carrying \([\mathrm{GeometricallyIntegral}]\), \([\mathrm{HasPicScheme}]\)
-and \([\mathrm{PicSchemeLocallyOfFiniteType}]\), whereas the Albanese curve
-\(C\) of this chapter carries only smoothness, properness and geometric
-irreducibility over \(\bar k\). The following three lemmas discharge the
-missing hypotheses honestly over an algebraically closed base.
-
-\begin{lemma}\leanok
-[Reducedness descends along a faithfully flat morphism]
-  \label{lem:isReduced_of_flat_of_surjective}
-  \lean{AlgebraicGeometry.isReduced_of_flat_of_surjective}
-
-  Let \(\pi \colon Y \to X\) be a flat, surjective morphism of schemes (i.e.\
-  faithfully flat) with \(Y\) reduced. Then \(X\) is reduced.
-\end{lemma}
-
-\begin{proof}\leanok
-  Fix \(x \in X\) and choose \(y \in Y\) with \(\pi(y) = x\). The induced
-  local ring homomorphism on stalks \(\mathcal O_{X,x} \to \mathcal O_{Y,y}\)
-  is flat and local, hence faithfully flat, hence injective. Since
-  \(\mathcal O_{Y,y}\) is reduced (as \(Y\) is reduced) and a subring of a
-  reduced ring is reduced, \(\mathcal O_{X,x}\) is reduced. As \(x\) was
-  arbitrary, \(X\) is reduced.
-\end{proof}
-
-\begin{lemma}\leanok
-[Smoothness over an algebraically closed field implies geometric reducedness]
-  \label{lem:geometrically_reduced_of_smooth}
-  \lean{AlgebraicGeometry.geometricallyReduced_of_smooth}
-  \uses{lem:isReduced_of_flat_of_surjective}
-
-  Let \(\bar k\) be an algebraically closed field and let
-  \(f \colon X \to \Spec \bar k\) be a smooth morphism of schemes. Then \(f\)
-  is geometrically reduced.
-\end{lemma}
-
-\begin{proof}\leanok
-  \uses{lem:isReduced_of_flat_of_surjective}
-  It suffices to check reducedness of the base change \(X_K\) for every
-  field extension \(K/\bar k\). Smoothness is stable under base change, so
-  \(X_K \to \Spec K\) is smooth, and so is its further base change
-  \(X_{\bar K} \to \Spec \bar K\) along an algebraic closure \(\bar K\) of
-  \(K\). A scheme smooth over an algebraically closed field is regular,
-  hence reduced, so \(X_{\bar K}\) is reduced. The projection
-  \(X_{\bar K} \to X_K\) is faithfully flat (the base change of the
-  faithfully flat extension \(K \hookrightarrow \bar K\)), so
-  \cref{lem:isReduced_of_flat_of_surjective} transports reducedness down to
-  \(X_K\).
-\end{proof}
-
-\begin{lemma}\leanok
-[A smooth geometrically irreducible curve over an algebraically closed field
-has a rational point]
-  \label{lem:has_rational_point_of_isAlgClosed}
-  \lean{AlgebraicGeometry.hasRationalPoint_of_isAlgClosed}
-
-  Let \(\bar k\) be an algebraically closed field and let \(C\) be a
-  \(\bar k\)-scheme, smooth and geometrically irreducible over \(\bar k\).
-  Then \(C\) has a \(\bar k\)-rational point (\cref{def:has_rational_point}).
-\end{lemma}
-
-\begin{proof}\leanok
-  Geometric irreducibility over the one-point base \(\Spec \bar k\) makes the
-  underlying space of \(C\) irreducible, hence nonempty; smoothness makes
-  \(C\) locally of finite type over \(\bar k\), hence a Jacobson space, so
-  \(C\) has a nonempty set of closed points. Since \(\bar k\) is
-  algebraically closed, every closed point of \(C\) is \(\bar k\)-rational,
-  i.e.\ corresponds to a section of the structural morphism
-  \(C \to \Spec \bar k\).
-\end{proof}
-
-\begin{definition}\leanok
-[Pic\(^0\) structural bundle]
-  \label{def:pic0_bundle}
-  \lean{AlgebraicGeometry.Pic0.Bundle}
-  \uses{def:pic_scheme}
-
-  A \emph{Pic\(^0\) bundle} for a smooth proper geometrically irreducible
-  curve \(C\) over \(\bar k\) is the datum of the underlying \(\bar k\)-scheme
-  \(\Pic^0_{C/k}\) together with its four abelian-variety structural
-  attributes obtained at the A.3 row of Route~A: a group-object structure,
-  properness over \(\bar k\), smoothness over \(\bar k\), and geometric
-  irreducibility. It packages, as a single object, the output of the
-  identity-component refinement of the representable Picard scheme of
-  \cref{def:pic_scheme}.
-\end{definition}
-
-\begin{definition}\leanok
-[Pic\(^0\) bundle carrier]
-  \label{def:pic0_bundle_carrier}
-  \lean{AlgebraicGeometry.Pic0.bundle}
-  \uses{def:pic0_bundle}
-
-  For each smooth proper geometrically irreducible curve \(C\) over \(\bar k\)
-  there is a Pic\(^0\) bundle (\cref{def:pic0_bundle}), supplied by the A.3
-  row (\cref{chap:Picard_Pic0AbelianVariety}): the identity component
-  \(\Pic^0_{C/k}\) of the representable Picard scheme, equipped with its
-  group-object, proper, smooth, and geometrically irreducible structure.
-\end{definition}
-
-\begin{proof}
-  \uses{thm:pic0_group_structure, thm:pic0_proper, thm:pic0_smooth,
-    thm:pic0_geom_irred, lem:geometrically_reduced_of_smooth,
-    lem:has_rational_point_of_isAlgClosed, def:inst_has_pic_scheme}
-  The underlying scheme is \(\Pic^0_{C/\bar k}\), and its four
-  abelian-variety attributes are the identity-component theorems of
-  \cref{chap:Picard_Pic0AbelianVariety}: the group-object structure
-  (\cref{thm:pic0_group_structure}), properness
-  (\cref{thm:pic0_proper}), smoothness (\cref{thm:pic0_smooth}), and
-  geometric irreducibility (\cref{thm:pic0_geom_irred}). Those four theorems
-  are stated for a curve carrying geometric integrality and a representable
-  Picard scheme of finite type; over the algebraically closed base \(\bar k\)
-  these hypotheses are discharged from the curve's own smoothness and
-  geometric irreducibility alone:
-  \cref{lem:geometrically_reduced_of_smooth} combines with geometric
-  irreducibility to give geometric integrality, and
-  \cref{lem:has_rational_point_of_isAlgClosed} supplies the \(\bar k\)-rational
-  point that the Picard-scheme existence instance
-  (\cref{def:inst_has_pic_scheme} of \cref{chap:Picard_FGAPicRepresentability})
-  requires, in turn discharging representability and local finiteness of the
-  Picard scheme. Assembling the underlying scheme with the four attributes
-  gives the bundle; no further gap is introduced by this assembly beyond the
-  two upstream theorems it invokes directly, \cref{thm:pic0_smooth} and
-  \cref{thm:pic0_proper}, and the upstream Picard-scheme existence instance
-  \cref{def:inst_has_pic_scheme}.
-\end{proof}
-
-\begin{definition}\leanok
-[The Jacobian scheme \(\Pic^0_{C/k}\)]
-  \label{def:jacobian_scheme}
-  \lean{AlgebraicGeometry.Pic0.jacobianScheme}
-  \uses{def:pic0_bundle_carrier}
-
-  The \emph{Jacobian scheme} \(J := \Pic^0_{C/k}\) of \(C\) is the underlying
-  \(\bar k\)-scheme of the Pic\(^0\) bundle of
-  \cref{def:pic0_bundle_carrier}.
-\end{definition}
-
-\begin{lemma}\leanok
-[Group-object structure on \(\Pic^0_{C/k}\)]
-  \label{lem:jacobian_scheme_grpObj}
-  \lean{AlgebraicGeometry.Pic0.jacobianScheme_grpObj}
-  \uses{def:jacobian_scheme}
-
-  The Jacobian scheme \(J = \Pic^0_{C/k}\) (\cref{def:jacobian_scheme})
-  carries a group-object structure, read off from the corresponding field of
-  its Pic\(^0\) bundle.
-\end{lemma}
-
-\begin{proof} Proved directly in Lean. \end{proof}
-
-\begin{lemma}\leanok
-[Properness of \(\Pic^0_{C/k}\)]
-  \label{lem:jacobian_scheme_isProper}
-  \lean{AlgebraicGeometry.Pic0.jacobianScheme_isProper}
-  \uses{def:jacobian_scheme}
-
-  The Jacobian scheme \(J = \Pic^0_{C/k}\) (\cref{def:jacobian_scheme}) is
-  proper over \(\bar k\), read off from the corresponding field of its
-  Pic\(^0\) bundle.
-\end{lemma}
-
-\begin{proof} Proved directly in Lean. \end{proof}
-
-\begin{lemma}\leanok
-[Smoothness of \(\Pic^0_{C/k}\)]
-  \label{lem:jacobian_scheme_smooth}
-  \lean{AlgebraicGeometry.Pic0.jacobianScheme_smooth}
-  \uses{def:jacobian_scheme}
-
-  The Jacobian scheme \(J = \Pic^0_{C/k}\) (\cref{def:jacobian_scheme}) is
-  smooth over \(\bar k\), read off from the corresponding field of its
-  Pic\(^0\) bundle.
-\end{lemma}
-
-\begin{proof} Proved directly in Lean. \end{proof}
-
-\begin{lemma}\leanok
-[Geometric irreducibility of \(\Pic^0_{C/k}\)]
-  \label{lem:jacobian_scheme_geomIrred}
-  \lean{AlgebraicGeometry.Pic0.jacobianScheme_geomIrred}
-  \uses{def:jacobian_scheme}
-
-  The Jacobian scheme \(J = \Pic^0_{C/k}\) (\cref{def:jacobian_scheme}) is
-  geometrically irreducible over \(\bar k\), read off from the corresponding
-  field of its Pic\(^0\) bundle.
-\end{lemma}
-
-\begin{proof} Proved directly in Lean. \end{proof}
-
-\section{The Abel--Jacobi morphism at a marked point}
-\label{sec:albaneseup_abel_jacobi}
-
-The first sub-lemma packages the construction and the elementary regularity of
-the Abel--Jacobi morphism \(\iota_{P_0}\) at the basepoint \(P_0\). It is the
-content gated on A.3 (existence of \(\Pic^0_{C/k}\) as a representable group
-scheme).
-
-\begin{lemma}\leanok
-[Abel--Jacobi morphism at a basepoint]
-  \label{lem:abel_jacobi_morphism}
+\begin{definition}
+  [The Abel--Jacobi morphism]
+  \label{def:abel_jacobi_morphism}
+  \source{abelian-varieties:page-0107}
   \lean{AlgebraicGeometry.Pic0.abelJacobi}
-  \uses{def:pic_scheme, def:jacobian_scheme}
+  \uses{def:pic_scheme, thm:pic0_group_structure}
 
-  % SOURCE: [Milne, Abelian Varieties], \S III.6, the canonical map
-  % \(f^P\colon C\to J\) (introduction to Proposition~6.1), doc p.~104
-  % (read from references/abelian-varieties.pdf, PDF page 110).
-  % SOURCE QUOTE:
-  % "PROPOSITION 6.1. Let \(P\) be a \(k\)-rational point on \(C\).  The map
-  %  \(f^P\colon C\to J\) has the following universal property: for any map
-  %  \(\varphi\colon C\to A\) from \(C\) into an abelian variety sending \(P\)
-  %  to \(0\), there is a unique homomorphism \(\psi\colon J\to A\) such that
-  %  \(\varphi=\psi\circ f^P\)."
-  % SOURCE: [Milne, Abelian Varieties], \S III.6, Summary 6.11, doc p.~107
-  % (read from references/abelian-varieties.pdf, PDF page 113).
-  % SOURCE QUOTE:
-  % "SUMMARY 6.11.  Between \((C,P)\) and itself, there is a divisorial
-  %  correspondence \(\mathcal L^P = \mathcal L(\Delta-\{P\}\times C-C\times\{P\})\).
-  %    Between \((C,P)\) and \(J\) there is the divisorial correspondence
-  %  \(\mathcal M^P\); for any divisorial correspondence \(\mathcal L\) between
-  %  \((C,P)\) and a pointed \(k\)-scheme \((T,t)\), there is a unique morphism
-  %  of pointed \(k\)-schemes \(\varphi\colon T\to J\) such that
-  %  \((1\times \varphi)^*\mathcal M^P\approx \mathcal L\).  In particular,
-  %  there is a unique map \(f^P\colon C\to J\) such that
-  %  \((1\times f^P)^*\mathcal M^P\approx \mathcal L^P\) and \(f(P)=0\)."
-  \textit{Source: Milne, \emph{Abelian Varieties}, Proposition~6.1 and
-  Summary~6.11, \S III.6.}
-
-  Let \(C\) be a complete nonsingular curve of genus \(g > 0\) over \(\bar k\), let
-  \(P_0 \in C(\bar k)\) be a basepoint, and write \(J := \Pic^0_{C/k}\). There is a
-  unique regular morphism of \(\bar k\)-schemes
-  \[
-    \iota_{P_0} \;\colon\; C \;\longrightarrow\; J, \qquad
-    Q \;\longmapsto\; \bigl[\mathcal O_C(Q - P_0)\bigr],
-  \]
-  sending the basepoint \(P_0\) to the identity element \(\eta_J \in J(\bar k)\)
-  and characterised on \(T\)-points by the formula
-  \((1 \times \iota_{P_0})^*\mathcal M^{P_0} \approx \mathcal L^{P_0}\), where
-  \(\mathcal L^{P_0} := \mathcal O_{C \times C}\bigl(\Delta - \{P_0\} \times C -
-  C \times \{P_0\}\bigr)\) is the rigidified diagonal correspondence on
-  \(C \times C\) and \(\mathcal M^{P_0}\) is the Poincar\'e--Picard correspondence
-  on \(C \times J\).
-\end{lemma}
-
-% SOURCE QUOTE PROOF: (no separate verbatim source; the existence of
-% \(f^P\) is part of Milne's standing setup at the head of \S III.6 -- ``\(J\)
-% will be its Jacobian variety'' -- and is the moduli-of-degree-0-line-bundles
-% interpretation of \(\Pic^0_{C/k}\) packaged into Summary~6.11.)
-\begin{proof}
-  
-  By A.3, \(J := \Pic^0_{C/k}\) is the moduli scheme of degree-zero line bundles
-  on \(C\); concretely, for every \(\bar k\)-scheme \(T\) its \(T\)-points are
-  isomorphism classes of line bundles \(\mathcal L\) on \(C \times_{\bar k} T\)
-  whose fibre degree at every geometric point of \(T\) is zero, taken modulo line
-  bundles pulled back from \(T\) (the universal property of the Picard scheme
-  packaged in \cref{def:pic_scheme}; the identity component imposes the
-  degree-zero condition).
-
-  Apply this to \(T := C\) and the line bundle
-  \[
-    \mathcal L^{P_0} \;:=\; \mathcal O_{C \times_{\bar k} C}\bigl(\Delta -
-      \{P_0\} \times C - C \times \{P_0\}\bigr),
-  \]
-  the rigidified diagonal correspondence on \(C \times_{\bar k} C\). Its fibre
-  over a \(\bar k\)-point \(Q \in C(\bar k)\) along the second projection is the
-  degree-zero line bundle \(\mathcal O_C(Q - P_0)\) on \(C\), so \(\mathcal L^{P_0}\)
-  is a relative degree-zero line bundle, hence a \(C\)-point of \(J\). The
-  representability of \(J\) at \(T = C\) produces the unique morphism
-  \[
-    \iota_{P_0} \;\colon\; C \;\longrightarrow\; J
-  \]
-  such that \((1 \times \iota_{P_0})^*\mathcal M^{P_0} \approx \mathcal L^{P_0}\)
-  for the Poincar\'e--Picard correspondence \(\mathcal M^{P_0}\) on \(C \times J\).
-
-  At the basepoint, restriction of \(\mathcal L^{P_0}\) to \(C \times \{P_0\}\)
-  gives \(\mathcal O_C(P_0 - P_0) \cong \mathcal O_C\), the trivial line bundle,
-  whose moduli class in \(J(\bar k)\) is the identity element \(\eta_J\). Hence
-  \(\iota_{P_0}(P_0) = \eta_J\). Uniqueness of \(\iota_{P_0}\) is the moduli
-  uniqueness clause of representability: any other morphism \(\iota'_{P_0}\)
-  satisfying \((1 \times \iota'_{P_0})^*\mathcal M^{P_0} \approx \mathcal L^{P_0}\)
-  and the pointed condition agrees with \(\iota_{P_0}\) on \(T\)-points for every
-  \(T\), hence equals \(\iota_{P_0}\) by the Yoneda embedding.
-\end{proof}
-
-\section{The \(g\)-th symmetric power \(\mathrm{Sym}^g C\)}
-\label{sec:albaneseup_sym_g}
-
-The Albanese universal property is built from \(C\) by taking the
-\(g\)-th \emph{symmetric power} \(\mathrm{Sym}^g C\) -- the quotient of the
-\(g\)-fold Cartesian power \(C^g\) by the natural action of the symmetric group
-\(S_g\). We collect the definition here as the first sub-lemma block.
-
-\begin{definition}\leanok
-[Symmetric power of a curve]
-  \label{def:symmetric_power_curve}
-  \lean{AlgebraicGeometry.Pic0.SymmetricPower}
-  % SOURCE: [Milne, Abelian Varieties], Proposition~3.1, \S III.3,
-  % doc p.~94 (read from references/abelian-varieties.pdf, PDF page 100).
-  % SOURCE QUOTE:
-  % "For any variety \(V\), the symmetric group \(S_r\) on \(r\) letters acts on
-  %  the product of \(r\) copies \(V^r\) of \(V\) by permuting the factors, and
-  %  we want to define the \(r\)th symmetric power \(V^{(r)}\) of \(V\) to be the
-  %  quotient \(S_r \backslash V^r\).  The next proposition demonstrates the
-  %  existence of \(V^{(r)}\) and lists its main properties.
-  %    A morphism \(\varphi\colon V^r\to T\) is said to be {\bf symmetric} if
-  %  \(\varphi\sigma=\varphi\) for all \(\sigma\) in \(S_r\).
-  %  PROPOSITION 3.1. Let \(V\) be a variety over \(k\).  Then there exists a
-  %  variety \(V^{(r)}\) and a symmetric morphism \(\pi\colon V^r\to V^{(r)}\)
-  %  having the following properties:
-  %    (a) as a topological space, \((V^{(r)},\pi)\) is the quotient of \(V^r\)
-  %        by \(S_r\);
-  %    (b) for any open affine subset \(U\) of \(V\), \(U^{(r)}\) is an open
-  %        affine subset of \(V^{(r)}\) and
-  %             $\Gamma(U^{(r)},\mathcal O_{V^{(r)}}) = \Gamma(U^r,
-  %             \mathcal O_{V^r})^{S_r}$
-  %        (set of elements fixed by the action of \(S_r\)).
-  %  The pair \((V^{(r)},\pi)\) has the following universal property: every
-  %  symmetric \(k\)-morphism \(\varphi\colon V^r\to T\) factors uniquely
-  %  through \(\pi\).
-  %  The map \(\pi\) is finite, surjective, and separable."
-  \textit{Source: Milne, \emph{Abelian Varieties}, Proposition~3.1, \S III.3, p.~94.}
-
-  Let \(C\) be a complete nonsingular curve over an algebraically closed field
-  \(\bar k\) and let \(g \ge 1\). The \emph{\(g\)-th symmetric power}
-  \(\mathrm{Sym}^g C\) is a \(\bar k\)-scheme equipped with a finite surjective
-  symmetric morphism \(\pi \colon C^g \to \mathrm{Sym}^g C\) characterised by
-  the following universal property: for every \(\bar k\)-scheme \(T\) and every
-  symmetric \(\bar k\)-morphism \(\varphi \colon C^g \to T\) (i.e.\ a morphism
-  satisfying \(\varphi \circ \sigma = \varphi\) for all \(\sigma \in S_g\)
-  acting by permutation of the factors of \(C^g\)) there exists a unique
-  morphism \(\overline\varphi \colon \mathrm{Sym}^g C \to T\) with
-  \(\overline\varphi \circ \pi = \varphi\). As a topological space
-  \(\mathrm{Sym}^g C\) is the quotient of \(C^g\) by \(S_g\), and for every open
-  affine \(U \subseteq C\) the open subset \(U^{(g)} \subseteq \mathrm{Sym}^g
-  C\) is affine with global sections the \(S_g\)-invariants
-  \(\Gamma(U^g, \mathcal O_{C^g})^{S_g}\).
+  The relative degree-zero line bundle associated with the rigidified
+  diagonal on \(C\times C\) defines a classifying morphism
+  \(\iota_{P_0}\colon C\to J\), called the \emph{Abel--Jacobi morphism}.
 \end{definition}
 
-\medskip
+\begin{lemma}
+  [Formula and basepoint of the Abel--Jacobi morphism]
+  \label{lem:abel_jacobi_morphism}
+  \source{abelian-varieties:page-0107, abelian-varieties:page-0110}
+  \uses{def:abel_jacobi_morphism}
 
-\textbf{Mathlib status.} Mathlib has no formalised \(g\)-th symmetric power of
-a scheme: only \texttt{Sym}/\texttt{SymmetricPower} for types and modules.
-The corresponding scheme-theoretic construction must be supplied
-project-side. The intended Lean construction follows Milne's recipe of
-\cref{def:symmetric_power_curve}: on affine open \(U = \Spec A \subseteq C\)
-form \(\Spec(A^{\otimes g})^{S_g}\), then glue via the standard affine
-patching for an open cover \(C = \bigcup U_i\). This sub-build is a
-non-trivial dependency of A.4.d that the prover lane must absorb before the
-main universal property closes; a \texttt{\textbackslash notready} marker is
-appropriate on the corresponding Lean target until the construction lands.
-For the proof of Proposition~3.1 itself, Milne refers to Mumford 1970,
-\S II~\S 7, p.~66 and \S III \S 11, p.~112, for the patching details (the
-quoted reference at the end of Milne's Proof on \S III.3, p.~94).
+  There is a regular morphism
+  \[
+    \iota_{P_0}\colon C\longrightarrow J,
+    \qquad Q\longmapsto [\mathcal O_C(Q-P_0)],
+  \]
+  and \(\iota_{P_0}(P_0)=0_J\).
+\end{lemma}
 
-\section{The induced morphism on the symmetric power}
-\label{sec:albaneseup_sym_g_av_map}
+\begin{proof}
+  On \(C\times C\), viewed over the second factor, consider the
+  rigidified relative degree-zero line bundle represented by
+  \[
+    \mathcal O_{C\times C}
+      (\Delta-P_0\times C-C\times P_0).
+  \]
+  Its restriction over \(Q\in C(k)\), modulo a line bundle pulled back
+  from the base, is \(\mathcal O_C(Q-P_0)\).  The moduli property of
+  \(\Pic^0_{C/k}\) therefore gives the displayed morphism.  At \(Q=P_0\)
+  the fibre is the trivial line bundle, whose class is the identity of
+  \(J\).
+\end{proof}
 
-The second sub-lemma is the elementary fact that the symmetric assignment
-\((P_1, \ldots, P_g) \mapsto \varphi(P_1) + \cdots + \varphi(P_g)\) from
-\(C^g\) to \(A\) descends through \(\pi \colon C^g \to \mathrm{Sym}^g C\). The
-key point is that the addition morphism \(A^g \to A\) is itself
-\(S_g\)-symmetric because \(A\) is commutative as a group scheme.
+\section{Symmetric powers and their canonical maps}
+\label{sec:albaneseup_symmetric_powers}
 
-\begin{lemma}\leanok
-[Symmetrisation of a curve-to-AV morphism]
-  \label{lem:symmetric_product_av_map}
-  \lean{AlgebraicGeometry.Pic0.symmetricPowerAVMap}
+\begin{definition}
+  [Symmetric power of a curve]
+  \label{def:symmetric_power_curve}
+  \source{abelian-varieties:page-0100}
+
+  For \(r\ge 1\), the \emph{\(r\)-th symmetric power} \(C^{(r)}\) is the
+  quotient of \(C^r\) by permutation of the factors, with quotient morphism
+  \(\pi_r\colon C^r\to C^{(r)}\).  Every symmetric morphism from \(C^r\) to a
+  \(k\)-scheme factors uniquely through \(\pi_r\).
+\end{definition}
+
+\begin{lemma}
+  [Properties of the symmetric-power projection]
+  \label{lem:symmetric_power_projection_properties}
+  \source{abelian-varieties:page-0100}
   \uses{def:symmetric_power_curve}
 
-  % SOURCE: [Milne, Abelian Varieties], Proof of Proposition~6.1, \S III.6,
-  % doc p.~104 (read from references/abelian-varieties.pdf, PDF page 110).
-  % SOURCE QUOTE:
-  % "PROOF.  Consider the map
-  %     \((P_1,...,P_g)\mapsto\sum_i\psi(P_i)\colon C^g\to A.\)
-  %  Clearly this is symmetric, and so it factors through \(C^{(g)}\)."
-  \textit{Source: Milne, \emph{Abelian Varieties}, Proof of Proposition~6.1,
-  \S III.6, p.~104.}
-
-  Let \(\varphi \colon C \to A\) be a morphism into an abelian variety \(A\)
-  over \(\bar k\). The composition
-  \[
-    \mathrm{add}_A \circ \varphi^{\times g}
-    \;\colon\; C^g \;\longrightarrow\; A^g \;\longrightarrow\; A,
-    \qquad (P_1, \ldots, P_g) \;\longmapsto\; \varphi(P_1) + \cdots + \varphi(P_g),
-  \]
-  is \(S_g\)-equivariant (where \(S_g\) acts on \(C^g\) by permutation of the
-  factors and on \(A\) trivially). Consequently, by the universal property of
-  \(\mathrm{Sym}^g C\) (\cref{def:symmetric_power_curve}), there is a unique
-  morphism of \(\bar k\)-schemes
-  \[
-    \mathrm{Sym}^g \varphi \;\colon\; \mathrm{Sym}^g C \;\longrightarrow\; A
-  \]
-  such that
-  \(\mathrm{Sym}^g \varphi \circ \pi = \mathrm{add}_A \circ \varphi^{\times g}\).
+  The quotient morphism \(\pi_r\colon C^r\to C^{(r)}\) is finite,
+  surjective, and separable.
 \end{lemma}
 
 \begin{proof}
-  
-  Since \(A\) is a commutative group scheme, the \(g\)-fold addition morphism
-  \(\mathrm{add}_A \colon A^g \to A\) satisfies \(\mathrm{add}_A \circ \tau =
-  \mathrm{add}_A\) for every \(\tau \in S_g\) permuting the factors of \(A^g\)
-  (this is the scheme-theoretic statement that summation in a commutative
-  monoid is independent of the order of summands; on \(T\)-points it is the
-  identity \(a_1 + \cdots + a_g = a_{\tau(1)} + \cdots + a_{\tau(g)}\) in the
-  abelian group \(A(T)\)). The diagonal action of \(\tau\) on \(\varphi^{\times
-  g} \colon C^g \to A^g\) is also given by permutation of factors. Therefore
-  \[
-    (\mathrm{add}_A \circ \varphi^{\times g}) \circ \tau
-    \;=\; \mathrm{add}_A \circ (\varphi^{\times g} \circ \tau)
-    \;=\; \mathrm{add}_A \circ (\tau \circ \varphi^{\times g})
-    \;=\; (\mathrm{add}_A \circ \tau) \circ \varphi^{\times g}
-    \;=\; \mathrm{add}_A \circ \varphi^{\times g},
-  \]
-  so the composition \(\mathrm{add}_A \circ \varphi^{\times g}\) is symmetric
-  in the sense of \cref{def:symmetric_power_curve}. The universal property
-  of \(\mathrm{Sym}^g C\) produces the unique factorisation
-  \(\mathrm{Sym}^g \varphi \colon \mathrm{Sym}^g C \to A\).
+  On an invariant affine chart the target ring is the ring of
+  \(S_r\)-invariants.  Every element of the source ring is integral over this
+  invariant ring, so the quotient is finite; the topological quotient
+  description gives surjectivity.  Finally, the induced extension of
+  function fields is the finite invariant-field extension for a group of
+  automorphisms, and is therefore separable.
 \end{proof}
 
-\section{The birational morphism \(\mathrm{Sym}^g C \dashrightarrow J\)}
-\label{sec:albaneseup_sym_g_to_jacobian}
+\begin{definition}
+  [The symmetric-power carrier]
+  \label{def:symmetric_power_curve_carrier}
+  \lean{AlgebraicGeometry.Pic0.SymmetricPower}
+  \uses{def:symmetric_power_curve}
 
-The third sub-lemma is the birational identification of \(\mathrm{Sym}^g C\)
-with \(J\). After choosing the basepoint \(P_0 \in C(\bar k)\), the cycle map
-\((P_1, \ldots, P_g) \mapsto [\mathcal O_C(P_1 + \cdots + P_g - g P_0)]\)
-defines a morphism \(f^{(g)} \colon \mathrm{Sym}^g C \to J\) which is
-birational by Milne III~Theorem~5.1(a).
+  The underlying \(k\)-scheme of \(C^{(r)}\) is denoted
+  \(\operatorname{SymmetricPower}(C,r)\).
+\end{definition}
 
-\begin{lemma}\leanok
-[Birational morphism from \(\mathrm{Sym}^g C\) to \(J\)]
-  \label{lem:symmetric_product_to_jacobian}
+\begin{lemma}
+  [Nonsingularity of a symmetric power of a curve]
+  \label{lem:symmetric_power_nonsingular}
+  \source{abelian-varieties:page-0100}
+  \uses{def:symmetric_power_curve}
+
+  If \(C\) is nonsingular, then \(C^{(r)}\) is nonsingular.
+\end{lemma}
+
+\begin{proof}
+  At the image of \((Q,\ldots,Q)\), choose a parameter \(X\) at \(Q\).
+  The completed local ring of \(C^r\) is
+  \(k[[X_1,\ldots,X_r]]\), and the completed local ring of the quotient is
+  its invariant subring.  The fundamental theorem on symmetric functions
+  identifies this with
+  \(k[[\sigma_1,\ldots,\sigma_r]]\), which is regular.  At a divisor with
+  several distinct support points, the completed local ring is the
+  completed tensor product of the corresponding invariant power-series
+  rings, and is again regular.
+\end{proof}
+
+\begin{definition}
+  [The symmetric sum morphism]
+  \label{def:symmetric_product_av_map}
+  \lean{AlgebraicGeometry.Pic0.symmetricPowerAVMap}
+  \uses{def:symmetric_power_curve_carrier}
+
+  For a morphism \(\varphi\colon C\to A\) to an abelian variety, denote the
+  induced morphism from the symmetric-power carrier by
+  \(\varphi^{(r)}\colon C^{(r)}\to A\).
+\end{definition}
+
+\begin{lemma}
+  [Symmetrisation of a morphism to an abelian variety]
+  \label{lem:symmetric_product_av_map}
+  \source{abelian-varieties:page-0110}
+  \uses{def:symmetric_power_curve, def:symmetric_product_av_map}
+
+  Let \(A\) be an abelian variety and let \(\varphi\colon C\to A\) be a
+  morphism.  There is a unique morphism
+  \(\varphi^{(r)}\colon C^{(r)}\to A\) satisfying
+  \[
+    \varphi^{(r)}(P_1+\cdots+P_r)
+      =\varphi(P_1)+\cdots+\varphi(P_r).
+  \]
+\end{lemma}
+
+\begin{proof}
+  The morphism \(C^r\to A\) obtained by applying \(\varphi\) in every
+  coordinate and then adding is invariant under every permutation, because
+  the group law of \(A\) is commutative.  The universal property of
+  \(C^{(r)}\) gives the unique factorisation.
+\end{proof}
+
+\begin{definition}
+  [The canonical symmetric-power morphism to the Jacobian]
+  \label{def:symmetric_product_to_jacobian_morphism}
+  \source{abelian-varieties:page-0107}
   \lean{AlgebraicGeometry.Pic0.symmetricPowerToJacobian}
-  \uses{lem:abel_jacobi_morphism, def:symmetric_power_curve, def:jacobian_scheme, lem:jacobian_scheme_grpObj, lem:jacobian_scheme_isProper, lem:jacobian_scheme_smooth, lem:jacobian_scheme_geomIrred}
+  \uses{def:abel_jacobi_morphism, def:symmetric_product_av_map}
 
-  % SOURCE: [Milne, Abelian Varieties], Theorem~5.1(a), \S III.5,
-  % doc p.~101 (read from references/abelian-varieties.pdf, PDF page 107).
-  % SOURCE QUOTE:
-  % "Let \(f^r\) be the map \(C^r\to J\) sending \((P_1,...,P_r)\) to
-  %  \(f(P_1)+\cdots+f(P_r)\).  On points, \(f^r\) is the map
-  %  \((P_1,...,P_r)\mapsto[P_1+\cdots+P_r-rP]\).  Clearly it is symmetric,
-  %  and so induces a map \(f^{(r)}\colon C^{(r)}\to J\).  We can regard
-  %  \(f^{(r)}\) as being the map sending an effective divisor \(D\) of degree
-  %  \(r\) on \(C\) to the linear equivalence class of \(D-rP\).  The fibre of
-  %  the map \(f^{(r)}\colon C^{(r)}(k)\to J(k)\) containing \(D\) can be
-  %  identified with the space of effective divisors linearly equivalent
-  %  to \(D\), that is, with the linear system \(|D|\).  The image of \(C^{(r)}\)
-  %  in \(J\) is a closed subvariety \(W^r\) of \(J\), which can also be written
-  %  \(W^r=f(C)+\cdots+f(C)\) (\(r\) summands).
-  %  THEOREM 5.1.  (a) For all \(r\le g\), the morphism
-  %  \(f^{(r)}\colon C^{(r)}\to W^r\) is birational; in particular,
-  %  \(f^{(g)}\) is a birational map from \(C^{(g)}\) onto \(J\)."
-  \textit{Source: Milne, \emph{Abelian Varieties}, Theorem~5.1(a) and the
-  preceding paragraph, \S III.5, p.~101.}
-
-  Let \(C\) be a complete nonsingular curve of genus \(g > 0\) over \(\bar k\),
-  let \(P_0 \in C(\bar k)\) be a basepoint, and write \(J := \Pic^0_{C/k}\),
-  \(\iota_{P_0} \colon C \to J\) for the Abel--Jacobi morphism of
-  \cref{lem:abel_jacobi_morphism}. The regular morphism
-  \(\iota_{P_0}^{\times g} \colon C^g \to J^g\) composed with the \(g\)-fold
-  group-law addition \(\mathrm{add}_J \colon J^g \to J\) descends through
-  \(\pi \colon C^g \to \mathrm{Sym}^g C\) to a regular morphism
+  The Lean construction obtained by symmetrising \(\iota_{P_0}\) is denoted
   \[
-    f^{(g)} \;\colon\; \mathrm{Sym}^g C \;\longrightarrow\; J,
-    \qquad (P_1, \ldots, P_g) \;\longmapsto\;
-      \bigl[\mathcal O_C(P_1 + \cdots + P_g - g P_0)\bigr].
+    f^{(r)}\colon C^{(r)}\longrightarrow J.
   \]
-  The morphism \(f^{(g)}\) is birational: it is dominant (its image is
-  \(J\), the \(g\)-fold sum \(\iota_{P_0}(C) + \cdots + \iota_{P_0}(C)\) exhausts
-  \(J\) since \(\dim J = g\) and the iterated sum reaches full dimension), and
-  its generic fibre is a single \(\bar k\)-point (a degree-\(g\) effective
-  divisor \(D\) on \(C\) with \(h^0(D) = 1\) is the unique element of its linear
-  system \(|D|\); such divisors form a dense open subset of \(\mathrm{Sym}^g
-  C\) -- a consequence of \(\dim |D| = 0\) generically on a curve of genus \(g\)
-  by Riemann--Roch). Equivalently, \(f^{(g)}\) is a birational morphism in
-  the sense that there exist dense opens
-  \(U \subseteq \mathrm{Sym}^g C\), \(V \subseteq J\) such that
-  \(f^{(g)}|_U \colon U \to V\) is an isomorphism.
+\end{definition}
+
+\begin{lemma}
+  [Divisor description of the canonical symmetric-power morphism]
+  \label{lem:symmetric_product_to_jacobian_formula}
+  \source{abelian-varieties:page-0107, abelian-varieties:page-0109}
+  \uses{def:symmetric_product_to_jacobian_morphism,
+    lem:abel_jacobi_morphism, lem:symmetric_product_av_map}
+
+  On effective divisors, the canonical morphism is given by
+  \[
+    f^{(r)}(D)=[\mathcal O_C(D-rP_0)].
+  \]
+  Denote its reduced closed image by \(W^r\).  The fibre through an
+  effective divisor \(D\) is its complete linear system \(|D|\), a projective
+  space of dimension \(h^0(D)-1\).
 \end{lemma}
 
-% NOTE (iter-199): the birationality proof below derives the generic-fibre
-% identification from Riemann--Roch at \(\deg D = g\) (specifically
-% \(h^0(D) - h^1(D) = 1\) generically). Riemann--Roch is the Route C
-% chain (\texttt{RiemannRoch_RRFormula.tex} et al.), currently PAUSED
-% per USER 2026-05-28 standing directive. This lemma is therefore
-% gated on Route C re-engagement (or on a parallel construction that
-% sidesteps RR). Flagged here so a future prover does not attempt to
-% formalize the birationality argument until the RR substrate is
-% available.
-
 \begin{proof}
-
-  Symmetry of \(\mathrm{add}_J \circ \iota_{P_0}^{\times g}\) is the
-  specialisation of \cref{lem:symmetric_product_av_map} to the abelian
-  variety \(A := J\) and the morphism \(\varphi := \iota_{P_0}\); the universal
-  property of \(\mathrm{Sym}^g C\) produces the regular morphism \(f^{(g)}\).
-  The closed-form description on \(\bar k\)-points,
-  \(f^{(g)}(P_1, \ldots, P_g) = [\mathcal O_C(P_1 + \cdots + P_g - g P_0)]\),
-  follows because \(\iota_{P_0}(P_i) = [\mathcal O_C(P_i - P_0)]\) by
-  \cref{lem:abel_jacobi_morphism} and the group law on \(J\) is the
-  tensor-product of degree-zero line bundles.
-
-  We verify birationality. The image of \(f^{(g)}\) in \(J\) is the iterated
-  sum \(\iota_{P_0}(C) + \cdots + \iota_{P_0}(C)\) (\(g\) summands), which is
-  closed (it is the image of the proper morphism
-  \(\mathrm{Sym}^g C \to J\), \(\mathrm{Sym}^g C\) being proper because \(C^g\)
-  is proper and \(\pi\) is finite surjective). By the dimension count
-  \(\dim \mathrm{Sym}^g C = g = \dim J\) (Riemann--Roch and the standing
-  hypothesis \(g > 0\)), the image \(W^g \subseteq J\) has dimension at most
-  \(g\), and equality forces \(W^g = J\) since \(J\) is irreducible. Hence
-  \(f^{(g)}\) is surjective with \(\dim\)-equal source and target.
-
-  For the generic-fibre identification, Riemann--Roch
-  \(h^0(D) - h^1(D) = \deg(D) + 1 - g\) at \(\deg D = g\) gives \(h^0(D) - h^1(D)
-  = 1\), so for a general \(D \in \mathrm{Sym}^g C(\bar k)\) with \(h^1(D) =
-  0\) (the locus where \(h^1\) jumps is closed of positive codimension on a
-  smooth curve, by upper semicontinuity of cohomology), we have \(h^0(D) =
-  1\) and the linear system \(|D|\) consists of \(D\) alone. Therefore the
-  fibre of \(f^{(g)}\) over the generic point of \(J\) contains a single point
-  \(D\), i.e.\ \(f^{(g)}\) is birational onto \(J\).
-
-  By \cref{def:pic_scheme} the underlying \(\bar k\)-scheme \(J\) is the
-  Picard scheme \(\Pic^0_{C/k}\) obtained at A.3, so the moduli-theoretic
-  reading of \(f^{(g)}\) (effective divisor class \(\mapsto\) degree-zero
-  line bundle class via \(D \mapsto [\mathcal O_C(D - g P_0)]\)) is the
-  same as the Yoneda image of the \(\mathrm{Sym}^g C\)-point
-  \([\mathcal O_{C \times \mathrm{Sym}^g C}(\mathcal D_g - g\{P_0\} \times
-  \mathrm{Sym}^g C)]\), where \(\mathcal D_g \subseteq C \times \mathrm{Sym}^g
-  C\) is the universal effective Cartier divisor of degree \(g\) on \(C\). We
-  do not need this Yoneda repackaging for the proof of the Albanese UP --
-  the symmetric-power route uses only the morphism \(f^{(g)}\) and its
-  birationality.
+  Pulling back along \(\pi_r\) gives the sum of the \(r\) Abel--Jacobi
+  classes, hence the displayed divisor class.  Two effective divisors have
+  the same class precisely when they are linearly equivalent.  The functor
+  of effective divisors linearly equivalent to \(D\) is represented by the
+  projectivisation of \(H^0(C,\mathcal O_C(D))\), giving the fibre statement.
 \end{proof}
 
-\section{Descent through the birational quotient}
+\begin{lemma}
+  [General divisors of degree at most the genus]
+  \label{lem:symmetric_product_general_divisor}
+  \source{abelian-varieties:page-0107, abelian-varieties:page-0108}
+  \uses{lem:symmetric_product_to_jacobian_formula}
+
+  If \(1\le r\le g\), there is a dense open subset of \(C^{(r)}\) on which
+  \(h^0(D)=1\).  Thus the fibres of \(f^{(r)}\) over this open consist of one
+  geometric point.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:symmetric_power_projection_properties,
+    thm:adelic_serreDuality, thm:adelic_riemannRoch}
+  If \(h^1(D)>0\), Serre duality identifies
+  \[
+    H^1(C,\mathcal O_C(D+Q))^\vee
+  \]
+  with the subspace of \(H^0(C,\Omega_C^1(-D))\) consisting of
+  differentials that vanish at \(Q\).  Outside the common zero locus of a
+  basis of this latter space,
+  adding \(Q\) lowers \(h^1\) by exactly one.  Starting with the zero
+  divisor, for which \(h^1=g\), and repeating this argument \(r\) times
+  gives a dense open subset of \(C^r\) on which
+  \(h^1(P_1+\cdots+P_r)=g-r\).  Riemann--Roch then gives
+  \[
+    h^0(P_1+\cdots+P_r)
+      =r+1-g+(g-r)=1.
+  \]
+  Intersecting its finitely many translates under \(S_r\) gives a dense
+  symmetric open with the same property.  Its image in the finite quotient
+  \(C^{(r)}\) is the complement of the image of its closed invariant
+  complement, hence is open and dense.
+  Since the fibre of \(f^{(r)}\) through \(D\) is \(|D|\), it is a single
+  point there.
+\end{proof}
+
+\begin{lemma}
+  [Invariant one-forms on the Jacobian]
+  \label{lem:jacobian_invariant_one_forms}
+  \source{abelian-varieties:page-0108}
+
+  Evaluation at the identity is an isomorphism
+  \[
+    H^0(J,\Omega_J^1)\xrightarrow{\sim}T_0J^\vee.
+  \]
+\end{lemma}
+
+\begin{proof}
+  \uses{thm:pic0_smooth, thm:pic0_proper, thm:pic0_geom_irred}
+  A cotangent vector at the identity extends uniquely to a
+  translation-invariant one-form on the smooth group scheme \(J\).
+  Conversely, for a global one-form \(\eta\), the coefficients of
+  \(t_a^*\eta-\eta\), expressed in an invariant frame, vary regularly with
+  \(a\in J\).  They are regular functions on the proper geometrically
+  irreducible variety \(J\), hence constant; at \(a=0\) they vanish.  Thus
+  every global one-form is invariant, and evaluation at the identity gives
+  the asserted inverse pair.
+\end{proof}
+
+\begin{lemma}
+  [Differential of the Abel--Jacobi map]
+  \label{lem:abel_jacobi_differential}
+  \source{abelian-varieties:page-0108}
+  \uses{def:abel_jacobi_morphism}
+
+  Under the tangent-space identification
+  \(T_0J\simeq H^1(C,\mathcal O_C)\) and Serre duality, the transpose of the
+  translated differential of \(\iota_{P_0}\) at \(Q\) is evaluation
+  \[
+    H^0(C,\Omega_C^1)\longrightarrow T_Q^*C,
+    \qquad \omega\longmapsto\omega(Q).
+  \]
+\end{lemma}
+
+\begin{proof}
+  \uses{thm:pic0_tangent_space_iso, thm:adelic_serreDuality}
+  Moving \(Q\) to first order changes the class
+  \([\mathcal O_C(Q-P_0)]\) by the connecting homomorphism associated with
+  the principal-parts sequence at \(Q\).  The Serre-duality transpose of
+  this connecting homomorphism is the restriction of a differential to its
+  value at \(Q\), which is the displayed evaluation map.
+\end{proof}
+
+\begin{lemma}
+  [One-forms pulled back by the Abel--Jacobi map]
+  \label{lem:abel_jacobi_one_forms}
+  \source{abelian-varieties:page-0108}
+  \uses{lem:jacobian_invariant_one_forms,
+    lem:abel_jacobi_differential}
+
+  Pullback by \(\iota_{P_0}\) is an isomorphism
+  \[
+    H^0(J,\Omega_J^1)\xrightarrow{\sim}H^0(C,\Omega_C^1).
+  \]
+\end{lemma}
+
+\begin{proof}
+  By \cref{lem:jacobian_invariant_one_forms}, a form on \(J\) is determined
+  by its value at the identity.  Under
+  \cref{lem:abel_jacobi_differential}, pulling it back along
+  \(\iota_{P_0}\) recovers at every \(Q\) the corresponding canonical
+  differential on \(C\).  Under the Serre-duality identification this map
+  is the identity, hence an isomorphism.
+\end{proof}
+
+\begin{lemma}
+  [Dimension of the Jacobian]
+  \label{lem:jacobian_dimension}
+  \source{abelian-varieties:page-0108}
+
+  The Jacobian has dimension \(g\).
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:abel_jacobi_one_forms, thm:pic0_smooth}
+  Since \(J\) is smooth, its dimension is the dimension of its cotangent
+  space at the identity.  Translation identifies that cotangent space with
+  the global one-forms on \(J\).  By
+  \cref{lem:abel_jacobi_one_forms}, this space is isomorphic to
+  \(H^0(C,\Omega_C^1)\), whose dimension is the genus \(g\).
+\end{proof}
+
+\begin{proposition}
+  [Differentials on a symmetric power]
+  \label{prop:symmetric_product_differentials}
+  \source{abelian-varieties:page-0108, abelian-varieties:page-0109}
+  \uses{lem:symmetric_product_to_jacobian_formula}
+
+  Pullback by \(f^{(r)}\) is an isomorphism
+  \[
+    H^0(J,\Omega_J^1)\xrightarrow{\sim}
+    H^0(C^{(r)},\Omega_{C^{(r)}}^1).
+  \]
+  Under the canonical identification of either side with
+  \(H^0(C,\Omega_C^1)\), the form corresponding to \(\omega\) vanishes at
+  an effective divisor \(D\) if and only if
+  \(\operatorname{div}(\omega)\ge D\).
+\end{proposition}
+
+\begin{proof}
+  \uses{lem:symmetric_power_projection_properties,
+    lem:abel_jacobi_one_forms}
+  A global one-form on \(C^r\) is a sum of pullbacks from the factors.
+  Hence the invariant forms are exactly
+  \(\sum_i p_i^*\omega\), with \(\omega\in H^0(C,\Omega_C^1)\).
+  The quotient map \(\pi_r\) is separable, so pullback embeds
+  \(H^0(C^{(r)},\Omega^1)\) into this invariant subspace.  The composite
+  \[
+    H^0(J,\Omega_J^1)\longrightarrow H^0(C^{(r)},\Omega^1)
+      \longrightarrow H^0(C^r,\Omega^1)^{S_r}
+  \]
+  is the pullback by the sum of the \(r\) copies of the Abel--Jacobi map.
+  By \cref{lem:abel_jacobi_one_forms}, it sends a form to
+  \(\sum_i p_i^*\omega\) and is an isomorphism.  Consequently both arrows
+  in the display are isomorphisms.
+
+  It remains to identify vanishing at a divisor.  First take \(D=rQ\),
+  choose a parameter \(X\) at \(Q\), and write
+  \(\omega=(a_0+a_1X+\cdots)dX\).  In the completed local ring of
+  \(C^{(r)}\) at \(D\), use the elementary symmetric functions
+  \(\sigma_1,\ldots,\sigma_r\) in local parameters
+  \(X_1,\ldots,X_r\), and put
+  \(\tau_j=\sum_iX_i^j\,dX_i\).  The identities
+  \[
+    \sigma_m\tau_0-\sigma_{m-1}\tau_1+\cdots+(-1)^m\tau_m
+      =d\sigma_{m+1}
+      \qquad(0\le m<r)
+  \]
+  show that \(\tau_0,\ldots,\tau_{r-1}\) form a basis of the cotangent
+  module.  The descended form is \(\sum_{j\ge0}a_j\tau_j\), so it
+  vanishes at \(D\) exactly when
+  \(a_0=\cdots=a_{r-1}=0\), equivalently when
+  \(\operatorname{ord}_Q(\omega)\ge r\).  The same calculation in the
+  completed local product for
+  \(D=\sum_Q n_QQ\) gives the stated criterion.
+\end{proof}
+
+\begin{lemma}
+  [Tangent sequence of the canonical symmetric-power map]
+  \label{lem:symmetric_product_tangent_exact}
+  \source{abelian-varieties:page-0107, abelian-varieties:page-0109}
+  \uses{lem:symmetric_product_to_jacobian_formula}
+
+  Let \(F=|D|\) be the fibre of \(f^{(r)}\) through an effective divisor
+  \(D\), and put \(a=f^{(r)}(D)\).  The sequence
+  \[
+    0\longrightarrow T_DF\longrightarrow T_DC^{(r)}
+      \xrightarrow{\,d f^{(r)}_D\,}T_aJ
+  \]
+  is exact.  In particular, if \(h^0(D)=1\), then
+  \(d f^{(r)}_D\) is injective.
+\end{lemma}
+
+\begin{proof}
+  \uses{prop:symmetric_product_differentials,
+    lem:symmetric_power_nonsingular, thm:adelic_serreDuality,
+    thm:adelic_riemannRoch}
+  The first arrow is injective because the fibre is a closed subscheme, and
+  its image lies in the kernel because \(f^{(r)}\) is constant on the
+  fibre.  By \cref{prop:symmetric_product_differentials}, the annihilator
+  in \(T_aJ^\vee\) of the image of \(d f^{(r)}_D\) is
+  \(H^0(C,\Omega_C^1(-D))\).  Serre duality therefore gives
+  \[
+    \dim\ker(d f^{(r)}_D)=r-g+h^1(D).
+  \]
+  The fibre \(F\) is the projective space of effective divisors in the
+  complete linear system, so it is smooth of dimension \(h^0(D)-1\).
+  Thus \(\dim T_DF=\dim|D|=h^0(D)-1\), and Riemann--Roch says
+  \(h^0(D)-1=r-g+h^1(D)\).  The included subspaces have the same
+  dimension, proving exactness.  When \(h^0(D)=1\), this dimension is zero.
+\end{proof}
+
+\begin{lemma}
+  [Birationality of the canonical map]
+  \label{lem:symmetric_product_to_jacobian}
+  \source{abelian-varieties:page-0107, abelian-varieties:page-0108,
+    abelian-varieties:page-0109}
+  \uses{lem:symmetric_product_to_jacobian_formula}
+
+  For \(1\le r\le g\), the morphism
+  \[
+    f^{(r)}\colon C^{(r)}\longrightarrow W^r
+  \]
+  is birational.  In particular, \(W^g=J\), and
+  \(f^{(g)}\colon C^{(g)}\to J\) is a birational surjective morphism.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:symmetric_power_projection_properties,
+    lem:symmetric_product_general_divisor,
+    lem:symmetric_product_tangent_exact, lem:jacobian_dimension,
+    thm:pic0_geom_irred}
+  The product \(C^r\) has dimension \(r\), and the finite surjective map
+  \(C^r\to C^{(r)}\) shows that \(C^{(r)}\) also has dimension \(r\).
+  By \cref{lem:symmetric_product_general_divisor}, the map is injective on
+  geometric points over a dense open subset.  It is therefore generically
+  quasi-finite, so its image \(W^r\) has dimension \(r\).  Thus the induced
+  extension of function fields has separable degree one.  In positive characteristic
+  this still leaves open the possibility of a nontrivial purely
+  inseparable extension.  Choose \(D\) in that open.  Then \(h^0(D)=1\),
+  so \cref{lem:symmetric_product_tangent_exact} makes
+  \(d f^{(r)}_D\) injective.  Since source and image both have dimension
+  \(r\), the differential has full rank, and the function-field extension
+  is generically separable.  Its inseparable degree is therefore also one.
+  The function fields of \(C^{(r)}\) and \(W^r\) are equal, proving
+  birationality.
+
+  For \(r=g\), the image \(W^g\) is a closed irreducible subvariety of the
+  irreducible variety \(J\) and has dimension \(g=\dim J\), the latter
+  equality being \cref{lem:jacobian_dimension}.  Hence
+  \(W^g=J\).  Surjectivity follows because \(C^{(g)}\) is proper and its
+  image is exactly \(W^g\).
+\end{proof}
+
+\section{Descent and the universal property}
 \label{sec:albaneseup_descent}
 
-The final auxiliary lemma packages the two-step descent that promotes a
-morphism on \(C^g\) (after passing through \(\mathrm{Sym}^g C\) via
-\cref{lem:symmetric_product_av_map} and inverting \(f^{(g)}\) via
-\cref{lem:symmetric_product_to_jacobian}) to a regular morphism on
-\(J\). The output is a rational map \(J \dashrightarrow A\), which is then
-upgraded to a regular morphism via Milne's Theorem~3.2
-(\cref{thm:rational_map_to_av_extends}). This is the unique step of the
-proof that consumes A.4.c.
-
-\begin{lemma}\leanok
-[Descent of \(\mathrm{Sym}^g \varphi\) to a regular morphism \(J \to A\)]
+\begin{lemma}
+  [Descent through the birational symmetric power]
   \label{lem:descent_through_birational_sigma}
+  \source{abelian-varieties:page-0110}
   \lean{AlgebraicGeometry.Pic0.descentThroughBirationalSigma}
-  \uses{lem:symmetric_product_av_map, lem:symmetric_product_to_jacobian,
-        thm:rational_map_to_av_extends}
+  \uses{def:symmetric_product_av_map,
+    def:symmetric_product_to_jacobian_morphism}
 
-  % SOURCE: [Milne, Abelian Varieties], Proof of Proposition~6.1, \S III.6,
-  % doc p.~104 (read from references/abelian-varieties.pdf, PDF page 110).
-  % SOURCE QUOTE:
-  % "It therefore defines a rational map \(\psi\colon J\to A\), which (I 3.2)
-  %  shows to be a regular map."
-  \textit{Source: Milne, \emph{Abelian Varieties}, Proof of Proposition~6.1,
-  \S III.6, p.~104 (the sentence ``which (I~3.2) shows to be a regular
-  map'').}
-
-  Let \(\varphi \colon C \to A\) be a morphism into an abelian variety \(A\)
-  over \(\bar k\). Let \(\mathrm{Sym}^g \varphi \colon \mathrm{Sym}^g C \to A\)
-  be the symmetrised morphism of \cref{lem:symmetric_product_av_map} and
-  \(f^{(g)} \colon \mathrm{Sym}^g C \to J\) the birational morphism of
-  \cref{lem:symmetric_product_to_jacobian}. Then there is a unique
-  regular morphism
+  Let \(A\) be an abelian variety and let
+  \(\varphi\colon C\to A\) be pointed at \(P_0\).  There is a unique
+  regular morphism \(\psi\colon J\to A\) such that
   \[
-    \psi \;\colon\; J \;\longrightarrow\; A
+    \varphi^{(g)}=\psi\circ f^{(g)}.
   \]
-  such that \(\psi \circ f^{(g)} = \mathrm{Sym}^g \varphi\) on the dense open
-  on which \(f^{(g)}\) is an isomorphism (equivalently, \(\psi\) is the unique
-  regular morphism extending the rational map
-  \(\mathrm{Sym}^g \varphi \circ (f^{(g)})^{-1} \colon J \dashrightarrow
-  A\)).
 \end{lemma}
 
 \begin{proof}
-  
-  By \cref{lem:symmetric_product_to_jacobian}, there exist dense opens
-  \(U \subseteq \mathrm{Sym}^g C\) and \(V \subseteq J\) with \(f^{(g)}|_U \colon
-  U \xrightarrow{\sim} V\) an isomorphism. Setting \(\psi_0 \colon V \to A\)
-  to be the composition \(\mathrm{Sym}^g \varphi|_U \circ (f^{(g)}|_U)^{-1}
-  \colon V \to U \to A\) produces a rational map \(J \dashrightarrow A\).
-
-  The target \(A\) is an abelian variety and the source \(J\) is smooth over
-  \(\bar k\) (it is itself an abelian variety, hence nonsingular). Milne's
-  Theorem~3.2 (\cref{thm:rational_map_to_av_extends}) therefore promotes
-  \(\psi_0\) to a unique regular morphism \(\psi \colon J \to A\) extending
-  \(\psi_0\) on \(V\). Uniqueness of \(\psi\) follows from the
-  reduced-and-separated agreement principle: two regular morphisms
-  \(J \to A\) agreeing on a dense open are equal.
+  \uses{lem:symmetric_product_av_map, lem:symmetric_product_to_jacobian,
+    lem:symmetric_power_nonsingular, thm:pic0_smooth,
+    thm:rational_map_to_av_extends}
+  On dense opens \(U\subseteq C^{(g)}\) and \(V\subseteq J\), the map
+  \(f^{(g)}|_U\colon U\to V\) is an isomorphism.  Thus
+  \(\varphi^{(g)}|_U\circ(f^{(g)}|_U)^{-1}\) defines a rational map
+  \(J\dashrightarrow A\).  The Jacobian is smooth and \(A\) is an abelian
+  variety, so \cref{thm:rational_map_to_av_extends} extends this rational
+  map uniquely to a regular morphism \(\psi\colon J\to A\).  The two
+  morphisms \(\varphi^{(g)}\) and \(\psi\circ f^{(g)}\) agree on the dense
+  open \(U\); since \(C^{(g)}\) is nonsingular by
+  \cref{lem:symmetric_power_nonsingular}, hence reduced, and \(A\) is
+  separated, they agree everywhere.  The same dense-open agreement proves
+  uniqueness.
 \end{proof}
 
-\section{Connecting the two factorisation forms}
-\label{sec:albaneseup_connecting}
+\begin{definition}
+  [The basepoint section of the symmetric power]
+  \label{def:basepoint_section_symmetric_power}
+  \uses{def:symmetric_power_curve}
 
-The headline universal property is phrased in the \emph{Albanese form}
-\(\varphi = \psi \circ \iota_{P_0}\), whereas the descent lemma
-\cref{lem:descent_through_birational_sigma} delivers the
-\emph{symmetric-power form}
-\(\mathrm{Sym}^g \varphi = \psi \circ f^{(g)}\). The following biconditional
-identifies the two forms for every candidate \(\psi\), so that the existence
-and uniqueness statement of \cref{thm:albanese_universal_property} reduces to
-that of the descent lemma.
+  Define
+  \[
+    s_{P_0}\colon C\longrightarrow C^{(g)},\qquad
+    Q\longmapsto Q+(g-1)P_0.
+  \]
+\end{definition}
 
-\begin{lemma}\leanok
-[Albanese form \(\Leftrightarrow\) symmetric-power form]
-  \label{lem:albanese_eq_iff_symmetricPower_eq}
-  \lean{AlgebraicGeometry.Pic0.albanese_eq_iff_symmetricPower_eq}
-  \uses{lem:abel_jacobi_morphism, lem:symmetric_product_av_map, lem:symmetric_product_to_jacobian}
+\begin{lemma}
+  [The basepoint section followed by the canonical map]
+  \label{lem:basepoint_section_to_jacobian}
+  \source{abelian-varieties:page-0110}
+  \uses{def:basepoint_section_symmetric_power,
+    lem:symmetric_product_to_jacobian_formula,
+    def:abel_jacobi_morphism}
 
-  Let \(\varphi \colon C \to A\) be a pointed morphism into an abelian variety
-  \(A\) over \(\bar k\) with \(\varphi(P_0) = \eta_A\). For every candidate
-  morphism \(\psi \colon J \to A\), the Albanese-form factorisation
-  \(\varphi = \psi \circ \iota_{P_0}\) holds if and only if the
-  symmetric-power-form factorisation
-  \(\mathrm{Sym}^g \varphi = \psi \circ f^{(g)}\) holds, where
-  \(\iota_{P_0}\) is the Abel--Jacobi morphism of
-  \cref{lem:abel_jacobi_morphism}, \(\mathrm{Sym}^g \varphi\) the symmetrised
-  morphism of \cref{lem:symmetric_product_av_map}, and \(f^{(g)}\) the
-  birational morphism of \cref{lem:symmetric_product_to_jacobian}. The forward
-  direction precomposes the Albanese equation with the symmetric \(g\)-fold sum
-  and descends through \(\pi \colon C^g \to \mathrm{Sym}^g C\); the reverse
-  direction restricts the symmetric-power equation along the embedding
-  \(Q \mapsto (Q, P_0, \ldots, P_0)\) and uses \(\varphi(P_0) = \eta_A\).
+  One has \(f^{(g)}\circ s_{P_0}=\iota_{P_0}\).
 \end{lemma}
 
-\begin{proof} Proved directly in Lean. \end{proof}
-
-\section{Proof of the universal property}
-\label{sec:albaneseup_proof}
-
-% SOURCE QUOTE PROOF:
-% "PROOF.  Consider the map
-%    \(\)(P_1,\ldots,P_g)\mapsto\sum_i\psi(P_i)\colon C^g\to A.\(\)
-%  Clearly this is symmetric, and so it factors through \(C^{(g)}\).  It
-%  therefore defines a rational map \(\psi\colon J\to A\), which (I 3.2)
-%  shows to be a regular map.  It is clear from the construction that
-%  \(\psi\circ f^P=\varphi\) (note that \(f^P\) is the composite of $Q\mapsto
-%  Q+(g-1)P\colon C\to C^{(g)}\( with \)f^{(g)}\colon C^{(g)}\to J$).  In
-%  particular, \(\psi\) maps 0 to 0, and (I 1.2) shows that it is therefore
-%  a homomorphism.  If \(\psi'\) is a second homomorphism such that
-%  \(\psi'\circ f^P=\varphi\), then \(\psi\) and \(\psi'\) agree on
-%  \(f^P(C)+\cdots+f^P(C)\) (\(g\) copies), which is the whole of \(J\)."
-\begin{proof}[Proof of \cref{thm:albanese_universal_property}]
-  
-  The proof follows Milne's Proposition~6.1 verbatim, using the four
-  sub-lemmas of this chapter:
-  \cref{lem:abel_jacobi_morphism} (Abel--Jacobi morphism \(\iota_{P_0}\)),
-  \cref{lem:symmetric_product_av_map} (symmetrisation of \(\varphi\) to
-  \(\mathrm{Sym}^g \varphi \colon \mathrm{Sym}^g C \to A\)),
-  \cref{lem:symmetric_product_to_jacobian} (birational morphism
-  \(f^{(g)} \colon \mathrm{Sym}^g C \to J\)), and
-  \cref{lem:descent_through_birational_sigma} (descent of \(\mathrm{Sym}^g
-  \varphi\) to a regular morphism \(\psi \colon J \to A\) via
-  \cref{thm:rational_map_to_av_extends}).
-  \begin{enumerate}
-    \item \emph{Symmetrisation.} Consider the map \(C^g \to A\) sending
-      \((P_1, \ldots, P_g) \mapsto \varphi(P_1) + \cdots + \varphi(P_g)\)
-      (Milne's typeset proof writes \(\sum_i \psi(P_i)\) in this line, but
-      the construction is the symmetrisation of the input \(\varphi\); we
-      use the unambiguous symbol \(\varphi\) throughout). Since \(A\) is
-      commutative this map is \(S_g\)-symmetric. By
-      \cref{lem:symmetric_product_av_map} it factors through the
-      symmetric power \(\mathrm{Sym}^g C\), defining a regular morphism
-      \[
-        \widetilde \psi \;:=\; \mathrm{Sym}^g \varphi
-        \;\colon\; \mathrm{Sym}^g C \;\longrightarrow\; A.
-      \]
-    \item \emph{Descent to a regular morphism on \(J\).} By
-      \cref{lem:symmetric_product_to_jacobian}, the morphism
-      \(f^{(g)} \colon \mathrm{Sym}^g C \to J\) is birational. The
-      composite \(\widetilde \psi \circ (f^{(g)})^{-1}\) is, a priori,
-      only a rational map \(J \dashrightarrow A\). By
-      \cref{lem:descent_through_birational_sigma} -- whose proof is an
-      application of \cref{thm:rational_map_to_av_extends} (Milne
-      Theorem~I~3.2, rational map from a nonsingular variety to an
-      abelian variety is regular) -- this rational map extends uniquely
-      to a regular morphism
-      \[
-        \psi \;\colon\; J \;\longrightarrow\; A.
-      \]
-    \item \emph{Factorisation \(\psi \circ \iota_{P_0} = \varphi\).}
-      Milne's identification: \(\iota_{P_0}\) is the composite
-      \[
-        C \;\xrightarrow{\;Q \mapsto Q + (g-1) P_0\;}\;
-        \mathrm{Sym}^g C \;\xrightarrow{\;f^{(g)}\;}\; J,
-      \]
-      where the first arrow sends a point \(Q \in C(\bar k)\) to the
-      effective divisor \(Q + (g-1) P_0 \in \mathrm{Sym}^g C(\bar k)\)
-      (its image under \(f^{(g)}\) in \(J\) is
-      \([\mathcal O_C(Q + (g-1) P_0 - g P_0)] = [\mathcal O_C(Q - P_0)]
-      = \iota_{P_0}(Q)\), matching \cref{lem:abel_jacobi_morphism}). On
-      \(\bar k\)-points,
-      \[
-        \psi(\iota_{P_0}(Q)) = \widetilde\psi(Q + (g-1) P_0)
-          = \varphi(Q) + (g-1)\varphi(P_0) = \varphi(Q),
-      \]
-      using \(\varphi(P_0) = \eta_A\) and that \(\eta_A\) is the identity of
-      \(A\). Hence \(\psi \circ \iota_{P_0} = \varphi\) on \(\bar k\)-points,
-      and therefore \(\psi \circ \iota_{P_0} = \varphi\) as morphisms of
-      \(\bar k\)-schemes (both sides are regular morphisms \(C \to A\) from
-      a reduced separated scheme to a separated scheme, agreeing on
-      dense \(\bar k\)-points, hence agreeing everywhere by the
-      reduced-and-separated agreement principle).
-    \item \emph{Homomorphism property.} The morphism \(\psi\) sends
-      \(\eta_J\) to \(\eta_A\): indeed,
-      \(\psi(\eta_J) = \psi(\iota_{P_0}(P_0)) = \varphi(P_0) = \eta_A\).
-      A regular morphism of abelian varieties sending the identity to
-      the identity is a homomorphism of group schemes, by Milne
-      Corollary~I~1.2 (a consequence of the Rigidity Lemma
-      \cref{thm:rigidity_lemma}, see
-      \cref{chap:AbelianVarietyRigidity}, Corollary~1.2). Therefore
-      \(\psi\) is a homomorphism of group schemes \(J \to A\).
-    \item \emph{Uniqueness.} Suppose \(\psi'\) is a second homomorphism
-      with \(\psi' \circ \iota_{P_0} = \varphi\). Then \(\psi\) and
-      \(\psi'\) agree on the set-theoretic image \(\iota_{P_0}(C) \subseteq
-      J\). Both are homomorphisms, so they agree on the subgroup
-      generated by \(\iota_{P_0}(C)\) -- which contains the \(g\)-fold sum
-      \(\iota_{P_0}(C) + \cdots + \iota_{P_0}(C)\) (\(g\) copies). The
-      \(g\)-fold sum is the image of
-      \(\mathrm{add}_J \circ \iota_{P_0}^{\times g} \colon C^g \to J\),
-      which descends to \(f^{(g)} \colon \mathrm{Sym}^g C \to J\), which
-      is surjective by \cref{lem:symmetric_product_to_jacobian}.
-      Therefore \(\psi\) and \(\psi'\) agree on a dense open subset of \(J\)
-      (in fact on all of \(J\) as a set), hence everywhere by the
-      reduced-and-separated agreement principle.
-  \end{enumerate}
-  This completes the proof.
+\begin{proof}
+  At \(Q\in C\), the left side represents
+  \[
+    \mathcal O_C(Q+(g-1)P_0-gP_0)=\mathcal O_C(Q-P_0),
+  \]
+  which is the defining class of \(\iota_{P_0}(Q)\).
 \end{proof}
 
-\section{Wiring for the positive-genus Albanese witness}
-\label{sec:albaneseup_witness_wiring}
+\begin{lemma}
+  [The basepoint section followed by a symmetric sum]
+  \label{lem:basepoint_section_symmetric_map}
+  \source{abelian-varieties:page-0110}
+  \uses{def:basepoint_section_symmetric_power,
+    lem:symmetric_product_av_map}
 
-\cref{thm:albanese_universal_property} supplies the universal-factorisation
-field \(\texttt{isAlbaneseFor}\) of an Albanese witness for \((C, P_0)\) in the
-sense of \cref{def:JacobianWitness} (\cref{chap:Jacobian}); the remaining
-fields are supplied by A.3:
-\begin{itemize}
-  \item \(J := \Pic^0_{C/k}\) (the underlying scheme).
-  \item \(\texttt{grpObj}\): the group-object structure on \(J\) obtained from the
-    abelian-group structure on \(\Pic^0_{C/k}(T)\) for varying \(T\), refined to a
-    group object in the category of \(\bar k\)-schemes (A.3, A.2.c group-scheme
-    refinement).
-  \item \(\texttt{proper}\): properness of \(\Pic^0_{C/k} \to \Spec \bar k\) from
-    the closed-immersion property of the identity component in the proper
-    representing Picard scheme (A.3; cf.\
-    \cref{thm:Jacobian_proper}'s discussion).
-  \item \(\texttt{smoothGenus}\): smoothness of relative dimension \(g(C)\) from
-    the deformation-theoretic tangent-space identification with \(H^1(C,
-    \mathcal O_C)\), which has dimension \(g(C)\) by Riemann--Roch.
-  \item \(\texttt{geomIrred}\): geometric irreducibility of the identity
-    component of a \(\bar k\)-group scheme locally of finite type (Kleiman,
-    \emph{The Picard scheme}, the identity-component lemma and its
-    \(\Pic^0_{C/k}\) specialisation; cf.\
-    \cref{thm:Jacobian_geomIrred}'s discussion).
-  \item \(\texttt{isAlbaneseFor}\): the present
-    \cref{thm:albanese_universal_property}, applied at each
-    \(P_0 \in C(\bar k)\).
-\end{itemize}
+  If \(\varphi(P_0)=0_A\), then
+  \(\varphi^{(g)}\circ s_{P_0}=\varphi\).
+\end{lemma}
 
-The witness so produced is over \(\bar k\). The Galois-descent step from \(\bar
-k\) back to the original base field \(k\) -- packaged at
-\cref{chap:Jacobian}, sub-step C.2.f -- closes the loop and supplies the
-\(k\)-side Albanese witness consumed by \cref{def:Jacobian}.
+\begin{proof}
+  At \(Q\in C\), the left side is
+  \(\varphi(Q)+(g-1)\varphi(P_0)=\varphi(Q)\).
+\end{proof}
 
-\section{Lean encoding}
-\label{sec:albaneseup_lean_encoding}
+\begin{lemma}
+  [Equivalence of the two factorisation equations]
+  \label{lem:albanese_eq_iff_symmetricPower_eq}
+  \source{abelian-varieties:page-0110}
+  \lean{AlgebraicGeometry.Pic0.albanese_eq_iff_symmetricPower_eq}
+  \uses{def:abel_jacobi_morphism, def:symmetric_product_av_map,
+    def:symmetric_product_to_jacobian_morphism}
 
-The Lean target file is the new
-\texttt{AlgebraicJacobian/Albanese/AlbaneseUP.lean} (declared at the top of
-this chapter). The five target declarations are:
-\begin{itemize}
-  \item \texttt{AlgebraicGeometry.Pic0.abelJacobi}: the regular morphism
-    \(\iota_{P_0} \colon C \to \Pic^0_{C/k}\) of \cref{lem:abel_jacobi_morphism}.
-    The signature exposes the marked point \(P_0\) as an explicit argument and
-    the Picard-scheme construction \(\Pic^0_{C/k}\) as an existing object.
-  \item \texttt{AlgebraicGeometry.Pic0.SymmetricPower}: the scheme-theoretic
-    \(g\)-th symmetric power \(\mathrm{Sym}^g C\) of \cref{def:symmetric_power_curve},
-    packaged with the canonical projection
-    \(\pi \colon C^g \to \mathrm{Sym}^g C\) and its universal property
-    (factorisation of every \(S_g\)-symmetric morphism out of \(C^g\)). \emph{This
-    declaration has no Mathlib analogue}: Mathlib's \texttt{Sym} /
-    \texttt{SymmetricPower} cover types and modules only; the
-    scheme-theoretic construction must be supplied project-side, following
-    Milne's affine-and-glue recipe of \cref{def:symmetric_power_curve}.
-  \item \texttt{AlgebraicGeometry.Pic0.symmetricPowerAVMap}: the
-    symmetrised morphism
-    \(\mathrm{Sym}^g \varphi \colon \mathrm{Sym}^g C \to A\) produced by
-    \cref{lem:symmetric_product_av_map} from an input morphism
-    \(\varphi \colon C \to A\) into an abelian variety.
-  \item \texttt{AlgebraicGeometry.Pic0.symmetricPowerToJacobian}: the
-    birational morphism \(f^{(g)} \colon \mathrm{Sym}^g C \to J\) of
-    \cref{lem:symmetric_product_to_jacobian}, together with the data of a
-    dense open isomorphism \(U \xrightarrow{\sim} V\) realising
-    birationality. The signature exposes the basepoint \(P_0\) and consumes
-    \texttt{AlgebraicGeometry.Pic0.abelJacobi}.
-  \item \texttt{AlgebraicGeometry.Pic0.descentThroughBirationalSigma}: the
-    descent lemma of \cref{lem:descent_through_birational_sigma},
-    consuming \texttt{symmetricPowerAVMap} and
-    \texttt{symmetricPowerToJacobian} together with
-    \texttt{Albanese.Thm32RationalMapExtension.extend\_to\_av}
-    (\cref{thm:rational_map_to_av_extends}) to produce the regular
-    morphism \(\psi \colon J \to A\).
-  \item \texttt{AlgebraicGeometry.Pic0.albanese\_universal\_property}: the
-    main theorem, the existence-and-uniqueness statement of
-    \cref{thm:albanese_universal_property}. The signature is
-    \[
-      \mathtt{P_0} : C(\bar{k}) \;\to\;
-      \mathtt{A} : \operatorname{AbelianVariety}(\bar{k}) \;\to\;
-      (\varphi : C \to A) \;\to\;
-      (h\varphi : \varphi \circ P_0 = \eta_A) \;\to\;
-      \exists ! \, \psi \colon J \to A, \;\; \psi \circ \iota_{P_0} = \varphi
-      \;\wedge\; \psi \text{ is a group homomorphism}.
-    \]
-\end{itemize}
+  Let \(\varphi\colon C\to A\) satisfy \(\varphi(P_0)=0_A\).  For every
+  regular morphism \(\psi\colon J\to A\),
+  \[
+    \varphi=\psi\circ\iota_{P_0}
+      \quad\Longleftrightarrow\quad
+    \varphi^{(g)}=\psi\circ f^{(g)}.
+  \]
+\end{lemma}
 
-The proof body of \texttt{albanese\_universal\_property} consumes its four
-sub-lemma exports plus \texttt{Albanese.Thm32RationalMapExtension.extend\_to\_av}
-(\cref{thm:rational_map_to_av_extends}) and Milne's Corollary~I~1.2
-(\cref{thm:rigidity_lemma} consequence, registered at
-\cref{chap:AbelianVarietyRigidity}); the wiring follows the five-step proof
-of \cref{thm:albanese_universal_property}.
+\begin{proof}
+  \uses{lem:abel_jacobi_morphism, lem:symmetric_product_av_map,
+    lem:symmetric_product_to_jacobian_formula,
+    lem:av_regular_map_is_hom, lem:basepoint_section_to_jacobian,
+    lem:basepoint_section_symmetric_map}
+  Suppose first that \(\varphi=\psi\circ\iota_{P_0}\).  Evaluating at
+  \(P_0\) gives \(\psi(0_J)=0_A\), so
+  \cref{lem:av_regular_map_is_hom} shows that \(\psi\) is a homomorphism.
+  Pulling both sides of the desired symmetric-power equation back to
+  \(C^g\), both send \((P_1,\ldots,P_g)\) to
+  \(\sum_i\psi(\iota_{P_0}(P_i))\).  The uniqueness clause in the
+  universal property of \(C^{(g)}\) gives the equation on \(C^{(g)}\).
 
-The Picard-scheme inputs (\cref{def:pic_scheme} of
-\cref{chap:Picard_FGAPicRepresentability}) are imported from
-\texttt{AlgebraicJacobian/Picard/FGAPicRepresentability.lean} (when that file
-materialises along the A.2.c row) and the identity-component / degree-map
-refinement is supplied by the A.3 row of
-\cref{chap:Picard_Pic0AbelianVariety} (\cref{def:pic0_bundle_carrier}
-wires the two together). At the time of writing, the
-prover-side declaration body
-\texttt{AlgebraicGeometry.Pic0.albane\-se\_universal\_property} should be
-skeletoned as a \texttt{sorry} that consumes the A.3 instances as
-hypotheses with named placeholders, and \texttt{Sym\-met\-ric\-Power} should
-be skeletoned with a \texttt{notready} marker until the affine-and-glue
-sub-build lands. The remaining sub-lemma bodies become routine once both
-inputs are available.
+  Conversely, compose the symmetric-power equation with
+  \(s_{P_0}\).  The two basepoint-section identities
+  \cref{lem:basepoint_section_symmetric_map} and
+  \cref{lem:basepoint_section_to_jacobian} identify the resulting equation
+  with \(\varphi=\psi\circ\iota_{P_0}\).  Hence
+  \(\varphi=\psi\circ\iota_{P_0}\).
+\end{proof}
 
-\section{Out of scope}
-\label{sec:albaneseup_out_of_scope}
+\begin{theorem}
+  [Albanese factorisation through \(\Pic^0_{C/k}\)]
+  \label{thm:albanese_universal_property}
+  \source{abelian-varieties:page-0110}
+  \lean{AlgebraicGeometry.Pic0.albanese_universal_property}
+  \uses{def:abel_jacobi_morphism}
 
-This chapter packages \emph{only} the Albanese universal property
-(\cref{thm:albanese_universal_property} = Milne Proposition~III~6.1) and the
-four internal sub-lemmas of the symmetric-power proof
-(\cref{lem:abel_jacobi_morphism},
-\cref{def:symmetric_power_curve},
-\cref{lem:symmetric_product_av_map},
-\cref{lem:symmetric_product_to_jacobian},
-\cref{lem:descent_through_birational_sigma}), plus the wiring of these into
-a positive-genus Albanese witness. The following adjacent content is
-explicitly out of scope:
-\begin{itemize}
-  \item \textbf{Representability of \(\Pic_{C/k}\) (A.2.c).} Proved in
-    \cref{chap:Picard_FGAPicRepresentability} as
-    \cref{thm:fga_pic_representability}; this chapter only consumes it.
-  \item \textbf{The identity component \(\Pic^0_{C/k}\) and the degree map
-    (A.3).} The identity component refinement of the Picard scheme together
-    with its degree map is constructed in
-    \cref{chap:Picard_Pic0AbelianVariety}; this chapter only consumes
-    \(\Pic^0_{C/k}\), through the bundle carrier of
-    \cref{def:pic0_bundle_carrier}, as a smooth proper geometrically
-    irreducible \(\bar k\)-group scheme of dimension \(g\).
-  \item \textbf{Milne's Theorem~3.2 (A.4.c).} Proved in
-    \cref{chap:Albanese_Thm32RationalMapExtension} as
-    \cref{thm:rational_map_to_av_extends}; this chapter only consumes it
-    inside \cref{lem:descent_through_birational_sigma} to promote the
-    rational map \(J \dashrightarrow A\) to a regular morphism.
-  \item \textbf{The scheme-theoretic construction of \(\mathrm{Sym}^g C\).}
-    Mathlib has no \(g\)-th symmetric power of a scheme; the
-    \texttt{SymmetricPower} target of \cref{def:symmetric_power_curve} is a
-    project-side sub-build (affine \(S_g\)-invariants
-    \(\Spec(A^{\otimes g})^{S_g}\) on each open affine \(\Spec A \subseteq C\),
-    glued by the standard open-cover patching of Milne~III.3
-    Proposition~3.1 / Mumford~1970 II.7 \& III.11). The construction itself
-    is a non-trivial dependency of A.4.d; this chapter \emph{specifies} the
-    target but does not develop its construction.
-  \item \textbf{The autoduality \(J \cong J^\vee\) (Milne~III \S 6.6) and the
-    moduli / Poincar\'e-bundle Albanese route.} The iter-174 draft of this
-    chapter proposed a route via the Poincar\'e bundle of \(A\) and the
-    autoduality of \(J\), which gates on the theorem of the cube. The cube
-    was excised from the project in iter-163; the autoduality / moduli
-    route is therefore demoted and replaced by the symmetric-power route
-    of this chapter. A reference recording of the moduli wording is given
-    in the ``Alternative route history'' \texttt{\%~NOTE} block at the end
-    of this file.
-  \item \textbf{Milne Proposition~III~6.4 / Remark~6.5 / Theorem~6.6} (the
-    divisorial-correspondence universal property for \(C \times C \to A\),
-    the identification of \((J, F)\) with the Albanese variety in the sense
-    of Lang, and the autoduality \(J \cong J^\vee\)). Not needed by the
-    symmetric-power route.
-  \item \textbf{Weil's reconstruction of \(J\) from the rational law of
-    composition on \(C^{(g)}\) (Milne~III \S 7).} The project does not need
-    this alternative construction.
-  \item \textbf{The genus-\(0\) case.} The standing hypothesis of this chapter
-    is \(g(C) > 0\) (Milne's standing hypothesis of \S III.6). The genus-\(0\)
-    case is not special: when \(g(C) = 0\) one has \(H^1(C, \mathcal O_C) = 0\),
-    so \(\Pic^0_{C/k} = \Spec k\) automatically, and the genus-\(0\) witness is
-    simply the degenerate instance of the same universal property (every pointed
-    morphism \(C \to A\) into an abelian variety is then constant).
-  \item \textbf{Generalisations to a non-algebraically-closed base \(k\).}
-    The chapter works over \(\bar k\) throughout. The descent of the witness
-    back to \(k\) via Galois descent of morphism equality is the subject of
-    \cref{chap:Jacobian}, sub-step C.2.f.
-\end{itemize}
+  For every abelian variety \(A\) and every morphism
+  \(\varphi\colon C\to A\) with \(\varphi(P_0)=0_A\), there exists a unique
+  regular morphism \(\psi\colon J\to A\) such that
+  \[
+    \varphi=\psi\circ\iota_{P_0}.
+  \]
+\end{theorem}
 
-% =========================================================================
-% NOTE: Alternative route history (iter-174 moduli / autoduality wording).
-% =========================================================================
-%
-% The iter-174 draft of this chapter proposed an alternative ``moduli''
-% route via the Poincar\'e bundle of \(A\) and the autoduality
-% \(J \cong J^\vee\). That route was retired in iter-175 because its
-% autoduality input depends on the theorem of the cube, which was excised
-% from the project in iter-163. The wording is recorded here for
-% reference only; it is NOT part of the active dependency graph and is
-% intentionally left without \label/\lean/\uses tags so it does not feed
-% the leanblueprint dependency graph.
-%
-% ---- (Retired) Lemma: Poincar\'e-bundle pullback along $\varphi \times
-% \mathrm{id}$ ----
-% Let \(A\) be an abelian variety over \(\bar k\), equipped with its identity
-% section \(\eta_A\), and let \(\varphi \colon C \to A\) be a pointed morphism
-% with \(\varphi(P_0) = \eta_A\). Let \(\mathcal P_A\) be a Poincar\'e sheaf
-% on \(A \times A^\vee\) normalised so that
-% \(\eta_A^*\mathcal P_A \cong \mathcal O_{A^\vee}\). Then the pullback
-% line bundle
-%   \(\mathcal L_\varphi := (\varphi \times \mathrm{id}_{A^\vee})^*\mathcal P_A\)
-% on \(C \times A^\vee\) is trivialised along \(\{P_0\} \times A^\vee\) and
-% defines a class in \(\Pic^\sharp_{C/k}(A^\vee)\) via the relative Picard
-% presheaf.
-%
-% ---- (Retired) Lemma: Moduli classifier of a trivialised line bundle ----
-% Let \(T\) be a pointed \(\bar k\)-scheme with base-point \(t\). A line bundle
-% \(\mathcal L\) on \(C \times T\) trivialised along \(\{P_0\} \times T\), with
-% degree-zero geometric fibres, classifies under the moduli interpretation
-% of \(J = \Pic^0_{C/k}\) a unique morphism \(h_{\mathcal L} \colon T \to J\)
-% with \(h_{\mathcal L}(t) = \eta_J\).
-%
-% ---- (Retired) Moduli-route construction of \(\psi\) ----
-% Apply the two retired lemmas at \(T := A^\vee\) with the input
-% \((\mathcal P_A, \varphi)\) to obtain \(h_\varphi \colon A^\vee \to J\);
-% dualise via the autoduality \(J \cong J^\vee\) and the canonical
-% principal polarisation \(\varphi_{\mathcal L(\Theta)} \colon J \to J^\vee\)
-% (Milne Theorem~III~6.6) to obtain \(\psi \colon J \to A\).
-% The cube-dependence enters at the autoduality step: Milne~III~6.6 is
-% proved using the seesaw theorem, which is a direct corollary of the
-% theorem of the cube.
-%
-% End of retired wording.
-% =========================================================================
+\begin{proof}
+  \uses{lem:descent_through_birational_sigma,
+    lem:albanese_eq_iff_symmetricPower_eq}
+  By \cref{lem:descent_through_birational_sigma}, there is a unique
+  \(\psi\colon J\to A\) satisfying
+  \(\varphi^{(g)}=\psi\circ f^{(g)}\).  The equivalence in
+  \cref{lem:albanese_eq_iff_symmetricPower_eq}, applied to every candidate
+  morphism, transports both existence and uniqueness to the equation
+  \(\varphi=\psi\circ\iota_{P_0}\).
+\end{proof}
+
+\begin{corollary}
+  [Albanese universal property]
+  \label{cor:albanese_universal_property_homomorphism}
+  \source{abelian-varieties:page-0110}
+  \uses{thm:albanese_universal_property}
+
+  In the situation of \cref{thm:albanese_universal_property}, the unique
+  factor \(\psi\colon J\to A\) is a homomorphism of group schemes.
+  Consequently \(\iota_{P_0}\) is initial among pointed morphisms from
+  \(C\) to abelian varieties.
+\end{corollary}
+
+\begin{proof}
+  \uses{lem:av_regular_map_is_hom, lem:abel_jacobi_morphism}
+  Since \(\iota_{P_0}(P_0)=0_J\) and \(\varphi(P_0)=0_A\), the
+  factorisation gives \(\psi(0_J)=0_A\).  The pointed rigidity theorem
+  \cref{lem:av_regular_map_is_hom} therefore makes \(\psi\) a group
+  homomorphism.  Uniqueness among all regular factors implies uniqueness
+  among homomorphisms.
+\end{proof}
