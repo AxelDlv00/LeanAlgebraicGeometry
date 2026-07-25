@@ -49,6 +49,7 @@ set_option maxSynthPendingDepth 3
 universe u
 
 open CategoryTheory Limits TopologicalSpace Opposite
+open scoped TensorProduct
 
 namespace AlgebraicGeometry
 
@@ -220,5 +221,58 @@ theorem supportLeak_eq_empty_of_isClopen_trace (U : X.Opens)
   exact d.isClosed_supportLocus.inter hT
 
 end Scheme.LocalEquations
+
+/-! ## The (c1) clause from a clopen trace
+
+Assembling the identification with the landed finiteness engine: a clopen piece trace gives
+the assembler's `hnoLeak` at that piece, hence its `Module.Finite` colength.  Combined with
+`SupportTube.projective_colength_of_forall_tmul_residueField` this is the whole (c1) input,
+so under the Z-clopen hypothesis the certificate's finiteness side needs no fibre analysis.
+
+What remains outstanding for the lane is only the *production* of the clopen trace, i.e.
+I-0209's `W`-as-algebra extraction. `PrimeSpectrum.isClopen_iff_zeroLocus` and
+`PrimeSpectrum.exists_idempotent_basicOpen_eq_of_isClopen` are the mathlib translations that
+turn a clopen packet of the divisor scheme into the idempotent the brick above consumes. -/
+
+section Clopen
+
+variable {k : Type u} [Field k] {C : Over (Spec (.of k))} [IsProper C.hom]
+variable {R : Type u} [CommRing R] [Algebra k R]
+variable {pi : C.left ⟶ P1 k} [IsFinite pi]
+variable {d : (relCurve C R).LocalEquations}
+
+namespace DivisorAdaptation
+
+variable (A : DivisorAdaptation C R pi d)
+
+/-- **A clopen piece trace gives the (c1)-finite clause at that piece.** Reading the
+identification `supportLeak = ∅ ↔ clopen trace` into the landed finiteness engine
+`finite_colength_of_supportLeak_eq_empty`. -/
+theorem finite_colength_of_isClopen_trace (j : A.index)
+    (h : IsClosed ((fun x : d.supportLocus => x.val) ⁻¹'
+      (A.pieces j : Set (relCurve C R)))) :
+    Module.Finite R (A.colength j) :=
+  A.finite_colength_of_supportLeak_eq_empty j
+    (d.supportLeak_eq_empty_of_isClopen_trace _ h)
+
+/-- **The full (c1) data at a piece with clopen trace.** Finiteness from the clopen trace,
+projectivity from fibrewise regularity of the piece equation — which for a seed adaptation
+is landed (`ThetaGeneratorSeed.divisorAdaptation_fibre_regular`).  No fibre containment and
+no flatness of a Čech cokernel enters. -/
+theorem finite_and_projective_colength_of_isClopen_trace [IsNoetherianRing R] (j : A.index)
+    (h : IsClosed ((fun x : d.supportLocus => x.val) ⁻¹'
+      (A.pieces j : Set (relCurve C R))))
+    (hreg : ∀ p : PrimeSpectrum R,
+      (A.eqn j ⊗ₜ[R] (1 : p.asIdeal.ResidueField) :
+          Γ(relCurve C R, A.pieces j) ⊗[R] p.asIdeal.ResidueField) ∈
+        nonZeroDivisors
+          (Γ(relCurve C R, A.pieces j) ⊗[R] p.asIdeal.ResidueField)) :
+    Module.Finite R (A.colength j) ∧ Module.Projective R (A.colength j) := by
+  haveI := A.finite_colength_of_isClopen_trace j h
+  exact ⟨‹_›, A.projective_colength_of_forall_tmul_residueField j hreg⟩
+
+end DivisorAdaptation
+
+end Clopen
 
 end AlgebraicGeometry
