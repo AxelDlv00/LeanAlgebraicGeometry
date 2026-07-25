@@ -31,7 +31,7 @@ construction is uniform: genus 0 is the automatic degenerate case `Pic⁰ = Spec
 
 **Blueprint**: matching changes — 10 genus-0 chapters removed from `content.tex`;
 `AbelianVarietyRigidity.tex` truncated to the general rigidity-lemma chain and retitled
-"The rigidity lemma and its Milne §I.1–I.3 corollaries"; `Jacobian.tex` rewritten to the
+"The rigidity lemma and its corollaries"; `Jacobian.tex` rewritten to the
 uniform Pic⁰ narrative (label `def:picardJacobianWitness`); WeilDivisor.tex ℙ¹ block
 removed; prose asides in `AbelJacobi/AlbaneseUP/Thm32/CodimOneExtension` dewired. Verified:
 0 dangling `\cref/\ref/\uses` to removed labels, 0 new undefined refs vs the pre-refactor

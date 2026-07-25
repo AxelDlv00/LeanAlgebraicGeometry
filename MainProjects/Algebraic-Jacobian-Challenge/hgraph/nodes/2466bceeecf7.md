@@ -1,22 +1,18 @@
 ---
 author: sync
-chapter: The rigidity lemma and its Milne \S I.1--I.3 corollaries
+chapter: The rigidity lemma and its corollaries
 content_type: lemma
 created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:rigidity_core
 lean_status: lean_ok
 order: 538
-title: Scheme-level gluing core of the Rigidity Lemma
+title: Scheme-theoretic gluing core
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-25T19:16:20'
 ---
-Let \(\bar k\) be algebraically closed, \(X\) proper, \(X \times Y\) geometrically irreducible,
-  reduced and locally of finite type over \(\bar k\), and \(Z\) separated. Let
-  \(f \colon X \times Y \to Z\) collapse the slice \(X \times \{y_0\}\) to a single point \(z_0\).
-  Then \(f\) equals its composite with the collapse endomorphism \((x, y) \mapsto (x_0, y)\), i.e.\
-  \(f = \mathtt{retract} \fatsemi f\). The proof takes the non-empty open \(U\) on which \(f\) and
-  \(\mathtt{retract} \fatsemi f\) agree (\cref{lem:rigidity_eqOn_dense_open}); since \(X \times Y\)
-  is geometrically irreducible over the one-point base \(\Spec \bar k\), it is irreducible, so the
-  non-empty open \(U\) is dense and its inclusion is dominant; the dominant-source/separated-target
-  rigidity handle then promotes agreement on \(U\) to equality of the two morphisms everywhere.
+Suppose that \(X\) is proper, \(X\times Y\) is reduced, geometrically irreducible,
+  and locally of finite type over \(\bar k\), and \(Z\) is separated.  Fix points
+  \(x_0\in X\), \(y_0\in Y\), and \(z_0\in Z\).  If
+  \(f\colon X\times Y\to Z\) maps \(X\times\{y_0\}\) to \(z_0\), then \(f\)
+  equals the morphism \((x,y)\mapsto f(x_0,y)\) on all of \(X\times Y\).

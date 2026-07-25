@@ -449,15 +449,8 @@ theorem rigidity_eqOn_saturated_open_to_affine
     have heq : terminal.from Z.left = Z.hom ≫ terminal.from (Spec (CommRingCat.of kbar)) :=
       terminal.hom_ext _ _
     rw [heq]; infer_instance
-  -- JACOBSON DERIVATION (iter-161: now a routine instance discharge, NOT an as-typed gap).
-  -- The route-B globalisation of the per-closed-slice constancy needs the closed points of `U` to
-  -- be DENSE, i.e. `U` to be a Jacobson space. The chain now carries
-  -- `[LocallyOfFiniteType (X ⊗ Y).hom]` as a hypothesis of this lemma, so `JacobsonSpace U` is
-  -- derivable: `Spec k̄` is a Jacobson space (a field is an `IsJacobsonRing`,
-  -- `PrimeSpectrum.instJacobsonSpaceOfIsJacobsonRing`); `LocallyOfFiniteType.jacobsonSpace` then
-  -- transports it to `(X ⊗ Y).left`; and `JacobsonSpace.of_isOpenEmbedding` inherits it onto the
-  -- open subscheme `U`. This `sorry` is therefore the assembly of those three Mathlib facts, left
-  -- for the prover phase — it is no longer an as-typed-unprovability.
+  -- A locally finite type scheme over the Jacobson base `Spec kbar` is Jacobson, and the
+  -- open subscheme `U` inherits that property. Its closed points are therefore dense.
   haveI : JacobsonSpace ((U : (X ⊗ Y).left.Opens).toScheme) := by
     -- `Spec k̄` is Jacobson (a field is `IsArtinianRing`, hence `IsJacobsonRing`); transport
     -- across the locally-of-finite-type structure map to `(X ⊗ Y).left`; then inherit onto the
