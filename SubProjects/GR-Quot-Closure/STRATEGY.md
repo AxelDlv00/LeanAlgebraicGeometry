@@ -2,9 +2,14 @@
 
 ## Goal
 
+*(This project is COMPLETE and merged back into `MainProjects/Algebraic-Jacobian-Challenge`
+(2026-06-22). The document is retained for its `## Completed` technique/pitfall record, which the
+parent's Grassmannian and section-graded-ring work still draws on. Read the phase tables as
+history.)*
+
 Close the `sorry`-bearing nodes of the **Grassmannian-quotient representability** cone (the
 Čech-independent / H⁰ leg of the parent's `thm:fga_pic_representability` cone; Nitsure §1/§5,
-FGA Explained Ch. 5), then merge back into *Quot-Foundations*:
+FGA Explained Ch. 5), then merge back into the parent:
 
 - **GR-quot core** — `def:grassmannian_scheme`, `thm:grassmannian_representable`,
   `lem:tautologicalQuotient_epi`: the rank-`d` Grassmannian as a scheme glued from affine
@@ -12,8 +17,8 @@ FGA Explained Ch. 5), then merge back into *Quot-Foundations*:
   Hilbert condition is constant rank `d`).
 - **SNAP-S0** — `def:sectionsCast`, `lem:sectionsCast_refl`, `lem:gradedMonoid_eq_of_cast`,
   `lem:sectionMul_coherent` (+ graded assembly): the H⁰ section graded ring `Γ_*(X,L)`,
-  Čech-independent. **Shared with the sibling `FBC-B_SNAP-chain`** — keep as sorry here or
-  import the sibling's proofs (user hint).
+  Čech-independent. Shared with the Čech leg; in the event these were proved here and merged
+  to the parent from this project.
 - **χ-blocked** — `def:quot_functor`, `def:hilbert_polynomial`: in-cone via the blueprint
   `\uses` wiring, but χ-semantic (need higher cohomology this leg lacks). Sourced from the
   cohomology leg at merge; kept as `sorry` here.
@@ -99,9 +104,9 @@ filled from the cohomology leg at merge.
   mandated goal landed; closed axiom-clean. Leg's closable scope is now fully delivered — finalize / await
   merge. Downstream `_fg`/`hilbertPoly` deliberately NOT pursued (Serre-finiteness/cohomology nodes, not
   closable in the H⁰ leg).
-- **SNAP coordination with `FBC-B_SNAP-chain`.** Decide per-iteration whether to prove SNAP here
-  or import the sibling's finished proofs (Lean names identical). See manifest `overlaps` and
-  `.archon/USER_HINTS.md`.
+- **SNAP coordination with the Čech leg (RESOLVED).** SNAP was proved here rather than imported from
+  the sibling; the finished proofs went to the parent at merge. The Čech leg now lives at
+  `SubProjects/Cech-Cohomology`.
 - **χ encoding consistency.** The blueprint `def:hilbert_polynomial` ENCODING comment claims an
   H⁰ encoding that contradicts the χ Lean decl. The Lean source governs; flag for the parent to
   reconcile the comment, but do NOT change the Lean to H⁰ in this leg.
