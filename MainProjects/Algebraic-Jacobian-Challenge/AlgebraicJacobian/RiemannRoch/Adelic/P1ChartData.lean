@@ -505,9 +505,6 @@ noncomputable local instance instAlgebraΓV0 :
     (Over.mk (ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k)) ↘ Spec (CommRingCat.of k)))
     (op (p1Chart k ⟨0⟩))
 
-set_option maxHeartbeats 3200000 in
--- `maxHeartbeats`: constructing the affine-chart iso `basicOpenIsoAway` (its `IsIso`
--- witness threads the whole `Proj` structure-sheaf machinery) is heavy (fleet recipe).
 /-- The affine-chart map `awayToSection : (ℤ[X]_{X₀})₀ → Γ(D₊(X₀))` is surjective:
 it is the isomorphism `basicOpenIsoAway` (`X₀` is homogeneous of degree `1 > 0`). -/
 private lemma awayToSection_X0_surjective :
@@ -520,13 +517,6 @@ private lemma awayToSection_X0_surjective :
     infer_instance
   exact (ConcreteCategory.bijective_of_isIso _).2
 
-set_option maxHeartbeats 800000 in
--- `maxHeartbeats`: the `p1Chart`/preimage `appLE`-vs-`app` bridge crosses the concrete
--- `Proj`/`ℙ¹` model diamonds (fleet recipe).  The `ℤ`-span core is transported by an
--- *inlined* `span_induction` (primitive `Submodule` steps only), and the composite ring
--- hom `ρ` carries an *explicit source type* so the elaborator solves its `X`-index at the
--- argument level — otherwise `RingHom.comp` defers it and unifies `D₊(X₀)` basic-open
--- predicates through the `ℙ¹` pullback into `MvPolynomial`, which is astronomically slow.
 /-- **`V₀`-generators of type (1): the `Proj`-side.**  The `toProjInt`-pullback of a
 section `s ∈ Γ(D₊(X₀))` lies in the `k`-span of the powers of `x = p1XSection`.
 Writing `s = awayToSection a` (the affine chart iso, `awayToSection_X0_surjective`)
@@ -560,7 +550,7 @@ private lemma mem_span_appLE_toProjInt
         (X (⟨0⟩ : ULift.{u} (Fin 2)))).hom
   -- `ρ (X₁/X₀) = x = p1XSection`: rewrite `appLE = app` (`hbridge`), the rest is `rfl`.
   have hval : ρ (p1CoordAway (ULift.{u} (Fin 2)) ⟨0⟩ ⟨1⟩) = p1XSection k := by
-    show ((Scheme.Hom.appLE (toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k)))
+    change ((Scheme.Hom.appLE (toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k)))
           (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
             (X (⟨0⟩ : ULift.{u} (Fin 2))))
           (p1Chart k ⟨0⟩) (le_refl _)).hom.comp
@@ -572,7 +562,7 @@ private lemma mem_span_appLE_toProjInt
   have hmem : a ∈ Submodule.span (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ) 0)
       (Set.range fun m : ℕ => p1CoordAway (ULift.{u} (Fin 2)) ⟨0⟩ ⟨1⟩ ^ m) :=
     span_p1CoordAway_pow_top Submodule.mem_top
-  show ρ a ∈ Submodule.span k (Set.range fun n : ℕ => p1XSection k ^ n)
+  change ρ a ∈ Submodule.span k (Set.range fun n : ℕ => p1XSection k ^ n)
   induction hmem using Submodule.span_induction with
   | mem z hz =>
       obtain ⟨m, rfl⟩ := hz
@@ -585,9 +575,6 @@ private lemma mem_span_appLE_toProjInt
       rw [Int.cast_smul_eq_zsmul, map_zsmul, ← Int.cast_smul_eq_zsmul k]
       exact Submodule.smul_mem _ _ hu
 
-set_option maxHeartbeats 800000 in
--- `maxHeartbeats`: `kToSection`/`appLE` share the structure-map section as a subterm,
--- but recognising the algebra-instance unfolding crosses the `ℙ¹` model (fleet recipe).
 /-- **`V₀`-generators of type (2): the `Spec k`-side.**  The structure-morphism
 pullback of a section `t ∈ Γ(Spec k, ⊤)` is the `k`-scalar `ΓSpecIso t` times `1`
 (the structure-morphism algebra map factors as `iY.appLE ∘ ΓSpecIso.inv`), hence lies
@@ -629,9 +616,6 @@ private lemma mem_span_appLE_over
   rw [h1, Algebra.algebraMap_eq_smul_one]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨0, pow_zero _⟩)
 
-set_option maxHeartbeats 1600000 in
--- `maxHeartbeats`: the `pushoutSection` cover setup and the two `Subring.closure`
--- generator matches each cross the concrete `ℙ¹` pullback model (fleet recipe).
 /-- **Route step 2 (the char-free base change): `Γ(V₀) = k[x]`.**  The first chart
 `V₀ = p1Chart ⟨0⟩ = toProjInt ⁻¹ᵁ D₊(X₀)` of the `ℙ¹` model is the pullback of the
 affine `D₊(X₀) ⊆ Proj ℤ[X₀,X₁]` along `Spec k → ⊤_Scheme`; as a fibre product of
@@ -702,8 +686,6 @@ noncomputable local instance instAlgebraΓV1 :
     (Over.mk (ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k)) ↘ Spec (CommRingCat.of k)))
     (op (p1Chart k ⟨1⟩))
 
-set_option maxHeartbeats 3200000 in
--- `maxHeartbeats`: mirror of `awayToSection_X0_surjective` (fleet recipe).
 /-- The affine-chart map `awayToSection : (ℤ[X]_{X₁})₀ → Γ(D₊(X₁))` is surjective
 (`X₁` is homogeneous of degree `1 > 0`); mirror of `awayToSection_X0_surjective`. -/
 private lemma awayToSection_X1_surjective :
@@ -716,10 +698,6 @@ private lemma awayToSection_X1_surjective :
     infer_instance
   exact (ConcreteCategory.bijective_of_isIso _).2
 
-set_option maxHeartbeats 800000 in
--- `maxHeartbeats`: mirror of `mem_span_appLE_toProjInt`; the composite ring hom `ρ`
--- carries an *explicit source type with ascribed `X`-index* to keep the elaborator from
--- unifying the `D₊(X₁)` basic-open predicates through the `ℙ¹` pullback (fleet recipe).
 /-- **`V₁`-generators of type (1): the `Proj`-side (mirror).**  The `toProjInt`-pullback
 of a section `s ∈ Γ(D₊(X₁))` lies in the `k`-span of the powers of `y = p1YSection`. -/
 private lemma mem_span_appLE_toProjInt_y
@@ -746,7 +724,7 @@ private lemma mem_span_appLE_toProjInt_y
       (Proj.awayToSection (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
         (X (⟨1⟩ : ULift.{u} (Fin 2)))).hom
   have hval : ρ (p1CoordAway (ULift.{u} (Fin 2)) ⟨1⟩ ⟨0⟩) = p1YSection k := by
-    show ((Scheme.Hom.appLE (toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k)))
+    change ((Scheme.Hom.appLE (toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k)))
           (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
             (X (⟨1⟩ : ULift.{u} (Fin 2))))
           (p1Chart k ⟨1⟩) (le_refl _)).hom.comp
@@ -757,7 +735,7 @@ private lemma mem_span_appLE_toProjInt_y
   have hmem : a ∈ Submodule.span (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ) 0)
       (Set.range fun m : ℕ => p1CoordAway (ULift.{u} (Fin 2)) ⟨1⟩ ⟨0⟩ ^ m) :=
     span_p1CoordAwayY_pow_top Submodule.mem_top
-  show ρ a ∈ Submodule.span k (Set.range fun n : ℕ => p1YSection k ^ n)
+  change ρ a ∈ Submodule.span k (Set.range fun n : ℕ => p1YSection k ^ n)
   induction hmem using Submodule.span_induction with
   | mem z hz =>
       obtain ⟨m, rfl⟩ := hz
@@ -770,8 +748,6 @@ private lemma mem_span_appLE_toProjInt_y
       rw [Int.cast_smul_eq_zsmul, map_zsmul, ← Int.cast_smul_eq_zsmul k]
       exact Submodule.smul_mem _ _ hu
 
-set_option maxHeartbeats 800000 in
--- `maxHeartbeats`: mirror of `mem_span_appLE_over` (fleet recipe).
 /-- **`V₁`-generators of type (2): the `Spec k`-side (mirror).**  The structure-morphism
 pullback of `t ∈ Γ(Spec k, ⊤)` is the `k`-scalar `ΓSpecIso t` times `1`, hence in the
 span; mirror of `mem_span_appLE_over`. -/
@@ -811,8 +787,6 @@ private lemma mem_span_appLE_over_y
   rw [h1, Algebra.algebraMap_eq_smul_one]
   exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨0, pow_zero _⟩)
 
-set_option maxHeartbeats 1600000 in
--- `maxHeartbeats`: mirror of `span_pow_p1XSection_scaffold` (fleet recipe).
 /-- **Route step 2 (`y`-chart): `Γ(V₁) = k[y]`.**  The second chart `V₁ = p1Chart ⟨1⟩`
 of the `ℙ¹` model is the pullback of the affine `D₊(X₁)`; its section ring is the ring
 pushout `Γ(D₊(X₁)) ⊗_ℤ k`, whose two structural maps ring-generate it.  The `Proj`-side
@@ -884,9 +858,6 @@ private lemma p1CoordAway_eq_isLocalizationElem (i j : ULift.{u} (Fin 2)) :
   apply HomogeneousLocalization.val_injective
   simp only [p1CoordAway, Away.isLocalizationElem, Away.val_mk, pow_one]
 
-set_option maxHeartbeats 1600000 in
--- `maxHeartbeats`: the affine-chart iso chain (`basicOpenIsoSpec`/`awayι`) threads the whole
--- `Proj` structure-sheaf machinery through several `Scheme.basicOpen`/image rewrites (fleet recipe).
 set_option backward.isDefEq.respectTransparency false in
 -- `respectTransparency false`: the proof repeatedly crosses the `Proj`/`Scheme.Opens`
 -- presheaf-carrier diamond (`X.presheaf` as `TopCat.Presheaf` vs functor); the fleet recipe.
