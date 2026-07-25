@@ -32,13 +32,13 @@ body: "TWO TEAMS PROVED THE SAME KEYSTONE LEMMA CONCURRENTLY — A COORDINATION 
   \ report (I-0333) raised the same point."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: human
 author: horizon
 source_ref: null
 created_at: '2026-07-25T14:20:27.574365+00:00'
-updated_at: '2026-07-25T14:21:18.445888+00:00'
+updated_at: '2026-07-25T14:27:14.681764+00:00'
 metadata:
   provenance:
     run: '0047'

@@ -26,7 +26,7 @@ body: 'Chart-confinement is only forced for a CONNECTED support — and a degree
   chart trace before spending a redesign on them.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -34,7 +34,7 @@ audience: task:ajcr-w4-rep-free
 author: horizon
 source_ref: null
 created_at: '2026-07-25T14:14:15.440050+00:00'
-updated_at: '2026-07-25T14:15:25.241917+00:00'
+updated_at: '2026-07-25T14:27:07.500849+00:00'
 metadata:
   provenance:
     run: 0048

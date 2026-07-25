@@ -71,13 +71,13 @@ body: 'TWO TEAMS CONVERGED ON THE SAME DD-R VERDICT INDEPENDENTLY (2026-07-25; r
   composed with the gate. It is now landed and in the default build (9075 jobs green).'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-25T14:08:08.318256+00:00'
-updated_at: '2026-07-25T14:15:38.037286+00:00'
+updated_at: '2026-07-25T14:27:00.223195+00:00'
 metadata:
   provenance:
     run: '0047'

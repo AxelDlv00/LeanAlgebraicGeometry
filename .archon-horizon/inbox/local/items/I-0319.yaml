@@ -9,14 +9,17 @@ body: 'Lean full-build warning and resource baseline
   warm whole-project build passes all 8,721 jobs with exactly 262 warning heads across
   36 project files, 29 below the preceding 291-warning baseline and 316 below the
   controlled clean baseline. The run took a contended 25:28.97 at 9,596,892 KiB peak
-  RSS because the concurrent Rebuild run and initial LSP workers shared the host.
-  The inherited heartbeat-rationale audit and recursion-depth audit are complete:
-  31 obsolete scopes were removed, seven required heartbeat scopes have measured rationales,
-  and all nine recursion scopes were tested. Structural elaboration-budget work remains
-  open at 201 documented sites: 157 `maxHeartbeats` settings and 44 synthesis heartbeat
-  scopes. CechSectionContractibility degree one remains the main cold-build hotspot
-  at about 15:03 and 10.1 GiB; residual warning and umbrella-import work also remain
-  open. Latest optimization commits: `db85e701c`, `f73c10133`.'
+  RSS because concurrent work shared the host; use it for warning accounting rather
+  than performance comparison.
+
+
+  The inherited rationale and recursion-depth audits are complete. Cone-by-cone threshold
+  testing has removed fifteen additional heartbeat scopes, leaving 186 numeric elaboration-budget
+  sites: 142 maxHeartbeats settings and 44 synthesis-heartbeat scopes. CechSectionContractibility
+  degree one remains the main forced-rebuild hotspot at about 15-16 minutes and 10.1
+  GiB; explicit-carrier re-spelling is ruled out at 400k, while direct concrete augmentation
+  remains the structural route. Residual warning and umbrella-import work also remain
+  open. Latest optimization commits: `1396cfbb4`, `885608a29`.'
 labels:
 - agent-ready
 status: open
@@ -27,7 +30,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-24T14:56:46.449883+00:00'
-updated_at: '2026-07-25T14:17:27.071226+00:00'
+updated_at: '2026-07-25T14:44:08.298564+00:00'
 metadata:
   provenance:
     run: '0046'
