@@ -150,6 +150,33 @@ theorem isLocallyCertified_of_forall_prime_away_certified (hD : D.IsGenerator)
     IsLocallyCertified C R pi n (D.localEquations hD) :=
   isLocallyCertified_of_forall_prime_exists_away h
 
+/-- **The gate in its most consumable form: certify the pulled system after shrinking.**
+At every prime it suffices to produce an `r ∉ p` and a certificate for *some* adaptation
+of the pulled seed system over `Localization.Away r`.  The adaptation itself is free
+(`exists_divisorAdaptation`), so the only genuine obligation is the certificate over the
+shrunken base — where the support tube makes per-piece isolation available.
+
+Contrast with the old gate `divisorAdaptation_isCertified_of_noLeak_kernel_spanning`,
+which demanded a certificate for the *canonically extracted* adaptation over the whole
+chart ring; that shape forces a globally valid no-leak hypothesis, which is false. -/
+theorem isLocallyCertified_of_forall_prime_exists_certified_adaptation
+    (hD : D.IsGenerator)
+    (h : ∀ p : PrimeSpectrum R, ∃ r, r ∉ p.asIdeal ∧
+      haveI : IsOpenImmersion (relCurveMap C R (Localization.Away r)) :=
+        isOpenImmersion_relCurveMap_away C R (Localization.Away r) r
+      ∃ A : DivisorAdaptation C (Localization.Away r) pi
+          ((D.localEquations hD).pullback (relCurveMap C R (Localization.Away r))
+            (Scheme.LocalEquations.germ_pullbackEqn_mem_nonZeroDivisors_of_isOpenImmersion
+              (relCurveMap C R (Localization.Away r)) (D.localEquations hD))),
+        A.IsCertified n) :
+    IsLocallyCertified C R pi n (D.localEquations hD) := by
+  refine isLocallyCertified_of_forall_prime_away_certified hD fun p => ?_
+  obtain ⟨r, hrp, A, hA⟩ := h p
+  haveI : IsOpenImmersion (relCurveMap C R (Localization.Away r)) :=
+    isOpenImmersion_relCurveMap_away C R (Localization.Away r) r
+  -- bundle the supplied adaptation and its certificate; the divisor equality is `rfl`
+  exact ⟨r, hrp, ⟨_, A, hA⟩, Scheme.LocalEquations.divEq_refl _⟩
+
 /-- The `DivFamZar` class of a seed certified pointwise on the base. -/
 noncomputable def divFamZar_of_forall_prime_away_certified (hD : D.IsGenerator)
     (h : ∀ p : PrimeSpectrum R, ∃ r, r ∉ p.asIdeal ∧
