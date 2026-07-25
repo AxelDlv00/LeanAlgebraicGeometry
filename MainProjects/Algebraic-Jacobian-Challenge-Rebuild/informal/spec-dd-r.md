@@ -481,3 +481,158 @@ follow from the seed's own exactness data.
 Roadmap leaves: `…certificate.chart-avoid` (the decision), `…certificate.swallow-adapt` (the
 construction), `…certificate.cert-collapse` (the collapse), `…certificate.cert-assemble` (the
 composition, plus four missing Away-transport bricks). Memory: I-0327.
+
+---
+
+## ADDENDUM 3 (2026-07-25, run 0048 round 1) — chart-avoid is ANSWERED: NO. The repair, and what it costs (BINDING)
+
+ADDENDUM 2 §4 left exactly one question and called it a design decision an agent should not take
+alone (inbox I-0333). It is now answered, negatively, on three independent grounds, and the
+consequence is a determinate repair with a costed work breakdown. This addendum supersedes
+ADDENDUM 2 §4 and ADDENDUM 1 item 2.
+
+### 1. The answer: the `Z(♦)` chart does NOT confine its divisors
+
+**(a) The seed carries no exactness datum, and cannot be given one honestly.**
+`ThetaGeneratorSeed` (`Picard/DivSchemeFamily.lean:74`) has exactly five fields — `side`, `h`,
+`mem_basicOpen`, `sec`, `sec_mem` — and `IsGenerator` (:129) exactly two — `dvd`,
+`fibre_regular`. None mentions Θ, pole order or a chart. Every universal instantiation of
+`side` picks an ARBITRARY chart containing the point (`seedUniv`,
+`Picard/DivSchemeSeedUnivGen.lean:283`, `side := (exists_seedPoint …).choose`; `seedUniv'`,
+`Picard/DivSchemeRedesignSeedUniv.lean:180`; `pointwiseSide`,
+`Picard/DivSchemeSeedUnivPointwise.lean:88`), so a point of `π⁻¹(∞)` is legal everywhere.
+
+**(b) ADDENDUM 2 §4's "tractable half" is not a half, and its argument is circular.**
+Θ = `fiberWeilDivisor π` is supported on `V₀ ∖ V₁` (`RiemannRoch/FLVFiberToolkit.lean:292`,
+:311, :254), i.e. set-theoretically **Θ = V₁ᶜ**. So "`supportLocus ∩ π⁻¹(∞) = ∅`" IS the
+disjunct `supportLocus ⊆ V₁` of the verdict — a whole side of the conclusion, not a tractable
+half of it. And the route is circular: `IsGenerator.dvd` forces `eqn z` to generate `K·𝒪` on
+its piece, so `supportLocus` is the base locus of `K`, and "a generator of exact pole order `a`
+exists at `y ∈ Θ`" holds iff the base locus misses `y`. Premise = conclusion.
+
+**(c) There is an explicit counterexample, and no Zariski shrink of the base evades it.**
+Over `k[t]`, on `C = P¹`, `π = id`, take the degree-2 form
+
+  `F = t·X² + X·Y + t·Y²`,   `D = Z(F) ⊆ P¹ × A¹_t`.
+
+The coefficients `(t, 1, t)` generate the unit ideal, so `D` is a relative effective Cartier
+divisor, finite flat of degree 2. `F(1,0) = F(0,1) = t`, so the fibre `D₀ = Z(XY) = {0, ∞}`
+meets BOTH vertical fibres. In the chart `Y = 1`, `F = t(x²+1) + x` is degree 1 in `t` with
+coprime coefficients, hence irreducible in `k[x,t]`; the only point over `Y = 0` is `(∞, 0)`,
+which lies in the closure (`t = -x/(x²+1) → 0` as `x → ∞`). So `D` is IRREDUCIBLE. `D → A¹_t`
+is finite surjective, so over every nonempty open `U ⊆ Spec k[t]`, `D_U` is a nonempty open of
+an irreducible space, hence irreducible, hence preconnected. Every Zariski cover of `Spec k[t]`
+has a member containing `t = 0`, and over that member `D` is connected and meets both vertical
+fibres. By `supportLocus_subset_chart_of_isCertified` (`Picard/DivSchemeCertZarC1.lean:131`)
+it therefore has no certified adaptation there, so **`D` is not `IsLocallyCertified`**.
+
+Correction to the record: ADDENDUM 2 §3 and the `chart-avoid` roadmap leaf justify "base
+localization cannot help" with `Spec R[x]/(x²−t)` over `R = k[t]`. That divisor's points are
+`x = ±√t`, always finite, so it never meets `π⁻¹(∞)` and is chart-confined — it is not a
+witness. The conclusion stands; the witness above is the correct one.
+
+**(d) The obstruction survives the quotient the functor is built from.** New this round,
+kernel-checked: `Scheme.LocalEquations.DivEq.supportLocus_eq`
+(`Picard/DivSchemeCertZarConfine.lean`) — the support locus is a `DivEq` invariant, because the
+unit locus is a germ-invertibility locus and `DivEq` only rescales germs by units. Hence
+`not_isCertified_of_divEq_of_isPreconnected_of_witnesses`: **no representative** of the class
+admits a certified adaptation. `DivFamZar` is a `DivEq` quotient, so this closes the last
+escape hatch. `DivFamZar` is not the relative-divisor functor, and `divRep` stated against it
+represents the wrong object.
+
+### 2. The binding constraint is `FinCoverData`, not `π`, not the cover, not `L`, not the base
+
+`FinCoverData` (`Picard/DivisorFamily.lean:160-176`) hardwires `h₀ : Fin m₀ → Γ(V₀)`,
+`h₁ : Fin m₁ → Γ(V₁)` with a partition of unity on EACH pinned chart; `pieces` (:186) are
+therefore basic opens of `V₀`/`V₁`, and they cover the whole curve. Clause (c1)-finiteness IS
+leak-freeness (`supportLeak_eq_empty_iff_finite_colength`, `DivSchemeCertZarC1.lean:123`), so
+every piece trace is clopen in the support; a connected support then lies in one piece, hence
+in one pinned chart. Consequently:
+
+* refining the cover cannot help (more pieces, same union of traces);
+* shrinking the base cannot help (it re-states the condition, and does not disconnect);
+* a cleverer submodule `L` cannot help (the `L`-free form is already the general one);
+* re-spelling the equations cannot help (§1(d)).
+
+Any repair must introduce an adaptation piece that is **not contained in a single pinned
+chart**. That is the whole content of the decision.
+
+### 3. Two admissible repairs, and one that does not work
+
+**R1 — vary the P¹ coordinate.** Every declaration in the chain is generic in `π`, constrained
+only by `[IsFinite π]` / `[IsAffineHom π]` (+ `[IsDominant π]`) and
+`hπ : π ≫ P1.structureMap k = C.left ↘ Spec (.of k)` (`DivSchemeSeedUnivFields.lean:58`). So
+replacing `π` by `γ ∘ π` for `γ ∈ Aut(P¹_k)` costs NOTHING in the landed material: every lemma
+applies verbatim to the twisted map, and the twisted charts `π⁻¹(P¹ ∖ {c})` are affine because
+`π` is affine. `IsLocallyCertified` (and the atlas) then quantify over `γ` as well as over the
+base cover. COST, and it is the reason this is not free: **`Aut(P¹)` does not exist in this
+project.** `P1 k` is a `Proj` (`Curve/P1.lean:135`) with `chartOpen : Fin 2 → Opens` (:200) and
+no `PGL₂` action anywhere. R1 owes the `GL₂(k)`-action on `Proj (k[X₀,X₁])` and transitivity on
+`P¹(k)`.
+
+**R2 — generalize `FinCoverData` to σ-charts.** For `σ ∈ H⁰(bΘ)` let `U_σ` be its
+non-vanishing locus; `V₀` and `V₁` are the cases `σ = t₀ᵇ`, `t₁ᵇ`. A divisor avoiding `Z(σ)` is
+swallowed by the single piece `U_σ`. This stays inside the existing `relThetaSections`
+vocabulary, but owes affineness of `U_σ` (complement of an ample divisor) and a wide refactor
+of `FinCoverData`/`DivisorAdaptation`/`chartProd`.
+
+**REJECTED — delete clause (c1) from `IsCertified`.** Tempting, because `Module.Flat R
+(colength j)` is free from fibrewise regularity alone
+(`flat_colength_of_forall_tmul_residueField`, `SupportTube.lean:313` — no finiteness, no
+no-leak), while `Module.Finite` is exactly the culprit. But the (c2)/(c3)/(c4) keystones
+(`SlicingFlatKernel.lean`, variable block at :221-224) all carry `[Module.Finite R M]` with
+`M = chartProd`, which IS finite colengths. Dropping (c1) leaves `projective_glued`,
+`rankAtStalk_glued` and both flat-cokernel clauses with no landed route. Do not re-propose this
+without first supplying a finiteness-free replacement for `SlicingFlatKernel`.
+
+### 4. Why a repair of this shape is legitimate at all
+
+§Discipline (2) forbids a support-separation hypothesis, and it is right to: assuming
+`supp D ∩ π⁻¹({0,∞}) = ∅` about an arbitrary divisor assumes the conclusion. The repair does
+something different — the ATLAS RECORDS which vertical fibres its divisors avoid — and that is
+legitimate because the recorded condition is **open on the base**. New this round,
+kernel-checked (`Picard/DivSchemeCertZarConfine.lean`):
+
+* `isOpen_setOf_fibre_subset_chartInter` — the base points whose support fibre lies in
+  `V₀ ⊓ V₁` form an OPEN subset of `Spec R`;
+* `exists_opens_supportLocus_subset_chartInter` — confinement at one fibre spreads to a
+  Zariski neighbourhood (the chart instance of the landed support tube);
+* `supportLocus_subset_of_forall_fibre` — fibrewise confinement at every base point IS the
+  global hypothesis `forall_finite_colength_of_pieces_eq_chart` wants.
+
+So a chart of the atlas may carve by avoidance without losing points. What the repair still
+owes is that the carved opens **cover** — and with the two pinned charts fixed once and for all
+they provably do not (§1(c)). Covering is exactly what R1/R2 buy.
+
+### 5. The covering obligation, stated
+
+For a relative divisor whose support is finite over `Spec R`, and any `s ∈ Spec R`: the fibre
+`D_s` is finite, so `π(D_s)` is a finite subset of `P¹` over `κ(s)`; if `k` is infinite,
+`P¹(k)` is infinite, so two distinct `c₀, c₁ ∈ P¹(k)` avoid `π(D_s)`; `relCurve C R ↘ Spec R`
+is proper (`instIsProperRelCurveHom`, `SupportTube.lean:194`), hence closed, so the image of
+`supportLocus ∩ π⁻¹({c₀,c₁})` is closed and misses `s`; over the open complement the divisor is
+confined to `π⁻¹(P¹ ∖ {c₀,c₁})`, i.e. to `V₀ ⊓ V₁` for the `γ`-twist carrying `{c₀,c₁}` to
+`{0,∞}`. Then `chartPairCoverData` / `ofChartPair` and
+`forall_finite_colength_of_pieces_eq_chart` (`Picard/DivSchemeCertZarChartPair.lean`) give
+clause (c1) FREE, with no fibre, no tube and no idempotent.
+
+Two hypotheses to watch. (i) **`k` infinite.** `Challenge.lean` states the Jacobian over an
+arbitrary field; a finite-field route needs `|P¹(k)| > deg D`, i.e. a base change to `k(T)` or
+a degree-`d` point, and must be scheduled, not assumed. (ii) **Finiteness of the support over
+the base** must come from the seed's own degree data, NOT from the certificate — otherwise the
+argument is circular.
+
+### 6. Work breakdown (roadmap leaves)
+
+* `certificate.chart-avoid` — ANSWERED (this addendum); becomes the record, not a task.
+* `certificate.confine-open` — LANDED (`DivSchemeCertZarConfine.lean`).
+* `certificate.p1-aut` — the `GL₂(k)` action on `P1 k` and transitivity on `P¹(k)` (R1's cost).
+* `certificate.fibre-avoid` — §5's avoidance lemma, over an infinite `k`.
+* `certificate.cert-relocalize` — restate `IsLocallyCertified`/`DivFamZar` to quantify over the
+  twist; check every consumer of the frozen S6 names.
+* `certificate.swallow-adapt` — ungated once `fibre-avoid` lands; only the chart-principality
+  datum remains.
+* `certificate.cert-collapse`, `certificate.cert-assemble` — unchanged.
+
+*Nothing downstream of `chart-avoid` is blocked on a human any more; it is blocked on
+`p1-aut` + `fibre-avoid`, both of which are ordinary mathematics.*
