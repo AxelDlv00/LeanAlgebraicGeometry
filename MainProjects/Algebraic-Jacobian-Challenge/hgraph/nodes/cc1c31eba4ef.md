@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:adelic_alternatingCofaceMapComplex_objD
 lean_status: lean_ok
-order: 1825
+order: 1835
 title: The unnormalized coface differential is the alternating coface sum
 type: tex
-updated: '2026-07-26T01:29:35'
+updated: '2026-07-26T02:44:57'
 ---
 For a cosimplicial object \(Y\) in a preadditive category and \(n \ge
   0\), the degree-\(n\) differential of the associated (unnormalized)

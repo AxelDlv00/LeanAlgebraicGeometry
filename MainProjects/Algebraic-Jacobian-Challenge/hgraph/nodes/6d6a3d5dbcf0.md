@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:adelic_local_step_injective
 lean_status: lean_ok
-order: 1863
+order: 1873
 title: 'N14b: the local step quotient injects into the single-point quotient'
 type: tex
-updated: '2026-07-26T01:29:35'
+updated: '2026-07-26T02:44:57'
 ---
 Under the hypotheses of \Cref{thm:adelic_local_step_identity}, the
   inclusion \(\Gamma(U, \struct{C}(D')) \subseteq \mathfrak G_P^{\ge
