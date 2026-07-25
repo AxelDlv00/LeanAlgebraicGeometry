@@ -63,6 +63,10 @@ swallowing a packet has a clopen trace, hence carries the certificate.  The alge
 of that is elementary and is recorded here: cutting by an idempotent produces a **direct
 summand**, so projectivity is inherited with no flatness or finiteness input. -/
 
+-- Stated in the ROOT namespace: these are statements about modules, not about schemes, so
+-- they must not resolve as `AlgebraicGeometry.Module.…`.
+end AlgebraicGeometry
+
 section Idempotent
 
 variable {R B : Type u} [CommRing R] [CommRing B] [Algebra R B]
@@ -124,6 +128,10 @@ theorem Module.Flat.quotient_span_singleton_one_sub_of_isIdempotentElem
     exact ⟨-b, by ring⟩)
 
 end Idempotent
+
+namespace AlgebraicGeometry
+
+attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
 
 namespace Scheme.LocalEquations
 
@@ -200,10 +208,9 @@ theorem isClopen_trace_of_supportLeak_eq_empty (U : X.Opens)
   rw [heq]
   exact hclosed.preimage continuous_subtype_val
 
-/-- The converse: a clopen trace leaks nothing.  Together with the previous lemma, the
-assembler's per-piece no-leak clause and the Z-clopen principle of I-0209 are literally the
-same condition — so the certificate lane's finiteness obligation was never about fibres, it
-was about the trace being a connected-component-like piece of the divisor scheme. -/
+/-- The converse, from the closedness half alone: a trace closed in the support leaks
+nothing.  (The openness half is automatic — see `supportLeak_eq_empty_iff_isClosed_trace`
+for the honest equivalence.) -/
 theorem supportLeak_eq_empty_of_isClopen_trace (U : X.Opens)
     (h : IsClosed ((fun x : d.supportLocus => x.val) ⁻¹' (U : Set X))) :
     d.supportLeak U = ∅ := by
@@ -219,6 +226,25 @@ theorem supportLeak_eq_empty_of_isClopen_trace (U : X.Opens)
       exact ⟨hxs, (Set.ext_iff.mp hTeq ⟨x, hxs⟩).mp hxT⟩
   rw [heq]
   exact d.isClosed_supportLocus.inter hT
+
+/-- **The honest equivalence.** Leak-freeness at `U` is exactly closedness of the piece
+trace in the subspace `supp` — and since that trace is *always* open there (`U` is open), it
+is exactly clopen-ness of the trace, i.e. the Z-clopen condition of I-0209.
+
+The `IsClopen` spelling of the forward direction (`isClopen_trace_of_supportLeak_eq_empty`)
+carries a free rider: the openness half holds unconditionally, so the content of the
+identification is this `Iff` on the closedness half. -/
+theorem supportLeak_eq_empty_iff_isClosed_trace (U : X.Opens) :
+    d.supportLeak U = ∅ ↔
+      IsClosed ((fun x : d.supportLocus => x.val) ⁻¹' (U : Set X)) :=
+  ⟨fun h => (d.isClopen_trace_of_supportLeak_eq_empty U h).1,
+    d.supportLeak_eq_empty_of_isClopen_trace U⟩
+
+/-- The piece trace is always **open** in the support, with no hypothesis — the half of
+clopen-ness that carries no information. -/
+theorem isOpen_trace (U : X.Opens) :
+    IsOpen ((fun x : d.supportLocus => x.val) ⁻¹' (U : Set X)) :=
+  U.isOpen.preimage continuous_subtype_val
 
 end Scheme.LocalEquations
 
