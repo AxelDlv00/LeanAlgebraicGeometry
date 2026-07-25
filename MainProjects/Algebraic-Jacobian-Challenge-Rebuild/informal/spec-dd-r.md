@@ -637,6 +637,13 @@ argument is circular.
 *Nothing downstream of `chart-avoid` is blocked on a human any more; it is blocked on
 `p1-aut` + `fibre-avoid`, both of which are ordinary mathematics.*
 
+**RETRACTED IN PART by the CORRIGENDUM below (C4 iii).** `chart-avoid` itself is indeed
+answered and needs no human. But a DIFFERENT question does, and it gates `p1-aut`: over a small
+finite field, where `|P¹(k)| = q + 1 < n + 2`, no admissible pair of pinned points exists at
+all, and the counterexample of §1(c) is field-independent, so the obstruction is real there.
+That is roadmap leaf `certificate.field-size` and inbox I-0346. Read the corrigendum before
+acting on §5 or §6.
+
 ### ADDENDUM 3 — CORRIGENDUM (same round, after an adversarial pass)
 
 The negative half above (§1, §2, §4) survived refutation. The positive half (§3, §5) did not
