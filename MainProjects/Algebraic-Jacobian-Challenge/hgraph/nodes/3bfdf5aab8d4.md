@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.rqPullback_grPointOfRankQuotient_rel
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-26T06:25:05'
 ---
 lemma rqPullback_grPointOfRankQuotient_rel {T : Scheme.{0}} (d r : ℕ)
     (x : RankQuotient r d T) :
@@ -117,7 +117,9 @@ lemma rqPullback_grPointOfRankQuotient_rel {T : Scheme.{0}} (d r : ℕ)
               (chartComposite x I.1 I.2)) :=
           congrArg (· ≫ _)
             (congrArg (Scheme.Modules.pullback (chartLocus x I.1 I.2).ι).map
-              (kernel.condition ((rqPullback (grPointOfRankQuotient d r x) (tautologicalRankQuotient d r)).q)))
+              (kernel.condition
+                ((rqPullback (grPointOfRankQuotient d r x)
+                  (tautologicalRankQuotient d r)).q)))
       _ = (Scheme.Modules.pullback (chartLocus x I.1 I.2).ι).map 0 := by
           rw [Functor.map_zero, zero_comp, Functor.map_zero]
   have hker2 : kernel.ι x.q ≫ (rqPullback (grPointOfRankQuotient d r x)

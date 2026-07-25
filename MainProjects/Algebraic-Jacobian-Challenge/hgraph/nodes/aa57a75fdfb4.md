@@ -30,7 +30,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.functor
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-26T06:03:22'
 ---
 noncomputable def functor (d r : ℕ) : Scheme.{0}ᵒᵖ ⥤ Type 1 where
   obj T := Quotient (rqSetoid r d T.unop)
@@ -90,7 +90,7 @@ noncomputable def functor (d r : ℕ) : Scheme.{0}ᵒᵖ ⥤ Type 1 where
         trans (𝟙 _)
         · rw [Category.assoc, Iso.hom_inv_id_assoc]
           exact (Scheme.Modules.pullbackComp g.unop f.unop).hom_inv_id_app _
-        · rw [hH]; simp <;> rfl
+        · rw [hH]; simp; rfl
       -- whisker `hstar` by `≫ (pullback f ⋙ pullback g).map x.q` and refold the RHS via
       -- `map_comp` into `(rqPullback g (rqPullback f x)).q`.
       exact (Category.assoc _ _ _).symm.trans

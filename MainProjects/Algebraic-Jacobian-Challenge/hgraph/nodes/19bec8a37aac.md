@@ -6,10 +6,10 @@ created: '2026-07-26T03:32:38'
 generated: blueprint
 label: thm:adelic_function_field_H1_zero_compare
 lean_status: empty
-order: 1837
+order: 1838
 title: Comparison at the zero divisor
 type: tex
-updated: '2026-07-26T03:32:38'
+updated: '2026-07-26T06:44:13'
 ---
 There is a canonical isomorphism
   \[

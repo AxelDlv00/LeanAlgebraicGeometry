@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:order_eq_order_restrict
 lean_status: lean_ok
-order: 1787
+order: 1788
 title: Order is invariant under restriction to an open
 type: tex
-updated: '2026-07-26T02:25:43'
+updated: '2026-07-26T06:44:13'
 ---
 Let \(X\) be integral, locally Noetherian, and regular in codimension one.
   If \(Y\in X^{(1)}\) meets a nonempty integral open \(U\), then for every

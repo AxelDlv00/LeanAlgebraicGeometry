@@ -3598,8 +3598,7 @@ section localization]
 [Schematic support of a sheaf of modules]
   \label{def:schematic_support}
   \lean{AlgebraicGeometry.Scheme.Modules.schematicSupport}
-  \uses{def:modules_annihilator, lem:modules_annihilator_ideal_le,
-    def:schematic_support_immersion}
+  \uses{def:modules_annihilator, lem:modules_annihilator_ideal_le}
   % SOURCE: [Nitsure], \S 1, sub-section "Stratification by Hilbert
   % Polynomials" (read from
   % references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex, L468-L471).
@@ -3614,11 +3613,10 @@ section localization]
   cut out by its annihilator ideal sheaf (\cref{def:modules_annihilator}):
   \[
     \mathrm{schematicSupport}(\mathcal{F})
-    \;=\; V\bigl(\mathrm{Ann}(\mathcal{F})\bigr) \;\hookrightarrow\; X,
+    \;=\; V\bigl(\mathrm{Ann}(\mathcal{F})\bigr).
   \]
-  equipped with its canonical closed immersion into \(X\). This realises
-  Nitsure's ``schematic support of \(\mathcal{F}\)'' as a closed subscheme of
-  \(X\).
+  This realises Nitsure's ``schematic support of \(\mathcal{F}\)'' as a closed
+  subscheme of \(X\).
 \end{definition}
 
 \begin{definition}\leanok
@@ -3636,7 +3634,7 @@ section localization]
   \(\mathrm{Ann}(\mathcal{F})\) (\cref{def:modules_annihilator}). It is a
   quasi-compact preimmersion onto the support, and it is the morphism whose
   composite with a base morphism \(f : X \to S\) defines proper support
-  (\cref{def:has_proper_support}). Proved directly in Lean.
+  (\cref{def:has_proper_support}).
 \end{definition}
 
 \begin{lemma}[Properness as a morphism property]
@@ -7646,7 +7644,11 @@ first, in the pure module-theoretic form of
   target of the canonical base-change map
   (\cref{def:quot_canonical_basechange_map}) is read through this identity.
 \end{lemma}
-\begin{proof} Proved directly in Lean. \end{proof}
+\begin{proof}
+  By definition of pushforward, the sections of \(f'_*\mathcal G\) over
+  \(U\) are the sections of \(\mathcal G\) over \(f'^{-1}(U)\). Apply this
+  identity to \(\mathcal G=g'^*\mathcal F\).
+\end{proof}
 
 \begin{theorem}\leanok
 [Canonical base-change map is a sheaf isomorphism]
@@ -7679,16 +7681,10 @@ first, in the pure module-theoretic form of
   \(\Gamma(V,\, g^* \mathcal{N}) \;\cong\;
    \Gamma(V,\, \mathcal{O}_X) \otimes_{\Gamma(U,\, \mathcal{O}_Y)}
      \Gamma(U,\, \mathcal{N})\)
-  as a `LinearEquiv`. This is the project-side rfl-bridge used by the
-  consumer \(\text{Quot}\)-functor iso assembly: it discharges the
-  pullback-app step of the Tilde-isoTop route (Stacks tag 01HQ / 01I8)
-  to a base-change-of-scalars identity. The body factors as
-  (Step 1, axiom-clean): the underlying linear map
-  \texttt{pullback\_app\_isoTensor\_unitAtV};
-  (Step 2, project-side typed sorry): the
-  \texttt{IsBaseChange}-packaging step
-  \texttt{pullback\_app\_isoTensor\_isBaseChange} reducing to
-  Stacks 02KE bijectivity of the canonical map.
+  as a linear equivalence. It is induced by the adjunction-unit base map:
+  \cref{thm:quot_pullback_app_isoTensor_baseMap_isBaseChange} identifies
+  the scalar extension of that map with an isomorphism, and hence with the
+  displayed tensor-presentation equivalence.
 \end{definition}
 
 \begin{definition}
@@ -7708,11 +7704,15 @@ first, in the pure module-theoretic form of
     \;\longrightarrow\;
     \Gamma\bigl(g_*(g^* \mathcal{N}),\ V\bigr).
   \]
-  This is the axiom-clean building block (Step~1 of the Tilde-isoTop route)
-  underlying the tensor-presentation iso of
-  \cref{def:quot_pullback_app_isoTensor}.
+  This is the adjunction-unit map underlying the tensor-presentation
+  isomorphism of \cref{def:quot_pullback_app_isoTensor}.
 \end{definition}
-\begin{proof} Proved directly in Lean. \end{proof}
+\begin{proof}
+  Evaluate the unit natural transformation
+  \(\mathcal N\to g_*g^*\mathcal N\) on the open \(V\). Naturality with
+  respect to multiplication by sections of \(\mathcal O_X\) gives
+  \(\Gamma(X,V)\)-linearity.
+\end{proof}
 
 \begin{definition}
 
@@ -7738,7 +7738,12 @@ first, in the pure module-theoretic form of
   (\cref{thm:quot_pullback_app_isoTensor_baseMap_isBaseChange}) yields the
   tensor presentation.
 \end{definition}
-\begin{proof} Proved directly in Lean. \end{proof}
+\begin{proof}
+  Restrict the section supplied by the adjunction unit from
+  \(g^{-1}(V)\) to \(U\). The compatibility of the unit with the structure
+  sheaf map makes the composite semilinear for
+  \(\Gamma(X,V)\to\Gamma(Y,U)\), hence linear after restriction of scalars.
+\end{proof}
 
 \begin{theorem}
 
@@ -7759,7 +7764,14 @@ first, in the pure module-theoretic form of
   (\cref{def:pullback_app_isoTensor_sigma}) into the universal
   characterization of a base change.
 \end{theorem}
-\begin{proof} Proved directly in Lean. \end{proof}
+\begin{proof}
+  Choose the linear equivalence and its intertwining identity from
+  \cref{def:pullback_app_isoTensor_sigma}. The universal property of the
+  tensor product identifies the scalar-extension map induced by the base
+  map with this equivalence, since they agree on every pure tensor
+  \(1\otimes x\). It is therefore an isomorphism, which is precisely the
+  asserted base-change property.
+\end{proof}
 
 \begin{theorem}
 
@@ -7780,7 +7792,12 @@ first, in the pure module-theoretic form of
   the induced equivalence. This is the existence statement consumed by the
   tensor-presentation iso \cref{def:quot_pullback_app_isoTensor}.
 \end{theorem}
-\begin{proof} Proved directly in Lean. \end{proof}
+\begin{proof}
+  By \cref{thm:quot_pullback_app_isoTensor_baseMap_isBaseChange}, the
+  scalar-extension map induced by the base map is an isomorphism. Its
+  inverse, viewed as a linear equivalence, gives the displayed
+  tensor-presentation equivalence.
+\end{proof}
 
 \begin{definition}
 
@@ -7788,95 +7805,36 @@ first, in the pure module-theoretic form of
 [\(\Sigma\)-pair packaging: section-level LinearEquiv + intertwining]
   \label{def:pullback_app_isoTensor_sigma}
   \lean{AlgebraicGeometry.pullback_app_isoTensor_baseMap_sectionLinearEquiv}
-  % NOTE iter-283: replaced the spurious `def:quot_pullback_app_isoTensor` with
-  % `def:quot_pullback_app_isoTensor_baseMap` to break a dependency cycle that
-  % crashed `leanblueprint web`. In Lean (QuotScheme.lean L867) this Sigma-pair
-  % is built from `tildeIso_of_isQuasicoherent_isAffineOpen`/`pullback_tildeIso`
-  % and its statement references `pullback_app_isoTensor_baseMap`, NOT the
-  % high-level final iso `pullback_app_isoTensor`. The final iso is built FROM
-  % this Sigma-pair (def:quot_pullback_app_isoTensor -> thm:..._isBaseChange ->
-  % thm:..._baseMap_isBaseChange -> def:pullback_app_isoTensor_sigma), so the
-  % former edge was the back-edge closing the cycle. The corrected dependency
-  % (on the lower-level baseMap) is both acyclic and accurate.
   \uses{def:quot_pullback_app_isoTensor_baseMap, def:quot_canonical_basechange_map,
         lem:pullback_tildeIso, lem:tildeIso_of_isQuasicoherent_isAffineOpen,
         lem:pullback_of_openImmersion_iso_restrict, lem:pushforward_isQuasicoherent}
-  Iter-188 Lane F-introduced \(\Sigma\)-pair packaging declaration that
-  bundles BOTH the section-level LinearEquiv
-  \(\Gamma(V,(g^*\mathcal N)) \;\simeq_{\Gamma(Y,U)}\; \Gamma(Y,U) \otimes
-    \Gamma(N,V)\) AND its intertwining property with the canonical
-  base-change map into a single \(\Sigma\)-struct returned via
-  \texttt{Nonempty} for \texttt{IsBaseChange.of\_equiv} consumption.
-  Concretely:
+  Write \(A=\Gamma(X,V)\) and \(B=\Gamma(Y,U)\). The packaged data consist
+  of a \(B\)-linear equivalence
   \[
-    \exists\, (f : \Gamma(V,(\text{pullback}\, g).\mathrm{obj}\,
-                     \mathcal N) \;\simeq_{\Gamma(Y,U)}\;
-                     \Gamma(X,V) \otimes_{\Gamma(Y,U)} \Gamma(N,V)),\;
-      \forall x,\; f(1\otimes x)\;=\;\text{baseMap}\,g\,\mathcal N\,e\,x.
+    f : B\otimes_A\Gamma(\mathcal N,V)
+      \;\xrightarrow{\sim}\; \Gamma(g^*\mathcal N,U)
   \]
-  This packaging idiom keeps consumer signatures clean and is the project-
-  side bridge into Mathlib's \texttt{IsBaseChange.of\_equiv} consumer.
-  Body is gated on \cref{lem:pullback_tildeIso} (Stacks 01HQ) plus a
-  6-stage Beck-Chevalley intertwining decomposition recorded in
-  \cref{sec:quot_iter195_bc_substrate} and mirroring the in-file
-  comment block at
-  \texttt{AlgebraicJacobian/Picard/QuotScheme.lean:999-1037}:
-  \begin{itemize}
-    \item \textbf{Stage 1} (closed iter-195 via the \(\Sigma\)-pair
-      iso-characterizing identity \texttt{\_step2\_apply} together with
-      \texttt{inv\_hom\_id}): rewrites
-      \((\text{step2}.\mathrm{inv}.\mathrm{app}\,\top)\bigl(\text{tilde.toOpen}\,TR\,\top\,(1 \otimes x)\bigr)\)
-      as
-      \(\text{baseMap}\,(\text{Spec.map}\,\varphi)\,(\widetilde{\Gamma(\mathcal N, V)})\,e_1\,(\text{tilde.toOpen}\,\Gamma(\mathcal N, V)\,\top\,x)\).
-    \item \textbf{Stage 2} (uses (N1) baseMap naturality of
-      \cref{lem:baseMap_pullbackComp_apply} together with the
-      \(\Sigma\)-pair \texttt{\_step1\_apply} identity): transports
-      \(\text{step1}.\mathrm{inv}\) across
-      \(\text{baseMap}\,(\text{Spec.map}\,\varphi)\), producing
-      \(\text{baseMap}\,(\text{Spec.map}\,\varphi)\,((\text{pullback}\,\mathtt{\_hV.fromSpec}).\mathrm{obj}\,\mathcal N)\,e_2\,(\text{baseMap}\,\mathtt{\_hV.fromSpec}\,\mathcal N\,e_3\,x)\).
-    \item \textbf{Stage 3} (uses (N2) baseMap composition via
-      \texttt{pullbackComp} of
-      \cref{lem:baseMap_pullback_comp_apply}): collapses the nested
-      pair of \texttt{baseMap}'s of Stage 2 into a single
-      \(\text{baseMap}\,(\text{Spec.map}\,\varphi \circ \mathtt{\_hV.fromSpec})\,\mathcal N\,e_4\,x\)
-      along the composite morphism.
-    \item \textbf{Stage 4} (uses (N3) baseMap transport via
-      \texttt{pullbackCongr} of
-      \cref{lem:baseMap_pullbackCongr_apply}): transports the
-      composite of Stage 3 along the propositional equality
-      \(\text{Spec.map}\,\varphi \circ \mathtt{\_hV.fromSpec}
-      = \mathtt{\_hU.fromSpec} \circ g\) (which holds by definition of
-      \texttt{Scheme.Hom.appLE} on \(g\) with \(g(V) \subseteq U\)),
-      producing
-      \(\text{baseMap}\,(\mathtt{\_hU.fromSpec} \circ g)\,\mathcal N\,e_5\,x\).
-    \item \textbf{Stage 5} (uses (N2) again,
-      \cref{lem:baseMap_pullback_comp_apply}): re-decomposes the
-      composite of Stage 4 into nested \texttt{baseMap}'s along
-      \(\mathtt{\_hU.fromSpec}\) and \(g\), exposing
-      \(\text{baseMap}\,g\,\mathcal N\,e\,x\) as the inner section.
-    \item \textbf{Stage 6} (uses (N4) \texttt{step3} inversion of
-      \cref{lem:baseMap_inv_step3_open_immersion}): inverts the outer
-      \(\text{baseMap}\,\mathtt{\_hU.fromSpec}\) via \texttt{step3} —
-      the transport iso of
-      \cref{lem:pullback_of_openImmersion_iso_restrict} for the open
-      immersion \(\mathtt{\_hU.fromSpec}\) — leaving
-      \(\text{baseMap}\,g\,\mathcal N\,e\,x\), which matches the RHS
-      of the Σ-pair intertwining property.
-  \end{itemize}
+  together with the identity
+  \(f(1\otimes x)=\operatorname{baseMap}(x)\) for every
+  \(x\in\Gamma(\mathcal N,V)\). To construct \(f\), identify the
+  restriction of \(\mathcal N\) to \(\operatorname{Spec} A\) with its
+  associated tilde sheaf, pull this sheaf back along
+  \(\operatorname{Spec} B\to\operatorname{Spec} A\), and apply the tilde
+  base-change isomorphism. Transporting through the affine-open
+  identifications gives the displayed equivalence. The naturality,
+  composition, and open-immersion identities of
+  \cref{sec:quot_iter195_bc_substrate} show that this composite sends
+  \(1\otimes x\) to the canonical base-map section.
 \end{definition}
 
-\subsection{Iter-187 analogist-licensed named substrate gaps}
+\subsection{Adjunction substrate for pullback of tilde sheaves}
 \label{sec:quot_analogist_gaps}
 
-The iter-187 \texttt{mathlib-analogist quotscheme-isbasechange-tilde}
-verdict (see \texttt{analogies/quotscheme-isbasechange-tilde.md})
-identified two distinct Mathlib substrate gaps at the pinned commit
-\texttt{b80f227}. Both pins are now closed axiom-clean:
-\cref{lem:tildeIso_of_isQuasicoherent_isAffineOpen} via the gap1/gap2
-union-merge substrate, and \cref{lem:pullback_tildeIso} (2026-07-03,
-T12) by the adjoint-uniqueness route through
-\cref{lem:tilde_gamma_adjunction_mathlib} and
-\cref{lem:pullbackTilde_gammaBridge} below.
+The affine pullback formula rests on the tilde--global-sections adjunction,
+the extension--restriction-of-scalars adjunction, and the
+pullback--pushforward adjunction. The following comparison identifies global
+sections of a pushforward with restricted scalars; uniqueness of left
+adjoints then yields the pullback formula for tilde sheaves used above.
 
 \begin{lemma}[Tilde--global-sections adjunction on an affine scheme]
   \label{lem:tilde_gamma_adjunction_mathlib}
@@ -7937,7 +7895,7 @@ T12) by the adjoint-uniqueness route through
   \label{lem:pullback_tildeIso}
   \lean{AlgebraicGeometry.pullback_tildeIso}
   \leanok
-  \uses{def:quot_pullback_app_isoTensor}
+  \uses{def:quot_pullback_app_isoTensor_baseMap}
   \textit{Source: Stacks~\href{https://stacks.math.columbia.edu/tag/01HQ}{01HQ}
   / \href{https://stacks.math.columbia.edu/tag/0BJ8}{0BJ8} (pullback of
   quasi-coherent modules along a Spec morphism).}
@@ -7950,14 +7908,11 @@ T12) by the adjoint-uniqueness route through
     \;\cong\;
     \widetilde{B \otimes_A M}.
   \]
-  Mathlib \texttt{b80f227} ships
-  \texttt{PullbackFree.lean:122 pullbackObjFreeIso} for \emph{free} sheaves
-  only — the general-module form (Stacks 01HQ) is unowned.
 \end{lemma}
 \begin{proof}
   \leanok
-  \uses{lem:tilde_gamma_adjunction_mathlib, lem:pullbackTilde_gammaBridge,
-    def:quot_pullback_app_isoTensor}
+  \uses{def:quot_pullback_app_isoTensor_baseMap,
+    lem:tilde_gamma_adjunction_mathlib, lem:pullbackTilde_gammaBridge}
   Write \(\pi = \Spec\varphi : \Spec B \to \Spec A\). Both composite
   functors
   \[
@@ -7984,9 +7939,8 @@ T12) by the adjoint-uniqueness route through
 
   For the section-level identity, apply the unit compatibility of the
   left-adjoint-uniqueness isomorphism at \(m \in M\): the unit of the
-  first composed adjunction sends \(m\) to the canonical base map
-  (\cref{def:quot_pullback_app_isoTensor}, at \(V = U = \top\)) of the
-  global section of \(\widetilde M\) attached to \(m\), while the unit
+  first composed adjunction sends \(m\) to the canonical pullback base map
+  on global sections of \(\widetilde M\), while the unit
   of the second sends \(m\) to the global section of
   \(\widetilde{B \otimes_A M}\) attached to \(1 \otimes m\); the
   compatibility square states precisely that the isomorphism carries
@@ -8190,19 +8144,14 @@ at each affine open of the base.
   adjointness yields colimit preservation only.)
 \end{proof}
 
-\subsection{Iter-189 analogist-licensed unbundle pins}
+\subsection{Affine-open comparison isomorphisms}
 \label{sec:quot_iter189_unbundle}
 
-The iter-189 \texttt{mathlib-analogist lane-f-isbasechange} verdict
-(see \texttt{analogies/lane-f-isbasechange.md}) returned verdict (A)
-\emph{STRUCTURAL OK} on the project's use of
-\texttt{IsBaseChange.of\_equiv}. The corrective was to \emph{unbundle}
-the iter-188 \(\Sigma\)-pair helper's three internal Mathlib gaps into
-separately named typed-sorry pins so that each can be targeted
-individually (~30-50 LOC apiece) in subsequent iters. Iter-189 Lane F
-prover landed the unbundle. The two new pins are recorded below
-(parallel to the existing \cref{lem:pullback_tildeIso} pin, which
-remains Step 2 of the 3-step chain).
+The tensor-presentation equivalence uses three comparison isomorphisms:
+a quasi-coherent sheaf on an affine open is the tilde sheaf associated to
+its sections, tilde sheaves commute with affine base change, and pullback
+along the spectrum presentation of an affine open agrees with restriction.
+The following results record these ingredients separately.
 
 \begin{lemma}
 
@@ -8302,9 +8251,7 @@ remains Step 2 of the 3-step chain).
   \]
   The map identifies a section of the pulled-back sheaf at \(\top\) of
   \(\mathrm{Spec}\,\Gamma(Y, U)\) with the corresponding section of
-  \(\mathcal N\) on the affine open \(U \subset Y\). This pin is the
-  iter-190+ prover target as Step 3 of the iter-189 \(\Sigma\)-pair
-  unbundle.
+  \(\mathcal N\) on the affine open \(U \subset Y\).
 \end{lemma}
 \begin{proof}
   \leanok
@@ -8424,38 +8371,17 @@ adjunction on the affine model.
   \cref{lem:module_finite_sections_qcdata}.
 \end{proof}
 
-\subsection{Iter-195 Beck-Chevalley 6-stage decomposition + (N1)--(N4) substrate}
+\subsection{Beck--Chevalley identities for the base-change map}
 \label{sec:quot_iter195_bc_substrate}
 
-The iter-195 plan-phase refactor \texttt{lane-f-step12-sigma-pair}
-upgraded the helpers \texttt{step1} and \texttt{step2} of the
-Tilde-isoTop route into \(\Sigma\)-pair components carrying
-iso-characterizing identities \texttt{\_step1\_apply} and
-\texttt{\_step2\_apply}. With these identities in hand, the
-Beck-Chevalley intertwining of
-\cref{def:pullback_app_isoTensor_sigma} unfolds into the six named
-stages spelled out in the prose of that definition; mirror copy at
-\texttt{AlgebraicJacobian/Picard/QuotScheme.lean:999-1037}. All six
-stages are now closed axiom-clean (T12, 2026-07-03): the four
-substrate naturality lemmas (N1)--(N4) below are proved, and the
-stage chain is assembled elementwise in the Lean body of
-\cref{def:pullback_app_isoTensor_sigma}, which is sorry-free.
-
-The four substrate lemmas all follow a single logical pattern. The
-project's \texttt{Scheme.Modules.baseMap} is defined from the unit of
-\texttt{pullbackPushforwardAdjunction} (Mathlib
-\texttt{Mathlib.AlgebraicGeometry.Sheaves.Modules.Pullback}), so
-(N1)--(N3) record naturality squares of that adjunction unit at
-triples of morphisms / module homomorphisms / propositional
-equalities, and (N4) records the inversion of the \texttt{step3}
-component built from \texttt{restrictFunctorIsoPullback} (Mathlib
-\texttt{Mathlib.AlgebraicGeometry.OpenImmersion}). Together they
-discharge the Beck-Chevalley sequence stage-by-stage. LOC estimate
-\(\sim\)20--30 LOC per sub-lemma; total \(\sim\)80--120 LOC of
-substrate volume. This is the iter-195 progress-critic-flagged
-``volume gap'' relative to the iter-195 plan-phase estimate
-(\(\sim\)10--30 LOC for the consumer, which did not budget the
-substrate).
+The base map is obtained from the unit of the pullback--pushforward
+adjunction. Its compatibility with the affine tilde comparisons therefore
+follows from four identities: naturality in the module, compatibility with
+composition of pullbacks, invariance under equality of the underlying
+morphisms, and inversion of the comparison for an affine open immersion.
+Together these identities identify the composite used in
+\cref{def:pullback_app_isoTensor_sigma} with the canonical base map on every
+section.
 
 \begin{lemma}
 [(N1) baseMap naturality in input sheaf]
@@ -8590,16 +8516,16 @@ substrate).
   Let \(Y\) be a scheme, \(U \subseteq Y\) an affine open with
   canonical open immersion
   \(\mathtt{\_hU.fromSpec} : \text{Spec}\,\Gamma(Y, U) \to Y\), and
-  \(\mathcal N\) an \(\mathcal O_Y\)-module. Then the iter-189
-  Spec-restriction transport iso \texttt{step3} (constructed in
-  \cref{lem:pullback_of_openImmersion_iso_restrict}) is the inverse
+  \(\mathcal N\) an \(\mathcal O_Y\)-module. Then the canonical
+  section-transport isomorphism of
+  \cref{lem:pullback_of_openImmersion_iso_restrict} is the inverse
   of \texttt{baseMap} along \(\mathtt{\_hU.fromSpec}\) at the
   \(\top\)-section:
   \[
     \text{step3}\bigl(
       \text{baseMap}\,\mathtt{\_hU.fromSpec}\,
-        ((\text{pullback}\,g).\mathrm{obj}\,\mathcal N)\,
-        \text{le\_top}'\,y
+        \mathcal N\,
+        (\text{le\_of\_eq}\,\mathtt{\_hU.fromSpec\_preimage\_self.symm})\,y
     \bigr) \;=\; y
     \qquad\text{for every } y \in \Gamma(\mathcal N, U).
   \]
@@ -8630,40 +8556,34 @@ substrate).
   sides of the characterization.
 \end{proof}
 
-\section{Lean encoding}
+\section{Construction overview}
 \label{sec:quot_lean_encoding}
 
-The Lean target file is the new
-\texttt{AlgebraicJacobian/Picard/QuotScheme.lean}. The construction
-proceeds in three phases.
+The construction proceeds in three phases.
 
 \paragraph{Phase 1: Hilbert polynomial (\cref{def:hilbert_polynomial}).}
 On a locally-of-finite-type morphism \(\pi : X \to S\) with \(S\) locally
-noetherian, the per-fiber Hilbert polynomial is encoded as a total function
-\(s \mapsto \Phi_{\mathcal{F},s} \in \mathbb{Q}[\lambda]\), formalized
-sorry-free in \texttt{AlgebraicJacobian/Picard/HilbertPolynomial.lean}
+noetherian, the fibers determine a function
+\(s \mapsto \Phi_{\mathcal{F},s} \in \mathbb{Q}[\lambda]\)
 (\cref{def:fiber_module_restriction}, \cref{def:fiber_sections_module},
 \cref{def:fiber_hilbert_function}, \cref{lem:hilbertPolynomial_unique},
 \cref{lem:hilbertPoly_of_isRatHilb}). The \(H^0\)-only route through the
-graded Hilbert function of the section graded module avoids Snapper's Lemma
-and the Euler-characteristic infrastructure entirely; the outstanding
-geometric input is the finite generation \cref{lem:sectionGradedModule_fg},
-which feeds \cref{thm:hilbertPoly_of_sectionModule} through
-\cref{lem:gradedHilbertSerre_rational}.
+  graded Hilbert function of the section module reduces polynomiality to
+  finite generation (\cref{lem:sectionGradedModule_fg}) and the
+  Hilbert--Serre theorem (\cref{lem:gradedHilbertSerre_rational}), yielding
+  \cref{thm:hilbertPoly_of_sectionModule}.
 
 \paragraph{Phase 2: Grassmannian scheme (\cref{def:grassmannian_scheme},
 \cref{thm:grassmannian_representable}).} The Grassmannian
-\(\mathrm{Gr}_S(V, d)\) is encoded as the relative gluing of \(\binom{r}{d}\)
+\(\mathrm{Gr}_S(V, d)\) is obtained by gluing \(\binom{r}{d}\)
 affine charts \(U^I\) (each isomorphic to a relative affine space
 \(\mathbb{A}^{d(r-d)}_S\)) via the Pl\"ucker cocycle \(\theta_{I,J}\). The
-gluing backbone is \texttt{AlgebraicGeometry.Scheme.GlueData}. The
 universal quotient sheaf \(\mathcal{U}\) is glued by the transition cocycle
-\(g_{I,J} = (X^I_J)^{-1}\), and the determinant line bundle
-\(\det \mathcal{U}\) gives the Pl\"ucker closed embedding into
-\(\mathbb{P}_S(\bigwedge^d V)\). The representability statement uses
-\texttt{CategoryTheory.Functor.RepresentableBy} (as in
-\cref{chap:Picard_RelativeSpec}) on the universal pair
-\((\mathrm{Gr}_S(V, d), \mathcal{U})\).
+  \(g_{I,J} = (X^I_J)^{-1}\), and the determinant line bundle
+  \(\det \mathcal{U}\) gives the Pl\"ucker closed embedding into
+  \(\mathbb{P}_S(\bigwedge^d V)\). The universal pair
+  \((\mathrm{Gr}_S(V, d), \mathcal{U})\) represents rank-\(d\) locally
+  free quotients.
 
 \paragraph{Phase 3: Quot scheme (\cref{thm:quot_representable}).}
 The Quot functor is constructed as a locally closed subfunctor of the
@@ -8671,8 +8591,7 @@ Grassmannian
 \(\mathrm{Grass}(W \otimes_{\mathcal{O}_S} \mathrm{Sym}^r V, \Phi(r))\), via:
 \begin{enumerate}
   \item the uniform \(m\)-regularity bound from
-    \cref{lem:quot_boundedness} (input: Castelnuovo--Mumford theorem,
-    \texttt{AlgebraicGeometry.CastelnuovoMumford} -- project-side sub-build);
+    \cref{lem:quot_boundedness}, using Castelnuovo--Mumford regularity;
   \item the Grassmannian embedding \(\alpha\) from
     \cref{lem:quot_alpha_injective};
   \item the flattening stratification (\cref{thm:flattening_stratification_exists}
@@ -8684,24 +8603,23 @@ Grassmannian
     projective \(S\)-scheme.
 \end{enumerate}
 The reduction \cref{lem:quot_reduction_to_pi_star_W} from the universal
-case to the general case is encoded as a closed embedding of representable
+case to the general case is a closed embedding of representable
 subfunctors via the kernel-vanishing scheme.
 
 \paragraph{Cohomology and base change.}
-\cref{thm:flat_base_change_cohomology} is the Mathlib-equivalent of
-Stacks tag 02KH. Mathlib carries a partial form
-(\texttt{AlgebraicGeometry.flat\_base\_change}) for affine bases; the
-full \(R^i f_*\) statement is a project-side bridge if not present at the
-pinned commit.
+\cref{thm:flat_base_change_cohomology} proves the degree-zero flat-base-change
+isomorphism \(g^*f_*\mathcal F\cong f'_*g'^*\mathcal F\) (Stacks tag 02KH).
+It is assembled from the canonical base-change map using the affine
+tensor/base-map comparison developed above; higher direct images are not
+claimed here.
 
 \paragraph{Dependencies summary.}
-This file directly consumes
-\cref{chap:Picard_RelativeSpec} (A.1.a, on disk) for relative-spectrum
-gluing infrastructure and
+Relative-spectrum gluing from \cref{chap:Picard_RelativeSpec} constructs
+the affine charts, while
 \cref{thm:flattening_stratification_exists} from
-\cref{chap:Picard_FlatteningStratification} (A.2.a, written this iter)
-for the flattening stratum. Downstream, \cref{chap:Picard_FGAPicRepresentability}
-(A.2.c) consumes \cref{thm:quot_representable} via the special case
+\cref{chap:Picard_FlatteningStratification} provides the flattening stratum.
+The Picard construction in \cref{chap:Picard_FGAPicRepresentability}
+applies \cref{thm:quot_representable} to the special case
 \(E = \mathcal{O}_C\) on a smooth proper curve \(C/k\), giving the Hilbert
 scheme \(\Hilb_{C/k} = \Quot^{\Phi,\mathcal{O}_C(1)}_{\mathcal{O}_C/C/k}\)
 and its open subscheme \(\mathrm{Div}_{C/k}\) of relative effective divisors.
@@ -8709,39 +8627,28 @@ and its open subscheme \(\mathrm{Div}_{C/k}\) of relative effective divisors.
 \section{Out of scope}
 \label{sec:quot_out_of_scope}
 
-This chapter packages \emph{only} the Quot-foundations layer: the Hilbert
-polynomial, the Quot functor, the relative-divisor functor, and the
-Grassmannian scheme with its representability. The following are explicitly
-out of scope here:
+This chapter treats the Hilbert polynomial, the Quot and relative-divisor
+functors, the Grassmannian, and the representability of the Quot functor.
+The following applications and refinements are treated elsewhere:
 \begin{itemize}
-  \item \textbf{Representability of the Quot scheme} -- the
-    Grothendieck--Altman--Kleiman existence theorem and its proof skeleton
-    (boundedness, Grassmannian embedding, flattening stratification,
-    valuative criterion) are not constructed in this chapter.
-  \item \textbf{Flat base change of cohomology} (Stacks 02KH) and its
-    associated prerequisites -- not constructed in this chapter.
   \item \textbf{Hilbert scheme as a separate chapter}. The Hilbert scheme
     \(\Hilb_{X/S}\) is the special case
     \(\Hilb_{X/S} = \Quot_{\mathcal{O}_X/X/S}\) of the Quot functor and is
-    introduced inline (\cref{def:quot_functor}); no separate chapter.
+    introduced here through \cref{def:quot_functor}.
   \item \textbf{Snapper's Lemma} -- the polynomial-eventually property of
     Euler characteristics. Cited via Nitsure \S 1 and (textbook reference)
     Hartshorne III.5.2. The \(H^0\)-only definition
     \cref{def:hilbert_polynomial} does not consume it: Snapper's Lemma enters
-    only the (unformalized) comparison remark identifying
+    only the comparison identifying
     \(\Phi_{\mathcal{F},s}\) with the Euler-characteristic Hilbert polynomial
     for \(m \gg 0\).
   \item \textbf{Identification with \(\mathbb{P}^n\) and relative
     Grassmannian variants} (Nitsure \S 1, Exercises (1)--(4)) --
     optional applications, not consumed by Route A.
-  \item \textbf{Group-scheme structure on \(\Pic_{C/k}\)} (A.2.c) -- the
-    abelian-group-scheme refinement is downstream. Its blueprint home is the
-    FGA Picard-representability assembly (the chapter that bundles the relative
-    Picard functor, its representability, and the abelian-group-scheme
-    structure on \(\Pic_{C/k}\)); that assembly lives in the parent project
-    which consumes this Quot-foundations layer and is not part of the present
-    subproject.
+  \item \textbf{Group-scheme structure on \(\Pic_{C/k}\)}. The
+    abelian-group-scheme refinement belongs to the FGA
+    Picard-representability construction.
   \item \textbf{Identity-component \(\Pic^0\) and abelian-variety
-    structure} (A.3) -- a separate Route A sub-row, fed by but not
-    constructed in this chapter.
+    structure}. These are consequences of the later Picard and Albanese
+    constructions.
 \end{itemize}

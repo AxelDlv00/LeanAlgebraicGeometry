@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:adelic_local_step_injective
 lean_status: lean_ok
-order: 1878
+order: 1879
 title: The local step quotient injects into the valuation quotient
 type: tex
-updated: '2026-07-26T03:32:38'
+updated: '2026-07-26T06:44:13'
 ---
 Under the hypotheses of \Cref{thm:adelic_local_step_identity}, the
   inclusion \(\Gamma(U, \struct{C}(D')) \subseteq \mathfrak G_P^{\ge

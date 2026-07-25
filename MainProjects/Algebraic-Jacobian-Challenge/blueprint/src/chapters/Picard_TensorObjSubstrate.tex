@@ -5999,7 +5999,7 @@ internal construction.
   (by defeq) closes the \(\mathtt{naturality}\) field of \(\mathtt{sliceDualTransportInv}\).
 \end{lemma}
 \begin{proof}
-  \uses{lem:slice_dual_transport_inv, def:dual_unit_ring_swap_hom, lem:image_preimage_of_le}
+  \uses{def:dual_unit_ring_swap_hom, lem:image_preimage_of_le}
   \leanok
   After rewriting the two \(\mathtt{inv}\,\varepsilon\) legs into their shallow \(\mathtt{\_apply}\)
   forms (so no \(\mathtt{whnf}\) of the deep \(\mathtt{inv}\,\varepsilon\) composite occurs) the
@@ -6211,7 +6211,7 @@ internal construction.
   serving as the naturality certificate for \(\mathtt{sliceDualTransport}\).
 \end{lemma}
 \begin{proof}
-  \uses{lem:slice_dual_transport, def:dual_unit_ring_swap, lem:appiso_hom_naturality_apply}
+  \uses{def:dual_unit_ring_swap, lem:appiso_hom_naturality_apply}
   \leanok
   After substituting the \(\mathtt{inv}\,\varepsilon\) leg via
   \(\mathtt{dualUnitRingSwap\_apply}\), the goal reduces to a concrete element equation closed by two

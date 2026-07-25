@@ -89,8 +89,7 @@ chart--overlap square.
   \cref{lem:modules_restrictFunctorIsoPullback_mathlib}.
 \end{lemma}
 \begin{proof}
-  \uses{lem:modules_restrictFunctorIsoPullback_mathlib, lem:gr_overlap_appIso_compat,
-    lem:gr_overlapBaseChange_inv_app, lem:gr_overlapBaseChange_hom_app}
+  \uses{lem:modules_restrictFunctorIsoPullback_mathlib, lem:gr_overlap_appIso_compat}
     \leanok
   The isomorphism is the cartesianness of the chart--overlap square, made site-level.
   The square
@@ -559,14 +558,13 @@ with first projection \(\mathrm{fst} : V_{ipq} \to V_{ip}\). Two morphisms out o
 \]
 is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBaseChangeIso}.
 
-\begin{lemma}
+\begin{lemma}\leanok
 
 [Triple-overlap bridges of the glue datum]
   \label{lem:gr_glueData_bridges}
   \lean{AlgebraicGeometry.Scheme.Modules.glueData_bridge_src,
     AlgebraicGeometry.Scheme.Modules.glueData_bridge_mid,
     AlgebraicGeometry.Scheme.Modules.glueData_bridge_tgt}
-  \uses{def:scheme_modules_glue}
   On the triple overlap \(V_{ijk} = V_{ij}\times_{U_i} V_{ik}\) the following three
   identities of morphisms hold, lining up the endpoints of the three base-change
   transports of the cocycle equation (C2):
@@ -583,14 +581,13 @@ is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBase
       \((t_{ik}\circ f_{ki})\) agree as morphisms to \(U_k\).
   \end{enumerate}
 \end{lemma}
-\begin{proof}
-  \uses{def:scheme_modules_glue}
+\begin{proof}\leanok
   The source identity is the universal property (pullback condition) of \(V_{ijk}\).
   The middle identity follows from the transition factorisation
-  \(t'_{ijk}\) of \cref{def:scheme_modules_glue} together with the pullback condition.
+  \(t'_{ijk}\) in the glue datum together with the pullback condition.
   The target identity -- the heart of the cocycle -- combines the same transition
   factorisation, the pullback condition, the involutivity \(t_{ik}\circ t_{ki}=\mathrm{id}\)
-  and the cocycle condition of \cref{def:scheme_modules_glue}.
+  and the cocycle condition of the glue datum.
 \end{proof}
 
 \begin{lemma}\leanok

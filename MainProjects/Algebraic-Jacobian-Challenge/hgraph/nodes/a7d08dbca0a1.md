@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1233
 title: Adjunction-unit base linear map at a section
 type: tex
-updated: '2026-07-26T00:08:22'
+updated: '2026-07-26T06:25:06'
 ---
 Given a morphism \(g : Y \to X\) of schemes, a sheaf of
   \(\mathcal{O}_X\)-modules \(\mathcal{N}\), and an open \(V \subseteq X\),
@@ -22,6 +22,5 @@ Given a morphism \(g : Y \to X\) of schemes, a sheaf of
     \;\longrightarrow\;
     \Gamma\bigl(g_*(g^* \mathcal{N}),\ V\bigr).
   \]
-  This is the axiom-clean building block (Step~1 of the Tilde-isoTop route)
-  underlying the tensor-presentation iso of
-  \cref{def:quot_pullback_app_isoTensor}.
+  This is the adjunction-unit map underlying the tensor-presentation
+  isomorphism of \cref{def:quot_pullback_app_isoTensor}.

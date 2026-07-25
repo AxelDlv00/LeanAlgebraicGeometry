@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:has_div_functor
 lean_status: lean_ok
-order: 1532
+order: 1533
 title: Existence of the relative-divisor functor
 type: tex
-updated: '2026-07-26T00:08:22'
+updated: '2026-07-26T06:44:12'
 ---
 The predicate \(\mathrm{HasDivFunctor}(C)\) asserts that the category of
   presheaves of types on \((\Sch/k)^{op}\) contains the

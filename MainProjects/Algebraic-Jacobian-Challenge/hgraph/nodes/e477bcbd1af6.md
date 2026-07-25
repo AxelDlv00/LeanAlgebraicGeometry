@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:adelic_windowMap_injective
 lean_status: lean_ok
-order: 1872
+order: 1873
 title: The window map is injective
 type: tex
-updated: '2026-07-26T03:32:38'
+updated: '2026-07-26T06:44:13'
 ---
 Under the hypotheses of \Cref{thm:adelic_linearSystem_inf_overlap_eq}
   (\(D \le D'\), \(D' - D\) supported on the overlap), the window map

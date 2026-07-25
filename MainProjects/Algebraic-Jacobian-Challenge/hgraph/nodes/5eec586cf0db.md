@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:adelic_quasiFinite_dim_le
 lean_status: lean_ok
-order: 1850
+order: 1851
 title: Quasi-finite algebras do not raise Krull dimension
 type: tex
-updated: '2026-07-26T03:32:38'
+updated: '2026-07-26T06:44:13'
 ---
 For a quasi-finite \(R\)-algebra \(A\), \(\operatorname{ringKrullDim}
   A \le \operatorname{ringKrullDim} R\).

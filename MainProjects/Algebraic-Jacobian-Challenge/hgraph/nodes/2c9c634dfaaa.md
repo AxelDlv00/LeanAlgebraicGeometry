@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.mem_range_rankStratumι_iff
 type: lean
-updated: '2026-07-24T17:02:57'
+updated: '2026-07-26T06:25:05'
 ---
 theorem mem_range_rankStratumι_iff [IsLocallyNoetherian S]
     [F.IsFinitePresentation] (s : S) :
@@ -37,7 +37,7 @@ theorem mem_range_rankStratumι_iff [IsLocallyNoetherian S]
     obtain ⟨z, hz⟩ := (mem_range_stratumι_iff _
       (chartsCover_chartLocus F e) x).mpr hrx
     refine ⟨z, ?_⟩
-    show ((chartLocus F e).ι.base)
+    change ((chartLocus F e).ι.base)
       ((stratumι ((Scheme.Modules.pullback (chartLocus F e).ι).obj F) e
         (chartsCover_chartLocus F e)).base z) = s
     rw [show ((stratumι ((Scheme.Modules.pullback (chartLocus F e).ι).obj F) e

@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:grpObjDiffLeft_comp_hom
 lean_status: lean_ok
-order: 1664
+order: 1665
 title: lem:grpObjDiffLeft_comp_hom
 type: tex
-updated: '2026-07-26T00:08:22'
+updated: '2026-07-26T06:44:13'
 ---
 The difference morphism is over the base: \(\operatorname{diff}_G^{\,\mathrm{left}} \circ
   (G \to \operatorname{Spec}\bar k) = \mathrm{pr}_1 \circ (G \to \operatorname{Spec}\bar k)\).
