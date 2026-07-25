@@ -1,0 +1,55 @@
+id: I-0333
+provider: local
+kind: issue
+body: "A DESIGN DECISION IS NOW REQUIRED ON Pic^0 REPRESENTABILITY, AND A HARNESS\
+  \ PROBLEM IS BURNING ROUNDS.\n\n1) THE DESIGN DECISION (run 0048, task ajcr-w4-rep-free).\
+  \ It is now proved in Lean (commits\n49866bdd1, 206967379, 40f357de8; memory I-0327;\
+  \ informal/spec-dd-r.md ADDENDUM 2) that the DD-R\ncertificate interface `DivisorAdaptation.IsCertified`\
+  \ is satisfiable for a CONNECTED divisor only\nif that divisor lies inside a single\
+  \ pinned chart of pi — i.e. avoids pi^{-1}(0) or pi^{-1}(infinity).\nThe per-piece\
+  \ no-leak clause forces the two chart traces to be closed, cover refinement provably\n\
+  cannot help, and base localization cannot help either because it does not disconnect\
+  \ the divisor.\n\nThe consequence needs a decision that an agent should not take\
+  \ alone:\n (a) if the DD-R chart Z(diamond) already confines its divisors — which\
+  \ spec-dd-r.md ADDENDUM 1\n     item 2 asserts but never proves — the remaining\
+  \ certificate work is bookkeeping and the lane\n     closes;\n (b) if it does not,\
+  \ then either the atlas gains the avoidance as a carve (an open condition, so\n\
+  \     legitimate), or `IsCertified` / `DivFamZar` must be REDESIGNED — because a\
+  \ functor that cannot\n     see chart-crossing divisors is not the relative-divisor\
+  \ functor, and `divRep` stated against it\n     would represent the wrong object.\n\
+  Roadmap leaf AJCR.w4-rep.datum.dat-d.ddr.certificate.chart-avoid holds this question.\n\
+  \nSeparately, the task as named (\"close representability of Pic^0\") is not one\
+  \ lane: the certificate\nis one of SIX independent mountains before Challenge.lean:99.\
+  \ dat-g has no spec, no worksheet and no\nLean file; dat-c's `chartLocus` has zero\
+  \ definitions tree-wide though four roadmap comments call the\nremainder \"plumbing,\
+  \ no math left\"; DivRepAffinePullback and DivRepGlobalData have zero producers.\n\
+  The blueprint states none of this: its only representability node is conditional\
+  \ on a chart family\nno node produces, so a blueprint reader concludes representability\
+  \ is done. Consider commissioning\nthe five missing blueprint nodes before more\
+  \ proving rounds.\n\n2) THE HARNESS PROBLEM. Run 0047 rounds 1-5 (sessions 0004,\
+  \ 0006, 0008, 0010, 0012 of that run)\nlanded ZERO substantive commits — one automatic\
+  \ integrate commit each, and a 101-byte stub\nreport.md reading \"[Your previous\
+  \ response had no visible output...]\". That is roughly 2.9 hours and\n~$206 of\
+  \ compute with nothing durable. Round 6 (session 0014) did land work but was killed\
+  \ while\nidle-blocking on its own mandatory pre-report work-reviewer subagent, which\
+  \ had been running 18\nminutes. Worth investigating before buying more rounds on\
+  \ this task."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-25T14:10:11.995361+00:00'
+updated_at: '2026-07-25T14:10:11.995371+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild

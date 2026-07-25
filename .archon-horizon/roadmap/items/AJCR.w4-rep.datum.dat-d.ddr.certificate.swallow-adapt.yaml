@@ -1,31 +1,37 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.swallow-adapt
-title: 'Swallow-adapt: build the 2-piece-per-chart adaptation (swallowing piece +
-  comaximal complement)'
+title: 'Swallow-adapt: coarse chart-pair adaptation LANDED; chart-principality datum
+  remains'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "CONSTRUCT the swallow-or-miss adaptation, i.e. produce the input of\nDivisorAdaptation.forall_noLeak_of_forall_subset_or_disjoint\
-  \ (Picard/DivSchemeCertZarSwallow.lean).\nReplaces away-assemble's \"compose tube-fibre\"\
-  \ framing.\n\nSHAPE (2 pieces per chart, m_0 = m_1 = 2):\n (1) the SWALLOWING piece\
-  \ D(h_b) of chart b, with supportLocus subset D(h_b) and a single equation\n   \
-  \  f_b in Gamma(D(h_b)) cutting d there;\n (2) the COMPLEMENTARY piece D(s_b) with\
-  \ Disjoint supportLocus D(s_b) and equation 1 — its eqn_rel\n     clause is free\
-  \ because d's equation is a unit off the support, and its colength VANISHES.\n\n\
-  THE TWO HONEST INPUTS:\n (a) chart-avoid, which gives supportLocus subset V_b so\
-  \ that a swallowing piece can exist at all;\n (b) A GLOBAL GENERATOR NEAR THE SUPPORT:\
-  \ some psi in K whose divisor agrees with d on a\n     neighbourhood of supportLocus.\
-  \ A theta section has exactly two chart components\n     (relThetaResSide a b),\
-  \ so psi supplies f_0 and f_1 simultaneously. div(psi) = d + E with E\n     disjoint\
-  \ from the support, so W := relCurve \\ supp(E) is an open containing supportLocus\
-  \ on\n     which psi cuts d.\n\nTHE COMAXIMALITY STEP (elementary, no new geometry):\
-  \ supportLocus and V_b \\ W are disjoint closed\nsubsets of the AFFINE V_b, so their\
-  \ ideals in Gamma(V_b) are comaximal: sigma + tau = 1 with sigma\nvanishing on the\
-  \ support and tau on V_b \\ W. Then h_b := tau gives supportLocus subset D(h_b)\n\
-  subset W, s_b := sigma gives Disjoint supportLocus D(s_b), and span{h_b, s_b} =\
-  \ top is the required\npartition of unity. Base shrinking is licensed throughout\
-  \ by the pointwise gate\nisLocallyCertified_of_forall_prime_exists_certified_adaptation.\n\
-  \nSpreading-out remark for (b): a line bundle trivial on the (finite over the base,\
-  \ hence semilocal\nafter localizing) divisor scheme is trivial after a Zariski shrink\
-  \ of the base, which is exactly the\nfreedom the pointwise gate provides.\n"
+summary: "HALF LANDED 2026-07-25 (run 0048, commit on Picard/DivSchemeCertZarChartPair.lean).\n\
+  \nWHAT IS DONE. The coarse adaptation exists and its certificate obligations are\
+  \ discharged:\n * chartPairCoverData — a legal FinCoverData with m_0 = m_1 = 1,\
+  \ h = a = 1; the partition of unity\n   is 1*1 = 1 and Scheme.basicOpen_one identifies\
+  \ each piece with its pinned chart\n   (chartPairCoverData_pieces_inl / _inr / _eq);\n\
+  \ * DivisorAdaptation.ofChartPair — builds the adaptation from a CHART-PRINCIPALITY\
+  \ datum via the\n   landed anchored constructor DivisorAdaptation.ofAnchors (DivisorFamily.lean:257):\
+  \ for each pinned\n   chart, a member pt of d's cover with V_b <= d.cover.opens\
+  \ (pt), the chart equation, and the\n   comparison unit;\n * forall_noLeak_of_pieces_eq_chart\
+  \ and forall_finite_colength_of_pieces_eq_chart — for ANY\n   adaptation whose pieces\
+  \ are the two pinned charts, a divisor with\n   supportLocus subset V_0 cap V_1\
+  \ is swallowed by every piece, so the assembler's hnoLeak and\n   clause (c1)-finite\
+  \ hold. No fibre, no tube, no packet idempotent.\nNone of the landed no-gos touches\
+  \ this configuration: not_exists_unique_support_piece refutes ONE\nsupport-meeting\
+  \ piece and this has TWO; supportLocus_disjoint_chart_inter_of_separated refutes\n\
+  separation and this adaptation is maximally unseparated.\n\nWHAT REMAINS: the CHART-PRINCIPALITY\
+  \ input, i.e. produce the (pt, eqn, unit) datum. It says the\ndivisor is cut by\
+  \ a single equation on each pinned chart. Route: a theta section psi in K has\n\
+  exactly two chart components (relThetaResSide a b), so ONE psi supplies both equations\
+  \ at once;\ndiv(psi) = d + E with E disjoint from the support, so psi cuts d on\
+  \ the open W = relCurve \\ supp(E).\nIf W is not a whole chart, fall back to the\
+  \ FOUR-piece variant: a swallowing piece D(h_b) inside W\nplus a complementary piece\
+  \ D(s_b) missing the support, obtained from comaximality of the disjoint\nclosed\
+  \ sets supportLocus and V_b \\ W in the AFFINE V_b (sigma + tau = 1); the complementary\
+  \ piece's\nequation is 1 and its colength VANISHES (subsingleton_colength_of_disjoint_supportLocus).\
+  \ The\npointwise gate licenses shrinking the base first, which is what makes a line\
+  \ bundle trivial on the\n(semilocal after localization) divisor scheme spread to\
+  \ a Zariski neighbourhood.\n\nGATED ON chart-avoid: without supportLocus subset\
+  \ V_0 cap V_1 the swallowing hypothesis is false.\n"
 status: pending
 kind: proof
 priority: high
@@ -48,3 +54,4 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
+  updated_at: '2026-07-25T14:09:41.729985+00:00'
