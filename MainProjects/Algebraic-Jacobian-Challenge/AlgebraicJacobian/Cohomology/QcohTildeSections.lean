@@ -881,8 +881,6 @@ theorem tile_section_ring_identity (g : R) :
   congr 1
 
 set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1000000 in
--- The `convert … using 2` check on global-ring tile section carriers exceeds the default budget.
 /-- **Sub-lemma B scalar compatibility (Stacks 01I8).**  For a quasi-coherent `F` on `Spec R` and
 `g r : R`, the native `R`-action of `r` on a section of `F` over the tile image open `D(g)`
 coincides with the `R_g`-action of `algebraMap R R_g r` on the corresponding section of the affine
@@ -978,8 +976,6 @@ theorem tile_section_ring_identity' (g : R) (V : (Spec (.of (Localization.Away g
           appIso_inv_res_assoc (basicOpenIsoSpecAway g).inv (le_top : V ≤ ⊤) hV1]
 
 set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1000000 in
--- The `convert … using 2` check on global-ring tile section carriers exceeds the default budget.
 /-- **General-open form of `tile_scalar_compat` (Stacks 01I8).**  For a quasi-coherent `F` on
 `Spec R`, `g r : R`, and an arbitrary open `V ⊆ Spec R_g`, the native `R`-action of `r` on a section
 of `F` over
@@ -1019,8 +1015,6 @@ instance isScalarTower_restrictScalars_obj {R S : Type u} [CommRing R] [CommRing
 
 -- The `toFun := id` carrier identity unifies the tile section against `F.val.obj (op (ι ''ᵁ V))`
 set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1000000 in
--- Reconciliation through the `modulesSpecToSheaf` restriction tower exceeds the default budget.
 /-- The reconciliation `R`-linear equivalence underlying the tile section comparison: on the common
 underlying carrier `F.val.obj (op (ι ''ᵁ V))` (the tile section over `V` IS `F`'s section over the
 image open `ι ''ᵁ V`, by the restriction `rfl`), the `R`-module structure obtained by restriction of
@@ -1056,8 +1050,6 @@ noncomputable def tileReconcileEquiv (F : (Spec R).Modules) (g : R)
 
 -- The `rfl` checks the tile restriction against `F`'s restriction over the iterated image opens
 set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1000000 in
--- Reconciliation through the `modulesSpecToSheaf` restriction tower exceeds the default budget.
 /-- The tile restriction map IS `F`'s restriction over the iterated image opens (the restriction
 `rfl` underlying the smul bridges, read at the level of the section-restriction morphism).
 Project-local glue for the transport step of `tile_section_localization`. -/
@@ -1071,8 +1063,6 @@ private lemma tile_restrict_map_apply (F : (Spec R).Modules) (g : R)
   rfl
 
 set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1000000 in
--- Base-ring descent through the tile reconciliation equivalences exceeds the default budget.
 /-- **Per-tile section localisation at `f` (Stacks 01HV(4)/01I8, the last keystone leaf).**  Let
 `F` be an `𝒪_{Spec R}`-module, `f g : R`, and suppose `D(g) ⊆ U` with `F.over U` globally presented.
 Then the section-restriction `Γ(D(g), F) → Γ(D(gf), F)` exhibits its target as the localisation of
@@ -1350,9 +1340,6 @@ private lemma overlap_section_localization (F : (Spec R).Modules) (U : (Spec R).
   exact h4
 
 set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1000000 in
--- The `change`-based defeq reduction of the `LinearMap.pi` cover-section maps and the per-tile
--- `IsLocalizedModule.pi` synthesis over `ULift (Fin n)` are heartbeat-heavy.
 /-- **Route B keystone (Stacks 01HV(4)/01I8).**  For a quasi-coherent `F` on `Spec R` and `f ∈ R`,
 the section-restriction `ρ_f : Γ(X, F) → Γ(D(f), F)` exhibits its target as the localisation of its
 source at the powers of `f`.  This is the generalisation of `Γ(D(f), M^~) = M_f` from the associated
