@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:divisor_degree
 lean_status: lean_ok
-order: 1788
+order: 1789
 title: Degree of a divisor on a curve over \(\bar k\)
 type: tex
-updated: '2026-07-24T10:32:51'
+updated: '2026-07-25T20:41:02'
 ---
 \textit{Source: Hartshorne, II.6, p.~137 (definition of degree on a
   nonsingular curve).}

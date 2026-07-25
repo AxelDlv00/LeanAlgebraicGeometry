@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:adelic_coboundary
 lean_status: lean_ok
-order: 1845
+order: 1846
 title: The coboundary subgroup
 type: tex
-updated: '2026-07-24T10:32:51'
+updated: '2026-07-25T20:41:02'
 ---
 The \emph{coboundary} \(B(D) = \Gamma(U_0, \struct{C}(D)) +
   \Gamma(U_1, \struct{C}(D))\), the sum of the two chart section

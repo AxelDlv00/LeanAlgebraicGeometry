@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:linebundle_chart_over_iso
 lean_status: lean_ok
-order: 891
+order: 892
 title: 'Engine bridge: line-bundle over--restrict trivialisation'
 type: tex
-updated: '2026-07-24T11:03:44'
+updated: '2026-07-25T20:41:02'
 ---
 The line-bundle engine's local over--restrict trivialisation bridge: given
   \(M \in \Scheme.\mathtt{Modules}\,X\), an open \(U \subseteq X\), and a

@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:isRegularInCodimensionOne_open
 lean_status: lean_ok
-order: 1768
+order: 1769
 title: \(\texttt{IsRegularInCodimensionOne}\) descends along open immersion
 type: tex
-updated: '2026-07-24T10:32:51'
+updated: '2026-07-25T20:41:02'
 ---
 Let \(X\) be a scheme satisfying \(\texttt{IsRegularInCodimensionOne}\)
   and \(U \hookrightarrow X\) an open subscheme with

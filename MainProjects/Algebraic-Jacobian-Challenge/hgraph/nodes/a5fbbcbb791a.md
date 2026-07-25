@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.mul_mem_span_range_pow
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-07-25T21:02:41'
 ---
 theorem mul_mem_span_range_pow {k A : Type*} [CommRing k] [CommRing A] [Algebra k A]
     (x : A) {a b : A}
@@ -45,7 +45,3 @@ noncomputable local instance instAlgebraΓV0 :
   Scheme.toModuleKSheaf.algebraSection
     (Over.mk (ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k)) ↘ Spec (CommRingCat.of k)))
     (op (p1Chart k ⟨0⟩))
-
-set_option maxHeartbeats 3200000 in
--- `maxHeartbeats`: constructing the affine-chart iso `basicOpenIsoAway` (its `IsIso`
--- witness threads the whole `Proj` structure-sheaf machinery) is heavy (fleet recipe).

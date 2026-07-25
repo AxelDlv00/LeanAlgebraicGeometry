@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:noetherian_isopen_connected_component
 lean_status: lean_ok
-order: 1557
+order: 1558
 title: Connected components are open on a Noetherian space
 type: tex
-updated: '2026-07-24T10:32:51'
+updated: '2026-07-25T20:41:02'
 ---
 Let \(\alpha\) be a Noetherian topological space and \(x \in \alpha\). Then
   the connected component \(\connComp(x)\) of \(x\) is open in \(\alpha\).

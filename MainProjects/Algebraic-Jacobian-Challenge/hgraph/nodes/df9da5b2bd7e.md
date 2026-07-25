@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:conjugate_equiv_restrictfunctorcomp_inv
 lean_status: lean_ok
-order: 748
+order: 749
 title: Restrict-side conjugate of the restriction-composition isomorphism
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-25T20:41:02'
 ---
 Let \(f : X \hookrightarrow Y\) and \(g : Y \hookrightarrow Z\) be open immersions. Under the
   conjugation equivalence between the composite restriction adjunction

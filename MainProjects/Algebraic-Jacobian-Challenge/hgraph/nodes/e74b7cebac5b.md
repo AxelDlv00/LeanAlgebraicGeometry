@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:gr_existence_lift
 lean_status: lean_ok
-order: 1423
+order: 1424
 title: E4 --- the filler and its two triangles
 type: tex
-updated: '2026-07-24T10:32:51'
+updated: '2026-07-25T20:41:02'
 ---
 \textit{Source: [Nitsure], \S 1.}
   The morphism

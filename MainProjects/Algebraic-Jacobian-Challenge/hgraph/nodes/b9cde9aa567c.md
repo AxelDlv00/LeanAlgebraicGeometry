@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:tensorobj_restrict_iso
 lean_status: lean_ok
-order: 626
+order: 627
 title: Tensor product commutes with restriction along an open immersion
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-25T20:41:01'
 ---
 Let \(X\) be a scheme, let \(M, N \in \Scheme.\mathtt{Modules}\,X\) be
   \emph{arbitrary} \(\mathcal{O}_X\)-modules, and let

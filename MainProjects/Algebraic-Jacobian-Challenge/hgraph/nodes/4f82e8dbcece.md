@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:enat_ab_inductive_combine
 lean_status: lean_ok
-order: 1714
+order: 1715
 title: \(\mathbb N_\infty\) combine for the inductive step
 type: tex
-updated: '2026-07-24T10:32:51'
+updated: '2026-07-25T20:41:02'
 ---
 A purely arithmetic statement in \(\mathbb N_\infty\): given \(j + d_K = d\),
   \(\min(d, d_K - 1) \leq d_M\), \(\min(d, d_M + 1) \leq d_K\), and \(1 \leq j\), one

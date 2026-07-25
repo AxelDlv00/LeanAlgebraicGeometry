@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.map_alternatingCofaceMapComplex_objD
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-25T20:41:00'
 ---
 theorem map_alternatingCofaceMapComplex_objD (F : C ⥤ D) [F.Additive]
     (Y : CosimplicialObject C) (i : ℕ) :
@@ -43,7 +43,4 @@ The degreewise components are identities (the degree-`n` terms are `F.obj (Y.obj
 both sides) and the differential compatibility is `map_alternatingCofaceMapComplex_objD`.
 This is the cosimplicial-altitude brick (step (b)) used to push `g^*` into the relative
 Čech complex `relativeCechComplexOfNerve`. Project-local Mathlib supplement. -/
--- (v4.31.0: `CechToHigherDirectImage` also defines a public `mapAlternatingCofaceMapComplexIso`
--- — that file never compiled before the migration so the name clash was latent; now that it
--- builds, both being public collides at the root import. This copy is used only inside this file,
--- so mark it `private` to resolve the clash without rebuilding the 4.3 h `CechToHigherDirectImage`.)
+-- Keep this local: `CechToHigherDirectImage` exports the same helper independently.

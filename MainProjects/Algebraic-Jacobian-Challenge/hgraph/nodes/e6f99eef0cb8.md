@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:sheafify_pullbackcomp_hom_inv_cancel
 lean_status: lean_ok
-order: 660
+order: 661
 title: Sheafification kills the \(\mathtt{pullbackComp}\) hom--inv pair (D3$'$ residual
   brick)
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-25T20:41:01'
 ---
 Let \(h : Z \to Y\) and \(f : Y \to X\) be composable, write
   \(\mathtt{PrPbComp} = \mathtt{PresheafOfModules.pullbackComp}\,\varphi'_f\,\varphi'_h\) for the

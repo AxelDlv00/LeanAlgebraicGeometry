@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechSectionZeroCoord
 type: lean
-updated: '2026-07-25T08:32:26'
+updated: '2026-07-25T22:02:35'
 ---
 noncomputable def cechSectionZeroCoord (σ : Fin 1 → 𝒰.I₀)
     (t : ToType ((cechSectionAugComplex 𝒰 F V).X 1)) : cechSectionCoeff 𝒰 F V 1 σ :=

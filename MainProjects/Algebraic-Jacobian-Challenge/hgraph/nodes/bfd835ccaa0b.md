@@ -26,7 +26,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.twisted_cech_nerve_iso
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-25T20:41:00'
 ---
 noncomputable def twisted_cech_nerve_iso
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
@@ -56,17 +56,20 @@ noncomputable def twisted_cech_nerve_iso
   --     `∏_σ (pullback g').obj (pushPullObj F (Over.mk j_σ)) ≅ pushPullObj (g'^* F) Y'ₙ`.
   -- The per-σ X-level Beck–Chevalley iso `(pullback g').obj (pushPullObj F (Over.mk j_σ)) ≅
   -- pushPullObj (g'^* F) (Over.mk j'_σ)` (base change of push–pull along the open immersion j_σ,
-  -- for the restricted cartesian square over `U_σ`) is the per-σ content; reassembling the σ-product
-  -- on the RHS would use `(pushPull_sigma_iso 𝒰' (g'^* F) n.len).symm`, but that needs
+  -- for the restricted cartesian square over `U_σ`) is the per-σ content; reassembling
+  -- the σ-product on the RHS would use `(pushPull_sigma_iso 𝒰' (g'^* F) n.len).symm`, but
+  -- that needs
   -- `[Finite 𝒰'.I₀]` and `[∀ i, IsAffine (𝒰'.X i)]` for the base-changed cover `𝒰'`, which are NOT
-  -- available in this signature (the X-level leaf carries no `[IsAffine S']`; the base-changed cover
-  -- members' affineness is the geometric cover-base-change route `coverInterOpen 𝒰' σ = g'⁻¹(U_σ)`).
+  -- available in this signature (the X-level leaf carries no `[IsAffine S']`; the
+  -- base-changed cover members' affineness is the geometric cover-base-change route
+  -- `coverInterOpen 𝒰' σ = g'⁻¹(U_σ)`).
   -- That cover-base-change identification is the residual Beck–Chevalley heart of this leaf.
   -- STEP-1 sig extension landed `[Finite 𝒰'.I₀]`/`[∀ i, IsAffine (𝒰'.X i)]` for the base-changed
   -- cover `𝒰'`, so the σ-product on the RHS *can now* be reassembled by
   -- `(pushPull_sigma_iso 𝒰' (g'^* F) n.len).symm`.  The residual per-σ content is isolated into the
-  -- named leaf `twisted_cech_nerve_per_sigma` (the open-immersion Beck–Chevalley + cover-base-change
-  -- identification).  Only the cosimplicial `naturality` remains beyond that leaf.
+  -- named leaf `twisted_cech_nerve_per_sigma` (the open-immersion Beck–Chevalley and
+  -- cover-base-change identification). Only the cosimplicial `naturality` remains beyond
+  -- that leaf.
   NatIso.ofComponents
     (fun n =>
       (Scheme.Modules.pullback g').mapIso (pushPull_sigma_iso 𝒰 F n.len) ≪≫

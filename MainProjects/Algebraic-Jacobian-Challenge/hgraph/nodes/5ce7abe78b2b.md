@@ -8,10 +8,10 @@ label: lem:tensorProductComm_eq_refl_mathlib
 lean_status: mathlib_ok
 mathlib_name:
 - Module.Invertible.tensorProductComm_eq_refl
-order: 1287
+order: 1288
 title: Self-braiding of an invertible module is trivial (affine)
 type: tex
-updated: '2026-07-24T10:32:51'
+updated: '2026-07-25T20:41:02'
 ---
 \textit{Provided by Mathlib (\texttt{Mathlib.RingTheory.PicardGroup}).}
   Let \(R\) be a commutative ring and \(M\) an invertible \(R\)-module

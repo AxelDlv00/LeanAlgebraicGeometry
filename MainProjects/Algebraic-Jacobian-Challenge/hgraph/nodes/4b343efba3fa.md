@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:pushforwardcomp_lax_mu
 lean_status: lean_ok
-order: 873
+order: 874
 title: Sq2b residual --- monoidality of the \(\mathtt{pushforward}\) composition cell
 type: tex
-updated: '2026-07-24T17:02:58'
+updated: '2026-07-25T20:41:02'
 ---
 The change-of-rings coherence ``\(\mathtt{pushforwardComp}\) is monoidal'': the lax
   tensorator \(\mu\) of the composite pushforward
