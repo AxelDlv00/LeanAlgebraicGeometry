@@ -1,0 +1,51 @@
+id: I-0350
+provider: local
+kind: hint
+body: "NEXT-SESSION MOVES on ajcr-w4-rep-free, ranked, after run 0048 round 2 (5 commits\
+  \ landed).\nRead AJCR.w4-rep's summary first; it was rewritten this round and the\
+  \ old one is stale.\n\n1. `pull_naturality` for DivRepAffinePullback (Picard/DivRepAffKit.lean:174).\
+  \  It is the ONE\n   of the (now) three remaining obligations that is U2-free, and\
+  \ the roadmap's own audit says\n   it is provable from inputs that exist today.\
+  \  With `ofPull` (landed this round) a producer\n   then owes only `pull` + `isDivRepClassify_pull`.\
+  \  Start from divRepPullAt\n   (DivRepAffKit.lean:92) and DivFamZar.mapAlgHom functoriality.\n\
+  \n2. `exists_unique_ofCurve_comp` (Challenge.lean:141) -- the Albanese universal\
+  \ property, the\n   only one of Wave 6's three frozen gates with no datum-level\
+  \ avatar.  The other two got\n   theirs this round (JacobianDataAbel.lean).  Substrate:\
+  \ abelElement's functor-point formula\n   (AbelElement.lean:140) plus the Milne\
+  \ I 3.2 extension already ported\n   (AJCR.w6-albanese.port-ext).  Nobody has looked\
+  \ at this; it is at the TOP of the mountain,\n   which is where the cheap wins turned\
+  \ out to be.\n\n3. c9b parametrically: develop f_c over a section variable\n   `(divRep\
+  \ : (divFunctor C pi g).RepresentableBy DivOver)`, the idiom at DivRepKit.lean:113,\n\
+  \   now that chartLocus and its openness exist (Pic0ChartLocusClass.lean).  Real\
+  \ checkable\n   mathematics today without waiting for DAT-J.\n\n4. build-reach,\
+  \ in SMALL batches with a green `lake build` after each -- NOT the 89-module\n \
+  \  big bang.  First: DivSchemeFlatteningBridge + EntryIdeal (verified clean).  But\
+  \ read the\n   caveat on AJCR.w4-rep.build-reach: both have zero consumers here,\
+  \ and the real decision is\n   \"port the sibling's 2,839-line flattening chain\
+  \ or delete EntryIdeal\".\n\n5. One `lake env lean Picard/Pic0ThetaCocycle.lean`.\
+  \  That file has never been elaborated by\n   anything, ever, and holds the tree's\
+  \ only non-Challenge sorry.  Nobody has run it.  See\n   the correction on I-0348\
+  \ -- the \"does not parse\" claim was wrong.\n\nDO NOT: re-attempt the FinCoverData\
+  \ joint-covering relaxation (refuted, I-0346 + roadmap leaf\njoint-cover); launch\
+  \ a lane at Pic0PreservesFilteredBaseColimit; or chase `degAff_mapAlg` /\n`mem_pic0Subgroup_overSpec_iff`\
+  \ as \"cheap sorries\" -- they are not sorries, they are\ndeclarations that do not\
+  \ exist.  And see I-0349 before quoting any docstring."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T16:22:38.079249+00:00'
+updated_at: '2026-07-25T16:22:38.079260+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0006-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild

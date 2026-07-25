@@ -1,0 +1,47 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.divrep.u2
+title: 'U2: the DDR9-U epsilon-identity at the universal point (the last gate of divRep)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: "THE REMAINING GATE OF THE divRep MOUNTAIN (re-scoped 2026-07-26, run 0048\
+  \ round 2).\n\nDivRepAffinePullback (Picard/DivRepAffKit.lean:169) demanded four\
+  \ fields.  Status now:\n  pull                  -- no producer; needs the universal\
+  \ family (U1)\n  pull_classify         -- RETIRED this round.  Derived from isDivRepClassify_pull\
+  \ by\n                           pull_classify_of_isDivRepClassify_pull; use the\
+  \ three-field\n                           constructor DivRepAffinePullback.ofPull\n\
+  \                           (Picard/DivRepAffPullbackReduce.lean, commit 0b3ab49b8).\n\
+  \  isDivRepClassify_pull -- STILL U2-gated.\n  pull_naturality       -- provable\
+  \ from inputs that exist today; nobody has written it.\n\nU2 is the DDR9-U epsilon-identity\
+  \ of informal/w4-ddr9-worksheet.md §3.1: at the universal\npoint, the pair-chart\
+  \ taut submodules ARE the coordinate images of divFamEps of the\nuniversal family.\
+  \  It exists in NO Lean declaration; `divUniversalFamily` greps empty and\nthere\
+  \ is no DivSchemeEpsUniv.lean.  U2 is G-4 property, gated on the I-0234 windowS\n\
+  strengthening (b+2g -> b+3g) and its full-rebuild window.\n\nALSO STILL TRUE: DivRepGlobalData's\
+  \ `equiv` field asserts a full equivalence for a FIXED pi\nand cannot hold as stated\
+  \ while the chart-avoid no-go stands; it must be re-pinned by\ncert-relocalize.\
+  \  Do not build a producer against the current spelling.\n\nCHEAPEST NEXT MOVE ON\
+  \ THIS ROW: pull_naturality, which is U2-free.\n"
+status: blocked
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T16:18:45.489635+00:00'
+  provenance:
+    run: 0048
+    session: 0006-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
+  updated_at: '2026-07-25T16:18:46.484167+00:00'
+  pinned_commits:
+  - 0b3ab49b8

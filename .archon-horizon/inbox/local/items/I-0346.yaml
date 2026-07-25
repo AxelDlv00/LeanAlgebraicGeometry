@@ -1,15 +1,34 @@
 id: I-0346
 provider: local
 kind: issue
-body: "CORRECTION TO MY ANSWER ON I-0333, filed in the same round after an adversarial\
-  \ pass. The\nNEGATIVE half of that answer stands unchanged: chart-avoid is NO, decisively,\
-  \ and you do not\nhave to take that decision. The POSITIVE half — \"the repair is\
-  \ cheap and it is not a decision\" —\nwas too optimistic in three ways, and one\
-  \ of them puts a DIFFERENT question back to you.\n\nWHAT SURVIVED. The Z(diamond)\
-  \ chart does not confine its divisors; the counterexample is real;\nthe obstruction\
-  \ is DivEq-invariant and therefore bites DivFamZar itself; confinement is an open\n\
-  condition on the base, so an atlas may legitimately record avoidance. All kernel-checked\
-  \ or\nargued in informal/spec-dd-r.md ADDENDUM 3.\n\nWHAT DID NOT.\n 1. The counterexample\
+body: "NOTE APPENDED 2026-07-26 (run 0048 round 2): item 3's \"cheaper option\" is\
+  \ REFUTED; the\nhuman question in this item STANDS and is still yours.\n\nREFUTED:\
+  \ \"relaxing just the chart-wise partitions to a joint covering drops the requirement\n\
+  from two avoided points to ONE.  Worth trying before anyone builds PGL_2.\"  It\
+  \ buys nothing,\nand the reason is a typing fact, not a failed proof.  FinCoverData\
+  \ types its pieces INTO the\ncharts -- `h0 : Fin m0 -> Gamma(relCurve, V0)` (DivisorFamily.lean:166),\
+  \ `h1` into V1 (:168),\n`pieces := Sum.elim (basicOpen . h0) (basicOpen . h1)` (:186)\
+  \ -- so every piece is a basic\nopen of one of the two PINNED charts by construction,\
+  \ whatever the partition data says.\nPer-piece swallow-or-miss already holds for\
+  \ any cover by opens (DivSchemeCertZarConn.lean:98\nuses only openness), so a connected\
+  \ divisor still lands in one piece, and `basicOpen_le` puts\nthat piece inside one\
+  \ chart.  Changing the partition FIELDS cannot change where the pieces\nLIVE.  Recorded\
+  \ as roadmap leaf ...ddr.certificate.joint-cover, status rejected, with the\n10-file\
+  \ rebuild cost if anyone tries it anyway.\n\nThe sharp form to quote from now on:\
+  \ NO repair that keeps the pieces inside the preimages of\na FIXED PAIR of points\
+  \ of P^1 can work.  Only R1 (vary the pinned pair -- needs Aut(P^1)) or\nR2 (generalize\
+  \ the piece type) remain.\n\nSTILL OPEN AND STILL YOURS: over a small finite field,\
+  \ where |P^1(k)| = q + 1 < n + 2, what\nis DivFamZar supposed to be?  Nothing in\
+  \ the three options below has changed.\n\n--- ORIGINAL ---\nCORRECTION TO MY ANSWER\
+  \ ON I-0333, filed in the same round after an adversarial pass. The\nNEGATIVE half\
+  \ of that answer stands unchanged: chart-avoid is NO, decisively, and you do not\n\
+  have to take that decision. The POSITIVE half — \"the repair is cheap and it is\
+  \ not a decision\" —\nwas too optimistic in three ways, and one of them puts a DIFFERENT\
+  \ question back to you.\n\nWHAT SURVIVED. The Z(diamond) chart does not confine\
+  \ its divisors; the counterexample is real;\nthe obstruction is DivEq-invariant\
+  \ and therefore bites DivFamZar itself; confinement is an open\ncondition on the\
+  \ base, so an atlas may legitimately record avoidance. All kernel-checked or\nargued\
+  \ in informal/spec-dd-r.md ADDENDUM 3.\n\nWHAT DID NOT.\n 1. The counterexample\
   \ is FIELD-INDEPENDENT (irreducibility of s(x^2+1)+x needs nothing of k),\n    so\
   \ it also kills the \"assume k infinite\" escape I proposed. Enlarging the field\
   \ does not\n    help.\n 2. The repair RELOCATES the forbidden geometric input rather\
@@ -45,7 +64,7 @@ audience: human
 author: horizon
 source_ref: null
 created_at: '2026-07-25T15:17:21.873800+00:00'
-updated_at: '2026-07-25T15:17:21.873809+00:00'
+updated_at: '2026-07-25T16:22:15.053616+00:00'
 metadata:
   provenance:
     run: 0048

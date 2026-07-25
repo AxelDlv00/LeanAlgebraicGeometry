@@ -1,0 +1,48 @@
+id: AJCR.w4-rep.datum.dat-c.c9-chartlocus.c9a
+title: 'C9a: the class-indexed chartLocus and its openness (divRep-free)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: "DONE 2026-07-26 (run 0048 round 2), commit e47d57de1, Picard/Pic0ChartLocusClass.lean.\n\
+  \n`chartLocus` EXISTS.  Before this commit it had zero code hits tree-wide: eight\n\
+  occurrences, all doc comments, one of which (Pic0ChartLocusFibreField.lean:20) called\
+  \ it\n\"the still-undefined chartLocus\".\n\n  chartLocus pi c : Set (PrimeSpectrum\
+  \ B)\n    := {q | every basic-open cocycle datum with fibre class c has an effective\
+  \ witness\n            divisor with vanishing H^1 at kappa(q)}\n  mem_chartLocus_iff_of_datum\
+  \ -- any ONE presenting datum is a sound and complete test\n  mem_chartLocus_iff_exists\
+  \   -- the forall-form and the exists-form agree\n  isOpen_chartLocus          \
+  \ -- OPENNESS\n\nTHE DESIGN DECISION THE ROW ASKED FOR IS TAKEN: chartLocus is a\
+  \ locus in the PARAMETER\nspace Spec B indexed by a Picard CLASS, not a predicate\
+  \ attached to a chosen datum.  That\ndistinction is the whole content of the commit\
+  \ -- the landed openness engine\n(BasicOpenCocycleDatum.isOpen_setOf_exists_witness_h1_vanishing,\
+  \ Pic0ChartLocusOpen.lean:80)\nis stated for a chosen D, and a chart indexed by\
+  \ a class may not depend on a presentation.\nThe two are reconciled through the\
+  \ fibre-field / class-intrinsicity layer\n(Pic0ChartLocusFibreField.lean:177), which\
+  \ had been landed and left unused.\n\nCertificate-free and divRep-free: no DivFamZar,\
+  \ no IsCertified, no RepresentableBy datum in\nthe cone.  Axioms exactly [propext,\
+  \ Classical.choice, Quot.sound].\n"
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T16:19:13.610781+00:00'
+  provenance:
+    run: 0048
+    session: 0006-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
+  owner: ajcr-w4-rep-free
+  updated_at: '2026-07-25T16:19:14.523052+00:00'
+  pinned_commits:
+  - e47d57de1

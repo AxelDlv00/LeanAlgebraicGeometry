@@ -1,0 +1,40 @@
+id: I-0349
+provider: local
+kind: memory
+body: "DOCSTRING BULLETS IN THIS TREE ARE NOT EVIDENCE THAT A DECLARATION EXISTS.\n\
+  \nEstablished 2026-07-26 (run 0048 round 2) by two independent adversarial audits,\
+  \ and it is\nthe single highest-value generalizable lesson from four rounds of recon\
+  \ on AJCR.\n\nThe pattern: a module docstring lists \"Main declarations\" that the\
+  \ file never declares; a\nroadmap row then quotes the docstring; a lane is then\
+  \ briefed on the roadmap and burns a\nsession looking for a sorry that is not there.\
+  \  Confirmed instances:\n  * `PicEtAff.degAff_mapAlg` and `mem_pic0Subgroup_overSpec_iff`\
+  \ -- the roadmap called them\n    cheap items with a \"verbatim template\"; they\
+  \ are NOT sorries to close, they do not\n    exist as declarations anywhere.\n \
+  \ * `PicRepColimitCompat.lean:54-56` -- an English-only \"hence\" standing in for\
+  \ a proof.\n  * `Pic0ChartLocusFibreField.lean` and `Pic0ChartLocusOpen.lean` both\
+  \ discussed\n    `chartLocus` in prose for months; it had ZERO code hits until 2026-07-26.\n\
+  \  * `Pic0ThetaCocycle.lean:41-48` -- the header asserts the file \"elaborates green\"\
+  ; the\n    file has no olean, ilean, trace or hash, so nothing in it has ever been\
+  \ checked.\n\nRULE: before briefing a lane, or writing a roadmap row, or quoting\
+  \ a \"cheap item\", run\n  /home/axel/.archon-env/bin/horizon search \"<name>\"\
+  \ --json\nand require a hit with a signature.  One second per claim.  Apply this\
+  \ to your own\ndocstrings too: do not announce a theorem you have not declared."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T16:21:19.454369+00:00'
+updated_at: '2026-07-25T16:21:19.454395+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0006-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild

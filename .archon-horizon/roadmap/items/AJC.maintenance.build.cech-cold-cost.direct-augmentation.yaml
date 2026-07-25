@@ -2,13 +2,12 @@ id: AJC.maintenance.build.cech-cold-cost.direct-augmentation
 title: Direct concrete augmentation
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Next structural route: define the concrete section-complex augmentation
-  directly as the Pi.lift of restriction maps near the section complex, prove its
-  coordinate and d-squared-zero facts there, and move the expensive transported-equals-direct
-  mate calculus into CechSectionIdentification. This avoids normalizing the transported
-  augmentation inside the contraction and may shrink both its proof term and import
-  cone.'
-status: pending
+summary: The concrete augmentation is now a direct product of restriction maps in
+  a lightweight module; its coordinate and first-differential identities elaborate
+  at defaults. Transported mate calculus is isolated in the Identification comparison
+  module. The forced degree-one target falls from 16:16.30 and 10,138,220 KiB to 6.85
+  s and 3,225,180 KiB.
+status: done
 kind: refactor
 priority: high
 depends_on: []
@@ -30,3 +29,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.cech-cold-cost
+  updated_at: '2026-07-25T16:21:43.426984+00:00'
+  pinned_commits:
+  - 08c03cbf0

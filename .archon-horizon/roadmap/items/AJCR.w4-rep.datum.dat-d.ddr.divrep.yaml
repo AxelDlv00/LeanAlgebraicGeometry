@@ -3,10 +3,30 @@ title: 'DD-R divRep: affine classification, Zariski/global representability, and
   export'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Package the affine classify/inverse laws, DivFamZar and S6b interfaces, divRepAff,
-  and the global RepresentableBy endpoint. This is the direct consumer of the certificate
-  and RD-N chain.
-status: pending
+summary: 'Package the affine classify/inverse laws, DivFamZar and S6b interfaces,
+  divRepAff, and the
+
+  global RepresentableBy endpoint.  The direct consumer of the certificate and RD-N
+  chain.
+
+
+  STATUS 2026-07-26 (run 0048 round 2): the row MOVED for the first time in this campaign.
+
+  The class side of the backward classification is PROVED and kernel-checked (leaf
+  `sep`),
+
+  which retired one of DivRepAffinePullback''s four obligations WITHOUT U2.  Read
+  `sep` for
+
+  what landed and `u2` for what is left.  Both DivRepClassifyZarSep.lean and DivRepAffKit.lean
+
+  are now imported by the root aggregator, so this row''s claims are kernel-checked
+  by the
+
+  configured build for the first time.
+
+  '
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -28,3 +48,5 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
+  updated_at: '2026-07-25T16:19:12.634188+00:00'
+  owner: ajcr-w4-rep-free

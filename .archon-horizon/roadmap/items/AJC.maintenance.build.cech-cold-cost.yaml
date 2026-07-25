@@ -2,12 +2,12 @@ id: AJC.maintenance.build.cech-cold-cost
 title: Cech degree-one cold-build cost
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'A forced rebuild of CechSectionContractibilityOne with dependencies cached
-  remains the dominant hotspot: 16:16.30 and 10,138,220 KiB in the latest replay,
-  consistent with the earlier 15:03 baseline. An explicit-carrier bottom-homotopy
-  refactor is now ruled out at 400k; the next credible route is to define the concrete
-  augmentation directly and isolate the transported comparison in Identification.'
-status: pending
+summary: The structural direct-augmentation route closes the degree-one cold-build
+  hotspot. With dependencies cached, the forced CechSectionContractibilityOne rebuild
+  falls from 16:16.30 and 10,138,220 KiB to 6.85 s and 3,225,180 KiB; CechAugmentedResolution
+  builds in 16.28 s at 3,382,608 KiB. The rejected explicit-carrier experiment remains
+  recorded as the ruled-out sibling route.
+status: done
 kind: refactor
 priority: normal
 depends_on: []
@@ -29,4 +29,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-25T14:13:49.530539+00:00'
+  updated_at: '2026-07-25T16:21:44.371315+00:00'
+  pinned_commits:
+  - 08c03cbf0

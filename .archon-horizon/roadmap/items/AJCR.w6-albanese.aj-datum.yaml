@@ -1,0 +1,47 @@
+id: AJCR.w6-albanese.aj-datum
+title: Datum-level Abel-Jacobi map and pointing law (ofCurve / comp_ofCurve)
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: "DONE 2026-07-26 (run 0048 round 2), commit 7e5e268a6, Picard/JacobianDataAbel.lean.\n\
+  \nThe datum-level avatars of two of the fifteen frozen Challenge.lean sorries, PROVED:\n\
+  \  JacobianData.ofCurve d P : C -> d.J := d.homEquiv.symm (abelElement C P)\n  \
+  \    the frozen Jacobian.ofCurve (Challenge.lean:125)\n  JacobianData.comp_ofCurve\
+  \ : P >> d.ofCurve P = eta[d.J]\n      the frozen Jacobian.comp_ofCurve (Challenge.lean:130)\n\
+  Both become one-liners the moment DAT-J produces jacobianData, because\nJacobian\
+  \ C := (jacobianData C).J definitionally.\n\nThe map was already in use UNNAMED\
+  \ at JacobianDataBaseChangeAbel.lean:115/:151.  The\npointing law is NOT free: its\
+  \ load-bearing step is homEquiv_one (eta[d.J] is MonObj.one of\nGrpObj.ofRepresentableBy,\
+  \ which mathlib defines as alpha.homEquiv'.symm 1, and\nRepresentableBy.homEquiv'\
+  \ IS homEquiv, so the two cancel -- the kernel confirms the defeq).\n\nSTILL OPEN\
+  \ in Wave 6's frozen trio: exists_unique_ofCurve_comp (Challenge.lean:141), the\n\
+  Albanese universal property, which has NO avatar anywhere in the tree.\n\nNOTE ON\
+  \ THE FROZEN SIGNATURES (archon-protected.yaml:2-4,20): AlgebraicGeometry.Jacobian's\n\
+  signature must not be modified, so a hypothesis-carrying `Jacobian` is FORBIDDEN.\
+  \  The only\nadmissible discharge is Jacobian C := (jacobianData C).J.  Do not propose\
+  \ a conditional\nrestatement of the challenge.\n"
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T16:19:49.529748+00:00'
+  provenance:
+    run: 0048
+    session: 0006-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w6-albanese
+  owner: ajcr-w4-rep-free
+  updated_at: '2026-07-25T16:19:50.492732+00:00'
+  pinned_commits:
+  - 7e5e268a6

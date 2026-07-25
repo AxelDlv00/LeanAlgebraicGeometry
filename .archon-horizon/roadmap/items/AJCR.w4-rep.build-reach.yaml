@@ -1,18 +1,110 @@
 id: AJCR.w4-rep.build-reach
-title: 'Build reachability: 95 Picard modules sit outside lake''s default target'
+title: 'Build reachability: ~91 Picard modules still outside lake''s default target
+  (5 rooted 2026-07-26)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'INTEGRITY ISSUE, not cosmetics (found 2026-07-25, run 0048 recon; partially
-  addressed by fd46fcf83 for the Zar cert chain). About 95 modules — every DivRep*,
-  HighWindow* and Redesign* file — are not reachable from lake''s default target,
-  and DivRepAffKitZar.lean has no olean at all. Consequences: (i) their proofs are
-  never kernel-checked by the configured final build, so a break there is invisible
-  until someone opens the file; (ii) I-0320''s claim that ''no consumer needs a global
-  certificate'' holds only modulo the UNBUILT DivRepAffKitZar — the root-reachable
-  divRepPullAt (DivRepAffKit.lean:92) still demands a full CertifiedDivisorFamily
-  over the chart ring. ACTION: add the missing imports to AlgebraicJacobian.lean in
-  dependency order and fix whatever the build then reports. Cheap, and it is what
-  makes the certificate relaxation actually load-bearing.'
+summary: 'INTEGRITY ISSUE, re-measured 2026-07-26 (run 0048 round 2, independently
+  recomputed twice
+
+  and reconciled).  The old numbers on this row were right about reachability and
+  WRONG about
+
+  risk, in the optimistic direction; both are corrected here.
+
+
+  MEASURED: 616 .lean under AlgebraicJacobian/ (620 now), 520 reachable from the root
+  before
+
+  this round, 0 dangling imports, no module imports `AlgebraicJacobian` so no cycle
+  is
+
+  possible.  Exactly ONE real sorry outside Challenge.lean in the whole tree
+
+  (Pic0ThetaCocycle.lean:268); Challenge.lean has 15 (:99,108,113,117,121,126,134,147,156,
+
+  157,158,248,259,272,283).  Zero `axiom` declarations, zero `native_decide`, tree-wide.
+
+
+  MUCH CHEAPER THAN ADVERTISED: 89 of the 96 then-unreachable modules ALREADY carry
+  oleans,
+
+  i.e. they were elaborated at some point.  Only 5 have genuinely never been elaborated
+
+  (DivRepAffKitZar, DivSchemeRedesignFlatIdealFibre, DivSchemeRedesignLocalIdealFibre,
+
+  DivSchemeRedesignPointPrime, ScratchChartLocal), plus Pic0ThetaCocycle which must
+  not be
+
+  rooted.  "95 modules never kernel-checked" was wrong.
+
+
+  MUCH RISKIER THAN ADVERTISED, and this is the binding constraint: staleness was
+  undercounted
+
+  >=3.3x (mtime only, not propagated through reverse imports, and lake''s own .trace/
+
+  .trace.nobuild depHash records were not read -- at least 22 of 89 are dirty by lake),
+  and the
+
+  89-module patch carries 237 raised-maxHeartbeats options across 57 files, roughly
+  DOUBLING
+
+  the project''s heavy-elaboration surface.  Under I-0227 (this machine OOM-kills
+  at ~58GB in
+
+  one lean worker) that, not soundness, is what makes a big-bang patch a bad idea.  Root
+  in
+
+  small batches, each with a green `lake build`.
+
+
+  LANDED THIS ROUND (4 modules, each with a full green default build after it):
+
+  DivRepClassifyZarSep, DivRepAffKit, DivRepAffPullbackReduce, JacobianDataAbel,
+
+  Pic0ChartLocusClass.  DivRepAffKit had an olean from Jul 21, no importer, and was
+  dirty by
+
+  lake; it rebuilt green in 149s.
+
+
+  CORRECTION TO THE RECORD, and please stop quoting the old claim: Picard/Pic0ThetaCocycle.lean
+
+  DOES PARSE.  The `by` at :193 followed by `exact rfl` at :194 is a term-position
+  `by`, not a
+
+  stray tactic; I-0348''s "the entire file fails to elaborate" is not established.  What
+  IS
+
+  true, and is the real problem, is that the file has NO olean, ilean, trace or hash,
+  so
+
+  nothing in it -- including that `exact rfl` and the header''s own "elaborates green"
+  claim --
+
+  has ever been checked by anything.  Its header (:47-48) forbids rooting it until
+  :268''s
+
+  sorry is closed.  Treat it as unverified, not as broken.
+
+
+  NEXT SAFE BATCH (all preconditions independently verified): DivSchemeFlatteningBridge
+  (cone
+
+  111 modules, 0 unreachable deps, sorry-free, no raised maxHeartbeats) and EntryIdeal
+  (cone =
+
+  itself).  CAVEAT worth taking seriously: both have ZERO consumers in this project,
+  and
+
+  EntryIdeal''s real consumer chain (~2,839 lines) exists only in the sibling project.  The
+
+  decision to take there is "port the sibling flattening chain or delete EntryIdeal",
+  not
+
+  "root the orphan".
+
+  '
 status: pending
 kind: workspace
 priority: high
@@ -35,3 +127,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep
+  updated_at: '2026-07-25T16:21:02.078115+00:00'
+  pinned_commits:
+  - 0b3ab49b8
+  - b72270288

@@ -1,30 +1,82 @@
 id: I-0348
 provider: local
 kind: issue
-body: "BROKEN SOURCE: `Picard/Pic0ThetaCocycle.lean` does not parse — `pic0Theta_id`\
-  \ and `pic0Theta_comp` are NOT proved\n\n`AlgebraicJacobian/Picard/Pic0ThetaCocycle.lean:193-194`\
-  \ has a bare `by` on its own line inside an\nalready-open tactic block, followed\
-  \ by `exact rfl`:\n\n```\n  rw [picEtCrossBaseInv_val, picEtMap_val]\n  -- (25 lines\
-  \ of PLAN comments)\n  by\n    exact rfl\n```\n\n**`by` is a term, not a tactic**,\
-  \ so this is a syntax error. Reproduced on a minimal snippet\n(`lean_run_code`,\
-  \ run 0048 janitor pass): `unexpected token 'by'; expected command` plus\n`unsolved\
-  \ goals` on the enclosing theorem. The parser therefore aborts the tactic block\
-  \ at line\n193 and resumes at command level on a bogus token, so **the entire file\
-  \ fails to elaborate**:\n`pic0Theta_id` is left with unsolved goals and everything\
-  \ after it — including `pic0Theta_comp`\nand the whole `Cocycle` section — is not\
-  \ compiled at all.\n\n**Why nobody noticed.** The file is unreachable from `AlgebraicJacobian.lean`\
-  \ (no import\nanywhere; `grep` finds zero references outside the file itself), so\
-  \ `lake build` never touches\nit. This is exactly the trap recorded in `I-0324`.\n\
-  \n**What the record currently claims, and is wrong.**\n- The file docstring (`:45-48`)\
-  \ still says \"two `sorry`s\"; only one survives (`:268`), because the\n  first\
-  \ was replaced by this broken `by`/`exact rfl` rather than by a proof.\n- `I-0309`\
-  \ comment `C-0003` and workspace `roadmap.md` describe the file as merely *unwired*\
-  \ with\n  one open `sorry`. It is worse than unwired: it is unparseable, and the\
-  \ Leg-4 atom recorded as\n  proved in `I-0224` is not proved.\n\n**Action (not taken\
-  \ here — janitor does not edit Lean).** Either restore the `sorry` with the\ninline\
-  \ PLAN intact so the file is at least honest and elaborable, or finish the Leg-4\
-  \ scheme\nidentity and close it properly. Do not wire the file into the root until\
-  \ it elaborates."
+body: '**CORRECTED 2026-07-26 (run 0048 round 2): the headline claim is WRONG. The
+  file PARSES.**
+
+
+  The original report below said `Picard/Pic0ThetaCocycle.lean` "does not parse" because
+  of a
+
+  bare `by` at :193-194, and concluded that "the entire file fails to elaborate" and
+  that
+
+  `pic0Theta_id` / `pic0Theta_comp` are not proved.  Two independent audits this round
+
+  checked the bytes: :185-192 is a `--` comment block, :193 is `  by`, :194 is
+
+  `    exact rfl`, :196 is `end Identity`.  That is a `by` in TERM position closing
+  the
+
+  proof, not a stray tactic.  The original diagnosis was grammar-inferred from a minimal
+
+  snippet in a different context, never observed on this file.
+
+
+  **WHAT IS ACTUALLY WRONG, and it is worth recording:** the file has NO build artifacts
+  at
+
+  all -- no `.olean`, no `.ilean`, no `.trace`, no `.hash`.  It is one of only five
+  modules in
+
+  the 620-module tree that have genuinely never been elaborated.  So nothing in it
+  is
+
+  verified: not the `exact rfl`, not the ~300 lines of `pic0Theta` / `cocycleRHS`
+  /
+
+  `RelPicTransportFamily.picEtAffHom_congr` / the Leg-1..3 reduction, and not the
+  header''s own
+
+  claim at :41-43 that the file "elaborates green".  Its :268 `sorry` is the ONLY
+  real sorry
+
+  in the entire tree outside `Challenge.lean`.
+
+
+  **Action, unchanged in substance:** do not root it (its own header at :47-48 forbids
+  that
+
+  until :268 closes).  But the first step is now a single `lake env lean` on the file
+  to find
+
+  out what it actually says -- not an edit.  Nobody has ever run one.
+
+
+  Stale-record cleanup that follows: the file docstring at :45-48 still says "two
+  sorrys";
+
+  there is one.  `I-0309` comment `C-0003` and the workspace `roadmap.md` describe
+  the file as
+
+  merely unwired, which is closer to the truth than this issue''s own headline was.
+
+
+  --- ORIGINAL REPORT (headline refuted; kept for the anchors) ---
+
+
+  BROKEN SOURCE: `Picard/Pic0ThetaCocycle.lean` does not parse -- `pic0Theta_id` and
+
+  `pic0Theta_comp` are NOT proved.  `AlgebraicJacobian/Picard/Pic0ThetaCocycle.lean:193-194`
+
+  has a bare `by` on its own line inside an already-open tactic block, followed by
+
+  `exact rfl`.  The file is unreachable from `AlgebraicJacobian.lean` (no import anywhere),
+  so
+
+  `lake build` never touches it -- the trap recorded in `I-0324`.
+
+  '
 labels:
 - agent-ready
 status: open
@@ -35,7 +87,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-25T15:22:36.707996+00:00'
-updated_at: '2026-07-25T15:22:36.708008+00:00'
+updated_at: '2026-07-25T16:22:13.506087+00:00'
 metadata:
   provenance:
     run: 0048

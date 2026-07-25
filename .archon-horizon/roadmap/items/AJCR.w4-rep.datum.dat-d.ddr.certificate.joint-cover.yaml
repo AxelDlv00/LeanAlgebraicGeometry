@@ -1,0 +1,49 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.joint-cover
+title: Relax FinCoverData's chart-wise partitions to a joint covering (I-0346's cheaper
+  option)
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: "REJECTED 2026-07-26 (run 0048 round 2), on a source fact, before any Lean\
+  \ was written.\n\nI-0346 recorded a cheaper untried repair than R1/PGL_2: \"relaxing\
+  \ just the chart-wise\npartitions of unity in FinCoverData to a JOINT covering drops\
+  \ the requirement from two\navoided points to ONE.  Worth trying before anyone builds\
+  \ PGL_2.\"\n\nIT BUYS NOTHING, and the reason is a typing fact, not a proof attempt.\
+  \  FinCoverData\n(Picard/DivisorFamily.lean:160-176) types its pieces INTO the charts:\n\
+  \  h0 : Fin m0 -> Gamma(relCurve, V0)      (:166)\n  h1 : Fin m1 -> Gamma(relCurve,\
+  \ V1)      (:168)\n  pieces := Sum.elim (basicOpen . h0) (basicOpen . h1)   (:186)\n\
+  so every piece is a basic open OF ONE OF THE TWO PINNED CHARTS by construction,\
+  \ whatever\nthe partition data says.  Per-piece swallow-or-miss already holds for\
+  \ ANY cover by opens\n(DivSchemeCertZarConn.lean:98 uses only openness of pieces),\
+  \ so a connected divisor still\nlands in one piece, and basicOpen_le puts that piece\
+  \ inside one chart.  The joint-covering\nrelaxation changes the partition FIELDS;\
+  \ it cannot change where the pieces live.\n\nSHARP FORM, which is what should be\
+  \ quoted from now on: no repair that keeps the pieces\ninside the preimages of a\
+  \ FIXED PAIR of points of P^1 can work.  Any real repair must\neither vary the pinned\
+  \ pair (leaf p1-aut, the R1 route) or generalize FinCoverData's piece\nTYPE away\
+  \ from the two charts (the recorded R2 alternative).\n\nCost of a rebuild if anyone\
+  \ tries it anyway: partition0/partition1 have ~31 grep hits over\n10 files, and\
+  \ thetaIdealDatum copies them into BasicOpenCocycleDatum\n(DivisorThetaDatum.lean:397-401),\
+  \ which needs chart-ring Ideal.span_range = top\n(GluedSheafEngine.lean:84-92) for\
+  \ Serre vanishing.  It is a 10-file refactor for zero\nmathematical gain.\n"
+status: rejected
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T16:19:48.561306+00:00'
+  provenance:
+    run: 0048
+    session: 0006-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate

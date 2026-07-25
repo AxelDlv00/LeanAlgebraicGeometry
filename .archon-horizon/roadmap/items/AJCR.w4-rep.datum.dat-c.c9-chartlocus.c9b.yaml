@@ -1,0 +1,61 @@
+id: AJCR.w4-rep.datum.dat-c.c9-chartlocus.c9b
+title: 'C9b: f_c and the (f, hf) chart pair (CERT-Sigma-gated; developable parametrically)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'The C9 DELIVERABLE PROPER: f_c, the chart morphism, and the (f, hf) pair
+  that
+
+  pic0RepresentableByOfCharts (Pic0SigmaSheaf.lean:161) consumes.
+
+
+  HONEST GATE, corrected 2026-07-26 (run 0048 round 2, adversarially verified): this
+  half is
+
+  NOT merely divRep-gated, it is CERT-Sigma-gated -- it needs the universal family
+  from a
+
+  DivRepGlobalData term, of which there are zero, AND the shifted-datum constructor,
+  for
+
+  which no BasicOpenCocycleDatum.mul / tensor exists anywhere.  The four roadmap comments
+
+  under dat-c calling the remainder "C9-gated plumbing, no math left" are REFUTED
+  for this
+
+  half; they were written before the gate existed and were never tested.
+
+
+  What is not blocked is the parametric idiom: c9b can be developed over a section
+  variable
+
+  `(divRep : (divFunctor C pi g).RepresentableBy DivOver)`, the pattern already landed
+  at
+
+  DivRepKit.lean:113.  A lane that does that produces real, checkable mathematics
+  today
+
+  without waiting for DAT-J.
+
+  '
+status: blocked
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T16:19:15.458048+00:00'
+  provenance:
+    run: 0048
+    session: 0006-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
