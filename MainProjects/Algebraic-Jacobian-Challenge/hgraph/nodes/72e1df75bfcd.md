@@ -11,12 +11,12 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.overResHom_fromGluedHom
 type: lean
-updated: '2026-07-25T15:02:37'
+updated: '2026-07-26T05:02:39'
 ---
 lemma overResHom_fromGluedHom (k : κ) :
     Scheme.overResHom T (W k) ≫ fromGluedHom W hW = glueChartHom W hW k := by
   apply Over.OverMorphism.ext
-  show (W k).ι ≫ inv (opensCover T.left W hW).fromGlued = (covGD W hW).ι k
+  change (W k).ι ≫ inv (opensCover T.left W hW).fromGlued = (covGD W hW).ι k
   rw [IsIso.comp_inv_eq]
   exact (Scheme.Cover.ι_fromGlued (opensCover T.left W hW) k).symm
 
