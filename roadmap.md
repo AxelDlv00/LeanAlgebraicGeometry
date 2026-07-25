@@ -8,27 +8,22 @@ A high-level, mathematical checklist across the scope's member projects.
 - [~] in progress (declarations exist, residual `sorry`)
 - [ ] not started (no Lean yet — blueprint only, or theme not begun)
 
-**Status snapshot** *(open `sorry` counts over each project's `AlgebraicJacobian/` source tree
-via a Lean comment-stripping pass — comments/docstrings excluded; baseline measured 2026-06-30,
-with separately dated rows refreshed later. The two active loops move these between pushes;
-the **[live dashboard](https://axeldlv00.github.io/LeanAlgebraicGeometry/)**
-holds the authoritative per-node counts. **v4.31 note (repaid 2026-07-03):** the mathlib
-v4.31.0 bump had introduced ~20–30 mechanical **migration-interim** `sorry`s; all are now
-closed — the AJC in-tree copies (T8, commit `eed5383`), the `GR-Quot-Closure` and
-`Cech-Cohomology` standalones (back-ports, both verified green end-to-end), and
-`MR0555258` (migrated v4.30.0→v4.31.0, first green build). No migration debt remains.):*
+**Status snapshot** *(open `sorry` counts over each project's Lean source tree via a
+comment-stripping pass — comments/docstrings excluded; measured 2026-07-25. The active loops move
+these between pushes; the **[live dashboard](https://axeldlv00.github.io/LeanAlgebraicGeometry/)**
+holds the authoritative per-node counts. All projects are on Lean/Mathlib `v4.31.0` with no
+migration debt.)*
 
 | Project | Stage | Open `sorry` |
 | --- | --- | --- |
-| Algebraic-Jacobian-Challenge-Rebuild | prover ✨ | 13 — all of them the protected `Challenge.lean` targets; **zero infrastructure sorries**. Wave 1 complete 2026-07-11 (see the rebuild section below) |
-| Algebraic-Jacobian-Challenge | prover | 24 *(refreshed 2026-07-24; grouped by the nested AJC roadmap below)* |
-| Cech-Cohomology | ✅ complete · merged → AJC | 0 — standalone green, v4.31-clean ✨ |
-| Line-Bundle-Comparison-Iso | prover | 3 ✨ |
-| Albanese | prover | 17 |
-| Quot-Foundations | ⏸️ deferred | 21 |
-| GR-quot_closure | ✅ complete · merged → AJC | 0 — standalone green, v4.31-clean ✨ |
-| MR0555258-compactifying-picard | prover | 1 ✨ |
-| 35 related-paper projects | 📝 blueprint only | 0 Lean (stub aggregators) |
+| Algebraic-Jacobian-Challenge-Rebuild | prover ✨ | 16 — 15 protected `Challenge.lean` targets + 1 in the unwired `Picard/Pic0ThetaCocycle.lean` lane (not imported from the root) |
+| Algebraic-Jacobian-Challenge | prover | 24 *(grouped by the nested AJC roadmap below)* |
+| Cech-Cohomology | ✅ complete · merged → AJC | 0 |
+| GR-Quot-Closure | ✅ complete · merged → AJC | 0 |
+| Line-Bundle-Comparison-Iso | ✅ complete · merged → AJC | 0 |
+| Albanese | prover | 11 |
+| Picard-IdentityComponent | prover | 16 |
+| MR0555258-Compactifying-Picard | prover | 1 |
 
 ---
 
@@ -36,23 +31,21 @@ closed — the AJC in-tree copies (T8, commit `eed5383`), the `GR-Quot-Closure` 
 
 ### Core algebraic-geometry engine
 
-- `Line-Bundle-Comparison-Iso` → `Algebraic-Jacobian-Challenge` (largest leverage: unblocks the Picard / comparison-iso substrate; merges back the `A.1.c.sub` package)
-- `Albanese` → `Algebraic-Jacobian-Challenge` (extracted Albanese / abelian-variety leg — Albanese universal property, codim-one & Thm 3.2 rational-map extension, Auslander–Buchsbaum/coheight bridge; merges back) ✨ 2026-06-20
-- `Cech-Cohomology` ↔ `Algebraic-Jacobian-Challenge` (the Čech `Rⁱf_*` engine is the cohomological substrate; proved sorry-free here, **merged sorry-free into the AJC tree** ✨ 2026-06-19 — all Čech MERGE-STUBs restored with the working proofs, AJC's full `lake build` is green and the capstone `cech_computes_higherDirectImage` is axiom-clean)
-- `GR-quot_closure` → `Algebraic-Jacobian-Challenge` (Grassmannian-quotient representability H⁰ leg — `Grassmannian.represents`, SNAP section graded ring/module, cell-chart/glue-descent atlas; **merged sorry-free into the AJC tree** ✨ 2026-06-22 via a `union` merge, AJC `lake build` green) — originally extracted from `Quot-Foundations`
-- `Quot-Foundations` → `Algebraic-Jacobian-Challenge` (the H⁰ Picard-representability cone — flat base change, Grassmannian, Quot — merges back; **deferred**, active work now lives in the `GR-quot_closure` extraction)
+- `Line-Bundle-Comparison-Iso` → `Algebraic-Jacobian-Challenge` (the comparison-iso substrate giving `Pic♯` its group law; **merged sorry-free** ✨)
+- `Albanese` → `Algebraic-Jacobian-Challenge` (Albanese universal property, codim-one & Thm 3.2 rational-map extension, Auslander–Buchsbaum/coheight bridge; merges back) ✨ 2026-06-20
+- `Cech-Cohomology` ↔ `Algebraic-Jacobian-Challenge` (the Čech `Rⁱf_*` engine; **merged sorry-free** ✨ 2026-06-19, capstone `cech_computes_higherDirectImage` axiom-clean)
+- `GR-Quot-Closure` → `Algebraic-Jacobian-Challenge` (Grassmannian-quotient representability H⁰ leg — `Grassmannian.represents`, SNAP section graded ring/module, cell-chart/glue-descent atlas; **merged sorry-free** ✨ 2026-06-22)
+- `Picard-IdentityComponent` → `Algebraic-Jacobian-Challenge` (identity-component / `Pic⁰` group-scheme substrate)
 
-### Related papers → AG base
+### Related papers
 
-The 35 related-paper formalisations all depend on the core AG engine (schemes, cohomology,
-curves, Picard) and are **blueprint-stage only**. Their per-paper `Requires` / `New infra`
-breakdown, the shared-infrastructure vocabulary, coverage tiers, and the formalization-readiness
-ordering now live in the dedicated **[Related-Papers roadmap](SubProjects/RelatedPapersFormalisation/roadmap.md)** ✨,
-so this scope roadmap stays focused on the Jacobian-challenge critical path.
+`SubProjects/RelatedPapersFormalisation/` currently holds one registered project,
+`MR0555258-Compactifying-Picard`; the broader related-paper catalogue is blueprint-stage and does
+not feed the Jacobian-challenge critical path.
 
 ---
 
-## Algebraic-Jacobian-Challenge-Rebuild  *(from-scratch rebuild — prover stage, 13 open `sorry` = exactly the protected `Challenge.lean` targets)* ✨
+## Algebraic-Jacobian-Challenge-Rebuild  *(from-scratch rebuild — prover stage, 16 open `sorry`)* ✨
 
 **Goal:** the EXTENDED challenge (core eight + `Jacobian.functor` + field base change with
 cocycle coherence), rebuilt clean/general/mathlib-idiomatic per the `rebuild` task charter.
@@ -66,19 +59,19 @@ functor (curve-specialized Kleiman, no Quot schemes), Albanese via Milne III.6.1
   topological quasi-finiteness + ZMT); `ModuleCat k` sheaf cohomology with affine `H¹'` vanishing;
   Mayer–Vietoris (0,1)-slice + two-cover `H1Cok` bridge (no affine-intersection hypothesis!);
   two-lattice ladder ⇒ **`Module.Finite k H¹(C,𝒪_C)`** — `genus` defined AND correct, axiom-clean.
-- [x] **Wave 2 item 6 — rigidity** ✨ — Mumford Form-I rigidity + Milne I 1.2 (pointed morphism
-  of group schemes is a homomorphism), hypotheses weaker than Milne's.
-- [~] **Wave 2 item 7 — χ-ledger / RR-lite** (next; twisted two-cover carrier landed as input)
-- [~] **Wave 3 — Picard functor** (design spec in progress: cocycle `Ȟ¹(𝒪ˣ)` carrier,
-  H_T-coset relative functor, pinned `RepresentableBy` datum; capability survey + old-draft
-  post-mortem lessons committed in `informal/`)
-- [ ] **Waves 4–7** — representability [RG], Pic⁰ abelian-variety package [RG], Albanese [RG],
-  functorial layer (cheap by design given the pin)
+- [x] **Wave 2 — rigidity (2a) and the χ-ledger / RR-lite (2b)** ✨ — Mumford Form-I rigidity +
+  Milne I 1.2 (a pointed morphism of group schemes is a homomorphism), hypotheses weaker than
+  Milne's; Euler-characteristic ledger complete.
+- [x] **Wave 3 — relative Picard functor** ✨ — cocycle `Ȟ¹(𝒪ˣ)` carrier, étale-plus construction.
+- [~] **Wave 4 — representability of `Pic⁰`** (active; `horizon roadmap list --focus AJCR.w4-rep`
+  is the authoritative breakdown — the live gate is the DD-R certificate lane)
+- [~] **Waves 5–7** — Pic⁰ abelian-variety package, Abel–Jacobi / Albanese, functoriality and
+  base change of fields (each partly landed; see the structured roadmap)
 
 Blueprint: Challenge/BaseChange/Curves/Algebra/Cohomology/AbelianVariety chapters all synced
 1-to-1 with the Lean, `\leanok` only after kernel checks, `\source{}` read-before-cite.
 
-## Algebraic-Jacobian-Challenge  *(core engine -- prover stage, 24 open `sorry` as of 2026-07-24)*
+## Algebraic-Jacobian-Challenge  *(core engine — prover stage, 24 open `sorry`)*
 
 **Goal:** construct the Jacobian of a smooth proper geometrically integral curve as
 `Pic^0`, prove that it is an abelian variety of dimension equal to the genus, and
@@ -135,18 +128,17 @@ complex computes `Rⁱf_* F`. Unconditional (no enough-injectives appeal).
 - [x] **PushPull functoriality** — `pushPullMap` composition, leg coherence, pentagon
 - [x] **Comparison theorem `cech_computes_higherDirectImage`** *(proved iter-079, 0 sorries)*
 
-## Line-Bundle-Comparison-Iso  *(prover stage — extraction hub → Jacobian, 3 open `sorry`)* ✨
+## Line-Bundle-Comparison-Iso  *(✅ complete — sorry-free; deliverable merged → AJC)* ✨
 
 **Goal:** the comparison-isomorphism substrate giving `Pic♯_{C/k}` its abelian-group
-structure (the A.1.c.sub package; merges back into the Jacobian challenge).
+structure (the A.1.c.sub package; merged back into the Jacobian challenge).
 
-- [x] **Stalk-tensor / internal-hom machinery** — `TensorObjSubstrate/StalkTensor`, `PresheafInternalHom` **sorry-free**
-- [x] **Slice-dual transport iso (DUAL route)** — `TensorObjSubstrate/DualInverse`, `DualInverse/SliceTransport` **sorry-free**
-- [x] **Line-bundle pullback / relative Pic functor** — `LineBundlePullback`, `RelPicFunctor` **sorry-free**; seed `pullback_tensor_iso_loctriv` delivered ✨
-- [x] **Bridge B2 terminal blocker** — `TensorObjInverse.restrictFunctorIsoPullback_comp_compat` is closed axiom-clean; `TensorObjInverse.lean` builds green with the blocker gone ✨
-- [~] **Terminal comparison inverse** — **3 residual `sorry`**: the keystone `trivialisation_restrict_compat` (`TensorObjInverse`, iter-103 effort-broken into 3 seams), a dead-dup stub (`TensorObjSubstrate`), and one infrastructure `sorry` (`TrivialisationRestrict`) ✨
+- [x] **Stalk-tensor / internal-hom machinery** — `TensorObjSubstrate/StalkTensor`, `PresheafInternalHom`
+- [x] **Slice-dual transport iso (DUAL route)** — `TensorObjSubstrate/DualInverse`, `DualInverse/SliceTransport`
+- [x] **Line-bundle pullback / relative Pic functor** — `LineBundlePullback`, `RelPicFunctor`
+- [x] **Terminal comparison inverse** — `TensorObjInverse` closed, including the keystone `trivialisation_restrict_compat` ✨
 
-## Albanese  *(prover stage — extraction → Jacobian, 17 open `sorry`)* ✨
+## Albanese  *(prover stage — extraction → Jacobian, 11 open `sorry`)* ✨
 
 **Goal:** the Albanese universal property of `Pic⁰` (Milne III §6 Prop 6.1, seed
 `thm:albanese_universal_property`) and the rational-map-extension machinery feeding the
@@ -158,52 +150,28 @@ the parent ✨ 2026-06-20.)*
 - [x] **Auslander–Buchsbaum / coheight bridge** — `Albanese/AuslanderBuchsbaum`, `Albanese/CoheightBridge` **sorry-free**
 - [x] **Rigidity lemma + structure-sheaf module substrate** — `RigidityLemma`, `Cohomology/StructureSheaf*` **sorry-free**
 - [~] **Albanese universal property** — `Albanese/AlbaneseUP` (×7): the headline `Pic.albaneseUP` + universal-map descent
-- [~] **Codim-one & Thm 3.2 rational-map extension** — `Albanese/CodimOneExtension` (×3), `Albanese/Thm32RationalMapExtension` (×2)
+- [~] **Codim-one rational-map extension** — `Albanese/CodimOneExtension` (×1)
 - [~] **FGA Picard representability slice** — `Picard/FGAPicRepresentability` (×2)
-- [~] **Genus-0 base + Weil-divisor riders** — `Genus0BaseObjects/BareScheme` (×1, `projectiveLineBar_geomIrred` scaffold), `Genus0BaseObjects/Points` (×1), `RiemannRoch/WeilDivisor` (×1)
+- [~] **Weil-divisor rider** — `RiemannRoch/WeilDivisor` (×1); the genus-0 / Route-C block is retirement work (task `T13`, inbox `I-0106`: `PrimeDivisor`/`order` are load-bearing for codim-one, carve rather than delete)
 
-## Quot-Foundations  *(⏸️ deferred — 21 open `sorry`; active work moved to subproject extractions)*
-
-**Goal:** the Čech-independent (i = 0) leg of FGA Picard representability — flat base
-change, generic flatness, and Quot/Grassmannian foundations. The Grassmannian-quotient
-representability endgame is carved into the sibling extraction `GR-quot_closure` (below); the
-flat-base-change leg is now pursued via the Čech route in AJC, and proofs merge back here.
-**Deferred:** the directory is parked as `Quot-Foundations-[deferred_to_subprojects]` while
-that extraction carries the active proving.
-
-- [x] **Grassmannian construction & gluing** — `GrassmannianCells`, `GlueDescent` **sorry-free** (rank-quotient setoid, charts, transition cocycle, effective descent)
-- [x] **RelativeSpec / flattening stratification** — `RelativeSpec`, `FlatteningStratification` **sorry-free**
-- [x] **Graded Hilbert–Serre helper** — `GradedHilbertSerre`, `RegroupHelper` **sorry-free**
-- [~] **Flat base change (degree 0)** — `Cohomology/FlatBaseChange` (×4), `FlatBaseChangeGlobal` (×1); pushforward Mayer–Vietoris / finite-generation criteria
-- [~] **Tautological / universal quotient** — `GrassmannianQuot` (×3): `represents` done, `tautologicalQuotient_epi` closing
-- [~] **Quot scheme** — `QuotScheme` (×4): `RepresentableBy` upgrade + Quot-representability core
-- [~] **Section graded ring (SNAP)** — `Picard/SectionGradedRing` (×9): cast coherence → Hilbert polynomial *(shared with the sibling extractions)*
-
-## GR-quot_closure  *(✅ complete — core deliverable merged sorry-free into AJC ✨ 2026-06-22; standalone fully green + sorry-free since 2026-07-03 — the v4.31 `SectionGradedRing` red build and the 3 interim `sorry`s are closed)*
+## GR-Quot-Closure  *(✅ complete — sorry-free, deliverable merged → AJC ✨ 2026-06-22)*
 
 **Goal:** representability of the relative Grassmannian — the Čech-independent (H⁰) leg that
 builds `Grass(V, d)` from affine charts via the `GL_d` cocycle and proves it represents the
-rank-`d`-quotient functor. Extracted from `Quot-Foundations`. **Merged back into
-`Algebraic-Jacobian-Challenge` ✨ 2026-06-22** (union merge): the five sorry-free files +
-`Grassmannian.represents` + the SNAP graded ring/module lane are now in the AJC tree, AJC
-`lake build` green. *(The configured `enrich` scope was a no-op — all shared declarations
-were identical or target-stronger — so the merge ran as a `union` to carry the real,
-non-shared deliverable; three `Scheme.Modules.*` name collisions resolved by renaming the
-imported copies.)*
+rank-`d`-quotient functor. **Merged back into `Algebraic-Jacobian-Challenge`** ✨ 2026-06-22.
 
-- [x] **Grassmannian cells, gluing & descent** — `GrassmannianCells`, `GrassmannianQuot`, `GlueDescent`, `GradedHilbertSerre`, `RelativeSpec` **sorry-free** *(now also in AJC)*
-- [x] **Section graded ring (SNAP)** — `Picard/SectionGradedRing` **sorry-free** through the graded ring and module stretch ✨ *(now also in AJC)*
-- [x] **Quot scheme** — `QuotScheme` **sorry-free** ✨ *(2026-06-22)*: the four χ-blocked endgame stubs (`hilbertPolynomial`, `QuotFunctor`, the `Grassmannian` functor def, `Grassmannian.representable` — the Hilbert-polynomial/χ formulation, distinct from the proved `Grassmannian.represents`) were **removed** from this leg, since they need the cohomology / Euler-characteristic engine that is out of scope for the H⁰ Grassmannian deliverable; the file's sorry-free quasi-coherent-descent machinery is retained and `lake build` is green (8317 jobs). *(The same stubs still live in the AJC tree's own `Picard/QuotScheme` copy — see the AJC §"Picard representability cone" line — and remain open there.)*
+- [x] **Grassmannian cells, gluing & descent** — `GrassmannianCells`, `GrassmannianQuot`, `GlueDescent`, `GradedHilbertSerre`, `RelativeSpec` *(now also in AJC)*
+- [x] **Section graded ring (SNAP)** — `Picard/SectionGradedRing` through the graded ring and module stretch ✨ *(now also in AJC)*
+- [x] **Quot scheme** — the file's quasi-coherent-descent machinery is sorry-free; the four χ-blocked endgame stubs (Hilbert polynomial, `QuotFunctor`, the `Grassmannian` functor def, `Grassmannian.representable`) were removed from this leg as out of its H⁰ scope and remain open in the AJC tree's own copy
 
----
+## Picard-IdentityComponent  *(prover stage — 16 open `sorry`)*
 
-## Related papers  *(📝 blueprint stage — moved to a dedicated roadmap ✨ 2026-06-30)*
+**Goal:** the identity-component / `Pic⁰` group-scheme substrate (the A.3 leg), in
+`Picard/IdentityComponent` (×9) and `Picard/FGAPicRepresentability` (×7). Roadmap node
+`PIC.idcomp` is `blocked` pending the AJC representability inputs.
 
-The 35 related-paper projects now live in their own roadmap to keep this file readable:
-**[SubProjects/RelatedPapersFormalisation/roadmap.md](SubProjects/RelatedPapersFormalisation/roadmap.md)**.
+## MR0555258-Compactifying-Picard  *(prover stage — 1 open `sorry`)*
 
-They are blueprint-only (Lean targets are stub aggregators, 0 real declarations) and do **not**
-directly contribute to the Jacobian challenge. Five are formalization-ready *now* (`R0` —
-`MR2223407` Picard scheme, `MR2223407` Hilbert/Quot, `MR3267585` cohomology & base change,
-`MR1432198`, `MR1681097`); the readiness ordering (`R0`–`R3`) and full per-paper catalogue are
-in that roadmap.
+D'Souza's compactification of the Picard scheme, under
+`SubProjects/RelatedPapersFormalisation/`; roadmap node `MR.pic`. Not on the
+Jacobian-challenge critical path.

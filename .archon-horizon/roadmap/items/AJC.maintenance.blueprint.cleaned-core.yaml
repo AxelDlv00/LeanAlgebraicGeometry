@@ -2,10 +2,10 @@ id: AJC.maintenance.blueprint.cleaned-core
 title: Completed timeless-mathematics chapter passes
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Six bounded chapters now read as timeless mathematics: Albanese codimension-one
+summary: 'Seven bounded chapters now read as timeless mathematics: Albanese codimension-one
   extension, rational-map extension, Auslander--Buchsbaum, FGA Picard representability,
-  Relative Spec, and Flattening Stratification. Valid statements, dependencies, source
-  anchors, and faithful Lean pins remain.'
+  Relative Spec, Flattening Stratification, and Abelian Variety Rigidity. Valid statements,
+  complete proofs, dependencies, source anchors, and faithful Lean pins remain.'
 status: done
 kind: blueprint
 priority: normal
@@ -28,8 +28,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint
-  updated_at: '2026-07-25T07:25:11.252728+00:00'
+  updated_at: '2026-07-25T11:25:06.972358+00:00'
   pinned_commits:
+  - 3d7c61a1b
   - 5326a8295
   - bfaac46ec
   - 7bc2b2e6b

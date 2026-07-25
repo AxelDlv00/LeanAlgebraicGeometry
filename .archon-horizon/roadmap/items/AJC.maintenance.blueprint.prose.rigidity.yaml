@@ -1,0 +1,33 @@
+id: AJC.maintenance.blueprint.prose.rigidity
+title: Rigidity truth and prose pass
+projects:
+- Algebraic-Jacobian-Challenge
+summary: AbelianVarietyRigidity is now a 338-line timeless chapter with complete proofs
+  and verified Mumford/Milne anchors. All 12 existing pins match lean_ok declarations;
+  the stronger uniqueness and translation corollaries are separate unpinned nodes,
+  the retract proof is stalkwise, and the obsolete Route-A risk journal is removed.
+status: done
+kind: blueprint
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-25T11:24:35.074254+00:00'
+  provenance:
+    run: '0046'
+    session: 0066-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.blueprint.prose
+  updated_at: '2026-07-25T11:24:55.137271+00:00'
+  pinned_commits:
+  - 3d7c61a1b

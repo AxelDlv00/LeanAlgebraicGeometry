@@ -4,15 +4,14 @@ kind: issue
 body: 'Blueprint journal cleanup
 
 
-  Six bounded chapter passes are complete: Albanese_CodimOneExtension, Albanese_Thm32RationalMapExtension,
+  Seven bounded chapter passes are complete: Albanese_CodimOneExtension, Albanese_Thm32RationalMapExtension,
   Picard_FGAPicRepresentability, Albanese_AuslanderBuchsbaum, Picard_RelativeSpec,
-  and Picard_FlatteningStratification now read as timeless mathematics. The rational-map
-  chapter also removes a false Auslander--Buchsbaum dependency, corrects the Albanese
-  application to the rational map `J \\dashrightarrow A`, and adds a page-level Milne
-  source anchor. Mathematical labels, source anchors, dependency structure, and faithful
-  Lean pins remain intact; proof markers remain absent where the Lean chain still
-  depends on `sorry`. Continue bounded cleanup with other marker-heavy chapters. Latest
-  prose commit: `bfaac46ec`.'
+  Picard_FlatteningStratification, and AbelianVarietyRigidity now read as timeless
+  mathematics. The rigidity chapter is 338 lines, has verified source anchors, and
+  distinguishes the twelve exact Lean-pinned results from the two stronger classical
+  corollaries that remain honestly unpinned. Mathematical labels, dependency structure,
+  and faithful pins remain intact. Continue with the remaining marker-heavy chapters.
+  Latest prose commit: `3d7c61a1b`.'
 labels:
 - agent-ready
 status: open
@@ -23,7 +22,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-24T00:59:37.386102+00:00'
-updated_at: '2026-07-24T22:56:22.654376+00:00'
+updated_at: '2026-07-25T11:31:01.982640+00:00'
 metadata:
   provenance:
     run: '0046'

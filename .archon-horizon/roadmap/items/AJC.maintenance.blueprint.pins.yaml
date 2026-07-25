@@ -2,10 +2,11 @@ id: AJC.maintenance.blueprint.pins
 title: Lean-pin declaration audit
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The explicit graph-sync warning set is classified and reduced from 69 to
-  43: seven are scanner limitations around valid universe-qualified or instance declarations,
-  and 36 are genuine forward declarations grouped by mathematical workstream. No known
-  stale pins remain.'
+summary: 'The explicit full graph sync remains at 43 classified warnings: seven scanner
+  limitations and 36 genuine forward declarations. The rigidity truth pass verifies
+  all 12 chapter pins as lean_ok, separates two stronger Milne corollaries as intentionally
+  unpinned empty nodes, and deletes one obsolete unattached stale node; no known stale
+  pin remains.'
 status: pending
 kind: blueprint
 priority: normal
@@ -28,8 +29,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint
-  updated_at: '2026-07-25T07:25:13.082125+00:00'
+  updated_at: '2026-07-25T11:25:36.038554+00:00'
   pinned_commits:
+  - 3d7c61a1b
   - b8090e839
   - be9659e15
   - 7bc2b2e6b

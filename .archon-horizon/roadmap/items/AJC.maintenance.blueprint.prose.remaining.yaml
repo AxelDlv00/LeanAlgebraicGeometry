@@ -1,0 +1,30 @@
+id: AJC.maintenance.blueprint.prose.remaining
+title: Remaining marker-heavy chapters
+projects:
+- Algebraic-Jacobian-Challenge
+summary: Continue bounded truth passes over the remaining journal-heavy chapters.
+  Each pass must preserve exact statements and proof dependencies, replace source
+  quotes by verified anchors, keep Lean pins honest, and finish with graph and chapter-local
+  print checks.
+status: pending
+kind: blueprint
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-25T11:24:47.805681+00:00'
+  provenance:
+    run: '0046'
+    session: 0066-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.blueprint.prose

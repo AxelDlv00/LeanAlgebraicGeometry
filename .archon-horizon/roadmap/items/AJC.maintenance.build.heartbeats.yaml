@@ -2,12 +2,12 @@ id: AJC.maintenance.build.heartbeats
 title: Heartbeat and recursion-budget audit
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The resource-budget audit is complete. All 38 inherited heartbeat-rationale
-  diagnostics were resolved (31 scopes removed, seven measured and documented). All
-  nine surviving recursion-depth scopes are now measured: four Cech scopes at 2000,
-  four SectionGradedRing scopes (two at 4000 and two at 1000), and InvertibleSectionLocalization
-  at 1000. The last audit removed one obsolete SectionGradedRing scope and reduced
-  two from 4000 to 1000; its 2,644-job target is warning-free.'
+summary: The missing-rationale and recursion-depth audit is complete. Thirty-one obsolete
+  heartbeat scopes were removed, seven required sites were measured and documented,
+  and all nine recursion-depth scopes are measured (four Cech, four SectionGradedRing,
+  one localization). The remaining 157 heartbeat and 44 synthesis-budget scopes are
+  explicitly tracked as structural reduction work in the sibling resource-budgets
+  leaf.
 status: done
 kind: refactor
 priority: normal
@@ -30,7 +30,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-25T10:48:13.654330+00:00'
+  updated_at: '2026-07-25T11:26:32.528925+00:00'
   pinned_commits:
   - db85e701c
   - 00b4c44ed
