@@ -2,8 +2,10 @@ id: AJC.maintenance.build.warnings.residual.albanese-rr-entry
 title: Albanese and Riemann-Roch entry warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Clean-build allocation: 51 warnings, led by AuslanderBuchsbaum (22), ChiLedger
-  (9), and AlbaneseUP (7); includes expected sorry and overlapping-instance diagnostics.'
+summary: The clean-build allocation was 51 warnings. P1ChartData's four style diagnostics
+  are now eliminated and tracked as a completed child; the unrecounted residual baseline
+  is 47, led by AuslanderBuchsbaum, ChiLedger, and AlbaneseUP, with genuine sorry
+  and overlapping-instance diagnostics still explicit in the pending remainder.
 status: pending
 kind: refactor
 priority: normal
@@ -26,3 +28,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual
+  updated_at: '2026-07-25T14:20:59.620442+00:00'
+  pinned_commits:
+  - 1396cfbb4

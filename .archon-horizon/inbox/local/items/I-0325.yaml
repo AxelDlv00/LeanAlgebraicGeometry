@@ -17,13 +17,13 @@ body: "STYLE LINT in DivSchemeCertZarPointwise.lean (introduced run 0047 round 0
   \ build as a side effect of fixing the\nreachability gap (I-0324)."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-25T13:02:05.239026+00:00'
-updated_at: '2026-07-25T13:02:05.239035+00:00'
+updated_at: '2026-07-25T14:07:25.784749+00:00'
 metadata:
   provenance:
     run: '0047'
@@ -34,3 +34,5 @@ metadata:
     task: ajcr-w4-rep-free
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-optimize

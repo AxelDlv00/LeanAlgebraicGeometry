@@ -85,13 +85,13 @@ body: 'SUPPORT-SEPARATED ADAPTATIONS CANNOT CERTIFY A GENERAL DD-R SYSTEM (prove
   See [[I-0209]], [[I-0320]].'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-25T12:39:41.849821+00:00'
-updated_at: '2026-07-25T13:58:40.646464+00:00'
+updated_at: '2026-07-25T14:06:47.455138+00:00'
 metadata:
   provenance:
     run: '0047'

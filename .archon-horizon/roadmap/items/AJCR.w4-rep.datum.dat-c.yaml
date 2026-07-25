@@ -3,9 +3,11 @@ title: 'DAT-C: the $\Sigma$-charts — the $h^1$-vanishing open of $\mathrm{Div}
   canonical-section normalization ($h^0 = 1$), mono chart functors, open fibre products'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: C0-C5 are landed. C6-C9 and the canonical-section certificate depend on the
-  DD-R certificate/divRep chain; keep this milestone pending while DD-R.koszul-flatness
-  is the active focus.
+summary: C0-C5 are landed. C6-C8 and the canonical-section certificate depend on the
+  DD-R certificate/divRep chain, whose live gate is now the certificate lane (chart-avoid
+  / swallow-adapt / cert-collapse); DD-R.koszul-flatness, named here as the focus
+  while this milestone was written, is done. Keep the milestone pending, but note
+  that its own leaf c9-chartlocus is independent of DD-R and can run in parallel.
 status: pending
 kind: proof
 priority: normal
@@ -19,4 +21,4 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:08.321387+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-23T01:57:52.762127+00:00'
+  updated_at: '2026-07-25T14:09:07.071114+00:00'

@@ -2,10 +2,11 @@ id: AJC.maintenance.build.cech-cold-cost
 title: Cech degree-one cold-build cost
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The public wrapper is cheap, but the isolated degree-one contraction still
-  takes about 15:03 and 10.1 GiB on the verified runner. Seek a structural factorization
-  or reusable coordinate theorem that reduces cold elaboration; packaging-only splits
-  do not close this leaf.
+summary: 'A forced rebuild of CechSectionContractibilityOne with dependencies cached
+  remains the dominant hotspot: 16:16.30 and 10,138,220 KiB in the latest replay,
+  consistent with the earlier 15:03 baseline. An explicit-carrier bottom-homotopy
+  refactor is now ruled out at 400k; the next credible route is to define the concrete
+  augmentation directly and isolate the transported comparison in Identification.'
 status: pending
 kind: refactor
 priority: normal
@@ -28,3 +29,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
+  updated_at: '2026-07-25T14:13:49.530539+00:00'
