@@ -1,33 +1,30 @@
 ---
 author: sync
 chapter: 'Adelic Riemann--Roch: the repartition cokernel (RR.A)'
-content_type: definition
+content_type: proposition
 created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:adelic_residuePairing
 lean_status: empty
-order: 1886
-ref: vater-weil-differentials, papaioannou-algebraic-rr
-title: Residue pairing on the cover cohomology
+order: 1899
+ref: "papaioannou-algebraic-rr:page-0011,\n    papaioannou-algebraic-rr:page-0012"
+title: The Weil-differential pairing
 type: tex
-updated: '2026-07-26T02:44:57'
+updated: '2026-07-26T03:52:38'
 ---
-Let \(\Omega_K\) be the space of Weil differentials of \(K/k\)
-  (\(k\)-linear forms on the adeles vanishing on some
-  \(\mathbb{A}_K(D) + K\); locally the Kähler differentials
-  \(\Omega_{K/k}\), a one-dimensional \(K\)-vector space). There is a
-  perfect \(k\)-bilinear residue pairing
+Let \(\Omega_K\) be the space of Weil differentials: the \(k\)-linear
+  forms on \(\mathbb A_K\) that vanish on \(\mathbb A_K(E)+K\) for some
+  divisor \(E\).  Put
   \[
-    \langle\,\cdot\,,\,\cdot\,\rangle \colon
-      \mathbb{A}_K \times \Omega_K \to k,
-    \qquad
-    (\alpha, \omega) \mapsto \sum_P \operatorname{Res}_P(\alpha_P\, \omega),
+    \Omega_K(D)=\{\eta\in\Omega_K:\eta(\mathbb A_K(D)+K)=0\}.
   \]
-  where \(\operatorname{Res}_P\) is the local residue at \(P\). It
-  satisfies the residue theorem \(\sum_P \operatorname{Res}_P(f\omega) = 0\)
-  for \(f \in K\), and therefore descends to a pairing
+  Equivalently,
+  \(\Omega_K(D)=\{0\}\cup\{\eta:\operatorname{div}\eta\ge D\}\).
+  Evaluation induces a canonical isomorphism
   \[
-    \check{H}^1(D) \times \Omega_K(K_C - D) \longrightarrow k,
+    \Omega_K(D)\simeq_k H^1_{\mathbb A}(D)^*,
   \]
-  where \(\Omega_K(E) = \{\omega : \operatorname{div}\omega \ge E\}\) and
-  \(K_C\) is a canonical divisor.
+  and hence a perfect pairing
+  \[
+    \check H^1_{\mathrm{ff}}(D)\times\Omega_K(D)\longrightarrow k.
+  \]

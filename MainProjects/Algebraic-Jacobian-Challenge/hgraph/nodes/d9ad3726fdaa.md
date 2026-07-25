@@ -6,13 +6,12 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:adelic_riemann_inequality_conditional
 lean_status: lean_ok
-order: 1884
-title: 'N16b: the Riemann inequality from a telescoped \(\chi\)'
+order: 1896
+title: The Riemann inequality from a telescoped \(\chi\)
 type: tex
-updated: '2026-07-26T02:44:57'
+updated: '2026-07-26T03:52:38'
 ---
-Given \(\chi(D) = \chi(0) + \deg D\) (the telescoped Euler
-  characteristic of \Cref{thm:adelic_chi_eq_chi_zero_add_degree}),
+Given \(\chi(D) = \chi(0) + \deg D\),
   \[
     \deg D + \chi(0) \;\le\; \ell(D).
   \]

@@ -6,17 +6,19 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:adelic_serreDuality
 lean_status: empty
-order: 1887
-ref: papaioannou-algebraic-rr, cff-curves-function-fields, vater-weil-differentials
+order: 1901
+ref: "papaioannou-algebraic-rr:page-0011,\n    papaioannou-algebraic-rr:page-0012,\n\
+  \    papaioannou-algebraic-rr:page-0013"
 title: 'Serre duality: \(i(D) = \ell(K_C - D)\)'
 type: tex
-updated: '2026-07-26T02:44:57'
+updated: '2026-07-26T03:52:38'
 ---
 For a canonical divisor \(K_C = \operatorname{div}\omega\) of a nonzero
   Weil differential \(\omega\), the map \(x \mapsto x\omega\) induces a
   \(k\)-linear isomorphism
   \[
-    \mu \colon L(K_C - D) \;\xrightarrow{\ \sim\ }\; \Omega_K(K_C - D)
-    \;\simeq_k\; \check{H}^1(D)^\ast,
+    \mu \colon L(K_C - D) \;\xrightarrow{\ \sim\ }\; \Omega_K(D)
+      \;\simeq_k\; H^1_{\mathbb A}(D)^*
+      \;\simeq_k\;\check H^1_{\mathrm{ff}}(D)^*,
   \]
-  so that \(i(D) = \dim_k \check{H}^1(D) = \ell(K_C - D)\).
+  so that \(i(D)=\dim_k\check H^1_{\mathrm{ff}}(D)=\ell(K_C-D)\).

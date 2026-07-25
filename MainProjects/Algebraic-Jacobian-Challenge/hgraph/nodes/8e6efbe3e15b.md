@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:adelic_chi_eq_chi_zero_add_degree
 lean_status: empty
-order: 1882
-ref: papaioannou-algebraic-rr, cff-curves-function-fields
-title: '\(\chi\)-KEYSTONE: \(\chi(D) = \deg D + 1 - g\)'
+order: 1894
+ref: "papaioannou-algebraic-rr:page-0010,\n    papaioannou-algebraic-rr:page-0011"
+title: Euler characteristic of a divisor
 type: tex
-updated: '2026-07-26T02:44:57'
+updated: '2026-07-26T03:52:38'
 ---
 The Euler characteristic \(\chi(D) = \ell(D) - i(D)\) is additive in the
   degree:
@@ -20,8 +20,3 @@ The Euler characteristic \(\chi(D) = \ell(D) - i(D)\) is additive in the
     \qquad\text{hence}\qquad
     \chi(D) = \deg D + 1 - g .
   \]
-  \emph{Status:} the single-step case is
-  \Cref{thm:adelic_chi_additivity}; the telescoping induction extending
-  it along an arbitrary divisor (summing one-point bumps and their
-  negatives) and the base value \(\chi(0) = 1 - g\) below are not yet
-  assembled into one Lean theorem.
