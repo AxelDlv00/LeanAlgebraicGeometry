@@ -116,7 +116,8 @@ scoped instance isScalarTower_globalSections_functionField
     IsScalarTower k ↥Γ(C.left, ⊤) C.left.functionField :=
   IsScalarTower.of_algebraMap_eq' (algebraMap_functionField_eq C)
 
-/-- **Discharge of the adelic `IsConstantField` gate.**  For an integral
+/-- **The structure field satisfies the adelic `IsConstantField` interface.**
+For an integral
 `k`-scheme `C` satisfying the `(*)`-hypotheses, with the structure-morphism
 algebra structure on `K(C)`, every nonzero constant `c ∈ k` has order `0` at
 every prime divisor: `c` is a unit in the field `k`, hence its image in each
@@ -126,7 +127,7 @@ DVR stalk is a unit, and units have order `0`
 Audit verdict (see module docstring): TRUE at this generality — no properness,
 no `B0`/`HasTrivialConstants` input; this is the easy direction of the
 field-of-constants dialectic. -/
-scoped instance instIsConstantField (C : Over (Spec (CommRingCat.of k)))
+theorem isConstantField_functionField (C : Over (Spec (CommRingCat.of k)))
     [IsIntegral C.left] [IsLocallyNoetherian C.left]
     [Scheme.IsRegularInCodimensionOne C.left] :
     Adelic.IsConstantField k C.left where
@@ -145,6 +146,13 @@ scoped instance instIsConstantField (C : Over (Spec (CommRingCat.of k)))
     rw [h1, IsScalarTower.algebraMap_apply ↥Γ(C.left, ⊤)
       (C.left.presheaf.stalk P.point) C.left.functionField]
     exact Scheme.RationalMap.order_algebraMap_eq_zero_of_isUnit P hu
+
+/-- Scoped instance form of `isConstantField_functionField`. -/
+scoped instance instIsConstantField (C : Over (Spec (CommRingCat.of k)))
+    [IsIntegral C.left] [IsLocallyNoetherian C.left]
+    [Scheme.IsRegularInCodimensionOne C.left] :
+    Adelic.IsConstantField k C.left :=
+  isConstantField_functionField C
 
 end Scheme
 
