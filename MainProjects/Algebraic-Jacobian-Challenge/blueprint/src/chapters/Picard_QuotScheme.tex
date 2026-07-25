@@ -7079,35 +7079,12 @@ embedding (\cref{lem:quot_alpha_injective}). We record the relevant
 statement as a named theorem so the Lean encoding can cite it directly.
 
 \begin{theorem}\leanok
-[Flat base change of cohomology]
+[Degree-zero flat base change]
   \label{thm:flat_base_change_cohomology}
   \lean{AlgebraicGeometry.flatBaseChangeCohomology}
-  \uses{thm:flat_base_change_higher, lem:cech_flat_base_change,
-    lem:higher_direct_image_quasi_coherent}
+  \uses{def:quot_canonical_basechange_map}
   % SOURCE: [Stacks Project], tag 02KH (lemma-flat-base-change-cohomology)
   % (read from references/stacks-coherent.tex, L947-L970).
-  % SOURCE QUOTE:
-  % "Consider a cartesian diagram of schemes
-  %  \(\)
-  %  \xymatrix{
-  %  X' \ar[d]_{f'} \ar[r]_{g'} & X \ar[d]^f \\
-  %  S' \ar[r]^g & S
-  %  }
-  %  \(\)
-  %  Let \(\mathcal{F}\) be a quasi-coherent \(\mathcal{O}_X\)-module
-  %  with pullback \(\mathcal{F}' = (g')^*\mathcal{F}\).
-  %  Assume that \(g\) is flat and that \(f\) is quasi-compact and quasi-separated.
-  %  For any \(i \geq 0\)
-  %  \begin{enumerate}
-  %  \item the base change map of
-  %  Cohomology, Lemma REF
-  %  is an isomorphism
-  %  \(\)
-  %  g^*R^if_*\mathcal{F} \longrightarrow R^if'_*\mathcal{F}',
-  %  \(\)
-  %  \item if \(S = \Spec(A)\) and \(S' = \Spec(B)\), then
-  %  \(H^i(X, \mathcal{F}) \otimes_A B = H^i(X', \mathcal{F}')\).
-  %  \end{enumerate}"
   \textit{Source: [Stacks Project], tag 02KH (lemma-flat-base-change-cohomology).}
   Let
   \[
@@ -7120,14 +7097,19 @@ statement as a named theorem so the Lean encoding can cite it directly.
   be a cartesian diagram of schemes with \(g\) flat and \(f\) quasi-compact and
   quasi-separated. Let \(\mathcal{F}\) be a quasi-coherent
   \(\mathcal{O}_X\)-module with pull-back
-  \(\mathcal{F}' = (g')^* \mathcal{F}\). For every \(i \ge 0\):
-  \begin{enumerate}
-    \item the base-change map
-      \(g^* R^i f_* \mathcal{F} \to R^i f'_* \mathcal{F}'\) is an isomorphism;
-    \item if \(S = \Spec A\) and \(S' = \Spec B\), then \(H^i(X, \mathcal{F})
-      \otimes_A B = H^i(X', \mathcal{F}')\).
-  \end{enumerate}
+  \(\mathcal{F}' = (g')^* \mathcal{F}\). Then the canonical base-change map
+  \[
+    g^* f_* \mathcal{F} \longrightarrow f'_* \mathcal{F}'
+  \]
+  is an isomorphism.
 \end{theorem}
+\begin{proof}\leanok
+  \uses{thm:quot_canonical_basechange_isIso}
+  The displayed morphism is the canonical base-change map of
+  \cref{def:quot_canonical_basechange_map}. Its invertibility under the stated
+  hypotheses is \cref{thm:quot_canonical_basechange_isIso}; taking the associated
+  isomorphism proves the claim.
+\end{proof}
 
 \subsection{Project-side base-change substrate}
 \label{subsec:quot_project_basechange}
@@ -7234,17 +7216,17 @@ first, in the pure module-theoretic form of
 [Canonical base-change map on sheaves of modules]
   \label{def:quot_canonical_basechange_map}
   \lean{AlgebraicGeometry.canonicalBaseChangeMap}
-  \uses{thm:flat_base_change_cohomology}
   Given a cartesian square of schemes
   \(\square = (g' : X' \to X,\ f' : X' \to S',\ f : X \to S,\ g : S' \to S)\)
-  with \(g \circ f' = f \circ g'\) and \(g\) flat, the
+  with \(g \circ f' = f \circ g'\), the
   \emph{canonical base-change map} on sheaves of modules is the natural
-  transformation \(g'^* f^* \mathcal{F} \longrightarrow f'^* g^* \mathcal{F}\)
-  arising from the universal property of pullback. Encoded as a morphism
-  of \(\mathrm{ModuleCat}\)-valued sheaf functors on the pulled-back open
-  cover; this is the morphism whose iso-status discharges
-  \cref{thm:flat_base_change_cohomology}(1) in the present
-  finite-locally-free / quasi-coherent-of-finite-type setting.
+  transformation
+  \[
+    g^* f_* \mathcal F \longrightarrow f'_* g'^* \mathcal F.
+  \]
+  It is the mate, under the pullback--pushforward adjunctions, of the canonical
+  identification \(f'^*g^*\cong g'^*f^*\) supplied by the cartesian square. Its
+  construction requires no flatness hypothesis.
 \end{definition}
 
 \begin{theorem}\leanok
@@ -7659,8 +7641,8 @@ first, in the pure module-theoretic form of
   \(\mathcal{F}\) quasi-coherent, the canonical base-change map
   \(g^* f_* \mathcal{F} \to f'_* g'^* \mathcal{F}\) of
   \cref{def:quot_canonical_basechange_map} is an isomorphism of sheaves of
-  modules. This is the sheaf-level form of
-  \cref{thm:flat_base_change_cohomology}(1) at \(i = 0\).
+  modules. This is the canonical-morphism form of the degree-zero isomorphism
+  in \cref{thm:flat_base_change_cohomology}.
 \end{theorem}
 \begin{proof}\leanok
   \uses{thm:quot_canonical_basechange_app_app_isIso}
