@@ -1,6 +1,6 @@
 ---
 name: genus-split-removed-uniform-pic0
-description: The genus=0 vs genus>0 split was removed (2026-06-23); the Jacobian is now built uniformly as Pic⁰_{C/k}
+description: The Jacobian strategy is now uniform in the genus; residual Route-C cleanup is tracked by T13 and I-0106
 metadata:
   type: project
 ---
@@ -21,10 +21,13 @@ construction is uniform: genus 0 is the automatic degenerate case `Pic⁰ = Spec
   `Cotangent/*`, `Genus0BaseObjects/*`, and `RiemannRoch/{RationalCurveIso, RRFormula,
   H1Vanishing, OCofP, OcOfD}`.
 - **Kept**: `RigidityLemma.lean` (general Milne §I.1 rigidity lemma — consumed by the
-  positive-genus Albanese UP) and `RiemannRoch/WeilDivisor.lean` (general divisor/
-  `PrimeDivisor`/`RationalMap.order` theory used by `Albanese/CodimOneExtension`).
-  WeilDivisor had its trailing `projectiveLineBar` ℙ¹ block surgically excised + its
-  `Genus0BaseObjects` import dropped.
+  Albanese UP) and the load-bearing `PrimeDivisor`/`RationalMap.order` substrate in
+  `RiemannRoch/WeilDivisor.lean`, used by `Albanese/CodimOneExtension`.
+- **Residual cleanup**: `WeilDivisor.lean` is still dual-purpose. Its file-level
+  genus-zero framing, `principal_degree_zero` gap, and positive-part/Riemann--Roch tail
+  survive even though the separate Jacobian witness route is retired. Task `T13` and
+  inbox memory `I-0106` record the required surgical boundary: retain the codimension-one
+  substrate and carve only the obsolete Route-C tail.
 
 **Blueprint**: matching changes — 10 genus-0 chapters removed from `content.tex`;
 `AbelianVarietyRigidity.tex` truncated to the general rigidity-lemma chain and retitled
