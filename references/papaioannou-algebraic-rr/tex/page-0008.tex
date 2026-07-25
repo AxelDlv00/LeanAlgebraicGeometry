@@ -1,0 +1,142 @@
+% source: An algebraic approach to the Riemann-Roch theorem and the arithmetic theory of function fields (Athanasios Papaioannou), http://www.fen.bilkent.edu.tr/~franz/mat/Riemann-Roch.pdf
+% pdf_page: 0008
+% retrieved: 2026-07-26
+% transcribed_by: page-transcriber (AI vision, no OCR)
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+% Small-caps theorem style matching the source (LEMMA/THEOREM headings, italic bodies).
+\newtheoremstyle{scplain}{\topsep}{\topsep}{\itshape}{0pt}{\scshape}{.}{ }{\thmname{#1} \thmnote{#3}}
+\theoremstyle{scplain}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{theorem}{Theorem}
+
+% Small-caps "Proof." to match the source.
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+  \par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax
+  \trivlist\item[\hskip\labelsep\scshape #1\@addpunct{.}]\ignorespaces}%
+  {\popQED\endtrivlist\@endpefalse}
+\makeatother
+\renewcommand{\qedsymbol}{$\square$}
+
+\DeclareMathOperator{\Div}{Div}
+
+\begin{document}
+\setlength{\emergencystretch}{2em}
+
+The genus is obviously non-negative; we see this by letting $D = 0$ be the
+trivial divisor. In fact, for any divisor $D$, $g \geq \deg D - \dim D + 1$ and
+this is called \emph{Riemann's Inequality} (of course, Riemann had given an
+equivalent definition of genus and the above result was not a tautology in his
+approach). What is not a tautology even in our approach is that there is an
+integer $c$ such that $\dim D = \deg D + 1 - g$ when $\dim D \geq c$. Indeed,
+pick a divisor $D_0 \in \Div(\mathbb{F})$ such that
+$g = \deg D_0 - \dim D_0 + 1$ and let $c = \deg D_0 + g$. If $\deg D \geq c$,
+then
+\[
+  \dim(D - D_0) \geq \deg(D - D_0) + 1 - g
+    \geq c - \deg D_0 + 1 - g \geq 1,
+\]
+and so there is a non-zero element $z \in L(D - D_0)$. Consider the divisor
+$D' = D + (z)$, which is $\geq D_0$. We observe that
+$\deg D - \dim D = \deg D' - \dim D' \geq \deg D_0 - \dim D_0 = g - 1$.
+Hence $\dim D \leq \deg D + 1 - g$, which provides the desired equality.
+
+In order to accomplish our second goal, we need to go through some technical
+lemmas first, most of which involve the \emph{dimension} $\dim D$ of a divisor
+$D$, namely the dimension $\dim L(D)$ of the associated vector space. We begin
+with the following
+
+\begin{lemma}[1.13]
+Let $D$ and $E$ be divisors of a function field $\mathbb{F}/\mathbb{K}$ with
+$D \leq E$. Then $L(D) \subseteq L(E)$ and also
+\[
+  \dim L(E)/L(D) \leq \deg E - \deg D.
+\]
+\end{lemma}
+
+\begin{proof}
+The first part of the claim is trivial. For the second part, we may assume
+without loss of generality that $E = D + P$ for some
+$P \in \mathbf{P}_{\mathbb{F}}$, since the general case then follows by an
+inductive argument. Pick $t \in \mathbb{F}$ such that
+$v_P(E) = v_P(D) = v_P(D) + 1$. For $x \in L(E)$ we have
+$v_P(x) \geq -v_P(E) = -v_P(t)$, so $xt \in \mathcal{O}_P$. Thus we obtain a
+$\mathbb{K}$-linear map $\phi : L(E) \longrightarrow \mathbb{F}_P$ given by
+$x \mapsto (xt)P$. An element $x$ is in the kernel of $\phi$ if and only if
+$v_P(xt) \geq 0$, or equivalently $v_P(x) \geq -v_P(D)$. Therefore,
+$\ker(\phi) = L(D)$ and therefore the induced mapping
+$\bar{\phi} : L(E)/L(D) \longrightarrow \mathbb{F}_P$ is injective. This
+implies, of course, that
+$\dim(L(E)/L(D)) \leq \dim \mathbb{F}_P = \deg E - \deg D$, as desired.
+\end{proof}
+
+The next necessary statement is
+
+\begin{lemma}[1.14]
+For any divisor $D \in \Div(\mathbb{F})$ is a finite dimensional
+$\mathbb{K}$-vector space. More precisely, if $D = D_+ - D_-$, with $D_+$ and
+$D_-$ positive and negative divisors respectively, then
+$\dim L(D) \leq \deg D_+ + 1$.
+\end{lemma}
+
+\begin{proof}
+Since $L(D) \subseteq L(D_+)$, it is sufficient to show that
+\[
+  \dim L(D_+) \leq \deg D_+ + 1.
+\]
+Since $D_+ \geq 0$, the previous lemma yields that
+\[
+  \dim(L(D_+)/L(0)) \leq \deg D_+
+\]
+and since $L(0) = \mathbb{K}$ (remember the assumption we made at the
+introduction of this section!), we obtain
+\[
+  \dim L(D_+) = \dim(L(D)/L(0)) + 1;
+\]
+this completes the proof.
+\end{proof}
+
+Our next theorem reinforces the analogy between elements of
+$\mathbb{F}/\mathbb{K}$ and meromorphic functions; now we have the arsenal
+required to show that all $x \in \mathbb{F}$ have as many poles as zeroes.
+
+\begin{theorem}[1.15]
+Any principal divisor has degree zero. More precisely, for any
+$x \in \mathbb{F}$,
+\[
+  \deg(x)_0 = \deg(x)_\infty = [\mathbb{F} : \mathbb{K}(x)].
+\]
+\end{theorem}
+
+\begin{proof}
+Set $n = [\mathbb{F} : \mathbb{K}(x)]$ and
+\[
+  D = (x)_\infty = \sum_{i=1}^{r} -v_{P_i}(x)P_i,
+\]
+where $P_i$ for $1 \leq i \leq r$ are all the poles of $x$. Then,
+\[
+  \deg D = \sum_{i=1}^{r} v_{P_i}(x^{-1})\deg P_i
+    \leq [\mathbb{F} : \mathbb{K}(x)] = n
+\]
+by the sharpened version of the Weak Approximation, Theorem 1.11. It would now
+clearly suffice to show that $n \leq \deg D$. Choose a basis
+$v_1, v_2, \ldots, v_n$ of $\mathbb{F}/\mathbb{K}(x)$ and a divisor $C \geq 0$
+such that $(u_i) \geq -C$ for $1 \leq i \leq n$. We have
+$\dim(kD+C) \geq n(k+1)$ for all $k \geq 0$, which follows immediately from the
+fact that $x^i u_j \in L(kD+C)$ for $0 \leq i \leq k$, $1 \leq j \leq n$.
+Setting $c = \deg C$ we obtain
+$n(k+1) \leq \dim(kD+C) \leq k\deg D+c+1$, by our previous lemma. Therefore,
+$k(\deg D-n) \geq n-c-1$ for all $k \in \mathbb{N}$; since the right-hand side
+of the previous equation is independent of $k$, the inequality can only be true
+if $\deg D \geq n$. This concludes the proof, since a symmetrical argument shows
+the same equality for $\deg(x)_0 = \deg(x^{-1})_\infty$.
+\end{proof}
+
+We can draw some easy consequences of the above; the proofs are omitted.
+
+\begin{center}8\end{center}
+
+\end{document}

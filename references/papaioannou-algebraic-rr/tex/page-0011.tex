@@ -1,0 +1,142 @@
+% source: An algebraic approach to the Riemann-Roch theorem and the arithmetic theory of function fields (Athanasios Papaioannou), http://www.fen.bilkent.edu.tr/~franz/mat/Riemann-Roch.pdf
+% pdf_page: 0011
+% retrieved: 2026-07-26
+% transcribed_by: page-transcriber (AI vision, no OCR)
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+% Small-caps theorem style matching the source.
+\newtheoremstyle{scplain}{\topsep}{\topsep}{\itshape}{0pt}{\scshape}{.}{ }{\thmname{#1} \thmnote{#3}}
+\theoremstyle{scplain}
+\newtheorem*{definition}{Definition}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{theorem}{Theorem}
+
+% Small-caps "Proof." to match the source.
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+  \par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax
+  \trivlist\item[\hskip\labelsep\scshape #1\@addpunct{.}]\ignorespaces}%
+  {\popQED\endtrivlist\@endpefalse}
+\makeatother
+\renewcommand{\qedsymbol}{$\square$}
+
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\Hom}{Hom}
+
+\begin{document}
+
+Armed with the above, we can now prove our initial assertion. Consider an
+arbitrary divisor $D$. By Riemann's inequality, there exists a divisor
+$D_1 \geq D$ such that $\dim D_1 = \deg D_1 + 1 - g$. By lemma 3 in this proof,
+$A_{\mathbb{F}} = A_{\mathbb{F}}(D_1)+\mathbb{F}$ and in light of lemma 2 in this
+proof, we obtain
+\[
+\begin{split}
+  \dim(A_{\mathbb{F}}/A_{\mathbb{F}}(D)+\mathbb{F})
+  &= \dim((A_{\mathbb{F}}(D_1)+\mathbb{F})/(A_{\mathbb{F}}(D)+\mathbb{F})) \\
+  &= (\deg D_1-\dim D_1)-(\deg D-\dim D) \\
+  &= (g-1)+\dim D-\deg D,
+\end{split}
+\]
+which is the desired result.\hfill$\square$
+
+The above theorem states: for any divisor $D \in \Div(\mathbb{F})$, the formula
+\[
+  \dim D = \deg D + 1 - g
+    + \dim(A_{\mathbb{F}}/A_{\mathbb{F}}(D)+\mathbb{F}) = i(D)
+\]
+is true.
+
+The next concept we shall use is that of \emph{Weil differentials}. These will
+yield a second interpretation of the quantity $i(D)$ and are defined as
+
+\begin{definition}[1.13]
+A Weil differential of a function field $\mathbb{F}/\mathbb{K}$ is a map
+$\omega \in \Hom_{\mathbb{K}}(A_{\mathbb{F}},\mathbb{K})$ such that
+$\omega\big|_{A_{\mathbb{F}}(D)+\mathbb{F}} \equiv 0$ for some divisor
+$D \in \Div(\mathbb{F})$. We set $\Omega_{\mathbb{F}}$ to be the set of all
+differentials on $\mathbb{F}/\mathbb{K}$ and moreover define
+$\Omega_{\mathbb{F}}(D)$ to be the collection of all differentials of
+$\mathbb{F}/\mathbb{K}$ that vanish on $A_{\mathbb{F}}(D)+\mathbb{F}$.
+\end{definition}
+
+We may regard $\Omega_{\mathbb{F}}$ as a $\mathbb{K}$-vector space (closure,
+though not immediately obvious, holds). As with adeles,
+$\Omega_{\mathbb{F}}(D)$ is a subspace of $\Omega_{\mathbb{F}}$.
+
+The first fact we shall prove about differentials is
+
+\begin{lemma}[1.22]
+For any divisor $D \in \Div(\mathbb{F})$, we have
+\[
+  \dim \Omega_{\mathbb{F}}(D) = i(D).
+\]
+\end{lemma}
+
+\begin{proof}
+The space $\Omega_{\mathbb{F}}(D)$ is isomorphic in a natural way to the space
+if linear forms on $A_{\mathbb{F}}/(A_{\mathbb{F}}(D)+\mathbb{F})$. Since
+$A_{\mathbb{F}}/(A_{\mathbb{F}}(D)+\mathbb{F})$ is finite dimensional of
+dimension $i(D)$ by theorem 1.18, we obtain the desired result.
+\end{proof}
+
+A simple consequence of the previous lemma is that
+$\Omega_{\mathbb{F}} \neq \varnothing$. Indeed, pick a divisor $D$ of degree
+less than $-1$; then
+$\dim \Omega_{\mathbb{F}}(D) = i(D) = \dim D-\deg D+g-1 \geq 1$, whence the
+desired result.
+
+A morphism associated to any element $x \in \mathbb{F}$ and any differential
+$\omega$ on the space $A_{\mathbb{F}}$ of all adeles on
+$\mathbb{F}/\mathbb{K}$ is the natural one: define
+$(x\omega) : A_{\mathbb{F}} \longrightarrow \mathbb{K}$ by letting
+$(x\omega)(\alpha) = \omega(x\alpha)$. We see that $x\omega$ is again a
+differential of $\mathbb{F}/\mathbb{K}$; in fact, if $\omega$ vanishes on
+$A-\mathbb{F}(D)+\mathbb{F}$, then $x\omega$ vanishes on
+$A_{\mathbb{F}}(D+(x))+\mathbb{F}$. Clearly, this construction extends the set
+of scalars of $\Omega_{\mathbb{F}}$ as a vector space from $\mathbb{K}$ to
+$\mathbb{F}$. We would now like to calculate the dimension of this new vector
+space. This answer is rather dull (if convenient) and is given by the next
+theorem.
+
+\begin{theorem}[1.23]
+$\dim_{\mathbb{F}} \Omega_{\mathbb{F}} = 1$.
+\end{theorem}
+
+\medskip\noindent{\scshape Proof.} Choose a non-zero differential
+$\omega \in \Omega_{\mathbb{F}}$; this is possible by our remarks above. We have
+to show that this generates the whole space, or, equivalently, given
+$\omega_2 \in \Omega_{\mathbb{F}}$, there is $z \in \mathbb{F}$ such that
+$\omega_2 = \omega_1$; we can assume that $\omega_2 \neq 0$. Indeed, pick
+$D_1,D_2 \in \Div(\mathbb{F})$ such that
+$\omega_1 \in \Omega_{\mathbb{F}}(D_1)$ and
+$\omega_2 \in \Omega_{\mathbb{F}}(D_2)$. For a fixed divisor $B$, consider the
+$\mathbb{K}$-linear mappings
+$\phi_i : L(D_1+B) \longrightarrow \Omega_{\mathbb{F}}(-B)$ (for $i=1,2$)
+defined by $x \mapsto x\omega_i$.
+
+We claim that for an appropriate choice of the divisor $B$, we have
+\[
+  \phi_1(L(D_1+B)) \cap \phi_2(L(D_2+B)) \neq \{0\}.
+\]
+
+Indeed, it is well-known from linear algebra that if $U_1,U_2$ are subspaces of
+a finite-dimensional vector space $V$, then
+\[
+  \dim(U_1 \cap U_2) \geq \dim U_1 + \dim U_2 - \dim V.
+\]
+Now, let $B > 0$ be a divisor of degree sufficiently large, that
+\[
+  \dim(D_i+B) \geq \deg(D_i+B) + 1 - g
+\]
+for $i=1,2$ -- this is possible by Riemann's inequality -- and set
+$U_i = \phi_i(L(D_i+B)) \subset \Omega_{\mathbb{F}}(-B)$. Since
+$\dim \Omega_{\mathbb{F}}(-B) = i(-B) = \deg B + 1 - g$, we obtain
+$\dim U_1 + \dim U_2 - \dim \Omega_{\mathbb{F}}(-B)
+= \deg(D_1+B)+1-g+$
+
+\begin{center}11\end{center}
+
+\end{document}

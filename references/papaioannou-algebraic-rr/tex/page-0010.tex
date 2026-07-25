@@ -1,0 +1,169 @@
+% source: An algebraic approach to the Riemann-Roch theorem and the arithmetic theory of function fields (Athanasios Papaioannou), http://www.fen.bilkent.edu.tr/~franz/mat/Riemann-Roch.pdf
+% pdf_page: 0010
+% retrieved: 2026-07-26
+% transcribed_by: page-transcriber (AI vision, no OCR)
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+% Small-caps theorem style matching the source.
+\newtheoremstyle{scplain}{\topsep}{\topsep}{\itshape}{0pt}{\scshape}{.}{ }{\thmname{#1} \thmnote{#3}}
+\theoremstyle{scplain}
+\newtheorem*{definition}{Definition}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{lemma}{Lemma}
+
+% Small-caps "Proof." to match the source.
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+  \par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax
+  \trivlist\item[\hskip\labelsep\scshape #1\@addpunct{.}]\ignorespaces}%
+  {\popQED\endtrivlist\@endpefalse}
+\makeatother
+\renewcommand{\qedsymbol}{$\square$}
+
+\DeclareMathOperator{\Div}{Div}
+
+\begin{document}
+
+\noindent
+extend naturally to $A_{\mathbb{F}}$ by setting
+$v_P(\alpha) = v_P(\alpha_P)$, where $\alpha_P$ is the $P$'th component of
+$\alpha$. By definition, $v_P(\alpha_P) \geq 0$ for almost all
+$P \in \mathbf{P}_{\mathbb{F}}$.
+
+Adding to the sea of definitions there are already, we will define the following
+$\mathbb{K}$-subspaces of $A_{\mathbb{F}}$:
+
+\begin{definition}[1.12]
+For $D \in \Div(\mathbb{F})$, we set
+\[
+  A_{\mathbb{F}}(D) =
+    \{\alpha \in A_{\mathbb{F}} \mid v_P(\alpha) \geq -v_P(A)
+      \text{ for all } P \in \mathbf{P}_{\mathbb{F}}\}.
+\]
+\end{definition}
+
+Our first observation about adeles, and in fact a preliminary version of the
+Riemann-Roch theorem, is the following:
+
+\begin{theorem}[1.18]
+For any divisor $D \in \Div(\mathbb{F})$,
+\[
+  \dim D = \deg D + 1 - g
+    + \dim(A_{\mathbb{F}}/A_{\mathbb{F}}(D) + \mathbb{F}).
+\]
+\end{theorem}
+
+\medskip\noindent{\scshape Proof.} Note that despite the infinite dimension of
+$A_{\mathbb{F}}$, $A_{\mathbb{F}}(D)$ and $\mathbb{F}$, the above theorem
+asserts that the quotient space
+$A_{\mathbb{F}}/(A_{\mathbb{F}}(D)+\mathbb{F})$ is finite-dimensional over
+$\mathbb{K}$.
+
+We will complete the proof after three lemmas. We begin with
+
+\begin{lemma}[1.19]
+Let $D_1,D_2 \in \Div(\mathbb{F})$ be such that $D_1 \leq D_2$. Then
+$A_{\mathbb{F}}(D_1) \subseteq A_{\mathbb{F}}(D_2)$ and
+\[
+  \dim(A_{\mathbb{F}}(D_2)/A_{\mathbb{F}}(D_1)) = \deg D_2 - \deg D_1.
+\]
+\end{lemma}
+
+\begin{proof}
+The first assertion of the lemma is obvious; it follows from the definition of
+the spaces involved and the condition on $D_1,D_2$. For the second claim, note
+that it is sufficient to prove it for in the case $D_2 = D_1 + P$, with
+$P \in \mathbf{P}_{\mathbb{F}}$, since the general case then follows by an
+inductive argument. Pick $t \in \mathbb{F}$ with
+$v_P(t) = v_P(D_1) + 1$ and consider the $\mathbb{K}$-linear map
+$\phi : A_{\mathbb{F}}(D_2) \longrightarrow \mathbb{F}_P$ defined by
+$\alpha \mapsto (t\alpha)_P(P)$. We can easily see that $\phi$ is in fact
+surjective, with kernel $A_{\mathbb{F}}(D_1)$. Therefore,
+$\deg D_2 - \deg D_1 = \deg P = [\mathbb{F} : \mathbb{K}(x)]
+= \dim(A_{\mathbb{F}}(D_2)/A_{\mathbb{F}}(D_1))$, and this implies the desired
+result.
+\end{proof}
+
+We now go on to show the following
+
+\begin{lemma}[1.20]
+As before, let $D_1,D_2 \in \Div(\mathbb{F})$ be such that $D_1 \leq D_2$.
+Then
+\[
+  \dim((A_{\mathbb{F}}(D_2)+\mathbb{F})/(A_{\mathbb{F}}(D_1)+\mathbb{F}))
+    = (\deg D_2-\dim D_2) - (\deg D_1-\dim D_1).
+\]
+\end{lemma}
+
+\begin{proof}
+We have the following exact sequence of linear transformations
+{\small
+\[
+  0 \longrightarrow L(D_2)L(D_1)
+    \xrightarrow{\ \sigma_1\ } A_{\mathbb{F}}(D_2)/A_{\mathbb{F}}(D_1)
+    \xrightarrow{\ \sigma_2\ }
+    (A_{\mathbb{F}}(D_2)+\mathbb{F})/((A_{\mathbb{F}}(D_1)+\mathbb{F})
+    \longrightarrow 0,
+\]
+}
+where $\sigma_1$ and $\sigma_2$ are defined in the obvious manner. We further
+claim that $\ker\sigma_2 \subseteq \operatorname{Im}\sigma_1$. Indeed, let
+$\alpha \in A_{\mathbb{F}}(D_2)$ with
+$\sigma_2(\alpha+A_{\mathbb{F}}(D_1))=0$. Then,
+$\alpha \in A_{\mathbb{F}}(D_1)+\mathbb{F}$, so there is some
+$x \in \mathbb{F}$ such that $\alpha-x \in A_{\mathbb{F}}(D_1)$. As
+$A_{\mathbb{F}}(D_1) \subseteq A_{\mathbb{F}}(D_2)$ we conclude that
+$x \in A_{\mathbb{F}}(D_2) \cap \mathbb{F} = L(D_2)$. Thus,
+$\alpha+A_{\mathbb{F}}(D_1) = x+A_{\mathbb{F}}(D_1)
+= \sigma_1(x+L(D_1))$ lies in the image of $\sigma_1$.
+
+From the exactness of the previous sequence, we obtain that
+{\small
+\[
+\begin{split}
+  \dim((A_{\mathbb{F}}(D_2)+\mathbb{F})/(A_{\mathbb{F}}(D_1)+\mathbb{F}))
+  &= \dim(A_{\mathbb{F}}(D_2)/A_{\mathbb{F}}(D_1))
+     - \dim(L(D_2)/L(D_1)) \\
+  &= (\deg D_2-\dim D_2) - (\deg D_1-\dim D_1),
+\end{split}
+\]
+}
+as desired.
+\end{proof}
+
+The third and last lemma can be stated as
+
+\begin{lemma}[1.21]
+If $B$ is a divisor such that $\dim B = \deg B + 1 - g$, then
+$A_{\mathbb{F}} = A_{\mathbb{F}}(B) + \mathbb{F}$.
+\end{lemma}
+
+\begin{proof}
+First, observe that for $B_1 \geq B$, we have
+\[
+  \dim B_1 \leq \deg B_1 + \dim B - \deg B = \deg B_1 + 1 - g,
+\]
+by lemma 1.13. On the other hand, $\dim B_1 \geq \deg B + 1 - g$ by Riemann's
+inequality; therefore, $\dim B_1 = \deg B_1 + 1 - g$. Now, let
+$\alpha \in A_{\mathbb{F}}$; by definition, we can find a divisor $B_1 > B$
+such that $\alpha \in A_{\mathbb{F}}(B_1)$. By the proof of our previous lemma,
+{\small
+\[
+\begin{aligned}
+  &\dim((A_{\mathbb{F}}(B_1)+\mathbb{F})/(A_{\mathbb{F}}(B)+\mathbb{F})) \\
+  &\qquad= (\deg B_1-\dim B_1) - (\deg B-\dim B) \\
+  &\qquad= (g-1)-(g-1)=0.
+\end{aligned}
+\]
+}
+This yields the desired result, since it implies
+$A_{\mathbb{F}}(B)+\mathbb{F} = A_{\mathbb{F}}(B_1)+\mathbb{F}$ and since
+$\alpha \in A_{\mathbb{F}}(B_1)$, it follows that
+$\alpha \in A_{\mathbb{F}}(B)+\mathbb{F}$, as desired.
+\end{proof}
+
+\begin{center}10\end{center}
+
+\end{document}

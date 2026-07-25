@@ -568,6 +568,11 @@ references:
       - { path: papaioannou-algebraic-rr/tex/page-0005.tex, format: tex }
       - { path: papaioannou-algebraic-rr/tex/page-0006.tex, format: tex }
       - { path: papaioannou-algebraic-rr/tex/page-0007.tex, format: tex }
+      - { path: papaioannou-algebraic-rr/tex/page-0008.tex, format: tex }
+      - { path: papaioannou-algebraic-rr/tex/page-0009.tex, format: tex }
+      - { path: papaioannou-algebraic-rr/tex/page-0010.tex, format: tex }
+      - { path: papaioannou-algebraic-rr/tex/page-0011.tex, format: tex }
+      - { path: papaioannou-algebraic-rr/tex/page-0012.tex, format: tex }
     read: >-
       Text-extractable PDF, 15 pp. PRIMARY open surrogate for Stichtenoth GTM 254
       Ch. 1 (adele / Weil-differential proof of Riemann-Roch over an arbitrary
@@ -601,6 +606,21 @@ references:
       Div(F) -> Z, with Def 1.7-1.10 (zero/pole/principal divisors, class group
       Class(F)=Div(F)/Princ(F), L(D), genus g=sup{deg D - dim D + 1}). Source
       typos were transcribed verbatim (e.g. the "L(A)" misprint in Def 1.9).
+      PAGES 8-12 transcribed 2026-07-26 via AI vision (no OCR) at 300 DPI, with
+      rendered images retained and standalone LaTeX under the same directories;
+      cite as papaioannou-algebraic-rr:page-0008 ...
+      papaioannou-algebraic-rr:page-0012. Page 8 gives Lemma 1.13 (L(D) subset
+      L(E) and the dimension/degree bound), Lemma 1.14 (finite-dimensionality of
+      L(D)), and Thm 1.15 (principal divisors have degree zero, with zero and
+      pole degrees [F:K(x)]). Page 9 gives Cor 1.16, Thm 1.17 (finite genus),
+      and Def 1.11 (adeles). Page 10 gives Def 1.12 (A_F(D)), Thm 1.18 (the
+      adelic preliminary Riemann-Roch formula), and Lemmas 1.19-1.21. Page 11
+      completes Thm 1.18, gives Def 1.13 (Weil differentials and Omega_F(D)),
+      Lemma 1.22 (dim Omega_F(D) = i(D)), and begins Thm 1.23. Page 12 completes
+      Thm 1.23 (dim_F Omega_F = 1), gives Lemma 1.24 and Def 1.14 (the divisor
+      of a differential and regularity), and Thm 1.25 ((x omega) = (x) +
+      (omega), hence canonical divisors are equivalent). Visible source typos
+      on these pages are likewise retained verbatim.
     topics: [function-fields, adeles, weil-differentials, riemann-roch, genus, canonical-divisor, valuations, places, divisors, index-of-specialty]
 
   - slug: cff-curves-function-fields

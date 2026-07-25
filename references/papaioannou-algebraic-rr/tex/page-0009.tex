@@ -1,0 +1,133 @@
+% source: An algebraic approach to the Riemann-Roch theorem and the arithmetic theory of function fields (Athanasios Papaioannou), http://www.fen.bilkent.edu.tr/~franz/mat/Riemann-Roch.pdf
+% pdf_page: 0009
+% retrieved: 2026-07-26
+% transcribed_by: page-transcriber (AI vision, no OCR)
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+% Small-caps theorem style matching the source.
+\newtheoremstyle{scplain}{\topsep}{\topsep}{\itshape}{0pt}{\scshape}{.}{ }{\thmname{#1} \thmnote{#3}}
+\theoremstyle{scplain}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{definition}{Definition}
+
+% Small-caps "Proof." to match the source.
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+  \par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax
+  \trivlist\item[\hskip\labelsep\scshape #1\@addpunct{.}]\ignorespaces}%
+  {\popQED\endtrivlist\@endpefalse}
+\makeatother
+\renewcommand{\qedsymbol}{$\square$}
+
+\DeclareMathOperator{\Div}{Div}
+
+\begin{document}
+
+\begin{corollary}[1.16]
+\begin{enumerate}
+\item[(a)] The degrees and the dimensions of any two equivalent divisors
+coincide.
+
+\item[(b)] If $\deg D < 0$, then $\dim D = 0$.
+
+\item[(c)] For a divisor $D$ of degree $0$, the following assertions are
+equivalent:
+  \begin{enumerate}
+  \item[(i)] $D$ is principal
+  \item[(ii)] $\dim D \geq 1$
+  \item[(iii)] $\dim D = 1$.
+  \end{enumerate}
+\end{enumerate}
+\end{corollary}
+
+Notice now that in Lemma 1.14 we saw that $\dim D \leq 1 + \deg D$ for any
+effective divisor $D$. However, this holds for all divisors $D$ with
+$\deg D \geq 0$. In order to verify this, assume that $\dim D > 0$, in which
+case $D \sim D'$ for some effective divisor $D'$, the result now follows
+immediately, by the proved equalities $\deg D = \deg D'$ and
+$\dim D = \dim D'$.
+
+The desired theorem is now attainable. We have
+
+\begin{theorem}[1.17]
+Any function field has finite genus. More precisely, there is a constant
+$\gamma \in \mathbb{Z}$ that only depends on $\mathbb{F}/\mathbb{K}$ and is such
+that
+\[
+  \deg D - \dim D \leq \gamma,
+\]
+for any $D \in \Div(\mathbb{F})$.
+\end{theorem}
+
+\begin{proof}
+First note that $D_1 \leq D_2$ implies that
+$\deg D_1 - \dim D_1 \leq \deg D_2 - \dim D_2$, by Lemma 1.13. Now fix a
+non-constant element $x \in \mathbb{F}$ and consider the specific divisor
+$B = (x)_\infty$. As mentioned before, there exists an effective divisor $C$
+such that $\dim(kB+C) \geq (k+1)\deg B$, for all non-negative integers $k$. On
+the other hand, $\dim(kB+C) \leq \dim(kB)+\dim C$, by lemma 1.13; the above
+inequalities combined yield
+\[
+  \dim(kB) \geq (k+1)\deg B - \deg C
+    = \deg(kB) + ([\mathbb{F} : \mathbb{K}(x)] - \deg C),
+\]
+hence
+\[
+  \deg(kB) - \dim(kB) \leq \gamma,
+\]
+for all $k \geq 0$ and
+$\gamma = [\mathbb{F} : \mathbb{K}(x)] - \deg C$. We would like to show that
+the above displayed equation continues to hold when we substitute $kB$ by any
+$A \in \Div(\mathbb{F})$.
+
+For the above statement to hold, it clearly suffices to prove the following
+claim: \emph{given a divisor $A \in \Div(\mathbb{F})$, there exist divisors $A_1$
+and $D$ and a positive integer $k$ such that $A \leq A_1$, $A_1 \sim D$ and
+$D < kB$} (this statement is enough to finish off the proof, because then
+$\deg A - \dim A \leq \deg A_1 - \dim A_1 = \deg D - \dim D
+\leq \deg(kB)-\dim(kB) \leq \gamma$). To prove the claim, pick an effective
+divisor $A_1$ such that $A_1 \geq A$. Then
+$\dim(kB-A_1) \geq \dim(kB)-\deg(A_1) \geq \deg(kB)-\gamma-\deg A_1 > 0$, for
+$k \in \mathbb{N}$ sufficiently large. Therefore there is some element
+$z \in L(kB-A_1)$ and so we may set $D = A_1-(z)_0$ for a fixed such $z$. Note
+that $A_1 \sim D$ and $D \leq A_1-(A_1-kB)=kB$, as desired. This completes the
+proof.
+\end{proof}
+
+\section*{1.4\quad The Proof of the Riemann-Roch Theorem.}
+
+We will now proceed to prove Roch's generalisation of Riemann's inequality,
+which is known as the Riemann-Roch theorem. Before stating it, we will need to
+introduce the technical objects that will be used in its proof. The first
+important concept is that of an adele.
+
+\begin{definition}[1.11]
+An adele of a function field $\mathbb{F}/\mathbb{K}$ is a mapping
+$\alpha : \mathbf{P}_{\mathbb{F}} \longrightarrow \mathbb{F}$ defined by
+$P \mapsto \alpha_P$ such that $\alpha_P \in \mathcal{O}_P$ for almost all
+places $P$ of $\mathbb{F}/\mathbb{K}$. We may regard an adele as an element of
+$\prod P$, where the product ranges over all places
+$P \in \mathbf{P}_{\mathbb{F}}$.
+\end{definition}
+
+The associated space $A_{\mathbb{F}}$ that contains all the adeles of
+$\mathbb{F}/\mathbb{K}$ is called the \emph{adele space} and is obviously a
+$\mathbb{K}$-vector space, with the algebraic structure inherited from the
+identification of $A_{\mathbb{F}}$ with
+$\prod_{P \in \mathbf{P}_{\mathbb{F}}} P$; in fact, $A_{\mathbb{F}}$ can be even
+regarded as a $\mathbb{K}$-algebra, though this observation will never be used
+henceforth.
+
+Given an element $x \in \mathbb{F}$, the \emph{principal adele of $x$} is the
+adele whose components are all equal to $x$; this definition agrees with the
+conditions imposed on adeles, since any $x \in \mathbb{F}$ has finitely many
+zeroes and poles, as we showed earlier. The above construction yields an
+embedding $\mathbb{F} \hookrightarrow A_{\mathbb{F}}$, and the valuations $v_P$
+of $\mathbb{F}/\mathbb{K}$
+
+\begin{center}9\end{center}
+
+\end{document}

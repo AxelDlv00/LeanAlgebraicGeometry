@@ -1,0 +1,146 @@
+% source: An algebraic approach to the Riemann-Roch theorem and the arithmetic theory of function fields (Athanasios Papaioannou), http://www.fen.bilkent.edu.tr/~franz/mat/Riemann-Roch.pdf
+% pdf_page: 0012
+% retrieved: 2026-07-26
+% transcribed_by: page-transcriber (AI vision, no OCR)
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+% Small-caps theorem style matching the source.
+\newtheoremstyle{scplain}{\topsep}{\topsep}{\itshape}{0pt}{\scshape}{.}{ }{\thmname{#1} \thmnote{#3}}
+\theoremstyle{scplain}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{definition}{Definition}
+\newtheorem*{theorem}{Theorem}
+
+% Small-caps "Proof." to match the source.
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+  \par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax
+  \trivlist\item[\hskip\labelsep\scshape #1\@addpunct{.}]\ignorespaces}%
+  {\popQED\endtrivlist\@endpefalse}
+\makeatother
+\renewcommand{\qedsymbol}{$\square$}
+
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\Class}{Class}
+
+\begin{document}
+
+\noindent
+$\deg(D_2+B)+1-g-(\deg B+g-1)
+= \deg B+(\deg D_1+\deg D_2+3(1-g))$. The term in brackets is independent of
+$B$ and therefore
+$\dim U_1+\dim U_2-\dim\Omega_{\mathbb{F}}(-B)>0$ if the degree of $B$ is
+sufficiently large. By our little fact from linear algebra, it follows that
+$U_1 \cap U_2 \neq \varnothing$, as desired.
+
+After we accomplished the above, the proof of our initial claim is easy to come:
+pick $x_1 \in L(D_1+B)$, $x_2 \in L(D_2+B)$ such that
+$x_1\omega_1=x_2\omega_2 \neq 0$; then
+$\omega_2=(x_1x_2^{-1})\omega_1$, as desired.\hfill$\square$
+
+We will now proceed to attach a natural divisor to any Weil differential of
+$\mathbb{F}/\mathbb{K}$. Before that, we have to prove the following
+
+\begin{lemma}[1.24]
+Let $\omega$ be a non-trivial differential of $\mathbb{F}/\mathbb{K}$. Then,
+there is a uniquely determined divisor
+\[
+  W \in M(\omega) =
+    \{D \in \Div(\mathbb{F}) \mid
+      \omega\big|_{A_{\mathbb{F}}(D)+\mathbb{F}} \equiv 0\}
+\]
+such that $D \leq W$ for any $D \in M(\omega)$.
+\end{lemma}
+
+\begin{proof}
+By Riemann's inequality, there exists a constant $c$ dependent only on the
+function field $\mathbb{F}/\mathbb{K}$ such that $i(D)=0$ for all
+$D \in \Div(\mathbb{F})$ with the property $\deg D \geq c$ (see our remarks
+following the introduction of Riemann's inequality). Since
+$\dim(A_{\mathbb{F}}/(A_{\mathbb{F}}(D)+\mathbb{F}))=i(D)$, we have
+$\deg D<c$ for all $D \in M(\omega)$. Thus, we may pick a divisor $W$ of maximal
+degree among those.
+
+Suppose that $W$ does not satisfy the desired property; then there exists a
+divisor $D_0 \in M(\omega)$ such that $v_Q(D_0)>v_Q(W)$ at some place $Q$ of
+$\mathbb{F}/\mathbb{K}$. We claim that $W+Q \in M(\omega)$, which will be a
+contradiction to the maximality of $W$. Indeed, consider an adele
+$\alpha=(\alpha)_P \in A_{\mathbb{F}}(W+Q)$. We may write
+$\alpha=\alpha'+\alpha''$ with
+\[
+  \alpha'_P=(1-\delta_{PQ})\alpha_P
+\]
+and
+\[
+  \alpha''_P=\delta_{PQ}\alpha_P,
+\]
+where the $\delta$ above is merely the Kronecker delta. Then,
+$\alpha' \in A_{\mathbb{F}}(W)$, $\alpha'' \in A_{\mathbb{F}}(D_0)$, hence
+$\omega(\alpha)=\omega(\alpha')+\omega(\alpha'')=0$. Therefore, $\omega$
+vanishes on $A_{\mathbb{F}}(W+Q)+\mathbb{F}$, and our claim is true. This
+completes the proof of the lemma.
+\end{proof}
+
+In light of the above lemma, the following definition is legitimate
+
+\begin{definition}[1.14]
+The divisor $(\omega)$ of a Weil differential $\omega \neq 0$ is the unique
+divisor $D$ of $\mathbb{F}/\mathbb{K}$ such that
+\begin{enumerate}
+\item[(a)] $\omega$ vanishes on $A_{\mathbb{F}}(D)+\mathbb{F}$.
+
+\item[(b)] If $\omega$ vanishes on $A_{\mathbb{F}}(D')+\mathbb{F}$, then
+$D' \leq D=(\omega)$.
+\end{enumerate}
+
+Now for any place $P$ and any $\omega,(\omega)$ as above, we define
+$v_P(\omega)=v_P((\omega))$. Moreover, a place $P$ is called a zero of $\omega$
+if $v_P(\omega)>0$ and a pole of $\omega$ if $v_P(\omega)>0$. A differential
+$\omega$ is called regular at a place $P$ if $v_P(\omega) \geq 0$, and $\omega$
+is called regular or holomorphic, if it is regular at all places
+$P \in \mathbf{P}_{\mathbb{F}}$.
+\end{definition}
+
+Note now that
+$\Omega_{\mathbb{F}}(D)=\{\omega \in \Omega_{\mathbb{F}} \mid
+\omega=0 \text{ or } (\omega)\geq D\}$ and
+$\Omega_{\mathbb{F}}(0)=\{\omega \in \Omega_{\mathbb{F}} \mid
+\omega \text{ is regular}\}$. As a consequence of the fact that
+$\Omega_{\mathbb{F}}(D)=i(D)$ and the definition, we obtain
+$\dim\Omega_{\mathbb{F}}(0)=g$.
+
+We will now need the following
+
+\begin{theorem}[1.25]
+\begin{enumerate}
+\item[(a)] For a non-zero element $x \in \mathbb{F}$, and a non-zero
+differential $\omega \in \Omega_{\mathbb{F}}$, we have
+$(x\omega)=(x)+(\omega)$.
+
+\item[(b)] Any two canonical divisors are equivalent.
+\end{enumerate}
+\end{theorem}
+
+\medskip\noindent{\scshape Proof.} A simple consequence of this statement is
+that the canonical divisors of $\mathbb{F}/\mathbb{K}$ form a class $[W]$ in the
+divisor class group $\Class(\mathbb{F})$; this divisor class is called the
+\emph{canonical class} of $\mathbb{F}/\mathbb{K}$. We now proceed to prove the
+statement.
+
+\begin{enumerate}
+\item[(a)] If $\omega$ vanishes on $A_{\mathbb{F}}(D)+\mathbb{F}$, then
+$x\omega$ vanishes on $A_{\mathbb{F}}(D+(x))+\mathbb{F}$, as mentioned before,
+and therefore $(\omega)+(x) \leq (x\omega)$. Likewise,
+$(x\omega)+(x^{-1}) \leq (\omega)$. Combining these inequalities, we obtain
+$(\omega)+(x) \leq (x\omega) \leq -(x^{-1})+(\omega)=(\omega)+(x)$, which
+obviously yields the desired equality.
+
+\item[(b)] This second assertion follows from part (a) above and the fact that
+$\dim_{\mathbb{F}}\Omega_{\mathbb{F}}=1$.
+\end{enumerate}
+
+\begin{center}12\end{center}
+
+\end{document}
