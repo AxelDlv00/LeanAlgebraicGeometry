@@ -96,6 +96,11 @@ formalization while keeping mathematical and operational state explicit:
 - **The workspace ledger** records coherent commits and powers the public dashboard's progress
   and session views.
 
+Concurrent sessions can share a project's root import file. When adding one
+import, build the staged root from the ledger's current `HEAD` and insert only
+that line; do not stage the whole on-disk root, which may contain another
+session's uncommitted imports.
+
 The mathematical blueprint is kept separate from implementation journals. Lean-specific progress
 and failed approaches belong in graph comments, tasks, or the inbox, while the blueprint remains a
 timeless account of the mathematics.
