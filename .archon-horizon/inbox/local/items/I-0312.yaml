@@ -4,13 +4,14 @@ kind: issue
 body: 'Printable blueprint warning debt
 
 
-  Two settled full LuaLaTeX passes produce a 625-page PDF with 817 overfull boxes
-  and 96 missing-character notices. There are no underfull boxes, unresolved references
-  or citations, duplicate labels, rerun requests, or TeX errors. The rewritten rigidity,
-  Cech augmentation, and Albanese universal-property slices contribute no chapter-local
-  layout or glyph warnings. Continue with the worst remaining chapter-local overflows
-  and central rendering of Greek glyphs in code-style names. Latest blueprint commit:
-  `21eefaf60`.'
+  Two settled full LuaLaTeX passes produce a 618-page PDF with 759 overfull boxes
+  and 96 missing-character notices. There are zero underfull boxes and no LaTeX warnings,
+  unresolved references or citations, duplicate labels, rerun requests, or TeX errors.
+  The rewritten RiemannRoch_WeilDivisor slice contributes no chapter-local overfull,
+  underfull, missing-character, or LaTeX warning. This improves the preceding 625-page
+  and 817-overfull baseline while glyph debt stays flat. Continue with the worst remaining
+  chapter-local overflows and central rendering of Greek glyphs in code-style names.
+  Latest commits: a49bf3c38, 9dac093df.'
 labels:
 - agent-ready
 status: open
@@ -21,7 +22,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-23T19:07:53.865283+00:00'
-updated_at: '2026-07-25T18:04:43.135855+00:00'
+updated_at: '2026-07-25T18:55:16.503943+00:00'
 metadata:
   provenance:
     run: '0046'

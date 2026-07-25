@@ -3,9 +3,11 @@ title: Albanese and Riemann-Roch entry warnings
 projects:
 - Algebraic-Jacobian-Challenge
 summary: The clean-build allocation was 51 warnings. P1ChartData's four style diagnostics
-  are now eliminated and tracked as a completed child; the unrecounted residual baseline
-  is 47, led by AuslanderBuchsbaum, ChiLedger, and AlbaneseUP, with genuine sorry
-  and overlapping-instance diagnostics still explicit in the pending remainder.
+  are closed, and the WeilDivisor pass removes its unused-section-variable linter
+  while leaving the genuine principal_degree_zero sorry explicit; a targeted module
+  build reports only that known sorry. The unrecounted residual is still led by AuslanderBuchsbaum,
+  ChiLedger, and AlbaneseUP, with genuine sorry and overlapping-instance diagnostics
+  tracked in the pending remainder.
 status: pending
 kind: refactor
 priority: normal
@@ -28,6 +30,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual
-  updated_at: '2026-07-25T14:20:59.620442+00:00'
+  updated_at: '2026-07-25T18:53:08.486454+00:00'
   pinned_commits:
+  - f5e9c3b5e
   - 1396cfbb4

@@ -2,12 +2,14 @@ id: AJC.maintenance.blueprint.prose.remaining.weil-divisor
 title: Weil-divisor truth pass
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Clean RiemannRoch_WeilDivisor as the next bounded pass: remove iteration
-  and Lean-development journals, preserve the divisor/function-field mathematics and
-  source anchors, audit completion markers and dependencies, and finish with graph
-  plus chapter-local print checks. This chapter is also upstream of the Serre-duality
-  and Riemann--Roch gates now exposed by the Albanese proof.'
-status: pending
+summary: RiemannRoch_WeilDivisor is now a 1,002-line timeless substrate, down from
+  1,664 lines. The pass removes iteration journals, uses exact Hartshorne page anchors,
+  marks the sole principal-degree-zero sorry honestly, exposes the finite-map and
+  pullback-degree blockers, distinguishes coefficient from residue-weighted degree,
+  and keeps every completed Lean statement and proof pin exact. Targeted and full
+  builds, explicit graph sync, settled print passes, and an independent review all
+  pass.
+status: done
 kind: blueprint
 priority: high
 depends_on: []
@@ -29,3 +31,10 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint.prose.remaining
+  updated_at: '2026-07-25T18:56:32.829742+00:00'
+  pinned_commits:
+  - 9dac093df
+  - 748dfbd26
+  - a49bf3c38
+  - c7f89a262
+  - f5e9c3b5e

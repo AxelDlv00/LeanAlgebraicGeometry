@@ -4,14 +4,14 @@ kind: issue
 body: 'Project-wide blueprint pins need declaration audit
 
 
-  An explicit full graph sync now reports 43 Lean-pin warnings, reduced from 69. The
-  stale set has been eliminated. Seven warnings are scanner limitations involving
-  valid universe-qualified declarations, anonymous instances, or priority-named instances;
-  keep those valid pins. The remaining 36 are genuine forward declarations: flat-base-change
-  gluing (4), qcoh and tilde infrastructure (7), RelPic (1), Quot carrier and Hilbert
-  (3), Quot endgame (4), GlueHom (1), Codim and Auslander--Buchsbaum (8), and Adelic
-  (8). Continue by discharging formal leaves and improving scanner coverage, without
-  deleting forward mathematical contracts. Commits: 02d960210, 7bc2b2e6b, be9659e15.'
+  An explicit full graph sync now reports 1,890 blueprint nodes, 4,326 Lean nodes,
+  6,604 edges, and the same 43 classified warnings: seven scanner limitations and
+  36 genuine forward declarations. The Weil pass makes six reusable order and naturality
+  declarations public, leaves principal_degree_zero visibly sorry, and splits the
+  adelic point valuation, order comparison, residue field, and weighted degree so
+  each green pin has checked dependencies. No new unresolved pin was introduced. Keep
+  the issue open for scanner coverage and the genuine forward contracts. Latest commits:
+  f5e9c3b5e, a49bf3c38, 9dac093df.'
 labels:
 - agent-ready
 status: open
@@ -22,7 +22,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-24T11:19:30.012968+00:00'
-updated_at: '2026-07-25T17:40:35.529523+00:00'
+updated_at: '2026-07-25T18:55:26.093224+00:00'
 metadata:
   provenance:
     run: '0046'

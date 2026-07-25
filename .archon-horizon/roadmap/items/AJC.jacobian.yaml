@@ -6,8 +6,9 @@ summary: 'North star: construct the Jacobian of a smooth proper geometrically in
   curve as Pic^0, prove it is an abelian variety of dimension equal to the genus,
   and establish the Albanese universal property. The children distinguish completed
   infrastructure from remaining representability, base-change, Pic0, and Albanese
-  obligations; the Albanese blueprint now records the characteristic-free differential
-  route and its exact open gates.'
+  obligations. The supporting divisor blueprint now exposes principal degree zero
+  through the exact finite-map and pullback-degree gates and keeps coefficient degree
+  over an algebraically closed field separate from the general-field adelic degree.'
 status: active
 kind: proof
 priority: high
@@ -20,6 +21,9 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:39.715008+00:00'
-  updated_at: '2026-07-25T17:39:24.019910+00:00'
+  updated_at: '2026-07-25T18:53:36.894424+00:00'
   pinned_commits:
+  - 9dac093df
+  - a49bf3c38
+  - f5e9c3b5e
   - 21eefaf60

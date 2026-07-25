@@ -5,9 +5,10 @@ projects:
 summary: Keep the ambitious AJC route maintainable through measured elaboration work,
   bounded warning and heartbeat audits, timeless blueprint truth passes, faithful
   formalization pins, and reproducible print/build baselines. The dominant Cech hotspot
-  is closed and the Albanese chapter is now characteristic-free; remaining work stays
-  split across build budgets, warning debt, pin debt, print debt, and the explicit
-  Weil-divisor prose pass.
+  is closed and the Weil-divisor substrate is now source-checked and dependency-honest.
+  Remaining work stays split across build budgets, warning debt, the 43 classified
+  pin warnings, 759 print overflows plus 96 glyph notices, and the next explicit Adelic
+  prose pass.
 status: active
 kind: refactor
 priority: normal
@@ -30,7 +31,10 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
-  updated_at: '2026-07-25T17:39:36.782971+00:00'
+  updated_at: '2026-07-25T18:53:27.897445+00:00'
   pinned_commits:
+  - 9dac093df
+  - a49bf3c38
+  - f5e9c3b5e
   - 08c03cbf0
   - 21eefaf60

@@ -3,10 +3,12 @@ title: Project-wide build and warning budgets
 projects:
 - Algebraic-Jacobian-Challenge
 summary: 'The controlled clean baseline is 8,720 jobs with 578 warnings across 49
-  files. The Cech degree-one cold hotspot is closed: a direct augmentation reduces
-  its forced rebuild from 16:16.30 and 10.14 GiB to 6.85 s and 3.23 GiB. Remaining
-  children cover global warning reduction, umbrella imports, and 186 numeric elaboration-budget
-  sites (142 heartbeat and 44 synthesis scopes).'
+  files. The Cech degree-one cold hotspot remains closed: direct augmentation reduced
+  its forced rebuild from 16:16.30 and 10.14 GiB to 6.85 s and 3.23 GiB. A current
+  end-to-end validation after the Weil pass completes all 8,723 jobs in 6:23.67 at
+  7,520,352 KiB peak RSS. Remaining children cover global warning reduction, umbrella
+  imports, and 186 numeric elaboration-budget sites (142 heartbeat and 44 synthesis
+  scopes).'
 status: pending
 kind: refactor
 priority: normal
@@ -29,8 +31,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
-  updated_at: '2026-07-25T16:21:45.326954+00:00'
+  updated_at: '2026-07-25T18:53:19.227804+00:00'
   pinned_commits:
+  - f5e9c3b5e
   - 08c03cbf0
   - f73c10133
   - 00b4c44ed

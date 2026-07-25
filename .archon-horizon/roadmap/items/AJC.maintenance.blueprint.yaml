@@ -3,10 +3,11 @@ title: Blueprint prose and formalization pins
 projects:
 - Algebraic-Jacobian-Challenge
 summary: Keep the mathematical blueprint timeless and mechanically trustworthy through
-  separate bounded prose, Lean-pin, and print passes. The Albanese universal-property
-  chapter is now source-checked and characteristic-free; the next prose target is
-  the Weil-divisor substrate, while project-wide pin and print debt remain explicitly
-  open.
+  separate bounded prose, Lean-pin, and print passes. The Weil-divisor substrate is
+  now source-checked, dependency-honest, and explicit about coefficient versus residue-weighted
+  degree; RiemannRoch_Adelic is the next prose target. Project-wide pin debt remains
+  at 43 classified warnings and global print debt at 759 overfull plus 96 missing-glyph
+  notices.
 status: pending
 kind: blueprint
 priority: normal
@@ -29,8 +30,11 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
-  updated_at: '2026-07-25T17:38:23.251255+00:00'
+  updated_at: '2026-07-25T18:52:56.673012+00:00'
   pinned_commits:
+  - 9dac093df
+  - a49bf3c38
+  - f5e9c3b5e
   - 21eefaf60
   - c2bc211c8
   - 2482721ad

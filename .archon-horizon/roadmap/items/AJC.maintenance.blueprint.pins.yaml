@@ -2,12 +2,13 @@ id: AJC.maintenance.blueprint.pins
 title: Lean-pin declaration audit
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The explicit full graph sync remains at the same 43 classified warnings:
-  seven scanner limitations and 36 genuine forward declarations. The Albanese pass
-  narrows its seven pins to the actual Lean declarations, leaves stronger formula,
-  separability, birationality, and homomorphism claims unpinned, removes ten obsolete
-  journal nodes, and exposes all open mathematical gates. No new unresolved pin or
-  stale blueprint node was introduced.'
+summary: 'The explicit full graph sync now has 1,890 blueprint nodes, 4,326 Lean nodes,
+  and 6,604 edges while retaining exactly the same 43 classified warnings: seven scanner
+  limitations and 36 genuine forward declarations. The Weil pass makes six reusable
+  order/naturality declarations public, marks principal_degree_zero as the sole local
+  sorry, and splits adelic valuation, additive order, residue field, and weighted
+  degree so every green pin has only checked dependencies. No new unresolved pin was
+  introduced.'
 status: pending
 kind: blueprint
 priority: normal
@@ -30,8 +31,11 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint
-  updated_at: '2026-07-25T17:37:53.874304+00:00'
+  updated_at: '2026-07-25T18:52:39.439571+00:00'
   pinned_commits:
+  - 9dac093df
+  - a49bf3c38
+  - f5e9c3b5e
   - 21eefaf60
   - 6aff13c82
   - 3d7c61a1b
