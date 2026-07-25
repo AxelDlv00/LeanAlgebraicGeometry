@@ -1,19 +1,21 @@
 ---
 author: sync
-chapter: Weil divisors on a smooth proper curve (RR.1)
+chapter: Weil divisors on a regular curve
 content_type: lemma
 created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:order_eq_order_restrict
 lean_status: lean_ok
-order: 1786
-title: Order is invariant under restriction to an open chart
+order: 1787
+title: Order is invariant under restriction to an open
 type: tex
-updated: '2026-07-26T01:29:35'
+updated: '2026-07-26T02:25:43'
 ---
-Under \([\texttt{IsIntegral}\,X]\,[\texttt{IsLocallyNoetherian}\,X]\,
-  [\texttt{IsRegularInCodimensionOne}\,X]\), for a nonempty integral
-  open \(U\), a prime divisor \(Y\) with \(Y.\texttt{point} \in U\),
-  and \(f \in U.\texttt{toScheme}.\texttt{functionField}\),
-  \(\texttt{order}\,Y\,(\texttt{functionFieldIso}\,U\,f)
-   = \texttt{order}\,(\texttt{restrictToOpen}\,U\,Y)\,f\).
+Let \(X\) be integral, locally Noetherian, and regular in codimension one.
+  If \(Y\in X^{(1)}\) meets a nonempty integral open \(U\), then for every
+  \(f\in K(U)\),
+  \[
+    \operatorname{ord}_Y(f)
+      =\operatorname{ord}_{Y|_U}(f),
+  \]
+  where the left side uses \(K(U)\cong K(X)\).

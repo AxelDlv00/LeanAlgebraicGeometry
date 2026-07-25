@@ -3,20 +3,20 @@ author: sync
 content_type: theorem
 created: '2026-07-16T21:14:29'
 decl: AlgebraicGeometry.Scheme.PrimeDivisor.functionFieldIso_compat
-docstring: "**Morphism-level compatibility for the function-field iso** (iter-202\
-  \ Lane\nWD-A4a Sub-build 3, step 1). For an integral scheme `X`, a nonempty integral\n\
-  open `U`, and a prime divisor `Y` of `X` with `Y.point ∈ U`, the square\n```\n \
-  \ stalk_U Y  --stalkSpec_U-->  functionField U\n      |                        \
-  \      |\n   stalkIso                     functionFieldIso\n      v            \
-  \                  v\n  stalk_X Y  --stalkSpec_X-->  functionField X\n```\ncommutes\
-  \ in `CommRingCat`, where the horizontal maps are the canonical\n`stalkSpecializes`\
-  \ maps to the respective generic points (i.e. the algebra\nmaps `O_{·,Y} → K(·)`)."
+docstring: "**Morphism-level compatibility for the function-field iso.** For an integral\n\
+  scheme `X`, a nonempty integral open `U`, and a prime divisor `Y` of `X` with\n\
+  `Y.point ∈ U`, the square\n```\n  stalk_U Y  --stalkSpec_U-->  functionField U\n\
+  \      |                              |\n   stalkIso                     functionFieldIso\n\
+  \      v                              v\n  stalk_X Y  --stalkSpec_X-->  functionField\
+  \ X\n```\ncommutes in `CommRingCat`, where the horizontal maps are the canonical\n\
+  `stalkSpecializes` maps to the respective generic points (i.e. the algebra\nmaps\
+  \ `O_{·,Y} → K(·)`)."
 file: AlgebraicJacobian/RiemannRoch/WeilDivisor.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PrimeDivisor.functionFieldIso_compat
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-07-26T02:25:43'
 ---
 theorem Scheme.PrimeDivisor.functionFieldIso_compat {X : Scheme.{u}} [IsIntegral X]
     (U : X.Opens) [Nonempty U] [IsIntegral U.toScheme]

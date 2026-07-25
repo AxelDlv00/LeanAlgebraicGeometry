@@ -10,43 +10,22 @@ import AlgebraicJacobian.Albanese.CoheightBridge
 /-!
 # Weil divisors on a smooth proper curve (RR.1)
 
-This file is the **RR.1** sub-build chapter for the project's headline
-`genusZero_curve_iso_P1` (the "smooth proper geom-irred genus-`0` curve over `k̄` is
-isomorphic to `ℙ¹`" lemma in `AlgebraicJacobian.AbelianVarietyRigidity`).
+This file develops the scheme-level Weil-divisor API needed by the
+Riemann--Roch part of the project. It contains:
 
-Mathlib `b80f227` ships no `WeilDivisor` on a scheme; adjacent pieces
-(`MeromorphicOn.divisor`, `CommRing.Pic`, `Scheme.RationalMap`) cover different
-ground. This file is therefore **project-bespoke**, scaffolding the formal-sum data
-type `Div(X) = ⨁_{Y ⊂ X codim 1} ℤ` on a Noetherian integral scheme `X` satisfying
-Hartshorne's condition `(*)`, the principal-divisor homomorphism
-`div : K(X)^× → Div(X)` on a curve, the degree map `deg : Div(C) → ℤ` on a smooth
-proper curve over an algebraically closed field, the degree-zero of principal divisors
-on a complete nonsingular curve (Hartshorne Cor. II.6.10), and the linear-equivalence
-relation `D ~ D'`.
+* prime divisors and finite formal sums of prime divisors;
+* restriction of prime divisors and orders of vanishing to open subschemes;
+* finite support and principal divisors on Noetherian integral schemes regular
+  in codimension one;
+* coefficient degree, positive parts, and linear equivalence; and
+* the degree-zero theorem for principal divisors on complete nonsingular curves.
 
-## Status (iter-172 file-skeleton)
-
-This file is the **iter-172 Lane C** file-skeleton: each declaration carries the
-intended signature (matching the blueprint `\lean{...}` pin) with a `sorry` body.
-The bodies are iter-173+ work after the sibling chapters `RR.2`
-(`RiemannRoch_RRFormula.tex`), `RR.3` (`RiemannRoch_OcOfD.tex`), and `RR.4`
-(`RiemannRoch_RationalIsoP1.tex`) land.
-
-The 9 pinned declarations are:
-
-1. `Scheme.WeilDivisor` — free abelian group on prime divisors (Definition).
-2. `Scheme.RationalMap.order` — order of a rational function along a prime divisor.
-3. `Scheme.WeilDivisor.ofClosedPoint` — Weil divisor associated to a closed point.
-4. `Scheme.WeilDivisor.degree` — degree map over an algebraically closed base.
-5. `Scheme.WeilDivisor.degree_hom` — degree is a group homomorphism (Theorem).
-6. `Scheme.WeilDivisor.principal` — principal divisor of a rational function.
-7. `Scheme.WeilDivisor.principal_hom` — `div` is a group homomorphism (Theorem).
-8. `Scheme.WeilDivisor.principal_degree_zero` — `deg ∘ div = 0` on a complete curve.
-9. `Scheme.WeilDivisor.LinearEquivalence` — linear equivalence of Weil divisors.
+Mathlib's adjacent APIs for meromorphic divisors, ring Picard groups, and
+rational maps do not provide this scheme-level formal-sum construction.
 
 ## References
 
-Blueprint: `blueprint/src/chapters/RiemannRoch_WeilDivisor.tex` (445 LOC, 9 pins).
+Blueprint: `blueprint/src/chapters/RiemannRoch_WeilDivisor.tex`.
 Hartshorne, *Algebraic Geometry*, II §6 (pp. 130–137 + IV.1 pp. 294–296).
 Stacks Project, tags 02RW (divisors), 02ME (order at a point), 0BE0 (degree),
 0BE3 (principal divisors have degree zero on a complete nonsingular curve).
@@ -94,7 +73,7 @@ structure Scheme.PrimeDivisor (X : Scheme.{u}) where
   /-- The generic point of the closed integral subscheme. -/
   point : X
   /-- Codimension-1 witness: `point` has coheight `1` in the specialisation
-  preorder on `X.carrier`. Per iter-173 `wd-spec-refine` (`def:prime_divisor`). -/
+  preorder on `X.carrier`. -/
   coheight : Order.coheight point = 1
 
 /-- The **Weil divisor group** of a scheme `X` satisfying Hartshorne's condition
@@ -115,16 +94,10 @@ instance (X : Scheme.{u}) : Inhabited X.WeilDivisor :=
 
 end Scheme.WeilDivisor
 
-/-! ## Project-local Mathlib supplement — PrimeDivisor open-immersion bridge
+/-! ## Prime divisors and open immersions
 
-Iter-200 Lane WD-A4a Sub-build 1 substrate (per `analogies/wd-stacks02iz.md`
-and `task_results/mathlib-analogist-wd-stacks02iz.md`): on top of the existing
-project-side `AlgebraicJacobian.Albanese.CoheightBridge`
-(`Order.coheight_eq_of_isOpenEmbedding`, axiom-clean iter-183) we package the
-PrimeDivisor-level open-immersion bijection used by future RR.1 / A.4.a
-substrate work.
-
-The four declarations are:
+The project-local lemma `Order.coheight_eq_of_isOpenEmbedding` lets us package
+the following standard operations:
 - `Scheme.PrimeDivisor.restrictToOpen` — given a prime divisor `Y` of `X` and
   `Y.point ∈ U`, the corresponding prime divisor of the open subscheme `U`.
 - `Scheme.PrimeDivisor.ofOpen` — push a prime divisor of an open subscheme `U`
@@ -135,9 +108,8 @@ The four declarations are:
   open immersion `U.ι : U.toScheme ⟶ X`, a thin wrapper around Mathlib's
   `AlgebraicGeometry.Scheme.Opens.stalkIso`.
 
-References: Stacks 02IZ (open-immersion stalks), Stacks 005X (coheight ↔ Krull
-dim on Noetherian schemes); iter-183 substrate at
-`AlgebraicJacobian/Albanese/CoheightBridge.lean`.
+References: Stacks 02IZ (open-immersion stalks) and Stacks 005X (coheight and
+Krull dimension on Noetherian schemes).
 -/
 
 namespace Scheme.PrimeDivisor
@@ -156,8 +128,7 @@ lemma ext {Y Y' : X.PrimeDivisor} (h : Y.point = Y'.point) : Y = Y' := by
 /-- **PrimeDivisor restriction along an open immersion.** Given a prime
 divisor `Y` of `X` whose generic point lies in an open `U ⊆ X`, the
 corresponding prime divisor of the open subscheme `U.toScheme`. The
-codimension-one witness transports via `Order.coheight_eq_of_isOpenEmbedding`
-(iter-183 project substrate, Stacks 02IZ topological side). -/
+codimension-one witness transports via `Order.coheight_eq_of_isOpenEmbedding`. -/
 def restrictToOpen (U : X.Opens) (Y : X.PrimeDivisor)
     (hYU : Y.point ∈ U) : U.toScheme.PrimeDivisor where
   point := ⟨Y.point, hYU⟩
@@ -216,22 +187,18 @@ end Scheme.PrimeDivisor
 
 end AlgebraicGeometry
 
-/-! ## Project-local Mathlib supplement — `Ring.ordFrac` naturality
+/-! ## Naturality of `Ring.ordFrac`
 
-Iter-201 Lane WD-A4a Sub-build 2 (HARD BAR + extras). Naturality of
-`Ring.ord`, `Ring.ordMonoidWithZeroHom`, and `Ring.ordFrac` (Mathlib's
-`K →*₀ ℤᵐ⁰` from `Mathlib.RingTheory.OrderOfVanishing.Basic`) across a ring
-isomorphism `e : R ≃+* S` between commutative rings, lifted to a compatible
-fraction-field isomorphism `e_K : Frac R ≃+* Frac S`.
+The order functions `Ring.ord`, `Ring.ordMonoidWithZeroHom`, and
+`Ring.ordFrac` are invariant under a ring isomorphism and a compatible
+fraction-field isomorphism.
 
 This is the algebraic substrate for the scheme-level
 `Scheme.RationalMap.order` naturality across the
 `Scheme.PrimeDivisor.stalkIso` open-immersion bridge (used by the
 function-field-iso naturality `order_eq_order_restrict`).
 
-References: Stacks 02RV (Hartshorne II.6.1), Stacks 02ME (DVR-of-stalk
-characterisation at codim-1 points), Stacks 02IZ (stalk under open
-immersion), Stacks 02MD (Mathlib's `Ring.ordFrac` / `Ring.ord` API).
+References: Stacks 02ME, 02IZ, and 02MD.
 -/
 
 namespace Ring
@@ -243,7 +210,7 @@ length of `S/(e x)` as `S`-module: the `R`-linear equivalence
 via `e`) transports length across rings using `Module.length_eq_of_surjective`.
 
 Project-local because Mathlib `b80f227` ships no `ord` naturality lemma. -/
-private lemma ord_ringEquiv {R S : Type*} [CommRing R] [CommRing S]
+lemma ord_ringEquiv {R S : Type*} [CommRing R] [CommRing S]
     (e : R ≃+* S) (x : R) : Ring.ord R x = Ring.ord S (e x) := by
   have heq : Ideal.span ({e x} : Set S) = Ideal.map (e : R →+* S) (Ideal.span {x}) := by
     rw [Ideal.map_span, Set.image_singleton]; rfl
@@ -269,7 +236,7 @@ private lemma ord_ringEquiv {R S : Type*} [CommRing R] [CommRing S]
 /-- **`nonZeroDivisors` is preserved by a ring isomorphism.** Direct from
 Mathlib's `MulEquivClass.map_nonZeroDivisors`. Project-local convenience
 wrapper to phrase the result as an `Iff` instead of a `Submonoid.map` equality. -/
-private lemma nonZeroDivisors_ringEquiv {R S : Type*} [CommRing R] [CommRing S]
+lemma nonZeroDivisors_ringEquiv {R S : Type*} [CommRing R] [CommRing S]
     (e : R ≃+* S) (r : R) :
     r ∈ nonZeroDivisors R ↔ e r ∈ nonZeroDivisors S := by
   rw [← MulEquivClass.map_nonZeroDivisors (e : R ≃* S)]
@@ -281,7 +248,7 @@ private lemma nonZeroDivisors_ringEquiv {R S : Type*} [CommRing R] [CommRing S]
 /-- **`Ring.ordMonoidWithZeroHom` naturality under a ring isomorphism.**
 `ordMonoidWithZeroHom S (e r) = ordMonoidWithZeroHom R r`. Reduces to
 `ord_ringEquiv` after splitting on `r ∈ nonZeroDivisors R`. -/
-private lemma ordMonoidWithZeroHom_ringEquiv {R S : Type*} [CommRing R] [Nontrivial R]
+lemma ordMonoidWithZeroHom_ringEquiv {R S : Type*} [CommRing R] [Nontrivial R]
     [CommRing S] [Nontrivial S] (e : R ≃+* S) (r : R) :
     Ring.ordMonoidWithZeroHom S (e r) = Ring.ordMonoidWithZeroHom R r := by
   unfold Ring.ordMonoidWithZeroHom
@@ -293,8 +260,7 @@ private lemma ordMonoidWithZeroHom_ringEquiv {R S : Type*} [CommRing R] [Nontriv
       hr ((nonZeroDivisors_ringEquiv e r).mpr h)
     simp [hr, her]
 
-/-- **`Ring.ordFrac` naturality** — iter-201 Lane WD-A4a Sub-build 2 HARD BAR
-(per PROGRESS.md L108--L122 recipe step (1)).
+/-- **`Ring.ordFrac` naturality under compatible isomorphisms.**
 
 Given a ring iso `e : R ≃+* S` between Noetherian Krull-dim-`≤ 1` integral
 domains and a compatible fraction-field iso `e_K : K_R ≃+* K_S` (compatibility
@@ -307,7 +273,7 @@ with `a, b ∈ nonZeroDivisors R` via `IsLocalization.surj`. Then
 `e_K x = mk' K_S (e a) (e b)` via the compatibility hypothesis, and both
 sides reduce via Mathlib's `ordFrac_eq_div` to a quotient of
 `ordMonoidWithZeroHom`-values, which agree by `ordMonoidWithZeroHom_ringEquiv`. -/
-private lemma ordFrac_ringEquiv {R S : Type*} [CommRing R] [IsDomain R]
+lemma ordFrac_ringEquiv {R S : Type*} [CommRing R] [IsDomain R]
     [IsNoetherianRing R] [Ring.KrullDimLE 1 R]
     [CommRing S] [IsDomain S] [IsNoetherianRing S] [Ring.KrullDimLE 1 S]
     {K_R K_S : Type*} [Field K_R] [Field K_S]
@@ -354,10 +320,9 @@ end Ring
 
 namespace AlgebraicGeometry
 
-/-! ## Project-local Mathlib supplement — Function field iso for open immersions
+/-! ## Function fields of open subschemes
 
-Iter-201 Lane WD-A4a Sub-build 2 PUSH-BEYOND (step (2) per PROGRESS.md
-L122--L138): canonical iso `U.toScheme.functionField ≅ X.functionField` for
+There is a canonical isomorphism `U.toScheme.functionField ≅ X.functionField` for
 integral `X` and nonempty open `U ⊆ X`, obtained by composing Mathlib's
 `Scheme.Opens.stalkIso U (genericPoint U.toScheme)` with the transport across
 the genericPoint equality `(U.ι (genericPoint U.toScheme)) = genericPoint X`
@@ -366,16 +331,14 @@ delivered by `genericPoint_eq_of_isOpenImmersion`.
 This iso is the bridge that lets `Ring.ordFrac_ringEquiv` apply at the
 scheme level (with `e_K = Scheme.Opens.functionFieldIso U` and `e =
 Scheme.PrimeDivisor.stalkIso U Y hYU` for a prime divisor `Y` of `X` with
-`Y.point ∈ U`). The full IsFractionRing-compatibility lemma chaining the
-two isos is iter-202+ Sub-build 3 scope.
+`Y.point ∈ U`).
 
 Reference: Mathlib `AlgebraicGeometry.FunctionField.genericPoint_eq_of_isOpenImmersion`
-+ iter-200 `Scheme.PrimeDivisor.stalkIso` wrapper. -/
++ `Scheme.PrimeDivisor.stalkIso`. -/
 
-/-- **Function field isomorphism along an open immersion** (iter-201 Lane
-WD-A4a Sub-build 2 PUSH-BEYOND). For an integral scheme `X` and a nonempty
-open subscheme `U ⊆ X`, the function fields of `U.toScheme` and `X` are
-canonically isomorphic. -/
+/-- **Function field isomorphism along an open immersion.** For an integral
+scheme `X` and a nonempty open subscheme `U ⊆ X`, the function fields of
+`U.toScheme` and `X` are canonically isomorphic. -/
 noncomputable def Scheme.Opens.functionFieldIso {X : Scheme.{u}} [IsIntegral X]
     (U : X.Opens) [Nonempty U] :
     (U.toScheme).functionField ≅ X.functionField :=
@@ -407,21 +370,12 @@ divisor and `ord_P(f) = v_P(f)` is the standard DVR valuation at `P`.
 
 Blueprint reference: `def:order_at_point` (Hartshorne II §6 pp. 130–131; Stacks 02ME).
 
-iter-176 body (per analogist `dvr-rationalmap-order`): the body uses Mathlib's
-`Ring.ordFrac` (the canonical `K →*₀ ℤᵐ⁰` monoid-with-zero hom from
+The definition uses Mathlib's `Ring.ordFrac` (the canonical
+`K →*₀ ℤᵐ⁰` monoid-with-zero hom from
 `Mathlib.RingTheory.OrderOfVanishing.Basic`, Stacks `02MD`) on the stalk
 `X.presheaf.stalk Y.point`, then projects through `WithZero.log : ℤᵐ⁰ → ℤ`
 (the canonical projection with junk-on-zero, `Mathlib.Algebra.GroupWithZero.WithZero`).
-On `f = 0` this gives `order Y 0 = 0` (junk convention from `WithZero.log_zero`).
-
-The required Mathlib typeclasses on the stalk are:
-- `IsNoetherianRing` — from `[IsLocallyNoetherian X]`.
-- `IsDomain` ⟹ `Nontrivial` — from `[IsIntegral X]`.
-- `IsFractionRing (X.presheaf.stalk Y.point) X.functionField` — from `[IsIntegral X]`.
-- `Ring.KrullDimLE 1 (X.presheaf.stalk Y.point)` — threaded explicitly (the
-  topological-coheight-to-Krull-dim bridge `Order.coheight Y.point = 1 ⟹
-  Ring.KrullDimLE 1 (X.presheaf.stalk Y.point)` is a Mathlib-upstream-pending
-  gap; see Stacks `02IZ` / `005X`). -/
+On `f = 0` this gives `order Y 0 = 0`. -/
 noncomputable def order {X : Scheme.{u}} [IsIntegral X]
     [IsLocallyNoetherian X] (Y : X.PrimeDivisor)
     [Ring.KrullDimLE 1 (X.presheaf.stalk Y.point)]
@@ -436,10 +390,7 @@ Hartshorne's condition `(*)` includes "regular in codimension one", i.e.\ every
 prime divisor `Y` of `X` has a DVR stalk `O_{X,Y.point}`. Mathlib has no direct
 typeclass for this; we package it as the project-bespoke class
 `Scheme.IsRegularInCodimensionOne`, with an instance synthesising the per-`Y`
-Krull-dim-≤-1 condition required by `Scheme.RationalMap.order`. Blueprint pin
-("Iter-173+ may introduce a `Scheme.IsRegularInCodimensionOne` predicate to
-abbreviate this"; chapter `RiemannRoch_WeilDivisor.tex` §2 "Standing hypothesis
-`(*)` in the Lean encoding"). -/
+Krull-dim-≤-1 condition required by `Scheme.RationalMap.order`. -/
 
 /-- Project-bespoke class encoding Hartshorne's "regular in codimension one"
 clause of `(*)`: every prime divisor `Y` of `X` has a DVR stalk
@@ -464,16 +415,15 @@ instance Scheme.IsRegularInCodimensionOne.instIsDiscreteValuationRingStalk
     IsDiscreteValuationRing (X.presheaf.stalk Y.point) :=
   Scheme.IsRegularInCodimensionOne.out Y
 
-/-- **Open-immersion descent for `IsRegularInCodimensionOne`** (iter-200 Lane
-WD-A4a Sub-build 1 PUSH-BEYOND). The codim-1 regularity hypothesis transports
-along the open immersion `U.ι : U.toScheme ⟶ X`: prime divisors of `U.toScheme`
+/-- **Open-immersion descent for `IsRegularInCodimensionOne`.** The codim-1
+regularity hypothesis transports along the open immersion `U.ι : U.toScheme ⟶ X`:
+prime divisors of `U.toScheme`
 push to prime divisors of `X` via `Scheme.PrimeDivisor.ofOpen`, and Mathlib's
 `Scheme.Opens.stalkIso` gives the ring iso between stalks. We then transport
 the `IsDiscreteValuationRing` property via
 `IsDiscreteValuationRing.RingEquivClass.isDiscreteValuationRing`.
 
-References: Stacks 02IZ (open-immersion stalks), iter-183 project substrate
-in `AlgebraicJacobian/Albanese/CoheightBridge.lean`. -/
+Reference: Stacks 02IZ (open-immersion stalks). -/
 instance Scheme.IsRegularInCodimensionOne.instOpen
     {X : Scheme.{u}} [IsIntegral X] [Scheme.IsRegularInCodimensionOne X]
     (U : X.Opens) [IsIntegral U.toScheme] :
@@ -499,23 +449,14 @@ instance Scheme.IsRegularInCodimensionOne.instKrullDimLEStalk
     IsDiscreteValuationRing.toIsPrincipalIdealRing
   IsPrincipalIdealRing.krullDimLE_one _
 
-/-- **Scheme-side packaging of `Ring.ordFrac_ringEquiv` for the open-immersion
-PrimeDivisor stalk iso** (iter-201 Lane WD-A4a Sub-build 2 PUSH-BEYOND
-packaging).
+/-- **Naturality of `Ring.ordFrac` across an open-immersion stalk isomorphism.**
 
-This is the iter-202+ Sub-build 3 entry point: it pipes the iter-200
-`Scheme.PrimeDivisor.stalkIso U Y hYU` ring iso plus a user-supplied
+This theorem combines the
+`Scheme.PrimeDivisor.stalkIso U Y hYU` ring iso with a user-supplied
 function-field iso `e_K` (typically the `Scheme.Opens.functionFieldIso U`)
 and a compatibility hypothesis `h_compat` into the algebraic naturality
-`Ring.ordFrac_ringEquiv`.
-
-The full Sub-build 3 closure replaces `e_K` with `Scheme.Opens.functionFieldIso U`
-and discharges `h_compat` from the naturality of `Scheme.Opens.stalkIso` w.r.t.
-`stalkSpecializes` to the generic point. That naturality lemma is iter-202
-scope (it requires either a `Scheme.Hom.stalkSpecializes_stalkMap` analogue or a
-direct germ-universal chase via Mathlib's
-`AlgebraicGeometry.Scheme.Opens.germ_stalkIso_hom_assoc`). -/
-private theorem Scheme.PrimeDivisor.ordFrac_stalkIso_naturality
+`Ring.ordFrac_ringEquiv`. -/
+theorem Scheme.PrimeDivisor.ordFrac_stalkIso_naturality
     {X : Scheme.{u}} [IsIntegral X] [IsLocallyNoetherian X]
     [Scheme.IsRegularInCodimensionOne X]
     (U : X.Opens) [Nonempty U] [IsIntegral U.toScheme]
@@ -535,16 +476,15 @@ private theorem Scheme.PrimeDivisor.ordFrac_stalkIso_naturality
     (Scheme.PrimeDivisor.stalkIso U Y hYU).commRingCatIsoToRingEquiv
     e_K h_compat f
 
-/-! ## Project-local Mathlib supplement — Sub-build 3 closure of `h_compat`
+/-! ## Order under restriction to an open subscheme
 
-Iter-202 Lane WD-A4a Sub-build 3 (HARD BAR, both steps). We discharge the
-`h_compat` hypothesis of `Scheme.PrimeDivisor.ordFrac_stalkIso_naturality`
+We discharge the compatibility hypothesis of
+`Scheme.PrimeDivisor.ordFrac_stalkIso_naturality`
 with `e_K := Scheme.Opens.functionFieldIso U`, producing the user-facing
 naturality `Scheme.PrimeDivisor.order_eq_order_restrict`:
 `order Y (functionFieldIso U f) = order (restrictToOpen U Y hYU) f`.
 
-Step 1 is the morphism-level commutativity in `CommRingCat`
-(`Scheme.PrimeDivisor.functionFieldIso_compat`): the two ways of mapping the
+The key is morphism-level commutativity in `CommRingCat`: the two ways of mapping the
 stalk of `U.toScheme` at `Y` into `X.functionField` — first specialise to the
 generic point of `U` then apply `functionFieldIso`, vs. first apply the
 open-immersion `stalkIso` then specialise to the generic point of `X` —
@@ -555,9 +495,9 @@ Reference: Stacks 02IZ (open-immersion stalks) + Mathlib's
 `TopCat.Presheaf.germ_stalkSpecializes` + `Scheme.Opens.germ_stalkIso_hom`.
 -/
 
-/-- **Morphism-level compatibility for the function-field iso** (iter-202 Lane
-WD-A4a Sub-build 3, step 1). For an integral scheme `X`, a nonempty integral
-open `U`, and a prime divisor `Y` of `X` with `Y.point ∈ U`, the square
+/-- **Morphism-level compatibility for the function-field iso.** For an integral
+scheme `X`, a nonempty integral open `U`, and a prime divisor `Y` of `X` with
+`Y.point ∈ U`, the square
 ```
   stalk_U Y  --stalkSpec_U-->  functionField U
       |                              |
@@ -590,15 +530,12 @@ theorem Scheme.PrimeDivisor.functionFieldIso_compat {X : Scheme.{u}} [IsIntegral
   exact (TopCat.Presheaf.germ_stalkSpecializes _ _ _).trans
     (TopCat.Presheaf.germ_stalkSpecializes _ _ _).symm
 
-/-- **Naturality of `Scheme.RationalMap.order` across the function-field iso**
-(iter-202 Lane WD-A4a Sub-build 3, step 2 — the HARD BAR endpoint). For an
+/-- **Naturality of `Scheme.RationalMap.order` across the function-field iso.** For an
 integral locally-Noetherian scheme `X` regular in codimension one, a nonempty
 integral open `U`, a prime divisor `Y` of `X` with `Y.point ∈ U`, and a
 rational function `f` of `U.toScheme`, the order of the transported function
 `functionFieldIso U f` along `Y` equals the order of `f` along the restricted
-prime divisor `restrictToOpen U Y hYU`. This is the user-facing closure
-consumer of Sub-build 2's `ordFrac_stalkIso_naturality`, with `h_compat`
-discharged by the morphism-level `functionFieldIso_compat`. -/
+prime divisor `restrictToOpen U Y hYU`. -/
 theorem Scheme.PrimeDivisor.order_eq_order_restrict {X : Scheme.{u}} [IsIntegral X]
     [IsLocallyNoetherian X] [Scheme.IsRegularInCodimensionOne X]
     (U : X.Opens) [Nonempty U] [IsIntegral U.toScheme]
@@ -624,8 +561,7 @@ theorem Scheme.PrimeDivisor.order_eq_order_restrict {X : Scheme.{u}} [IsIntegral
 
 /-! ### Order-on-curve algebraic identities
 
-iter-198 §2 substrate lemmas (Lane WD-A4a PUSH-BEYOND). These are
-axiom-clean per-prime-divisor algebraic identities on
+These are per-prime-divisor algebraic identities on
 `Scheme.RationalMap.order` — direct consequences of `Ring.ordFrac` being
 a `K →*₀ ℤᵐ⁰` monoid-with-zero hom composed with `WithZero.log : ℤᵐ⁰ → ℤ`
 (which is additive on nonzero arguments, junk-zero on `0`).
@@ -708,9 +644,7 @@ The argument: `(-f)^2 = f^2`, so taking `ordFrac` (a monoid-with-zero hom) and
 then `WithZero.log_pow` gives `2 • ord_Y (-f) = 2 • ord_Y f` in `ℤ`. The free
 action `(· • ·) : ℕ → ℤ → ℤ` cancels `2 ≠ 0`, giving the equality.
 
-iter-199 §2 substrate sharpening (Lane WD-A4a PUSH-BEYOND). Foundational
-sign-flip identity for downstream consumers (Hartshorne II.6.10 non-constant
-branch, ramification-inertia chase). -/
+This sign-flip identity is useful in divisor-of-function calculations. -/
 @[simp]
 lemma _root_.AlgebraicGeometry.Scheme.RationalMap.order_neg
     {X : Scheme.{u}} [IsIntegral X] [IsLocallyNoetherian X]
@@ -735,10 +669,8 @@ By induction on `n` from `order_mul_of_ne_zero` + `order_one`. The `f = 0`
 hypothesis is necessary because the multiplicativity of `order` requires both
 factors nonzero (otherwise `WithZero.log_mul` does not apply).
 
-iter-199 §2 substrate sharpening (Lane WD-A4a PUSH-BEYOND). Powers-of-`f`
-identity used in the Hartshorne II.6.9 ramification-inertia chase
-(`degree_positivePart_principal_eq_finrank` body) and in classical
-divisor-of-power computations `div(f^n) = n · div(f)`. -/
+This is the order-theoretic input for the divisor identity
+`div(f^n) = n · div(f)`. -/
 lemma _root_.AlgebraicGeometry.Scheme.RationalMap.order_pow_of_ne_zero
     {X : Scheme.{u}} [IsIntegral X] [IsLocallyNoetherian X]
     (Y : X.PrimeDivisor)
@@ -752,13 +684,13 @@ lemma _root_.AlgebraicGeometry.Scheme.RationalMap.order_pow_of_ne_zero
     push_cast
     ring
 
-/-! ### Finite-support closure substrate (Lane WD-A4a HARD BAR)
+/-! ### Finite support of the order function
 
 The affine-chart minimal-primes core proving `rationalMap_order_finite_support`
-under the corrected `[IsNoetherian X]` hypothesis (wave-3 established the
-`[IsLocallyNoetherian X]` statement is FALSE: the line with infinitely many
-origins is integral, locally Noetherian and regular in codim 1 yet `t` has order
-one at infinitely many origins; global Noetherian = quasi-compact is Stacks 02RV).
+under the `[IsNoetherian X]` hypothesis. The merely locally Noetherian statement
+is false: the line with infinitely many origins is integral, locally Noetherian
+and regular in codimension one, yet `t` has order one at infinitely many origins.
+Global Noetherianness supplies the required quasi-compactness (Stacks 02RV).
 
 The argument: a finite affine cover (from quasi-compactness) reduces to the
 per-chart statement, where a codim-1 point of `X` inside an affine chart `U`
@@ -832,6 +764,7 @@ private lemma order_algebraMap_eq_zero_of_notMem_primeIdealOf
         (by rw [Ring.ord_of_isUnit hunit]; simp)]
   simp
 
+omit [IsIntegral X] [IsLocallyNoetherian X] [Scheme.IsRegularInCodimensionOne X] in
 /-- **Height of the chart prime is one.** For a prime divisor `Y` with generic
 point in an affine chart `U`, the corresponding prime `p_Y := primeIdealOf` of
 `R = Γ(X, U)` has height one. Combines `ringKrullDim_stalk_eq_coheight`
@@ -929,29 +862,20 @@ integral scheme `X` satisfying `(*)`, the order function `Y ↦ ord_Y(f)` is
 nonzero at only finitely many prime divisors `Y`. This is the well-definedness
 side condition for `Scheme.WeilDivisor.principal`.
 
-iter-177 status: this packages Hartshorne's Lemma 6.1, which Mathlib does not
-ship. The body is a Mathlib-upstream-pending gap (Stacks tag `02RV` — for a
-nonzero element `f ∈ K(X)^×` of a Noetherian integral scheme, only finitely
-many height-one primes can divide either numerator or denominator); the proof
-factors through `IsLocallyNoetherian X` + the principal-ideal generation of
-height-1 primes + the finite irreducible-component decomposition of
-`V(f₀) ∪ V(f∞)`. The chapter pins this as a separate sub-build deferral
-(`RiemannRoch_WeilDivisor.tex` §5).
+The proof uses a finite affine cover and the fact that only finitely many
+height-one primes can divide the numerator or denominator on each chart.
 
 The statement is generic in `f` (no `f ≠ 0` hypothesis is threaded): on
 `f = 0` the function `Y ↦ ord_Y(0) = WithZero.log 0 = 0` has empty support,
 which is finite, so the conclusion holds vacuously. -/
-private theorem rationalMap_order_finite_support {X : Scheme.{u}} [IsIntegral X]
+theorem rationalMap_order_finite_support {X : Scheme.{u}} [IsIntegral X]
     [IsNoetherian X] [Scheme.IsRegularInCodimensionOne X]
     (f : X.functionField) :
     (Function.support (fun Y : X.PrimeDivisor =>
       Scheme.RationalMap.order Y f)).Finite := by
-  -- **iter-192 case split + f = 0 branch closed axiom-clean.**
-  --
   -- Case 1 (f = 0): the order function evaluates to
   -- `WithZero.log (Ring.ordFrac _ 0) = WithZero.log 0 = 0` at every
   -- prime divisor, so the support is empty (finite vacuously).
-  -- iter-198 cleanup: use `Scheme.RationalMap.order_zero` for clarity.
   by_cases hf : f = 0
   · subst hf
     convert Set.finite_empty
@@ -963,8 +887,8 @@ private theorem rationalMap_order_finite_support {X : Scheme.{u}} [IsIntegral X]
   -- some `Uᵢ`, so the support is contained in the finite union of the per-chart
   -- supports, each finite by `finite_chart_support` (the affine-chart
   -- minimal-primes core).  Without `[CompactSpace X]` (equivalently
-  -- `[IsNoetherian X]`) this fails — the line with infinitely many origins is a
-  -- non-quasi-compact counterexample (wave-3).
+  -- `[IsNoetherian X]`) this fails: the line with infinitely many origins is a
+  -- non-quasi-compact counterexample.
   · haveI : CompactSpace X := inferInstance
     set 𝒰 := X.affineCover.finiteSubcover with h𝒰
     refine Set.Finite.subset (Set.finite_iUnion fun i : 𝒰.I₀ =>
@@ -994,17 +918,14 @@ arbitrary divisor on `C` is a finite formal `ℤ`-linear combination
 
 Blueprint reference: `def:divisor_closed_point` (Hartshorne II §6 p. 137).
 
-iter-174 body: the function is junk-defined outside its intended scope. We
-case-split on `Order.coheight P = 1` (the codimension-one witness of
+The definition is zero outside its intended codimension-one scope. It
+case-splits on `Order.coheight P = 1` (the codimension-one witness of
 `PrimeDivisor`). On the branch where the equality holds — automatic for a
 closed point on a one-dimensional integral scheme — we promote `P` to a
 `PrimeDivisor` via the witness and return `Finsupp.single ⟨P, h⟩ 1`, i.e.
 the prime divisor `P` with multiplicity one. On the off-branch (junk regime)
-we return the zero divisor. The blueprint pins the well-definedness argument
-"`IsClosed {P}` on a one-dimensional integral scheme ⟹ `coheight P = 1`" as a
-separate threadable hypothesis at the call site (chapter L330–L340 "Lean
-signature scope"); see `ofClosedPoint_eq_single` for the equation in the
-hypothesised regime. -/
+we return the zero divisor; see `ofClosedPoint_eq_single` for the equation in
+the codimension-one regime. -/
 noncomputable def ofClosedPoint {C : Scheme.{u}} (P : C)
     (_hP : IsClosed ({P} : Set C)) : C.WeilDivisor :=
   if h : Order.coheight P = 1 then Finsupp.single ⟨P, h⟩ 1 else 0
@@ -1081,9 +1002,7 @@ lemma degree_add (D₁ D₂ : X.WeilDivisor) :
   exact map_add _ _ _
 
 /-- **Degree of the negation.** `deg(-D) = -deg D`. A direct consequence of
-`degree_hom` being an `AddMonoidHom`.
-
-iter-198 §4 substrate sharpening (Lane WD-A4a PUSH-BEYOND). -/
+`degree_hom` being an `AddMonoidHom`. -/
 @[simp]
 lemma degree_neg (D : X.WeilDivisor) :
     degree (-D) = -degree D := by
@@ -1091,9 +1010,7 @@ lemma degree_neg (D : X.WeilDivisor) :
   exact map_neg _ _
 
 /-- **Degree is subtractive.** `deg(D₁ - D₂) = deg D₁ - deg D₂`. A direct
-consequence of `degree_hom` being an `AddMonoidHom`.
-
-iter-198 §4 substrate sharpening (Lane WD-A4a PUSH-BEYOND). -/
+consequence of `degree_hom` being an `AddMonoidHom`. -/
 lemma degree_sub (D₁ D₂ : X.WeilDivisor) :
     degree (D₁ - D₂) = degree D₁ - degree D₂ := by
   rw [← degree_hom_apply, ← degree_hom_apply, ← degree_hom_apply]
@@ -1128,10 +1045,7 @@ noncomputable def principal [IsIntegral X] [IsNoetherian X]
 /-- **The coefficient of `principal f hf` at a prime divisor `Y` is the order of
 `f` along `Y`.** This is the basic structural unfolding of the
 `Finsupp.ofSupportFinite` packaging in `principal`; one-line via
-`Finsupp.ofSupportFinite_coe` from `Mathlib.Data.Finsupp.Defs`.
-
-iter-193 substrate helper for the Lane I body close
-(`degree_positivePart_principal_eq_finrank`). -/
+`Finsupp.ofSupportFinite_coe` from `Mathlib.Data.Finsupp.Defs`. -/
 lemma principal_apply [IsIntegral X] [IsNoetherian X]
     [Scheme.IsRegularInCodimensionOne X] (f : X.functionField) (hf : f ≠ 0)
     (Y : X.PrimeDivisor) :
@@ -1144,10 +1058,7 @@ lemma principal_apply [IsIntegral X] [IsNoetherian X]
 
 /-- **`Scheme.RationalMap.order Y 1 = 0`** — the order of the constant
 function `1` is `0` at every prime divisor. Direct from
-`map_one` of `Ring.ordFrac` + `WithZero.log_one`.
-
-iter-193 substrate helper for further structural results
-(`principal_one_eq_zero` and similar). -/
+`map_one` of `Ring.ordFrac` + `WithZero.log_one`. -/
 @[simp]
 lemma _root_.AlgebraicGeometry.Scheme.RationalMap.order_one
     {X : Scheme.{u}} [IsIntegral X] [IsLocallyNoetherian X]
@@ -1177,8 +1088,8 @@ as a `MonoidHom` from the multiplicative units of `K(X)` to `Multiplicative (Div
 
 Blueprint reference: `thm:principal_hom` (Hartshorne II §6 p. 131).
 
-iter-177 body: closes coordinate-wise from the DVR identities
-`v_Y(fg) = v_Y(f) + v_Y(g)`, `v_Y(1) = 0`. The per-`Y` identities live in
+The homomorphism laws close coordinate-wise from the DVR identities
+`v_Y(fg) = v_Y(f) + v_Y(g)` and `v_Y(1) = 0`. The per-`Y` identities live in
 `Scheme.RationalMap.order` via `Ring.ordFrac` (a `K →*₀ ℤᵐ⁰` monoid-with-zero
 hom) and `WithZero.log_mul` / `WithZero.log_one`. -/
 noncomputable def principal_hom [IsIntegral X] [IsNoetherian X]
@@ -1240,9 +1151,8 @@ claim is trivial. Otherwise the inclusion `k̄(f) ⊂ K(C)` exhibits `K(C)` as a
 finite extension of `k̄(f) ≅ k̄(t)`, so the corresponding morphism
 `φ : C → ℙ¹_{k̄}` is finite, `div(f) = φ^*([0] - [∞])`, and pullback along a
 finite morphism multiplies degree by `deg(φ)`. Two auxiliary sub-lemmas
-(finite morphism induced by a non-constant rational function; multiplicativity
-of degree under finite pullback, Hartshorne II.6.9) are deferred to follow-up
-iters of `RR.1`. -/
+(finite morphism induced by a non-constant rational function and multiplicativity
+of degree under finite pullback) are the geometric inputs. -/
 theorem principal_degree_zero {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     (C : Over (Spec (.of kbar))) [IsProper C.hom]
     [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]
@@ -1250,7 +1160,7 @@ theorem principal_degree_zero {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     [Scheme.IsRegularInCodimensionOne C.left]
     (f : C.left.functionField) (hf : f ≠ 0) :
     degree (principal f hf) = 0 := by
-  -- Hartshorne II.6.10 (iter-178 partial). Case-split on whether every
+  -- Hartshorne II.6.10. Case-split on whether every
   -- prime-divisor order of `f` vanishes. On a complete nonsingular curve,
   -- this case split exactly recovers Hartshorne's constant-vs-non-constant
   -- split: `(∀ Y, ord_Y f = 0)` ⟺ `f ∈ k̄ \ {0}` (a nowhere-vanishing
@@ -1274,15 +1184,13 @@ theorem principal_degree_zero {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     -- morphism of curves multiplies degrees by `deg(φ)` (Hartshorne
     -- II.6.9), so `deg(principal f hf) = deg(φ) · deg([0] - [∞]) =
     -- deg(φ) · 0 = 0`.
-    -- This branch is gated on (i) the `φ : C → ℙ¹` construction (Lane 5
-    -- `RationalCurveIso.lean:morphismToP1OfGlobalSections`, iter-178+),
-    -- and (ii) the degree-multiplicativity-under-finite-pullback bridge
-    -- (Hartshorne II.6.9, Mathlib gap).
+    -- This branch uses the morphism `φ : C → ℙ¹` defined by `f` and
+    -- multiplicativity of degree under finite pullback (Hartshorne II.6.9).
     sorry
 
 /-! ## §6. Positive part of a Weil divisor
 
-Iter-190 plan-phase Lane I Pin 2 corrective substrate. The carrier
+The carrier
 `X.WeilDivisor = X.PrimeDivisor →₀ ℤ` is a finitely supported integer-valued
 function on prime divisors; the *positive part* `(D)_0` is obtained by
 replacing each coefficient `n_Y` with `max(n_Y, 0)`. Equivalently this is
@@ -1291,9 +1199,8 @@ the lattice join `D ⊔ 0` in the pointwise lattice structure (the
 *negative part* `(D)_∞ := (-D)_0` then gives the canonical decomposition
 `D = (D)_0 - (D)_∞` into a difference of effective divisors.
 
-Blueprint reference: `def:WeilDivisor_positivePart` /
-`lem:degree_positivePart_principal_eq_finrank` of
-`RiemannRoch_WeilDivisor.tex` §6 (iter-190 plan-phase additions).
+Blueprint reference: `def:WeilDivisor_positivePart` in
+`RiemannRoch_WeilDivisor.tex`.
 -/
 
 /-- **Positive part of a Weil divisor**.
@@ -1333,9 +1240,7 @@ symbolic Mathlib manipulation: unfolding `positivePart`
 identifies `degree (positivePart D)` with the sum of `max (D Y) 0` over
 the support of `D`.
 
-This is the iter-192 structural-reduction helper consumed by
-`degree_positivePart_principal_eq_finrank` below. The proof is one line
-via `Finsupp.sum_mapRange_index` from
+The proof uses `Finsupp.sum_mapRange_index` from
 `Mathlib.Algebra.BigOperators.Finsupp.Basic`. -/
 lemma degree_positivePart_eq_sum_max (D : X.WeilDivisor) :
     degree (positivePart D) = D.sum (fun _ n => max n 0) := by
@@ -1346,9 +1251,7 @@ lemma degree_positivePart_eq_sum_max (D : X.WeilDivisor) :
 mapRange definition of `positivePart`: for a one-point-supported Weil divisor
 `Finsupp.single Y n`, the positive part is `Finsupp.single Y (max n 0)`.
 A direct consequence of `Finsupp.mapRange_single` (with `max 0 0 = 0` as
-the zero-preservation witness).
-
-iter-193 substrate helper paving the way for the Lane I body close. -/
+the zero-preservation witness). -/
 @[simp]
 lemma positivePart_single (Y : X.PrimeDivisor) (n : ℤ) :
     positivePart (Finsupp.single Y n : X.WeilDivisor) =
@@ -1359,9 +1262,7 @@ lemma positivePart_single (Y : X.PrimeDivisor) (n : ℤ) :
 
 /-- **Degree of a `Finsupp.single` Weil divisor.** The degree of the
 one-point-supported Weil divisor `Finsupp.single Y n` is `n`. A direct
-consequence of `Finsupp.sum_single_index`.
-
-iter-193 substrate helper for `degree_positivePart_principal_eq_finrank`. -/
+consequence of `Finsupp.sum_single_index`. -/
 @[simp]
 lemma degree_single (Y : X.PrimeDivisor) (n : ℤ) :
     degree (Finsupp.single Y n : X.WeilDivisor) = n := by
@@ -1371,11 +1272,7 @@ lemma degree_single (Y : X.PrimeDivisor) (n : ℤ) :
 
 /-- **Sum-over-prime-divisors lower bound via a single contributing point.**
 If `f` has order `1` at some prime divisor `Y₀`, then the degree of the positive
-part of `principal f hf` is at least `1`.
-
-iter-193 substrate helper consumed by `degree_positivePart_principal_eq_finrank`:
-it formalises Step 2 of the Hartshorne II.6.9 recipe (`hlp` produces
-the local-parameter prime divisor `Y₀` with coefficient `1`). -/
+part of `principal f hf` is at least `1`. -/
 lemma one_le_degree_positivePart_principal_of_order_one
     [IsIntegral X] [IsNoetherian X]
     [Scheme.IsRegularInCodimensionOne X]
@@ -1431,12 +1328,7 @@ For a finsupp `D : α →₀ ℤ`, `D.sum (max · 0)` agrees with the unclipped 
 `∑ D` restricted to the finset `{a ∈ supp D | 0 < D a}`. Negative-coefficient
 points contribute `0` to the max and drop out; positive-coefficient points
 contribute `D a` to both sides; the (vacuously zero) `D a = 0` case is excluded
-by the `supp` filter on both sides.
-
-iter-195 Lane I substrate helper for `degree_positivePart_principal_eq_finrank`:
-it formalises the "the positive part of `D` is supported on the positive-coefficient
-points" identity, which is Step 2.5 of the Hartshorne II.6.9 recipe (between the
-`degree_positivePart_eq_sum_max` unfolding and the ramification-inertia chase). -/
+by the `supp` filter on both sides. -/
 lemma _root_.Finsupp.sum_max_zero_eq_sum_filter_pos {α : Type*}
     (D : α →₀ ℤ) :
     D.sum (fun _ n => max n 0) =
