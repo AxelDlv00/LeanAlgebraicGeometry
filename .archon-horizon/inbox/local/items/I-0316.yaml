@@ -5,10 +5,10 @@ body: 'Project-wide blueprint pins need declaration audit
 
 
   The current graph contains 1,913 blueprint nodes, 4,327 Lean nodes, 6,240 live nodes
-  total, and 6,665 edges. The generated-node ledger is stale-free, all uses edges
-  topologically sort after nine dependency-direction repairs, and 33 classified unresolved-pin
+  total, and 6,663 edges. The generated-node ledger is stale-free, all uses edges
+  topologically sort after the dependency-direction repairs, and 33 classified unresolved-pin
   warnings remain. Keep this issue open for scanner coverage and genuine forward contracts.
-  Latest source and edge commits: 9ee3841b2 and c9946fdfa.'
+  Latest source and graph commits: 9ee3841b2, c9946fdfa, and c1d535ce6.'
 labels:
 - agent-ready
 status: open
@@ -19,7 +19,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-24T11:19:30.012968+00:00'
-updated_at: '2026-07-25T23:15:22.946656+00:00'
+updated_at: '2026-07-25T23:25:04.687228+00:00'
 metadata:
   provenance:
     run: '0046'

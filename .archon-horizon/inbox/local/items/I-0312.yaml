@@ -9,8 +9,8 @@ body: 'Printable blueprint warning debt
   references or citations, rerun request, or TeX error; the HTML blueprint also renders
   successfully. The cycle-free Quot affine-base-change truth pass improves the previous
   742-overfull, 96-glyph baseline. Continue with the worst remaining chapter-local
-  overflows and central rendering of Greek glyphs in code-style names. Latest commit:
-  9ee3841b2.'
+  overflows and central rendering of Greek glyphs in code-style names. Latest commits:
+  9ee3841b2 and c1d535ce6.'
 labels:
 - agent-ready
 status: open
@@ -21,7 +21,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-23T19:07:53.865283+00:00'
-updated_at: '2026-07-25T23:11:13.536126+00:00'
+updated_at: '2026-07-25T23:25:01.618514+00:00'
 metadata:
   provenance:
     run: '0046'

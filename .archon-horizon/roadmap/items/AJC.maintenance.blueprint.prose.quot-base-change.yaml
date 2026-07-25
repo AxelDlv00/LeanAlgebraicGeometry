@@ -4,8 +4,8 @@ projects:
 - Algebraic-Jacobian-Challenge
 summary: Rewrote the late Quot affine-base-change slice as timeless mathematics, replaced
   five proof stubs, split the Abel witness from its instance and evaluation formula,
-  corrected nine backwards dependency loops, and verified an acyclic graph plus HTML
-  and PDF builds.
+  corrected backwards dependencies, and aligned the flat-base-change pin with the
+  proved degree-zero theorem. The dependency graph, HTML, and PDF builds pass.
 status: done
 kind: blueprint
 priority: normal
@@ -28,7 +28,8 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint.prose
-  updated_at: '2026-07-25T23:15:17.452142+00:00'
+  updated_at: '2026-07-25T23:24:56.901999+00:00'
   pinned_commits:
+  - c1d535ce6
   - c9946fdfa
   - 9ee3841b2

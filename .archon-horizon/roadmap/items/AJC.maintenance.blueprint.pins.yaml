@@ -3,7 +3,7 @@ title: Lean-pin declaration audit
 projects:
 - Algebraic-Jacobian-Challenge
 summary: The current graph contains 1,913 blueprint nodes, 4,327 Lean nodes, 6,240
-  live nodes total, and 6,665 edges. It is stale-free, all uses edges topologically
+  live nodes total, and 6,663 edges. It is stale-free, all uses edges topologically
   sort, and 33 classified unresolved-pin warnings remain.
 status: pending
 kind: blueprint
@@ -27,8 +27,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint
-  updated_at: '2026-07-25T23:15:18.394765+00:00'
+  updated_at: '2026-07-25T23:24:57.851146+00:00'
   pinned_commits:
+  - c1d535ce6
   - c9946fdfa
   - 9ee3841b2
   - 0cd05df34
