@@ -8,19 +8,14 @@ import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse
 import AlgebraicJacobian.Picard.TensorObjSubstrate.PullbackTensorMapIso
 
 /-!
-# Restriction-reindex infrastructure (monster-free leaf)
+# Restriction-reindex infrastructure
 
-This file holds the restriction-reindex helpers that `TensorObjInverse.lean`
-needs for the keystone Seam-1/Seam-2 chart-chase, extracted to a separate
-monster-free leaf so that the Lean LSP works here.
+This file holds the restriction-reindex helpers used by the Seam-1/Seam-2 chart chase in
+`TensorObjInverse.lean`.
 
-The parent file `TensorObjInverse.lean` imports the 12.8M-HB monster
-`PresheafDualPullback`, which kills the LSP there.  By splitting out these
-pure restrict/pullback glue declarations (none of which need the monster),
-we keep an LSP-alive workspace for the remaining chart-chase proofs.
-
-**HARD CONSTRAINT**: this file must NOT (transitively) import
-`DualInverse.PresheafDualPullback` or `DualInverse.PresheafDualUnitPullback`.
+These restriction and pullback declarations do not depend on the expensive presheaf dual
+comparison. Keeping that dependency boundary lets consumers use the chart-reindexing API without
+importing `DualInverse.PresheafDualPullback` or `DualInverse.PresheafDualUnitPullback`.
 -/
 
 open CategoryTheory Limits MonoidalCategory
@@ -76,7 +71,8 @@ lemma conjugateEquiv_pullbackComp_hom {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y 
   rw [← cancel_epi (pushforwardComp f g).hom, hcomm, Iso.hom_inv_id]
 
 /-- **LHS of the B2 telescope: the conjugate of `restrictFunctorIsoPullback f` is the identity.**
-`restrictFunctorIsoPullback f = leftAdjointUniq (restrictAdjunction f) (pullbackPushforwardAdjunction f)`,
+`restrictFunctorIsoPullback f` is the `leftAdjointUniq` comparison between
+`restrictAdjunction f` and `pullbackPushforwardAdjunction f`,
 both adjoint to the common `pushforward f`; the conjugate of a `leftAdjointUniq` hom onto the shared
 right adjoint is the identity. -/
 lemma conjugateEquiv_restrictFunctorIsoPullback_hom {X Y : Scheme.{u}} (f : Y ⟶ X)
@@ -104,7 +100,7 @@ lemma conjugateEquiv_restrictFunctorIsoPullback_whiskerRight {X Y Z : Scheme.{u}
 
 /-- **c₄ (blueprint `lem:conjugateequiv_restrictfunctorisopullback_whiskerleft`): conjugate of the
 `j`-comparison whiskered into `pullback f`.** The leg `whiskerLeft (pullback f)
-(restrictFunctorIsoPullback j).hom`, conjugated through `(pPA f).comp (pPA j) → (pPA f).comp (rA j)`,
+(restrictFunctorIsoPullback j).hom`, conjugated through the two composite adjunctions,
 is the identity: by `conjugateEquiv_whiskerLeft` it becomes `whiskerRight` of the (identity)
 conjugate of `restrictFunctorIsoPullback j`. -/
 lemma conjugateEquiv_restrictFunctorIsoPullback_whiskerLeft {X Y Z : Scheme.{u}}
@@ -131,8 +127,7 @@ set_option linter.unusedTactic false in
 set_option linter.unreachableTactic false in
 /-- **Restrict-side conjugate of the restriction-composition isomorphism.**
 The conjugate of `(restrictFunctorComp f g).hom` across the composite restrict-adjunction equals
-`(pushforwardComp f g).hom`.  Public so the terminal file can consume it.  (Ported from the v4.30
-root `TensorObjSubstrate.lean` tail, which was dropped in the file-split migration.) -/
+`(pushforwardComp f g).hom`. Public so the terminal file can consume it. -/
 lemma conjugateEquiv_restrictFunctorComp_inv {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
     [IsOpenImmersion f] [IsOpenImmersion g] :
     conjugateEquiv ((restrictAdjunction g).comp (restrictAdjunction f))
@@ -149,16 +144,16 @@ lemma conjugateEquiv_restrictFunctorComp_inv {X Y Z : Scheme.{u}} (f : X ⟶ Y) 
       restrictFunctor_map_app', pushforwardComp_hom_app_app]
     erw [Hom.comp_app, restrictAdjunction_unit_app_app, pushforward_map_app,
       restrictAdjunction_unit_app_app, restrictAdjunction_counit_app_app]
-    simp only [Functor.comp_obj, restrict_map]
+    simp only [restrict_map]
     erw [Category.id_comp, ← M.presheaf.map_comp, ← M.presheaf.map_comp]
     all_goals first
       | rfl
       | (congr 1; exact Subsingleton.elim _ _)
 
 /-- **General B2 (`.hom`/NatTrans level): `restrictFunctorIsoPullback` pseudonaturality across a
-LITERAL composite `f ≫ g`.**  The dual-flank analogue of `restrictFunctorIsoPullback_comp_compat_hom`
-for general composable open immersions `f : Z ⟶ Y`, `g : Y ⟶ X` (arbitrary schemes), with NO
-`restrictFunctorCongr`/`pullbackCongr` congruence legs (the composite is literal, so those collapse).
+literal composite `f ≫ g`.** This is the dual-flank analogue of
+`restrictFunctorIsoPullback_comp_compat_hom` for composable open immersions `f : Z ⟶ Y` and
+`g : Y ⟶ X`. Congruence legs are unnecessary because the composite is literal.
 Same conjugate-telescope proof: `conjugateEquiv` injectivity onto `pushforward (f ≫ g)`, distribute
 leg-by-leg via `← conjugateEquiv_comp`, then the keystone `conjugateEquiv_restrictFunctorComp_inv`
 (c₂ ↦ `(pushforwardComp).hom`) + `conjugateEquiv_pullbackComp_hom` (c₅ ↦ `(pushforwardComp).inv`)
@@ -170,9 +165,7 @@ private lemma restrictFunctorIsoPullback_comp_general_hom {X Y Z : Scheme.{u}} (
           ≫ (restrictFunctor f).map ((restrictFunctorIsoPullback g).hom.app A)
           ≫ (restrictFunctorIsoPullback f).hom.app ((pullback g).obj A)
           ≫ (pullbackComp f g).hom.app A := by
-  -- Same leg-by-leg conjugate telescope as the chart version `restrictFunctorIsoPullback_comp_compat_hom`,
-  -- but for the LITERAL composite `f ≫ g` (no `restrictFunctorCongr`/`pullbackCongr` flank legs, so
-  -- only the 4 inner legs survive and they telescope directly to `𝟙`).
+  -- The four inner conjugate legs telescope directly because the composite is literal.
   have hNat : (restrictFunctorIsoPullback (f ≫ g)).hom
       = (restrictFunctorComp f g).hom
           ≫ Functor.whiskerRight (restrictFunctorIsoPullback g).hom (restrictFunctor f)
@@ -192,18 +185,17 @@ private lemma restrictFunctorIsoPullback_comp_general_hom {X Y Z : Scheme.{u}} (
     rw [conjugateEquiv_restrictFunctorComp_inv, conjugateEquiv_pullbackComp_hom,
         conjugateEquiv_restrictFunctorIsoPullback_whiskerRight,
         conjugateEquiv_restrictFunctorIsoPullback_whiskerLeft]
-    simp only [Category.id_comp, Category.comp_id, Iso.inv_hom_id]
+    simp only [Category.comp_id, Iso.inv_hom_id]
   have happ := congr_app hNat A
-  -- v4.31: `simpa using` runs at reducible transparency; normalise `happ` then close by `exact`.
+  -- Normalize the natural-transformation components before using the pointwise equality.
   simp only [NatTrans.comp_app, Functor.whiskerRight_app, Functor.whiskerLeft_app] at happ
   exact happ
 
-/-- **General B2 (iso level): `restrictFunctorIsoPullback` pseudonaturality across a LITERAL
-composite `f ≫ g`.**  The dual-flank analogue of `restrictFunctorIsoPullback_comp_compat` for general
-composable open immersions, with `restrictFunctorComp f g` (NOT `restrictCompReindex`) as the head and
-NO `pullbackCongr` tail.  Both sides are isos `(restrictFunctor (f ≫ g)).obj A ≅ (pullback (f ≫ g)).obj A`;
-pinned by the `leftAdjointUniq` characterisation as in the chart version, the residual `.hom`-naturality
-being `restrictFunctorIsoPullback_comp_general_hom`. -/
+/-- **General B2 (iso level): `restrictFunctorIsoPullback` pseudonaturality across a literal
+composite `f ≫ g`.** This is the dual-flank analogue of
+`restrictFunctorIsoPullback_comp_compat`, headed by `restrictFunctorComp f g` and with no
+`pullbackCongr` tail. The residual morphism equality is
+`restrictFunctorIsoPullback_comp_general_hom`. -/
 lemma restrictFunctorIsoPullback_comp_general {X Y Z : Scheme.{u}} (f : Z ⟶ Y)
     (g : Y ⟶ X) [IsOpenImmersion f] [IsOpenImmersion g] (A : X.Modules) :
     (restrictFunctorIsoPullback (f ≫ g)).app A
@@ -252,8 +244,8 @@ private lemma restrictFunctorIsoPullback_congr_hom {X Y : Scheme.{u}} {f f' : Y 
     simp [pullbackCongr]
   rw [hr, hp, Category.id_comp, Category.comp_id]
 
-/-- **Front-leg normalisation: the `hom` of `restrictFunctorCongr` along the reversed equality is the
-`inv` along the original.**  Both are maps `restrictFunctor f' ⟶ restrictFunctor f`; their sheaf
+/-- **Front-leg normalisation:** the `hom` of `restrictFunctorCongr` along the reversed equality is
+the `inv` along the original. Both are maps `restrictFunctor f' ⟶ restrictFunctor f`; their sheaf
 components are the same `eqToHom`-reindex. -/
 private lemma restrictFunctorCongr_symm_hom_app {X Y : Scheme.{u}} {f f' : Y ⟶ X}
     [IsOpenImmersion f] [IsOpenImmersion f'] (h : f = f') (A : X.Modules) :
@@ -266,11 +258,11 @@ private lemma restrictFunctorCongr_symm_hom_app {X Y : Scheme.{u}} {f f' : Y ⟶
 set_option backward.isDefEq.respectTransparency false in
 /-- **Keystone Seam-1 identity: `restrictIsoUnitOfLE` is the reindexed `restrict j`-image of the
 trivialisation.**  For the chart `j : V ⟶ U` (`j ≫ U.ι = V.ι`) and a trivialisation
-`e : M|_U ≅ 𝒪_U`, the refined trivialisation `restrictIsoUnitOfLE hVU e : M|_V ≅ 𝒪_V` factors as the
-reindex `restrictCompReindex j hjι M`, the `restrict j`-image `(restrictFunctor j).mapIso e`, and the
-unit-restriction comparison `unitRestrictIso j`.  This is the `e ↦ (restrict j) e` identification the
+`e : M|_U ≅ 𝒪_U`, the refined trivialisation `restrictIsoUnitOfLE hVU e` factors as
+`restrictCompReindex j hjι M`, the `restrict j`-image `(restrictFunctor j).mapIso e`, and the
+unit-restriction comparison `unitRestrictIso j`. This is the restriction identification the
 blueprint Seam-1 split rests on (`restrictIsoUnitOfLE hVU e = (restrict j) e` modulo the unit
-identifications).  It mirrors the definitional chart-chase of `restrictIsoUnitOfLE` itself, where the
+identifications). It mirrors the definitional chart chase of `restrictIsoUnitOfLE`, where the
 internal chart morphism is exactly `j = Scheme.Hom.resLE (𝟙 X) U V hVU`. -/
 lemma restrictIsoUnitOfLE_eq_restrict {X : Scheme.{u}} {M : X.Modules} {U V : X.Opens}
     (hVU : V ≤ U) (j : (V : Scheme) ⟶ (U : Scheme)) [IsOpenImmersion j] (hjι : j ≫ U.ι = V.ι)
@@ -282,17 +274,15 @@ lemma restrictIsoUnitOfLE_eq_restrict {X : Scheme.{u}} {M : X.Modules} {U V : X.
   -- `restrictIsoUnitOfLE hVU e` (unfolded) is the pullback-world chart-chase
   --   `RFIP(V.ι) ≪≫ pullbackCongr(hjι.symm) ≪≫ (pullbackComp j U.ι).symm
   --      ≪≫ (pullback j)(RFIP(U.ι).symm) ≪≫ (pullback j) e ≪≫ asIso (pullbackObjUnitToUnit j)`.
-  -- The RHS unfolds `restrictCompReindex = (restrictFunctorCongr hjι).symm ≪≫ restrictFunctorComp j U.ι`
-  -- and `unitRestrictIso j = RFIP(j).app 𝒪_U ≪≫ pullbackUnitIso j`.  The two presentations agree once
+  -- The RHS unfolds `restrictCompReindex` into its congruence and composition factors, while
+  -- `unitRestrictIso j` unfolds into the RFIP comparison followed by `pullbackUnitIso j`.
+  -- The two presentations agree once
   -- `restrictFunctorComp`/`restrictFunctorCongr` are pushed into the pullback world by
   -- `restrictFunctorIsoPullback_comp_general` (the same RFIP-bridge S2/S4c use); the trailing
   -- `pullbackObjUnitToUnit j` matches `pullbackUnitIso j` definitionally.
   -- After `Iso.ext` the residual goal is the `.hom`-level chart-chase reconciliation
   --   `(restrictIsoUnitOfLE hVU e).hom
   --      = (restrictCompReindex j hjι M ≪≫ (restrictFunctor j).mapIso e ≪≫ unitRestrictIso j).hom`.
-  -- BLOCKER: the `restrictFunctorComp ↔ pullbackComp` reconciliation through the `pullbackCongr`/
-  -- `restrictFunctorCongr` shim needs build-driven `trace_state` stepping (LSP dead on this
-  -- monster-importing file); re-break candidate per the no-grind guard.
   -- `U.ι` is mono, so the abstract chart `j` is forced to equal the internal `Hom.resLE` used by
   -- `restrictIsoUnitOfLE`; identify them so the two presentations share the same chart.
   have hjeq : j = Scheme.Hom.resLE (𝟙 X) U V hVU := by
@@ -310,8 +300,7 @@ lemma restrictIsoUnitOfLE_eq_restrict {X : Scheme.{u}} {M : X.Modules} {U V : X.
   -- iso to be slid past the `restrict j`-image of `RFIP U.ι` (which collapses with its inverse) and
   -- past the `restrict j`-image of `e`, landing both presentations on the same composite.
   simp only [Category.assoc, Iso.hom_inv_id_app_assoc]
-  -- Slide `RFIP j` past the `restrict j`-image of `RFIP U.ι` (which collapses with its inverse to the
-  -- identity) and past the `restrict j`-image of `e`, landing both presentations on one composite.
+  -- Slide `RFIP j` past the restricted `RFIP U.ι` and `e`, collapsing the inverse pair.
   rw [← (restrictFunctorIsoPullback (Hom.resLE (𝟙 X) U V hVU)).hom.naturality_assoc
         ((restrictFunctorIsoPullback U.ι).inv.app M),
       ← Functor.map_comp_assoc, Iso.hom_inv_id_app, CategoryTheory.Functor.map_id, Category.id_comp,

@@ -116,8 +116,7 @@ lemma stalkTensorDescU_smul (U : Opens X) (hx : x ∈ U) (r : ↑(R.obj (op U)))
   -- We pin `smul_tmul'`/`smul_add`/`smul_zero` to that ring so the scalar `r` slots in.
   induction z using TensorProduct.induction_on with
   | zero =>
-      simp only [presheaf_obj_coe, Functor.comp_obj, CommRingCat.forgetToRingCat_obj,
-        Monoidal.tensorObj_obj, map_zero, smul_zero]
+      simp only [presheaf_obj_coe]
       exact map_zero _
   | tmul a b =>
       erw [stalkTensorDescU_tmul, stalkTensorDescU_tmul, PresheafOfModules.germ_smul A x U hx]

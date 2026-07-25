@@ -14,7 +14,8 @@ This file provides the foundational presheaf-level algebra that the C-bridge
 - `RestrictScalarsRingIsoTensor`: the strong-monoidal upgrade of `restrictScalars`
   along a ring iso (H2 of `tensorObj_restrict_iso`); includes `restrictScalarsRingIsoDualEquiv`.
 - Lax-monoidal `PresheafOfModules.restrictScalars` (H2 presheaf lift).
-- Presheaf-level pushforward adjunction `pushforwardPushforwardAdj` (H1 of `tensorObj_restrict_iso`).
+- Presheaf-level pushforward adjunction `pushforwardPushforwardAdj`
+  (H1 of `tensorObj_restrict_iso`).
 - `StrongMonoidalRestrictScalars`: `restrictScalarsMonoidalOfBijective`.
 - `InternalHom` namespace: slice internal hom, homModule, internalHom, internalHomEval.
 - `Dual` section: presheaf dual, evalLin, dualIsoOfIso.
@@ -293,7 +294,7 @@ noncomputable def restrictScalarsLaxε
       (restrictScalars α).obj (𝟙_ (PresheafOfModules.{u} (S ⋙ forget₂ _ _))) where
   app X := Functor.LaxMonoidal.ε (ModuleCat.restrictScalars (α.app X).hom)
   naturality {X Y} f := by
-    ext r
+    ext
     dsimp
     erw [PresheafOfModules.unit_map_one, ModuleCat.restrictScalars_η,
       ModuleCat.restrictScalars_η]
@@ -977,20 +978,14 @@ would otherwise time out). Used to rewrite the `naturality_apply` of a dual sect
 shape `ev_M`'s naturality needs. -/
 private lemma restr_map_homMk
     (N : PresheafOfModules.{u} (R₀ ⋙ forget₂ CommRingCat RingCat)) {X Y : Dᵒᵖ} (f : X ⟶ Y) :
-    (restr X.unop N).map (Over.homMk f.unop (Category.comp_id _) : Over.mk f.unop ⟶ Over.mk (𝟙 X.unop)).op
+    (restr X.unop N).map
+        (Over.homMk f.unop (Category.comp_id _) : Over.mk f.unop ⟶ Over.mk (𝟙 X.unop)).op
       = N.map f := rfl
 
 /-- **The evaluation morphism `ev_M : M ⊗_R M^∨ ⟶ R`** (blueprint `lem:internal_hom_eval`):
-the full natural morphism `M ⊗_R M^∨ ⟶ R`, `s ⊗ φ ↦ φ(s)`, with `app X := internalHomEvalApp M X`.
-CLOSED axiom-clean iter-224 (`{propext, Classical.choice, Quot.sound}`). The per-object/value content
-is `internalHomEvalApp` + `internalHomEvalApp_tmul`; the `naturality` field is the six-step
-`evalLin`/`key`/`hdt` reduction recorded in the proof body. The iter-222/223 `whnf` HEARTBEAT-BOMB
-diagnosis (>200000 heartbeats forced by `kabstract` whnf-ing the monoidal unit `𝟙_`) turned out to be
-STALE after a Mathlib update: the composition now splits cleanly with
-`erw [ModuleCat.hom_comp, …]`, every elementwise rewrite (`internalHomEvalApp_tmul`,
-`PresheafOfModules.naturality_apply`, `restr_map_homMk`) fires without any bomb, and the dual-section
-naturality square closes directly. No transparency hacks (`with_reducible`), no `unit`-reshape, and no
-`maxHeartbeats` bump were needed. -/
+the natural morphism `M ⊗_R M^∨ ⟶ R`, sending `s ⊗ φ` to `φ(s)`. Its components are
+`internalHomEvalApp`; naturality reduces to naturality of a dual section after rewriting restriction
+along the canonical morphism with `restr_map_homMk`. -/
 noncomputable def internalHomEval
     (M : PresheafOfModules.{u} (R₀ ⋙ forget₂ CommRingCat RingCat)) :
     PresheafOfModules.Monoidal.tensorObj M (dual M) ⟶
@@ -998,12 +993,7 @@ noncomputable def internalHomEval
   PresheafOfModules.Hom.mk (fun X => internalHomEvalApp M X) (by
     intro X Y f
     refine ModuleCat.MonoidalCategory.tensor_ext (fun s φ => ?_)
-    -- iter-224: the iter-222/223 `whnf` HEARTBEAT-BOMB diagnosis (the codomain `𝟙_` forcing
-    -- `kabstract` to whnf the monoidal-unit machinery, >200000 heartbeats) turned out STALE after a
-    -- Mathlib update. The composition splits cleanly with `erw [ModuleCat.hom_comp, …]` and every
-    -- elementwise rewrite fires without any bomb; the six-step `evalLin`/`key`/`hdt` reduction below
-    -- goes through directly. No `with_reducible`, no `unit`-reshape, no `maxHeartbeats` bump.
-    -- Step 1: break the two `≫` on `s ⊗ₜ φ`, then `tensorObj_map_tmul` + `internalHomEvalApp_tmul`
+    -- Break the two composites on `s ⊗ₜ φ`; the tensor and evaluation lemmas then reduce the goal.
     -- (handled by `erw`'s defeq matching through `restrictScalars`):
     --   LHS ⇒ `evalLin M Y ((dual M).map f φ) ((M.map f) s)`.
     erw [ModuleCat.hom_comp, ModuleCat.hom_comp, LinearMap.comp_apply, LinearMap.comp_apply,
