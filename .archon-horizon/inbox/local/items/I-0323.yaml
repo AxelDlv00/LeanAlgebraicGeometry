@@ -1,0 +1,104 @@
+id: I-0323
+provider: local
+kind: memory
+body: 'SUPPORT-SEPARATED ADAPTATIONS CANNOT CERTIFY A GENERAL DD-R SYSTEM (proved
+  in Lean 2026-07-25, run 0047).
+
+
+  THE TEMPTING ROUTE. The pointwise gate (isLocallyCertified_of_forall_prime_exists_certified_adaptation,
+
+  DivSchemeCertZarPointwise.lean:162) accepts ANY adaptation over the shrunken base.
+  So one is tempted
+
+  to choose an adaptation that is SUPPORT-SEPARATED (off-diagonal ovlColength i j
+  all subsingleton).
+
+  That really does trivialize the hard part: the Cech difference deltaLeft - deltaRight
+  becomes LITERALLY
+
+  ZERO, the equalizer W(d) is the whole product, and both flat-cokernel clauses (c3)/(c4)
+  plus the
+
+  kernel-spanning hypothesis are free. Landed as DivisorAdaptation.isCertified_of_separated
+
+  (Picard/DivSchemeCertZarSep.lean), needing only (c1) + a rankAtStalk sum.
+
+
+  WHY IT DOES NOT CLOSE THE LANE. The premise is essentially always FALSE. Proved
+  as
+
+  DivisorAdaptation.supportLocus_disjoint_chart_inter_of_separated (same file): BOTH
+  pinned charts carry
+
+  a partition of unity (FinCoverData.partition0/1, DivisorFamily.lean:174-176), so
+  their pieces cover V0
+
+  and V1 respectively (cover0/cover1, DivisorFamily.lean:199-207). A support point
+  z in V0 cap V1
+
+  therefore lies in a chart-0 piece AND a chart-1 piece — an off-diagonal pair — and
+  both equations have
+
+  non-unit germ at z (isUnit_germ_eqn_iff, SupportTube.lean:245), so that overlap
+  ideal is PROPER and its
+
+  colength is not subsingleton. Hence separation holds only if supp d avoids V0 cap
+  V1, i.e. the divisor
+
+  is confined to the two vertical fibres of pi. Refining the cover cannot help; the
+  pointwise gate cannot
+
+  help either (shrinking the base deletes fibres, it does not move a support point
+  out of the overlap);
+
+  and supportLocus is DivEq-invariant, so re-spelling d cannot help.
+
+
+  ALREADY KNOWN FOR THE FIELD CASE. DivisorFamilyFieldSurj.lean:33-38 records the
+  same obstruction in
+
+  prose and routes around it: over a field every module is free, so the certificate
+  is discharged on the
+
+  PLAIN extraction adaptation via the unconditional CRT colength-degree identity
+
+  (DivisorAdaptation.isCertified_of_deg, DivisorFamilyFieldSurj.lean:104; deg_presentationDivisor,
+
+  DivisorFamilyFieldCRT.lean:365, I-0230). That escape is unavailable over a nonreduced
+  base, which is
+
+  exactly why the flat-cokernel content stands.
+
+
+  RULE. Do not attack the DD-R certificate by choosing a cleverer adaptation. Two
+  independent no-gos now
+
+  bound the packaging: cleverer submodule L is ruled out by divUniversalHighWindowKernelSyzygySpans_iff_flat_quotient
+
+  (DivSchemeHighWindowSyzygy.lean:298, spanning IFF the sought flatness), and cleverer
+  PIECES are ruled out
+
+  by supportLocus_disjoint_chart_inter_of_separated. The honest analogue of the field
+  escape is a RELATIVE
+
+  version of the stalk-CRT adaptation-independence of the glued rank, not separation.
+  See [[I-0209]], [[I-0320]].'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T12:39:41.849821+00:00'
+updated_at: '2026-07-25T12:39:41.849830+00:00'
+metadata:
+  provenance:
+    run: '0047'
+    session: 0014-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
