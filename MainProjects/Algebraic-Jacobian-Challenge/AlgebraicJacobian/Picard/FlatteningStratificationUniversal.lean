@@ -139,7 +139,7 @@ private lemma flat_compHom_congr {R : Type u} [CommRing R] {M : Type u}
      Module.Flat R M) ↔ Module.Flat R M := by
   have h : (Module.compHom M f : Module R M) = ‹Module R M› :=
     Module.ext' _ _ fun r m => by
-      show f r • m = r • m
+      change f r • m = r • m
       rw [hf r]
   exact (congrArg (fun i : Module R M => @Module.Flat R M _ _ i) h).to_iff
 
@@ -211,7 +211,7 @@ theorem rankAtStalk_sections_eq_pointRank {W : T.Opens}
     rwa [hW.range_fromSpec] at h0
   rw [Module.rankAtStalk_eq,
     pointRank_eq_chartFiberRank G (V := ⟨W, hW⟩) _ hmem]
-  show p.asIdeal.fiberRank Γ(G, W) = chartFiberRank G _ hmem
+  change p.asIdeal.fiberRank Γ(G, W) = chartFiberRank G _ hmem
   rw [chartFiberRank]
   exact Ideal.fiberRank_congr_ideal
     (congrArg PrimeSpectrum.asIdeal (primeIdealOf_fromSpec hW p hmem)).symm
@@ -263,7 +263,7 @@ theorem pointRank_pullback (y : Y) :
     have h5 : algebraMap Γ(X, V) Γ(Y, W) = (g.appLE V W hWle).hom := rfl
     rw [h5]
     exact congrArg PrimeSpectrum.asIdeal h4
-  show ((hW.primeIdealOf ⟨y, hyW⟩).asIdeal).fiberRank
+  change ((hW.primeIdealOf ⟨y, hyW⟩).asIdeal).fiberRank
       Γ((Scheme.Modules.pullback g).obj G, W) =
     ((hV.primeIdealOf ⟨g y, hgyV⟩).asIdeal).fiberRank Γ(G, V)
   rw [h1, h2]
@@ -332,7 +332,7 @@ theorem strataData_le_ker (hcov : ChartsCover G e) (q : T ⟶ X)
   -- the restricted section
   have hres : (T.presheaf.map (homOfLE hV).op).hom ((q.app U.1).hom r) =
       (q.appLE U.1 W hV).hom r := rfl
-  show (T.presheaf.map (homOfLE hV).op).hom ((q.app U.1).hom r) =
+  change (T.presheaf.map (homOfLE hV).op).hom ((q.app U.1).hom r) =
     (T.presheaf.map (homOfLE hV).op).hom 0
   rw [map_zero, hres, ← appLE_base_res_apply' q (hVcU i) hWle hV r, hzero]
 
@@ -400,12 +400,12 @@ theorem coherentSheafFlat_stratum (hcov : ChartsCover G e) :
         have h1 : P.relMatrix a b ∈
             RingHom.ker (((strataData G e hcov).subschemeι.app j.1.1).hom) := by
           rw [Scheme.IdealSheafData.ker_subschemeι_app]
-          show P.relMatrix a b ∈ strataIdeal G e j.1
+          change P.relMatrix a b ∈ strataIdeal G e j.1
           rw [strataIdeal_eq_entryIdeal G P]
           exact P.relMatrix_mem_entryIdeal a b
         exact RingHom.mem_ker.mp h1
       -- `appLE` at `le_rfl` is `app` followed by the trivial restriction
-      show ((stratumι G e hcov).appLE j.1.1
+      change ((stratumι G e hcov).appLE j.1.1
         (stratumι G e hcov ⁻¹ᵁ j.1.1) le_rfl).hom (P.relMatrix a b) = 0
       have happ : ((stratumι G e hcov).appLE j.1.1
           (stratumι G e hcov ⁻¹ᵁ j.1.1) le_rfl).hom (P.relMatrix a b) =
@@ -615,7 +615,7 @@ noncomputable def rankStratumι : rankStratum F e ⟶ S :=
 
 instance : IsImmersion (rankStratumι F e) := by
   haveI := pullback_isQuasicoherent_hom (chartLocus F e).ι F ‹_›
-  show IsImmersion
+  change IsImmersion
     (stratumι ((Scheme.Modules.pullback (chartLocus F e).ι).obj F) e
       (chartsCover_chartLocus F e) ≫ (chartLocus F e).ι)
   infer_instance
@@ -646,7 +646,7 @@ theorem mem_range_rankStratumι_iff [IsLocallyNoetherian S]
     obtain ⟨z, hz⟩ := (mem_range_stratumι_iff _
       (chartsCover_chartLocus F e) x).mpr hrx
     refine ⟨z, ?_⟩
-    show ((chartLocus F e).ι.base)
+    change ((chartLocus F e).ι.base)
       ((stratumι ((Scheme.Modules.pullback (chartLocus F e).ι).obj F) e
         (chartsCover_chartLocus F e)).base z) = s
     rw [show ((stratumι ((Scheme.Modules.pullback (chartLocus F e).ι).obj F) e
@@ -733,14 +733,14 @@ theorem isOpen_pointRank_pullback_eq {T : Scheme.{u}} [IsLocallyNoetherian S]
     (Module.rankAtStalk Γ((Scheme.Modules.pullback φ).obj F, W) ⁻¹' {e}),
     ?_, ?_, ?_⟩
   · rintro _ ⟨p, hp, rfl⟩
-    show pointRank T ((Scheme.Modules.pullback φ).obj F)
+    change pointRank T ((Scheme.Modules.pullback φ).obj F)
       (hW.fromSpec.base p) = e
     rw [← rankAtStalk_sections_eq_pointRank
       ((Scheme.Modules.pullback φ).obj F) hW p]
     exact hp
   · exact hW.fromSpec.isOpenEmbedding.isOpenMap _ (hlc.isOpen_fiber e)
   · refine ⟨hW.primeIdealOf ⟨t₀, htW⟩, ?_, ?_⟩
-    · show Module.rankAtStalk Γ((Scheme.Modules.pullback φ).obj F, W)
+    · change Module.rankAtStalk Γ((Scheme.Modules.pullback φ).obj F, W)
         (hW.primeIdealOf ⟨t₀, htW⟩) = e
       rw [rankAtStalk_sections_eq_pointRank
         ((Scheme.Modules.pullback φ).obj F) hW]
@@ -808,12 +808,12 @@ theorem existsUnique_factor_rankStratum [IsLocallyNoetherian S]
     ((Scheme.Modules.pullback (chartLocus F e).ι).obj F)
     (chartsCover_chartLocus F e) q hflat_q hrank_q
   refine ⟨l, ?_, ?_⟩
-  · show l ≫ (stratumι ((Scheme.Modules.pullback (chartLocus F e).ι).obj F) e
+  · change l ≫ (stratumι ((Scheme.Modules.pullback (chartLocus F e).ι).obj F) e
       (chartsCover_chartLocus F e) ≫ (chartLocus F e).ι) = φ
     rw [← Category.assoc, hl, hqfac]
   · intro l' hl'
     refine hluniq l' ?_
-    show l' ≫ stratumι ((Scheme.Modules.pullback (chartLocus F e).ι).obj F) e
+    change l' ≫ stratumι ((Scheme.Modules.pullback (chartLocus F e).ι).obj F) e
       (chartsCover_chartLocus F e) = q
     rw [← cancel_mono (chartLocus F e).ι, Category.assoc]
     show l' ≫ (stratumι ((Scheme.Modules.pullback (chartLocus F e).ι).obj F) e

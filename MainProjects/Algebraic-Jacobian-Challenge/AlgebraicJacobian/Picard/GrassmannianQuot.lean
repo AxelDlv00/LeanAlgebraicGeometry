@@ -1,3 +1,8 @@
+/-
+Copyright (c) 2026 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+-/
 import AlgebraicJacobian.Picard.GrassmannianCells
 import AlgebraicJacobian.Picard.QuotScheme
 import AlgebraicJacobian.Picard.GlueDescent
@@ -817,7 +822,7 @@ lemma matrixEnd_pullback {T S : Scheme.{0}} (p : T ⟶ S) {d : ℕ}
   refine Cofan.IsColimit.hom_ext
     (isColimitCofanMkObjOfIsColimit (Scheme.Modules.pullback p) _ _
       (SheafOfModules.isColimitFreeCofan (Fin d))) _ _ (fun i => ?_)
-  simp only [cofan_mk_inj, Cofan.mk_pt]
+  simp only [cofan_mk_inj]
   -- `Q.hom` is, by construction of `pullbackFreeIso`, the Mathlib free-pullback comparison.
   have hQhom : (Scheme.Modules.pullbackFreeIso p (Fin d)).hom
       = (SheafOfModules.pullbackObjFreeIso (Scheme.Hom.toRingCatSheafHom p) (Fin d)).hom := rfl
@@ -888,7 +893,7 @@ lemma matrixEndRect_pullback {T S : Scheme.{0}} (p : T ⟶ S) {d r : ℕ}
   refine Cofan.IsColimit.hom_ext
     (isColimitCofanMkObjOfIsColimit (Scheme.Modules.pullback p) _ _
       (SheafOfModules.isColimitFreeCofan (Fin r))) _ _ (fun i => ?_)
-  simp only [cofan_mk_inj, Cofan.mk_pt]
+  simp only [cofan_mk_inj]
   -- the source/target free-pullback comparisons in their Mathlib form
   have hQr : (Scheme.Modules.pullbackFreeIso p (Fin r)).hom
       = (SheafOfModules.pullbackObjFreeIso (Scheme.Hom.toRingCatSheafHom p) (Fin r)).hom := rfl
@@ -1068,7 +1073,7 @@ lemma pullback_map_freeMap_pullbackFreeIso {W V : Scheme.{0}} (p : W ⟶ V) {n m
   refine Cofan.IsColimit.hom_ext
     (isColimitCofanMkObjOfIsColimit (Scheme.Modules.pullback p) _ _
       (SheafOfModules.isColimitFreeCofan (Fin n))) _ _ (fun i => ?_)
-  simp only [cofan_mk_inj, Cofan.mk_pt]
+  simp only [cofan_mk_inj]
   have key_n : (Scheme.Modules.pullback p).map (SheafOfModules.ιFree i)
         ≫ (Scheme.Modules.pullbackFreeIso p (Fin n)).hom
       = SheafOfModules.pullbackObjUnitToUnit (Scheme.Hom.toRingCatSheafHom p)
@@ -1254,7 +1259,7 @@ lemma exists_section_of_epi_free_spec {R : CommRingCat.{0}} {d r : ℕ}
     exact @epi_comp _ _ _ _ _ (tildeFinsupp (Fin r)).hom (IsIso.epi_of_iso _) _ h1
   haveI hge : Epi g := by
     refine (tilde.functor R).epi_of_epi_map ?_
-    show Epi (tilde.map g)
+    change Epi (tilde.map g)
     rw [hg]
     exact hψt
   have hsurj : Function.Surjective g.hom := (ModuleCat.epi_iff_surjective g).mp hge
@@ -2397,7 +2402,7 @@ noncomputable def functor (d r : ℕ) : Scheme.{0}ᵒᵖ ⥤ Type 1 where
         trans (𝟙 _)
         · rw [Category.assoc, Iso.hom_inv_id_assoc]
           exact (Scheme.Modules.pullbackComp g.unop f.unop).hom_inv_id_app _
-        · rw [hH]; simp <;> rfl
+        · rw [hH]; simp; rfl
       -- whisker `hstar` by `≫ (pullback f ⋙ pullback g).map x.q` and refold the RHS via
       -- `map_comp` into `(rqPullback g (rqPullback f x)).q`.
       exact (Category.assoc _ _ _).symm.trans
@@ -2600,7 +2605,7 @@ private lemma exists_isUnit_submatrix {K : Type} [Field K] {d r : ℕ}
     rw [← Matrix.range_mulVecLin, LinearMap.range_eq_top]
     intro v
     refine ⟨G.mulVec v, ?_⟩
-    show M.mulVec (G.mulVec v) = v
+    change M.mulVec (G.mulVec v) = v
     rw [Matrix.mulVec_mulVec, hMG, Matrix.one_mulVec]
   -- extract a linearly independent spanning subset `b` of the column set
   obtain ⟨b, hbsub, hbspan, hbind⟩ := exists_linearIndependent K (Set.range M.col)
@@ -2759,7 +2764,7 @@ theorem chartLocus_isOpenCover {T : Scheme.{0}} (d r : ℕ) (x : RankQuotient r 
     have hcomp2 : (homOfLE (le_top : Wb.ι ''ᵁ ⊤ ≤ ⊤))
         = homOfLE hle ≫ homOfLE (W.toScheme.basicOpen_le f0) := Subsingleton.elim _ _
     rw [Scheme.Opens.ι_appTop, hcomp2, op_comp, Functor.map_comp]
-    show IsUnit ((CommRingCat.Hom.hom (W.toScheme.presheaf.map (homOfLE hle).op))
+    change IsUnit ((CommRingCat.Hom.hom (W.toScheme.presheaf.map (homOfLE hle).op))
       ((CommRingCat.Hom.hom (W.toScheme.presheaf.map
         (homOfLE (W.toScheme.basicOpen_le f0)).op)) f0))
     exact IsUnit.map (CommRingCat.Hom.hom (W.toScheme.presheaf.map (homOfLE hle).op))
@@ -2795,7 +2800,7 @@ theorem chartLocus_isOpenCover {T : Scheme.{0}} (d r : ℕ) (x : RankQuotient r 
       = SheafOfModules.freeMap (fun j : Fin d => (I.orderIsoOfFin hI j : Fin r)) ≫
         (Scheme.Modules.pullbackFreeIso W.ι (Fin r)).inv := by
     rw [← cancel_mono (Scheme.Modules.pullbackFreeIso W.ι (Fin r)).hom]
-    simp only [Category.assoc, Iso.inv_hom_id, Category.comp_id]
+    simp only [Category.assoc]
     rw [pullback_map_freeMap_pullbackFreeIso W.ι
       (fun j : Fin d => (I.orderIsoOfFin hI j : Fin r))]
     rw [Iso.inv_hom_id_assoc]
@@ -2826,8 +2831,7 @@ theorem chartLocus_isOpenCover {T : Scheme.{0}} (d r : ℕ) (x : RankQuotient r 
         matrixEndRect (MW.submatrix id
           (fun j : Fin d => (I.orderIsoOfFin hI j : Fin r))) ≫ eW.inv := by
     rw [← hfree, ← hkey0]
-    simp only [Category.assoc, Iso.hom_inv_id, Iso.hom_inv_id_assoc, Category.comp_id,
-      Iso.inv_hom_id_assoc]
+    simp only [Category.assoc, Iso.hom_inv_id, Iso.hom_inv_id_assoc, Category.comp_id]
   -- B10: the pullback to the basic open is an isomorphism
   have hb1 : (Scheme.Modules.pullbackFreeIso Wb.ι (Fin d)).inv ≫
       (Scheme.Modules.pullback Wb.ι).map (matrixEndRect (MW.submatrix id
@@ -2847,8 +2851,7 @@ theorem chartLocus_isOpenCover {T : Scheme.{0}} (d r : ℕ) (x : RankQuotient r 
             ⇑(CommRingCat.Hom.hom (Scheme.Hom.appTop Wb.ι))) ≫
           (Scheme.Modules.pullbackFreeIso Wb.ι (Fin d)).inv := by
       rw [← hb1]
-      simp only [Category.assoc, Iso.hom_inv_id, Category.comp_id, Iso.hom_inv_id_assoc,
-        Iso.inv_hom_id_assoc, Iso.inv_hom_id]
+      simp only [Category.assoc, Iso.hom_inv_id, Category.comp_id, Iso.hom_inv_id_assoc]
     rw [hdec]
     -- `matrixEndRect ((MW.submatrix _ _).map τ)` is definitionally
     -- `matrixEnd ((MW.map τ).submatrix _ _)` (`submatrix_map` and the square bridge
@@ -3019,7 +3022,7 @@ lemma pullbackFreeIso_inv_freeMap {W V : Scheme.{0}} (p : W ⟶ V) {n m : ℕ}
     = SheafOfModules.freeMap (R := W.ringCatSheaf) g ≫
       (Scheme.Modules.pullbackFreeIso p (Fin m)).inv := by
   rw [← cancel_mono (Scheme.Modules.pullbackFreeIso p (Fin m)).hom]
-  simp only [Category.assoc, Iso.inv_hom_id, Category.comp_id]
+  simp only [Category.assoc]
   rw [pullback_map_freeMap_pullbackFreeIso p g]
   rw [Iso.inv_hom_id_assoc]
   exact ((Category.assoc _ _ _).trans
@@ -3352,7 +3355,7 @@ lemma pullbackFreeIso_inv_pullbackComp {W V X : Scheme.{0}} (p : W ⟶ V) (a : V
   trans (𝟙 _)
   · rw [Category.assoc, Iso.hom_inv_id_assoc]
     exact (Scheme.Modules.pullbackComp p a).hom_inv_id_app _
-  · rw [hH]; simp <;> rfl
+  · rw [hH]; simp; rfl
 
 /-- **Pseudofunctor coherence for the conjugated chart data**: presenting
 `q`-against-`inv c` after pullback along a composite `p ≫ a` is the same as pulling the
@@ -4630,7 +4633,7 @@ lemma chartLocus_rqPullback {T' T : Scheme.{0}} (ψ : T' ⟶ T) {r d : ℕ}
     have hv : V.ι.base v ∈ V := by
       have : V.ι.base v ∈ Set.range V.ι.base := ⟨v, rfl⟩
       rwa [Scheme.Opens.range_ι] at this
-    show (V.ι ≫ ψ).base v ∈ (chartLocus y I hI : Set T)
+    change (V.ι ≫ ψ).base v ∈ (chartLocus y I hI : Set T)
     rw [Scheme.Hom.comp_base]
     exact hv
   set ρ : V.toScheme ⟶ (chartLocus y I hI).toScheme :=
@@ -4956,7 +4959,7 @@ lemma pullback_map_cover_faithful {T : Scheme.{0}} {ι : Type} {V : ι → T.Ope
   · intro pt hpt
     obtain ⟨i, hi⟩ := hV.exists_mem pt
     refine TopologicalSpace.Opens.mem_iSup.mpr ⟨i, ⟨pt, hi⟩, ?_, rfl⟩
-    show (V i).ι.base ⟨pt, hi⟩ ∈ O
+    change (V i).ι.base ⟨pt, hi⟩ ∈ O
     exact hpt
   · intro i
     -- naturality moves the restriction inside `u.app`/`v.app`; the cover-member
@@ -5069,7 +5072,7 @@ lemma grPointOfRankQuotient_rqPullback_tautological (d r : ℕ) {T : Scheme.{0}}
       have : W.ι.base w ∈ Set.range W.ι.base := ⟨w, rfl⟩
       rwa [Scheme.Opens.range_ι] at this
     rw [Scheme.Hom.comp_base, TopCat.comp_app]
-    show ψ.base (W.ι.base w) ∈ @Scheme.Hom.opensRange _ _ ((theGlueData d r).ι I) hoi
+    change ψ.base (W.ι.base w) ∈ @Scheme.Hom.opensRange _ _ ((theGlueData d r).ι I) hoi
     exact hw
   set ρ : W.toScheme ⟶ (theGlueData d r).U I :=
     @IsOpenImmersion.lift _ _ _ ((theGlueData d r).ι I) (W.ι ≫ ψ) hoi hrange with hρdef
@@ -5080,8 +5083,12 @@ lemma grPointOfRankQuotient_rqPullback_tautological (d r : ℕ) {T : Scheme.{0}}
         grPointOfRankQuotient d r (rqPullback ψ (tautologicalRankQuotient d r))
       = chartMorphism d r (rqPullback ψ (tautologicalRankQuotient d r)) I.1 I.2 ≫
         (theGlueData d r).ι I :=
-    Scheme.Cover.ι_glueMorphisms (T.openCoverOfIsOpenCover _ (chartLocus_isOpenCover d r (rqPullback ψ (tautologicalRankQuotient d r))))
-      (fun J => chartMorphism d r (rqPullback ψ (tautologicalRankQuotient d r)) J.1 J.2 ≫ (theGlueData d r).ι J)
+    Scheme.Cover.ι_glueMorphisms
+      (T.openCoverOfIsOpenCover _
+        (chartLocus_isOpenCover d r (rqPullback ψ (tautologicalRankQuotient d r))))
+      (fun J =>
+        chartMorphism d r (rqPullback ψ (tautologicalRankQuotient d r)) J.1 J.2 ≫
+          (theGlueData d r).ι J)
       (fun J K => chartMorphism_glue_compat d r (rqPullback ψ (tautologicalRankQuotient d r)) J K) I
   have hWι : W.ι = T.homOfLE hle ≫
       (chartLocus (rqPullback ψ (tautologicalRankQuotient d r)) I.1 I.2).ι :=
@@ -5113,10 +5120,12 @@ lemma grPointOfRankQuotient_rqPullback_tautological (d r : ℕ) {T : Scheme.{0}}
   haveI hc2 : IsIso ((Scheme.Modules.pullback (W.ι ≫ ψ)).map
       (chartComposite (tautologicalRankQuotient d r) I.1 I.2)) := by
     rw [← hfac]
-    exact isIso_pullback_map_comp ρ ((theGlueData d r).ι I) (chartComposite (tautologicalRankQuotient d r) I.1 I.2)
+    exact isIso_pullback_map_comp ρ ((theGlueData d r).ι I)
+      (chartComposite (tautologicalRankQuotient d r) I.1 I.2)
   haveI hc3 : IsIso ((Scheme.Modules.pullback (ρ ≫ (theGlueData d r).ι I)).map
       (chartComposite (tautologicalRankQuotient d r) I.1 I.2)) :=
-    isIso_pullback_map_comp ρ ((theGlueData d r).ι I) (chartComposite (tautologicalRankQuotient d r) I.1 I.2)
+    isIso_pullback_map_comp ρ ((theGlueData d r).ι I)
+      (chartComposite (tautologicalRankQuotient d r) I.1 I.2)
   have hmatrix : presentedMatrix (rqPullback ψ (tautologicalRankQuotient d r))
         (T.homOfLE hle ≫
           (chartLocus (rqPullback ψ (tautologicalRankQuotient d r)) I.1 I.2).ι) I.1 I.2
@@ -5250,7 +5259,7 @@ lemma chartLocus_le_chartLocus_rqPullback_grPoint {T : Scheme.{0}} (d r : ℕ)
     have htr : t ∈ Set.range (chartLocus x I.1 I.2).ι.base := by
       rw [Scheme.Opens.range_ι]; exact ht
     obtain ⟨w, rfl⟩ := htr
-    show (grPointOfRankQuotient d r x).base ((chartLocus x I.1 I.2).ι.base w)
+    change (grPointOfRankQuotient d r x).base ((chartLocus x I.1 I.2).ι.base w)
       ∈ @Scheme.Hom.opensRange _ _ ((theGlueData d r).ι I) hoi
     have hb : (grPointOfRankQuotient d r x).base ((chartLocus x I.1 I.2).ι.base w)
         = ((theGlueData d r).ι I).base ((chartMorphism d r x I.1 I.2).base w) := by
@@ -5456,7 +5465,9 @@ lemma rqPullback_grPointOfRankQuotient_rel {T : Scheme.{0}} (d r : ℕ)
               (chartComposite x I.1 I.2)) :=
           congrArg (· ≫ _)
             (congrArg (Scheme.Modules.pullback (chartLocus x I.1 I.2).ι).map
-              (kernel.condition ((rqPullback (grPointOfRankQuotient d r x) (tautologicalRankQuotient d r)).q)))
+              (kernel.condition
+                ((rqPullback (grPointOfRankQuotient d r x)
+                  (tautologicalRankQuotient d r)).q)))
       _ = (Scheme.Modules.pullback (chartLocus x I.1 I.2).ι).map 0 := by
           rw [Functor.map_zero, zero_comp, Functor.map_zero]
   have hker2 : kernel.ι x.q ≫ (rqPullback (grPointOfRankQuotient d r x)
@@ -5593,7 +5604,7 @@ pseudofunctoriality `(functor d r).map_comp` evaluated at the tautological point
 inverse is the chart-by-chart construction `grPointOfRankQuotient`; the two inverse laws
 are the remaining content (they consume the chart restriction isomorphisms
 `universalQuotient_restrictionIso` and the glued-scheme universal property). -/
-noncomputable def represents (d r : ℕ) (hd : 1 ≤ d) (hdr : d ≤ r) :
+noncomputable def represents (d r : ℕ) (_hd : 1 ≤ d) (_hdr : d ≤ r) :
     (functor d r).RepresentableBy (scheme d r) where
   homEquiv {T} :=
     { toFun := fun ψ => Quotient.mk _ (rqPullback ψ (tautologicalRankQuotient d r))
