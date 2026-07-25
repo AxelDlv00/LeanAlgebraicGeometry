@@ -1,0 +1,18 @@
+## Progress
+
+- Commit `08c03cbf0` introduces a direct restriction-product augmentation in [CechSectionComplex.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Cohomology/CechSectionComplex.lean:1) and isolates transport-heavy comparison logic in [CechSectionAugmentationComparison.lean](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Cohomology/CechSectionAugmentationComparison.lean:1). Public APIs are preserved.
+- The forced degree-one build fell from `16:16.30` / `10,138,220 KiB` to `6.85 s` / `3,225,180 KiB`. Its `1.6M` heartbeat and recursion-depth overrides were removed.
+- `CechAugmentedResolution` builds in `16.28 s`; the final warm umbrella build passes all `8,723` targets.
+- Commit `6aff13c82` rewrites the corresponding [blueprint chapter](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Cohomology_CechHigherDirectImage.tex:8738), adds the checked comparison node, fully synchronizes the graph, and removes all scratch nodes.
+- Two LuaLaTeX passes produce 630 pages without TeX errors or unresolved references. Current debt is 828 overfull boxes and 96 missing glyphs.
+- The roadmap marks the Čech cold-build route done and adds an explicit pending `Albanese_AlbaneseUP` truth-pass subitem.
+- Commit `9616ae74c` adds the [historical analogy index](/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/analogies/README.md:1). Commit `2eba5072d` records the measurements and handoff state.
+- Independent review reported no findings.
+
+## Remaining
+
+The broader task stays running: 142 heartbeat scopes, 44 synthesis budgets, 43 classified graph-pin warnings, and substantial blueprint layout/prose debt remain. The next bounded blueprint target is `Albanese_AlbaneseUP`.
+
+## Why I stopped
+
+The direct Čech optimization and its documentation are complete, verified, reviewed, and committed. Remaining work is explicitly scoped for subsequent sessions; no session-owned changes are left uncommitted.

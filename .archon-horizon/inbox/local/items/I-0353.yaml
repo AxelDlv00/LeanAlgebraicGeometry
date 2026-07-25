@@ -1,0 +1,44 @@
+id: I-0353
+provider: local
+kind: issue
+body: "`JacobianData.comp_ofCurve` is a one-liner for the frozen gate ONLY IF `Jacobian.instGrpObj`\
+  \ is discharged as `(jacobianData C).grpObj` — record that as a required discharge\
+  \ (review of 0048 r2, commit 7e5e268a6).\n\nPicard/JacobianDataAbel.lean:78 proves\n\
+  \  JacobianData.comp_ofCurve : letI := d.grpObj; P >> d.ofCurve P = eta[d.J]\nThe\
+  \ frozen target is Challenge.lean:130\n  Jacobian.comp_ofCurve : P >> ofCurve P\
+  \ = eta[Jacobian C]\nwhere `eta` is MonObj.one of `Jacobian.instGrpObj` (Challenge.lean:106),\
+  \ which is\n`sorry`. The two `eta`s are the same term only if that instance is later\
+  \ DEFINED as\n`(jacobianData C).grpObj`; if DAT-J discharges `instGrpObj` any other\
+  \ way, the avatar\ndoes not transfer and the \"one-liner\" claim silently fails.\n\
+  \nThe audited part is fine: `homEquiv_one` (:68) is honest, not vacuous —\n`GrpObj.ofRepresentableBy`\
+  \ -> `MonObj.ofRepresentableBy` sets\n`one := alpha.homEquiv'.symm 1` (mathlib Cartesian/Mon.lean:181-183)\
+  \ and\n`RepresentableBy.homEquiv' := alpha.homEquiv` (ConcreteCategory/Representable.lean:29),\n\
+  so `d.homEquiv.apply_symm_apply 1` is the right unit of the right instance. It is,\n\
+  however, pure defeq unfolding; the commit message calling it \"NOT free\" oversells\
+  \ it.\nThe real content of the commit is `comp_ofCurve` via `homEquiv_comp` +\n\
+  `abelElement_map_point` (AbelElement.lean:160), and that is genuine.\n\nACTION:\
+  \ add the constraint \"instGrpObj must be discharged as (jacobianData C).grpObj\"\
+  \ to\nthe DAT-J roadmap row, so the coupling is checked when DAT-J lands rather\
+  \ than discovered\nthen."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T16:27:33.638224+00:00'
+updated_at: '2026-07-25T16:27:33.638232+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0006-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer

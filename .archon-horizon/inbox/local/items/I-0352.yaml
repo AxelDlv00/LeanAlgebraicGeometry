@@ -1,0 +1,48 @@
+id: I-0352
+provider: local
+kind: issue
+body: "F5/F6 IS BEING STRENGTHENED ON AN OBJECT THIS RUN ALREADY DECLARED WRONG (review\
+  \ of 0048 r2).\n\nRound 1 of this same run landed, as BINDING and kernel-checked,\
+  \ spec-dd-r.md ADDENDUM 3\nsection 1(d): `DivEq.supportLocus_eq` makes the chart\
+  \ obstruction a DivEq INVARIANT, so\nno representative escapes, and the addendum\
+  \ concludes verbatim:\n  \"DivFamZar is not the relative-divisor functor, and divRep\
+  \ stated against it\n   represents the wrong object.\"\n\nRound 2's largest deliverable\
+  \ (e320509e7 + 0b3ab49b8, 561 lines) is\n`eq_of_isDivRepClassify` / `divRepClassifyZar_injective`\
+  \ /\n`DivRepAffinePullback.ofPull` — all quantified over that same `DivFamZar`.\
+  \ The\nmathematics is sound and kernel-clean; the concern is direction, not correctness.\n\
+  \nTwo concrete facts a next session should weigh before extending F5/F6:\n1. INHABITATION.\
+  \ `DivFamZar C S pi g` has NO landed inhabitant for a general test ring S.\n   The\
+  \ only unconditional producer is over a FIELD base with an effective degree-n divisor\n\
+  \   in hand (DivisorFamilyFieldSurj.lean:147, via isCertified_of_deg :107). Every\
+  \ other\n   route (DivSchemeCertZarSeed.lean:133, DivSchemeCertZarPointwise.lean:180,\n\
+  \   DivSchemeEps.lean:239) takes certifiability as a HYPOTHESIS. So the separation\
+  \ theorem\n   is not vacuous, but its non-vacuity rests on a field base.\n2. `DivRepAffinePullback`\
+  \ gained `ofPull`, but the two obligations that were U2-gated\n   (`pull` and `isDivRepClassify_pull`)\
+  \ are untouched — the retired field\n   (`pull_classify`) was the one already derivable.\
+  \ Net movement toward a producer: zero,\n   and 0b3ab49b8's own message says so.\n\
+  \nACTION: before any further F5/F6 obligation-shaving, record in the roadmap whether\
+  \ the\ndivRep lane is (a) proceeding under a stated `[Infinite k]`/field-base restriction,\
+  \ or\n(b) paused until R1 (`p1-aut`) / R2 lands. Both are legitimate; leaving it\
+  \ implicit is\nwhat turns real proofs into sunk cost."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T16:27:16.433783+00:00'
+updated_at: '2026-07-25T16:27:16.433793+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0006-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer

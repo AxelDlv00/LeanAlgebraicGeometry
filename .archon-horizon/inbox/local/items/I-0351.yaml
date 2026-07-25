@@ -1,0 +1,52 @@
+id: I-0351
+provider: local
+kind: issue
+body: "C9a IS NOT CHART-U(b): `isOpen_chartLocus` now names a strictly weaker theorem,\
+  \ and the co-sign was bypassed (review of 0048 r2, commit e47d57de1).\n\nPicard/Pic0ChartLocusClass.lean:73\
+  \ defines\n  chartLocus (c : (relCurve C B).CechPic) : Set (PrimeSpectrum B)\nand\
+  \ :112 proves `isOpen_chartLocus` for it. Both worksheets reserve that exact name\
+  \ for a\nDIFFERENT object:\n\n* w4-datc-worksheet.md:391 (CHART-U(a)) — `chartLocus\
+  \ c lambda`, indexed by a plus class\n  lambda in pic0Subgroup C (Over.mk a), over\
+  \ a general test T, at the TWISTED fibre class\n  lambda_t . theta^m . (-Sigma).\
+  \ The landed def has no lambda, no theta^m, no Sigma-shift,\n  and lives over PrimeSpectrum\
+  \ B.\n* w4-datb-worksheet.md:325-360 — DAT-B CO-SIGNS the interface with an (a)-amendment\
+  \ (the\n  SPLIT predicate over a finite separable L/kappa(t)) and a (b)-amendment\
+  \ pinning the\n  openness chain, \"to be acknowledged by the DAT-C lane BEFORE either\
+  \ builds\". Row B-4\n  (:484) owns `isOpen_chartLocus` as an ASSEMBLY \"against\
+  \ DAT-C's shifted-datum half\".\n  No acknowledgement was recorded; the name was\
+  \ taken unilaterally.\n\nWhat the co-signed chain still owes, none of it landed\
+  \ by e47d57de1:\n  - the shifted-datum constructor (theta layer + GAP-1 inverse\
+  \ datum) — DAT-C's half;\n  - transport (i) Spec B -> Spec B0 preimage after RE-5;\n\
+  \  - transport (ii) Spec B -> Spec A etale IMAGE (the Kleiman 2204-2244 step);\n\
+  \  - transport (iii) affine gluing.\nPicard/Pic0ChartLocusOpen.lean:29-38 already\
+  \ says exactly this in its own docstring\n(\"link 1\" and \"link 2\"). The new file\
+  \ lands neither link; it composes the already-landed\nengine (Pic0ChartLocusOpen.lean:80)\
+  \ with the already-landed class-intrinsicity\n(Pic0ChartLocusFibreField.lean:177).\
+  \ ~30 lines of proof.\n\nACTION: (1) rename to something like `isOpen_chartLocusOfCechClass`\
+  \ / `chartLocusZar`\nand free `isOpen_chartLocus` for the B-4 assembly, or amend\
+  \ both worksheets first;\n(2) reopen roadmap leaf AJCR.w4-rep.datum.dat-c.c9-chartlocus.c9a\
+  \ (currently `done`,\npinned to e47d57de1) or restate its scope as \"the affine\
+  \ Cech-class inner case\";\n(3) get the DAT-B co-sign before either lane builds\
+  \ on the name."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T16:26:57.669251+00:00'
+updated_at: '2026-07-25T16:26:57.669261+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0006-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer

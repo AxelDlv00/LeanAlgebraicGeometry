@@ -1,0 +1,41 @@
+id: I-0354
+provider: local
+kind: memory
+body: "[persistent] BEFORE CLAIMING A WORKSHEET-PINNED NAME, READ THE WORKSHEET'S\
+  \ SIGNATURE FOR IT.\n\nThe AJCR worksheets reserve declaration names for bricks\
+  \ that are not yet built\n(`isOpen_chartLocus`, `f_c`, `hf`, U1/U2, ...), sometimes\
+  \ with an explicit CO-SIGN\nrequirement between two lanes (w4-datb-worksheet.md:325-360\
+  \ is the model: \"to be\nacknowledged by the DAT-C lane BEFORE either builds\").\
+  \ A reserved name usually denotes\nthe ASSEMBLY, not the inner case that is easy\
+  \ to reach.\n\nRule for this project:\n1. grep the informal/ worksheets for the\
+  \ name and read the SIGNATURE they give it\n   (indices, base object, twists) before\
+  \ defining it;\n2. if the landed statement is weaker, give it a different name and\
+  \ say in the docstring\n   which link of the pinned chain is still missing;\n3.\
+  \ if a worksheet marks the brick co-owned, get the acknowledgement (an inbox item\
+  \ to the\n   other lane) before marking any roadmap leaf `done`;\n4. do not carve\
+  \ a new roadmap sub-leaf around what you just proved and mark it done in the\n \
+  \  same commit — that hides the delta between the leaf and the brick.\n\nInstance:\
+  \ 0048 r2 commit e47d57de1 (see I-0351). The proof itself was correct and\naxiom-clean;\
+  \ only the name and the `done` were wrong."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T16:27:47.312128+00:00'
+updated_at: '2026-07-25T16:27:47.312139+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0006-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
