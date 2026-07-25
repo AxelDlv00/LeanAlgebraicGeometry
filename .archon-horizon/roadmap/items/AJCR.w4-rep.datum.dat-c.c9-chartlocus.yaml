@@ -2,17 +2,19 @@ id: AJCR.w4-rep.datum.dat-c.c9-chartlocus
 title: 'C9 chartLocus: the sole gate of dat-b B-6 AND the whole dat-glue assembly'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'HIGHEST-LEVERAGE SINGLE ROW OUTSIDE DD-R (recorded 2026-07-25, run 0048
-  recon). `chartLocus` is referenced at Picard/Pic0SigmaSheaf.lean:162-164 and has
-  ZERO hits anywhere else in the tree — no definition, no producer, no consumer. Four
-  roadmap comments under dat-c describe the remainder as ''C9-gated plumbing, no math
-  left'', yet no Lean exists for the gate itself, so that assessment has never been
-  tested. This row gates dat-b B-6 and the entire dat-glue (Stacks 01JJ) assembly,
-  i.e. two of the six mountains on the path to Challenge.lean:99. It is also completely
-  independent of the DD-R certificate lane, so it can be run in parallel with it.
-  FIRST ACTION: read Pic0SigmaSheaf.lean:150-180, decide whether chartLocus is meant
-  to be an open subscheme of the Sigma-chart or a locus in the parameter space, and
-  write the definition plus the (f, hf) pair the consumers need.'
+summary: 'HIGHEST-LEVERAGE SINGLE ROW OUTSIDE DD-R (2026-07-25, run 0048). `chartLocus`
+  has ZERO code hits tree-wide — every occurrence is a doc comment, one of which (Picard/Pic0ChartLocusFibreField.lean:20)
+  literally calls it ''the still-undefined chartLocus''. ANCHOR CORRECTED: the earlier
+  pointer to Pic0SigmaSheaf.lean:162-164 was wrong; that string does not occur in
+  that file (lines 155-170 are pic0RepresentableByOfCharts). Start from the doc comments
+  in Pic0ChartLocusOpen.lean and Pic0ChartLocusFibreField.lean. Four roadmap comments
+  under dat-c call the remainder ''C9-gated plumbing, no math left'', yet no Lean
+  exists for the gate itself, so that assessment has never been tested. This row gates
+  dat-b B-6 AND the entire dat-glue (Stacks 01JJ) assembly — two of the six mountains
+  before Challenge.lean:99 — and it is completely independent of the DD-R certificate
+  lane, so it can run in parallel. FIRST ACTION: decide whether chartLocus is an open
+  subscheme of the Sigma-chart or a locus in the parameter space, then write the definition
+  plus the (f, hf) pair the consumers need.'
 status: pending
 kind: proof
 priority: urgent
@@ -35,3 +37,4 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c
+  updated_at: '2026-07-25T14:19:24.858013+00:00'

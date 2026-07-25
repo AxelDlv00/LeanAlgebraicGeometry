@@ -1,0 +1,45 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.pull-transport
+title: Pullback transport of the support locus (composability of the verdict with
+  the pointwise gate)
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'DONE (run 0047 r6, kernel-checked, in the default build). supportLocus_pullback
+  / unitLocus_pullback (Picard/DivSchemeCertZarTransport.lean): the support locus
+  of a PULLED system is the preimage of the support locus, both inclusions from stalkMap
+  being a LOCAL ring hom (so it preserves and reflects unit-ness), with germ_pullbackEqn_eq_stalkMap
+  supplying the germ identity.
+
+
+  WHY IT MATTERS. Every support / no-leak / clopen / chart-trace lemma of this lane
+  -- including the chart-confinement verdict of C1 and Conn -- is stated for a system
+  on relCurve C R, whereas the pointwise gate (isLocallyCertified_of_forall_prime_exists_certified_adaptation)
+  consumes the PULLED system over Localization.Away r. Without this transport none
+  of those results could be composed with the gate, and the lane''s ''pure composition''
+  claims were not actually available. It also makes precise why base shrinking cannot
+  evade the verdict: the support of the shrunken system is literally the preimage,
+  so a shrink deletes fibres rather than moving support points between charts.
+
+
+  Flagged by a fresh-context review as the missing hinge; landed the same session.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T14:20:52.286045+00:00'
+  provenance:
+    run: '0047'
+    session: 0014-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate

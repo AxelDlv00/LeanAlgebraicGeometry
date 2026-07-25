@@ -37,7 +37,17 @@ summary: "LANDED 2026-07-25 (run 0048), kernel-checked warning-free by lake env 
   \ NO leak-free adaptation, over any base, after any shrink.\n\nSO: IsCertified is\
   \ satisfiable for a connected divisor only if the divisor avoids pi^{-1}(0) or\n\
   pi^{-1}(infinity). Seven rounds were spent proving hypotheses of an interface whose\
-  \ satisfiability\nhad never been checked.\n"
+  \ satisfiability\nhad never been checked.\n\nPicard/DivSchemeCertZarC1.lean (commit\
+  \ 5651710d6) — THE KEYSTONE, closing Ground's I-0334.\n * IsAffineOpen.isClosed_zeroLocus_inter_of_finite_quotient\
+  \ — the converse of the abstract finiteness\n   engine: Module.Finite makes Spec(Gamma(V)/I)\
+  \ -> Spec R finite hence universally closed; it factors\n   through X and X -> Spec\
+  \ R is separated, so the first leg is universally closed\n   (UniversallyClosed.of_comp_of_isSeparated)\
+  \ and its range — the trace — is closed.\n * supportLeak_eq_empty_of_finite_colength\
+  \ / supportLeak_eq_empty_iff_finite_colength — clause (c1)\n   and leak-freeness\
+  \ are the SAME condition at a piece. This is the equivalence I-0209 asserted and\n\
+  \   nobody had proved.\n * supportLocus_subset_chart_of_isCertified — the verdict\
+  \ for IsCertified itself.\nAxioms of the keystone: exactly [propext, Classical.choice,\
+  \ Quot.sound].\n"
 status: done
 kind: proof
 priority: normal
@@ -61,8 +71,9 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
   owner: ajcr-w4-rep-free
-  updated_at: '2026-07-25T14:04:14.061897+00:00'
+  updated_at: '2026-07-25T14:19:51.901302+00:00'
   pinned_commits:
+  - 5651710d6
   - 40f357de8
   - '206967379'
   - 49866bdd1

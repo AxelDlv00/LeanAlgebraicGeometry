@@ -1,38 +1,37 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.cert-collapse
-title: 'Cert-collapse: (c2)/(c3)/(c4) — and the hinj wall — are free for a swallow-or-miss
+title: 'Cert-collapse: (c2)/(c3)/(c4) reduce to (c1)-projectivity + degree for a swallow-or-miss
   adaptation'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "THE SINGLE HIGHEST-VALUE EXPERIMENT IN THE LANE: show that clauses (c2)/(c3)/(c4)\
-  \ — and therefore\nthe hinj wall of away-kerspan — are FREE for a swallow-or-miss\
-  \ adaptation.\n\nWHY THIS SHOULD WORK. The lane has been certifying `(exists_divisorAdaptation\
-  \ ...).some`\n(ThetaGeneratorSeed.divisorAdaptation, Picard/DivSchemeFamily.lean:367)\
-  \ — an adaptation about which\nNOTHING is known, so every clause had to be proved\
-  \ for an arbitrary finite cover. The pointwise gate\naccepts ANY adaptation over\
-  \ the shrunken base, so choose one. For the swallow-or-miss shape:\n\n * every MISSING\
-  \ piece has a subsingleton colength AND subsingleton overlap colengths\n   (subsingleton_colength_of_disjoint_supportLocus,\n\
-  \   subsingleton_ovlColength_of_disjoint_supportLocus), so it contributes 0 to chartProd\
-  \ and to\n   ovlProd;\n * only the two SWALLOWING pieces survive, one per chart,\
-  \ and every overlap colength among them is\n   Gamma of the SAME divisor subscheme\
-  \ (the support is inside every one of those opens);\n * hence delta_left - delta_right\
-  \ is, up to the identifications, (a, b) |-> a - b, which is\n   SURJECTIVE onto\
-  \ the off-diagonal overlap components. Its kernel W(d) is the diagonal, so\n   W(d)\
-  \ iso colength, and coker(delta) is the diagonal part prod_j ovlColength j j iso\
-  \ prod_j\n   colength j plus one leftover copy — all finite projective by (c1),\
-  \ hence FLAT.\n\nSo (c2) reduces to (c1) plus the rank, (c3)/(c4) are flatness of\
-  \ finite projective modules, and\nhinj — provably equivalent to (c4) — is discharged\
-  \ by construction rather than by a fibrewise\nflatness argument over a nonreduced\
-  \ base. If this lands, away-kerspan is retired, not solved.\n\nTHE ONE TECHNICAL\
-  \ LEMMA NEEDED: colength is invariant under shrinking a piece to a smaller open\n\
-  that still contains the trace. Ring-level core: if V(g) cap V(h) = empty in a commutative\
-  \ ring then\nh is a UNIT mod (g) (from 1 in span{g, h}), so Gamma(V)/(g) iso Gamma(V)_h/(g)\
-  \ = Gamma(D(h))/(g)\nvia IsAffineOpen.isLocalization_basicOpen. Applied with g the\
-  \ piece equation and h cutting out the\nsmaller open, this identifies all the colength\
-  \ and overlap-colength modules of the swallowing\npieces. Watch the Opens-level\
-  \ `inf` bookkeeping (pieces i inf pieces j is not syntactically\nsymmetric).\n"
+summary: "CORRECTED 2026-07-25 AFTER REVIEW (work-reviewer, I-0340). The original\
+  \ claim on this leaf — that\n(c2)/(c3)/(c4) become FREE for a swallow-or-miss adaptation\
+  \ — is WRONG, and the reason is worth\nknowing before anyone re-derives it.\n\n\
+  WHY \"FREE\" IS FALSE. `A.toOvlLeft i i = A.toOvlRight i i` holds by `rfl` (proof\
+  \ irrelevance makes\ninf_le_left and inf_le_right the same proof at pieces i inf\
+  \ pieces i), so EVERY DIAGONAL COMPONENT of\ndeltaLeft - deltaRight is identically\
+  \ zero, for every adaptation. Hence coker(delta) always retains\nprod_i ovlColength\
+  \ i i iso prod_i colength i as a direct factor, and therefore\n\n  clause (c4) \
+  \ ==>  Module.Flat R (A.colength i) for every i.\n\n(c4) can never be discharged\
+  \ without flatness of the colengths. The off-diagonal image is the\nANTI-DIAGONAL\
+  \ {(c, -c)}, not the whole off-diagonal block, so one copy of the overlap colength\n\
+  survives in the cokernel too.\n\nTHE CORRECT, STILL-VALUABLE CLAIM. For a swallow-or-miss\
+  \ adaptation the surviving factors are\nexactly: the colengths themselves, and one\
+  \ leftover overlap colength isomorphic to them. All are\nfinite PROJECTIVE by (c1)\
+  \ once the fibrewise-regularity input is supplied\n(projective_colength_of_forall_tmul_residueField),\
+  \ hence flat. So\n\n  (c2)/(c3)/(c4) REDUCE TO (c1)-projectivity plus the constant-rank/degree\
+  \ input hdeg.\n\nThat is a genuine reduction — it removes the relative-flatness-over-a-nonreduced-base\
+  \ content that\naway-kerspan was stuck on — but it is a reduction, not a retirement.\
+  \ away-kerspan stays blocked\nrather than rejected for exactly this reason.\n\n\
+  THE ONE TECHNICAL LEMMA STILL NEEDED (unchanged): colength is invariant under shrinking\
+  \ a piece to a\nsmaller open that still contains the trace, so the colength and\
+  \ overlap-colength modules of the\nswallowing pieces are identified. Ring-level\
+  \ core: if V(g) cap V(h) = empty then h is a UNIT mod (g)\n(1 lies in span{g,h}),\
+  \ so Gamma(V)/(g) iso Gamma(V)_h/(g) = Gamma(D(h))/(g) via\nIsAffineOpen.isLocalization_basicOpen.\
+  \ Watch the Opens-level `inf` bookkeeping — pieces i inf pieces j\nis not syntactically\
+  \ symmetric in i and j.\n"
 status: pending
 kind: proof
-priority: urgent
+priority: high
 depends_on: []
 inbox_refs: []
 task_refs: []
@@ -52,3 +51,4 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
+  updated_at: '2026-07-25T14:19:23.980027+00:00'
