@@ -1,0 +1,49 @@
+id: I-0348
+provider: local
+kind: issue
+body: "BROKEN SOURCE: `Picard/Pic0ThetaCocycle.lean` does not parse — `pic0Theta_id`\
+  \ and `pic0Theta_comp` are NOT proved\n\n`AlgebraicJacobian/Picard/Pic0ThetaCocycle.lean:193-194`\
+  \ has a bare `by` on its own line inside an\nalready-open tactic block, followed\
+  \ by `exact rfl`:\n\n```\n  rw [picEtCrossBaseInv_val, picEtMap_val]\n  -- (25 lines\
+  \ of PLAN comments)\n  by\n    exact rfl\n```\n\n**`by` is a term, not a tactic**,\
+  \ so this is a syntax error. Reproduced on a minimal snippet\n(`lean_run_code`,\
+  \ run 0048 janitor pass): `unexpected token 'by'; expected command` plus\n`unsolved\
+  \ goals` on the enclosing theorem. The parser therefore aborts the tactic block\
+  \ at line\n193 and resumes at command level on a bogus token, so **the entire file\
+  \ fails to elaborate**:\n`pic0Theta_id` is left with unsolved goals and everything\
+  \ after it — including `pic0Theta_comp`\nand the whole `Cocycle` section — is not\
+  \ compiled at all.\n\n**Why nobody noticed.** The file is unreachable from `AlgebraicJacobian.lean`\
+  \ (no import\nanywhere; `grep` finds zero references outside the file itself), so\
+  \ `lake build` never touches\nit. This is exactly the trap recorded in `I-0324`.\n\
+  \n**What the record currently claims, and is wrong.**\n- The file docstring (`:45-48`)\
+  \ still says \"two `sorry`s\"; only one survives (`:268`), because the\n  first\
+  \ was replaced by this broken `by`/`exact rfl` rather than by a proof.\n- `I-0309`\
+  \ comment `C-0003` and workspace `roadmap.md` describe the file as merely *unwired*\
+  \ with\n  one open `sorry`. It is worse than unwired: it is unparseable, and the\
+  \ Leg-4 atom recorded as\n  proved in `I-0224` is not proved.\n\n**Action (not taken\
+  \ here — janitor does not edit Lean).** Either restore the `sorry` with the\ninline\
+  \ PLAN intact so the file is at least honest and elaborable, or finish the Leg-4\
+  \ scheme\nidentity and close it properly. Do not wire the file into the root until\
+  \ it elaborates."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T15:22:36.707996+00:00'
+updated_at: '2026-07-25T15:22:36.708008+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0004-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: janitor

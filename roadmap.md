@@ -16,7 +16,7 @@ migration debt.)*
 
 | Project | Stage | Open `sorry` |
 | --- | --- | --- |
-| Algebraic-Jacobian-Challenge-Rebuild | prover ✨ | 16 — 15 protected `Challenge.lean` targets + 1 in the unwired `Picard/Pic0ThetaCocycle.lean` lane (not imported from the root) |
+| Algebraic-Jacobian-Challenge-Rebuild | prover ✨ | 16 — 15 protected `Challenge.lean` targets + 1 in `Picard/Pic0ThetaCocycle.lean`, which is imported from nowhere and does **not** parse, so its two theta coherences are unproved (inbox `I-0348`) |
 | Algebraic-Jacobian-Challenge | prover | 24 *(grouped by the nested AJC roadmap below)* |
 | Cech-Cohomology | ✅ complete · merged → AJC | 0 |
 | GR-Quot-Closure | ✅ complete · merged → AJC | 0 |
@@ -64,9 +64,11 @@ functor (curve-specialized Kleiman, no Quot schemes), Albanese via Milne III.6.1
   Milne's; Euler-characteristic ledger complete.
 - [x] **Wave 3 — relative Picard functor** ✨ — cocycle `Ȟ¹(𝒪ˣ)` carrier, étale-plus construction.
 - [~] **Wave 4 — representability of `Pic⁰`** (active; `horizon roadmap list --focus AJCR.w4-rep`
-  is the authoritative breakdown — the live gate is the DD-R certificate lane, re-based 2026-07-25
-  on a chart-design condition: the divisor's support must avoid both vertical fibres of `π`, and the
-  adaptation must swallow or miss it)
+  is the authoritative breakdown — the live gate is the DD-R certificate lane. Settled 2026-07-25:
+  a certificate forces both pinned chart traces of the divisor closed, and the `Z(♦)` chart
+  provably does *not* arrange that — the counterexample is field-independent. So the lane is on a
+  coordinate twist of `π` (needs `Aut(ℙ¹)`, leaf `…certificate.p1-aut`), with one open question
+  over small finite fields, leaf `…certificate.field-size` / inbox `I-0346`)
 - [~] **Waves 5–7** — Pic⁰ abelian-variety package, Abel–Jacobi / Albanese, functoriality and
   base change of fields (each partly landed; see the structured roadmap)
 
@@ -112,8 +114,9 @@ establish the Albanese universal property. The structured roadmap command
     abelian-variety structure, the dimension theorem, and Albanese universality.
 - [~] **Maintenance and documentation**
   - [x] Optimize the Cech capstone and prune its unnecessary import chain.
+  - [x] Record controlled-clean and warm full-project build and warning baselines.
   - [ ] Continue bounded blueprint prose and formalization-pin audits.
-  - [ ] Establish a fresh full-project build and warning baseline.
+  - [ ] Reduce the remaining warning and resource-budget cones, especially Cech cold cost.
 
 ## Cech-Cohomology  *(✅ complete — deliverable merged sorry-free into AJC ✨ 2026-06-19; standalone fully green + sorry-free — the 16 v4.31-interim `sorry`s were closed and the full build (incl. the `CechToHigherDirectImage` capstone) verified 2026-07-03)*
 
