@@ -3,30 +3,44 @@ title: 'Tube-fibre: at one base prime, put the family support of the pointwise s
   system inside a single adaptation piece'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'GOAL REFUTED AS STATED, NEEDS REFORMULATION (run 0047 r6). The leaf asked
-  to ''put the family support of the pointwise seed system inside a SINGLE adaptation
-  piece''. That is impossible whenever a support point lies in the overlap V0 cap
-  V1 of the two pinned charts: both charts carry a partition of unity, so their pieces
-  cover their chart, and such a point lies in a chart-0 piece AND a chart-1 piece
-  -- two distinct support-meeting pieces, for every refinement of the cover. Proved
-  as DivisorAdaptation.not_exists_unique_support_piece and supportLocus_disjoint_chart_inter_of_separated
-  (Picard/DivSchemeCertZarSep.lean, kernel-checked). The degree-g seed divisor is
-  not fibre-confined, so it does meet the overlap in general.
+summary: 'REJECTED 2026-07-25 (run 0048) — SUPERSEDED, not merely refuted-as-stated.
 
 
-  WHAT SURVIVES. The landed machinery of this leaf is still correct and useful: exists_away_supportLocus_subset_of_fibre_subset
-  (DivSchemeCertZarTube.lean) spreads one-fibre containment in an OPEN U to a basic-open
-  neighbourhood, and forall_noLeak_of_forall_supportLocus_subset converts containment
-  into the assembler''s hnoLeak. What must NOT be asked of it is that U be a single
-  piece.
+  The goal ("put the support inside a SINGLE adaptation piece") was already refuted
+  in run 0047 r6
+
+  (not_exists_unique_support_piece, Picard/DivSchemeCertZarSep.lean:257). Run 0048
+  shows the intended
+
+  reformulation ("per-piece, for each j the fibre of the closure of the piece trace
+  stays in the
+
+  piece") is EQUIVALENT to a statement with no pieces in it at all: the chart traces
+
+  supportLocus cap V_b must be closed in the relative curve
+
+  (isClosed_supportLocus_inter_chart_of_forall_noLeak, Picard/DivSchemeCertZarChartTrace.lean).
+  So
+
+  there is nothing left for this leaf to own; the obligation lives in chart-avoid
+  and the production
+
+  rule in chart-trace / swallow-adapt.
 
 
-  REFORMULATION NEEDED: the assembler consumes hnoLeak PER PIECE (a fibrewise closure
-  clause for each j), not support-in-one-piece. So the honest goal is per-piece: for
-  each j, the fibre of the closure of the piece trace stays in the piece. That is
-  compatible with several support-meeting pieces and does not trigger the no-go. See
-  memory I-0323.'
-status: pending
+  WHAT SURVIVES AND IS STILL USED: exists_away_supportLocus_subset_of_fibre_subset
+  and
+
+  forall_noLeak_of_forall_supportLocus_subset (Picard/DivSchemeCertZarTube.lean) —
+  spreading one-fibre
+
+  containment in an OPEN to a basic-open base neighbourhood, and containment-to-hnoLeak.
+  They are
+
+  consumed by swallow-adapt with U the swallowing piece.
+
+  '
+status: rejected
 kind: proof
 priority: normal
 depends_on: []
@@ -48,4 +62,4 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-25T12:44:15.318082+00:00'
+  updated_at: '2026-07-25T13:56:17.586158+00:00'

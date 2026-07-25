@@ -1,0 +1,46 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.cert-assemble
+title: 'Cert-assemble: compose into isLocallyCertified/DivFamZar + the four missing
+  Away-transport bricks'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: "COMPOSE the new chain into the consumer predicate. Target, already landed\
+  \ and waiting:\n\n  isLocallyCertified_of_forall_prime_exists_certified_adaptation\n\
+  \  (Picard/DivSchemeCertZarPointwise.lean:162), and its DivFamZar packaging\n  divFamZar_of_forall_prime_away_certified\
+  \ (:181).\n\nINPUTS: chart-avoid + swallow-adapt give the adaptation and hnoLeak;\
+  \ cert-collapse gives\n(c2)/(c3)/(c4); hdeg is ALREADY PROVED\n(deg_presentationDivisor_pulledEquations_pointwiseGeneratorSeed,\n\
+  Picard/DivSchemeSeedUnivPulledDegree.lean:354) and hregular for the swallowing piece\
+  \ comes from\ndivisorAdaptation_fibre_regular's generic core.\n\nFOUR TRANSPORT\
+  \ BRICKS the away route still owes, all currently missing and all cheap (recon 0048):\n\
+  \ (1) Scheme.LocalEquations.supportLocus_pullback — the support of a pulled system\
+  \ is the preimage\n     of the support (ingredients landed: mem_unitLocus_iff_isUnit_germ,\
+  \ pullback_cover, pullback_eqn);\n (2) DivisorAdaptation.pullbackOfIsOpenImmersion\
+  \ — the existing pullback (DivisorFamilyMapAlg.lean:175)\n     is gated on a global\
+  \ projectivity clause used ONLY to supply the target system's `regular`\n     field,\
+  \ which an open immersion gives for free;\n (3) hregular / hovlFlat in seed-free\
+  \ form over an Away chart (only same-base versions exist,\n     DivSchemeAdaptationFibreRegular.lean:585,\
+  \ DivSchemeCertOverlapFinite.lean:244) — there is no\n     ThetaGeneratorSeed base\
+  \ change in the project;\n (4) hdeg base-changed to the Away chart.\nNote also:\
+  \ isCertified_of_noLeak_of_forall_liftQ_injective needs\n[IsNoetherianRing (Localization.Away\
+  \ r)] — confirm the instance fires.\n"
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T13:55:23.360965+00:00'
+  provenance:
+    run: 0048
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate

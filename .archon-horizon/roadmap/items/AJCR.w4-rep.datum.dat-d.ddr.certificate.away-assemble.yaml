@@ -3,10 +3,14 @@ title: 'Away-assemble: compose tube-fibre + away-kerspan + the landed degree-g t
   into isLocallyCertified_of_forall_prime_exists_certified_adaptation'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Pure composition once the two above land. hdeg is ALREADY PROVED: deg_presentationDivisor_pulledEquations_pointwiseGeneratorSeed
-  (DivSchemeSeedUnivPulledDegree.lean:354). Output: the DivFamZar class of the universal
-  seed system, which is what divRepPullAt / DivRepAffinePullback.pull consume.'
-status: pending
+summary: 'DONE AS WRITTEN, FRAMING SUPERSEDED (2026-07-25, run 0048). The composition
+  target this leaf named is fully proved: isLocallyCertified_of_forall_prime_exists_certified_adaptation
+  (Picard/DivSchemeCertZarPointwise.lean:162) with its DivFamZar packaging divFamZar_of_forall_prime_away_certified
+  (:181). Its two named inputs are both retired — tube-fibre is superseded by chart-avoid,
+  away-kerspan is blocked and likely an artifact — so nothing is left to compose here.
+  The genuine remaining composition, plus the four Away-transport bricks this leaf
+  never recorded, is the new leaf cert-assemble.'
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -28,3 +32,4 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
+  updated_at: '2026-07-25T14:04:14.968573+00:00'

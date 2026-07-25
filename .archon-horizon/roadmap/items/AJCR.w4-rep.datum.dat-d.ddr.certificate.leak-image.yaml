@@ -2,31 +2,53 @@ id: AJCR.w4-rep.datum.dat-d.ddr.certificate.leak-image
 title: No-leak inside the leak locus' base image (the reformulated tube-fibre obligation)
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "NEW LEAF, replacing the refuted one-piece shape of tube-fibre (run 0047\
-  \ r6).\n\nLANDED HALF (Picard/DivSchemeCertZarLeak.lean, kernel-checked, now in\
-  \ the default build):\nthe assembler's per-piece clause is emptiness of the leak\
-  \ locus supportLeak(pieces j) =\nclosure(supp cap pieces j) \\ pieces j. That locus\
-  \ is CLOSED, and under the properness licence its\nBASE IMAGE is closed (isClosed_image_supportLeak).\
-  \ Hence\n - exists_basicOpen_supportLeak_eq_empty: every base point OUTSIDE that\
-  \ image has a basic open over\n   which nothing leaks -- exactly the Localization.Away\
-  \ shape the pointwise gate consumes, with NO\n   fibre analysis whatsoever;\n -\
-  \ forall_fibre_closure_subset_of_supportLeak_inter_eq_empty: leak-freeness over\
-  \ a base open yields\n   the fibrewise closure clause there.\n\nREMAINING OBLIGATION,\
-  \ now sharply localized: the base points INSIDE the closed image\nf.base '' supportLeak(pieces\
-  \ j). The pointwise gate needs an away-certificate at EVERY prime p, so\nthose primes\
-  \ cannot simply be discarded. Two candidate routes:\n (a) show the image is empty\
-  \ for the pieces of the seed's extracted adaptation -- i.e. the support\n     trace\
-  \ on each piece is already closed, which is a statement about the seed's own geometry\n\
-  \     (the divisor scheme is finite over the base, so its trace should not accumulate\
-  \ outside a piece);\n (b) at a prime p inside the image, REFINE the adaptation over\
-  \ a neighbourhood of p so that the\n     refined pieces have empty leak there. Note\
-  \ the no-go of I-0323 does NOT block this: refinement\n     is allowed, only 'at\
-  \ most one support-meeting piece' is forbidden, and no-leak is a per-piece\n   \
-  \  condition compatible with several support-meeting pieces.\n\nRoute (a) is the\
-  \ more likely: leaks are support points outside the piece (supportLeak_subset_sdiff),\n\
-  and properness plus finiteness of the divisor scheme over the base is exactly what\
-  \ should preclude\nthem. Memory I-0323, I-0324."
-status: pending
+summary: 'REJECTED 2026-07-25 (run 0048) — both of its two candidate routes are settled,
+  in opposite ways.
+
+
+  Route (a) "show the leak image is empty for the seed''s pieces, i.e. the piece traces
+  are already
+
+  closed" IS CORRECT and is now the leaf chart-avoid: by
+
+  isClosed_supportLocus_inter_chart_of_forall_noLeak (Picard/DivSchemeCertZarChartTrace.lean)
+  the
+
+  per-piece statement is equivalent to closedness of the two CHART traces, which is
+  a property of the
+
+  system and the pinned charts alone.
+
+
+  Route (b) "at a prime inside the leak image, REFINE the adaptation over a neighbourhood"
+  IS DEAD.
+
+  Refinement cannot help: the chart-b pieces always cover V_b, so the union of their
+  traces is the
+
+  fixed set supportLocus cap V_b, and a finite union of closed sets is closed — a
+  finer cover only
+
+  imposes MORE closed-trace constraints on the same union. Shrinking the base does
+  not move the
+
+  condition either; it restates it over the smaller base.
+
+
+  THE LANDED HALF REMAINS VALID AND USEFUL: exists_basicOpen_supportLeak_eq_empty
+  (no-leak on the open
+
+  complement of the leak locus'' closed base image, with no fibre analysis) and
+
+  forall_fibre_closure_subset_of_supportLeak_inter_eq_empty, plus the clopen identification
+
+  isClopen_trace_of_supportLeak_eq_empty / supportLeak_eq_empty_of_isClopen_trace
+  which shows the
+
+  assembler clause IS I-0209''s Z-clopen principle. All in Picard/DivSchemeCertZarLeak.lean.
+
+  '
+status: rejected
 kind: proof
 priority: normal
 depends_on: []
@@ -48,3 +70,4 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
+  updated_at: '2026-07-25T13:56:18.473761+00:00'

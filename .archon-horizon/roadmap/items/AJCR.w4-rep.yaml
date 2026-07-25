@@ -2,13 +2,42 @@ id: AJCR.w4-rep
 title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Representability remains active. Nonreduced high-window flatness, the genuine
-  chart quotient, pointwise RD-N, the unconditional generator, adapted fibre regularity,
-  overlap finite/flat reductions, universal second-window containment, fibre-rank
-  reduction, seed-specific certificate assembly, and arbitrary fibre-point reindexing
-  are landed. The active certificate gate is no-leak, relative Cech-kernel spanning,
-  and pulled divisor degree g. The full epsilon inverse laws, divRep, universal family,
-  affine/global representability, and datum assembly remain downstream.
+summary: "THE CRITICAL PATH TO Challenge.lean:99, as re-audited 2026-07-25 (run 0048,\
+  \ seven parallel recon\nagents + a formal result in the certificate lane). Read\
+  \ this before choosing work in this subtree.\n\nTARGET: AlgebraicGeometry.Jacobian\
+  \ (Challenge.lean:96-99, a bare sorry). Its blueprint node\ndef:jacobian (Challenge.tex:34-40)\
+  \ has NO \\uses and NO \\leanok, and the only representability node in\nthe blueprint,\
+  \ def:pic0RepresentableByOfCharts (PicardEtale.tex:10678), is CONDITIONAL on a chart\n\
+  family that no blueprint node produces. The real design lives in ~40 informal/*.md\
+  \ docs\n(spec-w4-gates.md's \"corrected full map\" is the master plan) and is detailed,\
+  \ not sketched — but it\nis unreviewable as mathematics where it sits. The blueprint\
+  \ owes about five nodes: divRep, the\nSigma-charts, coverage/injectivity, the K_s\
+  \ -> k' transfer, and JacobianData existence.\n\nTHERE ARE SIX INDEPENDENT MOUNTAINS,\
+  \ not one. In dependency order:\n 1. ddr.certificate — re-based this session; see\
+  \ its own summary. NOT the last link.\n 2. ddr.divrep — DivRepAffinePullback (4\
+  \ fields) and DivRepGlobalData (5 fields) have ZERO producers\n    anywhere in the\
+  \ tree; no `def divRep` / `divRepAff` exists. Three of the four affine fields are\n\
+  \    pre-certificate launchable (the two inverse laws + naturality).\n 3. dat-c\
+  \ C9 — `chartLocus` (Pic0SigmaSheaf.lean:162-164) has ZERO hits tree-wide, yet four\
+  \ roadmap\n    comments call the remainder \"C9-gated plumbing, no math left\".\
+  \ It is the sole gate of dat-b B-6\n    AND of the whole dat-glue assembly: the\
+  \ highest-leverage single row outside DD-R.\n 4. dat-b, 5. dat-g (no spec, no worksheet,\
+  \ no Lean file, unfrozen handoff shape — the true\n    bottleneck), 6. dat-j.\n\
+  \ Plus DAT-G0.beta1 (pic0 commutes with the base-field filtered colimit), the ONE\
+  \ genuinely\n undesigned mathematical question of the endgame (spec-datg0.md §4.3\
+  \ probe, scheduled 6 days ago, no\n verdict recorded); and the I-0234 windowS budget\
+  \ strengthening b+2g -> b+3g, which is not a\n mathematical unknown but an unscheduled\
+  \ wide refactor gating G-4.\n\nCHEAPEST REAL ADVANCE OFF THE CERTIFICATE PATH: Pic0PreservesFilteredBaseColimit\n\
+  (PicRepColimitCompat.lean:136) — explicitly divRep-free, mathlib avatars pinned,\
+  \ reduction landed,\nnothing blocking it.\n\nTOOLING WARNING: do not steer this\
+  \ subtree from `graph frontier`. Its top items are \\lean{} name-drift\nartifacts\
+  \ (anonymous instances), the Rebuild cannot be graph-synced at all (I-0318, no\n\
+  hgraph/config.yaml), and the graph carries one comment in 8,024 nodes, so no failure\
+  \ history is\nrecoverable from it. Also: 95 modules (every DivRep*/HighWindow*/Redesign*\
+  \ file) sit outside lake's\ndefault target, and DivRepAffKitZar.lean has no olean\
+  \ at all — see the build-reach row.\n\nOPERATIONAL: run 0047 rounds 1-5 landed ZERO\
+  \ commits (2.9h, ~$206, 101-byte empty reports). The lane\nharness, not the mathematics,\
+  \ ate that run.\n"
 status: active
 kind: proof
 priority: normal
@@ -22,4 +51,4 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:10.654781+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-24T06:51:06.382287+00:00'
+  updated_at: '2026-07-25T13:56:55.112173+00:00'

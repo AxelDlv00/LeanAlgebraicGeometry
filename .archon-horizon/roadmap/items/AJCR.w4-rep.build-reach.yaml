@@ -1,0 +1,37 @@
+id: AJCR.w4-rep.build-reach
+title: 'Build reachability: 95 Picard modules sit outside lake''s default target'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'INTEGRITY ISSUE, not cosmetics (found 2026-07-25, run 0048 recon; partially
+  addressed by fd46fcf83 for the Zar cert chain). About 95 modules — every DivRep*,
+  HighWindow* and Redesign* file — are not reachable from lake''s default target,
+  and DivRepAffKitZar.lean has no olean at all. Consequences: (i) their proofs are
+  never kernel-checked by the configured final build, so a break there is invisible
+  until someone opens the file; (ii) I-0320''s claim that ''no consumer needs a global
+  certificate'' holds only modulo the UNBUILT DivRepAffKitZar — the root-reachable
+  divRepPullAt (DivRepAffKit.lean:92) still demands a full CertifiedDivisorFamily
+  over the chart ring. ACTION: add the missing imports to AlgebraicJacobian.lean in
+  dependency order and fix whatever the build then reports. Cheap, and it is what
+  makes the certificate relaxation actually load-bearing.'
+status: pending
+kind: workspace
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T13:57:13.959896+00:00'
+  provenance:
+    run: 0048
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep

@@ -1,0 +1,55 @@
+id: I-0327
+provider: local
+kind: memory
+body: "THE DD-R CERTIFICATE'S NO-LEAK CLAUSE IS A CHART-DESIGN CONDITION, NOT A FIBRE\
+  \ CONDITION\n(proved in Lean 2026-07-25, run 0048, commits 49866bdd1 + 206967379;\
+  \ standing constraint for the\ncertificate lane).\n\nTHE THEOREM. A FinCoverData\
+  \ carries a partition of unity on EACH pinned chart, so the chart-b pieces\ncover\
+  \ all of V_b and the union of their traces is the whole chart trace supportLocus\
+  \ cap V_b. A\nfinite union of closed sets is closed, hence\n\n  the assembler's\
+  \ hnoLeak at every piece  ==>  supportLocus cap V_0 and supportLocus cap V_1 are\n\
+  \  CLOSED in the relative curve.\n\n`DivisorAdaptation.isClosed_supportLocus_inter_chart_of_forall_noLeak`\n\
+  (Picard/DivSchemeCertZarChartTrace.lean). The conclusion mentions neither the adaptation\
+  \ nor its\npieces — only the system and the two pinned charts.\n\nFOUR CONSEQUENCES,\
+  \ all binding:\n1. REFINING THE COVER CANNOT HELP. The union of the piece traces\
+  \ is the fixed set supportLocus cap\n   V_b; a finer cover only imposes MORE closed-trace\
+  \ constraints on the same union. So roadmap leaf\n   leak-image route (b) (\"refine\
+  \ the adaptation near a bad prime\") is DEAD, and so is any\n   support-tube / packet-idempotent\
+  \ scheme aimed at producing hnoLeak piece by piece.\n2. SHRINKING THE BASE CANNOT\
+  \ HELP EITHER, except by restating the same condition over the smaller\n   base.\
+  \ The pointwise gate's freedom is real but it buys a different thing (see 4).\n\
+  3. THE OBLIGATION IS: the chart's divisors avoid both vertical fibres of pi, i.e.\n\
+  \   supportLocus subset V_0 cap V_1. It is FALSE for a general degree-g divisor\
+  \ — model:\n   V(t x^2 + x y + t y^2) in P^1 over k[t] has a DOMAIN section ring\
+  \ (no nontrivial idempotent after\n   any base shrink) and fibre {0, infinity} at\
+  \ t = 0, so no adaptation of it can ever be certified.\n   The DD-R atlas must arrange\
+  \ the avoidance. Roadmap leaf ...certificate.chart-avoid.\n4. THE POSITIVE SHAPE\
+  \ IS \"SWALLOW OR MISS\": if every piece either contains the whole support or\n\
+  \   misses it, hnoLeak and clause (c1) follow with no fibre analysis, and a missing\
+  \ piece has a UNIT\n   equation so its colength VANISHES (Picard/DivSchemeCertZarSwallow.lean).\
+  \ The pointwise gate\n   `isLocallyCertified_of_forall_prime_exists_certified_adaptation`\
+  \ accepts ANY adaptation over the\n   shrunken base — so CONSTRUCT this one instead\
+  \ of certifying\n   `(exists_divisorAdaptation ...).some`.\n\nRULE: before proving\
+  \ a clause of `IsCertified`, ask which adaptation you are proving it FOR. Seven\n\
+  sessions were spent proving clauses for `ThetaGeneratorSeed.divisorAdaptation`\n\
+  (= `.some`, DivSchemeFamily.lean:367), about which nothing is known. See also [[I-0209]]'s\
+  \ Z-clopen\nprinciple, which this theorem identifies with the chart traces."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-25T13:58:20.790351+00:00'
+updated_at: '2026-07-25T13:58:20.790361+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild

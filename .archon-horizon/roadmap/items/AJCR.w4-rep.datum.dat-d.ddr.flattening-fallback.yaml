@@ -2,12 +2,24 @@ id: AJCR.w4-rep.datum.dat-d.ddr.flattening-fallback
 title: 'DD-R fallback: universal flattening strata or the affine Hilbert algebra chart'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: NOT NEEDED. The direct relative Koszul/Gotzmann route now proves all-stage
-  finite projectivity and flatness over arbitrary nonreduced carve rings, so no universal
-  flattening-stratum or affine Hilbert-chart rebuild is required.
-status: rejected
+summary: 'REJECTION REOPENED (2026-07-25, run 0048) — the recorded rejection rationale
+  was checked and is factually wrong, and the rejection predates the route change
+  that created the obligation it was rejected against. It was rejected 2026-07-23T18:32
+  with an EMPTY note, two days before the 2026-07-25 relaxation to IsLocallyCertified;
+  and its summary''s claim that ''the direct relative Koszul/Gotzmann route now proves
+  all-stage finite projectivity and flatness over arbitrary nonreduced carve rings''
+  does not hold as stated. Keep it PENDING but LOW: it is the fallback if ...certificate.cert-collapse
+  fails. Concrete cheapest experiment, no port needed: the original project''s flatLocusStratification_universal
+  has a sorry-free 28-module cone, and its commutative-algebra heart Picard/EntryIdeal.lean
+  is ALREADY in this tree BYTE-IDENTICAL (md5 38f377594a7225c6cd6fdb2d889d9e8a, 634
+  lines, imports Mathlib only) as an UNWIRED ORPHAN — landed run 0042, imported by
+  nothing, alongside DivSchemeFlatteningBridge.lean. Wire it into the root (one line)
+  and try to derive ''over R_g/entryIdeal the cokernel of A.deltaLeft - A.deltaRight
+  is free of rank n'' from entryIdeal_le_prime_iff + relMatrix_eq_zero_of_flat + exists_matrixPresentation_of_isLocalizedModule.
+  If that lands, clause (c4) is free by construction on the carved stratum.'
+status: pending
 kind: proof
-priority: normal
+priority: low
 depends_on: []
 inbox_refs: []
 task_refs: []
@@ -27,4 +39,4 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-23T18:32:58.613894+00:00'
+  updated_at: '2026-07-25T14:04:46.022679+00:00'

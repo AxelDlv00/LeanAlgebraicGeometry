@@ -1,0 +1,55 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.chart-avoid
+title: 'Chart-avoid: is the DD-R chart''s divisor confined to ONE pinned chart? (lemma,
+  carve, or redesign)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: "THE GEOMETRIC INPUT OF THE CERTIFICATE — and by Picard/DivSchemeCertZarConn.lean\
+  \ (commit 40f357de8)\nnow known to be NECESSARY AND SUFFICIENT for a connected divisor,\
+  \ not merely convenient.\n\nTHE VERDICT THAT CREATED THIS LEAF. supportLocus_subset_chart_of_isPreconnected:\
+  \ if the support is\npreconnected and the adaptation is leak-free at every piece\
+  \ (which certificate clause (c1) forces),\nthen supportLocus subset V_0 OR supportLocus\
+  \ subset V_1. Contrapositive: a connected divisor meeting\nboth pi^{-1}(0) and pi^{-1}(infinity)\
+  \ admits NO leak-free adaptation, over any base, after any\nshrink. Base localization\
+  \ does not disconnect the divisor\n(Spec R[x]/(x^2 - t) over k[t] is connected over\
+  \ every basic open of Spec R), so this cannot be\nlocalized away.\n\nTHE GOAL, therefore:\
+  \ show that the DD-R chart's divisors are chart-confined, i.e. for the pointwise\n\
+  seed system over a Localization.Away chart around an arbitrary base prime,\n\n \
+  \ (D.localEquations hD).supportLocus subset ((relCover C R (fiberTwoCover pi)).V_0\
+  \ : Set _)\n  (or the V_1 twin; V_0 cap V_1 is the comfortable case, and is what\
+  \ makes the two-piece adaptation\n   of swallow-adapt work in both charts at once).\n\
+  \nWHERE TO LOOK FIRST. spec-dd-r.md ADDENDUM 1 asserts \"the universal family of\
+  \ DDR-3/4 is honestly\ncertified over each Z(diamond)-chart ring\". If that is true,\
+  \ the chart ALREADY confines its divisors\nand this leaf is a bookkeeping lemma;\
+  \ if it is not, the DD-R atlas needs the avoidance added as a\ncarve condition (an\
+  \ open condition, so a carve is legitimate) — or IsCertified/DivFamZar must be\n\
+  redesigned, because a functor that cannot see chart-crossing divisors is not the\
+  \ divisor functor.\nCandidates to read: Pic0ChartLocusOpen.lean, Pic0ChartLocusFibreField.lean\
+  \ (whose docstring at :20\nmentions \"the still-undefined chartLocus\"), DivSchemeEpsCarve*.lean,\
+  \ DivSchemeAtlasFactor.lean.\nThe theta side is the tractable half: K subset H^0(Theta^a)\
+  \ with Theta = pi^{-1}(infinity), and a\ngenerator of exact pole order a has no\
+  \ zero on Theta, so supportLocus cap pi^{-1}(infinity) = empty\nshould follow from\
+  \ the seed's own exactness data.\n\nTHIS IS THE DECISION POINT OF THE WHOLE LANE:\
+  \ lemma, carve, or redesign.\n"
+status: pending
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T13:55:20.364243+00:00'
+  provenance:
+    run: 0048
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
+  updated_at: '2026-07-25T14:04:45.001575+00:00'

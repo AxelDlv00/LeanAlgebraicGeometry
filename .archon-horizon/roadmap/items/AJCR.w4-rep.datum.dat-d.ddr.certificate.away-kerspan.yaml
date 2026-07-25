@@ -1,19 +1,77 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.away-kerspan
-title: 'Away-kerspan: the relative Cech-kernel spanning submodule L over an Away localization'
+title: 'Away-kerspan / hinj = certificate clause (c4): blocked, and likely an artifact
+  of the .some adaptation'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'SUBMODULE ELIMINATED (commit 983730622, Picard/DivSchemeCertZarKerSpan.lean,
-  kernel-checked). Both assemblers now read with NO submodule argument: isCertified_of_noLeak_of_forall_liftQ_injective
-  and divisorAdaptation_isCertified_of_noLeak_liftQ_degree take the actual kernel
-  of the Cech difference, so hle is le_rfl and hspan becomes residue-fibre injectivity
-  of the injectivized map. REMAINING (genuine relative geometry, not evadable): that
-  injectivity at each prime of the Away chart. Note divUniversalHighWindowKernelSyzygySpans_iff
-  (DivSchemeHighWindowSyzygy.lean) proves the condition equivalent to the flat-cokernel
-  clause, so a cleverer L cannot help; use the Koszul/relation machinery over the
-  shrunken base.'
-status: pending
+summary: 'BLOCKED / LIKELY AN ARTIFACT — do not grind it before cert-collapse is tried
+  (2026-07-25, run 0048).
+
+
+  STATUS OF THE MATHEMATICS. hinj (residue-fibre injectivity of the injectivized Cech
+  difference,
+
+  Picard/DivSchemeCertZarKerSpan.lean:63,123) is not a decomposition of the certificate:
+  it is
+
+  PROVABLY EQUIVALENT to clause (c4) itself, Module.Flat R (ovlProd / range (deltaLeft
+  - deltaRight)),
+
+  via ker_rTensor_le_range_subtype_iff_liftQ_rTensor_injective (DivSchemeHighWindowSyzygy.lean:56)
+  plus
+
+  SlicingFlatKernel.lean. Two landed no-gos fence it: a cleverer submodule L cannot
+  help (the L-free
+
+  form is already the general one), and support-separated pieces cannot help
+
+  (DivSchemeCertZarSep.lean:201/:257). Over a field it is free (every module is projective,
+
+  DivisorFamilyFieldSurj.lean); over a nonreduced base the escape is unavailable.
+
+
+  WHY IT IS PROBABLY AN ARTIFACT. Every attempt so far certified
+
+  ThetaGeneratorSeed.divisorAdaptation = (exists_divisorAdaptation ...).some
+
+  (Picard/DivSchemeFamily.lean:367) — an adaptation about which nothing whatsoever
+  is known, so (c4)
+
+  had to be proved for an arbitrary finite cover, where it is a genuine relative-flatness
+  statement.
+
+  The pointwise gate accepts ANY adaptation over the shrunken base. For the swallow-or-miss
+  adaptation
+
+  of swallow-adapt only two pieces have nonzero colength and the Cech difference is
+  surjective onto the
+
+  off-diagonal overlaps, so its cokernel is a product of finite projective modules
+  and (c4) is free.
+
+  See cert-collapse for the argument and the one technical lemma it needs.
+
+
+  IF cert-collapse FAILS, the fallback lead is the flattening route: the original
+  project''s
+
+  flatLocusStratification_universal has a sorry-free 28-module cone, and its commutative-algebra
+  heart
+
+  Picard/EntryIdeal.lean is ALREADY present byte-identical in this tree as an UNWIRED
+  ORPHAN (landed
+
+  run 0042, never imported), alongside DivSchemeFlatteningBridge.lean. ddr.flattening-fallback
+  was
+
+  rejected on 2026-07-23 with an EMPTY note, two days before the route change that
+  created this
+
+  obligation; that rejection should be revisited rather than inherited.
+
+  '
+status: blocked
 kind: proof
-priority: normal
+priority: low
 depends_on: []
 inbox_refs: []
 task_refs: []
@@ -33,4 +91,4 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-25T07:34:18.749796+00:00'
+  updated_at: '2026-07-25T13:56:20.198460+00:00'

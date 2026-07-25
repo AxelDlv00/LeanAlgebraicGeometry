@@ -1,0 +1,54 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.cert-collapse
+title: 'Cert-collapse: (c2)/(c3)/(c4) — and the hinj wall — are free for a swallow-or-miss
+  adaptation'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: "THE SINGLE HIGHEST-VALUE EXPERIMENT IN THE LANE: show that clauses (c2)/(c3)/(c4)\
+  \ — and therefore\nthe hinj wall of away-kerspan — are FREE for a swallow-or-miss\
+  \ adaptation.\n\nWHY THIS SHOULD WORK. The lane has been certifying `(exists_divisorAdaptation\
+  \ ...).some`\n(ThetaGeneratorSeed.divisorAdaptation, Picard/DivSchemeFamily.lean:367)\
+  \ — an adaptation about which\nNOTHING is known, so every clause had to be proved\
+  \ for an arbitrary finite cover. The pointwise gate\naccepts ANY adaptation over\
+  \ the shrunken base, so choose one. For the swallow-or-miss shape:\n\n * every MISSING\
+  \ piece has a subsingleton colength AND subsingleton overlap colengths\n   (subsingleton_colength_of_disjoint_supportLocus,\n\
+  \   subsingleton_ovlColength_of_disjoint_supportLocus), so it contributes 0 to chartProd\
+  \ and to\n   ovlProd;\n * only the two SWALLOWING pieces survive, one per chart,\
+  \ and every overlap colength among them is\n   Gamma of the SAME divisor subscheme\
+  \ (the support is inside every one of those opens);\n * hence delta_left - delta_right\
+  \ is, up to the identifications, (a, b) |-> a - b, which is\n   SURJECTIVE onto\
+  \ the off-diagonal overlap components. Its kernel W(d) is the diagonal, so\n   W(d)\
+  \ iso colength, and coker(delta) is the diagonal part prod_j ovlColength j j iso\
+  \ prod_j\n   colength j plus one leftover copy — all finite projective by (c1),\
+  \ hence FLAT.\n\nSo (c2) reduces to (c1) plus the rank, (c3)/(c4) are flatness of\
+  \ finite projective modules, and\nhinj — provably equivalent to (c4) — is discharged\
+  \ by construction rather than by a fibrewise\nflatness argument over a nonreduced\
+  \ base. If this lands, away-kerspan is retired, not solved.\n\nTHE ONE TECHNICAL\
+  \ LEMMA NEEDED: colength is invariant under shrinking a piece to a smaller open\n\
+  that still contains the trace. Ring-level core: if V(g) cap V(h) = empty in a commutative\
+  \ ring then\nh is a UNIT mod (g) (from 1 in span{g, h}), so Gamma(V)/(g) iso Gamma(V)_h/(g)\
+  \ = Gamma(D(h))/(g)\nvia IsAffineOpen.isLocalization_basicOpen. Applied with g the\
+  \ piece equation and h cutting out the\nsmaller open, this identifies all the colength\
+  \ and overlap-colength modules of the swallowing\npieces. Watch the Opens-level\
+  \ `inf` bookkeeping (pieces i inf pieces j is not syntactically\nsymmetric).\n"
+status: pending
+kind: proof
+priority: urgent
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T13:55:22.254948+00:00'
+  provenance:
+    run: 0048
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate

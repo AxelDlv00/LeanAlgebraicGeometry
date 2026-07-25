@@ -3,13 +3,17 @@ title: 'DD-R quotient bridge: genuine chart quotient as the shifted colimit with
   flatness'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'PARTLY LANDED. DivSchemeHighWindowQuotientBridge instantiates all-stage
-  flatness in the saturated shifted-colimit consumer and proves the genuine chart
-  quotient B/chartReadIdeal(seedK) flat on both pinned charts. Remaining if required
-  by downstream geometry: export the concrete direct-limit equivalence, prove finite
-  presentation, and identify chartReadIdeal under arbitrary base change; none is needed
-  for the landed pointwise RD-N consumer.'
-status: pending
+summary: 'DONE / OFF-PATH (re-audited 2026-07-25). DivSchemeHighWindowQuotientBridge
+  instantiates all-stage flatness in the saturated shifted-colimit consumer and proves
+  the genuine chart quotient B/chartReadIdeal(seedK) flat on both pinned charts —
+  everything the landed pointwise RD-N consumer needs. The three residual items its
+  own summary listed (concrete direct-limit equivalence, finite presentation, chartReadIdeal
+  under arbitrary base change) are explicitly ''not needed for the landed pointwise
+  RD-N consumer''; reopen only if a downstream consumer actually asks. Cross-project
+  note: GR-Quot-Closure proved Grassmannian representability, NOT quotient existence,
+  so it is not an input here, and cross-project import is impossible anyway (no require
+  in the lakefile).'
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -31,4 +35,4 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-23T18:33:27.137891+00:00'
+  updated_at: '2026-07-25T13:56:55.967694+00:00'

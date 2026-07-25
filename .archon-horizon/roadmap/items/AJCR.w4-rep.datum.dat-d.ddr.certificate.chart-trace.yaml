@@ -1,0 +1,68 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.chart-trace
+title: 'Chart-trace + satisfiability verdict: no-leak forces closed chart traces;
+  a connected divisor must sit in ONE chart'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: "LANDED 2026-07-25 (run 0048), kernel-checked warning-free by lake env lean,\
+  \ both files in the\ndefault build.\n\nPicard/DivSchemeCertZarChartTrace.lean (commit\
+  \ 49866bdd1) — THE NECESSITY.\n * supportLocus_inter_chart0_eq_iUnion / _chart1_\
+  \ : the chart trace IS the finite union of the\n   chart's piece traces (cover0/cover1\
+  \ one way, Scheme.basicOpen_le the other).\n * isClosed_supportLocus_inter_chart0_of_forall_supportLeak_eq_empty\
+  \ (+ chart-1 twin), and the\n   assembler-shaped isClosed_supportLocus_inter_chart_of_forall_noLeak:\
+  \ the hnoLeak hypothesis of\n   isCertified_of_noLeak_kernel_spanning forces BOTH\
+  \ chart traces closed in the relative curve.\n * not_forall_noLeak_of_not_isClosed_chart0\
+  \ / _chart1 : contrapositive — a system whose chart trace\n   is not closed admits\
+  \ NO adaptation satisfying the assembler's clause.\n\nPicard/DivSchemeCertZarSwallow.lean\
+  \ (commit 206967379) — THE SUFFICIENCY.\n * subsingleton_colength_of_disjoint_supportLocus\
+  \ : a piece missing the support has a UNIT equation,\n   so its colength module\
+  \ vanishes (the colength companion of the landed overlap version).\n * supportLeak_eq_empty_of_subset_or_disjoint\
+  \ and forall_noLeak_of_forall_subset_or_disjoint :\n   swallow-or-miss gives the\
+  \ assembler's hnoLeak with no fibre, tube or idempotent.\n * forall_finite_colength_of_forall_subset_or_disjoint\
+  \ : clause (c1)-finite at every piece.\n * subset_chart0_or_disjoint_chart0 / _chart1_\
+  \ : the dichotomy the shape imposes on the divisor.\n\nWHAT IT SETTLES. The lane's\
+  \ obligation is chart-trace closedness, a property of the system and the\ntwo pinned\
+  \ charts alone. Refining the cover cannot help (it adds constraints while the union\
+  \ of the\ntraces is fixed), so leak-image route (b) is dead; and the tube/idempotent\
+  \ machinery cannot\nmanufacture it, so leak-image route (a) is exactly chart-avoid.\
+  \ The lane is therefore a chart-design\nproblem, not a fibre-analysis problem.\n\
+  \nPicard/DivSchemeCertZarConn.lean (commit 40f357de8) — THE SATISFIABILITY VERDICT.\n\
+  \ * subset_or_disjoint_of_isPreconnected_of_supportLeak : leak-freeness makes the\
+  \ piece trace CLOSED\n   and the piece is OPEN, so the trace is clopen in the support;\
+  \ a preconnected support forces it\n   empty or total. Swallow-or-miss is therefore\
+  \ not an extra hypothesis for a connected divisor —\n   it is what leak-freeness\
+  \ already says.\n * supportLocus_subset_chart_of_isPreconnected : IsPreconnected\
+  \ supportLocus plus leak-freeness at\n   every piece implies supportLocus subset\
+  \ V_0 OR supportLocus subset V_1. No nonemptiness needed.\n * not_forall_supportLeak_eq_empty_of_isPreconnected\
+  \ : contrapositive — a connected divisor confined\n   to neither pinned chart admits\
+  \ NO leak-free adaptation, over any base, after any shrink.\n\nSO: IsCertified is\
+  \ satisfiable for a connected divisor only if the divisor avoids pi^{-1}(0) or\n\
+  pi^{-1}(infinity). Seven rounds were spent proving hypotheses of an interface whose\
+  \ satisfiability\nhad never been checked.\n"
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T13:55:18.655337+00:00'
+  provenance:
+    run: 0048
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
+  owner: ajcr-w4-rep-free
+  updated_at: '2026-07-25T14:04:14.061897+00:00'
+  pinned_commits:
+  - 40f357de8
+  - '206967379'
+  - 49866bdd1

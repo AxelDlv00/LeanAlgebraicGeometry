@@ -3,16 +3,36 @@ title: 'DD-R certificate: inherited certificate, epsilon projection, U1/U2, and 
   laws'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'ROUTE CHANGED (2026-07-25). The gate is no longer a global certificate over
-  the chart ring. Consumers (DivFamZar, divRepPullAt, DivRepAffinePullback.pull, divRepClassifyZar)
-  need only IsLocallyCertified, so the certificate may be produced one base prime
-  at a time over a Localization.Away chart -- with the adaptation free by extraction.
-  zar-gate is LANDED and kernel-checked (the relaxation, the pointwise gate via quasi-compactness,
-  the Away-form support tube, and no-leak from support containment). The degree input
-  hdeg is also already proved. What remains is exactly: tube-fibre (put the support
-  fibre at one prime inside one piece), away-kerspan (the Cech-kernel spanning submodule
-  over the Away chart), away-assemble (composition). The old I-0209 obstruction blocks
-  only the abandoned global clause.'
+summary: "ROUTE RE-BASED (2026-07-25, run 0048) — the lane's gate is now a single\
+  \ geometric statement\nabout the divisor, and it is PROVED to be irreducible.\n\n\
+  THE NECESSITY (landed, kernel-checked, commit 49866bdd1, Picard/DivSchemeCertZarChartTrace.lean).\n\
+  A FinCoverData carries a partition of unity on each pinned chart, so the chart-b\
+  \ pieces cover\nALL of V_b and the union of their traces is the whole chart trace\
+  \ supportLocus cap V_b. A finite\nunion of closed sets is closed, hence\n\n  the\
+  \ assembler's hnoLeak at every piece  ==>  supportLocus cap V_0 and supportLocus\
+  \ cap V_1 are\n  CLOSED in the relative curve\n\n(isClosed_supportLocus_inter_chart_of_forall_noLeak).\
+  \ That mentions neither the adaptation nor its\npieces. Contrapositive not_forall_noLeak_of_not_isClosed_chart0:\
+  \ a system whose chart trace is not\nclosed admits NO adaptation satisfying the\
+  \ assembler's hypothesis. So refining the cover can only\nadd constraints, and shrinking\
+  \ the base only re-states the same condition over the smaller base.\n\nTHE SUFFICIENCY\
+  \ (landed, commit 206967379, Picard/DivSchemeCertZarSwallow.lean). If every piece\n\
+  either SWALLOWS the support (supportLocus subset pieces j) or MISSES it, then no-leak\
+  \ holds at every\npiece and clause (c1)-finite follows, with no fibre, no tube and\
+  \ no packet idempotent. A missing\npiece has a UNIT equation, so its colength module\
+  \ VANISHES\n(subsingleton_colength_of_disjoint_supportLocus) and needs no fibrewise\
+  \ regularity input either.\nThe two dichotomy theorems pin the shape: a swallow-or-miss\
+  \ adaptation exists only for a divisor\ninside a pinned chart or disjoint from it,\
+  \ so (V_0 sup V_1 = top) a nonempty support lies in\nV_0 cap V_1 — the divisor avoids\
+  \ BOTH vertical fibres of pi — or is confined to one of them.\n\nCONSEQUENCE FOR\
+  \ THE OLD LEAVES. tube-fibre and leak-image are both superseded: their common\n\
+  obligation is exactly chart-trace closedness, which is a CHART-DESIGN input, not\
+  \ something the\nsupport tube / idempotent packets / base shrinking can manufacture.\
+  \ away-kerspan (hinj) is\nsuspected to be an ARTIFACT of certifying the arbitrary\
+  \ `.some` extraction adaptation: for a\nswallow-or-miss adaptation the Cech complex\
+  \ has at most one nontrivial piece per chart and its\ndifference map is surjective\
+  \ onto the off-diagonal overlaps, so (c3)/(c4) should be free — see the\nnew cert-collapse\
+  \ leaf. That is the single highest-value experiment in the lane.\n\nTHE NEW CHAIN:\
+  \ chart-avoid -> swallow-adapt -> cert-collapse -> cert-assemble.\n"
 status: active
 kind: proof
 priority: normal
@@ -35,7 +55,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-25T07:18:45.074262+00:00'
+  updated_at: '2026-07-25T13:55:19.510811+00:00'
   pinned_commits:
   - c843eafd7
   - 359c0a38d

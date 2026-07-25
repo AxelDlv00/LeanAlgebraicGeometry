@@ -1,0 +1,50 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.swallow-adapt
+title: 'Swallow-adapt: build the 2-piece-per-chart adaptation (swallowing piece +
+  comaximal complement)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: "CONSTRUCT the swallow-or-miss adaptation, i.e. produce the input of\nDivisorAdaptation.forall_noLeak_of_forall_subset_or_disjoint\
+  \ (Picard/DivSchemeCertZarSwallow.lean).\nReplaces away-assemble's \"compose tube-fibre\"\
+  \ framing.\n\nSHAPE (2 pieces per chart, m_0 = m_1 = 2):\n (1) the SWALLOWING piece\
+  \ D(h_b) of chart b, with supportLocus subset D(h_b) and a single equation\n   \
+  \  f_b in Gamma(D(h_b)) cutting d there;\n (2) the COMPLEMENTARY piece D(s_b) with\
+  \ Disjoint supportLocus D(s_b) and equation 1 — its eqn_rel\n     clause is free\
+  \ because d's equation is a unit off the support, and its colength VANISHES.\n\n\
+  THE TWO HONEST INPUTS:\n (a) chart-avoid, which gives supportLocus subset V_b so\
+  \ that a swallowing piece can exist at all;\n (b) A GLOBAL GENERATOR NEAR THE SUPPORT:\
+  \ some psi in K whose divisor agrees with d on a\n     neighbourhood of supportLocus.\
+  \ A theta section has exactly two chart components\n     (relThetaResSide a b),\
+  \ so psi supplies f_0 and f_1 simultaneously. div(psi) = d + E with E\n     disjoint\
+  \ from the support, so W := relCurve \\ supp(E) is an open containing supportLocus\
+  \ on\n     which psi cuts d.\n\nTHE COMAXIMALITY STEP (elementary, no new geometry):\
+  \ supportLocus and V_b \\ W are disjoint closed\nsubsets of the AFFINE V_b, so their\
+  \ ideals in Gamma(V_b) are comaximal: sigma + tau = 1 with sigma\nvanishing on the\
+  \ support and tau on V_b \\ W. Then h_b := tau gives supportLocus subset D(h_b)\n\
+  subset W, s_b := sigma gives Disjoint supportLocus D(s_b), and span{h_b, s_b} =\
+  \ top is the required\npartition of unity. Base shrinking is licensed throughout\
+  \ by the pointwise gate\nisLocallyCertified_of_forall_prime_exists_certified_adaptation.\n\
+  \nSpreading-out remark for (b): a line bundle trivial on the (finite over the base,\
+  \ hence semilocal\nafter localizing) divisor scheme is trivial after a Zariski shrink\
+  \ of the base, which is exactly the\nfreedom the pointwise gate provides.\n"
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-25T13:55:21.331586+00:00'
+  provenance:
+    run: 0048
+    session: 0002-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
