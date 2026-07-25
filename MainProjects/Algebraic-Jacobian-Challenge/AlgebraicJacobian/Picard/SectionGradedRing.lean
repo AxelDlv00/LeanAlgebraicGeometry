@@ -2558,7 +2558,6 @@ private lemma tensorObjAssoc_associator_counit_coherence
 -- concrete coherence term. Keep the depth increase local to this declaration.
 set_option backward.isDefEq.respectTransparency false in
 set_option maxRecDepth 4000 in
-set_option backward.isDefEq.respectTransparency false in
 /-- **Sheaf-level factorization of the associator** (the `X.Modules`-internal core of
 `lem:tensorObjAssoc_eta_factor`).  As morphisms of *sheaves* of modules, the sheafified
 right-whiskered unit composed with `tensorObjAssoc` equals the sheafified presheaf associator
@@ -4245,7 +4244,9 @@ private lemma moduleSectionsCast_sectionsCast (F L : X.Modules) {i j : ℕ} (h�
   rw [Subsingleton.elim h₂ rfl]
   simp only [moduleSectionsCast_refl, LinearEquiv.refl_apply]
 
-set_option maxRecDepth 4000 in
+-- The dependent `congrArg` result below normalizes a threefold tensor comparison through the
+-- localized monoidal instance; this exceeds the default recursion depth during elaboration.
+set_option maxRecDepth 1000 in
 /-- **Compatibility of the graded module action** (`lem:moduleSectionAction_coherent`, compatibility
 clause): transporting `(r·r')⋆x` along `(i+j)+k = i+(j+k)` gives `r⋆(r'⋆x)`.  Module analogue of
 `sectionsMul_mul_assoc` (B7): the same three-slide assembly with the action comparison `a` replacing
@@ -4285,7 +4286,6 @@ theorem moduleSectionAction_mul_smul (F L : X.Modules) {i j k : ℕ}
             ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] x)))
     (moduleTensorPowAdd_assoc F L i j k)
 
-set_option maxRecDepth 4000 in
 /-- **Unitality of the graded module action** (`lem:moduleSectionAction_coherent`, unitality
 clause): transporting `1 ⋆ x` along `0 + k = k` gives `x`.  Module analogue of
 `sectionsMul_one_mul`: the
@@ -4309,7 +4309,9 @@ theorem moduleSectionAction_one_smul (F L : X.Modules) {k : ℕ} (x : moduleSect
   rw [moduleSectionsCast_sectionsCast]
   exact tensorObjUnitIso_hom_sectionsMul (moduleTensorPow F L k) x
 
-set_option maxRecDepth 4000 in
+-- Synthesizing the graded-module structure unfolds the dependent action laws and their transported
+-- degree equalities; elaboration exceeds the default recursion depth.
+set_option maxRecDepth 1000 in
 /-- **Graded-module structure on the twisted section components**
 (`lem:sectionGradedModule_gmodule`,
 module analogue of [Stacks, Tag 01CV]): for an *arbitrary* `L : X.Modules` and any `F : X.Modules`,
