@@ -104,6 +104,51 @@ theorem forall_fibre_closure_subset_of_supportLeak_inter_eq_empty
     rw [Set.mem_preimage, this]; exact hs
   exact Set.eq_empty_iff_forall_notMem.mp hV x ⟨hxV, hcl, hxU⟩
 
+/-! ## No-leak IS the Z-clopen condition
+
+The recorded design constraint of this project (memory I-0209, "the Z-clopen certificate
+principle") says a piece carries an `R`-finite colength exactly when its trace on the divisor
+scheme is *clopen* in that scheme.  The following two lemmas identify that principle with the
+leak locus, so the two vocabularies are the same statement:
+
+the piece trace `supp ∩ U` is always **open** in the subspace `supp` (as `U` is open), so it
+is clopen there precisely when it is closed in the ambient space — precisely when nothing
+leaks. -/
+
+/-- **Leak-freeness is clopen-ness of the trace in the support.** The forward direction of
+the identification with the Z-clopen principle (I-0209). -/
+theorem isClopen_trace_of_supportLeak_eq_empty (U : X.Opens)
+    (h : d.supportLeak U = ∅) :
+    IsClopen ((fun x : d.supportLocus => x.val) ⁻¹' (U : Set X)) := by
+  have hclosed : IsClosed (d.supportLocus ∩ (U : Set X)) :=
+    (d.isClosed_supportLocus_inter_iff_supportLeak_eq_empty U).mpr h
+  refine ⟨?_, U.isOpen.preimage continuous_subtype_val⟩
+  have heq : (fun x : d.supportLocus => x.val) ⁻¹' (U : Set X)
+      = (fun x : d.supportLocus => x.val) ⁻¹' (d.supportLocus ∩ (U : Set X)) := by
+    ext x; simp
+  rw [heq]
+  exact hclosed.preimage continuous_subtype_val
+
+/-- The converse: a clopen trace leaks nothing.  Together with the previous lemma, the
+assembler's per-piece no-leak clause and the Z-clopen principle of I-0209 are literally the
+same condition — so the certificate lane's finiteness obligation was never about fibres, it
+was about the trace being a connected-component-like piece of the divisor scheme. -/
+theorem supportLeak_eq_empty_of_isClopen_trace (U : X.Opens)
+    (h : IsClosed ((fun x : d.supportLocus => x.val) ⁻¹' (U : Set X))) :
+    d.supportLeak U = ∅ := by
+  refine (d.isClosed_supportLocus_inter_iff_supportLeak_eq_empty U).mp ?_
+  -- a set closed in the closed subspace `supp` is closed in `X`
+  obtain ⟨T, hT, hTeq⟩ := (isClosed_induced_iff (f := fun x : d.supportLocus => x.val)).mp h
+  have heq : d.supportLocus ∩ (U : Set X) = d.supportLocus ∩ T := by
+    ext x
+    constructor
+    · rintro ⟨hxs, hxU⟩
+      exact ⟨hxs, (Set.ext_iff.mp hTeq ⟨x, hxs⟩).mpr hxU⟩
+    · rintro ⟨hxs, hxT⟩
+      exact ⟨hxs, (Set.ext_iff.mp hTeq ⟨x, hxs⟩).mp hxT⟩
+  rw [heq]
+  exact d.isClosed_supportLocus.inter hT
+
 end Scheme.LocalEquations
 
 end AlgebraicGeometry
