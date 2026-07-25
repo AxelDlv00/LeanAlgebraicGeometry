@@ -4,9 +4,9 @@ projects:
 - Algebraic-Jacobian-Challenge
 summary: The controlled clean build certifies 578 warnings across 49 files, down 596
   from 1,174. Subsequent warning-free targets eliminate 13 QuotScheme, 37 PresheafDualUnitPullback,
-  29 FlatBaseChange, 80 PresheafDualPullback, and 57 DualInverse warnings, giving
-  an estimated current total of 362 pending the next controlled recount. Residual
-  debt remains partitioned by mathematical area.
+  29 FlatBaseChange, 80 PresheafDualPullback, 57 DualInverse, and 33 duality-support
+  warnings, giving an estimated current total of 329 pending the next controlled recount.
+  Residual debt remains partitioned by mathematical area.
 status: pending
 kind: refactor
 priority: normal
@@ -29,4 +29,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-25T04:45:09.248688+00:00'
+  updated_at: '2026-07-25T05:13:19.156052+00:00'

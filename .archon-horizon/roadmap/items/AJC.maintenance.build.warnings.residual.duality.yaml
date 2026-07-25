@@ -2,11 +2,10 @@ id: AJC.maintenance.build.warnings.residual.duality
 title: Duality and tensor-support warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Of the original 207-warning duality allocation, warning-free target builds
-  have removed 37 dual-unit, 80 presheaf pullback, and 57 DualInverse warnings. The
-  remaining 33 are isolated in supporting files such as PresheafInternalHom and StalkTensor,
-  pending a controlled recount.
-status: pending
+summary: 'The full 207-warning duality and tensor-support allocation is clean: 37
+  dual-unit, 80 presheaf dual pullback, 57 DualInverse, and 33 support warnings have
+  been eliminated with warning-free target builds.'
+status: done
 kind: refactor
 priority: normal
 depends_on: []
@@ -28,4 +27,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual
-  updated_at: '2026-07-25T04:44:06.032847+00:00'
+  updated_at: '2026-07-25T05:12:48.703063+00:00'
+  pinned_commits:
+  - df5192767
+  - acd0e1322

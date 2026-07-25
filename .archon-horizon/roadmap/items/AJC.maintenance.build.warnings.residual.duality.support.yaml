@@ -2,9 +2,10 @@ id: AJC.maintenance.build.warnings.residual.duality.support
 title: Duality support warnings
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Clean-build allocation: 33 warnings in supporting duality files, including
-  PresheafInternalHom and StalkTensor.'
-status: pending
+summary: 'Eliminated the remaining 33 duality support warnings: 5 in StalkTensor,
+  8 in PresheafInternalHom, 18 in TrivialisationRestrict, and 2 in PresheafDualPullbackNatural.
+  Required pre/post LSP checks and canonical target builds pass warning-free.'
+status: done
 kind: refactor
 priority: normal
 depends_on: []
@@ -26,3 +27,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build.warnings.residual.duality
+  updated_at: '2026-07-25T05:11:48.104354+00:00'
+  pinned_commits:
+  - df5192767
+  - acd0e1322
