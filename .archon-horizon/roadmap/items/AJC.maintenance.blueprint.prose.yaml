@@ -2,13 +2,11 @@ id: AJC.maintenance.blueprint.prose
 title: Remaining chapter prose cleanup
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Ten bounded blueprint slices now present timeless mathematics, most recently
-  the Weil-divisor substrate with exact Hartshorne anchors, honest principal-degree-zero
-  blockers, and a clean coefficient-versus-residue-degree boundary. Continue through
-  the explicit remaining-chapters subtree with RiemannRoch_Adelic next, preserving
-  exact statements, complete proofs, verified page sources, proof-only dependencies,
-  and faithful Lean pins.
-status: pending
+summary: The eleven bounded prose and truth passes are complete. Core, rigidity, Cech
+  augmentation, Albanese, Weil-divisor, and Adelic chapters now separate mathematical
+  proofs from implementation history, use verified sources, place dependencies honestly,
+  and avoid unsupported completion markers.
+status: done
 kind: blueprint
 priority: normal
 depends_on: []
@@ -30,8 +28,10 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint
-  updated_at: '2026-07-25T18:52:31.522234+00:00'
+  updated_at: '2026-07-25T20:29:28.915478+00:00'
   pinned_commits:
+  - 03889996b
+  - 053970b58
   - 9dac093df
   - a49bf3c38
   - f5e9c3b5e

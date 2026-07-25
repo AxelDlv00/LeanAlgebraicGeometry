@@ -2,13 +2,12 @@ id: AJC.maintenance.blueprint.prose.remaining.adelic
 title: Adelic Riemann--Roch truth pass
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Clean RiemannRoch_Adelic as the next bounded chapter pass. Separate the general-field
-  residue-weighted degree from the algebraically closed coefficient degree throughout,
-  split oversized formalization pins into exact declarations, replace PDF-only whole-source
-  slugs by verified page anchors where sources are claimed, remove development journals,
-  and preserve the explicit Tier 0--3 dependency gates. Finish with graph, chapter-local
-  print, and Lean-pin checks.
-status: pending
+summary: RiemannRoch_Adelic is now a 2,084-line timeless mathematical chapter. It
+  separates the function-field quotient from sheaf comparison, proves the residue-weighted
+  ledger and Weil-duality chain with correct signs, uses exact Papaioannou page anchors,
+  and pins only declarations actually present in Lean. Independent review, graph sync,
+  two settled print passes, targeted builds, and the full 8,723-job build pass.
+status: done
 kind: blueprint
 priority: high
 depends_on: []
@@ -30,3 +29,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint.prose.remaining
+  updated_at: '2026-07-25T20:29:27.045638+00:00'
+  pinned_commits:
+  - 03889996b
+  - 930de090d
+  - 053970b58
+  - eb6f7ad06

@@ -2,13 +2,10 @@ id: AJC.maintenance.blueprint.prose.remaining
 title: Remaining marker-heavy chapters
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Continue bounded truth passes over the remaining marker-heavy chapters. Albanese_AlbaneseUP
-  and RiemannRoch_WeilDivisor are complete; RiemannRoch_Adelic is the next explicit
-  target because its 1,863-line Tier 0--3 ledger still mixes exact Lean declarations
-  with broader residue-field, strong-approximation, and duality prose. Each pass preserves
-  exact mathematics, verified page sources, proof-only dependency placement, and honest
-  Lean pins.
-status: pending
+summary: 'All three marker-heavy chapter truth passes are complete: Albanese universal
+  property, the Weil-divisor substrate, and Adelic Riemann--Roch now present timeless
+  sourced mathematics with explicit open dependencies and faithful Lean pins.'
+status: done
 kind: blueprint
 priority: normal
 depends_on: []
@@ -30,8 +27,10 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint.prose
-  updated_at: '2026-07-25T18:56:21.466664+00:00'
+  updated_at: '2026-07-25T20:29:27.967888+00:00'
   pinned_commits:
+  - 03889996b
+  - 053970b58
   - 9dac093df
   - a49bf3c38
   - f5e9c3b5e

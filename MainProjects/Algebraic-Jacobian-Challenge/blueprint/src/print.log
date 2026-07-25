@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.22.0 (TeX Live 2025/Debian)  (format=lualatex 2026.7.13)  26 JUL 2026 02:51
+This is LuaHBTeX, Version 1.22.0 (TeX Live 2025/Debian)  (format=lualatex 2026.7.13)  26 JUL 2026 04:22
  restricted system commands enabled.
 **print.tex
 (./print.tex
@@ -7530,172 +7530,10 @@ Chapter 33.
 
 ] [593] [594] [595] [596] [597] [598]) (./chapters/RiemannRoch_Adelic.tex [599]
 Chapter 34.
-
-Overfull \hbox (22.54842pt too wide) in paragraph at lines 52--57
-[]\TU/lmr/bx/n/10 The $\TU/latinmodern-math.otf(1)/m/n/10 2$\TU/lmr/bx/n/10 -aff
-ine-cover cok-er-nel.[] \TU/lmr/m/n/10 Fix an affine Mayer--Vietoris square $\T
-U/latinmodern-math.otf(1)/m/n/10 𝑆 ∶ 𝐶.[].[]$
- []
-
-
-Overfull \hbox (31.55286pt too wide) detected at line 75
-\TU/latinmodern-math.otf(1)/m/n/10 𝐿(𝐷) = Γ(𝑈[], 𝒪[](𝐷)) ∩ 
-Γ(𝑈[], 𝒪[](𝐷)),  [](𝐷) = Γ(𝑈[] ∩ 𝑈[], 𝒪[](𝐷))[][]
-Γ(𝑈[], 𝒪[](𝐷)) + Γ(𝑈[], 𝒪[](𝐷))[].
- []
-
 [600
 
-]
-Overfull \hbox (27.03555pt too wide) in paragraph at lines 127--132
-[]\TU/lmr/m/n/10 Through-out, $\TU/latinmodern-math.otf(1)/m/n/10 𝐶 ∶ [] ([](.
-𝑜𝑓 𝑘))$ \TU/lmr/m/n/10 with $\TU/latinmodern-math.otf(1)/m/n/10 [[] 
-𝐶. []]$\TU/lmr/m/n/10 , $\TU/latinmodern-math.otf(1)/m/n/10 [[] 1 𝐶. []]$
-
- []
-
-
-Overfull \hbox (41.68033pt too wide) in paragraph at lines 127--132
-\TU/lmr/m/n/10 and $\TU/latinmodern-math.otf(1)/m/n/10 [[] 𝐶. []]$\TU/lmr/m/
-n/10 , match-ing the stand-ing hy-pothe-ses of [][]537[][]; $\TU/latinmodern-ma
-th.otf(1)/m/n/10 𝐾 = 𝐶.[].[]$\TU/lmr/m/n/10 . 
- []
-
-[601] [602]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 312.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 312.
-
-
-Overfull \hbox (17.92775pt too wide) in paragraph at lines 379--392
-\TU/lmr/m/n/10 and a sheaf $\TU/latinmodern-math.otf(1)/m/n/10 𝐹$ \TU/lmr/m/
-n/10 of $\TU/latinmodern-math.otf(1)/m/n/10 𝑘$\TU/lmr/m/n/10 -modules, the \
-TU/lmr/m/it/10 Čech cosim-pli-cial ob-ject $\TU/latinmodern-math.otf(1)/m/n/10
- 𝑌[]$ \TU/lmr/m/n/10 sends $\TU/latinmodern-math.otf(1)/m/n/10 [𝑛]$ \TU/l
-mr/m/n/10 to $[][] \TU/latinmodern-math.otf(1)/m/n/10 Γ[][][] 𝑈[], 𝐹[]$\
-TU/lmr/m/n/10 ,
- []
-
-[603]
-Overfull \hbox (3.73506pt too wide) in paragraph at lines 408--416
-[][]\TU/lmr/bx/n/10 Lemma 1843 \TU/lmr/m/n/10 (Co-face com-po-nents are re-stric
--tion maps)\TU/lmr/bx/n/10 . [][]\TU/lmr/m/it/10 For ev-ery fi-nite in-dex fam-i
-ly $\TU/latinmodern-math.otf(1)/m/n/10 𝑗 [] [] [] 𝑚 →
- []
-
-
-Overfull \hbox (171.87671pt too wide) in paragraph at lines 472--479
-\TU/latinmodern-math.otf(1)/m/n/10 Γ(𝑈[], 𝐹) + Γ(𝑈[], 𝐹)$ \TU/lmr
-/m/it/10 in-side $\TU/latinmodern-math.otf(1)/m/n/10 Γ(𝑈[] ∩ 𝑈[], 
-𝐹)$\TU/lmr/m/it/10 . Spe-cial-is-ing $\TU/latinmodern-math.otf(1)/m/n/10 
-𝐹 = [] 𝐶$ \TU/lmr/m/it/10 gives $[] \TU/latinmodern-math.otf(1)/m/n/10 
-𝐶 ([] 𝐶) 𝑆.[] 1  ≃[]
- []
-
-[604]
-Overfull \hbox (179.93254pt too wide) in paragraph at lines 583--591
-\TU/lmr/m/n/10 gether with the uni-verse bridge [][]92[][] iden-ti-fies $[]  \T
-U/latinmodern-math.otf(1)/m/n/10 𝑘 ([] 𝐶) 1$ \TU/lmr/m/n/10 with $[] \TU/
-latinmodern-math.otf(1)/m/n/10 𝐶 ([] 𝐶) 𝑆.[] 1$
- []
-
-
-Overfull \hbox (0.74632pt too wide) in paragraph at lines 598--606
-[]\TU/lmr/bx/n/10 Gate.[] \TU/lmr/m/n/10 The only re-main-ing hy-poth-e-sis is 
-the Čech-to-derived com-par-i-son $[]$
- []
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 608.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\symbb' on input line 608.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 608.
-
-[605]
-Overfull \hbox (12.05763pt too wide) in paragraph at lines 647--661
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1850 \TU/lmr/m/n/10 (Gate: a non-con-stant map
- to $\TU/latinmodern-math.otf(1)/m/n/10 ℙ[]$ \TU/lmr/m/n/10 (N9a))\TU/lmr/bx/
-n/10 . [][]\TU/lmr/m/n/10 The class $[] \TU/latinmodern-math.otf(1)/m/n/10 
-𝐶$
- []
-
-
-Overfull \hbox (94.90762pt too wide) in paragraph at lines 668--688
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1851 \TU/lmr/m/n/10 (Gate: a non-con-stant map
- to the in-te-gral model of $\TU/latinmodern-math.otf(1)/m/n/10 ℙ[]$\TU/lmr/m
-/n/10 )\TU/lmr/bx/n/10 . []\TU/lmr/m/n/10 The class $[] \TU/latinmodern-math.ot
-f(1)/m/n/10 𝐶$
- []
-
-
-Overfull \hbox (110.9236pt too wide) in paragraph at lines 696--699
-[][]\TU/lmr/bx/n/10 Propo-si-tion 1852 \TU/lmr/m/n/10 (Bridge: a non-con-stant 
-map to the in-te-gral model gives one to $\TU/latinmodern-math.otf(1)/m/n/10 
-ℙ[]$\TU/lmr/m/n/10 )\TU/lmr/bx/n/10 . [][][]$[] \TU/latinmodern-math.otf(1)/m
-/n/10 𝐶$
- []
-
-[606]
-Overfull \hbox (4.60701pt too wide) in paragraph at lines 792--796
-[]\TU/lmr/m/n/10 Im-me-di-ate from [][]1855[][] and the stalk--coheight bridge 
-[][]1695[][] ($[] \TU/latinmodern-math.otf(1)/m/n/10 𝑧 = [] 𝒪[]$\TU/lmr/m
-/n/10 ).
- []
-
-[607]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1005.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\symbb' on input line 1005.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 1005.
-
-[608]
-Overfull \hbox (2.42474pt too wide) in paragraph at lines 1070--1074
-[][]\TU/lmr/bx/n/10 The-o-rem 1867 \TU/lmr/m/n/10 (The chart-ring span core)\TU
-/lmr/bx/n/10 . [][]\TU/lmr/m/it/10 The degree-zero away ring $\TU/latinmodern-m
-ath.otf(1)/m/n/10 (ℤ[𝑋[], 𝑋[]][])[]$ \TU/lmr/m/it/10 is spanned,
- []
-
-
-Overfull \hbox (56.08134pt too wide) in paragraph at lines 1117--1129
-[][]\TU/lmr/bx/n/10 The-o-rem 1869 \TU/lmr/m/n/10 (Tier 1 de-liv-er-able: $[]\T
-U/latinmodern-math.otf(1)/m/n/10 𝐶$ \TU/lmr/m/n/10 is hon-est (N12))\TU/lmr/
-bx/n/10 . [][][][][][]\TU/lmr/m/it/10 Un-der the finite-map gate $[] \TU/latinm
-odern-math.otf(1)/m/n/10 𝐶$
- []
-
-
-Overfull \hbox (0.90158pt too wide) in paragraph at lines 1138--1154
-[]\TU/lmr/m/n/10 The key-stone [][]1863[][] pro-duces, un-der $[] \TU/latinmode
-rn-math.otf(1)/m/n/10 𝐶$ \TU/lmr/m/n/10 and $[] \TU/latinmodern-math.otf(1)/
-m/n/10 𝑘$\TU/lmr/m/n/10 ,
- []
-
-[609]
-Overfull \hbox (24.75365pt too wide) in paragraph at lines 1193--1197
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1871 \TU/lmr/m/n/10 (The cobound-ary sub-group
-)\TU/lmr/bx/n/10 . [][]\TU/lmr/m/n/10 The \TU/lmr/m/it/10 cobound-ary $\TU/lati
-nmodern-math.otf(1)/m/n/10 𝐵(𝐷) = Γ(𝑈[], 𝒪[](𝐷)) + Γ(𝑈[], 
-𝒪[](𝐷))$\TU/lmr/m/n/10 ,
- []
-
-[610] [611] [612] [613] [614] [615]) [616]) [617
+] [601] [602] [603] [604] [605] [606] [607] [608] [609] [610] [611] [612] [613]
+[614] [615] [616]) [617]) [618
 
 ] (./print.aux)
  ***********
@@ -7703,19 +7541,19 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `print.out' has not changed.
-(rerunfilecheck)             Checksum: 41576ECE42FCB73C91F184F948A691A0;102685.
+(rerunfilecheck)             Checksum: 34B94183B67F4EF0EA0FCBCBF2214AFB;101892.
 
 )
 
 Here is how much of LuaTeX's memory you used:
- 35701 strings out of 476076
+ 35737 strings out of 476076
  125129,1648299 words of node,token memory allocated
- 13680 words of node memory still in use:
-   7 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 8 sub_mlist, 1 glyph, 3286 attribut
-e, 60 glue_spec, 3286 attribute_list, 2 write nodes
-   avail lists: 2:923,3:512,4:276,5:854,6:86,7:10883,8:220,9:1115,10:27,11:763
- 54195 multiletter control sequences out of 65536+600000
- 136 fonts using 35505251 bytes
+ 13816 words of node memory still in use:
+   7 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 8 sub_mlist, 1 glyph, 3320 attribut
+e, 60 glue_spec, 3320 attribute_list, 2 write nodes
+   avail lists: 2:855,3:512,4:276,5:853,6:86,7:10883,8:220,9:1115,10:27,11:763
+ 54217 multiletter control sequences out of 65536+600000
+ 136 fonts using 35505375 bytes
  116i,16n,114p,710b,1172s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/opentype/public/lm/lmsans8-regular.otf></usr/share/texmf
 /fonts/opentype/public/lm/lmroman7-bold.otf></usr/share/texmf/fonts/opentype/pub
@@ -7737,10 +7575,10 @@ gular.otf></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
 fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/s
 hare/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb>
-Output written on print.pdf (618 pages, 3885162 bytes).
+Output written on print.pdf (619 pages, 3879778 bytes).
 
-PDF statistics: 19019 PDF objects out of 22161 (max. 8388607)
- 11881 compressed objects within 119 object streams
- 3108 named destinations out of 3580 (max. 131072)
+PDF statistics: 19039 PDF objects out of 22161 (max. 8388607)
+ 11859 compressed objects within 119 object streams
+ 3122 named destinations out of 3580 (max. 131072)
  3176 words of extra memory for PDF output out of 10000 (max. 100000000)
 

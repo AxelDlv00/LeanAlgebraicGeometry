@@ -4,15 +4,14 @@ kind: issue
 body: 'Lean full-build warning and resource baseline
 
 
-  A current end-to-end lake build AlgebraicJacobian validation after the Weil pass
-  completes all 8,723 jobs in 6:23.67 at 7,520,352 KiB peak RSS. The targeted WeilDivisor
-  build completes in 16 seconds and reports only the known principal_degree_zero sorry;
-  its unused-section-variable warning is gone. These are validation measurements,
-  not replacements for the controlled clean warning baseline. The direct Cech augmentation
-  still closes the old degree-one bottleneck, whose forced rebuild fell from 16:16.30
-  and 10,138,220 KiB to 6.85 seconds and 3,225,180 KiB. Remaining debt is 142 maxHeartbeats
+  A full lake build AlgebraicJacobian after the Adelic cleanup passes all 8,723 jobs
+  in 1:39.31 at 7,352,480 KiB peak RSS and replays 245 warning heads; changed Adelic
+  modules emit no warnings. ChiLedger loses all nine local linter warnings, FinitenessP1
+  now elaborates at the default heartbeat budget, and GenusUnconditional drops the
+  legacy Cech comparison import lane. NonconstantToP1 still genuinely needs 1.6M heartbeats:
+  200k and 800k trials both fail at whnf. Remaining structural debt is 140 maxHeartbeats
   scopes, 44 synthesis-heartbeat scopes, residual warnings, and umbrella-import review.
-  Latest Lean cleanup: f5e9c3b5e.'
+  Latest commits: 9aad570f8 and c4fea0e5e.'
 labels:
 - agent-ready
 status: open
@@ -23,7 +22,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-24T14:56:46.449883+00:00'
-updated_at: '2026-07-25T18:55:39.703540+00:00'
+updated_at: '2026-07-25T20:30:33.855737+00:00'
 metadata:
   provenance:
     run: '0046'
