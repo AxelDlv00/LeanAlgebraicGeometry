@@ -237,6 +237,7 @@ import AlgebraicJacobian.Picard.PicEtCoverBridge
 import AlgebraicJacobian.Picard.ThetaShift
 import AlgebraicJacobian.Picard.OverSigmaExtension
 import AlgebraicJacobian.Picard.Pic0SigmaSheaf
+import AlgebraicJacobian.Picard.JacobianDataCharts
 import AlgebraicJacobian.Picard.PicRepColimitCompat
 import AlgebraicJacobian.Picard.PicRepColimitResidual
 import AlgebraicJacobian.Picard.PicRepColimitMountain
