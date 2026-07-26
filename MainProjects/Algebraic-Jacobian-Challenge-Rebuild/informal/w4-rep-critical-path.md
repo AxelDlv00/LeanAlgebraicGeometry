@@ -7,6 +7,12 @@ this project are that module docstrings announce theorems the files do not decla
 and that roadmap summaries are confident and frequently wrong about the Lean
 (the `ajcr-roadmap-claims-untrustworthy` memory). Both bit again this round.*
 
+> **ROUND-5 AMENDMENT (run 0048 round 5).** The table in §1 was already stale when it was
+> committed, and §2's "one open experiment" had been answered the same round by this file's own
+> sibling deliverable. Read §7 at the bottom FIRST: it carries the corrections and the current
+> state of the chain. The rest of the file is left as written, because the reasoning is still the
+> reasoning; only the status column and §2's closing question have moved.
+
 The point of this document is to replace "six independent mountains" with a single ordered
 chain, so that a session can see at a glance which link it is standing on. The chain is
 written **backwards from the target**, because that is the only direction in which the
@@ -175,9 +181,93 @@ Roadmap row `AJCR.w4-rep.build-reach` owns this.
 
 ## 6. Reading order for the next session
 
-1. This file.
+1. This file — **§7 first**.
 2. `AJCR.w4-rep`'s roadmap summary, then the leaf you intend to work.
 3. The inbox memories on what has been refuted: the Zariski-local re-basing, the joint-covering
    relaxation, the docstring rule, and I-0356 on the off-stratum counterexample.
 4. Only then the worksheets (`spec-dd-r.md`, `w4-ddr9-worksheet.md`), which are long, pinned to an
    older route, and contain stale blockers that have been struck in the roadmap but not in the file.
+
+## 7. Round-5 corrections, and where the chain actually stands
+
+*Run 0048 round 5. Everything below was checked against the source or landed as Lean this round.*
+
+### 7.1 Four rows of §1's table have moved
+
+| # | §1 said | truth as of round 5 |
+|---|---|---|
+| L2 | `jacobianData` MISSING, no producer anywhere | **`JacobianData.ofCharts`** (`Picard/JacobianDataCharts.lean:182`) — a conditional producer, sorry-free, rooted, kernel-checked. `JacobianData` had zero producers before this round; it has two now (`ofRepresentableBy` :71 and `ofCharts` :182). |
+| L9 | `(divFunctor C π g).RepresentableBy DivOver` exists but **UNROOTED** | **rooted.** `Picard/DivRepGlobalLift.lean` imports `DivRepKit`, and the root aggregator imports `DivRepGlobalLift`. L9 is kernel-checked. |
+| L11 | `DivRepGlobalData.ofAffine` **MISSING, never attempted** | its **forward half is landed**: `DivRepAffinePullback.pullGlobal` (`Picard/DivRepGlobalLift.lean:102`) is the `pull` field and `pullGlobal_comp` (:132) is the `pull_comp` field, both from the affine package alone. What is left of L11 is the general-test **classifier** and the two inverse laws. |
+| L4 | field of L3 | the two finiteness certificates of L3/L4 are no longer obligations: `locallyOfFiniteType_gluedHom` (:154) and `quasiCompact_gluedHom` (:164) derive them from properties of the charts. |
+
+`DivRepGlobalLift.lean` was written in round 4 but landed only through that round's integration
+commit, which is why §1 — written in the same round — did not know about it. Check the ledger for
+files added by an `integrate` commit before trusting any "MISSING" claim.
+
+### 7.2 The `GeometricallyReduced` scare, checked and closed
+
+`Picard/Pic0SigmaSheaf.lean:79` declares `variable [GeometricallyReduced C.hom]` before the sheaf
+theorem and `pic0RepresentableByOfCharts`, and `Challenge.lean:96-98`'s frozen bundle does not
+supply it — so the whole representability seam appeared to demand a hypothesis the target forbids.
+It does not. `Curve/GeometricallyReduced.lean:130` gives `Smooth.geometricallyReduced` and `:140`
+gives `Smooth.of_smoothOfRelativeDimension_one`, both instances, and that module is in
+`Pic0SigmaSheaf`'s import closure. The hypothesis is redundant, not a gap. Machine-checked record:
+`Picard/JacobianDataCharts.lean:210`.
+
+### 7.3 §2's "one open experiment" was already answered, by this file's own sibling
+
+§2 closes with *"At `g ≥ 2` no witness has ever been exhibited… It is not acceptable to keep
+planning without knowing which."* That question was settled in the **same round**:
+`informal/spec-dd-r.md` **ADDENDUM 4** (commit `d7e8348ce`) is titled *"the on-stratum witness
+EXISTS"*, and roadmap leaf `…ddr.certificate.field-size` is `done` carrying the sharp theorem.
+Independently re-derived this round, and it agrees:
+
+> For any `g ≥ 2`, take a pencil of degree `g` on `C` one of whose members is a divisor
+> `E ≥ s₀ + s_∞` with `π(s₀) = 0`, `π(s_∞) = ∞`. Such an `E` exists: `ℓ(E) = 1 + ℓ(K − E)`, so any
+> `E` with `s₀ + s_∞ ≤ E ≤ K'` for a canonical `K' ≥ s₀ + s_∞` has `ℓ(E) ≥ 2`; and such a `K'`
+> exists because `ℓ(K − s₀ − s_∞) ≥ g − 2 ≥ 1` for `g ≥ 3`, and for `g = 2` exactly when `s_∞` is
+> the hyperelliptic conjugate of `s₀` (which one is free to arrange, since `π` is a choice: a
+> function with a zero at `s₀` and a pole at `s_∞` is a finite map sending them to `0` and `∞`).
+> The support of the total family is an open subscheme of the irreducible `C`, hence irreducible,
+> hence **connected after every Zariski shrink of the base** — which is exactly why the shrink
+> evasion that kills the `g = 1` case does not apply here.
+
+So: **the fixed-pair certificate route is dead on the campaign's own stratum**, over any field.
+Do not re-run this experiment. Do not formalise the witness either — ADDENDUM 4 §4.5 explains why
+(it needs `Sym^g C` / `Hilb^g`, and this tree constructs no curve other than `P¹`).
+
+### 7.4 The live strategic question is R1 versus R2, and it is not "which is cheaper"
+
+With the fixed pair dead, `spec-dd-r` ADDENDUM 4 §4.4 leaves exactly two repairs, and they differ
+in kind, not only in cost:
+
+* **R1** (`p1-aut` → `fibre-avoid` → `cert-relocalize`): let the certificate quantify over a twist
+  `γ ∈ Aut(P¹_k)`. Proved correct **iff `|P¹(k)| ≥ g + 2`** — i.e. over every infinite field and
+  over `𝔽_q` for `q ≥ g + 1`, and dead over small finite fields. Since `Challenge.lean` states the
+  Jacobian over an **arbitrary** field and `archon-protected.yaml` forbids adding a hypothesis, R1
+  **cannot discharge the challenge on its own**: it must be paired with the descent lane `dat-g`.
+* **R2** (generalise `FinCoverData`'s piece type from basic opens of the two pinned charts to
+  arbitrary affine opens of the relative curve): field-uniform, and ADDENDUM 4 §4.4 gives it a
+  one-line justification — `supp D` is finite over `R`, hence contained in a single affine open of
+  `C ×_k Spec R` (Stacks 0B8B), so a cover with one straddling piece always exists. Blast radius
+  measured this round: `FinCoverData` is named in **28 files**.
+
+The honest comparison is therefore *R1 + a full Galois-descent campaign* against *R2 + a 28-file
+refactor*. Nobody has costed the second half of R1, and the roadmap's `p1-aut` leaf says "do not
+attempt both". That decision is the highest-value thing the next session can make, and it should be
+made with a costing of `dat-g`, not with a costing of `p1-aut` alone.
+
+### 7.5 What `Challenge.lean:99` reduces to today
+
+Composing `JacobianData.ofCharts` with the frozen discharge `Jacobian C := (jacobianData C).J`, the
+target is now exactly:
+
+> **a finite Zariski atlas of `pic0SigmaFunctor C`** — a finite `ι`, schemes `X i`, maps
+> `f i : yoneda.obj (X i) ⟶ pic0SigmaFunctor C` such that (1) each `f i` is a relatively
+> representable open immersion, (2) `Sigma.desc f` is Zariski-locally surjective, (3) each `X i` is
+> quasi-compact with locally-of-finite-type structure morphism.
+
+Sheafhood, the 01JJ gluing, the Σ-descent and both finiteness certificates are discharged. (1) is
+roadmap `dat-c` C9b, (2) is `dat-b` B-6, and (3) touches the Picard functor not at all. Everything
+below the atlas — L9 through L14 — exists to produce (1) and (2).
