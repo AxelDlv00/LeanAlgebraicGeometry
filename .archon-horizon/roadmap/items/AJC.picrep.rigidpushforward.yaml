@@ -1,0 +1,32 @@
+id: AJC.picrep.rigidpushforward
+title: Rigidified pushforward engine
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'Sorry-free. The rigidified pushforward of a line bundle along the structure
+  morphism, the P^1 engine and its transfer, finiteness of chart and P^1 sections,
+  semicontinuity of h^0, faithfulness of the scalar endomorphisms, and section base
+  change. Modules: Picard/RigidPushforward, Picard/RigidPushforwardP1Engine, Picard/RigidPushforwardTransfer,
+  Picard/ChartSectionsFinite, Picard/P1SectionsFinite, Picard/SemicontinuityH0, Picard/ScalarEndFaithful,
+  Picard/SectionBaseChange.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-26T16:41:38.647641+00:00'
+  provenance:
+    run: '0046'
+    session: 0086-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep

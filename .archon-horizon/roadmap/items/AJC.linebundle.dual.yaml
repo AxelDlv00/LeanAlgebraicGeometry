@@ -1,0 +1,32 @@
+id: AJC.linebundle.dual
+title: Dual comparison and the terminal inverse
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'Sorry-free. The slice-dual transport isomorphism, presheaf dual pullback
+  with its unit, composition and naturality, trivialisation restriction compatibility,
+  and the terminal comparison inverse giving Pic^sharp its group law. Modules: Picard/TensorObjInverse,
+  Picard/TensorObjSubstrate/DualInverse and its PresheafDualPullback, PresheafDualUnitPullback,
+  PresheafDualPullbackComposition, PresheafDualPullbackNatural, SliceTransport and
+  TrivialisationRestrict components.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-26T16:41:26.948058+00:00'
+  provenance:
+    run: '0046'
+    session: 0086-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.linebundle

@@ -1,0 +1,29 @@
+id: AJC.grquot.hilbertserre
+title: Graded Hilbert--Serre algebra and the Hilbert polynomial
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'Sorry-free. The Hilbert--Serre theorem for a finitely generated graded module
+  over a polynomial ring and the resulting Hilbert polynomial with its uniqueness
+  and specification API. Modules: Picard/GradedHilbertSerre, Picard/HilbertPolynomial.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-26T16:41:16.155821+00:00'
+  provenance:
+    run: '0046'
+    session: 0086-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.grquot

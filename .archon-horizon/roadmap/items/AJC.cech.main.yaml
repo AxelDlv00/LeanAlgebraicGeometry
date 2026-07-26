@@ -1,0 +1,30 @@
+id: AJC.cech.main
+title: cech_computes_higherDirectImage
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'Sorry-free and unconditional (no enough-injectives appeal). For a separated
+  quasi-compact morphism, a quasi-coherent sheaf, and a finite affine open cover,
+  the cohomology of the relative Cech complex computes R^i f_*. Modules: Cohomology/AbsoluteCohomology,
+  Cohomology/CechToCohomology, Cohomology/CechBridge, Cohomology/CechToHigherDirectImage.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-26T16:41:10.171100+00:00'
+  provenance:
+    run: '0046'
+    session: 0086-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.cech

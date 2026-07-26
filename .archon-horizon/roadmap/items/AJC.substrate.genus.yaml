@@ -1,0 +1,28 @@
+id: AJC.substrate.genus
+title: Genus and the Abel--Jacobi interface
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'Sorry-free. The genus of a smooth proper curve as dim_k H^1(C, O_C) together
+  with the Abel--Jacobi interface consumed by the final witness. Modules: Genus, AbelJacobi.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-26T16:40:58.560343+00:00'
+  provenance:
+    run: '0046'
+    session: 0086-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.substrate

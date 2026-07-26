@@ -1,0 +1,29 @@
+id: AJC.grquot.genericflatness
+title: Generic flatness and finite presentation
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'Sorry-free. Geometric generic flatness for a finite-type morphism, stability
+  of finite presentation under pullback, and the finite-presentation functor. Modules:
+  Picard/GenericFlatnessGeometric, Picard/PullbackFinitePresentation, Picard/FinitePresentationFunctor.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-26T16:41:19.542076+00:00'
+  provenance:
+    run: '0046'
+    session: 0086-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.grquot

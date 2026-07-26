@@ -1,0 +1,30 @@
+id: AJC.rr.principal
+title: Principal divisors have degree zero
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'The single remaining in-tree Riemann--Roch obligation: deg(div f) = 0 for
+  a nonzero rational function on a smooth proper curve, in RiemannRoch/WeilDivisor.
+  The finite-map and pullback-degree gates are stated; the divisor-degree and divisor-functor
+  substrate (Picard/DivDegree, Picard/DivFunctorDef) is otherwise sorry-free.'
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-26T16:41:32.189570+00:00'
+  provenance:
+    run: '0046'
+    session: 0086-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.rr

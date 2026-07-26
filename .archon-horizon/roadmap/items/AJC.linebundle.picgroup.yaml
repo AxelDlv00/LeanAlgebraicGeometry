@@ -1,0 +1,29 @@
+id: AJC.linebundle.picgroup
+title: Relative Picard functor and its group law
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'Sorry-free. The relative Picard functor of a curve over a base, its rigidified
+  variant, and the abelian-group structure supplied by the comparison isomorphisms.
+  Modules: Picard/RelPicFunctor, Picard/RigidifiedPic.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-26T16:41:28.452898+00:00'
+  provenance:
+    run: '0046'
+    session: 0086-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.linebundle
