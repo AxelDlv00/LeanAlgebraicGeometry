@@ -1,0 +1,10 @@
+{
+  "run_id": "0046",
+  "reason": "usage_limit",
+  "at": "2026-07-26T17:16:41.010949+00:00",
+  "focus_tasks": [
+    "ajc-optimize"
+  ],
+  "focus_projects": [],
+  "resume": "horizon run --resume 0046"
+}
