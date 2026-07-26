@@ -32,11 +32,11 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isCompatible_of_isDivRepClassify_divRepPullAt
 type: lean
-updated: '2026-07-26T00:52:50'
+updated: '2026-07-26T14:33:34'
 ---
 theorem isCompatible_of_isDivRepClassify_divRepPullAt
     (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
-      CertifiedDivisorFamily C (ChartRing i j) pi g)
+      DivFamZar C (ChartRing i j) pi g)
     (hcl : ∀ {S : Type u} [CommRing S] [Algebra k S]
       (i : (glueData k g r1).J) (j : (glueData k g r2).J)
       (omega : ChartRing i j →ₐ[k] S),

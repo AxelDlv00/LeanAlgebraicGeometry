@@ -102,7 +102,7 @@ summary: 'ROUTE RE-BASED AGAIN 2026-07-25 (run 0048 round 1). The lane''s gate i
   aggregator, so the citation is source-level only and its olean is stale. See AJCR.w4-rep.build-reach.
 
   '
-status: active
+status: blocked
 kind: proof
 priority: normal
 depends_on: []
@@ -124,7 +124,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-26T06:42:57.834726+00:00'
+  updated_at: '2026-07-26T06:46:06.961668+00:00'
   pinned_commits:
   - c843eafd7
   - 359c0a38d

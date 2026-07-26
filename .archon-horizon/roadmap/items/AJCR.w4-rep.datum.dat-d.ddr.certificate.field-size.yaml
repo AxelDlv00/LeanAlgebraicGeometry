@@ -3,33 +3,43 @@ title: 'Field-size: over a small finite field, what is DivFamZar? — the one re
   human decision'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "THE ONE QUESTION THAT STILL NEEDS A HUMAN (2026-07-25, run 0048 r1). It\
-  \ is NOT \"does the\nZ(diamond) chart confine its divisors\" — that is answered,\
-  \ NO (see chart-avoid). It is:\n\n  OVER A SMALL FINITE FIELD, WHERE |P^1(k)| =\
-  \ q + 1 < n + 2, WHAT IS DivFamZar SUPPOSED TO BE?\n\nWHY THE QUESTION IS FORCED.\
-  \ Certifiability requires the support to sit inside the preimages of a\npinned PAIR\
-  \ of points of P^1 (chart-avoid + confine-open). Every repair therefore needs, at\
-  \ every\nbase point, two k-rational points of P^1 off pi(supp_s) — i.e. q + 1 >=\
-  \ n + 2. And the\ncounterexample that kills chart-avoidance is FIELD-INDEPENDENT:\
-  \ F = s X_0^2 + X_0 X_1 + s X_1^2\nis irreducible over F_2 exactly as over Q, because\
-  \ s(x^2+1) + x is degree 1 in s with coprime\ncoefficients over any field. So enlarging\
-  \ the field is not an escape and small fields are a real\nhole, not a footnote.\n\
-  \nWHAT MAKES IT A HUMAN DECISION. Challenge.lean:96-99 states the Jacobian over\
-  \ an ARBITRARY field,\nand there is no hypothesis on k stronger than [Field k] anywhere\
-  \ in Picard/ or RiemannRoch/ (510\noccurrences of Field k; zero Infinite / IsAlgClosed\
-  \ / PerfectField). The three options are not\ncomparable on mathematical grounds\
-  \ alone:\n (a) accept |P^1(k)| >= n + 2 as a hypothesis, and RECORD that Challenge.lean:96-99\
-  \ is then\n     unreachable for small q — i.e. the challenge as stated is not solved;\n\
-  \ (b) plan a descent lane: divQProj (Picard/DivSchemeQProj.lean) is the right lever\
-  \ for fpqc\n     descent from k'/k, so the Jacobian over k is obtained by descending\
-  \ from a big enough k';\n (c) generalize the pinned charts from k-rational points\
-  \ to closed points of degree d >= 2. This\n     costs the two facts the whole design\
-  \ rests on — Gamma(P1 k, chartOpen k i) iso Polynomial k\n     (Curve/P1Charts.lean:234,239)\
-  \ and isPrincipalIdealRing_chartSections (Curve/P1Points.lean:64)\n     — because\
-  \ Cl(P^1 minus a degree-d point) = Z/d, not 0.\n\nSETTLE THIS BEFORE p1-aut. It\
-  \ decides whether building the GL_2(k) action on P^1 is worth doing\nat all: under\
-  \ (b) or (c) the twist may be unnecessary or insufficient.\n"
-status: blocked
+summary: "ANSWERED 2026-07-26 (run 0048 round 4). Not blocked any more, and not a\
+  \ human decision after all —\nthe bound is a theorem, sharp in both directions.\
+  \ Deliverable: informal/spec-dd-r.md ADDENDUM 4\n§4.4 (commit d7e8348ce). Inbox\
+  \ I-0346's standing question is discharged.\n\nTHE ANSWER.  R1 -- varying the pinned\
+  \ pair of P^1-points per cover member, i.e. the p1-aut ->\nfibre-avoid -> cert-relocalize\
+  \ chain -- is correct IF AND ONLY IF |P^1(k)| >= n + 2, where n is\nthe degree,\
+  \ pinned to the genus g by the functor.\n\nBoth directions come from one fibrewise\
+  \ reduction (ADDENDUM 4 §4.2).  For c in P^1(k) let W_c be\nthe image in Spec R\
+  \ of supp D meeting pi^{-1}(c); it is closed because supp D is finite over R,\n\
+  and s in W_c iff the FIBRE supp(D_s) meets pi^{-1}(c).  Since D_s is finite of degree\
+  \ n over\nkappa(s), its image in |P^1| has at most n closed points.\n  IF: pick\
+  \ c in P^1(k) outside that image and any c' /= c; then Spec R minus W_c confines\
+  \ D to the\n  chart complementary to pi^{-1}(c).  Doing this at every s gives a\
+  \ Zariski cover on which the\n  divisor is confined, with the pair varying per member\
+  \ -- exactly what R1 allows.\n  ONLY IF: if the sum over c in P^1(k) of e_c is at\
+  \ most n, where e_c is the minimal degree of a\n  closed point of C over c, then\
+  \ a divisor of the form sum_c q_c + padding lies in W_c for EVERY\n  c in P^1(k),\
+  \ and no pinned pair confines it.\n\nCONSEQUENCES, and they decide the certificate\
+  \ route.\n * p1-aut is NOT dead.  It is correct over every infinite field, and over\
+  \ F_q whenever q >= g+1.\n * It cannot discharge the challenge on its own.  Challenge.lean:96-99\
+  \ states the Jacobian over an\n   ARBITRARY field and archon-protected.yaml forbids\
+  \ adding a hypothesis, so R1 must be paired\n   with descent (dat-g) or replaced.\n\
+  \ * Of the three options this leaf was opened to choose between, (a) \"accept |P^1(k)|\
+  \ >= n+2 as a\n   hypothesis\" is now known to be exactly the right hypothesis and\
+  \ exactly what the challenge\n   forbids; (b) descent from a big enough k' is viable\
+  \ and is the pairing R1 needs; (c) degree-d\n   closed points is unnecessary --\
+  \ it is subsumed by R2, which is cleaner.\n * R2 is the only field-uniform fix and\
+  \ is no longer a gamble: supp D is finite over R, hence\n   contained in a single\
+  \ affine open of C x_k Spec R (avoidance for families, Stacks 0B8B), so a\n   cover\
+  \ with one straddling piece always exists.  Generalising FinCoverData's piece type\
+  \ to\n   arbitrary affine opens of the relative curve is the statement the geometry\
+  \ already supports.\n\nRelated and settled the same round: the on-stratum witness\
+  \ the no-go lacked now exists at g >= 2\nover any field (ADDENDUM 4 §4.3), so the\
+  \ no-go is not vacuous on the campaign's stratum; and\nADDENDUM 3's shrink-stability\
+  \ argument was the wrong criterion (a span-top cover cannot delete a\npoint) --\
+  \ under the criterion it stated, the campaign's own genus-0 example would be evaded.\n"
+status: done
 kind: report
 priority: high
 depends_on: []
@@ -51,5 +61,5 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-26T06:43:12.294004+00:00'
+  updated_at: '2026-07-26T06:49:26.482349+00:00'
   milestone: w4-gate

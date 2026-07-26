@@ -1,0 +1,112 @@
+id: I-0361
+provider: local
+kind: issue
+body: "UNROOTED CODE UNDER LOAD-BEARING CLAIMS: 93 of 620 modules are outside `lake\
+  \ build`, 47 of them\nalso dirty, and the DD-R \"landed foundation\" is entirely\
+  \ inside them (measured 2026-07-26,\nbuild-reach lane; full numbers and the rooting\
+  \ order are on roadmap row `AJCR.w4-rep.build-reach`).\n\nWHY THIS IS AN ISSUE AND\
+  \ NOT A NOTE. `lake build AlgebraicJacobian` elaborates only the 526\nmodules reachable\
+  \ from the root aggregator. 93 are not. 47 of those 93 have no olean at all, or\n\
+  an olean lake itself considers out of date (recorded import hashes disagreeing with\
+  \ the rooted\nbuild, `.trace.nobuild` markers, source newer than olean, or a dirty\
+  \ dependency). Zero of the 526\nrooted modules fail the same test. Separately, hgraph\
+  \ carries 627 nodes whose `file:` is one of\nthe 93 and marks 626 of them `lean_status:\
+  \ lean_ok` -- that flag is auto-synced and is not\nevidence. (The LaTeX blueprint\
+  \ is clean: no `\\lean{}` name points into an unrooted module.)\n\nTHE HEADLINE.\
+  \ The ACTIVE row `AJCR.w4-rep.datum.dat-d.ddr` says \"High-window relations, fibre\n\
+  models, nonreduced quotient flatness, chart quotient transfer, pointwise RD-N, the\
+  \ unconditional\ngenerator, universal second-window containment ... and the pulled\
+  \ degree-g identity are complete\",\nand `...dat-d` repeats it. Every one of those\
+  \ clauses is discharged only in unrooted modules, and\nmost of them are dirty. Read\
+  \ every DD-R \"DONE\" as source-level only until it is rooted.\n\nLIVE-UNROOTED,\
+  \ NAMED, WITH THE SPECIFIC CLAIM AT RISK (22 modules; 58 more are only in their\n\
+  import cones). \"[dirty]\" = artifact absent or out of date as well as unchecked.\n\
+  \n 1. Picard/DivSchemeSeedUnivPointwiseGenerator.lean -- `...ddr.rdn` is DONE on\
+  \ \"PointwiseSeedRDN\n    is now promoted to an unconditional ThetaGeneratorSeed.IsGenerator.\
+  \ Landed endpoints:\n    pointwiseGeneratorSeed/isGenerator_pointwiseGeneratorSeed\"\
+  \ (:258, :274). Both declarations\n    exist nowhere else in the tree. This is the\
+  \ RD-N keystone of the whole DD-R generator chain.\n 2. Picard/DivSchemeSeedUnivPulledDegree.lean\
+  \ [dirty] -- `...ddr.certificate.cert-assemble`\n    (PENDING) says \"hdeg is ALREADY\
+  \ PROVED\n    (deg_presentationDivisor_pulledEquations_pointwiseGeneratorSeed, :354)\"\
+  . THE SHARPEST CASE:\n    unrooted, its olean is older than its source, AND lake\
+  \ left a `.trace.nobuild` marker on it.\n    An open plan's stated input is backed\
+  \ by an artifact that provably does not match the source.\n 3. Picard/DivSchemeSeedUnivPointwise.lean\
+  \ -- `...ddr.rdn` (DONE) cites PointwiseSeedRDN (:145);\n    `...chart-avoid` (DONE)\
+  \ and `...cert-assemble` cite pointwiseSide (:88); spec-dd-r.md:502.\n 4. Picard/DivSchemeHighWindowTransitionSaturation.lean\
+  \ [dirty] -- `...ddr.coefficient-saturation`\n    is DONE on \"the public endpoint\
+  \ is\n    exists_divUniversalHighWindowShiftedRelationTransitionOfLE_mem_relation_of_mem_readIdeal\"\
+  \ (:424).\n 5. Picard/DivSchemeHighWindowQuotientBridge.lean [dirty] and\n 6. Picard/DivSchemeRedesignChartReadIdeal.lean\
+  \ -- `...ddr.quotient-bridge` is DONE on\n    \"B/chartReadIdeal(seedK) flat on\
+  \ both pinned charts\" (chartReadIdeal, ChartReadIdeal:75).\n 7. Picard/DivSchemeHighWindowRelationKoszulConjugacy.lean\
+  \ [dirty] and\n 8. Picard/DivSchemeHighWindowFibreModelInduction.lean [dirty] --\
+  \ `...ddr.koszul-flatness` is DONE:\n    \"Endpoints are in DivSchemeHighWindowRelationKoszulConjugacy\
+  \ and ...FibreModelInduction\".\n 9. Picard/DivSchemeHighWindowFibreModelBase.lean\
+  \ [dirty] -- `...ddr.seed-fibre-models` DONE.\n10. Picard/DivSchemeHighWindowFibreWindow.lean\
+  \ [dirty] -- `...ddr.hw-foundation` DONE,\n    \"Evidence includes ... DivSchemeHighWindowFibreWindow\"\
+  .\n11. Picard/DivSchemeHighWindowSecondContainment.lean [dirty] -- the \"universal\
+  \ second-window\n    containment ... complete\" clause of the ACTIVE `...dat-d.ddr`\
+  \ row; proved only at :79/:114.\n12. Picard/DivSchemeHighWindowPointwiseGenerator.lean\
+  \ [dirty],\n13. Picard/DivSchemeHighWindowPencilDivisor.lean [dirty],\n14. Picard/DivSchemeHighWindowFibreNormalization.lean\
+  \ [dirty] -- I-0309 (OPEN) records these as\n    built green and axiom-clean; that\
+  \ record is not reproducible by the configured build.\n15. Picard/EntryIdeal.lean\
+  \ and\n16. Picard/DivSchemeFlatteningBridge.lean -- `...ddr.flattening-fallback`\
+  \ (PENDING, \"REJECTION\n    REOPENED\") pins its entire cheapest experiment on\
+  \ entryIdeal_le_prime_iff (:379),\n    relMatrix_eq_zero_of_flat (:245), exists_matrixPresentation_of_isLocalizedModule\
+  \ (:470);\n    `...away-kerspan` (BLOCKED) repeats the same lead.\n17. Picard/DivSchemeRedesignRDNChart.lean,\n\
+  18. Picard/DivSchemeRedesignRDN.lean,\n19. Picard/DivSchemeRedesignSeedFinish.lean\
+  \ -- informal/spec-dd4-fieldvanishing.md's RECOMMENDED\n    repair (:216, :251,\
+  \ :279) plans to \"reuse landed chartColengthModule_finite\" (RDNChart:119),\n \
+  \   and cites flat_chart_colength_divUniversalSeedK (RDN:94) and chartColengthModuleBase_finite\n\
+  \    (SeedFinish:92) as landed. A worksheet-level plan whose reused inputs are unverified.\n\
+  20. Picard/DivSchemeRedesignSeedUniv.lean -- `...chart-avoid` (DONE) cites seedUniv'\
+  \ (:180);\n    spec-dd-r.md:501.\n21. Picard/DivSchemeRedesignFibreCut.lean -- cited\
+  \ from a ROOTED file,\n    Picard/DivSchemeRedesignHsub.lean:52.\n22. Picard/DivRepKit.lean\
+  \ [dirty] -- `...ddr.divrep.lift` (ACTIVE), `...cert-relocalize`,\n    `...dat-c.c9-chartlocus.c9b`\
+  \ all cite DivRepGlobalData (:68) / representableBy (:113).\n    informal/w4-rep-critical-path.md:48-50\
+  \ already flags it UNROOTED. A LANE IS ROOTING IT NOW;\n    listed for completeness\
+  \ only.\n\nSEPARATE AND WORSE: Picard/Pic0ThetaCocycle.lean. informal/w7-k1-worksheet.md\
+  \ is the RATIFIED,\nmandated worksheet for the OPEN row `AJCR.w7-functor.k1` and\
+  \ states at :114, :371, :375 that\n`pic0Theta k k C = cocycleIdRHS k C` and `pic0Theta\
+  \ k M C = cocycleRHS k L M C` \"elaborate with\nzero errors\"; I-0224 calls picEtAffHom_congr\
+  \ and the Leg-1..3 reduction \"GREEN\". The file has NO\nolean/ilean/trace/hash\
+  \ -- nothing in it has ever been checked -- and I-0359 measured it at 34.1 GB\n\
+  RSS after 4:58 still climbing, so it cannot be elaborated on this machine as written.\
+  \ It also\nholds the only real sorry outside Challenge.lean (:268). Do not plan\
+  \ W7-K1 against it unsplit.\n\nNOT AT RISK, for contrast: 11 modules are SUPERSEDED\
+  \ (the kappa(p)/kappa(z) Redesign branch that\nspec-dd4-fieldvanishing.md sec.0\
+  \ calls a dead end -- KappaZEquiv/Fibre/Purity/Seed,\nFlatIdealFibre/LocalIdealFibre/PointPrime\
+  \ (never elaborated), RankOneChart/RankOneFibre,\nRangeFlatBridge, SeedUnivSecondWindowMap)\
+  \ and 1 is scratch (ScratchChartLocal, decl\n`test_chart_local`, no licence header).\
+  \ No open row, worksheet or inbox item names a declaration\nin any of them. They\
+  \ are delete candidates, not rooting candidates.\n\nASKS. (a) Do not mark another\
+  \ DD-R row DONE citing an unrooted declaration; name the command that\nelaborated\
+  \ it, per I-0324's rule. (b) Root in the order on `AJCR.w4-rep.build-reach` -- start\
+  \ with\nthe artifact-clean RD-N keystone cones (SeedUnivPointwise 12 modules / 2,430\
+  \ L, then\nPointwiseGenerator 16 / 3,183 L), leave the high-window tower for last\
+  \ (up to 74 modules /\n16,968 L, half dirty). (c) Budget for cost: the 93 unrooted\
+  \ modules carry 551 raised\nmaxHeartbeats/maxRecDepth options across 66 files against\
+  \ 447 across 99 rooted files, so rooting\nthem more than doubles the heavy-elaboration\
+  \ surface -- small batches, each with a green build.\n(d) Decide an hgraph resync\
+  \ policy: 626 `lean_ok` nodes over unrooted files is the largest single\nfalse statement\
+  \ about this project's state."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-26T06:49:28.774897+00:00'
+updated_at: '2026-07-26T06:49:28.774911+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0011-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '4'
+    rounds: '12'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
