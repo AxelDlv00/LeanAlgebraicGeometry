@@ -221,7 +221,13 @@ gives `Smooth.of_smoothOfRelativeDimension_one`, both instances, and that module
 planning without knowing which."* That question was settled in the **same round**:
 `informal/spec-dd-r.md` **ADDENDUM 4** (commit `d7e8348ce`) is titled *"the on-stratum witness
 EXISTS"*, and roadmap leaf `…ddr.certificate.field-size` is `done` carrying the sharp theorem.
-Independently re-derived this round, and it agrees:
+
+**The conclusion stands on ADDENDUM 4, not on what follows.** A ground review corrected the
+first draft of this subsection, which claimed the argument below "agrees with" ADDENDUM 4 and holds
+"over any field". It does neither. ADDENDUM 4 §4.3 uses the universal divisor over `Sym^g C`,
+base-changes to an extension and pads by `(g−1)Q₀`, and states at `spec-dd-r.md:826` that no
+rational-point hypothesis is used anywhere. What follows is a **different, cheaper witness** — a
+pencil rather than `Sym^g` — with a side condition ADDENDUM 4 does not need:
 
 > For any `g ≥ 2`, take a pencil of degree `g` on `C` one of whose members is a divisor
 > `E ≥ s₀ + s_∞` with `π(s₀) = 0`, `π(s_∞) = ∞`. Such an `E` exists: `ℓ(E) = 1 + ℓ(K − E)`, so any
@@ -233,9 +239,18 @@ Independently re-derived this round, and it agrees:
 > hence **connected after every Zariski shrink of the base** — which is exactly why the shrink
 > evasion that kills the `g = 1` case does not apply here.
 
-So: **the fixed-pair certificate route is dead on the campaign's own stratum**, over any field.
-Do not re-run this experiment. Do not formalise the witness either — ADDENDUM 4 §4.5 explains why
-(it needs `Sym^g C` / `Hilb^g`, and this tree constructs no curve other than `P¹`).
+**The side condition, and it is not cosmetic.** Writing `s₀ + s_∞` and computing
+`ℓ(K − s₀ − s_∞) ≥ g − 2` treats `s₀, s_∞` as *degree-1* points. Over a non-closed field the
+minimal closed points `q₀ ∈ π⁻¹(0)`, `q₁ ∈ π⁻¹(∞)` have residue degrees `e₀, e₁`, and an effective
+`E ≥ q₀ + q₁` of degree `g` exists only if **`e₀ + e₁ ≤ g`**. Over `𝔽₂` with `g = 2` and
+`e₀ = e₁ = 2` this witness does not exist — which is exactly the regime ADDENDUM 4 §4.4's
+"only if" direction isolates. Secondly, the `g = 2` case above needs `π` chosen so that `s_∞` is
+the hyperelliptic conjugate of `s₀`, whereas ADDENDUM 4 holds for any finite dominant `π`.
+
+So: **the fixed-pair certificate route is dead on the campaign's own stratum** — on ADDENDUM 4's
+authority, for every field; and the pencil above is a cheaper witness for the sub-case
+`e₀ + e₁ ≤ g`. Do not re-run this experiment. Do not formalise either witness — ADDENDUM 4 §4.5
+explains why (it needs `Sym^g C` / `Hilb^g`, and this tree constructs no curve other than `P¹`).
 
 ### 7.4 The live strategic question is R1 versus R2, and it is not "which is cheaper"
 
@@ -260,14 +275,67 @@ made with a costing of `dat-g`, not with a costing of `p1-aut` alone.
 
 ### 7.5 What `Challenge.lean:99` reduces to today
 
-Composing `JacobianData.ofCharts` with the frozen discharge `Jacobian C := (jacobianData C).J`, the
-target is now exactly:
+Composing with the frozen discharge `Jacobian C := (jacobianData C).J`, the target is now exactly:
 
-> **a finite Zariski atlas of `pic0SigmaFunctor C`** — a finite `ι`, schemes `X i`, maps
+> **a Zariski atlas of `pic0SigmaFunctor C`** — an index `ι`, schemes `X i`, maps
 > `f i : yoneda.obj (X i) ⟶ pic0SigmaFunctor C` such that (1) each `f i` is a relatively
-> representable open immersion, (2) `Sigma.desc f` is Zariski-locally surjective, (3) each `X i` is
-> quasi-compact with locally-of-finite-type structure morphism.
+> representable open immersion, (2) `Sigma.desc f` is Zariski-locally surjective, (3) each chart's
+> structure morphism is locally of finite type and the glued object is quasi-compact.
 
-Sheafhood, the 01JJ gluing, the Σ-descent and both finiteness certificates are discharged. (1) is
-roadmap `dat-c` C9b, (2) is `dat-b` B-6, and (3) touches the Picard functor not at all. Everything
-below the atlas — L9 through L14 — exists to produce (1) and (2).
+Sheafhood, the 01JJ gluing, the Σ-descent and both finiteness certificates are discharged.
+
+**Three corrections a ground review forced on the first draft of this subsection, all of which
+matter to anyone planning off it.**
+
+* **The atlas is NOT finite, so the producer to aim at is `JacobianData.ofChartsOfCompactSpace`
+  (`JacobianDataCharts.lean:199`), not `ofCharts`.** The chart index is
+  `ChartIndex C := (m : ℕ) × {Σ // 0 ≤ Σ ∧ deg Σ = m·d₁ − g}` (`informal/w4-datb-worksheet.md:161`),
+  a `Σ` over all `m : ℕ`, and the worksheet says at :66-71 that the `m`-strata do not collapse, so
+  no uniform bound exists. `locallyOfFiniteType_gluedHom` never needed finiteness (being locally of
+  finite type is local on the source); the whole finiteness burden therefore collapses onto the
+  single statement `CompactSpace` of the glued object — which is the DAT-J image argument, a
+  theorem about the Jacobian and not bookkeeping.
+* **Clause (2) is not a free-standing leaf; it IS the gate.** The only builder of an `f i` is
+  `abelSigmaChart` (`Picard/Pic0AtlasFromDivRep.lean:203`), which consumes
+  `(divFunctor C π n).RepresentableBy`, and `divFunctor` is by definition the functor of *locally
+  certified* families (`Picard/DivisorFamilyZarFunctor.lean:41-45`). So (2) asserts that certified
+  families cover — which is exactly what the no-go denies. See §7.6.
+* Only clause (3) is genuinely cheap.
+
+Everything below the atlas — L9 through L14 — exists to produce (1) and (2).
+
+## 7.6 The gate is L8, not U2 — and that is the round's main finding
+
+Inbox **I-0365**. The framing "the divrep tail is independent of the certificate; the certificate
+gates U2" is false, but not in the direction the tree assumed.
+
+`DivFamZar` is **by definition** a quotient of *locally certified* families
+(`Picard/DivisorFamilyZar.lean:224` the setoid, `:235` the def, `:71` `IsLocallyCertified` — note it
+localises on the base only). So certificates are **free on the consuming side**:
+`DivFamZar.exists_certChartCover` (`Picard/DivRepClassifyZarKit.lean:433`) is a landed theorem,
+unfolded by every classifier keystone (`DivRepClassifyZar.lean:128/:176/:230`,
+`DivRepClassifyZarSep.lean:361/:363`), and `IsDivRepClassify` (`DivRepClassifyZar.lean:90`)
+quantifies over certified families as a *hypothesis*, so their scarcity makes it easier, not harder.
+
+The bite is on the other side. The no-go (`DivSchemeCertZarC1.lean:123` — clause (c1) *is*
+leak-freeness — and `:131`) says `DivFamZar` is blind to connected divisors meeting both pinned
+fibres. So `divFunctor C π g` is a **proper subfunctor** of degree-`g` relative divisors.
+Representing it is not the problem; the L9–L13 tail does that honestly. The problem is that a
+too-small divisor functor **cannot cover Pic⁰**: the Abel map out of it is not Zariski-locally
+surjective, because the classes whose only witnesses are the invisible divisors are never hit.
+
+One nuance that sharpens where to look: the no-go's hypothesis is `IsPreconnected d.supportLocus`,
+and **over a field it is vacuous** — the support of a divisor is a finite set of closed points, so
+preconnected forces a single point, which cannot meet two disjoint fibres. The blindness is a
+purely *relative* phenomenon: a family over a positive-dimensional base whose total support is a
+connected horizontal curve sweeping from `π⁻¹(0)` to `π⁻¹(∞)` is invisible, and base shrinking does
+not help because every neighbourhood of the crossing contains points on both sides. So
+Riemann–Roch-level, fibrewise coverage is untouched — but local surjectivity of a *presheaf* map is
+tested on arbitrary scheme tests, which is exactly the relative direction.
+
+**Consequences.** (i) Stop calling U2 or the affine package "the gate": they are tail work and are
+nearly finished. (ii) Do not attack L8 against `divFunctor` as it stands — it is arguably false,
+not merely hard. (iii) Judge R1 and R2 by whether they widen `DivFamZar` enough for L8, not by
+whether they make a certificate easier to prove. A third widening is worth costing beside them:
+replace `IsLocallyCertified` outright by the standard relative effective Cartier divisor (finite
+locally free of rank `g` over the base), which carries no chart-adaptation artifact at all.
