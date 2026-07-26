@@ -33,7 +33,13 @@ which carries the full charter (target, constraints, working model, and phases).
 - `AlgebraicJacobian.lean` — the library root import list, and the index of what is actually
   checked: `lake build`'s default target is this module, so a new file is **not** elaborated by a
   bare `lake build` until it is imported here. Add the import, or check the file explicitly by
-  module name.
+  module name. **This gap is large, not hypothetical:** 624 `.lean` files exist under
+  `AlgebraicJacobian/` and the root imports 499, so ~125 modules are never kernel-checked by a
+  bare `lake build`. An unrooted module looks green because no job runs it — see inbox `I-0361`
+  (the tracked list) and `I-0362` (why it bites). Check the root before trusting a "landed" claim.
+- `informal/` — 76 design worksheets, brick specs, and recon dumps (~26k lines). **Start from
+  [`informal/README.md`](informal/README.md)**, which says what each file is for and which are
+  superseded; several are pinned to routes that have since been abandoned.
 - `blueprint/` — a clean **mathematical** blueprint (no Lean code in the prose; nodes carry `\lean{}`
   and `\source{}` anchors). Build with `leanblueprint pdf` / `leanblueprint web`.
 - `archon-protected.yaml` — the mathematician-owned signatures agents must not modify.

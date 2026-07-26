@@ -32,6 +32,34 @@ If the `update-ref` CAS fails (HEAD moved), re-read HEAD and repeat — never fo
 ALWAYS verify afterward: `git --git-dir=$GD show --stat HEAD` must touch only your paths.
 A single-lane session may keep the plain `add`+`commit` recipe, but must still verify.
 
+### 1b. The CAS recipe leaves the SHARED index permanently stale — this is by design, and it is armed
+
+Added 2026-07-27 (run 0048 r5) after this failed a **third** time (`I-0366`: the shared index
+was pinned to a pre-round-5 snapshot and a bare `git commit` would have deleted
+`Picard/JacobianDataCharts.lean` and un-rooted it from `AlgebraicJacobian.lean` in one commit).
+
+The mechanism is not a bug in anyone's lane, it is the direct consequence of §1: a CAS commit
+publishes a tree built in a **private** `GIT_INDEX_FILE` and moves the ref with `update-ref`.
+The **shared** index is never touched, so the moment anybody commits, the shared index still
+describes the previous HEAD — and `git status` then reports that difference as *staged changes*,
+including **staged deletions** for any file the commit added. The longer a run goes, the further
+the shared index drifts behind.
+
+Consequences, all three binding:
+
+1. **Never run a bare `git commit` (no `-a`, no pathspec) against `workspace.git`.** It publishes
+   whatever the stale shared index holds, which is a reversion of other lanes' work.
+2. **Before finishing, check and repair.** `git --git-dir=$GD --work-tree=. status --porcelain | grep '^D'`
+   must be empty. If it is not, repair with the **narrowest** form that covers your paths:
+   `git --git-dir=$GD --work-tree=. reset -q -- <your project dir>/`. Prefer this to a whole-index
+   `read-tree HEAD` when another run is live — a full reset can discard the other run's staging.
+3. **Verify the worktree is the good copy before repairing.** `reset` makes the index match HEAD;
+   that is only safe once you have confirmed the on-disk file is the one you want
+   (`diff <(git --git-dir=$GD cat-file -p HEAD:<path>) <path>`).
+
+Expect to repeat step 2 more than once in a long session: every CAS commit by any lane re-stales
+the index, so a repair done early does not stay done.
+
 ## 2. The lake mutex is a mkdir DIRECTORY lock — never flock a file there
 
 `/tmp/claude-1001/ajcr-locks/lake.lock` is acquired by `mkdir` (atomic; a crash leaves a
