@@ -2,9 +2,11 @@ id: AJC.fbc
 title: Flat base change (three leaves open)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: For flat g, prove base change for higher direct images. The affine termwise
-  comparison is complete; remaining are flat pullback preserving finite limits and
-  the naturality fields of cech_pushforward_baseChange_natIso and twisted_cech_nerve_iso.
+summary: For flat g, prove base change for higher direct images. The global flat-base-change
+  scaffolding (Cohomology/FlatBaseChange, Cohomology/FlatBaseChangeGlobal) and the
+  affine termwise comparison are sorry-free; the three open obligations all live in
+  Cohomology/CechHigherDirectImageUnconditional -- flat pullback preserving finite
+  limits, and the naturality fields of cech_pushforward_baseChange_natIso and twisted_cech_nerve_iso.
 status: pending
 kind: proof
 priority: high
@@ -17,5 +19,5 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:43.293058+00:00'
-  updated_at: '2026-07-23T13:46:26.021053+00:00'
+  updated_at: '2026-07-26T16:52:54.080195+00:00'
   parent: AJC.cohomology

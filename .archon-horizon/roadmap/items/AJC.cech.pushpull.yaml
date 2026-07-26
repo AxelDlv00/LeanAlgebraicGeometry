@@ -3,9 +3,11 @@ title: Higher direct images and pushPull functoriality
 projects:
 - Algebraic-Jacobian-Challenge
 summary: 'Sorry-free. Higher direct images as derived pushforward, their presheaf
-  model, acyclicity of pushforward along an affine morphism, the essential image of
-  affine pushPull, and pushforward along an open immersion. Modules: Cohomology/HigherDirectImage,
-  Cohomology/HigherDirectImagePresheaf, Cohomology/AffinePushPullEssImage, Cohomology/OpenImmersionPushforward.'
+  model, the relative Cech complex of a cover and its pushPull functoriality (composition,
+  leg coherence, pentagon), acyclicity of pushforward along an affine morphism, the
+  essential image of affine pushPull, and pushforward along an open immersion. Modules:
+  Cohomology/HigherDirectImage, Cohomology/HigherDirectImagePresheaf, Cohomology/CechHigherDirectImage,
+  Cohomology/AffinePushPullEssImage, Cohomology/OpenImmersionPushforward.'
 status: done
 kind: proof
 priority: normal
@@ -28,3 +30,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.cech
+  updated_at: '2026-07-26T16:52:52.902916+00:00'

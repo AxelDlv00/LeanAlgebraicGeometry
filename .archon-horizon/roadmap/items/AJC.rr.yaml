@@ -1,10 +1,10 @@
 id: AJC.rr
-title: Riemann--Roch and divisor remnant
+title: Riemann--Roch, divisors, and the adelic genus
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The adelic genus and cohomological-finiteness lane is complete. The sole
-  remaining in-tree Riemann--Roch leaf is the proof that principal divisors have degree
-  zero in WeilDivisor.
+summary: The adelic Riemann--Roch lane is complete and sorry-free, as is the Weil-divisor
+  and degree substrate. The single remaining in-tree obligation is that a principal
+  divisor has degree zero.
 status: pending
 kind: proof
 priority: normal
@@ -27,3 +27,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
+  updated_at: '2026-07-26T16:52:51.837973+00:00'
