@@ -10696,6 +10696,35 @@ engine, and a representation of the extension descends to one of the original fu
   scheme; compose with Theorem~\ref{thm:representableBy_overSlice}.
 \end{proof}
 
+This is a conditional statement, and the condition is the whole of the construction of the
+Picard scheme. Spelled out, the hypothesis asks for a family of schemes \(X_i\) together
+with maps \(\mathrm{yoneda}(X_i) \to \widetilde{\mathrm{pic}^0}(C)\) such that
+
+\begin{itemize}
+  \item each \(f_i\) is \emph{relatively representable by an open immersion}: for every
+    scheme \(T\) and every \(\Sigma\)-element \(\xi \in \widetilde{\mathrm{pic}^0}(C)(T)\),
+    the fibre product \(\mathrm{yoneda}(X_i) \times_{\widetilde{\mathrm{pic}^0}(C)} T\) is
+    representable by an open subscheme of \(T\) --- so each \(f_i\) exhibits \(X_i\) as an
+    \emph{open piece} of the functor, with the openness verified at every test, not merely
+    at points;
+  \item the family is \emph{jointly Zariski-locally surjective}: every element of
+    \(\widetilde{\mathrm{pic}^0}(C)(T)\) is, after restriction to the members of some open
+    cover of \(T\), in the image of some \(f_i\).
+\end{itemize}
+
+Neither is available for free. A degree-zero class over a test \(T\) is not represented by
+a divisor over \(T\) itself; producing a divisor requires passing to a cover and choosing an
+effective representative of a twist, which is exactly the content of the second condition.
+The first condition asks that the locus where such a representative exists in a fixed
+family be open in every test --- the openness statement that, in Grothendieck's argument,
+comes from semicontinuity of \(h^0\) along the Abel map from a scheme of divisors.
+
+Producing such a family for \(C\) is the open problem: the divisor half of the construction
+is Chapter~\ref{chap:DivisorScheme}, whose forward direction
+(Theorem~\ref{thm:divRepUniversalFamily}) is unproved, and the chart family is
+Corollary~\ref{cor:divRepToJacobian}, which rests on it. Until then this definition has no
+producer, and the degree-zero Picard functor of \(C\) is not known to be representable.
+
 \section{The Abel element}
 \label{sec:abelElement}
 

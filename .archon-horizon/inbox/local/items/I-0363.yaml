@@ -1,0 +1,81 @@
+id: I-0363
+provider: local
+kind: issue
+body: "NET RESULT OF THE ROUND-4 SEVEN-FRONT RECON (2026-07-26, run 0048). 7 recon\
+  \ agents, each checked by\n3 adversarial refuters with distinct lenses; 21 of 21\
+  \ refuters overturned something. Read this\nbefore acting on any of the fronts'\
+  \ own reports, which are NOT reliable on their own.\n\nMETHODOLOGICAL HAZARD, and\
+  \ it invalidated a chunk of the pass: THE RECON READ A MOVING TREE. A\nproving lane\
+  \ deleted Picard/DivRepAffKitZar.lean and retyped divRepPullAt's chart-family argument\n\
+  WHILE the recon was running. Five separate recon reports cited that file and its\
+  \ six declarations\nwith line numbers, and every ranked move they typed against\n\
+  `U : forall i j, CertifiedDivisorFamily ...` is now ill-typed, because divRepPullAt,\n\
+  DivRepChartFamily.IsCompatible, divRepPullAt_mapAlgHom_eq_of_chartFactor and\nisCompatible_of_isDivRepClassify_divRepPullAt\
+  \ all take `DivFamZar C (ChartRing i j) pi g` since\ncommit 1e4ac5b52. Several reports\
+  \ also quoted DOCSTRING PROSE as if it were a definition body --\nthe exact failure\
+  \ mode they were briefed to avoid. RULE: do not run a wide read-only recon\nconcurrently\
+  \ with lanes that edit the files it reads; pin a commit, or serialise.\n\nCORRECTIONS\
+  \ THAT CHANGE WHAT A SESSION WOULD DO.\n\n1. away-kerspan: THE ROADMAP WAS RIGHT,\
+  \ the recon was wrong. 'hinj is provably equivalent to clause\n   (c4)' is landed\
+  \ in BOTH directions, sorry-free, and IN THE DEFAULT BUILD --\n   ker_rTensor_le_range_subtype_iff_liftQ_rTensor_injective\
+  \ (DivSchemeHighWindowSyzygy.lean:56) plus\n   Syzygy.lean:140 and SlicingFlatKernel.lean:192,:296.\
+  \ The recon opened only :56, saw no\n   Module.Flat, and stopped. Do not weaken\
+  \ that leaf.\n\n2. c9b: 'develop it parametrically over (divRep : (divFunctor C\
+  \ pi g).RepresentableBy DivOver)' does\n   NOT unblock the deliverable. The (f,\
+  \ hf) pair additionally needs CERT-Sigma (zero producers) and\n   CHART-U(a)/(b)\
+  \ (zero producers). The 'parametric idiom' framing is empty in both directions:\n\
+  \   DivRepKit.lean:113 and ThetaShift.lean:227 have the same shape (an ordinary\
+  \ explicit parameter),\n   so neither is a special idiom and citing either proves\
+  \ nothing.\n\n3. A LINK NOBODY HAD NAMED, and it is a real one: pic0RepresentableByOfCharts\
+  \ consumes charts on the\n   BIG site (yoneda.obj (X i) --> (pic0SigmaSheaf C).1,\
+  \ i.e. into Over.sigmaExtension), while every\n   divisor and Picard datum in the\
+  \ tree lives on the SLICE (Over (Spec k))^op. OverSigmaExtension.lean\n   supplies\
+  \ only one direction. One refuter argues mathlib's yonedaEquiv closes the gap, another\n\
+  \   that it does not; it is CONTESTED and cheap to settle by writing the bridge\
+  \ or failing to.\n\n4. THE CHEAPEST divRep-FREE WIN ON THE WHOLE SUBTREE, and nobody\
+  \ has taken it: chartValue,\n   picEtMap_chartValue and chartValue_mem_pic0Subgroup\
+  \ are all landed sorry-free in\n   Picard/DivSchemeAbel.lean with ZERO consumers\
+  \ tree-wide. They assemble into the natural\n   transformation from the divisor\
+  \ functor to the pic0 type functor that c9b, dat-glue and dat-b B-5\n   all need.\
+  \ CAVEAT from a refuter, and it is the part to check first: abelDivTrans lands in\
+  \ the\n   DEGREE-n layer, not pic0, and chartValue is a bare function never packaged\
+  \ as a morphism -- so\n   the '~15 lines' estimate is optimistic and the shift to\
+  \ degree 0 is part of the job.\n\n5. p1-aut is cheaper than the leaf implies on\
+  \ the mathlib side -- Proj.map, map_id, map_comp and\n   map_preimage_basicOpen\
+  \ all ship at this rev (ProjectiveSpectrum/Functor.lean:144,204,211,156) --\n  \
+  \ but the real cost is the compatibility of Proj.map with Proj.toSpecZero, i.e.\
+  \ keeping the frozen\n   hpi triangle over Spec k, and mathlib has NO such lemma.\
+  \ That cost is ALREADY stated as the first\n   clause of the p1-aut leaf's obligation\
+  \ (iii); only inbox I-0350 item 2 omits it. Also:\n   map_preimage_basicOpen is\
+  \ rfl only in the shape basicOpen (f s); the project-facing form needs\n   bind1\
+  \ l (X i) = l i, which is simp-proved, not defeq.\n\n6. No cheaper route exists\
+  \ and the sibling is NOT ahead: its HasPicScheme is a bare <sorry>\n   (FGAPicRepresentability.lean:317),\
+  \ so everything downstream there carries sorryAx. mathlib at this\n   rev has no\
+  \ Picard scheme, no Quot, no Hilbert scheme, no Grassmannian scheme. What the sibling\
+  \ DOES\n   have and is worth porting is its Speiser / finite-Galois-quotient stack\
+  \ (Scheme.{u}, Mathlib-only\n   imports, sorry-free) which pre-builds dat-g, and\
+  \ Picard/ZariskiDescentRepresentability.lean.\n\n7. Front 5's claim that the orphan\
+  \ set contains 'the entire DivSchemeRedesign*/DivSchemeSeedUniv*/\n   DivSchemeHighWindow*\
+  \ families' is FALSE and was corrected: only a minority of each family is\n   unrooted\
+  \ (the audit's counts are counts of unrooted MEMBERS, not whole families), and\n\
+  \   DivSchemeHighWindowSyzygy and SlicingFlatKernel in particular ARE in the default\
+  \ build. Do not\n   use the orphan audit to dismiss that material."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-26T06:55:18.765622+00:00'
+updated_at: '2026-07-26T06:55:18.765635+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0011-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '4'
+    rounds: '12'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild

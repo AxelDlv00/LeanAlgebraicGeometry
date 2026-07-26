@@ -1,8 +1,32 @@
 id: I-0320
 provider: local
 kind: memory
-body: "THE DD-R CERTIFICATE GATE WAS OVER-STRONG FOR ~7 SESSIONS (adjudicated 2026-07-25,\
-  \ run 0047).\n\nThe DD-R certificate lane (AJCR.w4-rep.datum.dat-d.ddr.certificate)\
+body: "NOTE APPENDED 2026-07-26 (run 0048 round 4). This item is still correct and\
+  \ still the right rule,\nbut its optimism about what the relaxation BUYS has now\
+  \ been tested and bounded. Read I-0360 with it.\n\nWHAT SURVIVES UNCHANGED: the\
+  \ rule (\"before grinding a certificate/finiteness hypothesis, check what\nthe actual\
+  \ CONSUMER's predicate is\"), the five landed relaxation bricks, and the observation\
+  \ that\nevery DD-R consumer goes through DivFamZar / IsLocallyCertified rather than\
+  \ a global IsCertified\nover R. That was real and it was worth landing. Round 4\
+  \ pushed it one interface further: the F5\nforward map divRepPullAt now TAKES a\
+  \ DivFamZar class per chart instead of a CertifiedDivisorFamily\n(commit 1e4ac5b52),\
+  \ so the interface finally matches the consumer, which is what this item asked for.\n\
+  \nWHAT IS NOW KNOWN AND WAS NOT THEN: the relaxation does not unblock U1. The chart-confinement\
+  \ no-go\nis about PRODUCING a certificate, not consuming one, and IsLocallyCertified\
+  \ fails for exactly the\ndivisors IsCertified fails for -- supportLocus is DivEq-invariant\
+  \ (DivSchemeCertZarConfine.lean:110)\nand shrink-stable (DivSchemeCertZarTransport.lean),\
+  \ and DivSchemeCertZarC1.lean:30-31 states it\nverbatim: DivFamZar is blind to connected\
+  \ divisors meeting both pinned fibres, over any base, after\nany Zariski shrink,\
+  \ for any adaptation. Round 4 also settled that the no-go is NOT vacuous on the\n\
+  campaign's stratum: an on-stratum witness exists at g >= 2 over any field (spec-dd-r\
+  \ ADDENDUM 4).\n\nSo the honest summary is: this item removed a hypothesis that\
+  \ was strictly stronger than any\nconsumer needed -- good hygiene, and it is what\
+  \ makes the pointwise production rules admissible --\nbut the remaining pointwise\
+  \ obligation is still the one the no-go forbids. The escape is R1 paired\nwith descent\
+  \ (correct exactly when |P^1(k)| >= g+2) or R2 (generalise FinCoverData's piece\
+  \ type),\nnot a further weakening of the certificate predicate.\n\n--- ORIGINAL\
+  \ ---\n\nTHE DD-R CERTIFICATE GATE WAS OVER-STRONG FOR ~7 SESSIONS (adjudicated\
+  \ 2026-07-25, run 0047).\n\nThe DD-R certificate lane (AJCR.w4-rep.datum.dat-d.ddr.certificate)\
   \ was attacking\n`(D.divisorAdaptation hD).IsCertified g` -- a certificate over\
   \ the WHOLE chart ring R_Z --\nvia `divisorAdaptation_isCertified_of_noLeak_kernel_spanning(_degree)`\
   \ (DivSchemeCertUniv.lean:144,\nDivSchemeCertSeed.lean:61). Its `hnoLeak` input\
@@ -36,7 +60,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-25T07:16:01.324965+00:00'
-updated_at: '2026-07-25T14:25:09.647585+00:00'
+updated_at: '2026-07-26T06:52:51.664782+00:00'
 metadata:
   provenance:
     run: '0047'

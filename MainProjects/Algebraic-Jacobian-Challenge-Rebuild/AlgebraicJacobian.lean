@@ -416,6 +416,7 @@ import AlgebraicJacobian.Picard.DivRepClassifyZarSep
 import AlgebraicJacobian.Picard.DivRepAffKit
 import AlgebraicJacobian.Picard.DivRepAffChartOverlap
 import AlgebraicJacobian.Picard.DivRepAffPullbackReduce
+import AlgebraicJacobian.Picard.DivRepGlobalLift
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
 import AlgebraicJacobian.Algebra.ABDepthSES

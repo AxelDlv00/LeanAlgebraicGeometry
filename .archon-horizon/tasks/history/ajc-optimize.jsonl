@@ -78,3 +78,8 @@
 {"at": "2026-07-25T21:54:23.402076+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-07-25T21:54:43.257947+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-07-25T23:28:24.642345+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-07-26T06:17:21.061805+00:00", "actor": "Axel", "field": "edited", "from": "", "to": "", "note": "fields updated"}
+{"at": "2026-07-26T06:17:51.300791+00:00", "actor": "Axel", "field": "edited", "from": "", "to": "", "note": "fields updated"}
+{"at": "2026-07-26T06:18:01.498316+00:00", "actor": "Axel", "field": "edited", "from": "", "to": "", "note": "fields updated"}
+{"at": "2026-07-26T06:18:01.503686+00:00", "actor": "Axel", "field": "edited", "from": "", "to": "", "note": "fields updated"}
+{"at": "2026-07-26T06:24:37.978101+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}

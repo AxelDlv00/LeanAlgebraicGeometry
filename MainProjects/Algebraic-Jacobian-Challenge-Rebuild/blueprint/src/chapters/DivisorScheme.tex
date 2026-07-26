@@ -1,0 +1,979 @@
+\chapter{The divisor scheme and the representability of \(\mathrm{Pic}^0\)}
+\label{chap:DivisorScheme}
+
+Grothendieck's construction of the Picard scheme does not represent \(\mathrm{Pic}\)
+directly. It represents first the functor of relative effective divisors, and then
+presents \(\mathrm{Pic}\) as a quotient of that divisor scheme along the Abel map: the
+Abel map is a surjection of sheaves whose fibres are linear systems, and a scheme
+representing \(\mathrm{Pic}\) is obtained by descending along it
+(\ref{def:localEquations_picClass}, and Kleiman's Theorem 4.8 and its proof).
+
+This chapter builds the divisor half of that argument for the curve \(C/k\) of
+Chapter~\ref{chap:Challenge}, in the form in which the representability seam
+\ref{def:pic0RepresentableByOfCharts} can consume it. The three steps are:
+
+\begin{enumerate}
+  \item a functor \(\Div^{\,n}_{C/k}\) of degree-\(n\) relative divisors, defined on affine
+    test algebras by \emph{local equations plus a finite chart adaptation carrying a
+    colength certificate}, and its Zariski-localised form (Sections
+    \ref{sec:divfam}--\ref{sec:divfamzar});
+  \item an embedding \(\varepsilon\) of that functor into a product of two Grassmannians,
+    sending a divisor \(D\) to the pair of window submodules
+    \(H^0(\OO(aF - D)) \subseteq H^0(\OO(aF))\) at two pinned exponents \(a\), and a closed
+    subscheme \(\mathbf{Div}\) of that Grassmannian pair carved out by the multiplication
+    condition which the image satisfies (Section~\ref{sec:divscheme}); this is
+    Grothendieck's embedding of a Quot-type functor into a Grassmannian by a twisted
+    pushforward;
+  \item the \emph{backward} half of representability --- every divisor class over an affine
+    test induces a unique morphism to \(\mathbf{Div}\), and the class is recoverable from
+    that morphism (Section~\ref{sec:divclassify}).
+\end{enumerate}
+
+The forward half --- a universal divisor family on \(\mathbf{Div}\) --- is not built here.
+Section~\ref{sec:divrep} states exactly what it must be, derives the affine equivalence and
+the chart family of \ref{def:pic0RepresentableByOfCharts} from it, and isolates the
+unproved statement (\ref{thm:divRepUniversalFamily}).
+
+Throughout, \(k\) is a field, \(C\) is a smooth proper geometrically irreducible curve over
+\(k\) of genus \(g\), \(\pi \colon C \to \PP^1_k\) is a finite dominant morphism, and
+\(F\) is its fibre Weil divisor (\ref{def:fiberWeilDivisor}). For a \(k\)-algebra \(R\) we
+write \(C_R\) for the relative curve (\ref{def:relCurve}) and \(V_0^R, V_1^R\) for the two
+pinned charts of \(C_R\) obtained by pulling back the two standard charts of \(\PP^1\)
+along \(\pi\) (\ref{def:relCover}, \ref{def:fiberTwoCover}). We abbreviate
+\(H_a := H^0(C, \OO(aF))\) (\ref{def:divisorSections}).
+
+\section{Divisor equality of local-equation systems}
+\label{sec:diveq}
+
+A local-equation system (\ref{def:localEquations}) is a presentation of an effective
+Cartier divisor, not the divisor itself: the same divisor is presented by many systems,
+differing by refinement of the cover and by unit rescaling of the equations. The relation
+below identifies exactly those, in one move.
+
+\begin{lemma}[Restriction to a refinement]
+  \label{lem:localEquations_restrict}
+  \lean{AlgebraicGeometry.Scheme.LocalEquations.restrict,
+    AlgebraicGeometry.Scheme.LocalEquations.picClass_restrict}
+  \uses{def:localEquations, def:localEquations_picClass, lem:localEquations_ratioUnit}
+  \leanok
+  Let \(d\) be a local-equation system on \(X\) adapted to a pointed cover \(\mathcal U\),
+  and let \(\mathcal V \le \mathcal U\) be a refinement (\(\mathcal V(x) \subseteq
+  \mathcal U(x)\) for every \(x\)). Restricting each equation, \(f'_x := f_x|_{\mathcal
+  V(x)}\), is again a local-equation system, and it has the same Picard class:
+  \(\mathrm{picClass}(d|_{\mathcal V}) = \mathrm{picClass}(d)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Restriction of sections is a ring homomorphism and germs are unchanged along it, so each
+  \(f'_x\) is again regular at every point of \(\mathcal V(x)\); restricting the overlap
+  equation \(f_x|_\cap = g_{xy} f_y|_\cap\) of \(d\) (\ref{lem:localEquations_ratioUnit})
+  to \(\mathcal V(x) \cap \mathcal V(y)\) shows the overlap condition, with transition unit
+  the restriction \(g_{xy}|_\cap\). Thus the unit cocycle of \(d|_{\mathcal V}\) is the
+  restriction of the cocycle of \(d\) along the refinement \(\mathcal V \le \mathcal U\).
+  In the colimit defining \(\Pic(X)\) (\ref{def:localEquations_picClass}) a cocycle and its
+  restriction along a refinement have the same class, by the definition of the colimit.
+\end{proof}
+
+\begin{lemma}[Divisor equality]
+  \label{lem:localEquations_divEq}
+  \lean{AlgebraicGeometry.Scheme.LocalEquations.DivEq,
+    AlgebraicGeometry.Scheme.LocalEquations.divEq_refl,
+    AlgebraicGeometry.Scheme.LocalEquations.DivEq.symm,
+    AlgebraicGeometry.Scheme.LocalEquations.DivEq.trans,
+    AlgebraicGeometry.Scheme.LocalEquations.picClass_eq_of_divEq}
+  \uses{def:localEquations, lem:localEquations_restrict, lem:localEquations_rescale,
+    def:localEquations_picClass}
+  \leanok
+  \source{kleiman-picard}
+  Call two local-equation systems \(d_1, d_2\) on \(X\) \emph{divisor-equal}, written
+  \(d_1 \sim d_2\), if there is a pointed cover \(\mathcal W\) refining both covers such
+  that for every \(x \in X\) the two restricted equations differ by a unit on
+  \(\mathcal W(x)\):
+  \[
+    f^{(1)}_x\big|_{\mathcal W(x)} \;=\; u_x \cdot f^{(2)}_x\big|_{\mathcal W(x)},
+    \qquad u_x \in \struct X(\mathcal W(x))^{\times}.
+  \]
+  This is an equivalence relation, and \(\mathrm{picClass}\) is constant on its classes:
+  \(d_1 \sim d_2\) implies \(\struct X(D_1) = \struct X(D_2)\) in \(\Pic(X)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \emph{Reflexivity}: take \(\mathcal W = \mathcal U\) and \(u_x = 1\).
+  \emph{Symmetry}: the same \(\mathcal W\) with \(u_x^{-1}\).
+  \emph{Transitivity}: given \(d_1 \sim d_2\) on \(\mathcal W\) with units \(u\), and
+  \(d_2 \sim d_3\) on \(\mathcal V\) with units \(v\), take the pointwise intersection
+  \(\mathcal W \wedge \mathcal V\), which refines all three covers. Restricting the two
+  equations to it and multiplying,
+  \[
+    f^{(1)}_x = (u_x|)\,f^{(2)}_x = (u_x|)(v_x|)\, f^{(3)}_x ,
+  \]
+  and \((u_x|)(v_x|)\) is a unit, being a product of restrictions of units.
+
+  \emph{Invariance of the class}: restrict both systems to the witnessing cover
+  \(\mathcal W\); by Lemma~\ref{lem:localEquations_restrict} neither class moves. On
+  \(\mathcal W\) the first restricted system is the second one rescaled by the unit family
+  \((u_x)_x\), so the two classes agree by Lemma~\ref{lem:localEquations_rescale}.
+\end{proof}
+
+\section{The relative divisor functor of the curve}
+\label{sec:divfam}
+
+Fix a \(k\)-algebra \(R\). A relative effective divisor on \(C_R/R\) is, locally on
+\(C_R\), cut out by one equation which is regular on the fibres; a local-equation system on
+\(C_R\) records exactly that, but on an \emph{arbitrary} pointed cover, and with regularity
+asked in the stalks of \(C_R\) rather than on the fibres. Two further data turn a
+local-equation system into a value of a functor with a finite presentation: a refinement of
+its cover by finitely many basic opens of the two pinned charts, and a certificate
+asserting that the resulting colength modules are finite projective over \(R\) of constant
+rank \(n\). The certificate is what plays the role of \(R\)-flatness with fibres of degree
+\(n\) in Kleiman's Definition of \(\Div^{\,n}_{X/S}\).
+
+\begin{definition}[Finite chart cover data]
+  \label{def:finCoverData}
+  \lean{AlgebraicGeometry.FinCoverData, AlgebraicGeometry.FinCoverData.pieces,
+    AlgebraicGeometry.FinCoverData.cover₀, AlgebraicGeometry.FinCoverData.cover₁,
+    AlgebraicGeometry.FinCoverData.isAffineOpen_pieces,
+    AlgebraicGeometry.le_iSup_basicOpen_of_sum_eq_one}
+  \uses{def:relCurve, def:relCover, def:fiberTwoCover}
+  \leanok
+  \emph{Finite chart cover data} on \(C_R\) consists of finitely many sections
+  \(h^0_1,\dots,h^0_{m_0} \in \struct{}(V_0^R)\) and \(h^1_1,\dots,h^1_{m_1} \in
+  \struct{}(V_1^R)\), together with coefficients \(a^\iota_j\) in the same rings satisfying
+  the two partition identities
+  \[
+    \sum_{j} a^0_j h^0_j = 1 \ \text{ in } \struct{}(V_0^R), \qquad
+    \sum_{j} a^1_j h^1_j = 1 \ \text{ in } \struct{}(V_1^R).
+  \]
+  Its \emph{pieces} are the basic opens \(P_j := D(h^\iota_j) \subseteq V_\iota^R\), indexed
+  by the disjoint union of the two index sets. Each piece is affine, and the pieces of each
+  chart cover that chart:
+  \(V_0^R = \bigcup_j D(h^0_j)\) and \(V_1^R = \bigcup_j D(h^1_j)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  A basic open of an affine open is affine, and the pinned charts are affine over the
+  base, so each \(P_j\) is affine.
+
+  For the covering claim on \(V_0^R\): let \(z \in V_0^R\) and suppose \(z \notin D(h^0_j)\)
+  for every \(j\), that is, the germ of every \(h^0_j\) at \(z\) lies in the maximal ideal
+  of \(\struct{C_R, z}\). Taking germs at \(z\) in the partition identity gives
+  \(1 = \sum_j (a^0_j)_z (h^0_j)_z\), which exhibits \(1\) as an element of the maximal
+  ideal --- impossible in a local ring. Hence some \(h^0_j\) is a unit at \(z\), i.e.\
+  \(z \in D(h^0_j)\). The same argument applies on \(V_1^R\).
+\end{proof}
+
+\begin{definition}[Finite chart adaptation of a local-equation system]
+  \label{def:divisorAdaptation}
+  \lean{AlgebraicGeometry.DivisorAdaptation, AlgebraicGeometry.DivisorAdaptation.ofAnchors}
+  \uses{def:finCoverData, def:localEquations, lem:localEquations_ratioUnit}
+  \leanok
+  \source{kleiman-picard}
+  Let \(d\) be a local-equation system on \(C_R\), adapted to a pointed cover
+  \(\mathcal U\). A \emph{finite chart adaptation} \(A\) of \(d\) consists of finite chart
+  cover data (\ref{def:finCoverData}) with pieces \(P_j\), together with sections
+  \(f_j \in \struct{}(P_j)\) subject to the \emph{refinement clause}: for every piece index
+  \(j\) and every point \(y \in C_R\) there is a unit
+  \(u \in \struct{}(P_j \cap \mathcal U(y))^{\times}\) with
+  \[
+    f_j\big|_{P_j \cap \mathcal U(y)} \;=\; u \cdot d_y\big|_{P_j \cap \mathcal U(y)} .
+  \]
+  (The quantifier ranges over \emph{all} \(y\); over an empty overlap the section ring is
+  the zero ring and the clause is vacuous.)
+
+  In particular, anchored data suffice to build an adaptation: if for each \(j\) one is
+  given a point \(p_j\) with \(P_j \subseteq \mathcal U(p_j)\) and a unit \(w_j\) on
+  \(P_j\) with \(f_j = w_j \cdot d_{p_j}|_{P_j}\), then the refinement clause holds for
+  every \(y\), with unit the product of \(w_j|\) and the restriction of the transition unit
+  \(g_{p_j y}\) of \(d\) (\ref{lem:localEquations_ratioUnit}).
+\end{definition}
+\begin{proof}
+  \leanok
+  Only the last assertion needs an argument. Fix \(j\) and \(y\), and restrict everything
+  to \(W := P_j \cap \mathcal U(y)\). Restricting \(f_j = w_j\, d_{p_j}|_{P_j}\) to \(W\)
+  gives \(f_j|_W = (w_j|_W)\, d_{p_j}|_W\). Restricting the defining equation of the
+  transition unit, \(d_{p_j}|_{\mathcal U(p_j) \cap \mathcal U(y)} = g_{p_j y}\,
+  d_y|_{\mathcal U(p_j)\cap\mathcal U(y)}\), along \(W \subseteq \mathcal U(p_j) \cap
+  \mathcal U(y)\) gives \(d_{p_j}|_W = (g_{p_j y}|_W)\, d_y|_W\). Substituting,
+  \(f_j|_W = (w_j|_W)(g_{p_j y}|_W)\, d_y|_W\), and the left factor is a unit on \(W\), a
+  product of restrictions of units.
+\end{proof}
+
+\begin{lemma}[The adapted equations are regular]
+  \label{lem:divisorAdaptation_eqn_regular}
+  \lean{AlgebraicGeometry.DivisorAdaptation.eqn_regular}
+  \uses{def:divisorAdaptation, def:localEquations}
+  \leanok
+  Let \(A\) be a finite chart adaptation of \(d\). For every piece index \(j\) and every
+  point \(z \in P_j\), the germ of \(f_j\) at \(z\) is a nonzerodivisor in
+  \(\struct{C_R,z}\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Apply the refinement clause of \ref{def:divisorAdaptation} at the piece \(j\) and at the
+  point \(y := z\) itself. The point \(z\) lies in \(P_j\) and in \(\mathcal U(z)\), hence
+  in the overlap \(W := P_j \cap \mathcal U(z)\), so germs at \(z\) may be taken in the
+  identity \(f_j|_W = u\, d_z|_W\); germs commute with restriction, so
+  \[
+    (f_j)_z \;=\; u_z \cdot (d_z)_z \quad\text{in } \struct{C_R,z}.
+  \]
+  The germ \(u_z\) of a unit section is a unit, hence a nonzerodivisor; and \((d_z)_z\) is
+  a nonzerodivisor by the regularity clause of \(d\) (\ref{def:localEquations}). A product
+  of nonzerodivisors is a nonzerodivisor.
+\end{proof}
+
+\begin{definition}[The chart colength modules and their glued equalizer]
+  \label{def:gluedColength}
+  \lean{AlgebraicGeometry.DivisorAdaptation.colength,
+    AlgebraicGeometry.DivisorAdaptation.ovlColength,
+    AlgebraicGeometry.DivisorAdaptation.gluedSubmodule,
+    AlgebraicGeometry.DivisorAdaptation.mem_gluedSubmodule_iff}
+  \uses{def:divisorAdaptation, lem:divisorAdaptation_eqn_regular}
+  \leanok
+  Let \(A\) be a finite chart adaptation of \(d\), with pieces \(P_j\) and equations
+  \(f_j\). Its \emph{chart colength modules} are the \(R\)-algebras
+  \[
+    Q_j \;:=\; \struct{}(P_j) \big/ (f_j),
+  \]
+  the structure sheaves of the pieces of the divisor cut out by \(d\). On an overlap put
+  \(Q_{ij} := \struct{}(P_i \cap P_j)/(f_i|, f_j|)\), the quotient by the ideal generated
+  by \emph{both} restricted equations, and let \(\delta^-, \delta^+ \colon \prod_j Q_j \to
+  \prod_{(i,j)} Q_{ij}\) be the two restriction maps, \(\delta^-\) restricting the
+  \(i\)-component and \(\delta^+\) the \(j\)-component. The \emph{glued colength module} is
+  their equalizer
+  \[
+    W(A) \;:=\; \ker\bigl(\delta^- - \delta^+\bigr) \;\subseteq\; \prod_j Q_j ,
+  \]
+  an \(R\)-submodule; concretely \(s \in W(A)\) iff \(s_i\) and \(s_j\) have the same image
+  in \(Q_{ij}\) for every pair \((i,j)\). It is the module of global sections of the
+  structure sheaf of the divisor over the union of the pieces.
+\end{definition}
+
+\begin{definition}[The colength certificate of degree \(n\)]
+  \label{def:isCertified}
+  \lean{AlgebraicGeometry.DivisorAdaptation.IsCertified}
+  \uses{def:gluedColength}
+  \leanok
+  \source{kleiman-picard}
+  A finite chart adaptation \(A\) is \emph{certified of degree \(n\)} if
+  \begin{enumerate}
+    \item[(c1)] every chart colength module \(Q_j\) is finite and projective over \(R\);
+    \item[(c2)] the glued colength module \(W(A)\) is finite and projective over \(R\), and
+      has constant rank \(n\) at every prime: \(\operatorname{rank}_{\mathfrak p} W(A) = n\)
+      for all \(\mathfrak p \in \Spec R\);
+    \item[(c3)] the cokernel of the inclusion \(W(A) \hookrightarrow \prod_j Q_j\) is flat
+      over \(R\);
+    \item[(c4)] the cokernel of \(\delta^- - \delta^+\) is flat over \(R\).
+  \end{enumerate}
+  Clauses (c1) and (c2) say that the divisor is finite flat of degree \(n\) over the base
+  --- Kleiman's condition that a relative effective divisor of degree \(n\) have
+  \(S\)-flat structure sheaf with fibres of length \(n\). Clauses (c3) and (c4) are what
+  make the certificate stable under an \emph{arbitrary} base change \(R \to R'\): they are
+  the flatness hypotheses under which tensoring the defining left-exact sequence
+  \(0 \to W(A) \to \prod_j Q_j \to \prod_{ij} Q_{ij}\) with \(R'\) stays exact, so that the
+  base-changed glued module is again the equalizer of the base-changed arrows. Over a field
+  they are automatic.
+\end{definition}
+
+\begin{definition}[Certified divisor families and the divisor functor value]
+  \label{def:certifiedDivisorFamily}
+  \lean{AlgebraicGeometry.CertifiedDivisorFamily, AlgebraicGeometry.divFamSetoid,
+    AlgebraicGeometry.DivFam, AlgebraicGeometry.DivFam.mk,
+    AlgebraicGeometry.DivFam.mk_eq_mk_iff, AlgebraicGeometry.DivFam.picClass}
+  \uses{def:isCertified, lem:localEquations_divEq, def:localEquations_picClass}
+  \leanok
+  \source{kleiman-picard}
+  A \emph{certified divisor family of degree \(n\)} over \(R\) is a triple \((d, A, c)\):
+  a local-equation system \(d\) on \(C_R\), a finite chart adaptation \(A\) of \(d\), and a
+  certificate \(c\) of degree \(n\) for \(A\). Divisor equality of the underlying systems
+  (\ref{lem:localEquations_divEq}) is an equivalence relation on such triples --- the
+  adaptation and the certificate are presentation data and do not enter the relation ---
+  and
+  \[
+    \Div^{\,n}(R) \;:=\; \bigl\{\,\text{certified divisor families of degree }n\text{ over }
+      R\,\bigr\} \big/ \sim
+  \]
+  is the value of the degree-\(n\) divisor functor at \(R\). The Picard class descends to
+  it: \(\mathcal{O}(D) \in \Pic(C_R)\) is well defined on \(\Div^{\,n}(R)\). This map is
+  the Abel map of Kleiman's Definition, at the affine test \(R\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The relation is an equivalence relation because divisor equality is
+  (\ref{lem:localEquations_divEq}), and it ignores the last two components by definition.
+  The Picard class of a certified family depends only on \(d\), and is constant on
+  divisor-equality classes by the invariance half of \ref{lem:localEquations_divEq}; hence
+  it factors through the quotient.
+\end{proof}
+
+\section{The Zariski-local certificate}
+\label{sec:divfamzar}
+
+The certificate of \ref{def:isCertified} is a condition on \emph{global} modules over
+\(R\), and it is genuinely restrictive: it forces the divisor to sit, chart-trace by
+chart-trace, in a closed way inside the two pinned charts. The next theorem is that
+obstruction, and it is the reason the functor of Section~\ref{sec:divfam} is not the one
+the representability argument uses.
+
+\begin{theorem}[The chart obstruction to a global certificate]
+  \label{thm:isCertified_chart_obstruction}
+  \lean{AlgebraicGeometry.DivisorAdaptation.supportLeak_eq_empty_iff_finite_colength,
+    AlgebraicGeometry.DivisorAdaptation.isClosed_supportLocus_inter_chart_of_isCertified,
+    AlgebraicGeometry.DivisorAdaptation.not_isCertified_of_not_isClosed_inter_chart₀,
+    AlgebraicGeometry.DivisorAdaptation.not_isCertified_of_divEq_of_isPreconnected_of_witnesses}
+  \uses{def:isCertified, lem:localEquations_divEq, def:relCover}
+  \leanok
+  Write \(\operatorname{Supp}(d) \subseteq C_R\) for the support of \(d\), the closed set
+  of points at which the equation of \(d\) is not a unit.
+  \begin{enumerate}
+    \item At a single piece \(P_j\), the chart colength module \(Q_j\) is a finite
+      \(R\)-module if and only if \(\operatorname{Supp}(d) \cap P_j\) is closed in \(C_R\)
+      --- that is, iff the support does not \emph{leak} out of the piece.
+    \item Consequently, if \(A\) is a certified adaptation of \(d\) in any degree, then both
+      pinned-chart traces \(\operatorname{Supp}(d) \cap V_0^R\) and
+      \(\operatorname{Supp}(d) \cap V_1^R\) are closed in \(C_R\).
+    \item In particular a divisor one of whose chart traces is not closed admits no
+      certified adaptation in any degree; and if some representative of a divisor class has
+      preconnected support containing a point outside \(V_0^R\) and a point outside
+      \(V_1^R\), then \emph{no} representative of that class admits one.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  \leanok
+  Say the \emph{leak} of the piece \(P_j\) is
+  \(\overline{\operatorname{Supp}(d) \cap P_j} \setminus P_j\); it is empty exactly when
+  \(\operatorname{Supp}(d) \cap P_j\) is closed in \(C_R\) (a set is closed iff it contains
+  its closure, and the trace is closed in the open \(P_j\) always).
+
+  (i) The piece \(P_j\) is affine (\ref{def:finCoverData}), and
+  \(\operatorname{Supp}(d) \cap P_j\) is the closed subscheme \(Z_j := V(f_j) \subseteq
+  P_j\) with coordinate ring \(Q_j\) --- a point of \(P_j\) is a support point exactly when
+  \(f_j\) is not a unit there, i.e.\ when \(f_j\) lies in the corresponding prime.
+
+  If \(Q_j\) is a finite \(R\)-module, then \(Z_j \to \Spec R\) is a finite, hence proper,
+  morphism. The structure morphism \(C_R \to \Spec R\) is separated (it is a base change of
+  the proper \(C \to \Spec k\)), so the immersion \(Z_j \to C_R\) over \(\Spec R\) is
+  proper, and the image of a proper morphism is closed. Hence
+  \(\operatorname{Supp}(d) \cap P_j\) is closed in \(C_R\), i.e.\ the leak is empty.
+
+  Conversely, if \(\operatorname{Supp}(d) \cap P_j\) is closed in \(C_R\), then \(Z_j\) is a
+  closed subscheme of \(C_R\) contained in the affine open \(P_j\); \(C_R \to \Spec R\) is
+  proper, so \(Z_j \to \Spec R\) is proper, and a proper affine morphism is finite. Hence
+  \(Q_j\) is a finite \(R\)-module.
+
+  (ii) Clause (c1) of the certificate supplies finiteness of \(Q_j\) at every piece, hence
+  by (i) an empty leak at every piece. The pieces indexed by the first chart cover
+  \(V_0^R\) (\ref{def:finCoverData}), so \(\operatorname{Supp}(d) \cap V_0^R\) is the finite
+  union \(\bigcup_j (\operatorname{Supp}(d) \cap P_j)\) of sets closed in \(C_R\), hence
+  closed in \(C_R\). Likewise for \(V_1^R\).
+
+  (iii) The first assertion is the contrapositive of (ii). For the second, first note that
+  divisor equality does not move the support: on a common refinement the two equations
+  differ by a unit at every point, and being a unit is a germ-local condition, so the two
+  systems have the same non-unit locus. Hence the connectivity hypothesis and the two
+  witnesses transport from the given representative to any other, and it suffices to rule
+  out a certified adaptation of a system \(d\) whose own support is preconnected and meets
+  the complements of both charts.
+
+  Suppose it had one. By (ii) both traces \(\operatorname{Supp}(d) \cap V_\iota^R\) are
+  closed in \(C_R\), hence closed in \(\operatorname{Supp}(d)\); each is also open in
+  \(\operatorname{Supp}(d)\), being the intersection with an open. So each trace is clopen
+  in the preconnected space \(\operatorname{Supp}(d)\), hence is empty or everything. If
+  \(\operatorname{Supp}(d) \cap V_0^R = \operatorname{Supp}(d)\) then
+  \(\operatorname{Supp}(d) \subseteq V_0^R\), contradicting the witness outside \(V_0^R\);
+  otherwise \(\operatorname{Supp}(d) \cap V_0^R = \emptyset\), and since
+  \(V_0^R \cup V_1^R = C_R\) this forces \(\operatorname{Supp}(d) \subseteq V_1^R\),
+  contradicting the witness outside \(V_1^R\).
+\end{proof}
+
+\begin{definition}[The Zariski-local certificate]
+  \label{def:isLocallyCertified}
+  \lean{AlgebraicGeometry.IsLocallyCertified, AlgebraicGeometry.IsLocallyCertified.of_divEq,
+    AlgebraicGeometry.CertifiedDivisorFamily.isLocallyCertified}
+  \uses{def:certifiedDivisorFamily, def:relCurveMap, def:localEquations_pullback,
+    lem:localEquations_divEq}
+  \leanok
+  A local-equation system \(d\) on \(C_R\) is \emph{locally certified of degree \(n\)} if
+  there are finitely many \(g_1, \dots, g_m \in R\) generating the unit ideal such that for
+  each \(i\) there is a certified divisor family of degree \(n\) over the localisation
+  \(R_{g_i}\) whose local-equation system is divisor-equal to the pullback of \(d\) along
+  \(C_{R_{g_i}} \to C_R\).
+
+  Being locally certified is invariant under divisor equality, and every certified family
+  is locally certified.
+\end{definition}
+\begin{proof}
+  \leanok
+  The comparison \(C_{R_{g}} \to C_R\) of an away localisation is an open immersion, so
+  pullback of a local-equation system along it is defined without further hypothesis: the
+  regularity required by \ref{def:localEquations_pullback} holds because an open immersion
+  induces isomorphisms on stalks, and an isomorphism carries nonzerodivisors to
+  nonzerodivisors.
+
+  \emph{Invariance}: if \(d \sim d'\) then their pullbacks along each \(C_{R_{g_i}} \to
+  C_R\) are divisor-equal (restrict the witnessing cover and pull the comparison units
+  back; pullback of a unit is a unit), so the recorded divisor equalities for \(d\) compose
+  with these to give the ones needed for \(d'\) (\ref{lem:localEquations_divEq},
+  transitivity).
+
+  \emph{Global implies local}: take \(m = 1\) and \(g_1 = 1\), whose span is the unit
+  ideal. Over \(R_1\) take the base change of the given certified family; the certificate
+  base-changes by clauses (c3)/(c4) of \ref{def:isCertified}, and its local-equation system
+  is the pullback of \(d\) on the nose, so the required divisor equality is reflexivity.
+\end{proof}
+
+\begin{theorem}[Regularity of the pulled equations of a locally certified system]
+  \label{thm:isLocallyCertified_pullback_regular}
+  \lean{AlgebraicGeometry.IsLocallyCertified.germ_pullbackEqn_mem_nonZeroDivisors}
+  \uses{def:isLocallyCertified, def:localEquations_pullback, def:relCurveMap}
+  \leanok
+  Let \(d\) be locally certified of degree \(n\) over \(R\), and let \(R \to R'\) be an
+  arbitrary morphism of \(k\)-algebras. Then the equations of \(d\) pulled back along
+  \(C_{R'} \to C_R\) are regular; hence the pullback \(d|_{R'}\) is again a local-equation
+  system (\ref{def:localEquations_pullback}), with no flatness hypothesis on \(R \to R'\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Regularity of a section is a condition on its germ at each point, hence may be checked on
+  any open cover of \(C_{R'}\). Let \(g_1,\dots,g_m\) be the unit-ideal family certifying
+  \(d\). Their images \(\varphi(g_i) \in R'\) again generate the unit ideal, so the open
+  immersions \(C_{R'_{\varphi(g_i)}} \to C_{R'}\) cover \(C_{R'}\); it suffices to prove
+  regularity of the pulled germs at points of each such chart.
+
+  Fix \(i\). The localisation map factors: \(R \to R_{g_i} \to R'_{\varphi(g_i)}\), the
+  second arrow being the induced map of away localisations. Correspondingly
+  \[
+    C_{R'_{\varphi(g_i)}} \longrightarrow C_{R_{g_i}} \longrightarrow C_R
+  \]
+  composes to the restriction of \(C_{R'} \to C_R\), so the pulled equations over
+  \(R'_{\varphi(g_i)}\) are the equations of \(d\) pulled first to \(C_{R_{g_i}}\) and then
+  along the second arrow. On \(C_{R_{g_i}}\) the pulled system is divisor-equal to the
+  local-equation system of a \emph{certified} family \(G_i\) by hypothesis. For a certified
+  family the pulled equations along an arbitrary base change are regular: clause (c1) of
+  the certificate makes each chart colength module projective, so the multiplication-by-
+  \(f_j\) sequence \(0 \to \struct{}(P_j) \to \struct{}(P_j) \to Q_j \to 0\) is split as
+  \(R\)-modules and stays exact after \(- \otimes_R R'\), which is precisely the statement
+  that the pulled equation is again a nonzerodivisor. Finally, divisor equality is
+  preserved by pullback and units pull back to units, so regularity transports from the
+  pulled equations of \(G_i\) to those of \(d\).
+\end{proof}
+
+\begin{definition}[The locally certified divisor functor \(\Div^{\,n}_{\mathrm{Zar}}\)]
+  \label{def:divFamZar}
+  \lean{AlgebraicGeometry.DivFamZar, AlgebraicGeometry.DivFamZar.mk,
+    AlgebraicGeometry.DivFamZar.mk_eq_mk_iff, AlgebraicGeometry.DivFamZar.picClass,
+    AlgebraicGeometry.DivFam.toZar}
+  \uses{def:isLocallyCertified, lem:localEquations_divEq, def:certifiedDivisorFamily}
+  \leanok
+  The value at \(R\) of the \emph{locally certified} divisor functor is
+  \[
+    \Div^{\,n}_{\mathrm{Zar}}(R) \;:=\;
+      \bigl\{\, d \text{ locally certified of degree } n \text{ on } C_R \,\bigr\} \big/ \sim ,
+  \]
+  the quotient by divisor equality (well posed by \ref{def:isLocallyCertified}). The Picard
+  class descends to it, and passing from a global to a local certificate gives a natural
+  comparison \(\Div^{\,n}(R) \to \Div^{\,n}_{\mathrm{Zar}}(R)\) compatible with the Picard
+  class.
+
+  This is the carrier every statement below uses. The reason is
+  Theorem~\ref{thm:isCertified_chart_obstruction}: the condition ``carries a global
+  certificate'' is not local on \(\Spec R\), so \(\Div^{\,n}\) cannot be a Zariski sheaf on
+  affine test algebras, whereas \(\Div^{\,n}_{\mathrm{Zar}}\) is local on the base by
+  construction.
+\end{definition}
+\begin{proof}
+  \leanok
+  Divisor equality is an equivalence relation on all local-equation systems
+  (\ref{lem:localEquations_divEq}) and preserves the property of being locally certified
+  (\ref{def:isLocallyCertified}), so it restricts to an equivalence relation on the locally
+  certified ones. The Picard class is constant on divisor-equality classes
+  (\ref{lem:localEquations_divEq}), so it factors through the quotient. The comparison
+  sends the class of a certified family \((d,A,c)\) to the class of \(d\), which is locally
+  certified by the last part of \ref{def:isLocallyCertified}; it is well defined because
+  both sides are quotients by the same relation, and it commutes with the Picard class
+  because both are computed from \(d\).
+\end{proof}
+
+\section{The window embedding and the divisor scheme}
+\label{sec:divscheme}
+
+Grothendieck's route from a Quot-type functor to a scheme is: twist high enough that the
+relevant \(H^1\) vanishes, push forward, and read the result as a point of a Grassmannian;
+then cut out the image by the condition that the submodule be closed under multiplication
+by sections of a further twist. We carry that out for \(\Div^{\,n}_{\mathrm{Zar}}\) with
+the fibre divisor \(F\) as the twisting class.
+
+Fix two exponents \(a\) with \(H^1(C_R, \OO(aF)) = 0\) universally --- concretely the two
+\emph{pinned window exponents} \(M\) and \(M+s\) attached to \(\pi\) and the genus \(g\),
+which are chosen past the bound at which the fibre twists have vanishing relative \(H^1\)
+and the multiplication maps are surjective.
+
+\begin{definition}[The affine Grassmannian functor]
+  \label{def:grFunctorAff}
+  \lean{AlgebraicGeometry.Grassmannian.grFunctorAff,
+    AlgebraicGeometry.Grassmannian.grFunctorAffineEquiv}
+  \leanok
+  \source{nitsure-hilbert-quot}
+  For a finite-dimensional \(k\)-vector space \(H\) and \(n \in \mathbb{N}\), the
+  \emph{Grassmannian functor} \(\mathrm{Gr}(H, n)\) assigns to a \(k\)-algebra \(R\) the set
+  of \(R\)-submodules \(K \subseteq R \otimes_k H\) whose quotient \((R \otimes_k H)/K\) is
+  finite projective over \(R\) of constant rank \(n\) at every prime. A \(k\)-algebra map
+  \(R \to R'\) acts by \(K \mapsto \operatorname{im}(R' \otimes_R K \to R' \otimes_k H)\).
+  Corank rather than rank is the right index because it is what base-changes: a projective
+  quotient of constant rank stays one.
+\end{definition}
+
+\begin{definition}[The window submodule and the embedding \(\varepsilon\)]
+  \label{def:divisorWindow}
+  \lean{AlgebraicGeometry.divisorWindow, AlgebraicGeometry.divisorWindow_eq_of_divEq,
+    AlgebraicGeometry.DivFam.window, AlgebraicGeometry.divFamEps,
+    AlgebraicGeometry.divFamEps_mk}
+  \uses{def:certifiedDivisorFamily, def:divisorSections, def:fiberWeilDivisor,
+    def:fiberTwist, lem:localEquations_divEq, def:grFunctorAff}
+  \leanok
+  \source{nitsure-hilbert-quot}
+  Let \(a\) be an exponent at which the relative twist \(\OO(aF)\) on \(C_R\) has vanishing
+  \(H^1\), so that base change identifies
+  \[
+    R \otimes_k H_a \;\xrightarrow{\ \sim\ }\; H^0\bigl(C_R, \OO(aF)\bigr).
+  \]
+  For a local-equation system \(d\) on \(C_R\), the \emph{window submodule}
+  \[
+    K_a(d) \;\subseteq\; R \otimes_k H_a
+  \]
+  is the preimage under this identification of the submodule of sections of \(\OO(aF)\)
+  vanishing along \(d\) --- i.e.\ of \(H^0(C_R, \OO(aF - D))\), read inside the free
+  window. It depends only on \(d\), not on any chart adaptation, and it is unchanged when
+  \(d\) is replaced by a divisor-equal system; hence it descends to \(\Div^{\,n}(R)\) and to
+  \(\Div^{\,n}_{\mathrm{Zar}}(R)\).
+
+  Taking the two pinned exponents gives the \emph{window pair}
+  \[
+    \varepsilon(D) \;=\; \bigl(K_M(D),\, K_{M+s}(D)\bigr)
+      \;\in\; \Bigl(R \otimes_k H_M \ \text{submodules}\Bigr)
+        \times \Bigl(R \otimes_k H_{M+s}\ \text{submodules}\Bigr).
+  \]
+\end{definition}
+\begin{proof}
+  \leanok
+  Vanishing along a divisor is a condition on the section, not on its presentation:
+  a section \(\sigma\) of \(\OO(aF)\) lies in \(H^0(\OO(aF-D))\) iff on each member of the
+  cover of \(d\) the local expression of \(\sigma\) is divisible by the equation of \(d\).
+  If \(d \sim d'\), then on a common refinement the two equations differ by a unit at every
+  point, and divisibility by an element is unchanged when the element is multiplied by a
+  unit; divisibility is local on the cover, so the two vanishing submodules agree. Hence
+  \(K_a(-)\) is constant on divisor-equality classes and factors through the quotients of
+  \ref{def:certifiedDivisorFamily} and \ref{def:divFamZar}.
+\end{proof}
+
+\begin{lemma}[Equal rank at every stalk forces equality]
+  \label{lem:rankAtStalk_equal_quotients}
+  \lean{LinearMap.injective_of_surjective_of_rankAtStalk_eq,
+    Submodule.eq_of_le_of_rankAtStalk_quotient_eq}
+  \leanok
+  Let \(R\) be a commutative ring.
+  \begin{enumerate}
+    \item A surjection \(\varphi \colon M \twoheadrightarrow N\) of \(R\)-modules with \(M\)
+      finite projective and \(N\) projective, whose ranks at every prime agree, is an
+      isomorphism.
+    \item Consequently, if \(K_1 \subseteq K_2\) are submodules of \(M\) with \(M/K_1\)
+      finite projective, \(M/K_2\) projective, and
+      \(\operatorname{rank}_{\mathfrak p}(M/K_1) = \operatorname{rank}_{\mathfrak p}(M/K_2)\)
+      for every prime \(\mathfrak p\), then \(K_1 = K_2\).
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  \leanok
+  (i) Since \(N\) is projective, \(\varphi\) splits: there is \(\ell \colon N \to M\) with
+  \(\varphi \ell = \id_N\), and \(M \cong \ker\varphi \oplus N\). Hence \(\ker \varphi\) is
+  a direct summand of the finite projective module \(M\), so it is itself finite
+  projective, and rank is additive over direct sums:
+  \(\operatorname{rank}_{\mathfrak p} \ker\varphi + \operatorname{rank}_{\mathfrak p} N =
+  \operatorname{rank}_{\mathfrak p} M = \operatorname{rank}_{\mathfrak p} N\) for every
+  \(\mathfrak p\), so \(\operatorname{rank}_{\mathfrak p}\ker\varphi = 0\) identically. A
+  finite projective module of rank \(0\) at every prime is trivial (it is trivial after
+  localisation at every prime, and triviality of a module is local). Hence
+  \(\ker \varphi = 0\) and \(\varphi\) is an isomorphism.
+
+  (ii) The canonical map \(M/K_1 \to M/K_2\) is surjective, and (i) applies to it, so it is
+  injective. If \(x \in K_2\), its class in \(M/K_1\) maps to \(0\), hence is \(0\), i.e.\
+  \(x \in K_1\). Thus \(K_2 \subseteq K_1\), and the reverse inclusion is the hypothesis.
+\end{proof}
+
+\begin{theorem}[The window identity]
+  \label{thm:divisorWindow_eq_of_le}
+  \lean{AlgebraicGeometry.divisorWindow_eq_of_le,
+    AlgebraicGeometry.divisorWindow_eq_of_le_of_isCertified,
+    AlgebraicGeometry.divFamEps_mk_eq_of_le}
+  \uses{def:divisorWindow, def:isCertified, lem:rankAtStalk_equal_quotients,
+    def:grFunctorAff, def:gluedColength}
+  \leanok
+  Let \(A\) be a finite chart adaptation of \(d\) over \(R\), certified of degree \(n\), let
+  \(a\) be an exponent as in \ref{def:divisorWindow}, and assume the evaluation map
+  \[
+    R \otimes_k H_a \;\longrightarrow\; W(A)^{(a)}
+  \]
+  onto the \(\OO(aF)\)-twisted glued colength module is surjective. Then:
+  \begin{enumerate}
+    \item \((R \otimes_k H_a)/K_a(d) \cong W(A)^{(a)}\); in particular \(K_a(d)\) is a point
+      of \(\mathrm{Gr}(H_a, n)\) over \(R\);
+    \item any point \(x\) of \(\mathrm{Gr}(H_a, n)\) over \(R\) with \(x \subseteq K_a(d)\)
+      equals \(K_a(d)\).
+  \end{enumerate}
+  Consequently, for a certified family whose two window submodules contain a given pair of
+  Grassmannian points at the pinned exponents, \(\varepsilon\) of the family \emph{is} that
+  pair.
+\end{theorem}
+\begin{proof}
+  \leanok
+  (i) By definition \(K_a(d)\) is the kernel of the evaluation map: a section of
+  \(\OO(aF)\) vanishes along \(d\) exactly when its image in each chart colength module ---
+  hence in their glued equalizer --- is zero. The evaluation is surjective by hypothesis,
+  so the first isomorphism theorem gives the displayed isomorphism. The certificate makes
+  \(W(A)^{(a)}\) finite projective of constant rank \(n\) at every prime: this is clause
+  (c2) transported across the twist by \(\OO(aF)\), which is an invertible sheaf and hence
+  does not change finiteness, projectivity or rank of the glued colength module. So the
+  quotient of \(R \otimes_k H_a\) by \(K_a(d)\) is finite projective of constant rank
+  \(n\), which is exactly membership in \(\mathrm{Gr}(H_a, n)(R)\)
+  (\ref{def:grFunctorAff}).
+
+  (ii) Both \((R\otimes_k H_a)/x\) and \((R \otimes_k H_a)/K_a(d)\) are finite projective of
+  constant rank \(n\) --- the first because \(x\) is a Grassmannian point, the second by
+  (i) --- so they have equal rank at every prime, and
+  Lemma~\ref{lem:rankAtStalk_equal_quotients}(ii) applied to the inclusion
+  \(x \subseteq K_a(d)\) gives \(x = K_a(d)\).
+
+  The last sentence is (ii) applied at each of the two pinned exponents separately, the
+  certificate slots at both exponents being supplied by the family's own certificate.
+\end{proof}
+
+\begin{theorem}[\(\varepsilon\) is injective on divisor classes]
+  \label{thm:divFam_mono}
+  \lean{AlgebraicGeometry.divFam_divEq_of_stalkIdeal_eq,
+    AlgebraicGeometry.divFam_divEq_of_eps_eq_total}
+  \uses{def:divisorWindow, def:certifiedDivisorFamily, lem:localEquations_divEq,
+    def:isCertified}
+  \leanok
+  Assume the base-field normalisations \(h^0(\struct C) = 1\) and
+  \(\chi(\struct C) = 1 - g\). Let \(G, G'\) be certified divisor families of degree \(g\)
+  over an arbitrary \(k\)-algebra \(R\) --- no Noetherian hypothesis --- with
+  \(\varepsilon(G) = \varepsilon(G')\). Then \(G\) and \(G'\) are divisor-equal; that is,
+  \(\varepsilon\) is injective on \(\Div^{\,g}(R)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \emph{Step 1: stalk ideals determine the class.} Two local-equation systems with the same
+  ideal \((d_z)\struct{C_R,z}\) in every stalk are divisor-equal. Indeed, fix a point
+  \(z\); the two equations generate the same stalk ideal, so each is a unit multiple of the
+  other in the stalk, and a germ-level unit factor lifts to a unit on some neighbourhood of
+  \(z\) contained in both members. Letting \(\mathcal W(z)\) be such a neighbourhood defines
+  a pointed cover refining both, on which the equations differ by a unit at every point ---
+  which is divisor equality (\ref{lem:localEquations_divEq}). Descending through the
+  quotient of \ref{def:certifiedDivisorFamily} gives equality in \(\Div^{\,g}(R)\).
+
+  \emph{Step 2: the window generates.} For a certified family the first window generates the
+  divisor: at every point \(z\) of \(C_R\) the stalk ideal of \(d\) is generated by the
+  germs at \(z\) of the sections in \(K_M(d)\), divided by a local generator of
+  \(\OO(MF)\). This is where the exponent \(M\) is used: it is past the bound at which
+  \(\OO(MF - D)\) is relatively globally generated for every degree-\(g\) certified family,
+  and global generation of \(\OO(MF-D)\) says exactly that the image of
+  \(H^0(\OO(MF-D)) \otimes \struct{} \to \OO(MF)\) is the subsheaf \(\OO(MF-D)\), whose
+  local generator is (a local generator of \(\OO(MF)\) times) the equation of \(D\). The
+  normalisations \(h^0 = 1\), \(\chi = 1-g\) are what pin the numerical bound.
+
+  \emph{Conclusion.} If \(\varepsilon(G) = \varepsilon(G')\) then in particular
+  \(K_M(G) = K_M(G')\), so by Step 2 the two systems have equal stalk ideals at every
+  point, and by Step 1 they are divisor-equal.
+\end{proof}
+
+\begin{definition}[The divisor scheme \(\mathbf{Div}\)]
+  \label{def:divScheme}
+  \lean{AlgebraicGeometry.DivScheme, AlgebraicGeometry.divSchemeι,
+    AlgebraicGeometry.divSchemeOver, AlgebraicGeometry.divScheme_hom_ext,
+    AlgebraicGeometry.divCarveMul, AlgebraicGeometry.divCarveIdeal}
+  \uses{def:grFunctorAff, def:divisorSections, def:fiberWeilDivisor}
+  \leanok
+  \source{nitsure-hilbert-quot, kleiman-picard}
+  Choose \(k\)-bases of \(H_M\) and \(H_{M+s}\), giving the Grassmannian functors
+  \(\mathrm{Gr}(H_M, g)\) and \(\mathrm{Gr}(H_{M+s}, g)\) their standard affine charts
+  indexed by coordinate subsets, and let \(\mathrm{Gr}\text{-pair}\) be the product of the
+  two chart-glued Grassmannian schemes. For \(\sigma \in H_s = H^0(C, \OO(sF))\), multiplication
+  by \(\sigma\) is a \(k\)-linear map \(\mu_\sigma \colon H_M \to H_{M+s}\).
+
+  The \emph{divisor scheme} \(\mathbf{Div}\) is the closed subscheme of
+  \(\mathrm{Gr}\text{-pair}\) cut out, chart by chart, by the ideal generated by the matrix
+  entries of the composites
+  \[
+    K_1 \;\hookrightarrow\; R \otimes_k H_M \;\xrightarrow{\ \id \otimes \mu_\sigma\ }\;
+      R \otimes_k H_{M+s} \;\twoheadrightarrow\; (R \otimes_k H_{M+s})/K_2 ,
+    \qquad \sigma \in H_s ,
+  \]
+  where \((K_1, K_2)\) is the tautological pair on the chart. Its \(R\)-points are therefore
+  the pairs \((K_1, K_2)\) of Grassmannian points of corank \(g\) satisfying
+  \(\mu_\sigma(K_1) \subseteq K_2\) for every \(\sigma \in H_s\). It comes with a closed
+  immersion \(\mathbf{Div} \hookrightarrow \mathrm{Gr}\text{-pair}\); in particular
+  morphisms into \(\mathbf{Div}\) are determined by their composites with that immersion.
+  Placed over \(\Spec k\) by its structure morphism, it is an object
+  \(\mathbf{Div}_{/k}\) of \(\Over(\Spec k)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The description of the \(R\)-points is the standard reading of a determinantal-type carve
+  on a Grassmannian chart: on the chart the tautological submodules are free with an
+  explicit basis, the composite above is an \(R\)-linear map between free modules, and a map
+  between free modules vanishes exactly when all its matrix entries do. Hence a \(k\)-algebra
+  map from the chart ring kills the carve ideal iff the base-changed composite is zero for
+  every \(\sigma\), i.e.\ iff \(\mu_\sigma(K_1) \subseteq K_2\). The carve ideals on
+  overlapping charts agree because the condition they express is chart-independent, so they
+  glue to a quasi-coherent ideal sheaf and the closed subschemes glue. Determination of
+  morphisms by their composite with the immersion holds because a closed immersion is a
+  monomorphism.
+\end{proof}
+
+The relation of \ref{def:divScheme} to \ref{def:divisorWindow} is the reason for the carve:
+if \(D\) is an effective divisor then \(\sigma \cdot H^0(\OO(MF - D)) \subseteq
+H^0(\OO((M+s)F - D))\) for every \(\sigma \in H^0(\OO(sF))\), so \(\varepsilon(D)\) is an
+\(R\)-point of \(\mathbf{Div}\). The content of the construction is the converse direction,
+that a point of \(\mathbf{Div}\) determines a divisor; that is the forward map of
+Section~\ref{sec:divrep}, which is not built.
+
+\section{The classifying morphism}
+\label{sec:divclassify}
+
+This section is the backward half of representability: a divisor class over an affine test
+determines a morphism to \(\mathbf{Div}\), uniquely, and the class is recoverable from the
+morphism. Both directions are proved.
+
+\begin{definition}[The characterizing clause of a classifying morphism]
+  \label{def:isDivRepClassify}
+  \lean{AlgebraicGeometry.IsDivRepClassify}
+  \uses{def:divFamZar, def:divScheme, def:divisorWindow, def:grFunctorAff}
+  \leanok
+  Let \(S\) be a \(k\)-algebra, \(D \in \Div^{\,g}_{\mathrm{Zar}}(S)\), and \(v \colon \Spec
+  S \to \mathbf{Div}\) a morphism. Say \(v\) \emph{classifies} \(D\) if for every
+  \(k\)-algebra \(T\) under \(S\), every certified family \(G\) over \(T\) whose class is
+  the restriction of \(D\) to \(T\), and every presentation of \(\varepsilon(G)\) as a point
+  of a chart of \(\mathrm{Gr}\text{-pair}\) --- that is, a \(k\)-algebra map \(w\) from the
+  chart ring to \(T\) carrying the tautological pair to \(\varepsilon(G)\) --- the square
+  \[
+    \Spec T \longrightarrow \Spec S \xrightarrow{\ v\ } \mathbf{Div}
+      \hookrightarrow \mathrm{Gr}\text{-pair}
+  \]
+  agrees with the chart morphism \(\Spec T \xrightarrow{w} \mathrm{Gr}\text{-pair}\).
+
+  Quantifying over all tests \(T\), all certified representatives and all chart
+  presentations makes the clause stable under refinement of covers and change of
+  representative by construction.
+\end{definition}
+
+\begin{theorem}[Existence and uniqueness of the classifying morphism]
+  \label{thm:divClassifyZar}
+  \lean{AlgebraicGeometry.exists_isDivRepClassify,
+    AlgebraicGeometry.isDivRepClassify_unique, AlgebraicGeometry.divClassifyZar,
+    AlgebraicGeometry.divRepClassifyZar,
+    AlgebraicGeometry.divRepClassifyZar_isDivRepClassify,
+    AlgebraicGeometry.divRepClassifyZar_eq_of_isDivRepClassify}
+  \uses{def:isDivRepClassify, def:divFamZar, def:divScheme, thm:divisorWindow_eq_of_le,
+    def:isLocallyCertified}
+  \leanok
+  For every \(k\)-algebra \(S\) and every \(D \in \Div^{\,g}_{\mathrm{Zar}}(S)\) there is a
+  unique morphism \(\Spec S \to \mathbf{Div}\) classifying \(D\) in the sense of
+  \ref{def:isDivRepClassify}. It lifts canonically to a morphism
+  \[
+    \gamma_S(D) \colon \Spec S \longrightarrow \mathbf{Div}_{/k}
+  \]
+  in \(\Over(\Spec k)\), and any morphism of \(\Over(\Spec k)\) whose underlying scheme
+  morphism classifies \(D\) equals \(\gamma_S(D)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \emph{Existence.} By \ref{def:isLocallyCertified} there is a finite family
+  \(r_1,\dots,r_m \in S\) generating the unit ideal such that over each \(S_{r_p}\) the
+  restriction of \(D\) has a certified representative \(G_p\); refining that family further
+  we may also assume that \(\varepsilon(G_p)\) admits a chart presentation \(w_p\) over
+  \(S_{r_p}\), since the Grassmannian charts cover \(\mathrm{Gr}\text{-pair}\) and a point
+  of a scheme covered by opens lies in one of them after a further localisation of the
+  base. Over each \(S_{r_p}\) the chart presentation kills the carve ideal --- by the
+  multiplication inclusion recorded after \ref{def:divScheme} --- so it factors through the
+  closed immersion of \ref{def:divScheme}, giving \(v_p \colon \Spec S_{r_p} \to
+  \mathbf{Div}\) satisfying the clause for \(G_p\).
+
+  The \(v_p\) agree on overlaps: on \(\Spec S_{r_p r_q}\) both restrictions satisfy the
+  clause for the restriction of \(D\), and the uniqueness argument below (applied over the
+  ring \(S_{r_p r_q}\)) identifies them. Gluing along the affine open cover \(\{\Spec
+  S_{r_p}\}\) of \(\Spec S\) yields \(v\), and the clause for \(v\) follows from the clause
+  for each \(v_p\) because it may be tested after pulling back to the members of a cover.
+
+  \emph{Uniqueness.} Let \(v, v'\) both classify \(D\). Take a family \(r_p\) and data
+  \(G_p, w_p\) as above. Restricting to \(\Spec S_{r_p}\), the clause applied to \(v\) and
+  to \(v'\) with the same \((T, G, w) = (S_{r_p}, G_p, w_p)\) gives that both composites
+  \(\Spec S_{r_p} \to \mathbf{Div} \hookrightarrow \mathrm{Gr}\text{-pair}\) equal the same
+  chart morphism. Since \(\mathbf{Div} \hookrightarrow \mathrm{Gr}\text{-pair}\) is a
+  monomorphism (\ref{def:divScheme}), the two restrictions to \(\Spec S_{r_p}\) agree; as
+  the \(\Spec S_{r_p}\) cover \(\Spec S\), \(v = v'\).
+
+  \emph{The lift.} The composite of \(v\) with the immersion is, over each member of the
+  cover, a chart morphism, and every chart of \(\mathrm{Gr}\text{-pair}\) lies over
+  \(\Spec k\) compatibly; so \(v\) commutes with the structure morphisms to \(\Spec k\) and
+  underlies a morphism \(\gamma_S(D)\) of \(\Over(\Spec k)\). A morphism of
+  \(\Over(\Spec k)\) is determined by its underlying scheme morphism, so the last assertion
+  is uniqueness again.
+\end{proof}
+
+\begin{theorem}[Separation of divisor classes]
+  \label{thm:eq_of_isDivRepClassify}
+  \lean{AlgebraicGeometry.eq_of_isDivRepClassify,
+    AlgebraicGeometry.divRepClassifyZar_injective}
+  \uses{thm:divClassifyZar, def:isDivRepClassify, def:divFamZar, thm:divFam_mono,
+    def:isLocallyCertified}
+  \leanok
+  If \(D_0, D_1 \in \Div^{\,g}_{\mathrm{Zar}}(S)\) are classified by the \emph{same}
+  morphism \(v \colon \Spec S \to \mathbf{Div}\), then \(D_0 = D_1\). Equivalently,
+  \(D \mapsto \gamma_S(D)\) is injective.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Choose, as in \ref{thm:divClassifyZar}, unit-ideal families \(c^{(0)}\) and \(c^{(1)}\) in
+  \(S\) over whose localisations \(D_0\), respectively \(D_1\), have certified
+  representatives with chart-presented \(\varepsilon\)-pairs. The products
+  \(c^{(0)}_p c^{(1)}_q\) again generate the unit ideal (a product of two unit ideals is the
+  unit ideal), so it suffices to prove that \(D_0\) and \(D_1\) have the same restriction to
+  each \(S_{c^{(0)}_p c^{(1)}_q}\); membership in \(\Div^{\,g}_{\mathrm{Zar}}\) is a
+  quotient of local-equation systems and equality of classes is local on \(\Spec S\).
+
+  Fix such a common localisation \(B\). Over \(B\) we have certified representatives
+  \(G_0\) of \(D_0|_B\) and \(G_1\) of \(D_1|_B\), together with chart presentations \(w_0\)
+  of \(\varepsilon(G_0)\) and \(w_1\) of \(\varepsilon(G_1)\). Applying the clause of
+  \ref{def:isDivRepClassify} to the single morphism \(v\), once with \((G_0, w_0)\) and once
+  with \((G_1, w_1)\), shows that \(w_0\) and \(w_1\) present the \emph{same} morphism
+  \(\Spec B \to \mathrm{Gr}\text{-pair}\); hence the two tautological images agree, i.e.
+  \[
+    \varepsilon(G_0) = \varepsilon(G_1)
+  \]
+  as pairs of submodules of the free windows over \(B\). By the mono theorem
+  (\ref{thm:divFam_mono}) two certified families of degree \(g\) over \(B\) with equal
+  \(\varepsilon\)-pairs are divisor-equal, so \(G_0\) and \(G_1\) define the same class;
+  hence \(D_0|_B = D_1|_B\).
+
+  Note that this argument consumes neither a certificate over the chart ring of
+  \(\mathbf{Div}\) nor any universal family: the only certified objects are the local
+  representatives supplied by \ref{def:isLocallyCertified}.
+\end{proof}
+
+\section{Affine representability, and what remains}
+\label{sec:divrep}
+
+Everything above is the backward direction: from divisor classes to morphisms. Turning
+\(\mathbf{Div}\) into a representing object requires the forward direction --- a universal
+divisor family on \(\mathbf{Div}\), from which a divisor class can be pulled back along any
+test morphism. This section states exactly what that datum is, shows that it suffices, and
+records that it has not been constructed.
+
+\begin{definition}[The affine pullback package]
+  \label{def:divRepAffinePullback}
+  \lean{AlgebraicGeometry.divRepPullAt, AlgebraicGeometry.divRepPullAt_comp,
+    AlgebraicGeometry.DivRepChartFamily.IsCompatible,
+    AlgebraicGeometry.DivRepAffinePullback}
+  \uses{def:divFamZar, def:divScheme, def:isDivRepClassify}
+  \leanok
+  An \emph{affine pullback package} for \(\mathbf{Div}\) consists of, for every
+  \(k\)-algebra \(S\), a map
+  \[
+    \rho_S \colon \Hom_{\Over(\Spec k)}\bigl(\Spec S, \mathbf{Div}_{/k}\bigr)
+      \longrightarrow \Div^{\,g}_{\mathrm{Zar}}(S),
+  \]
+  subject to two conditions: \(\rho_S(v)\) is classified by \(v\) in the sense of
+  \ref{def:isDivRepClassify}, for every \(v\); and \(\rho\) is natural, \(\rho_B(\varphi
+  \circ v) = \varphi_* \rho_A(v)\) for every \(k\)-algebra map \(\varphi \colon A \to B\).
+
+  The canonical way to produce such a \(\rho\) is from a \emph{chart family}: a certified
+  divisor family \(U_{ij}\) over the coordinate ring of each affine chart of
+  \(\mathbf{Div}\), pulled back along a chart presentation of the given \(v\); this is well
+  defined precisely when the family is \emph{compatible}, meaning that two chart
+  presentations inducing the same morphism to \(\mathbf{Div}\) pull \(U\) back to the same
+  class in \(\Div^{\,g}_{\mathrm{Zar}}\).
+\end{definition}
+
+\begin{theorem}[The affine equivalence]
+  \label{thm:divRepAffinePullback_equiv}
+  \lean{AlgebraicGeometry.pull_classify_of_isDivRepClassify_pull,
+    AlgebraicGeometry.DivRepAffinePullback.ofPull,
+    AlgebraicGeometry.DivRepAffinePullback.equiv,
+    AlgebraicGeometry.DivRepAffinePullback.equiv_naturality}
+  \uses{def:divRepAffinePullback, thm:divClassifyZar, thm:eq_of_isDivRepClassify}
+  \leanok
+  An affine pullback package \(\rho\) makes \(\mathbf{Div}_{/k}\) represent
+  \(\Div^{\,g}_{\mathrm{Zar}}\) on affine tests: for every \(k\)-algebra \(S\) the maps
+  \(\rho_S\) and \(\gamma_S\) (\ref{thm:divClassifyZar}) are mutually inverse bijections
+  \[
+    \Hom_{\Over(\Spec k)}\bigl(\Spec S, \mathbf{Div}_{/k}\bigr)
+      \;\simeq\; \Div^{\,g}_{\mathrm{Zar}}(S),
+  \]
+  natural in \(S\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \(\gamma_S \circ \rho_S = \id\): given \(v\), the class \(\rho_S(v)\) is classified by
+  \(v\) by hypothesis, and by the uniqueness clause of \ref{thm:divClassifyZar} any
+  morphism classifying a class \emph{is} the classifying morphism of that class; hence
+  \(\gamma_S(\rho_S(v)) = v\).
+
+  \(\rho_S \circ \gamma_S = \id\): given \(D\), both \(\rho_S(\gamma_S(D))\) and \(D\) are
+  classified by the single morphism \(\gamma_S(D)\) --- the first by the hypothesis on
+  \(\rho\), the second by the characterizing property of \(\gamma_S\)
+  (\ref{thm:divClassifyZar}). By separation (\ref{thm:eq_of_isDivRepClassify}) two classes
+  classified by the same morphism are equal, so \(\rho_S(\gamma_S(D)) = D\). (In particular
+  this round-trip law need not be assumed in \ref{def:divRepAffinePullback}: it is a
+  consequence of the clause law and separation.)
+
+  Naturality of the bijection in \(S\) is the naturality assumed of \(\rho\).
+\end{proof}
+
+\begin{theorem}[The universal certified family --- unproved]
+  \label{thm:divRepUniversalFamily}
+  \uses{def:divRepAffinePullback, def:divScheme, def:certifiedDivisorFamily,
+    thm:divisorWindow_eq_of_le, thm:isCertified_chart_obstruction}
+  \notready
+  There exists an affine pullback package for \(\mathbf{Div}\) in the sense of
+  \ref{def:divRepAffinePullback}; equivalently, there is a compatible chart family --- a
+  certified divisor family \(U_{ij}\) of degree \(g\) over the coordinate ring of each
+  affine chart of \(\mathbf{Div}\), whose window pair is the tautological pair of that
+  chart, and whose pullbacks along two presentations of one morphism agree in
+  \(\Div^{\,g}_{\mathrm{Zar}}\).
+
+  This statement is not proved. It is the forward direction of representability: given a
+  point \((K_1, K_2)\) of \(\mathbf{Div}\) over \(R\), one must produce the divisor whose
+  windows are \(K_1\) and \(K_2\). The intended construction takes a generating family of
+  \(K_1\) inside \(R \otimes_k H_M\) and reads its common vanishing locus as an effective
+  divisor, with local equations extracted chart by chart; the two obstacles are that this
+  produces the local equations only after a Zariski localisation of \(R\) --- which is why
+  the target is \(\Div^{\,g}_{\mathrm{Zar}}\) and not \(\Div^{\,g}\), and why the global
+  certificate of \ref{def:isCertified} is unavailable
+  (\ref{thm:isCertified_chart_obstruction}) --- and that the resulting family's second
+  window must be shown to be exactly \(K_2\), for which the containment
+  \(K_2 \subseteq K_{M+s}\) has to be upgraded from the fibrewise statement to a relative
+  one, an upgrade that fails over nonreduced base rings if attempted fibrewise.
+
+  Everything in Sections~\ref{sec:divfam}--\ref{sec:divclassify} is independent of this
+  statement.
+\end{theorem}
+
+\begin{corollary}[From the divisor scheme to the Jacobian]
+  \label{cor:divRepToJacobian}
+  \uses{thm:divRepAffinePullback_equiv, thm:divRepUniversalFamily,
+    def:pic0RepresentableByOfCharts, def:jacobian_data, def:divFamZar,
+    def:localEquations_picClass}
+  \notready
+  Granting \ref{thm:divRepUniversalFamily}, the Abel map \(D \mapsto \OO(D)\)
+  (\ref{def:divFamZar}) becomes a morphism of functors from the representable functor
+  \(\Div^{\,g}_{\mathrm{Zar}}\) to the degree-zero Picard functor after twisting by a fixed
+  divisor of degree \(g\), and the loci over which it is representable by open immersions
+  supply the chart family required by \ref{def:pic0RepresentableByOfCharts}. That
+  hypothesis being met, the degree-zero Picard functor of \(C\) is representable, and the
+  representing object with its universal element is a Jacobian datum
+  (\ref{def:jacobian_data}) --- hence, through the frozen definition
+  (\ref{def:jacobian}), the Jacobian of \(C\).
+
+  Neither the chart family nor the local surjectivity of the resulting maps is proved; both
+  rest on \ref{thm:divRepUniversalFamily}. The passage from a representation over a
+  separably closed base to one over \(k\) is a further descent step, not addressed here.
+\end{corollary}
