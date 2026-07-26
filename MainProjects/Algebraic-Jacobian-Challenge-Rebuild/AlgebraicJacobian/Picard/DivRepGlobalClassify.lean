@@ -149,6 +149,10 @@ private noncomputable def classifyPiece
   U.2.isoSpec.hom ≫
     (divRepClassifyZar hpi g hO hchi r1 r2 b1 b2 Γ(T.left, U.1) (F.1 U)).left
 
+set_option maxHeartbeats 1600000 in
+-- The rewrite chain unifies through the section-ring algebra towers over both affine
+-- opens at once, so it exceeds the default elaboration budget (as in
+-- `divFamZar.exists_isGlueValue`).
 /-- The gluing datum: the family `classifyPiece` is compatible with the transition maps
 of the directed cover of `T.left` by its affine opens.  This is naturality of the affine
 classifier along the section restriction, applied to the coherence of `F`. -/
