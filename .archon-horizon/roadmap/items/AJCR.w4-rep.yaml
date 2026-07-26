@@ -2,66 +2,81 @@ id: AJCR.w4-rep
 title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "THE CRITICAL PATH TO Challenge.lean:99.  Re-audited 2026-07-25 (run 0048\
-  \ round 1: six recon\nagents, each adversarially refuted) and UPDATED 2026-07-26\
-  \ (round 2: five commits landed;\nthe refuters corrected several of round 1's own\
-  \ claims).  Read this before choosing work.\n\nTARGET: AlgebraicGeometry.Jacobian\
-  \ (Challenge.lean:96-99, a bare sorry).  Challenge.lean\nholds 15 sorries; the whole\
-  \ rest of the tree holds exactly ONE (Pic0ThetaCocycle.lean:268).\narchon-protected.yaml\
-  \ FREEZES the signature of `Jacobian`, so a hypothesis-carrying or\nconditional\
-  \ restatement is FORBIDDEN: the only admissible discharge is\nJacobian C := (jacobianData\
-  \ C).J, and `jacobianData` has no producer.  The blueprint's only\nrepresentability\
-  \ node, def:pic0RepresentableByOfCharts (PicardEtale.tex:10678), is\nconditional\
-  \ on a chart family no node produces; the blueprint owes about five nodes.\n\nSIX\
-  \ INDEPENDENT MOUNTAINS, in dependency order.\n\n 1. ddr.certificate -- THE GATE\
-  \ IS ANSWERED, NOT BLOCKED.  chart-avoid = NO, with an\n    explicit counterexample\
-  \ (F = tX^2 + XY + tY^2 over k[t]); the obstruction is\n    DivEq-invariant so it\
-  \ bites DivFamZar itself.  SHARP FORM (2026-07-26): no repair that\n    keeps FinCoverData's\
-  \ pieces inside the preimages of a FIXED PAIR of points of P^1 can\n    work --\
-  \ the pieces are TYPED into the two pinned charts (DivisorFamily.lean:166,:168,\n\
-  \    :186), so I-0346's \"joint covering\" idea provably buys nothing (leaf joint-cover,\n\
-  \    rejected).  Only two routes remain: R1 vary the pinned pair (p1-aut -> fibre-avoid\
-  \ ->\n    cert-relocalize) or R2 generalize the piece type.  Do not attempt both.\n\
-  \n 2. ddr.divrep -- MOVED THIS ROUND for the first time in the campaign.  The class\
-  \ side of\n    the backward classification is PROVED and kernel-checked (leaf `sep`,\n\
-  \    Picard/DivRepClassifyZarSep.lean): a morphism satisfying the characterizing\
-  \ clause\n    determines the class, so with the landed hom side the clause is a\
-  \ bijection on the\n    nose.  That retired ONE of DivRepAffinePullback's four obligations\
-  \ WITHOUT U2 (leaf\n    `u2`, three-field constructor DivRepAffinePullback.ofPull).\
-  \  Remaining: `pull` and\n    `isDivRepClassify_pull` need U2, which exists in NO\
-  \ Lean declaration; `pull_naturality`\n    is U2-free and is the cheapest next move\
-  \ on this row.\n\n 3. dat-c C9 -- SPLIT.  c9a is DONE: `chartLocus` now EXISTS (it\
-  \ had zero code hits\n    tree-wide until 2026-07-26) as a class-indexed locus in\
-  \ the parameter space, with its\n    OPENNESS proved, certificate-free and divRep-free.\
-  \  c9b (f_c and the (f,hf) pair) is\n    CERT-Sigma-gated, not merely divRep-gated\
-  \ -- and the four old dat-c comments calling the\n    remainder \"plumbing, no math\
-  \ left\" are refuted for that half.  c9b CAN be developed\n    parametrically over\
-  \ a section variable `(divRep : ....RepresentableBy DivOver)`, the\n    idiom landed\
-  \ at DivRepKit.lean:113.\n\n 4. dat-b, 5. dat-g, 6. dat-j.  dat-g's upstream bricks\
-  \ are portable from the sibling\n    read-only project (Galois-descent substrate,\
-  \ identical toolchain), but the Rebuild\n    already has its own root-imported flat-descent\
-  \ stack, so port the ALGEBRA half only.\n    dat-j owns the `jacobianData` producer\
-  \ and is the true last link.\n\nWAVE 6 IS NO LONGER ENTIRELY DOWNSTREAM.  Two of\
-  \ the three frozen Albanese gates now have\nPROVED datum-level avatars (AJCR.w6-albanese.aj-datum,\
-  \ 2026-07-26): ofCurve and\ncomp_ofCurve are one-liners the moment DAT-J lands.\
-  \  Only exists_unique_ofCurve_comp\n(Challenge.lean:141) has no avatar anywhere.\
-  \  Work at the TOP of the mountain is available\nand had never been attempted --\
-  \ prefer it to a sixth attempt at a blocked foothill.\n\nDO NOT LAUNCH A LANE AT:\
-  \ Pic0PreservesFilteredBaseColimit (a bare `def : Prop`, zero\nproducers, its mathlib\
-  \ avatars do not apply to the bespoke quotient tower);\ntube-fibre / leak-image\
-  \ / separation / a cleverer submodule L (all refuted in Lean);\n`degAff_mapAlg`\
-  \ and `mem_pic0Subgroup_overSpec_iff` (they are not sorries to close, they\nare\
-  \ declarations that do not exist -- see the docstring warning below).\n\nBUILD REACH:\
-  \ see AJCR.w4-rep.build-reach.  Five modules were rooted this round, each with a\n\
-  green full default build (now 9084 jobs).  CORRECTION: Pic0ThetaCocycle.lean DOES\
-  \ parse;\nits real defect is that it has no build artifacts at all.\n\nTOOLING WARNINGS.\
-  \  (a) Do not steer this subtree from `graph frontier`: its top items are\n\\lean{}\
-  \ name-drift artifacts and the Rebuild cannot be graph-synced (I-0318).  (b) THIS\n\
-  CODEBASE'S MODULE DOCSTRINGS ANNOUNCE THEOREMS THE FILES DO NOT DECLARE.  Treat\
-  \ a docstring\nbullet, a roadmap \"cheap item\", and an English \"hence\" as ZERO\
-  \ evidence that a declaration\nexists; verify with `horizon search` before briefing\
-  \ anyone.  This single habit is behind\nmost of the stale claims corrected in the\
-  \ last two rounds.\n"
+summary: "THE CRITICAL PATH TO Challenge.lean:99.  Re-framed 2026-07-26 (run 0048\
+  \ round 4) around a single\nordered chain instead of \"six independent mountains\"\
+  .  READ informal/w4-rep-critical-path.md FIRST —\nit carries the per-link evidence\
+  \ and this summary does not repeat it.\n\nTARGET.  AlgebraicGeometry.Jacobian (Challenge.lean:96-99,\
+  \ a bare sorry).  archon-protected.yaml\nFREEZES the signature, so a hypothesis-carrying\
+  \ restatement is forbidden; the only admissible\ndischarge is Jacobian C := (jacobianData\
+  \ C).J, and jacobianData has no producer.\n\nTHE CHAIN, BACKWARDS.  L1 Jacobian\
+  \ := (jacobianData C).J | L2 the producer jacobianData — MISSING |\nL3 structure\
+  \ JacobianData + consumer API (Picard/JacobianData.lean:87-144) — LANDED | L4 its\
+  \ rep\nfield | L5 descent of the representation from a separably closed stage to\
+  \ k (dat-g, dat-glue DAT-G0)\n— MISSING | L6 pic0RepresentableByOfCharts (Picard/Pic0SigmaSheaf.lean:161-169)\
+  \ — LANDED | L7 its\nchart family (f, hf) = dat-c C9b — MISSING | L8 its IsLocallySurjective\
+  \ input = dat-b B-6 — MISSING |\nL9 (divFunctor C pi g).RepresentableBy DivOver\
+  \ (Picard/DivRepKit.lean:114) — exists but UNROOTED |\nL10 a term of DivRepGlobalData\
+  \ (DivRepKit.lean:69) — MISSING, ZERO producers | L11 the affine-to-\ngeneral lift\
+  \ DivRepGlobalData.ofAffine — MISSING, NEVER ATTEMPTED | L12 DivRepAffinePullback\n\
+  (DivRepAffKit.lean:167) — structure landed, no producer | L13 its pull / isDivRepClassify_pull\n\
+  fields = U2 | L14 U2's gate, the certificate — BLOCKED.\n\nTWO THINGS THE OLD FRAMING\
+  \ HID.\n\n 1. THE HARDEST-SOUNDING STEP IS ALREADY DONE.  L6, gluing local representability\
+  \ into a scheme,\n    is landed: pic0RepresentableByOfCharts consumes mathlib's\
+  \ 01JJ engine and returns exactly the\n    type of JacobianData.rep.  Everything\
+  \ above it is assembly.\n\n 2. A WHOLE LINK WAS MISSING FROM THE PLAN.  DivRepGlobalData\
+  \ occurs in NO file but its own, and\n    its docstring says the omission is deliberate:\
+  \ \"The affine-to-general lift is intentionally not\n    assumed to exist implicitly.\"\
+  \  So between the affine package and the divisor-representability\n    endpoint\
+  \ sits a sheaf-theoretic descent that appeared in no roadmap row, because every\
+  \ plan\n    folded it into \"divrep\" as bookkeeping.  Its main input is already\
+  \ proved — divFamZar is a\n    Zariski sheaf on ARBITRARY tests (Picard/DivisorFamilyZarSheaf.lean:66,\
+  \ :237).  Leaf\n    ...ddr.divrep.lift.\n\nTHE SHAPE OF THE WORK: ONE GATE, ONE\
+  \ CONDITIONAL TAIL.  Milestones now carry this split — list them\nwith `roadmap\
+  \ list --milestone w4-gate` and `--milestone w4-tail`.\n * w4-gate: the certificate\
+  \ subtree and u2.  Genuinely blocked (below).\n * w4-tail: lift, c9b, chart-u, dat-b,\
+  \ dat-glue, dat-g, dat-j, datum-tail.  Every one of these is a\n   CONDITIONAL statement\
+  \ provable today over a section variable — the idiom the tree already uses,\n  \
+  \ since DivRepKit.lean is written entirely against one.  Work here does not wait\
+  \ on the gate.\n\nWHERE THE GATE ACTUALLY STANDS.  chart-avoid is answered NO and\
+  \ the reasons are landed Lean:\nFinCoverData types its pieces into the two pinned\
+  \ charts (DivisorFamily.lean:166,:168,:186), clause\n(c1)-finiteness is leak-freeness\
+  \ so piece traces are clopen (DivSchemeCertZarConn.lean:98), hence a\nconnected\
+  \ support lands in one chart (DivSchemeCertZarC1.lean:131), and the obstruction\
+  \ is\nDivEq-invariant (Confine.lean:110) and shrink-stable (Transport.lean).  Provably\
+  \ useless repairs, do\nnot retry: refining the cover, shrinking the base, a cleverer\
+  \ submodule L, re-spelling the equations,\nthe joint-covering relaxation (leaf joint-cover,\
+  \ rejected), and — established this round —\nRE-BASING ON THE ZARISKI-LOCAL CERTIFICATE.\
+  \  The epsilon-identity really does consume IsCertified\nthrough only three Zariski-local\
+  \ projections and can be re-proved from IsLocallyCertified by a\nsqueeze, but the\
+  \ no-go is about PRODUCING a certificate and IsLocallyCertified fails for exactly\
+  \ the\ndivisors IsCertified fails for (DivSchemeCertZarC1.lean:30-31, verbatim).\n\
+  \nTHE ONE OPEN EXPERIMENT ON THE GATE, and it is cheap: the no-go's argument is\
+  \ degree-agnostic but\nits only witness (tX^2 + XY + tY^2 over k[t], C = P^1) is\
+  \ genus 0, off the stratum the functor pins.\nAt g = 0 the no-go is vacuous; at\
+  \ g = 1 base shrink evades it; at g >= 2 NO WITNESS HAS EVER BEEN\nEXHIBITED.  Settle\
+  \ that before costing p1-aut or R2.  Note also that R1 alone cannot suffice over\
+  \ an\narbitrary field: the pointwise gate needs two kappa(p)-rational points of\
+  \ P^1 off the fibre's support\nimage at every prime, which fails over small finite\
+  \ residue fields — that is inbox I-0346's\nfield-size question, and it is the same\
+  \ obstruction seen pointwise, not a separate one.\n\nTRUST CORRECTION AFFECTING\
+  \ EVERY ROW HERE.  93 of the tree's 619 modules (20,302 of 169,135 lines,\n~12%)\
+  \ are unreachable from AlgebraicJacobian.lean and are therefore NEVER kernel-checked\
+  \ — including\nPicard/DivRepKit.lean, i.e. L9 itself, and Picard/DivRepAffKitZar.lean,\
+  \ which already contains the\ninterface weakening the u2 row called \"the cheap\
+  \ edit nobody has made\".  The count of sorries is not\nthe measure of what is verified.\
+  \  See AJCR.w4-rep.build-reach.\n\nNO SHORTCUT NEXT DOOR.  The sibling project MainProjects/Algebraic-Jacobian-Challenge\
+  \ does NOT have\nrepresentability: its Picard.FGAPicRepresentability.instHasPicScheme\
+  \ is an explicit <sorry> instance,\n\"the single genuine FGA sorry\", i.e. existence\
+  \ of the Picard scheme is ASSUMED there and everything\ndownstream is built on the\
+  \ assumption.  What the sibling does have and IS worth porting:\nPicard/ZariskiDescentRepresentability.lean\
+  \ (1372 L, Zariski descent of representability with a full\ntranslation layer),\
+  \ GlueDescent.lean, GaloisDescent/ (semilinear algebras and modules — the substrate\n\
+  dat-g needs), GrassmannianRepresentability.lean, QuotRepresentability.lean.\n\n\
+  TOOLING WARNINGS, unchanged.  (a) Do not steer this subtree from `graph frontier`:\
+  \ its top items are\n\\lean{} name-drift artifacts and the Rebuild cannot be graph-synced\
+  \ (I-0318).  (b) MODULE DOCSTRINGS\nIN THIS TREE ANNOUNCE THEOREMS THE FILES DO\
+  \ NOT DECLARE, and roadmap rows have asserted the ABSENCE\nof declarations that\
+  \ exist.  Verify both directions with `horizon search` before briefing anyone.\n"
 status: active
 kind: proof
 priority: normal
@@ -75,4 +90,4 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:10.654781+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-25T16:20:51.240815+00:00'
+  updated_at: '2026-07-26T06:45:13.745818+00:00'

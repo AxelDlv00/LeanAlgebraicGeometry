@@ -1,0 +1,65 @@
+id: I-0360
+provider: local
+kind: memory
+body: "RE-BASING U2 ON THE ZARISKI-LOCAL CERTIFICATE DOES NOT UNBLOCK ANYTHING. Adjudicated\
+  \ 2026-07-26 (run 0048 round 4) by a dedicated adversarial probe. Do not spend another\
+  \ session on this idea; it is attractive, it is half-true, and the half that is\
+  \ true is not the half that matters.\n\nTHE IDEA (mine, formed by reading the Lean\
+  \ rather than the roadmap): the epsilon-identity does not\nconsume the seven-field\
+  \ IsCertified. divisorWindow_eq_of_le_of_isCertified (DivSchemeEps.lean:196)\nuses\
+  \ the certificate through exactly three projections, and its kernel divisorWindow_eq_of_le\
+  \ (:170)\ntakes only Module.Finite + Module.Projective + constant rankAtStalk of\
+  \ A.ThetaGlued, plus\nsurjectivity of thetaGluedEval. All four are Zariski-local.\
+  \ The I-0320 relaxation already landed a\npointwise production rule for IsLocallyCertified.\
+  \ So (I reasoned) U2 could be re-based on the local\ncertificate and the global\
+  \ one -- hence the chart-confinement no-go, hence the whole p1-aut/R1\ndetour --\
+  \ would not be needed.\n\nWHY IT FAILS, and it is one line: THE NO-GO IS ABOUT PRODUCING\
+  \ A CERTIFICATE, NOT ABOUT CONSUMING\nONE. IsLocallyCertified fails for exactly\
+  \ the divisors IsCertified fails for. supportLocus is\nDivEq-invariant (DivSchemeCertZarConfine.lean:110)\
+  \ and pulls back along the relative-curve map\n(DivSchemeCertZarTransport.lean),\
+  \ so every member of every span-top family in IsLocallyCertified\nstill sees the\
+  \ same connected two-witness support, and supportLocus_subset_chart_of_isCertified\n\
+  (DivSchemeCertZarC1.lean:131) refuses a certificate on each. The project had already\
+  \ written this\ndown and I missed it: DivSchemeCertZarC1.lean:30-31 says verbatim\
+  \ that 'DivFamZar is therefore blind\nto connected divisors meeting both pi^-1(0)\
+  \ and pi^-1(infinity), over any base, after any Zariski\nshrink, for any adaptation.'\n\
+  \nWHAT SURVIVED, and it is worth having anyway: the epsilon-identity CAN be proved\
+  \ from a locally\ncertified family without any ThetaGlued base change, by a SQUEEZE\
+  \ rather than by descending the\nthree module properties (which would need a twisted\
+  \ ThetaGlued base change that is not landed, and a\nZariski descent of Module.Projective\
+  \ that mathlib does not have -- only\nModule.projective_of_localization_maximal\
+  \ under [Module.FinitePresentation], with an explicit TODO\nsaying the Zariski-local\
+  \ version is 'very hard'). Over S_i = Localization.Away (g i):\n  windowBaseChange\
+  \ x <= windowBaseChange (divisorWindow d) <= divisorWindow (d.pullback)\n    = divisorWindow\
+  \ G_i.eqns = windowBaseChange x\nwith the middle <= the landed formal half windowBaseChange_divisorWindow_le\n\
+  (DivisorFamilyEpsNaturality.lean:251), then Submodule.eq_of_isLocalized'_span\n\
+  (Mathlib/RingTheory/LocalProperties/Submodule.lean:194). Do NOT route this through\n\
+  divisorWindow_pulledEquations_eq (EpsNaturality.lean:387) -- that is itself gated\
+  \ on a global\nIsCertified and the reasoning would be circular.\n\nTHE ONE PROBE\
+  \ THAT COULD STILL OVERTURN THE NO-GO (and it is now the only one): the no-go is\
+  \ proved\nSTRUCTURALLY and is degree-agnostic, but no on-stratum witness exists.\
+  \ I-0356 established that the\nexhibited counterexample tX^2+XY+tY^2 is genus 0\
+  \ / degree 2, off the campaign's stratum, and that at\ng = 1 base shrink DOES evade\
+  \ it. So the open question is: at g >= 2, with the functor's genus\npinning, is\
+  \ a connected seed divisor meeting both pinned fibres actually realisable after\
+  \ base\nshrink? Exhibit one, or prove confinability on stratum. That is the cheap\
+  \ decisive experiment; it is\nnot 'more Lean on the certificate'."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-26T06:28:26.006284+00:00'
+updated_at: '2026-07-26T06:28:26.006293+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0011-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '4'
+    rounds: '12'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild

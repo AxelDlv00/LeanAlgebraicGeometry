@@ -1,0 +1,58 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.divrep.lift
+title: 'F6 to F7: the affine-to-general lift (DivRepGlobalData.ofAffine)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: "DDR-9's F6 -> F7 AFFINE-TO-GENERAL LIFT. Opened 2026-07-26 (run 0048 round\
+  \ 4) after a direct\nsource check found the gap; it had never been named as a work\
+  \ item.\n\nTHE GAP. `DivRepGlobalData` (Picard/DivRepKit.lean:69) occurs in NO other\
+  \ file in the tree --\nzero producers, zero consumers. Its own docstring (:16-20)\
+  \ says so deliberately: \"DDR-9.F7 has\ntwo logically separate parts: lifting the\
+  \ affine equivalences to arbitrary tests, and packaging\nthe resulting natural equivalences\
+  \ as a RepresentableBy datum. This file formalizes the second\npart. ... The affine-to-general\
+  \ lift is intentionally not assumed to exist implicitly: a caller\nmust provide\
+  \ every field.\" The second part IS landed --\n`DivRepGlobalData.representableBy`\
+  \ (:114) yields `(divFunctor C pi g).RepresentableBy DivOver`,\nthe campaign's divisor-representability\
+  \ endpoint. The FIRST part was never written.\n\nWHY THIS LEAF EXISTS. Every previous\
+  \ plan treated F6 -> F7 as bookkeeping folded into \"divrep\",\nso it was invisible:\
+  \ it appears in no roadmap row and no worksheet task list. It is not\nbookkeeping.\
+  \ It is the sheaf-theoretic descent of an equivalence from affine tests to arbitrary\n\
+  tests in Over (Spec k), and it needs a gluing argument on both sides -- sections\
+  \ one way,\nmorphisms of schemes the other.\n\nWHY IT IS TRACTABLE, AND WHY IT IS\
+  \ THE BEST U2-FREE WORK AVAILABLE. Its main input is already\nproved: Picard/DivisorFamilyZarSheaf.lean\
+  \ shows `divFamZar` is a Zariski sheaf on ARBITRARY tests\n-- separation `ext_of_le_cover`\
+  \ (:66) and gluing `existsUnique_glue_of_le_cover` (:237), with the\n`LocalData`\
+  \ / `IsGlueValue` / `glueValue` / `glueSection` apparatus (:92-:226). The target\n\
+  statement is\n\n  DivRepGlobalData.ofAffine (D : DivRepAffinePullback hpi g hO hchi\
+  \ r1 r2 b1 b2) :\n    DivRepGlobalData hpi g r1 r2 b1 b2\n\nwhich is complete mathematics\
+  \ over a section variable, independent of the blocked certificate\nmountain and\
+  \ of U2. Landing it means the divisor-representability endpoint is separated from\
+  \ the\nopen problem by exactly the affine package, and nothing else.\n\nSTAGING:\
+  \ (1) the `pull` field by gluing the affine pulls, with its characterizing property\
+  \ and\nuniqueness from ext_of_le_cover; (2) `pull_comp` from the affine `pull_naturality`;\
+  \ (3) the\n`classify` field by gluing the affine classifiers as morphisms of schemes\
+  \ (mathlib\nScheme.OpenCover.glueMorphisms); (4) the two inverse laws and `ofAffine`.\n"
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-26T06:35:06.039328+00:00'
+  provenance:
+    run: 0048
+    session: 0011-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '4'
+    rounds: '12'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
+  owner: ajcr-w4-rep-free
+  updated_at: '2026-07-26T06:43:19.237548+00:00'
+  milestone: w4-tail
