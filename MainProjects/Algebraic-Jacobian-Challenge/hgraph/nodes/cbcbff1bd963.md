@@ -21,44 +21,35 @@ docstring: '**Flattening stratification existence theorem** [Nitsure §4 main /
   - the pullback `𝓕|_{X ×_S S_f}` is flat over `S_f` for each `f`.
 
 
-  The (intended) substantive refinement is that the index set `I` is in
+  Caveat: the theorem in its full form also asserts that the index set `I`
 
-  bijection with the set of Hilbert polynomials arising on fibres, and
+  is in bijection with the set of Hilbert polynomials arising on the fibres,
 
-  that each `S_f` is uniquely determined by its Hilbert polynomial. For
+  and that each `S_f` is uniquely determined by its Hilbert polynomial.
 
-  the iter-176 file-skeleton the substantive type captures the
+  That labelling is not part of the statement here; it appears — still in a
 
-  stratification + flatness; the Hilbert-polynomial labeling is encoded
+  weak form — as the injection `P : I → ℕ → ℤ` of `flatLocusAssembly`.  The
 
-  in `flatLocusAssembly`''s `P : I → ℕ → ℤ` injection but elided here for
+  conclusion as typed is exactly the conclusion of `flatLocusReduction`
 
-  type-clarity.
+  (Lemma 6) up to the order of the conjuncts, and is proved below by that
 
+  reduction, so the mathematical content sits in `flatLocusReduction`
 
-  Proof status (run 0010, T12 r2): the conclusion as typed is exactly the
+  (Noetherian induction on `genericFlatness`) and in `genericFlatness`
 
-  conclusion of `flatLocusReduction` (Lemma 6) up to conjunct order, so the
+  itself.  A Hilbert-polynomial-indexed refinement would need relative
 
-  theorem is proved below by that reduction; the remaining mathematical
+  projective space `ℙⁿ_S`, Castelnuovo–Mumford regularity, and direct-image
 
-  content of this cone therefore lives in `flatLocusReduction` (Noetherian
-
-  induction on `genericFlatness`) and `genericFlatness` itself. The
-
-  Hilbert-polynomial-indexed refinement (which would need relative
-
-  projective space `ℙⁿ_S`, Castelnuovo–Mumford regularity, direct-image
-
-  base change 02KH) is deliberately not part of this statement; see
-
-  `flatLocusAssembly` and the blueprint chapter §`Mathlib status`.'
+  base change (Stacks 02KH).'
 file: AlgebraicJacobian/Picard/GenericFlatnessGeometric.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.flatteningStratification
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-27T01:04:43'
 ---
 theorem flatteningStratification {S X : Scheme.{u}} [IsNoetherian S]
     (π : X ⟶ S) [IsProper π] (F : X.Modules) [F.IsFinitePresentation] :

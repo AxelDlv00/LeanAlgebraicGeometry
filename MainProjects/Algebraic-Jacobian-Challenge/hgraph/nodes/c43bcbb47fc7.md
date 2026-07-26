@@ -11,12 +11,12 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.ChartsCover.exists_finite_charts
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-27T01:04:43'
 ---
 theorem ChartsCover.exists_finite_charts (hcov : ChartsCover G e)
     (U : X.affineOpens) :
     ∃ (n : ℕ) (Vc : Fin n → X.affineOpens) (mmc : Fin n → ℕ)
-      (Pc : ∀ i, MatrixPresentation Γ(X, (Vc i).1) Γ(G, (Vc i).1) e (mmc i)),
+      (_Pc : ∀ i, MatrixPresentation Γ(X, (Vc i).1) Γ(G, (Vc i).1) e (mmc i)),
       (∀ i, (Vc i).1 ≤ U.1) ∧ ∀ x ∈ U.1, ∃ i, x ∈ (Vc i).1 := by
   classical
   -- the subtype of presentation charts contained in `U`
@@ -28,11 +28,11 @@ theorem ChartsCover.exists_finite_charts (hcov : ChartsCover G e)
     obtain ⟨f, g, hfg, hxf⟩ :=
       exists_basicOpen_le_affine_inter U.2 V.2 x ⟨hx, hxV⟩
     have hle : (X.affineBasicOpen g).1 ≤ U.1 := by
-      show X.basicOpen g ≤ U.1
+      change X.basicOpen g ≤ U.1
       rw [← hfg]; exact X.basicOpen_le f
     refine Set.mem_iUnion.mpr
       ⟨⟨X.affineBasicOpen g, hle, hVchart.basicOpen G g⟩, ?_⟩
-    show x ∈ X.basicOpen g
+    change x ∈ X.basicOpen g
     rw [← hfg]; exact hxf
   -- extract a finite subcover by quasi-compactness of the affine open
   obtain ⟨T, hT⟩ := U.2.isCompact.elim_finite_subcover

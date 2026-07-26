@@ -9,129 +9,89 @@ import AlgebraicJacobian.Picard.SectionBaseChange
 import AlgebraicJacobian.Cohomology.FlatBaseChange
 
 /-!
-# The Quot scheme (A.2.b)
+# Flat base change of cohomology, and quasi-coherent descent
 
-This file is the **A.2.b** file-skeleton sub-build chapter for the project's
-positive-genus arm of `nonempty_jacobianWitness`. It packages the
-Grothendieck–Altman–Kleiman Quot-scheme construction
-`Quot^{Φ,L}_{E/X/S}` — a projective `S`-scheme representing the functor of
-`T`-flat coherent quotients of `E_T` on `X_T = X ×_S T` with Hilbert
-polynomial `Φ` on every fiber — together with the in-project sub-build for
-the Grassmannian *scheme* (Mathlib at the pinned commit carries only a
-linear-algebra Grassmannian).
+This file develops the sheaf theory entering the Grothendieck–Altman–Kleiman construction of
+the Quot scheme `Quot^{Φ,L}_{E/X/S}`, the projective `S`-scheme representing the functor
+sending an `S`-scheme `T` to the `T`-flat coherent quotients of `E_T` on `X_T = X ×_S T` whose
+fibres have Hilbert polynomial `Φ`. Cohomology and base change enters that construction twice,
+in the boundedness step and in the embedding of `Quot` into a Grassmannian.
 
-## Status (run 0010 T12: §§2–4 functor layer moved out and made real)
+Let
 
-Declaration 1 (`hilbertPolynomial`) is a **real definition** imported from
-`AlgebraicJacobian.Picard.HilbertPolynomial` (run 0011).  Declarations 2–5
-(`QuotFunctor`, `Grassmannian`, `Grassmannian.representable`, `QuotScheme`)
-now live in `AlgebraicJacobian.Picard.QuotFunctorDef` (run 0010 T12): the
-two *definitions* are real (Setoid quotients of families of quotients with
-pullback functoriality; base-change well-definedness factored into named
-leaves), while the two *representability theorems* remain typed `sorry`s —
-the substantive proofs are deep (Nitsure §5: boundedness ⟶ Grassmannian
-embedding ⟶ flattening stratification ⟶ valuative criterion).  This file
-keeps declaration 6 (the base-change lane, §5) and the qcqs/tilde section
-engine and support/freeness predicates that the functor layer consumes.
+```
+     g'
+X' ─────→ X
+│         │
+f'        f
+↓         ↓
+S' ─────→ S
+     g
+```
 
-The 6 blueprint-pinned declarations are:
+be a cartesian square of schemes and `F` a sheaf of `O_X`-modules. There is a canonical
+base-change morphism `g^* (f_* F) ⟶ f'_* ((g')^* F)`, the Beck–Chevalley mate of the
+`pullback ⊣ pushforward` adjunctions, which requires no hypotheses; it is an isomorphism as
+soon as `g` is flat, `f` is quasi-compact and quasi-separated, and `F` is quasi-coherent. Only
+this `i = 0` case of flat base change is treated: the corresponding statement for the higher
+direct images `R^i f_*`, `i ≥ 1`, is not proved here.
 
-1. `AlgebraicGeometry.Scheme.hilbertPolynomial` (def) — the
-   **Hilbert polynomial function** `s ↦ Φ_{F,s} ∈ ℚ[λ]` of a coherent
-   sheaf `F` on `X` over a finite-type `π : X ⟶ S` with respect to a
-   line bundle `L`. **Now a real definition** — provided (sorry-free,
-   with its uniqueness/spec API) by
-   `AlgebraicJacobian.Picard.HilbertPolynomial`; see §1 below.
+The proof rests on a body of quasi-coherent descent, developed here from scratch and of
+independent use: on `Spec R` a quasi-coherent sheaf of modules is the `tilde` of its global
+sections, hence its sections localize on basic opens — first over an affine open, then over any
+quasi-compact quasi-separated open — and pushforward along a quasi-compact quasi-separated
+morphism preserves quasi-coherence. The file also builds the annihilator ideal sheaf, the
+schematic support and the rank-`d` local freeness predicate for sheaves of modules on a scheme,
+which the Quot functor consumes, and promotes the site equivalence `Over U ≌ Opens ↥U` to an
+equivalence of sheaf categories.
 
-2. `AlgebraicGeometry.Scheme.QuotFunctor` (def, ~6 LOC) — the **Quot
-   functor** `Quot^{Φ,L}_{E/X/S} : (Sch/S)^op ⥤ Set` sending an
-   `S`-scheme `T ⟶ S` to the set of equivalence classes
-   `⟨F, q⟩` of pairs `(F, q)` with `F` a `T`-flat coherent sheaf on
-   `X_T`, `q : E_T ↠ F` a surjection, and `F|_{X_t}` having Hilbert
-   polynomial `Φ` at every `t ∈ T`.
+The Hilbert polynomial `AlgebraicGeometry.Scheme.hilbertPolynomial` is constructed in
+`AlgebraicJacobian.Picard.HilbertPolynomial`; the Quot functor, the Grassmannian functor and
+their representability statements live in `AlgebraicJacobian.Picard.QuotFunctorDef`.
 
-3. `AlgebraicGeometry.Scheme.Grassmannian` (def, ~5 LOC) — the
-   **Grassmannian functor** `Grass(V, d) : (Sch/S)^op ⥤ Set` of
-   rank-`d` quotients of a locally free `O_S`-module `V`.
+## Main results
 
-4. `AlgebraicGeometry.Scheme.Grassmannian.representable` (theorem, ~8 LOC)
-   — the **representability of the Grassmannian** by a smooth projective
-   `S`-scheme `Gr_S(V, d)` of relative dimension `d(r-d)`, equipped with
-   the Plücker closed embedding into `ℙ_S(⋀^d V)`.
-
-5. `AlgebraicGeometry.Scheme.QuotScheme` (theorem, ~10 LOC) — the
-   **Grothendieck–Altman–Kleiman representability theorem** for the Quot
-   functor: for a noetherian `S`, a projective `π : X ⟶ S`, a relatively
-   very ample `L` on `X`, a coherent `E`, and `Φ ∈ ℚ[λ]`, the functor
-   `Quot^{Φ,L}_{E/X/S}` is representable by a projective `S`-scheme.
-
-6. `AlgebraicGeometry.flatBaseChangeCohomology` (theorem, ~10 LOC) — the
-   **flat base-change theorem of cohomology** (Stacks tag 02KH): for a
-   cartesian square with `g` flat and `f` quasi-compact quasi-separated,
-   the canonical base-change map `g* (f_* F) ⟶ f'_* ((g')* F)` is an
-   isomorphism. The current scaffold encodes the `i = 0` direct-image
-   form (substantive content of (ii) of the Stacks 02KH statement); the
-   `R^i f_*` form for `i ≥ 1` requires the higher-direct-image
-   infrastructure not present at the pinned commit.
-
-## Note on type expressivity
-
-Following the project rule "Never weaken the type to dodge the proof",
-each declaration carries a substantive, non-tautological type:
-
-- `hilbertPolynomial` returns `Polynomial ℚ` keyed by `s : S`, not
-  `Unit`; the Hilbert polynomial is a non-trivial invariant of the
-  coherent sheaf at the fiber over `s`.
-- `QuotFunctor` and `Grassmannian` return contravariant functors into
-  `Type u` — substantive presheaves of sets, not constant functors.
-- `Grassmannian.representable` and `QuotScheme` package the
-  `Functor.RepresentableBy` Yoneda-bijection structure: existence of a
-  scheme `Y` together with a `RepresentableBy Y` witness — substantive
-  content (a representable functor is determined by its representing
-  object up to canonical isomorphism, and the witness is the data of
-  that isomorphism family).
-- `flatBaseChangeCohomology` produces a `Nonempty (... ≅ ...)` of an
-  isomorphism between two `S'`-modules built via the pullback/pushforward
-  bifunctor; the iso is non-trivial (it is `Stacks 02KH` content, not
-  the identity-on-the-same-object iso `Iso.refl _`).
-
-## Mathlib status
-
-Mathlib (master `b80f227`) provides:
-- `AlgebraicGeometry.Scheme.Modules` (the category `X.Modules`),
-- `Scheme.Modules.pullback`, `Scheme.Modules.pushforward` (the
-  pullback–pushforward adjunction at level `i = 0`),
-- `CategoryTheory.IsPullback` for cartesian squares,
-- `CategoryTheory.Functor.RepresentableBy` for representable functors,
-- `AlgebraicGeometry.Flat`, `AlgebraicGeometry.QuasiCompact`,
-  `AlgebraicGeometry.QuasiSeparated`, `AlgebraicGeometry.IsProper`,
-  `AlgebraicGeometry.LocallyOfFiniteType`, `AlgebraicGeometry.IsLocallyNoetherian`
-  (morphism / object property predicates), and
-- `Polynomial` for `ℚ[λ]`.
-
-Mathlib does NOT provide (at the pinned commit):
-- a Grassmannian *scheme* (only a linear-algebra Grassmannian
-  as a finite-rank-quotient variety),
-- a `IsProjective` morphism property,
-- the Quot/Hilbert functor or its representability,
-- `R^i f_*` higher direct images on `Scheme.Modules`,
-- Castelnuovo–Mumford `m`-regularity,
-- Snapper's Lemma for the polynomial property of Euler characteristics.
-
-The current file-skeleton uses `IsProper π` as the structural stand-in
-for "projective `π`" (every projective morphism is proper; the
-restriction is harmless in the Route A consumer setting where `π` comes
-from a smooth proper curve, which is automatically projective).
-iter-177+ refinement: once Mathlib gains an `IsProjective` morphism
-property, the hypothesis tightens.
+* `AlgebraicGeometry.canonicalBaseChangeMap`: the base-change transformation
+  `g^* (f_* -) ⟶ f'_* ((g')^* -)` of a cartesian square.
+* `AlgebraicGeometry.canonicalBaseChangeMap_isIso` and
+  `AlgebraicGeometry.flatBaseChangeCohomology`: it is an isomorphism for `g` flat and `f`
+  quasi-compact quasi-separated (Stacks 02KH, `i = 0`).
+* `AlgebraicGeometry.pullback_baseMap_sectionLinearEquiv_of_quasiCompact`: the underlying H⁰
+  statement (Stacks 02KE) — over a compatible pair of affine opens `U ⊆ S'`, `V ⊆ S`, the
+  sections of `(g')^* F` over `f' ⁻¹ᵁ U` are `Γ(S', U) ⊗_{Γ(S, V)} Γ(F, f ⁻¹ᵁ V)`.
+* `AlgebraicGeometry.Scheme.Modules.pullback_app_isoTensor`: the affine-open section formula
+  `Γ(g^* N, U) ≃ Γ(Y, U) ⊗_{Γ(X, V)} Γ(N, V)` for quasi-coherent `N` (Stacks 01HQ).
+* `AlgebraicGeometry.Scheme.Modules.isIso_fromTildeΓ_of_isQuasicoherent`: a quasi-coherent
+  sheaf of modules on `Spec R` lies in the essential image of `tilde` (Stacks 01I8).
+* `AlgebraicGeometry.Scheme.Modules.isLocalizedModule_basicOpen`: for quasi-coherent `M`, an
+  affine open `U` and `f : Γ(X, U)`, the restriction `Γ(M, U) → Γ(M, D(f))` exhibits the
+  target as the localization at the powers of `f` (Hartshorne II.5.3).
+* `AlgebraicGeometry.Scheme.Modules.isLocalizedModule_basicOpen_of_isCompact`: the same
+  conclusion over a quasi-compact quasi-separated open (Stacks 01P0).
+* `AlgebraicGeometry.Scheme.Modules.pushforward_isQuasicoherent`: pushforward along a
+  quasi-compact quasi-separated morphism preserves quasi-coherence (Stacks 01XJ).
+* `AlgebraicGeometry.Scheme.Modules.module_finite_sections_of_quasicoherentData` and
+  `AlgebraicGeometry.Scheme.Modules.exists_affine_finite_sections_nhds`: sections of a
+  finitely presented sheaf of modules over a small enough affine open are a finite module
+  (Stacks 01PC).
+* `AlgebraicGeometry.overEquivalence_sheafCongr`: the equivalence of sheaf categories induced
+  by `Opens.overEquivalence U : Over U ≌ Opens ↥U`.
+* `AlgebraicGeometry.SheafOfModules.IsLocallyFreeOfRank`,
+  `AlgebraicGeometry.Scheme.Modules.annihilator`,
+  `AlgebraicGeometry.Scheme.Modules.schematicSupport`,
+  `AlgebraicGeometry.Scheme.Modules.HasProperSupport`: the predicates and constructions on
+  sheaves of modules used by the Quot functor, together with the identification
+  `AlgebraicGeometry.Scheme.Modules.annihilator_ideal` of the annihilator ideal sheaf on
+  affine opens.
+* `Module.annihilator_isLocalizedModule_eq_map`: for a finitely generated module the
+  annihilator commutes with localization.
 
 ## References
 
-Blueprint: `blueprint/src/chapters/Picard_QuotScheme.tex` (~900 LOC,
-6 pins + 4 sub-lemmas). Source: Nitsure, "Construction of Hilbert and
-Quot Schemes", §§1, 5 (FGA Explained Ch. 5, arXiv:math/0504020 pp. 5–35);
-Grothendieck, FGA TDTE-IV; Stacks Project tag 02KH (flat-base-change of
-cohomology).
+* Nitsure, *Construction of Hilbert and Quot schemes*, §§1, 5 (FGA Explained, Ch. 5).
+* Grothendieck, FGA, TDTE IV.
+* Hartshorne, *Algebraic Geometry*, II.5.3 and III.5.2.
+* Stacks Project, tags 01HQ, 01I8, 01P0, 01PC, 01XJ, 02KE, 02KH.
 -/
 
 set_option autoImplicit false
@@ -144,56 +104,40 @@ namespace AlgebraicGeometry
 
 namespace Scheme
 
-/-! ## §1. Hilbert polynomial of a coherent sheaf
+/-! ## The Hilbert polynomial of a coherent sheaf
 
-The **Hilbert polynomial** `AlgebraicGeometry.Scheme.hilbertPolynomial` is a
-**real definition** (no `sorry`), provided by
-`AlgebraicJacobian.Picard.HilbertPolynomial` (imported above): the unique
+The Hilbert polynomial `AlgebraicGeometry.Scheme.hilbertPolynomial` is constructed in
+`AlgebraicJacobian.Picard.HilbertPolynomial` (imported above): it is the unique
 `Φ_{F,s} ∈ ℚ[λ]` agreeing for `m ≫ 0` with the graded Hilbert function
-`m ↦ dim_{κ(s)} Γ(X_s, F_s ⊗ L_s^{⊗m})` of the fibre section module
-(`H⁰`-only encoding; agrees with the Euler-characteristic `χ(F(m))` form by
-Serre vanishing for proper `X_s` and ample `L_s`).  See
-`Scheme.hilbertPolynomial_eq_of_eventually` (uniqueness / well-definedness)
-and `Scheme.existsUnique_hilbertPolynomial_of_isRatHilb` (existence from the
-graded Hilbert–Serre engine of `AlgebraicJacobian.Picard.GradedHilbertSerre`).
+`m ↦ dim_{κ(s)} Γ(X_s, F_s ⊗ L_s^{⊗m})` of the fibre section module. This is the `H⁰`-only
+encoding; it agrees with the Euler-characteristic form `χ(F(m))` by Serre vanishing, for
+proper `X_s` and ample `L_s`. See `Scheme.hilbertPolynomial_eq_of_eventually` for uniqueness
+and `Scheme.existsUnique_hilbertPolynomial_of_isRatHilb` for existence, the latter resting on
+the graded Hilbert–Serre theorem of `AlgebraicJacobian.Picard.GradedHilbertSerre`.
 
-Blueprint reference: `def:hilbert_polynomial` (Nitsure §1; cf. Hartshorne
-III.5.2). -/
+Reference: Nitsure §1; cf. Hartshorne III.5.2. -/
 
-/-! ## §2–§4. The Quot functor, the Grassmannian, and representability — moved
+/-! ## The Quot functor, the Grassmannian, and representability
 
-The headline functor definitions `Scheme.QuotFunctor` (`def:quot_functor`)
-and `Scheme.Grassmannian` (`def:grassmannian_scheme`) are now **real
-definitions** — Setoid quotients of genuine families of quotients with
-pullback functoriality — and the representability statements
-`Scheme.Grassmannian.representable` (`thm:grassmannian_representable`) and
-`Scheme.QuotScheme` (`thm:quot_representable`) are stated against them, in
-`AlgebraicJacobian.Picard.QuotFunctorDef` (run 0010 T12).  The
-functor-of-points layer consumes the flattening-stratification flatness
-predicate (`Scheme.CoherentSheafFlat`), the support/freeness predicates
-built below in this file, and the Hilbert-function machinery of
-`AlgebraicJacobian.Picard.HilbertPolynomial`, so it lives above this file,
-`FlatteningStratification`, and `GlueDescent` in the import order.
-Blueprint `\lean{}` pointers are unchanged — they pin fully qualified
-declaration names, which are preserved. -/
+The functor definitions `Scheme.QuotFunctor` and `Scheme.Grassmannian` — Setoid quotients of
+families of quotients, with their pullback functoriality — and the representability statements
+`Scheme.Grassmannian.representable` and `Scheme.QuotScheme` live in
+`AlgebraicJacobian.Picard.QuotFunctorDef`. That functor-of-points layer consumes the
+flattening-stratification flatness predicate `Scheme.CoherentSheafFlat`, the support and
+freeness predicates built below in this file, and the Hilbert-function machinery of
+`AlgebraicJacobian.Picard.HilbertPolynomial`, so it sits above this file,
+`FlatteningStratification` and `GlueDescent` in the import order. -/
 end Scheme
 
-/-! ## §5. Cohomology and base change
+/-! ## Cohomology and base change
 
-The Quot construction uses cohomology-and-base-change in two places: the
-boundedness step (Nitsure §5 "Use of m-Regularity") and the Grassmannian
-embedding (Nitsure §5 "Embedding Quot into Grassmannian"). We record the
-relevant statement as a named theorem so the Lean encoding can cite it
-directly.
+The Quot construction uses cohomology and base change in two places: the boundedness step
+(Nitsure §5, "Use of m-regularity") and the Grassmannian embedding (Nitsure §5, "Embedding
+Quot into Grassmannian").
 
-The Stacks 02KH form is the statement for higher direct images
-`R^i f_*` on quasi-coherent sheaves; for the iter-176 file-skeleton we
-state the `i = 0` form on `Scheme.Modules`, which is the substantive
-content of `lemma-flat-base-change-cohomology(ii)` of Stacks 02KH. The
-`R^i` form is iter-177+ work after higher-direct-image infrastructure
-is in scope.
-
-Blueprint reference: `thm:flat_base_change_cohomology` (Stacks 02KH). -/
+Stacks 02KH states flat base change for all higher direct images `R^i f_*` of quasi-coherent
+sheaves. What is proved here is the `i = 0` form on `Scheme.Modules`, the substantive content
+of part (ii) of that statement; the `R^i` form for `i ≥ 1` is not proved. -/
 
 /-! ### Flat base change of cohomology (Stacks tag 02KH, `i = 0` form)
 
@@ -213,25 +157,19 @@ base-change map `g* (f_* F) ⟶ f'_* ((g')* F)` is an isomorphism in
 `S'.Modules`.
 
 (The full Stacks 02KH statement covers all higher direct images
-`R^i f_* F` for `i ≥ 0`; the `i = 0` form encoded here is the
-substantive content of `lemma-flat-base-change-cohomology(ii)` of
-Stacks 02KH, with the `i ≥ 1` form post-iter-177 work after the
-higher-direct-image bifunctor lands.)
+`R^i f_* F` for `i ≥ 0`; what is proved here is the `i = 0` form, the
+substantive content of part (ii) of that statement.)
 
-iter-177 (Lane QS-FLAT): the body constructs the canonical base-change
-natural transformation via the mate equivalence of the
-`pullback ⊣ pushforward` adjunction (Mathlib's `mateEquiv` of
-`Scheme.Modules.pullbackPushforwardAdjunction`), then exhibits the iso
-via the `canonicalBaseChangeMap_isIso` helper. The deep mathematical
-content (Stacks tag 02KH / 02KE / 00H8) lives entirely in the helper;
-it reduces affine-locally to: for a flat ring map `A → B` and an
-`A`-algebra `R`, the canonical map `B ⊗_A H^i(X, F) → H^i(X_B, F_B)`
-is an iso for any quasi-coherent `F` (the `i = 0` form is what we use).
-The helper `canonicalBaseChangeMap_isIso` is PROVED (T13, 2026-07-07):
-the affine-local reduction runs through the sorry-free Tilde-route
-section formula (Stacks 01HQ, `pullback_app_isoTensor`) and the
-quasi-compact open-cover Mayer–Vietoris induction engine, so the whole
-02KE/02KH `i = 0` chain in this file is sorry-free. -/
+The base-change natural transformation itself is the mate of the
+`pullback ⊣ pushforward` adjunction (Mathlib's `mateEquiv` applied to
+`Scheme.Modules.pullbackPushforwardAdjunction`); that it is an isomorphism
+is `canonicalBaseChangeMap_isIso`. The deep content (Stacks 02KH / 02KE /
+00H8) lies entirely in that step: it reduces affine-locally to the claim
+that, for a flat ring map `A → B`, the canonical map
+`B ⊗_A H^i(X, F) → H^i(X_B, F_B)` is an isomorphism for quasi-coherent
+`F`, here in its `i = 0` form. The affine-local reduction runs through the
+section formula of Stacks 01HQ (`pullback_app_isoTensor`) and a
+quasi-compact open-cover Mayer–Vietoris induction. -/
 
 /-- The canonical base-change natural transformation `g* (f_* -) ⟶ f'_* ((g')* -)`
 associated to a cartesian square
@@ -268,45 +206,36 @@ noncomputable def canonicalBaseChangeMap
         Scheme.Modules.pullbackCongr sq.w.symm ≪≫
         (Scheme.Modules.pullbackComp g' f).symm).hom)
 
-/-- **Trivial bridge** (pushforward of pullback at sections — rfl).
-
-The section of `(pushforward f').obj ((pullback g').obj F)` over an
-open `U ⊆ S'` identifies definitionally with the section of
-`(pullback g').obj F` over `f' ⁻¹ᵁ U`, by `Scheme.Modules.pushforward_obj_obj`.
-Factored as a separate (closed) lemma to document step (3) of the
-intended-body plan in
-`canonicalBaseChangeMap_app_app_isIso_of_isAffineOpen` cleanly. -/
+/-- Sections of `(pushforward f').obj ((pullback g').obj F)` over an open
+`U ⊆ S'` are definitionally the sections of `(pullback g').obj F` over the
+preimage `f' ⁻¹ᵁ U`, by `Scheme.Modules.pushforward_obj_obj`. -/
 private lemma pushforward_pullback_section_eq_pullback_section
     {X X' S' : Scheme.{u}} (f' : X' ⟶ S') (g' : X' ⟶ X)
     (F : X.Modules) (U : S'.Opens) :
     Γ((Scheme.Modules.pushforward f').obj ((Scheme.Modules.pullback g').obj F), U) =
       Γ((Scheme.Modules.pullback g').obj F, f' ⁻¹ᵁ U) := rfl
 
-/-! ### Affine-open section formula for `Scheme.Modules.pullback` (CLOSED — sorry-free)
+/-! ### Affine-open section formula for `Scheme.Modules.pullback`
 
-The load-bearing Mathlib gap for `_of_isAffineBase` was the affine-open
-section formula identifying
+The section formula identifies
 
   `Γ((pullback g).obj N, U)  ≃  Γ(Y, U) ⊗_{Γ(X, V)} Γ(N, V)`
 
 for any compatible affine pair `(V ⊆ X, U ⊆ Y)` of a morphism `g : Y ⟶ X`
-of schemes and a quasi-coherent sheaf of `O_X`-modules `N`. The pullback
-functor `Scheme.Modules.pullback g` is built as `SheafOfModules.pullback`
-via the partial-adjoint machinery and has NO closed-form `pullback_obj_obj`
-simp lemma (cf. `analogies/quotscheme-pullback-affine-section.md` table for
-the mathlib survey). Formerly this section pinned the formula as the
-project's Lane-F typed-sorry helper; it is now PROVED (Stacks 01HQ, run
-0010): the substantive claim is discharged by
-`pullback_app_isoTensor_isBaseChange` via the `Tilde` route on Spec
-(`pullback_tildeIso` + `pullback_app_isoTensor_baseMap_sectionLinearEquiv`)
-promoted to a general affine open in `Y`, and the whole helper chain below
-is sorry-free. -/
+of schemes and a quasi-coherent sheaf of `O_X`-modules `N` (Stacks 01HQ).
+The pullback functor `Scheme.Modules.pullback g` is built as
+`SheafOfModules.pullback` via the partial-adjoint machinery, so no
+closed-form description of its sections is available and the formula has to
+be established by hand. The substantive claim is
+`pullback_app_isoTensor_isBaseChange`, proved by the `tilde` route on `Spec`
+(`pullback_tildeIso` together with
+`pullback_app_isoTensor_baseMap_sectionLinearEquiv`), then promoted to a
+general affine open of `Y`. -/
 
-/-- **Project-side base linear map for `pullback_app_isoTensor`** (iter-185
-Lane F substantive step).
+/-- The base linear map underlying `pullback_app_isoTensor`.
 
-Built from the unit of the `pullback ⊣ pushforward` adjunction at the
-`V`-section level: the unit produces a morphism of `𝒪_X`-modules
+It is built from the unit of the `pullback ⊣ pushforward` adjunction at the
+`V`-section level: the unit is a morphism of `𝒪_X`-modules
 `N ⟶ (pushforward g).obj ((pullback g).obj N)`, and evaluating its
 underlying `PresheafOfModules`-val at `V` gives a `Γ(X, V)`-linear map
 `Γ(N, V) →ₗ[Γ(X, V)] Γ((pushforward g).obj ((pullback g).obj N), V)`.
@@ -314,22 +243,19 @@ By `pushforward_obj_obj` (definitional), the codomain is the same data as
 `Γ((pullback g).obj N, g ⁻¹ᵁ V)` with `Γ(X, V)` acting through restriction
 of scalars along `g.app V`.
 
-This `let`-only construction is axiom-clean (no `sorry`); it captures
-exactly Step 1 of the Tilde-isoTop body plan documented in the consumer's
-docstring. The substantive bijectivity claim (Stacks 02KE / 01HQ algebraic
-flat-base-change content) is encapsulated separately in
-`pullback_app_isoTensor_isBaseChange`, allowing the consumer iso to
-discharge cleanly via `IsBaseChange.equiv.symm`. -/
+That this map exhibits the target as a base change — the algebraic content of
+Stacks 02KE / 01HQ — is the separate statement
+`pullback_app_isoTensor_isBaseChange`, from which the section formula follows
+by `IsBaseChange.equiv.symm`. -/
 private noncomputable def pullback_app_isoTensor_unitAtV
     {X Y : Scheme.{u}} (g : Y ⟶ X) (N : X.Modules) (V : X.Opens) :
     Γ(N, V) →ₗ[Γ(X, V)]
       Γ((Scheme.Modules.pushforward g).obj ((Scheme.Modules.pullback g).obj N), V) :=
   (((Scheme.Modules.pullbackPushforwardAdjunction g).unit.app N).val.app (.op V)).hom
 
-/-- **Step 2 of the Tilde-isoTop route** (iter-186 Lane F): the `Γ(X, V)`-linear
-base map for the affine-open section formula.
+/-- The `Γ(X, V)`-linear base map for the affine-open section formula.
 
-Combining the axiom-clean unit `pullback_app_isoTensor_unitAtV` with the
+Combining the unit `pullback_app_isoTensor_unitAtV` with the
 presheaf-restriction `((pullback g).obj N).presheaf.map (homOfLE e).op` (from
 the larger open `g ⁻¹ᵁ V` to the smaller open `U`) gives a `Γ(X, V)`-linear
 map
@@ -350,8 +276,8 @@ linearity in the target's restriction-of-scalars action is the
 `Γ(Y, g ⁻¹ᵁ V)`-linearity of the presheaf-restriction map, and the two
 chain definitionally to give `Γ(X, V)`-linearity.
 
-This is axiom-clean; the substantive bijectivity claim is encapsulated in
-`pullback_app_isoTensor_baseMap_isBaseChange` (iter-186 Lane F helper #2). -/
+That this map is a base change is the separate statement
+`pullback_app_isoTensor_baseMap_isBaseChange`. -/
 noncomputable def pullback_app_isoTensor_baseMap
     {X Y : Scheme.{u}} (g : Y ⟶ X) (N : X.Modules)
     {U : Y.Opens} {V : X.Opens} (e : U ≤ g ⁻¹ᵁ V) :

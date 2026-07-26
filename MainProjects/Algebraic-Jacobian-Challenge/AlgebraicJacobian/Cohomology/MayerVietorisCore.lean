@@ -7,21 +7,39 @@ import AlgebraicJacobian.Cohomology.StructureSheafModuleK
 import Mathlib.CategoryTheory.Limits.Preorder
 
 /-!
-# Mayer-Vietoris LES core for `ModuleCat k`-valued sheaf cohomology
+# The Mayer-Vietoris long exact sequence for `ModuleCat k`-valued sheaf cohomology
 
-This file (iter-063 split, cohort 1) contains the MV LES core for
-`Sheaf J (ModuleCat k)`-valued cohomology: the Mathlib gap-fill
-`Abelian.Ext.chgUnivLinearEquiv` plus the iter-016 → iter-026 abstract
-Mayer-Vietoris infrastructure (`HModule'_cohomologyPresheafFunctor`,
-`HModule'_toBiprod`, `HModule'_fromBiprod`, `HModule'_δ`, `HModule'_sequence`,
-`HModule'_sequence_exact`, and the `δ`-zero simp companions).
+Let `J` be a Grothendieck topology on a category `C` and let `F` be a sheaf of
+`k`-modules on `(C, J)`. The cohomology `HModule' k F n X` of an object `X` is an
+`Ext`-group out of the sheafification of the free `ModuleCat k`-valued presheaf on the
+presheaf represented by `X`. This file constructs, for a Mayer-Vietoris square `S` in
+`(C, J)`, the associated long exact sequence
 
-This is cohort 1 of the original `MayerVietoris.lean` split:
-* `MayerVietorisCore.lean` (this file): MV LES core + Mathlib gap-fill.
-* `MayerVietorisCover.lean`: 2-affine cover MV + cover-totality bridges +
-  `IsCechAcyclicCover` consumers + `HasAffineCechAcyclicCover` carrier.
+`⋯ → Hⁿ(X₄) → Hⁿ(X₂) ⊞ Hⁿ(X₃) → Hⁿ(X₁) → Hⁿ⁺¹(X₄) → ⋯`
 
-See `blueprint/src/chapters/Cohomology_MayerVietoris.tex`.
+by mirroring, for `ModuleCat k`-valued sheaves, the construction Mathlib performs for
+`AddCommGrpCat`-valued ones. The mechanism is the short exact sequence of sheafified
+free sheaves attached to the square, whose extension class provides the connecting
+homomorphism and whose contravariant `Ext`-sequence is exact.
+
+## Main results
+
+* `Abelian.Ext.chgUnivLinearEquiv`: the universe change on `Ext` is a linear
+  equivalence over a `Linear R`-enriched abelian category.
+* `HModule'_cohomologyPresheafFunctor`, `HModule'_cohomologyPresheaf`: degree-`n`
+  cohomology as a presheaf `Cᵒᵖ ⥤ AddCommGrpCat`, with value `HModule' k F n X` at
+  `op X`.
+* `HModule'_toBiprod`, `HModule'_fromBiprod`: the sum and the difference of the
+  restriction maps of a Mayer-Vietoris square.
+* `HModule'_shortComplex_shortExact`: the short complex of sheafified free sheaves
+  attached to a Mayer-Vietoris square is short exact.
+* `HModule'_δ`: the connecting homomorphism `Hⁿ⁰(X₁) ⟶ Hⁿ¹(X₄)`.
+* `HModule'_sequence`, `HModule'_sequence_exact`: the Mayer-Vietoris sequence and its
+  exactness.
+
+## References
+
+* `blueprint/src/chapters/Cohomology_MayerVietoris.tex`
 -/
 
 set_option autoImplicit false
@@ -30,33 +48,21 @@ universe u v w w'
 
 open CategoryTheory Limits TopologicalSpace AlgebraicGeometry
 
-/-! ## Iter-034 Mathlib gap-fill: `Abelian.Ext.chgUniv` as a `LinearEquiv`
+/-! ## The universe change on `Ext` as a linear equivalence
 
-Mathlib's `Abelian.Ext.chgUniv : Ext.{w} X Y n ≃ Ext.{w'} X Y n`
-(`Mathlib/Algebra/Homology/DerivedCategory/Ext/Basic.lean` L540) is a bare
-`Equiv` only. The iter-034 universe-bridge `HModule'_eq_HModule_linearEquiv`
-(below in `section CoverTotality`) requires it as a `LinearEquiv` over the
-`Linear R C`-enriched abelian category. The upgrade is mechanical: the
-`AddCommGroup (Ext X Y n)` and `Module R (Ext X Y n)` instances are themselves
-transferred from the standard derived category through `homEquiv`, and
-Mathlib's load-bearing intermediate lemma `Ext.homEquiv_chgUniv` (Basic.lean
-L543–545) shows that `chgUniv` preserves the underlying derived-category
-morphism. So `chgUniv` automatically commutes with `+` and `•`. Two short
-helper lemmas (`chgUniv_add` and `chgUniv_smul`) plus a 7-line `LinearEquiv`
-structure literal give the upgrade.
+Mathlib's `Abelian.Ext.chgUniv : Ext.{w} X Y n ≃ Ext.{w'} X Y n` is a bare `Equiv`.
+Over a `Linear R`-enriched abelian category it is in fact `R`-linear: the additive and
+`R`-module structures on `Ext X Y n` are transferred from the standard derived category
+through `homEquiv`, and `Ext.homEquiv_chgUniv` says that `chgUniv` preserves the
+underlying derived-category morphism, so it automatically commutes with `+` and `•`.
 
-This cohort lives outside `namespace AlgebraicGeometry.Scheme` because the
-helpers belong to the `CategoryTheory.Abelian.Ext` namespace. We use the
-qualified-name pattern `Abelian.Ext.foo` rather than wrapping the entire file
-in a second namespace block. -/
+These declarations belong to the `CategoryTheory.Abelian.Ext` namespace and hence sit
+outside the `AlgebraicGeometry.Scheme` namespace opened below. -/
 
-/-- Iter-034 Mathlib gap-fill (a): `Abelian.Ext.chgUniv` is additive. The
-underlying `homEquiv` (`Mathlib/Algebra/Homology/DerivedCategory/Ext/Basic.lean`
-L162) is preserved by `chgUniv` (Mathlib lemma `Ext.homEquiv_chgUniv`,
-L543–545), and the `AddCommGroup (Ext X Y n)` instance (L241–243) is defined by
-transferring the `AddCommGroup` from the standard derived category through
-`homEquiv`. Combining these via the `Ext.ext` extensionality (L177–179) gives
-additivity. -/
+/-- `Abelian.Ext.chgUniv` is additive. The underlying morphism `homEquiv` is preserved
+by `chgUniv`, and the `AddCommGroup (Ext X Y n)` instance is defined by transferring the
+group structure of the standard derived category along `homEquiv`; combining the two
+through the extensionality lemma for `Ext` gives additivity. -/
 private lemma Abelian.Ext.chgUniv_add
     {C : Type*} [Category C] [Abelian C]
     [HasExt.{w} C] [HasExt.{w'} C] {X Y : C} {n : ℕ} (a b : Abelian.Ext.{w} X Y n) :
@@ -72,10 +78,8 @@ private lemma Abelian.Ext.chgUniv_add
   rw [Abelian.Ext.homEquiv_chgUniv, Abelian.Ext.homEquiv_chgUniv,
       Abelian.Ext.homEquiv_chgUniv, ← Abelian.Ext.add_hom]
 
-/-- Iter-034 Mathlib gap-fill (b): `Abelian.Ext.chgUniv` is `R`-linear when `C`
-is `Linear R`-enriched. Same proof shape as `chgUniv_add`, but using
-`smul_hom` (`Mathlib/Algebra/Homology/DerivedCategory/Ext/Linear.lean` L52–55)
-in place of `add_hom`. -/
+/-- `Abelian.Ext.chgUniv` commutes with the `R`-action when `C` is `Linear R`-enriched.
+Same argument as `chgUniv_add`, with `smul_hom` in place of `add_hom`. -/
 private lemma Abelian.Ext.chgUniv_smul
     {R : Type*} [Ring R] {C : Type*} [Category C] [Abelian C] [Linear R C]
     [HasExt.{w} C] [HasExt.{w'} C] {X Y : C} {n : ℕ}
@@ -90,14 +94,11 @@ private lemma Abelian.Ext.chgUniv_smul
   rw [Abelian.Ext.homEquiv_chgUniv, Abelian.Ext.homEquiv_chgUniv,
       ← Abelian.Ext.smul_hom]
 
-/-- Iter-034 Mathlib gap-fill (c): the `R`-linear upgrade of Mathlib's bare-`Equiv`
-`Abelian.Ext.chgUniv : Ext.{w} X Y n ≃ Ext.{w'} X Y n` to a `LinearEquiv`,
-when `C` is `Linear R`-enriched abelian. Combines (a) and (b). The
-`Mathlib/Algebra/Homology/DerivedCategory/Ext/Basic.lean` L540 declaration is
-universe-polymorphic but only proves the underlying bijection; this wrapper
-adds the algebraic structure preservation needed for downstream `LinearEquiv`
-chaining (specifically, the iter-034 universe bridge
-`HModule'_eq_HModule_linearEquiv` below). -/
+/-- The universe change `Abelian.Ext.chgUniv : Ext.{w} X Y n ≃ Ext.{w'} X Y n` as an
+`R`-linear equivalence, when `C` is `Linear R`-enriched abelian; it combines
+`chgUniv_add` and `chgUniv_smul`. Mathlib's version records only the underlying
+bijection, whereas chaining the universe change with other linear equivalences (as in
+`HModule'_eq_HModule_linearEquiv`) needs the algebraic structure to be preserved. -/
 noncomputable def Abelian.Ext.chgUnivLinearEquiv
     {R : Type*} [Ring R] {C : Type*} [Category C] [Abelian C] [Linear R C]
     [HasExt.{w} C] [HasExt.{w'} C] {X Y : C} {n : ℕ} :
@@ -111,20 +112,18 @@ noncomputable def Abelian.Ext.chgUnivLinearEquiv
 
 namespace AlgebraicGeometry.Scheme
 
-/-- Phase A step 6 *Path 2* (iter-016): the substantive functor mirroring
-Mathlib's `Sheaf.cohomologyPresheafFunctor` for the `ModuleCat k` flavor. Sends
-a sheaf `F : Sheaf J (ModuleCat k)` to the presheaf
+/-- Degree-`n` cohomology of `ModuleCat k`-valued sheaves as a functor, the analogue of
+`Sheaf.cohomologyPresheafFunctor`. It sends a sheaf `F : Sheaf J (ModuleCat k)` to the
+presheaf
 `X ↦ Ext^n((presheafToSheaf J _).obj ((yoneda ⋙ ModuleCat.free k).obj X), F)`,
-i.e.\ to a presheaf `Cᵒᵖ ⥤ AddCommGrpCat` whose value at `op X` is
-`HModule' k F n X` (definitionally, see `HModule'_cohomologyPresheaf` below).
+i.e.\ to a presheaf `Cᵒᵖ ⥤ AddCommGrpCat` whose value at `op X` is `HModule' k F n X`
+definitionally (see `HModule'_cohomologyPresheaf` below).
 
-The codomain is `Cᵒᵖ ⥤ AddCommGrpCat` (not `Cᵒᵖ ⥤ ModuleCat k`) because Mathlib's
-`Abelian.extFunctor n : Cᵒᵖ ⥤ C ⥤ AddCommGrpCat` always lands in `AddCommGrpCat`
-regardless of the source category's `Linear`-enrichment; the per-fiber `Module k`
-structure on `(HModule'_cohomologyPresheaf k F n).obj (op X)` is preserved
-through the iter-014 `HModule'` reducibility chain. Probe-confirmed body
-(iter-016 plan-agent). Used downstream as the prerequisite for the queued
-iter-017+ `ModuleCat k`-flavored Mayer-Vietoris LES. -/
+The codomain is `Cᵒᵖ ⥤ AddCommGrpCat` rather than `Cᵒᵖ ⥤ ModuleCat k` because
+`Abelian.extFunctor n : Cᵒᵖ ⥤ C ⥤ AddCommGrpCat` lands in `AddCommGrpCat` whatever the
+`Linear`-enrichment of the source category; the `Module k` structure on each value
+`(HModule'_cohomologyPresheaf k F n).obj (op X)` remains available through the
+definitional unfolding to `HModule'`. -/
 noncomputable def HModule'_cohomologyPresheafFunctor
     (k : Type u) [Field k]
     {C : Type v} [Category.{u, v} C] (J : GrothendieckTopology C)
@@ -136,14 +135,14 @@ noncomputable def HModule'_cohomologyPresheafFunctor
     ((yoneda ⋙ (Functor.whiskeringRight _ _ _).obj (ModuleCat.free k) ⋙
       presheafToSheaf _ _).op ⋙ Abelian.extFunctor n)
 
-/-- Phase A step 6 *Path 2* (iter-016): the abbrev wrapper mirroring Mathlib's
-`Sheaf.cohomologyPresheaf` for the `ModuleCat k` flavor. Evaluates the
-`HModule'_cohomologyPresheafFunctor` at a sheaf `F`, giving a presheaf
-`Cᵒᵖ ⥤ AddCommGrpCat` whose value at `op X` is `HModule' k F n X` definitionally
-(probe-confirmed `rfl` by the iter-016 plan-agent). The `noncomputable abbrev`
-form is required for the per-fiber definitional identification with `HModule'`;
-under `def` the wrapper would block the `rfl`-level reduction that downstream
-Mayer-Vietoris and Stein-factorization arguments rely on. -/
+/-- Degree-`n` cohomology of a fixed sheaf `F` as a presheaf `Cᵒᵖ ⥤ AddCommGrpCat`, the
+analogue of `Sheaf.cohomologyPresheaf`: the value of
+`HModule'_cohomologyPresheafFunctor` at `F`. Its value at `op X` is `HModule' k F n X`
+definitionally.
+
+The `abbrev` form is load-bearing for that definitional identification: under `def` the
+wrapper would block the `rfl`-level reduction to `HModule'` that the Mayer-Vietoris and
+Stein-factorization arguments rely on. -/
 noncomputable abbrev HModule'_cohomologyPresheaf
     (k : Type u) [Field k]
     {C : Type v} [Category.{u, v} C] {J : GrothendieckTopology C}
@@ -153,21 +152,13 @@ noncomputable abbrev HModule'_cohomologyPresheaf
     Cᵒᵖ ⥤ AddCommGrpCat :=
   (HModule'_cohomologyPresheafFunctor k J n).obj F
 
-/-- Phase A step 6 *Path 2* (iter-017): the first Mayer-Vietoris LES building
-block on the `ModuleCat k` side — the sum of the two restriction maps
-`(cohomologyPresheaf F n).map S.f₂₄.op` and `(cohomologyPresheaf F n).map S.f₃₄.op`,
-as a single map into the biproduct. Direct mirror of Mathlib's
-`GrothendieckTopology.MayerVietorisSquare.toBiprod` (file
-`Mathlib/CategoryTheory/Sites/SheafCohomology/MayerVietoris.lean`, L43–46) for
-the `ModuleCat k` flavor with `F.cohomologyPresheaf → HModule'_cohomologyPresheaf k F`.
+/-- The pair of restriction maps `Hⁿ(X₄) ⟶ Hⁿ(X₂)` and `Hⁿ(X₄) ⟶ Hⁿ(X₃)` of a
+Mayer-Vietoris square `S`, assembled into a single map into the biproduct
+`Hⁿ(X₂) ⊞ Hⁿ(X₃)`. This is the first map of the Mayer-Vietoris sequence, the analogue
+of `GrothendieckTopology.MayerVietorisSquare.toBiprod`.
 
-The codomain `(... ).obj (op S.X₂) ⊞ (...).obj (op S.X₃)` is the biproduct in
-`AddCommGrpCat` (Mathlib `Mathlib/Algebra/Category/Grp/Biproducts.lean`); since
-`HModule'_cohomologyPresheaf k F n` is `Cᵒᵖ ⥤ AddCommGrpCat`, the biproduct
-auto-resolves. Probe-confirmed body (iter-017 plan-agent). Used downstream as the
-first of three Mayer-Vietoris LES building blocks; iter-018 will add the
-composition-is-zero lemma and the connecting hom `δ`, iter-019 the LES sequence
-and exactness theorem. -/
+The codomain is the biproduct in `AddCommGrpCat`, which is available because
+`HModule'_cohomologyPresheaf k F n` takes values there. -/
 noncomputable def HModule'_toBiprod
     (k : Type u) [Field k]
     {C : Type v} [Category.{u, v} C] {J : GrothendieckTopology C}
@@ -180,18 +171,14 @@ noncomputable def HModule'_toBiprod
   biprod.lift ((HModule'_cohomologyPresheaf k F n).map S.f₂₄.op)
               ((HModule'_cohomologyPresheaf k F n).map S.f₃₄.op)
 
-/-- Phase A step 6 *Path 2* (iter-017): the second Mayer-Vietoris LES building
-block on the `ModuleCat k` side — the difference of the two restriction maps
-`(cohomologyPresheaf F n).map S.f₁₂.op` and `(cohomologyPresheaf F n).map S.f₁₃.op`,
-as a single map out of the biproduct. Direct mirror of Mathlib's
-`GrothendieckTopology.MayerVietorisSquare.fromBiprod` (file
-`Mathlib/CategoryTheory/Sites/SheafCohomology/MayerVietoris.lean`, L67–70) for
-the `ModuleCat k` flavor.
+/-- The difference of the two restriction maps `Hⁿ(X₂) ⟶ Hⁿ(X₁)` and `Hⁿ(X₃) ⟶ Hⁿ(X₁)`
+of a Mayer-Vietoris square `S`, as a single map out of the biproduct
+`Hⁿ(X₂) ⊞ Hⁿ(X₃)`. This is the second map of the Mayer-Vietoris sequence, the analogue
+of `GrothendieckTopology.MayerVietorisSquare.fromBiprod`.
 
-The negation `-(HModule'_cohomologyPresheaf k F n).map S.f₁₃.op` uses the
-preadditive structure on `AddCommGrpCat`-morphisms; the sign is the standard
-Mayer-Vietoris convention encoding the alternating-sum structure of the Čech
-complex. Probe-confirmed body (iter-017 plan-agent). -/
+The negation uses the preadditive structure on `AddCommGrpCat`-morphisms; the sign is
+the standard Mayer-Vietoris convention, encoding the alternating-sum differential of the
+Čech complex. -/
 noncomputable def HModule'_fromBiprod
     (k : Type u) [Field k]
     {C : Type v} [Category.{u, v} C] {J : GrothendieckTopology C}
@@ -204,28 +191,15 @@ noncomputable def HModule'_fromBiprod
   biprod.desc ((HModule'_cohomologyPresheaf k F n).map S.f₁₂.op)
               (-(HModule'_cohomologyPresheaf k F n).map S.f₁₃.op)
 
-/-- Phase A step 6 *Path 2* (iter-018): the third Mayer-Vietoris LES building
-block on the `ModuleCat k` side — the composition-is-zero lemma asserting
-`HModule'_toBiprod k S F n ≫ HModule'_fromBiprod k S F n = 0`. Direct mirror
-of Mathlib's `GrothendieckTopology.MayerVietorisSquare.toBiprod_fromBiprod`
-(file `Mathlib/CategoryTheory/Sites/SheafCohomology/MayerVietoris.lean`,
-L72–75) for the `ModuleCat k` flavor.
+/-- The first two maps of the Mayer-Vietoris sequence compose to zero:
+`HModule'_toBiprod k S F n ≫ HModule'_fromBiprod k S F n = 0`. The analogue of
+`GrothendieckTopology.MayerVietorisSquare.toBiprod_fromBiprod`.
 
-The proof unwinds via the biproduct universal property
-(`biprod.lift_desc : biprod.lift a b ≫ biprod.desc c d = a ≫ c + b ≫ d`),
-the preadditive negation (`Preadditive.comp_neg`), the addition-of-negation
-arithmetic (`← sub_eq_add_neg`), the zero-iff-equal arithmetic
-(`sub_eq_zero`), the contravariant functoriality of `cohomologyPresheaf`
-(`← Functor.map_comp`, `← op_comp`), and the Mayer-Vietoris square
-factorisation `S.toSquare.fac` (which says `S.f₁₂ ≫ S.f₂₄ = S.f₁₃ ≫ S.f₃₄`).
-Probe-confirmed proof (iter-018 plan-agent); the `simp only` set transfers
-verbatim from Mathlib's `AddCommGrpCat`-flavored proof because every step
-is value-category-agnostic.
-
-The `@[reassoc (attr := simp)]` attribute generates the post-composition
-form `… ≫ HModule'_fromBiprod … ≫ Z = 0 ≫ Z = 0` and registers the lemma
-as a `simp` lemma; both are required for downstream Mayer-Vietoris LES
-exactness arguments. -/
+Unwinding the biproduct universal property
+(`biprod.lift_desc : biprod.lift a b ≫ biprod.desc c d = a ≫ c + b ≫ d`) turns the
+statement into the equality of the two composite restrictions `Hⁿ(X₄) ⟶ Hⁿ(X₁)`, which
+is the contravariant image of the commutativity `S.f₁₂ ≫ S.f₂₄ = S.f₁₃ ≫ S.f₃₄` of the
+Mayer-Vietoris square. -/
 @[reassoc (attr := simp)]
 lemma HModule'_toBiprod_fromBiprod
     (k : Type u) [Field k]
@@ -238,35 +212,26 @@ lemma HModule'_toBiprod_fromBiprod
     Preadditive.comp_neg, ← sub_eq_add_neg, sub_eq_zero,
     ← Functor.map_comp, ← op_comp, S.toSquare.fac]
 
-/-- Phase A step 6 *Path 2* (iter-019 helper, Mathlib gap-fill): `ModuleCat.free k`
-is left adjoint to `forget (ModuleCat k)`. Mathlib's
-`Mathlib/Algebra/Category/ModuleCat/Adjunctions.lean` provides the adjunction
-`ModuleCat.adj k : ModuleCat.free k ⊣ forget (ModuleCat k)` but does not register
-the corresponding `IsLeftAdjoint` instance (whereas `AddCommGrpCat.free.IsLeftAdjoint`
-is registered in `Mathlib/Algebra/Category/Grp/Adjunctions.lean` L84). This
-project-local instance fills the gap so that `Sheaf.composeAndSheafify J (ModuleCat.free k)`
-acquires the necessary `PreservesColimit` instance, used by
+/-- `ModuleCat.free k` is a left adjoint, being left adjoint to `forget (ModuleCat k)`
+via `ModuleCat.adj k`. Mathlib provides the adjunction but registers no `IsLeftAdjoint`
+instance for it (unlike `AddCommGrpCat.free`); the instance is what makes
+`Sheaf.composeAndSheafify J (ModuleCat.free k)` preserve colimits, as used in
 `HModule'_isPushoutModuleCatFreeSheaf` below. -/
 instance ModuleCat_free_isLeftAdjoint
     (k : Type u) [Field k] : (ModuleCat.free k).IsLeftAdjoint :=
   ⟨_, ⟨ModuleCat.adj k⟩⟩
 
-/-- Phase A step 6 *Path 2* (iter-019): the `ModuleCat k`-flavored
-pushout-of-free-sheaves analog of Mathlib's
-`GrothendieckTopology.MayerVietorisSquare.isPushoutAddCommGrpFreeSheaf`
-(file `Mathlib/CategoryTheory/Sites/MayerVietorisSquare.lean`, L154–160).
-States that the image of the Mayer-Vietoris square `S` under the composite
-`yoneda ⋙ Functor.whiskeringRight ⋅ (ModuleCat.free k) ⋙ presheafToSheaf J _`
-is a pushout square in `Sheaf J (ModuleCat k)`. The proof transfers the
-type-level pushout `S.isPushout` through `Sheaf.composeAndSheafify J (ModuleCat.free k)`
-(which preserves pushouts because `(ModuleCat.free k).IsLeftAdjoint`, registered
-in `ModuleCat_free_isLeftAdjoint` above) and adjusts via the canonical iso
-`presheafToSheafCompComposeAndSheafifyIso`.
+/-- The image of a Mayer-Vietoris square `S` under
+`yoneda ⋙ Functor.whiskeringRight ⋅ (ModuleCat.free k) ⋙ presheafToSheaf J _` is a
+pushout square in `Sheaf J (ModuleCat k)`; the analogue of
+`GrothendieckTopology.MayerVietorisSquare.isPushoutAddCommGrpFreeSheaf`.
 
-Probe-confirmed body (iter-019 plan-agent); the proof is verbatim from Mathlib L156–160
-with `AddCommGrpCat.free → ModuleCat.free k`. Used downstream in iter-020+ to
-prove `Mono` / `Epi` / `Exact` instances on the iter-019 short complex
-`HModule'_shortComplex`, and ultimately in the iter-022+ `δ` connecting hom. -/
+The type-level pushout `S.isPushout` is transported through
+`Sheaf.composeAndSheafify J (ModuleCat.free k)`, which preserves pushouts because
+`ModuleCat.free k` is a left adjoint, and then corrected along the canonical
+isomorphism `presheafToSheafCompComposeAndSheafifyIso`. This pushout is what makes the
+short complex `HModule'_shortComplex` short exact, and hence what produces the
+connecting homomorphism of the Mayer-Vietoris sequence. -/
 lemma HModule'_isPushoutModuleCatFreeSheaf
     (k : Type u) [Field k]
     {C : Type v} [Category.{u, v} C] {J : GrothendieckTopology C}
@@ -279,26 +244,16 @@ lemma HModule'_isPushoutModuleCatFreeSheaf
       (presheafToSheafCompComposeAndSheafifyIso J (ModuleCat.free k))).app
         (S.map yoneda))
 
-/-- Phase A step 6 *Path 2* (iter-019): the `ModuleCat k`-flavored
-short complex of free sheaves underlying the Mayer-Vietoris LES.
-Direct mirror of Mathlib's `GrothendieckTopology.MayerVietorisSquare.shortComplex`
-(file `Mathlib/CategoryTheory/Sites/MayerVietorisSquare.lean`, L234–249) for the
-`ModuleCat k` flavor with `AddCommGrpCat.free → ModuleCat.free k`.
+/-- The short complex of sheafified free `ModuleCat k`-valued presheaves underlying the
+Mayer-Vietoris long exact sequence, the analogue of
+`GrothendieckTopology.MayerVietorisSquare.shortComplex`.
 
-The objects are the sheafified free `ModuleCat k`-valued presheaves on the four
-vertices of the Mayer-Vietoris square (with the middle pair `S.X₂` and `S.X₃`
-biproduct-summed). The two morphisms are: `f` (the difference `(yoneda.map S.f₁₂)
-– (yoneda.map S.f₁₃)` lifted through the biproduct), and `g` (the sum
-`(yoneda.map S.f₂₄) + (yoneda.map S.f₃₄)` desced through the biproduct).
-The `zero` proof (i.e.\ `f ≫ g = 0`) follows from the
-`cokernelCofork.condition` of the pushout square in
-`HModule'_isPushoutModuleCatFreeSheaf` above.
-
-Probe-confirmed body (iter-019 plan-agent); structure-literal mirror of Mathlib L235–249
-with `AddCommGrpCat.free → ModuleCat.free k`. The `@[simps]` attribute generates
-field-projection simp lemmas (`HModule'_shortComplex_X₁`, `..._X₂`, `..._X₃`,
-`..._f`, `..._g`) consumed by the iter-020+ `Mono`/`Epi`/`Exact`/`ShortExact`
-proofs and the iter-022+ `δ` definition. -/
+Its objects are the sheafified free presheaves on the four vertices of the
+Mayer-Vietoris square, the middle two `S.X₂` and `S.X₃` combined into a biproduct. The
+map `f` is the difference of `yoneda.map S.f₁₂` and `yoneda.map S.f₁₃` lifted through
+the biproduct, and `g` is the sum of `yoneda.map S.f₂₄` and `yoneda.map S.f₃₄` desced
+through it. That `f ≫ g = 0` is the cokernel-cofork condition of the pushout square
+`HModule'_isPushoutModuleCatFreeSheaf` above. -/
 @[simps]
 noncomputable def HModule'_shortComplex
     (k : Type u) [Field k]

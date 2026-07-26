@@ -3,7 +3,10 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import Mathlib
+import Mathlib.Algebra.Homology.Homotopy
+import Mathlib.AlgebraicGeometry.Birational.RationalMap
+import Mathlib.Combinatorics.Quiver.ReflQuiver
+import Std.Tactic.BVDecide.LRAT.Internal.Clause
 
 /-!
 # Precomposition of a rational map with an open morphism

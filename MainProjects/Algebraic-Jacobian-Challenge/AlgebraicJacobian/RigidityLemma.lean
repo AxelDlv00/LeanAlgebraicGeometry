@@ -6,43 +6,53 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Genus
 
 /-!
-# Mumford Rigidity Lemma and its Milne §I.1 corollaries
+# The Mumford rigidity lemma and its corollaries for abelian varieties
 
-This file is the **abstract rigidity foundation** (Milne §I.1). It hosts the proven,
-axiom-clean **Mumford Rigidity Lemma (Form I)** and the two Milne §I.1 corollaries it
-implies — the additive decomposition of a morphism out of a product (Cor 1.5) and the fact that
-a pointed regular map of abelian varieties is a homomorphism (Cor 1.2).
+This file proves the rigidity lemma of Mumford (*Abelian Varieties*, Ch. II §4) in Form I,
+together with the two corollaries of Milne §I.1 that it implies: the additive decomposition of a
+morphism out of a product (Corollary 1.5), and the fact that a regular map of abelian varieties
+preserving the identity is a homomorphism (Corollary 1.2).
 
-It is general infrastructure for the abelian-variety theory underlying the Jacobian; the
+Everything is phrased in the cartesian monoidal category `Over (Spec k̄)` over an algebraically
+closed field `k̄`, so that `X ⊗ Y` is the fibre product over `k̄` and a `k̄`-point of `X` is a
+morphism `𝟙_ ⟶ X`. The arguments hold in arbitrary characteristic and use neither the theorem of
+the cube nor coherent cohomology beyond `H⁰`. The two geometric inputs are that completeness of
+`X` makes the projection `X ⊗ Y ⟶ Y` a closed map, and that a proper integral `k̄`-scheme
+mapping into an affine scheme is constant on `k̄`-points.
+
+This is general infrastructure for the abelian-variety theory underlying the Jacobian; the
 Albanese universal property of `Pic⁰_{C/k}` (`AlgebraicJacobian.Albanese.AlbaneseUP`)
-consumes the rigidity lemma `rigidity_lemma` and its corollaries.
+consumes `rigidity_lemma` and its corollaries.
 
-## Contents
+## Main results
 
-The Rigidity-Lemma chain (PROVEN axiom-clean, iters 157–162; cube-free, cohomology-free, char-free):
+* `rigidity_lemma` — the rigidity lemma (Mumford, Form I): a morphism `f : X ⊗ Y ⟶ Z` with `X`
+  complete that collapses one slice `X × {y₀}` to a point factors through the projection to `Y`.
+* `rigidity_core` — the geometric heart of that statement: `f = retract ≫ f`, where `retract` is
+  the collapse `(x, y) ↦ (x₀, y)`.
+* `rigidity_eqOn_dense_open` — there is a non-empty open of `X ⊗ Y` on which `f` and
+  `retract ≫ f` agree.
+* `rigidity_eqOn_saturated_open_to_affine` — slice constancy: `f` and `retract ≫ f` agree on a
+  projection-saturated open along which `f` lands inside one affine open of `Z`.
+* `rigidity_eqAt_closedPoint_of_proper_into_affine` — that agreement at a single closed point.
+* `eq_comp_of_isAffine_of_properIntegral` — a morphism from a proper integral `k̄`-scheme into an
+  affine scheme takes the same value at any two `k̄`-points.
+* `morphism_eq_of_eqAt_closedPoints` — two morphisms out of a reduced scheme whose closed points
+  are dense, into a separated scheme, agree as soon as they agree at every closed point.
+* `snd_left_isClosedMap` — for `X` proper over `k̄`, the projection `snd : X ⊗ Y ⟶ Y` has closed
+  underlying map.
+* `isIntegral_of_retract` — integrality descends to a retract.
+* `rigidity_snd_lift` — the cartesian-monoidal identity reducing `rigidity_lemma` to
+  `rigidity_core`.
+* `hom_additive_decomp_of_rigidity` — Milne Corollary 1.5: a morphism out of a product is the
+  product of its two axis-restrictions pulled back along the projections.
+* `av_regularMap_isHom_of_zero` — Milne Corollary 1.2: a pointed regular map of abelian
+  varieties is a homomorphism.
 
-* `rigidity_snd_lift` — the cartesian-monoidal skeleton step of the Rigidity Lemma.
-* `snd_left_isClosedMap` — bridge 1: completeness of `X` makes `snd : X ⊗ Y ⟶ Y` a closed map.
-* `morphism_eq_of_eqAt_closedPoints` — the dense-closed-points hom-extensionality connective
-  (route B's Step 2).
-* `eq_comp_of_isAffine_of_properIntegral` — the deep algebra of bridge 2 / Step 1: a proper
-  integral `k̄`-scheme mapping to an affine is constant on `k̄`-points.
-* `isIntegral_of_retract` — integrality descends to a retract; closes the slice/section
-  assembly of route B's Step 1.
-* `rigidity_eqAt_closedPoint_of_proper_into_affine` — route B Step 1 assembled.
-* `rigidity_eqOn_saturated_open_to_affine` — bridge 2 (slice-constancy) end to end.
-* `rigidity_eqOn_dense_open` — the genuine geometric content: a non-empty open of agreement.
-* `rigidity_core` — the geometric core `f = retract ≫ f`.
-* `rigidity_lemma` — **Rigidity Lemma (Mumford, Form I).** The headline.
+## References
 
-The Milne §I.1 corollaries (both PROVEN axiom-clean from `rigidity_lemma`):
-
-* `hom_additive_decomp_of_rigidity` — Corollary 1.5 (additive decomposition over a product).
-* `av_regularMap_isHom_of_zero` — Corollary 1.2 (a pointed regular map of abelian varieties
-  is a homomorphism).
-
-See `blueprint/src/chapters/AbelianVarietyRigidity.tex` for the informal sketches and sources
-(Mumford, *Abelian Varieties*, Ch. II §4; Milne, *Abelian Varieties*, Cor 1.2, Cor 1.5).
+* Mumford, *Abelian Varieties*, Ch. II §4, p. 43.
+* Milne, *Abelian Varieties*, §I.1, Corollary 1.2 and Corollary 1.5.
 -/
 
 set_option autoImplicit false
@@ -55,7 +65,7 @@ namespace AlgebraicGeometry
 
 variable {kbar : Type u} [Field kbar]
 
-/-- **Cartesian-monoidal identity (skeleton step of the Rigidity Lemma).** Post-composing the
+/-- **Cartesian-monoidal identity underlying the rigidity lemma.** Post-composing the
 second projection `snd : X ⊗ Y ⟶ Y` with the slice section `y ↦ (x₀, y)` is the "collapse the
 `X`-axis onto `x₀`" endomorphism `(x, y) ↦ (x₀, y)` of `X ⊗ Y`:
 `snd ≫ lift (toUnit Y ≫ x₀) (𝟙 Y) = lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y)`.
@@ -70,8 +80,8 @@ theorem rigidity_snd_lift
       lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y) := by
   ext1 <;> simp
 
-/-- **Bridge 1 of the Rigidity Lemma (closed-map step), PROVEN.** When `X` is complete (proper)
-over `k̄`, the second monoidal projection `snd : X ⊗ Y ⟶ Y` has, on underlying schemes, a
+/-- **Completeness of `X` makes the projection `X ⊗ Y ⟶ Y` a closed map.** When `X` is complete
+(proper) over `k̄`, the second monoidal projection `snd : X ⊗ Y ⟶ Y` has, on underlying schemes, a
 *closed* base map. This is Mumford's "completeness of `X` makes `p₂` a closed map" (Abelian
 Varieties, Ch. II §4, p. 43).
 
@@ -81,7 +91,8 @@ Proof: the underlying scheme morphism `(snd X Y).left` is the pullback projectio
 `UniversallyClosed` is stable under base change
 (`universallyClosed_isStableUnderBaseChange.of_isPullback` on the canonical pullback square), so
 `(snd X Y).left` is universally closed and hence its base map is closed
-(`Scheme.Hom.isClosedMap`). Char-free; no theorem of the cube, no cohomology. -/
+(`Scheme.Hom.isClosedMap`). Valid in any characteristic; no theorem of the cube, no
+cohomology. -/
 theorem snd_left_isClosedMap
     {X Y : Over (Spec (.of kbar))} [IsProper X.hom] :
     IsClosedMap (snd X Y).left.base := by
@@ -92,18 +103,17 @@ theorem snd_left_isClosedMap
       (IsPullback.of_hasPullback X.hom Y.hom) hp
   exact Scheme.Hom.isClosedMap _
 
-/-- **Dense-closed-points hom-extensionality (the bespoke globalisation connective, PROVEN).**
+/-- **Hom-extensionality along dense closed points.**
 Two morphisms `g₁ g₂ : W ⟶ Z` out of a *reduced* scheme `W` whose closed points are *dense*
 (`[JacobsonSpace W]` — e.g. when `W` is locally of finite type over a field) into a *separated*
 scheme `Z` are equal as soon as they agree at every closed point `x ∈ closedPoints W` after the
 canonical residue-field probe `W.fromSpecResidueField x : Spec κ(x) ⟶ W`.
 
-This is the one connective the iter-159 `mathlib-analogist` flagged that Mathlib does **not**
-package directly: Mathlib supplies only the single-dominant-morphism `ext_of_isDominant`. Here we
-assemble all the closed points into one dominant probe — the coproduct
+Mathlib packages only the single-dominant-morphism form `ext_of_isDominant`. Here all the closed
+points are assembled into one dominant probe — the coproduct
 `∐_{x ∈ closedPoints W} Spec κ(x) ⟶ W`, whose topological range is exactly the (dense) set of
-closed points — and feed it to `ext_of_isDominant`. It is `Step 2` of bridge 2's route B
-(cohomology-free) and is fully proven here, reusable independently of the rigidity context. -/
+closed points — which is then fed to `ext_of_isDominant`. The statement is independent of the
+rigidity context and reusable on its own. -/
 theorem morphism_eq_of_eqAt_closedPoints
     {W Z : Scheme.{u}} [IsReduced W] [JacobsonSpace W] [Z.IsSeparated]
     {g₁ g₂ : W ⟶ Z}
@@ -129,8 +139,8 @@ theorem morphism_eq_of_eqAt_closedPoints
   rw [← Category.assoc, ← Category.assoc, Sigma.ι_desc]
   exact h x.1 x.2
 
-/-- **A proper integral `k̄`-scheme mapping into an affine is constant on `k̄`-points (the deep
-algebraic content of Step 1, PROVEN).** Over an algebraically closed field `k̄`, let `W` be an
+/-- **A proper integral `k̄`-scheme mapping into an affine scheme is constant on `k̄`-points.**
+Over an algebraically closed field `k̄`, let `W` be an
 integral scheme that is universally closed and locally of finite type over `Spec k̄` (e.g. a proper
 integral slice `X_y`), and let `g : W ⟶ V` be a morphism into an *affine* scheme `V`. Then `g`
 takes the same value on any two `k̄`-points (sections `a`, `b` of the structure map `wk`):
@@ -177,7 +187,7 @@ theorem eq_comp_of_isAffine_of_properIntegral
   apply ext_of_isAffine
   rw [Scheme.Hom.comp_appTop, Scheme.Hom.comp_appTop, hab]
 
-/-- **Integrality descends to a retract (blueprint `lem:isIntegral_of_retract_of_integral`).**
+/-- **Integrality descends to a retract.**
 If `T` is an integral scheme and `S` is a *retract* of `T` — i.e. there are `r : S ⟶ T` and
 `pr : T ⟶ S` with `r ≫ pr = 𝟙 S` — then `S` is integral.
 
@@ -190,8 +200,8 @@ Two halves, both elementary (no cohomology):
   (`isReduced_of_injective`), so every stalk of `S` is reduced (`isReduced_of_isReduced_stalk`).
 
 Reduced and irreducible together give `IsIntegral S`
-(`isIntegral_of_irreducibleSpace_of_isReduced`). This feeds the Step-1 geometric assembly, where
-the proper slice `X_y ≅ X` must be presented as proper *integral*. -/
+(`isIntegral_of_irreducibleSpace_of_isReduced`). This is what presents the proper slice
+`X_y ≅ X` of the rigidity argument as a proper *integral* scheme. -/
 theorem isIntegral_of_retract {S T : Scheme.{u}} [IsIntegral T]
     (r : S ⟶ T) (pr : T ⟶ S) (hrp : r ≫ pr = 𝟙 S) : IsIntegral S := by
   -- `pr.base` is surjective: `r.base` is a section of it.
@@ -231,26 +241,24 @@ theorem isIntegral_of_retract {S T : Scheme.{u}} [IsIntegral T]
   haveI : IsReduced S := isReduced_of_isReduced_stalk S
   exact isIntegral_of_irreducibleSpace_of_isReduced S
 
-/-- **Per-closed-slice constancy (Step 1 of bridge 2's route B), the residual deep geometry.**
+/-- **Slice constancy at one closed point.**
 With the data of `rigidity_eqOn_saturated_open_to_affine`, fix a *closed* point `x` of the
 `p₂`-saturated open `U ⊆ X ⊗ Y` on which `f` lands in the affine `U₀`. Then `f` and the collapsed
 map `retract ≫ f` (`retract := lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y)`, i.e. `(x,y) ↦ (x₀,y)`)
 agree at `x` after the residue-field probe `U.fromSpecResidueField x`.
 
-Mumford's "for each `y ∈ V`, the complete slice `X × {y}` maps into the affine, hence to a single
-point" step, realised cohomology-FREE. The intended proof (analogist route B, `analogies/
-rigidity-affineconst.md`): the closed point `x` lies over a closed point `y = p₂(x) ∈ Vset` with
-`κ(y) = k̄` (`[IsAlgClosed kbar]`, finite type); saturation `_hUV` puts the whole proper integral
-slice `X_y ≅ X` inside `U`, so `f` maps `X_y` into the affine `U₀`. By
-`isField_of_universallyClosed` + `finite_appTop_of_universallyClosed` + alg-closedness,
+This is Mumford's step "for each `y ∈ V`, the complete slice `X × {y}` maps into the affine, hence
+to a single point", realised without cohomology. The closed point `x` lies over a closed point
+`y = p₂(x) ∈ Vset` with `κ(y) = k̄` (`k̄` algebraically closed, finite type); saturation `_hUV`
+puts the whole proper integral slice `X_y ≅ X` inside `U`, so `f` maps `X_y` into the affine `U₀`.
+By `isField_of_universallyClosed` + `finite_appTop_of_universallyClosed` + algebraic closedness,
 `Γ(X_y) = k̄`, so `f|X_y` factors through a single `k̄`-point of `U₀` (`ext_of_isAffine`) —
-necessarily `f(x₀, y)`, which is exactly `(retract ≫ f)(x)`. The relative Stein / `f_*𝒪 = 𝒪`
-framing is a confirmed Mathlib gap and is deliberately avoided.
+necessarily `f(x₀, y)`, which is exactly `(retract ≫ f)(x)`. No relative Stein factorisation and
+no `f_*𝒪 = 𝒪` are needed.
 
-**Status (iter-162): PROVEN axiom-clean.** It is the per-point input that
-`morphism_eq_of_eqAt_closedPoints` globalises over the dense closed points. Extracted as a named
-top-level obligation per the route-B decomposition; the geometric slice/section assembly is closed
-via the `IsIntegral X.left` retract argument (`isIntegral_of_retract`). -/
+This is the per-point input that `morphism_eq_of_eqAt_closedPoints` globalises over the dense
+closed points; the slice is presented as a proper integral scheme by the retract argument
+`isIntegral_of_retract`. -/
 theorem rigidity_eqAt_closedPoint_of_proper_into_affine
     [IsAlgClosed kbar]
     {X Y Z : Over (Spec (.of kbar))}
@@ -300,8 +308,8 @@ theorem rigidity_eqAt_closedPoint_of_proper_into_affine
   -- i.e. `f` agrees at the `k̄`-point `q = (x_X, y)` and its `X`-collapse `retract(q) = (x₀, y)`.
   -- Both points lie on the proper integral slice `X_y` over the `k̄`-point `y := q ≫ p₂`, which
   -- (saturation `_hUV`) lies entirely inside `U`, hence (`_hfU`) maps under `f` into the affine
-  -- `U₀`. The deep content "a proper integral `k̄`-scheme into an affine is constant on
-  -- `k̄`-points" is now-proven as `eq_comp_of_isAffine_of_properIntegral`: realising the slice
+  -- `U₀`. The key content "a proper integral `k̄`-scheme into an affine is constant on
+  -- `k̄`-points" is `eq_comp_of_isAffine_of_properIntegral`: realising the slice
   -- as `X` via the section `s := lift (𝟙 X) (toUnit X ≫ ŷ)` over the `k̄`-point `ŷ : 𝟙_ ⟶ Y`
   -- lifting `y`, one
   -- corestricts `(s ≫ f).left : X.left → Z.left` to `U₀.toScheme` and applies the sub-lemma to the
@@ -369,7 +377,7 @@ theorem rigidity_eqAt_closedPoint_of_proper_into_affine
     exact hfin
   set g : X.left ⟶ U₀.toScheme := IsOpenImmersion.lift U₀.ι (sec ≫ f).left hrange with hgdef
   have hgfac : g ≫ U₀.ι = (sec ≫ f).left := IsOpenImmersion.lift_fac _ _ hrange
-  -- Deep algebra: the two `k̄`-points `xq`, `x₀` of the proper integral slice agree under `sec≫f`.
+  -- The two `k̄`-points `xq`, `x₀` of the proper integral slice agree under `sec ≫ f`.
   have key : xq.left ≫ g = x₀.left ≫ g :=
     eq_comp_of_isAffine_of_properIntegral X.hom g xq.left x₀.left (Over.w xq) (Over.w x₀)
   -- Over-level: `q̂ ≫ f = xq ≫ sec ≫ f` and `q̂ ≫ retract ≫ f = x₀ ≫ sec ≫ f`.
@@ -394,8 +402,8 @@ theorem rigidity_eqAt_closedPoint_of_proper_into_affine
   rw [hq] at hgoalq
   simpa only [Category.assoc] using hgoalq
 
-/-- **Bridge 2 of the Rigidity Lemma (slice-constancy / the agreement equation), the residual
-geometric input.** Let `X` be complete (proper) over an algebraically closed `k̄`, `x₀` a
+/-- **Slice constancy on a saturated open: the agreement equation.** Let `X` be complete (proper)
+over an algebraically closed `k̄`, `x₀` a
 `k̄`-point of `X`, and `f : X ⊗ Y ⟶ Z` into a separated `Z`. Let `U = p₂⁻¹(V)` be a `p₂`-saturated
 open of `X ⊗ Y` (the preimage of a set `Vset ⊆ Y`) on which `f` lands inside a single **affine**
 open `U₀ ⊆ Z`. Then `f` agrees on `U` with the collapsed map `retract ≫ f`

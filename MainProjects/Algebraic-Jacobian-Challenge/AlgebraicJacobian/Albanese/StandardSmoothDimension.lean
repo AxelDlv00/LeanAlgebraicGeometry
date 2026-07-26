@@ -3,7 +3,13 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import Mathlib
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.KrullDimension.Polynomial
+import Mathlib.RingTheory.PicardGroup
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.Smooth.StandardSmooth
+import Std.Tactic.BVDecide.LRAT.Internal.Clause
 
 /-!
 # Krull dimension at maximal ideals of standard-smooth algebras (Stacks 00OE substrate)

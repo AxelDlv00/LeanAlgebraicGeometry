@@ -106,7 +106,7 @@ theorem CoherentSheafFlat.of_isPullback
     -- affine `Ut ⊆ g⁻¹U` around `f'(x)`
     obtain ⟨Ut, hUt, hxUt, hUtsub⟩ := exists_isAffineOpen_mem_and_subset
       (show f'.base x ∈ g ⁻¹ᵁ U by
-        show g.base (f'.base x) ∈ U
+        change g.base (f'.base x) ∈ U
         rw [← hbase]; exact hsU)
     have hUSX : V ≤ f ⁻¹ᵁ U := hVsub
     have hUST : Ut ≤ g ⁻¹ᵁ U := hUtsub

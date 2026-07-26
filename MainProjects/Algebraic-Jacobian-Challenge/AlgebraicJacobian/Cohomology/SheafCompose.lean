@@ -3,7 +3,10 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import Mathlib
+import Mathlib.Algebra.Category.Ring.Limits
+import Mathlib.CategoryTheory.Sites.Spaces
+import Mathlib.CategoryTheory.Sites.Whiskering
+import Mathlib.Topology.Category.TopCat.Basic
 
 /-!
 # Sheaf condition along the structure-sheaf forget composite

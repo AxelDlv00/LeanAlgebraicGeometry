@@ -22,13 +22,13 @@ open `V ⊆ S`.
 It is the geometric-glue layer on top of the algebraic generic-freeness
 engine of `AlgebraicJacobian.Picard.FlatteningStratification`
 (`GenericFreeness.genericFlatnessAlgebraic`, Stacks 051R).  The declaration
-lives in its own file — rather than in `FlatteningStratification.lean`, whose
-remaining statements it logically belongs with — because the glue needs the
-qcqs section-localization engine of `AlgebraicJacobian.Picard.QuotScheme`
+lives in its own file — rather than in `FlatteningStratification.lean`, which
+it logically belongs with — because the glue needs the qcqs
+section-localization engine of `AlgebraicJacobian.Picard.QuotScheme`
 (Stacks 01P0/01PC/01I8) and the base-ring descent of
 `AlgebraicJacobian.Cohomology.QcohTildeSections`, and importing those files
 into `FlatteningStratification.lean` perturbs the instance environment of its
-(heavy, finished) dévissage proofs.
+dévissage proofs.
 
 The layer structure, bottom to top:
 
@@ -155,7 +155,7 @@ chart whose section module localized at `g ∈ Γ(S, U₀)` is free over
 cut a basic open lying above the base basic open `D(g)`.  Then the sections of
 `F` over `D(c)` (presented as any open `O = D(c)`) are flat over `Γ(S, U₀)`.
 
-Route: `D(β) = Wj ⊓ p ⁻¹ᵁ D(g)` for `β := appLE g`; the section restriction
+Proof: `D(β) = Wj ⊓ p ⁻¹ᵁ D(g)` for `β := appLE g`; the section restriction
 `Γ(F, Wj) → Γ(F, D(β))` is a localization at `powers β` over `Γ(X, Wj)`
 (Stacks 01P0) hence at `powers g` over `Γ(S, U₀)` (base-ring descent), so
 `Γ(F, D(β))` inherits freeness-hence-flatness over `Γ(S, U₀)` from the
@@ -414,7 +414,7 @@ engine of the flattening-stratification theorem: combined with
 Noetherian induction on the closed complement `S ∖ V`, it produces the
 finite stratification of `S` by flatness loci.
 
-Algebraically (theorem `generic_flatness_algebraic`, no Lean pin): for a
+Algebraically (blueprint node `generic_flatness_algebraic`): for a
 noetherian domain `A`, a finite-type `A`-algebra `B`, and a finite
 `B`-module `M`, there exists a non-zero `f ∈ A` such that `M_f` is a
 free `A_f`-module. The geometric form (this declaration) restricts to a
@@ -433,7 +433,7 @@ in the flattening-stratification induction it comes from
 `finite_section_pullback_piece`), there exists a non-empty open subscheme
 `V ⊆ S` such that `𝓕|_{X_V} = 𝓕|_{p⁻¹V}` is flat over `𝓞_V`.
 
-PROVED (run 0010, T12 r4), following Nitsure §4: pass to a non-empty affine
+The proof follows Nitsure §4: pass to a non-empty affine
 open `U₀ ⊆ S` with `A := Γ(S, U₀)` a noetherian domain, cover the compact
 preimage `p ⁻¹ᵁ U₀` by finitely many affine charts with finitely generated
 sections (`Scheme.Modules.exists_affine_finite_sections_nhds`, Stacks 01PC),
@@ -442,14 +442,14 @@ on each chart, and take `f ∈ A` the product of the witnesses.  The witness
 open is `V := D(f)`, non-empty since `A` is a domain and `f ≠ 0`; the
 quantified flatness on affine pairs below `V` is `flat_section_pair` (§1b).
 
-Statement repair (run 0010, T12 r2): Nitsure requires `p` of **finite type**
-(EGA sense: quasi-compact AND locally of finite type). With
-`LocallyOfFiniteType` alone the statement is FALSE: for
+The `[QuasiCompact p]` hypothesis is essential: Nitsure requires `p` of
+**finite type** in the EGA sense, i.e. quasi-compact *and* locally of finite
+type.  With `LocallyOfFiniteType` alone the statement is false: for
 `X = ⨿_q Spec 𝔽_q → Spec ℤ` (locally of finite type, not quasi-compact,
 structure sheaf finitely presented) every non-empty open `V ⊆ Spec ℤ`
 contains all but finitely many primes `q`, and `𝔽_q` is never flat over the
-corresponding `ℤ[1/n]`. Quasi-compactness is what bounds the number of
-denominators to clear. Hence the `[QuasiCompact p]` hypothesis below. -/
+corresponding `ℤ[1/n]`.  Quasi-compactness is what bounds the number of
+denominators to clear. -/
 theorem genericFlatness_of_finite_sections {S X : Scheme.{u}} [IsIntegral S]
     [IsLocallyNoetherian S] (p : X ⟶ S) [QuasiCompact p] [LocallyOfFiniteType p]
     (F : X.Modules) [F.IsQuasicoherent]
@@ -607,7 +607,7 @@ theorem isBaseChange_pushout_tensorProduct [h : Algebra.IsPushout R S A B] :
     | tmul a' =>
       rw [AlgHom.toLinearMap_apply, IsScalarTower.coe_toAlgHom', ← map_mul,
         hΛ_alg, hΛ_alg]
-      show g ((a * a') • m) = g (a' • a • m)
+      change g ((a * a') • m) = g (a' • a • m)
       rw [← smul_smul, smul_comm]
     | smul s b e =>
       rw [mul_smul_comm, map_smul, LinearMap.smul_apply, e, map_smul Λ s b,
@@ -641,15 +641,15 @@ theorem isBaseChange_pushout_tensorProduct [h : Algebra.IsPushout R S A B] :
   · -- the extension restricts to `g` along `m ↦ 1 ⊗ m`
     apply LinearMap.ext
     intro m
-    show h₀ ((1 : B) ⊗ₜ m) = g m
+    change h₀ ((1 : B) ⊗ₜ m) = g m
     rw [h₀_tmul, show (1 : B) = algebraMap A B 1 from (map_one _).symm, hΛ_alg]
-    show g ((1 : A) • m) = g m
+    change g ((1 : A) • m) = g m
     rw [one_smul]
   · -- uniqueness
     intro h' hh'
     apply LinearMap.ext
     intro x
-    show h' x = h₀ x
+    change h' x = h₀ x
     induction x with
     | zero => rw [map_zero, map_zero]
     | tmul b m =>
@@ -698,7 +698,7 @@ affine opens `US ⊆ S`, `UX ⊆ iX⁻¹US`, `UT ⊆ f⁻¹US`, the **piece**
 `UY := g⁻¹UX ⊓ iY⁻¹UT ⊆ Y` is an affine open whose section ring is the
 pushout `Γ(X,UX) ⊗_{Γ(S,US)} Γ(T,UT)` (Mathlib's
 `isIso_pushoutSection_of_isAffineOpen`), and whose `F`-pullback sections are
-the base change `Γ(Y,UY) ⊗_{Γ(X,UX)} Γ(F,UX)` (the Lane F section formula
+the base change `Γ(Y,UY) ⊗_{Γ(X,UX)} Γ(F,UX)` (the section formula
 `pullback_app_isoTensor_baseMap_sectionLinearEquiv`, Stacks 01HQ/01I8).
 Combining the two with `Module.Flat.of_isPushout` (§3) transports flatness
 of `Γ(F,UX)` over `Γ(S,US)` to flatness of the piece sections over
@@ -743,7 +743,7 @@ set_option maxSynthPendingDepth 3 in
 `UX ⊆ X` are flat over the affine `US ⊆ S`, then for any affine `UT ⊆ T`
 above `US`, the pulled-back sections on the piece `g⁻¹UX ⊓ iY⁻¹UT ⊆ Y` are
 flat over `UT`.  This is `Module.Flat.of_isPushout` (§3) fed with the ring
-pushout of `isPushout_appLE_pullback_piece` and the Lane F base-change
+pushout of `isPushout_appLE_pullback_piece` and the base-change
 section formula. -/
 theorem flat_section_pullback_piece (F : X.Modules) [F.IsQuasicoherent]
     (hUS : IsAffineOpen US) (hUT : IsAffineOpen UT) (hUX : IsAffineOpen UX)
@@ -769,7 +769,7 @@ theorem flat_section_pullback_piece (F : X.Modules) [F.IsQuasicoherent]
     IsScalarTower.of_algebraMap_eq' rfl
   haveI : IsScalarTower Γ(S, US) Γ(T, UT) Γ(Y, g ⁻¹ᵁ UX ⊓ iY ⁻¹ᵁ UT) :=
     IsScalarTower.of_algebraMap_eq' (by
-      show ((g.appLE UX _ inf_le_left).hom.comp (iX.appLE US UX hUSX).hom) =
+      change ((g.appLE UX _ inf_le_left).hom.comp (iX.appLE US UX hUSX).hom) =
         (iY.appLE UT _ inf_le_right).hom.comp (f.appLE US UT hUST).hom
       have key : ∀ (φ : Y ⟶ S) (_ : iY ≫ f = φ)
           (w₁ : (g ⁻¹ᵁ UX ⊓ iY ⁻¹ᵁ UT) ≤ φ ⁻¹ᵁ US)
@@ -804,7 +804,7 @@ theorem flat_section_pullback_piece (F : X.Modules) [F.IsQuasicoherent]
       Γ((Scheme.Modules.pullback g).obj F, g ⁻¹ᵁ UX ⊓ iY ⁻¹ᵁ UT) :=
     IsScalarTower.of_algebraMap_smul fun _ _ => rfl
   haveI hMflat : Module.Flat Γ(S, US) Γ(F, UX) := hflat
-  -- the Lane F base-change section formula
+  -- the base-change section formula
   obtain ⟨⟨eqv, heqv⟩⟩ :=
     pullback_app_isoTensor_baseMap_sectionLinearEquiv g F hUY hUX inf_le_left
   have hbc : IsBaseChange Γ(Y, g ⁻¹ᵁ UX ⊓ iY ⁻¹ᵁ UT)
@@ -1159,7 +1159,7 @@ theorem flat_stratum_of_irreducible (hirr : IsIrreducible (Zc : Set S)) :
     have hxw : (pullback.fst π kT) x ∈ π ⁻¹ᵁ US := by
       have h1 : π ((pullback.fst π kT) x) = (kT) ((pullback.snd π kT) x) := by
         rw [← Scheme.Hom.comp_apply, ← Scheme.Hom.comp_apply, pullback.condition]
-      show π ((pullback.fst π kT) x) ∈ US
+      change π ((pullback.fst π kT) x) ∈ US
       rw [h1]
       exact hs₀
     obtain ⟨WX, hWX, hxWX, hWXle, hWfin⟩ :=
@@ -1257,7 +1257,7 @@ theorem flat_stratum_of_irreducible (hirr : IsIrreducible (Zc : Set S)) :
     have hxt : (St.ι ((pullback.snd π (St.ι ≫ kT)) y)) ∈
         (St ⊓ Ω ⊓ kT ⁻¹ᵁ US : (Tsch).Opens) := by
       refine ⟨⟨hmemSt, hStΩ hmemSt⟩, ?_⟩
-      show (kT) (St.ι ((pullback.snd π (St.ι ≫ kT)) y)) ∈ US
+      change (kT) (St.ι ((pullback.snd π (St.ι ≫ kT)) y)) ∈ US
       rwa [← Scheme.Hom.comp_apply] at hs₀
     obtain ⟨_, ⟨U₁, hU₁, rfl⟩, hxU₁, hU₁le⟩ :=
       (Tsch).isBasis_affineOpens.exists_subset_of_mem_open hxt
@@ -1266,7 +1266,7 @@ theorem flat_stratum_of_irreducible (hirr : IsIrreducible (Zc : Set S)) :
       have h1 : π ((pullback.fst π (St.ι ≫ kT)) y) =
           (St.ι ≫ kT) ((pullback.snd π (St.ι ≫ kT)) y) := by
         rw [← Scheme.Hom.comp_apply, ← Scheme.Hom.comp_apply, pullback.condition]
-      show π ((pullback.fst π (St.ι ≫ kT)) y) ∈ US
+      change π ((pullback.fst π (St.ι ≫ kT)) y) ∈ US
       rw [h1]
       exact hs₀
     obtain ⟨_, ⟨WX, hWX, rfl⟩, hxWX, hWXle⟩ :=
@@ -1464,15 +1464,13 @@ theorem coherentSheafFlat_of_comp_isIso {P W W' : Scheme.{u}} (q : P ⟶ W)
 
 end IsoTransport
 
-/-! ## §8. The flattening stratification (statements moved from
-`FlatteningStratification.lean`)
+/-! ## §8. The flattening stratification
 
-The geometric sections §3–§6 of `FlatteningStratification.lean` (Nitsure §4
-sub-lemmas, main theorem, universal property, curve specialisation) live here
-because the proof of Lemma 6 (`flatLocusReduction`) consumes
-`genericFlatness`, which needs the QuotScheme engine that
-`FlatteningStratification.lean` deliberately does not import.  Blueprint
-pointers are unchanged (they pin fully qualified declaration names). -/
+The geometric part of the flattening-stratification theorem (Nitsure §4
+sub-lemmas, main theorem, universal property, curve specialisation) lives
+here rather than in `FlatteningStratification.lean`, because the proof of
+Lemma 6 (`flatLocusReduction`) consumes `genericFlatness`, which needs the
+QuotScheme engine that `FlatteningStratification.lean` does not import. -/
 
 /-- **Lemma 6 (Noetherian-induction reduction).** [Nitsure §4 general
 case opening]
@@ -1494,9 +1492,8 @@ merely that strata exist); the polynomial-indexed refinement of the
 main theorem (`flatteningStratification`) requires further assembly
 (`flatLocusAssembly`).
 
-Statement repair (run 0010, T12 r5): the hypothesis is `IsNoetherian S`
-(Nitsure's "noetherian"), not merely `IsLocallyNoetherian S` as the
-iter-176 skeleton had it.  With only local noetherianity the *finite*
+The hypothesis is `IsNoetherian S` (Nitsure's "noetherian"), not merely
+`IsLocallyNoetherian S`.  With only local noetherianity the *finite*
 family is impossible: on `S = ⊔_{n≥1} 𝔸ⁿ` give component `n` the coherent
 sheaf `⊕_{k≤n} (i_{V_k})_* 𝓞_{V_k}` for a strictly nested flag
 `V_1 ⊃ ⋯ ⊃ V_n`; a flat locally-closed stratum through the generic point
@@ -1504,13 +1501,13 @@ sheaf `⊕_{k≤n} (i_{V_k})_* 𝓞_{V_k}` for a strictly nested flag
 neighbourhood meets the dense lower level, so `T ∩ V_{k'}` is not open in
 `T`, contradicting the clopen-support criterion for local freeness), so
 component `n` needs at least `n + 1` strata and no finite family covers
-all components.  The same strengthening applies to every finite-strata
+all components.  The same hypothesis is required by every finite-strata
 statement below (`flatLocusAssembly`, `flatteningStratification`,
 `flatteningStratification_universal`, `.ofCurve`); the ℕ-indexed `n = 0`
 special case (Lemma 5) is correct for locally noetherian `S` because the
 fibre rank provides the global countable index.
 
-PROVED (run 0010, T12 r6): well-founded induction on the closed target
+The proof is by well-founded induction on the closed target
 (`WellFoundedLT (Closeds S)` from noetherianity).  For non-empty `Z`,
 each irreducible component (imaged in `S`, with reduced subscheme
 structure from `vanishingIdeal`) receives a flat relatively open stratum
@@ -1587,14 +1584,13 @@ theorem flatLocusReduction {S X : Scheme.{u}} [IsNoetherian S]
   have hrangek : ∀ c, Set.range
       ((Scheme.IdealSheafData.vanishingIdeal (Zc c)).subschemeι).base = (Zc c : Set S) := by
     intro c
-    show Set.range ((Scheme.IdealSheafData.vanishingIdeal (Zc c)).subschemeι) = _
     rw [Scheme.IdealSheafData.range_subschemeι]
     exact congrArg SetLike.coe (support_vanishingIdeal (Zc c))
   have hrangest : ∀ c, Set.range (ιst c).base =
       ((Scheme.IdealSheafData.vanishingIdeal (Zc c)).subschemeι).base ''
         ((St c) : Set _) := by
     intro c
-    show Set.range ((St c).ι ≫ _).base = _
+    change Set.range ((St c).ι ≫ _).base = _
     rw [Scheme.Hom.comp_base, TopCat.coe_comp, Set.range_comp,
       Scheme.Opens.range_ι]
   -- S-open realizations of the strata
@@ -1670,7 +1666,7 @@ theorem flatLocusReduction {S X : Scheme.{u}} [IsNoetherian S]
         (Scheme.IdealSheafData.vanishingIdeal (Zc c₀)).subscheme.Opens) :
         Set ↑((Scheme.IdealSheafData.vanishingIdeal (Zc c₀)).subscheme)).Nonempty := by
       refine ⟨t₁, ?_⟩
-      show ((Scheme.IdealSheafData.vanishingIdeal (Zc c₀)).subschemeι).base t₁ ∈
+      change ((Scheme.IdealSheafData.vanishingIdeal (Zc c₀)).subschemeι).base t₁ ∈
         (E c₀ : Set S)
       rw [ht₁]
       exact hz₁A
@@ -1756,30 +1752,28 @@ theorem flatLocusReduction {S X : Scheme.{u}} [IsNoetherian S]
 /-- **Lemma 7 (assembly via direct images).** [Nitsure §4 assembly step]
 
 For `S` noetherian and `𝓕` coherent on a proper `π : X ⟶ S`, there
-exists an integer `N` such that iterating the `n=0` stratification
+exists an integer `N` such that iterating the `n = 0` stratification
 (Lemma 5) on the direct images `E_i := π_*𝓕(N+i)` on `S`
 (`i = 0, 1, …`) produces, after finitely many refinements, the
 Hilbert-polynomial-indexed stratification of the main theorem.
 
-The substantive content is the existence of the uniform vanishing
-bound `N` together with the finite refinement chain producing the
-locally-closed strata `S_f` from the rank-strata `W_{e_0, …, e_n}`.
+The mathematical content of the step is the existence of the uniform
+vanishing bound `N` together with the finite refinement chain producing
+the locally-closed strata `S_f` from the rank strata `W_{e_0, …, e_n}`.
 
-For the iter-176 file-skeleton this is encoded by the existence of a
-finite locally-closed stratification refining Lemma 6, together with
-the assertion that the strata carry constant Hilbert polynomial (the
-"polynomial-locally-constant" content of Nitsure's statement (A)).
-The Hilbert polynomial itself is encoded abstractly as a function
-`I → (ℕ → ℤ)` (each numerical polynomial restricted to `ℕ`); the
-substantive refinement to `numericalPolynomial` of degree `≤ n` is
-iter-177+ work.
+The statement below records the existence of a finite locally-closed
+stratification refining Lemma 6, together with a label
+`P : I → (ℕ → ℤ)` standing for the Hilbert polynomial of a stratum (a
+numerical polynomial restricted to `ℕ`), i.e. the
+"polynomial-locally-constant" content of Nitsure's statement (A).
 
-Proof status (run 0010, T12 r2): as typed, the `P`-conjunct only demands
-*some* injection `I → (ℕ → ℤ)`, which any finite index type admits; the
-statement is therefore a formal corollary of `flatLocusReduction`, and is
-proved as such below. The genuinely-Hilbert-indexed refinement must
-strengthen the statement (tie `P f` to fibre Euler characteristics), which
-awaits the coherent-χ substrate. -/
+Caveat on the strength of that label: as typed, the `P`-conjunct only
+demands *some* injection `I → (ℕ → ℤ)`, which any finite index type
+admits, so the statement is a formal corollary of `flatLocusReduction`
+and is proved as such below.  A genuinely Hilbert-indexed version would
+have to tie `P f` to the Euler characteristics of the fibres; the further
+refinement of the label to a numerical polynomial of degree `≤ n` is also
+not part of this statement. -/
 lemma flatLocusAssembly {S X : Scheme.{u}} [IsNoetherian S]
     (π : X ⟶ S) [IsProper π] (F : X.Modules) [F.IsFinitePresentation] :
     ∃ (I : Type u) (_ : Finite I) (S_ : I → Scheme.{u}) (ι : ∀ f, S_ f ⟶ S)
@@ -1809,23 +1803,18 @@ stratification `{S_f}` of `S` indexed by a finite set `I` such that
 - the underlying sets `|S_f|` partition `|S|` (disjoint and covering);
 - the pullback `𝓕|_{X ×_S S_f}` is flat over `S_f` for each `f`.
 
-The (intended) substantive refinement is that the index set `I` is in
-bijection with the set of Hilbert polynomials arising on fibres, and
-that each `S_f` is uniquely determined by its Hilbert polynomial. For
-the iter-176 file-skeleton the substantive type captures the
-stratification + flatness; the Hilbert-polynomial labeling is encoded
-in `flatLocusAssembly`'s `P : I → ℕ → ℤ` injection but elided here for
-type-clarity.
-
-Proof status (run 0010, T12 r2): the conclusion as typed is exactly the
-conclusion of `flatLocusReduction` (Lemma 6) up to conjunct order, so the
-theorem is proved below by that reduction; the remaining mathematical
-content of this cone therefore lives in `flatLocusReduction` (Noetherian
-induction on `genericFlatness`) and `genericFlatness` itself. The
-Hilbert-polynomial-indexed refinement (which would need relative
-projective space `ℙⁿ_S`, Castelnuovo–Mumford regularity, direct-image
-base change 02KH) is deliberately not part of this statement; see
-`flatLocusAssembly` and the blueprint chapter §`Mathlib status`. -/
+Caveat: the theorem in its full form also asserts that the index set `I`
+is in bijection with the set of Hilbert polynomials arising on the fibres,
+and that each `S_f` is uniquely determined by its Hilbert polynomial.
+That labelling is not part of the statement here; it appears — still in a
+weak form — as the injection `P : I → ℕ → ℤ` of `flatLocusAssembly`.  The
+conclusion as typed is exactly the conclusion of `flatLocusReduction`
+(Lemma 6) up to the order of the conjuncts, and is proved below by that
+reduction, so the mathematical content sits in `flatLocusReduction`
+(Noetherian induction on `genericFlatness`) and in `genericFlatness`
+itself.  A Hilbert-polynomial-indexed refinement would need relative
+projective space `ℙⁿ_S`, Castelnuovo–Mumford regularity, and direct-image
+base change (Stacks 02KH). -/
 theorem flatteningStratification {S X : Scheme.{u}} [IsNoetherian S]
     (π : X ⟶ S) [IsProper π] (F : X.Modules) [F.IsFinitePresentation] :
     ∃ (I : Type u) (_ : Finite I) (S_ : I → Scheme.{u}) (ι : ∀ f, S_ f ⟶ S),
@@ -1847,26 +1836,23 @@ subschemes such that
 - the pullback `𝓕|_{S_e}` is flat over `𝓞_{S_e}` — encoded as
   `CoherentSheafFlat (𝟙 (S_ e))`, i.e. flatness of the section modules of
   the pulled-back sheaf over the section rings of the stratum *itself*.
-  (The *rank*-`e` locally-free refinement is future work once the
-  locally-free-of-rank-`e` predicate is in scope.)
+  (The *rank*-`e` locally-free refinement is not part of this statement; it
+  needs the locally-free-of-rank-`e` predicate.)
 
-Statement repair (run 0010, T12 r2): the former conclusion asserted
-`CoherentSheafFlat (ι e)` — flatness of the pulled-back sheaf over the
-*ambient* `S` via the immersion — which is FALSE for any non-open stratum
-(the rank stratification of the skyscraper `k(0)` on `𝔸¹` refutes it);
-Nitsure's content is flatness (indeed local freeness) over the stratum,
-which is `CoherentSheafFlat (𝟙 (S_ e))`.
+Flatness has to be asserted over the stratum, not over the *ambient* `S`
+via the immersion: `CoherentSheafFlat (ι e)` is false for any non-open
+stratum, as the rank stratification of the skyscraper `k(0)` on `𝔸¹`
+shows.  Nitsure's content is flatness — indeed local freeness — over the
+stratum, which is `CoherentSheafFlat (𝟙 (S_ e))`.
 
-Statement repair (run 0010, T12 r7): hypothesis strengthened from
-`IsLocallyNoetherian` to `IsNoetherian`, matching the standing noetherian
-assumption of [Nitsure] §4.  With the rank-`e` labeling dropped (previous
-repair) the strata are no longer canonical, so the gluing argument that
-would extend the ℕ-indexed statement to a merely locally noetherian base
-(canonical rank strata glue over any affine cover) is not available to this
-statement; the noetherian form is what the `AJC.picrep` cone consumes.
+The hypothesis is `IsNoetherian S`, not `IsLocallyNoetherian S`, matching
+the standing noetherian assumption of [Nitsure] §4.  Without the rank-`e`
+labelling the strata are not canonical, so the gluing argument that would
+extend the ℕ-indexed statement to a merely locally noetherian base
+(canonical rank strata glue over any affine cover) is unavailable here.
 
-Proof (run 0010, T12 r7): from the existence theorem
-`flatteningStratification` applied to `π = 𝟙 S`.  The finitely many strata
+The proof specializes the existence theorem
+`flatteningStratification` to `π = 𝟙 S`.  The finitely many strata
 `V_f` are re-indexed over `ℕ` via `Fintype.equivFin`, with the *pullback
 scheme* `(𝟙 S) ×_S V_f` itself as stratum and `pullback.fst` as the
 immersion (equal to `pullback.snd ≫ ι f` with `pullback.snd` an
@@ -1997,11 +1983,10 @@ special case `n = 0`, parts (i) + (ii)]) is stated and proved in
 `AlgebraicJacobian.Picard.FlatteningStratificationUniversal`: its proof
 consumes the canonical rank strata of
 `AlgebraicJacobian.Picard.EntryIdealStratum`, which this file does not
-import.  The statement-repair history (specialization to `π = 𝟙 S`, run
-0010 T12 r7) is recorded in the docstring there. -/
+import. -/
 
 /-- **Flattening stratification for a coherent sheaf on a relative
-curve** [Nitsure §4 corollary; Route~A consumer A.2.a entry-point].
+curve** [Nitsure §4 corollary].
 
 Let `k` be a field, `C` a smooth proper curve over `k` (encoded as
 `C : Over (Spec k)` with `[SmoothOfRelativeDimension 1 C.hom]` and
@@ -2015,7 +2000,7 @@ such that `𝓕|_{C ×_k T_f}` is flat over `T_f` for each `f`.
 The body invokes `flatteningStratification` on the base-changed
 morphism `pullback.snd C.hom T.hom : (C ×_k T) ⟶ T`, using that
 `IsProper (pullback.snd C.hom T.hom)` holds by base change of
-`IsProper C.hom`; hence this corollary is proved (no `sorry`). -/
+`IsProper C.hom`. -/
 theorem flatteningStratification.ofCurve {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

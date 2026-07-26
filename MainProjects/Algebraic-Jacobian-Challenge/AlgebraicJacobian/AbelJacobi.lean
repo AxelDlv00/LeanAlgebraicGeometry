@@ -11,21 +11,29 @@ import AlgebraicJacobian.Jacobian
 The Abel-Jacobi map from a smooth, proper curve to its Jacobian, and the universal property
 of the Jacobian as the Albanese variety.
 
-## Status (iteration 073 — Phase E closes by reduction)
+Since `Jacobian C` is by definition `(jacobianWitness C).J`, every declaration below is a
+projection of the Albanese universal property carried by the witness field
+`(jacobianWitness C).isAlbaneseFor P : IsAlbanese C P (jacobianWitness C).J`.
 
-After the iter-073 refactor of `Jacobian C := (jacobianWitness C).J` (no genus-0 dite),
-all three protected declarations reduce uniformly to the Albanese universal property
-carried by `(jacobianWitness C).isAlbaneseFor P : IsAlbanese C P (jacobianWitness C).J`:
+## Main results
 
-* `ofCurve P := ((jacobianWitness C).isAlbaneseFor P).ofCurve`.
-* `comp_ofCurve P := ((jacobianWitness C).isAlbaneseFor P).comp_ofCurve`.
-* `exists_unique_ofCurve_comp P f hf := ((jacobianWitness C).isAlbaneseFor P).exists_unique_ofCurve_comp f hf`.
+* `Jacobian.ofCurve`: the Abel-Jacobi map `C ⟶ Jacobian C` attached to a `k`-rational point
+  `P` of `C`.
+* `Jacobian.comp_ofCurve`: the Abel-Jacobi map sends `P` to the neutral element of
+  `Jacobian C`.
+* `Jacobian.exists_unique_ofCurve_comp`: a morphism `f : C ⟶ A` to an abelian variety with
+  `P ≫ f = η[A]` factors uniquely through the Abel-Jacobi map.
 
-The genus-0 rigidity content previously sitting at the existence step of
-`exists_unique_ofCurve_comp` (classical rigidity `Hom(ℙ¹, A) = A(k)`) is now absorbed
-into the single deferred existence claim `nonempty_jacobianWitness` in
-`Jacobian.lean`: the witness's `isAlbaneseFor P` field must verify the Albanese property
-for genus-0 curves too, which is precisely the rigidity content.
+## Remaining obligations
+
+The genus-0 rigidity input (classical rigidity `Hom(ℙ¹, A) = A(k)`) is not proved here: it is
+part of the existence claim `nonempty_jacobianWitness` in `AlgebraicJacobian.Jacobian`, which is
+still open.  The `isAlbaneseFor` field of a witness must verify the Albanese property for
+genus-0 curves too, which is exactly that rigidity content.
+
+## References
+
+Source: [Mumford], *Abelian Varieties*, §4 (rigidity).
 -/
 
 set_option autoImplicit false

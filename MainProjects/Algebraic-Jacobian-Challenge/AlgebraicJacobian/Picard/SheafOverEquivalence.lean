@@ -18,16 +18,27 @@ overEquivalence U :
   SheafOfModules (↑U : Scheme).ringCatSheaf ≌ SheafOfModules (X.ringCatSheaf.over U)
 ```
 
-together with two consumer isomorphisms and the engine corollary `chartOverIso` that
-closes the outstanding sorry in `AlgebraicJacobian/Picard/LineBundleCoherence.lean`.
+together with two consumer isomorphisms and the corollary `chartOverIso`, which transports a
+scheme-level trivialisation of a module to a trivialisation of its slice avatar.
 
-This is the **shared-root** that both the engine consumer (`LineBundleCoherence.chartOverIso`)
-and the dual-lane consumers (`dual_restrict_iso`, `sliceDualTransport`) in
-`TensorObjSubstrate/DualInverse.lean` consume. The construction assembles three existing
-Mathlib primitives; the only genuine content is the ring morphism `φ`.
+The construction assembles three existing Mathlib primitives; the only genuine content is the
+ring morphism `φ` identifying the two structure sheaves along the open immersion `U.ι`.
+
+## Main results
+
+* `Scheme.Modules.overEquivalence`: the equivalence of sheaf-of-modules categories above.
+* `Scheme.Modules.restrictOverIso`: `(overEquivalence U).functor.obj (M.restrict U.ι) ≅ M.over U`.
+* `Scheme.Modules.unitOverIso`: the equivalence matches the two unit modules.
+* `Scheme.Modules.chartOverIso`: from `M.restrict U.ι ≅ 𝒪_{↥U}` obtain
+  `M.over U ≅ 𝒪_X|_U`; the composite of the three isomorphisms above.
+
+The last two are consumed by `LineBundleCoherence.chartOverIso` and, on the dual side, by
+`dual_restrict_iso` / `sliceDualTransport` in `TensorObjSubstrate/DualInverse.lean`.
+
+## References
 
 Blueprint: `blueprint/src/chapters/Picard_SheafOverEquivalence.tex`,
-chapters `sec:soe_equivalence`, `sec:soe_consumers`, `sec:soe_chart`.
+sections `sec:soe_equivalence`, `sec:soe_consumers`, `sec:soe_chart`.
 -/
 
 set_option autoImplicit false
@@ -46,49 +57,29 @@ variable {X : Scheme.{u}} (U : X.Opens)
 
 /-! ## §1. The equivalence (`def:sheafofmodules_over_equivalence`) -/
 
-/- Planner strategy (steps 1–4 from `analogies/overeq258.md`):
+/- Shape of the construction.
 
-   Set `e := TopologicalSpace.Opens.overEquivalence U : Over U ≌ Opens ↥U`
-   (`Topology/Sheaves/Over.lean:41`); C = Over U with J = (Opens.grothendieckTopology X).over U,
-   D = Opens ↥U with K = Opens.grothendieckTopology ↥U.
-   The result orientation: `SheafOfModules R ≌ SheafOfModules S` with R = (↑U).ringCatSheaf (on D),
-   S = X.ringCatSheaf.over U (on C) — so the functor goes
-     SheafOfModules (↑U).ringCatSheaf ⥤ SheafOfModules (X.ringCatSheaf.over U). ✓
+   Write `e := TopologicalSpace.Opens.overEquivalence U : Over U ≌ Opens ↥U`, and equip
+   `Over U` with `J := (Opens.grothendieckTopology X).over U` and `Opens ↥U` with
+   `K := Opens.grothendieckTopology ↥U`.  The ring sheaves are `(↑U).ringCatSheaf` on the
+   second site and `X.ringCatSheaf.over U` on the first, so the equivalence is oriented
+   `SheafOfModules (↑U).ringCatSheaf ⥤ SheafOfModules (X.ringCatSheaf.over U)`.
 
-   STEP 1 — Continuity (free, no work):
-   `pushforwardPushforwardEquivalence` (PushforwardContinuous.lean:305) needs
-   `[IsContinuous eqv.functor J K]` AND `[IsContinuous eqv.inverse K J]`.
-   These resolve by typeclass inference via the chain:
-   · `overEquivInverseIsDenseSubsite` (`Vestigial.lean:689`) gives
-       `(overEquivalence U).inverse.IsDenseSubsite K J`
-     — the project already builds this instance.
-   · `Functor.IsDenseSubsite → IsContinuous` is a priority-900 instance
-       (`CategoryTheory/Sites/DenseSubsite/Basic.lean:548`).
-   · For an equivalence, `[e.inverse.IsDenseSubsite K J] ⇒ e.functor.IsDenseSubsite J K`
-       automatically (`CategoryTheory/Sites/Equivalence.lean:106–108`).
-   Both legs are free; the Mathlib TODO at `Topology/Sheaves/Over.lean:19–22` is
-   discharged for this case by the project's existing dense-subsite instance.
+   Continuity of both legs comes for free: the project's dense-subsite instance for
+   `e.inverse` (`Vestigial.lean`) gives `e.inverse.IsDenseSubsite K J`, a dense subsite is
+   continuous, and for an equivalence density of the inverse propagates to the functor.
 
-   STEP 2 — The ring morphism φ (the real content):
-   `φ : (X.ringCatSheaf.over U) ⟶ (e.functor.sheafPushforwardContinuous RingCat J K).obj (↑U : Scheme).ringCatSheaf`
-   Sectionwise at `V : Over U` this is `O_X(V.left) ⟶ O_{↥U}(e V)` — the structure-sheaf
-   comparison of the open immersion `U.ι`. Build from `(U.ι.appIso V.left).inv`; this is the
-   IDENTICAL datum that `Scheme.Modules.restrictFunctor` already uses inline
-   (`AlgebraicGeometry/Modules/Sheaf.lean:320`: `α U := (f.appIso U.unop).inv`).
-   `Scheme.ringCatSheaf = sheafCompose (forget₂ CommRingCat RingCat) X.sheaf`
-   (`AlgebraicGeometry/Modules/Presheaf.lean:34`).
-   Package sectionwise in V to obtain `φ`; `ψ` is the symmetric inverse using `.hom`.
-
-   STEP 3 — H₁, H₂ (coherences):
-   Equalities of ring-presheaf nat-transes expressing that φ and ψ are mutual inverses.
-   NOT Subsingleton (thinness of Opens does not kill hom equalities); prove from the
-   `appIso` round-trips via `Sheaf.hom_ext` / `ext` sectionwise.
-   (Can be skipped in the functor-only fallback of Decision 2 from the analogist.)
-
-   STEP 4 — Assembly:
-   `overEquivalence X U := pushforwardPushforwardEquivalence e φ ψ H₁ H₂`
-   (`Mathlib/Algebra/Category/ModuleCat/Sheaf/PushforwardContinuous.lean:305`).
-   Underlying functor = `SheafOfModules.pushforward φ` (PushforwardContinuous.lean:44). -/
+   The mathematical content is the ring morphism
+   `φ : X.ringCatSheaf.over U ⟶
+      (e.functor.sheafPushforwardContinuous RingCat J K).obj (↑U : Scheme).ringCatSheaf`,
+   which sectionwise at `V : Over U` is the structure-sheaf comparison
+   `𝒪_X(V.left) ⟶ 𝒪_{↥U}(e V)` of the open immersion `U.ι` — the same datum
+   `α U := (f.appIso U.unop).inv` that `Scheme.Modules.restrictFunctor` uses inline; `ψ` is
+   the symmetric inverse.  The two coherences say that `φ` and `ψ` are mutually inverse, and
+   are proved sectionwise from the `appIso` round-trips (they are genuine hom equalities:
+   thinness of `Opens` does not make them automatic).  The equivalence is then
+   `SheafOfModules.pushforwardPushforwardEquivalence e φ ψ`, whose underlying functor is
+   `SheafOfModules.pushforward φ`. -/
 /- Continuity of both legs of `Opens.overEquivalence U`.
 
    The site of `(↑U : Scheme).ringCatSheaf` is `Opens.grothendieckTopology ↥(↑U : Scheme)`,
@@ -97,7 +88,7 @@ variable {X : Scheme.{u}} (U : X.Opens)
    keys differently in the instance discrimination tree, so typeclass search does not find
    the project's dense-subsite instance `overEquivInverseIsDenseSubsite` (stated for the
    bare topological space `↥U`). We therefore state the two continuity instances on the
-   scheme-carrier form and discharge them by `show`-converting to the subtype form, where
+   scheme-carrier form and discharge them by converting to the subtype form, where
    `overEquivInverseIsDenseSubsite` + the priority-900 `IsDenseSubsite → IsContinuous` and
    the equivalence's functor-density propagation resolve them. -/
 
@@ -181,7 +172,7 @@ noncomputable def overEquivalence :
     (TopologicalSpace.Opens.overEquivalence U) (phiOver U) (psiOver U) ?H₁ ?H₂
   · ext W : 2
     simp only [Functor.whiskerRight_app, NatTrans.op_app, NatTrans.comp_app,
-      Functor.whiskerLeft_app, Functor.op_obj, phiOver, psiOver]
+      Functor.whiskerLeft_app, phiOver, psiOver]
     change X.ringCatSheaf.obj.map (U.ι.opensFunctor.op.map
             ((TopologicalSpace.Opens.overEquivalence U).counit.app W.unop).op) = _
     change (forget₂ CommRingCat RingCat).map _
@@ -191,7 +182,7 @@ noncomputable def overEquivalence :
     exact (congrArg _ (Subsingleton.elim _ _)).trans (Functor.map_comp _ _ _)
   · ext W : 2
     simp only [NatTrans.comp_app, Functor.whiskerLeft_app, Functor.whiskerRight_app,
-      NatTrans.op_app, Functor.op_obj, phiOver, psiOver, NatTrans.id_app,
+      NatTrans.op_app, phiOver, psiOver, NatTrans.id_app,
       Functor.sheafPushforwardContinuous_obj_obj_map]
     rw [show (𝟙 ((Sheaf.over X.ringCatSheaf U).obj.obj W))
           = X.ringCatSheaf.obj.map (𝟙 (Opposite.op W.unop.left))
@@ -203,31 +194,23 @@ noncomputable def overEquivalence :
     exact ((Functor.map_comp _ _ _).trans
       (congrArg _ (Functor.map_comp _ _ _))).symm.trans (congrArg _ (Subsingleton.elim _ _))
 
-/-! ## §2. Consumer isomorphisms (`lem:sheafofmodules_restrict_over_iso`, `lem:sheafofmodules_unit_over_iso`) -/
+/-! ## §2. Consumer isomorphisms
+(`lem:sheafofmodules_restrict_over_iso`, `lem:sheafofmodules_unit_over_iso`) -/
 
-/- Planner strategy (step 5 from `analogies/overeq258.md`):
+/- Construction of `restrictOverIso : (overEquivalence U).functor.obj (M.restrict U.ι) ≅ M.over U`.
 
-   Consumer iso (A) — restrict ↦ over:
-   Goal: `(overEquivalence U).functor.obj (M.restrict U.ι) ≅ M.over U`.
+   `M.restrict U.ι = (restrictFunctor U.ι).obj M` is itself a `SheafOfModules.pushforward`,
+   along the open-immersion functor `U.ι.opensFunctor : Opens ↥U ⥤ Opens X`: by construction
+   `restrictFunctor f = SheafOfModules.pushforward ⟨α⟩` with `α U := (f.appIso U.unop).inv`.
 
-   Route: `M.restrict U.ι = (restrictFunctor U.ι).obj M` is ITSELF a
-   `SheafOfModules.pushforward` along `U.ι.opensFunctor` (the open-immersion functor
-   `Opens (↑U) → Opens X`): by construction in `AlgebraicGeometry/Modules/Sheaf.lean:319–322`,
-   `restrictFunctor f := SheafOfModules.pushforward ⟨α⟩` where `α U := (f.appIso U.unop).inv`
-   and the underlying functor is `f.opensFunctor`.
+   The functor underlying `(overEquivalence U).functor` is `SheafOfModules.pushforward φ`, so
+   the composite is a pushforward along `U.ι.opensFunctor ⋙ e.functor`, identified by
+   `SheafOfModules.pushforwardComp`; the φ round-trip cancels, so the composite ring morphism
+   is the identity.  Then `SheafOfModules.pushforwardNatIso`, applied to the `eqToIso` of the
+   equality of the two index functors `Over U ⥤ Opens X` (both send `V ↦ V.left`), transports
+   the composite to `M.over U`.
 
-   The functor underlying `(overEquivalence U).functor` is `SheafOfModules.pushforward φ`
-   (PushforwardContinuous.lean:44). Their composite is a pushforward along
-   `f.opensFunctor ⋙ e.functor`, identified by `SheafOfModules.pushforwardComp`
-   (PushforwardContinuous.lean:101); here `pushforwardComp = Iso.refl _` since the φ-round-trip
-   cancels (the composite ring morphism is `𝟙`-equivalent).
-
-   Then `SheafOfModules.pushforwardNatIso` (PushforwardContinuous.lean:188) along the
-   `eqToIso` of the equality of the two underlying functors `Over U ⥤ Opens X`
-   (both are `V ↦ V.left`) transports the composite to `M.over U`.
-
-   This mirrors step-for-step `Scheme.Modules.restrictFunctorAdjCounitIso`
-   (`AlgebraicGeometry/Modules/Sheaf.lean:335–340`). -/
+   This mirrors `Scheme.Modules.restrictFunctorAdjCounitIso`. -/
 /-- The ring morphism along `U.ι.opensFunctor` underlying `Scheme.Modules.restrictFunctor U.ι`;
 reconstructed so that `restrictFunctor U.ι = SheafOfModules.pushforward (psiRestrict U)` holds
 definitionally (verbatim from `restrictFunctor`'s internals). -/
@@ -274,16 +257,20 @@ noncomputable def restrictOverIso (M : X.Modules) :
   -- Sectionwise the composite ring map is `𝒪_X(V.left) → 𝒪_X(ι ''ᵁ (e.functor V)) → 𝒪_X(V.left)`
   -- via two mutually inverse `eqToHom` images (the open equality `ι ''ᵁ (e.functor V) = V.left`),
   -- hence the identity. The `psiRestrict` `appIso` round-trip collapses the middle to `𝟙`.
-  simp [phiOver, psiRestrict, overForgetNatIso]
+  simp only [phiOver, eqToHom_op, psiRestrict, Opposite.op_unop, Opens.ι_appIso, Iso.refl_inv,
+    overForgetNatIso, Over.forget_obj, Category.assoc,
+    ObjectProperty.FullSubcategory.comp_hom, Functor.sheafPushforwardContinuousNatTrans_app_hom,
+    ObjectProperty.ι_obj, NatTrans.comp_app, Functor.sheafPushforwardContinuous_map_hom_app,
+    Functor.whiskerRight_app, NatTrans.op_app, NatIso.ofComponents_hom_app, eqToIso.hom,
+    RingCat.hom_comp, CommRingCat.forgetToRingCat_map_hom, RingHom.coe_comp, Function.comp_apply,
+    ObjectProperty.FullSubcategory.id_hom, NatTrans.id_app, RingCat.hom_id, RingHom.id_apply]
   erw [ConcreteCategory.id_apply, ← ConcreteCategory.comp_apply, ← Functor.map_comp]
-  simp
+  simp only [eqToHom_trans, eqToHom_refl, CategoryTheory.Functor.map_id]
   erw [ConcreteCategory.id_apply]
 
-/- Planner strategy (step 6 from `analogies/overeq258.md`):
-
-   Consumer iso (B) — unit ↦ unit:
-   Goal: `(overEquivalence U).functor.obj (SheafOfModules.unit (↑U : Scheme).ringCatSheaf)
-          ≅ SheafOfModules.unit (X.ringCatSheaf.over U)`.
+/- Construction of `unitOverIso`:
+   `(overEquivalence U).functor.obj (SheafOfModules.unit (↑U : Scheme).ringCatSheaf)
+    ≅ SheafOfModules.unit (X.ringCatSheaf.over U)`.
 
    The functor underlying `(overEquivalence U).functor` is `SheafOfModules.pushforward φ`.
    The pushforward of a unit module along a morphism φ of ringed sites is the unit module
@@ -296,7 +283,8 @@ noncomputable def unitOverIso :
     SheafOfModules.unit (X.ringCatSheaf.over U) := by
   -- The over-equivalence functor is `SheafOfModules.pushforward (phiOver U)`, so this iso is the
   -- inverse of the canonical unit-comparison `unitToPushforwardObjUnit (phiOver U)`.
-  -- That comparison is sectionwise `(phiOver U).hom.app` (`unitToPushforwardObjUnit_val_app_apply`),
+  -- That comparison is sectionwise `(phiOver U).hom.app`
+  -- (`unitToPushforwardObjUnit_val_app_apply`),
   -- which is an isomorphism because `phiOver U` is one (its presheaf components are
   -- `X.ringCatSheaf.obj.map (eqToHom …).op`, images of `eqToHom` under a functor). Hence the
   -- comparison is a `SheafOfModules` isomorphism (sectionwise-iso reflection).
@@ -336,9 +324,7 @@ noncomputable def unitOverIso :
 
 /-! ## §3. Engine corollary (`lem:chart_over_iso`) -/
 
-/- Planner strategy (step 7 from `analogies/overeq258.md`):
-
-   One-liner once steps 1–3 land. Three-step composite:
+/- `chartOverIso` is the three-step composite:
    1. `(restrictOverIso U M).symm`
          : M.over U ≅ (overEquivalence U).functor.obj (M.restrict U.ι)
    2. `(overEquivalence U).functor.mapIso e`
@@ -346,14 +332,9 @@ noncomputable def unitOverIso :
    3. `unitOverIso U`
          : ... ≅ SheafOfModules.unit (X.ringCatSheaf.over U)
 
-   Each factor is an isomorphism; the composite has the required type.
-
-   This is the general form of the engine's local `chartOverIso` sorry-def at
-   `AlgebraicJacobian/Picard/LineBundleCoherence.lean:203–206`.
-   **Next iter**: redirect `LineBundleCoherence.chartOverIso` to this declaration, closing
-   the last open sorry in the coherence engine.
-   The dual-lane consumers `sliceDualTransport` / `dual_restrict_iso` in
-   `TensorObjSubstrate/DualInverse.lean` consume the same three pieces. -/
+   Each factor is an isomorphism; the composite has the required type.  This is the general
+   form consumed by `LineBundleCoherence.chartOverIso` and, on the dual side, by
+   `sliceDualTransport` / `dual_restrict_iso` in `TensorObjSubstrate/DualInverse.lean`. -/
 noncomputable def chartOverIso (M : X.Modules)
     (e : M.restrict U.ι ≅ SheafOfModules.unit (↑U : Scheme).ringCatSheaf) :
     M.over U ≅ SheafOfModules.unit (X.ringCatSheaf.over U) :=

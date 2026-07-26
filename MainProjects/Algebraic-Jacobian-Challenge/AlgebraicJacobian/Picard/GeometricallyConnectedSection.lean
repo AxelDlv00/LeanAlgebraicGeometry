@@ -3,7 +3,21 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import Mathlib
+import Mathlib.Algebra.Algebra.IsSimpleRing
+import Mathlib.Algebra.Algebra.Subalgebra.Centralizer
+import Mathlib.Algebra.Homology.Homotopy
+import Mathlib.AlgebraicGeometry.Geometrically.Connected
+import Mathlib.AlgebraicGeometry.Morphisms.Integral
+import Mathlib.Combinatorics.Quiver.ReflQuiver
+import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+import Mathlib.RingTheory.Flat.TorsionFree
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.PicardGroup
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TensorProduct.Free
+import Mathlib.RingTheory.TensorProduct.Nontrivial
+import Std.Tactic.BVDecide.LRAT.Internal.Clause
 
 /-!
 # Connected + rational section ⟹ geometrically connected (Stacks 04KV / 037Q)

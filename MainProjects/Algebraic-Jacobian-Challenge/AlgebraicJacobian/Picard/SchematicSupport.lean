@@ -9,52 +9,55 @@ import AlgebraicJacobian.Picard.PullbackFinitePresentation
 import AlgebraicJacobian.Picard.TensorSectionFormula
 
 /-!
-# Algebraic bricks for the Γ-fibre base-change over a residue field extension
+# Base change of Γ-fibres over a residue field extension, via the schematic support
 
-This leaf file collects the two *field/algebra-level* building blocks feeding the
-proof of `AlgebraicGeometry.Scheme.gammaFiber_finrank_baseChange_field`
-(`Picard/QuotFunctorDef.lean`, blueprint `lem:gamma_fiber_baseChange_field`), the
+This file supplies the algebra and the schematic-support geometry feeding the Γ-fibre
+base-change statement `AlgebraicGeometry.Scheme.gammaFiber_finrank_baseChange_field`
+(`Picard/QuotFunctorDef.lean`, blueprint `lem:gamma_fiber_baseChange_field`), which is the
 flat-base-change core of the fibrewise Hilbert-function invariance
-(`Scheme.hilbertFunction_quotBaseMap`, Nitsure §1 / Stacks 02KH at `i = 0`).
+(`Scheme.hilbertFunction_quotBaseMap`, Nitsure §1, [Stacks, Tag 02KH] at `i = 0`).
 
-* `AlgebraicGeometry.annihilator_le_annihilator_tensorProduct` /
-  `annihilator_le_annihilator_tensorProduct_right` — annihilator monotonicity
-  under tensoring: `Ann_R M ⊆ Ann_R (M ⊗[R] N)` (and the symmetric statement).
-  This is the *sections-level* algebraic content behind the "the support of the
-  twist `F ⊗ L^{⊗m}` is contained in the support of `F`" step (attack-plan
-  brick (3)): on an affine open the section module of a twist of quasi-coherent
-  sheaves is a tensor product of the section modules, and any scalar killing
-  `Γ(F, U)` kills every elementary tensor, hence the whole tensor product;
-  monotonicity of `Scheme.IdealSheafData.ofIdeals` (`ofIdeals_mono`) then
-  propagates the inclusion to the annihilator ideal sheaves
-  (`Scheme.Modules.annihilator`) and hence to the schematic supports, giving
-  properness of the twisted fibre support from properness of the support of `F`.
+On the algebraic side, annihilators only grow under tensoring,
+`Ann_R M ⊆ Ann_R (M ⊗[R] N)`; a module is finitely generated, finitely presented (over a
+noetherian base) and faithful over the quotient `R ⧸ Ann_R M` of its base ring by its own
+annihilator; and a `κ'`-linear equivalence `κ' ⊗[κ] V ≃ₗ[κ'] W` forces
+`dim_{κ'} W = dim_κ V`.  The last statement holds unconditionally: both sides are
+`Module.finrank`, and the equivalence identifies the junk value `0` in the
+infinite-dimensional case as well, so no finiteness case-split is needed.
 
-* `AlgebraicGeometry.finrank_eq_of_baseChange_linearEquiv` — the dimension
-  transport packaging: a `κ'`-linear equivalence `κ' ⊗[κ] V ≃ₗ[κ'] W` forces
-  `dim_{κ'} W = dim_{κ} V` (`Module.finrank_baseChange`).  This is the final step
-  (attack-plan step (5)): flat base change over the residue field extension
-  `κ(t) → κ(t')` produces exactly such an equivalence for `V = Γ(Z, N)` and
-  `W = Γ(Z', v^*N)` (`Z` the proper support of the twisted fibre module, `v` the
-  base change of `Z` along `Spec κ(t') → Spec κ(t)`), and the equivalence forces
-  the finrank equality *unconditionally* — no finiteness case-split is needed,
-  since both sides are `Module.finrank` (junk value `0` in the infinite case) and
-  the equivalence identifies those junk values too.
+On the geometric side, for a quasi-coherent `F` on a scheme `Y` and an ideal sheaf `I`
+whose affine sections lie in the annihilators of the section modules of `F`, the unit
+`F ⟶ i_* i^* F` of the pullback–pushforward adjunction along the closed immersion
+`i : V(I) ↪ Y` is an isomorphism.  Taking `I = Ann F` realizes `F ≅ i_* N` with
+`N = i^* F` on the schematic support `Z = V(Ann F)`, with `N` finitely presented whenever
+`F` is.  Since the annihilator of a tensor product contains that of either factor, the
+schematic support of `F ⊗ G` sits inside that of `F`, so proper support is inherited by all
+twists `F ⊗ L^{⊗m}`.
 
-Both are universe-monomorphic pure algebra and are axiom-clean
-(`propext, Classical.choice, Quot.sound`).
+The two sides combine in the last theorem: over a cartesian square of a quasi-compact
+descent to the schematic support, flat base change along a field extension identifies the
+global sections of `b^* G` with a base change of the global sections of `G`, whence the
+equality of dimensions.
 
-On top of the algebra bricks, the file now also delivers the **scheme-level
-support-descent brick** itself (wave 8): for a quasi-coherent `F` on `Y` and any
-ideal sheaf `I` with `I(U) ⊆ Ann Γ(F, U)` on affines, the unit
-`F ⟶ i_* i^* F` of the pullback–pushforward adjunction along the closed
-immersion `i : V(I) ↪ Y` is an isomorphism
-(`Scheme.Modules.isIso_unit_subschemeι_of_le_annihilator`); instantiated at the
-annihilator ideal sheaf `I := Ann F` this realizes `F ≅ i_* N` with
-`N := i^* F` on the schematic support
-(`Scheme.Modules.schematicSupportDescentIso`), the geometric half of the
-`lem:gamma_fiber_baseChange_field` reduction, with `N` finitely presented when
-`F` is (`Scheme.Modules.isFinitePresentation_pullback_schematicSupportι`).
+## Main results
+
+* `AlgebraicGeometry.annihilator_le_annihilator_tensorProduct` — `Ann_R M ⊆ Ann_R (M ⊗[R] N)`.
+* `AlgebraicGeometry.finrank_eq_of_baseChange_linearEquiv` — dimension transport along a
+  base-change linear equivalence.
+* `AlgebraicGeometry.Scheme.Modules.isIso_unit_subschemeι_of_le_annihilator` — the
+  closed-immersion adjunction unit is an isomorphism over an ideal sheaf contained in the
+  annihilator.
+* `AlgebraicGeometry.Scheme.Modules.schematicSupportDescentIso` — the descent isomorphism
+  `F ≅ i_* (i^* F)` along the schematic support.
+* `AlgebraicGeometry.Scheme.Modules.hasProperSupport_moduleTensorPow` — proper support passes
+  to the twists `F ⊗ L^{⊗m}`.
+* `AlgebraicGeometry.Scheme.finrank_gammaTop_baseChange_of_hasProperSupport` — the Γ-fibre
+  base-change equality of dimensions over a field extension.
+
+## References
+
+* [Stacks, Tag 02KH], [Stacks, Tag 02KE]
+* Nitsure, *Construction of Hilbert and Quot schemes*, §1
 -/
 
 universe u v
@@ -107,9 +110,9 @@ theorem annihilator_le_annihilator_tensorProduct_right
 
 Over fields the base-change identity `Module.finrank_baseChange`
 (`finrank_{k'} (k' ⊗[k] V) = finrank_k V`) holds unconditionally, and the
-equivalence transports finrank (`LinearEquiv.finrank_eq`).  This is the terminal
-packaging of `lem:gamma_fiber_baseChange_field`: flat base change over the
-residue field extension supplies the equivalence `e`, and the finrank equality
+equivalence transports finrank (`LinearEquiv.finrank_eq`).  This is the last step
+of `lem:gamma_fiber_baseChange_field`: flat base change over the residue field
+extension supplies the equivalence `e`, and the finrank equality
 follows with **no** finiteness case-split (both sides are `Module.finrank`, whose
 junk value `0` in the infinite-dimensional case is identified by `e` as well). -/
 theorem finrank_eq_of_baseChange_linearEquiv
@@ -132,7 +135,7 @@ the descent needs at this affine level are packaged below:
 
 * `module_finite_quotientAnnihilator` — the *coherence descent*: the descended
   module `M`, viewed over `R ⧸ I`, is still finitely generated.  This is the
-  affine content of "`N` is finitely presented on `Z`" in the brick
+  affine content of "`N` is finitely presented on `Z`" in the descent
   `F ≅ i_* N` (over the residue field `κ(t)` the fibre is Noetherian, so finite
   generation is finite presentation).  Assembled from
   `Module.quotientAnnihilator` (the `R ⧸ I`-action), the induced scalar tower
@@ -146,16 +149,14 @@ the descent needs at this affine level are packaged below:
   `q = 0`.  Equivalently (`Module.annihilator_eq_bot`) `FaithfulSMul (R ⧸ I) M`:
   the closed subscheme `V(I)` is the *smallest* on which `F|_U` lives, i.e.
   `V(Ann_R M)` is the honest schematic support and carries no embedded
-  thickening.
-
-Both are universe-monomorphic pure algebra and axiom-clean. -/
+  thickening. -/
 
 /-- **Coherence descent to the schematic support (affine heart)**: a finitely
 generated `R`-module `M` remains finitely generated over the quotient
 `R ⧸ Ann_R M` by its annihilator (with the canonical `Module.quotientAnnihilator`
 action).  This is the affine, sections-level content of "the descended module
-`N` on the schematic support `Z = V(Ann F)` is coherent" in the support-descent
-brick `F ≅ i_* N`.
+`N` on the schematic support `Z = V(Ann F)` is coherent" in the support descent
+`F ≅ i_* N`.
 
 The `R ⧸ Ann_R M`-action is `Module.quotientAnnihilator`; the scalar tower
 `R → R ⧸ Ann_R M → M` is `Module.IsTorsionBySet.isScalarTower` at `S := R`
@@ -182,7 +183,7 @@ annihilator is trivial.  Any residue class `q = mk r` annihilating `M` has
 Equivalently `FaithfulSMul (R ⧸ Ann_R M) M` (`Module.annihilator_eq_bot`): the
 closed subscheme `V(Ann_R M)` is the honest schematic support of `F|_U`, carrying
 no embedded component — exactly what makes the closed immersion `i : Z ↪ X_t` of
-the brick `F ≅ i_* N` the scheme-theoretic support rather than an arbitrary
+the descent `F ≅ i_* N` the scheme-theoretic support rather than an arbitrary
 thickening. -/
 theorem annihilator_quotientAnnihilator_eq_bot
     {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M] [Module R M] :
@@ -206,8 +207,8 @@ This upgrades `module_finite_quotientAnnihilator` (finite generation) to finite
 presentation: `R ⧸ Ann_R M` is again Noetherian
 (`Ideal.Quotient.isNoetherianRing`), so a finitely generated module over it is
 finitely presented (`Module.finitePresentation_of_finite`).  It is the affine,
-sections-level content of step (3) of the support-descent brick `F ≅ i_* N` —
-"`N` is finitely presented on `Z = V(Ann F)`".  In the Quot consumer the fibre
+sections-level content of "`N` is finitely presented on `Z = V(Ann F)`" in the
+support descent `F ≅ i_* N`.  In the Quot consumer the fibre
 `X_t` is a scheme of finite type over the residue field `κ(t)`, hence locally
 Noetherian, so the schematic support `Z` is Noetherian and the finitely
 generated descended module `N` is automatically finitely presented there. -/
@@ -230,7 +231,7 @@ This is `annihilator_quotientAnnihilator_eq_bot` transported through
 `Module.annihilator_eq_bot`, packaging the sharpness of the schematic support
 (no embedded thickening: `V(Ann_R M)` is the honest scheme-theoretic support)
 as the `FaithfulSMul` scalar-action fact directly consumable by downstream
-closed-immersion bookkeeping in the brick `F ≅ i_* N`. -/
+closed-immersion bookkeeping in the descent `F ≅ i_* N`. -/
 theorem faithfulSMul_quotientAnnihilator
     {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M] [Module R M] :
     letI := Module.quotientAnnihilator (R := R) (M := M)
@@ -240,7 +241,7 @@ theorem faithfulSMul_quotientAnnihilator
 
 /-! ## The descent isomorphism `F ≅ i_* i^* F`, affine heart
 
-The support-descent brick `F ≅ i_* N` of `lem:gamma_fiber_baseChange_field`
+The support descent `F ≅ i_* N` of `lem:gamma_fiber_baseChange_field`
 realizes a finitely presented sheaf `F` on `Y` as the pushforward `i_* (i^* F)`
 of its restriction to the schematic-support closed immersion
 `i : Z = V(Ann F) ↪ Y`.  The comparison is the unit
@@ -249,11 +250,11 @@ isomorphism affine-locally on a basis.
 
 On an affine open `U = Spec R` of `Y` the closed immersion restricts to
 `Spec (R ⧸ I) ↪ Spec R`, where `I := (annihilator F).ideal U` is the section of
-the annihilator ideal sheaf.  The always-available `ofIdeals` direction
-`annihilator_ideal_le` gives `I ≤ Ann_R M` for `M := Γ(F, U)` — this inclusion
-(not the sharpness reverse, which is blocked on the QCoh localization bridge) is
-*all* the descent isomorphism needs.  Under the tilde/pullback section formula
-the closed-immersion restriction `Γ(i^* F, i⁻¹ U)` is `(R ⧸ I) ⊗_R M`, and the
+the annihilator ideal sheaf.  The `ofIdeals` inclusion `annihilator_ideal_le`
+gives `I ≤ Ann_R M` for `M := Γ(F, U)`, and this inclusion is *all* the descent
+isomorphism needs; the reverse inclusion, which would express sharpness of the
+support, is not proved here.  Under the tilde/pullback section formula the
+closed-immersion restriction `Γ(i^* F, i⁻¹ U)` is `(R ⧸ I) ⊗_R M`, and the
 unit `η.app U` is the canonical map `m ↦ 1 ⊗ₜ m : M → (R ⧸ I) ⊗_R M`.  The two
 lemmas below package its inverse and bijectivity for `I ≤ Ann_R M`:
 
@@ -266,9 +267,7 @@ lemmas below package its inverse and bijectivity for `I ≤ Ann_R M`:
   unit map `(TensorProduct.mk R (R ⧸ I) M) 1`, in the `Function.Bijective` form
   directly consumed by the section-wise iso criterion
   (`Modules.isIso_of_isIso_app_of_isBasis`) when globalizing `η` to the scheme
-  isomorphism `F ≅ i_* i^* F`.
-
-Universe-monomorphic pure algebra, axiom-clean. -/
+  isomorphism `F ≅ i_* i^* F`. -/
 
 /-- **The descent isomorphism, affine heart**: for an ideal `I ≤ Ann_R M` the
 `R`-linear map `m ↦ 1 ⊗ₜ m : M → (R ⧸ I) ⊗_R M` is an equivalence.
@@ -279,12 +278,12 @@ identifies the base change with `M ⧸ ⊥`, which is `M`
 (`Submodule.quotEquivOfEqBot`); composing gives `M ≃ₗ[R] (R ⧸ I) ⊗_R M`.
 
 This is the affine, sections-level content of the closed-immersion unit
-`F ⟶ i_* i^* F` being an isomorphism in the support-descent brick `F ≅ i_* N`:
+`F ⟶ i_* i^* F` being an isomorphism in the support descent `F ≅ i_* N`:
 on `U = Spec R` the restriction `Γ(i^* F, i⁻¹ U)` is `(R ⧸ I) ⊗_R Γ(F, U)` and the
 unit is exactly `m ↦ 1 ⊗ₜ m`.  Only the inclusion `I ≤ Ann_R M`
-(`annihilator_ideal_le`, the always-available direction) is used — the reverse
-sharpness inclusion, blocked on the QCoh localization bridge, is *not* needed for
-the isomorphism, only for identifying `Z` as the honest (minimal) support. -/
+(`annihilator_ideal_le`) is used; the reverse inclusion is *not* needed for the
+isomorphism, only for identifying `Z` as the honest (minimal) support, and is not
+proved here. -/
 noncomputable def quotTensorEquivOfLeAnnihilator
     {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M] [Module R M]
     (I : Ideal R) (hI : I ≤ Module.annihilator R M) :
@@ -402,13 +401,12 @@ namespace Scheme.Modules
 open AlgebraicGeometry.Scheme
 
 /-- **The closed-immersion adjunction unit is an isomorphism over the
-annihilator** (the support-descent brick of `lem:gamma_fiber_baseChange_field`,
+annihilator** (the support descent of `lem:gamma_fiber_baseChange_field`,
 general ideal-sheaf form): for a quasi-coherent `F` on `Y` and an ideal sheaf
 `I` with `I(U) ⊆ Ann_{Γ(Y,U)} Γ(F, U)` for every affine open `U`, the unit
 `F ⟶ i_* i^* F` of the pullback–pushforward adjunction along the closed
-immersion `i = I.subschemeι : V(I) ↪ Y` is an isomorphism.  Only the
-always-available `ofIdeals` inclusion direction is consumed at the annihilator
-instantiation, so no localization bridge is needed. -/
+immersion `i = I.subschemeι : V(I) ↪ Y` is an isomorphism.  At the annihilator
+ideal sheaf only the `ofIdeals` inclusion `I(U) ⊆ Ann Γ(F, U)` is used. -/
 theorem isIso_unit_subschemeι_of_le_annihilator
     {Y : Scheme.{u}} (I : Y.IdealSheafData) (F : Y.Modules) [F.IsQuasicoherent]
     (hI : ∀ U : Y.affineOpens, I.ideal U ≤ Module.annihilator Γ(Y, U.1) Γ(F, U.1)) :
@@ -464,12 +462,12 @@ theorem isIso_unit_subschemeι_of_le_annihilator
   exact (ConcreteCategory.isIso_iff_bijective _).mpr hbij
 
 /-- **The schematic-support descent: the unit `F ⟶ i_* i^* F` is an
-isomorphism** at the annihilator ideal sheaf (the geometric half of the brick
+isomorphism** at the annihilator ideal sheaf (the geometric half of the descent
 `F ≅ i_* N` of `lem:gamma_fiber_baseChange_field`): for a quasi-coherent `F`
 on `Y` with schematic-support immersion
 `i = schematicSupportι F : V(Ann F) ↪ Y`, the adjunction unit is invertible.
-Instantiation of `isIso_unit_subschemeι_of_le_annihilator` via the
-always-available `ofIdeals` direction `annihilator_ideal_le`. -/
+Instantiation of `isIso_unit_subschemeι_of_le_annihilator` along the `ofIdeals`
+inclusion `annihilator_ideal_le`. -/
 theorem isIso_unit_schematicSupportι
     {Y : Scheme.{u}} (F : Y.Modules) [F.IsQuasicoherent] :
     IsIso ((Scheme.Modules.pullbackPushforwardAdjunction
@@ -478,9 +476,9 @@ theorem isIso_unit_schematicSupportι
     (fun U => Scheme.Modules.annihilator_ideal_le F U)
 
 /-- **The support-descent isomorphism `F ≅ i_* N`** with `N := i^* F` on the
-schematic support `Z = V(Ann F)` (`lem:gamma_fiber_baseChange_field`, brick
-(1)): packaging of `isIso_unit_schematicSupportι` as an `Iso`, the comparison
-being the adjunction unit itself. -/
+schematic support `Z = V(Ann F)` (`lem:gamma_fiber_baseChange_field`):
+packaging of `isIso_unit_schematicSupportι` as an `Iso`, the comparison being
+the adjunction unit itself. -/
 noncomputable def schematicSupportDescentIso
     {Y : Scheme.{u}} (F : Y.Modules) [F.IsQuasicoherent] :
     F ≅ (Scheme.Modules.pushforward (Scheme.Modules.schematicSupportι F)).obj
@@ -488,7 +486,7 @@ noncomputable def schematicSupportDescentIso
   @asIso _ _ _ _ _ (isIso_unit_schematicSupportι F)
 
 /-- **The descended module `N = i^* F` is finitely presented on the schematic
-support** (`lem:gamma_fiber_baseChange_field`, brick (2)): pullback along the
+support** (`lem:gamma_fiber_baseChange_field`): pullback along the
 schematic-support immersion preserves finite presentation
 (`Modules.pullback_isFinitePresentation`, valid for arbitrary morphisms). -/
 theorem isFinitePresentation_pullback_schematicSupportι

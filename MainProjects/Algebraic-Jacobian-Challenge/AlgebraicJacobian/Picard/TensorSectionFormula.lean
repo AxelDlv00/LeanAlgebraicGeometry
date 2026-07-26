@@ -10,7 +10,7 @@ import AlgebraicJacobian.Picard.QuotScheme
 /-!
 # Affine tensor-section substrate (`TensorSectionFormula`)
 
-This leaf file records the Tier-1 substrate bricks for the affine tensor-section
+This file collects the substrate for the affine tensor-section
 formula that feeds the quasi-coherent case of
 `Scheme.Modules.pullbackTensorMap_isIso` ([Stacks 01CD]; the section formula is
 [Stacks 01CD]/[Stacks 01CA] read on a basis of affine opens).
@@ -46,14 +46,13 @@ section-graded `sheafTensorObj` are the same object
   the unit), which is why the affine formula reduces to the presheaf-tensor
   localization on a basis of affine opens.
 
-## Wiring plan (the quasi-coherent case of `pullbackTensorMap_isIso`)
+## Remaining obligations (the quasi-coherent case of `pullbackTensorMap_isIso`)
 
-The remaining, genuinely hard step — promoting `tensorSectionHom A B V` to a
-`LinearEquiv` for quasi-coherent `A B` and *affine* `V` — is deliberately left to
-a later wiring pass, because it requires computing the sheafification value on the
-basis of basic opens as a localization of the presheaf tensor, and that
-computation lives against the (currently `private`) tilde-comparison engine of
-`Picard/QuotScheme.lean`.  Concretely, the wiring pass should:
+The genuinely hard step — promoting `tensorSectionHom A B V` to a `LinearEquiv`
+for quasi-coherent `A B` and *affine* `V` — is not carried out here: it requires
+computing the sheafification value on the basis of basic opens as a localization
+of the presheaf tensor, against the (currently `private`) tilde-comparison engine
+of `Picard/QuotScheme.lean`.  Concretely, it remains to:
 
 1. On a basic open `D(f) ⊆ V` (affine `V = Spec Γ(X, V)`), identify
    `Γ(A, D(f)) = Γ(A, V)_f` and `Γ(B, D(f)) = Γ(B, V)_f` via
@@ -68,18 +67,15 @@ computation lives against the (currently `private`) tilde-comparison engine of
    pullback side) and globalize by `isIso_of_isIso_restrict` over the affine cover,
    discharging the `pullbackTensorMap_restrict` restriction coherence.
 
-### Statement-narrowing recommendation for the orchestrator
+### On the generality of `pullbackTensorMap_isIso`
 
 `Modules.pullbackTensorMap_isIso` is stated for *arbitrary* `A B` (no
 quasi-coherence hypothesis), matching the general [Stacks 01CD] statement for
-ringed spaces.  The chart-chase route above only closes the *quasi-coherent* case.
-Since the sole consumer (`pullback_moduleTensorPow_iso`) already carries
-`[F.IsQuasicoherent] [L.IsQuasicoherent]`, narrowing
-`pullbackTensorMap_isIso` (or introducing a quasi-coherent variant
-`pullbackTensorMap_isIso_of_isQuasicoherent`) to require
-`[A.IsQuasicoherent] [B.IsQuasicoherent]` would make the affine section formula
-sufficient and unblock the qcoh case without the general ringed-space stalk
-machinery.
+ringed spaces, whereas the chart chase above only closes the *quasi-coherent*
+case.  Its sole consumer (`pullback_moduleTensorPow_iso`) already carries
+`[F.IsQuasicoherent] [L.IsQuasicoherent]`, so a quasi-coherent variant assuming
+`[A.IsQuasicoherent] [B.IsQuasicoherent]` would be enough for that consumer and
+would avoid the general ringed-space stalk machinery.
 -/
 
 universe u
@@ -143,9 +139,9 @@ lemma isIso_sheafification_tensorSectionUnit (A B : X.Modules) :
         (𝟙 X.ringCatSheaf.obj)).unit.app (tensorPresheaf A B))) :=
   isIso_sheafification_map_unit _
 
-/-! ## Quasi-coherence from basic-open section localization (the reusable criterion)
+/-! ## Quasi-coherence from basic-open section localization
 
-The affine tensor-section wiring pass (see the module docstring) will produce, for
+The affine tensor-section formula (see the module docstring) would give, for
 `A B : X.Modules` quasi-coherent and `V` affine, the fact that the section restriction
 `Γ(A ⊗ B, V) → Γ(A ⊗ B, D(f))` is `IsLocalizedModule (powers f)` (the affine tensor-section
 formula composed with the module-localization heart

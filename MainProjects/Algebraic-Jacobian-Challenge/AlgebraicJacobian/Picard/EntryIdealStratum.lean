@@ -20,9 +20,9 @@ case `n = 0` of the flattening-stratification theorem in [Nitsure, §4].
 
 ## Contents
 
-* §1 — presentation transport (`Module.MatrixPresentation.congr`) and
-  fiber-rank bricks: monotonicity under `e`-generator presentations
-  (`fiberRank_le`), invariance under linear equivalences
+* §1 — presentation transport (`Module.MatrixPresentation.congr`) and the
+  basic properties of the fiber rank: monotonicity under `e`-generator
+  presentations (`fiberRank_le`), invariance under linear equivalences
   (`Ideal.fiberRank_congr`), base change
   (`Ideal.fiberRank_baseChange`: the fiber of `A ⊗[R] M` at a prime `q`
   has the same dimension as the fiber of `M` at `q ∩ R`), and the
@@ -48,7 +48,7 @@ universe u
 
 open TensorProduct
 
-/-! ## §1 Presentation transport and fiber-rank bricks -/
+/-! ## §1 Presentation transport and basic properties of the fiber rank -/
 
 namespace Module.MatrixPresentation
 
@@ -128,7 +128,7 @@ theorem fiberRank_baseChange (q : Ideal A) [q.IsPrime] :
     (Ideal.ResidueField.map p q (algebraMap R A) rfl).toAlgebra
   haveI : IsScalarTower R p.ResidueField q.ResidueField := by
     refine .of_algebraMap_eq fun r => ?_
-    show algebraMap R q.ResidueField r =
+    change algebraMap R q.ResidueField r =
       Ideal.ResidueField.map p q (algebraMap R A) rfl (algebraMap R p.ResidueField r)
     rw [Ideal.ResidueField.map_algebraMap,
       IsScalarTower.algebraMap_apply R A q.ResidueField]
@@ -209,7 +209,7 @@ lemma mem_basicOpen_iff_notMem_primeIdealOf (f : Γ(X, U)) (x : U) :
     rw [hU.fromSpec_preimage_basicOpen]
     exact PrimeSpectrum.mem_basicOpen _ _
   refine Iff.trans ?_ hpre
-  show _ ↔ hU.fromSpec (hU.primeIdealOf x) ∈ X.basicOpen f
+  change _ ↔ hU.fromSpec (hU.primeIdealOf x) ∈ X.basicOpen f
   rw [hU.fromSpec_primeIdealOf x]
 
 end AlgebraicGeometry.IsAffineOpen
@@ -557,7 +557,7 @@ many `e`-presentation charts contained in it. -/
 theorem ChartsCover.exists_finite_charts (hcov : ChartsCover G e)
     (U : X.affineOpens) :
     ∃ (n : ℕ) (Vc : Fin n → X.affineOpens) (mmc : Fin n → ℕ)
-      (Pc : ∀ i, MatrixPresentation Γ(X, (Vc i).1) Γ(G, (Vc i).1) e (mmc i)),
+      (_Pc : ∀ i, MatrixPresentation Γ(X, (Vc i).1) Γ(G, (Vc i).1) e (mmc i)),
       (∀ i, (Vc i).1 ≤ U.1) ∧ ∀ x ∈ U.1, ∃ i, x ∈ (Vc i).1 := by
   classical
   -- the subtype of presentation charts contained in `U`
@@ -569,11 +569,11 @@ theorem ChartsCover.exists_finite_charts (hcov : ChartsCover G e)
     obtain ⟨f, g, hfg, hxf⟩ :=
       exists_basicOpen_le_affine_inter U.2 V.2 x ⟨hx, hxV⟩
     have hle : (X.affineBasicOpen g).1 ≤ U.1 := by
-      show X.basicOpen g ≤ U.1
+      change X.basicOpen g ≤ U.1
       rw [← hfg]; exact X.basicOpen_le f
     refine Set.mem_iUnion.mpr
       ⟨⟨X.affineBasicOpen g, hle, hVchart.basicOpen G g⟩, ?_⟩
-    show x ∈ X.basicOpen g
+    change x ∈ X.basicOpen g
     rw [← hfg]; exact hxf
   -- extract a finite subcover by quasi-compactness of the affine open
   obtain ⟨T, hT⟩ := U.2.isCompact.elim_finite_subcover
@@ -621,7 +621,7 @@ theorem res_mk'_basicOpen {U : X.affineOpens} (f₀ : Γ(X, U.1))
           (X.presheaf.map (homOfLE (X.basicOpen_le f₀)).op z) := by
     intro z
     rw [hbase]
-    show X.presheaf.map (homOfLE (X.basicOpen_le fv)).op
+    change X.presheaf.map (homOfLE (X.basicOpen_le fv)).op
         (X.presheaf.map (homOfLE hVU).op z) = _
     rw [presheaf_res_res (homOfLE hVU) (homOfLE (X.basicOpen_le fv))
         (homOfLE ((X.basicOpen_le fv).trans hVU)),
@@ -632,7 +632,7 @@ theorem res_mk'_basicOpen {U : X.affineOpens} (f₀ : Γ(X, U.1))
       pow_mem (Submonoid.mem_powers _) n⟩ : Submonoid.powers fv) =
       X.presheaf.map (homOfLE h₁).op
         (X.presheaf.map (homOfLE (X.basicOpen_le f₀)).op (f₀ ^ n)) := by
-    show algebraMap Γ(X, V.1) Γ(X, X.basicOpen fv) (fv ^ n) = _
+    change algebraMap Γ(X, V.1) Γ(X, X.basicOpen fv) (fv ^ n) = _
     rw [map_pow, hcalc f₀, ← map_pow, ← map_pow]
   rw [hmul, ← map_mul]
   congr 1
@@ -666,7 +666,7 @@ theorem map_strataIdeal_basicOpen (hcov : ChartsCover G e)
     have h := (mem_strataIdeal_iff G).mp hr W hWU mmW Q
     have heq := presheaf_res_res (X := X) (homOfLE (X.basicOpen_le f₀))
       (homOfLE hWD) (homOfLE hWU) r
-    show X.presheaf.map (homOfLE hWD).op
+    change X.presheaf.map (homOfLE hWD).op
       (X.presheaf.map (homOfLE (X.basicOpen_le f₀)).op r) ∈ Q.entryIdeal
     exact heq.symm ▸ h
   · -- a section satisfying the conditions over the basic open comes from
