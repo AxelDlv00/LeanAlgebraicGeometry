@@ -77,6 +77,19 @@ theorem substAlgHom_mul (M N : Matrix σ σ R) :
     Finset.smul_sum, smul_smul]
   exact Finset.sum_comm
 
+/-- A linear substitution is the identity in degree zero: it is an `R`-algebra map, and the
+degree-zero part of `R[Xᵢ]` consists of the constants. -/
+theorem substAlgHom_of_mem_zero (M : Matrix σ σ R) {p : MvPolynomial σ R}
+    (hp : p ∈ homogeneousSubmodule σ R 0) : substAlgHom M p = p := by
+  rw [homogeneousSubmodule_zero] at hp
+  obtain ⟨r, rfl⟩ := Submodule.mem_one.mp hp
+  exact (substAlgHom M).commutes r
+
+/-- The degree-zero component of a linear substitution is the identity. -/
+theorem substGradedHom_gradedZeroRingHom (M : Matrix σ σ R) :
+    (substGradedHom M).gradedZeroRingHom = RingHom.id (homogeneousSubmodule σ R 0) :=
+  RingHom.ext fun c => Subtype.ext (substAlgHom_of_mem_zero M c.2)
+
 /-- The substitution attached to a product of matrices, as graded ring homs. -/
 theorem substGradedHom_mul (M N : Matrix σ σ R) :
     substGradedHom (M * N) = (substGradedHom N).comp (substGradedHom M) :=
@@ -143,6 +156,48 @@ theorem Proj.map_congr {f g : 𝒜 →+*ᵍ ℬ} (h : f = g) (hf : ℬ₊ ≤ �
 
 end MapCongr
 
+section ToSpecZero
+
+variable {A B σ τ : Type u} [CommRing A] [SetLike σ A] [AddSubgroupClass σ A]
+  [CommRing B] [SetLike τ B] [AddSubgroupClass τ B]
+  {𝒜 : ℕ → σ} {ℬ : ℕ → τ} [GradedRing 𝒜] [GradedRing ℬ]
+
+/-- The degree-zero part is natural for the localization maps: mapping `c/1` along a graded
+ring hom `f` gives `f c / 1`. -/
+theorem HomogeneousLocalization.Away.map_comp_fromZeroRingHom (f : 𝒜 →+*ᵍ ℬ) (x : A) :
+    (HomogeneousLocalization.Away.map f x).comp
+        (HomogeneousLocalization.fromZeroRingHom 𝒜 (Submonoid.powers x)) =
+      (HomogeneousLocalization.fromZeroRingHom ℬ (Submonoid.powers (f x))).comp
+        f.gradedZeroRingHom := by
+  have hle : Submonoid.powers x ≤ (Submonoid.powers (f x)).comap f := by
+    rintro _ ⟨n, rfl⟩; exact ⟨n, by simp⟩
+  have hmap : HomogeneousLocalization.Away.map f x = HomogeneousLocalization.map f hle := rfl
+  refine RingHom.ext fun c => ?_
+  have h1 : HomogeneousLocalization.fromZeroRingHom 𝒜 (Submonoid.powers x) c =
+      HomogeneousLocalization.mk ⟨0, c, 1, Submonoid.one_mem _⟩ := rfl
+  have h2 : HomogeneousLocalization.fromZeroRingHom ℬ (Submonoid.powers (f x))
+        (f.gradedZeroRingHom c) =
+      HomogeneousLocalization.mk ⟨0, f.gradedZeroRingHom c, 1, Submonoid.one_mem _⟩ := rfl
+  rw [RingHom.comp_apply, RingHom.comp_apply, h1, h2, hmap, HomogeneousLocalization.map_mk]
+  refine HomogeneousLocalization.val_injective _ ?_
+  rw [HomogeneousLocalization.val_mk, HomogeneousLocalization.val_mk]
+  simp
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Naturality of `Proj A ⟶ Spec A₀` in the graded ring `A`. -/
+theorem Proj.map_comp_toSpecZero (f : 𝒜 →+*ᵍ ℬ) (hf : ℬ₊ ≤ 𝒜₊.map f) :
+    Proj.map f hf ≫ Proj.toSpecZero 𝒜 =
+      Proj.toSpecZero ℬ ≫ Spec.map (CommRingCat.ofHom f.gradedZeroRingHom) := by
+  refine (Proj.mapAffineOpenCover f hf).openCover.hom_ext _ _ fun s => ?_
+  obtain ⟨n, x, hx⟩ := s
+  simp only [Scheme.AffineOpenCover.openCover_f, Proj.mapAffineOpenCover_f]
+  rw [Proj.awayι_comp_map_assoc f hf n.2 x hx, Proj.awayι_toSpecZero,
+    Proj.awayι_toSpecZero_assoc]
+  rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp,
+    HomogeneousLocalization.Away.map_comp_fromZeroRingHom]
+
+end ToSpecZero
+
 namespace P1
 
 variable (k : Type u) [Field k]
@@ -204,6 +259,63 @@ noncomputable def autMonoidHom : Matrix.GeneralLinearGroup (Fin 2) k →* Aut (P
   toFun := autIsoOfMatrix k
   map_one' := Iso.ext (autOfMatrix_one k)
   map_mul' M N := Iso.ext (autOfMatrix_mul k M N)
+
+/-! ### The twist lies over `Spec k`
+
+This is what makes `γ ≫ π` still satisfy the DD-R compatibility `hpi`: a linear substitution
+is `k`-linear, hence the identity in degree zero, so it commutes with `Proj 𝒜 ⟶ Spec (𝒜 0)`. -/
+
+theorem autOfMatrix_comp_toSpecZero (M : Matrix.GeneralLinearGroup (Fin 2) k) :
+    autOfMatrix k M ≫ Proj.toSpecZero 𝒜 = Proj.toSpecZero 𝒜 := by
+  have h := Proj.map_comp_toSpecZero (substGradedHom (mat M))
+    (irrelevant_le_map_substGradedHom k M)
+  rw [substGradedHom_gradedZeroRingHom] at h
+  simp only [CommRingCat.ofHom_id, Spec.map_id, Category.comp_id] at h
+  exact h
+
+/-- **The twist is a morphism over `Spec k`.** -/
+theorem autOfMatrix_comp_structureMap (M : Matrix.GeneralLinearGroup (Fin 2) k) :
+    autOfMatrix k M ≫ structureMap k = structureMap k := by
+  change autOfMatrix k M ≫ Proj.toSpecZero 𝒜 ≫
+    Spec.map (CommRingCat.ofHom (algebraMap k (𝒜 0))) = _
+  rw [← Category.assoc, autOfMatrix_comp_toSpecZero]
+  rfl
+
+/-! ### The twisted charts
+
+The twist `γ = autOfMatrix M` pulls the standard chart `D₊(Xᵢ)` back to the basic open of the
+linear form `ℓᵢ = ∑ⱼ Mᵢⱼ Xⱼ` — the `i`-th row of `M`. These twisted charts are again affine and
+again cover `P¹_k`. -/
+
+/-- The `i`-th twisted coordinate `ℓᵢ = ∑ⱼ Mᵢⱼ Xⱼ`. -/
+noncomputable def twistedCoord (M : Matrix.GeneralLinearGroup (Fin 2) k) (i : Fin 2) :
+    MvPolynomial (Fin 2) k :=
+  matrixLinearForm (mat M) i
+
+theorem twistedCoord_mem (M : Matrix.GeneralLinearGroup (Fin 2) k) (i : Fin 2) :
+    twistedCoord k M i ∈ 𝒜 1 :=
+  matrixLinearForm_mem _ i
+
+/-- **The twisted chart.** `γ⁻¹(D₊(Xᵢ)) = D₊(ℓᵢ)`, where `ℓᵢ` is the `i`-th row form of `M`.
+This is free: `Proj.map_preimage_basicOpen` holds by `rfl`. -/
+theorem autOfMatrix_preimage_chartOpen (M : Matrix.GeneralLinearGroup (Fin 2) k) (i : Fin 2) :
+    autOfMatrix k M ⁻¹ᵁ chartOpen k i = Proj.basicOpen 𝒜 (twistedCoord k M i) := by
+  have h : autOfMatrix k M ⁻¹ᵁ chartOpen k i =
+      Proj.basicOpen 𝒜 (substGradedHom (mat M) (X i)) := rfl
+  rw [h, substGradedHom_apply, substAlgHom_X]
+  rfl
+
+/-- Each twisted chart is an affine open, directly from `Proj.isAffineOpen_basicOpen`
+applied to the degree-one form `ℓᵢ`. -/
+theorem isAffineOpen_preimage_chartOpen (M : Matrix.GeneralLinearGroup (Fin 2) k) (i : Fin 2) :
+    IsAffineOpen (autOfMatrix k M ⁻¹ᵁ chartOpen k i) := by
+  rw [autOfMatrix_preimage_chartOpen]
+  exact Proj.isAffineOpen_basicOpen 𝒜 (twistedCoord k M i) (twistedCoord_mem k M i) one_pos
+
+/-- The two twisted charts still cover `P¹_k`: preimage preserves `⊔` and `⊤`. -/
+theorem autOfMatrix_preimage_chartOpen_sup (M : Matrix.GeneralLinearGroup (Fin 2) k) :
+    (autOfMatrix k M ⁻¹ᵁ chartOpen k 0) ⊔ (autOfMatrix k M ⁻¹ᵁ chartOpen k 1) = ⊤ := by
+  rw [← Scheme.Hom.preimage_sup, chartOpen_sup, Scheme.Hom.preimage_top]
 
 end P1
 
