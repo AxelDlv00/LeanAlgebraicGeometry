@@ -99,8 +99,7 @@ content below.
 \section{From pointwise triviality to a trivialising cover}
 \label{sec:lbc_cover}
 
-\begin{lemma}\leanok
-[Trivialising affine cover]
+\begin{lemma}[Trivialising affine cover]\leanok
   \label{lem:lbc_trivializing_cover}
   \lean{AlgebraicGeometry.Scheme.LineBundle.IsLocallyTrivial.exists_trivializing_cover}
   \uses{def:line_bundle_on_product}
@@ -152,10 +151,7 @@ transporting a fixed canonical presentation of the unit module
 isomorphism. We record that canonical presentation here. The unit module is free
 of rank one, so it has a presentation with a single generator and no relations.
 
-\begin{definition}
-
-\leanok
-[Free–unit isomorphism]
+\begin{definition}[Free–unit isomorphism]\leanok
   \label{def:lbc_free_unit_iso}
   \lean{AlgebraicGeometry.Scheme.LineBundle.freeUnitIso}
   Over a sheaf of rings \(R\) on a site, the free \(R\)-module on a single
@@ -173,10 +169,7 @@ of rank one, so it has a presentation with a single generator and no relations.
   Proved directly in Lean.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Unit generating section]
+\begin{definition}[Unit generating section]\leanok
   \label{def:lbc_unit_generators}
   \lean{AlgebraicGeometry.Scheme.LineBundle.unitGenerators}
   \uses{def:lbc_free_unit_iso}
@@ -193,10 +186,7 @@ of rank one, so it has a presentation with a single generator and no relations.
   Proved directly in Lean.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Canonical unit presentation]
+\begin{definition}[Canonical unit presentation]\leanok
   \label{def:lbc_unit_presentation}
   \lean{AlgebraicGeometry.Scheme.LineBundle.unitPresentation}
   \uses{def:lbc_unit_generators}
@@ -216,8 +206,7 @@ of rank one, so it has a presentation with a single generator and no relations.
 \section{The trivial presentation on a chart}
 \label{sec:lbc_chart_presentation}
 
-\begin{lemma}\leanok
-[Finite free presentation on a chart]
+\begin{lemma}[Finite free presentation on a chart]\leanok
   \label{lem:lbc_chart_presentation}
   \lean{AlgebraicGeometry.Scheme.LineBundle.IsLocallyTrivial.chartPresentation}
   \uses{lem:lbc_trivializing_cover, def:lbc_unit_presentation,
@@ -282,8 +271,7 @@ of rank one, so it has a presentation with a single generator and no relations.
 \section{Finite presentation of a locally trivial line bundle}
 \label{sec:lbc_finite_presentation}
 
-\begin{theorem}\leanok
-[Locally trivial \(\Rightarrow\) finitely presented]
+\begin{theorem}[Locally trivial \(\Rightarrow\) finitely presented]\leanok
   \label{thm:lbc_isFinitePresentation}
   \lean{AlgebraicGeometry.Scheme.LineBundle.IsLocallyTrivial.isFinitePresentation}
   \uses{lem:lbc_trivializing_cover, lem:lbc_chart_presentation, rem:lbc_site_instances}
@@ -325,8 +313,7 @@ of rank one, so it has a presentation with a single generator and no relations.
   used: the hypothesis already provides the local free models.
 \end{proof}
 
-\begin{corollary}\leanok
-[Locally trivial \(\Rightarrow\) finite type]
+\begin{corollary}[Locally trivial \(\Rightarrow\) finite type]\leanok
   \label{cor:lbc_isFiniteType}
   \lean{AlgebraicGeometry.Scheme.LineBundle.IsLocallyTrivial.isFiniteType}
   \uses{thm:lbc_isFinitePresentation}
@@ -356,8 +343,7 @@ of rank one, so it has a presentation with a single generator and no relations.
 % global predicate. Project-side predicates may be introduced if a downstream
 % consumer needs them packaged; this is flagged for the plan agent.
 
-\begin{lemma}\leanok
-[Chart-local rank one and flatness]
+\begin{lemma}[Chart-local rank one and flatness]\leanok
   \label{lem:lbc_rank_flat}
   \lean{AlgebraicGeometry.Scheme.LineBundle.IsLocallyTrivial.chart_free_rank_one}
   \uses{lem:lbc_trivializing_cover}

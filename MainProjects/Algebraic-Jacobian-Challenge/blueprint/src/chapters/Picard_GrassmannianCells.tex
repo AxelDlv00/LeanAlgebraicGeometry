@@ -15,10 +15,7 @@ matrices, but we never use the language of group-scheme actions: the charts and
 their transition maps are elementary matrix algebra over \(\mathbb{Z}\). Taking
 \(d = 1\) recovers \(\mathrm{Gr}(r,1) = \mathbb{P}^{r-1}_{\mathbb{Z}}\).
 
-\begin{definition}
-
-\leanok
-[Affine chart \(U^I\)]
+\begin{definition}[Affine chart \(U^I\)]\leanok
   \label{def:gr_affine_chart}
   \lean{AlgebraicGeometry.Grassmannian.affineChart}
   % SOURCE: [Nitsure], "Construction of Hilbert and Quot Schemes", \S 1,
@@ -118,10 +115,7 @@ ambient chart ring \(\mathbb{Z}[X^I]\) is the polynomial ring of
 \cref{def:gr_affine_chart} in the \(d(r-d)\) free variables \(x^I_{p,q}\)
 (\(p \in \{1,\dots,d\}\), \(q \notin I\)).
 
-\begin{definition}
-
-\leanok
-[The universal matrix \(X^I\)]
+\begin{definition}[The universal matrix \(X^I\)]\leanok
   \label{def:gr_universal_matrix}
   \lean{AlgebraicGeometry.Grassmannian.universalMatrix}
   \uses{def:gr_affine_chart}
@@ -144,10 +138,7 @@ ambient chart ring \(\mathbb{Z}[X^I]\) is the polynomial ring of
   with identity \(I\)-minor.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[The minor determinant \(P^I_J\)]
+\begin{definition}[The minor determinant \(P^I_J\)]\leanok
   \label{def:gr_minor_det}
   \lean{AlgebraicGeometry.Grassmannian.minorDet}
   \uses{def:gr_universal_matrix}
@@ -172,10 +163,7 @@ ambient chart ring \(\mathbb{Z}[X^I]\) is the polynomial ring of
   \mathbb{Z}[X^I]\) and \(U^I_I = U^I\).
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[The localised \(J\)-minor \(X^I_J\) over \(R^I_J\)]
+\begin{definition}[The localised \(J\)-minor \(X^I_J\) over \(R^I_J\)]\leanok
   \label{def:gr_universal_minor}
   \lean{AlgebraicGeometry.Grassmannian.universalMinor}
   \uses{def:gr_universal_matrix, def:gr_minor_det}
@@ -194,10 +182,7 @@ ambient chart ring \(\mathbb{Z}[X^I]\) is the polynomial ring of
   \(P^I_J\) in \(R^I_J\).
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[The localised minor determinant is a unit]
+\begin{lemma}[The localised minor determinant is a unit]\leanok
   \label{lem:gr_minorDet_unit}
   \lean{AlgebraicGeometry.Grassmannian.isUnit_det_universalMinor}
   \uses{def:gr_universal_minor, def:gr_minor_det, lem:mathlib_away_algebraMap_isUnit}
@@ -225,10 +210,7 @@ ambient chart ring \(\mathbb{Z}[X^I]\) is the polynomial ring of
   \cref{lem:mathlib_away_algebraMap_isUnit}.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[The Cramer inverse \((X^I_J)^{-1}\)]
+\begin{definition}[The Cramer inverse \((X^I_J)^{-1}\)]\leanok
   \label{def:gr_universalMinorInv}
   \lean{AlgebraicGeometry.Grassmannian.universalMinorInv}
   \uses{def:gr_universal_minor}
@@ -244,10 +226,7 @@ ambient chart ring \(\mathbb{Z}[X^I]\) is the polynomial ring of
   (\cref{def:gr_universal_minor}). Its entries lie in \(R^I_J\) by Cramer's rule.
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[The Cramer inverse is a two-sided inverse]
+\begin{lemma}[The Cramer inverse is a two-sided inverse]\leanok
   \label{lem:gr_universalMinorInv_identities}
   \lean{AlgebraicGeometry.Grassmannian.universalMinorInv_mul_cancel}
   \uses{def:gr_universalMinorInv, lem:gr_minorDet_unit, lem:mathlib_nonsing_inv_mul, lem:mathlib_mul_nonsing_inv}
@@ -269,10 +248,7 @@ ambient chart ring \(\mathbb{Z}[X^I]\) is the polynomial ring of
   \(\det(X^I_J)\) is known to be a unit.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[The image matrix \(M = (X^I_J)^{-1} X^I\)]
+\begin{definition}[The image matrix \(M = (X^I_J)^{-1} X^I\)]\leanok
   \label{def:gr_image_matrix}
   \lean{AlgebraicGeometry.Grassmannian.imageMatrix}
   \uses{def:gr_universalMinorInv, def:gr_universal_matrix}
@@ -297,10 +273,7 @@ ambient chart ring \(\mathbb{Z}[X^I]\) is the polynomial ring of
   (X^I_J)^{-1}\).
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[The pre-localisation hom \(\tilde\theta_{I,J} : \mathbb{Z}[X^J] \to R^I_J\)]
+\begin{definition}[The pre-localisation hom \(\tilde\theta_{I,J} : \mathbb{Z}[X^J]\leanok \to R^I_J\)]
   \label{def:gr_transition_pre}
   \lean{AlgebraicGeometry.Grassmannian.transitionPreMap}
   \uses{def:gr_image_matrix}
@@ -323,10 +296,7 @@ ambient chart ring \(\mathbb{Z}[X^I]\) is the polynomial ring of
   identity \(J\)-block of \(X^J\) matching the identity \(J\)-minor of \(M\)).
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[The pre-hom sends \(P^J_I\) to a unit]
+\begin{lemma}[The pre-hom sends \(P^J_I\) to a unit]\leanok
   \label{lem:gr_transition_pre_unit}
   \lean{AlgebraicGeometry.Grassmannian.isUnit_transitionPreMap_minorDet}
   \uses{def:gr_transition_pre, def:gr_minor_det, lem:gr_universalMinorInv_identities, lem:gr_minorDet_unit}
@@ -358,10 +328,7 @@ ambient chart ring \(\mathbb{Z}[X^I]\) is the polynomial ring of
   determinant identity uses \cref{lem:gr_universalMinorInv_identities}.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Transition map \(\theta_{I,J}\)]
+\begin{definition}[Transition map \(\theta_{I,J}\)]\leanok
   \label{def:gr_transition}
   \lean{AlgebraicGeometry.Grassmannian.transitionMap}
   \uses{def:gr_transition_pre, lem:gr_transition_pre_unit, lem:mathlib_away_lift, def:gr_affine_chart}
@@ -390,10 +357,7 @@ ambient chart ring \(\mathbb{Z}[X^I]\) is the polynomial ring of
   \(\theta_{I,J}\); it sends the universal matrix \(X^I\) to \((X^I_J)^{-1} X^I\).
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[\(\theta_{I,I}\) is the identity]
+\begin{lemma}[\(\theta_{I,I}\) is the identity]\leanok
   \label{lem:gr_transition_self}
   \lean{AlgebraicGeometry.Grassmannian.transitionMap_self}
   \uses{def:gr_transition, def:gr_minor_det}
@@ -425,10 +389,7 @@ The cocycle computation rests on a handful of elementary matrix-algebra
 identities over the (localised) chart rings. They are project-internal helpers
 with no external source; each is verified directly in Lean.
 
-\begin{lemma}
-
-\leanok
-[Column submatrix of a product]
+\begin{lemma}[Column submatrix of a product]\leanok
   \label{lem:gr_mul_submatrix_col}
   \lean{AlgebraicGeometry.Grassmannian.mul_submatrix_col}
   Let \(A \in \operatorname{Mat}_{d\times d}(R)\) and
@@ -447,10 +408,7 @@ with no external source; each is verified directly in Lean.
   the identity leaves the contraction index untouched). Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[A ring map commutes with the Cramer inverse]
+\begin{lemma}[A ring map commutes with the Cramer inverse]\leanok
   \label{lem:gr_map_nonsing_inv}
   \lean{AlgebraicGeometry.Grassmannian.map_nonsing_inv}
   \uses{lem:mathlib_mul_nonsing_inv}
@@ -471,10 +429,7 @@ with no external source; each is verified directly in Lean.
   \((f_\ast A)^{-1}\). Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Functoriality of entrywise application]
+\begin{lemma}[Functoriality of entrywise application]\leanok
   \label{lem:gr_map_map_eq_of_comp}
   \lean{AlgebraicGeometry.Grassmannian.map_map_eq_of_comp}
   Let \(f : R \to A\), \(g : A \to D\) and \(h : R \to D\) be ring
@@ -489,10 +444,7 @@ with no external source; each is verified directly in Lean.
   entrywise maps). Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Inverse cancellation in a composite]
+\begin{lemma}[Inverse cancellation in a composite]\leanok
   \label{lem:gr_inv_mul_inv_mul_cancel}
   \lean{AlgebraicGeometry.Grassmannian.inv_mul_inv_mul_cancel}
   \uses{lem:mathlib_mul_nonsing_inv}
@@ -510,10 +462,7 @@ with no external source; each is verified directly in Lean.
   (\cref{lem:mathlib_mul_nonsing_inv}). Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The \(I\)-minor of \(X^I\) is the identity]
+\begin{lemma}[The \(I\)-minor of \(X^I\) is the identity]\leanok
   \label{lem:gr_universalMatrix_submatrix_self}
   \lean{AlgebraicGeometry.Grassmannian.universalMatrix_submatrix_self}
   \uses{def:gr_universal_matrix}
@@ -532,10 +481,7 @@ with no external source; each is verified directly in Lean.
   is the identity. Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The \(J\)-minor of the image matrix is the identity]
+\begin{lemma}[The \(J\)-minor of the image matrix is the identity]\leanok
   \label{lem:gr_imageMatrix_submatrix_self}
   \lean{AlgebraicGeometry.Grassmannian.imageMatrix_submatrix_self}
   \uses{def:gr_image_matrix, lem:gr_mul_submatrix_col, lem:gr_universalMinorInv_identities}
@@ -556,10 +502,7 @@ with no external source; each is verified directly in Lean.
 \end{proof}
 
 
-\begin{lemma}
-
-\leanok
-[\(\tilde\theta_{I,J}\) realises the matrix formula]
+\begin{lemma}[\(\tilde\theta_{I,J}\) realises the matrix formula]\leanok
   \label{lem:gr_universalMatrix_map_transitionPreMap}
   \lean{AlgebraicGeometry.Grassmannian.universalMatrix_map_transitionPreMap}
   \uses{def:gr_universal_matrix, def:gr_image_matrix, def:gr_transition_pre, lem:gr_imageMatrix_submatrix_self}
@@ -581,10 +524,7 @@ with no external source; each is verified directly in Lean.
   (\cref{lem:gr_imageMatrix_submatrix_self}). Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Image of a cross minor under \(\tilde\theta_{I,J}\)]
+\begin{lemma}[Image of a cross minor under \(\tilde\theta_{I,J}\)]\leanok
   \label{lem:gr_transitionPreMap_minorDet}
   \lean{AlgebraicGeometry.Grassmannian.transitionPreMap_minorDet}
   \uses{def:gr_transition_pre, def:gr_minor_det, def:gr_image_matrix, lem:gr_universalMatrix_map_transitionPreMap}
@@ -604,10 +544,7 @@ with no external source; each is verified directly in Lean.
   \cref{lem:gr_universalMatrix_map_transitionPreMap}. Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Naturality of the image matrix]
+\begin{lemma}[Naturality of the image matrix]\leanok
   \label{lem:gr_imageMatrix_map_eq}
   \lean{AlgebraicGeometry.Grassmannian.imageMatrix_map_eq}
   \uses{def:gr_image_matrix, lem:gr_map_map_eq_of_comp, def:gr_universalMinorInv, lem:gr_map_nonsing_inv, lem:gr_minorDet_unit, def:gr_universal_minor}
@@ -644,10 +581,7 @@ rings obtained by inverting both relevant minors in each chart ring:
   S_I := R^I[1/(P^I_J P^I_K)].
 \]
 
-\begin{definition}
-
-\leanok
-[Inclusion of an away-localisation into a double one (left)]
+\begin{definition}[Inclusion of an away-localisation into a double one (left)]\leanok
   \label{def:gr_away_incl_left}
   \lean{AlgebraicGeometry.Grassmannian.awayInclLeft}
   \uses{lem:mathlib_away_lift, lem:mathlib_away_algebraMap_isUnit}
@@ -659,10 +593,7 @@ rings obtained by inverting both relevant minors in each chart ring:
   \cref{lem:mathlib_away_algebraMap_isUnit}).
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Inclusion of an away-localisation into a double one (right)]
+\begin{definition}[Inclusion of an away-localisation into a double one (right)]\leanok
   \label{def:gr_away_incl_right}
   \lean{AlgebraicGeometry.Grassmannian.awayInclRight}
   \uses{lem:mathlib_away_lift, lem:mathlib_away_algebraMap_isUnit}
@@ -673,10 +604,7 @@ rings obtained by inverting both relevant minors in each chart ring:
   \(R[1/(xy)]\) (\cref{lem:mathlib_away_algebraMap_isUnit}).
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[Left inclusion lies over \(R\)]
+\begin{lemma}[Left inclusion lies over \(R\)]\leanok
   \label{lem:gr_awayInclLeft_comp_algebraMap}
   \lean{AlgebraicGeometry.Grassmannian.awayInclLeft_comp_algebraMap}
   \uses{def:gr_away_incl_left}
@@ -691,10 +619,7 @@ rings obtained by inverting both relevant minors in each chart ring:
   (\cref{lem:mathlib_away_lift}). Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Right inclusion lies over \(R\)]
+\begin{lemma}[Right inclusion lies over \(R\)]\leanok
   \label{lem:gr_awayInclRight_comp_algebraMap}
   \lean{AlgebraicGeometry.Grassmannian.awayInclRight_comp_algebraMap}
   \uses{def:gr_away_incl_right}
@@ -709,10 +634,7 @@ rings obtained by inverting both relevant minors in each chart ring:
   (\cref{lem:mathlib_away_lift}). Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Left factor is a unit in the double localisation]
+\begin{lemma}[Left factor is a unit in the double localisation]\leanok
   \label{lem:gr_isUnit_algebraMap_away_left}
   \lean{AlgebraicGeometry.Grassmannian.isUnit_algebraMap_away_left}
   \uses{lem:mathlib_away_algebraMap_isUnit}
@@ -726,10 +648,7 @@ rings obtained by inverting both relevant minors in each chart ring:
   Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Right factor is a unit in the double localisation]
+\begin{lemma}[Right factor is a unit in the double localisation]\leanok
   \label{lem:gr_isUnit_algebraMap_away_right}
   \lean{AlgebraicGeometry.Grassmannian.isUnit_algebraMap_away_right}
   \uses{lem:mathlib_away_algebraMap_isUnit}
@@ -743,10 +662,7 @@ rings obtained by inverting both relevant minors in each chart ring:
   Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The cross minor becomes a unit after inclusion]
+\begin{lemma}[The cross minor becomes a unit after inclusion]\leanok
   \label{lem:gr_isUnit_incl_transitionPreMap_cross}
   \lean{AlgebraicGeometry.Grassmannian.isUnit_incl_transitionPreMap_cross}
   \uses{lem:gr_transitionPreMap_minorDet, lem:gr_mul_submatrix_col, lem:gr_universalMinorInv_identities, def:gr_image_matrix}
@@ -772,10 +688,7 @@ rings obtained by inverting both relevant minors in each chart ring:
   \(\iota\) by hypothesis. Proved directly in Lean.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Localised transition map \(\Theta_{I,J} : S_J \to S_I\)]
+\begin{definition}[Localised transition map \(\Theta_{I,J} : S_J \to S_I\)]\leanok
   \label{def:gr_cocycle_theta_ij}
   \lean{AlgebraicGeometry.Grassmannian.cocycleΘIJ}
   \uses{lem:mathlib_away_lift, def:gr_away_incl_left, def:gr_transition_pre, lem:gr_transition_pre_unit, lem:gr_isUnit_incl_transitionPreMap_cross, lem:gr_awayInclLeft_comp_algebraMap, lem:gr_isUnit_algebraMap_away_right, def:gr_minor_det}
@@ -792,10 +705,7 @@ rings obtained by inverting both relevant minors in each chart ring:
   \(P^I_K\) a unit, \cref{lem:gr_isUnit_algebraMap_away_right}).
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Localised transition map \(\Theta_{J,K} : S_K \to S_J\)]
+\begin{definition}[Localised transition map \(\Theta_{J,K} : S_K \to S_J\)]\leanok
   \label{def:gr_cocycle_theta_jk}
   \lean{AlgebraicGeometry.Grassmannian.cocycleΘJK}
   \uses{lem:mathlib_away_lift, def:gr_away_incl_right, def:gr_transition_pre, lem:gr_transition_pre_unit, lem:gr_isUnit_incl_transitionPreMap_cross, lem:gr_awayInclRight_comp_algebraMap, lem:gr_isUnit_algebraMap_away_left, def:gr_minor_det}
@@ -809,10 +719,7 @@ rings obtained by inverting both relevant minors in each chart ring:
   unit, \cref{lem:gr_isUnit_algebraMap_away_left}).
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Localised transition map \(\Theta_{I,K} : S_K \to S_I\)]
+\begin{definition}[Localised transition map \(\Theta_{I,K} : S_K \to S_I\)]\leanok
   \label{def:gr_cocycle_theta_ik}
   \lean{AlgebraicGeometry.Grassmannian.cocycleΘIK}
   \uses{lem:mathlib_away_lift, def:gr_away_incl_right, def:gr_transition_pre, lem:gr_transition_pre_unit, lem:gr_isUnit_incl_transitionPreMap_cross, lem:gr_awayInclRight_comp_algebraMap, lem:gr_isUnit_algebraMap_away_left, def:gr_minor_det}
@@ -826,10 +733,7 @@ rings obtained by inverting both relevant minors in each chart ring:
   unit, \cref{lem:gr_isUnit_algebraMap_away_left}).
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[Image-matrix identity over the triple overlap]
+\begin{lemma}[Image-matrix identity over the triple overlap]\leanok
   \label{lem:gr_cocycle_imageMatrix_eq}
   \lean{AlgebraicGeometry.Grassmannian.cocycle_imageMatrix_eq}
   \uses{lem:gr_imageMatrix_map_eq, def:gr_cocycle_theta_ij, def:gr_away_incl_right, def:gr_away_incl_left, lem:gr_awayInclRight_comp_algebraMap, lem:gr_awayInclLeft_comp_algebraMap, lem:gr_universalMatrix_map_transitionPreMap, lem:gr_map_map_eq_of_comp, lem:gr_map_nonsing_inv, lem:gr_mul_submatrix_col, lem:gr_inv_mul_inv_mul_cancel, lem:gr_isUnit_algebraMap_away_left, lem:gr_minorDet_unit, def:gr_image_matrix, def:gr_universal_minor}
@@ -862,10 +766,7 @@ rings obtained by inverting both relevant minors in each chart ring:
   directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Cocycle condition for the transition maps]
+\begin{lemma}[Cocycle condition for the transition maps]\leanok
   \label{lem:gr_cocycle}
   \lean{AlgebraicGeometry.Grassmannian.cocycleCondition}
   \uses{def:gr_transition, def:gr_affine_chart, def:gr_image_matrix, lem:gr_universalMinorInv_identities, lem:gr_transition_self, def:gr_cocycle_theta_ij, def:gr_cocycle_theta_jk, def:gr_cocycle_theta_ik, lem:gr_cocycle_imageMatrix_eq}
@@ -1009,10 +910,7 @@ construction of \cref{def:gr_glued_scheme}.
 
 \subsection*{Charts, overlaps, and inclusions as schemes}
 
-\begin{theorem}
-
-\leanok
-[The diagonal minor is the unit]
+\begin{theorem}[The diagonal minor is the unit]\leanok
   \label{lem:gr_minorDet_self}
   \lean{AlgebraicGeometry.Grassmannian.minorDet_self}
   \uses{def:gr_minor_det, lem:gr_universalMatrix_submatrix_self}
@@ -1030,10 +928,7 @@ construction of \cref{def:gr_glued_scheme}.
   Proved directly in Lean.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[The overlap scheme \(U^I_J\)]
+\begin{definition}[The overlap scheme \(U^I_J\)]\leanok
   \label{def:gr_chart_overlap}
   \lean{AlgebraicGeometry.Grassmannian.chartOverlap}
   \uses{def:gr_minor_det, def:gr_affine_chart}
@@ -1046,10 +941,7 @@ construction of \cref{def:gr_glued_scheme}.
   It is the \(V\)-object of the Grassmannian glue datum.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[The overlap inclusion \(U^I_J \to U^I\)]
+\begin{definition}[The overlap inclusion \(U^I_J \to U^I\)]\leanok
   \label{def:gr_chart_incl}
   \lean{AlgebraicGeometry.Grassmannian.chartIncl}
   \uses{def:gr_chart_overlap, def:gr_affine_chart}
@@ -1061,10 +953,7 @@ construction of \cref{def:gr_glued_scheme}.
   It is the \(f\)-field of the Grassmannian glue datum.
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[The overlap inclusion is an open immersion]
+\begin{lemma}[The overlap inclusion is an open immersion]\leanok
   \label{lem:gr_chartIncl_isOpenImmersion}
   \lean{AlgebraicGeometry.Grassmannian.chartIncl_isOpenImmersion}
   \uses{def:gr_chart_incl, lem:mathlib_specMap_localizationAway_isOpenImmersion}
@@ -1080,10 +969,7 @@ construction of \cref{def:gr_glued_scheme}.
   \(f = P^I_J\). Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The self-overlap inclusion is an isomorphism]
+\begin{lemma}[The self-overlap inclusion is an isomorphism]\leanok
   \label{lem:gr_chartIncl_self_isIso}
   \lean{AlgebraicGeometry.Grassmannian.chartIncl_self_isIso}
   \uses{def:gr_chart_incl, lem:gr_minorDet_self}
@@ -1099,10 +985,7 @@ construction of \cref{def:gr_glued_scheme}.
   Lean.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[The scheme-level transition \(U^I_J \to U^J_I\)]
+\begin{definition}[The scheme-level transition \(U^I_J \to U^J_I\)]\leanok
   \label{def:gr_chart_transition}
   \lean{AlgebraicGeometry.Grassmannian.chartTransition}
   \uses{def:gr_transition, def:gr_chart_overlap}
@@ -1114,10 +997,7 @@ construction of \cref{def:gr_glued_scheme}.
   It is the \(t\)-field of the Grassmannian glue datum.
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[The self-transition is the identity]
+\begin{lemma}[The self-transition is the identity]\leanok
   \label{lem:gr_chartTransition_self}
   \lean{AlgebraicGeometry.Grassmannian.chartTransition_self}
   \uses{def:gr_chart_transition, lem:gr_transition_self}
@@ -1135,10 +1015,7 @@ construction of \cref{def:gr_glued_scheme}.
 
 \subsection*{The away-localisation pullback isomorphism}
 
-\begin{definition}
-
-\leanok
-[Pullback of two principal opens of \(\Spec A\)]
+\begin{definition}[Pullback of two principal opens of \(\Spec A\)]\leanok
   \label{def:gr_away_pullback_iso}
   \lean{AlgebraicGeometry.Grassmannian.awayPullbackIso}
   \uses{lem:mathlib_pullbackSpecIso, lem:mathlib_isLocalization_away_mul, lem:mathlib_isLocalization_algEquiv}
@@ -1159,10 +1036,7 @@ construction of \cref{def:gr_glued_scheme}.
   Grassmannian glue datum.
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[Left leg of the pullback isomorphism]
+\begin{lemma}[Left leg of the pullback isomorphism]\leanok
   \label{lem:gr_awayPullbackIso_inv_fst}
   \lean{AlgebraicGeometry.Grassmannian.awayPullbackIso_inv_fst}
   \uses{def:gr_away_pullback_iso, def:gr_away_incl_left}
@@ -1184,10 +1058,7 @@ construction of \cref{def:gr_glued_scheme}.
   away-localisation. Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Right leg of the pullback isomorphism]
+\begin{lemma}[Right leg of the pullback isomorphism]\leanok
   \label{lem:gr_awayPullbackIso_inv_snd}
   \lean{AlgebraicGeometry.Grassmannian.awayPullbackIso_inv_snd}
   \uses{def:gr_away_pullback_iso, def:gr_away_incl_right}
@@ -1205,10 +1076,7 @@ construction of \cref{def:gr_glued_scheme}.
   place of the left. Proved directly in Lean.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Order-swap isomorphism \(A[1/(xy)] \cong A[1/(yx)]\)]
+\begin{definition}[Order-swap isomorphism \(A[1/(xy)]\leanok \cong A[1/(yx)]\)]
   \label{def:gr_away_mul_comm_equiv}
   \lean{AlgebraicGeometry.Grassmannian.awayMulCommEquiv}
   \uses{lem:mathlib_isLocalization_algEquiv}
@@ -1223,10 +1091,7 @@ construction of \cref{def:gr_glued_scheme}.
   orders produced by the two pullback isomorphisms.
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[The order-swap lies over the base ring]
+\begin{lemma}[The order-swap lies over the base ring]\leanok
   \label{lem:gr_awayMulCommEquiv_comp_algebraMap}
   \lean{AlgebraicGeometry.Grassmannian.awayMulCommEquiv_comp_algebraMap}
   \uses{def:gr_away_mul_comm_equiv, lem:mathlib_isLocalization_algEquiv}
@@ -1256,10 +1121,7 @@ its compatibility \(t_{\mathrm{fac}}\) with the chart projections. We record bot
 as the next layer of bridge results; their cocycle coherence is the residual
 obligation discharged in \cref{def:gr_glued_scheme}.
 
-\begin{definition}
-
-\leanok
-[The triple-overlap transition \(t'\)]
+\begin{definition}[The triple-overlap transition \(t'\)]\leanok
   \label{def:gr_chart_transition'}
   \lean{AlgebraicGeometry.Grassmannian.chartTransition'}
   \uses{def:gr_away_pullback_iso, def:gr_cocycle_theta_ij, def:gr_away_mul_comm_equiv}
@@ -1288,10 +1150,7 @@ obligation discharged in \cref{def:gr_glued_scheme}.
   \(\Theta_{I,J}\).
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[The \(t'\) ring identity]
+\begin{lemma}[The \(t'\) ring identity]\leanok
   \label{lem:gr_chartTransition'_ringIdentity}
   \lean{AlgebraicGeometry.Grassmannian.chartTransition'_ringIdentity}
   \uses{def:gr_cocycle_theta_ij, def:gr_away_mul_comm_equiv, def:gr_away_incl_right, def:gr_away_incl_left, def:gr_transition, lem:gr_awayInclRight_comp_algebraMap, lem:gr_awayMulCommEquiv_comp_algebraMap, lem:mathlib_away_lift}
@@ -1321,10 +1180,7 @@ obligation discharged in \cref{def:gr_glued_scheme}.
   \(\iota^{\mathrm{L}} \circ \tilde\theta_{I,J}\). Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The \(t'\) compatibility field \(t_{\mathrm{fac}}\)]
+\begin{lemma}[The \(t'\) compatibility field \(t_{\mathrm{fac}}\)]\leanok
   \label{lem:gr_chartTransition'_fac}
   \lean{AlgebraicGeometry.Grassmannian.chartTransition'_fac}
   \uses{def:gr_chart_transition', lem:gr_chartTransition'_ringIdentity, def:gr_away_pullback_iso, lem:gr_awayPullbackIso_inv_fst, lem:gr_awayPullbackIso_inv_snd, def:gr_chart_transition}
@@ -1352,10 +1208,7 @@ obligation discharged in \cref{def:gr_glued_scheme}.
   (\cref{def:gr_chart_transition}). Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The triple-overlap cocycle coherence]
+\begin{lemma}[The triple-overlap cocycle coherence]\leanok
   \label{lem:gr_chartTransition'_cocycle}
   \lean{AlgebraicGeometry.Grassmannian.chartTransition'_cocycle}
   \uses{def:gr_chart_transition', lem:gr_cocycle_phi_id, def:gr_away_pullback_iso, def:gr_cocycle_theta_ij, def:gr_away_mul_comm_equiv}
@@ -1388,8 +1241,7 @@ obligation discharged in \cref{def:gr_glued_scheme}.
 \end{proof}
 
 
-\begin{lemma}\leanok
-[The rotated triple-overlap ring cocycle identity \(\Phi = \id\)]
+\begin{lemma}[The rotated triple-overlap ring cocycle identity \(\Phi = \id\)]\leanok
   \label{lem:gr_cocycle_phi_id}
   \lean{AlgebraicGeometry.Grassmannian.cocyclePhiId}
   \uses{def:gr_cocycle_theta_ij, def:gr_away_mul_comm_equiv, lem:gr_cocycle_imageMatrix_eq,
@@ -1425,10 +1277,7 @@ obligation discharged in \cref{def:gr_glued_scheme}.
 \section{The glued Grassmannian scheme}
 \label{sec:gr_glued}
 
-\begin{definition}
-
-\leanok
-[The Grassmannian glue datum]
+\begin{definition}[The Grassmannian glue datum]\leanok
   \label{def:gr_the_glue_data}
   \lean{AlgebraicGeometry.Grassmannian.theGlueData}
   \uses{def:gr_affine_chart, def:gr_chart_overlap, def:gr_chart_incl,
@@ -1462,10 +1311,7 @@ obligation discharged in \cref{def:gr_glued_scheme}.
   (\cref{def:gr_glued_scheme}) is formed.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[The Grassmannian scheme \(\mathrm{Gr}(r,d)\) over \(\mathbb{Z}\)]
+\begin{definition}[The Grassmannian scheme \(\mathrm{Gr}(r,d)\) over \(\mathbb{Z}\)]\leanok
   \label{def:gr_glued_scheme}
   \lean{AlgebraicGeometry.Grassmannian.scheme}
   \uses{def:gr_the_glue_data, def:gr_affine_chart, def:gr_transition, lem:gr_cocycle,
@@ -1565,10 +1411,7 @@ The surjectivity of the restricted-diagonal comorphism is the ring-theoretic
 heart of separatedness. We isolate it through the following sequence of
 helper results before stating the keystone lemma.
 
-\begin{lemma}
-
-\leanok
-[Two-sided inverse identity \(\tilde\theta_{I,J}(P^J_I)\,P^I_J = 1\)]
+\begin{lemma}[Two-sided inverse identity \(\tilde\theta_{I,J}(P^J_I)\,P^I_J = 1\)]\leanok
   \label{lem:gr_transitionPreMap_minorDet_swap_mul}
   \lean{AlgebraicGeometry.Grassmannian.transitionPreMap_minorDet_swap_mul}
   \uses{lem:gr_universalMatrix_map_transitionPreMap, lem:gr_transition_pre_unit, lem:gr_transitionPreMap_minorDet}
@@ -1596,10 +1439,7 @@ helper results before stating the keystone lemma.
   (\cref{lem:gr_transition_pre_unit}).
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Restricted-diagonal comorphism \(\delta_{I,J}\)]
+\begin{definition}[Restricted-diagonal comorphism \(\delta_{I,J}\)]\leanok
   \label{def:gr_diagonalRingMap}
   \lean{AlgebraicGeometry.Grassmannian.diagonalRingMap}
   \uses{def:gr_transition_pre}
@@ -1628,10 +1468,7 @@ helper results before stating the keystone lemma.
   factors; by construction its right component is \(\tilde\theta_{I,J}\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Left component of \(\delta_{I,J}\)]
+\begin{lemma}[Left component of \(\delta_{I,J}\)]\leanok
   \label{lem:gr_diagonalRingMap_left}
   \lean{AlgebraicGeometry.Grassmannian.diagonalRingMap_left}
   \uses{def:gr_diagonalRingMap}
@@ -1650,10 +1487,7 @@ helper results before stating the keystone lemma.
   1\) is the left factor evaluated at \(a\), i.e.\ the structure map.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Right component of \(\delta_{I,J}\)]
+\begin{lemma}[Right component of \(\delta_{I,J}\)]\leanok
   \label{lem:gr_diagonalRingMap_right}
   \lean{AlgebraicGeometry.Grassmannian.diagonalRingMap_right}
   \uses{def:gr_diagonalRingMap}
@@ -1673,10 +1507,7 @@ helper results before stating the keystone lemma.
   b\) is the right factor \(\tilde\theta_{I,J}\) evaluated at \(b\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The restricted-diagonal comorphism is surjective]
+\begin{lemma}[The restricted-diagonal comorphism is surjective]\leanok
   \label{lem:gr_diagonalRingMap_surjective}
   \lean{AlgebraicGeometry.Grassmannian.diagonalRingMap_surjective}
   \uses{lem:gr_diagonalRingMap_left, lem:gr_diagonalRingMap_right, lem:gr_transitionPreMap_minorDet_swap_mul}
@@ -1707,10 +1538,7 @@ helper results before stating the keystone lemma.
   of \(\delta_{I,J}\), so \(\delta_{I,J}\) is surjective.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Source pullback iso \(e_2\) for the diagonal computation]
+\begin{definition}[Source pullback iso \(e_2\) for the diagonal computation]\leanok
   \label{def:gr_pullbackιIso}
   \lean{AlgebraicGeometry.Grassmannian.pullbackιIso}
   \uses{def:gr_glued_scheme, def:gr_chart_overlap}
@@ -1734,10 +1562,7 @@ helper results before stating the keystone lemma.
   yields the desired isomorphism \(e_2\).
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Structure morphism \(\mathrm{Gr}(r,d) \to \Spec \mathbb{Z}\)]
+\begin{definition}[Structure morphism \(\mathrm{Gr}(r,d) \to \Spec \mathbb{Z}\)]\leanok
   \label{def:gr_to_specZ}
   \lean{AlgebraicGeometry.Grassmannian.toSpecZ}
   \uses{def:gr_glued_scheme}
@@ -1752,10 +1577,7 @@ helper results before stating the keystone lemma.
   properness of the Grassmannian are formulated.
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[The chart map composes to the affine structure map]
+\begin{lemma}[The chart map composes to the affine structure map]\leanok
   \label{lem:gr_ι_toSpecZ}
   \lean{AlgebraicGeometry.Grassmannian.ι_toSpecZ}
   \uses{def:gr_to_specZ, def:gr_glued_scheme}
@@ -1777,10 +1599,7 @@ helper results before stating the keystone lemma.
   \mathbb{Z}\), hence they coincide by uniqueness of the terminal map.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[First projection leg of the source pullback iso]
+\begin{lemma}[First projection leg of the source pullback iso]\leanok
   \label{lem:gr_pullbackιIso_inv_fst}
   \lean{AlgebraicGeometry.Grassmannian.pullbackιIso_inv_fst}
   \uses{def:gr_pullbackιIso, def:gr_chart_incl}
@@ -1804,10 +1623,7 @@ helper results before stating the keystone lemma.
   leg of the glue-datum cone, which is the chart inclusion \(\iota^I_J\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Second projection leg of the source pullback iso]
+\begin{lemma}[Second projection leg of the source pullback iso]\leanok
   \label{lem:gr_pullbackιIso_inv_snd}
   \lean{AlgebraicGeometry.Grassmannian.pullbackιIso_inv_snd}
   \uses{def:gr_pullbackιIso, def:gr_chart_incl, def:gr_chart_transition}
@@ -1830,10 +1646,7 @@ helper results before stating the keystone lemma.
   identifies \(e_2^{-1} \circ \mathrm{pr}_2\) with \(t_{I,J} \circ \iota^J_I\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The transition-then-inclusion composite is affine]
+\begin{lemma}[The transition-then-inclusion composite is affine]\leanok
   \label{lem:gr_chartTransition_comp_chartIncl}
   \lean{AlgebraicGeometry.Grassmannian.chartTransition_comp_chartIncl}
   \uses{def:gr_chart_transition, def:gr_chart_incl, def:gr_transition_pre}
@@ -1859,10 +1672,7 @@ helper results before stating the keystone lemma.
   composition gives the claim.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The structure morphism is separated (morphism form)]
+\begin{lemma}[The structure morphism is separated (morphism form)]\leanok
   \label{lem:gr_separated_toSpecZ}
   \lean{AlgebraicGeometry.Grassmannian.isSeparatedToSpecZ}
   \uses{def:gr_to_specZ, def:gr_glued_scheme, def:gr_pullbackιIso,
@@ -1896,10 +1706,7 @@ helper results before stating the keystone lemma.
   structure morphism is separated.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[\(\mathrm{Gr}(r,d)\) is separated over \(\mathbb{Z}\)]
+\begin{lemma}[\(\mathrm{Gr}(r,d)\) is separated over \(\mathbb{Z}\)]\leanok
   \label{lem:gr_separated}
   \lean{AlgebraicGeometry.Grassmannian.isSeparated}
   \uses{def:gr_glued_scheme, def:gr_transition, lem:gr_diagonalRingMap_surjective, lem:gr_separated_toSpecZ}
@@ -1983,10 +1790,7 @@ chart-selection argument, which we decompose into four steps E1--E4.
 
 \subsection*{Cheap ingredients and the reduction to existence}
 
-\begin{lemma}
-
-\leanok
-[\(\mathrm{Gr}(r,d)\) is a compact space]
+\begin{lemma}[\(\mathrm{Gr}(r,d)\) is a compact space]\leanok
   \label{lem:gr_compactSpace_scheme}
   \lean{AlgebraicGeometry.Grassmannian.compactSpace_scheme}
   \uses{def:gr_the_glue_data, def:gr_affine_chart, def:gr_glued_scheme}
@@ -2005,10 +1809,7 @@ chart-selection argument, which we decompose into four steps E1--E4.
   space.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The structure morphism is quasi-compact]
+\begin{lemma}[The structure morphism is quasi-compact]\leanok
   \label{lem:gr_quasiCompact_toSpecZ}
   \lean{AlgebraicGeometry.Grassmannian.quasiCompact_toSpecZ}
   \uses{def:gr_to_specZ, lem:gr_compactSpace_scheme}
@@ -2023,10 +1824,7 @@ chart-selection argument, which we decompose into four steps E1--E4.
   a compact space by \cref{lem:gr_compactSpace_scheme}.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The structure morphism is locally of finite type]
+\begin{lemma}[The structure morphism is locally of finite type]\leanok
   \label{lem:gr_locallyOfFiniteType_toSpecZ}
   \lean{AlgebraicGeometry.Grassmannian.locallyOfFiniteType_toSpecZ}
   \uses{def:gr_to_specZ, def:gr_the_glue_data, def:gr_affine_chart, lem:gr_ι_toSpecZ}
@@ -2045,10 +1843,7 @@ chart-selection argument, which we decompose into four steps E1--E4.
   locally of finite type.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The structure morphism is quasi-separated]
+\begin{lemma}[The structure morphism is quasi-separated]\leanok
   \label{lem:gr_quasiSeparated_toSpecZ}
   \lean{AlgebraicGeometry.Grassmannian.quasiSeparated_toSpecZ}
   \uses{def:gr_to_specZ, lem:gr_separated_toSpecZ}
@@ -2062,10 +1857,7 @@ chart-selection argument, which we decompose into four steps E1--E4.
   separated morphism is quasi-separated.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Uniqueness half of the valuative criterion]
+\begin{lemma}[Uniqueness half of the valuative criterion]\leanok
   \label{lem:gr_valuativeUniqueness_toSpecZ}
   \lean{AlgebraicGeometry.Grassmannian.valuativeUniqueness_toSpecZ}
   \uses{def:gr_to_specZ, lem:gr_separated_toSpecZ}
@@ -2084,10 +1876,7 @@ chart-selection argument, which we decompose into four steps E1--E4.
   coincide because the diagonal is a (closed, in particular separated) immersion.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Properness from the existence half of the valuative criterion]
+\begin{lemma}[Properness from the existence half of the valuative criterion]\leanok
   \label{lem:gr_isProper_of_valuativeExistence}
   \lean{AlgebraicGeometry.Grassmannian.isProper_of_valuativeExistence}
   \uses{lem:gr_compactSpace_scheme, lem:gr_quasiCompact_toSpecZ,
@@ -2125,10 +1914,7 @@ multiplicatively, so \(R = \{x : v(x) \le 1\}\)), a morphism \(i_1 : \Spec K \to
 in four steps. The algebraic core --- the behaviour of the transition hom on a
 \(K'\)-minor --- is the following identity over the localised chart ring.
 
-\begin{lemma}
-
-\leanok
-[The minor-ratio identity]
+\begin{lemma}[The minor-ratio identity]\leanok
   \label{lem:gr_transitionPreMap_minorDet_mul}
   \lean{AlgebraicGeometry.Grassmannian.transitionPreMap_minorDet_mul}
   \uses{def:gr_transition_pre, def:gr_minor_det, lem:gr_transitionPreMap_minorDet,
@@ -2172,10 +1958,7 @@ in four steps. The algebraic core --- the behaviour of the transition hom on a
   \(\tilde\theta_{I,J}(P^J_K)\cdot P^I_J = P^I_K\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[E1 --- the \(K\)-point factors through a single chart]
+\begin{lemma}[E1 --- the \(K\)-point factors through a single chart]\leanok
   \label{lem:gr_existence_chart_factorization}
   \lean{AlgebraicGeometry.Grassmannian.existence_chart_factorization}
   \uses{def:gr_the_glue_data, def:gr_glued_scheme, def:gr_affine_chart,
@@ -2213,10 +1996,7 @@ in four steps. The algebraic core --- the behaviour of the transition hom on a
   \(f : R^I \to K\), giving the claimed factorization.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[E2 --- minimal-valuation chart selection]
+\begin{lemma}[E2 --- minimal-valuation chart selection]\leanok
   \label{lem:gr_existence_minimal_valuation}
   \lean{AlgebraicGeometry.Grassmannian.existence_minimal_valuation}
   \uses{lem:gr_existence_chart_factorization, def:gr_minor_det,
@@ -2256,10 +2036,7 @@ in four steps. The algebraic core --- the behaviour of the transition hom on a
   determinant \(f(P^I_J) = \det f(X^I_J)\) is invertible.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Determinant of the identity with one column replaced]
+\begin{lemma}[Determinant of the identity with one column replaced]\leanok
   \label{lem:gr_det_one_updateCol}
   \lean{AlgebraicGeometry.Grassmannian.det_one_updateCol}
   For a vector \(v : \mathrm{Fin}\,d \to R\) and a row index \(p\), the determinant of the identity
@@ -2275,10 +2052,7 @@ in four steps. The algebraic core --- the behaviour of the transition hom on a
   Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Free entry as a signed minor (E3 cofactor sub-step)]
+\begin{lemma}[Free entry as a signed minor (E3 cofactor sub-step)]\leanok
   \label{lem:gr_free_entry_eq_signed_minor}
   \lean{AlgebraicGeometry.Grassmannian.exists_minorDet_eq_free_entry}
   \uses{def:gr_universal_matrix, def:gr_minor_det, lem:gr_det_one_updateCol}
@@ -2304,10 +2078,7 @@ in four steps. The algebraic core --- the behaviour of the transition hom on a
   X_{(p,q)} = \pm X_{(p,q)}\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[E3 --- entries land in \(R\); \(g\) factors through the valuation ring]
+\begin{lemma}[E3 --- entries land in \(R\); \(g\) factors through the valuation ring]\leanok
   \label{lem:gr_existence_factor_through_valuation_ring}
   \lean{AlgebraicGeometry.Grassmannian.existence_factor_through_valuationRing}
   \uses{lem:gr_transitionPreMap_minorDet_mul, lem:gr_existence_minimal_valuation,
@@ -2371,10 +2142,7 @@ in four steps. The algebraic core --- the behaviour of the transition hom on a
 \end{proof}
 
 
-\begin{lemma}
-
-\leanok
-[E4 top-triangle $K$-point identity]
+\begin{lemma}[E4 top-triangle $K$-point identity]\leanok
   \label{lem:gr_existence_chart_kpoint_eq}
   \lean{AlgebraicGeometry.Grassmannian.existence_chart_kpoint_eq}
   \uses{lem:gr_chartTransition_comp_chartIncl, def:gr_the_glue_data,
@@ -2399,10 +2167,7 @@ in four steps. The algebraic core --- the behaviour of the transition hom on a
   \(\Spec(f) \circ \iota_I\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[E4 --- the filler and its two triangles]
+\begin{lemma}[E4 --- the filler and its two triangles]\leanok
   \label{lem:gr_existence_lift}
   \lean{AlgebraicGeometry.Grassmannian.existence_lift}
   \uses{lem:gr_existence_chart_factorization,
@@ -2448,10 +2213,7 @@ in four steps. The algebraic core --- the behaviour of the transition hom on a
   exists.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Existence half of the valuative criterion]
+\begin{lemma}[Existence half of the valuative criterion]\leanok
   \label{lem:gr_valuativeExistence_toSpecZ}
   \lean{AlgebraicGeometry.Grassmannian.valuativeExistence_toSpecZ}
   \uses{def:gr_to_specZ, lem:gr_existence_chart_factorization,
@@ -2486,10 +2248,7 @@ in four steps. The algebraic core --- the behaviour of the transition hom on a
 
 \subsection*{Properness}
 
-\begin{lemma}
-
-\leanok
-[\(\mathrm{Gr}(r,d)\) is proper over \(\mathbb{Z}\)]
+\begin{lemma}[\(\mathrm{Gr}(r,d)\) is proper over \(\mathbb{Z}\)]\leanok
   \label{lem:gr_proper}
   \lean{AlgebraicGeometry.Grassmannian.isProper}
   \uses{def:gr_to_specZ, lem:gr_isProper_of_valuativeExistence,

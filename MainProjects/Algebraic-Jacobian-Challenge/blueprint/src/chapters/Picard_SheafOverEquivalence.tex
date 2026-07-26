@@ -5,10 +5,7 @@
 \section{The equivalence}
 \label{sec:soe_equivalence}
 
-\begin{definition}
-
-\leanok
-[Sheaf-of-modules over-equivalence]
+\begin{definition}[Sheaf-of-modules over-equivalence]\leanok
   \label{def:sheafofmodules_over_equivalence}
   \lean{AlgebraicGeometry.Scheme.Modules.overEquivalence}
   \uses{def:phi_over, def:psi_over, def:over_equiv_functor_is_continuous,
@@ -103,10 +100,7 @@
 \subsection{Substrate helpers for the equivalence}
 \label{sec:soe_equivalence_helpers}
 
-\begin{definition}
-
-\leanok
-[Continuity of the inverse leg of the over-equivalence]
+\begin{definition}[Continuity of the inverse leg of the over-equivalence]\leanok
   \label{def:over_equiv_inverse_is_continuous}
   \lean{AlgebraicGeometry.Scheme.Modules.overEquivInverseIsContinuous}
   % NOTE iter-283: removed the spurious `\uses{def:sheafofmodules_over_equivalence}`.
@@ -139,10 +133,7 @@
   \mathtt{IsContinuous}\) discharge it by inference.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Continuity of the functor leg of the over-equivalence]
+\begin{definition}[Continuity of the functor leg of the over-equivalence]\leanok
   \label{def:over_equiv_functor_is_continuous}
   \lean{AlgebraicGeometry.Scheme.Modules.overEquivFunctorIsContinuous}
   \uses{def:over_equiv_inverse_is_continuous}
@@ -162,10 +153,7 @@
   equivalence of sites, to density --- hence continuity --- of the functor leg.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Reindexed open recovers its left component]
+\begin{lemma}[Reindexed open recovers its left component]\leanok
   \label{lem:image_overequiv_functor_obj}
   \lean{AlgebraicGeometry.Scheme.Modules.image_overEquiv_functor_obj}
   For an object \(V \in \mathtt{Over}\,U\), the open-immersion image of the
@@ -188,10 +176,7 @@
   image cancel.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Inverse-reindexed open is its open-immersion image]
+\begin{lemma}[Inverse-reindexed open is its open-immersion image]\leanok
   \label{lem:left_overequiv_inverse_obj}
   \lean{AlgebraicGeometry.Scheme.Modules.left_overEquiv_inverse_obj}
   For an open \(W \subseteq \widetilde{U}\), the left component of the
@@ -211,10 +196,7 @@
   unfolding of the inverse reindexing functor.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[The structure-sheaf ring morphism \(\varphi\)]
+\begin{definition}[The structure-sheaf ring morphism \(\varphi\)]\leanok
   \label{def:phi_over}
   \lean{AlgebraicGeometry.Scheme.Modules.phiOver}
   \uses{lem:image_overequiv_functor_obj}
@@ -235,10 +217,7 @@
   \cref{def:sheafofmodules_over_equivalence}.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[The inverse structure-sheaf ring morphism \(\psi\)]
+\begin{definition}[The inverse structure-sheaf ring morphism \(\psi\)]\leanok
   \label{def:psi_over}
   \lean{AlgebraicGeometry.Scheme.Modules.psiOver}
   \uses{lem:left_overequiv_inverse_obj}
@@ -262,10 +241,7 @@
 \subsection{Substrate helpers for the restriction comparison}
 \label{sec:soe_consumers_helpers}
 
-\begin{definition}
-
-\leanok
-[The restriction ring morphism along the open-immersion functor]
+\begin{definition}[The restriction ring morphism along the open-immersion functor]\leanok
   \label{def:psi_restrict}
   \lean{AlgebraicGeometry.Scheme.Modules.psiRestrict}
   The ring morphism along the open-immersion functor
@@ -285,10 +261,7 @@
   \((\iota.\mathtt{appIso}\,W)^{-1}\)) as a morphism of ring sheaves.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Restriction functor as a pushforward]
+\begin{lemma}[Restriction functor as a pushforward]\leanok
   \label{lem:restrict_functor_eq_pushforward_psi_restrict}
   \lean{AlgebraicGeometry.Scheme.Modules.restrictFunctor_eq_pushforward_psiRestrict}
   \uses{def:psi_restrict}
@@ -308,10 +281,7 @@
   \(\mathtt{restrictFunctor}\,\iota\) verbatim.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Index reconciliation natural isomorphism]
+\begin{definition}[Index reconciliation natural isomorphism]\leanok
   \label{def:over_forget_nat_iso}
   \lean{AlgebraicGeometry.Scheme.Modules.overForgetNatIso}
   \uses{lem:image_overequiv_functor_obj}
@@ -334,10 +304,7 @@
   form a thin category.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The over-equivalence carries restriction to over]
+\begin{lemma}[The over-equivalence carries restriction to over]\leanok
   \label{lem:sheafofmodules_restrict_over_iso}
   \lean{AlgebraicGeometry.Scheme.Modules.restrictOverIso}
   \uses{def:sheafofmodules_over_equivalence, def:phi_over, def:psi_restrict,
@@ -374,10 +341,7 @@
   \(\mathtt{Scheme.Modules.restrictFunctorAdjCounitIso}\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The over-equivalence carries unit to unit]
+\begin{lemma}[The over-equivalence carries unit to unit]\leanok
   \label{lem:sheafofmodules_unit_over_iso}
   \lean{AlgebraicGeometry.Scheme.Modules.unitOverIso}
   \uses{def:sheafofmodules_over_equivalence, def:phi_over}
@@ -441,10 +405,7 @@
 \section{The engine corollary}
 \label{sec:soe_chart}
 
-\begin{lemma}
-
-\leanok
-[Over--restrict trivialisation bridge]
+\begin{lemma}[Over--restrict trivialisation bridge]\leanok
   \label{lem:chart_over_iso}
   \lean{AlgebraicGeometry.Scheme.Modules.chartOverIso}
   \uses{lem:sheafofmodules_restrict_over_iso, lem:sheafofmodules_unit_over_iso}
@@ -499,10 +460,7 @@
   (\cref{lem:dual_restrict_iso}) passes through the same equivalence.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Engine bridge: line-bundle over--restrict trivialisation]
+\begin{definition}[Engine bridge: line-bundle over--restrict trivialisation]\leanok
   \label{def:linebundle_chart_over_iso}
   \lean{AlgebraicGeometry.Scheme.LineBundle.chartOverIso}
   \uses{lem:chart_over_iso}

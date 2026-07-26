@@ -126,8 +126,7 @@ monoidal structure applies.
 \end{lemma}
 
 
-\begin{definition}\leanok
-[Unit module of a scheme]
+\begin{definition}[Unit module of a scheme]\leanok
   \label{def:unitModule}
   \lean{AlgebraicGeometry.Scheme.Modules.unitModule}
   \uses{lem:moduleUnit_mathlib}
@@ -138,8 +137,7 @@ monoidal structure applies.
   \(\mathcal{L}^{\otimes 0} = \mathbf{1}_X\) (\cref{def:sheafTensorPow}).
 \end{definition}
 
-\begin{definition}\leanok
-[Tensor product of sheaves of modules]
+\begin{definition}[Tensor product of sheaves of modules]\leanok
   \label{def:sheafTensorObj}
   \lean{AlgebraicGeometry.Scheme.Modules.sheafTensorObj}
   \uses{lem:presheafModule_monoidal_mathlib,
@@ -184,8 +182,7 @@ monoidal structure applies.
   is, and sheafification preserves the coherence isomorphisms.
 \end{definition}
 
-\begin{definition}\leanok
-[Tensor power of a line bundle]
+\begin{definition}[Tensor power of a line bundle]\leanok
   \label{def:sheafTensorPow}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorPow}
   \uses{def:sheafTensorObj, def:unitModule, lem:moduleUnit_mathlib}
@@ -220,10 +217,7 @@ monoidal structure applies.
   invertible.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Invertible sheaf of modules]
+\begin{definition}[Invertible sheaf of modules]\leanok
   \label{def:isInvertible}
   \lean{AlgebraicGeometry.Scheme.Modules.IsInvertibleGr}
   \uses{lem:tensorProductComm_eq_refl_mathlib}
@@ -281,8 +275,7 @@ monoidal structure applies.
 \end{definition}
 
 
-\begin{definition}\leanok
-[Twist of a coherent sheaf by a tensor power]
+\begin{definition}[Twist of a coherent sheaf by a tensor power]\leanok
   \label{def:sheafModuleTwist}
   \lean{AlgebraicGeometry.Scheme.Modules.moduleTensorPow}
   \uses{def:sheafTensorObj, def:sheafTensorPow}
@@ -317,10 +310,7 @@ coequalizer presentation of the relative module-presheaf tensor product, the sin
 Mathlib-absent brick on which the comparison rests.
 
 
-\begin{definition}
-
-\leanok
-[Scheme-level module sheafification functor]
+\begin{definition}[Scheme-level module sheafification functor]\leanok
   \label{def:schemeModuleSheafification}
   \lean{AlgebraicGeometry.Scheme.Modules.sheafification}
   \uses{lem:presheafModule_sheafification_mathlib}
@@ -340,10 +330,7 @@ Mathlib-absent brick on which the comparison rests.
   \cref{lem:presheafModule_monoidal_mathlib} descend to \(X.\Modules\).
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Left unitor of the sheaf tensor product]
+\begin{definition}[Left unitor of the sheaf tensor product]\leanok
   \label{def:tensorObjUnitIso}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjUnitIso}
   \uses{def:sheafTensorObj, def:unitModule, def:schemeModuleSheafification,
@@ -362,10 +349,7 @@ Mathlib-absent brick on which the comparison rests.
   counit.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Braiding of the sheaf tensor product]
+\begin{definition}[Braiding of the sheaf tensor product]\leanok
   \label{def:tensorBraiding}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorBraiding}
   \uses{def:sheafTensorObj, def:schemeModuleSheafification,
@@ -384,10 +368,7 @@ Mathlib-absent brick on which the comparison rests.
   \cref{lem:sheafTensorPow_add}.
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[Sheafification inverts the whiskered localization unit]
+\begin{lemma}[Sheafification inverts the whiskered localization unit]\leanok
   \label{lem:isIso_sheafification_whiskerRight_unit}
   \lean{AlgebraicGeometry.Scheme.Modules.isIso_sheafification_whiskerRight_unit}
   \uses{def:schemeModuleSheafification, lem:presheafModule_monoidal_mathlib,
@@ -507,10 +488,7 @@ the compatibility hypothesis and read off the resulting structure.
   \cref{def:sheafificationMon_isLocalization}.
 \end{lemma}
 
-\begin{definition}
-
-\leanok
-[Monoidal-carrier sheafification functor]
+\begin{definition}[Monoidal-carrier sheafification functor]\leanok
   \label{def:sheafificationMon}
   \lean{AlgebraicGeometry.Scheme.Modules.sheafificationMon}
   \uses{def:schemeModuleSheafification}
@@ -529,10 +507,7 @@ the compatibility hypothesis and read off the resulting structure.
   carries no mathematical content.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[The sheafification localization class \(W'\)]
+\begin{definition}[The sheafification localization class \(W'\)]\leanok
   \label{def:sheafificationW}
   \lean{AlgebraicGeometry.Scheme.Modules.sheafificationW}
   \uses{lem:moduleSheafification_isLocalization_mathlib}
@@ -550,10 +525,7 @@ the compatibility hypothesis and read off the resulting structure.
   \cref{lem:moduleSheafification_isLocalization_mathlib}.
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[Sheafification is the localization at \(W'\) on the monoidal carrier]
+\begin{lemma}[Sheafification is the localization at \(W'\) on the monoidal carrier]\leanok
   \label{def:sheafificationMon_isLocalization}
   \lean{AlgebraicGeometry.Scheme.Modules.sheafificationMon_isLocalization}
   \uses{def:sheafificationMon, def:sheafificationW,
@@ -571,10 +543,7 @@ the compatibility hypothesis and read off the resulting structure.
   \(\mathrm{sheafificationMon}\).
 \end{lemma}
 
-\begin{definition}
-
-\leanok
-[Transport unit of the monoidal localization]
+\begin{definition}[Transport unit of the monoidal localization]\leanok
   \label{def:localizationUnitIso}
   \lean{AlgebraicGeometry.Scheme.Modules.localizationUnitIso}
   \uses{def:unitModule, def:sheafificationMon, def:schemeModuleSheafification}
@@ -595,10 +564,7 @@ the compatibility hypothesis and read off the resulting structure.
   \(\mathbf{1}_X\).
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Tensor-compatibility of the sheafification localization class]
+\begin{definition}[Tensor-compatibility of the sheafification localization class]\leanok
   \label{def:sheafModule_W_isMonoidal}
   \lean{AlgebraicGeometry.Scheme.Modules.W_isMonoidal}
   \uses{lem:isIso_sheafification_whiskerRight_unit,
@@ -630,10 +596,7 @@ the compatibility hypothesis and read off the resulting structure.
   stability under left-whiskering reduces to stability under right-whiskering.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Symmetric monoidal structure on sheaves of modules by transport]
+\begin{definition}[Symmetric monoidal structure on sheaves of modules by transport]\leanok
   \label{def:sheafModule_monoidalStructure}
   \lean{AlgebraicGeometry.Scheme.Modules.monoidalCategory}
   \uses{def:sheafModule_W_isMonoidal, lem:monoidalLocalization_mathlib, def:unitModule,
@@ -711,10 +674,7 @@ the compatibility hypothesis and read off the resulting structure.
   \mathrm{id}\) --- rather than inherited outright.
 \end{corollary}
 
-\begin{definition}
-
-\leanok
-[Bridge between the inherited and the project tensor product]
+\begin{definition}[Bridge between the inherited and the project tensor product]\leanok
   \label{def:tensorObjIso}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjIso}
   \uses{def:sheafTensorObj, def:sheafModule_monoidalStructure,
@@ -743,10 +703,7 @@ the compatibility hypothesis and read off the resulting structure.
   \cref{lem:sheafTensorPow_add}.
 \end{definition}
 
-\begin{corollary}
-
-\leanok
-[Associator of the sheaf tensor product]
+\begin{corollary}[Associator of the sheaf tensor product]\leanok
   \label{cor:sheafTensorObjAssoc}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjAssoc}
   \uses{def:sheafTensorObj, def:sheafModule_monoidalStructure, def:tensorObjIso}
@@ -801,10 +758,7 @@ the work. Throughout, write \(\Phi_{F,G} : F \otimes G \xrightarrow{\sim}
 F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
 (\cref{def:tensorObjIso}).
 
-\begin{definition}
-
-\leanok
-[Right unitor of the sheaf tensor product]
+\begin{definition}[Right unitor of the sheaf tensor product]\leanok
   \label{def:tensorObjRightUnitor}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjRightUnitor}
   \uses{def:sheafTensorObj, def:unitModule, def:schemeModuleSheafification,
@@ -823,10 +777,7 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
   the section-level coherence of \cref{lem:sectionMul_coherent}.
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[The right unitor is the bridge-conjugate of the canonical right unitor]
+\begin{lemma}[The right unitor is the bridge-conjugate of the canonical right unitor]\leanok
   \label{lem:tensorObjRightUnitor_eq}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjRightUnitor_eq}
   \uses{def:tensorObjRightUnitor, def:tensorObjIso,
@@ -851,10 +802,7 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
   bridge on the unit factor gives the stated equality.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The left unitor is the bridge-conjugate of the canonical left unitor]
+\begin{lemma}[The left unitor is the bridge-conjugate of the canonical left unitor]\leanok
   \label{lem:tensorObjUnitIso_eq}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjUnitIso_eq}
   \uses{def:tensorObjUnitIso, def:tensorObjIso,
@@ -878,10 +826,7 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
   factor.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The braiding is the bridge-conjugate of the canonical braiding]
+\begin{lemma}[The braiding is the bridge-conjugate of the canonical braiding]\leanok
   \label{lem:tensorBraiding_eq}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorBraiding_eq}
   \uses{def:tensorBraiding, def:tensorObjIso,
@@ -908,10 +853,7 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
   absorbed by this naturality rather than cancelling against each other.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Left whiskering is the bridge-conjugate of the canonical left whiskering]
+\begin{lemma}[Left whiskering is the bridge-conjugate of the canonical left whiskering]\leanok
   \label{lem:tensorObjWhiskerLeftIso_eq}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjWhiskerLeftIso_eq}
   \uses{def:tensorObjIso, def:sheafModule_monoidalStructure}
@@ -933,10 +875,7 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
   whiskering, which is \(\mathrm{tensorObjWhiskerLeftIso}\,F\,e\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Right whiskering is the bridge-conjugate of the canonical right whiskering]
+\begin{lemma}[Right whiskering is the bridge-conjugate of the canonical right whiskering]\leanok
   \label{lem:tensorObjWhiskerRightIso_eq}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjWhiskerRightIso_eq}
   \uses{def:tensorObjIso, def:sheafModule_monoidalStructure}
@@ -958,8 +897,7 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
 \end{proof}
 
 
-\begin{lemma}\leanok
-[Tensor-power comparison isomorphism]
+\begin{lemma}[Tensor-power comparison isomorphism]\leanok
   \label{lem:sheafTensorPow_add}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorPowAdd}
   \uses{def:sheafTensorPow, def:sheafTensorObj}
@@ -1103,10 +1041,7 @@ counterpart and the \(\mathrm{tensorObjIso}\) bridges cancel in adjacent pairs -
 to a single canonical coherence law (the unitor coherence, resp.\ the pentagon) of
 the inherited symmetric monoidal structure on \(X.\Modules\).
 
-\begin{lemma}
-
-\leanok
-[Right-unit constraint for the tensor-power comparison]
+\begin{lemma}[Right-unit constraint for the tensor-power comparison]\leanok
   \label{lem:tensorPowAdd_zero_right}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorPowAdd_zero_right}
   \uses{lem:sheafTensorPow_add, def:tensorObjRightUnitor}
@@ -1129,10 +1064,7 @@ the inherited symmetric monoidal structure on \(X.\Modules\).
   every \(n\), without induction.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Left-unit constraint for the tensor-power comparison]
+\begin{lemma}[Left-unit constraint for the tensor-power comparison]\leanok
   \label{lem:tensorPowAdd_zero_left}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorPowAdd_zero_left}
   \uses{lem:sheafTensorPow_add, def:tensorObjUnitIso, lem:tensorObjUnitIso_eq,
@@ -1196,10 +1128,7 @@ the inherited symmetric monoidal structure on \(X.\Modules\).
   \(\mathrm{Module.Invertible}\) sense, not mere categorical invertibility.
 \end{lemma}
 
-\begin{lemma}
-
-\leanok
-[Trivial self-braiding of an invertible sheaf]
+\begin{lemma}[Trivial self-braiding of an invertible sheaf]\leanok
   \label{lem:braiding_eq_id_of_invertible}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorBraiding_self_eq_id_of_isInvertible}
   \uses{def:isInvertible, def:tensorBraiding, def:sheafTensorObj,
@@ -1281,10 +1210,7 @@ the inherited symmetric monoidal structure on \(X.\Modules\).
   \(\beta_{\mathcal{L}^{\otimes m},\mathcal{L}^{\otimes m}} = \mathrm{id}\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[First-index successor recursion of the tensor-power comparison]
+\begin{lemma}[First-index successor recursion of the tensor-power comparison]\leanok
   \label{lem:tensorPowAdd_succ_left}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorPowAdd_succ_left}
   \uses{lem:sheafTensorPow_add, lem:tensorPowAdd_assoc, cor:sheafTensorObjAssoc,
@@ -1361,10 +1287,7 @@ the inherited symmetric monoidal structure on \(X.\Modules\).
   is closed by the canonical coherence tactic \(\mathrm{monoidal}\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Descended forward hexagon for the sheaf braiding]
+\begin{lemma}[Descended forward hexagon for the sheaf braiding]\leanok
   \label{lem:tensorBraiding_hexagon_forward}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorBraiding_hexagon_forward}
   \uses{def:tensorBraiding, lem:tensorBraiding_eq, cor:sheafTensorObjAssoc,
@@ -1422,8 +1345,7 @@ the inherited symmetric monoidal structure on \(X.\Modules\).
   consumed.
 \end{proof}
 
-\begin{lemma}\leanok
-[Order-reversing first-index successor recursion (brick 1$'$)]
+\begin{lemma}[Order-reversing first-index successor recursion (brick 1$'$)]\leanok
   \label{lem:tensorPowAdd_succ_left_braided}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorPowAdd_succ_left_braided}
   \uses{lem:sheafTensorPow_add, def:isInvertible,
@@ -1510,10 +1432,7 @@ the inherited symmetric monoidal structure on \(X.\Modules\).
   \cref{lem:tensorPowAdd_assoc}.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Commutativity constraint for the tensor-power comparison]
+\begin{lemma}[Commutativity constraint for the tensor-power comparison]\leanok
   \label{lem:tensorPowAdd_comm}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorPowAdd_comm}
   \uses{lem:sheafTensorPow_add, def:isInvertible, def:tensorBraiding,
@@ -1593,10 +1512,7 @@ the inherited symmetric monoidal structure on \(X.\Modules\).
   (\(\mathrm{monoidal}\)); the reindex \(m'+m=m+m'\) matches the two ends.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Associativity constraint for the tensor-power comparison]
+\begin{lemma}[Associativity constraint for the tensor-power comparison]\leanok
   \label{lem:tensorPowAdd_assoc}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorPowAdd_assoc}
   \uses{lem:sheafTensorPow_add, cor:sheafTensorObjAssoc,
@@ -1667,8 +1583,7 @@ global sections do not commute with sheafification: a global section of a
 sheafified tensor product is not in general a finite sum of elementary tensors of
 global sections.
 
-\begin{definition}\leanok
-[Section multiplication]
+\begin{definition}[Section multiplication]\leanok
   \label{def:sectionMul}
   \lean{AlgebraicGeometry.Scheme.Modules.sectionsMul}
   \uses{def:sheafTensorObj, lem:presheafModule_monoidal_mathlib,
@@ -1712,10 +1627,7 @@ global sections; they are the section-level partners of the iso-level constraint
 \(\mathrm{ModuleCat}\) symmetric-monoidal structure map, computed on elementary
 tensors of sections.
 
-\begin{lemma}
-
-\leanok
-[Left unitor through the section multiplication]
+\begin{lemma}[Left unitor through the section multiplication]\leanok
   \label{lem:tensorObjUnitIso_hom_sectionsMul}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjUnitIso_hom_sectionsMul}
   \uses{def:sectionMul, def:tensorObjUnitIso}
@@ -1740,10 +1652,7 @@ tensors of sections.
   \(1 \cdot a = a\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Right unitor through the section multiplication]
+\begin{lemma}[Right unitor through the section multiplication]\leanok
   \label{lem:tensorObjRightUnitor_hom_sectionsMul}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjRightUnitor_hom_sectionsMul}
   \uses{def:sectionMul, def:tensorObjRightUnitor}
@@ -1766,10 +1675,7 @@ tensors of sections.
   \leanok
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Braiding through the section multiplication]
+\begin{lemma}[Braiding through the section multiplication]\leanok
   \label{lem:tensorBraiding_hom_sectionsMul}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorBraiding_hom_sectionsMul}
   \uses{def:sectionMul, def:tensorBraiding}
@@ -1817,10 +1723,7 @@ tensor. Throughout, \(\eta\) denotes the sheafification unit
 (\cref{lem:presheafModule_sheafification_mathlib}) and \(\otimes_{p,\mathcal{O}_X}\)
 the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
 
-\begin{lemma}
-
-\leanok
-[Right-whiskered-unit leg of the iterated section product]
+\begin{lemma}[Right-whiskered-unit leg of the iterated section product]\leanok
   \label{lem:sectionsMul_whiskerRight_unit}
   \lean{AlgebraicGeometry.Scheme.Modules.sectionsMul_whiskerRight_unit}
   \uses{def:sectionMul, lem:presheafModule_monoidal_mathlib,
@@ -1869,10 +1772,7 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
   telescoping of \cref{lem:tensorObjAssoc_eta_factor}.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Left-whiskered-unit leg of the iterated section product]
+\begin{lemma}[Left-whiskered-unit leg of the iterated section product]\leanok
   \label{lem:sectionsMul_whiskerLeft_unit}
   \lean{AlgebraicGeometry.Scheme.Modules.sectionsMul_whiskerLeft_unit}
   \uses{def:sectionMul, lem:presheafModule_monoidal_mathlib,
@@ -1920,10 +1820,7 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
   invertibility used in \cref{lem:tensorObjAssoc_eta_factor}.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Right-whisker naturality of the section product]
+\begin{lemma}[Right-whisker naturality of the section product]\leanok
   \label{lem:sectionsMul_whiskerRight_natural}
   \lean{AlgebraicGeometry.Scheme.Modules.sectionsMul_whiskerRight_natural}
   \uses{def:sectionMul, lem:presheafModule_monoidal_mathlib,
@@ -1966,10 +1863,7 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
   the top open on the elementary tensor \(x \otimes y\) gives the displayed equality.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Left-whisker naturality of the section product]
+\begin{lemma}[Left-whisker naturality of the section product]\leanok
   \label{lem:sectionsMul_whiskerLeft_natural}
   \lean{AlgebraicGeometry.Scheme.Modules.sectionsMul_whiskerLeft_natural}
   \uses{def:sectionMul, lem:presheafModule_monoidal_mathlib,
@@ -2002,10 +1896,7 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
   \cref{lem:presheafModule_monoidal_mathlib}, evaluated on \(x \otimes y\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Presheaf associator at the top open]
+\begin{lemma}[Presheaf associator at the top open]\leanok
   \label{lem:presheafAssociator_top_apply}
   \lean{AlgebraicGeometry.Scheme.Modules.presheafAssociator_top_apply}
   \uses{lem:presheafModule_monoidal_mathlib}
@@ -2023,10 +1914,7 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
 
 \begin{proof}\leanok\end{proof}
 
-\begin{lemma}
-
-\leanok
-[Presheaf-morphism factorization of the associator]
+\begin{lemma}[Presheaf-morphism factorization of the associator]\leanok
   \label{lem:tensorObjAssoc_eta_factor}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_eta_factor}
   \uses{cor:sheafTensorObjAssoc, def:tensorObjIso,
@@ -2083,8 +1971,7 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
   performed up to this definitional equality.)
 \end{proof}
 
-\begin{lemma}\leanok
-[Sheafification unit on the left triangle]
+\begin{lemma}[Sheafification unit on the left triangle]\leanok
   \label{lem:sheafification_map_unit_eq}
   \lean{AlgebraicGeometry.Scheme.Modules.sheafification_map_unit_eq}
   \uses{lem:presheafModule_sheafification_mathlib}
@@ -2101,10 +1988,7 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
 
 \begin{proof}\leanok\end{proof}
 
-\begin{lemma}
-
-\leanok
-[Sheaf-level associator factorization (core of \cref{lem:tensorObjAssoc_eta_factor})]
+\begin{lemma}[Sheaf-level associator factorization (core of \cref{lem:tensorObjAssoc_eta_factor})]\leanok
   \label{lem:tensorObjAssoc_eta_factor_sheaf}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_eta_factor_sheaf}
   \uses{cor:sheafTensorObjAssoc, def:tensorObjIso,
@@ -2160,10 +2044,7 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
   carried out up to that definitional equality.)
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Associator through the section multiplication]
+\begin{lemma}[Associator through the section multiplication]\leanok
   \label{lem:tensorObjAssoc_hom_sectionsMul}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_hom_sectionsMul}
   \uses{def:sectionMul, cor:sheafTensorObjAssoc,
@@ -2204,8 +2085,7 @@ honest equality in a single section module, obtained by transporting one side
 along an index-equality isomorphism, and provide a bridge that repackages such a
 transported equality as an equality of dependent pairs.
 
-\begin{definition}\leanok
-[Section component in degree \(m\)]
+\begin{definition}[Section component in degree \(m\)]\leanok
   \label{def:sectionDeg}
   \lean{AlgebraicGeometry.Scheme.Modules.sectionDeg}
   \uses{def:sheafTensorPow}
@@ -2225,8 +2105,7 @@ transported equality as an equality of dependent pairs.
   domains of the index transport \cref{def:sectionsCast}.
 \end{definition}
 
-\begin{definition}\leanok
-[Index-equality transport of section components]
+\begin{definition}[Index-equality transport of section components]\leanok
   \label{def:sectionsCast}
   \lean{AlgebraicGeometry.Scheme.Modules.sectionsCast}
   \uses{def:sheafTensorPow}
@@ -2251,8 +2130,7 @@ transported equality as an equality of dependent pairs.
   \(\mathrm{sectionsCast\_refl}\), \cref{lem:sectionsCast_refl}).
 \end{definition}
 
-\begin{lemma}\leanok
-[Reflexivity of the section transport]
+\begin{lemma}[Reflexivity of the section transport]\leanok
   \label{lem:sectionsCast_refl}
   \lean{AlgebraicGeometry.Scheme.Modules.sectionsCast_refl}
   \uses{def:sectionsCast}
@@ -2265,8 +2143,7 @@ transported equality as an equality of dependent pairs.
 
 \begin{proof}\leanok\end{proof}
 
-\begin{lemma}\leanok
-[Cast-mediated equality in the graded monoid]
+\begin{lemma}[Cast-mediated equality in the graded monoid]\leanok
   \label{lem:gradedMonoid_eq_of_cast}
   \lean{AlgebraicGeometry.Scheme.Modules.gradedMonoid_eq_of_cast}
   \uses{def:sectionsCast, lem:sectionsCast_refl}
@@ -2537,8 +2414,7 @@ landing in the index-sum component, not submodules of a pre-existing ring.
   extension of the graded action.
 \end{lemma}
 
-\begin{lemma}\leanok
-[Graded monoid structure on the section components]
+\begin{lemma}[Graded monoid structure on the section components]\leanok
   \label{lem:sectionGradedRing_gmonoid}
   \lean{AlgebraicGeometry.Scheme.Modules.sectionGradedRing_gmonoid}
   \uses{lem:sectionMul_coherent, lem:gradedMonoid_eq_of_cast,
@@ -2631,8 +2507,7 @@ landing in the index-sum component, not submodules of a pre-existing ring.
   structure. No commutativity clause enters.
 \end{proof}
 
-\begin{lemma}\leanok
-[A semiring structure on the section direct sum exists]
+\begin{lemma}[A semiring structure on the section direct sum exists]\leanok
   \label{lem:sectionGradedRing_semiring_nonempty}
   \lean{AlgebraicGeometry.Scheme.Modules.sectionGradedRing_semiring_nonempty}
   \uses{lem:sectionGradedRing_gsemiring, lem:directSum_gsemiring_mathlib}
@@ -2653,10 +2528,7 @@ landing in the index-sum component, not submodules of a pre-existing ring.
   structure witnesses the nonemptiness.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[A commutative semiring structure on the section direct sum exists]
+\begin{lemma}[A commutative semiring structure on the section direct sum exists]\leanok
   \label{lem:sectionGradedRing_commSemiring_nonempty}
   \lean{AlgebraicGeometry.Scheme.Modules.sectionGradedRing_commSemiring_nonempty}
   \uses{lem:sectionGradedRing_gcommSemiring, lem:directSum_gcommSemiring_mathlib}
@@ -2675,8 +2547,7 @@ landing in the index-sum component, not submodules of a pre-existing ring.
   commutative semiring on \(\bigoplus_{m \ge 0} \Gamma(X, L^{\otimes m})\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Graded commutative semiring for an invertible sheaf]
+\begin{lemma}[Graded commutative semiring for an invertible sheaf]\leanok
   \label{lem:sectionGradedRing_gcommSemiring}
   \lean{AlgebraicGeometry.Scheme.Modules.sectionGradedRing_gcommSemiring}
   \uses{def:isInvertible, lem:sectionGradedRing_gsemiring, lem:sheafTensorPow_add,
@@ -2739,8 +2610,7 @@ landing in the index-sum component, not submodules of a pre-existing ring.
   structure.
 \end{proof}
 
-\begin{definition}\leanok
-[Action comparison isomorphism for the twisted module]
+\begin{definition}[Action comparison isomorphism for the twisted module]\leanok
   \label{def:moduleTensorPowAdd}
   \lean{AlgebraicGeometry.Scheme.Modules.moduleTensorPowAdd}
   \uses{cor:sheafTensorObjAssoc, def:tensorBraiding, def:sheafTensorObj,
@@ -2769,8 +2639,7 @@ landing in the index-sum component, not submodules of a pre-existing ring.
   structure of \cref{lem:sectionGradedModule_gmodule}.
 \end{definition}
 
-\begin{lemma}\leanok
-[Associativity (hexagon) constraint for the action comparison]
+\begin{lemma}[Associativity (hexagon) constraint for the action comparison]\leanok
   \label{lem:moduleTensorPowAdd_assoc}
   \lean{AlgebraicGeometry.Scheme.Modules.moduleTensorPowAdd_assoc}
   \uses{def:moduleTensorPowAdd, cor:sheafTensorObjAssoc, def:tensorBraiding,
@@ -2829,10 +2698,7 @@ landing in the index-sum component, not submodules of a pre-existing ring.
   symmetric monoidal categories.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Twisted-section component in degree \(m\)]
+\begin{definition}[Twisted-section component in degree \(m\)]\leanok
   \label{def:moduleSectionDeg}
   \lean{AlgebraicGeometry.Scheme.Modules.moduleSectionDeg}
   \uses{def:sheafModuleTwist, def:sheafTensorPow}
@@ -2858,10 +2724,7 @@ landing in the index-sum component, not submodules of a pre-existing ring.
   \(\mathcal{L}^{\otimes m}\).
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Index-equality transport of twisted-section components]
+\begin{definition}[Index-equality transport of twisted-section components]\leanok
   \label{def:moduleSectionsCast}
   \lean{AlgebraicGeometry.Scheme.Modules.moduleSectionsCast}
   \uses{def:moduleSectionDeg}
@@ -2890,10 +2753,7 @@ landing in the index-sum component, not submodules of a pre-existing ring.
   \(\mathrm{moduleSectionsCast\_refl}\), \cref{lem:moduleSectionsCast_refl}).
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[Reflexivity of the twisted-section transport]
+\begin{lemma}[Reflexivity of the twisted-section transport]\leanok
   \label{lem:moduleSectionsCast_refl}
   \lean{AlgebraicGeometry.Scheme.Modules.moduleSectionsCast_refl}
   \uses{def:moduleSectionsCast}
@@ -2907,10 +2767,7 @@ landing in the index-sum component, not submodules of a pre-existing ring.
 \begin{proof}\leanok
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Cast-mediated equality in the graded module]
+\begin{lemma}[Cast-mediated equality in the graded module]\leanok
   \label{lem:moduleGradedMonoid_eq_of_cast}
   \lean{AlgebraicGeometry.Scheme.Modules.moduleGradedMonoid_eq_of_cast}
   \uses{def:moduleSectionsCast, lem:moduleSectionsCast_refl}
@@ -2966,10 +2823,7 @@ landing in the index-sum component, not submodules of a pre-existing ring.
   \(\mu_{i,j}\) and the twisted module in the right-hand factor.
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[Left-unit (base-case) constraint for the action comparison]
+\begin{lemma}[Left-unit (base-case) constraint for the action comparison]\leanok
   \label{lem:moduleTensorPowAdd_zero_left}
   \lean{AlgebraicGeometry.Scheme.Modules.moduleTensorPowAdd_zero_left}
   \uses{def:moduleTensorPowAdd, lem:tensorPowAdd_zero_left, def:tensorBraiding,
@@ -3110,8 +2964,7 @@ landing in the index-sum component, not submodules of a pre-existing ring.
   of the pentagon and the right-unitor pair.
 \end{proof}
 
-\begin{lemma}\leanok
-[Graded module structure on the twisted-section components]
+\begin{lemma}[Graded module structure on the twisted-section components]\leanok
   \label{lem:sectionGradedModule_gmodule}
   \lean{AlgebraicGeometry.Scheme.Modules.sectionGradedModule_gmodule}
   \uses{def:sheafModuleTwist, lem:sheafTensorPow_add, def:sectionMul,

@@ -62,10 +62,7 @@ projection, and \(\mathcal{F}' = (g')^*\mathcal{F}\) is the pullback of
 
 \section{The {\v C}ech nerve and {\v C}ech complex of an affine cover}
 
-\begin{definition}
-
-\leanok
-[{\v C}ech nerve of an affine open cover]
+\begin{definition}[{\v C}ech nerve of an affine open cover]\leanok
   \label{def:cech_nerve}
   \lean{AlgebraicGeometry.CechNerve}
   \uses{def:cover_cech_nerve, def:push_pull_functor, def:cech_nerve_cosimplicial, lem:push_pull_id, lem:push_pull_comp}
@@ -114,10 +111,7 @@ projection, and \(\mathcal{F}' = (g')^*\mathcal{F}\) is the pullback of
   \(D(f_{i_0} \cdots f_{i_p})\).
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[{\v C}ech complex of a quasi-coherent sheaf]
+\begin{definition}[{\v C}ech complex of a quasi-coherent sheaf]\leanok
   \label{def:cech_complex}
   \lean{AlgebraicGeometry.CechComplex}
   \uses{def:cech_nerve, def:relative_cech_complex_of_nerve}
@@ -270,8 +264,7 @@ recorded as the following declarations. The backbone and plumbing are
 unconditional; the push--pull object and morphism maps are likewise unconditional
 bricks, and the functor laws assembling them are the lone coherence statement.
 
-\begin{definition}\leanok
-[Arrow of an affine cover]
+\begin{definition}[Arrow of an affine cover]\leanok
   \label{def:cover_arrow}
   \lean{AlgebraicGeometry.coverArrow}
   Let \(\mathcal{U} : X = \bigcup_{i \in I} U_i\) be an affine open cover. Its
@@ -299,8 +292,7 @@ bricks, and the functor laws assembling them are the lone coherence statement.
   {\v C}ech nerve of an arrow). This is the geometric backbone (1).
 \end{definition}
 
-\begin{definition}\leanok
-[Push--pull object map]
+\begin{definition}[Push--pull object map]\leanok
   \label{def:push_pull_obj}
   \lean{AlgebraicGeometry.pushPullObj}
   The object map of the push--pull functor \(G\): to an \(X\)-scheme
@@ -338,10 +330,7 @@ bricks, and the functor laws assembling them are the lone coherence statement.
   substitutions are realised as coercions along \(p_1 \circ \bar g = p_2\).
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[Push--pull functor — identity law]
+\begin{lemma}[Push--pull functor — identity law]\leanok
   \label{lem:push_pull_id}
   \lean{AlgebraicGeometry.pushPullMap_id}
   \uses{def:push_pull_obj, def:push_pull_map}
@@ -387,10 +376,7 @@ bricks, and the functor laws assembling them are the lone coherence statement.
   coherences are absorbed by Lemma~\ref{lem:push_pull_transport_cancel}.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Base-change unit (mate) identity for the push--pull head]
+\begin{lemma}[Base-change unit (mate) identity for the push--pull head]\leanok
   \label{lem:push_pull_unit_mate}
   \lean{AlgebraicGeometry.pushPull_unit_mate}
   \uses{def:push_pull_map}
@@ -420,10 +406,7 @@ bricks, and the functor laws assembling them are the lone coherence statement.
   verify the equality by the mate identity for the pushforward/pullback comparison.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Over-triangle transport cancellation for the push--pull tail]
+\begin{lemma}[Over-triangle transport cancellation for the push--pull tail]\leanok
   \label{lem:push_pull_transport_cancel}
   \lean{AlgebraicGeometry.pushPull_transport_cancel}
   \uses{def:push_pull_map}
@@ -454,10 +437,7 @@ bricks, and the functor laws assembling them are the lone coherence statement.
   calculation with the pushforward comparison.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Push--pull functor]
+\begin{definition}[Push--pull functor]\leanok
   \label{def:push_pull_functor}
   \lean{AlgebraicGeometry.pushPullFunctor}
   \uses{def:push_pull_obj, def:push_pull_map, lem:push_pull_id, lem:push_pull_comp}
@@ -474,10 +454,7 @@ bricks, and the functor laws assembling them are the lone coherence statement.
   geometric backbone (1) to \(\mathcal{O}_X\)-modules described as step (2) above.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[{\v C}ech nerve cosimplicial object]
+\begin{definition}[{\v C}ech nerve cosimplicial object]\leanok
   \label{def:cech_nerve_cosimplicial}
   \lean{AlgebraicGeometry.cechNerveCosimplicial}
   \uses{def:cover_cech_nerve, def:push_pull_functor}
@@ -492,8 +469,7 @@ bricks, and the functor laws assembling them are the lone coherence statement.
   \mathcal{C}^0\).
 \end{definition}
 
-\begin{definition}\leanok
-[Relative {\v C}ech complex from a nerve]
+\begin{definition}[Relative {\v C}ech complex from a nerve]\leanok
   \label{def:relative_cech_complex_of_nerve}
   \lean{AlgebraicGeometry.relativeCechComplexOfNerve}
   \uses{def:cech_nerve}
@@ -1086,10 +1062,7 @@ and Lemma~\ref{lem:section_cech_homology_exact} give these two parts.
   exactness of \(D^\bullet\) can be checked one localisation at a time.
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[Positive-degree exactness of the section {\v C}ech module complex]
+\begin{lemma}[Positive-degree exactness of the section {\v C}ech module complex]\leanok
   \label{lem:section_cech_module_exact}
   \lean{AlgebraicGeometry.SectionCechModule.dDiff_exact}
   \uses{def:section_cech_module_complex}
@@ -2750,10 +2723,7 @@ to restriction of module sheaves. The corepresenting object and its corepresenta
 are fixed first, then the following definition fixes the realization, and the Mathlib
 dependency anchors after it pin the exact results it rests on.
 
-\begin{definition}
-
-\leanok
-[Extension-by-zero structure sheaf as a corepresenting object]
+\begin{definition}[Extension-by-zero structure sheaf as a corepresenting object]\leanok
   \label{def:jshriek_ou}
   \lean{AlgebraicGeometry.jShriekOU}
   \uses{def:cech_free_presheaf_complex, lem:mod_pmod_adjunction,
@@ -2828,10 +2798,7 @@ dependency anchors after it pin the exact results it rests on.
   the asserted natural additive isomorphism.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Absolute sheaf cohomology as Ext of the corepresenting object]
+\begin{definition}[Absolute sheaf cohomology as Ext of the corepresenting object]\leanok
   \label{def:absolute_cohomology}
   \lean{AlgebraicGeometry.absoluteCohomology}
   \uses{def:jshriek_ou, lem:jshriek_corepr, lem:ext_bifunctor_mathlib,
@@ -2965,10 +2932,7 @@ The following are the thin project-side specializations of the Mathlib Ext ancho
 fixed first argument \(j_!\mathcal{O}_U\); they are the declarations the dimension-shift sub-lemmas
 of Lemma~\ref{lem:cech_to_cohomology_on_basis} actually invoke.
 
-\begin{lemma}
-
-\leanok
-[Degree-zero absolute cohomology is global sections]
+\begin{lemma}[Degree-zero absolute cohomology is global sections]\leanok
   \label{lem:absolute_cohomology_zero}
   \lean{AlgebraicGeometry.absoluteCohomologyZeroAddEquiv}
   \uses{def:absolute_cohomology, lem:jshriek_corepr, lem:ext_homequiv_zero_mathlib}
@@ -3030,10 +2994,7 @@ of Lemma~\ref{lem:cech_to_cohomology_on_basis} actually invoke.
   Lemma~\ref{lem:absolute_cohomology_one_vanishing}.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Injective vanishing for absolute cohomology]
+\begin{lemma}[Injective vanishing for absolute cohomology]\leanok
   \label{lem:absolute_cohomology_injective_vanishing}
   \lean{AlgebraicGeometry.absoluteCohomology_eq_zero_of_injective}
   \uses{def:absolute_cohomology, lem:ext_eq_zero_of_injective_mathlib}
@@ -3148,11 +3109,7 @@ The Serre vanishing of Lemma~\ref{lem:affine_serre_vanishing} is obtained by fee
 quasi-coherent seed that meets condition (3). The sub-lemmas below are the formalize-ready cut points
 of this instantiation.
 
-\begin{lemma}
-
-
-\leanok
-[Distinguished opens are closed under finite intersection]
+\begin{lemma}[Distinguished opens are closed under finite intersection]\leanok
   \label{lem:affine_faces_mem}
   \lean{AlgebraicGeometry.affine_faces_mem}
   \uses{def:standard_affine_cover}
@@ -3182,11 +3139,7 @@ of this instantiation.
   \(V = D(f)\) is distinguished by hypothesis. Hence every face of a standard cover lies in the basis.
 \end{proof}
 
-\begin{lemma}
-
-
-\leanok
-[Standard covers are cofinal among open covers of a distinguished open]
+\begin{lemma}[Standard covers are cofinal among open covers of a distinguished open]\leanok
   \label{lem:standard_cover_cofinal}
   \lean{AlgebraicGeometry.standard_cover_cofinal}
   \uses{def:standard_affine_cover, lem:primeSpectrum_isBasis_basicOpen}
@@ -3258,11 +3211,7 @@ of this instantiation.
   covers form a cofinal system in the sense of the sheaf-on-a-basis cofinality principle.
 \end{proof}
 
-\begin{lemma}
-
-
-\leanok
-[Section surjectivity for the affine cover system]
+\begin{lemma}[Section surjectivity for the affine cover system]\leanok
   \label{lem:affine_surj_of_vanishing}
   \lean{AlgebraicGeometry.affine_surj_of_vanishing}
   \uses{lem:ses_cech_h1, lem:standard_cover_cofinal, lem:to_sheaf_preserves_epi,
@@ -3480,11 +3429,7 @@ of this instantiation.
   (Lemma~\ref{lem:standard_cover_cofinal}).
 \end{lemma}
 
-\begin{lemma}
-
-
-\leanok
-[Standard-cover opens are the distinguished opens \(D(s_i)\)]
+\begin{lemma}[Standard-cover opens are the distinguished opens \(D(s_i)\)]\leanok
   \label{lem:cover_datum_bridge}
   \lean{AlgebraicGeometry.coverOpen_affineOpenCoverOfSpan}
   \uses{def:standard_affine_cover}
@@ -3509,11 +3454,7 @@ of this instantiation.
   \(\operatorname{Spec} R\), and the open carried at index \(i\) is \(D(s_i)\) on the nose.
 \end{proof}
 
-\begin{lemma}
-
-
-\leanok
-[Injective acyclicity for the affine cover system]
+\begin{lemma}[Injective acyclicity for the affine cover system]\leanok
   \label{lem:affine_injective_acyclic}
   \lean{AlgebraicGeometry.affine_injective_acyclic}
   \uses{lem:injective_cech_acyclic, lem:cover_datum_bridge}
@@ -3551,11 +3492,7 @@ of this instantiation.
   \(i \mapsto D(s_i)\) gives \(\check{H}^p(\mathcal{U}, \mathcal{I}) = 0\) for all \(p > 0\).
 \end{proof}
 
-\begin{definition}
-
-
-\leanok
-[The affine cover system]
+\begin{definition}[The affine cover system]\leanok
   \label{def:affine_cover_system}
   \lean{AlgebraicGeometry.affineCoverSystem}
   \uses{def:basis_cov_system, lem:affine_faces_mem, lem:affine_surj_of_vanishing,
@@ -3580,9 +3517,7 @@ of this instantiation.
   Lemma~\ref{lem:injective_cech_acyclic} (applied to the distinguished opens of each standard cover).
 \end{definition}
 
-\begin{lemma}\leanok
-
-[Sections--tilde equivalence from an invertible counit]
+\begin{lemma}[Sections--tilde equivalence from an invertible counit]\leanok
   \label{lem:qcoh_iso_tilde_sections}
   \lean{AlgebraicGeometry.qcoh_iso_tilde_sections,
     AlgebraicGeometry.qcoh_iso_tilde_sections_hom,
@@ -3618,10 +3553,7 @@ of this instantiation.
   original counit.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Affine structure theorem from a global presentation]
+\begin{lemma}[Affine structure theorem from a global presentation]\leanok
   \label{lem:qcoh_iso_tilde_sections_of_presentation}
   \lean{AlgebraicGeometry.qcoh_iso_tilde_sections_of_presentation}
   \uses{lem:qcoh_iso_tilde_sections, lem:isIso_fromTildeGamma_of_presentation}
@@ -3840,8 +3772,7 @@ isomorphism.
   isomorphism.
 \end{lemma}
 
-\begin{lemma}\leanok
-[Section restriction of \(\widetilde{M}\) localizes]
+\begin{lemma}[Section restriction of \(\widetilde{M}\) localizes]\leanok
   \label{lem:tilde_section_isLocalizedModule}
   \lean{AlgebraicGeometry.tilde_section_isLocalizedModule}
   \uses{lem:tilde_toOpen_isLocalizedModule_mathlib}
@@ -3863,8 +3794,7 @@ isomorphism.
   powers of \(f\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Section restriction localizes when the counit is an isomorphism]
+\begin{lemma}[Section restriction localizes when the counit is an isomorphism]\leanok
   \label{lem:section_isLocalizedModule_of_isIso_fromTildeGamma}
   \lean{AlgebraicGeometry.section_isLocalizedModule_of_isIso_fromTildeΓ}
   \uses{lem:tilde_section_isLocalizedModule, lem:qcoh_iso_tilde_sections}
@@ -3884,8 +3814,7 @@ isomorphism.
   isomorphism transports the localization property to the section-restriction map of \(\mathcal{F}\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Section restriction localizes for a globally presented module]
+\begin{lemma}[Section restriction localizes for a globally presented module]\leanok
   \label{lem:section_isLocalizedModule_of_presentation}
   \lean{AlgebraicGeometry.section_isLocalizedModule_of_presentation}
   \uses{lem:section_isLocalizedModule_of_isIso_fromTildeGamma,
@@ -3925,8 +3854,7 @@ isomorphism.
   \(U_{\varphi(j)}\) by the datum.
 \end{proof}
 
-\begin{lemma}\leanok
-[Restricting a presentation to a basic open]
+\begin{lemma}[Restricting a presentation to a basic open]\leanok
   \label{lem:presentation_over_basicOpen}
   \lean{AlgebraicGeometry.presentationOverBasicOpen}
   \uses{lem:presentation_map_mathlib}
@@ -3978,8 +3906,7 @@ isomorphism.
   object-level comparison with restriction to the open subscheme.
 \end{definition}
 
-\begin{lemma}\leanok
-[Compatibility between over-restriction and open-subscheme restriction]
+\begin{lemma}[Compatibility between over-restriction and open-subscheme restriction]\leanok
   \label{lem:restrict_over_compat}
   \lean{AlgebraicGeometry.overBasicOpenIsoRestrict}
   \uses{def:modules_over_basicOpen_equivalence, lem:modules_restrict_basicOpen,
@@ -4106,8 +4033,7 @@ isomorphism.
   with the formation of kernels.
 \end{lemma}
 
-\begin{lemma}\leanok
-[Base-ring descent of a localisation along an algebra map]
+\begin{lemma}[Base-ring descent of a localisation along an algebra map]\leanok
   \label{lem:isLocalizedModule_powers_restrictScalars_of_algebraMap}
   \lean{AlgebraicGeometry.isLocalizedModule_powers_restrictScalars_of_algebraMap}
   Let \(A\) be an \(R\)-algebra, let \(M\) and \(N\) be \(A\)-modules that are also \(R\)-modules
@@ -4131,8 +4057,7 @@ isomorphism.
   underlying map independent of the choice of base ring. Hence all three clauses hold over \(R\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Image opens of the affine tile identification]
+\begin{lemma}[Image opens of the affine tile identification]\leanok
   \label{lem:tile_image_opens_identities}
   \lean{AlgebraicGeometry.tile_image_opens_identities}
   \uses{lem:presentation_modulesRestrictBasicOpen}
@@ -4161,8 +4086,7 @@ isomorphism.
   set-theoretically; they are not definitional.
 \end{proof}
 
-\begin{lemma}\leanok
-[Native action of the global-ring section functor is the structure-sheaf action]
+\begin{lemma}[Native action of the global-ring section functor is the structure-sheaf action]\leanok
   \label{lem:modulesSpecToSheaf_smul_eq}
   \lean{AlgebraicGeometry.modulesSpecToSheaf_smul_eq}
   Let \(\mathcal{F}\) be an \(\mathcal{O}_{\Spec R}\)-module, let \(W \subseteq \Spec R\) be open, let
@@ -4189,8 +4113,7 @@ isomorphism.
   definitional unfolding.
 \end{proof}
 
-\begin{lemma}\leanok
-[Tile action transports definitionally to the ambient structure-sheaf action]
+\begin{lemma}[Tile action transports definitionally to the ambient structure-sheaf action]\leanok
   \label{lem:modulesRestrictBasicOpen_smul_eq}
   \lean{AlgebraicGeometry.modulesRestrictBasicOpen_smul_eq}
   \uses{lem:tile_image_opens_identities}
@@ -4222,10 +4145,7 @@ isomorphism.
   coincide on the nose.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Tile action transports to the ambient action over an arbitrary open]
+\begin{lemma}[Tile action transports to the ambient action over an arbitrary open]\leanok
   \label{lem:modulesRestrictBasicOpen_smul_eq_genV}
   \lean{AlgebraicGeometry.modulesRestrictBasicOpen_smul_eq'}
   \uses{lem:tile_image_opens_identities}
@@ -4254,8 +4174,7 @@ isomorphism.
   carriers coincide on the nose.
 \end{proof}
 
-\begin{lemma}\leanok
-[Open-immersion section iso reads as a restriction]
+\begin{lemma}[Open-immersion section iso reads as a restriction]\leanok
   \label{lem:appTop_appIso_inv_eq_res}
   \lean{AlgebraicGeometry.appTop_appIso_inv_eq_res}
   Let \(f : X \to Y\) be an open immersion of schemes. On global sections \(f\) induces the comparison
@@ -4283,8 +4202,7 @@ isomorphism.
   \(\rho^{f(\top)}_Y\).
 \end{proof}
 
-\begin{lemma}\leanok
-[$\Gamma$--$\Spec$ naturality of the localisation immersion, section form]
+\begin{lemma}[$\Gamma$--$\Spec$ naturality of the localisation immersion, section form]\leanok
   \label{lem:key_morph}
   \lean{AlgebraicGeometry.key_morph}
   \uses{lem:appTop_appIso_inv_eq_res}
@@ -4316,8 +4234,7 @@ isomorphism.
   image open \(D(g)\) by Lemma~\ref{lem:appTop_appIso_inv_eq_res} yields \(\rho^{D(g)} \circ \theta_R\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Composition of the two tile section isomorphisms]
+\begin{lemma}[Composition of the two tile section isomorphisms]\leanok
   \label{lem:tile_appIso_comp}
   \lean{AlgebraicGeometry.tile_appIso_comp}
   In the situation of Lemma~\ref{lem:key_morph} the localisation immersion \(\iota\) factors as the
@@ -4345,8 +4262,7 @@ isomorphism.
   the structure-sheaf map of that equality of opens.
 \end{proof}
 
-\begin{lemma}\leanok
-[Structure-sheaf ring identity of the tile comparison, morphism form]
+\begin{lemma}[Structure-sheaf ring identity of the tile comparison, morphism form]\leanok
   \label{lem:tile_section_ring_identity}
   \lean{AlgebraicGeometry.tile_section_ring_identity}
   \uses{lem:key_morph, lem:tile_appIso_comp}
@@ -4404,8 +4320,7 @@ isomorphism.
   uniqueness of morphisms in the thin category of opens.
 \end{proof}
 
-\begin{lemma}\leanok
-[Scalar compatibility of the tile comparison at the source open]
+\begin{lemma}[Scalar compatibility of the tile comparison at the source open]\leanok
   \label{lem:tile_scalar_compat}
   \lean{AlgebraicGeometry.tile_scalar_compat}
   \uses{lem:modulesSpecToSheaf_smul_eq, lem:modulesRestrictBasicOpen_smul_eq,
@@ -4439,10 +4354,7 @@ isomorphism.
   evaluated at \(r\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Scalar compatibility of the tile comparison at an arbitrary open]
+\begin{lemma}[Scalar compatibility of the tile comparison at an arbitrary open]\leanok
   \label{lem:tile_scalar_compat_genV}
   \lean{AlgebraicGeometry.tile_scalar_compat'}
   \uses{lem:modulesSpecToSheaf_smul_eq, lem:modulesRestrictBasicOpen_smul_eq_genV,
@@ -4518,8 +4430,7 @@ isomorphism.
   compatibility with restrictions makes it natural in \(V\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Scalar tower on a bundled restriction-of-scalars module]
+\begin{lemma}[Scalar tower on a bundled restriction-of-scalars module]\leanok
   \label{lem:isScalarTower_restrictScalars_obj}
   \lean{AlgebraicGeometry.isScalarTower_restrictScalars_obj}
   Let \(R \to S\) be a ring map and let \(M\) be an \(S\)-module. Then the \(R\)-module obtained from
@@ -4685,8 +4596,7 @@ isomorphism.
   \(\operatorname{IsLocalizedModule}\) property, yielding the claim.
 \end{proof}
 
-\begin{lemma}\leanok
-[Kernel comparison: a left-exact ladder localises on the left]
+\begin{lemma}[Kernel comparison: a left-exact ladder localises on the left]\leanok
   \label{lem:isLocalizedModule_of_exact}
   \lean{AlgebraicGeometry.isLocalizedModule_of_exact}
   \uses{lem:localized_module_map_exact_mathlib}
@@ -4739,8 +4649,7 @@ isomorphism.
   The three clauses are exactly \(\operatorname{IsLocalizedModule} S\, a\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Kernel comparison: the localised global equalizer matches the \(D(f)\)-cover equalizer]
+\begin{lemma}[Kernel comparison: the localised global equalizer matches the \(D(f)\)-cover equalizer]\leanok
   \label{lem:qcoh_section_kernel_comparison}
   \lean{AlgebraicGeometry.qcoh_section_kernel_comparison}
   \uses{lem:qcoh_section_isLocalizedModule, lem:isLocalizedModule_linearEquiv_mathlib}
@@ -4764,8 +4673,7 @@ isomorphism.
   isomorphism.
 \end{proof}
 
-\begin{lemma}\leanok
-[Sections over a basic open localize the global sections]
+\begin{lemma}[Sections over a basic open localize the global sections]\leanok
   \label{lem:qcoh_section_isLocalizedModule}
   \lean{AlgebraicGeometry.qcoh_section_isLocalizedModule}
   \uses{lem:qcoh_finite_presentation_cover, lem:qcoh_section_equalizer,
@@ -4974,8 +4882,7 @@ We now give the global-generation argument. It uses quasi-coherence of free modu
 and finite basic-open refinements of covers, as in the Stacks Project section
 ``Quasi-coherent sheaves on affines''.
 
-\begin{lemma}\leanok
-[Free \(\mathcal{O}\)-modules are quasi-coherent]
+\begin{lemma}[Free \(\mathcal{O}\)-modules are quasi-coherent]\leanok
   \label{lem:free_isQuasicoherent}
   \lean{AlgebraicGeometry.free_isQuasicoherent}
   % SOURCE: [Stacks Project], Schemes, Lemma
@@ -4996,8 +4903,7 @@ and finite basic-open refinements of covers, as in the Stacks Project section
   tilde of the free \(R\)-module.
 \end{lemma}
 
-\begin{lemma}\leanok
-[Finite basic-open refinement of a cover of \(\operatorname{Spec} R\)]
+\begin{lemma}[Finite basic-open refinement of a cover of \(\operatorname{Spec} R\)]\leanok
   \label{lem:exists_finite_basicOpen_subcover}
   \lean{AlgebraicGeometry.exists_finite_basicOpen_subcover}
   % SOURCE: [Stacks Project], Schemes, \texttt{lemma-standard-open} (parts 2--3) and
@@ -5072,8 +4978,7 @@ and finite basic-open refinements of covers, as in the Stacks Project section
   \(\mathcal{F} \mapsto \mathcal{F}_{(f)}\) is functorial in \(\mathcal{F}\).
 \end{proof}
 
-\begin{definition}\leanok
-[The distinguished open \(D(f)\) as an open of \(\operatorname{Spec} R\)]
+\begin{definition}[The distinguished open \(D(f)\) as an open of \(\operatorname{Spec} R\)]\leanok
   \label{def:spec_basic_open}
   \lean{AlgebraicGeometry.specBasicOpen}
   Let \(R\) be a commutative ring and \(f \in R\). The \emph{distinguished open}
@@ -5082,8 +4987,7 @@ and finite basic-open refinements of covers, as in the Stacks Project section
   \((\operatorname{Spec} R).\mathrm{Opens}\); it is the basic open \(\operatorname{PrimeSpectrum.basicOpen} f\).
 \end{definition}
 
-\begin{lemma}\leanok
-[The localisation morphism \(\operatorname{Spec} R_f \to \operatorname{Spec} R\)]
+\begin{lemma}[The localisation morphism \(\operatorname{Spec} R_f \to \operatorname{Spec} R\)]\leanok
   \label{lem:spec_away_to_spec}
   \lean{AlgebraicGeometry.specAwayToSpec}
   \uses{def:spec_basic_open, lem:modules_restrict_basicOpen}
@@ -5096,8 +5000,7 @@ and finite basic-open refinements of covers, as in the Stacks Project section
   Lemma~\ref{lem:modules_restrict_basicOpen}.
 \end{lemma}
 
-\begin{lemma}\leanok
-[The localisation morphism is the spectrum of \(R \to R_f\)]
+\begin{lemma}[The localisation morphism is the spectrum of \(R \to R_f\)]\leanok
   \label{lem:spec_away_to_spec_eq}
   \lean{AlgebraicGeometry.specAwayToSpec_eq}
   \uses{lem:spec_away_to_spec}
@@ -5502,8 +5405,7 @@ and finite basic-open refinements of covers, as in the Stacks Project section
   \(\tau\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Counit is iso from two global generating families]
+\begin{lemma}[Counit is iso from two global generating families]\leanok
   \label{lem:isIso_fromTildeGamma_of_genSections}
   \lean{AlgebraicGeometry.isIso_fromTildeΓ_of_genSections}
   \uses{lem:isIso_fromTildeGamma_of_presentation}
@@ -5528,8 +5430,7 @@ and finite basic-open refinements of covers, as in the Stacks Project section
   \(\operatorname{fromTilde\Gamma}\) an isomorphism.
 \end{proof}
 
-\begin{lemma}\leanok
-[Affine structure theorem from two generating families]
+\begin{lemma}[Affine structure theorem from two generating families]\leanok
   \label{lem:qcoh_iso_tilde_sections_of_genSections}
   \lean{AlgebraicGeometry.qcoh_iso_tilde_sections_of_genSections}
   \uses{lem:isIso_fromTildeGamma_of_genSections, lem:qcoh_iso_tilde_sections}
@@ -5638,8 +5539,7 @@ and finite basic-open refinements of covers, as in the Stacks Project section
   {\v C}ech cohomology for the affine cover system.
 \end{proof}
 
-\begin{lemma}\leanok
-[{\v C}ech cohomology transports along an isomorphism of coefficients]
+\begin{lemma}[{\v C}ech cohomology transports along an isomorphism of coefficients]\leanok
   \label{lem:cechCohomology_isZero_of_iso}
   \lean{AlgebraicGeometry.cechCohomology_isZero_of_iso}
   \uses{def:cech_cohomology_accessor, def:section_cech_functoriality}
@@ -5670,8 +5570,7 @@ and finite basic-open refinements of covers, as in the Stacks Project section
   if \(\operatorname{span}(\{s_i : i \in \iota\}) = R\).
 \end{lemma}
 
-\begin{lemma}\leanok
-[A standard cover of \(D(f)\) spans the unit ideal of \(R_f\)]
+\begin{lemma}[A standard cover of \(D(f)\) spans the unit ideal of \(R_f\)]\leanok
   \label{lem:affine_cover_span_localizationAway}
   \lean{AlgebraicGeometry.affine_cover_span_localizationAway}
   \uses{lem:iSup_basicOpen_eq_top_iff_span}
@@ -5698,8 +5597,7 @@ and finite basic-open refinements of covers, as in the Stacks Project section
   generate the unit ideal) is equivalent to \(\operatorname{span}\{g_i/1\} = R_f\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Localisation transitivity for away modules]
+\begin{lemma}[Localisation transitivity for away modules]\leanok
   \label{lem:away_comparison_isLocalizedModule}
   \lean{AlgebraicGeometry.AwayComparison.comparison_isLocalizedModule}
   \textit{Project-local infrastructure.}
@@ -5718,8 +5616,7 @@ and finite basic-open refinements of covers, as in the Stacks Project section
   \(M_f\) away from \(g_\sigma\) present the same module.
 \end{lemma}
 
-\begin{lemma}\leanok
-[Two-step away localisation localises at the product factor]
+\begin{lemma}[Two-step away localisation localises at the product factor]\leanok
   \label{lem:isLocalizedModule_comp_away}
   \lean{AlgebraicGeometry.AwayComparison.isLocalizedModule_comp_away}
   \textit{Project-local infrastructure.}
@@ -5749,8 +5646,7 @@ and finite basic-open refinements of covers, as in the Stacks Project section
   of scalars''.
 \end{proof}
 
-\begin{lemma}\leanok
-[Section {\v C}ech module exactness from a localisation-away spanning datum]
+\begin{lemma}[Section {\v C}ech module exactness from a localisation-away spanning datum]\leanok
   \label{lem:section_cech_module_exact_of_localizationAway}
   \lean{AlgebraicGeometry.SectionCechModule.dDiff_exact_of_localizationAway}
   \uses{lem:section_cech_module_exact, lem:isLocalizedModule_comp_away}
@@ -5869,10 +5765,7 @@ Definition~\ref{def:has_vanishing_higher_cech}) and discharges those hypotheses 
 short-exact-sequence derivation (Lemma~\ref{lem:face_ses_of_sheaf_ses}). The supporting
 definitions and the degreewise product engine are collected first.
 
-\begin{definition}
-
-\leanok
-[{\v C}ech cohomology accessor]
+\begin{definition}[{\v C}ech cohomology accessor]\leanok
   \label{def:cech_cohomology_accessor}
   \lean{AlgebraicGeometry.cechCohomology}
   \uses{def:section_cech_complex}
@@ -5911,10 +5804,7 @@ definitions and the degreewise product engine are collected first.
   complex of Definition~\ref{def:section_cech_short_complex}.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Per-face section short complex]
+\begin{definition}[Per-face section short complex]\leanok
   \label{def:face_short_complex}
   \lean{AlgebraicGeometry.faceShortComplex}
   \uses{def:section_cech_complex}
@@ -5933,10 +5823,7 @@ definitions and the degreewise product engine are collected first.
   of the section {\v C}ech complex.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Short complex of section {\v C}ech complexes]
+\begin{definition}[Short complex of section {\v C}ech complexes]\leanok
   \label{def:section_cech_short_complex}
   \lean{AlgebraicGeometry.sectionCechComplexShortComplex}
   \uses{def:section_cech_complex, def:section_cech_functoriality}
@@ -5991,10 +5878,7 @@ definitions and the degreewise product engine are collected first.
   that the dimension-shift induction Lemma~\ref{lem:absolute_cohomology_pos_vanishing} consumes.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Vanishing higher {\v C}ech cohomology for a cover system]
+\begin{definition}[Vanishing higher {\v C}ech cohomology for a cover system]\leanok
   \label{def:has_vanishing_higher_cech}
   \lean{AlgebraicGeometry.HasVanishingHigherCech}
   \uses{def:basis_cov_system, def:cech_cohomology_accessor}
@@ -6047,10 +5931,7 @@ definitions and the degreewise product engine are collected first.
   displayed sequence is short exact.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Short exact sequence of {\v C}ech complexes from a basis]
+\begin{lemma}[Short exact sequence of {\v C}ech complexes from a basis]\leanok
   \label{lem:cech_ses_of_basis}
   \lean{AlgebraicGeometry.cechComplex_shortExact_of_basis}
   \uses{def:cech_complex, def:face_short_complex, def:section_cech_short_complex,
@@ -6165,10 +6046,7 @@ definitions and the degreewise product engine are collected first.
   \(V\). Hence the per-face short complex is short exact.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Quotient preserves vanishing positive homology (homological core)]
+\begin{lemma}[Quotient preserves vanishing positive homology (homological core)]\leanok
   \label{lem:cech_homology_quotient_vanishing}
   \lean{AlgebraicGeometry.cechHomology_quotient_vanishing}
   \uses{lem:homology_long_exact_sequence}
@@ -6191,10 +6069,7 @@ definitions and the degreewise product engine are collected first.
   and \(T_1\) has vanishing positive homology. Therefore \(H^p(T_3) = 0\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Quotient preserves vanishing higher {\v C}ech cohomology]
+\begin{lemma}[Quotient preserves vanishing higher {\v C}ech cohomology]\leanok
   \label{lem:quotient_vanishing_cech}
   \lean{AlgebraicGeometry.quotient_cech_vanishing_of_basis}
   \uses{def:cech_complex, def:cech_cohomology_accessor, lem:cech_ses_of_basis,
@@ -6243,10 +6118,7 @@ definitions and the degreewise product engine are collected first.
   the injective acyclicity of Lemma~\ref{lem:injective_cech_acyclic}.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Sheaf-cohomology base case \(H^1(U, \mathcal{F}) = 0\)]
+\begin{lemma}[Sheaf-cohomology base case \(H^1(U, \mathcal{F}) = 0\)]\leanok
   \label{lem:absolute_cohomology_one_vanishing}
   \lean{AlgebraicGeometry.absoluteCohomology_one_eq_zero_of_basis}
   \uses{def:absolute_cohomology, lem:cech_ses_of_basis,
@@ -6393,10 +6265,7 @@ definitions and the degreewise product engine are collected first.
   \(H^p(U, \mathcal{F}) = 0\) for all \(p > 0\) and all \(U \in s.\mathcal{B}\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[{\v C}ech-to-cohomology comparison on a basis]
+\begin{lemma}[{\v C}ech-to-cohomology comparison on a basis]\leanok
   \label{lem:cech_to_cohomology_on_basis}
   \lean{AlgebraicGeometry.cech_eq_cohomology_of_basis}
   \uses{def:cech_complex, def:absolute_cohomology, lem:cech_ses_of_basis,
@@ -6559,10 +6428,7 @@ map and the identity \(\varepsilon \cdot d^0 = 0\) that makes the augmentation l
 layer is purely formal --- it uses only the {\v C}ech nerve of Definition~\ref{def:cech_nerve} and the
 unitors of the push--pull adjunction --- and is independent of the exactness (acyclicity) statement.
 
-\begin{definition}
-
-\leanok
-[Un-augmented {\v C}ech cochain complex on \(X\)]
+\begin{definition}[Un-augmented {\v C}ech cochain complex on \(X\)]\leanok
   \label{def:cech_complex_on_X}
   \lean{AlgebraicGeometry.cechComplexOnX}
   \uses{def:cech_nerve, def:relative_cech_complex_of_nerve}
@@ -6580,10 +6446,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   Definition~\ref{def:relative_cech_complex_of_nerve} specialised to \(f = \mathrm{id}_X\).
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Augmentation point isomorphism]
+\begin{definition}[Augmentation point isomorphism]\leanok
   \label{def:cech_nerve_point_iso}
   \lean{AlgebraicGeometry.cechNervePointIso}
   \uses{def:cech_nerve}
@@ -6598,10 +6461,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   pushforward unitor \((\mathrm{id}_X)_* \mathcal{G} \cong \mathcal{G}\) of the push--pull adjunction.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[{\v C}ech augmentation map]
+\begin{definition}[{\v C}ech augmentation map]\leanok
   \label{def:cech_augmentation}
   \lean{AlgebraicGeometry.cechAugmentation}
   \uses{def:cech_nerve_point_iso, def:cech_complex_on_X}
@@ -6634,10 +6494,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   same way; the two contributions therefore cancel.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Augmented {\v C}ech complex]
+\begin{definition}[Augmented {\v C}ech complex]\leanok
   \label{def:cech_augmented_complex}
   \lean{AlgebraicGeometry.cechAugmentedComplex}
   \uses{def:cech_complex_on_X, def:cech_augmentation, lem:cech_augmentation_comp_d}
@@ -6714,10 +6571,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   zero object.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Sheafification of a presheaf that is locally a zero object vanishes]
+\begin{lemma}[Sheafification of a presheaf that is locally a zero object vanishes]\leanok
   \label{lem:isZero_presheafToSheaf_of_locally_isZero}
   \lean{AlgebraicGeometry.isZero_presheafToSheaf_of_locally_isZero}
   \uses{lem:sheafify_kills_locally_zero}
@@ -6742,10 +6596,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   zero sheaf.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The augmented {\v C}ech complex is a resolution]
+\begin{lemma}[The augmented {\v C}ech complex is a resolution]\leanok
   \label{lem:cech_augmented_resolution}
   \lean{AlgebraicGeometry.cechAugmented_exact}
   \uses{def:cech_nerve, def:cech_augmented_complex, lem:cech_free_eval_prepend_homotopy,
@@ -6963,10 +6814,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 % (the \mathlibok anchors at the end of this group) or reuse of the project's section-{\v C}ech
 % machinery. These blocks are Archon-original project infrastructure.
 
-\begin{lemma}
-
-\leanok
-[A contracting homotopy of the identity makes homology vanish]
+\begin{lemma}[A contracting homotopy of the identity makes homology vanish]\leanok
   \label{lem:isZero_homology_of_homotopy_id_zero}
   \lean{AlgebraicGeometry.isZero_homology_of_homotopy_id_zero}
   Let \(\mathcal{A}\) be a preadditive category and \(D^\bullet\) a cochain complex in
@@ -6986,10 +6834,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   endomorphism is a zero object, so \(H^p(D^\bullet)\) is zero.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Homology vanishes after transporting a null-homotopic complex across an isomorphism]
+\begin{lemma}[Homology vanishes after transporting a null-homotopic complex across an isomorphism]\leanok
   \label{lem:isZero_homology_of_iso_homotopy_id_zero}
   \lean{AlgebraicGeometry.isZero_homology_of_iso_homotopy_id_zero}
   \uses{lem:isZero_homology_of_homotopy_id_zero}
@@ -7020,10 +6865,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 % is the intersection open [mechanical, iterating isPullback_opens_inf]; (4) assemble. The Mathlib
 % facts each step rests on are recorded as \mathlibok anchors in the dependency-anchor group below.
 
-\begin{lemma}
-
-\leanok
-[The degree-\(p\) {\v C}ech-nerve object is a wide pullback]
+\begin{lemma}[The degree-\(p\) {\v C}ech-nerve object is a wide pullback]\leanok
   \label{lem:cechBackbone_obj_widePullback}
   \lean{AlgebraicGeometry.cechBackbone_obj_widePullback}
   \uses{def:cover_cech_nerve}
@@ -7087,10 +6929,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \oplus \mathrm{Fin}(p+1)\) (a binary product with the head factor).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Base case of the wide-fibre-power decomposition]
+\begin{lemma}[Base case of the wide-fibre-power decomposition]\leanok
   \label{lem:coproduct_distrib_fibrePower_zero}
   \lean{CategoryTheory.FinitaryPreExtensive.widePullback_coproduct_iso_zero}
   \uses{lem:widePullback_overX_eq_prod}
@@ -7186,10 +7025,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   with the projection to \(S\), gives the slice isomorphism.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[One-sided distributivity in \(\operatorname{Over} S\), product-on-the-right form]
+\begin{lemma}[One-sided distributivity in \(\operatorname{Over} S\), product-on-the-right form]\leanok
   \label{lem:overProd_coproduct_distrib_right}
   \lean{CategoryTheory.FinitaryPreExtensive.overProd_coproduct_distrib_right}
   \uses{lem:overProd_coproduct_distrib}
@@ -7226,10 +7062,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   Y.\mathrm{hom}\, Z.\mathrm{hom}\), compatibly with the projections.
 \end{lemma}
 
-\begin{lemma}
-
-\leanok
-[Nested coproduct flattens and reindexes to the next fibre power]
+\begin{lemma}[Nested coproduct flattens and reindexes to the next fibre power]\leanok
   \label{lem:coproduct_fibrePower_reindex}
   \lean{CategoryTheory.FinitaryPreExtensive.coproduct_fibrePower_reindex}
   \uses{lem:sigmaSigmaIso_mathlib}
@@ -7502,10 +7335,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   Comparing with the standard coproduct in \(\operatorname{Over} X\) yields the asserted isomorphism.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Reflect an isomorphism of module sheaves to the underlying presheaf of abelian groups]
+\begin{lemma}[Reflect an isomorphism of module sheaves to the underlying presheaf of abelian groups]\leanok
   \label{lem:isIso_modules_of_toPresheaf}
   \lean{AlgebraicGeometry.isIso_modules_of_toPresheaf}
   \uses{lem:forget_reflectsIso_mathlib}
@@ -7566,9 +7396,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \(\mathrm{Sheaf}(\mathrm{Ab}, X)\).
 \end{lemma}
 
-\begin{lemma}
-\leanok
-[A module-sheaf morphism is an isomorphism iff it is one on every member of an open cover]
+\begin{lemma}[A module-sheaf morphism is an isomorphism iff it is one on every member of an open cover]\leanok
   \label{lem:isIso_iff_isIso_restrict}
   \lean{AlgebraicGeometry.Scheme.Modules.Hom.isIso_iff_isIso_restrict}
   \uses{lem:isIso_modules_of_toPresheaf, lem:restrictStalkNatIso_mathlib,
@@ -7729,10 +7557,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   (\operatorname{leftAdjointUniq}\mathrm{adj}_1\,\mathrm{adj}_2).\mathrm{hom}\bigr)\).
 \end{lemma}
 
-\begin{lemma}
-
-\leanok
-[Per-leg coherence of the binary push--pull comparison]
+\begin{lemma}[Per-leg coherence of the binary push--pull comparison]\leanok
   \label{lem:pushPull_binary_leg_coherence}
   \lean{AlgebraicGeometry.pushPull_binary_leg_coherence}
   \uses{def:push_pull_map, lem:restrictFunctorIsoPullback_mathlib,
@@ -7774,8 +7599,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \mathrm{idiso}_0.\mathrm{hom}\), as claimed.
 \end{proof}
 
-\begin{lemma}\leanok
-[Canonical leg identification of the binary push--pull chain]
+\begin{lemma}[Canonical leg identification of the binary push--pull chain]\leanok
   \label{lem:pushPullCoprodLegIso}
   \lean{AlgebraicGeometry.pushPullCoprodLegIso}
   \uses{def:push_pull_obj, lem:restrictFunctorIsoPullback_mathlib}
@@ -7801,8 +7625,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   Lemma~\ref{lem:pushPull_binary_coprod_prod}.
 \end{proof}
 
-\begin{lemma}\leanok
-[Splitting an $\operatorname{Option}$-indexed coproduct]
+\begin{lemma}[Splitting an $\operatorname{Option}$-indexed coproduct]\leanok
   \label{lem:sigmaOptionIso}
   \lean{CategoryTheory.sigmaOptionIso}
   Let \(\mathcal{C}\) be a category and \(Z : \operatorname{Option}\alpha \to \mathcal{C}\) a family
@@ -7827,8 +7650,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   directly.)
 \end{proof}
 
-\begin{lemma}\leanok
-[Push--pull objects transport along a slice isomorphism]
+\begin{lemma}[Push--pull objects transport along a slice isomorphism]\leanok
   \label{lem:pushPullObjCongr}
   \lean{AlgebraicGeometry.pushPullObjCongr}
   \uses{def:push_pull_obj, def:push_pull_map}
@@ -7848,8 +7670,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   push--pull map under composition and identity of over-morphisms.
 \end{proof}
 
-\begin{lemma}\leanok
-[Slice lift of the $\operatorname{Option}$-coproduct splitting]
+\begin{lemma}[Slice lift of the $\operatorname{Option}$-coproduct splitting]\leanok
   \label{lem:over_sigmaOptionIso}
   \lean{AlgebraicGeometry.overSigmaOptionIso}
   \uses{lem:sigmaOptionIso}
@@ -7873,8 +7694,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   the universal properties of each coproduct.
 \end{proof}
 
-\begin{lemma}\leanok
-[Splitting an $\operatorname{Option}$-indexed product]
+\begin{lemma}[Splitting an $\operatorname{Option}$-indexed product]\leanok
   \label{lem:piOptionIso}
   \lean{AlgebraicGeometry.piOptionIso}
   Dual to Lemma~\ref{lem:sigmaOptionIso}: let \(W : \operatorname{Option}\alpha \to \mathcal{C}\) with
@@ -7937,8 +7757,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   sections of the structure sheaf over the empty scheme.
 \end{proof}
 
-\begin{definition}\leanok
-[The $i$-th coproduct inclusion as an over-morphism]
+\begin{definition}[The $i$-th coproduct inclusion as an over-morphism]\leanok
   \label{def:coprodOverIncl}
   \lean{AlgebraicGeometry.coprodOverIncl}
   Let \((\mathrm{legs} : \iota \to \operatorname{Over} X)\) be a family of objects of the slice over a
@@ -7956,8 +7775,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \(\operatorname{Sigma.desc}\).
 \end{definition}
 
-\begin{definition}\leanok
-[Canonical coproduct-to-product comparison of push--pull objects]
+\begin{definition}[Canonical coproduct-to-product comparison of push--pull objects]\leanok
   \label{def:coprodToProdMap}
   \lean{AlgebraicGeometry.coprodToProdMap}
   \uses{def:push_pull_obj, def:push_pull_map, def:coprodOverIncl}
@@ -7979,8 +7797,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   Lemma~\ref{lem:pushPull_coprod_prod}.
 \end{definition}
 
-\begin{lemma}\leanok
-[The comparison map is invariant under index reindexing]
+\begin{lemma}[The comparison map is invariant under index reindexing]\leanok
   \label{lem:coprodToProd_isIso_of_equiv}
   \lean{AlgebraicGeometry.coprodToProd_isIso_of_equiv}
   \uses{def:push_pull_obj, def:coprodOverIncl, def:coprodToProdMap, lem:pushPullObjCongr}
@@ -8146,10 +7963,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   decomposition.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Sections of one push--pull leg over an open]
+\begin{lemma}[Sections of one push--pull leg over an open]\leanok
   \label{lem:pushPull_leg_sections}
   \lean{AlgebraicGeometry.pushPull_leg_sections}
   \uses{def:push_pull_obj, def:cech_free_presheaf_complex, lem:pushforward_obj_obj_mathlib,
@@ -8183,10 +7997,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   three gives the stated isomorphism.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Degreewise section identification of the {\v C}ech backbone]
+\begin{lemma}[Degreewise section identification of the {\v C}ech backbone]\leanok
   \label{lem:pushPull_eval_prod_iso}
   \lean{AlgebraicGeometry.pushPull_eval_prod_iso}
   \uses{lem:pushPull_sigma_iso, lem:pushPull_leg_sections,
@@ -8214,10 +8025,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \mathcal{F})\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[An additive functor commutes with augmentation, degreewise the identity]
+\begin{lemma}[An additive functor commutes with augmentation, degreewise the identity]\leanok
   \label{lem:mapHC_augment_iso}
   \lean{AlgebraicGeometry.mapHC_augment_iso}
   \uses{lem:map_augment_cond}
@@ -8245,10 +8053,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   (\(\Phi f\) in the bottom slot, \(\Phi(d^{n})\) above), so each square commutes on the nose.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Additive functors preserve the augmentation condition]
+\begin{lemma}[Additive functors preserve the augmentation condition]\leanok
   \label{lem:map_augment_cond}
   \lean{AlgebraicGeometry.map_augment_cond}
   Let \(\Phi : \mathcal{A} \to \mathcal{B}\) be an additive functor between preadditive
@@ -8265,10 +8070,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   on composites and its preservation of zero.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Gluing an iso of augmented complexes from base, node, and compatibility data]
+\begin{lemma}[Gluing an iso of augmented complexes from base, node, and compatibility data]\leanok
   \label{lem:augmentCochainIso}
   \lean{AlgebraicGeometry.augmentCochainIso}
   Let \(C^\bullet, C'^\bullet\) be cochain complexes in a preadditive category, with augmentation
@@ -8293,10 +8095,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   Hence all squares commute and the components assemble to an isomorphism.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Open-meet identity: intersection with \(V\) distributes over the cover meet]
+\begin{lemma}[Open-meet identity: intersection with \(V\) distributes over the cover meet]\leanok
   \label{lem:coverInterOpen_inf_distrib}
   \lean{AlgebraicGeometry.coverInterOpen_inf_eq_iInf_inf}
   \uses{def:cech_free_presheaf_complex}
@@ -8319,10 +8118,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   Taking \(A_k = \operatorname{coverOpen}\mathcal{U}\,(\sigma k)\) gives the claim.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Degreewise object iso of the non-augmented core comparison]
+\begin{lemma}[Degreewise object iso of the non-augmented core comparison]\leanok
   \label{lem:coreIso_obj_iso}
   \lean{AlgebraicGeometry.coreIso_objIso}
   \uses{lem:pushPull_eval_prod_iso, lem:coverInterOpen_inf_distrib}
@@ -8630,10 +8426,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   this restriction with \(\operatorname{sectionCechFaceRestr}(\sigma', k)\) on the nose.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Per-coface square of the core comparison]
+\begin{lemma}[Per-coface square of the core comparison]\leanok
   \label{lem:coreIso_comm_coface}
   \lean{AlgebraicGeometry.coreIso_comm_coface}
   \uses{lem:coreIso_comm_leg, lem:section_cech_product_equiv, lem:section_cech_objd_apply}
@@ -8689,10 +8482,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   the differentials in every degree.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The core comparison intertwines the {\v C}ech differentials]
+\begin{lemma}[The core comparison intertwines the {\v C}ech differentials]\leanok
   \label{lem:coreIso_comm}
   \lean{AlgebraicGeometry.coreIso_comm}
   \uses{lem:coreIso_comm_sum, lem:coreIso_obj_iso}
@@ -8722,10 +8512,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Augmentation of the section {\v C}ech complex over \(V\)]
+\begin{definition}[Augmentation of the section {\v C}ech complex over \(V\)]\leanok
   \label{def:sectionCechAugV}
   \lean{AlgebraicGeometry.sectionCechAugV}
   \uses{def:section_cech_complex}
@@ -8769,10 +8556,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   restrictions with its \(\sigma\)-projection gives the restriction indexed by \(\sigma\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The section augmentation kills the first differential]
+\begin{lemma}[The section augmentation kills the first differential]\leanok
   \label{lem:sectionCechAugV_comp_d}
   \lean{AlgebraicGeometry.sectionCechAugV_comp_d}
   \uses{def:sectionCechAugV, lem:sectionCechAugV_π, lem:section_cech_objd_apply}
@@ -8793,10 +8577,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   sum is zero.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Comparison of the evaluated and concrete section augmentations]
+\begin{lemma}[Comparison of the evaluated and concrete section augmentations]\leanok
   \label{lem:mappedSectionCechAugV_eq}
   \lean{AlgebraicGeometry.mappedSectionCechAugV_eq}
   \uses{def:cech_augmentation, def:sectionCechAugV, lem:sectionCechAugV_π,
@@ -9018,10 +8799,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \(\mathrm{id}_{D'^\bullet_{\mathrm{aug}}} \simeq 0\) of cochain complexes.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Local vanishing of the evaluated augmented {\v C}ech homology]
+\begin{lemma}[Local vanishing of the evaluated augmented {\v C}ech homology]\leanok
   \label{lem:cechSection_isZero_homology}
   \lean{AlgebraicGeometry.cechSection_isZero_homology}
   \uses{lem:cechSection_complex_iso, lem:cechSection_contractible,
@@ -9366,10 +9144,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \(q\) is therefore zero and the right-derived object is a zero object.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[An isomorphism in the first Ext-argument transfers subsingletons]
+\begin{lemma}[An isomorphism in the first Ext-argument transfers subsingletons]\leanok
   \label{lem:subsingleton_ext_of_iso_fst}
   \lean{AlgebraicGeometry.subsingleton_ext_of_iso_fst}
   \uses{lem:ext_homcomplex_mathlib}
@@ -9393,10 +9168,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   element is \(0\), \(\operatorname{Ext}^q(A, Y)\) is a subsingleton.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Injective resolutions provide enough injectives]
+\begin{lemma}[Injective resolutions provide enough injectives]\leanok
   \label{lem:enoughInjectives_of_hasInjectiveResolutions}
   \lean{AlgebraicGeometry.enoughInjectives_of_hasInjectiveResolutions}
   \uses{lem:right_derived_injective_resolution}
@@ -9557,10 +9329,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   supplied by identifications (1) and~(2) above.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Pushing forward an affine open immersion degenerates the composite direct image]
+\begin{lemma}[Pushing forward an affine open immersion degenerates the composite direct image]\leanok
   \label{lem:open_immersion_pushforward_comp}
   \lean{AlgebraicGeometry.higherDirectImage_openImmersion_comp}
   \uses{lem:open_immersion_pushforward_acyclic, lem:injective_of_adjoint,
@@ -9685,10 +9454,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 
 % ----- Absolute-cohomology functor infrastructure for the transport route -----
 
-\begin{lemma}
-
-\leanok
-[The presheaf-of-modules functor is additive]
+\begin{lemma}[The presheaf-of-modules functor is additive]\leanok
   \label{lem:toPresheafOfModules_additive}
   \lean{AlgebraicGeometry.toPresheafOfModules_additive}
   The functor \(\operatorname{toPresheafOfModules} X : X.\mathrm{Modules} \to
@@ -9705,10 +9471,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   Both factors are additive, and a composite of additive functors is additive.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The sections functor is additive]
+\begin{lemma}[The sections functor is additive]\leanok
   \label{lem:sectionsFunctor_additive}
   \lean{AlgebraicGeometry.sectionsFunctor_additive}
   \uses{lem:toPresheafOfModules_additive}
@@ -9724,10 +9487,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   evaluation at \(V\), each of which is additive; the composite is therefore additive.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The sections functor is corepresented by \(j_!\mathcal{O}_V\)]
+\begin{lemma}[The sections functor is corepresented by \(j_!\mathcal{O}_V\)]\leanok
   \label{lem:sectionsFunctorCorepIso}
   \lean{AlgebraicGeometry.sectionsFunctorCorepIso}
   \uses{lem:jshriek_corepr, lem:sectionsFunctor_additive}
@@ -9752,10 +9512,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   additive (Lemma~\ref{lem:sectionsFunctor_additive} and the additivity of a hom-functor).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Right derived functors transport along a natural isomorphism]
+\begin{lemma}[Right derived functors transport along a natural isomorphism]\leanok
   \label{lem:rightDerivedNatIso}
   \lean{AlgebraicGeometry.rightDerivedNatIso}
   Let \(\mathcal{A}\) be an abelian category with enough injectives, \(\mathcal{B}\) abelian, and
@@ -9832,11 +9589,7 @@ are re-discharged below in their general-affine-open form; the only genuinely ne
 (Lemma~\ref{lem:affine_cech_vanishing_general_seed}), whose change-of-ring discharge replaces the single
 localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V)\).
 
-\begin{lemma}
-
-
-\leanok
-[Distinguished opens of \(\operatorname{Spec} R\) are affine]
+\begin{lemma}[Distinguished opens of \(\operatorname{Spec} R\) are affine]\leanok
   \label{lem:isAffineOpen_specBasicOpen}
   \lean{AlgebraicGeometry.isAffineOpen_specBasicOpen}
   \textit{Project-local infrastructure.}
@@ -9856,11 +9609,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   isomorphism, \(D(r)\) is affine.
 \end{proof}
 
-\begin{lemma}
-
-
-\leanok
-[Standard covers are cofinal among open covers of a general affine open]
+\begin{lemma}[Standard covers are cofinal among open covers of a general affine open]\leanok
   \label{lem:standard_cover_cofinal_affine}
   \lean{AlgebraicGeometry.standard_cover_cofinal_affine}
   \uses{def:standard_affine_cover, lem:primeSpectrum_isBasis_basicOpen, lem:affine_faces_mem}
@@ -9913,11 +9662,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   standard covers form a cofinal system among the open coverings of \(V\).
 \end{proof}
 
-\begin{lemma}
-
-
-\leanok
-[Section surjectivity for the enlarged affine cover system]
+\begin{lemma}[Section surjectivity for the enlarged affine cover system]\leanok
   \label{lem:affine_surj_of_vanishing_affine}
   \lean{AlgebraicGeometry.affine_surj_of_vanishing_affine}
   \uses{lem:ses_cech_h1, lem:standard_cover_cofinal_affine, lem:to_sheaf_preserves_epi,
@@ -9945,11 +9690,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   global lift of \(t\) over \(V\).
 \end{proof}
 
-\begin{definition}
-
-
-\leanok
-[The enlarged affine cover system]
+\begin{definition}[The enlarged affine cover system]\leanok
   \label{def:affine_cover_system_general}
   \lean{AlgebraicGeometry.affineCoverSystemGeneral}
   \uses{def:basis_cov_system, lem:affine_faces_mem, lem:isAffineOpen_specBasicOpen,
@@ -9970,8 +9711,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 
 % ----- Change-of-ring chain for the general-affine-open Čech-vanishing seed -----
 
-\begin{lemma}\leanok
-[Localised base change is a localisation away]
+\begin{lemma}[Localised base change is a localisation away]\leanok
   \label{lem:isLocalizedModule_baseChange_away}
   \lean{AlgebraicGeometry.isLocalizedModule_baseChange_away}
   \uses{lem:isLocalizedModule_comp_away}
@@ -10031,8 +9771,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   of the localisation comparison.
 \end{proof}
 
-\begin{lemma}\leanok
-[Tilde {\v C}ech vanishing over an affine-union standard cover]
+\begin{lemma}[Tilde {\v C}ech vanishing over an affine-union standard cover]\leanok
   \label{lem:sectionCech_homology_exact_of_affineCover}
   \lean{AlgebraicGeometry.sectionCech_homology_exact_of_affineCover}
   \uses{lem:section_cech_module_exact_of_affineCover, lem:section_cech_ab_exact,
@@ -10145,11 +9884,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   \(\check{H}^p(\{D(g_i)\}, \widetilde{M}) = 0\) for all \(p > 0\).
 \end{proof}
 
-\begin{lemma}
-
-
-\leanok
-[General-affine-open quasi-coherent {\v C}ech vanishing from the tilde seed]
+\begin{lemma}[General-affine-open quasi-coherent {\v C}ech vanishing from the tilde seed]\leanok
   \label{lem:affine_cech_vanishing_general_of_tildeVanishing}
   \lean{AlgebraicGeometry.affine_cech_vanishing_qcoh_general_of_tildeVanishing}
   \uses{lem:qcoh_iso_tilde_sections, lem:affine_cech_vanishing_general_seed}
@@ -10173,11 +9908,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   \(p > 0\) --- which is exactly Lemma~\ref{lem:affine_cech_vanishing_general_seed}.
 \end{proof}
 
-\begin{lemma}
-
-
-\leanok
-[General-affine Serre vanishing from the enlarged {\v C}ech seed]
+\begin{lemma}[General-affine Serre vanishing from the enlarged {\v C}ech seed]\leanok
   \label{lem:affine_serre_vanishing_general_of_seed}
   \lean{AlgebraicGeometry.affine_serre_vanishing_general_of_seed}
   \uses{lem:cech_to_cohomology_on_basis, def:affine_cover_system_general}
@@ -10201,11 +9932,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   \(H^p(V, \mathcal{F}) = 0\) for \(p > 0\).
 \end{proof}
 
-\begin{lemma}
-
-
-\leanok
-[General-affine Serre vanishing from the tilde leaf]
+\begin{lemma}[General-affine Serre vanishing from the tilde leaf]\leanok
   \label{lem:affine_serre_vanishing_general_of_tildeVanishing}
   \lean{AlgebraicGeometry.affine_serre_vanishing_general_of_tildeVanishing}
   \uses{lem:affine_cech_vanishing_general_of_tildeVanishing,
@@ -10229,11 +9956,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   \(\operatorname{Ext}^p(j_!\mathcal{O}_V, \mathcal{F}) = 0\) for \(p > 0\).
 \end{proof}
 
-\begin{lemma}
-
-
-\leanok
-[Serre vanishing for a general affine open (Need~\#2)]
+\begin{lemma}[Serre vanishing for a general affine open (Need~\#2)]\leanok
   \label{lem:affine_serre_vanishing_general_open}
   \lean{AlgebraicGeometry.affine_serre_vanishing_general_open}
   \uses{lem:cech_to_cohomology_on_basis, lem:affine_surj_of_vanishing_affine,
@@ -10700,8 +10423,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   functors (Lemma~\ref{lem:functor_isContinuous_comp_mathlib}) gives the inverse's continuity.
 \end{proof}
 
-\begin{lemma}\leanok
-[The reverse slice ring map $\varphi''$]
+\begin{lemma}[The reverse slice ring map $\varphi''$]\leanok
   \label{lem:slice_reverse_ring_map}
   \lean{AlgebraicGeometry.sliceReverseRingMap}
   \uses{lem:slice_structureSheaf_hom, lem:slice_overs_equiv_continuity}
@@ -10759,8 +10481,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   and unit compatibility squares \(H_1, H_2\) absorb.
 \end{proof}
 
-\begin{lemma}\leanok
-[Counit compatibility square $H_1$ for the slice adjunction]
+\begin{lemma}[Counit compatibility square $H_1$ for the slice adjunction]\leanok
   \label{lem:pushforward_slice_adjunction_h1}
   \lean{AlgebraicGeometry.pushforwardSliceAdjunctionH1}
   \uses{lem:slice_reverse_ring_map, lem:slice_structureSheaf_hom}
@@ -10783,8 +10504,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   proof-irrelevance.
 \end{proof}
 
-\begin{lemma}\leanok
-[Unit compatibility square $H_2$ for the slice adjunction]
+\begin{lemma}[Unit compatibility square $H_2$ for the slice adjunction]\leanok
   \label{lem:pushforward_slice_adjunction_h2}
   \lean{AlgebraicGeometry.pushforwardSliceAdjunctionH2}
   \uses{lem:slice_reverse_ring_map, lem:slice_structureSheaf_hom}
@@ -10802,8 +10522,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   true by proof-irrelevance.
 \end{proof}
 
-\begin{lemma}\leanok
-[The two-pushforward adjunction for the slice ring maps]
+\begin{lemma}[The two-pushforward adjunction for the slice ring maps]\leanok
   \label{lem:pushforward_slice_two_adjunction}
   \lean{AlgebraicGeometry.pushforwardSliceTwoAdjunction}
   \uses{lem:slice_structureSheaf_hom, lem:slice_reverse_ring_map,
@@ -10857,8 +10576,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   each reducing to a proof-irrelevant equality-transport identity.
 \end{proof}
 
-\begin{lemma}\leanok
-[Pullback along $\psi_r$ realizes the per-slice pushforward]
+\begin{lemma}[Pullback along $\psi_r$ realizes the per-slice pushforward]\leanok
   \label{lem:pushforward_slice_pullback_iso}
   \lean{AlgebraicGeometry.pushforwardSlicePullbackIso}
   \uses{lem:slice_structureSheaf_hom, lem:slice_reverse_ring_map, lem:sheafOfModules_pullback_mathlib,
@@ -10919,8 +10637,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   definitional identification yields the stated isomorphism.
 \end{proof}
 
-\begin{lemma}\leanok
-[Pushforward along an iso preserves quasi-coherence]
+\begin{lemma}[Pushforward along an iso preserves quasi-coherence]\leanok
   \label{lem:pushforward_iso_preserves_qcoh}
   \lean{AlgebraicGeometry.pushforward_iso_preserves_qcoh}
   \uses{lem:slice_structureSheaf_hom, lem:pushforward_slice_pullback_iso,
@@ -11055,10 +10772,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   an isomorphism preserves quasi-coherence (Lemma~\ref{lem:pushforward_iso_preserves_qcoh}).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Serre Ext-vanishing over an affine scheme via the spectrum transport]
+\begin{lemma}[Serre Ext-vanishing over an affine scheme via the spectrum transport]\leanok
   \label{lem:ext_jShriekOU_eq_zero_of_specIso}
   \lean{AlgebraicGeometry.ext_jShriekOU_eq_zero_of_specIso}
   \uses{lem:modules_isoSpec_ext_transport, lem:jshriek_transport_along_iso,
@@ -11101,10 +10815,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   and forces \(e = 0\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Sheafification of a sectionwise-locally-zero presheaf vanishes]
+\begin{lemma}[Sheafification of a sectionwise-locally-zero presheaf vanishes]\leanok
   \label{lem:isZero_presheafToSheaf_of_sections_locally_zero}
   \lean{CategoryTheory.GrothendieckTopology.isZero_presheafToSheaf_of_sections_locally_zero}
   \uses{lem:sheafify_kills_locally_zero}
@@ -11302,10 +11013,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   \(R^k f_*(\mathcal{C}^p) = 0\) for all \(k \geq 1\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[{\v C}ech complex computes the higher direct images]
+\begin{lemma}[{\v C}ech complex computes the higher direct images]\leanok
   \label{lem:cech_computes_cohomology}
   \lean{AlgebraicGeometry.cech_computes_higherDirectImage}
   \uses{lem:cech_augmented_resolution, lem:cech_term_pushforward_acyclic, lem:acyclic_resolution_computes_derived, lem:pushforward_mapHC_cechComplexOnX, lem:cechAugmented_to_acyclicResolutionInput, def:cech_complex, def:higher_direct_image}
@@ -11433,10 +11141,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   R^i f_*\mathcal{F})\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[A finite product of right-\(f_*\)-acyclic objects is right-\(f_*\)-acyclic]
+\begin{lemma}[A finite product of right-\(f_*\)-acyclic objects is right-\(f_*\)-acyclic]\leanok
   \label{lem:rightAcyclic_finite_prod}
   \lean{AlgebraicGeometry.rightAcyclic_finite_prod}
   \textit{Project-local.}
@@ -11504,10 +11209,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   isomorphism of cochain complexes.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[From augmented exactness to the acyclic-resolution input data]
+\begin{lemma}[From augmented exactness to the acyclic-resolution input data]\leanok
   \label{lem:cechAugmented_to_acyclicResolutionInput}
   \lean{AlgebraicGeometry.cechAugmented_to_acyclicResolutionInput}
   \uses{lem:cech_augmented_resolution, def:cech_complex_on_X, def:cech_augmented_complex}
@@ -11550,9 +11252,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 
 \section{The unconditional higher direct image}
 
-\begin{definition}
-\leanok
-[Unconditional higher direct image via {\v C}ech]
+\begin{definition}[Unconditional higher direct image via {\v C}ech]\leanok
   \label{def:cech_higher_direct_image}
   \lean{AlgebraicGeometry.cechHigherDirectImage}
   \uses{lem:cech_computes_cohomology}
@@ -11837,10 +11537,7 @@ Mathlib bridge.
 
 \section{Flat base change for the {\v C}ech higher direct images}
 
-\begin{lemma}
-
-\leanok
-[Flat base change of $R^i f_*$ via {\v C}ech]
+\begin{lemma}[Flat base change of $R^i f_*$ via {\v C}ech]\leanok
   \label{lem:cech_flat_base_change}
   \lean{AlgebraicGeometry.cech_flatBaseChange}
   \uses{def:cech_higher_direct_image, lem:cech_computes_cohomology}
@@ -11954,9 +11651,7 @@ flat pullback \(g^*\) (so it commutes with cohomology) and the tensorial base ch
 the {\v C}ech complex itself. We record both here. The homology-side pieces are
 already proved; the genuine open content is isolated in the two clearly-flagged gaps below.
 
-\begin{lemma}
-\leanok
-[Exact functor commutes with complex homology]
+\begin{lemma}[Exact functor commutes with complex homology]\leanok
   \label{lem:map_hc_homology_iso}
   \lean{AlgebraicGeometry.mapHomologicalComplexHomologyIso}
   Let \(F : \mathcal{C} \to \mathcal{D}\) be an additive functor between categories
@@ -11969,9 +11664,7 @@ already proved; the genuine open content is isolated in the two clearly-flagged 
   image under \(F\) of the short complex defining \(H^i(K)\).
 \end{lemma}
 
-\begin{lemma}
-\leanok
-[Flat pullback preserves finite colimits]
+\begin{lemma}[Flat pullback preserves finite colimits]\leanok
   \label{lem:pullback_preserves_finite_colimits}
   \lean{AlgebraicGeometry.pullback_preservesFiniteColimits}
   For any morphism \(g : S' \to S\) the pullback \(g^* : \operatorname{QCoh}(S) \to
@@ -12090,10 +11783,7 @@ and~\ref{lem:sheafification_pfl_mathlib}. It remains to treat presheaf pullback.
   to such a composite does as well.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Flat pullback is left exact]
+\begin{lemma}[Flat pullback is left exact]\leanok
   \label{lem:pullback_preserves_finite_limits}
   \lean{AlgebraicGeometry.pullback_preservesFiniteLimits}
   \uses{lem:sheafOfModules_pullbackIso, lem:forget_sheafOfModules_pfl_mathlib,
@@ -12120,9 +11810,7 @@ and~\ref{lem:sheafification_pfl_mathlib}. It remains to treat presheaf pullback.
   finite-limit-preserving functors preserves finite limits, so \(g^*\) does.
 \end{proof}
 
-\begin{lemma}
-\leanok
-[Flat pullback preserves homology]
+\begin{lemma}[Flat pullback preserves homology]\leanok
   \label{lem:pullback_preserves_homology}
   \lean{AlgebraicGeometry.pullback_preservesHomology}
   \uses{lem:pullback_preserves_finite_colimits, lem:pullback_preserves_finite_limits}
@@ -12130,9 +11818,7 @@ and~\ref{lem:sheafification_pfl_mathlib}. It remains to treat presheaf pullback.
   left-adjointness via \texttt{Functor.preservesHomologyOfExact}.
 \end{lemma}
 
-\begin{lemma}
-\leanok
-[Flat pullback commutes with {\v C}ech homology]
+\begin{lemma}[Flat pullback commutes with {\v C}ech homology]\leanok
   \label{lem:pullback_mapHC_homologyIso}
   \lean{AlgebraicGeometry.pullback_mapHC_homologyIso}
   \uses{lem:map_hc_homology_iso, lem:pullback_preserves_homology}
@@ -12155,8 +11841,7 @@ isomorphism of the underlying cosimplicial objects therefore induces an isomorph
 of {\v C}ech complexes by functoriality of
 \(\operatorname{alternatingCofaceMapComplex}\).
 
-\begin{lemma}\leanok
-[Additive functors commute with the alternating-coface differential]
+\begin{lemma}[Additive functors commute with the alternating-coface differential]\leanok
   \label{lem:map_alternatingCofaceMapComplex_objD}
   \lean{AlgebraicGeometry.map_alternatingCofaceMapComplex_objD}
   For an additive functor \(F\) between preadditive categories, \(F\) applied to the
@@ -12167,8 +11852,7 @@ of {\v C}ech complexes by functoriality of
   differentials coincide termwise.
 \end{lemma}
 
-\begin{lemma}\leanok
-[Flat pullback commutes with the alternating-coface complex]
+\begin{lemma}[Flat pullback commutes with the alternating-coface complex]\leanok
   \label{lem:pullback_commutes_alternatingCofaceMapComplex}
   \lean{AlgebraicGeometry.mapAlternatingCofaceMapComplexIso}
   \uses{def:relative_cech_complex_of_nerve, lem:map_alternatingCofaceMapComplex_objD}
@@ -12188,10 +11872,7 @@ of {\v C}ech complexes by functoriality of
 % \cref{lem:affine_pushforward_pullback_baseChange}; the {\v C}ech construction below
 % consumes it by cross-reference.
 
-\begin{lemma}
-
-\leanok
-[Degreewise affine reduction of the {\v C}ech base change]
+\begin{lemma}[Degreewise affine reduction of the {\v C}ech base change]\leanok
   \label{lem:cech_degree_affine_baseChange}
   \lean{AlgebraicGeometry.cech_degree_affine_baseChange}
   \uses{lem:affine_pushforward_pullback_baseChange, lem:pushforward_spec_tilde_iso,
@@ -12304,10 +11985,7 @@ of an affine open-immersion cover of a separated scheme.
   \(Y_n = \operatorname{Spec} A_n\).
 \end{lemma}
 
-\begin{lemma}
-
-\leanok
-[{\v C}ech intersection opens are affine, separated case]
+\begin{lemma}[{\v C}ech intersection opens are affine, separated case]\leanok
   \label{lem:cech_interopen_isaffine}
   \lean{AlgebraicGeometry.coverInterOpen_isAffine}
   \uses{lem:isAffineOpen_biInf_mathlib}
@@ -12335,8 +12013,7 @@ of an affine open-immersion cover of a separated scheme.
   which need not be affine.)
 \end{proof}
 
-\begin{lemma}\leanok
-[Pullback preserves quasi-coherence (open-immersion case)]
+\begin{lemma}[Pullback preserves quasi-coherence (open-immersion case)]\leanok
   \label{lem:pullback_preserves_quasicoherent}
   \lean{AlgebraicGeometry.pullback_isQuasicoherent}
   \uses{lem:isQuasicoherent_pullback_opens}
@@ -12362,8 +12039,7 @@ of an affine open-immersion cover of a separated scheme.
   \(p_n : Y_n \hookrightarrow X\) is an open immersion.
 \end{proof}
 
-\begin{lemma}\leanok
-[The opens-preimage comma posets of a continuous map are filtered]
+\begin{lemma}[The opens-preimage comma posets of a continuous map are filtered]\leanok
   \label{lem:opensMap_structuredArrow_isFiltered}
   \lean{AlgebraicGeometry.opensMapStructuredArrow_isFiltered}
   Let \(\varphi : T \to T'\) be a continuous map of topological spaces and let \(d\) be an
@@ -12378,8 +12054,7 @@ of an affine open-immersion cover of a separated scheme.
   directed thin category is filtered.
 \end{proof}
 
-\begin{lemma}\leanok
-[The opens-preimage functor of a continuous map is final]
+\begin{lemma}[The opens-preimage functor of a continuous map is final]\leanok
   \label{lem:opensMap_final}
   \lean{AlgebraicGeometry.opensMap_final}
   \uses{lem:opensMap_structuredArrow_isFiltered}
@@ -12395,8 +12070,7 @@ of an affine open-immersion cover of a separated scheme.
   filtered categories are connected.
 \end{proof}
 
-\begin{lemma}\leanok
-[Pullback of the structure sheaf]
+\begin{lemma}[Pullback of the structure sheaf]\leanok
   \label{lem:module_pullback_unit_iso}
   \lean{AlgebraicGeometry.pullbackObjUnitToUnit_isIso_hom, AlgebraicGeometry.pullbackUnitIso}
   \uses{lem:opensMap_final}
@@ -12415,8 +12089,7 @@ of an affine open-immersion cover of a separated scheme.
   comparison morphism realizes this identification, hence is an isomorphism.
 \end{proof}
 
-\begin{lemma}\leanok
-[Per-slice presentation of a pullback]
+\begin{lemma}[Per-slice presentation of a pullback]\leanok
   \label{lem:presentation_pullback_slice_of_over}
   \lean{AlgebraicGeometry.presentationPullbackSliceOfOver}
   \uses{lem:module_pullback_unit_iso}
@@ -12440,8 +12113,7 @@ of an affine open-immersion cover of a separated scheme.
   \cref{lem:isQuasicoherent_pullback_opens}.
 \end{proof}
 
-\begin{lemma}\leanok
-[Pullback preserves quasi-coherence (general morphism)]
+\begin{lemma}[Pullback preserves quasi-coherence (general morphism)]\leanok
   \label{lem:pullback_isQuasicoherent_hom}
   \lean{AlgebraicGeometry.pullback_isQuasicoherent_hom}
   \uses{lem:presentation_pullback_slice_of_over}
@@ -12545,10 +12217,7 @@ of an affine open-immersion cover of a separated scheme.
   is \cref{lem:isLocalizing_pushforward_mathlib}.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Abstract push--pull tilde-model over an abstract affine base]
+\begin{lemma}[Abstract push--pull tilde-model over an abstract affine base]\leanok
   \label{lem:pushPullObj_iso_tilde_affine}
   \lean{AlgebraicGeometry.pushPullObj_pushforward_iso_tilde_affine}
   \uses{lem:pushPullObj_iso_tilde, lem:isoSpec_scheme_mathlib,
@@ -12601,8 +12270,7 @@ of an affine open-immersion cover of a separated scheme.
   presented-morphism side.
 \end{proof}
 
-\begin{lemma}\leanok
-[Spec-cartesian commutative squares are pushouts of rings]
+\begin{lemma}[Spec-cartesian commutative squares are pushouts of rings]\leanok
   \label{lem:commRingCat_isPushout_iff_mathlib}
   \lean{AlgebraicGeometry.isPushout_of_isPullback_SpecMap}
   A commutative square of commutative rings \(\varphi : A \to B\), \(\psi : A \to C\),
@@ -12630,10 +12298,7 @@ of an affine open-immersion cover of a separated scheme.
   \(\mathrm{CommRing}\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Restriction of the cartesian base-change square over an intersection open is cartesian]
+\begin{lemma}[Restriction of the cartesian base-change square over an intersection open is cartesian]\leanok
   \label{lem:restricted_cartesian_affine_pushout}
   \lean{AlgebraicGeometry.restrictedCartesianAffinePushout}
   Let \(g' : X' \to X\) be an arbitrary morphism of schemes and let
@@ -12661,10 +12326,7 @@ of an affine open-immersion cover of a separated scheme.
   are required.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[LHS abstract \(\to\) tilde for a single intersection open]
+\begin{lemma}[LHS abstract \(\to\) tilde for a single intersection open]\leanok
   \label{lem:coverinter_lhs_iso_tilde}
   \lean{AlgebraicGeometry.pushPullObj_coverInter_pushforward_iso_tilde}
   \uses{lem:pushPullObj_iso_tilde, lem:cech_interopen_isaffine, def:push_pull_obj}
@@ -12700,10 +12362,7 @@ of an affine open-immersion cover of a separated scheme.
   \(N = \Gamma(V, (j_\sigma)^*\mathcal{F})\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Base-change cancellation: the restricted corner module is the tensor base change of \(N\)]
+\begin{lemma}[Base-change cancellation: the restricted corner module is the tensor base change of \(N\)]\leanok
   \label{lem:coverinter_baseChanged_module_iso_tensor}
   \lean{AlgebraicGeometry.coverInter_baseChanged_sections_iso_tensor}
   \uses{lem:baseChangeCancelModuleIso, lem:cancelBaseChange_mathlib,
@@ -12740,10 +12399,7 @@ of an affine open-immersion cover of a separated scheme.
   hypothesis is required.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[RHS abstract \(\to\) tilde for a single intersection open (base-changed side)]
+\begin{lemma}[RHS abstract \(\to\) tilde for a single intersection open (base-changed side)]\leanok
   \label{lem:coverinter_rhs_iso_tilde}
   \lean{AlgebraicGeometry.pushPullObj_coverInter_baseChanged_pushforward_iso_tilde}
   \uses{lem:twisted_cech_nerve_per_sigma, lem:coverinter_lhs_iso_tilde,
@@ -12812,8 +12468,7 @@ of an affine open-immersion cover of a separated scheme.
   isomorphism.
 \end{proof}
 
-\begin{lemma}\leanok
-[Corner identification of the base-changed section module]
+\begin{lemma}[Corner identification of the base-changed section module]\leanok
   \label{lem:coverinter_rhs_tensor_rewrite}
   \lean{AlgebraicGeometry.coverInter_baseChanged_sections_tensor_rewrite}
   \uses{lem:restricted_cartesian_affine_pushout, lem:cech_interopen_isaffine,
@@ -12857,8 +12512,7 @@ of an affine open-immersion cover of a separated scheme.
   \((\operatorname{Spec}\psi)_*\widetilde{N \otimes_R R'}\) along this identification.
 \end{proof}
 
-\begin{lemma}\leanok
-[The restricted square carves into a ring pushout]
+\begin{lemma}[The restricted square carves into a ring pushout]\leanok
   \label{lem:coverinter_ring_pushout}
   \lean{AlgebraicGeometry.coverInter_ring_isPushout}
   \uses{lem:cech_interopen_isaffine, lem:restricted_cartesian_affine_pushout,
@@ -12898,10 +12552,7 @@ of an affine open-immersion cover of a separated scheme.
   of a ring pushout is the tensor product \(A_\sigma \otimes_R R'\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Per-intersection-open base change of the push--pull object]
+\begin{lemma}[Per-intersection-open base change of the push--pull object]\leanok
   \label{lem:pushpullobj_coverinter_basechange}
   \lean{AlgebraicGeometry.pushPullObj_coverInter_baseChange}
   \uses{lem:coverinter_lhs_iso_tilde, lem:coverinter_rhs_iso_tilde,
@@ -13007,8 +12658,7 @@ of an affine open-immersion cover of a separated scheme.
   \end{enumerate}
 \end{proof}
 
-\begin{lemma}\leanok
-[Beck--Chevalley natural iso through the {\v C}ech nerve]
+\begin{lemma}[Beck--Chevalley natural iso through the {\v C}ech nerve]\leanok
   \label{lem:cech_pushforward_baseChange_natIso}
   \lean{AlgebraicGeometry.cech_pushforward_baseChange_natIso}
   \uses{lem:affine_pushforward_pullback_baseChange, lem:pushPullObj_iso_tilde,
@@ -13071,10 +12721,7 @@ of an affine open-immersion cover of a separated scheme.
   \end{enumerate}
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The base-changed cover intersection is the preimage of the intersection]
+\begin{lemma}[The base-changed cover intersection is the preimage of the intersection]\leanok
   \label{lem:coverinteropen_basechange_eq}
   \lean{AlgebraicGeometry.coverInterOpen_baseChange_eq}
   \uses{def:cover_cech_nerve}
@@ -13099,10 +12746,7 @@ of an affine open-immersion cover of a separated scheme.
   = (g')^{-1}\bigl(\operatorname{coverInterOpen}\mathfrak{U}\,\sigma\bigr)\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Open-immersion Beck--Chevalley over a restricted cartesian square]
+\begin{lemma}[Open-immersion Beck--Chevalley over a restricted cartesian square]\leanok
   \label{lem:openimm_beckchevalley}
   \lean{AlgebraicGeometry.openImmersion_beckChevalley}
   \uses{def:push_pull_obj}
@@ -13228,8 +12872,7 @@ of an affine open-immersion cover of a separated scheme.
   Beck--Chevalley.
 \end{proof}
 
-\begin{lemma}\leanok
-[Affine cover of \(X'\) refining preimages of affine opens of \(X\)]
+\begin{lemma}[Affine cover of \(X'\) refining preimages of affine opens of \(X\)]\leanok
   \label{lem:openimm_refining_affine_cover}
   \lean{AlgebraicGeometry.openImmersion_refiningAffineCover}
   \uses{lem:isoSpec_scheme_mathlib}
@@ -13251,8 +12894,7 @@ of an affine open-immersion cover of a separated scheme.
   so \(g'|_{W_j} = \operatorname{Spec}\varphi_j\) with \(\varphi_j = \Gamma(g'|_{W_j})\).
 \end{proof}
 
-\begin{lemma}\leanok
-[The geometric counit at an open immersion is invertible]
+\begin{lemma}[The geometric counit at an open immersion is invertible]\leanok
   \label{lem:openimm_pullback_counit_isIso}
   \lean{AlgebraicGeometry.openImmersion_pullback_counit_isIso}
   \uses{lem:restrictFunctorIsoPullback_mathlib}
@@ -13273,8 +12915,7 @@ of an affine open-immersion cover of a separated scheme.
   at \(q_*\,c\)) with an isomorphism (the restriction counit), hence an isomorphism.
 \end{proof}
 
-\begin{lemma}\leanok
-[Restriction maps of a pushforward-presented module are isomorphisms]
+\begin{lemma}[Restriction maps of a pushforward-presented module are isomorphisms]\leanok
   \label{lem:restrictionMap_isIso_of_essImage}
   \lean{AlgebraicGeometry.restrictionMap_isIso_of_essImage}
   Let \(W\) be a scheme, \(O_0 \subseteq W\) an open with inclusion \(\iota : O_0 \hookrightarrow
@@ -13294,8 +12935,7 @@ of an affine open-immersion cover of a separated scheme.
   isomorphism.
 \end{proof}
 
-\begin{lemma}\leanok
-[Essential-image membership for \(p'_*\) is cover local]
+\begin{lemma}[Essential-image membership for \(p'_*\) is cover local]\leanok
   \label{lem:essimage_pushforward_cover_local}
   \lean{AlgebraicGeometry.essImage_pushforward_of_openCover,
         AlgebraicGeometry.restrictFunctor_map_app}
@@ -13326,8 +12966,7 @@ of an affine open-immersion cover of a separated scheme.
   isomorphism and \(M\) lies in the essential image of \(p'_*\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Local essential-image comparison over an affine cover member]
+\begin{lemma}[Local essential-image comparison over an affine cover member]\leanok
   \label{lem:openimm_bareBC_app_isIso_affine}
   \lean{AlgebraicGeometry.openImmersion_pushPull_essImage_member,
         AlgebraicGeometry.restrict_pullback_pushforward_essImage,
@@ -13387,8 +13026,7 @@ of an affine open-immersion cover of a separated scheme.
   \(W_j \cap (g')^{-1}(V) \hookrightarrow W_j\), as claimed.
 \end{proof}
 
-\begin{lemma}\leanok
-[Stage 2, assembly: \(\operatorname{bareBC}\) is an isomorphism]
+\begin{lemma}[Stage 2, assembly: \(\operatorname{bareBC}\) is an isomorphism]\leanok
   \label{lem:openimm_bareBC_isIso}
   \lean{AlgebraicGeometry.openImmersion_bareBC_app_eq,
         AlgebraicGeometry.openImmersion_bareBC_app_isIso_of_unit,
@@ -13463,8 +13101,7 @@ of an affine open-immersion cover of a separated scheme.
   cartesian square turns the open immersion \(p\) into the open immersion \(p'\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Bare Beck--Chevalley mate of the restricted square]
+\begin{lemma}[Bare Beck--Chevalley mate of the restricted square]\leanok
   \label{lem:openimm_bareBC}
   \lean{AlgebraicGeometry.openImmersion_bareBC}
   \uses{lem:openimm_bc_telescope}
@@ -13493,8 +13130,7 @@ of an affine open-immersion cover of a separated scheme.
   construction is formal and uses no hypothesis on the maps.
 \end{proof}
 
-\begin{lemma}\leanok
-[Pullback telescope across the restricted square]
+\begin{lemma}[Pullback telescope across the restricted square]\leanok
   \label{lem:openimm_bc_telescope}
   \lean{AlgebraicGeometry.openImmersion_bc_telescope}
   In the cartesian square of \cref{lem:openimm_beckchevalley}, the iterated pullback of any
@@ -13515,10 +13151,7 @@ of an affine open-immersion cover of a separated scheme.
   \(g'_V \cdot p\), then evaluate the resulting natural isomorphism at \(\mathcal{F}\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Per-intersection-open X-level Beck--Chevalley for the twisted nerve]
+\begin{lemma}[Per-intersection-open X-level Beck--Chevalley for the twisted nerve]\leanok
   \label{lem:twisted_cech_nerve_per_sigma}
   \lean{AlgebraicGeometry.twisted_cech_nerve_per_sigma}
   \uses{lem:coverinteropen_basechange_eq, lem:openimm_beckchevalley, lem:pushPullObj_iso_tilde}
@@ -13555,8 +13188,7 @@ of an affine open-immersion cover of a separated scheme.
   altitude~1.
 \end{proof}
 
-\begin{lemma}\leanok
-[The base-changed nerve is the nerve of the base-changed data]
+\begin{lemma}[The base-changed nerve is the nerve of the base-changed data]\leanok
   \label{lem:twisted_cech_nerve_iso}
   \lean{AlgebraicGeometry.twisted_cech_nerve_iso}
   \uses{def:cech_nerve, def:cover_cech_nerve, lem:pushPullObj_iso_tilde}
@@ -13638,8 +13270,7 @@ of an affine open-immersion cover of a separated scheme.
   \end{enumerate}
 \end{proof}
 
-\begin{definition}\leanok
-[Degreewise pullback of the {\v C}ech complex as an alternating-coface complex]
+\begin{definition}[Degreewise pullback of the {\v C}ech complex as an alternating-coface complex]\leanok
   \label{def:pullback_cechComplex_alternatingIso}
   \lean{AlgebraicGeometry.pullback_cechComplex_alternatingIso}
   \uses{lem:pullback_commutes_alternatingCofaceMapComplex,
@@ -13652,8 +13283,7 @@ of an affine open-immersion cover of a separated scheme.
   base-change construction below.
 \end{definition}
 
-\begin{definition}\leanok
-[Reduction of the {\v C}ech base change to a cosimplicial iso]
+\begin{definition}[Reduction of the {\v C}ech base change to a cosimplicial iso]\leanok
   \label{def:cech_complex_base_change_iso_of_cosimplicialIso}
   \lean{AlgebraicGeometry.cechComplex_baseChange_iso_of_cosimplicialIso}
   \uses{def:pullback_cechComplex_alternatingIso,
@@ -13690,10 +13320,7 @@ of an affine open-immersion cover of a separated scheme.
   iso by feeding \(e\) into the present reduction.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[The {\v C}ech base-change cosimplicial isomorphism \(e\)]
+\begin{definition}[The {\v C}ech base-change cosimplicial isomorphism \(e\)]\leanok
   \label{def:cech_complex_base_change_cosimplicialIso}
   \lean{AlgebraicGeometry.cechComplex_baseChange_cosimplicialIso}
   \uses{lem:cech_pushforward_baseChange_natIso, lem:twisted_cech_nerve_iso}
@@ -13718,10 +13345,7 @@ of an affine open-immersion cover of a separated scheme.
   by \cref{def:cech_complex_base_change_iso_of_cosimplicialIso}.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Tensorial base change of the {\v C}ech complex \textnormal{(Stacks 02KG, OPEN)}]
+\begin{definition}[Tensorial base change of the {\v C}ech complex \textnormal{(Stacks 02KG, OPEN)}]\leanok
   \label{def:cech_complex_base_change_iso}
   \lean{AlgebraicGeometry.cechComplex_baseChange_iso}
   \uses{def:cech_complex, def:relative_cech_complex_of_nerve,

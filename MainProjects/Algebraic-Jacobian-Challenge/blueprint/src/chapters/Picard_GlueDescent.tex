@@ -33,10 +33,7 @@ chart--overlap square.
 \section{The descent equalizer and its overlap base change}
 \label{sec:gd_equalizer}
 
-\begin{definition}
-
-\leanok
-[The pushforward product carrying the descent equalizer]
+\begin{definition}[The pushforward product carrying the descent equalizer]\leanok
   \label{def:gr_glue_equalizer}
   \lean{AlgebraicGeometry.Scheme.Modules.glueProd}
   \uses{def:scheme_modules_glue}
@@ -65,10 +62,7 @@ chart--overlap square.
   through it, the restriction morphism) is defined.
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[Overlap base change of the chart square (\(\beta_{ij}\))]
+\begin{lemma}[Overlap base change of the chart square (\(\beta_{ij}\))]\leanok
   \label{lem:glueOverlapBaseChangeIso}
   \lean{AlgebraicGeometry.Scheme.Modules.glueOverlapBaseChangeIso}
   \uses{lem:modules_restrictFunctorIsoPullback_mathlib}
@@ -141,10 +135,7 @@ chart--overlap square.
 \section{The restriction morphism and effective descent}
 \label{sec:gd_descent}
 
-\begin{lemma}
-
-\leanok
-[The chart restriction morphism of the glued sheaf]
+\begin{lemma}[The chart restriction morphism of the glued sheaf]\leanok
   \label{lem:glueRestrictionHom}
   \lean{AlgebraicGeometry.Scheme.Modules.glueRestrictionHom}
   \uses{def:gr_glue_equalizer, def:scheme_modules_glue}
@@ -181,10 +172,7 @@ chart--overlap square.
   equivalent description is the unit--counit form of this transpose.
 \end{proof}
 
-\begin{theorem}
-
-\leanok
-[Effective descent: the chart restriction morphism is an isomorphism]
+\begin{theorem}[Effective descent: the chart restriction morphism is an isomorphism]\leanok
   \label{thm:isIso_glueRestrictionHom}
   \lean{AlgebraicGeometry.Scheme.Modules.isIso_glueRestrictionHom}
   \uses{lem:glueRestrictionHom, lem:glueOverlapBaseChangeIso,
@@ -265,8 +253,7 @@ declaration.
 
 \subsection{Section-level compatibilities of the overlap square}
 
-\begin{lemma}\leanok
-[Transport of \(\mathrm{appLE}\) along equal morphisms]
+\begin{lemma}[Transport of \(\mathrm{appLE}\) along equal morphisms]\leanok
   \label{lem:gr_appLE_congr_mor}
   \lean{AlgebraicGeometry.Scheme.Modules.appLE_congr_mor}
   Let \(f, g : A \to B\) be morphisms of schemes with \(f = g\), let \(U\) be an open of
@@ -283,8 +270,7 @@ declaration.
   proof-irrelevant.
 \end{proof}
 
-\begin{lemma}\leanok
-[Structure-sheaf compatibility of the chart--overlap square]
+\begin{lemma}[Structure-sheaf compatibility of the chart--overlap square]\leanok
   \label{lem:gr_overlap_appIso_compat}
   \lean{AlgebraicGeometry.Scheme.Modules.glueData_overlap_appIso_compat}
   \uses{lem:gr_appLE_congr_mor, def:scheme_modules_glue}
@@ -314,8 +300,7 @@ declaration.
   \(\mathrm{appLE}\)s of the equal composites, which is \cref{lem:gr_appLE_congr_mor}.
 \end{proof}
 
-\begin{lemma}\leanok
-[Sections of the overlap base change, inverse side]
+\begin{lemma}[Sections of the overlap base change, inverse side]\leanok
   \label{lem:gr_overlapBaseChange_inv_app}
   \lean{AlgebraicGeometry.Scheme.Modules.glueOverlapBaseChangeIso_inv_app_app}
   \uses{lem:glueOverlapBaseChangeIso}
@@ -339,8 +324,7 @@ declaration.
   restriction map. The verification is pointwise on sections.
 \end{proof}
 
-\begin{lemma}\leanok
-[Sections of the overlap base change, forward side]
+\begin{lemma}[Sections of the overlap base change, forward side]\leanok
   \label{lem:gr_overlapBaseChange_hom_app}
   \lean{AlgebraicGeometry.Scheme.Modules.glueOverlapBaseChangeIso_hom_app_app}
   \uses{lem:glueOverlapBaseChangeIso}
@@ -367,8 +351,7 @@ of left adjoints between them. The next blocks transport units, counits and
 congruence casts across that comparison, so that the descent obligations can be
 discharged by section-level computations.
 
-\begin{lemma}\leanok
-[Unit comparison across the adjunctions]
+\begin{lemma}[Unit comparison across the adjunctions]\leanok
   \label{lem:gr_restrictAdjunction_unit_iso}
   \lean{AlgebraicGeometry.Scheme.Modules.restrictAdjunction_unit_app_iso}
   \uses{lem:modules_restrictFunctorIsoPullback_mathlib}
@@ -389,8 +372,7 @@ discharged by section-level computations.
   isomorphism of left adjoints (\cref{lem:modules_restrictFunctorIsoPullback_mathlib}).
 \end{proof}
 
-\begin{lemma}\leanok
-[Counit comparison across the adjunctions]
+\begin{lemma}[Counit comparison across the adjunctions]\leanok
   \label{lem:gr_restrictIsoPullback_counit}
   \lean{AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback_hom_app_counit}
   \uses{lem:modules_restrictFunctorIsoPullback_mathlib}
@@ -409,8 +391,7 @@ discharged by section-level computations.
   adjoints.
 \end{proof}
 
-\begin{lemma}\leanok
-[Congruence cast at the pullback level]
+\begin{lemma}[Congruence cast at the pullback level]\leanok
   \label{lem:gr_pullbackCongr_hom_eqToHom}
   \lean{AlgebraicGeometry.Scheme.Modules.pullbackCongr_hom_app_eqToHom}
   For equal morphisms \(\varphi = \psi : X \to Y\) and a sheaf \(\mathcal{N}\) on \(Y\),
@@ -425,8 +406,7 @@ discharged by section-level computations.
   the canonical transport of a reflexivity.
 \end{proof}
 
-\begin{lemma}\leanok
-[Trivial site-level congruence cast]
+\begin{lemma}[Trivial site-level congruence cast]\leanok
   \label{lem:gr_restrictFunctorCongr_rfl}
   \lean{AlgebraicGeometry.Scheme.Modules.restrictFunctorCongr_rfl_hom_app}
   For an open immersion \(\varphi\) the site-level congruence cast associated to the
@@ -439,8 +419,7 @@ discharged by section-level computations.
   opens, which is the identity by functoriality.
 \end{proof}
 
-\begin{lemma}\leanok
-[Comparison intertwines the two congruence casts]
+\begin{lemma}[Comparison intertwines the two congruence casts]\leanok
   \label{lem:gr_restrictIsoPullback_congr}
   \lean{AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback_congr}
   \uses{lem:gr_pullbackCongr_hom_eqToHom, lem:gr_restrictFunctorCongr_rfl,
@@ -465,8 +444,7 @@ discharged by section-level computations.
 
 \subsection{The candidate inverse}
 
-\begin{definition}\leanok
-[Overlap base change in pullback form]
+\begin{definition}[Overlap base change in pullback form]\leanok
   \label{def:gr_glueOverlapFactorIso}
   \lean{AlgebraicGeometry.Scheme.Modules.glueOverlapFactorIso}
   \uses{lem:glueOverlapBaseChangeIso, lem:modules_restrictFunctorIsoPullback_mathlib}
@@ -483,8 +461,7 @@ discharged by section-level computations.
   evaluated at the input sheaf \(\mathcal{M}_j\).
 \end{definition}
 
-\begin{definition}\leanok
-[The \(j\)-th component of the candidate inverse]
+\begin{definition}[The \(j\)-th component of the candidate inverse]\leanok
   \label{def:gr_glueChartComponent}
   \lean{AlgebraicGeometry.Scheme.Modules.glueChartComponent}
   \uses{def:gr_glueOverlapFactorIso}
@@ -504,8 +481,7 @@ discharged by section-level computations.
   \(g_{ij}\), and the inverse of \(\gamma_{ij}\) (\cref{def:gr_glueOverlapFactorIso}).
 \end{definition}
 
-\begin{definition}\leanok
-[The candidate-inverse family]
+\begin{definition}[The candidate-inverse family]\leanok
   \label{def:gr_glueChartFamily}
   \lean{AlgebraicGeometry.Scheme.Modules.glueChartFamily}
   \uses{def:gr_glueChartComponent, def:gr_glue_equalizer}
@@ -520,8 +496,7 @@ discharged by section-level computations.
   \(\iota_i^{*}\mathcal{M}\).
 \end{definition}
 
-\begin{lemma}\leanok
-[The candidate family recovers each chart component]
+\begin{lemma}[The candidate family recovers each chart component]\leanok
   \label{lem:gr_glueChartFamily_pullback_map_pi}
   \lean{AlgebraicGeometry.Scheme.Modules.glueChartFamily_pullback_map_π}
   \uses{def:gr_glueChartComponent, def:gr_glueChartFamily}
@@ -558,9 +533,7 @@ with first projection \(\mathrm{fst} : V_{ipq} \to V_{ip}\). Two morphisms out o
 \]
 is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBaseChangeIso}.
 
-\begin{lemma}\leanok
-
-[Triple-overlap bridges of the glue datum]
+\begin{lemma}[Triple-overlap bridges of the glue datum]\leanok
   \label{lem:gr_glueData_bridges}
   \lean{AlgebraicGeometry.Scheme.Modules.glueData_bridge_src,
     AlgebraicGeometry.Scheme.Modules.glueData_bridge_mid,
@@ -590,8 +563,7 @@ is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBase
   and the cocycle condition of the glue datum.
 \end{proof}
 
-\begin{lemma}\leanok
-[Pair component of the equalizing condition]
+\begin{lemma}[Pair component of the equalizing condition]\leanok
   \label{lem:gr_glueChartComponent_leg_compat}
   \lean{AlgebraicGeometry.Scheme.Modules.glueChartComponent_leg_compat}
   \uses{def:gr_glueChartComponent, def:scheme_modules_glue,
@@ -606,8 +578,7 @@ is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBase
 
 \subsection{The first descent obligation}
 
-\begin{lemma}\leanok
-[The candidate-inverse family equalizes the restricted legs (C2 transported)]
+\begin{lemma}[The candidate-inverse family equalizes the restricted legs (C2 transported)]\leanok
   \label{lem:gr_glueChartFamily_equalizes}
   \lean{AlgebraicGeometry.Scheme.Modules.glueChartFamily_equalizes}
   \uses{def:gr_glueChartFamily, def:scheme_modules_glue, lem:gr_glueData_bridges,
@@ -640,8 +611,7 @@ is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBase
   gives the equalizing condition.
 \end{proof}
 
-\begin{definition}\leanok
-[The candidate inverse \(\mathrm{s}_i\)]
+\begin{definition}[The candidate inverse \(\mathrm{s}_i\)]\leanok
   \label{def:gr_glueRestrictionInv}
   \lean{AlgebraicGeometry.Scheme.Modules.glueRestrictionInv}
   \uses{def:gr_glueChartFamily, lem:gr_glueChartFamily_equalizes}
@@ -654,8 +624,7 @@ is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBase
   the candidate inverse of the chart restriction morphism.
 \end{definition}
 
-\begin{lemma}\leanok
-[Comparison compatibility of the restricted projection]
+\begin{lemma}[Comparison compatibility of the restricted projection]\leanok
   \label{lem:gr_glueRestrict_proj_compat}
   \lean{AlgebraicGeometry.Scheme.Modules.glueRestrict_proj_compat}
   \uses{def:gr_glue_equalizer, def:scheme_modules_glue}
@@ -675,8 +644,7 @@ is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBase
   is \(\iota_i^{*}(\pi_j)\).
 \end{proof}
 
-\begin{lemma}\leanok
-[The candidate inverse recovers the components]
+\begin{lemma}[The candidate inverse recovers the components]\leanok
   \label{lem:gr_glueRestrictionInv_proj}
   \lean{AlgebraicGeometry.Scheme.Modules.glueRestrictionInv_pullback_map_glueProj}
   \uses{def:gr_glueRestrictionInv, lem:gr_glueRestrict_proj_compat,
@@ -698,8 +666,7 @@ is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBase
   family \cref{def:gr_glueChartFamily}, namely \(\mathrm{s}_i^{(j)}\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Joint detection of morphisms into the restricted glued sheaf]
+\begin{lemma}[Joint detection of morphisms into the restricted glued sheaf]\leanok
   \label{lem:gr_glueRestrict_hom_ext}
   \lean{AlgebraicGeometry.Scheme.Modules.glueRestrict_hom_ext}
   \uses{lem:gr_glueRestrict_proj_compat}
@@ -715,8 +682,7 @@ is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBase
   hypothesis via \cref{lem:gr_glueRestrict_proj_compat}.
 \end{proof}
 
-\begin{lemma}\leanok
-[Joint faithfulness of the chart restrictions]
+\begin{lemma}[Joint faithfulness of the chart restrictions]\leanok
   \label{lem:gr_modules_glue_unique}
   \lean{AlgebraicGeometry.Scheme.Modules.pullback_map_jointly_faithful}
   \uses{def:scheme_modules_glue}
@@ -738,8 +704,7 @@ is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBase
 
 \subsection{The three cocycle obligations}
 
-\begin{lemma}\leanok
-[Self-component collapses to the identity (C1 + counit triangle)]
+\begin{lemma}[Self-component collapses to the identity (C1 + counit triangle)]\leanok
   \label{lem:gr_glueChartComponent_self_counit}
   \lean{AlgebraicGeometry.Scheme.Modules.glueChartComponent_self_counit}
   \uses{def:gr_glueChartComponent, def:scheme_modules_glue,
@@ -775,8 +740,7 @@ is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBase
   proof-irrelevance of the open inclusions gives the identity.
 \end{proof}
 
-\begin{lemma}\leanok
-[Transpose of the overlap base change (mate core)]
+\begin{lemma}[Transpose of the overlap base change (mate core)]\leanok
   \label{lem:gr_glueOverlapFactor_transpose}
   \lean{AlgebraicGeometry.Scheme.Modules.glueOverlapFactor_transpose}
   \uses{def:gr_glueOverlapFactorIso, lem:glueOverlapBaseChangeIso,
@@ -817,8 +781,7 @@ is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBase
   of \cref{lem:gr_glueChartComponent_self_counit}.
 \end{proof}
 
-\begin{lemma}\leanok
-[Mate recognition of the factor transpose]
+\begin{lemma}[Mate recognition of the factor transpose]\leanok
   \label{lem:gr_glueOverlapFactor_mate}
   \lean{AlgebraicGeometry.Scheme.Modules.glueOverlapFactor_mate}
   \uses{lem:gr_glueOverlapFactor_transpose, def:gr_glueOverlapFactorIso,
@@ -843,8 +806,7 @@ is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBase
   factor transpose \cref{lem:gr_glueOverlapFactor_transpose}.
 \end{proof}
 
-\begin{lemma}\leanok
-[Overlap compatibility of the restriction morphisms]
+\begin{lemma}[Overlap compatibility of the restriction morphisms]\leanok
   \label{lem:gr_glueRestriction_overlap_compat}
   \lean{AlgebraicGeometry.Scheme.Modules.glueRestriction_overlap_compat}
   \uses{lem:glueRestrictionHom, def:scheme_modules_glue, def:gr_glue_equalizer}
@@ -865,8 +827,7 @@ is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBase
   casts of \cref{def:scheme_modules_glue} and corrected by \(g_{ij}\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Pair condition transposed: restriction composed with the component]
+\begin{lemma}[Pair condition transposed: restriction composed with the component]\leanok
   \label{lem:gr_glueRestrictionHom_glueChartComponent}
   \lean{AlgebraicGeometry.Scheme.Modules.glueRestrictionHom_glueChartComponent}
   \uses{lem:gr_glueRestriction_overlap_compat, lem:gr_glueOverlapFactor_mate,
@@ -898,10 +859,7 @@ is the triple analogue of the chart--overlap square of \cref{lem:glueOverlapBase
 \subsection{Joint faithfulness of chart restrictions}
 
 
-\begin{definition}
-
-\leanok
-[The restriction isomorphism of the glued sheaf]
+\begin{definition}[The restriction isomorphism of the glued sheaf]\leanok
   \label{def:glueRestrictionIso}
   \lean{AlgebraicGeometry.Scheme.Modules.glueRestrictionIso}
   % NOTE: this is the 1:1 home for the Lean decl `glueRestrictionIso`

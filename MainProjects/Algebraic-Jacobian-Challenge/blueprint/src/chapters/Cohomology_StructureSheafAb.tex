@@ -11,8 +11,7 @@ Let \(X\) be a topological space. Abelian-group-valued presheaves on the topolog
 
 \section{Sheafification of abelian-group-valued sheaves on opens}
 
-\begin{theorem}\leanok
-[Sheafification on the topology of opens, abelian-group valued]
+\begin{theorem}[Sheafification on the topology of opens, abelian-group valued]\leanok
   \label{thm:HasSheafify_Opens_AddCommGrp}
   \lean{AlgebraicGeometry.Cohomology.instHasSheafify_Opens_AddCommGrp}
   Let \(X\) be a topological space. Then the Grothendieck topology of opens of \(X\) admits sheafification for sheaves valued in the category of abelian groups.
@@ -27,8 +26,7 @@ Let \(X\) be a topological space. Abelian-group-valued presheaves on the topolog
 
 \section{\(\Ext\) for sheaves on opens}
 
-\begin{theorem}\leanok
-[\(\Ext\) on the topology of opens, abelian-group valued]
+\begin{theorem}[\(\Ext\) on the topology of opens, abelian-group valued]\leanok
   \label{thm:HasExt_Sheaf_Opens_AddCommGrp}
   \lean{AlgebraicGeometry.Cohomology.instHasExt_Sheaf_Opens_AddCommGrp}
   \uses{thm:HasSheafify_Opens_AddCommGrp}
@@ -45,8 +43,7 @@ Let \(X\) be a topological space. Abelian-group-valued presheaves on the topolog
 
 \section{Structure sheaf as a sheaf of abelian groups}
 
-\begin{definition}\leanok
-[Structure sheaf as a sheaf of abelian groups]
+\begin{definition}[Structure sheaf as a sheaf of abelian groups]\leanok
   \label{def:Scheme_toAbSheaf}
   \lean{AlgebraicGeometry.Scheme.toAbSheaf}
   \uses{thm:HasSheafCompose_forget, thm:HasSheafify_Opens_AddCommGrp,

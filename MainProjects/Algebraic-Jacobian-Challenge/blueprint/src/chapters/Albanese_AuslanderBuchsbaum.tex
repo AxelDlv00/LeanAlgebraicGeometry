@@ -36,10 +36,7 @@ for regular functions and its precise separation from the Albanese extension arg
 \section{Depth of a module over a local ring}
 \label{sec:ab_depth}
 
-\begin{definition}
-
-\leanok
-  [Depth of a module]
+\begin{definition}[Depth of a module]\leanok
   \label{def:depth}
   \lean{RingTheory.Module.depth}
   \textit{Source: [Stacks Project], tag 00LF (definition-depth).}
@@ -63,10 +60,7 @@ The two practical computations of depth are the regular-sequence definition (use
 establish a \emph{lower} bound) and the \(\text{Ext}\) characterisation (used to establish an
 \emph{upper} bound and to prove the depth-on-a-short-exact-sequence inequality).
 
-\begin{lemma}
-
-\leanok
-  [Depth via \(\text{Ext}\)]
+\begin{lemma}[Depth via \(\text{Ext}\)]\leanok
   \label{lem:depth_via_ext}
   \lean{RingTheory.Module.depth_eq_smallest_ext_index}
   \uses{def:depth, lem:ext_smul_eq_zero_of_mem_annihilator}
@@ -104,10 +98,7 @@ establish a \emph{lower} bound) and the \(\text{Ext}\) characterisation (used to
 \section{Projective dimension}
 \label{sec:ab_pd}
 
-\begin{definition}
-
-\leanok
-  [Projective dimension]
+\begin{definition}[Projective dimension]\leanok
   \label{def:projective_dimension}
   \lean{Module.projectiveDimension}
   Let \(R\) be a commutative ring and let \(M\) be an \(R\)-module. The \emph{projective
@@ -139,10 +130,7 @@ Both statements follow by splitting or splicing finite projective resolutions.
 \section{Depth on a short exact sequence}
 \label{sec:ab_depth_ses}
 
-\begin{lemma}
-
-\leanok
-  [Depth on a short exact sequence]
+\begin{lemma}[Depth on a short exact sequence]\leanok
   \label{lem:depth_short_exact_sequence}
   \lean{RingTheory.Module.depth_of_short_exact}
   \uses{lem:natCast_add_one_le_of_le_sub_one}
@@ -186,10 +174,7 @@ Both statements follow by splitting or splicing finite projective resolutions.
 \section{The Auslander--Buchsbaum formula}
 \label{sec:ab_main}
 
-\begin{theorem}
-
-\leanok
-  [Auslander--Buchsbaum formula]
+\begin{theorem}[Auslander--Buchsbaum formula]\leanok
   \label{thm:auslander_buchsbaum}
   \lean{RingTheory.auslander_buchsbaum_formula}
   
@@ -266,10 +251,7 @@ Both statements follow by splitting or splicing finite projective resolutions.
   \(\text{pd}_R(M) + \text{depth}(M) = \text{depth}(R)\), as required.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-  [Auslander--Buchsbaum: inductive step \(\text{pd} = k+1\)]
+\begin{lemma}[Auslander--Buchsbaum: inductive step \(\text{pd} = k+1\)]\leanok
   \label{lem:auslander_buchsbaum_formula_succ_pd}
   \lean{RingTheory.auslander_buchsbaum_formula_succ_pd}
   \uses{lem:depth_drops_by_one, lem:enat_ab_inductive_combine,
@@ -369,11 +351,7 @@ inductive hypothesis yields
 
 \subsection{Minimal finite-free surjections}
 \label{subsec:ab_gap1_first_step}
-\begin{lemma}
-
-\leanok
-  [Per-syzygy minimal surjection from \(R^n\) for finite modules
-    over a local ring]
+\begin{lemma}[Per-syzygy minimal surjection from \(R^n\) for finite modules over a local ring]\leanok
   \label{lem:exists_minimalSurjection_finite_localRing}
   \lean{RingTheory.Module.exists_minimalSurjection_finite_localRing}
   \uses{def:depth}
@@ -433,10 +411,7 @@ induction on projective dimension.
 
 The following lemmas express the two directions of projective-dimension
 control in the syzygy sequence and the corresponding lower bound on depth.
-\begin{lemma}
-\leanok
-[Bridge: \(\texttt{projectiveDimension}\,M = n \Rightarrow
-  \texttt{HasProjectiveDimensionLT}\,M\,(n+1)\)]
+\begin{lemma}[Bridge: \(\texttt{projectiveDimension}\,M = n \Rightarrow \texttt{HasProjectiveDimensionLT}\,M\,(n+1)\)]\leanok
   \label{lem:hasProjectiveDimensionLT_succ_of_projectiveDimension_eq}
   \lean{RingTheory.Module.hasProjectiveDimensionLT_succ_of_projectiveDimension_eq}
   \uses{def:projective_dimension}
@@ -448,9 +423,7 @@ control in the syzygy sequence and the corresponding lower bound on depth.
   (n+1)\). This is the strict-inequality formulation of the assumed
   projective-dimension equality.
 \end{lemma}
-\begin{lemma}
-\leanok
-[Syzygy descent of \(\texttt{HasProjectiveDimensionLT}\)]
+\begin{lemma}[Syzygy descent of \(\texttt{HasProjectiveDimensionLT}\)]\leanok
   \label{lem:hasProjectiveDimensionLT_ker_of_surjection}
   \lean{RingTheory.Module.hasProjectiveDimensionLT_ker_of_surjection}
   \uses{lem:hasProjectiveDimensionLT_succ_of_projectiveDimension_eq}
@@ -470,9 +443,7 @@ control in the syzygy sequence and the corresponding lower bound on depth.
   \(k+1\) via \(\texttt{hasProjectiveDimensionLT\_of\_ge}\); apply
   \(\texttt{ShortExact.hasProjectiveDimensionLT\_X\_1}\) to close.
 \end{lemma}
-\begin{lemma}
-\leanok
-[Ascent companion: \(\ker f\)-pd-control \(\Rightarrow M\)-pd-control]
+\begin{lemma}[Ascent companion: \(\ker f\)-pd-control \(\Rightarrow M\)-pd-control]\leanok
   \label{lem:hasProjectiveDimensionLT_succ_of_hasProjectiveDimensionLT_ker}
   \lean{RingTheory.Module.hasProjectiveDimensionLT_succ_of_hasProjectiveDimensionLT_ker}
   \uses{lem:hasProjectiveDimensionLT_ker_of_surjection}
@@ -516,8 +487,7 @@ used in the proofs above.
 \subsection{Ext-annihilation and depth-bound substrate}
 \label{subsec:ab_ext_depth_substrate}
 
-\begin{lemma}\leanok
-[Annihilator kills \(\text{Ext}\)]
+\begin{lemma}[Annihilator kills \(\text{Ext}\)]\leanok
   \label{lem:ext_smul_eq_zero_of_mem_annihilator}
   \lean{RingTheory.Module.ext_smul_eq_zero_of_mem_annihilator}
   \uses{def:depth}
@@ -535,8 +505,7 @@ used in the proofs above.
   that endomorphism is zero, and functoriality sends it to the zero map.
 \end{proof}
 
-\begin{lemma}\leanok
-[\(\text{Ext}\)-vanishing below the depth]
+\begin{lemma}[\(\text{Ext}\)-vanishing below the depth]\leanok
   \label{lem:ext_vanish_of_natCast_lt_depth}
   \lean{RingTheory.Module.ext_vanish_of_natCast_lt_depth}
   \uses{def:depth, lem:depth_via_ext}
@@ -554,8 +523,7 @@ used in the proofs above.
   \(\operatorname{depth}(M)\leq i\), contrary to the hypothesis.
 \end{proof}
 
-\begin{lemma}\leanok
-[\(\mathbb N_\infty\) successor bridge]
+\begin{lemma}[\(\mathbb N_\infty\) successor bridge]\leanok
   \label{lem:natCast_add_one_le_of_le_sub_one}
   \lean{RingTheory.Module.natCast_add_one_le_of_le_sub_one}
   For \(d \in \mathbb N_\infty\) and \(a \in \mathbb N\) with \(1 \leq a\): if
@@ -571,8 +539,7 @@ used in the proofs above.
   \(1\leq a\leq m-1\), so \(a+1\leq m=d\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Depth is a linear-equivalence invariant]
+\begin{lemma}[Depth is a linear-equivalence invariant]\leanok
   \label{lem:depth_eq_of_linearEquiv}
   \lean{RingTheory.Module.depth_eq_of_linearEquiv}
   \uses{def:depth}
@@ -593,8 +560,7 @@ used in the proofs above.
 \subsection{Depth of a constant product module}
 \label{subsec:ab_depth_pi_substrate}
 
-\begin{lemma}\leanok
-[Ideal action on a constant product]
+\begin{lemma}[Ideal action on a constant product]\leanok
   \label{lem:ideal_smul_top_pi_const}
   \lean{RingTheory.Module.ideal_smul_top_pi_const}
   For a commutative ring \(R\), an ideal \(I\), a finite index type \(\iota\), and an
@@ -610,8 +576,7 @@ used in the proofs above.
   lies in the ideal action because its unique nonzero coordinate does.
 \end{proof}
 
-\begin{lemma}\leanok
-[Triviality of the ideal action on a constant product]
+\begin{lemma}[Triviality of the ideal action on a constant product]\leanok
   \label{lem:ideal_smul_top_pi_const_eq_top_iff}
   \lean{RingTheory.Module.ideal_smul_top_pi_const_eq_top_iff}
   \uses{lem:ideal_smul_top_pi_const}
@@ -628,8 +593,7 @@ used in the proofs above.
   equality at any index, which exists by nonemptiness, to obtain \(IM=M\).
 \end{proof}
 
-\begin{definition}\leanok
-[Quotient of a constant product by a scalar]
+\begin{definition}[Quotient of a constant product by a scalar]\leanok
   \label{def:quotSMulTopPiConstLinearEquiv}
   \lean{RingTheory.Module.quotSMulTopPiConstLinearEquiv}
   \uses{lem:ideal_smul_top_pi_const}
@@ -642,8 +606,7 @@ used in the proofs above.
   quotient-of-a-product identification.
 \end{definition}
 
-\begin{lemma}\leanok
-[Regularity on a constant product]
+\begin{lemma}[Regularity on a constant product]\leanok
   \label{lem:isRegular_pi_const_iff_of_nonempty}
   \lean{RingTheory.Module.isRegular_pi_const_iff_of_nonempty}
   \uses{def:quotSMulTopPiConstLinearEquiv}
@@ -664,8 +627,7 @@ used in the proofs above.
   with the product of the quotients; apply the inductive hypothesis.
 \end{proof}
 
-\begin{lemma}\leanok
-[Depth of a constant product]
+\begin{lemma}[Depth of a constant product]\leanok
   \label{lem:depth_pi_const_eq_depth_of_nonempty}
   \lean{RingTheory.Module.depth_pi_const_eq_depth_of_nonempty}
   \uses{def:depth, lem:ideal_smul_top_pi_const_eq_top_iff, lem:isRegular_pi_const_iff_of_nonempty}
@@ -703,8 +665,7 @@ used in the proofs above.
   \(M\)-regular.
 \end{proof}
 
-\begin{lemma}\leanok
-[Kernel-SES depth inequalities for a finite free surjection]
+\begin{lemma}[Kernel-SES depth inequalities for a finite free surjection]\leanok
   \label{lem:depth_ses_ineqs_of_surjection_finite_localRing}
   \lean{RingTheory.Module.depth_ses_ineqs_of_surjection_finite_localRing}
   \uses{lem:depth_short_exact_sequence, lem:depth_pi_const_eq_depth_of_nonempty}
@@ -728,8 +689,7 @@ used in the proofs above.
   \cref{lem:depth_pi_const_eq_depth_of_nonempty}.
 \end{proof}
 
-\begin{lemma}\leanok
-[A nonzero \(\text{Ext}\) class at the depth index]
+\begin{lemma}[A nonzero \(\text{Ext}\) class at the depth index]\leanok
   \label{lem:exists_ne_zero_ext_of_depth_eq}
   \lean{RingTheory.Module.exists_ne_zero_ext_of_depth_eq}
   \uses{lem:depth_via_ext}
@@ -747,8 +707,7 @@ used in the proofs above.
   index \(D\) is nonzero, and any nonzero group contains the required class.
 \end{proof}
 
-\begin{lemma}\leanok
-[Exact projective dimension of a syzygy]
+\begin{lemma}[Exact projective dimension of a syzygy]\leanok
   \label{lem:projectiveDimension_ker_eq_of_surjection}
   \lean{RingTheory.projectiveDimension_ker_eq_of_surjection}
   \uses{def:projective_dimension, lem:hasProjectiveDimensionLT_succ_of_projectiveDimension_eq, lem:hasProjectiveDimensionLT_ker_of_surjection, lem:hasProjectiveDimensionLT_succ_of_hasProjectiveDimensionLT_ker}
@@ -768,8 +727,7 @@ used in the proofs above.
   the assumed value \(k+2\).
 \end{proof}
 
-\begin{lemma}\leanok
-[\(\mathbb N_\infty\) combine for the inductive step]
+\begin{lemma}[\(\mathbb N_\infty\) combine for the inductive step]\leanok
   \label{lem:enat_ab_inductive_combine}
   \lean{RingTheory.enat_ab_inductive_combine}
   A purely arithmetic statement in \(\mathbb N_\infty\): given \(j + d_K = d\),
@@ -791,8 +749,7 @@ used in the proofs above.
 \subsection{Matrix-collapse on \texorpdfstring{\(\text{Ext}\)}{Ext}}
 \label{subsec:ab_matrix_collapse_substrate}
 
-\begin{definition}\leanok
-[Elementary linear map]
+\begin{definition}[Elementary linear map]\leanok
   \label{def:elemMap}
   \lean{RingTheory.Module.elemMap}
   For a commutative ring \(R\) and indices \(i \in \{1, \dots, n\}\),
@@ -801,8 +758,7 @@ used in the proofs above.
   \(\text{Pi.single}\,i\,1\) and every other standard basis vector to \(0\).
 \end{definition}
 
-\begin{lemma}\leanok
-[Evaluation of the elementary map]
+\begin{lemma}[Evaluation of the elementary map]\leanok
   \label{lem:elemMap_apply}
   \lean{RingTheory.Module.elemMap_apply}
   \uses{def:elemMap}
@@ -817,8 +773,7 @@ used in the proofs above.
   the \(i\)-th coordinate, giving the displayed formula.
 \end{proof}
 
-\begin{lemma}\leanok
-[Matrix decomposition into elementary maps]
+\begin{lemma}[Matrix decomposition into elementary maps]\leanok
   \label{lem:linearMap_finFunR_matrix_decomp}
   \lean{RingTheory.Module.linearMap_finFunR_matrix_decomp}
   \uses{def:elemMap, lem:elemMap_apply}
@@ -834,8 +789,7 @@ used in the proofs above.
   \(\sum_i A_{i,j}e_i=A(e_j)\), proving equality.
 \end{proof}
 
-\begin{lemma}\leanok
-[Matrix-collapse on \(\text{Ext}\)]
+\begin{lemma}[Matrix-collapse on \(\text{Ext}\)]\leanok
   \label{lem:ext_comp_mk_zero_ofHom_eq_zero_of_entries_mem_annihilator}
   \lean{RingTheory.Module.ext_comp_mk₀_ofHom_eq_zero_of_entries_mem_annihilator}
   \uses{lem:linearMap_finFunR_matrix_decomp, lem:ext_smul_eq_zero_of_mem_annihilator}
@@ -858,8 +812,7 @@ used in the proofs above.
 \subsection{Regular-sequence and domain substrate for regular local rings}
 \label{subsec:ab_regular_domain_substrate}
 
-\begin{lemma}\leanok
-[Regular sequences are bounded by the Krull dimension]
+\begin{lemma}[Regular sequences are bounded by the Krull dimension]\leanok
   \label{lem:length_le_ringKrullDim_of_isRegular}
   \lean{RingTheory.CohenMacaulay.length_le_ringKrullDim_of_isRegular}
   For a Noetherian local ring \(R\), every \(R\)-regular sequence \(rs\) has length at
@@ -876,8 +829,7 @@ used in the proofs above.
   \(\dim(R)\geq |rs|\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Cotangent image of \(x \in \mathfrak m \setminus \mathfrak m^2\)]
+\begin{lemma}[Cotangent image of \(x \in \mathfrak m \setminus \mathfrak m^2\)]\leanok
   \label{lem:toCotangent_ne_zero_of_not_mem_sq}
   \lean{RingTheory.CohenMacaulay.toCotangent_ne_zero_of_not_mem_sq}
   For a local ring \((R, \mathfrak m)\) and \(x \in \mathfrak m\) with \(x \notin \mathfrak m^2\),
@@ -893,8 +845,7 @@ used in the proofs above.
   \(x\in\mathfrak m^2\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Cotangent dimension drops by one modulo \(x\)]
+\begin{lemma}[Cotangent dimension drops by one modulo \(x\)]\leanok
   \label{lem:finrank_cotangentSpace_quot_span_singleton_succ}
   \lean{RingTheory.CohenMacaulay.finrank_cotangentSpace_quot_span_singleton_succ}
   \uses{lem:toCotangent_ne_zero_of_not_mem_sq}
@@ -916,8 +867,7 @@ used in the proofs above.
   nonzero class of \(x\), so rank-nullity lowers the dimension by exactly one.
 \end{proof}
 
-\begin{lemma}\leanok
-[Nakayama witness for a positive cotangent dimension]
+\begin{lemma}[Nakayama witness for a positive cotangent dimension]\leanok
   \label{lem:exists_notMemSq_of_spanFinrank_pos}
   \lean{RingTheory.CohenMacaulay.exists_notMemSq_of_spanFinrank_pos}
   For a Noetherian local ring \((R, \mathfrak m)\) with positive minimal-generator count
@@ -933,8 +883,7 @@ used in the proofs above.
   \(\mathfrak m=0\), making the cotangent dimension zero, a contradiction.
 \end{proof}
 
-\begin{lemma}\leanok
-[Zero cotangent dimension forces a field]
+\begin{lemma}[Zero cotangent dimension forces a field]\leanok
   \label{lem:isDomain_of_isLocalRing_of_spanFinrank_maximalIdeal_eq_zero}
   \lean{RingTheory.CohenMacaulay.isDomain_of_isLocalRing_of_spanFinrank_maximalIdeal_eq_zero}
   For a Noetherian local ring \(R\) with \(\text{spanFinrank}(\mathfrak m) = 0\), the maximal
@@ -950,8 +899,7 @@ used in the proofs above.
   A local ring whose maximal ideal is zero is a field, and therefore a domain.
 \end{proof}
 
-\begin{lemma}\leanok
-[Regularity descends to \(R/(x)\)]
+\begin{lemma}[Regularity descends to \(R/(x)\)]\leanok
   \label{lem:regularLocal_quotient_isRegularLocal_of_notMemSq}
   \lean{RingTheory.CohenMacaulay.regularLocal_quotient_isRegularLocal_of_notMemSq}
   \uses{lem:finrank_cotangentSpace_quot_span_singleton_succ}
@@ -973,8 +921,7 @@ used in the proofs above.
   regularity criterion for the local quotient.
 \end{proof}
 
-\begin{lemma}\leanok
-[Members of a minimal prime are zero-divisors]
+\begin{lemma}[Members of a minimal prime are zero-divisors]\leanok
   \label{lem:exists_ne_zero_mul_eq_zero_of_mem_minimalPrimes}
   \lean{RingTheory.CohenMacaulay.exists_ne_zero_mul_eq_zero_of_mem_minimalPrimes}
   For a commutative ring \(R\) and a minimal prime \(\mathfrak p\) of \(R\), every
@@ -989,8 +936,7 @@ used in the proofs above.
   injective. Thus there is \(y\neq0\) with \(xy=0\).
 \end{proof}
 
-\begin{lemma}\leanok
-[\((x)\) is not a minimal prime in the inductive step]
+\begin{lemma}[\((x)\) is not a minimal prime in the inductive step]\leanok
   \label{lem:notMem_minimalPrimes_of_regularLocal_succ}
   \lean{RingTheory.CohenMacaulay.notMem_minimalPrimes_of_regularLocal_succ}
   \uses{lem:exists_ne_zero_mul_eq_zero_of_mem_minimalPrimes, lem:regularLocal_quotient_isRegularLocal_of_notMemSq}
@@ -1022,8 +968,7 @@ used in the proofs above.
   \((x)\) gives \(x=0\), contradicting \(x\notin\mathfrak m^2\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Regular local rings are domains]
+\begin{lemma}[Regular local rings are domains]\leanok
   \label{lem:isDomain_of_regularLocal}
   \lean{RingTheory.CohenMacaulay.isDomain_of_regularLocal}
   \uses{lem:isDomain_of_isLocalRing_of_spanFinrank_maximalIdeal_eq_zero, lem:exists_notMemSq_of_spanFinrank_pos, lem:regularLocal_quotient_isRegularLocal_of_notMemSq, lem:notMem_minimalPrimes_of_regularLocal_succ}
@@ -1048,8 +993,7 @@ used in the proofs above.
   \cref{lem:notMem_minimalPrimes_of_regularLocal_succ}.
 \end{proof}
 
-\begin{lemma}\leanok
-[A regular element outside \(\mathfrak m^2\)]
+\begin{lemma}[A regular element outside \(\mathfrak m^2\)]\leanok
   \label{lem:exists_isSMulRegular_notMemSq_of_regularLocal_succ}
   \lean{RingTheory.CohenMacaulay.exists_isSMulRegular_notMemSq_of_regularLocal_succ}
   \uses{lem:exists_notMemSq_of_spanFinrank_pos, lem:isDomain_of_regularLocal}
@@ -1068,8 +1012,7 @@ used in the proofs above.
   injective. Thus \(x\) is regular.
 \end{proof}
 
-\begin{lemma}\leanok
-[Regular element with regular quotient]
+\begin{lemma}[Regular element with regular quotient]\leanok
   \label{lem:exists_isSMulRegular_quotient_isRegularLocal_succ}
   \lean{RingTheory.CohenMacaulay.exists_isSMulRegular_quotient_isRegularLocal_succ}
   \uses{lem:exists_isSMulRegular_notMemSq_of_regularLocal_succ, lem:finrank_cotangentSpace_quot_span_singleton_succ}
@@ -1087,8 +1030,7 @@ used in the proofs above.
   \cref{lem:regularLocal_quotient_isRegularLocal_of_notMemSq}.
 \end{proof}
 
-\begin{lemma}\leanok
-[Inductive step for the regular sequence]
+\begin{lemma}[Inductive step for the regular sequence]\leanok
   \label{lem:regularLocal_inductive_step}
   \lean{RingTheory.CohenMacaulay.regularLocal_inductive_step}
   \uses{lem:exists_isSMulRegular_quotient_isRegularLocal_succ}
@@ -1109,8 +1051,7 @@ used in the proofs above.
   \(x,x_1,\ldots,x_k\) is regular on \(R\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Regular local rings have a full regular sequence]
+\begin{lemma}[Regular local rings have a full regular sequence]\leanok
   \label{lem:exists_isRegular_of_regularLocal}
   \lean{RingTheory.CohenMacaulay.exists_isRegular_of_regularLocal}
   \uses{lem:regularLocal_inductive_step}
@@ -1133,10 +1074,7 @@ used in the proofs above.
 \section{Corollary: regular local rings are Cohen--Macaulay}
 \label{sec:ab_regular_cm}
 
-\begin{definition}
-
-\leanok
-  [Cohen--Macaulay local ring]
+\begin{definition}[Cohen--Macaulay local ring]\leanok
   \label{def:cohen_macaulay_local}
   \lean{RingTheory.CohenMacaulay}
   \uses{def:depth}
@@ -1147,10 +1085,7 @@ used in the proofs above.
   \(\dim(\text{Supp}(M)) = \text{depth}(M)\), cf.\ Stacks tag 00N3).
 \end{definition}
 
-\begin{corollary}
-
-\leanok
-  [Regular local rings are Cohen--Macaulay]
+\begin{corollary}[Regular local rings are Cohen--Macaulay]\leanok
   \label{cor:regular_cohen_macaulay}
   \lean{RingTheory.CohenMacaulay.of_regular}
   \uses{def:cohen_macaulay_local, thm:auslander_buchsbaum,

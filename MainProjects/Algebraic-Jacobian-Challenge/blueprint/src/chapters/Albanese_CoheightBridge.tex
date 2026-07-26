@@ -96,10 +96,7 @@ assembles the bridge \cref{thm:ringKrullDim_stalk_eq_coheight}. The closing
 % reference shipped at \texttt{b80f227} states it under this exact
 % formulation.
 
-\begin{lemma}
-
-\leanok
-  [Coheight on opens equals coheight in the ambient space]
+\begin{lemma}[Coheight on opens equals coheight in the ambient space]\leanok
   \label{lem:coheight_eq_of_isOpenEmbedding}
   \lean{Order.coheight_eq_of_isOpenEmbedding}
   Let \(X\) be a topological space carrying the specialisation preorder, and
@@ -158,10 +155,7 @@ assembles the bridge \cref{thm:ringKrullDim_stalk_eq_coheight}. The closing
 % and to \texttt{Order.coheight\_orderIso} +
 % \texttt{Order.height\_toDual} in \texttt{Mathlib.Order.KrullDimension}.
 
-\begin{lemma}
-
-\leanok
-  [Coheight on \(\Spec R\) equals height in \(\operatorname{PrimeSpectrum} R\)]
+\begin{lemma}[Coheight on \(\Spec R\) equals height in \(\operatorname{PrimeSpectrum} R\)]\leanok
   \label{lem:coheight_spec_eq_height_primeSpectrum}
   \lean{Order.coheight_spec_eq_height_primeSpectrum}
   Let \(R\) be a commutative ring and let \(p \in \Spec R\) (viewed as a point of
@@ -219,10 +213,7 @@ assembles the bridge \cref{thm:ringKrullDim_stalk_eq_coheight}. The closing
 %     (\texttt{Mathlib.RingTheory.Ideal.Height:45})
 %   - \cref{lem:coheight_eq_of_isOpenEmbedding}, \cref{lem:coheight_spec_eq_height_primeSpectrum}
 
-\begin{theorem}
-
-\leanok
-  [Coheight-to-Krull-dim bridge for a scheme point]
+\begin{theorem}[Coheight-to-Krull-dim bridge for a scheme point]\leanok
   \label{thm:ringKrullDim_stalk_eq_coheight}
   \lean{AlgebraicGeometry.Scheme.ringKrullDim_stalk_eq_coheight}
   \uses{lem:coheight_eq_of_isOpenEmbedding, lem:coheight_spec_eq_height_primeSpectrum}
@@ -300,10 +291,7 @@ assembles the bridge \cref{thm:ringKrullDim_stalk_eq_coheight}. The closing
 % \cref{chap:Albanese_CodimOneExtension} and
 % \cref{chap:RiemannRoch_WeilDivisor}.
 
-\begin{lemma}
-
-\leanok
-  [Coheight \(= 1\) forces stalk \(\operatorname{Krull\,dim} \leq 1\)]
+\begin{lemma}[Coheight \(= 1\) forces stalk \(\operatorname{Krull\,dim} \leq 1\)]\leanok
   \label{lem:ringKrullDimLE_of_coheight_eq_one}
   \lean{AlgebraicGeometry.Scheme.ringKrullDimLE_of_coheight_eq_one}
   \uses{thm:ringKrullDim_stalk_eq_coheight}

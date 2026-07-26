@@ -71,8 +71,7 @@ is $[\mathcal{L}^{-1}] = [\mathcal{H}om_{\mathcal{O}_X}(\mathcal{L},
 \(\mathcal{O}_X\)-modules sends \(\mathcal{O}_T\) to \(\mathcal{O}_{C \times_k T}\)
 and is multiplicative on tensor products.
 
-\begin{lemma}\leanok
-[Group structure descends to the relative Picard quotient]
+\begin{lemma}[Group structure descends to the relative Picard quotient]\leanok
   \label{lem:rel_pic_sharp_groupoid}
   \lean{AlgebraicGeometry.Scheme.PicSharp.addCommGroup}
   \uses{def:line_bundle_on_product, def:pullback_along_projection,
@@ -250,8 +249,7 @@ uniqueness of tensor inverses (which makes negation well defined), and the two
 descended operations on isomorphism classes. Each is recorded here for the
 one-to-one Lean correspondence; all are proved directly in Lean.
 
-\begin{definition}\leanok
-[Tensor product on relative line bundles]
+\begin{definition}[Tensor product on relative line bundles]\leanok
   \label{def:rel_tensor_obj}
   \lean{AlgebraicGeometry.Scheme.PicSharp.relTensorObj}
   \uses{def:line_bundle_on_product, lem:tensorobj_lift_onproduct,
@@ -270,8 +268,7 @@ one-to-one Lean correspondence; all are proved directly in Lean.
   realises addition \([L] + [L'] := [L \otimes L']\) on isomorphism classes.
 \end{definition}
 
-\begin{lemma}\leanok
-[The structure-sheaf unit is locally trivial]
+\begin{lemma}[The structure-sheaf unit is locally trivial]\leanok
   \label{lem:rel_pic_sharp_unit_loctriv}
   \lean{AlgebraicGeometry.Scheme.PicSharp.isLocallyTrivial_unit}
   \uses{def:line_bundle_on_product, lem:pullback_unit_iso}
@@ -293,8 +290,7 @@ one-to-one Lean correspondence; all are proved directly in Lean.
   \((\mathcal{O}_{C \times_S T})|_W \cong \mathcal{O}_W\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Uniqueness of the tensor inverse]
+\begin{lemma}[Uniqueness of the tensor inverse]\leanok
   \label{lem:rel_pic_sharp_inverse_unique}
   \lean{AlgebraicGeometry.Scheme.PicSharp.pInverseUnique}
   \uses{lem:tensorobj_lift_onproduct, lem:tensorobj_unit_iso,
@@ -353,8 +349,7 @@ one-to-one Lean correspondence; all are proved directly in Lean.
   the standard uniqueness of inverses in the Picard group.
 \end{proof}
 
-\begin{definition}\leanok
-[Descended addition on the relative Picard quotient]
+\begin{definition}[Descended addition on the relative Picard quotient]\leanok
   \label{def:rel_add}
   \lean{AlgebraicGeometry.Scheme.PicSharp.relAdd}
   \uses{def:rel_tensor_obj, thm:relative_pic_quotient_well_defined,
@@ -378,8 +373,7 @@ one-to-one Lean correspondence; all are proved directly in Lean.
   so the class \([L \otimes L']\) is independent of the chosen representatives.
 \end{proof}
 
-\begin{definition}\leanok
-[Descended negation on the relative Picard quotient]
+\begin{definition}[Descended negation on the relative Picard quotient]\leanok
   \label{def:rel_neg}
   \lean{AlgebraicGeometry.Scheme.PicSharp.relNeg}
   \uses{def:rel_tensor_obj, lem:rel_pic_sharp_inverse_unique,
@@ -422,8 +416,7 @@ defines, the middle-four interchange, the well-definedness of addition, and
 the compatibility of negation. Each is recorded here for the one-to-one Lean
 correspondence.
 
-\begin{definition}\leanok
-[The \(H_T\)-coset relation on locally-trivial bundles]
+\begin{definition}[The \(H_T\)-coset relation on locally-trivial bundles]\leanok
   \label{lem:relpic_rel}
   \lean{AlgebraicGeometry.Scheme.PicSharp.relPicRel}
   \uses{def:line_bundle_on_product, def:pullback_along_projection}
@@ -443,8 +436,7 @@ correspondence.
   iso-class relation \(\mathtt{RelPicPresheaf.preimage\_subgroup}\).
 \end{definition}
 
-\begin{lemma}\leanok
-[Iso-class inclusion into the \(H_T\)-coset relation]
+\begin{lemma}[Iso-class inclusion into the \(H_T\)-coset relation]\leanok
   \label{lem:relpic_rel_of_iso}
   \lean{AlgebraicGeometry.Scheme.PicSharp.relPicRel_of_iso}
   \uses{lem:relpic_rel, def:pullback_along_projection, lem:pullback_unit_iso, lem:tensorobj_unit_iso}
@@ -538,8 +530,7 @@ correspondence.
 \leanok
 \end{proof}
 
-\begin{lemma}\leanok
-[Middle-four interchange for \(\otimes\)]
+\begin{lemma}[Middle-four interchange for \(\otimes\)]\leanok
   \label{lem:tensor_middle_four}
   \lean{AlgebraicGeometry.Scheme.PicSharp.tensorMiddleFour}
   \uses{lem:tensorobj_assoc_iso, lem:tensorobj_comm_iso, def:tensorobjisoofiso}
@@ -608,8 +599,7 @@ correspondence.
 \leanok
 \end{proof}
 
-\begin{definition}\leanok
-[The relative Picard carrier setoid]
+\begin{definition}[The relative Picard carrier setoid]\leanok
   \label{lem:relpic_setoid}
   \lean{AlgebraicGeometry.Scheme.PicSharp.relPicSetoid}
   \uses{lem:relpic_rel, lem:relpic_setoid_refl, lem:relpic_setoid_symm, lem:relpic_setoid_trans}
@@ -621,8 +611,7 @@ correspondence.
   absolute iso-class setoid \(\mathtt{RelPicPresheaf.preimage\_subgroup}\).
 \end{definition}
 
-\begin{lemma}\leanok
-[Negation is compatible with the \(H_T\)-relation]
+\begin{lemma}[Negation is compatible with the \(H_T\)-relation]\leanok
   \label{lem:relpic_rel_neg}
   \lean{AlgebraicGeometry.Scheme.PicSharp.relPicRel_neg}
   \uses{lem:relpic_rel, lem:tensorobj_inverse_invertible, lem:tensorobj_assoc_iso, lem:tensorobj_comm_iso, lem:tensorobj_unit_iso, lem:pullback_tensor_iso_loctriv, lem:pullback_unit_iso, lem:rel_pic_sharp_inverse_unique}
@@ -662,8 +651,7 @@ correspondence.
 We now refine the set-valued functor of \cref{thm:pullback_natural} into a
 group-valued presheaf.
 
-\begin{definition}\leanok
-[Relative Picard presheaf]
+\begin{definition}[Relative Picard presheaf]\leanok
   \label{def:rel_pic_sharp}
   \lean{AlgebraicGeometry.Scheme.PicSharp.relPresheaf}
   \uses{def:line_bundle_on_product, def:pullback_along_projection,
@@ -715,8 +703,7 @@ group-valued presheaf.
 % The FGA chapter (chap:Picard_FGAPicRepresentability) consumes THIS node
 % through PicScheme.picSharp := relPresheaf ⋙ forget.
 
-\begin{lemma}\leanok
-[Naturality respects the group structure]
+\begin{lemma}[Naturality respects the group structure]\leanok
   \label{lem:rel_pic_sharp_functorial}
   \lean{AlgebraicGeometry.Scheme.PicSharp.relFunctorial}
   \uses{def:rel_pic_sharp, lem:pullback_compose,
@@ -785,8 +772,7 @@ group-valued presheaf.
   (\cref{lem:pullback_compose}).
 \end{proof}
 
-\begin{theorem}\leanok
-[\(\Pic^\sharp_{C/k}\) is a group-valued presheaf]
+\begin{theorem}[\(\Pic^\sharp_{C/k}\) is a group-valued presheaf]\leanok
   \label{thm:rel_pic_sharp_presheaf}
   % Run-0008 repin note: no separate \lean pin — the bundled group-valued
   % functor IS the Lean declaration AlgebraicGeometry.Scheme.PicSharp.relPresheaf
@@ -866,8 +852,7 @@ natural componentwise quotient comparison
 \cref{lem:relpic_quotient_comparison} onto the relative functor of
 \cref{def:rel_pic_sharp}.
 
-\begin{lemma}\leanok
-[Pullback descends to the \(H_T\)-quotient]
+\begin{lemma}[Pullback descends to the \(H_T\)-quotient]\leanok
   \label{lem:relpic_pullback_welldef}
   \lean{AlgebraicGeometry.Scheme.PicSharp.relPicRel_pullback}
   \uses{lem:relpic_rel, lem:pullback_compose,
@@ -891,8 +876,7 @@ natural componentwise quotient comparison
   locally trivial. Hence \(g^* N\) witnesses \(g_C^* L \sim g_C^* L'\).
 \end{proof}
 
-\begin{definition}\leanok
-[Absolute Picard functor]
+\begin{definition}[Absolute Picard functor]\leanok
   \label{def:abs_pic_functor}
   \lean{AlgebraicGeometry.Scheme.PicSharp}
   \uses{def:line_bundle_on_product, lem:rel_pic_sharp_groupoid,
@@ -916,8 +900,7 @@ natural componentwise quotient comparison
   via \cref{lem:relpic_quotient_comparison}.
 \end{definition}
 
-\begin{lemma}\leanok
-[Quotient comparison from the absolute functor]
+\begin{lemma}[Quotient comparison from the absolute functor]\leanok
   \label{lem:relpic_quotient_comparison}
   \lean{AlgebraicGeometry.Scheme.PicSharp.toRelPresheaf}
   \uses{def:abs_pic_functor, def:rel_pic_sharp, lem:relpic_rel_of_iso}
@@ -953,8 +936,7 @@ fails. Therefore, to obtain a representable functor in the sense of
 this sheaf \(\Pic_{(X/S)\et}\) and singles it out as the functor that Kleiman's
 main existence theorem in \S 4 represents.
 
-\begin{definition}\leanok
-[\'Etale sheafification of the relative Picard presheaf]
+\begin{definition}[\'Etale sheafification of the relative Picard presheaf]\leanok
   \label{def:rel_pic_etale_sheafification}
   \lean{AlgebraicGeometry.Scheme.PicSharp.etSheaf}
   \uses{def:abs_pic_functor}
@@ -1031,8 +1013,7 @@ main existence theorem in \S 4 represents.
 % as the topology-parametric interface for a future section-free
 % generalisation; a sharper future form would sheafify relPresheaf.
 
-\begin{theorem}\leanok
-[\'Etale sheafification preserves the abelian-group structure]
+\begin{theorem}[\'Etale sheafification preserves the abelian-group structure]\leanok
   \label{thm:rel_pic_etale_sheaf_group_structure}
   \lean{AlgebraicGeometry.Scheme.PicSharp.etSheaf_group_structure}
   \uses{def:rel_pic_etale_sheafification, thm:rel_pic_sharp_presheaf,

@@ -125,8 +125,7 @@ construction of \(R^n G\) and are the foundational inputs to the argument.
 
 \section{Right-acyclic objects}
 
-\begin{definition}\leanok
-[Right-\(G\)-acyclic object]
+\begin{definition}[Right-\(G\)-acyclic object]\leanok
   \label{def:right_acyclic}
   \lean{CategoryTheory.Functor.IsRightAcyclic}
   \uses{lem:right_derived_injective_resolution}
@@ -230,8 +229,7 @@ Horseshoe Lemma (dual of Weibel, \emph{An Introduction to Homological Algebra}, 
   as split, furnishing the degreewise-splitting data required for the construction.
 \end{lemma}
 
-\begin{lemma}\leanok
-[Per-stage monomorphism into the biproduct]
+\begin{lemma}[Per-stage monomorphism into the biproduct]\leanok
   \label{lem:horseshoe_stage_mono}
   \lean{CategoryTheory.mono_biprod_lift_factorThru_of_exact}
   \uses{lem:horseshoe_biprod_injective}
@@ -321,8 +319,7 @@ Horseshoe Lemma (dual of Weibel, \emph{An Introduction to Homological Algebra}, 
   the dual of the inductive lift in the Horseshoe Lemma.
 \end{proof}
 
-\begin{lemma}\leanok
-[The assembled middle differential squares to zero]
+\begin{lemma}[The assembled middle differential squares to zero]\leanok
   \label{lem:horseshoe_dComp}
   \lean{CategoryTheory.twistedBiprodD_comp}
   \uses{lem:horseshoe_twist}
@@ -387,8 +384,7 @@ Horseshoe Lemma (dual of Weibel, \emph{An Introduction to Homological Algebra}, 
   exact by Lemma~\ref{lem:horseshoe_degree_split}.
 \end{proof}
 
-\begin{lemma}\leanok
-[Middle-term quasi-isomorphism transfer]
+\begin{lemma}[Middle-term quasi-isomorphism transfer]\leanok
   \label{lem:quasiIso_tau2}
   \lean{HomologicalComplex.HomologySequence.quasiIso_τ₂}
   \uses{lem:homology_long_exact_sequence}
@@ -464,8 +460,7 @@ Horseshoe Lemma (dual of Weibel, \emph{An Introduction to Homological Algebra}, 
   \(B\); with injective terms it is an injective resolution of \(B\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Horseshoe lift of a short exact sequence to injective resolutions]
+\begin{lemma}[Horseshoe lift of a short exact sequence to injective resolutions]\leanok
   \label{lem:injective_resolution_of_ses}
   \lean{CategoryTheory.InjectiveResolution.ofShortExact}
   \uses{lem:horseshoe_biprod_injective, lem:horseshoe_degree_split,
@@ -559,8 +554,7 @@ to objects.
   \((R^{k+1} G)(Z) \cong (R^{k+2} G)(A)\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Dimension shift across an acyclic short exact sequence]
+\begin{lemma}[Dimension shift across an acyclic short exact sequence]\leanok
   \label{lem:acyclic_dimension_shift}
   \lean{CategoryTheory.Functor.rightDerivedShiftIsoOfAcyclic}
   \uses{def:right_acyclic, lem:right_derived_zero_iso_self,
@@ -678,8 +672,7 @@ to objects.
   recorded separately in Lemma~\ref{lem:acyclic_one_iso_coker}.)
 \end{proof}
 
-\begin{lemma}\leanok
-[Lowest-degree cokernel description across an acyclic short exact sequence]
+\begin{lemma}[Lowest-degree cokernel description across an acyclic short exact sequence]\leanok
   \label{lem:acyclic_one_iso_coker}
   \lean{CategoryTheory.Functor.rightDerivedOneIsoCokerOfAcyclic}
   \uses{def:right_acyclic, lem:right_derived_zero_iso_self,
@@ -921,8 +914,7 @@ here.
 
 \section{The acyclic-resolution comparison theorem}
 
-\begin{theorem}\leanok
-[An acyclic resolution computes the right-derived functor]
+\begin{theorem}[An acyclic resolution computes the right-derived functor]\leanok
   \label{lem:acyclic_resolution_computes_derived}
   \lean{CategoryTheory.Functor.rightDerivedIsoOfAcyclicResolution}
   \uses{def:right_acyclic, lem:cosyzygy_ses, lem:cohomology_of_applied_resolution,

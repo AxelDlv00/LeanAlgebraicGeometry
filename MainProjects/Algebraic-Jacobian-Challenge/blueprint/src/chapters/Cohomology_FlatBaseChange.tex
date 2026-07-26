@@ -89,8 +89,7 @@ faithfulness but are off the critical path.
 
 \section{The canonical base-change map}
 
-\begin{definition}\leanok
-[Base-change map for the pushforward]
+\begin{definition}[Base-change map for the pushforward]\leanok
   \label{def:pushforward_base_change_map}
   \lean{AlgebraicGeometry.pushforwardBaseChangeMap}
   % SOURCE: [Stacks Project], Cohomology of Schemes, Section "Cohomology and
@@ -137,8 +136,7 @@ base-change lemma below, where one checks the base-change map after restricting 
 the affine opens of the base. As bespoke infrastructure they carry no external
 citation and stand on their proof sketches.
 
-\begin{lemma}\leanok
-[Stalk-local criterion for isomorphisms of \(\mathcal{O}_X\)-modules]
+\begin{lemma}[Stalk-local criterion for isomorphisms of \(\mathcal{O}_X\)-modules]\leanok
   \label{lem:modules_isIso_iff_stalk}
   \lean{AlgebraicGeometry.Modules.isIso_iff_isIso_stalkFunctor_map}
   Let \(X\) be a scheme and \(\varphi : M \to N\) a morphism of sheaves of
@@ -165,8 +163,7 @@ citation and stand on their proof sketches.
   \(\varphi\) itself is an isomorphism.
 \end{proof}
 
-\begin{lemma}\leanok
-[Basis-local criterion for isomorphisms of \(\mathcal{O}_X\)-modules]
+\begin{lemma}[Basis-local criterion for isomorphisms of \(\mathcal{O}_X\)-modules]\leanok
   \label{lem:modules_isIso_of_isBasis}
   \lean{AlgebraicGeometry.Modules.isIso_of_isIso_app_of_isBasis}
   \uses{lem:modules_isIso_iff_stalk}
@@ -192,8 +189,7 @@ citation and stand on their proof sketches.
   bijective, and \(\varphi\) is an isomorphism.
 \end{proof}
 
-\begin{lemma}\leanok
-[Affine-open locality criterion for isomorphisms of \(\mathcal{O}_X\)-modules]
+\begin{lemma}[Affine-open locality criterion for isomorphisms of \(\mathcal{O}_X\)-modules]\leanok
   \label{lem:modules_isIso_iff_affineOpens}
   \lean{AlgebraicGeometry.Modules.isIso_iff_isIso_app_affineOpens}
   \uses{lem:modules_isIso_of_isBasis}
@@ -224,10 +220,7 @@ We first record three bespoke \(\Gamma\)-fragment supports that compute the glob
 sections of an affine pushforward; they carry no external citation and stand on
 their proof sketches.
 
-\begin{lemma}
-
-\leanok
-[Naturality of the global-sections comparison square]
+\begin{lemma}[Naturality of the global-sections comparison square]\leanok
   \label{lem:globalSectionsIso_hom_comp_specMap_appTop}
   \lean{AlgebraicGeometry.globalSectionsIso_hom_comp_specMap_appTop}
   Let \(\varphi : R \to R'\) be a homomorphism of commutative rings, and write
@@ -255,10 +248,7 @@ their proof sketches.
   exactly the asserted ring equation.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Global sections of an affine pushforward]
+\begin{lemma}[Global sections of an affine pushforward]\leanok
   \label{lem:gammaPushforwardIso}
   \lean{AlgebraicGeometry.gammaPushforwardIso}
   \uses{lem:globalSectionsIso_hom_comp_specMap_appTop}
@@ -290,10 +280,7 @@ their proof sketches.
   resulting \(R\)-action is exactly restriction of scalars along \(\varphi\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Global sections of an affine pushforward of a tilde-module]
+\begin{lemma}[Global sections of an affine pushforward of a tilde-module]\leanok
   \label{lem:gammaPushforwardTildeIso}
   \lean{AlgebraicGeometry.gammaPushforwardTildeIso}
   \uses{lem:gammaPushforwardIso}
@@ -315,10 +302,7 @@ their proof sketches.
   isomorphism of \(R\)-modules after applying \(\operatorname{restr}_\varphi\)).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Sections of an affine pushforward over an arbitrary open]
+\begin{lemma}[Sections of an affine pushforward over an arbitrary open]\leanok
   \label{lem:gammaPushforwardIsoAt}
   \lean{AlgebraicGeometry.gammaPushforwardIsoAt}
   \uses{lem:globalSectionsIso_hom_comp_specMap_appTop}
@@ -392,10 +376,7 @@ their proof sketches.
   Lemma~\ref{lem:pushforward_spec_tilde_iso}.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The tilde restriction from the top open to a basic open is a localization]
+\begin{lemma}[The tilde restriction from the top open to a basic open is a localization]\leanok
   \label{lem:tildeRestriction_isLocalizedModule}
   \lean{AlgebraicGeometry.tildeRestriction_isLocalizedModule}
   Let \(M\) be an \(R'\)-module and \(b \in R'\). Then the structure-sheaf
@@ -428,10 +409,7 @@ We record three further bespoke supports that drive the basic-open verification 
 the affine-pushforward isomorphism below. They carry no external citation and stand
 on their proof sketches.
 
-\begin{lemma}
-
-\leanok
-[Restriction of scalars of a localized module]
+\begin{lemma}[Restriction of scalars of a localized module]\leanok
   \label{lem:powers_restrictScalars}
   \lean{AlgebraicGeometry.IsLocalizedModule.powers_restrictScalars}
   Let \(A\) be a commutative \(R\)-algebra, \(S \subseteq R\) a submonoid, and
@@ -464,10 +442,7 @@ on their proof sketches.
   basic-open computation below.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Section-level counit isomorphism from a localization hypothesis]
+\begin{lemma}[Section-level counit isomorphism from a localization hypothesis]\leanok
   \label{lem:fromTildeGamma_app_isIso_of_localized}
   \lean{AlgebraicGeometry.fromTildeΓ_app_isIso_of_isLocalizedModule}
   Let \(N\) be an \(\operatorname{Spec}(R)\)-module and \(a \in R\). Suppose the
@@ -496,10 +471,7 @@ on their proof sketches.
   criterion Lemma~\ref{lem:modules_isIso_of_isBasis}.)
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Affine pushforward of a tilde-module, conditional form]
+\begin{lemma}[Affine pushforward of a tilde-module, conditional form]\leanok
   \label{lem:pushforward_spec_tilde_iso_conditional}
   \lean{AlgebraicGeometry.pushforward_spec_tilde_iso_of_isLocalizedModule}
   \uses{lem:modules_isIso_of_isBasis, lem:gammaPushforwardTildeIso,
@@ -531,8 +503,7 @@ on their proof sketches.
   Lemma~\ref{lem:gammaPushforwardTildeIso} yields the asserted object isomorphism.
 \end{proof}
 
-\begin{lemma}\leanok
-[Affine pushforward of a tilde-module]
+\begin{lemma}[Affine pushforward of a tilde-module]\leanok
   \label{lem:pushforward_spec_tilde_iso}
   \lean{AlgebraicGeometry.pushforward_spec_tilde_iso}
   \uses{lem:modules_isIso_of_isBasis, lem:gammaPushforwardTildeIso,
@@ -790,10 +761,7 @@ the following packaging of the per-object \(\Gamma\)-fragment comparison as a
 natural isomorphism of right-adjoint functors. It is bespoke project
 infrastructure and carries no external citation.
 
-\begin{lemma}
-
-\leanok
-[The pushforward--global-sections natural isomorphism]
+\begin{lemma}[The pushforward--global-sections natural isomorphism]\leanok
   \label{lem:gammaPushforwardNatIso}
   \lean{AlgebraicGeometry.gammaPushforwardNatIso}
   \uses{lem:gammaPushforwardIso}
@@ -829,10 +797,7 @@ infrastructure and carries no external citation.
   corresponding left adjoints to be isomorphic.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Affine pullback of a tilde-module]
+\begin{lemma}[Affine pullback of a tilde-module]\leanok
   \label{lem:pullback_spec_tilde_iso}
   \lean{AlgebraicGeometry.pullback_spec_tilde_iso}
   \uses{lem:pushforward_spec_tilde_iso}
@@ -926,8 +891,7 @@ superseded canonical route.
   with no flatness hypothesis whatsoever.
 \end{lemma}
 
-\begin{lemma}\leanok
-[Module-level base-change cancellation iso]
+\begin{lemma}[Module-level base-change cancellation iso]\leanok
   \label{lem:baseChangeCancelModuleIso}
   \lean{AlgebraicGeometry.baseChangeCancelModuleIso}
   \uses{lem:cancelBaseChange_mathlib}
@@ -962,8 +926,7 @@ superseded canonical route.
   is an isomorphism with no flatness hypothesis.
 \end{proof}
 
-\begin{lemma}\leanok
-[Affine termwise base change, abstract-\(B\) framing]
+\begin{lemma}[Affine termwise base change, abstract-\(B\) framing]\leanok
   \label{lem:affine_pushforward_pullback_baseChange}
   \lean{AlgebraicGeometry.affinePushforwardPullbackBaseChange}
   \uses{lem:pushforward_spec_tilde_iso, lem:pullback_spec_tilde_iso,
@@ -1147,8 +1110,7 @@ packaged in \(\mathcal{F}\). It rests on the following Mathlib anchors.
 % `lem:cancelBaseChange_mathlib`); the localization datum is needed only at the consumption site
 % `lem:pushforwardPullbackBaseChange_restrict_naturality`. The proof sketch below (universal-property-
 % of-localized-modules route) is STALE — rewrite for the general tmul-induction route.
-\begin{lemma}\leanok
-[Compatibility of cancellation with localizing the outer base]
+\begin{lemma}[Compatibility of cancellation with localizing the outer base]\leanok
   \label{lem:cancelBaseChange_localization_compat}
   \lean{AlgebraicGeometry.cancelBaseChange_localization_compat}
   \uses{lem:cancelBaseChange_mathlib}
@@ -1190,8 +1152,7 @@ packaged in \(\mathcal{F}\). It rests on the following Mathlib anchors.
   \(\mathtt{tildeRestriction\_isLocalizedModule}\) from this lemma's cone.)
 \end{proof}
 
-\begin{lemma}\leanok
-[Cancellation--base-change compatibility, inverse form]
+\begin{lemma}[Cancellation--base-change compatibility, inverse form]\leanok
   \label{lem:cancelBaseChange_localization_compat_symm}
   \lean{AlgebraicGeometry.cancelBaseChange_localization_compat_symm}
   \uses{lem:cancelBaseChange_localization_compat}
@@ -1221,8 +1182,7 @@ the base map \(\psi : R \to R'\), the tower map \(j : R' \to R''\), and the two 
 pushout squares realizing the charts \(B' = A \otimes_R R'\), \(B'' = A \otimes_R R''\) ---
 as a single structure, so the naturality statement is phrased against it.
 
-\begin{definition}\leanok
-[Base-change chart tower]
+\begin{definition}[Base-change chart tower]\leanok
   \label{def:baseChangeChartTower}
   \lean{AlgebraicGeometry.BaseChangeChartTower}
   \uses{lem:affine_pushforward_pullback_baseChange}
@@ -1236,8 +1196,7 @@ as a single structure, so the naturality statement is phrased against it.
   inclusion \(\operatorname{Spec}(R'') \subseteq \operatorname{Spec}(R')\).
 \end{definition}
 
-\begin{definition}\leanok
-[Chart comparison of a tower]
+\begin{definition}[Chart comparison of a tower]\leanok
   \label{def:baseChangeChartTower_connect}
   \lean{AlgebraicGeometry.BaseChangeChartTower.connect}
   \uses{def:baseChangeChartTower}
@@ -1247,8 +1206,7 @@ as a single structure, so the naturality statement is phrased against it.
   model of the inclusion \(X_{\operatorname{Spec}(R'')} \subseteq X_{\operatorname{Spec}(R')}\).
 \end{definition}
 
-\begin{lemma}\leanok
-[Leg compatibilities of the chart comparison]
+\begin{lemma}[Leg compatibilities of the chart comparison]\leanok
   \label{lem:baseChangeChartTower_inl_connect}
   \lean{AlgebraicGeometry.BaseChangeChartTower.inl_connect}
   \uses{def:baseChangeChartTower_connect}
@@ -1259,8 +1217,7 @@ as a single structure, so the naturality statement is phrased against it.
   (\(\mathrm{inl\_desc}\), \(\mathrm{inr\_desc}\)).
 \end{lemma}
 
-\begin{lemma}\leanok
-[Second leg compatibility of the chart comparison]
+\begin{lemma}[Second leg compatibility of the chart comparison]\leanok
   \label{lem:baseChangeChartTower_inr_connect}
   \lean{AlgebraicGeometry.BaseChangeChartTower.inr_connect}
   \uses{def:baseChangeChartTower_connect}
@@ -1269,8 +1226,7 @@ as a single structure, so the naturality statement is phrased against it.
   universal property.
 \end{lemma}
 
-\begin{definition}\leanok
-[The two bricks of a tower]
+\begin{definition}[The two bricks of a tower]\leanok
   \label{def:baseChangeChartTower_bricks}
   \lean{AlgebraicGeometry.BaseChangeChartTower.brickR'}
   \uses{def:baseChangeChartTower, lem:affine_pushforward_pullback_baseChange}
@@ -1283,8 +1239,7 @@ as a single structure, so the naturality statement is phrased against it.
   Lemma~\ref{lem:pushforwardPullbackBaseChange_restrict_naturality} compares.
 \end{definition}
 
-\begin{definition}\leanok
-[The second brick of a tower]
+\begin{definition}[The second brick of a tower]\leanok
   \label{def:baseChangeChartTower_brickRpp}
   \lean{AlgebraicGeometry.BaseChangeChartTower.brickR''}
   \uses{def:baseChangeChartTower, lem:affine_pushforward_pullback_baseChange}

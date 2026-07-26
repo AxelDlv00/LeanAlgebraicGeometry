@@ -54,8 +54,7 @@ polynomial (\cref{def:hilbert_polynomial}), the Quot functor
 \section{Hilbert polynomial of a coherent sheaf}
 \label{sec:hilbert_polynomial}
 
-\begin{definition}\leanok
-[Hilbert polynomial]
+\begin{definition}[Hilbert polynomial]\leanok
   \label{def:hilbert_polynomial}
   \lean{AlgebraicGeometry.Scheme.hilbertPolynomial}
   \uses{def:fiber_hilbert_function, lem:hilbertPolynomial_unique}
@@ -145,8 +144,7 @@ and the extracted polynomial is unique by
 \cref{lem:hilbertPolynomial_unique}. The route uses only \(H^0\)
 (global sections), so it is independent of higher coherent cohomology.
 
-\begin{definition}\leanok
-[Restriction of a sheaf of modules to a fibre]
+\begin{definition}[Restriction of a sheaf of modules to a fibre]\leanok
   \label{def:fiber_module_restriction}
   \lean{AlgebraicGeometry.Scheme.Hom.fiberModule}
   \source{nitsure-hilbert-quot}
@@ -174,8 +172,7 @@ and the extracted polynomial is unique by
   on \(X\) restricts to a line bundle \(L_s = L|_{X_s}\) on \(X_s\).
 \end{definition}
 
-\begin{definition}\leanok
-[\(\kappa(s)\)-structure on sections over a fibre]
+\begin{definition}[\(\kappa(s)\)-structure on sections over a fibre]\leanok
   \label{def:fiber_sections_module}
   \lean{AlgebraicGeometry.Scheme.Hom.fiberResidueMap,
     AlgebraicGeometry.Scheme.Hom.fiberSectionsModule}
@@ -289,8 +286,7 @@ and the extracted polynomial is unique by
   \Gamma(X_s, \mathcal{F}_s \otimes L_s^{\otimes m})\).
 \end{definition}
 
-\begin{definition}\leanok
-[Graded Hilbert function along a fibre]
+\begin{definition}[Graded Hilbert function along a fibre]\leanok
   \label{def:fiber_hilbert_function}
   \lean{AlgebraicGeometry.Scheme.hilbertFunction}
   \uses{def:fiber_module_restriction, def:fiber_sections_module,
@@ -449,8 +445,7 @@ and the extracted polynomial is unique by
   \cref{lem:hilbertPoly_exists_mathlib}.
 \end{lemma}
 
-\begin{lemma}\leanok
-[Graded Hilbert--Serre: rationality of the Hilbert series]
+\begin{lemma}[Graded Hilbert--Serre: rationality of the Hilbert series]\leanok
   \label{lem:gradedHilbertSerre_rational}
   \lean{AlgebraicGeometry.gradedModule_hilbertSeries_rational}
   \uses{lem:finrank_ses_additive_mathlib, lem:invOneSubPow_mathlib,
@@ -615,8 +610,7 @@ project-internal helpers realising standard steps of the Stacks~00K1 argument at
 the level of power series; Mathlib supplies only the converse extraction
 (\cref{lem:hilbertPoly_exists_mathlib}).
 
-\begin{lemma}\leanok
-[Coefficients of \((1-X)^{-1}\) times a series are partial sums]
+\begin{lemma}[Coefficients of \((1-X)^{-1}\) times a series are partial sums]\leanok
   \label{lem:coeff_invOneSubPow_one_mul}
   \lean{AlgebraicGeometry.coeff_invOneSubPow_one_mul}
   \uses{lem:invOneSubPow_mathlib}
@@ -635,8 +629,7 @@ the level of power series; Mathlib supplies only the converse extraction
   the Cauchy product.
 \end{lemma}
 
-\begin{lemma}\leanok
-[Antidifference of a rational Hilbert series]
+\begin{lemma}[Antidifference of a rational Hilbert series]\leanok
   \label{lem:rationalHilbert_antidiff}
   \lean{AlgebraicGeometry.rationalHilbert_antidiff}
   \uses{lem:coeff_invOneSubPow_one_mul, lem:invOneSubPow_mathlib}
@@ -677,8 +670,7 @@ the level of power series; Mathlib supplies only the converse extraction
   \([X^n]\bigl(p\cdot(1-X)^{-(e+1)}\bigr)\) for all \(n > N\).
 \end{proof}
 
-\begin{definition}\leanok
-[Rational Hilbert function]
+\begin{definition}[Rational Hilbert function]\leanok
   \label{def:ratHilb}
   \lean{AlgebraicGeometry.IsRatHilb}
   \uses{lem:invOneSubPow_mathlib}
@@ -698,8 +690,7 @@ the level of power series; Mathlib supplies only the converse extraction
   one consumed by \cref{lem:hilbertPoly_exists_mathlib}.
 \end{definition}
 
-\begin{lemma}\leanok
-[Base case: eventually-zero functions are rational of order \(0\)]
+\begin{lemma}[Base case: eventually-zero functions are rational of order \(0\)]\leanok
   \label{lem:ratHilb_ofEventuallyZero}
   \lean{AlgebraicGeometry.IsRatHilb.ofEventuallyZero}
   \uses{def:ratHilb}
@@ -710,8 +701,7 @@ the level of power series; Mathlib supplies only the converse extraction
   Stacks~00K1 induction (no degree-one generators). Proved directly in Lean.
 \end{lemma}
 
-\begin{lemma}\leanok
-[Raising the pole order]
+\begin{lemma}[Raising the pole order]\leanok
   \label{lem:ratHilb_bump}
   \lean{AlgebraicGeometry.IsRatHilb.bump}
   \uses{def:ratHilb, lem:invOneSubPow_mathlib}
@@ -723,8 +713,7 @@ the level of power series; Mathlib supplies only the converse extraction
   \((1-X)\cdot(1-X)^{-(d+1)} = (1-X)^{-d}\) (\cref{lem:invOneSubPow_mathlib}).
 \end{lemma}
 
-\begin{lemma}\leanok
-[Closure under difference]
+\begin{lemma}[Closure under difference]\leanok
   \label{lem:ratHilb_sub}
   \lean{AlgebraicGeometry.IsRatHilb.sub}
   \uses{def:ratHilb}
@@ -735,8 +724,7 @@ the level of power series; Mathlib supplies only the converse extraction
   \((1-X)^{-d}\)). Proved directly in Lean.
 \end{lemma}
 
-\begin{lemma}\leanok
-[Closure under right shift]
+\begin{lemma}[Closure under right shift]\leanok
   \label{lem:ratHilb_shiftRight}
   \lean{AlgebraicGeometry.IsRatHilb.shiftRight}
   \uses{def:ratHilb}
@@ -747,8 +735,7 @@ the level of power series; Mathlib supplies only the converse extraction
   Lean.
 \end{lemma}
 
-\begin{lemma}\leanok
-[Antidifference step for the predicate]
+\begin{lemma}[Antidifference step for the predicate]\leanok
   \label{lem:ratHilb_antidiff}
   \lean{AlgebraicGeometry.IsRatHilb.antidiff}
   \uses{def:ratHilb, lem:rationalHilbert_antidiff}
@@ -772,8 +759,7 @@ the level of power series; Mathlib supplies only the converse extraction
   \(\mathrm{IsRatHilb}(H, e+1)\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Inductive-step engine from a degreewise short exact sequence]
+\begin{lemma}[Inductive-step engine from a degreewise short exact sequence]\leanok
   \label{lem:ratHilb_ofDiffEq}
   \lean{AlgebraicGeometry.IsRatHilb.ofDiffEq}
   \uses{def:ratHilb, lem:ratHilb_antidiff, lem:ratHilb_sub, lem:ratHilb_shiftRight}
@@ -806,8 +792,7 @@ the level of power series; Mathlib supplies only the converse extraction
   \(\mathrm{IsRatHilb}(h_M, d+1)\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Uniqueness of the Hilbert polynomial]
+\begin{lemma}[Uniqueness of the Hilbert polynomial]\leanok
   \label{lem:hilbertPolynomial_unique}
   \lean{AlgebraicGeometry.Scheme.hilbertPolynomial_eq_of_eventually}
   \uses{def:fiber_hilbert_function}
@@ -839,8 +824,7 @@ the level of power series; Mathlib supplies only the converse extraction
   \(\Phi = \Psi\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Hilbert polynomial from a rational Hilbert function]
+\begin{lemma}[Hilbert polynomial from a rational Hilbert function]\leanok
   \label{lem:hilbertPoly_of_isRatHilb}
   \lean{AlgebraicGeometry.Scheme.existsUnique_hilbertPolynomial_of_isRatHilb}
   \uses{def:fiber_hilbert_function, def:ratHilb,
@@ -882,8 +866,7 @@ the level of power series; Mathlib supplies only the converse extraction
   \(h_{\mathcal{F},s}\) at all sufficiently large integers are equal.
 \end{proof}
 
-\begin{corollary}\leanok
-[Defining property of the Hilbert polynomial]
+\begin{corollary}[Defining property of the Hilbert polynomial]\leanok
   \label{cor:hilbertPolynomial_eval_eventually}
   \lean{AlgebraicGeometry.Scheme.hilbertPolynomial_eval_eventually}
   \uses{def:hilbert_polynomial, def:fiber_hilbert_function,
@@ -910,8 +893,7 @@ the level of power series; Mathlib supplies only the converse extraction
   \(\Phi_{\mathcal{F},s}(m) = h_{\mathcal{F},s}(m)\) for all \(m > N\).
 \end{proof}
 
-\begin{corollary}\leanok
-[The Hilbert polynomial under a rational Hilbert function]
+\begin{corollary}[The Hilbert polynomial under a rational Hilbert function]\leanok
   \label{cor:hilbertPolynomial_eval_of_isRatHilb}
   \lean{AlgebraicGeometry.Scheme.hilbertPolynomial_eval_of_isRatHilb}
   \uses{def:hilbert_polynomial, def:ratHilb, lem:hilbertPoly_of_isRatHilb,
@@ -933,8 +915,7 @@ the level of power series; Mathlib supplies only the converse extraction
   \cref{cor:hilbertPolynomial_eval_eventually}.
 \end{proof}
 
-\begin{corollary}\leanok
-[The Hilbert polynomial computes as the extracted numerator polynomial]
+\begin{corollary}[The Hilbert polynomial computes as the extracted numerator polynomial]\leanok
   \label{cor:hilbertPolynomial_eq_hilbertPoly}
   \lean{AlgebraicGeometry.Scheme.hilbertPolynomial_eq_hilbertPoly}
   \uses{def:hilbert_polynomial, def:ratHilb, lem:hilbertPoly_exists_mathlib,
@@ -1239,8 +1220,7 @@ raising degree by one -- typically multiplication by a homogeneous element
 
 \subsubsection*{The internal grading of a homogeneous submodule (split $G_1$)}
 
-\begin{lemma}\leanok
-[$G_1$ (independence) -- the family $n \mapsto M_n \cap p$ is independent]
+\begin{lemma}[$G_1$ (independence) -- the family $n \mapsto M_n \cap p$ is independent]\leanok
   \label{lem:graded_homogeneousSubmodule_iSupIndep}
   \lean{AlgebraicGeometry.GradedModule.homogeneousSubmodule_inf_iSupIndep}
   \uses{lem:submodule_isHomogeneous_mathlib}
@@ -1265,8 +1245,7 @@ raising degree by one -- typically multiplication by a homogeneous element
   relation among the \(M_n\), forcing each term to vanish.
 \end{proof}
 
-\begin{lemma}\leanok
-[$G_1$ (supremum) -- $\bigsqcup_n (M_n \cap p) = p$ for $p$ homogeneous]
+\begin{lemma}[$G_1$ (supremum) -- $\bigsqcup_n (M_n \cap p) = p$ for $p$ homogeneous]\leanok
   \label{lem:graded_homogeneousSubmodule_iSup_eq}
   \lean{AlgebraicGeometry.GradedModule.homogeneousSubmodule_iSup_inf_eq}
   \uses{lem:submodule_isHomogeneous_mathlib}
@@ -1295,8 +1274,7 @@ raising degree by one -- typically multiplication by a homogeneous element
 
 \subsubsection*{The ambient subquotient class and its Hilbert function}
 
-\begin{definition}\leanok
-[Subquotient Hilbert data]
+\begin{definition}[Subquotient Hilbert data]\leanok
   \label{def:graded_subquotientHilb}
   \lean{AlgebraicGeometry.GradedModule.subquotientHilb}
   \lean{AlgebraicGeometry.GradedModule.SubquotientDatum}
@@ -1345,8 +1323,7 @@ is the fixed internally graded \(\kappa\)-module and \(x : M \to M\) is a
 \(\kappa\)-linear endomorphism raising degree by one. None of these statements forms a
 derived carrier: every object is a submodule of the fixed \(M\).
 
-\begin{definition}\leanok
-[Degree-raising endomorphism]
+\begin{definition}[Degree-raising endomorphism]\leanok
   \label{def:graded_raisesDegree}
   \lean{AlgebraicGeometry.GradedModule.RaisesDegree}
   Let \(M = \bigoplus_n \mathcal{M}_n\) be an internally graded \(\kappa\)-module. A
@@ -1358,8 +1335,7 @@ derived carrier: every object is a submodule of the fixed \(M\).
   endomorphism, with no reference to the grading ring \(R\).
 \end{definition}
 
-\begin{lemma}\leanok
-[Membership form of degree-raising]
+\begin{lemma}[Membership form of degree-raising]\leanok
   \label{lem:graded_raisesDegree_mem}
   \lean{AlgebraicGeometry.GradedModule.RaisesDegree.mem}
   \uses{def:graded_raisesDegree}
@@ -1374,8 +1350,7 @@ derived carrier: every object is a submodule of the fixed \(M\).
   \mathcal{M}_{n+1}\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Degree-shift commutation]
+\begin{lemma}[Degree-shift commutation]\leanok
   \label{lem:graded_decompose_raisesDegree}
   \lean{AlgebraicGeometry.GradedModule.decompose_raisesDegree}
   \uses{def:graded_raisesDegree, lem:graded_raisesDegree_mem}
@@ -1400,8 +1375,7 @@ derived carrier: every object is a submodule of the fixed \(M\).
   terms with \(j+1 \ne i+1\) drop out, leaving \(x(\mathrm{proj}_i(m))\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Degree-raising kills the bottom]
+\begin{lemma}[Degree-raising kills the bottom]\leanok
   \label{lem:graded_decompose_raisesDegree_zero}
   \lean{AlgebraicGeometry.GradedModule.decompose_raisesDegree_zero}
   \uses{def:graded_raisesDegree}
@@ -1417,8 +1391,7 @@ derived carrier: every object is a submodule of the fixed \(M\).
   degree-\(0\) component is \(0\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Preimage of a homogeneous submodule is homogeneous]
+\begin{lemma}[Preimage of a homogeneous submodule is homogeneous]\leanok
   \label{lem:graded_comap_isHomogeneous}
   \lean{AlgebraicGeometry.GradedModule.comap_isHomogeneous}
   \uses{lem:submodule_isHomogeneous_mathlib, lem:graded_decompose_raisesDegree}
@@ -1437,8 +1410,7 @@ derived carrier: every object is a submodule of the fixed \(M\).
   homogeneous.
 \end{proof}
 
-\begin{lemma}\leanok
-[Image of a homogeneous submodule is homogeneous]
+\begin{lemma}[Image of a homogeneous submodule is homogeneous]\leanok
   \label{lem:graded_map_isHomogeneous}
   \lean{AlgebraicGeometry.GradedModule.map_isHomogeneous}
   \uses{lem:submodule_isHomogeneous_mathlib, lem:graded_decompose_raisesDegree,
@@ -1463,8 +1435,7 @@ derived carrier: every object is a submodule of the fixed \(M\).
   homogeneous.
 \end{proof}
 
-\begin{lemma}\leanok
-[Intersection of homogeneous submodules is homogeneous]
+\begin{lemma}[Intersection of homogeneous submodules is homogeneous]\leanok
   \label{lem:graded_inf_isHomogeneous}
   \lean{AlgebraicGeometry.GradedModule.inf_isHomogeneous}
   \uses{lem:submodule_isHomogeneous_mathlib}
@@ -1482,8 +1453,7 @@ derived carrier: every object is a submodule of the fixed \(M\).
   \(\mathrm{proj}_i(m) \in p \cap q\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Sum of homogeneous submodules is homogeneous]
+\begin{lemma}[Sum of homogeneous submodules is homogeneous]\leanok
   \label{lem:graded_sup_isHomogeneous}
   \lean{AlgebraicGeometry.GradedModule.sup_isHomogeneous}
   \uses{lem:submodule_isHomogeneous_mathlib}
@@ -1499,8 +1469,7 @@ derived carrier: every object is a submodule of the fixed \(M\).
   so \(\mathrm{proj}_i(a+b) \in p + q\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Ambient image identity]
+\begin{lemma}[Ambient image identity]\leanok
   \label{lem:graded_map_inf_degree_eq}
   \lean{AlgebraicGeometry.GradedModule.map_inf_degree_eq}
   \uses{lem:graded_decompose_raisesDegree, lem:graded_map_isHomogeneous}
@@ -1525,8 +1494,7 @@ derived carrier: every object is a submodule of the fixed \(M\).
   \cref{lem:graded_map_isHomogeneous}.
 \end{proof}
 
-\begin{lemma}\leanok
-[Ambient distributive law]
+\begin{lemma}[Ambient distributive law]\leanok
   \label{lem:graded_sup_inf_degree_eq}
   \lean{AlgebraicGeometry.GradedModule.sup_inf_degree_eq}
   \uses{lem:graded_inf_isHomogeneous, lem:graded_sup_isHomogeneous,
@@ -1562,8 +1530,7 @@ component facts: for a degree-raising endomorphism \(x\) and a homogeneous pair
 nest correctly, are annihilated by \(x\), and are preserved by any endomorphism \(t\)
 commuting with \(x\) that preserves the original pair.
 
-\begin{lemma}\leanok
-[Homogeneity of the kernel pair's lower module]
+\begin{lemma}[Homogeneity of the kernel pair's lower module]\leanok
   \label{lem:graded_ker_isHomogeneous}
   \lean{AlgebraicGeometry.GradedModule.ker_isHomogeneous}
   \uses{lem:graded_inf_isHomogeneous, lem:graded_comap_isHomogeneous}
@@ -1574,8 +1541,7 @@ commuting with \(x\) that preserves the original pair.
   preimage \(x^{-1}(N')\) (\cref{lem:graded_comap_isHomogeneous}).
 \end{lemma}
 
-\begin{lemma}\leanok
-[Homogeneity of the cokernel pair's upper module]
+\begin{lemma}[Homogeneity of the cokernel pair's upper module]\leanok
   \label{lem:graded_coker_isHomogeneous}
   \lean{AlgebraicGeometry.GradedModule.coker_isHomogeneous}
   \uses{lem:graded_sup_isHomogeneous, lem:graded_map_isHomogeneous}
@@ -1585,8 +1551,7 @@ commuting with \(x\) that preserves the original pair.
   (\cref{lem:graded_map_isHomogeneous}).
 \end{lemma}
 
-\begin{lemma}\leanok
-[The kernel pair nests]
+\begin{lemma}[The kernel pair nests]\leanok
   \label{lem:graded_ker_le}
   \lean{AlgebraicGeometry.GradedModule.ker_le}
   If \(N' \le N\) and \(x\) preserves \(N'\) (\(x \cdot N' \subseteq N'\)), then
@@ -1596,8 +1561,7 @@ commuting with \(x\) that preserves the original pair.
   subquotient pair (\cref{def:graded_subquotientHilb}).
 \end{lemma}
 
-\begin{lemma}\leanok
-[The cokernel pair nests]
+\begin{lemma}[The cokernel pair nests]\leanok
   \label{lem:graded_coker_le}
   \lean{AlgebraicGeometry.GradedModule.coker_le}
   If \(N' \le N\) and \(x\) preserves \(N\) (\(x \cdot N \subseteq N\)), then
@@ -1606,8 +1570,7 @@ commuting with \(x\) that preserves the original pair.
   (\cref{def:graded_subquotientHilb}).
 \end{lemma}
 
-\begin{lemma}\leanok
-[$x$ annihilates the kernel subquotient]
+\begin{lemma}[$x$ annihilates the kernel subquotient]\leanok
   \label{lem:graded_ker_annihilate}
   \lean{AlgebraicGeometry.GradedModule.ker_annihilate}
   The endomorphism \(x\) carries the kernel pair's lower module into \(N'\):
@@ -1616,8 +1579,7 @@ commuting with \(x\) that preserves the original pair.
   acts as zero on the kernel subquotient.
 \end{lemma}
 
-\begin{lemma}\leanok
-[$x$ annihilates the cokernel subquotient]
+\begin{lemma}[$x$ annihilates the cokernel subquotient]\leanok
   \label{lem:graded_coker_annihilate}
   \lean{AlgebraicGeometry.GradedModule.coker_annihilate}
   The endomorphism \(x\) carries \(N\) into the cokernel pair's upper module:
@@ -1625,8 +1587,7 @@ commuting with \(x\) that preserves the original pair.
   acts as zero on the cokernel subquotient \(N/(N' + x \cdot N)\).
 \end{lemma}
 
-\begin{lemma}\leanok
-[Commuting endomorphisms preserve the preimage]
+\begin{lemma}[Commuting endomorphisms preserve the preimage]\leanok
   \label{lem:graded_comap_map_le_of_commute}
   \lean{AlgebraicGeometry.GradedModule.comap_map_le_of_commute}
   Let \(t\) commute with \(x\) and preserve \(N'\) (\(t \cdot N' \subseteq N'\)). Then
@@ -1636,8 +1597,7 @@ commuting with \(x\) that preserves the original pair.
   pair's lower module \(N \cap x^{-1}(N')\).
 \end{lemma}
 
-\begin{lemma}\leanok
-[Commuting endomorphisms preserve the image]
+\begin{lemma}[Commuting endomorphisms preserve the image]\leanok
   \label{lem:graded_map_map_le_of_commute}
   \lean{AlgebraicGeometry.GradedModule.map_map_le_of_commute}
   Let \(t\) commute with \(x\) and preserve \(N\) (\(t \cdot N \subseteq N\)). Then
@@ -1647,8 +1607,7 @@ commuting with \(x\) that preserves the original pair.
   module \(N' + x \cdot N\).
 \end{lemma}
 
-\begin{lemma}\leanok
-[Kernel/cokernel closure of the subquotient class]
+\begin{lemma}[Kernel/cokernel closure of the subquotient class]\leanok
   \label{lem:graded_subquotient_ker_coker}
   \lean{AlgebraicGeometry.GradedModule.SubquotientDatum.ker}
   % This is a narrative grouping lemma: its content is realised in Lean by the eight
@@ -1750,10 +1709,7 @@ commuting with \(x\) that preserves the original pair.
 
 \subsubsection*{The subquotient degreewise difference identity ($D_6$)}
 
-\begin{lemma}
-
-\leanok
-[preimage dimension equals ambient-intersection dimension]
+\begin{lemma}[preimage dimension equals ambient-intersection dimension]\leanok
   \label{lem:graded_finrank_comap_subtype}
   \lean{AlgebraicGeometry.GradedModule.finrank_comap_subtype}
   For submodules \(p, S\) of a \(\kappa\)-vector space \(M\), the dimension of the
@@ -1771,8 +1727,7 @@ commuting with \(x\) that preserves the original pair.
   the claimed equality.
 \end{proof}
 
-\begin{lemma}\leanok
-[$D_6$ -- subquotient degreewise difference]
+\begin{lemma}[$D_6$ -- subquotient degreewise difference]\leanok
   \label{lem:graded_subquotient_degreewise_diff}
   \lean{AlgebraicGeometry.GradedModule.subquotient_degreewise_diff}
   \uses{def:graded_subquotientHilb, lem:graded_subquotient_ker_coker,
@@ -1875,8 +1830,7 @@ degree-raising endomorphisms \(t_i\), keeping every carrier an ambient submodule
 \(\kappa[t_0, \dots, t_{r-1}] \twoheadrightarrow \kappa[t_0, \dots, t_{r-2}]\) available
 (\cref{lem:graded_subquotient_finite_transfer}).
 
-\begin{definition}\leanok
-[Polynomial evaluation ring homomorphism]
+\begin{definition}[Polynomial evaluation ring homomorphism]\leanok
   \label{def:graded_polyEndHom}
   \lean{AlgebraicGeometry.GradedModule.polyEndHom}
   \uses{lem:adjoinCommRingOfComm_mathlib}
@@ -1896,8 +1850,7 @@ degree-raising endomorphisms \(t_i\), keeping every carrier an ambient submodule
   homomorphism, which is why the commutative \(A\) is interposed.
 \end{definition}
 
-\begin{lemma}\leanok
-[Evaluation sends $X_i$ to $t_i$]
+\begin{lemma}[Evaluation sends $X_i$ to $t_i$]\leanok
   \label{lem:graded_polyEndHom_X}
   \lean{AlgebraicGeometry.GradedModule.polyEndHom_X}
   \uses{def:graded_polyEndHom}
@@ -1906,8 +1859,7 @@ degree-raising endomorphisms \(t_i\), keeping every carrier an ambient submodule
   \(t_i\).
 \end{lemma}
 
-\begin{lemma}\leanok
-[Evaluation sends a constant to a scalar]
+\begin{lemma}[Evaluation sends a constant to a scalar]\leanok
   \label{lem:graded_polyEndHom_C}
   \lean{AlgebraicGeometry.GradedModule.polyEndHom_C}
   \uses{def:graded_polyEndHom}
@@ -1916,8 +1868,7 @@ degree-raising endomorphisms \(t_i\), keeping every carrier an ambient submodule
   carries the constant polynomial \(C\,c\) to the scalar endomorphism \(c \cdot 1\).
 \end{lemma}
 
-\begin{definition}\leanok
-[Polynomial-ring module structure on $M$]
+\begin{definition}[Polynomial-ring module structure on $M$]\leanok
   \label{def:graded_polyModule}
   \lean{AlgebraicGeometry.GradedModule.polyModule}
   \uses{def:graded_polyEndHom}
@@ -1929,8 +1880,7 @@ degree-raising endomorphisms \(t_i\), keeping every carrier an ambient submodule
   is measured.
 \end{definition}
 
-\begin{lemma}\leanok
-[$X_i$ acts as $t_i$]
+\begin{lemma}[$X_i$ acts as $t_i$]\leanok
   \label{lem:graded_polyModule_X_smul}
   \lean{AlgebraicGeometry.GradedModule.polyModule_X_smul}
   \uses{def:graded_polyModule, lem:graded_polyEndHom_X}
@@ -1939,8 +1889,7 @@ degree-raising endomorphisms \(t_i\), keeping every carrier an ambient submodule
   \(\mathrm{polyEndHom}(t)(X_i) = t_i\) (\cref{lem:graded_polyEndHom_X}).
 \end{lemma}
 
-\begin{lemma}\leanok
-[A constant acts as a scalar]
+\begin{lemma}[A constant acts as a scalar]\leanok
   \label{lem:graded_polyModule_C_smul}
   \lean{AlgebraicGeometry.GradedModule.polyModule_C_smul}
   \uses{def:graded_polyModule, lem:graded_polyEndHom_C}
@@ -1951,8 +1900,7 @@ degree-raising endomorphisms \(t_i\), keeping every carrier an ambient submodule
 \end{lemma}
 
 
-\begin{definition}\leanok
-[Polynomial-ring submodule from a $t$-stable submodule]
+\begin{definition}[Polynomial-ring submodule from a $t$-stable submodule]\leanok
   \label{def:graded_polySubmodule}
   \lean{AlgebraicGeometry.GradedModule.polySubmodule}
   \uses{def:graded_polyModule, lem:graded_polyModule_X_smul,
@@ -1976,10 +1924,7 @@ identity it rests on, and record the two elementary finiteness manipulations
 (shrinking a numerator, enlarging a denominator) used to feed the kernel and
 cokernel constructors.
 
-\begin{definition}
-
-\leanok
-[The last-variable surjection of polynomial rings]
+\begin{definition}[The last-variable surjection of polynomial rings]\leanok
   \label{lem:graded_lastVarAlgHom}
   \lean{AlgebraicGeometry.GradedModule.lastVarAlgHom}
   \lean{AlgebraicGeometry.GradedModule.lastVarAlgHom_X_castSucc}
@@ -2008,10 +1953,7 @@ cokernel constructors.
   (\cref{lem:fg_restrictScalars_of_surjective_mathlib}).
 \end{definition}
 
-\begin{lemma}
-
-\leanok
-[A $t$-stable submodule is closed under the polynomial action]
+\begin{lemma}[A $t$-stable submodule is closed under the polynomial action]\leanok
   \label{lem:graded_polyEndHom_mem_of_stable}
   \lean{AlgebraicGeometry.GradedModule.polyEndHom_mem_of_stable}
   \uses{def:graded_polyEndHom, lem:graded_polyEndHom_X, lem:graded_polyEndHom_C}
@@ -2025,10 +1967,7 @@ cokernel constructors.
   (\cref{lem:graded_polyEndHom_X}), and sums are handled additively.
 \end{lemma}
 
-\begin{lemma}
-
-\leanok
-[Mod-$P'$ semilinearity of the polynomial action]
+\begin{lemma}[Mod-$P'$ semilinearity of the polynomial action]\leanok
   \label{lem:graded_polyEndHom_lastVar_sub_mem}
   \lean{AlgebraicGeometry.GradedModule.polyEndHom_lastVar_sub_mem}
   \uses{def:graded_polyEndHom, lem:graded_polyEndHom_X, lem:graded_polyEndHom_C,
@@ -2056,10 +1995,7 @@ cokernel constructors.
   \(t\)-stable \(P'\) (\cref{lem:graded_polyEndHom_mem_of_stable}).
 \end{lemma}
 
-\begin{lemma}
-
-\leanok
-[Shrinking the numerator preserves finiteness]
+\begin{lemma}[Shrinking the numerator preserves finiteness]\leanok
   \label{lem:graded_polyQuot_finite_of_le_numerator}
   \lean{AlgebraicGeometry.GradedModule.polyQuot_finite_of_le_numerator}
   \uses{def:graded_polyModule, def:graded_polySubmodule,
@@ -2082,10 +2018,7 @@ cokernel constructors.
   (\cref{def:graded_subquotientDatum_ker}).
 \end{lemma}
 
-\begin{lemma}
-
-\leanok
-[Enlarging the denominator preserves finiteness]
+\begin{lemma}[Enlarging the denominator preserves finiteness]\leanok
   \label{lem:graded_polyQuot_finite_of_le_denominator}
   \lean{AlgebraicGeometry.GradedModule.polyQuot_finite_of_le_denominator}
   \uses{def:graded_polyModule, def:graded_polySubmodule,
@@ -2104,8 +2037,7 @@ cokernel constructors.
 
 \subsubsection*{Ambient finiteness transfer}
 
-\begin{lemma}\leanok
-[Abstract single-pair finiteness transfer down one variable]
+\begin{lemma}[Abstract single-pair finiteness transfer down one variable]\leanok
   \label{lem:graded_subquotient_finite_transfer}
   \lean{AlgebraicGeometry.GradedModule.subquotient_finite_transfer}
   \uses{def:graded_polyModule, def:graded_polySubmodule,
@@ -2188,10 +2120,7 @@ lemmas below first record that the new pairs are stable under the \emph{whole}
 endomorphism family (not merely the reduced one), which is what lets the over-\(\kappa[t_0,\dots,t_r]\)
 finiteness inputs be stated before the variable is dropped.
 
-\begin{lemma}
-
-\leanok
-[The kernel pair's lower module is stable under the full family]
+\begin{lemma}[The kernel pair's lower module is stable under the full family]\leanok
   \label{lem:graded_ker_stable_full}
   \lean{AlgebraicGeometry.GradedModule.ker_stable_full}
   \uses{lem:graded_comap_map_le_of_commute}
@@ -2206,10 +2135,7 @@ finiteness inputs be stated before the variable is dropped.
   before the transfer drops the last variable.
 \end{lemma}
 
-\begin{lemma}
-
-\leanok
-[The cokernel pair's upper module is stable under the full family]
+\begin{lemma}[The cokernel pair's upper module is stable under the full family]\leanok
   \label{lem:graded_coker_stable_full}
   \lean{AlgebraicGeometry.GradedModule.coker_stable_full}
   \uses{lem:graded_map_map_le_of_commute}
@@ -2221,10 +2147,7 @@ finiteness inputs be stated before the variable is dropped.
   t_r]\) finiteness input of the cokernel constructor.
 \end{lemma}
 
-\begin{definition}
-
-\leanok
-[Kernel constructor of a subquotient datum]
+\begin{definition}[Kernel constructor of a subquotient datum]\leanok
   \label{def:graded_subquotientDatum_ker}
   \lean{AlgebraicGeometry.GradedModule.SubquotientDatum.ker}
   \uses{def:graded_subquotientHilb, lem:graded_subquotient_ker_coker,
@@ -2252,10 +2175,7 @@ finiteness inputs be stated before the variable is dropped.
   length-\(r\) datum.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Cokernel constructor of a subquotient datum]
+\begin{definition}[Cokernel constructor of a subquotient datum]\leanok
   \label{def:graded_subquotientDatum_coker}
   \lean{AlgebraicGeometry.GradedModule.SubquotientDatum.coker}
   \uses{def:graded_subquotientHilb, lem:graded_subquotient_ker_coker,
@@ -2283,8 +2203,7 @@ finiteness inputs be stated before the variable is dropped.
 
 \subsubsection*{The degreewise difference identity}
 
-\begin{lemma}\leanok
-[$D_5$ -- degreewise rank--nullity difference]
+\begin{lemma}[$D_5$ -- degreewise rank--nullity difference]\leanok
   \label{lem:graded_degreewise_finrank_diff}
   \lean{AlgebraicGeometry.GradedModule.degreewise_finrank_diff}
   \uses{lem:finrank_range_add_finrank_ker_mathlib,
@@ -2338,8 +2257,7 @@ finiteness inputs be stated before the variable is dropped.
 
 \subsubsection*{The base case ($r = 0$)}
 
-\begin{lemma}\leanok
-[Base-case finiteness over the empty polynomial ring]
+\begin{lemma}[Base-case finiteness over the empty polynomial ring]\leanok
   \label{lem:graded_finiteDimensional_of_mvPolynomial_isEmpty_finite}
   \lean{AlgebraicGeometry.GradedModule.finiteDimensional_of_mvPolynomial_isEmpty_finite}
   Let \(Q\) be a \(\kappa\)-vector space that is also a module over
@@ -2355,10 +2273,7 @@ finiteness inputs be stated before the variable is dropped.
   finite-dimensional \(\kappa\)-vector space, hence \(\mathrm{hilb}\) is eventually zero.
 \end{lemma}
 
-\begin{lemma}
-
-\leanok
-[independence of images modulo the kernel]
+\begin{lemma}[independence of images modulo the kernel]\leanok
   \label{lem:graded_iSupIndep_map_of_mem_ker_sup}
   \lean{AlgebraicGeometry.GradedModule.iSupIndep_map_of_mem_ker_sup}
   Let \(\pi : A \to Q\) be a \(\kappa\)-linear map and \((g_i)_{i \in \iota}\) a family of
@@ -2380,10 +2295,7 @@ finiteness inputs be stated before the variable is dropped.
   \(a \in \ker\pi\), whence \(q = \pi(a) = 0\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Base case: the length-zero subquotient Hilbert function vanishes eventually]
+\begin{lemma}[Base case: the length-zero subquotient Hilbert function vanishes eventually]\leanok
   \label{lem:graded_subquotient_base_eventuallyZero}
   \lean{AlgebraicGeometry.GradedModule.subquotient_base_eventuallyZero}
   \uses{def:graded_subquotientHilb,
@@ -2473,8 +2385,7 @@ finiteness inputs be stated before the variable is dropped.
 
 \subsubsection*{The ambient subquotient induction}
 
-\begin{lemma}\leanok
-[Rationality of the ambient subquotient Hilbert function]
+\begin{lemma}[Rationality of the ambient subquotient Hilbert function]\leanok
   \label{lem:graded_subquotient_isRatHilb}
   \lean{AlgebraicGeometry.GradedModule.subquotient_hilbertSeries_rational}
   \uses{def:graded_subquotientHilb, lem:graded_subquotient_ker_coker,
@@ -2560,10 +2471,7 @@ geometric conditions: a coherent quotient must have \emph{schematic support
 proper over the base}, and the Grassmannian's quotients must be \emph{locally
 free of a fixed rank}. This section introduces both predicates.
 
-\begin{definition}
-
-\leanok
-[Annihilator ideal sheaf of a sheaf of modules]
+\begin{definition}[Annihilator ideal sheaf of a sheaf of modules]\leanok
   \label{def:modules_annihilator}
   \lean{AlgebraicGeometry.Scheme.Modules.annihilator}
   % NOTE: The definition carries no \uses: the Lean construction is
@@ -2623,8 +2531,7 @@ free of a fixed rank}. This section introduces both predicates.
   \emph{Note.} Mathlib does not carry an annihilator for sheaves of modules on a scheme.
 \end{definition}
 
-\begin{lemma}\leanok
-[Annihilator ideal bounded by the module annihilator on affine opens]
+\begin{lemma}[Annihilator ideal bounded by the module annihilator on affine opens]\leanok
   \label{lem:modules_annihilator_ideal_le}
   \lean{AlgebraicGeometry.Scheme.Modules.annihilator_ideal_le}
   \uses{def:modules_annihilator}
@@ -2644,8 +2551,7 @@ free of a fixed rank}. This section introduces both predicates.
   (\cref{def:schematic_support}).
 \end{lemma}
 
-\begin{lemma}\leanok
-[Annihilator ideal sheaf equals the module annihilator on affine opens]
+\begin{lemma}[Annihilator ideal sheaf equals the module annihilator on affine opens]\leanok
   \label{lem:modules_annihilator_ideal}
   \lean{AlgebraicGeometry.Scheme.Modules.annihilator_ideal}
   \uses{def:modules_annihilator}
@@ -2862,8 +2768,7 @@ free of a fixed rank}. This section introduces both predicates.
   \(\mathrm{Sheaf}(J, A) \simeq \mathrm{Sheaf}(K, A)\).
 \end{lemma}
 
-\begin{lemma}\leanok
-[The over-equivalence functor is cocontinuous]
+\begin{lemma}[The over-equivalence functor is cocontinuous]\leanok
   \label{lem:overEquivalence_functor_isCocontinuous}
   \lean{AlgebraicGeometry.overEquivalence_functor_isCocontinuous}
   \uses{lem:opens_overEquivalence_mathlib}
@@ -2883,8 +2788,7 @@ free of a fixed rank}. This section introduces both predicates.
   cover-lifting condition.
 \end{proof}
 
-\begin{lemma}\leanok
-[The over-equivalence inverse is cocontinuous]
+\begin{lemma}[The over-equivalence inverse is cocontinuous]\leanok
   \label{lem:overEquivalence_inverse_isCocontinuous}
   \lean{AlgebraicGeometry.overEquivalence_inverse_isCocontinuous}
   \uses{lem:opens_overEquivalence_mathlib}
@@ -2900,8 +2804,7 @@ free of a fixed rank}. This section introduces both predicates.
   of the subspace) to obtain a cover member of \(J_U\) witnessing the lift.
 \end{proof}
 
-\begin{lemma}\leanok
-[The over-equivalence inverse is a dense subsite]
+\begin{lemma}[The over-equivalence inverse is a dense subsite]\leanok
   \label{lem:overEquivalence_inverse_isDenseSubsite}
   \lean{AlgebraicGeometry.overEquivalence_inverse_isDenseSubsite}
   \uses{lem:overEquivalence_functor_isCocontinuous, lem:overEquivalence_inverse_isCocontinuous}
@@ -2913,8 +2816,7 @@ free of a fixed rank}. This section introduces both predicates.
   \cref{lem:overEquivalence_inverse_isCocontinuous}) yields a dense subsite on its inverse.
 \end{lemma}
 
-\begin{lemma}\leanok
-[The over-equivalence functor is continuous]
+\begin{lemma}[The over-equivalence functor is continuous]\leanok
   \label{lem:overEquivalence_functor_isContinuous}
   \lean{AlgebraicGeometry.overEquivalence_functor_isContinuous}
   \uses{lem:overEquivalence_inverse_isCocontinuous}
@@ -2925,8 +2827,7 @@ free of a fixed rank}. This section introduces both predicates.
   left adjoint of a cocontinuous functor is continuous.
 \end{lemma}
 
-\begin{lemma}\leanok
-[The over-equivalence inverse is continuous]
+\begin{lemma}[The over-equivalence inverse is continuous]\leanok
   \label{lem:overEquivalence_inverse_isContinuous}
   \lean{AlgebraicGeometry.overEquivalence_inverse_isContinuous}
   \uses{lem:overEquivalence_functor_isCocontinuous}
@@ -2936,8 +2837,7 @@ free of a fixed rank}. This section introduces both predicates.
   (\cref{lem:overEquivalence_functor_isCocontinuous}) through the equivalence adjunction.
 \end{lemma}
 
-\begin{definition}\leanok
-[The over-site/open-subspace sheaf equivalence]
+\begin{definition}[The over-site/open-subspace sheaf equivalence]\leanok
   \label{def:overEquivalence_sheafCongr}
   \lean{AlgebraicGeometry.overEquivalence_sheafCongr}
   \uses{lem:opens_overEquivalence_mathlib, lem:equivalence_sheafCongr_mathlib,
@@ -2990,8 +2890,7 @@ free of a fixed rank}. This section introduces both predicates.
 
 % --- (C) The single slice-touching bridge ---
 
-\begin{lemma}\leanok
-[The Grothendieck-slice restriction equals the geometric restriction (gap1, C)]
+\begin{lemma}[The Grothendieck-slice restriction equals the geometric restriction (gap1, C)]\leanok
   \label{lem:over_restrict_iso}
   \lean{AlgebraicGeometry.Scheme.Modules.overRestrictIso}
   \uses{lem:modules_restrictFunctor_mathlib, lem:modules_restrictFunctorIsoPullback_mathlib,
@@ -3076,10 +2975,7 @@ free of a fixed rank}. This section introduces both predicates.
 
 % --- (C, step 4') The pullback form of the slice-to-geometric isomorphism ---
 
-\begin{lemma}
-
-\leanok
-[The slice-to-geometric isomorphism in pullback form (gap1, C, step 4')]
+\begin{lemma}[The slice-to-geometric isomorphism in pullback form (gap1, C, step 4')]\leanok
   \label{lem:over_restrict_pullback_iso}
   \lean{AlgebraicGeometry.Scheme.Modules.overRestrictPullbackIso}
   \uses{lem:over_restrict_iso, def:over_restrict_equiv,
@@ -3592,10 +3488,7 @@ section localization]
 \end{proof}
 
 
-\begin{definition}
-
-\leanok
-[Schematic support of a sheaf of modules]
+\begin{definition}[Schematic support of a sheaf of modules]\leanok
   \label{def:schematic_support}
   \lean{AlgebraicGeometry.Scheme.Modules.schematicSupport}
   \uses{def:modules_annihilator, lem:modules_annihilator_ideal_le}
@@ -3619,8 +3512,7 @@ section localization]
   subscheme of \(X\).
 \end{definition}
 
-\begin{definition}\leanok
-[Schematic-support immersion]
+\begin{definition}[Schematic-support immersion]\leanok
   \label{def:schematic_support_immersion}
   \lean{AlgebraicGeometry.Scheme.Modules.schematicSupportι}
   \uses{def:schematic_support, def:modules_annihilator}
@@ -3654,10 +3546,7 @@ section localization]
   \(g \circ f\) is proper and \(g\) is separated, then \(f\) is proper.
 \end{lemma}
 
-\begin{definition}
-
-\leanok
-[Proper support over the base]
+\begin{definition}[Proper support over the base]\leanok
   \label{def:has_proper_support}
   \lean{AlgebraicGeometry.Scheme.Modules.HasProperSupport}
   \uses{def:schematic_support, def:schematic_support_immersion, lem:isProper_mathlib}
@@ -3685,10 +3574,7 @@ section localization]
   functor's pullback action requires.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Locally free of rank \(d\)]
+\begin{definition}[Locally free of rank \(d\)]\leanok
   \label{def:is_locally_free_of_rank}
   \lean{AlgebraicGeometry.SheafOfModules.IsLocallyFreeOfRank}
   % SOURCE: [Nitsure], \S 1, "Elementary Examples, Exercises (2)" and
@@ -3714,8 +3600,7 @@ section localization]
 \section{The Quot functor}
 \label{sec:quot_functor}
 
-\begin{definition}\leanok
-[Quot functor]
+\begin{definition}[Quot functor]\leanok
   \label{def:quot_functor}
   \lean{AlgebraicGeometry.Scheme.QuotFunctor}
   \uses{def:hilbert_polynomial, def:has_proper_support, def:coherent_sheaf_flat,
@@ -3814,8 +3699,7 @@ content of the following four lemmas.  Throughout, write
 \(g' : X_{T'} \to X_T\) for the induced morphism on relative products, which
 is cartesian over \(T' \to T\).
 
-\begin{lemma}\leanok
-[Pullback preserves finite presentation]
+\begin{lemma}[Pullback preserves finite presentation]\leanok
   \label{lem:pullback_finite_presentation}
   \lean{AlgebraicGeometry.Scheme.Modules.pullback_isFinitePresentation}
   \source{nitsure-hilbert-quot}
@@ -3846,8 +3730,7 @@ is cartesian over \(T' \to T\).
   (g^*\mathcal{F})|_{g^{-1}(U_i)} \to 0\) with the same finite index sets.
 \end{proof}
 
-\begin{lemma}\leanok
-[Flatness over the base is stable under base change]
+\begin{lemma}[Flatness over the base is stable under base change]\leanok
   \label{lem:coherent_flat_base_change}
   \lean{AlgebraicGeometry.Scheme.CoherentSheafFlat.of_isPullback}
   \uses{def:coherent_sheaf_flat}
@@ -3923,8 +3806,7 @@ is cartesian over \(T' \to T\).
   \(M\) is a finite \(R\)-module.
 \end{lemma}
 
-\begin{lemma}\leanok
-[Finitely presented modules have finite sections on every affine open]
+\begin{lemma}[Finitely presented modules have finite sections on every affine open]\leanok
   \label{lem:finite_sections_affine_all}
   \lean{AlgebraicGeometry.Scheme.Modules.module_finite_sections_of_isFinitePresentation}
   \source{stacks-project}
@@ -3971,8 +3853,7 @@ is cartesian over \(T' \to T\).
   finiteness of \(\Gamma(\mathcal{F}, V)\) over \(\Gamma(X, V)\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Annihilators are stable under pullback: section level]
+\begin{lemma}[Annihilators are stable under pullback: section level]\leanok
   \label{lem:annihilator_pullback_sections}
   \lean{AlgebraicGeometry.Scheme.Modules.map_app_mem_annihilator_pullback}
   \source{stacks-project, nitsure-hilbert-quot}
@@ -4046,8 +3927,7 @@ is cartesian over \(T' \to T\).
   \(\Gamma(g'^* \mathcal{F}, V')\).
 \end{proof}
 
-\begin{lemma}\leanok
-[The annihilator ideal sheaf pulls back]
+\begin{lemma}[The annihilator ideal sheaf pulls back]\leanok
   \label{lem:annihilator_le_map_pullback}
   \lean{AlgebraicGeometry.Scheme.Modules.annihilator_le_map_pullback}
   \uses{def:modules_annihilator, def:schematic_support_immersion}
@@ -4100,8 +3980,7 @@ is cartesian over \(T' \to T\).
   with \(\iota \circ l = g' \circ \iota'\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Proper support is stable under base change]
+\begin{lemma}[Proper support is stable under base change]\leanok
   \label{lem:proper_support_base_change}
   \lean{AlgebraicGeometry.Scheme.Modules.HasProperSupport.of_isPullback}
   \uses{def:has_proper_support, def:modules_annihilator}
@@ -4145,8 +4024,7 @@ is cartesian over \(T' \to T\).
   \(g'^* \mathcal{F}\) is proper over \(S'\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Pullback commutes with tensor product and twists]
+\begin{lemma}[Pullback commutes with tensor product and twists]\leanok
   \label{lem:pullback_moduleTensorPow}
   \lean{AlgebraicGeometry.Scheme.Modules.pullback_moduleTensorPow_iso}
   \uses{def:sheafTensorObj, def:sheafTensorPow, def:sheafModuleTwist,
@@ -4181,8 +4059,7 @@ is cartesian over \(T' \to T\).
   \cref{lem:pullback_tensor_map_isiso} remains as an open leaf.
 \end{proof}
 
-\begin{lemma}\leanok
-[The canonical pullback--tensor comparison is an isomorphism]
+\begin{lemma}[The canonical pullback--tensor comparison is an isomorphism]\leanok
   \label{lem:pullback_tensor_map_isiso}
   \lean{AlgebraicGeometry.Scheme.Modules.pullbackTensorMap_isIso}
   \uses{def:sheafTensorObj, lem:modules_pullback_mathlib}
@@ -4245,8 +4122,7 @@ the schematic support of the twisted fibre module and its sections, rather
 than through the pole-divisor style argument summarised there). Both are
 pure module algebra, universe-monomorphic and axiom-clean.
 
-\begin{lemma}\leanok
-[Annihilator monotonicity under tensoring]
+\begin{lemma}[Annihilator monotonicity under tensoring]\leanok
   \label{lem:annihilator_le_annihilator_tensorProduct}
   \lean{AlgebraicGeometry.annihilator_le_annihilator_tensorProduct,
     AlgebraicGeometry.annihilator_le_annihilator_tensorProduct_right}
@@ -4287,8 +4163,7 @@ pure module algebra, universe-monomorphic and axiom-clean.
   \cref{rem:tensor_section_formula_gap}.
 \end{remark}
 
-\begin{lemma}\leanok
-[Dimension transport across a base-change linear equivalence]
+\begin{lemma}[Dimension transport across a base-change linear equivalence]\leanok
   \label{lem:finrank_eq_of_baseChange_linearEquiv}
   \lean{AlgebraicGeometry.finrank_eq_of_baseChange_linearEquiv}
   Let \(\kappa \to \kappa'\) be a field extension, \(V\) a \(\kappa\)-vector
@@ -4327,8 +4202,7 @@ presheaf-of-modules tensor product supplies, on every open \(V\), a
 canonical \(\Gamma(X,V)\)-linear comparison map into the sections of the
 substrate tensor \(\mathrm{tensorObj}(A,B)\) (\cref{def:scheme_modules_tensorobj}).
 
-\begin{definition}\leanok
-[The presheaf-of-modules tensor and its section comparison]
+\begin{definition}[The presheaf-of-modules tensor and its section comparison]\leanok
   \label{def:tensor_section_hom}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorPresheaf,
     AlgebraicGeometry.Scheme.Modules.tensorSectionHom,
@@ -4355,8 +4229,7 @@ substrate tensor \(\mathrm{tensorObj}(A,B)\) (\cref{def:scheme_modules_tensorobj
   \(V\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Naturality and normalisation of the section comparison]
+\begin{lemma}[Naturality and normalisation of the section comparison]\leanok
   \label{lem:tensor_section_hom_naturality}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorSectionHom_naturality_apply,
     AlgebraicGeometry.Scheme.Modules.tensorSectionHom_top_eq_sectionsMul}
@@ -4376,8 +4249,7 @@ substrate tensor \(\mathrm{tensorObj}(A,B)\) (\cref{def:scheme_modules_tensorobj
   constructed in \cref{def:sectionMul}.
 \end{proof}
 
-\begin{lemma}\leanok
-[The substrate tensor and the section-graded tensor coincide]
+\begin{lemma}[The substrate tensor and the section-graded tensor coincide]\leanok
   \label{lem:tensorObj_iso_sheafTensorObj}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjIsoSheafTensorObj}
   \uses{def:scheme_modules_tensorobj, def:sheafTensorObj}
@@ -4391,8 +4263,7 @@ substrate tensor \(\mathrm{tensorObj}(A,B)\) (\cref{def:scheme_modules_tensorobj
   Definitional: both constructions sheafify \(A \otimes^p B\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Sheafifying the tensor comparison unit is an isomorphism]
+\begin{lemma}[Sheafifying the tensor comparison unit is an isomorphism]\leanok
   \label{lem:isIso_sheafification_tensorSectionUnit}
   \lean{AlgebraicGeometry.Scheme.Modules.isIso_sheafification_tensorSectionUnit}
   \uses{def:tensor_section_hom}
@@ -4429,8 +4300,7 @@ substrate tensor \(\mathrm{tensorObj}(A,B)\) (\cref{def:scheme_modules_tensorobj
   ringed-space stalk argument sketched there.
 \end{remark}
 
-\begin{lemma}\leanok
-[Sections of the twisted fibre module under residue field extension]
+\begin{lemma}[Sections of the twisted fibre module under residue field extension]\leanok
   \label{lem:gamma_fiber_baseChange_field}
   \lean{AlgebraicGeometry.Scheme.gammaFiber_finrank_baseChange_field}
   \uses{def:fiber_hilbert_function, def:has_proper_support,
@@ -4519,8 +4389,7 @@ substrate tensor \(\mathrm{tensorObj}(A,B)\) (\cref{def:scheme_modules_tensorobj
   \Gamma\bigl((X_T)_t, \mathcal{M}\bigr)\) yields the claim.
 \end{proof}
 
-\begin{lemma}\leanok
-[The fibrewise Hilbert function is invariant under base change]
+\begin{lemma}[The fibrewise Hilbert function is invariant under base change]\leanok
   \label{lem:hilbert_fibre_base_change}
   \lean{AlgebraicGeometry.Scheme.hilbertFunction_quotBaseMap}
   \uses{def:fiber_hilbert_function, def:has_proper_support}
@@ -4612,8 +4481,7 @@ functor \(\Hilb_{X/S} = \Quot_{\mathcal O_X/X/S}\) (before the
 Hilbert-polynomial decomposition) as the quotients of
 \(\mathcal O_{X_T}\) whose kernel ideal is invertible.
 
-\begin{definition}\leanok
-[Family of relative effective divisors]
+\begin{definition}[Family of relative effective divisors]\leanok
   \label{def:div_family}
   \lean{AlgebraicGeometry.Scheme.DivFamily}
   \uses{def:has_proper_support, def:coherent_sheaf_flat, def:IsLocallyTrivial}
@@ -4649,8 +4517,7 @@ Hilbert-polynomial decomposition) as the quotients of
   the \(T\)-proper \(X_T\) is proper over \(T\)).
 \end{definition}
 
-\begin{lemma}\leanok
-[Invertibility is invariant under isomorphism]
+\begin{lemma}[Invertibility is invariant under isomorphism]\leanok
   \label{lem:locally_trivial_of_iso}
   \lean{AlgebraicGeometry.Scheme.LineBundle.IsLocallyTrivial.of_iso}
   \uses{def:IsLocallyTrivial}
@@ -4665,8 +4532,7 @@ Hilbert-polynomial decomposition) as the quotients of
   restricts to \(N|_U \cong M|_U \cong \mathcal O_U\).
 \end{proof}
 
-\begin{lemma}\leanok
-[A trivialising chart restricts to any smaller open]
+\begin{lemma}[A trivialising chart restricts to any smaller open]\leanok
   \label{lem:IsLocallyTrivial_trivialization_of_le}
   \lean{AlgebraicGeometry.Scheme.LineBundle.IsLocallyTrivial.trivialization_of_le}
   \uses{def:IsLocallyTrivial}
@@ -4684,8 +4550,7 @@ Hilbert-polynomial decomposition) as the quotients of
   \cong \mathcal O_V\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Affine trivialising charts are cofinal]
+\begin{lemma}[Affine trivialising charts are cofinal]\leanok
   \label{cor:IsLocallyTrivial_exists_affine_trivializing_le}
   \lean{AlgebraicGeometry.Scheme.LineBundle.IsLocallyTrivial.exists_affine_trivializing_le}
   \uses{def:IsLocallyTrivial, lem:IsLocallyTrivial_trivialization_of_le}
@@ -4702,8 +4567,7 @@ Hilbert-polynomial decomposition) as the quotients of
   \cref{lem:IsLocallyTrivial_trivialization_of_le} gives the claim.
 \end{proof}
 
-\begin{lemma}\leanok
-[Flat cokernel keeps a tensored kernel inclusion injective]
+\begin{lemma}[Flat cokernel keeps a tensored kernel inclusion injective]\leanok
   \label{lem:flat_cokernel_rTensor_injective}
   \lean{Module.Flat.rTensor_injective_of_exact}
   \source{stacks-project}
@@ -4746,8 +4610,7 @@ Hilbert-polynomial decomposition) as the quotients of
   \(x = (\mathrm{id}_A \otimes \pi)(y) = 0\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Flat cokernel keeps a tensored kernel inclusion injective, left-tensor form]
+\begin{lemma}[Flat cokernel keeps a tensored kernel inclusion injective, left-tensor form]\leanok
   \label{lem:flat_cokernel_lTensor_injective}
   \lean{Module.Flat.lTensor_injective_of_exact}
   \uses{lem:flat_cokernel_rTensor_injective}
@@ -4766,8 +4629,7 @@ Hilbert-polynomial decomposition) as the quotients of
   injective maps.
 \end{proof}
 
-\begin{lemma}\leanok
-[Base change of the ideal of a relative effective divisor]
+\begin{lemma}[Base change of the ideal of a relative effective divisor]\leanok
   \label{lem:relative_divisor_base_change}
   \lean{AlgebraicGeometry.Scheme.Modules.pullback_kernel_isLocallyTrivial}
   \uses{def:coherent_sheaf_flat, def:IsLocallyTrivial}
@@ -4892,8 +4754,7 @@ Hilbert-polynomial decomposition) as the quotients of
   (\cref{lem:modules_pullback_mathlib}).
 \end{definition}
 
-\begin{lemma}\leanok
-[Local triviality transports along an isomorphic kernel comparison]
+\begin{lemma}[Local triviality transports along an isomorphic kernel comparison]\leanok
   \label{lem:pullback_kernel_isLocallyTrivial_of_isIso_kernelComparison}
   \lean{AlgebraicGeometry.Scheme.Modules.pullback_kernel_isLocallyTrivial_of_isIso_kernelComparison}
   \uses{def:pullback_kernel_comparison, lem:IsLocallyTrivial_pullback,
@@ -4911,8 +4772,7 @@ Hilbert-polynomial decomposition) as the quotients of
   \(\ker(g'^{*} q)\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Basis-local criterion for a monomorphism of sheaves of modules]
+\begin{lemma}[Basis-local criterion for a monomorphism of sheaves of modules]\leanok
   \label{lem:modules_mono_of_injective_app_of_isBasis}
   \lean{AlgebraicGeometry.Scheme.Modules.mono_of_injective_app_of_isBasis}
   Let \(B\) be a basis of opens of a scheme \(X\) and let
@@ -4927,8 +4787,7 @@ Hilbert-polynomial decomposition) as the quotients of
   sheaves of abelian groups reflects monomorphisms.
 \end{proof}
 
-\begin{lemma}\leanok
-[The kernel--pullback comparison is an epimorphism when \(q\) is]
+\begin{lemma}[The kernel--pullback comparison is an epimorphism when \(q\) is]\leanok
   \label{lem:pullback_kernel_comparison_epi}
   \lean{AlgebraicGeometry.Scheme.Modules.epi_pullbackKernelComparison}
   \uses{def:pullback_kernel_comparison}
@@ -4946,8 +4805,7 @@ Hilbert-polynomial decomposition) as the quotients of
   \(\kappa_{g',q}\) is an epimorphism.
 \end{proof}
 
-\begin{lemma}\leanok
-[The kernel--pullback comparison is an isomorphism once it is monic]
+\begin{lemma}[The kernel--pullback comparison is an isomorphism once it is monic]\leanok
   \label{lem:pullback_kernel_comparison_iso_of_mono}
   \lean{AlgebraicGeometry.Scheme.Modules.isIso_pullbackKernelComparison_of_mono}
   \uses{def:pullback_kernel_comparison, lem:pullback_kernel_comparison_epi}
@@ -5004,8 +4862,7 @@ Hilbert-polynomial decomposition) as the quotients of
   general (\cref{lem:relative_divisor_base_change_comparison_iso}).
 \end{remark}
 
-\begin{lemma}\leanok
-[The kernel--pullback comparison is an isomorphism under base-flatness]
+\begin{lemma}[The kernel--pullback comparison is an isomorphism under base-flatness]\leanok
   \label{lem:relative_divisor_base_change_comparison_iso}
   \lean{AlgebraicGeometry.Scheme.Modules.isIso_pullbackKernelComparison}
   \uses{def:pullback_kernel_comparison, lem:relative_divisor_base_change}
@@ -5028,8 +4885,7 @@ Hilbert-polynomial decomposition) as the quotients of
   divisors (\cref{def:div_functor}).
 \end{proof}
 
-\begin{lemma}\leanok
-[The structure sheaf is quasi-coherent]
+\begin{lemma}[The structure sheaf is quasi-coherent]\leanok
   \label{lem:unit_isQuasicoherent}
   \lean{AlgebraicGeometry.Scheme.Modules.unit_isQuasicoherent}
   For every scheme \(X\), the unit module \(\mathcal O_X\) (the unit object
@@ -5041,8 +4897,7 @@ Hilbert-polynomial decomposition) as the quotients of
   one-member cover \(\{X\}\); this is a quasi-coherence datum.
 \end{proof}
 
-\begin{definition}\leanok
-[Relative-divisor functor]
+\begin{definition}[Relative-divisor functor]\leanok
   \label{def:div_functor}
   \lean{AlgebraicGeometry.Scheme.DivFunctor}
   \uses{def:div_family, lem:relative_divisor_base_change,
@@ -5083,8 +4938,7 @@ locally closed subfunctor of a Grassmannian over \(S\). Since Mathlib carries
 no Grassmannian \emph{scheme} (only a finite-rank-quotient variety in
 linear algebra), we package the construction here.
 
-\begin{definition}\leanok
-[Grassmannian scheme]
+\begin{definition}[Grassmannian scheme]\leanok
   \label{def:grassmannian_scheme}
   \lean{AlgebraicGeometry.Scheme.Grassmannian}
   \uses{def:is_locally_free_of_rank}
@@ -5171,8 +5025,7 @@ linear algebra), we package the construction here.
   the \(X_i\) along the pairwise pullbacks \(h_{X_i} \times_G h_{X_j}\).
 \end{lemma}
 
-\begin{lemma}\leanok
-[Representability of the Grassmannian, trivialised case]
+\begin{lemma}[Representability of the Grassmannian, trivialised case]\leanok
   \label{lem:grassmannian_representable_free}
   \lean{AlgebraicGeometry.Scheme.Grassmannian.representable_of_iso_free}
   \uses{def:grassmannian_scheme, thm:grassmannian_universal_property,
@@ -5220,8 +5073,7 @@ linear algebra), we package the construction here.
   classes match because the re-presentation composes with isomorphisms only.
 \end{proof}
 
-\begin{definition}\leanok
-[Zariski sheaf axiom on \(\mathrm{Sch}/S\)]
+\begin{definition}[Zariski sheaf axiom on \(\mathrm{Sch}/S\)]\leanok
   \label{def:zariski_sheaf_over}
   \lean{AlgebraicGeometry.Scheme.IsZariskiSheafOver}
   A presheaf \(F : (\mathrm{Sch}/S)^{op} \to \mathbf{Set}\) \emph{satisfies
@@ -5234,8 +5086,7 @@ linear algebra), we package the construction here.
   covers of the total space; every representable presheaf satisfies it.
 \end{definition}
 
-\begin{theorem}\leanok
-[Zariski descent of representability]
+\begin{theorem}[Zariski descent of representability]\leanok
   \label{thm:representability_zariski_descent}
   \lean{AlgebraicGeometry.Scheme.representable_of_openCover}
   \uses{def:zariski_sheaf_over, lem:functor_is_representable_mathlib,
@@ -5301,8 +5152,7 @@ linear algebra), we package the construction here.
   \(F\) is representable by the \(S\)-scheme \((\hat{Y}, \hat{a})\).
 \end{proof}
 
-\begin{lemma}\leanok
-[The Grassmannian functor is a Zariski sheaf]
+\begin{lemma}[The Grassmannian functor is a Zariski sheaf]\leanok
   \label{lem:grassmannian_zariski_sheaf}
   \lean{AlgebraicGeometry.Scheme.Grassmannian.isZariskiSheaf,
     AlgebraicGeometry.Scheme.grassmannian_isZariskiSheafOver}
@@ -5363,8 +5213,7 @@ linear algebra), we package the construction here.
   epi-cancellation, so the two glued points are equivalent.
 \end{proof}
 
-\begin{theorem}\leanok
-[Representability of the Grassmannian]
+\begin{theorem}[Representability of the Grassmannian]\leanok
   \label{thm:grassmannian_representable}
   \lean{AlgebraicGeometry.Scheme.Grassmannian.representable}
   \uses{def:grassmannian_scheme, def:is_locally_free_of_rank,
@@ -5742,8 +5591,7 @@ stability properties.
   \(\operatorname{Proj} \mathbb{Z}[X_i]\).
 \end{proof}
 
-\begin{lemma}\leanok
-[The Serre twist is a locally trivial line bundle]
+\begin{lemma}[The Serre twist is a locally trivial line bundle]\leanok
   \label{lem:serreTwist_isLocallyTrivial}
   \lean{AlgebraicGeometry.ProjTwist.serreTwist_isLocallyTrivial,
     AlgebraicGeometry.ProjTwist.twistingSheaf_isLocallyTrivial}
@@ -5771,8 +5619,7 @@ stability properties.
   (\cref{def:twisting_sheaf}) --- is locally trivial as well.
 \end{proof}
 
-\begin{corollary}\leanok
-[Finite presentation and quasi-coherence of the Serre twist]
+\begin{corollary}[Finite presentation and quasi-coherence of the Serre twist]\leanok
   \label{cor:serreTwist_isFinitePresentation}
   \lean{AlgebraicGeometry.ProjTwist.serreTwist_isFinitePresentation,
     AlgebraicGeometry.ProjTwist.twistingSheaf_isFinitePresentation}
@@ -5788,8 +5635,7 @@ stability properties.
   presentation by \cref{cor:lbc_isFiniteType}.
 \end{proof}
 
-\begin{theorem}\leanok
-[\(H^0\) base change of the Serre twist over a flat affine base]
+\begin{theorem}[\(H^0\) base change of the Serre twist over a flat affine base]\leanok
   \label{thm:serreTwist_sections_baseChange}
   \lean{AlgebraicGeometry.ProjTwist.serreTwistSectionsBaseChange}
   \uses{thm:quot_pullback_baseMap_sectionEquiv_qc,
@@ -6284,8 +6130,7 @@ identification with the degree-zero localisation \(\mathrm{Away}(X_i)\), a
 compatible family becomes a family of away-fractions related on overlaps by
 the transition unit, and a single degree-\(m\) form gives such a family.
 
-\begin{lemma}\leanok
-[The second descent leg of the Serre-twist datum, concretely]
+\begin{lemma}[The second descent leg of the Serre-twist datum, concretely]\leanok
   \label{lem:serre_twist_b_leg}
   \lean{AlgebraicGeometry.ProjTwist.glueLegBComponent_twist,
     AlgebraicGeometry.ProjTwist.glueLegBComponent_twist_app,
@@ -6323,8 +6168,7 @@ the transition unit, and a single degree-\(m\) form gives such a family.
   identity on sections; composing these gives the stated formula.
 \end{proof}
 
-\begin{lemma}\leanok
-[The concrete Serre-twist compatible-family condition]
+\begin{lemma}[The concrete Serre-twist compatible-family condition]\leanok
   \label{lem:serre_twist_compatible_condition}
   \lean{AlgebraicGeometry.ProjTwist.trivialize_appTop_injective,
     AlgebraicGeometry.ProjTwist.serreTwist_mem_glueGammaCompatible_iff}
@@ -6352,8 +6196,7 @@ the transition unit, and a single degree-\(m\) form gives such a family.
   original one.
 \end{proof}
 
-\begin{definition}\leanok
-[Chart sections as the degree-zero localisation]
+\begin{definition}[Chart sections as the degree-zero localisation]\leanok
   \label{def:chart_sections_away}
   \lean{AlgebraicGeometry.ProjTwist.chartSectionsIso}
   \uses{def:serre_twist}
@@ -6383,8 +6226,7 @@ single homogeneous form, its consequence that the degree-\(m\) forms embed
 into \(\Gamma(\mathcal O(m))\), and the coordinate sections of
 \(\mathcal O(1)\).
 
-\begin{lemma}\leanok
-[The away-fraction bridge]
+\begin{lemma}[The away-fraction bridge]\leanok
   \label{lem:serre_twist_away_bridge}
   \lean{AlgebraicGeometry.ProjTwist.appTop_f_chartSectionsIso,
     AlgebraicGeometry.ProjTwist.appTop_tf_chartSectionsIso}
@@ -6406,8 +6248,7 @@ into \(\Gamma(\mathcal O(m))\), and the coordinate sections of
   degree-zero ring \(\mathrm{Away}(X_i X_j)\).
 \end{proof}
 
-\begin{lemma}\leanok
-[A single form gives a compatible family]
+\begin{lemma}[A single form gives a compatible family]\leanok
   \label{lem:serre_twist_form_compatible}
   \lean{AlgebraicGeometry.ProjTwist.formChart_compat,
     AlgebraicGeometry.ProjTwist.formFamily_mem}
@@ -6427,8 +6268,7 @@ into \(\Gamma(\mathcal O(m))\), and the coordinate sections of
   condition of \Cref{lem:serre_twist_compatible_condition}.
 \end{proof}
 
-\begin{lemma}\leanok
-[The degree-\(m\) forms embed as global sections of \(\mathcal O(m)\)]
+\begin{lemma}[The degree-\(m\) forms embed as global sections of \(\mathcal O(m)\)]\leanok
   \label{lem:serre_twist_forms_embed}
   \lean{AlgebraicGeometry.ProjTwist.formSectionHom,
     AlgebraicGeometry.ProjTwist.formSectionHom_injective}
@@ -6455,8 +6295,7 @@ into \(\Gamma(\mathcal O(m))\), and the coordinate sections of
   \(F = F'\) after clearing the nonzerodivisor \(X_i^m\).
 \end{proof}
 
-\begin{definition}\leanok
-[Coordinate global sections of \(\mathcal O(1)\)]
+\begin{definition}[Coordinate global sections of \(\mathcal O(1)\)]\leanok
   \label{def:coordinate_section}
   \lean{AlgebraicGeometry.ProjTwist.coordSection,
     AlgebraicGeometry.ProjTwist.glueProj_coordSectionGlued}
@@ -6474,8 +6313,7 @@ into \(\Gamma(\mathcal O(m))\), and the coordinate sections of
   value of \Cref{lem:serre_twist_form_compatible} applied to that same form.
 \end{proof}
 
-\begin{lemma}\leanok
-[Global sections of \(\mathcal O(m)\) are the degree-\(m\) forms]
+\begin{lemma}[Global sections of \(\mathcal O(m)\) are the degree-\(m\) forms]\leanok
   \label{lem:serre_twist_sections}
   \lean{AlgebraicGeometry.ProjTwist.formSectionEquiv,
     AlgebraicGeometry.ProjTwist.formSectionHom_surjective}
@@ -6666,8 +6504,7 @@ graded Hilbert function --- hence the genuineness of the Hilbert polynomial
 \section{Representability of the Quot scheme}
 \label{sec:quot_representable}
 
-\begin{theorem}\leanok
-[Representability of the Quot functor]
+\begin{theorem}[Representability of the Quot functor]\leanok
   \label{thm:quot_representable}
   \lean{AlgebraicGeometry.Scheme.QuotScheme}
   % FAITHFUL ENCODING (inbox I-0118, restated 2026-07-07, commit 320a340e6d): the
@@ -7078,8 +6915,7 @@ boundedness step (\cref{lem:quot_boundedness}) and the Grassmannian
 embedding (\cref{lem:quot_alpha_injective}). We record the relevant
 statement as a named theorem so the Lean encoding can cite it directly.
 
-\begin{theorem}\leanok
-[Degree-zero flat base change]
+\begin{theorem}[Degree-zero flat base change]\leanok
   \label{thm:flat_base_change_cohomology}
   \lean{AlgebraicGeometry.flatBaseChangeCohomology}
   \uses{def:quot_canonical_basechange_map}
@@ -7212,8 +7048,7 @@ first, in the pure module-theoretic form of
   \(\Phi\) uniquely.
 \end{proof}
 
-\begin{definition}\leanok
-[Canonical base-change map on sheaves of modules]
+\begin{definition}[Canonical base-change map on sheaves of modules]\leanok
   \label{def:quot_canonical_basechange_map}
   \lean{AlgebraicGeometry.canonicalBaseChangeMap}
   Given a cartesian square of schemes
@@ -7229,8 +7064,7 @@ first, in the pure module-theoretic form of
   construction requires no flatness hypothesis.
 \end{definition}
 
-\begin{theorem}\leanok
-[Section-wise base-change isomorphism]
+\begin{theorem}[Section-wise base-change isomorphism]\leanok
   \label{thm:quot_canonical_basechange_app_app_isIso}
   \lean{AlgebraicGeometry.canonicalBaseChangeMap_app_app_isIso}
   \uses{def:quot_canonical_basechange_map}
@@ -7525,10 +7359,7 @@ first, in the pure module-theoretic form of
   \(e_R \circ e_L^{-1}\), hence is bijective.
 \end{proof}
 
-\begin{theorem}
-
-\leanok
-[Affine-base case of the section-wise base-change isomorphism]
+\begin{theorem}[Affine-base case of the section-wise base-change isomorphism]\leanok
   \label{thm:quot_canonical_basechange_app_app_isIso_of_isAffineBase}
   \lean{AlgebraicGeometry.canonicalBaseChangeMap_app_app_isIso_of_isAffineOpen_of_isAffineBase}
   \uses{def:quot_canonical_basechange_map}
@@ -7547,10 +7378,7 @@ first, in the pure module-theoretic form of
   applies to the pair \((V, U)\).
 \end{proof}
 
-\begin{theorem}
-
-\leanok
-[Affine-open case of the section-wise base-change isomorphism]
+\begin{theorem}[Affine-open case of the section-wise base-change isomorphism]\leanok
   \label{thm:quot_canonical_basechange_app_app_isIso_of_isAffineOpen}
   \lean{AlgebraicGeometry.canonicalBaseChangeMap_app_app_isIso_of_isAffineOpen}
   \uses{def:quot_canonical_basechange_map}
@@ -7577,10 +7405,7 @@ first, in the pure module-theoretic form of
   fact over every open) is an isomorphism.
 \end{proof}
 
-\begin{theorem}
-
-\leanok
-[Basis-locality reduction for the section-wise base-change isomorphism]
+\begin{theorem}[Basis-locality reduction for the section-wise base-change isomorphism]\leanok
   \label{thm:quot_canonical_basechange_app_app_isIso_of_affineCover}
   \lean{AlgebraicGeometry.canonicalBaseChangeMap_app_app_isIso_of_affineCover}
   \uses{def:quot_canonical_basechange_map}
@@ -7603,10 +7428,7 @@ first, in the pure module-theoretic form of
   opens); its section over every open \(U\) is then an isomorphism.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Definitional section identity for pushforward of a pullback]
+\begin{lemma}[Definitional section identity for pushforward of a pullback]\leanok
   \label{lem:quot_pushforward_pullback_section_eq}
   \lean{AlgebraicGeometry.pushforward_pullback_section_eq_pullback_section}
   \uses{def:quot_canonical_basechange_map}
@@ -7632,8 +7454,7 @@ first, in the pure module-theoretic form of
   identity to \(\mathcal G=g'^*\mathcal F\).
 \end{proof}
 
-\begin{theorem}\leanok
-[Canonical base-change map is a sheaf isomorphism]
+\begin{theorem}[Canonical base-change map is a sheaf isomorphism]\leanok
   \label{thm:quot_canonical_basechange_isIso}
   \lean{AlgebraicGeometry.canonicalBaseChangeMap_isIso}
   \uses{def:quot_canonical_basechange_map}
@@ -7651,8 +7472,7 @@ first, in the pure module-theoretic form of
   \cref{thm:quot_canonical_basechange_app_app_isIso}.
 \end{proof}
 
-\begin{definition}\leanok
-[Tensor-presentation of the pullback-of-sections functor]
+\begin{definition}[Tensor-presentation of the pullback-of-sections functor]\leanok
   \label{def:quot_pullback_app_isoTensor}
   \lean{AlgebraicGeometry.Scheme.Modules.pullback_app_isoTensor}
   \uses{def:quot_canonical_basechange_map, thm:quot_pullback_app_isoTensor_isBaseChange}
@@ -7669,10 +7489,7 @@ first, in the pure module-theoretic form of
   displayed tensor-presentation equivalence.
 \end{definition}
 
-\begin{definition}
-
-\leanok
-[Adjunction-unit base linear map at a section]
+\begin{definition}[Adjunction-unit base linear map at a section]\leanok
   \label{def:quot_pullback_app_isoTensor_unitAtV}
   \lean{AlgebraicGeometry.pullback_app_isoTensor_unitAtV}
   Given a morphism \(g : Y \to X\) of schemes, a sheaf of
@@ -7696,10 +7513,7 @@ first, in the pure module-theoretic form of
   \(\Gamma(X,V)\)-linearity.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[Section-level base map for the pullback]
+\begin{definition}[Section-level base map for the pullback]\leanok
   \label{def:quot_pullback_app_isoTensor_baseMap}
   \lean{AlgebraicGeometry.pullback_app_isoTensor_baseMap}
   \uses{def:quot_pullback_app_isoTensor_unitAtV}
@@ -7727,10 +7541,7 @@ first, in the pure module-theoretic form of
   \(\Gamma(X,V)\to\Gamma(Y,U)\), hence linear after restriction of scalars.
 \end{proof}
 
-\begin{theorem}
-
-\leanok
-[The base map is a base change]
+\begin{theorem}[The base map is a base change]\leanok
   \label{thm:quot_pullback_app_isoTensor_baseMap_isBaseChange}
   \lean{AlgebraicGeometry.pullback_app_isoTensor_baseMap_isBaseChange}
   \uses{def:quot_pullback_app_isoTensor_baseMap, def:pullback_app_isoTensor_sigma}
@@ -7755,10 +7566,7 @@ first, in the pure module-theoretic form of
   asserted base-change property.
 \end{proof}
 
-\begin{theorem}
-
-\leanok
-[Existence of the tensor-presentation equivalence]
+\begin{theorem}[Existence of the tensor-presentation equivalence]\leanok
   \label{thm:quot_pullback_app_isoTensor_isBaseChange}
   \lean{AlgebraicGeometry.pullback_app_isoTensor_isBaseChange}
   \uses{thm:quot_pullback_app_isoTensor_baseMap_isBaseChange}
@@ -7781,10 +7589,7 @@ first, in the pure module-theoretic form of
   tensor-presentation equivalence.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[\(\Sigma\)-pair packaging: section-level LinearEquiv + intertwining]
+\begin{definition}[\(\Sigma\)-pair packaging: section-level LinearEquiv + intertwining]\leanok
   \label{def:pullback_app_isoTensor_sigma}
   \lean{AlgebraicGeometry.pullback_app_isoTensor_baseMap_sectionLinearEquiv}
   \uses{def:quot_pullback_app_isoTensor_baseMap, def:quot_canonical_basechange_map,
@@ -8135,10 +7940,7 @@ its sections, tilde sheaves commute with affine base change, and pullback
 along the spectrum presentation of an affine open agrees with restriction.
 The following results record these ingredients separately.
 
-\begin{lemma}
-
-\leanok
-[Quasi-coherent module on an affine open is \texttt{tilde} of its sections (Stacks 01I8)]
+\begin{lemma}[Quasi-coherent module on an affine open is \texttt{tilde} of its sections (Stacks 01I8)]\leanok
   \label{lem:tildeIso_of_isQuasicoherent_isAffineOpen}
   \lean{AlgebraicGeometry.tildeIso_of_isQuasicoherent_isAffineOpen}
   \uses{def:quot_canonical_basechange_map, lem:qcoh_affine_isIso_fromTildeΓ}
@@ -8203,11 +8005,7 @@ The following results record these ingredients separately.
   \(\top\) is the identity restriction.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Section-level transport for pullback along an affine open's
-\texttt{fromSpec}]
+\begin{lemma}[Section-level transport for pullback along an affine open's \texttt{fromSpec}]\leanok
   \label{lem:pullback_of_openImmersion_iso_restrict}
   \lean{AlgebraicGeometry.pullback_of_openImmersion_iso_restrict}
   \uses{def:quot_canonical_basechange_map}

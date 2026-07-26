@@ -73,8 +73,7 @@ cocycle condition can be expressed cleanly.
   Mathlib.
 \end{definition}
 
-\begin{lemma}\leanok
-[Base-change transport of a transition isomorphism to a triple overlap]
+\begin{lemma}[Base-change transport of a transition isomorphism to a triple overlap]\leanok
   \label{lem:modules_pullback_basechange_transport}
   \lean{AlgebraicGeometry.Scheme.Modules.pullbackBaseChangeTransport}
   \uses{def:modules_pullbackComp, def:gr_the_glue_data}
@@ -154,10 +153,7 @@ cocycle condition can be expressed cleanly.
 % That route is abandoned; the gluing is now the equalizer of pushforwards described in the
 % Construction paragraph of \cref{def:scheme_modules_glue}, which subsumes it.
 
-\begin{definition}
-
-\leanok
-[Gluing a sheaf of modules along an open cover]
+\begin{definition}[Gluing a sheaf of modules along an open cover]\leanok
   \label{def:scheme_modules_glue}
   \lean{AlgebraicGeometry.Scheme.Modules.glue}
   \uses{def:gr_the_glue_data, def:modules_pullbackComp,
@@ -337,8 +333,7 @@ only when the underlying site functor \(\mathrm{Opens.map}\,\varphi\) is \emph{f
 following three blocks remove that restriction for every morphism, and the resulting
 pullback machinery preserves rank-\(d\) local freeness.
 
-\begin{lemma}\leanok
-[The opens-pullback functor is final]
+\begin{lemma}[The opens-pullback functor is final]\leanok
   \label{lem:gr_opensMap_final}
   \lean{AlgebraicGeometry.Scheme.Modules.opensMap_final}
   For any morphism of schemes \(\varphi : T' \to T\), the inverse-image functor on opens
@@ -357,8 +352,7 @@ pullback machinery preserves rank-\(d\) local freeness.
   and a category with a terminal object is connected.
 \end{proof}
 
-\begin{lemma}\leanok
-[Pullback of a free sheaf is free]
+\begin{lemma}[Pullback of a free sheaf is free]\leanok
   \label{lem:gr_pullbackFreeIso}
   \lean{AlgebraicGeometry.Scheme.Modules.pullbackFreeIso}
   \uses{lem:gr_opensMap_final}
@@ -389,8 +383,7 @@ in Mathlib; it is assembled from two small project-local helpers that turn a glo
 function into a scalar endomorphism of the structure sheaf, after which the matrix
 is reconstituted entry-by-entry over a finite biproduct.
 
-\begin{definition}\leanok
-[Global section of the unit module]
+\begin{definition}[Global section of the unit module]\leanok
   \label{def:gr_globalUnitSection}
   \lean{AlgebraicGeometry.Grassmannian.globalUnitSection}
   \uses{lem:moduleUnit_mathlib}
@@ -404,8 +397,7 @@ is reconstituted entry-by-entry over a finite biproduct.
   global function.
 \end{definition}
 
-\begin{definition}\leanok
-[Scalar endomorphism of \(\mathcal{O}_X\)]
+\begin{definition}[Scalar endomorphism of \(\mathcal{O}_X\)]\leanok
   \label{def:gr_scalarEnd}
   \lean{AlgebraicGeometry.Grassmannian.scalarEnd}
   \uses{def:gr_globalUnitSection, lem:moduleUnit_mathlib}
@@ -420,8 +412,7 @@ is reconstituted entry-by-entry over a finite biproduct.
   building blocks of the chart quotient.
 \end{definition}
 
-\begin{lemma}\leanok
-[Scalar endomorphism of the unit is the identity]
+\begin{lemma}[Scalar endomorphism of the unit is the identity]\leanok
   \label{lem:gr_scalarEnd_one}
   \lean{AlgebraicGeometry.Grassmannian.scalarEnd_one}
   \uses{def:gr_scalarEnd}
@@ -437,8 +428,7 @@ is reconstituted entry-by-entry over a finite biproduct.
   corresponds to \(\mathrm{id}_{\mathbf{1}}\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Scalar endomorphism of the zero function is zero]
+\begin{lemma}[Scalar endomorphism of the zero function is zero]\leanok
   \label{lem:gr_scalarEnd_zero}
   \lean{AlgebraicGeometry.Grassmannian.scalarEnd_zero}
   \uses{def:gr_scalarEnd}
@@ -453,8 +443,7 @@ is reconstituted entry-by-entry over a finite biproduct.
   endomorphism of the unit module is the zero map.
 \end{proof}
 
-\begin{lemma}\leanok
-[Composition of scalar endomorphisms is multiplication]
+\begin{lemma}[Composition of scalar endomorphisms is multiplication]\leanok
   \label{lem:gr_scalarEnd_comp}
   \lean{AlgebraicGeometry.Grassmannian.scalarEnd_comp}
   \uses{def:gr_scalarEnd}
@@ -470,8 +459,7 @@ is reconstituted entry-by-entry over a finite biproduct.
   restriction maps are ring homomorphisms.
 \end{proof}
 
-\begin{lemma}\leanok
-[Scalar endomorphism is additive]
+\begin{lemma}[Scalar endomorphism is additive]\leanok
   \label{lem:gr_scalarEnd_add}
   \lean{AlgebraicGeometry.Grassmannian.scalarEnd_add}
   \uses{def:gr_scalarEnd}
@@ -495,8 +483,7 @@ functor and record its two structural identities -- that it carries matrix
 multiplication to composition and the identity matrix to the identity -- which are
 the algebraic heart of the bundle cocycle.
 
-\begin{definition}\leanok
-[Matrix endomorphism of the free sheaf]
+\begin{definition}[Matrix endomorphism of the free sheaf]\leanok
   \label{def:gr_matrixEnd}
   \lean{AlgebraicGeometry.Grassmannian.matrixEnd}
   \uses{def:gr_scalarEnd}
@@ -513,8 +500,7 @@ the algebraic heart of the bundle cocycle.
   Mathlib ``matrix \(\mapsto\) endomorphism of a free sheaf'' primitive.
 \end{definition}
 
-\begin{lemma}\leanok
-[Matrix endomorphism carries multiplication to composition]
+\begin{lemma}[Matrix endomorphism carries multiplication to composition]\leanok
   \label{lem:gr_matrixEnd_comp}
   \lean{AlgebraicGeometry.Grassmannian.matrixEnd_comp}
   \uses{def:gr_matrixEnd, lem:gr_scalarEnd_comp, lem:gr_scalarEnd_add}
@@ -542,8 +528,7 @@ the algebraic heart of the bundle cocycle.
   order is the contravariance of the column/component indexing.
 \end{proof}
 
-\begin{lemma}\leanok
-[Matrix endomorphism of the identity is the identity]
+\begin{lemma}[Matrix endomorphism of the identity is the identity]\leanok
   \label{lem:gr_matrixEnd_one}
   \lean{AlgebraicGeometry.Grassmannian.matrixEnd_one}
   \uses{def:gr_matrixEnd, lem:gr_scalarEnd_one, lem:gr_scalarEnd_zero}
@@ -559,8 +544,7 @@ the algebraic heart of the bundle cocycle.
   component matrix is the identity of the biproduct.
 \end{proof}
 
-\begin{definition}\leanok
-[Free-sheaf automorphism of an invertible matrix]
+\begin{definition}[Free-sheaf automorphism of an invertible matrix]\leanok
   \label{def:gr_matrixToFreeIso}
   \lean{AlgebraicGeometry.Grassmannian.matrixToFreeIso}
   \uses{def:gr_matrixEnd, lem:gr_matrixEnd_comp, lem:gr_matrixEnd_one}
@@ -575,8 +559,7 @@ the algebraic heart of the bundle cocycle.
   (\cref{lem:gr_matrixToFreeIso_hom}).
 \end{definition}
 
-\begin{lemma}\leanok
-[Forward map of the matrix automorphism]
+\begin{lemma}[Forward map of the matrix automorphism]\leanok
   \label{lem:gr_matrixToFreeIso_hom}
   \lean{AlgebraicGeometry.Grassmannian.matrixToFreeIso_hom}
   \uses{def:gr_matrixToFreeIso, def:gr_matrixEnd}
@@ -588,8 +571,7 @@ the algebraic heart of the bundle cocycle.
   literally \(\mathrm{matrixEnd}(M)\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Matrix automorphisms compose multiplicatively]
+\begin{lemma}[Matrix automorphisms compose multiplicatively]\leanok
   \label{lem:gr_matrixToFreeIso_mul}
   \lean{AlgebraicGeometry.Grassmannian.matrixToFreeIso_mul}
   \uses{def:gr_matrixToFreeIso, lem:gr_matrixToFreeIso_hom, lem:gr_matrixEnd_comp}
@@ -615,11 +597,7 @@ the algebraic heart of the bundle cocycle.
   \cref{lem:gr_matrixEnd_comp}.
 \end{proof}
 
-\begin{definition}
-
-
-\leanok
-[Chart quotient \(u^I\)]
+\begin{definition}[Chart quotient \(u^I\)]\leanok
   \label{def:gr_chart_quotient}
   \lean{AlgebraicGeometry.Grassmannian.chartQuotientMap}
   \uses{def:gr_affine_chart, def:gr_universal_matrix, def:gr_scalarEnd}
@@ -666,8 +644,7 @@ the algebraic heart of the bundle cocycle.
 \end{definition}
 
 
-\begin{lemma}\leanok
-[The chart quotient is an epimorphism]
+\begin{lemma}[The chart quotient is an epimorphism]\leanok
   \label{lem:gr_chartQuotientMap_epi}
   \lean{AlgebraicGeometry.Grassmannian.chartQuotientMap_epi}
   \uses{def:gr_chart_quotient}
@@ -718,8 +695,7 @@ matrix-to-module transport bookkeeping. This is the only net-new infrastructure 
 universal quotient requires beyond the gluing primitive itself.
 
 
-\begin{definition}\leanok
-[The bundle transition \(g_{I,J}\)]
+\begin{definition}[The bundle transition \(g_{I,J}\)]\leanok
   \label{def:gr_bundleTransition}
   \lean{AlgebraicGeometry.Grassmannian.bundleTransition}
   \uses{def:gr_universalMinorInv, def:gr_scalarEnd, lem:gr_pullbackFreeIso,
@@ -753,8 +729,7 @@ universal quotient requires beyond the gluing primitive itself.
   \(g_{I,J}\) an isomorphism.
 \end{definition}
 
-\begin{lemma}\leanok
-[Self-identity of the bundle transition (C1)]
+\begin{lemma}[Self-identity of the bundle transition (C1)]\leanok
   \label{lem:gr_bundleCocycle_id}
   \lean{AlgebraicGeometry.Grassmannian.bundleTransition_self}
   \uses{def:gr_bundleTransition, lem:gr_universalMatrix_submatrix_self,
@@ -778,8 +753,7 @@ universal quotient requires beyond the gluing primitive itself.
 \end{proof}
 
 
-\begin{lemma}\leanok
-[Cramer-inverse cocycle on the triple overlap]
+\begin{lemma}[Cramer-inverse cocycle on the triple overlap]\leanok
   \label{lem:gr_bundleCocycle_matrix}
   \lean{AlgebraicGeometry.Grassmannian.bundleTransition_cocycle_matrix}
   \uses{def:gr_universalMinorInv, lem:gr_cocycle_imageMatrix_eq,
@@ -819,8 +793,7 @@ universal quotient requires beyond the gluing primitive itself.
   \cref{lem:gr_cocycle}.
 \end{proof}
 
-\begin{lemma}\leanok
-[Scalar endomorphism is natural under pullback]
+\begin{lemma}[Scalar endomorphism is natural under pullback]\leanok
   \label{lem:gr_scalarEnd_pullback}
   \lean{AlgebraicGeometry.Grassmannian.scalarEnd_pullback}
   \uses{def:gr_scalarEnd, lem:gr_pullbackFreeIso, def:modules_pullbackComp}
@@ -854,8 +827,7 @@ universal quotient requires beyond the gluing primitive itself.
   \(q\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Matrix endomorphism is natural under pullback]
+\begin{lemma}[Matrix endomorphism is natural under pullback]\leanok
   \label{lem:gr_matrixEnd_pullback}
   \lean{AlgebraicGeometry.Grassmannian.matrixEnd_pullback}
   \uses{def:gr_matrixEnd, def:gr_scalarEnd, lem:gr_scalarEnd_pullback, lem:gr_pullbackFreeIso,
@@ -891,8 +863,7 @@ universal quotient requires beyond the gluing primitive itself.
   \(p^{*}(\mathrm{matrixEnd}(M)) = Q^{-1}\circ\mathrm{matrixEnd}(p^{\sharp}M)\circ Q\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Affine global-sections comorphism is the inducing ring homomorphism]
+\begin{lemma}[Affine global-sections comorphism is the inducing ring homomorphism]\leanok
   \label{lem:gr_baseChange_bridge_gammaSpec}
   \lean{AlgebraicGeometry.Grassmannian.baseChange_bridge_gammaSpec}
   \uses{def:gr_glued_scheme}
@@ -917,8 +888,7 @@ universal quotient requires beyond the gluing primitive itself.
   enters; the statement is the affine-scheme naturality square applied to a single ring map.
 \end{proof}
 
-\begin{lemma}\leanok
-[First-projection bridge to \texorpdfstring{$\mathrm{awayInclLeft}$}{awayInclLeft}]
+\begin{lemma}[First-projection bridge to \texorpdfstring{$\mathrm{awayInclLeft}$}{awayInclLeft}]\leanok
   \label{lem:gr_baseChange_bridge_left}
   \lean{AlgebraicGeometry.Grassmannian.baseChange_bridge_left}
   \uses{def:gr_the_glue_data, def:gr_chart_incl, def:gr_away_pullback_iso,
@@ -949,8 +919,7 @@ universal quotient requires beyond the gluing primitive itself.
   entrywise to \((X^I_J)^{-1}\) gives the asserted agreement.
 \end{proof}
 
-\begin{lemma}\leanok
-[Second-projection bridge to \texorpdfstring{$\mathrm{awayInclRight}$}{awayInclRight}]
+\begin{lemma}[Second-projection bridge to \texorpdfstring{$\mathrm{awayInclRight}$}{awayInclRight}]\leanok
   \label{lem:gr_baseChange_bridge_right}
   \lean{AlgebraicGeometry.Grassmannian.baseChange_bridge_right}
   \uses{def:gr_the_glue_data, def:gr_chart_incl, def:gr_away_pullback_iso,
@@ -980,8 +949,7 @@ universal quotient requires beyond the gluing primitive itself.
   image of \((X^I_K)^{-1}\) follows.
 \end{proof}
 
-\begin{lemma}\leanok
-[Triple-transition bridge to \texorpdfstring{$\Theta_{IJ}$}{Theta_IJ}]
+\begin{lemma}[Triple-transition bridge to \texorpdfstring{$\Theta_{IJ}$}{Theta_IJ}]\leanok
   \label{lem:gr_baseChange_bridge_transition}
   \lean{AlgebraicGeometry.Grassmannian.baseChange_bridge_transition}
   \uses{def:gr_the_glue_data, def:gr_chart_transition', def:gr_cocycle_theta_ij,
@@ -1012,8 +980,7 @@ universal quotient requires beyond the gluing primitive itself.
   comorphism therefore agrees with its image under \(\Theta_{IJ}\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Base-change bridge to the localised cocycle ring homomorphisms]
+\begin{lemma}[Base-change bridge to the localised cocycle ring homomorphisms]\leanok
   \label{lem:gr_baseChange_bridge}
   \lean{AlgebraicGeometry.Grassmannian.baseChange_bridge}
   \uses{def:gr_transition, def:gr_glued_scheme, def:gr_the_glue_data,
@@ -1051,8 +1018,7 @@ universal quotient requires beyond the gluing primitive itself.
   gives the claim.
 \end{proof}
 
-\begin{lemma}\leanok
-[Transport and endpoint alignment of the bundle transitions]
+\begin{lemma}[Transport and endpoint alignment of the bundle transitions]\leanok
   \label{lem:gr_bundleCocycle_transport}
   \lean{AlgebraicGeometry.Grassmannian.bundleTransition_cocycle_transport}
   \uses{def:gr_bundleTransition, lem:gr_bundleCocycle_matrix, lem:gr_matrixToFreeIso_mul,
@@ -1097,8 +1063,7 @@ universal quotient requires beyond the gluing primitive itself.
   sides isomorphisms between the same pair of sheaves on \(V_{IJK}\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Triple-overlap multiplicativity of the bundle transition (C2)]
+\begin{lemma}[Triple-overlap multiplicativity of the bundle transition (C2)]\leanok
   \label{lem:gr_bundleCocycle_mul}
   \lean{AlgebraicGeometry.Grassmannian.bundleTransition_cocycle}
   \uses{def:gr_bundleTransition, lem:gr_bundleCocycle_matrix, lem:gr_matrixToFreeIso_mul,
@@ -1128,11 +1093,7 @@ universal quotient requires beyond the gluing primitive itself.
   \(\widehat{g}_{JK}^{\,I} \circ \widehat{g}_{IJ}^{\,K} = \widehat{g}_{IK}^{\,J}\).
 \end{proof}
 
-\begin{definition}
-
-
-\leanok
-[The universal quotient sheaf \(\mathcal{U}\)]
+\begin{definition}[The universal quotient sheaf \(\mathcal{U}\)]\leanok
   \label{def:gr_universal_quotient_sheaf}
   \lean{AlgebraicGeometry.Grassmannian.universalQuotient}
   \uses{def:gr_chart_quotient, def:gr_universalMinorInv, def:gr_transition,
@@ -1194,11 +1155,7 @@ a matrix along a morphism and proves Nitsure's change-of-basis identity. They ar
 project-bespoke infrastructure.
 
 
-\begin{definition}
-
-
-\leanok
-[Rectangular matrix homomorphism of free sheaves]
+\begin{definition}[Rectangular matrix homomorphism of free sheaves]\leanok
   \label{def:gr_matrixEndRect}
   \lean{AlgebraicGeometry.Grassmannian.matrixEndRect}
   \uses{def:gr_scalarEnd}
@@ -1222,11 +1179,7 @@ project-bespoke infrastructure.
   universal \(d \times r\) matrix \(X^I\) (\cref{def:gr_universal_matrix}).
 \end{definition}
 
-\begin{lemma}
-
-
-\leanok
-[Rectangular matrix homomorphism is natural under pullback]
+\begin{lemma}[Rectangular matrix homomorphism is natural under pullback]\leanok
   \label{lem:gr_matrixEndRect_pullback}
   \lean{AlgebraicGeometry.Grassmannian.matrixEndRect_pullback}
   \uses{def:gr_matrixEndRect, def:gr_scalarEnd, lem:gr_scalarEnd_pullback,
@@ -1263,11 +1216,7 @@ project-bespoke infrastructure.
   \mathrm{matrixEndRect}(p^{\sharp}M)\circ Q_r\).
 \end{proof}
 
-\begin{lemma}
-
-
-\leanok
-[Square-after-rectangular composition law]
+\begin{lemma}[Square-after-rectangular composition law]\leanok
   \label{lem:gr_matrixEndRect_comp}
   \lean{AlgebraicGeometry.Grassmannian.matrixEndRect_comp}
   \uses{def:gr_matrixEndRect, def:gr_matrixEnd, lem:gr_scalarEnd_comp, lem:gr_scalarEnd_add,
@@ -1301,11 +1250,7 @@ project-bespoke infrastructure.
   \(\mathrm{matrixEndRect}(N\cdot M)\).
 \end{proof}
 
-\begin{lemma}
-
-
-\leanok
-[Adjunction transpose of the chart-overlap condition]
+\begin{lemma}[Adjunction transpose of the chart-overlap condition]\leanok
   \label{lem:gr_tautologicalQuotientComponent_transpose}
   \lean{AlgebraicGeometry.Grassmannian.tautologicalQuotientComponent_transpose}
   \uses{def:gr_chart_quotient, def:gr_bundleTransition, def:gr_modules_glueHom,
@@ -1344,11 +1289,7 @@ project-bespoke infrastructure.
   which the transposed condition becomes the displayed pullback-level identity.
 \end{proof}
 
-\begin{lemma}
-
-
-\leanok
-[Overlap compatibility of the tautological quotient]
+\begin{lemma}[Overlap compatibility of the tautological quotient]\leanok
   \label{lem:gr_tautologicalQuotient_overlap}
   \lean{AlgebraicGeometry.Grassmannian.tautologicalQuotient_overlap}
   \uses{lem:gr_tautologicalQuotientComponent_transpose, lem:gr_matrixEndRect_pullback,
@@ -1393,11 +1334,7 @@ project-bespoke infrastructure.
   the two sides agree, which is the required overlap compatibility.
 \end{proof}
 
-\begin{definition}
-
-
-\leanok
-[The tautological quotient \(u : \mathcal{O}^{r} \twoheadrightarrow \mathcal{U}\)]
+\begin{definition}[The tautological quotient \(u : \mathcal{O}^{r} \twoheadrightarrow \mathcal{U}\)]\leanok
   \label{def:tautological_quotient}
   \lean{AlgebraicGeometry.Grassmannian.tautologicalQuotient}
   \uses{def:gr_universal_quotient_sheaf, def:gr_chart_quotient,
@@ -1451,8 +1388,7 @@ quotient, the equivalence relation on them, and the pullback action through whic
 functor acts on morphisms; the two coherence blocks after it isolate the comparison
 identities that make that action functorial.
 
-\begin{definition}\leanok
-[Rank-\(d\) quotient of \(\mathcal{O}_T^{\,r}\)]
+\begin{definition}[Rank-\(d\) quotient of \(\mathcal{O}_T^{\,r}\)]\leanok
   \label{def:gr_rankQuotient}
   \lean{AlgebraicGeometry.Grassmannian.RankQuotient}
   A \emph{rank-\(d\) quotient} of the trivial bundle \(\mathcal{O}_T^{\,r}\) on a scheme
@@ -1465,8 +1401,7 @@ identities that make that action functorial.
   equivalence relation whose classes form the value of the Grassmannian functor.
 \end{definition}
 
-\begin{definition}\leanok
-[The Grassmannian functor \(\mathrm{Grass}(r,d)\)]
+\begin{definition}[The Grassmannian functor \(\mathrm{Grass}(r,d)\)]\leanok
   \label{def:grassmannian_functor}
   \lean{AlgebraicGeometry.Grassmannian.functor}
   \uses{def:gr_rankQuotient, lem:gr_pullbackFreeIso, lem:gr_pullbackObjUnitToUnit_id,
@@ -1492,8 +1427,7 @@ The two blocks below record the comparison identities, between the free-pullback
 the descended pullback action of \cref{def:gr_rankQuotient} functorial.
 
 
-\begin{lemma}\leanok
-[Mate/conjugate compatibility of the adjunction hom-equivalence]
+\begin{lemma}[Mate/conjugate compatibility of the adjunction hom-equivalence]\leanok
   \label{lem:gr_homEquiv_conjugateEquiv_app}
   \lean{AlgebraicGeometry.Scheme.Modules.homEquiv_conjugateEquiv_app}
   Let \(\mathrm{adj}_1, \mathrm{adj}_2\) be two adjunctions and \(\alpha\) a natural
@@ -1514,8 +1448,7 @@ the descended pullback action of \cref{def:gr_rankQuotient} functorial.
   hom-set bijections.
 \end{proof}
 
-\begin{lemma}\leanok
-[Free-pullback unit coherence at the identity]
+\begin{lemma}[Free-pullback unit coherence at the identity]\leanok
   \label{lem:gr_pullbackObjUnitToUnit_id}
   \lean{AlgebraicGeometry.Scheme.Modules.pullbackObjUnitToUnit_id}
   The free-pullback comparison morphism on the unit sheaf at the identity morphism of \(T\)
@@ -1531,8 +1464,7 @@ the descended pullback action of \cref{def:gr_rankQuotient} functorial.
   transposes therefore coincide, so the original maps agree.
 \end{proof}
 
-\begin{lemma}\leanok
-[Free-pullback unit coherence at a composite]
+\begin{lemma}[Free-pullback unit coherence at a composite]\leanok
   \label{lem:gr_pullbackObjUnitToUnit_comp}
   \lean{AlgebraicGeometry.Scheme.Modules.gr_pullbackObjUnitToUnit_comp}
   \uses{lem:gr_homEquiv_conjugateEquiv_app}
@@ -1580,8 +1512,7 @@ the fact that a morphism becomes invertible after restriction to its iso-locus
 and the proof that the chart loci cover \(T\) (\cref{lem:chartLocus_isOpenCover}); and the
 glued classifying morphism itself (\cref{def:grPointOfRankQuotient}).
 
-\begin{lemma}\leanok
-[The tautological quotient is an epimorphism]
+\begin{lemma}[The tautological quotient is an epimorphism]\leanok
   \label{lem:tautologicalQuotient_epi}
   \lean{AlgebraicGeometry.Grassmannian.tautologicalQuotient_epi}
   \uses{lem:gr_chartQuotientMap_epi, def:tautological_quotient, lem:gr_modules_glue_unique}
@@ -1606,8 +1537,7 @@ glued classifying morphism itself (\cref{def:grPointOfRankQuotient}).
   epi (\cref{lem:gr_chartQuotientMap_epi}). As \(u^I\) is epi on every chart, \(u\) is epi.
 \end{proof}
 
-\begin{definition}\leanok
-[Iso-locus of a morphism of module sheaves]
+\begin{definition}[Iso-locus of a morphism of module sheaves]\leanok
   \label{def:isoLocus}
   \lean{AlgebraicGeometry.Grassmannian.isoLocus}
   For a morphism \(\varphi : \mathcal{M} \to \mathcal{N}\) of sheaves of
@@ -1618,8 +1548,7 @@ glued classifying morphism itself (\cref{def:grPointOfRankQuotient}).
   precisely when some open neighbourhood of \(t\) pulls \(\varphi\) back to an isomorphism.
 \end{definition}
 
-\begin{lemma}\leanok
-[A morphism is invertible over its iso-locus]
+\begin{lemma}[A morphism is invertible over its iso-locus]\leanok
   \label{lem:isIso_pullback_isoLocus_map}
   \lean{AlgebraicGeometry.Grassmannian.isIso_pullback_isoLocus_map}
   \uses{def:isoLocus}
@@ -1638,8 +1567,7 @@ glued classifying morphism itself (\cref{def:grPointOfRankQuotient}).
   transports it to the pullback functor.
 \end{proof}
 
-\begin{definition}\leanok
-[Chart locus \(T_I\) of a rank-\(d\) quotient]
+\begin{definition}[Chart locus \(T_I\) of a rank-\(d\) quotient]\leanok
   \label{def:chartLocus}
   \lean{AlgebraicGeometry.Grassmannian.chartLocus}
   \uses{def:isoLocus, def:gr_rankQuotient}
@@ -1652,8 +1580,7 @@ glued classifying morphism itself (\cref{def:grPointOfRankQuotient}).
   isomorphism.
 \end{definition}
 
-\begin{lemma}\leanok
-[The chart loci cover \(T\)]
+\begin{lemma}[The chart loci cover \(T\)]\leanok
   \label{lem:chartLocus_isOpenCover}
   \lean{AlgebraicGeometry.Grassmannian.chartLocus_isOpenCover}
   \uses{def:chartLocus, def:gr_rankQuotient}
@@ -1689,8 +1616,7 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
 (\cref{lem:gr_chart_point_eq}), and finally the overlap compatibility itself
 (\cref{lem:gr_chartMorphism_glue_compat}).
 
-\begin{definition}\leanok
-[Presented matrix \(M^I\) of a quotient along a morphism]
+\begin{definition}[Presented matrix \(M^I\) of a quotient along a morphism]\leanok
   \label{def:gr_presentedMatrix}
   \lean{AlgebraicGeometry.Grassmannian.presentedMatrix}
   \uses{def:gr_rankQuotient, def:gr_matrixEndRect, lem:gr_pullbackFreeIso}
@@ -1704,8 +1630,7 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
   (the case \(j = \iota_{T_I}\)); its \(I\)-minor is the identity.
 \end{definition}
 
-\begin{lemma}\leanok
-[Pullback-invertibility along a composite]
+\begin{lemma}[Pullback-invertibility along a composite]\leanok
   \label{lem:gr_isIso_pullback_map_comp}
   \lean{AlgebraicGeometry.Grassmannian.isIso_pullback_map_comp}
   If \(a^{*}c\) is an isomorphism of module sheaves, then so is \((p\circ a)^{*}c\) for any
@@ -1718,8 +1643,7 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
   which is therefore an isomorphism.
 \end{proof}
 
-\begin{lemma}\leanok
-[Presented matrix along a composite]
+\begin{lemma}[Presented matrix along a composite]\leanok
   \label{lem:gr_presentedMatrix_comp}
   \lean{AlgebraicGeometry.Grassmannian.presentedMatrix_comp}
   \uses{def:gr_presentedMatrix, def:gr_matrixEndRect}
@@ -1738,8 +1662,7 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
   the entrywise restriction \(p^{\sharp}M^I\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Presented matrix depends only on the base morphism]
+\begin{lemma}[Presented matrix depends only on the base morphism]\leanok
   \label{lem:gr_presentedMatrix_congr}
   \lean{AlgebraicGeometry.Grassmannian.presentedMatrix_congr}
   \uses{def:gr_presentedMatrix}
@@ -1752,8 +1675,7 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
   Substituting \(j' = j\), the two presented matrices coincide by definition.
 \end{proof}
 
-\begin{lemma}\leanok
-[Chart matrix as a presented matrix]
+\begin{lemma}[Chart matrix as a presented matrix]\leanok
   \label{lem:gr_chartMatrix_eq_presentedMatrix}
   \lean{AlgebraicGeometry.Grassmannian.chartMatrix_eq_presentedMatrix}
   \uses{def:gr_presentedMatrix, def:chartLocus}
@@ -1767,8 +1689,7 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
   the inclusion of the chart locus.
 \end{proof}
 
-\begin{lemma}\leanok
-[The own \(I\)-minor of \(M^I\) is the identity]
+\begin{lemma}[The own \(I\)-minor of \(M^I\) is the identity]\leanok
   \label{lem:gr_presentedMatrix_submatrix_self}
   \lean{AlgebraicGeometry.Grassmannian.presentedMatrix_submatrix_self}
   \uses{def:gr_presentedMatrix, def:gr_matrixEndRect}
@@ -1782,8 +1703,7 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
   matching realisations and using injectivity of the realisation gives the identity matrix.
 \end{proof}
 
-\begin{lemma}\leanok
-[The classifying map realises \(X^I\) as \(M^I\)]
+\begin{lemma}[The classifying map realises \(X^I\) as \(M^I\)]\leanok
   \label{lem:gr_universalMatrix_map_presentedMatrix}
   \lean{AlgebraicGeometry.Grassmannian.universalMatrix_map_presentedMatrix}
   \uses{def:gr_presentedMatrix, lem:gr_presentedMatrix_submatrix_self}
@@ -1799,8 +1719,7 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
   so the two agree there as well.
 \end{proof}
 
-\begin{lemma}\leanok
-[Transport of the image matrix along the structure map]
+\begin{lemma}[Transport of the image matrix along the structure map]\leanok
   \label{lem:gr_imageMatrix_map_ringHom}
   \lean{AlgebraicGeometry.Grassmannian.imageMatrix_map_ringHom}
   Let \(I, J\) be size-\(d\) subsets and \(\mathrm{incl} : R^I_J \to D\) a ring map into a
@@ -1817,8 +1736,7 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
   using \(\mathrm{incl}\circ(R^I\to R^I_J) = g\) yields \((Y_J)^{-1}Y\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Naturality of the chart morphism]
+\begin{lemma}[Naturality of the chart morphism]\leanok
   \label{lem:gr_comp_chartMorphism}
   \lean{AlgebraicGeometry.Grassmannian.comp_chartMorphism}
   \uses{def:gr_presentedMatrix, lem:gr_presentedMatrix_comp,
@@ -1836,8 +1754,7 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
   \(p^{\sharp}M^I = \mathrm{presentedMatrix}(x, p\circ\iota_{T_I}, I)\), giving the claim.
 \end{proof}
 
-\begin{lemma}\leanok
-[Chart-point identity: the glue condition in classifying form]
+\begin{lemma}[Chart-point identity: the glue condition in classifying form]\leanok
   \label{lem:gr_chart_point_eq}
   \lean{AlgebraicGeometry.Grassmannian.chart_point_eq}
   Let \(K\) be a commutative ring and \(f : R^I \to K\) a ring map under which the minor
@@ -1857,8 +1774,7 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
   identity.
 \end{proof}
 
-\begin{lemma}\leanok
-[Overlap compatibility of the chart morphisms]
+\begin{lemma}[Overlap compatibility of the chart morphisms]\leanok
   \label{lem:gr_chartMorphism_glue_compat}
   \lean{AlgebraicGeometry.Grassmannian.chartMorphism_glue_compat}
   \uses{def:chartLocus, lem:gr_isIso_pullback_map_comp, def:gr_presentedMatrix,
@@ -1886,8 +1802,7 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
   so they agree.
 \end{proof}
 
-\begin{definition}\leanok
-[The classifying morphism \(T \to \mathrm{Gr}(r,d)\) of a quotient]
+\begin{definition}[The classifying morphism \(T \to \mathrm{Gr}(r,d)\) of a quotient]\leanok
   \label{def:grPointOfRankQuotient}
   \lean{AlgebraicGeometry.Grassmannian.grPointOfRankQuotient}
   \uses{def:chartLocus, lem:chartLocus_isOpenCover, lem:gr_chartMorphism_glue_compat}
@@ -1905,8 +1820,7 @@ The two blocks below carry the chart data of a quotient through a base change
 \(\psi : T' \to T\); they are the bridge underlying the two inverse laws of the
 representability theorem.
 
-\begin{lemma}\leanok
-[Presented matrix of a pulled-back quotient]
+\begin{lemma}[Presented matrix of a pulled-back quotient]\leanok
   \label{lem:gr_presentedMatrix_rqPullback}
   \lean{AlgebraicGeometry.Grassmannian.presentedMatrix_rqPullback}
   \uses{def:gr_presentedMatrix, def:gr_rankQuotient, def:gr_matrixEndRect}
@@ -1946,8 +1860,7 @@ representability theorem.
   As the realisations agree, so do the matrices.
 \end{proof}
 
-\begin{lemma}\leanok
-[Left inverse law: the classifier recovers \(\psi\)]
+\begin{lemma}[Left inverse law: the classifier recovers \(\psi\)]\leanok
   \label{lem:gr_grPointOfRankQuotient_rqPullback_tautological}
   \lean{AlgebraicGeometry.Grassmannian.grPointOfRankQuotient_rqPullback_tautological}
   \uses{def:grPointOfRankQuotient, def:tautological_quotient, def:gr_rankQuotient,
@@ -1989,8 +1902,7 @@ representability theorem.
   \(T\), the two morphisms agree.
 \end{proof}
 
-\begin{theorem}\leanok
-[\(\mathrm{Gr}(r,d)\) represents the Grassmannian functor]
+\begin{theorem}[\(\mathrm{Gr}(r,d)\) represents the Grassmannian functor]\leanok
   \label{thm:grassmannian_universal_property}
   \lean{AlgebraicGeometry.Grassmannian.represents}
   \uses{def:grassmannian_functor, def:tautological_quotient, def:gr_rankQuotient,

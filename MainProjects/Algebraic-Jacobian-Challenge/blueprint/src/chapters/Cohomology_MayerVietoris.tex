@@ -13,8 +13,7 @@ The cohomology group \(H^{\prime n}(X,\mathcal F)\) is contravariantly functoria
 \]
 and, varying \(\mathcal F\) as well, a bifunctor from sheaves of \(k\)-modules to presheaves of abelian groups. Each fiber also carries the \(k\)-module structure induced by the \(k\)-linear structure on \(\Ext\).
 
-\begin{definition}\leanok
-[Cohomology presheaf functor, \(H'\) flavor]
+\begin{definition}[Cohomology presheaf functor, \(H'\) flavor]\leanok
   \label{def:Scheme_HModule_prime_cohomologyPresheafFunctor}
   \lean{AlgebraicGeometry.Scheme.HModule'_cohomologyPresheafFunctor}
   \uses{def:Scheme_HModule_prime}
@@ -32,8 +31,7 @@ and, varying \(\mathcal F\) as well, a bifunctor from sheaves of \(k\)-modules t
   Each morphism of \(C\) induces, by Yoneda and sheafification, a morphism between the corresponding source sheaves. Contravariance of \(\Ext\) in its first variable gives the restriction maps, and functoriality of these constructions gives the stated bifunctor.
 \end{proof}
 
-\begin{definition}\leanok
-[Cohomology presheaf, \(H'\) flavor]
+\begin{definition}[Cohomology presheaf, \(H'\) flavor]\leanok
   \label{def:Scheme_HModule_prime_cohomologyPresheaf}
   \lean{AlgebraicGeometry.Scheme.HModule'_cohomologyPresheaf}
   \uses{def:Scheme_HModule_prime_cohomologyPresheafFunctor}
@@ -70,8 +68,7 @@ that is a \(J\)-cover: the pair of morphisms \(X_2 \to X_4\) and \(X_3 \to X_4\)
 
 \subsection{The restriction maps}
 
-\begin{definition}\leanok
-[Sum of two restriction maps]
+\begin{definition}[Sum of two restriction maps]\leanok
   \label{def:Scheme_HModule_prime_toBiprod}
   \lean{AlgebraicGeometry.Scheme.HModule'_toBiprod}
   \uses{def:Scheme_HModule_prime_cohomologyPresheaf, def:Scheme_HModule_prime}
@@ -89,8 +86,7 @@ that is a \(J\)-cover: the pair of morphisms \(X_2 \to X_4\) and \(X_3 \to X_4\)
   The biproduct exists because the category of abelian groups has finite biproducts. The morphism is built from the contravariant functoriality of the cohomology presheaf.
 \end{proof}
 
-\begin{definition}\leanok
-[Difference of two restriction maps]
+\begin{definition}[Difference of two restriction maps]\leanok
   \label{def:Scheme_HModule_prime_fromBiprod}
   \lean{AlgebraicGeometry.Scheme.HModule'_fromBiprod}
   \uses{def:Scheme_HModule_prime_cohomologyPresheaf, def:Scheme_HModule_prime}
@@ -108,8 +104,7 @@ that is a \(J\)-cover: the pair of morphisms \(X_2 \to X_4\) and \(X_3 \to X_4\)
   The negation is taken in the preadditive morphism group of the codomain category. The sign convention encodes the alternating-sum structure of the \v{C}ech complex.
 \end{proof}
 
-\begin{lemma}\leanok
-[Composition vanishes]
+\begin{lemma}[Composition vanishes]\leanok
   \label{lem:Scheme_HModule_prime_toBiprod_fromBiprod}
   \lean{AlgebraicGeometry.Scheme.HModule'_toBiprod_fromBiprod}
   \uses{def:Scheme_HModule_prime_toBiprod, def:Scheme_HModule_prime_fromBiprod}
@@ -130,8 +125,7 @@ that is a \(J\)-cover: the pair of morphisms \(X_2 \to X_4\) and \(X_3 \to X_4\)
 
 The connecting homomorphism of the Mayer--Vietoris sequence is built from a short exact sequence of sheaves of \(k\)-modules obtained by sheafifying the Yoneda embedding composed with the free-\(k\)-module functor.
 
-\begin{definition}\leanok
-[Free-\(k\)-module functor is left adjoint]
+\begin{definition}[Free-\(k\)-module functor is left adjoint]\leanok
   \label{def:Scheme_ModuleCat_free_isLeftAdjoint}
   \lean{AlgebraicGeometry.Scheme.ModuleCat_free_isLeftAdjoint}
   Let \(k\) be a field. The free-\(k\)-module functor \(\Type \to \ModuleCat\,k\) is a left adjoint.
@@ -146,8 +140,7 @@ The connecting homomorphism of the Mayer--Vietoris sequence is built from a shor
   exhibits the free-\(k\)-module functor as left adjoint to the forgetful functor.
 \end{proof}
 
-\begin{lemma}\leanok
-[Pushout of free sheaves]
+\begin{lemma}[Pushout of free sheaves]\leanok
   \label{lem:Scheme_HModule_prime_isPushoutModuleCatFreeSheaf}
   \lean{AlgebraicGeometry.Scheme.HModule'_isPushoutModuleCatFreeSheaf}
   \uses{def:Scheme_ModuleCat_free_isLeftAdjoint}
@@ -165,8 +158,7 @@ The connecting homomorphism of the Mayer--Vietoris sequence is built from a shor
   The original square is a pushout. Post-composition with the sheafify-compose functor preserves pushouts because the free-\(k\)-module functor is a left adjoint. A canonical isomorphism translates the resulting square into the desired shape.
 \end{proof}
 
-\begin{definition}\leanok
-[Short complex of free sheaves]
+\begin{definition}[Short complex of free sheaves]\leanok
   \label{def:Scheme_HModule_prime_shortComplex}
   \lean{AlgebraicGeometry.Scheme.HModule'_shortComplex}
   \uses{lem:Scheme_HModule_prime_isPushoutModuleCatFreeSheaf}
@@ -184,8 +176,7 @@ The connecting homomorphism of the Mayer--Vietoris sequence is built from a shor
   The commutativity relation in the pushout square says that the two composites from \(\mathcal F_1\) to \(\mathcal F_4\) agree. With the chosen sign on the second component of \(f\), their sum is therefore zero, so \(g\circ f=0\).
 \end{proof}
 
-\begin{definition}\leanok
-[Free-\(k\)-module functor preserves monomorphisms]
+\begin{definition}[Free-\(k\)-module functor preserves monomorphisms]\leanok
   \label{def:Scheme_ModuleCat_free_preservesMonomorphisms}
   \lean{AlgebraicGeometry.Scheme.ModuleCat_free_preservesMonomorphisms}
   Let \(k\) be a field. The free-\(k\)-module functor preserves monomorphisms.
@@ -196,8 +187,7 @@ The connecting homomorphism of the Mayer--Vietoris sequence is built from a shor
   An injection of bases induces an injection of the corresponding free modules: a nonzero finite linear combination remains nonzero after relabeling its basis elements. Since monomorphisms of \(k\)-modules are precisely injective linear maps, the free-module functor preserves monomorphisms.
 \end{proof}
 
-\begin{lemma}\leanok
-[The first map is mono]
+\begin{lemma}[The first map is mono]\leanok
   \label{lem:Scheme_HModule_prime_shortComplex_f_mono}
   \lean{AlgebraicGeometry.Scheme.HModule'_shortComplex_f_mono}
   \uses{def:Scheme_HModule_prime_shortComplex, def:Scheme_ModuleCat_free_preservesMonomorphisms}
@@ -211,8 +201,7 @@ The connecting homomorphism of the Mayer--Vietoris sequence is built from a shor
   The map \(f\) followed by the second projection is the free-\(k\)-module functor applied to the monomorphism \(X_1 \to X_3\), which is mono because the free functor preserves monomorphisms. Hence \(f\) itself is mono.
 \end{proof}
 
-\begin{lemma}\leanok
-[The second map is epi]
+\begin{lemma}[The second map is epi]\leanok
   \label{lem:Scheme_HModule_prime_shortComplex_g_epi}
   \lean{AlgebraicGeometry.Scheme.HModule'_shortComplex_g_epi}
   \uses{def:Scheme_HModule_prime_shortComplex, lem:Scheme_HModule_prime_isPushoutModuleCatFreeSheaf}
@@ -226,8 +215,7 @@ The connecting homomorphism of the Mayer--Vietoris sequence is built from a shor
   By the pushout lemma, \(g\) is the cokernel of \(f\), and every cokernel is epi.
 \end{proof}
 
-\begin{lemma}\leanok
-[Exactness at the middle term]
+\begin{lemma}[Exactness at the middle term]\leanok
   \label{lem:Scheme_HModule_prime_shortComplex_exact}
   \lean{AlgebraicGeometry.Scheme.HModule'_shortComplex_exact}
   \uses{def:Scheme_HModule_prime_shortComplex, lem:Scheme_HModule_prime_isPushoutModuleCatFreeSheaf}
@@ -241,8 +229,7 @@ The connecting homomorphism of the Mayer--Vietoris sequence is built from a shor
   By the pushout lemma, \(g\) is a cokernel of \(f\). In an abelian category the kernel of a cokernel is the image of the original morphism, so \(\operatorname{im}(f)=\ker(g)\).
 \end{proof}
 
-\begin{lemma}\leanok
-[The short complex is short exact]
+\begin{lemma}[The short complex is short exact]\leanok
   \label{lem:Scheme_HModule_prime_shortComplex_shortExact}
   \lean{AlgebraicGeometry.Scheme.HModule'_shortComplex_shortExact}
   \uses{lem:Scheme_HModule_prime_shortComplex_f_mono, lem:Scheme_HModule_prime_shortComplex_g_epi, lem:Scheme_HModule_prime_shortComplex_exact}
@@ -258,8 +245,7 @@ The connecting homomorphism of the Mayer--Vietoris sequence is built from a shor
 
 \subsection{The connecting homomorphism and the long exact sequence}
 
-\begin{definition}\leanok
-[Connecting homomorphism]
+\begin{definition}[Connecting homomorphism]\leanok
   \label{def:Scheme_HModule_prime_delta}
   \lean{AlgebraicGeometry.Scheme.HModule'_δ}
   \uses{lem:Scheme_HModule_prime_shortComplex_shortExact, def:Scheme_HModule_prime}
@@ -277,8 +263,7 @@ The connecting homomorphism of the Mayer--Vietoris sequence is built from a shor
   The extension class lives in \(\Ext^1\) of the short exact sequence; precomposing with a map of degree zero and transporting through the additive structure yields the connecting homomorphism as a morphism of abelian groups.
 \end{proof}
 
-\begin{definition}\leanok
-[Mayer--Vietoris long exact sequence]
+\begin{definition}[Mayer--Vietoris long exact sequence]\leanok
   \label{def:Scheme_HModule_prime_sequence}
   \lean{AlgebraicGeometry.Scheme.HModule'_sequence}
   \uses{def:Scheme_HModule_prime_toBiprod, def:Scheme_HModule_prime_fromBiprod, def:Scheme_HModule_prime_delta}
@@ -299,8 +284,7 @@ The connecting homomorphism of the Mayer--Vietoris sequence is built from a shor
 
 The following four lemmas bridge the biproduct structure on the abelian-group side with the \(\Ext\) biproduct additivity, preparing the comparison isomorphism.
 
-\begin{lemma}\leanok
-[Elementwise formula for \(\toBiprod\)]
+\begin{lemma}[Elementwise formula for \(\toBiprod\)]\leanok
   \label{lem:Scheme_HModule_prime_toBiprod_apply}
   \lean{AlgebraicGeometry.Scheme.HModule'_toBiprod_apply}
   \uses{def:Scheme_HModule_prime_toBiprod}
@@ -317,8 +301,7 @@ The following four lemmas bridge the biproduct structure on the abelian-group si
   Follows from the definition of \(\toBiprod\) as a biproduct lift and the naturality of the biproduct isomorphism with the product.
 \end{proof}
 
-\begin{lemma}\leanok
-[Elementwise formula for \(\fromBiprod\)]
+\begin{lemma}[Elementwise formula for \(\fromBiprod\)]\leanok
   \label{lem:Scheme_HModule_prime_fromBiprod_biprodIsoProd_inv_apply}
   \lean{AlgebraicGeometry.Scheme.HModule'_fromBiprod_biprodIsoProd_inv_apply}
   \uses{def:Scheme_HModule_prime_fromBiprod}
@@ -335,8 +318,7 @@ The following four lemmas bridge the biproduct structure on the abelian-group si
   Follows from the definition of \(\fromBiprod\) as a biproduct desc and the concrete description of the biproduct isomorphism.
 \end{proof}
 
-\begin{lemma}\leanok
-[\(\Ext\) biproduct bridge for \(\toBiprod\)]
+\begin{lemma}[\(\Ext\) biproduct bridge for \(\toBiprod\)]\leanok
   \label{lem:Scheme_HModule_prime_biprodAddEquiv_symm_biprodIsoProd_hom_toBiprod_apply}
   \lean{AlgebraicGeometry.Scheme.HModule'_biprodAddEquiv_symm_biprodIsoProd_hom_toBiprod_apply}
   \uses{lem:Scheme_HModule_prime_toBiprod_apply}
@@ -350,8 +332,7 @@ The following four lemmas bridge the biproduct structure on the abelian-group si
   Under the \(\Ext\) biproduct isomorphism, the two components of the transported class are the pullbacks of \(x\) along the two components of \(g\). This is also the componentwise description of its Yoneda product with the degree-zero class of \(g\), so the classes agree.
 \end{proof}
 
-\begin{lemma}\leanok
-[\(\Ext\) biproduct bridge for \(\fromBiprod\)]
+\begin{lemma}[\(\Ext\) biproduct bridge for \(\fromBiprod\)]\leanok
   \label{lem:Scheme_HModule_prime_mk_zero_f_comp_biprodAddEquiv_symm_biprodIsoProd_hom}
   \lean{AlgebraicGeometry.Scheme.HModule'_mk₀_f_comp_biprodAddEquiv_symm_biprodIsoProd_hom}
   \uses{lem:Scheme_HModule_prime_fromBiprod_biprodIsoProd_inv_apply, def:Scheme_HModule_prime_shortComplex}
@@ -365,8 +346,7 @@ The following four lemmas bridge the biproduct structure on the abelian-group si
   Write \(x=(x_2,x_3)\) using the biproduct isomorphism. The degree-zero class of \(f\) has components given by the two restriction maps, with a minus sign on the second. Bilinearity of the Yoneda product therefore gives the difference of the restrictions of \(x_2\) and \(x_3\), which is \(\fromBiprod(x)\).
 \end{proof}
 
-\begin{definition}\leanok
-[Comparison isomorphism]
+\begin{definition}[Comparison isomorphism]\leanok
   \label{def:Scheme_HModule_prime_sequenceIso}
   \lean{AlgebraicGeometry.Scheme.HModule'_sequenceIso}
   \uses{def:Scheme_HModule_prime_sequence, lem:Scheme_HModule_prime_shortComplex_shortExact, def:Scheme_HModule_prime_delta, lem:Scheme_HModule_prime_toBiprod_apply, lem:Scheme_HModule_prime_fromBiprod_biprodIsoProd_inv_apply, lem:Scheme_HModule_prime_biprodAddEquiv_symm_biprodIsoProd_hom_toBiprod_apply, lem:Scheme_HModule_prime_mk_zero_f_comp_biprodAddEquiv_symm_biprodIsoProd_hom}
@@ -382,8 +362,7 @@ The following four lemmas bridge the biproduct structure on the abelian-group si
 
 \subsection{Exactness}
 
-\begin{theorem}\leanok
-[Mayer--Vietoris exactness]
+\begin{theorem}[Mayer--Vietoris exactness]\leanok
   \label{thm:Scheme_HModule_prime_sequence_exact}
   \lean{AlgebraicGeometry.Scheme.HModule'_sequence_exact}
   \uses{def:Scheme_HModule_prime_sequenceIso, def:Scheme_HModule_prime_sequence}
@@ -397,8 +376,7 @@ The following four lemmas bridge the biproduct structure on the abelian-group si
   Transport exactness along the comparison isomorphism of \cref{def:Scheme_HModule_prime_sequenceIso}. The \(\Ext\) contravariant sequence is exact by the general exactness theorem for \(\Ext\) applied to a short exact sequence.
 \end{proof}
 
-\begin{lemma}\leanok
-[Connecting homomorphism annihilates \(\toBiprod\)]
+\begin{lemma}[Connecting homomorphism annihilates \(\toBiprod\)]\leanok
   \label{lem:Scheme_HModule_prime_delta_toBiprod}
   \lean{AlgebraicGeometry.Scheme.HModule'_δ_toBiprod}
   \uses{thm:Scheme_HModule_prime_sequence_exact}
@@ -415,8 +393,7 @@ The following four lemmas bridge the biproduct structure on the abelian-group si
   Immediate from exactness at the third term of the sequence.
 \end{proof}
 
-\begin{lemma}\leanok
-[\(\fromBiprod\) annihilates the connecting homomorphism]
+\begin{lemma}[\(\fromBiprod\) annihilates the connecting homomorphism]\leanok
   \label{lem:Scheme_HModule_prime_fromBiprod_delta}
   \lean{AlgebraicGeometry.Scheme.HModule'_fromBiprod_δ}
   \uses{thm:Scheme_HModule_prime_sequence_exact}
@@ -438,16 +415,14 @@ The following four lemmas bridge the biproduct structure on the abelian-group si
 
 Let \(X\) be a scheme equipped with two affine opens \(U_1,U_2\) that cover \(X\) and whose intersection is affine. These opens determine a Mayer--Vietoris square and hence a long exact sequence.
 
-\begin{definition}\leanok
-[Two-affine Mayer--Vietoris square]
+\begin{definition}[Two-affine Mayer--Vietoris square]\leanok
   \label{def:Scheme_AffineCoverMVSquare}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare}
   
   Let \(X\) be a scheme. A two-affine Mayer--Vietoris square on \(X\) consists of two open subschemes \(U_1, U_2\) of \(X\) such that \(U_1\), \(U_2\), and \(U_1 \cap U_2\) are affine, together with the hypothesis \(U_1 \cup U_2 = X\).
 \end{definition}
 
-\begin{definition}\leanok
-[Underlying Mayer--Vietoris square]
+\begin{definition}[Underlying Mayer--Vietoris square]\leanok
   \label{def:Scheme_AffineCoverMVSquare_toMayerVietorisSquare}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare.toMayerVietorisSquare}
   \uses{def:Scheme_AffineCoverMVSquare}
@@ -455,8 +430,7 @@ Let \(X\) be a scheme equipped with two affine opens \(U_1,U_2\) that cover \(X\
   Given a two-affine cover \(S\) of \(X\), the underlying abstract Mayer--Vietoris square has corners \(X_1 = U_1 \cap U_2\), \(X_2 = U_1\), \(X_3 = U_2\), \(X_4 = U_1 \cup U_2\).
 \end{definition}
 
-\begin{lemma}\leanok
-[Corner identification, \(X_1\)]
+\begin{lemma}[Corner identification, \(X_1\)]\leanok
   \label{lem:Scheme_AffineCoverMVSquare_X1}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare.toMayerVietorisSquare_toSquare_X₁}
   \uses{def:Scheme_AffineCoverMVSquare_toMayerVietorisSquare}
@@ -471,8 +445,7 @@ Let \(X\) be a scheme equipped with two affine opens \(U_1,U_2\) that cover \(X\
   The first corner of the underlying square is defined to be \(U_1\cap U_2\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Corner identification, \(X_2\)]
+\begin{lemma}[Corner identification, \(X_2\)]\leanok
   \label{lem:Scheme_AffineCoverMVSquare_X2}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare.toMayerVietorisSquare_toSquare_X₂}
   \uses{def:Scheme_AffineCoverMVSquare_toMayerVietorisSquare}
@@ -487,8 +460,7 @@ Let \(X\) be a scheme equipped with two affine opens \(U_1,U_2\) that cover \(X\
   The second corner of the underlying square is \(U_1\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Corner identification, \(X_3\)]
+\begin{lemma}[Corner identification, \(X_3\)]\leanok
   \label{lem:Scheme_AffineCoverMVSquare_X3}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare.toMayerVietorisSquare_toSquare_X₃}
   \uses{def:Scheme_AffineCoverMVSquare_toMayerVietorisSquare}
@@ -503,8 +475,7 @@ Let \(X\) be a scheme equipped with two affine opens \(U_1,U_2\) that cover \(X\
   The third corner of the underlying square is \(U_2\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Cover-totality identification, \(X_4\)]
+\begin{lemma}[Cover-totality identification, \(X_4\)]\leanok
   \label{lem:Scheme_AffineCoverMVSquare_X4}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare.toMayerVietorisSquare_toSquare_X₄}
   \uses{def:Scheme_AffineCoverMVSquare_toMayerVietorisSquare, def:Scheme_AffineCoverMVSquare}
@@ -519,8 +490,7 @@ Let \(X\) be a scheme equipped with two affine opens \(U_1,U_2\) that cover \(X\
   The fourth corner equals \(U_1 \cup U_2\) by construction, and \(U_1 \cup U_2 = X = \top\) by the cover hypothesis.
 \end{proof}
 
-\begin{definition}\leanok
-[Mayer--Vietoris sequence on a two-affine cover]
+\begin{definition}[Mayer--Vietoris sequence on a two-affine cover]\leanok
   \label{def:Scheme_AffineCoverMVSquare_HModule_prime_sequence}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_sequence}
   \uses{def:Scheme_AffineCoverMVSquare_toMayerVietorisSquare, def:Scheme_HModule_prime_sequence}
@@ -528,8 +498,7 @@ Let \(X\) be a scheme equipped with two affine opens \(U_1,U_2\) that cover \(X\
   Let \(S\) be a two-affine cover of \(X\) and \(\mathcal F\) a sheaf of \(k\)-modules. The five-term Mayer--Vietoris sequence on \(S\) is the specialisation of the abstract sequence to the underlying Mayer--Vietoris square of \(S\).
 \end{definition}
 
-\begin{theorem}\leanok
-[Exactness on a two-affine cover]
+\begin{theorem}[Exactness on a two-affine cover]\leanok
   \label{thm:Scheme_AffineCoverMVSquare_HModule_prime_sequence_exact}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_sequence_exact}
   \uses{def:Scheme_AffineCoverMVSquare_HModule_prime_sequence, thm:Scheme_HModule_prime_sequence_exact}
@@ -544,8 +513,7 @@ Let \(X\) be a scheme equipped with two affine opens \(U_1,U_2\) that cover \(X\
   By \cref{thm:Scheme_HModule_prime_sequence_exact} applied to the underlying Mayer--Vietoris square.
 \end{proof}
 
-\begin{definition}\leanok
-[Curve specialisation]
+\begin{definition}[Curve specialisation]\leanok
   \label{def:Scheme_AffineCoverMVSquare_HModule_prime_sequence_curve}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_sequence_curve}
   \uses{def:Scheme_AffineCoverMVSquare_HModule_prime_sequence}
@@ -553,8 +521,7 @@ Let \(X\) be a scheme equipped with two affine opens \(U_1,U_2\) that cover \(X\
   Let \(C\) be a scheme over \(\Spec k\) and \(S\) a two-affine cover of \(C\). The Mayer--Vietoris sequence on \(S\) for the structure sheaf \(\mathcal O_C\) is the specialisation of the sheaf-parameterised sequence at \(\mathcal F = \mathcal O_C\).
 \end{definition}
 
-\begin{theorem}\leanok
-[Exactness for the structure sheaf on a curve]
+\begin{theorem}[Exactness for the structure sheaf on a curve]\leanok
   \label{thm:Scheme_AffineCoverMVSquare_HModule_prime_sequence_curve_exact}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_sequence_curve_exact}
   \uses{def:Scheme_AffineCoverMVSquare_HModule_prime_sequence_curve, thm:Scheme_AffineCoverMVSquare_HModule_prime_sequence_exact}
@@ -585,8 +552,7 @@ At a terminal object \(T\), the sheafified free \(k\)-module on the representabl
 
 \subsection{Source-object identification}
 
-\begin{definition}\leanok
-[Source-object isomorphism for a terminal object]
+\begin{definition}[Source-object isomorphism for a terminal object]\leanok
   \label{def:Scheme_HModule_prime_top_sourceIso}
   \lean{AlgebraicGeometry.Scheme.HModule'_top_sourceIso}
   \uses{def:Scheme_ModuleCat_free_isLeftAdjoint}
@@ -603,8 +569,7 @@ At a terminal object \(T\), the sheafified free \(k\)-module on the representabl
 
 \subsection{\(\Ext\) transport}
 
-\begin{definition}\leanok
-[\(\Ext\) transport for whole-space cohomology]
+\begin{definition}[\(\Ext\) transport for whole-space cohomology]\leanok
   \label{def:Scheme_HModule_top_linearEquiv}
   \lean{AlgebraicGeometry.Scheme.HModule_top_linearEquiv}
   \uses{def:Scheme_HModule_prime_top_sourceIso, def:Scheme_HModule}
@@ -622,8 +587,7 @@ At a terminal object \(T\), the sheafified free \(k\)-module on the representabl
   Pre- and post-compose with the degree-zero maps induced by the source-object isomorphism and its inverse. The round-trip equations collapse by associativity, composition of degree-zero maps, and the inverse laws of the isomorphism.
 \end{proof}
 
-\begin{definition}\leanok
-[\(\Ext\) transport for cohomology of an open]
+\begin{definition}[\(\Ext\) transport for cohomology of an open]\leanok
   \label{def:Scheme_HModule_prime_top_linearEquiv}
   \lean{AlgebraicGeometry.Scheme.HModule'_top_linearEquiv}
   \uses{def:Scheme_HModule_prime_top_sourceIso, def:Scheme_HModule_prime}
@@ -645,8 +609,7 @@ At a terminal object \(T\), the sheafified free \(k\)-module on the representabl
 
 Changing the ambient universe does not change an \(\Ext\) group. The canonical change-of-universe equivalence respects both its additive structure and, in an \(R\)-linear category, its \(R\)-module structure.
 
-\begin{lemma}\leanok
-[Universe change is additive on \(\Ext\)]
+\begin{lemma}[Universe change is additive on \(\Ext\)]\leanok
   \label{lem:Abelian_Ext_chgUniv_add}
   \lean{Abelian.Ext.chgUniv_add}
   Let \(C\) be an abelian category for which \(\Ext\) exists at two universes \(w\) and \(w'\). For \(a, b \in \Ext^{n}(X, Y)\) computed at universe \(w\), the universe-change map satisfies
@@ -661,8 +624,7 @@ Changing the ambient universe does not change an \(\Ext\) group. The canonical c
   Identify \(\Ext^n(X,Y)\) with the corresponding morphism group in the derived category. Under this identification, change of universe commutes with the canonical embedding of morphisms, which is additive. Hence it carries the sum of \(a\) and \(b\) to the sum of their images.
 \end{proof}
 
-\begin{lemma}\leanok
-[Universe change is \(R\)-linear on \(\Ext\)]
+\begin{lemma}[Universe change is \(R\)-linear on \(\Ext\)]\leanok
   \label{lem:Abelian_Ext_chgUniv_smul}
   \lean{Abelian.Ext.chgUniv_smul}
   Let \(R\) be a ring and \(C\) an \(R\)-linear abelian category for which \(\Ext\) exists at two universes \(w\) and \(w'\). For \(r \in R\) and \(a \in \Ext^{n}(X, Y)\) computed at universe \(w\), the universe-change map satisfies
@@ -677,8 +639,7 @@ Changing the ambient universe does not change an \(\Ext\) group. The canonical c
   Under the identification of \(\Ext\) with a derived-category morphism group, the \(R\)-action is the usual scalar action on morphisms. Change of universe commutes with this identification and with scalar multiplication, which gives the stated equality.
 \end{proof}
 
-\begin{definition}\leanok
-[Linear change of universe]
+\begin{definition}[Linear change of universe]\leanok
   \label{def:Abelian_Ext_chgUnivLinearEquiv}
   \lean{Abelian.Ext.chgUnivLinearEquiv}
   \uses{lem:Abelian_Ext_chgUniv_add, lem:Abelian_Ext_chgUniv_smul}
@@ -691,8 +652,7 @@ Changing the ambient universe does not change an \(\Ext\) group. The canonical c
   The underlying bijection is the standard universe-change equivalence. Additivity and \(R\)-linearity follow from the fact that the universe change commutes with the homomorphism equivalence to the derived category, and the additive and \(R\)-linear structures are pulled back through that equivalence.
 \end{proof}
 
-\begin{definition}\leanok
-[Full cover-totality bridge]
+\begin{definition}[Full cover-totality bridge]\leanok
   \label{def:Scheme_HModule_prime_eq_HModule_linearEquiv}
   \lean{AlgebraicGeometry.Scheme.HModule'_eq_HModule_linearEquiv}
   \uses{def:Scheme_HModule_prime_top_linearEquiv, def:Abelian_Ext_chgUnivLinearEquiv, def:Scheme_HModule_top_linearEquiv}
@@ -712,8 +672,7 @@ Changing the ambient universe does not change an \(\Ext\) group. The canonical c
 
 \subsection{Specialisation to the \(X_4\) corner of a two-affine cover}
 
-\begin{definition}\leanok
-[\(X_4\) corner bridge, abstract sheaf form]
+\begin{definition}[\(X_4\) corner bridge, abstract sheaf form]\leanok
   \label{def:Scheme_AffineCoverMVSquare_HModule_prime_X4_linearEquiv}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_X₄_linearEquiv}
   \uses{def:Scheme_HModule_prime_eq_HModule_linearEquiv, lem:Scheme_AffineCoverMVSquare_X4}
@@ -731,8 +690,7 @@ Changing the ambient universe does not change an \(\Ext\) group. The canonical c
   The fourth corner \(X_4\) equals the top open \(\top\), which is terminal; apply the full bridge.
 \end{proof}
 
-\begin{definition}\leanok
-[\(X_4\) corner bridge, curve form]
+\begin{definition}[\(X_4\) corner bridge, curve form]\leanok
   \label{def:Scheme_AffineCoverMVSquare_HModule_prime_X4_linearEquiv_curve}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_X₄_linearEquiv_curve}
   \uses{def:Scheme_AffineCoverMVSquare_HModule_prime_X4_linearEquiv}
@@ -752,8 +710,7 @@ Changing the ambient universe does not change an \(\Ext\) group. The canonical c
 
 \subsection{Consequences for finite dimensionality}
 
-\begin{theorem}\leanok
-[Finite rank via the \(X_4\) corner, abstract sheaf form]
+\begin{theorem}[Finite rank via the \(X_4\) corner, abstract sheaf form]\leanok
   \label{thm:Scheme_AffineCoverMVSquare_finrank_HModule_eq_HModule_prime_X4}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare.finrank_HModule_eq_HModule'_X₄}
   \uses{def:Scheme_AffineCoverMVSquare_HModule_prime_X4_linearEquiv}
@@ -771,8 +728,7 @@ Changing the ambient universe does not change an \(\Ext\) group. The canonical c
   A linear isomorphism preserves finite rank.
 \end{proof}
 
-\begin{theorem}\leanok
-[Finite rank via the \(X_4\) corner, curve form]
+\begin{theorem}[Finite rank via the \(X_4\) corner, curve form]\leanok
   \label{thm:Scheme_AffineCoverMVSquare_finrank_HModule_eq_HModule_prime_X4_curve}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare.finrank_HModule_eq_HModule'_X₄_curve}
   \uses{thm:Scheme_AffineCoverMVSquare_finrank_HModule_eq_HModule_prime_X4, def:Scheme_AffineCoverMVSquare_HModule_prime_X4_linearEquiv_curve}
@@ -790,8 +746,7 @@ Changing the ambient universe does not change an \(\Ext\) group. The canonical c
   Apply \cref{thm:Scheme_AffineCoverMVSquare_finrank_HModule_eq_HModule_prime_X4} to \(\mathcal F=\mathcal O_C\).
 \end{proof}
 
-\begin{theorem}\leanok
-[Finite-dimensionality via the \(X_4\) corner, abstract sheaf form]
+\begin{theorem}[Finite-dimensionality via the \(X_4\) corner, abstract sheaf form]\leanok
   \label{thm:Scheme_AffineCoverMVSquare_module_finite_HModule_of_HModule_prime_X4}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare.module_finite_HModule_of_HModule'_X₄}
   \uses{def:Scheme_AffineCoverMVSquare_HModule_prime_X4_linearEquiv}
@@ -806,8 +761,7 @@ Changing the ambient universe does not change an \(\Ext\) group. The canonical c
   A linear isomorphism transports the property of being a finite module.
 \end{proof}
 
-\begin{theorem}\leanok
-[Finite-dimensionality via the \(X_4\) corner, curve form]
+\begin{theorem}[Finite-dimensionality via the \(X_4\) corner, curve form]\leanok
   \label{thm:Scheme_AffineCoverMVSquare_module_finite_HModule_of_HModule_prime_X4_curve}
   \lean{AlgebraicGeometry.Scheme.AffineCoverMVSquare.module_finite_HModule_of_HModule'_X₄_curve}
   \uses{thm:Scheme_AffineCoverMVSquare_module_finite_HModule_of_HModule_prime_X4, def:Scheme_AffineCoverMVSquare_HModule_prime_X4_linearEquiv_curve}
@@ -831,8 +785,7 @@ A \v{C}ech-acyclic cover whose \v{C}ech cohomology agrees with derived cohomolog
 
 When a cover \(\mathfrak U\) is Čech-acyclic and its supremum is the whole space, the vanishing of Čech cohomology transports to the vanishing of whole-space cohomology.
 
-\begin{theorem}\leanok
-[Top-supremum transport, abstract sheaf form]
+\begin{theorem}[Top-supremum transport, abstract sheaf form]\leanok
   \label{thm:Scheme_subsingleton_HModule_of_isCechAcyclicCover_top}
   \lean{AlgebraicGeometry.Scheme.subsingleton_HModule_of_isCechAcyclicCover_top}
   \uses{thm:Scheme_subsingleton_HModule_prime_supr_of_isCechAcyclicCover, def:Scheme_HModule_prime_eq_HModule_linearEquiv, def:Scheme_IsCechAcyclicCover, def:Scheme_HModule}
@@ -847,8 +800,7 @@ When a cover \(\mathfrak U\) is Čech-acyclic and its supremum is the whole spac
   Acyclicity and the comparison isomorphism make \(H^{\prime n}(\bigsqcup_i\mathfrak U_i,\mathcal F)\) zero. The cover hypothesis identifies its open with \(\top\), and \cref{def:Scheme_HModule_prime_eq_HModule_linearEquiv} transports this vanishing to \(H^n(X,\mathcal F)\).
 \end{proof}
 
-\begin{theorem}\leanok
-[Top-supremum transport, curve form]
+\begin{theorem}[Top-supremum transport, curve form]\leanok
   \label{thm:Scheme_subsingleton_HModule_of_isCechAcyclicCover_top_curve}
   \lean{AlgebraicGeometry.Scheme.subsingleton_HModule_of_isCechAcyclicCover_top_curve}
   \uses{thm:Scheme_subsingleton_HModule_of_isCechAcyclicCover_top, thm:Scheme_subsingleton_HModule_prime_supr_of_isCechAcyclicCover_curve}
@@ -867,8 +819,7 @@ When a cover \(\mathfrak U\) is Čech-acyclic and its supremum is the whole spac
 
 A \v{C}ech-to-derived comparison consists of a linear isomorphism in every degree.
 
-\begin{definition}\leanok
-[\v{C}ech-to-derived comparison data]
+\begin{definition}[\v{C}ech-to-derived comparison data]\leanok
   \label{def:Scheme_HasCechToHModuleIso}
   \lean{AlgebraicGeometry.Scheme.HasCechToHModuleIso}
   \uses{def:Scheme_cechCohomology, def:Scheme_HModule_prime}
@@ -876,8 +827,7 @@ A \v{C}ech-to-derived comparison consists of a linear isomorphism in every degre
   Let \(\mathfrak U\) be an indexed open cover. The property \(\HasCechToHModuleIso\) consists of a \(k\)-linear isomorphism between \v{C}ech cohomology and \(H'\) cohomology of the supremum in every degree.
 \end{definition}
 
-\begin{definition}\leanok
-[The comparison isomorphism]
+\begin{definition}[The comparison isomorphism]\leanok
   \label{def:Scheme_cechToHModuleIso}
   \lean{AlgebraicGeometry.Scheme.cechToHModuleIso}
   \uses{def:Scheme_HasCechToHModuleIso}
@@ -885,8 +835,7 @@ A \v{C}ech-to-derived comparison consists of a linear isomorphism in every degre
   Given \(\HasCechToHModuleIso\), denote its degree-\(n\) comparison isomorphism by \(\operatorname{comp}_n\).
 \end{definition}
 
-\begin{theorem}\leanok
-[Top-supremum transport from comparison data, abstract sheaf form]
+\begin{theorem}[Top-supremum transport from comparison data, abstract sheaf form]\leanok
   \label{thm:Scheme_subsingleton_HModule_of_hasCechToHModuleIso_top}
   \lean{AlgebraicGeometry.Scheme.subsingleton_HModule_of_hasCechToHModuleIso_top}
   \uses{thm:Scheme_subsingleton_HModule_of_isCechAcyclicCover_top, def:Scheme_cechToHModuleIso, def:Scheme_HasCechToHModuleIso, def:Scheme_IsCechAcyclicCover}
@@ -901,8 +850,7 @@ A \v{C}ech-to-derived comparison consists of a linear isomorphism in every degre
   Apply \cref{thm:Scheme_subsingleton_HModule_of_isCechAcyclicCover_top} using the comparison isomorphisms of \cref{def:Scheme_cechToHModuleIso}.
 \end{proof}
 
-\begin{theorem}\leanok
-[Top-supremum transport from comparison data, curve form]
+\begin{theorem}[Top-supremum transport from comparison data, curve form]\leanok
   \label{thm:Scheme_subsingleton_HModule_of_hasCechToHModuleIso_top_curve}
   \lean{AlgebraicGeometry.Scheme.subsingleton_HModule_of_hasCechToHModuleIso_top_curve}
   \uses{thm:Scheme_subsingleton_HModule_of_hasCechToHModuleIso_top, thm:Scheme_subsingleton_HModule_of_isCechAcyclicCover_top_curve}
@@ -917,8 +865,7 @@ A \v{C}ech-to-derived comparison consists of a linear isomorphism in every degre
   Apply \cref{thm:Scheme_subsingleton_HModule_of_hasCechToHModuleIso_top} to the \(k\)-module-valued structure sheaf.
 \end{proof}
 
-\begin{theorem}\leanok
-[Supremum transport for \(H'\), abstract sheaf form]
+\begin{theorem}[Supremum transport for \(H'\), abstract sheaf form]\leanok
   \label{thm:Scheme_subsingleton_HModule_prime_supr_of_hasCechToHModuleIso}
   \lean{AlgebraicGeometry.Scheme.subsingleton_HModule'_supr_of_hasCechToHModuleIso}
   \uses{thm:Scheme_subsingleton_HModule_prime_supr_of_isCechAcyclicCover, def:Scheme_cechToHModuleIso, def:Scheme_HasCechToHModuleIso}
@@ -933,8 +880,7 @@ A \v{C}ech-to-derived comparison consists of a linear isomorphism in every degre
   Apply \cref{thm:Scheme_subsingleton_HModule_prime_supr_of_isCechAcyclicCover} using the comparison isomorphisms of \cref{def:Scheme_cechToHModuleIso}.
 \end{proof}
 
-\begin{theorem}\leanok
-[Supremum transport for \(H'\), curve form]
+\begin{theorem}[Supremum transport for \(H'\), curve form]\leanok
   \label{thm:Scheme_subsingleton_HModule_prime_supr_of_hasCechToHModuleIso_curve}
   \lean{AlgebraicGeometry.Scheme.subsingleton_HModule'_supr_of_hasCechToHModuleIso_curve}
   \uses{thm:Scheme_subsingleton_HModule_prime_supr_of_hasCechToHModuleIso, thm:Scheme_subsingleton_HModule_prime_supr_of_isCechAcyclicCover_curve}
@@ -949,8 +895,7 @@ A \v{C}ech-to-derived comparison consists of a linear isomorphism in every degre
   Apply \cref{thm:Scheme_subsingleton_HModule_prime_supr_of_hasCechToHModuleIso} to the \(k\)-module-valued structure sheaf.
 \end{proof}
 
-\begin{theorem}\leanok
-[Vanishing on the covered open, abstract sheaf form]
+\begin{theorem}[Vanishing on the covered open, abstract sheaf form]\leanok
   \label{thm:Scheme_subsingleton_HModule_prime_of_hasCechToHModuleIso}
   \lean{AlgebraicGeometry.Scheme.subsingleton_HModule'_of_hasCechToHModuleIso}
   \uses{thm:Scheme_subsingleton_HModule_prime_supr_of_hasCechToHModuleIso}
@@ -965,8 +910,7 @@ A \v{C}ech-to-derived comparison consists of a linear isomorphism in every degre
   Identify \(U\) with \(\bigsqcup_i\mathfrak U_i\) and apply \cref{thm:Scheme_subsingleton_HModule_prime_supr_of_hasCechToHModuleIso}.
 \end{proof}
 
-\begin{theorem}\leanok
-[Vanishing on the covered open, curve form]
+\begin{theorem}[Vanishing on the covered open, curve form]\leanok
   \label{thm:Scheme_subsingleton_HModule_prime_of_hasCechToHModuleIso_curve}
   \lean{AlgebraicGeometry.Scheme.subsingleton_HModule'_of_hasCechToHModuleIso_curve}
   \uses{thm:Scheme_subsingleton_HModule_prime_of_hasCechToHModuleIso, thm:Scheme_subsingleton_HModule_prime_supr_of_hasCechToHModuleIso_curve}
@@ -985,8 +929,7 @@ A \v{C}ech-to-derived comparison consists of a linear isomorphism in every degre
 
 Suppose every affine open admits a \v{C}ech-acyclic cover equipped with comparison data. Then positive-degree cohomology vanishes on every affine open.
 
-\begin{definition}\leanok
-[Acyclic covers of affine opens]
+\begin{definition}[Acyclic covers of affine opens]\leanok
   \label{def:Scheme_HasAffineCechAcyclicCover}
   \lean{AlgebraicGeometry.Scheme.HasAffineCechAcyclicCover}
   \uses{def:Scheme_IsCechAcyclicCover, def:Scheme_HasCechToHModuleIso}
@@ -994,8 +937,7 @@ Suppose every affine open admits a \v{C}ech-acyclic cover equipped with comparis
   For every affine open \(U\), there exists an indexed cover \(\mathfrak U\) with \(\bigsqcup \mathfrak U_i = U\) that is Čech-acyclic and carries a comparison isomorphism.
 \end{definition}
 
-\begin{theorem}\leanok
-[Affine vanishing from acyclic covers]
+\begin{theorem}[Affine vanishing from acyclic covers]\leanok
   \label{thm:Scheme_instIsAffineHModuleVanishing_of_hasAffineCechAcyclicCover}
   \lean{AlgebraicGeometry.Scheme.instIsAffineHModuleVanishing_of_hasAffineCechAcyclicCover}
   \uses{def:Scheme_HasAffineCechAcyclicCover, thm:Scheme_subsingleton_HModule_prime_of_hasCechToHModuleIso, thm:Scheme_IsAffineHModuleVanishing}

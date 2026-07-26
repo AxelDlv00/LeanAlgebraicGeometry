@@ -8,8 +8,7 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
 
 \section{Albanese objects}
 
-\begin{definition}\leanok
-[Albanese universal property of a pointed curve]
+\begin{definition}[Albanese universal property of a pointed curve]\leanok
   \label{def:IsAlbanese}
   \lean{AlgebraicGeometry.IsAlbanese}
   Let \(P \in C(k)\).  An abelian variety \(J\) together with a pointed
@@ -34,8 +33,7 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
 
 \subsection{The universal morphism}
 
-\begin{definition}\leanok
-[The Albanese universal morphism]
+\begin{definition}[The Albanese universal morphism]\leanok
   \label{def:IsAlbanese_ofCurve}
   \uses{def:IsAlbanese}
   \lean{AlgebraicGeometry.IsAlbanese.ofCurve}
@@ -43,16 +41,14 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   \(\iota_P \colon C \to J\), called its universal morphism.
 \end{definition}
 
-\begin{lemma}\leanok
-[Pointed condition]
+\begin{lemma}[Pointed condition]\leanok
   \label{lem:IsAlbanese_comp_ofCurve}
   \uses{def:IsAlbanese, def:IsAlbanese_ofCurve}
   \lean{AlgebraicGeometry.IsAlbanese.comp_ofCurve}
   The universal morphism satisfies \(P \circ \iota_P = \eta_J\).
 \end{lemma}
 
-\begin{lemma}\leanok
-[Universal factorisation]
+\begin{lemma}[Universal factorisation]\leanok
   \label{lem:IsAlbanese_exists_unique_ofCurve_comp}
   \uses{def:IsAlbanese, def:IsAlbanese_ofCurve}
   \lean{AlgebraicGeometry.IsAlbanese.exists_unique_ofCurve_comp}
@@ -61,8 +57,7 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   \(g \colon J \to A\).
 \end{lemma}
 
-\begin{theorem}\leanok
-[Uniqueness of the Albanese object]
+\begin{theorem}[Uniqueness of the Albanese object]\leanok
   \label{thm:IsAlbanese_unique}
   \uses{def:IsAlbanese, def:IsAlbanese_ofCurve}
   \lean{AlgebraicGeometry.IsAlbanese.unique}
@@ -89,8 +84,7 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
 
 \section{A uniform Jacobian witness}
 
-\begin{definition}\leanok
-[Jacobian witness]
+\begin{definition}[Jacobian witness]\leanok
   \label{def:JacobianWitness}
   \uses{def:IsAlbanese, def:genus}
   \lean{AlgebraicGeometry.JacobianWitness}
@@ -117,8 +111,7 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
 \subsection{The Picard witness \(J=\Pic^0_{C/k}\)}
 \label{sec:picardJacobianWitness}
 
-\begin{theorem}\leanok
-[The Picard identity component is a Jacobian witness]
+\begin{theorem}[The Picard identity component is a Jacobian witness]\leanok
   \label{def:picardJacobianWitness}
   \uses{def:JacobianWitness, def:genus, thm:fga_pic_representability,
     thm:pic0_isAbelianVariety, thm:pic_zero_dimension_equals_genus,
@@ -141,8 +134,7 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   These data form the required witness.
 \end{proof}
 
-\begin{theorem}\leanok
-[Existence of a Jacobian witness]
+\begin{theorem}[Existence of a Jacobian witness]\leanok
   \label{thm:nonempty_jacobianWitness}
   \uses{def:JacobianWitness, def:picardJacobianWitness}
   \lean{AlgebraicGeometry.nonempty_jacobianWitness}
@@ -154,8 +146,7 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   Theorem~\ref{def:picardJacobianWitness}.
 \end{proof}
 
-\begin{definition}\leanok
-[Chosen Jacobian witness]
+\begin{definition}[Chosen Jacobian witness]\leanok
   \label{def:jacobianWitness}
   \uses{def:JacobianWitness, thm:nonempty_jacobianWitness}
   \lean{AlgebraicGeometry.jacobianWitness}
@@ -164,8 +155,7 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
 
 \section{The Jacobian and its structure}
 
-\begin{definition}\leanok
-[Jacobian]
+\begin{definition}[Jacobian]\leanok
   \label{def:Jacobian}
   \uses{def:genus, def:JacobianWitness, def:jacobianWitness}
   \lean{AlgebraicGeometry.Jacobian}
@@ -174,8 +164,7 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   unique isomorphism of Albanese objects.
 \end{definition}
 
-\begin{theorem}\leanok
-[Group structure]
+\begin{theorem}[Group structure]\leanok
   \label{thm:Jacobian_grpObj}
   \uses{def:Jacobian, def:jacobianWitness}
   \lean{AlgebraicGeometry.Jacobian.instGrpObj}
@@ -186,8 +175,7 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   This is the group structure carried by the chosen Jacobian witness.
 \end{proof}
 
-\begin{theorem}\leanok
-[Dimension and smoothness]
+\begin{theorem}[Dimension and smoothness]\leanok
   \label{thm:Jacobian_smooth_genus}
   \uses{def:Jacobian, def:genus, def:jacobianWitness}
   \lean{AlgebraicGeometry.Jacobian.smoothOfRelativeDimension_genus}
@@ -199,8 +187,7 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   This is the dimension assertion carried by the chosen Jacobian witness.
 \end{proof}
 
-\begin{theorem}\leanok
-[Properness]
+\begin{theorem}[Properness]\leanok
   \label{thm:Jacobian_proper}
   \uses{def:Jacobian, def:jacobianWitness}
   \lean{AlgebraicGeometry.Jacobian.instIsProper}
@@ -211,8 +198,7 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   This is the properness assertion carried by the chosen Jacobian witness.
 \end{proof}
 
-\begin{theorem}\leanok
-[Geometric irreducibility]
+\begin{theorem}[Geometric irreducibility]\leanok
   \label{thm:Jacobian_geomIrred}
   \uses{def:Jacobian, def:jacobianWitness}
   \lean{AlgebraicGeometry.Jacobian.instGeometricallyIrreducible}

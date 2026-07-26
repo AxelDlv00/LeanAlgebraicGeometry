@@ -62,8 +62,7 @@ of the Quot functor of \cref{chap:Picard_QuotScheme}; and it determines an
 invertible sheaf \(\mathcal{O}_{C \times_k T}(D)\) on the relative curve,
 representing a class in \(\Pic^\sharp_{C/k}(T)\).
 
-\begin{definition}\leanok
-[Abel-map witness]
+\begin{definition}[Abel-map witness]\leanok
   \label{def:abel_map_witness}
   \lean{AlgebraicGeometry.Scheme.PicScheme.abelMapWitness}
   \uses{def:div_functor_carrier, def:pic_sharp_carrier}
@@ -92,8 +91,7 @@ representing a class in \(\Pic^\sharp_{C/k}(T)\).
   \(\langle \mathcal F,q\rangle\) to \(-[\ker q]\).
 \end{proof}
 
-\begin{lemma}\leanok
-[Line bundle / Quot correspondence via the Abel map]
+\begin{lemma}[Line bundle / Quot correspondence via the Abel map]\leanok
   \label{lem:line_bundle_quot_correspondence}
   \lean{AlgebraicGeometry.Scheme.PicScheme.abelMap_app_mk}
   \uses{def:abel_map_witness, def:inst_has_abel_map, def:has_abel_map,
@@ -172,8 +170,7 @@ curve. The general theorem (Kleiman \S 4, Thm.~4.8) covers any
 \(X/S\) projective Zariski-locally over \(S\), flat, with integral geometric
 fibers; we record the general statement and then specialise.
 
-\begin{theorem}\leanok
-[FGA representability of the Picard scheme]
+\begin{theorem}[FGA representability of the Picard scheme]\leanok
   \label{thm:fga_pic_representability}
   \lean{AlgebraicGeometry.Scheme.PicScheme.representable}
   \uses{lem:line_bundle_quot_correspondence, lem:smooth_proper_quotient,
@@ -285,8 +282,7 @@ The structural lemma underlying step 4 above is recorded separately
 because it is the abstract content allowing descent from
 \(Z = \mathrm{Div}^{\phi_0}_0\) to the representing Picard piece.
 
-\begin{lemma}\leanok
-[Smooth-proper quotient of \'etale sheaves]
+\begin{lemma}[Smooth-proper quotient of \'etale sheaves]\leanok
   \label{lem:smooth_proper_quotient}
   \lean{AlgebraicGeometry.Scheme.PicScheme.smoothProperQuotient}
   \uses{def:has_smooth_proper_quotient}
@@ -352,8 +348,7 @@ group at every \(T\) (the quotient of an abelian group by a subgroup),
 functorially in \(T\); this lifts to the \'etale sheafification, and then
 to a group-scheme structure on the representing scheme by Yoneda.
 
-\begin{theorem}\leanok
-[\(\Pic_{C/k}\) is a \(k\)-group scheme]
+\begin{theorem}[\(\Pic_{C/k}\) is a \(k\)-group scheme]\leanok
   \label{thm:pic_is_group_scheme}
   \lean{AlgebraicGeometry.Scheme.PicScheme.groupSchemeStructure}
   \uses{thm:fga_pic_representability, thm:relative_pic_quotient_well_defined,
@@ -413,8 +408,7 @@ to a group-scheme structure on the representing scheme by Yoneda.
 
 The two preceding theorems determine the following named scheme.
 
-\begin{definition}\leanok
-[The Picard scheme]
+\begin{definition}[The Picard scheme]\leanok
   \label{def:pic_scheme}
   \lean{AlgebraicGeometry.Scheme.PicScheme}
   \uses{def:has_pic_scheme, def:inst_has_pic_scheme}
@@ -489,8 +483,7 @@ when the predicate is inhabited.
 \subsection{Basic functors}
 \label{subsec:fga_pic_functor_carriers}
 
-\begin{definition}\leanok
-[\(k\)-rational point]
+\begin{definition}[\(k\)-rational point]\leanok
   \label{def:has_rational_point}
   \lean{AlgebraicGeometry.Scheme.HasRationalPoint}
   The predicate \(\mathrm{HasRationalPoint}(C)\) asserts that the structural
@@ -508,8 +501,7 @@ when the predicate is inhabited.
   This is a definition.
 \end{proof}
 
-\begin{definition}\leanok
-[Set-valued relative Picard functor]
+\begin{definition}[Set-valued relative Picard functor]\leanok
   \label{def:pic_sharp_carrier}
   \lean{AlgebraicGeometry.Scheme.PicScheme.picSharp}
   \uses{def:rel_pic_sharp}
@@ -530,8 +522,7 @@ when the predicate is inhabited.
   the group-valued presheaf.
 \end{proof}
 
-\begin{definition}\leanok
-[Existence of the relative-divisor functor]
+\begin{definition}[Existence of the relative-divisor functor]\leanok
   \label{def:has_div_functor}
   \lean{AlgebraicGeometry.Scheme.PicScheme.HasDivFunctor}
   The predicate \(\mathrm{HasDivFunctor}(C)\) asserts that the category of
@@ -546,8 +537,7 @@ when the predicate is inhabited.
   This is the defining predicate.
 \end{proof}
 
-\begin{definition}\leanok
-[The relative-divisor functor]
+\begin{definition}[The relative-divisor functor]\leanok
   \label{def:div_functor_carrier}
   \lean{AlgebraicGeometry.Scheme.PicScheme.divFunctor}
   \uses{def:div_functor}
@@ -564,8 +554,7 @@ when the predicate is inhabited.
   \(X = C\), \(S = \Spec k\), \(\pi\) the structural morphism.
 \end{proof}
 
-\begin{definition}\leanok
-[Relative-divisor functor exists]
+\begin{definition}[Relative-divisor functor exists]\leanok
   \label{def:inst_has_div_functor}
   \lean{AlgebraicGeometry.Scheme.PicScheme.instHasDivFunctor}
   \uses{def:has_div_functor, def:div_functor_carrier}
@@ -582,8 +571,7 @@ when the predicate is inhabited.
 \subsection{Abel-map predicate}
 \label{subsec:fga_pic_abel_map_carrier}
 
-\begin{definition}\leanok
-[Abel-map data]
+\begin{definition}[Abel-map data]\leanok
   \label{def:has_abel_map}
   \lean{AlgebraicGeometry.Scheme.PicScheme.HasAbelMap,
     AlgebraicGeometry.Scheme.PicScheme.abelMap}
@@ -600,8 +588,7 @@ when the predicate is inhabited.
   This is a definition.
 \end{proof}
 
-\begin{definition}\leanok
-[Existence of the Abel map]
+\begin{definition}[Existence of the Abel map]\leanok
   \label{def:inst_has_abel_map}
   \lean{AlgebraicGeometry.Scheme.PicScheme.instHasAbelMap}
   \uses{def:has_abel_map, def:abel_map_witness}
@@ -622,8 +609,7 @@ when the predicate is inhabited.
 \subsection{Smooth-proper quotient predicate}
 \label{subsec:fga_pic_quotient_carrier}
 
-\begin{definition}\leanok
-[Representability of the smooth-proper quotient]
+\begin{definition}[Representability of the smooth-proper quotient]\leanok
   \label{def:has_smooth_proper_quotient}
   \lean{AlgebraicGeometry.Scheme.PicScheme.HasSmoothProperQuotient}
   For a morphism \(\alpha : Z \to P\) of presheaves of types on
@@ -640,8 +626,7 @@ when the predicate is inhabited.
 \subsection{Picard-scheme predicates}
 \label{subsec:fga_pic_scheme_carriers}
 
-\begin{definition}\leanok
-[Existence of the Picard scheme]
+\begin{definition}[Existence of the Picard scheme]\leanok
   \label{def:has_pic_scheme}
   \lean{AlgebraicGeometry.Scheme.HasPicScheme}
   \uses{def:pic_sharp_carrier}
@@ -663,8 +648,7 @@ when the predicate is inhabited.
   This is the defining existence predicate.
 \end{proof}
 
-\begin{definition}\leanok
-[Picard scheme exists]
+\begin{definition}[Picard scheme exists]\leanok
   \label{def:inst_has_pic_scheme}
   \lean{AlgebraicGeometry.Scheme.instHasPicScheme}
   \uses{def:has_pic_scheme, def:has_rational_point}
@@ -680,8 +664,7 @@ when the predicate is inhabited.
   the required locally finite type representing scheme.
 \end{proof}
 
-\begin{definition}\leanok
-[Representability of \(\Pic^\sharp_{C/k}\)]
+\begin{definition}[Representability of \(\Pic^\sharp_{C/k}\)]\leanok
   \label{def:pic_sharp_representable}
   \lean{AlgebraicGeometry.Scheme.PicScheme.PicSharpRepresentable}
   \uses{def:pic_sharp_carrier, def:pic_scheme}
@@ -695,8 +678,7 @@ when the predicate is inhabited.
   This is a definition.
 \end{proof}
 
-\begin{definition}\leanok
-[Representability identification]
+\begin{definition}[Representability identification]\leanok
   \label{def:inst_pic_sharp_representable}
   \lean{AlgebraicGeometry.Scheme.PicScheme.instPicSharpRepresentable}
   \uses{def:pic_sharp_representable, def:has_pic_scheme}
@@ -711,8 +693,7 @@ when the predicate is inhabited.
   \cref{def:has_pic_scheme}.
 \end{proof}
 
-\begin{definition}\leanok
-[Local finite type of \(\Pic_{C/k}\)]
+\begin{definition}[Local finite type of \(\Pic_{C/k}\)]\leanok
   \label{def:pic_scheme_lft}
   \lean{AlgebraicGeometry.Scheme.PicScheme.PicSchemeLocallyOfFiniteType}
   \uses{def:pic_scheme, def:has_pic_scheme}
@@ -735,8 +716,7 @@ when the predicate is inhabited.
   This is a definition.
 \end{proof}
 
-\begin{definition}\leanok
-[Local-finiteness assertion]
+\begin{definition}[Local-finiteness assertion]\leanok
   \label{def:inst_pic_scheme_lft}
   \lean{AlgebraicGeometry.Scheme.PicScheme.instPicSchemeLocallyOfFiniteType}
   \uses{def:pic_scheme_lft, def:has_pic_scheme}

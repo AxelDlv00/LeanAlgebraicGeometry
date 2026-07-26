@@ -63,8 +63,7 @@ Lean substrate
 \texttt{AlgebraicGeometry.GroupScheme.IdentityComponent} is reusable
 outside the Picard context.
 
-\begin{definition}\leanok
-[Identity component of a group scheme]
+\begin{definition}[Identity component of a group scheme]\leanok
   \label{def:identity_component_group_scheme}
   \lean{AlgebraicGeometry.GroupScheme.IdentityComponent}
   \uses{def:identity_component_carrier}
@@ -171,10 +170,7 @@ outside the Picard context.
   \(G^0 \hookrightarrow G\) is then both an open and a closed immersion.
 \end{proof}
 
-\begin{theorem}
-
-\leanok
-[Identity component inclusion is a group-scheme homomorphism]
+\begin{theorem}[Identity component inclusion is a group-scheme homomorphism]\leanok
   \label{thm:identity_component_is_subgroup_homomorphism}
   \lean{AlgebraicGeometry.GroupScheme.IdentityComponent.isSubgroupHomomorphism}
   \uses{thm:identity_component_open_subgroup, def:identity_component_group_scheme, lem:identity_component_geometrically_connected}
@@ -221,10 +217,7 @@ outside the Picard context.
   is a homomorphism of \(k\)-group schemes.
 \end{proof}
 
-\begin{theorem}
-
-\leanok
-[Identity component is of finite type and geometrically irreducible]
+\begin{theorem}[Identity component is of finite type and geometrically irreducible]\leanok
   \label{thm:identity_component_finite_type_geom_irreducible}
   \lean{AlgebraicGeometry.GroupScheme.IdentityComponent.isFiniteTypeGeometricallyIrreducible}
 
@@ -300,10 +293,7 @@ outside the Picard context.
   from the algebraic closure of \(K\).
 \end{proof}
 
-\begin{theorem}
-
-\leanok
-[Formation of the identity component commutes with base change]
+\begin{theorem}[Formation of the identity component commutes with base change]\leanok
   \label{thm:identity_component_base_change_commutes}
   \lean{AlgebraicGeometry.GroupScheme.IdentityComponent.baseChangeIso}
   \uses{thm:identity_component_open_subgroup, lem:geometricallyConnected_of_connected_of_section, lem:identity_component_geometrically_connected, def:identity_component_group_scheme}
@@ -358,10 +348,7 @@ morphisms to the spectrum of a field (Stacks 0383, available in
 mathlib), closedness of integral base changes, and a clopen-image
 argument at the rational point.
 
-\begin{lemma}
-
-\leanok
-[Evaluation at a maximal ideal over an algebraically closed field]
+\begin{lemma}[Evaluation at a maximal ideal over an algebraically closed field]\leanok
   \label{lem:maximal_ideal_evaluation_alg_closed}
   \lean{AlgebraicGeometry.exists_algHom_ker_eq}
   \textit{Source: Zariski's lemma; Stacks, tag 00FV.}
@@ -380,10 +367,7 @@ argument at the rational point.
   \(\varphi\), whose kernel is \(\mathfrak m\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Tensor product with a finite-type domain over an algebraically closed field]
+\begin{lemma}[Tensor product with a finite-type domain over an algebraically closed field]\leanok
   \label{lem:tensor_domain_finite_type_alg_closed}
   \lean{AlgebraicGeometry.isDomain_tensorProduct_of_finiteType}
   \uses{lem:maximal_ideal_evaluation_alg_closed}
@@ -416,10 +400,7 @@ argument at the rational point.
   \(R\) is a domain every \(c_j(y) = 0\), i.e.\ \(y = 0\).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Tensor product of field extensions over an algebraically closed field]
+\begin{lemma}[Tensor product of field extensions over an algebraically closed field]\leanok
   \label{lem:tensor_domain_alg_closed}
   \lean{Algebra.TensorProduct.isDomain_of_isAlgClosed}
   \uses{lem:tensor_domain_finite_type_alg_closed}
@@ -443,10 +424,7 @@ argument at the rational point.
   \cref{lem:tensor_domain_finite_type_alg_closed}.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The spectrum of a domain is connected]
+\begin{lemma}[The spectrum of a domain is connected]\leanok
   \label{lem:spec_domain_connected}
   \lean{AlgebraicGeometry.connectedSpace_spec_of_isDomain}
   Let \(R\) be a commutative domain. Then \(\Spec R\) is a connected
@@ -459,10 +437,7 @@ argument at the rational point.
   connected and nonempty.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Projections from constant-field base changes are geometrically connected]
+\begin{lemma}[Projections from constant-field base changes are geometrically connected]\leanok
   \label{lem:geometrically_connected_projection_alg_closed}
   \lean{AlgebraicGeometry.geometricallyConnected_pullback_fst_of_isAlgClosed}
   \uses{lem:tensor_domain_alg_closed, lem:spec_domain_connected}
@@ -484,10 +459,7 @@ argument at the rational point.
   \cref{lem:spec_domain_connected}.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Connectedness is stable under base change from an algebraically closed field]
+\begin{lemma}[Connectedness is stable under base change from an algebraically closed field]\leanok
   \label{lem:connected_base_change_alg_closed}
   \lean{AlgebraicGeometry.connectedSpace_pullback_of_isAlgClosed}
   \uses{lem:geometrically_connected_projection_alg_closed}
@@ -510,10 +482,7 @@ argument at the rational point.
   \(\texttt{GeometricallyConnected.connectedSpace}\)).
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Base change to the algebraic closure preserves connectedness given a section]
+\begin{lemma}[Base change to the algebraic closure preserves connectedness given a section]\leanok
   \label{lem:connected_base_change_algebraic_closure}
   \lean{AlgebraicGeometry.connectedSpace_pullback_algebraicClosure}
   \textit{Source: Stacks, tag 04KV (algebraic step); EGA IV\(_2\) 4.5.13.}
@@ -550,10 +519,7 @@ argument at the rational point.
   connected.
 \end{proof}
 
-\begin{theorem}
-
-\leanok
-[Connected with a rational section implies geometrically connected]
+\begin{theorem}[Connected with a rational section implies geometrically connected]\leanok
   \label{thm:geometrically_connected_of_section}
   \lean{AlgebraicGeometry.geometricallyConnected_of_connectedSpace_of_section}
   \uses{lem:connected_base_change_algebraic_closure, lem:connected_base_change_alg_closed}
@@ -600,10 +566,7 @@ argument at the rational point.
 % identityComponent_geometricallyConnected G` explicitly. Verified by
 % `lean_verify` that `IdentityComponent.isOpenSubgroupScheme` is now
 % kernel-only.
-\begin{lemma}
-
-\leanok
-[Stacks 037Q iff-direction: connected + section ⟹ geometrically connected]
+\begin{lemma}[Stacks 037Q iff-direction: connected + section ⟹ geometrically connected]\leanok
   \label{lem:geometricallyConnected_of_connected_of_section}
   \lean{AlgebraicGeometry.GroupScheme.geometricallyConnected_of_connected_of_section}
   \uses{thm:geometrically_connected_of_section}
@@ -673,10 +636,7 @@ the Lean development.
   Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Connected components are open on a Noetherian space]
+\begin{lemma}[Connected components are open on a Noetherian space]\leanok
   \label{lem:noetherian_isopen_connected_component}
   \lean{AlgebraicGeometry.GroupScheme.noetherianSpace_isOpen_connectedComponent}
   \uses{lem:noetherian_finite_connected_components}
@@ -694,10 +654,7 @@ the Lean development.
   therefore open. Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The underlying space of a locally-finite-type \(k\)-scheme is locally connected]
+\begin{lemma}[The underlying space of a locally-finite-type \(k\)-scheme is locally connected]\leanok
   \label{lem:identity_component_locally_connected}
   \lean{AlgebraicGeometry.GroupScheme.identityComponent_locallyConnectedSpace}
   \uses{lem:noetherian_isopen_connected_component}
@@ -719,10 +676,7 @@ the Lean development.
   local-connectedness criterion. Proved directly in Lean.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[The identity point]
+\begin{definition}[The identity point]\leanok
   \label{def:identity_section_point}
   \lean{AlgebraicGeometry.GroupScheme.identitySectionPoint}
   Let \(k\) be a field and \(G\) a \(k\)-group scheme. The
@@ -736,10 +690,7 @@ the Lean development.
   section).
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[The carrier of the identity component]
+\begin{definition}[The carrier of the identity component]\leanok
   \label{def:identity_component_carrier}
   \lean{AlgebraicGeometry.GroupScheme.identityComponentCarrier}
   \uses{def:identity_section_point, lem:identity_component_locally_connected}
@@ -759,10 +710,7 @@ the Lean development.
   Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The carrier of the identity component is connected]
+\begin{lemma}[The carrier of the identity component is connected]\leanok
   \label{lem:identity_component_carrier_connected}
   \lean{AlgebraicGeometry.GroupScheme.identityComponentCarrier_connectedSpace}
   \uses{def:identity_component_carrier, def:identity_section_point}
@@ -779,10 +727,7 @@ the Lean development.
   connected. Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The identity component is connected]
+\begin{lemma}[The identity component is connected]\leanok
   \label{lem:identity_component_connected}
   \lean{AlgebraicGeometry.GroupScheme.identityComponent_connectedSpace}
   \uses{lem:identity_component_carrier_connected, def:identity_component_group_scheme}
@@ -798,10 +743,7 @@ the Lean development.
   Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The identity section lands in the identity-component carrier]
+\begin{lemma}[The identity section lands in the identity-component carrier]\leanok
   \label{lem:identity_component_section_range_subset}
   \lean{AlgebraicGeometry.GroupScheme.identityComponentSection_range_subset}
   \uses{def:identity_component_carrier, def:identity_section_point}
@@ -817,10 +759,7 @@ the Lean development.
   component, i.e.\ in the carrier. Proved directly in Lean.
 \end{proof}
 
-\begin{definition}
-
-\leanok
-[The identity section into the identity component]
+\begin{definition}[The identity section into the identity component]\leanok
   \label{def:identity_component_section}
   \lean{AlgebraicGeometry.GroupScheme.identityComponentSection}
   \uses{def:identity_component_carrier, lem:identity_component_section_range_subset, def:identity_component_group_scheme}
@@ -841,10 +780,7 @@ the Lean development.
   Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The lifted identity section is a section]
+\begin{lemma}[The lifted identity section is a section]\leanok
   \label{lem:identity_component_section_is_section}
   \lean{AlgebraicGeometry.GroupScheme.identityComponentSection_isSection}
   \uses{def:identity_component_section, lem:identity_component_section_range_subset, def:identity_component_group_scheme}
@@ -863,10 +799,7 @@ the Lean development.
   Proved directly in Lean.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[The identity component is geometrically connected]
+\begin{lemma}[The identity component is geometrically connected]\leanok
   \label{lem:identity_component_geometrically_connected}
   \lean{AlgebraicGeometry.GroupScheme.identityComponent_geometricallyConnected}
   \uses{lem:geometricallyConnected_of_connected_of_section, def:identity_component_section, lem:identity_component_section_is_section, lem:identity_component_connected}
@@ -893,10 +826,7 @@ the Lean development.
 We now specialise the abstract identity-component construction to
 \(G = \Pic_{C/k}\).
 
-\begin{definition}
-
-\leanok
-[The identity component of the Picard scheme]
+\begin{definition}[The identity component of the Picard scheme]\leanok
   \label{def:pic_zero_subscheme}
   \lean{AlgebraicGeometry.Scheme.Pic0Scheme}
   \uses{def:identity_component_group_scheme, def:pic_scheme,
@@ -960,10 +890,7 @@ linear in \(n\) with leading coefficient \(\deg \mathcal{L} \in
 \(\Pic_{C/k}(\overline k)\) with the integers, the index being the
 degree.
 
-\begin{definition}
-
-\leanok
-[Degree of a Picard class]
+\begin{definition}[Degree of a Picard class]\leanok
   \label{def:divisor_degree_pic}
   \lean{AlgebraicGeometry.Scheme.PicScheme.degree}
   \uses{def:pic_scheme, def:hilbert_polynomial, thm:fga_pic_representability,
@@ -1048,8 +975,7 @@ automatically.
 % Cor.~5.13 source-proof quote precedes the proof of
 % \cref{thm:pic_zero_dimension_equals_genus}.
 
-\begin{theorem}\leanok
-[\(\Pic^0_{C/k}\) is an abelian variety]
+\begin{theorem}[\(\Pic^0_{C/k}\) is an abelian variety]\leanok
   \label{thm:pic_zero_is_abelian_variety}
   \lean{AlgebraicGeometry.Scheme.Pic0Scheme.isAbelianVariety}
   \uses{def:pic_zero_subscheme, thm:identity_component_open_subgroup, thm:identity_component_is_subgroup_homomorphism, thm:identity_component_finite_type_geom_irreducible, thm:identity_component_base_change_commutes, thm:fga_pic_representability, thm:pic_is_group_scheme}
@@ -1155,10 +1081,7 @@ automatically.
   \cref{thm:pic_zero_is_abelian_variety}.
 \end{proof}
 
-\begin{theorem}
-
-\leanok
-[Dimension of \(\Pic^0_{C/k}\) equals the genus of \(C\)]
+\begin{theorem}[Dimension of \(\Pic^0_{C/k}\) equals the genus of \(C\)]\leanok
   \label{thm:pic_zero_dimension_equals_genus}
   \lean{AlgebraicGeometry.Scheme.Pic0Scheme.finrank_eq_genus}
   \uses{thm:pic_zero_is_abelian_variety, def:genus}
@@ -1209,10 +1132,7 @@ automatically.
   dimension of \(J\) is the genus of \(C\)''.
 \end{proof}
 
-\begin{theorem}
-
-\leanok
-[\(k\)-points of \(\Pic^0_{C/k}\) are the kernel of the degree map]
+\begin{theorem}[\(k\)-points of \(\Pic^0_{C/k}\) are the kernel of the degree map]\leanok
   \label{thm:pic_zero_k_points_iff_degree_zero}
   \lean{AlgebraicGeometry.Scheme.Pic0Scheme.kPoints_iff_kerDegree}
   \uses{thm:pic_zero_is_abelian_variety, thm:identity_component_open_subgroup, def:pic_zero_subscheme, def:divisor_degree_pic,

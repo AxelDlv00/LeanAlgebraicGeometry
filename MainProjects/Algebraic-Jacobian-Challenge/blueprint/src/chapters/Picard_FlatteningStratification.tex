@@ -24,10 +24,7 @@ coherent sheaf on the relative curve.
 \section{Coherent flatness over a base}
 \label{sec:coh_flat}
 
-\begin{definition}
-
-\leanok
-[Coherent sheaf flat over the base]
+\begin{definition}[Coherent sheaf flat over the base]\leanok
   \label{def:coherent_sheaf_flat}
   \lean{AlgebraicGeometry.Scheme.CoherentSheafFlat}
   Let \(S\) be a noetherian scheme, \(f : X \to S\) a morphism of finite type, and
@@ -81,9 +78,7 @@ finite-type algebra \(B\) to the case of a quotient domain \(B/\pp\), and a
 \emph{normalisation core} handling that case. We first develop the dévissage
 layer as standalone module theory.
 
-\begin{definition}
-\leanok
-[Generically free module]
+\begin{definition}[Generically free module]\leanok
   \label{def:generically_free}
   \lean{AlgebraicGeometry.GenericFreeness.GenericallyFree}
   Let \(A\) be a commutative ring and \(M\) an \(A\)-module.  We say \(M\) is
@@ -91,9 +86,7 @@ layer as standalone module theory.
   such that the localisation \(M_f\) is a free \(A_f\)-module.
 \end{definition}
 
-\begin{lemma}
-\leanok
-[Transport of generic freeness along further localisation]
+\begin{lemma}[Transport of generic freeness along further localisation]\leanok
   \label{lem:generically_free_transport}
   \lean{AlgebraicGeometry.GenericFreeness.free_localizedModule_powers_mul}
   Let \(A\) be a commutative ring, \(M\) an \(A\)-module, and \(f, g \in A\).
@@ -117,9 +110,7 @@ layer as standalone module theory.
   free over \(A_{fg}\).
 \end{proof}
 
-\begin{lemma}
-\leanok
-[Generic freeness is invariant under isomorphism]
+\begin{lemma}[Generic freeness is invariant under isomorphism]\leanok
   \label{lem:generically_free_of_equiv}
   \lean{AlgebraicGeometry.GenericFreeness.GenericallyFree.of_linearEquiv}
   \uses{def:generically_free}
@@ -134,9 +125,7 @@ layer as standalone module theory.
   transports along it.
 \end{proof}
 
-\begin{lemma}
-\leanok
-[Splicing: generic freeness is stable under extensions]
+\begin{lemma}[Splicing: generic freeness is stable under extensions]\leanok
   \label{lem:generically_free_splice}
   \lean{AlgebraicGeometry.GenericFreeness.genericallyFree_of_exact}
   \uses{def:generically_free}
@@ -158,9 +147,7 @@ layer as standalone module theory.
   quotient splits, so \((M_2)_f \cong (M_1)_f \oplus (M_3)_f\) is free.
 \end{proof}
 
-\begin{lemma}
-\leanok
-[Generic freeness of the zero module]
+\begin{lemma}[Generic freeness of the zero module]\leanok
   \label{lem:generically_free_subsingleton}
   \lean{AlgebraicGeometry.GenericFreeness.genericallyFree_of_subsingleton}
   \uses{def:generically_free}
@@ -174,9 +161,7 @@ layer as standalone module theory.
   basis), and \(1 \ne 0\) since \(A\) is non-trivial.
 \end{proof}
 
-\begin{lemma}
-\leanok
-[Torsion base case]
+\begin{lemma}[Torsion base case]\leanok
   \label{lem:generically_free_torsion}
   \lean{AlgebraicGeometry.GenericFreeness.genericallyFree_of_torsion}
   \uses{def:generically_free}
@@ -196,9 +181,7 @@ layer as standalone module theory.
   element of \(M_f\) is then zero, and the zero module is free.
 \end{proof}
 
-\begin{lemma}
-\leanok
-[Generic freeness: finite modules]
+\begin{lemma}[Generic freeness: finite modules]\leanok
   \label{lem:generically_free_finite}
   \lean{AlgebraicGeometry.GenericFreeness.exists_free_localizationAway_of_finite}
   \uses{def:generically_free}
@@ -215,9 +198,7 @@ layer as standalone module theory.
   \(f \ne 0\) in \(A\) with \(M_f\) free over \(A_f\).
 \end{proof}
 
-\begin{lemma}
-\leanok
-[Generic flatness: finite modules]
+\begin{lemma}[Generic flatness: finite modules]\leanok
   \label{lem:generically_flat_finite}
   \lean{AlgebraicGeometry.GenericFreeness.exists_flat_localizationAway_of_finite}
   \uses{def:generically_free}
@@ -231,9 +212,7 @@ layer as standalone module theory.
   Immediate from \cref{lem:generically_free_finite}: free modules are flat.
 \end{proof}
 
-\begin{lemma}
-\leanok
-[Generic freeness: the module-finite case]
+\begin{lemma}[Generic freeness: the module-finite case]\leanok
   \label{lem:generically_free_module_finite}
   \lean{AlgebraicGeometry.GenericFreeness.exists_free_localizationAway_of_moduleFinite}
   \uses{def:generically_free}
@@ -250,9 +229,7 @@ layer as standalone module theory.
   \(A\)-module, so \cref{lem:generically_free_finite} applies.
 \end{proof}
 
-\begin{lemma}
-\leanok
-[Generic-rank comparison for a finite module over a domain]
+\begin{lemma}[Generic-rank comparison for a finite module over a domain]\leanok
   \label{lem:generic_rank_comparison}
   \lean{AlgebraicGeometry.GenericFreeness.exists_generic_rank_comparison}
   Let \(D\) be a domain and \(M\) a finite \(D\)-module.  Then there exist
@@ -285,9 +262,7 @@ layer as standalone module theory.
   non-zero uniform annihilator \(d\).
 \end{proof}
 
-\begin{lemma}
-\leanok
-[Normalisation core: generic freeness of quotient domains]
+\begin{lemma}[Normalisation core: generic freeness of quotient domains]\leanok
   \label{lem:generically_free_domain_core}
   \lean{AlgebraicGeometry.GenericFreeness.genericallyFree_quotient_prime}
   \uses{def:generically_free}
@@ -349,9 +324,7 @@ layer as standalone module theory.
   (\cref{lem:generically_free_transport} normalising the witnesses).
 \end{proof}
 
-\begin{theorem}
-\leanok
-[Generic flatness, algebraic form]
+\begin{theorem}[Generic flatness, algebraic form]\leanok
   \label{thm:generic_flatness_algebraic}
   \lean{AlgebraicGeometry.GenericFreeness.genericFlatnessAlgebraic}
   \uses{def:generically_free}
@@ -847,10 +820,7 @@ stratification.  Further transfer lemmas give a direct Noetherian-induction
 construction for proper morphisms and allow the resulting finite family to
 be indexed injectively by integer-valued functions.
 
-\begin{lemma}
-
-\leanok
-[Flat-locus stratification, special case \(n = 0\)]
+\begin{lemma}[Flat-locus stratification, special case \(n = 0\)]\leanok
   \label{lem:flat_locus_stratification_lean}
   \lean{AlgebraicGeometry.flatLocusStratification}
   \uses{def:coherent_sheaf_flat}
@@ -1105,10 +1075,7 @@ flat stratum over one irreducible component.
   isomorphism of module sheaves.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Noetherian-induction reduction to the flat case]
+\begin{lemma}[Noetherian-induction reduction to the flat case]\leanok
   \label{lem:flat_locus_reduction_lean}
   \lean{AlgebraicGeometry.flatLocusReduction}
   \uses{def:coherent_sheaf_flat, thm:generic_flatness}
@@ -1180,10 +1147,7 @@ flat stratum over one irreducible component.
   the statement to \(Z = S\) proves the lemma.
 \end{proof}
 
-\begin{lemma}
-
-\leanok
-[Assembly with injectively labelled strata]
+\begin{lemma}[Assembly with injectively labelled strata]\leanok
   \label{lem:flat_locus_assembly_lean}
   \lean{AlgebraicGeometry.flatLocusAssembly}
   \uses{def:coherent_sheaf_flat}

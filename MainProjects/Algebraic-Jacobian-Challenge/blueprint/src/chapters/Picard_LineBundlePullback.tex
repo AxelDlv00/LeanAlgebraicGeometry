@@ -11,9 +11,7 @@ of line bundles needed for pullback.
 \section{Line bundles and local triviality}
 \label{sec:lbp_line_bundle}
 
-\begin{definition}
-\leanok
-[Local triviality of a module]
+\begin{definition}[Local triviality of a module]\leanok
   \label{def:IsLocallyTrivial}
   \lean{AlgebraicGeometry.Scheme.LineBundle.IsLocallyTrivial}
   \source{stacks-project}
@@ -31,8 +29,7 @@ of line bundles needed for pullback.
   \]
 \end{definition}
 
-\begin{definition}\leanok
-[Line bundle on a product]
+\begin{definition}[Line bundle on a product]\leanok
   \label{def:line_bundle_on_product}
   \lean{AlgebraicGeometry.Scheme.LineBundle.OnProduct}
   \uses{def:IsLocallyTrivial}
@@ -49,9 +46,7 @@ of line bundles needed for pullback.
   constructions below.
 \end{definition}
 
-\begin{lemma}
-\leanok
-[Pullback preserves local triviality]
+\begin{lemma}[Pullback preserves local triviality]\leanok
   \label{lem:IsLocallyTrivial_pullback}
   \lean{AlgebraicGeometry.Scheme.LineBundle.IsLocallyTrivial.pullback}
   \uses{def:IsLocallyTrivial}
@@ -76,9 +71,7 @@ of line bundles needed for pullback.
   \]
   Hence every point of $Y$ has an affine trivialising neighbourhood.
 \end{proof}
-\begin{definition}
-\leanok
-[Underlying module]
+\begin{definition}[Underlying module]\leanok
   \label{def:OnProduct_carrier}
   \lean{AlgebraicGeometry.Scheme.LineBundle.OnProduct.carrier}
   \uses{def:line_bundle_on_product, def:IsLocallyTrivial}
@@ -87,9 +80,7 @@ of line bundles needed for pullback.
   $\mathcal O_P$-module obtained by forgetting the local-triviality witness.
 \end{definition}
 
-\begin{lemma}
-\leanok
-[A line bundle is locally trivial]
+\begin{lemma}[A line bundle is locally trivial]\leanok
   \label{lem:OnProduct_isLocallyTrivial}
   \lean{AlgebraicGeometry.Scheme.LineBundle.OnProduct.isLocallyTrivial}
   \uses{def:line_bundle_on_product, def:OnProduct_carrier,
@@ -111,8 +102,7 @@ of line bundles needed for pullback.
 Let $\pi_T:P\to T$ be the second projection.  Pullback along $\pi_T$ sends a
 line bundle on $T$ to a line bundle on $P$.
 
-\begin{definition}\leanok
-[Pullback along the projection]
+\begin{definition}[Pullback along the projection]\leanok
   \label{def:pullback_along_projection}
   \lean{AlgebraicGeometry.Scheme.LineBundle.pullbackAlongProjection}
   \uses{def:line_bundle_on_product, lem:IsLocallyTrivial_pullback}
@@ -130,8 +120,7 @@ line bundle on $T$ to a line bundle on $P$.
 \section{Base change and composition}
 \label{sec:lbp_compose}
 
-\begin{lemma}\leanok
-[Composition of line-bundle pullbacks]
+\begin{lemma}[Composition of line-bundle pullbacks]\leanok
   \label{lem:pullback_compose}
   \lean{AlgebraicGeometry.Scheme.LineBundle.pullback_pullback_eq}
   \uses{def:line_bundle_on_product, def:pullback_along_projection}
@@ -163,8 +152,7 @@ The current line-bundle carrier records modules together with a local
 trivialisation.  Before adding tensor products and quotienting by bundles from
 the base, we can already form its set of isomorphism classes.
 
-\begin{theorem}\leanok
-[Isomorphism classes of line bundles]
+\begin{theorem}[Isomorphism classes of line bundles]\leanok
   \label{thm:relative_pic_quotient_well_defined}
   \lean{AlgebraicGeometry.Scheme.RelPicPresheaf.preimage_subgroup}
   \uses{def:line_bundle_on_product, def:OnProduct_carrier,
@@ -195,8 +183,7 @@ the base, we can already form its set of isomorphism classes.
 \section{Naturality in the test scheme}
 \label{sec:lbp_pullback_natural}
 
-\begin{theorem}\leanok
-[Pullback descends to isomorphism classes]
+\begin{theorem}[Pullback descends to isomorphism classes]\leanok
   \label{thm:pullback_natural}
   \lean{AlgebraicGeometry.Scheme.RelPicPresheaf.functorial}
   \uses{def:line_bundle_on_product, def:pullback_along_projection,
