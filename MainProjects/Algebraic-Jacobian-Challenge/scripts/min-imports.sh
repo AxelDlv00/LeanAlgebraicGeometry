@@ -24,15 +24,42 @@ base=$(basename "$SRC" .lean)
 tmp="$OUT/$base.probe.lean"
 raw="$OUT/$base.out"
 
-# Insert `#import_bumps` immediately after the final import line.
+# Insert `#import_bumps` immediately after the import header.
+#
+# The header must be delimited structurally, not by "the last line starting with
+# `import `": prose inside a module docstring can begin with that word (it does in
+# Cohomology/RegroupHelper.lean), and inserting the macro into a comment makes the
+# linter silently never fire.  Lean requires every import before the first command,
+# so walk from the top through comment blocks, blank lines and real import lines and
+# stop at the first command.
 python3 - "$SRC" "$tmp" <<'PY'
+import re
 import sys
+
 src, dst = sys.argv[1], sys.argv[2]
 lines = open(src, encoding="utf-8").read().split("\n")
-last = -1
-for i, l in enumerate(lines):
-    if l.startswith("import "):
+
+IMPORT = re.compile(r"^import\s+[A-Za-z_][A-Za-z0-9_.]*\s*$")
+i, depth, last = 0, 0, -1
+while i < len(lines):
+    l = lines[i]
+    if depth:
+        depth += l.count("/-") - l.count("-/")
+        i += 1
+        continue
+    s = l.strip()
+    if s.startswith("/-"):
+        depth = 1 + l.count("/-") - l.count("-/") - 1
+        i += 1
+        continue
+    if s == "" or s.startswith("--"):
+        i += 1
+        continue
+    if IMPORT.match(l):
         last = i
+        i += 1
+        continue
+    break                                    # first real command
 assert last >= 0, f"no import line in {src}"
 lines.insert(last + 1, "#import_bumps")
 open(dst, "w", encoding="utf-8").write("\n".join(lines))
