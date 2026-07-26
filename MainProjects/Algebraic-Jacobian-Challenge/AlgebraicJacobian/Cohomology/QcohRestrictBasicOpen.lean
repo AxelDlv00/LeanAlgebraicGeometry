@@ -1,7 +1,7 @@
 /-
-Copyright (c) 2026 Axel Delaval. All rights reserved.
+Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Axel Delaval
+Authors: The AlgebraicJacobian Contributors
 -/
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Mathlib.AlgebraicGeometry.Modules.Tilde
