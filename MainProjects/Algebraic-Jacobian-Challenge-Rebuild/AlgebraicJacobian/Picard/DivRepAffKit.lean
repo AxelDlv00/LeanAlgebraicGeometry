@@ -14,7 +14,8 @@ This file isolates the formal tail between a chart-wise universal certified fami
 the affine equivalence of DDR-9.F6.  It deliberately makes the remaining F5 hypotheses
 explicit:
 
-* `divRepPullAt` pulls a supplied chart family along a map out of a carve-chart ring;
+* `divRepPullAt` pulls a supplied chart family of Zariski-local classes (`DivFamZar`, not
+  globally certified families) along a map out of a carve-chart ring;
 * `DivRepChartFamily.IsCompatible` is the exact choice-independence statement needed to
   glue those local pullbacks;
 * `DivRepAffinePullback` packages the output of that glue together with the two laws and
@@ -84,49 +85,56 @@ local notation "ChartMap" => fun i j =>
 
 /-! ## F5: pullback from one supplied universal chart family -/
 
-/-- Pull a supplied certified family on one carve chart to a test algebra and pass to
-the locally certified quotient.  This is the choice-free per-chart operation from which
-F5's affine forward map is glued. -/
+/-- Pull a supplied Zariski-locally certified **class** on one carve chart to a test
+algebra.  This is the choice-free per-chart operation from which F5's affine forward map
+is glued.
+
+The supplied datum is a `DivFamZar` class, not a globally certified family: the forward
+map only ever transports a class along `DivFamZar.mapAlgHom`, so a global degree-`g`
+certificate over the chart ring is never consumed.  A caller that does hold a
+`CertifiedDivisorFamily G` on a chart passes `(DivFam.mk G).toZar`, so no expressive
+power is lost, while the Zariski-local production rules (`IsLocallyCertified`) become
+usable here. -/
 noncomputable def divRepPullAt
     (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
-      CertifiedDivisorFamily C (ChartRing i j) pi g)
+      DivFamZar C (ChartRing i j) pi g)
     {S : Type u} [CommRing S] [Algebra k S]
     (i : (glueData k g r1).J) (j : (glueData k g r2).J)
     (omega : ChartRing i j →ₐ[k] S) : DivFamZar C S pi g :=
-  DivFamZar.mapAlgHom omega (DivFam.mk (U i j)).toZar
+  DivFamZar.mapAlgHom omega (U i j)
 
 set_option linter.unusedSectionVars false in
 @[simp]
 theorem divRepPullAt_id
     (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
-      CertifiedDivisorFamily C (ChartRing i j) pi g)
+      DivFamZar C (ChartRing i j) pi g)
     (i : (glueData k g r1).J) (j : (glueData k g r2).J) :
     divRepPullAt (hpi := hpi) g r1 r2 b1 b2 U i j (AlgHom.id k (ChartRing i j))
-      = (DivFam.mk (U i j)).toZar :=
+      = U i j :=
   DivFamZar.mapAlgHom_id _
 
 set_option linter.unusedSectionVars false in
-/-- Pulling a chart family through two algebra maps is the same as pulling it through
+/-- Pulling a chart class through two algebra maps is the same as pulling it through
 their composite.  This is the algebraic part of F5 naturality. -/
 theorem divRepPullAt_comp
     (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
-      CertifiedDivisorFamily C (ChartRing i j) pi g)
+      DivFamZar C (ChartRing i j) pi g)
     {S T : Type u} [CommRing S] [Algebra k S] [CommRing T] [Algebra k T]
     (i : (glueData k g r1).J) (j : (glueData k g r2).J)
     (omega : ChartRing i j →ₐ[k] S) (phi : S →ₐ[k] T) :
     DivFamZar.mapAlgHom phi (divRepPullAt (hpi := hpi) g r1 r2 b1 b2 U i j omega)
       = divRepPullAt (hpi := hpi) g r1 r2 b1 b2 U i j (phi.comp omega) :=
-  (DivFamZar.mapAlgHom_comp omega phi (DivFam.mk (U i j)).toZar).symm
+  (DivFamZar.mapAlgHom_comp omega phi (U i j)).symm
 
 namespace DivRepChartFamily
 
-/-- The precise F5 overlap obligation for a supplied family on every carve chart:
-two chart points inducing the same morphism to `DivScheme` have equal pulled locally
-certified divisor classes.  The future universal-family construction proves this from
-its epsilon identity and the total mono theorem. -/
+/-- The precise F5 overlap obligation for a supplied family of classes on every carve
+chart: two chart points inducing the same morphism to `DivScheme` have equal pulled
+locally certified divisor classes.  The future universal-family construction proves this
+from its epsilon identity and the total mono theorem. -/
 def IsCompatible
     (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
-      CertifiedDivisorFamily C (ChartRing i j) pi g) : Prop :=
+      DivFamZar C (ChartRing i j) pi g) : Prop :=
   ∀ {S : Type u} [CommRing S] [Algebra k S]
     (i : (glueData k g r1).J) (j : (glueData k g r2).J)
     (i' : (glueData k g r1).J) (j' : (glueData k g r2).J)
@@ -141,7 +149,7 @@ set_option linter.unusedSectionVars false in
 common morphism.  This is the form used on overlaps of an atlas factorization. -/
 theorem pullAt_eq_of_eq_common
     (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
-      CertifiedDivisorFamily C (ChartRing i j) pi g)
+      DivFamZar C (ChartRing i j) pi g)
     (hU : IsCompatible (hpi := hpi) g r1 r2 b1 b2 U)
     {S : Type u} [CommRing S] [Algebra k S]
     (i : (glueData k g r1).J) (j : (glueData k g r2).J)

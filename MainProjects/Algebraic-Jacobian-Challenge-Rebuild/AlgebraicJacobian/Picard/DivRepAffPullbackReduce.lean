@@ -97,7 +97,7 @@ i.e. exactly the DDR9-U ε-identity U2 — so the F5 overlap obligation is no lo
 separate thing to prove. -/
 theorem isCompatible_of_isDivRepClassify_divRepPullAt
     (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
-      CertifiedDivisorFamily C (ChartRing i j) pi g)
+      DivFamZar C (ChartRing i j) pi g)
     (hcl : ∀ {S : Type u} [CommRing S] [Algebra k S]
       (i : (glueData k g r1).J) (j : (glueData k g r2).J)
       (omega : ChartRing i j →ₐ[k] S),

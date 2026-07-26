@@ -125,7 +125,7 @@ presentations induce `Spec.map (algebraMap S B) ≫ v.left` after pushforward.  
 will prove `IsCompatible` for the universal family, not what is needed to use it. -/
 theorem divRepPullAt_mapAlgHom_eq_of_chartFactor
     (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
-      CertifiedDivisorFamily C (ChartRing i j) pi g)
+      DivFamZar C (ChartRing i j) pi g)
     (hU : DivRepChartFamily.IsCompatible (hpi := hpi) g r1 r2 b1 b2 U)
     {S : Type u} [CommRing S] [Algebra k S] (v : overSpec k S ⟶ DivOver)
     {A A' B : Type u}
