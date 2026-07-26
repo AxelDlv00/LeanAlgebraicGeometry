@@ -75,22 +75,35 @@ functor (curve-specialized Kleiman, no Quot schemes), Albanese via Milne III.6.1
 Blueprint: Challenge/BaseChange/Curves/Algebra/Cohomology/AbelianVariety chapters all synced
 1-to-1 with the Lean, `\leanok` only after kernel checks, `\source{}` read-before-cite.
 
-## Algebraic-Jacobian-Challenge  *(core engine — prover stage, 24 open `sorry`)*
+## Algebraic-Jacobian-Challenge  *(core engine — prover stage, 24 open `sorry` in 11 of 164 modules)*
 
 **Goal:** construct the Jacobian of a smooth proper geometrically integral curve as
 `Pic^0`, prove that it is an abelian variety of dimension equal to the genus, and
 establish the Albanese universal property. The structured roadmap command
 `horizon roadmap list --focus AJC.jacobian` is the authoritative work breakdown.
 
-- [x] **Foundational and representability substrate**
-  - [x] Line-bundle coherence, pullback, tensor/dual comparison, and the relative
-    Picard group law are sorry-free.
-  - [x] The relative-Spec, Grassmannian, graded-algebra, glue-descent, flattening,
-    and generic-flatness infrastructure is sorry-free.
+*153 of the 164 modules are sorry-free; all 24 remaining `sorry`s live in 11 modules.*
+
+- [x] **Foundational substrate** — `AJC.substrate`, seven sorry-free sub-items
+  - [x] Curve and scheme base objects; quasi-coherent sheaves on schemes (tilde and
+    its sections, basic opens, over-equivalences, module-cover conservativity).
+  - [x] Relative Spec, projective morphisms, section rings; gluing, Zariski and
+    Galois descent.
+  - [x] Dual numbers and tangent spaces; Mumford's rigidity lemma; genus and the
+    Abel--Jacobi interface.
+- [x] **Line-bundle comparison isomorphisms** — `AJC.linebundle`, five sorry-free
+  sub-items: coherence, pullback and the section formula, the tensor substrate, the
+  dual comparison and terminal inverse, and the relative Picard group law.
+- [x] **Grassmannian and graded substrate** — `AJC.grquot`, five sorry-free
+  sub-items: Grassmannian cells and representability, section graded ring/module,
+  graded Hilbert--Serre and the Hilbert polynomial, flattening stratification, and
+  generic flatness.
 - [~] **Cohomology and flat base change** *(3 open leaves)*
-  - [x] The Cech higher-direct-image comparison and `pushPull` functoriality are
-    sorry-free. Exact augmentations now supply the capstone comparison generically,
-    without the former 4M-heartbeat specialized proof.
+  - [x] The whole Čech engine — `AJC.cech`, six sorry-free sub-items: the
+    combinatorial and section complexes with their contracting homotopy, the
+    section-complex identification, affine acyclicity and acyclic resolutions,
+    higher direct images with `pushPull` functoriality, Mayer--Vietoris, and the
+    unconditional comparison theorem `cech_computes_higherDirectImage`.
   - [ ] Prove that flat pullback preserves finite limits *(1)*.
   - [ ] Prove the pushforward and twisted-nerve cosimplicial naturality laws *(2)*.
 - [~] **Picard-scheme representability** *(6 open leaves)*
@@ -115,9 +128,17 @@ establish the Albanese universal property. The structured roadmap command
 - [~] **Maintenance and documentation**
   - [x] Optimize the Cech capstone and prune its unnecessary import chain.
   - [x] Record controlled-clean and warm full-project build and warning baselines.
-  - [ ] Continue bounded blueprint prose and formalization-pin audits.
-  - [ ] Reduce the remaining warning and resource-budget cones, especially Cech term synthesis,
-    Quot presentation, and umbrella-import debt.
+  - [x] Normalize the copyright header of all 164 modules; restore the 1,123 blueprint
+    statement titles that LaTeX was swallowing into the statement body.
+  - [~] **Import hygiene — the dominant build cost.** 86 of 164 modules open with a bare
+    `import Mathlib`, so 132 of 164 load the whole library. Measured: a 49-line module costs
+    16.6 s and ~7 GB with the umbrella and 3.5 s and 2.0 GB with four precise imports. The
+    conversion runs bottom-up over the import DAG (`scripts/deumbrella-wave.sh`).
+  - [ ] Retire the 179 heartbeat and 20 depth overrides. Mathlib itself has **zero**
+    `set_option maxHeartbeats` in its library files; re-measure each with `#count_heartbeats in`
+    once its module no longer imports the umbrella.
+  - [ ] Drive the 138 mechanical Lean warnings to zero (24 `sorry` notices are honest and stay),
+    and finish the blueprint prose, pin and print audits.
 
 ## Cech-Cohomology  *(✅ complete — deliverable merged sorry-free into AJC ✨ 2026-06-19; standalone fully green + sorry-free — the 16 v4.31-interim `sorry`s were closed and the full build (incl. the `CechToHigherDirectImage` capstone) verified 2026-07-03)*
 
