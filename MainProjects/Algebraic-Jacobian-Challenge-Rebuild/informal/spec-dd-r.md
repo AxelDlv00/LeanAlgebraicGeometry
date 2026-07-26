@@ -752,3 +752,140 @@ answered — but: *over a small finite field, what is `DivFamZar` supposed to be
 (C4 iii) BEFORE building `PGL₂` — it decides whether `p1-aut` is worth building at all.
 (4) Only then `p1-aut` → `fibre-avoid` → `cert-relocalize`, with `swallow-adapt` (not
 `ofChartPair`) as the adaptation and fibrewise-finite support as an explicit seed obligation.
+
+---
+
+## ADDENDUM 4 (2026-07-26, run 0048 round 4) — the on-stratum witness EXISTS, and R1 is correct exactly when `|P¹(k)| ≥ g + 2` (BINDING; closes I-0356 and answers I-0346)
+
+ADDENDUM 3's second corrigendum left one question: the no-go's argument is degree-agnostic, but
+its only exhibited witness (`F = tX² + XY + tY²` over `k[t]`, `C = P¹`, `π = id`) has degree 2 on a
+curve of genus 0, off the stratum the functor pins. At `g = 0` the no-go is vacuous, at `g = 1`
+the base can be shrunk to confine, and at `g ≥ 2` nobody had exhibited anything. This addendum
+settles it, corrects the argument ADDENDUM 3 used for shrink-stability, and — the part that
+actually decides the route — gives a sharp iff for R1.
+
+### 4.1 First, the criterion ADDENDUM 3 used is the wrong one
+
+ADDENDUM 3 argued shrink-stability as "the divisor stays irreducible over every nonempty open of
+the base, so no Zariski shrink evades the no-go". That is true of the exhibited family and it is
+not the right criterion, because `IsLocallyCertified` (`Picard/DivisorFamilyZar.lean:71`) asks for
+a **span-⊤ family**, i.e. a *cover* — and a cover cannot delete a point. The correct criterion is
+
+> (★) there is a point `s ∈ Spec R` such that for **every** open `U ∋ s`, some connected component
+> of `supp(D|_U)` meets both `π⁻¹(p₀)` and `π⁻¹(p₁)`.
+
+Under the criterion ADDENDUM 3 actually stated, the campaign's own genus-0 example would be
+*evaded*: the two witness points of `tX² + XY + tY²` are `([1:0], 0)` and `([0:1], 0)`, both lying
+over `t = 0`, and over `t ≠ 0` the roots are `(−1 ± √(1−4t²))/2t`, which are never `0` or `∞`. So
+`D` restricted to `𝔸¹ ∖ {0}` misses *both* pinned fibres. It is a genuine counterexample only
+because a cover must contain `t = 0`. The conclusion was right; half the reason was missing.
+
+### 4.2 The reduction (general — no hypotheses on `k`, `C`, `π`, `n`)
+
+Let `S = supp D ⊆ C ×_k Spec R`. Since `D` is finite flat of degree `n` over `R`, `S → Spec R` is
+finite, hence closed. For `c ∈ P¹(k)` set `W_c :=` the image in `Spec R` of `S ∩ (π⁻¹(c) × Spec R)`
+— a closed subset. Then for `s ∈ Spec R`:
+
+* `s ∉ W_c` ⟹ `U := Spec R ∖ W_c` is an open neighbourhood of `s` on which `supp(D|_U)` misses
+  `π⁻¹(c)` entirely, i.e. `D|_U` is confined to the chart complementary to `π⁻¹(c)`;
+* `s ∈ W_c` ⟹ *every* `U ∋ s` has `supp(D|_U)` meeting `π⁻¹(c)`.
+
+And `s ∈ W_c ⟺ supp(D_s)` meets `π⁻¹(c)`, a purely **fibrewise** condition. Since `D_s` is finite
+of degree `n` over `κ(s)`, the image of `supp(D_s)` in `|P¹_k|` has **at most `n` closed points**.
+
+Two consequences worth stating separately.
+
+**(A) Necessity of `g ≥ 2`.** A witness needs one `s` whose fibre meets both `π⁻¹(p₀)` and
+`π⁻¹(p₁)`, hence `n ≥ 2`. At `n = g = 1`, `W_{p₀} ∩ W_{p₁} = ∅`, so
+`{Spec R ∖ W_{p₀}, Spec R ∖ W_{p₁}}` is a *confining cover*. That is I-0356's `g = 1` verdict, now
+with a proof rather than an observation.
+
+**(B) Connectedness is the second half.** The two witness points must lie in the same connected
+component of `supp(D|_U)` for every `U ∋ s` — equivalently in the same connected component of
+`S ×_R O_{R,s}`, idempotents of a finite algebra descending to a finite level. Reducible
+constructions therefore fail: if `S = Δ ∪ ({b} × T)`, a certifier just shrinks until the
+components separate.
+
+### 4.3 The witness, over an arbitrary field
+
+Hypotheses: `k` **any** field; `C/k` smooth proper geometrically irreducible of genus `g ≥ 2`;
+`π : C → P¹` any finite dominant map; `p₀ ≠ p₁ ∈ P¹(k)` the pinned pair.
+
+1. `Div^g_{C/k} ≅ Sym^g C =: T` exists over `k` — smooth projective, geometrically irreducible of
+   dimension `g` — carrying a universal relative effective Cartier divisor `D_univ ⊆ C ×_k T`,
+   finite flat of degree `g` over `T` (Kleiman, *The Picard scheme*, FGA Explained §9.3; BLR
+   §8.2/9.3). Every degree-`g` relative divisor over every `R` is a pullback of `D_univ`, so this
+   analysis is exhaustive rather than a lucky example.
+2. **`supp D_univ` is irreducible over any `k`**: it is the image of the finite surjection
+   `C × Sym^{g−1}C → C × Sym^g C`, `(x, ξ) ↦ (x, x + ξ)`, and `C × Sym^{g−1}C` is irreducible
+   because `C` is geometrically irreducible. No monodromy argument and no `k = k̄` is used.
+3. **The straddling point.** `π` finite dominant gives closed points `q₀ ∈ π⁻¹(p₀)`,
+   `q₁ ∈ π⁻¹(p₁)`. Let `L` be a residue field of `κ(q₀) ⊗_k κ(q₁)`, so `L/k` is finite and admits
+   `k`-embeddings of both; get `Q₀, Q₁ ∈ C(L)` over `p₀, p₁`. Since `g ≥ 2`,
+   `ξ := (g−1)Q₀ + Q₁` is effective of degree exactly `g`, i.e. an `L`-point of `T`; let `s` be
+   the underlying closed point. **No rational-point hypothesis is used anywhere** — the padding is
+   by multiples of `Q₀`, so no "an effective divisor of degree `m` exists over `k`" problem arises,
+   and `s` is in general not `k`-rational.
+4. `T` is quasi-projective; choose an affine open `Spec R ⊆ T` containing `s` and put
+   `D := D_univ|_{Spec R}`. This is on-stratum: degree `g = n`, finite flat over `R`.
+5. **Non-confinability.** Let `{D(g_i)}` be any span-⊤ family. Some `D(g_i)` contains `s`. Then
+   `supp(D|_{D(g_i)})` is a nonempty open of the irreducible `supp D_univ`, hence irreducible,
+   hence preconnected, and it contains points over `p₀` and over `p₁` (the images of `Q₀, Q₁`,
+   which lie over `s`). By `not_isCertified_of_isPreconnected_of_witnesses`
+   (`Picard/DivSchemeCertZarVerdict.lean:62`), together with `supportLocus_pullback`
+   (`DivSchemeCertZarTransport.lean`) and `DivEq.supportLocus_eq` (`DivSchemeCertZarConfine.lean:110`),
+   no certified family exists over `Localization.Away (g i)` divisor-equal to the pullback. So
+   `D ∉ DivFamZar(R)` while `D ∈ Div^g_{C/k}(R)`. ∎
+
+**Field dependence: none.** It works over `F₂`, over imperfect fields, over non-closed fields.
+Enlarging `k` does not escape it and neither does descent from a large field — the witness is
+already there over the small field.
+
+### 4.4 The sharp iff for R1, which is the decision this addendum is for
+
+The reduction in §4.2 gives, with the pinned pair allowed to vary per cover member (which is
+exactly what R1 buys):
+
+> **R1 is correct if and only if `|P¹(k)| ≥ n + 2`.**
+>
+> *If.* For any `D`, `R`, `s`, the image of `supp(D_s)` in `P¹` has at most `n` closed points;
+> choose `c ∈ P¹(k)` outside it and any `c' ≠ c`. Then `U := Spec R ∖ W_c` confines `D|_U` to the
+> chart complementary to `π⁻¹(c)`. Doing this at every `s` gives a Zariski cover on which the
+> divisor is confined, with the pair varying per member.
+>
+> *Only if.* If `Σ_{c ∈ P¹(k)} e_c ≤ n`, where `e_c` is the minimal degree of a closed point of `C`
+> over `c` (e.g. `q + 1 ≤ g` when `C` has a rational point over each `c`), take
+> `ξ_s = Σ_c q_c + padding`. Then `s ∈ W_c` for **every** `c ∈ P¹(k)`, and no pinned pair confines.
+
+This **answers I-0346 exactly, in both directions**; the bound there was a sufficient guess and is
+now known to be sharp. Consequences for the route:
+
+* `p1-aut` / R1 is **not dead**: it is correct over every infinite `k`, and over `F_q` whenever
+  `q ≥ g + 1`. It is dead exactly over small finite fields.
+* Because `Challenge.lean:96-99` states the Jacobian over an **arbitrary** field and
+  `archon-protected.yaml` forbids adding a hypothesis, R1 alone cannot discharge the challenge. It
+  must be paired with descent (`dat-g`) or replaced.
+* **R2 is the only field-uniform fix, and it has a short justification**: `supp D` is finite over
+  `R`, hence contained in a single affine open of `C ×_k Spec R` (avoidance for families, Stacks
+  0B8B), so a cover with one straddling piece always exists. Generalising `FinCoverData`'s piece
+  type to arbitrary affine opens of the relative curve is therefore not a gamble; it is the
+  statement the geometry already supports.
+
+### 4.5 What to do in Lean, and what not to
+
+**Do not formalise the witness.** It needs `Sym^g C` / `Hilb^g` with its universal flat divisor.
+Mathlib has no Hilbert schemes, no symmetric products of schemes and no Picard scheme, and this
+tree constructs no curve other than `P¹` (`C` is always a variable carrying hypotheses). A concrete
+genus-2 hyperelliptic witness is not cheaper — it still requires building a non-rational proper
+curve as a scheme, which has never been done here. The payoff would be a negative statement that
+changes no theorem.
+
+**Do this instead (≈40 lines, and it is the honest statement of the no-go):** strengthen
+`supportLocus_subset_chart_of_isCertified` (`Picard/DivSchemeCertZarC1.lean:131`) and
+`not_isCertified_of_isPreconnected_of_witnesses` (`DivSchemeCertZarVerdict.lean:62`) from
+`IsPreconnected d.supportLocus` to the per-connected-component form. The clopen-trace proof at
+`DivSchemeCertZarConn.lean:98` already gives it, and the general analysis in §4.2 is stated in
+those terms.
+
+Also: `DivSchemeCertZarConn.lean:170-175`'s docstring model is genus 0 — annotate it as
+off-stratum and point here.
