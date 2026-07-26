@@ -177,8 +177,8 @@ jointly locally surjective, indexed by a finite type, with quasi-compact charts 
 of finite type over the base field, produces the pinned representability datum of the curve.
 
 The representing object is the glued scheme of the family, placed over `Spec k` by the
-Σ-component of the universal element; the two certificates are `locallyOfFiniteType_gluedOfCharts`
-and `quasiCompact_gluedOfCharts`. -/
+Σ-component of the universal element; the two certificates are `locallyOfFiniteType_gluedHom`
+and `quasiCompact_gluedHom`. -/
 noncomputable def JacobianData.ofCharts [Finite ι]
     (hlft : ∀ i, LocallyOfFiniteType (chartHom C f i))
     (hcpt : ∀ i, CompactSpace (X i)) :
@@ -193,6 +193,33 @@ lemma JacobianData.ofCharts_J [Finite ι]
     (hlft : ∀ i, LocallyOfFiniteType (chartHom C f i))
     (hcpt : ∀ i, CompactSpace (X i)) :
     (JacobianData.ofCharts C f hf hlft hcpt).J = gluedOfCharts C f hf :=
+  rfl
+
+/-- **The producer for an infinite atlas**: same as `JacobianData.ofCharts`, but the index type
+is arbitrary and quasi-compactness of the glued object is supplied directly instead of being
+derived from finitely many compact charts.
+
+This is the form the classical construction needs.  The charts of the degree-zero Picard functor
+are indexed by divisor *classes* — one chart per class whose twisted fibre class has an effective
+witness — and that index set is not finite; compactness of the glued object is then a genuine
+theorem about the Jacobian (it is the union of the images of a *quasi-compact* divisor scheme
+under the Abel map), not a consequence of finiteness of the atlas.  Note that the
+locally-of-finite-type certificate still descends from the charts with no finiteness hypothesis
+whatsoever: `locallyOfFiniteType_gluedHom` never uses `Finite ι`. -/
+noncomputable def JacobianData.ofChartsOfCompactSpace
+    (hlft : ∀ i, LocallyOfFiniteType (chartHom C f i))
+    (hcpt : CompactSpace (Scheme.LocalRepresentability.glueData hf).glued) :
+    JacobianData C :=
+  JacobianData.ofRepresentableBy C (gluedOfCharts C f hf)
+    (pic0RepresentableByOfCharts C f hf)
+    (locallyOfFiniteType_gluedHom C f hf hlft)
+    (HasAffineProperty.iff_of_isAffine.mpr hcpt)
+
+@[simp]
+lemma JacobianData.ofChartsOfCompactSpace_J
+    (hlft : ∀ i, LocallyOfFiniteType (chartHom C f i))
+    (hcpt : CompactSpace (Scheme.LocalRepresentability.glueData hf).glued) :
+    (JacobianData.ofChartsOfCompactSpace C f hf hlft hcpt).J = gluedOfCharts C f hf :=
   rfl
 
 end Charts
@@ -235,6 +262,14 @@ certificates of the glued object are discharged here from (3).
 Conditions (1) and (2) are the geometric input — they are what the divisor-scheme/Abel-map
 machinery of the `DivScheme…` and `DivRep…` files exists to produce, one chart being carved out
 of a symmetric power of the curve by an effectivity locus.  Condition (3) is a property of those
-charts alone and does not interact with the Picard functor at all. -/
+charts alone and does not interact with the Picard functor at all.
+
+If the atlas that machinery produces is *not* finitely indexed — and the classical one is not,
+its charts being indexed by divisor classes — then `JacobianData.ofChartsOfCompactSpace` is the
+form to use: `ι` is then arbitrary, condition (3) weakens to `LocallyOfFiniteType (chartHom C f i)`
+alone, and the second certificate becomes the single statement `CompactSpace` of the glued
+object.  That statement is not a bookkeeping hypothesis but a theorem about the Jacobian — the
+underlying space is the image of a quasi-compact divisor scheme under the Abel map — and it is
+where the quasi-compactness content of the construction actually lives. -/
 
 end AlgebraicGeometry
