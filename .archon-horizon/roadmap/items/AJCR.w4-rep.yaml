@@ -2,81 +2,97 @@ id: AJCR.w4-rep
 title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "THE CRITICAL PATH TO Challenge.lean:99.  Re-framed 2026-07-26 (run 0048\
-  \ round 4) around a single\nordered chain instead of \"six independent mountains\"\
-  .  READ informal/w4-rep-critical-path.md FIRST —\nit carries the per-link evidence\
-  \ and this summary does not repeat it.\n\nTARGET.  AlgebraicGeometry.Jacobian (Challenge.lean:96-99,\
+summary: "THE CRITICAL PATH TO Challenge.lean:99.  Re-framed round 4 as one ordered\
+  \ chain; REFRAMED AGAIN\nround 5, because the round-4 framing put the gate in the\
+  \ wrong place.  READ\ninformal/w4-rep-critical-path.md SECTION 7 FIRST -- it carries\
+  \ the per-link evidence.\n\nTARGET.  AlgebraicGeometry.Jacobian (Challenge.lean:96-99,\
   \ a bare sorry).  archon-protected.yaml\nFREEZES the signature, so a hypothesis-carrying\
-  \ restatement is forbidden; the only admissible\ndischarge is Jacobian C := (jacobianData\
-  \ C).J, and jacobianData has no producer.\n\nTHE CHAIN, BACKWARDS.  L1 Jacobian\
-  \ := (jacobianData C).J | L2 the producer jacobianData — MISSING |\nL3 structure\
-  \ JacobianData + consumer API (Picard/JacobianData.lean:87-144) — LANDED | L4 its\
-  \ rep\nfield | L5 descent of the representation from a separably closed stage to\
-  \ k (dat-g, dat-glue DAT-G0)\n— MISSING | L6 pic0RepresentableByOfCharts (Picard/Pic0SigmaSheaf.lean:161-169)\
-  \ — LANDED | L7 its\nchart family (f, hf) = dat-c C9b — MISSING | L8 its IsLocallySurjective\
-  \ input = dat-b B-6 — MISSING |\nL9 (divFunctor C pi g).RepresentableBy DivOver\
-  \ (Picard/DivRepKit.lean:114) — exists but UNROOTED |\nL10 a term of DivRepGlobalData\
-  \ (DivRepKit.lean:69) — MISSING, ZERO producers | L11 the affine-to-\ngeneral lift\
-  \ DivRepGlobalData.ofAffine — MISSING, NEVER ATTEMPTED | L12 DivRepAffinePullback\n\
-  (DivRepAffKit.lean:167) — structure landed, no producer | L13 its pull / isDivRepClassify_pull\n\
-  fields = U2 | L14 U2's gate, the certificate — BLOCKED.\n\nTWO THINGS THE OLD FRAMING\
-  \ HID.\n\n 1. THE HARDEST-SOUNDING STEP IS ALREADY DONE.  L6, gluing local representability\
-  \ into a scheme,\n    is landed: pic0RepresentableByOfCharts consumes mathlib's\
-  \ 01JJ engine and returns exactly the\n    type of JacobianData.rep.  Everything\
-  \ above it is assembly.\n\n 2. A WHOLE LINK WAS MISSING FROM THE PLAN.  DivRepGlobalData\
-  \ occurs in NO file but its own, and\n    its docstring says the omission is deliberate:\
-  \ \"The affine-to-general lift is intentionally not\n    assumed to exist implicitly.\"\
-  \  So between the affine package and the divisor-representability\n    endpoint\
-  \ sits a sheaf-theoretic descent that appeared in no roadmap row, because every\
-  \ plan\n    folded it into \"divrep\" as bookkeeping.  Its main input is already\
-  \ proved — divFamZar is a\n    Zariski sheaf on ARBITRARY tests (Picard/DivisorFamilyZarSheaf.lean:66,\
-  \ :237).  Leaf\n    ...ddr.divrep.lift.\n\nTHE SHAPE OF THE WORK: ONE GATE, ONE\
-  \ CONDITIONAL TAIL.  Milestones now carry this split — list them\nwith `roadmap\
-  \ list --milestone w4-gate` and `--milestone w4-tail`.\n * w4-gate: the certificate\
-  \ subtree and u2.  Genuinely blocked (below).\n * w4-tail: lift, c9b, chart-u, dat-b,\
-  \ dat-glue, dat-g, dat-j, datum-tail.  Every one of these is a\n   CONDITIONAL statement\
-  \ provable today over a section variable — the idiom the tree already uses,\n  \
-  \ since DivRepKit.lean is written entirely against one.  Work here does not wait\
-  \ on the gate.\n\nWHERE THE GATE ACTUALLY STANDS.  chart-avoid is answered NO and\
-  \ the reasons are landed Lean:\nFinCoverData types its pieces into the two pinned\
-  \ charts (DivisorFamily.lean:166,:168,:186), clause\n(c1)-finiteness is leak-freeness\
-  \ so piece traces are clopen (DivSchemeCertZarConn.lean:98), hence a\nconnected\
-  \ support lands in one chart (DivSchemeCertZarC1.lean:131), and the obstruction\
-  \ is\nDivEq-invariant (Confine.lean:110) and shrink-stable (Transport.lean).  Provably\
-  \ useless repairs, do\nnot retry: refining the cover, shrinking the base, a cleverer\
-  \ submodule L, re-spelling the equations,\nthe joint-covering relaxation (leaf joint-cover,\
-  \ rejected), and — established this round —\nRE-BASING ON THE ZARISKI-LOCAL CERTIFICATE.\
-  \  The epsilon-identity really does consume IsCertified\nthrough only three Zariski-local\
-  \ projections and can be re-proved from IsLocallyCertified by a\nsqueeze, but the\
-  \ no-go is about PRODUCING a certificate and IsLocallyCertified fails for exactly\
-  \ the\ndivisors IsCertified fails for (DivSchemeCertZarC1.lean:30-31, verbatim).\n\
-  \nTHE ONE OPEN EXPERIMENT ON THE GATE, and it is cheap: the no-go's argument is\
-  \ degree-agnostic but\nits only witness (tX^2 + XY + tY^2 over k[t], C = P^1) is\
-  \ genus 0, off the stratum the functor pins.\nAt g = 0 the no-go is vacuous; at\
-  \ g = 1 base shrink evades it; at g >= 2 NO WITNESS HAS EVER BEEN\nEXHIBITED.  Settle\
-  \ that before costing p1-aut or R2.  Note also that R1 alone cannot suffice over\
-  \ an\narbitrary field: the pointwise gate needs two kappa(p)-rational points of\
-  \ P^1 off the fibre's support\nimage at every prime, which fails over small finite\
-  \ residue fields — that is inbox I-0346's\nfield-size question, and it is the same\
-  \ obstruction seen pointwise, not a separate one.\n\nTRUST CORRECTION AFFECTING\
-  \ EVERY ROW HERE.  93 of the tree's 619 modules (20,302 of 169,135 lines,\n~12%)\
-  \ are unreachable from AlgebraicJacobian.lean and are therefore NEVER kernel-checked\
-  \ — including\nPicard/DivRepKit.lean, i.e. L9 itself, and Picard/DivRepAffKitZar.lean,\
-  \ which already contains the\ninterface weakening the u2 row called \"the cheap\
-  \ edit nobody has made\".  The count of sorries is not\nthe measure of what is verified.\
-  \  See AJCR.w4-rep.build-reach.\n\nNO SHORTCUT NEXT DOOR.  The sibling project MainProjects/Algebraic-Jacobian-Challenge\
-  \ does NOT have\nrepresentability: its Picard.FGAPicRepresentability.instHasPicScheme\
-  \ is an explicit <sorry> instance,\n\"the single genuine FGA sorry\", i.e. existence\
-  \ of the Picard scheme is ASSUMED there and everything\ndownstream is built on the\
-  \ assumption.  What the sibling does have and IS worth porting:\nPicard/ZariskiDescentRepresentability.lean\
-  \ (1372 L, Zariski descent of representability with a full\ntranslation layer),\
-  \ GlueDescent.lean, GaloisDescent/ (semilinear algebras and modules — the substrate\n\
-  dat-g needs), GrassmannianRepresentability.lean, QuotRepresentability.lean.\n\n\
-  TOOLING WARNINGS, unchanged.  (a) Do not steer this subtree from `graph frontier`:\
+  \ restatement is forbidden -- in particular a\nrepresentability theorem valid only\
+  \ over infinite fields is NOT a discharge.  The sanctioned\ndischarge is Jacobian\
+  \ C := (jacobianData C).J.\n\nWHAT THE TARGET REDUCES TO TODAY, exactly.  Round\
+  \ 5 landed JacobianData.ofCharts\n(Picard/JacobianDataCharts.lean:182) and JacobianData.ofChartsOfCompactSpace\
+  \ -- the first producers\nof JacobianData, which had ZERO before (all ~25 occurrences\
+  \ in the tree were consumers taking it as\na section variable).  Composing with\
+  \ the frozen discharge, the target is now exactly\n\n    A ZARISKI ATLAS OF pic0SigmaFunctor\
+  \ C: schemes X i and maps\n    f i : yoneda.obj (X i) -> pic0SigmaFunctor C such\
+  \ that\n      (L7) each f i is a relatively representable open immersion   [roadmap\
+  \ dat-c C9b]\n      (L8) Sigma.desc f is Zariski-locally surjective            \
+  \  [roadmap dat-b B-6]\n      (L*) each chart is quasi-compact with locally-of-finite-type\
+  \ structure morphism.\n\nEverything else above the atlas is DONE and kernel-checked:\
+  \ the big-site sheaf condition, mathlib's\n01JJ gluing (pic0RepresentableByOfCharts,\
+  \ Pic0SigmaSheaf.lean:161), the Sigma-descent, and BOTH\nfiniteness certificates\
+  \ -- which are DERIVED from chart-level hypotheses, not assumed\n(locallyOfFiniteType_gluedHom\
+  \ :154 via IsZariskiLocalAtSource.of_openCover;\nquasiCompact_gluedHom :164 via\
+  \ HasAffineProperty.iff_of_isAffine).  A hypothesis scare was checked\nand closed:\
+  \ Pic0SigmaSheaf.lean:79's [GeometricallyReduced C.hom] is redundant, supplied by\n\
+  Curve/GeometricallyReduced.lean:130/:140 from smoothness (record: JacobianDataCharts.lean:210).\n\
+  \nWHERE THE GATE ACTUALLY BITES -- THE ROUND-5 CORRECTION, and it changes what everyone\
+  \ should work\non.  Inbox I-0365.  The old framing (\"the divrep tail is independent\
+  \ of the certificate; the\ncertificate gates U2\") is FALSE, but not in the direction\
+  \ the tree assumed.  DivFamZar is BY\nDEFINITION a quotient of LOCALLY CERTIFIED\
+  \ families (DivisorFamilyZar.lean:224,:235), so\ncertificates are FREE on the consuming\
+  \ side -- DivFamZar.exists_certChartCover\n(DivRepClassifyZarKit.lean:433) is a\
+  \ landed theorem, unfolded by every classifier keystone\n(DivRepClassifyZar.lean:128/:176/:230,\
+  \ DivRepClassifyZarSep.lean:361/:363), and IsDivRepClassify\n(:90) quantifies over\
+  \ certified families as a HYPOTHESIS.  The bite is on the other side: the no-go\n\
+  (DivSchemeCertZarC1.lean:30-31,:131) says DivFamZar is BLIND to connected divisors\
+  \ meeting both\npinned fibres, so divFunctor C pi g is a PROPER SUBFUNCTOR of degree-g\
+  \ relative divisors.\nRepresenting it is not the problem -- the L9-L13 tail does\
+  \ that honestly.  The problem is that a\ntoo-small divisor functor CANNOT COVER\
+  \ Pic^0: the Abel map out of it is not locally surjective,\nbecause the classes\
+  \ whose only witnesses are the invisible divisors are never hit.  THE GATE IS L8.\n\
+  Judge every proposed repair by whether it widens DivFamZar enough for L8, not by\
+  \ whether it makes a\ncertificate easier to prove.  U2 and the affine package are\
+  \ TAIL work, and they are nearly finished.\n\nSETTLED; DO NOT RE-LITIGATE.  (a)\
+  \ No repair that keeps the pieces inside the preimages of a FIXED\nPAIR of points\
+  \ of P^1 can work: refining the cover, shrinking the base, a cleverer submodule\
+  \ L,\nre-spelling the equations, the joint-covering relaxation (leaf joint-cover,\
+  \ rejected), and re-basing\non the Zariski-local certificate are all provably useless.\
+  \  (b) The no-go is ON-STRATUM: a witness\nexists for every genus >= 2 (spec-dd-r\
+  \ ADDENDUM 4; re-derived independently round 5, critical-path\nsection 7.3; an explicit\
+  \ rational example is y^2 = x^5 - x + 1 with pi = [y-1 : y+1] of degree 5).\nThe\
+  \ round-4 instruction on this row to \"settle that before costing p1-aut or R2\"\
+  \ is STRUCK -- it was\nalready settled the same round, by this row's own child field-size.\
+  \  (c) DO NOT formalise the\nwitness: it needs Sym^g C / Hilb^g, which mathlib lacks\
+  \ and this tree has never built (ADDENDUM 4\nsection 4.5).\n\nTHE ONE LIVE DECISION:\
+  \ R1 VERSUS R2, and it must be made with the descent half COSTED.\n * R1 (p1-aut\
+  \ -> fibre-avoid -> cert-relocalize): quantify the certificate over a twist\n  \
+  \ gamma in Aut(P^1_k).  PROVED CORRECT IFF |P^1(k)| >= g + 2 -- every infinite field,\
+  \ and F_q for\n   q >= g + 1.  Since the target is stated over an ARBITRARY field,\
+  \ R1 CANNOT DISCHARGE THE\n   CHALLENGE ALONE; it needs the descent lane dat-g behind\
+  \ it.  Note what descent is required:\n   the sibling's ZariskiDescentRepresentability.lean\
+  \ is ZARISKI descent and does NOT cross a field\n   extension; what is needed is\
+  \ Galois/fppf descent, for which the sibling's GaloisDescent/\n   (semilinear algebras\
+  \ and modules, sorry-free, built) is the substrate.\n * R2 (generalise FinCoverData's\
+  \ piece type to arbitrary affine opens of the relative curve):\n   field-uniform,\
+  \ and justified in one line -- supp D is finite over R, hence contained in a single\n\
+  \   affine open (Stacks 0B8B), so a cover with one straddling piece always exists.\
+  \  Blast radius\n   measured: FinCoverData is named in 28 files.\nThe honest comparison\
+  \ is R1 + a Galois-descent campaign against R2 + a 28-file refactor.  The\np1-aut\
+  \ leaf says \"do not attempt both\".\n\nTRUST, MEASURED THIS ROUND.  622 modules\
+  \ on disk, 529 reachable from AlgebraicJacobian.lean, 93\nUNROOTED and therefore\
+  \ never kernel-checked (lakefile.toml has no globs and defaultTargets is the\nroot,\
+  \ so unrooted really does mean unverified).  CORRECTION to the round-4 census: Picard/DivRepKit.lean\n\
+  is NO LONGER unrooted -- Picard/DivRepGlobalLift.lean imports it and the root imports\
+  \ that -- so L9,\nthe divisor-representability endpoint, is kernel-checked.  Picard/DivRepAffKitZar.lean,\
+  \ which round-4\nnotes cite as already performing the u2 interface weakening, NO\
+  \ LONGER EXISTS (removed in 1e4ac5b52).\nThe count of sorries is not the measure\
+  \ of what is verified.  Row AJCR.w4-rep.build-reach owns this.\n\nNO SHORTCUT NEXT\
+  \ DOOR, WITH ONE EXCEPTION WORTH CHECKING.  The sibling MainProjects/Algebraic-Jacobian-Challenge\n\
+  does NOT have representability: its Picard.FGAPicRepresentability.instHasPicScheme\
+  \ (:313-317) is an\nexplicit <sorry> instance.  But it does hold one large verified\
+  \ asset the Rebuild has never looked\nat -- GrassmannianQuot.lean:5607 declares\
+  \ an UNCONDITIONAL (functor d r).RepresentableBy (scheme d r)\nin a 5631-line sorry-free\
+  \ file, and both projects share the same toolchain and the same mathlib.\nAlso portable:\
+  \ GaloisDescent/, GlueDescent.lean, ZariskiDescentRepresentability.lean (1372 L).\n\
+  \nTOOLING WARNINGS, unchanged.  (a) Do not steer this subtree from `graph frontier`:\
   \ its top items are\n\\lean{} name-drift artifacts and the Rebuild cannot be graph-synced\
   \ (I-0318).  (b) MODULE DOCSTRINGS\nIN THIS TREE ANNOUNCE THEOREMS THE FILES DO\
-  \ NOT DECLARE, and roadmap rows have asserted the ABSENCE\nof declarations that\
-  \ exist.  Verify both directions with `horizon search` before briefing anyone.\n"
+  \ NOT DECLARE (I-0349), and roadmap rows have asserted the\nABSENCE of declarations\
+  \ that exist.  Verify both directions with `horizon search` before briefing\nanyone\
+  \ -- and check the ledger for files swept in by an `integrate` commit, which is\
+  \ how round 4's\nown chain document came to call a landed file \"MISSING, never\
+  \ attempted\"."
 status: active
 kind: proof
 priority: normal
@@ -90,4 +106,4 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:10.654781+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-26T06:45:13.745818+00:00'
+  updated_at: '2026-07-26T16:57:11.245460+00:00'

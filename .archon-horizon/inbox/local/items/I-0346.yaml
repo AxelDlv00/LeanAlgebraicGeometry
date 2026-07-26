@@ -1,61 +1,117 @@
 id: I-0346
 provider: local
 kind: issue
-body: "NOTE APPENDED 2026-07-26 (run 0048 round 2): item 3's \"cheaper option\" is\
-  \ REFUTED; the\nhuman question in this item STANDS and is still yours.\n\nREFUTED:\
-  \ \"relaxing just the chart-wise partitions to a joint covering drops the requirement\n\
-  from two avoided points to ONE.  Worth trying before anyone builds PGL_2.\"  It\
-  \ buys nothing,\nand the reason is a typing fact, not a failed proof.  FinCoverData\
-  \ types its pieces INTO the\ncharts -- `h0 : Fin m0 -> Gamma(relCurve, V0)` (DivisorFamily.lean:166),\
-  \ `h1` into V1 (:168),\n`pieces := Sum.elim (basicOpen . h0) (basicOpen . h1)` (:186)\
-  \ -- so every piece is a basic\nopen of one of the two PINNED charts by construction,\
-  \ whatever the partition data says.\nPer-piece swallow-or-miss already holds for\
-  \ any cover by opens (DivSchemeCertZarConn.lean:98\nuses only openness), so a connected\
-  \ divisor still lands in one piece, and `basicOpen_le` puts\nthat piece inside one\
-  \ chart.  Changing the partition FIELDS cannot change where the pieces\nLIVE.  Recorded\
-  \ as roadmap leaf ...ddr.certificate.joint-cover, status rejected, with the\n10-file\
-  \ rebuild cost if anyone tries it anyway.\n\nThe sharp form to quote from now on:\
-  \ NO repair that keeps the pieces inside the preimages of\na FIXED PAIR of points\
-  \ of P^1 can work.  Only R1 (vary the pinned pair -- needs Aut(P^1)) or\nR2 (generalize\
-  \ the piece type) remain.\n\nSTILL OPEN AND STILL YOURS: over a small finite field,\
-  \ where |P^1(k)| = q + 1 < n + 2, what\nis DivFamZar supposed to be?  Nothing in\
-  \ the three options below has changed.\n\n--- ORIGINAL ---\nCORRECTION TO MY ANSWER\
-  \ ON I-0333, filed in the same round after an adversarial pass. The\nNEGATIVE half\
-  \ of that answer stands unchanged: chart-avoid is NO, decisively, and you do not\n\
-  have to take that decision. The POSITIVE half — \"the repair is cheap and it is\
-  \ not a decision\" —\nwas too optimistic in three ways, and one of them puts a DIFFERENT\
-  \ question back to you.\n\nWHAT SURVIVED. The Z(diamond) chart does not confine\
-  \ its divisors; the counterexample is real;\nthe obstruction is DivEq-invariant\
-  \ and therefore bites DivFamZar itself; confinement is an open\ncondition on the\
-  \ base, so an atlas may legitimately record avoidance. All kernel-checked or\nargued\
-  \ in informal/spec-dd-r.md ADDENDUM 3.\n\nWHAT DID NOT.\n 1. The counterexample\
-  \ is FIELD-INDEPENDENT (irreducibility of s(x^2+1)+x needs nothing of k),\n    so\
-  \ it also kills the \"assume k infinite\" escape I proposed. Enlarging the field\
-  \ does not\n    help.\n 2. The repair RELOCATES the forbidden geometric input rather\
-  \ than removing it: fibrewise-finite\n    support is not implied by anything a LocalEquations\
-  \ carries, and must be discharged from the\n    seed's own degree data.\n 3. My\
-  \ diagnosis \"the binding constraint is FinCoverData\" was too narrow. Per-piece\n\
-  \    swallow-or-miss follows from (c1)-finiteness for ANY cover by opens; only the\
-  \ chart-wise\n    partitions of unity upgrade \"inside one piece\" to \"inside one\
-  \ chart\". Sharp form: no repair\n    keeping pieces inside the preimages of a FIXED\
-  \ PAIR of points of P^1 can work. A cheaper\n    option I had missed: relaxing just\
-  \ the chart-wise partitions to a joint covering drops the\n    requirement from\
-  \ two avoided points to ONE. Worth trying before anyone builds PGL_2.\n\nTHE QUESTION\
-  \ THAT IS NOW YOURS, and it is a different one from I-0333's:\n\n  OVER A SMALL\
-  \ FINITE FIELD, WHERE |P^1(k)| = q + 1 < n + 2, WHAT IS DivFamZar SUPPOSED TO BE?\n\
-  \nCertifiability needs two k-rational points of P^1 off the support's image at every\
-  \ base point.\nChallenge.lean:96-99 states the Jacobian over an ARBITRARY field,\
-  \ and nothing in Picard/ or\nRiemannRoch/ assumes more than [Field k]. Three options,\
-  \ not comparable on mathematical grounds\nalone:\n (a) accept |P^1(k)| >= n + 2\
-  \ as a hypothesis and record that the challenge as stated is then\n     not solved\
-  \ for small q;\n (b) plan a descent lane — divQProj (Picard/DivSchemeQProj.lean)\
-  \ is the right lever for fpqc\n     descent from a big enough k'/k;\n (c) generalize\
-  \ the pinned charts to closed points of degree d >= 2, paying\n     Gamma(P1 k,\
-  \ chartOpen k i) iso Polynomial k (Curve/P1Charts.lean:234,239) and\n     isPrincipalIdealRing_chartSections\
-  \ (Curve/P1Points.lean:64), since Cl(P^1 minus a degree-d\n     point) = Z/d.\n\n\
-  Roadmap leaf: AJCR.w4-rep.datum.dat-d.ddr.certificate.field-size (blocked, high).\
-  \ It should be\nsettled BEFORE anyone builds the GL_2(k) action on P^1 (leaf p1-aut)\
-  \ — it decides whether that\nwork is worth doing at all."
+body: 'STILL OPEN AND STILL YOURS: over a small finite field, what is `DivFamZar`
+  supposed to be? (The mathematical half of this item is now ANSWERED and closed —
+  see below.)
+
+
+  **RESTRUCTURED 2026-07-27 (janitor hygiene pass, run 0048 round 5).** Nothing withdrawn;
+  the item was re-ordered so the one live question leads, because two later rounds
+  had buried it under their own corrections. Status of the three layers, newest first:
+
+
+  ---
+
+
+  ## 1. THE STANDING QUESTION FOR THE HUMAN — OPEN, UNCHANGED, AND THE ONLY OPEN PART
+
+
+  > Over a small finite field, where $|\mathbb{P}^1(k)| = q + 1 < n + 2$, **what is
+  `DivFamZar` supposed to be?**
+
+
+  Certifiability needs two $k$-rational points of $\mathbb{P}^1$ off the support''s
+  image at every base point. `Challenge.lean:96-99` states the Jacobian over an ARBITRARY
+  field, and nothing in `Picard/` or `RiemannRoch/` assumes more than `[Field k]`.
+  Three options, not comparable on mathematical grounds alone — this is a design decision,
+  not a theorem:
+
+
+  - **(a)** accept $|\mathbb{P}^1(k)| \ge n + 2$ as a hypothesis, and record that
+  the challenge as stated is then not solved for small $q$;
+
+  - **(b)** plan a descent lane — `divQProj` (`Picard/DivSchemeQProj.lean`) is the
+  right lever for fpqc descent from a big enough $k''/k$;
+
+  - **(c)** generalize the pinned charts to closed points of degree $d \ge 2$, paying
+  `Gamma(P1 k, chartOpen k i) ≃ Polynomial k` (`Curve/P1Charts.lean:234,239`) and
+  `isPrincipalIdealRing_chartSections` (`Curve/P1Points.lean:64`), since $\mathrm{Cl}(\mathbb{P}^1
+  \setminus \{\text{degree-}d\text{ point}\}) = \mathbb{Z}/d$.
+
+
+  It should be settled BEFORE anyone builds the $\mathrm{GL}_2(k)$ action on $\mathbb{P}^1$
+  (leaf `p1-aut`, still `pending`) — it decides whether that work is worth doing at
+  all.
+
+
+  ## 2. THE MATHEMATICAL HALF — ANSWERED, sharp, no longer yours
+
+
+  `informal/spec-dd-r.md` ADDENDUM 4 §4.4 answers the quantitative question in both
+  directions, and the bound guessed originally is now known to be **sharp**: the pinned-pair
+  route R1 works precisely when $|\mathbb{P}^1(k)| \ge g+2$, and fails exactly when
+  $\sum_{c \in \mathbb{P}^1(k)} e_c \le n$ (with $e_c$ the minimal degree of a closed
+  point of $C$ over $c$), where one can place $\xi_s$ so that $s \in W_c$ for **every**
+  $c$ and no pinned pair confines. Roadmap leaf `...ddr.certificate.field-size` is
+  `done`. **This half needs no human input** — it does not change the design question
+  in §1, which is about what the object should BE, not about where the bound sits.
+
+
+  ## 3. THE "CHEAPER OPTION" — REFUTED (2026-07-26, run 0048 round 2)
+
+
+  REFUTED: *"relaxing just the chart-wise partitions to a joint covering drops the
+  requirement from two avoided points to ONE. Worth trying before anyone builds PGL_2."*
+  It buys nothing, and the reason is a typing fact, not a failed proof. `FinCoverData`
+  types its pieces INTO the charts — `h0 : Fin m0 -> Gamma(relCurve, V0)` (`DivisorFamily.lean:166`),
+  `h1` into `V1` (`:168`), `pieces := Sum.elim (basicOpen . h0) (basicOpen . h1)`
+  (`:186`) — so every piece is a basic open of one of the two PINNED charts by construction,
+  whatever the partition data says. Per-piece swallow-or-miss already holds for any
+  cover by opens (`DivSchemeCertZarConn.lean:98` uses only openness), so a connected
+  divisor still lands in one piece, and `basicOpen_le` puts that piece inside one
+  chart. Changing the partition FIELDS cannot change where the pieces LIVE. Recorded
+  as roadmap leaf `...ddr.certificate.joint-cover`, status `rejected`, with the 10-file
+  rebuild cost if anyone tries it anyway.
+
+
+  The sharp form to quote from now on: **NO repair that keeps the pieces inside the
+  preimages of a FIXED PAIR of points of $\mathbb{P}^1$ can work.** Only R1 (vary
+  the pinned pair — needs $\mathrm{Aut}(\mathbb{P}^1)$) or R2 (generalize the piece
+  type) remain.
+
+
+  ## 4. THE ORIGINAL CORRECTION TO I-0333 — historical record
+
+
+  CORRECTION TO MY ANSWER ON I-0333, filed in the same round after an adversarial
+  pass. The NEGATIVE half of that answer stands unchanged: chart-avoid is NO, decisively,
+  and you do not have to take that decision. The POSITIVE half — "the repair is cheap
+  and it is not a decision" — was too optimistic in three ways, and one of them put
+  the DIFFERENT question of §1 back to you.
+
+
+  WHAT SURVIVED. The $Z(\diamond)$ chart does not confine its divisors; the counterexample
+  is real; the obstruction is `DivEq`-invariant and therefore bites `DivFamZar` itself;
+  confinement is an open condition on the base, so an atlas may legitimately record
+  avoidance. All kernel-checked or argued in `informal/spec-dd-r.md` ADDENDUM 3.
+
+
+  WHAT DID NOT.
+
+
+  1. The counterexample is FIELD-INDEPENDENT (irreducibility of $s(x^2+1)+x$ needs
+  nothing of $k$), so it also kills the "assume $k$ infinite" escape originally proposed.
+  Enlarging the field does not help.
+
+  2. The repair RELOCATES the forbidden geometric input rather than removing it: fibrewise-finite
+  support is not implied by anything a `LocalEquations` carries, and must be discharged
+  from the seed''s own degree data.
+
+  3. The diagnosis "the binding constraint is `FinCoverData`" was too narrow. Per-piece
+  swallow-or-miss follows from (c1)-finiteness for ANY cover by opens; only the chart-wise
+  partitions of unity upgrade "inside one piece" to "inside one chart". (The "cheaper
+  option" this point proposed is the one refuted in §3.)'
 labels:
 - agent-ready
 status: open
@@ -64,7 +120,7 @@ audience: human
 author: horizon
 source_ref: null
 created_at: '2026-07-25T15:17:21.873800+00:00'
-updated_at: '2026-07-25T17:15:06.279190+00:00'
+updated_at: '2026-07-26T17:04:44.203908+00:00'
 metadata:
   provenance:
     run: 0048

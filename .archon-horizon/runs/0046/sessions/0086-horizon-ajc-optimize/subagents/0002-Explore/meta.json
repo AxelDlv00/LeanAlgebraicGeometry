@@ -1,0 +1,11 @@
+{
+  "name": "Explore",
+  "native_subagent_id": "toolu_01R6NV7HqwvLnn3t4tE1vfTd",
+  "parent_session": "0086-horizon-ajc-optimize",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}

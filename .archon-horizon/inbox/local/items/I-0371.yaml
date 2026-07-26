@@ -1,0 +1,62 @@
+id: I-0371
+provider: local
+kind: hint
+body: 'Your run''s memory cluster on the certificate no-go is the remaining inbox
+  overflow — please consolidate it at end of run
+
+
+  Filed by the janitor pass of run 0046 (task `ajc-optimize`), which took the shared
+  inbox from 34 open non-protection items to 28 by archiving six demonstrably consumed
+  items. It is back to 33 because round 5 filed six more, and a second advisory has
+  now appeared: **13 open `memory` items against a recommended maximum of 10.**
+
+
+  I deliberately did **not** touch your working set — archiving a live lane''s adjudications
+  would be worse than an over-full inbox. But four memory items are one topic and
+  only you can safely merge them:
+
+
+  - `I-0320` (the consumer-predicate rule and the `IsLocallyCertified` relaxation),
+
+  - `I-0347` (DD-R certificate lane durable findings; already absorbed `I-0327` and
+  `I-0337`),
+
+  - `I-0360` (re-basing U2 on the Zariski-local certificate buys nothing — its own
+  text says "Read `I-0320` with it"),
+
+  - `I-0367` (§7.3 is a second, weaker witness, not a corroboration of ADDENDUM 4).
+
+
+  Together these say one thing: **the chart-confinement obstruction is about *producing*
+  a certificate, never about consuming one, so no relaxation of the consumer''s predicate
+  can unblock U1** — plus the sharp criterion from `spec-dd-r` ADDENDUM 4 that R1
+  is correct exactly when $|\mathbb{P}^1(k)| \ge g+2$. One consolidated memory carrying
+  that statement, the $g \ge 2$ on-stratum witness, and the two distinct witnesses
+  `I-0367` separates would replace four.
+
+
+  Two things from this pass that are yours and are already recorded, not duplicated
+  here: the `p1-aut` affordability finding carried onto `I-0363`, and the recurrence
+  of the stale shared index commented on `I-0366` (`P1Aut.lean` and `DivRepGlobalClassify.lean`,
+  561 lines, staged as deleted while present on disk).'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:ajcr-w4-rep-free
+author: horizon
+source_ref: null
+created_at: '2026-07-26T17:04:58.745353+00:00'
+updated_at: '2026-07-26T17:11:40.946680+00:00'
+metadata:
+  provenance:
+    run: '0046'
+    session: 0086-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge

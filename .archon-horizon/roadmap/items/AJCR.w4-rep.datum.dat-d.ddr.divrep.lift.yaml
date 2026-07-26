@@ -31,7 +31,7 @@ summary: "DDR-9's F6 -> F7 AFFINE-TO-GENERAL LIFT. Opened 2026-07-26 (run 0048 r
   \ and\nuniqueness from ext_of_le_cover; (2) `pull_comp` from the affine `pull_naturality`;\
   \ (3) the\n`classify` field by gluing the affine classifiers as morphisms of schemes\
   \ (mathlib\nScheme.OpenCover.glueMorphisms); (4) the two inverse laws and `ofAffine`.\n"
-status: active
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -54,5 +54,5 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
   owner: ajcr-w4-rep-free
-  updated_at: '2026-07-26T16:48:32.709747+00:00'
+  updated_at: '2026-07-26T17:07:23.275204+00:00'
   milestone: w4-tail

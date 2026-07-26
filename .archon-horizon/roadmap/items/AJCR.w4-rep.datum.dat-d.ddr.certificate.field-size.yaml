@@ -1,6 +1,6 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.field-size
-title: 'Field-size: over a small finite field, what is DivFamZar? — the one remaining
-  human decision'
+title: 'The R1 field-size bound: sharp iff |P^1(k)| >= g+2 (ANSWERED, theorem not
+  decision)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "ANSWERED 2026-07-26 (run 0048 round 4). Not blocked any more, and not a\
@@ -61,5 +61,5 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-26T06:49:26.482349+00:00'
+  updated_at: '2026-07-26T17:07:50.282226+00:00'
   milestone: w4-gate

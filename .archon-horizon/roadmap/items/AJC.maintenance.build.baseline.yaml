@@ -1,12 +1,20 @@
 id: AJC.maintenance.build.baseline
-title: Full-project build baseline
+title: From-scratch build baseline (43:15)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Controlled root-package clean verification at b5e180854 passes all 8,720
-  jobs with 578 project warnings across 49 files, down 596 from the previous 1,174-warning
-  baseline. Shared dependency builds were preserved. The 39:56.95 wall time and 10,151,432
-  KiB peak RSS are contended-run observations because another workspace run began
-  compiling during the build; Cech degree one took 1,531s and its wrapper 11s.
+summary: 'Measured 2026-07-27 on a 16-core / 62 GB host, contended with a second workspace
+  run (load average 13-27 throughout). Wiping .lake/build and rebuilding the package
+  with Mathlib served from the shared package cache: ALL 8,723 jobs green in 43:15.98
+  wall at 9,721,288 KiB peak RSS. Shape of the run: 68 of the 165 modules finish inside
+  5 minutes and 113 inside 10, but the last 34 take 33 minutes because the tail is
+  a nearly serial chain (GlueDescent gates SerreTwist, GrassmannianQuot, QuotFunctorDef
+  and RigidPushforward, which gate the rest); for most of that stretch exactly one
+  project job was running. Largest single-module costs, bounded by completion minus
+  the last dependency completion: QuotScheme 804s, TensorObjSubstrate 538s, GlueDescent
+  504s, Adelic/NonconstantToP1 453s, GrassmannianZariskiSheaf 385s, TensorObjInverse
+  360s, GrassmannianQuot 353s, CechHigherDirectImage 337s. This supersedes the earlier
+  39:56.95 observation, which predated the header and import work and was taken at
+  a different commit.'
 status: done
 kind: workspace
 priority: normal
@@ -29,6 +37,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-25T02:49:20.679265+00:00'
+  updated_at: '2026-07-26T17:12:07.641827+00:00'
   pinned_commits:
   - 2e6d3c83e

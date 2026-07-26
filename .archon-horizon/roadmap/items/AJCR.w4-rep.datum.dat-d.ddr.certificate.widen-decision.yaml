@@ -1,0 +1,67 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.widen-decision
+title: 'DECIDE the widening of DivFamZar: R1 (Aut(P^1) twist) vs R2 (piece type) vs
+  R3 (drop IsLocallyCertified for relative effective Cartier)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: "THE CAMPAIGN'S ONE LIVE DECISION (opened run 0048 round 5).\n\nWHY IT EXISTS.\
+  \ Inbox I-0365 and informal/w4-rep-critical-path.md section 7.6: the gate is not\
+  \ U2 and not 'a certificate for the universal family'. DivFamZar is BY DEFINITION\
+  \ a quotient of locally certified families (DivisorFamilyZar.lean:224,:235), so\
+  \ certificates are free on the consuming side; the no-go (DivSchemeCertZarC1.lean:123,:131)\
+  \ makes divFunctor a PROPER SUBFUNCTOR of degree-g relative divisors, and a too-small\
+  \ divisor functor cannot cover Pic^0. The obstruction is dat-b B-6 / L8, Zariski-local\
+  \ surjectivity of Sigma.desc f. Every repair below is a WIDENING of DivFamZar, and\
+  \ must be judged by whether L8 becomes true -- not by whether a certificate becomes\
+  \ easier.\n\nSHARPENING WORTH KEEPING: the no-go is VACUOUS FIBREWISE. Over a field\
+  \ the support of a divisor is a finite set of closed points, so IsPreconnected forces\
+  \ a single point, which cannot meet two disjoint fibres. The blindness is purely\
+  \ relative -- a family over a positive-dimensional base whose total support is a\
+  \ connected horizontal curve sweeping from pi^-1(0) to pi^-1(infinity). Base shrinking\
+  \ cannot evade it because every neighbourhood of the crossing meets both sides.\
+  \ So Riemann-Roch-level coverage is untouched; it is presheaf local surjectivity,\
+  \ tested on arbitrary scheme tests, that fails.\n\nTHE THREE CANDIDATES.\n R1  Quantify\
+  \ the certificate over a twist gamma in Aut(P^1_k). Leaves p1-aut -> fibre-avoid\
+  \ ->\n     cert-relocalize. Correct IFF |P^1(k)| >= g+2 (field-size, done). Since\
+  \ Challenge.lean states\n     the Jacobian over an ARBITRARY field and archon-protected.yaml\
+  \ forbids adding a hypothesis\n     (verified: the file's own header says agents\
+  \ are read-only on these signatures), R1 CANNOT\n     discharge the challenge alone;\
+  \ it needs Galois/fppf descent behind it. NOTE the sibling's\n     ZariskiDescentRepresentability.lean\
+  \ is ZARISKI descent and does not cross a field extension;\n     the usable substrate\
+  \ is the sibling's GaloisDescent/ (semilinear algebras and modules,\n     sorry-free,\
+  \ built).\n     STATUS OF ITS FIRST BRICK: Curve/P1Aut.lean landed round 5 and is\
+  \ rooted.\n R2  Generalise FinCoverData's piece type from basic opens of the two\
+  \ pinned charts to arbitrary\n     affine opens of the relative curve. Field-uniform.\
+  \ Justification is one line: supp D is finite\n     over R hence contained in a\
+  \ single affine open (Stacks 0B8B), so a cover with one straddling\n     piece always\
+  \ exists. Blast radius measured round 5: FinCoverData is named in 28 files.\n R3\
+  \  NEW, and it should be costed beside the other two: drop IsLocallyCertified altogether\
+  \ and use\n     the STANDARD relative effective Cartier divisor (finite locally\
+  \ free of rank g over the base).\n     That object carries no chart-adaptation artifact\
+  \ at all, so the no-go simply does not arise.\n     It is the mathematically standard\
+  \ functor; the cost is re-basing the DivScheme layer on it.\n\nWHAT WOULD DECIDE\
+  \ IT: a costing of R1's descent half against R2's refactor against R3's re-basing,\n\
+  each in concrete declarations. Do not start any of the three before this row is\
+  \ closed -- p1-aut\nalready says 'do not attempt both', and R3 makes that a three-way."
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-26T17:07:51.650332+00:00'
+  provenance:
+    run: 0048
+    session: 0014-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '5'
+    rounds: '13'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
+  milestone: w4-gate

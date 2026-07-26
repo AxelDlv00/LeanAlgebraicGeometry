@@ -1,0 +1,72 @@
+id: I-0369
+provider: local
+kind: issue
+body: 'THE ATLAS REDUCTION DOES NOT SHRINK THE PROBLEM: clause (2) OF §7.5 *IS* THE
+  R1/R2 GATE (Ground, 2026-07-27, run 0048 r5).
+
+
+  §7.5 of informal/w4-rep-critical-path.md presents the remaining obligation as three
+  tidy clauses and routes them to roadmap leaves: "(1) is roadmap dat-c C9b, (2) is
+  dat-b B-6, and (3) touches the Picard functor not at all". Clause (2) is not an
+  independent leaf. Traced:
+
+
+  * JacobianData.ofCharts (Picard/JacobianDataCharts.lean:182) consumes charts f i
+  : yoneda.obj (X i) -> (pic0SigmaSheaf C).1.
+
+  * The only machinery in the tree that builds such an f is `abelSigmaChart` (Picard/Pic0AtlasFromDivRep.lean:192,
+  UNCOMMITTED as of this review), and it consumes `rep : (divFunctor C pi n).RepresentableBy
+  D`.
+
+  * That representation is DivRepGlobalData.representableBy (Picard/DivRepKit.lean:113),
+  conclusion `(divFunctor C pi g).RepresentableBy DivOver`. The join is real and the
+  types line up.
+
+  * But `divFunctor` is NOT Div^n. Picard/DivisorFamilyZarFunctor.lean:41-45 defines
+  it as "the locally CERTIFIED degree-n divisor families", obj T := divFamZar C pi
+  n T.
+
+
+  So the charts produced by this route classify only locally certified families. Clause
+  (2) -- `Presheaf.IsLocallySurjective Scheme.zariskiTopology (Sigma.desc f)` -- therefore
+  asserts that certified families cover, which is exactly what spec-dd-r ADDENDUM
+  3 answered NO to and ADDENDUM 4 §4.3 refuted on the g >= 2 stratum over any field.
+  §7.4 R1-vs-R2 is the decision about how to repair that. Clause (2) and the R1/R2
+  gate are the same obstruction wearing two names.
+
+
+  CONSEQUENCE FOR PLANNING: "Challenge.lean:99 now reduces to exactly a Zariski atlas"
+  is TRUE as a type-level statement (Ground verified the whole composition: pic0TypeFunctor
+  is a `noncomputable abbrev` for the exact `(pic0Functor C cmp forget2 CommGrpCat
+  GrpCat) cmp forget GrpCat` spelling JacobianData.rep is typed against -- Pic0SigmaSheaf.lean:58-60
+  vs JacobianData.lean:93 -- so no restatement and no smuggled hypothesis). But it
+  is NOT true that the atlas is three cheap leaves away. Two of its three clauses
+  are downstream of the unresolved R1/R2 decision; only clause (3) is genuinely free.
+  A session that plans off §7.5 as written will underestimate by the whole descent/refactor
+  campaign.
+
+
+  Also worth recording: DivRepGlobalData still has NO producer (the L11 classifier),
+  so even the certified-functor representation is currently vacuous -- `DivRepGlobalData.representableBy`
+  takes the datum as an argument.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-26T16:59:05.831200+00:00'
+updated_at: '2026-07-26T16:59:05.831211+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0014-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '5'
+    rounds: '13'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild

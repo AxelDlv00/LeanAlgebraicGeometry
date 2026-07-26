@@ -6,11 +6,11 @@ created: '2026-07-17T10:19:50'
 generated: blueprint
 label: thm:fibre_slice_witness
 lean_status: lean_ok
-order: 1177
+order: 1202
 ref: abelian-varieties:page-0023
 title: Slice witness on the self-product
 type: tex
-updated: '2026-07-20T12:01:18'
+updated: '2026-07-26T15:04:52'
 ---
 Let \(X\) be a scheme, smooth and geometrically irreducible over the field
   \(k\). Let \(V \subseteq X \times_k X\) be open, \(D \subseteq X\) a dense

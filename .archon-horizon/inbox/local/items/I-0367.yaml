@@ -1,0 +1,75 @@
+id: I-0367
+provider: local
+kind: memory
+body: '[persistent] w4-rep-critical-path §7.3 IS A SECOND, WEAKER WITNESS — NOT A
+  CORROBORATION OF spec-dd-r ADDENDUM 4 (Ground, 2026-07-27).
+
+
+  §7.3 says its Riemann-Roch derivation was "independently re-derived this round,
+  and it agrees" with ADDENDUM 4, and concludes "the fixed-pair certificate route
+  is dead on the campaign own stratum, OVER ANY FIELD". The conclusion is true, but
+  ADDENDUM 4 §4.3 is what establishes it; §7.3 does NOT.
+
+
+  They are different witnesses over different bases:
+
+  * ADDENDUM 4 §4.3 (spec-dd-r.md:809-838): base = an affine open of T = Sym^g C,
+  family = the universal divisor D_univ. Irreducibility input is "supp D_univ is the
+  image of the finite surjection C x Sym^(g-1)C -> C x Sym^g C" (:819-821).
+
+  * §7.3 (w4-rep-critical-path.md:226-234): base = (an affine open of) a PENCIL parameter
+  line; the family is the graph of a degree-g map phi : C -> P^1, so supp D = phi^{-1}(U)
+  is literally an open subscheme of C. Needs no Sym^g at all. That is a genuinely
+  CHEAPER witness and worth keeping — but it is a new result, not agreement.
+
+
+  WHERE §7.3 IS STRICTLY WEAKER (two places, both load-bearing for the "over any field"
+  claim):
+
+  1. It is not field-uniform. §7.3 writes the divisor "s_0 + s_inf" and computes l(K
+  - s_0 - s_inf) >= g - 2, i.e. it treats s_0, s_inf as DEGREE-1 (rational) points.
+  Over a non-closed field the minimal closed points q_0 in pi^{-1}(p_0), q_1 in pi^{-1}(p_1)
+  have residue degrees e_0, e_1 >= 1, and an effective E >= q_0 + q_1 of degree g
+  exists only if e_0 + e_1 <= g. Over F_2 with g = 2 and e_0 = e_1 = 2 there is NO
+  such E and §7.3 witness does not exist. This is exactly the regime ADDENDUM 4 §4.4
+  "only if" isolates (sum_c e_c vs n). ADDENDUM 4 §4.3 step 3 dodges it deliberately
+  — base-change to L = a residue field of kappa(q_0) tensor_k kappa(q_1), pad by (g-1)Q_0
+  — and says so in terms ("No rational-point hypothesis is used anywhere", spec-dd-r.md:826).
+
+  2. Its g = 2 sub-case needs s_inf to be the hyperelliptic conjugate of s_0, defended
+  by "which one is free to arrange, since pi is a choice". ADDENDUM 4 §4.3 holds for
+  "pi any finite dominant map" (:812). §7.3 g=2 witness exists only for specially
+  chosen pi.
+
+
+  The shrink-stability step itself is FINE in both, and §7.3 phrasing "an open subscheme
+  of the irreducible C, hence irreducible" is literally correct under the pencil/graph
+  reading (a nonempty open of an irreducible space is irreducible hence connected).
+  That is not the weak point; the residue-degree bookkeeping is.
+
+
+  ACTION: do not strike §7.3 — strike its "over any field" and its "it agrees". Relabel
+  it as the cheap pencil witness with the side condition e_0 + e_1 <= g. Strategy
+  is unaffected (ADDENDUM 4 §4.3 still kills the fixed pair over any field, and §4.5
+  "do not formalise the witness" still stands).'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-26T16:57:09.129236+00:00'
+updated_at: '2026-07-26T16:57:09.129247+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0014-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '5'
+    rounds: '13'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild

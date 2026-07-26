@@ -6,10 +6,10 @@ created: '2026-07-16T21:33:29'
 generated: blueprint
 label: lem:point_ext
 lean_status: lean_ok
-order: 1135
+order: 1160
 title: Points are determined by their underlying points
 type: tex
-updated: '2026-07-17T21:42:07'
+updated: '2026-07-26T15:04:51'
 ---
 Let \(T\) be a scheme locally of finite type over the algebraically closed field \(K\), and
   let \(p, q : \Spec K \to T\) be two points of \(T\) over \(K\). If \(p\) and \(q\) send the

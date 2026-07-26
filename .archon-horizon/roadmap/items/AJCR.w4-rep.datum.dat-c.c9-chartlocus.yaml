@@ -28,7 +28,7 @@ summary: 'SPLIT 2026-07-26 (run 0048 round 2) into c9a (DONE) and c9b (blocked),
   needs the universal family.  Do not brief a lane on the old text.
 
   '
-status: active
+status: pending
 kind: proof
 priority: urgent
 depends_on: []
@@ -50,4 +50,4 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c
-  updated_at: '2026-07-25T16:19:47.589464+00:00'
+  updated_at: '2026-07-26T17:07:25.028080+00:00'

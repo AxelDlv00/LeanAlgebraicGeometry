@@ -1,0 +1,58 @@
+id: I-0370
+provider: local
+kind: issue
+body: "ROUND 5 UPDATED THE WORKSHEET AND LEFT THE ROADMAP STALE; AND THE \"CIRCLING\"\
+  \ VERDICT HAS NOT BEEN RE-TESTED SINCE ROUND 2 (Ground, 2026-07-27).\n\n(a) ROADMAP\
+  \ NOT RECONCILED. Commit fa61add70 rewrote informal/w4-rep-critical-path.md §7.1\
+  \ to say L2 and L9 have moved. No roadmap row was touched.\n  * .archon-horizon/roadmap/items/AJCR.w4-rep.yaml\
+  \ (updated_at 2026-07-26T06:45, untouched by round 5) still records L2 as \"MISSING\"\
+  \ and L9 as \"exists but UNROOTED\". Both are now false: DivRepGlobalLift is imported\
+  \ at AlgebraicJacobian.lean:420 and JacobianData.ofCharts exists at Picard/JacobianDataCharts.lean:182.\n\
+  \  * AJCR.w4-rep.datum.dat-j.yaml is still `pending` with a summary that predates\
+  \ DJ-2; round 5 work is DJ-2 territory and is not reflected.\n  * AJCR.w4-rep.datum.dat-d.ddr.divrep.lift.yaml\
+  \ still targets `DivRepGlobalData.ofAffine`, which does not exist anywhere in the\
+  \ tree.\n  * ...ddr.certificate.field-size is `done` but its TITLE still reads \"\
+  the one remaining human decision\" and its milestone is still w4-gate; its body\
+  \ was rewritten to \"not a human decision after all\". Title and milestone need\
+  \ to follow.\n  * Parent/child disagreements the CLI does not warn on: ...ddr.certificate\
+  \ is `blocked` with 8 done children; dat-c is `pending` with child c9-chartlocus\
+  \ `active`.\n  * I-0346 (the field-size human question) was answered by ADDENDUM\
+  \ 4 §4.4 in round 4 and never closed. I-0351..I-0357 (six round-2 ground/work-reviewer\
+  \ findings) are all still open, untouched by rounds 3-5.\n\n(b) THE VERDICT UNDER\
+  \ TEST IS ROUND 2 S, NOT ROUND 4 S. The \"circling\" judgement is at runs/0048/sessions/0006-horizon-ajcr-w4-rep-free/subagents/0004-ground/report.md:3\
+  \ -- \"Circling, and now circling in a way that looks like progress, which is worse...\
+  \ the number of gates closed toward Challenge.lean:99 is zero, same as run 0047\
+  \ rounds 1-5.\" Rounds 3, 4 and 5 spawned NO ground and NO work-reviewer subagent\
+  \ at all (r3: one claude; r4: 7 general-purpose + 1 blueprint; r5: claude/Explore/claude).\
+  \ Rounds 3 and 4 also produced no report -- both report.md files contain only \"\
+  You have hit your session limit\". Round 4 cost $144 with no written report.\n \
+  \ So there is no round-4 verdict on round 3, and the strategy has run three rounds\
+  \ without an independent check. Recommend making a ground pass a standing per-round\
+  \ requirement on this task rather than an optional subagent.\n\n(c) NOT THIS TASK.\
+  \ Commits 009637d06 and ea62cf030 carry Archon-Task: ajc-optimize, Archon-Projects:\
+  \ Algebraic-Jacobian-Challenge -- the SIBLING project, run 0046. They should not\
+  \ be counted as w4-rep round-5 output. (Audited anyway: 009637d06 sets 28 done +\
+  \ 1 pending, not the \"30\" in its subject; all 119 resolvable cited modules exist\
+  \ and are rooted; the one cited sorry-carrying module is under the row correctly\
+  \ left pending. Not status inflation.)"
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-26T16:59:36.413023+00:00'
+updated_at: '2026-07-26T16:59:36.413035+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0014-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '5'
+    rounds: '13'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild

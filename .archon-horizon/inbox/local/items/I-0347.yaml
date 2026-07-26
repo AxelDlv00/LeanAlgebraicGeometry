@@ -26,10 +26,19 @@ body: "DD-R CERTIFICATE LANE — DURABLE FINDINGS (run 0048 r1, 2026-07-25). Sup
   \ lies inside a single PIECE no matter how\n   FinCoverData is reshaped. Only the\
   \ chart-wise partitions of unity (DivisorFamily.lean:174,176)\n   upgrade that to\
   \ a single CHART. Sharp form: no repair keeping pieces inside the preimages of\n\
-  \   a FIXED PAIR of points of P^1 can work. UNTRIED CHEAP OPTION: relax the partitions\
-  \ to a joint\n   ⨆ pieces = top — drops the requirement from two avoided points\
-  \ to one.\n\n5. DEAD END, with a reason: deleting clause (c1) from IsCertified.\
-  \ Module.Flat R (colength j) is\n   free from fibrewise regularity alone (flat_colength_of_forall_tmul_residueField,\n\
+  \   a FIXED PAIR of points of P^1 can work.\n   >> CORRECTION 2026-07-27 (janitor\
+  \ pass, run 0048 r5): this point USED TO END with\n   \"UNTRIED CHEAP OPTION: relax\
+  \ the partitions to a joint ⨆ pieces = top -- drops the\n   requirement from two\
+  \ avoided points to one.\" THAT OPTION IS REFUTED, do not try it.\n   FinCoverData\
+  \ types its pieces INTO the charts (h0 : Fin m0 -> Gamma(relCurve, V0),\n   DivisorFamily.lean:166;\
+  \ h1 into V1, :168; pieces := Sum.elim (basicOpen . h0) (basicOpen . h1),\n   :186),\
+  \ so every piece is a basic open of one of the two PINNED charts BY CONSTRUCTION,\n\
+  \   whatever the partition fields say. Changing the partition FIELDS cannot change\
+  \ where the\n   pieces LIVE. Recorded as roadmap leaf ...ddr.certificate.joint-cover,\
+  \ status REJECTED;\n   full refutation in I-0346. Only R1 (vary the pinned pair)\
+  \ and R2 (generalize the piece\n   type) remain.\n\n5. DEAD END, with a reason:\
+  \ deleting clause (c1) from IsCertified. Module.Flat R (colength j) is\n   free\
+  \ from fibrewise regularity alone (flat_colength_of_forall_tmul_residueField,\n\
   \   SupportTube.lean:313 — no finiteness, no no-leak), so it looks like finiteness\
   \ is the only\n   culprit. It is not usable: every (c2)/(c3)/(c4) keystone in SlicingFlatKernel.lean\
   \ (variable\n   block :221-224) carries [Module.Finite R M] with M = chartProd,\
@@ -39,7 +48,50 @@ body: "DD-R CERTIFICATE LANE — DURABLE FINDINGS (run 0048 r1, 2026-07-25). Sup
   \ two abstract CurveDivisors and pi enters only at the instantiation.\n   So a coordinate\
   \ twist needs no atlas gluing. But Aut(P^1) does not exist in this project, and\n\
   \   mathlib has Proj.map without Proj.mapIso; and the project has no k-rational\
-  \ points of P^1 at\n   all."
+  \ points of P^1 at\n   all.\n   >> STATUS UPDATE 2026-07-27 (janitor pass, run 0048\
+  \ r5): Curve/P1Aut.lean now EXISTS\n   (round 5, leaf p1-aut still `pending`), but\
+  \ it does NOT yet contain an automorphism of P^1.\n   Its 13 declarations are the\
+  \ MvPolynomial substitution machinery (matrixLinearForm,\n   substAlgHom, substGradedHom\
+  \ and their mul/one laws) plus irrelevant_le_map_of_rightInverse\n   and Proj.map_congr\
+  \ -- i.e. the ingredients for the GL_2 twist, not the twist. The file is\n   also\
+  \ NOT imported by AlgebraicJacobian.lean, so nothing in it is kernel-checked by\n\
+  \   `lake build` (see I-0362 / I-0361). The sentence above therefore still stands\
+  \ as written.\n\n7. ABSORBED FROM I-0360 (archived 2026-07-27, janitor pass run\
+  \ 0048 r5): RE-BASING U2 ON THE\n   ZARISKI-LOCAL CERTIFICATE DOES NOT UNBLOCK ANYTHING.\
+  \ Adjudicated 2026-07-26 (round 4) by a\n   dedicated adversarial probe. Do not\
+  \ spend another session on it; it is attractive, half-true,\n   and the true half\
+  \ is not the half that matters.\n   THE IDEA: the epsilon-identity does not consume\
+  \ the seven-field IsCertified.\n   divisorWindow_eq_of_le_of_isCertified (DivSchemeEps.lean:196)\
+  \ uses the certificate through\n   exactly three projections, and its kernel divisorWindow_eq_of_le\
+  \ (:170) takes only\n   Module.Finite + Module.Projective + constant rankAtStalk\
+  \ of A.ThetaGlued, plus surjectivity of\n   thetaGluedEval -- all four Zariski-local.\
+  \ So U2 looked re-baseable on the local certificate.\n   WHY IT FAILS, one line:\
+  \ THE NO-GO IS ABOUT PRODUCING A CERTIFICATE, NOT CONSUMING ONE.\n   IsLocallyCertified\
+  \ fails for exactly the divisors IsCertified fails for -- supportLocus is\n   DivEq-invariant\
+  \ (DivSchemeCertZarConfine.lean:110) and pulls back along the relative-curve map\n\
+  \   (DivSchemeCertZarTransport.lean), so every member of every span-top family still\
+  \ sees the same\n   connected two-witness support, and supportLocus_subset_chart_of_isCertified\n\
+  \   (DivSchemeCertZarC1.lean:131) refuses a certificate on each. Stated verbatim\
+  \ in the tree at\n   DivSchemeCertZarC1.lean:30-31.\n   WHAT SURVIVED AND IS WORTH\
+  \ HAVING: the epsilon-identity CAN be proved from a locally certified\n   family\
+  \ with no ThetaGlued base change, by a SQUEEZE rather than by descending the three\
+  \ module\n   properties (which would need a twisted ThetaGlued base change that\
+  \ is not landed, plus a\n   Zariski descent of Module.Projective mathlib does not\
+  \ have -- only\n   Module.projective_of_localization_maximal under [Module.FinitePresentation],\
+  \ whose TODO calls\n   the Zariski-local version 'very hard'). Over S_i = Localization.Away\
+  \ (g i):\n     windowBaseChange x <= windowBaseChange (divisorWindow d) <= divisorWindow\
+  \ (d.pullback)\n       = divisorWindow G_i.eqns = windowBaseChange x\n   with the\
+  \ middle <= the landed formal half windowBaseChange_divisorWindow_le\n   (DivisorFamilyEpsNaturality.lean:251),\
+  \ then Submodule.eq_of_isLocalized'_span\n   (Mathlib/RingTheory/LocalProperties/Submodule.lean:194).\
+  \ Do NOT route this through\n   divisorWindow_pulledEquations_eq (EpsNaturality.lean:387)\
+  \ -- that is itself gated on a global\n   IsCertified, so the reasoning would be\
+  \ circular.\n   I-0360's CLOSING QUESTION IS NOW ANSWERED, which is why it could\
+  \ be archived. It asked for the\n   one decisive probe: at g >= 2, with the functor's\
+  \ genus pinning, is a connected seed divisor\n   meeting both pinned fibres realisable\
+  \ after base shrink? YES -- spec-dd-r.md ADDENDUM 4 exhibits\n   an on-stratum witness,\
+  \ and the fixed-pair certificate route is dead on the campaign's own\n   stratum\
+  \ over ANY field. Do not re-run that experiment (see I-0367 for exactly how strong\
+  \ each\n   of the two witnesses is, and I-0346 for the sharp field-size iff)."
 labels:
 - agent-ready
 status: open
@@ -48,7 +100,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-25T15:17:23.572213+00:00'
-updated_at: '2026-07-25T17:15:09.749276+00:00'
+updated_at: '2026-07-26T17:11:03.694953+00:00'
 metadata:
   provenance:
     run: 0048

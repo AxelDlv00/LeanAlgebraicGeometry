@@ -2,13 +2,11 @@ id: AJC.maintenance.build.umbrella-imports
 title: Remaining umbrella-import audit
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Three more high-fanout Cech frontiers are explicit: CechCoboundarySplitting
-  inherits CechAcyclic, CechBridge names three Mathlib modules plus two project modules,
-  and CechToCohomology no longer imports the bridge. Full-build-discovered clients
-  now declare their own Cech, Ext, separatedness, and site dependencies. Isolated
-  frontend probes reduce peak RSS from about 6.7 GiB to 3.1-3.2 GiB; continue with
-  other stable high-fanout modules.'
-status: pending
+summary: Superseded by AJC.maintenance.build.imports, which measures the cost and
+  drives the whole conversion. The three high-fanout Cech frontiers this item tracked
+  are explicit and the isolated-probe measurement it recorded (about 6.7 GiB down
+  to 3.1-3.2 GiB) is confirmed by the new per-file measurement.
+status: done
 kind: refactor
 priority: normal
 depends_on: []
@@ -30,7 +28,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-24T17:17:37.776515+00:00'
+  updated_at: '2026-07-26T17:12:29.304125+00:00'
   pinned_commits:
   - 72d3f23c5
   - 023d894d0

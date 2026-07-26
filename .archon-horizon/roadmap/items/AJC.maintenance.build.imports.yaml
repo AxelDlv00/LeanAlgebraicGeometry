@@ -1,0 +1,35 @@
+id: AJC.maintenance.build.imports
+title: Replace the bare import Mathlib in 86 modules by precise imports
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'The dominant build cost. 86 of 164 modules open with a bare ''import Mathlib''
+  and 27 of those are import-DAG sources, so 132 of 164 load the whole 8,171-module
+  library. Measured on Cohomology/SheafCompose.lean (49 lines): 16.6s and about 7
+  GB with the umbrella, 3.5s and 1.97 GB with the four precise imports the linter
+  reports. The memory figure is the second lever -- at 7 GB per Lean process a 62
+  GB host sustains only about 8 concurrent jobs instead of 16. Conversion must go
+  bottom-up (a module keeps paying while any module in its transitive project closure
+  is bare); scripts/deumbrella-wave.sh drives it, probing with Mathlib''s #import_bumps,
+  rewriting the import block and restoring the original on any verification failure.'
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-26T17:12:28.131800+00:00'
+  provenance:
+    run: '0046'
+    session: 0086-horizon-ajc-optimize
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.maintenance.build

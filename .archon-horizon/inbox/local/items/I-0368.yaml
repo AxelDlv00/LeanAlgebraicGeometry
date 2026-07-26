@@ -1,0 +1,53 @@
+id: I-0368
+provider: local
+kind: issue
+body: "ROUND 5 CONTRADICTED ITS OWN HEADLINE AND DID NOT UPDATE IT: §7.5 \"a FINITE\
+  \ Zariski atlas\" is stale (Ground, 2026-07-27).\n\ninformal/w4-rep-critical-path.md:261-273\
+  \ (§7.5, commit fa61add70) states what Challenge.lean:99 reduces to as:\n  \"a FINITE\
+  \ Zariski atlas of pic0SigmaFunctor C -- a finite iota, schemes X i, ... (3) each\
+  \ X i is quasi-compact with locally-of-finite-type structure morphism.\"\n\nThe\
+  \ LATER commit of the same round, 9d99b0451, added AlgebraicJacobian/Picard/JacobianDataCharts.lean:209\
+  \ `JacobianData.ofChartsOfCompactSpace`, and that file own §\"What remains\" (:266-273)\
+  \ says the opposite in plain terms: \"If the atlas that machinery produces is *not*\
+  \ finitely indexed -- and the classical one is not, its charts being indexed by\
+  \ divisor classes -- then JacobianData.ofChartsOfCompactSpace is the form to use\"\
+  . §7.5 was not amended.\n\nThe honest reduction is therefore:\n  a Zariski atlas\
+  \ (iota ARBITRARY) satisfying (1) relative representability, (2) joint Zariski-local\
+  \ surjectivity, (3) LocallyOfFiniteType (chartHom C f i) for each i, PLUS\n  CompactSpace\
+  \ of the glued object.\n`Finite iota` + `CompactSpace (X i)` is one sufficient shortcut\
+  \ for the last clause (JacobianData.ofCharts, :182), and per the file own note it\
+  \ is the shortcut the classical construction does NOT satisfy. So the \"finite\"\
+  \ in §7.5 understates the remaining obligation: quasi-compactness of the Jacobian\
+  \ is a real theorem (image of a quasi-compact divisor scheme under the Abel map),\
+  \ not a bookkeeping hypothesis.\n\nAlso stale in the same section: §7.2 (:216) cites\
+  \ \"Machine-checked record: Picard/JacobianDataCharts.lean:210\" -- the `example\
+  \ : GeometricallyReduced C.hom := inferInstance` is now at :237 (commit 9d99b0451\
+  \ inserted 27 lines above it).\n\nBoth claims of §7.2 itself VERIFY (Ground checked\
+  \ independently): Curve/GeometricallyReduced.lean:130 `Smooth.geometricallyReduced`\
+  \ and :140 `Smooth.of_smoothOfRelativeDimension_one` are both `instance (priority\
+  \ := 100)`, and Curve.GeometricallyReduced IS in Pic0SigmaSheaf import closure (chain:\
+  \ Pic0SigmaSheaf -> PicEtCoverBridge -> Pic0ZariskiSheaf -> Pic0Functor -> PicEtMap\
+  \ -> PicEtMapToolkit -> PicEtAffZariskiGlue -> PicEtAffZariskiSep -> RelPicPi ->\
+  \ ProjectionUnits -> Separatedness -> UniversalSections -> Curve.GeometricallyReduced).\
+  \ The GeometricallyReduced hypothesis IS redundant, not a gap."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-26T16:57:29.562395+00:00'
+updated_at: '2026-07-26T17:07:48.727237+00:00'
+metadata:
+  provenance:
+    run: 0048
+    session: 0014-horizon-ajcr-w4-rep-free
+    role: horizon
+    round: '5'
+    rounds: '13'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild

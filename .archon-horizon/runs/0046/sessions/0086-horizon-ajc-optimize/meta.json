@@ -1,0 +1,17 @@
+{
+  "role": "horizon",
+  "round": 0,
+  "project": "Algebraic-Jacobian-Challenge",
+  "task_id": "ajc-optimize",
+  "status": "running",
+  "started_at": "2026-07-26T16:22:45.514332+00:00",
+  "projects": [
+    "Algebraic-Jacobian-Challenge"
+  ],
+  "harness_name": "opus5",
+  "harness_kind": "claude-code",
+  "model": "claude-opus-5",
+  "effort": "ultracode",
+  "auth": "subscription",
+  "workspace_sha": "c70ddc580a718c85467caa6205aa2ca9faaf8bd0"
+}

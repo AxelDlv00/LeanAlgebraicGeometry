@@ -6,10 +6,10 @@ created: '2026-07-17T10:19:50'
 generated: blueprint
 label: thm:group_scheme_separated
 lean_status: lean_ok
-order: 1243
+order: 1268
 ref: kleiman-picard
 title: Group schemes over a field are separated
 type: tex
-updated: '2026-07-20T12:01:18'
+updated: '2026-07-26T15:04:52'
 ---
 Every group scheme \(G\) over a field \(K\) is separated over \(K\).

@@ -6,10 +6,10 @@ created: '2026-07-17T10:19:50'
 generated: blueprint
 label: def:ratmap_functionFieldPullback
 lean_status: lean_ok
-order: 1159
+order: 1184
 title: Function-field pullback of a dominant rational map
 type: tex
-updated: '2026-07-17T21:42:07'
+updated: '2026-07-26T15:04:52'
 ---
 Let \(X\) be integral, \(Y\) irreducible and \(f : X \dashrightarrow Y\)
   dominant. By \ref{thm:ratmap_dominant_generic} the source of the germ pullback
