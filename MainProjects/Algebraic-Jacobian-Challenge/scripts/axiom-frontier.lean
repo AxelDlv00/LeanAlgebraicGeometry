@@ -62,25 +62,30 @@ How to read the output.  Every line is one declaration; the only token that matt
 Note the `re.split` rather than a plain line filter: Lean wraps a long axiom list over
 several lines, so a per-line scan misclassifies exactly the declarations whose axiom
 list is longest.  Measured 2026-07-28 through the root path, with `lake build
-AlgebraicJacobian` green at 8746 jobs: **125 probed, 84 clean, 41 carrying `sorryAx`**
-(113/72/41 before §6f added the twelve unconditional-χ lines; 107/70/37 before the two
-leaf-A lines in §0, the §0b obligation-count pair, and the two chapter-keystone synthesis
-probes in §8).
+AlgebraicJacobian` green at 8746 jobs: **126 probed, 84 clean, 42 carrying `sorryAx`**
+(125/84/41 before §0c added the branch-(1) assembly; 113/72/41 before §6f added the twelve
+unconditional-χ lines; 107/70/37 before the two leaf-A lines in §0, the §0b obligation-count
+pair, and the two chapter-keystone synthesis probes in §8).
 Run the command above rather than adjusting this sentence's arithmetic by hand, which is
 how the two previous counts here went wrong.
 
-The `sorryAx` count is the one to watch, and note what it did *not* do when §6f landed: it
-stayed at 41 while the clean count rose by twelve.  A lane whose declarations are all clean
-adds nothing to the frontier, which is the correct outcome and also the reason a clean line
-is not by itself progress on the headline (§6b, §6d).
+The `sorryAx` count is the one to watch, and the last two additions moved it in opposite
+directions for the right reasons.  §6f added twelve declarations and left it at 41: a lane
+whose declarations are all clean adds nothing to the frontier, which is the correct outcome
+and also the reason a clean line is not by itself progress on the headline (§6b, §6d).  §0c
+added one and moved it to 42, because the branch-(1) assembly leaks on the four obligations
+behind it.  Neither movement is a change in the mathematics — the frontier is the same five
+obligations it was — which is why the number is worth re-measuring rather than reciting.
 
 The two lines added last are the ones to read as a PAIR rather than individually, because
 the gap between them carries the information. `hasRationalPoint_of_curve_of_isAlgClosed` is
 clean — leaf A is a theorem over an algebraically closed field, so it is a discharge and not
 a relocation. `picardJacobianWitnessOfIsAlgClosed`, the same witness assembled on it, still
-leaks, and must: `Pic0.smooth`, `Pic0.proper` and leaves B and C are open. What the pair
-establishes is that the residue over `k̄` consists of four *true* statements awaiting proofs,
-where the general `picardJacobianWitness` also carries a *false* one. Both witnesses report
+leaks, and must: the synthesised gate `instHasPicScheme`, `Pic0.smooth`, `Pic0.proper` and
+leaves B and C are open. What the pair establishes is that the residue over `k̄` consists of
+five *true* statements awaiting proofs — five, not four; see §0b, which measures the gate
+rather than letting the natural arithmetic drop it — where the general `picardJacobianWitness`
+also carries a *false* one. Both witnesses report
 `sorryAx` identically, so nothing in this file's output distinguishes them — which is exactly
 why the discharge had to be exhibited rather than measured (compare §2b, trap (g)).
 
@@ -202,6 +207,26 @@ noncomputable def probe_pic0Scheme_named_gateAssumed [GeometricallyIntegral C.ho
 #print axioms probe_pic0Scheme_named_gateAssumed
 
 end Section0b
+
+/-! §0c Branch (1) of the open decision I-0372, as a compiled definition rather than a
+description.
+
+`picardJacobianWitnessOfHasRationalPoint` is the FGA assembly with `[HasRationalPoint C]` as
+a binder instead of a source, and `picardJacobianWitness` /
+`picardJacobianWitnessOfIsAlgClosed` are both `haveI` specialisations of it. Two things follow
+that are worth having measured.
+
+First, it *leaks* — `Pic0.smooth`, `Pic0.proper` and leaves B and C are open — and that is the
+honest reading of "branch (1) is cheap": cheap means no NEW mathematics beyond the four, not
+that a headline carrying `C(k) ≠ ∅` is available today. The clean/leak split here says
+precisely which of the two.
+
+Second, note what it does *not* measure. Under this binder the representability gate is
+synthesised, so the count of §0b applies verbatim: the gate is present, and §0b's pair — not
+this line — is where that is visible. Comparing this line against `picardJacobianWitness`
+tells you nothing at all, because both leak and for overlapping reasons; the informative
+comparison is §0b's. -/
+#print axioms AlgebraicGeometry.picardJacobianWitnessOfHasRationalPoint
 
 -- §1 The headline (AlgebraicJacobian/Jacobian.lean, AbelJacobi.lean)
 #print axioms AlgebraicGeometry.picardJacobianWitness

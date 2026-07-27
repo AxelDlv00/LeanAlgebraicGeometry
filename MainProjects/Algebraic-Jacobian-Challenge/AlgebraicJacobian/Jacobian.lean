@@ -97,8 +97,13 @@ The file contains:
   that each leaf's remaining distance is compiler-checked rather than described.
 - `hasRationalPoint_of_curve_of_isAlgClosed` and `picardJacobianWitnessOfIsAlgClosed`:
   leaf A discharged over an algebraically closed field, and the witness assembled without
-  the inconsistent leaf. Unlike the two companions above these are axiom-clean and are a
-  discharge rather than a record of distance.
+  the inconsistent leaf. Unlike the two companions above the first of these is axiom-clean
+  and is a discharge rather than a record of distance.
+- `picardJacobianWitnessOfHasRationalPoint`: the assembly itself, with the rational point
+  as a hypothesis rather than a source. Both witnesses below are `haveI` specialisations of
+  it, so neither repeats a field, and it is the compiled form of branch (1) of the open
+  decision — a headline carrying `C(k) ≠ ∅` needs no new mathematics beyond this. Branch
+  (2) is not reachable from it; see its docstring.
 - the three leaves above, and `picardJacobianWitness`, the Albanese witness
   `J = Pic⁰_{C/k}` assembled from them with no `sorry` of its own.
 - `nonempty_jacobianWitness`: existence of an Albanese witness for every curve,
@@ -478,6 +483,41 @@ theorem isAlbanese_pic0_of_isAlgClosed [IsAlgClosed k] (C : Over (Spec (.of k)))
     @IsAlbanese k _ C P (Scheme.Pic0Scheme C) grp pr sm gi :=
   ⟨Pic0.abelJacobi C P, hbase, fun f hf => Pic0.albanese_universal_property C hg P f hf⟩
 
+/-- **The assembly itself, with the rational point taken as a hypothesis.**
+
+This is the mathematical content of the FGA route at the headline, separated from the
+question of *where the rational point comes from* — which is the whole of the open decision
+I-0372 and none of the assembly. Given `[Scheme.HasRationalPoint C]`, the identity component
+`Pic⁰_{C/k}` carries a Jacobian witness, and the remaining obligations are the five
+recorded in the file header: the representability gate `Scheme.instHasPicScheme` (which
+this binder makes fire), the upstream `Pic0.smooth` and `Pic0.proper`, and leaves B and C.
+
+Factoring the assembly this way is what makes the two witnesses below *specialisations*
+rather than duplicated code: `picardJacobianWitness` supplies the binder from the false
+gap marker `hasRationalPoint_of_curve`, `picardJacobianWitnessOfIsAlgClosed` from the
+theorem `hasRationalPoint_of_curve_of_isAlgClosed`, and neither repeats a field. It also
+gives branch (1) of the open decision a compiled form: a headline that carries
+`C(k) ≠ ∅` as a hypothesis is exactly this definition, so that branch costs no new
+mathematics — a fact worth having checked by the elaborator rather than described in
+prose. Branch (2), étale sheafification, is *not* obtainable from here: it needs a
+different representability input and would replace `Scheme.instHasPicScheme` rather than
+supply its hypothesis. Recording both branches is not the same as being able to build
+both, and this definition is honest about which one it reaches.
+
+Nothing here chooses a branch. Both consumers below are kept, and the general-field one
+remains the default. -/
+noncomputable def picardJacobianWitnessOfHasRationalPoint (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
+    [Scheme.HasRationalPoint C] :
+    JacobianWitness C where
+  J := Scheme.Pic0Scheme C
+  grpObj := (Scheme.Pic0.grpObj C).some
+  proper := Scheme.Pic0.proper C
+  smooth := Scheme.Pic0.smooth C
+  geomIrred := Scheme.Pic0.geometricallyIrreducible C
+  smoothGenus := smoothOfRelativeDimension_genus_pic0 C
+  isAlbaneseFor := fun P => isAlbanese_pic0 C _ _ _ _ P
+
 /-- The Albanese witness for a smooth proper geometrically irreducible curve `C`,
 constructed **uniformly in the genus** as the identity component `Pic⁰_{C/k}` of the
 Picard scheme of `C`.
@@ -498,11 +538,14 @@ that every pointed morphism `C ⟶ A` into an abelian variety is constant. The f
 rigidity / cotangent-vanishing / Frobenius / `ℙ¹`-identification machinery — has been
 removed in favour of this single uniform witness.
 
-The construction below is **wired to the Picard development**: the underlying scheme
+The construction is **wired to the Picard development**: the underlying scheme
 is `Scheme.Pic0Scheme C`, and four of the six witness fields are theorems of
-`Picard/Pic0AbelianVariety.lean` applied directly. This definition carries no `sorry`
-of its own, but that is a statement about this file, not a completeness claim: two of
-those four upstream theorems (`Pic0.smooth`, `Pic0.proper`) are `sorry`-bodied, so
+`Picard/Pic0AbelianVariety.lean` applied directly. Those fields live in
+`picardJacobianWitnessOfHasRationalPoint`, of which this definition is the specialisation
+supplying the rational point from leaf A; splitting them apart separates the assembly
+from the open decision about where the point comes from. This definition carries no
+`sorry` of its own, but that is a statement about this file, not a completeness claim: two
+of those four upstream theorems (`Pic0.smooth`, `Pic0.proper`) are `sorry`-bodied, so
 the witness depends on five open obligations — those two, plus the three leaves
 `hasRationalPoint_of_curve`, `smoothOfRelativeDimension_genus_pic0` and
 `isAlbanese_pic0` above. The `GeometricallyIntegral` hypothesis of the Picard
@@ -510,22 +553,18 @@ development is *not* among them: it is synthesised from the challenge hypotheses
 through `Smooth.geometricallyIntegral` (see `geometricallyIntegral_of_curve`). -/
 noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
-    JacobianWitness C := by
+    JacobianWitness C :=
   haveI := hasRationalPoint_of_curve C
-  exact
-    { J := Scheme.Pic0Scheme C
-      grpObj := (Scheme.Pic0.grpObj C).some
-      proper := Scheme.Pic0.proper C
-      smooth := Scheme.Pic0.smooth C
-      geomIrred := Scheme.Pic0.geometricallyIrreducible C
-      smoothGenus := smoothOfRelativeDimension_genus_pic0 C
-      isAlbaneseFor := fun P => isAlbanese_pic0 C _ _ _ _ P }
+  picardJacobianWitnessOfHasRationalPoint C
 
 /-- **The witness over an algebraically closed field, free of the inconsistent leaf.**
 
-Identical to `picardJacobianWitness` except that the rational point is supplied by the
-theorem `hasRationalPoint_of_curve_of_isAlgClosed` rather than by the gap marker
-`hasRationalPoint_of_curve`. The distinction is not cosmetic and is the reason this
+The same assembly as `picardJacobianWitness` — both are
+`picardJacobianWitnessOfHasRationalPoint` — differing in exactly one thing: the rational
+point is supplied by the theorem `hasRationalPoint_of_curve_of_isAlgClosed` rather than by
+the gap marker `hasRationalPoint_of_curve`. Since the shared assembly is now a single
+definition, that one difference is the *only* difference, which the elaborator checks
+rather than the reader. The distinction is not cosmetic and is the reason this
 definition exists separately.
 
 `hasRationalPoint_of_curve` is *false* as stated, so every consequence of
@@ -552,16 +591,9 @@ Both are kept: this one records what is actually reachable, and the general one 
 open decision visible where a reader of the headline meets it. -/
 noncomputable def picardJacobianWitnessOfIsAlgClosed [IsAlgClosed k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
-    JacobianWitness C := by
+    JacobianWitness C :=
   haveI := hasRationalPoint_of_curve_of_isAlgClosed C
-  exact
-    { J := Scheme.Pic0Scheme C
-      grpObj := (Scheme.Pic0.grpObj C).some
-      proper := Scheme.Pic0.proper C
-      smooth := Scheme.Pic0.smooth C
-      geomIrred := Scheme.Pic0.geometricallyIrreducible C
-      smoothGenus := smoothOfRelativeDimension_genus_pic0 C
-      isAlbaneseFor := fun P => isAlbanese_pic0 C _ _ _ _ P }
+  picardJacobianWitnessOfHasRationalPoint C
 
 /-- Existence of an Albanese witness for every smooth proper geometrically irreducible
 curve, uniformly in the genus via the Picard identity component `Pic⁰_{C/k}`
