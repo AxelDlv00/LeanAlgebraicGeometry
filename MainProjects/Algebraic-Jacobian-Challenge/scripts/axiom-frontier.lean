@@ -337,28 +337,46 @@ linearly there. So `hbump` is FALSE on every cover whose `h¹` is bounded — an
 at the degenerate cover `U₀ = U₁ = ⊤`, where the Čech `H¹` vanishes identically, as soon as a
 single prime divisor exists. That refutation needs no exactness data at all.
 
-A CORRECTION, and it is the most instructive part of this entry, because the first version of
-it made exactly the mistake the trap is about. This entry originally claimed a second
-refutation "at each prime outside the overlap `U₀ ∩ U₁`", on the grounds that `A(1·P + E) =
-A(E)` there makes the local step a subsingleton, so `ChiLedger.chi_add` gives a χ-jump of `0`
-against `hbump`'s `residueDeg P ≥ 1`. Every step of that is valid and the conclusion drawn
-from it is wrong: what it measures is that `chi_add`'s own exactness hypotheses are
-UNSATISFIABLE off the overlap — a fact about `chi_add`, not about `hbump`. Off the overlap the
-bump leaves the `U₀` and overlap terms untouched, so the ungated Čech count gives
-`Adelic.chi_add_pointDivisor_of_notMem_left`: the χ-jump is the single-chart step alone, and
-`Adelic.bump_iff_chartStep_of_notMem_left` makes `hbump` at such a `P` EQUIVALENT to that
-chart step being `[κ(P):k]` — an iff, both directions ungated. So off the overlap `hbump` is
-not contradictory at all; its residual content is approximation on one chart.
+THE OFF-CHART REFUTATION, and the two-step history of this paragraph is the most instructive
+part of the entry, because the trap caught the audit and then caught the retraction.
 
-Honest status of `hbump`: consistent; refutable at `U₀ = U₁ = ⊤` given one prime divisor;
-refutable on every bounded-`h¹` cover; satisfiable only where `h¹` is unbounded on the
-anti-effective cone; and NOT refuted off the overlap. None of that contradicts the vanishing
-lane, whose results are high-degree only — which is why nobody noticed.
+Round 1 (the audit, `I-0449`): a second refutation "at each prime outside the overlap", on the
+grounds that `A(1·P + E) = A(E)` there makes the local step a subsingleton, so
+`ChiLedger.chi_add` gives a χ-jump of `0` against `hbump`'s `residueDeg P ≥ 1`.
 
-The generalisable lesson, worth more than the instance: when a hypothesis `H` and a lemma `L`
-are inconsistent together, that does not tell you which of the two is at fault. Establishing
-that `H` is refutable requires deriving `¬H` from things that are THEMSELVES satisfiable —
-otherwise you have measured `L`.
+Round 2 (my retraction, and it was WRONG): I withdrew that on the grounds that the derivation
+runs through `chi_add`, so it measures `chi_add`'s exactness hypotheses rather than `hbump` —
+citing `Adelic.bump_iff_chartStep_of_notMem_left`, which makes `hbump` at such a `P` equivalent
+to the surviving one-chart step being `[κ(P):k]`, and concluding `hbump` is merely weaker there
+rather than false.
+
+Round 3 (`I-0467`, machine-checked, and it reinstates round 1): the one-chart step cannot be
+`[κ(P):k]` repeatedly, because the overlap term `A` is FROZEN along the tower `n·P`
+(`sectionSub_add_pointDivisor_of_notMem`, iterated) and the coboundary term is trapped beneath
+it (`S₁(D) ≤ A(D)`). So in `χ = dim S₀ + dim S₁ − dim A` all three terms are bounded along the
+tower while `hbump` forces linear growth. Hence `¬hbump` off the chart, from this file's own
+theorems and its own finiteness binders, with **no** `chi_add` and no exactness hypothesis
+anywhere. The equivalence I cited is true and does not say what I used it for: its right-hand
+side is itself false for large `n`. `Adelic.not_bump_of_notMem_left` and
+`Adelic.ledger_refuted_of_notMem_left` are the landed forms (§6f), and `P.point ∉ U₀` is far
+weaker than `P.point ∉ U₀ ⊓ U₁`, so the refutation reaches MORE primes than the audit claimed.
+
+Honest status of `hbump`: consistent (`bump_of_isEmpty_primeDivisor`); refutable at
+`U₀ = U₁ = ⊤` given one prime divisor; refutable on every bounded-`h¹` cover; refutable
+whenever any prime divisor lies off one chart; satisfiable only where `h¹` is unbounded on the
+anti-effective cone. The closed ledger itself is refuted on the same covers. None of that
+contradicts the vanishing lane, whose results are high-degree only — which is why nobody
+noticed.
+
+The generalisable lesson, and note that it cuts BOTH ways, which is what round 2 missed. When a
+hypothesis `H` and a lemma `L` are inconsistent together, that does not tell you which is at
+fault: establishing that `H` is refutable requires deriving `¬H` from things THEMSELVES
+satisfiable. That is why round 1's argument was not yet conclusive. But it equally does not
+license concluding `H` is *fine* — round 2 inferred "not refutable" from "not refutable by this
+route", which is the same error with the sign flipped, and an ungated derivation existed the
+whole time. The correct response to "your refutation measured the wrong thing" is to look for an
+ungated derivation, not to withdraw the conclusion. Recorded as I-0449/I-0454/I-0467, with the
+durable lessons at I-0451 and I-0468.
 
 What defeats each check, in order: `#print axioms` sees a clean line; a consistency witness
 exists (`bump_of_isEmpty_primeDivisor`, on a scheme with no prime divisors); an elaboration

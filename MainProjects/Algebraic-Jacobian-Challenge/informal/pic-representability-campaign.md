@@ -88,10 +88,15 @@
 > `RiemannRoch/Adelic/LedgerClosure.lean`, which is refutable on every cover whose
 > `h¹` is bounded on the anti-effective cone, and outright false at `U₀ = U₁ = ⊤`
 > given one prime divisor (I-0449, I-0454, lesson I-0451; the catalogue entry with
-> the machine-checked steps is §2b of the probe). Note the correction recorded there:
-> the *off-overlap* refutation first claimed for this measured `chi_add`'s own
-> hypotheses rather than `hbump`, and off the overlap `hbump` is in fact equivalent to
-> a single-chart approximation statement. The check that finds it is
+> the machine-checked steps is §2b of the probe). `hbump` is refutable **off one chart**
+> too — a strictly larger set of primes than off the overlap — and so is the closed
+> ledger itself (`not_bump_of_notMem_left`, `ledger_refuted_of_notMem_left`). That took
+> three rounds: the off-overlap refutation was claimed via `chi_add`, then withdrawn on
+> the correct ground that the derivation measured `chi_add`'s exactness hypotheses, then
+> reinstated unconditionally (I-0467) when the χ-formula's own frozen-overlap bound gave
+> `¬hbump` with no exactness data at all. The withdrawal inferred "not refutable" from
+> "not refutable by that route", which is the same error with the sign flipped. The check
+> that finds any of it is
 > not a probe at all: read the *producer's* side conditions, and for a hypothesis
 > quantified over a family, ask where the tree derives the negation.
 >
@@ -391,11 +396,19 @@ project's headline claims.
   hypothesis quantified over a family, "is it satisfiable" is the wrong question; ask where
   the tree derives the negation (I-0449, I-0454, lesson I-0451, probe §2b).
 
-  One correction is part of the lesson: an *off-overlap* refutation was claimed first and
-  withdrawn. It showed only that `chi_add`'s exactness hypotheses are unsatisfiable off the
-  overlap — a fact about `chi_add`. Establishing that `H` is refutable means deriving `¬H`
-  from premises that are themselves satisfiable; from an inconsistent pair you cannot read
-  off which side is at fault.
+  Two corrections are part of the lesson, in opposite directions. An *off-overlap*
+  refutation was claimed via `chi_add` and withdrawn, correctly, because it showed only that
+  `chi_add`'s exactness hypotheses are unsatisfiable off the overlap — a fact about
+  `chi_add`. Establishing that `H` is refutable means deriving `¬H` from premises that are
+  themselves satisfiable; from an inconsistent pair you cannot read off which side is at
+  fault. But the withdrawal then concluded `hbump` was merely *weaker* off the overlap, and
+  that was wrong too: an ungated derivation existed the whole time. Along the tower `n·P` the
+  overlap term is frozen and the coboundary term is trapped beneath it, so all three terms of
+  `χ = dim S₀ + dim S₁ − dim A` are bounded while `hbump` forces linear growth — `¬hbump`
+  off **one chart**, no exactness data, and the closed ledger falls with it (I-0467;
+  `not_bump_of_notMem_left`, `ledger_refuted_of_notMem_left`). "Not refutable by this route"
+  is not "not refutable"; when a refutation is shown to measure the wrong object, look for an
+  ungated derivation of the same conclusion before withdrawing it.
 
   The **eighth** is the cheapest to check and belongs first in any audit: a hypothesis
   *equivalent* to the conclusion it is supposed to buy. `hbump` and the closed χ-ledger are
