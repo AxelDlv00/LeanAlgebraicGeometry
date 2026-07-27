@@ -267,7 +267,16 @@ stated positively — the axiom line was never the thing that distinguished them
 residue-weighted degree on an AJC curve over an algebraically closed field, with no open
 input at all.  `degree_principal_eq_zero_of_isAlgClosed_curve` then rests on the closed
 ledger alone, where its `_of_hasRationalResidues` predecessor needed the ledger *and* the
-approximation statement. -/
+approximation statement.
+
+ONE QUALIFICATION, established by elaborating a consumer rather than by reading signatures,
+because that is the discipline trap (d) demands.  These take an `Adelic.IsConstantField k
+C.left` binder whose producer (`Scheme.instIsConstantField`, `Adelic/GateInstances.lean`) is
+a `scoped` instance.  A consumer must therefore `open scoped AlgebraicGeometry.Scheme`; a
+`degK_eq_degree_of_isAlgClosed_curve` applied without it fails to synthesize, and the
+failure looks exactly like trap (d) even though the instance exists.  Instantiability is
+`open`-sensitive, which is a fifth thing no axiom line shows and the reason to test the
+consumer instead of the signature. -/
 #print axioms AlgebraicGeometry.Adelic.evalMap_injective
 #print axioms AlgebraicGeometry.Adelic.mem_orderGe_one_iff_mem_maximalIdeal
 #print axioms AlgebraicGeometry.Adelic.residueDeg_eq_one_iff_hasRationalResidues
