@@ -62,11 +62,17 @@ How to read the output.  Every line is one declaration; the only token that matt
 Note the `re.split` rather than a plain line filter: Lean wraps a long axiom list over
 several lines, so a per-line scan misclassifies exactly the declarations whose axiom
 list is longest.  Measured 2026-07-28 through the root path, with `lake build
-AlgebraicJacobian` green at 8744 jobs: **113 probed, 72 clean, 41 carrying `sorryAx`**
-(107/70/37 before this session added two leaf-A lines in §0, the §0b obligation-count pair,
-and two chapter-keystone synthesis probes in §8).
+AlgebraicJacobian` green at 8746 jobs: **125 probed, 84 clean, 41 carrying `sorryAx`**
+(113/72/41 before §6f added the twelve unconditional-χ lines; 107/70/37 before the two
+leaf-A lines in §0, the §0b obligation-count pair, and the two chapter-keystone synthesis
+probes in §8).
 Run the command above rather than adjusting this sentence's arithmetic by hand, which is
 how the two previous counts here went wrong.
+
+The `sorryAx` count is the one to watch, and note what it did *not* do when §6f landed: it
+stayed at 41 while the clean count rose by twelve.  A lane whose declarations are all clean
+adds nothing to the frontier, which is the correct outcome and also the reason a clean line
+is not by itself progress on the headline (§6b, §6d).
 
 The two lines added last are the ones to read as a PAIR rather than individually, because
 the gap between them carries the information. `hasRationalPoint_of_curve_of_isAlgClosed` is
@@ -505,6 +511,46 @@ consumer instead of the signature. -/
 #print axioms AlgebraicGeometry.Adelic.degK_eq_degree_of_isAlgClosed_curve
 #print axioms AlgebraicGeometry.Adelic.degree_principal_eq_zero_of_isAlgClosed_curve
 #print axioms AlgebraicGeometry.Adelic.exists_bound_forall_generatedAt_of_isAlgClosed_curve
+
+/-! §6f The unconditional-χ lane, measured THROUGH THE ROOT PATH (requested by ajc-rr in
+I-0463).
+
+ajc-rr measured these twelve declarations in their own session and reported zero `sorryAx`,
+but flagged the measurement themselves: they probed through a scratch file that imported
+`AlgebraicJacobian` *plus* the two new modules directly, because at that moment
+`ChiUnconditional` and `UniformChartVanishing` were committed and **not** in the root
+roll-up. The two imports have since landed (`AlgebraicJacobian.lean`), so the lines below
+are the same twelve declarations measured on the root path — the measurement that may be
+quoted. They agree with theirs: all twelve clean.
+
+Why the distinction is not pedantry. An unrooted module is invisible to `import
+AlgebraicJacobian`, so its axioms cannot be probed here at all; and a scratch import can
+differ from the root path in instance *scope*, which §6e's final qualification shows is
+exactly the kind of difference an axiom line does not display. The honest procedure when a
+sibling team lands a module is: root it, rebuild, then re-measure — not carry the scratch
+number forward.
+
+What the clean lines do and do not say. The lane's own summary is the thing to read
+alongside them: `chartCountsDegree_iff_ledger` is `Iff.rfl`, so `ChartCountsDegree` is a
+*restatement* of the closed χ-ledger and not a weakening of it, and a clean axiom line on
+`degK_principal_eq_zero_of_chartCounts` therefore reports nothing about the ledger being
+available. Same caution as §6b and §6d: the χ identity `chi_eq_charts_sub_overlap` is
+genuinely unconditional (inclusion–exclusion for a two-set cover, no exact sequence and no
+exactness binders), whereas the two vanishing statements carry chart-count hypotheses proved
+at no curve. `uniformlyBoundedVanishing_of_uniformChartCount` takes `UniformChartCount`,
+which is strictly stronger than the single-field count. -/
+#print axioms AlgebraicGeometry.Adelic.chi_eq_charts_sub_overlap
+#print axioms AlgebraicGeometry.Adelic.chi_sub_chi_eq_charts_sub_overlap
+#print axioms AlgebraicGeometry.Adelic.sectionSub_top_eq_inf
+#print axioms AlgebraicGeometry.Adelic.sectionSub_add_pointDivisor_of_notMem
+#print axioms AlgebraicGeometry.Adelic.chi_add_pointDivisor_of_notMem_left
+#print axioms AlgebraicGeometry.Adelic.bump_iff_chartStep_of_notMem_left
+#print axioms AlgebraicGeometry.Adelic.charts_sub_overlap_le_ell
+#print axioms AlgebraicGeometry.Adelic.h1dim_eq_zero_iff_charts
+#print axioms AlgebraicGeometry.Adelic.exists_bound_h1dim_eq_zero_of_charts
+#print axioms AlgebraicGeometry.Adelic.degK_principal_eq_zero_of_chartCounts
+#print axioms AlgebraicGeometry.Adelic.chartCountsDegree_iff_ledger
+#print axioms AlgebraicGeometry.Adelic.uniformlyBoundedVanishing_of_uniformChartCount
 
 -- §6c The rigid-pushforward gate (task ajc-gate).  THE GATE IS NOW INSTANTIATED AND THE
 -- INSTANCE IS AXIOM-CLEAN — `instHasRigidPushforwardOfCurve`

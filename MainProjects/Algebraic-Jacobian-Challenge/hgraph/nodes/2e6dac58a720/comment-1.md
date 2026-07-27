@@ -20,11 +20,16 @@ lean_status=sorry here is therefore correct and permanent until that decision la
 What IS provable, and is now landed (run 0054 s0010), is the algebraically closed case:
 lem:curve_rational_point_algClosed / hasRationalPoint_of_curve_of_isAlgClosed, axiom-clean
 ([propext, Classical.choice, Quot.sound]) via Albanese.hasRationalPoint_of_isAlgClosed. Its witness is
-def:picardJacobianWitnessOfIsAlgClosed, which assembles the headline over k-bar on four obligations
-instead of five. If you arrived here wanting to close leaf A, that is the node to work from.
+def:picardJacobianWitnessOfIsAlgClosed, which assembles the headline over k-bar on five obligations
+of which every one is TRUE -- not on four. RETRACTED (same session, later round): the earlier text
+here said "four obligations instead of five". Discharging leaf A does not remove the representability
+gate, it makes def:inst_has_pic_scheme FIRE, since Pic0Scheme carries [HasPicScheme C] and that
+sorry-bodied instance is its sole producer. scripts/axiom-frontier.lean §0b measures this. If you
+arrived here wanting to close leaf A, def:picardJacobianWitnessOfIsAlgClosed is the node to work from.
 
 The asymmetry worth remembering: of the headline's five obligations this is the only FALSE one; the
 other four (thm:pic0_smooth, thm:pic0_proper, lem:pic0_relative_dimension_genus,
-lem:pic0_isAlbanese_all_points) are true statements awaiting proofs. #print axioms cannot tell those
+lem:pic0_isAlbanese_all_points) are true statements awaiting proofs, and over k-bar the gate
+def:inst_has_pic_scheme joins them as a fifth true one. #print axioms cannot tell those
 two situations apart -- both report sorryAx -- so the distinction is recorded in
 rem:rational_point_scope rather than measured.

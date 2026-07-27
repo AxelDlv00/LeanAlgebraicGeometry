@@ -329,8 +329,13 @@ but which of the two honest formulations the project claims over an arbitrary `k
 
 Unlike leaves B and C, whose `_of_isAlgClosed` companions record a *distance* and report
 `sorryAx`, this one is a genuine discharge: its axioms are `[propext, Classical.choice,
-Quot.sound]`. Over `k̄`, the witness's five obligations are therefore four —
-`Pic0.smooth`, `Pic0.proper`, and leaves B and C. -/
+Quot.sound]`. What it does **not** do is reduce the count. Over `k̄` the witness still rests
+on five obligations — `Scheme.instHasPicScheme`, `Pic0.smooth`, `Pic0.proper`, and leaves B
+and C — because discharging this leaf makes the representability gate *fire* rather than
+removing it (`Scheme.Pic0Scheme` carries `[Scheme.HasPicScheme C]`, and that `sorry`-bodied
+instance is its sole producer). What the discharge changes is the *kind* of every remaining
+obligation: all five are then true statements awaiting proofs.
+`scripts/axiom-frontier.lean` §0b measures this rather than asserting it. -/
 theorem hasRationalPoint_of_curve_of_isAlgClosed [IsAlgClosed k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
     Scheme.HasRationalPoint C :=
