@@ -117,17 +117,39 @@ reading cannot answer it.  A `\leanok` is a local mark, but the defect is transi
 proof genuinely written in Lean is still not proved if it routes through a `sorry`, and
 nothing at the mark says so.  So the mark has to be joined against `#print axioms`.
 
-**The join must be over every proof-level mark, not over this file's output.**  That is
-the whole design of the check and the earlier version of it got this backwards: it
-intersected the marks with §0–§8, which name 126 declarations, so it could only ever
-see the ~50 marked nodes this probe happens to mention.  Generate the `#print axioms`
-lines *from the marks* instead.  Measured 2026-07-28 that way: **998 proof-level marks
-pinning 1073 declarations, 930 of them resolvable and probed, 143 `private` and therefore
-unprobeable, and ZERO carrying `sorryAx`.**  The three numbers add up, which is the point.
+**The join must be over every mark, not over this file's output.**  That is the whole
+design of the check and the earlier version of it got this backwards: it intersected the
+marks with §0–§8, which name 126 declarations, so it could only ever see the ~50 marked
+nodes this probe happens to mention.  Generate the axiom lines *from the marks* instead.
 
-Reconcile `probed + unresolvable == pins` every time, in code, and fail on a shortfall.
-That identity is the only thing that catches this check silently shrinking its own
-domain, and it caught **five** independent instances of exactly that, each of which had
+**Both mark positions have to be measured, and by the same identity.**  The two are
+different claims — a proof-level mark says the proof is formalised, a statement-level one
+says the signature is — so they are counted separately and only the proof-level ones can be
+defects (see the end of this section).  Measured 2026-07-28 over every mark:
+
+    proof-level:     1078 marks pinning 1073 declarations = 930 public + 143 private,
+                     0 unresolved, ZERO carrying `sorryAx`
+    statement-level: 1567 marks pinning 1560 declarations = 1372 public + 188 private,
+                     0 unresolved, 34 carrying `sorryAx`, across 34 nodes,
+                     none of which also carries a proof-level mark
+
+Both triples add up, which is the point, and the pairing is the load-bearing part: the 34
+are legitimate and the 0 is the defect count.
+
+Read the second line as a correction with a moral.  It stood here as "eleven" for two
+revisions, and eleven is *precisely the intersection with this file's own 126 lines* — the
+very artifact the paragraph above retracts, still live one paragraph below its own
+retraction.  So fixing a domain bug is not done when the instance is fixed: every OTHER
+figure derived by the same broken route has to go through the same identity.  A count that
+was never wrong for its own reasons can still be wrong for the reason just fixed, and the
+reconciliation assertion certifies exactly the quantities routed through it.  This one
+mattered more than the arithmetic, because the sentence carrying it is the sentence telling
+readers *not* to delete those marks: a reader reconciling 11 against a real 34 concludes 23
+are unaccounted for and starts deleting correct ones.
+
+Reconcile `public + private + unresolved == pins` every time, in code, and fail on a
+shortfall.  That identity is the only thing that catches this check silently shrinking its
+own domain, and it caught **six** independent instances of exactly that, each of which had
 printed a plausible `0 dishonest` line:
 
   - the 100-error cap below;
@@ -139,62 +161,133 @@ printed a plausible `0 dishonest` line:
   - `#print axioms` printing `does not depend on any axioms` — a *different sentence* —
     for an axiom-free declaration, which a `depends on axioms: [...]` regex never matches;
   - `split` numbering past `z`: 1073 pins at 40 per batch gives `lk_aa`…`lk_az` **and
-    `lk_ba`**, so a `lk_a*` glob silently skips the last 33 pins.  Glob `lk_*`.
+    `lk_ba`**, so a `lk_a*` glob silently skips the last 33 pins.  Glob `lk_*`;
+  - `re.search(r'\\lean\{([^}]*)\}')` keeping only the FIRST `\lean{}` macro of a
+    statement.  Two nodes in `Picard_QuotScheme.tex` (`def:graded_subquotientHilb`,
+    `lem:graded_lastVarAlgHom`) carry several, worth 8 pins.  Use `findall`.
 
-Only the last two were found *after* the reconciliation assertion was in place, and they
-are the reason it is worth having: each had survived a careful reading of the code.
+Only the last three were found *after* the reconciliation assertion was in place, and they
+are the reason it is worth having: each had survived a careful reading of the code.  The
+sixth was found by a different route worth naming, because it is cheaper than reading: two
+extractors sharing no code agreed on the *answer* (34) and disagreed on the *domain* (1552
+against 1560).  When two independent measurements agree on the finding and differ on how
+much they looked at, the agreement is not the thing to report — chase the gap, because
+domain size is exactly what the false clean lines above were wrong about.
 
-    python3 - <<'PY' > /tmp/leanok_pins.txt
-    import re, glob, json
-    ENVS = r'theorem|lemma|proposition|corollary|definition|remark|example|notation|convention'
-    marked = []
-    for fn in sorted(glob.glob('blueprint/src/chapters/*.tex')):
-        # A `%`-comment can hold a \begin{proof} or an \end{theorem}; strip comments first.
-        t = re.sub(r'(?<!\\)%[^\n]*', '', open(fn).read())
-        for m in re.finditer(r'\\begin\{(' + ENVS + r')\}(.*?)\\end\{\1\}', t, re.S):
-            stmt = m.group(2)
-            lab = re.search(r'\\label\{([^}]*)\}', stmt)
-            lean = re.search(r'\\lean\{([^}]*)\}', stmt)
-            if not (lab and lean):
-                continue
-            # the node's own proof is the NEXT environment, if it is a proof at all
-            pm = re.match(r'\s*\\begin\{proof\}(.*?)\\end\{proof\}', t[m.end():], re.S)
-            if not (pm and '\\leanok' in pm.group(1)):
-                continue
-            for d in (x.strip() for x in lean.group(1).split(',')):
-                if d:
-                    marked.append((fn.split('/')[-1], lab.group(1), d))
-    json.dump(marked, open('/tmp/marked.json', 'w'))
-    for d in sorted({d for _, _, d in marked}):
-        print(d)
-    PY
-    # `#print axioms` on an absent name is an ERROR, and `lean` stops at 100 of them,
-    # silently truncating the audit.  Batch so no batch can reach the cap.  Note the
-    # output file is NOT named `/tmp/lk_a…`: a `/tmp/lk_a*` glob would otherwise pick up
-    # the growing log itself as an input batch.
-    # Output log must NOT be named /tmp/lk_… — the input glob would re-ingest it.
-    rm -f /tmp/lk_?? /tmp/leanok_ax.txt && split -l 40 /tmp/leanok_pins.txt /tmp/lk_
-    for f in /tmp/lk_??; do          # lk_?? not lk_a* : split numbers past `az` to `ba`
-      { echo 'import AlgebraicJacobian'; sed 's/^/#print axioms /' "$f"; } > /tmp/lk.lean
-      lake env lean /tmp/lk.lean >> /tmp/leanok_ax.txt 2>&1
-    done
+Step 1, extract the marks.  Match environments with an explicit STACK rather than a
+non-greedy regex: the regex reaches past the true `\end{theorem}` whenever anything
+intervenes, which is failure mode 2 below and was the entire source of the three retracted
+findings.
+
     python3 - <<'PY'
-    import re, json
-    txt = open('/tmp/leanok_ax.txt').read()
-    assert 'maximum number of errors' not in txt, 'audit truncated — use smaller batches'
-    # Two output sentences, and a name may contain apostrophes: anchor on the suffix.
-    axioms = dict(re.findall(r"^'(.+?)' depends on axioms: \[([^\]]*)\]", txt, re.M))
-    axioms |= {n: '' for n in re.findall(r"^'(.+?)' does not depend on any axioms", txt, re.M)}
-    unresolved = set(re.findall(r"Unknown constant `([^`]+)`", txt))
-    marked = json.load(open('/tmp/marked.json'))
-    pins = {d for _, _, d in marked}
-    lost = pins - set(axioms) - unresolved
-    assert not lost, f'{len(lost)} pins produced NO output: {sorted(lost)[:5]}'
-    bad = [(l, d, f) for f, l, d in marked if 'sorryAx' in axioms.get(d, '')]
-    print(f'{len(pins)} pins = {len(axioms)} probed + {len(unresolved)} private; '
-          f'{len(bad)} dishonest proof-level marks')
-    for l, d, f in bad: print('  DISHONEST', l, d, f)
+    import re, glob, json
+    ENVS = {'theorem','lemma','proposition','corollary','definition','remark',
+            'example','notation','convention'}
+    def strip_comments(t):                    # a `%` comment can hold \end{theorem}
+        out = []
+        for line in t.split('\n'):
+            i = 0
+            while i < len(line):
+                if line[i] == '\\': i += 2; continue
+                if line[i] == '%':  line = line[:i]; break
+                i += 1
+            out.append(line)
+        return '\n'.join(out)
+    TOK = re.compile(r'\\(begin|end)\{([^}]*)\}')
+    def top_level_envs(t):
+        stack, out = [], []
+        for m in TOK.finditer(t):
+            if m.group(1) == 'begin':
+                stack.append((m.group(2), m.end(), m.start()))
+            else:
+                while stack:
+                    nm, s, os_ = stack.pop()
+                    if nm == m.group(2):
+                        if not stack: out.append((nm, s, m.start(), os_, m.end()))
+                        break
+        return out
+    stmt, proof = [], []
+    for fn in sorted(glob.glob('blueprint/src/chapters/*.tex')):
+        t = strip_comments(open(fn).read()); envs = top_level_envs(t); base = fn.split('/')[-1]
+        for i, (name, s, e, os_, oe) in enumerate(envs):
+            if name not in ENVS: continue
+            body = t[s:e]
+            lab = re.search(r'\\label\{([^}]*)\}', body)
+            leans = re.findall(r'\\lean\{([^}]*)\}', body)   # findall: a node may carry several
+            if not (lab and leans): continue
+            pins = [x.strip() for g in leans for x in g.split(',') if x.strip()]
+            if '\\leanok' in body:
+                stmt += [(base, lab.group(1), d) for d in pins]
+            if i + 1 < len(envs) and envs[i+1][0] == 'proof' and '\\leanok' in t[envs[i+1][1]:envs[i+1][2]]:
+                proof += [(base, lab.group(1), d) for d in pins]
+    json.dump({'stmt': stmt, 'proof': proof}, open('/tmp/marks.json','w'))
+    open('/tmp/all_pins.txt','w').write(
+        '\n'.join(sorted({d for _,_,d in stmt} | {d for _,_,d in proof})) + '\n')
     PY
+
+Step 2, decide the axioms of every pin — **including the `private` ones**.  Use
+`Lean.collectAxioms`, not `#print axioms`: the latter resolves through the *exported*
+environment, so a private constant is unaddressable from outside its defining file, whereas
+`collectAxioms` runs against `env.setExporting false` and answers for all of them once the
+private mangling is reversed.  Build the reverse map with ONE fold over the environment; one
+fold per unresolved name does not finish.
+
+    cat > /tmp/axprobe.lean <<'LEAN'
+    import AlgebraicJacobian
+    open Lean Elab Command
+    run_cmd do
+      let names := ((← IO.FS.readFile "/tmp/all_pins.txt").splitOn "\n").filterMap fun s =>
+        let s := s.trimAscii.toString; if s.isEmpty then none else some s.toName
+      let env ← getEnv
+      let exported := env.setExporting true
+      let wanted : Std.HashSet Name := names.foldl (fun s n => s.insert n) {}
+      let privMap : Std.HashMap Name (List Name) :=
+        env.constants.fold (init := {}) fun acc c _ =>
+          let u := privateToUserName c
+          if u != c && wanted.contains u then acc.insert u (c :: (acc.getD u [])) else acc
+      let mut out := #[]
+      let mut nMissing := 0; let mut nPublic := 0; let mut nPrivate := 0; let mut nBad := 0
+      for n in names do
+        match (if (exported.find? n).isSome then [n] else privMap.getD n []) with
+        | [] => nMissing := nMissing + 1; out := out.push s!"{n}\tMISSING\t"
+        | cs => for c in cs do
+                  if c != n then nPrivate := nPrivate + 1 else nPublic := nPublic + 1
+                  let axs ← Lean.collectAxioms c
+                  if axs.contains ``sorryAx then nBad := nBad + 1
+                  out := out.push s!"{n}\t{if c != n then "private" else "public"}\t{String.intercalate "," (axs.toList.map toString)}"
+      IO.FS.writeFile "/tmp/axout.txt" (String.intercalate "\n" out.toList ++ "\n")
+      logInfo s!"pins={names.length} public={nPublic} private={nPrivate} missing={nMissing} sorryAxHits={nBad}"
+    LEAN
+    lake env lean /tmp/axprobe.lean
+
+Step 3, join and RECONCILE each position separately.  The assertion is the check.
+
+    python3 - <<'PY'
+    import json
+    marks = json.load(open('/tmp/marks.json'))
+    ax, kind = {}, {}
+    for line in open('/tmp/axout.txt'):
+        if not line.strip(): continue
+        n, k, a = line.rstrip('\n').split('\t', 2)
+        kind[n] = k; ax[n] = ax.get(n, '') + ',' + a     # several private constants may share a name
+    for tag, ms in (('proof-level', marks['proof']), ('statement-level', marks['stmt'])):
+        pins = {d for _, _, d in ms}
+        missing = pins - set(ax)
+        assert not missing, f'{tag}: {len(missing)} pins produced NO output: {sorted(missing)[:5]}'
+        pub = sum(1 for d in pins if kind[d] == 'public')
+        priv = sum(1 for d in pins if kind[d] == 'private')
+        assert pub + priv == len(pins), f'{tag}: split does not reconcile'
+        bad = sorted({(l, d, f) for f, l, d in ms if 'sorryAx' in ax[d]})
+        print(f'{tag}: {len(ms)} marks pinning {len(pins)} = {pub} public + {priv} private, '
+              f'missing 0; {len(bad)} on sorryAx carriers across {len({l for l,_,_ in bad})} nodes')
+        for l, d, f in bad: print(f'   {"DISHONEST" if tag == "proof-level" else "stmt"} {f} {l} {d}')
+    PY
+
+The private lane needs a POSITIVE CONTROL, or "zero private pins carry `sorryAx`" is
+indistinguishable from a lane that silently measures nothing.  It has one, which is why the
+result is a measurement: exactly one private pin does carry `sorryAx`
+(`Scheme.RationalMap.av_indeterminacyLocus_eq_empty`, statement-level only, correctly, and
+among the 34).  Check that it still appears before believing the other 187.
 
 Three failure modes of the naive version, each of which it exhibited, and all three
 matter more than the arithmetic:
@@ -214,26 +307,37 @@ matter more than the arithmetic:
      `\leanok` at all, and `git log` records that this is deliberate.**
   3. **`#print axioms` on an absent name is an error and `lean` halts at 100**, so a
      naive one-file audit reports on whatever it reached before the cap and looks
-     complete.  This is the first of the five domain-shrinking bugs listed above; all
-     five printed a clean line while examining a strict subset, which is why the
-     reconciliation assertion is part of the recipe rather than hygiene.
+     complete.  This is the first of the six domain-shrinking bugs listed above; all
+     six printed a clean line while examining a strict subset, which is why the
+     reconciliation assertion is part of the recipe rather than hygiene.  Step 2 above
+     drops this failure mode entirely rather than batching around it: `collectAxioms`
+     returns a value per name instead of raising an error, so there is no cap to hit.
 
-What the corrected join does *not* cover, and it is a real bound rather than a
-footnote: 143 of the 1073 pins name **`private`** declarations, which `#print axioms`
-cannot address from outside their file even though they are genuine checked lemmas.
-They concentrate in `Picard/TensorObjInverse.lean` (36), `TensorObjSubstrate.lean` (21)
-and `Albanese/AuslanderBuchsbaum.lean` (21).  So the honest statement is: zero dishonest
-marks among the 930 pins that can be probed, and 143 marks whose honesty this method
-cannot decide either way.  Auditing those would mean `#print axioms` *inside* each
-defining file, which no single-file probe can do.
+The `private` pins are DECIDED, and the way that claim changed is worth more than the
+number.  143 of the 1073 proof-level pins (188 of 1560 at statement level) name `private`
+declarations, concentrated in `Picard/TensorObjInverse.lean` (36),
+`TensorObjSubstrate.lean` (21) and `Albanese/AuslanderBuchsbaum.lean` (21).  This file
+published them twice as marks "whose honesty this method cannot decide either way", on the
+grounds that auditing them would need a probe *inside* each defining file.  That is a true
+statement about `#print axioms` and a false one about the method: `Lean.collectAxioms`
+reaches every one of them from outside (step 2 above), and the answer is zero `sorryAx`.
 
-Only *proof*-level marks are defects here.  A **statement**-level `\leanok` on a
-`sorry` carrier is legitimate and there are eleven: it claims the signature is
-formalised, which is true of a `sorry`-bodied declaration.  Do not "fix" those — the
-distinction is the convention, and deleting a correct mark to make a report cleaner is
-the same error as leaving a false one.  `thm:pic0_smooth` and `thm:pic0_proper` carry
-no `\leanok` in *either* position, which is right: their statements *are* the
-`sorry`-bodied declarations.
+So the general lesson, and it is the one that generalises past this check: **"my probe
+cannot see it" is a fact about the probe.**  Before publishing a bound on a method, look for
+a different tool in the same ecosystem that decides the question — a limit of the chosen
+instrument reads exactly like a limit of the approach, and only one of those is worth
+telling a reader about.
+
+Only *proof*-level marks are defects here.  A **statement**-level `\leanok` on a `sorry`
+carrier is legitimate: it claims the signature is formalised, which is true of a
+`sorry`-bodied declaration.  There are **34**, none of which also carries a proof-level
+mark, and they concentrate where the open cones are — 12 in `Picard_QuotScheme.tex`, 8 in
+`Cohomology_CechHigherDirectImage.tex`, 4 in `Picard_IdentityComponent.tex`.  Expect the
+count to grow as those chapters take landings; re-measure it rather than quoting this
+sentence.  Do not "fix" them — the distinction is the convention, and deleting a correct
+mark to make a report cleaner is the same error as leaving a false one.  `thm:pic0_smooth`
+and `thm:pic0_proper` carry no `\leanok` in *either* position, which is right: their
+statements *are* the `sorry`-bodied declarations.
 -/
 import AlgebraicJacobian
 
