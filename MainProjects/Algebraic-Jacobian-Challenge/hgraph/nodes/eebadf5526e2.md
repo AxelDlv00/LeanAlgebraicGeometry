@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.sheaf
 type: lean
-updated: '2026-07-28T04:58:05'
+updated: '2026-07-28T05:25:00'
 ---
 structure sheaf of `k`-modules `toModuleKSheaf C` — by the *identity*
 function.  Both `k`-scalar paths are restriction of scalars along the same
