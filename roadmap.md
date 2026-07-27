@@ -21,7 +21,7 @@ migration debt.)*
 | Cech-Cohomology | ✅ complete · merged → AJC | 0 |
 | GR-Quot-Closure | ✅ complete · merged → AJC | 0 |
 | Line-Bundle-Comparison-Iso | ✅ complete · merged → AJC | 0 |
-| Albanese | prover | 11 |
+| Albanese | prover | 12 |
 | Picard-IdentityComponent | prover | 16 |
 | MR0555258-Compactifying-Picard | prover | 1 |
 
@@ -169,7 +169,7 @@ structure (the A.1.c.sub package; merged back into the Jacobian challenge).
 - [x] **Line-bundle pullback / relative Pic functor** — `LineBundlePullback`, `RelPicFunctor`
 - [x] **Terminal comparison inverse** — `TensorObjInverse` closed, including the keystone `trivialisation_restrict_compat` ✨
 
-## Albanese  *(prover stage — extraction → Jacobian, 11 open `sorry`)* ✨
+## Albanese  *(prover stage — extraction → Jacobian, 12 open `sorry`)* ✨
 
 **Goal:** the Albanese universal property of `Pic⁰` (Milne III §6 Prop 6.1, seed
 `thm:albanese_universal_property`) and the rational-map-extension machinery feeding the
@@ -187,6 +187,9 @@ base-scheme grading / `Over` / standard-smooth instances, restored from the pare
   **retired** (2026-07-27): no `Genus0*` module, Lean identifier, blueprint node, or README
   reference survives in AJC; only two docstrings record it as a rejected route. `PrimeDivisor` /
   `order` were carved out and kept, per inbox `I-0106`, because codim-one depends on them.
+- [~] **Residual genus-0 module in this subproject** — `Genus0BaseObjects/GmScaling` (×1). The
+  retirement above was scoped to AJC; this extraction still carries the module. Retire or root it
+  when the Albanese leg next merges back.
 
 ## GR-Quot-Closure  *(✅ complete — sorry-free, deliverable merged → AJC ✨ 2026-06-22)*
 
