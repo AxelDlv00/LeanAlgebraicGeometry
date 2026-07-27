@@ -70,11 +70,14 @@ frontier is
 
 **`IsIntegral (ℙ¹_k)`** (`p1Cech_h0_fg_of_isIntegral`),
 
-a statement about the *one* field `k`, strictly weaker than geometric
-integrality (`isIntegral_p1Over_left_of_geometricallyIntegral`) and strictly
-weaker than `Γ(ℙ¹_k, 𝒪) = k`.  Both routes are kept: §3–§4 for the sharp
-field-of-constants statement (which other campaign consumers want in its own
-right), §5 for the cheapest sufficient one.
+a statement about the *one* field `k`.  It is strictly weaker than geometric
+integrality (`isIntegral_p1Over_left_of_geometricallyIntegral`).  It is **not**
+comparable with `Γ(ℙ¹_k, 𝒪) = k`: neither implies the other (a double line in
+`ℙ²` has `Γ(X, 𝒪) = k` and is not reduced, so `P1HasTrivialConstants` does not
+force integrality; and integrality does not by itself force the field of
+constants to be `k`).  Both anchors are kept because each independently
+discharges `hH0`: §3–§4 for the sharp field-of-constants statement (which other
+campaign consumers want in its own right), §5 for the one that needs less.
 
 Sources: Mumford AV II §5; Stacks 01XZ/01YS; EGA III 3.2.1 (the classical
 `H⁰`-finiteness this file replaces by an elementary anchor); Kleiman,
@@ -385,9 +388,9 @@ field `k`,
 
 which is strictly weaker than `GeometricallyIntegral (p1Over k).hom`
 (a statement about every field extension of `k`; the implication is
-`isIntegral_p1Over_left_of_geometricallyIntegral` below) and strictly weaker
-than `P1HasTrivialConstants k`.  This is the sharpest form of the B3-H0
-frontier currently known. -/
+`isIntegral_p1Over_left_of_geometricallyIntegral` below), and *incomparable*
+with `P1HasTrivialConstants k`.  This is the cheapest sufficient form of the
+B3-H0 frontier currently known. -/
 
 namespace Scheme
 

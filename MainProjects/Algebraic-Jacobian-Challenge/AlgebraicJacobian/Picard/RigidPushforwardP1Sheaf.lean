@@ -557,6 +557,66 @@ theorem module_projective_pushforwardTop (A : Type u) [CommRing A] [Algebra k A]
 
 /-! ## §6. The output bridge, conditional on the rank identification -/
 
+/-- **The rank identity, stated on the engine's output.**  For a finitely
+presented `M` on `ℙ¹_A` *whose Čech complex already satisfies the conclusions
+of the two-term engine* — `d` surjective, `H⁰ = ker d` finite projective over
+`Γ(Spec A, ⊤)`, and the formation of `H⁰` commuting with arbitrary base change
+— the pointwise rank of the pushforward sections is the fibre invariant
+`p.fiberH0 M t`.
+
+**The engine hypotheses are load-bearing and must not be dropped.**  Without
+them the statement is FALSE, and its consumers become vacuous.  Counterexample
+(found in review): `A = k[x]`, `M = 𝒪_{ℙ¹_A}/x = coker(𝒪 --x--> 𝒪)`, which is
+finitely presented.  Then `Γ(ℙ¹_A, M) = A/(x) = k`, a *torsion* `A`-module, so
+`Module.rankAtStalk` at `t = (x)` takes its junk value `0`; but the fibre is
+`ℙ¹_k` with `M_t = 𝒪_{ℙ¹_k}`, so `p.fiberH0 M t = 1`.  What excludes it is
+exactly `Module.Projective` (`k` is not a projective `k[x]`-module): for a
+finite projective module `Module.rankAtStalk_eq` identifies the stalk rank with
+`finrank κ(t) (κ(t) ⊗ H⁰)`, and the base-change conclusion at `B = κ(t)`
+identifies *that* with the fibre `h⁰`.
+
+This is the remaining half of leaf 3 of the gate factorization.  It is
+assembly, not new mathematics: the chart comparison
+`exists_fiberChartTensorEquiv` and its restriction naturality
+(`Picard/RigidPushforwardFiberChart.lean`) already identify
+`ker (d ⊗ κ(t))` with the Čech `H⁰` of the fibre cover, hence with
+`Γ(ℙ¹_t, M_t)`. -/
+def P1RankIdentity (k : Type u) [Field k]
+    (A : Type u) [CommRing A] [Algebra k A] : Prop :=
+  ∀ (M : (Limits.pullback (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules),
+    M.IsFinitePresentation →
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₁
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₂
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        ((p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂)
+    Function.Surjective ⇑((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+        (pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M) →
+    Module.Finite Γ(Spec (CommRingCat.of A), ⊤)
+      (LinearMap.ker ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+        (pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M)) →
+    Module.Projective Γ(Spec (CommRingCat.of A), ⊤)
+      (LinearMap.ker ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+        (pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M)) →
+    (∀ (B : Type u) [CommRing B] [Algebra Γ(Spec (CommRingCat.of A), ⊤) B],
+      Function.Bijective (AlgebraicJacobian.TwoTerm.kerBaseChange
+        ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+          (pullback.snd (p1Over k).hom
+            (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M) B)) →
+    ∀ t : Spec (CommRingCat.of A),
+      sectionsRankAtStalk ((Scheme.Modules.pushforward (pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A))))).obj M) t
+        = (pullback.snd (p1Over k).hom
+            (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberH0 M t
+
 set_option maxHeartbeats 1600000 in
 -- Heartbeat headroom: the `letI`-laden bridge `Prop` forces large `isDefEq`
 -- checks when the engine's kernel hypotheses are matched against the
@@ -580,22 +640,16 @@ package of this file:
   neighbourhood of `t` (`exists_free_restrict_of_finite_projective_sections'`,
   Stacks 00NX).
 
-The hypothesis `hrank` is *not* proved here: it is the fibre-chart base-change
-comparison `κ(t) ⊗_{Γ(Spec A,⊤)} H⁰ ≅ H⁰(ℙ¹_t, M_t)` (Stacks 02KG in degree 0),
-the `B = κ(t)` case of the engine's fourth conclusion, and is the remaining half
-of leaf 3.
+The hypothesis `P1RankIdentity` is *not* proved here: it is the fibre-chart
+base-change comparison `κ(t) ⊗_{Γ(Spec A,⊤)} H⁰ ≅ H⁰(ℙ¹_t, M_t)` (Stacks 02KG
+in degree 0), the `B = κ(t)` case of the engine's fourth conclusion, and is the
+remaining half of leaf 3.
 
 Sources: Stacks 00NX, 01XJ, 02KG; Mumford, *Abelian Varieties*, II §5;
 EGA III 7.9.9. -/
 theorem p1PushforwardLocalFreenessBridge_of_rank
     (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
-    (hrank : ∀ (M : (Limits.pullback (p1Over k).hom
-        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules), M.IsFinitePresentation →
-      ∀ t : Spec (CommRingCat.of A),
-        sectionsRankAtStalk ((Scheme.Modules.pushforward (pullback.snd (p1Over k).hom
-            (Spec.map (CommRingCat.ofHom (algebraMap k A))))).obj M) t
-          = (pullback.snd (p1Over k).hom
-              (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberH0 M t) :
+    (hrank : P1RankIdentity k A) :
     P1PushforwardLocalFreenessBridge k A := by
   intro M hfp hsurj hfin hproj hbc t
   haveI := hfp
@@ -613,7 +667,7 @@ theorem p1PushforwardLocalFreenessBridge_of_rank
   obtain ⟨U, htU, hiso⟩ := exists_free_restrict_of_finite_projective_sections'
     ((Scheme.Modules.pushforward (pullback.snd (p1Over k).hom
       (Spec.map (CommRingCat.ofHom (algebraMap k A))))).obj M) hfin' hproj' t
-  exact ⟨U, htU, (hrank M hfp t) ▸ hiso⟩
+  exact ⟨U, htU, (hrank M hfp hsurj hfin hproj hbc t) ▸ hiso⟩
 
 end Adelic
 

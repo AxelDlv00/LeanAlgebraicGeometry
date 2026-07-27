@@ -55,18 +55,26 @@ engine statement, hence the gate's `locallyFree` field, now needs exactly:
    the chart iso would give `IsReduced` and `IrreducibleSpace` of `ℙ¹` by
    transport.
 
-2. **`hrank`** — that the pointwise rank of `p_* M` really is the fibre
-   `h⁰`, `sectionsRankAtStalk (p_* M) t = p.fiberH0 M t`.  This is the same
-   fibre-chart base change that leaf 2 already uses: the chart comparison
-   `exists_fiberChartTensorEquiv` identifies `ker (d ⊗ κ(t))` with the Čech
-   `H⁰` of the fibre, i.e. with `Γ(ℙ¹_t, M_t)`, and the engine's
-   `kerBaseChange` bijectivity at `B = κ(t)` converts that into the rank
-   statement.  So this is assembly of bricks that now exist, not new
-   mathematics.
+2. **`P1RankIdentity k A`** — that the pointwise rank of `p_* M` really is
+   the fibre `h⁰`, `sectionsRankAtStalk (p_* M) t = p.fiberH0 M t`, *for `M`
+   satisfying the engine's own conclusions* (`d` surjective, `H⁰ = ker d`
+   finite projective, `H⁰` base-change compatible).  Those hypotheses are
+   load-bearing, not decoration: dropped, the statement is FALSE — take
+   `A = k[x]` and `M = 𝒪/x`, where `Γ(ℙ¹_A, M) = k` is torsion so the stalk
+   rank is the junk value `0`, while the fibre is `ℙ¹_k` with `M_t = 𝒪` and
+   `fiberH0 M t = 1`.  Projectivity is exactly what excludes it.  With them,
+   this is the same fibre-chart base change leaf 2 already uses: the chart
+   comparison `exists_fiberChartTensorEquiv` identifies `ker (d ⊗ κ(t))` with
+   the Čech `H⁰` of the fibre, i.e. with `Γ(ℙ¹_t, M_t)`, and
+   `Module.rankAtStalk_eq` plus the engine's `kerBaseChange` bijectivity at
+   `B = κ(t)` convert that into the rank statement.  So this is assembly of
+   bricks that now exist, not new mathematics.
 
 and, for the gate's second field,
 
-3. **`Scheme.RigidPushforwardBaseChange C A`** — untouched.  Every `IsIso`
+3. **`Scheme.RigidPushforwardBaseChange C A`** — untouched, and the largest
+   of the three: it is one of the gate's two fields and plausibly exceeds
+   items 1 and 2 combined.  Every `IsIso`
    theorem for the adjoint mate `pushforwardBaseChangeMap` in this tree
    requires `[IsAffineHom f]`, and `q : C_A ⟶ Spec A` is proper; with
    `IsAffineHom q` assumed the field closes in one line, so its entire
@@ -110,21 +118,16 @@ proved and the sheaf half of leaf 3 proved, `P1RigidPushforwardStatement k A`
 needs only
 
 * `IsIntegral (ℙ¹_k)` (as an instance — the `H⁰`-finiteness anchor), and
-* `hrank`: the pointwise rank of `p_* M` is the fibre `h⁰`.
+* `P1RankIdentity k A`: the pointwise rank of `p_* M` is the fibre `h⁰`, for
+  `M` satisfying the engine's conclusions (those hypotheses are necessary —
+  see the module docstring for the counterexample without them).
 
-Both are recorded in the module docstring; `hrank` is assembly of existing
-bricks, `IsIntegral (ℙ¹_k)` is the genuine remaining mathematics. -/
+`P1RankIdentity` is assembly of existing bricks; `IsIntegral (ℙ¹_k)` is the
+genuine remaining mathematics. -/
 theorem p1RigidPushforwardStatement_of_isIntegral_of_rank
     [IsIntegral ((p1Over k).left)]
     (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
-    (hrank : ∀ (M : (Limits.pullback (p1Over k).hom
-        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules),
-      M.IsFinitePresentation →
-      ∀ t : Spec (CommRingCat.of A),
-        sectionsRankAtStalk ((Scheme.Modules.pushforward (pullback.snd (p1Over k).hom
-          (Spec.map (CommRingCat.ofHom (algebraMap k A))))).obj M) t =
-        (pullback.snd (p1Over k).hom
-          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberH0 M t) :
+    (hrank : P1RankIdentity k A) :
     P1RigidPushforwardStatement k A :=
   p1RigidPushforwardStatement_of_leaves_of_isIntegral A
     (p1CechFibrewiseBridge_proved A)
@@ -140,14 +143,7 @@ theorem rigidPushforwardLocallyFree_of_isIntegral_of_rank
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]
     [IsIntegral ((p1Over k).left)]
     (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
-    (hrank : ∀ (M : (Limits.pullback (p1Over k).hom
-        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules),
-      M.IsFinitePresentation →
-      ∀ t : Spec (CommRingCat.of A),
-        sectionsRankAtStalk ((Scheme.Modules.pushforward (pullback.snd (p1Over k).hom
-          (Spec.map (CommRingCat.ofHom (algebraMap k A))))).obj M) t =
-        (pullback.snd (p1Over k).hom
-          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberH0 M t) :
+    (hrank : P1RankIdentity k A) :
     Scheme.RigidPushforwardLocallyFree C A :=
   rigidPushforwardLocallyFree_of_p1Engine A C
     (p1RigidPushforwardStatement_of_isIntegral_of_rank A hrank)
@@ -160,15 +156,8 @@ theorem hasRigidPushforward_of_isIntegral_of_rank_of_baseChange
     (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]
     [IsIntegral ((p1Over k).left)]
-    (hrank : ∀ (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
-      (M : (Limits.pullback (p1Over k).hom
-        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules),
-      M.IsFinitePresentation →
-      ∀ t : Spec (CommRingCat.of A),
-        sectionsRankAtStalk ((Scheme.Modules.pushforward (pullback.snd (p1Over k).hom
-          (Spec.map (CommRingCat.ofHom (algebraMap k A))))).obj M) t =
-        (pullback.snd (p1Over k).hom
-          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberH0 M t)
+    (hrank : ∀ (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A],
+      P1RankIdentity k A)
     (hBC : ∀ (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A],
       Scheme.RigidPushforwardBaseChange C A) :
     Scheme.HasRigidPushforward C :=

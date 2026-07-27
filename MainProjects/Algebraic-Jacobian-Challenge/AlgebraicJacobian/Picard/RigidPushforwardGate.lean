@@ -25,10 +25,11 @@ only `ℙ¹`:
 
 1. **`IsIntegral (ℙ¹_k)`** (`Picard/RigidPushforwardP1Constants.lean` §5):
    integrality of the projective line over the one field `k`.  This is the
-   sharpest sufficient form of the `H⁰`-finiteness anchor; the stronger
-   `Γ(ℙ¹_k, 𝒪) = k` (`P1HasTrivialConstants k`, §3 there) and the still
-   stronger `GeometricallyIntegral (p1Over k).hom` both imply it and both
-   also discharge the anchor, through `p1RigidPushforwardStatement_of_leaves`.
+   cheapest sufficient form of the `H⁰`-finiteness anchor.
+   `GeometricallyIntegral (p1Over k).hom` is strictly stronger and implies it;
+   `Γ(ℙ¹_k, 𝒪) = k` (`P1HasTrivialConstants k`, §3 there) is *incomparable*
+   with it but also discharges the anchor, through
+   `p1RigidPushforwardStatement_of_leaves`.
 2. **`P1CechFibrewiseBridge k A`** (§1 here): fibrewise `Ȟ¹`-vanishing of `M`
    on `ℙ¹_A` at all scheme points forces the base-linear Čech differential to
    stay surjective after `⊗ κ(𝔪)` at maximal ideals.  This is the geometric
@@ -41,7 +42,8 @@ only `ℙ¹`:
    `p.fiberH0 M t`.
 4. **`Scheme.RigidPushforwardBaseChange C A`** — the second gate field, for
    which the tree currently has *no* infrastructure at all (see the caveat
-   below).
+   below).  These four are named leaves, not equal-sized ones: leaf 4 is one
+   of the gate's two fields and is plausibly larger than leaves 1–3 combined.
 
 §3 assembles 1–3 into `P1RigidPushforwardStatement k A`, the sole hypothesis
 of `rigidPushforwardLocallyFree_of_p1Engine`
