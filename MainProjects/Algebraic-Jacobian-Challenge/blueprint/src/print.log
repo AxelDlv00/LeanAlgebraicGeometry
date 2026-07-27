@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.22.0 (TeX Live 2025/Debian)  (format=lualatex 2026.7.13)  27 JUL 2026 17:36
+This is LuaHBTeX, Version 1.22.0 (TeX Live 2025/Debian)  (format=lualatex 2026.7.13)  27 JUL 2026 19:04
  restricted system commands enabled.
 **print.tex
 (./print.tex
@@ -5958,7 +5958,7 @@ Chapter 20.
 [359
 
 ]
-Overfull \hbox (31.42555pt too wide) in paragraph at lines 238--250
+Overfull \hbox (31.42555pt too wide) in paragraph at lines 246--258
 \TU/lmr/m/n/10 with degree-$\TU/latinmodern-math.otf(1)/m/n/10 𝑚$ \TU/lmr/m/
 n/10 com-po-nent $\TU/latinmodern-math.otf(1)/m/n/10 Γ(𝑋[], 𝐿[])$ \TU/lm
 r/m/n/10 and mul-ti-pli-ca-tion the ten-sor prod-uct of sec-tions $\TU/latinmod
@@ -5966,7 +5966,7 @@ ern-math.otf(1)/m/n/10 Γ(𝑋[], 𝐿[]) ⊗[]
  []
 
 [360] [361]
-Overfull \hbox (118.82405pt too wide) in paragraph at lines 432--436
+Overfull \hbox (118.82405pt too wide) in paragraph at lines 440--444
 [][]\TU/lmr/bx/n/10 Lemma 1021 \TU/lmr/m/n/10 (The ra-tio-nal power se-ries $\T
 U/latinmodern-math.otf(1)/m/n/10 (1 − 𝑋)[]$\TU/lmr/m/n/10 )\TU/lmr/bx/n/10
  . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 Mathlib.RingTheory.
@@ -5974,21 +5974,21 @@ PowerSeries.WellKnown\TU/lmr/m/it/10 ).
  []
 
 [362] [363] [364] [365]
-Overfull \hbox (181.42522pt too wide) in paragraph at lines 970--978
+Overfull \hbox (181.42522pt too wide) in paragraph at lines 978--986
 \TU/lmr/m/it/10 the ex-trac-tion of the unique poly-no-mial from a ra-tio-nal Hi
 lbert func-tion ([][]1033[][], \TU/lmtt/m/it/10 Scheme.existsUnique_hilbertPolyn
 omial_of_isRatHilb\TU/lmr/m/it/10 )
  []
 
 [366]
-Overfull \hbox (152.45306pt too wide) in paragraph at lines 1053--1063
+Overfull \hbox (152.45306pt too wide) in paragraph at lines 1061--1071
 [][]\TU/lmr/bx/n/10 Lemma 1038 \TU/lmr/m/n/10 (Ho-mo-ge-neous sub-mod-ule)\TU/l
 mr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 Mathlib.R
 ingTheory.GradedAlgebra.Homogeneous.Submodule\TU/lmr/m/it/10 ).
  []
 
 
-Overfull \hbox (231.31198pt too wide) in paragraph at lines 1070--1077
+Overfull \hbox (231.31198pt too wide) in paragraph at lines 1078--1085
 [][]\TU/lmr/bx/n/10 Lemma 1039 \TU/lmr/m/n/10 (A span of ho-mo-ge-neous el-e-men
 ts is ho-mo-ge-neous)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib 
 (\TU/lmtt/m/it/10 Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal\TU/lmr/m/i
@@ -5996,33 +5996,33 @@ t/10 ).
  []
 
 
-Overfull \hbox (57.72305pt too wide) in paragraph at lines 1084--1087
+Overfull \hbox (57.72305pt too wide) in paragraph at lines 1092--1095
 [][]\TU/lmr/bx/n/10 Lemma 1040 \TU/lmr/m/n/10 (Rank--nullity)\TU/lmr/bx/n/10 . 
 []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 Mathlib.LinearAlgebra.
 FiniteDimensional.Lemmas\TU/lmr/m/it/10 ).
  []
 
 
-Overfull \hbox (134.97305pt too wide) in paragraph at lines 1099--1107
+Overfull \hbox (134.97305pt too wide) in paragraph at lines 1107--1115
 [][]\TU/lmr/bx/n/10 Lemma 1041 \TU/lmr/m/n/10 (Fi-nite gen-er-a-tion trans-fers along a sur-jec-tion)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 Mathlib.RingTheory.Finiteness.Basic\TU/lmr/m/it/10 ).
  []
 
 [367]
-Overfull \hbox (146.48306pt too wide) in paragraph at lines 1146--1154
+Overfull \hbox (146.48306pt too wide) in paragraph at lines 1154--1162
 [][]\TU/lmr/bx/n/10 Lemma 1044 \TU/lmr/m/n/10 (Finite-ness trans-fers along a su
 r-jec-tive lin-ear map)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib
  (\TU/lmtt/m/it/10 Mathlib.RingTheory.Finiteness.Defs\TU/lmr/m/it/10 ).
  []
 
 
-Overfull \hbox (128.48305pt too wide) in paragraph at lines 1171--1179
+Overfull \hbox (128.48305pt too wide) in paragraph at lines 1179--1187
 [][]\TU/lmr/bx/n/10 Lemma 1046 \TU/lmr/m/n/10 (The lift of a lin-ear map through
  a quo-tient)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmt
 t/m/it/10 Mathlib.LinearAlgebra.Quotient.Basic\TU/lmr/m/it/10 ).
  []
 
 [368] [369]
-Overfull \hbox (5.57747pt too wide) in paragraph at lines 1404--1411
+Overfull \hbox (5.57747pt too wide) in paragraph at lines 1412--1419
 [][][]\TU/lmr/m/n/10 Let $\TU/latinmodern-math.otf(1)/m/n/10 𝑚 ∈ 𝑥[](
 𝑁[])$ \TU/lmr/m/n/10 and fix a de-gree $\TU/latinmodern-math.otf(1)/m/n/10 
 𝑖$\TU/lmr/m/n/10 . By the degree-shift com-mu-ta-tion ([][]1055[][]), $\TU/l
@@ -6030,21 +6030,21 @@ atinmodern-math.otf(1)/m/n/10 𝑥([][](𝑚)) =
  []
 
 [370] [371] [372]
-Overfull \hbox (2.78064pt too wide) detected at line 1815
+Overfull \hbox (2.78064pt too wide) detected at line 1823
 \TU/latinmodern-math.otf(1)/m/n/10 ℎ[](𝑛 + 1) − ℎ[](𝑛) = [][] 𝑄[
 ] − [][] 𝑄[] = [][](𝑄[]/ [] 𝜑) − [][]([] 𝜑) = ℎ[](𝑛 + 1) 
 − ℎ[](𝑛).
  []
 
 [373]
-Overfull \hbox (66.13112pt too wide) detected at line 1944
+Overfull \hbox (66.13112pt too wide) detected at line 1952
 [] \TU/latinmodern-math.otf(1)/m/n/10 ∶ 𝜅[𝑡[], … , 𝑡[]] = []({0, 
 … , 𝑟}, 𝜅)  ⟶  []({0, … , 𝑟 − 1}, 𝜅) = 𝜅[𝑡[], … , 
 𝑡[]]
  []
 
 [374]
-Overfull \hbox (11.05493pt too wide) in paragraph at lines 1974--1980
+Overfull \hbox (11.05493pt too wide) in paragraph at lines 1982--1988
 [][]\TU/lmr/bx/n/10 Lemma 1083 \TU/lmr/m/n/10 (Mod-$\TU/latinmodern-math.otf(1)
 /m/n/10 𝑃[]$ \TU/lmr/m/n/10 semi-lin-ear-ity of the poly-no-mial ac-tion)\TU
 /lmr/bx/n/10 . [][][][][][]\TU/lmr/m/it/10 Let $\TU/latinmodern-math.otf(1)/m/n
@@ -6052,7 +6052,7 @@ Overfull \hbox (11.05493pt too wide) in paragraph at lines 1974--1980
  []
 
 [375]
-Overfull \hbox (1.68108pt too wide) in paragraph at lines 2079--2091
+Overfull \hbox (1.68108pt too wide) in paragraph at lines 2087--2099
 \TU/lmr/m/n/10 where the source car-ries the $\TU/latinmodern-math.otf(1)/m/n/1
 0 𝜅[𝑡[], … , 𝑡[]]$\TU/lmr/m/n/10 -module struc-ture and the tar-get 
 the re-duced $\TU/latinmodern-math.otf(1)/m/n/10 𝜅[𝑡[], … , 𝑡[]]$\TU
@@ -6060,114 +6060,114 @@ the re-duced $\TU/latinmodern-math.otf(1)/m/n/10 𝜅[𝑡[], … , 𝑡[]]$\TU
  []
 
 [376] [377] [378]
-Overfull \hbox (4.8964pt too wide) in paragraph at lines 2397--2412
+Overfull \hbox (4.8964pt too wide) in paragraph at lines 2405--2420
 [][]\TU/lmr/bx/n/10 Lemma 1095 \TU/lmr/m/n/10 (Ra-tio-nal-ity of the am-bi-ent 
 sub-quo-tient Hilbert func-tion)\TU/lmr/bx/n/10 . [][][][][][][][][][][][]\TU/l
 mr/m/it/10 Source: [Stacks Project],
  []
 
 [379]
-Overfull \hbox (157.36307pt too wide) in paragraph at lines 2598--2606
+Overfull \hbox (157.36307pt too wide) in paragraph at lines 2606--2614
 [][]\TU/lmr/bx/n/10 Lemma 1099 \TU/lmr/m/n/10 (Sec-tions on a ba-sic open lo-cal
 -ize the affine ring)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib 
 (\TU/lmtt/m/it/10 Mathlib.AlgebraicGeometry.AffineScheme\TU/lmr/m/it/10 ).
  []
 
 [380]
-Overfull \hbox (4.05196pt too wide) in paragraph at lines 2668--2672
+Overfull \hbox (4.05196pt too wide) in paragraph at lines 2676--2680
 \TU/lmr/m/it/10 vided by Math-lib (\TU/lmtt/m/it/10 Mathlib.Topology.Sheaves.She
 afCondition.PairwiseIntersections\TU/lmr/m/it/10 ). For
  []
 
 
-Overfull \hbox (121.18306pt too wide) in paragraph at lines 2728--2733
+Overfull \hbox (121.18306pt too wide) in paragraph at lines 2736--2741
 [][]\TU/lmr/bx/n/10 Lemma 1105 \TU/lmr/m/n/10 (Re-stric-tion is iso-mor-phic to pull-back)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 Mathlib.AlgebraicGeometry.Modules.Sheaf\TU/lmr/m/it/10 ).
  []
 
 
-Overfull \hbox (178.49307pt too wide) in paragraph at lines 2764--2769
+Overfull \hbox (178.49307pt too wide) in paragraph at lines 2772--2777
 [][]\TU/lmr/bx/n/10 Lemma 1107 \TU/lmr/m/n/10 (Sheaf cat-e-gories of equiv-a-len
 t sites are equiv-a-lent)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-l
 ib (\TU/lmtt/m/it/10 Mathlib.CategoryTheory.Sites.Equivalence\TU/lmr/m/it/10 ).
  []
 
 [381]
-Overfull \hbox (7.98842pt too wide) in paragraph at lines 2794--2798
+Overfull \hbox (7.98842pt too wide) in paragraph at lines 2802--2806
 \TU/lmr/m/it/10 the \TU/lmtt/m/it/10 Topology/Sheaves/Over.lean \TU/lmr/m/it/10
  TODO. Sym-met-ri-cally, the in-verse of $[] \TU/latinmodern-math.otf(1)/m/n/10
  𝑈$
  []
 
 
-Overfull \hbox (13.89873pt too wide) in paragraph at lines 2810--2817
+Overfull \hbox (13.89873pt too wide) in paragraph at lines 2818--2825
 \TU/lmr/m/it/10 dense-subsite wit-ness as-sem-bled from the two co-con-ti-nu-iti
 es. The in-verse of $[] \TU/latinmodern-math.otf(1)/m/n/10 𝑈$
  []
 
 
-Overfull \hbox (9.06523pt too wide) in paragraph at lines 2850--2856
+Overfull \hbox (9.06523pt too wide) in paragraph at lines 2858--2864
 \TU/lmr/m/n/10 ([][]1107[][]). This is ex-actly the equiv-a-lence left as a TODO
  in Math-lib’s \TU/lmtt/m/n/10 Topology/Sheaves/Over.lean\TU/lmr/m/n/10 ,
  []
 
 [382]
-Overfull \hbox (42.28293pt too wide) in paragraph at lines 2951--2957
+Overfull \hbox (42.28293pt too wide) in paragraph at lines 2959--2965
 \TU/lmr/m/n/10 sheaf iden-ti-fi-ca-tions; re-call that $[] \TU/latinmodern-math
 .otf(1)/m/n/10 𝑈.𝜄$ \TU/lmr/m/n/10 ([][]1104[][]) is pre-cisely push-for-w
 ard along $\TU/latinmodern-math.otf(1)/m/n/10 𝑈.𝜄.[]$\TU/lmr/m/n/10 .
  []
 
 
-Overfull \hbox (17.4762pt too wide) in paragraph at lines 2958--2966
+Overfull \hbox (17.4762pt too wide) in paragraph at lines 2966--2974
 \TU/lmr/m/n/10 lence the sliced mod-ule $\TU/latinmodern-math.otf(1)/m/n/10 
 𝑀.[] 𝑈$ \TU/lmr/m/n/10 cor-re-sponds to the ge-o-met-ric re-stric-tion $\
 TU/latinmodern-math.otf(1)/m/n/10 ([] 𝑈.𝜄).[] 𝑀$\TU/lmr/m/n/10 . 
  []
 
 [383] [384] [385] [386] [387] [388]
-Overfull \hbox (132.07306pt too wide) in paragraph at lines 3537--3547
+Overfull \hbox (132.07306pt too wide) in paragraph at lines 3545--3555
 [][]\TU/lmr/bx/n/10 Lemma 1129 \TU/lmr/m/n/10 (Proper-ness as a mor-phism prop-e
 rty)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10
  Mathlib.AlgebraicGeometry.Morphisms.Proper\TU/lmr/m/it/10 ).
  []
 
 [389] [390]
-Overfull \hbox (190.42305pt too wide) in paragraph at lines 3802--3807
+Overfull \hbox (190.42305pt too wide) in paragraph at lines 3810--3815
 [][]\TU/lmr/bx/n/10 Lemma 1135 \TU/lmr/m/n/10 (Mod-ule finite-ness is lo-cal alo
 ng a span-ning fam-ily)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib
  (\TU/lmtt/m/it/10 Mathlib.RingTheory.Localization.Finiteness\TU/lmr/m/it/10 ).
  []
 
 [391] [392] [393] [394]
-Overfull \hbox (1.54889pt too wide) in paragraph at lines 4283--4301
+Overfull \hbox (1.54889pt too wide) in paragraph at lines 4291--4309
 \TU/lmr/m/n/10 Stacks 01CC affine tensor-section for-mula flagged in [][]1143[]
 []. The route is: iden-tify $\TU/latinmodern-math.otf(1)/m/n/10 Γ(𝐴, 𝑉)[
 ] ⊗[]
  []
 
 [395] [396] [397] [398] [399] [400] [401] [402] [403]
-Overfull \hbox (46.27605pt too wide) in paragraph at lines 5511--5522
+Overfull \hbox (46.27605pt too wide) in paragraph at lines 5519--5530
 [][]\TU/lmr/m/n/10 In the degree-zero part of the lo-cal-iza-tion $\TU/latinmod
 ern-math.otf(1)/m/n/10 ℤ[𝑋[]][]$\TU/lmr/m/n/10 , the three frac-tions sat-i
 sfy $\TU/latinmodern-math.otf(1)/m/n/10 (𝑋[]/𝑋[])(𝑋[]/𝑋[]) =
  []
 
 [404] [405]
-Overfull \hbox (25.94725pt too wide) in paragraph at lines 5790--5795
+Overfull \hbox (25.94725pt too wide) in paragraph at lines 5798--5803
 [][]\TU/lmr/bx/n/10 Lemma 1198 \TU/lmr/m/n/10 (Pro-jec-tive space is pro-jec-tiv
 e over its base)\TU/lmr/bx/n/10 . [][][]\TU/lmr/m/it/10 The struc-tural mor-phis
 m $\TU/latinmodern-math.otf(1)/m/n/10 ℙ({0, … , 𝑑}; 𝑆) →
  []
 
 [406] [407] [408]
-Overfull \hbox (9.04628pt too wide) in paragraph at lines 6048--6057
+Overfull \hbox (9.04628pt too wide) in paragraph at lines 6056--6065
 \TU/lmr/m/n/10 pullback--pushforward ad-junc-tion ap-plied to $\TU/latinmodern-
 math.otf(1)/m/n/10 𝒪[]$\TU/lmr/m/n/10 , post-composed with the pushforward-co
 mposition
  []
 
 
-Overfull \hbox (69.90657pt too wide) in paragraph at lines 6123--6132
+Overfull \hbox (69.90657pt too wide) in paragraph at lines 6131--6140
 [][]\TU/lmr/m/n/10 1209[][] iden-ti-fies global sec-tions of $\TU/latinmodern-m
 ath.otf(1)/m/n/10 𝒪(𝑚)$ \TU/lmr/m/n/10 with the ab-stract compatible-famil
 y sub-mod-ule $[]\TU/latinmodern-math.otf(1)/m/n/10 (𝐷, 𝒪, ((𝑋[]/𝑋[
@@ -6177,16 +6177,16 @@ y sub-mod-ule $[]\TU/latinmodern-math.otf(1)/m/n/10 (𝐷, 𝒪, ((𝑋[]/𝑋[
 [409]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 6218.
+(hyperref)                removing `math shift' on input line 6226.
 
 
-Overfull \hbox (15.72105pt too wide) in paragraph at lines 6243--6249
+Overfull \hbox (15.72105pt too wide) in paragraph at lines 6251--6257
 [][]\TU/lmr/m/n/10 On global sec-tions, re-stric-tion of a chart sec-tion along the over-lap im-mer-sion into $\TU/latinmodern-math.otf(1)/m/n/10 
 𝐷[](𝑋[]𝑋[]) ⊆
  []
 
 [410]
-Overfull \hbox (4.60034pt too wide) in paragraph at lines 6262--6269
+Overfull \hbox (4.60034pt too wide) in paragraph at lines 6270--6277
 [][]\TU/lmr/m/n/10 In $[]\TU/latinmodern-math.otf(1)/m/n/10 (𝑋[]𝑋[])$\TU/
 lmr/m/n/10 , the two away-map im-ages of $\TU/latinmodern-math.otf(1)/m/n/10 
 𝐹/𝑋[]$ \TU/lmr/m/n/10 and $\TU/latinmodern-math.otf(1)/m/n/10 𝐹/𝑋[]
@@ -6195,72 +6195,72 @@ $ \TU/lmr/m/n/10 dif-fer by ex-actly $\TU/latinmodern-math.otf(1)/m/n/10 (𝑋[
  []
 
 [411] [412]
-Overfull \hbox (46.07689pt too wide) in paragraph at lines 6566--6581
+Overfull \hbox (46.07689pt too wide) in paragraph at lines 6574--6589
 []\TU/lmr/bx/n/10 (Bound-ed-ness, [][]1225[][].) \TU/lmr/m/n/10 Pick the Casteln
 uovo--Mumford reg-u-lar-ity bound $\TU/latinmodern-math.otf(1)/m/n/10 𝑚 = 
 𝑚([] 𝑉, [] 𝑊, Φ)$
  []
 
 [413] [414] [415] [416]
-Overfull \hbox (103.29622pt too wide) detected at line 7135
+Overfull \hbox (103.29622pt too wide) detected at line 7143
 \TU/latinmodern-math.otf(1)/m/n/10 Γ[]𝑈, ([] \U/msa/m/n/10 \TU/latinmodern
 -math.otf(1)/m/n/10 )[][][][][](𝑓[]ℱ)(𝑡)[]  =  [][](ℱ)(𝑡) []Γ[]
 𝑔[]ℱ,  𝑓[](𝑈)[] = Γ[]𝑓[]𝑔[]ℱ,  𝑈[].
  []
 
 [417] [418]
-Overfull \hbox (2.92633pt too wide) in paragraph at lines 7303--7319
+Overfull \hbox (2.92633pt too wide) in paragraph at lines 7311--7327
 []\TU/lmr/m/n/10 The two equal-izer pre-sen-ta-tions are there-fore con-nected 
 by a com-mut-ing lad-der whose product-
  []
 
 [419] [420] [421]
-Overfull \hbox (4.09831pt too wide) in paragraph at lines 7620--7625
+Overfull \hbox (4.09831pt too wide) in paragraph at lines 7628--7633
 \TU/lmr/m/n/10 The affine pull-back for-mula rests on the tilde--global-sections
  ad-junc-tion, the extension--restriction-
  []
 
 
-Overfull \hbox (61.53745pt too wide) detected at line 7712
+Overfull \hbox (61.53745pt too wide) detected at line 7720
 [][] [] \TU/latinmodern-math.otf(1)/m/n/10 ([] 𝐴).[] [] ([] 𝐵).[] [] [][]
  [] [][] [] ([] 𝐵).[]
  []
 
 [422]
-Overfull \hbox (23.90636pt too wide) in paragraph at lines 7750--7758
+Overfull \hbox (23.90636pt too wide) in paragraph at lines 7758--7766
 [][]\TU/lmr/bx/n/10 Lemma 1253 \TU/lmr/m/n/10 (Affine basic-open sec-tion lo-cal
 -iza-tion for quasi-coherent mod-ules)\TU/lmr/bx/n/10 . [][][]\TU/lmr/m/it/10 So
 urce: Stacks [][]01IB[][]
  []
 
 [423] [424]
-Overfull \hbox (32.52646pt too wide) in paragraph at lines 7960--7967
+Overfull \hbox (32.52646pt too wide) in paragraph at lines 7968--7975
 \TU/lmr/m/it/10 Math-lib \TU/lmtt/m/it/10 b80f227 \TU/lmr/m/it/10 ships the ana-
 log for \TU/lmr/m/n/10 free \TU/lmr/m/it/10 quasi-coherent mod-ules (\TU/lmtt/m
 /it/10 isIso_fromTildeΓ_of_presentation
  []
 
 
-Overfull \hbox (3.05133pt too wide) in paragraph at lines 8063--8067
+Overfull \hbox (3.05133pt too wide) in paragraph at lines 8071--8075
 \TU/lmr/m/n/10 The chart-level in-put to generic flat-ness (Nit-sure §4): over an affine open con-tained in a presenting-
  []
 
 [425]
-Overfull \hbox (4.70634pt too wide) in paragraph at lines 8073--8080
+Overfull \hbox (4.70634pt too wide) in paragraph at lines 8081--8088
 [][]\TU/lmr/bx/n/10 Lemma 1262 \TU/lmr/m/n/10 (Fi-nite gen-er-a-tion from a fi-n
 ite gen-er-at-ing fam-ily of the tilde)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Sourc
 e: Stacks [][]01PC[][]
  []
 
 [426]
-Overfull \hbox (74.62224pt too wide) detected at line 8223
+Overfull \hbox (74.62224pt too wide) detected at line 8231
 \TU/latinmodern-math.otf(1)/m/n/10 (([] 𝑓 𝑔) 𝒩).[].[] 𝑉 [][] 𝑓 ((
 [] 𝑔).[] 𝒩) 𝑒[] ([] 𝑔 𝒩 𝑒[] 𝑥)[]  =  [] (𝑓 ∘ 𝑔) 
 𝒩 𝑒 𝑥.
  []
 
 
-Overfull \hbox (89.37238pt too wide) detected at line 8311
+Overfull \hbox (89.37238pt too wide) detected at line 8319
 [][][] [] \TU/latinmodern-math.otf(1)/m/n/10 𝒩 ([] []) 𝑦[]  =  𝑦 []
 𝑦 ∈ Γ(𝒩, 𝑈).
  []
@@ -7762,7 +7762,7 @@ Here is how much of LuaTeX's memory you used:
 e, 60 glue_spec, 3322 attribute_list, 2 write nodes
    avail lists: 2:855,3:512,4:276,5:852,6:86,7:10883,8:220,9:1115,10:27,11:763
  54225 multiletter control sequences out of 65536+600000
- 136 fonts using 35505375 bytes
+ 136 fonts using 35505127 bytes
  116i,16n,114p,710b,1172s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/opentype/public/lm/lmsans8-regular.otf></usr/share/texmf
 /fonts/opentype/public/lm/lmroman7-bold.otf></usr/share/texmf/fonts/opentype/pub
