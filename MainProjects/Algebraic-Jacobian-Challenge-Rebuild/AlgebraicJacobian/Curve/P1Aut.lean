@@ -341,6 +341,96 @@ theorem exists_matrix_smul_pair {p₀ p₁ q₀ q₁ : RationalPoint k}
   · simpa using hg₀
   · simpa using hg₁
 
+/-! ### Avoiding a finite set with two twisted charts -/
+
+/-- The scalars whose affine linear form `X₁ - aX₀` vanishes at a point of `P¹`. -/
+noncomputable def badScalars (x : P1 k) : Set k :=
+  {a | X 1 - C a * X 0 ∈ x.asHomogeneousIdeal}
+
+/-- At a projective point, at most one form in the pencil `X₁ - aX₀` vanishes. -/
+theorem badScalars_subsingleton (x : P1 k) : (badScalars k x).Subsingleton := by
+  intro a ha b hb
+  change X 1 - C a * X 0 ∈ x.asHomogeneousIdeal at ha
+  change X 1 - C b * X 0 ∈ x.asHomogeneousIdeal at hb
+  by_contra hab
+  have hba : b - a ≠ 0 := sub_ne_zero.mpr (Ne.symm hab)
+  have hd : C (b - a) * (X 0 : MvPolynomial (Fin 2) k) ∈ x.asHomogeneousIdeal := by
+    rw [show C (b - a) * (X 0 : MvPolynomial (Fin 2) k) =
+      (X 1 - C a * X 0) - (X 1 - C b * X 0) by rw [C_sub]; ring]
+    exact x.asHomogeneousIdeal.sub_mem ha hb
+  have hx0 : (X 0 : MvPolynomial (Fin 2) k) ∈ x.asHomogeneousIdeal := by
+    have hmul := x.asHomogeneousIdeal.toIdeal.mul_mem_left (C (b - a)⁻¹) hd
+    rw [show C (b - a)⁻¹ * (C (b - a) * (X 0 : MvPolynomial (Fin 2) k)) = X 0 by
+      rw [← mul_assoc, ← C_mul, inv_mul_cancel₀ hba, C_1, one_mul]] at hmul
+    exact hmul
+  have hx1 : (X 1 : MvPolynomial (Fin 2) k) ∈ x.asHomogeneousIdeal := by
+    rw [show (X 1 : MvPolynomial (Fin 2) k) =
+      (X 1 - C a * X 0) + C a * X 0 by ring]
+    exact x.asHomogeneousIdeal.add_mem ha
+      (x.asHomogeneousIdeal.toIdeal.mul_mem_left (C a) hx0)
+  have hxcover : x ∈ chartOpen k 0 ⊔ chartOpen k 1 := by
+    rw [chartOpen_sup]
+    trivial
+  change x ∈ chartOpen k 0 ∨ x ∈ chartOpen k 1 at hxcover
+  rcases hxcover with hxcover | hxcover
+  · change (X 0 : MvPolynomial (Fin 2) k) ∉ x.asHomogeneousIdeal at hxcover
+    exact hxcover hx0
+  · change (X 1 : MvPolynomial (Fin 2) k) ∉ x.asHomogeneousIdeal at hxcover
+    exact hxcover hx1
+
+/-- Two distinct members of the pencil `X₁ - aX₀` are the rows of an invertible matrix. -/
+theorem exists_matrix_twistedCoord_eq (a b : k) (hab : a ≠ b) :
+    ∃ M : Matrix.GeneralLinearGroup (Fin 2) k,
+      twistedCoord k M 0 = X 1 - C a * X 0 ∧
+      twistedCoord k M 1 = X 1 - C b * X 0 := by
+  let A : Matrix (Fin 2) (Fin 2) k := !![-a, 1; -b, 1]
+  have hdet : Matrix.det A ≠ 0 := by
+    rw [show Matrix.det A = b - a by
+      simp [A, Matrix.det_fin_two_of, sub_eq_add_neg, add_comm]]
+    exact sub_ne_zero.mpr (Ne.symm hab)
+  let M : Matrix.GeneralLinearGroup (Fin 2) k :=
+    Matrix.GeneralLinearGroup.mkOfDetNeZero A hdet
+  refine ⟨M, ?_, ?_⟩
+  · simp [twistedCoord, MvPolynomial.matrixLinearForm, M, A, Fin.sum_univ_two,
+      MvPolynomial.smul_eq_C_mul, sub_eq_add_neg, add_comm]
+  · simp [twistedCoord, MvPolynomial.matrixLinearForm, M, A, Fin.sum_univ_two,
+      MvPolynomial.smul_eq_C_mul, sub_eq_add_neg, add_comm]
+
+/-- Over an infinite field, one coordinate twist puts any finite subset of `P¹` inside the
+intersection of the two twisted standard charts. -/
+theorem exists_matrix_finite_subset_chartInter [Infinite k]
+    (S : Set (P1 k)) (hS : S.Finite) :
+    ∃ M : Matrix.GeneralLinearGroup (Fin 2) k,
+      S ⊆ ((autOfMatrix k M ⁻¹ᵁ chartOpen k 0 : (P1 k).Opens) : Set (P1 k)) ∩
+        ((autOfMatrix k M ⁻¹ᵁ chartOpen k 1 : (P1 k).Opens) : Set (P1 k)) := by
+  let B : Set k := ⋃ x ∈ S, badScalars k x
+  have hB : B.Finite := by
+    dsimp [B]
+    exact hS.biUnion fun x _ => (badScalars_subsingleton k x).finite
+  obtain ⟨a, ha⟩ := hB.exists_notMem
+  have hBa : (B ∪ {a}).Finite := hB.union (Set.finite_singleton a)
+  obtain ⟨b, hb⟩ := hBa.exists_notMem
+  have hbB : b ∉ B := fun h => hb (Set.mem_union_left _ h)
+  have hab : a ≠ b := by
+    intro hab
+    apply hb
+    exact Set.mem_union_right B (by simp [hab])
+  obtain ⟨M, hM0, hM1⟩ := exists_matrix_twistedCoord_eq k a b hab
+  refine ⟨M, fun x hx => ?_⟩
+  constructor
+  · rw [autOfMatrix_preimage_chartOpen]
+    change twistedCoord k M 0 ∉ x.asHomogeneousIdeal
+    rw [hM0]
+    intro hbad
+    apply ha
+    exact Set.mem_iUnion_of_mem x (Set.mem_iUnion_of_mem hx hbad)
+  · rw [autOfMatrix_preimage_chartOpen]
+    change twistedCoord k M 1 ∉ x.asHomogeneousIdeal
+    rw [hM1]
+    intro hbad
+    apply hbB
+    exact Set.mem_iUnion_of_mem x (Set.mem_iUnion_of_mem hx hbad)
+
 end P1
 
 end AlgebraicGeometry
