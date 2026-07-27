@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.22.0 (TeX Live 2025/Debian)  (format=lualatex 2026.7.13)  28 JUL 2026 04:56
+This is LuaHBTeX, Version 1.22.0 (TeX Live 2025/Debian)  (format=lualatex 2026.7.13)  28 JUL 2026 05:32
  restricted system commands enabled.
 **print.tex
 (./print.tex
@@ -3111,76 +3111,76 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 [185] [186] [187] [188]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 539.
+(hyperref)                removing `math shift' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathop' on input line 539.
+(hyperref)                removing `\mathop' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 539.
+(hyperref)                removing `\mathcode' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 539.
+(hyperref)                removing `\mathcode' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 539.
+(hyperref)                removing `\mathcode' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Umathcharnumdef' on input line 539.
+(hyperref)                removing `\Umathcharnumdef' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\std@minus' on input line 539.
+(hyperref)                removing `\std@minus' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Umathcodenum' on input line 539.
+(hyperref)                removing `\Umathcodenum' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\-' on input line 539.
+(hyperref)                removing `\-' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 539.
+(hyperref)                removing `\mathcode' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\-' on input line 539.
+(hyperref)                removing `\-' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 539.
+(hyperref)                removing `\mathcode' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 539.
+(hyperref)                removing `\mathcode' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 539.
+(hyperref)                removing `\leavevmode@ifvmode' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.22198pt
-(hyperref)                removed on input line 539.
+(hyperref)                removed on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\operator@font' on input line 539.
+(hyperref)                removing `\operator@font' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 539.
+(hyperref)                removing `\@ifnextchar' on input line 538.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 539.
+(hyperref)                removing `superscript' on input line 538.
 
 ) (./chapters/AbelJacobi.tex [189]
 Chapter 12.
@@ -7669,7 +7669,7 @@ Here is how much of LuaTeX's memory you used:
 e, 60 glue_spec, 3333 attribute_list, 2 write nodes
    avail lists: 2:845,3:512,4:276,5:852,6:86,7:10883,8:220,9:1115,10:27,11:763
  54248 multiletter control sequences out of 65536+600000
- 136 fonts using 35505623 bytes
+ 136 fonts using 35505375 bytes
  116i,16n,114p,710b,1172s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/opentype/public/lm/lmsans8-regular.otf></usr/share/texmf
 /fonts/opentype/public/lm/lmroman7-bold.otf></usr/share/texmf/fonts/opentype/pub
