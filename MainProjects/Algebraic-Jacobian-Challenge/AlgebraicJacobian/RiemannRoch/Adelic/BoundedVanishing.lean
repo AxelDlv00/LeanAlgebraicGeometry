@@ -57,7 +57,10 @@ though no `Module.Finite` binder appears next to it.
   peel input transports vanishing to any `D' ≥ D`.
 * `subsingleton_h1Mod_of_linearEquivalence` — vanishing is a class invariant
   (from `ClassInvariance.lean`, finiteness-free).
-* `exists_bound_subsingleton_h1Mod` — the assembled bound.
+* `exists_bound_subsingleton_h1Mod_of_residualLedger` — the assembled bound, taking the
+  ledger only at the **residuals** `D − D₀`, which is where the proof uses it (inbox I-0394).
+* `exists_bound_subsingleton_h1Mod` — the same with the universal ledger binder, a one-line
+  corollary of the previous, kept for existing consumers.
 
 ## Relation to the sibling project's `UniformVanishing.lean`
 
@@ -286,39 +289,58 @@ theorem exists_ne_zero_mem_of_one_le_chi {D : X.WeilDivisor}
   rw [ell, hbot] at hell
   simp at hell
 
-/-- **An effective representative of a class of large weighted degree.**  Given
-the closed ledger, if `deg_k D ≥ 1 − χ(0)` then `D` is linearly equivalent to an
-effective divisor.  This is the adelic counterpart of AJCR's
-`exists_effective_of_picClass`, proved here from `χ ≤ ℓ` plus the effective-witness
-dictionary. -/
+/-- **The effective representative, from the ledger at the one divisor it is needed at.**
+If `deg_k D ≥ 1 − χ(0)` and the ledger holds **at `D`**, then `D` is linearly equivalent to an
+effective divisor.  This is the adelic counterpart of AJCR's `exists_effective_of_picClass`,
+proved here from `χ ≤ ℓ` plus the effective-witness dictionary.
+
+Stated at a single divisor so that the universal ledger binder does not propagate into
+consumers that only have the identity at one place (inbox I-0394). -/
+theorem exists_effective_linearEquiv_of_le_degK_at
+    {D : X.WeilDivisor}
+    (hledgerD : chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
+    (hdeg : 1 - chi k U₀ U₁ 0 ≤ degK k D) :
+    ∃ E : X.WeilDivisor,
+      (∀ P : X.PrimeDivisor, 0 ≤ (show X.PrimeDivisor →₀ ℤ from E) P) ∧
+        Scheme.WeilDivisor.LinearEquivalence E D := by
+  have hchi : 1 ≤ chi k U₀ U₁ D := by rw [hledgerD]; omega
+  obtain ⟨f, hfmem, hfne⟩ := exists_ne_zero_mem_of_one_le_chi k U₀ U₁ hchi
+  exact exists_effective_linearEquiv_of_ne_zero_mem hfne hfmem
+
+/-- **An effective representative of a class of large weighted degree.**  The universal-ledger
+form of `exists_effective_linearEquiv_of_le_degK_at`, kept for existing consumers. -/
 theorem exists_effective_linearEquiv_of_le_degK
     (hledger : ∀ D : X.WeilDivisor, chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
     {D : X.WeilDivisor} (hdeg : 1 - chi k U₀ U₁ 0 ≤ degK k D) :
     ∃ E : X.WeilDivisor,
       (∀ P : X.PrimeDivisor, 0 ≤ (show X.PrimeDivisor →₀ ℤ from E) P) ∧
-        Scheme.WeilDivisor.LinearEquivalence E D := by
-  have hchi : 1 ≤ chi k U₀ U₁ D := by rw [hledger D]; omega
-  obtain ⟨f, hfmem, hfne⟩ := exists_ne_zero_mem_of_one_le_chi k U₀ U₁ hchi
-  exact exists_effective_linearEquiv_of_ne_zero_mem hfne hfmem
+        Scheme.WeilDivisor.LinearEquivalence E D :=
+  exists_effective_linearEquiv_of_le_degK_at k U₀ U₁ (hledger D) hdeg
 
-/-- **Single-field bounded `H¹` vanishing** (campaign P5, primary clause; the
-strongest form reachable in AJC today).
+/-- **The bound, with the ledger taken only where the proof uses it** — the sharpened form
+requested by inbox item I-0394.
 
-Given
-* a base divisor `D₀` with `Ȟ¹(D₀) = 0`,
-* the **peel input** at `D₀`: for every `D' ≥ D₀`, each overlap section of
-  `𝒪(D')` agrees modulo `B(D')` with an overlap section of `𝒪(D₀)` — i.e. the
-  twist `Ȟ¹(D₀) → Ȟ¹(D')` is surjective (the ledger's `htwist` datum, unwound),
-* the closed ledger,
+`exists_bound_subsingleton_h1Mod` below takes the ledger at **every** divisor.  The proof
+uses it at exactly one divisor per `D`, namely the **residual** `D − D₀`, and only for `D`
+above the bound.  This version asks for precisely that, as `hledgerRes`.
 
-there is a single threshold `b = deg_k D₀ + 1 − χ(0)` past which `Ȟ¹(D)` vanishes
-for **every** Weil divisor `D` of weighted degree `≥ b`.
+Why this is worth stating separately rather than being cosmetic.  I-0394 observes that the
+universal form silently carries finiteness content (`Module.finrank` of an
+infinite-dimensional space is `0`, so the identity forces finite-dimensionality wherever it
+forces a nonzero rank) and that nothing in the project can discharge it — `chi_telescope_list`
+and `LedgerClosure.chi_eq_of_bump_of_nonneg` reach the *effective* cone only.  Restricting to
+residuals does not by itself fix that, and it would be wrong to claim it does: `D − D₀` is a
+difference and need not be effective, so the effective-cone ledger still does not supply this
+hypothesis in general.  What the restriction buys is that the requirement is now **stated at
+the divisors that matter**, so a caller who can produce the ledger on any set containing the
+residuals `{D − D₀ | deg_k D ≥ b}` can use the theorem — and a reader can see exactly which
+instances are load-bearing instead of having to audit the proof.
 
-The bound depends only on `(k, U₀, U₁, D₀)`.  It is **not** uniform over field
-extensions and says **nothing** about global generation — see the module
-docstring. -/
-theorem exists_bound_subsingleton_h1Mod
-    (hledger : ∀ D : X.WeilDivisor, chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
+The remaining honest gap, in one line: closing this needs the ledger on differences, and
+`LedgerClosure.chi_eq_iff_step_of_bump` says exactly what the negative part costs. -/
+theorem exists_bound_subsingleton_h1Mod_of_residualLedger
+    (hledgerRes : ∀ D : X.WeilDivisor, 1 - chi k U₀ U₁ 0 ≤ degK k D →
+      chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
     (D₀ : X.WeilDivisor) (hbase : Subsingleton (H1Mod k U₀ U₁ D₀))
     (hpeel : ∀ D' : X.WeilDivisor,
       (∀ P : X.PrimeDivisor, (show X.PrimeDivisor →₀ ℤ from D₀) P ≤
@@ -328,9 +350,9 @@ theorem exists_bound_subsingleton_h1Mod
       Subsingleton (H1Mod k U₀ U₁ D) := by
   refine ⟨degK k D₀ + 1 - chi k U₀ U₁ 0, fun D hD => ?_⟩
   -- the residual class `D - D₀` has weighted degree ≥ 1 - χ(0), so it is effective
+  have hres : 1 - chi k U₀ U₁ 0 ≤ degK k (D - D₀) := by rw [degK_sub]; omega
   obtain ⟨E, hEnonneg, hEclass⟩ :=
-    exists_effective_linearEquiv_of_le_degK k U₀ U₁ hledger
-      (D := D - D₀) (by rw [degK_sub]; omega)
+    exists_effective_linearEquiv_of_le_degK_at k U₀ U₁ (hledgerRes (D - D₀) hres) hres
   -- `D₀ + E ≥ D₀`, so peeling `E` off the base vanishing kills `Ȟ¹(D₀ + E)`
   have hmono : ∀ P : X.PrimeDivisor, (show X.PrimeDivisor →₀ ℤ from D₀) P ≤
       (show X.PrimeDivisor →₀ ℤ from D₀ + E) P := by
@@ -354,6 +376,38 @@ theorem exists_bound_subsingleton_h1Mod
     rw [hDsub]
     exact sub_principal_apply hg P
   exact subsingleton_h1Mod_of_shift k U₀ U₁ hg hshift hpeeled
+
+/-- **Single-field bounded `H¹` vanishing** (campaign P5, primary clause; the
+strongest form reachable in AJC today).
+
+Given
+* a base divisor `D₀` with `Ȟ¹(D₀) = 0`,
+* the **peel input** at `D₀`: for every `D' ≥ D₀`, each overlap section of
+  `𝒪(D')` agrees modulo `B(D')` with an overlap section of `𝒪(D₀)` — i.e. the
+  twist `Ȟ¹(D₀) → Ȟ¹(D')` is surjective (the ledger's `htwist` datum, unwound),
+* the closed ledger,
+
+there is a single threshold `b = deg_k D₀ + 1 − χ(0)` past which `Ȟ¹(D)` vanishes
+for **every** Weil divisor `D` of weighted degree `≥ b`.
+
+The bound depends only on `(k, U₀, U₁, D₀)`.  It is **not** uniform over field
+extensions and says **nothing** about global generation — see the module
+docstring.
+
+This is the universal-ledger form, kept for existing consumers; the ledger is actually needed
+only at the residuals `D − D₀`, which is
+`exists_bound_subsingleton_h1Mod_of_residualLedger` above. -/
+theorem exists_bound_subsingleton_h1Mod
+    (hledger : ∀ D : X.WeilDivisor, chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
+    (D₀ : X.WeilDivisor) (hbase : Subsingleton (H1Mod k U₀ U₁ D₀))
+    (hpeel : ∀ D' : X.WeilDivisor,
+      (∀ P : X.PrimeDivisor, (show X.PrimeDivisor →₀ ℤ from D₀) P ≤
+        (show X.PrimeDivisor →₀ ℤ from D') P) →
+      Peel k U₀ U₁ D₀ D') :
+    ∃ b : ℤ, ∀ D : X.WeilDivisor, b ≤ degK k D →
+      Subsingleton (H1Mod k U₀ U₁ D) :=
+  exists_bound_subsingleton_h1Mod_of_residualLedger k U₀ U₁
+    (fun D _ => hledger D) D₀ hbase hpeel
 
 omit [IsIntegral X] [IsNoetherian X] [X.IsRegularInCodimensionOne] in
 /-- **Every effective divisor is list-effective.**  An effective `E ≥ 0` is
