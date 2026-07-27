@@ -30,6 +30,25 @@ is not merely nonzero but **onto** (`evalMap_surjective`).
 
 ## The mechanism: two vanishings, not one
 
+## A note on the ledger hypothesis
+
+Inbox item I-0394 objects, correctly, that `hledger : ∀ D, χ(D) = χ(0) + deg_k D` is much
+stronger than a consumer usually needs — and, quantified over *all* divisors, silently
+carries finiteness content, since `Module.finrank` of an infinite-dimensional space is `0`.
+
+The theorems here that need the ledger at *specific* divisors therefore take it **only
+there**: `ell_sub_ell_sub_pointDivisor_eq`, `evalMap_surjective` and
+`generatedAt_of_vanishing` take two named instances, `hledgerD` and `hledgerDP`, rather
+than the universal binder.  That is exactly what their proofs use, and it means a caller
+who can produce the ledger only on the effective cone
+(`LedgerClosure.chi_eq_of_bump_of_nonneg`) can still use them.
+
+The `∃ b, ∀ D, …` threshold theorems of §4 keep the universal form, and that is not
+laziness: their conclusion quantifies over *all* divisors above a numerical bound, so they
+genuinely need the ledger at every such `D` — and at `D − P` for each, which is not a set
+that can be named in advance.  Sharpening those means sharpening
+`exists_bound_subsingleton_h1Mod` upstream first.
+
 The evaluation map is *always* injective — that is `localStepMapₖ_injective`, the
 elementary half of node N14, and it is what makes `ℓ(D) − ℓ(D−P) ≤ [κ(P):k]`.  It is
 onto exactly when that inequality is an equality, and the ledger converts the
@@ -182,15 +201,17 @@ section drop is *maximal*.  Compare `ell_le_ell_add_residueDeg` (`SectionBounds.
 which gives the inequality `≤` unconditionally: this is its equality case, and the
 input needed for equality is precisely a pair of vanishings, not one. -/
 theorem ell_sub_ell_sub_pointDivisor_eq
-    (hledger : ∀ D : X.WeilDivisor, chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
     (D : X.WeilDivisor) (P : X.PrimeDivisor)
+    (hledgerD : chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
+    (hledgerDP : chi k U₀ U₁ (D - pointDivisor P) =
+      chi k U₀ U₁ 0 + degK k (D - pointDivisor P))
     (hD : Subsingleton (H1Mod k U₀ U₁ D))
     (hDP : Subsingleton (H1Mod k U₀ U₁ (D - pointDivisor P))) :
     (ell k D : ℤ) - ell k (D - pointDivisor P) = residueDeg k P := by
   have h1 := h1dim_eq_zero_of_subsingleton k U₀ U₁ hD
   have h2 := h1dim_eq_zero_of_subsingleton k U₀ U₁ hDP
-  have hchiD := hledger D
-  have hchiDP := hledger (D - pointDivisor P)
+  have hchiD := hledgerD
+  have hchiDP := hledgerDP
   have hdeg : degK k D - degK k (D - pointDivisor P) = residueDeg k P := by
     rw [degK_sub, degK_pointDivisor]; ring
   rw [chi, h1] at hchiD
@@ -211,8 +232,10 @@ Note which finiteness is needed and which is not: `Module.Finite k (sectionSub k
 enters through rank–nullity, and `Module.Finite k (localStepTgt k P 1)` is the residue
 finiteness `[κ(P):k] < ∞` — the same gated keystone input node N14 already takes. -/
 theorem evalMap_surjective
-    (hledger : ∀ D : X.WeilDivisor, chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
     (D : X.WeilDivisor) (P : X.PrimeDivisor)
+    (hledgerD : chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
+    (hledgerDP : chi k U₀ U₁ (D - pointDivisor P) =
+      chi k U₀ U₁ 0 + degK k (D - pointDivisor P))
     (hD : Subsingleton (H1Mod k U₀ U₁ D))
     (hDP : Subsingleton (H1Mod k U₀ U₁ (D - pointDivisor P)))
     [Module.Finite k (sectionSub k ⊤ D)]
@@ -237,7 +260,7 @@ theorem evalMap_surjective
     rw [finrank_localStepTgt]
     have hrn := finrank_localStepDom k ⊤
       (sectionSub_mono k ⊤ (sub_pointDivisor_le D P))
-    have hdrop := ell_sub_ell_sub_pointDivisor_eq k U₀ U₁ hledger D P hD hDP
+    have hdrop := ell_sub_ell_sub_pointDivisor_eq k U₀ U₁ D P hledgerD hledgerDP hD hDP
     simp only [ell] at hdrop
     omega
   exact (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hdim).mp
@@ -337,15 +360,17 @@ drop `ℓ(D) − ℓ(D − P) = [κ(P):k]`.  Those differ as soon as `[κ(P):k] 
 converse fails and the vanishing input is doing real work.  (Over an algebraically closed
 base they coincide, which is the degenerate case, not the general one.) -/
 theorem generatedAt_of_vanishing
-    (hledger : ∀ D : X.WeilDivisor, chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
     (D : X.WeilDivisor) (P : X.PrimeDivisor)
+    (hledgerD : chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
+    (hledgerDP : chi k U₀ U₁ (D - pointDivisor P) =
+      chi k U₀ U₁ 0 + degK k (D - pointDivisor P))
     (hD : Subsingleton (H1Mod k U₀ U₁ D))
     (hDP : Subsingleton (H1Mod k U₀ U₁ (D - pointDivisor P)))
     [Module.Finite k (sectionSub k ⊤ D)]
     [Module.Finite k (localStepTgt k P 1)] :
     GeneratedAt k D P :=
   generatedAt_of_evalMap_surjective k D P
-    (evalMap_surjective k U₀ U₁ hledger D P hD hDP)
+    (evalMap_surjective k U₀ U₁ D P hledgerD hledgerDP hD hDP)
 
 end GeneratedAt
 
@@ -400,8 +425,9 @@ theorem exists_bound_generatedAt
   refine ⟨b, fun D P hD => ?_⟩
   have hdegDP : degK k (D - pointDivisor P) = degK k D - residueDeg k P := by
     rw [degK_sub, degK_pointDivisor]
-  refine generatedAt_of_vanishing k U₀ U₁ hledger D P (hb D (by omega)) ?_
-  exact hb (D - pointDivisor P) (by omega)
+  exact generatedAt_of_vanishing k U₀ U₁ D P (hledger D)
+    (hledger (D - pointDivisor P)) (hb D (by omega))
+    (hb (D - pointDivisor P) (by omega))
 
 /-- **Uniform global generation above the shifted bound.**  With a uniform bound `r` on
 residue degrees, one threshold `b + r` works for **every** point at once: above it,
