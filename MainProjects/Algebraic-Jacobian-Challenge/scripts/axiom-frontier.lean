@@ -7,6 +7,33 @@ from the project root.  Every `#print axioms` line below reports the axioms a
 declaration actually depends on, `sorryAx` included, so a declaration that is
 locally `sorry`-free but consumes a `sorry`-bodied *instance* through typeclass
 synthesis is exposed here and nowhere else.
+
+Companion measurement — reachability of the headline.  `#print axioms` says what
+the headline depends on; the import graph says what it *could* depend on.  A
+headline importing only `Genus.lean` cannot rest on the Picard, cohomology or
+Riemann-Roch work no matter what its docstring claims, so the size of its
+transitive project-import closure is the honest check that the infrastructure is
+wired to the stated theorem:
+
+    python3 - <<'PY'
+    import os, re
+    def imports(m):
+        p = m.replace('.', '/') + '.lean'
+        return re.findall(r'^import\s+(AlgebraicJacobian[\w.]*)', open(p).read(), re.M) \
+               if os.path.exists(p) else []
+    seen, stack = set(), ['AlgebraicJacobian.Jacobian']
+    while stack:
+        m = stack.pop()
+        if m not in seen:
+            seen.add(m); stack += imports(m)
+    total = sum(1 for _, _, fs in os.walk('AlgebraicJacobian') for f in fs
+                if f.endswith('.lean'))
+    print(f'{len(seen)} of {total} project modules reachable from the headline')
+    PY
+
+At the time this probe was written that reports 96 reachable modules, up from 8
+before `picardJacobianWitness` was wired to `Scheme.Pic0Scheme`.  The
+denominator moves as modules land, so read the reachable count, not the ratio.
 -/
 import AlgebraicJacobian
 

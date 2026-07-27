@@ -11,16 +11,46 @@ Picard presheaf \(\Pic^\sharp_{C/k} : (\Sch/k)^{op} \to \Set\) of
 \cref{chap:Picard_LineBundlePullback} has already been packaged as a
 set-valued functor and refined to its abelian-group-valued
 \'etale-sheafified version \(\Pic^\sharp_{(C/k)\et}\) in
-\cref{chap:Picard_RelPicFunctor}. The Quot scheme machinery of
-\cref{chap:Picard_QuotScheme} supplies the representing engine: for
-\(C/k\) projective and flat with integral geometric fibers, the Hilbert scheme
-\(\Hilb_{C/k}\) and its open subscheme \(\mathrm{Div}_{C/k}\) of relative effective
-divisors are both representable by quasi-projective \(k\)-schemes. Grothendieck's
-existence theorem for \(\Pic\) assembles these two ingredients via the Abel
-map \(\mathrm{Div}_{C/k} \to \Pic^\sharp_{C/k}\) to produce a representing scheme,
-the \emph{Picard scheme} \(\Pic_{C/k}\). The present chapter packages this
-assembly: a line-bundle / Quot correspondence, the FGA representability
-theorem, and the abelian-group-scheme refinement.
+\cref{chap:Picard_RelPicFunctor}. What remains is to produce a scheme
+representing it: the \emph{Picard scheme} \(\Pic_{C/k}\). The present chapter
+packages that assembly, together with the abelian-group-scheme refinement.
+
+\medskip
+
+\textbf{Two routes to representability.} The Picard scheme of a curve can be
+constructed in two ways, and this blueprint records both, because they need
+different inputs and only one of them is the route under construction here.
+
+The \emph{quotient route} is Grothendieck's, as presented by Kleiman \S 4: the
+Abel map \(\mathrm{Div}_{C/k} \to \Pic^\sharp_{C/k}\) exhibits the Picard functor
+as a quotient of a quasi-projective scheme by a smooth proper equivalence
+relation, and Altman--Kleiman descent
+(\cref{lem:smooth_proper_quotient}) represents the quotient. Its engine is the
+Hilbert scheme \(\Hilb_{C/k} = \Quot_{\mathcal{O}_C/C/k}\) of
+\cref{chap:Picard_QuotScheme}, whose open subscheme \(\mathrm{Div}_{C/k}\) of
+relative effective divisors carries the source of the Abel map. This is the route
+of \cref{thm:fga_pic_representability} and its proof below.
+
+The \emph{Milne--Koll\'ar route} builds \(\Pic^r_{C/k}\) directly, over a
+separably closed field, from the open loci
+\[
+  C^\Sigma = \{\,t : h^0(\mathcal{O}(W - \Sigma)_t) = 1\,\}
+\]
+cut out inside a degree-\(r\) divisor scheme by a tuple \(\Sigma\) of rational
+points, glues them, and descends the result to \(k\) by a finite Galois quotient
+before assembling the degrees by a coproduct. Its inputs are a rigidified
+pushforward engine, uniform \(H^1\) vanishing, and Galois descent of rigidified
+classes --- not a Hilbert or Quot scheme.
+
+The decisive difference is the quotient step. Altman--Kleiman descent needs
+quasi-projectivity of the scheme being quotiented, which is not expressible in
+the formalisation at present and without which the lemma is false
+(\cref{rem:smooth_proper_quotient_hypothesis}); the Milne--Koll\'ar route takes
+only finite Galois quotients under an orbit-in-affine hypothesis, and so avoids
+that obstruction entirely. The Lean development therefore pursues the
+Milne--Koll\'ar route. The quotient-route material below is retained as the
+mathematics it is --- the divisor and Hilbert-scheme substrate it rests on is
+consumed by both routes --- and is not the path currently being formalised.
 
 \medskip
 
@@ -41,8 +71,33 @@ base change), then the comparison maps
 are bijective for every \(T\). Hence under the rational-point hypothesis the
 plain relative functor \emph{is} the \'etale sheaf, so the rational point
 allows us to work directly with \(\Pic^\sharp_{C/k}\).
-Without a section the plain functor is not even a Zariski sheaf in
-general, so every representability assertion of this chapter carries the
+
+The hypothesis is not a convenience: without a section the plain functor is not
+even a Zariski sheaf in general, so a representability statement for
+\(\Pic^\sharp_{C/k}\) with no rational point would be false. Two honest
+formulations are therefore available, and they prove different theorems.
+
+\begin{enumerate}
+  \item Represent \(\Pic^\sharp_{C/k}\) and carry \(C(k) \neq \emptyset\) as a
+    hypothesis. This is the formulation of
+    \cref{thm:fga_pic_representability} and of every representability assertion
+    in this chapter. It is strictly weaker than a statement about all smooth
+    proper geometrically integral curves, since such a curve need not have a
+    rational point --- a conic without rational points, or a genus-\(2\) curve
+    over \(\mathbb{Q}\) with no rational point, satisfies every other
+    hypothesis.
+  \item Represent the \'etale sheafification \(\Pic_{(C/k)\et}\) and drop the
+    rational point. This is Kleiman's own formulation, and needs no section
+    precisely because sheafifying supplies \'etale-locally what the section
+    would have supplied globally. It requires developing the Picard functor on
+    the \'etale site.
+\end{enumerate}
+
+Which formulation the project should target is a decision about what theorem is
+being claimed, not a limitation of the platform. The two are recorded here
+side by side; the chapter as written realises the first.
+
+Every representability assertion of this chapter accordingly carries the
 rational-point hypothesis. A pointed curve \((C,P)\), as in
 \cref{chap:AbelJacobi}, supplies such a section.
 
@@ -337,6 +392,23 @@ because it is the abstract content allowing descent from
   isomorphism, so \(Q\) represents \(P\). Smoothness of \(\alpha : Z \to P\)
   is the smoothness of \(Z \to Q\) just shown.
 \end{proof}
+
+\begin{remark}[Quasi-projectivity is load-bearing]
+  \label{rem:smooth_proper_quotient_hypothesis}
+  \uses{lem:smooth_proper_quotient}
+  Hypothesis (ii) of \cref{lem:smooth_proper_quotient} --- that \(Z\) be
+  representable by a \emph{quasi-projective} \(k\)-scheme --- cannot be weakened
+  to bare representability. A Hironaka-type free \(\mathbb{Z}/2\)-action on a
+  smooth proper non-projective threefold gives a smooth proper equivalence
+  relation satisfying (i), (iii) and (iv) whose quotient \'etale sheaf is an
+  algebraic space and not a scheme.
+
+  This is what separates the two routes of \cref{sec:fga_pic_setup}. The
+  quotient route must supply quasi-projectivity of the Abel-map slice; the
+  Milne--Koll\'ar route quotients only by a finite Galois group, under the
+  hypothesis that every finite orbit lies in an affine open, which is a
+  condition the Hironaka example fails.
+\end{remark}
 
 \section{Group-scheme structure}
 \label{sec:fga_pic_group_structure}
