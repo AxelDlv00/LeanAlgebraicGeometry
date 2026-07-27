@@ -35,7 +35,7 @@ explanation: ''
 projects:
 - Algebraic-Jacobian-Challenge
 priority: high
-status: running
+status: queued
 write_set:
   files:
   - AlgebraicJacobian/Jacobian.lean
@@ -73,6 +73,6 @@ inbox_refs:
 - I-0372
 artifact_refs: []
 created_at: '2026-07-27T06:53:27.577847+00:00'
-updated_at: '2026-07-27T20:32:43.773201+00:00'
+updated_at: '2026-07-27T21:47:59.898415+00:00'
 metadata:
   author: human
