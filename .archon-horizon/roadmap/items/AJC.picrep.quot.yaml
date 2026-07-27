@@ -15,7 +15,7 @@ summary: 'OFF-PATH, retained not revived. Under projectivity, relative very ampl
   the endgame. Do not build new consumers against HasSmoothProperQuotient.'
 status: pending
 kind: proof
-priority: high
+priority: low
 depends_on: []
 inbox_refs: []
 task_refs: []
@@ -35,4 +35,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-27T07:36:12.508680+00:00'
+  updated_at: '2026-07-27T21:16:41.905232+00:00'

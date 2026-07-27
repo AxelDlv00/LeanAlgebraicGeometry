@@ -12,7 +12,7 @@ summary: 'OFF-PATH, retained not revived. Finite generation of the section grade
   to the H0-finite-generation leaf flagged in RigidPushforwardP1Engine.lean.'
 status: pending
 kind: proof
-priority: high
+priority: low
 depends_on: []
 inbox_refs: []
 task_refs: []
@@ -32,4 +32,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-27T07:36:14.318701+00:00'
+  updated_at: '2026-07-27T21:16:43.174362+00:00'

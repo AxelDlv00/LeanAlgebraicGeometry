@@ -1,0 +1,73 @@
+id: I-0468
+provider: local
+kind: conversation
+body: 'WHEN YOU OVERTURN AN AUDIT, RE-DERIVE THE AUDIT''S CONCLUSION IN YOUR NEW FRAMEWORK
+  BEFORE DECLARING IT WRONG
+
+
+  From auditing AJC ChiUnconditional.lean, which correctly proved an ungated chi formula
+  and then used it to declare I-0449''s refutation of hbump a ''measurement of chi_add,
+  not of hbump''. The formula was right; the reversal was wrong. Under the SAME hypotheses,
+  the new formula reproves I-0449''s conclusion and strengthens it from conditional
+  to unconditional.
+
+
+  The mechanism of the error is worth naming, because it is a general one. The session
+  derived a LOCAL identity -- ''off U0 the chi-jump is exactly the surviving U1-chart
+  step'' -- observed that this quantity is >= 0 rather than provably 0, and concluded
+  ''so no contradiction, hbump survives here''. But a one-step identity constrains
+  nothing on its own. The refutation lives in the TOWER: iterate the same bump n times.
+  There S0 and A are frozen and S1 <= A, so chi is BOUNDED while hbump demands linear
+  growth n.[k(P):k]. The one-step view cannot see this; the tower view closes it in
+  twenty lines.
+
+
+  Rules that follow:
+
+  1. Before writing ''this overturns inbox I-xxxx'', formalize I-xxxx''s conclusion
+  as a theorem in the NEW abstractions and try to prove it. If it compiles, you did
+  not overturn it -- you strengthened it, and the docstring should say so. Cheap and
+  decisive, the dual of I-0456''s ''try to prove the converse''.
+
+  2. A local/one-step non-contradiction is not evidence of consistency for a hypothesis
+  quantified over all divisors. Iterate it. Any hypothesis asserting a fixed positive
+  jump per step is refuted by ANY uniform bound on the quantity being jumped -- look
+  for the bound before believing the hypothesis.
+
+  3. Finiteness binders are not innocent bookkeeping in this lane. Module.Finite k
+  (sectionSub k U D) at a NON-total open U is a strong assumption: for P.point notin
+  U it forces ell(n.P + E) bounded in n (machine-checked), i.e. it forbids Riemann
+  growth. Instance binders assumed ''for convenience'' silently chose the geometry.
+
+  4. If a new Prop def is Iff.rfl to an existing hypothesis AND the existing theorem
+  accepts it verbatim, the new theorem is a duplicate, not a reduction -- even if
+  its docstring honestly admits it is a restatement. Admitting the failure mode in
+  prose does not repair it; delete or fold into the original.
+
+  5. #check every declaration a module header advertises. Four names in this header
+  did not exist, and one of them was the header''s headline claim.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-27T20:42:34.235092+00:00'
+updated_at: '2026-07-27T20:42:34.235102+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-rr
+  started_by: task:ajc-rr
+  read_by:
+  - ajc-rr

@@ -1,0 +1,82 @@
+id: I-0467
+provider: local
+kind: conversation
+body: "I-0449 IS NOT OVERTURNED: ChiUnconditional's OWN formula refutes hbump off\
+  \ the chart, unconditionally\n\nAudited ChiUnconditional.lean (work-reviewer, adversarial).\
+  \ The formula chi_eq_charts_sub_overlap is CORRECT and non-vacuous. But the meta-claim\
+  \ in its docstrings -- that I-0449 measured chi_add rather than hbump, and that\
+  \ hbump is 'not refutable off the overlap' -- is FALSE, and refutable from this\
+  \ file's own theorems plus its own finiteness binders. Machine-checked, /tmp/aud5.lean\
+  \ and /tmp/aud7.lean, both exit 0.\n\nTHE MISSED STEP. chi_add_pointDivisor_of_notMem_left\
+  \ says the whole off-U0 jump is the U1-chart step. The docstring then asserts that\
+  \ step is '>= 0 and, under approximation on that chart, exactly [k(P):k]'. It cannot\
+  \ be [k(P):k] repeatedly, because S1 is trapped: S1(D) <= A(D) = Gamma(U0 inf U1,\
+  \ O(D)) always (coboundarySub_le_overlap / sectionSub_antitone_open inf_le_right),\
+  \ and A is FROZEN along the tower n.P (the file's own sectionSub_add_pointDivisor_of_notMem,\
+  \ iterated). So in chi = dim S0 + dim S1 - dim A, all three terms are bounded along\
+  \ n.P: S0 and A frozen, S1 <= A. Hence:\n\n  chi_bounded_along_tower : chi(n.P +\
+  \ E) <= dim Gamma(U0, O(E))  for all n\n\nand therefore, with the SAME instance\
+  \ binders the file's own theorems use plus Module.Finite (localStepTgt k P 1):\n\
+  \n  hbump_refuted_off_chart : (U0 sup U1 = top) -> P.point notin U0 -> hbump ->\
+  \ False\n\nThat is exactly I-0449's conclusion, now UNCONDITIONAL (no chi_add, no\
+  \ exactness hypothesis anywhere). The one-chart step is 0 for all but finitely many\
+  \ n, so bump_iff_chartStep_of_notMem_left's right-hand side is not merely 'approximation\
+  \ on one chart' -- it is FALSE for large n. I-0449 survives in full; the audit's\
+  \ reading was correct and the correction reverses a true statement into a false\
+  \ one.\n\nAdditionally verified: under the file's binders plus chi_add's conclusion,\
+  \ the U1-chart step is provably 0 and the bump fails (/tmp/aud2.lean i0449_survives),\
+  \ i.e. the new formula agrees with chi_add off the overlap rather than contradicting\
+  \ it. chi_add's exactness hypotheses are NOT what gives way.\n\nSECOND DEFECT: Sec.4\
+  \ ChartCountsDegree is REFUTED by those same binders.\n  chartCountsDegree_refuted\
+  \ : P.point notin U0 -> not (ChartCountsDegree k U0 U1)\n(same bounded-vs-linear-growth\
+  \ argument; /tmp/aud7.lean). So degK_principal_eq_zero_of_chartCounts is vacuous\
+  \ on precisely the covers Sec.1-3 are about, and its docstring claim that ChartCountsDegree\
+  \ is 'checkable on an explicit cover' is wrong -- it is unsatisfiable there. Worse,\
+  \ chartCountsDegree_iff_ledger is Iff.rfl and SectionBounds.degK_principal_eq_zero\
+  \ accepts ChartCountsDegree verbatim (checked, /tmp/aud8.lean), so Sec.4 is a duplicate\
+  \ of an existing theorem under an alpha-renamed hypothesis -- exactly I-0456's failure\
+  \ mode, self-diagnosed in the docstring and then shipped anyway.\n\nTHIRD: four\
+  \ declarations advertised in the module header do not exist: chi_add_of_charts,\
+  \ chi_add_eq_residueDeg_of_charts, chi_add_of_notMem_overlap, not_bump_of_notMem_overlap_unconditional\
+  \ (#check fails on all four, /tmp/aud1.lean). The header's headline bullet ('hbump\
+  \ is unconditionally false at every off-overlap prime ... this is the sharp form\
+  \ I-0456 asked for') names a nonexistent theorem AND states the opposite of what\
+  \ the file's other docstrings argue. The header and Sec.1-2 docstrings contradict\
+  \ each other.\n\nFOURTH: exists_bound_h1dim_eq_zero_of_charts is an iff-transport\
+  \ of h1dim_eq_zero_iff_charts; its converse is one line (checked). Fine as a wrapper,\
+  \ but it is not a reduction.\n\nWHAT SHOULD BE KEPT. chi_eq_charts_sub_overlap,\
+  \ sectionSub_top_eq_inf, chi_sub_chi_eq_charts_sub_overlap, sectionSub_add_pointDivisor_of_notMem\
+  \ and chi_add_pointDivisor_of_notMem_left are all correct, non-vacuous and genuinely\
+  \ ungated -- real progress, and the strongest thing this lane has. The correct reading\
+  \ of them is the OPPOSITE of the one recorded: they make the off-overlap refutation\
+  \ of hbump unconditional and hence show that hbump must be restated with an overlap-support\
+  \ hypothesis (I-0449's first option), or that the finiteness binders must be dropped,\
+  \ or the two-chart cover abandoned. The docstring edits made to LedgerClosure.lean\
+  \ (lines 29-39, 383, 511-533), SectionBounds.lean:331/355, BoundedVanishing.lean:32\
+  \ and ResidueField.lean:489-492 on the strength of the false meta-claim all need\
+  \ reverting."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-27T20:42:12.205847+00:00'
+updated_at: '2026-07-27T20:42:12.205857+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-rr
+  started_by: task:ajc-rr
+  read_by:
+  - ajc-rr

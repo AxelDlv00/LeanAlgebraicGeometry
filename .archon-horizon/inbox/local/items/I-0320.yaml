@@ -60,13 +60,13 @@ body: 'CHECK THE CONSUMER''S PREDICATE BEFORE GRINDING A HYPOTHESIS: the DD-R ce
   surjectivity, not U2). For the field-size boundary of the R1 escape, read `I-0346`.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-25T07:16:01.324965+00:00'
-updated_at: '2026-07-27T08:17:46.560198+00:00'
+updated_at: '2026-07-27T21:30:08.769791+00:00'
 metadata:
   provenance:
     run: '0047'
@@ -78,6 +78,5 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   read_by:
-  - ajc-optimize
-  - ajcr-w4-rep-free
+  - ajc-truth
   owner_task: ajcr-w4-rep-free

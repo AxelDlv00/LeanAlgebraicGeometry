@@ -1,0 +1,59 @@
+id: I-0466
+provider: local
+kind: issue
+body: "POINTER: the 'hbump is refuted off the cover overlap' finding (archived I-0449\
+  \ / I-0456) IS UNDER CORRECTION -- read this before citing either\n\nFiled because\
+  \ both items were archived (run-0054 janitor, before my correction landed) and so\
+  \ will\nnot appear in a default inbox list, while their conclusion has been propagated\
+  \ into six AJC\ndocstrings and two roadmap/task histories. A reader who lands on\
+  \ the archived items alone gets the\nuncorrected version.\n\nWHAT I-0449/I-0456\
+  \ GOT RIGHT, and it was valuable:\n- Five AJC docstrings published a FALSE cost\
+  \ for hbump ('one application of chi_add_eq_residueDeg\n  per step'). chi_add_eq_residueDeg\
+  \ carries hPV : P.point in (U0 inf U1), so off the overlap it\n  supplies no route\
+  \ to the bump at all. Corrected in all six places (run 0055 s0014).\n- I-0456's\
+  \ central observation is correct and is the sharper of the two: hbump and the closed\n\
+  \  ledger are EQUIVALENT, so chi_eq_of_bump was a reformulation, not a reduction.\
+  \ The prescribed\n  check -- TRY TO PROVE THE CONVERSE before claiming a hypothesis-elimination\
+  \ -- is sound and I\n  applied it to my own work this session.\n\nWHAT DOES NOT\
+  \ FOLLOW: the conclusion that hbump is REFUTABLE off the overlap. The derivation\
+  \ runs\nthrough ChiLedger.chi_add, which equates the chi-jump with the OVERLAP local\
+  \ step; that step is 0\noff the overlap; hbump wants >= 1. What that establishes\
+  \ is that CHI_ADD'S FOUR EXACTNESS\nHYPOTHESES are unsatisfiable off the overlap\
+  \ -- a fact about chi_add, not about hbump. I-0449 in\nfact observes this ('hbump\
+  \ forces chi_add's window/connect/twist to FAIL') and then charges the\nfailure\
+  \ to hbump.\n\nTHE INDEPENDENT COMPUTATION THAT SETTLES IT (Adelic/ChiUnconditional.lean,\
+  \ committed, axiom-clean):\nfor a two-set cover, chi(D) = dim Gamma(U0,O(D)) + dim\
+  \ Gamma(U1,O(D)) - dim A(D) with NO exactness\nhypotheses. Off the overlap that\
+  \ gives chi_add_pointDivisor_of_notMem_left: the jump equals the\nsurviving ONE-CHART\
+  \ step; and bump_iff_chartStep_of_notMem_left: hbump there is EQUIVALENT to that\n\
+  chart step being full. So hbump is not contradictory off the overlap; its residual\
+  \ content there is\napproximation on a single chart -- strictly weaker than the\
+  \ overlap approximation hsurj.\n\nnot_bump_of_notMem_overlap remains a true theorem\
+  \ with its proof untouched; its hypothesis hchiAdd\nis unsatisfiable exactly where\
+  \ the theorem applies, so it refutes nothing. Its docstring now says so.\n\nTHE\
+  \ DURABLE METHOD POINT, which is why this is an issue and not just a correction:\
+  \ when a\nhypothesis H is incompatible with theorem T's CONCLUSION on some region,\
+  \ you have learned only\nthat H and T's HYPOTHESES cannot both hold there. Deciding\
+  \ which gives way requires computing the\nsame quantity by an independent route.\
+  \ Absent that, 'H contradicts T's conclusion' must not be\nwritten as 'H is false'."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T20:35:05.836344+00:00'
+updated_at: '2026-07-27T21:20:45.450497+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr

@@ -1,0 +1,60 @@
+id: I-0470
+provider: local
+kind: memory
+body: "A ONE-STEP NON-CONTRADICTION IS NOT EVIDENCE THAT A HYPOTHESIS QUANTIFIED OVER\
+  \ ALL DIVISORS IS CONSISTENT -- ITERATE IT\n\nMy own error, AJC run 0055 s0014 (task\
+  \ ajc-rr), caught by an adversarial work-reviewer within the\nsame session. Recording\
+  \ it because I acted on it -- I broadcast the wrong conclusion to two teams\nand\
+  \ edited six docstrings before it was caught.\n\nWHAT I DID. I proved an ungated\
+  \ Cech formula (correct, and it stands) and used it to compute the\nchi-jump at\
+  \ a prime P off one chart: the jump is exactly the surviving one-chart step. That\
+  \ step is\n>= 0 rather than provably 0. I concluded that the standing refutation\
+  \ of hbump off the overlap\n(inbox I-0449) had misfired -- that it measured chi_add's\
+  \ exactness hypotheses rather than hbump --\nand that hbump was consistent there,\
+  \ equivalent to a one-chart approximation statement.\n\nWHY IT WAS WRONG. A ONE-STEP\
+  \ identity constrains nothing. hbump asserts the jump at EVERY base\ndivisor, hence\
+  \ at every stage of the tower n.P. Along that tower Gamma(U0,-) freezes (the point\
+  \ is\noff U0), A = Gamma(U0 inf U1,-) freezes (off the overlap too), and Gamma(U1,-)\
+  \ <= A is trapped by\nantitonicity in the open. So all three terms of my own formula\
+  \ are bounded, chi(n.P+E) <= dim\nGamma(U0,O(E)) for all n, and hbump's demanded\
+  \ growth n.[kappa(P):k] is impossible. The refutation\nwas twenty lines in my own\
+  \ framework and I had not looked for it.\n\nTHE THREE RULES THAT FOLLOW.\n1. BEFORE\
+  \ writing 'this overturns I-xxxx', formalize I-xxxx's conclusion as a theorem in\
+  \ your NEW\n   abstractions and try to prove it. If it compiles you did not overturn\
+  \ it -- you strengthened it.\n   This is the dual of I-0456's 'try to prove the\
+  \ converse' and just as cheap.\n2. Any hypothesis asserting a FIXED POSITIVE JUMP\
+  \ PER STEP is refuted by ANY uniform bound on the\n   quantity being jumped. Look\
+  \ for the bound before believing the hypothesis. Local\n   non-contradiction is\
+  \ not consistency.\n3. Module.Finite binders at a NON-TOTAL open are load-bearing\
+  \ geometry, not bookkeeping. In this\n   lane Module.Finite k (sectionSub k U D)\
+  \ with P.point notin U forces ell(n.P+E) bounded in n --\n   it FORBIDS Riemann\
+  \ growth. Instances assumed 'for convenience' silently chose the geometry, and\n\
+  \   they are what made the refutation available.\n\nTHE CONSEQUENCE, which outlives\
+  \ the lesson: the closed ledger hledger is FALSE on any cover with a\nprime divisor\
+  \ off a chart (ledger_refuted_of_notMem_left). Every conditional theorem in\nSectionBounds\
+  \ section 3, BoundedVanishing and GlobalGeneration takes hledger, so those are VACUOUS\n\
+  there. The lane's problem was never the missing connecting homomorphism -- it is\
+  \ the two-chart\ncover. Fix the cover hypothesis or add charts; do not spend another\
+  \ session on the bump.\n\nCross-refs: [[i0449-hbump-refuted-off-overlap]] was RIGHT.\
+  \ I-0467/I-0468 carry the audit."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T21:18:29.415513+00:00'
+updated_at: '2026-07-27T21:30:32.907622+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-truth

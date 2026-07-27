@@ -1,0 +1,55 @@
+id: I-0472
+provider: local
+kind: issue
+body: "HGRAPH SYNC INVENTS DECLARATIONS FROM DOCSTRING PROSE, AND SOME ARRIVE WITH\
+  \ lean_status: sorry -- fictional entries in the sorry frontier\n\nREPRODUCIBLE\
+  \ (run 0054 s0012, project Algebraic-Jacobian-Challenge). Delete the node, resync,\n\
+  it comes back -- so this is a live scanner defect, not stale files:\n\n  horizon\
+  \ graph -p Algebraic-Jacobian-Challenge sync --lean AlgebraicJacobian \\\n    --blueprint\
+  \ blueprint/src/print.tex\n\nTHREE GHOSTS THAT REGENERATE, each parsed from ordinary\
+  \ English inside a module docstring:\n  decl='on'                              from\
+  \ Picard/TensorObjSubstrate/PresheafInternalHom.lean\n                         \
+  \                (a docstring line beginning 'on `R(Y)`-modules.')\n  decl=—   \
+  \                              from Picard/GaloisDescent/SemilinearModules.lean\n\
+  \  decl='`exists_generic_rank_comparison`'  from Picard/FlatteningStratification.lean:64\n\
+  \                                         (a BACKTICKED cross-reference in prose)\n\
+  \nWHY THE THIRD IS THE HARMFUL SHAPE. It carries lean_status: sorry, so a declaration\
+  \ that does\nnot exist is counted as a sorry carrier. The real theorem exists\n\
+  (FlatteningStratification.lean:1010) and has its own correct node (2a083e428c0e),\
+  \ so the graph\nholds a phantom DUPLICATE of a proved theorem, marked unproved.\
+  \ Any frontier ranking or\ncarrier count read off the graph is wrong by that entry.\
+  \ The first two are lean_ok and merely\nnoise.\n\nFIXED LOCALLY, and this part stays\
+  \ fixed: nine nodes generated from scripts/axiom-frontier.lean\nhave been deleted\
+  \ (that file is a probe run by hand, not a library module, so nothing in it\nbelongs\
+  \ in the graph). Two of those were pure prose artefacts -- decl='anyone' from the\
+  \ English\nphrase 'instance anyone would use' and decl='imports' from a PYTHON function\
+  \ inside a shell\nrecipe in a block comment -- and both carried lean_status: sorry.\
+  \ They do not regenerate,\nbecause the probe file is not under --lean.\n\nTHE PATTERN:\
+  \ the scanner appears to accept a line-initial token in a docstring or block comment\n\
+  as a declaration name. Real declaration names cannot be '—', cannot be quoted, and\
+  \ cannot\ncontain backticks, so a cheap guard is to reject any decl that is not\
+  \ a valid Lean identifier\n(and to skip prose inside /-! ... -/ and /- ... -/).\
+  \ That guard would remove all five shapes seen\nhere without touching a real node.\n\
+  \nNOT FIXABLE FROM A PROJECT WRITE SET: rewriting the affected docstrings to dodge\
+  \ the parser\nwould be contorting mathematics to suit a tool. The 33 pin warnings\
+  \ that sync prints on every\nrun include two of the same family (`theorem foo.{u,v}`,\
+  \ filed as I-0452), so this is one defect\nwith several faces."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T21:26:40.086140+00:00'
+updated_at: '2026-07-27T21:26:40.086150+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0012-horizon-ajc-truth
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge

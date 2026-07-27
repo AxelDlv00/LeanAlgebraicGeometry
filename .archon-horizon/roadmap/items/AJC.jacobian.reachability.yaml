@@ -2,67 +2,63 @@ id: AJC.jacobian.reachability
 title: Wire the headline to the infrastructure
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "The headline rests on the infrastructure it claims, and every number here\
-  \ is measured rather than asserted. picardJacobianWitness is built from Scheme.Pic0Scheme,\
-  \ so 98 of the project's modules are reachable from Jacobian.lean rather than the\
-  \ 8 of the Genus-only import; the 98th arrived when leaf C was stated against the\
-  \ landed Albanese universal property, which put the Albanese cone under the headline\
-  \ for the first time.\n\nEVERY MODULE ON DISK IS ROOTED at AlgebraicJacobian.lean\
-  \ -- 185 of 185 as of 2026-07-28, no exceptions -- which matters because an unrooted\
-  \ module compiles green and is invisible BOTH to the root build and to the axiom\
-  \ probe: #print axioms on its declarations cannot even be written against the root\
-  \ import. The standing check is in the probe header and in I-0388. A module not\
-  \ yet committed to the ledger must NOT be rooted (a clean checkout would fail);\
-  \ that grace period ends at the commit.\n\nTHE OBLIGATION COUNT IS FIVE over a general\
-  \ base field, and FOUR over an algebraically closed one. Pic0.smooth and Pic0.proper\
-  \ are sorry-bodied upstream; three leaves are stated at the headline. Each leaf's\
-  \ distance to the landed tree is now COMPILER-CHECKED rather than described, by\
-  \ a companion theorem stated at the headline:\n\n  leaf A (rational point) -- FALSE\
-  \ over a general k, so it must be REPLACED, not proved. Over an algebraically closed\
-  \ field it is a THEOREM: hasRationalPoint_of_curve_of_isAlgClosed is axiom-clean\
-  \ via Albanese.hasRationalPoint_of_isAlgClosed, and picardJacobianWitnessOfIsAlgClosed\
-  \ assembles the witness with it supplied rather than assumed. This bounds I-0372's\
-  \ decision without choosing a branch: what is undecided is what the project claims\
-  \ over an ARBITRARY base field.\n  instHasPicScheme (representability) -- the FIFTH\
-  \ obligation, and the one that is easy to miscount. Scheme.Pic0Scheme carries [HasPicScheme\
-  \ C] and this sorry-bodied instance is its sole producer. Over a general field the\
-  \ gate is reached THROUGH leaf A, so counting it separately looks like double-counting;\
-  \ discharging leaf A makes it FIRE rather than removing it, so over k-bar it stands\
-  \ free.\n  leaf B -- owes Pic0.smooth plus the passage from a tangent-space dimension\
-  \ to Mathlib's presentation-based SmoothOfRelativeDimension; the dimension count\
-  \ itself is landed (finrank_tangentSpace_pic0_eq_genus proves dim T_e Pic0 = genus\
-  \ C with no transport).\n  leaf C -- one basepoint condition plus two generalizations\
-  \ away (isAlbanese_pic0_of_isAlgClosed proves the algebraically closed positive-genus\
-  \ case).\n\nWHY THE KIND OF OBLIGATION MATTERS AND CANNOT BE READ OFF THE PROBE:\
-  \ four of the five are unproved TRUE statements; leaf A over a general field is\
-  \ FALSE, so the general witness rests on an inconsistent hypothesis and its consequences\
-  \ are vacuously true. Both states report exactly the same sorryAx, so the distinction\
-  \ has to be exhibited by a discharge rather than measured. That is why the alg-closed\
-  \ witness is a separate definition.\n\nRETRACTED (2026-07-28, caught by Ground and\
-  \ reproduced independently): an earlier revision of this summary said the alg-closed\
-  \ witness rests on FOUR obligations. It is five. The count does not drop, because\
-  \ discharging leaf A unmasks instHasPicScheme instead of removing it -- trap (a)\
-  \ landing on the very declaration whose docstring warns about trap (c). Now MEASURED\
-  \ as probe section 0b: naming Pic0Scheme with leaf A discharged and nothing else\
-  \ in the term still reports sorryAx, against a gate-assumed control that is clean.\
-  \ The claim that survives is unchanged and was always the valuable one: over k-bar\
-  \ all five remaining obligations are TRUE statements.\n\nAND NOTE WHAT THIS DOES\
-  \ NOT MOVE: picardJacobianWitnessOfIsAlgClosed has ZERO Lean consumers. The five\
-  \ protected declarations still route Jacobian -> jacobianWitness -> nonempty_jacobianWitness\
-  \ -> picardJacobianWitness -> hasRationalPoint_of_curve, i.e. through the false\
-  \ leaf. Nothing about the protected surface changed this session.\n\nREPRODUCIBLE\
-  \ and independently re-measured 2026-07-28 THROUGH THE ROOT PATH with lake build\
-  \ AlgebraicJacobian green at 8744 jobs: scripts/axiom-frontier.lean, 113 declarations,\
-  \ 72 clean and 41 carrying sorryAx (107/70/37 before this session's additions);\
-  \ 26 sorry carriers over 11 modules, matching the enumeration published in the probe's\
-  \ section 2 exactly -- of those 26, exactly TWO are instances (instHasPicScheme,\
-  \ pullback_preservesFiniteLimits) and therefore the only two reachable without being\
-  \ named; 98 modules reachable from the headline of 185 on disk, zero unrooted. Count\
-  \ by output ENTRY, not by line -- Lean wraps long axiom lists, and the naive per-line\
-  \ filter misclassifies exactly the declarations whose lists are longest. Two earlier\
-  \ revisions of this summary published 24 rather than 26; the build says 26 and the\
-  \ probe carries the regenerating command so the number is checkable rather than\
-  \ asserted.\n"
+summary: "The headline rests on the infrastructure it claims, and every number here is measured rather\
+  \ than asserted. picardJacobianWitness is built from Scheme.Pic0Scheme, so 98 of the project's modules\
+  \ are reachable from Jacobian.lean rather than the 8 of the Genus-only import; the 98th arrived when\
+  \ leaf C was stated against the landed Albanese universal property, which put the Albanese cone under\
+  \ the headline for the first time.\n\nEVERY MODULE ON DISK IS ROOTED at AlgebraicJacobian.lean -- 187\
+  \ of 187 as of 2026-07-28, no exceptions -- which matters because an unrooted module compiles green\
+  \ and is invisible BOTH to the root build and to the axiom probe: #print axioms on its declarations\
+  \ cannot even be written against the root import. The standing check is in the probe header and in I-0388.\
+  \ A module not yet committed to the ledger must NOT be rooted (a clean checkout would fail); that grace\
+  \ period ends at the commit.\n\nTHE OBLIGATION COUNT IS FIVE, over a general base field AND over an\
+  \ algebraically closed one. The count does not drop when leaf A is discharged; only the KIND of the\
+  \ obligations changes. The five: instHasPicScheme, Pic0.smooth and Pic0.proper (sorry-bodied upstream),\
+  \ and leaves B and C stated at the headline -- with leaf A a sixth over a general field, where it is\
+  \ the FALSE one. Each leaf's distance to the landed tree is COMPILER-CHECKED rather than described,\
+  \ by a companion theorem stated at the headline:\n\n  leaf A (rational point) -- FALSE over a general\
+  \ k, so it must be REPLACED, not proved. Over an algebraically closed field it is a THEOREM: hasRationalPoint_of_curve_of_isAlgClosed\
+  \ is axiom-clean via Albanese.hasRationalPoint_of_isAlgClosed, and picardJacobianWitnessOfIsAlgClosed\
+  \ assembles the witness with it supplied rather than assumed. This bounds I-0372's decision without\
+  \ choosing a branch: what is undecided is what the project claims over an ARBITRARY base field.\n  instHasPicScheme\
+  \ (representability) -- the obligation that is easy to miscount. Scheme.Pic0Scheme carries [HasPicScheme\
+  \ C] and this sorry-bodied instance is its sole producer. Over a general field the gate is reached THROUGH\
+  \ leaf A, so counting it separately looks like double-counting; discharging leaf A makes it FIRE rather\
+  \ than removing it, so over k-bar it stands free.\n  leaf B -- owes Pic0.smooth plus the passage from\
+  \ a tangent-space dimension to Mathlib's presentation-based SmoothOfRelativeDimension; the dimension\
+  \ count itself is landed (finrank_tangentSpace_pic0_eq_genus proves dim T_e Pic0 = genus C with no transport).\n\
+  \  leaf C -- one basepoint condition plus two generalizations away (isAlbanese_pic0_of_isAlgClosed proves\
+  \ the algebraically closed positive-genus case).\n\nWHY THE KIND OF OBLIGATION MATTERS AND CANNOT BE\
+  \ READ OFF THE PROBE: over k-bar all five are unproved TRUE statements; leaf A over a general field\
+  \ is FALSE, so the general witness rests on an inconsistent hypothesis and its consequences are vacuously\
+  \ true. Both states report exactly the same sorryAx, so the distinction has to be exhibited by a discharge\
+  \ rather than measured. That is why the alg-closed witness is a separate definition.\n\nRETRACTED (2026-07-28,\
+  \ caught by Ground and reproduced independently): an earlier revision of this summary said the alg-closed\
+  \ witness rests on FOUR obligations, and a later revision retracted that in a trailing paragraph while\
+  \ leaving the FOUR standing in its own opening -- so the node contradicted itself for one round. Both\
+  \ are now corrected to five. Trap (a) landed on the very declaration whose docstring warns about trap\
+  \ (c). MEASURED as probe section 0b: naming Pic0Scheme with leaf A discharged and nothing else in the\
+  \ term still reports sorryAx, against a gate-assumed control that is clean. The claim that survives\
+  \ is unchanged and was always the valuable one: over k-bar all five remaining obligations are TRUE statements.\n\
+  \nAND NOTE WHAT THIS DOES NOT MOVE: picardJacobianWitnessOfIsAlgClosed has ZERO Lean consumers. The\
+  \ five protected declarations still route Jacobian -> jacobianWitness -> nonempty_jacobianWitness ->\
+  \ picardJacobianWitness -> hasRationalPoint_of_curve, i.e. through the false leaf. Nothing about the\
+  \ protected surface has changed.\n\nREPRODUCIBLE and independently re-measured 2026-07-28 THROUGH THE\
+  \ ROOT PATH with lake build AlgebraicJacobian green at 8746 jobs: scripts/axiom-frontier.lean, 126 declarations,\
+  \ 84 clean and 42 carrying sorryAx (125/84/41 before section 0c added the branch-(1) assembly; 113/72/41\
+  \ before section 6f added ajc-rr's unconditional-chi lines, all clean; 107/70/37 before that). Note\
+  \ how the last two additions moved the sorryAx count in OPPOSITE directions, for the right reasons:\
+  \ section 6f added declarations and left it at 41, because an all-clean lane adds nothing to the frontier\
+  \ and a clean line is therefore not by itself headline progress; section 0c added one and moved it to\
+  \ 42, because the branch-(1) assembly leaks on the five obligations behind it. Neither movement changed\
+  \ the mathematics -- the frontier is the same five obligations throughout. 26 sorry carriers over 11\
+  \ modules, matching the enumeration published in the probe's section 2 exactly -- of those 26, exactly\
+  \ TWO are instances (instHasPicScheme, pullback_preservesFiniteLimits) and therefore the only two reachable\
+  \ without being named; 98 modules reachable from the headline of 187 on disk, zero unrooted. Count by\
+  \ output ENTRY, not by line -- Lean wraps long axiom lists, and the naive per-line filter misclassifies\
+  \ exactly the declarations whose lists are longest. Two earlier revisions of this summary published\
+  \ 24 rather than 26; the build says 26 and the probe carries the regenerating command so the number\
+  \ is checkable rather than asserted."
 status: done
 kind: proof
 priority: normal
@@ -85,7 +81,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian.assembly
-  updated_at: '2026-07-27T20:25:06.678918+00:00'
+  updated_at: '2026-07-27T20:46:00.110533+00:00'
   owner: ajc-truth
   pinned_commits:
   - ad09baf14

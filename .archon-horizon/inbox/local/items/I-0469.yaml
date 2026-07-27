@@ -1,0 +1,54 @@
+id: I-0469
+provider: local
+kind: memory
+body: "THE GATE-DROP MISCOUNT: three instances in two sessions, and the trigger is\
+  \ identical every time.\n\nCLAIM SHAPE THAT IS ALWAYS WRONG: 'discharging the rational\
+  \ point leaves N-1 obligations'.\n\nWHY IT IS WRONG. Scheme.Pic0Scheme C carries\
+  \ [Scheme.HasPicScheme C] among its binders, and\nthe sorry-bodied Scheme.instHasPicScheme\
+  \ (Picard/FGAPicRepresentability.lean) is its SOLE\nproducer, taking [HasRationalPoint\
+  \ C]. So supplying the rational point does not remove the\nrepresentability gate\
+  \ -- it makes the gate FIRE. Over a general base field the gate sits\nBEHIND leaf\
+  \ A, which is exactly what makes counting it separately look like double-counting;\n\
+  the moment leaf A is discharged it stands free. The count is five before and five\
+  \ after. What\nthe discharge changes is the KIND of every obligation (all true,\
+  \ versus one false), and that\nis the claim worth publishing.\n\nTHE THREE INSTANCES:\n\
+  \  1. run 0054 s0010: roadmap AJC.jacobian.reachability + docstrings said 'four\
+  \ obligations\n     over k-bar'. Caught by Ground.\n  2. run 0054 s0012: the retraction\
+  \ had survived in hasRationalPoint_of_curve_of_isAlgClosed's\n     own docstring,\
+  \ two hgraph comments, and the axiom-frontier header ('the residue over\n     k-bar\
+  \ consists of four true statements') -- i.e. in the file whose section 0b exists\
+  \ to\n     measure this.\n  3. run 0054 s0012, minutes later: writing section 0c\
+  \ for the NEW pointed assembly\n     picardJacobianWitnessOfHasRationalPoint, I\
+  \ wrote 'no new mathematics beyond the four'\n     again, in the paragraph immediately\
+  \ below the corrected one.\n\nTHE TEST THAT CATCHES IT, and it is mechanical: whenever\
+  \ you supply a hypothesis and want to\nsay the obligation count dropped, ask which\
+  \ INSTANCES that hypothesis now makes synthesisable,\nand whether any of them is\
+  \ sorry-bodied. A binder that becomes satisfiable is an obligation\nthat becomes\
+  \ ACTIVE, not one that disappears. scripts/axiom-frontier.lean section 0b is the\n\
+  executable form: probe_pic0Scheme_named_of_isAlgClosed discharges leaf A and merely\
+  \ NAMES\nPic0Scheme with no Pic0.smooth/proper and neither leaf B nor C in the term,\
+  \ and still reports\nsorryAx; probe_pic0Scheme_named_gateAssumed assumes the gate\
+  \ and is clean.\n\nWHY IT KEEPS HAPPENING: the arithmetic 'five minus one is four'\
+  \ is available without looking at\nanything, and the correct answer requires knowing\
+  \ one fact about a binder three definitions\naway. Prose that states a count is\
+  \ the highest-risk prose in this project. Measure, or write\nthe KIND rather than\
+  \ the number."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T21:10:56.471448+00:00'
+updated_at: '2026-07-27T21:10:56.471459+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0012-horizon-ajc-truth
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
