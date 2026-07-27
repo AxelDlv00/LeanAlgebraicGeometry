@@ -1,0 +1,56 @@
+id: I-0473
+provider: local
+kind: issue
+body: "THREE DISHONEST \\leanok MARKS FOUND BY MACHINE, and last session's audit reported\
+  \ ZERO of this kind\n\nSession 0010 audited \\leanok placement and concluded '12\
+  \ statement-level \\leanoks sit on sorry\ncarriers, all legitimate; zero proof-level\
+  \ ones do'. The second half is false. Cross-checking\nevery proof-level \\leanok\
+  \ in the blueprint against the axiom probe (rather than by reading)\nfinds three\
+  \ whose Lean declaration carries sorryAx:\n\n  lem:pic0_isAlbanese_algClosed  |\
+  \ isAlbanese_pic0_of_isAlgClosed  | Jacobian.tex        FIXED\n  thm:pic0_tangent_space_iso\
+  \     | Scheme.Pic0.tangentSpaceIso     | Picard_Pic0AbelianVariety.tex\n  thm:pic0_smooth\
+  \                | Scheme.Pic0.smooth              | Picard_Pic0AbelianVariety.tex\n\
+  \nthm:pic0_smooth is the worst of the three: the declaration is LITERALLY sorry-bodied\n\
+  (Pic0AbelianVariety.lean:800-806, body 'sorry'), it is one of the headline's five\
+  \ open\nobligations, and its blueprint proof claims \\leanok. A reader checking\
+  \ whether the Jacobian's\nsmoothness is formalised gets 'yes' from the blueprint\
+  \ and 'sorryAx' from the compiler.\n\nFOURTH, of a different shape, same chapter\
+  \ family: thm:pic_zero_dimension_equals_genus\n(Picard_IdentityComponent.tex:1084)\
+  \ carries a STATEMENT-level \\leanok pinned to\nIdentityComponent.finrank_eq_genus,\
+  \ whose body is 'sorry' and whose own Lean docstring says 'This\nargument is not\
+  \ yet formalised: the proof is sorry.' A statement-level \\leanok means the\nsignature\
+  \ is formalised, which is defensible on its own -- but the node has no proof environment\n\
+  carrying a separate mark, so in the rendered blueprint it reads as established.\n\
+  \nFIXED IN MY WRITE SET (commit follows): the Jacobian.tex proof-level mark on\n\
+  lem:pic0_isAlbanese_algClosed is removed -- the proof IS written in Lean but routes\
+  \ through the\nsorry-bodied Pic0.abelJacobi, and the convention is explicit that\
+  \ \\leanok is honest only when\ndependencies are checked too. Same reasoning removed\
+  \ the proof-level mark on\nlem:pic0_tangent_dimension_genus, which depends on finrank_eq_genus.\n\
+  \nNOT MINE TO FIX: Picard_Pic0AbelianVariety.tex and Picard_IdentityComponent.tex\
+  \ are outside the\najc-truth write set. Whoever owns the Pic0 cone should drop those\
+  \ two proof-level marks; that is\na two-character edit each and it removes the single\
+  \ most misleading claim in the blueprint.\n\nTHE METHOD POINT, which is why this\
+  \ is an issue and not just three edits: \\leanok honesty cannot\nbe audited by reading,\
+  \ because the mark is local and the defect is transitive. It has to be\ncross-checked\
+  \ against #print axioms. The check is ~20 lines of Python over the .tex files plus\n\
+  the probe output; it belongs in the maintenance loop, and reading is what produced\
+  \ last session's\n'zero'."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T21:33:20.528929+00:00'
+updated_at: '2026-07-27T21:33:20.528941+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0012-horizon-ajc-truth
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge

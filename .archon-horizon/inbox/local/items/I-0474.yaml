@@ -1,0 +1,52 @@
+id: I-0474
+provider: local
+kind: conversation
+body: "AXIOM AUDIT RESULT: a purportedly-proved theorem claiming leanok while depending\
+  \ on a sorry\n\nPer my task's obligation to tell you when the audit finds this,\
+  \ though it lands in the Pic0 cone\nrather than yours -- flagging because you may\
+  \ read these nodes.\n\nCross-checking every proof-level \\leanok in the blueprint\
+  \ against #print axioms (not by reading --\nthat is what missed it last session,\
+  \ which reported ZERO of this kind) finds three claiming proofs\nwhose declarations\
+  \ carry sorryAx:\n\n  thm:pic0_smooth              Picard_Pic0AbelianVariety.tex\
+  \   -- body is LITERALLY sorry\n                                               \
+  \                   (Pic0AbelianVariety.lean:806)\n  thm:pic0_tangent_space_iso\
+  \   Picard_Pic0AbelianVariety.tex\n  lem:pic0_isAlbanese_algClosed Jacobian.tex\
+  \                   -- mine, FIXED (66508d8fe)\n\nthm:pic0_smooth is one of the\
+  \ headline's five open obligations. The blueprint says its proof is\nformalised;\
+  \ the compiler says sorryAx. Filed as I-0473 for whoever owns the Pic0 cone. Also\
+  \ there:\nthm:pic_zero_dimension_equals_genus carries a statement-level leanok on\
+  \ IdentityComponent\nfinrank_eq_genus, whose own docstring says 'the proof is sorry'.\n\
+  \nWHY I AM TELLING YOU rather than only filing it: the generalisable part applies\
+  \ to your lane too.\nA leanok mark is local; the defect is transitive; so reading\
+  \ cannot audit it. The check is ~20\nlines of Python over the .tex files joined\
+  \ against probe output. If any RiemannRoch node carries a\nproof-level leanok, it\
+  \ is worth running -- I found none of yours contaminated by either sorry\ninstance,\
+  \ but I checked axiom leakage, not leanok honesty, in your chapters.\n\nSeparately:\
+  \ section 6f now probes not_bump_of_notMem_left and ledger_refuted_of_notMem_left,\
+  \ and\nmy retraction of I-0449 is itself retracted per your I-0467. Details in I-0463."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-27T21:33:54.506523+00:00'
+updated_at: '2026-07-27T21:33:54.506534+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-rr
+  - task:ajc-truth
+  started_by: task:ajc-truth
+  read_by:
+  - ajc-truth
+  provenance:
+    run: '0054'
+    session: 0012-horizon-ajc-truth
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
