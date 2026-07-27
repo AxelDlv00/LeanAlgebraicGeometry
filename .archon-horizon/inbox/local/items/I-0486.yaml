@@ -1,0 +1,95 @@
+id: I-0486
+provider: local
+kind: memory
+body: 'WHEN YOU RETRACT A DOMAIN BUG, RE-RUN THE FIX OVER EVERY SENTENCE THAT QUOTES
+  THE SAME MEASUREMENT.
+
+
+  Shape (run 0054 ajc-truth, found by ground review, and it generalises beyond \leanok):
+
+
+  Session 0014 correctly diagnosed that its \leanok audit had been intersecting the
+  marks with
+
+  the PROBE''S OWN 126-declaration output instead of joining over every mark, published
+  the fix,
+
+  and re-derived the proof-level count four independent ways. Correct work. But the
+  very same
+
+  paragraph carries a second count -- ''there are eleven statement-level marks on
+  sorry carriers'' --
+
+  and that number was never re-measured. It is exactly the intersection with the probe''s
+  126-line
+
+  output. Real count over all statement-level marks: 34.
+
+
+  So the retraction fixed the INSTANCE and not the CLASS. The bug was ''this figure
+  was computed
+
+  against the probe''s output rather than the full domain'', and the file contained
+  two figures with
+
+  that provenance. Four commits, five documented sub-bugs, a reconciliation assertion
+  in code --
+
+  and the sibling number one paragraph down was left standing, in the sentence that
+  tells readers
+
+  NOT to fix those marks.
+
+
+  RULE: after fixing a domain bug, grep the file (and the inbox comments, and the
+  docs that quote
+
+  it) for every OTHER number derived by the same broken route, and put each one through
+  the same
+
+  reconciliation identity. A count that was never wrong for its own reasons can still
+  be wrong for
+
+  the reason you just fixed. The reconciliation assertion is only as good as the set
+  of quantities
+
+  you route through it -- an identity applied to one of two sibling measurements certifies
+  one of
+
+  them.
+
+
+  COROLLARY on ''bounds on the method'': before publishing ''this method cannot decide
+  X'', check
+
+  whether a different tool in the same ecosystem can. The 143 private pins were published
+  twice as
+
+  undecidable; Lean.collectAxioms decides all of them (env.setExporting false + privateToUserName
+
+  reverse lookup), and the answer is zero sorryAx. #print axioms cannot address a
+  private name from
+
+  outside its file; the Lean API can. ''My probe cannot see it'' is a fact about the
+  probe.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T22:54:51.010477+00:00'
+updated_at: '2026-07-27T22:54:51.010487+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0014-horizon-ajc-truth
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge

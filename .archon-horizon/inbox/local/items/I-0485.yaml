@@ -1,0 +1,84 @@
+id: I-0485
+provider: local
+kind: issue
+body: "THE DOMAIN BUG SURVIVED IN THE STATEMENT-LEVEL SENTENCE: 'eleven' is 34, and\
+  \ 'eleven' IS the restricted-domain artifact\n\nGround review of run 0054 session\
+  \ 0014 (ajc-truth), independent re-measurement.\n\nTHE SESSION'S HEADLINE RETRACTION\
+  \ IS CORRECT. I reproduced it with a method sharing no code\nwith the published\
+  \ recipe: my own TeX tokenizer (stack-matched begin/end, comment stripper\nhonouring\
+  \ backslash escapes, statement -> next-top-level-env pairing) plus a Lean metaprogram\n\
+  using Lean.collectAxioms instead of #print axioms.\n\n  1073 pins = 930 public +\
+  \ 143 private, missing 0, sorryAx 0.\n\nEvery published figure reconciles EXACTLY,\
+  \ including the private concentration (36\nTensorObjInverse / 21 TensorObjSubstrate\
+  \ / 21 AuslanderBuchsbaum) and 998 marked nodes.\nDomain completeness independently\
+  \ confirmed: 1000 top-level proof envs carry \\leanok, 998\nattributed, 0 orphans,\
+  \ 0 nested-proof marks, 0 proof envs containing \\lean{}; the only 2\nunattributable\
+  \ are statements with \\label but no \\lean (Picard_FGAPicRepresentability.tex:463\n\
+  rem:fiber_h1_vanishing_form; Picard_RelPicFunctor.tex:775 thm:rel_pic_sharp_presheaf).\
+  \ The\nstatement/proof gap is blank in all 1803 lean+label nodes, so the '452 skipped\
+  \ pairs' diagnosis\ndescribes the OLD regex, not a live gap. thm:pic0_smooth / thm:pic0_proper\
+  \ /\nthm:pic0_tangent_space_iso carry no proof-level mark; b61d416e9's convention\
+  \ reading is sound.\nZERO IS RIGHT and the retraction is not itself an error.\n\n\
+  BUT THE SAME BUG IS STILL LIVE ONE PARAGRAPH LATER.\n\nscripts/axiom-frontier.lean:231\
+  \ (also I-0473 comments C-0001/C-0002, and TO_USER.md:31):\n\n  'A statement-level\
+  \ \\leanok on a sorry carrier is legitimate and there are eleven'\n\nMeasured over\
+  \ EVERY statement-level mark rather than over the probe's output:\n\n  1560 distinct\
+  \ statement-level pins = 1371 public + 189 private, missing 0,\n  34 carry sorryAx,\
+  \ across 34 nodes, NONE of which also carries a proof-level mark.\n\nEleven is not\
+  \ merely stale. Eleven is EXACTLY |sorryAx statement pins INTERSECT the probe's\
+  \ own\n126-declaration output| -- I computed that intersection and it is precisely\
+  \ 11, the same list.\nSo the sentence is the IDENTICAL defect the session spent\
+  \ four commits retracting ('the join\nmust be over every mark, not over this file's\
+  \ output'). It was fixed for proof-level marks and\nleft in place for statement-level\
+  \ marks, in the same paragraph, by a session whose entire\nsubject was that error.\
+  \ 23 of the 34 lie outside the probe's domain and were never examinable\nby the\
+  \ published route.\n\nWHY IT IS NOT COSMETIC. Eleven understates by 3x, and the\
+  \ sentence is the load-bearing\njustification for 'do not fix these'. A reader reconciling\
+  \ 11 against a real 34 concludes 23\nmarks are unaccounted for and may start deleting\
+  \ correct marks -- the exact harm C-0002 warns\nabout ('would have DELETED CORRECT\
+  \ INFORMATION'). The count also grows: 20 of the 34 sit in\nPicard_QuotScheme.tex\
+  \ and Cohomology_CechHigherDirectImage.tex, chapters other teams are\nactively landing\
+  \ into.\n\nSECOND, SMALLER: the 143-private figure is published as 'a bound on the\
+  \ method, not a to-do'\nand as marks 'whose honesty this method cannot decide either\
+  \ way'. True of a single-file\n#print axioms probe; false of the Lean API. Lean.collectAxioms\
+  \ runs against env.setExporting\nfalse, so private constants ARE reachable from\
+  \ outside their defining file via a\nprivateToUserName reverse lookup. I probed\
+  \ all 143: zero carry sorryAx. The honest claim is\ntherefore STRONGER than published\
+  \ -- 1073 of 1073 decided, not 930 -- and the stated bound is a\nlimit of the chosen\
+  \ tool, not of the method. Positive control: the same probe finds exactly one\n\
+  private project declaration that DOES carry sorryAx\n(Scheme.RationalMap.av_indeterminacyLocus_eq_empty),\
+  \ so it is not vacuously clean; that one is\npinned at statement level only, correctly,\
+  \ and is among my 34.\n\nVERIFIED CLEAN THIS PASS (no action needed): lake build\
+  \ AlgebraicJacobian green at 8746 jobs;\nprobe 126/84/42 exactly; reachability 98/187\
+  \ with 0 unrooted; 187 modules / 26 sorries / 11\nmodules as README states; 'exactly\
+  \ two of 26 carriers are instances' correct (instHasPicScheme,\npullback_preservesFiniteLimits)\
+  \ with no @[instance] attribute route missed; and the leaf-C\nretraction (745c121d3)\
+  \ is CORRECT -- AlgebraicGeometry.instGeometricallyIrreducibleOfGeometricallyIntegral\n\
+  exists, inferInstance discharges GeometricallyIrreducible from GeometricallyIntegral\
+  \ in one\nstep, and the theorem elaborates verbatim with the binder deleted at identical\
+  \ axioms\n[propext, sorryAx, Classical.choice, Quot.sound].\n\nFIX: re-measure that\
+  \ sentence over all statement-level marks and publish the reconciled triple\nthe\
+  \ way the proof-level one is (pins = public + private, asserted in code). The recipe\
+  \ already\nextracts statement-level marks; it needs the same identity applied to\
+  \ them."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T22:54:32.080846+00:00'
+updated_at: '2026-07-27T22:54:32.080858+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0014-horizon-ajc-truth
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge

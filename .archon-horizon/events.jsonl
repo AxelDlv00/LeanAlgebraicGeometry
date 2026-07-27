@@ -3376,3 +3376,6 @@
 {"type": "publish.completed", "id": "9f87a2fc2e4041dcb30ed9f6991093cd", "created_at": "2026-07-27T22:12:26.951294+00:00", "actor": "orchestrator", "data": {"run_id": "0055", "reports": [], "blueprints": [".archon-horizon/blueprints/Algebraic-Jacobian-Challenge.json"]}}
 {"type": "run.finished", "id": "e0e34af7c44245f8b26d52f5faf02904", "created_at": "2026-07-27T22:12:27.167986+00:00", "actor": "orchestrator", "data": {"run_id": "0055"}}
 {"type": "workspace.run_integrated", "id": "a24cfd4cf67f4f0a8e8a80fd604221a5", "created_at": "2026-07-27T22:12:30.503912+00:00", "actor": "orchestrator", "data": {"run_id": "0055", "sha": "b6c334611da5ea7a7474a156b241ab8302020acb", "changed": true}}
+{"type": "report.written", "id": "27cc7928ff3f427dbc2ab53ebaa2d663", "created_at": "2026-07-27T23:03:58.970741+00:00", "actor": "orchestrator", "data": {"name": "task-ajc-truth", "ref": ".archon-horizon/runs/0054/sessions/0014-horizon-ajc-truth/report.md"}}
+{"type": "task.incomplete", "id": "e6a8956ed86b4e60ae4db156f9ec2b48", "created_at": "2026-07-27T23:03:58.973320+00:00", "actor": "orchestrator", "data": {"task_id": "ajc-truth", "reason": "no-terminal-status-recorded"}}
+{"type": "task.finished", "id": "e1e50ecbb8b1404f80373c5c46c5366c", "created_at": "2026-07-27T23:03:58.976049+00:00", "actor": "horizon", "data": {"task_id": "ajc-truth", "status": "queued"}}
