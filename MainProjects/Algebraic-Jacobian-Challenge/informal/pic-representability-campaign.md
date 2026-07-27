@@ -20,6 +20,16 @@
 >    topology, so this is a design decision, not a platform limitation. Open with
 >    the human as inbox `I-0372`, roadmap node `AJC.picrep.rational-point`.
 >    Neither branch is assumed anywhere in this plan.
+>
+>    The scope of this decision narrowed on 2026-07-27, and it is worth being
+>    precise about what remains. The headline leaf used to assert the rational
+>    point *and* geometric integrality together. Geometric integrality of a smooth
+>    proper geometrically irreducible curve is not a decision at all: it follows
+>    from `Smooth ⇒ GeometricallyReduced`, now proved in mathlib generality at
+>    `AlgebraicJacobian/Curve/GeometricallyReduced.lean`, so `[GeometricallyIntegral
+>    C.hom]` in the target statement above is *free* given the challenge
+>    hypotheses. What the owner must decide is only the rational point, and that
+>    half is genuinely false in general rather than merely unproved.
 > 2. *Cluster P's provenance.* Cluster P (χ-ledger, section drops, uniform `H¹`
 >    vanishing) is the longest pole, and the sibling
 >    `Algebraic-Jacobian-Challenge-Rebuild` carries a large sorry-free
@@ -28,14 +38,37 @@
 >    the milestones below assume none of it has landed.
 >
 > **Axiom frontier.** `scripts/axiom-frontier.lean` (run with `lake env lean`)
-> is the reproducible check that a milestone claimed clean actually is. Note that
-> `#print axioms` on a theorem that *quantifies over* a gate reports clean axioms
-> regardless, because the hypothesis is discharged by the caller — measure at a
-> call site where the instance is synthesised. `G5` below already says to verify
-> axiom-cleanliness of `instHasPicScheme`; the same discipline applies to every
-> gate discharge in the table.
+> is the reproducible check that a milestone claimed clean actually is, and it is
+> also the record of what such a check *cannot* establish. A clean axiom set means
+> exactly one thing: no `sorry` is reachable from that proof term. Three separate
+> ways a milestone can still be short of unconditional mathematics have each been
+> measured in this tree:
+>
+> - `#print axioms` on a theorem that *quantifies over* a gate reports clean axioms
+>   regardless, because the hypothesis is discharged by the caller — measure at a
+>   call site where the instance is synthesised.
+> - A named hypothesis in the *statement* that is unproved is invisible to the
+>   check. Several cluster-P results are clean in exactly this way: they carry the
+>   closed χ-ledger or a peel-surjectivity datum as a hypothesis.
+> - A named hypothesis that is *false* is worse: the theorem is then vacuously true
+>   and reports clean axioms like any other. This is not hypothetical — it happened
+>   to a leaf of the rigid-pushforward gate, whose consumers were vacuous until the
+>   leaf was restated.
+>
+> `G5` below already says to verify axiom-cleanliness of `instHasPicScheme`; the
+> same discipline, in all three forms, applies to every gate discharge in the
+> table. A milestone is done when its statement is true and unconditional, not when
+> its axiom line is short.
+>
+> **Line numbers in this document have drifted and will drift again.** Every
+> `file.lean:NNN` citation below was accurate when written in July 2026 and most are
+> now off by tens of lines, because the files kept growing. Treat a bare line number
+> as a hint about *where to look*, never as evidence that a declaration exists or
+> says what the surrounding prose claims — resolve the declaration by name, with
+> `horizon search` or the LSP. Load-bearing citations are being converted to
+> declaration names as they are touched.
 
-Target: `instHasPicScheme` — `MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Picard/FGAPicRepresentability.lean:305-309` (verified this session: `⟨sorry⟩` body at :309; statement `∃ X, Nonempty ((picSharp C).RepresentableBy X) ∧ LocallyOfFiniteType X.hom ∧ IsSeparated X.hom` under `[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom] [HasRationalPoint C]`). Project paths relative to `MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/`; mathlib paths relative to `.lake-packages/mathlib/Mathlib/`.
+Target: `instHasPicScheme` — `MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Picard/FGAPicRepresentability.lean:259-263` (re-verified 2026-07-27: `⟨sorry⟩` body at :263; statement `∃ X, Nonempty ((picSharp C).RepresentableBy X) ∧ LocallyOfFiniteType X.hom ∧ IsSeparated X.hom` under `[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom] [HasRationalPoint C]`). Project paths relative to `MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/`; mathlib paths relative to `.lake-packages/mathlib/Mathlib/`.
 
 ---
 
@@ -76,7 +109,7 @@ All three target the honest `picSharp` statement, keep `[HasRationalPoint C]` as
 1. **Separatedness of `J'_r` is asserted in J5 but never milestoned.** Gluing the `J^Σ` along nontrivial transition isos does not give separatedness for free; it needs closedness of the transition graphs = closedness of the class-agreement locus. Repaired by the new milestone **B6** (closed-triviality-locus device), which is cheaper and safer than D2's valuative route.
 2. **G2's hypothesis "immersion `X' ↪ ℙ^N`" may be unavailable for the *glued* `J'_r`** — a scheme glued from finitely many quasi-projective opens is not obviously quasi-projective, and proving it would smuggle in the ample-bundle problem the Milne route dodges. Repaired by D2's form of the hypothesis: *every finite Γ-orbit lies in an affine open*, supplied by the Γ-stable cover `V_Σ` whose members carry Gr-immersions (finite point-set in a quasi-projective scheme lies in an affine open).
 
-**Feasibility 8.5 / Effort 8 / Risk 8.5**: maximal reuse of verified substrate (adelic `RiemannRoch/` lane — verified this session: the only genuine sorry in the lane is `RiemannRoch/WeilDivisor.lean:1281`; the `Cokernel.lean:133` / `CechAcyclicInstance.lean:73` grep hits are docstring text; plus `DivFunctor` `DivFunctorDef.lean:875`, `Grassmannian.representable` `GrassmannianRepresentability.lean:595-599`, mathlib coproducts `AlgebraicGeometry/Limits.lean:187/:224` (verified: `HasColimitsOfShape (Discrete σ) Scheme.{u}` + `CoproductsOfShapeDisjoint`), 01JJ `Sites/Representability.lean:207`, `sigmaDesc` `Morphisms/Basic.lean:303`, equalizer-closed `Morphisms/Separated.lean:356`). Its three XLs (P5, B3, G2) are **pairwise independent and all start by wave 2** — the best risk shape of the three designs. The B2 filtered-colimit brick is the correct systematic answer to the noetherian/arbitrary-`T` tension that D1 pushes into its engine statement and D2 leaves unresolved.
+**Feasibility 8.5 / Effort 8 / Risk 8.5**: maximal reuse of verified substrate (adelic `RiemannRoch/` lane — verified this session: the only genuine sorry in the lane is `WeilDivisor.principal_degree_zero`; the `Cokernel.lean:133` / `CechAcyclicInstance.lean:73` grep hits are docstring text; plus `DivFunctor` `DivFunctorDef.lean:875`, `Grassmannian.representable` `GrassmannianRepresentability.lean:595-599`, mathlib coproducts `AlgebraicGeometry/Limits.lean:187/:224` (verified: `HasColimitsOfShape (Discrete σ) Scheme.{u}` + `CoproductsOfShapeDisjoint`), 01JJ `Sites/Representability.lean:207`, `sigmaDesc` `Morphisms/Basic.lean:303`, equalizer-closed `Morphisms/Separated.lean:356`). Its three XLs (P5, B3, G2) are **pairwise independent and all start by wave 2** — the best risk shape of the three designs. The B2 filtered-colimit brick is the correct systematic answer to the noetherian/arbitrary-`T` tension that D1 pushes into its engine statement and D2 leaves unresolved.
 
 ### Judge's additional finding (adopted into the plan)
 
@@ -102,14 +135,14 @@ Sizes: S ≤ 1 session, M ≈ 1–2, L ≈ 3–5, XL ≥ 6.
 
 **P1 — Discharge the adelic lane's gates.**
 (i) Instances for `ExistsNonconstantMapToP1 C` (`RiemannRoch/Adelic/FiniteMapToP1.lean:437`, verified: class carries no instance, everything downstream to `HasFiniteMapToP1` is proved) and `P1HasLaurentChartData`; audit whether the `HasExt`-shaped inputs are already unconditional in `CechComparisonGate.lean:114-136`.
-(ii) `RiemannRoch/Adelic/GateInstances.lean`. (iii) trdeg-1 function field; in-lane substrate. (iv) **M**. (v) 🔍 **AUDIT-FIRST**: kernel-build the whole `RiemannRoch/` closure before relying on "sorry-free" (memory lesson: verify inherited closures; the lane's only true sorry must remain `WeilDivisor.lean:1281`, off-path).
+(ii) `RiemannRoch/Adelic/GateInstances.lean`. (iii) trdeg-1 function field; in-lane substrate. (iv) **M**. (v) 🔍 **AUDIT-FIRST**: kernel-build the whole `RiemannRoch/` closure before relying on "sorry-free" (memory lesson: verify inherited closures; the lane's only true sorry must remain `WeilDivisor.principal_degree_zero`, off-path).
 
 **P2 — h⁰/h¹/χ kit over all field extensions.**
 (i) For every field κ/k and invertible `M` on `C_κ`: `h0 κ M`, `h1 κ M : ℕ` finite; pinned on the **Čech carrier** (`AffineCoverMVSquare`, `RiemannRoch/Adelic/Substrate.lean`) with cover-independence proved Čech-to-Čech (structurally avoids the `HasCechToHModuleIso` gate); flat-base-change stability `h^i(C_κ, M) = h^i(C_{κ'}, M_{κ'})`.
 (ii) `RiemannRoch/CohomologyKit.lean`. (iii) P1; `GenusFiniteness.lean:64`. (iv) **L**. (v) 🔍 AUDIT: Λ-stability instances for `C_κ` (smooth proper geometrically integral over κ) + base-change of `AffineCoverMVSquare` — record as named lemmas, don't inline.
 
 **P3 — Riemann–Roch χ-ledger.**
-(i) `χ(M) = deg M + 1 − g` with `deg` the residue-weighted Weil degree (`RiemannRoch/WeilDivisor.lean:1047`); point-sequence induction from `χ(O) = 1 − g`; `M ≅ O(div s)` for `0 ≠ s ∈ H⁰` (integrality ⟹ regular section). Byproduct: closes the input to the `WeilDivisor.lean:1281` sorry (off-path bonus).
+(i) `χ(M) = deg M + 1 − g` with `deg` the residue-weighted Weil degree (`RiemannRoch/WeilDivisor.lean:1047`); point-sequence induction from `χ(O) = 1 − g`; `M ≅ O(div s)` for `0 ≠ s ∈ H⁰` (integrality ⟹ regular section). Byproduct: closes the input to the `WeilDivisor.principal_degree_zero` sorry (off-path bonus).
 (ii) `RiemannRoch/RiemannRochChi.lean`. (iii) P2; `WeilDivisor.lean` linear equivalence :1471. (iv) **L**. (v) 🔍 AUDIT: degree invariance under linear equivalence over **non-perfect** κ — keep the residue-field-weighted convention.
 
 **P4 — h⁰ bounds, drops, rational-point density.**
@@ -227,13 +260,13 @@ House pattern: Prop-classes, **no sorried instances**, deleted on discharge.
 | `HasPicDegSchemeSepClosed` (optional) | J5 | G1 | **J5** (wave 4) |
 | `HasGaloisDescent` (optional) | G2 | G3 | **G2** (wave 2–3) |
 
-Order: P1 → (P5, B3, G2 in parallel) → D4' → J5 → G3 → G5. Final state: **zero campaign gates**; `HasRationalPoint` (:139) remains as an honest hypothesis; `HasSmoothProperQuotient` (:541) remains empty, unused, docstring-flagged. Off-path and untouched: Quot-lane sorries (`QuotRepresentability.lean:79`, `QuotFunctorDef.lean:464/:719`, `SerreFiniteness.lean:79/:262`), `WeilDivisor.lean:1281` (P3 may close it as a bonus).
+Order: P1 → (P5, B3, G2 in parallel) → D4' → J5 → G3 → G5. Final state: **zero campaign gates**; `HasRationalPoint` remains as an honest hypothesis; `HasSmoothProperQuotient` remains empty, unused, docstring-flagged. Off-path and untouched: the Quot-lane sorries in `QuotRepresentability.lean`, `QuotFunctorDef.lean` (two) and `SerreFiniteness.lean` (two), and `WeilDivisor.principal_degree_zero` (P3 may close it as a bonus).
 
 ### Wave-1 parallel work list (6 agent tasks)
 
 **W1-A — Adelic gate discharge + closure certification (P1).**
 Do: kernel-build `RiemannRoch/` (`lake build`, check PIPESTATUS); prove the `ExistsNonconstantMapToP1` instance (trdeg-1 nonconstant function); assess/finish `P1HasLaurentChartData`; audit `CechComparisonGate.lean:114-136` for conditionality.
-Accept: instances compile axiom-clean (`lean_verify`); a note listing every remaining gate in the lane with file:line; confirmation the only sorry is `WeilDivisor.lean:1281`.
+Accept: instances compile axiom-clean (`lean_verify`); a note listing every remaining gate in the lane with file:line; confirmation the only sorry is `WeilDivisor.principal_degree_zero`.
 
 **W1-B — B3 statement-pin + scaffold, and B5.**
 Do: run the B3 statement audit (all-scheme-points quantifier, arbitrary base-change ring maps, two-step pin) BEFORE writing Lean; pin `pushforward_locallyFree_of_h1_vanishing` + corollary behind a finiteness gate; build the `ℙ¹_A`-pushforward reduction and the 2-chart Čech complex; prove B5 both directions modulo the gate.
