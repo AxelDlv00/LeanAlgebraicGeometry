@@ -351,12 +351,18 @@ overlap.  If `P.point ∉ U₀ ⊓ U₁` then `1·P + E` and `E` impose the *sam
 they differ only at `P` — so `𝒜(1·P + E) = 𝒜(E)` and one may take `y = x`, with
 `x − y = 0` a coboundary for free.
 
-**How much this is worth, stated honestly.**  It is a reduction and not a discharge, and it
-is a *small* reduction — smaller than the phrase "only on the overlap" suggests.  For a
-2-affine cover of an irreducible curve the overlap `U₀ ⊓ U₁` is dense and omits only finitely
-many points, so the primes this section disposes of are the **few**, not the many.  The
-direction of the saving is the opposite of what one might hope: one cannot shrink the
-exceptional set by choosing a better cover, because it is already nearly empty.
+**How much this is worth, stated honestly.**  It is a reduction and not a discharge, and it is
+probably a *small* reduction — smaller than the phrase "only on the overlap" suggests.  On the
+covers this lane actually uses (two nonempty affine opens of an irreducible curve), the overlap
+`U₀ ⊓ U₁` should be a dense open omitting only finitely many closed points, so the primes
+disposed of here are the **few**, not the many, and the exceptional set cannot be shrunk by
+choosing a better cover — it is already nearly empty.
+
+That last paragraph is a *mathematical expectation about the intended covers, not a theorem in
+this file*: nothing below quantifies over "the covers the lane uses", and the lemmas hold for
+arbitrary `U₀ U₁` where the exceptional set may be large or everything.  It is flagged this way
+deliberately, since the estimate argues against the value of my own lemma and it would be easy
+to state it as established fact in either direction.
 
 What remains at an overlap point is the substantive input: the
 Mittag-Leffler/strong-approximation statement that a section with a first-order pole at `P`
