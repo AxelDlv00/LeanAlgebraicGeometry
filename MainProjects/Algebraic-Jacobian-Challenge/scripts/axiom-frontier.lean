@@ -36,9 +36,11 @@ wired to the stated theorem:
     print(f'{len(seen)} of {total} project modules reachable from the headline')
     PY
 
-At the time this probe was last re-measured that reports 97 reachable modules, up from
-8 before `picardJacobianWitness` was wired to `Scheme.Pic0Scheme` (the 97th is
-`Curve/GeometricallyReduced.lean`, which discharges the curve's geometric integrality).
+At the time this probe was last re-measured that reports 98 reachable modules, up from
+8 before `picardJacobianWitness` was wired to `Scheme.Pic0Scheme`.  The two most recent
+additions are `Curve/GeometricallyReduced.lean`, which discharges the curve's geometric
+integrality, and `Albanese/AlbaneseUP.lean`, which the headline now reaches because leaf C
+is stated against the landed universal property (`isAlbanese_pic0_of_isAlgClosed`).
 The denominator moves as modules land, so read the reachable count, not the ratio — and
 note that the reachable count does *not* move when a module lands beside the headline
 cone rather than under it, which is the normal case for the rigid-pushforward and
@@ -59,7 +61,7 @@ How to read the output.  Every line is one declaration; the only token that matt
 
 Note the `re.split` rather than a plain line filter: Lean wraps a long axiom list over
 several lines, so a per-line scan misclassifies exactly the declarations whose axiom
-list is longest.  Measured 2026-07-27 on the rooted tree: 89 probed, 54 clean, 35
+list is longest.  Measured 2026-07-27 on the rooted tree: 90 probed, 54 clean, 36
 carrying `sorryAx`.
 
 Companion measurement 2 — is every module on disk rooted?  A module that nothing
@@ -87,6 +89,14 @@ open AlgebraicGeometry AlgebraicGeometry.Scheme
 -- (`Curve/GeometricallyReduced.lean`).  Clean here means it really is discharged, not
 -- that a hypothesis was moved.
 #print axioms AlgebraicGeometry.geometricallyIntegral_of_curve
+
+-- Leaf C at the strength the landed Albanese development actually reaches.  This is a
+-- theorem, so what it measures is the DISTANCE from the leaf: over an algebraically closed
+-- field, in positive genus, and given the basepoint condition, the universal property is
+-- `Albanese.Pic0.albanese_universal_property` on the nose.  It reports `sorryAx` all the
+-- same, because `Pic0.abelJacobi` is unconstructed -- which is the honest reading: a faithful
+-- record of where the mathematics stops is not a discharge.
+#print axioms AlgebraicGeometry.isAlbanese_pic0_of_isAlgClosed
 
 -- §1 The headline (AlgebraicJacobian/Jacobian.lean, AbelJacobi.lean)
 #print axioms AlgebraicGeometry.picardJacobianWitness

@@ -92,6 +92,9 @@ import AlgebraicJacobian.Picard.RigidPushforwardRank
 -- no `instance : HasRigidPushforward`, so §6c of the axiom probe still records the gate
 -- as uninstantiated.
 import AlgebraicJacobian.Picard.RigidPushforwardInstance
+-- Aimed at the one statement the gate still costs: the chart-level form of the Γ base
+-- change. Sits over FiberChart, beside the assembly rather than under it.
+import AlgebraicJacobian.Picard.RigidPushforwardChartBaseChange
 import AlgebraicJacobian.Picard.P1SectionsFinite
 import AlgebraicJacobian.Picard.TwoTermFiniteFree
 import AlgebraicJacobian.Picard.SemicontinuityH0

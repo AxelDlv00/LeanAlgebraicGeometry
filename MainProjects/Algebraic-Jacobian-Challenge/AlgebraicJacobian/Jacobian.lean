@@ -7,6 +7,7 @@ import Mathlib
 import AlgebraicJacobian.Genus
 import AlgebraicJacobian.Curve.GeometricallyReduced
 import AlgebraicJacobian.Picard.Pic0AbelianVariety
+import AlgebraicJacobian.Albanese.AlbaneseUP
 
 /-! # The Jacobian of a smooth proper curve
 
@@ -50,7 +51,10 @@ The three leaves are each stated at exactly the strength the assembly consumes:
   unproved, so the leaf presupposes an obligation rather than resting on one.
 - `isAlbanese_pic0` — the Albanese universal property over an arbitrary base field and
   for every marked point, where the landed proof covers the algebraically closed,
-  positive-genus case.
+  positive-genus case. `isAlbanese_pic0_of_isAlgClosed` measures the distance exactly:
+  in that case the universal property *is* the landed
+  `Albanese.Pic0.albanese_universal_property` with no transport, and what the leaf adds
+  is arbitrary base field, genus `0`, and the basepoint condition `P ≫ ι_P = η`.
 
 The file contains:
 - `IsAlbanese`: the Albanese universal property for a pointed curve.
@@ -296,7 +300,12 @@ genus is positive. The witness needs the property over the ambient field `k` and
 pointed morphism from a genus-`0` curve to an abelian variety is constant).
 
 Descending the algebraically-closed case to `k` is the Galois-descent step of the
-campaign's cluster `G`; the genus-`0` case is Mumford §4 rigidity. -/
+campaign's cluster `G`; the genus-`0` case is Mumford §4 rigidity.
+
+`isAlbanese_pic0_of_isAlgClosed` below is the same statement in the case the landed
+proof covers, and it is a theorem rather than a leaf: it shows the *only* content this
+leaf adds over the landed `Albanese.Pic0.albanese_universal_property`, beyond the two
+restrictions named above, is the basepoint condition. -/
 theorem isAlbanese_pic0 (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]
     [Scheme.HasPicScheme C] [Scheme.PicScheme.PicSchemeLocallyOfFiniteType C]
@@ -306,6 +315,47 @@ theorem isAlbanese_pic0 (C : Over (Spec (.of k)))
     (P : 𝟙_ (Over (Spec (.of k))) ⟶ C) :
     @IsAlbanese k _ C P (Scheme.Pic0Scheme C) grp pr sm gi :=
   sorry
+
+/-- **Leaf C in the case the landed proof covers**, over an algebraically closed field and
+in positive genus, with the basepoint condition as an explicit hypothesis.
+
+This is a theorem, and it is the honest measure of the distance between
+`isAlbanese_pic0` and the Albanese development. The factorisation clause of `IsAlbanese`
+-- the whole universal property -- is `Albanese.Pic0.albanese_universal_property` applied
+directly, with no transport: `Pic0.jacobianScheme C` is `Scheme.Pic0Scheme C`, so the
+statements match on the nose. What `isAlbanese_pic0` adds is therefore exactly three
+things, and no more:
+
+1. arbitrary base field, in place of algebraically closed -- the Galois-descent step of
+   the campaign's cluster `G`;
+2. `genus C = 0` as well as positive genus -- where `Pic⁰_{C/k} = Spec k` and the content
+   is Mumford §4 rigidity;
+3. the basepoint condition `P ≫ ι_P = η`, taken here as the hypothesis `hbase`.
+
+The third is the one that is easy to lose sight of, because it is not a restriction on
+the landed theorem's *hypotheses* but a conjunct of `IsAlbanese` that
+`albanese_universal_property` does not state. In the Albanese development it is
+`lem:abel_jacobi_morphism`: the restriction of the diagonal correspondence
+`𝓛^{P₀} = 𝓞_{C × C}(Δ - \{P₀\} × C - C × \{P₀\})` to `C × \{P₀\}` is trivial, so the
+moduli class of the basepoint is the identity. It is unproved because
+`Pic0.abelJacobi` is itself unconstructed, and no statement of it can be discharged
+before that morphism exists.
+
+Note also what this does *not* establish. `Pic0.abelJacobi` is `sorry`-bodied, so this
+theorem's own axioms carry `sorryAx` and it is not a discharge of anything; it is a
+faithful record of where the mathematics stops, in a form the compiler checks. -/
+theorem isAlbanese_pic0_of_isAlgClosed [IsAlgClosed k] (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
+    [GeometricallyIntegral C.hom]
+    [Scheme.HasPicScheme C] [Scheme.PicScheme.PicSchemeLocallyOfFiniteType C]
+    (hg : 0 < genus C)
+    (grp : GrpObj (Scheme.Pic0Scheme C)) (pr : IsProper (Scheme.Pic0Scheme C).hom)
+    (sm : Smooth (Scheme.Pic0Scheme C).hom)
+    (gi : GeometricallyIrreducible (Scheme.Pic0Scheme C).hom)
+    (P : 𝟙_ (Over (Spec (.of k))) ⟶ C)
+    (hbase : P ≫ Pic0.abelJacobi C P = @MonObj.one _ _ _ _ grp.toMonObj) :
+    @IsAlbanese k _ C P (Scheme.Pic0Scheme C) grp pr sm gi :=
+  ⟨Pic0.abelJacobi C P, hbase, fun f hf => Pic0.albanese_universal_property C hg P f hf⟩
 
 /-- The Albanese witness for a smooth proper geometrically irreducible curve `C`,
 constructed **uniformly in the genus** as the identity component `Pic⁰_{C/k}` of the
