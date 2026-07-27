@@ -122,16 +122,104 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
 \end{theorem}
 
 \begin{proof}
-  Representability of the relative Picard functor gives \(\Pic_{C/k}\).
-  Its identity component is a group scheme; the structure theorem for the
-  identity component of the Picard scheme makes it smooth, proper, and
-  geometrically irreducible.  The tangent-space identification
-  \[
-    T_0\Pic^0_{C/k}\cong H^1(C,\mathcal O_C)
-  \]
-  gives relative dimension \(g(C)\).  Finally, the Abel--Jacobi morphism and
-  its universal property give an Albanese structure for each \(P\in C(k)\).
-  These data form the required witness.
+  \uses{lem:curve_hypothesis_gap, lem:pic0_relative_dimension_genus,
+    lem:pic0_isAlbanese_all_points}
+  Representability of the relative Picard functor gives \(\Pic_{C/k}\), and its
+  identity component \(\Pic^0_{C/k}\) is a group scheme, smooth, proper and
+  geometrically irreducible by \cref{thm:pic0_isAbelianVariety}. Those four data
+  are the first four fields of the witness.
+
+  Three further steps are needed, and each is isolated as a lemma because it does
+  not follow from the four above.
+
+  First, the hypotheses must be reconciled: \(\Pic^0_{C/k}\) is constructed for a
+  geometrically \emph{integral} curve carrying a \(k\)-rational point, whereas a
+  witness is required for every smooth proper geometrically irreducible curve.
+  This is \cref{lem:curve_hypothesis_gap}.
+
+  Second, the smoothness supplied by \cref{thm:pic0_isAbelianVariety} carries no
+  relative dimension, while the witness records smoothness at the specific
+  relative dimension \(g(C)\); the tangent-space identification
+  \(T_0\Pic^0_{C/k}\cong H^1(C,\mathcal O_C)\) of
+  \cref{thm:pic_zero_dimension_equals_genus} supplies the dimension, and
+  \cref{lem:pic0_relative_dimension_genus} is the resulting refinement.
+
+  Third, the Albanese structure is required for \emph{every} \(P\in C(k)\) and for
+  every genus, whereas \cref{thm:albanese_universal_property_northstar} is proved
+  over an algebraically closed base field and for \(g(C) > 0\); the extension is
+  \cref{lem:pic0_isAlbanese_all_points}. Together these seven data form the
+  required witness.
+\end{proof}
+
+\begin{lemma}[Rational point and geometric integrality]
+  \label{lem:curve_hypothesis_gap}
+  \lean{AlgebraicGeometry.hasRationalPoint_and_geometricallyIntegral}
+  \uses{def:has_rational_point}
+  A smooth proper geometrically irreducible curve \(C\) over a field \(k\) is
+  geometrically integral and has a \(k\)-rational point.
+\end{lemma}
+
+\begin{proof}
+  Geometric integrality holds: a smooth morphism is geometrically reduced, and a
+  geometrically reduced geometrically irreducible morphism is geometrically
+  integral.
+
+  The second assertion is \emph{false} as stated. A smooth proper geometrically
+  integral curve need not have a \(k\)-rational point: a conic over \(\mathbb{Q}\)
+  with no rational point is a genus-\(0\) example, and there are genus-\(2\)
+  curves over \(\mathbb{Q}\) with no rational point. Over an algebraically closed
+  field a rational point always exists, since a curve there is a nonempty
+  Jacobson space whose closed points are rational.
+
+  The lemma is therefore stated here only to name the gap between the hypotheses
+  of the witness and those of the Picard construction, and it is not provable in
+  this form. Closing it requires either weakening the claim --- carry
+  \(C(k) \neq \emptyset\) as a hypothesis of the Jacobian itself, which proves
+  something weaker than intended --- or replacing the input by a representability
+  statement that needs no section, namely representability of the \'etale
+  sheafification (\cref{sec:fga_pic_setup}). That choice is open.
+\end{proof}
+
+\begin{lemma}[Relative dimension of the identity component]
+  \label{lem:pic0_relative_dimension_genus}
+  \lean{AlgebraicGeometry.smoothOfRelativeDimension_genus_pic0}
+  \uses{def:genus, thm:pic_zero_dimension_equals_genus, thm:pic0_isAbelianVariety}
+  For a smooth proper geometrically integral curve \(C/k\) whose Picard functor is
+  representable, \(\Pic^0_{C/k}\) is smooth over \(k\) of relative dimension
+  \(g(C)\).
+\end{lemma}
+
+\begin{proof}
+  \(\Pic^0_{C/k}\) is a smooth \(k\)-group scheme by
+  \cref{thm:pic0_isAbelianVariety}. For a smooth group scheme over a field the
+  relative dimension is constant and equals the dimension of the tangent space at
+  the identity, which is \(H^1(C,\mathcal O_C)\) by
+  \cref{thm:pic_zero_dimension_equals_genus}. Its \(k\)-dimension is \(g(C)\) by
+  the definition of the genus (\cref{def:genus}).
+\end{proof}
+
+\begin{lemma}[Albanese property at every point, in every genus]
+  \label{lem:pic0_isAlbanese_all_points}
+  \lean{AlgebraicGeometry.isAlbanese_pic0}
+  \uses{def:IsAlbanese, thm:albanese_universal_property_northstar}
+  Let \(C/k\) be a smooth proper geometrically integral curve whose Picard functor
+  is representable. Then for every \(P\in C(k)\), the scheme \(\Pic^0_{C/k}\)
+  satisfies the Albanese universal property for the pointed curve \((C,P)\).
+\end{lemma}
+
+\begin{proof}
+  For \(g(C) > 0\) and \(k\) algebraically closed this is
+  \cref{thm:albanese_universal_property_northstar}, via the Abel--Jacobi morphism
+  \(\iota_P\).
+
+  Two extensions are required. Over a general \(k\), apply the algebraically
+  closed case over \(k^s\) and descend: the universal morphism and the factoring
+  homomorphism are unique, so they are Galois-equivariant and descend to \(k\).
+  For \(g(C) = 0\) the tangent space \(H^1(C,\mathcal O_C)\) vanishes, so
+  \(\Pic^0_{C/k}\) is a smooth proper group scheme of dimension \(0\), namely
+  \(\Spec k\); the universal property then asserts that every pointed morphism
+  from \(C\) to an abelian variety is constant, which is the rigidity statement
+  that a morphism from a genus-\(0\) curve to an abelian variety is constant.
 \end{proof}
 
 \begin{theorem}[Existence of a Jacobian witness]\leanok
