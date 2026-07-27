@@ -111,6 +111,43 @@ this probe as well: `import AlgebraicJacobian` does not reach it, so `#print axi
 its declarations cannot even be written here.  Replace the `stack` seed above with
 `['AlgebraicJacobian']` and compare against the on-disk module list; the difference is
 the set of modules whose axioms nobody is measuring.  It should be empty.
+
+Companion measurement 3 — is every blueprint `\leanok` honest?  This one exists because
+reading cannot answer it.  A `\leanok` is a local mark, but the defect is transitive: a
+proof genuinely written in Lean is still not proved if it routes through a `sorry`, and
+nothing at the mark says so.  An audit by eye reported "zero dishonest proof-level marks"
+one session before this join found three.  Join the marks against this file's output:
+
+    lake env lean scripts/axiom-frontier.lean > /tmp/ax.txt
+    python3 - <<'PY'
+    import re, glob
+    ax = open('/tmp/ax.txt').read()
+    leaks = {m.group(1): 'sorryAx' in e
+             for e in re.split(r"\n(?=')", ax)
+             for m in [re.match(r"'([^']+)'", e)] if m}
+    for fn in glob.glob('blueprint/src/chapters/*.tex'):
+        t = open(fn).read()
+        for m in re.finditer(r'\\begin\{(theorem|lemma|definition|proposition|corollary)\}'
+                             r'(.*?)\\end\{\1\}\s*\n\s*\\begin\{proof\}(.*?)\\end\{proof\}',
+                             t, re.S):
+            stmt, proof = m.group(2), m.group(3)
+            lab = re.search(r'\\label\{([^}]*)\}', stmt)
+            lean = re.search(r'\\lean\{([^}]*)\}', stmt)
+            if not (lab and lean and '\\leanok' in proof):
+                continue
+            for d in (x.strip() for x in lean.group(1).split(',')):
+                if leaks.get(d):
+                    print('DISHONEST', lab.group(1), d, fn.split('/')[-1])
+    PY
+
+Only *proof*-level marks are defects here.  A **statement**-level `\leanok` on a
+`sorry` carrier is legitimate and there are eleven: it claims the signature is
+formalised, which is true of a `sorry`-bodied declaration.  Do not "fix" those — the
+distinction is the convention, and deleting a correct mark to make a report cleaner is
+the same error as leaving a false one.
+
+A declaration the probe does not name is invisible to this check too, so its coverage is
+bounded by §0–§8 rather than by the blueprint.
 -/
 import AlgebraicJacobian
 
