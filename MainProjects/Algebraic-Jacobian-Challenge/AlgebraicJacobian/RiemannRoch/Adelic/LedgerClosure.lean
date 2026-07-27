@@ -509,47 +509,41 @@ theorem finrank_localStepDom_eq_zero_of_notMem_overlap
     exact Submodule.sub_mem _ (h ▸ x.2) (h ▸ y.2)
   exact Module.finrank_zero_of_subsingleton
 
-/-- **`chi_add`'s exactness hypotheses are unsatisfiable at an off-overlap prime, if the bump
-holds there.**
+/-- **`hbump` fails at an off-overlap prime, given `chi_add`'s conclusion there.**  The
+*conditional* form of the refutation; the unconditional one is
+`ChiUnconditional.not_bump_of_notMem_left`.
 
-**Read the statement, not the old title.**  This theorem used to be advertised as "`hbump` is
-REFUTED at every off-overlap prime".  It does not say that, and the stronger reading is false.
-What it says is: *given* `hchiAdd` — the conclusion of `ChiLedger.chi_add`, i.e. that the χ-jump
-equals the **overlap** local step — the bump fails.  Since that local step is `0` off the
-overlap, the honest content is that `chi_add`'s conclusion and the bump are incompatible there,
-and `ChiUnconditional.chi_eq_charts_sub_overlap` settles which one gives way: computing χ off
-the overlap with **no** exactness hypothesis yields a jump equal to the surviving one-chart
-step, so it is `chi_add`'s four hypotheses that cannot hold at such a prime.  A conditional
-refutation whose hypothesis is unsatisfiable exactly where the theorem applies refutes nothing;
-`ChiUnconditional.bump_iff_chartStep_of_notMem_left` gives the bump's actual off-overlap
-content, which is a one-chart approximation statement.
-
-What survives unchanged, and was worth finding: the cost accounting that five docstrings in
-this lane carried (including this file's) *was* false.  Those said each instance of `hbump` is
-"one application of `ChiLedger.chi_add_eq_residueDeg`".  **False off the overlap**:
-
-* `chi_add_eq_residueDeg` carries `hPV : P.point ∈ U₀ ⊓ U₁`, so at an off-overlap `P` the lane
-  has no route to the bump at all — not even a gated one.
-
-And the incompatibility below is real: `chi_add` concludes
+The incompatibility is real: `chi_add` concludes
 `χ(1·P + E) = χ(E) + dim_k(𝒜(1·P+E)/𝒜(E))`, off the overlap that dimension is `0`
 (`finrank_localStepDom_eq_zero_of_notMem_overlap`), while `hbump` asserts a jump of
 `[κ(P):k] ≥ 1` (`one_le_residueDeg`).  The two cannot both hold.
 
-**Which one gives way.**  `chi_add`'s.  Its window/connect/twist exactness hypotheses simply
-fail at an off-overlap one-point step, and since a 2-affine cover of a proper curve has
-`U₀ ⊓ U₁ ≠ ⊤`, that set of primes is nonempty for the covers of interest.  The ungated Čech
-count (`ChiUnconditional.chi_eq_charts_sub_overlap`) computes the same χ-jump with no exactness
-hypothesis at all and gets the one-chart step, which is `≥ 0` and consistent with `[κ(P):k]`.
+**Which one gives way: `hbump`.**  `ChiUnconditional` §5–§6 settle it, and the answer is *not*
+the one an intermediate version of this docstring gave.  On a genuine cover with
+finite-dimensional chart sections, `ChiUnconditional.ell_le_finrank_chart_along_tower` bounds `ℓ`
+— and hence χ — along the tower `n·P` at any `P` off a chart, while `hbump` demands growth
+`n·[κ(P):k]`.  So `hbump` is false there outright, and the closed ledger with it
+(`ledger_refuted_of_notMem_left`).
 
 **What this does and does not do to `chi_eq_of_bump`.**  It does not touch its proof, which is
-correct: from `hbump` the ledger follows at every divisor.  What it establishes is that a
-consumer intending to discharge `hbump` from `chi_add_eq_residueDeg` **cannot** — that producer
-is unavailable off the overlap and its own hypotheses fail there.  It does *not* establish that
-`hbump` is false anywhere.
+correct: from `hbump` the ledger follows at every divisor.  What it means is that `chi_eq_of_bump`
+derives a false conclusion from a false hypothesis on such a cover, so it must **not** be
+advertised as a route to the ledger.  A consumer intending to discharge `hbump` from
+`chi_add_eq_residueDeg` cannot — that producer requires `P.point ∈ U₀ ⊓ U₁` and is unavailable off
+the overlap.
 
-Credit: found by an independent `work-reviewer` audit of this session's work (inbox I-0449 /
-I-0451), and machine-checked here rather than left as prose. -/
+**Correction history.**  This docstring was twice wrong in opposite directions.  It first
+advertised itself as showing "`hbump` is REFUTED at every off-overlap prime" — too strong for what
+the *statement* says, since the hypothesis `hchiAdd` is doing work.  It was then rewritten to say
+that `chi_add`'s hypotheses are what fail and that `hbump` "is not false anywhere" — which was
+false.  The stable position is above: the statement here is conditional, and the unconditional
+refutation of `hbump` exists in `ChiUnconditional`.  What was correct throughout: the cost
+accounting five docstrings in this lane carried ("one application of
+`ChiLedger.chi_add_eq_residueDeg`" per bump instance) *was* false off the overlap.
+
+Credit: the conditional refutation was found by an independent `work-reviewer` audit (inbox
+I-0449 / I-0451); the unconditional one, and the correction of the middle position above, by a
+second such audit (I-0467 / I-0468).  Both machine-checked rather than left as prose. -/
 theorem not_bump_of_notMem_overlap
     {P : X.PrimeDivisor} (hP : P.point ∉ (U₀ ⊓ U₁ : X.Opens)) (E : X.WeilDivisor)
     [Module.Finite k (localStepTgt k P 1)]
