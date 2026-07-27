@@ -494,8 +494,17 @@ not two.  Item 1 below is closed; item 2 is what remains.
    (`residueDeg_eq_one_of_isAlgClosed_curve`), for a prime divisor of a curve
    `C : Over (Spec k̄)` with `k̄` algebraically closed, under
    `[IsIntegral] [IsLocallyNoetherian] [IsRegularInCodimensionOne] [LocallyOfFiniteType]`
-   and `[SmoothOfRelativeDimension 1]` — and `LocallyOfFiniteType` synthesizes from
-   smoothness, so these are the hypotheses the project's headline curve already carries.
+   and `[SmoothOfRelativeDimension 1]` — all of which the project's headline curve already
+   carries, `LocallyOfFiniteType` because mathlib's `IsProper` extends it structurally.
+
+   (An earlier version of this sentence said `LocallyOfFiniteType` "synthesizes from
+   smoothness".  **That is false in the relevant import closure**: the
+   `SmoothOfRelativeDimension 1 → Smooth` bridge lives in
+   `AlgebraicJacobian/Curve/GeometricallyReduced.lean`, which `Adelic/ResidueField.lean` does
+   not import, and `infer_instance` for `LocallyOfFiniteType` from smoothness alone fails
+   there — machine-checked.  From `[IsProper]` it succeeds.  The applicability conclusion is
+   unchanged, because `principal_degree_zero` and every other real consumer carries
+   `[IsProper]`; only the stated reason was wrong.)
 
    Two earlier descriptions of this item are now history.  It was first an informal remark;
    then §5–§7 of `Adelic/GlobalGeneration.lean` made it a machine-checked *equivalence* to a

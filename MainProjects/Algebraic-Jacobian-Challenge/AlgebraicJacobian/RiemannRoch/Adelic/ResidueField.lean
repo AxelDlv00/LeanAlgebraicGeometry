@@ -41,10 +41,23 @@ This file builds all three, for a curve `C : Over (Spec k)`, and so closes the g
    `κ(x) ≅ k` for a closed point of a scheme **locally of finite type** over an
    algebraically closed field, obtaining integrality from
    `isFinite_iff_locallyOfFiniteType_of_jacobsonSpace` instead.  `LocallyOfFiniteType C.hom`
-   is a hypothesis a smooth curve satisfies, unlike a bare residue-finiteness gate.
+   is a hypothesis the project's curves genuinely have, unlike a bare residue-finiteness gate.
 
 So the exchange is: one open fact **out**, and in its place a `LocallyOfFiniteType`
 hypothesis plus the closedness of the point — both genuinely available.
+
+**Where `LocallyOfFiniteType` comes from, precisely.**  From `[IsProper C.hom]`, which mathlib
+declares as `class IsProper extends IsSeparated f, UniversallyClosed f, LocallyOfFiniteType f` —
+so a proper curve has it structurally, and every real consumer of this file (notably
+`Scheme.WeilDivisor.principal_degree_zero`) carries `[IsProper]`.
+
+It does **not** come from smoothness in this file's import closure, and an earlier version of
+this docstring implied otherwise.  The `SmoothOfRelativeDimension 1 → Smooth` bridge lives in
+`AlgebraicJacobian/Curve/GeometricallyReduced.lean`, which this module does not import;
+`infer_instance` for `LocallyOfFiniteType` from `[SmoothOfRelativeDimension 1]` alone **fails**
+here (machine-checked), while from `[IsProper]` it succeeds.  A caller who has smoothness but
+not properness must supply `LocallyOfFiniteType` by hand — `Adelic/FiniteMapToP1.lean` does
+exactly that at its own use site, via `SmoothOfRelativeDimension.smooth`.
 
 ## The N14 finiteness gate falls out too
 
@@ -91,11 +104,28 @@ With `Picard/TangentSpaceStalkAlgebra.lean` imported, `open scoped AlgebraicGeom
 brings in `overStalkAlgebra C x : Algebra k 𝒪_{C,x}`.  At `x = genericPoint C.left` its
 target `𝒪_{C,generic}` *is* `K(C)` by definition, so it competes with
 `Scheme.functionFieldAlgebra` for `Algebra k K(C)` — and the two are **not**
-definitionally equal (machine-checked: `rfl` fails).  Everything below therefore opens
-only `AlgebraicGeometry.Scheme`, and constructs the stalk algebra as an explicit `letI`
-rather than by activating the scoped instance.  Activating it would silently re-pin
+definitionally equal.  Activating it would silently re-pin
 `sectionSub`/`orderGeSub`/`residueDeg` to a different `k`-action than the rest of the
-lane uses.
+lane uses — with no error, no `sorry`, and clean `#print axioms`.
+
+**What actually protects this file, stated precisely** (a reviewer rightly doubted an earlier
+version of this paragraph, which asserted the protection without saying why it works).  The two
+instances sit in *different namespaces*:
+
+* `AlgebraicGeometry.overStalkAlgebra` — namespace `AlgebraicGeometry`;
+* `AlgebraicGeometry.Scheme.functionFieldAlgebra` — namespace `AlgebraicGeometry.Scheme`.
+
+So `open scoped AlgebraicGeometry.Scheme`, which is what this file uses, activates the second
+and **not** the first, while `open scoped AlgebraicGeometry` activates both.  Machine-checked
+both ways: with the narrow open,
+`algebraMap k K(C) c = (Scheme.functionFieldAlgebra C).algebraMap c` closes by `rfl`; with the
+wide open, the *same* `rfl` fails to elaborate.  That pair of results is the evidence, not the
+reasoning.
+
+Consequence for a future edit: adding `open scoped AlgebraicGeometry` to this file, or importing it
+into a file that has one, is not a style question — it changes which theorem the declarations below
+state.  Constructing the stalk algebra as an explicit `letI` inside each proof (as §1 does) is what
+keeps that choice local.
 -/
 
 set_option autoImplicit false
@@ -255,7 +285,7 @@ theorem residue_stalkStructureHom_eq [IsAlgClosed k]
 base.**  Immediate from `residue_stalkStructureHom_eq`: an iso of `CommRingCat` has
 bijective underlying ring map.
 
-This is the statement that replaces `GlobalScheme`'s three-binder route: no
+This is the statement that replaces `GlobalGeneration.lean` §7's three-binder route: no
 `Module.Finite k κ_P` gate is consumed, because mathlib obtains integrality of `κ(x)` over
 `k` from `LocallyOfFiniteType` through the Jacobson-space finiteness criterion. -/
 theorem bijective_residue_comp_stalkStructureHom [IsAlgClosed k]
@@ -437,7 +467,7 @@ theorem residueDeg_eq_one_of_isAlgClosed_curve [IsAlgClosed k]
   (residueDeg_eq_one_iff_hasRationalResidues k P).mpr
     (hasRationalResidues_of_isAlgClosed_curve C P)
 
-/-! ### The consequences, with the residue input no longer a hypothesis
+/-! ## §4. The consequences, with the residue input no longer a hypothesis
 
 `GlobalGeneration.lean` §6 draws two conclusions from `HasRationalResidues` — uniform global
 generation with threshold `b + 1`, and the unweighted principal-degree-zero statement — but
@@ -539,7 +569,8 @@ degrees agree (`degK_eq_degree_of_isAlgClosed_curve`), so those conclusions can 
 `Scheme.WeilDivisor.degree` — the invariant the rest of the project, and the classical
 statement, use.
 
-`ell_eq_of_bound_degree` below is the `ℓ(D) = χ(0) + deg D` form; with `χ(0) = 1 − g` it is the
+`exists_bound_ell_eq_degree_of_isAlgClosed_curve` below is the `ℓ(D) = χ(0) + deg D` form (the
+weighted original is `BoundedVanishing.exists_bound_ell_eq`); with `χ(0) = 1 − g` it is the
 classical `ℓ(D) = deg D + 1 − g` for `deg D` large.  Note it is *not* free of the lane's open
 inputs: it is `exists_bound_ell_eq` with the degree translated, so the ledger, the base
 vanishing and the peel are all still there.  What the translation removes is only the
