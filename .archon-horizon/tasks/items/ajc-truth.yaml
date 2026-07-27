@@ -1,0 +1,76 @@
+id: ajc-truth
+project: Algebraic-Jacobian-Challenge
+objective: 'Make the project headline, blueprint, and roadmap state the same mathematical
+  claim that the Lean dependency graph actually supports. First, establish and publish
+  the real axiom frontier with #print axioms on the protected Jacobian declarations
+  and on the keystones claimed by the Picard, cohomology, Riemann-Roch, and Albanese
+  cones. This matters because instHasPicScheme in Picard/FGAPicRepresentability.lean
+  and pullback_preservesFiniteLimits in Cohomology/CechHigherDirectImageUnconditional.lean
+  are sorry-bodied instances whose axioms can leak through typeclass synthesis.
+
+
+  Second, connect AlgebraicJacobian/Jacobian.lean to the landed infrastructure where
+  doing so is honest, or state precisely which dependency prevents that connection.
+  Third, re-aim timeless blueprint prose, hgraph metadata, roadmap descriptions, and
+  project-facing documentation at the Milne-Kollar route selected in informal/pic-representability-campaign.md.
+  The blueprint currently foregrounds a Quot endgame that the source marks permanently
+  off-path. Do not delete reusable mathematics. The rational-point versus etale-sheafification
+  decision remains with the human in inbox I-0372; record both branches accurately
+  without choosing one.
+
+
+  This task owns the headline wiring, project root import roll-up, blueprint and hgraph
+  material, campaign document, and project READMEs. It must not edit RigidPushforward
+  files or RiemannRoch sources. Tell ajc-gate and ajc-rr whenever the axiom audit
+  shows that a purportedly clean theorem still depends on a sorry instance, and accept
+  their requests to add newly landed modules to the root roll-up.
+
+
+  Done means the headline reachability and axiom report are reproducible, the blueprint
+  and roadmap no longer advertise an abandoned route as current, all edited prose
+  follows blueprint conventions, focused checks/builds are green, and unresolved human
+  decisions are explicitly visible rather than silently assumed.'
+title: Publish the true axiom frontier and align the Jacobian route
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge
+priority: high
+status: queued
+write_set:
+  files:
+  - AlgebraicJacobian/Jacobian.lean
+  - AlgebraicJacobian/AbelJacobi.lean
+  - AlgebraicJacobian.lean
+  - blueprint/**
+  - hgraph/**
+  - informal/pic-representability-campaign.md
+  - README.md
+  - TO_USER.md
+  projects:
+  - Algebraic-Jacobian-Challenge
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+  files:
+  - AlgebraicJacobian/Jacobian.lean
+  - AlgebraicJacobian/AbelJacobi.lean
+  - AlgebraicJacobian.lean
+  - blueprint/**
+  - hgraph/**
+  - informal/pic-representability-campaign.md
+  - README.md
+  - TO_USER.md
+roadmap_refs:
+- AJC.jacobian.reachability
+- AJC.maintenance.blueprint
+- AJC.picrep.rational-point
+inbox_refs:
+- I-0372
+artifact_refs: []
+created_at: '2026-07-27T06:53:27.577847+00:00'
+updated_at: '2026-07-27T06:53:28.157201+00:00'
+metadata:
+  author: human

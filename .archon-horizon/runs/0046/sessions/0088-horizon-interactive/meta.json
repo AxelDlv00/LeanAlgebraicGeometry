@@ -11,5 +11,20 @@
   "started_at": "2026-07-27T01:40:19.363116+00:00",
   "resumed_engine_session_id": "8cd8c4bc-706b-436d-a7ec-9ac9996dea6f",
   "workspace_base_sha": "79c07e8968ffdc3b567201c73d778c9a9b2e2066",
-  "status": "running"
+  "status": "ok",
+  "ended_at": "2026-07-27T06:28:44.827671+00:00",
+  "returncode": 0,
+  "workspace_agent_sha": "3fbc2cace9aa0de4963ab3f74063757d351bad53",
+  "commit_shas": [
+    "7ccced6e09c5993f9b33fd031fd9a589bc7edba8",
+    "5d1028740b6752727986680edbf090223d4d2a54",
+    "6616229c9c9b8af654c8f27884788af060c4abb5",
+    "b0d13f686d604afb30b0cbeed1bb2c787ad64996",
+    "6d88f1c049f9dd06b9c385ee9e28a2691d0351b3",
+    "e228d35eeabbd2a404fe0e02d8dac326d6b717b2",
+    "ab1c264cb4e385d7ee80711f05d1e6a07c712f34",
+    "650ae25f122530c8ab561ec559cd15267ad8ef60",
+    "3fbc2cace9aa0de4963ab3f74063757d351bad53"
+  ],
+  "workspace_commit": "a860a2f1e2380524f91d9efd3933f45726bb2f69"
 }

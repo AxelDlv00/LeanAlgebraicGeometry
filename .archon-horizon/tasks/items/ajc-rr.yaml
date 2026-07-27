@@ -1,0 +1,59 @@
+id: ajc-rr
+project: Algebraic-Jacobian-Challenge
+objective: 'Give Algebraic-Jacobian-Challenge the strongest honest Riemann-Roch and
+  vanishing substrate available for the committed Picard representability route. Cluster
+  P consists of the Euler-characteristic ledger, section-drop results, and uniform
+  H1 vanishing needed downstream. AJC already contains a substantial sorry-free adelic
+  lane, including RiemannRoch/Adelic/ChiLedger.lean, but the sibling Algebraic-Jacobian-Challenge-Rebuild
+  contains a broader sorry-free 17,792-line RiemannRoch development. In particular,
+  AJCR RiemannRoch/UniformVanishing.lean proves a single-field bounded vanishing core;
+  it does not by itself supply field-extension uniformity or global generation.
+
+
+  The owner of this task should decide, theorem by theorem, whether to reuse AJC code,
+  port an AJCR result, adapt its argument, or rederive it in the AJC abstractions.
+  Report that provenance honestly and do not promise a mechanical port. The one already
+  identified open AJC leaf in this cone is principal-divisor degree zero in RiemannRoch/WeilDivisor.lean.
+  Work may close it when it materially advances the shared substrate.
+
+
+  This task owns only AlgebraicJacobian/RiemannRoch/** in AJC and may read AJCR without
+  modifying it. It must not edit Picard/RigidPushforward files, Jacobian.lean, AbelJacobi.lean,
+  the root import roll-up, or blueprint files. Notify ajc-gate when a vanishing or
+  cohomology theorem becomes available so that gate hypotheses can be removed. Ask
+  ajc-truth to add final root imports and to audit axioms of major landed results.
+
+
+  Done means the strongest reachable cluster-P statements are present under AJC-compatible
+  hypotheses, focused Lean checks and the appropriate project build pass, no new anonymous
+  or misleading sorry boundaries are introduced, #print axioms results are reported,
+  and every remaining gap distinguishes single-field vanishing, extension-uniformity,
+  and global generation precisely.'
+title: Bring the cluster-P Riemann-Roch substrate into AJC
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge
+priority: high
+status: queued
+write_set:
+  files:
+  - AlgebraicJacobian/RiemannRoch/**
+  projects:
+  - Algebraic-Jacobian-Challenge
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+  files:
+  - AlgebraicJacobian/RiemannRoch/**
+roadmap_refs:
+- AJC.rr
+- AJC.rr.principal
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-07-27T06:53:28.730901+00:00'
+updated_at: '2026-07-27T06:53:29.315196+00:00'
+metadata:
+  author: human

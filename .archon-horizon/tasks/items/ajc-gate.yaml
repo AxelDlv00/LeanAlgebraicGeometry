@@ -1,0 +1,63 @@
+id: ajc-gate
+project: Algebraic-Jacobian-Challenge
+objective: 'Turn HasRigidPushforward from a hypothesis into a proved instance for
+  the smooth proper geometrically integral curve setup used by the Picard representability
+  campaign. This is the highest-fanout open gate: the class is declared in AlgebraicJacobian/Picard/RigidPushforward.lean
+  around line 373, has no producer, feeds seven downstream campaign obligations, and
+  is the only implemented route from a line bundle to a DivFamily. RigidPushforwardTransfer.lean
+  already supplies the locally-free transfer half; RigidPushforwardP1Engine.lean and
+  P1SectionsFinite.lean expose the remaining base-change and projective-line geometry.
+
+
+  The task owns the rigid-pushforward cone and may introduce new modules whose names
+  stay in that cone. It may read RiemannRoch freely but must not edit RiemannRoch,
+  Jacobian.lean, AbelJacobi.lean, the root import roll-up, or blueprint files. Coordinate
+  with task ajc-rr when the proof reaches vanishing or cohomological hypotheses: ask
+  which results are becoming unconditional, and report when a newly landed theorem
+  lets either task remove a local hypothesis. Coordinate with ajc-truth when the new
+  instance changes the axiom frontier or needs an import in the root roll-up.
+
+
+  Done means a genuine non-sorry instance producer exists, the relevant direct consumers
+  synthesize it without an explicit HasRigidPushforward binder, focused Lean checks
+  and the appropriate project build pass, and #print axioms for the new producer contains
+  only accepted foundational axioms. If a mathematically deeper prerequisite remains,
+  factor it as an honestly named theorem with an exact statement, document the remaining
+  frontier, and keep the task queued rather than claiming completion.'
+title: Close the HasRigidPushforward representability gate
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge
+priority: high
+status: queued
+write_set:
+  files:
+  - AlgebraicJacobian/Picard/RigidPushforward*.lean
+  - AlgebraicJacobian/Picard/P1SectionsFinite.lean
+  - AlgebraicJacobian/Picard/ChartSectionsFinite.lean
+  - AlgebraicJacobian/Picard/SemicontinuityH0.lean
+  - AlgebraicJacobian/Picard/ScalarEndFaithful.lean
+  - AlgebraicJacobian/Picard/SectionBaseChange.lean
+  projects:
+  - Algebraic-Jacobian-Challenge
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+  files:
+  - AlgebraicJacobian/Picard/RigidPushforward*.lean
+  - AlgebraicJacobian/Picard/P1SectionsFinite.lean
+  - AlgebraicJacobian/Picard/ChartSectionsFinite.lean
+  - AlgebraicJacobian/Picard/SemicontinuityH0.lean
+  - AlgebraicJacobian/Picard/ScalarEndFaithful.lean
+  - AlgebraicJacobian/Picard/SectionBaseChange.lean
+roadmap_refs:
+- AJC.picrep.rigidpushforward
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-07-27T06:53:26.457841+00:00'
+updated_at: '2026-07-27T06:53:27.020589+00:00'
+metadata:
+  author: human
