@@ -9,5 +9,12 @@
   ],
   "started_at": "2026-07-27T01:17:26.427845+00:00",
   "workspace_base_sha": "95151c631dabc8b9a5ff8deeb6ed75872c4cb66d",
-  "status": "running"
+  "status": "ok",
+  "ended_at": "2026-07-27T01:19:44.840517+00:00",
+  "returncode": 0,
+  "workspace_agent_sha": "faa188e8618ed9e0539c4e1a31d15baa491714d9",
+  "commit_shas": [
+    "faa188e8618ed9e0539c4e1a31d15baa491714d9"
+  ],
+  "workspace_commit": "94f6bc7984d4a1a8d679f30c6d312e3f04c205c9"
 }
