@@ -24,7 +24,7 @@ open CategoryTheory Limits Opposite
 
 `Scheme.Modules.glue` descends a sheaf of modules from per-chart data plus a transition
 cocycle over a `Scheme.GlueData`. Mathlib carries no turn-key module descent over a
-scheme glue datum (confirmed), so this is an Archon-original construction.
+scheme glue datum, so the construction is developed here from the limit API.
 
 Construction (blueprint `def:scheme_modules_glue`): the glued sheaf is built directly as a
 categorical limit — an **equalizer of pushforwards** — rather than a hand-built presheaf of
@@ -33,10 +33,10 @@ compatible families. Concretely, `glue` forms the two parallel maps
 with the pushforward-composition comparison, the other transported across the inverse
 transition `(g_ij)⁻¹`), and takes their equalizer inside `Scheme.Modules D.glued`. The
 self-identity (C1) and triple-overlap multiplicativity (C2) hypotheses `_hC1`/`_hC2` on the
-family `g` are NOT consumed in forming the equalizer object (the limit exists for any family
+family `g` are not consumed in forming the equalizer object (the limit exists for any family
 of transition maps); they are the descent conditions pinned down downstream when the
-restriction isomorphisms are produced. The body below and the `_hC1`/`_hC2` signature are
-complete (axiom-clean since iter-056). -/
+restriction isomorphisms are produced, and are carried in the signature of `glue` so that
+the glued sheaf and those isomorphisms speak about the same datum. -/
 
 namespace AlgebraicGeometry.Scheme.Modules
 
@@ -1856,7 +1856,7 @@ lemma glueLegA_component_transpose (D : Scheme.GlueData.{0}) (p q : D.J)
 
 /-! ### Pseudofunctor cast coherence for the conjugated cocycle
 
-The remaining content of the descent obligation (`glueChartComponent_leg_compat`) is a
+The core content of the descent obligation (`glueChartComponent_leg_compat`) is a
 comparison of two regroupings of iterated pullbacks: the route through the glued scheme
 (the triple-square casts) against the route through the chart overlaps (the pair-square
 casts whiskered by the triple-overlap projections). This comparison is *pure cast
@@ -1994,7 +1994,8 @@ lemma pullbackComp_inv_comp_map_congr_inv_app {X' Y' Z' : Scheme.{u}} (f : X' �
           (show f ≫ x = f ≫ y from by rw [h])).inv.app W ≫
         (Scheme.Modules.pullbackComp f x).inv.app W := by
   subst h
-  simp [Scheme.Modules.pullbackCongr]
+  simp only [pullbackCongr, eqToIso_refl, Iso.refl_inv, NatTrans.id_app,
+    CategoryTheory.Functor.map_id, Category.id_comp]
   exact Category.comp_id _
 @[reassoc]
 lemma pullbackComp_inv_comp_congr_hom_app {X' Y' Z' : Scheme.{u}} {x y : X' ⟶ Y'}
@@ -2005,7 +2006,7 @@ lemma pullbackComp_inv_comp_congr_hom_app {X' Y' Z' : Scheme.{u}} {x y : X' ⟶ 
           (show x ≫ κ = y ≫ κ from by rw [h])).hom.app W ≫
         (Scheme.Modules.pullbackComp y κ).inv.app W := by
   subst h
-  simp [Scheme.Modules.pullbackCongr]
+  simp only [pullbackCongr, eqToIso_refl, Iso.refl_hom, NatTrans.id_app, Category.id_comp]
   exact Category.comp_id _
 lemma pullbackComp_hom_app_congr_fst {X' Y' Z' : Scheme.{u}} {x y : X' ⟶ Y'}
     (h : x = y) (κ : Y' ⟶ Z') (W : Z'.Modules) :
@@ -2067,12 +2068,12 @@ lemma pullback_cast_compat {P A' B' C' E' X' : Scheme.{u}}
   -- the matching `(τ≫b)^*κ`-inv ∘ `τ^*b`-inv pair.
   simp only [pullbackComp_comp_fst_hom_app, pullback_map_inv_comp_hom_app_assoc,
     pullback_map_congr_inv_comp_hom_app_assoc, pullbackComp_inv_comp_congr_hom_app_assoc,
-    pullbackComp_inv_comp_map_inv_app_assoc, pullbackComp_inv_comp_map_inv_app, Category.assoc]
+    pullbackComp_inv_comp_map_inv_app, Category.assoc]
   -- Phase 2: the remaining chains of `pullbackCongr` casts are `eqToHom`s between the same
   -- endpoints, so they collapse (via the `_assoc` fold, since they sit mid-chain) by `eqToHom`
   -- uniqueness.
-  simp only [pullbackCongr_hom_app_eqToHom, pullbackCongr_inv_app_eqToHom, eqToHom_trans,
-    eqToHom_trans_assoc, eqToHom_refl, Category.assoc, Category.comp_id, Category.id_comp]
+  simp only [pullbackCongr_hom_app_eqToHom, pullbackCongr_inv_app_eqToHom,
+    eqToHom_trans_assoc, eqToHom_refl, Category.id_comp]
 private lemma map_fold₅ {𝒞 𝒟 : Type*} [Category 𝒞] [Category 𝒟] (F : 𝒞 ⥤ 𝒟)
     {x₀ x₁ x₂ x₃ x₄ x₅ : 𝒞} {a : x₀ ⟶ x₁} {k₁ : x₁ ⟶ x₂} {k₂ : x₂ ⟶ x₃} {k₃ : x₃ ⟶ x₄}
     {k₄ : x₄ ⟶ x₅} {z : x₀ ⟶ x₅} (h : a ≫ k₁ ≫ k₂ ≫ k₃ ≫ k₄ = z) :
@@ -2832,14 +2833,19 @@ private lemma glueChart_legCompat_right (i p q : D.J) :
     (map_fold₅ (Scheme.Modules.pullback (pullback.snd (D.f i p) (D.f i q)))
       (glueChartComponent_overlap_collapse D M g i q))
 
+-- `hC1` is kept in the signature so that the descent datum `(g, hC1, hC2)` travels as one
+-- unit, matching `glue D M g hC1 hC2`; the argument below consumes only (C2).
+set_option linter.unusedSectionVars false in
 include hC1 hC2 in
 /-- **Pair component of the equalizing condition** (the `(p,q)`-component of
 `glueChartFamily_equalizes`, C2 transported): the `p`-th candidate-inverse component
 followed by the restricted first descent-leg factor equals the `q`-th component
 followed by the restricted second descent-leg factor. This is where the triple-overlap
 multiplicativity (C2) at the triple `(i,p,q)` is consumed, transposed along the
-triple-overlap immersion `q_pq : V_ipq ⟶ U_i`; the degenerate pairs (`p = i` or
-`q = i`) instead invoke the self-identity (C1). Project-local. -/
+triple-overlap immersion `q_pq : V_ipq ⟶ U_i`. The self-identity (C1) is carried along
+in the signature for uniformity with `glue`, but the argument does not use it — the
+degenerate pairs `p = i`, `q = i` are instances of the same transported (C2).
+Project-local. -/
 lemma glueChartComponent_leg_compat (i p q : D.J) :
     glueChartComponent D M g i p ≫ (Scheme.Modules.pullback (D.ι i)).map
         ((Scheme.Modules.pushforward (D.ι p)).map
@@ -3318,7 +3324,7 @@ end GlueRestrictionInverse
 isomorphism** (`def:gr_modules_glueRestrictionIso`). This is where the cocycle
 hypotheses (C1)/(C2) are consumed.
 
-PROOF ROUTE (scoped iter-066, partially built): the chart pullback `ι_i^*` preserves
+Proof outline: the chart pullback `ι_i^*` preserves
 limits (`pullback_preservesLimits_of_isOpenImmersion` — it is isomorphic to the
 site-level pushforward `restrictFunctor`), so `ι_i^* (glue …)` is the equalizer of the
 restricted legs `ι_i^* (glueLegA)`, `ι_i^* (glueLegB)` and the restricted product
@@ -3329,9 +3335,7 @@ to the overlap: `unit_{f_ij} ≫ (f_ij)_* (g_ij-conjugate) ≫ β_ij⁻¹`, wher
 change of the cartesian overlap square (site-level: both composites are pushforwards
 along the SAME opens functor, by `glueData_preimage_image_eq`). The equalizing
 condition of that family is (C2) in transported form; the two triangle identities
-reduce to (C1) and the counit triangle. Remaining work: construct `β_ij` (via
-`restrictFunctor` + `SheafOfModules.pushforwardComp`/`pushforwardCongr` +
-`glueData_preimage_image_eq`) and verify the three conditions. -/
+reduce to (C1) and the counit triangle. -/
 theorem isIso_glueRestrictionHom (D : Scheme.GlueData.{0}) (M : ∀ i, (D.U i).Modules)
     (g : ∀ i j, (Scheme.Modules.pullback (D.f i j)).obj (M i) ≅
         (Scheme.Modules.pullback (D.t i j ≫ D.f j i)).obj (M j))

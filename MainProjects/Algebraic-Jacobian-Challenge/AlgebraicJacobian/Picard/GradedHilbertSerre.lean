@@ -16,15 +16,35 @@ import Mathlib.RingTheory.SimpleRing.Principal
 # Graded Hilbert–Serre rationality layer
 
 This file houses the `IsRatHilb` toolkit and the `GradedModule` ambient
-subquotient induction (`subquotient_hilbertSeries_rational`) that establish
-the rationality of graded Hilbert series (Stacks 00K1). The keystone
-`gradedModule_hilbertSeries_rational` shows that for a graded `κ`-module
-finite over `MvPolynomial (Fin r) κ` with finite-dimensional components,
-the Hilbert function is eventually a coefficient sequence of `p · (1 - X)⁻ʳ`.
+subquotient induction that establish the rationality of graded Hilbert series
+(Stacks 00K1).
 
-Split from `AlgebraicJacobian/Picard/QuotScheme.lean` (iter-021) so the
-graded-algebra layer and the Quot/Grassmannian-defs layer can be proved in
-parallel.
+A function `f : ℕ → ℚ` satisfies `IsRatHilb f d` when it eventually agrees with
+the coefficient sequence of a rational power series `p · (1 - X)⁻ᵈ` with
+`p : ℚ[X]`. The class is closed under differences, shifts and — the substantial
+step — antidifferentiation, which raises `d` by one. The graded input is fed in
+through an induction on the number of polynomial variables: multiplication by a
+degree-raising endomorphism `x` on a graded module `M` has homogeneous kernel and
+cokernel, both again finite over one fewer variable, and the degreewise
+rank–nullity identity turns the first difference of the Hilbert function of `M`
+into the Hilbert function of that kernel/cokernel pair.
+
+## Main results
+
+* `IsRatHilb.antidiff` — the antidifference step: if the first difference of `H`
+  is eventually the coefficient sequence of `q · (1 - X)⁻ᵉ`, then `H` is
+  eventually the coefficient sequence of `p · (1 - X)^{-(e+1)}`.
+* `GradedModule.subquotient_hilbertSeries_rational` — the ambient subquotient
+  induction: for a subquotient datum of length `r`, the degreewise rank
+  difference satisfies `IsRatHilb _ r`.
+* `gradedModule_hilbertSeries_rational` — the keystone: for a graded
+  `κ`-module finite over `MvPolynomial (Fin r) κ` with finite-dimensional
+  components, the Hilbert function is eventually a coefficient sequence of
+  `p · (1 - X)⁻ʳ`.
+
+## References
+
+* [Stacks, Tag 00K1](https://stacks.math.columbia.edu/tag/00K1)
 
 Blueprint: `blueprint/src/chapters/Picard_GradedHilbertSerre.tex`.
 -/
@@ -329,7 +349,7 @@ lemma decompose_raisesDegree {x : M →ₗ[κ] M} (hx : RaisesDegree ℳ x) (m :
     (DirectSum.decompose ℳ (x m) (i + 1) : M) = x (DirectSum.decompose ℳ m i) := by
   classical
   conv_lhs => rw [← DirectSum.sum_support_decompose ℳ m, map_sum, DirectSum.decompose_sum]
-  simp only [DirectSum.sum_apply, AddSubmonoidClass.coe_finset_sum]
+  simp only [DirectSum.sum_apply, AddSubmonoidClass.coe_finsetSum]
   rw [Finset.sum_eq_single i]
   · exact DirectSum.decompose_of_mem_same ℳ
       (hx i (Submodule.mem_map_of_mem (SetLike.coe_mem _)))
@@ -354,7 +374,7 @@ lemma decompose_raisesDegree_zero {x : M →ₗ[κ] M} (hx : RaisesDegree ℳ x)
     (DirectSum.decompose ℳ (x m) 0 : M) = 0 := by
   classical
   conv_lhs => rw [← DirectSum.sum_support_decompose ℳ m, map_sum, DirectSum.decompose_sum]
-  simp only [DirectSum.sum_apply, AddSubmonoidClass.coe_finset_sum]
+  simp only [DirectSum.sum_apply, AddSubmonoidClass.coe_finsetSum]
   refine Finset.sum_eq_zero fun j _ => ?_
   rw [DirectSum.decompose_of_mem_ne ℳ
     (hx j (Submodule.mem_map_of_mem (SetLike.coe_mem _))) (by omega : j + 1 ≠ 0)]
@@ -630,6 +650,7 @@ noncomputable def polyEndHom {r : ℕ} (t : Fin r → Module.End κ M)
 /-- The `MvPolynomial (Fin r) κ`-module structure on `M` in which `X i` acts as `t i`,
 obtained by restricting scalars along `polyEndHom`. Project-local: the module over the free
 polynomial ring required by the ambient subquotient induction. -/
+@[implicit_reducible]
 noncomputable def polyModule {r : ℕ} (t : Fin r → Module.End κ M)
     (hcomm : ∀ i j, Commute (t i) (t j)) : Module (MvPolynomial (Fin r) κ) M :=
   Module.compHom M (polyEndHom t hcomm)
@@ -782,7 +803,7 @@ lemma polyEndHom_lastVar_sub_mem {r : ℕ} (t : Fin (r + 1) → Module.End κ M)
     (hannih : P.map (t (Fin.last r)) ≤ P')
     (s : MvPolynomial (Fin (r + 1)) κ) :
     ∀ m ∈ P, (polyEndHom t hcomm s) m
-      - (polyEndHom (fun i => t (Fin.castSucc i)) (fun i j => hcomm _ _)
+      - (polyEndHom (fun i => t (Fin.castSucc i)) (fun _ _ => hcomm _ _)
           (lastVarAlgHom r κ s)) m ∈ P' := by
   induction s using MvPolynomial.induction_on with
   | C a =>
@@ -820,14 +841,14 @@ lemma subquotient_finite_transfer {r : ℕ} (t : Fin (r + 1) → Module.End κ M
       Module.Finite (MvPolynomial (Fin (r + 1)) κ)
         (↥(polySubmodule t hcomm P hP) ⧸
           (polySubmodule t hcomm P' hP').comap (polySubmodule t hcomm P hP).subtype)) :
-    letI := polyModule (fun i => t (Fin.castSucc i)) (fun i j => hcomm _ _)
+    letI := polyModule (fun i => t (Fin.castSucc i)) (fun _ _ => hcomm _ _)
     Module.Finite (MvPolynomial (Fin r) κ)
-      (↥(polySubmodule (fun i => t (Fin.castSucc i)) (fun i j => hcomm _ _) P
-            (fun i => hP _)) ⧸
-        (polySubmodule (fun i => t (Fin.castSucc i)) (fun i j => hcomm _ _) P'
-            (fun i => hP' _)).comap
-          (polySubmodule (fun i => t (Fin.castSucc i)) (fun i j => hcomm _ _) P
-            (fun i => hP _)).subtype) := by
+      (↥(polySubmodule (fun i => t (Fin.castSucc i)) (fun _ _ => hcomm _ _) P
+            (fun _ => hP _)) ⧸
+        (polySubmodule (fun i => t (Fin.castSucc i)) (fun _ _ => hcomm _ _) P'
+            (fun _ => hP' _)).comap
+          (polySubmodule (fun i => t (Fin.castSucc i)) (fun _ _ => hcomm _ _) P
+            (fun _ => hP _)).subtype) := by
   classical
   letI iS := polyModule t hcomm
   letI iS' := polyModule (fun i => t (Fin.castSucc i)) (fun i j => hcomm _ _)
@@ -1014,10 +1035,10 @@ noncomputable def SubquotientDatum.ker {r : ℕ} (D : SubquotientDatum ℳ (r + 
   hN := ker_isHomogeneous ℳ (D.hraise (Fin.last r)) D.hN D.hN'
   hN' := D.hN'
   t := fun i => D.t (Fin.castSucc i)
-  hcomm := fun i j => D.hcomm _ _
-  hraise := fun i => D.hraise _
+  hcomm := fun _ _ => D.hcomm _ _
+  hraise := fun _ => D.hraise _
   hpresN := fun i => ker_stable_full ℳ D (Fin.castSucc i)
-  hpresN' := fun i => D.hpresN' _
+  hpresN' := fun _ => D.hpresN' _
   hfin :=
     subquotient_finite_transfer D.t D.hcomm (ker_stable_full ℳ D) D.hpresN'
       ker_annihilate
@@ -1034,9 +1055,9 @@ noncomputable def SubquotientDatum.coker {r : ℕ} (D : SubquotientDatum ℳ (r 
   hN := D.hN
   hN' := coker_isHomogeneous ℳ (D.hraise (Fin.last r)) D.hN D.hN'
   t := fun i => D.t (Fin.castSucc i)
-  hcomm := fun i j => D.hcomm _ _
-  hraise := fun i => D.hraise _
-  hpresN := fun i => D.hpresN _
+  hcomm := fun _ _ => D.hcomm _ _
+  hraise := fun _ => D.hraise _
+  hpresN := fun _ => D.hpresN _
   hpresN' := fun i => coker_stable_full ℳ D (Fin.castSucc i)
   hfin :=
     subquotient_finite_transfer D.t D.hcomm D.hpresN (coker_stable_full ℳ D)

@@ -9,10 +9,9 @@ import AlgebraicJacobian.Picard.Pic0AbelianVariety
 import AlgebraicJacobian.Albanese.CodimOneExtension
 
 /-!
-# The Albanese universal property of `Pic⁰_{C/k}` (A.4.d)
+# The Albanese universal property of `Pic⁰_{C/k}`
 
-This file is the **A.4.d** file-skeleton sub-build chapter for the project's
-positive-genus arm of `nonempty_jacobianWitness`. It packages Milne's
+This file states Milne's
 *Abelian Varieties* §III.6 Proposition 6.1: for a complete nonsingular curve
 `C` of genus `g > 0` over an algebraically closed field `k̄` and a marked
 `k̄`-point `P₀ ∈ C(k̄)`, the Abel–Jacobi morphism
@@ -21,7 +20,7 @@ positive-genus arm of `nonempty_jacobianWitness`. It packages Milne's
 `φ(P₀) = η_A` factors uniquely as `φ = ψ ∘ ι_{P₀}` for a homomorphism of
 group schemes `ψ : Pic⁰_{C/k̄} ⟶ A`.
 
-The chapter commits to the **symmetric-power route** (cube-free): the
+The route taken is the **symmetric-power route** (cube-free): the
 symmetric assignment `(P₁,…,P_g) ↦ φ(P₁) + ⋯ + φ(P_g)` factors through
 `Sym^g C`, the resulting morphism `Sym^g φ : Sym^g C ⟶ A` descends through
 the birational morphism `f^{(g)} : Sym^g C ⟶ Pic⁰_{C/k̄}` to a rational map
@@ -31,85 +30,60 @@ morphism `ψ : Pic⁰_{C/k̄} ⟶ A`. The group-homomorphism property of `ψ` th
 follows from `ψ(η_J) = η_A` together with Milne Corollary I.1.2 (a
 consequence of `thm:rigidity_lemma`).
 
-## Status (iter-177 Lane 7 file-skeleton)
+## Main results
 
-This file is the **iter-177 Lane 7** file-skeleton. Each of the six
-blueprint-pinned declarations carries the *intended* substantive type
-signature (matching the `\lean{...}` pin in
-`blueprint/src/chapters/Albanese_AlbaneseUP.tex`) with a `sorry` body.
+* `Pic0.abelJacobi` — the regular morphism `ι_{P₀} : C ⟶ Pic⁰_{C/k̄}`
+  (`lem:abel_jacobi_morphism`).
+* `Pic0.SymmetricPower` — the `g`-th symmetric power `Sym^g C` of the curve
+  `C`, as a `k̄`-scheme (Milne III.3 Proposition 3.1).
+* `Pic0.symmetricPowerAVMap` — the symmetrised morphism
+  `Sym^g φ : Sym^g C ⟶ A` induced by a morphism `φ : C ⟶ A` into an abelian
+  variety.
+* `Pic0.symmetricPowerToJacobian` — the birational morphism
+  `f^{(g)} : Sym^g C ⟶ Pic⁰_{C/k̄}`.
+* `Pic0.descentThroughBirationalSigma` — the descent of `Sym^g φ` to a unique
+  regular morphism `ψ : Pic⁰_{C/k̄} ⟶ A`, via Milne Theorem I.3.2.
+* `Pic0.albanese_eq_iff_symmetricPower_eq` — the connecting biconditional:
+  `φ = ι_{P₀} ≫ ψ` holds iff `Sym^g φ = f^{(g)} ≫ ψ`.
+* `Pic0.albanese_universal_property` — the universal property itself (Milne
+  Proposition III.6.1), assembled from the previous two.
 
-The 6 pinned declarations are:
+## Remaining obligations
 
-1. `AlgebraicGeometry.Pic0.abelJacobi` (noncomputable def, ~6 LOC) — the
-   regular morphism `ι_{P₀} : C ⟶ Pic⁰_{C/k̄}` of
-   `lem:abel_jacobi_morphism`. Encoded against the file-internal
-   placeholder `Pic0.jacobianScheme` for `Pic⁰_{C/k̄}` (the A.3 upstream
-   has not yet been split out; see §0 below).
-2. `AlgebraicGeometry.Pic0.SymmetricPower` (noncomputable def, ~3 LOC) —
-   the `g`-th symmetric power `Sym^g C` of the curve `C`, as a `k̄`-scheme.
-   Body gated on iter-178+ `SymmetricPower.lean` substrate (Milne III.3
-   Proposition 3.1; Mumford 1970 II.7 / III.11 affine-and-glue recipe).
-3. `AlgebraicGeometry.Pic0.symmetricPowerAVMap` (noncomputable def, ~5 LOC) —
-   the symmetrised morphism `Sym^g φ : Sym^g C ⟶ A` produced by
-   `lem:symmetric_product_av_map` from an input `φ : C ⟶ A`.
-4. `AlgebraicGeometry.Pic0.symmetricPowerToJacobian` (noncomputable def,
-   ~5 LOC) — the birational morphism `f^{(g)} : Sym^g C ⟶ Pic⁰_{C/k̄}` of
-   `lem:symmetric_product_to_jacobian`.
-5. `AlgebraicGeometry.Pic0.descentThroughBirationalSigma` (theorem,
-   ~10 LOC) — the descent of `Sym^g φ` to a regular morphism
-   `ψ : Pic⁰_{C/k̄} ⟶ A` via Milne Theorem 3.2.
-6. `AlgebraicGeometry.Pic0.albanese_universal_property` (theorem, ~12 LOC) —
-   the headline UP theorem (Milne Proposition III.6.1).
+`albanese_universal_property` is assembled from
+`descentThroughBirationalSigma` and `albanese_eq_iff_symmetricPower_eq`, but
+six declarations of this file are stated without proof:
 
-## File-internal placeholder for `Pic⁰_{C/k̄}`
+* `abelJacobi` — the moduli classifier of the rigidified diagonal
+  correspondence `𝓛^{P₀} = 𝓞_{C × C}(Δ − {P₀} × C − C × {P₀})`, taken as a
+  relative degree-zero line bundle over the second factor.
+* `SymmetricPower` — the affine-and-glue construction `Spec(A^{⊗ g})^{S_g}`
+  of Milne III.3 Proposition 3.1 (Mumford 1970 §II.7 / §III.11). Mathlib has
+  no scheme-theoretic symmetric power, only `Sym` for types and modules.
+* `symmetricPowerAVMap` and `symmetricPowerToJacobian` — the two invocations
+  of the universal property of `Sym^g C`, which need the symmetric projection
+  `π : C^g ⟶ Sym^g C` supplied by that construction.
+* `descentThroughBirationalSigma` — extension of the rational map
+  `Sym^g φ ∘ (f^{(g)})^{-1}` to a regular morphism (Milne Theorem I.3.2).
+* `albanese_eq_iff_symmetricPower_eq` — Milne's identification of `ι_{P₀}`
+  with `Q ↦ Q + (g − 1) P₀` followed by `f^{(g)}`.
 
-The A.3 row of Route A (the identity-component refinement of the Picard
-scheme together with its degree map) is now split out in
-`Picard/Pic0AbelianVariety.lean`. We keep a thin `Pic0.Bundle` structure
-here bundling the underlying scheme together with its four abelian-variety
-instances (`GrpObj`, `IsProper`, `Smooth`, `GeometricallyIrreducible`),
-plus the carrier `Pic0.bundle C` and a derived definition
-`Pic0.jacobianScheme C := (bundle C).scheme`. The four instances on
-`jacobianScheme C` are derived from the bundle's fields. Once the A.3
-chapter's own `smooth`/`proper` gaps close, this placeholder collapses to a
-one-line re-export.
+## The scheme `Pic⁰_{C/k̄}`
 
-Bundle wiring (this iter): `bundle C` is **no longer a typed `sorry`**. Its
-underlying scheme is `Scheme.Pic0Scheme C` and its four attributes are the
-tracked upstream theorems `Scheme.Pic0.{grpObj, proper, smooth,
-geometricallyIrreducible}`. The upstream hypotheses
-`[GeometricallyIntegral C.hom] [HasPicScheme C]
-[PicScheme.PicSchemeLocallyOfFiniteType C]` are discharged honestly over the
-algebraically closed base by the three axiom-clean bridges of §0.0
+`Pic⁰_{C/k̄}` is taken from `Picard/Pic0AbelianVariety.lean` through a thin
+`Pic0.Bundle` structure that carries the underlying scheme together with its
+four abelian-variety attributes (`GrpObj`, `IsProper`, `Smooth`,
+`GeometricallyIrreducible`), the carrier `Pic0.bundle C`, and the derived
+definition `Pic0.jacobianScheme C := (bundle C).scheme`.
+
+The upstream declarations `Scheme.Pic0.{grpObj, proper, smooth,
+geometricallyIrreducible}` run under `[GeometricallyIntegral C.hom]`,
+`[HasPicScheme C]` and `[PicScheme.PicSchemeLocallyOfFiniteType C]`, whereas
+the Albanese curve enters carrying only smoothness, properness and geometric
+irreducibility over `k̄`. The three bridges of §0.0
 (`geometricallyReduced_of_smooth`, `GeometricallyIntegral.of_…`,
-`hasRationalPoint_of_isAlgClosed`). Any residual `sorryAx` in `bundle` is
-inherited **only** from the still-open upstream `Scheme.Pic0.smooth` /
-`Scheme.Pic0.proper` and the FGA `instHasPicScheme`; no `sorry` is
-introduced here.
-
-## Note on type expressivity
-
-Following the project rule "Never weaken the type to dodge the proof",
-each pinned declaration carries a substantive, non-tautological type:
-
-- `abelJacobi C P₀ : C ⟶ jacobianScheme C` — a genuine morphism into the
-  Pic⁰ scheme (not `𝟙 C` or any tautology).
-- `SymmetricPower C g : Over (Spec (.of k̄))` — a `k̄`-scheme, not `C`
-  itself or `𝟙_`.
-- `symmetricPowerAVMap C g φ : SymmetricPower C g ⟶ A` — a morphism into
-  the abelian variety `A`.
-- `symmetricPowerToJacobian C P₀ g : SymmetricPower C g ⟶ jacobianScheme C`
-  — a morphism into Pic⁰.
-- `descentThroughBirationalSigma` — `∃!` existence-and-uniqueness of
-  `ψ : jacobianScheme C ⟶ A` satisfying
-  `symmetricPowerAVMap C g φ = symmetricPowerToJacobian C P₀ g ≫ ψ`.
-- `albanese_universal_property` — `∃!` existence-and-uniqueness of
-  `ψ : jacobianScheme C ⟶ A` satisfying `φ = abelJacobi C P₀ ≫ ψ`.
-
-Unfolding any pinned declaration exposes the named substantive content
-(a morphism into the Pic⁰ scheme, a unique factorisation through the
-Abel–Jacobi map, …); no `Iso.refl _` / `Classical.choice ⟨witness⟩` /
-empty-content `proof_wanted` placeholders are used.
+`hasRationalPoint_of_isAlgClosed`) discharge the missing hypotheses over an
+algebraically closed base.
 
 ## Abelian-variety conventions
 
@@ -132,8 +106,8 @@ These instances are supplied by `inferInstance` at the call site.
 
 ## References
 
-Blueprint: `blueprint/src/chapters/Albanese_AlbaneseUP.tex` (~830 LOC,
-6 pins). Source: Milne, *Abelian Varieties*, §III.6 Proposition 6.1, p. 104;
+Blueprint: `blueprint/src/chapters/Albanese_AlbaneseUP.tex`.
+Milne, *Abelian Varieties*, §III.6 Proposition 6.1, p. 104;
 §III.3 Proposition 3.1 (symmetric power), p. 94; §III.5 Theorem 5.1(a)
 (birationality of `f^{(g)}`), p. 101 (`references/abelian-varieties.pdf`).
 -/
@@ -148,15 +122,14 @@ namespace AlgebraicGeometry
 
 /-! ## §0.0. Substrate bridges: geometric integrality and rational points
 
-The A.3 upstream (`Picard/Pic0AbelianVariety.lean`) states `Pic⁰_{C/k}` smooth,
+`Picard/Pic0AbelianVariety.lean` states `Pic⁰_{C/k}` smooth,
 proper and geometrically irreducible under the hypotheses
 `[GeometricallyIntegral C.hom] [HasPicScheme C]
 [PicScheme.PicSchemeLocallyOfFiniteType C]`, whereas the Albanese curve `C`
 enters here carrying only `[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
 [GeometricallyIrreducible C.hom]` over an algebraically closed field `k̄`. The
-three bridging facts below discharge the missing hypotheses honestly, so that
-`Pic0.bundle` can be assembled from the tracked upstream declarations rather than
-from a typed `sorry`. -/
+three bridging facts below discharge the missing hypotheses, so that
+`Pic0.bundle` can be assembled from the upstream declarations. -/
 
 /-- **Reducedness descends along a faithfully flat morphism.** If `π : Y ⟶ X` is
 flat and surjective (i.e. faithfully flat) and `Y` is reduced, then `X` is
@@ -236,24 +209,18 @@ namespace Pic0
 
 /-! ## §0. File-internal placeholder for `Pic⁰_{C/k̄}`
 
-The A.3 row of Route A (identity component of the Picard scheme together
-with its degree map) is split out in `Picard/Pic0AbelianVariety.lean`. The
-helper below — a bundled structure carrying the Pic⁰ scheme together with
-its four abelian-variety instances, plus the carrier `bundle` — supplies
-the interface. `bundle` is wired to the tracked upstream declarations
-(`Scheme.Pic0Scheme`, `Scheme.Pic0.{grpObj, proper, smooth,
-geometricallyIrreducible}`) via the axiom-clean §0.0 bridges, so it consumes
-**no** `sorry` of its own; the derived `jacobianScheme` def and the four
-typeclass carriers below are projections from `bundle`. Residual `sorryAx`
-in this section is inherited only from the still-open upstream
-`Scheme.Pic0.smooth` / `Scheme.Pic0.proper` and the FGA `instHasPicScheme`. -/
+The identity component of the Picard scheme, together with its degree map, is
+constructed in `Picard/Pic0AbelianVariety.lean`. The helper below — a bundled
+structure carrying the Pic⁰ scheme together with its four abelian-variety
+instances, plus the carrier `bundle` — supplies the interface. `bundle` is
+wired to the upstream declarations (`Scheme.Pic0Scheme`,
+`Scheme.Pic0.{grpObj, proper, smooth, geometricallyIrreducible}`) through the
+§0.0 bridges; the derived `jacobianScheme` def and the four typeclass carriers
+below are projections from `bundle`. -/
 
-/-- File-internal placeholder for `Pic⁰_{C/k̄}`: bundles the underlying
-`k̄`-scheme together with the four abelian-variety structural instances
-(group object, proper, smooth, geometrically irreducible) supplied at the
-A.3 row of Route A.
-
-Collapses to a re-export of the A.3 chapter once that materialises. -/
+/-- Interface for `Pic⁰_{C/k̄}`: bundles the underlying `k̄`-scheme together
+with the four abelian-variety structural instances (group object, proper,
+smooth, geometrically irreducible). -/
 structure Bundle {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     (C : Over (Spec (.of kbar)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -275,7 +242,7 @@ variable (C : Over (Spec (.of kbar)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIrreducible C.hom]
 
-/-- **The `Pic⁰_{C/k̄}` bundle, wired to the tracked A.3 upstream.** For a smooth
+/-- **The `Pic⁰_{C/k̄}` bundle.** For a smooth
 proper geometrically irreducible curve `C` over an algebraically closed field
 `k̄`, the underlying scheme is `Scheme.Pic0Scheme C` and its four
 abelian-variety attributes are the identity-component theorems of
@@ -288,12 +255,7 @@ these are discharged honestly here:
 `geometricallyReduced_of_smooth` + `GeometricallyIrreducible C.hom` give
 `GeometricallyIntegral C.hom`; `hasRationalPoint_of_isAlgClosed` gives
 `[HasRationalPoint C]`, whence `instHasPicScheme` supplies `[HasPicScheme C]` and
-`instPicSchemeLocallyOfFiniteType` the local-finiteness carrier.
-
-This removes the former opaque `sorry` token and makes the Albanese-cone DAG
-honest: any residual `sorryAx` taint is inherited only from the still-open
-upstream `Scheme.Pic0.smooth` / `Scheme.Pic0.proper` (and the FGA
-`instHasPicScheme`), never introduced here. -/
+`instPicSchemeLocallyOfFiniteType` the local-finiteness carrier. -/
 noncomputable def bundle : Bundle C := by
   haveI : Smooth C.hom := SmoothOfRelativeDimension.smooth 1 C.hom
   haveI : GeometricallyReduced C.hom := geometricallyReduced_of_smooth C.hom
@@ -309,26 +271,27 @@ noncomputable def bundle : Bundle C := by
 
 /-- The underlying `k̄`-scheme `Pic⁰_{C/k̄}` of a smooth proper
 geometrically irreducible curve `C` over an algebraically closed field
-`k̄`. Read off from the `Bundle` placeholder. -/
+`k̄`. Read off from the `Bundle` interface. -/
 noncomputable def jacobianScheme : Over (Spec (.of kbar)) := (bundle C).scheme
 
-/-- Group-object structure on `Pic⁰_{C/k̄}`. **Demoted from
-`instance` per lean-auditor iter-196 must-fix**: the silent
-propagation of `sorryAx` through `GrpObj`-typeclass synthesis is
-a soundness exposure until the `bundle` carrier closes.
-Consumers thread via `letI := jacobianScheme_grpObj C`. -/
+/-- Group-object structure on `Pic⁰_{C/k̄}`. Deliberately **not** an
+`instance`: while `Pic⁰_{C/k̄}` still depends on unproved upstream
+statements, making this an instance would let `sorryAx` propagate silently
+through typeclass synthesis. Consumers thread it explicitly via
+`letI := jacobianScheme_grpObj C`. -/
+@[implicit_reducible]
 noncomputable def jacobianScheme_grpObj : GrpObj (jacobianScheme C) :=
   (bundle C).grpObj
 
-/-- (Demoted from `instance`; see `jacobianScheme_grpObj`.) -/
+/-- (Deliberately not an `instance`; see `jacobianScheme_grpObj`.) -/
 theorem jacobianScheme_isProper : IsProper (jacobianScheme C).hom :=
   (bundle C).proper
 
-/-- (Demoted from `instance`; see `jacobianScheme_grpObj`.) -/
+/-- (Deliberately not an `instance`; see `jacobianScheme_grpObj`.) -/
 theorem jacobianScheme_smooth : Smooth (jacobianScheme C).hom :=
   (bundle C).smooth
 
-/-- (Demoted from `instance`; see `jacobianScheme_grpObj`.) -/
+/-- (Deliberately not an `instance`; see `jacobianScheme_grpObj`.) -/
 theorem jacobianScheme_geomIrred :
     GeometricallyIrreducible (jacobianScheme C).hom :=
   (bundle C).geomIrred
@@ -341,8 +304,7 @@ of the Abel–Jacobi morphism `ι_{P₀} : C ⟶ Pic⁰_{C/k̄}` at the basepoin
 `ι_{P₀}(Q) = [𝓞_C(Q − P₀)] ∈ Pic⁰_{C/k̄}(k̄)`; at the basepoint
 itself `ι_{P₀}(P₀) = η_J`.
 
-This is the content gated on A.3 (existence of `Pic⁰_{C/k̄}` as a
-representable group scheme); the morphism is the moduli classifier of
+The morphism is the moduli classifier of
 the rigidified diagonal correspondence
 `𝓛^{P₀} = 𝓞_{C × C}(Δ − {P₀} × C − C × {P₀})` on `C × C`, taken as a
 relative degree-zero line bundle on `C × C` over the second factor.
@@ -360,16 +322,14 @@ formula `(1 × ι_{P₀})^* 𝓜^{P₀} ≈ 𝓛^{P₀}`, where `𝓜^{P₀}` is
 Poincaré–Picard correspondence on `C × Pic⁰_{C/k̄}` and
 `𝓛^{P₀} = 𝓞_{C × C}(Δ − {P₀} × C − C × {P₀})`.
 
-iter-178+: body constructed by applying the moduli interpretation of
-`Pic⁰_{C/k̄}` (`def:pic_scheme` together with the identity-component
-refinement A.3) to the relative degree-zero line bundle `𝓛^{P₀}` on
-`C × C → C` along the second projection. Yoneda then produces the
+**Not yet constructed.** The construction applies the moduli interpretation
+of `Pic⁰_{C/k̄}` (`def:pic_scheme` together with its identity-component
+refinement) to the relative degree-zero line bundle `𝓛^{P₀}` on
+`C × C → C` along the second projection; Yoneda then produces the
 unique classifying morphism `C ⟶ Pic⁰_{C/k̄}`. The basepoint
 condition `P₀ ≫ abelJacobi C P₀ = η[Pic⁰_{C/k̄}]` (`lem:abel_jacobi_morphism`)
-holds because restriction of `𝓛^{P₀}` to `C × {P₀}` is the trivial
-line bundle `𝓞_C(P₀ − P₀) ≅ 𝓞_C` whose moduli class is `η_J`.
-
-For the iter-177 file-skeleton the body is a typed `sorry`. -/
+holds because the restriction of `𝓛^{P₀}` to `C × {P₀}` is the trivial
+line bundle `𝓞_C(P₀ − P₀) ≅ 𝓞_C`, whose moduli class is `η_J`. -/
 noncomputable def abelJacobi (P0 : 𝟙_ (Over (Spec (.of kbar))) ⟶ C) :
     C ⟶ jacobianScheme C :=
   sorry
@@ -385,12 +345,11 @@ project-side, following Milne's recipe of §III.3 Proposition 3.1: on
 each open affine `U = Spec A ⊆ C` form `Spec(A^{⊗ g})^{S_g}`, then glue
 along the standard open-cover patching (Mumford 1970 §II.7 / §III.11).
 
-This sub-build is a non-trivial dependency of A.4.d that the prover
-must absorb before the body of `symmetricPowerAVMap` /
-`symmetricPowerToJacobian` closes; the carrier here records the
-substantive *target* `Sym^g C : Over (Spec k̄)` with a typed `sorry`
-body, deferring the affine-and-glue construction to iter-178+
-`Albanese/SymmetricPower.lean`.
+The construction is a prerequisite for the bodies of
+`symmetricPowerAVMap` and `symmetricPowerToJacobian`, which need the
+symmetric projection `π : C^g ⟶ Sym^g C` and its universal property. The
+declaration below records the target `Sym^g C : Over (Spec k̄)` only; the
+affine-and-glue construction is not yet formalised.
 
 Blueprint reference: `def:symmetric_power_curve` (Milne, *Abelian
 Varieties*, §III.3, Proposition 3.1, p. 94). -/
@@ -406,13 +365,11 @@ equipped with a canonical finite surjective symmetric morphism
 `π : C^g ⟶ Sym^g C` characterised by the universal property that
 every `S_g`-symmetric morphism `C^g ⟶ T` factors uniquely through `π`.
 
-This pin records the substantive *target* scheme `Sym^g C`; the
-projection `π` and its universal property are recorded as helper API
-in the iter-178+ `Albanese/SymmetricPower.lean` substrate file.
+This declaration records the target scheme `Sym^g C`; the projection `π` and
+its universal property belong with the construction.
 
-iter-178+: body is the gluing-of-affines `Spec(A^{⊗ g})^{S_g}`
-construction over an open affine cover of `C`. For the iter-177
-file-skeleton the body is a typed `sorry`.
+**Not yet constructed.** The body is the gluing-of-affines
+`Spec(A^{⊗ g})^{S_g}` construction over an open affine cover of `C`.
 
 The signature mentions `C` explicitly (not via the file's `variable`
 block) so that the declaration's first explicit argument is the curve
@@ -448,10 +405,9 @@ addition in a commutative group object is order-independent. By the
 universal property of `Sym^g C` (`def:symmetric_power_curve`) it
 factors uniquely as `Sym^g φ ∘ π = add_A ∘ φ^{×g}`.
 
-iter-178+: body is the universal-property invocation on the
-symmetric composition `add_A ∘ φ^{×g}` once the iter-178+
-`Albanese/SymmetricPower.lean` substrate exposes the projection `π`
-and its UP. For the iter-177 file-skeleton the body is a typed `sorry`. -/
+**Not yet constructed.** The body is the universal-property invocation on
+the symmetric composition `add_A ∘ φ^{×g}`, which needs the projection `π`
+and its universal property from the construction of `Sym^g C`. -/
 noncomputable def symmetricPowerAVMap (g : ℕ)
     {A : Over (Spec (.of kbar))}
     [GrpObj A] [IsProper A.hom] [Smooth A.hom] [GeometricallyIrreducible A.hom]
@@ -485,13 +441,12 @@ dominant with one-dimensional fibres, and its generic fibre is a single
 on a curve of genus `g` is `0`-dimensional by Riemann–Roch).
 
 The birationality data (a dense open subset `U ⊆ Sym^g C` mapping
-isomorphically onto a dense open `V ⊆ Pic⁰_{C/k̄}`) is recorded as
-helper API in the iter-178+ proof body of
-`descentThroughBirationalSigma`.
+isomorphically onto a dense open `V ⊆ Pic⁰_{C/k̄}`) is what
+`descentThroughBirationalSigma` consumes.
 
-iter-178+: body is the specialisation of `symmetricPowerAVMap` to
-`A := jacobianScheme C` and `φ := abelJacobi C P₀`. For the iter-177
-file-skeleton the body is a typed `sorry`. -/
+**Not yet constructed.** The body is the specialisation of
+`symmetricPowerAVMap` to `A := jacobianScheme C` and
+`φ := abelJacobi C P₀`. -/
 noncomputable def symmetricPowerToJacobian
     (_P0 : 𝟙_ (Over (Spec (.of kbar))) ⟶ C) (g : ℕ) :
     SymmetricPower C g ⟶ jacobianScheme C :=
@@ -506,7 +461,7 @@ The final auxiliary lemma packages the two-step descent that promotes
 `Pic⁰_{C/k̄} ⇢ A` on the dense open of `Pic⁰_{C/k̄}` on which
 `f^{(g)}` is an isomorphism, then promoted to a regular morphism via
 Milne's Theorem I.3.2 (the sibling `Albanese/Thm32RationalMapExtension.lean`).
-This is the unique step of the proof that consumes A.4.c.
+This is the only step of the proof that uses the rational-map extension.
 
 Blueprint reference: `lem:descent_through_birational_sigma` (Milne's
 proof of III.6.1, p. 104, "It therefore defines a rational map
@@ -523,14 +478,13 @@ The rational map is constructed on the dense open `V ⊆ Pic⁰_{C/k̄}`
 where `f^{(g)}` is an isomorphism, then promoted to a regular morphism
 on all of `Pic⁰_{C/k̄}` via Milne's Theorem I.3.2 (sibling
 `Scheme.RationalMap.extend_to_av` in
-`Albanese/Thm32RationalMapExtension.lean`, A.4.c). Uniqueness is the
+`Albanese/Thm32RationalMapExtension.lean`). Uniqueness is the
 standard reduced-and-separated agreement principle: two regular
 morphisms `Pic⁰_{C/k̄} ⟶ A` agreeing on a dense open are equal.
 
-iter-178+: body invokes `Scheme.RationalMap.extend_to_av` on the
-rational map produced by inverting `f^{(g)}` on its dense open of
-isomorphism. For the iter-177 file-skeleton the body is a typed
-`sorry`. -/
+**Not yet proved.** The proof invokes `Scheme.RationalMap.extend_to_av` on
+the rational map produced by inverting `f^{(g)}` on its dense open of
+isomorphism. -/
 theorem descentThroughBirationalSigma
     (P0 : 𝟙_ (Over (Spec (.of kbar))) ⟶ C)
     {A : Over (Spec (.of kbar))}
@@ -543,13 +497,12 @@ theorem descentThroughBirationalSigma
 
 /-! ## §5.5. Albanese ⇔ symmetric-power equation (connecting biconditional)
 
-The iter-182 structural decomposition extracts the precise *connecting
-identity* between the Albanese-form factorisation
-`φ = abelJacobi C P₀ ≫ ψ` and the symmetric-power-form factorisation
-`symmetricPowerAVMap C (genus C) φ = symmetricPowerToJacobian C P₀
-(genus C) ≫ ψ` as a named typed-`sorry` biconditional helper. With this
-biconditional in hand the body of `albanese_universal_property` reduces
-to sorry-free assembly from `descentThroughBirationalSigma`. -/
+This section isolates the *connecting identity* between the Albanese-form
+factorisation `φ = abelJacobi C P₀ ≫ ψ` and the symmetric-power-form
+factorisation `symmetricPowerAVMap C (genus C) φ =
+symmetricPowerToJacobian C P₀ (genus C) ≫ ψ`. Given that biconditional,
+`albanese_universal_property` follows from
+`descentThroughBirationalSigma` by pure assembly. -/
 
 /-- **Connecting biconditional: Albanese-form equation ⇔ symmetric-power-form
 equation.**
@@ -564,13 +517,10 @@ schemes). The reverse direction restricts the symmetric-power-form equation
 along the diagonal embedding `Q ↦ (Q, P₀, …, P₀)` and uses
 `φ(P₀) = η_A`.
 
-iter-200+: body uses the `Sym^g` projection π and its UP from
-`Albanese/SymmetricPower.lean` (substrate file not yet opened),
-together with the explicit Milne III §6 identification of `ι_{P₀}` with
-the composite of `Q ↦ Q + (g - 1) P₀` followed by `f^{(g)}`. For the
-iter-182 file-skeleton the body is a typed `sorry` — but the named
-substantive helper exposes the precise connecting identity, allowing
-`albanese_universal_property` to be assembled sorry-free from it. -/
+**Not yet proved.** The proof uses the `Sym^g` projection `π` and its
+universal property, together with the Milne III §6 identification of
+`ι_{P₀}` with the composite of `Q ↦ Q + (g − 1) P₀` followed by
+`f^{(g)}`. -/
 theorem albanese_eq_iff_symmetricPower_eq
     (P0 : 𝟙_ (Over (Spec (.of kbar))) ⟶ C)
     {A : Over (Spec (.of kbar))}
@@ -627,21 +577,16 @@ Proof sketch (Milne III.6.1):
    `ι_{P₀}(C) + ⋯ + ι_{P₀}(C) = Pic⁰_{C/k̄}` (since `f^{(g)}` is
    surjective), hence are equal.
 
-The iter-177 file-skeleton encodes only the existence-and-uniqueness
-of the factoring morphism `ψ : Pic⁰_{C/k̄} ⟶ A` (matching the
-project's `IsAlbanese` precedent in `Jacobian.lean`); the
-group-homomorphism property is implicit in the construction. The body
-consumes its four sub-lemma exports plus
-`Scheme.RationalMap.extend_to_av` (A.4.c) and Milne Corollary I.1.2
-(registered in `chap:AbelianVarietyRigidity`).
+The statement asserts only the existence and uniqueness of the factoring
+morphism `ψ : Pic⁰_{C/k̄} ⟶ A` (matching the project's `IsAlbanese`
+convention in `Jacobian.lean`); the group-homomorphism property is implicit
+in the construction, by Milne Corollary I.1.2 (registered in
+`chap:AbelianVarietyRigidity`).
 
-iter-182 update: structural decomposition lands the body as
-sorry-free assembly from `descentThroughBirationalSigma` (§5)
-combined with the named typed-`sorry` biconditional helper
-`albanese_eq_iff_symmetricPower_eq` (§5.5). The remaining substantive
-gaps (substrate files `Pic⁰` representability, `Sym^g C` construction,
-`extend_to_av` rational-map extension, and the connecting biconditional
-body itself) remain blocking and are deferred to iter-200+. -/
+The proof below is pure assembly: `descentThroughBirationalSigma` (§5)
+transported across `albanese_eq_iff_symmetricPower_eq` (§5.5). Both of
+those, and the constructions of §1–§4 they rest on, are still unproved —
+see the file header. -/
 theorem albanese_universal_property
     (_hg : 0 < genus C)
     (P0 : 𝟙_ (Over (Spec (.of kbar))) ⟶ C)
@@ -649,11 +594,8 @@ theorem albanese_universal_property
     [GrpObj A] [IsProper A.hom] [Smooth A.hom] [GeometricallyIrreducible A.hom]
     (φ : C ⟶ A) (_hφ : P0 ≫ φ = η[A]) :
     ∃! (ψ : jacobianScheme C ⟶ A), φ = abelJacobi C P0 ≫ ψ := by
-  -- Structural decomposition (iter-182): reduce to the symmetric-power
-  -- descent `descentThroughBirationalSigma` plus the connecting
-  -- biconditional `albanese_eq_iff_symmetricPower_eq`. The remaining
-  -- substantive gap is the biconditional helper (named typed-sorry); the
-  -- proof body below is sorry-free assembly.
+  -- Transport the symmetric-power descent `descentThroughBirationalSigma`
+  -- across the connecting biconditional `albanese_eq_iff_symmetricPower_eq`.
   have key := albanese_eq_iff_symmetricPower_eq C P0 φ _hφ
   obtain ⟨ψ, hψ_sym, huniq_sym⟩ := descentThroughBirationalSigma C P0 φ _hφ
   exact ⟨ψ, (key ψ).mpr hψ_sym,

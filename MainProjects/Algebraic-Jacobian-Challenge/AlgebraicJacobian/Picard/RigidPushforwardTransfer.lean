@@ -55,7 +55,7 @@ transfer hypotheses:
   `flat_section_of_affine_cover` (`Picard/GenericFlatnessGeometric.lean`).
 
 * **transfer item (c) — the fibre-compatibility isomorphism and `hH0`**
-  (wave 4, §6–§7): the general Stacks 02KG (`i = 0`) engine for **affine**
+  (§6–§7): the general Stacks 02KG (`i = 0`) engine for **affine**
   morphisms and **arbitrary** (non-flat) base change
   (`isIso_pushforwardBaseChangeMap_of_isPullback`), its fibre specialization
   `fiberPushforwardCompatIso : (p.fiberι t)^* ((π_A)_* L) ≅ (π_t)_* (L_t)`,
@@ -64,14 +64,14 @@ transfer hypotheses:
   reduced to Čech cover-independence of `Ȟ¹`-vanishing on the fibre curve
   (`fiberH1Vanishing_pushforward_finiteMapToP1BaseChange_of_coverIndependence`).
 
-* **`hH1` (wave 5)** — the cover-independence obligation `hindep` is
+* **`hH1`** — the cover-independence obligation `hindep` is
   discharged by the QC-vanishing keystone
   (`Cohomology/StructureSheafModuleK/QuasicoherentDegreeOneVanishing.lean`:
   degree-1 affine vanishing for quasi-coherent modules + the Mayer–Vietoris
   `(0,1)`-slice on every 2-affine cover), giving the verbatim pinned `hH1`
-  (`pushforward_finiteMapToP1BaseChange_fiberH1`).  The transfer package is
-  **complete**: B3 local freeness for `C_A` now follows from the ℙ¹ engine
-  alone (`rigidPushforwardLocallyFree_of_p1Engine`).
+  (`pushforward_finiteMapToP1BaseChange_fiberH1`).  All four transfer
+  hypotheses being discharged, B3 local freeness for `C_A` follows from the
+  ℙ¹ engine alone (`rigidPushforwardLocallyFree_of_p1Engine`).
 
 No pinned statement is touched: this file only *produces* the named
 hypotheses consumed by `rigidPushforwardLocallyFree_of_p1`.
@@ -93,7 +93,7 @@ namespace AlgebraicGeometry
 
 /-! ## §1. Finite-module transport along a semilinear additive equivalence
 
-The elementary bookkeeping brick for moving `Module.Finite` across the
+The elementary bookkeeping lemma for moving `Module.Finite` across the
 section comparisons of the fromSpec dictionary: a surjective-semilinear
 additive equivalence transports finite generation. -/
 
@@ -560,13 +560,13 @@ map `π_t : C_t ⟶ ℙ¹_t` between the scheme-theoretic fibres, its cartesian
 square over `π_A`, and the two *definitional* Čech bridges — the difference
 map of a 2-affine cover for an (affine) pushforward literally *is* the
 difference map of the preimage cover, and surjectivity of the difference
-map transports across isomorphisms of module sheaves.  What remains for
-`hH1`/`hH0` (next session) is the affine-morphism base-change isomorphism
+map transports across isomorphisms of module sheaves.  On top of this
+substrate, `hH1`/`hH0` need the affine-morphism base-change isomorphism
 `(p.fiberι t)^* (π_A)_* L ≅ (π_t)_* (q.fiberι t)^* L` (Stacks 02KG for the
 affine `π_A`; `κ(t)` is *not* flat over `A`, so this is the
 glued form of `affinePushforwardPullbackBaseChange`), plus — for `hH1` —
-the Čech-to-Čech cover-independence of `Ȟ¹`-vanishing on the fibre curve,
-which is the recorded P2-interface TODO of `RigidPushforward.lean`. -/
+the Čech-to-Čech cover-independence of `Ȟ¹`-vanishing on the fibre curve
+(§6–§8 below). -/
 
 namespace Scheme
 
@@ -724,11 +724,11 @@ section proves it in full generality (Stacks 02KG, `i = 0`, affine case):
 * `isIso_pushforwardBaseChangeMap_of_isAffineHom` — the headline: the mate is
   an isomorphism.  Checked on the basis of affine opens lying inside a chart
   `g ⁻¹ᵁ V` (`Modules.isIso_of_isIso_app_of_isBasis`), where both sides are
-  identified with the two scalar-extension tensor products by the Lane-F
+  identified with the two scalar-extension tensor products by the affine
   section formula (`pullback_app_isoTensor_baseMap_sectionLinearEquiv`) and the
   bridge between them is `SectionBaseChange.bijective_addHom_of_isPushout`
-  (associativity of scalar extension along the section-ring pushout — the
-  arbitrary-pushout brick, no flatness). -/
+  (associativity of scalar extension along the section-ring pushout — an
+  arbitrary pushout, no flatness required). -/
 
 namespace Scheme.Modules
 
@@ -736,7 +736,7 @@ variable {X : Scheme.{u}}
 
 /-- Composition collapse for section restrictions of a sheaf of modules along
 arbitrary (`Subsingleton`) opens homs.  Public re-derivation of the transport
-brick used throughout the QuotScheme lane (`modules_res_res_hom` there is
+lemma of `Picard/QuotScheme.lean` (`modules_res_res_hom` there is
 `private`). -/
 lemma sections_map_map (N : X.Modules) {W₁ W₂ W₃ : X.Opens}
     (i₁ : W₁ ⟶ W₂) (i₂ : W₂ ⟶ W₃) (i₃ : W₁ ⟶ W₃) (ξ : Γ(N, W₃)) :
@@ -781,7 +781,7 @@ lemma pullback_map_app_isoTensor_baseMap
 
 set_option backward.isDefEq.respectTransparency false in
 /-- **The counit collapses the `baseMap` of a pushforward to a plain
-restriction** (triangle-identity brick for the mate–unit formula): for a module
+restriction** (triangle identity for the mate–unit formula): for a module
 `K` on `Y'` and `y ∈ Γ((pushforward g).obj K, V) = Γ(K, g⁻¹V)`, applying the
 `pullback ⊣ pushforward` counit to the canonical base-map section of `y`
 returns the restriction of `y` to `O ⊆ g⁻¹V`. -/
@@ -894,7 +894,7 @@ theorem isPushout_appLE_of_isPullback
     {V : Y.Opens} {O : Y'.Opens} (e : O ≤ g ⁻¹ᵁ V)
     (e' : f' ⁻¹ᵁ O ≤ g' ⁻¹ᵁ (f ⁻¹ᵁ V))
     (hV : IsAffineOpen V) (hO : IsAffineOpen O)
-    (hfV : IsAffineOpen (f ⁻¹ᵁ V)) (hf'O : IsAffineOpen (f' ⁻¹ᵁ O)) :
+    (hfV : IsAffineOpen (f ⁻¹ᵁ V)) (_hf'O : IsAffineOpen (f' ⁻¹ᵁ O)) :
     CategoryTheory.IsPushout (f.appLE V (f ⁻¹ᵁ V) le_rfl) (g.appLE V O e)
       (g'.appLE (f ⁻¹ᵁ V) (f' ⁻¹ᵁ O) e') (f'.appLE O (f' ⁻¹ᵁ O) le_rfl) := by
   -- the restricted square of the four opens is cartesian
@@ -906,7 +906,7 @@ theorem isPushout_appLE_of_isPullback
   haveI : IsAffine V.toScheme := hV
   haveI : IsAffine O.toScheme := hO
   haveI : IsAffine (f ⁻¹ᵁ V).toScheme := hfV
-  haveI : IsAffine (f' ⁻¹ᵁ O).toScheme := hf'O
+  haveI : IsAffine (f' ⁻¹ᵁ O).toScheme := _hf'O
   -- pushout of the `appTop`s of the restricted square
   have hpush := isPushout_appTop_of_isPullback hpb
   -- transport along the `topIso`s to the `appLE` square
@@ -1151,7 +1151,7 @@ isomorphism of transfer item (c),
 `(p.fiberι t)^* ((π_A)_* L) ≅ (π_t)_* ((q.fiberι t)^* L)`,
 
 for **every** scheme point `t` — `κ(t)` is not flat over `A`, which is exactly
-why the arbitrary-pushout 02KG brick (and never the flat 02KE engine) is used.
+why the arbitrary-pushout form of 02KG (and never the flat 02KE engine) is used.
 From it:
 
 * `hH0` is discharged **verbatim**
@@ -1162,10 +1162,11 @@ From it:
   is available **on the preimage cover**
   (`fiberH1Vanishing_pushforward_finiteMapToP1BaseChange_of_preimage_cover`).
   The pinned `hH1` of `rigidPushforwardLocallyFree_of_p1` supplies the witness
-  on an *arbitrary* 2-affine cover of `C_t`; closing the remaining gap is
-  exactly the Čech-to-Čech cover-independence of `Ȟ¹`-vanishing on the fibre
-  curve — the recorded **P2-interface TODO** of `RigidPushforward.lean` (Leray
-  for 2-affine covers of the separated fibre), NOT re-proved here. -/
+  on an *arbitrary* 2-affine cover of `C_t`; bridging the two is exactly the
+  Čech-to-Čech cover-independence of `Ȟ¹`-vanishing on the fibre curve (Leray
+  for 2-affine covers of the separated fibre), imported from
+  `Cohomology/StructureSheafModuleK/QuasicoherentDegreeOneVanishing.lean`
+  rather than re-proved here. -/
 
 namespace Adelic
 
@@ -1200,7 +1201,7 @@ This is the entire *transfer* content of the pinned `hH1` hypothesis of
 `rigidPushforwardLocallyFree_of_p1`; what separates it from the pinned `hH1`
 (whose hypothesis provides the surjectivity witness on an *arbitrary* 2-affine
 cover of `C_t`) is exactly the cover-independence of Čech-`Ȟ¹` vanishing on
-the separated fibre curve — the recorded P2-interface TODO. -/
+the separated fibre curve. -/
 theorem fiberH1Vanishing_pushforward_finiteMapToP1BaseChange_of_preimage_cover
     [HasFiniteMapToP1 C]
     (L : (Limits.pullback C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
@@ -1319,13 +1320,13 @@ noncomputable def p1BaseChangeFiberCoverSquare (t : Spec (CommRingCat.of A)) :
       (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberι t)
 
 /-- **The pinned `hH1`, reduced to Čech cover-independence on the fibre curve**:
-given the (P2-interface TODO) implication `hindep` — `h¹`-vanishing of `L_t` on
+given the implication `hindep` — `h¹`-vanishing of `L_t` on
 *some* 2-affine cover of `C_t` gives the surjectivity witness on the canonical
 `π_t`-preimage cover — the pinned `hH1` hypothesis of
 `rigidPushforwardLocallyFree_of_p1` holds at `t`.  Everything else (the
-fibre-compatibility isomorphism and the definitional Čech bridges) is proved;
-`hindep` is *exactly* the Leray/cover-independence content and the only
-remaining obligation of transfer item (c). -/
+fibre-compatibility isomorphism and the definitional Čech bridges) is proved
+here; `hindep` is *exactly* the Leray/cover-independence content of transfer
+item (c). -/
 theorem fiberH1Vanishing_pushforward_finiteMapToP1BaseChange_of_coverIndependence
     [HasFiniteMapToP1 C]
     (L : (Limits.pullback C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
@@ -1353,14 +1354,15 @@ point `t`.
 
 The `hindep` obligation of
 `fiberH1Vanishing_pushforward_finiteMapToP1BaseChange_of_coverIndependence`
-is discharged by the wave-5 QC-vanishing keystone: the fibre restriction
+is discharged by the QC-vanishing keystone: the fibre restriction
 `L_t` is quasi-coherent (`Scheme.Hom.fiberModule_isQuasicoherent`), so
 `Ȟ¹`-vanishing on *some* 2-affine cover of `C_t` (the ∃-form `hvan`) forces
 the surjectivity witness on the specific `π_t`-preimage cover
 (`Scheme.Hom.FiberH1Vanishing.surjective_moduleSectionDiff`, Leray both ways
 through the cover-free `H¹(C_t, L_t)` over `κ(t)`;
 `Cohomology/StructureSheafModuleK/QuasicoherentDegreeOneVanishing.lean`).
-This closes the P2-interface TODO recorded in `RigidPushforward.lean`. -/
+This discharges the cover-independence obligation recorded in
+`RigidPushforward.lean`. -/
 theorem pushforward_finiteMapToP1BaseChange_fiberH1 [HasFiniteMapToP1 C]
     (L : (Limits.pullback C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
     (t : Spec (CommRingCat.of A)) (hL : LineBundle.IsLocallyTrivial L)
@@ -1379,9 +1381,9 @@ theorem pushforward_finiteMapToP1BaseChange_fiberH1 [HasFiniteMapToP1 C]
       ((p1BaseChangeFiberCoverSquare A t).preimage (finiteMapToP1FiberMap A C t)))
     hvan
 
-/-- **THE B3 TRANSFER PACKAGE IS COMPLETE** (wave-5): with `hfp`/`hflat`
-(wave 3), `hH0` (wave 4) and `hH1` (this wave, above) all discharged, B3
-local freeness for the constant curve `C_A` follows from the ℙ¹ engine alone:
+/-- **The B3 transfer package**: with `hfp`, `hflat`, `hH0` and `hH1` all
+discharged above, B3 local freeness for the constant curve `C_A` follows from
+the ℙ¹ engine alone:
 for every finitely generated `k`-algebra `A`, `P1RigidPushforwardStatement`
 implies `RigidPushforwardLocallyFree C A`.  (The `HasRigidPushforward` gate
 is *not* instantiated here: its `baseChange` field is still open; this is the

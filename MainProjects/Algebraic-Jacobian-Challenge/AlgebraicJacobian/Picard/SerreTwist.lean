@@ -511,7 +511,8 @@ set_option backward.isDefEq.respectTransparency false in
 /-- `f_ij ≫ ι_i = p₂ ≫ ι_j` on the double overlap. -/
 lemma chart_overlap_swap (i j : n) :
     (glueData n).f i j ≫ (basicOpenCover n).f i
-      = pullback.snd ((basicOpenCover n).f i) ((basicOpenCover n).f j) ≫ (basicOpenCover n).f j := by
+      = pullback.snd ((basicOpenCover n).f i) ((basicOpenCover n).f j) ≫
+        (basicOpenCover n).f j := by
   rw [gd_f, pullback.condition]
 
 set_option backward.isDefEq.respectTransparency false in
@@ -746,7 +747,8 @@ lemma overlapUnit_cocycle_transport (i j k : n₀) :
             (Proj.awayToSection (homogeneousSubmodule n₀ (ULift.{0} ℤ)) (X i * X j * X k)
               (awayMap (homogeneousSubmodule n₀ (ULift.{0} ℤ)) (X_mem_deg_one n₀ j)
                 (show X i * X j * X k = (X i * X k) * X j from
-                  by rw [mul_assoc, mul_comm (X j) (X k), ← mul_assoc]) (awayFraction n₀ i k)))) := by
+                  by rw [mul_assoc, mul_comm (X j) (X k), ← mul_assoc])
+                (awayFraction n₀ i k)))) := by
     rw [overlapUnit_val_eq]
     have hmor : Scheme.Hom.appTop (overlapHom n₀ i k) ≫
           Scheme.Hom.appTop (pullback.snd ((glueData n₀).f i j) ((glueData n₀).f i k))

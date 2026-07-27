@@ -3,7 +3,16 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import Mathlib
+import Mathlib.Algebra.Category.ModuleCat.Presheaf.Monoidal
+import Mathlib.Algebra.Category.ModuleCat.Sheaf.Localization
+import Mathlib.Algebra.Homology.Homotopy
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.Combinatorics.Quiver.ReflQuiver
+import Mathlib.RingTheory.Flat.Basic
+import Mathlib.Topology.SeparatedMap
+import Mathlib.Topology.Sheaves.LocallySurjective
+import Mathlib.Topology.Sheaves.Over
+import Std.Tactic.BVDecide.LRAT.Internal.Clause
 import AlgebraicJacobian.Picard.TensorObjSubstrate.StalkTensor
 
 /-!

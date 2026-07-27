@@ -11,10 +11,10 @@ import AlgebraicJacobian.Genus
 /-!
 # The P2 cohomology kit: `h⁰`, `h¹`, `χ` on a 2-affine Čech cover
 
-Campaign **P2**, definitions layer (wave 4).  For a scheme `C` over a base
-ring `k` (structure morphism `C.hom : C.left ⟶ Spec k`; in the campaign `k`
-is a field, but the carrier layer is stated over any commutative ring so the
-same kit serves the B2/B3 noetherian-base extensions), a sheaf of modules
+For a scheme `C` over a base
+ring `k` (structure morphism `C.hom : C.left ⟶ Spec k`; in the intended
+application `k` is a field, but the carrier layer is stated over any
+commutative ring, so the same kit serves noetherian bases), a sheaf of modules
 `M : C.left.Modules`, and a bundled 2-affine Mayer–Vietoris cover
 `S : C.left.AffineCoverMVSquare`, this file upgrades the `AddMonoidHom`-level
 Čech vocabulary `AffineCoverMVSquare.moduleSectionDiff` /
@@ -33,9 +33,9 @@ same kit serves the B2/B3 noetherian-base extensions), a sheaf of modules
   (cokernel `k`-module, same underlying group as `moduleH1Cok`);
 * `AffineCoverMVSquare.h0`, `.h1` (`Module.finrank`s), `.chi := h0 - h1`.
 
-**Cover discipline (the P2 plan).**  All invariants are pinned **on a chosen
-cover `S`**.  Cover-independence is deliberately OUT of scope of this wave:
-it will be discharged Čech-to-Čech (comparing two 2-affine covers through
+**Cover discipline.**  All invariants are pinned **on a chosen
+cover `S`**.  Cover-independence is deliberately out of scope here:
+it is to be discharged Čech-to-Čech (comparing two 2-affine covers through
 their common refinement, exactly as `hModuleOneEquivH1Cok_curve` compares
 Čech to derived `H¹` through the Mayer–Vietoris `(0,1)`-slice) — **never**
 through the `HasCechToHModuleIso` comparison gate, which remains
@@ -45,7 +45,7 @@ sheaf condition); for `H¹` of the structure sheaf it is inherited from the
 gate-free derived comparison (`hModuleOneEquivH1Cokₗ_unit` below, both sides
 being `H¹(C, 𝒪_C)`).
 
-## The `𝒪_C` base case (the P3 χ-ledger seed)
+## The `𝒪_C` base case
 
 For `M = 𝒪_C` (the rank-one free module `SheafOfModules.unit`) over a field:
 
@@ -58,12 +58,11 @@ For `M = 𝒪_C` (the rank-one free module `SheafOfModules.unit`) over a field:
 * `h0_unit_eq_one` — `h⁰(𝒪_C) = 1` (sheaf gluing + the unconditional
   field-of-constants theorem `Γ(C, 𝒪_C) ≃ₐ[k] k`,
   `Picard/SectionRingUniversal.lean`);
-* `chi_unit_eq_one_sub_genus` — **`χ(𝒪_C) = 1 - g`**, the first honest entry
-  of the P3 `χ`-ledger.
+* `chi_unit_eq_one_sub_genus` — **`χ(𝒪_C) = 1 - g`**.
 
 ## Base-change finiteness transport for `𝒪` (Λ-stability consumers)
 
-The wave-3 substrate (`RiemannRoch/CurveBaseChange.lean`) makes
+The substrate of `RiemannRoch/CurveBaseChange.lean` makes
 `C_κ := Scheme.baseChangeField C κ` an AJC curve over any field extension
 `κ/k` by *named instances*, so the general-field statements above apply to
 `C_κ` verbatim at base field `κ`.  The named transports are
@@ -254,10 +253,10 @@ noncomputable def AffineCoverMVSquare.h1 (S : C.left.AffineCoverMVSquare)
     (M : C.left.Modules) : ℕ :=
   Module.finrank k (S.H1Cokₗ C M)
 
-/-- **The Euler characteristic `χ(M) = h⁰(M) − h¹(M)` on the cover `S`** —
-the P3 `χ`-ledger anchor shape.  Honest (i.e. equal to the sheaf-theoretic
-`χ`) whenever both `h⁰` and `h¹` are finite and the cover computes them,
-which for the campaign's curves is every 2-affine cover. -/
+/-- **The Euler characteristic `χ(M) = h⁰(M) − h¹(M)` on the cover `S`.**
+It agrees with the sheaf-theoretic `χ` whenever both `h⁰` and `h¹` are finite
+and the cover computes them, which for the curves considered here is every
+2-affine cover. -/
 noncomputable def AffineCoverMVSquare.chi (S : C.left.AffineCoverMVSquare)
     (M : C.left.Modules) : ℤ :=
   (S.h0 C M : ℤ) - (S.h1 C M : ℤ)

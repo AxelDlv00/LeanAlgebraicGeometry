@@ -13,11 +13,10 @@ import AlgebraicJacobian.Picard.SchematicSupport
 import AlgebraicJacobian.Picard.TensorObjSubstrate
 
 /-!
-# The Quot functor and the relative Grassmannian functor (real definitions)
+# The Quot functor and the relative Grassmannian functor
 
-This file replaces the typed-`sorry` bodies of the two headline *definitions*
-of the A.2.b Quot-scheme chapter (`blueprint/src/chapters/Picard_QuotScheme.tex`)
-with real constructions:
+This file constructs the two headline *definitions* of the A.2.b Quot-scheme
+chapter (`blueprint/src/chapters/Picard_QuotScheme.tex`):
 
 * `AlgebraicGeometry.Scheme.QuotFunctor` (`def:quot_functor`) — the Quot
   functor `Quot^{Φ,L}_{E/X/S} : (Sch/S)ᵒᵖ ⥤ Type (u+1)` of `T`-flat, finitely
@@ -27,13 +26,12 @@ with real constructions:
   relative Grassmannian functor `Grass(V, d) : (Sch/S)ᵒᵖ ⥤ Type (u+1)` of
   rank-`d` locally free quotients of `V_T` on `T`.
 
-Universe note: the value category is `Type (u+1)`, not the `Type u` of the
-iter-176 scaffold — a sheaf of modules on a scheme in `Scheme.{u}` is a large
-object, so the quotient sets live one universe up.  This is the same forced
-correction documented for the merged absolute Grassmannian functor
-(`AlgebraicGeometry.Grassmannian.functor`, `GrassmannianQuot.lean`) and for
-`picSharp` (`FGAPicRepresentability.lean`); `Functor.RepresentableBy` is
-universe-polymorphic, so the representability statements are unaffected.
+Universe note: the value category is `Type (u+1)`, not `Type u` — a sheaf of
+modules on a scheme in `Scheme.{u}` is a large object, so the quotient sets
+live one universe up.  The same shift occurs for the absolute Grassmannian
+functor (`AlgebraicGeometry.Grassmannian.functor`, `GrassmannianQuot.lean`)
+and for `picSharp` (`FGAPicRepresentability.lean`); `Functor.RepresentableBy`
+is universe-polymorphic, so the representability statements are unaffected.
 
 ## Design
 
@@ -54,7 +52,7 @@ exactly the statement "the Hilbert polynomial of `F|_{X_t}` equals `Φ`" of
 
 Two families are equivalent when an isomorphism of the targets commutes with
 the quotient maps (equivalently, `ker q = ker q'` — same convention as the
-merged absolute Grassmannian `RankQuotient.Rel`).  The functor value at `T` is
+absolute Grassmannian `RankQuotient.Rel`).  The functor value at `T` is
 the quotient by this relation; the morphism action pulls a family back along
 the induced morphism on relative products `Scheme.quotBaseMap π ψ` (with the
 `E`-side matched through the pullback pseudofunctor comparisons
@@ -88,19 +86,19 @@ the presentation transports); item 3 is proved in
 affine-cover flatness engines of `GenericFlatnessGeometric.lean`); item 4 is
 proved in `Picard/QuotSupportBaseChange.lean`
 (`Scheme.Modules.HasProperSupport.of_isPullback`, re-exported by the import);
-item 5 is proved by the fibre-pasting assembly of §2 modulo two named typed
-`sorry` leaves — the tensor–pullback compatibility
-`Scheme.Modules.pullbackTensorMap_isIso` (invertibility of the canonical
-comparison, to which the twist statement
-`Scheme.Modules.pullback_moduleTensorPow_iso` is now reduced by the proved
-`m`-recursion assembly of §2) and the `Γ`-base-change core
-`Scheme.gammaFiber_finrank_baseChange_field` (the leaf statements are the
-honest Stacks/Nitsure facts; see the blueprint nodes for sources).  The
-functor
-identities reduce to the pseudofunctor
-coherence laws of `Scheme.Modules.pullback`
-(`pseudofunctor_right_unitality` / `pseudofunctor_associativity`), packaged
-once as the app-level lemmas `Scheme.Modules.pullback_id_app_coherence` and
+item 5 is proved by the fibre-pasting assembly of §2, modulo the two
+obligations this file still leaves open (`sorry`): the tensor–pullback
+compatibility `Scheme.Modules.pullbackTensorMap_isIso` (invertibility of the
+canonical comparison, to which the twist statement
+`Scheme.Modules.pullback_moduleTensorPow_iso` is reduced by the `m`-recursion
+assembly of §2) and the `Γ`-base-change core
+`Scheme.gammaFiber_finrank_baseChange_field`.  Both are standard facts of
+[Stacks] / [Nitsure], cited at their declarations.
+
+The functor identities reduce to the pseudofunctor coherence laws of
+`Scheme.Modules.pullback` (`pseudofunctor_right_unitality` /
+`pseudofunctor_associativity`), packaged once as the app-level lemmas
+`Scheme.Modules.pullback_id_app_coherence` and
 `Scheme.Modules.pullback_comp_app_coherence` and consumed by both functors.
 
 ## References
@@ -251,10 +249,10 @@ lemma pullback_comp_app_coherence_inv {W Xs Y Z : Scheme.{u}} (a : Z ⟶ Y) (b :
   have k2 := congrArg
     (fun m => m ≫ (Scheme.Modules.pullbackComp a b).inv.app
       ((Scheme.Modules.pullback g).obj V)) k1
-  simp only [Category.assoc, Iso.hom_inv_id_app, Category.comp_id] at k2
+  simp only [Category.assoc, Iso.hom_inv_id_app] at k2
   -- normalize all `pullbackCongr` occurrences to `eqToHom`s and conclude
   simp only [pullbackCongr_hom_app, pullbackCongr_inv_app, eqToHom_refl,
-    Category.id_comp, Category.comp_id]
+    Category.id_comp]
   exact k2.symm
 
 end Modules
@@ -274,7 +272,7 @@ variable {S X : Scheme.{u}}
 noncomputable def quotBaseMap (π : X ⟶ S) {T T' : Over S} (ψ : T' ⟶ T) :
     (Limits.pullback π T'.hom : Scheme.{u}) ⟶ Limits.pullback π T.hom :=
   Limits.pullback.map π T'.hom π T.hom (𝟙 X) ψ.left (𝟙 S) (by simp)
-    (by simpa using (Over.w ψ).symm)
+    (by simp)
 
 @[reassoc]
 lemma quotBaseMap_fst (π : X ⟶ S) {T T' : Over S} (ψ : T' ⟶ T) :
@@ -289,13 +287,13 @@ lemma quotBaseMap_snd (π : X ⟶ S) {T T' : Over S} (ψ : T' ⟶ T) :
 lemma quotBaseMap_id (π : X ⟶ S) (T : Over S) :
     quotBaseMap π (𝟙 T) = 𝟙 (Limits.pullback π T.hom) := by
   apply pullback.hom_ext <;>
-    simp [quotBaseMap, pullback.lift_fst, pullback.lift_snd]
+    simp [quotBaseMap]
 
 lemma quotBaseMap_comp (π : X ⟶ S) {T T' T'' : Over S} (ψ : T' ⟶ T) (φ : T'' ⟶ T') :
     quotBaseMap π (φ ≫ ψ) = quotBaseMap π φ ≫ quotBaseMap π ψ := by
   apply pullback.hom_ext <;>
     simp [quotBaseMap, pullback.lift_fst, pullback.lift_snd,
-      pullback.lift_fst_assoc, pullback.lift_snd_assoc]
+      pullback.lift_snd_assoc]
 
 /-- The square
 ```
@@ -342,24 +340,23 @@ transport `Modules.pullbackSlicePresentation` and its finiteness) is proved in
 (`Scheme.Modules.HasProperSupport.of_isPullback`) is proved in
 `Picard/QuotSupportBaseChange.lean` (blueprint node
 `lem:proper_support_base_change`); all three are re-exported here by the
-imports.  The
-Hilbert-function invariance (item 5, blueprint node
+imports.  The Hilbert-function invariance (item 5, blueprint node
 `lem:hilbert_fibre_base_change`) is proved below by pasting the fibre squares
 (`Scheme.fiberBaseChange`) and transporting dimensions across the comparison
-isomorphisms, modulo two named typed `sorry` leaves (blueprint nodes
-`lem:pullback_tensor_map_isiso` — the canonical-comparison invertibility to
-which `lem:pullback_moduleTensorPow` is reduced — and
+isomorphisms, modulo the two obligations left open in this file (blueprint
+nodes `lem:pullback_tensor_map_isiso` — the canonical-comparison
+invertibility to which `lem:pullback_moduleTensorPow` is reduced — and
 `lem:gamma_fiber_baseChange_field`). -/
 
 /- **Proper support is stable under base change** (Nitsure §1; Stacks 01W4 +
-056H; blueprint `lem:proper_support_base_change`) now lives in
-`AlgebraicJacobian/Picard/QuotSupportBaseChange.lean`
-(`Scheme.Modules.HasProperSupport.of_isPullback`, proved sorry-free and
-axiom-clean) and is re-exported here by the import. -/
+056H; blueprint `lem:proper_support_base_change`) is
+`Scheme.Modules.HasProperSupport.of_isPullback` of
+`AlgebraicJacobian/Picard/QuotSupportBaseChange.lean`, re-exported here by
+the import. -/
 
 /-! ### Base change of the fibrewise graded Hilbert function
 
-Substrate for `Scheme.hilbertFunction_quotBaseMap` below: the fibre of
+Ingredients for `Scheme.hilbertFunction_quotBaseMap` below: the fibre of
 `X_{T'} → T'` at `t'` is the base change of the fibre of `X_T → T` at
 `t := ψ(t')` along the residue field extension `κ(t) → κ(t')`
 (`Scheme.fiberBaseChange`, cartesian by `Scheme.isPullback_fiberBaseChange` —
@@ -368,12 +365,12 @@ The two restrictions are matched across this identification by pseudofunctor
 coherence (`Scheme.pullbackSquareIso`); their twists by the congruence isos
 of the sheaf tensor product (`Scheme.Modules.moduleTensorPowCongr`) together
 with the tensor-compatibility statement
-(`Scheme.Modules.pullback_moduleTensorPow_iso`, proved by the `m`-recursion
-assembly modulo the canonical-comparison leaf
-`Scheme.Modules.pullbackTensorMap_isIso`); and the dimension count is
-transported along the assembled isomorphism
-(`Scheme.hilbertFunction_eq_finrank_of_iso`) and delegated to the
-`Γ`-base-change leaf (`Scheme.gammaFiber_finrank_baseChange_field`). -/
+(`Scheme.Modules.pullback_moduleTensorPow_iso`, obtained from the canonical
+comparison `Scheme.Modules.pullbackTensorMap_isIso` by induction on the
+twisting exponent); and the dimension count is transported along the
+resulting isomorphism (`Scheme.hilbertFunction_eq_finrank_of_iso`) and
+delegated to the base-change statement for `Γ`
+(`Scheme.gammaFiber_finrank_baseChange_field`). -/
 
 section HilbertFunctionBaseChange
 
@@ -415,7 +412,7 @@ noncomputable def Modules.moduleTensorPowCongr {Z : Scheme.{u}} {F F' L L' : Z.M
     Modules.moduleTensorPow F L m ≅ Modules.moduleTensorPow F' L' m :=
   Modules.sheafTensorObjCongr eF (Modules.tensorPowCongr eL m)
 
-/-! #### Reduction of the tensor–pullback leaf to the canonical comparison
+/-! #### Reduction of the tensor–pullback compatibility to the canonical comparison
 
 The tensor–pullback compatibility `Scheme.Modules.pullback_moduleTensorPow_iso`
 below (Stacks 01CD for the twists `F ⊗ L^{⊗m}`) reduces, by induction on `m`,
@@ -423,14 +420,14 @@ to the *binary* case — invertibility of the canonical sheaf-level
 pullback–tensor comparison `Scheme.Modules.pullbackTensorMap` built in
 `Picard/TensorObjSubstrate.lean` (the sheafified mate of the lax monoidal
 structure of the pushforward) — together with the unit case `f^*𝒪_Z ≅ 𝒪_Y`,
-which is the proved `Scheme.Modules.pullbackUnitIso` (the comparison functor
-on opens is always `Final`).  The substrate tensor `Scheme.Modules.tensorObj`
-is definitionally equal to the section-graded `Scheme.Modules.sheafTensorObj`
-(both sheafify the presheaf-level tensor of the underlying presheaves), so
-`asIso` of the canonical comparison re-types at `sheafTensorObj` directly.
-The single remaining wall is the named typed `sorry`
-`Scheme.Modules.pullbackTensorMap_isIso` just below
-(blueprint `lem:pullback_tensor_map_isiso`). -/
+which is `Scheme.Modules.pullbackUnitIso` (the comparison functor on opens is
+always `Final`).  The tensor `Scheme.Modules.tensorObj` is definitionally
+equal to the section-graded `Scheme.Modules.sheafTensorObj` (both sheafify
+the presheaf-level tensor of the underlying presheaves), so `asIso` of the
+canonical comparison re-types at `sheafTensorObj` directly.  Invertibility of
+that comparison, `Scheme.Modules.pullbackTensorMap_isIso` just below, is the
+one statement of this section that remains unproved (blueprint
+`lem:pullback_tensor_map_isiso`). -/
 
 set_option backward.isDefEq.respectTransparency false in
 /-- **The canonical pullback–tensor comparison is an isomorphism**
@@ -443,22 +440,20 @@ comparison `Scheme.Modules.pullbackTensorMap f A B :
 f^*(A ⊗ B) ⟶ f^*A ⊗ f^*B` of `Picard/TensorObjSubstrate.lean` is an
 isomorphism.
 
-This is the KNOWN-HARD general-`f` wall documented in
-`TensorObjSubstrate.lean` (§Phase 2): the Lean pullback functor is an
+This statement is not proved here; it is one of the two obligations this file
+leaves open.  The obstruction is that the Lean pullback functor is an
 *abstract* left adjoint with no sectionwise value, so invertibility cannot be
-checked on sections directly.  Candidate closure routes: (i) generalize the
-locally-trivial chart-chase (`Modules.pullbackTensorIsoOfLocallyTrivial`)
-from trivializing charts to affine charts with quasi-coherent section
-formulas — `Modules.pullback_app_isoTensor` (QuotScheme.lean) supplies the
-pullback side, and a `Γ(affine, tensorObj)` section formula for
-quasi-coherent factors is the missing brick — globalized by
-`isIso_of_isIso_restrict` through the restriction coherence
-`pullbackTensorMap_restrict` (PROVED sorry-free in `TensorObjSubstrate.lean`
-— the D3′ composition coherence, closed via the mate calculus);
-(ii) the concrete inverse-image model (`extendScalars ⋙ pullback₀` left Kan
-extension) route of `sec:tensorobj_pullback_monoidality` (multi-hundred-LOC);
-(iii) stalk machinery for `SheafOfModules` (Mathlib-absent; the presheaf-level
-comparison-map substrate exists in `TensorObjSubstrate/StalkTensor.lean`).
+checked on sections directly.  Three reductions of the statement are
+available: (i) a chart-chase generalizing
+`Modules.pullbackTensorIsoOfLocallyTrivial` from trivializing charts to
+affine charts, using `Modules.pullback_app_isoTensor` on the pullback side
+and a `Γ(affine, tensorObj)` section formula for quasi-coherent factors, then
+globalized by `isIso_of_isIso_restrict` through the restriction coherence
+`Modules.pullbackTensorMap_restrict`; (ii) the concrete inverse-image model
+`extendScalars ⋙ pullback₀` as a left Kan extension
+(`sec:tensorobj_pullback_monoidality`); (iii) stalkwise, which needs stalk
+machinery for `SheafOfModules` that Mathlib does not currently have (the
+presheaf-level comparison map is in `TensorObjSubstrate/StalkTensor.lean`).
 Blueprint: `lem:pullback_tensor_map_isiso`. -/
 theorem Modules.pullbackTensorMap_isIso {Z Y : Scheme.{u}} (f : Y ⟶ Z) (A B : Z.Modules) :
     IsIso (Modules.pullbackTensorMap f A B) := by
@@ -467,11 +462,11 @@ theorem Modules.pullbackTensorMap_isIso {Z Y : Scheme.{u}} (f : Y ⟶ Z) (A B : 
 set_option backward.isDefEq.respectTransparency false in
 /-- **Pullback commutes with the binary sheaf tensor product**: the
 `sheafTensorObj`-typed `Iso` packaging of `Modules.pullbackTensorMap_isIso`.
-The substrate tensor `Modules.tensorObj` and the section-graded
+The tensor `Modules.tensorObj` and the section-graded
 `Modules.sheafTensorObj` are definitionally equal, so `asIso` of the canonical
 comparison `Modules.pullbackTensorMap` re-types at `sheafTensorObj` without a
-bridge.  (The `IsIso` witness is passed explicitly to `asIso` — the substrate's
-`pbu`-canon idiom — so no instance synthesis runs on the sorried leaf.) -/
+bridge.  (The `IsIso` witness is passed explicitly to `asIso`, so that no
+instance synthesis runs on it.) -/
 noncomputable def Modules.pullbackSheafTensorIso {Z Y : Scheme.{u}} (f : Y ⟶ Z)
     (A B : Z.Modules) :
     (Scheme.Modules.pullback f).obj (Modules.sheafTensorObj A B) ≅
@@ -481,10 +476,10 @@ noncomputable def Modules.pullbackSheafTensorIso {Z Y : Scheme.{u}} (f : Y ⟶ Z
 
 set_option backward.isDefEq.respectTransparency false in
 /-- **Pullback commutes with tensor powers**: `f^*(L^{⊗m}) ≅ (f^*L)^{⊗m}`, by
-induction on `m` from the unit case (`Modules.pullbackUnitIso`, proved
-sorry-free in `TensorObjSubstrate.lean`) and the binary case
-(`Modules.pullbackSheafTensorIso`, resting on the
-`Modules.pullbackTensorMap_isIso` leaf), the isomorphisms being pushed through
+induction on `m` from the unit case (`Modules.pullbackUnitIso`, from
+`TensorObjSubstrate.lean`) and the binary case
+(`Modules.pullbackSheafTensorIso`, which rests on
+`Modules.pullbackTensorMap_isIso`), the isomorphisms being pushed through
 the recursion `L^{⊗(m+1)} = L^{⊗m} ⊗ L` by the tensor congruence
 `Modules.sheafTensorObjCongr`. -/
 noncomputable def Modules.pullbackTensorPowIso {Z Y : Scheme.{u}} (f : Y ⟶ Z)
@@ -507,13 +502,13 @@ canonical comparison map is an isomorphism for arbitrary sheaves of modules
 on ringed spaces — but the quasi-coherent `Nonempty`-of-isomorphism form
 recorded here is all the Hilbert-function base-change argument needs.
 
-PROVED (T12 wave 2) by the `m`-recursion assembly
-`Modules.pullbackSheafTensorIso` (binary case) +
-`Modules.pullbackTensorPowIso` (powers) + `Modules.sheafTensorObjCongr`
-(congruence), modulo the single narrower named typed `sorry`
+The proof is the recursion on `m` built from
+`Modules.pullbackSheafTensorIso` (binary case),
+`Modules.pullbackTensorPowIso` (powers) and `Modules.sheafTensorObjCongr`
+(congruence); it therefore rests on the single narrower unproved statement
 `Modules.pullbackTensorMap_isIso` above (invertibility of the canonical
-comparison; the quasi-coherence hypotheses are not consumed by this
-assembly — they are retained because the statement is pinned).
+comparison).  The quasi-coherence hypotheses are not consumed by this
+argument; they are kept because the statement is fixed by its callers.
 Blueprint: `lem:pullback_moduleTensorPow`. -/
 theorem Modules.pullback_moduleTensorPow_iso {Z Y : Scheme.{u}} (f : Y ⟶ Z)
     (F L : Z.Modules) [F.IsQuasicoherent] [L.IsQuasicoherent] (m : ℕ) :
@@ -594,30 +589,29 @@ set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- fibre-square properness transfer + defeq instantiation of the Γ-fibre core
 /-- **Flat base change of the global sections of the twisted fibre module,
-conditional on quasi-coherence of the twist** — the full scheme-level
-reduction of `lem:gamma_fiber_baseChange_field`.  All geometric content of
-`Scheme.gammaFiber_finrank_baseChange_field` is discharged here:
+conditional on quasi-coherence of the twist** — the scheme-level content of
+`lem:gamma_fiber_baseChange_field`, of which this carries the whole geometric
+argument:
 
 * proper support transfers from `F/T` to the fibre restriction `F_t/κ(t)`
   (`Modules.HasProperSupport.of_isPullback` on Mathlib's fibre square) and on
-  to the twist `F_t ⊗ L_t^{⊗m}` (`hasProperSupport_moduleTensorPow`, the
-  annihilator monotonicity brick);
-* the Γ-fibre flat base-change core
+  to the twist `F_t ⊗ L_t^{⊗m}` (`hasProperSupport_moduleTensorPow`, by
+  monotonicity of the annihilator);
+* the flat base-change statement for `Γ` on a fibre
   (`Scheme.finrank_gammaTop_baseChange_of_hasProperSupport` — support descent
-  `G ≅ i_* i^* G`, the 02KH exchange across the closed-immersion square, the
-  CLOSED 02KE heart at `⊤` on the pasted proper-support square, and the
+  `G ≅ i_* i^* G`, the [Stacks 02KH] exchange across the closed-immersion
+  square, [Stacks 02KE] at `⊤` on the pasted proper-support square, and the
   `ΓSpecIso` dimension bookkeeping) applies to Mathlib's cartesian fibre
   square `Scheme.isPullback_fiberBaseChange`, whose corners instantiate
   `K := κ(t)`, `K' := κ(t')`, `φ := ψ.residueFieldMap`; the
   `fiberSectionsModule`/`fiberResidueMap` scalar actions are *definitionally*
-  the `ΓSpecIso⁻¹ ≫ appTop` composites of the core statement.
+  the `ΓSpecIso⁻¹ ≫ appTop` composites of that statement.
 
-The sole remaining input is quasi-coherence of the twisted fibre module
-(`hGqc`) — the affine tensor-section formula for `sheafTensorObj` of
-quasi-coherent modules (the deferred wiring pass of
-`Picard/TensorSectionFormula.lean`, shared with
-`lem:pullback_tensor_map_isiso`), which will discharge it from
-`[L.IsQuasicoherent]` + finite presentation of `F`. -/
+The remaining input, taken here as the hypothesis `hGqc`, is quasi-coherence
+of the twisted fibre module.  It follows from `[L.IsQuasicoherent]` and finite
+presentation of `F` once the affine section formula for `sheafTensorObj` of
+quasi-coherent modules ([Stacks 01CB], `Picard/TensorSectionFormula.lean`) is
+available; that formula is also what `lem:pullback_tensor_map_isiso` needs. -/
 theorem gammaFiber_finrank_baseChange_field_of_quasicoherent (π : X ⟶ S)
     (L : X.Modules) {T T' : Over S} (ψ : T' ⟶ T)
     (F : (Limits.pullback π T.hom).Modules) (hfp : F.IsFinitePresentation)
@@ -683,15 +677,16 @@ is likewise required.  In the infinite-dimensional case both sides carry the
 junk value `0` of `Module.finrank`, matching the equality of infinite
 dimensions.  Blueprint: `lem:gamma_fiber_baseChange_field`.
 
-REDUCED (wave 8): the entire scheme-level content is now the PROVED
-`Scheme.gammaFiber_finrank_baseChange_field_of_quasicoherent` above (fibre
-properness transfer + twist-support monotonicity + the Γ-fibre flat
-base-change core `finrank_gammaTop_baseChange_of_hasProperSupport` of
-`Picard/SchematicSupport.lean`).  The SOLE remaining leaf is quasi-coherence
-of the sheafified tensor `moduleTensorPow F_t L_t^{⊗m}` of quasi-coherent
-modules — the affine tensor-section formula wiring pass deferred in
-`Picard/TensorSectionFormula.lean` (Stacks 01CB; shared wall with
-`lem:pullback_tensor_map_isiso`). -/
+The scheme-level content is carried by
+`Scheme.gammaFiber_finrank_baseChange_field_of_quasicoherent` above (transfer
+of properness to the fibre, monotonicity of the support under twisting, and
+the flat base-change statement for `Γ`,
+`finrank_gammaTop_baseChange_of_hasProperSupport` of
+`Picard/SchematicSupport.lean`).  What is left unproved here, and is the
+reason this declaration still uses `sorry`, is quasi-coherence of the
+sheafified tensor `moduleTensorPow F_t L_t^{⊗m}` of quasi-coherent modules —
+the affine tensor-section formula of `Picard/TensorSectionFormula.lean`
+([Stacks 01CB]), the same input `lem:pullback_tensor_map_isiso` needs. -/
 theorem gammaFiber_finrank_baseChange_field (π : X ⟶ S) (L : X.Modules)
     [L.IsQuasicoherent] {T T' : Over S} (ψ : T' ⟶ T)
     (F : (Limits.pullback π T.hom).Modules) (hfp : F.IsFinitePresentation)
@@ -713,10 +708,10 @@ theorem gammaFiber_finrank_baseChange_field (π : X ⟶ S) (L : X.Modules)
           ((Scheme.Modules.pullback (pullback.fst π T.hom)).obj L) F
           (ψ.left.base t') m := by
   refine gammaFiber_finrank_baseChange_field_of_quasicoherent π L ψ F hfp hps t' m ?_
-  -- SOLE remaining leaf (`lem:gamma_fiber_baseChange_field`): quasi-coherence
+  -- Remaining obligation (`lem:gamma_fiber_baseChange_field`): quasi-coherence
   -- of the sheafified tensor of quasi-coherent modules (Stacks 01CB), i.e. the
-  -- affine tensor-section formula for `sheafTensorObj` — the deferred wiring
-  -- pass of `Picard/TensorSectionFormula.lean`.
+  -- affine tensor-section formula for `sheafTensorObj` of
+  -- `Picard/TensorSectionFormula.lean`.
   sorry
 
 end HilbertFunctionBaseChange
@@ -768,14 +763,14 @@ theorem hilbertFunction_quotBaseMap (π : X ⟶ S) (L : X.Modules)
         (pullbackTriangleIso (rfl : (pullback.snd π T.hom).fiberι (ψ.left.base t')
             ≫ pullback.fst π T.hom = _) L).symm
   -- Step 3 (twist compatibility): pull the tensor operations through
-  -- `fiberBaseChange` (`Modules.pullback_moduleTensorPow_iso`, proved modulo
-  -- the `Modules.pullbackTensorMap_isIso` leaf)
+  -- `fiberBaseChange` (`Modules.pullback_moduleTensorPow_iso`, which rests on
+  -- `Modules.pullbackTensorMap_isIso`)
   obtain ⟨eT⟩ := Modules.pullback_moduleTensorPow_iso (fiberBaseChange π ψ t')
     ((pullback.snd π T.hom).fiberModule (ψ.left.base t') F)
     ((pullback.snd π T.hom).fiberModule (ψ.left.base t')
       ((Scheme.Modules.pullback (pullback.fst π T.hom)).obj L)) m
-  -- Step 4 (dimension transport along the assembled isomorphism), then
-  -- Step 5 (Γ-base change over the residue field extension, leaf
+  -- Step 4 (dimension transport along the composite isomorphism), then
+  -- Step 5 (Γ-base change over the residue field extension,
   -- `gammaFiber_finrank_baseChange_field`)
   exact (hilbertFunction_eq_finrank_of_iso (pullback.snd π T'.hom)
       ((Scheme.Modules.pullback (pullback.fst π T'.hom)).obj L)
@@ -836,18 +831,21 @@ invariance of the fibrewise Hilbert function
 
 /-- Two families of quotients are **equivalent** when an isomorphism of the
 target sheaves commutes with the quotient maps — equivalently, when
-`ker q = ker q'` (`def:quot_functor`; same convention as the merged absolute
+`ker q = ker q'` (`def:quot_functor`; same convention as the absolute
 Grassmannian `RankQuotient.Rel`). -/
 def Rel {T : Over S} (x y : QuotFamily π L E Φ T) : Prop :=
   ∃ f : x.F ≅ y.F, x.q ≫ f.hom = y.q
 
+omit [IsLocallyNoetherian S] in
 lemma rel_refl {T : Over S} (x : QuotFamily π L E Φ T) : x.Rel x :=
   ⟨Iso.refl _, Category.comp_id _⟩
 
+omit [IsLocallyNoetherian S] in
 lemma rel_symm {T : Over S} {x y : QuotFamily π L E Φ T} (h : x.Rel y) : y.Rel x := by
   obtain ⟨f, hf⟩ := h
   exact ⟨f.symm, by rw [Iso.symm_hom, Iso.comp_inv_eq]; exact hf.symm⟩
 
+omit [IsLocallyNoetherian S] in
 lemma rel_trans {T : Over S} {x y z : QuotFamily π L E Φ T}
     (h1 : x.Rel y) (h2 : y.Rel z) : x.Rel z := by
   obtain ⟨f, hf⟩ := h1; obtain ⟨g, hg⟩ := h2
@@ -892,6 +890,7 @@ noncomputable def pullbackAlong [L.IsQuasicoherent] {T T' : Over S} (ψ : T' ⟶
       (hilbertFunction_quotBaseMap π L ψ x.F x.isFinitePresentation
         x.properSupport t' m).symm)⟩
 
+omit [IsLocallyNoetherian S] in
 /-- The pullback action respects the equivalence relation. -/
 lemma pullbackAlong_rel [L.IsQuasicoherent] {T T' : Over S} (ψ : T' ⟶ T)
     {x y : QuotFamily π L E Φ T} (h : x.Rel y) :
@@ -1015,14 +1014,17 @@ commuting with the quotient maps (equivalently, `ker q = ker q'`). -/
 def Rel {T : Over S} (x y : LocallyFreeQuotient V d T) : Prop :=
   ∃ f : x.F ≅ y.F, x.q ≫ f.hom = y.q
 
+omit [IsLocallyNoetherian S] in
 lemma rel_refl {T : Over S} (x : LocallyFreeQuotient V d T) : x.Rel x :=
   ⟨Iso.refl _, Category.comp_id _⟩
 
+omit [IsLocallyNoetherian S] in
 lemma rel_symm {T : Over S} {x y : LocallyFreeQuotient V d T} (h : x.Rel y) :
     y.Rel x := by
   obtain ⟨f, hf⟩ := h
   exact ⟨f.symm, by rw [Iso.symm_hom, Iso.comp_inv_eq]; exact hf.symm⟩
 
+omit [IsLocallyNoetherian S] in
 lemma rel_trans {T : Over S} {x y z : LocallyFreeQuotient V d T}
     (h1 : x.Rel y) (h2 : y.Rel z) : x.Rel z := by
   obtain ⟨f, hf⟩ := h1; obtain ⟨g, hg⟩ := h2
@@ -1053,6 +1055,7 @@ noncomputable def pullbackAlong {T T' : Over S} (ψ : T' ⟶ T)
         (Scheme.Modules.pullback ψ.left) inferInstance _ _ x.q x.epi)
   locFree := Scheme.Modules.pullback_isLocallyFreeOfRank ψ.left x.locFree
 
+omit [IsLocallyNoetherian S] in
 /-- The pullback action respects the equivalence relation. -/
 lemma pullbackAlong_rel {T T' : Over S} (ψ : T' ⟶ T)
     {x y : LocallyFreeQuotient V d T} (h : x.Rel y) :
@@ -1082,7 +1085,7 @@ this agrees with the Quot-functor special case
 `Grass(V, d) = Quot^{d, O_S}_{V/S/S}` of the blueprint (a flat finitely
 presented module with constant fibre dimension `d` is locally free of rank
 `d`); the locally-free encoding is the form valid over an arbitrary base and
-the one matched by the merged chart construction
+the one matched by the absolute chart construction
 (`AlgebraicGeometry.Grassmannian.functor`, `GrassmannianQuot.lean`). -/
 noncomputable def Grassmannian (V : S.Modules) (d : ℕ) :
     (Over S)ᵒᵖ ⥤ Type (u + 1) where
@@ -1129,7 +1132,8 @@ noncomputable def Grassmannian (V : S.Modules) (d : ℕ) :
             ((pullbackTriangleIso (Over.w g.unop) V).inv ≫
               (Scheme.Modules.pullback g.unop.left).map x.q)
       rw [Category.assoc,
-        (Scheme.Modules.pullbackCongr (Over.comp_left _ _ _ h.unop g.unop)).hom.naturality_assoc x.q,
+        (Scheme.Modules.pullbackCongr (Over.comp_left _ _ _ h.unop g.unop)).hom.naturality_assoc
+          x.q,
         (Scheme.Modules.pullbackComp h.unop.left g.unop.left).inv.naturality x.q]
       have key := Scheme.Modules.pullback_comp_app_coherence_inv
         h.unop.left g.unop.left (Over.comp_left _ _ _ h.unop g.unop) T.unop.hom
@@ -1141,33 +1145,30 @@ noncomputable def Grassmannian (V : S.Modules) (d : ℕ) :
       rfl
 
 /- **Representability of the Grassmannian** (`thm:grassmannian_representable`)
-now lives in `AlgebraicJacobian/Picard/GrassmannianRepresentability.lean`
-(`AlgebraicGeometry.Scheme.Grassmannian.representable`), stated with the
-blueprint hypotheses (`V` locally free of rank `r`, `1 ≤ d ≤ r`) that the
-earlier skeleton here omitted — without them the bare statement quantifies
-over arbitrary sheaves of modules `V`, which is not the [Nitsure] §1 theorem
-and is not known to be true.  The proof consumes the merged absolute chart
-construction (`AlgebraicGeometry.Grassmannian.represents`,
+is `AlgebraicGeometry.Scheme.Grassmannian.representable` of
+`AlgebraicJacobian/Picard/GrassmannianRepresentability.lean`, stated with the
+blueprint hypotheses (`V` locally free of rank `r`, `1 ≤ d ≤ r`); without them
+the bare statement quantifies over arbitrary sheaves of modules `V`, which is
+not the [Nitsure] §1 theorem and is not known to be true.  Its proof consumes
+the absolute chart construction (`AlgebraicGeometry.Grassmannian.represents`,
 `GrassmannianQuot.lean`), which this file deliberately does not import. -/
 
 end Grassmannian
 
 /-! ## §5. Representability of the Quot scheme -/
 
-/- **Representability of the Quot scheme** (`thm:quot_representable`) now
-lives in `AlgebraicJacobian/Picard/QuotRepresentability.lean`
-(`AlgebraicGeometry.Scheme.QuotScheme`), restated with the faithful
+/- **Representability of the Quot scheme** (`thm:quot_representable`) is
+`AlgebraicGeometry.Scheme.QuotScheme` of
+`AlgebraicJacobian/Picard/QuotRepresentability.lean`, stated with the
 [Nitsure] §5 hypotheses: `π` projective carrying the relatively very ample
 line bundle `L` (`Scheme.Hom.IsProjectiveWith`,
 `Picard/ProjectiveMorphism.lean` — that file imports this one, which forces
-the statement out of this file) and `E` coherent, at `Scheme.{0}`.  The
-earlier pin here hypothesized only `[IsProper π] [LocallyOfFiniteType π]`
-over arbitrary quasi-coherent `L` and arbitrary `E` — a strictly weaker,
-false-or-open signature (for merely proper `π` the Quot functor is in
-general only an algebraic space; Hironaka's smooth proper non-projective
-3-fold is the standard counterexample family), recorded and repaired in
-inbox `I-0118`.  This is the same split as `Grassmannian.representable`
-above. -/
+the statement out of this file) and `E` coherent, at `Scheme.{0}`.  Merely
+assuming `[IsProper π] [LocallyOfFiniteType π]` over quasi-coherent `L` and
+arbitrary `E` would not do: for a proper `π` that is not projective the Quot
+functor is in general only an algebraic space, Hironaka's smooth proper
+non-projective 3-folds being the standard counterexamples.  This is the same
+split as `Grassmannian.representable` above. -/
 
 end Scheme
 

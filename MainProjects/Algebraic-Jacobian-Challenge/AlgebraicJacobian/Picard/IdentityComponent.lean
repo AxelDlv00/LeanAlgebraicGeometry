@@ -9,80 +9,69 @@ import AlgebraicJacobian.Picard.GeometricallyConnectedSection
 import AlgebraicJacobian.Genus
 
 /-!
-# The identity component of the Picard scheme (A.3)
+# The identity component of the Picard scheme
 
-This file is the **A.3** sub-build chapter for the project's positive-genus arm
-of `nonempty_jacobianWitness`. It scaffolds the abstract identity-component
-substrate for a `k`-group scheme locally of finite type and specialises it to
-`G = Pic_{C/k}`, packaging:
+Let `G` be a `k`-group scheme locally of finite type. Its **identity
+component** `G⁰` is the connected component of `|G|` containing the image of
+the identity section. It is an open and closed subgroup scheme of `G`, of
+finite type and geometrically irreducible over `k`, and its formation
+commutes with extension of the base field (Kleiman, §5, Lem.~`lem:agps`).
 
-1. the open-and-closed subgroup-scheme structure of the identity component,
-2. the degree map `Pic_{C/k}(k) → ℤ`,
-3. the abelian-variety identification of `Pic⁰_{C/k}` (the Jacobian variety
-   of `C` when `C/k` is a smooth proper geometrically integral curve of
-   positive genus).
+This file develops that substrate for an arbitrary `k`-group scheme (§1) and
+then specialises it to `G = Pic_{C/k}`, the Picard scheme of a smooth proper
+geometrically integral curve `C/k` (§2), obtaining `Pic⁰_{C/k}` together with
+the degree map `Pic_{C/k}(k) → ℤ` (§3) whose kernel it cuts out on
+`k`-points (§4). For `C` of positive genus, `Pic⁰_{C/k}` is the Jacobian
+variety of `C`.
 
-## Status (run 0009, T6 session)
+## Main results
 
-The §1 group-scheme substrate is fully proved: `IdentityComponent`,
-`isOpenSubgroupScheme`, `isSubgroupHomomorphism` (Yoneda subgroup-presheaf
-route), `isFiniteTypeGeometricallyIrreducible` (run 0009: Kleiman's
-translation argument over the algebraic closure — closed-point translation
-via `GrpObj.mulRight` and `pointEquivClosedPoint`, Jacobson density,
-EGA I 6.1.10, then descent along the surjective base-change projection via
-`baseChangeIso`; the previous claim that this needed EGA IV₂ 4.6.1-type
-input absent from Mathlib was stale) and `baseChangeIso` are sorry-free.
-Remaining sorries (3): `degree` / `finrank_eq_genus` /
-`kPoints_iff_kerDegree` of §3–§4, which inherit the typed-sorry FGA
-representability foundation (`Picard/FGAPicRepresentability.lean`) and
-cannot be axiom-clean before `AJC.picrep` lands.
-`Pic0Scheme.isAbelianVariety` MOVED to sibling
-`Picard/Pic0AbelianVariety.lean` (run 0008), where it is assembled from
-the per-conjunct theorems of that chapter.
+- `AlgebraicGeometry.GroupScheme.IdentityComponent` — the identity component
+  `G⁰` of a `k`-group scheme `G` locally of finite type, as a `k`-scheme (an
+  object of `Over (Spec k)`): the open subscheme of `G` carried by the
+  connected component of the image of the identity section.
+- `AlgebraicGeometry.GroupScheme.IdentityComponent.isOpenSubgroupScheme` —
+  the inclusion `G⁰ ↪ G` is both an open and a closed immersion.
+- `AlgebraicGeometry.GroupScheme.IdentityComponent.isSubgroupHomomorphism` —
+  `G⁰` inherits the group-object structure of `G`.
+- `AlgebraicGeometry.GroupScheme.IdentityComponent.baseChangeIso` — for a
+  field extension `K/k`, the base change `(G⁰)_K` is isomorphic to `(G_K)⁰`.
+- `AlgebraicGeometry.GroupScheme.IdentityComponent.isFiniteTypeGeometricallyIrreducible`
+  — `G⁰` is of finite type and geometrically irreducible over `k`.
+- `AlgebraicGeometry.Scheme.Pic0Scheme` — the identity component
+  `Pic⁰_{C/k}` of the Picard scheme.
+- `AlgebraicGeometry.Scheme.PicScheme.degree` — the degree map
+  `Pic_{C/k}(k) → ℤ`, the leading coefficient of the Hilbert polynomial of a
+  representing invertible sheaf relative to a fixed degree-one polarisation
+  `O_C(1)`.
+- `AlgebraicGeometry.Scheme.Pic0Scheme.finrank_eq_genus` — the dimension of
+  `Pic⁰_{C/k}` is the genus of `C`.
+- `AlgebraicGeometry.Scheme.Pic0Scheme.kPoints_iff_kerDegree` — a `k`-point
+  of `Pic_{C/k}` factors through `Pic⁰_{C/k}` iff its degree vanishes.
 
-The 5 blueprint-pinned declarations are:
+The abelian-variety identification of `Pic⁰_{C/k}` (smooth, proper,
+geometrically irreducible `k`-group scheme of dimension `g(C)`) is assembled
+in the sibling file `Picard/Pic0AbelianVariety.lean`.
 
-1. `AlgebraicGeometry.GroupScheme.IdentityComponent` (def, ~5 LOC) — the
-   **identity component** `G^0` of a `k`-group scheme `G` locally of finite
-   type, as a `k`-scheme (an `Over (Spec k)`-object). Abstract substrate
-   reusable outside the Picard context; not yet in Mathlib.
-2. `AlgebraicGeometry.GroupScheme.IdentityComponent.isOpenSubgroupScheme`
-   (theorem, ~10 LOC) — the bundled statement that `G^0` is an open and
-   closed subscheme of `G` via an open immersion `G^0 ↪ G`.
-3. `AlgebraicGeometry.Scheme.Pic0Scheme` (def, ~5 LOC) — the **identity
-   component of the Picard scheme** `Pic⁰_{C/k}`, obtained by applying
-   `IdentityComponent` to `G = PicScheme C`.
-4. `AlgebraicGeometry.Scheme.PicScheme.degree` (def, ~5 LOC) — the **degree
-   map** `Pic_{C/k}(k) → ℤ`, extracting the leading coefficient of the
-   Hilbert polynomial of a representing invertible sheaf relative to a fixed
-   degree-one polarisation `O_C(1)`.
-5. `AlgebraicGeometry.Scheme.Pic0Scheme.isAbelianVariety` (theorem, ~10 LOC)
-   — the **abelian-variety identification** of `Pic⁰_{C/k}`: smooth, proper,
-   geometrically irreducible `k`-group scheme of dimension `g(C)` --- the
-   Jacobian variety of `C`.
+## Remaining obligations
 
-## Note on type expressivity
+The §1 substrate for an abstract `k`-group scheme is unconditional. Three
+statements of §3–§4 are still open; all three depend on the invertible sheaf
+representing a `k`-point of `Pic_{C/k}`, which rests on the representability
+of the relative Picard functor (`Picard/FGAPicRepresentability.lean`):
 
-Following the project rule "Never weaken the type to dodge the proof", each
-pinned declaration carries a substantive, non-tautological type:
-
-- `IdentityComponent G : Over (Spec (.of k))` — a `k`-scheme, not the
-  tautological `G` itself.
-- `IdentityComponent.isOpenSubgroupScheme G` — asserts the *existence* of an
-  open immersion morphism `IdentityComponent G ⟶ G` whose underlying map of
-  schemes is both an open and a closed immersion (clopen subscheme).
-- `Pic0Scheme C : Over (Spec (.of k))` — a `k`-scheme.
-- `PicScheme.degree C : (Spec (.of k) ⟶ (PicScheme C).left) → ℤ` —
-  a genuine function from `k`-points to `ℤ`, not a constant.
-- `Pic0Scheme.isAbelianVariety C` — asserts the conjunction of the four
-  abelian-variety properties (proper, smooth, geometrically irreducible,
-  group-object structure); not vacuous because each conjunct is a genuine
-  property/structure on the (typed-sorry) `Pic0Scheme C`.
+- `PicScheme.degree`: the value should be the leading coefficient of the
+  Hilbert polynomial `Φ_L(n) = χ(C, L ⊗ O_C(n)) = n · deg L + 1 - g` of a
+  representing sheaf `L`, which is independent of the choice of `L`.
+- `Pic0Scheme.finrank_eq_genus`: the equality
+  `dim Pic⁰_{C/k} = dim_k H¹(C, O_C) = g(C)`, which follows from
+  Kleiman~§5 Cor.~`cor:sm` once the identity component is known to be smooth.
+- `Pic0Scheme.kPoints_iff_kerDegree`: the identification of the `k`-points of
+  `Pic⁰_{C/k}` with the degree-zero classes.
 
 ## References
 
-Blueprint: `blueprint/src/chapters/Picard_IdentityComponent.tex` (560 LOC,
-5 pins). Sources:
+- Blueprint: `blueprint/src/chapters/Picard_IdentityComponent.tex`.
 - Kleiman, "The Picard scheme", §5, Lem.~`lem:agps` (identity component
   substrate) + Prp.~`prp:pic0` (specialisation to `Pic_{C/k}`) +
   Thm.~`th:qpp&p` (quasi-projectivity/projectivity) + Cor.~`cor:sm`
@@ -119,8 +108,8 @@ Blueprint references: `def:identity_component_group_scheme` +
 
 namespace GroupScheme
 
-/-- Helper (iter-188): in a **Noetherian** topological space `α`, the set of
-connected components is finite.
+/-- In a **Noetherian** topological space `α`, the set of connected
+components is finite.
 
 Proof: the map `irreducibleComponents α → ConnectedComponents α` sending each
 irreducible component `C` to the connected component of an arbitrary chosen
@@ -149,8 +138,8 @@ private lemma noetherianSpace_finite_connectedComponents
   exact irreducibleComponent_subset_connectedComponent
     (isIrreducible_irreducibleComponent (x := x)).nonempty.some_mem
 
-/-- Helper (iter-188): in a **Noetherian** topological space `α`, each
-connected component is open.
+/-- In a **Noetherian** topological space `α`, each connected component is
+open.
 
 Proof: `ConnectedComponents α` is totally disconnected
 (`ConnectedComponents.totallyDisconnectedSpace`), hence T1
@@ -172,9 +161,9 @@ private lemma noetherianSpace_isOpen_connectedComponent
     ConnectedComponents.continuous_coe
   rwa [connectedComponents_preimage_singleton] at h
 
-/-- Helper (iter-188): the **`LocallyConnectedSpace` instance** for the
-underlying topological space of a `k`-scheme `G.left` whose structural
-morphism `G.hom : G.left ⟶ Spec k` is locally of finite type.
+/-- The **`LocallyConnectedSpace` instance** for the underlying topological
+space of a `k`-scheme `G.left` whose structural morphism
+`G.hom : G.left ⟶ Spec k` is locally of finite type.
 
 The substantive content is EGA I 6.1.9: a locally Noetherian topological
 space has open connected components — equivalently, is locally connected.
@@ -183,8 +172,8 @@ spectrum); `LocallyOfFiniteType G.hom + IsLocallyNoetherian (Spec k) ⟹
 IsLocallyNoetherian G.left` (Mathlib's
 `AlgebraicGeometry.LocallyOfFiniteType.isLocallyNoetherian`); and the
 implication `IsLocallyNoetherian X ⟹ LocallyConnectedSpace X.toTopCat`
-is the iter-188 project-side helper (`noetherianSpace_finite_connectedComponents`
-+ `noetherianSpace_isOpen_connectedComponent`).
+comes from `noetherianSpace_finite_connectedComponents` together with
+`noetherianSpace_isOpen_connectedComponent` above.
 
 The classical proof: each point `y ∈ G.left` has an open affine
 neighbourhood `W = Spec R` with `R` Noetherian, hence `|W|` is a Noetherian
@@ -230,9 +219,10 @@ private noncomputable def identitySectionPoint
   ((MonObj.one (X := G)).left.base :
       ↥(Spec (.of k)) → G.left) (default : Spec (.of k))
 
-/-- Helper (iter-186; iter-187 closed): the **clopen carrier `Set`** of
-the identity component of a `k`-group scheme `G` locally of finite type,
-packaged as a `G.left.Opens`. The carrier set is `connectedComponent x`
+/-- The **clopen carrier `Set`** of the identity component of a `k`-group
+scheme `G` locally of finite type, packaged as a `G.left.Opens`.
+
+The carrier set is `connectedComponent x`
 for `x = e(*)` the image of the identity section
 (`identitySectionPoint G`); openness is `isOpen_connectedComponent` which
 needs the `identityComponent_locallyConnectedSpace` instance above
@@ -253,16 +243,14 @@ structure inherited from `G`". The associated open immersion
 `IdentityComponent G ⟶ G` is the content of
 `IdentityComponent.isOpenSubgroupScheme`.
 
-iter-186 body: built from the `identityComponentCarrier G` helper — the
-open subscheme of `G` whose underlying topological space is the connected
-component of `|G|` through the image of the identity section. The
-structure morphism is the inherited `(identityComponentCarrier G).ι ≫ G.hom`.
-The substantive content (the actual carrier `Set`, plus its openness from
-EGA I 6.1.9: locally Noetherian spaces have open connected components)
-lives in the PROVED body of `identityComponentCarrier` above —
-`connectedComponent (identitySectionPoint G)`, open by
+Concretely, `IdentityComponent G` is built from `identityComponentCarrier G`:
+the open subscheme of `G` whose underlying topological space is the connected
+component of `|G|` through the image of the identity section, with the
+inherited structure morphism `(identityComponentCarrier G).ι ≫ G.hom`. The
+carrier is `connectedComponent (identitySectionPoint G)`, open by
 `isOpen_connectedComponent` under the
-`identityComponent_locallyConnectedSpace` instance. -/
+`identityComponent_locallyConnectedSpace` instance (EGA I 6.1.9: locally
+Noetherian spaces have open connected components). -/
 noncomputable def IdentityComponent {k : Type u} [Field k]
     (G : Over (Spec (.of k)))
     [GrpObj G] [LocallyOfFiniteType G.hom] :
@@ -278,22 +266,23 @@ finite type comes with a morphism `IdentityComponent G ⟶ G` (in
 immersion and a closed immersion (i.e. the inclusion of a clopen
 subscheme).
 
-The full Kleiman conclusion also packages the group-subscheme property (the
-inclusion is a homomorphism of `k`-group schemes), finite-type-ness over `k`
-(`LocallyOfFiniteType` + quasi-compactness), geometric irreducibility, and
-base-change-commutation. Those refinements live as separate instances /
-follow-up lemmas in iter-186+; the file-skeleton pins only the clopen
-open-immersion conclusion as a Nonempty-witness.
+The remaining parts of Kleiman's conclusion — the group-subscheme property
+(the inclusion is a homomorphism of `k`-group schemes), finite-type-ness over
+`k` (`LocallyOfFiniteType` + quasi-compactness), geometric irreducibility and
+base-change-commutation — are stated separately as
+`IdentityComponent.isSubgroupHomomorphism`,
+`IdentityComponent.isFiniteTypeGeometricallyIrreducible` and
+`IdentityComponent.baseChangeIso`.
 
-iter-186 body: the inclusion morphism is `Over.homMk (identityComponentCarrier G).ι`,
-with the over-category compatibility holding by definition of
+The inclusion morphism is `Over.homMk (identityComponentCarrier G).ι`, with
+the over-category compatibility holding by definition of
 `IdentityComponent G`. The `.left` of this morphism is
 `(identityComponentCarrier G).ι`, an open immersion by the global
 `Scheme.Opens.instIsOpenImmersionι` instance. For the closed-immersion
 half we apply `IsClosedImmersion.of_isPreimmersion` to the open immersion
 and reduce to `IsClosed (↑(identityComponentCarrier G) : Set _)`, which holds
 because the carrier is a connected component and connected components are
-closed. This theorem is now axiom-clean. -/
+closed. -/
 theorem IdentityComponent.isOpenSubgroupScheme {k : Type u} [Field k]
     (G : Over (Spec (.of k)))
     [GrpObj G] [LocallyOfFiniteType G.hom] :
@@ -325,34 +314,26 @@ theorem IdentityComponent.isOpenSubgroupScheme {k : Type u} [Field k]
     change IsClosed (connectedComponent (identitySectionPoint G))
     exact isClopen_connectedComponent.1
 
-/-! ### iter-192 Lane A.3.i: identity-component substrate
+/-! ### Connectedness substrate for the identity component
 
-Per `analogies/lane-a3i-isconnected-prod.md`, the substrate for the
-group-structure inheritance and base-change-commutation arguments is
-Stacks Tag 04KU / EGA IV₂ 4.5.14 (a connected `k`-scheme with a
-`k`-rational section is geometrically connected) combined with Mathlib's
+The group-structure inheritance and base-change-commutation arguments rest on
+Stacks Tag 04KU / EGA IV₂ 4.5.14 (a connected `k`-scheme with a `k`-rational
+section is geometrically connected), combined with Mathlib's
 `ConnectedSpace (pullback f g)` instance for
 `[GeometricallyConnected f] [UniversallyOpen f] [ConnectedSpace Y]`.
 
-This iter (Lane A.3.i): we add the AXIOM-CLEAN
-`identityComponentCarrier_connectedSpace` helper below (the carrier is
-connected by construction). The full Stacks 04KU bridge
-"`ConnectedSpace X` + section ⟹ `GeometricallyConnected f`" is now
-PROVED project-side (run 0005 session 0007, T5) in the sibling module
-`Picard/GeometricallyConnectedSection.lean` and consumed by
-`geometricallyConnected_of_connected_of_section` below, so the
-geometric-connectedness substrate is axiom-clean. Built on top of it,
+The carrier of the identity component is connected by construction
+(`identityComponentCarrier_connectedSpace` below), and the bridge
+"`ConnectedSpace X` + section ⟹ `GeometricallyConnected f`" is proved in the
+sibling module `Picard/GeometricallyConnectedSection.lean`, applied here in
+`geometricallyConnected_of_connected_of_section`. On top of these,
 `isSubgroupHomomorphism` (group-structure inheritance) and `baseChangeIso`
-(clopen-image identification) are now both axiom-clean, and (run 0009, T6)
-`isFiniteTypeGeometricallyIrreducible` is closed as well — see the
-"Run 0009 (T6)" section below — so the §1 substrate is fully sorry-free.
-
-Below: `baseChangeIso` closes via
+(clopen-image identification) follow; the latter closes via
 `CategoryTheory.Over.grpObjMkPullbackSnd` together with the carrier
 identification `fst⁻¹(G⁰) = (G_K)⁰` (clopen ⊇, preconnected-range ⊆). -/
 
-/-- Helper (iter-192 Lane A.3.i, axiom-clean): the **identity component
-carrier** has connected underlying topological space.
+/-- The **identity component carrier** has connected underlying topological
+space.
 
 The carrier is defined as `connectedComponent (identitySectionPoint G)`
 in `|G|` (a `G.left.Opens`), and its subspace topology coincides with the
@@ -368,8 +349,8 @@ private instance identityComponentCarrier_connectedSpace
     Subtype.preconnectedSpace isPreconnected_connectedComponent
   exact ⟨⟨⟨identitySectionPoint G, mem_connectedComponent⟩⟩⟩
 
-/-- Helper (iter-192 Lane A.3.i, axiom-clean): the **identity component**
-`IdentityComponent G` has connected underlying topological space.
+/-- The **identity component** `IdentityComponent G` has connected underlying
+topological space.
 
 By definition `(IdentityComponent G).left` is the open subscheme
 `identityComponentCarrier G : G.left.Opens` regarded as a scheme; its
@@ -377,7 +358,7 @@ underlying topological space coincides definitionally with the carrier's
 subspace topology, so `ConnectedSpace` transports via
 `identityComponentCarrier_connectedSpace` above.
 
-Downstream this combines with the (pending) Stacks 04KU substrate
+Downstream this combines with the Stacks 04KU substrate
 `GeometricallyConnected (IdentityComponent G).hom` plus Mathlib's
 `ConnectedSpace (pullback f g)` instance for
 `[GeometricallyConnected f] [UniversallyOpen f] [ConnectedSpace Y]`
@@ -399,11 +380,11 @@ admitting a section `s : Spec k ⟶ X` (i.e. `s ≫ f = 𝟙`), the morphism `f`
 geometrically connected: for any field extension `K/k`, the pullback
 `X ×_{Spec k} Spec K` is connected.
 
-CLOSED (run 0005 session 0007, T5): the full Stacks 04KV/037Q descent substrate
-now lives in the sibling module `Picard/GeometricallyConnectedSection.lean`
-(tensor products of field extensions over an algebraically closed field are
-domains + the open/closed/singleton-fiber clopen descent argument), and this
-helper is a direct application. Axiom-clean. -/
+The Stacks 04KV/037Q descent substrate lives in the sibling module
+`Picard/GeometricallyConnectedSection.lean` (tensor products of field
+extensions over an algebraically closed field are domains, together with the
+open/closed/singleton-fibre clopen descent argument); this lemma is a direct
+application of it. -/
 private theorem geometricallyConnected_of_connected_of_section
     {k : Type u} [Field k] {X : Scheme.{u}}
     (f : X ⟶ Spec (.of k))
@@ -433,9 +414,12 @@ private lemma identityComponentSection_range_subset
   -- `connectedComponent (identitySectionPoint G)`.
   exact mem_connectedComponent
 
--- (iter-current) de-privatised: consumed by `Scheme.Pic0.identitySection`
--- in the sibling `Picard/Pic0AbelianVariety.lean` (the `e`-witness of the
--- `tangentSpaceIso` Σ'-bundle).
+/-- The **identity section of `G⁰`**: the unit `e : Spec k ⟶ G` of the group
+scheme `G` factored through the open immersion `G⁰ ↪ G`.
+
+The factorisation exists because the image of `e` is the single point
+`identitySectionPoint G`, which lies in the carrier of `G⁰` by
+`identityComponentSection_range_subset`. -/
 noncomputable def identityComponentSection
     {k : Type u} [Field k]
     (G : Over (Spec (.of k)))
@@ -446,8 +430,7 @@ noncomputable def identityComponentSection
     ((MonObj.one (X := G)).left : Spec (.of k) ⟶ G.left)
     inferInstance (identityComponentSection_range_subset G)
 
-/-- Helper (iter-193 Lane A.3.i, axiom-clean): the **identity section lift is
-a section of `(IdentityComponent G).hom`**.
+/-- The **identity section lift is a section of `(IdentityComponent G).hom`**.
 
 Composing `identityComponentSection G` with `(IdentityComponent G).hom`
 returns the identity on `Spec k`, by `IsOpenImmersion.lift_fac` plus the
@@ -474,25 +457,20 @@ lemma identityComponentSection_isSection
   -- `MonObj.one.left ≫ G.hom = (𝟙_).hom = 𝟙 (Spec k)` (defeq).
   exact (MonObj.one (X := G)).w
 
-/-- Lemma (iter-193 Lane A.3.i; AXIOM-CLEAN since run 0005 session 0007
-closed `geometricallyConnected_of_connected_of_section`): the structural
-morphism `(IdentityComponent G).hom` is **geometrically connected**.
+/-- The structural morphism `(IdentityComponent G).hom` is **geometrically
+connected**.
 
-**iter-194 demotion (per lean-auditor iter-193 must-fix): no longer a
-`private instance` but a `private theorem`.** The earlier instance shape
-silently propagated a `sorryAx` axiom into every downstream typeclass
-search that happened to resolve `GeometricallyConnected (IdentityComponent
-G).hom` — a soundness exposure. Downstream consumers should now invoke
-this lemma explicitly via `letI := identityComponent_geometricallyConnected G`.
+This is deliberately stated as a `theorem` and not as an `instance`, so that
+it is never inserted silently by typeclass search; downstream consumers
+invoke it explicitly via `letI := identityComponent_geometricallyConnected G`.
 
 Derived from:
-- `identityComponent_connectedSpace`: `ConnectedSpace (IdentityComponent G).left`
-  (axiom-clean iter-192).
+- `identityComponent_connectedSpace`:
+  `ConnectedSpace (IdentityComponent G).left`.
 - `identityComponentSection_isSection`: existence of a section
-  `Spec k ⟶ (IdentityComponent G).left` (axiom-clean iter-193).
-- `geometricallyConnected_of_connected_of_section`: Stacks 04KU helper
-  (axiom-clean since run 0005 session 0007 via
-  `Picard/GeometricallyConnectedSection.lean`).
+  `Spec k ⟶ (IdentityComponent G).left`.
+- `geometricallyConnected_of_connected_of_section`: the Stacks 04KU bridge
+  from `Picard/GeometricallyConnectedSection.lean`.
 
 Downstream consumers can
 chain `letI := identityComponent_geometricallyConnected G` with
@@ -509,7 +487,7 @@ private theorem identityComponent_geometricallyConnected
     (IdentityComponent G).hom (identityComponentSection G)
     (identityComponentSection_isSection G)
 
-/-! ### Session 0011 (run 0005, T5): the inherited group structure on `G⁰`
+/-! ### The inherited group structure on `G⁰`
 
 Kleiman §5 Lem.~`lem:agps`~(3)(b): the clopen identity component `G⁰` of a
 `k`-group scheme `G` locally of finite type inherits the group structure of
@@ -554,7 +532,7 @@ private lemma range_one_left_subset :
 private lemma range_inclusion_left_subset :
     Set.range ⇑(identityComponentInclusion G).left ⊆
       (identityComponentCarrier G : Set G.left) := by
-  show Set.range ⇑(identityComponentCarrier G).ι ⊆ (identityComponentCarrier G : Set G.left)
+  change Set.range ⇑(identityComponentCarrier G).ι ⊆ (identityComponentCarrier G : Set G.left)
   exact (Scheme.Opens.range_ι _).le
 
 /-- Range hypothesis for the `IsOpenImmersion.lift` factorisation below. -/
@@ -609,9 +587,7 @@ omit [LocallyOfFiniteType G.hom] in
 /-- The unit is fixed by inversion: `e⁻¹ = e` in diagrammatic form. -/
 private lemma one_comp_inv :
     MonObj.one (X := G) ≫ GrpObj.inv (X := G) = MonObj.one (X := G) := by
-  have h1 : (1 : 𝟙_ (Over (Spec (.of k))) ⟶ G) = MonObj.one (X := G) := by
-    rw [Hom.one_def, toUnit_unique (toUnit _) (𝟙 _), Category.id_comp]
-  simpa [Hom.inv_def, h1] using (inv_one : (1 : 𝟙_ (Over (Spec (.of k))) ⟶ G)⁻¹ = 1)
+  simp
 
 /-- `G⁰ ×ₖ G⁰` is connected (EGA IV₂ 4.5.8, via geometric connectedness of
 `G⁰` and universal openness of morphisms to the spectrum of a field). -/
@@ -668,12 +644,12 @@ private noncomputable def identityComponentSubgroup (T : Over (Spec (.of k))) :
     Subgroup (T ⟶ G) where
   carrier := {f | Set.range ⇑f.left ⊆ (identityComponentCarrier G : Set G.left)}
   one_mem' := by
-    show Set.range ⇑(1 : T ⟶ G).left ⊆ _
+    change Set.range ⇑(1 : T ⟶ G).left ⊆ _
     rw [(Hom.one_def : (1 : T ⟶ G) = _)]
     exact (range_comp_left_subset _ _).trans (range_one_left_subset G)
   mul_mem' := by
     intro f g hf hg
-    show Set.range ⇑(f * g).left ⊆ _
+    change Set.range ⇑(f * g).left ⊆ _
     have hfac : f * g =
         lift (identityComponentFactor G f hf) (identityComponentFactor G g hg) ≫
           ((identityComponentInclusion G ⊗ₘ identityComponentInclusion G) ≫
@@ -685,7 +661,7 @@ private noncomputable def identityComponentSubgroup (T : Over (Spec (.of k))) :
     exact (range_comp_left_subset _ _).trans (range_tensor_mul_subset G)
   inv_mem' := by
     intro f hf
-    show Set.range ⇑f⁻¹.left ⊆ _
+    change Set.range ⇑f⁻¹.left ⊆ _
     have hfac : f⁻¹ = identityComponentFactor G f hf ≫
         (identityComponentInclusion G ≫ GrpObj.inv (X := G)) := by
       conv_rhs => rw [← Category.assoc, identityComponentFactor_comp G f hf]
@@ -700,11 +676,11 @@ private noncomputable def identityComponentSubgroupFunctor :
   map {T T'} φ := GrpCat.ofHom
     { toFun := fun f => ⟨φ.unop ≫ f.1, (range_comp_left_subset _ _).trans f.2⟩
       map_one' := Subtype.ext (by
-        show φ.unop ≫ (1 : T.unop ⟶ G) = (1 : T'.unop ⟶ G)
+        change φ.unop ≫ (1 : T.unop ⟶ G) = (1 : T'.unop ⟶ G)
         simp only [Hom.one_def]
         rw [← Category.assoc, comp_toUnit])
       map_mul' := fun f g => Subtype.ext (by
-        show φ.unop ≫ (f.1 * g.1) = (φ.unop ≫ f.1) * (φ.unop ≫ g.1)
+        change φ.unop ≫ (f.1 * g.1) = (φ.unop ≫ f.1) * (φ.unop ≫ g.1)
         simp only [Hom.mul_def]
         rw [← Category.assoc, comp_lift]) }
   map_id T := by
@@ -733,7 +709,7 @@ private noncomputable def identityComponentRepresentableBy :
   homEquiv {T} := identityComponentHomEquiv G T
   homEquiv_comp {T T'} f g := by
     apply Subtype.ext
-    show (f ≫ g) ≫ identityComponentInclusion G = f ≫ (g ≫ identityComponentInclusion G)
+    change (f ≫ g) ≫ identityComponentInclusion G = f ≫ (g ≫ identityComponentInclusion G)
     exact Category.assoc _ _ _
 
 end SubgroupStructure
@@ -743,21 +719,20 @@ end SubgroupStructure
 Kleiman §5 Lem.~`lem:agps`~(3) conclusion (b): the clopen subscheme `G^0`
 inherits a `k`-group-scheme structure from `G`, and the inclusion morphism
 `G^0 ↪ G` (from `IdentityComponent.isOpenSubgroupScheme`) is compatible
-with the group laws on source and target. The statement-level pin asserts
-the existence of the inherited `GrpObj` structure; the compatibility of
+with the group laws on source and target. The statement asserts the
+existence of the inherited `GrpObj` structure; the compatibility of
 the inclusion with the group operations is the substantive content of
 Kleiman's argument (the product `G^0 ×_k G^0` is connected by
 EGA IV₂ 4.5.8; the group-multiplication map sends this connected subset
 containing the identity into the connected component `G^0`).
 
-CLOSED (run 0005, session 0011): via `GrpObj.ofRepresentableBy` applied to
-the subgroup presheaf `identityComponentSubgroupFunctor` — the group
-structure on `Hom(T, G⁰)` is the subgroup of `Hom(T, G)` of morphisms
-landing in the carrier, with closure under `mul`/`inv` provided by the
-connectedness core lemmas `range_tensor_mul_subset` /
-`range_inclusion_inv_subset` above. The induced group law on `G⁰` is by
-construction compatible with the inclusion (the Yoneda equivalence is
-`u ↦ u ≫ identityComponentInclusion G`). -/
+The proof applies `GrpObj.ofRepresentableBy` to the subgroup presheaf
+`identityComponentSubgroupFunctor`: the group structure on `Hom(T, G⁰)` is
+the subgroup of `Hom(T, G)` of morphisms landing in the carrier, with closure
+under `mul`/`inv` provided by the connectedness core lemmas
+`range_tensor_mul_subset` / `range_inclusion_inv_subset` above. The induced
+group law on `G⁰` is by construction compatible with the inclusion (the
+Yoneda equivalence is `u ↦ u ≫ identityComponentInclusion G`). -/
 theorem IdentityComponent.isSubgroupHomomorphism {k : Type u} [Field k]
     (G : Over (Spec (.of k)))
     [GrpObj G] [LocallyOfFiniteType G.hom] :
@@ -765,15 +740,14 @@ theorem IdentityComponent.isSubgroupHomomorphism {k : Type u} [Field k]
   ⟨GrpObj.ofRepresentableBy (IdentityComponent G) (identityComponentSubgroupFunctor G)
     (identityComponentRepresentableBy G)⟩
 
-/-! ### Run 0009 (T6): finite type + geometric irreducibility of `G⁰`
+/-! ### Finite type and geometric irreducibility of `G⁰`
 
-Kleiman §5 Lem.~`lem:agps`~(3) conclusion (c). The former header claim that
-this needs EGA IV₂ 4.6.1 reduced-fiber-product input absent from Mathlib was
-stale: Mathlib v4.31 templates Kleiman's translation argument (closed-point
-translation via `GrpObj.mulRight`, closed points ↔ rational points via
-`pointEquivClosedPoint`, Jacobson density of closed points) in
-`Mathlib/AlgebraicGeometry/Group/Smooth.lean`
-(`smooth_of_grpObj_of_isAlgClosed`), and we adapt that pattern here.
+Kleiman §5 Lem.~`lem:agps`~(3) conclusion (c). The argument follows Kleiman's
+translation trick (closed-point translation via `GrpObj.mulRight`, closed
+points ↔ rational points via `pointEquivClosedPoint`, Jacobson density of
+closed points), in the form used by Mathlib for
+`smooth_of_grpObj_of_isAlgClosed` in
+`Mathlib/AlgebraicGeometry/Group/Smooth.lean`.
 
 Layer structure:
 1. `irreducibleSpace_of_connectedSpace_of_nhds` — EGA I 6.1.10 in topological
@@ -791,8 +765,8 @@ Layer structure:
    surjective projection from the base change to the algebraic closure,
    using `baseChangeIso` to identify `(G_K̄)⁰` with the base change of `G⁰`.
 
-The blueprint-pinned theorem `isFiniteTypeGeometricallyIrreducible` is
-assembled after `baseChangeIso` (its statement is unchanged). -/
+The theorem `isFiniteTypeGeometricallyIrreducible` is assembled from these
+after `baseChangeIso`. -/
 
 /-- **EGA I 6.1.10** (topological form): a connected topological space in
 which every point admits an irreducible open neighbourhood is irreducible.
@@ -1053,13 +1027,13 @@ private theorem identityComponent_compactSpace_of_isAlgClosed
       rw [hu a]; exact hgE
     let gW : 𝟙_ (Over (Spec (.of K))) ⟶ UW :=
       Over.homMk (IsOpenImmersion.lift W.ι g'.left hrg) (by
-        show IsOpenImmersion.lift W.ι g'.left hrg ≫
+        change IsOpenImmersion.lift W.ι g'.left hrg ≫
           W.ι ≫ (IdentityComponent G).hom = _
         rw [← Category.assoc, IsOpenImmersion.lift_fac W.ι g'.left hrg]
         exact Over.w g')
     let uW : 𝟙_ (Over (Spec (.of K))) ⟶ UW :=
       Over.homMk (IsOpenImmersion.lift W.ι (g'⁻¹ * z').left hru) (by
-        show IsOpenImmersion.lift W.ι (g'⁻¹ * z').left hru ≫
+        change IsOpenImmersion.lift W.ι (g'⁻¹ * z').left hru ≫
           W.ι ≫ (IdentityComponent G).hom = _
         rw [← Category.assoc, IsOpenImmersion.lift_fac W.ι (g'⁻¹ * z').left hru]
         exact Over.w (g'⁻¹ * z'))
@@ -1070,7 +1044,7 @@ private theorem identityComponent_compactSpace_of_isAlgClosed
       apply Over.OverMorphism.ext
       exact IsOpenImmersion.lift_fac W.ι (g'⁻¹ * z').left hru
     have hfin : lift gW uW ≫ m = z' := by
-      show lift gW uW ≫ (ιU ⊗ₘ ιU) ≫ MonObj.mul (X := IdentityComponent G) = z'
+      change lift gW uW ≫ (ιU ⊗ₘ ιU) ≫ MonObj.mul (X := IdentityComponent G) = z'
       rw [← Category.assoc, lift_map, hgWι, huWι, ← Hom.mul_def]
       exact mul_inv_cancel_left g' z'
     refine ⟨(lift gW uW).left pt, ?_⟩
@@ -1114,15 +1088,15 @@ scheme with a `k`-rational point (EGA IV₂ 4.5.14), so its base change
 `(G^0)_K` remains connected; it is also open and closed in `G_K`, so
 coincides with the identity component `(G_K)^0`.
 
-The statement-level pin asserts existence of: a `K`-group-scheme structure
-on the base change `G ×_{Spec k} Spec K` (with appropriate
-locally-of-finite-type instance), and an isomorphism on underlying schemes
-identifying the two iterated constructions.
+The statement asserts existence of: a `K`-group-scheme structure on the base
+change `G ×_{Spec k} Spec K` (with the accompanying locally-of-finite-type
+instance), and an isomorphism on underlying schemes identifying the two
+iterated constructions.
 
-CLOSED (run 0005, session 0011): the `_grpInst` slot via
-`CategoryTheory.Over.grpObjMkPullbackSnd`, the `_locFTInst` slot via
-Mathlib's base-change stability of `LocallyOfFiniteType`, and the iso slot
-(Stacks 04KS / EGA IV₂ 4.5.16) by the carrier identification
+The `_grpInst` slot is `CategoryTheory.Over.grpObjMkPullbackSnd`, the
+`_locFTInst` slot is Mathlib's base-change stability of
+`LocallyOfFiniteType`, and the iso slot (Stacks 04KS / EGA IV₂ 4.5.16)
+comes from the carrier identification
 `fst⁻¹(G⁰-carrier) = (G_K)⁰-carrier` inside `|G ×ₖ Spec K|`:
 
 - `⊆` (connectedness): `fst⁻¹(carrier)` is the image of the open immersion
@@ -1237,7 +1211,7 @@ theorem IdentityComponent.baseChangeIso {k : Type u} [Field k]
       _ = identitySectionPoint G := rfl
   -- §3: the two carriers coincide as subsets of `|G_K|`.
   have hclopenG : IsClopen (identityComponentCarrier G : Set G.left) := by
-    show IsClopen (connectedComponent (identitySectionPoint G))
+    change IsClopen (connectedComponent (identitySectionPoint G))
     exact ⟨isClosed_connectedComponent, isOpen_connectedComponent⟩
   have hrange : Set.range
         ⇑(pullback.snd (identityComponentCarrier G).ι (pullback.fst G.hom φ)) =
@@ -1255,7 +1229,7 @@ theorem IdentityComponent.baseChangeIso {k : Type u} [Field k]
       exact (isPreconnected_range
         (Scheme.Hom.continuous _)).subset_connectedComponent hmem
     · -- carrier ⊆ preimage: the preimage is clopen and contains `e_{G_K}`.
-      show connectedComponent (identitySectionPoint G_K) ⊆ _
+      change connectedComponent (identitySectionPoint G_K) ⊆ _
       refine IsClopen.connectedComponent_subset
         (hclopenG.preimage (Scheme.Hom.continuous _)) ?_
       exact Set.mem_preimage.mpr (by rw [hfst]; exact mem_connectedComponent)
@@ -1355,15 +1329,16 @@ image `α(W × W) ⊆ G^0` of an affine open `W ∋ e` under the group law is
 quasi-compact and contains all closed points, so finitely many affine opens
 cover `G^0` and `G^0` is quasi-compact.
 
-CLOSED (run 0009, T6): `LocallyOfFiniteType` as before (open immersion
-composed with `G.hom`); `QuasiCompact` via `identityComponent_compactSpace`
-(Kleiman's product trick over the algebraic closure + Jacobson density +
-descent along the surjective base-change projection) together with the
-affine-target characterisation of quasi-compactness;
-`GeometricallyIrreducible` via `identityComponent_geometricallyIrreducible`
-(translation of an irreducible open through all closed points over the
-algebraic closure, EGA I 6.1.10, and descent along the surjective
-projection from the algebraic closure of each field extension). -/
+The three conjuncts are obtained as follows: `LocallyOfFiniteType` because
+the structural morphism is an open immersion composed with `G.hom`;
+`QuasiCompact` from `identityComponent_compactSpace` (Kleiman's product trick
+over the algebraic closure, Jacobson density, and descent along the
+surjective base-change projection) together with the affine-target
+characterisation of quasi-compactness; `GeometricallyIrreducible` from
+`identityComponent_geometricallyIrreducible` (translation of an irreducible
+open through all closed points over the algebraic closure, EGA I 6.1.10, and
+descent along the surjective projection from the algebraic closure of each
+field extension). -/
 theorem IdentityComponent.isFiniteTypeGeometricallyIrreducible
     {k : Type u} [Field k]
     (G : Over (Spec (.of k)))
@@ -1400,16 +1375,13 @@ open and closed subgroup scheme of `Pic_{C/k}` of finite type over `k`,
 geometrically irreducible, and its formation commutes with extension of the
 base field.
 
-Run 0008: the body is REAL — it unwinds to
-`GroupScheme.IdentityComponent (PicScheme C)`, as the iter-186 docstring
-promised. The two ingredients landed with the run-0008 FGA rewire: the
-group structure `GrpObj (PicScheme C)` is genuinely proved (Yoneda
-transport, `PicScheme.groupSchemeStructure`), and local finiteness is the
-new typed-sorry carrier `PicSchemeLocallyOfFiniteType` (true by Kleiman §4
-Thm `th:main`(1)). Consequently all the §1 substrate theorems
-(`isOpenSubgroupScheme`, `isSubgroupHomomorphism`,
-`identityComponent_geometricallyConnected`, `baseChangeIso`) now apply to
-`Pic⁰_{C/k}` definitionally. -/
+The two instances required by the §1 substrate are available for
+`PicScheme C`: the group structure `GrpObj (PicScheme C)` (by Yoneda
+transport, `PicScheme.groupSchemeStructure`) and local finiteness, carried by
+`PicSchemeLocallyOfFiniteType` (Kleiman §4 Thm `th:main`(1)). Consequently
+the §1 substrate theorems (`isOpenSubgroupScheme`,
+`isSubgroupHomomorphism`, `identityComponent_geometricallyConnected`,
+`baseChangeIso`) apply to `Pic⁰_{C/k}` definitionally. -/
 noncomputable def Pic0Scheme {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1442,16 +1414,16 @@ coefficient of `Φ_L(n)`, well-defined on the isomorphism class `[L]` and on
 the `k`-point `λ` (because `PicScheme C` represents the étale-sheafified
 relative Picard functor).
 
-The degree map is a group homomorphism for the additive structure on
-`Pic_{C/k}(k)` (tensor product on `L`) and the standard `(ℤ, +)`. The full
-group-homomorphism refinement / functoriality in `k` lives as a follow-up
-lemma in iter-186+; the file-skeleton pins only the underlying function.
+The degree map is a group homomorphism from the additive structure on
+`Pic_{C/k}(k)` (tensor product on `L`) to `(ℤ, +)`; only the underlying
+function is stated here, the homomorphism property and the functoriality in
+`k` being left to separate lemmas.
 
-iter-186+: the body extracts the representing invertible sheaf from
-`(PicScheme.representable C)`, forms its Hilbert polynomial via the project's
-Hilbert-polynomial machinery (sibling `Picard/QuotScheme.lean`), and returns
-the leading coefficient. For the iter-185 file-skeleton the body is a typed
-`sorry`. -/
+The construction is an open obligation: the value should be obtained by
+extracting a representing invertible sheaf from `PicScheme.representable C`,
+forming its Hilbert polynomial with the machinery of the sibling file
+`Picard/QuotScheme.lean`, and taking the leading coefficient. The body is
+currently `sorry`. -/
 noncomputable def degree {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1475,11 +1447,11 @@ Ex.~`ex:jac` + Rmk.~`rmk:Jac`; cf. Milne §I.1, Rmk. III.1.4(e)). -/
 
 namespace Pic0Scheme
 
-/- `Pic0Scheme.isAbelianVariety` (blueprint pin
-`thm:pic_zero_is_abelian_variety`) MOVED (run 0008, T5) to sibling
-`Picard/Pic0AbelianVariety.lean`, where it is assembled sorry-free from the
-per-conjunct theorems `Pic0.proper` / `Pic0.smooth` /
-`Pic0.geometricallyIrreducible` / `Pic0.grpObj` of that chapter. -/
+/- The abelian-variety identification `Pic0Scheme.isAbelianVariety`
+(blueprint `thm:pic_zero_is_abelian_variety`) lives in the sibling file
+`Picard/Pic0AbelianVariety.lean`, where it is assembled from the per-conjunct
+theorems `Pic0.proper` / `Pic0.smooth` / `Pic0.geometricallyIrreducible` /
+`Pic0.grpObj` of that chapter. -/
 
 /-- **Dimension of `Pic⁰_{C/k}` equals the genus of `C`.**
 
@@ -1491,7 +1463,9 @@ For a smooth proper geometrically integral curve `C/k` of genus
 `Pic_{C/k}` is smooth, and for smooth proper curves
 (`SmoothOfRelativeDimension 1 C.hom`) the identity component is smooth
 (Kleiman~§5 Ex.~`ex:jac`), so the dimension equals `dim_k H¹(C, O_C) = g(C)`
-by `def:genus`. -/
+by `def:genus`.
+
+This argument is not yet formalised: the proof is `sorry`. -/
 theorem finrank_eq_genus {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1509,12 +1483,15 @@ the inclusion `Pic⁰_{C/k} ↪ Pic_{C/k}` (the inclusion of
 `def:pic_zero_subscheme`, packaged here via the existence of the
 inclusion morphism) if and only if `degree C λ = 0`.
 
-The statement-level pin packages two pieces: existence of the inclusion
+The statement packages two pieces: existence of the inclusion
 morphism `Pic⁰_{C/k} ⟶ Pic_{C/k}` (extracted from
 `IdentityComponent.isOpenSubgroupScheme` once `PicScheme C` has the
 `GrpObj` + `LocallyOfFiniteType` instances), together with the
 characterisation of `k`-points factoring through it as those with degree
-zero. -/
+zero.
+
+This depends on the still-unconstructed `PicScheme.degree`, and is not yet
+formalised: the proof is `sorry`. -/
 theorem kPoints_iff_kerDegree {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

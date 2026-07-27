@@ -73,9 +73,9 @@ Faithfulness notes (Kleiman §3):
 The pullback action reuses the `QuotFamily` base-change lemmas for the shared
 fields (finite presentation: `Modules.pullback_isFinitePresentation`, proved;
 flatness: `CoherentSheafFlat.of_isPullback`, proved; proper support:
-`Modules.HasProperSupport.of_isPullback`, proved sorry-free in
-`Picard/QuotSupportBaseChange.lean`) and needs exactly ONE new fact for the
-divisor condition, PROVED in this file as the theorem
+`Modules.HasProperSupport.of_isPullback`, proved in
+`Picard/QuotSupportBaseChange.lean`) and needs exactly one new fact for the
+divisor condition, proved in this file as the theorem
 `Scheme.Modules.pullback_kernel_isLocallyTrivial` (blueprint
 `lem:relative_divisor_base_change`): the kernel of the pulled-back quotient
 is the pullback of the kernel — because `0 → I → O → O_D → 0` stays exact
@@ -87,7 +87,7 @@ quasi-coherence hypothesis on the source of the quotient (removable once
 extension-closure of quasi-coherence, Stacks 01LA, is available; see the
 declaration docstring), discharged here by `pullback_isQuasicoherent_hom` +
 `Modules.unit_isQuasicoherent` since the source is the pulled-back unit.
-The supporting bricks — the Stacks 00HL algebra heart
+The supporting lemmas — the Stacks 00HL algebra heart
 `Module.Flat.rTensor_injective_of_exact`, the comparison map
 `Modules.pullbackKernelComparison`, and the chart-shrinking lemmas — live in
 `Picard/FlatKernelBase.lean`; the derivation of the pinned statement from
@@ -155,8 +155,8 @@ lemma Modules.pullback_kernel_isLocallyTrivial_of_isIso_kernelComparison
     (hker.pullback g')
 
 set_option backward.isDefEq.respectTransparency false in
-/-- **Naturality of the `fromSpec`/pullback base map.**  Reconstruction of the private `pullback_app_isoTensor_baseMap_naturality`
-using only the public `pullback_app_isoTensor_baseMap` + adjunction unit naturality
+/-- **Naturality of the `fromSpec`/pullback base map.**  Derived from the public
+`pullback_app_isoTensor_baseMap` together with naturality of the adjunction unit
 (with `pullback_app_isoTensor_unitAtV` inlined). -/
 private lemma Modules.baseMap_naturality
     {X Y : Scheme.{u}} (g : Y ⟶ X) {N N' : X.Modules}
@@ -182,10 +182,10 @@ private lemma Modules.baseMap_naturality
     hb.symm)
 
 set_option backward.isDefEq.respectTransparency false in
-/-- **Bijectivity of the `fromSpec` base map.**  The canonical base map along `hV.fromSpec` is bijective for any module `N`
-(no quasi-coherence needed): it is the section-level realization of "restriction to an
-affine open, sections over `⊤` = sections over `V`".  Reconstructed from the
-`tildeIso_of_isQuasicoherent_isAffineOpen` model with `unitAtV` inlined. -/
+/-- **Bijectivity of the `fromSpec` base map.**  The canonical base map along
+`hV.fromSpec` is bijective for any module `N` (no quasi-coherence needed): it is the
+section-level realization of "restriction to an affine open, sections over `⊤` = sections
+over `V`".  Modelled on `tildeIso_of_isQuasicoherent_isAffineOpen` with `unitAtV` inlined. -/
 private lemma baseMap_fromSpec_bijective {X : Scheme.{u}} (N : X.Modules)
     {V : X.Opens} (hV : IsAffineOpen V) :
     Function.Bijective (pullback_app_isoTensor_baseMap hV.fromSpec N
@@ -282,7 +282,8 @@ private lemma baseMap_fromSpec_bijective {X : Scheme.{u}} (N : X.Modules)
 set_option maxHeartbeats 1600000 in
 -- Heartbeat headroom: the Čech-vanishing transport and short-exact base change under
 -- binders provision many instances, as in the affine-locality engines of `QuotScheme`.
-/-- **Section surjectivity of an epimorphism of quasi-coherent sheaves over an affine open** (brick 1).  For an epimorphism `q : E ⟶ F` of quasi-coherent modules with
+/-- **Section surjectivity of an epimorphism of quasi-coherent sheaves over an affine
+open.**  For an epimorphism `q : E ⟶ F` of quasi-coherent modules with
 quasi-coherent kernel, and an affine open `V`, the section map `Γ(q, V) : Γ(E,V) → Γ(F,V)`
 is surjective (the `H¹(V, ker q) = 0` content).  Transport the short exact sequence
 `0 → ker q → E → F → 0` along the exact `hV.fromSpec`-pullback to `Spec Γ(X,V)`, apply
@@ -412,9 +413,10 @@ set_option maxSynthPendingDepth 3 in
 -- Instance-search depth: the per-piece instance provisioning mirrors
 -- `flat_section_pullback_piece` (`GenericFlatnessGeometric`), plus the section-equiv
 -- conjugation and pushout reconciliation.
-/-- **Per-piece injectivity of the pulled-back kernel inclusion** (steps 2–3).  On an affine piece `W = g'⁻¹V ⊓ f'⁻¹Ut` of the fibre-product
+/-- **Per-piece injectivity of the pulled-back kernel inclusion.**  On an affine piece
+`W = g'⁻¹V ⊓ f'⁻¹Ut` of the fibre-product
 square (over an affine base `U`, with `V` affine `⊆ f⁻¹U` and `Ut` affine `⊆ g⁻¹U`),
-the pulled-back kernel inclusion `g'^*(ker q ↪ E)` is injective on `W`-sections.  Route:
+the pulled-back kernel inclusion `g'^*(ker q ↪ E)` is injective on `W`-sections.  Proof:
 the section-equiv `pullback_app_isoTensor_baseMap_sectionLinearEquiv` conjugates the
 `W`-section map into `Γ(X',W) ⊗_{Γ(X,V)} Γ(ker q,V) → Γ(X',W) ⊗_{Γ(X,V)} Γ(E,V)`; the
 pushout `Γ(X',W) = Γ(X,V) ⊗_{Γ(S,U)} Γ(S',Ut)` rebases this to `Γ(S',Ut) ⊗_{Γ(S,U)} ·`
@@ -448,7 +450,7 @@ private theorem app_injective_on_piece
     IsScalarTower.of_algebraMap_eq' rfl
   haveI : IsScalarTower Γ(S, U) Γ(S', Ut) Γ(X', g' ⁻¹ᵁ V ⊓ f' ⁻¹ᵁ Ut) :=
     IsScalarTower.of_algebraMap_eq' (by
-      show ((g'.appLE V _ inf_le_left).hom.comp (f.appLE U V hUSX).hom) =
+      change ((g'.appLE V _ inf_le_left).hom.comp (f.appLE U V hUSX).hom) =
         (f'.appLE Ut _ inf_le_right).hom.comp (g.appLE U Ut hUST).hom
       have h1 : f.appLE U V hUSX ≫ g'.appLE V (g' ⁻¹ᵁ V ⊓ f' ⁻¹ᵁ Ut) inf_le_left =
           g.appLE U Ut hUST ≫ f'.appLE Ut (g' ⁻¹ᵁ V ⊓ f' ⁻¹ᵁ Ut) inf_le_right := by
@@ -531,7 +533,7 @@ private theorem app_injective_on_piece
   obtain ⟨a', rfl⟩ := fK.surjective a
   obtain ⟨b', rfl⟩ := fK.surjective b
   refine congrArg (⇑fK) (hTfK ?_)
-  show (Scheme.Modules.Hom.app ((Scheme.Modules.pullback g').map (Limits.kernel.ι q))
+  change (Scheme.Modules.Hom.app ((Scheme.Modules.pullback g').map (Limits.kernel.ι q))
       (g' ⁻¹ᵁ V ⊓ f' ⁻¹ᵁ Ut)).hom (fK a')
     = (Scheme.Modules.Hom.app ((Scheme.Modules.pullback g').map (Limits.kernel.ι q))
       (g' ⁻¹ᵁ V ⊓ f' ⁻¹ᵁ Ut)).hom (fK b')
@@ -809,7 +811,7 @@ noncomputable def pullbackAlong {T T' : Over S} (ψ : T' ⟶ T)
   F := (Scheme.Modules.pullback (quotBaseMap π ψ)).obj x.F
   isFinitePresentation :=
     Modules.pullback_isFinitePresentation _ x.F x.isFinitePresentation
-  flat := fun {U} hU {V} hV e =>
+  flat := fun {_} hU {_} hV e =>
     CoherentSheafFlat.of_isPullback (quotBaseSquare π ψ) x.F
       (letI := x.isFinitePresentation; inferInstance) x.flat hU hV e
   properSupport :=

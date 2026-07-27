@@ -3,7 +3,13 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import Mathlib
+import Mathlib.Algebra.Category.ModuleCat.Presheaf.PushforwardZeroMonoidal
+import Mathlib.AlgebraicGeometry.Morphisms.Proper
+import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+import Mathlib.CategoryTheory.EffectiveEpi.Comp
+import Mathlib.CategoryTheory.ExtremalEpi
+import Mathlib.CategoryTheory.Sites.SheafHom
+import Mathlib.Order.CompletePartialOrder
 import AlgebraicJacobian.Picard.LineBundlePullback
 import AlgebraicJacobian.Picard.TensorObjSubstrate
 -- (v4.31.0: `exists_tensorObj_inverse` was moved from `TensorObjSubstrate` to `TensorObjInverse`

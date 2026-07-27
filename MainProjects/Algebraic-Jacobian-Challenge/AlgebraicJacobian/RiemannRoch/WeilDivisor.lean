@@ -3,7 +3,12 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import Mathlib
+import Mathlib.AlgebraicGeometry.Morphisms.Proper
+import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+import Mathlib.RingTheory.DiscreteValuationRing.Basic
+import Mathlib.RingTheory.KrullDimension.PID
+import Mathlib.RingTheory.OrderOfVanishing.Basic
+import Mathlib.RingTheory.SimpleRing.Principal
 import AlgebraicJacobian.Genus
 import AlgebraicJacobian.Albanese.CoheightBridge
 

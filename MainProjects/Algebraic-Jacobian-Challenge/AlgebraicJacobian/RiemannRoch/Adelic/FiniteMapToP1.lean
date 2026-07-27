@@ -3,7 +3,12 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import Mathlib
+import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+import Mathlib.AlgebraicTopology.SimplexCategory.Basic
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.PicardGroup
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 import AlgebraicJacobian.RiemannRoch.Adelic.P1BaseCase
 import AlgebraicJacobian.Albanese.CoheightBridge
 

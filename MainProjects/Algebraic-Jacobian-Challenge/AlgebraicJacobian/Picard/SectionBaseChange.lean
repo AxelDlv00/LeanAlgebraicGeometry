@@ -111,6 +111,7 @@ variable {Mi : ι → Type*} [∀ i, AddCommGroup (Mi i)] [∀ i, Module A (Mi i
 variable {P : Type*} [AddCommGroup P] [Module B P]
 variable {Pi : ι → Type*} [∀ i, AddCommGroup (Pi i)] [∀ i, Module B (Pi i)]
 
+omit [Finite ι] in
 /-- The tensored restriction to a cover piece is the corresponding component of
 the tensored restriction to the whole (finite) cover. -/
 theorem lTensor_pi_apply (res : ∀ i, M →ₗ[A] Mi i) (z : B ⊗[A] M) (i : ι) :
@@ -211,7 +212,7 @@ theorem isPushout_of_ringEquiv (E : C ⊗[A] B ≃+* D)
        invFun := E.symm
        left_inv := E.left_inv
        right_inv := E.right_inv } : C ⊗[A] B ≃ₗ[C] D) fun b => ?_
-  show E ((1 : C) ⊗ₜ[A] b) = _
+  change E ((1 : C) ⊗ₜ[A] b) = _
   rw [hE, map_one, one_mul]
   rfl
 
@@ -232,7 +233,7 @@ theorem bijective_addHom_of_isPushout [h : Algebra.IsPushout A C B D]
     intro m b
     rw [LinearEquiv.symm_apply_eq]
     symm
-    show hbc.tensorEquiv M (m ⊗ₜ[C] algebraMap B D b) = m ⊗ₜ[A] b
+    change hbc.tensorEquiv M (m ⊗ₜ[C] algebraMap B D b) = m ⊗ₜ[A] b
     have hsymm : hbc.equiv.symm (algebraMap B D b) = (1 : C) ⊗ₜ[A] b := by
       have h1 := hbc.equiv_symm_apply b
       simpa using h1
@@ -337,7 +338,7 @@ theorem exists_linearEquiv_of_gluing [Module.Flat A B]
     rw [lTensor_lTensor_apply]
     have hproj : (LinearMap.proj i) ∘ₗ T = res i := by
       refine LinearMap.ext fun m => ?_
-      simp [hT, LinearMap.pi_apply]
+      simp [hT]
     rw [hproj]
     simp [hFam, LinearMap.pi_apply]
   -- `Fam` is injective (separatedness + flatness).
@@ -505,7 +506,7 @@ theorem exists_linearEquiv_of_gluing [Module.Flat A B]
   have hν : νP (Φ z) = Fam z := by
     have h1 : (LinearEquiv.ofInjective νP hνPInj) (Φ z) =
         LinearEquiv.ofEq _ _ hrange ((LinearEquiv.ofInjective Fam hFamInj) z) := by
-      show (LinearEquiv.ofInjective νP hνPInj)
+      change (LinearEquiv.ofInjective νP hνPInj)
         ((LinearEquiv.ofInjective νP hνPInj).symm _) = _
       rw [LinearEquiv.apply_symm_apply]
       rfl

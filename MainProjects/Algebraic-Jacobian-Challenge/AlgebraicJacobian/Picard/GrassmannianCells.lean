@@ -302,7 +302,7 @@ theorem transitionMap_self (d r : ℕ) (I : Finset (Fin r)) (hI : I.card = d) :
 /-! ## Project-local Mathlib supplement — triple-overlap rings and the cocycle
 
 The cocycle condition `θ_{I,K} = θ_{I,J} ∘ θ_{J,K}` cannot be stated as a naive
-composition of the landed `transitionMap`s: the codomain of `transitionMap d r J K`
+composition of the `transitionMap`s: the codomain of `transitionMap d r J K`
 (`R^J[1/P^J_K]`) differs from the domain of `transitionMap d r I J` (`R^J[1/P^J_I]`).
 The identity therefore lives over the *triple-overlap* rings obtained by inverting BOTH
 relevant minors in each chart ring:
@@ -1326,8 +1326,7 @@ theorem pullbackιIso_inv_fst (d r : ℕ) (i j : (theGlueData d r).J) :
       (Limits.cospan ((theGlueData d r).ι i)
         ((theGlueData d r).ι j))).conePointUniqueUpToIso_inv_comp
     ((theGlueData d r).vPullbackConeIsLimit i j) Limits.WalkingCospan.left
-  simp only [pullbackιIso, Limits.pullback.fst, Limits.PullbackCone.mk,
-    Grassmannian.theGlueData] at this ⊢
+  simp only [pullbackιIso, Limits.pullback.fst, Grassmannian.theGlueData] at this ⊢
   exact this
 
 /-- Second leg of the source iso `pullbackιIso`: `e₂⁻¹ ≫ pr₂ = chartTransition I J ≫ chartIncl J I`
@@ -1340,8 +1339,7 @@ theorem pullbackιIso_inv_snd (d r : ℕ) (i j : (theGlueData d r).J) :
       (Limits.cospan ((theGlueData d r).ι i)
         ((theGlueData d r).ι j))).conePointUniqueUpToIso_inv_comp
     ((theGlueData d r).vPullbackConeIsLimit i j) Limits.WalkingCospan.right
-  simp only [pullbackιIso, Limits.pullback.snd, Limits.PullbackCone.mk,
-    Grassmannian.theGlueData] at this ⊢
+  simp only [pullbackιIso, Limits.pullback.snd, Grassmannian.theGlueData] at this ⊢
   exact this
 
 /-- The overlap-to-chart composite `t_{I,J} ≫ ι_{J,I}` is the comorphism of the pre-localisation

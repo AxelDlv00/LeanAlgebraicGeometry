@@ -3,7 +3,17 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import Mathlib
+import Mathlib.Algebra.Category.ModuleCat.Abelian
+import Mathlib.Algebra.Category.ModuleCat.Adjunctions
+import Mathlib.Algebra.Category.ModuleCat.FilteredColimits
+import Mathlib.Algebra.Homology.DerivedCategory.Ext.Basic
+import Mathlib.AlgebraicGeometry.Scheme
+import Mathlib.CategoryTheory.Adjunction.Additive
+import Mathlib.CategoryTheory.Limits.Shapes.Countable
+import Mathlib.CategoryTheory.Linear.FunctorCategory
+import Mathlib.CategoryTheory.Sites.Abelian
+import Mathlib.Combinatorics.Quiver.ReflQuiver
+import Std.Tactic.BVDecide.LRAT.Internal.Clause
 import AlgebraicJacobian.Cohomology.StructureSheafAb
 
 /-!

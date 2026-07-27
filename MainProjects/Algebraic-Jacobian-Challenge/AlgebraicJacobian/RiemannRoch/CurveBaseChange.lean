@@ -17,8 +17,8 @@ For a field extension `κ/k` (with structure map
 `C : Over (Spec k)` — `[SmoothOfRelativeDimension 1 C.hom]`, `[IsProper C.hom]`,
 `[GeometricallyIntegral C.hom]` — this file provides the **named** base-changed
 curve `Scheme.baseChangeField C κ := Over.mk (pullback.snd C.hom φ)` together
-with **named instances** (campaign P2 prerequisites; audit item 14: no inline
-`haveI` blocks at use sites) showing that `C_κ` is again an AJC curve over `κ`:
+with **named instances** (so that use sites need no inline `haveI` blocks)
+showing that `C_κ` is again an AJC curve over `κ`:
 
 * `smoothOfRelativeDimension_one_hom_baseChangeField`,
   `isProper_hom_baseChangeField`, `geometricallyIntegral_hom_baseChangeField` —
@@ -38,23 +38,18 @@ with **named instances** (campaign P2 prerequisites; audit item 14: no inline
   projection, reusing `AffineCoverMVSquare.preimage`
   (`Picard/RigidPushforward.lean`), with the chart-identification `simp` lemmas.
 
-**AUDIT ITEM 6 (verdict, recorded before discharge).** The in-tree class
-`AlgebraicGeometry.GeometricallyIntegral` is the *Mathlib v4.31* class
-(`Mathlib/AlgebraicGeometry/Geometrically/Integral.lean`): `f : X ⟶ Y` is
-geometrically integral iff `geometrically IsIntegral f`, i.e. for every field
-`K`, every `y : Spec K ⟶ Y`, and every pullback square of `f` along `y`, the
-total space is integral — exactly "fibres integral after arbitrary field
-extension". The one-shot consumer
-`GeometricallyIntegral.geometrically_isIntegral` at
-`RiemannRoch/Adelic/NonconstantToP1.lean:977-980` uses precisely this
-unfolding. Consequently the "new lemma" (c) of the lane spec —
-stability of geometric integrality under field extension via transitivity of
-base change — is **already in Mathlib** as
-`MorphismProperty.IsStableUnderBaseChange @GeometricallyIntegral` together with
-the direct instance `GeometricallyIntegral (pullback.snd f g)`; the named
-instance below is a re-export keyed on the `baseChangeField` spelling, not a
-re-proof. **Verdict: semantics CONFIRMED, statement (c) true and
-Mathlib-provided.**
+**On geometric integrality.** `AlgebraicGeometry.GeometricallyIntegral` is
+the Mathlib class (`Mathlib/AlgebraicGeometry/Geometrically/Integral.lean`):
+`f : X ⟶ Y` is geometrically integral iff `geometrically IsIntegral f`, i.e.
+for every field `K`, every `y : Spec K ⟶ Y`, and every pullback square of `f`
+along `y`, the total space is integral — exactly "fibres integral after
+arbitrary field extension". Stability of this property under a field
+extension, which is transitivity of base change, is therefore already
+available as
+`MorphismProperty.IsStableUnderBaseChange @GeometricallyIntegral` together
+with the direct instance `GeometricallyIntegral (pullback.snd f g)`; the
+named instance below is a re-export keyed on the `baseChangeField` spelling,
+not a re-proof.
 
 The general-curve regularity instance
 `isRegularInCodimensionOne_left_of_curve` is the genuinely new content: over an
@@ -69,10 +64,6 @@ that is a valuation ring and not a field is a DVR
 (`IsDiscreteValuationRing.TFAE`). This is the same descent skeleton as the
 valuative dichotomy `regLocus_sup_regLocus_inv_eq_top` of `NonconstantToP1.lean`
 (which is `private` there), repackaged per-stalk as reusable substrate.
-
-Follow-up (not done here, `NonconstantToP1.lean` owned by another lane): the
-inline `haveI` block at `NonconstantToP1.lean:975-996` could now consume the
-named base-change instances of this file; left untouched.
 -/
 
 universe u
@@ -254,8 +245,8 @@ variable (C : Over (Spec (CommRingCat.of k))) (κ : Type u) [Field κ] [Algebra 
 
 /-- **The base change of a `k`-scheme `C` along a field extension `κ/k`**:
 `C_κ := C ×_{Spec k} Spec κ`, as an object of `Over (Spec κ)` via the second
-projection. The named carrier of the campaign-P2 Λ-stability instances below
-(instances are keyed on this definitional spelling). -/
+projection. The named carrier of the Λ-stability instances below (instances
+are keyed on this definitional spelling). -/
 noncomputable def baseChangeField : Over (Spec (CommRingCat.of κ)) :=
   Over.mk (pullback.snd C.hom (Spec.map (CommRingCat.ofHom (algebraMap k κ))))
 
@@ -345,7 +336,7 @@ affine first projection `C_κ ⟶ C`. Charts are identified by
 `baseChangeField_U₁`/`baseChangeField_U₂`. Companion of
 `AffineCoverMVSquare.baseChangeSpecOver` (`Picard/FinitePresentationFunctor.lean`),
 which is keyed on the `specOver k A` base shape; this one is keyed on the raw
-`Spec.map (algebraMap k κ)` spelling of the P2 field-extension campaign. -/
+`Spec.map (algebraMap k κ)` spelling. -/
 noncomputable def AffineCoverMVSquare.baseChangeField
     (S : C.left.AffineCoverMVSquare) :
     (Scheme.baseChangeField C κ).left.AffineCoverMVSquare :=
