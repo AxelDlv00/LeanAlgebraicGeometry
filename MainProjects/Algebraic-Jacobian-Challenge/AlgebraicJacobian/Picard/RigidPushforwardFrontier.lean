@@ -40,22 +40,44 @@ the resulting state of the frontier — as Lean, not as prose.
   `Γ(Spec A, p_* M)` really is `ker d`
   (`Adelic.pushforwardTop_linearEquiv_ker`).
 
-## What remains — the whole frontier, in two statements plus one field
+## STATUS: this file is superseded — read it as history
+
+All three items below have since been discharged or reduced.  The current
+frontier is `Picard/RigidPushforwardInstance.lean`, where the gate is derived
+from **one** statement rather than three.  What this file still supplies is the
+conditional plumbing (`p1RigidPushforwardStatement_of_isIntegral_of_rank` and
+friends), which the assembly consumes; only the survey below is out of date, and
+it is kept because the shape of the reduction is worth reading.
+
+## What remained at the time of writing — two statements plus one field
 
 `p1RigidPushforwardStatement_of_isIntegral_of_rank` below shows that the ℙ¹
 engine statement, hence the gate's `locallyFree` field, now needs exactly:
 
 1. **`IsIntegral (ℙ¹_k)`** — integrality of the projective line over the one
-   field `k`.  The load-bearing sub-probe is the chart-ring identification
-   `Γ(ℙ¹, D₊(X₀)) ≅ R[T]`: the tree has the spanning half
-   (`span_p1CoordAway_pow_top`, `RiemannRoch/Adelic/P1ChartData.lean`) and
-   nothing about freeness, and `RelLaurentChartData` supplies spanning but
-   never a basis.  mathlib has `GeometricallyIrreducible`/`Reduced`/`Integral`
-   for *affine* space and no integrality API for `Proj` at all, so landing
-   the chart iso would give `IsReduced` and `IrreducibleSpace` of `ℙ¹` by
-   transport.
+   field `k`.  **Now PROVED** (`Adelic.instIsIntegralP1OverLeft`,
+   `Picard/RigidPushforwardInstance.lean`), so the `[IsIntegral …]` binders in
+   this file synthesize.  The diagnosis below was right about *where* the
+   difficulty was and stale about *how much* of it the tree had.  The
+   load-bearing sub-probe is indeed the chart-ring identification
+   `Γ(ℙ¹, D₊(X₀)) ≅ R[T]`, of which the tree had only the spanning half
+   (`span_p1CoordAway_pow_top`, `span_pow_p1XSection_scaffold`,
+   `RiemannRoch/Adelic/P1ChartData.lean`), i.e. surjectivity of `R[T] → Γ(V₀)`;
+   `RelLaurentChartData` likewise supplies spanning but never a basis.  The
+   missing injectivity is now `Picard/RigidPushforwardP1ChartRing.lean`
+   (`p1AwayAlgEquiv`, dehomogenisation over an arbitrary base ring) plus
+   `Picard/RigidPushforwardP1ChartSections.lean` (the section-ring pushout
+   supplies a retraction of the surjection), and
+   `Picard/RigidPushforwardP1Topology.lean` transports it to `IsReduced` and
+   `IrreducibleSpace`.  mathlib still has `GeometricallyIrreducible`/`Reduced`/
+   `Integral` only for *affine* space and no integrality API for `Proj`.
 
-2. **`P1RankIdentity k A`** — that the pointwise rank of `p_* M` really is
+2. **`P1RankIdentity k A`** — **now PROVED**, for *every* `k`-algebra `A` and
+   with no `FiniteType` hypothesis (`Adelic.p1RankIdentity_proved`,
+   `Picard/RigidPushforwardRank.lean`); the "assembly, not new mathematics"
+   verdict below was right as mathematics and understated the Lean work by
+   about a factor of three.  The statement: that the pointwise rank of `p_* M`
+   really is
    the fibre `h⁰`, `sectionsRankAtStalk (p_* M) t = p.fiberH0 M t`, *for `M`
    satisfying the engine's own conclusions* (`d` surjective, `H⁰ = ker d`
    finite projective, `H⁰` base-change compatible).  Those hypotheses are
@@ -72,9 +94,12 @@ engine statement, hence the gate's `locallyFree` field, now needs exactly:
 
 and, for the gate's second field,
 
-3. **`Scheme.RigidPushforwardBaseChange C A`** — untouched, and the largest
-   of the three: it is one of the gate's two fields and plausibly exceeds
-   items 1 and 2 combined.  Every `IsIso`
+3. **`Scheme.RigidPushforwardBaseChange C A`** — the only survivor, and now
+   **REDUCED** rather than untouched: `Picard/RigidPushforwardAffineDescent.lean`
+   descends it, along the affine target `Spec A'`, to the single module-level
+   bijectivity `Adelic.RigidPushforwardGammaBaseChange C A`.  The diagnosis
+   below is what made that possible and is still the right way to read the
+   field.  Every `IsIso`
    theorem for the adjoint mate `pushforwardBaseChangeMap` in this tree
    requires `[IsAffineHom f]`, and `q : C_A ⟶ Spec A` is proper; with
    `IsAffineHom q` assumed the field closes in one line, so its entire

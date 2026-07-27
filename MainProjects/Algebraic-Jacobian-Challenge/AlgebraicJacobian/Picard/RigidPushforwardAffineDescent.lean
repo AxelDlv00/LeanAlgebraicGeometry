@@ -123,7 +123,54 @@ this file, recorded so the next session does not re-derive it:
    engine's **global** surjectivity of the Čech differential `d`, not merely the fibrewise
    `h¹ = 0` hypothesis that the gate carries.  Global surjectivity comes out of
    `p1Cech_h0_baseChange_of_fibrewise_h1_vanishing`, whose `H⁰`-finiteness anchor is exactly
-   that leaf.  So the two fields of the gate are not independent along this route.
+   that leaf.  So the two fields of the gate are not independent along this route.  (That leaf
+   is now proved — `Adelic.instIsIntegralP1OverLeft`, `Picard/RigidPushforwardInstance.lean` —
+   so the dependency is discharged, not blocking.)
+
+## Four corrections to that route, from an adversarial re-check
+
+The route above survived an independent verification of §1–§4, but four of its *unproved*
+steps were found to be booked at less than they cost.  Recorded so the next session does not
+rediscover them:
+
+1. **Take the engine's fourth conjunct directly; do not re-derive it.**  Step 1 above proposes
+   feeding global surjectivity of `d` to `bijective_kerBaseChange_of_surjective`
+   (`Picard/TwoTermFiniteFree.lean`:392), which then also demands
+   `Module.Flat Γ(Spec A, ⊤) Γ(M, U₁ ⊓ U₂)`.  That is unnecessary: the fourth conjunct of
+   `p1Cech_h0_baseChange_of_fibrewise_h1_vanishing_of_isIntegral`
+   (`Picard/RigidPushforwardP1Constants.lean`:540-544) is already
+   `∀ B, Function.Bijective (TwoTerm.kerBaseChange (…) B)` for *every*
+   `Γ(Spec A, ⊤)`-algebra `B`; instantiate `B := Γ(Spec A', ⊤)`.  This deletes the flatness
+   obligation entirely, so the intended `Γ`-level statement should take
+   `hker : ∀ B …, Function.Bijective (kerBaseChange (𝒰.moduleSectionDiffBase f M) B)` rather
+   than a flatness-plus-surjectivity pair.
+
+2. **The intended `Γ`-level statement does not elaborate as sketched.**  Its tensor product,
+   its flatness hypothesis and its surjectivity hypothesis each need a
+   `Module Γ(Y, ⊤) Γ(M, ·)` instance that exists only through
+   `letI := f.baseSectionsModule M ·`; four such binders (`⊤`, `U₁`, `U₂`, `U₁ ⊓ U₂`) are
+   required, not the single `Algebra Γ(Y,⊤) Γ(Y',⊤)` binder.  Copy the binder list of
+   `surjective_moduleSectionDiffBase_baseChange_residueField`
+   (`Picard/RigidPushforwardFiberChart.lean`:508-518), and elaborate the statement with a
+   placeholder body *before* writing any proof.
+
+3. **The glue to §3 is not free.**  §3's map lives on the tensor product formed with the
+   *native* pushforward module structure (that is what
+   `pullback_app_isoTensor_baseMap_sectionLinearEquiv` returns), while the Čech statement
+   delivers the `baseSectionsModule` structure.  The tree proves these are only
+   propositionally equal: `Scheme.Modules.pushforwardTopEquivBaseSections`
+   (`Picard/RigidPushforwardP1Sheaf.lean`:408-421) is the identity on carriers but proves
+   `map_smul'` via `Scheme.Hom.appLE_eq_app`.  So the two must be joined by a
+   `TensorProduct` transport along that equivalence plus one `appLE_eq_app` rewrite for the
+   target-side scalar.
+
+4. **Moving surjectivity from `π_A ≫ p` to `q` needs a lemma.**  The preimage-cover
+   observation lands the Čech differential at the family `π_A ≫ p`, and `q` equals it only
+   propositionally (`Adelic.finiteMapToP1BaseChange_snd`, `Picard/RigidPushforward.lean`:595,
+   proved by `(pullback.lift_snd _ _ _).trans (Category.comp_id _)`).  Since the module
+   structures sit inside the *type* of `moduleSectionDiffBase`, a naive `rw` on the morphism
+   equality risks a "motive is not type correct" failure; a `subst`-style congruence helper is
+   needed.  "Transports by `exact`" is true only within a fixed family.
 
 ## Vacuity audit
 

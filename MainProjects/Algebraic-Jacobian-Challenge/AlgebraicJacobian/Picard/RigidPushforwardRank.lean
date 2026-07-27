@@ -28,8 +28,15 @@ The `ℙ¹` consumer is a one-line specialisation of a general theorem,
 projective line at all: it holds for any quasi-compact quasi-separated
 `p : X ⟶ Spec R` carrying a bundled two-chart affine cover
 `𝒰 : X.AffineCoverMVSquare`, and any quasi-coherent `M`.  That generality is
-deliberate — the curve side of the campaign, `C_A ⟶ Spec A`, consumes the same
-statement.
+deliberate, but it should not be oversold: the theorem is available to any
+family that *already carries* a two-affine Mayer–Vietoris cover of its total
+space, and the campaign's curve `C_A` is not known to be one — that is exactly
+why the curve side routes through `HasFiniteMapToP1` and
+`rigidPushforwardLocallyFree_of_p1Engine` instead
+(`Picard/RigidPushforwardTransfer.lean`).  What the generality does buy is that
+this leaf is independent of `ℙ¹`: it carries content whatever `ℙ¹_k` turns out
+to be, so it is not evidence about the `IsIntegral (ℙ¹_k)` leaf, and should not
+be read as such.
 
 ## The route, in six steps
 
@@ -92,10 +99,13 @@ Recorded honestly, because it changes what the consumers must supply:
 
 * `rank_pushforward_eq_fiberH0` **does not use surjectivity of `d`**.  The
   `hsurj` argument of `P1RankIdentity` is consequently unused in
-  `p1RankIdentity_proved`: it is subsumed by the bijectivity of
-  `TwoTerm.kerBaseChange`, which is the only base-change input the proof
-  consumes.  `hsurj` stays in the `Prop` because that `Prop` is pinned by the
-  gate, and its producer
+  `p1RankIdentity_proved`.  It is *not* implied by the other hypotheses —
+  do not delete it from a downstream statement on that reading.  (Take
+  `d = 0 : M₀ →ₗ M₁` with `M₁ ≠ 0` flat: then `ker d = M₀`, `d.baseChange B = 0`,
+  and `kerBaseChange d B` is the identity of `B ⊗ M₀`, bijective for every `B`,
+  while `d` is not surjective.)  The accurate claim is only that this proof
+  does not need it.  `hsurj` stays in the `Prop` because that `Prop` is pinned
+  by the gate, and its producer
   (`p1Cech_h0_baseChange_of_fibrewise_h1_vanishing_of_p1TrivialConstants`)
   hands out all four conclusions at once anyway.
 * It **does not need `[Algebra.FiniteType k A]`**, nor properness, nor finite
