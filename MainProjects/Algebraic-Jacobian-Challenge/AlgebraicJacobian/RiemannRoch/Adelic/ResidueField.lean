@@ -479,6 +479,23 @@ theorem exists_bound_forall_generatedAt_of_isAlgClosed_curve [IsAlgClosed k]
   exists_bound_forall_generatedAt k U₀ U₁ hledger D₀ hbase hpeel 1
     (fun P => le_of_eq (residueDeg_eq_one_of_isAlgClosed_curve C P))
 
+/-- **The threshold conclusions are not vacuous, unconditionally on a curve.**  For every bound
+`b` and every prime divisor `P`, some multiple `n·P` has weighted degree `≥ b`.
+
+`exists_degK_ge` (`BoundedVanishing.lean`) proves this but carries the residue-finiteness
+binder; here it is discharged, so the non-vacuity of every `∃ b, ∀ D, b ≤ deg_k D → …`
+conclusion in the lane is unconditional on curve hypotheses.  Worth having as a statement
+rather than a remark: that quantifier shape is exactly the one that *can* be satisfied
+trivially, and a reader is entitled to see it ruled out. -/
+theorem exists_degK_ge_of_isAlgClosed_curve [IsAlgClosed k]
+    (C : Over (Spec (CommRingCat.of k))) [IsIntegral C.left]
+    [IsNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
+    [LocallyOfFiniteType C.hom] [SmoothOfRelativeDimension 1 C.hom]
+    (b : ℤ) (P : C.left.PrimeDivisor) :
+    ∃ n : ℕ, b ≤ degK k ((n : ℤ) • pointDivisor P : C.left.WeilDivisor) :=
+  haveI := finite_localStepTgt_one_of_isAlgClosed_curve C P
+  exists_degK_ge k b P
+
 /-! ### Riemann–Roch in the vanishing range, on the geometric degree
 
 The lane's numerical conclusions are all stated on the residue-weighted `deg_k`, because that
