@@ -64,13 +64,21 @@ on a cover), the modular law
 
 ## The finiteness binders are NOT innocent — read them before using anything here
 
-`Module.Finite k (sectionSub k U D)` at a **non-total** open `U` is a strong hypothesis, not
-bookkeeping.  For `P.point ∉ U` it forces `dim Γ(U, 𝒪(n·P + E))` to be constant in `n`
-(`sectionSub_divisorOfList_replicate_of_notMem`), i.e. it *forbids* Riemann growth along that
-tower.  That is precisely what powers §5 and §6: the refutations are consequences of the
-binders every theorem here already assumes.  A reader who supplies those instances "for
-convenience" has silently chosen the geometry.  Flagged because it was not obvious to the
-author until an audit pointed it out (`I-0468`, lesson 3).
+`Module.Finite k (sectionSub k U D)` at a **non-total** open `U`, quantified over all `D`, is a
+substantive geometric restriction, not bookkeeping.  The sharpest form is
+`ell_le_finrank_chart_along_tower`:
+
+`ℓ(n·P + E) ≤ dim Γ(U₀,𝒪(E))` for all `n`, whenever `P.point ∉ U₀`
+
+— no cover, no χ, no exactness datum.  **It forbids Riemann growth outright**: Riemann–Roch says
+`ℓ(D)` grows like `deg D`, and this says it cannot along any such tower.  Everything in §5–§6 is
+a corollary, and any theorem assuming these binders over all divisors has already excluded the
+curves Riemann–Roch is about.
+
+So read the binders as hypotheses about the geometry, and prefer stating results at `⊤` (where
+`Module.Finite` is the honest finiteness of `L(D)`) over the charts wherever possible.  Flagged
+because it was not obvious to the author until an audit and a fresh-context review pointed it out
+(`I-0468` lesson 3; the `ℓ`-level form is the reviewer's sharpening).
 
 ## Provenance
 
@@ -326,6 +334,35 @@ theorem chi_le_finrank_chart_along_tower (hcov : U₀ ⊔ U₁ = ⊤)
   rw [h0] at h
   omega
 
+/-- **Chart-level finiteness alone forbids Riemann growth: `ℓ` is BOUNDED along a tower.**
+
+`ℓ(n·P + E) ≤ dim Γ(U₀, 𝒪(E))` for every `n`, whenever `P.point ∉ U₀` and the `U₀`-chart
+section spaces are finite-dimensional.  No cover hypothesis, no χ, no exactness datum: it is
+`sectionSub k ⊤ D ≤ sectionSub k U₀ D` (antitonicity in the open) composed with the freeze.
+
+**This is the root cause of everything in §5–§6, and it is worth stating separately because it is
+stronger and simpler than the χ-level statements.**  Riemann–Roch says `ℓ(D)` grows like
+`deg D`; this says it *cannot*, along any tower at a point missing a chart whose sections are
+finite-dimensional.  So `Module.Finite k (sectionSub k U D)` at a **non-total** `U` is not
+bookkeeping — it is a substantive geometric restriction, and any theorem assuming it over all
+divisors has already excluded the curves Riemann–Roch is about.
+
+Consequence for reading this whole module: the `[∀ D, Module.Finite k (sectionSub k Uᵢ D)]`
+binders on §5–§6 are what make the refutations available, and a consumer who supplies them for
+convenience has chosen the geometry.  Found by a fresh-context review of this module. -/
+theorem ell_le_finrank_chart_along_tower (k : Type u) [Field k] {X : Scheme.{u}} [IsIntegral X]
+    [IsLocallyNoetherian X] [Scheme.IsRegularInCodimensionOne X]
+    [Algebra k X.functionField] [IsConstantField k X] (U₀ : X.Opens)
+    {P : X.PrimeDivisor} (hP : P.point ∉ U₀) (E : X.WeilDivisor)
+    [∀ D : X.WeilDivisor, Module.Finite k (sectionSub k U₀ D)] (n : ℕ) :
+    ell k (divisorOfList (List.replicate n P) + E)
+      ≤ Module.finrank k (sectionSub k U₀ E) := by
+  have hsub : sectionSub k ⊤ (divisorOfList (List.replicate n P) + E)
+      ≤ sectionSub k U₀ (divisorOfList (List.replicate n P) + E) :=
+    sectionSub_antitone_open k le_top _
+  rw [sectionSub_divisorOfList_replicate_of_notMem k U₀ hP E n] at hsub
+  exact Submodule.finrank_mono hsub
+
 /-- **`hbump` IS FALSE whenever some prime divisor sits off one chart of the cover.**
 
 Unconditional: no `chi_add`, no exactness hypothesis, no approximation input.  `hbump` forces
@@ -413,11 +450,14 @@ which is what an explicit cover computation actually produces.  Note it is a gen
 two-way reduction, not a reformulation of `h1dim = 0` — the right-hand side mentions only
 the three chart dimensions and `ℓ`.
 
-**Caveat, and it is not small.**  This is a criterion, not a vanishing theorem: nothing here
-or elsewhere in AJC proves its right-hand side at any curve.  Worse, on a cover with a prime
-divisor off a chart §6 shows the *ledger* is false, and the threshold form below inherits that
-— see `exists_bound_h1dim_eq_zero_of_charts`'s own caveat.  Do not read this as closing
-single-field vanishing. -/
+**Caveat.**  This is a criterion, not a vanishing theorem: nothing here or elsewhere in AJC
+proves its right-hand side at any curve.  Do not read it as closing single-field vanishing.
+
+It is *not*, however, damaged by §5–§6: this statement assumes finiteness at the single divisor
+`D` only, and its right-hand side compares the count with `ℓ(D)` rather than with `deg_k D`, so
+the tower argument does not touch it (see the discussion at
+`exists_bound_h1dim_eq_zero_of_charts`).  Vanishing content survives; it is the ledger's *growth*
+claim that the chart-finiteness binders refute. -/
 theorem h1dim_eq_zero_iff_charts (hcov : U₀ ⊔ U₁ = ⊤) (D : X.WeilDivisor)
     [Module.Finite k (sectionSub k U₀ D)] [Module.Finite k (sectionSub k U₁ D)]
     [Module.Finite k (sectionSub k (U₀ ⊓ U₁) D)] :
@@ -438,12 +478,18 @@ This is deliberately stated with the finiteness binders as an instance-quantifie
 hypothesis, matching `ResidueField.UniformlyBoundedVanishing`'s shape, so that a consumer
 proving the chart count over a family of divisors gets uniform vanishing directly.
 
-**Vacuity warning.**  `hcount` is quantified over all divisors above the threshold, so on a
-cover with a prime divisor off a chart it is refutable by the §6 tower argument (the count
-would make χ agree with a linearly growing quantity while χ stays bounded).  The theorem is
-true and its proof correct, but a consumer must first establish that its cover has no such
-prime — otherwise this is a valid implication with an unsatisfiable hypothesis.  Stated here
-because a hypothesis that cannot hold is exactly the failure mode this lane keeps shipping. -/
+**Is `hcount` refutable by the §5–§6 tower argument?  No — and the reason is the useful part.**
+This hypothesis equates the chart count with `ℓ(D)`, and `ell_le_finrank_chart_along_tower` says
+`ℓ` is *also* bounded along the tower under these binders.  Bounded = bounded is no
+contradiction, so unlike `hledger` — which equates χ with the **unbounded** `deg_k D` — `hcount`
+survives the tower.
+
+That contrast is the sharpest available statement of what went wrong with the lane's ledger:
+`hcount` and `hledger` both look like "the Čech count is exact", but only the ledger asserts
+*growth*.  The vanishing content is safe; the Riemann-growth content is what these binders
+forbid.  So this theorem is not vacuous for that reason — though it remains a criterion, proved
+at no curve, and it does carry the `∀ D` chart-finiteness binders, which by the module header
+already restrict the geometry. -/
 theorem exists_bound_h1dim_eq_zero_of_charts (hcov : U₀ ⊔ U₁ = ⊤) (b : ℤ)
     [∀ D : X.WeilDivisor, Module.Finite k (sectionSub k U₀ D)]
     [∀ D : X.WeilDivisor, Module.Finite k (sectionSub k U₁ D)]

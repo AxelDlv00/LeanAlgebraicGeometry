@@ -87,14 +87,19 @@ it is strictly stronger than the single-field count because `b` is quantified be
 Anyone reading this as "extension uniformity is closed" has misread it; a janitor made
 exactly that conflation once already (retracted at inbox `I-0412`).
 
-**Vacuity warning, inherited from `ChiUnconditional` §5–§6.**  On a cover with a prime divisor
-whose point lies off one chart, the finiteness binders force χ to be *bounded* along a tower
-`n·P`, which refutes the closed ledger there (`ledger_refuted_of_notMem_left`) and hence makes
-the analogous chart counts unsatisfiable.  `UniformChartCount` demands its inclusion at every
-`κ` and every divisor above `b`, so a consumer must first rule out such primes on the
-base-changed cover.  Until that is done this reduction may have an unsatisfiable hypothesis —
-a valid implication that transports nothing.  This is the sharpest honest statement of gap (2)
-available in AJC today, and "sharpest honest" is not the same as "usable". -/
+**Relation to `ChiUnconditional` §5–§6, stated carefully.**  Those sections refute the closed
+ledger `hledger` on a cover with a prime divisor off a chart, because `hledger` equates χ with the
+*unbounded* `deg_k D` while the chart-finiteness binders force χ — and indeed `ℓ`
+(`ell_le_finrank_chart_along_tower`) — to be *bounded* along a tower.
+
+`UniformChartCount` is **not** refuted that way: it demands a subspace *inclusion*
+`𝒜(D) ⊆ B(D)`, i.e. vanishing, not growth.  Vanishing content survives the tower argument; the
+ledger's growth claim does not.  So this reduction is not vacuous for that reason.
+
+What remains true, and is the honest limit: `UniformChartCount` is proved at **no** curve, it is
+strictly stronger than the single-field count (the threshold precedes `κ`), and it quantifies over
+all divisors above `b` on every base-changed curve.  This is the sharpest honest statement of gap
+(2) available in AJC today, and "sharpest honest" is not the same as "usable". -/
 theorem uniformlyBoundedVanishing_of_uniformChartCount
     (C : Over (Spec (CommRingCat.of k)))
     [IsProper C.hom] [GeometricallyIntegral C.hom] [SmoothOfRelativeDimension 1 C.hom]
