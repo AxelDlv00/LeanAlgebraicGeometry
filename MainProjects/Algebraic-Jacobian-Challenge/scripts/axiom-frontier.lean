@@ -544,13 +544,28 @@ consumer instead of the signature. -/
 /-! §6f The unconditional-χ lane, measured THROUGH THE ROOT PATH (requested by ajc-rr in
 I-0463).
 
-ajc-rr measured these twelve declarations in their own session and reported zero `sorryAx`,
-but flagged the measurement themselves: they probed through a scratch file that imported
+ajc-rr measured twelve declarations in their own session and reported zero `sorryAx`, but
+flagged the measurement themselves: they probed through a scratch file that imported
 `AlgebraicJacobian` *plus* the two new modules directly, because at that moment
 `ChiUnconditional` and `UniformChartVanishing` were committed and **not** in the root
 roll-up. The two imports have since landed (`AlgebraicJacobian.lean`), so the lines below
-are the same twelve declarations measured on the root path — the measurement that may be
-quoted. They agree with theirs: all twelve clean.
+are measured on the root path — the measurement that may be quoted. All clean, agreeing with
+theirs.
+
+Ten of the twelve, not twelve: `degK_principal_eq_zero_of_chartCounts` and
+`chartCountsDegree_iff_ledger` no longer exist. ajc-rr deleted them (audit `I-0467`) on their
+own initiative, for two reasons worth recording because both are the reasons a probe line
+would have been misleading. The predicate was `Iff.rfl` to the closed ledger and
+`SectionBounds.degK_principal_eq_zero` already took that hypothesis verbatim, so the theorem
+was the old one with a renamed binder; and it was *vacuous on the covers the module is about*,
+since the ledger is outright FALSE whenever a prime divisor lies off one chart. Two clean
+axiom lines would have sat on a duplicate of a vacuous statement — which is trap (c) and trap
+(h) at once, and no axiom output distinguishes either. `ledger_refuted_of_notMem_left` below
+is what replaced them, and it is a constraint on the route rather than a theorem about it.
+
+This is also why a probe file must be re-elaborated and not merely re-read after a sibling
+team lands: naming a deleted declaration is a hard error, so the file itself fails rather than
+silently reporting a stale set. That is the desired failure mode, and it fired here.
 
 Why the distinction is not pedantry. An unrooted module is invisible to `import
 AlgebraicJacobian`, so its axioms cannot be probed here at all; and a scratch import can
@@ -559,15 +574,15 @@ exactly the kind of difference an axiom line does not display. The honest proced
 sibling team lands a module is: root it, rebuild, then re-measure — not carry the scratch
 number forward.
 
-What the clean lines do and do not say. The lane's own summary is the thing to read
-alongside them: `chartCountsDegree_iff_ledger` is `Iff.rfl`, so `ChartCountsDegree` is a
-*restatement* of the closed χ-ledger and not a weakening of it, and a clean axiom line on
-`degK_principal_eq_zero_of_chartCounts` therefore reports nothing about the ledger being
-available. Same caution as §6b and §6d: the χ identity `chi_eq_charts_sub_overlap` is
-genuinely unconditional (inclusion–exclusion for a two-set cover, no exact sequence and no
-exactness binders), whereas the two vanishing statements carry chart-count hypotheses proved
-at no curve. `uniformlyBoundedVanishing_of_uniformChartCount` takes `UniformChartCount`,
-which is strictly stronger than the single-field count. -/
+What the clean lines do and do not say. Same caution as §6b and §6d: the χ identity
+`chi_eq_charts_sub_overlap` is genuinely unconditional (inclusion–exclusion for a two-set
+cover, no exact sequence and no exactness binders), whereas the two vanishing statements carry
+chart-count hypotheses proved at no curve. `uniformlyBoundedVanishing_of_uniformChartCount`
+takes `UniformChartCount`, which is strictly stronger than the single-field count. And the two
+refutations are the sharpest lines here precisely because they are *negative*: they say the
+bump hypothesis and the closed ledger are FALSE on any cover having a prime divisor off one
+chart, so a clean axiom line on anything downstream of either is clean about a vacuous
+premise (trap (h)). -/
 #print axioms AlgebraicGeometry.Adelic.chi_eq_charts_sub_overlap
 #print axioms AlgebraicGeometry.Adelic.chi_sub_chi_eq_charts_sub_overlap
 #print axioms AlgebraicGeometry.Adelic.sectionSub_top_eq_inf
@@ -577,9 +592,12 @@ which is strictly stronger than the single-field count. -/
 #print axioms AlgebraicGeometry.Adelic.charts_sub_overlap_le_ell
 #print axioms AlgebraicGeometry.Adelic.h1dim_eq_zero_iff_charts
 #print axioms AlgebraicGeometry.Adelic.exists_bound_h1dim_eq_zero_of_charts
-#print axioms AlgebraicGeometry.Adelic.degK_principal_eq_zero_of_chartCounts
-#print axioms AlgebraicGeometry.Adelic.chartCountsDegree_iff_ledger
 #print axioms AlgebraicGeometry.Adelic.uniformlyBoundedVanishing_of_uniformChartCount
+
+-- The two refutations that replaced the deleted `ChartCountsDegree` pair.  Both are
+-- unconditional negative results on a cover with a prime divisor off one chart.
+#print axioms AlgebraicGeometry.Adelic.not_bump_of_notMem_left
+#print axioms AlgebraicGeometry.Adelic.ledger_refuted_of_notMem_left
 
 -- §6c The rigid-pushforward gate (task ajc-gate).  THE GATE IS NOW INSTANTIATED AND THE
 -- INSTANCE IS AXIOM-CLEAN — `instHasRigidPushforwardOfCurve`
