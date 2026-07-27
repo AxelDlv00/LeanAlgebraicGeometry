@@ -1,0 +1,31 @@
+Cleanup pass complete. I-0074 is untouched and still the sole open protection.
+
+## What I did
+
+**Archived 11 items**, each with a conclusion comment naming the theorem, commit, or docstring that consumed it:
+
+Conversations (7) — `I-0393` and `I-0402` (the cone-vanishing correction is now the theorem `coneVanishing_iff_base_and_peel` at `BoundedVanishing.lean:510`, and the docstring at `:26` states it); `I-0382` (superseded by its own correction plus the global-generation landing); `I-0396` (§4 of `SectionBounds.lean` now names the closed ledger as the substantive obligation); `I-0398` (two of three points were "noted, no action"); `I-0401` (both requested docstring edits are in commit `5ed0de2e8`); `I-0378` (superseded by `I-0404` from the same team on the same ask); `I-0407` (its premise is gone — both modules are now tracked in the ledger); `I-0409` (superseded by ajc-rr's own retraction `I-0417`).
+
+Duplicates/stale (4) — `I-0388` folded into memory `I-0362` (same unrooted-module rule; I preserved the sharp part, that `#print axioms` reports `Unknown constant` for unrooted declarations); `I-0390` (info note defending a stale "11 vs 10" count, superseded by `I-0387`); `I-0413`, which I filed myself before finding `I-0385` already owned that lane — the defect is preserved as "Defect 3" on `I-0385`.
+
+**Left open deliberately:** `I-0074` (live protection), `I-0391` (human-started), `I-0394` (its actionable request is *not* done — the `∀ D` `hledger` binder has since propagated into a second module; I measured all 12 sites), `I-0404`/`I-0405`/`I-0410`/`I-0417`/`I-0418` (live coordination), all 18 memories, and `I-0357` (I withdrew its claim 1 — a `DivisorScheme.tex` chapter now covers 7 of its 8 terms — but re-confirmed claim 2: all 16 `AJCR.w5-av.*` rows still have empty summaries).
+
+**Docs:** `/home/axel/LeanAlgebraicGeometry-Horizon/roadmap.md`, commit `bb30c16ef` — AJC module count 172→181 in three places, Albanese 12→11 sorries (measured per-file), heartbeat overrides 179→199.
+
+## Counts before → after
+
+| | before | after |
+|---|---|---|
+| non-protection | 41 | 38 |
+| conversations | 14 | **7** (cap 8, cleared) |
+| memory | 15 | 18 |
+
+## Surviving warnings
+
+Conversations cleared. Three remain, all intentional, each recorded in the inbox rather than guessed at:
+
+- **Non-protection 38 vs 30, memory 18 vs 10.** My actions took non-protection to 36; live teams filed seven new items (`I-0411`…`I-0418`) during the pass. I archived no memory for being over cap — I read all 18 and each is a false-belief guard; the AJCR ones are live because `AJCR.w4-rep` and `...dat-d.ddr` are both `active`. This is the third pass to report the mismatch, so I added the arithmetic to `I-0387` (human-addressed) instead of a new item.
+- **`AJC.jacobian.assembly` 1/1 done.** Not marked done, as you instructed — confirmed on `I-0411`. Its own summary calls the mismatch deliberate, and one of its five obligations (`hasRationalPoint_of_curve`) is false as stated.
+- **9 active roadmap items vs 8** (new this session). I checked all nine: two ancestor spines plus leaves held by running teams, no deferred work. Recorded on `I-0411`.
+
+One correction worth flagging: my `I-0396` comment initially repeated ajc-rr's claim that residue-degree-one was "discharged". `I-0415`/`I-0417`/`I-0418` retracted that mid-pass — it is reformulated, one unproved fact traded for three unbuilt stalk-level instances — so I appended a correction. No Lean, blueprint, or reference source was edited, and no task/roadmap status was mutated.

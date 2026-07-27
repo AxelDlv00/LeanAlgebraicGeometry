@@ -2,10 +2,39 @@ id: AJC.rr.principal
 title: Principal divisors have degree zero
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The single remaining in-tree Riemann--Roch obligation: deg(div f) = 0 for
-  a nonzero rational function on a smooth proper curve, in RiemannRoch/WeilDivisor.
-  The finite-map and pullback-degree gates are stated; the divisor-degree and divisor-functor
-  substrate (Picard/DivDegree, Picard/DivFunctorDef) is otherwise sorry-free.'
+summary: 'Principal divisors have degree zero. STILL OPEN (sorry at RiemannRoch/WeilDivisor.lean:1194,
+  deliberately in place). Run 0055 session 0004 sharpened both of its two residual
+  items but closed neither.
+
+
+  ITEM 1, residueDeg = 1: REFORMULATED, not discharged. Proved EQUIVALENT to a first-order
+  approximation statement in the order language (GlobalGeneration.residueDeg_eq_one_iff_hasRationalResidues
+  -- a genuine iff, stands on its own). That statement is then derived for an algebraically
+  closed base from the stalk residue field (hasRationalResidues_of_isAlgClosed). BUT
+  that derivation takes three stalk-level instance binders -- Algebra k (stalk), IsScalarTower
+  k (stalk) K(X), Module.Finite k (ResidueField (stalk)) -- and AJC constructs NONE
+  of them for its curve; the last is not node N14''s Module.Finite k (localStepTgt
+  k P 1) but effectively a new gate. So the obligation moved from an order subquotient
+  to standard stalk commutative algebra, which is where it belongs, but it did not
+  go away. An earlier version of this summary said "DISCHARGED"; a fresh-context review
+  corrected it.
+
+
+  ITEM 2, the closed chi-ledger: still not a theorem. Now proved on the whole EFFECTIVE
+  cone from the one-point bump alone (LedgerClosure.chi_eq_of_bump_of_nonneg). Extending
+  to all divisors is proved EQUIVALENT to one identity about the negative part (chi_eq_iff_step_of_bump),
+  stated as an iff precisely so it is not mistaken for a reduction. Not bookkeeping:
+  chi is not additive in D (only deg_k is) and D is not linearly equivalent to D+,
+  so neither transport mechanism the lane owns applies.
+
+
+  NEXT for this row: construct the three stalk instances for an AJC curve (the algebra
+  structure and tower look routine given the structure morphism; the residue finiteness
+  is substantive). Do not substitute the sorry until the ledger is a theorem -- doing
+  so would relocate the gap while making a hypothesis-free statement depend silently
+  on one.
+
+  '
 status: pending
 kind: proof
 priority: normal
@@ -28,3 +57,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.rr
+  updated_at: '2026-07-27T11:37:05.458529+00:00'

@@ -17812,7 +17812,7 @@
     "macros": {},
     "states": {
       "blocked": 126,
-      "closed": 5947,
+      "closed": 6065,
       "formalized_open": 194,
       "informal": 164,
       "ready": 128
@@ -45876,7 +45876,7 @@
       "review_count": 0,
       "sources": [],
       "state": "closed",
-      "statement": "A morphism of schemes \\(f\\colon X\\to Y\\) that is smooth of some relative\n  dimension is geometrically reduced: for every field \\(K\\) and every morphism\n  \\(\\Spec K\\to Y\\), the base change \\(X\\times_Y\\Spec K\\) is a reduced scheme. The\n  same holds for any smooth morphism; the relative dimension plays no role.",
+      "statement": "A morphism of schemes \\(f\\colon X\\to Y\\) that is smooth of some relative\n  dimension is geometrically reduced: for every field \\(K\\) and every morphism\n  \\(\\Spec K\\to Y\\), the base change \\(X\\times_Y\\Spec K\\) is a reduced scheme.",
       "title": "A smooth morphism is geometrically reduced",
       "type": "lemma",
       "unlocks": 11,

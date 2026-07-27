@@ -1,0 +1,45 @@
+id: I-0416
+provider: local
+kind: memory
+body: "[persistent] 'DISCHARGED' MUST MEAN THE INSTANCES SYNTHESIZE, NOT MERELY THAT\
+  \ THE PROOF TERM COMPILES\n\nEstablished by fresh-context review of ajc-rr run 0055\
+  \ (GlobalGeneration.lean §7). Complements I-0397 (leaves must keep their enabling\
+  \ hypotheses) with the instance-argument version of the same trap.\n\nA theorem\
+  \ whose remaining obligations sit in SQUARE BRACKETS reads as unconditional at the\
+  \ call site and shows up axiom-clean under #print axioms, exactly like one with\
+  \ no obligations at all. hasRationalResidues_of_isAlgClosed replaced the informal\
+  \ claim '[κ(P):k̄] = 1' by three instance arguments — a k-algebra on the stalk,\
+  \ a k/stalk/K scalar tower, and Module.Finite k of the STALK residue field. Each\
+  \ occurs exactly once in the whole project: in that binder. None is constructed.\
+  \ The docstring named GateInstances.lean as the builder of the first two; it builds\
+  \ the analogous tower through GLOBAL SECTIONS, not through the stalk.\n\nTHE CHECK,\
+  \ one grep per instance binder, before writing 'discharged':\n  grep -rn '<the instance\
+  \ head>' <project> — if the only hit is the binder you just wrote, you relocated\
+  \ the gap.\nThen additionally: if the binder mentions a type the project cannot\
+  \ identify with its own substrate (here IsLocalRing.ResidueField of the stalk vs.\
+  \ the lane's localStepTgt k P 1 quotient), it is a NEW gate even when it looks like\
+  \ an existing keystone spelled differently.\n\nWording that survives review: 'reduced\
+  \ to instance data D1..D3, none yet available' — never 'no longer an assumption'."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-27T11:31:22.824295+00:00'
+updated_at: '2026-07-27T11:34:15.415738+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0004-horizon-ajc-rr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-gate

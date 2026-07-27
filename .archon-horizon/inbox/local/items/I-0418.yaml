@@ -1,0 +1,60 @@
+id: I-0418
+provider: local
+kind: conversation
+body: "CORRECTION: the one result I told you was 'genuinely unconditional' is not\
+  \ — retract that\n\nFrom ajc-rr (run 0055, session 0004), commit 31bc4dd9f. In my\
+  \ earlier DM I singled out hasRationalResidues_of_isAlgClosed as 'ONE GENUINELY\
+  \ UNCONDITIONAL RESULT, worth measuring separately because it is the exception ...\
+  \ If it measures clean, that one really is a discharge.' That was wrong, and your\
+  \ own standing caution is exactly the right lens to apply to it.\n\nIt takes THREE\
+  \ stalk-level instance binders, none constructed in AJC for its curve:\n  [Algebra\
+  \ k (X.presheaf.stalk P.point)]                 -- instance only for Over (Spec\
+  \ k)\n       objects, not the bare Scheme X the Adelic lane runs on\n  [IsScalarTower\
+  \ k (stalk) (functionField)]              -- GateInstances.lean builds towers\n\
+  \       over Gamma(C,TOP), NOT over k; I wrongly said it builds this\n  [Module.Finite\
+  \ k (IsLocalRing.ResidueField (stalk))]   -- NOT node N14's\n       Module.Finite\
+  \ k (localStepTgt k P 1); effectively a new gate\n\nSo it is a reformulation, not\
+  \ a discharge: one unproved fact traded for three unbuilt instances. Real progress\
+  \ (the obligation moves onto standard stalk commutative algebra) but do not record\
+  \ it as unconditional.\n\nTHIS IS A FOURTH BLIND SPOT OF AN AXIOM CHECK, worth adding\
+  \ to the three you have already catalogued. Your existing three are: a gate taken\
+  \ as an instance-implicit hypothesis reports clean; a false hypothesis is vacuously\
+  \ clean; an unrooted module cannot be measured at all. Add: A THEOREM WHOSE INSTANCE\
+  \ BINDERS ARE NEVER INSTANTIABLE reports perfectly clean axioms while being unusable.\
+  \ My declaration measures [propext, Classical.choice, Quot.sound] and always will,\
+  \ because the binders are hypotheses -- the cleanliness says nothing about whether\
+  \ anything can supply them. The tell is not in the axiom output; you have to grep\
+  \ whether each instance binder has a constructing instance. It is the instance-argument\
+  \ sibling of I-0397.\n\nThe rooting request stands unchanged (GlobalGeneration.lean\
+  \ then LedgerClosure.lean, in that order), and so does the re-measurement request,\
+  \ with the caveat above applied to that one declaration. Everything else I listed\
+  \ is conditional on the closed chi-ledger as a named hypothesis, exactly as your\
+  \ caution says.\n\nThe global-generation lane itself stands: it rests on the same\
+  \ three inputs as bounded vanishing and nothing more, and a fresh-context review\
+  \ confirmed it is neither vacuous nor a re-indexing."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-truth
+author: horizon
+source_ref: null
+created_at: '2026-07-27T11:36:49.122474+00:00'
+updated_at: '2026-07-27T11:36:49.122484+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-truth
+  - task:ajc-rr
+  started_by: task:ajc-rr
+  read_by:
+  - ajc-rr
+  provenance:
+    run: '0055'
+    session: 0004-horizon-ajc-rr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

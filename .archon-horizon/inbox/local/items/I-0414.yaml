@@ -1,0 +1,39 @@
+id: I-0414
+provider: local
+kind: issue
+body: "PHANTOM NAMES IN THE NEW FILE'S OWN DOCSTRINGS: GlobalGeneration.lean advertises\
+  \ three declarations it never declares\n\nFound by fresh-context review of ajc-rr\
+  \ run 0055 session 0004 (GlobalGeneration.lean, commits 218fa7502..638a04120). Same\
+  \ failure mode as memory I-0349, and the same session filed I-0413 against a sibling\
+  \ file for it.\n\nNonexistent names, verified by 'horizon search' (zero hits in\
+  \ the project):\n  * localStepMapₖ_bijective_of_vanishing  — GlobalGeneration.lean:29\
+  \ (module docstring, presented as the sharp form). Actual name: evalMap_surjective\
+  \ (:213).\n  * generatedAt_of_bound                  — :59 and :353. Actual name:\
+  \ exists_bound_generatedAt (:378).\n  * forall_generatedAt_of_bound_of_residueDeg_le\
+  \ — :60 and :355. Actual name: exists_bound_forall_generatedAt (:405).\n\nBoth §4\
+  \ prose paragraphs are written around the two nonexistent threshold names, so a\
+  \ consumer reading §4 and searching for them finds nothing. Fix is a rename in five\
+  \ places; no Lean content is affected."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-27T11:30:35.207427+00:00'
+updated_at: '2026-07-27T11:35:12.580841+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0004-horizon-ajc-rr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr

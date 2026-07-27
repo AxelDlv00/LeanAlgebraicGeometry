@@ -2,33 +2,12 @@ id: AJC.picrep.rigidpushforward
 title: Rigidified pushforward engine (gate reduced to three statements)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'GATE REDUCED TO THREE STATEMENTS (run 0053). Picard/RigidPushforwardFrontier.lean,
-  hasRigidPushforward_of_isIntegral_of_rank_of_baseChange, derives HasRigidPushforward
-  C for an AJC curve from exactly: (1) IsIntegral (P^1_k); (2) hrank, the rank identity
-  sectionsRankAtStalk (p_*M) t = p.fiberH0 M t; (3) RigidPushforwardBaseChange. Five
-  new sorry-free modules, all axiom-clean and warning-free under a single-module lake
-  build: RigidPushforwardP1Constants, RigidPushforwardGate, RigidPushforwardFiberChart,
-  RigidPushforwardP1Sheaf, RigidPushforwardFrontier.
-
-
-  WHAT CLOSED THIS SESSION. (a) The H0-finiteness anchor, formerly the audited Serre-finiteness
-  leaf, was de-parameterised in A and then sharpened: it is now IsIntegral (P^1_k),
-  a statement about the ONE field k -- p1Cech_h0_fg_of_isIntegral. (b) The fibrewise
-  Cech leaf is PROVED outright: p1_hfib_of_fiberH1Vanishing discharges the engine''s
-  pinned _hfib binder from fibrewise h1-vanishing at scheme points, via Stacks 02KG
-  in degree 0 on each affine chart of P^1_A; the enabling brick is isPushout_appLE_of_isPullback'',
-  which generalises the tree''s section-ring pushout from the pinned open f^-1 V to
-  an arbitrary affine U (necessary because p^-1 top = P^1_A is not affine). (c) The
-  output leaf''s SHEAF half is PROVED: a quasi-coherent module on Spec R with finite
-  projective global sections is free of rank rankAtStalk on a basic open (exists_free_restrict_of_finite_projective_sections),
-  and Gamma(Spec A, p_*M) = ker d (pushforwardTop_linearEquiv_ker); only the rank
-  identity remains, and it is assembly of bricks that now exist -- the same chart
-  comparison leaf 2 uses, plus kerBaseChange bijectivity at B = kappa(t).
-
-
-  STILL TRUE FROM BEFORE: HasFiniteMapToP1 is NOT an open gate (synthesizes for an
-  AJC curve, sorry-free); HasRigidPushforward has ZERO consumers workspace-wide, so
-  it is a prerequisite for future DivFamily work, not a live blocker.'
+summary: 'Rigidified pushforward engine -- the gate now costs ONE statement, not four.
+  hasRigidPushforward_of_leaves needed FOUR hypotheses; hasRigidPushforward_of_isIntegral_of_rank_of_baseChange
+  THREE; hasRigidPushforward_of_gammaBaseChange (Picard/RigidPushforwardInstance.lean)
+  needs ONE. The locallyFree field is an unconditional theorem for an AJC curve (rigidPushforwardLocallyFree_proved).
+  Deliberately NO instance : HasRigidPushforward, because RigidPushforwardGammaBaseChange
+  has no producer -- so the task stays queued.'
 status: active
 kind: proof
 priority: normal
@@ -51,5 +30,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-27T08:39:52.871165+00:00'
+  updated_at: '2026-07-27T11:32:57.329853+00:00'
   owner: ajc-gate

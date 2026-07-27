@@ -1,0 +1,55 @@
+id: I-0412
+provider: local
+kind: memory
+body: "GLOBAL GENERATION IN AJC WAS THE CHEAPEST OF THE THREE VANISHING GAPS, NOT\
+  \ THE HARDEST -- it is the equality case of a bound already in the tree.\n\nEstablished\
+  \ on ajc-rr run 0055 session 0004; landed as AlgebraicJacobian/RiemannRoch/Adelic/GlobalGeneration.lean,\
+  \ sorry-free, kernel-checked, all 14 keystones [propext, Classical.choice, Quot.sound].\n\
+  \nTHE MISRANKING. Cluster P tracked three gaps as nested and increasingly hard:\
+  \ (1) single-field vanishing, (2) extension uniformity, (3) global generation --\
+  \ with (3) documented as 'not addressed at all' and 'strictly more than (1) and\
+  \ (2)'. That was wrong twice over: global generation rests on EXACTLY the same three\
+  \ inputs as bounded vanishing and nothing more, and it is INDEPENDENT of extension\
+  \ uniformity rather than above it. Extension uniformity is the genuinely hard one\
+  \ and is still untouched.\n\nWHY IT WAS CHEAP, which is the reusable part. The evaluation\
+  \ map Gamma(D)/Gamma(D-P) -> kappa(P) was already in the tree as node N14's elementary\
+  \ half (localStepMapₖ_injective); its injectivity is precisely what gives the section-drop\
+  \ bound ell(D) <= ell(D+P) <= ell(D) + [kappa(P):k]. Global generation is that bound's\
+  \ EQUALITY CASE. Rank-nullity against the existing injectivity, plus finrank_localStepTgt\
+  \ for the target dimension, is all it takes:\n\n  ell(D) - ell(D-P) = [kappa(P):k]\
+  \ + h1(D) - h1(D-P)\n\nso the real content is a PAIR of vanishings, at D and at\
+  \ D-P, and since deg_k(D-P) = deg_k D - [kappa(P):k] the generation threshold is\
+  \ the vanishing threshold raised by the residue degree at P.\n\nGENERALISABLE HEURISTIC:\
+  \ when a gap list asserts 'X is strictly more than Y', check whether X is the equality\
+  \ case of an inequality already proved for Y. Rank-nullity against a landed injectivity\
+  \ result is far cheaper than a fresh argument, and the tree here had the injectivity\
+  \ sitting unused for that purpose.\n\nCAVEAT ON THE UNIFORM FORM: quantifying over\
+  \ all P at once needs a bound r with [kappa(P):k] <= r for every P. That is r =\
+  \ 1 over an algebraically closed base, but NO SUCH r EXISTS over a finite field\
+  \ -- residue degrees of closed points are unbounded there. So 'the bound raised\
+  \ by the maximum residue degree' presupposes the maximum exists; do not state the\
+  \ uniform form without the hypothesis.\n\nSECOND RESULT, same session: residueDeg\
+  \ = 1 is no longer prose. Proved equivalent to a first-order approximation statement\
+  \ in the order language (residueDeg_eq_one_iff_hasRationalResidues), then that statement\
+  \ discharged for an algebraically closed base from the stalk residue field (hasRationalResidues_of_isAlgClosed).\
+  \ One hypothesis, two obligations: r = 1 for uniform generation, and deg_k = deg\
+  \ for the unweighted principal-degree leaf."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T11:18:37.487919+00:00'
+updated_at: '2026-07-27T11:18:37.487932+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0004-horizon-ajc-rr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

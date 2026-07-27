@@ -1,0 +1,56 @@
+id: I-0415
+provider: local
+kind: issue
+body: "hasRationalResidues_of_isAlgClosed: the 'discharge' claim overstates it — two\
+  \ of its three instance arguments have NO instance anywhere in the project\n\nFresh-context\
+  \ review of ajc-rr run 0055 (GlobalGeneration.lean:766-769, commit 638a04120). The\
+  \ theorem itself is fine and its docstring note on the ord_P 0 = 0 junk convention\
+  \ is correct. What is overstated is the word 'discharge' in the commit message,\
+  \ in the §7 header, and in the SectionBounds.lean §4 edit that now strikes item\
+  \ 1 as 'discharged'.\n\nThe three instance arguments:\n  [Algebra k (X.presheaf.stalk\
+  \ P.point)]                        — an instance exists but only for Over (Spec\
+  \ k) objects: Picard/TangentSpaceStalkAlgebra.lean:140 overStalkAlgebra. Not for\
+  \ a bare Scheme X with [Algebra k X.functionField], which is the ambient setting\
+  \ of the whole Adelic lane.\n  [IsScalarTower k (X.presheaf.stalk P.point) X.functionField]\
+  \  — grep: this occurs in the project EXACTLY ONCE, at GlobalGeneration.lean:768.\
+  \ Nothing constructs it. The docstring claims 'Adelic/GateInstances.lean builds\
+  \ exactly this, algebra_section_stalk plus functionField_isScalarTower'. It does\
+  \ not: GateInstances.lean:115-118 builds IsScalarTower k Γ(C,⊤) K(C) (global sections,\
+  \ not the stalk), and its :139 tower is over Γ(C,⊤), not over k. The k-to-stalk-to-K\
+  \ tower is asserted, not built.\n  [Module.Finite k (IsLocalRing.ResidueField (X.presheaf.stalk\
+  \ P.point))] — also occurs exactly once, at :769. It is NOT the same as the lane's\
+  \ existing keystone [Module.Finite k (localStepTgt k P 1)] despite the docstring\
+  \ saying 'the same keystone finiteness node N14 consumes'; localStepTgt is a quotient\
+  \ of k-submodules of K(X) and the project has no identification of it with the stalk\
+  \ residue field (§5 says so itself at :441-443). So this is a NEW gate, not a reused\
+  \ one.\n\nConsequence: §7 converts one unproved fact ([κ(P):k] = 1) into three unbuilt\
+  \ instances, one of which is a residue-field finiteness that the project's own §5\
+  \ says it cannot connect to the substrate. That is a relocation of the gap, and\
+  \ the phrase 'the residue hypothesis is no longer an assumption' is not accurate\
+  \ as long as none of the three can be synthesized for an AJC curve.\n\nSuggested\
+  \ repair, cheapest first: (1) soften §7 and the SectionBounds §4 strike-through\
+  \ to 'reduced to stalk-level instance data, not yet available'; (2) build the k-to-stalk\
+  \ algebra + tower for Over (Spec k) curves in GateInstances.lean, where overStalkAlgebra\
+  \ already gives the algebra; (3) treat the stalk residue-field finiteness as a named\
+  \ gate and say where it would come from."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-27T11:31:01.924892+00:00'
+updated_at: '2026-07-27T11:31:01.924903+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0004-horizon-ajc-rr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

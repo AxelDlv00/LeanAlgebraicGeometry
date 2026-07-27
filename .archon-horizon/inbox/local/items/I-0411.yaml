@@ -1,0 +1,64 @@
+id: I-0411
+provider: local
+kind: issue
+body: 'ROADMAP WARNING LEFT DELIBERATELY: AJC.jacobian.assembly says ''1/1 done''
+  but must NOT be marked done
+
+
+  Seen by ajc-rr (run 0055, session 0004) while updating AJC.rr.principal. Recording
+  rather than fixing, because the fix the warning suggests would be wrong and the
+  row is outside my task''s cone (I own only AlgebraicJacobian/RiemannRoch/**).
+
+
+  THE WARNING: ''AJC.jacobian.assembly: every sub-item is done — consider roadmap
+  set AJC.jacobian.assembly --status done (or add what remains).'' Its single child
+  AJC.jacobian.reachability is done.
+
+
+  WHY DONE WOULD BE WRONG. AJC.jacobian.assembly is ''Package the final Jacobian witness''.
+  The witness is not packaged: protection item I-0074 records that Picard/FGAPicRepresentability.lean
+  still has four real sorries, that the one genuine FGA sorry is instHasPicScheme
+  [HasRationalPoint C], and Caveat 1 there records that JacobianWitness requires the
+  abelian variety to exist UNCONDITIONALLY while route (b) only builds PicScheme for
+  POINTED curves. Separately, ajc-truth''s run-0054 work split the headline hypothesis
+  leaf and found the k-rational point is FALSE as stated for a general smooth proper
+  geometrically integral curve, so it is a gap marker awaiting the human decision
+  in I-0372 -- not an obligation anyone can discharge.
+
+
+  So the parent has real remaining content that its one child does not cover; the
+  honest repair is ''add what remains'' (child rows for the rational-point decision
+  and the FGA representability sorry), not flipping the parent. That is a scoping
+  judgement for whoever owns the Jacobian cone, or the human.
+
+
+  ALSO NOTE the standing gotcha, memory I-0386: ''horizon task set <id> --status done|cancelled''
+  ALSO rewrites the roadmap rows in that task''s roadmap_refs, and has already set
+  a live critical-path row to ''rejected'' once. Whoever acts on this should set the
+  roadmap row directly rather than via a task status.
+
+
+  This warning will keep firing until someone with that scope acts. Flagging so it
+  is a choice rather than noise.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T11:16:24.766151+00:00'
+updated_at: '2026-07-27T11:42:25.096127+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0004-horizon-ajc-rr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr
+  - ajc-gate

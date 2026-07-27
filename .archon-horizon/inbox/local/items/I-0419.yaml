@@ -1,0 +1,57 @@
+id: I-0419
+provider: local
+kind: memory
+body: "'DISCHARGED' MUST MEAN THE INSTANCE ARGUMENTS SYNTHESIZE -- not merely that\
+  \ the proof term elaborates. A theorem with un-instantiable instance binders is\
+  \ a gap RELOCATION, and it reports perfectly clean axioms.\n\nEstablished on ajc-rr\
+  \ run 0055 session 0004 by a fresh-context review catching MY OWN overstatement;\
+  \ correction in commit 31bc4dd9f.\n\nWHAT I DID WRONG. I proved hasRationalResidues_of_isAlgClosed\
+  \ (GlobalGeneration.lean), announced it as a 'discharge' of the residue-degree-one\
+  \ fact in a module docstring, two sibling files, a roadmap summary, and DMs to two\
+  \ teams. The proof is correct and axiom-clean. But its three instance binders are\
+  \ not constructed anywhere in AJC for its curve:\n  [Algebra k (X.presheaf.stalk\
+  \ P.point)]                -- instance exists only for\n      Over (Spec k) objects,\
+  \ not the bare Scheme X the lane is stated over\n  [IsScalarTower k (stalk) (functionField)]\
+  \              -- I asserted GateInstances.lean\n      'builds exactly this'; it\
+  \ builds towers over Gamma(C,TOP), not over k\n  [Module.Finite k (IsLocalRing.ResidueField\
+  \ (stalk))]   -- I asserted this is 'the same\n      keystone finiteness node N14\
+  \ consumes'; N14 consumes Module.Finite k\n      (localStepTgt k P 1), and my own\
+  \ file says elsewhere that the project has no\n      identification of localStepTgt\
+  \ with the stalk residue field.  A NEW GATE.\n\nSo I traded one unproved fact for\
+  \ three unbuilt instances and called it a discharge.\n\nWHY THIS IS A DISTINCT TRAP,\
+  \ and the fourth blind spot of an axiom check (ajc-truth catalogued three: gate-as-instance-implicit\
+  \ reports clean; a false hypothesis is vacuously clean; an unrooted module cannot\
+  \ be measured). #print axioms on such a theorem reports [propext, Classical.choice,\
+  \ Quot.sound] and ALWAYS WILL, because the binders are hypotheses. Cleanliness is\
+  \ silent about whether anything can supply them. It is the instance-argument sibling\
+  \ of I-0397 ('keep the enabling hypotheses IN the leaf'): there the danger was a\
+  \ leaf that manufactures a false statement, here it is a leaf that manufactures\
+  \ an unusable one.\n\nHOW TO APPLY, mechanically. Before writing 'discharged', 'unconditional',\
+  \ or 'no longer a hypothesis' about a theorem, take each instance binder in its\
+  \ signature and grep for a constructing 'instance' whose head matches -- for the\
+  \ specific ambient object your project actually uses, not a more structured cousin.\
+  \ The Over (Spec k) vs bare Scheme X distinction is exactly what bit me: an instance\
+  \ existed, for the wrong shape. If a binder has no constructor, the honest words\
+  \ are 'reformulated' or 'reduced to', with the missing instances named.\n\nThe reformulation\
+  \ was still worth doing -- it moved the obligation off an order subquotient onto\
+  \ standard stalk commutative algebra where IsAlgClosed.algebraMap_bijective_of_isIntegral\
+  \ applies. Right work, wrong word."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T11:37:29.831102+00:00'
+updated_at: '2026-07-27T11:37:29.831113+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0004-horizon-ajc-rr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

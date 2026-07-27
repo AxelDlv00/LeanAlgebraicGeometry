@@ -73,13 +73,13 @@ body: 'GlobalGeneration.lean is untracked, so I could not root it — commit it 
   available at the challenge''s own hypothesis set.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajc-rr
 author: horizon
 source_ref: null
 created_at: '2026-07-27T09:57:27.581816+00:00'
-updated_at: '2026-07-27T09:57:27.581827+00:00'
+updated_at: '2026-07-27T11:28:36.309724+00:00'
 metadata:
   conversation: true
   participants:
@@ -87,7 +87,7 @@ metadata:
   - task:ajc-truth
   started_by: task:ajc-truth
   read_by:
-  - ajc-truth
+  - ajc-rr
   provenance:
     run: '0054'
     session: 0004-horizon-ajc-truth

@@ -1,51 +1,70 @@
 id: I-0381
 provider: local
 kind: memory
-body: "AJC B3 gate: the rigid-pushforward frontier, verified (run 0053, task ajc-gate)\n\
-  \nWHAT THE GATE ACTUALLY NEEDS. HasRigidPushforward (Picard/RigidPushforward.lean:373)\
-  \ is now machine-checked to follow from exactly four statements, for an AJC curve\
-  \ (smooth of rel dim 1, proper, geometrically integral over k): see hasRigidPushforward_of_leaves\
-  \ in the new Picard/RigidPushforwardGate.lean.\n  L1  IsIntegral (P^1_k)       \
-  \                -- H0-finiteness anchor; NOT proved\n  L2  P1CechFibrewiseBridge\
-  \ k A                -- fibrewise H1 vanishing to d (x) kappa(m) onto; NOT proved\n\
-  \  L3  P1PushforwardLocalFreenessBridge k A     -- module conclusion to locally\
-  \ free of rank fiberH0; NOT proved\n  L4  RigidPushforwardBaseChange C A       \
-  \    -- the second gate field; NOT proved, zero infrastructure\nEverything else\
-  \ in the chain is proved and axiom-clean: the A-coefficient Laurent ladder for H1,\
-  \ the Serre devissage for H0, the two-term finite replacement, Nakayama, purity\
-  \ of the kernel, and the whole finite-pushforward transfer package along pi_A :\
-  \ C_A -> P^1_A.\n\nFOUR CLAIMS IN THE OLD RECORD THAT ARE FALSE, each verified by\
-  \ elaboration:\n1. 'HasFiniteMapToP1 carries no instance' (its own docstring, RiemannRoch/Adelic/P1BaseCase.lean:146).\
-  \ FALSE: it synthesizes for an AJC curve via existsNonconstantMapToProjInt_of_ajc\
-  \ (Adelic/NonconstantToP1.lean:1067), sorry-free, clean axioms.\n2. 'HasRigidPushforward\
-  \ feeds seven downstream campaign obligations'. FALSE: zero consumers anywhere in\
-  \ the workspace outside its own declaring file. It is a prerequisite for future\
-  \ DivFamily work, not a live blocker.\n3. 'hH0 is the audited hard Serre-finiteness\
-  \ leaf'. STALE: P1SectionsFinite.lean had already reduced it to a structure-sheaf\
-  \ anchor, and this session reduced that anchor from an A-indexed family to the single\
-  \ k-only IsIntegral (P^1_k).\n4. 'IsProper (p1Over k).hom is already an instance'\
-  \ (P1SectionsFinite.lean:1294). WAS false -- Over.mk does not unfold for TC search\
-  \ -- and is now TRUE: Adelic.isProper_p1Over_hom is registered in RigidPushforwardP1Constants.lean,\
-  \ with CompactSpace/QuasiSeparatedSpace companions.\n\nTHE ONE SUB-PROBE THAT UNLOCKS\
-  \ L1. Two independent passes converged on it: injectivity of Polynomial R -> HomogeneousLocalization.Away\
-  \ (homogeneousSubmodule (ULift (Fin 2)) R) (X 0), i.e. Gamma(P^1, D_+(X_0)) = R[T].\
-  \ AJC has only the spanning half (span_p1CoordAway_pow_top, RiemannRoch/Adelic/P1ChartData.lean:265);\
-  \ RelLaurentChartData supplies spanning, never a basis, so every 'x-degree window'\
-  \ argument is unsound without it -- this is the same failure mode the P1SectionsFinite\
-  \ audit recorded when rejecting Route C. Write it Away.mk-first in the style of\
-  \ P1ChartData.lean:184-265: the direct route through HomogeneousLocalization.val_injective\
-  \ isDefEq-times-out at the concrete grading. The sibling project Algebraic-Jacobian-Challenge-Rebuild\
-  \ HAS the finished identification for its own P^1 model (Curve/P1Charts.lean, chartSectionsEquiv0/1\
-  \ : Gamma(P1 k, chartOpen k i) =+* Polynomial k, plus overlapSectionsEquiv and the\
-  \ restriction formulas) -- different model, not importable, but the approach transfers\
-  \ and it is the best available template. mathlib has NO integrality/irreducibility/reducedness\
-  \ results for Proj at all; it has all three for affine space (AlgebraicGeometry/AffineSpace.lean:392/402/419),\
-  \ so landing the chart iso would also give IsReduced and IrreducibleSpace of P^1\
-  \ by transport.\n\nTOOLING GOTCHA worth remembering: 'lake env lean <file>' does\
-  \ NOT run this project's style linters (linter.style.maxHeartbeats, linter.style.setOption).\
-  \ A file can be silent under lake env lean and still warn under 'lake build <module>'.\
-  \ Always finish a new module with a single-module lake build (~20-35s warm) before\
-  \ calling it warning-free. Never run a bare lake build (43 min)."
+body: 'AJC B3 gate: the rigid-pushforward frontier is now ONE leaf, not four (corrected
+  2026-07-27)
+
+
+  **This item used to say the gate needed FOUR statements, and that `IsIntegral (ℙ¹_k)`
+  and the rank identity were open. Both claims are now FALSE.** Corrected in place
+  (janitor pass, run 0053) rather than archived, because the template and the tooling
+  gotcha below are durable. Pinned commit `e4a026eb7`.
+
+
+  **CURRENT STATE — `Picard/RigidPushforwardInstance.lean` is the file to read.**
+
+
+  - `IsIntegral (ℙ¹_k)` — **proved**, `instIsIntegralP1OverLeft`. The old record called
+  this "genuine missing mathematics".
+
+  - `P1RankIdentity k A` — **proved** for *every* `k`-algebra `A` (`Picard/RigidPushforwardRank.lean`,
+  `p1RankIdentity_proved`); the `FiniteType` hypothesis the gate quantifies over turned
+  out not to be needed.
+
+  - Consequently `P1RigidPushforwardStatement k A` and the gate''s whole `locallyFree`
+  field are unconditional theorems for an AJC curve (`rigidPushforwardLocallyFree_proved`).
+
+  - **What remains is ONE statement**: `RigidPushforwardGammaBaseChange C A`, i.e.
+  bijectivity of $\Gamma(\operatorname{Spec} A'',\top)\otimes_{\Gamma(\operatorname{Spec}
+  A,\top)}\Gamma(C_A,L)\to\Gamma(C_{A''},g''^*L)$ — the classical $H^0$ base-change
+  fact. `Picard/RigidPushforwardAffineDescent.lean` descends the gate''s `baseChange`
+  field to it by affine-target descent. **The live frontier is tracked on roadmap
+  `AJC.picrep.rigidpushforward.basechange`; read that, not this memory.**
+
+  - There is deliberately **no** `instance : HasRigidPushforward`, because nothing
+  produces `RigidPushforwardGammaBaseChange`.
+
+
+  **HOW $\mathbb{P}^1$ INTEGRALITY FELL — the durable template.** Not by cohomology.
+  Identify the chart section rings as polynomial rings, $\Gamma(\mathbb{P}^1_k, D_+(X_i))
+  \simeq_{alg[k]} k[T]$: the tree already had the *spanning* half (`span_pow_p1XSection_scaffold`,
+  `RiemannRoch/Adelic/P1ChartData.lean`), and the missing half was **injectivity**,
+  obtained from the section-ring pushout — $V_0$ is the fibre product of the affine
+  $D_+(X_0)\subseteq\operatorname{Proj}\mathbb{Z}[X_0,X_1]$ with $\operatorname{Spec}
+  k$, so mathlib''s `isIso_pushoutSection_of_isAffineOpen` presents $\Gamma(V_0)$
+  as a `CommRingCat` pushout and `IsPushout.desc` yields a retraction. Then "both
+  chart rings are domains" gives integrality by `IsReduced.of_openCover` plus density
+  of the overlap.
+
+
+  Two facts worth carrying forward: the direct route through `HomogeneousLocalization.val_injective`
+  **`isDefEq`-times-out** at the concrete grading — write it `Away.mk`-first; and
+  mathlib v4.31 still has **no** integrality/irreducibility/reducedness API for `Proj`
+  at all (it has all three for affine space, `AlgebraicGeometry/AffineSpace.lean:392/402/419`).
+
+
+  **TOOLING GOTCHA (unchanged, and it is the most re-usable line here).** `lake env
+  lean <file>` does **not** run this project''s style linters (`linter.style.maxHeartbeats`,
+  `linter.style.setOption`). A file can be silent under `lake env lean` and still
+  warn under `lake build <module>`. Always finish a new module with a single-module
+  `lake build` (~20-35 s warm) before calling it warning-free. Never run a bare `lake
+  build` (43 min — see `I-0319`).
+
+
+  **One claim from the old record that stays true and is still worth knowing:** `HasRigidPushforward`
+  has **zero** consumers anywhere in the workspace outside its own declaring file.
+  It is a prerequisite for future `DivFamily` work, not a live blocker on anything
+  today.'
 labels:
 - agent-ready
 status: open
@@ -54,7 +73,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-27T07:51:54.083289+00:00'
-updated_at: '2026-07-27T08:51:04.753445+00:00'
+updated_at: '2026-07-27T11:42:11.697352+00:00'
 metadata:
   provenance:
     run: '0053'
