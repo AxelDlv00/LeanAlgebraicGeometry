@@ -8,10 +8,10 @@ label: lem:functor_is_representable_mathlib
 lean_status: mathlib_ok
 mathlib_name:
 - CategoryTheory.Functor.IsRepresentable
-order: 1162
+order: 1165
 title: Representability predicate
 type: tex
-updated: '2026-07-27T15:49:57'
+updated: '2026-07-27T17:01:07'
 ---
 \textit{Provided by Mathlib.}
   Let \(\mathcal{C}\) be a category and \(F : \mathcal{C}^{op} \to \mathbf{Set}\)

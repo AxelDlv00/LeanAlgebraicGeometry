@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:difference_map_domain_lower_bound
 lean_status: lean_ok
-order: 1673
+order: 1676
 title: lem:difference_map_domain_lower_bound
 type: tex
-updated: '2026-07-27T15:50:37'
+updated: '2026-07-27T17:01:08'
 ---
 \textbf{(Milne Lemma~3.3, Sub-step~1 domain bound / Sub-step~2 easy direction.)} The
   difference rational map \(\Phi\) is defined on \(\mathrm{Dom}(f) \times_{\bar k}

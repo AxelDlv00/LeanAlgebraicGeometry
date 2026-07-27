@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:projective_with_fiber
 lean_status: lean_ok
-order: 1190
+order: 1193
 title: Projectivity descends to scheme-theoretic fibres
 type: tex
-updated: '2026-07-27T15:50:36'
+updated: '2026-07-27T17:01:07'
 ---
 Let \(\pi : X \to S\) be projective carrying \(L\) and let \(s \in S\).  Then
   the structural morphism of the scheme-theoretic fibre

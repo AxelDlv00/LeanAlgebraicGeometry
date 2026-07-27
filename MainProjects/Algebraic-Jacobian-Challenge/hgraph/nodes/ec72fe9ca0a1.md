@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:sectionGradedRing_gmonoid
 lean_status: lean_ok
-order: 1322
+order: 1325
 title: Graded monoid structure on the section components
 type: tex
-updated: '2026-07-27T15:50:37'
+updated: '2026-07-27T17:01:07'
 ---
 Let \(\mathcal{L}\) be an arbitrary sheaf of \(\mathcal{O}_X\)-modules. The degree
   family \(\mathrm{sectionDeg}\,\mathcal{L}\), \(m \mapsto

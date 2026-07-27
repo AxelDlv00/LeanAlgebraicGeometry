@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:weil_divisor_obstruction
 lean_status: empty
-order: 1688
+order: 1691
 title: Weil-divisor criterion for codimension-one extension
 type: tex
-updated: '2026-07-27T15:49:57'
+updated: '2026-07-27T17:01:08'
 ---
 \textit{Source: Hartshorne, II.6, pp.~130--131 (valuation \(v_Y\) and the order map).}
   Let \(X\) be a nonsingular variety over \(\bar k\), let \(Y\) be a variety over \(\bar k\),

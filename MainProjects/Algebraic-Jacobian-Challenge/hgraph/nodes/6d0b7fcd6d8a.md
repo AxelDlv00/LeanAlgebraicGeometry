@@ -28,7 +28,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_fiberChartTensorEquiv
 type: lean
-updated: '2026-07-27T15:50:35'
+updated: '2026-07-27T16:23:53'
 ---
 theorem exists_fiberChartTensorEquiv {X Y : Scheme.{u}} (f : X ⟶ Y) [IsAffine Y] (t : Y)
     (M : X.Modules) [M.IsQuasicoherent] {W : X.Opens} (hW : IsAffineOpen W)
@@ -106,7 +106,7 @@ theorem exists_fiberChartTensorEquiv {X Y : Scheme.{u}} (f : X ⟶ Y) [IsAffine 
   refine ⟨⟨AddEquiv.ofBijective (eL.toAddEquiv.toAddMonoidHom.comp s)
     ((EquivLike.bijective eL).comp hs_bij), ?_⟩⟩
   intro b x
-  show eL (s (b ⊗ₜ[Γ(Y, ⊤)] x)) = _
+  change eL (s (b ⊗ₜ[Γ(Y, ⊤)] x)) = _
   rw [hs b x]
   have hsm : (algebraMap Γ(Spec (Y.residueField t), ⊤)
       Γ(f.fiber t, f.fiberι t ⁻¹ᵁ W) b ⊗ₜ[Γ(X, W)] x :

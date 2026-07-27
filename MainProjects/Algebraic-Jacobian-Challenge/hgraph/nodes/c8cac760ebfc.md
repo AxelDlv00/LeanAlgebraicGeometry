@@ -6,9 +6,9 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:primeDivisor_ext
 lean_status: lean_ok
-order: 1776
+order: 1779
 title: Extensionality of prime divisors
 type: tex
-updated: '2026-07-27T15:50:37'
+updated: '2026-07-27T17:01:08'
 ---
 Two prime divisors represented by the same point of \(X\) are equal.

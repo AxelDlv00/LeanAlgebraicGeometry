@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:presentation_chart
 lean_status: lean_ok
-order: 957
+order: 960
 ref: nitsure-hilbert-quot
 title: Presentation chart
 type: tex
-updated: '2026-07-27T15:50:36'
+updated: '2026-07-27T17:01:07'
 ---
 An affine open \(V \subseteq X\) is an \emph{\(e\)-presentation chart} for
   \(\mathcal G\) if the section module \(\Gamma(\mathcal G, V)\) admits a

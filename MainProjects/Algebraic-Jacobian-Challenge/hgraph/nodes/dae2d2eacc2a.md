@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:graded_polyQuot_finite_of_le_numerator
 lean_status: lean_ok
-order: 1075
+order: 1078
 title: Shrinking the numerator preserves finiteness
 type: tex
-updated: '2026-07-27T15:50:36'
+updated: '2026-07-27T17:01:07'
 ---
 Let \(N_1 \le N_2\) and \(P'\) be \(\kappa\)-submodules of \(M\), each stable under
   the commuting family \(t_0, \dots, t_{r-1}\), and suppose the subquotient

@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: cor:tangent_spec_dual_number_at
 lean_status: lean_ok
-order: 1587
+order: 1590
 title: Dual-number points at a fixed point
 type: tex
-updated: '2026-07-27T15:50:37'
+updated: '2026-07-27T17:01:08'
 ---
 Let \(k\) be a field, \(X\) a scheme, and \(x \in X\). The
   dual-number points of \(X\) at \(x\) — morphisms

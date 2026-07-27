@@ -122,8 +122,8 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
 \end{theorem}
 
 \begin{proof}
-  \uses{lem:curve_hypothesis_gap, lem:pic0_relative_dimension_genus,
-    lem:pic0_isAlbanese_all_points}
+  \uses{lem:curve_geometrically_integral, lem:curve_hypothesis_gap,
+    lem:pic0_relative_dimension_genus, lem:pic0_isAlbanese_all_points}
   Representability of the relative Picard functor gives \(\Pic_{C/k}\), and its
   identity component \(\Pic^0_{C/k}\) is a group scheme, smooth, proper and
   geometrically irreducible by \cref{thm:pic0_isAbelianVariety}. Those four data
@@ -137,7 +137,9 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   First, the hypotheses must be reconciled: \(\Pic^0_{C/k}\) is constructed for a
   geometrically \emph{integral} curve carrying a \(k\)-rational point, whereas a
   witness is required for every smooth proper geometrically irreducible curve.
-  This is \cref{lem:curve_hypothesis_gap}.
+  Geometric integrality is automatic (\cref{lem:curve_geometrically_integral}); the
+  rational point is not, and is the single genuine gap
+  (\cref{lem:curve_hypothesis_gap}).
 
   Second, the smoothness supplied by \cref{thm:pic0_isAbelianVariety} carries no
   relative dimension, while the witness records smoothness at the specific
@@ -153,20 +155,77 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   required witness.
 \end{proof}
 
-\begin{lemma}[Rational point and geometric integrality]
-  \label{lem:curve_hypothesis_gap}
-  \lean{AlgebraicGeometry.hasRationalPoint_and_geometricallyIntegral}
-  \uses{def:has_rational_point}
-  A smooth proper geometrically irreducible curve \(C\) over a field \(k\) is
-  geometrically integral and has a \(k\)-rational point.
+\begin{lemma}[A smooth geometrically irreducible curve is geometrically integral]
+  \label{lem:curve_geometrically_integral}
+  \leanok
+  \lean{AlgebraicGeometry.geometricallyIntegral_of_curve}
+  Let \(C\) be a smooth proper geometrically irreducible curve over a field \(k\).
+  Then \(C\) is geometrically integral over \(k\).
 \end{lemma}
 
 \begin{proof}
-  Geometric integrality holds: a smooth morphism is geometrically reduced, and a
-  geometrically reduced geometrically irreducible morphism is geometrically
-  integral.
+  \leanok
+  \uses{lem:smooth_geometrically_reduced}
+  A smooth morphism is geometrically reduced
+  (\cref{lem:smooth_geometrically_reduced}), and a morphism that is both
+  geometrically reduced and geometrically irreducible is geometrically integral:
+  for every field extension \(K/k\) the base change \(C_K\) is then both reduced
+  and irreducible, hence integral.
+\end{proof}
 
-  The second assertion is \emph{false} as stated. A smooth proper geometrically
+\begin{lemma}[A smooth morphism is geometrically reduced]
+  \label{lem:smooth_geometrically_reduced}
+  \leanok
+  \lean{AlgebraicGeometry.SmoothOfRelativeDimension.geometricallyReduced}
+  A morphism of schemes \(f\colon X\to Y\) that is smooth of some relative
+  dimension is geometrically reduced: for every field \(K\) and every morphism
+  \(\Spec K\to Y\), the base change \(X\times_Y\Spec K\) is a reduced scheme. The
+  same holds for any smooth morphism; the relative dimension plays no role.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  \uses{lem:standard_smooth_over_domain_reduced}
+  Smoothness is stable under base change, so it suffices to show that a scheme
+  \(X\) smooth over a field \(K\) is reduced. Reducedness is local, and \(X\) is
+  covered by affine opens \(\Spec S\) with \(S\) standard smooth over \(K\); each
+  is reduced by \cref{lem:standard_smooth_over_domain_reduced} applied to the
+  domain \(K\).
+\end{proof}
+
+\begin{lemma}[A standard smooth algebra over a domain is reduced]
+  \label{lem:standard_smooth_over_domain_reduced}
+  \leanok
+  \lean{Algebra.IsStandardSmooth.isReduced_of_isDomain}
+  Let \(B\) be a domain and \(S\) a standard smooth \(B\)-algebra. Then \(S\) is
+  reduced.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  By the structure theorem for standard smooth algebras, \(S\) is étale over a
+  polynomial ring \(P=B[x_1,\dots,x_n]\), which is again a domain. So it suffices
+  to prove that a flat, formally unramified \(P\)-algebra \(S\) essentially of
+  finite type over a domain \(P\) is reduced, étale algebras being flat, formally
+  unramified and essentially of finite type.
+
+  Let \(F=\operatorname{Frac}(P)\). The algebra \(F\otimes_P S\) is formally
+  unramified and essentially of finite type over the field \(F\), hence reduced.
+  Since \(S\) is flat over \(P\) and \(P\to F\) is injective, the induced map
+  \(S\cong P\otimes_P S\to F\otimes_P S\) is injective, so \(S\) embeds into a
+  reduced ring and is therefore reduced.
+\end{proof}
+
+\begin{lemma}[The curve has a \(k\)-rational point]
+  \label{lem:curve_hypothesis_gap}
+  \lean{AlgebraicGeometry.hasRationalPoint_of_curve}
+  \uses{def:has_rational_point}
+  A smooth proper geometrically irreducible curve \(C\) over a field \(k\) has a
+  \(k\)-rational point.
+\end{lemma}
+
+\begin{proof}
+  This assertion is \emph{false} as stated. A smooth proper geometrically
   integral curve need not have a \(k\)-rational point: a conic over \(\mathbb{Q}\)
   with no rational point is a genus-\(0\) example, and there are genus-\(2\)
   curves over \(\mathbb{Q}\) with no rational point. Over an algebraically closed

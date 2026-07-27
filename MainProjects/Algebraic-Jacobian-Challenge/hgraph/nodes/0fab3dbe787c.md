@@ -6,11 +6,11 @@ created: '2026-07-26T02:25:43'
 generated: blueprint
 label: thm:divisor_class_group_degree
 lean_status: empty
-order: 1831
+order: 1834
 ref: hartshorne-algebraic-geometry:page-0155
 title: Degree on the divisor class group of a curve
 type: tex
-updated: '2026-07-27T15:49:57'
+updated: '2026-07-27T17:01:08'
 ---
 On a complete nonsingular curve over an algebraically closed field,
   coefficient degree descends to a homomorphism

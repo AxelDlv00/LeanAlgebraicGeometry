@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.exists_bound_subsingleton_h1Mod
 type: lean
-updated: '2026-07-27T15:50:35'
+updated: '2026-07-27T16:23:54'
 ---
 theorem exists_bound_subsingleton_h1Mod
     (hledger : ∀ D : X.WeilDivisor, chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
@@ -26,8 +26,7 @@ theorem exists_bound_subsingleton_h1Mod
     (hpeel : ∀ D' : X.WeilDivisor,
       (∀ P : X.PrimeDivisor, (show X.PrimeDivisor →₀ ℤ from D₀) P ≤
         (show X.PrimeDivisor →₀ ℤ from D') P) →
-      ∀ x ∈ sectionSub k (U₀ ⊓ U₁) D', ∃ y ∈ sectionSub k (U₀ ⊓ U₁) D₀,
-        x - y ∈ coboundarySub k U₀ U₁ D') :
+      Peel k U₀ U₁ D₀ D') :
     ∃ b : ℤ, ∀ D : X.WeilDivisor, b ≤ degK k D →
       Subsingleton (H1Mod k U₀ U₁ D) := by
   refine ⟨degK k D₀ + 1 - chi k U₀ U₁ 0, fun D hD => ?_⟩
@@ -58,3 +57,5 @@ theorem exists_bound_subsingleton_h1Mod
     rw [hDsub]
     exact sub_principal_apply hg P
   exact subsingleton_h1Mod_of_shift k U₀ U₁ hg hshift hpeeled
+
+omit [IsIntegral X] [IsNoetherian X] [X.IsRegularInCodimensionOne] in

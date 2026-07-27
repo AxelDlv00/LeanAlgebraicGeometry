@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:smooth_proper_quotient
 lean_status: lean_ok
-order: 1531
+order: 1534
 title: Smooth-proper quotient of \'etale sheaves
 type: tex
-updated: '2026-07-27T15:50:37'
+updated: '2026-07-27T17:01:07'
 ---
 \textit{Source: [Kleiman], ``The Picard scheme'', \S 4, Lem.~4.9.}
   Let \(\alpha : Z \to P\) be a morphism of \'etale sheaves on \((\Sch/k)\).

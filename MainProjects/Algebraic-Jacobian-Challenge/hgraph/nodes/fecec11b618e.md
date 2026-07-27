@@ -44,32 +44,38 @@ docstring: 'The Albanese witness for a smooth proper geometrically irreducible c
   removed in favour of this single uniform witness.
 
 
-  The construction below is **wired to the landed Picard development**: the underlying
+  The construction below is **wired to the Picard development**: the underlying scheme
 
-  scheme is `Scheme.Pic0Scheme C`, and four of the six witness fields are the theorems
+  is `Scheme.Pic0Scheme C`, and four of the six witness fields are theorems of
+
+  `Picard/Pic0AbelianVariety.lean` applied directly. This definition carries no `sorry`
+
+  of its own, but that is a statement about this file, not a completeness claim: two
   of
 
-  `Picard/Pic0AbelianVariety.lean` applied directly. The remaining distance to the
-  headline
+  those four upstream theorems (`Pic0.smooth`, `Pic0.proper`) are `sorry`-bodied,
+  so
 
-  is the three leaves `hasRationalPoint_and_geometricallyIntegral`,
+  the witness depends on five open obligations — those two, plus the three leaves
 
-  `smoothOfRelativeDimension_genus_pic0` and `isAlbanese_pic0` above; this definition
+  `hasRationalPoint_of_curve`, `smoothOfRelativeDimension_genus_pic0` and
 
-  carries no `sorry` of its own.'
+  `isAlbanese_pic0` above. The `GeometricallyIntegral` hypothesis of the Picard
+
+  development is *not* among them: it is synthesised from the challenge hypotheses
+
+  through `Smooth.geometricallyIntegral` (see `geometricallyIntegral_of_curve`).'
 file: AlgebraicJacobian/Jacobian.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picardJacobianWitness
 type: lean
-updated: '2026-07-27T15:50:34'
+updated: '2026-07-27T17:00:52'
 ---
 noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
     JacobianWitness C := by
-  obtain ⟨hgi, hrp⟩ := hasRationalPoint_and_geometricallyIntegral C
-  haveI := hgi
-  haveI := hrp
+  haveI := hasRationalPoint_of_curve C
   exact
     { J := Scheme.Pic0Scheme C
       grpObj := (Scheme.Pic0.grpObj C).some

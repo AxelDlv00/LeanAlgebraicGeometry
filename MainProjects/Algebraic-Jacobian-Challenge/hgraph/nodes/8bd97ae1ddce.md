@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:tensorBraiding
 lean_status: lean_ok
-order: 1270
+order: 1273
 title: Braiding of the sheaf tensor product
 type: tex
-updated: '2026-07-27T15:50:36'
+updated: '2026-07-27T17:01:07'
 ---
 For sheaves of \(\mathcal{O}_X\)-modules \(F, G\), the \emph{braiding}
   \[
