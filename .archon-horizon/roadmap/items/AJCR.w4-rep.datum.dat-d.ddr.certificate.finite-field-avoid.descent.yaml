@@ -2,10 +2,13 @@ id: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid.descent
 title: Base-change twists and descend the finite-field atlas
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Choose a sufficiently large finite Galois extension, transport P1 automorphisms
-  and twisted divisor charts across scalar extension, equip the resulting outer atlas
-  with semilinear Galois descent data, and descend it. This is the genuine remaining
-  finite-field obstruction and depends on the twist-atlas architecture.
+summary: 'First assemble the finite-field avoidance endpoint: transport the residue
+  support into P1(k), combine image-ncard injectivity and the ncard <= g bound with
+  the finite-cardinality P1 theorem, and spread the resulting fibre containment to
+  a support tube. Then choose a sufficiently large finite Galois extension, transport
+  P1 automorphisms and fixed-twist divisor charts across scalar extension, equip the
+  outer atlas with semilinear Galois descent data, and descend it. This remains the
+  genuine finite-field obstruction and depends on the twist-atlas architecture.'
 status: pending
 kind: proof
 priority: high
@@ -29,3 +32,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid
   milestone: w4-gate
+  updated_at: '2026-07-27T12:30:42.463620+00:00'
