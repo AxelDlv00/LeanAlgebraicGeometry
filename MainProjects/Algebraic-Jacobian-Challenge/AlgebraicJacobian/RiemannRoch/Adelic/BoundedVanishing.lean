@@ -355,8 +355,14 @@ an arbitrary base divisor.  So `hledgerRes` *is* dischargeable from the bump, an
 restriction to residuals is now a convenience for callers with partial information rather
 than a record of an open gap.
 
-The finiteness observation of I-0394 survives unchanged: it applies to the bump exactly as it
-applied to the ledger, since the bump is an identity between `finrank`s. -/
+The finiteness observation of I-0394 survives unchanged, and **transfers to the bump** — this is
+machine-checked, not inferred.  From `hbump` alone, via `LedgerClosure.chi_eq_of_bump` and
+`chi_le_ell`, one derives `0 < χ(0) + deg_k D → 0 < finrank k Γ(⊤,𝒪(D))`; since `Module.finrank`
+of an infinite-dimensional space is `0`, that is finite-dimensionality forced by the hypothesis
+with no `Module.Finite` binder in sight.
+
+So "the ledger is now a theorem" must **not** be read as "the finiteness worry is gone".  The
+worry attaches to whichever hypothesis carries the identity, and that is now `hbump`. -/
 theorem exists_bound_subsingleton_h1Mod_of_residualLedger
     (hledgerRes : ∀ D : X.WeilDivisor, 1 - chi k U₀ U₁ 0 ≤ degK k D →
       chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
