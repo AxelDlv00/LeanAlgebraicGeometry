@@ -452,6 +452,31 @@ theorem exists_bound_subsingleton_h1Mod_of_pointPeel
   rw [hD']
   exact Peel.of_list k U₀ U₁ hstep D₀ L
 
+/-- **The bound is not vacuous: divisors above it exist.**  For every threshold `b`
+and every prime divisor `P`, some multiple `n·P` has weighted degree `≥ b` — because
+`[κ(P):k] ≥ 1` (`one_le_residueDeg`).  So the `∀ D, b ≤ deg_k D → …` conclusion of
+`exists_bound_subsingleton_h1Mod` quantifies over a nonempty family, and cannot be
+satisfied trivially by there being no divisor of large degree.
+
+(Recorded explicitly because an `∃ b, ∀ D, b ≤ deg D → P D` statement is exactly
+the shape that *can* be vacuous, and a reader is entitled to see that ruled out
+rather than assumed.  Note the witness needs no rational point: any prime divisor
+does, since residue degrees are positive.) -/
+theorem exists_degK_ge (b : ℤ) (P : X.PrimeDivisor)
+    [Module.Finite k (localStepTgt k P 1)] :
+    ∃ n : ℕ, b ≤ degK k ((n : ℤ) • pointDivisor P : X.WeilDivisor) := by
+  refine ⟨b.toNat, ?_⟩
+  rw [show degK k ((b.toNat : ℤ) • pointDivisor P : X.WeilDivisor)
+        = (b.toNat : ℤ) • degK k (pointDivisor P : X.WeilDivisor) from
+      map_zsmul (degKHom k) _ _, degK_pointDivisor, smul_eq_mul]
+  have h1 : (1 : ℤ) ≤ (residueDeg k P : ℤ) := by
+    exact_mod_cast one_le_residueDeg k P
+  have hb : b ≤ (b.toNat : ℤ) := Int.self_le_toNat b
+  calc b ≤ (b.toNat : ℤ) := hb
+    _ = (b.toNat : ℤ) * 1 := by ring
+    _ ≤ (b.toNat : ℤ) * (residueDeg k P : ℤ) :=
+        mul_le_mul_of_nonneg_left h1 (Int.natCast_nonneg _)
+
 /-- **The bound in numerical form.**  Same statement with the conclusion read on
 `h¹` rather than on `Subsingleton`; `h1dim` is `0` for a subsingleton without any
 finiteness input (`Module.finrank_zero_of_subsingleton`). -/
