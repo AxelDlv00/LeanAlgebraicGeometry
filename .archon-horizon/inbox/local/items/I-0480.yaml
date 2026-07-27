@@ -1,0 +1,63 @@
+id: I-0480
+provider: local
+kind: issue
+body: "hbump AND the closed ledger hledger are FALSE on a two-chart cover with a prime\
+  \ off a chart -- read this, not archived I-0449/I-0456/I-0466\n\nReplaces I-0466,\
+  \ which I filed earlier today ARGUING THE OPPOSITE and have archived: its title\
+  \ and\nbody carried a position I retracted the same session, and a reader skimming\
+  \ it would have been\nmisled even though a correction comment sat below. Filing\
+  \ the conclusion afresh so the durable\nrecord leads with the right version.\n\n\
+  THE FACTS, all machine-checked in AlgebraicJacobian/RiemannRoch/Adelic/ChiUnconditional.lean\n\
+  (committed, 15 declarations axiom-clean [propext, Classical.choice, Quot.sound],\
+  \ zero sorryAx,\nfull project build 8746 jobs exit 0):\n\n  ell_le_finrank_chart_along_tower\
+  \ : ell(n.P + E) <= dim Gamma(U0, O(E)) for ALL n\n  chi_le_finrank_chart_along_tower\
+  \ : the same bound for chi\n  not_bump_of_notMem_left          : hbump is FALSE\n\
+  \  ledger_refuted_of_notMem_left    : the closed ledger hledger is FALSE\n\nSIDE\
+  \ CONDITIONS, stated because they are load-bearing and the consumers do not assume\
+  \ them:\na genuine cover U0 sup U1 = top; chart-level Module.Finite over ALL divisors;\
+  \ and some prime\ndivisor whose point lies off a chart. The hledger consumers in\
+  \ SectionBounds section 3,\nBoundedVanishing and GlobalGeneration take arbitrary\
+  \ U0 U1 and finiteness only at top. So this says\nWHICH COVERS ARE UNUSABLE, not\
+  \ that their hypotheses are refuted outright -- but where a cover does\nmeet the\
+  \ description, those theorems are vacuous, and a clean #print axioms line will not\
+  \ show it.\n\nTHE ROOT CAUSE is simpler than the chi-level statements and is the\
+  \ thing to remember:\nModule.Finite k (sectionSub k U D) at a NON-TOTAL open U,\
+  \ quantified over all D, FORBIDS RIEMANN\nGROWTH. Proof is two lines -- sectionSub\
+  \ k top D <= sectionSub k U D by antitonicity, and\nsectionSub k U is frozen along\
+  \ the tower n.P when P.point notin U. Riemann-Roch says ell(D) grows\nlike deg D;\
+  \ these binders say it cannot. Any theorem assuming them over all divisors has already\n\
+  excluded the curves Riemann-Roch is about. Prefer stating results at top.\n\nTHE\
+  \ DISTINCTION THAT DECIDES WHETHER A HYPOTHESIS SURVIVES: does its right-hand side\
+  \ GROW?\n  hledger equates chi with the UNBOUNDED degK D          -> dead\n  a chart\
+  \ count equated with ell(D), both bounded        -> survives\n  a subspace inclusion\
+  \ A(D) subseteq B(D) (vanishing)    -> survives, not a growth claim at all\nVanishing\
+  \ content is safe; growth content is not. I got this wrong in both directions before\n\
+  getting it right, so it is worth stating explicitly.\n\nWHAT THIS MEANS FOR THE\
+  \ ROUTE: the lane's obstruction was never the missing connecting\nhomomorphism,\
+  \ and no amount of approximation data repairs the bump -- on such a cover there\
+  \ is\nnothing to supply. The next work is a cover hypothesis excluding such primes,\
+  \ or more than two\ncharts. Also note ChiLedger.chi_add's four exactness binders\
+  \ are UNNECESSARY for the numerical\nidentity: chi_eq_charts_sub_overlap computes\
+  \ chi from the three chart dimensions with no exactness\nhypothesis at all (one\
+  \ mathlib lemma, the modular law).\n\nHistory, for anyone reconstructing this: I-0449/I-0456\
+  \ (archived) had the conditional refutation\nand were RIGHT; I-0466 (archived) is\
+  \ my wrong reversal; I-0467/I-0468 (archived) are the audit that\ncorrected me."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T21:54:06.187325+00:00'
+updated_at: '2026-07-27T21:54:06.187337+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

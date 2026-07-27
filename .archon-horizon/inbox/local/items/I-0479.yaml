@@ -1,0 +1,57 @@
+id: I-0479
+provider: local
+kind: memory
+body: "CHART-LEVEL Module.Finite AT A NON-TOTAL OPEN FORBIDS RIEMANN GROWTH -- and\
+  \ the bounded/unbounded distinction is what separates a live vanishing hypothesis\
+  \ from a dead ledger\n\nAJC run 0055 s0014, task ajc-rr. Supersedes the chi-level\
+  \ framing in my earlier memory this\nsession: the root cause is one level lower\
+  \ and much simpler.\n\nTHE FACT (ell_le_finrank_chart_along_tower, Adelic/ChiUnconditional.lean,\
+  \ axiom-clean):\n\n  ell(n.P + E) <= dim Gamma(U0, O(E))  for ALL n,  when P.point\
+  \ notin U0\n                                                   and [forall D, Module.Finite\
+  \ k (sectionSub k U0 D)]\n\nNo cover hypothesis, no chi, no exactness datum. Proof\
+  \ is two steps: sectionSub k top D <=\nsectionSub k U0 D (antitonicity in the open,\
+  \ since U0 <= top), and sectionSub k U0 is FROZEN along\nthe tower n.P because the\
+  \ point is off U0.\n\nWHY IT MATTERS. Riemann-Roch says ell(D) grows like deg D.\
+  \ This says it CANNOT, along any tower at\na point missing a chart whose section\
+  \ spaces are finite-dimensional. So the innocuous-looking\nbinder [forall D, Module.Finite\
+  \ k (sectionSub k U D)] at a NON-TOTAL U is not bookkeeping -- it has\nalready excluded\
+  \ the curves Riemann-Roch is about. Prefer stating results at top, where\nModule.Finite\
+  \ is the honest finiteness of L(D).\n\nTHE DISTINCTION THAT TOOK ME TWO WRONG TURNS\
+  \ TO FIND, and which is the generalisable payoff:\n\n  a hypothesis equating chi\
+  \ (or ell) with an UNBOUNDED quantity -- e.g. hledger: chi(D) =\n  chi(0) + degK\
+  \ D -- is REFUTED by any uniform bound on the left side;\n\n  a hypothesis equating\
+  \ bounded with bounded -- a chart count = ell(D), or a subspace inclusion\n  A(D)\
+  \ subseteq B(D) -- is untouched by the same argument.\n\nSo VANISHING content survives\
+  \ a boundedness argument and GROWTH content dies. I initially applied\nthe refutation\
+  \ too narrowly (only off the overlap, via chi_add), then too broadly (warning that\
+  \ my\nown vanishing criteria were vacuous too). Both errors came from not asking\
+  \ 'is the right-hand side\nbounded?'. Ask that first.\n\nPRACTICAL CONSEQUENCE FOR\
+  \ AJC, unchanged: hbump and hledger are false on a genuine two-chart cover\nwith\
+  \ finite-dimensional chart sections having a prime off a chart, so the hledger-conditional\n\
+  results in SectionBounds section 3, BoundedVanishing and GlobalGeneration are vacuous\
+  \ there. Note\nthose consumers assume NEITHER a cover NOR chart-level finiteness\
+  \ -- they take arbitrary U0 U1 and\nfiniteness only at top -- so the refutation\
+  \ constrains which covers are usable rather than\nrefuting their hypotheses outright.\
+  \ Do not overstate it in either direction.\n\nCross-refs: [[one-step-non-contradiction-is-not-consistency]],\
+  \ [[ajc-adelic-ledger-refuted]]."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T21:48:31.103468+00:00'
+updated_at: '2026-07-27T21:49:39.731988+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-truth
