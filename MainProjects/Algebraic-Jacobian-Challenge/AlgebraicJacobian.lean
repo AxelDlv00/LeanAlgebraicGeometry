@@ -51,6 +51,10 @@ import AlgebraicJacobian.Cohomology.PullbackQuasicoherent
 import AlgebraicJacobian.Cohomology.CechHigherDirectImageUnconditional
 import AlgebraicJacobian.Genus
 import AlgebraicJacobian.RigidityLemma
+-- Smooth ⟹ geometrically reduced (mathlib-general, upstreaming candidate). Supplies
+-- `GeometricallyIntegral` for the challenge's curve hypotheses, which is what the whole
+-- Picard/FGA development runs under.
+import AlgebraicJacobian.Curve.GeometricallyReduced
 import AlgebraicJacobian.Jacobian
 import AlgebraicJacobian.AbelJacobi
 import AlgebraicJacobian.Picard.RelativeSpec
@@ -59,17 +63,18 @@ import AlgebraicJacobian.Picard.StructureSheafPushforward
 import AlgebraicJacobian.Picard.RigidPushforward
 import AlgebraicJacobian.Picard.RigidPushforwardTransfer
 import AlgebraicJacobian.Picard.RigidPushforwardP1Engine
--- Rigid-pushforward gate cone (run 0053, task ajc-gate). RigidPushforwardGate is
--- the single entry point; it transitively pulls RigidPushforwardP1Constants,
--- RigidPushforwardFiberChart and RigidPushforwardP1Sheaf. The gate itself is NOT
+-- Rigid-pushforward gate cone (run 0053, task ajc-gate). The gate itself is NOT
 -- instantiated: hasRigidPushforward_of_leaves derives HasRigidPushforward from
 -- four named leaves, none of them proved.
+-- The gate is NOT the top of its own cone: RigidPushforwardP1Sheaf imports it and
+-- RigidPushforwardFiberChart sits beside it (over Transfer + P1Engine), so both are
+-- ABOVE the gate. RigidPushforwardFrontier imports all three and is the single entry
+-- point; the other entries are kept explicit so that retiring Frontier cannot silently
+-- unroot them.
 import AlgebraicJacobian.Picard.RigidPushforwardGate
--- NB RigidPushforwardFiberChart and RigidPushforwardP1Sheaf are NOT below the gate
--- (P1Sheaf imports it, FiberChart sits beside it), so they need their own entries
--- here or they stay invisible to the root build. Both compile green, but they are
--- not yet committed to the ledger, so importing them would break a clean checkout.
--- Add the two lines once they land.
+import AlgebraicJacobian.Picard.RigidPushforwardFiberChart
+import AlgebraicJacobian.Picard.RigidPushforwardP1Sheaf
+import AlgebraicJacobian.Picard.RigidPushforwardFrontier
 import AlgebraicJacobian.Picard.P1SectionsFinite
 import AlgebraicJacobian.Picard.TwoTermFiniteFree
 import AlgebraicJacobian.Picard.SemicontinuityH0

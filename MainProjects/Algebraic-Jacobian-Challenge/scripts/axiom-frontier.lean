@@ -31,20 +31,36 @@ wired to the stated theorem:
     print(f'{len(seen)} of {total} project modules reachable from the headline')
     PY
 
-At the time this probe was written that reports 96 reachable modules, up from 8
-before `picardJacobianWitness` was wired to `Scheme.Pic0Scheme`.  The
-denominator moves as modules land, so read the reachable count, not the ratio.
+At the time this probe was last re-measured that reports 97 reachable modules, up from
+8 before `picardJacobianWitness` was wired to `Scheme.Pic0Scheme` (the 97th is
+`Curve/GeometricallyReduced.lean`, which discharges the curve's geometric integrality).
+The denominator moves as modules land, so read the reachable count, not the ratio.
+
+Companion measurement 2 — is every module on disk rooted?  A module that nothing
+imports compiles green, is invisible to the root build, and is therefore invisible to
+this probe as well: `import AlgebraicJacobian` does not reach it, so `#print axioms` on
+its declarations cannot even be written here.  Replace the `stack` seed above with
+`['AlgebraicJacobian']` and compare against the on-disk module list; the difference is
+the set of modules whose axioms nobody is measuring.  It should be empty.
 -/
 import AlgebraicJacobian
 
 open AlgebraicGeometry AlgebraicGeometry.Scheme
 
--- §0 The three open leaves of the headline witness.  These are the whole
--- mathematical distance between the tree and the theorem; everything in §1 is
--- `sorryAx` because of them and nothing else.
-#print axioms AlgebraicGeometry.hasRationalPoint_and_geometricallyIntegral
+-- §0 The three open leaves of the headline witness, plus the two `sorry`-bodied
+-- upstream theorems the assembly invokes (`Pic0.smooth`, `Pic0.proper`, §4).
+-- Together these five are the whole mathematical distance between the tree and the
+-- theorem; everything in §1 is `sorryAx` because of them and nothing else.
+#print axioms AlgebraicGeometry.hasRationalPoint_of_curve
 #print axioms AlgebraicGeometry.smoothOfRelativeDimension_genus_pic0
 #print axioms AlgebraicGeometry.isAlbanese_pic0
+
+-- The half of the former combined leaf `hasRationalPoint_and_geometricallyIntegral`
+-- that turned out to be a theorem rather than a decision: geometric integrality of the
+-- curve follows from the challenge hypotheses via `Smooth.geometricallyReduced`
+-- (`Curve/GeometricallyReduced.lean`).  Clean here means it really is discharged, not
+-- that a hypothesis was moved.
+#print axioms AlgebraicGeometry.geometricallyIntegral_of_curve
 
 -- §1 The headline (AlgebraicJacobian/Jacobian.lean, AbelJacobi.lean)
 #print axioms AlgebraicGeometry.picardJacobianWitness
