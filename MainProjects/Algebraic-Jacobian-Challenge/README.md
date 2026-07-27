@@ -22,9 +22,12 @@ same theorem by a separate curve-specialized strategy.
 
 ## State (measured 2026-07-27)
 
-- **172 modules, 124,300 lines.**  **26 `sorry`** remain, spread over 11 modules;
-  the rest are locally sorry-free.
-- A warm `lake build AlgebraicJacobian` is **green**: 8,723 jobs, exit 0.
+- **173 modules, 125,285 lines**, all of them reachable from
+  [`AlgebraicJacobian.lean`](AlgebraicJacobian.lean).  **26 `sorry`** remain,
+  spread over 11 modules; the rest are locally sorry-free.  Rootedness is worth
+  measuring, not assuming: a module nothing imports compiles green and is invisible
+  both to the root build and to the axiom probe.
+- A warm `lake build AlgebraicJacobian` is **green**: 8,732 jobs, exit 0.
 - **Locally sorry-free is not axiom-clean.**  Two `sorry`-bodied *instances* leak
   through typeclass synthesis: `instHasPicScheme`
   (`Picard/FGAPicRepresentability.lean`, the sole producer of `HasPicScheme`) and
@@ -34,9 +37,15 @@ same theorem by a separate curve-specialized strategy.
   discharged by the caller; the leak appears at any call site that must
   synthesise the instance.  Run
   [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean) (`lake env lean
-  scripts/axiom-frontier.lean`, ~12s warm) before believing any completeness
-  claim — it measures the frontier rather than inferring it.
-- 66 of the 172 modules still open with a bare `import Mathlib`; this is the
+  scripts/axiom-frontier.lean`, ~8s warm, 61 declarations) before believing any
+  completeness claim — it measures the frontier rather than inferring it.
+- **A clean axiom set answers one question only:** is a `sorry` reachable from this
+  proof term.  Three separate things it cannot see have each been measured in this
+  tree — a `sorry`-bodied instance reached only through synthesis; an *unproved*
+  named hypothesis in the statement; and a *false* named hypothesis in the
+  statement, which makes the theorem vacuously true and perfectly clean.  Read the
+  probe's section headers, not just its output lines.
+- 66 of the 173 modules still open with a bare `import Mathlib`; this is the
   dominant build cost and is being converted bottom-up with the helpers in
   `scripts/`.
 
@@ -47,8 +56,17 @@ Whether to represent the plain relative Picard functor while carrying a
 since such a curve need not have a rational point — or to étale-sheafify and drop
 the hypothesis, is an open decision for the project owner (roadmap
 `AJC.picrep.rational-point`).  Both branches are recorded in the blueprint's FGA
-chapter and at the Lean leaf `hasRationalPoint_and_geometricallyIntegral`
+chapter and at the Lean leaf `hasRationalPoint_of_curve`
 (`AlgebraicJacobian/Jacobian.lean`); neither is assumed.
+
+This is now the *whole* of that gap.  The leaf used to assert geometric integrality
+as well, which obscured the fact that only one of the two is a decision: geometric
+integrality of a smooth geometrically irreducible curve is a theorem
+(`geometricallyIntegral_of_curve`, via `Smooth ⇒ GeometricallyReduced` in
+[`AlgebraicJacobian/Curve/GeometricallyReduced.lean`](AlgebraicJacobian/Curve/GeometricallyReduced.lean)),
+and it is now proved rather than assumed.  The rational point is a genuine
+mathematical gap: the statement is *false* in general, so the leaf must be replaced
+by whichever branch the owner picks, never proved.
 
 Cones closed: `AJC.substrate`, `AJC.linebundle`, `AJC.grquot`, `AJC.cech`.
 Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
@@ -62,9 +80,11 @@ Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
 - [`AlgebraicJacobian/Jacobian.lean`](AlgebraicJacobian/Jacobian.lean): the final
   Jacobian witness interface and assembly point.  The witness is built from
   `Pic⁰_{C/k}` and depends on five stated obligations: `Pic0.smooth` and
-  `Pic0.proper` upstream, plus three named leaves stated there.
+  `Pic0.proper` upstream, plus three named leaves stated there.  97 of the 173
+  modules are reachable from it.
 - [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean): the axiom-frontier
-  probe, and the reachability measurement in its header.
+  probe, and the two reachability measurements in its header (headline cone, and
+  whether every module on disk is rooted at all).
 - [`blueprint/web/index.html`](blueprint/web/index.html): generated mathematical blueprint.
 - [`analogies/README.md`](analogies/README.md): index to the historical design notes.
 - [`../Algebraic-Jacobian-Challenge-Rebuild/README.md`](../Algebraic-Jacobian-Challenge-Rebuild/README.md):

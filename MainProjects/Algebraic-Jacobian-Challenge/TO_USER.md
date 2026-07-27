@@ -6,22 +6,28 @@
   the challenge asks — such a curve need not have a rational point.  Dropping the
   hypothesis means étale-sheafifying the Picard functor, which Mathlib v4.31 does
   support.  Both branches are now written down in the blueprint's FGA chapter and
-  at the Lean leaf `hasRationalPoint_and_geometricallyIntegral`; neither has been
-  assumed.
+  at the Lean leaf `hasRationalPoint_of_curve`; neither has been assumed.  The
+  decision is now *exactly* the rational point: the leaf used to bundle geometric
+  integrality with it, and that half turned out to be a theorem, now proved
+  (`geometricallyIntegral_of_curve`).
 
-- **Sorry-free is not axiom-clean, and the difference is now measured.**  Two
-  `sorry`-bodied instances (`instHasPicScheme`, `pullback_preservesFiniteLimits`)
-  leak through typeclass synthesis, so a theorem can report clean axioms while
-  every real consumer of it depends on `sorryAx`.  Run `lake env lean
-  scripts/axiom-frontier.lean` before believing a completeness number.  Genuinely
-  clean, verified: the adelic genus lane, degree-1 affine vanishing, and the Čech
-  higher-direct-image comparison.
+- **Sorry-free is not axiom-clean, and there are three separate ways to be misled.**
+  Run `lake env lean scripts/axiom-frontier.lean` before believing any completeness
+  number.  (1) Two `sorry`-bodied *instances* (`instHasPicScheme`,
+  `pullback_preservesFiniteLimits`) leak through synthesis, so a theorem reports
+  clean axioms while every real consumer depends on `sorryAx`.  (2) An *unproved*
+  named hypothesis in a statement is invisible to the check.  (3) So is a *false*
+  one — which makes the theorem vacuously true and perfectly clean; this was found
+  in the rigid-pushforward cone, not hypothesised.  Genuinely clean and
+  unconditional, verified: the adelic genus lane, degree-1 affine vanishing, and the
+  Čech higher-direct-image comparison.
 
 - **The headline is wired, and now rests on five stated obligations.**
-  `picardJacobianWitness` is built from `Pic⁰_{C/k}` and reaches 96 project
-  modules, up from 8.  Two of its four structural fields are proved upstream
-  (`Pic0.grpObj`, `Pic0.geometricallyIrreducible`); the other two, `Pic0.smooth`
-  and `Pic0.proper`, are still `sorry`.  Added to those are three new named leaves
-  in `Jacobian.lean`: the hypothesis gap above, refining smoothness of `Pic⁰` to
-  relative dimension `genus C`, and the Albanese property over an arbitrary base
-  field (the landed proof covers the algebraically closed, positive-genus case).
+  `picardJacobianWitness` is built from `Pic⁰_{C/k}` and reaches 97 project
+  modules, up from 8; all 173 modules on disk are reachable from the project root.
+  Two of its four structural fields are proved upstream (`Pic0.grpObj`,
+  `Pic0.geometricallyIrreducible`); the other two, `Pic0.smooth` and `Pic0.proper`,
+  are still `sorry`.  Added to those are three named leaves in `Jacobian.lean`: the
+  rational point above, refining smoothness of `Pic⁰` to relative dimension
+  `genus C`, and the Albanese property over an arbitrary base field (the landed
+  proof covers the algebraically closed, positive-genus case).
