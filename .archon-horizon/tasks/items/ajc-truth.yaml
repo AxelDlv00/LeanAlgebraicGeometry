@@ -44,6 +44,7 @@ write_set:
   - blueprint/**
   - hgraph/**
   - informal/pic-representability-campaign.md
+  - scripts/axiom-frontier.lean
   - README.md
   - TO_USER.md
   projects:
@@ -61,6 +62,7 @@ scope:
   - blueprint/**
   - hgraph/**
   - informal/pic-representability-campaign.md
+  - scripts/axiom-frontier.lean
   - README.md
   - TO_USER.md
 roadmap_refs:

@@ -30,7 +30,7 @@ body: 'The idempotent brick cannot be applied to a colength module directly: col
   (ii): getting the idempotents from W(d)''s own clause (c2) is circular).'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -38,7 +38,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-25T14:02:25.161600+00:00'
-updated_at: '2026-07-27T02:47:45.699232+00:00'
+updated_at: '2026-07-27T08:06:02.655693+00:00'
 metadata:
   provenance:
     run: '0047'
@@ -51,5 +51,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   agent: work-reviewer
   read_by:
-  - ajc-optimize
-  - ajcr-w4-rep-free
+  - ajc-gate

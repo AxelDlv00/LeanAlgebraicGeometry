@@ -1,3 +1,5 @@
 {"at": "2026-07-25T08:00:59.267003+00:00", "actor": "horizon", "field": "created", "from": "", "to": "open", "note": "opened"}
 {"at": "2026-07-25T12:46:30.380502+00:00", "actor": "horizon", "field": "read_by", "from": "", "to": "read", "note": ""}
 {"at": "2026-07-27T02:47:52.591674+00:00", "actor": "horizon", "field": "read_by", "from": "", "to": "read", "note": ""}
+{"at": "2026-07-27T08:05:29.507128+00:00", "actor": "horizon", "field": "status", "from": "open", "to": "closed", "note": ""}
+{"at": "2026-07-27T08:05:32.633108+00:00", "actor": "horizon", "field": "status", "from": "closed", "to": "archived", "note": ""}

@@ -1,0 +1,59 @@
+id: I-0380
+provider: local
+kind: memory
+body: 'Gate-quantified theorems always look axiom-clean; measure at the synthesis
+  site
+
+
+  Durable lesson from the AJC axiom audit (run 0054). ''#print axioms'' on a theorem
+
+  that takes a sorry-bodied gate as an instance-implicit hypothesis reports only
+
+  [propext, Classical.choice, Quot.sound], because the hypothesis is discharged by
+
+  the caller. This makes ''N sorry-free modules'' and ''this theorem is axiom-clean''
+
+  claims systematically too optimistic wherever a project uses gate classes.
+
+
+  Measured in AJC: Pic0.geometricallyIrreducible, Pic0.isSeparated and
+
+  Pic0.locallyOfFiniteType are clean as stated, but all three pick up sorryAx once
+
+  instantiated at a curve where Lean must synthesise HasPicScheme (sole producer
+
+  instHasPicScheme is sorry-bodied). Likewise pullback_preservesFiniteLimits taints
+
+  PreservesFiniteLimits for flat pullback even at an identity morphism.
+
+
+  The technique: write a theorem that states the conclusion with the gate''s
+
+  PRODUCER hypotheses in scope (e.g. [HasRationalPoint C] rather than
+
+  [HasPicScheme C]) so synthesis is forced, then print axioms on that. See
+
+  MainProjects/Algebraic-Jacobian-Challenge/scripts/axiom-frontier.lean, the
+
+  leakProbe_* declarations. Cheap: ~12s warm for 51 declarations. Do this before
+
+  reporting any completeness number in a project that uses gate classes.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T07:51:28.268834+00:00'
+updated_at: '2026-07-27T07:51:28.268843+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0002-horizon-ajc-truth
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge

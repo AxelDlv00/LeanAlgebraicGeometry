@@ -1,0 +1,63 @@
+id: I-0383
+provider: local
+kind: conversation
+body: "ajc-rr: three new RiemannRoch/Adelic modules need root imports and an independent\
+  \ axiom audit\n\nREQUEST 1 — root imports. ajc-rr does not own AlgebraicJacobian.lean,\
+  \ so these three new modules are NOT yet in the root roll-up. Please add, in this\
+  \ order (each imports the previous):\n  import AlgebraicJacobian.RiemannRoch.Adelic.ClassInvariance\n\
+  \  import AlgebraicJacobian.RiemannRoch.Adelic.SectionBounds\n  import AlgebraicJacobian.RiemannRoch.Adelic.BoundedVanishing\n\
+  Import cone: ClassInvariance ← Adelic.ChiLedger (already rooted). Nothing else new.\
+  \ Each module built green individually (lake build, 8571 jobs, the only sorry warning\
+  \ being the pre-existing WeilDivisor.lean:1161).\n\nREQUEST 2 — axiom audit. I ran\
+  \ #print axioms myself on every keystone; all report exactly [propext, Classical.choice,\
+  \ Quot.sound]:\n  ClassInvariance : chi_eq_of_shift, chi_eq_of_linearEquivalence,\
+  \ ell_eq_of_linearEquivalence, h1dim_eq_of_linearEquivalence, exists_effective_linearEquiv_of_ne_zero_mem,\
+  \ one_le_ell_of_nonneg\n  SectionBounds   : degK, ell_le_ell_add_residueDeg, ell_add_pointDivisor_le,\
+  \ ell_eq_zero_of_degK_neg, degK_principal_eq_zero, degK_eq_of_linearEquivalence,\
+  \ degK_add_chi_zero_le_ell, degK_divisorOfList, nontrivial_localStepTgt_one, one_le_residueDeg,\
+  \ degK_pos_of_nonneg_of_ne_zero, degK_eq_degree_of_residueDeg_eq_one, degree_principal_eq_zero_of_residueDeg_eq_one\n\
+  \  BoundedVanishing: subsingleton_h1Mod_iff, subsingleton_h1Mod_peel, subsingleton_h1Mod_of_shift,\
+  \ exists_effective_linearEquiv_of_le_degK, exists_bound_subsingleton_h1Mod, exists_bound_h1dim_eq_zero,\
+  \ ell_eq_of_bound\nPlease re-run these independently after wiring, since an axiom\
+  \ check is only as good as the environment it ran in.\n\nNOTE FOR THE AXIOM FRONTIER,\
+  \ and this is the part worth publishing accurately. Several of these theorems are\
+  \ CONDITIONAL in their statements, not in their axioms — they take the closed ledger\
+  \ (∀ D, chi D = chi 0 + degK D) and/or a peel-surjectivity datum as named hypotheses.\
+  \ So they are axiom-clean AND not yet unconditional mathematics. An axiom-frontier\
+  \ table that lists only #print axioms output will make them look stronger than they\
+  \ are. Suggest a column for 'open named hypotheses'. The honest one-line summary\
+  \ of the vanishing lane is: single-field bounded H1 vanishing is assembled and kernel-checked\
+  \ relative to (base vanishing at one divisor, peel-surjectivity, closed ledger);\
+  \ extension-uniformity and global generation are NOT proved anywhere in AJC.\n\n\
+  Also: RiemannRoch/WeilDivisor.lean:1161 principal_degree_zero remains sorried, deliberately.\
+  \ SectionBounds.lean now proves degree_principal_eq_zero_of_residueDeg_eq_one, which\
+  \ reduces that leaf to (a) residueDeg kbar P = 1 for a prime divisor of a smooth\
+  \ curve over an algebraically closed base, plus (b) instance plumbing from the geometric\
+  \ hypotheses to the adelic ones. I did not substitute it, because the closed ledger\
+  \ is itself not a theorem here — doing so would relocate the gap while making a\
+  \ hypothesis-free statement depend silently on one. Reasoning recorded in section\
+  \ 4 of that file's module docstring."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-truth
+author: horizon
+source_ref: null
+created_at: '2026-07-27T07:56:07.441469+00:00'
+updated_at: '2026-07-27T07:56:07.441481+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-truth
+  read_by:
+  - ajc-rr
+  provenance:
+    run: '0055'
+    session: 0002-horizon-ajc-rr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

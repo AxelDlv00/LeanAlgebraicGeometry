@@ -1,41 +1,50 @@
 id: I-0362
 provider: local
 kind: memory
-body: "A NEW MODULE WITH NO IMPORTER LOOKS GREEN AND IS INVISIBLE. This is how work\
-  \ gets done twice in this project, and it happened INSIDE run 0048.\n\nMEASUREMENT\
-  \ (2026-07-26, run 0048 round 4). Import closure over\nMainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian.lean:\n\
-  \  modules on disk 619 | reachable from the root 526 | UNROOTED 93 (20,302 of 169,135\
-  \ lines, ~12%).\nUnrooted families: DivSchemeHighWindow* (38), DivSchemeRedesign*\
-  \ (28), DivSchemeSeedUnivPointwise* (7),\nDivSchemeTheta* (3), DivSchemeSeedUniv{MulIdeal,PulledDegree,SecondWindowMap}\
-  \ (3), DivSchemeMulIdeal* (2),\nDivSchemeFibrePoint* (2), plus Algebra/DirectLimitQuotient,\
-  \ Algebra/FlatDirectLimit, Picard/DivRepKit,\nPicard/DivSchemeFlatteningBridge,\
-  \ Picard/DivSchemeProjectiveFibreModel, Picard/DivSchemeWindowMulGeneral,\nPicard/DivisorFamilyWindowUnitGeneration,\
-  \ Picard/EntryIdeal, Picard/Pic0ThetaCocycle, Picard/ScratchChartLocal.\n\nWHY IT\
-  \ BITES. The lakefile's lean_lib target builds the root module and its transitive\
-  \ imports only.\nA new Picard/*.lean whose commit does not also add an import line\
-  \ is never elaborated, never\nkernel-checked, and contributes zero jobs -- so the\
-  \ job count does not change and nothing looks\nwrong. Its hgraph node can still\
-  \ carry lean_status: lean_ok, which is then UNEARNED.\n\nTHE INCIDENT. Round 0 of\
-  \ this very run (session 0002, commit 1c093de44) landed\nPicard/DivRepAffKitZar.lean,\
-  \ 174 lines, doing exactly the DivFamZar weakening of the F5 kit, with a\ncommit\
-  \ message claiming it. It added no import. Rounds 1, 2 and 3 never saw it; the roadmap\
-  \ leaf\nAJCR.w4-rep.datum.dat-d.ddr.divrep.u2 went on calling that weakening \"\
-  the CHEAP EDIT NOBODY HAS\nMADE\"; and in round 4 I briefed a lane to do it from\
-  \ scratch. The lane found the file, merged it\ninto DivRepAffKit.lean and removed\
-  \ the duplicate (commit 1e4ac5b52) -- full build still 9085 jobs,\ni.e. deleting\
-  \ 174 lines changed the job count by zero, which is itself the proof that it was\
-  \ never\na job.\n\nWORSE: Picard/DivRepKit.lean is unrooted too, and it holds DivRepGlobalData\
-  \ and\nDivRepGlobalData.representableBy -- the campaign's divisor-representability\
-  \ endpoint. \"The endpoint\nexists\" had never been machine-checked.\n\nRULES.\n\
-  1. A commit that adds a module MUST add its import line to AlgebraicJacobian.lean\
-  \ in the same\n   commit, or say in the message why not and open a roadmap item\
-  \ to root it.\n2. Before claiming a declaration is verified, check it is REACHABLE,\
-  \ not just that it has no sorry.\n   The count of sorries is not the measure of\
-  \ what is verified.\n3. Before briefing a lane on a \"missing\" declaration, run\
-  \ horizon search for it -- the index covers\n   unrooted files, which is precisely\
-  \ where the previous session's invisible work lives. I-0349's\n   rule cuts both\
-  \ ways: verify ABSENCE as well as presence.\n4. Job count is a bad green light.\
-  \ Deleting or adding an unrooted module leaves it unchanged."
+body: 'A NEW MODULE WITH NO IMPORTER LOOKS GREEN AND IS INVISIBLE — this is how work
+  gets done twice here.
+
+
+  **TRIMMED 2026-07-27 (janitor hygiene pass, run 0054).** The 93-module census and
+  the per-family breakdown that used to open this item are superseded by roadmap row
+  `AJCR.w4-rep.build-reach`, which carries the lake-authoritative triage, the per-module
+  map to the rows whose `done` rests on them, and a staged rooting order. Kept here:
+  the rules and the incident that earned them, because those are the durable part.
+  Re-measured today: **627 on disk, 536 rooted, 91 unrooted** in AJCR.
+
+
+  WHY IT BITES. The lakefile`s `lean_lib` target builds the root module and its transitive
+  imports only. A new `Picard/*.lean` whose commit does not also add an import line
+  is never elaborated, never kernel-checked, and contributes zero jobs — so the job
+  count does not move and nothing looks wrong. Its hgraph node can still carry `lean_status:
+  lean_ok`, which is then unearned.
+
+
+  THE INCIDENT (run 0048, and it cost a whole lane). Round 0 landed `Picard/DivRepAffKitZar.lean`,
+  174 lines, doing exactly the `DivFamZar` weakening of the F5 kit, with a commit
+  message claiming it — and no import line. Rounds 1-3 never saw it, roadmap leaf
+  `...ddr.divrep.u2` went on calling that weakening "the CHEAP EDIT NOBODY HAS MADE",
+  and in round 4 a lane was briefed to do it from scratch. The lane found the file
+  and merged it away (commit `1e4ac5b52`); the full build stayed at 9,085 jobs, i.e.
+  deleting 174 lines changed the job count by zero — which is itself the proof it
+  was never a job.
+
+
+  RULES.
+
+  1. A commit that adds a module MUST add its import line to `AlgebraicJacobian.lean`
+  in the same commit, or say in the message why not and open a roadmap item to root
+  it.
+
+  2. Before claiming a declaration is verified, check it is REACHABLE, not just sorry-free.
+  **The count of sorries is not the measure of what is verified.**
+
+  3. Before briefing a lane on a "missing" declaration, run `horizon search` — the
+  index covers unrooted files, which is exactly where a previous session`s invisible
+  work lives. `I-0349`s rule cuts both ways: verify ABSENCE as well as presence.
+
+  4. Job count is a bad green light: adding or deleting an unrooted module leaves
+  it unchanged.'
 labels:
 - agent-ready
 status: open
@@ -44,7 +53,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-26T06:49:59.963523+00:00'
-updated_at: '2026-07-27T02:47:30.263120+00:00'
+updated_at: '2026-07-27T07:57:54.864914+00:00'
 metadata:
   provenance:
     run: 0048

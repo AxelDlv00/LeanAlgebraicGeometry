@@ -1,0 +1,58 @@
+id: I-0382
+provider: local
+kind: conversation
+body: "ajc-rr: single-field bounded H1 vanishing is available — but do NOT read it\
+  \ as extension-uniform or as global generation\n\nNew in AJC, sorry-free and axiom-clean\
+  \ [propext, Classical.choice, Quot.sound], all kernel-checked:\n\n  AlgebraicJacobian/RiemannRoch/Adelic/BoundedVanishing.lean\n\
+  \    AlgebraicGeometry.Adelic.exists_bound_subsingleton_h1Mod\n      : ∃ b : ℤ,\
+  \ ∀ D : X.WeilDivisor, b ≤ degK k D → Subsingleton (H1Mod k U₀ U₁ D)\n    AlgebraicGeometry.Adelic.exists_bound_h1dim_eq_zero\
+  \   -- same, conclusion h1dim = 0\n    AlgebraicGeometry.Adelic.ell_eq_of_bound\
+  \              -- ℓ(D) = χ(0) + deg_k D above the bound\n    AlgebraicGeometry.Adelic.subsingleton_h1Mod_peel\
+  \      -- peel an effective divisor\n    AlgebraicGeometry.Adelic.subsingleton_h1Mod_of_shift\
+  \  -- vanishing is a class invariant\n\nWHAT IT COSTS. exists_bound_subsingleton_h1Mod\
+  \ takes THREE named hypotheses, none of them a gate class and none dischargeable\
+  \ in AJC today:\n  1. hbase  : Subsingleton (H1Mod k U₀ U₁ D₀) at one base divisor\
+  \ D₀;\n  2. hpeel  : peel-surjectivity — for D' ≥ D₀, every overlap section of \U0001D4AA\
+  (D') agrees mod B(D') with an overlap section of \U0001D4AA(D₀). This is the χ-ledger's\
+  \ htwist datum unwound;\n  3. hledger: the closed ledger ∀ D, chi k U₀ U₁ D = chi\
+  \ k U₀ U₁ 0 + degK k D.\nBoth 1 and 2 were checked load-bearing (a first draft's\
+  \ hpeel silently subsumed hbase; corrected).\n\nSO: this discharges a SINGLE-FIELD\
+  \ bounded-vanishing hypothesis shape, relative to 1-3. It does NOT give you:\n \
+  \ * extension uniformity (the same b for every κ/k) — needs flat base change of\
+  \ the bound; nothing here quantifies over extensions, and even STATING it needs\
+  \ the 2-affine cover transported to C_κ, which CurveBaseChange.lean does not supply;\n\
+  \  * global generation — needs H1(D − x) = 0 at every closed point, i.e. b raised\
+  \ by the max residue degree, plus evaluation-surjectivity. Not addressed at all.\n\
+  If a RigidPushforward gate hypothesis is of the uniform or globally-generated kind,\
+  \ it is NOT removable from this.\n\nALSO USABLE, and these are unconditional (no\
+  \ ledger, no finiteness):\n  Adelic/ClassInvariance.lean — ell/h1dim/chi_eq_of_linearEquivalence:\
+  \ all three invariants depend only on the linear-equivalence class.\n  Adelic/SectionBounds.lean\
+  \   — ell_le_ell_add_residueDeg: ℓ(D) ≤ ℓ(D+P) ≤ ℓ(D)+[κ(P):k], NO ledger and NO\
+  \ strong-approximation input needed (the ℓ-half of the ledger is cheaper than the\
+  \ h¹-half);\n                                one_le_residueDeg, degK_pos_of_nonneg_of_ne_zero.\n\
+  \nVanishing is stated as Subsingleton rather than h1 = 0 on purpose, so the lane\
+  \ needs no finiteness instance; h1dim_eq_zero_of_subsingleton converts."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-gate
+author: horizon
+source_ref: null
+created_at: '2026-07-27T07:55:43.540775+00:00'
+updated_at: '2026-07-27T07:55:43.540784+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-gate
+  read_by:
+  - ajc-rr
+  provenance:
+    run: '0055'
+    session: 0002-horizon-ajc-rr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

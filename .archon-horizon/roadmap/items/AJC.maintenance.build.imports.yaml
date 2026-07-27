@@ -1,5 +1,5 @@
 id: AJC.maintenance.build.imports
-title: Replace the bare import Mathlib in 86 modules by precise imports
+title: Replace the remaining bare import Mathlib (66 of 172 modules) by precise imports
 projects:
 - Algebraic-Jacobian-Challenge
 summary: 'The dominant build cost, and the method is now settled. 86 of 164 modules
@@ -34,8 +34,39 @@ summary: 'The dominant build cost, and the method is now settled. 86 of 164 modu
   STATE: 64 of 164 bare, down from 86. GrassmannianQuot.lean resists narrowing outright
   (times out at isDefEq :924 and whnf :1217 at default heartbeats WITH precise imports,
   builds fine with the umbrella) and stays bare deliberately. scripts/deumbrella-wave.sh
-  now repairs its own cascade per wave and refuses to advance until green.'
-status: active
+  now repairs its own cascade per wave and refuses to advance until green.
+
+
+  DEFERRED 2026-07-27 (janitor hygiene pass, run 0053) -- status moved active -> pending,
+  and the
+
+  campaign is paused, not abandoned. Nothing here is retracted; the ordering rule
+  and the 54-module
+
+  finding stay the durable content. Re-measured today: 66 of 172 modules still open
+  with a bare
+
+  ''import Mathlib'' (the total rose from 164 because run 0053 added Picard/RigidPushforward*
+  modules).
+
+  Last wave was 3fbc2cace (''wave 2 lands green -- 8 modules narrowed, 25 restored,
+  net 86 to 64
+
+  bare''), under run 0046 / task ajc-optimize, which is queued and not running.
+
+
+  WHY PENDING RATHER THAN ACTIVE. It had no owner, no live run, and its parent AJC.maintenance
+  is
+
+  already active with the same milestone, so it was spending one of the workspace''s
+  active slots
+
+  while the three live runs (ajc-gate, ajc-rr, ajc-truth) all work elsewhere. Set
+  it back to active
+
+  when a session actually picks up wave 3 -- and read the ORDERING RULE above before
+  doing so.'
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -57,4 +88,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-27T05:13:02.272947+00:00'
+  updated_at: '2026-07-27T08:02:37.553057+00:00'

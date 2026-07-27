@@ -11,7 +11,7 @@ body: 'Pre-existing root replay warnings in Pic and Challenge
   signatures are discharged.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -19,7 +19,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-22T01:48:37.164106+00:00'
-updated_at: '2026-07-27T02:47:43.892200+00:00'
+updated_at: '2026-07-27T08:05:56.137608+00:00'
 metadata:
   provenance:
     run: '0043'
@@ -31,6 +31,4 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   read_by:
-  - AJCR.w4-rep
-  - ajc-optimize
-  - ajcr-w4-rep-free
+  - ajc-gate

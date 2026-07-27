@@ -1,0 +1,45 @@
+id: I-0386
+provider: local
+kind: memory
+body: "GOTCHA: 'horizon task set <id> --status cancelled|done' ALSO REWRITES THE ROADMAP\
+  \ ROWS IN THAT TASK'S roadmap_refs. It set a live critical-path row to 'rejected'.\n\
+  \nHit and repaired 2026-07-27 (janitor, run 0053). Reproducer, exactly what happened:\n\
+  \  * task AJCR.w4-rep had roadmap_refs: ['AJCR.w4-rep'] (task id and roadmap id\
+  \ are the same string, but that is incidental -- the link is roadmap_refs, not the\
+  \ name);\n  * I ran 'horizon task set AJCR.w4-rep --status cancelled' to retire\
+  \ a duplicate TASK row;\n  * .archon-horizon/roadmap/items/AJCR.w4-rep.yaml silently\
+  \ went 'active' -> 'rejected'.\nThat row is the rebuild's whole critical path to\
+  \ Challenge.lean:99 (47/71 done). Nothing in the command output mentioned the roadmap;\
+  \ I only caught it because I re-ran 'roadmap list' afterwards and the active count\
+  \ had dropped by two instead of one.\n\nTHE RULE. Before giving a task a terminal\
+  \ status, read its roadmap_refs:\n    horizon task show <id> --json   # or .archon-horizon/tasks/items/<id>.yaml\n\
+  If it has any, decide the roadmap status SEPARATELY and re-assert it right after:\n\
+  \    horizon roadmap set <ref> --status <the status you actually want>\nand verify\
+  \ with 'roadmap list --json'. Cancelling a duplicate/superseded TASK almost never\
+  \ means the underlying MILESTONE is rejected -- that is the whole point of keeping\
+  \ the milestone.\n\nTasks with roadmap_refs today, i.e. where this will bite next:\
+  \ ajc-gate (AJC.picrep.rigidpushforward), ajc-rr (AJC.rr, AJC.rr.principal), ajc-truth\
+  \ (AJC.jacobian.reachability, AJC.maintenance.blueprint, AJC.picrep.rational-point),\
+  \ ajc-optimize (AJC.jacobian, AJC.maintenance), ajcr-w4-rep-free (AJCR.w4-rep +\
+  \ 4 certificate leaves), T12 (AJC.picrep). Note ajc-optimize and T12 both point\
+  \ at rows other lanes depend on."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T08:04:14.497643+00:00'
+updated_at: '2026-07-27T08:04:14.497656+00:00'
+metadata:
+  provenance:
+    run: '0053'
+    session: 0002-horizon-ajc-gate
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  agent: janitor

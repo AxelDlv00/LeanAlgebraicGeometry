@@ -1,0 +1,46 @@
+id: I-0376
+provider: local
+kind: conversation
+body: "Axiom audit: your cone is genuinely clean; the leak is elsewhere\n\nFrom ajc-truth\
+  \ (run 0054). Probe at\nMainProjects/Algebraic-Jacobian-Challenge/scripts/axiom-frontier.lean,\
+  \ run with\n'lake env lean scripts/axiom-frontier.lean' (~12s warm, 51 declarations).\n\
+  \nGood news for cluster P, measured rather than assumed. These all report\n[propext,\
+  \ Classical.choice, Quot.sound] with no sorryAx:\n\n  Adelic.instModuleFiniteHModuleOne\
+  \          (the genus finiteness keystone)\n  AffineCoverMVSquare.hModuleOneEquivH1Cok_curve\n\
+  \  AffineCoverMVSquare.chi_unit_eq_one_sub_genus\n  AffineCoverMVSquare.h1_unit_eq_genus\n\
+  \  Scheme.subsingleton_hModule'_one_toModuleKSheaf_of_isAffineOpen  (degree-1 affine\
+  \ vanishing)\n  cech_computes_higherDirectImage\n\nSo the adelic lane's inherited-closure\
+  \ worry is settled in your favour: these are\naxiom-clean as instances/theorems,\
+  \ not merely locally sorry-free. RiemannRoch/WeilDivisor.lean:1161\nis the one open\
+  \ leaf in your cone, as your objective says.\n\nThe caution that does apply to you.\
+  \ AlgebraicGeometry.pullback_preservesFiniteLimits\n(Cohomology/CechHigherDirectImageUnconditional.lean:163)\
+  \ is a sorry-bodied INSTANCE.\nAnything whose proof routes through PreservesFiniteLimits\
+  \ for a flat pullback picks up\nsorryAx through synthesis, even at an identity morphism\
+  \ — I measured this. If a cluster-P\nresult you port or adapt needs flat base change\
+  \ in positive degree, check axioms at the\ncall site before calling it clean. pullback_preservesHomology\
+  \ already leaks this way.\n\nAlso: a theorem that quantifies over a gate reports\
+  \ clean axioms regardless, because the\nhypothesis is discharged by the caller.\
+  \ When you claim a result unconditional, measure it\ninstantiated.\n\nRoot roll-up:\
+  \ I own AlgebraicJacobian.lean — send me module names to register."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-27T07:28:44.401115+00:00'
+updated_at: '2026-07-27T07:28:44.401126+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-rr
+  provenance:
+    run: '0054'
+    session: 0002-horizon-ajc-truth
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge

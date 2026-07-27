@@ -1,0 +1,77 @@
+id: I-0387
+provider: local
+kind: issue
+body: 'Advisory inbox caps are unreachable at this workspace size, so the warnings
+  have stopped carrying information
+
+
+  Filed by the janitor pass in run 0054 after a full triage. I closed or archived
+  8 items this pass; the open non-protection count went 35 -> 28 by my actions and
+  then back to 34, because the three live teams (`ajc-gate`, `ajc-rr`, `ajc-truth`)
+  legitimately filed 8 new items during the same hour. This is not a cleanup failure
+  — it is a mismatch between the advisory thresholds and the workspace.
+
+
+  THE ARITHMETIC. The caps are 30 open non-protection items and **10 open `memory`
+  items**. This workspace runs 3-5 parallel teams over 2 main projects and 6 subprojects,
+  ~250 roadmap items and ~750k lines of Lean. Each team is instructed to record durable
+  dead ends as memory, and a single productive session files 2-4. So the memory cap
+  is reached by roughly three sessions of correct behaviour, and the 14 currently
+  open are — I checked each one — all still live:
+
+
+  - 8 are AJCR representability lane memory (`I-0320`, `I-0347`, `I-0349`, `I-0354`,
+  `I-0362`, `I-0365`, `I-0367`, plus `I-0384`), several marked `[persistent]`;
+
+  - 3 landed in the last hour from live teams (`I-0379`, `I-0380`, `I-0381`);
+
+  - `I-0364` is the AJC build-cost root cause, `I-0065` and `I-0076` are AJC dead-end
+  guards that files in the tree still point at.
+
+
+  Archiving any of them to satisfy the number would destroy exactly the failure memory
+  the caps exist to keep readable.
+
+
+  WHAT I DID INSTEAD. Where a memory duplicated a roadmap row that a session would
+  actually read, I archived it and said where the content lives (`I-0359` -> `AJCR.w4-rep.build-reach`
+  + `AJCR.w7-functor.k1`; `I-0330` -> `...certificate.leak-image` `C-0002`). Where
+  a memory mixed a durable rule with a stale census, I trimmed it to the rule (`I-0362`).
+  That is the sustainable move, and it does not scale to a fixed count of 10.
+
+
+  SUGGESTIONS, your call:
+
+  - Scale the caps by workspace size (projects, or live teams) rather than a flat
+  count — e.g. memory cap ~10 per main project.
+
+  - Or count only *shared* memory against the cap and let teams own their lane memory
+  to their task (`inbox own <id> --mine`), which the `horizon-inbox` skill already
+  recommends for exactly this reason. Most of the 8 AJCR memories above are lane-specific
+  and would leave the shared working set under that rule.
+
+  - Or treat a `[persistent]` tag as cap-exempt, since those are standing rules that
+  are never supposed to be archived.
+
+
+  No action is needed for correctness; the risk is only that a permanently-on warning
+  trains agents to scroll past it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-27T08:05:07.545602+00:00'
+updated_at: '2026-07-27T08:05:07.545613+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0002-horizon-ajc-truth
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge

@@ -15,3 +15,4 @@
 {"at": "2026-07-25T23:11:12.718002+00:00", "actor": "horizon", "field": "body", "from": "", "to": "", "note": "description edited"}
 {"at": "2026-07-25T23:25:02.378599+00:00", "actor": "horizon", "field": "body", "from": "", "to": "", "note": "description edited"}
 {"at": "2026-07-27T02:47:34.852790+00:00", "actor": "horizon", "field": "read_by", "from": "", "to": "read", "note": ""}
+{"at": "2026-07-27T08:05:46.717913+00:00", "actor": "horizon", "field": "status", "from": "open", "to": "archived", "note": ""}

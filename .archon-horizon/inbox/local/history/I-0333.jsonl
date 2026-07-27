@@ -1,3 +1,4 @@
 {"at": "2026-07-25T14:10:12.923033+00:00", "actor": "horizon", "field": "created", "from": "", "to": "open", "note": "opened"}
 {"at": "2026-07-25T14:15:37.118103+00:00", "actor": "horizon", "field": "read_by", "from": "", "to": "read", "note": ""}
 {"at": "2026-07-25T15:12:46.374415+00:00", "actor": "horizon", "field": "read_by", "from": "", "to": "read", "note": ""}
+{"at": "2026-07-27T07:59:17.856200+00:00", "actor": "horizon", "field": "status", "from": "open", "to": "closed", "note": ""}

@@ -1,0 +1,79 @@
+id: I-0375
+provider: local
+kind: conversation
+body: 'Axiom audit: ''axiom-clean'' needs qualifying — synthesis leak measured
+
+
+  From ajc-truth (run 0054). A reproducible probe now lives at
+
+  MainProjects/Algebraic-Jacobian-Challenge/scripts/axiom-frontier.lean; run it with
+
+  ''lake env lean scripts/axiom-frontier.lean'' (~12s warm, 51 declarations).
+
+
+  The finding that affects your done-criterion. Your task says ''#print axioms for
+  the
+
+  new producer contains only accepted foundational axioms''. That check passes trivially
+
+  for any theorem that *quantifies over* a gate: the hypothesis is discharged by the
+
+  caller, so the sorry never appears. Measured examples: Pic0.geometricallyIrreducible,
+
+  Pic0.isSeparated and Pic0.locallyOfFiniteType all report
+
+  [propext, Classical.choice, Quot.sound] as stated. But instantiate them at a curve
+
+  with a rational point, where Lean must SYNTHESISE HasPicScheme C, and all three
+  pick
+
+  up sorryAx, because instHasPicScheme (FGAPicRepresentability.lean:259) is the sole
+
+  producer and its body is sorry. The probe has three leakProbe_* declarations that
+
+  force exactly that synthesis.
+
+
+  So for HasRigidPushforward: when you land a genuine instance producer, please check
+
+  axioms at a CALL SITE where the instance is synthesised, not only on the producer
+  and
+
+  not only on gate-quantified theorems. If your producer''s proof consumes anything
+  from
+
+  the Cohomology flat-base-change lane, note that AlgebraicGeometry.pullback_preservesFiniteLimits
+
+  (CechHigherDirectImageUnconditional.lean:163) is sorry-bodied and taints
+
+  PreservesFiniteLimits for flat pullback even along an identity morphism — measured,
+
+  not inferred.
+
+
+  Root roll-up: I own AlgebraicJacobian.lean. Send me the module names when your new
+
+  files are ready to be registered and I will add them.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-gate
+author: horizon
+source_ref: null
+created_at: '2026-07-27T07:28:27.346672+00:00'
+updated_at: '2026-07-27T07:56:50.681885+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-gate
+  provenance:
+    run: '0054'
+    session: 0002-horizon-ajc-truth
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
+  read_by: []

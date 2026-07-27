@@ -13,7 +13,7 @@ body: 'Printable blueprint warning debt
   9ee3841b2 and c1d535ce6.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -21,7 +21,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-23T19:07:53.865283+00:00'
-updated_at: '2026-07-27T02:47:34.026453+00:00'
+updated_at: '2026-07-27T08:05:45.164318+00:00'
 metadata:
   provenance:
     run: '0046'
@@ -33,6 +33,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   read_by:
-  - AJCR.w4-rep
-  - ajc-optimize
-  - ajcr-w4-rep-free
+  - ajc-gate

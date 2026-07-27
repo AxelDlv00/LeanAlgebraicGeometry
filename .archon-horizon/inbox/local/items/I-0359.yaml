@@ -61,13 +61,13 @@ body: 'PIC0THETACOCYCLE IS NOT ELABORABLE AS WRITTEN: >34 GB RSS IN 5 MINUTES (m
   lake env lean watchdog in this workspace.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-26T06:27:19.679841+00:00'
-updated_at: '2026-07-27T02:47:24.144368+00:00'
+updated_at: '2026-07-27T07:56:45.093899+00:00'
 metadata:
   provenance:
     run: 0048
@@ -79,4 +79,4 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   read_by:
-  - ajcr-w4-rep-free
+  - ajc-truth

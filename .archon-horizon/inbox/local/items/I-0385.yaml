@@ -1,0 +1,56 @@
+id: I-0385
+provider: local
+kind: issue
+body: "STALE DOCSTRING: HasFiniteMapToP1 and ExistsNonconstantMapToP1 both say 'carries\
+  \ no instance'; both have had proved instances for some time.\n\nFound and verified\
+  \ 2026-07-27 (janitor, run 0053). Documentation defect only -- no proof is wrong,\
+  \ nothing is broken. Filed rather than fixed because these are Lean sources under\
+  \ RiemannRoch/Adelic/, which the live task ajc-rr (run 0055) is writing in right\
+  \ now; whoever owns that lane should make the edit.\n\nDEFECT 1 (the one that matters).\n\
+  \  AlgebraicJacobian/RiemannRoch/Adelic/P1BaseCase.lean:139-152, the docstring on\
+  \ 'class HasFiniteMapToP1' (declared :153), says verbatim:\n    'The class carries\
+  \ no instance; the future keystone (N11 ...) consumes it as a hypothesis,\n    \
+  \ and the proved instance (transcendence degree one of k(C)/k for a geometrically\
+  \ integral\n     curve) is later work.'\n  That 'later work' is done. The chain\
+  \ is complete and proved:\n    NonconstantToP1.lean:1067  instance existsNonconstantMapToProjInt_of_ajc\n\
+  \                               [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]\n\
+  \                               [GeometricallyIntegral C.hom] : ExistsNonconstantMapToProjInt\
+  \ C\n    NonconstantToP1.lean:136   instance existsNonconstantMapToP1_of_existsNonconstantMapToProjInt\n\
+  \    FiniteMapToP1.lean:455-468 instance (priority := 100) hasFiniteMapToP1_of_existsNonconstantMapToP1\n\
+  \                               ... [ExistsNonconstantMapToP1 C] : HasFiniteMapToP1\
+  \ C\n                               := exact <<pi, isFinite_left_of_exists_ne pi\
+  \ hpi>>\n  NonconstantToP1.lean has 0 sorry. So HasFiniteMapToP1 is UNCONDITIONAL\
+  \ for an AJC curve, not a gate.\n\nDEFECT 2 (same bug, milder).\n  FiniteMapToP1.lean:439-441\
+  \ says ExistsNonconstantMapToP1 'carries no instance', but\n  NonconstantToP1.lean:136\
+  \ supplies one.\n\nWHY THIS IS WORTH FIXING RATHER THAN LEAVING. The docstring describes\
+  \ the class as a gate 'in the HasPicScheme style'. HasPicScheme really is an open\
+  \ gate (FGAPicRepresentability.lean:263 is <sorry>); HasFiniteMapToP1 is not. A\
+  \ reader budgeting the remaining frontier from these docstrings will over-count\
+  \ the open gates by two -- which is precisely the failure mode memory I-0349 records\
+  \ ('docstring bullets in this tree are not evidence that a declaration exists',\
+  \ and its converse here). It also cuts against the axiom-frontier work in flight\
+  \ on task ajc-truth.\n\nSUGGESTED EDIT: in both docstrings, replace the 'carries\
+  \ no instance / later work' sentence with a pointer to the discharging instance\
+  \ and its file:line. Do not change any statement or proof."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T08:03:46.938512+00:00'
+updated_at: '2026-07-27T08:03:46.938527+00:00'
+metadata:
+  provenance:
+    run: '0053'
+    session: 0002-horizon-ajc-gate
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  agent: janitor

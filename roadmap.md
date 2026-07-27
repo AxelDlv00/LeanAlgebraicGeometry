@@ -9,15 +9,15 @@ A high-level, mathematical checklist across the scope's member projects.
 - [ ] not started (no Lean yet — blueprint only, or theme not begun)
 
 **Status snapshot** *(open `sorry` counts over each project's Lean source tree via a
-comment-stripping pass — comments/docstrings excluded; measured 2026-07-25. The active loops move
+comment-stripping pass — comments/docstrings excluded; measured 2026-07-27. The active loops move
 these between pushes; the **[live dashboard](https://axeldlv00.github.io/LeanAlgebraicGeometry/)**
 holds the authoritative per-node counts. All projects are on Lean/Mathlib `v4.31.0` with no
 migration debt.)*
 
 | Project | Stage | Open `sorry` |
 | --- | --- | --- |
-| Algebraic-Jacobian-Challenge-Rebuild | prover ✨ | 16 — 15 protected `Challenge.lean` targets + 1 in `Picard/Pic0ThetaCocycle.lean`, which is imported from nowhere and does **not** parse, so its two theta coherences are unproved (inbox `I-0348`) |
-| Algebraic-Jacobian-Challenge | prover | 24 *(grouped by the nested AJC roadmap below)* |
+| Algebraic-Jacobian-Challenge-Rebuild | prover ✨ | 16 — 15 protected `Challenge.lean` targets + 1 in `Picard/Pic0ThetaCocycle.lean`. That file is imported from nowhere and has **never been elaborated** (no `.olean`/`.trace`), so its two theta coherences are unverified rather than proved; it is also not elaborable as written — 34 GB RSS and still climbing at 5 min, so it needs a split (roadmap `AJCR.w4-rep.build-reach`, `AJCR.w7-functor.k1`) |
+| Algebraic-Jacobian-Challenge | prover | 26 *(grouped by the nested AJC roadmap below)* |
 | Cech-Cohomology | ✅ complete · merged → AJC | 0 |
 | GR-Quot-Closure | ✅ complete · merged → AJC | 0 |
 | Line-Bundle-Comparison-Iso | ✅ complete · merged → AJC | 0 |
@@ -75,14 +75,14 @@ functor (curve-specialized Kleiman, no Quot schemes), Albanese via Milne III.6.1
 Blueprint: Challenge/BaseChange/Curves/Algebra/Cohomology/AbelianVariety chapters all synced
 1-to-1 with the Lean, `\leanok` only after kernel checks, `\source{}` read-before-cite.
 
-## Algebraic-Jacobian-Challenge  *(core engine — prover stage, 24 open `sorry` in 11 of 164 modules)*
+## Algebraic-Jacobian-Challenge  *(core engine — prover stage, 26 open `sorry` in 11 of 172 modules)*
 
 **Goal:** construct the Jacobian of a smooth proper geometrically integral curve as
 `Pic^0`, prove that it is an abelian variety of dimension equal to the genus, and
 establish the Albanese universal property. The structured roadmap command
 `horizon roadmap list --focus AJC.jacobian` is the authoritative work breakdown.
 
-*153 of the 164 modules are sorry-free; all 24 remaining `sorry`s live in 11 modules.*
+*161 of the 172 modules are sorry-free; all 26 remaining `sorry`s live in 11 modules.*
 
 - [x] **Foundational substrate** — `AJC.substrate`, seven sorry-free sub-items
   - [x] Curve and scheme base objects; quasi-coherent sheaves on schemes (tilde and
@@ -130,10 +130,14 @@ establish the Albanese universal property. The structured roadmap command
   - [x] Record controlled-clean and warm full-project build and warning baselines.
   - [x] Normalize the copyright header of all 164 modules; restore the 1,123 blueprint
     statement titles that LaTeX was swallowing into the statement body.
-  - [~] **Import hygiene — the dominant build cost.** 86 of 164 modules open with a bare
-    `import Mathlib`, so 132 of 164 load the whole library. Measured: a 49-line module costs
-    16.6 s and ~7 GB with the umbrella and 3.5 s and 2.0 GB with four precise imports. The
-    conversion runs bottom-up over the import DAG (`scripts/deumbrella-wave.sh`).
+  - [~] **Import hygiene — the dominant build cost.** 66 of 172 modules still open with a bare
+    `import Mathlib` (down from 86; wave 2 landed at `3fbc2cace`), and every module in their
+    transitive closure still loads the whole library. Measured: a 49-line module costs 16.6 s
+    and ~7 GB with the umbrella and 3.5 s and 2.0 GB with four precise imports. The conversion
+    runs bottom-up over the import DAG
+    (`MainProjects/Algebraic-Jacobian-Challenge/scripts/deumbrella-wave.sh`). Deferred, not
+    abandoned — a wave must repair its own cascade, since narrowing a parent breaks children
+    that were inheriting `Mathlib` through it.
   - [ ] Retire the 179 heartbeat and 20 depth overrides. Mathlib itself has **zero**
     `set_option maxHeartbeats` in its library files; re-measure each with `#count_heartbeats in`
     once its module no longer imports the umbrella.
@@ -171,15 +175,18 @@ structure (the A.1.c.sub package; merged back into the Jacobian challenge).
 `thm:albanese_universal_property`) and the rational-map-extension machinery feeding the
 abelian-variety leg of the Jacobian challenge. Extracted from `Algebraic-Jacobian-Challenge`
 on 2026-06-20; merges back. *(Full `lake build` green — the carve had dropped load-bearing
-`Genus0BaseObjects/BareScheme` grading / `Over` / standard-smooth instances, restored from
-the parent ✨ 2026-06-20.)*
+base-scheme grading / `Over` / standard-smooth instances, restored from the parent ✨
+2026-06-20.)*
 
 - [x] **Auslander–Buchsbaum / coheight bridge** — `Albanese/AuslanderBuchsbaum`, `Albanese/CoheightBridge` **sorry-free**
 - [x] **Rigidity lemma + structure-sheaf module substrate** — `RigidityLemma`, `Cohomology/StructureSheaf*` **sorry-free**
 - [~] **Albanese universal property** — `Albanese/AlbaneseUP` (×7): the headline `Pic.albaneseUP` + universal-map descent
 - [~] **Codim-one rational-map extension** — `Albanese/CodimOneExtension` (×1)
 - [~] **FGA Picard representability slice** — `Picard/FGAPicRepresentability` (×2)
-- [~] **Weil-divisor rider** — `RiemannRoch/WeilDivisor` (×1); the genus-0 / Route-C block is retirement work (task `T13`, inbox `I-0106`: `PrimeDivisor`/`order` are load-bearing for codim-one, carve rather than delete)
+- [~] **Weil-divisor rider** — `RiemannRoch/WeilDivisor` (×1). The genus-0 / Route-C split is
+  **retired** (2026-07-27): no `Genus0*` module, Lean identifier, blueprint node, or README
+  reference survives in AJC; only two docstrings record it as a rejected route. `PrimeDivisor` /
+  `order` were carved out and kept, per inbox `I-0106`, because codim-one depends on them.
 
 ## GR-Quot-Closure  *(✅ complete — sorry-free, deliverable merged → AJC ✨ 2026-06-22)*
 

@@ -17,3 +17,5 @@
 {"at": "2026-07-25T16:20:51.240642+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-26T06:45:13.745345+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-26T16:57:11.245204+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-27T08:01:34.987476+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "rejected", "note": "synced from task AJCR.w4-rep"}
+{"at": "2026-07-27T08:03:05.974434+00:00", "actor": "horizon", "field": "status", "from": "rejected", "to": "active", "note": ""}

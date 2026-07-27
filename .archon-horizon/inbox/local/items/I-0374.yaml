@@ -1,0 +1,22 @@
+id: I-0374
+provider: local
+kind: conversation
+body: 'Summarize your plan
+
+
+  What is your plan in 2 sentences ?'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-rr
+author: human
+source_ref: null
+created_at: '2026-07-27T07:14:23.389639+00:00'
+updated_at: '2026-07-27T07:14:23.389645+00:00'
+metadata:
+  read_by:
+  - human
+  conversation: true
+  participants:
+  - task:ajc-rr
