@@ -63,9 +63,9 @@ import AlgebraicJacobian.Picard.StructureSheafPushforward
 import AlgebraicJacobian.Picard.RigidPushforward
 import AlgebraicJacobian.Picard.RigidPushforwardTransfer
 import AlgebraicJacobian.Picard.RigidPushforwardP1Engine
--- Rigid-pushforward gate cone (run 0053, task ajc-gate). The gate itself is NOT
--- instantiated: hasRigidPushforward_of_leaves derives HasRigidPushforward from
--- four named leaves, none of them proved.
+-- Rigid-pushforward gate cone (run 0053, task ajc-gate). The gate is DISCHARGED (see the
+-- Instance/GammaBaseChange/P1Witness entries below); `hasRigidPushforward_of_leaves` is a
+-- four-leaf factorization of it, kept as a decomposition, no longer a frontier.
 -- The gate is NOT the top of its own cone: RigidPushforwardP1Sheaf imports it and
 -- RigidPushforwardFiberChart sits beside it (over Transfer + P1Engine), so both are
 -- ABOVE the gate. RigidPushforwardFrontier imports all three and is the single entry
@@ -86,18 +86,20 @@ import AlgebraicJacobian.Picard.RigidPushforwardAffineDescent
 import AlgebraicJacobian.Picard.RigidPushforwardP1Topology
 import AlgebraicJacobian.Picard.RigidPushforwardP1ChartSections
 import AlgebraicJacobian.Picard.RigidPushforwardRank
--- The assembly above all four: `IsIntegral ℙ¹_k` and the rank identity are theorems, so
--- the gate's `locallyFree` field is unconditional and `HasRigidPushforward` costs one
--- statement (`RigidPushforwardGammaBaseChange`) rather than four. There is deliberately
--- no `instance : HasRigidPushforward`, so §6c of the axiom probe still records the gate
--- as uninstantiated.
+-- The assembly above all four: `IsIntegral ℙ¹_k` and the rank identity are theorems, so the
+-- gate's `locallyFree` field is unconditional.
 import AlgebraicJacobian.Picard.RigidPushforwardInstance
--- The one statement the gate still costs, and its chart-level input. ChartBaseChange sits
--- over FiberChart; GammaBaseChange imports it and Instance, and carries the gate's whole
--- remaining cost, which is exactly why it must be rooted rather than left green and
--- unmeasured (I-0388).
+-- The gate's second field and its chart-level input. ChartBaseChange sits over FiberChart;
+-- GammaBaseChange imports it and Instance, proves the residual Γ-level base-change statement,
+-- and carries the resulting `instHasRigidPushforwardOfCurve` — a real global instance, measured
+-- clean AT THE SYNTHESIS SITE together with the three extraction theorems that now synthesize
+-- rather than assume it (scripts/axiom-frontier.lean §6c).
 import AlgebraicJacobian.Picard.RigidPushforwardChartBaseChange
 import AlgebraicJacobian.Picard.RigidPushforwardGammaBaseChange
+-- Non-vacuity of that instance, which is not a formality: a theorem quantified over three
+-- hypotheses is worth nothing if nothing satisfies them, and §6c trap (c) is exactly this
+-- failure mode. ℙ¹ over an arbitrary field satisfies all three, and the gate fires at it.
+import AlgebraicJacobian.Picard.RigidPushforwardP1Witness
 import AlgebraicJacobian.Picard.P1SectionsFinite
 import AlgebraicJacobian.Picard.TwoTermFiniteFree
 import AlgebraicJacobian.Picard.SemicontinuityH0

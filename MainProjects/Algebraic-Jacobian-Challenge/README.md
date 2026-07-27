@@ -35,8 +35,8 @@ same theorem by a separate curve-specialized strategy.
 
 ## State (measured 2026-07-27)
 
-- **184 modules, 130,204 lines**; **26 `sorry`** over 11 modules, the rest locally
-  sorry-free; a warm `lake build AlgebraicJacobian` **green** at 8,743 jobs.  These
+- **185 modules, 130,786 lines**; **26 `sorry`** over 11 modules, the rest locally
+  sorry-free; a warm `lake build AlgebraicJacobian` **green** at 8,744 jobs.  These
   counts move whenever a module lands, so re-measure rather than quoting them:
 
   ```bash
@@ -51,7 +51,9 @@ same theorem by a separate curve-specialized strategy.
   measurement in [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean)'s
   header.  Modules land here from several parallel efforts, so the unrooted set is
   routinely non-empty for a short while: a module not yet committed to the workspace
-  ledger must **not** be rooted, since a clean checkout would then fail to build.
+  ledger must **not** be rooted, since a clean checkout would then fail to build.  That
+  grace period ends at the commit — once a module is in the ledger, leaving it unrooted
+  means the build does not check it.
 - **Locally sorry-free is not axiom-clean.**  Two `sorry`-bodied *instances* leak
   through typeclass synthesis: `instHasPicScheme`
   (`Picard/FGAPicRepresentability.lean`, the sole producer of `HasPicScheme`) and
@@ -61,7 +63,7 @@ same theorem by a separate curve-specialized strategy.
   discharged by the caller; the leak appears at any call site that must
   synthesise the instance.  Run
   [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean) (`lake env lean
-  scripts/axiom-frontier.lean`, 102 declarations, 66 clean and 36 carrying `sorryAx`
+  scripts/axiom-frontier.lean`, 105 declarations, 69 clean and 36 carrying `sorryAx`
   as last measured) before believing any completeness claim — it measures the
   frontier rather than inferring it.  Count by output *entry*, not by output line:
   Lean wraps a long axiom list across several lines, so a per-line filter
@@ -113,7 +115,7 @@ Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
 - [`AlgebraicJacobian/Jacobian.lean`](AlgebraicJacobian/Jacobian.lean): the final
   Jacobian witness interface and assembly point.  The witness is built from
   `Pic⁰_{C/k}` and depends on five stated obligations: `Pic0.smooth` and
-  `Pic0.proper` upstream, plus three named leaves stated there.  97 modules are
+  `Pic0.proper` upstream, plus three named leaves stated there.  98 modules are
   reachable from it.
 - [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean): the axiom-frontier
   probe, and the two reachability measurements in its header (headline cone, and

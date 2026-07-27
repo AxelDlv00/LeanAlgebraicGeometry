@@ -61,7 +61,7 @@ How to read the output.  Every line is one declaration; the only token that matt
 
 Note the `re.split` rather than a plain line filter: Lean wraps a long axiom list over
 several lines, so a per-line scan misclassifies exactly the declarations whose axiom
-list is longest.  Measured 2026-07-27 on the rooted tree: 102 probed, 66 clean, 36
+list is longest.  Measured 2026-07-27 on the rooted tree: 105 probed, 69 clean, 36
 carrying `sorryAx`.
 
 Companion measurement 2 — is every module on disk rooted?  A module that nothing
@@ -356,6 +356,15 @@ approximation statement. -/
 #print axioms AlgebraicGeometry.Adelic.rigidPushforward_locallyFree
 #print axioms AlgebraicGeometry.Adelic.rigidPushforward_baseChange
 #print axioms AlgebraicGeometry.Adelic.rigidPushforward_isLocallyTrivial
+
+-- NON-VACUITY of that instance, which trap (c) says is a separate question from cleanliness:
+-- a theorem quantified over three hypotheses is worth nothing if the tree contains nothing
+-- satisfying them, and a vacuous theorem reports clean axioms like any other.  `ℙ¹` over an
+-- arbitrary field satisfies all three and the gate fires at it, so the discharge above is
+-- not empty.  This is the measurement that `hrank` (the false-hypothesis case) would fail.
+#print axioms AlgebraicGeometry.Adelic.hasRigidPushforward_p1Over
+#print axioms AlgebraicGeometry.Adelic.instSmoothOfRelativeDimensionOneP1Over
+#print axioms AlgebraicGeometry.Adelic.rigidPushforward_baseChange_p1Over
 
 -- §7 Albanese cone
 #print axioms AlgebraicGeometry.Pic0.bundle
