@@ -23,9 +23,12 @@ For an AJC curve — `C : Over (Spec k)` with
 — the gate is *equivalent* to four named statements, three of which concern
 only `ℙ¹`:
 
-1. **`P1HasTrivialConstants k`** (`Picard/RigidPushforwardP1Constants.lean`):
-   `Γ(ℙ¹_k, 𝒪) = k`.  Pushed there all the way down to geometric integrality
-   of the integral model `Proj ℤ[X₀, X₁]`.
+1. **`IsIntegral (ℙ¹_k)`** (`Picard/RigidPushforwardP1Constants.lean` §5):
+   integrality of the projective line over the one field `k`.  This is the
+   sharpest sufficient form of the `H⁰`-finiteness anchor; the stronger
+   `Γ(ℙ¹_k, 𝒪) = k` (`P1HasTrivialConstants k`, §3 there) and the still
+   stronger `GeometricallyIntegral (p1Over k).hom` both imply it and both
+   also discharge the anchor, through `p1RigidPushforwardStatement_of_leaves`.
 2. **`P1CechFibrewiseBridge k A`** (§1 here): fibrewise `Ȟ¹`-vanishing of `M`
    on `ℙ¹_A` at all scheme points forces the base-linear Čech differential to
    stay surjective after `⊗ κ(𝔪)` at maximal ideals.  This is the geometric
@@ -228,6 +231,26 @@ theorem p1RigidPushforwardStatement_of_leaves
       (hfib M hfp h1)
   exact hshape M hfp hsurj hfin hproj hbc t
 
+set_option maxHeartbeats 800000 in
+-- Heartbeat headroom for the instance-heavy `letI` environment (fleet recipe).
+/-- **`P1RigidPushforwardStatement` from the sharpest form of leaf 1.**  Same
+as `p1RigidPushforwardStatement_of_leaves`, with `Γ(ℙ¹_k, 𝒪) = k` replaced by
+the strictly weaker `IsIntegral (ℙ¹_k)` (see §5 of
+`Picard/RigidPushforwardP1Constants.lean`: the Serre-dévissage anchor needs
+only *finiteness* of `Γ(ℙ¹_A, 𝒪)`, and over a proper integral scheme that is
+mathlib's `finite_appTop_of_universallyClosed`). -/
+theorem p1RigidPushforwardStatement_of_leaves_of_isIntegral
+    [IsIntegral ((p1Over k).left)]
+    (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (hfib : P1CechFibrewiseBridge k A)
+    (hshape : P1PushforwardLocalFreenessBridge k A) :
+    P1RigidPushforwardStatement k A := by
+  intro M hfp hflat h1 t
+  haveI := hfp
+  obtain ⟨hsurj, hfin, hproj, hbc⟩ :=
+    p1Cech_h0_baseChange_of_fibrewise_h1_vanishing_of_isIntegral A M hflat (hfib M hfp h1)
+  exact hshape M hfp hsurj hfin hproj hbc t
+
 /-! ## §4. The gate -/
 
 /-- **The `locallyFree` field of the gate from the three ℙ¹ leaves.**  For an
@@ -273,7 +296,7 @@ the B3 campaign gate, machine-checked:
 theorem hasRigidPushforward_of_leaves
     (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]
-    (hk : P1HasTrivialConstants k)
+    [IsIntegral ((p1Over k).left)]
     (hfib : ∀ (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A],
       P1CechFibrewiseBridge k A)
     (hshape : ∀ (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A],
@@ -282,7 +305,7 @@ theorem hasRigidPushforward_of_leaves
       Scheme.RigidPushforwardBaseChange C A) :
     Scheme.HasRigidPushforward C :=
   hasRigidPushforward_of_p1Engine_of_baseChange C
-    (fun A => p1RigidPushforwardStatement_of_leaves A hk (hfib A) (hshape A)) hBC
+    (fun A => p1RigidPushforwardStatement_of_leaves_of_isIntegral A (hfib A) (hshape A)) hBC
 
 end Adelic
 

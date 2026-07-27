@@ -52,15 +52,29 @@ the engine conclusion in that form.
 
 `Γ(ℙ¹_k, 𝒪) = k` is *not* proved here.  It is the standard fact that the
 projective line over a field has no nonconstant global regular functions; in
-this tree the cheapest honest route to it is `GeometricallyIntegral` of the
-structural morphism of relative projective space, which by
-`MorphismProperty.pullback_fst` reduces to geometric integrality of the
-integral model `Proj ℤ[X₀, X₁] ⟶ ⊤_Scheme`, i.e. to `IsIntegral (ℙ¹_K)` for
-every field `K` — a genuinely missing mathlib result about `Proj`, not a gap
-in the B3 argument.  It is recorded here as the honest leaf
-(`GeometricallyIntegral (p1Over k).hom`), with the derivation
-`p1_bijective_appTop_of_geometricallyIntegral` supplied so that landing it
-discharges everything downstream by `exact`.
+this tree the route to it is `GeometricallyIntegral` of the structural
+morphism of relative projective space, which by `MorphismProperty.pullback_fst`
+reduces (§3b) to geometric integrality of the integral model
+`Proj ℤ[X₀, X₁] ⟶ ⊤_Scheme`, i.e. to `IsIntegral (ℙ¹_K)` for *every* field
+`K` — a genuinely missing mathlib result about `Proj`, not a gap in the B3
+argument.
+
+**§5 sharpens this considerably.**  The `hH0` leaf does not actually need
+`Γ(ℙ¹_k, 𝒪) = k`: the Serre-dévissage anchor
+`fg_ker_ringSectionDiffBase_of_module_finite_top` consumes only *finiteness*
+of `Γ(ℙ¹_A, 𝒪)` over `Γ(Spec A, 𝒪)`, and over a field base finiteness
+base-changes along the same `H⁰` flat base change.  Over `k`, finiteness for a
+proper scheme is mathlib's `finite_appTop_of_universallyClosed`, whose only
+non-properness hypothesis is `IsIntegral X`.  So the sharpest form of the
+frontier is
+
+**`IsIntegral (ℙ¹_k)`** (`p1Cech_h0_fg_of_isIntegral`),
+
+a statement about the *one* field `k`, strictly weaker than geometric
+integrality (`isIntegral_p1Over_left_of_geometricallyIntegral`) and strictly
+weaker than `Γ(ℙ¹_k, 𝒪) = k`.  Both routes are kept: §3–§4 for the sharp
+field-of-constants statement (which other campaign consumers want in its own
+right), §5 for the cheapest sufficient one.
 
 Sources: Mumford AV II §5; Stacks 01XZ/01YS; EGA III 3.2.1 (the classical
 `H⁰`-finiteness this file replaces by an elementary anchor); Kleiman,
@@ -349,6 +363,194 @@ theorem p1Cech_h0_baseChange_of_fibrewise_h1_vanishing_of_p1TrivialConstants
   intro hfib
   exact p1Cech_h0_baseChange_of_fibrewise_h1_vanishing A M hflat
     (p1Cech_h0_fg_of_p1TrivialConstants A hk M) hfib
+
+end Adelic
+
+/-! ## §5. A strictly weaker anchor: `Γ(ℙ¹_k, 𝒪)` merely *finite* over `k`
+
+§3–§4 route the `hH0` leaf through the field-of-constants statement
+`Γ(ℙ¹_k, 𝒪) = k`.  That is more than the leaf needs.  Inspecting
+`AffineCoverMVSquare.fg_ker_ringSectionDiffBase_of_module_finite_top`
+(`Picard/P1SectionsFinite.lean`:914) shows it consumes only
+`Module.Finite Γ(Spec A, ⊤) Γ(ℙ¹_A, 𝒪)` — *finiteness*, not bijectivity — and
+finiteness base-changes from `k` to `A` across the very same `H⁰` flat base
+change used in §1.  Over `k`, finiteness of `Γ(X, 𝒪)` for a proper `X` is
+mathlib's `finite_appTop_of_universallyClosed`, whose only non-properness
+hypothesis is `IsIntegral X`.
+
+So the whole `hH0` leaf follows from
+
+**`IsIntegral (ℙ¹_k)`** — integrality of the projective line over the *one*
+field `k`,
+
+which is strictly weaker than `GeometricallyIntegral (p1Over k).hom`
+(a statement about every field extension of `k`; the implication is
+`isIntegral_p1Over_left_of_geometricallyIntegral` below) and strictly weaker
+than `P1HasTrivialConstants k`.  This is the sharpest form of the B3-H0
+frontier currently known. -/
+
+namespace Scheme
+
+variable {k : Type u} [Field k]
+
+open TensorProduct in
+set_option backward.isDefEq.respectTransparency false in
+/-- **Base-finiteness of global sections base-changes over a field.**  For a
+qcqs `k`-scheme `X` with `Γ(X, 𝒪)` a finite `Γ(Spec k, 𝒪)`-module, the section
+ring of `X ×_k Spec A` is a finite `Γ(Spec A, 𝒪)`-module for every `k`-algebra
+`A`.  Same engine as §1 — the qcqs `H⁰` flat base change
+`globalSectionsBaseChangeAlgEquiv` — but transporting `Module.Finite` along it
+instead of bijectivity, so no field-of-constants hypothesis is needed. -/
+theorem module_finite_snd_top_baseChange
+    {X : Scheme.{u}} (iX : X ⟶ Spec (CommRingCat.of k))
+    [CompactSpace X] [QuasiSeparatedSpace X]
+    (hfin : letI := (iX.appTop).hom.toAlgebra
+      Module.Finite ↥Γ(Spec (CommRingCat.of k), ⊤) ↥Γ(X, ⊤))
+    (A : Type u) [CommRing A] [Algebra k A] :
+    letI := (((pullback.snd iX
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).appTop).hom).toAlgebra
+    Module.Finite ↥Γ(Spec (CommRingCat.of A), ⊤)
+      ↥Γ(pullback iX (Spec.map (CommRingCat.ofHom (algebraMap k A))), ⊤) := by
+  set g : Spec (CommRingCat.of A) ⟶ Spec (CommRingCat.of k) :=
+    Spec.map (CommRingCat.ofHom (algebraMap k A)) with hg
+  letI instSA : Algebra ↥Γ(Spec (CommRingCat.of k), ⊤) ↥Γ(Spec (CommRingCat.of A), ⊤) :=
+    ((Spec.map (CommRingCat.ofHom (algebraMap k A))).appLE ⊤ ⊤ le_top).hom.toAlgebra
+  letI instMA : Algebra ↥Γ(Spec (CommRingCat.of k), ⊤) ↥Γ(X, ⊤) :=
+    (iX.appTop).hom.toAlgebra
+  letI instPull : Algebra ↥Γ(Spec (CommRingCat.of A), ⊤) ↥Γ(pullback iX g, ⊤) :=
+    ((pullback.snd iX g).appTop).hom.toAlgebra
+  have e := globalSectionsBaseChangeAlgEquiv iX A
+  set R := ↥Γ(Spec (CommRingCat.of k), ⊤)
+  set S := ↥Γ(Spec (CommRingCat.of A), ⊤)
+  set M := ↥Γ(X, ⊤)
+  haveI : Module.Finite R M := hfin
+  haveI : Module.Finite S (S ⊗[R] M) := Module.Finite.base_change R S M
+  exact Module.Finite.equiv e.toLinearEquiv
+
+end Scheme
+
+namespace Adelic
+
+open Scheme
+
+variable {k : Type u} [Field k]
+
+/-- `ℙ¹_k` is an integral scheme as soon as `ℙ¹_k ⟶ Spec k` is geometrically
+integral (`GeometricallyIntegral.isIntegral_of_subsingleton`, using that
+`Spec k` is a one-point integral scheme).  This exhibits the §5 anchor as
+strictly weaker than the §3 one. -/
+theorem isIntegral_p1Over_left_of_geometricallyIntegral
+    [GeometricallyIntegral ((p1Over k).hom)] :
+    IsIntegral ((p1Over k).left) := by
+  haveI : Subsingleton (Spec (CommRingCat.of k)) :=
+    inferInstanceAs (Subsingleton (PrimeSpectrum k))
+  haveI : IsIntegral (Spec (CommRingCat.of k)) :=
+    haveI : IsDomain ↑(CommRingCat.of k) := inferInstanceAs (IsDomain k)
+    inferInstance
+  exact GeometricallyIntegral.isIntegral_of_subsingleton ((p1Over k).hom)
+
+set_option maxHeartbeats 800000 in
+-- Heartbeat headroom for the instance-heavy `letI` environment (fleet recipe).
+/-- **THE B3-H0 LEAF, sharpest form**: the engine's `hH0` at every finitely
+generated `k`-algebra `A`, from integrality of `ℙ¹_k` alone.
+
+Chain: `IsIntegral ℙ¹_k` + properness ⟹ (`finite_appTop_of_universallyClosed`)
+`Γ(ℙ¹_k, 𝒪)` finite over `k` ⟹ (qcqs `H⁰` flat base change,
+`module_finite_snd_top_baseChange`) `Γ(ℙ¹_A, 𝒪)` finite over `Γ(Spec A, 𝒪)` ⟹
+(sheaf gluing, `fg_ker_ringSectionDiffBase_of_module_finite_top`) the
+structure-sheaf anchor `hS0` ⟹ (Serre dévissage,
+`p1Cech_h0_fg_of_structure_h0_fg`) `hH0`.
+
+Note what has disappeared: no `Γ(ℙ¹_k, 𝒪) = k`, no geometric integrality, no
+statement about field extensions of `k`.  Only `ℙ¹_k` integral. -/
+theorem p1Cech_h0_fg_of_isIntegral [IsIntegral ((p1Over k).left)]
+    (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (M : (Limits.pullback (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
+    [M.IsFinitePresentation] :
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₁
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₂
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        ((p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂)
+    (LinearMap.ker ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+      (pullback.snd (p1Over k).hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M)).FG := by
+  have hfin0 : ((p1Over k).hom.appTop).hom.Finite :=
+    AlgebraicGeometry.finite_appTop_of_universallyClosed k (p1Over k).hom
+  have hfin := Scheme.module_finite_snd_top_baseChange (p1Over k).hom hfin0 A
+  refine p1Cech_h0_fg_of_structure_h0_fg A M ?_
+  refine (p1BaseChangeCoverSquare A).fg_ker_ringSectionDiffBase_of_module_finite_top
+    (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) ?_
+  have happ : (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).appLE ⊤ (⊤ : _)
+        (le_top : (⊤ : (Limits.pullback (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Opens) ≤
+          pullback.snd (p1Over k).hom
+            (Spec.map (CommRingCat.ofHom (algebraMap k A))) ⁻¹ᵁ ⊤)
+      = (pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).appTop :=
+    Scheme.Hom.appLE_eq_app _
+  rw [happ]
+  exact hfin
+
+set_option maxHeartbeats 800000 in
+-- Heartbeat headroom for the instance-heavy `letI` environment (fleet recipe).
+/-- **The full wave-4 ℙ¹ endgame conclusion from `IsIntegral ℙ¹_k`.**  Same
+statement as `p1Cech_h0_baseChange_of_fibrewise_h1_vanishing`, with `hH0`
+replaced by integrality of the projective line over `k`. -/
+theorem p1Cech_h0_baseChange_of_fibrewise_h1_vanishing_of_isIntegral
+    [IsIntegral ((p1Over k).left)]
+    (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (M : (Limits.pullback (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
+    [M.IsFinitePresentation]
+    (hflat : Scheme.CoherentSheafFlat
+      (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M) :
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₁
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₂
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        ((p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂)
+    ∀ _hfib : (∀ (m : Ideal Γ(Spec (CommRingCat.of A), ⊤)), m.IsMaximal →
+      Function.Surjective
+        (((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+          (pullback.snd (p1Over k).hom
+            (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M).baseChange
+          (Γ(Spec (CommRingCat.of A), ⊤) ⧸ m))),
+    Function.Surjective ⇑((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+        (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M) ∧
+      Module.Finite Γ(Spec (CommRingCat.of A), ⊤)
+        (LinearMap.ker ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+          (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M)) ∧
+      Module.Projective Γ(Spec (CommRingCat.of A), ⊤)
+        (LinearMap.ker ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+          (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M)) ∧
+      ∀ (B : Type u) [CommRing B] [Algebra Γ(Spec (CommRingCat.of A), ⊤) B],
+        Function.Bijective (AlgebraicJacobian.TwoTerm.kerBaseChange
+          ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+            (pullback.snd (p1Over k).hom
+              (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M) B) := by
+  letI := (pullback.snd (p1Over k).hom
+    (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+      (p1BaseChangeCoverSquare A).U₁
+  letI := (pullback.snd (p1Over k).hom
+    (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+      (p1BaseChangeCoverSquare A).U₂
+  letI := (pullback.snd (p1Over k).hom
+    (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+      ((p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂)
+  intro hfib
+  exact p1Cech_h0_baseChange_of_fibrewise_h1_vanishing A M hflat
+    (p1Cech_h0_fg_of_isIntegral A M) hfib
 
 end Adelic
 
