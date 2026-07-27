@@ -26,7 +26,7 @@ statement is that the *whole* residue field is reached — the evaluation map
 
 `Γ(⊤, 𝒪(D)) / Γ(⊤, 𝒪(D − P)) → κ(P)`
 
-is not merely nonzero but **onto** (`localStepMapₖ_bijective_of_vanishing`).
+is not merely nonzero but **onto** (`evalMap_surjective`).
 
 ## The mechanism: two vanishings, not one
 
@@ -56,8 +56,8 @@ With this file the ledger of gaps reads:
    `RiemannRoch/CurveBaseChange.lean` does not transport that cover to `C_κ`.
 3. **Global generation** — **this file**, conditional on exactly the same inputs as
    (1) and nothing more, with the threshold shifted by the residue degree.  The
-   pointwise form (`generatedAt_of_bound`) is unconditional in `P`; the *uniform*
-   form (`forall_generatedAt_of_bound_of_residueDeg_le`) needs a bound `r` on residue
+   pointwise form (`exists_bound_generatedAt`) is unconditional in `P`; the *uniform*
+   form (`exists_bound_forall_generatedAt`) needs a bound `r` on residue
    degrees, which is a genuine extra hypothesis over a general `k` (residue degrees of
    closed points are unbounded over a finite field) and is `r = 1` over an
    algebraically closed base.
@@ -359,9 +359,9 @@ bounded-vanishing theorem requires both divisors above the threshold `b`, and
 so the generation threshold is `b + [κ(P):k]` — the vanishing bound raised by the
 residue degree **at that point**.  Two forms follow.
 
-*Pointwise* (`generatedAt_of_bound`): for each `P` separately, no extra hypothesis.
+*Pointwise* (`exists_bound_generatedAt`): for each `P` separately, no extra hypothesis.
 
-*Uniform* (`forall_generatedAt_of_bound_of_residueDeg_le`): the same `D` generating at
+*Uniform* (`exists_bound_forall_generatedAt`): the same `D` generating at
 **every** `P` at once needs a uniform bound `r` on residue degrees, `∀ P, [κ(P):k] ≤ r`.
 That is a real hypothesis and not a formality: over a finite field the residue degrees
 of closed points are unbounded, so no such `r` exists there, whereas over an
@@ -661,11 +661,11 @@ end RationalResidueConsequences
 /-! ## §7. Discharging `HasRationalResidues` from algebraic closedness
 
 §5 reduced `[κ(P):k] = 1` to the approximation statement, and §6 drew the consequences.
-This section **proves** the approximation statement, for an algebraically closed `k`,
-from the stalk data.  The result is `hasRationalResidues_of_isAlgClosed`: the residue
-hypothesis of §6 is no longer an assumption about residue fields but a consequence of
-`IsAlgClosed k` plus the finiteness `[Module.Finite k (κ_P)]` of the *stalk's* residue
-field.
+This section derives the approximation statement, for an algebraically closed `k`, **from
+stalk-level hypotheses that are not yet instantiable in this project** — see the warning on
+`hasRationalResidues_of_isAlgClosed` below before citing it.  The honest summary is that it
+moves the obligation off the order subquotient and onto standard commutative algebra about
+the stalk, which is progress, but it is a reformulation and not a discharge.
 
 The argument, at the point `P` with stalk `R := 𝒪_{X,P}` (a DVR):
 
@@ -755,19 +755,43 @@ omit [IsConstantField k X] in
 /-- **`HasRationalResidues` holds over an algebraically closed base field.**
 
 Given at `P`:
-* an algebra structure `k → 𝒪_P` on the stalk compatible with `k → K(X)` (the tower the
-  structure morphism of a `k`-scheme provides — `Adelic/GateInstances.lean` builds exactly
-  this, `algebra_section_stalk` plus `functionField_isScalarTower`);
-* finiteness of the residue field of the stalk over `k`, `[κ_P : k] < ∞` — the same
-  keystone finiteness node N14 consumes;
+* an algebra structure `k → 𝒪_P` on the stalk, and compatibility with `k → K(X)` as an
+  `IsScalarTower`;
+* finiteness of the residue field of the *stalk* over `k`, `[κ_P : k] < ∞`;
 * `IsAlgClosed k`,
 
 every function of order `≥ 0` at `P` agrees with a constant to first order.
 
-Composed with §5–§6 this discharges the residue hypothesis of
-`exists_bound_forall_generatedAt_of_hasRationalResidues` and of
-`degree_principal_eq_zero_of_hasRationalResidues`: over an algebraically closed base they
-hold outright, with no residue-field assumption left.
+## READ THIS BEFORE CITING: the three binders are NOT currently instantiable
+
+An earlier version of this docstring claimed `Adelic/GateInstances.lean` "builds exactly
+this" and that the residue finiteness is "the same keystone finiteness node N14 consumes".
+**Both claims were false**, and a fresh-context review caught them.  Precisely:
+
+* `GateInstances.lean` builds `IsScalarTower k Γ(C,⊤) K(C)` (over **global sections**) and
+  a tower `IsScalarTower Γ(C,⊤) 𝒪_P K(C)` (over **`Γ(C,⊤)`**, not over `k`).  Neither is
+  the `IsScalarTower k 𝒪_P K(X)` binder below.
+* `Algebra k (X.presheaf.stalk P.point)` has an instance only for objects of
+  `Over (Spec k)` (`Picard/TangentSpaceStalkAlgebra.lean`), not for the bare `Scheme X`
+  this lane is stated over.
+* node N14 consumes `Module.Finite k (localStepTgt k P 1)`, which is a quotient of
+  `k`-submodules of `K(X)`.  `Module.Finite k (IsLocalRing.ResidueField 𝒪_P)` is a
+  **different** hypothesis about the stalk, and §5 above says in its own words that this
+  project has no identification of the two.
+
+So this theorem should be read as **trading one unproved fact for three unbuilt
+instances**, one of which (the stalk residue finiteness) is effectively a new gate.  It is
+a genuine *reformulation* — it moves the obligation from "`κ(P)` as an order subquotient
+has dimension one" to standard commutative algebra about the stalk, where
+`IsAlgClosed.algebraMap_bijective_of_isIntegral` applies — but it is **not** a discharge
+until those instances are constructed for an AJC curve.  Constructing them is the obvious
+next step and looks routine (the `k`-algebra structure and tower should follow from the
+structure morphism, as they do over `Γ(C,⊤)`); the residue finiteness is the substantive
+one.
+
+Composed with §5–§6 it therefore *reduces*, rather than discharges, the residue hypothesis
+of `exists_bound_forall_generatedAt_of_hasRationalResidues` and of
+`degree_principal_eq_zero_of_hasRationalResidues`.
 
 Note that `IsConstantField k X` is **not** used (hence the `omit`): the approximation
 statement is about the stalk and the order filtration only.  The constant-field gate is

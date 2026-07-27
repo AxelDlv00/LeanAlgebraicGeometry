@@ -93,8 +93,10 @@ anywhere in this project and the second is now proved elsewhere in the lane:
   ledger converts into the pair of vanishings at `D` and `D − x`
   (`evalMap_surjective`, `exists_bound_generatedAt`).  The uniform-over-points form
   additionally needs a bound on residue degrees, which is `1` over an algebraically
-  closed base — and that residue fact is itself discharged there
-  (`hasRationalResidues_of_isAlgClosed`).
+  closed base — and that residue fact is *reformulated* there
+  (`hasRationalResidues_of_isAlgClosed`) onto stalk-level hypotheses that this project
+  does not yet instantiate, so it is not discharged.  Read the warning in §7 of that
+  file before citing it as one.
 
 `ajc-gate` should therefore not read this file as discharging an extension-uniform
 hypothesis; it discharges the single-field bounded-vanishing shape only, and only
