@@ -90,6 +90,14 @@ open AlgebraicGeometry AlgebraicGeometry.Scheme
 -- that a hypothesis was moved.
 #print axioms AlgebraicGeometry.geometricallyIntegral_of_curve
 
+-- Leaf B at the strength the landed development reaches: the dimension count
+-- `dim T_e Pic⁰_{C/k} = genus C` holds at the headline with no transport, so what leaf B
+-- still owes is `Pic0.smooth` plus the passage from a tangent-space dimension to Mathlib's
+-- presentation-based `SmoothOfRelativeDimension` — which has no bridge in either direction.
+-- Like leaf C's `_of_isAlgClosed` companion this reports `sorryAx`, and for the same reason:
+-- it is a faithful record of a distance, not a discharge.
+#print axioms AlgebraicGeometry.finrank_tangentSpace_pic0_eq_genus
+
 -- Leaf C at the strength the landed Albanese development actually reaches.  This is a
 -- theorem, so what it measures is the DISTANCE from the leaf: over an algebraically closed
 -- field, in positive genus, and given the basepoint condition, the universal property is
@@ -114,7 +122,38 @@ open AlgebraicGeometry AlgebraicGeometry.Scheme
 #print axioms AlgebraicGeometry.Jacobian.exists_unique_ofCurve_comp
 #print axioms AlgebraicGeometry.genus
 
--- §2 The two sorry-bodied instances
+/-! §2 The two `sorry`-bodied INSTANCES, which are the whole of trap (a).
+
+These two are singled out because an instance is the only kind of `sorry` carrier that a
+consumer can pick up *without naming it*: every other carrier has to be written down by
+whoever depends on it, whereas these arrive through synthesis. §8 measures the consequence.
+
+The enumeration is exhaustive, and worth stating as such because "there are two" is the kind
+of claim that rots silently as modules land. Measured on the rooted tree (2026-07-28), the
+project declares **24 `sorry`-bodied declarations**, of which exactly **two are instances** —
+the two below. The other 22 are theorems and definitions:
+
+  Jacobian.lean          `hasRationalPoint_of_curve`, `smoothOfRelativeDimension_genus_pic0`,
+                         `isAlbanese_pic0`                                    (the three leaves)
+  Pic0AbelianVariety     `finrank_cotangentSpaceDual_eq_finrank_h1Cok`, `smooth`, `proper`
+  AlbaneseUP             `abelJacobi`, `SymmetricPower`, `symmetricPowerAVMap`,
+                         `symmetricPowerToJacobian`, `descentThroughBirationalSigma`,
+                         `albanese_eq_iff_symmetricPower_eq`
+  IdentityComponent      `degree`, `finrank_eq_genus`, `kPoints_iff_kerDegree`
+  QuotFunctorDef         `Modules.pullbackTensorMap_isIso`, `gammaFiber_finrank_baseChange_field`
+  SerreFiniteness        `sectionGradedModule_fg`, `gradedHilbert_fiber`
+  QuotRepresentability   `QuotScheme`
+  CodimOneExtension      `indeterminacy_pure_codim_one_into_grpScheme`
+  WeilDivisor            `principal_degree_zero`
+  CechHigherDirectImageUnconditional
+                         `cech_pushforward_baseChange_natIso`, `twisted_cech_nerve_iso`
+                         (two `fun _ => sorry` fields, so they are carriers even though the
+                         declarations are not themselves bare `sorry` bodies)
+
+To re-derive rather than trust that list: `lake build AlgebraicJacobian` names every carrier
+on stderr as `declaration uses 'sorry'`, and which of them are instances is a source question.
+The two below are `noncomputable instance instHasPicScheme` and
+`instance pullback_preservesFiniteLimits`. -/
 #print axioms AlgebraicGeometry.Scheme.instHasPicScheme
 #print axioms AlgebraicGeometry.pullback_preservesFiniteLimits
 
@@ -374,6 +413,15 @@ consumer instead of the signature. -/
 #print axioms AlgebraicGeometry.Adelic.hasRigidPushforward_p1Over
 #print axioms AlgebraicGeometry.Adelic.instSmoothOfRelativeDimensionOneP1Over
 #print axioms AlgebraicGeometry.Adelic.rigidPushforward_baseChange_p1Over
+
+-- The gate at the *challenge's own* hypothesis bundle, which is the form the headline would
+-- consume: `GeometricallyIrreducible` where the gate's producer wants `GeometricallyIntegral`.
+-- Measuring it here is not redundant with `instHasRigidPushforwardOfCurve` above, because the
+-- two differ exactly by the `Smooth ⇒ GeometricallyIntegral` upgrade of
+-- `Curve/GeometricallyReduced.lean` — the same upgrade the headline's
+-- `geometricallyIntegral_of_curve` performs.  A clean line here says the gate is available at
+-- the hypotheses of `Jacobian C` itself, not merely at a restatement of them.
+#print axioms AlgebraicGeometry.Adelic.hasRigidPushforward_of_geometricallyIrreducible
 
 -- §7 Albanese cone
 #print axioms AlgebraicGeometry.Pic0.bundle

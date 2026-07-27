@@ -49,6 +49,10 @@ The three leaves are each stated at exactly the strength the assembly consumes:
 - `smoothOfRelativeDimension_genus_pic0` — bare smoothness of `Pic⁰_{C/k}` refined to
   relative dimension `genus C`. Note this refines `Pic0.smooth`, which is itself
   unproved, so the leaf presupposes an obligation rather than resting on one.
+  `finrank_tangentSpace_pic0_eq_genus` measures what remains: the *dimension count*
+  `dim T_e Pic⁰_{C/k} = genus C` is landed mathematics and holds here with no transport,
+  so the leaf owes `Pic0.smooth` plus the passage from a tangent-space dimension to
+  Mathlib's presentation-based `SmoothOfRelativeDimension`, and nothing else.
 - `isAlbanese_pic0` — the Albanese universal property over an arbitrary base field and
   for every marked point, where the landed proof covers the algebraically closed,
   positive-genus case. `isAlbanese_pic0_of_isAlgClosed` measures the distance exactly:
@@ -63,6 +67,9 @@ The file contains:
   property uniformly over the choice of $k$-rational marked point.
 - `geometricallyIntegral_of_curve`: the Picard development's `GeometricallyIntegral`
   hypothesis, derived from the challenge hypotheses.
+- `finrank_tangentSpace_pic0_eq_genus` and `isAlbanese_pic0_of_isAlgClosed`: the parts of
+  leaves B and C that the landed development already proves, stated at the headline so
+  that each leaf's remaining distance is compiler-checked rather than described.
 - the three leaves above, and `picardJacobianWitness`, the Albanese witness
   `J = Pic⁰_{C/k}` assembled from them with no `sorry` of its own.
 - `nonempty_jacobianWitness`: existence of an Albanese witness for every curve,
@@ -289,6 +296,45 @@ theorem smoothOfRelativeDimension_genus_pic0 (C : Over (Spec (.of k)))
     [Scheme.HasPicScheme C] [Scheme.PicScheme.PicSchemeLocallyOfFiniteType C] :
     SmoothOfRelativeDimension (genus C) (Scheme.Pic0Scheme C).hom :=
   sorry
+
+/-- **Leaf B's dimension count, at the headline and against the landed development.**
+
+The number `genus C` in leaf B is not an arbitrary index: it is the dimension of the
+Zariski tangent space of `Pic⁰_{C/k}` at the identity, and *that* identity is landed
+mathematics (`Scheme.Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne`, the Kleiman §5
+Thm 5.11 chain through the truncated-exponential splitting and the Mayer–Vietoris
+comparison). Since `genus C` is by definition `dim_k H¹(C, 𝒪_C)`, the two sides match
+with no transport, exactly as leaf C's `isAlbanese_pic0_of_isAlgClosed` matches
+`Albanese.Pic0.albanese_universal_property`.
+
+Stating it here fixes what leaf B still owes, which is easy to misjudge from the leaf
+alone. It is *not* the dimension count. It is the two steps that turn a tangent-space
+dimension into a relative dimension:
+
+1. `Scheme.Pic0.smooth` — bare smoothness of `Pic⁰_{C/k}` over `k`, itself `sorry`-bodied
+   upstream, so leaf B presupposes an obligation rather than reducing one;
+2. the passage from "smooth, with `dim_{κ(e)} T_e = n`" to
+   `SmoothOfRelativeDimension n`. Mathlib's `SmoothOfRelativeDimension` is defined by
+   local standard-smooth presentations, not by a tangent-space dimension, and it carries
+   no bridge in either direction, so this step is missing mathematics rather than
+   bookkeeping.
+
+Like `isAlbanese_pic0_of_isAlgClosed`, this is a faithful record of a distance rather
+than a discharge: its axioms carry `sorryAx`, because the dimension chain it invokes
+still rests on `Pic0.finrank_cotangentSpaceDual_eq_finrank_h1Cok`. -/
+theorem finrank_tangentSpace_pic0_eq_genus (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
+    [GeometricallyIntegral C.hom]
+    [Scheme.HasPicScheme C] [Scheme.PicScheme.PicSchemeLocallyOfFiniteType C] :
+    Module.finrank
+        (IsLocalRing.ResidueField
+          ((Scheme.Pic0Scheme C).left.presheaf.stalk
+            ((Scheme.Pic0.identitySection C).base default)))
+        (IsLocalRing.CotangentSpace
+          ((Scheme.Pic0Scheme C).left.presheaf.stalk
+            ((Scheme.Pic0.identitySection C).base default)))
+      = genus C :=
+  Scheme.Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne C
 
 /-- **Leaf C: the Albanese universal property, over an arbitrary field and every point.**
 
