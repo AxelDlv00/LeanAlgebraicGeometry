@@ -77,8 +77,8 @@ now proved.
 
 `exists_bound_subsingleton_h1Mod` is **single-field**: `k`, the cover `U₀, U₁` and
 the base divisor `D₀` are all fixed.  It is therefore strictly weaker than the two
-things downstream consumers eventually want, and neither is proved anywhere in
-this project:
+things downstream consumers eventually want.  Of those two, the first is still open
+anywhere in this project and the second is now proved elsewhere in the lane:
 
 * **extension uniformity** — the *same* `b` for every field extension `κ/k`.
   Needs flat base change of the bound along `k → κ`; nothing here quantifies over
@@ -87,11 +87,19 @@ this project:
   transported 2-affine cover data on which `Ȟ¹` here is pinned).
 * **global generation** above the bound.  Needs `Ȟ¹(D − x) = 0` at every closed
   point `x`, i.e. the bound raised by the maximal residue degree, plus the
-  evaluation-surjectivity argument.  Not addressed.
+  evaluation-surjectivity argument.  **Now proved**, in
+  `Adelic/GlobalGeneration.lean`, from *this file's* three inputs and nothing more:
+  the evaluation map is onto exactly when the section drop is maximal, which the
+  ledger converts into the pair of vanishings at `D` and `D − x`
+  (`evalMap_surjective`, `exists_bound_generatedAt`).  The uniform-over-points form
+  additionally needs a bound on residue degrees, which is `1` over an algebraically
+  closed base — and that residue fact is itself discharged there
+  (`hasRationalResidues_of_isAlgClosed`).
 
-`ajc-gate` should therefore not read this file as discharging a global-generation
-or extension-uniform hypothesis; it discharges the single-field bounded-vanishing
-shape only, and only relative to (1)–(3).
+`ajc-gate` should therefore not read this file as discharging an extension-uniform
+hypothesis; it discharges the single-field bounded-vanishing shape only, and only
+relative to (1)–(3).  For global generation, cite `Adelic/GlobalGeneration.lean`,
+which is conditional on the same (1)–(3).
 -/
 
 set_option autoImplicit false
