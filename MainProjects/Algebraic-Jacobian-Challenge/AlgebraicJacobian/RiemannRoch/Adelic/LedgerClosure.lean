@@ -26,17 +26,22 @@ NOT merely one application of `chi_add_eq_residueDeg` per step: that theorem
 requires `P.point ∈ U₀ ⊓ U₁`, so **off the overlap it supplies no route to the bump at
 all**.  See §5.
 
-**Correction (later session).**  §5 below, and an earlier version of this paragraph, went
-further and said that off the overlap the lane proves the *negation* of the bump.  That
-overstates what `not_bump_of_notMem_overlap` shows, and
-`Adelic/ChiUnconditional.lean` now proves why.  The refutation runs through
-`ChiLedger.chi_add`, which equates the χ-jump with the **overlap** local step; what it
-establishes is that `chi_add`'s four exactness hypotheses are unsatisfiable off the overlap,
-which is a fact about `chi_add`, not about `hbump`.  With the ungated Čech formula
-(`ChiUnconditional.chi_eq_charts_sub_overlap`, no exactness hypotheses at all) the off-overlap
-χ-jump is the surviving **one-chart** step, and `hbump` there is *equivalent* to that chart
-step being full (`ChiUnconditional.bump_iff_chartStep_of_notMem_left`).  So `hbump` is not
-refutable off the overlap; its residual content there is approximation on a single chart.
+**`hbump` IS FALSE, and so is the ledger it yields (later session).**  §5 below records the
+refutation conditionally; `Adelic/ChiUnconditional.lean` §5–§6 now prove it **unconditionally**:
+
+* `ChiUnconditional.not_bump_of_notMem_left` — `hbump` is false whenever some prime divisor's
+  point lies off a chart (weaker, hence more often applicable, than off the *overlap*);
+* `ChiUnconditional.ledger_refuted_of_notMem_left` — the closed ledger `hledger` is itself
+  false there.
+
+The mechanism is the tower `n·P`: `Γ(U₀,−)` and `𝒜` freeze while `Γ(U₁,−) ⊆ 𝒜` is trapped, so
+χ is *bounded*, against the linear growth `hbump`/`hledger` demand.
+
+**So `chi_eq_of_bump` below, while correct, must not be advertised as a route to the ledger.**
+It derives a false conclusion from a false hypothesis on any such cover.  What the lane needs
+is a cover hypothesis excluding those primes (or more charts) — not further work on the bump.
+(An intermediate version of this note claimed the opposite, that `hbump` was *not* refutable
+off the overlap; that was this session's own error, retracted.)
 
 ## What is proved
 

@@ -326,11 +326,10 @@ reader should not take the hypothesis as a record of an open gap.
 
 What the bump costs is NOT merely one application of `chi_add_eq_residueDeg` per step: that theorem
 requires `P.point ∈ U₀ ⊓ U₁`, so off the overlap it supplies no route to the bump at all.
-(An earlier version of this paragraph added that off the overlap the lane proves the
-*negation* of the bump.  That was a misattribution, corrected in
-`Adelic/ChiUnconditional.lean`: the refutation measures `chi_add`'s exactness hypotheses,
-not `hbump`, and off the overlap `hbump` is *equivalent* to a single chart step being full.)
-At overlap primes it is one
+Worse: `ChiUnconditional.not_bump_of_notMem_left` proves `hbump` outright **false** whenever a
+prime divisor's point lies off a chart, and `ChiUnconditional.ledger_refuted_of_notMem_left`
+proves the same for `hledger` itself — so on such a cover **the hypothesis of every theorem in
+this section is unsatisfiable and the theorems are vacuous**.  At overlap primes the bump is one
 application of `chi_add_eq_residueDeg`, consuming that theorem's connecting/surjectivity data
 plus the strong-approximation input `hsurj`.  So `hledger` is an honest hypothesis, not
 a gate class and not a `sorry` — but the reader should look for the remaining mathematics
@@ -348,11 +347,14 @@ variable (k : Type u) [Field k] {X : Scheme.{u}} [IsIntegral X]
 two agree: `χ(D) = χ(0) + deg_k D` for `D = divisorOfList L`.
 
 This is what pins `degK` as *the* degree of the ledger rather than one weighting
-among several, and it shows the `hledger` hypothesis of this section is not
-idle — it holds wherever the one-point bump `hbump` does, which is one application
-of `chi_add_eq_residueDeg` per step **at overlap primes only**; off the overlap that producer is
-unavailable and the bump reduces to a one-chart count
-(`ChiUnconditional.bump_iff_chartStep_of_notMem_left`).
+among several.  It used to be offered here as evidence that the `hledger` hypothesis of this
+section "is not idle", on the grounds that it holds wherever the one-point bump `hbump` does.
+**That reading is withdrawn.**  `hbump` is one application of `chi_add_eq_residueDeg` per step
+**at overlap primes only**, and off the overlap that producer is unavailable; worse,
+`ChiUnconditional.ledger_refuted_of_notMem_left` shows `hledger` is **false** on any cover with
+a prime divisor off a chart.  So `hledger` is not "not idle" — it is unsatisfiable on such
+covers, making this section's conditionals vacuous there.  Establishing a cover without such
+primes is the missing work.
 
 An earlier version added that "extending from list-effective divisors to *all* divisors
 additionally needs the negative part".  **That is false**: `LedgerClosure.chi_eq_of_bump`
