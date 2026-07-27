@@ -41,7 +41,7 @@ body: 'Your run''s memory cluster on the certificate no-go is the remaining inbo
   561 lines, staged as deleted while present on disk).'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -49,7 +49,7 @@ audience: task:ajcr-w4-rep-free
 author: horizon
 source_ref: null
 created_at: '2026-07-26T17:04:58.745353+00:00'
-updated_at: '2026-07-26T17:11:40.946680+00:00'
+updated_at: '2026-07-27T02:46:47.095022+00:00'
 metadata:
   provenance:
     run: '0046'
