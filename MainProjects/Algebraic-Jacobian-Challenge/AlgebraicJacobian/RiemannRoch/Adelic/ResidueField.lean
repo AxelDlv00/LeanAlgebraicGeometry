@@ -201,6 +201,40 @@ theorem isClosed_primeDivisor {X : Scheme.{u}} [IrreducibleSpace X]
   rw [P.coheight] at h0
   exact absurd h0 (by simp)
 
+/-- **Every non-generic point of a curve has coheight exactly one** — hence *is* a prime divisor.
+
+`coheight_le_one_of_curve` (`Adelic/FiniteMapToP1.lean`) gives `≤ 1` from smoothness.  The
+reverse needs only that a non-generic point is not maximal in the specialisation order: the
+generic point satisfies `P ≤ genericPoint` always (mathlib's convention is
+`x ≤ y ↔ y ⤳ x`, and the generic point specialises to everything), so if `P` were maximal it
+would satisfy `genericPoint ≤ P` too and antisymmetry would force `P = genericPoint`.
+
+**Why this is worth having as a theorem.** `X.PrimeDivisor` bundles a point with a proof that
+its coheight is `1`, and until now AJC had no way to *produce* one on a curve:
+`Scheme.WeilDivisor.ofClosedPoint` case-splits on `Order.coheight P = 1` and falls back to the
+zero divisor when it cannot be shown, so every statement quantified over `X.PrimeDivisor` was
+formally at risk of being vacuous.  `primeDivisorOfNotGeneric` below removes that risk. -/
+theorem coheight_eq_one_of_ne_genericPoint (C : Over (Spec (CommRingCat.of k)))
+    [IrreducibleSpace C.left] [SmoothOfRelativeDimension 1 C.hom]
+    {x : C.left} (hx : x ≠ genericPoint C.left) :
+    Order.coheight x = 1 := by
+  refine le_antisymm (coheight_le_one_of_curve C x) ?_
+  -- `x` is not maximal (the generic point strictly dominates it), so its coheight is not `0`
+  have hnotmax : ¬ IsMax x := by
+    intro hmax
+    exact hx ((genericPoint_specializes x).antisymm
+      (hmax (genericPoint_specializes x))).symm.eq
+  have hne : Order.coheight x ≠ 0 := fun h => hnotmax (Order.coheight_eq_zero.mp h)
+  exact Order.one_le_iff_ne_zero.mpr hne
+
+/-- **A non-generic point of a curve, packaged as a prime divisor.**  The producer that makes
+every `∀ P : C.left.PrimeDivisor` statement in this lane non-vacuous. -/
+def primeDivisorOfNotGeneric (C : Over (Spec (CommRingCat.of k)))
+    [IrreducibleSpace C.left] [SmoothOfRelativeDimension 1 C.hom]
+    {x : C.left} (hx : x ≠ genericPoint C.left) :
+    C.left.PrimeDivisor :=
+  ⟨x, coheight_eq_one_of_ne_genericPoint C hx⟩
+
 /-- **The composite `k → 𝒪_x → κ(x)` is the inverse of mathlib's `residueFieldIsoBase`.**
 
 Both are morphisms `k ⟶ κ(x)` in `CommRingCat`; `Spec` is faithful, so it suffices to
