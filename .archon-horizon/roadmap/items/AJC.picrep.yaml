@@ -2,9 +2,32 @@ id: AJC.picrep
 title: Picard scheme representability cone
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Represent the relative Picard functor. Completed inputs include line-bundle
-  coherence, the Grassmannian, graded algebra, and descent. Open inputs are Serre
-  finiteness, pullback-tensor compatibility, the Nitsure Quot endgame, and final assembly.
+summary: 'Represent the relative Picard functor by the Milne-Kollar route selected
+  in informal/pic-representability-campaign.md: build Pic^r over a separably closed
+  field from the h0=1 loci cut out by a tuple of rational points, glue, descend to
+  k by a finite Galois quotient, then assemble the degrees by a coproduct. Completed
+  inputs: line-bundle coherence, the Grassmannian and graded algebra substrate, glue-descent,
+  Speiser semilinear descent, the affine Galois quotient, and the stable affine cover.
+  Open inputs on this route: the rigidified pushforward gate (AJC.picrep.rigidpushforward,
+  held by task ajc-gate), uniform H1 vanishing and the chi-ledger (AJC.rr, held by
+  ajc-rr), Div^d representability, the Milne glue, and Galois descent of rigidified
+  classes.
+
+
+  The Quot endgame is NOT this route. AJC.picrep.quot and AJC.picrep.serre describe
+  it; the Lean tree marks HasSmoothProperQuotient permanently off-path because Altman-Kleiman
+  descent needs a quasi-projectivity hypothesis that is not expressible at the pinned
+  revision and without which the lemma is false (Hironaka free Z/2 action on a smooth
+  proper non-projective threefold). Those nodes are retained, not revived: their divisor,
+  Hilbert-scheme and Grassmannian substrate is consumed by the committed route, and
+  only QuotRepresentability.lean and SerreFiniteness.lean are exclusive to the abandoned
+  endgame.
+
+
+  BLOCKED ABOVE THIS NODE: whether to represent Pic^sharp carrying a k-rational-point
+  hypothesis (weaker than the challenge statement) or to etale-sheafify and drop it.
+  See AJC.picrep.rational-point and inbox I-0372; the decision is the human''s and
+  is not assumed either way here.'
 status: pending
 kind: proof
 priority: high
@@ -18,5 +41,5 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:40.928722+00:00'
-  updated_at: '2026-07-23T13:46:28.324102+00:00'
+  updated_at: '2026-07-27T07:35:53.461475+00:00'
   parent: AJC.jacobian

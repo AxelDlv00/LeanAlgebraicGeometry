@@ -2,8 +2,18 @@ id: AJC.picrep.assembly
 title: Assemble the Picard scheme
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Combine Quot representability and flattening stratification to construct
-  the relative Picard scheme and its locally finite type group structure.
+summary: 'Assemble the Picard scheme on the committed Milne-Kollar route: glue the
+  h0=1 loci into Pic^r over a separably closed field (needs the 01JJ engine and a
+  universe bridge, since picSharp is Type (u+1)-valued), spread the finite glue datum
+  to a finite Galois level, descend picSharp points through rigidified pairs, and
+  assemble the degree pieces as a coproduct over Z. Discharges instHasPicScheme (FGAPicRepresentability.lean:259),
+  which is currently the sole producer of HasPicScheme and sorry-bodied, so its axioms
+  leak by synthesis into every consumer (measured: scripts/axiom-frontier.lean).
+
+
+  Superseded description: this node previously read ''combine Quot representability
+  and flattening stratification''. That was the Grothendieck/Kleiman quotient route,
+  which the tree marks off-path -- see AJC.picrep.'
 status: pending
 kind: proof
 priority: high
@@ -26,3 +36,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
+  updated_at: '2026-07-27T07:36:11.011730+00:00'

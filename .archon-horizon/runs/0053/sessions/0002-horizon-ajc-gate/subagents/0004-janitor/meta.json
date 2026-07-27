@@ -1,0 +1,11 @@
+{
+  "name": "janitor",
+  "native_subagent_id": "toolu_019seKQW3ucXk1KSXqi6gjt2",
+  "parent_session": "0002-horizon-ajc-gate",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}

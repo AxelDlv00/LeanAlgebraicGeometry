@@ -2,9 +2,17 @@ id: AJC.picrep.quot
 title: Nitsure Quot representability
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Under projectivity, relative very ampleness, and coherence, prove representability
-  of the Quot functor from boundedness, the Grassmannian embedding, flattening stratification,
-  and closedness.
+summary: 'OFF-PATH, retained not revived. Under projectivity, relative very ampleness
+  and coherence, representability of the Quot functor from boundedness, the Grassmannian
+  embedding, flattening stratification and closedness (Nitsure section 5). One open
+  leaf: QuotRepresentability.lean:79.
+
+
+  This is the engine of the abandoned quotient endgame, not of the committed Milne-Kollar
+  route (AJC.picrep). It is kept because the surrounding Grassmannian, graded-algebra
+  and flattening substrate is sorry-free, genuinely reusable, and imported by the
+  committed route; only this node''s own leaf and AJC.picrep.serre are exclusive to
+  the endgame. Do not build new consumers against HasSmoothProperQuotient.'
 status: pending
 kind: proof
 priority: high
@@ -27,3 +35,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
+  updated_at: '2026-07-27T07:36:12.508680+00:00'

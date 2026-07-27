@@ -2,8 +2,14 @@ id: AJC.picrep.serre
 title: Serre finiteness and Hilbert polynomial
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Prove finite generation of the section graded module and package the fibrewise
-  graded Hilbert function. These are the two open leaves in SerreFiniteness.lean.
+summary: 'OFF-PATH, retained not revived. Finite generation of the section graded
+  module plus the fibrewise graded Hilbert function; the two open leaves in SerreFiniteness.lean.
+
+
+  Needed by the Quot endgame (AJC.picrep.quot), not by the committed Milne-Kollar
+  route, whose uniform-H1 input comes from cluster P instead (AJC.rr, task ajc-rr).
+  Serre finiteness remains of independent interest and may yet be the cheapest route
+  to the H0-finite-generation leaf flagged in RigidPushforwardP1Engine.lean.'
 status: pending
 kind: proof
 priority: high
@@ -26,3 +32,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
+  updated_at: '2026-07-27T07:36:14.318701+00:00'

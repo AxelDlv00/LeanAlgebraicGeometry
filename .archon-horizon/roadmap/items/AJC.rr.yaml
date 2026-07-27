@@ -2,9 +2,27 @@ id: AJC.rr
 title: Riemann--Roch, divisors, and the adelic genus
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The adelic Riemann--Roch lane is complete and sorry-free, as is the Weil-divisor
-  and degree substrate. The single remaining in-tree obligation is that a principal
-  divisor has degree zero.
+summary: "Riemann--Roch, divisors, and the adelic genus.\n\nCluster-P substrate now\
+  \ carries three legs, all sorry-free and axiom-clean\n[propext, Classical.choice,\
+  \ Quot.sound]:\n\n(a) UNCONDITIONAL class invariance (Adelic/ClassInvariance.lean)\
+  \ -- multiplication\n    by g is a k-linear automorphism of K(X) carrying the chart\
+  \ sections, the\n    coboundary and the overlap onto their shifted counterparts,\
+  \ so ell, h1 and chi\n    are functions of the linear-equivalence class, with no\
+  \ gate, no finiteness and\n    no ledger-exactness input.\n\n(b) UNCONDITIONAL degree\
+  \ and drop bounds (Adelic/SectionBounds.lean) -- the\n    residue-weighted degree\
+  \ deg_k as a bundled AddMonoidHom, residue-degree\n    positivity 1 <= [kappa(P):k],\
+  \ positive degree for nonzero effective divisors,\n    and the section-drop sandwich\
+  \ ell(D) <= ell(D+P) <= ell(D)+[kappa(P):k]. The\n    ell-half of the ledger needs\
+  \ neither the connecting/surjectivity data nor\n    strong approximation, unlike\
+  \ the h1-half.\n\n(c) CONDITIONAL single-field bounded H1 vanishing (Adelic/BoundedVanishing.lean)\
+  \ --\n    exists_bound_subsingleton_h1Mod, with b = deg_k D0 + 1 - chi(0), relative\
+  \ to\n    three named hypotheses: base vanishing at one D0, peel-surjectivity, and\
+  \ the\n    closed ledger chi(D) = chi(0) + deg_k D. None is a gate class; both vanishing\n\
+  \    hypotheses were verified load-bearing.\n\nNOT proved anywhere in AJC, and kept\
+  \ distinct: extension-uniformity of the bound\n(same b for every kappa/k -- needs\
+  \ flat base change, and even stating it needs the\n2-affine cover transported to\
+  \ C_kappa), and global generation above the bound\n(needs H1(D-x) = 0 at every closed\
+  \ point).\n"
 status: pending
 kind: proof
 priority: normal
@@ -27,4 +45,11 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
-  updated_at: '2026-07-26T16:52:51.837973+00:00'
+  updated_at: '2026-07-27T07:57:13.858907+00:00'
+  owner: ajc-rr
+  pinned_commits:
+  - 1f2d5a1fe
+  - 7053bdd51
+  - beb6c583a
+  - e56633817
+  - c5e72b89b

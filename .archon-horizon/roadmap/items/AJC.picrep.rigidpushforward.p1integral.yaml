@@ -1,0 +1,44 @@
+id: AJC.picrep.rigidpushforward.p1integral
+title: IsIntegral P^1_k -- the last H0-finiteness leaf
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'The whole B3 H0 anchor (finite generation of the Cech H0 of a finitely presented
+  module on P^1_A, classically Serre finiteness) now rests on one statement: IsIntegral
+  (P^1_k), integrality of the projective line over the single field k. Proved consequence
+  chain (Picard/RigidPushforwardP1Constants.lean section 5): IsIntegral + IsProper
+  implies Gamma(P^1_k,O) finite over k by mathlib finite_appTop_of_universallyClosed;
+  qcqs H0 flat base change over a field carries that finiteness to Gamma(P^1_A,O)
+  over A; the sheaf-gluing anchor fg_ker_ringSectionDiffBase_of_module_finite_top
+  then gives hS0 and the Serre devissage of P1SectionsFinite gives hH0. WHAT IS MISSING:
+  mathlib has GeometricallyIrreducible/Reduced/Integral for AFFINE space (AlgebraicGeometry/AffineSpace.lean)
+  and NOTHING for Proj -- ProjectiveSpectrum/*.lean contains zero IsIntegral/IsReduced/IrreducibleSpace
+  results. The load-bearing sub-probe identified by two independent passes is the
+  chart-ring identification: injectivity of Polynomial R into HomogeneousLocalization.Away
+  (homogeneousSubmodule (ULift (Fin 2)) R) (X 0). The project has the surjectivity/spanning
+  half only (span_p1CoordAway_pow_top, RiemannRoch/Adelic/P1ChartData.lean:265); RelLaurentChartData
+  supplies spanning, never a basis, so any ''x-degree'' argument is unsound without
+  it. Write it Away.mk-first in the style of P1ChartData.lean:184-265 to dodge the
+  val_injective isDefEq blowup. Landing the chart iso also yields IsReduced and IrreducibleSpace
+  of P^1 by transport from mathlib''s affine-space instances.'
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-27T07:50:00.321134+00:00'
+  provenance:
+    run: '0053'
+    session: 0002-horizon-ajc-gate
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep.rigidpushforward

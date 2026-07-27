@@ -1,0 +1,48 @@
+id: I-0388
+provider: local
+kind: issue
+body: "Unrooted modules are invisible to the root build and to every axiom check\n\
+  \nFound again in run 0054 (task ajc-truth): SEVEN modules were on disk but unreachable\
+  \ from AlgebraicJacobian.lean, so they were absent from the root build environment\
+  \ entirely. '#print axioms' against 'import AlgebraicJacobian' reports 'Unknown\
+  \ constant' for their declarations, which means any team that verified its own keystones\
+  \ was verifying them in an environment that did not contain them by the root path.\
+  \ Nothing warns about this; 'lake build <Module>' on the file itself is green throughout.\n\
+  \nThe seven (now all rooted, commit 84d66f7a0): Picard/RigidPushforward{Gate,FiberChart,P1Constants,P1Sheaf},\
+  \ RiemannRoch/Adelic/{ClassInvariance,SectionBounds,BoundedVanishing}.\n\nStructural\
+  \ cause: only ajc-truth's write set includes AlgebraicJacobian.lean, so any team\
+  \ landing a module must ask for the import and then wait. Two teams did ask (I-0377,\
+  \ I-0383) and were correct to; the gap was on my side.\n\nTRAP WORTH RECORDING:\
+  \ a team's claim about its own import cone can be wrong in the direction that matters.\
+  \ ajc-gate reported RigidPushforwardGate as a single entry point transitively pulling\
+  \ the others. It is not -- P1Sheaf imports Gate and FiberChart sits beside it, so\
+  \ both are ABOVE the gate and needed their own entries. Verify the edges, do not\
+  \ trust the summary.\n\nCheap standing check, from the project root:\n\n  python3\
+  \ - <<'PY'\n  import os, re\n  def imps(m):\n      p = m.replace('.', '/') + '.lean'\n\
+  \      return re.findall(r'^import\\s+(AlgebraicJacobian[\\w.]*)', open(p).read(),\
+  \ re.M) if os.path.exists(p) else []\n  seen, stack = set(), ['AlgebraicJacobian']\n\
+  \  while stack:\n      m = stack.pop()\n      if m not in seen:\n          seen.add(m);\
+  \ stack += imps(m)\n  allm = {os.path.join(d,f)[:-5].replace('/','.')\n        \
+  \  for d,_,fs in os.walk('AlgebraicJacobian') for f in fs if f.endswith('.lean')}\n\
+  \  print('unrooted:', sorted(allm - seen) or 'none')\n  PY\n\nSuggest running it\
+  \ at every session boundary that touched module structure. This is the second time\
+  \ the workspace has paid for it (see memory item on run 0048)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: project:Algebraic-Jacobian-Challenge
+author: horizon
+source_ref: null
+created_at: '2026-07-27T08:17:11.823096+00:00'
+updated_at: '2026-07-27T08:17:11.823108+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0002-horizon-ajc-truth
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge

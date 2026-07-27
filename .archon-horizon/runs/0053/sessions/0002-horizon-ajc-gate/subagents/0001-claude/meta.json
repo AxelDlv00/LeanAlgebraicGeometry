@@ -1,0 +1,11 @@
+{
+  "name": "claude",
+  "native_subagent_id": "toolu_01MTyZF9XGKUyQMTBY5tQ7X2",
+  "parent_session": "0002-horizon-ajc-gate",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}

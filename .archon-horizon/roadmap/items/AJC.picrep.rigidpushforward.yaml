@@ -1,15 +1,25 @@
 id: AJC.picrep.rigidpushforward
-title: Rigidified pushforward engine (locally-free half done, gate open)
+title: Rigidified pushforward engine (gate factored into four named leaves)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'CORRECTION to the status I set earlier today: this is NOT done. The eight
-  modules are sorry-free, and rigidPushforwardLocallyFree_of_p1Engine (Picard/RigidPushforwardTransfer.lean:1389)
-  discharges local freeness for the constant curve from the P^1 engine -- but the
-  file''s own docstring at :1386-1388 says the HasRigidPushforward gate ''is *not*
-  instantiated here: its baseChange field is still open''. The gate class has zero
-  instance producers. Closing baseChange is the cheapest real advance on the representability
-  path.'
-status: pending
+summary: 'GATE FACTORED (run 0053). HasRigidPushforward is now four exactly-stated
+  leaves that are machine-checked to compose: Picard/RigidPushforwardGate.lean, hasRigidPushforward_of_leaves.
+  (1) IsIntegral (P^1_k) -- integrality of the projective line over the ONE field
+  k; this alone discharges the whole Serre-finiteness anchor hH0 at every finitely
+  generated k-algebra A (Picard/RigidPushforwardP1Constants.lean, p1Cech_h0_fg_of_isIntegral),
+  replacing the previous A-indexed family of anchors. GeometricallyIntegral is also
+  plumbed and is strictly stronger; it reduces further to the integral model Proj
+  Z[X0,X1]. (2) P1CechFibrewiseBridge -- fibrewise Cech H1-vanishing at scheme points
+  implies d tensor kappa(m) surjective at maximal ideals. (3) P1PushforwardLocalFreenessBridge
+  -- the engine module conclusion implies p_*M locally free of rank fiberH0. (4) RigidPushforwardBaseChange
+  -- the second gate field, zero infrastructure: every IsIso result for the adjoint
+  mate in this tree needs [IsAffineHom f] and q is proper, so the entire content of
+  the field is the non-affine case, and there is no composition/pasting API for pushforwardBaseChangeMap.
+  CORRECTIONS: HasFiniteMapToP1 is NOT an open gate (it synthesizes for an AJC curve,
+  sorry-free, clean axioms); and HasRigidPushforward has ZERO consumers anywhere in
+  the workspace, so it is a prerequisite for future DivFamily work rather than a live
+  blocker.'
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -31,4 +41,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-27T02:45:32.918636+00:00'
+  updated_at: '2026-07-27T07:54:53.117811+00:00'
+  owner: ajc-gate

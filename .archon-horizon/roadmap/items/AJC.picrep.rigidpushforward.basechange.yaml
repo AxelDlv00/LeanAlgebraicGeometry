@@ -1,0 +1,47 @@
+id: AJC.picrep.rigidpushforward.basechange
+title: The baseChange gate field -- non-affine cohomology and base change
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'Scheme.RigidPushforwardBaseChange (Picard/RigidPushforward.lean:342) is
+  the second field of HasRigidPushforward and has NO infrastructure. Established by
+  recon plus an adversarial re-verification: the tree''s only IsIso theorems for the
+  adjoint mate pushforwardBaseChangeMap are isIso_pushforwardBaseChangeMap_of_isPullback
+  (Picard/RigidPushforwardTransfer.lean:1108) and its chart form (:949), both requiring
+  [IsAffineHom f] [IsAffineHom f'']; with IsAffineHom q assumed the gate field closes
+  in ONE line (probe-verified: the pinned pullback.condition is defeq to IsPullback.of_hasPullback''s
+  h.w, IsAffineHom f'' follows by base-change stability, and the only residual obligation
+  L.IsQuasicoherent comes from hL.isFinitePresentation). So the entire content of
+  the field is the non-affine case for q : C_A -> Spec A. Two further obstacles: (a)
+  there is NO composition/pasting API for pushforwardBaseChangeMap anywhere (no _comp,
+  no pasting-of-squares lemma), so the natural route ''reduce along the finite affine
+  pi_A : C_A -> P^1_A, then handle p : P^1_A -> Spec A'' cannot be assembled even
+  once the second half exists; (b) the only non-affine base-change iso in the tree,
+  canonicalBaseChangeMap_isIso (Picard/QuotScheme.lean:6104), is about a DIFFERENT
+  mate (built from the pullback 2-iso, not the unit; probe-verified not defeq) and
+  assumes [Flat g], which this statement explicitly refuses. Cohomology/FlatBaseChange.lean:689
+  records the mate vs cancelBaseChange coherence as a known unresolved wall. The module-level
+  input IS available: kerBaseChange bijective for EVERY base algebra, the fourth conclusion
+  of p1Cech_h0_baseChange_of_fibrewise_h1_vanishing. Missing is the sheaf-level bridge,
+  estimated 4-5 new bricks.'
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-27T07:50:15.306977+00:00'
+  provenance:
+    run: '0053'
+    session: 0002-horizon-ajc-gate
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep.rigidpushforward

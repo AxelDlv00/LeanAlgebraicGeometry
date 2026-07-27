@@ -1,3 +1,6 @@
 {"at": "2026-07-26T16:41:39.279056+00:00", "actor": "horizon", "field": "created", "from": "", "to": "done", "note": "opened"}
 {"at": "2026-07-27T02:45:32.918218+00:00", "actor": "horizon", "field": "status", "from": "done", "to": "pending", "note": ""}
 {"at": "2026-07-27T02:45:32.918485+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, title updated"}
+{"at": "2026-07-27T07:49:44.521334+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "active", "note": ""}
+{"at": "2026-07-27T07:49:44.521540+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, owner updated"}
+{"at": "2026-07-27T07:54:53.117632+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "title updated"}

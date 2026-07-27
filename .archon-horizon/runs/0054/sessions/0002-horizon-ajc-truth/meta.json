@@ -3,15 +3,23 @@
   "round": 0,
   "project": "Algebraic-Jacobian-Challenge",
   "task_id": "ajc-truth",
-  "status": "running",
-  "started_at": "2026-07-27T07:04:41.653543+00:00",
   "projects": [
     "Algebraic-Jacobian-Challenge"
   ],
+  "status": "queued",
+  "started_at": "2026-07-27T07:04:41.653543+00:00",
+  "ended_at": "2026-07-27T08:23:22.703082+00:00",
   "harness_name": "opus5",
   "harness_kind": "claude-code",
   "model": "claude-opus-5",
   "effort": "ultracode",
+  "config_dir": null,
   "auth": "subscription",
-  "workspace_sha": "b081fd5053e92458efd67ef9225fd35b08e10586"
+  "usage": {
+    "tokens_in": 52774447,
+    "tokens_out": 64473,
+    "cost_usd": 429.12286
+  },
+  "engine_session_id": "f28a919b-c8fb-4138-9a27-9a533e39743d",
+  "workspace_sha": "a18c24c024642e6db9fab10fdb25b6b12683e9fd"
 }
