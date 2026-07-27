@@ -1,0 +1,66 @@
+id: I-0408
+provider: local
+kind: memory
+body: 'PARALLEL TEAMS SHARE ONE .lake DIRECTORY AND ONE CLI LOCK: a missing .olean,
+  or a horizon-CLI timeout, is often a sibling run in flight rather than a real failure.
+
+
+  Established 2026-07-27 (run 0054, task ajc-truth) with three runs (0053/0054/0055)
+  live on the same project. Written directly to the inbox store because the CLI itself
+  was locked out — see symptom 3.
+
+
+  SYMPTOM 1 — a green file suddenly fails. ''lake env lean scripts/axiom-frontier.lean''
+  failed with "object file ''.../Adelic/SectionBounds.olean'' of module ... does not
+  exist" on a file that had run green minutes earlier and whose content had not changed.
+  A sibling team was rebuilding that module at that instant, so its .olean was transiently
+  absent from the shared .lake/build tree. Fix: rebuild, then re-run the check. Do
+  NOT conclude a proof or probe is broken on a missing-.olean error while other runs
+  are live.
+
+
+  SYMPTOM 2 — an 8-second check takes many minutes. lake serialises on a shared lock.
+  With 25-30 queued build processes from other runs, a narrow check blocks for a long
+  time. It is waiting, not hung: check ''ps aux | grep "[l]ake build" | wc -l'' for
+  queue depth before drawing conclusions, and launch build-then-check as a single
+  backgrounded sequence you then wait on, rather than as two foreground commands that
+  each risk a timeout.
+
+
+  SYMPTOM 3 — horizon CLI writes time out or apply PARTIALLY. The CLI serialises on
+  .archon-horizon/locks/workspace-commit.lock, whose contents are the holder pid —
+  probe it, because a LIVE pid means contention, not a stale lock to clear. Under
+  contention ''roadmap set'', ''inbox comment'' and ''inbox add'' can time out mid-write.
+  Two consequences worth knowing: (a) verify whether a write landed by reading .archon-horizon/roadmap/items/<id>.yaml
+  or .../inbox/local/items/<id>.yaml rather than assuming a timeout meant failure;
+  (b) expect partial application — a single ''roadmap set --summary --owner --pin-commit''
+  landed the summary and silently dropped owner and pin-commit, and repeating it under
+  contention dropped them again. Set one field per call and verify on disk.
+
+
+  THE REPORTING RULE THAT FOLLOWS. Do not carry a green result forward from an earlier
+  run of the same file once the environment has been rebuilt underneath it. Re-run
+  it, or say plainly in the report which run the result came from and that the environment
+  has changed since. Related: [[a-new-module-with-no-importer-looks-green-and-is-invisible]].'
+labels:
+- agent-ready
+- persistent
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T10:45:00.000000+00:00'
+updated_at: '2026-07-27T10:45:00.000000+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0004-horizon-ajc-truth
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
