@@ -3,15 +3,14 @@ title: 'Finite-field avoidance: bound fibre support by g and avoid it after a la
   finite extension'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Complete the arbitrary-field half of R1. Prove a finite-cardinality analogue
-  of P1.exists_matrix_finite_subset_chartInter: two pencil parameters can be chosen
-  outside the finite bad set whenever the field has at least two more elements than
-  that set. Derive a uniform bound on the cardinality of the image in P1 of a ThetaGeneratorSeed
-  residue fibre from its degree-g or rankAtStalk data, without using a certificate.
-  For a finite base field choose a sufficiently large finite Galois extension K/k,
-  apply the bounded avoidance theorem over K, and feed the resulting fixed-twist atlas
-  into the existing Galois-descent substrate. A finite extension must not be treated
-  as Infinite.'
+summary: 'CURRENT STATE 2026-07-27: 2/3 child deliverables are done. finite-field-avoid.cardinality
+  (e602378af) proves the exact finite-cardinality P1 avoidance theorem under S.ncard
+  + 2 <= card(k). finite-field-avoid.support-degree (d6c67f41d) constructs the pointwise
+  seed residue equations without a certificate or hproj and proves their support has
+  at most g points. REMAINING: finite-field-avoid.descent must choose a large finite
+  Galois extension, transport P1 twists and fixed-twist divisor charts through scalar
+  extension, and descend the semilinear outer atlas. That last step depends on the
+  twist-atlas architecture; the aggregate row remains pending.'
 status: pending
 kind: proof
 priority: high
@@ -35,3 +34,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
   milestone: w4-gate
+  updated_at: '2026-07-27T12:06:07.170293+00:00'
+  pinned_commits:
+  - d6c67f41d
+  - e602378af
