@@ -293,8 +293,7 @@ theorem exists_bound_subsingleton_h1Mod
     (hpeel : ∀ D' : X.WeilDivisor,
       (∀ P : X.PrimeDivisor, (show X.PrimeDivisor →₀ ℤ from D₀) P ≤
         (show X.PrimeDivisor →₀ ℤ from D') P) →
-      ∀ x ∈ sectionSub k (U₀ ⊓ U₁) D', ∃ y ∈ sectionSub k (U₀ ⊓ U₁) D₀,
-        x - y ∈ coboundarySub k U₀ U₁ D') :
+      Peel k U₀ U₁ D₀ D') :
     ∃ b : ℤ, ∀ D : X.WeilDivisor, b ≤ degK k D →
       Subsingleton (H1Mod k U₀ U₁ D) := by
   refine ⟨degK k D₀ + 1 - chi k U₀ U₁ 0, fun D hD => ?_⟩
