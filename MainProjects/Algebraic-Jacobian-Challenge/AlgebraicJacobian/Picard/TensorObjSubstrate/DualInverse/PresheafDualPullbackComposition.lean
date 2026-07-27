@@ -3,6 +3,7 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
+import Mathlib
 import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse.PresheafDualPullback
 
 /-!

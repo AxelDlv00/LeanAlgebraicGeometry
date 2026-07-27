@@ -3,7 +3,19 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import Mathlib
+import Mathlib.Algebra.Category.ModuleCat.FilteredColimits
+import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
+import Mathlib.AlgebraicGeometry.Morphisms.Flat
+import Mathlib.AlgebraicGeometry.Morphisms.Proper
+import Mathlib.CategoryTheory.EffectiveEpi.Comp
+import Mathlib.CategoryTheory.ExtremalEpi
+import Mathlib.CategoryTheory.Limits.Shapes.Countable
+import Mathlib.CategoryTheory.Limits.SmallComplete
+import Mathlib.CategoryTheory.Sites.Abelian
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.PicardGroup
+import Mathlib.Tactic.SetNotationForOrder
+import Mathlib.Topology.Sheaves.Over
 import AlgebraicJacobian.Picard.HilbertPolynomial
 import AlgebraicJacobian.Picard.SectionBaseChange
 import AlgebraicJacobian.Cohomology.FlatBaseChange

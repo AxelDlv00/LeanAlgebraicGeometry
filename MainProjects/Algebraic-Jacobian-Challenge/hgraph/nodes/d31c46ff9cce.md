@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GradedModule.polyEndHom_lastVar_sub_mem
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-27T12:05:12'
 ---
 lemma polyEndHom_lastVar_sub_mem {r : ℕ} (t : Fin (r + 1) → Module.End κ M)
     (hcomm : ∀ i j, Commute (t i) (t j)) {P P' : Submodule κ M}
@@ -28,7 +28,7 @@ lemma polyEndHom_lastVar_sub_mem {r : ℕ} (t : Fin (r + 1) → Module.End κ M)
     (hannih : P.map (t (Fin.last r)) ≤ P')
     (s : MvPolynomial (Fin (r + 1)) κ) :
     ∀ m ∈ P, (polyEndHom t hcomm s) m
-      - (polyEndHom (fun i => t (Fin.castSucc i)) (fun i j => hcomm _ _)
+      - (polyEndHom (fun i => t (Fin.castSucc i)) (fun _ _ => hcomm _ _)
           (lastVarAlgHom r κ s)) m ∈ P' := by
   induction s using MvPolynomial.induction_on with
   | C a =>

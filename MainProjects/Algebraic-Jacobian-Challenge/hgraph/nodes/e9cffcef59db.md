@@ -33,29 +33,31 @@ docstring: '**Flat base change of the global sections of the twisted fibre modul
   dimensions.  Blueprint: `lem:gamma_fiber_baseChange_field`.
 
 
-  REDUCED (wave 8): the entire scheme-level content is now the PROVED
+  The scheme-level content is carried by
 
-  `Scheme.gammaFiber_finrank_baseChange_field_of_quasicoherent` above (fibre
+  `Scheme.gammaFiber_finrank_baseChange_field_of_quasicoherent` above (transfer
 
-  properness transfer + twist-support monotonicity + the Γ-fibre flat
+  of properness to the fibre, monotonicity of the support under twisting, and
 
-  base-change core `finrank_gammaTop_baseChange_of_hasProperSupport` of
+  the flat base-change statement for `Γ`,
 
-  `Picard/SchematicSupport.lean`).  The SOLE remaining leaf is quasi-coherence
+  `finrank_gammaTop_baseChange_of_hasProperSupport` of
 
-  of the sheafified tensor `moduleTensorPow F_t L_t^{⊗m}` of quasi-coherent
+  `Picard/SchematicSupport.lean`).  What is left unproved here, and is the
 
-  modules — the affine tensor-section formula wiring pass deferred in
+  reason this declaration still uses `sorry`, is quasi-coherence of the
 
-  `Picard/TensorSectionFormula.lean` (Stacks 01CB; shared wall with
+  sheafified tensor `moduleTensorPow F_t L_t^{⊗m}` of quasi-coherent modules —
 
-  `lem:pullback_tensor_map_isiso`).'
+  the affine tensor-section formula of `Picard/TensorSectionFormula.lean`
+
+  ([Stacks 01CB]), the same input `lem:pullback_tensor_map_isiso` needs.'
 file: AlgebraicJacobian/Picard/QuotFunctorDef.lean
 generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.gammaFiber_finrank_baseChange_field
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-27T12:05:13'
 ---
 theorem gammaFiber_finrank_baseChange_field (π : X ⟶ S) (L : X.Modules)
     [L.IsQuasicoherent] {T T' : Over S} (ψ : T' ⟶ T)
@@ -78,8 +80,8 @@ theorem gammaFiber_finrank_baseChange_field (π : X ⟶ S) (L : X.Modules)
           ((Scheme.Modules.pullback (pullback.fst π T.hom)).obj L) F
           (ψ.left.base t') m := by
   refine gammaFiber_finrank_baseChange_field_of_quasicoherent π L ψ F hfp hps t' m ?_
-  -- SOLE remaining leaf (`lem:gamma_fiber_baseChange_field`): quasi-coherence
+  -- Remaining obligation (`lem:gamma_fiber_baseChange_field`): quasi-coherence
   -- of the sheafified tensor of quasi-coherent modules (Stacks 01CB), i.e. the
-  -- affine tensor-section formula for `sheafTensorObj` — the deferred wiring
-  -- pass of `Picard/TensorSectionFormula.lean`.
+  -- affine tensor-section formula for `sheafTensorObj` of
+  -- `Picard/TensorSectionFormula.lean`.
   sorry

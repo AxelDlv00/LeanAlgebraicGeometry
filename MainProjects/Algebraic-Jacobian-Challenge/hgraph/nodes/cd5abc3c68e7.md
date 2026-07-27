@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GradedModule.SubquotientDatum.coker
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-27T12:05:12'
 ---
 noncomputable def SubquotientDatum.coker {r : ℕ} (D : SubquotientDatum ℳ (r + 1)) :
     SubquotientDatum ℳ r where
@@ -23,9 +23,9 @@ noncomputable def SubquotientDatum.coker {r : ℕ} (D : SubquotientDatum ℳ (r 
   hN := D.hN
   hN' := coker_isHomogeneous ℳ (D.hraise (Fin.last r)) D.hN D.hN'
   t := fun i => D.t (Fin.castSucc i)
-  hcomm := fun i j => D.hcomm _ _
-  hraise := fun i => D.hraise _
-  hpresN := fun i => D.hpresN _
+  hcomm := fun _ _ => D.hcomm _ _
+  hraise := fun _ => D.hraise _
+  hpresN := fun _ => D.hpresN _
   hpresN' := fun i => coker_stable_full ℳ D (Fin.castSucc i)
   hfin :=
     subquotient_finite_transfer D.t D.hcomm D.hpresN (coker_stable_full ℳ D)

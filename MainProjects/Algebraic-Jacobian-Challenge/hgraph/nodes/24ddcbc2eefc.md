@@ -17,21 +17,21 @@ docstring: '**Stacks 04KV / EGA IV₂ 4.5.14**: a connected `k`-scheme with a `k
   `X ×_{Spec k} Spec K` is connected.
 
 
-  CLOSED (run 0005 session 0007, T5): the full Stacks 04KV/037Q descent substrate
+  The Stacks 04KV/037Q descent substrate lives in the sibling module
 
-  now lives in the sibling module `Picard/GeometricallyConnectedSection.lean`
+  `Picard/GeometricallyConnectedSection.lean` (tensor products of field
 
-  (tensor products of field extensions over an algebraically closed field are
+  extensions over an algebraically closed field are domains, together with the
 
-  domains + the open/closed/singleton-fiber clopen descent argument), and this
+  open/closed/singleton-fibre clopen descent argument); this lemma is a direct
 
-  helper is a direct application. Axiom-clean.'
+  application of it.'
 file: AlgebraicJacobian/Picard/IdentityComponent.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GroupScheme.geometricallyConnected_of_connected_of_section
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-27T12:33:55'
 ---
 private theorem geometricallyConnected_of_connected_of_section
     {k : Type u} [Field k] {X : Scheme.{u}}

@@ -9,11 +9,12 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjTwist.chart_overlap_swap
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-27T12:33:55'
 ---
 lemma chart_overlap_swap (i j : n) :
     (glueData n).f i j ≫ (basicOpenCover n).f i
-      = pullback.snd ((basicOpenCover n).f i) ((basicOpenCover n).f j) ≫ (basicOpenCover n).f j := by
+      = pullback.snd ((basicOpenCover n).f i) ((basicOpenCover n).f j) ≫
+        (basicOpenCover n).f j := by
   rw [gd_f, pullback.condition]
 
 set_option backward.isDefEq.respectTransparency false in

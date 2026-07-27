@@ -23,30 +23,30 @@ docstring: 'The **degree map** `Pic_{C/k}(k) → ℤ`.
   relative Picard functor).
 
 
-  The degree map is a group homomorphism for the additive structure on
+  The degree map is a group homomorphism from the additive structure on
 
-  `Pic_{C/k}(k)` (tensor product on `L`) and the standard `(ℤ, +)`. The full
+  `Pic_{C/k}(k)` (tensor product on `L`) to `(ℤ, +)`; only the underlying
 
-  group-homomorphism refinement / functoriality in `k` lives as a follow-up
+  function is stated here, the homomorphism property and the functoriality in
 
-  lemma in iter-186+; the file-skeleton pins only the underlying function.
+  `k` being left to separate lemmas.
 
 
-  iter-186+: the body extracts the representing invertible sheaf from
+  The construction is an open obligation: the value should be obtained by
 
-  `(PicScheme.representable C)`, forms its Hilbert polynomial via the project''s
+  extracting a representing invertible sheaf from `PicScheme.representable C`,
 
-  Hilbert-polynomial machinery (sibling `Picard/QuotScheme.lean`), and returns
+  forming its Hilbert polynomial with the machinery of the sibling file
 
-  the leading coefficient. For the iter-185 file-skeleton the body is a typed
+  `Picard/QuotScheme.lean`, and taking the leading coefficient. The body is
 
-  `sorry`.'
+  currently `sorry`.'
 file: AlgebraicJacobian/Picard/IdentityComponent.lean
 generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.PicScheme.degree
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-27T12:33:55'
 ---
 noncomputable def degree {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
@@ -71,8 +71,8 @@ Ex.~`ex:jac` + Rmk.~`rmk:Jac`; cf. Milne §I.1, Rmk. III.1.4(e)). -/
 
 namespace Pic0Scheme
 
-/- `Pic0Scheme.isAbelianVariety` (blueprint pin
-`thm:pic_zero_is_abelian_variety`) MOVED (run 0008, T5) to sibling
-`Picard/Pic0AbelianVariety.lean`, where it is assembled sorry-free from the
-per-conjunct theorems `Pic0.proper` / `Pic0.smooth` /
-`Pic0.geometricallyIrreducible` / `Pic0.grpObj` of that chapter. -/
+/- The abelian-variety identification `Pic0Scheme.isAbelianVariety`
+(blueprint `thm:pic_zero_is_abelian_variety`) lives in the sibling file
+`Picard/Pic0AbelianVariety.lean`, where it is assembled from the per-conjunct
+theorems `Pic0.proper` / `Pic0.smooth` / `Pic0.geometricallyIrreducible` /
+`Pic0.grpObj` of that chapter. -/

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GroupScheme.identityComponentSubgroupFunctor
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-27T12:33:55'
 ---
 private noncomputable def identityComponentSubgroupFunctor :
     (Over (Spec (.of k)))ᵒᵖ ⥤ GrpCat.{u} where
@@ -17,11 +17,11 @@ private noncomputable def identityComponentSubgroupFunctor :
   map {T T'} φ := GrpCat.ofHom
     { toFun := fun f => ⟨φ.unop ≫ f.1, (range_comp_left_subset _ _).trans f.2⟩
       map_one' := Subtype.ext (by
-        show φ.unop ≫ (1 : T.unop ⟶ G) = (1 : T'.unop ⟶ G)
+        change φ.unop ≫ (1 : T.unop ⟶ G) = (1 : T'.unop ⟶ G)
         simp only [Hom.one_def]
         rw [← Category.assoc, comp_toUnit])
       map_mul' := fun f g => Subtype.ext (by
-        show φ.unop ≫ (f.1 * g.1) = (φ.unop ≫ f.1) * (φ.unop ≫ g.1)
+        change φ.unop ≫ (f.1 * g.1) = (φ.unop ≫ f.1) * (φ.unop ≫ g.1)
         simp only [Hom.mul_def]
         rw [← Category.assoc, comp_lift]) }
   map_id T := by

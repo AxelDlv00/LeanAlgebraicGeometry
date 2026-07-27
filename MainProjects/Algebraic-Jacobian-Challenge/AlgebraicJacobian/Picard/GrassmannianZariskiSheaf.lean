@@ -902,6 +902,7 @@ lemma overResHom_fromGluedHom (k : κ) :
   exact (Scheme.Cover.ι_fromGlued (opensCover T.left W hW) k).symm
 
 set_option backward.isDefEq.respectTransparency false in
+omit [IsLocallyNoetherian S] in
 /-- **Restriction recovery**: the glued family restricts on each member of
 the cover to the given chart family, up to the equivalence of quotients. -/
 lemma gluedFamily_restrict (k : κ) :
@@ -984,6 +985,7 @@ lemma LocallyFreeQuotient.rel_of_restrict_rel (hW : ⨆ k, W k = ⊤)
   exact Scheme.Modules.exists_iso_of_cover_iso hW z.q z'.q (fun k => f k) he
 
 set_option backward.isDefEq.respectTransparency false in
+omit [IsLocallyNoetherian S] in
 /-- **Compatibility transport**: the sheaf-axiom compatibility of a family of
 classes over the intersections `W k ⊓ W l` yields the `GlueCompat` input of
 the gluing construction over the scheme-theoretic overlaps. -/
@@ -1070,6 +1072,7 @@ lemma glueCompat_of_map_eq (hW : ⨆ k, W k = ⊤)
   exact ⟨α, hα⟩
 
 set_option backward.isDefEq.respectTransparency false in
+omit [IsLocallyNoetherian S] in
 /-- **The Grassmannian functor is a Zariski sheaf** ([Nitsure] §1; the
 locality behind the chart construction): families of rank-`d` locally free
 quotients of `V_T` glue uniquely along open covers of the parameter scheme.

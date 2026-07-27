@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.overResHom_fromGluedHom
 type: lean
-updated: '2026-07-26T05:02:39'
+updated: '2026-07-27T13:41:49'
 ---
 lemma overResHom_fromGluedHom (k : κ) :
     Scheme.overResHom T (W k) ≫ fromGluedHom W hW = glueChartHom W hW k := by
@@ -21,3 +21,4 @@ lemma overResHom_fromGluedHom (k : κ) :
   exact (Scheme.Cover.ι_fromGlued (opensCover T.left W hW) k).symm
 
 set_option backward.isDefEq.respectTransparency false in
+omit [IsLocallyNoetherian S] in

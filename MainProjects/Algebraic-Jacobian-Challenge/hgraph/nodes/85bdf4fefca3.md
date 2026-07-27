@@ -35,10 +35,10 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.smoothProperQuotient
 type: lean
-updated: '2026-07-24T17:02:56'
+updated: '2026-07-27T12:33:55'
 ---
 theorem smoothProperQuotient {k : Type u} [Field k]
-    {Z P : (Over (Spec (.of k)))ᵒᵖ ⥤ Type (u+1)}
+    {Z P : (Over (Spec (.of k)))ᵒᵖ ⥤ Type (u + 1)}
     (α : Z ⟶ P)
     (Y : Over (Spec (.of k)))
     (_hZ : Z.RepresentableBy Y)

@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Scheme.PicScheme.`HasAbelMap`
 file: AlgebraicJacobian/Picard/FGAPicRepresentability.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.PicScheme.`HasAbelMap`
 type: lean
-updated: '2026-07-24T17:02:56'
+updated: '2026-07-27T12:34:02'
 ---
 class `HasAbelMap` is repinned to **carry the map itself** (a data field
 `abel`, no longer a bare `Prop`), so that `abelMap` acquires a genuine defining

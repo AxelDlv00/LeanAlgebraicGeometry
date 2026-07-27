@@ -6,13 +6,13 @@ decl: AlgebraicGeometry.Scheme.Modules.pullbackTensorPowIso
 docstring: '**Pullback commutes with tensor powers**: `f^*(L^{⊗m}) ≅ (f^*L)^{⊗m}`,
   by
 
-  induction on `m` from the unit case (`Modules.pullbackUnitIso`, proved
+  induction on `m` from the unit case (`Modules.pullbackUnitIso`, from
 
-  sorry-free in `TensorObjSubstrate.lean`) and the binary case
+  `TensorObjSubstrate.lean`) and the binary case
 
-  (`Modules.pullbackSheafTensorIso`, resting on the
+  (`Modules.pullbackSheafTensorIso`, which rests on
 
-  `Modules.pullbackTensorMap_isIso` leaf), the isomorphisms being pushed through
+  `Modules.pullbackTensorMap_isIso`), the isomorphisms being pushed through
 
   the recursion `L^{⊗(m+1)} = L^{⊗m} ⊗ L` by the tensor congruence
 
@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.pullbackTensorPowIso
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-27T12:05:12'
 ---
 noncomputable def Modules.pullbackTensorPowIso {Z Y : Scheme.{u}} (f : Y ⟶ Z)
     (L : Z.Modules) :

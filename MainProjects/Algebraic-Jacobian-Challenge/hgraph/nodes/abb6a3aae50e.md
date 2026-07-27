@@ -3,9 +3,9 @@ author: sync
 content_type: lemma
 created: '2026-07-16T21:14:25'
 decl: RingTheory.CohenMacaulay.exists_notMemSq_of_spanFinrank_pos
-docstring: '**Axiom-clean Nakayama witness.** For a Noetherian local ring `(R, 𝔪)`
+docstring: '**Nakayama witness.** For a Noetherian local ring `(R, 𝔪)` with
 
-  with `spanFinrank 𝔪 ≥ 1`, there exists `x ∈ 𝔪` with `x ∉ 𝔪²`.
+  `spanFinrank 𝔪 ≥ 1`, there exists `x ∈ 𝔪` with `x ∉ 𝔪²`.
 
 
   This is the "cotangent space is nonzero" content: by Nakayama, if `𝔪 ⊆ 𝔪²`
@@ -16,5 +16,5 @@ generated: lean
 lean_status: lean_ok
 title: RingTheory.CohenMacaulay.exists_notMemSq_of_spanFinrank_pos
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-27T12:05:10'
 ---

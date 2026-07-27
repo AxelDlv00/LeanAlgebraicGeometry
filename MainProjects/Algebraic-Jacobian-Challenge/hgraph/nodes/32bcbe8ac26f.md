@@ -3,29 +3,27 @@ author: sync
 content_type: instance
 created: '2026-07-16T21:14:26'
 decl: AlgebraicGeometry.Scheme.PicScheme.instPicSchemeLocallyOfFiniteType
-docstring: 'Existence instance for `PicSchemeLocallyOfFiniteType` — **PROVED** (run
+docstring: 'Existence instance for `PicSchemeLocallyOfFiniteType`: Kleiman §4 Thm
 
-  0010): Kleiman §4 Thm `th:main`(1) makes local finiteness part of the same
+  `th:main`(1) makes local finiteness part of the same existence package as
 
-  existence package as representability, so the strengthened `HasPicScheme`
+  representability, so the `HasPicScheme` existential carries it and the
 
-  existential carries it and the property of the chosen witness is the second
+  property of the chosen witness is the second component of its `choose_spec`.
 
-  component of its `choose_spec`. The instance hypothesis is now
+  The instance hypothesis is `[HasPicScheme C]` rather than
 
-  `[HasPicScheme C]` rather than `[HasRationalPoint C]`: the rational-point
+  `[HasRationalPoint C]`: the rational-point conditionality lives entirely in
 
-  conditionality lives entirely in `instHasPicScheme` (which supplies
+  `instHasPicScheme` (which supplies `HasPicScheme C`), and any consumer able
 
-  `HasPicScheme C`), and any consumer able to name `PicScheme C` already
-
-  quantifies over `[HasPicScheme C]`.'
+  to name `PicScheme C` already quantifies over `[HasPicScheme C]`.'
 file: AlgebraicJacobian/Picard/FGAPicRepresentability.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.instPicSchemeLocallyOfFiniteType
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-27T12:33:55'
 ---
 instance instPicSchemeLocallyOfFiniteType {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

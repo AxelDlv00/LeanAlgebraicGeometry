@@ -29,29 +29,31 @@ docstring: '**The identity component is of finite type and geometrically irreduc
   cover `G^0` and `G^0` is quasi-compact.
 
 
-  CLOSED (run 0009, T6): `LocallyOfFiniteType` as before (open immersion
+  The three conjuncts are obtained as follows: `LocallyOfFiniteType` because
 
-  composed with `G.hom`); `QuasiCompact` via `identityComponent_compactSpace`
+  the structural morphism is an open immersion composed with `G.hom`;
 
-  (Kleiman''s product trick over the algebraic closure + Jacobson density +
+  `QuasiCompact` from `identityComponent_compactSpace` (Kleiman''s product trick
 
-  descent along the surjective base-change projection) together with the
+  over the algebraic closure, Jacobson density, and descent along the
 
-  affine-target characterisation of quasi-compactness;
+  surjective base-change projection) together with the affine-target
 
-  `GeometricallyIrreducible` via `identityComponent_geometricallyIrreducible`
+  characterisation of quasi-compactness; `GeometricallyIrreducible` from
 
-  (translation of an irreducible open through all closed points over the
+  `identityComponent_geometricallyIrreducible` (translation of an irreducible
 
-  algebraic closure, EGA I 6.1.10, and descent along the surjective
+  open through all closed points over the algebraic closure, EGA I 6.1.10, and
 
-  projection from the algebraic closure of each field extension).'
+  descent along the surjective projection from the algebraic closure of each
+
+  field extension).'
 file: AlgebraicJacobian/Picard/IdentityComponent.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GroupScheme.IdentityComponent.isFiniteTypeGeometricallyIrreducible
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-27T12:33:55'
 ---
 theorem IdentityComponent.isFiniteTypeGeometricallyIrreducible
     {k : Type u} [Field k]
