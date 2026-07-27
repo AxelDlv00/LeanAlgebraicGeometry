@@ -51,8 +51,9 @@ The three leaves are each stated at exactly the strength the assembly consumes:
   unproved, so the leaf presupposes an obligation rather than resting on one.
   `finrank_tangentSpace_pic0_eq_genus` measures what remains: the *dimension count*
   `dim T_e Pic⁰_{C/k} = genus C` is landed mathematics and holds here with no transport,
-  so the leaf owes `Pic0.smooth` plus the passage from a tangent-space dimension to
-  Mathlib's presentation-based `SmoothOfRelativeDimension`, and nothing else.
+  so the leaf owes `Pic0.smooth` plus a translation between two invariants of smoothness
+  — the tangent-space dimension and the rank of `Ω`, which is what Mathlib's
+  presentation-based `SmoothOfRelativeDimension` is characterised by — and nothing else.
 - `isAlbanese_pic0` — the Albanese universal property over an arbitrary base field and
   for every marked point, where the landed proof covers the algebraically closed,
   positive-genus case. `isAlbanese_pic0_of_isAlgClosed` measures the distance exactly:
@@ -314,10 +315,21 @@ dimension into a relative dimension:
 1. `Scheme.Pic0.smooth` — bare smoothness of `Pic⁰_{C/k}` over `k`, itself `sorry`-bodied
    upstream, so leaf B presupposes an obligation rather than reducing one;
 2. the passage from "smooth, with `dim_{κ(e)} T_e = n`" to
-   `SmoothOfRelativeDimension n`. Mathlib's `SmoothOfRelativeDimension` is defined by
-   local standard-smooth presentations, not by a tangent-space dimension, and it carries
-   no bridge in either direction, so this step is missing mathematics rather than
-   bookkeeping.
+   `SmoothOfRelativeDimension n`. Mathlib defines the latter by local standard-smooth
+   presentations, not by a tangent-space dimension. There *is* a bridge, but it is at the
+   algebra level and it goes through a different invariant:
+   `Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth` characterises
+   relative dimension `n` as `Module.rank S Ω[S⁄R] = n`, the rank of the module of Kähler
+   differentials. So the missing mathematics is (i) the identification of that rank with
+   the tangent-space dimension at the identity — over a field these are dual to one
+   another, but the statement has to be made and the duality is where a rank/`finrank`
+   mismatch would bite — and (ii) the passage from an affine-local statement about
+   presentations to the scheme-level class, which quantifies over an affine cover of
+   `Pic⁰_{C/k}` rather than over a single point.
+
+   This is worth stating precisely rather than as "no bridge exists", which an earlier
+   version of this docstring claimed: the leaf's cost is a translation between two
+   invariants of smoothness, not the construction of one from nothing.
 
 Like `isAlbanese_pic0_of_isAlgClosed`, this is a faithful record of a distance rather
 than a discharge: its axioms carry `sorryAx`, because the dimension chain it invokes
