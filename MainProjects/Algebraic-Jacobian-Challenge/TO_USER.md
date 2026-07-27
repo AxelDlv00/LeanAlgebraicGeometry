@@ -11,16 +11,22 @@
   integrality with it, and that half turned out to be a theorem, now proved
   (`geometricallyIntegral_of_curve`).
 
-- **Sorry-free is not axiom-clean, and there are three separate ways to be misled.**
+- **Sorry-free is not axiom-clean, and there are five separate ways to be misled.**
   Run `lake env lean scripts/axiom-frontier.lean` before believing any completeness
-  number.  (1) Two `sorry`-bodied *instances* (`instHasPicScheme`,
+  number; it currently probes 89 declarations, 54 clean and 35 carrying `sorryAx`.
+  (1) Two `sorry`-bodied *instances* (`instHasPicScheme`,
   `pullback_preservesFiniteLimits`) leak through synthesis, so a theorem reports
   clean axioms while every real consumer depends on `sorryAx`.  (2) An *unproved*
   named hypothesis in a statement is invisible to the check.  (3) So is a *false*
   one — which makes the theorem vacuously true and perfectly clean; this was found
-  in the rigid-pushforward cone, not hypothesised.  Genuinely clean and
-  unconditional, verified: the adelic genus lane, degree-1 affine vanishing, and the
-  Čech higher-direct-image comparison.
+  in the rigid-pushforward cone, not hypothesised.  (4) So is an *instance binder
+  nothing can instantiate* for the object actually used; this cost a claimed
+  discharge in the Riemann–Roch lane this week, caught and retracted.  (5) An
+  unrooted module is not probed at all, because the root import never reaches it.
+  Genuinely clean and unconditional, verified: the adelic genus lane, degree-1
+  affine vanishing, the Čech higher-direct-image comparison, and — new — the
+  local-freeness half of the rigidified pushforward with the integrality of
+  `ℙ¹_k` under it.
 
 - **The headline is wired, and now rests on five stated obligations.**
   `picardJacobianWitness` is built from `Pic⁰_{C/k}` and reaches 97 project

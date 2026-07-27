@@ -1844,7 +1844,7 @@
 \newlabel{def:gr_universalMinorInv}{{1360}{460}{The Cramer inverse \((X^I_J)^{-1}\)}{theorem.1360}{}}
 \newlabel{lem:gr_universalMinorInv_identities}{{1361}{460}{The Cramer inverse is a two-sided inverse}{theorem.1361}{}}
 \newlabel{def:gr_image_matrix}{{1362}{461}{The image matrix \(M = (X^I_J)^{-1} X^I\)}{theorem.1362}{}}
-\newlabel{def:gr_transition_pre}{{1363}{461}{The pre-localisation hom \(\tilde \theta _{I,J} : \mathbb {Z}[X^J}{theorem.1363}{}}
+\newlabel{def:gr_transition_pre}{{1363}{461}{The pre-localisation hom \(\tilde \theta _{I,J} : \mathbb {Z}[X^J] \to R^I_J\)}{theorem.1363}{}}
 \newlabel{lem:gr_transition_pre_unit}{{1364}{461}{The pre-hom sends \(P^J_I\) to a unit}{theorem.1364}{}}
 \newlabel{def:gr_transition}{{1365}{461}{Transition map \(\theta _{I,J}\)}{theorem.1365}{}}
 \newlabel{lem:gr_transition_self}{{1366}{461}{\(\theta _{I,I}\) is the identity}{theorem.1366}{}}
@@ -1885,7 +1885,7 @@
 \newlabel{def:gr_away_pullback_iso}{{1399}{467}{Pullback of two principal opens of \(\Spec A\)}{theorem.1399}{}}
 \newlabel{lem:gr_awayPullbackIso_inv_fst}{{1400}{467}{Left leg of the pullback isomorphism}{theorem.1400}{}}
 \newlabel{lem:gr_awayPullbackIso_inv_snd}{{1401}{467}{Right leg of the pullback isomorphism}{theorem.1401}{}}
-\newlabel{def:gr_away_mul_comm_equiv}{{1402}{467}{Order-swap isomorphism \(A[1/(xy)}{theorem.1402}{}}
+\newlabel{def:gr_away_mul_comm_equiv}{{1402}{467}{Order-swap isomorphism \(A[1/(xy)] \cong A[1/(yx)]\)}{theorem.1402}{}}
 \newlabel{lem:gr_awayMulCommEquiv_comp_algebraMap}{{1403}{468}{The order-swap lies over the base ring}{theorem.1403}{}}
 \newlabel{def:gr_chart_transition'}{{1404}{468}{The triple-overlap transition \(t'\)}{theorem.1404}{}}
 \newlabel{lem:gr_chartTransition'_ringIdentity}{{1405}{468}{The \(t'\) ring identity}{theorem.1405}{}}
@@ -2080,632 +2080,640 @@
 \newlabel{subsec:fga_pic_qt}{{25.3.1}{512}{The smooth-proper quotient lemma}{subsection.25.3.1}{}}
 \newlabel{lem:smooth_proper_quotient}{{1540}{512}{Smooth-proper quotient of \'etale sheaves}{theorem.1540}{}}
 \newlabel{rem:smooth_proper_quotient_hypothesis}{{1541}{513}{Quasi-projectivity is load-bearing}{theorem.1541}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {25.4}Group-scheme structure}{513}{section.25.4}\protected@file@percent }
-\newlabel{sec:fga_pic_group_structure}{{25.4}{513}{Group-scheme structure}{section.25.4}{}}
-\newlabel{thm:pic_is_group_scheme}{{1542}{514}{\(\Pic _{C/k}\) is a \(k\)-group scheme}{theorem.1542}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {25.5}The Picard scheme}{514}{section.25.5}\protected@file@percent }
-\newlabel{sec:fga_pic_named_definition}{{25.5}{514}{The Picard scheme}{section.25.5}{}}
-\newlabel{def:pic_scheme}{{1543}{514}{The Picard scheme}{theorem.1543}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {25.6}Construction interfaces}{514}{section.25.6}\protected@file@percent }
-\newlabel{sec:fga_pic_lean_encoding}{{25.6}{514}{Construction interfaces}{section.25.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {25.7}Auxiliary existence predicates}{515}{section.25.7}\protected@file@percent }
-\newlabel{sec:fga_pic_typeclass_scaffolding}{{25.7}{515}{Auxiliary existence predicates}{section.25.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {25.7.1}Basic functors}{515}{subsection.25.7.1}\protected@file@percent }
-\newlabel{subsec:fga_pic_functor_carriers}{{25.7.1}{515}{Basic functors}{subsection.25.7.1}{}}
-\newlabel{def:has_rational_point}{{1544}{515}{\(k\)-rational point}{theorem.1544}{}}
-\newlabel{def:pic_sharp_carrier}{{1545}{515}{Set-valued relative Picard functor}{theorem.1545}{}}
-\newlabel{def:has_div_functor}{{1546}{515}{Existence of the relative-divisor functor}{theorem.1546}{}}
-\newlabel{def:div_functor_carrier}{{1547}{516}{The relative-divisor functor}{theorem.1547}{}}
-\newlabel{def:inst_has_div_functor}{{1548}{516}{Relative-divisor functor exists}{theorem.1548}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {25.7.2}Abel-map predicate}{516}{subsection.25.7.2}\protected@file@percent }
-\newlabel{subsec:fga_pic_abel_map_carrier}{{25.7.2}{516}{Abel-map predicate}{subsection.25.7.2}{}}
-\newlabel{def:has_abel_map}{{1549}{516}{Abel-map data}{theorem.1549}{}}
-\newlabel{def:inst_has_abel_map}{{1550}{516}{Existence of the Abel map}{theorem.1550}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {25.7.3}Smooth-proper quotient predicate}{516}{subsection.25.7.3}\protected@file@percent }
-\newlabel{subsec:fga_pic_quotient_carrier}{{25.7.3}{516}{Smooth-proper quotient predicate}{subsection.25.7.3}{}}
-\newlabel{def:has_smooth_proper_quotient}{{1551}{516}{Representability of the smooth-proper quotient}{theorem.1551}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {25.7.4}Picard-scheme predicates}{516}{subsection.25.7.4}\protected@file@percent }
-\newlabel{subsec:fga_pic_scheme_carriers}{{25.7.4}{516}{Picard-scheme predicates}{subsection.25.7.4}{}}
-\newlabel{def:has_pic_scheme}{{1552}{516}{Existence of the Picard scheme}{theorem.1552}{}}
-\newlabel{def:inst_has_pic_scheme}{{1553}{516}{Picard scheme exists}{theorem.1553}{}}
-\newlabel{def:pic_sharp_representable}{{1554}{517}{Representability of \(\Pic ^\sharp _{C/k}\)}{theorem.1554}{}}
-\newlabel{def:inst_pic_sharp_representable}{{1555}{517}{Representability identification}{theorem.1555}{}}
-\newlabel{def:pic_scheme_lft}{{1556}{517}{Local finite type of \(\Pic _{C/k}\)}{theorem.1556}{}}
-\newlabel{def:inst_pic_scheme_lft}{{1557}{517}{Local-finiteness assertion}{theorem.1557}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {25.8}Dependencies of the representability theorem}{517}{section.25.8}\protected@file@percent }
-\newlabel{sec:fga_pic_sorry_closure_order}{{25.8}{517}{Dependencies of the representability theorem}{section.25.8}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {25.8.1}The Picard-scheme existence theorem}{517}{subsection.25.8.1}\protected@file@percent }
-\newlabel{subsec:sorry_has_pic_scheme}{{25.8.1}{517}{The Picard-scheme existence theorem}{subsection.25.8.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {25.8.2}The relative-divisor input}{518}{subsection.25.8.2}\protected@file@percent }
-\newlabel{subsec:sorry_has_div_functor}{{25.8.2}{518}{The relative-divisor input}{subsection.25.8.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {25.8.3}The Abel-map input}{518}{subsection.25.8.3}\protected@file@percent }
-\newlabel{subsec:sorry_has_abel_map}{{25.8.3}{518}{The Abel-map input}{subsection.25.8.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {25.8.4}Assembly of the inputs}{518}{subsection.25.8.4}\protected@file@percent }
-\newlabel{subsec:fga_pic_closure_order_summary}{{25.8.4}{518}{Assembly of the inputs}{subsection.25.8.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {25.9}Related constructions}{518}{section.25.9}\protected@file@percent }
-\newlabel{sec:fga_pic_out_of_scope}{{25.9}{518}{Related constructions}{section.25.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {25.10}Dependency structure}{519}{section.25.10}\protected@file@percent }
-\newlabel{sec:fga_pic_consistency_check}{{25.10}{519}{Dependency structure}{section.25.10}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {26}The identity component of the Picard scheme}{520}{chapter.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {25.4}The Milne--Koll\'ar route}{513}{section.25.4}\protected@file@percent }
+\newlabel{sec:fga_pic_milne_kollar}{{25.4}{513}{The Milne--Koll\'ar route}{section.25.4}{}}
+\newlabel{thm:rigid_pushforward_locally_free}{{1542}{514}{Local freeness of the rigidified pushforward}{theorem.1542}{}}
+\newlabel{lem:p1_integral}{{1543}{514}{The projective line over a field is integral}{theorem.1543}{}}
+\newlabel{thm:speiser_descent}{{1544}{514}{Speiser descent}{theorem.1544}{}}
+\newlabel{thm:galois_quotient_points}{{1545}{515}{Points of the finite Galois quotient}{theorem.1545}{}}
+\newlabel{lem:stable_affine_open}{{1546}{515}{\(\Gamma \)-stable affine neighbourhoods}{theorem.1546}{}}
+\newlabel{rem:orbit_in_affine_hypothesis}{{1547}{515}{The orbit hypothesis is load-bearing}{theorem.1547}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {25.5}Group-scheme structure}{515}{section.25.5}\protected@file@percent }
+\newlabel{sec:fga_pic_group_structure}{{25.5}{515}{Group-scheme structure}{section.25.5}{}}
+\newlabel{thm:pic_is_group_scheme}{{1548}{516}{\(\Pic _{C/k}\) is a \(k\)-group scheme}{theorem.1548}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {25.6}The Picard scheme}{516}{section.25.6}\protected@file@percent }
+\newlabel{sec:fga_pic_named_definition}{{25.6}{516}{The Picard scheme}{section.25.6}{}}
+\newlabel{def:pic_scheme}{{1549}{516}{The Picard scheme}{theorem.1549}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {25.7}Construction interfaces}{516}{section.25.7}\protected@file@percent }
+\newlabel{sec:fga_pic_lean_encoding}{{25.7}{516}{Construction interfaces}{section.25.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {25.8}Auxiliary existence predicates}{517}{section.25.8}\protected@file@percent }
+\newlabel{sec:fga_pic_typeclass_scaffolding}{{25.8}{517}{Auxiliary existence predicates}{section.25.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {25.8.1}Basic functors}{517}{subsection.25.8.1}\protected@file@percent }
+\newlabel{subsec:fga_pic_functor_carriers}{{25.8.1}{517}{Basic functors}{subsection.25.8.1}{}}
+\newlabel{def:has_rational_point}{{1550}{517}{\(k\)-rational point}{theorem.1550}{}}
+\newlabel{def:pic_sharp_carrier}{{1551}{517}{Set-valued relative Picard functor}{theorem.1551}{}}
+\newlabel{def:has_div_functor}{{1552}{517}{Existence of the relative-divisor functor}{theorem.1552}{}}
+\newlabel{def:div_functor_carrier}{{1553}{518}{The relative-divisor functor}{theorem.1553}{}}
+\newlabel{def:inst_has_div_functor}{{1554}{518}{Relative-divisor functor exists}{theorem.1554}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {25.8.2}Abel-map predicate}{518}{subsection.25.8.2}\protected@file@percent }
+\newlabel{subsec:fga_pic_abel_map_carrier}{{25.8.2}{518}{Abel-map predicate}{subsection.25.8.2}{}}
+\newlabel{def:has_abel_map}{{1555}{518}{Abel-map data}{theorem.1555}{}}
+\newlabel{def:inst_has_abel_map}{{1556}{518}{Existence of the Abel map}{theorem.1556}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {25.8.3}Smooth-proper quotient predicate}{518}{subsection.25.8.3}\protected@file@percent }
+\newlabel{subsec:fga_pic_quotient_carrier}{{25.8.3}{518}{Smooth-proper quotient predicate}{subsection.25.8.3}{}}
+\newlabel{def:has_smooth_proper_quotient}{{1557}{518}{Representability of the smooth-proper quotient}{theorem.1557}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {25.8.4}Picard-scheme predicates}{518}{subsection.25.8.4}\protected@file@percent }
+\newlabel{subsec:fga_pic_scheme_carriers}{{25.8.4}{518}{Picard-scheme predicates}{subsection.25.8.4}{}}
+\newlabel{def:has_pic_scheme}{{1558}{518}{Existence of the Picard scheme}{theorem.1558}{}}
+\newlabel{def:inst_has_pic_scheme}{{1559}{518}{Picard scheme exists}{theorem.1559}{}}
+\newlabel{def:pic_sharp_representable}{{1560}{519}{Representability of \(\Pic ^\sharp _{C/k}\)}{theorem.1560}{}}
+\newlabel{def:inst_pic_sharp_representable}{{1561}{519}{Representability identification}{theorem.1561}{}}
+\newlabel{def:pic_scheme_lft}{{1562}{519}{Local finite type of \(\Pic _{C/k}\)}{theorem.1562}{}}
+\newlabel{def:inst_pic_scheme_lft}{{1563}{519}{Local-finiteness assertion}{theorem.1563}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {25.9}Dependencies of the representability theorem}{519}{section.25.9}\protected@file@percent }
+\newlabel{sec:fga_pic_sorry_closure_order}{{25.9}{519}{Dependencies of the representability theorem}{section.25.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {25.9.1}The Picard-scheme existence theorem}{519}{subsection.25.9.1}\protected@file@percent }
+\newlabel{subsec:sorry_has_pic_scheme}{{25.9.1}{519}{The Picard-scheme existence theorem}{subsection.25.9.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {25.9.2}The relative-divisor input}{520}{subsection.25.9.2}\protected@file@percent }
+\newlabel{subsec:sorry_has_div_functor}{{25.9.2}{520}{The relative-divisor input}{subsection.25.9.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {25.9.3}The Abel-map input}{520}{subsection.25.9.3}\protected@file@percent }
+\newlabel{subsec:sorry_has_abel_map}{{25.9.3}{520}{The Abel-map input}{subsection.25.9.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {25.9.4}Assembly of the inputs}{520}{subsection.25.9.4}\protected@file@percent }
+\newlabel{subsec:fga_pic_closure_order_summary}{{25.9.4}{520}{Assembly of the inputs}{subsection.25.9.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {25.10}Related constructions}{520}{section.25.10}\protected@file@percent }
+\newlabel{sec:fga_pic_out_of_scope}{{25.10}{520}{Related constructions}{section.25.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {25.11}Dependency structure}{521}{section.25.11}\protected@file@percent }
+\newlabel{sec:fga_pic_consistency_check}{{25.11}{521}{Dependency structure}{section.25.11}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {26}The identity component of the Picard scheme}{522}{chapter.26}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chap:Picard_IdentityComponent}{{26}{520}{The identity component of the Picard scheme}{chapter.26}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {26.1}Setup and motivation}{520}{section.26.1}\protected@file@percent }
-\newlabel{sec:pic0_setup}{{26.1}{520}{Setup and motivation}{section.26.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {26.2}The identity component of a group scheme}{520}{section.26.2}\protected@file@percent }
-\newlabel{sec:identity_component_abstract}{{26.2}{520}{The identity component of a group scheme}{section.26.2}{}}
-\newlabel{def:identity_component_group_scheme}{{1558}{520}{Identity component of a group scheme}{theorem.1558}{}}
-\newlabel{thm:identity_component_open_subgroup}{{1559}{520}{Identity component is a clopen subscheme}{theorem.1559}{}}
-\newlabel{thm:identity_component_is_subgroup_homomorphism}{{1560}{521}{Identity component inclusion is a group-scheme homomorphism}{theorem.1560}{}}
-\newlabel{thm:identity_component_finite_type_geom_irreducible}{{1561}{521}{Identity component is of finite type and geometrically irreducible}{theorem.1561}{}}
-\newlabel{thm:identity_component_base_change_commutes}{{1562}{522}{Formation of the identity component commutes with base change}{theorem.1562}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {26.2.1}Descent of connectedness along field extensions}{522}{subsection.26.2.1}\protected@file@percent }
-\newlabel{subsec:connectedness_descent}{{26.2.1}{522}{Descent of connectedness along field extensions}{subsection.26.2.1}{}}
-\newlabel{lem:maximal_ideal_evaluation_alg_closed}{{1563}{522}{Evaluation at a maximal ideal over an algebraically closed field}{theorem.1563}{}}
-\newlabel{lem:tensor_domain_finite_type_alg_closed}{{1564}{523}{Tensor product with a finite-type domain over an algebraically closed field}{theorem.1564}{}}
-\newlabel{lem:tensor_domain_alg_closed}{{1565}{523}{Tensor product of field extensions over an algebraically closed field}{theorem.1565}{}}
-\newlabel{lem:spec_domain_connected}{{1566}{523}{The spectrum of a domain is connected}{theorem.1566}{}}
-\newlabel{lem:geometrically_connected_projection_alg_closed}{{1567}{523}{Projections from constant-field base changes are geometrically connected}{theorem.1567}{}}
-\newlabel{lem:connected_base_change_alg_closed}{{1568}{523}{Connectedness is stable under base change from an algebraically closed field}{theorem.1568}{}}
-\newlabel{lem:connected_base_change_algebraic_closure}{{1569}{524}{Base change to the algebraic closure preserves connectedness given a section}{theorem.1569}{}}
-\newlabel{thm:geometrically_connected_of_section}{{1570}{524}{Connected with a rational section implies geometrically connected}{theorem.1570}{}}
-\newlabel{lem:geometricallyConnected_of_connected_of_section}{{1571}{524}{Stacks 037Q iff-direction: connected + section ⟹ geometrically connected}{theorem.1571}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {26.2.2}Topological and connectedness substrate (helper lemmas)}{524}{subsection.26.2.2}\protected@file@percent }
-\newlabel{subsec:identity_component_substrate}{{26.2.2}{524}{Topological and connectedness substrate (helper lemmas)}{subsection.26.2.2}{}}
-\newlabel{lem:noetherian_finite_connected_components}{{1572}{524}{Finitely many connected components on a Noetherian space}{theorem.1572}{}}
-\newlabel{lem:noetherian_isopen_connected_component}{{1573}{525}{Connected components are open on a Noetherian space}{theorem.1573}{}}
-\newlabel{lem:identity_component_locally_connected}{{1574}{525}{The underlying space of a locally-finite-type \(k\)-scheme is locally connected}{theorem.1574}{}}
-\newlabel{def:identity_section_point}{{1575}{525}{The identity point}{theorem.1575}{}}
-\newlabel{def:identity_component_carrier}{{1576}{525}{The carrier of the identity component}{theorem.1576}{}}
-\newlabel{lem:identity_component_carrier_connected}{{1577}{525}{The carrier of the identity component is connected}{theorem.1577}{}}
-\newlabel{lem:identity_component_connected}{{1578}{525}{The identity component is connected}{theorem.1578}{}}
-\newlabel{lem:identity_component_section_range_subset}{{1579}{526}{The identity section lands in the identity-component carrier}{theorem.1579}{}}
-\newlabel{def:identity_component_section}{{1580}{526}{The identity section into the identity component}{theorem.1580}{}}
-\newlabel{lem:identity_component_section_is_section}{{1581}{526}{The lifted identity section is a section}{theorem.1581}{}}
-\newlabel{lem:identity_component_geometrically_connected}{{1582}{526}{The identity component is geometrically connected}{theorem.1582}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {26.3}The identity component of the Picard scheme}{526}{section.26.3}\protected@file@percent }
-\newlabel{sec:pic0_definition}{{26.3}{526}{The identity component of the Picard scheme}{section.26.3}{}}
-\newlabel{def:pic_zero_subscheme}{{1583}{526}{The identity component of the Picard scheme}{theorem.1583}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {26.4}The degree map}{526}{section.26.4}\protected@file@percent }
-\newlabel{sec:pic_degree}{{26.4}{526}{The degree map}{section.26.4}{}}
-\newlabel{def:divisor_degree_pic}{{1584}{527}{Degree of a Picard class}{theorem.1584}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {26.5}The Pic-zero abelian variety}{527}{section.26.5}\protected@file@percent }
-\newlabel{sec:pic0_abelian_variety}{{26.5}{527}{The Pic-zero abelian variety}{section.26.5}{}}
-\newlabel{thm:pic_zero_is_abelian_variety}{{1585}{527}{\(\Pic ^0_{C/k}\) is an abelian variety}{theorem.1585}{}}
-\newlabel{thm:pic_zero_dimension_equals_genus}{{1586}{528}{Dimension of \(\Pic ^0_{C/k}\) equals the genus of \(C\)}{theorem.1586}{}}
-\newlabel{thm:pic_zero_k_points_iff_degree_zero}{{1587}{528}{\(k\)-points of \(\Pic ^0_{C/k}\) are the kernel of the degree map}{theorem.1587}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {26.6}Lean encoding}{529}{section.26.6}\protected@file@percent }
-\newlabel{sec:pic0_lean_encoding}{{26.6}{529}{Lean encoding}{section.26.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {26.7}Out of scope}{530}{section.26.7}\protected@file@percent }
-\newlabel{sec:pic0_out_of_scope}{{26.7}{530}{Out of scope}{section.26.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {26.8}Internal-consistency check}{530}{section.26.8}\protected@file@percent }
-\newlabel{sec:pic0_consistency_check}{{26.8}{530}{Internal-consistency check}{section.26.8}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {27}The identity component \(\Pic  ^0_{C/k}\) as an abelian variety}{532}{chapter.27}\protected@file@percent }
+\newlabel{chap:Picard_IdentityComponent}{{26}{522}{The identity component of the Picard scheme}{chapter.26}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {26.1}Setup and motivation}{522}{section.26.1}\protected@file@percent }
+\newlabel{sec:pic0_setup}{{26.1}{522}{Setup and motivation}{section.26.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {26.2}The identity component of a group scheme}{522}{section.26.2}\protected@file@percent }
+\newlabel{sec:identity_component_abstract}{{26.2}{522}{The identity component of a group scheme}{section.26.2}{}}
+\newlabel{def:identity_component_group_scheme}{{1564}{522}{Identity component of a group scheme}{theorem.1564}{}}
+\newlabel{thm:identity_component_open_subgroup}{{1565}{522}{Identity component is a clopen subscheme}{theorem.1565}{}}
+\newlabel{thm:identity_component_is_subgroup_homomorphism}{{1566}{523}{Identity component inclusion is a group-scheme homomorphism}{theorem.1566}{}}
+\newlabel{thm:identity_component_finite_type_geom_irreducible}{{1567}{523}{Identity component is of finite type and geometrically irreducible}{theorem.1567}{}}
+\newlabel{thm:identity_component_base_change_commutes}{{1568}{524}{Formation of the identity component commutes with base change}{theorem.1568}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {26.2.1}Descent of connectedness along field extensions}{524}{subsection.26.2.1}\protected@file@percent }
+\newlabel{subsec:connectedness_descent}{{26.2.1}{524}{Descent of connectedness along field extensions}{subsection.26.2.1}{}}
+\newlabel{lem:maximal_ideal_evaluation_alg_closed}{{1569}{524}{Evaluation at a maximal ideal over an algebraically closed field}{theorem.1569}{}}
+\newlabel{lem:tensor_domain_finite_type_alg_closed}{{1570}{525}{Tensor product with a finite-type domain over an algebraically closed field}{theorem.1570}{}}
+\newlabel{lem:tensor_domain_alg_closed}{{1571}{525}{Tensor product of field extensions over an algebraically closed field}{theorem.1571}{}}
+\newlabel{lem:spec_domain_connected}{{1572}{525}{The spectrum of a domain is connected}{theorem.1572}{}}
+\newlabel{lem:geometrically_connected_projection_alg_closed}{{1573}{525}{Projections from constant-field base changes are geometrically connected}{theorem.1573}{}}
+\newlabel{lem:connected_base_change_alg_closed}{{1574}{525}{Connectedness is stable under base change from an algebraically closed field}{theorem.1574}{}}
+\newlabel{lem:connected_base_change_algebraic_closure}{{1575}{526}{Base change to the algebraic closure preserves connectedness given a section}{theorem.1575}{}}
+\newlabel{thm:geometrically_connected_of_section}{{1576}{526}{Connected with a rational section implies geometrically connected}{theorem.1576}{}}
+\newlabel{lem:geometricallyConnected_of_connected_of_section}{{1577}{526}{Stacks 037Q iff-direction: connected + section ⟹ geometrically connected}{theorem.1577}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {26.2.2}Topological and connectedness substrate (helper lemmas)}{526}{subsection.26.2.2}\protected@file@percent }
+\newlabel{subsec:identity_component_substrate}{{26.2.2}{526}{Topological and connectedness substrate (helper lemmas)}{subsection.26.2.2}{}}
+\newlabel{lem:noetherian_finite_connected_components}{{1578}{526}{Finitely many connected components on a Noetherian space}{theorem.1578}{}}
+\newlabel{lem:noetherian_isopen_connected_component}{{1579}{527}{Connected components are open on a Noetherian space}{theorem.1579}{}}
+\newlabel{lem:identity_component_locally_connected}{{1580}{527}{The underlying space of a locally-finite-type \(k\)-scheme is locally connected}{theorem.1580}{}}
+\newlabel{def:identity_section_point}{{1581}{527}{The identity point}{theorem.1581}{}}
+\newlabel{def:identity_component_carrier}{{1582}{527}{The carrier of the identity component}{theorem.1582}{}}
+\newlabel{lem:identity_component_carrier_connected}{{1583}{527}{The carrier of the identity component is connected}{theorem.1583}{}}
+\newlabel{lem:identity_component_connected}{{1584}{527}{The identity component is connected}{theorem.1584}{}}
+\newlabel{lem:identity_component_section_range_subset}{{1585}{528}{The identity section lands in the identity-component carrier}{theorem.1585}{}}
+\newlabel{def:identity_component_section}{{1586}{528}{The identity section into the identity component}{theorem.1586}{}}
+\newlabel{lem:identity_component_section_is_section}{{1587}{528}{The lifted identity section is a section}{theorem.1587}{}}
+\newlabel{lem:identity_component_geometrically_connected}{{1588}{528}{The identity component is geometrically connected}{theorem.1588}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {26.3}The identity component of the Picard scheme}{528}{section.26.3}\protected@file@percent }
+\newlabel{sec:pic0_definition}{{26.3}{528}{The identity component of the Picard scheme}{section.26.3}{}}
+\newlabel{def:pic_zero_subscheme}{{1589}{528}{The identity component of the Picard scheme}{theorem.1589}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {26.4}The degree map}{528}{section.26.4}\protected@file@percent }
+\newlabel{sec:pic_degree}{{26.4}{528}{The degree map}{section.26.4}{}}
+\newlabel{def:divisor_degree_pic}{{1590}{529}{Degree of a Picard class}{theorem.1590}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {26.5}The Pic-zero abelian variety}{529}{section.26.5}\protected@file@percent }
+\newlabel{sec:pic0_abelian_variety}{{26.5}{529}{The Pic-zero abelian variety}{section.26.5}{}}
+\newlabel{thm:pic_zero_is_abelian_variety}{{1591}{529}{\(\Pic ^0_{C/k}\) is an abelian variety}{theorem.1591}{}}
+\newlabel{thm:pic_zero_dimension_equals_genus}{{1592}{530}{Dimension of \(\Pic ^0_{C/k}\) equals the genus of \(C\)}{theorem.1592}{}}
+\newlabel{thm:pic_zero_k_points_iff_degree_zero}{{1593}{530}{\(k\)-points of \(\Pic ^0_{C/k}\) are the kernel of the degree map}{theorem.1593}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {26.6}Lean encoding}{531}{section.26.6}\protected@file@percent }
+\newlabel{sec:pic0_lean_encoding}{{26.6}{531}{Lean encoding}{section.26.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {26.7}Out of scope}{532}{section.26.7}\protected@file@percent }
+\newlabel{sec:pic0_out_of_scope}{{26.7}{532}{Out of scope}{section.26.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {26.8}Internal-consistency check}{532}{section.26.8}\protected@file@percent }
+\newlabel{sec:pic0_consistency_check}{{26.8}{532}{Internal-consistency check}{section.26.8}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {27}The identity component \(\Pic  ^0_{C/k}\) as an abelian variety}{534}{chapter.27}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chap:Picard_Pic0AbelianVariety}{{27}{532}{The identity component \(\Pic ^0_{C/k}\) as an abelian variety}{chapter.27}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {27.1}Tangent space at the identity}{532}{section.27.1}\protected@file@percent }
-\newlabel{sec:pic0_tangent_space}{{27.1}{532}{Tangent space at the identity}{section.27.1}{}}
-\newlabel{lem:tangent_derivation_descends}{{1588}{532}{Derivations descend to the cotangent space}{theorem.1588}{}}
-\newlabel{lem:tangent_derivation_cotangent_dual}{{1589}{532}{Derivations are the cotangent dual}{theorem.1589}{}}
-\newlabel{lem:tangent_dual_number_derivation}{{1590}{533}{Dual-number points are derivations}{theorem.1590}{}}
-\newlabel{cor:tangent_dual_number_cotangent_dual}{{1591}{533}{The tangent space is the cotangent dual}{theorem.1591}{}}
-\newlabel{lem:tangent_cotangent_dual_kappa_linear}{{1592}{533}{The cotangent dual is $\kappa $-linear}{theorem.1592}{}}
-\newlabel{cor:tangent_dual_number_cotangent_space_dual}{{1593}{533}{Tangent space as the dual vector space of $\mathfrak m/\mathfrak m^2$}{theorem.1593}{}}
-\newlabel{lem:tangent_dual_number_local_iff}{{1594}{534}{Local maps to the dual numbers}{theorem.1594}{}}
-\newlabel{lem:tangent_spec_local_ring_at}{{1595}{534}{$\operatorname {Spec}$ of a local ring at a fixed point}{theorem.1595}{}}
-\newlabel{cor:tangent_spec_dual_number_at}{{1596}{534}{Dual-number points at a fixed point}{theorem.1596}{}}
-\newlabel{def:tangent_stalk_structure_hom}{{1597}{534}{Structure homomorphism into a stalk}{theorem.1597}{}}
-\newlabel{def:tangent_stalk_algebra}{{1598}{534}{The stalk as a $k$-algebra}{theorem.1598}{}}
-\newlabel{lem:tangent_from_spec_stalk_over}{{1599}{535}{Canonical map from the spectrum of a stalk, over $\operatorname {Spec} k$}{theorem.1599}{}}
-\newlabel{lem:tangent_over_triangle_iff}{{1600}{535}{Over-triangles are structure-compatibilities}{theorem.1600}{}}
-\newlabel{cor:tangent_over_dual_number_alghom}{{1601}{535}{Over-$\operatorname {Spec} k$ dual-number points are local $k$-algebra maps}{theorem.1601}{}}
-\newlabel{thm:tangent_over_dual_number_cotangent_dual}{{1602}{535}{Tangent space of a $k$-scheme at a rational point}{theorem.1602}{}}
-\newlabel{lem:tangent_section_retraction}{{1603}{535}{A section retracts the structure homomorphism}{theorem.1603}{}}
-\newlabel{lem:tangent_section_rational}{{1604}{536}{The image of a section is a rational point}{theorem.1604}{}}
-\newlabel{cor:tangent_section_cotangent_dual}{{1605}{536}{Tangent space at the image of a section}{theorem.1605}{}}
-\newlabel{def:tangent_identity_section}{{1606}{536}{Identity section of a group scheme}{theorem.1606}{}}
-\newlabel{lem:tangent_identity_section_comp}{{1607}{536}{The identity section is a section}{theorem.1607}{}}
-\newlabel{thm:tangent_identity_cotangent_dual}{{1608}{536}{Tangent space of a group scheme at the identity}{theorem.1608}{}}
-\newlabel{thm:pic0_group_structure}{{1609}{536}{\(\Pic ^0_{C/k}\) is a \(k\)-group scheme}{theorem.1609}{}}
-\newlabel{thm:pic0_tangent_cotangent_dual}{{1610}{537}{Dual-number points of \(\Pic ^0_{C/k}\) at the identity}{theorem.1610}{}}
-\newlabel{thm:pic0_tangent_space_iso}{{1611}{537}{Tangent space at the identity: \(\tu T_0 \Pic ^0_{C/k} \cong H^1(C, \mathcal {O}_C)\)}{theorem.1611}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {27.1.1}The truncated-exponential splitting, ring level}{538}{subsection.27.1.1}\protected@file@percent }
-\newlabel{sec:pic0_trunc_exp}{{27.1.1}{538}{The truncated-exponential splitting, ring level}{subsection.27.1.1}{}}
-\newlabel{lem:dual_number_fst_ring_hom}{{1612}{538}{Reduction mod \(\varepsilon \) is a ring homomorphism}{theorem.1612}{}}
-\newlabel{lem:dual_number_trunc_exp_unit}{{1613}{538}{The truncated exponential is a unit}{theorem.1613}{}}
-\newlabel{def:dual_number_trunc_exp}{{1614}{538}{The truncated exponential}{theorem.1614}{}}
-\newlabel{lem:dual_number_trunc_exp_injective}{{1615}{538}{The truncated exponential is injective}{theorem.1615}{}}
-\newlabel{def:dual_number_units_fst}{{1616}{538}{Reduction mod \(\varepsilon \) on unit groups}{theorem.1616}{}}
-\newlabel{def:dual_number_units_inl}{{1617}{539}{The constant section of the unit groups}{theorem.1617}{}}
-\newlabel{lem:dual_number_units_fst_split}{{1618}{539}{The unit-group sequence is split}{theorem.1618}{}}
-\newlabel{lem:dual_number_fst_unit_inv}{{1619}{539}{First component of an inverse unit}{theorem.1619}{}}
-\newlabel{lem:dual_number_trunc_exp_exact}{{1620}{539}{Exactness of the truncated-exponential sequence}{theorem.1620}{}}
-\newlabel{thm:dual_number_units_split}{{1621}{539}{Splitting of the dual-number unit group}{theorem.1621}{}}
-\newlabel{def:dual_number_map}{{1622}{539}{Functoriality of the dual numbers}{theorem.1622}{}}
-\newlabel{lem:dual_number_map_id}{{1623}{539}{Functoriality: identity}{theorem.1623}{}}
-\newlabel{lem:dual_number_map_comp}{{1624}{539}{Functoriality: composition}{theorem.1624}{}}
-\newlabel{lem:dual_number_map_trunc_exp}{{1625}{539}{Naturality of the truncated exponential}{theorem.1625}{}}
-\newlabel{lem:dual_number_units_fst_natural}{{1626}{540}{Naturality of reduction mod \(\varepsilon \)}{theorem.1626}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {27.2}Smoothness of \(\Pic  ^0_{C/k}\)}{540}{section.27.2}\protected@file@percent }
-\newlabel{sec:pic0_smooth}{{27.2}{540}{Smoothness of \(\Pic ^0_{C/k}\)}{section.27.2}{}}
-\newlabel{thm:pic0_smooth}{{1627}{540}{Smoothness of \(\Pic ^0_{C/k}\)}{theorem.1627}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {27.3}Properness of \(\Pic  ^0_{C/k}\)}{541}{section.27.3}\protected@file@percent }
-\newlabel{sec:pic0_proper}{{27.3}{541}{Properness of \(\Pic ^0_{C/k}\)}{section.27.3}{}}
-\newlabel{thm:pic0_proper}{{1628}{541}{Properness of \(\Pic ^0_{C/k}\)}{theorem.1628}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {27.4}Geometric irreducibility of \(\Pic  ^0_{C/k}\)}{542}{section.27.4}\protected@file@percent }
-\newlabel{sec:pic0_geom_irred}{{27.4}{542}{Geometric irreducibility of \(\Pic ^0_{C/k}\)}{section.27.4}{}}
-\newlabel{thm:pic0_geom_irred}{{1629}{542}{Geometric irreducibility of \(\Pic ^0_{C/k}\)}{theorem.1629}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {27.5}Assembly: \(\Pic  ^0_{C/k}\) is an abelian variety}{542}{section.27.5}\protected@file@percent }
-\newlabel{sec:pic0_isAbelianVariety}{{27.5}{542}{Assembly: \(\Pic ^0_{C/k}\) is an abelian variety}{section.27.5}{}}
-\newlabel{thm:pic0_isAbelianVariety}{{1630}{542}{\(\Pic ^0_{C/k}\) is an abelian variety}{theorem.1630}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {27.6}Lean encoding}{543}{section.27.6}\protected@file@percent }
-\newlabel{sec:pic0_isAbelianVariety_lean_encoding}{{27.6}{543}{Lean encoding}{section.27.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {27.7}Out of scope}{543}{section.27.7}\protected@file@percent }
-\newlabel{sec:pic0_isAbelianVariety_out_of_scope}{{27.7}{543}{Out of scope}{section.27.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {27.8}Internal-consistency check}{544}{section.27.8}\protected@file@percent }
-\newlabel{sec:pic0_isAbelianVariety_consistency_check}{{27.8}{544}{Internal-consistency check}{section.27.8}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {28}Codimension-1 indeterminacy extension (A.4.a)}{545}{chapter.28}\protected@file@percent }
+\newlabel{chap:Picard_Pic0AbelianVariety}{{27}{534}{The identity component \(\Pic ^0_{C/k}\) as an abelian variety}{chapter.27}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {27.1}Tangent space at the identity}{534}{section.27.1}\protected@file@percent }
+\newlabel{sec:pic0_tangent_space}{{27.1}{534}{Tangent space at the identity}{section.27.1}{}}
+\newlabel{lem:tangent_derivation_descends}{{1594}{534}{Derivations descend to the cotangent space}{theorem.1594}{}}
+\newlabel{lem:tangent_derivation_cotangent_dual}{{1595}{534}{Derivations are the cotangent dual}{theorem.1595}{}}
+\newlabel{lem:tangent_dual_number_derivation}{{1596}{535}{Dual-number points are derivations}{theorem.1596}{}}
+\newlabel{cor:tangent_dual_number_cotangent_dual}{{1597}{535}{The tangent space is the cotangent dual}{theorem.1597}{}}
+\newlabel{lem:tangent_cotangent_dual_kappa_linear}{{1598}{535}{The cotangent dual is $\kappa $-linear}{theorem.1598}{}}
+\newlabel{cor:tangent_dual_number_cotangent_space_dual}{{1599}{535}{Tangent space as the dual vector space of $\mathfrak m/\mathfrak m^2$}{theorem.1599}{}}
+\newlabel{lem:tangent_dual_number_local_iff}{{1600}{536}{Local maps to the dual numbers}{theorem.1600}{}}
+\newlabel{lem:tangent_spec_local_ring_at}{{1601}{536}{$\operatorname {Spec}$ of a local ring at a fixed point}{theorem.1601}{}}
+\newlabel{cor:tangent_spec_dual_number_at}{{1602}{536}{Dual-number points at a fixed point}{theorem.1602}{}}
+\newlabel{def:tangent_stalk_structure_hom}{{1603}{536}{Structure homomorphism into a stalk}{theorem.1603}{}}
+\newlabel{def:tangent_stalk_algebra}{{1604}{536}{The stalk as a $k$-algebra}{theorem.1604}{}}
+\newlabel{lem:tangent_from_spec_stalk_over}{{1605}{537}{Canonical map from the spectrum of a stalk, over $\operatorname {Spec} k$}{theorem.1605}{}}
+\newlabel{lem:tangent_over_triangle_iff}{{1606}{537}{Over-triangles are structure-compatibilities}{theorem.1606}{}}
+\newlabel{cor:tangent_over_dual_number_alghom}{{1607}{537}{Over-$\operatorname {Spec} k$ dual-number points are local $k$-algebra maps}{theorem.1607}{}}
+\newlabel{thm:tangent_over_dual_number_cotangent_dual}{{1608}{537}{Tangent space of a $k$-scheme at a rational point}{theorem.1608}{}}
+\newlabel{lem:tangent_section_retraction}{{1609}{537}{A section retracts the structure homomorphism}{theorem.1609}{}}
+\newlabel{lem:tangent_section_rational}{{1610}{538}{The image of a section is a rational point}{theorem.1610}{}}
+\newlabel{cor:tangent_section_cotangent_dual}{{1611}{538}{Tangent space at the image of a section}{theorem.1611}{}}
+\newlabel{def:tangent_identity_section}{{1612}{538}{Identity section of a group scheme}{theorem.1612}{}}
+\newlabel{lem:tangent_identity_section_comp}{{1613}{538}{The identity section is a section}{theorem.1613}{}}
+\newlabel{thm:tangent_identity_cotangent_dual}{{1614}{538}{Tangent space of a group scheme at the identity}{theorem.1614}{}}
+\newlabel{thm:pic0_group_structure}{{1615}{538}{\(\Pic ^0_{C/k}\) is a \(k\)-group scheme}{theorem.1615}{}}
+\newlabel{thm:pic0_tangent_cotangent_dual}{{1616}{539}{Dual-number points of \(\Pic ^0_{C/k}\) at the identity}{theorem.1616}{}}
+\newlabel{thm:pic0_tangent_space_iso}{{1617}{539}{Tangent space at the identity: \(\tu T_0 \Pic ^0_{C/k} \cong H^1(C, \mathcal {O}_C)\)}{theorem.1617}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {27.1.1}The truncated-exponential splitting, ring level}{540}{subsection.27.1.1}\protected@file@percent }
+\newlabel{sec:pic0_trunc_exp}{{27.1.1}{540}{The truncated-exponential splitting, ring level}{subsection.27.1.1}{}}
+\newlabel{lem:dual_number_fst_ring_hom}{{1618}{540}{Reduction mod \(\varepsilon \) is a ring homomorphism}{theorem.1618}{}}
+\newlabel{lem:dual_number_trunc_exp_unit}{{1619}{540}{The truncated exponential is a unit}{theorem.1619}{}}
+\newlabel{def:dual_number_trunc_exp}{{1620}{540}{The truncated exponential}{theorem.1620}{}}
+\newlabel{lem:dual_number_trunc_exp_injective}{{1621}{540}{The truncated exponential is injective}{theorem.1621}{}}
+\newlabel{def:dual_number_units_fst}{{1622}{540}{Reduction mod \(\varepsilon \) on unit groups}{theorem.1622}{}}
+\newlabel{def:dual_number_units_inl}{{1623}{541}{The constant section of the unit groups}{theorem.1623}{}}
+\newlabel{lem:dual_number_units_fst_split}{{1624}{541}{The unit-group sequence is split}{theorem.1624}{}}
+\newlabel{lem:dual_number_fst_unit_inv}{{1625}{541}{First component of an inverse unit}{theorem.1625}{}}
+\newlabel{lem:dual_number_trunc_exp_exact}{{1626}{541}{Exactness of the truncated-exponential sequence}{theorem.1626}{}}
+\newlabel{thm:dual_number_units_split}{{1627}{541}{Splitting of the dual-number unit group}{theorem.1627}{}}
+\newlabel{def:dual_number_map}{{1628}{541}{Functoriality of the dual numbers}{theorem.1628}{}}
+\newlabel{lem:dual_number_map_id}{{1629}{541}{Functoriality: identity}{theorem.1629}{}}
+\newlabel{lem:dual_number_map_comp}{{1630}{541}{Functoriality: composition}{theorem.1630}{}}
+\newlabel{lem:dual_number_map_trunc_exp}{{1631}{541}{Naturality of the truncated exponential}{theorem.1631}{}}
+\newlabel{lem:dual_number_units_fst_natural}{{1632}{542}{Naturality of reduction mod \(\varepsilon \)}{theorem.1632}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {27.2}Smoothness of \(\Pic  ^0_{C/k}\)}{542}{section.27.2}\protected@file@percent }
+\newlabel{sec:pic0_smooth}{{27.2}{542}{Smoothness of \(\Pic ^0_{C/k}\)}{section.27.2}{}}
+\newlabel{thm:pic0_smooth}{{1633}{542}{Smoothness of \(\Pic ^0_{C/k}\)}{theorem.1633}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {27.3}Properness of \(\Pic  ^0_{C/k}\)}{543}{section.27.3}\protected@file@percent }
+\newlabel{sec:pic0_proper}{{27.3}{543}{Properness of \(\Pic ^0_{C/k}\)}{section.27.3}{}}
+\newlabel{thm:pic0_proper}{{1634}{543}{Properness of \(\Pic ^0_{C/k}\)}{theorem.1634}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {27.4}Geometric irreducibility of \(\Pic  ^0_{C/k}\)}{544}{section.27.4}\protected@file@percent }
+\newlabel{sec:pic0_geom_irred}{{27.4}{544}{Geometric irreducibility of \(\Pic ^0_{C/k}\)}{section.27.4}{}}
+\newlabel{thm:pic0_geom_irred}{{1635}{544}{Geometric irreducibility of \(\Pic ^0_{C/k}\)}{theorem.1635}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {27.5}Assembly: \(\Pic  ^0_{C/k}\) is an abelian variety}{544}{section.27.5}\protected@file@percent }
+\newlabel{sec:pic0_isAbelianVariety}{{27.5}{544}{Assembly: \(\Pic ^0_{C/k}\) is an abelian variety}{section.27.5}{}}
+\newlabel{thm:pic0_isAbelianVariety}{{1636}{544}{\(\Pic ^0_{C/k}\) is an abelian variety}{theorem.1636}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {27.6}Lean encoding}{545}{section.27.6}\protected@file@percent }
+\newlabel{sec:pic0_isAbelianVariety_lean_encoding}{{27.6}{545}{Lean encoding}{section.27.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {27.7}Out of scope}{545}{section.27.7}\protected@file@percent }
+\newlabel{sec:pic0_isAbelianVariety_out_of_scope}{{27.7}{545}{Out of scope}{section.27.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {27.8}Internal-consistency check}{546}{section.27.8}\protected@file@percent }
+\newlabel{sec:pic0_isAbelianVariety_consistency_check}{{27.8}{546}{Internal-consistency check}{section.27.8}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {28}Codimension-1 indeterminacy extension (A.4.a)}{547}{chapter.28}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chap:Albanese_CodimOneExtension}{{28}{545}{Codimension-1 indeterminacy extension (A.4.a)}{chapter.28}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {28.1}Setup and motivation}{545}{section.28.1}\protected@file@percent }
-\newlabel{sec:codim1_setup}{{28.1}{545}{Setup and motivation}{section.28.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {28.2}The indeterminacy locus of a rational map}{546}{section.28.2}\protected@file@percent }
-\newlabel{sec:indeterm_locus}{{28.2}{546}{The indeterminacy locus of a rational map}{section.28.2}{}}
-\newlabel{def:indeterminacy_locus}{{1631}{546}{Indeterminacy locus of a rational map}{theorem.1631}{}}
-\newlabel{lem:isClosed_indeterminacy_locus}{{1632}{546}{Indeterminacy locus is closed}{theorem.1632}{}}
-\newlabel{def:codim_one_indeterminacy}{{1633}{546}{Codimension-1-indeterminacy-free rational maps}{theorem.1633}{}}
-\@writefile{toc}{\contentsline {paragraph}{Why the abstraction.}{546}{section*.47}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {28.3}Smoothness yields a DVR at every codim-1 point}{546}{section.28.3}\protected@file@percent }
-\newlabel{sec:smooth_dvr}{{28.3}{546}{Smoothness yields a DVR at every codim-1 point}{section.28.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {28.3.1}K\"ahler differentials under localisation}{547}{subsection.28.3.1}\protected@file@percent }
-\newlabel{subsec:kaehler_localisation_substrate}{{28.3.1}{547}{K\"ahler differentials under localisation}{subsection.28.3.1}{}}
-\newlabel{lem:stalkMap_flat_of_smooth}{{1634}{547}{Smooth implies flatness on stalks}{theorem.1634}{}}
-\newlabel{lem:exists_standardSmooth_at_of_smooth}{{1635}{547}{A smooth morphism is locally standard smooth}{theorem.1635}{}}
-\newlabel{lem:exists_algebra_standardSmooth_stalk_localization}{{1636}{547}{A standard-smooth presentation of a smooth stalk}{theorem.1636}{}}
-\newlabel{lem:module_free_kaehler_standardSmooth}{{1637}{547}{K\"ahler differentials of a standard-smooth algebra are free}{theorem.1637}{}}
-\newlabel{lem:module_free_kaehler_localization}{{1638}{547}{K\"ahler-differential freeness is preserved by localisation}{theorem.1638}{}}
-\newlabel{lem:rank_kaehler_localization_eq_relative_dim}{{1639}{547}{The rank of localised K\"ahler differentials equals the relative dimension}{theorem.1639}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {28.3.2}Dimension and cotangent criteria for smooth local rings}{548}{subsection.28.3.2}\protected@file@percent }
-\newlabel{subsec:stage6_subgap_decomposition}{{28.3.2}{548}{Dimension and cotangent criteria for smooth local rings}{subsection.28.3.2}{}}
-\newlabel{lem:smooth_algebra_krull_dim_formula}{{1640}{548}{Smooth-algebra Krull-dimension formula (Stacks 00OE)}{theorem.1640}{}}
-\@writefile{toc}{\contentsline {paragraph}{Geometric application.}{548}{section*.48}\protected@file@percent }
-\newlabel{lem:cotangent_kahler_over_field}{{1641}{548}{Cotangent and K\"ahler differentials over a field}{theorem.1641}{}}
-\newlabel{lem:finrank_residue_kaehler_of_free_rank}{{1642}{549}{Residue-field tensor dimension from free rank}{theorem.1642}{}}
-\newlabel{lem:finrank_residue_kaehler_of_standardSmooth_reldim}{{1643}{549}{Residue-tensor dimension for a standard-smooth algebra}{theorem.1643}{}}
-\newlabel{lem:cotangent_iso_maximalIdeal_residue_kaehler}{{1644}{549}{Cotangent isomorphism in maximal-ideal form}{theorem.1644}{}}
-\newlabel{lem:finrank_cotangentSpace_of_formallySmooth_residue}{{1645}{549}{Cotangent-space dimension with formally smooth residue field}{theorem.1645}{}}
-\newlabel{lem:finrank_cotangentSpace_of_bijective_residue}{{1646}{549}{Cotangent-space dimension at a $\bar k$-rational point}{theorem.1646}{}}
-\newlabel{lem:stage6_regular_stalk_assembly}{{1647}{550}{A standard-smooth stalk is regular local}{theorem.1647}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {28.3.3}Krull dimension of standard-smooth localisations}{550}{subsection.28.3.3}\protected@file@percent }
-\newlabel{subsec:stage6_iib_substrate_iter200}{{28.3.3}{550}{Krull dimension of standard-smooth localisations}{subsection.28.3.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {28.3.4}Algebraic ingredients and scheme bridges}{551}{subsection.28.3.4}\protected@file@percent }
-\newlabel{subsec:codim1_substrate_lemmas}{{28.3.4}{551}{Algebraic ingredients and scheme bridges}{subsection.28.3.4}{}}
-\@writefile{toc}{\contentsline {paragraph}{Stacks 00OE Krull-dimension chain.}{551}{section*.49}\protected@file@percent }
-\newlabel{lem:ringKrullDim_localization_eq_height_atPrime}{{1648}{551}{Localised Krull dimension equals height}{theorem.1648}{}}
-\newlabel{lem:mvPolynomial_maximalIdeal_height_ge_card}{{1649}{551}{Polynomial-ring maximal ideal height lower bound}{theorem.1649}{}}
-\newlabel{lem:mvPolynomial_maximalIdeal_height_le_natCard}{{1650}{551}{Polynomial-ring ideal height upper bound}{theorem.1650}{}}
-\newlabel{lem:mvPolynomial_maximalIdeal_height_eq_card}{{1651}{551}{Maximal-ideal height in a polynomial ring indexed by $\mathrm {Fin}\,n$}{theorem.1651}{}}
-\newlabel{lem:mvPolynomial_maximalIdeal_height_eq_natCard}{{1652}{551}{Maximal-ideal height in a finitely generated polynomial ring}{theorem.1652}{}}
-\newlabel{lem:ringKrullDim_localization_atMaximal_mvPolynomial}{{1653}{551}{Krull dimension of a localised polynomial ring}{theorem.1653}{}}
-\newlabel{lem:ringKrullDim_quotient_add_eq_regular_sequence}{{1654}{552}{Dimension drop by a regular sequence}{theorem.1654}{}}
-\newlabel{lem:ringKrullDim_quotient_localization_mvPolynomial_regular}{{1655}{552}{Dimension of a localised polynomial quotient}{theorem.1655}{}}
-\@writefile{toc}{\contentsline {paragraph}{Stacks 00SW submersive-presentation cotangent independence.}{552}{section*.50}\protected@file@percent }
-\newlabel{lem:submersive_relation_cotangent_linearIndependent}{{1656}{552}{00SW --- relations are cotangent-independent}{theorem.1656}{}}
-\newlabel{lem:submersive_relation_cotangent_linearIndependent_localized}{{1657}{552}{00SW --- cotangent independence transported to a localisation}{theorem.1657}{}}
-\@writefile{toc}{\contentsline {paragraph}{Relative dimension and scheme-to-algebra bridges.}{552}{section*.51}\protected@file@percent }
-\newlabel{lem:exists_standardSmoothOfRelativeDimension_of_standardSmooth}{{1658}{552}{Existence of a relative dimension for a standard-smooth algebra}{theorem.1658}{}}
-\newlabel{lem:exists_submersivePresentation_of_standardSmoothReldim}{{1659}{552}{Submersive presentation of a relative-dimension-$n$ algebra}{theorem.1659}{}}
-\newlabel{lem:isLocalization_atPrime_stalk_of_affineOpen}{{1660}{552}{An affine-open stalk is a localisation}{theorem.1660}{}}
-\newlabel{lem:open_eq_top_of_subsingleton}{{1661}{552}{A nonempty open in a one-point space is the whole space}{theorem.1661}{}}
-\newlabel{lem:gammaSpecField_ringEquiv}{{1662}{553}{Sections of $\Spec \bar k$ over a nonempty open}{theorem.1662}{}}
-\@writefile{toc}{\contentsline {paragraph}{Matsumura regular-sequence bridge (Stacks 00NQ).}{553}{section*.52}\protected@file@percent }
-\newlabel{lem:quotSMulTop_quotientRing_linearEquiv}{{1663}{553}{Module quotient equals ring quotient}{theorem.1663}{}}
-\newlabel{lem:isRegular_cons_of_quotient_ring}{{1664}{553}{Ring-quotient cons rule for regular sequences}{theorem.1664}{}}
-\newlabel{lem:matsumura_descent_cotangent}{{1665}{553}{Cotangent independence descends to a quotient}{theorem.1665}{}}
-\newlabel{lem:matsumura_isRegular_of_linearIndependent_cotangent}{{1666}{553}{Matsumura: cotangent-independent elements form a regular sequence}{theorem.1666}{}}
-\newlabel{lem:smooth_to_regular_local_ring}{{1667}{553}{Smooth over \(\bar k\) \(\Rightarrow \) regular local stalk (Stacks 00TT)}{theorem.1667}{}}
-\newlabel{lem:smooth_codim_one_maximalIdeal_principal}{{1668}{554}{Smooth at a codim-1 point $\Rightarrow $ principal nonzero maximal ideal}{theorem.1668}{}}
-\newlabel{lem:smooth_codim_one_dvr}{{1669}{554}{Smooth \(\Rightarrow \) DVR at every codim-\(1\) point}{theorem.1669}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {28.4}Milne Theorem 3.1: extension across codimension at least two}{554}{section.28.4}\protected@file@percent }
-\newlabel{sec:milne_thm31}{{28.4}{554}{Milne Theorem 3.1: extension across codimension at least two}{section.28.4}{}}
-\newlabel{lem:fromFunctionField_base_eq_genericPoint}{{1670}{554}{Image of the closed point of \(\Spec K(X)\)}{theorem.1670}{}}
-\newlabel{def:functionFieldPullback}{{1671}{554}{}{theorem.1671}{}}
-\newlabel{def:rationalMap_precomp}{{1672}{555}{}{theorem.1672}{}}
-\newlabel{lem:rationalMap_precomp_compHom}{{1673}{555}{}{theorem.1673}{}}
-\newlabel{lem:rationalMap_precomp_hom}{{1674}{555}{}{theorem.1674}{}}
-\newlabel{def:rationalMap_prod}{{1675}{555}{}{theorem.1675}{}}
-\newlabel{lem:rationalMap_prod_proj}{{1676}{556}{}{theorem.1676}{}}
-\newlabel{def:grpObj_diff}{{1677}{556}{}{theorem.1677}{}}
-\newlabel{lem:grpObjDiffLeft_comp_hom}{{1678}{556}{}{theorem.1678}{}}
-\newlabel{def:rationalMap_difference}{{1679}{556}{}{theorem.1679}{}}
-\newlabel{lem:rationalMap_difference_over}{{1680}{556}{}{theorem.1680}{}}
-\newlabel{lem:compHom_domain_monotone}{{1681}{557}{}{theorem.1681}{}}
-\newlabel{lem:difference_map_domain_lower_bound}{{1682}{557}{}{theorem.1682}{}}
-\newlabel{lem:rationalMap_precomp_domain_bound}{{1683}{557}{}{theorem.1683}{}}
-\newlabel{lem:rationalMap_prod_domain_bound}{{1684}{557}{}{theorem.1684}{}}
-\newlabel{lem:grpObj_reconstruction}{{1685}{557}{}{theorem.1685}{}}
-\newlabel{lem:scheme_reconstruction}{{1686}{557}{}{theorem.1686}{}}
-\newlabel{lem:rationalMap_difference_reconstruct}{{1687}{558}{}{theorem.1687}{}}
-\newlabel{lem:difference_map_domain_reconstruction}{{1688}{558}{}{theorem.1688}{}}
-\newlabel{thm:codim_one_extension}{{1689}{558}{Milne Theorem~3.1: codim-\(\geq 2\) extension to a complete target}{theorem.1689}{}}
-\newlabel{rmk:codim1_role_of_ab}{{1690}{558}{}{theorem.1690}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {28.5}Milne Lemma 3.3: indeterminacy locus of a map to a group variety is codim 1}{559}{section.28.5}\protected@file@percent }
-\newlabel{sec:milne_lem33}{{28.5}{559}{Milne Lemma 3.3: indeterminacy locus of a map to a group variety is codim 1}{section.28.5}{}}
-\newlabel{lem:milne33_slice_existence}{{1691}{559}{Slice existence for the fibre of the self-product, and its difference-map corollary}{theorem.1691}{}}
-\newlabel{lem:krull_hauptidealsatz_transport}{{1692}{559}{Krull's Hauptidealsatz, transported to a height-one prime below a given prime}{theorem.1692}{}}
-\newlabel{lem:regular_stalk_propagates_to_generisation}{{1693}{560}{Regularity propagates to a generisation}{theorem.1693}{}}
-\newlabel{lem:milne33_diagonal_vanishing_purity}{{1694}{560}{Zero loci of regular functions are pure codimension one: the diagonal transport}{theorem.1694}{}}
-\newlabel{lem:milne_codim1_indeterminacy}{{1695}{560}{Milne Lemma~3.3: pure-codim-\(1\) structure of the indeterminacy locus into a group variety}{theorem.1695}{}}
-\newlabel{rmk:milne_lem33_charfree}{{1696}{562}{}{theorem.1696}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {28.6}Weil-divisor obstruction to codim-1 extension}{562}{section.28.6}\protected@file@percent }
-\newlabel{sec:weil_obstruction}{{28.6}{562}{Weil-divisor obstruction to codim-1 extension}{section.28.6}{}}
-\newlabel{thm:weil_divisor_obstruction}{{1697}{562}{}{theorem.1697}{}}
-\newlabel{rmk:weil_obstruction_application}{{1698}{563}{}{theorem.1698}{}}
-\newlabel{lem:mem_domain_partial_map_reshuffle}{{1699}{563}{}{theorem.1699}{}}
-\newlabel{rmk:mem_domain_partial_map_reshuffle_scope}{{1700}{563}{}{theorem.1700}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {28.7}The codimension-one method}{563}{section.28.7}\protected@file@percent }
-\newlabel{sec:codim1_lean_encoding}{{28.7}{563}{The codimension-one method}{section.28.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {28.8}Relations with neighbouring results}{563}{section.28.8}\protected@file@percent }
-\newlabel{sec:codim1_out_of_scope}{{28.8}{563}{Relations with neighbouring results}{section.28.8}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {29}Coheight--Krull dim bridge for scheme points}{565}{chapter.29}\protected@file@percent }
+\newlabel{chap:Albanese_CodimOneExtension}{{28}{547}{Codimension-1 indeterminacy extension (A.4.a)}{chapter.28}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {28.1}Setup and motivation}{547}{section.28.1}\protected@file@percent }
+\newlabel{sec:codim1_setup}{{28.1}{547}{Setup and motivation}{section.28.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {28.2}The indeterminacy locus of a rational map}{548}{section.28.2}\protected@file@percent }
+\newlabel{sec:indeterm_locus}{{28.2}{548}{The indeterminacy locus of a rational map}{section.28.2}{}}
+\newlabel{def:indeterminacy_locus}{{1637}{548}{Indeterminacy locus of a rational map}{theorem.1637}{}}
+\newlabel{lem:isClosed_indeterminacy_locus}{{1638}{548}{Indeterminacy locus is closed}{theorem.1638}{}}
+\newlabel{def:codim_one_indeterminacy}{{1639}{548}{Codimension-1-indeterminacy-free rational maps}{theorem.1639}{}}
+\@writefile{toc}{\contentsline {paragraph}{Why the abstraction.}{548}{section*.47}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {28.3}Smoothness yields a DVR at every codim-1 point}{548}{section.28.3}\protected@file@percent }
+\newlabel{sec:smooth_dvr}{{28.3}{548}{Smoothness yields a DVR at every codim-1 point}{section.28.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {28.3.1}K\"ahler differentials under localisation}{549}{subsection.28.3.1}\protected@file@percent }
+\newlabel{subsec:kaehler_localisation_substrate}{{28.3.1}{549}{K\"ahler differentials under localisation}{subsection.28.3.1}{}}
+\newlabel{lem:stalkMap_flat_of_smooth}{{1640}{549}{Smooth implies flatness on stalks}{theorem.1640}{}}
+\newlabel{lem:exists_standardSmooth_at_of_smooth}{{1641}{549}{A smooth morphism is locally standard smooth}{theorem.1641}{}}
+\newlabel{lem:exists_algebra_standardSmooth_stalk_localization}{{1642}{549}{A standard-smooth presentation of a smooth stalk}{theorem.1642}{}}
+\newlabel{lem:module_free_kaehler_standardSmooth}{{1643}{549}{K\"ahler differentials of a standard-smooth algebra are free}{theorem.1643}{}}
+\newlabel{lem:module_free_kaehler_localization}{{1644}{549}{K\"ahler-differential freeness is preserved by localisation}{theorem.1644}{}}
+\newlabel{lem:rank_kaehler_localization_eq_relative_dim}{{1645}{549}{The rank of localised K\"ahler differentials equals the relative dimension}{theorem.1645}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {28.3.2}Dimension and cotangent criteria for smooth local rings}{550}{subsection.28.3.2}\protected@file@percent }
+\newlabel{subsec:stage6_subgap_decomposition}{{28.3.2}{550}{Dimension and cotangent criteria for smooth local rings}{subsection.28.3.2}{}}
+\newlabel{lem:smooth_algebra_krull_dim_formula}{{1646}{550}{Smooth-algebra Krull-dimension formula (Stacks 00OE)}{theorem.1646}{}}
+\@writefile{toc}{\contentsline {paragraph}{Geometric application.}{550}{section*.48}\protected@file@percent }
+\newlabel{lem:cotangent_kahler_over_field}{{1647}{550}{Cotangent and K\"ahler differentials over a field}{theorem.1647}{}}
+\newlabel{lem:finrank_residue_kaehler_of_free_rank}{{1648}{551}{Residue-field tensor dimension from free rank}{theorem.1648}{}}
+\newlabel{lem:finrank_residue_kaehler_of_standardSmooth_reldim}{{1649}{551}{Residue-tensor dimension for a standard-smooth algebra}{theorem.1649}{}}
+\newlabel{lem:cotangent_iso_maximalIdeal_residue_kaehler}{{1650}{551}{Cotangent isomorphism in maximal-ideal form}{theorem.1650}{}}
+\newlabel{lem:finrank_cotangentSpace_of_formallySmooth_residue}{{1651}{551}{Cotangent-space dimension with formally smooth residue field}{theorem.1651}{}}
+\newlabel{lem:finrank_cotangentSpace_of_bijective_residue}{{1652}{551}{Cotangent-space dimension at a $\bar k$-rational point}{theorem.1652}{}}
+\newlabel{lem:stage6_regular_stalk_assembly}{{1653}{552}{A standard-smooth stalk is regular local}{theorem.1653}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {28.3.3}Krull dimension of standard-smooth localisations}{552}{subsection.28.3.3}\protected@file@percent }
+\newlabel{subsec:stage6_iib_substrate_iter200}{{28.3.3}{552}{Krull dimension of standard-smooth localisations}{subsection.28.3.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {28.3.4}Algebraic ingredients and scheme bridges}{553}{subsection.28.3.4}\protected@file@percent }
+\newlabel{subsec:codim1_substrate_lemmas}{{28.3.4}{553}{Algebraic ingredients and scheme bridges}{subsection.28.3.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Stacks 00OE Krull-dimension chain.}{553}{section*.49}\protected@file@percent }
+\newlabel{lem:ringKrullDim_localization_eq_height_atPrime}{{1654}{553}{Localised Krull dimension equals height}{theorem.1654}{}}
+\newlabel{lem:mvPolynomial_maximalIdeal_height_ge_card}{{1655}{553}{Polynomial-ring maximal ideal height lower bound}{theorem.1655}{}}
+\newlabel{lem:mvPolynomial_maximalIdeal_height_le_natCard}{{1656}{553}{Polynomial-ring ideal height upper bound}{theorem.1656}{}}
+\newlabel{lem:mvPolynomial_maximalIdeal_height_eq_card}{{1657}{553}{Maximal-ideal height in a polynomial ring indexed by $\mathrm {Fin}\,n$}{theorem.1657}{}}
+\newlabel{lem:mvPolynomial_maximalIdeal_height_eq_natCard}{{1658}{553}{Maximal-ideal height in a finitely generated polynomial ring}{theorem.1658}{}}
+\newlabel{lem:ringKrullDim_localization_atMaximal_mvPolynomial}{{1659}{553}{Krull dimension of a localised polynomial ring}{theorem.1659}{}}
+\newlabel{lem:ringKrullDim_quotient_add_eq_regular_sequence}{{1660}{554}{Dimension drop by a regular sequence}{theorem.1660}{}}
+\newlabel{lem:ringKrullDim_quotient_localization_mvPolynomial_regular}{{1661}{554}{Dimension of a localised polynomial quotient}{theorem.1661}{}}
+\@writefile{toc}{\contentsline {paragraph}{Stacks 00SW submersive-presentation cotangent independence.}{554}{section*.50}\protected@file@percent }
+\newlabel{lem:submersive_relation_cotangent_linearIndependent}{{1662}{554}{00SW --- relations are cotangent-independent}{theorem.1662}{}}
+\newlabel{lem:submersive_relation_cotangent_linearIndependent_localized}{{1663}{554}{00SW --- cotangent independence transported to a localisation}{theorem.1663}{}}
+\@writefile{toc}{\contentsline {paragraph}{Relative dimension and scheme-to-algebra bridges.}{554}{section*.51}\protected@file@percent }
+\newlabel{lem:exists_standardSmoothOfRelativeDimension_of_standardSmooth}{{1664}{554}{Existence of a relative dimension for a standard-smooth algebra}{theorem.1664}{}}
+\newlabel{lem:exists_submersivePresentation_of_standardSmoothReldim}{{1665}{554}{Submersive presentation of a relative-dimension-$n$ algebra}{theorem.1665}{}}
+\newlabel{lem:isLocalization_atPrime_stalk_of_affineOpen}{{1666}{554}{An affine-open stalk is a localisation}{theorem.1666}{}}
+\newlabel{lem:open_eq_top_of_subsingleton}{{1667}{554}{A nonempty open in a one-point space is the whole space}{theorem.1667}{}}
+\newlabel{lem:gammaSpecField_ringEquiv}{{1668}{555}{Sections of $\Spec \bar k$ over a nonempty open}{theorem.1668}{}}
+\@writefile{toc}{\contentsline {paragraph}{Matsumura regular-sequence bridge (Stacks 00NQ).}{555}{section*.52}\protected@file@percent }
+\newlabel{lem:quotSMulTop_quotientRing_linearEquiv}{{1669}{555}{Module quotient equals ring quotient}{theorem.1669}{}}
+\newlabel{lem:isRegular_cons_of_quotient_ring}{{1670}{555}{Ring-quotient cons rule for regular sequences}{theorem.1670}{}}
+\newlabel{lem:matsumura_descent_cotangent}{{1671}{555}{Cotangent independence descends to a quotient}{theorem.1671}{}}
+\newlabel{lem:matsumura_isRegular_of_linearIndependent_cotangent}{{1672}{555}{Matsumura: cotangent-independent elements form a regular sequence}{theorem.1672}{}}
+\newlabel{lem:smooth_to_regular_local_ring}{{1673}{555}{Smooth over \(\bar k\) \(\Rightarrow \) regular local stalk (Stacks 00TT)}{theorem.1673}{}}
+\newlabel{lem:smooth_codim_one_maximalIdeal_principal}{{1674}{556}{Smooth at a codim-1 point $\Rightarrow $ principal nonzero maximal ideal}{theorem.1674}{}}
+\newlabel{lem:smooth_codim_one_dvr}{{1675}{556}{Smooth \(\Rightarrow \) DVR at every codim-\(1\) point}{theorem.1675}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {28.4}Milne Theorem 3.1: extension across codimension at least two}{556}{section.28.4}\protected@file@percent }
+\newlabel{sec:milne_thm31}{{28.4}{556}{Milne Theorem 3.1: extension across codimension at least two}{section.28.4}{}}
+\newlabel{lem:fromFunctionField_base_eq_genericPoint}{{1676}{556}{Image of the closed point of \(\Spec K(X)\)}{theorem.1676}{}}
+\newlabel{def:functionFieldPullback}{{1677}{556}{}{theorem.1677}{}}
+\newlabel{def:rationalMap_precomp}{{1678}{557}{}{theorem.1678}{}}
+\newlabel{lem:rationalMap_precomp_compHom}{{1679}{557}{}{theorem.1679}{}}
+\newlabel{lem:rationalMap_precomp_hom}{{1680}{557}{}{theorem.1680}{}}
+\newlabel{def:rationalMap_prod}{{1681}{557}{}{theorem.1681}{}}
+\newlabel{lem:rationalMap_prod_proj}{{1682}{558}{}{theorem.1682}{}}
+\newlabel{def:grpObj_diff}{{1683}{558}{}{theorem.1683}{}}
+\newlabel{lem:grpObjDiffLeft_comp_hom}{{1684}{558}{}{theorem.1684}{}}
+\newlabel{def:rationalMap_difference}{{1685}{558}{}{theorem.1685}{}}
+\newlabel{lem:rationalMap_difference_over}{{1686}{558}{}{theorem.1686}{}}
+\newlabel{lem:compHom_domain_monotone}{{1687}{559}{}{theorem.1687}{}}
+\newlabel{lem:difference_map_domain_lower_bound}{{1688}{559}{}{theorem.1688}{}}
+\newlabel{lem:rationalMap_precomp_domain_bound}{{1689}{559}{}{theorem.1689}{}}
+\newlabel{lem:rationalMap_prod_domain_bound}{{1690}{559}{}{theorem.1690}{}}
+\newlabel{lem:grpObj_reconstruction}{{1691}{559}{}{theorem.1691}{}}
+\newlabel{lem:scheme_reconstruction}{{1692}{559}{}{theorem.1692}{}}
+\newlabel{lem:rationalMap_difference_reconstruct}{{1693}{560}{}{theorem.1693}{}}
+\newlabel{lem:difference_map_domain_reconstruction}{{1694}{560}{}{theorem.1694}{}}
+\newlabel{thm:codim_one_extension}{{1695}{560}{Milne Theorem~3.1: codim-\(\geq 2\) extension to a complete target}{theorem.1695}{}}
+\newlabel{rmk:codim1_role_of_ab}{{1696}{560}{}{theorem.1696}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {28.5}Milne Lemma 3.3: indeterminacy locus of a map to a group variety is codim 1}{561}{section.28.5}\protected@file@percent }
+\newlabel{sec:milne_lem33}{{28.5}{561}{Milne Lemma 3.3: indeterminacy locus of a map to a group variety is codim 1}{section.28.5}{}}
+\newlabel{lem:milne33_slice_existence}{{1697}{561}{Slice existence for the fibre of the self-product, and its difference-map corollary}{theorem.1697}{}}
+\newlabel{lem:krull_hauptidealsatz_transport}{{1698}{561}{Krull's Hauptidealsatz, transported to a height-one prime below a given prime}{theorem.1698}{}}
+\newlabel{lem:regular_stalk_propagates_to_generisation}{{1699}{562}{Regularity propagates to a generisation}{theorem.1699}{}}
+\newlabel{lem:milne33_diagonal_vanishing_purity}{{1700}{562}{Zero loci of regular functions are pure codimension one: the diagonal transport}{theorem.1700}{}}
+\newlabel{lem:milne_codim1_indeterminacy}{{1701}{562}{Milne Lemma~3.3: pure-codim-\(1\) structure of the indeterminacy locus into a group variety}{theorem.1701}{}}
+\newlabel{rmk:milne_lem33_charfree}{{1702}{564}{}{theorem.1702}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {28.6}Weil-divisor obstruction to codim-1 extension}{564}{section.28.6}\protected@file@percent }
+\newlabel{sec:weil_obstruction}{{28.6}{564}{Weil-divisor obstruction to codim-1 extension}{section.28.6}{}}
+\newlabel{thm:weil_divisor_obstruction}{{1703}{564}{}{theorem.1703}{}}
+\newlabel{rmk:weil_obstruction_application}{{1704}{565}{}{theorem.1704}{}}
+\newlabel{lem:mem_domain_partial_map_reshuffle}{{1705}{565}{}{theorem.1705}{}}
+\newlabel{rmk:mem_domain_partial_map_reshuffle_scope}{{1706}{565}{}{theorem.1706}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {28.7}The codimension-one method}{565}{section.28.7}\protected@file@percent }
+\newlabel{sec:codim1_lean_encoding}{{28.7}{565}{The codimension-one method}{section.28.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {28.8}Relations with neighbouring results}{565}{section.28.8}\protected@file@percent }
+\newlabel{sec:codim1_out_of_scope}{{28.8}{565}{Relations with neighbouring results}{section.28.8}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {29}Coheight--Krull dim bridge for scheme points}{567}{chapter.29}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chap:Albanese_CoheightBridge}{{29}{565}{Coheight--Krull dim bridge for scheme points}{chapter.29}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {29.1}Setup and motivation}{565}{section.29.1}\protected@file@percent }
-\newlabel{sec:coheight_setup}{{29.1}{565}{Setup and motivation}{section.29.1}{}}
-\@writefile{toc}{\contentsline {paragraph}{Why the bridge is needed.}{565}{section*.53}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Chapter structure.}{566}{section*.54}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {29.2}Coheight is preserved by open immersions}{566}{section.29.2}\protected@file@percent }
-\newlabel{sec:coheight_topology}{{29.2}{566}{Coheight is preserved by open immersions}{section.29.2}{}}
-\newlabel{lem:coheight_eq_of_isOpenEmbedding}{{1701}{566}{Coheight on opens equals coheight in the ambient space}{theorem.1701}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {29.3}Coheight on Spec equals height in PrimeSpectrum}{566}{section.29.3}\protected@file@percent }
-\newlabel{sec:coheight_spec_duality}{{29.3}{566}{Coheight on Spec equals height in PrimeSpectrum}{section.29.3}{}}
-\newlabel{lem:coheight_spec_eq_height_primeSpectrum}{{1702}{566}{Coheight on \(\Spec R\) equals height in \(\operatorname {PrimeSpectrum} R\)}{theorem.1702}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {29.4}The coheight \(=\) Krull-dim-of-stalk bridge}{567}{section.29.4}\protected@file@percent }
-\newlabel{sec:coheight_bridge}{{29.4}{567}{The coheight \(=\) Krull-dim-of-stalk bridge}{section.29.4}{}}
-\newlabel{thm:ringKrullDim_stalk_eq_coheight}{{1703}{567}{Coheight-to-Krull-dim bridge for a scheme point}{theorem.1703}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {29.5}Codim-1 specialisation: synthesising \(\operatorname  {KrullDimLE} 1\)}{567}{section.29.5}\protected@file@percent }
-\newlabel{sec:coheight_le_one_instance}{{29.5}{567}{Codim-1 specialisation: synthesising \texorpdfstring {\(\operatorname {KrullDimLE} 1\)}{KrullDimLE 1}}{section.29.5}{}}
-\newlabel{lem:ringKrullDimLE_of_coheight_eq_one}{{1704}{567}{Coheight \(= 1\) forces stalk \(\operatorname {Krull\,dim} \leq 1\)}{theorem.1704}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {29.6}Consumer wiring and the Stacks 00TT carve-out}{568}{section.29.6}\protected@file@percent }
-\newlabel{sec:coheight_consumers}{{29.6}{568}{Consumer wiring and the Stacks 00TT carve-out}{section.29.6}{}}
-\@writefile{toc}{\contentsline {paragraph}{Consumer 1: the \texttt  {hreg\_dim} refactor in \ref {chap:Albanese_CodimOneExtension}.}{568}{section*.55}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Consumer 2: the \texttt  {Scheme.RationalMap.order} threading hygiene in \ref {chap:RiemannRoch_WeilDivisor}.}{568}{section*.56}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Consumer 3: future codim-\(1\) infrastructure.}{568}{section*.57}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {29.7}Lean encoding}{568}{section.29.7}\protected@file@percent }
-\newlabel{sec:coheight_lean_encoding}{{29.7}{568}{Lean encoding}{section.29.7}{}}
-\@writefile{toc}{\contentsline {paragraph}{Mathlib readiness audit.}{569}{section*.58}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {29.8}Out of scope}{569}{section.29.8}\protected@file@percent }
-\newlabel{sec:coheight_out_of_scope}{{29.8}{569}{Out of scope}{section.29.8}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {30}Auslander--Buchsbaum}{571}{chapter.30}\protected@file@percent }
+\newlabel{chap:Albanese_CoheightBridge}{{29}{567}{Coheight--Krull dim bridge for scheme points}{chapter.29}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {29.1}Setup and motivation}{567}{section.29.1}\protected@file@percent }
+\newlabel{sec:coheight_setup}{{29.1}{567}{Setup and motivation}{section.29.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Why the bridge is needed.}{567}{section*.53}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Chapter structure.}{568}{section*.54}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {29.2}Coheight is preserved by open immersions}{568}{section.29.2}\protected@file@percent }
+\newlabel{sec:coheight_topology}{{29.2}{568}{Coheight is preserved by open immersions}{section.29.2}{}}
+\newlabel{lem:coheight_eq_of_isOpenEmbedding}{{1707}{568}{Coheight on opens equals coheight in the ambient space}{theorem.1707}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {29.3}Coheight on Spec equals height in PrimeSpectrum}{568}{section.29.3}\protected@file@percent }
+\newlabel{sec:coheight_spec_duality}{{29.3}{568}{Coheight on Spec equals height in PrimeSpectrum}{section.29.3}{}}
+\newlabel{lem:coheight_spec_eq_height_primeSpectrum}{{1708}{568}{Coheight on \(\Spec R\) equals height in \(\operatorname {PrimeSpectrum} R\)}{theorem.1708}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {29.4}The coheight \(=\) Krull-dim-of-stalk bridge}{569}{section.29.4}\protected@file@percent }
+\newlabel{sec:coheight_bridge}{{29.4}{569}{The coheight \(=\) Krull-dim-of-stalk bridge}{section.29.4}{}}
+\newlabel{thm:ringKrullDim_stalk_eq_coheight}{{1709}{569}{Coheight-to-Krull-dim bridge for a scheme point}{theorem.1709}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {29.5}Codim-1 specialisation: synthesising \(\operatorname  {KrullDimLE} 1\)}{569}{section.29.5}\protected@file@percent }
+\newlabel{sec:coheight_le_one_instance}{{29.5}{569}{Codim-1 specialisation: synthesising \texorpdfstring {\(\operatorname {KrullDimLE} 1\)}{KrullDimLE 1}}{section.29.5}{}}
+\newlabel{lem:ringKrullDimLE_of_coheight_eq_one}{{1710}{569}{Coheight \(= 1\) forces stalk \(\operatorname {Krull\,dim} \leq 1\)}{theorem.1710}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {29.6}Consumer wiring and the Stacks 00TT carve-out}{570}{section.29.6}\protected@file@percent }
+\newlabel{sec:coheight_consumers}{{29.6}{570}{Consumer wiring and the Stacks 00TT carve-out}{section.29.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Consumer 1: the \texttt  {hreg\_dim} refactor in \ref {chap:Albanese_CodimOneExtension}.}{570}{section*.55}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Consumer 2: the \texttt  {Scheme.RationalMap.order} threading hygiene in \ref {chap:RiemannRoch_WeilDivisor}.}{570}{section*.56}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Consumer 3: future codim-\(1\) infrastructure.}{570}{section*.57}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {29.7}Lean encoding}{570}{section.29.7}\protected@file@percent }
+\newlabel{sec:coheight_lean_encoding}{{29.7}{570}{Lean encoding}{section.29.7}{}}
+\@writefile{toc}{\contentsline {paragraph}{Mathlib readiness audit.}{571}{section*.58}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {29.8}Out of scope}{571}{section.29.8}\protected@file@percent }
+\newlabel{sec:coheight_out_of_scope}{{29.8}{571}{Out of scope}{section.29.8}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {30}Auslander--Buchsbaum}{573}{chapter.30}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chap:Albanese_AuslanderBuchsbaum}{{30}{571}{Auslander--Buchsbaum}{chapter.30}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {30.1}Setup and motivation}{571}{section.30.1}\protected@file@percent }
-\newlabel{sec:ab_setup}{{30.1}{571}{Setup and motivation}{section.30.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {30.2}Depth of a module over a local ring}{571}{section.30.2}\protected@file@percent }
-\newlabel{sec:ab_depth}{{30.2}{571}{Depth of a module over a local ring}{section.30.2}{}}
-\newlabel{def:depth}{{1705}{571}{Depth of a module}{theorem.1705}{}}
-\newlabel{lem:depth_via_ext}{{1706}{572}{Depth via \(\text {Ext}\)}{theorem.1706}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {30.3}Projective dimension}{572}{section.30.3}\protected@file@percent }
-\newlabel{sec:ab_pd}{{30.3}{572}{Projective dimension}{section.30.3}{}}
-\newlabel{def:projective_dimension}{{1707}{572}{Projective dimension}{theorem.1707}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {30.4}Depth on a short exact sequence}{572}{section.30.4}\protected@file@percent }
-\newlabel{sec:ab_depth_ses}{{30.4}{572}{Depth on a short exact sequence}{section.30.4}{}}
-\newlabel{lem:depth_short_exact_sequence}{{1708}{572}{Depth on a short exact sequence}{theorem.1708}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {30.5}The Auslander--Buchsbaum formula}{573}{section.30.5}\protected@file@percent }
-\newlabel{sec:ab_main}{{30.5}{573}{The Auslander--Buchsbaum formula}{section.30.5}{}}
-\newlabel{thm:auslander_buchsbaum}{{1709}{573}{Auslander--Buchsbaum formula}{theorem.1709}{}}
-\newlabel{lem:auslander_buchsbaum_formula_succ_pd}{{1710}{574}{Auslander--Buchsbaum: inductive step \(\text {pd} = k+1\)}{theorem.1710}{}}
-\newlabel{lem:depth_drops_by_one}{{1711}{574}{}{theorem.1711}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {30.5.1}The syzygy step in the induction}{575}{subsection.30.5.1}\protected@file@percent }
-\newlabel{subsec:succ_pd_gap_sequence}{{30.5.1}{575}{The syzygy step in the induction}{subsection.30.5.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {30.5.2}Minimal finite-free surjections}{575}{subsection.30.5.2}\protected@file@percent }
-\newlabel{subsec:ab_gap1_first_step}{{30.5.2}{575}{Minimal finite-free surjections}{subsection.30.5.2}{}}
-\newlabel{lem:exists_minimalSurjection_finite_localRing}{{1712}{575}{Per-syzygy minimal surjection from \(R^n\) for finite modules over a local ring}{theorem.1712}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {30.5.3}Projective-dimension descent along a syzygy}{575}{subsection.30.5.3}\protected@file@percent }
-\newlabel{subsec:ab_gap1_haspdlt_pivot}{{30.5.3}{575}{Projective-dimension descent along a syzygy}{subsection.30.5.3}{}}
-\newlabel{lem:hasProjectiveDimensionLT_succ_of_projectiveDimension_eq}{{1713}{575}{Bridge: \(\texttt {projectiveDimension}\,M = n \Rightarrow \texttt {HasProjectiveDimensionLT}\,M\,(n+1)\)}{theorem.1713}{}}
-\newlabel{lem:hasProjectiveDimensionLT_ker_of_surjection}{{1714}{576}{Syzygy descent of \(\texttt {HasProjectiveDimensionLT}\)}{theorem.1714}{}}
-\newlabel{lem:hasProjectiveDimensionLT_succ_of_hasProjectiveDimensionLT_ker}{{1715}{576}{Ascent companion: \(\ker f\)-pd-control \(\Rightarrow M\)-pd-control}{theorem.1715}{}}
-\newlabel{lem:depth_ker_ge_min_of_surjection_finite_localRing}{{1716}{576}{Depth lower bound on the kernel of a finite-free surjection}{theorem.1716}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {30.6}Auxiliary homological lemmas}{576}{section.30.6}\protected@file@percent }
-\newlabel{sec:ab_substrate_helpers}{{30.6}{576}{Auxiliary homological lemmas}{section.30.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {30.6.1}Ext-annihilation and depth-bound substrate}{576}{subsection.30.6.1}\protected@file@percent }
-\newlabel{subsec:ab_ext_depth_substrate}{{30.6.1}{576}{Ext-annihilation and depth-bound substrate}{subsection.30.6.1}{}}
-\newlabel{lem:ext_smul_eq_zero_of_mem_annihilator}{{1717}{576}{Annihilator kills \(\text {Ext}\)}{theorem.1717}{}}
-\newlabel{lem:ext_vanish_of_natCast_lt_depth}{{1718}{576}{\(\text {Ext}\)-vanishing below the depth}{theorem.1718}{}}
-\newlabel{lem:natCast_add_one_le_of_le_sub_one}{{1719}{576}{\(\mathbb N_\infty \) successor bridge}{theorem.1719}{}}
-\newlabel{lem:depth_eq_of_linearEquiv}{{1720}{577}{Depth is a linear-equivalence invariant}{theorem.1720}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {30.6.2}Depth of a constant product module}{577}{subsection.30.6.2}\protected@file@percent }
-\newlabel{subsec:ab_depth_pi_substrate}{{30.6.2}{577}{Depth of a constant product module}{subsection.30.6.2}{}}
-\newlabel{lem:ideal_smul_top_pi_const}{{1721}{577}{Ideal action on a constant product}{theorem.1721}{}}
-\newlabel{lem:ideal_smul_top_pi_const_eq_top_iff}{{1722}{577}{Triviality of the ideal action on a constant product}{theorem.1722}{}}
-\newlabel{def:quotSMulTopPiConstLinearEquiv}{{1723}{577}{Quotient of a constant product by a scalar}{theorem.1723}{}}
-\newlabel{lem:isRegular_pi_const_iff_of_nonempty}{{1724}{577}{Regularity on a constant product}{theorem.1724}{}}
-\newlabel{lem:depth_pi_const_eq_depth_of_nonempty}{{1725}{577}{Depth of a constant product}{theorem.1725}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {30.6.3}Surjection and projective-dimension substrate for the inductive step}{578}{subsection.30.6.3}\protected@file@percent }
-\newlabel{subsec:ab_surjection_substrate}{{30.6.3}{578}{Surjection and projective-dimension substrate for the inductive step}{subsection.30.6.3}{}}
-\newlabel{lem:exists_isSMulRegular_of_one_le_depth}{{1726}{578}{A regular element exists when depth is positive}{theorem.1726}{}}
-\newlabel{lem:depth_ses_ineqs_of_surjection_finite_localRing}{{1727}{578}{Kernel-SES depth inequalities for a finite free surjection}{theorem.1727}{}}
-\newlabel{lem:exists_ne_zero_ext_of_depth_eq}{{1728}{578}{A nonzero \(\text {Ext}\) class at the depth index}{theorem.1728}{}}
-\newlabel{lem:projectiveDimension_ker_eq_of_surjection}{{1729}{578}{Exact projective dimension of a syzygy}{theorem.1729}{}}
-\newlabel{lem:enat_ab_inductive_combine}{{1730}{578}{\(\mathbb N_\infty \) combine for the inductive step}{theorem.1730}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {30.6.4}Matrix-collapse on \(\text  {Ext}\)}{579}{subsection.30.6.4}\protected@file@percent }
-\newlabel{subsec:ab_matrix_collapse_substrate}{{30.6.4}{579}{Matrix-collapse on \texorpdfstring {\(\text {Ext}\)}{Ext}}{subsection.30.6.4}{}}
-\newlabel{def:elemMap}{{1731}{579}{Elementary linear map}{theorem.1731}{}}
-\newlabel{lem:elemMap_apply}{{1732}{579}{Evaluation of the elementary map}{theorem.1732}{}}
-\newlabel{lem:linearMap_finFunR_matrix_decomp}{{1733}{579}{Matrix decomposition into elementary maps}{theorem.1733}{}}
-\newlabel{lem:ext_comp_mk_zero_ofHom_eq_zero_of_entries_mem_annihilator}{{1734}{579}{Matrix-collapse on \(\text {Ext}\)}{theorem.1734}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {30.6.5}Regular-sequence and domain substrate for regular local rings}{579}{subsection.30.6.5}\protected@file@percent }
-\newlabel{subsec:ab_regular_domain_substrate}{{30.6.5}{579}{Regular-sequence and domain substrate for regular local rings}{subsection.30.6.5}{}}
-\newlabel{lem:length_le_ringKrullDim_of_isRegular}{{1735}{579}{Regular sequences are bounded by the Krull dimension}{theorem.1735}{}}
-\newlabel{lem:toCotangent_ne_zero_of_not_mem_sq}{{1736}{579}{Cotangent image of \(x \in \mathfrak m \setminus \mathfrak m^2\)}{theorem.1736}{}}
-\newlabel{lem:finrank_cotangentSpace_quot_span_singleton_succ}{{1737}{579}{Cotangent dimension drops by one modulo \(x\)}{theorem.1737}{}}
-\newlabel{lem:exists_notMemSq_of_spanFinrank_pos}{{1738}{580}{Nakayama witness for a positive cotangent dimension}{theorem.1738}{}}
-\newlabel{lem:isDomain_of_isLocalRing_of_spanFinrank_maximalIdeal_eq_zero}{{1739}{580}{Zero cotangent dimension forces a field}{theorem.1739}{}}
-\newlabel{lem:regularLocal_quotient_isRegularLocal_of_notMemSq}{{1740}{580}{Regularity descends to \(R/(x)\)}{theorem.1740}{}}
-\newlabel{lem:exists_ne_zero_mul_eq_zero_of_mem_minimalPrimes}{{1741}{580}{Members of a minimal prime are zero-divisors}{theorem.1741}{}}
-\newlabel{lem:notMem_minimalPrimes_of_regularLocal_succ}{{1742}{580}{\((x)\) is not a minimal prime in the inductive step}{theorem.1742}{}}
-\newlabel{lem:isDomain_of_regularLocal}{{1743}{580}{Regular local rings are domains}{theorem.1743}{}}
-\newlabel{lem:exists_isSMulRegular_notMemSq_of_regularLocal_succ}{{1744}{581}{A regular element outside \(\mathfrak m^2\)}{theorem.1744}{}}
-\newlabel{lem:exists_isSMulRegular_quotient_isRegularLocal_succ}{{1745}{581}{Regular element with regular quotient}{theorem.1745}{}}
-\newlabel{lem:regularLocal_inductive_step}{{1746}{581}{Inductive step for the regular sequence}{theorem.1746}{}}
-\newlabel{lem:exists_isRegular_of_regularLocal}{{1747}{581}{Regular local rings have a full regular sequence}{theorem.1747}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {30.7}Corollary: regular local rings are Cohen--Macaulay}{581}{section.30.7}\protected@file@percent }
-\newlabel{sec:ab_regular_cm}{{30.7}{581}{Corollary: regular local rings are Cohen--Macaulay}{section.30.7}{}}
-\newlabel{def:cohen_macaulay_local}{{1748}{581}{Cohen--Macaulay local ring}{theorem.1748}{}}
-\newlabel{cor:regular_cohen_macaulay}{{1749}{581}{Regular local rings are Cohen--Macaulay}{theorem.1749}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {30.8}Application: Hartogs extension on a regular surface}{582}{section.30.8}\protected@file@percent }
-\newlabel{sec:ab_application_to_a4a}{{30.8}{582}{Application: Hartogs extension on a regular surface}{section.30.8}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {30.9}Algebraic scope}{582}{section.30.9}\protected@file@percent }
-\newlabel{sec:ab_lean_encoding}{{30.9}{582}{Algebraic scope}{section.30.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {30.10}Further consequences}{582}{section.30.10}\protected@file@percent }
-\newlabel{sec:ab_out_of_scope}{{30.10}{582}{Further consequences}{section.30.10}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {31}Milne Theorem 3.2: Rational maps into abelian varieties}{584}{chapter.31}\protected@file@percent }
+\newlabel{chap:Albanese_AuslanderBuchsbaum}{{30}{573}{Auslander--Buchsbaum}{chapter.30}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.1}Setup and motivation}{573}{section.30.1}\protected@file@percent }
+\newlabel{sec:ab_setup}{{30.1}{573}{Setup and motivation}{section.30.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.2}Depth of a module over a local ring}{573}{section.30.2}\protected@file@percent }
+\newlabel{sec:ab_depth}{{30.2}{573}{Depth of a module over a local ring}{section.30.2}{}}
+\newlabel{def:depth}{{1711}{573}{Depth of a module}{theorem.1711}{}}
+\newlabel{lem:depth_via_ext}{{1712}{574}{Depth via \(\text {Ext}\)}{theorem.1712}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.3}Projective dimension}{574}{section.30.3}\protected@file@percent }
+\newlabel{sec:ab_pd}{{30.3}{574}{Projective dimension}{section.30.3}{}}
+\newlabel{def:projective_dimension}{{1713}{574}{Projective dimension}{theorem.1713}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.4}Depth on a short exact sequence}{574}{section.30.4}\protected@file@percent }
+\newlabel{sec:ab_depth_ses}{{30.4}{574}{Depth on a short exact sequence}{section.30.4}{}}
+\newlabel{lem:depth_short_exact_sequence}{{1714}{574}{Depth on a short exact sequence}{theorem.1714}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.5}The Auslander--Buchsbaum formula}{575}{section.30.5}\protected@file@percent }
+\newlabel{sec:ab_main}{{30.5}{575}{The Auslander--Buchsbaum formula}{section.30.5}{}}
+\newlabel{thm:auslander_buchsbaum}{{1715}{575}{Auslander--Buchsbaum formula}{theorem.1715}{}}
+\newlabel{lem:auslander_buchsbaum_formula_succ_pd}{{1716}{576}{Auslander--Buchsbaum: inductive step \(\text {pd} = k+1\)}{theorem.1716}{}}
+\newlabel{lem:depth_drops_by_one}{{1717}{576}{}{theorem.1717}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.5.1}The syzygy step in the induction}{577}{subsection.30.5.1}\protected@file@percent }
+\newlabel{subsec:succ_pd_gap_sequence}{{30.5.1}{577}{The syzygy step in the induction}{subsection.30.5.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.5.2}Minimal finite-free surjections}{577}{subsection.30.5.2}\protected@file@percent }
+\newlabel{subsec:ab_gap1_first_step}{{30.5.2}{577}{Minimal finite-free surjections}{subsection.30.5.2}{}}
+\newlabel{lem:exists_minimalSurjection_finite_localRing}{{1718}{577}{Per-syzygy minimal surjection from \(R^n\) for finite modules over a local ring}{theorem.1718}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.5.3}Projective-dimension descent along a syzygy}{577}{subsection.30.5.3}\protected@file@percent }
+\newlabel{subsec:ab_gap1_haspdlt_pivot}{{30.5.3}{577}{Projective-dimension descent along a syzygy}{subsection.30.5.3}{}}
+\newlabel{lem:hasProjectiveDimensionLT_succ_of_projectiveDimension_eq}{{1719}{577}{Bridge: \(\texttt {projectiveDimension}\,M = n \Rightarrow \texttt {HasProjectiveDimensionLT}\,M\,(n+1)\)}{theorem.1719}{}}
+\newlabel{lem:hasProjectiveDimensionLT_ker_of_surjection}{{1720}{578}{Syzygy descent of \(\texttt {HasProjectiveDimensionLT}\)}{theorem.1720}{}}
+\newlabel{lem:hasProjectiveDimensionLT_succ_of_hasProjectiveDimensionLT_ker}{{1721}{578}{Ascent companion: \(\ker f\)-pd-control \(\Rightarrow M\)-pd-control}{theorem.1721}{}}
+\newlabel{lem:depth_ker_ge_min_of_surjection_finite_localRing}{{1722}{578}{Depth lower bound on the kernel of a finite-free surjection}{theorem.1722}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.6}Auxiliary homological lemmas}{578}{section.30.6}\protected@file@percent }
+\newlabel{sec:ab_substrate_helpers}{{30.6}{578}{Auxiliary homological lemmas}{section.30.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.6.1}Ext-annihilation and depth-bound substrate}{578}{subsection.30.6.1}\protected@file@percent }
+\newlabel{subsec:ab_ext_depth_substrate}{{30.6.1}{578}{Ext-annihilation and depth-bound substrate}{subsection.30.6.1}{}}
+\newlabel{lem:ext_smul_eq_zero_of_mem_annihilator}{{1723}{578}{Annihilator kills \(\text {Ext}\)}{theorem.1723}{}}
+\newlabel{lem:ext_vanish_of_natCast_lt_depth}{{1724}{578}{\(\text {Ext}\)-vanishing below the depth}{theorem.1724}{}}
+\newlabel{lem:natCast_add_one_le_of_le_sub_one}{{1725}{578}{\(\mathbb N_\infty \) successor bridge}{theorem.1725}{}}
+\newlabel{lem:depth_eq_of_linearEquiv}{{1726}{579}{Depth is a linear-equivalence invariant}{theorem.1726}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.6.2}Depth of a constant product module}{579}{subsection.30.6.2}\protected@file@percent }
+\newlabel{subsec:ab_depth_pi_substrate}{{30.6.2}{579}{Depth of a constant product module}{subsection.30.6.2}{}}
+\newlabel{lem:ideal_smul_top_pi_const}{{1727}{579}{Ideal action on a constant product}{theorem.1727}{}}
+\newlabel{lem:ideal_smul_top_pi_const_eq_top_iff}{{1728}{579}{Triviality of the ideal action on a constant product}{theorem.1728}{}}
+\newlabel{def:quotSMulTopPiConstLinearEquiv}{{1729}{579}{Quotient of a constant product by a scalar}{theorem.1729}{}}
+\newlabel{lem:isRegular_pi_const_iff_of_nonempty}{{1730}{579}{Regularity on a constant product}{theorem.1730}{}}
+\newlabel{lem:depth_pi_const_eq_depth_of_nonempty}{{1731}{579}{Depth of a constant product}{theorem.1731}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.6.3}Surjection and projective-dimension substrate for the inductive step}{580}{subsection.30.6.3}\protected@file@percent }
+\newlabel{subsec:ab_surjection_substrate}{{30.6.3}{580}{Surjection and projective-dimension substrate for the inductive step}{subsection.30.6.3}{}}
+\newlabel{lem:exists_isSMulRegular_of_one_le_depth}{{1732}{580}{A regular element exists when depth is positive}{theorem.1732}{}}
+\newlabel{lem:depth_ses_ineqs_of_surjection_finite_localRing}{{1733}{580}{Kernel-SES depth inequalities for a finite free surjection}{theorem.1733}{}}
+\newlabel{lem:exists_ne_zero_ext_of_depth_eq}{{1734}{580}{A nonzero \(\text {Ext}\) class at the depth index}{theorem.1734}{}}
+\newlabel{lem:projectiveDimension_ker_eq_of_surjection}{{1735}{580}{Exact projective dimension of a syzygy}{theorem.1735}{}}
+\newlabel{lem:enat_ab_inductive_combine}{{1736}{580}{\(\mathbb N_\infty \) combine for the inductive step}{theorem.1736}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.6.4}Matrix-collapse on \(\text  {Ext}\)}{581}{subsection.30.6.4}\protected@file@percent }
+\newlabel{subsec:ab_matrix_collapse_substrate}{{30.6.4}{581}{Matrix-collapse on \texorpdfstring {\(\text {Ext}\)}{Ext}}{subsection.30.6.4}{}}
+\newlabel{def:elemMap}{{1737}{581}{Elementary linear map}{theorem.1737}{}}
+\newlabel{lem:elemMap_apply}{{1738}{581}{Evaluation of the elementary map}{theorem.1738}{}}
+\newlabel{lem:linearMap_finFunR_matrix_decomp}{{1739}{581}{Matrix decomposition into elementary maps}{theorem.1739}{}}
+\newlabel{lem:ext_comp_mk_zero_ofHom_eq_zero_of_entries_mem_annihilator}{{1740}{581}{Matrix-collapse on \(\text {Ext}\)}{theorem.1740}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {30.6.5}Regular-sequence and domain substrate for regular local rings}{581}{subsection.30.6.5}\protected@file@percent }
+\newlabel{subsec:ab_regular_domain_substrate}{{30.6.5}{581}{Regular-sequence and domain substrate for regular local rings}{subsection.30.6.5}{}}
+\newlabel{lem:length_le_ringKrullDim_of_isRegular}{{1741}{581}{Regular sequences are bounded by the Krull dimension}{theorem.1741}{}}
+\newlabel{lem:toCotangent_ne_zero_of_not_mem_sq}{{1742}{581}{Cotangent image of \(x \in \mathfrak m \setminus \mathfrak m^2\)}{theorem.1742}{}}
+\newlabel{lem:finrank_cotangentSpace_quot_span_singleton_succ}{{1743}{581}{Cotangent dimension drops by one modulo \(x\)}{theorem.1743}{}}
+\newlabel{lem:exists_notMemSq_of_spanFinrank_pos}{{1744}{582}{Nakayama witness for a positive cotangent dimension}{theorem.1744}{}}
+\newlabel{lem:isDomain_of_isLocalRing_of_spanFinrank_maximalIdeal_eq_zero}{{1745}{582}{Zero cotangent dimension forces a field}{theorem.1745}{}}
+\newlabel{lem:regularLocal_quotient_isRegularLocal_of_notMemSq}{{1746}{582}{Regularity descends to \(R/(x)\)}{theorem.1746}{}}
+\newlabel{lem:exists_ne_zero_mul_eq_zero_of_mem_minimalPrimes}{{1747}{582}{Members of a minimal prime are zero-divisors}{theorem.1747}{}}
+\newlabel{lem:notMem_minimalPrimes_of_regularLocal_succ}{{1748}{582}{\((x)\) is not a minimal prime in the inductive step}{theorem.1748}{}}
+\newlabel{lem:isDomain_of_regularLocal}{{1749}{582}{Regular local rings are domains}{theorem.1749}{}}
+\newlabel{lem:exists_isSMulRegular_notMemSq_of_regularLocal_succ}{{1750}{583}{A regular element outside \(\mathfrak m^2\)}{theorem.1750}{}}
+\newlabel{lem:exists_isSMulRegular_quotient_isRegularLocal_succ}{{1751}{583}{Regular element with regular quotient}{theorem.1751}{}}
+\newlabel{lem:regularLocal_inductive_step}{{1752}{583}{Inductive step for the regular sequence}{theorem.1752}{}}
+\newlabel{lem:exists_isRegular_of_regularLocal}{{1753}{583}{Regular local rings have a full regular sequence}{theorem.1753}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.7}Corollary: regular local rings are Cohen--Macaulay}{583}{section.30.7}\protected@file@percent }
+\newlabel{sec:ab_regular_cm}{{30.7}{583}{Corollary: regular local rings are Cohen--Macaulay}{section.30.7}{}}
+\newlabel{def:cohen_macaulay_local}{{1754}{583}{Cohen--Macaulay local ring}{theorem.1754}{}}
+\newlabel{cor:regular_cohen_macaulay}{{1755}{583}{Regular local rings are Cohen--Macaulay}{theorem.1755}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.8}Application: Hartogs extension on a regular surface}{584}{section.30.8}\protected@file@percent }
+\newlabel{sec:ab_application_to_a4a}{{30.8}{584}{Application: Hartogs extension on a regular surface}{section.30.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.9}Algebraic scope}{584}{section.30.9}\protected@file@percent }
+\newlabel{sec:ab_lean_encoding}{{30.9}{584}{Algebraic scope}{section.30.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {30.10}Further consequences}{584}{section.30.10}\protected@file@percent }
+\newlabel{sec:ab_out_of_scope}{{30.10}{584}{Further consequences}{section.30.10}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {31}Milne Theorem 3.2: Rational maps into abelian varieties}{586}{chapter.31}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chap:Albanese_Thm32RationalMapExtension}{{31}{584}{Milne Theorem 3.2: Rational maps into abelian varieties}{chapter.31}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {31.1}Setup and statement}{584}{section.31.1}\protected@file@percent }
-\newlabel{sec:thm32_setup}{{31.1}{584}{Setup and statement}{section.31.1}{}}
-\newlabel{thm:rational_map_to_av_extends}{{1750}{584}{Milne Theorem~3.2: a rational map from a nonsingular variety to an abelian variety extends}{theorem.1750}{}}
-\newlabel{rmk:thm32_role_of_ab}{{1751}{584}{}{theorem.1751}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {31.2}Why the proof is characteristic-free}{584}{section.31.2}\protected@file@percent }
-\newlabel{sec:thm32_char_free}{{31.2}{584}{Why the proof is characteristic-free}{section.31.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {31.3}Application to the symmetric-product Albanese map}{585}{section.31.3}\protected@file@percent }
-\newlabel{sec:thm32_application_to_a4d}{{31.3}{585}{Application to the symmetric-product Albanese map}{section.31.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {31.4}Structure of the proof}{585}{section.31.4}\protected@file@percent }
-\newlabel{sec:thm32_lean_encoding}{{31.4}{585}{Structure of the proof}{section.31.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {31.5}Auxiliary lemmas}{585}{section.31.5}\protected@file@percent }
-\newlabel{sec:thm32_lean_helpers}{{31.5}{585}{Auxiliary lemmas}{section.31.5}{}}
-\newlabel{lem:isReduced_of_smooth_over_field}{{1752}{585}{A scheme smooth over a field is reduced}{theorem.1752}{}}
-\newlabel{lem:av_isIntegral_of_smooth_geomIrred}{{1753}{585}{Integrality of the abelian variety}{theorem.1753}{}}
-\newlabel{lem:av_indeterminacyLocus_eq_empty}{{1754}{585}{Emptiness of the indeterminacy locus of a rational map into an abelian variety}{theorem.1754}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {31.6}Relations with neighbouring results}{586}{section.31.6}\protected@file@percent }
-\newlabel{sec:thm32_out_of_scope}{{31.6}{586}{Relations with neighbouring results}{section.31.6}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {32}The Albanese universal property of \(\Pic  ^0_{C/k}\)}{587}{chapter.32}\protected@file@percent }
+\newlabel{chap:Albanese_Thm32RationalMapExtension}{{31}{586}{Milne Theorem 3.2: Rational maps into abelian varieties}{chapter.31}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {31.1}Setup and statement}{586}{section.31.1}\protected@file@percent }
+\newlabel{sec:thm32_setup}{{31.1}{586}{Setup and statement}{section.31.1}{}}
+\newlabel{thm:rational_map_to_av_extends}{{1756}{586}{Milne Theorem~3.2: a rational map from a nonsingular variety to an abelian variety extends}{theorem.1756}{}}
+\newlabel{rmk:thm32_role_of_ab}{{1757}{586}{}{theorem.1757}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {31.2}Why the proof is characteristic-free}{586}{section.31.2}\protected@file@percent }
+\newlabel{sec:thm32_char_free}{{31.2}{586}{Why the proof is characteristic-free}{section.31.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {31.3}Application to the symmetric-product Albanese map}{587}{section.31.3}\protected@file@percent }
+\newlabel{sec:thm32_application_to_a4d}{{31.3}{587}{Application to the symmetric-product Albanese map}{section.31.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {31.4}Structure of the proof}{587}{section.31.4}\protected@file@percent }
+\newlabel{sec:thm32_lean_encoding}{{31.4}{587}{Structure of the proof}{section.31.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {31.5}Auxiliary lemmas}{587}{section.31.5}\protected@file@percent }
+\newlabel{sec:thm32_lean_helpers}{{31.5}{587}{Auxiliary lemmas}{section.31.5}{}}
+\newlabel{lem:isReduced_of_smooth_over_field}{{1758}{587}{A scheme smooth over a field is reduced}{theorem.1758}{}}
+\newlabel{lem:av_isIntegral_of_smooth_geomIrred}{{1759}{587}{Integrality of the abelian variety}{theorem.1759}{}}
+\newlabel{lem:av_indeterminacyLocus_eq_empty}{{1760}{587}{Emptiness of the indeterminacy locus of a rational map into an abelian variety}{theorem.1760}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {31.6}Relations with neighbouring results}{588}{section.31.6}\protected@file@percent }
+\newlabel{sec:thm32_out_of_scope}{{31.6}{588}{Relations with neighbouring results}{section.31.6}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {32}The Albanese universal property of \(\Pic  ^0_{C/k}\)}{589}{chapter.32}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chap:Albanese_AlbaneseUP}{{32}{587}{The Albanese universal property of \(\Pic ^0_{C/k}\)}{chapter.32}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {32.1}The Jacobian and the Abel--Jacobi map}{587}{section.32.1}\protected@file@percent }
-\newlabel{sec:albaneseup_setup}{{32.1}{587}{The Jacobian and the Abel--Jacobi map}{section.32.1}{}}
-\newlabel{def:abel_jacobi_morphism}{{1755}{587}{The Abel--Jacobi morphism}{theorem.1755}{}}
-\newlabel{lem:abel_jacobi_morphism}{{1756}{587}{Formula and basepoint of the Abel--Jacobi morphism}{theorem.1756}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {32.2}Symmetric powers and their canonical maps}{588}{section.32.2}\protected@file@percent }
-\newlabel{sec:albaneseup_symmetric_powers}{{32.2}{588}{Symmetric powers and their canonical maps}{section.32.2}{}}
-\newlabel{def:symmetric_power_curve}{{1757}{588}{Symmetric power of a curve}{theorem.1757}{}}
-\newlabel{lem:symmetric_power_projection_properties}{{1758}{588}{Properties of the symmetric-power projection}{theorem.1758}{}}
-\newlabel{def:symmetric_power_curve_carrier}{{1759}{588}{The symmetric-power carrier}{theorem.1759}{}}
-\newlabel{lem:symmetric_power_nonsingular}{{1760}{588}{Nonsingularity of a symmetric power of a curve}{theorem.1760}{}}
-\newlabel{def:symmetric_product_av_map}{{1761}{588}{The symmetric sum morphism}{theorem.1761}{}}
-\newlabel{lem:symmetric_product_av_map}{{1762}{588}{Symmetrisation of a morphism to an abelian variety}{theorem.1762}{}}
-\newlabel{def:symmetric_product_to_jacobian_morphism}{{1763}{588}{The canonical symmetric-power morphism to the Jacobian}{theorem.1763}{}}
-\newlabel{lem:symmetric_product_to_jacobian_formula}{{1764}{589}{Divisor description of the canonical symmetric-power morphism}{theorem.1764}{}}
-\newlabel{lem:symmetric_product_general_divisor}{{1765}{589}{General divisors of degree at most the genus}{theorem.1765}{}}
-\newlabel{lem:jacobian_invariant_one_forms}{{1766}{589}{Invariant one-forms on the Jacobian}{theorem.1766}{}}
-\newlabel{lem:abel_jacobi_differential}{{1767}{589}{Differential of the Abel--Jacobi map}{theorem.1767}{}}
-\newlabel{lem:abel_jacobi_one_forms}{{1768}{590}{One-forms pulled back by the Abel--Jacobi map}{theorem.1768}{}}
-\newlabel{lem:jacobian_dimension}{{1769}{590}{Dimension of the Jacobian}{theorem.1769}{}}
-\newlabel{prop:symmetric_product_differentials}{{1770}{590}{Differentials on a symmetric power}{theorem.1770}{}}
-\newlabel{lem:symmetric_product_tangent_exact}{{1771}{590}{Tangent sequence of the canonical symmetric-power map}{theorem.1771}{}}
-\newlabel{lem:symmetric_product_to_jacobian}{{1772}{591}{Birationality of the canonical map}{theorem.1772}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {32.3}Descent and the universal property}{591}{section.32.3}\protected@file@percent }
-\newlabel{sec:albaneseup_descent}{{32.3}{591}{Descent and the universal property}{section.32.3}{}}
-\newlabel{lem:descent_through_birational_sigma}{{1773}{591}{Descent through the birational symmetric power}{theorem.1773}{}}
-\newlabel{def:basepoint_section_symmetric_power}{{1774}{591}{The basepoint section of the symmetric power}{theorem.1774}{}}
-\newlabel{lem:basepoint_section_to_jacobian}{{1775}{591}{The basepoint section followed by the canonical map}{theorem.1775}{}}
-\newlabel{lem:basepoint_section_symmetric_map}{{1776}{591}{The basepoint section followed by a symmetric sum}{theorem.1776}{}}
-\newlabel{lem:albanese_eq_iff_symmetricPower_eq}{{1777}{592}{Equivalence of the two factorisation equations}{theorem.1777}{}}
-\newlabel{thm:albanese_universal_property}{{1778}{592}{Albanese factorisation through \(\Pic ^0_{C/k}\)}{theorem.1778}{}}
-\newlabel{cor:albanese_universal_property_homomorphism}{{1779}{592}{Albanese universal property}{theorem.1779}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {33}Weil divisors on a regular curve}{593}{chapter.33}\protected@file@percent }
+\newlabel{chap:Albanese_AlbaneseUP}{{32}{589}{The Albanese universal property of \(\Pic ^0_{C/k}\)}{chapter.32}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {32.1}The Jacobian and the Abel--Jacobi map}{589}{section.32.1}\protected@file@percent }
+\newlabel{sec:albaneseup_setup}{{32.1}{589}{The Jacobian and the Abel--Jacobi map}{section.32.1}{}}
+\newlabel{def:abel_jacobi_morphism}{{1761}{589}{The Abel--Jacobi morphism}{theorem.1761}{}}
+\newlabel{lem:abel_jacobi_morphism}{{1762}{589}{Formula and basepoint of the Abel--Jacobi morphism}{theorem.1762}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {32.2}Symmetric powers and their canonical maps}{590}{section.32.2}\protected@file@percent }
+\newlabel{sec:albaneseup_symmetric_powers}{{32.2}{590}{Symmetric powers and their canonical maps}{section.32.2}{}}
+\newlabel{def:symmetric_power_curve}{{1763}{590}{Symmetric power of a curve}{theorem.1763}{}}
+\newlabel{lem:symmetric_power_projection_properties}{{1764}{590}{Properties of the symmetric-power projection}{theorem.1764}{}}
+\newlabel{def:symmetric_power_curve_carrier}{{1765}{590}{The symmetric-power carrier}{theorem.1765}{}}
+\newlabel{lem:symmetric_power_nonsingular}{{1766}{590}{Nonsingularity of a symmetric power of a curve}{theorem.1766}{}}
+\newlabel{def:symmetric_product_av_map}{{1767}{590}{The symmetric sum morphism}{theorem.1767}{}}
+\newlabel{lem:symmetric_product_av_map}{{1768}{590}{Symmetrisation of a morphism to an abelian variety}{theorem.1768}{}}
+\newlabel{def:symmetric_product_to_jacobian_morphism}{{1769}{590}{The canonical symmetric-power morphism to the Jacobian}{theorem.1769}{}}
+\newlabel{lem:symmetric_product_to_jacobian_formula}{{1770}{591}{Divisor description of the canonical symmetric-power morphism}{theorem.1770}{}}
+\newlabel{lem:symmetric_product_general_divisor}{{1771}{591}{General divisors of degree at most the genus}{theorem.1771}{}}
+\newlabel{lem:jacobian_invariant_one_forms}{{1772}{591}{Invariant one-forms on the Jacobian}{theorem.1772}{}}
+\newlabel{lem:abel_jacobi_differential}{{1773}{591}{Differential of the Abel--Jacobi map}{theorem.1773}{}}
+\newlabel{lem:abel_jacobi_one_forms}{{1774}{592}{One-forms pulled back by the Abel--Jacobi map}{theorem.1774}{}}
+\newlabel{lem:jacobian_dimension}{{1775}{592}{Dimension of the Jacobian}{theorem.1775}{}}
+\newlabel{prop:symmetric_product_differentials}{{1776}{592}{Differentials on a symmetric power}{theorem.1776}{}}
+\newlabel{lem:symmetric_product_tangent_exact}{{1777}{592}{Tangent sequence of the canonical symmetric-power map}{theorem.1777}{}}
+\newlabel{lem:symmetric_product_to_jacobian}{{1778}{593}{Birationality of the canonical map}{theorem.1778}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {32.3}Descent and the universal property}{593}{section.32.3}\protected@file@percent }
+\newlabel{sec:albaneseup_descent}{{32.3}{593}{Descent and the universal property}{section.32.3}{}}
+\newlabel{lem:descent_through_birational_sigma}{{1779}{593}{Descent through the birational symmetric power}{theorem.1779}{}}
+\newlabel{def:basepoint_section_symmetric_power}{{1780}{593}{The basepoint section of the symmetric power}{theorem.1780}{}}
+\newlabel{lem:basepoint_section_to_jacobian}{{1781}{593}{The basepoint section followed by the canonical map}{theorem.1781}{}}
+\newlabel{lem:basepoint_section_symmetric_map}{{1782}{593}{The basepoint section followed by a symmetric sum}{theorem.1782}{}}
+\newlabel{lem:albanese_eq_iff_symmetricPower_eq}{{1783}{594}{Equivalence of the two factorisation equations}{theorem.1783}{}}
+\newlabel{thm:albanese_universal_property}{{1784}{594}{Albanese factorisation through \(\Pic ^0_{C/k}\)}{theorem.1784}{}}
+\newlabel{cor:albanese_universal_property_homomorphism}{{1785}{594}{Albanese universal property}{theorem.1785}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {33}Weil divisors on a regular curve}{595}{chapter.33}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chap:RiemannRoch_WeilDivisor}{{33}{593}{Weil divisors on a regular curve}{chapter.33}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {33.1}Prime divisors and Weil divisors}{593}{section.33.1}\protected@file@percent }
-\newlabel{def:prime_divisor}{{1780}{593}{Prime divisor}{theorem.1780}{}}
-\newlabel{def:codim1_cycles}{{1781}{593}{Weil divisor group}{theorem.1781}{}}
-\newlabel{def:isRegularInCodimensionOne}{{1782}{593}{Regularity in codimension one}{theorem.1782}{}}
-\newlabel{def:isRegularInCodimOne_dvrStalk}{{1783}{593}{The stalk at a prime divisor is a DVR}{theorem.1783}{}}
-\newlabel{def:isRegularInCodimOne_krullDimStalk}{{1784}{593}{Dimension of a prime-divisor stalk}{theorem.1784}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {33.2}Restriction to an open subscheme}{594}{section.33.2}\protected@file@percent }
-\newlabel{sec:open_immersion_descent}{{33.2}{594}{Restriction to an open subscheme}{section.33.2}{}}
-\newlabel{lem:primeDivisor_ext}{{1785}{594}{Extensionality of prime divisors}{theorem.1785}{}}
-\newlabel{def:primeDivisor_restrictToOpen}{{1786}{594}{Restriction of a prime divisor}{theorem.1786}{}}
-\newlabel{def:primeDivisor_ofOpen}{{1787}{594}{Extension from an open subscheme}{theorem.1787}{}}
-\newlabel{lem:primeDivisor_equivOpen}{{1788}{594}{Prime divisors on an open subscheme}{theorem.1788}{}}
-\newlabel{lem:primeDivisor_restrictToOpen_point}{{1789}{594}{Point of a restricted prime divisor}{theorem.1789}{}}
-\newlabel{lem:primeDivisor_ofOpen_point}{{1790}{594}{Point of an extended prime divisor}{theorem.1790}{}}
-\newlabel{lem:primeDivisor_stalkIso}{{1791}{594}{Stalks under restriction to an open}{theorem.1791}{}}
-\newlabel{thm:isRegularInCodimensionOne_open}{{1792}{594}{Regularity in codimension one is open-local}{theorem.1792}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {33.3}Orders of rational functions}{595}{section.33.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {33.3.1}Naturality under isomorphisms}{595}{subsection.33.3.1}\protected@file@percent }
-\newlabel{subsec:ordFrac_ringEquiv}{{33.3.1}{595}{Naturality under isomorphisms}{subsection.33.3.1}{}}
-\newlabel{lem:ord_ringEquiv}{{1793}{595}{Order length is invariant under a ring isomorphism}{theorem.1793}{}}
-\newlabel{lem:nonZeroDivisors_ringEquiv}{{1794}{595}{Non-zero-divisors are invariant under isomorphism}{theorem.1794}{}}
-\newlabel{lem:ordMonoidWithZeroHom_ringEquiv}{{1795}{595}{Naturality of the order monoid homomorphism}{theorem.1795}{}}
-\newlabel{lem:ordFrac_ringEquiv}{{1796}{595}{Naturality of fraction-field order}{theorem.1796}{}}
-\newlabel{def:functionFieldIso}{{1797}{595}{Function field of a nonempty open subscheme}{theorem.1797}{}}
-\newlabel{lem:functionFieldIso_compat}{{1798}{595}{Compatibility of the function-field isomorphism}{theorem.1798}{}}
-\newlabel{lem:ordFrac_stalkIso_naturality}{{1799}{595}{Fraction-field order across an open immersion}{theorem.1799}{}}
-\newlabel{def:order_at_point}{{1800}{596}{Order along a prime divisor}{theorem.1800}{}}
-\newlabel{lem:order_eq_order_restrict}{{1801}{596}{Order is invariant under restriction to an open}{theorem.1801}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {33.3.2}Valuation identities}{596}{subsection.33.3.2}\protected@file@percent }
-\newlabel{subsec:order_identities}{{33.3.2}{596}{Valuation identities}{subsection.33.3.2}{}}
-\newlabel{lem:order_zero}{{1802}{596}{Order of zero}{theorem.1802}{}}
-\newlabel{lem:order_one}{{1803}{596}{Order of one}{theorem.1803}{}}
-\newlabel{lem:order_mul_of_ne_zero}{{1804}{596}{Order of a product}{theorem.1804}{}}
-\newlabel{lem:order_inv}{{1805}{596}{Order of an inverse}{theorem.1805}{}}
-\newlabel{lem:order_units_inv}{{1806}{596}{Order of a unit inverse}{theorem.1806}{}}
-\newlabel{lem:order_neg}{{1807}{596}{Order is insensitive to sign}{theorem.1807}{}}
-\newlabel{lem:order_pow_of_ne_zero}{{1808}{596}{Order of a power}{theorem.1808}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {33.4}Closed points and coefficient degree}{597}{section.33.4}\protected@file@percent }
-\newlabel{def:divisor_closed_point}{{1809}{597}{Divisor associated with a closed point}{theorem.1809}{}}
-\newlabel{lem:curve_closed_point_prime_divisor}{{1810}{597}{Closed points of a nonsingular curve are prime divisors}{theorem.1810}{}}
-\newlabel{lem:ofClosedPoint_eq_single}{{1811}{597}{Closed point in the codimension-one branch}{theorem.1811}{}}
-\newlabel{lem:ofClosedPoint_eq_zero}{{1812}{597}{Closed point outside the codimension-one branch}{theorem.1812}{}}
-\newlabel{def:divisor_degree}{{1813}{597}{Coefficient degree}{theorem.1813}{}}
-\newlabel{thm:divisor_degree_hom}{{1814}{597}{Coefficient degree is additive}{theorem.1814}{}}
-\newlabel{lem:degree_hom_apply}{{1815}{597}{Bundled degree agrees with coefficient degree}{theorem.1815}{}}
-\newlabel{lem:degree_zero}{{1816}{597}{Degree of zero}{theorem.1816}{}}
-\newlabel{lem:degree_add}{{1817}{597}{Degree of a sum}{theorem.1817}{}}
-\newlabel{lem:degree_neg}{{1818}{598}{Degree of a negation}{theorem.1818}{}}
-\newlabel{lem:degree_sub}{{1819}{598}{Degree of a difference}{theorem.1819}{}}
-\newlabel{lem:degree_single}{{1820}{598}{Degree of a one-point divisor}{theorem.1820}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {33.5}Principal divisors}{598}{section.33.5}\protected@file@percent }
-\newlabel{lem:rationalMap_order_finite_support}{{1821}{598}{Finite support of the order function}{theorem.1821}{}}
-\newlabel{rem:finite_support_needs_noetherian}{{1822}{598}{}{theorem.1822}{}}
-\newlabel{def:principal_divisor}{{1823}{598}{Principal divisor}{theorem.1823}{}}
-\newlabel{lem:principal_apply}{{1824}{598}{Coefficient of a principal divisor}{theorem.1824}{}}
-\newlabel{lem:principal_one}{{1825}{598}{Principal divisor of one}{theorem.1825}{}}
-\newlabel{thm:principal_hom}{{1826}{598}{The principal-divisor homomorphism}{theorem.1826}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {33.6}Degree under finite morphisms}{599}{section.33.6}\protected@file@percent }
-\newlabel{def:finite_curve_divisor_pullback}{{1827}{599}{Pullback of a divisor along a finite morphism of curves}{theorem.1827}{}}
-\newlabel{thm:finite_curve_degree_pullback}{{1828}{599}{Degree of a finite pullback}{theorem.1828}{}}
-\newlabel{lem:rational_function_finite_map_to_p1}{{1829}{599}{A rational function gives a finite map to the projective line}{theorem.1829}{}}
-\newlabel{thm:principal_deg_zero}{{1830}{599}{Principal divisors have degree zero}{theorem.1830}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {33.7}Positive parts}{599}{section.33.7}\protected@file@percent }
-\newlabel{def:WeilDivisor_positivePart}{{1831}{599}{Positive part of a Weil divisor}{theorem.1831}{}}
-\newlabel{lem:positivePart_zero}{{1832}{600}{Positive part of zero}{theorem.1832}{}}
-\newlabel{lem:positivePart_single}{{1833}{600}{Positive part of a one-point divisor}{theorem.1833}{}}
-\newlabel{lem:degree_positivePart_eq_sum_max}{{1834}{600}{Degree of a positive part}{theorem.1834}{}}
-\newlabel{lem:finsupp_sum_max_zero_eq_sum_filter_pos}{{1835}{600}{Sum over positive coefficients}{theorem.1835}{}}
-\newlabel{lem:one_le_degree_positivePart_principal_of_order_one}{{1836}{600}{A simple zero contributes positive degree}{theorem.1836}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {33.8}Linear equivalence and the divisor class group}{600}{section.33.8}\protected@file@percent }
-\newlabel{def:linear_equivalence}{{1837}{600}{Linear equivalence}{theorem.1837}{}}
-\newlabel{lem:linear_equivalence_equivalence}{{1838}{600}{Linear equivalence is an equivalence relation}{theorem.1838}{}}
-\newlabel{def:divisor_class_group}{{1839}{600}{Divisor class group}{theorem.1839}{}}
-\newlabel{thm:divisor_class_group_degree}{{1840}{600}{Degree on the divisor class group of a curve}{theorem.1840}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {34}Adelic Riemann--Roch: the repartition cokernel (RR.A)}{601}{chapter.34}\protected@file@percent }
+\newlabel{chap:RiemannRoch_WeilDivisor}{{33}{595}{Weil divisors on a regular curve}{chapter.33}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {33.1}Prime divisors and Weil divisors}{595}{section.33.1}\protected@file@percent }
+\newlabel{def:prime_divisor}{{1786}{595}{Prime divisor}{theorem.1786}{}}
+\newlabel{def:codim1_cycles}{{1787}{595}{Weil divisor group}{theorem.1787}{}}
+\newlabel{def:isRegularInCodimensionOne}{{1788}{595}{Regularity in codimension one}{theorem.1788}{}}
+\newlabel{def:isRegularInCodimOne_dvrStalk}{{1789}{595}{The stalk at a prime divisor is a DVR}{theorem.1789}{}}
+\newlabel{def:isRegularInCodimOne_krullDimStalk}{{1790}{595}{Dimension of a prime-divisor stalk}{theorem.1790}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {33.2}Restriction to an open subscheme}{596}{section.33.2}\protected@file@percent }
+\newlabel{sec:open_immersion_descent}{{33.2}{596}{Restriction to an open subscheme}{section.33.2}{}}
+\newlabel{lem:primeDivisor_ext}{{1791}{596}{Extensionality of prime divisors}{theorem.1791}{}}
+\newlabel{def:primeDivisor_restrictToOpen}{{1792}{596}{Restriction of a prime divisor}{theorem.1792}{}}
+\newlabel{def:primeDivisor_ofOpen}{{1793}{596}{Extension from an open subscheme}{theorem.1793}{}}
+\newlabel{lem:primeDivisor_equivOpen}{{1794}{596}{Prime divisors on an open subscheme}{theorem.1794}{}}
+\newlabel{lem:primeDivisor_restrictToOpen_point}{{1795}{596}{Point of a restricted prime divisor}{theorem.1795}{}}
+\newlabel{lem:primeDivisor_ofOpen_point}{{1796}{596}{Point of an extended prime divisor}{theorem.1796}{}}
+\newlabel{lem:primeDivisor_stalkIso}{{1797}{596}{Stalks under restriction to an open}{theorem.1797}{}}
+\newlabel{thm:isRegularInCodimensionOne_open}{{1798}{596}{Regularity in codimension one is open-local}{theorem.1798}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {33.3}Orders of rational functions}{597}{section.33.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.3.1}Naturality under isomorphisms}{597}{subsection.33.3.1}\protected@file@percent }
+\newlabel{subsec:ordFrac_ringEquiv}{{33.3.1}{597}{Naturality under isomorphisms}{subsection.33.3.1}{}}
+\newlabel{lem:ord_ringEquiv}{{1799}{597}{Order length is invariant under a ring isomorphism}{theorem.1799}{}}
+\newlabel{lem:nonZeroDivisors_ringEquiv}{{1800}{597}{Non-zero-divisors are invariant under isomorphism}{theorem.1800}{}}
+\newlabel{lem:ordMonoidWithZeroHom_ringEquiv}{{1801}{597}{Naturality of the order monoid homomorphism}{theorem.1801}{}}
+\newlabel{lem:ordFrac_ringEquiv}{{1802}{597}{Naturality of fraction-field order}{theorem.1802}{}}
+\newlabel{def:functionFieldIso}{{1803}{597}{Function field of a nonempty open subscheme}{theorem.1803}{}}
+\newlabel{lem:functionFieldIso_compat}{{1804}{597}{Compatibility of the function-field isomorphism}{theorem.1804}{}}
+\newlabel{lem:ordFrac_stalkIso_naturality}{{1805}{597}{Fraction-field order across an open immersion}{theorem.1805}{}}
+\newlabel{def:order_at_point}{{1806}{598}{Order along a prime divisor}{theorem.1806}{}}
+\newlabel{lem:order_eq_order_restrict}{{1807}{598}{Order is invariant under restriction to an open}{theorem.1807}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.3.2}Valuation identities}{598}{subsection.33.3.2}\protected@file@percent }
+\newlabel{subsec:order_identities}{{33.3.2}{598}{Valuation identities}{subsection.33.3.2}{}}
+\newlabel{lem:order_zero}{{1808}{598}{Order of zero}{theorem.1808}{}}
+\newlabel{lem:order_one}{{1809}{598}{Order of one}{theorem.1809}{}}
+\newlabel{lem:order_mul_of_ne_zero}{{1810}{598}{Order of a product}{theorem.1810}{}}
+\newlabel{lem:order_inv}{{1811}{598}{Order of an inverse}{theorem.1811}{}}
+\newlabel{lem:order_units_inv}{{1812}{598}{Order of a unit inverse}{theorem.1812}{}}
+\newlabel{lem:order_neg}{{1813}{598}{Order is insensitive to sign}{theorem.1813}{}}
+\newlabel{lem:order_pow_of_ne_zero}{{1814}{598}{Order of a power}{theorem.1814}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {33.4}Closed points and coefficient degree}{599}{section.33.4}\protected@file@percent }
+\newlabel{def:divisor_closed_point}{{1815}{599}{Divisor associated with a closed point}{theorem.1815}{}}
+\newlabel{lem:curve_closed_point_prime_divisor}{{1816}{599}{Closed points of a nonsingular curve are prime divisors}{theorem.1816}{}}
+\newlabel{lem:ofClosedPoint_eq_single}{{1817}{599}{Closed point in the codimension-one branch}{theorem.1817}{}}
+\newlabel{lem:ofClosedPoint_eq_zero}{{1818}{599}{Closed point outside the codimension-one branch}{theorem.1818}{}}
+\newlabel{def:divisor_degree}{{1819}{599}{Coefficient degree}{theorem.1819}{}}
+\newlabel{thm:divisor_degree_hom}{{1820}{599}{Coefficient degree is additive}{theorem.1820}{}}
+\newlabel{lem:degree_hom_apply}{{1821}{599}{Bundled degree agrees with coefficient degree}{theorem.1821}{}}
+\newlabel{lem:degree_zero}{{1822}{599}{Degree of zero}{theorem.1822}{}}
+\newlabel{lem:degree_add}{{1823}{599}{Degree of a sum}{theorem.1823}{}}
+\newlabel{lem:degree_neg}{{1824}{600}{Degree of a negation}{theorem.1824}{}}
+\newlabel{lem:degree_sub}{{1825}{600}{Degree of a difference}{theorem.1825}{}}
+\newlabel{lem:degree_single}{{1826}{600}{Degree of a one-point divisor}{theorem.1826}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {33.5}Principal divisors}{600}{section.33.5}\protected@file@percent }
+\newlabel{lem:rationalMap_order_finite_support}{{1827}{600}{Finite support of the order function}{theorem.1827}{}}
+\newlabel{rem:finite_support_needs_noetherian}{{1828}{600}{}{theorem.1828}{}}
+\newlabel{def:principal_divisor}{{1829}{600}{Principal divisor}{theorem.1829}{}}
+\newlabel{lem:principal_apply}{{1830}{600}{Coefficient of a principal divisor}{theorem.1830}{}}
+\newlabel{lem:principal_one}{{1831}{600}{Principal divisor of one}{theorem.1831}{}}
+\newlabel{thm:principal_hom}{{1832}{600}{The principal-divisor homomorphism}{theorem.1832}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {33.6}Degree under finite morphisms}{601}{section.33.6}\protected@file@percent }
+\newlabel{def:finite_curve_divisor_pullback}{{1833}{601}{Pullback of a divisor along a finite morphism of curves}{theorem.1833}{}}
+\newlabel{thm:finite_curve_degree_pullback}{{1834}{601}{Degree of a finite pullback}{theorem.1834}{}}
+\newlabel{lem:rational_function_finite_map_to_p1}{{1835}{601}{A rational function gives a finite map to the projective line}{theorem.1835}{}}
+\newlabel{thm:principal_deg_zero}{{1836}{601}{Principal divisors have degree zero}{theorem.1836}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {33.7}Positive parts}{601}{section.33.7}\protected@file@percent }
+\newlabel{def:WeilDivisor_positivePart}{{1837}{601}{Positive part of a Weil divisor}{theorem.1837}{}}
+\newlabel{lem:positivePart_zero}{{1838}{602}{Positive part of zero}{theorem.1838}{}}
+\newlabel{lem:positivePart_single}{{1839}{602}{Positive part of a one-point divisor}{theorem.1839}{}}
+\newlabel{lem:degree_positivePart_eq_sum_max}{{1840}{602}{Degree of a positive part}{theorem.1840}{}}
+\newlabel{lem:finsupp_sum_max_zero_eq_sum_filter_pos}{{1841}{602}{Sum over positive coefficients}{theorem.1841}{}}
+\newlabel{lem:one_le_degree_positivePart_principal_of_order_one}{{1842}{602}{A simple zero contributes positive degree}{theorem.1842}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {33.8}Linear equivalence and the divisor class group}{602}{section.33.8}\protected@file@percent }
+\newlabel{def:linear_equivalence}{{1843}{602}{Linear equivalence}{theorem.1843}{}}
+\newlabel{lem:linear_equivalence_equivalence}{{1844}{602}{Linear equivalence is an equivalence relation}{theorem.1844}{}}
+\newlabel{def:divisor_class_group}{{1845}{602}{Divisor class group}{theorem.1845}{}}
+\newlabel{thm:divisor_class_group_degree}{{1846}{602}{Degree on the divisor class group of a curve}{theorem.1846}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {34}Adelic Riemann--Roch: the repartition cokernel (RR.A)}{603}{chapter.34}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chap:RiemannRoch_Adelic}{{34}{601}{Adelic Riemann--Roch: the repartition cokernel (RR.A)}{chapter.34}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {34.1}The two-chart model}{601}{section.34.1}\protected@file@percent }
-\newlabel{sec:RiemannRoch_Adelic_intro}{{34.1}{601}{The two-chart model}{section.34.1}{}}
-\@writefile{toc}{\contentsline {paragraph}{The concrete-repartition idea.}{601}{section*.59}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{The \(2\)-affine-cover cokernel.}{601}{section*.60}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Residue-degree bookkeeping.}{602}{section*.61}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {34.2}Valuations and divisor sections}{602}{section.34.2}\protected@file@percent }
-\newlabel{sec:RiemannRoch_Adelic_substrate}{{34.2}{602}{Valuations and divisor sections}{section.34.2}{}}
-\newlabel{thm:adelic_chartRing_isDedekindDomain}{{1841}{602}{Affine chart is a Dedekind domain with fraction field \(K\)}{theorem.1841}{}}
-\newlabel{def:adelic_pointValuation}{{1842}{602}{Point valuation}{theorem.1842}{}}
-\newlabel{lem:adelic_order_eq_neg_log_pointValuation}{{1843}{602}{Order is the additive normalization of the point valuation}{theorem.1843}{}}
-\newlabel{def:adelic_residue_degree}{{1844}{602}{Residue field and residue degree}{theorem.1844}{}}
-\newlabel{def:adelic_divisor_degree}{{1845}{602}{Residue-weighted degree}{theorem.1845}{}}
-\newlabel{thm:adelic_principal_degree_zero}{{1846}{602}{Weighted degree of a principal divisor}{theorem.1846}{}}
-\newlabel{def:adelic_sectionOfDivisor}{{1847}{603}{Sections bounded by a divisor; the Riemann--Roch space}{theorem.1847}{}}
-\newlabel{thm:adelic_finite_support_order}{{1848}{603}{Finiteness of the non-integral places on a Dedekind chart}{theorem.1848}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {34.3}The cover cokernel and first cohomology}{603}{section.34.3}\protected@file@percent }
-\newlabel{sec:RiemannRoch_Adelic_cokernel}{{34.3}{603}{The cover cokernel and first cohomology}{section.34.3}{}}
-\newlabel{def:adelic_coverH1}{{1849}{603}{The two-cover cokernel of a sheaf}{theorem.1849}{}}
-\newlabel{def:adelic_function_field_H1}{{1850}{603}{The function-field twist cokernel}{theorem.1850}{}}
-\newlabel{thm:adelic_function_field_H1_zero_compare}{{1851}{603}{Comparison at the zero divisor}{theorem.1851}{}}
-\newlabel{lem:adelic_alternatingCofaceMapComplex_objD}{{1852}{604}{The unnormalized coface differential is the alternating coface sum}{theorem.1852}{}}
-\newlabel{def:adelic_cechCosimplicial}{{1853}{604}{The Čech cosimplicial object of a cover}{theorem.1853}{}}
-\newlabel{lem:adelic_cech_coface_restriction}{{1854}{604}{Cofaces are restriction maps}{theorem.1854}{}}
-\newlabel{lem:adelic_cech_d01_d12_formula}{{1855}{604}{The degree-\(0\) and degree-\(1\) Čech differentials}{theorem.1855}{}}
-\newlabel{thm:adelic_cechH1_eq_cokernel}{{1856}{604}{Two-element Čech \(H^1\) is the cokernel}{theorem.1856}{}}
-\newlabel{thm:adelic_affine_h1_vanishing}{{1857}{605}{First cohomology vanishes on the affine pieces}{theorem.1857}{}}
-\newlabel{thm:adelic_mv_h1_cokernel_equiv}{{1858}{605}{The degree-one Mayer--Vietoris quotient}{theorem.1858}{}}
-\newlabel{thm:adelic_HModuleOne_linearEquiv_cokernel}{{1859}{605}{The structure-sheaf \(H^1\) is the cover cokernel}{theorem.1859}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {34.4}Finiteness via the projective line}{605}{section.34.4}\protected@file@percent }
-\newlabel{sec:RiemannRoch_Adelic_finiteness}{{34.4}{605}{Finiteness via the projective line}{section.34.4}{}}
-\newlabel{thm:adelic_exists_finiteMorphismToP1}{{1860}{605}{A nonconstant map to \(\mathbb {P}^1\) is finite}{theorem.1860}{}}
-\newlabel{def:adelic_nonconstant_map_gate}{{1861}{606}{A nonconstant map to \(\mathbb {P}^1\)}{theorem.1861}{}}
-\newlabel{thm:adelic_exists_nonconstant_projint}{{1862}{606}{A nonconstant map to the integral projective line}{theorem.1862}{}}
-\newlabel{lem:adelic_nonconstant_projint_bridge}{{1863}{606}{Integral-model bridge to \(\mathbb P^1_k\)}{theorem.1863}{}}
-\newlabel{lem:adelic_quasiFinite_dim_le}{{1864}{606}{Quasi-finite algebras do not raise Krull dimension}{theorem.1864}{}}
-\newlabel{lem:adelic_relDimOne_dim_le_one}{{1865}{606}{Dimension one for standard-smooth curves}{theorem.1865}{}}
-\newlabel{lem:adelic_curve_stalk_dim_le_one}{{1866}{606}{Stalks of the curve have dimension \(\le 1\)}{theorem.1866}{}}
-\newlabel{lem:adelic_curve_coheight_le_one}{{1867}{606}{Coheight \(\le 1\) on the curve}{theorem.1867}{}}
-\newlabel{lem:adelic_nongeneric_closed}{{1868}{607}{Non-generic points of the curve are closed}{theorem.1868}{}}
-\newlabel{lem:adelic_proper_closed_finite}{{1869}{607}{Proper closed subsets of the curve are finite}{theorem.1869}{}}
-\newlabel{lem:adelic_nonconstant_finite_fibres}{{1870}{607}{Fibres of a nonconstant map are finite}{theorem.1870}{}}
-\newlabel{thm:adelic_nonconstant_map_isFinite}{{1871}{607}{Nonconstant morphisms from the curve are finite}{theorem.1871}{}}
-\newlabel{thm:adelic_chart_finite_over_P1}{{1872}{607}{Charts are module-finite over the \(\mathbb {P}^1\) charts}{theorem.1872}{}}
-\newlabel{thm:adelic_cokernel_P1_zero}{{1873}{608}{The \(\mathbb {P}^1\) base cokernel vanishes}{theorem.1873}{}}
-\newlabel{thm:adelic_finiteDimensional_cokernel_zero}{{1874}{608}{The two-cover cokernel of the curve is finite-dimensional}{theorem.1874}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {34.4.1}The projective-line chart rings}{608}{subsection.34.4.1}\protected@file@percent }
-\newlabel{sec:RiemannRoch_Adelic_P1ChartData}{{34.4.1}{608}{The projective-line chart rings}{subsection.34.4.1}{}}
-\newlabel{def:adelic_p1CoordAway}{{1875}{608}{The coordinate fraction \(X_j/X_i\)}{theorem.1875}{}}
-\newlabel{def:adelic_p1_chart_sections}{{1876}{608}{The pulled-back chart coordinates}{theorem.1876}{}}
-\newlabel{lem:adelic_p1Monomial_eq_coordPow}{{1877}{609}{The monomial-to-power identity}{theorem.1877}{}}
-\newlabel{thm:adelic_span_p1CoordAway_pow_top}{{1878}{609}{Span of the projective-line chart}{theorem.1878}{}}
-\newlabel{thm:adelic_P1_laurent_chart_data}{{1879}{609}{Laurent chart data on \(\mathbb P^1\)}{theorem.1879}{}}
-\newlabel{thm:adelic_module_finite_genus}{{1880}{609}{Finite-dimensionality of \(H^1(C,\struct C)\)}{theorem.1880}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {34.5}The Euler-characteristic ledger}{609}{section.34.5}\protected@file@percent }
-\newlabel{sec:RiemannRoch_Adelic_chi}{{34.5}{609}{The Euler-characteristic ledger}{section.34.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {34.5.1}The twist sequence}{609}{subsection.34.5.1}\protected@file@percent }
-\newlabel{lem:adelic_sectionOfDivisor_antitone_open}{{1881}{609}{Antitonicity of the section subgroup in the open}{theorem.1881}{}}
-\newlabel{def:adelic_coboundary}{{1882}{609}{The coboundary subgroup}{theorem.1882}{}}
-\newlabel{lem:adelic_coboundary_le_overlap}{{1883}{610}{The coboundary and the linear system land in the overlap}{theorem.1883}{}}
-\newlabel{thm:adelic_linearSystem_inf_overlap_eq}{{1884}{610}{Exactness at the \(L\)-terms}{theorem.1884}{}}
-\newlabel{def:adelic_H1_window}{{1885}{610}{The function-field quotient and the window map}{theorem.1885}{}}
-\newlabel{thm:adelic_windowMap_injective}{{1886}{610}{The window map is injective}{theorem.1886}{}}
-\newlabel{def:adelic_divisorial_sheaf}{{1887}{610}{The divisorial sheaf}{theorem.1887}{}}
-\newlabel{thm:adelic_function_field_H1_compare}{{1888}{610}{Comparison with the divisorial sheaf}{theorem.1888}{}}
-\newlabel{thm:adelic_twist_exact_sequence}{{1889}{611}{Twist exact sequence}{theorem.1889}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {34.5.2}The one-point step}{611}{subsection.34.5.2}\protected@file@percent }
-\newlabel{def:adelic_orderGe}{{1890}{611}{The single-point order-\(\ge m\) subgroup}{theorem.1890}{}}
-\newlabel{thm:adelic_local_step_identity}{{1891}{611}{The local step identity}{theorem.1891}{}}
-\newlabel{thm:adelic_local_step_injective}{{1892}{611}{The local step quotient injects into the valuation quotient}{theorem.1892}{}}
-\newlabel{lem:adelic_order_stalk_integral}{{1893}{611}{Order-nonnegativity is stalk-integrality}{theorem.1893}{}}
-\newlabel{thm:adelic_constant_field_order_zero}{{1894}{611}{The ground field has order zero}{theorem.1894}{}}
-\newlabel{thm:adelic_local_step_dim_le_residue_degree}{{1895}{612}{The local step is bounded by the residue degree}{theorem.1895}{}}
-\newlabel{lem:adelic_valuation_quotient_residue_field}{{1896}{612}{The valuation quotient is the residue field}{theorem.1896}{}}
-\newlabel{thm:adelic_weak_approximation}{{1897}{612}{Approximation on a Dedekind chart}{theorem.1897}{}}
-\newlabel{thm:adelic_local_step_dim_eq_residue_degree}{{1898}{612}{The local step has residue degree under approximation}{theorem.1898}{}}
-\newlabel{thm:adelic_finite_support_quotient_sections}{{1899}{612}{Sections of a finite-support quotient}{theorem.1899}{}}
-\newlabel{thm:adelic_twist_stalk_quotient}{{1900}{613}{The one-point stalk quotient}{theorem.1900}{}}
-\newlabel{thm:adelic_dim_adele_quotient_eq_degree}{{1901}{613}{Dimension of the twist quotient}{theorem.1901}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {34.5.3}Euler characteristic and the Riemann inequality}{613}{subsection.34.5.3}\protected@file@percent }
-\newlabel{lem:adelic_finrank_alternating_exact4}{{1902}{613}{Alternating dimension identity of a four-term exact sequence}{theorem.1902}{}}
-\newlabel{def:adelic_chi_ledger}{{1903}{613}{The \(\chi \)-ledger dimensions}{theorem.1903}{}}
-\newlabel{thm:adelic_global_sections_constants}{{1904}{613}{Global regular functions are constants}{theorem.1904}{}}
-\newlabel{thm:adelic_ell_zero}{{1905}{614}{The base value of the divisor ledger}{theorem.1905}{}}
-\newlabel{thm:adelic_ledger_alternating}{{1906}{614}{Conditional overlap-ledger identity}{theorem.1906}{}}
-\newlabel{thm:adelic_chi_additivity}{{1907}{614}{One-step \(\chi \)-additivity}{theorem.1907}{}}
-\newlabel{thm:adelic_chi_telescope_effective}{{1908}{614}{Telescoping along an effective divisor}{theorem.1908}{}}
-\newlabel{thm:adelic_chi_eq_chi_zero_add_degree}{{1909}{614}{Euler characteristic of a divisor}{theorem.1909}{}}
-\newlabel{lem:adelic_chi_le_ell}{{1910}{615}{Nonnegativity of the index of speciality}{theorem.1910}{}}
-\newlabel{lem:adelic_riemann_inequality_conditional}{{1911}{615}{The Riemann inequality from a telescoped \(\chi \)}{theorem.1911}{}}
-\newlabel{thm:adelic_riemann_inequality}{{1912}{615}{Riemann inequality and finiteness of the twist cokernel}{theorem.1912}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {34.6}Weil differentials and duality}{615}{section.34.6}\protected@file@percent }
-\newlabel{sec:RiemannRoch_Adelic_duality}{{34.6}{615}{Weil differentials and duality}{section.34.6}{}}
-\newlabel{thm:adelic_principal_parts_resolution}{{1913}{615}{The principal-parts resolution}{theorem.1913}{}}
-\newlabel{thm:adelic_adele_cover_compare}{{1914}{616}{Adelic and two-chart cohomology agree}{theorem.1914}{}}
-\newlabel{def:adelic_weil_differentials}{{1915}{616}{Weil differentials}{theorem.1915}{}}
-\newlabel{thm:adelic_residuePairing}{{1916}{616}{The Weil-differential pairing}{theorem.1916}{}}
-\newlabel{thm:adelic_index_eventually_zero}{{1917}{616}{Eventual vanishing of the adelic index}{theorem.1917}{}}
-\newlabel{thm:adelic_weil_differential_divisor}{{1918}{616}{The divisor of a Weil differential}{theorem.1918}{}}
-\newlabel{thm:adelic_weil_differential_divisor_mul}{{1919}{617}{Scaling a differential}{theorem.1919}{}}
-\newlabel{thm:adelic_weil_differentials_finrank_one}{{1920}{617}{One-dimensionality of Weil differentials}{theorem.1920}{}}
-\newlabel{thm:adelic_serreDuality}{{1921}{617}{Serre duality: \(i(D) = \ell (K_C - D)\)}{theorem.1921}{}}
-\newlabel{thm:adelic_negative_degree_vanishing}{{1922}{617}{Negative-degree divisors have no nonzero sections}{theorem.1922}{}}
-\newlabel{thm:adelic_canonical_degree}{{1923}{617}{Degree of a canonical divisor}{theorem.1923}{}}
-\newlabel{thm:adelic_h1_vanishing}{{1924}{617}{Vanishing: \(i(D) = 0\) for \(\deg D > 2g - 2\)}{theorem.1924}{}}
-\newlabel{thm:adelic_riemannRoch}{{1925}{618}{Riemann--Roch}{theorem.1925}{}}
+\newlabel{chap:RiemannRoch_Adelic}{{34}{603}{Adelic Riemann--Roch: the repartition cokernel (RR.A)}{chapter.34}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {34.1}The two-chart model}{603}{section.34.1}\protected@file@percent }
+\newlabel{sec:RiemannRoch_Adelic_intro}{{34.1}{603}{The two-chart model}{section.34.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{The concrete-repartition idea.}{603}{section*.59}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The \(2\)-affine-cover cokernel.}{603}{section*.60}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Residue-degree bookkeeping.}{604}{section*.61}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {34.2}Valuations and divisor sections}{604}{section.34.2}\protected@file@percent }
+\newlabel{sec:RiemannRoch_Adelic_substrate}{{34.2}{604}{Valuations and divisor sections}{section.34.2}{}}
+\newlabel{thm:adelic_chartRing_isDedekindDomain}{{1847}{604}{Affine chart is a Dedekind domain with fraction field \(K\)}{theorem.1847}{}}
+\newlabel{def:adelic_pointValuation}{{1848}{604}{Point valuation}{theorem.1848}{}}
+\newlabel{lem:adelic_order_eq_neg_log_pointValuation}{{1849}{604}{Order is the additive normalization of the point valuation}{theorem.1849}{}}
+\newlabel{def:adelic_residue_degree}{{1850}{604}{Residue field and residue degree}{theorem.1850}{}}
+\newlabel{def:adelic_divisor_degree}{{1851}{604}{Residue-weighted degree}{theorem.1851}{}}
+\newlabel{thm:adelic_principal_degree_zero}{{1852}{604}{Weighted degree of a principal divisor}{theorem.1852}{}}
+\newlabel{def:adelic_sectionOfDivisor}{{1853}{605}{Sections bounded by a divisor; the Riemann--Roch space}{theorem.1853}{}}
+\newlabel{thm:adelic_finite_support_order}{{1854}{605}{Finiteness of the non-integral places on a Dedekind chart}{theorem.1854}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {34.3}The cover cokernel and first cohomology}{605}{section.34.3}\protected@file@percent }
+\newlabel{sec:RiemannRoch_Adelic_cokernel}{{34.3}{605}{The cover cokernel and first cohomology}{section.34.3}{}}
+\newlabel{def:adelic_coverH1}{{1855}{605}{The two-cover cokernel of a sheaf}{theorem.1855}{}}
+\newlabel{def:adelic_function_field_H1}{{1856}{605}{The function-field twist cokernel}{theorem.1856}{}}
+\newlabel{thm:adelic_function_field_H1_zero_compare}{{1857}{605}{Comparison at the zero divisor}{theorem.1857}{}}
+\newlabel{lem:adelic_alternatingCofaceMapComplex_objD}{{1858}{606}{The unnormalized coface differential is the alternating coface sum}{theorem.1858}{}}
+\newlabel{def:adelic_cechCosimplicial}{{1859}{606}{The Čech cosimplicial object of a cover}{theorem.1859}{}}
+\newlabel{lem:adelic_cech_coface_restriction}{{1860}{606}{Cofaces are restriction maps}{theorem.1860}{}}
+\newlabel{lem:adelic_cech_d01_d12_formula}{{1861}{606}{The degree-\(0\) and degree-\(1\) Čech differentials}{theorem.1861}{}}
+\newlabel{thm:adelic_cechH1_eq_cokernel}{{1862}{606}{Two-element Čech \(H^1\) is the cokernel}{theorem.1862}{}}
+\newlabel{thm:adelic_affine_h1_vanishing}{{1863}{607}{First cohomology vanishes on the affine pieces}{theorem.1863}{}}
+\newlabel{thm:adelic_mv_h1_cokernel_equiv}{{1864}{607}{The degree-one Mayer--Vietoris quotient}{theorem.1864}{}}
+\newlabel{thm:adelic_HModuleOne_linearEquiv_cokernel}{{1865}{607}{The structure-sheaf \(H^1\) is the cover cokernel}{theorem.1865}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {34.4}Finiteness via the projective line}{607}{section.34.4}\protected@file@percent }
+\newlabel{sec:RiemannRoch_Adelic_finiteness}{{34.4}{607}{Finiteness via the projective line}{section.34.4}{}}
+\newlabel{thm:adelic_exists_finiteMorphismToP1}{{1866}{607}{A nonconstant map to \(\mathbb {P}^1\) is finite}{theorem.1866}{}}
+\newlabel{def:adelic_nonconstant_map_gate}{{1867}{608}{A nonconstant map to \(\mathbb {P}^1\)}{theorem.1867}{}}
+\newlabel{thm:adelic_exists_nonconstant_projint}{{1868}{608}{A nonconstant map to the integral projective line}{theorem.1868}{}}
+\newlabel{lem:adelic_nonconstant_projint_bridge}{{1869}{608}{Integral-model bridge to \(\mathbb P^1_k\)}{theorem.1869}{}}
+\newlabel{lem:adelic_quasiFinite_dim_le}{{1870}{608}{Quasi-finite algebras do not raise Krull dimension}{theorem.1870}{}}
+\newlabel{lem:adelic_relDimOne_dim_le_one}{{1871}{608}{Dimension one for standard-smooth curves}{theorem.1871}{}}
+\newlabel{lem:adelic_curve_stalk_dim_le_one}{{1872}{608}{Stalks of the curve have dimension \(\le 1\)}{theorem.1872}{}}
+\newlabel{lem:adelic_curve_coheight_le_one}{{1873}{608}{Coheight \(\le 1\) on the curve}{theorem.1873}{}}
+\newlabel{lem:adelic_nongeneric_closed}{{1874}{609}{Non-generic points of the curve are closed}{theorem.1874}{}}
+\newlabel{lem:adelic_proper_closed_finite}{{1875}{609}{Proper closed subsets of the curve are finite}{theorem.1875}{}}
+\newlabel{lem:adelic_nonconstant_finite_fibres}{{1876}{609}{Fibres of a nonconstant map are finite}{theorem.1876}{}}
+\newlabel{thm:adelic_nonconstant_map_isFinite}{{1877}{609}{Nonconstant morphisms from the curve are finite}{theorem.1877}{}}
+\newlabel{thm:adelic_chart_finite_over_P1}{{1878}{609}{Charts are module-finite over the \(\mathbb {P}^1\) charts}{theorem.1878}{}}
+\newlabel{thm:adelic_cokernel_P1_zero}{{1879}{610}{The \(\mathbb {P}^1\) base cokernel vanishes}{theorem.1879}{}}
+\newlabel{thm:adelic_finiteDimensional_cokernel_zero}{{1880}{610}{The two-cover cokernel of the curve is finite-dimensional}{theorem.1880}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {34.4.1}The projective-line chart rings}{610}{subsection.34.4.1}\protected@file@percent }
+\newlabel{sec:RiemannRoch_Adelic_P1ChartData}{{34.4.1}{610}{The projective-line chart rings}{subsection.34.4.1}{}}
+\newlabel{def:adelic_p1CoordAway}{{1881}{610}{The coordinate fraction \(X_j/X_i\)}{theorem.1881}{}}
+\newlabel{def:adelic_p1_chart_sections}{{1882}{610}{The pulled-back chart coordinates}{theorem.1882}{}}
+\newlabel{lem:adelic_p1Monomial_eq_coordPow}{{1883}{611}{The monomial-to-power identity}{theorem.1883}{}}
+\newlabel{thm:adelic_span_p1CoordAway_pow_top}{{1884}{611}{Span of the projective-line chart}{theorem.1884}{}}
+\newlabel{thm:adelic_P1_laurent_chart_data}{{1885}{611}{Laurent chart data on \(\mathbb P^1\)}{theorem.1885}{}}
+\newlabel{thm:adelic_module_finite_genus}{{1886}{611}{Finite-dimensionality of \(H^1(C,\struct C)\)}{theorem.1886}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {34.5}The Euler-characteristic ledger}{611}{section.34.5}\protected@file@percent }
+\newlabel{sec:RiemannRoch_Adelic_chi}{{34.5}{611}{The Euler-characteristic ledger}{section.34.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {34.5.1}The twist sequence}{611}{subsection.34.5.1}\protected@file@percent }
+\newlabel{lem:adelic_sectionOfDivisor_antitone_open}{{1887}{611}{Antitonicity of the section subgroup in the open}{theorem.1887}{}}
+\newlabel{def:adelic_coboundary}{{1888}{611}{The coboundary subgroup}{theorem.1888}{}}
+\newlabel{lem:adelic_coboundary_le_overlap}{{1889}{612}{The coboundary and the linear system land in the overlap}{theorem.1889}{}}
+\newlabel{thm:adelic_linearSystem_inf_overlap_eq}{{1890}{612}{Exactness at the \(L\)-terms}{theorem.1890}{}}
+\newlabel{def:adelic_H1_window}{{1891}{612}{The function-field quotient and the window map}{theorem.1891}{}}
+\newlabel{thm:adelic_windowMap_injective}{{1892}{612}{The window map is injective}{theorem.1892}{}}
+\newlabel{def:adelic_divisorial_sheaf}{{1893}{612}{The divisorial sheaf}{theorem.1893}{}}
+\newlabel{thm:adelic_function_field_H1_compare}{{1894}{612}{Comparison with the divisorial sheaf}{theorem.1894}{}}
+\newlabel{thm:adelic_twist_exact_sequence}{{1895}{613}{Twist exact sequence}{theorem.1895}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {34.5.2}The one-point step}{613}{subsection.34.5.2}\protected@file@percent }
+\newlabel{def:adelic_orderGe}{{1896}{613}{The single-point order-\(\ge m\) subgroup}{theorem.1896}{}}
+\newlabel{thm:adelic_local_step_identity}{{1897}{613}{The local step identity}{theorem.1897}{}}
+\newlabel{thm:adelic_local_step_injective}{{1898}{613}{The local step quotient injects into the valuation quotient}{theorem.1898}{}}
+\newlabel{lem:adelic_order_stalk_integral}{{1899}{613}{Order-nonnegativity is stalk-integrality}{theorem.1899}{}}
+\newlabel{thm:adelic_constant_field_order_zero}{{1900}{613}{The ground field has order zero}{theorem.1900}{}}
+\newlabel{thm:adelic_local_step_dim_le_residue_degree}{{1901}{614}{The local step is bounded by the residue degree}{theorem.1901}{}}
+\newlabel{lem:adelic_valuation_quotient_residue_field}{{1902}{614}{The valuation quotient is the residue field}{theorem.1902}{}}
+\newlabel{thm:adelic_weak_approximation}{{1903}{614}{Approximation on a Dedekind chart}{theorem.1903}{}}
+\newlabel{thm:adelic_local_step_dim_eq_residue_degree}{{1904}{614}{The local step has residue degree under approximation}{theorem.1904}{}}
+\newlabel{thm:adelic_finite_support_quotient_sections}{{1905}{614}{Sections of a finite-support quotient}{theorem.1905}{}}
+\newlabel{thm:adelic_twist_stalk_quotient}{{1906}{615}{The one-point stalk quotient}{theorem.1906}{}}
+\newlabel{thm:adelic_dim_adele_quotient_eq_degree}{{1907}{615}{Dimension of the twist quotient}{theorem.1907}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {34.5.3}Euler characteristic and the Riemann inequality}{615}{subsection.34.5.3}\protected@file@percent }
+\newlabel{lem:adelic_finrank_alternating_exact4}{{1908}{615}{Alternating dimension identity of a four-term exact sequence}{theorem.1908}{}}
+\newlabel{def:adelic_chi_ledger}{{1909}{615}{The \(\chi \)-ledger dimensions}{theorem.1909}{}}
+\newlabel{thm:adelic_global_sections_constants}{{1910}{615}{Global regular functions are constants}{theorem.1910}{}}
+\newlabel{thm:adelic_ell_zero}{{1911}{616}{The base value of the divisor ledger}{theorem.1911}{}}
+\newlabel{thm:adelic_ledger_alternating}{{1912}{616}{Conditional overlap-ledger identity}{theorem.1912}{}}
+\newlabel{thm:adelic_chi_additivity}{{1913}{616}{One-step \(\chi \)-additivity}{theorem.1913}{}}
+\newlabel{thm:adelic_chi_telescope_effective}{{1914}{616}{Telescoping along an effective divisor}{theorem.1914}{}}
+\newlabel{thm:adelic_chi_eq_chi_zero_add_degree}{{1915}{616}{Euler characteristic of a divisor}{theorem.1915}{}}
+\newlabel{lem:adelic_chi_le_ell}{{1916}{617}{Nonnegativity of the index of speciality}{theorem.1916}{}}
+\newlabel{lem:adelic_riemann_inequality_conditional}{{1917}{617}{The Riemann inequality from a telescoped \(\chi \)}{theorem.1917}{}}
+\newlabel{thm:adelic_riemann_inequality}{{1918}{617}{Riemann inequality and finiteness of the twist cokernel}{theorem.1918}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {34.6}Weil differentials and duality}{617}{section.34.6}\protected@file@percent }
+\newlabel{sec:RiemannRoch_Adelic_duality}{{34.6}{617}{Weil differentials and duality}{section.34.6}{}}
+\newlabel{thm:adelic_principal_parts_resolution}{{1919}{617}{The principal-parts resolution}{theorem.1919}{}}
+\newlabel{thm:adelic_adele_cover_compare}{{1920}{618}{Adelic and two-chart cohomology agree}{theorem.1920}{}}
+\newlabel{def:adelic_weil_differentials}{{1921}{618}{Weil differentials}{theorem.1921}{}}
+\newlabel{thm:adelic_residuePairing}{{1922}{618}{The Weil-differential pairing}{theorem.1922}{}}
+\newlabel{thm:adelic_index_eventually_zero}{{1923}{618}{Eventual vanishing of the adelic index}{theorem.1923}{}}
+\newlabel{thm:adelic_weil_differential_divisor}{{1924}{618}{The divisor of a Weil differential}{theorem.1924}{}}
+\newlabel{thm:adelic_weil_differential_divisor_mul}{{1925}{619}{Scaling a differential}{theorem.1925}{}}
+\newlabel{thm:adelic_weil_differentials_finrank_one}{{1926}{619}{One-dimensionality of Weil differentials}{theorem.1926}{}}
+\newlabel{thm:adelic_serreDuality}{{1927}{619}{Serre duality: \(i(D) = \ell (K_C - D)\)}{theorem.1927}{}}
+\newlabel{thm:adelic_negative_degree_vanishing}{{1928}{619}{Negative-degree divisors have no nonzero sections}{theorem.1928}{}}
+\newlabel{thm:adelic_canonical_degree}{{1929}{619}{Degree of a canonical divisor}{theorem.1929}{}}
+\newlabel{thm:adelic_h1_vanishing}{{1930}{619}{Vanishing: \(i(D) = 0\) for \(\deg D > 2g - 2\)}{theorem.1930}{}}
+\newlabel{thm:adelic_riemannRoch}{{1931}{620}{Riemann--Roch}{theorem.1931}{}}
 \bibcite{nitsure-hilbert-quot}{1}
-\gdef \@abspage@last{620}
+\gdef \@abspage@last{622}

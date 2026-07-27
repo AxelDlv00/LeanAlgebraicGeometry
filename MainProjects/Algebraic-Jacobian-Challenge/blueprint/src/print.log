@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.22.0 (TeX Live 2025/Debian)  (format=lualatex 2026.7.13)  27 JUL 2026 19:04
+This is LuaHBTeX, Version 1.22.0 (TeX Live 2025/Debian)  (format=lualatex 2026.7.13)  27 JUL 2026 19:51
  restricted system commands enabled.
 **print.tex
 (./print.tex
@@ -6495,94 +6495,7 @@ Overfull \hbox (1.41246pt too wide) in paragraph at lines 216--227
 math.otf(1)/m/n/10 (𝑋[])[] ∈ [][](𝑅[])$
  []
 
-[460]
-! Extra }, or forgotten $.
-<argument> ...de \theta _{I,J} : \mathbb {Z}[X^J)}
-                                                  
-l.276 ...om \(\tilde\theta_{I,J} : \mathbb{Z}[X^J]
-                                                  \leanok \to R^I_J\)]
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.276 ...om \(\tilde\theta_{I,J} : \mathbb{Z}[X^J]
-                                                  \leanok \to R^I_J\)]
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.276 ...om \(\tilde\theta_{I,J} : \mathbb{Z}[X^J]
-                                                  \leanok \to R^I_J\)]
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.276 ...eta_{I,J} : \mathbb{Z}[X^J]\leanok \to R^
-                                                  I_J\)]
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-[461] [462] [463] [464] [465] [466]
-! Extra }, or forgotten $.
-<argument> ...(Order-swap isomorphism \(A[1/(xy))}
-                                                  
-l.1079 ...tion}[Order-swap isomorphism \(A[1/(xy)]
-                                                  \leanok \cong A[1/(yx)]\)]
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1079 ...tion}[Order-swap isomorphism \(A[1/(xy)]
-                                                  \leanok \cong A[1/(yx)]\)]
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.1079 ...tion}[Order-swap isomorphism \(A[1/(xy)]
-                                                  \leanok \cong A[1/(yx)]\)]
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-
-! LaTeX Error: Bad math environment delimiter.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1079 ...ism \(A[1/(xy)]\leanok \cong A[1/(yx)]\)
-                                                  ]
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-Missing character: There is no ≅ (U+2245) in font [lmroman10-regular]:+tlig;!
-Missing character: There is no ≅ (U+2245) in font [lmroman10-regular]:+tlig;!
-[467
-Missing character: There is no ≅ (U+2245) in font [lmroman10-regular]:+tlig;!
-] [468]
+[460] [461] [462] [463] [464] [465] [466] [467] [468]
 Overfull \hbox (48.64738pt too wide) in paragraph at lines 1263--1275
 [][][]\TU/lmr/m/n/10 Both en-do-mor-phisms are ring ho-mo-mor-phisms out of the lo-cal-iza-tion $\TU/latinmodern-math.otf(1)/m/n/10 
 𝑅[] = [] (𝑃[] ⋅
@@ -6759,55 +6672,55 @@ x/n/10 . [][][][][]\TU/lmr/m/n/10 The \TU/lmr/m/it/10 Grass-man-nian func-tor $
 Chapter 25.
 [509
 
-] [510] [511] [512] [513] [514]
-Overfull \hbox (11.89973pt too wide) in paragraph at lines 579--583
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1545 \TU/lmr/m/n/10 (Set-valued rel-a-tive Pi-
+] [510] [511] [512] [513] [514] [515] [516]
+Overfull \hbox (11.89973pt too wide) in paragraph at lines 766--770
+[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1551 \TU/lmr/m/n/10 (Set-valued rel-a-tive Pi-
 card func-tor)\TU/lmr/bx/n/10 . [][]\TU/lmr/m/n/10 The set-valued shadow $[][] 
 \TU/latinmodern-math.otf(1)/m/n/10 ∶ ([] /𝑘)[] →
  []
 
-[515] [516] [517] [518]) (./chapters/Picard_IdentityComponent.tex [519]
+[517] [518] [519] [520]) (./chapters/Picard_IdentityComponent.tex [521]
 Chapter 26.
-[520
+[522
 
-] [521]
+] [523]
 Overfull \hbox (1.8897pt too wide) in paragraph at lines 354--359
-[][]\TU/lmr/bx/n/10 Lemma 1563 \TU/lmr/m/n/10 (Eval-u-a-tion at a max-i-mal idea
+[][]\TU/lmr/bx/n/10 Lemma 1569 \TU/lmr/m/n/10 (Eval-u-a-tion at a max-i-mal idea
 l over an al-ge-braically closed field)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Sourc
 e: Zariski’s
  []
 
-[522] [523]
+[524] [525]
 Missing character: There is no ⟹ (U+27F9) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ⟹ (U+27F9) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ⟹ (U+27F9) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ⟹ (U+27F9) in font [lmroman10-regular]:+tlig;!
-[524
+[526
 Missing character: There is no ⟹ (U+27F9) in font [lmroman10-regular]:+tlig;!
-] [525]
+] [527]
 Overfull \hbox (11.72731pt too wide) in paragraph at lines 879--892
 \TU/lmr/m/n/10 The disjoint-union struc-ture of $[][]$ ([][]1539[][]: a dis-join
 t union of open quasi-projective $\TU/latinmodern-math.otf(1)/m/n/10 𝑘$\TU/l
 mr/m/n/10 -subschemes)
  []
 
-[526] [527]
+[528] [529]
 Overfull \hbox (243.65833pt too wide) in paragraph at lines 1187--1192
 \TU/lmr/m/n/10 The Lean tar-get file is \TU/lmtt/m/n/10 AlgebraicJacobian/Picard
 /IdentityComponent.lean\TU/lmr/m/n/10 , sib-ling to \TU/lmtt/m/n/10 AlgebraicJac
 obian/Picard/FGAPicRepresentability.lean
  []
 
-[528]
+[530]
 Overfull \hbox (19.29633pt too wide) in paragraph at lines 1201--1206
 []\TU/lmtt/m/n/10 AlgebraicGeometry.GroupScheme.IdentityComponent.isOpenSubgroup
-Scheme \TU/lmr/m/n/10 ([][]1559[][]) pack-
+Scheme \TU/lmr/m/n/10 ([][]1565[][]) pack-
  []
 
 
 Overfull \hbox (4.24632pt too wide) in paragraph at lines 1206--1212
 []\TU/lmtt/m/n/10 AlgebraicGeometry.GroupScheme.IdentityComponent.isSubgroupHomo
-morphism \TU/lmr/m/n/10 ([][]1560[][])
+morphism \TU/lmr/m/n/10 ([][]1566[][])
  []
 
 
@@ -6826,14 +6739,14 @@ icallyIrreducible
 
 Overfull \hbox (30.41002pt too wide) in paragraph at lines 1233--1241
 []\TU/lmtt/m/n/10 AlgebraicGeometry.Scheme.PicScheme.degree \TU/lmr/m/n/10 ([][
-]1584[][]) is the group ho-mo-mor-phism $[][]\TU/latinmodern-math.otf(1)/m/n/10
+]1590[][]) is the group ho-mo-mor-phism $[][]\TU/latinmodern-math.otf(1)/m/n/10
  (𝑘) →
  []
 
 
 Overfull \hbox (8.98631pt too wide) in paragraph at lines 1241--1248
 []\TU/lmtt/m/n/10 AlgebraicGeometry.Scheme.Pic0Scheme.isAbelianVariety \TU/lmr/
-m/n/10 ([][]1585[][]) is the bun-dled abelian-
+m/n/10 ([][]1591[][]) is the bun-dled abelian-
  []
 
 
@@ -6903,7 +6816,7 @@ Overfull \hbox (5.49832pt too wide) in paragraph at lines 1264--1283
  Pic0Scheme.kPoints_iff_kerDegree \TU/lmr/m/n/10 con-sume Kleiman §5
  []
 
-[529
+[531
 Missing character: There is no ∀ (U+2200) in font [lmmono10-regular]:!
 Missing character: There is no λ (U+03BB) in font [lmmono10-regular]:!
 Missing character: There is no ⟶ (U+27F6) in font [lmmono10-regular]:!
@@ -6929,7 +6842,7 @@ enus \TU/lmr/m/n/10 all ex-ist in sib-ling chap-ters (ver-i-fied against \TU/lm
 tt/m/n/10 Picard_FGAPicRepresentability.tex\TU/lmr/m/n/10 ,
  []
 
-[530] [531]
+[532] [533]
 Chapter 27.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
@@ -7008,16 +6921,16 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `subscript' on input line 1.
 
-[532
+[534
 
-] [533] [534] [535] [536]
+] [535] [536] [537] [538]
 Overfull \hbox (16.92677pt too wide) detected at line 677
 [][] [][]  \TU/latinmodern-math.otf(1)/m/n/10 =  { 𝑔 ∶ [] 𝑘[] → [][] 
 [] [] 𝑘 ∣ 𝑔(𝔪) = 𝑒(∗) }  ≅  [][] []𝔪[]/𝔪[],  𝜅(𝑒(
 ∗))[].
  []
 
-[537] [538] [539]
+[539] [540] [541]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 1084.
@@ -7184,7 +7097,7 @@ Overfull \hbox (11.82022pt too wide) in paragraph at lines 1206--1210
 -cally nor-mal, so Kleiman’s $[][]$-projectivity
  []
 
-[540]
+[542]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 1339.
@@ -7262,7 +7175,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `subscript' on input line 1339.
 
-[541]
+[543]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 1393.
@@ -7340,7 +7253,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `subscript' on input line 1393.
 
-[542]
+[544]
 Overfull \hbox (222.65833pt too wide) in paragraph at lines 1506--1511
 \TU/lmr/m/n/10 The Lean tar-get file is \TU/lmtt/m/n/10 AlgebraicJacobian/Picard
 /Pic0AbelianVariety.lean\TU/lmr/m/n/10 , sib-ling to \TU/lmtt/m/n/10 AlgebraicJa
@@ -7355,7 +7268,7 @@ Overfull \hbox (222.01631pt too wide) in paragraph at lines 1531--1539
 
 Overfull \hbox (17.83633pt too wide) in paragraph at lines 1539--1548
 []\TU/lmtt/m/n/10 AlgebraicGeometry.Scheme.Pic0.isAbelianVariety \TU/lmr/m/n/10
- ([][]1630[][]) pack-ages the as-sem-bled abelian-
+ ([][]1636[][]) pack-ages the as-sem-bled abelian-
  []
 
 
@@ -7365,7 +7278,7 @@ Overfull \hbox (5.84532pt too wide) in paragraph at lines 1539--1548
 metricallyIrreducible]
  []
 
-[543]) (./chapters/Albanese_CodimOneExtension.tex
+[545]) (./chapters/Albanese_CodimOneExtension.tex
 Overfull \hbox (15.00833pt too wide) in paragraph at lines 1631--2
 []\TU/lmr/m/n/10 The cross-chapter la-bels \TU/lmtt/m/n/10 def:pic_zero_subschem
 e\TU/lmr/m/n/10 , \TU/lmtt/m/n/10 thm:identity_component_open_subgroup\TU/lmr/m
@@ -7390,42 +7303,42 @@ Overfull \hbox (29.08832pt too wide) in paragraph at lines 1631--2
 Component.tex\TU/lmr/m/n/10 , \TU/lmtt/m/n/10 Picard_FGAPicRepresentability.tex\TU/lmr/m/n/10 ,
  []
 
-[544]
+[546]
 Chapter 28.
-[545
+[547
 
-] [546] [547]
+] [548] [549]
 Overfull \hbox (8.3264pt too wide) in paragraph at lines 287--301
-[][]\TU/lmr/bx/n/10 Lemma 1640 \TU/lmr/m/n/10 (Smooth-algebra Krull-dimension fo
+[][]\TU/lmr/bx/n/10 Lemma 1646 \TU/lmr/m/n/10 (Smooth-algebra Krull-dimension fo
 r-mula (Stacks 00OE))\TU/lmr/bx/n/10 . [][][][][][][]\TU/lmr/m/it/10 Source: [St
 acks Project],
  []
 
-[548] [549] [550] [551]
+[550] [551] [552] [553]
 Overfull \hbox (1.00967pt too wide) in paragraph at lines 792--794
-[][]\TU/lmr/bx/n/10 Lemma 1658 \TU/lmr/m/n/10 (Ex-is-tence of a rel-a-tive di-me
+[][]\TU/lmr/bx/n/10 Lemma 1664 \TU/lmr/m/n/10 (Ex-is-tence of a rel-a-tive di-me
 n-sion for a standard-smooth al-ge-bra)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Ev-er
 y standard-
  []
 
-[552] [553] [554] [555] [556] [557] [558]
+[554] [555] [556] [557] [558] [559] [560]
 Overfull \hbox (0.46176pt too wide) in paragraph at lines 1609--1615
-[][]\TU/lmr/bx/n/10 Lemma 1693 \TU/lmr/m/n/10 (Reg-u-lar-ity prop-a-gates to a 
+[][]\TU/lmr/bx/n/10 Lemma 1699 \TU/lmr/m/n/10 (Reg-u-lar-ity prop-a-gates to a 
 gener-i-sa-tion)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 On an ir-re-ducible scheme 
 $\TU/latinmodern-math.otf(1)/m/n/10 𝑋$\TU/lmr/m/it/10 , a function-
  []
 
-[559] [560] [561] [562] [563]) (./chapters/Albanese_CoheightBridge.tex [564]
+[561] [562] [563] [564] [565]) (./chapters/Albanese_CoheightBridge.tex [566]
 Chapter 29.
 
 Overfull \hbox (5.45633pt too wide) in paragraph at lines 72--78
 \TU/lmtt/m/n/10 [Ring.KrullDimLE 1 (X.presheaf.stalk Y.point)] \TU/lmr/m/n/10 in
--stance ar-gu-ment; af-ter [][]1704[][] lands,
+-stance ar-gu-ment; af-ter [][]1710[][] lands,
  []
 
-[565
+[567
 
-] [566]
+] [568]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 201.
@@ -7453,12 +7366,12 @@ U/lmr/m/n/10 . By \TU/lmtt/m/n/10 Ideal.height_eq_primeHeight
 
 
 Overfull \hbox (31.02446pt too wide) in paragraph at lines 308--313
-[]\TU/lmr/m/n/10 By [][]1703[][], $[]\TU/latinmodern-math.otf(1)/m/n/10 (𝒪[]
+[]\TU/lmr/m/n/10 By [][]1709[][], $[]\TU/latinmodern-math.otf(1)/m/n/10 (𝒪[]
 ) = [][](𝑧) = 1$\TU/lmr/m/n/10 . The Math-lib pred-i-cate $[]  \TU/latinmode
 rn-math.otf(1)/m/n/10 1 𝑅$
  []
 
-[567]
+[569]
 Overfull \hbox (144.64133pt too wide) in paragraph at lines 320--324
 []\TU/lmr/bx/n/10 Con-sumer 1: the \TU/lmtt/b/n/10 hreg_dim \TU/lmr/bx/n/10 refa
 c-tor in [][]28[][].[] \TU/lmr/m/n/10 The pri-vate helper \TU/lmtt/m/n/10 smooth
@@ -7497,7 +7410,7 @@ Overfull \hbox (71.02333pt too wide) in paragraph at lines 391--398
 n/10 Order.coheight_orderIso\TU/lmr/m/n/10 ,
  []
 
-[568]
+[570]
 Overfull \hbox (105.23334pt too wide) in paragraph at lines 398--408
 \TU/lmr/m/n/10 step as-sem-bly per the proof above. Tools: \TU/lmtt/m/n/10 exist
 s_isAffineOpen_mem_and_subset\TU/lmr/m/n/10 , \TU/lmtt/m/n/10 IsAffineOpen.prime
@@ -7548,13 +7461,13 @@ Overfull \hbox (23.16634pt too wide) in paragraph at lines 458--463
 \TU/lmr/bx/n/10 tion. \TU/lmr/m/n/10 This is the sec-ond multi-iter sub-project flagged in \TU/lmtt/m/n/10 analogies/stacks-00tt-coheight.md
  []
 
-[569]) (./chapters/Albanese_AuslanderBuchsbaum.tex [570]
+[571]) (./chapters/Albanese_AuslanderBuchsbaum.tex [572]
 Chapter 30.
-[571
+[573
 
-] [572]
+] [574]
 Overfull \hbox (2.48193pt too wide) in paragraph at lines 156--161
-[][][][]\TU/lmr/m/n/10 By [][]1706[][], $[]\TU/latinmodern-math.otf(1)/m/n/10 (
+[][][][]\TU/lmr/m/n/10 By [][]1712[][], $[]\TU/latinmodern-math.otf(1)/m/n/10 (
 𝑁[])$ \TU/lmr/m/n/10 (resp. $[]\TU/latinmodern-math.otf(1)/m/n/10 (𝑁)$\TU
 /lmr/m/n/10 , $[]\TU/latinmodern-math.otf(1)/m/n/10 (𝑁[])$\TU/lmr/m/n/10 ) is
  the small-est in-dex at which $[][]\TU/latinmodern-math.otf(1)/m/n/10 (𝜅, 
@@ -7563,7 +7476,7 @@ Overfull \hbox (2.48193pt too wide) in paragraph at lines 156--161
 
 
 Overfull \hbox (9.28397pt too wide) in paragraph at lines 183--186
-[][]\TU/lmr/bx/n/10 The-o-rem 1709 \TU/lmr/m/n/10 (Auslander--Buchsbaum for-mula
+[][]\TU/lmr/bx/n/10 The-o-rem 1715 \TU/lmr/m/n/10 (Auslander--Buchsbaum for-mula
 )\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Source: [Stacks Project], tag 090V (proposi
 tion-
  []
@@ -7575,7 +7488,7 @@ Overfull \hbox (28.18587pt too wide) detected at line 217
 𝑀 → 0,
  []
 
-[573] [574]
+[575] [576]
 Overfull \hbox (24.3363pt too wide) in paragraph at lines 393--404
 \TU/lmr/m/n/10 ing \TU/lmtt/m/n/10 TensorProduct.tmul_smul \TU/lmr/m/n/10 and th
 e lin-ear in-de-pen-dence of $\TU/latinmodern-math.otf(1)/m/n/10 𝑏$ \TU/lmr/
@@ -7584,14 +7497,14 @@ m/n/10 (\TU/lmtt/m/n/10 Module.Basis.linearIndependent\TU/lmr/m/n/10 )
 
 
 Overfull \hbox (5.8287pt too wide) in paragraph at lines 417--425
-[][]\TU/lmr/bx/n/10 Lemma 1713 \TU/lmr/m/n/10 (Bridge: $[] \TU/latinmodern-math
+[][]\TU/lmr/bx/n/10 Lemma 1719 \TU/lmr/m/n/10 (Bridge: $[] \TU/latinmodern-math
 .otf(1)/m/n/10 𝑀 = 𝑛 ⇒ [] 𝑀 (𝑛 + 1)$\TU/lmr/m/n/10 )\TU/lmr/bx/n/
 10 .
  []
 
 
 Overfull \hbox (216.34637pt too wide) in paragraph at lines 429--445
-[][]\TU/lmr/bx/n/10 Lemma 1714 \TU/lmr/m/n/10 (Syzygy de-scent of $[]$)\TU/lmr/
+[][]\TU/lmr/bx/n/10 Lemma 1720 \TU/lmr/m/n/10 (Syzygy de-scent of $[]$)\TU/lmr/
 bx/n/10 . [][]\TU/lmr/m/it/10 Source: Math-lib’s $[]$
  []
 
@@ -7608,7 +7521,7 @@ TU/latinmodern-math.otf(1)/m/n/10 0 → [] 𝑓 → 𝑅[] → 𝑀 → 0$ \TU/
 lmr/m/it/10 via $[]$;
  []
 
-[575]
+[577]
 Overfull \hbox (55.8362pt too wide) in paragraph at lines 449--458
 \TU/lmr/m/it/10 tion: with the same SES, $[] \TU/latinmodern-math.otf(1)/m/n/10
  ([] 𝑓) (𝑘 + 1)$ \TU/lmr/m/it/10 gives $[] \TU/latinmodern-math.otf(1)/m/
@@ -7617,7 +7530,7 @@ n/10 𝑀 (𝑘 +
 
 
 Overfull \hbox (47.55966pt too wide) in paragraph at lines 462--475
-[][]\TU/lmr/bx/n/10 Lemma 1716 \TU/lmr/m/n/10 (Depth lower bound on the ker-nel of a finite-free sur-jec-tion)\TU/lmr/bx/n/10 . [][][]\TU/lmr/m/it/10 Source: $[]$
+[][]\TU/lmr/bx/n/10 Lemma 1722 \TU/lmr/m/n/10 (Depth lower bound on the ker-nel of a finite-free sur-jec-tion)\TU/lmr/bx/n/10 . [][][]\TU/lmr/m/it/10 Source: $[]$
  []
 
 
@@ -7627,7 +7540,7 @@ Overfull \hbox (13.3615pt too wide) in paragraph at lines 462--475
 otf(1)/m/n/10 (𝑅[]) = [] 𝑅$ \TU/lmr/m/it/10 via $[]$;
  []
 
-[576] [577]
+[578] [579]
 Overfull \hbox (2.2036pt too wide) detected at line 678
 [][][]\TU/latinmodern-math.otf(1)/m/n/10 (𝑅),  []([] 𝑓) − 1[] ≤ [](
 𝑀) []  [][][](𝑅),  [](𝑀) + 1[] ≤ []([] 𝑓).
@@ -7635,23 +7548,23 @@ Overfull \hbox (2.2036pt too wide) detected at line 678
 
 
 Overfull \hbox (2.0648pt too wide) in paragraph at lines 764--767
-[][]\TU/lmr/bx/n/10 Lemma 1732 \TU/lmr/m/n/10 (Eval-u-a-tion of the el-e-men-tar
+[][]\TU/lmr/bx/n/10 Lemma 1738 \TU/lmr/m/n/10 (Eval-u-a-tion of the el-e-men-tar
 y map)\TU/lmr/bx/n/10 . [][]\TU/lmr/m/it/10 For $\TU/latinmodern-math.otf(1)/m/
 n/10 𝑥 ∈ 𝑅[]$ \TU/lmr/m/it/10 one has $\TU/latinmodern-math.otf(1)/m/n/
 10 𝐸[](𝑥) = [] 𝑖 (𝑥[])$\TU/lmr/m/it/10 :
  []
 
-[578] [579] [580] [581]
+[580] [581] [582] [583]
 Overfull \hbox (10.00632pt too wide) in paragraph at lines 1147--1153
-[]\TU/lmr/m/n/10 Thus [][]1749[][] sup-plies the depth-two in-put needed to ex-t
+[]\TU/lmr/m/n/10 Thus [][]1755[][] sup-plies the depth-two in-put needed to ex-t
 end reg-u-lar func-tions across a codimension-
  []
 
-) (./chapters/Albanese_Thm32RationalMapExtension.tex [582] [583]
+) (./chapters/Albanese_Thm32RationalMapExtension.tex [584] [585]
 Chapter 31.
-[584
+[586
 
-] [585]) (./chapters/Albanese_AlbaneseUP.tex [586]
+] [587]) (./chapters/Albanese_AlbaneseUP.tex [588]
 Chapter 32.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
@@ -7730,19 +7643,19 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `subscript' on input line 1.
 
-[587
+[589
 
-] [588] [589] [590] [591]) (./chapters/RiemannRoch_WeilDivisor.tex [592]
+] [590] [591] [592] [593]) (./chapters/RiemannRoch_WeilDivisor.tex [594]
 Chapter 33.
-[593
+[595
 
-] [594] [595] [596] [597] [598] [599]) (./chapters/RiemannRoch_Adelic.tex
-[600]
+] [596] [597] [598] [599] [600] [601]) (./chapters/RiemannRoch_Adelic.tex
+[602]
 Chapter 34.
-[601
+[603
 
-] [602] [603] [604] [605] [606] [607] [608] [609] [610] [611] [612]
-[613] [614] [615] [616] [617]) [618]) [619
+] [604] [605] [606] [607] [608] [609] [610] [611] [612] [613] [614]
+[615] [616] [617] [618] [619]) [620]) [621
 
 ] (./print.aux)
  ***********
@@ -7750,19 +7663,19 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `print.out' has not changed.
-(rerunfilecheck)             Checksum: 2E860D8B5F243A2187B75EA67EB26028;101810.
+(rerunfilecheck)             Checksum: 939D6618A2B17A5E4286B15B68D84952;101991.
 
 )
 
 Here is how much of LuaTeX's memory you used:
- 35754 strings out of 476076
+ 35771 strings out of 476076
  125129,1977958 words of node,token memory allocated
- 13824 words of node memory still in use:
-   7 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 8 sub_mlist, 1 glyph, 3322 attribut
-e, 60 glue_spec, 3322 attribute_list, 2 write nodes
+ 13844 words of node memory still in use:
+   7 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 8 sub_mlist, 1 glyph, 3327 attribut
+e, 60 glue_spec, 3327 attribute_list, 2 write nodes
    avail lists: 2:855,3:512,4:276,5:852,6:86,7:10883,8:220,9:1115,10:27,11:763
- 54225 multiletter control sequences out of 65536+600000
- 136 fonts using 35505127 bytes
+ 54233 multiletter control sequences out of 65536+600000
+ 136 fonts using 35505375 bytes
  116i,16n,114p,710b,1172s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/opentype/public/lm/lmsans8-regular.otf></usr/share/texmf
 /fonts/opentype/public/lm/lmroman7-bold.otf></usr/share/texmf/fonts/opentype/pub
@@ -7784,10 +7697,10 @@ gular.otf></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
 fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/s
 hare/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb>
-Output written on print.pdf (620 pages, 3897872 bytes).
+Output written on print.pdf (622 pages, 3913718 bytes).
 
-PDF statistics: 19065 PDF objects out of 22161 (max. 8388607)
- 11880 compressed objects within 119 object streams
- 3131 named destinations out of 3580 (max. 131072)
- 3176 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 19116 PDF objects out of 22161 (max. 8388607)
+ 11919 compressed objects within 120 object streams
+ 3140 named destinations out of 3580 (max. 131072)
+ 3184 words of extra memory for PDF output out of 10000 (max. 100000000)
 

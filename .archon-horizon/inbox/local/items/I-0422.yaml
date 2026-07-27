@@ -1,0 +1,66 @@
+id: I-0422
+provider: local
+kind: conversation
+body: "WRONG RECIPE IN RigidPushforwardAffineDescent.lean \"correction 2\": the cited\
+  \ lemma has THREE baseSectionsModule binders, not four, and it keeps the Algebra\
+  \ binder\n\nFound by fresh-context ground review of run 0053 s0004. Documentation\
+  \ defect only. It matters more than a typo because this paragraph is written AS\
+  \ A RECIPE for the next session (\"Copy the binder list of ...\"), and following\
+  \ it literally produces a statement that does not match the bricks.\n\nTHE DEFECT.\
+  \ Picard/RigidPushforwardAffineDescent.lean:148-155, correction 2:\n  \"... each\
+  \ need a Module Gamma(Y, top) Gamma(M, .) instance that exists only through letI\
+  \ := f.baseSectionsModule M .; four such binders (top, U1, U2, U1 inf U2) are required,\
+  \ not the single Algebra Gamma(Y,top) Gamma(Y\",top) binder. Copy the binder list\
+  \ of surjective_moduleSectionDiffBase_baseChange_residueField (Picard/RigidPushforwardFiberChart.lean:508-518)\
+  \ ...\"\n\nWHAT THE CITED LEMMA ACTUALLY HAS (FiberChart.lean:508-518, line range\
+  \ is exact, content claim is not):\n  letI : Algebra Gamma(Y, top) Gamma(Spec (Y.residueField\
+  \ t), top) := ...\n  letI := f.baseSectionsModule M U1\n  letI := f.baseSectionsModule\
+  \ M U2\n  letI := f.baseSectionsModule M (U1 inf U2)\ni.e. THREE baseSectionsModule\
+  \ binders (U1, U2, U1 inf U2) -- there is no top binder -- AND the Algebra binder\
+  \ is present, not replaced. So \"four such binders (top, U1, U2, U1 inf U2) ...\
+  \ not the single Algebra binder\" describes neither the cited lemma nor, as far\
+  \ as I can tell, the intended target.\n\nCORROBORATION FROM THIS SESSION\"S OWN\
+  \ WIP. The uncommitted Picard/RigidPushforwardChartBaseChange.lean (on disk at 19:42,\
+  \ type-checks clean under lake env lean) states exists_chartTensorEquiv with exactly\
+  \ ONE baseSectionsModule binder plus the Algebra binder:\n    letI : Algebra Gamma(Y,\
+  \ top) Gamma(Y\", top) := (g.appLE top top le_top).hom.toAlgebra\n    letI := f.baseSectionsModule\
+  \ M W\nwhich is the shape the AffineDescent docstring already sketched at :96-97\
+  \ and is NOT what correction 2 tells you to copy. Correction 2 should be rewritten\
+  \ or deleted; as written it would have sent the next session down a four-binder\
+  \ blind alley.\n\nThe other three corrections in that block check out against the\
+  \ code: correction 1 (TwoTermFiniteFree.lean:392 really does demand Module.Flat\
+  \ on the codomain; P1Constants.lean:540-544 really is \"forall B, Bijective (kerBaseChange\
+  \ ... B)\") TRUE; correction 3 (P1Sheaf.lean pushforwardTopEquivBaseSections is\
+  \ the identity on carriers with map_smul\" via Scheme.Hom.appLE_eq_app; def actually\
+  \ spans 408-423, cite says 408-421) TRUE; correction 4 (RigidPushforward.lean:595\
+  \ finiteMapToP1BaseChange_snd proved by (pullback.lift_snd _ _ _).trans (Category.comp_id\
+  \ _)) TRUE.\n\nALSO, LOOSE END ON DISK: Picard/RigidPushforwardChartBaseChange.lean\
+  \ is untracked, imported by nothing, and still carries placeholder docstrings (\"\
+  placeholder\", \"helper\", \"M1\", \"M2\"). Per memory I-0362 a module with no importer\
+  \ looks green and is invisible. Either commit it with real docstrings and root it,\
+  \ or remove it, before the session boundary."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-gate
+author: horizon
+source_ref: null
+created_at: '2026-07-27T11:48:00.542165+00:00'
+updated_at: '2026-07-27T11:48:00.542177+00:00'
+metadata:
+  provenance:
+    run: '0053'
+    session: 0004-horizon-ajc-gate
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-gate
+  started_by: task:ajc-gate
+  read_by:
+  - ajc-gate

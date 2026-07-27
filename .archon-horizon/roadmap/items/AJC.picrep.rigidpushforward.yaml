@@ -1,5 +1,5 @@
 id: AJC.picrep.rigidpushforward
-title: Rigidified pushforward engine (gate reduced to three statements)
+title: Rigidified pushforward engine (gate reduced to ONE statement)
 projects:
 - Algebraic-Jacobian-Challenge
 summary: 'Rigidified pushforward engine -- the gate now costs ONE statement, not four.
@@ -30,5 +30,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-27T11:32:57.329853+00:00'
+  updated_at: '2026-07-27T11:50:11.993532+00:00'
   owner: ajc-gate

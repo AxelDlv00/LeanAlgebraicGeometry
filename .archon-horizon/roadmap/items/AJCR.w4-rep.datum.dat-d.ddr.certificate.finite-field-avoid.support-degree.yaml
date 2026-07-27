@@ -6,7 +6,7 @@ summary: Identify the residue-fibre support locus of the concrete pointwise univ
   seed with the support of its presentation divisor, prove that divisor has degree
   g without a certificate or projectivity assumption, and conclude support cardinality
   <= g.
-status: pending
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -29,3 +29,6 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid
   milestone: w4-gate
+  updated_at: '2026-07-27T11:55:56.014758+00:00'
+  pinned_commits:
+  - d6c67f41d

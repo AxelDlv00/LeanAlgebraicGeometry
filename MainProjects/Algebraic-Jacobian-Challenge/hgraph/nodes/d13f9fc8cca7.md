@@ -28,13 +28,17 @@ docstring: '**The pushforward stalk rank is the fibre `h⁰`.**  Let `p : X ⟶ 
 
   occurs, so it is equally available for a curve `C_A ⟶ Spec A`.  Surjectivity of
 
-  the Čech differential is *not* required: it is subsumed by `hbc`.  Nor is
+  the Čech differential is *not* required — this proof does not use it (it is
 
-  finite presentation of `M`, properness of `p`, or any finiteness of `R`.  The
+  *not* implied by `hbc`; see the module docstring).  Nor is finite presentation
 
-  three hypotheses that do occur are genuinely necessary; see the module
+  of `M`, properness of `p`, or any finiteness of `R`.  Of the three hypotheses
 
-  docstring for the counterexample that drops `hproj`.
+  that do occur, `hproj` is genuinely necessary (module docstring, counterexample);
+
+  `hfin` and `hbc` are consumed by `Module.rankAtStalk_eq` and by step 3
+
+  respectively, and are not separately witnessed.
 
 
   Sources: Stacks 02KG at `i = 0`, 00NX; Mumford, *Abelian Varieties*, II §5.'
@@ -43,7 +47,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.rank_pushforward_eq_fiberH0
 type: lean
-updated: '2026-07-27T19:08:27'
+updated: '2026-07-27T19:54:25'
 ---
 theorem rank_pushforward_eq_fiberH0
     (p : X ⟶ Spec R) (𝒰 : X.AffineCoverMVSquare) (M : X.Modules)

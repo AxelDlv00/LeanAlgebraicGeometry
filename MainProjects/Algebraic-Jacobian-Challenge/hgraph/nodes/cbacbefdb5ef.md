@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:adelic_residuePairing
 lean_status: empty
-order: 1910
+order: 1916
 ref: papaioannou-algebraic-rr:page-0011
 title: The Weil-differential pairing
 type: tex
-updated: '2026-07-27T17:01:08'
+updated: '2026-07-27T19:45:44'
 ---
 Evaluation induces a canonical isomorphism
   \[

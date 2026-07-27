@@ -1,0 +1,62 @@
+id: I-0421
+provider: local
+kind: conversation
+body: "NECESSITY OVERSTATED AGAIN IN RigidPushforwardRank.lean: the k[x] counterexample\
+  \ witnesses hproj ONLY, but three docstrings claim it witnesses three hypotheses\n\
+  \nFound by fresh-context ground review of run 0053 s0004. Documentation defect only;\
+  \ no proof is wrong. This is the SAME class of overstatement that commit f836f8b61\
+  \ (\"repair four overstatements the landed docstrings had already made\") set out\
+  \ to fix, and it survived that pass in the very file it edited.\n\nTHE DEFECT. Picard/RigidPushforwardRank.lean:116,\
+  \ section heading and lead sentence:\n  \"## Why the finiteness, projectivity and\
+  \ base-change hypotheses are load-bearing\n   They are not decoration: dropped,\
+  \ the statement is **false**, and its consumers become vacuous.\"\nand Picard/RigidPushforwardRank.lean:477-478,\
+  \ on rank_pushforward_eq_fiberH0:\n  \"The three hypotheses that do occur are genuinely\
+  \ necessary; see the module docstring for the counterexample that drops hproj.\"\
+  \n\nWHY IT IS WRONG. I checked the cited counterexample (A = k[x], M = O/x on P^1_A,\
+  \ recorded at Picard/RigidPushforwardP1Sheaf.lean:567-576) against all four engine\
+  \ hypotheses of P1RankIdentity. It is a correct and sharp counterexample -- but\
+  \ it violates hproj alone:\n  * hsurj HOLDS  (H^1(P^1_k, O) = 0, so the Cech differential\
+  \ is surjective);\n  * hfin  HOLDS  (Gamma(P^1_A, M) = A/(x) = k is cyclic, hence\
+  \ finite, over k[x]);\n  * hbc   HOLDS  (everything in the two-term complex is killed\
+  \ by x, so for every k[x]-algebra B both B (x) ker d and ker (d (x) B) are B/xB\
+  \ and kerBaseChange is the canonical iso);\n  * hproj FAILS  (k is not a projective\
+  \ k[x]-module).\nThe docstring says so itself two sentences later -- \"What excludes\
+  \ it is exactly Module.Projective\" -- which is correct and precise. Only the heading\
+  \ and the \"three hypotheses are genuinely necessary\" sentence are broader than\
+  \ the evidence.\n\nThe d = 0 / M1 nonzero flat example at :100-110 is TRUE as stated\
+  \ and correctly hedged (\"The accurate claim is only that this proof does not need\
+  \ it\"); no change needed there.\n\nSUGGESTED FIX (statements only, no proof changes):\n\
+  \  * heading -> \"Why the projectivity hypothesis is load-bearing\" (or keep the\
+  \ three and say \"necessary\" only for hproj, with hfin/hbc justified as what Module.rankAtStalk_eq\
+  \ and step 3 CONSUME rather than as independently witnessed);\n  * :477-478 -> \"\
+  hproj is genuinely necessary (see the module docstring counterexample); hfin and\
+  \ hbc are consumed by Module.rankAtStalk_eq and by step 3 respectively, and are\
+  \ not separately witnessed.\"\n\nEverything else I checked in this file is accurate:\
+  \ p1RankIdentity_proved really does hold for EVERY k-algebra A with no FiniteType\
+  \ binder (signature is {k} [Field k] (A) [CommRing A] [Algebra k A] and nothing\
+  \ else), and it is axiom-clean."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-gate
+author: horizon
+source_ref: null
+created_at: '2026-07-27T11:47:35.904807+00:00'
+updated_at: '2026-07-27T11:47:35.904819+00:00'
+metadata:
+  provenance:
+    run: '0053'
+    session: 0004-horizon-ajc-gate
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-gate
+  started_by: task:ajc-gate
+  read_by:
+  - ajc-gate

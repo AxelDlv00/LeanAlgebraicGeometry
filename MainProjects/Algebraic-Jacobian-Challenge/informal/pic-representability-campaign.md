@@ -262,6 +262,40 @@ House pattern: Prop-classes, **no sorried instances**, deleted on discharge.
 
 Order: P1 → (P5, B3, G2 in parallel) → D4' → J5 → G3 → G5. Final state: **zero campaign gates**; `HasRationalPoint` remains as an honest hypothesis; `HasSmoothProperQuotient` remains empty, unused, docstring-flagged. Off-path and untouched: the Quot-lane sorries in `QuotRepresentability.lean`, `QuotFunctorDef.lean` (two) and `SerreFiniteness.lean` (two), and `WeilDivisor.principal_degree_zero` (P3 may close it as a bonus).
 
+**Gate-table status, re-measured 2026-07-27.** The table above is the plan; this is the
+state. Resolve everything by declaration name — the wave sections below cite line numbers
+that have drifted.
+
+- **`HasRigidPushforward C` — one statement left, not four.** The gate has two fields.
+  `locallyFree` is now an unconditional theorem for an AJC curve
+  (`Adelic.rigidPushforwardLocallyFree_proved`), because both statements it rested on are
+  proved: `IsIntegral (ℙ¹_k)` (`Adelic.instIsIntegralP1OverLeft`, from the chart-ring
+  identification `Γ(ℙ¹_k, D₊(Xᵢ)) ≃ₐ[k] k[T]` plus a two-chart irreducibility argument)
+  and the rank identity (`Adelic.p1RankIdentity_proved`, for every `k`-algebra). The
+  `baseChange` field reduces by affine-target descent to one module-level statement,
+  `Adelic.RigidPushforwardGammaBaseChange` — classical `H⁰` base change — and
+  `Adelic.hasRigidPushforward_of_gammaBaseChange` derives the whole gate from it. There is
+  deliberately **no instance**: nothing produces that statement yet. Read
+  `hasRigidPushforward_of_leaves` as a four-leaf factorisation, not as the frontier.
+- **`HasStableAffineCover` — discharged** (`hasStableAffineCover_of_orbitsInAffineOpen`),
+  under `OrbitsInAffineOpen`, which the Hironaka trap shows cannot be dropped.
+  `HasGaloisQuotient` remains instance-free; G2's affine model is proved
+  (`isGaloisQuotient_spec`), and Speiser descent and the affine Hom property are proved
+  (`SemilinearAction.descentAlgEquiv`, `SemilinearAction.invariantAlgHomEquiv`).
+- **Cluster P has landed further than the table suggests, and conditionally.** The χ-ledger
+  is closed on effective divisors from the one-point bump
+  (`Adelic.chi_eq_of_bump_of_nonneg`), the negative part is stated as an equivalence rather
+  than reduced (`Adelic.chi_eq_iff_step_of_bump`), and bounded vanishing and global
+  generation are assembled (`Adelic.exists_bound_forall_generatedAt`). All of it is
+  axiom-clean and almost all of it is **conditional in the statement** on the closed ledger
+  and/or a peel-surjectivity datum. `scripts/axiom-frontier.lean` §6b/§6d carry the
+  per-declaration open-hypothesis columns; a clean axiom line in this lane is not a
+  discharge.
+- **The five ways a milestone can look done and not be** are catalogued and each one
+  measured in `scripts/axiom-frontier.lean`: a gate discharged by the caller; an unproved
+  named hypothesis; a *false* named hypothesis; an instance binder nothing can instantiate
+  for the ambient object; and an unrooted module, which no axiom check reaches at all.
+
 ### Wave-1 parallel work list (6 agent tasks)
 
 **W1-A — Adelic gate discharge + closure certification (P1).**
