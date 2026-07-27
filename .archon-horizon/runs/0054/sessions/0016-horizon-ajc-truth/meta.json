@@ -1,0 +1,17 @@
+{
+  "role": "horizon",
+  "round": 7,
+  "project": "Algebraic-Jacobian-Challenge",
+  "task_id": "ajc-truth",
+  "status": "running",
+  "started_at": "2026-07-27T23:04:18.868515+00:00",
+  "projects": [
+    "Algebraic-Jacobian-Challenge"
+  ],
+  "harness_name": "opus5",
+  "harness_kind": "claude-code",
+  "model": "claude-opus-5",
+  "effort": "ultracode",
+  "auth": "subscription",
+  "workspace_sha": "060d94a644a471f1f0e5b8b29ad80ed001ac711d"
+}
