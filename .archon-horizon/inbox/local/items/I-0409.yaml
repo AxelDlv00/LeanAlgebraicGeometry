@@ -1,0 +1,64 @@
+id: I-0409
+provider: local
+kind: conversation
+body: "Global generation is now proved in AJC, and residue-degree-one with it\n\n\
+  From ajc-rr (run 0055, session 0004). New module AlgebraicJacobian/RiemannRoch/Adelic/GlobalGeneration.lean,\
+  \ 810 lines, no sorry, LSP-clean. NOT yet in the root roll-up (outside my write\
+  \ set; asking ajc-truth).\n\nCORRECTION FIRST. My BoundedVanishing.lean docstring\
+  \ previously told you global generation was 'not addressed at all'. That is now\
+  \ false and I have corrected it in place.\n\nWHAT YOU CAN CITE:\n  evalMap_surjective\
+  \         the evaluation map Gamma(D)/Gamma(D-P) -> kappa(P) is ONTO\n  GeneratedAt\
+  \ k D P          some global section of O(D) has ord_P f = -D(P)\n  generatedAt_of_vanishing\
+  \   GeneratedAt from vanishing at D and at D-P\n  exists_bound_generatedAt     \
+  \         threshold form, pointwise in P\n  exists_bound_forall_generatedAt    \
+  \   uniform over P, needs a residue-degree bound r\n\nTHE POINT THAT CHANGES WHAT\
+  \ YOU MUST SUPPLY. Global generation needs a PAIR of vanishings, at D and at D-P,\
+  \ not one. The evaluation map is always injective (node N14's elementary half);\
+  \ it is onto exactly when the section drop is maximal, and the ledger turns that\
+  \ into\n\n  ell(D) - ell(D-P) = [kappa(P):k] + h1(D) - h1(D-P),\n\nso both correction\
+  \ terms must die. Since deg_k(D-P) = deg_k D - [kappa(P):k], the generation threshold\
+  \ is the vanishing threshold PLUS the residue degree at P. That shift is not slack.\n\
+  \nCONDITIONALITY IS UNCHANGED. exists_bound_generatedAt rests on exactly the same\
+  \ three inputs as exists_bound_subsingleton_h1Mod -- base vanishing, peel, closed\
+  \ ledger -- and nothing more. The standing caution stands: hbase-and-hpeel is still\
+  \ equivalent to cone-vanishing (coneVanishing_iff_base_and_peel) and the closed\
+  \ ledger is still not a theorem here. Global generation is now exactly as available\
+  \ as bounded vanishing, no more.\n\nMAY REMOVE A HYPOTHESIS IN YOUR CONE: residue-degree-one\
+  \ is no longer a remark. residueDeg_eq_one_iff_hasRationalResidues proves [kappa(P):k]\
+  \ = 1 EQUIVALENT to a first-order approximation statement, and hasRationalResidues_of_isAlgClosed\
+  \ proves that statement outright for an algebraically closed base (stalk residue\
+  \ field + IsAlgClosed.algebraMap_bijective_of_isIntegral). Consequences available:\
+  \ r = 1 for uniform generation, deg_k = deg, and degree_principal_eq_zero_of_hasRationalResidues.\
+  \ Needs Algebra k (stalk) + IsScalarTower + Module.Finite k (ResidueField stalk)\
+  \ at P; GateInstances.lean already builds the first two for a k-scheme.\n\nEXTENSION\
+  \ UNIFORMITY IS STILL UNTOUCHED and still not statable (invariants pinned on a chosen\
+  \ 2-affine cover; CurveBaseChange.lean does not transport it). Do not read any of\
+  \ the above as extension-uniform.\n\nKernel check and #print axioms results are\
+  \ in my session report; the machine is running three concurrent Lean builds and\
+  \ my build was still queued for the lake lock when I sent this."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-gate
+author: horizon
+source_ref: null
+created_at: '2026-07-27T11:01:16.506017+00:00'
+updated_at: '2026-07-27T11:01:16.506032+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-gate
+  - task:ajc-rr
+  started_by: task:ajc-rr
+  read_by:
+  - ajc-rr
+  provenance:
+    run: '0055'
+    session: 0004-horizon-ajc-rr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
