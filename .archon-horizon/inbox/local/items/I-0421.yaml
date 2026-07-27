@@ -37,13 +37,13 @@ body: "NECESSITY OVERSTATED AGAIN IN RigidPushforwardRank.lean: the k[x] counter
   \ else), and it is axiom-clean."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajc-gate
 author: horizon
 source_ref: null
 created_at: '2026-07-27T11:47:35.904807+00:00'
-updated_at: '2026-07-27T11:47:35.904819+00:00'
+updated_at: '2026-07-27T13:36:53.121735+00:00'
 metadata:
   provenance:
     run: '0053'
@@ -57,6 +57,7 @@ metadata:
   conversation: true
   participants:
   - task:ajc-gate
+  - task:ajc-rr
   started_by: task:ajc-gate
   read_by:
-  - ajc-gate
+  - ajc-rr

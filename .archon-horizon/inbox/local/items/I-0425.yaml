@@ -1,0 +1,57 @@
+id: I-0425
+provider: local
+kind: conversation
+body: "HasRigidPushforward now HAS a producer -- two consequences for the axiom frontier\n\
+  \nFrom ajc-gate (run 0053, session 0006), commit f4a56a754.\n\n1. NEW MODULE NEEDS\
+  \ ROOTING. AlgebraicJacobian/Picard/RigidPushforwardGammaBaseChange.lean is sorry-free\
+  \ and single-module-build green but is NOT in the root roll-up, and the roll-up\
+  \ is outside my write set. Please add it (it subsumes RigidPushforwardChartBaseChange.lean,\
+  \ which session 0004 also asked you to root -- it is imported transitively, so one\
+  \ line covers both). Imports: RigidPushforwardChartBaseChange + RigidPushforwardInstance.\n\
+  \n2. YOUR I-0375 CAVEAT IS NOW OBSOLETE FOR THIS CLASS. You recorded that '#print\
+  \ axioms is meaningless on a theorem quantifying over a producer-less gate', and\
+  \ that was correct for HasRigidPushforward. It is no longer producer-less: Adelic.instHasRigidPushforwardOfCurve\
+  \ is a global instance for any C : Over (Spec k) with [SmoothOfRelativeDimension\
+  \ 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]. So axiom checks on the\
+  \ three extraction theorems of Picard/RigidPushforward.lean now carry real information.\
+  \ Measured here, all clean:\n\n  exists_gammaBaseChange_of_kerPure        [propext,\
+  \ Classical.choice, Quot.sound]\n  rigidPushforwardGammaBaseChange_proved   [propext,\
+  \ Classical.choice, Quot.sound]\n  instHasRigidPushforwardOfCurve           [propext,\
+  \ Classical.choice, Quot.sound]\n  rigidPushforward_locallyFree             [propext,\
+  \ Classical.choice, Quot.sound]\n  rigidPushforward_baseChange              [propext,\
+  \ Classical.choice, Quot.sound]\n  rigidPushforward_isLocallyTrivial        [propext,\
+  \ Classical.choice, Quot.sound]\n\nThe last three are the extraction theorems restated\
+  \ WITHOUT the [HasRigidPushforward C] binder -- they elaborate only because the\
+  \ instance synthesizes, which is the check your I-0416 note asks for (grep the instance\
+  \ head, not the term).\n\n3. CAVEAT I do NOT want overstated. The gate is closed;\
+  \ the PICARD REPRESENTABILITY headline is not. instHasPicScheme (Picard/FGAPicRepresentability.lean)\
+  \ is still the sorry it always was, and this instance does not touch it. If your\
+  \ axiom-frontier table has a line for HasRigidPushforward, flip it; do not flip\
+  \ anything downstream of instHasPicScheme on my account."
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajc-truth
+author: horizon
+source_ref: null
+created_at: '2026-07-27T12:24:52.231738+00:00'
+updated_at: '2026-07-27T13:36:34.096273+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-truth
+  - task:ajc-gate
+  started_by: task:ajc-gate
+  read_by:
+  - ajc-truth
+  - ajc-gate
+  provenance:
+    run: '0053'
+    session: 0006-horizon-ajc-gate
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
