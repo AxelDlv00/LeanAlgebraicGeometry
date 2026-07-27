@@ -339,5 +339,89 @@ theorem exists_bound_forall_generatedAt_of_bump
 
 end LedgerEliminated
 
+/-! ## §3. The one-point peel has content only on the overlap
+
+With the ledger closed, the one-point peel `Peel E (1·P + E)` is one of the lane's two
+remaining open inputs.  This section localises it: **the peel is free at every prime divisor
+whose point lies outside the overlap `U₀ ⊓ U₁`**, so its whole content sits at points of the
+overlap.
+
+The reason is that `𝒜(D) = Γ(U₀ ⊓ U₁, 𝒪(D))` constrains orders only at primes meeting the
+overlap.  If `P.point ∉ U₀ ⊓ U₁` then `1·P + E` and `E` impose the *same* conditions there —
+they differ only at `P` — so `𝒜(1·P + E) = 𝒜(E)` and one may take `y = x`, with
+`x − y = 0` a coboundary for free.
+
+**How much this is worth, stated honestly.**  It is a reduction and not a discharge, and it
+is a *small* reduction — smaller than the phrase "only on the overlap" suggests.  For a
+2-affine cover of an irreducible curve the overlap `U₀ ⊓ U₁` is dense and omits only finitely
+many points, so the primes this section disposes of are the **few**, not the many.  The
+direction of the saving is the opposite of what one might hope: one cannot shrink the
+exceptional set by choosing a better cover, because it is already nearly empty.
+
+What remains at an overlap point is the substantive input: the
+Mittag-Leffler/strong-approximation statement that a section with a first-order pole at `P`
+can be corrected, modulo the coboundary, by an overlap section without it.  Nothing here
+supplies that, and it is the same datum `ChiLedger.localStepMapₖ_surjective` takes as
+`hsurj`.  The value of the section is that the residual leaf now has an explicitly bounded
+domain of quantification rather than being stated at all primes, and that the two easy cases
+are no longer mixed with the hard one.
+
+(These lemmas are about `Peel`, defined in `BoundedVanishing.lean`; they live here because
+this file is where the ledger closure makes the peel the residual input.) -/
+
+section PeelOffOverlap
+
+variable (k : Type u) [Field k] {X : Scheme.{u}} [IsIntegral X]
+    [IsLocallyNoetherian X] [Scheme.IsRegularInCodimensionOne X]
+    [Algebra k X.functionField] [IsConstantField k X] (U₀ U₁ : X.Opens)
+
+/-- **Off the overlap, a one-point bump does not change the overlap sections.**
+`𝒜(1·P + E) = 𝒜(E)` when `P.point ∉ U₀ ⊓ U₁`, because the two divisors differ only at `P`
+and `𝒜` reads the divisor only at primes meeting the overlap. -/
+theorem sectionSub_add_pointDivisor_of_notMem_overlap
+    {P : X.PrimeDivisor} (hP : P.point ∉ (U₀ ⊓ U₁ : X.Opens)) (E : X.WeilDivisor) :
+    sectionSub k (U₀ ⊓ U₁) (pointDivisor P + E) = sectionSub k (U₀ ⊓ U₁) E := by
+  apply le_antisymm
+  · intro x hx
+    rcases eq_or_ne x 0 with rfl | hx0
+    · exact Submodule.zero_mem _
+    refine Or.inr fun Q hQ => ?_
+    have hQP : Q ≠ P := fun h => hP (h ▸ hQ)
+    rw [← add_pointDivisor_apply_of_ne E hQP]
+    exact ((mem_sectionOfDivisor_of_ne_zero hx0).mp hx) Q hQ
+  · exact sectionSub_mono k (U₀ ⊓ U₁) (le_add_pointDivisor E P)
+
+/-- **The one-point peel is free off the overlap.**  For a prime divisor `P` with
+`P.point ∉ U₀ ⊓ U₁`, `Peel E (1·P + E)` holds for every `E`, with no approximation input:
+take `y = x`, legitimate because the bump did not change the overlap sections
+(`sectionSub_add_pointDivisor_of_notMem_overlap`).
+
+So the one-point peel — one of the lane's two residual open inputs — has content **only** at
+primes whose point lies in the overlap. -/
+theorem peel_pointDivisor_of_notMem_overlap
+    {P : X.PrimeDivisor} (hP : P.point ∉ (U₀ ⊓ U₁ : X.Opens)) (E : X.WeilDivisor) :
+    Peel k U₀ U₁ E (pointDivisor P + E) := by
+  intro x hx
+  refine ⟨x, ?_, by simp⟩
+  rwa [sectionSub_add_pointDivisor_of_notMem_overlap k U₀ U₁ hP E] at hx
+
+/-- **The one-point peel, reduced to the overlap.**  To have the one-point peel at *every*
+prime divisor and every base divisor, it suffices to have it at the primes meeting the
+overlap `U₀ ⊓ U₁`.  Off the overlap it is `peel_pointDivisor_of_notMem_overlap`.
+
+This is the precise form of the residual leaf.  Combined with `Peel.of_list` and
+`exists_bound_subsingleton_h1Mod_of_bump_of_pointPeel`, the single-field vanishing lane rests
+on: the bump, one base vanishing, and the peel **at overlap points only**. -/
+theorem pointPeel_of_pointPeel_on_overlap
+    (hover : ∀ (P : X.PrimeDivisor), P.point ∈ (U₀ ⊓ U₁ : X.Opens) →
+      ∀ E : X.WeilDivisor, Peel k U₀ U₁ E (pointDivisor P + E))
+    (P : X.PrimeDivisor) (E : X.WeilDivisor) :
+    Peel k U₀ U₁ E (pointDivisor P + E) := by
+  by_cases hP : P.point ∈ (U₀ ⊓ U₁ : X.Opens)
+  · exact hover P hP E
+  · exact peel_pointDivisor_of_notMem_overlap k U₀ U₁ hP E
+
+end PeelOffOverlap
+
 end Adelic
 end AlgebraicGeometry
