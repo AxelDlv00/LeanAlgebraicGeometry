@@ -2,15 +2,40 @@ id: AJC.picrep.rational-point
 title: 'DECISION: the rational-point hypothesis'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Needs a human decision. references/challenge.lean declares Jacobian C with
-  no rational-point binder, but instHasPicScheme (Picard/FGAPicRepresentability.lean:316)
-  makes [HasRationalPoint C] an essential hypothesis -- correctly so, since without
-  a section Pic(C x_k T)/pi_T^* Pic(T) need not be a Zariski sheaf. Kleiman's theorem
-  needs no section because it represents the ETALE sheaf. This was assumed to be a
-  platform limitation, but mathlib v4.31 does have the etale topology (Mathlib/AlgebraicGeometry/Sites/Etale.lean:32-50),
-  so it is a design choice. Either etale-sheafify the Picard functor, or accept a
-  theorem strictly weaker than the challenge statement. Nothing above this on the
-  Picard path is safe until it is settled.
+summary: 'Needs a human decision, and it is now exactly one decision. references/challenge.lean
+  declares Jacobian C with no rational-point binder, but instHasPicScheme (Picard/FGAPicRepresentability.lean,
+  instance at :259) makes [HasRationalPoint C] an essential hypothesis -- correctly
+  so, since without a section Pic(C x_k T)/pi_T^* Pic(T) need not be a Zariski sheaf.
+  Kleiman''s theorem needs no section because it represents the ETALE sheaf, sheafification
+  supplying etale-locally what a section supplies globally. Mathlib v4.31 does carry
+  the etale topology, so this is a design choice, not a platform limitation.
+
+
+  BRANCH A: carry [HasRationalPoint C] on the headline. Cheap, and proves something
+  strictly weaker than the challenge asks, since a smooth proper geometrically integral
+  curve need not have a k-rational point (pointless conics in genus 0; standard genus-2
+  examples over Q).
+
+  BRANCH B: etale-sheafify the relative Picard functor and represent that. Kleiman''s
+  own formulation and the full strength, at the cost of a new representability input.
+
+  Neither is assumed anywhere. Both are recorded in the blueprint FGA chapter, at
+  the Lean leaf hasRationalPoint_of_curve, in README/TO_USER, and in the campaign
+  document.
+
+
+  SCOPE NARROWED 2026-07-27 (ajc-truth, commit 4905dc11b). The headline leaf used
+  to bundle the rational point with geometric integrality, which made this look like
+  two decisions. It is one: geometric integrality of a smooth proper geometrically
+  irreducible curve FOLLOWS from the challenge hypotheses via Smooth => GeometricallyReduced,
+  now proved in mathlib generality at AlgebraicJacobian/Curve/GeometricallyReduced.lean,
+  and is measured axiom-clean. So [GeometricallyIntegral C.hom] costs nothing; only
+  the rational point is open, and unlike the other half it is FALSE in general rather
+  than unproved, so the leaf must be replaced by whichever branch is chosen and must
+  never be proved.
+
+
+  Nothing above this on the Picard path is safe until it is settled.'
 status: blocked
 kind: proof
 priority: normal
@@ -33,3 +58,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
+  updated_at: '2026-07-27T09:11:07.446282+00:00'

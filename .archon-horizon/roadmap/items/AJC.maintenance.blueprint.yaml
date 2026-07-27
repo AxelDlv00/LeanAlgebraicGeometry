@@ -2,10 +2,22 @@ id: AJC.maintenance.blueprint
 title: Blueprint prose and formalization pins
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Twelve bounded prose and truth passes now include the cycle-free Quot affine-base-change
-  slice. Open work is residual journal cleanup, 33 classified unresolved pins, and
-  printable debt at 734 overfull boxes plus 95 missing-glyph notices; the settled
-  618-page PDF and HTML build have no unresolved references or renderer errors.
+summary: 'Twelve bounded prose and truth passes now include the cycle-free Quot affine-base-change
+  slice, and the route-of-record pass (run 0054): the blueprint no longer presents
+  the Quot endgame in the present tense, and the Jacobian chapter''s hypothesis-gap
+  node has been split so that the half which is a theorem carries a proof and the
+  half which is an open owner decision is alone in claiming nothing.
+
+
+  Measured on the current tree (2026-07-27): 620-page LuaLaTeX PDF, ZERO unresolved
+  references, zero multiply-defined labels, zero renderer errors. Printable debt is
+  747 overfull boxes and 100 missing-glyph notices. The hgraph resyncs clean against
+  blueprint AND Lean -- note that syncing with --blueprint alone leaves the Lean side
+  empty and emits thousands of bogus pin warnings; the real count is 33 classified
+  unresolved pins, all pre-existing.
+
+
+  Open work: residual journal cleanup, those 33 pins, and the printable debt.'
 status: pending
 kind: blueprint
 priority: normal
@@ -28,8 +40,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
-  updated_at: '2026-07-25T23:24:58.787472+00:00'
+  updated_at: '2026-07-27T09:11:36.409689+00:00'
   pinned_commits:
+  - dfa8d1755
   - c1d535ce6
   - c9946fdfa
   - 9ee3841b2

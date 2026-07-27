@@ -2,9 +2,26 @@ id: AJC.jacobian.assembly
 title: Package the final Jacobian witness
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Construct picardJacobianWitness from Picard representability, the Pic0 abelian-variety
-  structure, dimension g, and the Albanese universal property; discharge the protected
-  Jacobian interface.
+summary: "Construct picardJacobianWitness from Picard representability, the Pic0 abelian-variety\
+  \ structure, dimension g, and the Albanese universal property; discharge the protected\
+  \ Jacobian interface.\n\nThe structure is built and wired (see the child, AJC.jacobian.reachability,\
+  \ done): the witness IS Scheme.Pic0Scheme, four of six fields are upstream theorems\
+  \ applied directly, and 97 modules are reachable from the headline. What remains\
+  \ is mathematics, not assembly, so this item stays open with its only child done\
+  \ -- that status mismatch is deliberate, not an oversight.\n\nFive obligations,\
+  \ measured with scripts/axiom-frontier.lean rather than inferred:\n  Pic0.smooth,\
+  \ Pic0.proper                 sorry-bodied upstream in Pic0AbelianVariety.lean\n\
+  \  smoothOfRelativeDimension_genus_pic0     refines Pic0.smooth to relative dimension\
+  \ genus C\n  isAlbanese_pic0                          Albanese UP over arbitrary\
+  \ k, every marked point\n  hasRationalPoint_of_curve                FALSE as stated;\
+  \ a gap marker for the open owner\n                                           decision\
+  \ in AJC.picrep.rational-point, to be\n                                        \
+  \   REPLACED rather than proved\nBecause that last leaf is false, everything below\
+  \ picardJacobianWitness currently rests on\nan inconsistent hypothesis. That is\
+  \ deliberate -- it puts the gap where a reader of the\nheadline meets it -- but\
+  \ it means this item cannot close before the rational-point decision.\nPic0.smooth\
+  \ and Pic0.proper are the two nearest unproved obligations and belong to no\ncurrent\
+  \ task."
 status: pending
 kind: proof
 priority: high
@@ -27,3 +44,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
+  updated_at: '2026-07-27T09:12:13.310852+00:00'

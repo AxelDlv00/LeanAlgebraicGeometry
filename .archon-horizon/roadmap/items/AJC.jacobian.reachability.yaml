@@ -2,36 +2,18 @@ id: AJC.jacobian.reachability
 title: Wire the headline to the infrastructure
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Wire the headline to the infrastructure, and publish the true axiom frontier.\n\
-  \nHEADLINE WIRING: DONE (run 0054, commit c7e7f5acc). picardJacobianWitness was\
-  \ a bare sorry in a file whose only project import was Genus.lean, so its transitive\
-  \ closure was 8 modules and nothing in the Picard/cohomology/Riemann-Roch/Albanese\
-  \ development was reachable from it. It is now built from Scheme.Pic0Scheme C, with\
-  \ four of six witness fields supplied directly by Picard/Pic0AbelianVariety.lean\
-  \ (grpObj, proper, smooth, geometricallyIrreducible). Reachability 8 -> 96 modules.\
-  \ lake build of Jacobian + AbelJacobi green (8654 jobs).\n\nREMAINING, now three\
-  \ named leaves in Jacobian.lean rather than one opaque sorry, each pinned at the\
-  \ strength the assembly consumes:\n - hasRationalPoint_and_geometricallyIntegral:\
-  \ geometric integrality needs only Smooth => GeometricallyReduced, absent from mathlib\
-  \ v4.31 but PROVED in the sibling AJCR (Curve/GeometricallyReduced.lean, mathlib-generality,\
-  \ upstreaming candidate) -- a portable brick. The k-rational point does NOT follow\
-  \ from the challenge hypotheses; this is where the I-0372 decision lands.\n - smoothOfRelativeDimension_genus_pic0:\
-  \ Pic0.smooth gives bare smoothness; the witness needs relative dimension genus\
-  \ C. Verified nothing upstream supplies the refinement.\n - isAlbanese_pic0: Albanese.Pic0.albanese_universal_property\
-  \ covers only the algebraically closed, positive-genus case; the witness needs arbitrary\
-  \ k and every marked point, genus 0 included (Mumford section 4 rigidity).\n\nAXIOM\
-  \ FRONTIER: published and reproducible at scripts/axiom-frontier.lean (lake env\
-  \ lean, ~12s warm, 51 declarations). The substantive finding is that 'axiom-clean'\
-  \ was being claimed for theorems that merely QUANTIFY over a sorry-bodied gate:\
-  \ Pic0.geometricallyIrreducible, Pic0.isSeparated and Pic0.locallyOfFiniteType report\
-  \ clean axioms as stated, but pick up sorryAx as soon as a call site must synthesise\
-  \ HasPicScheme, whose sole producer instHasPicScheme is sorry-bodied. Three leakProbe_*\
-  \ declarations force that synthesis so the leak is measured, not inferred. Same\
-  \ for pullback_preservesFiniteLimits, which taints PreservesFiniteLimits for flat\
-  \ pullback even along an identity. Genuinely clean, measured: the whole adelic genus\
-  \ lane (Adelic.instModuleFiniteHModuleOne, chi_unit_eq_one_sub_genus, h1_unit_eq_genus,\
-  \ hModuleOneEquivH1Cok_curve), degree-1 affine vanishing, and cech_computes_higherDirectImage."
-status: pending
+summary: 'The headline rests on the infrastructure it claims. picardJacobianWitness
+  is built from Scheme.Pic0Scheme, so 97 of the project''s 173 modules are reachable
+  from Jacobian.lean rather than the 8 of the Genus-only import. Every module on disk
+  is now rooted at AlgebraicJacobian.lean, which matters because an unrooted module
+  compiles green and is invisible both to the root build and to the axiom probe.
+
+
+  The obligation count is five, not three, and that is now stated wherever the witness
+  is described: Pic0.smooth and Pic0.proper are sorry-bodied upstream, and three leaves
+  are stated at the headline. Reproducible with scripts/axiom-frontier.lean (61 declarations,
+  ~8s warm) and the two reachability measurements in its header.'
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -53,5 +35,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian.assembly
-  updated_at: '2026-07-27T07:36:33.508459+00:00'
+  updated_at: '2026-07-27T09:10:26.822964+00:00'
   owner: ajc-truth
+  pinned_commits:
+  - 4905dc11b
