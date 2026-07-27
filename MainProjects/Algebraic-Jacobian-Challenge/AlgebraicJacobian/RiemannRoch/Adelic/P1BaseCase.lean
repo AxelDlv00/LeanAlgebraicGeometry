@@ -140,13 +140,24 @@ variable {k : Type u} [Field k]
 existence of a finite `k`-morphism from the curve `C` to the projective line
 `ℙ¹_k = ℙ(ULift (Fin 2); Spec k)`.
 
-This is a **gate** in the `HasPicScheme` style: it is a *Kleiman-independent
-classical existence statement* — any nonconstant rational function `x ∈ k(C)`
-determines a finite morphism `C ⟶ ℙ¹_k` of degree `[k(C) : k(x)]`.  The class
-carries **no instance**; the future keystone (`N11`, the reduction of `H¹`
-finiteness of `C` to the ℙ¹ base case above) consumes it as a hypothesis, and the
-proved instance (transcendence degree one of `k(C)/k` for a geometrically integral
-curve) is later work.
+Introduced as a **gate** in the `HasPicScheme` style: a *Kleiman-independent classical
+existence statement* — any nonconstant rational function `x ∈ k(C)` determines a finite
+morphism `C ⟶ ℙ¹_k` of degree `[k(C) : k(x)]`.
+
+**Update (2026-07-27): this class is no longer instance-free, and the docstring above
+used to say otherwise.**  For an AJC curve the gate is now *discharged*, by a chain that
+is present and sorry-free:
+
+* `hasFiniteMapToP1_of_existsNonconstantMapToP1` (`FiniteMapToP1.lean`) — nonconstant
+  ⟹ finite, via Zariski's main theorem;
+* `existsNonconstantMapToP1_of_existsNonconstantMapToProjInt` and
+  `existsNonconstantMapToProjInt_of_ajc` (`NonconstantToP1.lean`) — the two-chart
+  construction of a nonconstant map, for `[SmoothOfRelativeDimension 1] [IsProper]
+  [GeometricallyIntegral]`.
+
+So the "proved instance is later work" claim is obsolete: under the AJC ambient
+hypotheses this synthesises.  The class is kept because the keystone `N11` is stated at
+greater generality than the AJC curve, where it is still an honest hypothesis.
 
 The witness is packaged as a morphism in the over-category `Over (Spec k)`, so it
 automatically commutes with the structure maps: it is a genuine `k`-morphism. -/

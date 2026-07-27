@@ -436,9 +436,16 @@ values.  This is the honest remaining kernel of the finite-map gate `N9`: it
 is a *Kleiman-independent classical existence statement* (any nonconstant
 rational function on the curve — which exists since `k(C)/k` has
 transcendence degree one — extends to a morphism to `ℙ¹` by the valuative
-property of the dimension-one regular local rings).  The class carries **no
-instance**; everything from here to `HasFiniteMapToP1` is proved
-(`isFinite_left_of_exists_ne` + the derived instance below). -/
+property of the dimension-one regular local rings).  Everything from here to
+`HasFiniteMapToP1` is proved (`isFinite_left_of_exists_ne` + the derived instance below).
+
+**Update (2026-07-27): the "carries no instance" clause this docstring used to end with
+is obsolete.**  `NonconstantToP1.lean` discharges this class for an AJC curve —
+`existsNonconstantMapToProjInt_of_ajc` builds the nonconstant map by the two-chart
+construction under `[SmoothOfRelativeDimension 1] [IsProper] [GeometricallyIntegral]`,
+and `existsNonconstantMapToP1_of_existsNonconstantMapToProjInt` transfers it here — so
+under those hypotheses the whole `N9` chain synthesises with no gate left open.  The class
+survives for use at generality beyond the AJC curve. -/
 class ExistsNonconstantMapToP1 (C : Over (Spec (CommRingCat.of k))) : Prop where
   /-- There exists a `k`-morphism `C ⟶ ℙ¹_k` taking two distinct values. -/
   exists_nonconstant_map :
