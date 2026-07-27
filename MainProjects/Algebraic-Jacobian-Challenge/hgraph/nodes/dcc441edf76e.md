@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 329
 title: Augmented {\v C}ech complex
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-27T15:50:36'
 ---
 \textit{Project-local.}
   The \emph{augmented {\v C}ech complex} is the cochain complex

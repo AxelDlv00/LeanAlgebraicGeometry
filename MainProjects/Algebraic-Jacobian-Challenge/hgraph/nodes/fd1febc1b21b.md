@@ -6,10 +6,10 @@ created: '2026-07-26T03:32:38'
 generated: blueprint
 label: thm:adelic_chi_telescope_effective
 lean_status: lean_ok
-order: 1895
+order: 1899
 title: Telescoping along an effective divisor
 type: tex
-updated: '2026-07-26T06:44:13'
+updated: '2026-07-27T15:50:37'
 ---
 Let \(P_1,\ldots,P_r\) be prime divisors and suppose the one-point
   identity

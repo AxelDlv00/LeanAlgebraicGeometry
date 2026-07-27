@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 108
 title: Base-change map for the pushforward
 type: tex
-updated: '2026-07-24T03:02:13'
+updated: '2026-07-27T15:50:35'
 ---
 \textit{Source: Stacks Project, Cohomology of Schemes, \S\,Cohomology and base
   change, I.}

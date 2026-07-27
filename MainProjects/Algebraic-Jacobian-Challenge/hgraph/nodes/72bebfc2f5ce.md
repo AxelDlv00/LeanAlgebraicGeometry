@@ -9,6 +9,6 @@ lean_status: lean_ok
 order: 0
 title: Sheaf condition transports along the structure-sheaf forget composite
 type: tex
-updated: '2026-07-24T03:02:13'
+updated: '2026-07-27T15:50:35'
 ---
 Let \(X\) be a topological space. Then the Grothendieck topology of opens of \(X\) transports sheaves along the forgetful composite from commutative rings to abelian groups.

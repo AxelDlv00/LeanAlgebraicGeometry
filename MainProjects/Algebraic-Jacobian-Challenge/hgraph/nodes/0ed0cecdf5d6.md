@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:rank_fibers_open
 lean_status: lean_ok
-order: 995
+order: 998
 title: Openness of the rank fibers of a flat pullback
 type: tex
-updated: '2026-07-26T00:08:22'
+updated: '2026-07-27T15:50:36'
 ---
 Let \(S\) be locally noetherian, \(\F\) a finitely presented
   \(\OO_S\)-module, and \(\varphi : T \to S\) a morphism with

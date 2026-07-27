@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: rmk:thm32_role_of_ab
 lean_status: empty
-order: 1738
+order: 1742
 title: rmk:thm32_role_of_ab
 type: tex
-updated: '2026-07-26T06:44:13'
+updated: '2026-07-27T15:49:57'
 ---
 The Auslander--Buchsbaum theorem is not needed for
   \cref{thm:rational_map_to_av_extends}.  The codimension-one argument uses

@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 311
 title: '{\v C}ech cohomology accessor'
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-27T15:50:36'
 ---
 \textit{Project-local accessor.}
   For an index family \(U : \iota \to \mathrm{Opens}(X)\) (giving the covering \(\mathcal{U}\)), a

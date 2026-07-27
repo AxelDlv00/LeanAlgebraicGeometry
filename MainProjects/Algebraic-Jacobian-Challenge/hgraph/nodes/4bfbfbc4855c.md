@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:finite_sections_affine_all
 lean_status: lean_ok
-order: 1124
+order: 1127
 ref: stacks-project
 title: Finitely presented modules have finite sections on every affine open
 type: tex
-updated: '2026-07-26T00:08:22'
+updated: '2026-07-27T15:50:36'
 ---
 \textit{Source: Stacks~\href{https://stacks.math.columbia.edu/tag/01PC}{01PC}
   (finite-type half).}

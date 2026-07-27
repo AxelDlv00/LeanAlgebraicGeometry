@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 420
 title: Standard covers are cofinal among open covers of a general affine open
 type: tex
-updated: '2026-07-26T00:08:21'
+updated: '2026-07-27T15:50:36'
 ---
 \textit{Source: Stacks Project, Sheaves on Spaces, Tag 009L,
   \texttt{lemma-cofinal-systems-coverings-standard-case}.}

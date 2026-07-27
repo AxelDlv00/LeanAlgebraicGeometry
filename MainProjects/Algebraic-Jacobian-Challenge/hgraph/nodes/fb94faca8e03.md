@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:section_localization_descent
 lean_status: lean_ok
-order: 1110
+order: 1113
 title: Section-localization descent for quasi-coherent modules (gap1 keystone)
 type: tex
-updated: '2026-07-26T00:08:22'
+updated: '2026-07-27T15:50:36'
 ---
 For a quasi-coherent sheaf of modules \(M\) on \(\Spec R\) and \(f \in R\), the section
   restriction \(\Gamma(M, \top) \to \Gamma(M, D(f))\) exhibits the target as the

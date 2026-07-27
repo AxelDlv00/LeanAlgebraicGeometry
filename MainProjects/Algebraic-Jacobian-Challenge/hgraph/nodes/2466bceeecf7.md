@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 539
 title: Scheme-theoretic gluing core
 type: tex
-updated: '2026-07-26T00:08:21'
+updated: '2026-07-27T15:50:36'
 ---
 Suppose that \(X\) is proper, \(X\times Y\) is reduced, geometrically irreducible,
   and locally of finite type over \(\bar k\), and \(Z\) is separated.  Fix points

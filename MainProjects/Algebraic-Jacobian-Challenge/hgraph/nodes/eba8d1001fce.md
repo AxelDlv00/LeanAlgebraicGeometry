@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 537
 title: Cartesian collapse identity
 type: tex
-updated: '2026-07-26T00:08:21'
+updated: '2026-07-27T15:50:36'
 ---
 Fix \(x_0\in X\), and let \(s_{x_0}\colon Y\to X\times Y\) be the section
   \(y\mapsto(x_0,y)\) of \(p_2\).  Then \(s_{x_0}\circ p_2\) is the endomorphism

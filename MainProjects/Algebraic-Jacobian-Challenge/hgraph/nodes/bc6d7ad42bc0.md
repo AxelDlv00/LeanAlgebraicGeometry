@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:trivialisation_uiota_restrict_compat
 lean_status: lean_ok
-order: 814
+order: 817
 title: 'S4c: global-unit comparison \(u_\iota\) commutes with further restriction'
 type: tex
-updated: '2026-07-26T00:08:21'
+updated: '2026-07-27T15:50:36'
 ---
 With \(j : V \hookrightarrow U\) as above, the global-unit comparison
   \[

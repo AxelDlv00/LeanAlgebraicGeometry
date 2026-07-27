@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:exists_algebra_standardSmooth_stalk_localization
 lean_status: lean_ok
-order: 1623
+order: 1627
 title: A standard-smooth presentation of a smooth stalk
 type: tex
-updated: '2026-07-26T06:44:12'
+updated: '2026-07-27T15:50:37'
 ---
 For a smooth morphism \(X \to \Spec(\bar k)\) and a point \(z \in X\), there is
   an affine open neighbourhood \(V \ni z\) and an \(\Gamma(\Spec \bar k, U)\)-algebra

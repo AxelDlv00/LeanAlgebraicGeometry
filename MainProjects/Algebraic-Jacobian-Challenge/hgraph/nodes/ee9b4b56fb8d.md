@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 301
 title: Affine structure theorem from two generating families
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-27T15:50:36'
 ---
 Let \(X = \operatorname{Spec} R\) and \(\mathcal{F}\) an \(\mathcal{O}_X\)-module
   equipped with a global generating family \(\sigma\) and a global generating family

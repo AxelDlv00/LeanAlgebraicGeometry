@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: thm:relative_spec_exists
 lean_status: empty
-order: 576
+order: 579
 title: Relative spectrum exists
 type: tex
-updated: '2026-07-26T00:08:21'
+updated: '2026-07-27T15:49:56'
 ---
 \textit{Source: [Stacks Project], tag 01LQ (lemma-glue-relative-spec);
   cf.\ [Hartshorne], II~Ex.~5.17(a).}

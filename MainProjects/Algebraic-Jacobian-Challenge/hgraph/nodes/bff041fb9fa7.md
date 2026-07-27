@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 295
 title: \(\operatorname{IsLocalizedModule}\) is local on a finite spanning cover
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-27T15:50:36'
 ---
 Let \(R\) be a commutative ring, let \(M\) and \(N\) be \(R\)-modules, let
   \(g : M \to N\) be an \(R\)-linear map, let \(f \in R\), and let

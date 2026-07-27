@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 384
 title: Augmentation of the section {\v C}ech complex over \(V\)
 type: tex
-updated: '2026-07-26T00:08:21'
+updated: '2026-07-27T15:50:36'
 ---
 Fix an open \(V \subseteq X\). The augmentation of the concrete section {\v C}ech complex for
   the restricted family \(U'_i=U_i\cap V\) is the product of the restriction maps

@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 364
 title: The comparison map is invariant under index reindexing
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-27T15:50:36'
 ---
 Let \(e : \alpha \simeq \beta\) be an equivalence of finite index types and let
   \(\mathrm{legs} : \beta \to \operatorname{Over} X\) be a family of slice objects. If the canonical

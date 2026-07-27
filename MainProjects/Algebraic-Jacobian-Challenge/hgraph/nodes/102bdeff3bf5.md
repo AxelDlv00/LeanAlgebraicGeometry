@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 358
 title: Push--pull objects transport along a slice isomorphism
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-27T15:50:36'
 ---
 Let \(\mathcal{F} : X.\mathrm{Modules}\) and let \(e : Y \cong Y'\) be an isomorphism in
   \(\operatorname{Over} X\). Then the push--pull objects on \(Y\) and \(Y'\) are isomorphic,

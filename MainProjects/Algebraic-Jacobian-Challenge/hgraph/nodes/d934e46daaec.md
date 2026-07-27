@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 281
 title: 'Kernel comparison: a left-exact ladder localises on the left'
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-27T15:50:36'
 ---
 Let \(S \subseteq R\) be a submonoid of a commutative ring, and consider a commutative ladder of
   \(R\)-modules

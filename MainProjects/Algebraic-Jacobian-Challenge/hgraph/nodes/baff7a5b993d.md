@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:rationalMap_prod
 lean_status: lean_ok
-order: 1662
+order: 1666
 title: def:rationalMap_prod
 type: tex
-updated: '2026-07-26T06:44:13'
+updated: '2026-07-27T15:50:37'
 ---
 Let \(s_X \colon X \to S\), \(s_Y \colon Y \to S\), \(s_Z \colon Z \to S\) be structure
   morphisms with \(X\) integral and \(s_Y, s_Z\) locally of finite type, and let

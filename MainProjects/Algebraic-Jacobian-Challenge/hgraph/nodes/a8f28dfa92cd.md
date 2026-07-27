@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:isIso_glueRestrictionHom
 lean_status: lean_ok
-order: 1431
+order: 1434
 title: 'Effective descent: the chart restriction morphism is an isomorphism'
 type: tex
-updated: '2026-07-26T00:08:22'
+updated: '2026-07-27T15:50:37'
 ---
 Assume the transition family \((g_{ij})\) satisfies the cocycle conditions (C1) and
   (C2) of \cref{def:scheme_modules_glue}. Then for every chart index \(i\) the

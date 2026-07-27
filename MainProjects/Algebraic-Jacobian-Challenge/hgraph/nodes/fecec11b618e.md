@@ -41,15 +41,40 @@ docstring: 'The Albanese witness for a smooth proper geometrically irreducible c
   rigidity / cotangent-vanishing / Frobenius / `ℙ¹`-identification machinery — has
   been
 
-  removed in favour of this single uniform witness.'
+  removed in favour of this single uniform witness.
+
+
+  The construction below is **wired to the landed Picard development**: the underlying
+
+  scheme is `Scheme.Pic0Scheme C`, and four of the six witness fields are the theorems
+  of
+
+  `Picard/Pic0AbelianVariety.lean` applied directly. The remaining distance to the
+  headline
+
+  is the three leaves `hasRationalPoint_and_geometricallyIntegral`,
+
+  `smoothOfRelativeDimension_genus_pic0` and `isAlbanese_pic0` above; this definition
+
+  carries no `sorry` of its own.'
 file: AlgebraicJacobian/Jacobian.lean
 generated: lean
-lean_status: sorry
+lean_status: lean_ok
 title: AlgebraicGeometry.picardJacobianWitness
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-27T15:50:34'
 ---
 noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
-    JacobianWitness C :=
-  sorry
+    JacobianWitness C := by
+  obtain ⟨hgi, hrp⟩ := hasRationalPoint_and_geometricallyIntegral C
+  haveI := hgi
+  haveI := hrp
+  exact
+    { J := Scheme.Pic0Scheme C
+      grpObj := (Scheme.Pic0.grpObj C).some
+      proper := Scheme.Pic0.proper C
+      smooth := Scheme.Pic0.smooth C
+      geomIrred := Scheme.Pic0.geometricallyIrreducible C
+      smoothGenus := smoothOfRelativeDimension_genus_pic0 C
+      isAlbaneseFor := fun P => isAlbanese_pic0 C _ _ _ _ P }

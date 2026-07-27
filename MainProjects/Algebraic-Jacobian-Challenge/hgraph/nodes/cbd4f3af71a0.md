@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 315
 title: Cover system on a basis
 type: tex
-updated: '2026-07-24T17:02:58'
+updated: '2026-07-27T15:50:36'
 ---
 \textit{Project-bespoke encoding of the hypotheses of Stacks 01EO.}
   A \emph{cover system on a basis} for a scheme \(X\) is a record with five fields. A

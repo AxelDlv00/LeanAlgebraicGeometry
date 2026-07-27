@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 326
 title: Augmentation point isomorphism
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-27T15:50:36'
 ---
 \textit{Project-local.}
   The augmentation point of the {\v C}ech nerve of Definition~\ref{def:cech_nerve} is the value of the

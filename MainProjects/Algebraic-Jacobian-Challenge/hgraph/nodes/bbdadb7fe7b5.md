@@ -8,10 +8,10 @@ label: lem:directSum_gmodule_mathlib
 lean_status: mathlib_ok
 mathlib_name:
 - DirectSum.Gmodule
-order: 1318
+order: 1321
 title: External-direct-sum graded module
 type: tex
-updated: '2026-07-26T00:08:22'
+updated: '2026-07-27T15:49:57'
 ---
 \textit{Provided by Mathlib (\texttt{Mathlib.Algebra.Module.GradedModule}).}
   Let \(A : \mathbb{N} \to \mathrm{Type}\) carry a graded semiring structure as

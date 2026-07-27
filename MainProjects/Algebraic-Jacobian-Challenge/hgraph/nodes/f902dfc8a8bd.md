@@ -10,6 +10,6 @@ lean_status: lean_ok
 order: 44
 title: Parameterised \v{C}ech cohomology
 type: tex
-updated: '2026-07-24T03:02:13'
+updated: '2026-07-27T15:50:35'
 ---
 With \((C, F, \mathcal U)\) as in \cref{def:Scheme_cechCochain}, define the \(n\)-th \v{C}ech cohomology to be the \(n\)-th homology of the \v{C}ech cochain complex.

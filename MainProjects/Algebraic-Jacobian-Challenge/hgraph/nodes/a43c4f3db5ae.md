@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 381
 title: Per-coface square of the core comparison
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-27T15:50:36'
 ---
 With the notation of Lemma~\ref{lem:coreIso_obj_iso}, for each degree \(p\) and each coface
   index \(k \le p+1\) the individual cofaces are intertwined by the object isomorphisms:

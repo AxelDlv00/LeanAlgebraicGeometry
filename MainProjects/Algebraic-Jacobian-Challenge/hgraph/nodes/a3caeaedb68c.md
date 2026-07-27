@@ -10,7 +10,7 @@ order: 540
 ref: mumford-abelian-varieties:page-0054
 title: Dense-open agreement
 type: tex
-updated: '2026-07-26T00:08:21'
+updated: '2026-07-27T15:50:36'
 ---
 Let \(X\) be proper, suppose that \(X\times Y\) is reduced, geometrically
   irreducible, and locally of finite type over \(\bar k\), and let \(Z\) be separated.

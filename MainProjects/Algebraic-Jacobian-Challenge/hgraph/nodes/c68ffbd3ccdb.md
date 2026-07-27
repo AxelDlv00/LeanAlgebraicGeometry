@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 531
 title: The {\v C}ech base-change cosimplicial isomorphism \(e\)
 type: tex
-updated: '2026-07-26T00:08:21'
+updated: '2026-07-27T15:50:36'
 ---
 The cosimplicial natural isomorphism \(e\) required by
   \cref{def:cech_complex_base_change_iso_of_cosimplicialIso} is assembled from the two

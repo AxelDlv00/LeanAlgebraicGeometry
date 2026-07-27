@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 414
 title: The sections functor is corepresented by \(j_!\mathcal{O}_V\)
 type: tex
-updated: '2026-07-26T00:08:21'
+updated: '2026-07-27T15:50:36'
 ---
 For an open \(V \subseteq X\) there is a natural isomorphism of additive functors
   \[

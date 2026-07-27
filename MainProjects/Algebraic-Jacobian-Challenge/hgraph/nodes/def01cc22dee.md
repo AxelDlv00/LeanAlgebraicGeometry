@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 208
 title: Opposite-transport identification of the section {\v C}ech complex
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-27T15:50:36'
 ---
 With the notation above, composing the opposite-transport iso
   \(\operatorname{homCechComplexMapOpIso}\) of

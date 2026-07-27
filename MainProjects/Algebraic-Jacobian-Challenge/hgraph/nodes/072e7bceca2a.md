@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 261
 title: Presentation of the affine restriction
 type: tex
-updated: '2026-07-24T11:03:43'
+updated: '2026-07-27T15:50:36'
 ---
 Let \(\mathcal{F}\) be an \(\mathcal{O}_{\operatorname{Spec} R}\)-module, let \(U\) be an open
   carrying a presentation of \(\mathcal{F}.\operatorname{over} U\), and let \(g \in R\) with

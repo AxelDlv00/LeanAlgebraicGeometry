@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:adelic_coboundary
 lean_status: lean_ok
-order: 1869
+order: 1873
 title: The coboundary subgroup
 type: tex
-updated: '2026-07-26T06:44:13'
+updated: '2026-07-27T15:50:37'
 ---
 The \emph{coboundary} is the sum of the two chart section subgroups
   inside \(K\):

@@ -10,6 +10,6 @@ lean_status: lean_ok
 order: 75
 title: Corner identification, \(X_1\)
 type: tex
-updated: '2026-07-24T17:02:58'
+updated: '2026-07-27T15:50:35'
 ---
 \(S.\toMayerVietorisSquare.X_1 = S.U_1 \cap S.U_2\).

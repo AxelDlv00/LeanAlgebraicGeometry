@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 236
 title: Standard-cover opens are the distinguished opens \(D(s_i)\)
 type: tex
-updated: '2026-07-24T03:02:14'
+updated: '2026-07-27T15:50:36'
 ---
 \textit{Project-bespoke compatibility lemma.}
   Let \(\mathcal{U}\) be the standard affine cover associated to a spanning family

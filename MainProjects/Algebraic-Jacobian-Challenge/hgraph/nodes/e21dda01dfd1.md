@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 404
 title: Presheaf description of the higher direct images
 type: tex
-updated: '2026-07-26T00:08:21'
+updated: '2026-07-27T15:50:36'
 ---
 \textit{Source: Stacks Project, Cohomology, Tag 01XJ
   (\texttt{lemma-describe-higher-direct-images}).}
