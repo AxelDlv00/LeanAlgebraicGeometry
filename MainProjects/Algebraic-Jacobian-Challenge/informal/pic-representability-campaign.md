@@ -312,9 +312,22 @@ Order: P1 → (P5, B3, G2 in parallel) → D4' → J5 → G3 → G5. Final state
 **Gate-table status, re-measured 2026-07-28.** The table above is the plan; this is the
 state. Resolve everything by declaration name — the wave sections below cite line numbers
 that have drifted. Every count below is regenerable: the frontier from `lake env lean
-scripts/axiom-frontier.lean` (113 declarations, 72 clean, 41 carrying `sorryAx`, with the
-root build green at 8,744 jobs), the carrier list from `lake build AlgebraicJacobian 2>&1 |
+scripts/axiom-frontier.lean` (126 declarations, 84 clean, 42 carrying `sorryAx`, with the
+root build green at 8,746 jobs), the carrier list from `lake build AlgebraicJacobian 2>&1 |
 grep 'declaration uses' | sort -u` (26 over 11 modules).
+
+**Branch (1) of the rational-point decision now has a compiled form, and that is a fact about
+build cost only.** `picardJacobianWitnessOfHasRationalPoint` (`Jacobian.lean`) is the FGA
+assembly with `[HasRationalPoint C]` as a binder; both headline witnesses are specialisations
+of it. So a headline that carries `C(k) ≠ ∅` needs no mathematics beyond the five obligations
+already open — five, not four, because the binder makes `instHasPicScheme` *fire* rather than
+removing it (probe §0b, §0c). Branch (2), étale sheafification, is **not** reachable from it:
+representing `Pic_{(C/k)ét}` replaces `instHasPicScheme` rather than supplying its hypothesis,
+so it needs a representability theorem for a different functor and remains the input this
+campaign does not have. The decision (`I-0372`) is the owner's and neither branch is assumed
+anywhere; the campaign's own stated end state — `HasRationalPoint` retained as an honest
+hypothesis — is the *route's* assumption about the gate, not a decision about what the
+project's headline claims.
 
 - **`instHasPicScheme` — still the target, and still the only genuine synthesis leak on this
   route.** Of the tree's 26 `sorry` carriers exactly *two* are instances, so exactly two can
