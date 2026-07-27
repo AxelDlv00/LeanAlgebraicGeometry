@@ -15,8 +15,9 @@ This file supplies two further legs of the campaign's cluster P
   the degree the χ-ledger actually telescopes to (the geometric
   `Scheme.WeilDivisor.degree` is its specialisation at residue degree one, i.e.
   over an algebraically closed base field);
-* the **section-drop bounds** `ℓ(D) ≤ ℓ(D + P) ≤ ℓ(D) + [κ(P):k]`, and their
-  telescoped form `ℓ(D) ≤ ℓ(0) + deg_k D` for effective `D`.
+* the **section-drop bounds** `ℓ(D) ≤ ℓ(D + P) ≤ ℓ(D) + [κ(P):k]`;
+* **residue-degree positivity** `1 ≤ [κ(P):k]` and its consequence that a nonzero
+  effective divisor has *positive* weighted degree.
 
 The drop bounds are **unconditional** — they need neither the ledger's
 connecting/surjectivity data nor the strong-approximation input, only the
@@ -148,6 +149,72 @@ theorem degK_nonneg_of_nonneg {D : X.WeilDivisor}
   rw [degK_eq_sum, Finsupp.sum]
   exact Finset.sum_nonneg fun P _ =>
     mul_nonneg (hD P) (Int.natCast_nonneg _)
+
+/-- **The residue field is nontrivial**: `1 ∈ orderGe P 0` but `1 ∉ orderGe P 1`,
+since `ord_P 1 = 0`.  So the one-step valuation quotient
+`localStepTgt k P 1 = orderGe P 0 ⧸ orderGe P 1` — the residue field `κ(P)` — is
+not the zero space. -/
+theorem nontrivial_localStepTgt_one (P : X.PrimeDivisor) :
+    Nontrivial (localStepTgt k P 1) := by
+  have hone : (1 : X.functionField) ∈ orderGeSub k P (1 - 1) := by
+    rw [mem_orderGeSub]
+    exact Or.inr (by rw [Scheme.RationalMap.order_one]; norm_num)
+  refine ⟨Submodule.Quotient.mk ⟨1, hone⟩, 0, ?_⟩
+  intro h
+  rw [Submodule.Quotient.mk_eq_zero, Submodule.mem_comap, Submodule.subtype_apply,
+    mem_orderGeSub] at h
+  rcases h with h0 | h0
+  · exact one_ne_zero h0
+  · rw [Scheme.RationalMap.order_one] at h0
+    norm_num at h0
+
+/-- **The residue degree is positive**: `1 ≤ [κ(P):k]`.  From the nontriviality of
+`κ(P)` (`nontrivial_localStepTgt_one`) plus finite-dimensionality — a nontrivial
+finite-dimensional space has positive rank.  Needed wherever a *nonzero* effective
+divisor must be given *positive* degree. -/
+theorem one_le_residueDeg (P : X.PrimeDivisor)
+    [Module.Finite k (localStepTgt k P 1)] : 1 ≤ residueDeg k P := by
+  haveI := nontrivial_localStepTgt_one k P
+  rw [residueDeg, Nat.one_le_iff_ne_zero]
+  intro h
+  exact (not_subsingleton (localStepTgt k P 1))
+    ((Module.finrank_zero_iff (R := k)).mp h)
+
+/-- **A nonzero effective divisor has positive weighted degree.**  Some coefficient
+`D(P₀)` is `≥ 1` (it is nonzero and `≥ 0`) and contributes `D(P₀)·[κ(P₀):k] ≥ 1`
+by `one_le_residueDeg`, while every other summand is `≥ 0`.
+
+This is the adelic counterpart of the sibling project's
+`CurveDivisor.deg_pos_of_nonneg_of_ne_zero`; the argument is the standard one, but
+the residue-degree positivity input (`one_le_residueDeg`) is proved here from the
+project's own `orderGe` filtration rather than from a residue-field API. -/
+theorem degK_pos_of_nonneg_of_ne_zero {D : X.WeilDivisor}
+    (hD : ∀ P : X.PrimeDivisor, 0 ≤ (show X.PrimeDivisor →₀ ℤ from D) P)
+    (hne : D ≠ 0)
+    [∀ P : X.PrimeDivisor, Module.Finite k (localStepTgt k P 1)] :
+    0 < degK k D := by
+  classical
+  -- some coefficient is nonzero, hence ≥ 1
+  obtain ⟨P₀, hP₀⟩ : ∃ P₀ : X.PrimeDivisor,
+      (show X.PrimeDivisor →₀ ℤ from D) P₀ ≠ 0 := by
+    by_contra hno
+    push Not at hno
+    exact hne (Finsupp.ext hno)
+  have hP₀supp : P₀ ∈ (show X.PrimeDivisor →₀ ℤ from D).support :=
+    Finsupp.mem_support_iff.mpr hP₀
+  rw [degK_eq_sum, Finsupp.sum, ← Finset.sum_erase_add _ _ hP₀supp]
+  have hrest : 0 ≤ ∑ P ∈ (show X.PrimeDivisor →₀ ℤ from D).support.erase P₀,
+      (show X.PrimeDivisor →₀ ℤ from D) P * (residueDeg k P : ℤ) :=
+    Finset.sum_nonneg fun P _ => mul_nonneg (hD P) (Int.natCast_nonneg _)
+  have hlast : 0 < (show X.PrimeDivisor →₀ ℤ from D) P₀ * (residueDeg k P₀ : ℤ) := by
+    have h1 : 1 ≤ (show X.PrimeDivisor →₀ ℤ from D) P₀ := by
+      have := hD P₀; omega
+    have h2 : (1 : ℤ) ≤ (residueDeg k P₀ : ℤ) := by
+      exact_mod_cast one_le_residueDeg k P₀
+    calc (0 : ℤ) < 1 * 1 := by norm_num
+      _ ≤ (show X.PrimeDivisor →₀ ℤ from D) P₀ * (residueDeg k P₀ : ℤ) :=
+          mul_le_mul h1 h2 (by norm_num) (by linarith)
+  linarith
 
 /-- **The weighted degree agrees with the geometric degree when every residue
 degree is one.**  `deg_k D = Σ_P D(P)·[κ(P):k]` collapses to
