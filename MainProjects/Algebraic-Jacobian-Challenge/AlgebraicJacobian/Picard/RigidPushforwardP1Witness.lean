@@ -37,12 +37,19 @@ bundle, so §3's `hasRigidPushforward_p1Over` is `inferInstance`.
 
 ## What this does and does not settle
 
-It settles **non-vacuity**: the B3 headlines are not statements about the empty class of curves.
-It does **not** claim that `ℙ¹` is the curve the Jacobian challenge is about — the challenge's
-curve has genus ≥ 1 and its own hypotheses (`references/challenge.lean` states them with
-`GeometricallyIrreducible` rather than `GeometricallyIntegral`; the two agree here because
-`Curve/GeometricallyReduced.lean`'s `Smooth.geometricallyIntegral` bridges them, which is why
-`Picard/RigidPushforwardGammaBaseChange.lean` imports that file).
+It settles **non-vacuity**, and rather more than the minimum: `references/challenge.lean` states
+the challenge's curve as exactly `[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+[GeometricallyIrreducible C.hom]` — there is **no** genus hypothesis there, `genus C` being a
+`def` rather than a binder — so `ℙ¹` satisfies the challenge's *complete* curve bundle, and
+`hasRigidPushforward_of_geometricallyIrreducible` below fires the gate at that bundle verbatim.
+(`GeometricallyIrreducible` versus `GeometricallyIntegral` is bridged by
+`Curve/GeometricallyReduced.lean`'s `Smooth.geometricallyIntegral`, which genuinely consumes the
+smoothness binder; that is why `Picard/RigidPushforwardGammaBaseChange.lean` imports that file.)
+
+What it does **not** settle is that the B3 headlines have ever been applied to concrete *data*.
+Their remaining quantified hypothesis, `Scheme.Hom.FiberH1Vanishing L t`, has no producer
+anywhere in the tree, so what is witnessed below is that the *curve* binders are satisfiable —
+not that a specific `(L, h¹ = 0)` pair exists.  See the inbox note on the `h1Mod` bridge.
 
 ## On registering these as global instances
 
@@ -249,10 +256,13 @@ theorem hasRigidPushforward_of_geometricallyIrreducible
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
     Scheme.HasRigidPushforward C := inferInstance
 
-/-- The B3 base-change headline, fired at `ℙ¹_k`: for an invertible `L` on `ℙ¹_A` with fibrewise
-`h¹ = 0`, the formation of `p_* L` commutes with every ring map `A → A'`.  A concrete
-instantiation of `Adelic.rigidPushforward_baseChange`, kept as evidence that the headlines apply
-to something. -/
+/-- The B3 base-change headline with its *curve* binders discharged: for an invertible `L` on
+`ℙ¹_A` with fibrewise `h¹ = 0`, the formation of `p_* L` commutes with every ring map `A → A'`.
+
+Read the scope exactly.  This substitutes a concrete curve into
+`Adelic.rigidPushforward_baseChange` and leaves `L`, `hL` and `h1` quantified; since
+`Scheme.Hom.FiberH1Vanishing` has no producer in the tree, it is evidence that the headlines'
+*curve* hypotheses are satisfiable, not that the headlines have been applied to concrete data. -/
 theorem rigidPushforward_baseChange_p1Over
     (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
     (L : (Limits.pullback (p1Over k).hom
