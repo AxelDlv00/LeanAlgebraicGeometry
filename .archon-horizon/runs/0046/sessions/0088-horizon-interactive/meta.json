@@ -1,0 +1,14 @@
+{
+  "role": "horizon",
+  "interactive": true,
+  "engine": "claude",
+  "engine_session_id": "8cd8c4bc-706b-436d-a7ec-9ac9996dea6f",
+  "task_id": "ajc-optimize",
+  "project": "Algebraic-Jacobian-Challenge",
+  "projects": [
+    "Algebraic-Jacobian-Challenge"
+  ],
+  "started_at": "2026-07-27T01:40:19.363116+00:00",
+  "resumed_engine_session_id": "8cd8c4bc-706b-436d-a7ec-9ac9996dea6f",
+  "status": "running"
+}
