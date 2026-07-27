@@ -39,15 +39,24 @@ not three: those two upstream, plus the three leaves below, which are the ones n
 here. Proving only the three would leave `sorryAx` in the witness — verified with
 `scripts/axiom-frontier.lean`.
 
-One of the five is of a different kind from the other four, and the difference decides
-what can be done about it. `Pic0.smooth`, `Pic0.proper` and leaves B and C are *unproved*:
-each is a true statement awaiting a proof. Leaf A is *false* over a general base field, so
+One of the five is of a different *kind* from the other four, and the difference decides what
+can be done about it. `Pic0.smooth`, `Pic0.proper` and leaves B and C are *unproved*: each is
+a true statement awaiting a proof. Leaf A is *false* over a general base field, so
 `picardJacobianWitness` rests on an inconsistent hypothesis and its consequences are
 vacuously true — a state no axiom check can distinguish from an honest one. Over an
 algebraically closed field that leaf is a theorem
 (`hasRationalPoint_of_curve_of_isAlgClosed`), and `picardJacobianWitnessOfIsAlgClosed`
-assembles the same witness on the remaining four obligations alone. That is the version
-of the headline whose open obligations are all of the ordinary kind.
+assembles the same witness with it supplied rather than assumed. That is the version of the
+headline whose open obligations are all of the ordinary kind.
+
+What that does *not* do is reduce the count, and the tempting arithmetic here is wrong.
+`Scheme.Pic0Scheme` carries `[Scheme.HasPicScheme C]`, whose sole producer is the
+`sorry`-bodied `Scheme.instHasPicScheme`. Over a general field that gate is reached *through*
+leaf A, so counting it separately looks like double-counting; discharging leaf A makes it
+*fire* rather than removing it, and it stands free over `k̄`. So the obligations over `k̄`
+number five as well — `instHasPicScheme`, `Pic0.smooth`, `Pic0.proper`, leaves B and C — with
+the difference that all five are true. `scripts/axiom-frontier.lean` §0b measures this instead
+of asserting it.
 
 The three leaves are each stated at exactly the strength the assembly consumes:
 
@@ -59,7 +68,8 @@ The three leaves are each stated at exactly the strength the assembly consumes:
   algebraically closed field the gap closes outright:
   `hasRationalPoint_of_curve_of_isAlgClosed` is a theorem with clean axioms, so the leaf
   is a gap only over a general base field, and `picardJacobianWitnessOfIsAlgClosed`
-  assembles the witness over `k̄` on four obligations rather than five.
+  assembles the witness over `k̄` with it supplied rather than assumed — five obligations
+  still, but every one of them true.
 - `smoothOfRelativeDimension_genus_pic0` — bare smoothness of `Pic⁰_{C/k}` refined to
   relative dimension `genus C`. Note this refines `Pic0.smooth`, which is itself
   unproved, so the leaf presupposes an obligation rather than resting on one.
@@ -516,11 +526,22 @@ definition exists separately.
 `hasRationalPoint_of_curve` is *false* as stated, so every consequence of
 `picardJacobianWitness` is a consequence of an inconsistent hypothesis: true, but with no
 content, and no axiom check can see the difference. Here the same assembly runs on a
-hypothesis that holds, so the four obligations it does rest on — `Pic0.smooth`,
-`Pic0.proper`, and leaves B and C — are the whole of what stands between this witness and
-an Albanese object for a curve over `k̄`. Closing those four closes this definition; closing
-them would *not* give `picardJacobianWitness` content over a general field, because leaf A
-must be replaced there rather than proved.
+hypothesis that holds, so the obligations that remain are all *true statements awaiting
+proofs*: `Scheme.instHasPicScheme`, `Pic0.smooth`, `Pic0.proper`, and leaves B and C.
+Closing those five closes this definition; closing them would *not* give
+`picardJacobianWitness` content over a general field, because leaf A must be replaced there
+rather than proved.
+
+The count is **five, not four**, and the reason is worth stating because the natural
+arithmetic gets it wrong. Discharging leaf A does not remove the representability gate — it
+makes `instHasPicScheme` *fire* instead of being assumed, since `Scheme.Pic0Scheme` carries
+`[Scheme.HasPicScheme C]` and that `sorry`-bodied instance is its sole producer. Over a
+general field the gate sits *behind* leaf A, which is what makes counting it separately look
+like double-counting; over `k̄` it stands free. `scripts/axiom-frontier.lean` §0b measures
+this rather than asserting it: naming `Pic0Scheme` with leaf A discharged and neither
+`Pic0.smooth`, `Pic0.proper`, nor leaves B and C anywhere in the term still reports `sorryAx`,
+while the control that assumes the gate is clean. So what this definition buys is not a
+smaller count — it is that every remaining obligation is of the ordinary kind.
 
 Both are kept: this one records what is actually reachable, and the general one keeps the
 open decision visible where a reader of the headline meets it. -/

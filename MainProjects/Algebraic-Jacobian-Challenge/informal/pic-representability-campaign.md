@@ -37,7 +37,9 @@
 >    `hasRationalPoint_of_curve_of_isAlgClosed` (`Jacobian.lean`) is axiom-clean,
 >    routed through `Albanese.hasRationalPoint_of_isAlgClosed`, and
 >    `picardJacobianWitnessOfIsAlgClosed` assembles the headline witness over `k̄`
->    on four obligations instead of five. So the branch point is exactly about
+>    with that leaf supplied rather than assumed — five obligations still, since
+>    discharging leaf A makes `instHasPicScheme` fire rather than removing it, but
+>    every one of the five is then a true statement. So the branch point is exactly about
 >    what is claimed over an *arbitrary* base field. Neither branch is chosen, and
 >    nothing below assumes one; what is now settled is that the general-field leaf
 >    is the only place the decision bites.
@@ -306,7 +308,7 @@ Order: P1 → (P5, B3, G2 in parallel) → D4' → J5 → G3 → G5. Final state
 **Gate-table status, re-measured 2026-07-28.** The table above is the plan; this is the
 state. Resolve everything by declaration name — the wave sections below cite line numbers
 that have drifted. Every count below is regenerable: the frontier from `lake env lean
-scripts/axiom-frontier.lean` (111 declarations, 71 clean, 40 carrying `sorryAx`, with the
+scripts/axiom-frontier.lean` (113 declarations, 72 clean, 41 carrying `sorryAx`, with the
 root build green at 8,744 jobs), the carrier list from `lake build AlgebraicJacobian 2>&1 |
 grep 'declaration uses' | sort -u` (26 over 11 modules).
 

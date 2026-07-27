@@ -11,14 +11,15 @@
   integrality with it, and that half turned out to be a theorem, now proved
   (`geometricallyIntegral_of_curve`).  It is also *bounded*: over an algebraically
   closed field the rational point is a theorem too
-  (`hasRationalPoint_of_curve_of_isAlgClosed`, axiom-clean), and the witness
-  assembles there on four obligations rather than five.  So what you are deciding is
-  what the project claims over an **arbitrary** base field — not whether the
-  construction runs.
+  (`hasRationalPoint_of_curve_of_isAlgClosed`, axiom-clean), and the witness assembles
+  there with it supplied rather than assumed — so every obligation that remains is a
+  true statement awaiting a proof, not a false one.  So what you are deciding is what
+  the project claims over an **arbitrary** base field — not whether the construction
+  runs.
 
 - **Sorry-free is not axiom-clean, and there are eight separate ways to be misled.**
   Run `lake env lean scripts/axiom-frontier.lean` before believing any completeness
-  number; it probes 111 declarations, 71 clean and 40 carrying `sorryAx` as last
+  number; it probes 113 declarations, 72 clean and 41 carrying `sorryAx` as last
   measured (2026-07-28, root build green at 8,744 jobs).
   (1) Two `sorry`-bodied *instances* (`instHasPicScheme`,
   `pullback_preservesFiniteLimits`) leak through synthesis, so a theorem reports
@@ -49,7 +50,7 @@
   the synthesis site, not merely as stated, which is the only check that
   distinguishes it from case (1) above.
 
-- **The headline is wired, and now rests on five stated obligations — four over `k̄`.**
+- **The headline is wired, and rests on five stated obligations — over `k̄`, five true ones.**
   `picardJacobianWitness` is built from `Pic⁰_{C/k}` and reaches 98 project
   modules, up from 8; the whole committed tree is reachable from the project root.
   Two of its four structural fields are proved upstream (`Pic0.grpObj`,
@@ -62,7 +63,10 @@
   `dim T_e Pic⁰ = genus C` holds already, and so does the Albanese property in the
   algebraically closed, positive-genus case.  The rational-point leaf is the one whose
   algebraically closed case is a full discharge, so over `k̄` the witness
-  (`picardJacobianWitnessOfIsAlgClosed`) rests on four obligations — and, unlike the
-  general one, on no false hypothesis.  That distinction is not visible in any axiom
-  count: a witness resting on an inconsistent leaf reports exactly what an honest one
-  does.
+  (`picardJacobianWitnessOfIsAlgClosed`) rests on no false hypothesis, unlike the general
+  one.  The *number* of obligations does not drop — discharging the rational point makes
+  the representability gate `instHasPicScheme` fire rather than removing it — so it is
+  five either way, and the difference is that over `k̄` all five are true.  That
+  distinction is not visible in any axiom count: a witness resting on an inconsistent
+  leaf reports exactly what an honest one does.  Nothing about the protected `Jacobian`
+  declarations changes; they still route through the general witness.

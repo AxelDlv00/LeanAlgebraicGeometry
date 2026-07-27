@@ -63,7 +63,7 @@ same theorem by a separate curve-specialized strategy.
   discharged by the caller; the leak appears at any call site that must
   synthesise the instance.  Run
   [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean) (`lake env lean
-  scripts/axiom-frontier.lean`, 111 declarations: 71 clean and 40 carrying `sorryAx`,
+  scripts/axiom-frontier.lean`, 113 declarations: 72 clean and 41 carrying `sorryAx`,
   measured 2026-07-28 with the root build green at 8,744 jobs) before believing any
   completeness claim — it measures the frontier rather than inferring it.  Count by
   output *entry*, not by output line:
@@ -131,10 +131,14 @@ by whichever branch the owner picks, never proved.
 The decision is also *bounded*, which is worth stating because the leaf's falsity
 invites the reading that nothing here is reachable.  Over an algebraically closed
 field the rational point is a theorem — `hasRationalPoint_of_curve_of_isAlgClosed`,
-axiom-clean — and `picardJacobianWitnessOfIsAlgClosed` builds the same witness with
-four open obligations rather than five.  What the owner decides is therefore what
+axiom-clean — and `picardJacobianWitnessOfIsAlgClosed` builds the same witness with that
+leaf supplied rather than assumed.  The obligation *count* does not drop: discharging the
+rational point makes the representability gate `instHasPicScheme` fire instead of removing
+it, so it is five either way, and what changes is that over `k̄` all five are true
+statements (measured, not asserted — probe §0b).  What the owner decides is therefore what
 the project claims over an *arbitrary* base field, not whether the construction runs
-at all.  The distinction matters for reading the frontier: over `k̄` every remaining
+at all.  Note also that this does not move the protected `Jacobian` declarations, which
+still route through the general witness and its false leaf.  The distinction matters for reading the frontier: over `k̄` every remaining
 obligation is a true statement awaiting a proof, whereas the general-field witness
 rests on an inconsistent hypothesis and its consequences are vacuously true — a
 state no axiom check can distinguish from an honest one (trap (c) above).

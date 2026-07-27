@@ -62,9 +62,9 @@ How to read the output.  Every line is one declaration; the only token that matt
 Note the `re.split` rather than a plain line filter: Lean wraps a long axiom list over
 several lines, so a per-line scan misclassifies exactly the declarations whose axiom
 list is longest.  Measured 2026-07-28 through the root path, with `lake build
-AlgebraicJacobian` green at 8744 jobs: **111 probed, 71 clean, 40 carrying `sorryAx`**
-(107/70/37 before this session added two leaf-A lines in §0 and two chapter-keystone
-synthesis probes in §8).
+AlgebraicJacobian` green at 8744 jobs: **113 probed, 72 clean, 41 carrying `sorryAx`**
+(107/70/37 before this session added two leaf-A lines in §0, the §0b obligation-count pair,
+and two chapter-keystone synthesis probes in §8).
 Run the command above rather than adjusting this sentence's arithmetic by hand, which is
 how the two previous counts here went wrong.
 
@@ -121,12 +121,16 @@ open AlgebraicGeometry AlgebraicGeometry.Scheme
 -- Leaf A over an algebraically closed field, and the witness assembled without it.  The
 -- FIRST of these is a genuine discharge and reads clean, which distinguishes it from leaf B's
 -- and leaf C's `_of_isAlgClosed` companions: those record a distance and leak.  The SECOND
--- still leaks, and the gap between the two lines is the informative measurement --- it says
--- the residue of the witness over `k̄` is exactly the four ordinary obligations
--- (`Pic0.smooth`, `Pic0.proper`, leaves B and C) and no longer includes a FALSE hypothesis.
--- That distinction matters because trap (c) is invisible to this probe: a witness resting on
--- an inconsistent leaf reports the same `sorryAx` as one resting on unproved-but-true leaves,
--- so which kind of obligation remains has to be established by exhibiting the discharge.
+-- still leaks, and what it leaks on is measured in §0b below rather than asserted --- an
+-- earlier revision of this comment claimed the residue over `k̄` was "the four ordinary
+-- obligations" and was WRONG, because discharging leaf A does not remove the gate it
+-- discharges: it makes `instHasPicScheme` fire instead of being assumed.
+--
+-- What the pair does establish, and it is the point: over `k̄` every remaining obligation is a
+-- TRUE statement awaiting a proof, where the general witness also carries a FALSE one.  That
+-- distinction is invisible here --- trap (c) means a witness resting on an inconsistent leaf
+-- reports the same `sorryAx` as an honest one --- so it has to be established by exhibiting
+-- the discharge, which is what the clean line does.
 #print axioms AlgebraicGeometry.hasRationalPoint_of_curve_of_isAlgClosed
 #print axioms AlgebraicGeometry.picardJacobianWitnessOfIsAlgClosed
 
@@ -145,6 +149,53 @@ open AlgebraicGeometry AlgebraicGeometry.Scheme
 -- same, because `Pic0.abelJacobi` is unconstructed -- which is the honest reading: a faithful
 -- record of where the mathematics stops is not a discharge.
 #print axioms AlgebraicGeometry.isAlbanese_pic0_of_isAlgClosed
+
+/-! §0b How many obligations does the witness over `k̄` actually rest on?  FIVE, not four,
+and the pair below is why the answer had to be measured.
+
+The tempting arithmetic is: five obligations, leaf A discharged over `k̄`, therefore four.
+It is wrong, and the reason is trap (a) landing on the very declaration whose docstring warns
+about trap (c).  `Scheme.Pic0Scheme` carries `[HasPicScheme C]` among its binders, whose sole
+producer is the `sorry`-bodied `instHasPicScheme` (§2).  Over a general field that gate hides
+*behind* leaf A --- the leaf is what supplies `HasRationalPoint`, from which the gate is
+synthesised --- so counting it separately looks like double-counting.  Discharging leaf A does
+not remove the gate; it makes the gate FIRE.  So the gate is a free-standing fifth obligation
+over `k̄`, and it is the one nobody was counting.
+
+`probe_pic0Scheme_named_of_isAlgClosed` isolates this: it discharges leaf A and then merely
+*names* `Pic0Scheme C`, with no `Pic0.smooth`, no `Pic0.proper`, and neither leaf B nor leaf C
+anywhere in the term.  It still reports `sorryAx`.  The control assumes the gate instead of
+synthesising it and is clean, which pins the leak to synthesis and to nothing else.
+
+The claim that survives, and it is the one worth publishing: over `k̄` all five remaining
+obligations are TRUE statements awaiting proofs, where the general-field witness carries a
+FALSE one among them.  "Four" was a count; the kind of obligation is the content. -/
+section Section0b
+
+open AlgebraicGeometry
+
+universe u₀
+
+variable {k : Type u₀} [Field k] (C : CategoryTheory.Over (Spec (.of k)))
+  [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
+
+/-- Leaf A discharged, then `Pic⁰_{C/k̄}` merely named.  Leaks: the gate is synthesised. -/
+noncomputable def probe_pic0Scheme_named_of_isAlgClosed [IsAlgClosed k] :
+    CategoryTheory.Over (Spec (.of k)) := by
+  haveI := hasRationalPoint_of_curve_of_isAlgClosed C
+  haveI : GeometricallyIntegral C.hom := geometricallyIntegral_of_curve C
+  exact Scheme.Pic0Scheme C
+
+/-- The control: the same object with `HasPicScheme` assumed rather than synthesised.  Clean,
+which is what isolates the leak above to the gate. -/
+noncomputable def probe_pic0Scheme_named_gateAssumed [GeometricallyIntegral C.hom]
+    [Scheme.HasPicScheme C] : CategoryTheory.Over (Spec (.of k)) :=
+  Scheme.Pic0Scheme C
+
+#print axioms probe_pic0Scheme_named_of_isAlgClosed
+#print axioms probe_pic0Scheme_named_gateAssumed
+
+end Section0b
 
 -- §1 The headline (AlgebraicJacobian/Jacobian.lean, AbelJacobi.lean)
 #print axioms AlgebraicGeometry.picardJacobianWitness
