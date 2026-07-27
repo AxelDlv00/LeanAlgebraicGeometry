@@ -44,6 +44,24 @@ curve has genus ≥ 1 and its own hypotheses (`references/challenge.lean` states
 `Curve/GeometricallyReduced.lean`'s `Smooth.geometricallyIntegral` bridges them, which is why
 `Picard/RigidPushforwardGammaBaseChange.lean` imports that file).
 
+## On registering these as global instances
+
+Inbox `I-0432` warns against registering a discharged gate as a global instance when an instance
+*diamond* is live nearby, because a global instance fires inside every downstream statement and
+that is exactly when the wrong branch of a diamond gets picked.  The warning does not bite here,
+and the reason is structural rather than a survey: every class instantiated globally in this file
+and in `Picard/RigidPushforwardGammaBaseChange.lean` — `Scheme.HasRigidPushforward`,
+`SmoothOfRelativeDimension`, `GeometricallyIntegral`,
+`Algebra.IsStandardSmoothOfRelativeDimension` — is **`Prop`-valued**, so any two instances of it
+are equal by proof irrelevance and no choice of branch can change what a downstream statement
+*means*.
+
+The one data-valued instance in this file, the `k`-algebra structure on a chart section ring, is
+exactly where a diamond *could* live, and it is `local` — re-declared verbatim from
+`Picard/RigidPushforwardP1ChartSections.lean`, which in turn re-declares it verbatim from
+`RiemannRoch/Adelic/P1ChartData.lean`.  That chain is why `p1ChartSectionsAlgEquivX` type-checks
+against it: same term, not merely the same shape.
+
 Sources: Stacks 01MZ (`Proj` of a graded ring), 00T2 (standard smooth ring maps); mathlib
 `AlgebraicGeometry/AffineSpace.lean` has the affine analogue of §1.
 -/
@@ -151,8 +169,12 @@ noncomputable local instance instAlgebraP1ChartSections (i : ULift.{u} (Fin 2)) 
     (op (p1Chart k i))
 
 /-- Each standard chart ring of `ℙ¹_k` is standard smooth of relative dimension one over `k` —
-it *is* `k[T]` (`Picard/RigidPushforwardP1ChartSections.lean`), and §2.1 applies. -/
-instance instIsStandardSmoothOfRelativeDimensionOneP1ChartSections (i : ULift.{u} (Fin 2)) :
+it *is* `k[T]` (`Picard/RigidPushforwardP1ChartSections.lean`), and §2.1 applies.
+
+`local`, deliberately: its statement mentions the `local` algebra structure above, so a global
+instance here would export a term that nothing downstream could re-derive. -/
+local instance instIsStandardSmoothOfRelativeDimensionOneP1ChartSections
+    (i : ULift.{u} (Fin 2)) :
     Algebra.IsStandardSmoothOfRelativeDimension 1 k
       Γ(ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k)), p1Chart k i) := by
   have e : Polynomial k ≃ₐ[k]
