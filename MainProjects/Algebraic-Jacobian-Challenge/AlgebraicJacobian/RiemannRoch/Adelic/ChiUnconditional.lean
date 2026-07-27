@@ -163,6 +163,90 @@ theorem chi_sub_chi_eq_charts_sub_overlap (hcov : U₀ ⊔ U₁ = ⊤) (D D' : X
   rw [chi_eq_charts_sub_overlap k U₀ U₁ hcov D, chi_eq_charts_sub_overlap k U₀ U₁ hcov D']
   ring
 
+/-- **A one-point bump does not change the sections over an open missing that point.**
+`Γ(U, 𝒪(1·P + E)) = Γ(U, 𝒪(E))` when `P.point ∉ U`, because `Γ(U, −)` reads the divisor
+only at primes meeting `U`.
+
+This is `LedgerClosure.sectionSub_add_pointDivisor_of_notMem_overlap` with the overlap
+`U₀ ⊓ U₁` generalised to an arbitrary open — the generalisation is what lets the same
+computation be run at *all three* terms of the Čech count below. -/
+theorem sectionSub_add_pointDivisor_of_notMem (U : X.Opens)
+    {P : X.PrimeDivisor} (hP : P.point ∉ U) (E : X.WeilDivisor) :
+    sectionSub k U (pointDivisor P + E) = sectionSub k U E := by
+  apply le_antisymm
+  · intro x hx
+    rcases eq_or_ne x 0 with rfl | hx0
+    · exact Submodule.zero_mem _
+    refine Or.inr fun Q hQ => ?_
+    have hQP : Q ≠ P := fun h => hP (h ▸ hQ)
+    rw [← add_pointDivisor_apply_of_ne E hQP]
+    exact ((mem_sectionOfDivisor_of_ne_zero hx0).mp hx) Q hQ
+  · exact sectionSub_mono k U (le_add_pointDivisor E P)
+
+/-- **The off-overlap χ-jump is exactly the ONE surviving chart step** — unconditionally.
+
+Let `P.point ∉ U₀`.  Then the bump `E ↦ 1·P + E` leaves both the `U₀` term and the
+overlap term of `chi_eq_charts_sub_overlap` untouched (`P.point ∉ U₀` and
+`P.point ∉ U₀ ⊓ U₁`), so the entire χ-jump is carried by the `U₁` chart:
+
+`χ(1·P + E) − χ(E) = dim Γ(U₁, 𝒪(1·P+E)) − dim Γ(U₁, 𝒪(E))`.
+
+**This overturns the reading recorded at inbox `I-0449`/`I-0456`.**  Those items concluded
+that `hbump` is *refuted* off the overlap, reasoning from `ChiLedger.chi_add`: that theorem
+makes the χ-jump equal to the **overlap** local step, which is `0` off the overlap
+(`LedgerClosure.finrank_localStepDom_eq_zero_of_notMem_overlap`), contradicting a jump of
+`[κ(P):k] ≥ 1`.  Every step of that is valid, but the conclusion drawn from it is not:
+what it actually shows is that **`chi_add`'s four exactness hypotheses are themselves
+unsatisfiable off the overlap** — the audit observed exactly this ("`hbump` forces
+`chi_add`'s window/connect/twist exactness hypotheses to FAIL") and then read it as a
+statement about `hbump` rather than about `chi_add`.
+
+The truth is the opposite of the recorded one.  Off the overlap the two-set Čech complex
+still computes χ, and it says the jump is the `U₁`-chart step — which is `≥ 0` and, under
+approximation *on that chart*, exactly `[κ(P):k]`.  So `hbump` is **not** refutable off
+the overlap; it is equivalent there to the one-chart step being full
+(`bump_iff_chartStep_of_notMem_left`).  Correspondingly
+`LedgerClosure.not_bump_of_notMem_overlap` is a true theorem whose hypothesis `hchiAdd`
+is unsatisfiable at precisely the primes it is about, so it refutes nothing. -/
+theorem chi_add_pointDivisor_of_notMem_left (hcov : U₀ ⊔ U₁ = ⊤)
+    {P : X.PrimeDivisor} (hP : P.point ∉ U₀) (E : X.WeilDivisor)
+    [Module.Finite k (sectionSub k U₀ E)] [Module.Finite k (sectionSub k U₁ E)]
+    [Module.Finite k (sectionSub k (U₀ ⊓ U₁) E)]
+    [Module.Finite k (sectionSub k U₀ (pointDivisor P + E))]
+    [Module.Finite k (sectionSub k U₁ (pointDivisor P + E))]
+    [Module.Finite k (sectionSub k (U₀ ⊓ U₁) (pointDivisor P + E))] :
+    chi k U₀ U₁ (pointDivisor P + E) - chi k U₀ U₁ E =
+      (Module.finrank k (sectionSub k U₁ (pointDivisor P + E)) : ℤ)
+        - Module.finrank k (sectionSub k U₁ E) := by
+  have hPinf : P.point ∉ (U₀ ⊓ U₁ : X.Opens) := fun h => hP h.1
+  rw [chi_sub_chi_eq_charts_sub_overlap k U₀ U₁ hcov E (pointDivisor P + E),
+    sectionSub_add_pointDivisor_of_notMem k U₀ hP E,
+    sectionSub_add_pointDivisor_of_notMem k (U₀ ⊓ U₁) hPinf E]
+  ring
+
+/-- **Off the overlap, the bump is EQUIVALENT to the one-chart step being full.**
+
+For `P.point ∉ U₀`, the bump statement `χ(1·P+E) = χ(E) + [κ(P):k]` holds if and only if
+the `U₁`-chart section space grows by exactly `[κ(P):k]`.  Neither direction needs an
+exactness hypothesis.
+
+So the residual content of `hbump` at an off-overlap prime is approximation **on the single
+chart containing `P`** — a strictly local, strictly weaker demand than the overlap
+approximation `hsurj` that `ChiLedger.chi_add_eq_residueDeg` requires, and in particular
+not a contradiction.  This is the precise correction to `I-0449`. -/
+theorem bump_iff_chartStep_of_notMem_left (hcov : U₀ ⊔ U₁ = ⊤)
+    {P : X.PrimeDivisor} (hP : P.point ∉ U₀) (E : X.WeilDivisor)
+    [Module.Finite k (sectionSub k U₀ E)] [Module.Finite k (sectionSub k U₁ E)]
+    [Module.Finite k (sectionSub k (U₀ ⊓ U₁) E)]
+    [Module.Finite k (sectionSub k U₀ (pointDivisor P + E))]
+    [Module.Finite k (sectionSub k U₁ (pointDivisor P + E))]
+    [Module.Finite k (sectionSub k (U₀ ⊓ U₁) (pointDivisor P + E))] :
+    chi k U₀ U₁ (pointDivisor P + E) = chi k U₀ U₁ E + residueDeg k P ↔
+      (Module.finrank k (sectionSub k U₁ (pointDivisor P + E)) : ℤ)
+        - Module.finrank k (sectionSub k U₁ E) = residueDeg k P := by
+  have h := chi_add_pointDivisor_of_notMem_left k U₀ U₁ hcov hP E
+  omega
+
 end ChiCharts
 
 end Adelic
