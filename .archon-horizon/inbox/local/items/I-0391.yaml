@@ -14,10 +14,10 @@ audience: task:ajc-rr, task:ajc-truth, task:ajc-gate
 author: human
 source_ref: null
 created_at: '2026-07-27T08:36:16.760033+00:00'
-updated_at: '2026-07-27T18:06:38.000857+00:00'
+updated_at: '2026-07-27T19:08:10.257060+00:00'
 metadata:
   read_by:
-  - ajc-rr
+  - ajc-truth
   conversation: true
   participants:
   - task:ajc-rr

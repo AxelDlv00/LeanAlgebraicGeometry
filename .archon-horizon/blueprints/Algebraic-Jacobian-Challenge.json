@@ -17955,7 +17955,7 @@
       "closed": 6145,
       "formalized_open": 200,
       "informal": 168,
-      "ready": 130
+      "ready": 131
     },
     "warnings": [
       "lem:pushforwardPullbackBaseChange_restrict_naturality: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChange_restrict_naturality} not found in Lean sources",

@@ -21,14 +21,24 @@ summary: "CLASSIFIED, and the load-bearing finding is that NONE of the 33 rides 
   \ TODO.stage6_regular_stalk_assembly, TODO.weilDivisorObstruction. Four of the seven\
   \ are Quot-endgame nodes, i.e. off-path mathematics retained deliberately (see the\
   \ route note in Picard_QuotScheme.tex); leaving them unresolved is correct and they\
-  \ should NOT be repinned to anything.\n\n  (b) RENAMED OR RESHAPED TARGETS, where\
-  \ the mathematics landed under a different name. Resolvable by name, one node at\
-  \ a time, and this is the only class where work remains. Confirmed candidates found\
-  \ by horizon search: lem:toSheaf_preservesFiniteColimits and lem:to_sheaf_preserves_epi\
-  \ (the declarations exist with a trailing-dot artifact in the index), lem:presentation_restrict_basicOpen\
-  \ -> presentationModulesRestrictBasicOpen, lem:qcoh_localized_sections -> qcoh_iso_tilde_sections_hom/_inv,\
-  \ lem:qcoh_global_generation -> qcoh_iso_tilde_sections_of_genSections, lem:tilde_preserves_kernels\
-  \ -> tildePreservesFiniteLimits_of_toPresheaf or tilde_preservesFiniteLimits_of_preservesKernels,\
+  \ should NOT be repinned to anything.\n\n  (a2) SCANNER FALSE NEGATIVES, 2 of 33,\
+  \ and these are NOT the blueprint's fault:\nlem:toSheaf_preservesFiniteColimits\
+  \ and lem:to_sheaf_preserves_epi pin\nAlgebraicGeometry.toSheaf_preservesFiniteColimits\
+  \ and .toSheaf_preservesEpimorphisms, which DO exist\n(Cohomology/AffineSerreVanishing.lean:121\
+  \ and :153) and ARE proved ([propext, Classical.choice,\nQuot.sound] through the\
+  \ root path). The graph's Lean indexer does not accept a declaration whose NAME\n\
+  carries an explicit universe-binder suffix -- `theorem toSheaf_preservesFiniteColimits.{v',\
+  \ u', w'}` --\nso it never indexes them; `graph get decl:...` returns 'no node matching'.\
+  \ Exactly four declarations\ntree-wide use that syntax, and these are the two with\
+  \ pins. Both nodes now carry \\leanok on statement\nand proof (correct: the Lean\
+  \ is written and checked, only the scanner disagreed), so these two\nwarnings will\
+  \ PERSIST until the tooling is fixed and should not be chased in this project. Filed\n\
+  upstream as I-0452.\n\n  (b) RENAMED OR RESHAPED TARGETS, where the mathematics\
+  \ landed under a different name. Resolvable by name, one node at a time, and this\
+  \ is the only class where work remains. Confirmed candidates found by horizon search:\
+  \ lem:presentation_restrict_basicOpen -> presentationModulesRestrictBasicOpen, lem:qcoh_localized_sections\
+  \ -> qcoh_iso_tilde_sections_hom/_inv, lem:qcoh_global_generation -> qcoh_iso_tilde_sections_of_genSections,\
+  \ lem:tilde_preserves_kernels -> tildePreservesFiniteLimits_of_toPresheaf or tilde_preservesFiniteLimits_of_preservesKernels,\
   \ the two MvPolynomial height nodes -> MvPolynomial.height_eq_natCard_of_isMaximal.\
   \ Each repin must be checked against the SIGNATURE, not just the name: a node whose\
   \ statement no longer matches its renamed target is a worse defect than an unresolved\
@@ -69,4 +79,4 @@ metadata:
   parent: AJC.maintenance.blueprint.pins
   owner: ajc-truth
   milestone: ajc-optimize
-  updated_at: '2026-07-27T18:52:11.224546+00:00'
+  updated_at: '2026-07-27T19:06:54.518842+00:00'
