@@ -15,44 +15,49 @@ Every conditional statement of the vanishing and generation lane
 `hledger : ∀ D : X.WeilDivisor, χ(D) = χ(0) + deg_k D`
 
 as a hypothesis quantified over **all** Weil divisors.  `chi_telescope_list` establishes
-it for *effective* divisors from the one-point bump, and the sibling docstrings record
-that "extending from list-effective divisors to all divisors additionally needs the
-negative part" as an open item.
+it for *effective* divisors from the one-point bump, and the sibling docstrings recorded
+"extending from list-effective divisors to all divisors additionally needs the negative
+part" as an open item.
 
-This file settles **half** of that extension and states the other half exactly.
+**This file closes that extension.**  `chi_eq_of_bump` proves the ledger at every Weil
+divisor from the one-point bump alone, so `hledger` is not an independent open input of the
+lane: every consumer that takes it can instead take `hbump`, which is one application of
+`chi_add_eq_residueDeg` per step.
 
 ## What is proved
 
-`chi_eq_of_bump_of_nonneg` — the ledger holds at **every effective divisor**, from the
-one-point bump alone, with the list eliminated from the statement.  This is a real
-strengthening of `chi_telescope_list`: every effective divisor is list-effective
-(`exists_divisorOfList_of_nonneg`), so a consumer no longer has to produce a list.
+* `chi_eq_of_bump_of_nonneg` — the ledger at **every effective divisor**, with the list
+  eliminated from the statement (every effective divisor is list-effective,
+  `exists_divisorOfList_of_nonneg`, so a consumer no longer has to produce a list).
+* `chi_telescope_list_add` — the telescope run from an **arbitrary base divisor**, not
+  only from `0`.
+* `chi_eq_of_bump` — **the closed ledger, at every Weil divisor**, from the bump alone.
 
-## What is *not* proved, stated precisely
+## The negative part costs nothing, and why this file previously said otherwise
 
-`chi_eq_iff_step_of_bump` — given the bump, the ledger at an arbitrary `D` is
-**equivalent** to the single identity `χ(D⁺) − χ(D) = deg_k (−D)⁺`.  It is deliberately an
-`iff` and not a one-directional "reduction": the two sides are interderivable by
-arithmetic, so a `←`-only version would be a theorem that re-indexes its own conclusion.
-That failure mode is exactly what inbox memory I-0399 records for this task, and the
-`iff` is how this file avoids repeating it.
+An earlier version of this module — and the sibling docstrings in `SectionBounds.lean`,
+`BoundedVanishing.lean` and `ResidueField.lean` — recorded the extension from the effective
+cone to all divisors as **open**, "needing an input the lane does not have".  That was
+false, and the error is worth stating precisely, because it survived three sessions and
+shaped their plans.
 
-## Why the naive route fails
+The reasoning was: write `D = D⁺ − (−D)⁺` as a difference of effective divisors; the
+effective case handles each piece; but `χ` is **not additive** in the divisor, and `D` is
+**not linearly equivalent** to `D⁺` in general, so neither of the lane's two transport
+mechanisms moves `χ` across the decomposition.  Every clause of that is true — and
+irrelevant, because no transport is needed.  `hbump` is quantified over **every** base
+divisor `E`, not only over effective ones, so the telescope is not confined to the effective
+cone: read the same identity as `D⁺ = (−D)⁺ + D`, i.e. the effective divisor `(−D)⁺`
+telescoped **onto the base `D`**, and `chi_telescope_list_add` computes `χ(D⁺)` from `χ(D)`
+in one induction.  Comparing with the effective-cone value of `χ(D⁺)` gives the ledger at
+`D`.
 
-The lattice identity `D + (−D)⁺ = D⁺` — pointwise `n + max(−n,0) = max(n,0)` — writes any
-divisor as a difference of two effective ones, and the effective case above handles both
-pieces.  But that does not close the ledger, because the two transport mechanisms the lane
-owns do not apply:
+The generalisable lesson: the obstruction was sought among the *transports* the lane owns,
+when what mattered was the *quantifier* of a hypothesis the lane already had.
 
-* `χ` is **not additive** in the divisor.  Only `deg_k` is (`degKHom`), which is why the
-  arithmetic above goes through on the degree side and stops on the `χ` side.
-* `D` and `D⁺` are **not linearly equivalent** in general, so the class-invariance
-  transport of `ClassInvariance.lean` cannot move `χ` between them.
-
-So the negative part is not bookkeeping that a more careful induction would absorb; it
-needs an input the project does not have.  Recorded here rather than left implicit, because
-the sibling docstrings describe it as merely "additionally needs the negative part", which
-understates it.
+`chi_eq_iff_step_of_bump` is kept with its statement unchanged and its reading corrected:
+given `hbump`, both sides of that `iff` are now theorems, so it records an identity rather
+than a gap.
 -/
 
 set_option autoImplicit false
@@ -129,28 +134,21 @@ theorem chi_eq_of_bump_of_nonneg
   obtain ⟨L, rfl⟩ := exists_divisorOfList_of_nonneg D hD
   exact chi_divisorOfList_eq_degK k U₀ U₁ L hbump
 
-/-- **What the negative part actually costs: an equivalence, not a reduction.**
+/-- **The ledger at `D` is equivalent to the single step identity `χ(D⁺) − χ(D) = deg_k (−D)⁺`.**
 
-Given the bump, the ledger at an arbitrary `D` is **equivalent** to the single identity
+Given the bump, the ledger at an arbitrary `D` holds exactly when `χ` drops by the weighted
+degree of the removed negative part.  Both directions are proved.
 
-`χ(D⁺) − χ(D) = deg_k (−D)⁺`,
-
-i.e. to "`χ` drops by the weighted degree of the removed negative part".  Both directions
-are proved, so this is *not* a theorem that reduces the ledger to something cheaper — it is
-a statement of exactly what the remaining content is.
-
-**Why it is phrased as an `iff`.**  It would be easy to state the `←` direction alone,
-"bump + hstep ⟹ ledger at `D`", and present it as progress.  That would be misleading in
-the specific way I-0399 records for this task: given `hbump` (which pins the ledger at
-`D⁺` via `chi_eq_of_bump_of_nonneg`) and the additivity of `deg_k`, `hstep` and the
-conclusion are interderivable by pure arithmetic — so such a theorem would re-index its own
-conclusion rather than reduce it.  The `→` direction below is what makes that visible.
-
-So the honest ledger of this file is: the effective cone is **done** from the bump
-(`chi_eq_of_bump_of_nonneg`, unconditional); extending to all divisors is **open**, and its
-entire content is the one identity above, for which no argument in this project is
-available.  `χ` is not additive in the divisor, and `D` is not linearly equivalent to `D⁺`
-in general, so neither of the two transport mechanisms the lane already owns applies. -/
+**Its status has changed, and the statement has not.**  This theorem was written to record
+what extending the ledger past the effective cone was thought to cost, with the `iff` chosen
+deliberately over a `←`-only "reduction" that would have re-indexed its own conclusion
+(inbox memory I-0399).  Both sides are now *theorems* given `hbump` — the right-hand
+identity is `chi_telescope_list_add` at `D`, and the left is `chi_eq_of_bump` — so what this
+records is an identity between two proved facts, not a gap.  It is kept because the
+equivalence is still the sharpest description of how the negative part enters, and because
+the diagnosis it encoded is exactly the one that turned out to be wrong: the missing
+ingredient was never a transport for `χ`, it was noticing that `hbump` admits an arbitrary
+base divisor. -/
 theorem chi_eq_iff_step_of_bump
     (hbump : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
       chi k U₀ U₁ (pointDivisor P + E) = chi k U₀ U₁ E + residueDeg k P)
@@ -165,6 +163,77 @@ theorem chi_eq_iff_step_of_bump
   constructor
   · intro h; omega
   · intro h; omega
+
+/-- **The telescope, started at an arbitrary base divisor.**  `chi_telescope_list` runs the
+one-point bump from `0`; the same induction runs from any `E`, because `hbump` is quantified
+over **all** base divisors and not only over effective ones. -/
+theorem chi_telescope_list_add (L : List X.PrimeDivisor)
+    (hbump : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
+      chi k U₀ U₁ (pointDivisor P + E) = chi k U₀ U₁ E + residueDeg k P)
+    (E : X.WeilDivisor) :
+    chi k U₀ U₁ (divisorOfList L + E) =
+      chi k U₀ U₁ E + ((L.map (residueDeg k)).sum : ℤ) := by
+  induction L with
+  | nil => rw [divisorOfList, zero_add]; simp
+  | cons P L ih =>
+    have hassoc : divisorOfList (P :: L) + E = pointDivisor P + (divisorOfList L + E) := by
+      rw [divisorOfList]; abel
+    rw [hassoc, hbump, ih, List.map_cons, List.sum_cons]
+    push_cast
+    ring
+
+/-- **The ledger on ALL divisors, from the one-point bump.**  This closes the extension that
+the file's original docstring called open.
+
+The argument the naive route missed: `hbump` is quantified over **every** base divisor `E`,
+not only over effective ones, so the telescope is not confined to the effective cone.  Write
+`D⁺ = (−D)⁺ + D` — the pointwise identity `max(n,0) = max(−n,0) + n` — and read it as "the
+effective divisor `(−D)⁺` telescoped **onto the base `D`**".  Then
+`chi_telescope_list_add` computes `χ(D⁺)` from `χ(D)`, and `chi_eq_of_bump_of_nonneg`
+computes `χ(D⁺)` from `χ(0)` since `D⁺` is effective.  Equating the two and using
+additivity of `deg_k` gives the ledger at `D`.
+
+So the negative part costs nothing beyond the bump: it is the *base* of a second telescope
+rather than a term that has to be transported.  `chi_eq_iff_step_of_bump` below identified
+the remaining content as the single identity `χ(D⁺) − χ(D) = deg_k (−D)⁺`; that identity is
+exactly what `chi_telescope_list_add` supplies, which is why the two together close the
+ledger. -/
+theorem chi_eq_of_bump (hbump : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
+      chi k U₀ U₁ (pointDivisor P + E) = chi k U₀ U₁ E + residueDeg k P)
+    (D : X.WeilDivisor) :
+    chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D := by
+  -- `D⁺ = (−D)⁺ + D`, with `(−D)⁺` effective
+  have hdecomp : Scheme.WeilDivisor.positivePart D =
+      Scheme.WeilDivisor.positivePart (-D) + D := by
+    -- pointwise `max(n,0) = max(−n,0) + n`; `abel` cannot be used, since `positivePart`
+    -- is not a group operation and normalising inside it is not sound
+    apply Finsupp.ext
+    intro P
+    rw [positivePart_apply, show (show X.PrimeDivisor →₀ ℤ from
+          Scheme.WeilDivisor.positivePart (-D) + D) P =
+        (show X.PrimeDivisor →₀ ℤ from Scheme.WeilDivisor.positivePart (-D)) P +
+          (show X.PrimeDivisor →₀ ℤ from D) P from Finsupp.add_apply _ _ _,
+      positivePart_apply,
+      show (show X.PrimeDivisor →₀ ℤ from -D) P =
+        -(show X.PrimeDivisor →₀ ℤ from D) P from Finsupp.neg_apply _ _]
+    set n : ℤ := (show X.PrimeDivisor →₀ ℤ from D) P with hn
+    omega
+  obtain ⟨L, hL⟩ :=
+    exists_divisorOfList_of_nonneg (Scheme.WeilDivisor.positivePart (-D))
+      (positivePart_nonneg (-D))
+  -- route 1: telescope `(−D)⁺` onto the base `D`
+  have h1 : chi k U₀ U₁ (Scheme.WeilDivisor.positivePart D) =
+      chi k U₀ U₁ D + degK k (Scheme.WeilDivisor.positivePart (-D)) := by
+    rw [hdecomp, hL, chi_telescope_list_add k U₀ U₁ L hbump D, ← degK_divisorOfList k L]
+  -- route 2: `D⁺` is effective, so the effective-cone ledger applies
+  have h2 : chi k U₀ U₁ (Scheme.WeilDivisor.positivePart D) =
+      chi k U₀ U₁ 0 + degK k (Scheme.WeilDivisor.positivePart D) :=
+    chi_eq_of_bump_of_nonneg k U₀ U₁ hbump (positivePart_nonneg D)
+  -- and `deg_k` is additive across the decomposition
+  have hdeg : degK k (Scheme.WeilDivisor.positivePart D) =
+      degK k (Scheme.WeilDivisor.positivePart (-D)) + degK k D := by
+    rw [hdecomp, degK_add]
+  omega
 
 end LedgerFromBump
 
