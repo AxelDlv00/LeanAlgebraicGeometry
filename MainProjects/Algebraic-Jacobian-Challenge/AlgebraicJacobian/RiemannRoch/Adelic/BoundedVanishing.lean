@@ -22,6 +22,15 @@ from three inputs that are named explicitly in every statement:
 3. **the closed ledger** `χ(D) = χ(0) + deg_k D`, used only to produce an
    effective witness in the class of `D − D₀`.
 
+Inputs 1 and 2 are individually load-bearing, but they are **not** two independent
+facts: `coneVanishing_iff_base_and_peel` proves their conjunction equivalent to
+vanishing on the whole cone `{D' ≥ D₀}`.  So the theorem's real content is
+*cone-vanishing (pointwise condition) + ledger ⟹ degree-vanishing (numerical
+condition)*, which is a genuine reduction — a divisor of large weighted degree need
+not dominate `D₀` — but the input is a vanishing statement on an infinite family,
+not one base vanishing plus a soft surjectivity.  The `_of_pointPeel` corollary is
+the form that actually reduces the burden, to a one-point bump.
+
 Nothing here is a `sorry` and nothing here is a new gate class: each theorem is of
 the form "given (1)–(3), the bound exists", with `b` computed explicitly as
 `b = deg_k D₀ + 1 − χ(0)`.
@@ -30,8 +39,15 @@ the form "given (1)–(3), the bound exists", with `b` computed explicitly as
 
 Vanishing is stated as `Subsingleton (H1Mod k U₀ U₁ D)` rather than
 `h1dim k U₀ U₁ D = 0`.  The two agree when `Ȟ¹(D)` is finite-dimensional, but the
-`Subsingleton` form needs **no finiteness instance**, so the vanishing lane stays
-independent of the finiteness gates.  `h1dim_eq_zero_of_subsingleton` converts.
+`Subsingleton` form needs **no finiteness instance**, so §1 stays independent of the
+finiteness gates.  `h1dim_eq_zero_of_subsingleton` converts.
+
+**Do not over-read that.**  It is a claim about *instance arguments* in §1 only.
+Every theorem taking the closed ledger `hledger` is a different matter: since
+`Module.finrank` of an infinite-dimensional space is `0`, an identity
+`∀ D, χ(D) = χ(0) + deg_k D` silently forces finite-dimensionality wherever it
+forces a nonzero rank.  So the ledger hypothesis carries finiteness content even
+though no `Module.Finite` binder appears next to it.
 
 ## Main declarations
 
@@ -451,6 +467,57 @@ theorem exists_bound_subsingleton_h1Mod_of_pointPeel
   have hD' : D' = divisorOfList L + D₀ := by rw [← hL]; abel
   rw [hD']
   exact Peel.of_list k U₀ U₁ hstep D₀ L
+
+/-! ### What the `hbase ∧ hpeel` pair really is
+
+Both hypotheses of `exists_bound_subsingleton_h1Mod` are individually load-bearing,
+but that is **not** enough to call them two independent inputs, and the honest
+description is sharper: their conjunction is *equivalent* to vanishing on the whole
+cone above `D₀`.
+
+`ConeVanishing_iff_base_and_peel` below proves both directions.  `←` is
+`subsingleton_h1Mod_peel`.  `→` is the direction that matters for honesty: given
+cone-vanishing, `hpeel` holds by taking `y = 0`, since `x − 0 = x ∈ B(D')` is
+exactly the vanishing criterion at `D'`.
+
+So `exists_bound_subsingleton_h1Mod` should be read as: **cone-vanishing above `D₀`
+plus the ledger implies degree-vanishing above `b`.**  That is a genuine reduction
+and not a re-indexing — the cone condition `D' ≥ D₀` is a *pointwise ordering*,
+while the conclusion's condition `b ≤ deg_k D` is *numerical*, and a divisor of
+large weighted degree need not dominate `D₀` at all.  Bridging the two is exactly
+what the effective-witness/linear-equivalence transport does.  But it does mean the
+input is a vanishing statement on an infinite family, not a single base vanishing
+plus a soft surjectivity, and the `_of_pointPeel` corollary is the one that actually
+reduces the burden (to a one-point bump).
+
+A second caveat, recorded for the same reason: `hledger` is not as
+finiteness-innocent as it looks.  `Module.finrank` of an infinite-dimensional space
+is `0`, so an identity `∀ D, χ(D) = χ(0) + deg_k D` silently forces
+finite-dimensionality wherever it forces a nonzero rank.  The claim that this file's
+vanishing lane needs no finiteness instance is a statement about *instance
+arguments* only; it does not apply to the theorems that take `hledger`. -/
+
+/-- **`hbase ∧ hpeel` is exactly vanishing on the cone above `D₀`.**  See the
+section note: `←` is `subsingleton_h1Mod_peel`, and `→` takes `y = 0`. -/
+theorem coneVanishing_iff_base_and_peel (D₀ : X.WeilDivisor) :
+    (∀ D' : X.WeilDivisor,
+        (∀ P : X.PrimeDivisor, (show X.PrimeDivisor →₀ ℤ from D₀) P ≤
+          (show X.PrimeDivisor →₀ ℤ from D') P) →
+        Subsingleton (H1Mod k U₀ U₁ D')) ↔
+      (Subsingleton (H1Mod k U₀ U₁ D₀) ∧
+        ∀ D' : X.WeilDivisor,
+          (∀ P : X.PrimeDivisor, (show X.PrimeDivisor →₀ ℤ from D₀) P ≤
+            (show X.PrimeDivisor →₀ ℤ from D') P) →
+          Peel k U₀ U₁ D₀ D') := by
+  constructor
+  · intro hcone
+    refine ⟨hcone D₀ (fun _ => le_rfl), fun D' hmono x hx => ?_⟩
+    -- take `y = 0`: `x - 0 = x` is a coboundary by vanishing at `D'`
+    refine ⟨0, (sectionSub k (U₀ ⊓ U₁) D₀).zero_mem, ?_⟩
+    rw [sub_zero]
+    exact (subsingleton_h1Mod_iff k U₀ U₁ D').mp (hcone D' hmono) hx
+  · rintro ⟨hbase, hpeel⟩ D' hmono
+    exact subsingleton_h1Mod_peel k U₀ U₁ hbase (hpeel D' hmono) hmono
 
 /-- **The bound is not vacuous: divisors above it exist.**  For every threshold `b`
 and every prime divisor `P`, some multiple `n·P` has weighted degree `≥ b` — because
