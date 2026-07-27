@@ -3,6 +3,9 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
+import Mathlib.Algebra.Homology.Homotopy
+import Mathlib.AlgebraicGeometry.Pullbacks
+import Mathlib.Combinatorics.Quiver.ReflQuiver
 import AlgebraicJacobian.Picard.GaloisDescent.SemilinearAlgebras
 
 /-!
