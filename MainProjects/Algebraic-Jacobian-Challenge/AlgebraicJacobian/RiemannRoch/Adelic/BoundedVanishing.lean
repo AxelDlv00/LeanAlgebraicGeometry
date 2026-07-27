@@ -93,10 +93,14 @@ anywhere in this project and the second is now proved elsewhere in the lane:
   ledger converts into the pair of vanishings at `D` and `D − x`
   (`evalMap_surjective`, `exists_bound_generatedAt`).  The uniform-over-points form
   additionally needs a bound on residue degrees, which is `1` over an algebraically
-  closed base — and that residue fact is *reformulated* there
-  (`hasRationalResidues_of_isAlgClosed`) onto stalk-level hypotheses that this project
-  does not yet instantiate, so it is not discharged.  Read the warning in §7 of that
-  file before citing it as one.
+  closed base — and that residue fact is now **proved**, in `Adelic/ResidueField.lean`
+  (`residueDeg_eq_one_of_isAlgClosed_curve`), on the curve hypotheses the project's
+  headline already carries.  So the uniform form
+  `exists_bound_forall_generatedAt_of_isAlgClosed_curve` is conditional on *this* file's
+  three inputs and nothing else.  (`GlobalGeneration.lean` §7's own
+  `hasRationalResidues_of_isAlgClosed` is a *reformulation* onto three stalk-level binders
+  and is **not** the discharge — cite the `ResidueField.lean` form, and read the warning in
+  §7 before citing that one.)
 
 `ajc-gate` should therefore not read this file as discharging an extension-uniform
 hypothesis; it discharges the single-field bounded-vanishing shape only, and only

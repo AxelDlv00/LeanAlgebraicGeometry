@@ -485,31 +485,37 @@ residue field `k̄`, i.e. `[κ(P):k̄] = 1`.  That collapse is
 `degK_principal_eq_zero` gives `degree_principal_eq_zero_of_residueDeg_eq_one`:
 the **unweighted** statement, proved, from the ledger plus residue-degree-one.
 
-So the reduction is now machine-checked, and the residue of the open leaf is still two
-items — but the first has moved to a substantially better place:
+So the reduction is machine-checked, and the residue of the open leaf is now **one** item,
+not two.  Item 1 below is closed; item 2 is what remains.
 
-1. `residueDeg k̄ P = 1` — **reformulated, not discharged**, in
-   `Adelic/GlobalGeneration.lean` §5–§7.  It is proved *equivalent* to a first-order
-   approximation statement in the order language
-   (`residueDeg_eq_one_iff_hasRationalResidues`), and that statement is then derived for
-   an algebraically closed base from the stalk residue field
-   (`hasRationalResidues_of_isAlgClosed`, via
-   `IsAlgClosed.algebraMap_bijective_of_isIntegral`).  **But** that derivation takes three
-   stalk-level instance binders — `Algebra k 𝒪_P`, `IsScalarTower k 𝒪_P K(X)`, and
-   `Module.Finite k (IsLocalRing.ResidueField 𝒪_P)` — none of which this project currently
-   constructs for an AJC curve, and the last of which is effectively a new gate (it is
-   *not* node N14's `Module.Finite k (localStepTgt k P 1)`).  So the obligation has moved
-   from the order subquotient to standard stalk commutative algebra, which is progress, and
-   is where it should live — but it has not gone away.  See the warning in §7 there.
+1. `residueDeg k̄ P = 1` — **DISCHARGED**, in `Adelic/ResidueField.lean`
+   (`residueDeg_eq_one_of_isAlgClosed_curve`), for a prime divisor of a curve
+   `C : Over (Spec k̄)` with `k̄` algebraically closed, under
+   `[IsIntegral] [IsLocallyNoetherian] [IsRegularInCodimensionOne] [LocallyOfFiniteType]`
+   and `[SmoothOfRelativeDimension 1]` — and `LocallyOfFiniteType` synthesizes from
+   smoothness, so these are the hypotheses the project's headline curve already carries.
+
+   Two earlier descriptions of this item are now history.  It was first an informal remark;
+   then §5–§7 of `Adelic/GlobalGeneration.lean` made it a machine-checked *equivalence* to a
+   first-order approximation statement plus a derivation of that statement from three
+   stalk-level binders, and this paragraph correctly recorded that AJC constructs none of
+   them, the last (`Module.Finite k κ_P`) being effectively a new gate.  The discharge did
+   not build that gate: mathlib's `AlgebraicGeometry.residueFieldIsoBase` gets the
+   integrality it needs from `LocallyOfFiniteType` through the Jacobson-space criterion, so
+   the residue-finiteness binder is **avoided**, not supplied.  What did have to be built is
+   the compatibility of the stalk `k`-algebra with this lane's `Algebra k K(X)`
+   (`Adelic.algebraMap_stalk_functionField`) — without it a stalk-level argument cannot be
+   read in the order language at all.
 2. The instance plumbing that places `principal_degree_zero`'s own geometric
    hypotheses in adelic shape: an `Algebra k̄ K(C)` with `IsConstantField k̄ C.left`
-   (available — `Adelic/GateInstances.lean`), a 2-affine cover, **the closed ledger for
-   that cover**, and the stalk-level `Algebra k̄ 𝒪_P` + scalar tower + residue
-   finiteness that §7 consumes.  The ledger is the substantive one, and it is still not
-   a theorem here (§3), so the leaf remains open.  Two of these are now sharper than
-   before: the ledger holds on the whole *effective* cone from the one-point bump
-   (`Adelic/LedgerClosure.lean`), and the residue input has moved from the order
-   subquotient to the stalk (item 1 above).
+   (available — `Adelic/GateInstances.lean`), a 2-affine cover, and **the closed ledger for
+   that cover**.  The ledger is the substantive one and is still not a theorem here (§3), so
+   the leaf remains open.  But the assembled statement is now sharper:
+   `Adelic.degree_principal_eq_zero_of_isAlgClosed_curve` proves the **unweighted**
+   `deg (div g) = 0` on curve hypotheses from **the ledger alone** — the residue input is no
+   longer a second hypothesis — and `Adelic.degK_eq_degree_of_isAlgClosed_curve` gives
+   `deg_k = deg` with no open input whatsoever.  The ledger itself holds on the whole
+   *effective* cone from the one-point bump (`Adelic/LedgerClosure.lean`).
 
 The `sorry` in `WeilDivisor.lean` is deliberately **left in place**.  Replacing it
 with a call to `degree_principal_eq_zero_of_residueDeg_eq_one` would require

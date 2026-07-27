@@ -477,13 +477,21 @@ a claim about residue fields — which in this substrate would require identifyi
 identification this project does not have — into an approximation statement in the order
 language the substrate already speaks.
 
-Note what is **not** claimed: `HasRationalResidues` is not proved here for an
-algebraically closed base.  Doing so needs the multiplicative structure of `κ(P)` (a
+Note what is **not** claimed *in this section*: `HasRationalResidues` is not proved here for
+an algebraically closed base.  Doing so needs the multiplicative structure of `κ(P)` (a
 finite-dimensional *field* extension of an algebraically closed `k` is trivial —
 `IsAlgClosed.algebraMap_bijective_of_isIntegral`), and `localStepTgt k P 1` is
 constructed here as a quotient of `k`-submodules with no ring structure on it.  Finite
 dimensionality alone does not give dimension one for a mere vector space, so the gap is
 real and is exactly the missing ring-structure identification.
+
+**It is proved elsewhere now**, for a curve: `Adelic.hasRationalResidues_of_isAlgClosed_curve`
+(`Adelic/ResidueField.lean`).  Note how it escapes the obstruction just described — it never
+identifies `localStepTgt k P 1` with the stalk residue field.  It proves the *approximation
+statement* directly, by lifting to the stalk and using that `k → κ_P` is onto there, and then
+feeds it back through this section's equivalence to reach `residueDeg k P = 1`.  So the `iff`
+above is what makes the discharge possible: the ring-structure identification is still absent,
+and is still not needed.
 -/
 
 section RationalResidues
@@ -687,11 +695,26 @@ end RationalResidueConsequences
 /-! ## §7. Discharging `HasRationalResidues` from algebraic closedness
 
 §5 reduced `[κ(P):k] = 1` to the approximation statement, and §6 drew the consequences.
-This section derives the approximation statement, for an algebraically closed `k`, **from
-stalk-level hypotheses that are not yet instantiable in this project** — see the warning on
-`hasRationalResidues_of_isAlgClosed` below before citing it.  The honest summary is that it
-moves the obligation off the order subquotient and onto standard commutative algebra about
-the stalk, which is progress, but it is a reformulation and not a discharge.
+This section derives the approximation statement, for an algebraically closed `k`, from
+stalk-level hypotheses that **this file** does not instantiate.
+
+**SUPERSEDED — read `Adelic/ResidueField.lean` instead.**  The approximation statement is
+now a *theorem* on AJC curve hypotheses, `hasRationalResidues_of_isAlgClosed_curve`, and
+`residueDeg k P = 1` with it.  That module does not use this section's route: it takes the
+three binders below off the table rather than building all of them, because mathlib's
+`AlgebraicGeometry.residueFieldIsoBase` obtains integrality of `κ(x)` over `k` from
+`LocallyOfFiniteType` (via the Jacobson-space finiteness criterion) instead of from a
+residue-finiteness hypothesis.  What it *did* have to build is the compatibility of the
+stalk `k`-algebra with this lane's `Algebra k K(X)`
+(`Adelic.algebraMap_stalk_functionField`), which is what lets a stalk-level argument be read
+in the order language at all.
+
+This section is kept because its statement is more general — it asks nothing of the scheme
+beyond the three binders, so it applies to a non-curve — and because the valuation bridge
+`mem_orderGe_one_iff_mem_maximalIdeal` below is reused by the new module.  The honest
+summary of *this theorem* is unchanged: it moves the obligation off the order subquotient
+and onto standard commutative algebra about the stalk, and is a reformulation rather than a
+discharge.
 
 The argument, at the point `P` with stalk `R := 𝒪_{X,P}` (a DVR):
 
@@ -788,7 +811,14 @@ Given at `P`:
 
 every function of order `≥ 0` at `P` agrees with a constant to first order.
 
-## READ THIS BEFORE CITING: the three binders are NOT currently instantiable
+## READ THIS BEFORE CITING: prefer `Adelic/ResidueField.lean`
+
+For a **curve** over an algebraically closed field, do not cite this theorem: cite
+`Adelic.hasRationalResidues_of_isAlgClosed_curve`, which proves the same conclusion with no
+open input.  This theorem's three binders below are still not instantiated *by this file*,
+and two of the three are now available (`Adelic.isScalarTower_stalk_functionField` and the
+`stalkAlgebra` it is stated over) — but the third, the residue finiteness, remains a gate
+here, which is precisely why the new module avoids needing it.
 
 An earlier version of this docstring claimed `Adelic/GateInstances.lean` "builds exactly
 this" and that the residue finiteness is "the same keystone finiteness node N14 consumes".
@@ -799,25 +829,34 @@ this" and that the residue finiteness is "the same keystone finiteness node N14 
   the `IsScalarTower k 𝒪_P K(X)` binder below.
 * `Algebra k (X.presheaf.stalk P.point)` has an instance only for objects of
   `Over (Spec k)` (`Picard/TangentSpaceStalkAlgebra.lean`), not for the bare `Scheme X`
-  this lane is stated over.
+  this lane is stated over.  (For an `Over (Spec k)` curve this one *is* now settled:
+  `Adelic.algebraMap_stalk_functionField` proves that structure compatible with this lane's
+  `Algebra k K(X)` — which was the missing half, since the ring map itself always existed.
+  Beware the diamond recorded in `ResidueField.lean`: at the generic point the scoped
+  `overStalkAlgebra` competes with `Scheme.functionFieldAlgebra` and they are not defeq.)
 * node N14 consumes `Module.Finite k (localStepTgt k P 1)`, which is a quotient of
   `k`-submodules of `K(X)`.  `Module.Finite k (IsLocalRing.ResidueField 𝒪_P)` is a
   **different** hypothesis about the stalk, and §5 above says in its own words that this
   project has no identification of the two.
 
-So this theorem should be read as **trading one unproved fact for three unbuilt
-instances**, one of which (the stalk residue finiteness) is effectively a new gate.  It is
-a genuine *reformulation* — it moves the obligation from "`κ(P)` as an order subquotient
-has dimension one" to standard commutative algebra about the stalk, where
-`IsAlgClosed.algebraMap_bijective_of_isIntegral` applies — but it is **not** a discharge
-until those instances are constructed for an AJC curve.  Constructing them is the obvious
-next step and looks routine (the `k`-algebra structure and tower should follow from the
-structure morphism, as they do over `Γ(C,⊤)`); the residue finiteness is the substantive
-one.
+So **this theorem** should be read as trading one unproved fact for three binders that it
+does not itself supply, one of which (the stalk residue finiteness) is effectively a new
+gate.  It is a genuine *reformulation* — it moves the obligation from "`κ(P)` as an order
+subquotient has dimension one" to standard commutative algebra about the stalk, where
+`IsAlgClosed.algebraMap_bijective_of_isIntegral` applies — but it is **not** a discharge.
 
-Composed with §5–§6 it therefore *reduces*, rather than discharges, the residue hypothesis
-of `exists_bound_forall_generatedAt_of_hasRationalResidues` and of
-`degree_principal_eq_zero_of_hasRationalResidues`.
+The prediction in an earlier version of this paragraph, that constructing the binders was
+"the obvious next step and looks routine", was half right.  The algebra structure and tower
+were indeed routine (`Adelic/ResidueField.lean` §1).  The residue finiteness was *not*, and
+the resolution was to **avoid it**: mathlib's `residueFieldIsoBase` derives what is needed
+from `LocallyOfFiniteType` instead, so the curve-level theorem needs no residue-finiteness
+gate at all.  The lesson worth keeping is that the substantive binder was dodged rather than
+discharged.
+
+Composed with §5–§6 this theorem therefore *reduces*, rather than discharges, the residue
+hypothesis of `exists_bound_forall_generatedAt_of_hasRationalResidues` and of
+`degree_principal_eq_zero_of_hasRationalResidues`.  For a curve, `Adelic/ResidueField.lean`
+supplies the discharged forms of both.
 
 Note that `IsConstantField k X` is **not** used (hence the `omit`): the approximation
 statement is about the stalk and the order filtration only.  The constant-field gate is
