@@ -400,21 +400,34 @@ and `P1HasLaurentChartData k` by `instP1HasLaurentChartData` (`P1ChartData.lean`
 **Statement audit (genus-lane wave 2, 2026-07-09): TRUE at stated generality.**
 Registered as an instance: the head `Module.Finite k (Abelian.Ext … 1)` is
 discrimination-tree-keyed on the `Ext` of the constant sheaf against
-`toModuleKSheaf C`, so it fires only on genus-carrier goals.  NB: Mathlib v4.31
-has no `SmoothOfRelativeDimension → GeometricallyReduced` instance, so the
-`GeometricallyIrreducible`-only variant (the hypothesis set of
-`AlgebraicGeometry.genus`) is not yet derivable; `GeometricallyIntegral` is the
-FGA-campaign ambient form (`instHasPicScheme`). -/
+`toModuleKSheaf C`, so it fires only on genus-carrier goals.  `GeometricallyIntegral`
+is the FGA-campaign ambient form (`instHasPicScheme`).
+
+**Update (2026-07-27).** An earlier version of this note said Mathlib v4.31 has no
+`SmoothOfRelativeDimension → GeometricallyReduced` instance, so that the
+`GeometricallyIrreducible`-only variant — the hypothesis set of
+`AlgebraicGeometry.genus` — was "not yet derivable".  That is no longer true:
+`AlgebraicJacobian/Curve/GeometricallyReduced.lean` proves
+`Smooth.geometricallyReduced` in mathlib generality, so
+`[SmoothOfRelativeDimension 1] [IsProper] [GeometricallyIrreducible]` synthesises
+`GeometricallyIntegral` and this instance applies **at the challenge's own
+hypotheses**, with nothing extra. -/
 instance instModuleFiniteHModuleOne (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom] :
     Module.Finite k (Scheme.HModule k (Scheme.toModuleKSheaf C) 1) :=
   module_finite_hModule_one C
 
 /-- Genus finiteness in the hypothesis shape of `AlgebraicGeometry.genus`
-(challenge.lean: smooth + proper + geometrically **irreducible**), with the
-geometric reducedness supplied as an extra hypothesis (Mathlib v4.31 lacks the
-`smooth ⟹ geometrically reduced` instance that would make it redundant):
-the genus carrier is finite. -/
+(challenge.lean: smooth + proper + geometrically **irreducible**), with the geometric
+reducedness supplied as an extra hypothesis: the genus carrier is finite.
+
+**This declaration is now redundant** (2026-07-27).  It existed only because Mathlib
+v4.31 lacked the `smooth ⟹ geometrically reduced` instance, and its docstring used to
+cite that gap.  The gap is closed in-tree by
+`AlgebraicJacobian/Curve/GeometricallyReduced.lean` (`Smooth.geometricallyReduced`), so
+`instModuleFiniteHModuleOne` already applies without the `GeometricallyReduced`
+hypothesis.  Kept as a harmless convenience wrapper for callers that happen to have the
+reducedness instance in hand; new code should prefer `instModuleFiniteHModuleOne`. -/
 theorem module_finite_hModule_one_of_geometricallyReduced
     (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
