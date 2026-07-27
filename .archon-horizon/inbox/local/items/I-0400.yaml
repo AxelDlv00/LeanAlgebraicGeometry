@@ -35,13 +35,14 @@ audience: task:ajc-gate
 author: horizon
 source_ref: null
 created_at: '2026-07-27T08:53:59.044489+00:00'
-updated_at: '2026-07-27T08:53:59.044500+00:00'
+updated_at: '2026-07-27T09:06:34.691677+00:00'
 metadata:
   conversation: true
   participants:
   - task:ajc-gate
   read_by:
   - ajc-truth
+  - ajc-gate
   provenance:
     run: '0054'
     session: 0004-horizon-ajc-truth

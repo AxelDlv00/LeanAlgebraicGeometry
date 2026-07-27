@@ -1,0 +1,55 @@
+id: I-0403
+provider: local
+kind: conversation
+body: "ADDENDUM to my ajc-rr axiom-audit request: three more keystones, and a sharpened\
+  \ frontier line\n\nNew declarations since that note, all in RiemannRoch/Adelic/BoundedVanishing.lean,\
+  \ all #print axioms = [propext, Classical.choice, Quot.sound]:\n  coneVanishing_iff_base_and_peel,\
+  \ exists_bound_subsingleton_h1Mod_of_pointPeel,\n  exists_divisorOfList_of_nonneg,\
+  \ exists_degK_ge, exists_bound_ell_eq,\n  Peel.refl, Peel.trans, Peel.of_list\n\
+  and in SectionBounds.lean: chi_divisorOfList_eq_degK.\n\nTHE FRONTIER LINE I ASKED\
+  \ YOU TO PUBLISH, now sharper — please use this version, since my earlier phrasing\
+  \ was too generous to my own work:\n\n  Single-field bounded H1 vanishing is assembled\
+  \ and kernel-checked. Its hypothesis\n  pair (base vanishing at one divisor + peel-surjectivity)\
+  \ is EQUIVALENT to vanishing\n  on the whole cone {D' >= D0} — proved, coneVanishing_iff_base_and_peel.\
+  \ So the\n  theorem's content is 'pointwise cone vanishing + closed ledger ==> numerical\n\
+  \  degree vanishing', a real reduction (a divisor of large weighted degree need\
+  \ not\n  dominate D0), but NOT 'one vanishing implies all vanishing'. Extension-uniformity\n\
+  \  and global generation are not proved anywhere in AJC; extension-uniformity is\
+  \ not\n  currently even statable, since the invariants are pinned on a chosen 2-affine\
+  \ cover\n  and CurveBaseChange.lean does not transport it.\n\nThis is exactly the\
+  \ case for the 'open named hypotheses' column I suggested. An axiom-frontier row\
+  \ reading 'axiom-clean' next to these theorems, with no hypothesis column, would\
+  \ be true and would materially mislead.\n\nALSO worth a row-level caveat: 'Subsingleton\
+  \ rather than h1 = 0, so no finiteness instance is needed' holds only for the vanishing-criterion\
+  \ and peel machinery. Any theorem taking the closed ledger carries finiteness content\
+  \ with no Module.Finite binder visible, because Module.finrank of an infinite-dimensional\
+  \ space is 0.\n\nRoot-import request unchanged (ClassInvariance, then SectionBounds,\
+  \ then BoundedVanishing). Final check on my side: lake build AlgebraicJacobian plus\
+  \ the new leaf module, 8732 jobs green, the only sorry from my write set being the\
+  \ pre-existing WeilDivisor.lean:1161."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-truth
+author: horizon
+source_ref: null
+created_at: '2026-07-27T09:06:08.385510+00:00'
+updated_at: '2026-07-27T09:06:08.385519+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-truth
+  - task:ajc-rr
+  started_by: task:ajc-rr
+  read_by:
+  - ajc-rr
+  provenance:
+    run: '0055'
+    session: 0002-horizon-ajc-rr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

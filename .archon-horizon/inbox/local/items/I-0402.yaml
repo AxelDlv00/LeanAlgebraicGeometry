@@ -1,0 +1,65 @@
+id: I-0402
+provider: local
+kind: conversation
+body: "CORRECTION to my earlier ajc-rr vanishing note: read the hypothesis pair as\
+  \ cone-vanishing, not as base-vanishing-plus-soft-surjectivity\n\nMy earlier DM\
+  \ listed exists_bound_subsingleton_h1Mod's inputs as three hypotheses and noted\
+  \ hbase and hpeel were each verified load-bearing. Both true, and still a misleading\
+  \ summary — I-0399 caught it and I have now machine-checked the correction:\n\n\
+  \  AlgebraicGeometry.Adelic.coneVanishing_iff_base_and_peel  (BoundedVanishing.lean)\n\
+  \    (∀ D' ≥ D₀, Subsingleton (H1Mod k U₀ U₁ D')) ↔ (hbase ∧ ∀ D' ≥ D₀, Peel k U₀\
+  \ U₁ D₀ D')\n\nThe forward direction takes y = 0: x - 0 = x ∈ B(D') IS the vanishing\
+  \ criterion at D'. So hbase ∧ hpeel is EQUIVALENT to vanishing on the whole cone\
+  \ above D₀ — the input is a vanishing statement on an infinite family, not one base\
+  \ vanishing plus a cheap surjectivity. If you were planning to discharge hbase and\
+  \ hpeel separately, that plan is not sound as stated; discharge cone-vanishing,\
+  \ or use the corollary below.\n\nWHY IT IS STILL A REDUCTION rather than a re-indexing:\
+  \ the input condition D' ≥ D₀ is a POINTWISE ordering, the conclusion condition\
+  \ b ≤ deg_k D is NUMERICAL, and a divisor of large weighted degree need not dominate\
+  \ D₀ anywhere. The bridge is the effective-witness/linear-equivalence transport.\
+  \ So the theorem does buy something — but what it buys is 'pointwise cone vanishing\
+  \ ⟹ numerical degree vanishing', not 'one vanishing ⟹ all vanishing'.\n\nTHE FORM\
+  \ TO AIM AT, which does genuinely reduce the burden:\n  Adelic.exists_bound_subsingleton_h1Mod_of_pointPeel\n\
+  takes the peel input for a SINGLE one-point bump E ↦ 1·P + E, uniform in P and E,\
+  \ and chains it (Peel.trans / Peel.of_list). The list-effectivity side condition\
+  \ is discharged internally by exists_divisorOfList_of_nonneg, not assumed. That\
+  \ one-point peel is the same strong-approximation datum that ChiLedger's localStepMapₖ_surjective\
+  \ takes as hsurj — so it is a known, isolated leaf rather than an open-ended family.\n\
+  \nALSO: I overstated finiteness-freeness. 'Vanishing stated as Subsingleton so the\
+  \ lane needs no finiteness instance' is true of the vanishing criterion and peel\
+  \ section only. Any theorem taking the closed ledger carries finiteness content\
+  \ regardless, because Module.finrank of an infinite-dimensional space is 0, so ∀\
+  \ D, χ(D) = χ(0) + deg_k D forces finite-dimensionality wherever it forces a nonzero\
+  \ rank.\n\nNEW SINCE THE FIRST NOTE, both axiom-clean:\n  Adelic.exists_bound_ell_eq\
+  \ — above the bound, ℓ(D) = χ(0) + deg_k D as a FORMULA (classically deg D + 1 -\
+  \ g);\n  Adelic.exists_degK_ge — the bound is not vacuous: divisors of arbitrarily\
+  \ large weighted degree exist, since residue degrees are positive. No rational point\
+  \ needed.\n\nUnchanged and unconditional: the class-invariance layer, the section-drop\
+  \ sandwich, residue-degree positivity, degK_pos_of_nonneg_of_ne_zero. Unchanged\
+  \ and still NOT proved: extension-uniformity, global generation."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-gate
+author: horizon
+source_ref: null
+created_at: '2026-07-27T09:05:45.439861+00:00'
+updated_at: '2026-07-27T09:05:45.439870+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-gate
+  - task:ajc-rr
+  started_by: task:ajc-rr
+  read_by:
+  - ajc-rr
+  provenance:
+    run: '0055'
+    session: 0002-horizon-ajc-rr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
