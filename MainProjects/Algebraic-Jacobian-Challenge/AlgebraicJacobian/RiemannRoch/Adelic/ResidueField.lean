@@ -45,6 +45,21 @@ This file builds all three, for a curve `C : Over (Spec k)`, and so closes the g
 So the exchange is: one open fact **out**, and in its place a `LocallyOfFiniteType`
 hypothesis plus the closedness of the point — both genuinely available.
 
+## The N14 finiteness gate falls out too
+
+Because the route above needs no finiteness, it *yields* some.  `ChiLedger.lean` §N14 carries
+`Module.Finite k (localStepTgt k P 1)` — "`[κ(P):k] < ∞`" — as an explicit binder on roughly
+twenty statements across the lane, describing it as "the gated keystone input, not re-proved
+here".  Approximation by constants makes `κ(P)` spanned by the single class of `1`, hence
+finitely generated: `finite_localStepTgt_one_of_hasRationalResidues`, and on curve hypotheses
+`finite_localStepTgt_one_of_isAlgClosed_curve`.
+
+That is why nothing in §3–§4 below carries a finiteness binder, including
+`residueDeg_eq_one_of_isAlgClosed_curve`: the binder is discharged internally rather than
+passed to the caller.  It is deliberately **not** registered as a global instance — see the
+diamond note below, and note that a global instance would fire during synthesis inside every
+lane statement and pin the `k`-action there.
+
 ## The closedness input
 
 `residueFieldIsoBase` needs `IsClosed {P.point}`.  For a prime divisor this is *not* an
@@ -62,7 +77,10 @@ below packages this, taking the one-dimensionality of the curve as the hypothesi
   closed point, from mathlib's `residueFieldIsoBase`.
 * `hasRationalResidues_of_isAlgClosed_curve` — `HasRationalResidues k P`, **discharged**:
   every function regular at `P` agrees with a constant to first order.
-* `residueDeg_eq_one_of_isAlgClosed_curve` — `[κ(P):k] = 1`, the campaign's residue fact.
+* `finite_localStepTgt_one_of_hasRationalResidues`,
+  `finite_localStepTgt_one_of_isAlgClosed_curve` — the **N14 finiteness gate**, discharged.
+* `residueDeg_eq_one_of_isAlgClosed_curve` — `[κ(P):k] = 1`, the campaign's residue fact,
+  with no finiteness binder.
 * `degree_principal_eq_zero_of_isAlgClosed_curve` — the **unweighted** principal-degree-zero
   statement, from the ledger, with the residue input now discharged rather than assumed.
 
@@ -287,19 +305,100 @@ theorem hasRationalResidues_of_isAlgClosed_curve [IsAlgClosed k]
   rw [map_sub, ha, algebraMap_stalk_functionField C P.point c] at himg
   exact himg
 
+/-! ### The N14 residue-finiteness gate is discharged too
+
+`Module.Finite k (localStepTgt k P 1)` — "`[κ(P):k] < ∞`" — is carried as an instance binder
+by roughly twenty statements across the adelic lane, and `ChiLedger.lean` §N14 describes it
+as "the gated keystone input, not re-proved here".  It is now **provable** on curve
+hypotheses, and cheaply, because `hasRationalResidues_of_isAlgClosed_curve` above needs no
+finiteness at all: approximation by constants says every class in the quotient is a
+`k`-multiple of the class of `1`, so the quotient is spanned by a *single* vector.
+
+This is why §3 is ordered the way it is.  Proving `residueDeg k P = 1` through
+`residueDeg_eq_one_iff_hasRationalResidues` would require the finiteness binder, since that
+equivalence carries it; deriving finiteness from the approximation statement *first* removes
+the binder from everything downstream, including `residueDeg_eq_one_of_isAlgClosed_curve`
+itself. -/
+
+/-- **The residue field is finite-dimensional, from approximation by constants alone.**
+If every function regular at `P` agrees with a constant to first order, then
+`κ(P) = orderGe P 0 ⧸ orderGe P 1` is spanned by the class of `1`, hence finitely generated.
+
+Stated on `HasRationalResidues` rather than on curve hypotheses so that it is reusable: this
+is the general fact that the approximation statement is *strictly stronger* than the
+finiteness gate N14 assumes.  The spanning computation is the one in the `←` branch of
+`residueDeg_eq_one_iff_hasRationalResidues`; here it is used for finiteness rather than for
+the rank bound. -/
+theorem finite_localStepTgt_one_of_hasRationalResidues
+    {X : Scheme.{u}} [IsIntegral X] [IsLocallyNoetherian X]
+    [Scheme.IsRegularInCodimensionOne X] [Algebra k X.functionField]
+    [IsConstantField k X] (P : X.PrimeDivisor)
+    (happrox : HasRationalResidues k P) :
+    Module.Finite k (localStepTgt k P 1) := by
+  have hone : (1 : X.functionField) ∈ orderGeSub k P (1 - 1) := by
+    rw [mem_orderGeSub]
+    exact Or.inr (by rw [Scheme.RationalMap.order_one]; norm_num)
+  -- every class is a `k`-multiple of the class of `1`
+  have hspan : (⊤ : Submodule k (localStepTgt k P 1)) ≤
+      Submodule.span k {Submodule.Quotient.mk (p := Submodule.comap
+        (orderGeSub k P (1 - 1)).subtype (orderGeSub k P 1)) ⟨1, hone⟩} := by
+    intro z _
+    obtain ⟨g, rfl⟩ := Submodule.Quotient.mk_surjective _ z
+    obtain ⟨c, hc⟩ := happrox (g : X.functionField)
+      (by
+        have hg2 := g.2
+        rw [mem_orderGeSub] at hg2
+        exact orderGe_antitone (by norm_num) hg2)
+    rw [Submodule.mem_span_singleton]
+    refine ⟨c, ?_⟩
+    rw [← Submodule.Quotient.mk_smul, Submodule.Quotient.eq, Submodule.mem_comap,
+      Submodule.subtype_apply]
+    have hval : ((c • ⟨1, hone⟩ - g : orderGeSub k P (1 - 1)) :
+        X.functionField) = -(g - algebraMap k X.functionField c) := by
+      change c • (1 : X.functionField) - (g : X.functionField) = _
+      rw [Algebra.smul_def, mul_one]
+      ring
+    rw [mem_orderGeSub, hval]
+    exact (orderGe P 1).neg_mem hc
+  -- a module whose `⊤` sits inside a one-vector span is finitely generated
+  have htop : (⊤ : Submodule k (localStepTgt k P 1))
+      = Submodule.span k {Submodule.Quotient.mk (p := Submodule.comap
+        (orderGeSub k P (1 - 1)).subtype (orderGeSub k P 1)) ⟨1, hone⟩} :=
+    le_antisymm hspan le_top
+  exact Module.Finite.of_fg_top (htop ▸ Submodule.fg_span_singleton _)
+
+/-- **The N14 residue-finiteness gate, discharged on curve hypotheses.**
+`[κ(P):k] < ∞` at every prime divisor of a curve over an algebraically closed base.
+
+Not registered as a global instance: the lane's statements take it as an explicit binder and
+a global instance here would change which `k`-action they synthesize against (see the diamond
+note in the module docstring).  Consumers should apply it explicitly, or `haveI` it. -/
+theorem finite_localStepTgt_one_of_isAlgClosed_curve [IsAlgClosed k]
+    (C : Over (Spec (CommRingCat.of k))) [IsIntegral C.left]
+    [IsLocallyNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
+    [LocallyOfFiniteType C.hom] [SmoothOfRelativeDimension 1 C.hom]
+    (P : C.left.PrimeDivisor) :
+    Module.Finite k (localStepTgt k P 1) :=
+  finite_localStepTgt_one_of_hasRationalResidues P
+    (hasRationalResidues_of_isAlgClosed_curve C P)
+
 /-- **The residue degree is one** at every prime divisor of a curve over an algebraically
 closed base: `[κ(P) : k] = 1`.
 
 This is the fact that `SectionBounds.lean` §4 and `GlobalGeneration.lean` §5–§7 both reduce
 to and both leave open.  It closes item 1 of the two-item residue list in
-`SectionBounds.lean` §4. -/
+`SectionBounds.lean` §4.
+
+Note there is **no finiteness binder**: it is supplied internally by
+`finite_localStepTgt_one_of_isAlgClosed_curve`, so this statement's hypotheses are the curve
+hypotheses and nothing else. -/
 theorem residueDeg_eq_one_of_isAlgClosed_curve [IsAlgClosed k]
     (C : Over (Spec (CommRingCat.of k))) [IsIntegral C.left]
     [IsLocallyNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
     [LocallyOfFiniteType C.hom] [SmoothOfRelativeDimension 1 C.hom]
-    (P : C.left.PrimeDivisor)
-    [Module.Finite k (localStepTgt k P 1)] :
+    (P : C.left.PrimeDivisor) :
     residueDeg k P = 1 :=
+  haveI := finite_localStepTgt_one_of_isAlgClosed_curve C P
   (residueDeg_eq_one_iff_hasRationalResidues k P).mpr
     (hasRationalResidues_of_isAlgClosed_curve C P)
 
@@ -326,7 +425,6 @@ theorem degK_eq_degree_of_isAlgClosed_curve [IsAlgClosed k]
     (C : Over (Spec (CommRingCat.of k))) [IsIntegral C.left]
     [IsNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
     [LocallyOfFiniteType C.hom] [SmoothOfRelativeDimension 1 C.hom]
-    [∀ P : C.left.PrimeDivisor, Module.Finite k (localStepTgt k P 1)]
     (D : C.left.WeilDivisor) :
     degK k D = Scheme.WeilDivisor.degree D :=
   degK_eq_degree_of_residueDeg_eq_one k
@@ -347,7 +445,6 @@ theorem degree_principal_eq_zero_of_isAlgClosed_curve [IsAlgClosed k]
     (C : Over (Spec (CommRingCat.of k))) [IsIntegral C.left]
     [IsNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
     [LocallyOfFiniteType C.hom] [SmoothOfRelativeDimension 1 C.hom]
-    [∀ P : C.left.PrimeDivisor, Module.Finite k (localStepTgt k P 1)]
     (U₀ U₁ : C.left.Opens)
     (hledger : ∀ D : C.left.WeilDivisor,
       chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
@@ -367,7 +464,6 @@ theorem exists_bound_forall_generatedAt_of_isAlgClosed_curve [IsAlgClosed k]
     [IsNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
     [LocallyOfFiniteType C.hom] [SmoothOfRelativeDimension 1 C.hom]
     [∀ D : C.left.WeilDivisor, Module.Finite k (sectionSub k ⊤ D)]
-    [∀ P : C.left.PrimeDivisor, Module.Finite k (localStepTgt k P 1)]
     (U₀ U₁ : C.left.Opens)
     (hledger : ∀ D : C.left.WeilDivisor,
       chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
@@ -378,6 +474,8 @@ theorem exists_bound_forall_generatedAt_of_isAlgClosed_curve [IsAlgClosed k]
       Peel k U₀ U₁ D₀ D') :
     ∃ b : ℤ, ∀ D : C.left.WeilDivisor, b ≤ degK k D →
       ∀ P : C.left.PrimeDivisor, GeneratedAt k D P :=
+  haveI : ∀ P : C.left.PrimeDivisor, Module.Finite k (localStepTgt k P 1) :=
+    fun P => finite_localStepTgt_one_of_isAlgClosed_curve C P
   exists_bound_forall_generatedAt k U₀ U₁ hledger D₀ hbase hpeel 1
     (fun P => le_of_eq (residueDeg_eq_one_of_isAlgClosed_curve C P))
 
