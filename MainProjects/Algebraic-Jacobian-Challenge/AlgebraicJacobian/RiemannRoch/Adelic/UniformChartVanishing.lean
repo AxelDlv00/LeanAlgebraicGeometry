@@ -85,7 +85,16 @@ statement about base-changed section spaces — the cohomological content is dis
 **not** a proof of extension uniformity: `UniformChartCount` is unproved at every curve, and
 it is strictly stronger than the single-field count because `b` is quantified before `κ`.
 Anyone reading this as "extension uniformity is closed" has misread it; a janitor made
-exactly that conflation once already (retracted at inbox `I-0412`). -/
+exactly that conflation once already (retracted at inbox `I-0412`).
+
+**Vacuity warning, inherited from `ChiUnconditional` §5–§6.**  On a cover with a prime divisor
+whose point lies off one chart, the finiteness binders force χ to be *bounded* along a tower
+`n·P`, which refutes the closed ledger there (`ledger_refuted_of_notMem_left`) and hence makes
+the analogous chart counts unsatisfiable.  `UniformChartCount` demands its inclusion at every
+`κ` and every divisor above `b`, so a consumer must first rule out such primes on the
+base-changed cover.  Until that is done this reduction may have an unsatisfiable hypothesis —
+a valid implication that transports nothing.  This is the sharpest honest statement of gap (2)
+available in AJC today, and "sharpest honest" is not the same as "usable". -/
 theorem uniformlyBoundedVanishing_of_uniformChartCount
     (C : Over (Spec (CommRingCat.of k)))
     [IsProper C.hom] [GeometricallyIntegral C.hom] [SmoothOfRelativeDimension 1 C.hom]
