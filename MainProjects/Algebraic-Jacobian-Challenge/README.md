@@ -63,10 +63,10 @@ same theorem by a separate curve-specialized strategy.
   discharged by the caller; the leak appears at any call site that must
   synthesise the instance.  Run
   [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean) (`lake env lean
-  scripts/axiom-frontier.lean`, 107 `#print axioms` lines; 105 of them last measured
-  green, 69 clean and 36 carrying `sorryAx`) before believing any completeness claim —
-  it measures the frontier rather than inferring it.  Count by output *entry*,
-  not by output line:
+  scripts/axiom-frontier.lean`, 107 declarations: 70 clean and 37 carrying `sorryAx`,
+  measured 2026-07-28 with the root build green at 8,744 jobs) before believing any
+  completeness claim — it measures the frontier rather than inferring it.  Count by
+  output *entry*, not by output line:
   Lean wraps a long axiom list across several lines, so a per-line filter
   misclassifies exactly the declarations with the longest lists.  The header carries
   the recipe.

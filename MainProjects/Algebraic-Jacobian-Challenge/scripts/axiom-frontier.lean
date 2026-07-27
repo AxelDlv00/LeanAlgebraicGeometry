@@ -36,7 +36,7 @@ wired to the stated theorem:
     print(f'{len(seen)} of {total} project modules reachable from the headline')
     PY
 
-At the time this probe was last re-measured that reports 98 reachable modules, up from
+Re-measured 2026-07-28: 98 reachable modules of 185 on disk, and zero unrooted, up from
 8 before `picardJacobianWitness` was wired to `Scheme.Pic0Scheme`.  The two most recent
 additions are `Curve/GeometricallyReduced.lean`, which discharges the curve's geometric
 integrality, and `Albanese/AlbaneseUP.lean`, which the headline now reaches because leaf C
@@ -61,11 +61,16 @@ How to read the output.  Every line is one declaration; the only token that matt
 
 Note the `re.split` rather than a plain line filter: Lean wraps a long axiom list over
 several lines, so a per-line scan misclassifies exactly the declarations whose axiom
-list is longest.  Measured 2026-07-27 on the rooted tree: 105 probed, 69 clean, 36
-carrying `sorryAx`.  Two declarations were added on 2026-07-28 (§0 leaf B's dimension
-count, §6c the gate at the challenge's own hypothesis bundle), both expected to leak and
-neither yet re-measured through the root path: run the command above rather than adjusting
-this sentence's arithmetic by hand, which is how the previous two counts here went wrong.
+list is longest.  Measured 2026-07-28 through the root path, with `lake build
+AlgebraicJacobian` green at 8744 jobs: **107 probed, 70 clean, 37 carrying `sorryAx`**.
+Run the command above rather than adjusting this sentence's arithmetic by hand, which is
+how the two previous counts here went wrong.
+
+Of the two declarations added on 2026-07-28, §0's leaf-B dimension count leaks (as its own
+comment predicts — the dimension chain rests on `finrank_cotangentSpaceDual_eq_finrank_h1Cok`)
+and §6c's gate at the challenge's own hypothesis bundle is clean, which is the informative
+one: the rigid-pushforward gate is available at the hypotheses of `Jacobian C` itself and not
+merely at a restatement of them.
 
 One failure mode of this probe that is not a defect in it: `import AlgebraicJacobian` means a
 single red module anywhere in the tree makes the whole frontier unmeasurable, and in a
