@@ -70,6 +70,79 @@ theorem supportLocus_finite_on_curve (K : Type u) [Field K] {X : Scheme.{u}}
     (d.presentation.elem x) (d.presentation_elem_val x)
     (d.cover.mem_opens x) hxg).mpr hord
 
+/-- Away from the generic point, the support locus of regular local equations is exactly the
+support of the associated presentation divisor. -/
+theorem mem_supportLocus_iff_mem_presentationDivisor_support
+    (K : Type u) [Field K] {X : Scheme.{u}}
+    [X.Over (Spec (CommRingCat.of K))]
+    [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))]
+    [IsIntegral X] [QuasiCompact (X ↘ Spec (CommRingCat.of K))]
+    (d : X.LocalEquations) {x : X} (hxg : x ≠ genericPoint X) :
+    x ∈ d.supportLocus ↔
+      (⟨x, hxg⟩ : {y : X // y ≠ genericPoint X}) ∈
+        (toFinsupp (Scheme.presentationDivisor K d.presentation)).support := by
+  rw [Finsupp.mem_support_iff]
+  change x ∈ d.supportLocus ↔
+    coeffAt hxg (Scheme.presentationDivisor K d.presentation) ≠ 0
+  rw [Scheme.coeffAt_presentationDivisor,
+    d.mem_supportLocus_iff_not_isUnit_germ (d.cover.mem_opens x),
+    Scheme.isUnit_germ_iff_ordZ_eq_one K
+      (d.cover.genericPoint_mem_opens x) (d.eqn x)
+      (d.presentation.elem x) (d.presentation_elem_val x)
+      (d.cover.mem_opens x) hxg]
+  simp
+
+/-- Regular local equations do not vanish at the generic point. -/
+theorem genericPoint_not_mem_supportLocus
+    (K : Type u) [Field K] {X : Scheme.{u}}
+    [X.Over (Spec (CommRingCat.of K))]
+    [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))]
+    [IsIntegral X] [QuasiCompact (X ↘ Spec (CommRingCat.of K))]
+    (d : X.LocalEquations) : genericPoint X ∉ d.supportLocus := by
+  intro h
+  have hnot := (d.mem_supportLocus_iff_not_isUnit_germ
+    (d.cover.mem_opens (genericPoint X))).mp h
+  apply hnot
+  exact isUnit_iff_ne_zero.mpr (mem_nonZeroDivisors_iff_ne_zero.mp
+    (d.regular (genericPoint X) (genericPoint X)
+      (d.cover.mem_opens (genericPoint X))))
+
+/-- The support locus is the image of the finite support of its presentation divisor. -/
+theorem supportLocus_eq_image_presentationDivisor_support
+    (K : Type u) [Field K] {X : Scheme.{u}}
+    [X.Over (Spec (CommRingCat.of K))]
+    [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))]
+    [IsIntegral X] [QuasiCompact (X ↘ Spec (CommRingCat.of K))]
+    (d : X.LocalEquations) :
+    d.supportLocus =
+      Subtype.val ''
+        (↑(toFinsupp (Scheme.presentationDivisor K d.presentation)).support :
+          Set {x : X // x ≠ genericPoint X}) := by
+  ext x
+  constructor
+  · intro hx
+    have hxg : x ≠ genericPoint X := by
+      intro h
+      subst x
+      exact genericPoint_not_mem_supportLocus K d hx
+    exact ⟨⟨x, hxg⟩,
+      (mem_supportLocus_iff_mem_presentationDivisor_support K d hxg).mp hx, rfl⟩
+  · rintro ⟨x, hx, rfl⟩
+    exact (mem_supportLocus_iff_mem_presentationDivisor_support K d x.2).mpr hx
+
+/-- Counting the support locus agrees with counting the support of its presentation divisor. -/
+theorem supportLocus_ncard_eq_presentationDivisor_support_card
+    (K : Type u) [Field K] {X : Scheme.{u}}
+    [X.Over (Spec (CommRingCat.of K))]
+    [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))]
+    [IsIntegral X] [QuasiCompact (X ↘ Spec (CommRingCat.of K))]
+    (d : X.LocalEquations) :
+    d.supportLocus.ncard =
+      (toFinsupp (Scheme.presentationDivisor K d.presentation)).support.card := by
+  rw [supportLocus_eq_image_presentationDivisor_support K d,
+    Set.ncard_image_of_injective _ Subtype.val_injective]
+  simp
+
 /-! ## Finite residue fibres -/
 
 section ResidueFibre

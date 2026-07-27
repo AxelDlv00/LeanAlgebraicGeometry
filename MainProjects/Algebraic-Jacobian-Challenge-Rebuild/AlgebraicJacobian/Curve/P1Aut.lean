@@ -378,6 +378,26 @@ theorem badScalars_subsingleton (x : P1 k) : (badScalars k x).Subsingleton := by
   · change (X 1 : MvPolynomial (Fin 2) k) ∉ x.asHomogeneousIdeal at hxcover
     exact hxcover hx1
 
+/-- The union of the bad scalar sets of a finite subset of `P¹` has cardinality at most the
+cardinality of that subset. -/
+theorem badScalars_biUnion_ncard_le (S : Set (P1 k)) (hS : S.Finite) :
+    (⋃ x ∈ S, badScalars k x).ncard ≤ S.ncard := by
+  classical
+  let s : Finset (P1 k) := hS.toFinset
+  have hEq : (⋃ x ∈ S, badScalars k x) = ⋃ x ∈ s, badScalars k x := by
+    ext a
+    simp [s]
+  rw [hEq]
+  calc
+    (⋃ x ∈ s, badScalars k x).ncard
+        ≤ ∑ x ∈ s, (badScalars k x).ncard :=
+      Finset.set_ncard_biUnion_le s (badScalars k)
+    _ ≤ ∑ x ∈ s, 1 := Finset.sum_le_sum fun x _ =>
+      (Set.ncard_le_one (badScalars_subsingleton k x).finite).mpr
+        (badScalars_subsingleton k x)
+    _ = s.card := by simp
+    _ = S.ncard := (Set.ncard_eq_toFinset_card S hS).symm
+
 /-- Two distinct members of the pencil `X₁ - aX₀` are the rows of an invertible matrix. -/
 theorem exists_matrix_twistedCoord_eq (a b : k) (hab : a ≠ b) :
     ∃ M : Matrix.GeneralLinearGroup (Fin 2) k,
@@ -395,6 +415,45 @@ theorem exists_matrix_twistedCoord_eq (a b : k) (hab : a ≠ b) :
       MvPolynomial.smul_eq_C_mul, sub_eq_add_neg, add_comm]
   · simp [twistedCoord, MvPolynomial.matrixLinearForm, M, A, Fin.sum_univ_two,
       MvPolynomial.smul_eq_C_mul, sub_eq_add_neg, add_comm]
+
+/-- Over a finite field with at least two more elements than `S`, one coordinate twist puts
+the finite subset `S` inside the intersection of the two twisted standard charts. -/
+theorem exists_matrix_finite_subset_chartInter_of_ncard_add_two_le [Fintype k]
+    (S : Set (P1 k)) (hS : S.Finite) (hcard : S.ncard + 2 ≤ Fintype.card k) :
+    ∃ M : Matrix.GeneralLinearGroup (Fin 2) k,
+      S ⊆ ((autOfMatrix k M ⁻¹ᵁ chartOpen k 0 : (P1 k).Opens) : Set (P1 k)) ∩
+        ((autOfMatrix k M ⁻¹ᵁ chartOpen k 1 : (P1 k).Opens) : Set (P1 k)) := by
+  classical
+  let B : Set k := ⋃ x ∈ S, badScalars k x
+  have hB : B.Finite := by
+    dsimp [B]
+    exact hS.biUnion fun x _ => (badScalars_subsingleton k x).finite
+  have hBncard : B.ncard ≤ S.ncard := by
+    dsimp [B]
+    exact badScalars_biUnion_ncard_le k S hS
+  let s : Finset k := hB.toFinset
+  have hs : 1 < sᶜ.card := by
+    rw [Finset.card_compl]
+    have hscard : s.card = B.ncard := (Set.ncard_eq_toFinset_card B hB).symm
+    omega
+  obtain ⟨a, ha, b, hb, hab⟩ := Finset.one_lt_card.mp hs
+  have haB : a ∉ B := by simpa [s] using ha
+  have hbB : b ∉ B := by simpa [s] using hb
+  obtain ⟨M, hM0, hM1⟩ := exists_matrix_twistedCoord_eq k a b hab
+  refine ⟨M, fun x hx => ?_⟩
+  constructor
+  · rw [autOfMatrix_preimage_chartOpen]
+    change twistedCoord k M 0 ∉ x.asHomogeneousIdeal
+    rw [hM0]
+    intro hbad
+    apply haB
+    exact Set.mem_iUnion_of_mem x (Set.mem_iUnion_of_mem hx hbad)
+  · rw [autOfMatrix_preimage_chartOpen]
+    change twistedCoord k M 1 ∉ x.asHomogeneousIdeal
+    rw [hM1]
+    intro hbad
+    apply hbB
+    exact Set.mem_iUnion_of_mem x (Set.mem_iUnion_of_mem hx hbad)
 
 /-- Over an infinite field, one coordinate twist puts any finite subset of `P¹` inside the
 intersection of the two twisted standard charts. -/

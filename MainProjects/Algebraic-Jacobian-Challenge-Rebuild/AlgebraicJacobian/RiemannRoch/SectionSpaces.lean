@@ -134,6 +134,35 @@ lemma Scheme.CurveDivisor.deg_inf_add_deg_sup (D D' : X.CurveDivisor) :
 
 end Degree
 
+section EffectiveSupport
+
+variable (K : Type u) [Field K] [X.Over (Spec (CommRingCat.of K))]
+  [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))]
+  [LocallyOfFiniteType (X ↘ Spec (CommRingCat.of K))]
+
+/-- The number of support points of an effective divisor is at most its degree. Each nonzero
+coefficient and each residue degree contributes at least one to the degree sum. -/
+lemma Scheme.CurveDivisor.support_card_le_deg {E : X.CurveDivisor} (hE : 0 ≤ E) :
+    ((toFinsupp E).support.card : ℤ) ≤ CurveDivisor.deg K E := by
+  classical
+  rw [CurveDivisor.deg]
+  calc
+    ((toFinsupp E).support.card : ℤ)
+        = ∑ p ∈ (toFinsupp E).support, (1 : ℤ) := by simp
+    _ ≤ ∑ p ∈ (toFinsupp E).support,
+        toFinsupp E p * (X.residueDeg K p.1 : ℤ) := by
+      gcongr with p hp
+      have hcoeff : (1 : ℤ) ≤ toFinsupp E p := by
+        have hnonneg : (0 : ℤ) ≤ toFinsupp E p := Finsupp.le_def.mp hE p
+        have hne : toFinsupp E p ≠ 0 := Finsupp.mem_support_iff.mp hp
+        omega
+      have hres : (1 : ℤ) ≤ (X.residueDeg K p.1 : ℤ) := by
+        exact_mod_cast Scheme.residueDeg_pos (K := K) p.2
+      exact one_le_mul_of_one_le_of_one_le hcoeff hres
+    _ = (toFinsupp E).sum fun p n => n * (X.residueDeg K p.1 : ℤ) := rfl
+
+end EffectiveSupport
+
 section DegreeZero
 
 variable (K : Type u) [Field K] [X.Over (Spec (CommRingCat.of K))]
