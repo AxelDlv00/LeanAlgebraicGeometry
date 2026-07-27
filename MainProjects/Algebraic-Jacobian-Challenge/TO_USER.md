@@ -13,7 +13,7 @@
 
 - **Sorry-free is not axiom-clean, and there are five separate ways to be misled.**
   Run `lake env lean scripts/axiom-frontier.lean` before believing any completeness
-  number; it currently probes 89 declarations, 54 clean and 35 carrying `sorryAx`.
+  number; it currently probes 95 declarations, 59 clean and 36 carrying `sorryAx`.
   (1) Two `sorry`-bodied *instances* (`instHasPicScheme`,
   `pullback_preservesFiniteLimits`) leak through synthesis, so a theorem reports
   clean axioms while every real consumer depends on `sorryAx`.  (2) An *unproved*
@@ -24,12 +24,14 @@
   discharge in the Riemann–Roch lane this week, caught and retracted.  (5) An
   unrooted module is not probed at all, because the root import never reaches it.
   Genuinely clean and unconditional, verified: the adelic genus lane, degree-1
-  affine vanishing, the Čech higher-direct-image comparison, and — new — the
-  local-freeness half of the rigidified pushforward with the integrality of
-  `ℙ¹_k` under it.
+  affine vanishing, the Čech higher-direct-image comparison, and — new this week —
+  the **whole B3 rigid-pushforward gate**, which now carries a real instance for
+  every curve satisfying the challenge hypotheses.  That last one is measured at
+  the synthesis site, not merely as stated, which is the only check that
+  distinguishes it from case (1) above.
 
 - **The headline is wired, and now rests on five stated obligations.**
-  `picardJacobianWitness` is built from `Pic⁰_{C/k}` and reaches 97 project
+  `picardJacobianWitness` is built from `Pic⁰_{C/k}` and reaches 98 project
   modules, up from 8; the whole committed tree is reachable from the project root.
   Two of its four structural fields are proved upstream (`Pic0.grpObj`,
   `Pic0.geometricallyIrreducible`); the other two, `Pic0.smooth` and `Pic0.proper`,

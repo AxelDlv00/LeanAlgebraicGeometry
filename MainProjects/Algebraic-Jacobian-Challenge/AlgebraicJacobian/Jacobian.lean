@@ -323,14 +323,20 @@ This is a theorem, and it is the honest measure of the distance between
 `isAlbanese_pic0` and the Albanese development. The factorisation clause of `IsAlbanese`
 -- the whole universal property -- is `Albanese.Pic0.albanese_universal_property` applied
 directly, with no transport: `Pic0.jacobianScheme C` is `Scheme.Pic0Scheme C`, so the
-statements match on the nose. What `isAlbanese_pic0` adds is therefore exactly three
-things, and no more:
+statements match on the nose. What `isAlbanese_pic0` adds is therefore three pieces of
+mathematics:
 
 1. arbitrary base field, in place of algebraically closed -- the Galois-descent step of
    the campaign's cluster `G`;
 2. `genus C = 0` as well as positive genus -- where `Pic⁰_{C/k} = Spec k` and the content
    is Mumford §4 rigidity;
 3. the basepoint condition `P ≫ ι_P = η`, taken here as the hypothesis `hbase`.
+
+Plus one bookkeeping difference that is not mathematics but should not be glossed: this
+statement carries `[GeometricallyIrreducible C.hom]` alongside `[GeometricallyIntegral
+C.hom]`, where the general leaf carries only the latter. Mathlib derives irreducibility
+from integrality at low instance priority, so it is not free at the binder even though it
+is free mathematically.
 
 The third is the one that is easy to lose sight of, because it is not a restriction on
 the landed theorem's *hypotheses* but a conjunct of `IsAlbanese` that

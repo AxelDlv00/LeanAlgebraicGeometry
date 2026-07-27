@@ -61,7 +61,7 @@ How to read the output.  Every line is one declaration; the only token that matt
 
 Note the `re.split` rather than a plain line filter: Lean wraps a long axiom list over
 several lines, so a per-line scan misclassifies exactly the declarations whose axiom
-list is longest.  Measured 2026-07-27 on the rooted tree: 90 probed, 54 clean, 36
+list is longest.  Measured 2026-07-27 on the rooted tree: 95 probed, 59 clean, 36
 carrying `sorryAx`.
 
 Companion measurement 2 — is every module on disk rooted?  A module that nothing
@@ -268,11 +268,19 @@ algebraically closed field either. -/
 #print axioms AlgebraicGeometry.Adelic.chi_eq_of_bump_of_nonneg
 #print axioms AlgebraicGeometry.Adelic.chi_eq_iff_step_of_bump
 
--- §6c The rigid-pushforward gate (task ajc-gate).  The gate is still NOT instantiated.
--- `hasRigidPushforward_of_leaves` is a four-leaf FACTORIZATION of it — a true theorem and
--- a useful decomposition, but no longer the frontier: two of its leaves are now proved
--- (see the block below), and the current frontier is the single statement
--- `RigidPushforwardGammaBaseChange`.
+-- §6c The rigid-pushforward gate (task ajc-gate).  THE GATE IS NOW INSTANTIATED AND THE
+-- INSTANCE IS AXIOM-CLEAN — `instHasRigidPushforwardOfCurve`
+-- (`Picard/RigidPushforwardGammaBaseChange.lean`), for every AJC curve, with no hypothesis
+-- beyond the curve's own.  This is the one case in this file where a global instance is
+-- *good* news, and it is exactly the case where the measurement matters most: the whole
+-- point of §8 below is that a `sorry`-bodied instance poisons every synthesis site, so an
+-- instance that measures clean has to be checked, not assumed.  The three extraction
+-- theorems of `Picard/RigidPushforward.lean` now synthesize their gate rather than
+-- assuming it, and §6c-headlines below measures them at that synthesis site.
+--
+-- `hasRigidPushforward_of_leaves` is a four-leaf FACTORIZATION, of historical interest
+-- only now that the gate is a theorem; it was never the frontier once two of its leaves
+-- were proved.
 --
 -- THIRD TRAP, worse than the first two, demonstrated in this very cone (I-0395): a
 -- theorem whose named hypothesis is FALSE is vacuously true, and reports clean axioms
@@ -299,11 +307,11 @@ algebraically closed field either. -/
 -- are clean and conditional in the *other* direction: they quantify over the curve's
 -- own instances only, which for an AJC curve are synthesized.
 --
--- `hasRigidPushforward_of_gammaBaseChange` is the honest residue: the gate still has NO
--- instance, and its whole remaining cost is `RigidPushforwardGammaBaseChange` at every
--- finitely generated `k`-algebra — one statement rather than the former four leaves.
--- Being an assembly theorem it reports clean axioms automatically (trap (a) again), so
--- the line below is a record of the reduction, not of a discharge.
+-- `hasRigidPushforward_of_gammaBaseChange` was the honest residue when the gate's cost was
+-- one statement; `rigidPushforwardGammaBaseChange_proved` now supplies that statement, so
+-- the reduction closed rather than merely narrowing.  Both are measured, along with the
+-- resulting instance and the three extraction theorems AT THEIR SYNTHESIS SITE — which is
+-- the only measurement that distinguishes a real discharge from trap (a).
 #print axioms AlgebraicGeometry.Adelic.instIsIntegralP1OverLeft
 #print axioms AlgebraicGeometry.Adelic.p1RankIdentity_proved
 #print axioms AlgebraicGeometry.Adelic.p1RigidPushforwardStatement_proved
@@ -311,6 +319,16 @@ algebraically closed field either. -/
 #print axioms AlgebraicGeometry.Adelic.hasRigidPushforward_of_gammaBaseChange
 #print axioms AlgebraicGeometry.Adelic.p1ChartSectionsAlgEquivX
 #print axioms AlgebraicGeometry.Adelic.isIntegral_p1_of_isDomain_charts
+
+-- The statement that closed the reduction, the instance it produces, and the three
+-- extraction theorems restated without the gate binder — so they are measured where the
+-- gate is SYNTHESIZED, not where it is assumed.  Compare §8: the same measurement on
+-- `HasPicScheme` is what exposes `instHasPicScheme`, and these come out the other way.
+#print axioms AlgebraicGeometry.Adelic.rigidPushforwardGammaBaseChange_proved
+#print axioms AlgebraicGeometry.Adelic.instHasRigidPushforwardOfCurve
+#print axioms AlgebraicGeometry.Adelic.rigidPushforward_locallyFree
+#print axioms AlgebraicGeometry.Adelic.rigidPushforward_baseChange
+#print axioms AlgebraicGeometry.Adelic.rigidPushforward_isLocallyTrivial
 
 -- §7 Albanese cone
 #print axioms AlgebraicGeometry.Pic0.bundle

@@ -1,6 +1,6 @@
 \chapter{FGA representability of the Picard scheme}
 \label{chap:Picard_FGAPicRepresentability}
-% archon:covers AlgebraicJacobian/Picard/FGAPicRepresentability.lean AlgebraicJacobian/Picard/RigidPushforwardInstance.lean AlgebraicJacobian/Picard/RigidPushforwardP1Topology.lean AlgebraicJacobian/Picard/GaloisDescent/SemilinearAlgebras.lean AlgebraicJacobian/Picard/StableAffineCover.lean
+% archon:covers AlgebraicJacobian/Picard/FGAPicRepresentability.lean AlgebraicJacobian/Picard/RigidPushforwardGammaBaseChange.lean AlgebraicJacobian/Picard/RigidPushforwardInstance.lean AlgebraicJacobian/Picard/RigidPushforwardP1Topology.lean AlgebraicJacobian/Picard/GaloisDescent/SemilinearAlgebras.lean AlgebraicJacobian/Picard/StableAffineCover.lean
 
 \section{Setup and motivation}
 \label{sec:fga_pic_setup}
@@ -437,9 +437,11 @@ subfunctors cover, so gluing them represents \(\Pic^r_{C'/k'}\). Descent to
 \(\Pic^d \cong \Pic^r\) given by tensoring with \(\mathcal{O}((r-d) x_0)\).
 
 The two inputs the route rests on that the quotient route does not are the
-rigidified pushforward and the finite Galois quotient. The first is the local
-freeness of \(q_* \mathcal{L}\); the second is Speiser descent together with the
-existence of \(\Gamma\)-stable affine neighbourhoods.
+rigidified pushforward and the finite Galois quotient. The first is local freeness
+of \(q_* \mathcal{L}\) together with its compatibility with base change, and it
+holds for every curve satisfying the hypotheses of this chapter
+(\cref{thm:rigid_pushforward_gate}). The second is Speiser descent together with
+the existence of \(\Gamma\)-stable affine neighbourhoods.
 
 \begin{theorem}[Local freeness of the rigidified pushforward]\leanok
   \label{thm:rigid_pushforward_locally_free}
@@ -449,15 +451,34 @@ existence of \(\Gamma\)-stable affine neighbourhoods.
   \textit{Source: [Mumford], \emph{Abelian Varieties}, II \S 5.}
   Let \(C\) be a smooth proper geometrically integral curve over a field \(k\),
   let \(A\) be a finitely generated \(k\)-algebra and \(q : C_A \to \Spec A\) the
-  constant family. Let \(\mathcal{L}\) be an invertible sheaf on \(C_A\) with
-  \(H^1(C_t, \mathcal{L}_t) = 0\) at every point \(t\) of \(\Spec A\). Then every
-  point of \(\Spec A\) has an open neighbourhood on which \(q_* \mathcal{L}\) is
-  free of rank \(h^0(C_t, \mathcal{L}_t)\).
+  constant family. Let \(\mathcal{L}\) be an invertible sheaf on \(C_A\) such that
+  for every point \(t\) of \(\Spec A\) some two-chart affine cover of the fibre
+  \(C_t\) has surjective {\v C}ech difference map on \(\mathcal{L}_t\) --- for a
+  separated fibre with affine chart intersection this computes
+  \(H^1(C_t, \mathcal{L}_t) = 0\). Then every point of \(\Spec A\) has an open
+  neighbourhood on which \(q_* \mathcal{L}\) is free of rank
+  \(h^0(C_t, \mathcal{L}_t)\).
 \end{theorem}
 
+\begin{remark}[Why the vanishing hypothesis is stated {\v C}ech-locally]
+  \label{rem:fiber_h1_vanishing_form}
+  \uses{thm:rigid_pushforward_locally_free}
+  The hypothesis of \cref{thm:rigid_pushforward_locally_free} asks for
+  \emph{some} two-chart cover of each fibre with surjective difference map,
+  rather than for vanishing of the sheaf cohomology \(H^1(C_t, \mathcal{L}_t)\).
+  On a separated fibre whose two charts have affine intersection the {\v C}ech
+  complex of that cover computes the sheaf cohomology, so the two agree; the
+  existential form is the weaker-looking one and is implied by any form of
+  \(h^1 = 0\), so a consumer supplying sheaf vanishing supplies this. The
+  identification is cover-independent by Mayer--Vietoris, but that
+  independence is not itself established here, which is why the hypothesis is
+  stated in the form that does not presuppose it.
+\end{remark}
+
 \begin{proof}\leanok
-  \uses{lem:p1_integral}
-  Choose a finite morphism \(\pi : C \to \mathbb{P}^1_k\) and base change it to
+  \uses{lem:p1_integral, thm:adelic_exists_finiteMorphismToP1}
+  Choose a finite morphism \(\pi : C \to \mathbb{P}^1_k\)
+  (\cref{thm:adelic_exists_finiteMorphismToP1}) and base change it to
   \(\pi_A : C_A \to \mathbb{P}^1_A\). Since \(\pi_A\) is finite, it is affine and
   \(\pi_{A*}\) is exact, so \(q_* \mathcal{L} = p_* (\pi_{A*} \mathcal{L})\) for
   \(p : \mathbb{P}^1_A \to \Spec A\), and the fibrewise cohomology of
@@ -480,6 +501,54 @@ existence of \(\Gamma\)-stable affine neighbourhoods.
   fibre identifies that dimension with \(h^0(C_t, \mathcal{L}_t)\). A finite
   locally free module of locally constant rank is free on a neighbourhood of each
   point.
+\end{proof}
+
+\begin{lemma}[Global sections of the pushforward commute with base change]\leanok
+  \label{lem:gamma_base_change}
+  \lean{AlgebraicGeometry.Adelic.rigidPushforwardGammaBaseChange_proved}
+  \uses{thm:rigid_pushforward_locally_free}
+  In the situation of \cref{thm:rigid_pushforward_locally_free}, for every ring
+  map \(A \to A'\) --- with no finiteness, flatness or noetherian hypothesis on
+  \(A'\) --- the canonical map
+  \[
+    A' \otimes_A \Gamma(C_A, \mathcal{L})
+      \longrightarrow \Gamma(C_{A'}, g'^* \mathcal{L})
+  \]
+  is bijective.
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{thm:rigid_pushforward_locally_free}
+  Push forward along the finite \(\pi_A : C_A \to \mathbb{P}^1_A\) as in
+  \cref{thm:rigid_pushforward_locally_free} and work with the two-term {\v C}ech
+  complex \(d\) of the preimage cover. Fibrewise vanishing of \(H^1\) makes \(d\)
+  surjective, and for a surjective two-term complex the formation of \(\ker d\)
+  is universally exact: base changing the short exact sequence
+  \(0 \to \ker d \to K^0 \to K^1 \to 0\) along \(A \to A'\) stays exact because
+  \(K^1\) is flat, so \(A' \otimes_A \ker d \to \ker(d \otimes A')\) is
+  bijective. Global sections of the pushforward are \(\ker d\) on both sides by
+  the sheaf condition, which gives the claim.
+\end{proof}
+
+\begin{theorem}[The rigidified pushforward exists for every curve]\leanok
+  \label{thm:rigid_pushforward_gate}
+  \lean{AlgebraicGeometry.Adelic.instHasRigidPushforwardOfCurve}
+  \uses{thm:rigid_pushforward_locally_free, lem:gamma_base_change}
+  Let \(C\) be a smooth proper geometrically integral curve over a field \(k\).
+  Then \(C\) admits the rigidified pushforward: for every finitely generated
+  \(k\)-algebra \(A\) and every invertible sheaf on \(C_A\) with fibrewise
+  vanishing \(H^1\), the pushforward \(q_* \mathcal{L}\) is locally free of rank
+  \(h^0\) of the fibre and its formation commutes with arbitrary base change.
+\end{theorem}
+
+\begin{proof}\leanok
+  \uses{thm:rigid_pushforward_locally_free, lem:gamma_base_change}
+  The two conclusions are \cref{thm:rigid_pushforward_locally_free} and, by
+  affine-target descent from the module-level statement of
+  \cref{lem:gamma_base_change}, the base-change conclusion: over an affine base
+  both ends of the adjunction mate are quasi-coherent, and a morphism of
+  quasi-coherent modules on an affine scheme is an isomorphism as soon as it is
+  bijective on global sections.
 \end{proof}
 
 \begin{lemma}[The projective line over a field is integral]\leanok
@@ -1018,9 +1087,9 @@ of \cref{sec:fga_pic_setup} establishes it, and they consume different inputs.
 
 Along the Milne--Koll\'ar route of \cref{sec:fga_pic_milne_kollar} --- the one
 being formalised --- the inputs are: the rigidified pushforward
-\cref{thm:rigid_pushforward_locally_free}, which supplies both the canonical
-divisor family and the semicontinuity of \(h^0\) cutting out the loci
-\(C^\Sigma\); uniform \(H^1\) vanishing in high degree, which makes those loci
+\cref{thm:rigid_pushforward_gate}, which holds for every curve satisfying this
+chapter's hypotheses and supplies both the canonical divisor family and the
+semicontinuity of \(h^0\) cutting out the loci \(C^\Sigma\); uniform \(H^1\) vanishing in high degree, which makes those loci
 cover; representability of the degree-\(r\) divisor functor, which supplies the
 ambient \(Z\) together with its Grassmannian immersion; and the finite Galois
 quotient \cref{thm:galois_quotient_points} with

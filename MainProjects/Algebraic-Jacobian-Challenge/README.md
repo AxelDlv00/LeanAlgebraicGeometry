@@ -18,9 +18,10 @@ Its substrate (Grassmannians, graded algebra, flattening stratification) is
 sorry-free and is consumed by the committed route, so it is retained.
 
 Two of the committed route's own engines are substantially built.  The rigidified
-pushforward has its local-freeness half unconditional
-(`Adelic.rigidPushforwardLocallyFree_proved`), and the gate it feeds now costs one
-statement — classical `H⁰` base change — rather than four leaves.  The finite Galois
+pushforward gate is **discharged**: `Adelic.instHasRigidPushforwardOfCurve` is a real
+instance for every curve satisfying the challenge hypotheses, and it measures axiom-clean
+at the synthesis site, as do the three extraction theorems that now synthesise it rather
+than assuming it.  The finite Galois
 quotient has Speiser descent, the affine quotient, and `Γ`-stable affine covers proved;
 what remains there is gluing.  Both are stated with proofs and Lean pins in the
 blueprint's FGA chapter, §"The Milne–Kollár route".  Neither route is hypothesis-free:
@@ -34,8 +35,8 @@ same theorem by a separate curve-specialized strategy.
 
 ## State (measured 2026-07-27)
 
-- **182 modules, 129,215 lines**; **26 `sorry`** over 11 modules, the rest locally
-  sorry-free; a warm `lake build AlgebraicJacobian` **green** at 8,740 jobs.  These
+- **184 modules, 130,035 lines**; **26 `sorry`** over 11 modules, the rest locally
+  sorry-free; a warm `lake build AlgebraicJacobian` **green** at 8,742 jobs.  These
   counts move whenever a module lands, so re-measure rather than quoting them:
 
   ```bash
@@ -60,7 +61,7 @@ same theorem by a separate curve-specialized strategy.
   discharged by the caller; the leak appears at any call site that must
   synthesise the instance.  Run
   [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean) (`lake env lean
-  scripts/axiom-frontier.lean`, 89 declarations, 54 clean and 35 carrying `sorryAx`
+  scripts/axiom-frontier.lean`, 95 declarations, 59 clean and 36 carrying `sorryAx`
   as last measured) before believing any completeness claim — it measures the
   frontier rather than inferring it.  Count by output *entry*, not by output line:
   Lean wraps a long axiom list across several lines, so a per-line filter

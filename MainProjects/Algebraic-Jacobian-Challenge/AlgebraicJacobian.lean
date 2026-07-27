@@ -92,9 +92,12 @@ import AlgebraicJacobian.Picard.RigidPushforwardRank
 -- no `instance : HasRigidPushforward`, so §6c of the axiom probe still records the gate
 -- as uninstantiated.
 import AlgebraicJacobian.Picard.RigidPushforwardInstance
--- Aimed at the one statement the gate still costs: the chart-level form of the Γ base
--- change. Sits over FiberChart, beside the assembly rather than under it.
+-- The one statement the gate still costs, and its chart-level input. ChartBaseChange sits
+-- over FiberChart; GammaBaseChange imports it and Instance, and carries the gate's whole
+-- remaining cost, which is exactly why it must be rooted rather than left green and
+-- unmeasured (I-0388).
 import AlgebraicJacobian.Picard.RigidPushforwardChartBaseChange
+import AlgebraicJacobian.Picard.RigidPushforwardGammaBaseChange
 import AlgebraicJacobian.Picard.P1SectionsFinite
 import AlgebraicJacobian.Picard.TwoTermFiniteFree
 import AlgebraicJacobian.Picard.SemicontinuityH0
@@ -202,9 +205,10 @@ import AlgebraicJacobian.RiemannRoch.Adelic.BoundedVanishing
 -- imports GlobalGeneration, so the second entry alone would root both; both are kept
 -- explicit so retiring either cannot silently unroot the other. Same caveat as above:
 -- the generation lane takes the closed χ-ledger as a named hypothesis, so a clean
--- `#print axioms` on it is not an unconditional theorem. The exception, measured
--- separately in scripts/axiom-frontier.lean §6d, is
--- `hasRationalResidues_of_isAlgClosed`, which takes no ledger at all.
+-- `#print axioms` on it is not an unconditional theorem. There is NO exception here:
+-- `hasRationalResidues_of_isAlgClosed` takes no ledger, but its obligations sit in three
+-- instance binders that nothing constructs for a bare `Scheme`, so it is a relocation
+-- rather than a discharge (scripts/axiom-frontier.lean §6e).
 import AlgebraicJacobian.RiemannRoch.Adelic.GlobalGeneration
 import AlgebraicJacobian.RiemannRoch.Adelic.LedgerClosure
 import AlgebraicJacobian.RiemannRoch.CurveBaseChange
