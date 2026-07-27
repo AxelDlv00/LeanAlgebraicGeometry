@@ -2,44 +2,80 @@ id: AJC.rr.principal
 title: Principal divisors have degree zero
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Principal divisors have degree zero. STILL OPEN (sorry at RiemannRoch/WeilDivisor.lean:1194,\n\
-  deliberately in place). Run 0055 session 0006 CLOSED item 1; item 2 remains and\
-  \ is now the only\nopen input.\n\nITEM 1, residueDeg = 1: DISCHARGED (Adelic/ResidueField.lean,\n\
-  residueDeg_eq_one_of_isAlgClosed_curve). For a prime divisor of a curve C : Over\
-  \ (Spec kbar) with\nkbar algebraically closed, under [IsIntegral] [IsLocallyNoetherian]\
-  \ [IsRegularInCodimensionOne]\n[LocallyOfFiniteType] [SmoothOfRelativeDimension\
-  \ 1] -- all carried by the project's headline curve,\nLocallyOfFiniteType because\
-  \ mathlib's IsProper extends it structurally. (NOT from smoothness: that\nbridge\
-  \ is outside the module's import closure and infer_instance fails there. Machine-checked.)\n\
-  \n  How, because the previous summary's diagnosis of the obstacle was right and\
-  \ the resolution went\n  around it rather than through it. GlobalGeneration §7 derives\
-  \ the fact from three stalk binders and\n  AJC builds none of them; the third, Module.Finite\
-  \ k (ResidueField (stalk)), is effectively a new\n  gate. That gate was NOT built.\
-  \ mathlib's AlgebraicGeometry.residueFieldIsoBase proves kappa(x) = k\n  for a closed\
-  \ point of a scheme LOCALLY OF FINITE TYPE over an algebraically closed field, getting\n\
-  \  integrality from isFinite_iff_locallyOfFiniteType_of_jacobsonSpace instead. Two\
-  \ enabling facts:\n  X.residueField x is DEFEQ to IsLocalRing.ResidueField (stalk\
-  \ x); and the load-bearing new lemma is\n  algebraMap_stalk_functionField, that\
-  \ the stalk k-algebra and the lane's Algebra k K(X) agree on\n  constants -- without\
-  \ it no stalk argument is readable in the order language.\n\n  Bonus: node N14's\
-  \ residue-FINITENESS gate Module.Finite k (localStepTgt k P 1), carried as a binder\n\
-  \  by ~20 lane statements, is discharged too (finite_localStepTgt_one_of_isAlgClosed_curve).\
-  \ The\n  direction is counter-intuitive: the residue statement needs no finiteness,\
-  \ and approximation by\n  constants makes kappa(P) spanned by the class of 1, so\
-  \ finiteness is a CONSEQUENCE of the residue\n  fact, not a prerequisite.\n\nITEM\
-  \ 2, the closed chi-ledger: still not a theorem, and now the SINGLE remaining input.\
-  \ Proved on the\nwhole EFFECTIVE cone from the one-point bump alone (LedgerClosure.chi_eq_of_bump_of_nonneg).\n\
-  Extending to all divisors is proved EQUIVALENT to one identity about the negative\
-  \ part\n(chi_eq_iff_step_of_bump), stated as an iff precisely so it is not mistaken\
-  \ for a reduction. Not\nbookkeeping: chi is not additive in D (only deg_k is) and\
-  \ D is not linearly equivalent to D+, so\nneither transport mechanism the lane owns\
-  \ applies.\n\nWHAT IS ASSEMBLED NOW: degree_principal_eq_zero_of_isAlgClosed_curve\
-  \ proves the UNWEIGHTED\ndeg(div g) = 0 on curve hypotheses from the ledger ALONE,\
-  \ where before it needed the ledger AND the\nresidue fact. And degK_eq_degree_of_isAlgClosed_curve\
-  \ gives deg_k = deg with no open input at all.\n\nNEXT for this row: the ledger's\
-  \ negative part. Do NOT substitute the sorry until it is a theorem --\ndoing so\
-  \ would relocate the gap while making a hypothesis-free statement depend silently\
-  \ on one.\n"
+summary: 'Principal divisors have degree zero. STILL OPEN (sorry at RiemannRoch/WeilDivisor.lean:1194,
+
+  deliberately in place). Both items of the old two-item residue are now closed; what
+  remains is
+
+  ONE input, and it is a one-point local statement rather than a global identity.
+
+
+  ITEM 1, residueDeg = 1: DISCHARGED (run 0055 s0006, Adelic/ResidueField.lean,
+
+  residueDeg_eq_one_of_isAlgClosed_curve). For a prime divisor of a curve C : Over
+  (Spec kbar) with
+
+  kbar algebraically closed, under [IsIntegral] [IsLocallyNoetherian] [IsRegularInCodimensionOne]
+
+  [LocallyOfFiniteType] [SmoothOfRelativeDimension 1] -- all carried by the project''s
+  headline
+
+  curve, LocallyOfFiniteType because mathlib''s IsProper extends it structurally (NOT
+  from
+
+  smoothness: that bridge is outside the module''s import closure, machine-checked).
+  Route: mathlib''s
+
+  residueFieldIsoBase gets integrality of kappa(x) from LocallyOfFiniteType via the
+  Jacobson-space
+
+  criterion, so the residue-finiteness gate is AVOIDED, not built. Bonus: node N14''s
+  residue
+
+  finiteness gate fell with it.
+
+
+  ITEM 2, THE CLOSED LEDGER: DISCHARGED (run 0055 s0008, Adelic/LedgerClosure.chi_eq_of_bump).
+
+  chi(D) = chi(0) + deg_k D at EVERY Weil divisor from the one-point bump alone. The
+  previous
+
+  summary recorded the extension past the effective cone as the substantive open half,
+  needing
+
+  ''an input the lane does not have'', with a correct-but-irrelevant obstruction argument
+  (chi is not
+
+  additive; D is not linearly equivalent to D+). No transport was needed: hbump admits
+  an ARBITRARY
+
+  base divisor, so the telescope runs onto the base D rather than up from 0.
+
+
+  WHAT REMAINS, precisely: the leaf needs the BUMP for a 2-affine cover of C -- one
+  application of
+
+  chi_add_eq_residueDeg per step, which consumes the ledger exact sequence''s connecting
+  and
+
+  surjectivity data plus the strong-approximation input hsurj. So the leaf is open,
+  but its open
+
+  input is now a single one-point local statement.
+
+
+  The sorry stays in place deliberately: substituting
+
+  Adelic.degree_principal_eq_zero_of_isAlgClosed_curve (which proves the UNWEIGHTED
+  deg(div g) = 0
+
+  on curve hypotheses from the ledger alone) would make a theorem whose statement
+  mentions no
+
+  hypotheses depend silently on the bump. Adelic.degK_eq_degree_of_isAlgClosed_curve
+  gives
+
+  deg_k = deg with no open input whatsoever.'
 status: pending
 kind: proof
 priority: normal
@@ -62,6 +98,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.rr
-  updated_at: '2026-07-27T14:46:49.065167+00:00'
+  updated_at: '2026-07-27T16:48:24.914593+00:00'
   pinned_commits:
   - 768b6cbd4

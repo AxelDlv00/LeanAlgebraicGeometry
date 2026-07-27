@@ -1,0 +1,56 @@
+id: I-0446
+provider: local
+kind: memory
+body: "[persistent] MATHLIB DOES CARRY A RELATIVE-DIMENSION BRIDGE, via the rank of\
+  \ Omega rather than a tangent space -- and 'mathlib has no API for this' was asserted\
+  \ about it twice\n\nFound by ajc-truth (run 0054 s0008) while writing a docstring\
+  \ that claimed the opposite, and\nworth recording because the shape of the error\
+  \ recurs in this workspace.\n\nTHE FACT. AJC's leaf B needs SmoothOfRelativeDimension\
+  \ (genus C) (Pic0Scheme C).hom, and the\nnatural evidence available is a TANGENT\
+  \ SPACE dimension: dim_{kappa(e)} T_e Pic0 = genus C\n(now proved at the headline,\
+  \ finrank_tangentSpace_pic0_eq_genus). It is easy to conclude that\nmathlib offers\
+  \ nothing, because SmoothOfRelativeDimension is DEFINED by local standard-smooth\n\
+  presentations and mentions no tangent space anywhere. I wrote 'it carries no bridge\
+  \ in either\ndirection, so this step is missing mathematics' and that is false.\n\
+  \nThe bridge is at the ALGEBRA level and through a DIFFERENT INVARIANT:\n\n  Algebra.IsStandardSmoothOfRelativeDimension.rank_kaehlerDifferential\n\
+  \    [Nontrivial S] [IsStandardSmoothOfRelativeDimension n R S] : Module.rank S\
+  \ Omega[S/R] = n\n  Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth\n\
+  \    [Nontrivial S] [IsStandardSmooth R S] (n) :\n      IsStandardSmoothOfRelativeDimension\
+  \ n R S <-> Module.rank S Omega[S/R] = n\n\n(RingTheory/Smooth/StandardSmoothCotangent.lean,\
+  \ mathlib v4.31.) The second is an IFF, so it\nconverts relative dimension into\
+  \ a rank computation in both directions.\n\nWHY THE SEARCH MISSES IT, which is the\
+  \ transferable part. Grepping SmoothOfRelativeDimension\nfor 'tangent' or 'finrank'\
+  \ returns nothing, and that is a true fact about the name. The bridge\ndoes not\
+  \ mention tangent spaces because it is stated in the invariant mathlib actually\
+  \ uses for\nsmoothness -- the module of Kaehler differentials. So the real obligation\
+  \ is not 'construct a\nbridge' but 'translate between two invariants': rank Omega\
+  \ versus dim of the tangent space,\ndual to each other over a field, plus the affine-local-to-scheme-level\
+  \ passage.\n\nTHE GENERAL LESSON. When a needed statement seems absent, check whether\
+  \ the library states the\nsame mathematics in a DIFFERENT INVARIANT before recording\
+  \ it as missing. Tangent space vs\nOmega, dimension vs rank, cotangent vs derivations\
+  \ -- these are the same content under names\nthat share no substring. 'No lemma\
+  \ mentions X and Y together' is evidence about vocabulary, not\nabout mathematics.\
+  \ Related: [[I-0439]] (prose asserting a gate is open after it closed) and\n[[I-0445]]\
+  \ (published counts nobody can re-derive) are the same defect class -- a checkable\n\
+  claim recorded in a form that cannot be checked."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T16:43:29.722204+00:00'
+updated_at: '2026-07-27T16:48:31.599114+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0008-horizon-ajc-truth
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-truth

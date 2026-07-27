@@ -1,0 +1,63 @@
+id: I-0445
+provider: local
+kind: memory
+body: "[persistent] PUBLISH THE COMMAND, NOT THE COUNT: this project's frontier numbers\
+  \ have now been wrong three times, and every time the number was checkable only\
+  \ by re-deriving it from scratch\n\nEstablished by ajc-truth across runs 0046-0054,\
+  \ counting the actual defect population in this\nproject's own published measurements\
+  \ rather than reasoning about it.\n\nTHE THREE FAILURES, all in scripts/axiom-frontier.lean\
+  \ or its downstream prose:\n\n1. '41 clean, 35 leaking, of 66 probed' -- arithmetically\
+  \ impossible on its face. Cause: the\n   count filtered output LINES, and Lean wraps\
+  \ a long axiom list across several lines, so\n   exactly the declarations with the\
+  \ longest lists were misclassified.\n2. '24 sorry-bodied declarations, of which\
+  \ two are instances' -- I wrote this after listing\n   exactly 24 NON-instance carriers\
+  \ and forgetting to add the two instances. The build says 26,\n   and I had also\
+  \ dropped one module's three carriers from the list entirely.\n3. '105 declarations,\
+  \ 69 clean' quoted as current after two lines were added, when the probe\n   could\
+  \ not run at all because the root build was red.\n\nWHAT THESE HAVE IN COMMON, and\
+  \ it is not carelessness. Each number was true when written and\nbecame false without\
+  \ anything warning about it, because the number was published as a VALUE\nrather\
+  \ than as the OUTPUT OF A NAMED COMMAND. A reader who doubts '26 carriers' has no\
+  \ cheap way\nto check; a reader given\n\n    lake build AlgebraicJacobian 2>&1 |\
+  \ grep 'declaration uses' | sort -u\n\nchecks it in one command and sees drift immediately.\
+  \ Same for the clean/leaking split (the\nre.split-by-entry recipe in the probe header)\
+  \ and for module rootedness (the closure script).\n\nTHE RULE. Any count published\
+  \ in this project -- README, TO_USER, roadmap summary, docstring,\ninbox report\
+  \ -- carries the command that regenerates it, and states its measurement STATUS\
+  \ when\nthat command has not just been run ('105 last measured green; two lines\
+  \ added since, not yet\nre-measured'). A count without its command is folklore with\
+  \ a digit in it.\n\nTWO SPECIFIC TRAPS THE COMMANDS THEMSELVES HAVE:\n- Do NOT derive\
+  \ the sorry-carrier count by grepping sources for ':= sorry'. It undercounts:\n\
+  \  cech_pushforward_baseChange_natIso and twisted_cech_nerve_iso hold their sorry\
+  \ in a STRUCTURE\n  FIELD (fun {n m} phi => sorry), and prose mentions of the word\
+  \ inflate the other direction.\n  The build's 'declaration uses sorry' warnings\
+  \ are the authority.\n- An 'import AlgebraicJacobian' probe cannot distinguish its\
+  \ own failures from the workspace's.\n  'object file ... does not exist' is a transient\
+  \ race with a sibling team's rebuild and is fixed\n  by re-running lake build first;\
+  \ a whnf timeout or elaboration error is a genuinely red tree and\n  the frontier\
+  \ must not be quoted until it is green. I lost three probe runs to treating the\n\
+  \  second as the first.\n\nRelated: [[I-0439]] is the converse defect (prose asserting\
+  \ a gate is still open after it\nclosed). This one is about numbers rather than\
+  \ claims, and the mechanism is the same -- a local\nedit falsifies a distributed\
+  \ statement."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T16:40:06.608778+00:00'
+updated_at: '2026-07-27T16:48:28.512336+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0008-horizon-ajc-truth
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-truth

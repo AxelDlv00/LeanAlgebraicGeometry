@@ -2,28 +2,37 @@ id: AJC.jacobian.reachability
 title: Wire the headline to the infrastructure
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The headline rests on the infrastructure it claims, and the claim is measured
-  rather than asserted. picardJacobianWitness is built from Scheme.Pic0Scheme, so
-  98 of the project''s modules are reachable from Jacobian.lean rather than the 8
-  of the Genus-only import; the 98th arrived when leaf C was stated against the landed
-  Albanese universal property, which put the Albanese cone under the headline for
-  the first time (previously the two were disjoint).  EVERY MODULE ON DISK IS ROOTED
-  at AlgebraicJacobian.lean, which matters because an unrooted module compiles green
-  and is invisible BOTH to the root build and to the axiom probe -- #print axioms
-  on its declarations cannot even be written against the root import. 184 on disk,
-  183 rooted as of 2026-07-27; the single exception is another team''s untracked mid-flight
-  file, and rooting an untracked module would break a clean checkout. The standing
-  check is in the probe header and in I-0388.  THE OBLIGATION COUNT IS FIVE, not three:
-  Pic0.smooth and Pic0.proper are sorry-bodied upstream, and three leaves are stated
-  at the headline. Their distances to the landed tree are unequal and now known: leaf
-  C is one basepoint condition plus two generalizations away from a landed theorem
-  (isAlbanese_pic0_of_isAlgClosed proves the case, so the distance is compiler-checked);
-  leaf A is FALSE as stated and must be replaced, not proved; leaf B presupposes Pic0.smooth,
-  so it rests on an obligation rather than reducing one.  REPRODUCIBLE: scripts/axiom-frontier.lean,
-  95 declarations, 59 clean and 36 carrying sorryAx, with the two reachability measurements
-  in its header. Count by output ENTRY, not by line -- Lean wraps long axiom lists,
-  and the naive per-line filter misclassifies exactly the declarations whose lists
-  are longest.'
+summary: 'The headline rests on the infrastructure it claims, and every number here
+  is measured rather than asserted. picardJacobianWitness is built from Scheme.Pic0Scheme,
+  so 98 of the project''s modules are reachable from Jacobian.lean rather than the
+  8 of the Genus-only import; the 98th arrived when leaf C was stated against the
+  landed Albanese universal property, which put the Albanese cone under the headline
+  for the first time.  EVERY MODULE ON DISK IS ROOTED at AlgebraicJacobian.lean --
+  185 of 185 as of 2026-07-28, no exceptions -- which matters because an unrooted
+  module compiles green and is invisible BOTH to the root build and to the axiom probe:
+  #print axioms on its declarations cannot even be written against the root import.
+  The standing check is in the probe header and in I-0388. A module not yet committed
+  to the ledger must NOT be rooted (a clean checkout would fail); that grace period
+  ends at the commit.  THE OBLIGATION COUNT IS FIVE, not three: Pic0.smooth and Pic0.proper
+  are sorry-bodied upstream, and three leaves are stated at the headline. Their distances
+  to the landed tree are unequal and now COMPILER-CHECKED rather than described, each
+  by a companion theorem stated at the headline: leaf A is FALSE as stated and must
+  be replaced, not proved; leaf B owes Pic0.smooth plus the passage from a tangent-space
+  dimension to Mathlib''s presentation-based SmoothOfRelativeDimension, since the
+  dimension count itself is landed (finrank_tangentSpace_pic0_eq_genus proves dim
+  T_e Pic0 = genus C with no transport); leaf C is one basepoint condition plus two
+  generalizations away (isAlbanese_pic0_of_isAlgClosed proves the algebraically closed
+  positive-genus case).  REPRODUCIBLE and re-measured 2026-07-28 THROUGH THE ROOT
+  PATH with lake build AlgebraicJacobian green at 8744 jobs: scripts/axiom-frontier.lean,
+  107 declarations, 70 clean and 37 carrying sorryAx; 26 sorry carriers over 11 modules,
+  matching the enumeration published in the probe''s section 2 exactly; 98 modules
+  reachable from the headline of 185 on disk, zero unrooted. With the two reachability
+  measurements in its header. Count by output ENTRY, not by line -- Lean wraps long
+  axiom lists, and the naive per-line filter misclassifies exactly the declarations
+  whose lists are longest. Section 2 now also carries the EXHAUSTIVE sorry-carrier
+  list: 24 sorry-bodied declarations, of which exactly two are instances (instHasPicScheme,
+  pullback_preservesFiniteLimits) and therefore the only two reachable without being
+  named.'
 status: done
 kind: proof
 priority: normal
@@ -46,7 +55,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian.assembly
-  updated_at: '2026-07-27T12:49:42.062181+00:00'
+  updated_at: '2026-07-27T16:46:59.000320+00:00'
   owner: ajc-truth
   pinned_commits:
+  - ad09baf14
+  - b65f25d6a
   - 4905dc11b

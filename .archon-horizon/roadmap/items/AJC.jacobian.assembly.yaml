@@ -20,9 +20,19 @@ summary: 'Construct picardJacobianWitness from Picard representability, the Pic0
   is constructed, since it is a statement about that morphism.  - LEAF A (rational
   point) is not a distance at all: the statement is FALSE, so it must be replaced
   by whichever branch the owner picks in I-0372, never proved.  - LEAF B (dimension
-  refinement) presupposes Pic0.smooth, itself unproved, so it rests on an obligation
-  rather than reducing one.  Pic0.smooth and Pic0.proper belong to no current task
-  and are the nearest unowned work under the headline.'
+  refinement) now has its landed half at the headline too, and it is NOT the dimension
+  count. finrank_tangentSpace_pic0_eq_genus proves dim T_e Pic0 = genus C by Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne
+  with no transport, since genus C is definitionally dim_k H^1(C,O_C). So leaf B owes
+  exactly two things: Pic0.smooth (itself unproved, so the leaf presupposes an obligation
+  rather than reducing one), and a TRANSLATION between two invariants of smoothness.
+  On the second: mathlib''s SmoothOfRelativeDimension mentions no tangent space, but
+  it is not bridge-free -- Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth
+  characterises relative dimension n as Module.rank S Omega[S/R] = n, an iff -- so
+  the work is the duality over a field between rank Omega and the tangent-space dimension,
+  plus the affine-local-to-scheme-level passage over a cover of Pic0. An earlier summary
+  called this missing mathematics with no bridge; that was retracted (memory I-0446).  Pic0.smooth
+  and Pic0.proper belong to no current task and are the nearest unowned work under
+  the headline.'
 status: pending
 kind: proof
 priority: high
@@ -45,4 +55,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
-  updated_at: '2026-07-27T12:12:47.733518+00:00'
+  updated_at: '2026-07-27T16:45:44.944948+00:00'

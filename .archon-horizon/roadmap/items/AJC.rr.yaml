@@ -7,40 +7,38 @@ summary: "Riemann--Roch, divisors, and the adelic genus.\n\nCluster-P substrate,
   \ class invariance (Adelic/ClassInvariance.lean) -- multiplication by g is a\n \
   \   k-linear automorphism of K(X) carrying chart sections, coboundary and overlap\
   \ onto their\n    shifted counterparts, so ell, h1 and chi are functions of the\
-  \ linear-equivalence class,\n    with no gate, no finiteness and no ledger-exactness\
+  \ linear-equivalence class, with\n    no gate, no finiteness and no ledger-exactness\
   \ input.\n\n(b) UNCONDITIONAL degree and drop bounds (Adelic/SectionBounds.lean)\
   \ -- deg_k as a bundled\n    AddMonoidHom, residue-degree positivity, positive degree\
-  \ for nonzero effective divisors,\n    and the drop sandwich ell(D) <= ell(D+P)\
-  \ <= ell(D)+[kappa(P):k]. The ell-half of the\n    ledger needs neither the connecting/surjectivity\
-  \ data nor strong approximation.\n\n(c) CONDITIONAL single-field bounded H1 vanishing\
-  \ (Adelic/BoundedVanishing.lean) --\n    exists_bound_subsingleton_h1Mod, b = deg_k\
-  \ D0 + 1 - chi(0), relative to three named\n    hypotheses: base vanishing at one\
-  \ D0, peel-surjectivity, the closed ledger. None is a gate\n    class. The ledger\
-  \ binder is now taken only at the RESIDUALS D - D0\n    (exists_bound_subsingleton_h1Mod_of_residualLedger),\
-  \ which is where the proof uses it.\n\n(d) PROVED global generation (Adelic/GlobalGeneration.lean)\
-  \ -- the evaluation map\n    Gamma(D)/Gamma(D-P) -> kappa(P) is onto exactly when\
-  \ the section drop is maximal, which\n    the ledger converts into a PAIR of vanishings.\
-  \ Conditional on the same inputs as (c).\n\n(e) THE RESIDUE LANE, CLOSED (Adelic/ResidueField.lean,\
-  \ run 0055 s0006) -- residueDeg = 1 and\n    node N14's residue-FINITENESS gate\
-  \ are both DISCHARGED on curve hypotheses; deg_k = deg is\n    unconditional; ell(D)\
-  \ = deg D + 1 - g for deg large, on the GEOMETRIC degree. Also\n    primeDivisorOfNotGeneric,\
-  \ the first producer of an X.PrimeDivisor in AJC -- before it, every\n    'forall\
-  \ P : PrimeDivisor' statement was formally at risk of vacuity.\n\nTHE THREE GAPS,\
-  \ kept distinct:\n  1. single-field bounded vanishing -- reduced to cone-vanishing\
-  \ + ledger, NOT discharged\n     (coneVanishing_iff_base_and_peel proves the hypothesis\
-  \ pair equivalent to cone-vanishing).\n  2. EXTENSION UNIFORMITY -- unproved, but\
-  \ STATABLE as Adelic.UniformlyBoundedVanishing. An\n     earlier version of this\
-  \ summary said \"even stating it needs the 2-affine cover transported\n     to C_kappa\"\
-  ; that is FALSE -- CurveBaseChange §3's AffineCoverMVSquare.baseChangeField\n  \
-  \   transports it. The real missing inputs are flat base change for the section\
-  \ spaces\n     (Gamma(C_kappa, O(D_kappa)) = Gamma(C,O(D)) tensor_k kappa) and a\
-  \ WeilDivisor PULLBACK along\n     C_kappa -> C, the latter genuinely hard since\
-  \ a closed point can split so prime divisors\n     need not stay prime.\n  3. global\
-  \ generation -- PROVED, see (d).\n\nOPEN INPUTS: the closed ledger's negative part\
-  \ (stated exactly as an iff in LedgerClosure), the\none-point peel (the deepest\
-  \ analytic leaf, unattempted), the base vanishing, and the SECTION\nfiniteness Module.Finite\
-  \ k (sectionSub k top D) -- a DIFFERENT hypothesis from the residue\nfiniteness\
-  \ now discharged, and still open.\n"
+  \ for nonzero effective divisors, and\n    the drop sandwich ell(D) <= ell(D+P)\
+  \ <= ell(D)+[kappa(P):k].\n\n(c) THE CLOSED CHI-LEDGER, PROVED (Adelic/LedgerClosure.chi_eq_of_bump,\
+  \ run 0055 s0008) --\n    chi(D) = chi(0) + deg_k D at EVERY Weil divisor, from\
+  \ the one-point bump alone. This was\n    recorded as open by three sessions, with\
+  \ a correct-but-irrelevant obstruction argument; the\n    resolution is that hbump\
+  \ admits an ARBITRARY base divisor, so the telescope runs onto the\n    base D rather\
+  \ than up from 0. hledger is therefore no longer an independent lane input, and\n\
+  \    six ledger-free restatements of the lane's conclusions are in LedgerClosure\
+  \ section 2.\n\n(d) CONDITIONAL single-field bounded H1 vanishing (Adelic/BoundedVanishing.lean)\
+  \ --\n    exists_bound_subsingleton_h1Mod, b = deg_k D0 + 1 - chi(0). Open inputs\
+  \ now TWO, not three,\n    and both are one-point local statements: the bump, and\
+  \ the one-point peel. The peel is FREE\n    off the overlap (peel_pointDivisor_of_notMem_overlap),\
+  \ so its content sits at overlap points\n    only -- a small saving, since the overlap\
+  \ of a 2-affine cover of an irreducible curve is dense.\n\n(e) PROVED global generation\
+  \ (Adelic/GlobalGeneration.lean) -- the evaluation map\n    Gamma(D)/Gamma(D-P)\
+  \ -> kappa(P) is onto exactly when the section drop is maximal, which the\n    ledger\
+  \ converts into a PAIR of vanishings. Conditional on the same inputs as (d).\n\n\
+  (f) THE RESIDUE LANE, CLOSED (Adelic/ResidueField.lean) -- residueDeg = 1 and node\
+  \ N14's\n    residue-finiteness gate both DISCHARGED on curve hypotheses; deg_k\
+  \ = deg unconditional;\n    ell(D) = deg D + 1 - g for deg large on the GEOMETRIC\
+  \ degree.\n\nTHE THREE GAPS, KEPT APART (the task requires this separation):\n \
+  \ 1. single-field vanishing -- conditional on the bump, one base vanishing, and\
+  \ the overlap peel;\n  2. extension uniformity -- OPEN. UniformlyBoundedVanishing\
+  \ is a definition proved at no curve.\n     UniformlyBoundedVanishing' gives an\
+  \ instance-binder form, defeq to it by Iff.rfl; that is a\n     usability fix and\
+  \ proves NOTHING about uniformity. Missing inputs unchanged: flat base change\n\
+  \     for the section spaces, and a WeilDivisor pullback along C_kappa -> C (hard:\
+  \ points split);\n  3. global generation -- PROVED, conditional on the inputs of\
+  \ (1)."
 status: pending
 kind: proof
 priority: normal
@@ -63,7 +61,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
-  updated_at: '2026-07-27T14:47:11.469767+00:00'
+  updated_at: '2026-07-27T16:48:51.363153+00:00'
   owner: ajc-rr
   pinned_commits:
   - 37f95374c

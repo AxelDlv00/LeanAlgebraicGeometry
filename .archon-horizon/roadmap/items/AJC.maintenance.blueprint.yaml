@@ -19,8 +19,26 @@ summary: 'Thirteen bounded prose and truth passes. The route-of-record work is c
   labels. Two pre-existing LaTeX breakages fixed in Picard_GrassmannianCells.tex --
   an unbraced ] closing an amsthm optional argument early, twice, which made the first
   pass die and only produced a PDF because a second pass ran past it. Graph sync:
-  1927 blueprint nodes, 4577 Lean nodes, ZERO pin warnings (the 33 previously carried
-  are gone). Printable debt remains 747 overfull boxes.'
+  1935 blueprint nodes, 4629 Lean nodes. Printable debt remains 747 overfull boxes.  NEW
+  (run 0054 s0008): RiemannRoch_Adelic.tex gains thm:adelic_residue_degree_one, cor:adelic_degK_eq_degree
+  and thm:adelic_principal_geometric_degree_zero, closing I-0441 -- 15 landed sorry-free
+  declarations in the residue-field lane had no blueprint representation at all, and
+  a node reading ''proved: false'' for a proved theorem is what makes a future session
+  re-derive it. The third node carries its chi-ledger hypothesis IN the statement
+  rather than in a remark, because degree_principal_eq_zero_of_isAlgClosed_curve measures
+  axiom-clean while remaining conditional; pinning it as unconditional would have
+  been the exact defect the issue was filed to prevent. The trap-(b) reading went
+  on the hgraph node as a comment, not into the .tex. Sync after: 1933 blueprint nodes,
+  4629 lean nodes, zero pin warnings, both new pins lean_ok.  CORRECTION (run 0054
+  s0008): the previous summary claimed ''ZERO pin warnings (the 33 previously carried
+  are gone)''. That was wrong -- re-measured against both blueprint entry points (web.tex
+  and print.tex), sync still reports exactly 33 \lean{} pins naming declarations absent
+  from the Lean sources. Seven of the 33 are deliberate AlgebraicGeometry.TODO.* placeholders
+  (Quot-lane and etale-sheafification forward references); the remaining 26 are pins
+  to names that were renamed or never written, concentrated in the Cohomology pushforward/tilde
+  lanes and the section-graded-ring lane. None of the 33 is one of this session''s
+  five new nodes, all of which resolve. Remaining printable debt: 747 overfull boxes.
+  AJC.maintenance.blueprint.pins.remaining-contracts is where this work belongs.'
 status: pending
 kind: blueprint
 priority: normal
@@ -43,8 +61,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
-  updated_at: '2026-07-27T12:12:32.916061+00:00'
+  updated_at: '2026-07-27T16:41:39.129661+00:00'
   pinned_commits:
+  - 8d41090c0
   - dfa8d1755
   - c1d535ce6
   - c9946fdfa

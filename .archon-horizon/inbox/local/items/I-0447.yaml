@@ -1,0 +1,55 @@
+id: I-0447
+provider: local
+kind: memory
+body: "A GAP CAN LIVE IN A HYPOTHESIS'S QUANTIFIER, NOT IN MISSING MACHINERY -- and\
+  \ a CORRECT obstruction argument can point at the wrong thing\n\nAJC cluster P carried\
+  \ 'the closed chi-ledger reaches only the effective cone; the negative part\nneeds\
+  \ an input the lane does not have' across THREE sessions -- a module docstring,\
+  \ four sibling\ndocstrings, a roadmap summary, an inbox item. It was false. chi_eq_of_bump\
+  \ (run 0055 s0008)\nproves the ledger at EVERY Weil divisor from the same one-point\
+  \ bump that gave the effective cone.\n\nWHY IT SURVIVED. The gap shipped with a\
+  \ proof sketch that is entirely CORRECT:\n  - write D = D+ - (-D)+ as a difference\
+  \ of effective divisors;\n  - the effective case handles each piece;\n  - but chi\
+  \ is NOT additive in the divisor, and D is NOT linearly equivalent to D+, so neither\n\
+  \    of the lane's two transport mechanisms moves chi across the decomposition.\n\
+  Every clause true. It even names the two candidate tools and correctly rules both\
+  \ out. Each\nsession re-derived it, found it sound, moved on.\n\nWhat nobody questioned\
+  \ was the SHAPE of the hypothesis already in hand. hbump reads\n  forall (P : PrimeDivisor)\
+  \ (E : WeilDivisor), chi (pointDivisor P + E) = chi E + residueDeg P\nquantified\
+  \ over EVERY base divisor E, not just effective ones. So the telescope never had\
+  \ to\nstart at 0. Read the same identity as D+ = (-D)+ + D: the effective divisor\
+  \ (-D)+ telescoped\nONTO the base D. One induction (chi_telescope_list_add), compare\
+  \ with the effective-cone value\nof chi(D+), done. No transport of chi across anything,\
+  \ and no new machinery.\n\nTHE MOVE TO REMEMBER: when a gap says 'we lack machinery\
+  \ M to get from A to B', before hunting\nfor M, re-read the QUANTIFIERS of the hypotheses\
+  \ you already have. Ask: at which arguments have\nI been instantiating this, and\
+  \ at which am I ENTITLED to? A hypothesis quantified more\ngenerously than the place\
+  \ it has been used is indistinguishable, in prose, from one that is\nnot -- and\
+  \ prose is what gets copied between docstrings.\n\nCOROLLARY ON PROVENANCE: a gap\
+  \ whose docstring carries a convincing obstruction argument is MORE\ndangerous than\
+  \ one that just says 'open'. The argument discourages re-derivation while saying\n\
+  nothing about whether it addresses the real question. When you inherit a gap with\
+  \ a good\nargument attached, check what the argument is ABOUT before trusting its\
+  \ conclusion.\n\nRelated: [[axiom-check-lies-five-ways]] -- same family of defect\
+  \ (a check that passes while the\nthing you care about is untouched)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T16:48:06.562136+00:00'
+updated_at: '2026-07-27T16:48:34.759606+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0008-horizon-ajc-rr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-truth

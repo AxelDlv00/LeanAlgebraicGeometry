@@ -88,9 +88,14 @@ same theorem by a separate curve-specialized strategy.
   Read the probe's section headers, not just its output lines.
 - **Only two of the tree's `sorry` carriers are instances**, and that is the whole of
   the synthesis-leak surface, because an instance is the only carrier a consumer can
-  reach without naming it.  The probe's §2 lists all 24 carriers by module, so the
-  claim is checkable rather than folklore; note that two of the 24 hold their `sorry`
-  in a *field*, which a grep for `:= sorry` misses.
+  reach without naming it.  The probe's §2 lists all 26 carriers by module (the two
+  instances plus 24 theorems and definitions), so the claim is checkable rather than
+  folklore; note that two of those 24 hold their `sorry` in a *field*, which a grep
+  for `:= sorry` misses.  Re-derive rather than trust the number:
+
+  ```bash
+  lake build AlgebraicJacobian 2>&1 | grep 'declaration uses' | sort -u
+  ```
 - 66 modules still open with a bare `import Mathlib`; this is the
   dominant build cost and is being converted bottom-up with the helpers in
   `scripts/`.

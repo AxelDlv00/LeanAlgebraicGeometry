@@ -34,13 +34,13 @@ body: "A FIFTH WAY A CLEAN AXIOM CHECK LIES: an instance DIAMOND that silently r
   \ is a theorem and not an\ninstance."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-27T12:59:24.819873+00:00'
-updated_at: '2026-07-27T14:51:54.300437+00:00'
+updated_at: '2026-07-27T16:22:03.630724+00:00'
 metadata:
   provenance:
     run: '0055'
@@ -52,4 +52,4 @@ metadata:
     task_title: Bring the cluster-P Riemann-Roch substrate into AJC
     projects: Algebraic-Jacobian-Challenge
   read_by:
-  - ajc-truth
+  - ajc-rr
