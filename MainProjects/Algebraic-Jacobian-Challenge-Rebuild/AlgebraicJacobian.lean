@@ -199,6 +199,7 @@ import AlgebraicJacobian.Cohomology.RigidEngine4Assembly
 import AlgebraicJacobian.Cohomology.RigidEngine4AEval
 import AlgebraicJacobian.Cohomology.RigidEngine4Twist
 import AlgebraicJacobian.Cohomology.RigidEngine4Relative
+import AlgebraicJacobian.Cohomology.TwistedFiberTwoCover
 import AlgebraicJacobian.Cohomology.RigidEngine4Engine
 import AlgebraicJacobian.Cohomology.RigidEngine4BaseChange
 import AlgebraicJacobian.Cohomology.GluedSheaf

@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Curve.P1
+import Mathlib.LinearAlgebra.Projectivization.Action
 
 /-!
 # Automorphisms of the projective line: the `GL₂`-twist
@@ -202,6 +203,8 @@ namespace P1
 
 variable (k : Type u) [Field k]
 
+open scoped LinearAlgebra.Projectivization
+
 local notation "𝒜" => homogeneousSubmodule (Fin 2) k
 
 /-- Notation-free shorthand for the coefficient matrix of `M ∈ GL₂(k)`. -/
@@ -316,6 +319,27 @@ theorem isAffineOpen_preimage_chartOpen (M : Matrix.GeneralLinearGroup (Fin 2) k
 theorem autOfMatrix_preimage_chartOpen_sup (M : Matrix.GeneralLinearGroup (Fin 2) k) :
     (autOfMatrix k M ⁻¹ᵁ chartOpen k 0) ⊔ (autOfMatrix k M ⁻¹ᵁ chartOpen k 1) = ⊤ := by
   rw [← Scheme.Hom.preimage_sup, chartOpen_sup, Scheme.Hom.preimage_top]
+
+/-! ### Two-transitivity on rational points -/
+
+/-- The type of `k`-rational points of the projective line, in homogeneous coordinates. -/
+abbrev RationalPoint := ℙ k (Fin 2 → k)
+
+/-- **Two-transitivity of `GL₂(k)` on `P¹(k)`.** Any ordered pair of distinct rational
+points can be carried to any other ordered pair by one invertible matrix. The matrix action here
+is the homogeneous-coordinate action underlying `autOfMatrix`. -/
+theorem exists_matrix_smul_pair {p₀ p₁ q₀ q₁ : RationalPoint k}
+    (hp : p₀ ≠ p₁) (hq : q₀ ≠ q₁) :
+    ∃ M : Matrix.GeneralLinearGroup (Fin 2) k,
+      Matrix.GeneralLinearGroup.toLin M • p₀ = q₀ ∧
+      Matrix.GeneralLinearGroup.toLin M • p₁ = q₁ := by
+  have htrans : MulAction.IsMultiplyPretransitive
+      (LinearMap.GeneralLinearGroup k (Fin 2 → k)) (RationalPoint k) 2 :=
+    inferInstance
+  obtain ⟨g, hg₀, hg₁⟩ := (MulAction.is_two_pretransitive_iff.mp htrans) hp hq
+  refine ⟨Matrix.GeneralLinearGroup.toLin.symm g, ?_, ?_⟩
+  · simpa using hg₀
+  · simpa using hg₁
 
 end P1
 
