@@ -3,7 +3,17 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import Mathlib
+import Mathlib.Algebra.Algebra.Subalgebra.Centralizer
+import Mathlib.Algebra.Homology.Homotopy
+import Mathlib.AlgebraicGeometry.QuasiAffine
+import Mathlib.AlgebraicGeometry.ValuativeCriterion
+import Mathlib.Analysis.CStarAlgebra.CStarMatrix
+import Mathlib.Combinatorics.Quiver.ReflQuiver
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
+import Mathlib.Tactic.SetNotationForOrder
 
 /-!
 # Grassmannian affine charts

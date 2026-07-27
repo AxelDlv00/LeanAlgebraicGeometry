@@ -3,7 +3,14 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import Mathlib
+import Mathlib.Algebra.MvPolynomial.Monad
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Submodule
+import Mathlib.RingTheory.Henselian
+import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
+import Mathlib.RingTheory.PowerSeries.WellKnown
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
 
 /-!
 # Graded Hilbert–Serre rationality layer

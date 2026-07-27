@@ -3,7 +3,22 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import Mathlib
+import Mathlib.Algebra.Category.ModuleCat.Free
+import Mathlib.Algebra.Homology.Homotopy
+import Mathlib.Algebra.Module.LocalizedModule.Exact
+import Mathlib.AlgebraicGeometry.AffineScheme
+import Mathlib.AlgebraicGeometry.Modules.Sheaf
+import Mathlib.Combinatorics.Quiver.ReflQuiver
+import Mathlib.LinearAlgebra.FreeModule.PID
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.RingTheory.Flat.TorsionFree
+import Mathlib.RingTheory.Ideal.AssociatedPrime.Finiteness
+import Mathlib.RingTheory.KrullDimension.Polynomial
+import Mathlib.RingTheory.MvPolynomial.IrreducibleQuadratic
+import Mathlib.RingTheory.NoetherNormalization
+import Mathlib.RingTheory.RegularLocalRing.Defs
+import Mathlib.RingTheory.SimpleRing.Principal
+import Mathlib.RingTheory.TotallySplit
 
 /-!
 # Flattening stratification of a coherent sheaf (A.2.a)

@@ -3,11 +3,11 @@ author: sync
 content_type: theorem
 created: '2026-07-16T21:14:29'
 decl: AlgebraicGeometry.snd_left_isClosedMap
-docstring: '**Bridge 1 of the Rigidity Lemma (closed-map step), PROVEN.** When `X`
-  is complete (proper)
+docstring: '**Completeness of `X` makes the projection `X ⊗ Y ⟶ Y` a closed map.**
+  When `X` is complete
 
-  over `k̄`, the second monoidal projection `snd : X ⊗ Y ⟶ Y` has, on underlying schemes,
-  a
+  (proper) over `k̄`, the second monoidal projection `snd : X ⊗ Y ⟶ Y` has, on underlying
+  schemes, a
 
   *closed* base map. This is Mumford''s "completeness of `X` makes `p₂` a closed map"
   (Abelian
@@ -30,13 +30,16 @@ docstring: '**Bridge 1 of the Rigidity Lemma (closed-map step), PROVEN.** When `
 
   `(snd X Y).left` is universally closed and hence its base map is closed
 
-  (`Scheme.Hom.isClosedMap`). Char-free; no theorem of the cube, no cohomology.'
+  (`Scheme.Hom.isClosedMap`). Valid in any characteristic; no theorem of the cube,
+  no
+
+  cohomology.'
 file: AlgebraicJacobian/RigidityLemma.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.snd_left_isClosedMap
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-07-27T01:33:12'
 ---
 theorem snd_left_isClosedMap
     {X Y : Over (Spec (.of kbar))} [IsProper X.hom] :

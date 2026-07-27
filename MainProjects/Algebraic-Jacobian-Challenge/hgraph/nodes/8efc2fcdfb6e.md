@@ -3,8 +3,8 @@ author: sync
 content_type: theorem
 created: '2026-07-16T21:14:29'
 decl: AlgebraicGeometry.rigidity_snd_lift
-docstring: '**Cartesian-monoidal identity (skeleton step of the Rigidity Lemma).**
-  Post-composing the
+docstring: '**Cartesian-monoidal identity underlying the rigidity lemma.** Post-composing
+  the
 
   second projection `snd : X ⊗ Y ⟶ Y` with the slice section `y ↦ (x₀, y)` is the
   "collapse the
@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.rigidity_snd_lift
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-07-27T01:33:12'
 ---
 theorem rigidity_snd_lift
     {X Y : Over (Spec (.of kbar))}

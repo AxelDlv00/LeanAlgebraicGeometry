@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.CoherentSheafFlat.of_isPullback
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-27T01:33:11'
 ---
 theorem CoherentSheafFlat.of_isPullback
     {X S X' S' : Scheme.{u}} {f : X ⟶ S} {g : S' ⟶ S} {g' : X' ⟶ X} {f' : X' ⟶ S'}
@@ -54,7 +54,7 @@ theorem CoherentSheafFlat.of_isPullback
     -- affine `Ut ⊆ g⁻¹U` around `f'(x)`
     obtain ⟨Ut, hUt, hxUt, hUtsub⟩ := exists_isAffineOpen_mem_and_subset
       (show f'.base x ∈ g ⁻¹ᵁ U by
-        show g.base (f'.base x) ∈ U
+        change g.base (f'.base x) ∈ U
         rw [← hbase]; exact hsU)
     have hUSX : V ≤ f ⁻¹ᵁ U := hVsub
     have hUST : Ut ≤ g ⁻¹ᵁ U := hUtsub

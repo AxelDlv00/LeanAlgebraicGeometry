@@ -3,43 +3,32 @@ author: sync
 content_type: definition
 created: '2026-07-16T21:14:26'
 decl: AlgebraicGeometry.Scheme.SheafGammaObj_linearEquiv_top
-docstring: 'Iter-045: LinearEquiv between the global-sections module
+docstring: 'The `k`-linear equivalence between the global-sections module `(Sheaf.Γ
+  J _).obj F` and the
 
-  `(Sheaf.Γ J _).obj F` (an object of `ModuleCat k`) and the underlying carrier
-
-  of `F.obj.obj (op ⊤)` for any sheaf `F` on a topological space `X`.
-
-
-  The underlying iso comes from `Sheaf.ΓNatIsoSheafSections` (Mathlib
-
-  `Mathlib/CategoryTheory/Sites/GlobalSections.lean`): on a site with terminal
-
-  `T`, the global-sections functor is naturally iso to evaluation at `T`. For
-
-  the topology of opens `Opens.grothendieckTopology X`, the terminal in
-
-  `TopologicalSpace.Opens X` is the top open `⊤` (this is `Preorder.isTerminalTop`
-
-  for any preorder with a top element). The categorical iso in `ModuleCat k` is
-
-  converted to a `LinearEquiv` via `Iso.toLinearEquiv` (Mathlib''s standard
-
-  upgrading of `ModuleCat`-isos to LinearEquivs).
+  sections `F.obj.obj (op ⊤)` over the top open, for a sheaf `F` on a topological
+  space `X`.
 
 
-  Iter-046+ uses this `LinearEquiv` together with the linearised constant-sheaf
+  The underlying isomorphism is `Sheaf.ΓNatIsoSheafSections`: on a site with a terminal
+  object `T`,
 
-  / global-sections adjunction (multi-iteration; project-local lift of
+  the global-sections functor is naturally isomorphic to evaluation at `T`. For the
+  topology of opens
 
-  Mathlib''s `Adjunction.homAddEquiv` to `≃ₗ[k]`) to construct the producer
+  `Opens.grothendieckTopology X` the terminal object of `TopologicalSpace.Opens X`
+  is the top open
 
-  instance `IsHModuleHomFinite k C (toModuleKSheaf C)`.'
+  `⊤`, by `Preorder.isTerminalTop`. The resulting isomorphism in `ModuleCat k` is
+  upgraded to a
+
+  `LinearEquiv` by `Iso.toLinearEquiv`.'
 file: AlgebraicJacobian/Cohomology/StructureSheafModuleK/Carriers.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.SheafGammaObj_linearEquiv_top
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-27T01:33:11'
 ---
 noncomputable def SheafGammaObj_linearEquiv_top
     (k : Type u) [Field k] {X : TopCat.{u}}

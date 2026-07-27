@@ -3,18 +3,17 @@ author: sync
 content_type: theorem
 created: '2026-07-16T21:14:29'
 decl: AlgebraicGeometry.rigidity_eqOn_saturated_open_to_affine
-docstring: "**Bridge 2 of the Rigidity Lemma (slice-constancy / the agreement equation),\
-  \ the residual\ngeometric input.** Let `X` be complete (proper) over an algebraically\
-  \ closed `k̄`, `x₀` a\n`k̄`-point of `X`, and `f : X ⊗ Y ⟶ Z` into a separated `Z`.\
-  \ Let `U = p₂⁻¹(V)` be a `p₂`-saturated\nopen of `X ⊗ Y` (the preimage of a set\
-  \ `Vset ⊆ Y`) on which `f` lands inside a single **affine**\nopen `U₀ ⊆ Z`. Then\
-  \ `f` agrees on `U` with the collapsed map `retract ≫ f`\n(`retract := lift (toUnit\
-  \ (X ⊗ Y) ≫ x₀) (snd X Y)`, i.e. `(x, y) ↦ (x₀, y)`):\n\n  `U.ι ≫ f.left = U.ι ≫\
-  \ (retract ≫ f).left`.\n\nThis is the cohomology-free **route B** of the iter-159\
-  \ `mathlib-analogist` consult\n(`analogies/rigidity-affineconst.md`); it was the\
-  \ genuinely-deep residual of the Rigidity-Lemma\nchain and is now **PROVEN axiom-clean**\
-  \ (iter-162), assembled here as a named top-level obligation\nfrom Step 2 (`morphism_eq_of_eqAt_closedPoints`)\
-  \ over the per-slice Step 1\n(`rigidity_eqAt_closedPoint_of_proper_into_affine`).\
+docstring: "**Slice constancy on a saturated open: the agreement equation.** Let `X`\
+  \ be complete (proper)\nover an algebraically closed `k̄`, `x₀` a\n`k̄`-point of\
+  \ `X`, and `f : X ⊗ Y ⟶ Z` into a separated `Z`. Let `U = p₂⁻¹(V)` be a `p₂`-saturated\n\
+  open of `X ⊗ Y` (the preimage of a set `Vset ⊆ Y`) on which `f` lands inside a single\
+  \ **affine**\nopen `U₀ ⊆ Z`. Then `f` agrees on `U` with the collapsed map `retract\
+  \ ≫ f`\n(`retract := lift (toUnit (X ⊗ Y) ≫ x₀) (snd X Y)`, i.e. `(x, y) ↦ (x₀,\
+  \ y)`):\n\n  `U.ι ≫ f.left = U.ι ≫ (retract ≫ f).left`.\n\nThis is the cohomology-free\
+  \ **route B** of the iter-159 `mathlib-analogist` consult\n(`analogies/rigidity-affineconst.md`);\
+  \ it was the genuinely-deep residual of the Rigidity-Lemma\nchain and is now **PROVEN\
+  \ axiom-clean** (iter-162), assembled here as a named top-level obligation\nfrom\
+  \ Step 2 (`morphism_eq_of_eqAt_closedPoints`) over the per-slice Step 1\n(`rigidity_eqAt_closedPoint_of_proper_into_affine`).\
   \ The relative Stein-factorisation /\nproper-pushforward `f_*\U0001D4AA = \U0001D4AA\
   ` framing is a confirmed Mathlib gap and is **deliberately avoided**.\n\nThe intended\
   \ proof (no coherent cohomology):\n1. *Per closed slice.* For each closed point\
@@ -36,7 +35,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.rigidity_eqOn_saturated_open_to_affine
 type: lean
-updated: '2026-07-25T19:00:18'
+updated: '2026-07-27T01:33:12'
 ---
 theorem rigidity_eqOn_saturated_open_to_affine
     [IsAlgClosed kbar]

@@ -3,7 +3,13 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import Mathlib
+import Mathlib.Algebra.Algebra.Subalgebra.Centralizer
+import Mathlib.Algebra.Homology.Homotopy
+import Mathlib.AlgebraicGeometry.Sites.Representability
+import Mathlib.Combinatorics.Quiver.ReflQuiver
+import Mathlib.Order.CompletePartialOrder
+import Mathlib.Tactic.SetNotationForOrder
+import Std.Tactic.BVDecide.LRAT.Internal.Clause
 
 /-!
 # Zariski descent of representability (`thm:representability_zariski_descent`)
