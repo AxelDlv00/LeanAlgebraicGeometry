@@ -2,15 +2,39 @@ id: AJC.maintenance.build.imports
 title: Replace the bare import Mathlib in 86 modules by precise imports
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The dominant build cost. 86 of 164 modules open with a bare ''import Mathlib''
-  and 27 of those are import-DAG sources, so 132 of 164 load the whole 8,171-module
-  library. Measured on Cohomology/SheafCompose.lean (49 lines): 16.6s and about 7
-  GB with the umbrella, 3.5s and 1.97 GB with the four precise imports the linter
-  reports. The memory figure is the second lever -- at 7 GB per Lean process a 62
-  GB host sustains only about 8 concurrent jobs instead of 16. Conversion must go
-  bottom-up (a module keeps paying while any module in its transitive project closure
-  is bare); scripts/deumbrella-wave.sh drives it, probing with Mathlib''s #import_bumps,
-  rewriting the import block and restoring the original on any verification failure.'
+summary: 'The dominant build cost, and the method is now settled. 86 of 164 modules
+  opened with a bare ''import Mathlib''; measured on Cohomology/SheafCompose.lean
+  (49 lines), 16.6 s and about 7 GB with the umbrella versus 3.5 s and 1.97 GB with
+  four precise imports. Converted modules were observed at 2.5-3.4 GB against 6.8-7.0
+  GB before, which is the second lever: at 7 GB per process a 62 GB host sustains
+  about 8 concurrent jobs instead of 16, and the from-scratch build''s 33-minute serial
+  tail ran with exactly one job.
+
+
+  ORDERING RULE, learned the expensive way. Bottom-up is right for probe CORRECTNESS
+  -- a module''s minimal imports cannot be computed until everything beneath it is
+  clean -- but wrong for NET PROGRESS whenever the module has a cone of import-less
+  dependents above it. Narrowing StructureSheafModuleK/Presheaf.lean stripped the
+  library from nine modules in the StructureSheafModuleK -> Genus -> Jacobian chain.
+  Over wave 2, converting 8 modules forced 25 back onto the umbrella and the count
+  went 39 back up to 64. Give a module''s import-less dependents their own precise
+  imports FIRST, top-down within the cone, then narrow the parent.
+
+
+  THE REAL WORK ITEM is the 54 modules that declare no Mathlib import at all and inherit
+  the library transitively. They are invisible to the minimal-import probe because
+  nothing in their own text says what they need, and every one that gets its own imports
+  permanently removes a class of breakage. Elaborating all 54 in parallel with ''lake
+  env lean'' (read-only against .lake/build, safe alongside a running build) resolves
+  the whole exposure in minutes; a full build finds only one victim per round because
+  lake stops at the first failure in a chain. Of the 54, exactly 24 needed Mathlib
+  -- the other 30 were loading 1.79 GB of oleans for nothing and are pure wins.
+
+
+  STATE: 64 of 164 bare, down from 86. GrassmannianQuot.lean resists narrowing outright
+  (times out at isDefEq :924 and whnf :1217 at default heartbeats WITH precise imports,
+  builds fine with the umbrella) and stays bare deliberately. scripts/deumbrella-wave.sh
+  now repairs its own cascade per wave and refuses to advance until green.'
 status: active
 kind: proof
 priority: normal
@@ -33,3 +57,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
+  updated_at: '2026-07-27T05:13:02.272947+00:00'
