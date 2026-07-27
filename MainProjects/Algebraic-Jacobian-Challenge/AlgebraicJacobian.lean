@@ -211,6 +211,11 @@ import AlgebraicJacobian.RiemannRoch.Adelic.BoundedVanishing
 -- rather than a discharge (scripts/axiom-frontier.lean §6e).
 import AlgebraicJacobian.RiemannRoch.Adelic.GlobalGeneration
 import AlgebraicJacobian.RiemannRoch.Adelic.LedgerClosure
+-- Residue degree one on the curve's own hypotheses. This is the module that turned the
+-- retracted "discharge" above into a real one: it routes around the stalk residue-field
+-- finiteness binder via mathlib's `residueFieldIsoBase`, so the obligation is no longer
+-- parked in an instance nothing constructs (scripts/axiom-frontier.lean §6e).
+import AlgebraicJacobian.RiemannRoch.Adelic.ResidueField
 import AlgebraicJacobian.RiemannRoch.CurveBaseChange
 import AlgebraicJacobian.RiemannRoch.CohomologyKit
 import AlgebraicJacobian.Picard.InvertibleSectionLocalization

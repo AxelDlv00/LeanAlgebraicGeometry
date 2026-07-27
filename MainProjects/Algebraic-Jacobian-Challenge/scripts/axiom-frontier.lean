@@ -61,7 +61,7 @@ How to read the output.  Every line is one declaration; the only token that matt
 
 Note the `re.split` rather than a plain line filter: Lean wraps a long axiom list over
 several lines, so a per-line scan misclassifies exactly the declarations whose axiom
-list is longest.  Measured 2026-07-27 on the rooted tree: 95 probed, 59 clean, 36
+list is longest.  Measured 2026-07-27 on the rooted tree: 102 probed, 66 clean, 36
 carrying `sorryAx`.
 
 Companion measurement 2 — is every module on disk rooted?  A module that nothing
@@ -250,7 +250,24 @@ So the fourth trap, in the same form as the other three:
 The statement is still a real reduction — `[κ(P) : k] = 1` is traded for standard stalk
 commutative algebra — but it is a relocation of the obligation, not a discharge, and the
 two `_of_hasRationalResidues` results are therefore not unconditional over an
-algebraically closed field either. -/
+algebraically closed field either.
+
+RESOLVED, and the resolution is what makes trap (d) worth stating rather than merely
+embarrassing.  `RiemannRoch/Adelic/ResidueField.lean` supplies the `_curve` forms below,
+which take no stalk binders at all: only the curve's own geometric instances, with the
+stalk algebra and tower *built* (`algebraMap_stalk_functionField`,
+`isScalarTower_stalk_functionField`) and the residue-field finiteness routed around
+entirely through mathlib's `residueFieldIsoBase`, which gets integrality of `κ(x)` over `k`
+from `LocallyOfFiniteType` by the Jacobson-space criterion.  So the same mathematics that
+was a relocation in the `_of_hasRationalResidues` form is a discharge in the `_curve` form,
+and the difference is invisible to `#print axioms`: both report clean.  That is trap (d)
+stated positively — the axiom line was never the thing that distinguished them.
+
+`degK_eq_degree_of_isAlgClosed_curve` is the one to look at: geometric degree equals the
+residue-weighted degree on an AJC curve over an algebraically closed field, with no open
+input at all.  `degree_principal_eq_zero_of_isAlgClosed_curve` then rests on the closed
+ledger alone, where its `_of_hasRationalResidues` predecessor needed the ledger *and* the
+approximation statement. -/
 #print axioms AlgebraicGeometry.Adelic.evalMap_injective
 #print axioms AlgebraicGeometry.Adelic.mem_orderGe_one_iff_mem_maximalIdeal
 #print axioms AlgebraicGeometry.Adelic.residueDeg_eq_one_iff_hasRationalResidues
@@ -267,6 +284,16 @@ algebraically closed field either. -/
 #print axioms AlgebraicGeometry.Adelic.degree_principal_eq_zero_of_hasRationalResidues
 #print axioms AlgebraicGeometry.Adelic.chi_eq_of_bump_of_nonneg
 #print axioms AlgebraicGeometry.Adelic.chi_eq_iff_step_of_bump
+
+-- The `_curve` forms of §6e: same clean axiom lines as their `_of_hasRationalResidues`
+-- predecessors, and unlike them, instantiable at the curve's own hypotheses.
+#print axioms AlgebraicGeometry.Adelic.algebraMap_stalk_functionField
+#print axioms AlgebraicGeometry.Adelic.isScalarTower_stalk_functionField
+#print axioms AlgebraicGeometry.Adelic.hasRationalResidues_of_isAlgClosed_curve
+#print axioms AlgebraicGeometry.Adelic.residueDeg_eq_one_of_isAlgClosed_curve
+#print axioms AlgebraicGeometry.Adelic.degK_eq_degree_of_isAlgClosed_curve
+#print axioms AlgebraicGeometry.Adelic.degree_principal_eq_zero_of_isAlgClosed_curve
+#print axioms AlgebraicGeometry.Adelic.exists_bound_forall_generatedAt_of_isAlgClosed_curve
 
 -- §6c The rigid-pushforward gate (task ajc-gate).  THE GATE IS NOW INSTANTIATED AND THE
 -- INSTANCE IS AXIOM-CLEAN — `instHasRigidPushforwardOfCurve`
