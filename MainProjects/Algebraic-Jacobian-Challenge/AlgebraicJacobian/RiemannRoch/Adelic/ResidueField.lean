@@ -484,9 +484,13 @@ the telescope is not confined to the effective cone.
 The `hledger` hypothesis below is therefore discharged wherever the bump is available, and the
 lane's residual input is the **bump**.  At overlap primes that is one application of
 `chi_add_eq_residueDeg`, consuming the ledger exact sequence's connecting/surjectivity data plus
-strong approximation; off the overlap the lane proves the bump's *negation*
-(`LedgerClosure.not_bump_of_notMem_overlap`), so the bump is strictly stronger than the exact
-sequence and must not be described as a routine consequence of it.  So what follows is a genuine reduction from two open inputs to one, and the
+strong approximation; off the overlap that producer is unavailable (it requires
+`P.point ∈ U₀ ⊓ U₁`) and the bump's content is instead a one-chart approximation statement
+(`ChiUnconditional.bump_iff_chartStep_of_notMem_left`), so the bump must not be described as a
+routine consequence of the exact sequence.  (An earlier version of this paragraph said the lane
+proves the bump's *negation* off the overlap; that misattributed to `hbump` a failure of
+`chi_add`'s hypotheses — see the correction in `Adelic/ChiUnconditional.lean`.)
+So what follows is a genuine reduction from two open inputs to one, and the
 remaining one is a local statement at a single prime divisor rather than a global identity. -/
 
 /-- **The weighted degree is the geometric degree on a curve over an algebraically closed

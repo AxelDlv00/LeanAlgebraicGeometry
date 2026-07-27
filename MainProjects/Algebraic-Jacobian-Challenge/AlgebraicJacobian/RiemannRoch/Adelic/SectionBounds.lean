@@ -325,9 +325,12 @@ they are strictly more general, and the `hbump` forms are in `LedgerClosure.lean
 reader should not take the hypothesis as a record of an open gap.
 
 What the bump costs is NOT merely one application of `chi_add_eq_residueDeg` per step: that theorem
-requires `P.point ∈ U₀ ⊓ U₁`, and off the overlap the lane proves the *negation* of the
-bump (`LedgerClosure.not_bump_of_notMem_overlap`), so `hbump` over all primes is strictly
-stronger than the exact sequence plus strong approximation.  At overlap primes it is one
+requires `P.point ∈ U₀ ⊓ U₁`, so off the overlap it supplies no route to the bump at all.
+(An earlier version of this paragraph added that off the overlap the lane proves the
+*negation* of the bump.  That was a misattribution, corrected in
+`Adelic/ChiUnconditional.lean`: the refutation measures `chi_add`'s exactness hypotheses,
+not `hbump`, and off the overlap `hbump` is *equivalent* to a single chart step being full.)
+At overlap primes it is one
 application of `chi_add_eq_residueDeg`, consuming that theorem's connecting/surjectivity data
 plus the strong-approximation input `hsurj`.  So `hledger` is an honest hypothesis, not
 a gate class and not a `sorry` — but the reader should look for the remaining mathematics
@@ -347,8 +350,9 @@ two agree: `χ(D) = χ(0) + deg_k D` for `D = divisorOfList L`.
 This is what pins `degK` as *the* degree of the ledger rather than one weighting
 among several, and it shows the `hledger` hypothesis of this section is not
 idle — it holds wherever the one-point bump `hbump` does, which is one application
-of `chi_add_eq_residueDeg` per step **at overlap primes only** — off the overlap the lane
-refutes the bump (`LedgerClosure.not_bump_of_notMem_overlap`).
+of `chi_add_eq_residueDeg` per step **at overlap primes only**; off the overlap that producer is
+unavailable and the bump reduces to a one-chart count
+(`ChiUnconditional.bump_iff_chartStep_of_notMem_left`).
 
 An earlier version added that "extending from list-effective divisors to *all* divisors
 additionally needs the negative part".  **That is false**: `LedgerClosure.chi_eq_of_bump`
@@ -536,8 +540,9 @@ not two.  Item 1 below is closed; item 2 is what remains.
 
    The ledger is no longer the substantive part: `LedgerClosure.chi_eq_of_bump` proves it from
    the one-point bump alone, so what item 2 now requires is the **bump** for a cover of `C`,
-   i.e., at overlap primes, one application of `chi_add_eq_residueDeg` per step — which still consumes the ledger
-   exact sequence's connecting/surjectivity data and the strong-approximation input `hsurj`.
+   i.e., at overlap primes, one application of `chi_add_eq_residueDeg` per step — which
+   still consumes the ledger exact sequence's connecting/surjectivity data and the
+   strong-approximation input `hsurj`.
    The leaf therefore remains open, but the open input has moved from a global identity over
    all divisors to a one-point local statement.  The assembled statement is now sharper:
    `Adelic.degree_principal_eq_zero_of_isAlgClosed_curve` proves the **unweighted**
