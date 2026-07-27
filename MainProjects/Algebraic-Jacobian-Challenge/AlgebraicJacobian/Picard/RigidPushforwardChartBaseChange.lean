@@ -47,6 +47,13 @@ gate `Scheme.HasRigidPushforward` still costs.
   the family `(Θ_W)_W` a map of Čech complexes.  Generalises `fiberChart_smul_baseMap_res`
   (§6 there); it carried no fibre-specific input to begin with.
 
+* `exists_kerChartTensorEquiv` — the resulting Čech square on a bundled 2-affine cover, in the
+  form the route needs: `Γ(Y', ⊤) ⊗_{Γ(Y, ⊤)} ker d ≅ ker d'` for the two-term Čech difference
+  maps `d` on `X` and `d'` on `X'`, from the `H⁰`-purity hypothesis
+  `∀ B, Function.Bijective (TwoTerm.kerBaseChange d B)`.  This is the kernel analogue of §7
+  there (`surjective_moduleSectionDiffBase_baseChange_residueField`, which concludes on
+  surjectivity at a fibre).
+
 Sources: Stacks 01HQ (affine base change of quasi-coherent modules), Stacks 02KG
 (cohomology and base change) at `i = 0`; Mumford, *Abelian Varieties* II §5; EGA III 7.7.5.
 -/
@@ -267,6 +274,167 @@ lemma chart_smul_baseMap_res {X X' Y' : Scheme.{u}} (f' : X' ⟶ Y') (g' : X' �
       ((f'.appLE ⊤ (g' ⁻¹ᵁ W) le_top).hom b) • z) hb)
     (congrArg (fun r => r • pullback_app_isoTensor_baseMap g' M hW''
       ((M.presheaf.map (homOfLE hWW₀).op).hom x)) hr)
+
+/-! ## §4. The Čech square of an affine base change, on kernels -/
+
+/-- **`H⁰` commutes with an affine base change, in the two-term Čech guise.**
+
+Let `f : X ⟶ Y` be a family over an affine base, `𝒰 = {U₁, U₂}` a bundled 2-affine cover of
+`X`, `M` a quasi-coherent module on `X`, and
+
+```
+  X' --g'--> X
+  |f'        |f
+  v          v
+  Y' --g---> Y
+```
+
+a cartesian square with `Y'` affine and `g'` affine (so that `𝒰.preimage g'` is a 2-affine
+cover of `X'`).  Assume the `H⁰`-purity hypothesis `hker`: for *every* `Γ(Y, ⊤)`-algebra `B`,
+the kernel base-change map `AlgebraicJacobian.TwoTerm.kerBaseChange` of the `Γ(Y, ⊤)`-linear
+Čech difference map `d = 𝒰.moduleSectionDiffBase f M` is bijective.  Then
+
+`Γ(Y', ⊤) ⊗_{Γ(Y, ⊤)} ker d ≅ ker d'`,
+
+where `d'` is the Čech difference map of the preimage cover of `X'` for `g'^* M` — i.e. the
+degree-`0` Čech cohomology of `M` commutes with the base change `Y' ⟶ Y` (Stacks 02KG at
+`i = 0`).  On a pure tensor the isomorphism is `b ⊗ (x₁, x₂) ↦ (b · baseMap x₁, b · baseMap x₂)`,
+componentwise the formula of §2.
+
+The proof is the Čech square of §2–§3 in the two-term guise: the three chart comparisons
+`Θ₁, Θ₂, Θ₀` of `exists_chartTensorEquiv` intertwine `d ⊗ Γ(Y', ⊤)` with `d'` — commutativity
+is checked on pure tensors using the restriction naturality `chart_smul_baseMap_res` of §3 —
+so the degree-`0` comparison `Θ₁ × Θ₂` carries `ker (d ⊗ Γ(Y', ⊤))` bijectively onto `ker d'`;
+composing with `hker Γ(Y', ⊤)` gives the statement.
+
+**Why `hker` and not flatness-plus-surjectivity.**  `bijective_kerBaseChange_of_surjective`
+(`Picard/TwoTermFiniteFree.lean`) would additionally demand
+`Module.Flat Γ(Y, ⊤) Γ(M, U₁ ⊓ U₂)`.  That is unnecessary on the campaign: the fourth conjunct
+of `p1Cech_h0_baseChange_of_fibrewise_h1_vanishing_of_isIntegral`
+(`Picard/RigidPushforwardP1Constants.lean`) already delivers exactly this `∀ B` bijectivity, so
+taking it as the hypothesis deletes the flatness obligation.
+
+**Vacuity audit.**  The conclusion is `∃ Ξ, (values of Ξ on pure tensors)`, but `Ξ` is required
+to be additive and pure tensors generate the source as an abelian group, so the prescribed
+values determine `Ξ` uniquely; the existential is a genuine bijectivity assertion about the
+canonical comparison, not an unconstrained choice.  (The `Subtype.val` on the left of the
+formula is injective, so it constrains `Ξ` fully.) -/
+theorem exists_kerChartTensorEquiv {X Y X' Y' : Scheme.{u}}
+    {f : X ⟶ Y} {g : Y' ⟶ Y} {f' : X' ⟶ Y'} {g' : X' ⟶ X}
+    (h : IsPullback g' f' f g) [IsAffine Y] [IsAffine Y'] [IsAffineHom g']
+    (𝒰 : X.AffineCoverMVSquare) (M : X.Modules) [M.IsQuasicoherent]
+    (hker : ∀ (B : Type u) [CommRing B] [Algebra Γ(Y, ⊤) B],
+      letI := f.baseSectionsModule M 𝒰.U₁
+      letI := f.baseSectionsModule M 𝒰.U₂
+      letI := f.baseSectionsModule M (𝒰.U₁ ⊓ 𝒰.U₂)
+      Function.Bijective
+        (AlgebraicJacobian.TwoTerm.kerBaseChange (𝒰.moduleSectionDiffBase f M) B)) :
+    letI : Algebra Γ(Y, ⊤) Γ(Y', ⊤) := (g.appLE ⊤ ⊤ le_top).hom.toAlgebra
+    letI := f.baseSectionsModule M 𝒰.U₁
+    letI := f.baseSectionsModule M 𝒰.U₂
+    letI := f.baseSectionsModule M (𝒰.U₁ ⊓ 𝒰.U₂)
+    letI := f'.baseSectionsModule ((Scheme.Modules.pullback g').obj M) (𝒰.preimage g').U₁
+    letI := f'.baseSectionsModule ((Scheme.Modules.pullback g').obj M) (𝒰.preimage g').U₂
+    letI := f'.baseSectionsModule ((Scheme.Modules.pullback g').obj M)
+      ((𝒰.preimage g').U₁ ⊓ (𝒰.preimage g').U₂)
+    Nonempty { Ξ : TensorProduct Γ(Y, ⊤) Γ(Y', ⊤)
+        (LinearMap.ker (𝒰.moduleSectionDiffBase f M)) ≃+
+        (LinearMap.ker ((𝒰.preimage g').moduleSectionDiffBase f'
+          ((Scheme.Modules.pullback g').obj M))) //
+      ∀ (b : Γ(Y', ⊤)) (u : LinearMap.ker (𝒰.moduleSectionDiffBase f M)),
+        ((Ξ (b ⊗ₜ[Γ(Y, ⊤)] u) : LinearMap.ker ((𝒰.preimage g').moduleSectionDiffBase f'
+              ((Scheme.Modules.pullback g').obj M))) :
+            Γ((Scheme.Modules.pullback g').obj M, (𝒰.preimage g').U₁) ×
+              Γ((Scheme.Modules.pullback g').obj M, (𝒰.preimage g').U₂)) =
+          ((f'.appLE ⊤ (g' ⁻¹ᵁ 𝒰.U₁) le_top).hom b •
+              pullback_app_isoTensor_baseMap g' M (le_refl (g' ⁻¹ᵁ 𝒰.U₁))
+                (u : Γ(M, 𝒰.U₁) × Γ(M, 𝒰.U₂)).1,
+            (f'.appLE ⊤ (g' ⁻¹ᵁ 𝒰.U₂) le_top).hom b •
+              pullback_app_isoTensor_baseMap g' M (le_refl (g' ⁻¹ᵁ 𝒰.U₂))
+                (u : Γ(M, 𝒰.U₁) × Γ(M, 𝒰.U₂)).2) } := by
+  letI aAB : Algebra Γ(Y, ⊤) Γ(Y', ⊤) := (g.appLE ⊤ ⊤ le_top).hom.toAlgebra
+  letI mA1 := f.baseSectionsModule M 𝒰.U₁
+  letI mA2 := f.baseSectionsModule M 𝒰.U₂
+  letI mA0 := f.baseSectionsModule M (𝒰.U₁ ⊓ 𝒰.U₂)
+  letI mB1 := f'.baseSectionsModule ((Scheme.Modules.pullback g').obj M) (𝒰.preimage g').U₁
+  letI mB2 := f'.baseSectionsModule ((Scheme.Modules.pullback g').obj M) (𝒰.preimage g').U₂
+  letI mB0 := f'.baseSectionsModule ((Scheme.Modules.pullback g').obj M)
+    ((𝒰.preimage g').U₁ ⊓ (𝒰.preimage g').U₂)
+  obtain ⟨⟨Θ₁, hΘ₁⟩⟩ := exists_chartTensorEquiv h M 𝒰.isAffineOpen_U₁
+    (𝒰.isAffineOpen_U₁.preimage g')
+  obtain ⟨⟨Θ₂, hΘ₂⟩⟩ := exists_chartTensorEquiv h M 𝒰.isAffineOpen_U₂
+    (𝒰.isAffineOpen_U₂.preimage g')
+  obtain ⟨⟨Θ₀, hΘ₀⟩⟩ := exists_chartTensorEquiv h M 𝒰.isAffineOpen_inf
+    (𝒰.isAffineOpen_inf.preimage g')
+  set d := 𝒰.moduleSectionDiffBase f M with hd
+  set d' := (𝒰.preimage g').moduleSectionDiffBase f'
+    ((Scheme.Modules.pullback g').obj M) with hd'
+  -- the degree-`0` comparison of the two Čech complexes
+  let P : TensorProduct Γ(Y, ⊤) Γ(Y', ⊤) (Γ(M, 𝒰.U₁) × Γ(M, 𝒰.U₂)) ≃+
+      (Γ((Scheme.Modules.pullback g').obj M, (𝒰.preimage g').U₁) ×
+        Γ((Scheme.Modules.pullback g').obj M, (𝒰.preimage g').U₂)) :=
+    (TensorProduct.prodRight Γ(Y, ⊤) Γ(Y, ⊤) Γ(Y', ⊤) Γ(M, 𝒰.U₁)
+      Γ(M, 𝒰.U₂)).toAddEquiv.trans (Θ₁.prodCongr Θ₂)
+  have hP : ∀ (b : Γ(Y', ⊤)) (x : Γ(M, 𝒰.U₁) × Γ(M, 𝒰.U₂)),
+      P (b ⊗ₜ[Γ(Y, ⊤)] x) = (Θ₁ (b ⊗ₜ[Γ(Y, ⊤)] x.1), Θ₂ (b ⊗ₜ[Γ(Y, ⊤)] x.2)) := by
+    intro b x
+    obtain ⟨x₁, x₂⟩ := x
+    change (Θ₁ (TensorProduct.prodRight Γ(Y, ⊤) Γ(Y, ⊤) Γ(Y', ⊤) Γ(M, 𝒰.U₁) Γ(M, 𝒰.U₂)
+        (b ⊗ₜ[Γ(Y, ⊤)] (x₁, x₂))).1,
+      Θ₂ (TensorProduct.prodRight Γ(Y, ⊤) Γ(Y, ⊤) Γ(Y', ⊤) Γ(M, 𝒰.U₁) Γ(M, 𝒰.U₂)
+        (b ⊗ₜ[Γ(Y, ⊤)] (x₁, x₂))).2) = _
+    simp only [TensorProduct.prodRight_tmul]
+  -- the commuting Čech square, checked on pure tensors
+  have hsquare : ∀ w : TensorProduct Γ(Y, ⊤) Γ(Y', ⊤) (Γ(M, 𝒰.U₁) × Γ(M, 𝒰.U₂)),
+      Θ₀ (d.baseChange Γ(Y', ⊤) w) = d' (P w) := by
+    intro w
+    induction w using TensorProduct.induction_on with
+    | zero =>
+      simp only [map_zero]
+      rfl
+    | add w₁ w₂ ih₁ ih₂ =>
+      simp only [map_add, ih₁, ih₂]
+      rfl
+    | tmul b p =>
+      obtain ⟨x₁, x₂⟩ := p
+      rw [LinearMap.baseChange_tmul, hd, hΘ₀ b _, hP, hd']
+      simp only [hΘ₁, hΘ₂, Scheme.AffineCoverMVSquare.moduleSectionDiffBase_apply,
+        Scheme.AffineCoverMVSquare.moduleSectionDiff_apply]
+      have e₁ := chart_smul_baseMap_res f' g' M
+        (inf_le_left : 𝒰.U₁ ⊓ 𝒰.U₂ ≤ 𝒰.U₁) (le_refl (g' ⁻¹ᵁ (𝒰.U₁ ⊓ 𝒰.U₂)))
+        (g'.preimage_mono (inf_le_left : 𝒰.U₁ ⊓ 𝒰.U₂ ≤ 𝒰.U₁)) b x₁
+      have e₂ := chart_smul_baseMap_res f' g' M
+        (inf_le_right : 𝒰.U₁ ⊓ 𝒰.U₂ ≤ 𝒰.U₂) (le_refl (g' ⁻¹ᵁ (𝒰.U₁ ⊓ 𝒰.U₂)))
+        (g'.preimage_mono (inf_le_right : 𝒰.U₁ ⊓ 𝒰.U₂ ≤ 𝒰.U₂)) b x₂
+      rw [map_sub, smul_sub]
+      exact congrArg₂ (· - ·) e₁.symm e₂.symm
+  -- the square makes `P` match the two kernels
+  have hmem : ∀ w : TensorProduct Γ(Y, ⊤) Γ(Y', ⊤) (Γ(M, 𝒰.U₁) × Γ(M, 𝒰.U₂)),
+      w ∈ LinearMap.ker (d.baseChange Γ(Y', ⊤)) ↔ P w ∈ LinearMap.ker d' := by
+    intro w
+    rw [LinearMap.mem_ker, LinearMap.mem_ker, ← hsquare w]
+    constructor
+    · intro hw
+      rw [hw]
+      exact map_zero Θ₀
+    · intro hw
+      exact Θ₀.injective (hw.trans (map_zero Θ₀).symm)
+  let e : (LinearMap.ker (d.baseChange Γ(Y', ⊤))) ≃+ (LinearMap.ker d') :=
+    { toFun := fun w => ⟨P w.1, (hmem w.1).mp w.2⟩
+      invFun := fun v => ⟨P.symm v.1, (hmem (P.symm v.1)).mpr (by
+        rw [P.apply_symm_apply]; exact v.2)⟩
+      left_inv := fun w => Subtype.ext (P.symm_apply_apply w.1)
+      right_inv := fun v => Subtype.ext (P.apply_symm_apply v.1)
+      map_add' := fun w₁ w₂ => Subtype.ext (map_add P w₁.1 w₂.1) }
+  refine ⟨⟨(AddEquiv.ofBijective
+    (AlgebraicJacobian.TwoTerm.kerBaseChange d Γ(Y', ⊤)).toAddMonoidHom
+      (hker Γ(Y', ⊤))).trans e, ?_⟩⟩
+  intro b u
+  change (P (AlgebraicJacobian.TwoTerm.kerBaseChange d Γ(Y', ⊤)
+    (b ⊗ₜ[Γ(Y, ⊤)] u) : TensorProduct Γ(Y, ⊤) Γ(Y', ⊤) (Γ(M, 𝒰.U₁) × Γ(M, 𝒰.U₂)))) = _
+  rw [AlgebraicJacobian.TwoTerm.kerBaseChange_apply_coe, LinearMap.baseChange_tmul]
+  rw [hP b _, hΘ₁, hΘ₂]
+  rfl
 
 end Adelic
 
