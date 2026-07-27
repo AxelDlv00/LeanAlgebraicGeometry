@@ -192,20 +192,33 @@ Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
   blueprint proof-level `\leanok` is honest.  The last has to be a `#print axioms` join
   rather than a reading pass, because a `\leanok` is a local mark while the defect is
   transitive — a proof written in Lean is still not proved if it routes through a `sorry`.
-  Current result: **1073 pinned declarations across 998 proof-level marks = 930 probed +
-  143 `private`, and zero carry `sorryAx`.**  Statement-level marks on `sorry` carriers are
-  a different thing and are legitimate: they claim the signature is formalised.
+  Current result, both mark positions under the same reconciliation identity:
+  **proof-level, 1073 pinned declarations across 1078 marks = 930 public + 143 `private`,
+  zero carrying `sorryAx`; statement-level, 1560 declarations across 1567 marks = 1372
+  public + 188 `private`, of which 34 carry `sorryAx`.**  Only the proof-level zero is a
+  defect count: a statement-level mark on a `sorry` carrier is legitimate, since it claims
+  the signature is formalised.  Do not delete those 34.
 
   Read that check's own history before writing another one, because it is the sharpest
   cautionary tale in this tree.  Its first version reported three dishonest marks; all
   three were artifacts of its regex pairing one node's statement with a *later* node's
   proof, and one of them had already been settled correctly, by reading, in a commit
-  message.  Fixing it exposed **five** separate ways it had been silently examining a
-  strict subset of its domain while printing a clean-looking result — and the last two
+  message.  Fixing it exposed **six** separate ways it had been silently examining a
+  strict subset of its domain while printing a clean-looking result — and the last three
   were found only because the corrected version *asserts* that
-  `probed + unprobeable == pins` and the assertion failed.  The lesson is not "machines
-  beat reading": it is that a mechanical audit needs an arithmetic identity it must
-  satisfy, checked in code, or "it printed 0 defects" means only that it printed.
+  `public + private + unresolved == pins` and the assertion failed.  The lesson is not
+  "machines beat reading": it is that a mechanical audit needs an arithmetic identity it
+  must satisfy, checked in code, or "it printed 0 defects" means only that it printed.
+
+  Two sharper lessons came out of correcting the correction, and both generalise past
+  `\leanok`.  The statement-level count above stood as "eleven" for two revisions, and
+  eleven was *precisely* the intersection with the probe's own output — the very artifact
+  the paragraph above retracts, still live one paragraph below its own retraction.  So a
+  domain bug is not fixed when its instance is: every other figure derived by the same
+  route needs the same identity.  And the 143 `private` pins were published twice as
+  undecidable, which is true of `#print axioms` and false of `Lean.collectAxioms`; all
+  1073 are decided, with a positive control to show the private lane is not vacuously
+  clean.  "My probe cannot see it" is a fact about the probe.
 - [`blueprint/web/index.html`](blueprint/web/index.html): generated mathematical blueprint.
 - [`analogies/README.md`](analogies/README.md): index to the historical design notes.
 - [`../Algebraic-Jacobian-Challenge-Rebuild/README.md`](../Algebraic-Jacobian-Challenge-Rebuild/README.md):
