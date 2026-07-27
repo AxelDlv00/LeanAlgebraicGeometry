@@ -2,13 +2,32 @@ id: AJC.picrep.rigidpushforward
 title: Rigidified pushforward engine (gate reduced to ONE statement)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Rigidified pushforward engine -- the gate now costs ONE statement, not four.
-  hasRigidPushforward_of_leaves needed FOUR hypotheses; hasRigidPushforward_of_isIntegral_of_rank_of_baseChange
-  THREE; hasRigidPushforward_of_gammaBaseChange (Picard/RigidPushforwardInstance.lean)
-  needs ONE. The locallyFree field is an unconditional theorem for an AJC curve (rigidPushforwardLocallyFree_proved).
-  Deliberately NO instance : HasRigidPushforward, because RigidPushforwardGammaBaseChange
-  has no producer -- so the task stays queued.'
-status: active
+summary: 'GATE DISCHARGED (run 0053, verified independently by ajc-truth in the rooted
+  environment, 2026-07-27). Picard/RigidPushforwardGammaBaseChange.lean carries instHasRigidPushforwardOfCurve,
+  a real global instance of Scheme.HasRigidPushforward C for every AJC curve -- smooth
+  of relative dimension one, proper, geometrically integral -- with no hypothesis
+  beyond the curve''s own. Both fields are theorems: locallyFree is rigidPushforwardLocallyFree_proved
+  and baseChange comes by affine-target descent from rigidPushforwardGammaBaseChange_proved.  MEASURED
+  AT THE SYNTHESIS SITE, which is the only check that separates this from the gate-quantified-theorem
+  trap: the three extraction theorems of RigidPushforward.lean are restated in §4
+  of that file WITHOUT the [HasRigidPushforward C] binder, so Lean must synthesize
+  the gate to elaborate them, and rigidPushforward_locallyFree / _baseChange / _isLocallyTrivial
+  all measure [propext, Classical.choice, Quot.sound]. The same measurement applied
+  to HasPicScheme is what exposes instHasPicScheme as poisoned (scripts/axiom-frontier.lean
+  §8); this one comes out the other way. First campaign gate in the project to reach
+  a clean global instance.  ROUTE FROM FOUR LEAVES TO ZERO: IsIntegral (P^1_k) from
+  the chart-ring identification Gamma(P^1_k, D+(Xi)) = k[T] plus two-chart irreducibility;
+  the rank identity for every k-algebra; affine-target descent reducing the baseChange
+  field to one Gamma-level statement; then that statement, via universal exactness
+  of ker d for a surjective two-term Cech complex. hasRigidPushforward_of_leaves is
+  now historical, a four-leaf factorization rather than a frontier.  Blueprint: FGA
+  chapter sec:fga_pic_milne_kollar, thm:rigid_pushforward_gate over lem:gamma_base_change
+  over thm:rigid_pushforward_locally_free over lem:p1_integral, complete proofs, pins
+  resolving lean_ok. CAVEAT ON THE VANISHING HYPOTHESIS: it is FiberH1Vanishing (some
+  two-chart cover of the fibre has surjective difference map), which equals sheaf
+  H^1 vanishing for a separated fibre with affine chart intersection; cover-independence
+  remains the P2-interface TODO.'
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -30,5 +49,8 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-27T11:50:11.993532+00:00'
+  updated_at: '2026-07-27T14:47:41.813547+00:00'
   owner: ajc-gate
+  pinned_commits:
+  - 02ae27824
+  - 744a74bf2

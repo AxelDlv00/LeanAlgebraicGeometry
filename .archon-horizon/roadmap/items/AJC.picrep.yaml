@@ -5,29 +5,27 @@ projects:
 summary: 'Represent the relative Picard functor by the Milne-Kollar route selected
   in informal/pic-representability-campaign.md: build Pic^r over a separably closed
   field from the h0=1 loci cut out by a tuple of rational points, glue, descend to
-  k by a finite Galois quotient, then assemble the degrees by a coproduct. Completed
-  inputs: line-bundle coherence, the Grassmannian and graded algebra substrate, glue-descent,
-  Speiser semilinear descent, the affine Galois quotient, and the stable affine cover.
-  Open inputs on this route: the rigidified pushforward gate (AJC.picrep.rigidpushforward,
-  held by task ajc-gate), uniform H1 vanishing and the chi-ledger (AJC.rr, held by
-  ajc-rr), Div^d representability, the Milne glue, and Galois descent of rigidified
-  classes.
-
-
-  The Quot endgame is NOT this route. AJC.picrep.quot and AJC.picrep.serre describe
-  it; the Lean tree marks HasSmoothProperQuotient permanently off-path because Altman-Kleiman
-  descent needs a quasi-projectivity hypothesis that is not expressible at the pinned
-  revision and without which the lemma is false (Hironaka free Z/2 action on a smooth
-  proper non-projective threefold). Those nodes are retained, not revived: their divisor,
-  Hilbert-scheme and Grassmannian substrate is consumed by the committed route, and
-  only QuotRepresentability.lean and SerreFiniteness.lean are exclusive to the abandoned
-  endgame.
-
-
-  BLOCKED ABOVE THIS NODE: whether to represent Pic^sharp carrying a k-rational-point
-  hypothesis (weaker than the challenge statement) or to etale-sheafify and drop it.
-  See AJC.picrep.rational-point and inbox I-0372; the decision is the human''s and
-  is not assumed either way here.'
+  k by a finite Galois quotient, then assemble the degrees by a coproduct.  COMPLETED
+  INPUTS: line-bundle coherence, the Grassmannian and graded algebra substrate, glue-descent,
+  Speiser semilinear descent, the affine Galois quotient, the stable affine cover,
+  and -- new 2026-07-27 -- the RIGIDIFIED PUSHFORWARD GATE, discharged with a real
+  instance and verified clean at the synthesis site (AJC.picrep.rigidpushforward,
+  task ajc-gate). Both engines that distinguish this route from the quotient route
+  are now substantially built: the pushforward is done, and the finite Galois quotient
+  has Speiser descent, the affine model and Gamma-stable affine covers proved, with
+  gluing (G2(c)) remaining.  OPEN INPUTS: uniform H^1 vanishing in high degree (cluster
+  P, task ajc-rr -- landed further than the campaign table suggests, but almost all
+  of it conditional in the STATEMENT on the closed chi-ledger or a peel datum, so
+  read scripts/axiom-frontier.lean §6b/§6d before treating any of it as available),
+  degree-r divisor representability with its Grassmannian certificate, the Milne glue
+  itself (cluster J, zero lines), and Galois descent of picSharp points through rigidified
+  pairs (cluster G).  NEITHER ROUTE IS HYPOTHESIS-FREE, and the blueprint now says
+  so (rem:orbit_in_affine_hypothesis): the quotient route needs quasi-projectivity
+  of the Abel-map slice, this route needs every finite Galois orbit in an affine open,
+  and the same Hironaka example defeats both. The difference is that the orbit condition
+  is available for the schemes this route quotients.  THE RATIONAL POINT REMAINS AN
+  OPEN HUMAN DECISION (I-0372, AJC.picrep.rational-point) and is orthogonal to the
+  route choice -- both routes carry it identically.'
 status: pending
 kind: proof
 priority: high
@@ -41,5 +39,5 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:40.928722+00:00'
-  updated_at: '2026-07-27T07:35:53.461475+00:00'
+  updated_at: '2026-07-27T12:49:06.268432+00:00'
   parent: AJC.jacobian

@@ -2,39 +2,44 @@ id: AJC.rr.principal
 title: Principal divisors have degree zero
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Principal divisors have degree zero. STILL OPEN (sorry at RiemannRoch/WeilDivisor.lean:1194,
-  deliberately in place). Run 0055 session 0004 sharpened both of its two residual
-  items but closed neither.
-
-
-  ITEM 1, residueDeg = 1: REFORMULATED, not discharged. Proved EQUIVALENT to a first-order
-  approximation statement in the order language (GlobalGeneration.residueDeg_eq_one_iff_hasRationalResidues
-  -- a genuine iff, stands on its own). That statement is then derived for an algebraically
-  closed base from the stalk residue field (hasRationalResidues_of_isAlgClosed). BUT
-  that derivation takes three stalk-level instance binders -- Algebra k (stalk), IsScalarTower
-  k (stalk) K(X), Module.Finite k (ResidueField (stalk)) -- and AJC constructs NONE
-  of them for its curve; the last is not node N14''s Module.Finite k (localStepTgt
-  k P 1) but effectively a new gate. So the obligation moved from an order subquotient
-  to standard stalk commutative algebra, which is where it belongs, but it did not
-  go away. An earlier version of this summary said "DISCHARGED"; a fresh-context review
-  corrected it.
-
-
-  ITEM 2, the closed chi-ledger: still not a theorem. Now proved on the whole EFFECTIVE
-  cone from the one-point bump alone (LedgerClosure.chi_eq_of_bump_of_nonneg). Extending
-  to all divisors is proved EQUIVALENT to one identity about the negative part (chi_eq_iff_step_of_bump),
-  stated as an iff precisely so it is not mistaken for a reduction. Not bookkeeping:
-  chi is not additive in D (only deg_k is) and D is not linearly equivalent to D+,
-  so neither transport mechanism the lane owns applies.
-
-
-  NEXT for this row: construct the three stalk instances for an AJC curve (the algebra
-  structure and tower look routine given the structure morphism; the residue finiteness
-  is substantive). Do not substitute the sorry until the ledger is a theorem -- doing
-  so would relocate the gap while making a hypothesis-free statement depend silently
-  on one.
-
-  '
+summary: "Principal divisors have degree zero. STILL OPEN (sorry at RiemannRoch/WeilDivisor.lean:1194,\n\
+  deliberately in place). Run 0055 session 0006 CLOSED item 1; item 2 remains and\
+  \ is now the only\nopen input.\n\nITEM 1, residueDeg = 1: DISCHARGED (Adelic/ResidueField.lean,\n\
+  residueDeg_eq_one_of_isAlgClosed_curve). For a prime divisor of a curve C : Over\
+  \ (Spec kbar) with\nkbar algebraically closed, under [IsIntegral] [IsLocallyNoetherian]\
+  \ [IsRegularInCodimensionOne]\n[LocallyOfFiniteType] [SmoothOfRelativeDimension\
+  \ 1] -- all carried by the project's headline curve,\nLocallyOfFiniteType because\
+  \ mathlib's IsProper extends it structurally. (NOT from smoothness: that\nbridge\
+  \ is outside the module's import closure and infer_instance fails there. Machine-checked.)\n\
+  \n  How, because the previous summary's diagnosis of the obstacle was right and\
+  \ the resolution went\n  around it rather than through it. GlobalGeneration §7 derives\
+  \ the fact from three stalk binders and\n  AJC builds none of them; the third, Module.Finite\
+  \ k (ResidueField (stalk)), is effectively a new\n  gate. That gate was NOT built.\
+  \ mathlib's AlgebraicGeometry.residueFieldIsoBase proves kappa(x) = k\n  for a closed\
+  \ point of a scheme LOCALLY OF FINITE TYPE over an algebraically closed field, getting\n\
+  \  integrality from isFinite_iff_locallyOfFiniteType_of_jacobsonSpace instead. Two\
+  \ enabling facts:\n  X.residueField x is DEFEQ to IsLocalRing.ResidueField (stalk\
+  \ x); and the load-bearing new lemma is\n  algebraMap_stalk_functionField, that\
+  \ the stalk k-algebra and the lane's Algebra k K(X) agree on\n  constants -- without\
+  \ it no stalk argument is readable in the order language.\n\n  Bonus: node N14's\
+  \ residue-FINITENESS gate Module.Finite k (localStepTgt k P 1), carried as a binder\n\
+  \  by ~20 lane statements, is discharged too (finite_localStepTgt_one_of_isAlgClosed_curve).\
+  \ The\n  direction is counter-intuitive: the residue statement needs no finiteness,\
+  \ and approximation by\n  constants makes kappa(P) spanned by the class of 1, so\
+  \ finiteness is a CONSEQUENCE of the residue\n  fact, not a prerequisite.\n\nITEM\
+  \ 2, the closed chi-ledger: still not a theorem, and now the SINGLE remaining input.\
+  \ Proved on the\nwhole EFFECTIVE cone from the one-point bump alone (LedgerClosure.chi_eq_of_bump_of_nonneg).\n\
+  Extending to all divisors is proved EQUIVALENT to one identity about the negative\
+  \ part\n(chi_eq_iff_step_of_bump), stated as an iff precisely so it is not mistaken\
+  \ for a reduction. Not\nbookkeeping: chi is not additive in D (only deg_k is) and\
+  \ D is not linearly equivalent to D+, so\nneither transport mechanism the lane owns\
+  \ applies.\n\nWHAT IS ASSEMBLED NOW: degree_principal_eq_zero_of_isAlgClosed_curve\
+  \ proves the UNWEIGHTED\ndeg(div g) = 0 on curve hypotheses from the ledger ALONE,\
+  \ where before it needed the ledger AND the\nresidue fact. And degK_eq_degree_of_isAlgClosed_curve\
+  \ gives deg_k = deg with no open input at all.\n\nNEXT for this row: the ledger's\
+  \ negative part. Do NOT substitute the sorry until it is a theorem --\ndoing so\
+  \ would relocate the gap while making a hypothesis-free statement depend silently\
+  \ on one.\n"
 status: pending
 kind: proof
 priority: normal
@@ -57,4 +62,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.rr
-  updated_at: '2026-07-27T11:37:05.458529+00:00'
+  updated_at: '2026-07-27T14:46:49.065167+00:00'
+  pinned_commits:
+  - 768b6cbd4

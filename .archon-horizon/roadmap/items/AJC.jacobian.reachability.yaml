@@ -2,17 +2,28 @@ id: AJC.jacobian.reachability
 title: Wire the headline to the infrastructure
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The headline rests on the infrastructure it claims. picardJacobianWitness
-  is built from Scheme.Pic0Scheme, so 97 of the project''s 173 modules are reachable
-  from Jacobian.lean rather than the 8 of the Genus-only import. Every module on disk
-  is now rooted at AlgebraicJacobian.lean, which matters because an unrooted module
-  compiles green and is invisible both to the root build and to the axiom probe.
-
-
-  The obligation count is five, not three, and that is now stated wherever the witness
-  is described: Pic0.smooth and Pic0.proper are sorry-bodied upstream, and three leaves
-  are stated at the headline. Reproducible with scripts/axiom-frontier.lean (61 declarations,
-  ~8s warm) and the two reachability measurements in its header.'
+summary: 'The headline rests on the infrastructure it claims, and the claim is measured
+  rather than asserted. picardJacobianWitness is built from Scheme.Pic0Scheme, so
+  98 of the project''s modules are reachable from Jacobian.lean rather than the 8
+  of the Genus-only import; the 98th arrived when leaf C was stated against the landed
+  Albanese universal property, which put the Albanese cone under the headline for
+  the first time (previously the two were disjoint).  EVERY MODULE ON DISK IS ROOTED
+  at AlgebraicJacobian.lean, which matters because an unrooted module compiles green
+  and is invisible BOTH to the root build and to the axiom probe -- #print axioms
+  on its declarations cannot even be written against the root import. 184 on disk,
+  183 rooted as of 2026-07-27; the single exception is another team''s untracked mid-flight
+  file, and rooting an untracked module would break a clean checkout. The standing
+  check is in the probe header and in I-0388.  THE OBLIGATION COUNT IS FIVE, not three:
+  Pic0.smooth and Pic0.proper are sorry-bodied upstream, and three leaves are stated
+  at the headline. Their distances to the landed tree are unequal and now known: leaf
+  C is one basepoint condition plus two generalizations away from a landed theorem
+  (isAlbanese_pic0_of_isAlgClosed proves the case, so the distance is compiler-checked);
+  leaf A is FALSE as stated and must be replaced, not proved; leaf B presupposes Pic0.smooth,
+  so it rests on an obligation rather than reducing one.  REPRODUCIBLE: scripts/axiom-frontier.lean,
+  95 declarations, 59 clean and 36 carrying sorryAx, with the two reachability measurements
+  in its header. Count by output ENTRY, not by line -- Lean wraps long axiom lists,
+  and the naive per-line filter misclassifies exactly the declarations whose lists
+  are longest.'
 status: done
 kind: proof
 priority: normal
@@ -35,7 +46,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian.assembly
-  updated_at: '2026-07-27T09:10:26.822964+00:00'
+  updated_at: '2026-07-27T12:49:42.062181+00:00'
   owner: ajc-truth
   pinned_commits:
   - 4905dc11b

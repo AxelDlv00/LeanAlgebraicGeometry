@@ -8,3 +8,7 @@
 {"at": "2026-07-27T11:32:57.329561+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "active", "note": ""}
 {"at": "2026-07-27T11:32:57.329754+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, owner updated"}
 {"at": "2026-07-27T11:50:11.992680+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "title updated"}
+{"at": "2026-07-27T12:12:17.006908+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-27T12:48:07.780219+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "done", "note": ""}
+{"at": "2026-07-27T12:48:07.783526+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, pinned_commits updated"}
+{"at": "2026-07-27T14:47:41.813368+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "pinned_commits updated"}

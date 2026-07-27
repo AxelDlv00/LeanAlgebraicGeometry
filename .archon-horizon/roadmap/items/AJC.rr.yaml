@@ -2,27 +2,45 @@ id: AJC.rr
 title: Riemann--Roch, divisors, and the adelic genus
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Riemann--Roch, divisors, and the adelic genus.\n\nCluster-P substrate now\
-  \ carries three legs, all sorry-free and axiom-clean\n[propext, Classical.choice,\
-  \ Quot.sound]:\n\n(a) UNCONDITIONAL class invariance (Adelic/ClassInvariance.lean)\
-  \ -- multiplication\n    by g is a k-linear automorphism of K(X) carrying the chart\
-  \ sections, the\n    coboundary and the overlap onto their shifted counterparts,\
-  \ so ell, h1 and chi\n    are functions of the linear-equivalence class, with no\
-  \ gate, no finiteness and\n    no ledger-exactness input.\n\n(b) UNCONDITIONAL degree\
-  \ and drop bounds (Adelic/SectionBounds.lean) -- the\n    residue-weighted degree\
-  \ deg_k as a bundled AddMonoidHom, residue-degree\n    positivity 1 <= [kappa(P):k],\
-  \ positive degree for nonzero effective divisors,\n    and the section-drop sandwich\
-  \ ell(D) <= ell(D+P) <= ell(D)+[kappa(P):k]. The\n    ell-half of the ledger needs\
-  \ neither the connecting/surjectivity data nor\n    strong approximation, unlike\
-  \ the h1-half.\n\n(c) CONDITIONAL single-field bounded H1 vanishing (Adelic/BoundedVanishing.lean)\
-  \ --\n    exists_bound_subsingleton_h1Mod, with b = deg_k D0 + 1 - chi(0), relative\
-  \ to\n    three named hypotheses: base vanishing at one D0, peel-surjectivity, and\
-  \ the\n    closed ledger chi(D) = chi(0) + deg_k D. None is a gate class; both vanishing\n\
-  \    hypotheses were verified load-bearing.\n\nNOT proved anywhere in AJC, and kept\
-  \ distinct: extension-uniformity of the bound\n(same b for every kappa/k -- needs\
-  \ flat base change, and even stating it needs the\n2-affine cover transported to\
-  \ C_kappa), and global generation above the bound\n(needs H1(D-x) = 0 at every closed\
-  \ point).\n"
+summary: "Riemann--Roch, divisors, and the adelic genus.\n\nCluster-P substrate, all\
+  \ sorry-free and axiom-clean [propext, Classical.choice, Quot.sound]:\n\n(a) UNCONDITIONAL\
+  \ class invariance (Adelic/ClassInvariance.lean) -- multiplication by g is a\n \
+  \   k-linear automorphism of K(X) carrying chart sections, coboundary and overlap\
+  \ onto their\n    shifted counterparts, so ell, h1 and chi are functions of the\
+  \ linear-equivalence class,\n    with no gate, no finiteness and no ledger-exactness\
+  \ input.\n\n(b) UNCONDITIONAL degree and drop bounds (Adelic/SectionBounds.lean)\
+  \ -- deg_k as a bundled\n    AddMonoidHom, residue-degree positivity, positive degree\
+  \ for nonzero effective divisors,\n    and the drop sandwich ell(D) <= ell(D+P)\
+  \ <= ell(D)+[kappa(P):k]. The ell-half of the\n    ledger needs neither the connecting/surjectivity\
+  \ data nor strong approximation.\n\n(c) CONDITIONAL single-field bounded H1 vanishing\
+  \ (Adelic/BoundedVanishing.lean) --\n    exists_bound_subsingleton_h1Mod, b = deg_k\
+  \ D0 + 1 - chi(0), relative to three named\n    hypotheses: base vanishing at one\
+  \ D0, peel-surjectivity, the closed ledger. None is a gate\n    class. The ledger\
+  \ binder is now taken only at the RESIDUALS D - D0\n    (exists_bound_subsingleton_h1Mod_of_residualLedger),\
+  \ which is where the proof uses it.\n\n(d) PROVED global generation (Adelic/GlobalGeneration.lean)\
+  \ -- the evaluation map\n    Gamma(D)/Gamma(D-P) -> kappa(P) is onto exactly when\
+  \ the section drop is maximal, which\n    the ledger converts into a PAIR of vanishings.\
+  \ Conditional on the same inputs as (c).\n\n(e) THE RESIDUE LANE, CLOSED (Adelic/ResidueField.lean,\
+  \ run 0055 s0006) -- residueDeg = 1 and\n    node N14's residue-FINITENESS gate\
+  \ are both DISCHARGED on curve hypotheses; deg_k = deg is\n    unconditional; ell(D)\
+  \ = deg D + 1 - g for deg large, on the GEOMETRIC degree. Also\n    primeDivisorOfNotGeneric,\
+  \ the first producer of an X.PrimeDivisor in AJC -- before it, every\n    'forall\
+  \ P : PrimeDivisor' statement was formally at risk of vacuity.\n\nTHE THREE GAPS,\
+  \ kept distinct:\n  1. single-field bounded vanishing -- reduced to cone-vanishing\
+  \ + ledger, NOT discharged\n     (coneVanishing_iff_base_and_peel proves the hypothesis\
+  \ pair equivalent to cone-vanishing).\n  2. EXTENSION UNIFORMITY -- unproved, but\
+  \ STATABLE as Adelic.UniformlyBoundedVanishing. An\n     earlier version of this\
+  \ summary said \"even stating it needs the 2-affine cover transported\n     to C_kappa\"\
+  ; that is FALSE -- CurveBaseChange §3's AffineCoverMVSquare.baseChangeField\n  \
+  \   transports it. The real missing inputs are flat base change for the section\
+  \ spaces\n     (Gamma(C_kappa, O(D_kappa)) = Gamma(C,O(D)) tensor_k kappa) and a\
+  \ WeilDivisor PULLBACK along\n     C_kappa -> C, the latter genuinely hard since\
+  \ a closed point can split so prime divisors\n     need not stay prime.\n  3. global\
+  \ generation -- PROVED, see (d).\n\nOPEN INPUTS: the closed ledger's negative part\
+  \ (stated exactly as an iff in LedgerClosure), the\none-point peel (the deepest\
+  \ analytic leaf, unattempted), the base vanishing, and the SECTION\nfiniteness Module.Finite\
+  \ k (sectionSub k top D) -- a DIFFERENT hypothesis from the residue\nfiniteness\
+  \ now discharged, and still open.\n"
 status: pending
 kind: proof
 priority: normal
@@ -45,9 +63,10 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
-  updated_at: '2026-07-27T07:57:13.858907+00:00'
+  updated_at: '2026-07-27T14:47:11.469767+00:00'
   owner: ajc-rr
   pinned_commits:
+  - 37f95374c
   - 1f2d5a1fe
   - 7053bdd51
   - beb6c583a

@@ -2,17 +2,18 @@ id: AJC.picrep.rigidpushforward.basechange
 title: The baseChange gate field -- non-affine cohomology and base change
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The baseChange gate field -- THE ONLY REMAINING GATE LEAF, and reduced (run
-  0053 s0004). Picard/RigidPushforwardAffineDescent.lean descends it to ONE module-level
-  statement, Adelic.RigidPushforwardGammaBaseChange: bijectivity of Gamma(Spec A'')
-  tensor_{Gamma(Spec A)} Gamma(C_A,L) -> Gamma(C_{A''}, g''^*L). Both sides of the
-  adjunction mate are quasi-coherent on the affine Spec A'', and such a map is iso
-  iff bijective on global sections (Stacks 01I8). NOT a Beck-Chevalley theorem: with
-  no cartesian hypothesis all the content sits in the supplied bijectivity. What remains
-  is classical H0 base change: generalise FiberChart sections 5-7 from the fibre embedding
-  Spec kappa(t) -> Spec A to an arbitrary Spec A'' -> Spec A. FOUR corrections to
-  the naive route are recorded in that module''s docstring -- read them before starting.'
-status: active
+summary: 'CLOSED (run 0053 s0006, commit f4a56a754). Adelic.rigidPushforwardGammaBaseChange_proved
+  supplies the Gamma-level statement; rigidPushforwardBaseChange_of_gamma lifts it
+  to the field. The non-affine case -- the whole content, since every IsIso theorem
+  for the adjoint mate in this tree wants IsAffineHom on the family while q : C_A
+  -> Spec A is proper -- is handled by replacing affineness with the two-term Cech
+  complex of the preimage cover: exists_gammaBaseChange_of_kerPure sandwiches exists_kerChartTensorEquiv
+  between globalSectionsEquivKerModuleSectionDiffBase on both sides and pushforwardTopEquivBaseSections
+  at the two tops. Cech purity comes from surjectivity (the P1 engine''s first conjunct,
+  which transports to C_A by ''exact'' -- moduleSectionDiff_pushforward is rfl and
+  Surjective sees only the underlying function, so no congruence helper was needed)
+  plus flatness of the overlap sections (free from CoherentSheafFlat q L). Axiom-clean.'
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -34,5 +35,7 @@ metadata:
     task_title: Close the HasRigidPushforward representability gate
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.rigidpushforward
-  updated_at: '2026-07-27T11:32:56.096903+00:00'
+  updated_at: '2026-07-27T13:21:21.436204+00:00'
   owner: ajc-gate
+  pinned_commits:
+  - f4a56a754

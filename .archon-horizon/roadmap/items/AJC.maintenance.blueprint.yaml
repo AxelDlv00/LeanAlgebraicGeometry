@@ -2,22 +2,25 @@ id: AJC.maintenance.blueprint
 title: Blueprint prose and formalization pins
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Twelve bounded prose and truth passes now include the cycle-free Quot affine-base-change
-  slice, and the route-of-record pass (run 0054): the blueprint no longer presents
-  the Quot endgame in the present tense, and the Jacobian chapter''s hypothesis-gap
-  node has been split so that the half which is a theorem carries a proof and the
-  half which is an open owner decision is alone in claiming nothing.
-
-
-  Measured on the current tree (2026-07-27): 620-page LuaLaTeX PDF, ZERO unresolved
-  references, zero multiply-defined labels, zero renderer errors. Printable debt is
-  747 overfull boxes and 100 missing-glyph notices. The hgraph resyncs clean against
-  blueprint AND Lean -- note that syncing with --blueprint alone leaves the Lean side
-  empty and emits thousands of bogus pin warnings; the real count is 33 classified
-  unresolved pins, all pre-existing.
-
-
-  Open work: residual journal cleanup, those 33 pins, and the printable debt.'
+summary: 'Thirteen bounded prose and truth passes. The route-of-record work is complete
+  in the sense that matters: the blueprint no longer presents the Quot endgame as
+  the live route AND the committed Milne-Kollar route now has its own section with
+  landed mathematics in it rather than only a description.  NEW (run 0054): FGA chapter
+  sec:fga_pic_milne_kollar, five nodes with complete proofs and resolving Lean pins
+  -- thm:rigid_pushforward_locally_free over lem:p1_integral (the rigidified pushforward
+  and the integrality of P^1 under it), thm:speiser_descent, thm:galois_quotient_points,
+  lem:stable_affine_open (the finite Galois quotient), plus rem:orbit_in_affine_hypothesis.
+  That remark states what the route comparison had been leaving implicit: BOTH routes
+  need a hypothesis the Hironaka example fails, and the difference is availability,
+  not hypothesis-freeness. The dependency section gives each route its own input list,
+  and Jacobian.tex''s Albanese leaf is split so the algebraically closed case carries
+  its proof (lem:pic0_isAlbanese_algClosed).  Measured on the current tree (2026-07-27):
+  623-page LuaLaTeX PDF, ZERO errors, ZERO unresolved references, zero multiply-defined
+  labels. Two pre-existing LaTeX breakages fixed in Picard_GrassmannianCells.tex --
+  an unbraced ] closing an amsthm optional argument early, twice, which made the first
+  pass die and only produced a PDF because a second pass ran past it. Graph sync:
+  1927 blueprint nodes, 4577 Lean nodes, ZERO pin warnings (the 33 previously carried
+  are gone). Printable debt remains 747 overfull boxes.'
 status: pending
 kind: blueprint
 priority: normal
@@ -40,7 +43,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
-  updated_at: '2026-07-27T09:11:36.409689+00:00'
+  updated_at: '2026-07-27T12:12:32.916061+00:00'
   pinned_commits:
   - dfa8d1755
   - c1d535ce6
