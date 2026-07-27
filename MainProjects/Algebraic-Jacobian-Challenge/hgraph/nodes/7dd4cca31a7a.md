@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:section_base_change_injective_cover
 lean_status: lean_ok
-order: 1229
+order: 1231
 title: Injectivity along a finite cover, by flat base change
 type: tex
-updated: '2026-07-28T02:46:11'
+updated: '2026-07-28T04:57:37'
 ---
 Let \(A \to B\) be a flat homomorphism of commutative rings, let \(M\) be
   an \(A\)-module and \(P\) a \(B\)-module, and let \((M_i)_{i \in \iota}\),

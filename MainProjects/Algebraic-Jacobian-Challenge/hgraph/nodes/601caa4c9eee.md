@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: thm:relative_spec_base_change
 lean_status: empty
-order: 592
+order: 594
 title: Base change of the relative spectrum
 type: tex
-updated: '2026-07-28T02:46:11'
+updated: '2026-07-28T04:57:36'
 ---
 \textit{Source: [Stacks Project], tag 01LS (lemma-spec-base-change +
   lemma-spec-properties).}

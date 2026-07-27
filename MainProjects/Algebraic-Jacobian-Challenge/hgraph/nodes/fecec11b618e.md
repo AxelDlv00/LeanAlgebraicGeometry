@@ -44,16 +44,23 @@ docstring: 'The Albanese witness for a smooth proper geometrically irreducible c
   removed in favour of this single uniform witness.
 
 
-  The construction below is **wired to the Picard development**: the underlying scheme
+  The construction is **wired to the Picard development**: the underlying scheme
 
   is `Scheme.Pic0Scheme C`, and four of the six witness fields are theorems of
 
-  `Picard/Pic0AbelianVariety.lean` applied directly. This definition carries no `sorry`
+  `Picard/Pic0AbelianVariety.lean` applied directly. Those fields live in
 
-  of its own, but that is a statement about this file, not a completeness claim: two
-  of
+  `picardJacobianWitnessOfHasRationalPoint`, of which this definition is the specialisation
 
-  those four upstream theorems (`Pic0.smooth`, `Pic0.proper`) are `sorry`-bodied,
+  supplying the rational point from leaf A; splitting them apart separates the assembly
+
+  from the open decision about where the point comes from. This definition carries
+  no
+
+  `sorry` of its own, but that is a statement about this file, not a completeness
+  claim: two
+
+  of those four upstream theorems (`Pic0.smooth`, `Pic0.proper`) are `sorry`-bodied,
   so
 
   the witness depends on five open obligations — those two, plus the three leaves
@@ -70,21 +77,10 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picardJacobianWitness
 type: lean
-updated: '2026-07-28T02:46:09'
+updated: '2026-07-28T04:57:33'
 ---
 noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
-    JacobianWitness C := by
+    JacobianWitness C :=
   haveI := hasRationalPoint_of_curve C
-  exact
-    { J := Scheme.Pic0Scheme C
-      grpObj := (Scheme.Pic0.grpObj C).some
-      proper := Scheme.Pic0.proper C
-      smooth := Scheme.Pic0.smooth C
-      geomIrred := Scheme.Pic0.geometricallyIrreducible C
-      smoothGenus := smoothOfRelativeDimension_genus_pic0 C
-      isAlbaneseFor := fun P => isAlbanese_pic0 C _ _ _ _ P }
-
-/-- **The witness over an algebraically closed field, free of the inconsistent leaf.**
-
-Identical to `picardJacobianWitness` except that the rational point is supplied by the
+  picardJacobianWitnessOfHasRationalPoint C

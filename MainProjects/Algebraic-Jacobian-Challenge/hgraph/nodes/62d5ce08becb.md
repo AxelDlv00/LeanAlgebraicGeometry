@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:braiding_eq_id_of_invertible
 lean_status: lean_ok
-order: 1302
+order: 1304
 title: Trivial self-braiding of an invertible sheaf
 type: tex
-updated: '2026-07-28T02:46:11'
+updated: '2026-07-28T04:57:37'
 ---
 Let \(\mathcal{L}\) be an invertible sheaf (\cref{def:isInvertible}) on a scheme
   \(X\). Then the braiding of \(\mathcal{L}\) with itself is the identity:

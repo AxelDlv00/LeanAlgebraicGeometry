@@ -111,37 +111,35 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
 \subsection{The Picard witness \(J=\Pic^0_{C/k}\)}
 \label{sec:picardJacobianWitness}
 
-\begin{theorem}[The Picard identity component is a Jacobian witness]
-  \label{def:picardJacobianWitness}
+\begin{theorem}[A Jacobian witness for a pointed curve]
+  \label{def:picardJacobianWitnessOfHasRationalPoint}
   \uses{def:JacobianWitness, def:genus, thm:fga_pic_representability,
     thm:pic0_isAbelianVariety, thm:pic_zero_dimension_equals_genus,
-    thm:albanese_universal_property_northstar}
-  \lean{AlgebraicGeometry.picardJacobianWitness}
-  The identity component \(\Pic^0_{C/k}\) carries a Jacobian witness for
-  \(C\).
+    thm:albanese_universal_property_northstar, def:has_rational_point}
+  \lean{AlgebraicGeometry.picardJacobianWitnessOfHasRationalPoint}
+  Let \(C\) be a smooth proper geometrically irreducible curve over \(k\)
+  possessing a \(k\)-rational point. Then the identity component
+  \(\Pic^0_{C/k}\) carries a Jacobian witness for \(C\).
 \end{theorem}
 
 \begin{proof}
-  \uses{lem:curve_geometrically_integral, lem:curve_hypothesis_gap,
+  \uses{lem:curve_geometrically_integral, def:inst_has_pic_scheme,
     lem:pic0_relative_dimension_genus, lem:pic0_isAlbanese_all_points}
-  Representability of the relative Picard functor gives \(\Pic_{C/k}\), and its
-  identity component \(\Pic^0_{C/k}\) is a group scheme, smooth, proper and
-  geometrically irreducible by \cref{thm:pic0_isAbelianVariety}. Those four data
-  are the first four fields of the witness; of the four,
-  \cref{thm:pic0_smooth} and \cref{thm:pic0_proper} are the ones whose own proofs
-  are still open.
+  Representability of the relative Picard functor
+  (\cref{def:inst_has_pic_scheme}, whose hypothesis is the rational point) gives
+  \(\Pic_{C/k}\), and its identity component \(\Pic^0_{C/k}\) is a group scheme,
+  smooth, proper and geometrically irreducible by
+  \cref{thm:pic0_isAbelianVariety}. Those four data are the first four fields of
+  the witness; of the four, \cref{thm:pic0_smooth} and \cref{thm:pic0_proper} are
+  the ones whose own proofs are still open.
 
   Three further steps are needed, and each is isolated as a lemma because it does
   not follow from the four above.
 
   First, the hypotheses must be reconciled: \(\Pic^0_{C/k}\) is constructed for a
-  geometrically \emph{integral} curve carrying a \(k\)-rational point, whereas a
-  witness is required for every smooth proper geometrically irreducible curve.
-  Geometric integrality is automatic (\cref{lem:curve_geometrically_integral}); the
-  rational point is not, and is the single genuine gap
-  (\cref{lem:curve_hypothesis_gap}), a gap only over a general base field ---
-  over an algebraically closed field it is \cref{lem:curve_rational_point_algClosed}
-  and the witness is \cref{def:picardJacobianWitnessOfIsAlgClosed}.
+  geometrically \emph{integral} curve, whereas a witness is required for a
+  geometrically irreducible one. Geometric integrality is automatic
+  (\cref{lem:curve_geometrically_integral}).
 
   Second, the smoothness supplied by \cref{thm:pic0_isAbelianVariety} carries no
   relative dimension, while the witness records smoothness at the specific
@@ -155,6 +153,49 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   over an algebraically closed base field and for \(g(C) > 0\); the extension is
   \cref{lem:pic0_isAlbanese_all_points}. Together these seven data form the
   required witness.
+\end{proof}
+
+\begin{remark}[What the pointed witness settles and what it leaves open]
+  \label{rem:pointed_witness_scope}
+  \uses{def:picardJacobianWitnessOfHasRationalPoint, lem:curve_hypothesis_gap,
+    def:inst_has_pic_scheme}
+  \Cref{def:picardJacobianWitnessOfHasRationalPoint} separates the construction of
+  the witness from the question of where the rational point comes from, and the two
+  witnesses below are the two answers to that question:
+  \cref{def:picardJacobianWitness} takes the point from
+  \cref{lem:curve_hypothesis_gap} and \cref{def:picardJacobianWitnessOfIsAlgClosed}
+  from \cref{lem:curve_rational_point_algClosed}. Nothing beyond the choice of
+  source distinguishes them.
+
+  This bears on the open question of \cref{rem:rational_point_scope}
+  asymmetrically, and the asymmetry is worth recording. A theorem for a curve
+  \emph{with} a rational point is exactly the statement above, so that formulation
+  requires no mathematics beyond the obligations already listed there. The étale
+  formulation is not obtained from it: representing
+  \(\Pic_{(C/k)\et}\) replaces \cref{def:inst_has_pic_scheme} rather than
+  supplying its hypothesis, so it needs a representability theorem for a different
+  functor. That one formulation is nearer to hand is not an argument that it is the
+  right claim to make.
+\end{remark}
+
+\begin{theorem}[The Picard identity component is a Jacobian witness]
+  \label{def:picardJacobianWitness}
+  \uses{def:JacobianWitness, def:genus, thm:fga_pic_representability,
+    thm:pic0_isAbelianVariety, thm:pic_zero_dimension_equals_genus,
+    thm:albanese_universal_property_northstar}
+  \lean{AlgebraicGeometry.picardJacobianWitness}
+  The identity component \(\Pic^0_{C/k}\) carries a Jacobian witness for
+  \(C\).
+\end{theorem}
+
+\begin{proof}
+  \uses{def:picardJacobianWitnessOfHasRationalPoint, lem:curve_hypothesis_gap,
+    rem:pointed_witness_scope}
+  Apply \cref{def:picardJacobianWitnessOfHasRationalPoint}, whose rational-point
+  hypothesis is supplied by \cref{lem:curve_hypothesis_gap}. That hypothesis is the
+  single genuine gap, and it is a gap only over a general base field: over an
+  algebraically closed field it is \cref{lem:curve_rational_point_algClosed} and the
+  witness is \cref{def:picardJacobianWitnessOfIsAlgClosed}.
 \end{proof}
 
 \begin{lemma}[A smooth geometrically irreducible curve is geometrically integral]
@@ -300,12 +341,13 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
 \end{theorem}
 
 \begin{proof}
-  \uses{lem:curve_rational_point_algClosed, thm:pic0_isAbelianVariety,
+  \uses{def:picardJacobianWitnessOfHasRationalPoint,
+    lem:curve_rational_point_algClosed,
     lem:pic0_relative_dimension_genus, lem:pic0_isAlbanese_all_points,
     rem:rational_point_scope, def:inst_has_pic_scheme}
-  The construction is that of \cref{def:picardJacobianWitness}, with the
-  rational point supplied by \cref{lem:curve_rational_point_algClosed} instead of
-  assumed. Every other field of the witness is unchanged, so the open obligations are
+  Apply \cref{def:picardJacobianWitnessOfHasRationalPoint}, with the rational point
+  supplied by \cref{lem:curve_rational_point_algClosed} instead of assumed. Every
+  other field of the witness is unchanged, so the open obligations are
   representability (\cref{def:inst_has_pic_scheme}), \cref{thm:pic0_smooth},
   \cref{thm:pic0_proper}, \cref{lem:pic0_relative_dimension_genus} and
   \cref{lem:pic0_isAlbanese_all_points}, all of them true statements

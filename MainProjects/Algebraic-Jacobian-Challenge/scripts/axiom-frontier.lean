@@ -73,8 +73,10 @@ The `sorryAx` count is the one to watch, and the last two additions moved it in 
 directions for the right reasons.  §6f added twelve declarations and left it at 41: a lane
 whose declarations are all clean adds nothing to the frontier, which is the correct outcome
 and also the reason a clean line is not by itself progress on the headline (§6b, §6d).  §0c
-added one and moved it to 42, because the branch-(1) assembly leaks on the four obligations
-behind it.  Neither movement is a change in the mathematics — the frontier is the same five
+added one and moved it to 42, because the branch-(1) assembly leaks on the five obligations
+behind it — five, because its `[HasRationalPoint C]` binder makes the gate FIRE exactly as
+§0b describes, so the gate is among them.  Writing "four" here is the same miscount §0b
+exists to prevent, and it was written and corrected once in this very paragraph.  Neither movement is a change in the mathematics — the frontier is the same five
 obligations it was — which is why the number is worth re-measuring rather than reciting.
 
 The two lines added last are the ones to read as a PAIR rather than individually, because
@@ -216,14 +218,16 @@ a binder instead of a source, and `picardJacobianWitness` /
 `picardJacobianWitnessOfIsAlgClosed` are both `haveI` specialisations of it. Two things follow
 that are worth having measured.
 
-First, it *leaks* — `Pic0.smooth`, `Pic0.proper` and leaves B and C are open — and that is the
-honest reading of "branch (1) is cheap": cheap means no NEW mathematics beyond the four, not
-that a headline carrying `C(k) ≠ ∅` is available today. The clean/leak split here says
-precisely which of the two.
+First, it *leaks* — the synthesised gate `instHasPicScheme`, `Pic0.smooth`, `Pic0.proper`, and
+leaves B and C are open — and that is the honest reading of "branch (1) is cheap": cheap means
+no NEW mathematics beyond those FIVE, not that a headline carrying `C(k) ≠ ∅` is available
+today. The clean/leak split here says precisely which of the two.
 
-Second, note what it does *not* measure. Under this binder the representability gate is
-synthesised, so the count of §0b applies verbatim: the gate is present, and §0b's pair — not
-this line — is where that is visible. Comparing this line against `picardJacobianWitness`
+Second, note what it does *not* measure, and that the count above is five for the reason §0b
+gives. Under this binder the representability gate is *synthesised*, not assumed, so it is one
+of the obligations rather than a hypothesis of the statement — the same step at which "five
+becomes four" was wrongly asserted twice before. §0b's pair, not this line, is where the gate
+is visible. Comparing this line against `picardJacobianWitness`
 tells you nothing at all, because both leak and for overlapping reasons; the informative
 comparison is §0b's. -/
 #print axioms AlgebraicGeometry.picardJacobianWitnessOfHasRationalPoint

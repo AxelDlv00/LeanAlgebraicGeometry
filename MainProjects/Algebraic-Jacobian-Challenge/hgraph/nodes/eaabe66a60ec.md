@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:sheaf_flat_of_flat_charts
 lean_status: lean_ok
-order: 990
+order: 992
 title: Flatness over the identity from an affine cover
 type: tex
-updated: '2026-07-28T02:46:11'
+updated: '2026-07-28T04:57:37'
 ---
 Let \(\mathcal G\) be a quasi-coherent \(\OO_T\)-module and \((W_j)_j\) an
   affine open cover of \(T\) such that each \(\Gamma(\mathcal G, W_j)\) is

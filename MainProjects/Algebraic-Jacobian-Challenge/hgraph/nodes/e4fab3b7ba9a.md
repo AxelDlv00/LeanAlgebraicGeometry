@@ -6,21 +6,43 @@ decl: anyone
 file: scripts/axiom-frontier.lean
 generated: lean
 lean_status: sorry
+stale: true
 title: anyone
 type: lean
-updated: '2026-07-28T03:14:53'
+updated: '2026-07-28T04:57:47'
 ---
 instance anyone would use, `¬H`. The theorem is true, axiom-clean, non-vacuous by every probe
 in this file, and empty.
 
 Measured instance (2026-07-28, `RiemannRoch/Adelic/LedgerClosure.lean`): `chi_eq_of_bump`
-takes `hbump : ∀ P E, χ(1·P + E) = χ(E) + residueDeg P`. Its only producer,
-`ChiLedger.chi_add_eq_residueDeg`, carries the side condition that `P` lie in the overlap
-`U₀ ∩ U₁` of the chosen affine cover. Off the overlap the same file's
-`sectionSub_add_pointDivisor_of_notMem_overlap` gives `A(1·P + E) = A(E)`, so the local step
-is a subsingleton, its `finrank` is `0`, and `ChiLedger.chi_add` yields a χ-jump of `0`
-against `hbump`'s `residueDeg P ≥ 1`. The exceptional set is empty only for `U₀ = U₁ = ⊤`,
-impossible for a 2-affine cover of a proper curve.
+takes `hbump : ∀ P E, χ(1·P + E) = χ(E) + residueDeg P`. Iterating it down the anti-effective
+cone forces `χ(-m·P) = χ(0) - m·[κ(P):k]`, and since `χ = ℓ - h¹` with `ℓ ≥ 0`, `h¹` must grow
+linearly there. So `hbump` is FALSE on every cover whose `h¹` is bounded — and outright false
+at the degenerate cover `U₀ = U₁ = ⊤`, where the Čech `H¹` vanishes identically, as soon as a
+single prime divisor exists. That refutation needs no exactness data at all.
+
+A CORRECTION, and it is the most instructive part of this entry, because the first version of
+it made exactly the mistake the trap is about. This entry originally claimed a second
+refutation "at each prime outside the overlap `U₀ ∩ U₁`", on the grounds that `A(1·P + E) =
+A(E)` there makes the local step a subsingleton, so `ChiLedger.chi_add` gives a χ-jump of `0`
+against `hbump`'s `residueDeg P ≥ 1`. Every step of that is valid and the conclusion drawn
+from it is wrong: what it measures is that `chi_add`'s own exactness hypotheses are
+UNSATISFIABLE off the overlap — a fact about `chi_add`, not about `hbump`. Off the overlap the
+bump leaves the `U₀` and overlap terms untouched, so the ungated Čech count gives
+`Adelic.chi_add_pointDivisor_of_notMem_left`: the χ-jump is the single-chart step alone, and
+`Adelic.bump_iff_chartStep_of_notMem_left` makes `hbump` at such a `P` EQUIVALENT to that
+chart step being `[κ(P):k]` — an iff, both directions ungated. So off the overlap `hbump` is
+not contradictory at all; its residual content is approximation on one chart.
+
+Honest status of `hbump`: consistent; refutable at `U₀ = U₁ = ⊤` given one prime divisor;
+refutable on every bounded-`h¹` cover; satisfiable only where `h¹` is unbounded on the
+anti-effective cone; and NOT refuted off the overlap. None of that contradicts the vanishing
+lane, whose results are high-degree only — which is why nobody noticed.
+
+The generalisable lesson, worth more than the instance: when a hypothesis `H` and a lemma `L`
+are inconsistent together, that does not tell you which of the two is at fault. Establishing
+that `H` is refutable requires deriving `¬H` from things that are THEMSELVES satisfiable —
+otherwise you have measured `L`.
 
 What defeats each check, in order: `#print axioms` sees a clean line; a consistency witness
 exists (`bump_of_isEmpty_primeDivisor`, on a scheme with no prime divisors); an elaboration
@@ -31,7 +53,22 @@ hypothesis quantifies over contains members where the tree proves the negation.
 
 So the discipline this adds to the other six: for a hypothesis quantified over a family, do
 not stop at "is it satisfiable". Ask where the project can derive its negation. Recorded as
-I-0449 with the machine-checked step, and as the durable lesson I-0451.
+I-0449/I-0454 with the machine-checked steps, and as the durable lesson I-0451.
+
+§2c The EIGHTH, found in the same audit and cheaper to check than any of the others: a
+hypothesis EQUIVALENT to the conclusion it is supposed to buy.
+
+`chi_eq_of_bump` proves `hbump → closed χ-ledger`. The converse is three lines —
+`rw [hledger (pointDivisor P + E), hledger E, degK_add, degK_pointDivisor]; ring` — because
+`degK` is an `AddMonoidHom` and the bump adds exactly one point. A theorem `A → B` whose
+converse is trivial transports no information: it is a restatement, and "is `A` satisfiable"
+is literally the question "is `B` satisfiable". The theorem is true, axiom-clean,
+instantiable, non-vacuous, and not a reduction.
+
+This is the re-indexing failure mode one level out, and it is the one to check FIRST, because
+it costs a single `rw` attempt: before believing that `H → C` reduces `C` to `H`, try to prove
+`C → H`. If that succeeds, no amount of axiom-probing will tell you the result is empty.
+Lesson recorded as I-0456.
 
 §6b Cluster-P extensions (task ajc-rr).  Independent re-verification, in the
 rooted environment, of the axiom claims made in I-0383 and I-0403.

@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: rem:coh_flat_pullback
 lean_status: empty
-order: 916
+order: 918
 title: rem:coh_flat_pullback
 type: tex
-updated: '2026-07-28T02:46:11'
+updated: '2026-07-28T04:57:37'
 ---
 The condition is stable under base change: for any morphism \(g : S' \to S\),
   pulling back along the cartesian square

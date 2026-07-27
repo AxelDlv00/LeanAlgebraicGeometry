@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:gr_scalarEnd_one
 lean_status: lean_ok
-order: 1480
+order: 1482
 title: Scalar endomorphism of the unit is the identity
 type: tex
-updated: '2026-07-28T02:46:11'
+updated: '2026-07-28T04:57:37'
 ---
 The scalar endomorphism attached to the unit function \(1 \in
   \Gamma(X, \mathcal{O}_X)\) is the identity of the unit module:

@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:sheafModule_monoidalStructure
 lean_status: lean_ok
-order: 1288
+order: 1290
 title: Symmetric monoidal structure on sheaves of modules by transport
 type: tex
-updated: '2026-07-28T02:46:11'
+updated: '2026-07-28T04:57:37'
 ---
 For a scheme \(X\), the category \(X.\Modules\) of sheaves of
   \(\mathcal{O}_X\)-modules carries a symmetric monoidal structure obtained by

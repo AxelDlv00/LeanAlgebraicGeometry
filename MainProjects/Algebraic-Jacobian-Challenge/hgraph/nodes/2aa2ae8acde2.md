@@ -6,10 +6,10 @@ created: '2026-07-28T00:40:21'
 generated: blueprint
 label: lem:pic0_tangent_dimension_genus
 lean_status: lean_ok
-order: 570
+order: 572
 title: Tangent space of the identity component has dimension the genus
 type: tex
-updated: '2026-07-28T02:46:11'
+updated: '2026-07-28T04:57:36'
 ---
 For a smooth proper geometrically integral curve \(C/k\) whose Picard functor is
   representable, the Zariski tangent space of \(\Pic^0_{C/k}\) at the identity has

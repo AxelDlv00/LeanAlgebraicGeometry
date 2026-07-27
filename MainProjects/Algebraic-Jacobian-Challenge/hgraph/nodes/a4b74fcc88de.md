@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:entry_ideal_flat_vanish
 lean_status: lean_ok
-order: 957
+order: 959
 ref: nitsure-hilbert-quot
 title: "Flat everywhere-rank-\\(e\\) modules have vanishing relation\n  matrix"
 type: tex
-updated: '2026-07-28T02:46:11'
+updated: '2026-07-28T04:57:37'
 ---
 Let \(M\) carry a matrix presentation \((\psi, \pi)\) by \(e\) generators.
   If \(M\) is flat and \(M_{\mathfrak p}\) has rank \(e\) over

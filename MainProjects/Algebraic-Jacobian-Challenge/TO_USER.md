@@ -15,12 +15,17 @@
   there with it supplied rather than assumed — so every obligation that remains is a
   true statement awaiting a proof, not a false one.  So what you are deciding is what
   the project claims over an **arbitrary** base field — not whether the construction
-  runs.
+  runs.  One asymmetry you should have when you decide, stated plainly because it could
+  otherwise look like a nudge: branch (1) now has a compiled form
+  (`picardJacobianWitnessOfHasRationalPoint`), so it costs no mathematics beyond the five
+  obligations already open, while branch (2) needs a representability input nobody has
+  built.  That is a difference in build cost, not in which claim is right, and we have
+  not treated it as one.
 
 - **Sorry-free is not axiom-clean, and there are eight separate ways to be misled.**
   Run `lake env lean scripts/axiom-frontier.lean` before believing any completeness
-  number; it probes 113 declarations, 72 clean and 41 carrying `sorryAx` as last
-  measured (2026-07-28, root build green at 8,744 jobs).
+  number; it probes 126 declarations, 84 clean and 42 carrying `sorryAx` as last
+  measured (2026-07-28, root build green at 8,746 jobs).
   (1) Two `sorry`-bodied *instances* (`instHasPicScheme`,
   `pullback_preservesFiniteLimits`) leak through synthesis, so a theorem reports
   clean axioms while every real consumer depends on `sorryAx`.  Those two are the

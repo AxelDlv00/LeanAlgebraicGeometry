@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:generically_free_domain_core
 lean_status: lean_ok
-order: 927
+order: 929
 ref: nitsure-hilbert-quot
 title: 'Normalisation core: generic freeness of quotient domains'
 type: tex
-updated: '2026-07-28T02:46:11'
+updated: '2026-07-28T04:57:37'
 ---
 Let \(A\) be a noetherian domain, \(B\) a finite-type \(A\)-algebra, and
   \(\pp \subset B\) a prime ideal.  Then the quotient domain \(B/\pp\) is

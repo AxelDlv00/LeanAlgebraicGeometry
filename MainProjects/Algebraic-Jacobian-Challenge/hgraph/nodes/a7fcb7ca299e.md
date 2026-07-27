@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:internal_hom_isSheaf
 lean_status: lean_ok
-order: 704
+order: 706
 title: The internal hom is a sheaf; the sheaf-level dual
 type: tex
-updated: '2026-07-28T02:46:11'
+updated: '2026-07-28T04:57:36'
 ---
 \textit{Source: [Stacks Project], ``Modules on Ringed Spaces'', \S Internal Hom
   (tag area 01CM).}

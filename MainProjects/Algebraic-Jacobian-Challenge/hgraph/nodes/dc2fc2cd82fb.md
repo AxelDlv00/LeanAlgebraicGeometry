@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:gr_cocycle_theta_ij
 lean_status: lean_ok
-order: 1383
+order: 1385
 title: 'Localised transition map \(\Theta_{I,J} : S_J \to S_I\)'
 type: tex
-updated: '2026-07-28T02:46:11'
+updated: '2026-07-28T04:57:37'
 ---
 The triple-overlap transition map
   \(\Theta_{I,J} : S_J = R^J[1/(P^J_I P^J_K)] \to S_I = R^I[1/(P^I_J P^I_K)]\):

@@ -63,8 +63,8 @@ same theorem by a separate curve-specialized strategy.
   discharged by the caller; the leak appears at any call site that must
   synthesise the instance.  Run
   [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean) (`lake env lean
-  scripts/axiom-frontier.lean`, 113 declarations: 72 clean and 41 carrying `sorryAx`,
-  measured 2026-07-28 with the root build green at 8,744 jobs) before believing any
+  scripts/axiom-frontier.lean`, 126 declarations: 84 clean and 42 carrying `sorryAx`,
+  measured 2026-07-28 with the root build green at 8,746 jobs) before believing any
   completeness claim — it measures the frontier rather than inferring it.  Count by
   output *entry*, not by output line:
   Lean wraps a long axiom list across several lines, so a per-line filter
@@ -138,7 +138,21 @@ it, so it is five either way, and what changes is that over `k̄` all five are t
 statements (measured, not asserted — probe §0b).  What the owner decides is therefore what
 the project claims over an *arbitrary* base field, not whether the construction runs
 at all.  Note also that this does not move the protected `Jacobian` declarations, which
-still route through the general witness and its false leaf.  The distinction matters for reading the frontier: over `k̄` every remaining
+still route through the general witness and its false leaf.
+
+One of the two branches now has a compiled form, and the asymmetry is worth being explicit
+about rather than leaving "both branches recorded" to imply they are equally close.
+`picardJacobianWitnessOfHasRationalPoint` is the assembly with `C(k) ≠ ∅` as a hypothesis,
+and both witnesses are specialisations of it — so branch (1) costs no mathematics beyond
+the five obligations already open (probe §0c, which leaks and says so; five, not four,
+because the binder makes the representability gate fire rather than removing it).
+Branch (2), étale
+sheafification, is *not* reachable from it: it replaces `instHasPicScheme` rather than
+supplying its hypothesis, and needs a representability input nobody has built.  Neither
+branch is assumed, and having one of them cheaper to *build* is not an argument for it
+being the right claim — that judgement is the owner's.
+
+The distinction matters for reading the frontier: over `k̄` every remaining
 obligation is a true statement awaiting a proof, whereas the general-field witness
 rests on an inconsistent hypothesis and its consequences are vacuously true — a
 state no axiom check can distinguish from an honest one (trap (c) above).
