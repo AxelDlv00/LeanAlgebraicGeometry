@@ -130,16 +130,16 @@ whoever depends on it, whereas these arrive through synthesis. §8 measures the 
 
 The enumeration is exhaustive, and worth stating as such because "there are two" is the kind
 of claim that rots silently as modules land. Measured on the rooted tree (2026-07-28), the
-project declares **24 `sorry`-bodied declarations**, of which exactly **two are instances** —
-the two below. The other 22 are theorems and definitions:
+project declares **26 `sorry`-bodied declarations** over 11 modules, of which exactly **two
+are instances** — the two below. The other 24 are theorems and definitions:
 
   Jacobian.lean          `hasRationalPoint_of_curve`, `smoothOfRelativeDimension_genus_pic0`,
                          `isAlbanese_pic0`                                    (the three leaves)
+  IdentityComponent      `degree`, `finrank_eq_genus`, `kPoints_iff_kerDegree`
   Pic0AbelianVariety     `finrank_cotangentSpaceDual_eq_finrank_h1Cok`, `smooth`, `proper`
   AlbaneseUP             `abelJacobi`, `SymmetricPower`, `symmetricPowerAVMap`,
                          `symmetricPowerToJacobian`, `descentThroughBirationalSigma`,
                          `albanese_eq_iff_symmetricPower_eq`
-  IdentityComponent      `degree`, `finrank_eq_genus`, `kPoints_iff_kerDegree`
   QuotFunctorDef         `Modules.pullbackTensorMap_isIso`, `gammaFiber_finrank_baseChange_field`
   SerreFiniteness        `sectionGradedModule_fg`, `gradedHilbert_fiber`
   QuotRepresentability   `QuotScheme`
@@ -150,10 +150,17 @@ the two below. The other 22 are theorems and definitions:
                          (two `fun _ => sorry` fields, so they are carriers even though the
                          declarations are not themselves bare `sorry` bodies)
 
-To re-derive rather than trust that list: `lake build AlgebraicJacobian` names every carrier
-on stderr as `declaration uses 'sorry'`, and which of them are instances is a source question.
-The two below are `noncomputable instance instHasPicScheme` and
-`instance pullback_preservesFiniteLimits`. -/
+To re-derive rather than trust that list, and to see immediately if it has drifted:
+
+    lake build AlgebraicJacobian 2>&1 | grep 'declaration uses' | sort -u
+
+Each line is one carrier, `file:line:col`. Which of them are instances is a source question at
+those lines, not something the build reports; the two below are `noncomputable instance
+instHasPicScheme` and `instance pullback_preservesFiniteLimits`. Do not derive the count by
+grepping the sources for `:= sorry`: that misses the last two entries above, whose `sorry`
+sits in a structure field, and it counts prose mentions of the word. Two earlier revisions of
+this file got the arithmetic wrong in exactly one of those ways, which is the reason the
+command is written out here rather than the number alone. -/
 #print axioms AlgebraicGeometry.Scheme.instHasPicScheme
 #print axioms AlgebraicGeometry.pullback_preservesFiniteLimits
 

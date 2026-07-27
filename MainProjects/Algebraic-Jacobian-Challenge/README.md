@@ -35,7 +35,7 @@ same theorem by a separate curve-specialized strategy.
 
 ## State (measured 2026-07-27)
 
-- **185 modules, 130,786 lines**; **26 `sorry`** over 11 modules, the rest locally
+- **185 modules, 131,165 lines**; **26 `sorry`** over 11 modules, the rest locally
   sorry-free; a warm `lake build AlgebraicJacobian` **green** at 8,744 jobs.  These
   counts move whenever a module lands, so re-measure rather than quoting them:
 
@@ -63,14 +63,14 @@ same theorem by a separate curve-specialized strategy.
   discharged by the caller; the leak appears at any call site that must
   synthesise the instance.  Run
   [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean) (`lake env lean
-  scripts/axiom-frontier.lean`, 105 declarations, 69 clean and 36 carrying `sorryAx`
-  as last measured) before believing any completeness claim — it measures the
-  frontier rather than inferring it.  Count by output *entry*, not by output line:
+  scripts/axiom-frontier.lean`, 107 declarations) before believing any completeness
+  claim — it measures the frontier rather than inferring it.  Count by output *entry*,
+  not by output line:
   Lean wraps a long axiom list across several lines, so a per-line filter
   misclassifies exactly the declarations with the longest lists.  The header carries
   the recipe.
 - **A clean axiom set answers one question only:** is a `sorry` reachable from this
-  proof term.  Five separate things it cannot see have each been measured in this
+  proof term.  Six separate things it cannot see have each been found in this
   tree — a `sorry`-bodied instance reached only through synthesis; an *unproved*
   named hypothesis in the statement; a *false* named hypothesis in the statement,
   which makes the theorem vacuously true and perfectly clean; an
@@ -78,8 +78,18 @@ same theorem by a separate curve-specialized strategy.
   and nothing in the project constructs it for the ambient object actually used
   (an instance for a more structured cousin — `Over (Spec k)` rather than a bare
   `Scheme` — does not count, and is worse than none, because the grep succeeds);
-  and an *unrooted module*, which no axiom check reaches at all, per the bullet
-  above.  Read the probe's section headers, not just its output lines.
+  an *unrooted module*, which no axiom check reaches at all, per the bullet
+  above; and an *instance diamond*, where two non-definitionally-equal instances can
+  supply the same binder, so a file can prove correct-looking theorems about a
+  definition pinned to the wrong one.  The first five are each measured by the probe;
+  the sixth defeats the probe *and* an instantiability check, because the binders do
+  synthesise — the tell is a cross-file identity that ought to be `rfl` and is not.
+  Read the probe's section headers, not just its output lines.
+- **Only two of the tree's `sorry` carriers are instances**, and that is the whole of
+  the synthesis-leak surface, because an instance is the only carrier a consumer can
+  reach without naming it.  The probe's §2 lists all 24 carriers by module, so the
+  claim is checkable rather than folklore; note that two of the 24 hold their `sorry`
+  in a *field*, which a grep for `:= sorry` misses.
 - 66 modules still open with a bare `import Mathlib`; this is the
   dominant build cost and is being converted bottom-up with the helpers in
   `scripts/`.
@@ -116,7 +126,10 @@ Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
   Jacobian witness interface and assembly point.  The witness is built from
   `Pic⁰_{C/k}` and depends on five stated obligations: `Pic0.smooth` and
   `Pic0.proper` upstream, plus three named leaves stated there.  98 modules are
-  reachable from it.
+  reachable from it.  Two of the three leaves also carry a *companion theorem* stating
+  the part the landed development already proves — `finrank_tangentSpace_pic0_eq_genus`
+  and `isAlbanese_pic0_of_isAlgClosed` — so each leaf's remaining distance is
+  compiler-checked rather than described in prose.
 - [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean): the axiom-frontier
   probe, and the two reachability measurements in its header (headline cone, and
   whether every module on disk is rooted at all).

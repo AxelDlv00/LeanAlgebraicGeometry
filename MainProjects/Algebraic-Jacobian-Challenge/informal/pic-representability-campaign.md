@@ -42,7 +42,7 @@
 > also the record of what such a check *cannot* establish. A clean axiom set means
 > exactly one thing: no `sorry` is reachable from that proof term. Five separate
 > ways a milestone can still be short of unconditional mathematics have each been
-> measured in this tree (the same five listed under "Gate-table status" below):
+> measured in this tree (the first five listed under "Gate-table status" below):
 >
 > - `#print axioms` on a theorem that *quantifies over* a gate reports clean axioms
 >   regardless, because the hypothesis is discharged by the caller — measure at a
@@ -61,8 +61,13 @@
 > - An *unrooted* module is not probed at all: `import AlgebraicJacobian` never
 >   reaches it, so no `#print axioms` line for it can even be written.
 >
+> A sixth way, found after the other five and worse than any of them, is recorded
+> under "Gate-table status": an *instance diamond* that re-pins a definition's
+> meaning survives both a clean axiom line and an instantiability probe, because
+> the binders do synthesise — just to the wrong instance.
+>
 > `G5` below already says to verify axiom-cleanliness of `instHasPicScheme`; the
-> same discipline, in all five forms, applies to every gate discharge in the
+> same discipline, in all six forms, applies to every gate discharge in the
 > table. A milestone is done when its statement is true and unconditional, not when
 > its axiom line is short.
 >
@@ -302,10 +307,19 @@ that have drifted.
   and/or a peel-surjectivity datum. `scripts/axiom-frontier.lean` §6b/§6d carry the
   per-declaration open-hypothesis columns; a clean axiom line in this lane is not a
   discharge.
-- **The five ways a milestone can look done and not be** are catalogued and each one
+- **The six ways a milestone can look done and not be** are catalogued, the first five each
   measured in `scripts/axiom-frontier.lean`: a gate discharged by the caller; an unproved
   named hypothesis; a *false* named hypothesis; an instance binder nothing can instantiate
-  for the ambient object; and an unrooted module, which no axiom check reaches at all.
+  for the ambient object; and an unrooted module, which no axiom check reaches at all. The
+  sixth was found in the Riemann–Roch lane after the other five and is the only one that
+  defeats *both* a clean axiom line and an instantiability probe: an **instance diamond**
+  that silently re-pins a definition's meaning. Two different `Algebra k K(C)` instances can
+  supply the binder that the Adelic definitions (`sectionSub`, `orderGeSub`, `residueDeg`,
+  `chi`) are stated over, they are not definitionally equal, and both are in scope in a file
+  that opens the wrong pair of namespaces. A file that picked up the second would prove
+  correct-looking theorems about a `residueDeg` pinned to a different `k`-action than every
+  consumer uses. The tell is not the axiom output and not "does it elaborate": it is a
+  cross-file identity that *ought* to be `rfl` and is not.
 
 ### Wave-1 parallel work list (6 agent tasks)
 
