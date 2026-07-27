@@ -55,7 +55,14 @@ Consequently `P1RigidPushforwardStatement k A` and, for an AJC curve, the
 gate's whole `locallyFree` field are unconditional theorems
 (`p1RigidPushforwardStatement_proved`, `rigidPushforwardLocallyFree_proved`).
 
-## What remains — one statement
+## What remained — one statement, and it is now proved
+
+**STATUS: nothing remains.**  The statement isolated below,
+`RigidPushforwardGammaBaseChange C A`, is
+`Adelic.rigidPushforwardGammaBaseChange_proved`
+(`Picard/RigidPushforwardGammaBaseChange.lean`), and the gate is the global
+instance `Adelic.instHasRigidPushforwardOfCurve` there.  What follows is the
+record of the last reduction, not a survey of open work.
 
 The gate's second field, `Scheme.RigidPushforwardBaseChange C A`.
 `Picard/RigidPushforwardAffineDescent.lean` reduces it — by affine-target
@@ -63,13 +70,15 @@ descent, both sides of the adjunction mate being quasi-coherent on the affine
 `Spec A'` — to the single module-level statement
 `RigidPushforwardGammaBaseChange C A`: bijectivity of the canonical
 `Γ(Spec A', ⊤) ⊗_{Γ(Spec A, ⊤)} Γ(C_A, L) → Γ(C_{A'}, g'^* L)`.  That is the
-classical `H⁰`-base-change fact, and it is *not* proved anywhere in the tree.
-`hasRigidPushforward_of_gammaBaseChange` below is the honest statement of the
-gate's remaining cost: **one** statement, not four.
+classical `H⁰`-base-change fact, and it is proved in
+`Picard/RigidPushforwardGammaBaseChange.lean` from the Čech purity of the same
+ℙ¹ engine.  `hasRigidPushforward_of_gammaBaseChange` below was the honest
+statement of the gate's cost at **one** statement, and is now the last
+conditional link in a chain with no free ends.
 
-Nothing here claims the gate itself.  There is deliberately no
-`instance : HasRigidPushforward C`, because there is no producer for
-`RigidPushforwardGammaBaseChange`.
+Nothing *in this file* claims the gate itself: the instance lives downstream,
+in `Picard/RigidPushforwardGammaBaseChange.lean` §3, where its one hypothesis
+is discharged.
 
 Sources: Mumford, *Abelian Varieties*, II §5; Stacks 00NX, 01I8, 01XJ, 02KG;
 EGA III 7.9.9; Kleiman, *The Picard scheme* (FGA Explained), §5.

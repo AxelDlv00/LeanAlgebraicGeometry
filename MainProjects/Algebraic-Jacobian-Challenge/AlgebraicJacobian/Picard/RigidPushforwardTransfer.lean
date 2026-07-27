@@ -1385,9 +1385,9 @@ theorem pushforward_finiteMapToP1BaseChange_fiberH1 [HasFiniteMapToP1 C]
 discharged above, B3 local freeness for the constant curve `C_A` follows from
 the ℙ¹ engine alone:
 for every finitely generated `k`-algebra `A`, `P1RigidPushforwardStatement`
-implies `RigidPushforwardLocallyFree C A`.  (The `HasRigidPushforward` gate
-is *not* instantiated here: its `baseChange` field is still open; this is the
-locally-free half only.) -/
+implies `RigidPushforwardLocallyFree C A`.  (This is the locally-free half
+only; the gate itself is assembled — both fields — in
+`Picard/RigidPushforwardGammaBaseChange.lean`.) -/
 theorem rigidPushforwardLocallyFree_of_p1Engine [HasFiniteMapToP1 C]
     [Algebra.FiniteType k A] (hP1 : P1RigidPushforwardStatement k A) :
     Scheme.RigidPushforwardLocallyFree C A :=

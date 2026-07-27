@@ -94,10 +94,15 @@ behind Kleiman's flattening/openness arguments in the curve case.
 ## Gate
 
 `HasRigidPushforward C` is the campaign gate (`HasPicScheme` pattern): a
-`Prop` class with **no instances anywhere**, carrying the two statement
-`Prop`s quantified over all finitely generated `k`-algebras.  It is
-discharged by the full B3 session (Mumford two-term complex route) and
-deleted on discharge.  Everything else in this file is *proved*: the
+`Prop` class carrying the two statement `Prop`s quantified over all finitely
+generated `k`-algebras.  **It is now DISCHARGED**, by the Mumford two-term
+complex route as planned: `Adelic.instHasRigidPushforwardOfCurve`
+(`Picard/RigidPushforwardGammaBaseChange.lean`) is a global instance for an
+AJC curve, and `Adelic.hasRigidPushforward_p1Over`
+(`Picard/RigidPushforwardP1Witness.lean`) fires it at `ℙ¹`.  The class is
+*kept* rather than deleted, so that consumers read as hypotheses on the
+curve rather than on an opaque conjunction.  Everything else in this file is
+*proved*: the
 extraction theorems, the rank-one corollary, and the ℙ¹ reduction skeleton
 (the base-changed finite map `C_A ⟶ ℙ¹_A`, the pushforward factorization
 `q_* = p_* ∘ π_*`, and the reduction of B3-for-`C_A` to a ℙ¹ engine plus a
@@ -355,9 +360,13 @@ def RigidPushforwardBaseChange (C : Over (Spec (CommRingCat.of k)))
           (Spec.map (CommRingCat.ofHom φ)))
         pullback.condition L)
 
-/-- **The B3 gate** (`HasPicScheme` pattern: `Prop` class, **no instances
-anywhere in the tree** — supplied as a hypothesis by consumers and
-discharged by the full B3 proof session, then deleted).
+/-- **The B3 gate** (`HasPicScheme` pattern).  **This class now has a
+producer.**  `Adelic.instHasRigidPushforwardOfCurve`
+(`Picard/RigidPushforwardGammaBaseChange.lean`) is a global instance for
+every `C` that is smooth of relative dimension one, proper and geometrically
+integral over `k`, so the `[HasRigidPushforward C]` binders below synthesize
+rather than being assumed; `Adelic.hasRigidPushforward_p1Over` exhibits a
+curve satisfying those three hypotheses, so the instance is not vacuous.
 
 Content: for the smooth proper geometrically integral curve `C/k` of the
 campaign, both B3 statement pins hold over every finitely generated
@@ -365,11 +374,16 @@ campaign, both B3 statement pins hold over every finitely generated
 the Mumford AV II §5 two-term-complex argument; milestone B2 extends
 consumers to arbitrary affine bases by filtered colimits).
 
-Route for the discharge (recorded, not claimed here): push along the finite
-`C_A ⟶ ℙ¹_A` (`finiteMapToP1BaseChange` below) and run the two-term finite
-free replacement on the explicit 2-chart Čech complex of `ℙ¹_A`
-(`p1BaseChangeCoverSquare` below); fallback: direct Čech on a 2-affine
-cover of `C_A` (campaign risk register R1). -/
+Route of the discharge (this is what was executed, not a plan): push along
+the finite `C_A ⟶ ℙ¹_A` (`finiteMapToP1BaseChange` below) and run the
+two-term finite free replacement on the explicit 2-chart Čech complex of
+`ℙ¹_A` (`p1BaseChangeCoverSquare` below).  The `locallyFree` field comes out
+of that engine directly; the `baseChange` field descends along the affine
+target `Spec A'` to a `Γ`-level bijectivity
+(`Picard/RigidPushforwardAffineDescent.lean`) which the same engine's Čech
+purity supplies (`Picard/RigidPushforwardGammaBaseChange.lean`).  The
+risk-register fallback (direct Čech on a 2-affine cover of `C_A`) was not
+needed. -/
 class HasRigidPushforward (C : Over (Spec (CommRingCat.of k))) : Prop where
   /-- Rank-`χ` local freeness over every finitely generated `k`-algebra. -/
   locallyFree : ∀ (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A],

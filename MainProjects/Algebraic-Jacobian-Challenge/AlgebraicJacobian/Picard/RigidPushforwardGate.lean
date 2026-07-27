@@ -11,10 +11,15 @@ import AlgebraicJacobian.Picard.RigidPushforwardTransfer
 
 `Picard/RigidPushforward.lean` declares the campaign gate
 `Scheme.HasRigidPushforward C` (:373) with two fields, `locallyFree` and
-`baseChange`, and no instance anywhere in the tree.  The purpose of this file
-is to make the *shape* of the discharge exact: to say, as machine-checked Lean
-rather than prose, precisely which statements remain and how they compose into
-the gate.
+`baseChange`.  The purpose of this file was to make the *shape* of the
+discharge exact: to say, as machine-checked Lean rather than prose, precisely
+which statements remain and how they compose into the gate.
+
+**STATUS: all four leaves are now closed and the gate has a producer**
+(`Adelic.instHasRigidPushforwardOfCurve`,
+`Picard/RigidPushforwardGammaBaseChange.lean`).  Read this file as the record
+of the factorization — its conditional plumbing is still consumed — but not as
+a survey of open work.
 
 ## The factorization
 
@@ -303,10 +308,13 @@ The four leaves, and what became of each:
 * the local-freeness output bridge on `ℙ¹_A` (leaf 3) — **proved**, its sheaf
   half in `Picard/RigidPushforwardP1Sheaf.lean` and the rank identity in
   `Picard/RigidPushforwardRank.lean`;
-* the base-change field for the proper family `C_A ⟶ Spec A` (leaf 4) — the
-  only one still open, and now reduced by affine-target descent to a single
-  module-level statement (`Picard/RigidPushforwardAffineDescent.lean`).  The
-  "no infrastructure yet" caveat in the module docstring above is history. -/
+* the base-change field for the proper family `C_A ⟶ Spec A` (leaf 4) — also
+  **proved**: reduced by affine-target descent to a single module-level
+  statement (`Picard/RigidPushforwardAffineDescent.lean`), which is
+  `Adelic.rigidPushforwardGammaBaseChange_proved`
+  (`Picard/RigidPushforwardGammaBaseChange.lean`).  The "no infrastructure
+  yet" caveat in the module docstring above is history, and so is the "only
+  one still open" reading of this list. -/
 theorem hasRigidPushforward_of_leaves
     (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]

@@ -204,11 +204,15 @@ proper geometrically integral `C/k` is unconditional in this tree
 instance `instHasTrivialConstants`), and `ℙ¹_k` is proper; so the anchor
 follows from the single mathlib class `GeometricallyIntegral (p1Over k).hom`.
 
-That class is the honest remaining frontier: by
+That class was the honest remaining frontier: by
 `MorphismProperty.pullback_fst` it reduces to geometric integrality of the
 integral model `Proj ℤ[X₀, X₁] ⟶ ⊤_Scheme`, i.e. to `IsIntegral (ℙ¹_K)` for
 every field `K` — a missing mathlib fact about `Proj`, not a gap in the
-Mumford argument. -/
+Mumford argument.  Both are now proved
+(`Adelic.instGeometricallyIntegralProjIntegralModel`,
+`Adelic.instGeometricallyIntegralP1Over`,
+`Picard/RigidPushforwardP1Witness.lean`), so the `[GeometricallyIntegral …]`
+binder here synthesizes. -/
 theorem p1_bijective_appTop_of_geometricallyIntegral
     [GeometricallyIntegral ((p1Over k).hom)] :
     P1HasTrivialConstants k :=
@@ -251,11 +255,15 @@ geometrically integral, i.e. `ℙ¹_K` is an integral scheme for every field
 `K` — discharges the field-of-constants anchor `Γ(ℙ¹_k, 𝒪) = k` over every
 field `k` simultaneously.
 
-This is the *whole* remaining B3-H0 frontier.  Mathlib has the analogous
-instances for **affine** space (`AlgebraicGeometry/AffineSpace.lean`:
-`GeometricallyIrreducible`, `GeometricallyReduced`, `GeometricallyIntegral`
-of `𝔸(n; S) ↘ S`) but nothing for `Proj`; supplying the projective analogue
-is the missing piece. -/
+This was the *whole* remaining B3-H0 frontier, and it is now **closed**:
+`Adelic.instGeometricallyIntegralProjIntegralModel`
+(`Picard/RigidPushforwardP1Witness.lean`) supplies the projective analogue of
+mathlib's affine-space instances (`AlgebraicGeometry/AffineSpace.lean` has
+`GeometricallyIrreducible`, `GeometricallyReduced`, `GeometricallyIntegral` of
+`𝔸(n; S) ↘ S` and nothing for `Proj`).  The cost turned out to be a dozen
+lines rather than new mathematics, because the base of a test square here is
+*terminal*: the test object is forced to be isomorphic to `ℙ¹_K`, and
+`Adelic.instIsIntegralP1OverLeft` already covers every field `K`. -/
 theorem p1TrivialConstants_of_proj
     [GeometricallyIntegral
       (terminal.from (Proj (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))))] :

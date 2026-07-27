@@ -19,9 +19,11 @@ in this tree (`isIso_pushforwardBaseChangeMap_of_isPullback`,
 whereas the gate's family `q : C_A ⟶ Spec A` is proper and emphatically not affine.
 
 This file replaces "no infrastructure" by a named, honest **reduction**: the whole field follows
-from a single classical `H⁰`-base-change bijectivity of `Γ(Spec A, ⊤)`-modules.  It does *not*
-prove that bijectivity — see "What remains" below — and it does not smuggle in the non-affine
-case: only the two *bases* of the square are assumed affine, the fibre map `f` is arbitrary.
+from a single classical `H⁰`-base-change bijectivity of `Γ(Spec A, ⊤)`-modules.  It does not
+prove that bijectivity; `Picard/RigidPushforwardGammaBaseChange.lean` does
+(`Adelic.rigidPushforwardGammaBaseChange_proved`), by the route sketched below.  It does not
+smuggle in the non-affine case either: only the two *bases* of the square are assumed affine,
+the fibre map `f` is arbitrary.
 
 ## The reduction, in four steps
 
@@ -63,10 +65,13 @@ case: only the two *bases* of the square are assumed affine, the fibre map `f` i
   `MorphismProperty.pullback_snd`, to know that the two pullback families are proper (hence qcqs)
   and that `q_* L` is quasi-coherent.
 
-## What remains, and the route the probe identified for it
+## The route the probe identified — EXECUTED, with one simplification
 
-`RigidPushforwardGammaBaseChange C A` is **not proved here**.  The route found while building
-this file, recorded so the next session does not re-derive it:
+`RigidPushforwardGammaBaseChange C A` is not proved *here*; it is proved in
+`Picard/RigidPushforwardGammaBaseChange.lean`.  The route below is what that file follows, with
+one departure worth reading before trusting the corrections in the next section: steps 1–2 were
+taken in the *opposite* order to correction 1's advice, and correction 4 turned out to be
+unnecessary (see the note at the end of this section).  The route as found:
 
 1. Work on the 2-affine cover `(p1BaseChangeCoverSquare A).preimage π_A` of `C_A`, the preimage
    under the finite (hence affine) `π_A := finiteMapToP1BaseChange A C` of the standard 2-chart
@@ -129,6 +134,20 @@ this file, recorded so the next session does not re-derive it:
 
    Both are the affine-base-change analogues of bricks already proved for fibres; the first is
    Stacks 02KG in degree `0` on a single affine chart, the second its restriction naturality.
+
+3b. **What actually happened (read this before corrections 1 and 4).**  The executed proof took
+   step 1's surjectivity and step 2's `bijective_kerBaseChange_of_surjective` after all, rather
+   than the engine's fourth conjunct — because the flatness that correction 1 calls an
+   unnecessary obligation is *free* on the campaign (`CoherentSheafFlat q L` for an invertible
+   `L` on the flat family `q`, read at the pair `(⊤, U₁ ⊓ U₂)` by
+   `flat_baseSections_of_coherentSheafFlat`), and taking it avoids moving the whole `letI`
+   dictionary off `p` and the pushforward module.  With that choice, correction 4's congruence
+   helper is **not needed at all**: `Function.Surjective ⇑d` mentions only the underlying
+   function of `d`, the module structures are instance arguments, and
+   `moduleSectionDiff_pushforward` is `rfl` — so the ℙ¹ statement and the `C_A` statement are
+   literally the same proposition and `exact` crosses `q = π_A ≫ p` for free.  Correction 3's
+   two-scalar-action glue is real, but is confined to one `map_smul` through
+   `pushforwardTopEquivBaseSections`.
 
 4. **Dependency warning.**  This route puts the `baseChange` field *downstream* of the
    `IsIntegral (ℙ¹_k)` leaf of `Picard/RigidPushforwardFrontier.lean`: step 1 consumes the

@@ -247,10 +247,12 @@ Both fields are now unconditional: `locallyFree` is
 (`Picard/RigidPushforwardAffineDescent.lean`) fed by `rigidPushforwardGammaBaseChange_proved`
 of §2.
 
-`Picard/RigidPushforward.lean`'s class docstring anticipated exactly this — "no instances
-anywhere in the tree — supplied as a hypothesis by consumers and discharged by the full B3 proof
-session".  This is that instance; the `[HasRigidPushforward C]` binders on the three extraction
-theorems now synthesize for an AJC curve, as §4 witnesses. -/
+This is the discharge `Picard/RigidPushforward.lean`'s class docstring anticipated; that
+docstring has been corrected accordingly, and the class is kept rather than deleted so consumers
+keep reading as hypotheses on the curve.  The `[HasRigidPushforward C]` binders on the three
+extraction theorems now synthesize for an AJC curve, as §4 witnesses, and
+`Picard/RigidPushforwardP1Witness.lean` exhibits a curve satisfying the three hypotheses, so
+neither this instance nor §4 is vacuous. -/
 instance instHasRigidPushforwardOfCurve
     (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom] :
