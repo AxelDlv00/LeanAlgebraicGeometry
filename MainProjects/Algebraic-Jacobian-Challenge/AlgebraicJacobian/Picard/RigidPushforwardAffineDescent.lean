@@ -145,14 +145,19 @@ rediscover them:
    `hker : ∀ B …, Function.Bijective (kerBaseChange (𝒰.moduleSectionDiffBase f M) B)` rather
    than a flatness-plus-surjectivity pair.
 
-2. **The intended `Γ`-level statement does not elaborate as sketched.**  Its tensor product,
-   its flatness hypothesis and its surjectivity hypothesis each need a
-   `Module Γ(Y, ⊤) Γ(M, ·)` instance that exists only through
-   `letI := f.baseSectionsModule M ·`; four such binders (`⊤`, `U₁`, `U₂`, `U₁ ⊓ U₂`) are
-   required, not the single `Algebra Γ(Y,⊤) Γ(Y',⊤)` binder.  Copy the binder list of
+2. **Get the `letI` binder list right, and elaborate the statement before writing any proof.**
+   A `Module Γ(Y, ⊤) Γ(M, ·)` instance exists only through `letI := f.baseSectionsModule M ·`,
+   so every hypothesis mentioning `Γ(M, ·)` as a `Γ(Y, ⊤)`-module needs one — *in addition to*
+   the `Algebra Γ(Y, ⊤) Γ(Y', ⊤)` binder, which is never replaced.  How many depends on the
+   statement, so copy from the closest existing one rather than guessing:
    `surjective_moduleSectionDiffBase_baseChange_residueField`
-   (`Picard/RigidPushforwardFiberChart.lean`:508-518), and elaborate the statement with a
-   placeholder body *before* writing any proof.
+   (`Picard/RigidPushforwardFiberChart.lean`:508-518) is about the whole Čech complex and
+   carries the `Algebra` binder plus **three** `baseSectionsModule` binders (`U₁`, `U₂`,
+   `U₁ ⊓ U₂` — there is no `⊤` binder); a statement about a *single* chart needs the `Algebra`
+   binder plus **one**, at that chart.  (An earlier draft of this paragraph said "four binders,
+   not the `Algebra` binder", which describes neither lemma; corrected after a fresh-context
+   review checked it against the source.)  Either way: write the statement with a placeholder
+   body and get it to elaborate first — that is where the time goes.
 
 3. **The glue to §3 is not free.**  §3's map lives on the tensor product formed with the
    *native* pushforward module structure (that is what

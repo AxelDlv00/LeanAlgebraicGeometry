@@ -113,10 +113,18 @@ Recorded honestly, because it changes what the consumers must supply:
   `QuasiSeparated p`, quasi-coherence of `M`, and `IsAffineHom (p.fiberι t)`
   (which is what makes the induced fibre cover a two-chart *affine* cover).
 
-## Why the finiteness, projectivity and base-change hypotheses are load-bearing
+## Why the projectivity hypothesis is load-bearing
 
-They are not decoration: dropped, the statement is **false**, and its
-consumers become vacuous.  The counterexample recorded at
+`hproj` is not decoration: dropped, the statement is **false**, and its
+consumers become vacuous.  Stated precisely, because the distinction has been
+got wrong here once already — the counterexample below witnesses the necessity
+of `hproj` **alone**.  In it `hsurj`, `hfin` and `hbc` all *hold*:
+`H¹(ℙ¹_k, 𝒪) = 0` so the Čech differential is surjective; `Γ = A/(x) = k` is
+cyclic hence finite over `A = k[x]`; and everything in the two-term complex is
+killed by `x`, so both `B ⊗ ker d` and `ker (d ⊗ B)` are `B/xB` and
+`kerBaseChange` is the canonical isomorphism for every `B`.  `hfin` and `hbc`
+are not separately witnessed here: they are what `Module.rankAtStalk_eq` and
+step 3 respectively *consume*.  The counterexample recorded at
 `Picard/RigidPushforwardP1Sheaf.lean`:567-576 is `A = k[x]` with
 `M = 𝒪_{ℙ¹_A}/x = coker(𝒪 --x--> 𝒪)`, which is finitely presented.  Then
 `Γ(ℙ¹_A, M) = A/(x) = k` is a *torsion* `A`-module, so `Module.rankAtStalk` at
@@ -472,10 +480,12 @@ change (`hbc`: `AlgebraicJacobian.TwoTerm.kerBaseChange` bijective over every
 
 This is the general form of leaf 3's rank identification — no projective line
 occurs, so it is equally available for a curve `C_A ⟶ Spec A`.  Surjectivity of
-the Čech differential is *not* required: it is subsumed by `hbc`.  Nor is
-finite presentation of `M`, properness of `p`, or any finiteness of `R`.  The
-three hypotheses that do occur are genuinely necessary; see the module
-docstring for the counterexample that drops `hproj`.
+the Čech differential is *not* required — this proof does not use it (it is
+*not* implied by `hbc`; see the module docstring).  Nor is finite presentation
+of `M`, properness of `p`, or any finiteness of `R`.  Of the three hypotheses
+that do occur, `hproj` is genuinely necessary (module docstring, counterexample);
+`hfin` and `hbc` are consumed by `Module.rankAtStalk_eq` and by step 3
+respectively, and are not separately witnessed.
 
 Sources: Stacks 02KG at `i = 0`, 00NX; Mumford, *Abelian Varieties*, II §5. -/
 theorem rank_pushforward_eq_fiberH0

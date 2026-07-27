@@ -286,15 +286,27 @@ theorem hasRigidPushforward_of_p1Engine_of_baseChange
   locallyFree A := rigidPushforwardLocallyFree_of_p1Engine A C (hP1 A)
   baseChange A := hBC A
 
-/-- **The gate from the four named leaves.**  The exact remaining frontier of
-the B3 campaign gate, machine-checked:
+/-- **The gate from the four named leaves.**  *This is no longer the frontier* —
+it is the four-leaf factorization, kept because the factorization is what the
+later assemblies are built on.  For the current cost of the gate see
+`Adelic.hasRigidPushforward_of_gammaBaseChange`
+(`Picard/RigidPushforwardInstance.lean`), which needs **one** hypothesis.
+
+The four leaves, and what became of each:
 
 * `Γ(ℙ¹_k, 𝒪) = k` (one statement, `k`-only, reducible to geometric
-  integrality of `Proj ℤ[X₀, X₁]`);
-* the fibrewise Čech bridge on `ℙ¹_A` (leaf 2);
-* the local-freeness output bridge on `ℙ¹_A` (leaf 3);
-* the base-change field for the proper family `C_A ⟶ Spec A` (leaf 4, no
-  infrastructure yet — see the module docstring). -/
+  integrality of `Proj ℤ[X₀, X₁]`) — superseded by the weaker
+  `IsIntegral (ℙ¹_k)`, which is now **proved**
+  (`Adelic.instIsIntegralP1OverLeft`);
+* the fibrewise Čech bridge on `ℙ¹_A` (leaf 2) — **proved**
+  (`Adelic.p1CechFibrewiseBridge_proved`);
+* the local-freeness output bridge on `ℙ¹_A` (leaf 3) — **proved**, its sheaf
+  half in `Picard/RigidPushforwardP1Sheaf.lean` and the rank identity in
+  `Picard/RigidPushforwardRank.lean`;
+* the base-change field for the proper family `C_A ⟶ Spec A` (leaf 4) — the
+  only one still open, and now reduced by affine-target descent to a single
+  module-level statement (`Picard/RigidPushforwardAffineDescent.lean`).  The
+  "no infrastructure yet" caveat in the module docstring above is history. -/
 theorem hasRigidPushforward_of_leaves
     (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]
