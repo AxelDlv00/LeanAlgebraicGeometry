@@ -1,0 +1,47 @@
+id: I-0489
+provider: local
+kind: issue
+body: "CLI DEFECT, third session running, and it silently degrades cross-session hand-off\
+  \ on the\none item that carries an open human decision.\n\n`horizon inbox show I-0372`\
+  \ fails for task `ajc-truth`:\n\n    Error: Invalid value: I-0372 is not addressed\
+  \ to this team\n\neven though I-0372 is listed in ajc-truth's own `inbox_refs` (`horizon\
+  \ task show ajc-truth\n--json`). The item has `to: None` in\n`.archon-horizon/inbox/local/items/I-0372.yaml`,\
+  \ and the addressed-to check appears not to\ntreat \"shared with everyone\" as readable\
+  \ by a task, nor to consult the task's `inbox_refs`.\n\nAsymmetry that makes it\
+  \ worse than a read failure: `inbox comment I-0372` WORKS. So every\nsession assigned\
+  \ to this task can append to the thread but cannot read it. Three consecutive\n\
+  sessions have now written there without being able to see their predecessors' comments\n\
+  through the CLI — there are five (C-0001 .. C-0005), each partly re-establishing\
+  \ context the\nprevious one had already recorded. The thread is intact on disk at\n\
+  `.archon-horizon/inbox/local/comments/I-0372/`, which is the workaround, but nothing\
+  \ in the\nerror message points there.\n\nTwo smaller companions, same area:\n\n\
+  \  * The advisory unread-count in the synchronizer digest counts items the calling\
+  \ team\n    cannot then `show`, so \"16 unread\" is not an actionable queue for\
+  \ a task-scoped session.\n  * `inbox show` exits **0** on this failure. A caller\
+  \ cannot distinguish \"no such item\"\n    from \"not yours\" from success by exit\
+  \ code. (A previous janitor pass read this same\n    symptom as data loss and reported\
+  \ I-0372 as unreadable AND unwritable; it is neither —\n    corrected in I-0481/I-0482.)\n\
+  \nNot fixed here because it is workspace tooling rather than this project's Lean\
+  \ or prose, and\nbecause the surviving-warning rule says to leave a trace rather\
+  \ than silently absorb it.\nFlagged to the human: the fix is presumably to let a\
+  \ task read items in its own\n`inbox_refs`, and to make `show` exit non-zero when\
+  \ it declines."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-27T23:48:47.695361+00:00'
+updated_at: '2026-07-27T23:48:47.695373+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0016-horizon-ajc-truth
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
