@@ -8,6 +8,7 @@ import AlgebraicJacobian.Picard.DivSchemeAdaptationFibreRegular
 import AlgebraicJacobian.Picard.DivSchemeFibrePointRead
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivPointwiseFibreCore
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivPointwiseGenerator
+import AlgebraicJacobian.Picard.DivisorFamilyZarKit
 
 /-!
 # Pulled pointwise-seed equations on residue fibres
@@ -35,6 +36,24 @@ open Scheme Grassmannian ThetaGeneratorSeed
 attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
   Scheme.functionFieldOverModule
 attribute [local instance 10000] relCurve.instOver
+
+namespace ThetaGeneratorSeed
+
+variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
+variable {R : Type u} [CommRing R] [Algebra k R] [IsNoetherianRing R]
+variable {pi : C.left ⟶ P1 k} [IsFinite pi] {a : Nat}
+variable {K : Submodule R (relThetaSections C R pi a)}
+
+/-- The raw residue-fibre pullback of a generator seed's local equations. Its regularity comes
+directly from the seed's fibre-regularity clause, without a divisor adaptation or certificate. -/
+noncomputable def residueFibreLocalEquations (D : ThetaGeneratorSeed C R pi a K)
+    (hD : D.IsGenerator) (p : PrimeSpectrum R) :
+    (relCurve C p.asIdeal.ResidueField).LocalEquations :=
+  (D.localEquations hD).pullback (relCurveMap C R p.asIdeal.ResidueField)
+    (Scheme.LocalEquations.germ_pullbackEqn_mem_nonZeroDivisors_of_forall_self
+      _ _ fun z => D.germ_self_pullbackEqn_mem_nonZeroDivisors hD p z)
+
+end ThetaGeneratorSeed
 
 namespace PointwiseAchiever
 
@@ -249,6 +268,117 @@ theorem coeffAt_presentationDivisor_eq_divUniversalSeedFibreDivisor_of_germ_eq
     ← Scheme.CurveDivisor.coeffAt_divOf
       (relCurve C K ↘ Spec (CommRingCat.of K)) t hzg]
   simpa only [thetaFieldDivisor] using hbalance
+
+set_option maxHeartbeats 8000000 in
+-- The raw residue pullback and the pointwise germ bridge carry the dependent residue-field tower.
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The certificate-free residue-fibre pullback of the pointwise generator seed has the universal
+fibre-divisor coefficient at the canonical residue point. -/
+theorem coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor
+    (hrdn : PointwiseSeedRDN C hpi g r1 r2 b1 b2 i j hO hchi)
+    (z : relCurve C RZ)
+    (hzg : relCurveResiduePoint C RZ z ≠
+      genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField)) :
+    coeffAt hzg (Scheme.presentationDivisor
+        (relCurveBasePoint C RZ z).asIdeal.ResidueField
+        ((ThetaGeneratorSeed.residueFibreLocalEquations
+          (pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn)
+          (isGenerator_pointwiseGeneratorSeed
+            C hpi g r1 r2 b1 b2 i j hO hchi hrdn)
+          (relCurveBasePoint C RZ z)).presentation)) =
+      coeffAt hzg (divUniversalSeedFibreDivisor
+        C hpi g r1 r2 b1 b2 i j hO hchi (relCurveBasePoint C RZ z)) := by
+  apply coeffAt_presentationDivisor_eq_divUniversalSeedFibreDivisor_of_germ_eq
+    C hpi g r1 r2 b1 b2 i j hO hchi z hzg
+  change
+    ((relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField).presheaf.germ
+      ((((pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn).localEquations
+        (isGenerator_pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn)).cover.pullback
+          (relCurveMap C RZ
+            (relCurveBasePoint C RZ z).asIdeal.ResidueField)).opens
+        (relCurveResiduePoint C RZ z)) (relCurveResiduePoint C RZ z)
+      (((((pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn).localEquations
+        (isGenerator_pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn)).cover.pullback
+          (relCurveMap C RZ
+            (relCurveBasePoint C RZ z).asIdeal.ResidueField)).mem_opens
+        (relCurveResiduePoint C RZ z)))).hom
+      (Scheme.LocalEquations.pullbackEqn
+        (relCurveMap C RZ (relCurveBasePoint C RZ z).asIdeal.ResidueField)
+        ((pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn).localEquations
+          (isGenerator_pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn))
+        (relCurveResiduePoint C RZ z)) = _
+  exact germ_pullbackEqn_pointwiseGeneratorSeed_eq_pointwiseFibreReadGerm
+    C hpi g r1 r2 b1 b2 i j hO hchi hrdn z
+
+set_option maxHeartbeats 8000000 in
+-- Reindexing transports the residue field, point, and both divisor coefficients dependently.
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The certificate-free pointwise-seed presentation and the universal fibre divisor have equal
+coefficients at every closed point of every residue fibre. -/
+theorem coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor_at
+    (hrdn : PointwiseSeedRDN C hpi g r1 r2 b1 b2 i j hO hchi)
+    (p : PrimeSpectrum RZ) {x : relCurve C p.asIdeal.ResidueField}
+    (hxg : x ≠ genericPoint (relCurve C p.asIdeal.ResidueField)) :
+    coeffAt hxg (Scheme.presentationDivisor p.asIdeal.ResidueField
+        ((ThetaGeneratorSeed.residueFibreLocalEquations
+          (pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn)
+          (isGenerator_pointwiseGeneratorSeed
+            C hpi g r1 r2 b1 b2 i j hO hchi hrdn) p).presentation)) =
+      coeffAt hxg (divUniversalSeedFibreDivisor
+        C hpi g r1 r2 b1 b2 i j hO hchi p) := by
+  generalize hz : (relCurveMap C RZ p.asIdeal.ResidueField).base x = z
+  have hp : relCurveBasePoint C RZ z = p :=
+    hz ▸ relCurveBasePoint_relCurveMap_residueField C RZ p x
+  have hxcast : Eq.ndrec
+      (motive := fun q : PrimeSpectrum RZ => relCurve C q.asIdeal.ResidueField)
+      (relCurveResiduePoint C RZ z) hp = x := by
+    subst z
+    exact relCurveResiduePoint_map_cast C RZ p x
+  clear hz
+  subst p
+  have hzg : relCurveResiduePoint C RZ z ≠
+      genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField) := by
+    simpa only [hxcast] using hxg
+  subst x
+  exact
+    coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor
+      C hpi g r1 r2 b1 b2 i j hO hchi hrdn z hzg
+
+set_option maxHeartbeats 8000000 in
+-- Extensionality ranges over the dependently indexed closed points of the residue curve.
+set_option synthInstance.maxHeartbeats 800000 in
+/-- On every residue fibre, the certificate-free pointwise-seed presentation divisor is the
+universal fibre divisor. -/
+theorem presentationDivisor_residueFibreLocalEquations_pointwiseGeneratorSeed_eq
+    (hrdn : PointwiseSeedRDN C hpi g r1 r2 b1 b2 i j hO hchi)
+    (p : PrimeSpectrum RZ) :
+    Scheme.presentationDivisor p.asIdeal.ResidueField
+        ((ThetaGeneratorSeed.residueFibreLocalEquations
+          (pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn)
+          (isGenerator_pointwiseGeneratorSeed
+            C hpi g r1 r2 b1 b2 i j hO hchi hrdn) p).presentation) =
+      divUniversalSeedFibreDivisor C hpi g r1 r2 b1 b2 i j hO hchi p := by
+  refine CurveDivisor.ext_coeffAt (fun x hxg => ?_)
+  exact
+    coeffAt_residueFibreLocalEquations_pointwiseGeneratorSeed_eq_divUniversalSeedFibreDivisor_at
+      C hpi g r1 r2 b1 b2 i j hO hchi hrdn p hxg
+
+set_option maxHeartbeats 8000000 in
+-- The equality carries the full pointwise seed data, so keep instance synthesis scoped here.
+set_option synthInstance.maxHeartbeats 800000 in
+/-- Every certificate-free pointwise-seed residue presentation has the prescribed degree `g`. -/
+theorem deg_presentationDivisor_residueFibreLocalEquations_pointwiseGeneratorSeed
+    (hrdn : PointwiseSeedRDN C hpi g r1 r2 b1 b2 i j hO hchi)
+    (p : PrimeSpectrum RZ) :
+    CurveDivisor.deg p.asIdeal.ResidueField
+        (Scheme.presentationDivisor p.asIdeal.ResidueField
+          ((ThetaGeneratorSeed.residueFibreLocalEquations
+            (pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn)
+            (isGenerator_pointwiseGeneratorSeed
+              C hpi g r1 r2 b1 b2 i j hO hchi hrdn) p).presentation)) = (g : ℤ) := by
+  rw [presentationDivisor_residueFibreLocalEquations_pointwiseGeneratorSeed_eq
+    C hpi g r1 r2 b1 b2 i j hO hchi hrdn p]
+  exact (divUniversalSeedFibreDivisor_spec C hpi g r1 r2 b1 b2 i j hO hchi p).2.1
 
 set_option maxHeartbeats 8000000 in
 -- The pulled-equation definition and the pointwise germ bridge carry the full dependent

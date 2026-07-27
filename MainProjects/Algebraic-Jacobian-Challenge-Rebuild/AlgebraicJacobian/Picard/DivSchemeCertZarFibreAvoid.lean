@@ -7,6 +7,7 @@ import AlgebraicJacobian.Cohomology.TwistedFiberTwoCover
 import AlgebraicJacobian.Picard.DivSchemeAdaptationFibreRegular
 import AlgebraicJacobian.Picard.DivSchemeCertZarConfine
 import AlgebraicJacobian.Picard.DivSchemeFibrePoint
+import AlgebraicJacobian.Picard.DivSchemeSeedUnivPulledDegree
 import AlgebraicJacobian.Picard.DivisorFamilyFieldDegree
 
 /-!
@@ -23,13 +24,17 @@ certificate.
 -/
 
 set_option autoImplicit false
+set_option quotPrecheck false
 set_option backward.isDefEq.respectTransparency false
+set_option maxRecDepth 16000
 
 universe u
 
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory TopologicalSpace Opposite
 
 namespace AlgebraicGeometry
+
+open Scheme Grassmannian ThetaGeneratorSeed
 
 namespace Scheme.LocalEquations
 
@@ -142,6 +147,24 @@ theorem supportLocus_ncard_eq_presentationDivisor_support_card
   rw [supportLocus_eq_image_presentationDivisor_support K d,
     Set.ncard_image_of_injective _ Subtype.val_injective]
   simp
+
+/-- The number of support points of regular local equations is at most the degree of their
+presentation divisor. -/
+theorem supportLocus_ncard_le_deg
+    (K : Type u) [Field K] {X : Scheme.{u}}
+    [X.Over (Spec (CommRingCat.of K))]
+    [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))]
+    [IsIntegral X] [QuasiCompact (X ↘ Spec (CommRingCat.of K))]
+    [LocallyOfFiniteType (X ↘ Spec (CommRingCat.of K))]
+    (d : X.LocalEquations) :
+    (d.supportLocus.ncard : ℤ) ≤
+      CurveDivisor.deg K (Scheme.presentationDivisor K d.presentation) := by
+  rw [supportLocus_ncard_eq_presentationDivisor_support_card K d]
+  apply Scheme.CurveDivisor.support_card_le_deg K
+  rw [Finsupp.le_def]
+  intro p
+  change 0 ≤ coeffAt p.2 (Scheme.presentationDivisor K d.presentation)
+  exact Scheme.zero_le_coeffAt_presentationDivisor K d p.2
 
 /-! ## Finite residue fibres -/
 
@@ -342,5 +365,78 @@ theorem exists_matrix_opens_supportLocus_subset_twisted_chartInter
     (fun z => D.germ_self_pullbackEqn_mem_nonZeroDivisors hD p z)
 
 end ThetaGeneratorSeed
+
+namespace PointwiseAchiever
+
+attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
+  Scheme.functionFieldOverModule
+attribute [local instance 10000] relCurve.instOver
+
+section SeedSupportBound
+
+variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
+  [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom]
+variable {pi : C.left ⟶ P1 k} [IsFinite pi] [IsDominant pi]
+
+noncomputable local instance instOverCleftSeedSupportBound :
+    C.left.Over (Spec (.of k)) := ⟨C.hom⟩
+
+variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))] [IsIntegral C.left]
+  [LocallyOfFiniteType (C.left ↘ Spec (.of k))]
+  [QuasiCompact (C.left ↘ Spec (.of k))]
+variable [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0)]
+  [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1)]
+variable (hpi : pi ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k))
+variable (g r1 r2 : Nat)
+variable (b1 : Module.Basis (Fin r1) k
+  ↑(Scheme.divisorSections k (windowM_choice pi hpi g • fiberWeilDivisor pi) ⊤))
+variable (b2 : Module.Basis (Fin r2) k
+  ↑(Scheme.divisorSections k ((windowS_choice pi hpi g • fiberWeilDivisor pi)
+    + (windowM_choice pi hpi g • fiberWeilDivisor pi)) ⊤))
+variable (i : (glueData k g r1).J) (j : (glueData k g r2).J)
+variable (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+  (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+
+local notation "RZ" => seedChartRing C hpi g r1 r2 b1 b2 i j
+
+set_option maxHeartbeats 8000000 in
+-- The residue-field base-change instances and full pointwise seed data elaborate together.
+set_option synthInstance.maxHeartbeats 800000 in
+/-- The certificate-free residue-fibre support of the concrete pointwise universal seed has at
+most `g` points. -/
+theorem supportLocus_ncard_residueFibreLocalEquations_pointwiseGeneratorSeed_le
+    (hrdn : PointwiseSeedRDN C hpi g r1 r2 b1 b2 i j hO hchi)
+    (p : PrimeSpectrum RZ) :
+    (ThetaGeneratorSeed.residueFibreLocalEquations
+      (pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn)
+      (isGenerator_pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn)
+      p).supportLocus.ncard ≤ g := by
+  letI : SmoothOfRelativeDimension 1
+      (relCurve C p.asIdeal.ResidueField ↘ Spec (CommRingCat.of p.asIdeal.ResidueField)) :=
+    instSmoothOfRelativeDimensionBaseChange C p.asIdeal.ResidueField
+  letI : IsIntegral (relCurve C p.asIdeal.ResidueField) :=
+    instIsIntegralBaseChange C p.asIdeal.ResidueField
+  letI : QuasiCompact
+      (relCurve C p.asIdeal.ResidueField ↘ Spec (CommRingCat.of p.asIdeal.ResidueField)) :=
+    instQuasiCompactBaseChange C p.asIdeal.ResidueField
+  letI : LocallyOfFiniteType
+      (relCurve C p.asIdeal.ResidueField ↘ Spec (CommRingCat.of p.asIdeal.ResidueField)) := by
+    haveI : Smooth
+        (relCurve C p.asIdeal.ResidueField ↘ Spec (CommRingCat.of p.asIdeal.ResidueField)) :=
+      SmoothOfRelativeDimension.smooth 1 _
+    infer_instance
+  have hbound := Scheme.LocalEquations.supportLocus_ncard_le_deg
+    p.asIdeal.ResidueField
+    (ThetaGeneratorSeed.residueFibreLocalEquations
+      (pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn)
+      (isGenerator_pointwiseGeneratorSeed C hpi g r1 r2 b1 b2 i j hO hchi hrdn) p)
+  rw [deg_presentationDivisor_residueFibreLocalEquations_pointwiseGeneratorSeed
+    C hpi g r1 r2 b1 b2 i j hO hchi hrdn p] at hbound
+  exact_mod_cast hbound
+
+end SeedSupportBound
+
+end PointwiseAchiever
 
 end AlgebraicGeometry
