@@ -6,8 +6,12 @@
       1782985512.726312
     ],
     "Algebraic-Jacobian-Challenge": [
-      82,
-      1782980267.217481
+      189,
+      1785190958.0736787
+    ],
+    "Algebraic-Jacobian-Challenge-Rebuild": [
+      627,
+      1785152126.8800654
     ],
     "Cech-Cohomology": [
       26,
@@ -21,23 +25,29 @@
       15,
       1782894660.0
     ],
+    "MR0555258-Compactifying-Picard": [
+      2,
+      1783046808.154535
+    ],
     "Picard-IdentityComponent": [
       10,
       1782968013.0110133
     ],
     "mathlib": [
-      8443,
-      1781745159.528964
+      8688,
+      1783934844.0006344
     ]
   },
   "roots": {
-    "Algebraic-Jacobian-Challenge": "MainProjects/Algebraic-Jacobian-Challenge",
-    "Line-Bundle-Comparison-Iso": "SubProjects/Line-Bundle-Comparison-Iso",
-    "Albanese": "SubProjects/Albanese",
-    "Cech-Cohomology": "SubProjects/Cech-Cohomology",
-    "GR-Quot-Closure": "SubProjects/GR-Quot-Closure",
-    "Picard-IdentityComponent": "SubProjects/Picard-IdentityComponent",
-    "mathlib": "SubProjects/Line-Bundle-Comparison-Iso/.lake/packages/mathlib"
+    "Algebraic-Jacobian-Challenge-Rebuild": "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild",
+    "Algebraic-Jacobian-Challenge": "/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge",
+    "Line-Bundle-Comparison-Iso": "/home/axel/LeanAlgebraicGeometry-Horizon/SubProjects/Line-Bundle-Comparison-Iso",
+    "Albanese": "/home/axel/LeanAlgebraicGeometry-Horizon/SubProjects/Albanese",
+    "Cech-Cohomology": "/home/axel/LeanAlgebraicGeometry-Horizon/SubProjects/Cech-Cohomology",
+    "GR-Quot-Closure": "/home/axel/LeanAlgebraicGeometry-Horizon/SubProjects/GR-Quot-Closure",
+    "MR0555258-Compactifying-Picard": "/home/axel/LeanAlgebraicGeometry-Horizon/SubProjects/RelatedPapersFormalisation/MR0555258-Compactifying-Picard",
+    "Picard-IdentityComponent": "/home/axel/LeanAlgebraicGeometry-Horizon/SubProjects/Picard-IdentityComponent",
+    "mathlib": "/home/axel/LeanAlgebraicGeometry-Horizon/.lake-packages/mathlib"
   },
-  "declarations": 242125
+  "declarations": 257796
 }
