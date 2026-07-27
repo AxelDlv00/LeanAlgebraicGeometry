@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.22.0 (TeX Live 2025/Debian)  (format=lualatex 2026.7.13)  27 JUL 2026 22:48
+This is LuaHBTeX, Version 1.22.0 (TeX Live 2025/Debian)  (format=lualatex 2026.7.13)  28 JUL 2026 00:44
  restricted system commands enabled.
 **print.tex
 (./print.tex
@@ -3108,81 +3108,81 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `subscript' on input line 111.
 
-[185] [186]
+[185] [186] [187]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 391.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathop' on input line 391.
+(hyperref)                removing `math shift' on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 391.
+(hyperref)                removing `\mathop' on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 391.
+(hyperref)                removing `\mathcode' on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 391.
+(hyperref)                removing `\mathcode' on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Umathcharnumdef' on input line 391.
+(hyperref)                removing `\mathcode' on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\std@minus' on input line 391.
+(hyperref)                removing `\Umathcharnumdef' on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Umathcodenum' on input line 391.
+(hyperref)                removing `\std@minus' on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\-' on input line 391.
+(hyperref)                removing `\Umathcodenum' on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 391.
+(hyperref)                removing `\-' on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\-' on input line 391.
+(hyperref)                removing `\mathcode' on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 391.
+(hyperref)                removing `\-' on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathcode' on input line 391.
+(hyperref)                removing `\mathcode' on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\leavevmode@ifvmode' on input line 391.
+(hyperref)                removing `\mathcode' on input line 425.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\leavevmode@ifvmode' on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 2.22198pt
-(hyperref)                removed on input line 391.
+(hyperref)                removed on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\operator@font' on input line 391.
+(hyperref)                removing `\operator@font' on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 391.
+(hyperref)                removing `\@ifnextchar' on input line 425.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 391.
+(hyperref)                removing `superscript' on input line 425.
 
-[187]) (./chapters/AbelJacobi.tex [188]
+) (./chapters/AbelJacobi.tex [188]
 Chapter 12.
 [189
 
@@ -3213,7 +3213,7 @@ mor-phism classes of the car-rier $[]\TU/latinmodern-math.otf(1)/m/n/10 (𝜋[]
 
 
 Overfull \hbox (9.4313pt too wide) in paragraph at lines 207--215
-\TU/lmr/m/n/10 by the locally-trivial com-par-i-son iso-mor-phism [][]691[][] sp
+\TU/lmr/m/n/10 by the locally-trivial com-par-i-son iso-mor-phism [][]693[][] sp
 e-cialised to the pro-jec-tion $\TU/latinmodern-math.otf(1)/m/n/10 𝜋[]$ \TU/
 lmr/m/n/10 on the $[]$
  []
@@ -3221,7 +3221,7 @@ lmr/m/n/10 on the $[]$
 
 Overfull \hbox (1.95644pt too wide) in paragraph at lines 216--222
 []\TU/lmr/m/it/10 Step 3 (se-toid rec-on-cil-i-a-tion). \TU/lmr/m/n/10 The set-v
-alued quo-tient of [][]611[][] is taken mod-ulo the isomorphism-
+alued quo-tient of [][]613[][] is taken mod-ulo the isomorphism-
  []
 
 [200] [201] [202]
@@ -3258,7 +3258,7 @@ Missing character: There is no ᵖ (U+1D56) in font [lmmono10-regular]:!
 
 Overfull \hbox (11.04633pt too wide) in paragraph at lines 1236--1277
 []\TU/lmtt/m/n/10 AlgebraicGeometry.Scheme.PicSharp.etSheaf \TU/lmr/m/n/10 ([][
-]634[][]) is the étale sheafi-fi-ca-tion of \TU/lmtt/m/n/10 PicSharp\TU/lmr/m/
+]636[][]) is the étale sheafi-fi-ca-tion of \TU/lmtt/m/n/10 PicSharp\TU/lmr/m/
 n/10 .
  []
 
@@ -3330,7 +3330,7 @@ Missing character: There is no ᵖ (U+1D56) in font [lmmono10-regular]:!
 
 Overfull \hbox (6.31633pt too wide) in paragraph at lines 1277--1301
 []\TU/lmtt/m/n/10 AlgebraicGeometry.Scheme.PicSharp.etSheaf_group_structure \TU
-/lmr/m/n/10 ([][]635[][]) pack-ages the fact
+/lmr/m/n/10 ([][]637[][]) pack-ages the fact
  []
 
 Missing character: There is no ᵒ (U+1D52) in font [lmmono10-regular]:!
@@ -3689,7 +3689,7 @@ r/m/n/10 ($[]$,
 
 
 Overfull \hbox (4.17838pt too wide) in paragraph at lines 1277--1295
-[]\TU/lmr/m/n/10 Note that, un-like the pointwise-existence state-ment [][]643[
+[]\TU/lmr/m/n/10 Note that, un-like the pointwise-existence state-ment [][]645[
 ][] --- a \TU/lmr/m/it/10 propo-si-tion \TU/lmr/m/n/10 proved cover-pointwise
  []
 
@@ -3702,7 +3702,7 @@ Overfull \hbox (49.31496pt too wide) in paragraph at lines 1315--1326
 
 
 Overfull \hbox (9.2818pt too wide) in paragraph at lines 1352--1394
-[][]\TU/lmr/bx/n/10 Lemma 651 \TU/lmr/m/n/10 (In-verse of an in-vert-ible mod-ul
+[][]\TU/lmr/bx/n/10 Lemma 653 \TU/lmr/m/n/10 (In-verse of an in-vert-ible mod-ul
 e)\TU/lmr/bx/n/10 . [][][][]\TU/lmr/m/it/10 Source: [Stacks Project], Tag 01CR, Lemma \TU/lmtt/m/it/10 lemma-
  []
 
@@ -3858,7 +3858,7 @@ $
 
 
 Overfull \hbox (16.79265pt too wide) in paragraph at lines 2210--2220
-\TU/lmr/m/n/10 ([][]604[][]): its car-rier $[]$ is the sub-ob-ject $\TU/latinmo
+\TU/lmr/m/n/10 ([][]606[][]): its car-rier $[]$ is the sub-ob-ject $\TU/latinmo
 dern-math.otf(1)/m/n/10 { 𝐿 ∈ [].[] (𝐶 ×[] 𝑇) ∣ [] 𝐿 }$
  []
 
@@ -3922,7 +3922,7 @@ e-sentably flat, so $[]$
 
 [236] [237]
 Overfull \hbox (3.26297pt too wide) in paragraph at lines 2767--2774
-[][]\TU/lmr/bx/n/10 Lemma 668 \TU/lmr/m/n/10 (Section-level nat-u-ral-ity of the
+[][]\TU/lmr/bx/n/10 Lemma 670 \TU/lmr/m/n/10 (Section-level nat-u-ral-ity of the
  ten-sor/unit rec-on-cil-i-a-tion $[]$)\TU/lmr/bx/n/10 .
  []
 
@@ -3976,7 +3976,7 @@ r/m/n/10 . Ap-ply-ing this with $[][] \TU/latinmodern-math.otf(1)/m/n/10 = [] (\
 
 [239]
 Overfull \hbox (1.92297pt too wide) in paragraph at lines 2942--2953
-[][]\TU/lmr/bx/n/10 Lemma 672 \TU/lmr/m/n/10 (The sheafify-then-pullback com-par
+[][]\TU/lmr/bx/n/10 Lemma 674 \TU/lmr/m/n/10 (The sheafify-then-pullback com-par
 -i-son is the left-adjoint-uniqueness iso-mor-phism)\TU/lmr/bx/n/10 .
  []
 
@@ -4044,7 +4044,7 @@ U/lmr/m/it/10 ,
 
 
 Overfull \hbox (9.77635pt too wide) in paragraph at lines 3104--3112
-[][][][]\TU/lmr/m/n/10 By [][]872[][] each $[]\TU/latinmodern-math.otf(1)/m/n/1
+[][][][]\TU/lmr/m/n/10 By [][]874[][] each $[]\TU/latinmodern-math.otf(1)/m/n/1
 0 .[]$ \TU/lmr/m/n/10 is a sin-gle $\TU/latinmodern-math.otf(1)/m/n/10 𝑎.[]$
  \TU/lmr/m/n/10 of a $[]$ of sheafification-
  []
@@ -4190,7 +4190,7 @@ Overfull \hbox (81.0478pt too wide) in paragraph at lines 3602--3613
 
 
 Overfull \hbox (34.17117pt too wide) in paragraph at lines 3623--3640
-[] \TU/latinmodern-math.otf(1)/m/n/10 𝑓$ \TU/lmr/m/n/10 ([][]873[][]): one si
+[] \TU/latinmodern-math.otf(1)/m/n/10 𝑓$ \TU/lmr/m/n/10 ([][]875[][]): one si
 de presents the data through the sheaf-pullback $[]\TU/latinmodern-math.otf(1)/
 m/n/10 ([] 𝑓).[] 𝑀[].[]$\TU/lmr/m/n/10 ,
  []
@@ -4198,20 +4198,20 @@ m/n/10 ([] 𝑓).[] 𝑀[].[]$\TU/lmr/m/n/10 ,
 
 Overfull \hbox (69.08403pt too wide) in paragraph at lines 3641--3655
 \TU/lmr/m/n/10 the nat-u-ral-ity of the oplax ten-so-ra-tor $\TU/latinmodern-ma
-th.otf(1)/m/n/10 𝛿$ \TU/lmr/m/n/10 ([][]661[][]); the single-$[]$ pre-sen-ta-
+th.otf(1)/m/n/10 𝛿$ \TU/lmr/m/n/10 ([][]663[][]); the single-$[]$ pre-sen-ta-
 tion $[]\TU/latinmodern-math.otf(1)/m/n/10 .[] =
  []
 
 
 Overfull \hbox (9.05833pt too wide) in paragraph at lines 3641--3655
 \TU/latinmodern-math.otf(1)/m/n/10 𝑎.[](𝜂 ⊗ 𝜂)$ \TU/lmr/m/n/10 of []
-[]872[][], which keeps ev-ery fac-tor in-side one monoidal in-stance; and the $
+[]874[][], which keeps ev-ery fac-tor in-side one monoidal in-stance; and the $
 []$
  []
 
 
 Overfull \hbox (22.49445pt too wide) in paragraph at lines 3659--3677
-[][]\TU/lmr/m/n/10 641[][], to the state-ment that the canon-i-cal left-adjoint-
+[][]\TU/lmr/m/n/10 643[][], to the state-ment that the canon-i-cal left-adjoint-
 uniqueness iso-mor-phism $\TU/latinmodern-math.otf(1)/m/n/10 𝐻[] = [] ∶
  []
 
@@ -4244,7 +4244,7 @@ Overfull \hbox (99.606pt too wide) detected at line 3751
 
 
 Overfull \hbox (103.60652pt too wide) in paragraph at lines 3766--3771
-\TU/lmr/m/it/10 act dual of [][]683[][]. For the same pushforward--pushforward 
+\TU/lmr/m/it/10 act dual of [][]685[][]. For the same pushforward--pushforward 
 ad-junc-tion $\TU/latinmodern-math.otf(1)/m/n/10 𝐹 ⊣ 𝐺$ \TU/lmr/m/it/10
  ($[] \TU/latinmodern-math.otf(1)/m/n/10 𝑎𝑑𝑗 𝜑 𝜓 𝐻[] 𝐻[]$\
 TU/lmr/m/it/10 ),
@@ -4259,7 +4259,7 @@ Overfull \hbox (94.98598pt too wide) detected at line 3775
 
 [248]
 Overfull \hbox (85.41635pt too wide) in paragraph at lines 3834--3854
-[][][][][][][][]\TU/lmr/m/n/10 The value lemma [][]683[][] char-ac-terises the 
+[][][][][][][][]\TU/lmr/m/n/10 The value lemma [][]685[][] char-ac-terises the 
 ad-junc-tion unit in the canon-i-cal $[]$
  []
 
@@ -4323,7 +4323,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
 [254]
 Overfull \hbox (32.43298pt too wide) in paragraph at lines 4454--4455
-[][]\TU/lmr/bx/n/10 The-o-rem 698 \TU/lmr/m/n/10 (Abelian-group in-stance on the
+[][]\TU/lmr/bx/n/10 The-o-rem 700 \TU/lmr/m/n/10 (Abelian-group in-stance on the
  rel-a-tive Pi-card quo-tient via $[]\TU/latinmodern-math.otf(1)/m/n/10 .[].[]$
 \TU/lmr/m/n/10 )\TU/lmr/bx/n/10 .
  []
@@ -4352,7 +4352,7 @@ oup tar-get \TU/lmr/m/n/10 (\TU/lmtt/m/n/10 rel_pic_etale_sheafification\TU/lmr
 
 Overfull \hbox (4.58833pt too wide) in paragraph at lines 4575--4582
 \TU/lmtt/m/n/10 rel_pic_etale_sheaf_group_structure\TU/lmr/m/n/10 ) --- once []
-[]698[][] is es-tab-lished, the $[]$-
+[]700[][] is es-tab-lished, the $[]$-
  []
 
 [256] [257]
@@ -4365,7 +4365,7 @@ $
 [258] [259]
 Overfull \hbox (97.63326pt too wide) in paragraph at lines 4950--4954
 \TU/lmr/m/it/10 This semi-lin-ear-ity is the com-pat-i-bil-ity da-tum that the 
-presheaf as-sem-bly of [][]701[][] (through $[]$
+presheaf as-sem-bly of [][]703[][] (through $[]$
  []
 
 [260] [261]
@@ -4405,7 +4405,7 @@ math.otf(1)/m/n/10 (𝑊[]),
 
 
 Overfull \hbox (62.74388pt too wide) in paragraph at lines 5477--5484
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 715 \TU/lmr/m/n/10 (Leg-(B) unit ring-iso swap
+[][]\TU/lmr/bx/n/10 Def-i-ni-tion 717 \TU/lmr/m/n/10 (Leg-(B) unit ring-iso swap
 , re-verse ($\TU/latinmodern-math.otf(1)/m/n/10 𝜀$ \TU/lmr/m/n/10 it-self))\
 TU/lmr/bx/n/10 . [][]\TU/lmr/m/n/10 The re-verse map $[] \TU/latinmodern-math.o
 tf(1)/m/n/10 𝑓 𝑊[] ∶=
@@ -4429,14 +4429,14 @@ modern-math.otf(1)/m/n/10 (𝑏))  ⟶  \TU/lmr/bx/n/10 1[]\TU/latinmodern-math
 
 [265]
 Overfull \hbox (61.97717pt too wide) in paragraph at lines 5548--5551
-[][]\TU/lmr/bx/n/10 Lemma 718 \TU/lmr/m/n/10 (Round-trip of the swap pair, $[] 
+[][]\TU/lmr/bx/n/10 Lemma 720 \TU/lmr/m/n/10 (Round-trip of the swap pair, $[] 
 \TU/latinmodern-math.otf(1)/m/n/10 ∘ []$\TU/lmr/m/n/10 )\TU/lmr/bx/n/10 . [][
 ][]$[] \TU/latinmodern-math.otf(1)/m/n/10 𝑓 𝑊[] ∘ [] 𝑓 𝑊[] =
  []
 
 
 Overfull \hbox (61.97717pt too wide) in paragraph at lines 5562--5565
-[][]\TU/lmr/bx/n/10 Lemma 719 \TU/lmr/m/n/10 (Round-trip of the swap pair, $[] 
+[][]\TU/lmr/bx/n/10 Lemma 721 \TU/lmr/m/n/10 (Round-trip of the swap pair, $[] 
 \TU/latinmodern-math.otf(1)/m/n/10 ∘ []$\TU/lmr/m/n/10 )\TU/lmr/bx/n/10 . [][
 ][]$[] \TU/latinmodern-math.otf(1)/m/n/10 𝑓 𝑊[] ∘ [] 𝑓 𝑊[] =
  []
@@ -4449,8 +4449,8 @@ Overfull \hbox (226.25896pt too wide) detected at line 5670
 
 
 Overfull \hbox (22.93158pt too wide) in paragraph at lines 5670--5685
-\TU/lmr/m/n/10 ([][]716[][]), the in-verse of $\TU/latinmodern-math.otf(1)/m/n/
-10 𝜀$ \TU/lmr/m/n/10 in the $[]$-direction ([][]712[][]). The fourth leg $[]
+\TU/lmr/m/n/10 ([][]718[][]), the in-verse of $\TU/latinmodern-math.otf(1)/m/n/
+10 𝜀$ \TU/lmr/m/n/10 in the $[]$-direction ([][]714[][]). The fourth leg $[]
  \TU/latinmodern-math.otf(1)/m/n/10 ([] ℎ𝑒.[])$
  []
 
@@ -4462,7 +4462,7 @@ Overfull \hbox (129.12901pt too wide) detected at line 5777
 
 
 Overfull \hbox (24.34746pt too wide) in paragraph at lines 5777--5785
-[] \TU/latinmodern-math.otf(1)/m/n/10 𝑓 𝑊[]$ \TU/lmr/m/it/10 ([][]714[][]
+[] \TU/latinmodern-math.otf(1)/m/n/10 𝑓 𝑊[]$ \TU/lmr/m/it/10 ([][]716[][]
 , the $\TU/latinmodern-math.otf(1)/m/n/10 (𝑓.[] 𝑊[]).[]$ \TU/lmr/m/it/10 
 con-ju-ga-tion); the in-ter-ven-ing $[]$
  []
@@ -4555,7 +4555,7 @@ t/m/it/10 scheme_modules_hom_local_section\TU/lmr/m/it/10 )
 [273] [274]
 Overfull \hbox (30.73962pt too wide) in paragraph at lines 6452--6481
 []\TU/lmr/m/n/10 Two sup-port-ing bridges or-gan-ise the squares. \TU/lmr/m/it/
-10 Bridge B1 \TU/lmr/m/n/10 ([][]771[][]) iden-ti-fies $[] \TU/latinmodern-math
+10 Bridge B1 \TU/lmr/m/n/10 ([][]773[][]) iden-ti-fies $[] \TU/latinmodern-math
 .otf(1)/m/n/10 𝑓$
  []
 
@@ -4657,7 +4657,7 @@ ath.otf(1)/m/n/10 𝜄[]$
 
 [278]
 Overfull \hbox (19.96632pt too wide) in paragraph at lines 6766--6773
-\TU/lmr/m/n/10 its con-ju-gate is given by the unit tri-an-gle $[]$ ([][]759[][
+\TU/lmr/m/n/10 its con-ju-gate is given by the unit tri-an-gle $[]$ ([][]761[][
 ]). The $[]$
  []
 
@@ -4699,7 +4699,7 @@ Overfull \hbox (7.26636pt too wide) in paragraph at lines 6988--7003
 
 [281]
 Overfull \hbox (2.89798pt too wide) in paragraph at lines 7148--7156
-[][]\TU/lmr/bx/n/10 Lemma 769 \TU/lmr/m/n/10 (Bridge B1 crux: sheafi-fi-ca-tion in-ter-twines the presheaf and sheaf adjoint-uniqueness
+[][]\TU/lmr/bx/n/10 Lemma 771 \TU/lmr/m/n/10 (Bridge B1 crux: sheafi-fi-ca-tion in-ter-twines the presheaf and sheaf adjoint-uniqueness
  []
 
 
@@ -4716,13 +4716,13 @@ the for-get-ful func-tor $[]\TU/latinmodern-math.otf(1)/m/n/10 .[] 𝑌 →
 
 
 Overfull \hbox (15.21631pt too wide) in paragraph at lines 7175--7203
-\TU/lmr/m/n/10 ex-panded by the unit for-mula. Rewrit-ing $[]$ ([][]873[][]) and
+\TU/lmr/m/n/10 ex-panded by the unit for-mula. Rewrit-ing $[]$ ([][]875[][]) and
  $[]$
  []
 
 
 Overfull \hbox (38.81831pt too wide) in paragraph at lines 7175--7203
-[]$ \TU/lmr/m/n/10 ([][]757[][]) and tran-si-tiv-ity $[]$ ([][]755[][]), the $[
+[]$ \TU/lmr/m/n/10 ([][]759[][]) and tran-si-tiv-ity $[]$ ([][]757[][]), the $[
 ]$
  []
 
@@ -4789,7 +4789,7 @@ ath.otf(1)/m/n/10 𝑓$
 
 
 Overfull \hbox (83.08192pt too wide) in paragraph at lines 7310--7323
-\TU/lmr/m/n/10 ([][]662[][]) is built from the iden-ti-cal pre-fix fol-lowed by the sheafi-fied oplax ten-so-ra-tor $\TU/latinmodern-math.otf(1)/m/n/10 
+\TU/lmr/m/n/10 ([][]664[][]) is built from the iden-ti-cal pre-fix fol-lowed by the sheafi-fied oplax ten-so-ra-tor $\TU/latinmodern-math.otf(1)/m/n/10 
 𝛿[][] 𝜑[][]$
  []
 
@@ -4809,7 +4809,7 @@ Overfull \hbox (72.6146pt too wide) in paragraph at lines 7341--7349
 [284]
 Overfull \hbox (40.53842pt too wide) in paragraph at lines 7374--7378
 \TU/lmr/m/it/10 com-mutes, where $\TU/latinmodern-math.otf(1)/m/n/10 𝜚$ \TU/
-lmr/m/it/10 is the equality-of-opens rein-dex-ing of [][]736[][]. Equiv-a-lently
+lmr/m/it/10 is the equality-of-opens rein-dex-ing of [][]738[][]. Equiv-a-lently
 , mod-ulo $\TU/latinmodern-math.otf(1)/m/n/10 𝜚$\TU/lmr/m/it/10 , $\TU/latin
 modern-math.otf(1)/m/n/10 ([] 𝑗) 𝑇(𝜄[]) =
  []
@@ -4835,7 +4835,7 @@ f(1)/m/n/10 𝑗 𝜄[]$\TU/lmr/m/n/10 .
 
 
 Overfull \hbox (26.9049pt too wide) in paragraph at lines 7429--7436
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 773 \TU/lmr/m/n/10 (Cone B / presheaf dual bas
+[][]\TU/lmr/bx/n/10 Def-i-ni-tion 775 \TU/lmr/m/n/10 (Cone B / presheaf dual bas
 e-change com-par-i-son $\TU/latinmodern-math.otf(1)/m/n/10 𝜃[]$ \TU/lmr/m/n/
 10 (Step 4 of $[]$))\TU/lmr/bx/n/10 .
  []
@@ -4873,7 +4873,7 @@ Overfull \hbox (13.79767pt too wide) detected at line 7692
 
 
 Overfull \hbox (28.53369pt too wide) in paragraph at lines 7700--7717
-[][][][]\TU/lmr/m/n/10 The com-par-i-son fac-tors ([][]773[][]) as $\TU/latinmo
+[][][][]\TU/lmr/m/n/10 The com-par-i-son fac-tors ([][]775[][]) as $\TU/latinmo
 dern-math.otf(1)/m/n/10 𝜃[] = (𝐻1[])[] [] [](𝑉 ↦ [] 𝑓 𝑀 𝑉)$
 \TU/lmr/m/n/10 ,
  []
@@ -4912,7 +4912,7 @@ Overfull \hbox (259.02765pt too wide) detected at line 7821
 
 [289]
 Overfull \hbox (30.37956pt too wide) in paragraph at lines 7869--7882
-\TU/lmr/m/n/10 built in-side [][]773[][] re-presents the ab-stract presheaf pull
+\TU/lmr/m/n/10 built in-side [][]775[][] re-presents the ab-stract presheaf pull
 -back $[] \TU/latinmodern-math.otf(1)/m/n/10 𝜑$ \TU/lmr/m/n/10 as the push-fo
 r-ward $[] \TU/latinmodern-math.otf(1)/m/n/10 𝛽$
  []
@@ -4926,12 +4926,12 @@ nent
 
 
 Overfull \hbox (14.803pt too wide) in paragraph at lines 7910--7914
-[][]\TU/lmr/bx/n/10 Lemma 787 \TU/lmr/m/n/10 (Re-stric-tion along a com-pos-ite as a com-po-si-tion of re-stric-tions $[]$)\TU/lmr/bx/n/10 .
+[][]\TU/lmr/bx/n/10 Lemma 789 \TU/lmr/m/n/10 (Re-stric-tion along a com-pos-ite as a com-po-si-tion of re-stric-tions $[]$)\TU/lmr/bx/n/10 .
  []
 
 
 Overfull \hbox (105.87973pt too wide) in paragraph at lines 7917--7922
-\TU/lmr/m/it/10 Its con-travari-ant im-age un-der the dual --- $[]$ ([][]709[][
+\TU/lmr/m/it/10 Its con-travari-ant im-age un-der the dual --- $[]$ ([][]711[][
 ]) of the for-get-ful im-age of $\TU/latinmodern-math.otf(1)/m/n/10 ([] ℎ 
 𝑓).[] 𝑀$
  []
@@ -4976,7 +4976,7 @@ Overfull \hbox (181.07349pt too wide) detected at line 8055
 
 Overfull \hbox (0.51505pt too wide) in paragraph at lines 8055--8068
 \TU/lmr/m/it/10 iso $[] \TU/latinmodern-math.otf(1)/m/n/10 ℎ 𝑓$ \TU/lmr/m/
-it/10 ([][]787[][], equiv-a-lently the push-for-ward com-po-si-tion $[]$).
+it/10 ([][]789[][], equiv-a-lently the push-for-ward com-po-si-tion $[]$).
  []
 
 
@@ -5008,7 +5008,7 @@ Overfull \hbox (0.49754pt too wide) in paragraph at lines 8172--8189
 
 Overfull \hbox (86.55026pt too wide) in paragraph at lines 8222--8229
 []\TU/lmr/bx/n/10 Sub-sti-tute co-cy-cle (a). \TU/lmr/m/n/10 By the ab-stract $
-\TU/latinmodern-math.otf(1)/m/n/10 𝐻1$ \TU/lmr/m/n/10 co-cy-cle [][]792[][] 
+\TU/latinmodern-math.otf(1)/m/n/10 𝐻1$ \TU/lmr/m/n/10 co-cy-cle [][]794[][] 
 this pre-fix equals $\TU/latinmodern-math.otf(1)/m/n/10 ([] 𝛽[]).[] (𝐻1[]
 .[]) []
  []
@@ -5036,7 +5036,7 @@ Overfull \hbox (55.51537pt too wide) detected at line 8247
 
 
 Overfull \hbox (6.7449pt too wide) in paragraph at lines 8254--8268
-\TU/lmr/m/n/10 Math-lib com-po-nent for-mula $[]$ ([][]790[][]), which ex-pands $\TU/latinmodern-math.otf(1)/m/n/10 
+\TU/lmr/m/n/10 Math-lib com-po-nent for-mula $[]$ ([][]792[][]), which ex-pands $\TU/latinmodern-math.otf(1)/m/n/10 
 𝐹𝐶.[].[] 𝑋$
  []
 
@@ -5063,25 +5063,25 @@ Overfull \hbox (194.30524pt too wide) detected at line 8361
 
 Overfull \hbox (8.0498pt too wide) in paragraph at lines 8361--8367
 \TU/lmr/m/it/10 where $[] \TU/latinmodern-math.otf(1)/m/n/10 𝑓 𝑔$ \TU/lmr
-/m/it/10 ([][]787[][]) is the restriction-composition pseud-o-func-to-ri-al-ity iso $\TU/latinmodern-math.otf(1)/m/n/10 
+/m/it/10 ([][]789[][]) is the restriction-composition pseud-o-func-to-ri-al-ity iso $\TU/latinmodern-math.otf(1)/m/n/10 
 𝐴|[] ≅
  []
 
 
 Overfull \hbox (20.2467pt too wide) in paragraph at lines 8361--8367
 \TU/latinmodern-math.otf(1)/m/n/10 (𝐴|[])|[]$ \TU/lmr/m/it/10 and $[]$ ([][]
-709[][]) is its con-travari-ant dual im-age. Choos-ing the $[]$-
+711[][]) is its con-travari-ant dual im-age. Choos-ing the $[]$-
  []
 
 
 Overfull \hbox (60.30832pt too wide) in paragraph at lines 8378--8398
-[]$\TU/lmr/m/n/10 -reindex by Bridge B2 ([][]747[][]), re-duc-ing the iden-tity to its $[]$-
+[]$\TU/lmr/m/n/10 -reindex by Bridge B2 ([][]749[][]), re-duc-ing the iden-tity to its $[]$-
  []
 
 
 Overfull \hbox (107.90617pt too wide) in paragraph at lines 8378--8398
 \TU/lmr/m/n/10 The con-travari-ant rein-dex-ing on the dual flank is the dual im
--age $[]$ ([][]709[][]) of $\TU/latinmodern-math.otf(1)/m/n/10 ([] 𝑓 𝑔).[
+-age $[]$ ([][]711[][]) of $\TU/latinmodern-math.otf(1)/m/n/10 ([] 𝑓 𝑔).[
 ] 𝑀$
  []
 
@@ -5142,7 +5142,7 @@ ath.otf(1)/m/n/10 𝑊$\TU/lmr/m/it/10 , $\TU/latinmodern-math.otf(1)/m/n/10
 [298]
 Overfull \hbox (52.35602pt too wide) in paragraph at lines 8699--8709
 [][][]\TU/lmr/m/n/10 Split $[] \TU/latinmodern-math.otf(1)/m/n/10 𝛽 = [][] 
-∘ [] 𝛽$ \TU/lmr/m/n/10 ([][]801[][]). Un-der $[]$
+∘ [] 𝛽$ \TU/lmr/m/n/10 ([][]803[][]). Un-der $[]$
  []
 
 [299]
@@ -5173,7 +5173,7 @@ ear en-do-mor-phisms of the (com-mu-ta-tive) struc-ture ring --- the same $[]$-
 
 
 Overfull \hbox (12.20564pt too wide) in paragraph at lines 8823--8833
-\TU/lmr/m/it/10 the dual-unit con-trac-tions ([][]733[][]). The \TU/lmr/m/n/10 
+\TU/lmr/m/it/10 the dual-unit con-trac-tions ([][]735[][]). The \TU/lmr/m/n/10 
 bare \TU/lmr/m/it/10 dual-restriction com-par-i-son $[] \TU/latinmodern-math.ot
 f(1)/m/n/10 𝑗 (\TU/lmr/bx/n/10 1[]\TU/latinmodern-math.otf(1)/m/n/10 ) ∶
  []
@@ -5194,13 +5194,13 @@ Overfull \hbox (47.14557pt too wide) in paragraph at lines 8842--8853
 
 
 Overfull \hbox (7.98294pt too wide) in paragraph at lines 8842--8853
-\TU/lmr/m/n/10 by the dual-B1 fac-tori-sa-tion ([][]780[][]) into the three-fact
+\TU/lmr/m/n/10 by the dual-B1 fac-tori-sa-tion ([][]782[][]) into the three-fact
 or com-pos-ite $[] \TU/latinmodern-math.otf(1)/m/n/10 𝑗 []
  []
 
 [300]
 Overfull \hbox (3.398pt too wide) in paragraph at lines 8872--8875
-[]\TU/lmr/m/n/10 the \TU/lmr/m/it/10 dual flank \TU/lmr/m/n/10 ([][]808[][]): th
+[]\TU/lmr/m/n/10 the \TU/lmr/m/it/10 dual flank \TU/lmr/m/n/10 ([][]810[][]): th
 e for-got-ten sheaf-level unit-restriction com-para-tor equals the presheaf
  []
 
@@ -5239,7 +5239,7 @@ Overfull \hbox (174.77617pt too wide) in paragraph at lines 8924--8932
 
 
 Overfull \hbox (28.67796pt too wide) in paragraph at lines 8964--8975
-[][]\TU/lmr/bx/n/10 Lemma 809 \TU/lmr/m/n/10 (RES2 L1: the unit pull-back iden-t
+[][]\TU/lmr/bx/n/10 Lemma 811 \TU/lmr/m/n/10 (RES2 L1: the unit pull-back iden-t
 i-fi-ca-tion fac-tors through \TU/lmtt/m/n/10 sheafificationCompPullback
  []
 
@@ -5310,7 +5310,7 @@ Overfull \hbox (48.22682pt too wide) detected at line 9173
 
 [303]
 Overfull \hbox (40.09795pt too wide) in paragraph at lines 9179--9186
-\TU/lmr/m/n/10 pair is an iso-mor-phism ([][]670[][]): there the right-hand com-
+\TU/lmr/m/n/10 pair is an iso-mor-phism ([][]672[][]): there the right-hand com-
 pos-ite is shown to equal $[] \TU/latinmodern-math.otf(1)/m/n/10 𝜑$\TU/lmr/m
 /n/10 ,
  []
@@ -5363,7 +5363,7 @@ Overfull \hbox (83.54195pt too wide) in paragraph at lines 9463--9473
 
 
 Overfull \hbox (33.83656pt too wide) in paragraph at lines 9463--9473
-\TU/lmr/m/n/10 sti-tut-ing bridge 1 ([][]815[][]), $\TU/latinmodern-math.otf(1)
+\TU/lmr/m/n/10 sti-tut-ing bridge 1 ([][]817[][]), $\TU/latinmodern-math.otf(1)
 /m/n/10 ([] 𝑓).[] = ([] 𝒪[]).[] [] 𝑎[].[](𝜂 𝐹) [] [].[]$\TU/lmr/
 m/n/10 ,
  []
@@ -5391,7 +5391,7 @@ e $[] \TU/latinmodern-math.otf(1)/m/n/10 ([] 𝜑[]) 𝑀[]$
 
 Overfull \hbox (34.67157pt too wide) in paragraph at lines 9521--9542
 \TU/lmr/m/n/10 to the whiskered $[] \TU/latinmodern-math.otf(1)/m/n/10 𝑓$ \T
-U/lmr/m/n/10 by sub-lemma 3 ([][]823[][]), the $\TU/latinmodern-math.otf(1)/m/n
+U/lmr/m/n/10 by sub-lemma 3 ([][]825[][]), the $\TU/latinmodern-math.otf(1)/m/n
 /10 𝜆$\TU/lmr/m/n/10 -leg to $[] \TU/latinmodern-math.otf(1)/m/n/10 (𝑓[]
 𝑀)$
  []
@@ -5410,15 +5410,15 @@ Overfull \hbox (58.06207pt too wide) in paragraph at lines 9547--9558
 
 
 Overfull \hbox (52.45184pt too wide) in paragraph at lines 9547--9558
-\TU/lmr/m/it/10 by Bridge B1 ([][]771[][]), the square re-duces to the sheaf-lev
+\TU/lmr/m/it/10 by Bridge B1 ([][]773[][]), the square re-duces to the sheaf-lev
 el left uni-tal-ity $[] \TU/latinmodern-math.otf(1)/m/n/10 𝑗$
  []
 
 
 Overfull \hbox (37.1365pt too wide) in paragraph at lines 9547--9558
-\TU/lmr/m/it/10 ([][]824[][]) eval-u-ated at $\TU/latinmodern-math.otf(1)/m/n/1
+\TU/lmr/m/it/10 ([][]826[][]) eval-u-ated at $\TU/latinmodern-math.otf(1)/m/n/1
 0 𝑀 = 𝒪[]$\TU/lmr/m/it/10 , with the unit leg sup-plied by $[] \TU/latinm
-odern-math.otf(1)/m/n/10 𝑗$ \TU/lmr/m/it/10 ([][]745[][]) and $[] \TU/latinm
+odern-math.otf(1)/m/n/10 𝑗$ \TU/lmr/m/it/10 ([][]747[][]) and $[] \TU/latinm
 odern-math.otf(1)/m/n/10 𝑗$
  []
 
@@ -5454,14 +5454,14 @@ Overfull \hbox (88.90474pt too wide) in paragraph at lines 9656--9671
 
 
 Overfull \hbox (30.87904pt too wide) in paragraph at lines 9656--9671
-\TU/lmr/m/n/10 ([][]665[][]) re-wrapped by Bridge B2 alone, with no deep con-ten
+\TU/lmr/m/n/10 ([][]667[][]) re-wrapped by Bridge B2 alone, with no deep con-ten
 t. By def-i-ni-tion $\TU/latinmodern-math.otf(1)/m/n/10 𝑢[](𝑓) = [] 𝑓 
 =
  []
 
 
 Overfull \hbox (79.55698pt too wide) in paragraph at lines 9656--9671
-[] \TU/latinmodern-math.otf(1)/m/n/10 𝑓 [] [] 𝑓$ \TU/lmr/m/n/10 ([][]745[
+[] \TU/latinmodern-math.otf(1)/m/n/10 𝑓 [] [] 𝑓$ \TU/lmr/m/n/10 ([][]747[
 ][]), and $[] \TU/latinmodern-math.otf(1)/m/n/10 = []$
  []
 
@@ -5487,7 +5487,7 @@ Overfull \hbox (85.63853pt too wide) detected at line 9717
 Overfull \hbox (37.33937pt too wide) in paragraph at lines 9717--9721
 \TU/lmr/m/it/10 where $[] \TU/latinmodern-math.otf(1)/m/n/10 𝑗 𝑀$ \TU/lmr
 /m/it/10 is the restriction-composite rein-dex-ing $\TU/latinmodern-math.otf(1)
-/m/n/10 𝜚[]$ \TU/lmr/m/it/10 ([][]744[][]) and $[] \TU/latinmodern-math.otf(
+/m/n/10 𝜚[]$ \TU/lmr/m/it/10 ([][]746[][]) and $[] \TU/latinmodern-math.otf(
 1)/m/n/10 𝑗$
  []
 
@@ -5499,7 +5499,7 @@ Overfull \hbox (121.24603pt too wide) detected at line 9733
 
 
 Overfull \hbox (16.24179pt too wide) in paragraph at lines 9733--9745
-\TU/lmr/m/n/10 un-folds ([][]744[][]) as $\TU/latinmodern-math.otf(1)/m/n/10 ([
+\TU/lmr/m/n/10 un-folds ([][]746[][]) as $\TU/latinmodern-math.otf(1)/m/n/10 ([
 ] ℎ[])[] [] [] 𝑗 𝜄[]$\TU/lmr/m/n/10 , and $[] \TU/latinmodern-math.otf(
 1)/m/n/10 𝑗$
  []
@@ -5520,7 +5520,7 @@ dern-math.otf(1)/m/n/10 ([] 𝑗 𝒪[] 𝒪[])[]$\TU/lmr/m/n/10 .
 
 
 Overfull \hbox (61.46129pt too wide) in paragraph at lines 9794--9802
-[][][][]\TU/lmr/m/n/10 The Seam-1 key-stone ([][]829[][]) reads $[] \TU/latinmo
+[][][][]\TU/lmr/m/n/10 The Seam-1 key-stone ([][]831[][]) reads $[] \TU/latinmo
 dern-math.otf(1)/m/n/10 ℎ[] 𝑒[] = 𝜚[] [] ([] 𝑗).[] 𝑒[] []
  []
 
@@ -5532,7 +5532,7 @@ Overfull \hbox (17.04422pt too wide) detected at line 9816
 [310]
 Overfull \hbox (127.23157pt too wide) in paragraph at lines 9833--9842
 []\TU/lmr/m/it/10 Leg 1\TU/lmr/m/n/10 , $[] \TU/latinmodern-math.otf(1)/m/n/10 
-𝜄[]$\TU/lmr/m/n/10 : S3 ([][]797[][]) reads $[] \TU/latinmodern-math.otf(1)/
+𝜄[]$\TU/lmr/m/n/10 : S3 ([][]799[][]) reads $[] \TU/latinmodern-math.otf(1)/
 m/n/10 𝜄[] = 𝜚[] [] ([] 𝑗)([] 𝜄[]) []
  []
 
@@ -5567,7 +5567,7 @@ nt is the iden-ti-fi-ca-tion $[] \TU/latinmodern-math.otf(1)/m/n/10 ℎ[] 𝑒[
 
 
 Overfull \hbox (0.64159pt too wide) in paragraph at lines 9894--9900
-\TU/lmr/m/it/10 module-naturality of $[]$ ([][]782[][]) into $\TU/latinmodern-m
+\TU/lmr/m/it/10 module-naturality of $[]$ ([][]784[][]) into $\TU/latinmodern-m
 ath.otf(1)/m/n/10 ([] (([] 𝑗) 𝑒[]))[]$\TU/lmr/m/it/10 ,
  []
 
@@ -5578,7 +5578,7 @@ Overfull \hbox (43.56029pt too wide) in paragraph at lines 9907--9926
 
 
 Overfull \hbox (11.2675pt too wide) in paragraph at lines 9907--9926
-\TU/lmr/m/n/10 Step C ([][]832[][]) the sec-ond as $\TU/latinmodern-math.otf(1)
+\TU/lmr/m/n/10 Step C ([][]834[][]) the sec-ond as $\TU/latinmodern-math.otf(1)
 /m/n/10 𝜚[] [] 𝑐[] [] 𝑢[]$\TU/lmr/m/n/10 , with $\TU/latinmodern-math.
 otf(1)/m/n/10 𝑐[]$ \TU/lmr/m/n/10 the $\TU/latinmodern-math.otf(1)/m/n/10 
 𝑉$\TU/lmr/m/n/10 -built dual chain whose $\TU/latinmodern-math.otf(1)/m/n/10
@@ -5587,7 +5587,7 @@ otf(1)/m/n/10 𝑐[]$ \TU/lmr/m/n/10 the $\TU/latinmodern-math.otf(1)/m/n/10
 
 
 Overfull \hbox (30.2863pt too wide) in paragraph at lines 9907--9926
-\TU/lmr/m/n/10 the bi-func-to-ri-al-ity law ([][]858[][]), the lead-ing $\TU/la
+\TU/lmr/m/n/10 the bi-func-to-ri-al-ity law ([][]860[][]), the lead-ing $\TU/la
 tinmodern-math.otf(1)/m/n/10 𝜚[]$ \TU/lmr/m/n/10 and trail-ing $\TU/latinmod
 ern-math.otf(1)/m/n/10 𝑢[]$ \TU/lmr/m/n/10 rein-dex-ings split off as $[]$
  []
@@ -5632,14 +5632,14 @@ rn-math.otf(1)/m/n/10 ([] 𝑡)[] []
 
 [314]
 Overfull \hbox (0.303pt too wide) in paragraph at lines 10199--10212
-[][]\TU/lmr/bx/n/10 Re-mark 842 \TU/lmr/m/n/10 (Al-ter-na-tive route via object-
+[][]\TU/lmr/bx/n/10 Re-mark 844 \TU/lmr/m/n/10 (Al-ter-na-tive route via object-
 level de-scent (fall-back))\TU/lmr/bx/n/10 . []\TU/lmr/m/n/10 Should the slice-a
 nd-sheafify
  []
 
 
 Overfull \hbox (29.70961pt too wide) in paragraph at lines 10289--10292
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 847 \TU/lmr/m/n/10 (Lax-monoidal unit of restr
+[][]\TU/lmr/bx/n/10 Def-i-ni-tion 849 \TU/lmr/m/n/10 (Lax-monoidal unit of restr
 ict-scalars)\TU/lmr/bx/n/10 . [][]\TU/lmr/m/n/10 The lax-monoidal unit $\TU/lat
 inmodern-math.otf(1)/m/n/10 𝜀$ \TU/lmr/m/n/10 of $[] \TU/latinmodern-math.ot
 f(1)/m/n/10 𝛼$\TU/lmr/m/n/10 ,
@@ -5664,34 +5664,34 @@ Overfull \hbox (23.34505pt too wide) detected at line 10693
 
 
 Overfull \hbox (29.9872pt too wide) in paragraph at lines 10709--10713
-[][]\TU/lmr/bx/n/10 Lemma 859 \TU/lmr/m/n/10 ($[]$ pre-serves iden-ti-ties)\TU/
+[][]\TU/lmr/bx/n/10 Lemma 861 \TU/lmr/m/n/10 ($[]$ pre-serves iden-ti-ties)\TU/
 lmr/bx/n/10 . [][]$[] \TU/latinmodern-math.otf(1)/m/n/10 ([] 𝑀) ([] 𝑁) =
  []
 
 [318]
 Overfull \hbox (17.21727pt too wide) in paragraph at lines 10779--10782
-[][]\TU/lmr/bx/n/10 Lemma 863 \TU/lmr/m/n/10 (Presheaf dual-transport pre-serves
+[][]\TU/lmr/bx/n/10 Lemma 865 \TU/lmr/m/n/10 (Presheaf dual-transport pre-serves
  iden-ti-ties)\TU/lmr/bx/n/10 . [][]$[] \TU/latinmodern-math.otf(1)/m/n/10 ([] 
 𝐿) = [] (𝐿[])$
  []
 
 
 Overfull \hbox (26.43727pt too wide) in paragraph at lines 10812--10815
-[][]\TU/lmr/bx/n/10 Lemma 865 \TU/lmr/m/n/10 (Sheaf-level dual-transport pre-ser
+[][]\TU/lmr/bx/n/10 Lemma 867 \TU/lmr/m/n/10 (Sheaf-level dual-transport pre-ser
 ves iden-ti-ties)\TU/lmr/bx/n/10 . [][][]$[] \TU/latinmodern-math.otf(1)/m/n/10
  ([] 𝐿) = [] (𝐿[])$
  []
 
 
 Overfull \hbox (1.34387pt too wide) in paragraph at lines 10843--10848
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 867 \TU/lmr/m/n/10 (Middle-four in-ter-change for $\TU/latinmodern-math.otf(1)/m/n/10 
+[][]\TU/lmr/bx/n/10 Def-i-ni-tion 869 \TU/lmr/m/n/10 (Middle-four in-ter-change for $\TU/latinmodern-math.otf(1)/m/n/10 
 ⊗[]$\TU/lmr/m/n/10 )\TU/lmr/bx/n/10 . [][][][]\TU/lmr/m/n/10 For ar-bi-trary 
 $\TU/latinmodern-math.otf(1)/m/n/10 𝐴, 𝐵, 𝐶, 𝐷 ∈ [].[] 𝑋$
  []
 
 [319]
 Overfull \hbox (40.75044pt too wide) in paragraph at lines 10876--10881
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 869 \TU/lmr/m/n/10 (Bun-dled iso form of the 
+[][]\TU/lmr/bx/n/10 Def-i-ni-tion 871 \TU/lmr/m/n/10 (Bun-dled iso form of the 
 unit com-par-i-son)\TU/lmr/bx/n/10 . [][]\TU/lmr/m/n/10 For $\TU/latinmodern-ma
 th.otf(1)/m/n/10 𝑔 ∶ 𝑌 → 𝑋$ \TU/lmr/m/n/10 with $\TU/latinmodern-m
 ath.otf(1)/m/n/10 ([] 𝑔.[]).[]$\TU/lmr/m/n/10 ,
@@ -5720,7 +5720,7 @@ lmr/m/it/10 and $\TU/latinmodern-math.otf(1)/m/n/10 𝑅[] = ([] ℎ).[] ([][]
 
 [321]
 Overfull \hbox (5.29933pt too wide) in paragraph at lines 11135--11142
-[][]\TU/lmr/m/n/10 674[][] ($[]$ in its $\TU/latinmodern-math.otf(1)/m/n/10 
+[][]\TU/lmr/m/n/10 676[][] ($[]$ in its $\TU/latinmodern-math.otf(1)/m/n/10 
 𝑃$\TU/lmr/m/n/10 -general form) to rewrite $\TU/latinmodern-math.otf(1)/m/n/
 10 𝑅[]$ \TU/lmr/m/n/10 as the composite-
  []
@@ -5739,7 +5739,7 @@ dal struc-ture maps $\TU/latinmodern-math.otf(1)/m/n/10 𝜇$ \TU/lmr/m/n/10 of 
 
 [322]
 Overfull \hbox (27.52893pt too wide) in paragraph at lines 11271--11275
-[][]\TU/lmr/m/it/10 The outer leg of [][]888[][]: ap-plied to a pure ten-sor, $
+[][]\TU/lmr/m/it/10 The outer leg of [][]890[][]: ap-plied to a pure ten-sor, $
 \TU/latinmodern-math.otf(1)/m/n/10 (([] 𝜑).[] (𝜇([] 𝜓) 𝑁[] 𝑁[]))[]$
  []
 
@@ -5765,7 +5765,7 @@ Overfull \hbox (2.85931pt too wide) in paragraph at lines 11296--11303
 
 
 Overfull \hbox (41.84305pt too wide) in paragraph at lines 11336--11343
-[][]\TU/lmr/bx/n/10 Lemma 889 \TU/lmr/m/n/10 (For-get-ful im-age of a sheaf-push
+[][]\TU/lmr/bx/n/10 Lemma 891 \TU/lmr/m/n/10 (For-get-ful im-age of a sheaf-push
 forward map)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 The for-get-ful func-tor $[]$
  []
 
@@ -5809,7 +5809,7 @@ Overfull \hbox (34.62125pt too wide) detected at line 52
 
 ]
 Overfull \hbox (3.57072pt too wide) in paragraph at lines 117--125
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 894 \TU/lmr/m/n/10 (Con-ti-nu-ity of the in-ve
+[][]\TU/lmr/bx/n/10 Def-i-ni-tion 896 \TU/lmr/m/n/10 (Con-ti-nu-ity of the in-ve
 rse leg of the over-equivalence)\TU/lmr/bx/n/10 . []\TU/lmr/m/n/10 The in-verse leg $\TU/latinmodern-math.otf(1)/m/n/10 
 𝑒.[] ∶
  []
@@ -5828,7 +5828,7 @@ in-stance $[] \TU/latinmodern-math.otf(1)/m/n/10 ⇒ []$
 
 
 Overfull \hbox (6.8307pt too wide) in paragraph at lines 139--146
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 895 \TU/lmr/m/n/10 (Con-ti-nu-ity of the func-
+[][]\TU/lmr/bx/n/10 Def-i-ni-tion 897 \TU/lmr/m/n/10 (Con-ti-nu-ity of the func-
 tor leg of the over-equivalence)\TU/lmr/bx/n/10 . [][]\TU/lmr/m/n/10 The func-to
 r leg $\TU/latinmodern-math.otf(1)/m/n/10 𝑒.[] ∶
  []
@@ -5943,7 +5943,7 @@ Overfull \hbox (110.89633pt too wide) in paragraph at lines 327--334
 
 
 Overfull \hbox (213.44633pt too wide) in paragraph at lines 327--334
-\TU/lmr/m/n/10 im-me-di-ate from [][]913[][]. Quasi-coherence is im-me-di-ate fr
+\TU/lmr/m/n/10 im-me-di-ate from [][]915[][]. Quasi-coherence is im-me-di-ate fr
 om fi-nite pre-sen-ta-tion by $[]$.
  []
 
@@ -5967,7 +5967,7 @@ ern-math.otf(1)/m/n/10 Γ(𝑋[], 𝐿[]) ⊗[]
 
 [361] [362]
 Overfull \hbox (118.82405pt too wide) in paragraph at lines 440--444
-[][]\TU/lmr/bx/n/10 Lemma 1022 \TU/lmr/m/n/10 (The ra-tio-nal power se-ries $\T
+[][]\TU/lmr/bx/n/10 Lemma 1024 \TU/lmr/m/n/10 (The ra-tio-nal power se-ries $\T
 U/latinmodern-math.otf(1)/m/n/10 (1 − 𝑋)[]$\TU/lmr/m/n/10 )\TU/lmr/bx/n/10
  . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 Mathlib.RingTheory.
 PowerSeries.WellKnown\TU/lmr/m/it/10 ).
@@ -5976,20 +5976,20 @@ PowerSeries.WellKnown\TU/lmr/m/it/10 ).
 [363] [364] [365] [366]
 Overfull \hbox (181.42522pt too wide) in paragraph at lines 978--986
 \TU/lmr/m/it/10 the ex-trac-tion of the unique poly-no-mial from a ra-tio-nal Hi
-lbert func-tion ([][]1034[][], \TU/lmtt/m/it/10 Scheme.existsUnique_hilbertPolyn
+lbert func-tion ([][]1036[][], \TU/lmtt/m/it/10 Scheme.existsUnique_hilbertPolyn
 omial_of_isRatHilb\TU/lmr/m/it/10 )
  []
 
 [367]
 Overfull \hbox (152.45306pt too wide) in paragraph at lines 1061--1071
-[][]\TU/lmr/bx/n/10 Lemma 1039 \TU/lmr/m/n/10 (Ho-mo-ge-neous sub-mod-ule)\TU/l
+[][]\TU/lmr/bx/n/10 Lemma 1041 \TU/lmr/m/n/10 (Ho-mo-ge-neous sub-mod-ule)\TU/l
 mr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 Mathlib.R
 ingTheory.GradedAlgebra.Homogeneous.Submodule\TU/lmr/m/it/10 ).
  []
 
 
 Overfull \hbox (231.31198pt too wide) in paragraph at lines 1078--1085
-[][]\TU/lmr/bx/n/10 Lemma 1040 \TU/lmr/m/n/10 (A span of ho-mo-ge-neous el-e-men
+[][]\TU/lmr/bx/n/10 Lemma 1042 \TU/lmr/m/n/10 (A span of ho-mo-ge-neous el-e-men
 ts is ho-mo-ge-neous)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib 
 (\TU/lmtt/m/it/10 Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal\TU/lmr/m/i
 t/10 ).
@@ -5997,26 +5997,26 @@ t/10 ).
 
 
 Overfull \hbox (57.72305pt too wide) in paragraph at lines 1092--1095
-[][]\TU/lmr/bx/n/10 Lemma 1041 \TU/lmr/m/n/10 (Rank--nullity)\TU/lmr/bx/n/10 . 
+[][]\TU/lmr/bx/n/10 Lemma 1043 \TU/lmr/m/n/10 (Rank--nullity)\TU/lmr/bx/n/10 . 
 []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 Mathlib.LinearAlgebra.
 FiniteDimensional.Lemmas\TU/lmr/m/it/10 ).
  []
 
 
 Overfull \hbox (134.97305pt too wide) in paragraph at lines 1107--1115
-[][]\TU/lmr/bx/n/10 Lemma 1042 \TU/lmr/m/n/10 (Fi-nite gen-er-a-tion trans-fers along a sur-jec-tion)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 Mathlib.RingTheory.Finiteness.Basic\TU/lmr/m/it/10 ).
+[][]\TU/lmr/bx/n/10 Lemma 1044 \TU/lmr/m/n/10 (Fi-nite gen-er-a-tion trans-fers along a sur-jec-tion)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 Mathlib.RingTheory.Finiteness.Basic\TU/lmr/m/it/10 ).
  []
 
 [368]
 Overfull \hbox (146.48306pt too wide) in paragraph at lines 1154--1162
-[][]\TU/lmr/bx/n/10 Lemma 1045 \TU/lmr/m/n/10 (Finite-ness trans-fers along a su
+[][]\TU/lmr/bx/n/10 Lemma 1047 \TU/lmr/m/n/10 (Finite-ness trans-fers along a su
 r-jec-tive lin-ear map)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib
  (\TU/lmtt/m/it/10 Mathlib.RingTheory.Finiteness.Defs\TU/lmr/m/it/10 ).
  []
 
 
 Overfull \hbox (128.48305pt too wide) in paragraph at lines 1179--1187
-[][]\TU/lmr/bx/n/10 Lemma 1047 \TU/lmr/m/n/10 (The lift of a lin-ear map through
+[][]\TU/lmr/bx/n/10 Lemma 1049 \TU/lmr/m/n/10 (The lift of a lin-ear map through
  a quo-tient)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmt
 t/m/it/10 Mathlib.LinearAlgebra.Quotient.Basic\TU/lmr/m/it/10 ).
  []
@@ -6025,7 +6025,7 @@ t/m/it/10 Mathlib.LinearAlgebra.Quotient.Basic\TU/lmr/m/it/10 ).
 Overfull \hbox (5.57747pt too wide) in paragraph at lines 1412--1419
 [][][]\TU/lmr/m/n/10 Let $\TU/latinmodern-math.otf(1)/m/n/10 𝑚 ∈ 𝑥[](
 𝑁[])$ \TU/lmr/m/n/10 and fix a de-gree $\TU/latinmodern-math.otf(1)/m/n/10 
-𝑖$\TU/lmr/m/n/10 . By the degree-shift com-mu-ta-tion ([][]1056[][]), $\TU/l
+𝑖$\TU/lmr/m/n/10 . By the degree-shift com-mu-ta-tion ([][]1058[][]), $\TU/l
 atinmodern-math.otf(1)/m/n/10 𝑥([][](𝑚)) =
  []
 
@@ -6045,7 +6045,7 @@ Overfull \hbox (66.13112pt too wide) detected at line 1952
 
 [375]
 Overfull \hbox (11.05493pt too wide) in paragraph at lines 1982--1988
-[][]\TU/lmr/bx/n/10 Lemma 1084 \TU/lmr/m/n/10 (Mod-$\TU/latinmodern-math.otf(1)
+[][]\TU/lmr/bx/n/10 Lemma 1086 \TU/lmr/m/n/10 (Mod-$\TU/latinmodern-math.otf(1)
 /m/n/10 𝑃[]$ \TU/lmr/m/n/10 semi-lin-ear-ity of the poly-no-mial ac-tion)\TU
 /lmr/bx/n/10 . [][][][][][]\TU/lmr/m/it/10 Let $\TU/latinmodern-math.otf(1)/m/n
 /10 𝑡[], … , 𝑡[]$ \TU/lmr/m/it/10 be pairwise-commuting
@@ -6061,14 +6061,14 @@ the re-duced $\TU/latinmodern-math.otf(1)/m/n/10 𝜅[𝑡[], … , 𝑡[]]$\TU
 
 [377] [378] [379]
 Overfull \hbox (4.8964pt too wide) in paragraph at lines 2405--2420
-[][]\TU/lmr/bx/n/10 Lemma 1096 \TU/lmr/m/n/10 (Ra-tio-nal-ity of the am-bi-ent 
+[][]\TU/lmr/bx/n/10 Lemma 1098 \TU/lmr/m/n/10 (Ra-tio-nal-ity of the am-bi-ent 
 sub-quo-tient Hilbert func-tion)\TU/lmr/bx/n/10 . [][][][][][][][][][][][]\TU/l
 mr/m/it/10 Source: [Stacks Project],
  []
 
 [380]
 Overfull \hbox (157.36307pt too wide) in paragraph at lines 2606--2614
-[][]\TU/lmr/bx/n/10 Lemma 1100 \TU/lmr/m/n/10 (Sec-tions on a ba-sic open lo-cal
+[][]\TU/lmr/bx/n/10 Lemma 1102 \TU/lmr/m/n/10 (Sec-tions on a ba-sic open lo-cal
 -ize the affine ring)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib 
 (\TU/lmtt/m/it/10 Mathlib.AlgebraicGeometry.AffineScheme\TU/lmr/m/it/10 ).
  []
@@ -6081,12 +6081,12 @@ afCondition.PairwiseIntersections\TU/lmr/m/it/10 ). For
 
 
 Overfull \hbox (121.18306pt too wide) in paragraph at lines 2736--2741
-[][]\TU/lmr/bx/n/10 Lemma 1106 \TU/lmr/m/n/10 (Re-stric-tion is iso-mor-phic to pull-back)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 Mathlib.AlgebraicGeometry.Modules.Sheaf\TU/lmr/m/it/10 ).
+[][]\TU/lmr/bx/n/10 Lemma 1108 \TU/lmr/m/n/10 (Re-stric-tion is iso-mor-phic to pull-back)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 Mathlib.AlgebraicGeometry.Modules.Sheaf\TU/lmr/m/it/10 ).
  []
 
 
 Overfull \hbox (178.49307pt too wide) in paragraph at lines 2772--2777
-[][]\TU/lmr/bx/n/10 Lemma 1108 \TU/lmr/m/n/10 (Sheaf cat-e-gories of equiv-a-len
+[][]\TU/lmr/bx/n/10 Lemma 1110 \TU/lmr/m/n/10 (Sheaf cat-e-gories of equiv-a-len
 t sites are equiv-a-lent)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-l
 ib (\TU/lmtt/m/it/10 Mathlib.CategoryTheory.Sites.Equivalence\TU/lmr/m/it/10 ).
  []
@@ -6106,14 +6106,14 @@ es. The in-verse of $[] \TU/latinmodern-math.otf(1)/m/n/10 𝑈$
 
 
 Overfull \hbox (9.06523pt too wide) in paragraph at lines 2858--2864
-\TU/lmr/m/n/10 ([][]1108[][]). This is ex-actly the equiv-a-lence left as a TODO
+\TU/lmr/m/n/10 ([][]1110[][]). This is ex-actly the equiv-a-lence left as a TODO
  in Math-lib’s \TU/lmtt/m/n/10 Topology/Sheaves/Over.lean\TU/lmr/m/n/10 ,
  []
 
 [383]
 Overfull \hbox (42.28293pt too wide) in paragraph at lines 2959--2965
 \TU/lmr/m/n/10 sheaf iden-ti-fi-ca-tions; re-call that $[] \TU/latinmodern-math
-.otf(1)/m/n/10 𝑈.𝜄$ \TU/lmr/m/n/10 ([][]1105[][]) is pre-cisely push-for-w
+.otf(1)/m/n/10 𝑈.𝜄$ \TU/lmr/m/n/10 ([][]1107[][]) is pre-cisely push-for-w
 ard along $\TU/latinmodern-math.otf(1)/m/n/10 𝑈.𝜄.[]$\TU/lmr/m/n/10 .
  []
 
@@ -6126,21 +6126,21 @@ TU/latinmodern-math.otf(1)/m/n/10 ([] 𝑈.𝜄).[] 𝑀$\TU/lmr/m/n/10 .
 
 [384] [385] [386] [387] [388] [389]
 Overfull \hbox (132.07306pt too wide) in paragraph at lines 3545--3555
-[][]\TU/lmr/bx/n/10 Lemma 1130 \TU/lmr/m/n/10 (Proper-ness as a mor-phism prop-e
+[][]\TU/lmr/bx/n/10 Lemma 1132 \TU/lmr/m/n/10 (Proper-ness as a mor-phism prop-e
 rty)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10
  Mathlib.AlgebraicGeometry.Morphisms.Proper\TU/lmr/m/it/10 ).
  []
 
 [390] [391]
 Overfull \hbox (190.42305pt too wide) in paragraph at lines 3810--3815
-[][]\TU/lmr/bx/n/10 Lemma 1136 \TU/lmr/m/n/10 (Mod-ule finite-ness is lo-cal alo
+[][]\TU/lmr/bx/n/10 Lemma 1138 \TU/lmr/m/n/10 (Mod-ule finite-ness is lo-cal alo
 ng a span-ning fam-ily)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib
  (\TU/lmtt/m/it/10 Mathlib.RingTheory.Localization.Finiteness\TU/lmr/m/it/10 ).
  []
 
 [392] [393] [394] [395]
 Overfull \hbox (1.54889pt too wide) in paragraph at lines 4291--4309
-\TU/lmr/m/n/10 Stacks 01CC affine tensor-section for-mula flagged in [][]1144[]
+\TU/lmr/m/n/10 Stacks 01CC affine tensor-section for-mula flagged in [][]1146[]
 []. The route is: iden-tify $\TU/latinmodern-math.otf(1)/m/n/10 Γ(𝐴, 𝑉)[
 ] ⊗[]
  []
@@ -6154,7 +6154,7 @@ sfy $\TU/latinmodern-math.otf(1)/m/n/10 (𝑋[]/𝑋[])(𝑋[]/𝑋[]) =
 
 [405] [406]
 Overfull \hbox (25.94725pt too wide) in paragraph at lines 5798--5803
-[][]\TU/lmr/bx/n/10 Lemma 1199 \TU/lmr/m/n/10 (Pro-jec-tive space is pro-jec-tiv
+[][]\TU/lmr/bx/n/10 Lemma 1201 \TU/lmr/m/n/10 (Pro-jec-tive space is pro-jec-tiv
 e over its base)\TU/lmr/bx/n/10 . [][][]\TU/lmr/m/it/10 The struc-tural mor-phis
 m $\TU/latinmodern-math.otf(1)/m/n/10 ℙ({0, … , 𝑑}; 𝑆) →
  []
@@ -6168,7 +6168,7 @@ mposition
 
 
 Overfull \hbox (69.90657pt too wide) in paragraph at lines 6131--6140
-[][]\TU/lmr/m/n/10 1210[][] iden-ti-fies global sec-tions of $\TU/latinmodern-m
+[][]\TU/lmr/m/n/10 1212[][] iden-ti-fies global sec-tions of $\TU/latinmodern-m
 ath.otf(1)/m/n/10 𝒪(𝑚)$ \TU/lmr/m/n/10 with the ab-stract compatible-famil
 y sub-mod-ule $[]\TU/latinmodern-math.otf(1)/m/n/10 (𝐷, 𝒪, ((𝑋[]/𝑋[
 ])[]))$
@@ -6196,7 +6196,7 @@ $ \TU/lmr/m/n/10 dif-fer by ex-actly $\TU/latinmodern-math.otf(1)/m/n/10 (𝑋[
 
 [412] [413]
 Overfull \hbox (46.07689pt too wide) in paragraph at lines 6574--6589
-[]\TU/lmr/bx/n/10 (Bound-ed-ness, [][]1226[][].) \TU/lmr/m/n/10 Pick the Casteln
+[]\TU/lmr/bx/n/10 (Bound-ed-ness, [][]1228[][].) \TU/lmr/m/n/10 Pick the Casteln
 uovo--Mumford reg-u-lar-ity bound $\TU/latinmodern-math.otf(1)/m/n/10 𝑚 = 
 𝑚([] 𝑉, [] 𝑊, Φ)$
  []
@@ -6228,7 +6228,7 @@ Overfull \hbox (61.53745pt too wide) detected at line 7720
 
 [423]
 Overfull \hbox (23.90636pt too wide) in paragraph at lines 7758--7766
-[][]\TU/lmr/bx/n/10 Lemma 1254 \TU/lmr/m/n/10 (Affine basic-open sec-tion lo-cal
+[][]\TU/lmr/bx/n/10 Lemma 1256 \TU/lmr/m/n/10 (Affine basic-open sec-tion lo-cal
 -iza-tion for quasi-coherent mod-ules)\TU/lmr/bx/n/10 . [][][]\TU/lmr/m/it/10 So
 urce: Stacks [][]01IB[][]
  []
@@ -6247,7 +6247,7 @@ Overfull \hbox (3.05133pt too wide) in paragraph at lines 8071--8075
 
 [426]
 Overfull \hbox (4.70634pt too wide) in paragraph at lines 8081--8088
-[][]\TU/lmr/bx/n/10 Lemma 1263 \TU/lmr/m/n/10 (Fi-nite gen-er-a-tion from a fi-n
+[][]\TU/lmr/bx/n/10 Lemma 1265 \TU/lmr/m/n/10 (Fi-nite gen-er-a-tion from a fi-n
 ite gen-er-at-ing fam-ily of the tilde)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Sourc
 e: Stacks [][]01PC[][]
  []
@@ -6275,7 +6275,7 @@ Overfull \hbox (22.44626pt too wide) in paragraph at lines 24--36
 
 
 Overfull \hbox (14.9217pt too wide) in paragraph at lines 24--36
-\TU/lmr/m/n/10 struc-ture ([][]1270[][]) and pro-vides the sheafi-fi-ca-tion fun
+\TU/lmr/m/n/10 struc-ture ([][]1272[][]) and pro-vides the sheafi-fi-ca-tion fun
 c-tor $[] \TU/latinmodern-math.otf(1)/m/n/10 → []$
  []
 
@@ -6283,7 +6283,7 @@ c-tor $[] \TU/latinmodern-math.otf(1)/m/n/10 → []$
 
 ]
 Overfull \hbox (224.93306pt too wide) in paragraph at lines 78--84
-[][]\TU/lmr/bx/n/10 Lemma 1270 \TU/lmr/m/n/10 (Monoidal struc-ture on presheaves
+[][]\TU/lmr/bx/n/10 Lemma 1272 \TU/lmr/m/n/10 (Monoidal struc-ture on presheaves
  of mod-ules)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmt
 t/m/it/10 Mathlib.Algebra.Category.ModuleCat.Presheaf.Monoidal\TU/lmr/m/it/10 ).
 
@@ -6298,7 +6298,7 @@ Overfull \hbox (44.05963pt too wide) in paragraph at lines 78--84
 
 
 Overfull \hbox (229.65306pt too wide) in paragraph at lines 101--104
-[][]\TU/lmr/bx/n/10 Lemma 1271 \TU/lmr/m/n/10 (Sheafi-fi-ca-tion of presheaves 
+[][]\TU/lmr/bx/n/10 Lemma 1273 \TU/lmr/m/n/10 (Sheafi-fi-ca-tion of presheaves 
 of mod-ules)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt
 /m/it/10 Mathlib.Algebra.Category.ModuleCat.Presheaf.Sheafification\TU/lmr/m/it
 /10 ).
@@ -6306,12 +6306,12 @@ of mod-ules)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt
 
 
 Overfull \hbox (134.62306pt too wide) in paragraph at lines 119--126
-[][]\TU/lmr/bx/n/10 Lemma 1272 \TU/lmr/m/n/10 (The struc-ture sheaf as the unit mod-ule)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 Mathlib.Algebra.Category.ModuleCat.Sheaf\TU/lmr/m/it/10 ).
+[][]\TU/lmr/bx/n/10 Lemma 1274 \TU/lmr/m/n/10 (The struc-ture sheaf as the unit mod-ule)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 Mathlib.Algebra.Category.ModuleCat.Sheaf\TU/lmr/m/it/10 ).
  []
 
 [432] [433]
 Overfull \hbox (151.27304pt too wide) in paragraph at lines 424--447
-[][]\TU/lmr/bx/n/10 Lemma 1282 \TU/lmr/m/n/10 (Monoidal lo-cal-iza-tion trans-po
+[][]\TU/lmr/bx/n/10 Lemma 1284 \TU/lmr/m/n/10 (Monoidal lo-cal-iza-tion trans-po
 rt)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 
 Mathlib.CategoryTheory.Localization.Monoidal.Basic
  []
@@ -6325,13 +6325,13 @@ ization \TU/lmr/m/it/10 and \TU/lmtt/m/it/10 ….ModuleCat.Presheaf.Monoidal\TU
 
 
 Overfull \hbox (10.99294pt too wide) in paragraph at lines 494--499
-\TU/lmr/m/n/10 the mod-ule sheafi-fi-ca-tion func-tor ([][]1278[][]) re-typed so
+\TU/lmr/m/n/10 the mod-ule sheafi-fi-ca-tion func-tor ([][]1280[][]) re-typed so
  that its source is the car-rier $[] \TU/latinmodern-math.otf(1)/m/n/10 𝑋$
  []
 
 
 Overfull \hbox (11.10498pt too wide) in paragraph at lines 549--551
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1287 \TU/lmr/m/n/10 (Trans-port unit of the mo
+[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1289 \TU/lmr/m/n/10 (Trans-port unit of the mo
 noidal lo-cal-iza-tion)\TU/lmr/bx/n/10 . [][][][]\TU/lmr/m/n/10 For a scheme $\
 TU/latinmodern-math.otf(1)/m/n/10 𝑋$\TU/lmr/m/n/10 , $[]$
  []
@@ -6346,7 +6346,7 @@ tf(1)/m/n/10 𝒪[]$ \TU/lmr/m/n/10 and $\TU/latinmodern-math.otf(1)/m/n/10
 
 [436]
 Overfull \hbox (0.79631pt too wide) in paragraph at lines 745--760
-\TU/lmr/m/n/10 The as-so-ci-a-tor of [][]1292[][] is ob-tained by con-ju-gat-ing
+\TU/lmr/m/n/10 The as-so-ci-a-tor of [][]1294[][] is ob-tained by con-ju-gat-ing
  the canon-i-cal Mac Lane as-so-ci-a-tor of $\TU/latinmodern-math.otf(1)/m/n/10
  𝑋.[]$
  []
@@ -6387,7 +6387,7 @@ ing the second-index re-cur-sion of $\TU/latinmodern-math.otf(1)/m/n/10 𝜇 =
 Overfull \hbox (12.10379pt too wide) in paragraph at lines 2005--2012
 \TU/lmr/m/it/10 where $\TU/latinmodern-math.otf(1)/m/n/10 𝜂$ \TU/lmr/m/it/10
  is the sheafi-fi-ca-tion unit and $\TU/latinmodern-math.otf(1)/m/n/10 𝛼[]$ 
-\TU/lmr/m/it/10 the presheaf as-so-ci-a-tor ([][]1270[][]). Equiv-a-lently, $[]
+\TU/lmr/m/it/10 the presheaf as-so-ci-a-tor ([][]1272[][]). Equiv-a-lently, $[]
 $
  []
 
@@ -6400,7 +6400,7 @@ Overfull \hbox (13.2057pt too wide) detected at line 2063
 [449] [450]
 Overfull \hbox (2.93184pt too wide) in paragraph at lines 2224--2248
 \TU/lmr/m/it/10 fi-ca-tion $\TU/latinmodern-math.otf(1)/m/n/10 Γ(𝑋, 𝒪[]) = 
-Γ(𝑋, ℒ[])$ \TU/lmr/m/it/10 ([][]1272[][]). Mir-ror-ing $[]$
+Γ(𝑋, ℒ[])$ \TU/lmr/m/it/10 ([][]1274[][]). Mir-ror-ing $[]$
  []
 
 
@@ -6418,28 +6418,28 @@ rt $[][]$
 
 
 Overfull \hbox (75.32306pt too wide) in paragraph at lines 2374--2385
-[][]\TU/lmr/bx/n/10 Lemma 1329 \TU/lmr/m/n/10 (External-direct-sum graded semir-
+[][]\TU/lmr/bx/n/10 Lemma 1331 \TU/lmr/m/n/10 (External-direct-sum graded semir-
 ing)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10
  Mathlib.Algebra.DirectSum.Ring\TU/lmr/m/it/10 ).
  []
 
 
 Overfull \hbox (133.92307pt too wide) in paragraph at lines 2391--2400
-[][]\TU/lmr/bx/n/10 Lemma 1330 \TU/lmr/m/n/10 (External-direct-sum graded com-mu
+[][]\TU/lmr/bx/n/10 Lemma 1332 \TU/lmr/m/n/10 (External-direct-sum graded com-mu
 -ta-tive semir-ing)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\
 TU/lmtt/m/it/10 Mathlib.Algebra.DirectSum.Ring\TU/lmr/m/it/10 ).
  []
 
 [452]
 Overfull \hbox (96.77306pt too wide) in paragraph at lines 2406--2415
-[][]\TU/lmr/bx/n/10 Lemma 1331 \TU/lmr/m/n/10 (External-direct-sum graded mod-ul
+[][]\TU/lmr/bx/n/10 Lemma 1333 \TU/lmr/m/n/10 (External-direct-sum graded mod-ul
 e)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Pro-vided by Math-lib (\TU/lmtt/m/it/10 Ma
 thlib.Algebra.Module.GradedModule\TU/lmr/m/it/10 ).
  []
 
 
 Overfull \hbox (7.12181pt too wide) in paragraph at lines 2421--2428
-\TU/lmr/m/it/10 pli-ca-tion $[]$ ([][]1326[][]) and graded unit $[]$ ([][]1327[
+\TU/lmr/m/it/10 pli-ca-tion $[]$ ([][]1328[][]) and graded unit $[]$ ([][]1329[
 ][]), is a graded monoid (a $[]$
  []
 
@@ -6458,7 +6458,7 @@ Overfull \hbox (5.34344pt too wide) detected at line 3012
 
 [457] [458]
 Overfull \hbox (0.61075pt too wide) in paragraph at lines 3138--3151
-[][]\TU/lmr/bx/n/10 The-o-rem 1350 \TU/lmr/m/n/10 (D5: fi-nite gen-er-a-tion for
+[][]\TU/lmr/bx/n/10 The-o-rem 1352 \TU/lmr/m/n/10 (D5: fi-nite gen-er-a-tion for
 ces finite-dimensional graded pieces)\TU/lmr/bx/n/10 . [][][]\TU/lmr/m/it/10 Let
  $\TU/latinmodern-math.otf(1)/m/n/10 𝑀 = [][] ℳ[]$
  []
@@ -6489,7 +6489,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
 ]
 Overfull \hbox (1.41246pt too wide) in paragraph at lines 216--227
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1361 \TU/lmr/m/n/10 (The Cramer in-verse $\TU
+[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1363 \TU/lmr/m/n/10 (The Cramer in-verse $\TU
 /latinmodern-math.otf(1)/m/n/10 (𝑋[])[]$\TU/lmr/m/n/10 )\TU/lmr/bx/n/10 . []
 []\TU/lmr/m/it/10 Source: [Nit-sure], §1. \TU/lmr/m/n/10 Let $\TU/latinmodern-
 math.otf(1)/m/n/10 (𝑋[])[] ∈ [][](𝑅[])$
@@ -6503,7 +6503,7 @@ Overfull \hbox (48.64738pt too wide) in paragraph at lines 1263--1275
 
 
 Overfull \hbox (42.61635pt too wide) in paragraph at lines 1287--1292
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1410 \TU/lmr/m/n/10 (The Grass-man-nian glue 
+[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1412 \TU/lmr/m/n/10 (The Grass-man-nian glue 
 da-tum)\TU/lmr/bx/n/10 . [][][][][][][][][][][]\TU/lmr/m/n/10 The \TU/lmr/m/it/
 10 Grass-man-nian glue da-tum \TU/lmr/m/n/10 is the $[]$
  []
@@ -6516,14 +6516,14 @@ emes (the struc-ture $[]$,
 
 [471]
 Overfull \hbox (6.26778pt too wide) in paragraph at lines 1513--1516
-[][]\TU/lmr/bx/n/10 Lemma 1416 \TU/lmr/m/n/10 (The restricted-diagonal co-mor-ph
+[][]\TU/lmr/bx/n/10 Lemma 1418 \TU/lmr/m/n/10 (The restricted-diagonal co-mor-ph
 ism is sur-jec-tive)\TU/lmr/bx/n/10 . [][][][]\TU/lmr/m/it/10 The co-mor-phism 
 $\TU/latinmodern-math.otf(1)/m/n/10 𝛿[] ∶ ℤ[𝑋[]] ⊗[]
  []
 
 [472] [473]
 Overfull \hbox (12.33185pt too wide) in paragraph at lines 1743--1746
-[]\TU/lmr/m/n/10 By [][]1411[][] the di-ag-o-nal preim-age is the over-lap $\TU
+[]\TU/lmr/m/n/10 By [][]1413[][] the di-ag-o-nal preim-age is the over-lap $\TU
 /latinmodern-math.otf(1)/m/n/10 Δ[](𝑈[] ×[] 𝑈[]) = 𝑈[] ∩ 𝑈[] = 
 𝑈[] = [] ℤ[𝑋[], 1/𝑃[]]$\TU/lmr/m/n/10 .
  []
@@ -6537,21 +6537,21 @@ _valuativeCriterion
 
 
 Overfull \hbox (6.95279pt too wide) in paragraph at lines 1815--1818
-[][]\TU/lmr/bx/n/10 Lemma 1426 \TU/lmr/m/n/10 (The struc-ture mor-phism is quasi
+[][]\TU/lmr/bx/n/10 Lemma 1428 \TU/lmr/m/n/10 (The struc-ture mor-phism is quasi
 -compact)\TU/lmr/bx/n/10 . [][][]\TU/lmr/m/it/10 The struc-ture mor-phism $\TU/
 latinmodern-math.otf(1)/m/n/10 𝜋 ∶ [](𝑟, 𝑑) →
  []
 
 [475]
 Overfull \hbox (12.04279pt too wide) in paragraph at lines 1849--1852
-[][]\TU/lmr/bx/n/10 Lemma 1428 \TU/lmr/m/n/10 (The struc-ture mor-phism is quasi
+[][]\TU/lmr/bx/n/10 Lemma 1430 \TU/lmr/m/n/10 (The struc-ture mor-phism is quasi
 -separated)\TU/lmr/bx/n/10 . [][][]\TU/lmr/m/it/10 The struc-ture mor-phism $\T
 U/latinmodern-math.otf(1)/m/n/10 𝜋 ∶ [](𝑟, 𝑑) →
  []
 
 
 Overfull \hbox (2.95277pt too wide) in paragraph at lines 1863--1869
-[][]\TU/lmr/bx/n/10 Lemma 1429 \TU/lmr/m/n/10 (Unique-ness half of the val-u-a-t
+[][]\TU/lmr/bx/n/10 Lemma 1431 \TU/lmr/m/n/10 (Unique-ness half of the val-u-a-t
 ive cri-te-rion)\TU/lmr/bx/n/10 . [][][]\TU/lmr/m/it/10 The struc-ture mor-phism
  $\TU/latinmodern-math.otf(1)/m/n/10 𝜋 ∶ [](𝑟, 𝑑) →
  []
@@ -6599,14 +6599,14 @@ Overfull \hbox (15.52368pt too wide) in paragraph at lines 516--529
 
 
 Overfull \hbox (12.35765pt too wide) in paragraph at lines 550--560
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1488 \TU/lmr/m/n/10 (Free-sheaf au-to-mor-phis
+[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1490 \TU/lmr/m/n/10 (Free-sheaf au-to-mor-phis
 m of an in-vert-ible ma-trix)\TU/lmr/bx/n/10 . [][][][]\TU/lmr/m/n/10 Let $\TU/
 latinmodern-math.otf(1)/m/n/10 𝑀, 𝑁 ∈ [][](Γ(𝑆, 𝒪[]))$
  []
 
 [495]
 Overfull \hbox (33.11632pt too wide) in paragraph at lines 565--567
-[][]\TU/lmr/bx/n/10 Lemma 1489 \TU/lmr/m/n/10 (For-ward map of the ma-trix au-to
+[][]\TU/lmr/bx/n/10 Lemma 1491 \TU/lmr/m/n/10 (For-ward map of the ma-trix au-to
 -mor-phism)\TU/lmr/bx/n/10 . [][][]\TU/lmr/m/it/10 The for-ward map of $[]\TU/l
 atinmodern-math.otf(1)/m/n/10 (𝑀, 𝑁)$
  []
@@ -6636,20 +6636,20 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 [497] [498]
 Overfull \hbox (22.00893pt too wide) in paragraph at lines 942--950
 \TU/lmr/m/n/10 jec-tion, pre-com-posed with the away-pullback iden-ti-fi-ca-tion
- [][]1400[][], equals $[]\TU/latinmodern-math.otf(1)/m/n/10 ([](𝑃[], 𝑃[]))
+ [][]1402[][], equals $[]\TU/latinmodern-math.otf(1)/m/n/10 ([](𝑃[], 𝑃[]))
 $\TU/lmr/m/n/10 .
  []
 
 
 Overfull \hbox (3.94695pt too wide) in paragraph at lines 942--950
-\TU/lmr/m/n/10 The charts be-ing affine, [][]1498[][] iden-ti-fies its global-se
+\TU/lmr/m/n/10 The charts be-ing affine, [][]1500[][] iden-ti-fies its global-se
 ctions co-mor-phism with $[]\TU/latinmodern-math.otf(1)/m/n/10 (𝑃[], 𝑃[])$
  []
 
 [499]
 Overfull \hbox (2.0093pt too wide) in paragraph at lines 1048--1064
 [][]\TU/latinmodern-math.otf(1)/m/n/10 (𝑋[])[](𝑋[])[][]$\TU/lmr/m/n/10 , 
-and by the ma-trix co-cy-cle iden-tity [][]1495[][] the ar-gu-ment equals $\TU/
+and by the ma-trix co-cy-cle iden-tity [][]1497[][] the ar-gu-ment equals $\TU/
 latinmodern-math.otf(1)/m/n/10 (𝑋[])[]$\TU/lmr/m/n/10 ,
  []
 
@@ -6661,7 +6661,7 @@ con-struc-tion against the hom-equivalences,
 
 [503]
 Overfull \hbox (11.20065pt too wide) in paragraph at lines 1408--1422
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1513 \TU/lmr/m/n/10 (The Grass-man-nian func-t
+[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1515 \TU/lmr/m/n/10 (The Grass-man-nian func-t
 or $[]\TU/latinmodern-math.otf(1)/m/n/10 (𝑟, 𝑑)$\TU/lmr/m/n/10 )\TU/lmr/b
 x/n/10 . [][][][][]\TU/lmr/m/n/10 The \TU/lmr/m/it/10 Grass-man-nian func-tor $
 []\TU/latinmodern-math.otf(1)/m/n/10 (𝑟, 𝑑) ∶
@@ -6674,7 +6674,7 @@ Chapter 25.
 
 ] [511] [512] [513] [514] [515] [516] [517] [518]
 Overfull \hbox (11.89973pt too wide) in paragraph at lines 835--839
-[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1555 \TU/lmr/m/n/10 (Set-valued rel-a-tive Pi-
+[][]\TU/lmr/bx/n/10 Def-i-ni-tion 1557 \TU/lmr/m/n/10 (Set-valued rel-a-tive Pi-
 card func-tor)\TU/lmr/bx/n/10 . [][]\TU/lmr/m/n/10 The set-valued shadow $[][] 
 \TU/latinmodern-math.otf(1)/m/n/10 ∶ ([] /𝑘)[] →
  []
@@ -6685,7 +6685,7 @@ Chapter 26.
 
 ] [525]
 Overfull \hbox (1.8897pt too wide) in paragraph at lines 354--359
-[][]\TU/lmr/bx/n/10 Lemma 1573 \TU/lmr/m/n/10 (Eval-u-a-tion at a max-i-mal idea
+[][]\TU/lmr/bx/n/10 Lemma 1575 \TU/lmr/m/n/10 (Eval-u-a-tion at a max-i-mal idea
 l over an al-ge-braically closed field)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Sourc
 e: Zariski’s
  []
@@ -6699,7 +6699,7 @@ Missing character: There is no ⟹ (U+27F9) in font [lmroman10-regular]:+tlig;!
 Missing character: There is no ⟹ (U+27F9) in font [lmroman10-regular]:+tlig;!
 ] [529]
 Overfull \hbox (11.72731pt too wide) in paragraph at lines 879--892
-\TU/lmr/m/n/10 The disjoint-union struc-ture of $[][]$ ([][]1540[][]: a dis-join
+\TU/lmr/m/n/10 The disjoint-union struc-ture of $[][]$ ([][]1542[][]: a dis-join
 t union of open quasi-projective $\TU/latinmodern-math.otf(1)/m/n/10 𝑘$\TU/l
 mr/m/n/10 -subschemes)
  []
@@ -6714,13 +6714,13 @@ obian/Picard/FGAPicRepresentability.lean
 [532]
 Overfull \hbox (19.29633pt too wide) in paragraph at lines 1201--1206
 []\TU/lmtt/m/n/10 AlgebraicGeometry.GroupScheme.IdentityComponent.isOpenSubgroup
-Scheme \TU/lmr/m/n/10 ([][]1569[][]) pack-
+Scheme \TU/lmr/m/n/10 ([][]1571[][]) pack-
  []
 
 
 Overfull \hbox (4.24632pt too wide) in paragraph at lines 1206--1212
 []\TU/lmtt/m/n/10 AlgebraicGeometry.GroupScheme.IdentityComponent.isSubgroupHomo
-morphism \TU/lmr/m/n/10 ([][]1570[][])
+morphism \TU/lmr/m/n/10 ([][]1572[][])
  []
 
 
@@ -6739,14 +6739,14 @@ icallyIrreducible
 
 Overfull \hbox (30.41002pt too wide) in paragraph at lines 1233--1241
 []\TU/lmtt/m/n/10 AlgebraicGeometry.Scheme.PicScheme.degree \TU/lmr/m/n/10 ([][
-]1594[][]) is the group ho-mo-mor-phism $[][]\TU/latinmodern-math.otf(1)/m/n/10
+]1596[][]) is the group ho-mo-mor-phism $[][]\TU/latinmodern-math.otf(1)/m/n/10
  (𝑘) →
  []
 
 
 Overfull \hbox (8.98631pt too wide) in paragraph at lines 1241--1248
 []\TU/lmtt/m/n/10 AlgebraicGeometry.Scheme.Pic0Scheme.isAbelianVariety \TU/lmr/
-m/n/10 ([][]1595[][]) is the bun-dled abelian-
+m/n/10 ([][]1597[][]) is the bun-dled abelian-
  []
 
 
@@ -7268,7 +7268,7 @@ Overfull \hbox (222.01631pt too wide) in paragraph at lines 1531--1539
 
 Overfull \hbox (17.83633pt too wide) in paragraph at lines 1539--1548
 []\TU/lmtt/m/n/10 AlgebraicGeometry.Scheme.Pic0.isAbelianVariety \TU/lmr/m/n/10
- ([][]1640[][]) pack-ages the as-sem-bled abelian-
+ ([][]1642[][]) pack-ages the as-sem-bled abelian-
  []
 
 
@@ -7309,21 +7309,21 @@ Chapter 28.
 
 ] [550] [551]
 Overfull \hbox (8.3264pt too wide) in paragraph at lines 287--301
-[][]\TU/lmr/bx/n/10 Lemma 1650 \TU/lmr/m/n/10 (Smooth-algebra Krull-dimension fo
+[][]\TU/lmr/bx/n/10 Lemma 1652 \TU/lmr/m/n/10 (Smooth-algebra Krull-dimension fo
 r-mula (Stacks 00OE))\TU/lmr/bx/n/10 . [][][][][][][]\TU/lmr/m/it/10 Source: [St
 acks Project],
  []
 
 [552] [553] [554] [555]
 Overfull \hbox (1.00967pt too wide) in paragraph at lines 792--794
-[][]\TU/lmr/bx/n/10 Lemma 1668 \TU/lmr/m/n/10 (Ex-is-tence of a rel-a-tive di-me
+[][]\TU/lmr/bx/n/10 Lemma 1670 \TU/lmr/m/n/10 (Ex-is-tence of a rel-a-tive di-me
 n-sion for a standard-smooth al-ge-bra)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Ev-er
 y standard-
  []
 
 [556] [557] [558] [559] [560] [561] [562]
 Overfull \hbox (0.46176pt too wide) in paragraph at lines 1609--1615
-[][]\TU/lmr/bx/n/10 Lemma 1703 \TU/lmr/m/n/10 (Reg-u-lar-ity prop-a-gates to a 
+[][]\TU/lmr/bx/n/10 Lemma 1705 \TU/lmr/m/n/10 (Reg-u-lar-ity prop-a-gates to a 
 gener-i-sa-tion)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 On an ir-re-ducible scheme 
 $\TU/latinmodern-math.otf(1)/m/n/10 𝑋$\TU/lmr/m/it/10 , a function-
  []
@@ -7333,7 +7333,7 @@ Chapter 29.
 
 Overfull \hbox (5.45633pt too wide) in paragraph at lines 72--78
 \TU/lmtt/m/n/10 [Ring.KrullDimLE 1 (X.presheaf.stalk Y.point)] \TU/lmr/m/n/10 in
--stance ar-gu-ment; af-ter [][]1714[][] lands,
+-stance ar-gu-ment; af-ter [][]1716[][] lands,
  []
 
 [569
@@ -7366,7 +7366,7 @@ U/lmr/m/n/10 . By \TU/lmtt/m/n/10 Ideal.height_eq_primeHeight
 
 
 Overfull \hbox (31.02446pt too wide) in paragraph at lines 308--313
-[]\TU/lmr/m/n/10 By [][]1713[][], $[]\TU/latinmodern-math.otf(1)/m/n/10 (𝒪[]
+[]\TU/lmr/m/n/10 By [][]1715[][], $[]\TU/latinmodern-math.otf(1)/m/n/10 (𝒪[]
 ) = [][](𝑧) = 1$\TU/lmr/m/n/10 . The Math-lib pred-i-cate $[]  \TU/latinmode
 rn-math.otf(1)/m/n/10 1 𝑅$
  []
@@ -7467,7 +7467,7 @@ Chapter 30.
 
 ] [576]
 Overfull \hbox (2.48193pt too wide) in paragraph at lines 156--161
-[][][][]\TU/lmr/m/n/10 By [][]1716[][], $[]\TU/latinmodern-math.otf(1)/m/n/10 (
+[][][][]\TU/lmr/m/n/10 By [][]1718[][], $[]\TU/latinmodern-math.otf(1)/m/n/10 (
 𝑁[])$ \TU/lmr/m/n/10 (resp. $[]\TU/latinmodern-math.otf(1)/m/n/10 (𝑁)$\TU
 /lmr/m/n/10 , $[]\TU/latinmodern-math.otf(1)/m/n/10 (𝑁[])$\TU/lmr/m/n/10 ) is
  the small-est in-dex at which $[][]\TU/latinmodern-math.otf(1)/m/n/10 (𝜅, 
@@ -7476,7 +7476,7 @@ Overfull \hbox (2.48193pt too wide) in paragraph at lines 156--161
 
 
 Overfull \hbox (9.28397pt too wide) in paragraph at lines 183--186
-[][]\TU/lmr/bx/n/10 The-o-rem 1719 \TU/lmr/m/n/10 (Auslander--Buchsbaum for-mula
+[][]\TU/lmr/bx/n/10 The-o-rem 1721 \TU/lmr/m/n/10 (Auslander--Buchsbaum for-mula
 )\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Source: [Stacks Project], tag 090V (proposi
 tion-
  []
@@ -7497,14 +7497,14 @@ m/n/10 (\TU/lmtt/m/n/10 Module.Basis.linearIndependent\TU/lmr/m/n/10 )
 
 
 Overfull \hbox (5.8287pt too wide) in paragraph at lines 417--425
-[][]\TU/lmr/bx/n/10 Lemma 1723 \TU/lmr/m/n/10 (Bridge: $[] \TU/latinmodern-math
+[][]\TU/lmr/bx/n/10 Lemma 1725 \TU/lmr/m/n/10 (Bridge: $[] \TU/latinmodern-math
 .otf(1)/m/n/10 𝑀 = 𝑛 ⇒ [] 𝑀 (𝑛 + 1)$\TU/lmr/m/n/10 )\TU/lmr/bx/n/
 10 .
  []
 
 
 Overfull \hbox (216.34637pt too wide) in paragraph at lines 429--445
-[][]\TU/lmr/bx/n/10 Lemma 1724 \TU/lmr/m/n/10 (Syzygy de-scent of $[]$)\TU/lmr/
+[][]\TU/lmr/bx/n/10 Lemma 1726 \TU/lmr/m/n/10 (Syzygy de-scent of $[]$)\TU/lmr/
 bx/n/10 . [][]\TU/lmr/m/it/10 Source: Math-lib’s $[]$
  []
 
@@ -7530,7 +7530,7 @@ n/10 𝑀 (𝑘 +
 
 
 Overfull \hbox (47.55966pt too wide) in paragraph at lines 462--475
-[][]\TU/lmr/bx/n/10 Lemma 1726 \TU/lmr/m/n/10 (Depth lower bound on the ker-nel of a finite-free sur-jec-tion)\TU/lmr/bx/n/10 . [][][]\TU/lmr/m/it/10 Source: $[]$
+[][]\TU/lmr/bx/n/10 Lemma 1728 \TU/lmr/m/n/10 (Depth lower bound on the ker-nel of a finite-free sur-jec-tion)\TU/lmr/bx/n/10 . [][][]\TU/lmr/m/it/10 Source: $[]$
  []
 
 
@@ -7548,7 +7548,7 @@ Overfull \hbox (2.2036pt too wide) detected at line 678
 
 
 Overfull \hbox (2.0648pt too wide) in paragraph at lines 764--767
-[][]\TU/lmr/bx/n/10 Lemma 1742 \TU/lmr/m/n/10 (Eval-u-a-tion of the el-e-men-tar
+[][]\TU/lmr/bx/n/10 Lemma 1744 \TU/lmr/m/n/10 (Eval-u-a-tion of the el-e-men-tar
 y map)\TU/lmr/bx/n/10 . [][]\TU/lmr/m/it/10 For $\TU/latinmodern-math.otf(1)/m/
 n/10 𝑥 ∈ 𝑅[]$ \TU/lmr/m/it/10 one has $\TU/latinmodern-math.otf(1)/m/n/
 10 𝐸[](𝑥) = [] 𝑖 (𝑥[])$\TU/lmr/m/it/10 :
@@ -7556,7 +7556,7 @@ n/10 𝑥 ∈ 𝑅[]$ \TU/lmr/m/it/10 one has $\TU/latinmodern-math.otf(1)/m/n/
 
 [582] [583] [584] [585]
 Overfull \hbox (10.00632pt too wide) in paragraph at lines 1147--1153
-[]\TU/lmr/m/n/10 Thus [][]1759[][] sup-plies the depth-two in-put needed to ex-t
+[]\TU/lmr/m/n/10 Thus [][]1761[][] sup-plies the depth-two in-put needed to ex-t
 end reg-u-lar func-tions across a codimension-
  []
 
@@ -7668,13 +7668,13 @@ Package rerunfilecheck Info: File `print.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 35781 strings out of 476076
+ 35791 strings out of 476076
  125129,1977958 words of node,token memory allocated
- 13848 words of node memory still in use:
-   7 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 8 sub_mlist, 1 glyph, 3328 attribut
-e, 60 glue_spec, 3328 attribute_list, 2 write nodes
-   avail lists: 2:855,3:512,4:276,5:852,6:86,7:10883,8:220,9:1115,10:27,11:763
- 54237 multiletter control sequences out of 65536+600000
+ 13868 words of node memory still in use:
+   7 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 8 sub_mlist, 1 glyph, 3333 attribut
+e, 60 glue_spec, 3333 attribute_list, 2 write nodes
+   avail lists: 2:845,3:512,4:276,5:852,6:86,7:10883,8:220,9:1115,10:27,11:763
+ 54242 multiletter control sequences out of 65536+600000
  136 fonts using 35505251 bytes
  116i,16n,114p,710b,1172s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/opentype/public/lm/lmsans8-regular.otf></usr/share/texmf
@@ -7697,10 +7697,10 @@ gular.otf></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
 fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/s
 hare/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb>
-Output written on print.pdf (624 pages, 3920077 bytes).
+Output written on print.pdf (624 pages, 3923824 bytes).
 
-PDF statistics: 19152 PDF objects out of 22161 (max. 8388607)
- 11941 compressed objects within 120 object streams
- 3146 named destinations out of 3580 (max. 131072)
+PDF statistics: 19177 PDF objects out of 22161 (max. 8388607)
+ 11953 compressed objects within 120 object streams
+ 3151 named destinations out of 3580 (max. 131072)
  3184 words of extra memory for PDF output out of 10000 (max. 100000000)
 
