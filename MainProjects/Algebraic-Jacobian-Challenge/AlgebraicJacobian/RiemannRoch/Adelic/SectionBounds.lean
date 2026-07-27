@@ -35,8 +35,13 @@ statement is left as a `sorry`.  Under that hypothesis this file derives:
 * `degK_principal_eq_zero` — **principal divisors have residue-weighted degree
   zero**, from the class-invariance of `χ` (`ClassInvariance.lean`).  This is the
   adelic form of the open geometric leaf
-  `Scheme.WeilDivisor.principal_degree_zero`; see §4 for exactly what separates
-  the two.
+  `Scheme.WeilDivisor.principal_degree_zero`.
+* `degK_eq_degree_of_residueDeg_eq_one` and
+  `degree_principal_eq_zero_of_residueDeg_eq_one` — the collapse to the
+  **unweighted** degree when every residue degree is one, and the resulting
+  unweighted principal-degree-zero statement.  Together these reduce the open leaf
+  to the single residue-field fact `[κ(P):k̄] = 1` plus instance plumbing; §4
+  records why the `sorry` is nonetheless left in place.
 * `ell_eq_zero_of_degK_neg` — `deg_k D < 0 ⟹ ℓ(D) = 0` (campaign P4(a)).
 * `degK_add_chi_zero_le_ell` — the Riemann inequality in closed weighted form.
 
@@ -143,6 +148,24 @@ theorem degK_nonneg_of_nonneg {D : X.WeilDivisor}
   rw [degK_eq_sum, Finsupp.sum]
   exact Finset.sum_nonneg fun P _ =>
     mul_nonneg (hD P) (Int.natCast_nonneg _)
+
+/-- **The weighted degree agrees with the geometric degree when every residue
+degree is one.**  `deg_k D = Σ_P D(P)·[κ(P):k]` collapses to
+`Σ_P D(P) = Scheme.WeilDivisor.degree D` as soon as `[κ(P):k] = 1` at every prime
+divisor in the support — which is the case over an algebraically closed base
+field, every closed point of a smooth curve then having residue field `k` itself.
+
+This is the **only** thing separating the adelic `degK_principal_eq_zero` from the
+geometric leaf `Scheme.WeilDivisor.principal_degree_zero`; see §4.  The hypothesis
+is stated pointwise on the support rather than globally so that a caller can
+discharge it where it is actually needed. -/
+theorem degK_eq_degree_of_residueDeg_eq_one {D : X.WeilDivisor}
+    (h1 : ∀ P ∈ (show X.PrimeDivisor →₀ ℤ from D).support, residueDeg k P = 1) :
+    degK k D = Scheme.WeilDivisor.degree D := by
+  rw [degK_eq_sum, Scheme.WeilDivisor.degree, Finsupp.sum, Finsupp.sum]
+  refine Finset.sum_congr rfl fun P hP => ?_
+  rw [h1 P hP]
+  simp
 
 end DegK
 
@@ -323,6 +346,36 @@ theorem degK_eq_of_linearEquivalence
 
 end LedgerNoetherian
 
+section GeometricDegree
+
+variable (k : Type u) [Field k] {X : Scheme.{u}} [IsIntegral X]
+    [IsNoetherian X] [Scheme.IsRegularInCodimensionOne X]
+    [Algebra k X.functionField] [IsConstantField k X] (U₀ U₁ : X.Opens)
+
+/-- **The geometric principal-degree-zero statement, reduced to residue degree
+one.**  `Σ_P ord_P(g) = 0` follows from the closed ledger together with
+`[κ(P):k] = 1` on the support of `div g`.
+
+This makes the reduction of the open leaf `Scheme.WeilDivisor.principal_degree_zero`
+machine-checked rather than merely asserted: the *whole* remaining content of that
+leaf, given the ledger, is the residue-degree-one fact for a smooth proper curve
+over an algebraically closed field.  It is stated here on the adelic hypotheses
+(`Algebra k K(X)`, `IsConstantField`, a 2-affine cover, the ledger) rather than on
+the leaf's own geometric hypotheses, which is why it does not literally close that
+`sorry` — the missing step is instantiating these hypotheses from
+`[IsProper] [SmoothOfRelativeDimension 1] [GeometricallyIrreducible]` over `k̄`,
+together with `residueDeg k̄ P = 1`. -/
+theorem degree_principal_eq_zero_of_residueDeg_eq_one
+    (hledger : ∀ D : X.WeilDivisor, chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
+    {g : X.functionField} (hg : g ≠ 0)
+    (h1 : ∀ P ∈ (show X.PrimeDivisor →₀ ℤ from
+      Scheme.WeilDivisor.principal g hg).support, residueDeg k P = 1) :
+    Scheme.WeilDivisor.degree (Scheme.WeilDivisor.principal g hg) = 0 := by
+  rw [← degK_eq_degree_of_residueDeg_eq_one k h1]
+  exact degK_principal_eq_zero k U₀ U₁ hledger hg
+
+end GeometricDegree
+
 /-! ## §4. `degK_principal_eq_zero` versus the geometric `principal_degree_zero`
 
 `degK_principal_eq_zero` above and the open leaf
@@ -338,29 +391,31 @@ misread as a formality.
   field of constants in sight and no ledger hypothesis.
 
 Over `k̄` the two degrees coincide because every closed point of a smooth curve has
-residue field `k̄`, i.e. `[κ(P):k̄] = 1`.  Bridging them therefore requires
-**exactly one** missing ingredient, which is neither the ledger nor
-class-invariance:
+residue field `k̄`, i.e. `[κ(P):k̄] = 1`.  That collapse is
+`degK_eq_degree_of_residueDeg_eq_one`, and composing it with
+`degK_principal_eq_zero` gives `degree_principal_eq_zero_of_residueDeg_eq_one`:
+the **unweighted** statement, proved, from the ledger plus residue-degree-one.
 
-> `residueDeg k̄ P = 1` for every prime divisor `P` of a smooth proper curve over
-> an algebraically closed `k̄`.
+So the reduction is now machine-checked, and the residue of the open leaf is
+exactly two items, neither of them about divisor theory:
 
-That is a statement about residue fields of closed points (`κ(P)` is a finite
-extension of `k̄`, hence `k̄`), plus the instances placing the geometric
-hypotheses of `principal_degree_zero` in the shape the adelic lane needs: an
-`Algebra k̄ K(C)` structure with `IsConstantField k̄ C.left` (available —
-`Adelic/GateInstances.lean`), the finiteness instances, a 2-affine cover, and the
-closed ledger for that cover.
+1. `residueDeg k̄ P = 1` for every prime divisor `P` of a smooth proper curve over
+   an algebraically closed `k̄` — a statement about residue fields of closed
+   points (`κ(P)` is a finite extension of `k̄`, hence `k̄`);
+2. the instance plumbing that places `principal_degree_zero`'s own geometric
+   hypotheses in adelic shape: an `Algebra k̄ K(C)` with
+   `IsConstantField k̄ C.left` (available — `Adelic/GateInstances.lean`), a
+   2-affine cover, and the closed ledger for that cover.
 
-So the honest statement of where the geometric leaf stands is: it is reducible to
-the closed ledger plus residue-degree-one, **not** open for lack of the divisor
-theory.  The Hartshorne II.6.10 route sketched in its docstring (build
-`φ : C → ℙ¹` from `g` and use multiplicativity of degree under finite pullback) is
-a *different*, heavier proof; the ledger route above is the cheaper one and is the
-route the campaign's P3 milestone anticipated ("byproduct: closes the input to the
-`WeilDivisor.lean` sorry").  The `sorry` is deliberately left in place rather than
-replaced by a chain that would silently import the ledger hypothesis into a
-theorem whose statement does not mention it. -/
+The `sorry` in `WeilDivisor.lean` is deliberately **left in place**.  Replacing it
+with a call to `degree_principal_eq_zero_of_residueDeg_eq_one` would require
+producing the ledger for a cover of `C`, and the ledger is itself not yet a
+theorem here (see §3) — so the substitution would move the gap rather than close
+it, while making a theorem whose statement mentions no hypotheses depend silently
+on one.  The Hartshorne II.6.10 route sketched in that docstring (build
+`φ : C → ℙ¹` from `g`, use multiplicativity of degree under finite pullback) is a
+*different*, heavier proof; the ledger route above is the cheaper one and is what
+the campaign's P3 milestone anticipated. -/
 
 end Adelic
 end AlgebraicGeometry
