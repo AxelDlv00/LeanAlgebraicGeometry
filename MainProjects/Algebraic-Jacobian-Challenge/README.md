@@ -189,12 +189,23 @@ Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
 - [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean): the axiom-frontier
   probe, and the three companion measurements in its header: reachability of the
   headline cone, whether every module on disk is rooted at all, and whether every
-  blueprint proof-level `\leanok` is honest.  The last is a join against the probe's own
-  output rather than a reading pass, because a `\leanok` is a local mark while the defect
-  is transitive — a proof written in Lean is still not proved if it routes through a
-  `sorry`.  An audit by eye reported zero such marks one session before the join found
-  three.  Statement-level marks on `sorry` carriers are a different thing and are
-  legitimate: they claim the signature is formalised.
+  blueprint proof-level `\leanok` is honest.  The last has to be a `#print axioms` join
+  rather than a reading pass, because a `\leanok` is a local mark while the defect is
+  transitive — a proof written in Lean is still not proved if it routes through a `sorry`.
+  Current result: **1073 pinned declarations across 998 proof-level marks = 930 probed +
+  143 `private`, and zero carry `sorryAx`.**  Statement-level marks on `sorry` carriers are
+  a different thing and are legitimate: they claim the signature is formalised.
+
+  Read that check's own history before writing another one, because it is the sharpest
+  cautionary tale in this tree.  Its first version reported three dishonest marks; all
+  three were artifacts of its regex pairing one node's statement with a *later* node's
+  proof, and one of them had already been settled correctly, by reading, in a commit
+  message.  Fixing it exposed **five** separate ways it had been silently examining a
+  strict subset of its domain while printing a clean-looking result — and the last two
+  were found only because the corrected version *asserts* that
+  `probed + unprobeable == pins` and the assertion failed.  The lesson is not "machines
+  beat reading": it is that a mechanical audit needs an arithmetic identity it must
+  satisfy, checked in code, or "it printed 0 defects" means only that it printed.
 - [`blueprint/web/index.html`](blueprint/web/index.html): generated mathematical blueprint.
 - [`analogies/README.md`](analogies/README.md): index to the historical design notes.
 - [`../Algebraic-Jacobian-Challenge-Rebuild/README.md`](../Algebraic-Jacobian-Challenge-Rebuild/README.md):
