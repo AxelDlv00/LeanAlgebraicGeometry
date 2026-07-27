@@ -22,7 +22,7 @@ summary: "THE COVERING OBLIGATION — what makes the atlas carve legitimate rath
   \     assume it.\n (ii) FINITENESS OF THE SUPPORT OVER THE BASE must come from the\
   \ seed's own degree data, NOT from\n     the certificate — otherwise the argument\
   \ is circular. This is the one genuinely load-bearing\n     input of this leaf.\n"
-status: pending
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -44,5 +44,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-26T06:43:01.551170+00:00'
+  updated_at: '2026-07-27T03:51:15.717633+00:00'
   milestone: w4-gate
+  pinned_commits:
+  - c6a47016f

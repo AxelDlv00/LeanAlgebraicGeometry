@@ -52,7 +52,7 @@ summary: 'THE INTERFACE CHANGE (spec-dd-r ADDENDUM 3 §3, repair R1). Restate Is
   making once the twisted charts are known to cover.
 
   '
-status: pending
+status: rejected
 kind: proof
 priority: normal
 depends_on: []
@@ -74,5 +74,5 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-26T06:43:03.579744+00:00'
+  updated_at: '2026-07-27T03:51:18.183450+00:00'
   milestone: w4-gate
