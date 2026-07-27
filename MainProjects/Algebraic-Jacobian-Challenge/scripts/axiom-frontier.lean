@@ -62,7 +62,18 @@ How to read the output.  Every line is one declaration; the only token that matt
 Note the `re.split` rather than a plain line filter: Lean wraps a long axiom list over
 several lines, so a per-line scan misclassifies exactly the declarations whose axiom
 list is longest.  Measured 2026-07-27 on the rooted tree: 105 probed, 69 clean, 36
-carrying `sorryAx`.
+carrying `sorryAx`.  Two declarations were added on 2026-07-28 (§0 leaf B's dimension
+count, §6c the gate at the challenge's own hypothesis bundle), both expected to leak and
+neither yet re-measured through the root path: run the command above rather than adjusting
+this sentence's arithmetic by hand, which is how the previous two counts here went wrong.
+
+One failure mode of this probe that is not a defect in it: `import AlgebraicJacobian` means a
+single red module anywhere in the tree makes the whole frontier unmeasurable, and in a
+workspace with several teams landing in parallel that happens. Distinguish the two shapes
+before concluding anything — `object file ... does not exist` is a transient race with a
+sibling's rebuild and is fixed by re-running `lake build AlgebraicJacobian` first, whereas a
+`timeout at 'whnf'` or an elaboration error is a real red build and the frontier simply
+cannot be quoted until it is green.
 
 Companion measurement 2 — is every module on disk rooted?  A module that nothing
 imports compiles green, is invisible to the root build, and is therefore invisible to
