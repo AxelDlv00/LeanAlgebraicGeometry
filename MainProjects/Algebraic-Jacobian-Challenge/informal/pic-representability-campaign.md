@@ -85,9 +85,13 @@
 > proves `H → C` and `¬H` at every instance anyone would use. The theorem is then
 > true, axiom-clean, consistent, instantiable, non-vacuous by the trap-(c) test,
 > and empty. Measured on `chi_eq_of_bump`'s `hbump` in
-> `RiemannRoch/Adelic/LedgerClosure.lean`, which is refutable at every prime
-> outside the affine cover's overlap (I-0449, lesson I-0451; the catalogue entry
-> with the machine-checked step is §2b of the probe). The check that finds it is
+> `RiemannRoch/Adelic/LedgerClosure.lean`, which is refutable on every cover whose
+> `h¹` is bounded on the anti-effective cone, and outright false at `U₀ = U₁ = ⊤`
+> given one prime divisor (I-0449, I-0454, lesson I-0451; the catalogue entry with
+> the machine-checked steps is §2b of the probe). Note the correction recorded there:
+> the *off-overlap* refutation first claimed for this measured `chi_add`'s own
+> hypotheses rather than `hbump`, and off the overlap `hbump` is in fact equivalent to
+> a single-chart approximation statement. The check that finds it is
 > not a probe at all: read the *producer's* side conditions, and for a hypothesis
 > quantified over a family, ask where the tree derives the negation.
 >
@@ -367,12 +371,18 @@ grep 'declaration uses' | sort -u` (26 over 11 modules).
   The **seventh** was found in the same lane (2026-07-28) and defeats even a consistency
   witness: a hypothesis whose negation the tree *already derives* at the instances that
   matter. `chi_eq_of_bump`'s `hbump` is quantified over every prime divisor, but its only
-  producer requires the prime to lie in the affine cover's overlap, and off the overlap the
-  same file proves the section space unchanged — so the χ-jump is `0` where `hbump` asserts
-  `residueDeg P ≥ 1`. The theorem is true, axiom-clean, consistent (vacuously, on a scheme
-  with no prime divisors), instantiable, and empty at every prime outside the overlap. For a
+  iteration down the anti-effective cone forces `h¹` to grow linearly there, so `hbump` fails
+  on every bounded-`h¹` cover and is outright false at the degenerate cover `U₀ = U₁ = ⊤`
+  once a single prime divisor exists. The theorem is true, axiom-clean, consistent (vacuously,
+  on a scheme with no prime divisors), instantiable, and empty on those covers. For a
   hypothesis quantified over a family, "is it satisfiable" is the wrong question; ask where
   the tree derives the negation (I-0449, I-0454, lesson I-0451, probe §2b).
+
+  One correction is part of the lesson: an *off-overlap* refutation was claimed first and
+  withdrawn. It showed only that `chi_add`'s exactness hypotheses are unsatisfiable off the
+  overlap — a fact about `chi_add`. Establishing that `H` is refutable means deriving `¬H`
+  from premises that are themselves satisfiable; from an inconsistent pair you cannot read
+  off which side is at fault.
 
   The **eighth** is the cheapest to check and belongs first in any audit: a hypothesis
   *equivalent* to the conclusion it is supposed to buy. `hbump` and the closed χ-ledger are

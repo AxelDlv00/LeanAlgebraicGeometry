@@ -300,14 +300,30 @@ takes `hbump : ∀ P E, χ(1·P + E) = χ(E) + residueDeg P`. Iterating it down 
 cone forces `χ(-m·P) = χ(0) - m·[κ(P):k]`, and since `χ = ℓ - h¹` with `ℓ ≥ 0`, `h¹` must grow
 linearly there. So `hbump` is FALSE on every cover whose `h¹` is bounded — and outright false
 at the degenerate cover `U₀ = U₁ = ⊤`, where the Čech `H¹` vanishes identically, as soon as a
-single prime divisor exists. That refutation needs no exactness data at all. A weaker,
-conditional refutation is available at each prime outside the overlap `U₀ ∩ U₁`, where
-`A(1·P + E) = A(E)` makes the local step a subsingleton and the χ-jump `0`.
+single prime divisor exists. That refutation needs no exactness data at all.
 
-So the honest status of `hbump` is: consistent; refutable at `U₀ = U₁ = ⊤` given one prime
-divisor; refutable on every bounded-`h¹` cover; and satisfiable only on covers whose `h¹` is
-unbounded on the anti-effective cone. None of that contradicts the vanishing lane, whose
-results are high-degree only — which is exactly why nobody noticed.
+A CORRECTION, and it is the most instructive part of this entry, because the first version of
+it made exactly the mistake the trap is about. This entry originally claimed a second
+refutation "at each prime outside the overlap `U₀ ∩ U₁`", on the grounds that `A(1·P + E) =
+A(E)` there makes the local step a subsingleton, so `ChiLedger.chi_add` gives a χ-jump of `0`
+against `hbump`'s `residueDeg P ≥ 1`. Every step of that is valid and the conclusion drawn
+from it is wrong: what it measures is that `chi_add`'s own exactness hypotheses are
+UNSATISFIABLE off the overlap — a fact about `chi_add`, not about `hbump`. Off the overlap the
+bump leaves the `U₀` and overlap terms untouched, so the ungated Čech count gives
+`Adelic.chi_add_pointDivisor_of_notMem_left`: the χ-jump is the single-chart step alone, and
+`Adelic.bump_iff_chartStep_of_notMem_left` makes `hbump` at such a `P` EQUIVALENT to that
+chart step being `[κ(P):k]` — an iff, both directions ungated. So off the overlap `hbump` is
+not contradictory at all; its residual content is approximation on one chart.
+
+Honest status of `hbump`: consistent; refutable at `U₀ = U₁ = ⊤` given one prime divisor;
+refutable on every bounded-`h¹` cover; satisfiable only where `h¹` is unbounded on the
+anti-effective cone; and NOT refuted off the overlap. None of that contradicts the vanishing
+lane, whose results are high-degree only — which is why nobody noticed.
+
+The generalisable lesson, worth more than the instance: when a hypothesis `H` and a lemma `L`
+are inconsistent together, that does not tell you which of the two is at fault. Establishing
+that `H` is refutable requires deriving `¬H` from things that are THEMSELVES satisfiable —
+otherwise you have measured `L`.
 
 What defeats each check, in order: `#print axioms` sees a clean line; a consistency witness
 exists (`bump_of_isEmpty_primeDivisor`, on a scheme with no prime divisors); an elaboration
