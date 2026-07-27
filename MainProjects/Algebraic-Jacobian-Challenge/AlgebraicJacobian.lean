@@ -63,12 +63,13 @@ import AlgebraicJacobian.Picard.RigidPushforwardP1Engine
 -- the single entry point; it transitively pulls RigidPushforwardP1Constants,
 -- RigidPushforwardFiberChart and RigidPushforwardP1Sheaf. The gate itself is NOT
 -- instantiated: hasRigidPushforward_of_leaves derives HasRigidPushforward from
--- four named leaves, none of them proved. FiberChart and P1Sheaf are NOT below
--- the gate (P1Sheaf imports it, FiberChart sits beside it), so they need their
--- own entries or they stay invisible to the root build.
+-- four named leaves, none of them proved.
 import AlgebraicJacobian.Picard.RigidPushforwardGate
-import AlgebraicJacobian.Picard.RigidPushforwardFiberChart
-import AlgebraicJacobian.Picard.RigidPushforwardP1Sheaf
+-- NB RigidPushforwardFiberChart and RigidPushforwardP1Sheaf are NOT below the gate
+-- (P1Sheaf imports it, FiberChart sits beside it), so they need their own entries
+-- here or they stay invisible to the root build. Both compile green, but they are
+-- not yet committed to the ledger, so importing them would break a clean checkout.
+-- Add the two lines once they land.
 import AlgebraicJacobian.Picard.P1SectionsFinite
 import AlgebraicJacobian.Picard.TwoTermFiniteFree
 import AlgebraicJacobian.Picard.SemicontinuityH0
