@@ -237,5 +237,107 @@ theorem chi_eq_of_bump (hbump : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
 
 end LedgerFromBump
 
+/-! ## §2. The lane's conclusions with the ledger eliminated
+
+`chi_eq_of_bump` removes `hledger` from every conditional statement of the lane by
+substituting the bump for it.  The restatements below are mechanical, and they matter for
+exactly one reason: they change the lane's open-input count from three to two, and they make
+the two remaining inputs *homogeneous* — both are now one-point statements about the local
+step at a single prime divisor, rather than one one-point statement plus a global identity
+over all divisors.
+
+A caveat this section does **not** claim away.  The bump is not cheap: each instance is one
+application of `chi_add_eq_residueDeg`, which consumes the ledger exact sequence's
+connecting and surjectivity data plus the strong-approximation input `hsurj`.  What has been
+removed is the *separate* quantified-over-all-divisors hypothesis, not the mathematics
+underneath the bump. -/
+
+section LedgerEliminated
+
+variable (k : Type u) [Field k] {X : Scheme.{u}} [IsIntegral X]
+    [IsNoetherian X] [Scheme.IsRegularInCodimensionOne X]
+    [Algebra k X.functionField] [IsConstantField k X] (U₀ U₁ : X.Opens)
+
+/-- **The Riemann inequality from the bump.**  `deg_k D + χ(0) ≤ ℓ(D)`, with the ledger
+eliminated (`degK_add_chi_zero_le_ell` is the form that takes it). -/
+theorem degK_add_chi_zero_le_ell_of_bump
+    (hbump : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
+      chi k U₀ U₁ (pointDivisor P + E) = chi k U₀ U₁ E + residueDeg k P)
+    (D : X.WeilDivisor) :
+    degK k D + chi k U₀ U₁ 0 ≤ (ell k D : ℤ) :=
+  degK_add_chi_zero_le_ell k U₀ U₁ (chi_eq_of_bump k U₀ U₁ hbump) D
+
+/-- **Principal divisors have weighted degree zero, from the bump.**  `deg_k (div g) = 0`
+with the ledger eliminated; `degK_principal_eq_zero` is the form that takes it. -/
+theorem degK_principal_eq_zero_of_bump
+    (hbump : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
+      chi k U₀ U₁ (pointDivisor P + E) = chi k U₀ U₁ E + residueDeg k P)
+    {g : X.functionField} (hg : g ≠ 0) :
+    degK k (Scheme.WeilDivisor.principal g hg) = 0 :=
+  degK_principal_eq_zero k U₀ U₁ (chi_eq_of_bump k U₀ U₁ hbump) hg
+
+/-- **`deg_k` descends to linear-equivalence classes, from the bump.** -/
+theorem degK_eq_of_linearEquivalence_of_bump
+    (hbump : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
+      chi k U₀ U₁ (pointDivisor P + E) = chi k U₀ U₁ E + residueDeg k P)
+    {D D' : X.WeilDivisor} (h : Scheme.WeilDivisor.LinearEquivalence D D') :
+    degK k D = degK k D' :=
+  degK_eq_of_linearEquivalence k U₀ U₁ (chi_eq_of_bump k U₀ U₁ hbump) h
+
+/-- **Bounded `H¹` vanishing from two one-point inputs.**  The lane's headline vanishing
+statement with `hledger` eliminated: the remaining inputs are the base vanishing at one
+divisor and the two one-point local statements (`hbump` and the one-point peel).
+
+This is the form to quote for the single-field clause of cluster P.  Compare
+`exists_bound_subsingleton_h1Mod_of_pointPeel`, which is this statement plus a separate
+ledger hypothesis. -/
+theorem exists_bound_subsingleton_h1Mod_of_bump_of_pointPeel
+    (hbump : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
+      chi k U₀ U₁ (pointDivisor P + E) = chi k U₀ U₁ E + residueDeg k P)
+    (D₀ : X.WeilDivisor) (hbase : Subsingleton (H1Mod k U₀ U₁ D₀))
+    (hstep : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
+      Peel k U₀ U₁ E (pointDivisor P + E)) :
+    ∃ b : ℤ, ∀ D : X.WeilDivisor, b ≤ degK k D →
+      Subsingleton (H1Mod k U₀ U₁ D) :=
+  exists_bound_subsingleton_h1Mod_of_pointPeel k U₀ U₁
+    (chi_eq_of_bump k U₀ U₁ hbump) D₀ hbase hstep
+
+/-- **Riemann–Roch in the vanishing range from the bump**: a threshold past which
+`ℓ(D) = χ(0) + deg_k D` exactly.  With `χ(0) = 1 − g` this is `ℓ(D) = deg_k D + 1 − g` for
+`deg_k D` large, on two one-point inputs plus one base vanishing. -/
+theorem exists_bound_ell_eq_of_bump_of_pointPeel
+    (hbump : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
+      chi k U₀ U₁ (pointDivisor P + E) = chi k U₀ U₁ E + residueDeg k P)
+    (D₀ : X.WeilDivisor) (hbase : Subsingleton (H1Mod k U₀ U₁ D₀))
+    (hstep : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
+      Peel k U₀ U₁ E (pointDivisor P + E)) :
+    ∃ b : ℤ, ∀ D : X.WeilDivisor, b ≤ degK k D →
+      (ell k D : ℤ) = chi k U₀ U₁ 0 + degK k D := by
+  obtain ⟨b, hb⟩ :=
+    exists_bound_subsingleton_h1Mod_of_bump_of_pointPeel k U₀ U₁ hbump D₀ hbase hstep
+  exact ⟨b, fun D hD =>
+    ell_eq_of_bound k U₀ U₁ (chi_eq_of_bump k U₀ U₁ hbump) (hb D hD)⟩
+
+/-- **Global generation from the bump**, uniformly in the point given a residue-degree
+bound `r`.  The ledger is eliminated; the open inputs are the base vanishing and the two
+one-point statements. -/
+theorem exists_bound_forall_generatedAt_of_bump
+    (hbump : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
+      chi k U₀ U₁ (pointDivisor P + E) = chi k U₀ U₁ E + residueDeg k P)
+    (D₀ : X.WeilDivisor) (hbase : Subsingleton (H1Mod k U₀ U₁ D₀))
+    (hpeel : ∀ D' : X.WeilDivisor,
+      (∀ P : X.PrimeDivisor, (show X.PrimeDivisor →₀ ℤ from D₀) P ≤
+        (show X.PrimeDivisor →₀ ℤ from D') P) →
+      Peel k U₀ U₁ D₀ D')
+    (r : ℕ) (hr : ∀ P : X.PrimeDivisor, residueDeg k P ≤ r)
+    [∀ D : X.WeilDivisor, Module.Finite k (sectionSub k ⊤ D)]
+    [∀ P : X.PrimeDivisor, Module.Finite k (localStepTgt k P 1)] :
+    ∃ b : ℤ, ∀ D : X.WeilDivisor, b ≤ degK k D →
+      ∀ P : X.PrimeDivisor, GeneratedAt k D P :=
+  exists_bound_forall_generatedAt k U₀ U₁ (chi_eq_of_bump k U₀ U₁ hbump)
+    D₀ hbase hpeel r hr
+
+end LedgerEliminated
+
 end Adelic
 end AlgebraicGeometry
