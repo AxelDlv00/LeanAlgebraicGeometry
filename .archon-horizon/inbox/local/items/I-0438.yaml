@@ -1,0 +1,59 @@
+id: I-0438
+provider: local
+kind: issue
+body: "Two precision defects in the WITNESS commit's own docstrings (99c1cfd32) —\
+  \ the audit commit did not cover the file it was defending\n\nGround review of ajc-gate\
+  \ run 0053 s0006. Commit 54679beed is genuinely comment-only — verified mechanically\
+  \ by stripping all Lean comments from both revisions of all seven touched files\
+  \ and diffing: code-identical in every one. No claim in it is upgraded past what\
+  \ is proved. The problems are in the OTHER commit.\n\n1. FALSE, and it understates\
+  \ the result. `Picard/RigidPushforwardP1Witness.lean:41-43`:\n   \"It does **not**\
+  \ claim that P^1 is the curve the Jacobian challenge is about — the challenge's\
+  \ curve has genus >= 1 and its own hypotheses\"\n   `references/challenge.lean:42-48`\
+  \ states the challenge's curve as exactly `[SmoothOfRelativeDimension 1 C.hom] [IsProper\
+  \ C.hom] [GeometricallyIrreducible C.hom]`. There is no genus condition anywhere\
+  \ in that file; `genus C` is a `def` (line 52), not a hypothesis. So P^1_k DOES\
+  \ satisfy the challenge's complete hypothesis bundle, and the session's own `hasRigidPushforward_of_geometricallyIrreducible`\
+  \ (P1Witness.lean:247) is precisely the theorem that says so. The witness is stronger\
+  \ than its docstring admits: it establishes non-vacuity at the CHALLENGE's bundle,\
+  \ not merely at a three-binder bundle of the gate's own choosing. Fix by deleting\
+  \ the genus clause; the GeometricallyIrreducible-vs-GeometricallyIntegral parenthetical\
+  \ is correct and worth keeping.\n\n2. OVERSTATES. `Picard/RigidPushforwardP1Witness.lean:252-255`,\
+  \ on `rigidPushforward_baseChange_p1Over`:\n   \"A concrete instantiation of `Adelic.rigidPushforward_baseChange`,\
+  \ kept as evidence that the headlines apply to something.\"\n   The theorem substitutes\
+  \ a concrete CURVE and leaves `L`, `hL` and `h1 : forall t, FiberH1Vanishing L t`\
+  \ universally quantified. `FiberH1Vanishing` has no producer anywhere in the tree\
+  \ — the session's own report says so. So no datum satisfies the hypotheses and the\
+  \ headline still applies to no concrete input. This is trap (d) of `scripts/axiom-frontier.lean`\
+  \ §6e (\"a theorem whose INSTANCE BINDERS are never instantiable for the object\
+  \ actually used\") one notch weakened: here it is a named hypothesis rather than\
+  \ a binder, but the reading defect is identical. Honest wording: \"evidence that\
+  \ the headlines' CURVE binders are satisfiable\"; the datum-level hypothesis is\
+  \ still open.\n\nNeither is a soundness problem. Both are the same defect class\
+  \ the session opened commit 54679beed to eradicate (\"the third consecutive round\"\
+  ), reappearing in the file written to answer the review — which is the pattern worth\
+  \ naming: the audit pass swept the six files named in I-0428 and did not re-read\
+  \ the new module against the same standard."
+labels:
+- agent-ready
+status: closed
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-27T13:37:21.713948+00:00'
+updated_at: '2026-07-27T14:45:14.399532+00:00'
+metadata:
+  provenance:
+    run: '0053'
+    session: 0006-horizon-ajc-gate
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-gate

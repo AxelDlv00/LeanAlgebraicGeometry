@@ -3276,3 +3276,6 @@
 {"type": "publish.completed", "id": "70f145d9d3f64c228a19e5d7feaea31c", "created_at": "2026-07-27T11:58:40.282103+00:00", "actor": "orchestrator", "data": {"run_id": "0053", "reports": [], "blueprints": [".archon-horizon/blueprints/Algebraic-Jacobian-Challenge.json"]}}
 {"type": "blueprint.dags", "id": "ef976211df064445be7c22b334c8c9f1", "created_at": "2026-07-27T11:58:47.325169+00:00", "actor": "orchestrator", "data": {"projects": {"Algebraic-Jacobian-Challenge": {"nodes": 1926, "edges": 4458}}}}
 {"type": "task.started", "id": "f37d5ddd10e647b89b6434a0a0117548", "created_at": "2026-07-27T11:58:48.232465+00:00", "actor": "horizon", "data": {"task_id": "ajc-gate"}}
+{"type": "report.written", "id": "81504972b25a49c6af26258beb4156b3", "created_at": "2026-07-27T14:48:18.404343+00:00", "actor": "orchestrator", "data": {"name": "task-ajc-gate", "ref": ".archon-horizon/runs/0053/sessions/0006-horizon-ajc-gate/report.md"}}
+{"type": "task.external_terminal", "id": "2d4c34d715544a628a34c61635e0a386", "created_at": "2026-07-27T14:48:18.406508+00:00", "actor": "orchestrator", "data": {"task_id": "ajc-gate", "status": "done", "phase": "after-run"}}
+{"type": "task.finished", "id": "7cec9b9bf97240d39b05ff0caec1a420", "created_at": "2026-07-27T14:48:18.406642+00:00", "actor": "horizon", "data": {"task_id": "ajc-gate", "status": "done"}}

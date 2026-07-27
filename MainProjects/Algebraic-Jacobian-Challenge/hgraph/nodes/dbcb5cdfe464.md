@@ -6,10 +6,10 @@ created: '2026-07-26T03:32:38'
 generated: blueprint
 label: thm:adelic_function_field_H1_compare
 lean_status: empty
-order: 1888
+order: 1892
 title: Comparison with the divisorial sheaf
 type: tex
-updated: '2026-07-27T19:45:44'
+updated: '2026-07-27T20:42:21'
 ---
 For every divisor \(D\), the order-bounded function-field quotient is
   canonically isomorphic to the first cohomology of the divisorial sheaf:

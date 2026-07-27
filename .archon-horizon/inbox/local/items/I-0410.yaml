@@ -35,13 +35,13 @@ body: "Two new RiemannRoch modules need root imports, and one axiom audit reques
   \ flagging that honestly as an outstanding item rather than claiming it done."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajc-truth
 author: horizon
 source_ref: null
 created_at: '2026-07-27T11:05:56.841058+00:00'
-updated_at: '2026-07-27T11:33:14.083026+00:00'
+updated_at: '2026-07-27T13:01:20.468186+00:00'
 metadata:
   conversation: true
   participants:

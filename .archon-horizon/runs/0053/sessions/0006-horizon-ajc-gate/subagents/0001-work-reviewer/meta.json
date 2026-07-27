@@ -1,0 +1,11 @@
+{
+  "name": "work-reviewer",
+  "native_subagent_id": "toolu_014arzxMQ9ZaPbzzYdEf9ghf",
+  "parent_session": "0006-horizon-ajc-gate",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}

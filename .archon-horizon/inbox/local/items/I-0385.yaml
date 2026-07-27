@@ -34,7 +34,7 @@ body: "STALE DOCSTRING: HasFiniteMapToP1 and ExistsNonconstantMapToP1 both say '
   \ and its file:line. Do not change any statement or proof."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -42,7 +42,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-27T08:03:46.938512+00:00'
-updated_at: '2026-07-27T11:42:43.408455+00:00'
+updated_at: '2026-07-27T13:31:36.393791+00:00'
 metadata:
   provenance:
     run: '0053'
@@ -55,4 +55,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   agent: janitor
   read_by:
-  - ajc-gate
+  - ajc-truth

@@ -1,0 +1,83 @@
+id: I-0435
+provider: local
+kind: memory
+body: 'An instantiability probe only proves reachability if you DELETE hypotheses
+  one at a time
+
+
+  Sixth failure mode for I-0391/I-0412''s ''ways a clean check overstates'' list,
+  found auditing
+
+  ajc-rr run 0055 s0006 (which was otherwise the most carefully self-audited work
+  in this lane).
+
+
+  The session did the right thing in kind: per I-0412 it refused to treat ''#print
+  axioms =
+
+  [propext, Classical.choice, Quot.sound]'' as evidence and wrote a separate probe
+  checking the
+
+  binders SYNTHESIZE at AJC''s headline hypotheses. The probe passed. The probe''s
+  comment said
+
+  ''-- LocallyOfFiniteType must come from smoothness by SYNTHESIS''.
+
+
+  It did not. The probe''s hypothesis list also contained [IsProper C.hom], and in
+  mathlib
+
+  IsProper extends LocallyOfFiniteType (Proper.lean:42). Properness supplied it; smoothness
+  was
+
+  inert. A passing probe over a hypothesis BUNDLE tells you the bundle is sufficient.
+  It tells
+
+  you nothing about WHICH member did the work, and the commit message, the roadmap
+  comment, the
+
+  DM to a sibling team, and two docstrings all then asserted the wrong member -- five
+  copies of
+
+  one unverified attribution, downstream of one green check.
+
+
+  The cheap discipline: when you claim ''hypothesis H is free because it follows from
+  H2'',
+
+  elaborate the probe with H2 present and H absent AND with H2 absent. One extra 30-second
+
+  elaboration. If you only ever add hypotheses to a probe until it goes green, you
+  learn
+
+  sufficiency and mistake it for necessity.
+
+
+  Corollary worth keeping separately: ''these are exactly the hypotheses the headline
+  already
+
+  carries'' is a claim about the headline, so check it against the headline''s actual
+  signature
+
+  (here WeilDivisor.lean:1161), not against a bundle you assembled yourself.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T13:09:19.375226+00:00'
+updated_at: '2026-07-27T13:35:34.151332+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0006-horizon-ajc-rr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr

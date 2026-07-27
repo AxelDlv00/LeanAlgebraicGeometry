@@ -1,0 +1,23 @@
+Audit the work of task `ajc-gate`, run 0053 session 0006, in the Archon Horizon workspace at /home/axel/LeanAlgebraicGeometry-Horizon (project MainProjects/Algebraic-Jacobian-Challenge).
+
+The ledger git is:
+  git --git-dir /home/axel/LeanAlgebraicGeometry-Horizon/.archon-horizon/vcs/workspace.git --work-tree /home/axel/LeanAlgebraicGeometry-Horizon
+The two commits to audit are d6bfd59be and f4a56a754 (one new file, AlgebraicJacobian/Picard/RigidPushforwardGammaBaseChange.lean). Read the previous session's report at .archon-horizon/runs/0053/sessions/0004-horizon-ajc-gate/report.md for what the frontier was.
+
+THE CLAIM BEING AUDITED, precisely: `Scheme.HasRigidPushforward` (declared in AlgebraicJacobian/Picard/RigidPushforward.lean:373) previously had NO producer anywhere in the tree, and the campaign gate cost one open statement, `Adelic.RigidPushforwardGammaBaseChange`. This session claims to have (a) proved that statement, (b) turned the class into a global instance `Adelic.instHasRigidPushforwardOfCurve` for a smooth-proper-geometrically-integral curve over a field, (c) shown all six new declarations are axiom-clean.
+
+Your job is to be SKEPTICAL and CONCRETE. Specifically check, and report a verdict on each:
+
+1. Is the proof genuinely sorry-free end to end, including everything it depends on? Run `#print axioms` yourself in a scratch file (`lake env lean /tmp/yourfile.lean` from the project dir) and do not take my word for it. Note that the tree DOES contain real sorries (Picard/FGAPicRepresentability.lean instHasPicScheme, Cohomology/CechHigherDirectImageUnconditional.lean pullback_preservesFiniteLimits) that leak through typeclass synthesis elsewhere — verify none of them is reachable from the new declarations.
+
+2. Is the instance NON-VACUOUS? This is the most important question. The instance binders are `[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]` on `C : Over (Spec (CommRingCat.of k))`. Is there any object in the tree (or constructible in mathlib v4.31) satisfying all three — e.g. is `Adelic.p1Over k` one? If NOTHING satisfies them, the instance is worthless. Also check whether `[HasFiniteMapToP1 C]`, which the proof uses, really synthesizes from those three, or whether it is itself a producer-less gate that silently makes everything vacuous.
+
+3. Did the proof RELOCATE the gap rather than close it? Read the chain: rigidPushforwardGammaBaseChange_proved -> p1Cech_h0_baseChange_of_fibrewise_h1_vanishing_of_isIntegral (Picard/RigidPushforwardP1Constants.lean) -> ... Check every hypothesis it discharges is discharged by a real theorem and not by another producer-less class or a `Prop`-valued gate. In particular, is `p1CechFibrewiseBridge_proved` real? Is `pushforward_finiteMapToP1BaseChange_fiberH1` real?
+
+4. THE STATEMENT-CORRECTNESS QUESTION. `Adelic.RigidPushforwardGammaBaseChange` (Picard/RigidPushforwardAffineDescent.lean:429) is an existential `∃ s, (values on simple tensors) ∧ Bijective s`. Its docstring argues this is not a loophole because `s` is additive and simple tensors generate. Verify that argument holds. Then check the OTHER direction: does `Adelic.rigidPushforwardBaseChange_of_gamma` really derive `Scheme.RigidPushforwardBaseChange C A` from it, and is `isIso_pushforwardBaseChangeMap_appTop_of_bijective`'s stated caveat ("the square is only assumed to commute, so all the content sits in hbij") respected — i.e. in the application, is the square actually cartesian?
+
+5. Is the new §1 theorem `exists_gammaBaseChange_of_kerPure` correctly stated? Its `hker` hypothesis quantifies over EVERY `Γ(Y,⊤)`-algebra B. Is that hypothesis actually satisfiable/satisfied in the application (I derive it from `bijective_kerBaseChange_of_surjective` + flatness)? Is the flatness instance I install the same one `bijective_kerBaseChange_of_surjective` consumes, or did I install an ambient instance that is propositionally-but-not-definitionally the right one and thereby prove something weaker?
+
+6. Are the docstrings honest? The previous session's report says two audit rounds found six overstatements in its own docstrings. Hold mine to the same standard — flag anything stated more strongly than proved. In particular I claim "correction 4's congruence helper turns out to be unnecessary" and "the two fields of the gate are not independent"; check both.
+
+Do not fix anything (you are read-only on source). Report a clear PASS/FAIL per item with file:line evidence, and file inbox issues for anything real. Be concrete: if you think something is wrong, say exactly which line and what the counterexample or missing step is.

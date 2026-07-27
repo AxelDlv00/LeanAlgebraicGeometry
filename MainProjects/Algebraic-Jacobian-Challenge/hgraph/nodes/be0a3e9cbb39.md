@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: chart_smul_baseMap_res
 type: lean
-updated: '2026-07-27T19:54:25'
+updated: '2026-07-27T19:58:33'
 ---
    lemma chart_smul_baseMap_res {f' : X' ⟶ Y'} {g' : X' ⟶ X} (M : X.Modules)
        {W W₀ : X.Opens} {W'' : X'.Opens}
@@ -62,10 +62,17 @@ rediscover them:
    (`Picard/RigidPushforwardFiberChart.lean`:508-518) is about the whole Čech complex and
    carries the `Algebra` binder plus **three** `baseSectionsModule` binders (`U₁`, `U₂`,
    `U₁ ⊓ U₂` — there is no `⊤` binder); a statement about a *single* chart needs the `Algebra`
-   binder plus **one**, at that chart.  (An earlier draft of this paragraph said "four binders,
-   not the `Algebra` binder", which describes neither lemma; corrected after a fresh-context
-   review checked it against the source.)  Either way: write the statement with a placeholder
-   body and get it to elaborate first — that is where the time goes.
+   binder plus **one**, at that chart; and the kernel comparison
+   `exists_kerChartTensorEquiv` (`Picard/RigidPushforwardChartBaseChange.lean`) needs **seven**
+   — the `Algebra` binder, three on `X`, three on `X'`.  (An earlier draft of this paragraph
+   said "four binders, not the `Algebra` binder", which describes none of them; corrected after
+   a fresh-context review checked it against the source, and the counts above are measured.)
+   Two traps found while writing the seven-binder version: instance search does **not** see
+   `g' ⁻¹ᵁ 𝒰.U₁` as `(𝒰.preimage g').U₁`, so the target-side binders must be spelled with
+   `(𝒰.preimage g').Uᵢ`; and after `TensorProduct.induction_on` a goal that is syntactically
+   `X = X` may still need an explicit `rfl`, because the two sides carry different-but-defeq
+   module instances from the `letI` dictionary.  Either way: write the statement with a
+   placeholder body and get it to elaborate first — that is where the time goes.
 
 3. **The glue to §3 is not free.**  §3's map lives on the tensor product formed with the
    *native* pushforward module structure (that is what

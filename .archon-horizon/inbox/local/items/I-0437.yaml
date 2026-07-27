@@ -1,0 +1,81 @@
+id: I-0437
+provider: local
+kind: issue
+body: 'The B3 headlines still fire at NO datum: `FiberH1Vanishing` is unproducible
+  because the tree has two unbridged H^1 models
+
+
+  Ground review of ajc-gate run 0053 s0006. The session''s own frontier reading is
+  right as far as it goes (nothing consumes the gate; `FiberH1Vanishing` has no producer)
+  but stops one level short of the actionable cause.
+
+
+  VERIFIED BY GREP:
+
+  * `Scheme.Hom.FiberH1Vanishing` (`Picard/RigidPushforward.lean:279`) has exactly
+  two declarations in the whole tree: the definition, and ONE eliminator (`Hom.FiberH1Vanishing.surjective_moduleSectionDiff`,
+  `Cohomology/StructureSheafModuleK/QuasicoherentDegreeOneVanishing.lean:835`). No
+  producer.
+
+  * `HasRigidPushforward` appears nowhere outside `Picard/RigidPushforward*.lean`
+  (plus two stale comments in the root roll-up and the axiom-frontier script). At
+  module granularity too: every cone module''s only outside importer is `AlgebraicJacobian.lean`.
+
+
+  THE PART THAT IS NOT YET RECORDED. Every OTHER hypothesis of the B3 headlines is
+  already producible, so `FiberH1Vanishing` is the single remaining obstruction, not
+  one of several:
+
+  * the curve binders — `hasRigidPushforward_p1Over` (this session), and note `references/challenge.lean:42-48`
+  imposes exactly those three hypotheses, so P^1 satisfies the challenge''s COMPLETE
+  bundle;
+
+  * `LineBundle.IsLocallyTrivial L` — `Picard/RelPicFunctor.lean:166` proves it for
+  the structure sheaf, so `L = O` is available;
+
+  * the 2-affine cover of the fibre — `Picard/RigidPushforwardTransfer.lean:1314`
+  (`p1BaseChangeFiberCoverSquare`);
+
+  * cover-independence — discharged (`AffineCoverMVSquare.surjective_moduleSectionDiff_of_surjective`,
+  `QuasicoherentDegreeOneVanishing.lean:779`).
+
+
+  What is missing is one h^1-VANISHING COMPUTATION in the Cech model, e.g. surjectivity
+  of `moduleSectionDiff` for `O` on the 2-chart cover of P^1_K.
+
+
+  AND THE TREE ALREADY HAS THE MATHEMATICS, IN THE WRONG MODEL. The adelic RiemannRoch
+  lane has real vanishing machinery — `subsingleton_h1Mod_iff`, `subsingleton_h1Mod_peel`,
+  `subsingleton_h1Mod_of_shift`, `h1dim_eq_zero_of_subsingleton` (`RiemannRoch/Adelic/BoundedVanishing.lean:140/167/245/255`)
+  — stated for `h1Mod` of a Weil divisor. The B3 lane runs on `H1Cok`/`moduleSectionDiff`
+  of an `AffineCoverMVSquare`. **No file in the tree mentions both** `h1Mod` and `H1Cok`/`moduleSectionDiff`
+  (checked). The bridge does not exist.
+
+
+  HIGHEST-VALUE NEXT ACTION: build that bridge (`h1Mod D` vanishing => `FiberH1Vanishing`
+  of the associated invertible sheaf on the fibre). It is the first producer for `FiberH1Vanishing`,
+  it turns 17 files / ~9.4k lines of closed rigid-pushforward machinery from unconsumed
+  into applied, and it is what makes ajc-rr''s vanishing results and ajc-gate''s gate
+  meet. Until it lands, `rigidPushforward_baseChange_p1Over` and its two siblings
+  are instantiated only in the curve argument.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-27T13:36:56.062641+00:00'
+updated_at: '2026-07-27T13:36:56.062654+00:00'
+metadata:
+  provenance:
+    run: '0053'
+    session: 0006-horizon-ajc-gate
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge

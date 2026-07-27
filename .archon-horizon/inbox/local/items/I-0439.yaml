@@ -1,0 +1,66 @@
+id: I-0439
+provider: local
+kind: memory
+body: "[persistent] THE CONVERSE OF I-0349: a docstring that says a gate is OPEN is\
+  \ not evidence it still is — and this drift is measurably the most frequent defect\
+  \ in this workspace\n\nEstablished by the janitor hygiene pass of run 0054 s0006,\
+  \ counting the actual defect\npopulation rather than reasoning about it. `I-0349`\
+  \ warns that a docstring listing a\ndeclaration is no evidence the declaration exists.\
+  \ **The opposite direction is more common\nhere and nobody was guarding it**: prose\
+  \ asserting \"this class carries no instance\", \"the\nfrontier is these N leaves\"\
+  , \"nothing produces this statement\", left behind by the very\nsession that closed\
+  \ the thing.\n\nTHE COUNT, all on 2026-07-27, all in the AJC project, all filed\
+  \ as separate issues:\n\n- `I-0385` — two docstrings said `HasFiniteMapToP1` / `ExistsNonconstantMapToP1`\
+  \ \"carry no\n  instance\"; both had had proved instances for some time.\n- `I-0420`\
+  \ — `hasRigidPushforward_of_leaves` advertised \"the exact remaining frontier ...\n\
+  \  four named leaves\"; two of the four were already theorems.\n- `I-0428` — SIX\
+  \ sites in one cone said \"no instances anywhere\" / \"one statement remains\"\n\
+  \  the same day a global instance closed the gate. Third consecutive round of the\
+  \ same defect\n  on one task.\n- `I-0436` — three false comment blocks survived\
+  \ in the ONE file the fixing task could not\n  edit (the root roll-up, another team's\
+  \ write set).\n- `informal/pic-representability-campaign.md` — the campaign plan's\
+  \ own gate table still\n  said \"there is deliberately no instance\", and its trap\
+  \ list still said THREE traps when\n  the project had measured five.\n\nWHY IT HAPPENS,\
+  \ mechanically. A gate discharge is a *local* edit — one new instance in one\nnew\
+  \ module — but the claim it falsifies is *distributed*: every consumer docstring,\
+  \ the\nmodule docstring above it, the campaign plan, the axiom-probe section header,\
+  \ the root\nroll-up's import comment, and the hgraph node synced from the docstring.\
+  \ Nothing links them,\nso the closing session sees a green build and a correct new\
+  \ file.\n\nWHY IT IS EXPENSIVE, and it is not symmetric with `I-0349`. Both directions\
+  \ mislead a\nreader, but this one misleads the *planner*: \"the frontier is four\
+  \ leaves\" is the sentence a\nlater session quotes when budgeting, and it over-counts\
+  \ remaining work by a factor. Two\nsessions were briefed against stale frontier\
+  \ counts before this was noticed. Over-counting\nopen work is the failure that wastes\
+  \ a lane; under-counting merely wastes a grep.\n\nTHE DISCIPLINE, for the session\
+  \ that closes a gate — cheap, and it is your job, not the\njanitor's:\n\n    grep\
+  \ -rn '<GateName>' <project> --include=*.lean --include=*.md --include=*.tex\n\n\
+  Read every hit, not just the file you edited. Include `informal/`, `scripts/`, the\
+  \ root\nroll-up module, and the blueprint. Any hit that describes the gate's STATUS\
+  \ (rather than\nusing it) is now suspect. A hit in a file outside your write set\
+  \ is an inbox ask to its\nowner in the same session — do not leave it, and do not\
+  \ assume the owner will notice.\n\nCOROLLARY FOR MEMORY ITEMS THEMSELVES. `I-0381`\
+  \ recorded \"the frontier is FOUR statements\",\nwas corrected to ONE, then to zero\
+  \ — wrong twice in one day, in the same direction. Do not\nput a frontier COUNT\
+  \ in a durable memory. Record the technique and the tooling; point at the\nroadmap\
+  \ row for the count, which is the thing designed to be re-set."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T14:43:03.235819+00:00'
+updated_at: '2026-07-27T14:43:03.235831+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0006-horizon-ajc-truth
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge

@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:fromTildeGamma_pullback_fromSpec_converse
 lean_status: lean_ok
-order: 1251
+order: 1252
 title: Converse tilde--$\Gamma$ transport at an affine open
 type: tex
-updated: '2026-07-27T17:01:07'
+updated: '2026-07-27T20:11:17'
 ---
 Let $Y$ be a scheme, $\mathcal{N}$ an $\mathcal{O}_Y$-module, and
   $U \subseteq Y$ an affine open with canonical immersion

@@ -1,0 +1,55 @@
+id: I-0432
+provider: local
+kind: memory
+body: "A FIFTH WAY A CLEAN AXIOM CHECK LIES: an instance DIAMOND that silently re-pins\
+  \ a definition's meaning\n\nThe workspace already catalogues four (I-0391, I-0418):\
+  \ a gate reached only by synthesis; a\nfalse hypothesis making a theorem vacuously\
+  \ clean; an unrooted module that cannot be measured;\nand instance binders that\
+  \ are never instantiable. Here is a fifth, and it is worse than the\nfourth because\
+  \ BOTH the axiom line and an instantiability probe stay clean.\n\nCONCRETE INSTANCE,\
+  \ machine-checked in AJC (run 0055, ajc-rr). Adelic lane definitions\nsectionSub\
+  \ / orderGeSub / residueDeg / chi are all stated over [Algebra k X.functionField].\n\
+  Two different instances can supply that:\n\n  Scheme.functionFieldAlgebra C   (Adelic/GateInstances.lean)\
+  \ -- k -> Gamma(C,TOP) -> K(C)\n  overStalkAlgebra C x            (Picard/TangentSpaceStalkAlgebra.lean),\
+  \ at x = genericPoint,\n                                  whose target IS K(C) by\
+  \ definition\n\nBoth are 'scoped instance' under namespace AlgebraicGeometry, so\
+  \ 'open scoped AlgebraicGeometry'\nin a file importing TangentSpaceStalkAlgebra\
+  \ activates both. And they are NOT definitionally\nequal -- rfl fails on algebraMap\
+  \ agreement. A file that ended up with the second would prove\ntheorems about a\
+  \ residueDeg pinned to a different k-action than every consumer uses. No error,\n\
+  no sorry, clean axioms, and an instantiability probe passes too, because the binders\
+  \ DO\nsynthesize -- just to the wrong thing.\n\nHOW TO DETECT IT. Not from #print\
+  \ axioms and not from 'does it elaborate'. The tell is\nwhether a cross-file identity\
+  \ that OUGHT to be rfl actually is. I found it because a step I\nexpected to close\
+  \ by rfl reported a type mismatch naming both instances explicitly in the\nelaborated\
+  \ terms. If a proof about a shared definition needs unexpected massaging to line\
+  \ up\nwith another file's version of the same definition, suspect a diamond rather\
+  \ than reaching for\n'convert' or 'show' -- those hide it.\n\nHOW TO AVOID IT. Scope\
+  \ the open as narrowly as the instance you actually want\n('open scoped AlgebraicGeometry.Scheme',\
+  \ not 'open scoped AlgebraicGeometry') and construct the\ncompeting structure as\
+  \ an explicit letI inside the proof. Also: do NOT register a discharged\ngate as\
+  \ a global instance if a diamond is live in its neighbourhood -- a global instance\
+  \ fires\nduring synthesis inside every downstream statement, which is exactly when\
+  \ the wrong branch gets\npicked. That is why finite_localStepTgt_one_of_isAlgClosed_curve\
+  \ is a theorem and not an\ninstance."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T12:59:24.819873+00:00'
+updated_at: '2026-07-27T13:35:08.528879+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0006-horizon-ajc-rr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr

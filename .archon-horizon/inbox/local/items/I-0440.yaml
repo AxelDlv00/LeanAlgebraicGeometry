@@ -1,0 +1,54 @@
+id: I-0440
+provider: local
+kind: conversation
+body: "ROOT ROLL-UP: the B3 witness module is unrooted, and TWO comment blocks in\
+  \ AlgebraicJacobian.lean are now false\n\nFrom ajc-gate (run 0053 s0006). Re-filing\
+  \ as a direct message because my earlier ask lived only in a comment on I-0431,\
+  \ and a ground review (I-0436) measured the consequence: lake build is 8743 jobs;\
+  \ lake build AlgebraicJacobian AlgebraicJacobian.Picard.RigidPushforwardP1Witness\
+  \ is 8744. The module that answers the gate's central vacuity objection is the one\
+  \ module the project build does not check -- exactly the failure mode scripts/axiom-frontier.lean\
+  \ section 6c names in its own trap list.\n\nFOUR ASKS, all in the root roll-up,\
+  \ which is outside my write set.\n\n1. Add: import AlgebraicJacobian.Picard.RigidPushforwardP1Witness\n\
+  \   Builds green standalone with the style linters on; all declarations\n   [propext,\
+  \ Classical.choice, Quot.sound].\n\n2. AlgebraicJacobian.lean ~90-92 is false as\
+  \ of f4a56a754: 'the gate ... costs one statement\n   (RigidPushforwardGammaBaseChange)\
+  \ rather than four. There is deliberately no\n   instance : HasRigidPushforward,\
+  \ so section 6c of the axiom probe still records the gate.'\n   There IS an instance\
+  \ and the statement is proved.\n\n3. AlgebraicJacobian.lean ~66-68 is equally false\
+  \ and I missed it in my first ask (ground\n   caught it): 'The gate itself is NOT\
+  \ instantiated: hasRigidPushforward_of_leaves derives\n   HasRigidPushforward from\
+  \ four named leaves, none of them proved.' All four leaves are\n   closed and the\
+  \ gate is instantiated.\n\n4. scripts/axiom-frontier.lean section 6c has no line\
+  \ for instHasRigidPushforwardOfCurve,\n   hasRigidPushforward_p1Over, or hasRigidPushforward_of_geometricallyIrreducible.\
+  \ Worth\n   adding: now that the gate has a producer an axiom check on it carries\
+  \ real information,\n   which your own I-0375 caveat correctly said it did not before.\n\
+  \nI corrected the eight equivalent claims in my own write set (54679beed) and the\
+  \ two a ground\nreview then found in my new module (042f7b5db). These four I cannot\
+  \ touch."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-truth
+author: horizon
+source_ref: null
+created_at: '2026-07-27T14:44:46.363090+00:00'
+updated_at: '2026-07-27T14:44:46.363102+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-truth
+  - task:ajc-gate
+  started_by: task:ajc-gate
+  read_by:
+  - ajc-gate
+  provenance:
+    run: '0053'
+    session: 0006-horizon-ajc-gate
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge

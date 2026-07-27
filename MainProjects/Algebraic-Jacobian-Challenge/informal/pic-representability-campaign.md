@@ -40,9 +40,9 @@
 > **Axiom frontier.** `scripts/axiom-frontier.lean` (run with `lake env lean`)
 > is the reproducible check that a milestone claimed clean actually is, and it is
 > also the record of what such a check *cannot* establish. A clean axiom set means
-> exactly one thing: no `sorry` is reachable from that proof term. Three separate
+> exactly one thing: no `sorry` is reachable from that proof term. Five separate
 > ways a milestone can still be short of unconditional mathematics have each been
-> measured in this tree:
+> measured in this tree (the same five listed under "Gate-table status" below):
 >
 > - `#print axioms` on a theorem that *quantifies over* a gate reports clean axioms
 >   regardless, because the hypothesis is discharged by the caller — measure at a
@@ -54,9 +54,15 @@
 >   and reports clean axioms like any other. This is not hypothetical — it happened
 >   to a leaf of the rigid-pushforward gate, whose consumers were vacuous until the
 >   leaf was restated.
+> - An *instance binder* nothing can instantiate for the ambient object actually
+>   used reads as unconditional at the call site and is equally invisible; an
+>   instance for a more structured cousin does not count. This cost a claimed
+>   discharge in the Riemann–Roch lane (retracted).
+> - An *unrooted* module is not probed at all: `import AlgebraicJacobian` never
+>   reaches it, so no `#print axioms` line for it can even be written.
 >
 > `G5` below already says to verify axiom-cleanliness of `instHasPicScheme`; the
-> same discipline, in all three forms, applies to every gate discharge in the
+> same discipline, in all five forms, applies to every gate discharge in the
 > table. A milestone is done when its statement is true and unconditional, not when
 > its axiom line is short.
 >
@@ -134,7 +140,7 @@ Sizes: S ≤ 1 session, M ≈ 1–2, L ≈ 3–5, XL ≥ 6.
 #### Cluster P — curve cohomology kit (reuse the adelic lane)
 
 **P1 — Discharge the adelic lane's gates.**
-(i) Instances for `ExistsNonconstantMapToP1 C` (`RiemannRoch/Adelic/FiniteMapToP1.lean:437`, verified: class carries no instance, everything downstream to `HasFiniteMapToP1` is proved) and `P1HasLaurentChartData`; audit whether the `HasExt`-shaped inputs are already unconditional in `CechComparisonGate.lean:114-136`.
+(i) Instances for `ExistsNonconstantMapToP1 C` (**since discharged**: `existsNonconstantMapToProjInt_of_ajc` and `existsNonconstantMapToP1_of_existsNonconstantMapToProjInt`, `RiemannRoch/Adelic/NonconstantToP1.lean`, so the whole chain to `HasFiniteMapToP1` synthesises for an AJC curve) and `P1HasLaurentChartData`; audit whether the `HasExt`-shaped inputs are already unconditional in `CechComparisonGate.lean:114-136`.
 (ii) `RiemannRoch/Adelic/GateInstances.lean`. (iii) trdeg-1 function field; in-lane substrate. (iv) **M**. (v) 🔍 **AUDIT-FIRST**: kernel-build the whole `RiemannRoch/` closure before relying on "sorry-free" (memory lesson: verify inherited closures; the lane's only true sorry must remain `WeilDivisor.principal_degree_zero`, off-path).
 
 **P2 — h⁰/h¹/χ kit over all field extensions.**
@@ -266,17 +272,22 @@ Order: P1 → (P5, B3, G2 in parallel) → D4' → J5 → G3 → G5. Final state
 state. Resolve everything by declaration name — the wave sections below cite line numbers
 that have drifted.
 
-- **`HasRigidPushforward C` — one statement left, not four.** The gate has two fields.
-  `locallyFree` is now an unconditional theorem for an AJC curve
-  (`Adelic.rigidPushforwardLocallyFree_proved`), because both statements it rested on are
-  proved: `IsIntegral (ℙ¹_k)` (`Adelic.instIsIntegralP1OverLeft`, from the chart-ring
+- **`HasRigidPushforward C` — DISCHARGED (2026-07-27, commits `d6bfd59be`/`f4a56a754`).**
+  `Adelic.instHasRigidPushforwardOfCurve`
+  (`Picard/RigidPushforwardGammaBaseChange.lean`) is a global instance for every curve
+  smooth of relative dimension one, proper and geometrically integral. Both fields are
+  theorems: `locallyFree` is `Adelic.rigidPushforwardLocallyFree_proved`, resting on
+  `IsIntegral (ℙ¹_k)` (`Adelic.instIsIntegralP1OverLeft`, from the chart-ring
   identification `Γ(ℙ¹_k, D₊(Xᵢ)) ≃ₐ[k] k[T]` plus a two-chart irreducibility argument)
-  and the rank identity (`Adelic.p1RankIdentity_proved`, for every `k`-algebra). The
-  `baseChange` field reduces by affine-target descent to one module-level statement,
-  `Adelic.RigidPushforwardGammaBaseChange` — classical `H⁰` base change — and
-  `Adelic.hasRigidPushforward_of_gammaBaseChange` derives the whole gate from it. There is
-  deliberately **no instance**: nothing produces that statement yet. Read
+  and the rank identity (`Adelic.p1RankIdentity_proved`, for every `k`-algebra);
+  `baseChange` comes by affine-target descent from
+  `Adelic.rigidPushforwardGammaBaseChange_proved`, the classical `H⁰` base-change
+  statement. Measured at the *synthesis* site, not merely as stated: the three extraction
+  theorems of `Picard/RigidPushforward.lean` are restated without the
+  `[HasRigidPushforward C]` binder in §4 of that file and come out clean. Read
   `hasRigidPushforward_of_leaves` as a four-leaf factorisation, not as the frontier.
+  `Picard/RigidPushforwardP1Witness.lean` exhibits `ℙ¹` itself as a curve satisfying the
+  three hypotheses, so neither the instance nor the extraction theorems are vacuous.
 - **`HasStableAffineCover` — discharged** (`hasStableAffineCover_of_orbitsInAffineOpen`),
   under `OrbitsInAffineOpen`, which the Hironaka trap shows cannot be dropped.
   `HasGaloisQuotient` remains instance-free; G2's affine model is proved

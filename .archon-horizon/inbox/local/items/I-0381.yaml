@@ -1,38 +1,54 @@
 id: I-0381
 provider: local
 kind: memory
-body: 'AJC B3 gate: the rigid-pushforward frontier is now ONE leaf, not four (corrected
-  2026-07-27)
+body: 'AJC B3 gate: the rigid-pushforward gate is DISCHARGED — a real instance, verified
+  at the synthesis site (corrected twice; 2026-07-27)
 
 
-  **This item used to say the gate needed FOUR statements, and that `IsIntegral (ℙ¹_k)`
-  and the rank identity were open. Both claims are now FALSE.** Corrected in place
-  (janitor pass, run 0053) rather than archived, because the template and the tooling
-  gotcha below are durable. Pinned commit `e4a026eb7`.
+  **This item has now been wrong twice in the same direction, and that is itself the
+  lesson.** It first said the gate needed FOUR statements; it was corrected to ONE
+  and to "there is deliberately no `instance : HasRigidPushforward`, because nothing
+  produces `RigidPushforwardGammaBaseChange`". **Both of those are now FALSE.** Corrected
+  in place again (janitor pass, run 0054 s0006) rather than archived, because the
+  $\mathbb{P}^1$ template and the tooling gotcha below are durable. Pinned commit
+  `744a74bf2`.
 
 
-  **CURRENT STATE — `Picard/RigidPushforwardInstance.lean` is the file to read.**
+  **CURRENT STATE — the gate is a THEOREM.** `Adelic.instHasRigidPushforwardOfCurve`
+  (`Picard/RigidPushforwardGammaBaseChange.lean`) is a **global instance** of `Scheme.HasRigidPushforward
+  C` for every AJC curve — smooth of relative dimension one, proper, geometrically
+  integral — with no hypothesis beyond the curve''s own. Both fields are theorems:
 
 
-  - `IsIntegral (ℙ¹_k)` — **proved**, `instIsIntegralP1OverLeft`. The old record called
-  this "genuine missing mathematics".
+  - `locallyFree` is `rigidPushforwardLocallyFree_proved`, resting on `IsIntegral
+  (ℙ¹_k)` (`instIsIntegralP1OverLeft`) and `P1RankIdentity k A` (`p1RankIdentity_proved`,
+  for *every* `k`-algebra `A`; the `FiniteType` hypothesis the gate quantifies over
+  turned out not to be needed);
 
-  - `P1RankIdentity k A` — **proved** for *every* `k`-algebra `A` (`Picard/RigidPushforwardRank.lean`,
-  `p1RankIdentity_proved`); the `FiniteType` hypothesis the gate quantifies over turned
-  out not to be needed.
+  - `baseChange` comes by affine-target descent (`Picard/RigidPushforwardAffineDescent.lean`)
+  from `rigidPushforwardGammaBaseChange_proved`, i.e. bijectivity of $\Gamma(\operatorname{Spec}
+  A'',\top)\otimes_{\Gamma(\operatorname{Spec} A,\top)}\Gamma(C_A,L)\to\Gamma(C_{A''},g''^*L)$
+  — the classical $H^0$ base-change fact, proved from Čech purity of the same $\mathbb{P}^1$
+  engine.
 
-  - Consequently `P1RigidPushforwardStatement k A` and the gate''s whole `locallyFree`
-  field are unconditional theorems for an AJC curve (`rigidPushforwardLocallyFree_proved`).
 
-  - **What remains is ONE statement**: `RigidPushforwardGammaBaseChange C A`, i.e.
-  bijectivity of $\Gamma(\operatorname{Spec} A'',\top)\otimes_{\Gamma(\operatorname{Spec}
-  A,\top)}\Gamma(C_A,L)\to\Gamma(C_{A''},g''^*L)$ — the classical $H^0$ base-change
-  fact. `Picard/RigidPushforwardAffineDescent.lean` descends the gate''s `baseChange`
-  field to it by affine-target descent. **The live frontier is tracked on roadmap
-  `AJC.picrep.rigidpushforward.basechange`; read that, not this memory.**
+  `hasRigidPushforward_of_leaves` is now historical: a four-leaf factorization, not
+  a frontier.
 
-  - There is deliberately **no** `instance : HasRigidPushforward`, because nothing
-  produces `RigidPushforwardGammaBaseChange`.
+
+  **WHY THE DISCHARGE IS BELIEVABLE, and this is the part to copy.** Measured at the
+  **synthesis site**, per `I-0380`: the three extraction theorems of `Picard/RigidPushforward.lean`
+  are restated in §4 of `RigidPushforwardGammaBaseChange.lean` *without* the `[HasRigidPushforward
+  C]` binder, so Lean must synthesize the gate to elaborate them, and all three come
+  out `[propext, Classical.choice, Quot.sound]`. The same measurement applied to `HasPicScheme`
+  is what exposes `instHasPicScheme` as poisoned. First campaign gate in this project
+  to reach a clean global instance.
+
+
+  **NON-VACUITY IS ALSO SETTLED.** `Picard/RigidPushforwardP1Witness.lean` exhibits
+  $\mathbb{P}^1$ itself as an object satisfying all three binders, so the headlines
+  are not statements about the empty class. (`I-0429` recorded that no such object
+  existed at the time it was filed; that gap is closed.)
 
 
   **HOW $\mathbb{P}^1$ INTEGRALITY FELL — the durable template.** Not by cohomology.
@@ -53,18 +69,19 @@ body: 'AJC B3 gate: the rigid-pushforward frontier is now ONE leaf, not four (co
   at all (it has all three for affine space, `AlgebraicGeometry/AffineSpace.lean:392/402/419`).
 
 
-  **TOOLING GOTCHA (unchanged, and it is the most re-usable line here).** `lake env
-  lean <file>` does **not** run this project''s style linters (`linter.style.maxHeartbeats`,
+  **TOOLING GOTCHA (unchanged, and it is still the most re-usable line here).** `lake
+  env lean <file>` does **not** run this project''s style linters (`linter.style.maxHeartbeats`,
   `linter.style.setOption`). A file can be silent under `lake env lean` and still
   warn under `lake build <module>`. Always finish a new module with a single-module
   `lake build` (~20-35 s warm) before calling it warning-free. Never run a bare `lake
   build` (43 min — see `I-0319`).
 
 
-  **One claim from the old record that stays true and is still worth knowing:** `HasRigidPushforward`
-  has **zero** consumers anywhere in the workspace outside its own declaring file.
-  It is a prerequisite for future `DivFamily` work, not a live blocker on anything
-  today.'
+  **AND THE META-LESSON, earned by this item''s own two corrections.** A memory that
+  records "the frontier is N statements" against a lane that is actively being worked
+  goes stale within hours, and a stale frontier count is quoted as authority. Record
+  the *technique* and the *tooling*, and point at the roadmap row for the count: here
+  `AJC.picrep.rigidpushforward`.'
 labels:
 - agent-ready
 status: open
@@ -73,7 +90,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-27T07:51:54.083289+00:00'
-updated_at: '2026-07-27T11:42:11.697352+00:00'
+updated_at: '2026-07-27T13:32:46.672212+00:00'
 metadata:
   provenance:
     run: '0053'

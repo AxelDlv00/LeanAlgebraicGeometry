@@ -1,0 +1,57 @@
+id: I-0436
+provider: local
+kind: issue
+body: "MEASURED: `lake build` does NOT build the B3 non-vacuity witness — 8743 jobs\
+  \ vs 8744\n\nGround review of ajc-gate run 0053 s0006. `AlgebraicJacobian/Picard/RigidPushforwardP1Witness.lean`\
+  \ has ZERO importers anywhere in the tree (checked by grep; independently seen by\
+  \ ajc-truth's own probe, run 0054 transcript 13:05, `unrooted: ['AlgebraicJacobian.Picard.RigidPushforwardP1Witness']`).\n\
+  \nThe decisive measurement, run here:\n  lake build                            \
+  \                        -> 8743 jobs, exit 0\n  lake build AlgebraicJacobian AlgebraicJacobian.Picard.RigidPushforwardP1Witness\
+  \ -> 8744 jobs\nOne extra job. The default target excludes the witness module exactly.\n\
+  \nWHY THIS MATTERS MORE THAN USUAL. The witness is the artifact that answers I-0429\
+  \ (the gate was true of nothing nameable). It is also the ONE module the project\
+  \ build does not check, and `scripts/axiom-frontier.lean` §6c names this exact failure\
+  \ mode in its own trap list: \"A fifth, outside this file: an unrooted module cannot\
+  \ be probed at all, because `import AlgebraicJacobian` does not reach it.\" So the\
+  \ non-vacuity evidence currently sits in the only place the workspace's own instrumentation\
+  \ cannot see. §6c therefore still has no line for `hasRigidPushforward_p1Over`,\
+  \ `instGeometricallyIntegralProjIntegralModel` or `instSmoothOfRelativeDimensionOneP1Over`.\n\
+  \nThe module itself is green: `lake build AlgebraicJacobian.Picard.RigidPushforwardP1Witness`\
+  \ succeeds (8671 jobs) with the style linters on, and all seven new declarations\
+  \ measure [propext, Classical.choice, Quot.sound].\n\nROOT ROLL-UP HAS A SECOND\
+  \ FALSE COMMENT BLOCK, NOT YET REPORTED. I-0431 comment C-0001 item 3(b) asked ajc-truth\
+  \ to fix `AlgebraicJacobian.lean` lines 90-92. Lines 66-68 of the same file are\
+  \ equally false and were not mentioned:\n  \"-- Rigid-pushforward gate cone (run\
+  \ 0053, task ajc-gate). The gate itself is NOT\n   -- instantiated: hasRigidPushforward_of_leaves\
+  \ derives HasRigidPushforward from\n   -- four named leaves, none of them proved.\"\
+  \nThe gate IS instantiated (`Adelic.instHasRigidPushforwardOfCurve`) and all four\
+  \ leaves are closed — `RigidPushforwardGate.lean`'s own docstring was corrected\
+  \ to say so in commit 54679beed. This is the same defect class the session spent\
+  \ that commit eradicating, surviving in the one file the task cannot edit.\n\nASK\
+  \ (all three are on `AlgebraicJacobian.lean`, owned by ajc-truth):\n  1. add `import\
+  \ AlgebraicJacobian.Picard.RigidPushforwardP1Witness`\n  2. fix lines 90-92 (already\
+  \ asked, I-0431 C-0001)\n  3. fix lines 66-68 (NOT yet asked)\nThen add the witness\
+  \ declarations to axiom-frontier §6c, where the non-vacuity claim becomes measurable."
+labels:
+- agent-ready
+status: closed
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-27T13:36:31.563572+00:00'
+updated_at: '2026-07-27T14:47:43.429290+00:00'
+metadata:
+  provenance:
+    run: '0053'
+    session: 0006-horizon-ajc-gate
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-gate

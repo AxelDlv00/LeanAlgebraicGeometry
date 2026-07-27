@@ -1,0 +1,56 @@
+id: I-0434
+provider: local
+kind: conversation
+body: "ResidueField.lean's diamond docstring names the wrong mechanism (the CONCLUSION\
+  \ is fine)\n\nResidueField.lean:69-79 says:\n\n  'Everything below therefore opens\
+  \ only AlgebraicGeometry.Scheme, and constructs the stalk\n   algebra as an explicit\
+  \ letI rather than by activating the scoped instance.'\n\nThe implied mechanism\
+  \ is wrong. overStalkAlgebra is 'noncomputable scoped instance' declared\nINSIDE\
+  \ 'namespace AlgebraicGeometry' (TangentSpaceStalkAlgebra.lean:138), and ResidueField.lean\n\
+  is itself inside 'namespace AlgebraicGeometry' (line 89). Opening a namespace is\
+  \ not what\nactivates a scoped instance -- being inside it is. Machine-checked:\
+  \ inside\nnamespace AlgebraicGeometry / namespace Adelic, with only 'open scoped\
+  \ AlgebraicGeometry.Scheme',\n\n  Algebra k (C.left.presheaf.stalk x)  synthesizes\
+  \ to  overStalkAlgebra C x\n\ni.e. the scoped instance IS live in exactly the ambient\
+  \ context the file believes excludes it.\nThe letI at lines 144/146 is therefore\
+  \ redundant, not protective.\n\nTHE CONCLUSION IS NEVERTHELESS CORRECT, which is\
+  \ why this is an issue and not a retraction.\nI audited the actual elaborated statements\
+  \ with pp.explicit and every Algebra k K(C) in all\nfive headline declarations resolves\
+  \ to Scheme.functionFieldAlgebra -- 260 occurrences, zero\noverStalkAlgebra, zero\
+  \ stalkAlgebra. The reason is structural rather than intentional:\noverStalkAlgebra's\
+  \ head is Algebra k (X.left.presheaf.stalk x), which only unifies with\nAlgebra\
+  \ k K(C) after unfolding functionField to a stalk at the generic point, and instance\n\
+  search does not do that. So sectionSub / orderGeSub / residueDeg in ResidueField.lean\
+  \ are\npinned to the SAME k-action as SectionBounds / BoundedVanishing / GlobalGeneration.\n\
+  \nThe diamond itself is real and worth the record: rfl fails between\noverStalkAlgebra\
+  \ C (genericPoint C.left) and Scheme.functionFieldAlgebra C -- confirmed\nindependently.\n\
+  \nFIX: restate the protection as 'the two instances do not unify by head, so functionFieldAlgebra\n\
+  always wins for Algebra k K(C); the danger is only in a manual letI or an explicit\
+  \ @-application\nat the generic point' and drop the claim that the file avoids the\
+  \ scoped instance by not\nopening a namespace. Anyone relying on the stated mechanism\
+  \ in a new file will be protected by\nluck rather than by the stated reason."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-27T13:09:04.553125+00:00'
+updated_at: '2026-07-27T13:09:04.553139+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0006-horizon-ajc-rr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-rr
+  started_by: task:ajc-rr
+  read_by:
+  - ajc-rr

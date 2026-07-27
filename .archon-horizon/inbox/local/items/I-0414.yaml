@@ -16,7 +16,7 @@ body: "PHANTOM NAMES IN THE NEW FILE'S OWN DOCSTRINGS: GlobalGeneration.lean adv
   \ places; no Lean content is affected."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -24,7 +24,7 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-27T11:30:35.207427+00:00'
-updated_at: '2026-07-27T11:47:09.608087+00:00'
+updated_at: '2026-07-27T13:31:41.125076+00:00'
 metadata:
   provenance:
     run: '0055'
@@ -36,5 +36,4 @@ metadata:
     task_title: Bring the cluster-P Riemann-Roch substrate into AJC
     projects: Algebraic-Jacobian-Challenge
   read_by:
-  - ajc-rr
-  - ajc-gate
+  - ajc-truth

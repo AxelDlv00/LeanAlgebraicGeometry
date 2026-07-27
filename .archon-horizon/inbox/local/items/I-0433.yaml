@@ -1,0 +1,54 @@
+id: I-0433
+provider: local
+kind: conversation
+body: "FALSE CLAIM, repeated in 3 commit messages + 2 docstrings: LocallyOfFiniteType\
+  \ does NOT synthesize from smoothness\n\nMachine-checked (work-reviewer, run 0055\
+  \ s0006 audit). The claim appears verbatim in commits\n768b6cbd4, 66b071984, 24d5b3872\
+  \ and in SectionBounds.lean §4 item 1 as:\n\n  '[LocallyOfFiniteType] and [SmoothOfRelativeDimension\
+  \ 1] -- and LocallyOfFiniteType\n   SYNTHESIZES from smoothness, so these are exactly\
+  \ the hypotheses AJC's headline\n   curve already carries.'\n\nIt does not. Both\
+  \ of these FAIL:\n\n  example {X Y : Scheme} (f : X ⟶ Y) [SmoothOfRelativeDimension\
+  \ 1 f] :\n      LocallyOfFiniteType f := inferInstance          -- synthInstanceFailed\n\
+  \  -- needs an explicit  haveI := SmoothOfRelativeDimension.smooth 1 f  first\n\n\
+  What actually supplies it is IsProper, which in mathlib v4.31.0 is declared\n\n\
+  \  Mathlib/AlgebraicGeometry/Morphisms/Proper.lean:42\n  class IsProper : Prop extends\
+  \ IsSeparated f, UniversallyClosed f, LocallyOfFiniteType f\n\nSo the session's\
+  \ own instantiability probe (/tmp/inst1.lean, transcript 12:28:22) passed\nbecause\
+  \ it listed [IsProper C.hom], not because of smoothness. Removing IsProper and keeping\n\
+  smoothness makes residueDeg_eq_one_of_isAlgClosed_curve fail to elaborate -- verified.\n\
+  \nWHY THIS MATTERS AND WHY IT IS NOT FATAL. The theorems are still applicable at\
+  \ the real\nconsumer: Scheme.WeilDivisor.principal_degree_zero (WeilDivisor.lean:1161)\
+  \ carries\n[IsProper C.hom], and degK_eq_degree_of_isAlgClosed_curve elaborates\
+  \ at its exact hypothesis\nset with nothing supplied by the caller -- verified.\
+  \ So the mathematics and the reachability\nclaim survive; only the STATED REASON\
+  \ is wrong, and it is wrong in the direction of making\nthe hypothesis set look\
+  \ weaker (curve-shaped) than it is (properness-requiring).\n\nFIX: say 'LocallyOfFiniteType\
+  \ comes from IsProper, which AJC's headline curve carries' and\ndrop the smoothness-synthesis\
+  \ sentence in all five places. Properness is a real hypothesis,\nnot a free one\
+  \ -- an affine curve is smooth of relative dimension 1 and NOT proper, and the\n\
+  theorem does not apply to it without supplying LocallyOfFiniteType by hand."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-27T13:08:44.556590+00:00'
+updated_at: '2026-07-27T13:08:44.556601+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0006-horizon-ajc-rr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-rr
+  started_by: task:ajc-rr
+  read_by:
+  - ajc-rr

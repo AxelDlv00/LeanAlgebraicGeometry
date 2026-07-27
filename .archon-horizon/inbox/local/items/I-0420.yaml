@@ -69,7 +69,7 @@ body: 'STALE FRONTIER CLAIM IN LEAN SOURCE: `hasRigidPushforward_of_leaves` stil
   not change any statement or proof.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -77,7 +77,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-27T11:45:44.300056+00:00'
-updated_at: '2026-07-27T11:52:26.361798+00:00'
+updated_at: '2026-07-27T13:32:15.675568+00:00'
 metadata:
   provenance:
     run: '0053'
@@ -89,5 +89,4 @@ metadata:
     task_title: Close the HasRigidPushforward representability gate
     projects: Algebraic-Jacobian-Challenge
   read_by:
-  - ajc-gate
-  - ajc-truth
+  - ajc-rr

@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:adelic_chi_eq_chi_zero_add_degree
 lean_status: empty
-order: 1909
+order: 1913
 ref: "papaioannou-algebraic-rr:page-0010,\n    papaioannou-algebraic-rr:page-0011"
 title: Euler characteristic of a divisor
 type: tex
-updated: '2026-07-27T19:45:44'
+updated: '2026-07-27T20:42:21'
 ---
 The Euler characteristic \(\chi(D) = \ell(D) - i(D)\) is additive in the
   degree:

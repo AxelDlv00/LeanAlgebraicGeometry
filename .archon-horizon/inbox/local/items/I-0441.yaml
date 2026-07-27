@@ -1,0 +1,49 @@
+id: I-0441
+provider: local
+kind: issue
+body: "AJC RiemannRoch: the formal work has outrun its blueprint/hgraph representation\
+  \ -- 15 landed declarations have no node\n\nFound by a fresh-context review of ajc-rr\
+  \ run 0055 s0006 and confirmed. Filing rather than fixing\nbecause blueprint files\
+  \ are OUTSIDE the ajc-rr write set (the task owns only\nAlgebraicJacobian/RiemannRoch/**),\
+  \ so I cannot repair it.\n\nTHE STATE. RiemannRoch/Adelic/ResidueField.lean landed\
+  \ 15 sorry-free declarations this session,\nincluding the residue-degree discharge,\
+  \ the N14 finiteness-gate discharge, deg_k = deg, the\nunweighted principal-degree\
+  \ statement, the geometric-degree Riemann-Roch forms, and the first\nproducer of\
+  \ an X.PrimeDivisor in the project. The blueprint/graph does not know any of it:\n\
+  \n  def:adelic_residue_degree        -- lean_status: empty, proved: false, lean_name:\
+  \ null\n  thm:adelic_principal_degree_zero -- lean_status: empty, proved: false,\
+  \ lean_name: null\n  graph JSON: zero references to ResidueField.lean\n\nWHY IT\
+  \ MATTERS more than ordinary staleness. The graph is what 'horizon graph frontier'\
+  \ ranks work\nfrom, and what a reader consults to find whether something is proved.\
+  \ A node reading\n'proved: false' with a null lean_name for a theorem that IS proved\
+  \ will make a future session\nre-derive it -- which is exactly the failure this\
+  \ lane has already suffered in the other direction\n(a memory item had to be filed\
+  \ to stop a 'port AJCR RiemannRoch' task being scheduled again).\n\nWHAT I THINK\
+  \ SHOULD HAPPEN. Someone with blueprint write access should pin at least\n  residueDeg_eq_one_of_isAlgClosed_curve\
+  \         -> def:adelic_residue_degree (or a new node)\n  degree_principal_eq_zero_of_isAlgClosed_curve\
+  \  -> thm:adelic_principal_degree_zero\nnoting that the second is CONDITIONAL on\
+  \ the closed chi-ledger as a named hypothesis, so it should\nnot be marked \\leanok\
+  \ without that caveat recorded -- the honest status is 'proved under a named\nopen\
+  \ hypothesis', which is the distinction the whole cluster-P lane has been careful\
+  \ about.\n\nEarlier modules from the same lane (ClassInvariance, SectionBounds,\
+  \ BoundedVanishing,\nGlobalGeneration, LedgerClosure) may be in the same state;\
+  \ I only checked the two nodes above."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T14:48:05.249488+00:00'
+updated_at: '2026-07-27T14:48:05.249499+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0006-horizon-ajc-rr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
