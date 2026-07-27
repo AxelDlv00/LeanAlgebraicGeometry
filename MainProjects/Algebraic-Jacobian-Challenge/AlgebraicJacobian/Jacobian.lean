@@ -27,17 +27,24 @@ falls out automatically. The former separate `genusZeroWitness` lane (with its
 `RigidityKbar` / cotangent-vanishing / Frobenius / `ℙ¹`-identification machinery) was a
 pre-FGA local optimisation and has been removed.
 
-`picardJacobianWitness` is wired to the landed `Pic⁰_{C/k}` development: the witness
-scheme is `Scheme.Pic0Scheme C`, and its group, proper, smooth and geometrically
-irreducible fields are the theorems of `Picard/Pic0AbelianVariety.lean`. What remains
-open is isolated into three named leaves, each stated at exactly the strength the
-assembly consumes:
+`picardJacobianWitness` is wired to the `Pic⁰_{C/k}` development: the witness scheme
+is `Scheme.Pic0Scheme C`, and its four structural fields are the theorems of
+`Picard/Pic0AbelianVariety.lean`. Be precise about what that buys, because
+"invoked upstream" is not "proved upstream": of those four, `Pic0.grpObj` and
+`Pic0.geometricallyIrreducible` are proved, while **`Pic0.smooth` and `Pic0.proper`
+are themselves `sorry`-bodied**. So the witness reaches **five** open obligations,
+not three: those two upstream, plus the three leaves below, which are the ones new
+here. Proving only the three would leave `sorryAx` in the witness — verified with
+`scripts/axiom-frontier.lean`.
+
+The three leaves are each stated at exactly the strength the assembly consumes:
 
 - `hasRationalPoint_and_geometricallyIntegral` — the hypothesis gap. Geometric
   integrality follows from the ambient hypotheses; the `k`-rational point does not
   follow and is not implied by the challenge statement (see the leaf's docstring).
 - `smoothOfRelativeDimension_genus_pic0` — bare smoothness of `Pic⁰_{C/k}` refined to
-  relative dimension `genus C`.
+  relative dimension `genus C`. Note this refines `Pic0.smooth`, which is itself
+  unproved, so the leaf presupposes an obligation rather than resting on one.
 - `isAlbanese_pic0` — the Albanese universal property over an arbitrary base field and
   for every marked point, where the landed proof covers the algebraically closed,
   positive-genus case.
@@ -213,7 +220,16 @@ takes `[HasRationalPoint C]` and is correct to do so, because without a section
 section because it represents the *étale* sheaf. The two ways to close the gap —
 étale-sheafify the Picard functor, or carry the rational point as a hypothesis of the
 headline and prove something weaker than the challenge asks — are a design decision, not
-a platform limitation. -/
+a platform limitation.
+
+**Read this leaf as a gap marker, not as an obligation to discharge.** Because its
+second conjunct is false, the statement is not merely unproved but unprovable, so
+everything downstream of `picardJacobianWitness` currently rests on an inconsistent
+hypothesis rather than on an open frontier. That is deliberate — it puts the gap where
+a reader of the headline meets it, instead of leaving it implicit in the Picard
+hypotheses — but it means this leaf must be **replaced** once the decision above is
+made, by either a rational-point binder on the Jacobian itself or an étale-sheafified
+representability input. It must not be "proved". -/
 theorem hasRationalPoint_and_geometricallyIntegral (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
     GeometricallyIntegral C.hom ∧ Scheme.HasRationalPoint C :=
@@ -274,12 +290,14 @@ that every pointed morphism `C ⟶ A` into an abelian variety is constant. The f
 rigidity / cotangent-vanishing / Frobenius / `ℙ¹`-identification machinery — has been
 removed in favour of this single uniform witness.
 
-The construction below is **wired to the landed Picard development**: the underlying
-scheme is `Scheme.Pic0Scheme C`, and four of the six witness fields are the theorems of
-`Picard/Pic0AbelianVariety.lean` applied directly. The remaining distance to the headline
-is the three leaves `hasRationalPoint_and_geometricallyIntegral`,
-`smoothOfRelativeDimension_genus_pic0` and `isAlbanese_pic0` above; this definition
-carries no `sorry` of its own. -/
+The construction below is **wired to the Picard development**: the underlying scheme
+is `Scheme.Pic0Scheme C`, and four of the six witness fields are theorems of
+`Picard/Pic0AbelianVariety.lean` applied directly. This definition carries no `sorry`
+of its own, but that is a statement about this file, not a completeness claim: two of
+those four upstream theorems (`Pic0.smooth`, `Pic0.proper`) are `sorry`-bodied, so
+the witness depends on five open obligations — those two, plus the three leaves
+`hasRationalPoint_and_geometricallyIntegral`, `smoothOfRelativeDimension_genus_pic0`
+and `isAlbanese_pic0` above. -/
 noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
     JacobianWitness C := by

@@ -59,6 +59,16 @@ import AlgebraicJacobian.Picard.StructureSheafPushforward
 import AlgebraicJacobian.Picard.RigidPushforward
 import AlgebraicJacobian.Picard.RigidPushforwardTransfer
 import AlgebraicJacobian.Picard.RigidPushforwardP1Engine
+-- Rigid-pushforward gate cone (run 0053, task ajc-gate). RigidPushforwardGate is
+-- the single entry point; it transitively pulls RigidPushforwardP1Constants,
+-- RigidPushforwardFiberChart and RigidPushforwardP1Sheaf. The gate itself is NOT
+-- instantiated: hasRigidPushforward_of_leaves derives HasRigidPushforward from
+-- four named leaves, none of them proved. FiberChart and P1Sheaf are NOT below
+-- the gate (P1Sheaf imports it, FiberChart sits beside it), so they need their
+-- own entries or they stay invisible to the root build.
+import AlgebraicJacobian.Picard.RigidPushforwardGate
+import AlgebraicJacobian.Picard.RigidPushforwardFiberChart
+import AlgebraicJacobian.Picard.RigidPushforwardP1Sheaf
 import AlgebraicJacobian.Picard.P1SectionsFinite
 import AlgebraicJacobian.Picard.TwoTermFiniteFree
 import AlgebraicJacobian.Picard.SemicontinuityH0
@@ -154,6 +164,14 @@ import AlgebraicJacobian.RiemannRoch.Adelic.CechComparisonGate
 import AlgebraicJacobian.RiemannRoch.Adelic.CechAcyclicInstance
 import AlgebraicJacobian.RiemannRoch.Adelic.GateInstances
 import AlgebraicJacobian.RiemannRoch.Adelic.GenusUnconditional
+-- Cluster-P χ-ledger extensions (run 0055, task ajc-rr). Each imports the
+-- previous; ClassInvariance sits over the already-rooted Adelic.ChiLedger.
+-- NB several keystones here are axiom-clean but CONDITIONAL in their statements:
+-- they take the closed ledger and/or a peel-surjectivity datum as named
+-- hypotheses, so `#print axioms` alone overstates them.
+import AlgebraicJacobian.RiemannRoch.Adelic.ClassInvariance
+import AlgebraicJacobian.RiemannRoch.Adelic.SectionBounds
+import AlgebraicJacobian.RiemannRoch.Adelic.BoundedVanishing
 import AlgebraicJacobian.RiemannRoch.CurveBaseChange
 import AlgebraicJacobian.RiemannRoch.CohomologyKit
 import AlgebraicJacobian.Picard.InvertibleSectionLocalization

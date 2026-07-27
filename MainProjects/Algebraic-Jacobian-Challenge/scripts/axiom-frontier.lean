@@ -97,6 +97,24 @@ open AlgebraicGeometry AlgebraicGeometry.Scheme
 #print axioms AlgebraicGeometry.Scheme.AffineCoverMVSquare.chi_unit_eq_one_sub_genus
 #print axioms AlgebraicGeometry.Scheme.AffineCoverMVSquare.h1_unit_eq_genus
 
+-- §6b Cluster-P extensions (task ajc-rr).  Independent re-verification, in the
+-- rooted environment, of the axiom claims made in I-0383.  CAUTION: several of
+-- these are axiom-clean and still NOT unconditional mathematics — they take the
+-- closed χ-ledger and/or a peel-surjectivity datum as *named hypotheses*, which
+-- `#print axioms` cannot see.  Read this section as "no hidden sorry", not as
+-- "theorem available".
+#print axioms AlgebraicGeometry.Adelic.chi_eq_of_linearEquivalence
+#print axioms AlgebraicGeometry.Adelic.degK
+#print axioms AlgebraicGeometry.Adelic.degK_principal_eq_zero
+#print axioms AlgebraicGeometry.Adelic.ell_eq_zero_of_degK_neg
+#print axioms AlgebraicGeometry.Adelic.exists_bound_h1dim_eq_zero
+#print axioms AlgebraicGeometry.Adelic.exists_bound_subsingleton_h1Mod
+
+-- §6c The rigid-pushforward gate (task ajc-gate).  Per I-0377 the gate is NOT
+-- instantiated: `hasRigidPushforward_of_leaves` derives it from four named leaves,
+-- none proved.  Probed here so the frontier records that accurately.
+#print axioms AlgebraicGeometry.Adelic.hasRigidPushforward_of_leaves
+
 -- §7 Albanese cone
 #print axioms AlgebraicGeometry.Pic0.bundle
 #print axioms AlgebraicGeometry.Pic0.jacobianScheme
@@ -138,8 +156,24 @@ theorem leakProbe_pic0_isSeparated [HasRationalPoint C]
     IsSeparated (Pic0Scheme C).hom :=
   Pic0.isSeparated C
 
+/-- Same measurement for the local-finiteness carrier. -/
+theorem leakProbe_pic0_locallyOfFiniteType [HasRationalPoint C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C] :
+    LocallyOfFiniteType (Pic0Scheme C).hom :=
+  Pic0.locallyOfFiniteType C
+
+/-- The control that isolates the leak to synthesis and nothing else: identical
+conclusion and proof term, but with `HasPicScheme` taken as a hypothesis rather
+than synthesised.  This one is clean, which is exactly the point. -/
+theorem leakControl_pic0_locallyOfFiniteType [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C] :
+    LocallyOfFiniteType (Pic0Scheme C).hom :=
+  Pic0.locallyOfFiniteType C
+
 #print axioms leakProbe_pic0_geometricallyIrreducible
 #print axioms leakProbe_pic0_isSeparated
+#print axioms leakProbe_pic0_locallyOfFiniteType
+#print axioms leakControl_pic0_locallyOfFiniteType
 
 /-- Flat pullback along the identity: `Flat` is synthesised from a proved
 instance, but `PreservesFiniteLimits` still routes through the `sorry`-bodied
