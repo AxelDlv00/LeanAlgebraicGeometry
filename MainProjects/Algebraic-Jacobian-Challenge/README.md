@@ -37,7 +37,7 @@ same theorem by a separate curve-specialized strategy.
   discharged by the caller; the leak appears at any call site that must
   synthesise the instance.  Run
   [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean) (`lake env lean
-  scripts/axiom-frontier.lean`, ~8s warm, 61 declarations) before believing any
+  scripts/axiom-frontier.lean`, ~8s warm, 66 declarations) before believing any
   completeness claim — it measures the frontier rather than inferring it.
 - **A clean axiom set answers one question only:** is a `sorry` reachable from this
   proof term.  Three separate things it cannot see have each been measured in this
