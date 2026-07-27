@@ -238,10 +238,29 @@ theorem leakControl_pic0_locallyOfFiniteType [HasPicScheme C]
     LocallyOfFiniteType (Pic0Scheme C).hom :=
   Pic0.locallyOfFiniteType C
 
+/-- The two *chapter keystones* at a synthesis site, which is what decides whether
+a blueprint `\leanok` on them would be honest.  `PicScheme.representable` is
+`Classical.choice` over the gate, and `Pic0.isAbelianVariety` bundles the
+`sorry`-bodied `smooth` and `proper` conjuncts, so both pick up `sorryAx` here even
+though each reports clean as stated. -/
+noncomputable def leakProbe_picScheme_representable [HasRationalPoint C] :
+    (PicScheme.picSharp C).RepresentableBy (PicScheme C) :=
+  PicScheme.representable C
+
+/-- Companion measurement for the abelian-variety assembly. -/
+theorem leakProbe_pic0_isAbelianVariety [HasRationalPoint C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C] :
+    IsProper (Pic0Scheme C).hom ∧ Smooth (Pic0Scheme C).hom ∧
+      GeometricallyIrreducible (Pic0Scheme C).hom ∧
+      Nonempty (GrpObj (Pic0Scheme C)) :=
+  Pic0.isAbelianVariety C
+
 #print axioms leakProbe_pic0_geometricallyIrreducible
 #print axioms leakProbe_pic0_isSeparated
 #print axioms leakProbe_pic0_locallyOfFiniteType
 #print axioms leakControl_pic0_locallyOfFiniteType
+#print axioms leakProbe_picScheme_representable
+#print axioms leakProbe_pic0_isAbelianVariety
 
 /-- Flat pullback along the identity: `Flat` is synthesised from a proved
 instance, but `PreservesFiniteLimits` still routes through the `sorry`-bodied
