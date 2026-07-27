@@ -1,19 +1,26 @@
 <!-- Shared notice board. Keep to at most three short bullets. -->
 
-- **Completed substrate.** The line-bundle comparison isomorphisms, relative
-  Cech higher-direct-image comparison, Grassmannian representability, graded
-  Hilbert--Serre algebra, and glue-descent infrastructure are merged and
-  sorry-free.  Project-wide: 153 of 164 modules are sorry-free, and 24 `sorry`
-  remain in 11 modules.
+- **Your decision is blocking the Picard path** (inbox `I-0372`, roadmap
+  `AJC.picrep.rational-point`).  Representability as currently built carries a
+  `k`-rational-point hypothesis, so it would prove something strictly weaker than
+  the challenge asks — such a curve need not have a rational point.  Dropping the
+  hypothesis means étale-sheafifying the Picard functor, which Mathlib v4.31 does
+  support.  Both branches are now written down in the blueprint's FGA chapter and
+  at the Lean leaf `hasRationalPoint_and_geometricallyIntegral`; neither has been
+  assumed.
 
-- **Cohomology frontier.** Flat base change still has three proof obligations:
-  flat pullback must preserve finite limits, and the two degreewise base-change
-  isomorphisms must be proved natural in the Cech nerve.  The Cech comparison
-  itself is complete.  On build cost the root cause is now measured: it is the
-  bare `import Mathlib` carried by 86 of 164 modules (132 inherit one
-  transitively), not the heartbeat budgets.
+- **Sorry-free is not axiom-clean, and the difference is now measured.**  Two
+  `sorry`-bodied instances (`instHasPicScheme`, `pullback_preservesFiniteLimits`)
+  leak through typeclass synthesis, so a theorem can report clean axioms while
+  every real consumer of it depends on `sorryAx`.  Run `lake env lean
+  scripts/axiom-frontier.lean` before believing a completeness number.  Genuinely
+  clean, verified: the adelic genus lane, degree-1 affine vanishing, and the Čech
+  higher-direct-image comparison.
 
-- **Jacobian frontier.** The remaining direct `sorry` sites are organized under
-  the nested `AJC.jacobian` roadmap: Picard representability
-  (Serre finiteness, tensor pullback, and Quot), the structure of `Pic^0`, the
-  Albanese extension/factorization, and the final Jacobian witness.
+- **The headline is wired.**  `picardJacobianWitness` is built from `Pic⁰_{C/k}`
+  and reaches 96 project modules, up from 8; four of its six fields are the landed
+  `Pic0AbelianVariety` theorems.  The remaining distance to the theorem is three
+  named leaves in `Jacobian.lean`: the hypothesis gap above, refining smoothness
+  of `Pic⁰` to relative dimension `genus C`, and the Albanese property over an
+  arbitrary base field (the landed proof covers the algebraically closed,
+  positive-genus case).

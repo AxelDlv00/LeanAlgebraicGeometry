@@ -2,24 +2,52 @@
 
 A Lean 4 formalization of the Jacobian of a smooth, proper, geometrically
 irreducible curve over a field.  The project takes the Picard-scheme route: build
-the relative Picard functor, represent it through the
-Grassmannian/Quot/flattening-stratification machinery, identify its identity
-component as an abelian variety of dimension the genus, and derive the Albanese
-universal property.  The first and last legs are substantially built; the
-representability leg is the open frontier.
+the relative Picard functor, represent it, identify its identity component as an
+abelian variety of dimension the genus, and derive the Albanese universal
+property.  The first and last legs are substantially built; representability is
+the open frontier.
+
+Representability is being built by the **Milne–Kollár route** — construct
+`Pic^r` over a separably closed field from the loci where `h⁰ = 1`, glue,
+descend to `k` by a finite Galois quotient, assemble the degrees by a coproduct.
+The plan of record is [`informal/pic-representability-campaign.md`](informal/pic-representability-campaign.md).
+The Grothendieck/Kleiman quotient route via the Quot scheme is **not** the path
+being built: its descent step needs a quasi-projectivity hypothesis that is not
+expressible at the pinned Mathlib revision and without which the lemma is false.
+Its substrate (Grassmannians, graded algebra, flattening stratification) is
+sorry-free and is consumed by the committed route, so it is retained.
 
 It is developed alongside `Algebraic-Jacobian-Challenge-Rebuild`, which attacks the
 same theorem by a separate curve-specialized strategy.
 
 ## State (measured 2026-07-27)
 
-- **164 modules, 121,662 lines.**  Exactly **24 `sorry`** remain, spread over 11
-  modules; the other **153 modules are sorry-free**.
-- A warm `lake build` is **green**: 8,723 jobs, and 162 warning heads across 28
-  files, of which 24 are `declaration uses sorry`.
-- **86 of the 164 modules still open with a bare `import Mathlib`**, and 132 of the
-  164 inherit one transitively.  This is the dominant build cost; it is being
-  converted bottom-up from the import-DAG sources using the helpers in `scripts/`.
+- **168 modules, 122,250 lines.**  **26 `sorry`** remain, spread over 11 modules;
+  the rest are locally sorry-free.
+- A warm `lake build AlgebraicJacobian` is **green**: 8,723 jobs, exit 0.
+- **Locally sorry-free is not axiom-clean.**  Two `sorry`-bodied *instances* leak
+  through typeclass synthesis: `instHasPicScheme`
+  (`Picard/FGAPicRepresentability.lean`, the sole producer of `HasPicScheme`) and
+  `pullback_preservesFiniteLimits`
+  (`Cohomology/CechHigherDirectImageUnconditional.lean`).  A theorem that merely
+  *quantifies over* such a gate reports clean axioms, because the hypothesis is
+  discharged by the caller; the leak appears at any call site that must
+  synthesise the instance.  Run
+  [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean) (`lake env lean
+  scripts/axiom-frontier.lean`, ~12s warm) before believing any completeness
+  claim — it measures the frontier rather than inferring it.
+- Many modules still open with a bare `import Mathlib`; this is the dominant
+  build cost and is being converted bottom-up with the helpers in `scripts/`.
+
+## Open decision
+
+Whether to represent the plain relative Picard functor while carrying a
+`k`-rational-point hypothesis — strictly weaker than the challenge statement,
+since such a curve need not have a rational point — or to étale-sheafify and drop
+the hypothesis, is an open decision for the project owner (roadmap
+`AJC.picrep.rational-point`).  Both branches are recorded in the blueprint's FGA
+chapter and at the Lean leaf `hasRationalPoint_and_geometricallyIntegral`
+(`AlgebraicJacobian/Jacobian.lean`); neither is assumed.
 
 Cones closed: `AJC.substrate`, `AJC.linebundle`, `AJC.grquot`, `AJC.cech`.
 Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
@@ -31,7 +59,10 @@ Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
 
 - [`AlgebraicJacobian.lean`](AlgebraicJacobian.lean): project import root.
 - [`AlgebraicJacobian/Jacobian.lean`](AlgebraicJacobian/Jacobian.lean): the final
-  Jacobian witness interface and assembly point.
+  Jacobian witness interface and assembly point.  The witness is built from
+  `Pic⁰_{C/k}`; what remains open is three named leaves stated there.
+- [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean): the axiom-frontier
+  probe, and the reachability measurement in its header.
 - [`blueprint/web/index.html`](blueprint/web/index.html): generated mathematical blueprint.
 - [`analogies/README.md`](analogies/README.md): index to the historical design notes.
 - [`../Algebraic-Jacobian-Challenge-Rebuild/README.md`](../Algebraic-Jacobian-Challenge-Rebuild/README.md):

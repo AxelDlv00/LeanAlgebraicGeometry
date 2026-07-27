@@ -1,6 +1,40 @@
 <!-- Campaign plan for instHasPicScheme — synthesized 2026-07-09 by the run-0019 recon+design workflow (4 recon agents, 3 designs, judge). Route decision: D3 Milne–Kollár (section trick + finite Galois quotient + coproduct assembly), grafts from D1/D2. Wave tracking lives in T16 comments. -->
 # FINAL — Campaign plan for `instHasPicScheme` (judge + synthesis, 2026-07-09)
 
+> **This document is the route of record.** The blueprint chapter
+> `Picard_FGAPicRepresentability.tex` and the roadmap cone `AJC.picrep` were
+> re-aimed at the D3 Milne–Kollár route selected here (run 0054); the Quot
+> endgame they previously described in the present tense is retained as
+> mathematics but is not the path being built. The Quot-lane leaves listed under
+> "Off-path and untouched" at the end of Part II remain off-path.
+>
+> **Two things this plan does not settle.**
+>
+> 1. *The rational point.* Every milestone below keeps `[HasRationalPoint C]` as
+>    an honest hypothesis, which makes the resulting theorem strictly weaker than
+>    the challenge statement — a smooth proper geometrically integral curve need
+>    not have a `k`-rational point. The alternative is to étale-sheafify the
+>    Picard functor and drop the hypothesis, which is Kleiman's own formulation
+>    and needs no section precisely because sheafifying supplies étale-locally
+>    what the section would supply globally. Mathlib v4.31 does carry the étale
+>    topology, so this is a design decision, not a platform limitation. Open with
+>    the human as inbox `I-0372`, roadmap node `AJC.picrep.rational-point`.
+>    Neither branch is assumed anywhere in this plan.
+> 2. *Cluster P's provenance.* Cluster P (χ-ledger, section drops, uniform `H¹`
+>    vanishing) is the longest pole, and the sibling
+>    `Algebraic-Jacobian-Challenge-Rebuild` carries a large sorry-free
+>    `RiemannRoch/` development covering much of it. Whether each statement is
+>    reused, ported, adapted or rederived is being decided theorem by theorem;
+>    the milestones below assume none of it has landed.
+>
+> **Axiom frontier.** `scripts/axiom-frontier.lean` (run with `lake env lean`)
+> is the reproducible check that a milestone claimed clean actually is. Note that
+> `#print axioms` on a theorem that *quantifies over* a gate reports clean axioms
+> regardless, because the hypothesis is discharged by the caller — measure at a
+> call site where the instance is synthesised. `G5` below already says to verify
+> axiom-cleanliness of `instHasPicScheme`; the same discipline applies to every
+> gate discharge in the table.
+
 Target: `instHasPicScheme` — `MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Picard/FGAPicRepresentability.lean:305-309` (verified this session: `⟨sorry⟩` body at :309; statement `∃ X, Nonempty ((picSharp C).RepresentableBy X) ∧ LocallyOfFiniteType X.hom ∧ IsSeparated X.hom` under `[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom] [HasRationalPoint C]`). Project paths relative to `MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/`; mathlib paths relative to `.lake-packages/mathlib/Mathlib/`.
 
 ---
