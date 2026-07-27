@@ -63,7 +63,14 @@
   modules, up from 8; the whole committed tree is reachable from the project root.
   Two of its four structural fields are proved upstream (`Pic0.grpObj`,
   `Pic0.geometricallyIrreducible`); the other two, `Pic0.smooth` and `Pic0.proper`,
-  are still `sorry`.  Added to those are three named leaves in `Jacobian.lean`: the
+  are still `sorry` — but `Pic0.smooth` got materially smaller this week, in a way no
+  axiom count shows.  Its whole remaining content is geometric reducedness of `Pic⁰`:
+  Mathlib's public `smooth_of_grpObj` already performs the translation argument over an
+  arbitrary field, and the two other inputs it needs are landed here.  So that obligation
+  is Cartier's theorem in characteristic zero, and a genuine characteristic-`p` statement
+  otherwise — not the tangent-space-plus-translation construction its own docstring
+  planned.  `Pic0.proper` is unaffected.  Added to those are three named leaves in
+  `Jacobian.lean`: the
   rational point above, refining smoothness of `Pic⁰` to relative dimension
   `genus C`, and the Albanese property over an arbitrary base field.  Both of the
   latter two now have their landed half stated at the headline as a compiled theorem,
