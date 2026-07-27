@@ -83,11 +83,17 @@ the base divisor `D₀` are all fixed.  It is therefore strictly weaker than the
 things downstream consumers eventually want.  Of those two, the first is still open
 anywhere in this project and the second is now proved elsewhere in the lane:
 
-* **extension uniformity** — the *same* `b` for every field extension `κ/k`.
-  Needs flat base change of the bound along `k → κ`; nothing here quantifies over
-  extensions, and note that even the *statement* needs the base-changed cover
-  (`RiemannRoch/CurveBaseChange.lean` supplies `C_κ` as an AJC curve, but not the
-  transported 2-affine cover data on which `Ȟ¹` here is pinned).
+* **extension uniformity** — the *same* `b` for every field extension `κ/k`.  Needs flat base
+  change of the bound along `k → κ`; nothing here quantifies over extensions.
+
+  An earlier version of this paragraph added that even the *statement* was unavailable, for
+  want of transported cover data.  **That was wrong**: `CurveBaseChange.lean` §3's
+  `AffineCoverMVSquare.baseChangeField` does transport a 2-affine cover to `C_κ`, and its
+  opens are what `Ȟ¹` consumes.  The predicate is written down as
+  `Adelic.UniformlyBoundedVanishing` (`Adelic/ResidueField.lean` §5).  It is **statable and
+  open** — the two genuinely missing inputs are flat base change for the section spaces
+  (`Γ(C_κ, 𝒪(D_κ)) ≃ Γ(C,𝒪(D)) ⊗_k κ`) and a `WeilDivisor` pullback along `C_κ ⟶ C`, neither
+  of which is a cover-transport problem.
 * **global generation** above the bound.  Needs `Ȟ¹(D − x) = 0` at every closed
   point `x`, i.e. the bound raised by the maximal residue degree, plus the
   evaluation-surjectivity argument.  **Now proved**, in

@@ -70,9 +70,12 @@ With this file the ledger of gaps reads:
    three named inputs (base vanishing, peel, closed ledger); the first two are jointly
    equivalent to cone-vanishing (`coneVanishing_iff_base_and_peel`), so this is a
    reduction and not a discharge.
-2. **Extension uniformity** — still untouched, and still not even *statable*: the
-   invariants here are pinned on a chosen 2-affine cover, and
-   `RiemannRoch/CurveBaseChange.lean` does not transport that cover to `C_κ`.
+2. **Extension uniformity** — still unproved, but **statable**, as
+   `Adelic.UniformlyBoundedVanishing` (`Adelic/ResidueField.lean` §5).  An earlier version of
+   this entry said "not even *statable*: the invariants here are pinned on a chosen 2-affine
+   cover, and `RiemannRoch/CurveBaseChange.lean` does not transport that cover to `C_κ`" — the
+   second half is false, `AffineCoverMVSquare.baseChangeField` transports it.  What is missing
+   is flat base change for the section spaces and a `WeilDivisor` pullback along `C_κ ⟶ C`.
 3. **Global generation** — **this file**, conditional on exactly the same inputs as
    (1) and nothing more, with the threshold shifted by the residue degree.  The
    pointwise form (`exists_bound_generatedAt`) is unconditional in `P`; the *uniform*

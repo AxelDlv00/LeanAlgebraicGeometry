@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.RiemannRoch.Adelic.LedgerClosure
 import AlgebraicJacobian.RiemannRoch.Adelic.GateInstances
 import AlgebraicJacobian.RiemannRoch.Adelic.FiniteMapToP1
+import AlgebraicJacobian.RiemannRoch.CurveBaseChange
 import AlgebraicJacobian.Picard.TangentSpaceStalkAlgebra
 
 /-!
@@ -554,6 +555,83 @@ theorem exists_bound_ell_eq_degree_of_isAlgClosed_curve [IsAlgClosed k]
   exact hb D hD
 
 end Discharge
+
+/-! ## §5. Extension uniformity: the statement, at last written down
+
+The lane's docstrings (`BoundedVanishing.lean`, `GlobalGeneration.lean` §"three gaps",
+`SectionBounds.lean` §"What is NOT proved here") record gap (2), **extension uniformity**, as
+not merely unproved but *not statable*: "the invariants here are pinned on a chosen 2-affine
+cover, and `RiemannRoch/CurveBaseChange.lean` does not transport that cover to `C_κ`".  A
+memory note to the same effect warned against re-planning it wrongly.
+
+**That is too strong, and this section corrects it.**  `CurveBaseChange.lean` §3 *does*
+transport a cover: `AffineCoverMVSquare.baseChangeField` produces a bundled 2-affine cover of
+`C_κ` from one of `C`, and its `U₁`/`U₂` are ordinary `Opens`, which is what `chi`, `ell`,
+`h1dim` and `H1Mod` consume.  Together with the `κ`-algebra on `K(C_κ)` and the
+`IsConstantField` gate — both available from `GateInstances.lean` applied to
+`Scheme.baseChangeField C κ`, whose curve instances `CurveBaseChange.lean` §2 supplies — the
+uniformity predicate can be written down.  `UniformlyBoundedVanishing` below does that.
+
+So the honest status of gap (2) is: **statable, and open**.  That is a weaker claim than
+"proved" and a stronger one than "not statable", and the distinction matters because the two
+call for different next steps — the second says build cover transport first, the first says the
+transport exists and what is missing is the mathematics of flat base change for the invariants.
+
+What is genuinely missing, stated as precisely as I can:
+
+* `ℓ`, `h¹` and `χ` are `κ`-dimensions on `C_κ` and `k`-dimensions on `C`.  Uniformity needs
+  them *compared*, which is flat base change for the section spaces —
+  `Γ(C_κ, 𝒪(D_κ)) ≃ Γ(C, 𝒪(D)) ⊗_k κ` — and no such comparison exists in this project.
+* Even the divisor correspondence is missing: `D ↦ D_κ` requires pulling a Weil divisor back
+  along `C_κ ⟶ C`, and prime divisors need not stay prime (a closed point can split).  There is
+  no `WeilDivisor` pullback in AJC.
+
+Neither is a cover-transport problem.  Recording the predicate without either of them is
+deliberate: it makes the gap a statement someone can attack, rather than a paragraph asserting
+it cannot be written.
+-/
+
+section Uniformity
+
+variable {k : Type u} [Field k]
+
+/-- **The extension-uniform bounded-vanishing predicate** — cluster P's gap (2), written down.
+
+`UniformlyBoundedVanishing C S` says: there is a **single** threshold `b`, independent of the
+extension, such that for every field extension `κ/k` and every Weil divisor `D` of the
+base-changed curve `C_κ` with `deg_κ D ≥ b`, the cover cohomology `Ȟ¹(D)` computed on the
+base-changed cover `S_κ` vanishes.
+
+Contrast `exists_bound_subsingleton_h1Mod`, which fixes `k`, the cover and the base divisor:
+there the bound may depend on all three.  Here `b` is chosen before `κ` is.
+
+This is a **definition, not a theorem** — nothing below proves it, and §5's docstring lists the
+two genuinely missing inputs (flat base change for the section spaces, and a `WeilDivisor`
+pullback along `C_κ ⟶ C`).  Its value is that the predicate typechecks, which the lane's
+docstrings claimed it could not. -/
+def UniformlyBoundedVanishing (C : Over (Spec (CommRingCat.of k)))
+    [IsProper C.hom] [GeometricallyIntegral C.hom] [SmoothOfRelativeDimension 1 C.hom]
+    (S : C.left.AffineCoverMVSquare) : Prop :=
+  ∃ b : ℤ, ∀ (κ : Type u) (_ : Field κ) (_ : Algebra k κ),
+    ∀ D : (Scheme.baseChangeField C κ).left.WeilDivisor,
+      b ≤ degK κ D → Subsingleton
+        (H1Mod κ (S.baseChangeField κ).U₁ (S.baseChangeField κ).U₂ D)
+
+/-! **One thing I could not state, recorded rather than papered over.**  The obvious sanity
+check on the predicate — instantiate at `κ = k` and read off a single-field bound on `C_k` —
+does not elaborate: it exceeds the `whnf` heartbeat limit, because supplying `Field k` and
+`Algebra.id k` positionally forces Lean to unfold the base-change pullback and re-synthesise
+the whole curve-instance tower inside `H1Mod`.  Raising `maxHeartbeats` would hide a real cost
+rather than address it, and the natural fix — restating the predicate with `[Field κ]`
+`[Algebra k κ]` as instance binders and quantifying over `κ` alone — changes the predicate's
+shape, so I have left the definition as the faithful `∀ (κ) (_ : Field κ) (_ : Algebra k κ)`
+form and recorded the limitation here.
+
+So the predicate typechecks but is not yet *convenient*: nothing has been instantiated at any
+particular `κ`, including the trivial one.  A consumer should expect to spend effort on the
+instance plumbing before using it. -/
+
+end Uniformity
 
 end Adelic
 end AlgebraicGeometry
