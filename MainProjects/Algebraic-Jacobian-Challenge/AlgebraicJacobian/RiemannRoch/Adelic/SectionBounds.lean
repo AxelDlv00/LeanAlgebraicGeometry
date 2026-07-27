@@ -326,6 +326,25 @@ variable (k : Type u) [Field k] {X : Scheme.{u}} [IsIntegral X]
     [IsLocallyNoetherian X] [Scheme.IsRegularInCodimensionOne X]
     [Algebra k X.functionField] [IsConstantField k X] (U₀ U₁ : X.Opens)
 
+/-- **The ledger holds on list-effective divisors, given the one-point bump.**
+`chi_telescope_list` computes `χ(Σ_{P ∈ L} P)` as `χ(0) + Σ_{P ∈ L} deg P`, and
+`degK_divisorOfList` computes `deg_k` of the same divisor as the same sum, so the
+two agree: `χ(D) = χ(0) + deg_k D` for `D = divisorOfList L`.
+
+This is what pins `degK` as *the* degree of the ledger rather than one weighting
+among several, and it shows the `hledger` hypothesis of this section is not
+idle — it holds wherever the one-point bump `hbump` does, which is one application
+of `chi_add_eq_residueDeg` per step.  What `hbump` still costs is the ledger's
+connecting/surjectivity data plus the strong-approximation input, and extending
+from list-effective divisors to *all* divisors additionally needs the negative
+part; both are why the general ledger is a hypothesis and not a theorem here. -/
+theorem chi_divisorOfList_eq_degK (L : List X.PrimeDivisor)
+    (hbump : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
+      chi k U₀ U₁ (pointDivisor P + E) = chi k U₀ U₁ E + residueDeg k P) :
+    chi k U₀ U₁ (divisorOfList L) =
+      chi k U₀ U₁ 0 + degK k (divisorOfList L : X.WeilDivisor) := by
+  rw [chi_telescope_list k U₀ U₁ L hbump, degK_divisorOfList]
+
 /-- **The Riemann inequality in closed weighted form.**  Given the closed ledger,
 `deg_k D + χ(0) ≤ ℓ(D)` for every `D` — the `h¹ ≥ 0` half applied to the
 telescoped Euler characteristic.  (This is `Adelic.riemann_inequality` with its
