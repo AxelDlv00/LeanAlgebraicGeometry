@@ -230,7 +230,9 @@ dimension is onto (`LinearMap.injective_iff_surjective_of_finrank_eq_finrank`).
 
 Note which finiteness is needed and which is not: `Module.Finite k (sectionSub k ⊤ D)`
 enters through rank–nullity, and `Module.Finite k (localStepTgt k P 1)` is the residue
-finiteness `[κ(P):k] < ∞` — the same gated keystone input node N14 already takes. -/
+finiteness `[κ(P):k] < ∞` — the same binder node N14 takes, and no longer an open gate:
+`Adelic.finite_localStepTgt_one_of_isAlgClosed_curve` discharges it on curve hypotheses.
+The section finiteness is a different matter and remains open. -/
 theorem evalMap_surjective
     (D : X.WeilDivisor) (P : X.PrimeDivisor)
     (hledgerD : chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)

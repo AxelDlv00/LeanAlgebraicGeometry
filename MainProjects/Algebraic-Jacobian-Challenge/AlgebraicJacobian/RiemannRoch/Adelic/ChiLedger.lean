@@ -598,8 +598,10 @@ finite-dimensional `k`-vector space `V` (with `V = κ(P)` and
 The proof composes the two injections `Γ(U,𝒪(D'))/Γ(U,𝒪(D)) ↪ κ(P)-target ↪ V`:
 `localStepMapₖ_injective` (the elementary kernel computation) and the residue
 embedding `ι` (the DVR layer), reading off the `finrank` inequality.  The residue
-finiteness `Module.Finite k V` is the gated keystone input (`[κ(P):k] < ∞` for a
-closed point of a finite-type curve), not re-proved here. -/
+finiteness `Module.Finite k V` is a binder here (`[κ(P):k] < ∞` for a closed point of a
+finite-type curve) and is not proved in this file; it is discharged for a curve over an
+algebraically closed base in `Adelic/ResidueField.lean`
+(`finite_localStepTgt_one_of_isAlgClosed_curve`). -/
 theorem localStep_finrank_le_residueEmbedding {U : X.Opens} {P : X.PrimeDivisor}
     (hPU : P.point ∈ U) {D D' : X.WeilDivisor}
     (hstep : (show X.PrimeDivisor →₀ ℤ from D') P =
@@ -746,8 +748,18 @@ residue degree `deg P = [κ(P) : k]`.  This is the honest conclusion of N14: the
 composite of the elementary kernel injection (`localStepMapₖ_injective`) with the
 uniformizer-power residue embedding (`residueShift_injective`).  The finiteness of
 `κ(P)` over `k` — `[κ(P):k] < ∞`, the residue field of a closed point of a
-finite-type `k`-curve — is the gated keystone input `[Module.Finite k κ(P)]`, not
-re-proved here. -/
+finite-type `k`-curve — enters as the binder `[Module.Finite k κ(P)]` and is not proved in
+this file.
+
+It is no longer an open gate, though.  `Adelic/ResidueField.lean` proves it for a prime
+divisor of a curve over an algebraically closed base
+(`finite_localStepTgt_one_of_isAlgClosed_curve`), and more generally from approximation by
+constants alone (`finite_localStepTgt_one_of_hasRationalResidues`) — the quotient is spanned
+by the class of `1`, so finiteness is a *consequence* of the residue statement rather than a
+prerequisite for it.  The binder is kept here rather than replaced by a global instance, so
+that this file stays independent of the curve hypotheses and because a global instance would
+fire during synthesis inside every lane statement; see the instance-diamond note in that
+module. -/
 theorem localStep_finrank_le {U : X.Opens} {P : X.PrimeDivisor}
     (hPU : P.point ∈ U) {D D' : X.WeilDivisor}
     (hstep : (show X.PrimeDivisor →₀ ℤ from D') P =
