@@ -177,8 +177,14 @@ Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
   first of the three is a genuine discharge and measures clean; the other two record a
   distance and carry `sorryAx`, and the probe's §0 says which is which and why.
 - [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean): the axiom-frontier
-  probe, and the two reachability measurements in its header (headline cone, and
-  whether every module on disk is rooted at all).
+  probe, and the three companion measurements in its header: reachability of the
+  headline cone, whether every module on disk is rooted at all, and whether every
+  blueprint proof-level `\leanok` is honest.  The last is a join against the probe's own
+  output rather than a reading pass, because a `\leanok` is a local mark while the defect
+  is transitive — a proof written in Lean is still not proved if it routes through a
+  `sorry`.  An audit by eye reported zero such marks one session before the join found
+  three.  Statement-level marks on `sorry` carriers are a different thing and are
+  legitimate: they claim the signature is formalised.
 - [`blueprint/web/index.html`](blueprint/web/index.html): generated mathematical blueprint.
 - [`analogies/README.md`](analogies/README.md): index to the historical design notes.
 - [`../Algebraic-Jacobian-Challenge-Rebuild/README.md`](../Algebraic-Jacobian-Challenge-Rebuild/README.md):
