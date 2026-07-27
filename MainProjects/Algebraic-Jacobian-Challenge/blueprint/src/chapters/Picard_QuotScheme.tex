@@ -4481,13 +4481,16 @@ substrate tensor \(\mathrm{tensorObj}(A,B)\) (\cref{def:scheme_modules_tensorobj
 \section{The relative-divisor functor}
 \label{sec:div_functor}
 
-Grothendieck constructed the Picard scheme by taking a suitable family of
-effective divisors and forming the quotient modulo linear equivalence.  This
-section defines the parameter functor of that family: the
-relative-effective-divisor functor \(\Div_{X/S}\), encoded inside the Hilbert
-functor \(\Hilb_{X/S} = \Quot_{\mathcal O_X/X/S}\) (before the
+In Grothendieck's quotient route to the Picard scheme --- the route set beside
+the Milne--Koll\'ar one in \cref{sec:fga_pic_setup}, and not the one the
+formalisation follows --- the Picard scheme arises from a family of effective
+divisors modulo linear equivalence.  This section defines the parameter functor
+of that family: the relative-effective-divisor functor \(\Div_{X/S}\), encoded
+inside the Hilbert functor \(\Hilb_{X/S} = \Quot_{\mathcal O_X/X/S}\) (before the
 Hilbert-polynomial decomposition) as the quotients of
-\(\mathcal O_{X_T}\) whose kernel ideal is invertible.
+\(\mathcal O_{X_T}\) whose kernel ideal is invertible.  The functor is a piece of
+mathematics in its own right, and the divisor substrate it rests on is shared
+with the committed route.
 
 \begin{definition}[Family of relative effective divisors]\leanok
   \label{def:div_family}
@@ -8406,11 +8409,14 @@ Relative-spectrum gluing from \cref{chap:Picard_RelativeSpec} constructs
 the affine charts, while
 \cref{thm:flattening_stratification_exists} from
 \cref{chap:Picard_FlatteningStratification} provides the flattening stratum.
-The Picard construction in \cref{chap:Picard_FGAPicRepresentability}
-applies \cref{thm:quot_representable} to the special case
-\(E = \mathcal{O}_C\) on a smooth proper curve \(C/k\), giving the Hilbert
+Downstream, the special case \(E = \mathcal{O}_C\) of
+\cref{thm:quot_representable} on a smooth proper curve \(C/k\) gives the Hilbert
 scheme \(\Hilb_{C/k} = \Quot^{\Phi,\mathcal{O}_C(1)}_{\mathcal{O}_C/C/k}\)
-and its open subscheme \(\mathrm{Div}_{C/k}\) of relative effective divisors.
+and its open subscheme \(\mathrm{Div}_{C/k}\) of relative effective divisors:
+the engine of the quotient route to the Picard scheme, which
+\cref{sec:fga_pic_setup} sets beside the Milne--Koll\'ar route the formalisation
+follows.  The substrate developed in this chapter --- Hilbert polynomial,
+Grassmannian scheme, graded algebra --- is consumed by either route.
 
 \section{Out of scope}
 \label{sec:quot_out_of_scope}
@@ -8431,8 +8437,8 @@ The following applications and refinements are treated elsewhere:
     \(\Phi_{\mathcal{F},s}\) with the Euler-characteristic Hilbert polynomial
     for \(m \gg 0\).
   \item \textbf{Identification with \(\mathbb{P}^n\) and relative
-    Grassmannian variants} (Nitsure \S 1, Exercises (1)--(4)) --
-    optional applications, not consumed by Route A.
+    Grassmannian variants} (Nitsure \S 1, Exercises (1)--(4)) --- optional
+    applications, consumed by nothing in this development.
   \item \textbf{Group-scheme structure on \(\Pic_{C/k}\)}. The
     abelian-group-scheme refinement belongs to the FGA
     Picard-representability construction.

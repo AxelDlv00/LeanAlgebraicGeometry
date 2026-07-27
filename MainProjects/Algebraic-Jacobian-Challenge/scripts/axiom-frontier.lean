@@ -106,6 +106,18 @@ open AlgebraicGeometry AlgebraicGeometry.Scheme
 -- that a hypothesis was moved.
 #print axioms AlgebraicGeometry.geometricallyIntegral_of_curve
 
+-- Leaf A over an algebraically closed field, and the witness assembled without it.  The
+-- FIRST of these is a genuine discharge and reads clean, which distinguishes it from leaf B's
+-- and leaf C's `_of_isAlgClosed` companions: those record a distance and leak.  The SECOND
+-- still leaks, and the gap between the two lines is the informative measurement --- it says
+-- the residue of the witness over `k̄` is exactly the four ordinary obligations
+-- (`Pic0.smooth`, `Pic0.proper`, leaves B and C) and no longer includes a FALSE hypothesis.
+-- That distinction matters because trap (c) is invisible to this probe: a witness resting on
+-- an inconsistent leaf reports the same `sorryAx` as one resting on unproved-but-true leaves,
+-- so which kind of obligation remains has to be established by exhibiting the discharge.
+#print axioms AlgebraicGeometry.hasRationalPoint_of_curve_of_isAlgClosed
+#print axioms AlgebraicGeometry.picardJacobianWitnessOfIsAlgClosed
+
 -- Leaf B at the strength the landed development reaches: the dimension count
 -- `dim T_e Pic⁰_{C/k} = genus C` holds at the headline with no transport, so what leaf B
 -- still owes is `Pic0.smooth` plus the passage from a tangent-space dimension to Mathlib's

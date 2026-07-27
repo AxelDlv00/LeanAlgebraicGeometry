@@ -8,5 +8,5 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.homomorphism
 type: lean
-updated: '2026-07-28T00:41:22'
+updated: '2026-07-28T01:58:31'
 ---

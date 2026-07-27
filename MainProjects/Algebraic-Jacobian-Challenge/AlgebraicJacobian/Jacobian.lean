@@ -39,13 +39,27 @@ not three: those two upstream, plus the three leaves below, which are the ones n
 here. Proving only the three would leave `sorryAx` in the witness — verified with
 `scripts/axiom-frontier.lean`.
 
+One of the five is of a different kind from the other four, and the difference decides
+what can be done about it. `Pic0.smooth`, `Pic0.proper` and leaves B and C are *unproved*:
+each is a true statement awaiting a proof. Leaf A is *false* over a general base field, so
+`picardJacobianWitness` rests on an inconsistent hypothesis and its consequences are
+vacuously true — a state no axiom check can distinguish from an honest one. Over an
+algebraically closed field that leaf is a theorem
+(`hasRationalPoint_of_curve_of_isAlgClosed`), and `picardJacobianWitnessOfIsAlgClosed`
+assembles the same witness on the remaining four obligations alone. That is the version
+of the headline whose open obligations are all of the ordinary kind.
+
 The three leaves are each stated at exactly the strength the assembly consumes:
 
 - `hasRationalPoint_of_curve` — the one genuine hypothesis gap: a `k`-rational point on
   `C`, which the challenge hypotheses do not give and which is false in general. It is a
   gap marker to be *replaced*, not proved (see the leaf's docstring). The former
   combined leaf also asserted geometric integrality; that half is now the theorem
-  `geometricallyIntegral_of_curve`, so the gap is exactly the rational point.
+  `geometricallyIntegral_of_curve`, so the gap is exactly the rational point. Over an
+  algebraically closed field the gap closes outright:
+  `hasRationalPoint_of_curve_of_isAlgClosed` is a theorem with clean axioms, so the leaf
+  is a gap only over a general base field, and `picardJacobianWitnessOfIsAlgClosed`
+  assembles the witness over `k̄` on four obligations rather than five.
 - `smoothOfRelativeDimension_genus_pic0` — bare smoothness of `Pic⁰_{C/k}` refined to
   relative dimension `genus C`. Note this refines `Pic0.smooth`, which is itself
   unproved, so the leaf presupposes an obligation rather than resting on one.
@@ -71,6 +85,10 @@ The file contains:
 - `finrank_tangentSpace_pic0_eq_genus` and `isAlbanese_pic0_of_isAlgClosed`: the parts of
   leaves B and C that the landed development already proves, stated at the headline so
   that each leaf's remaining distance is compiler-checked rather than described.
+- `hasRationalPoint_of_curve_of_isAlgClosed` and `picardJacobianWitnessOfIsAlgClosed`:
+  leaf A discharged over an algebraically closed field, and the witness assembled without
+  the inconsistent leaf. Unlike the two companions above these are axiom-clean and are a
+  discharge rather than a record of distance.
 - the three leaves above, and `picardJacobianWitness`, the Albanese witness
   `J = Pic⁰_{C/k}` assembled from them with no `sorry` of its own.
 - `nonempty_jacobianWitness`: existence of an Albanese witness for every curve,
@@ -284,6 +302,30 @@ theorem hasRationalPoint_of_curve (C : Over (Spec (.of k)))
     Scheme.HasRationalPoint C :=
   sorry
 
+/-- **Leaf A over an algebraically closed field: a theorem, not a decision.**
+
+The rational point is the one leaf of the witness whose statement is *false* over a general
+base field, and therefore the one leaf that cannot be closed by proving it. Over an
+algebraically closed field it is not merely provable but proved, by the landed
+`Albanese.hasRationalPoint_of_isAlgClosed`: the curve is irreducible over the one-point base
+and locally of finite type, hence a Jacobson space, so it has a closed point, and over
+`k = k̄` a closed point *is* a `k`-rational section.
+
+This delimits the open decision precisely. What is undecided is not whether a smooth proper
+geometrically irreducible curve has a rational point over *some* field — it does over `k̄` —
+but which of the two honest formulations the project claims over an arbitrary `k`: represent
+`Pic^♯_{C/k}` and carry `C(k) ≠ ∅` as a hypothesis, or represent the étale sheafification
+`Pic_{(C/k)ét}` and carry no such hypothesis. Both remain recorded, neither is assumed.
+
+Unlike leaves B and C, whose `_of_isAlgClosed` companions record a *distance* and report
+`sorryAx`, this one is a genuine discharge: its axioms are `[propext, Classical.choice,
+Quot.sound]`. Over `k̄`, the witness's five obligations are therefore four —
+`Pic0.smooth`, `Pic0.proper`, and leaves B and C. -/
+theorem hasRationalPoint_of_curve_of_isAlgClosed [IsAlgClosed k] (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
+    Scheme.HasRationalPoint C :=
+  hasRationalPoint_of_isAlgClosed C
+
 /-- **Leaf B: the dimension refinement.**
 
 The landed `Scheme.Pic0.smooth` gives bare smoothness of `Pic⁰_{C/k}` over `k`; the
@@ -455,6 +497,37 @@ noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
     JacobianWitness C := by
   haveI := hasRationalPoint_of_curve C
+  exact
+    { J := Scheme.Pic0Scheme C
+      grpObj := (Scheme.Pic0.grpObj C).some
+      proper := Scheme.Pic0.proper C
+      smooth := Scheme.Pic0.smooth C
+      geomIrred := Scheme.Pic0.geometricallyIrreducible C
+      smoothGenus := smoothOfRelativeDimension_genus_pic0 C
+      isAlbaneseFor := fun P => isAlbanese_pic0 C _ _ _ _ P }
+
+/-- **The witness over an algebraically closed field, free of the inconsistent leaf.**
+
+Identical to `picardJacobianWitness` except that the rational point is supplied by the
+theorem `hasRationalPoint_of_curve_of_isAlgClosed` rather than by the gap marker
+`hasRationalPoint_of_curve`. The distinction is not cosmetic and is the reason this
+definition exists separately.
+
+`hasRationalPoint_of_curve` is *false* as stated, so every consequence of
+`picardJacobianWitness` is a consequence of an inconsistent hypothesis: true, but with no
+content, and no axiom check can see the difference. Here the same assembly runs on a
+hypothesis that holds, so the four obligations it does rest on — `Pic0.smooth`,
+`Pic0.proper`, and leaves B and C — are the whole of what stands between this witness and
+an Albanese object for a curve over `k̄`. Closing those four closes this definition; closing
+them would *not* give `picardJacobianWitness` content over a general field, because leaf A
+must be replaced there rather than proved.
+
+Both are kept: this one records what is actually reachable, and the general one keeps the
+open decision visible where a reader of the headline meets it. -/
+noncomputable def picardJacobianWitnessOfIsAlgClosed [IsAlgClosed k] (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
+    JacobianWitness C := by
+  haveI := hasRationalPoint_of_curve_of_isAlgClosed C
   exact
     { J := Scheme.Pic0Scheme C
       grpObj := (Scheme.Pic0.grpObj C).some

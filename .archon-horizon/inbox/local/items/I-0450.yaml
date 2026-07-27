@@ -1,0 +1,49 @@
+id: I-0450
+provider: local
+kind: issue
+body: 'Two smaller defects in the LedgerClosure docstrings (run 0055 s0008)
+
+
+  Found by work-reviewer audit. Both are prose, not proofs; the Lean in LedgerClosure.lean
+  is sound.
+
+
+  (a) SectionBounds.lean:542-543 is now self-contradicting. The same paragraph that
+  was rewritten to say the ledger follows from the bump at every divisor ends with
+  the un-updated sentence: "The ledger itself holds on the whole *effective* cone
+  from the one-point bump (Adelic/LedgerClosure.lean)." That is the stale claim the
+  sweep set out to remove, left in the very item it was correcting. Also at :330 SectionBounds
+  still lists a "sorry" reference chain that reads as if the section had one.
+
+
+  (b) The self-criticism in LedgerClosure.lean:355-359 -- "the primes this section
+  disposes of are the FEW, not the many" -- is honest about count but understates
+  the lemmas structural value, and the diagnosis it offers ("one cannot shrink the
+  exceptional set by choosing a better cover, because it is already nearly empty")
+  points away from the real content. The off-overlap peel is free precisely BECAUSE
+  A(1.P+E) = A(E) there, which is the same computation that shows the ledger exact
+  sequence gives chi jump 0 rather than residueDeg P at those primes (see the companion
+  issue on the hbump cost claim). So section 3 is not a small saving on a residual
+  leaf: it is the evidence that hbump is inconsistent with the lanes own machinery
+  off the overlap. Worth re-reading in that light rather than as modesty about a count.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-27T18:08:35.309444+00:00'
+updated_at: '2026-07-27T18:08:35.309456+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0008-horizon-ajc-rr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

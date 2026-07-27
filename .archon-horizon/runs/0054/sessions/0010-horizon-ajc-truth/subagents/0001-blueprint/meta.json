@@ -1,0 +1,11 @@
+{
+  "name": "blueprint",
+  "native_subagent_id": "toolu_bdrk_01W3TBgfEFr8xQ8h4pv63AVr",
+  "parent_session": "0010-horizon-ajc-truth",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}

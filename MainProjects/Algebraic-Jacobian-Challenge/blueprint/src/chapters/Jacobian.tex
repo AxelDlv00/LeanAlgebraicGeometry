@@ -139,7 +139,9 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   witness is required for every smooth proper geometrically irreducible curve.
   Geometric integrality is automatic (\cref{lem:curve_geometrically_integral}); the
   rational point is not, and is the single genuine gap
-  (\cref{lem:curve_hypothesis_gap}).
+  (\cref{lem:curve_hypothesis_gap}), a gap only over a general base field ---
+  over an algebraically closed field it is \cref{lem:curve_rational_point_algClosed}
+  and the witness is \cref{def:picardJacobianWitnessOfIsAlgClosed}.
 
   Second, the smoothness supplied by \cref{thm:pic0_isAbelianVariety} carries no
   relative dimension, while the witness records smoothness at the specific
@@ -237,7 +239,69 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   \(C(k) \neq \emptyset\) as a hypothesis of the Jacobian itself, which proves
   something weaker than intended --- or replacing the input by a representability
   statement that needs no section, namely representability of the \'etale
-  sheafification (\cref{sec:fga_pic_setup}). That choice is open.
+  sheafification (\cref{sec:fga_pic_setup}). That choice is open. The algebraically
+  closed case is not affected by it and is \cref{lem:curve_rational_point_algClosed}.
+\end{proof}
+
+\begin{lemma}[A curve over an algebraically closed field has a rational point]
+  \label{lem:curve_rational_point_algClosed}
+  \leanok
+  \lean{AlgebraicGeometry.hasRationalPoint_of_curve_of_isAlgClosed}
+  \uses{def:has_rational_point}
+  Let \(C\) be a smooth proper geometrically irreducible curve over an algebraically
+  closed field \(\bar k\). Then \(C\) has a \(\bar k\)-rational point.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  Geometric irreducibility over the one-point base \(\Spec \bar k\) makes the
+  underlying space of \(C\) irreducible, in particular nonempty, and smoothness makes
+  \(C \to \Spec \bar k\) locally of finite type, so that space is a Jacobson space.
+  A nonempty Jacobson space has a closed point \(x\). Over an algebraically closed
+  field the residue field at a closed point of a scheme locally of finite type is
+  \(\bar k\) itself, so \(x\) is the image of a section of \(C \to \Spec \bar k\),
+  which is the required rational point.
+\end{proof}
+
+\begin{remark}[Which leaf is false and which is merely unproved]
+  \label{rem:rational_point_scope}
+  \uses{lem:curve_hypothesis_gap, lem:curve_rational_point_algClosed}
+  \Cref{lem:curve_hypothesis_gap} and \cref{lem:curve_rational_point_algClosed} state the
+  same conclusion under different hypotheses, and the pair delimits what is open. Over an
+  arbitrary base field the statement is false, so it admits no proof and the witness built
+  on it rests on an inconsistent hypothesis --- its consequences are vacuously true. Over
+  an algebraically closed field the same statement is a theorem. So the open question is
+  not the existence of a rational point in general, but which of two formulations is
+  claimed over an arbitrary \(k\): representability of \(\Pic^\sharp_{C/k}\) with
+  \(C(k) \neq \emptyset\) as a hypothesis, or representability of the \'etale
+  sheafification \(\Pic_{(C/k)\et}\), which needs no section
+  (\cref{sec:fga_pic_setup}). The remaining obligations of the witness ---
+  \cref{thm:pic0_smooth}, \cref{thm:pic0_proper},
+  \cref{lem:pic0_relative_dimension_genus} and \cref{lem:pic0_isAlbanese_all_points} ---
+  are of the other kind: true statements awaiting proofs.
+\end{remark}
+
+\begin{theorem}[A Jacobian witness over an algebraically closed field]
+  \label{def:picardJacobianWitnessOfIsAlgClosed}
+  \lean{AlgebraicGeometry.picardJacobianWitnessOfIsAlgClosed}
+  \uses{def:JacobianWitness, def:picardJacobianWitness,
+    lem:curve_rational_point_algClosed}
+  Over an algebraically closed field \(\bar k\), the identity component
+  \(\Pic^0_{C/\bar k}\) carries a Jacobian witness for every smooth proper
+  geometrically irreducible curve \(C\), with no rational-point hypothesis.
+\end{theorem}
+
+\begin{proof}
+  \uses{lem:curve_rational_point_algClosed, thm:pic0_isAbelianVariety,
+    lem:pic0_relative_dimension_genus, lem:pic0_isAlbanese_all_points,
+    rem:rational_point_scope}
+  The construction is that of \cref{def:picardJacobianWitness}, with the
+  rational point supplied by \cref{lem:curve_rational_point_algClosed} instead of
+  assumed. Every other field of the witness is unchanged, so the open obligations are
+  \cref{thm:pic0_smooth}, \cref{thm:pic0_proper},
+  \cref{lem:pic0_relative_dimension_genus} and
+  \cref{lem:pic0_isAlbanese_all_points}, all of them true statements
+  (\cref{rem:rational_point_scope}).
 \end{proof}
 
 \begin{lemma}[Relative dimension of the identity component]

@@ -2,17 +2,7 @@
 \label{chap:Picard_LineBundleCoherence}
 % archon:covers AlgebraicJacobian/Picard/LineBundleCoherence.lean
 
-% STRATEGY NOTE. This chapter supplies the cheap, on-path half of the
-% line-bundle coherence requirement of the A.2.c Quot-scheme embedding
-% (\cref{chap:Picard_QuotScheme}, \cref{chap:Picard_FGAPicRepresentability}).
-% The Quot functor takes coherent quotients of a coherent sheaf; to feed it a
-% line bundle one must know that the line bundle is itself coherent, i.e. a
-% finitely presented \(\mathcal{O}\)-module. The embedding's input is a point of
-% the relative Picard scheme \(\Pic^0_{C/k}\), whose carrier is the
-% \emph{locally trivial} predicate \(\texttt{IsLocallyTrivial}\) of
-% \cref{chap:Picard_LineBundlePullback} (the project-side stand-in for an
-% invertible sheaf, a sheaf of \(\mathcal{O}\)-modules locally isomorphic to
-% \(\mathcal{O}\) of rank one). The chapter proves
+% SCOPE. This chapter proves that a locally trivial line bundle is coherent:
 % \(\texttt{IsLocallyTrivial} M \Rightarrow M.\mathtt{IsFinitePresentation}\),
 % together with a rank-one / flatness record. The general implication
 % ``\(M\) tensor-invertible \(\Rightarrow\) \(M\) locally free of rank one''
@@ -42,8 +32,8 @@ This is the rank-one case of Stacks Definition~17.25.1
 agrees with the classical ``locally free of rank one'' description by Stacks
 Lemma~17.25.4 (Tag~0B8M).
 
-The goal of the chapter is to record that such a module is \emph{coherent} in the
-sense the Quot construction consumes, namely finitely presented:
+The goal of the chapter is to record that such a module is \emph{coherent},
+namely finitely presented:
 \(M.\mathtt{IsFinitePresentation}\) in Mathlib's
 \(\mathtt{SheafOfModules.IsFinitePresentation}\) (built from a
 \(\mathtt{QuasicoherentData}\)). The mathematics is elementary: on each
@@ -336,12 +326,9 @@ of rank one, so it has a presentation with a single generator and no relations.
 \section{Rank one and flatness record}
 \label{sec:lbc_rank_flat}
 
-% NOTE. Mathlib (at the pin) has no SheafOfModules-level "locally free of rank r"
-% or "flat" predicate (verified absent: no SheafOfModules.IsLocallyFree). The
-% rank-one and flatness facts are therefore recorded chart-locally, as the data
-% the Quot embedding actually consumes, rather than as instances of a missing
-% global predicate. Project-side predicates may be introduced if a downstream
-% consumer needs them packaged; this is flagged for the plan agent.
+% NOTE. Rank-one freeness and flatness are local conditions, so they are
+% recorded chart-locally, on the trivialising charts themselves, rather than
+% through a global predicate.
 
 \begin{lemma}[Chart-local rank one and flatness]\leanok
   \label{lem:lbc_rank_flat}

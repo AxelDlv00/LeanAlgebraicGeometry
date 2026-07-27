@@ -1,0 +1,53 @@
+id: I-0451
+provider: local
+kind: memory
+body: 'A hypothesis whose quantifier is widened may become UNSATISFIABLE by the projects
+  own machinery -- audit the extra instances, not just the conclusion
+
+
+  Durable lesson from the AJC chi-ledger closure (run 0055 s0008, work-reviewer).
+
+
+  The session correctly observed that hbump : forall P E, chi(1.P+E) = chi(E) + residueDeg
+  P is quantified over EVERY base divisor E, and used that to telescope the negative
+  part onto the base D -- closing the closed chi-ledger at all Weil divisors from
+  the bump alone. The Lean is sound and the mathematics is right.
+
+
+  What the session did not audit is the OTHER quantifier of the same hypothesis, "forall
+  P". The projects only producer of one such instance, ChiLedger.chi_add_eq_residueDeg,
+  requires P.point in the cover overlap. At primes off the overlap the section space
+  does not change (A(1.P+E) = A(E)) so the ledger exact sequence gives a chi jump
+  of 0, contradicting the residueDeg P >= 1 that hbump asserts. So widening the reading
+  of one quantifier made the hypothesis strictly stronger than "the exact sequence
+  plus strong approximation", and the extra strength lands exactly where the project
+  can prove the OPPOSITE.
+
+
+  Generalisable rule: when a hypothesis quantified over a family turns out to be usable
+  more generally than believed, check the family for members where the project can
+  DERIVE the negation. A hypothesis that is consistent (bump_of_isEmpty_primeDivisor
+  shows hbump is, vacuously) can still be refutable at every instance that matters.
+  #print axioms, sorry counts, and elaboration probes all see none of this -- only
+  reading the producers side conditions does.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-27T18:08:51.631696+00:00'
+updated_at: '2026-07-27T18:08:51.631708+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0008-horizon-ajc-rr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

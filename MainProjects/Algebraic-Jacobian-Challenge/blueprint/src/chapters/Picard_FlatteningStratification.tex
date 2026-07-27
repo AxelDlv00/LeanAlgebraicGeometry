@@ -4,15 +4,19 @@
 \section{Setup and motivation}
 \label{sec:flatstrat_setup}
 
-The construction of the Quot scheme \(\Quot_{\F/X/S}^{\Phi,L}\) in Nitsure's exposition
-of Grothendieck's existence theorem (\cite{nitsure-hilbert-quot}, \S5) proceeds by
-embedding the functor of points of \(\Quot\) into a Grassmannian via Castelnuovo--Mumford
-regularity, then cutting out the locus of \emph{quotients with flat fibres of the
-prescribed Hilbert polynomial} by a closed-subscheme condition.  Cutting out this
-locus uses, as a primary technical input, the existence of the
-\emph{flattening stratification} of a coherent sheaf \(\F\) on a projective
-\(S\)-scheme: a finite collection of locally-closed subschemes of \(S\) on each of which
-the restriction of \(\F\) becomes flat.
+This chapter establishes the existence of the \emph{flattening stratification} of
+a coherent sheaf \(\F\) on a projective \(S\)-scheme: a finite collection of
+locally-closed subschemes of \(S\) on each of which the restriction of \(\F\)
+becomes flat, together with the universal property that a base change makes
+\(\F\) flat exactly when it factors through the stratification.
+
+The statement is a theorem of commutative algebra and scheme theory
+independent of any moduli construction.  It is the technical input by which
+Nitsure's exposition of Grothendieck's existence theorem
+(\cite{nitsure-hilbert-quot}, \S5) cuts the locus of \emph{quotients with flat
+fibres of the prescribed Hilbert polynomial} out of a Grassmannian, once the
+functor of points of \(\Quot_{\F/X/S}^{\Phi,L}\) has been embedded there via
+Castelnuovo--Mumford regularity.
 
 We work throughout with a noetherian base scheme \(S\), a projective morphism
 \(\pi : X \to S\), and a coherent \(\OO_X\)-module \(\F\). The conclusion of Nitsure's
@@ -2736,6 +2740,8 @@ locally closed condition in the construction of Quot schemes: a family of
 quotients has prescribed Hilbert polynomial precisely after its classifying
 morphism factors through the corresponding stratum.  For a smooth proper
 curve, \cref{cor:flattening_stratification_curve} gives this input after base
-change to an arbitrary noetherian scheme.  Combining the resulting Quot
-spaces with the relative Picard functor is a separate representability
-argument; it does not alter the flattening construction proved here.
+change to an arbitrary noetherian scheme.  Passing from Quot schemes to the
+representability of the relative Picard functor is the quotient route of
+\cref{sec:fga_pic_setup}, a separate argument resting on a descent step the
+formalisation instead avoids by the Milne--Koll\'ar route; either way it does
+not alter the flattening construction proved here.
