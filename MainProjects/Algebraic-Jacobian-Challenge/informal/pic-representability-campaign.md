@@ -30,6 +30,17 @@
 >    C.hom]` in the target statement above is *free* given the challenge
 >    hypotheses. What the owner must decide is only the rational point, and that
 >    half is genuinely false in general rather than merely unproved.
+>
+>    It narrowed again on 2026-07-28, in a direction that bounds the decision
+>    rather than settling it. Over an algebraically closed field the rational
+>    point is a *theorem*, not a decision:
+>    `hasRationalPoint_of_curve_of_isAlgClosed` (`Jacobian.lean`) is axiom-clean,
+>    routed through `Albanese.hasRationalPoint_of_isAlgClosed`, and
+>    `picardJacobianWitnessOfIsAlgClosed` assembles the headline witness over `k̄`
+>    on four obligations instead of five. So the branch point is exactly about
+>    what is claimed over an *arbitrary* base field. Neither branch is chosen, and
+>    nothing below assumes one; what is now settled is that the general-field leaf
+>    is the only place the decision bites.
 > 2. *Cluster P's provenance.* Cluster P (χ-ledger, section drops, uniform `H¹`
 >    vanishing) is the longest pole, and the sibling
 >    `Algebraic-Jacobian-Challenge-Rebuild` carries a large sorry-free

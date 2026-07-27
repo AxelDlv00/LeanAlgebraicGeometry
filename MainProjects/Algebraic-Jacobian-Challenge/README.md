@@ -119,6 +119,17 @@ and it is now proved rather than assumed.  The rational point is a genuine
 mathematical gap: the statement is *false* in general, so the leaf must be replaced
 by whichever branch the owner picks, never proved.
 
+The decision is also *bounded*, which is worth stating because the leaf's falsity
+invites the reading that nothing here is reachable.  Over an algebraically closed
+field the rational point is a theorem — `hasRationalPoint_of_curve_of_isAlgClosed`,
+axiom-clean — and `picardJacobianWitnessOfIsAlgClosed` builds the same witness with
+four open obligations rather than five.  What the owner decides is therefore what
+the project claims over an *arbitrary* base field, not whether the construction runs
+at all.  The distinction matters for reading the frontier: over `k̄` every remaining
+obligation is a true statement awaiting a proof, whereas the general-field witness
+rests on an inconsistent hypothesis and its consequences are vacuously true — a
+state no axiom check can distinguish from an honest one (trap (c) above).
+
 Cones closed: `AJC.substrate`, `AJC.linebundle`, `AJC.grquot`, `AJC.cech`.
 Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
 (Picard representability), `AJC.pic0av` (Pic⁰ is an abelian variety),
@@ -132,10 +143,12 @@ Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
   Jacobian witness interface and assembly point.  The witness is built from
   `Pic⁰_{C/k}` and depends on five stated obligations: `Pic0.smooth` and
   `Pic0.proper` upstream, plus three named leaves stated there.  98 modules are
-  reachable from it.  Two of the three leaves also carry a *companion theorem* stating
-  the part the landed development already proves — `finrank_tangentSpace_pic0_eq_genus`
-  and `isAlbanese_pic0_of_isAlgClosed` — so each leaf's remaining distance is
-  compiler-checked rather than described in prose.
+  reachable from it.  Each of the three leaves carries a *companion* stating what the
+  landed development already reaches — `hasRationalPoint_of_curve_of_isAlgClosed`,
+  `finrank_tangentSpace_pic0_eq_genus`, `isAlbanese_pic0_of_isAlgClosed` — so each
+  leaf's remaining distance is compiler-checked rather than described in prose.  The
+  first of the three is a genuine discharge and measures clean; the other two record a
+  distance and carry `sorryAx`, and the probe's §0 says which is which and why.
 - [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean): the axiom-frontier
   probe, and the two reachability measurements in its header (headline cone, and
   whether every module on disk is rooted at all).
