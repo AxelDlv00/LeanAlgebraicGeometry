@@ -142,6 +142,63 @@ theorem subsingleton_h1Mod_peel {D D' : X.WeilDivisor}
   rw [this]
   exact (coboundarySub k U₀ U₁ D').add_mem hxy hyB
 
+/-- **The peel relation `Peel D D'`.**  "Every overlap section of `𝒪(D')` agrees,
+modulo the coboundary `B(D')`, with an overlap section of `𝒪(D)`" — equivalently,
+the twist `Ȟ¹(D) → Ȟ¹(D')` is surjective.  Named so that it can be composed
+(`Peel.trans`) and so that consumers can discharge it one point at a time rather
+than in one step. -/
+def Peel (D D' : X.WeilDivisor) : Prop :=
+  ∀ x ∈ sectionSub k (U₀ ⊓ U₁) D', ∃ y ∈ sectionSub k (U₀ ⊓ U₁) D,
+    x - y ∈ coboundarySub k U₀ U₁ D'
+
+/-- **The peel relation is reflexive** (take `y = x`). -/
+theorem Peel.refl (D : X.WeilDivisor) : Peel k U₀ U₁ D D :=
+  fun x hx => ⟨x, hx, by simp⟩
+
+/-- **The peel relation composes.**  `Peel D₀ D₁` and `Peel D₁ D₂` give
+`Peel D₀ D₂`, provided `D₁ ≤ D₂` (so that `B(D₁) ⊆ B(D₂)`).
+
+This is what makes the peel hypothesis of `exists_bound_subsingleton_h1Mod`
+tractable: it need only be established for **one-point** bumps `E ↦ E + P`, then
+chained along an effective divisor.  Chaining one-point peels is the adelic
+analogue of AJCR's `peel_effective`, which peels a whole effective divisor in one
+sheaf-level step. -/
+theorem Peel.trans {D₀ D₁ D₂ : X.WeilDivisor}
+    (h₀₁ : Peel k U₀ U₁ D₀ D₁) (h₁₂ : Peel k U₀ U₁ D₁ D₂)
+    (hle : ∀ P : X.PrimeDivisor, (show X.PrimeDivisor →₀ ℤ from D₁) P ≤
+      (show X.PrimeDivisor →₀ ℤ from D₂) P) :
+    Peel k U₀ U₁ D₀ D₂ := by
+  intro x hx
+  obtain ⟨y, hy, hxy⟩ := h₁₂ x hx
+  obtain ⟨z, hz, hyz⟩ := h₀₁ y hy
+  refine ⟨z, hz, ?_⟩
+  have : x - z = (x - y) + (y - z) := by abel
+  rw [this]
+  exact (coboundarySub k U₀ U₁ D₂).add_mem hxy
+    (coboundarySub_mono k U₀ U₁ hle hyz)
+
+/-- **Chaining one-point peels along a list.**  If every one-point bump peels —
+`Peel E (1·P + E)` for every prime divisor `P` and every `E` — then `D₀` peels to
+`divisorOfList L + D₀` for every list `L`, i.e. to `D₀` plus an arbitrary effective
+divisor.  Induction on `L` with `Peel.trans`. -/
+theorem Peel.of_list (hstep : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
+      Peel k U₀ U₁ E (pointDivisor P + E))
+    (D₀ : X.WeilDivisor) (L : List X.PrimeDivisor) :
+    Peel k U₀ U₁ D₀ (divisorOfList L + D₀) := by
+  induction L with
+  | nil =>
+    have h0 : divisorOfList ([] : List X.PrimeDivisor) + D₀ = D₀ := by
+      rw [divisorOfList, zero_add]
+    rw [h0]
+    exact Peel.refl k U₀ U₁ D₀
+  | cons P L ih =>
+    have hassoc : divisorOfList (P :: L) + D₀ =
+        pointDivisor P + (divisorOfList L + D₀) := by
+      rw [divisorOfList]; abel
+    rw [hassoc]
+    refine ih.trans k U₀ U₁ (hstep P (divisorOfList L + D₀)) fun Q => ?_
+    exact le_add_pointDivisor (divisorOfList L + D₀) P Q
+
 /-- **Vanishing is a linear-equivalence invariant** (finiteness-free).  The
 multiplication isomorphism of `ClassInvariance.lean` is a `k`-linear isomorphism
 `Ȟ¹(D) ≃ₗ[k] Ȟ¹(D')` whenever `D' = D − div g`, and `Subsingleton` transports
@@ -268,6 +325,133 @@ theorem exists_bound_subsingleton_h1Mod
     rw [hDsub]
     exact sub_principal_apply hg P
   exact subsingleton_h1Mod_of_shift k U₀ U₁ hg hshift hpeeled
+
+omit [IsIntegral X] [IsNoetherian X] [X.IsRegularInCodimensionOne] in
+/-- **Every effective divisor is list-effective.**  An effective `E ≥ 0` is
+`Σ_{P ∈ L} 1·P` for some list `L` of prime divisors, multiplicity encoded by
+repetition.  Strong induction on the support: peel one support point `P₀`, replace
+`E` by `E − 1·P₀` (whose support is contained in that of `E`, and strictly smaller
+when `E(P₀) = 1`), recurse.
+
+Implemented as induction on `(Σ_P E(P)).toNat`, which strictly decreases at each
+peel because `E(P₀) ≥ 1` and every other coefficient is unchanged.  This discharges
+the list-effectivity bookkeeping of
+`exists_bound_subsingleton_h1Mod_of_pointPeel`.  Pure `Finsupp` combinatorics — the
+geometric instances play no role, hence the `omit`. -/
+theorem exists_divisorOfList_of_nonneg (E : X.WeilDivisor)
+    (hE : ∀ P : X.PrimeDivisor, 0 ≤ (show X.PrimeDivisor →₀ ℤ from E) P) :
+    ∃ L : List X.PrimeDivisor, E = divisorOfList L := by
+  classical
+  -- induct on the total (unweighted) mass of `E`
+  generalize hn : (Scheme.WeilDivisor.degree E).toNat = n
+  induction n generalizing E with
+  | zero =>
+    -- total mass 0 with all coefficients ≥ 0 forces `E = 0`
+    refine ⟨[], ?_⟩
+    rw [divisorOfList]
+    have hsum : (show X.PrimeDivisor →₀ ℤ from E).sum (fun _ n => n) = 0 := by
+      have hnn : 0 ≤ Scheme.WeilDivisor.degree E :=
+        Finset.sum_nonneg fun P _ => hE P
+      have hdeg : Scheme.WeilDivisor.degree E
+          = (show X.PrimeDivisor →₀ ℤ from E).sum (fun _ n => n) := rfl
+      omega
+    -- a nonnegative finsupp of total mass 0 is zero
+    apply Finsupp.ext
+    intro P
+    by_cases hP : P ∈ (show X.PrimeDivisor →₀ ℤ from E).support
+    · have := Finset.sum_eq_zero_iff_of_nonneg
+        (f := fun Q => (show X.PrimeDivisor →₀ ℤ from E) Q)
+        (s := (show X.PrimeDivisor →₀ ℤ from E).support)
+        (fun Q _ => hE Q)
+      have hzero := (this.mp hsum) P hP
+      rw [show (show X.PrimeDivisor →₀ ℤ from (0 : X.WeilDivisor)) P = (0 : ℤ) from
+        Finsupp.zero_apply]
+      exact hzero
+    · rw [Finsupp.notMem_support_iff] at hP
+      rw [show (show X.PrimeDivisor →₀ ℤ from (0 : X.WeilDivisor)) P = (0 : ℤ) from
+        Finsupp.zero_apply]
+      exact hP
+  | succ n ih =>
+    -- positive mass: some coefficient is ≥ 1
+    have hdegE : Scheme.WeilDivisor.degree E
+        = (show X.PrimeDivisor →₀ ℤ from E).sum (fun _ n => n) := rfl
+    have hpos : 0 < (show X.PrimeDivisor →₀ ℤ from E).sum (fun _ n => n) := by omega
+    obtain ⟨P₀, hP₀supp, hP₀pos⟩ :
+        ∃ P₀ ∈ (show X.PrimeDivisor →₀ ℤ from E).support,
+          0 < (show X.PrimeDivisor →₀ ℤ from E) P₀ := by
+      by_contra hno
+      push Not at hno
+      have hle0 : (show X.PrimeDivisor →₀ ℤ from E).sum (fun _ n => n) ≤ 0 :=
+        Finset.sum_nonpos fun Q hQ => hno Q hQ
+      omega
+    -- peel `1·P₀`
+    set E' : X.WeilDivisor := E - pointDivisor P₀ with hE'def
+    have hE'apply : ∀ P : X.PrimeDivisor,
+        (show X.PrimeDivisor →₀ ℤ from E') P =
+          (show X.PrimeDivisor →₀ ℤ from E) P -
+            (if P = P₀ then 1 else 0) := by
+      intro P
+      rw [hE'def, show (show X.PrimeDivisor →₀ ℤ from E - pointDivisor P₀) P =
+            (show X.PrimeDivisor →₀ ℤ from E) P -
+              (show X.PrimeDivisor →₀ ℤ from pointDivisor P₀) P from
+          Finsupp.sub_apply _ _ _, pointDivisor]
+      by_cases h : P = P₀
+      · rw [h, Finsupp.single_eq_same, if_pos rfl]
+      · rw [Finsupp.single_eq_of_ne (Ne.symm (Ne.symm h) : P ≠ P₀), if_neg h]
+    have hE'nonneg : ∀ P : X.PrimeDivisor,
+        0 ≤ (show X.PrimeDivisor →₀ ℤ from E') P := by
+      intro P
+      rw [hE'apply P]
+      by_cases h : P = P₀
+      · subst h; rw [if_pos rfl]; omega
+      · rw [if_neg h]; have := hE P; omega
+    -- the mass drops by exactly one
+    have hmass : Scheme.WeilDivisor.degree E'
+        = Scheme.WeilDivisor.degree E - 1 := by
+      have hEE' : E = E' + pointDivisor P₀ := by rw [hE'def]; abel
+      have hadd := Scheme.WeilDivisor.degree_add E' (pointDivisor P₀)
+      have hpt : Scheme.WeilDivisor.degree (pointDivisor P₀ : X.WeilDivisor) = 1 := by
+        rw [Scheme.WeilDivisor.degree, pointDivisor]
+        exact Finsupp.sum_single_index rfl
+      rw [hpt, ← hEE'] at hadd
+      omega
+    obtain ⟨L, hL⟩ := ih E' hE'nonneg (by omega)
+    refine ⟨P₀ :: L, ?_⟩
+    rw [divisorOfList, ← hL, hE'def]
+    abel
+
+/-- **The bound from the one-point peel** — the form a consumer should actually
+aim at.  Instead of the peel input for all `D' ≥ D₀` at once, it suffices to have
+it for a **single point bump** `E ↦ 1·P + E`, uniformly in `P` and `E`: chaining
+along a list (`Peel.of_list`) recovers the general case.
+
+So the hypotheses reduce to exactly three, and only two of them are open
+mathematics: the base vanishing, the **one-point** peel, and the closed ledger.
+The list-effectivity bookkeeping is discharged internally by
+`exists_divisorOfList_of_nonneg`. -/
+theorem exists_bound_subsingleton_h1Mod_of_pointPeel
+    (hledger : ∀ D : X.WeilDivisor, chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
+    (D₀ : X.WeilDivisor) (hbase : Subsingleton (H1Mod k U₀ U₁ D₀))
+    (hstep : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
+      Peel k U₀ U₁ E (pointDivisor P + E)) :
+    ∃ b : ℤ, ∀ D : X.WeilDivisor, b ≤ degK k D →
+      Subsingleton (H1Mod k U₀ U₁ D) := by
+  refine exists_bound_subsingleton_h1Mod k U₀ U₁ hledger D₀ hbase ?_
+  -- the general peel input, recovered from the one-point one
+  intro D' hmono
+  -- `D' = D₀ + (D' - D₀)` with `D' - D₀` effective, hence list-effective
+  have hEnonneg : ∀ P : X.PrimeDivisor,
+      0 ≤ (show X.PrimeDivisor →₀ ℤ from D' - D₀) P := by
+    intro P
+    rw [show (show X.PrimeDivisor →₀ ℤ from D' - D₀) P =
+          (show X.PrimeDivisor →₀ ℤ from D') P -
+            (show X.PrimeDivisor →₀ ℤ from D₀) P from Finsupp.sub_apply _ _ _]
+    have := hmono P
+    linarith
+  obtain ⟨L, hL⟩ := exists_divisorOfList_of_nonneg (D' - D₀) hEnonneg
+  have hD' : D' = divisorOfList L + D₀ := by rw [← hL]; abel
+  rw [hD']
+  exact Peel.of_list k U₀ U₁ hstep D₀ L
 
 /-- **The bound in numerical form.**  Same statement with the conclusion read on
 `h¹` rather than on `Subsingleton`; `h1dim` is `0` for a subsingleton without any
