@@ -174,6 +174,14 @@ against 1560).  When two independent measurements agree on the finding and diffe
 much they looked at, the agreement is not the thing to report — chase the gap, because
 domain size is exactly what the false clean lines above were wrong about.
 
+**Run it, do not re-transcribe it:** `scripts/leanok-audit.sh`, from the project root.
+One command, three live checks — the reconciliation identity per mark position, and the
+private lane's positive control — exiting non-zero if any fails.  The whole history below
+is a history of *transcribed* recipes drifting from the code that produced their numbers,
+so the recipe now lives in a script that is executed rather than in a comment that is
+copied.  What follows explains what the script does and why each part is shaped that way;
+the script is the authority.
+
 Step 1, extract the marks.  Match environments with an explicit STACK rather than a
 non-greedy regex: the regex reaches past the true `\end{theorem}` whenever anything
 intervenes, which is failure mode 2 below and was the entire source of the three retracted

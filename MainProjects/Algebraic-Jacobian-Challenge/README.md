@@ -192,6 +192,13 @@ Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
   blueprint proof-level `\leanok` is honest.  The last has to be a `#print axioms` join
   rather than a reading pass, because a `\leanok` is a local mark while the defect is
   transitive — a proof written in Lean is still not proved if it routes through a `sorry`.
+  The `\leanok` join is executable — `scripts/leanok-audit.sh`, one command from the
+  project root, exiting non-zero if any of its three checks fails (the reconciliation
+  identity on each mark position, plus a positive control proving the `private` lane
+  still bites).  Run it rather than re-transcribing it: every wrong number this check has
+  published came from a recipe copied out of a comment and drifting from the code that
+  produced it.
+
   Current result, both mark positions under the same reconciliation identity:
   **proof-level, 1073 pinned declarations across 1078 marks = 930 public + 143 `private`,
   zero carrying `sorryAx`; statement-level, 1560 declarations across 1567 marks = 1372
