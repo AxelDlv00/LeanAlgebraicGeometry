@@ -35,7 +35,7 @@ same theorem by a separate curve-specialized strategy.
 
 ## State (measured 2026-07-27)
 
-- **185 modules, 131,165 lines**; **26 `sorry`** over 11 modules, the rest locally
+- **187 modules, 132,074 lines**; **26 `sorry`** over 11 modules, the rest locally
   sorry-free; a warm `lake build AlgebraicJacobian` **green** at 8,744 jobs.  These
   counts move whenever a module lands, so re-measure rather than quoting them:
 

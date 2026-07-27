@@ -36,7 +36,7 @@ wired to the stated theorem:
     print(f'{len(seen)} of {total} project modules reachable from the headline')
     PY
 
-Re-measured 2026-07-28: 98 reachable modules of 185 on disk, and zero unrooted, up from
+Re-measured 2026-07-28: 98 reachable modules of 187 on disk, and zero unrooted, up from
 8 before `picardJacobianWitness` was wired to `Scheme.Pic0Scheme`.  The two most recent
 additions are `Curve/GeometricallyReduced.lean`, which discharges the curve's geometric
 integrality, and `Albanese/AlbaneseUP.lean`, which the headline now reaches because leaf C

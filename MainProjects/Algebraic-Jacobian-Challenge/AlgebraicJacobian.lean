@@ -218,6 +218,14 @@ import AlgebraicJacobian.RiemannRoch.Adelic.LedgerClosure
 -- finiteness binder via mathlib's `residueFieldIsoBase`, so the obligation is no longer
 -- parked in an instance nothing constructs (scripts/axiom-frontier.lean §6e).
 import AlgebraicJacobian.RiemannRoch.Adelic.ResidueField
+-- The UNGATED Čech Euler characteristic and its consequences (run 0055, task ajc-rr).
+-- `ChiUnconditional` is where `χ` is computed as inclusion–exclusion over the two charts with
+-- no exact sequence and no exactness hypotheses, which is what makes its conclusions
+-- independent of the `chi_add` machinery. That independence is the point: a refutation of a
+-- hypothesis routed through `chi_add` measures `chi_add`, not the hypothesis
+-- (scripts/axiom-frontier.lean §2b records a retraction of exactly that shape).
+import AlgebraicJacobian.RiemannRoch.Adelic.ChiUnconditional
+import AlgebraicJacobian.RiemannRoch.Adelic.UniformChartVanishing
 import AlgebraicJacobian.RiemannRoch.CurveBaseChange
 import AlgebraicJacobian.RiemannRoch.CohomologyKit
 import AlgebraicJacobian.Picard.InvertibleSectionLocalization
