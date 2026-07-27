@@ -474,12 +474,18 @@ generation with threshold `b + 1`, and the unweighted principal-degree-zero stat
 carries it as a hypothesis `hres`.  §3 above discharges `hres` on curve hypotheses, so both
 conclusions can be restated with **one** open input instead of two.
 
-Read the remaining hypothesis carefully: `hledger` is the closed χ-ledger, and it is *still*
-not a theorem in this project.  `Adelic/LedgerClosure.lean` proves it on the whole effective
-cone from the one-point bump (`chi_eq_of_bump_of_nonneg`) and states the remaining half
-exactly as an `iff` (`chi_eq_iff_step_of_bump`); the negative part needs an input the lane
-does not have.  So what follows is a genuine reduction from two open inputs to one, not a
-discharge of the leaf. -/
+Read the remaining hypothesis carefully: `hledger` is the closed χ-ledger.  An earlier
+version of this paragraph said it was "*still* not a theorem in this project", proved only on
+the effective cone, with the negative part needing an input the lane does not have.  **That
+is out of date**: `Adelic/LedgerClosure.chi_eq_of_bump` proves the closed ledger at every Weil
+divisor from the one-point bump alone, because `hbump` admits an arbitrary base divisor and so
+the telescope is not confined to the effective cone.
+
+The `hledger` hypothesis below is therefore discharged wherever the bump is available, and the
+lane's residual input is the **bump** — one application of `chi_add_eq_residueDeg` per step,
+which still consumes the ledger exact sequence's connecting/surjectivity data plus strong
+approximation.  So what follows is a genuine reduction from two open inputs to one, and the
+remaining one is a local statement at a single prime divisor rather than a global identity. -/
 
 /-- **The weighted degree is the geometric degree on a curve over an algebraically closed
 base.**  `deg_k = deg`, with the residue-degree-one input discharged rather than assumed.
@@ -682,19 +688,71 @@ def UniformlyBoundedVanishing (C : Over (Spec (CommRingCat.of k)))
       b ≤ degK κ D → Subsingleton
         (H1Mod κ (S.baseChangeField κ).U₁ (S.baseChangeField κ).U₂ D)
 
-/-! **One thing I could not state, recorded rather than papered over.**  The obvious sanity
-check on the predicate — instantiate at `κ = k` and read off a single-field bound on `C_k` —
-does not elaborate: it exceeds the `whnf` heartbeat limit, because supplying `Field k` and
-`Algebra.id k` positionally forces Lean to unfold the base-change pullback and re-synthesise
-the whole curve-instance tower inside `H1Mod`.  Raising `maxHeartbeats` would hide a real cost
-rather than address it, and the natural fix — restating the predicate with `[Field κ]`
-`[Algebra k κ]` as instance binders and quantifying over `κ` alone — changes the predicate's
-shape, so I have left the definition as the faithful `∀ (κ) (_ : Field κ) (_ : Algebra k κ)`
-form and recorded the limitation here.
+/-- **The instance-binder form of the same predicate.**  `UniformlyBoundedVanishing` above
+quantifies over the `Field κ` and `Algebra k κ` structures *positionally*, which is the
+faithful reading of "for every field extension" but makes the predicate awkward to use: a
+consumer must supply those structures as explicit arguments, and doing so forces Lean to
+unfold the base-change pullback and re-synthesise the curve-instance tower inside `H1Mod`.
 
-So the predicate typechecks but is not yet *convenient*: nothing has been instantiated at any
-particular `κ`, including the trivial one.  A consumer should expect to spend effort on the
-instance plumbing before using it. -/
+This version takes them as instance binders instead.  The two are equivalent
+(`uniformlyBoundedVanishing_iff_instBinders`), so nothing about the mathematical content
+changes; what changes is that instance resolution does the work at the use site. -/
+def UniformlyBoundedVanishing' (C : Over (Spec (CommRingCat.of k)))
+    [IsProper C.hom] [GeometricallyIntegral C.hom] [SmoothOfRelativeDimension 1 C.hom]
+    (S : C.left.AffineCoverMVSquare) : Prop :=
+  ∃ b : ℤ, ∀ (κ : Type u) [Field κ] [Algebra k κ],
+    ∀ D : (Scheme.baseChangeField C κ).left.WeilDivisor,
+      b ≤ degK κ D → Subsingleton
+        (H1Mod κ (S.baseChangeField κ).U₁ (S.baseChangeField κ).U₂ D)
+
+/-- **The two spellings of extension uniformity are the same predicate, definitionally.**
+Positional and instance-binder quantification over the extension structures differ only in
+binder annotation, so `Iff.rfl` closes it: instance-implicit and explicit binders erase to the
+same `∀`.
+
+The proof is worth a note, because the obvious tactic route **fails**.  Writing
+`constructor` and then `exact ⟨b, fun κ _ _ => hb κ ‹Field κ› ‹Algebra k κ›⟩` blows the
+`whnf` heartbeat limit (200000, machine-checked): unifying the two `Subsingleton (H1Mod …)`
+bodies makes Lean unfold the base-change pullback and re-synthesise the curve-instance tower.
+`Iff.rfl` never compares the bodies, so it costs nothing — and it proves something stronger
+than the `Iff` asked for, namely that the two definitions are *defeq* rather than merely
+interderivable.
+
+This is the same heartbeat wall that this section's closing note records for instantiating the
+predicate at `κ = k`, met from a different direction — evidence that the cost is intrinsic to
+unfolding the base change, not an artefact of one proof attempt. -/
+theorem uniformlyBoundedVanishing_iff_instBinders
+    (C : Over (Spec (CommRingCat.of k)))
+    [IsProper C.hom] [GeometricallyIntegral C.hom] [SmoothOfRelativeDimension 1 C.hom]
+    (S : C.left.AffineCoverMVSquare) :
+    UniformlyBoundedVanishing C S ↔ UniformlyBoundedVanishing' C S :=
+  Iff.rfl
+
+/-! **What is now instantiable, and what still is not.**  An earlier version of this note
+recorded that the obvious sanity check on the predicate — instantiate at `κ = k` and read off
+a single-field bound on `C_k` — does not elaborate, exceeding the `whnf` heartbeat limit
+because supplying `Field k` and `Algebra.id k` positionally forces Lean to unfold the
+base-change pullback and re-synthesise the whole curve-instance tower inside `H1Mod`.  It
+also said that the natural fix, instance binders, "changes the predicate's shape".
+
+That last clause was wrong on the *shape* question and right on the cost.
+`uniformlyBoundedVanishing_iff_instBinders` above settles the shape: the instance-binder form
+`UniformlyBoundedVanishing'` is the same predicate **definitionally** (`Iff.rfl`), so using it
+weakens nothing.  What the predecessor got right is the price: my first attempt at that very
+equivalence, via `constructor` and `exact`, hit the identical 200000-heartbeat `whnf` wall,
+because it made Lean unify the two `Subsingleton (H1Mod …)` bodies and so unfold the
+base-change tower.  Two independent proof attempts hitting the same wall from different
+directions is good evidence the cost is intrinsic to unfolding the base change rather than an
+artefact — which is what the predecessor claimed and what raising `maxHeartbeats` would have
+hidden.
+
+So: the quantifier spelling is free to change, and the base-change unfolding is not.  A
+consumer should use the primed form and still expect to pay at the point where a specific `κ`
+is supplied.
+
+Still genuinely missing, and unaffected by any of this: flat base change for the section
+spaces (`Γ(C_κ, 𝒪(D_κ)) ≃ Γ(C,𝒪(D)) ⊗_k κ`) and a `WeilDivisor` pullback along `C_κ ⟶ C`.
+Neither predicate is proved at any curve. -/
 
 end Uniformity
 

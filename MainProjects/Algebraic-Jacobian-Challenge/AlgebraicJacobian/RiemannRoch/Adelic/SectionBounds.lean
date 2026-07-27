@@ -312,18 +312,23 @@ end Drops
 /-! ## §3. Consequences of the closed ledger
 
 The **closed ledger** is the identity `χ(D) = χ(0) + deg_k D` for every Weil
-divisor `D`.  In this project it is not a theorem: `chi_telescope_list` proves it
-for *effective* divisors from a per-step hypothesis which is one application of
-`chi_add_eq_residueDeg`, and that in turn consumes the ledger's
-connecting/surjectivity data plus the strong-approximation input `hsurj`.  So the
-statements below take the closed ledger as an explicit hypothesis, spelled
-exactly as it will be discharged:
+divisor `D`.  The statements below take it as an explicit hypothesis
 
 `hledger : ∀ D, chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D`.
 
-That is an honest hypothesis, not a gate class and not a `sorry`: each theorem
-here says "given the ledger, this follows", and the reader can see what is
-missing. -/
+**Status update — it is now a theorem.**  An earlier version of this paragraph said "in this
+project it is not a theorem", and that the extension from effective divisors to all divisors
+needed the negative part.  `Adelic/LedgerClosure.chi_eq_of_bump` proves the closed ledger at
+**every** Weil divisor from the one-point bump `hbump` alone, so the hypothesis below is
+discharged wherever the bump is available.  The theorems here are kept in `hledger` form —
+they are strictly more general, and the `hbump` forms are in `LedgerClosure.lean` §2 — but a
+reader should not take the hypothesis as a record of an open gap.
+
+What the bump still costs is unchanged: each instance is one application of
+`chi_add_eq_residueDeg`, which consumes the ledger exact sequence's connecting/surjectivity
+data plus the strong-approximation input `hsurj`.  So `hledger` is an honest hypothesis, not
+a gate class and not a `sorry` — but the reader should look for the remaining mathematics
+under the *bump*, not under the ledger. -/
 
 section Ledger
 
@@ -339,10 +344,13 @@ two agree: `χ(D) = χ(0) + deg_k D` for `D = divisorOfList L`.
 This is what pins `degK` as *the* degree of the ledger rather than one weighting
 among several, and it shows the `hledger` hypothesis of this section is not
 idle — it holds wherever the one-point bump `hbump` does, which is one application
-of `chi_add_eq_residueDeg` per step.  What `hbump` still costs is the ledger's
-connecting/surjectivity data plus the strong-approximation input, and extending
-from list-effective divisors to *all* divisors additionally needs the negative
-part; both are why the general ledger is a hypothesis and not a theorem here. -/
+of `chi_add_eq_residueDeg` per step.
+
+An earlier version added that "extending from list-effective divisors to *all* divisors
+additionally needs the negative part".  **That is false**: `LedgerClosure.chi_eq_of_bump`
+gets all divisors from the same `hbump`, because `hbump` admits an arbitrary base divisor and
+so the telescope need not start at `0`.  What `hbump` still costs is unchanged — the ledger's
+connecting/surjectivity data plus the strong-approximation input. -/
 theorem chi_divisorOfList_eq_degK (L : List X.PrimeDivisor)
     (hbump : ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
       chi k U₀ U₁ (pointDivisor P + E) = chi k U₀ U₁ E + residueDeg k P) :
@@ -520,8 +528,14 @@ not two.  Item 1 below is closed; item 2 is what remains.
 2. The instance plumbing that places `principal_degree_zero`'s own geometric
    hypotheses in adelic shape: an `Algebra k̄ K(C)` with `IsConstantField k̄ C.left`
    (available — `Adelic/GateInstances.lean`), a 2-affine cover, and **the closed ledger for
-   that cover**.  The ledger is the substantive one and is still not a theorem here (§3), so
-   the leaf remains open.  But the assembled statement is now sharper:
+   that cover**.
+
+   The ledger is no longer the substantive part: `LedgerClosure.chi_eq_of_bump` proves it from
+   the one-point bump alone, so what item 2 now requires is the **bump** for a cover of `C`,
+   i.e. one application of `chi_add_eq_residueDeg` per step — which still consumes the ledger
+   exact sequence's connecting/surjectivity data and the strong-approximation input `hsurj`.
+   The leaf therefore remains open, but the open input has moved from a global identity over
+   all divisors to a one-point local statement.  The assembled statement is now sharper:
    `Adelic.degree_principal_eq_zero_of_isAlgClosed_curve` proves the **unweighted**
    `deg (div g) = 0` on curve hypotheses from **the ledger alone** — the residue input is no
    longer a second hypothesis — and `Adelic.degK_eq_degree_of_isAlgClosed_curve` gives
@@ -530,10 +544,10 @@ not two.  Item 1 below is closed; item 2 is what remains.
 
 The `sorry` in `WeilDivisor.lean` is deliberately **left in place**.  Replacing it
 with a call to `degree_principal_eq_zero_of_residueDeg_eq_one` would require
-producing the ledger for a cover of `C`, and the ledger is itself not yet a
-theorem here (see §3) — so the substitution would move the gap rather than close
-it, while making a theorem whose statement mentions no hypotheses depend silently
-on one.  The Hartshorne II.6.10 route sketched in that docstring (build
+producing the bump (equivalently, by `LedgerClosure.chi_eq_of_bump`, the ledger) for a cover
+of `C`, and the bump is not yet a theorem here — so the substitution would move the gap
+rather than close it, while making a theorem whose statement mentions no hypotheses depend
+silently on one.  The Hartshorne II.6.10 route sketched in that docstring (build
 `φ : C → ℙ¹` from `g`, use multiplicativity of degree under finite pullback) is a
 *different*, heavier proof; the ledger route above is the cheaper one and is what
 the campaign's P3 milestone anticipated. -/

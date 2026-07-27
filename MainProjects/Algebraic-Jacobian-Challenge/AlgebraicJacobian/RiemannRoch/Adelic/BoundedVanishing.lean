@@ -22,6 +22,15 @@ from three inputs that are named explicitly in every statement:
 3. **the closed ledger** `χ(D) = χ(0) + deg_k D`, used only to produce an
    effective witness in the class of `D − D₀`.
 
+**Input 3 is no longer open.**  `Adelic/LedgerClosure.chi_eq_of_bump` proves the closed
+ledger at every Weil divisor from the one-point bump `hbump`, so the statements below can be
+read with `hledger` discharged; the ledger-free forms are in `LedgerClosure.lean` §2.  The
+theorems here keep the `hledger` binder because it is strictly more general.  Note this does
+**not** make the lane unconditional: the bump is one application of `chi_add_eq_residueDeg`
+per step, so the mathematics moved under the bump rather than away.  Input 2 is also
+localised — `LedgerClosure.peel_pointDivisor_of_notMem_overlap` discharges the one-point peel
+at every prime divisor off the overlap `U₀ ⊓ U₁`, leaving its content at overlap points.
+
 Inputs 1 and 2 are individually load-bearing, but they are **not** two independent
 facts: `coneVanishing_iff_base_and_peel` proves their conjunction equivalent to
 vanishing on the whole cone `{D' ≥ D₀}`.  So the theorem's real content is
@@ -330,20 +339,24 @@ requested by inbox item I-0394.
 uses it at exactly one divisor per `D`, namely the **residual** `D − D₀`, and only for `D`
 above the bound.  This version asks for precisely that, as `hledgerRes`.
 
-Why this is worth stating separately rather than being cosmetic.  I-0394 observes that the
-universal form silently carries finiteness content (`Module.finrank` of an
-infinite-dimensional space is `0`, so the identity forces finite-dimensionality wherever it
-forces a nonzero rank) and that nothing in the project can discharge it — `chi_telescope_list`
-and `LedgerClosure.chi_eq_of_bump_of_nonneg` reach the *effective* cone only.  Restricting to
-residuals does not by itself fix that, and it would be wrong to claim it does: `D − D₀` is a
-difference and need not be effective, so the effective-cone ledger still does not supply this
-hypothesis in general.  What the restriction buys is that the requirement is now **stated at
-the divisors that matter**, so a caller who can produce the ledger on any set containing the
-residuals `{D − D₀ | deg_k D ≥ b}` can use the theorem — and a reader can see exactly which
-instances are load-bearing instead of having to audit the proof.
+Why this was worth stating separately.  I-0394 observes that the universal form silently
+carries finiteness content (`Module.finrank` of an infinite-dimensional space is `0`, so the
+identity forces finite-dimensionality wherever it forces a nonzero rank).  Restricting to the
+residuals makes the requirement **stated at the divisors that matter**, so a caller who has
+the ledger only on a set containing `{D − D₀ | deg_k D ≥ b}` can still use the theorem, and a
+reader can see which instances are load-bearing without auditing the proof.
 
-The remaining honest gap, in one line: closing this needs the ledger on differences, and
-`LedgerClosure.chi_eq_iff_step_of_bump` says exactly what the negative part costs. -/
+**What has changed since.**  This docstring used to add that "nothing in the project can
+discharge it — `chi_telescope_list` and `LedgerClosure.chi_eq_of_bump_of_nonneg` reach the
+*effective* cone only", the point being that a residual `D − D₀` is a difference and need not
+be effective.  The premise is now false: `LedgerClosure.chi_eq_of_bump` proves the ledger at
+**every** Weil divisor from the one-point bump, differences included, because `hbump` admits
+an arbitrary base divisor.  So `hledgerRes` *is* dischargeable from the bump, and the
+restriction to residuals is now a convenience for callers with partial information rather
+than a record of an open gap.
+
+The finiteness observation of I-0394 survives unchanged: it applies to the bump exactly as it
+applied to the ledger, since the bump is an identity between `finrank`s. -/
 theorem exists_bound_subsingleton_h1Mod_of_residualLedger
     (hledgerRes : ∀ D : X.WeilDivisor, 1 - chi k U₀ U₁ 0 ≤ degK k D →
       chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)

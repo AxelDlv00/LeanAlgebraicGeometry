@@ -40,14 +40,21 @@ The theorems here that need the ledger at *specific* divisors therefore take it 
 there**: `ell_sub_ell_sub_pointDivisor_eq`, `evalMap_surjective` and
 `generatedAt_of_vanishing` take two named instances, `hledgerD` and `hledgerDP`, rather
 than the universal binder.  That is exactly what their proofs use, and it means a caller
-who can produce the ledger only on the effective cone
-(`LedgerClosure.chi_eq_of_bump_of_nonneg`) can still use them.
+with the ledger at only those divisors can still use them.
 
 The `∃ b, ∀ D, …` threshold theorems of §4 keep the universal form, and that is not
 laziness: their conclusion quantifies over *all* divisors above a numerical bound, so they
 genuinely need the ledger at every such `D` — and at `D − P` for each, which is not a set
-that can be named in advance.  Sharpening those means sharpening
-`exists_bound_subsingleton_h1Mod` upstream first.
+that can be named in advance.
+
+**Both concerns are now moot as gaps, though the sharpening is still worth having.**
+`LedgerClosure.chi_eq_of_bump` proves the closed ledger at **every** Weil divisor from the
+one-point bump alone, so the universal binder is dischargeable and there is no longer a
+caller who "can produce the ledger only on the effective cone".  An earlier version of this
+paragraph named `chi_eq_of_bump_of_nonneg` as the best available and described the
+effective-cone restriction as a real limitation; that is out of date.  The ledger-free forms
+of the §4 thresholds are `LedgerClosure.exists_bound_forall_generatedAt_of_bump` and
+siblings.
 
 The evaluation map is *always* injective — that is `localStepMapₖ_injective`, the
 elementary half of node N14, and it is what makes `ℓ(D) − ℓ(D−P) ≤ [κ(P):k]`.  It is
