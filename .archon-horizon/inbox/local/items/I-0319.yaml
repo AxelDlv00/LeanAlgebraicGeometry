@@ -1,16 +1,58 @@
 id: I-0319
 provider: local
 kind: issue
-body: 'Lean full-build warning and resource baseline
+body: 'Lean full-build, warning and resource baseline (re-measured 2026-07-27, run
+  0046 sessions 0086/0088).
 
 
-  The latest full build passes all 8,723 jobs in 10:32 at 8,350,104 KiB peak RSS and
-  reports 162 warning heads across 28 files, down from 201. GrassmannianQuot and FlatteningStratificationUniversal
-  are warning-free after removing 27 and 12 diagnostics respectively; 24 genuine sorry
-  notices remain. The active resource inventory is 140 maxHeartbeats, 39 synthesis-heartbeat,
-  15 synthesis-pending-depth, and 5 recursion-depth scopes. Keep this issue open for
-  residual warnings, resource scopes, and umbrella-import review. Latest source commit:
-  2148ff621.'
+  FROM-SCRATCH BUILD, MEASURED: wiped .lake/build, Mathlib served from the shared
+  package cache -- ALL 8,723 jobs green in 43:15.98 wall at 9,721,288 KiB peak RSS,
+  on a 16-core / 62 GB host contended throughout with run 0048 (load average 13-27).
+  This supersedes the earlier 39:56.95 figure, which was taken at a different commit
+  and before the header/import work.
+
+
+  THE WALL CLOCK IS CRITICAL-PATH BOUND, NOT THROUGHPUT BOUND. 68 of 165 modules finish
+  inside 5 minutes and 113 inside 10; the last 34 take 33 minutes because the tail
+  is an almost serial chain -- GlueDescent gates SerreTwist, GrassmannianQuot, QuotFunctorDef
+  and RigidPushforward, which gate the Adelic lane -- and for most of that stretch
+  exactly one project job runs. More cores buy nothing. Largest single-module costs
+  (completion minus last dependency completion): QuotScheme 804s, TensorObjSubstrate
+  538s, GlueDescent 504s, Adelic/NonconstantToP1 453s, GrassmannianZariskiSheaf 385s,
+  TensorObjInverse 360s, GrassmannianQuot 353s, CechHigherDirectImage 337s.
+
+
+  ROOT CAUSE IS THE UMBRELLA IMPORT, NOT THE HEARTBEATS. Measured on Cohomology/SheafCompose.lean
+  (49 lines): 16.6 s and about 7 GB with ''import Mathlib'', 3.5 s and 1.97 GB with
+  the four precise imports the linter reports. At 7 GB per Lean process a 62 GB host
+  sustains about 8 concurrent jobs instead of 16, so the umbrella costs wall clock
+  twice over. Trimming maxHeartbeats ceilings saves no compute by construction.
+
+
+  PROGRESS TODAY: bare ''import Mathlib'' 86 -> 40 of 164 modules; umbrella-free closure
+  32 -> 71+. Tooling in scripts/ (min-imports.sh, deumbrella.sh, deumbrella-wave.sh);
+  the wave driver converts only modules whose whole project closure is already clean
+  and runs a full build between waves. Conversion is NOT free by construction: GrassmannianQuot.lean
+  times out at isDefEq (:924) and whnf (:1217) at the default 200k heartbeats WITH
+  precise imports but builds fine with the umbrella, so a smaller environment can
+  send a defeq check down a slower path -- every conversion re-elaborates and reverts
+  on failure.
+
+
+  WARNINGS: 162 -> 24. All 102 remaining mechanical warnings were cleared (commit
+  b0d13f686); every surviving head is a genuine ''declaration uses sorry''. Also removed
+  229 development-journal fragments from /-- and /-! docstrings, which doc-gen4 publishes
+  as the project''s API documentation.
+
+
+  RESOURCE INVENTORY UNCHANGED AND STILL OPEN: 140 maxHeartbeats, 39 synthInstance.maxHeartbeats,
+  15 maxSynthPendingDepth, 5 maxRecDepth scopes -- against ZERO ''set_option maxHeartbeats''
+  in all of Mathlib/ and exactly one synthInstance budget. None of the 179 cites a
+  measured number and Mathlib''s own ''#count_heartbeats in'' appears nowhere in the
+  project. Re-measure each AFTER its module leaves the umbrella. CORRECTION to an
+  earlier suspicion: the 289 ''backward.isDefEq.respectTransparency'' scopes are NOT
+  a smell -- all are per-declaration and mathlib v4.31 has 5,629 of them at four times
+  this project''s density.'
 labels:
 - agent-ready
 status: open
@@ -21,7 +63,7 @@ audience: project:Algebraic-Jacobian-Challenge
 author: horizon
 source_ref: null
 created_at: '2026-07-24T14:56:46.449883+00:00'
-updated_at: '2026-07-27T02:47:35.848569+00:00'
+updated_at: '2026-07-27T04:44:01.821068+00:00'
 metadata:
   provenance:
     run: '0046'
