@@ -1,6 +1,6 @@
 \chapter{FGA representability of the Picard scheme}
 \label{chap:Picard_FGAPicRepresentability}
-% archon:covers AlgebraicJacobian/Picard/FGAPicRepresentability.lean
+% archon:covers AlgebraicJacobian/Picard/FGAPicRepresentability.lean AlgebraicJacobian/Picard/RigidPushforwardInstance.lean AlgebraicJacobian/Picard/RigidPushforwardP1Topology.lean AlgebraicJacobian/Picard/GaloisDescent/SemilinearAlgebras.lean AlgebraicJacobian/Picard/StableAffineCover.lean
 
 \section{Setup and motivation}
 \label{sec:fga_pic_setup}
@@ -411,6 +411,192 @@ because it is the abstract content allowing descent from
   condition the Hironaka example fails.
 \end{remark}
 
+\section{The Milne--Koll\'ar route}
+\label{sec:fga_pic_milne_kollar}
+
+This section records the route of \cref{sec:fga_pic_setup} that avoids the
+quasi-projectivity obstruction of \cref{rem:smooth_proper_quotient_hypothesis},
+in the three parts it decomposes into, and states the two of its inputs that are
+established.
+
+Over a separably closed field \(k'\) the construction is Milne \S 4. Fix
+\(r \ge 2g+1\) and a degree-\(r\) divisor scheme \(Z\). For a tuple \(\Sigma\) of
+\(r-g\) rational points of \(C' = C \times_k k'\), the locus
+\[
+  C^\Sigma
+    = \{\, t \in Z : h^0\bigl(\mathcal{O}(W - \Sigma)_t\bigr) = 1 \,\}
+\]
+is open, because \(h^0\) is upper semicontinuous and \(h^0 \ge \chi = 1\) in
+degree \(g\); adding \(\Sigma\) back to the canonical divisor family of the
+rigidified pushforward gives a second map \(C^\Sigma \to Z\), and the equaliser
+\(J^\Sigma\) of the two represents the subfunctor of degree-\(r\) classes
+\(\mathcal{L}\) with \(h^0(\mathcal{L}(-\Sigma)_t) = 1\) at every point. These
+subfunctors cover, so gluing them represents \(\Pic^r_{C'/k'}\). Descent to
+\(k\) is a finite Galois quotient, and the degrees assemble as a coproduct over
+\(\mathbb{Z}\) through the translation isomorphisms
+\(\Pic^d \cong \Pic^r\) given by tensoring with \(\mathcal{O}((r-d) x_0)\).
+
+The two inputs the route rests on that the quotient route does not are the
+rigidified pushforward and the finite Galois quotient. The first is the local
+freeness of \(q_* \mathcal{L}\); the second is Speiser descent together with the
+existence of \(\Gamma\)-stable affine neighbourhoods.
+
+\begin{theorem}[Local freeness of the rigidified pushforward]\leanok
+  \label{thm:rigid_pushforward_locally_free}
+  \lean{AlgebraicGeometry.Adelic.rigidPushforwardLocallyFree_proved}
+  \uses{lem:p1_integral}
+  \source{mumford-abelian-varieties:page-0054}
+  \textit{Source: [Mumford], \emph{Abelian Varieties}, II \S 5.}
+  Let \(C\) be a smooth proper geometrically integral curve over a field \(k\),
+  let \(A\) be a finitely generated \(k\)-algebra and \(q : C_A \to \Spec A\) the
+  constant family. Let \(\mathcal{L}\) be an invertible sheaf on \(C_A\) with
+  \(H^1(C_t, \mathcal{L}_t) = 0\) at every point \(t\) of \(\Spec A\). Then every
+  point of \(\Spec A\) has an open neighbourhood on which \(q_* \mathcal{L}\) is
+  free of rank \(h^0(C_t, \mathcal{L}_t)\).
+\end{theorem}
+
+\begin{proof}\leanok
+  \uses{lem:p1_integral}
+  Choose a finite morphism \(\pi : C \to \mathbb{P}^1_k\) and base change it to
+  \(\pi_A : C_A \to \mathbb{P}^1_A\). Since \(\pi_A\) is finite, it is affine and
+  \(\pi_{A*}\) is exact, so \(q_* \mathcal{L} = p_* (\pi_{A*} \mathcal{L})\) for
+  \(p : \mathbb{P}^1_A \to \Spec A\), and the fibrewise cohomology of
+  \(\pi_{A*}\mathcal{L}\) agrees with that of \(\mathcal{L}\).
+
+  On \(\mathbb{P}^1_A\) the two standard charts form an affine cover with affine
+  intersection, so the {\v C}ech complex of any quasi-coherent module is a
+  two-term complex \(d\) of \(\Gamma(\Spec A, \mathcal{O})\)-modules with
+  \(H^0 = \ker d\) and \(H^1 = \operatorname{coker} d\). Vanishing of \(H^1\) at
+  every point makes \(d\) surjective and \(\ker d\) finitely generated
+  projective, hence flat, and makes the formation of \(\ker d\) commute with
+  arbitrary base change; this is Mumford's two-term finite-free replacement.
+
+  Global sections of the pushforward are \(\ker d\) by the sheaf condition, so
+  \(q_* \mathcal{L}\) is finite locally free, and it remains to identify its
+  rank. Flatness gives
+  \(\operatorname{rank}_t = \dim_{\kappa(t)} \kappa(t) \otimes_A \ker d\), base
+  change moves the residue field inside the kernel, and comparing the
+  \(\kappa(t)\)-base-changed {\v C}ech square with the {\v C}ech square of the
+  fibre identifies that dimension with \(h^0(C_t, \mathcal{L}_t)\). A finite
+  locally free module of locally constant rank is free on a neighbourhood of each
+  point.
+\end{proof}
+
+\begin{lemma}[The projective line over a field is integral]\leanok
+  \label{lem:p1_integral}
+  \lean{AlgebraicGeometry.Adelic.isIntegral_p1_of_isDomain_charts}
+  Let \(k\) be a field. Then \(\mathbb{P}^1_k\) is an integral scheme.
+\end{lemma}
+
+\begin{proof}\leanok
+  Each standard chart \(V_i \subseteq \mathbb{P}^1_k\) is affine with section
+  ring the polynomial ring \(k[T]\) in the chart coordinate, hence an integral
+  domain, so each chart is an integral scheme. Reducedness of \(\mathbb{P}^1_k\)
+  follows because the two charts cover and reducedness is local. For
+  irreducibility, the overlap \(W = V_0 \cap V_1\) is a nonempty open subset of
+  the irreducible \(V_0\), hence irreducible and dense in \(V_0\), and
+  symmetrically dense in \(V_1\); as \(V_0 \cup V_1 = \mathbb{P}^1_k\), the set
+  \(W\) is a dense irreducible subset of \(\mathbb{P}^1_k\), which is therefore
+  the closure of an irreducible set and so irreducible.
+\end{proof}
+
+\begin{theorem}[Speiser descent]\leanok
+  \label{thm:speiser_descent}
+  \lean{AlgebraicJacobian.GaloisDescent.SemilinearAction.descentAlgEquiv}
+  Let \(L/K\) be a finite Galois extension with group \(\Gamma\), and let \(A\)
+  be an \(L\)-algebra carrying an action of \(\Gamma\) by ring automorphisms
+  which is semilinear over the action of \(\Gamma\) on \(L\). Then the canonical
+  map
+  \[
+    L \otimes_K A^\Gamma \longrightarrow A, \qquad a \otimes w \mapsto a w,
+  \]
+  is an isomorphism of \(L\)-algebras: the invariants form a \(K\)-form of
+  \(A\). No finiteness hypothesis on \(A\) is required.
+\end{theorem}
+
+\begin{proof}\leanok
+  The same statement for semilinear \(\Gamma\)-modules is the classical
+  normal-basis argument: writing \(L = K[\Gamma] \cdot \theta\) for a normal
+  basis element \(\theta\), the trace \(\sum_{\gamma} \gamma(\theta a) \gamma\)
+  exhibits every element of \(A\) as an \(L\)-combination of invariants, and
+  \(L\)-independence of the invariant part follows from linear independence of
+  the characters \(\gamma\). The map above is the \(L\)-algebra map extending the
+  inclusion \(A^\Gamma \hookrightarrow A\), and its underlying additive map is
+  the module-level descent map, which the module statement shows bijective.
+  Bijectivity of an algebra homomorphism makes it an algebra isomorphism.
+\end{proof}
+
+\begin{theorem}[Points of the finite Galois quotient]\leanok
+  \label{thm:galois_quotient_points}
+  \lean{AlgebraicJacobian.GaloisDescent.SemilinearAction.invariantAlgHomEquiv}
+  \uses{thm:speiser_descent}
+  In the situation of \cref{thm:speiser_descent}, for every \(K\)-algebra \(B\)
+  the map \(g \mapsto (\mathrm{id}_L \otimes g)\) is a bijection
+  \[
+    \mathrm{Hom}_{K\text{-alg}}(A^\Gamma, B)
+      \;\simeq\;
+    \{\, f \in \mathrm{Hom}_{L\text{-alg}}(A, L \otimes_K B) :
+       f(\gamma \cdot x) = (\gamma \otimes \mathrm{id})(f(x)) \,\}.
+  \]
+  Equivalently, for an affine \(K\)-scheme \(T = \Spec B\), the \(T\)-points of
+  \(\Spec A^\Gamma\) are the \(\Gamma\)-equivariant \(T_L\)-points of
+  \(\Spec A\): the affine scheme \(\Spec A^\Gamma\) is the quotient of
+  \(\Spec A\) by \(\Gamma\).
+\end{theorem}
+
+\begin{proof}\leanok
+  \uses{thm:speiser_descent}
+  Given \(g\), transport \(\mathrm{id}_L \otimes g\) through the isomorphism
+  \(A \cong L \otimes_K A^\Gamma\) of \cref{thm:speiser_descent}; equivariance is
+  the identity \(\gamma \otimes \mathrm{id}\) transported along the same
+  isomorphism, which is exactly the compatibility recorded there. Conversely, an
+  equivariant \(f\) carries invariants to \(\Gamma\)-fixed elements of
+  \(L \otimes_K B\), and for the left-factor action on a base change the fixed
+  points are \(1 \otimes B\); so \(f\) restricts to a \(K\)-algebra map
+  \(A^\Gamma \to B\). The two constructions are mutually inverse: one direction
+  is the computation of the restriction on invariants, and the other holds
+  because the invariants span \(A\) over \(L\), so two \(L\)-algebra maps
+  agreeing on them agree.
+\end{proof}
+
+\begin{lemma}[\(\Gamma\)-stable affine neighbourhoods]\leanok
+  \label{lem:stable_affine_open}
+  \lean{AlgebraicJacobian.GaloisDescent.SemilinearGalAction.exists_stable_affineOpen_of_orbitsInAffineOpen}
+  \uses{thm:galois_quotient_points}
+  Let \(L/K\) be finite Galois with group \(\Gamma\) and let \(X\) be a scheme
+  over \(L\) with a semilinear \(\Gamma\)-action all of whose orbits are
+  contained in affine opens. Then every point of \(X\) has a \(\Gamma\)-stable
+  affine open neighbourhood.
+\end{lemma}
+
+\begin{proof}\leanok
+  Let \(x \in X\) and let \(U\) be an affine open containing the orbit of \(x\).
+  The orbit is finite and lies in the open
+  \(W = \bigcap_{\gamma} \gamma^{-1} U\), so by prime avoidance inside the affine
+  \(U\) there is a section \(s \in \Gamma(X, U)\) with the whole orbit contained
+  in \(D(s) \subseteq W\). Put \(N = \prod_{\gamma} \gamma(s)|_W\). Then
+  \(D(N) = \bigcap_{\gamma} \gamma^{-1} D(s)\), which contains \(x\) because the
+  orbit lies in \(D(s)\), and is \(\Gamma\)-stable because translating the
+  intersection permutes its factors. Finally \(D(N) \subseteq D(s)\) by the
+  factor \(\gamma = 1\), so \(D(N)\) is a basic open of the affine \(D(s)\) and
+  hence affine.
+\end{proof}
+
+\begin{remark}[The orbit hypothesis is load-bearing]
+  \label{rem:orbit_in_affine_hypothesis}
+  \uses{lem:stable_affine_open, rem:smooth_proper_quotient_hypothesis}
+  The hypothesis of \cref{lem:stable_affine_open} that every orbit lie in an
+  affine open cannot be dropped, and it is the same phenomenon as
+  \cref{rem:smooth_proper_quotient_hypothesis}: the Hironaka free
+  \(\mathbb{Z}/2\)-action on a smooth proper non-projective threefold has an
+  orbit contained in no affine open, and its quotient is an algebraic space
+  rather than a scheme. The difference between the two routes is not that one
+  needs a hypothesis and the other does not, but that this hypothesis is
+  available for the schemes the Milne--Koll\'ar route quotients --- glued from
+  opens carrying locally closed immersions into a Grassmannian --- whereas
+  quasi-projectivity of the Abel-map slice is not currently expressible.
+\end{remark}
+
 \section{Group-scheme structure}
 \label{sec:fga_pic_group_structure}
 
@@ -731,10 +917,16 @@ when the predicate is inhabited.
 \end{definition}
 
 \begin{proof}
-  Apply the FGA representability construction of
-  \cref{thm:fga_pic_representability}. The rational point rigidifies line
-  bundles along the section, and the bounded Hilbert-polynomial strata glue to
-  the required locally finite type representing scheme.
+  \uses{thm:rigid_pushforward_locally_free, thm:galois_quotient_points}
+  The rational point rigidifies line bundles along the section, which is what
+  makes the plain relative functor a sheaf at all. Either route of
+  \cref{sec:fga_pic_setup} then produces the representing scheme. Along the
+  Milne--Koll\'ar route the degree pieces \(\Pic^r\) are glued from the loci
+  \(J^\Sigma\) over a separably closed field, descended to \(k\) by a finite
+  Galois quotient, and assembled over \(\mathbb{Z}\) as a coproduct, which is
+  locally of finite type because each piece is. Along the quotient route the
+  bounded Hilbert-polynomial strata of \cref{thm:fga_pic_representability} glue
+  to the same conclusion.
 \end{proof}
 
 \begin{definition}[Representability of \(\Pic^\sharp_{C/k}\)]\leanok
@@ -821,10 +1013,23 @@ type representing \(\Pic^\sharp_{C/k}\).
 For a
 smooth proper geometrically integral curve \(C/k\) with a \(k\)-rational
 point, the relative Picard functor \(\Pic^\sharp_{C/k}\)
-(\cref{def:pic_sharp_carrier}) is representable by a \(k\)-scheme. The
-proof first applies Kleiman \S 2, Thm.~2.5, using the section to identify the
-plain functor with its \'etale sheafification, and then uses Kleiman's four
-steps
+(\cref{def:pic_sharp_carrier}) is representable by a \(k\)-scheme. Either route
+of \cref{sec:fga_pic_setup} establishes it, and they consume different inputs.
+
+Along the Milne--Koll\'ar route of \cref{sec:fga_pic_milne_kollar} --- the one
+being formalised --- the inputs are: the rigidified pushforward
+\cref{thm:rigid_pushforward_locally_free}, which supplies both the canonical
+divisor family and the semicontinuity of \(h^0\) cutting out the loci
+\(C^\Sigma\); uniform \(H^1\) vanishing in high degree, which makes those loci
+cover; representability of the degree-\(r\) divisor functor, which supplies the
+ambient \(Z\) together with its Grassmannian immersion; and the finite Galois
+quotient \cref{thm:galois_quotient_points} with
+\cref{lem:stable_affine_open}, which descends the result from a separably closed
+field to \(k\). No Hilbert or Quot scheme occurs among them.
+
+Along the quotient route the proof first applies Kleiman \S 2, Thm.~2.5, using
+the section to identify the plain functor with its \'etale sheafification, and
+then uses Kleiman's four steps
 (\cref{thm:fga_pic_representability}): Hilbert-polynomial stratification,
 \(m\)-regularity bound, Abel-map factorisation through
 \(\mathrm{Div}_{C/k}\), and the smooth-proper quotient
@@ -833,7 +1038,10 @@ construction of \cref{chap:Picard_QuotScheme}, representability of
 \(\mathrm{Div}_{C/k}\) as in \cref{rem:div_functor_representability}, the
 regularity result \cref{cor:flattening_stratification_curve}, the base-change
 result \cref{lem:cech_flat_base_change}, and Altman--Kleiman effective descent.
-The resulting representing object gives
+Both routes rest on the same divisor and comparison substrate, and the
+rational-point hypothesis enters both in the same way.
+
+Either way, the resulting representing object gives
 natural bijections
 \[
   (T\to\Pic_{C/k})\simeq
@@ -898,7 +1106,10 @@ following constructions, treated in the indicated companion chapters.
     \cref{chap:Picard_Pic0AbelianVariety}.
   \item \textbf{Quot scheme representability} --- consumed by
     \cref{thm:fga_pic_representability} via \texttt{thm:quot\_representable}
-    (\cref{chap:Picard_QuotScheme}), not re-proved here.
+    (\cref{chap:Picard_QuotScheme}), not re-proved here. It is an input of the
+    quotient route only; the Milne--Koll\'ar route of
+    \cref{sec:fga_pic_milne_kollar} does not use it, although it does use the
+    Grassmannian and flattening substrate of the same chapters.
   \item \textbf{\'Etale sheafification.} The relative Picard presheaf and its
     topology-parametric sheafification are constructed in
     \cref{chap:Picard_RelPicFunctor}. Under the
@@ -922,11 +1133,16 @@ The principal constructions form a connected dependency chain rooted in
 \cref{chap:Picard_LineBundlePullback}, \cref{chap:Picard_QuotScheme}, and
 \cref{chap:Picard_RelPicFunctor}:
 \begin{itemize}
+  \item \cref{thm:rigid_pushforward_locally_free} uses \cref{lem:p1_integral},
+    and \cref{lem:stable_affine_open} uses
+    \cref{thm:galois_quotient_points}, which uses
+    \cref{thm:speiser_descent}. These are the inputs specific to the
+    Milne--Koll\'ar route (\cref{sec:fga_pic_milne_kollar}).
   \item \cref{lem:line_bundle_quot_correspondence} uses
     \cref{def:line_bundle_on_product} and
     \cref{thm:pullback_natural}.
   \item \cref{lem:smooth_proper_quotient} is the structural quotient
-    statement used by the representability argument.
+    statement used by the quotient-route representability argument.
   \item \cref{thm:fga_pic_representability} uses
     \cref{lem:line_bundle_quot_correspondence},
     \texttt{thm:quot\_representable},
