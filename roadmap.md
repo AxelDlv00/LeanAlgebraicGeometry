@@ -21,7 +21,7 @@ migration debt.)*
 | Cech-Cohomology | ✅ complete · merged → AJC | 0 |
 | GR-Quot-Closure | ✅ complete · merged → AJC | 0 |
 | Line-Bundle-Comparison-Iso | ✅ complete · merged → AJC | 0 |
-| Albanese | prover | 12 |
+| Albanese | prover | 11 |
 | Picard-IdentityComponent | prover | 16 |
 | MR0555258-Compactifying-Picard | prover | 1 |
 
@@ -75,14 +75,14 @@ functor (curve-specialized Kleiman, no Quot schemes), Albanese via Milne III.6.1
 Blueprint: Challenge/BaseChange/Curves/Algebra/Cohomology/AbelianVariety chapters all synced
 1-to-1 with the Lean, `\leanok` only after kernel checks, `\source{}` read-before-cite.
 
-## Algebraic-Jacobian-Challenge  *(core engine — prover stage, 26 open `sorry` in 11 of 172 modules)*
+## Algebraic-Jacobian-Challenge  *(core engine — prover stage, 26 open `sorry` in 11 of 181 modules)*
 
 **Goal:** construct the Jacobian of a smooth proper geometrically integral curve as
 `Pic^0`, prove that it is an abelian variety of dimension equal to the genus, and
 establish the Albanese universal property. The structured roadmap command
 `horizon roadmap list --focus AJC.jacobian` is the authoritative work breakdown.
 
-*161 of the 172 modules are sorry-free; all 26 remaining `sorry`s live in 11 modules.*
+*170 of the 181 modules are sorry-free; all 26 remaining `sorry`s live in 11 modules.*
 
 - [x] **Foundational substrate** — `AJC.substrate`, seven sorry-free sub-items
   - [x] Curve and scheme base objects; quasi-coherent sheaves on schemes (tilde and
@@ -130,7 +130,7 @@ establish the Albanese universal property. The structured roadmap command
   - [x] Record controlled-clean and warm full-project build and warning baselines.
   - [x] Normalize the copyright header of all 164 modules; restore the 1,123 blueprint
     statement titles that LaTeX was swallowing into the statement body.
-  - [~] **Import hygiene — the dominant build cost.** 66 of 172 modules still open with a bare
+  - [~] **Import hygiene — the dominant build cost.** 66 of 181 modules still open with a bare
     `import Mathlib` (down from 86; wave 2 landed at `3fbc2cace`), and every module in their
     transitive closure still loads the whole library. Measured: a 49-line module costs 16.6 s
     and ~7 GB with the umbrella and 3.5 s and 2.0 GB with four precise imports. The conversion
@@ -138,7 +138,8 @@ establish the Albanese universal property. The structured roadmap command
     (`MainProjects/Algebraic-Jacobian-Challenge/scripts/deumbrella-wave.sh`). Deferred, not
     abandoned — a wave must repair its own cascade, since narrowing a parent breaks children
     that were inheriting `Mathlib` through it.
-  - [ ] Retire the 179 heartbeat and 20 depth overrides. Mathlib itself has **zero**
+  - [ ] Retire the 199 heartbeat overrides (157 `maxHeartbeats`, 42 `synthInstance`) and the depth
+    overrides. Mathlib itself has **zero**
     `set_option maxHeartbeats` in its library files; re-measure each with `#count_heartbeats in`
     once its module no longer imports the umbrella.
   - [ ] Drive the 138 mechanical Lean warnings to zero (24 `sorry` notices are honest and stay),
@@ -169,7 +170,7 @@ structure (the A.1.c.sub package; merged back into the Jacobian challenge).
 - [x] **Line-bundle pullback / relative Pic functor** — `LineBundlePullback`, `RelPicFunctor`
 - [x] **Terminal comparison inverse** — `TensorObjInverse` closed, including the keystone `trivialisation_restrict_compat` ✨
 
-## Albanese  *(prover stage — extraction → Jacobian, 12 open `sorry`)* ✨
+## Albanese  *(prover stage — extraction → Jacobian, 11 open `sorry`)* ✨
 
 **Goal:** the Albanese universal property of `Pic⁰` (Milne III §6 Prop 6.1, seed
 `thm:albanese_universal_property`) and the rational-map-extension machinery feeding the
