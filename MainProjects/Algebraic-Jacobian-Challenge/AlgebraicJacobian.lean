@@ -75,6 +75,9 @@ import AlgebraicJacobian.Picard.RigidPushforwardGate
 import AlgebraicJacobian.Picard.RigidPushforwardFiberChart
 import AlgebraicJacobian.Picard.RigidPushforwardP1Sheaf
 import AlgebraicJacobian.Picard.RigidPushforwardFrontier
+-- Aimed at the gate's H0-finiteness leaf: the P^1 chart-ring identification over the
+-- integral model. Sits over Adelic.P1ChartData, beside the cone rather than under it.
+import AlgebraicJacobian.Picard.RigidPushforwardP1ChartRing
 import AlgebraicJacobian.Picard.P1SectionsFinite
 import AlgebraicJacobian.Picard.TwoTermFiniteFree
 import AlgebraicJacobian.Picard.SemicontinuityH0
