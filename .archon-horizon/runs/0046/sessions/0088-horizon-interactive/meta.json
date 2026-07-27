@@ -10,5 +10,6 @@
   ],
   "started_at": "2026-07-27T01:40:19.363116+00:00",
   "resumed_engine_session_id": "8cd8c4bc-706b-436d-a7ec-9ac9996dea6f",
+  "workspace_base_sha": "79c07e8968ffdc3b567201c73d778c9a9b2e2066",
   "status": "running"
 }
