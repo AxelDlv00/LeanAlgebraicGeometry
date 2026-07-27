@@ -423,5 +423,152 @@ theorem exists_bound_forall_generatedAt
 
 end Threshold
 
+/-! ## §5. What `[κ(P):k] = 1` actually says
+
+Both the uniform generation statement (`r = 1`) and the open geometric leaf
+`Scheme.WeilDivisor.principal_degree_zero` (through
+`degree_principal_eq_zero_of_residueDeg_eq_one`, `SectionBounds.lean` §4) reduce to the
+single fact `residueDeg k P = 1`.  It has been carried as an informal remark — "over an
+algebraically closed base every closed point has residue field `k̄`".  This section
+replaces the remark by a **machine-checked equivalence** to a concrete, checkable
+statement about rational functions:
+
+`residueDeg k P = 1 ↔ every function of order ≥ 0 at `P` agrees with a constant to
+first order at `P`.`
+
+That is `residueDeg_eq_one_iff_hasRationalResidues`.  It converts the remaining leaf from
+a claim about residue fields — which in this substrate would require identifying
+`localStepTgt k P 1` with `IsLocalRing.ResidueField (X.presheaf.stalk P.point)`, an
+identification this project does not have — into an approximation statement in the order
+language the substrate already speaks.
+
+Note what is **not** claimed: `HasRationalResidues` is not proved here for an
+algebraically closed base.  Doing so needs the multiplicative structure of `κ(P)` (a
+finite-dimensional *field* extension of an algebraically closed `k` is trivial —
+`IsAlgClosed.algebraMap_bijective_of_isIntegral`), and `localStepTgt k P 1` is
+constructed here as a quotient of `k`-submodules with no ring structure on it.  Finite
+dimensionality alone does not give dimension one for a mere vector space, so the gap is
+real and is exactly the missing ring-structure identification.
+-/
+
+section RationalResidues
+
+variable (k : Type u) [Field k] {X : Scheme.{u}} [IsIntegral X]
+    [IsLocallyNoetherian X] [Scheme.IsRegularInCodimensionOne X]
+    [Algebra k X.functionField] [IsConstantField k X]
+
+/-- **Every function regular at `P` agrees with a constant to first order.**
+`∀ f` with `ord_P f ≥ 0`, some `c ∈ k` has `ord_P (f − c) ≥ 1`.
+
+This is the concrete content of "`κ(P) = k`", phrased in the order language rather than
+through the residue field: the residue of `f` at `P` is the constant `c`.  Over an
+algebraically closed base field it is the standard fact that a closed point of a curve
+has residue field the base field; here it is an explicit hypothesis, and
+`residueDeg_eq_one_iff_hasRationalResidues` shows it is *exactly* equivalent to
+`[κ(P):k] = 1`. -/
+def HasRationalResidues (P : X.PrimeDivisor) : Prop :=
+  ∀ f : X.functionField, f ∈ orderGe P 0 →
+    ∃ c : k, f - algebraMap k X.functionField c ∈ orderGe P 1
+
+/-- **`[κ(P):k] = 1` is equivalent to first-order approximation by constants.**
+
+`→` The quotient `localStepTgt k P 1 = orderGe P 0 / orderGe P 1` has dimension one and
+its class of `1` is nonzero (`nontrivial_localStepTgt_one`), hence spans; so the class of
+any `f` is `c • [1] = [c]`, i.e. `f − c ∈ orderGe P 1`.
+
+`←` Conversely, approximation says every class is a `k`-multiple of `[1]`, so the
+quotient is spanned by one vector and has dimension `≤ 1`; with `1 ≤ [κ(P):k]`
+(`one_le_residueDeg`) it is exactly `1`.
+
+The `→` direction needs no finiteness instance; `←` produces one, since a space spanned
+by a single vector is finite-dimensional. -/
+theorem residueDeg_eq_one_iff_hasRationalResidues (P : X.PrimeDivisor)
+    [Module.Finite k (localStepTgt k P 1)] :
+    residueDeg k P = 1 ↔ HasRationalResidues k P := by
+  have hone : (1 : X.functionField) ∈ orderGeSub k P (1 - 1) := by
+    rw [mem_orderGeSub]
+    exact Or.inr (by rw [Scheme.RationalMap.order_one]; norm_num)
+  constructor
+  · -- dimension one: the class of `1` spans
+    intro hdeg f hf
+    -- `[1] ≠ 0`, and in a 1-dimensional space a nonzero vector spans
+    have hspan : ∀ z : localStepTgt k P 1, ∃ c : k,
+        z = c • Submodule.Quotient.mk (p := Submodule.comap
+          (orderGeSub k P (1 - 1)).subtype (orderGeSub k P 1)) ⟨1, hone⟩ := by
+      intro z
+      haveI := nontrivial_localStepTgt_one k P
+      have hne : Submodule.Quotient.mk (p := Submodule.comap
+          (orderGeSub k P (1 - 1)).subtype (orderGeSub k P 1))
+          (⟨1, hone⟩ : orderGeSub k P (1 - 1)) ≠ 0 := by
+        intro h
+        rw [Submodule.Quotient.mk_eq_zero, Submodule.mem_comap, Submodule.subtype_apply,
+          mem_orderGeSub] at h
+        rcases h with h0 | h0
+        · exact one_ne_zero h0
+        · rw [Scheme.RationalMap.order_one] at h0; norm_num at h0
+      -- a nonzero vector in a space of rank 1 spans it
+      have hfr : Module.finrank k (localStepTgt k P 1) = 1 := hdeg
+      obtain ⟨c, hc⟩ := (finrank_eq_one_iff_of_nonzero' _ hne).mp hfr z
+      exact ⟨c, hc.symm⟩
+    obtain ⟨c, hc⟩ := hspan (Submodule.Quotient.mk
+      (p := Submodule.comap (orderGeSub k P (1 - 1)).subtype (orderGeSub k P 1))
+      ⟨f, (mem_orderGeSub k).mpr hf⟩)
+    refine ⟨c, ?_⟩
+    -- unwind `[f] = c • [1]` into `f - c ∈ orderGe P 1`
+    rw [← Submodule.Quotient.mk_smul, Submodule.Quotient.eq, Submodule.mem_comap,
+      Submodule.subtype_apply] at hc
+    rw [mem_orderGeSub] at hc
+    have : ((⟨f, (mem_orderGeSub k).mpr hf⟩ : orderGeSub k P (1 - 1)) -
+        c • ⟨1, hone⟩ : orderGeSub k P (1 - 1)) =
+        (⟨f - algebraMap k X.functionField c, by
+          have h1 : algebraMap k X.functionField c ∈ orderGeSub k P (1 - 1) := by
+            have := (orderGeSub k P (1 - 1)).smul_mem c hone
+            rwa [Algebra.smul_def, mul_one] at this
+          exact (orderGeSub k P (1 - 1)).sub_mem ((mem_orderGeSub k).mpr hf) h1⟩ :
+          orderGeSub k P (1 - 1)) := by
+      apply Subtype.ext
+      change f - c • (1 : X.functionField) = f - algebraMap k X.functionField c
+      rw [Algebra.smul_def, mul_one]
+    rw [this] at hc
+    exact hc
+  · -- approximation: the class of `1` spans, so the rank is at most one
+    intro happrox
+    have hle : residueDeg k P ≤ 1 := by
+      rw [residueDeg]
+      -- the quotient is spanned by the single class of `1`
+      have hspan : (⊤ : Submodule k (localStepTgt k P 1)) ≤
+          Submodule.span k {Submodule.Quotient.mk (p := Submodule.comap
+            (orderGeSub k P (1 - 1)).subtype (orderGeSub k P 1)) ⟨1, hone⟩} := by
+        intro z _
+        obtain ⟨g, rfl⟩ := Submodule.Quotient.mk_surjective _ z
+        obtain ⟨c, hc⟩ := happrox (g : X.functionField)
+          (by
+            have hg2 := g.2
+            rw [mem_orderGeSub] at hg2
+            exact orderGe_antitone (by norm_num) hg2)
+        rw [Submodule.mem_span_singleton]
+        refine ⟨c, ?_⟩
+        rw [← Submodule.Quotient.mk_smul, Submodule.Quotient.eq, Submodule.mem_comap,
+          Submodule.subtype_apply]
+        have hval : ((c • ⟨1, hone⟩ - g : orderGeSub k P (1 - 1)) :
+            X.functionField) = -(g - algebraMap k X.functionField c) := by
+          change c • (1 : X.functionField) - (g : X.functionField) = _
+          rw [Algebra.smul_def, mul_one]
+          ring
+        rw [mem_orderGeSub, hval]
+        exact (orderGe P 1).neg_mem hc
+      have := Submodule.finrank_mono hspan
+      rw [finrank_top] at this
+      refine this.trans ?_
+      rcases eq_or_ne (Submodule.Quotient.mk (p := Submodule.comap
+          (orderGeSub k P (1 - 1)).subtype (orderGeSub k P 1))
+          (⟨1, hone⟩ : orderGeSub k P (1 - 1))) 0 with h0 | h0
+      · rw [h0, Submodule.span_zero_singleton, finrank_bot]; norm_num
+      · rw [finrank_span_singleton h0]
+    have := one_le_residueDeg k P
+    omega
+
+end RationalResidues
+
 end Adelic
 end AlgebraicGeometry
