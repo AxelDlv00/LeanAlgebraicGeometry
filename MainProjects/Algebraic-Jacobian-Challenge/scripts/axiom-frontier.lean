@@ -122,8 +122,16 @@ the whole design of the check and the earlier version of it got this backwards: 
 intersected the marks with §0–§8, which name 126 declarations, so it could only ever
 see the ~50 marked nodes this probe happens to mention.  Generate the `#print axioms`
 lines *from the marks* instead.  Measured 2026-07-28 that way: **998 proof-level marks
-pinning 1073 declarations, 891 of them resolvable and probed, and ZERO carrying
+pinning 1073 declarations, 950 of them resolvable and probed, and ZERO carrying
 `sorryAx`.**
+
+Reconcile `probed + unresolvable` against the pin count every time, and treat a
+shortfall as a broken audit rather than a rounding difference.  Three separate silent
+losses were found by exactly that arithmetic, and each one had been reporting a clean
+result: the error cap below, an output glob that swallowed its own log, and a parser
+that dropped every declaration whose name contains an apostrophe (49 of these pins do —
+`chartTransition'_cocycle` and friends).  Anchor the parse on the fixed
+`' depends on axioms: [...]` suffix, never on the closing quote.
 
     python3 - <<'PY' > /tmp/leanok_pins.txt
     import re, glob, json
@@ -150,21 +158,29 @@ pinning 1073 declarations, 891 of them resolvable and probed, and ZERO carrying
         print(d)
     PY
     # `#print axioms` on an absent name is an ERROR, and `lean` stops at 100 of them,
-    # silently truncating the audit.  Batch so no batch can reach the cap.
-    split -l 40 /tmp/leanok_pins.txt /tmp/lk_ && rm -f /tmp/lk_all.txt
+    # silently truncating the audit.  Batch so no batch can reach the cap.  Note the
+    # output file is NOT named `/tmp/lk_a…`: a `/tmp/lk_a*` glob would otherwise pick up
+    # the growing log itself as an input batch.
+    rm -f /tmp/lk_a* /tmp/lkout.txt && split -l 40 /tmp/leanok_pins.txt /tmp/lk_
     for f in /tmp/lk_a*; do
       { echo 'import AlgebraicJacobian'; sed 's/^/#print axioms /' "$f"; } > /tmp/lk.lean
-      lake env lean /tmp/lk.lean >> /tmp/lk_all.txt 2>&1
+      lake env lean /tmp/lk.lean >> /tmp/lkout.txt 2>&1
     done
     python3 - <<'PY'
     import re, json
-    txt = open('/tmp/lk_all.txt').read()
+    txt = open('/tmp/lkout.txt').read()
     assert 'maximum number of errors' not in txt, 'audit truncated — use smaller batches'
-    leaks = {m.group(1): 'sorryAx' in e
-             for e in re.split(r"\n(?=')", txt)
-             for m in [re.match(r"'([^']+)'", e)] if m}
-    bad = [(l, d, f) for f, l, d in json.load(open('/tmp/marked.json')) if leaks.get(d)]
-    print(f'{len(leaks)} pins probed, {len(bad)} dishonest proof-level marks')
+    # Anchor on the ' depends on axioms:' suffix.  A closing-quote regex silently drops
+    # every primed name (`foo'_bar`), which is 49 of these pins.
+    axioms = dict(re.findall(r"^'(.+?)' depends on axioms: \[([^\]]*)\]", txt, re.M))
+    unresolved = set(re.findall(r"Unknown constant `([^`]+)`", txt))
+    marked = json.load(open('/tmp/marked.json'))
+    pins = {d for _, _, d in marked}
+    lost = pins - set(axioms) - unresolved
+    assert not lost, f'{len(lost)} pins produced no output at all: {sorted(lost)[:5]}'
+    bad = [(l, d, f) for f, l, d in marked if 'sorryAx' in axioms.get(d, '')]
+    print(f'{len(pins)} pins: {len(axioms)} probed, {len(unresolved)} unresolvable '
+          f'(private), {len(bad)} dishonest proof-level marks')
     for l, d, f in bad: print('  DISHONEST', l, d, f)
     PY
 
@@ -186,15 +202,19 @@ matter more than the arithmetic:
      `\leanok` at all, and `git log` records that this is deliberate.**
   3. **`#print axioms` on an absent name is an error and `lean` halts at 100**, so a
      naive one-file audit reports on whatever it reached before the cap and looks
-     complete.
+     complete.  Two further silent losses of the same family — a `/tmp/lk_a*` glob that
+     re-ingested its own log, and the apostrophe parse above — were each caught only by
+     reconciling `probed + unresolvable` against the pin count.  All three produced a
+     plausible "0 dishonest" line while examining less than the whole set, which is why
+     the assertions above are part of the recipe rather than hygiene.
 
 What the corrected join does *not* cover, and it is a real bound rather than a
-footnote: 143 of the 1073 pins name **`private`** declarations, which `#print axioms`
+footnote: 123 of the 1073 pins name **`private`** declarations, which `#print axioms`
 cannot address from outside their file even though they are genuine checked lemmas.
-They concentrate in `Picard/TensorObjInverse.lean` (36), `TensorObjSubstrate.lean` (21)
-and `Albanese/AuslanderBuchsbaum.lean` (21).  So the honest statement is: zero
-dishonest marks among the 891 pins that can be probed, and 143 marks whose honesty
-this method cannot decide either way.
+They concentrate in `Picard/TensorObjInverse.lean`, `TensorObjSubstrate.lean` and
+`Albanese/AuslanderBuchsbaum.lean`.  So the honest statement is: zero dishonest marks
+among the pins that can be probed, and ~123 marks whose honesty this method cannot
+decide either way.
 
 Only *proof*-level marks are defects here.  A **statement**-level `\leanok` on a
 `sorry` carrier is legitimate and there are eleven: it claims the signature is

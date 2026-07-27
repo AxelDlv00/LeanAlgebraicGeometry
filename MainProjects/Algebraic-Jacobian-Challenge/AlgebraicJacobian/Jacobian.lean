@@ -452,11 +452,15 @@ mathematics:
    is Mumford §4 rigidity;
 3. the basepoint condition `P ≫ ι_P = η`, taken here as the hypothesis `hbase`.
 
-Plus one bookkeeping difference that is not mathematics but should not be glossed: this
-statement carries `[GeometricallyIrreducible C.hom]` alongside `[GeometricallyIntegral
-C.hom]`, where the general leaf carries only the latter. Mathlib derives irreducibility
-from integrality at low instance priority, so it is not free at the binder even though it
-is free mathematically.
+There is no fourth difference. An earlier version of this docstring claimed a
+"bookkeeping" one — that the extra `[GeometricallyIrreducible C.hom]` binder here, absent
+from the general leaf, was needed because irreducibility is "not free at the binder even
+though it is free mathematically". That is false, and it is the kind of claim worth
+checking rather than repeating: `instGeometricallyIrreducibleOfGeometricallyIntegral`
+synthesises it from `[GeometricallyIntegral C.hom]` directly, so the binder is redundant
+and the statement elaborates unchanged without it. The binder is kept only because these
+hypotheses mirror the witness's, and a redundant binder is harmless; what is *not*
+harmless is a docstring asserting an obstruction that does not exist.
 
 The third is the one that is easy to lose sight of, because it is not a restriction on
 the landed theorem's *hypotheses* but a conjunct of `IsAlbanese` that
