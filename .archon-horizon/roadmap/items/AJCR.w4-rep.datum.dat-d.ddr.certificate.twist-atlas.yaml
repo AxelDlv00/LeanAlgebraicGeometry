@@ -1,0 +1,37 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.twist-atlas
+title: 'Twist atlas: glue fixed-coordinate divisor charts over their common divisor
+  loci'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Replace the rejected in-place cert-relocalize formulation by an outer atlas.
+  For every fixed M, instantiate the existing DivFamZar, theta-window, cocycle, evaluation,
+  DivOver, and DivRepGlobalData classifier at twistedP1Map pi M. Define the image
+  locus inside the common underlying relative-divisor functor and prove it is open
+  on test schemes using support confinement. On pairwise intersections, identify the
+  two charts through equality of their underlying divisors, construct transition isomorphisms,
+  and prove identity, symmetry, and cocycle laws. Glue the fixed-M representing charts
+  and expose the resulting atlas to the downstream Pic0 construction. Do not place
+  M inside DivRepGlobalData.equiv.
+status: pending
+kind: refactor
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-27T04:12:30.825079+00:00'
+  provenance:
+    run: '0052'
+    session: 0001-horizon-interactive
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
+  milestone: w4-gate

@@ -1,0 +1,37 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid
+title: 'Finite-field avoidance: bound fibre support by g and avoid it after a large
+  finite extension'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Complete the arbitrary-field half of R1. Prove a finite-cardinality analogue
+  of P1.exists_matrix_finite_subset_chartInter: two pencil parameters can be chosen
+  outside the finite bad set whenever the field has at least two more elements than
+  that set. Derive a uniform bound on the cardinality of the image in P1 of a ThetaGeneratorSeed
+  residue fibre from its degree-g or rankAtStalk data, without using a certificate.
+  For a finite base field choose a sufficiently large finite Galois extension K/k,
+  apply the bounded avoidance theorem over K, and feed the resulting fixed-twist atlas
+  into the existing Galois-descent substrate. A finite extension must not be treated
+  as Infinite.'
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-27T04:12:12.750023+00:00'
+  provenance:
+    run: '0052'
+    session: 0001-horizon-interactive
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
+  milestone: w4-gate

@@ -3,105 +3,18 @@ title: 'DD-R certificate: inherited certificate, epsilon projection, U1/U2, and 
   laws'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'ROUTE RE-BASED AGAIN 2026-07-25 (run 0048 round 1). The lane''s gate is
-  no longer a question: it
-
-  is answered, and the lane is blocked on ordinary mathematics rather than on a human
-  decision.
-
-  Deliverable of record: informal/spec-dd-r.md ADDENDUM 3 (supersedes ADDENDUM 2 §4
-  and ADDENDUM 1
-
-  item 2). Inbox I-0333 is answered.
-
-
-  THE VERDICT (chart-avoid). The Z(diamond) chart does NOT confine its divisors. Three
-  independent
-
-  grounds: the seed carries no exactness datum and cannot honestly be given one; ADDENDUM
-  2 §4''s
-
-  "tractable half" is a whole disjunct (Theta = V_1^c set-theoretically) and its argument
-  is
-
-  circular; and there is an explicit counterexample — F = t X^2 + X Y + t Y^2 over
-  k[t] cuts an
-
-  IRREDUCIBLE relative Cartier divisor of degree 2 whose fibre at t = 0 is {0, infinity},
-  and it
-
-  stays irreducible over every nonempty open of the base, so no Zariski shrink evades
-  the no-go.
-
-  Landed this round: the obstruction is DivEq-invariant, so it bites the DivFamZar
-  QUOTIENT and
-
-  not merely a representative (DivSchemeCertZarConfine.lean).
-
-
-  THE DIAGNOSIS. The binding constraint is FinCoverData (DivisorFamily.lean:160-176):
-  pieces are
-
-  basic opens of the two PINNED charts with a partition of unity on each. Since clause
-
-  (c1)-finiteness IS leak-freeness, every piece trace is clopen in the support, so
-  a connected
-
-  support lands inside one piece hence one chart. Refining the cover, shrinking the
-  base, choosing
-
-  a cleverer L and re-spelling the equations are all provably useless. Any repair
-  must introduce a
-
-  piece NOT contained in a single pinned chart.
-
-
-  THE REPAIR (R1, chosen). Vary the P^1-coordinate: every declaration in the chain
-  is generic in
-
-  pi, so replacing pi by gamma . pi for gamma in Aut(P^1_k) is free in the landed
-  material. Its
-
-  one missing input is Aut(P^1) itself, which does not exist in this project (P1 k
-  is a Proj; no
-
-  PGL_2 action anywhere) — leaf p1-aut. Its covering obligation is leaf fibre-avoid.
-  Then the
-
-  interface restatement is leaf cert-relocalize, after which the LANDED chartPairCoverData
-  /
-
-  ofChartPair / forall_finite_colength_of_pieces_eq_chart give clause (c1) FREE.
-
-  R2 (generalize FinCoverData to sigma-charts) is the recorded alternative; do not
-  attempt both.
-
-  REJECTED: deleting clause (c1) from IsCertified — Module.Flat colength is free from
-  fibrewise
-
-  regularity alone, but the (c2)/(c3)/(c4) keystones in SlicingFlatKernel.lean (variable
-  block
-
-  :221-224) all carry [Module.Finite R chartProd], which IS finite colengths.
-
-
-  THE NEW CHAIN: p1-aut -> fibre-avoid -> cert-relocalize -> swallow-adapt -> cert-collapse
-  ->
-
-  cert-assemble.  confine-open and chart-avoid are done; tube-fibre and leak-image
-  stay rejected;
-
-  away-kerspan stays blocked behind cert-collapse.
-
-
-  BUILD-REACH HAZARD affecting this subtree: cert-assemble cites hdeg at
-
-  Picard/DivSchemeSeedUnivPulledDegree.lean:354, and that module is NOT reachable
-  from the root
-
-  aggregator, so the citation is source-level only and its olean is stale. See AJCR.w4-rep.build-reach.
-
-  '
+summary: 'CURRENT STATE 2026-07-27. The fixed two-chart DivFamZar is a proper subfunctor
+  of relative effective divisors, so the certificate lane must be widened before it
+  can cover Pic0. R1, varying the P1 coordinate, is selected after auditing R2 and
+  R3. LANDED: the GL2 action and twisted relative covers (p1-aut), plus noncircular
+  fibre avoidance over infinite ground fields (fibre-avoid). REJECTED: cert-relocalize
+  cannot put the twist quantifier inside one DivRepGlobalData equivalence because
+  that equivalence and all theta data are fixed in pi. ACTIVE SUCCESSORS: twist-atlas
+  builds an outer atlas of fixed-twist classifiers and glues them on common divisor
+  loci; finite-field-avoid proves a degree-bounded finite-cardinality variant and
+  connects it to finite Galois descent. After those, the certificate-production chain
+  continues through swallow-adapt, cert-collapse, and cert-assemble. The parent remains
+  blocked on ordinary formalization work, not on a human decision.'
 status: blocked
 kind: proof
 priority: normal
@@ -124,7 +37,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-26T06:46:06.961668+00:00'
+  updated_at: '2026-07-27T04:12:46.823505+00:00'
   pinned_commits:
   - c843eafd7
   - 359c0a38d

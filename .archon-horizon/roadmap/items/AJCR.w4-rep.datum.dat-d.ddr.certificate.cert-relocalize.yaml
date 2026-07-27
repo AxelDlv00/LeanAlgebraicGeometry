@@ -1,57 +1,18 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.cert-relocalize
-title: 'Cert-relocalize: restate IsLocallyCertified/DivFamZar to quantify over the
-  coordinate twist'
+title: 'Cert-relocalize, rejected: a fixed-pi classifier cannot internalize coordinate
+  twists'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'THE INTERFACE CHANGE (spec-dd-r ADDENDUM 3 §3, repair R1). Restate IsLocallyCertified
-  — hence
-
-  DivFamZar and divFunctor — to quantify over the P^1-coordinate twist as well as
-  over the Zariski
-
-  cover of the base: "locally on Spec R there is a gamma such that the adaptation
-  is certified for
-
-  gamma . pi".
-
-
-  WHY THE SHAPE IS FORCED: chart-avoid (c) exhibits a relative divisor that is certified
-  for NO
-
-  gamma-free cover, and confine-open shows the avoidance condition is open on the
-  base, so the
-
-  quantifier must sit inside the base-local one, not outside it.
-
-
-  BLAST RADIUS TO AUDIT (the S6 spelling freeze is a two-lane coordination point,
-  ADDENDUM 1 item
-
-  1 — the DD-R lane must sign off before S6 freezes): IsLocallyCertified (DivisorFamilyZar.lean),
-
-  DivFamZar / DivFamZar.mk / mapAlg / toZar / exists_glue_of_away_compat / eq_of_away_eq,
-
-  divFamZar.eval (DivisorFamilyZarVehicle.lean:209), divFunctor
-
-  (DivisorFamilyZarFunctor.lean:45), DivFamZar.exists_certified_away_rep
-
-  (DivRepClassifyZarKit.lean:79), DivFamZar.exists_certChartCover (DivRepClassifyZarKit.lean:433),
-
-  IsLocallyCertified.of_divEq (DivisorFamilyZar.lean:86), and DivRepGlobalData''s
-  `equiv` field
-
-  (DivRepKit.lean:83) — which asserts a full equivalence for a FIXED pi and therefore
-  CANNOT hold
-
-  as stated; it must be re-pinned in the same pass.
-
-
-  GATED ON p1-aut + fibre-avoid. Do not start before both land: the restatement is
-  only worth
-
-  making once the twisted charts are known to cover.
-
-  '
+summary: 'REJECTED 2026-07-27 after declaration-level audit. IsLocallyCertified, DivFamZar,
+  DivOver, the theta windows, cocycle, evaluation map, and DivRepGlobalData.equiv
+  are all parameterized by one fixed pi. Replacing pi by twistedP1Map pi M changes
+  the represented chart; one fixed classifier cannot classify the union over M without
+  changing its target and inverse laws. The correct replacement is an OUTER twist-indexed
+  atlas: retain the existing DivFamZar and fixed classifier for each fixed twisted
+  map, prove that its locus in the underlying divisor functor is open, construct transition
+  isomorphisms on common divisor-equality loci, verify cocycles, and glue the representing
+  charts. Those obligations are tracked by twist-atlas. The twist quantifier is inside
+  the base-local atlas cover but outside every fixed classifier.'
 status: rejected
 kind: proof
 priority: normal
@@ -74,5 +35,5 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-27T03:51:18.183450+00:00'
+  updated_at: '2026-07-27T04:11:58.410313+00:00'
   milestone: w4-gate

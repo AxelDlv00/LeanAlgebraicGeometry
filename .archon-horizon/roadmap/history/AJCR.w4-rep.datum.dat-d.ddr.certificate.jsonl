@@ -13,3 +13,5 @@
 {"at": "2026-07-25T15:10:18.158327+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-26T06:42:57.831321+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "milestone updated"}
 {"at": "2026-07-26T06:46:06.961274+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "blocked", "note": ""}
+{"at": "2026-07-27T04:12:46.822786+00:00", "actor": "horizon", "field": "status", "from": "blocked", "to": "blocked", "note": ""}
+{"at": "2026-07-27T04:12:46.823272+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}

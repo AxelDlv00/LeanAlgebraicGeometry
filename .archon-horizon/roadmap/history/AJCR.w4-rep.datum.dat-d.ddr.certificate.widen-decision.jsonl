@@ -1,2 +1,4 @@
 {"at": "2026-07-26T17:07:52.037335+00:00", "actor": "horizon", "field": "created", "from": "", "to": "pending", "note": "opened"}
 {"at": "2026-07-27T02:47:56.265250+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "done", "note": ""}
+{"at": "2026-07-27T04:11:27.455958+00:00", "actor": "horizon", "field": "status", "from": "done", "to": "done", "note": ""}
+{"at": "2026-07-27T04:11:27.457047+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}

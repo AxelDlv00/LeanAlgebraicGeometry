@@ -1,27 +1,18 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.fibre-avoid
-title: 'Fibre-avoid: every relative divisor avoids two k-points of P^1 Zariski-locally
-  on the base'
+title: 'Fibre-avoid, infinite-field branch: twist finite divisor fibres into the two-chart
+  overlap'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "THE COVERING OBLIGATION — what makes the atlas carve legitimate rather than\
-  \ lossy\n(spec-dd-r ADDENDUM 3 §5). With p1-aut, this closes the certificate lane's\
-  \ geometric gate.\n\nSTATEMENT. For a relative divisor whose support is finite over\
-  \ Spec R, and any s in Spec R: the\nfibre D_s is finite, so pi(D_s) is a finite\
-  \ subset of P^1 over kappa(s); if k is INFINITE then\nP^1(k) is infinite, so two\
-  \ distinct c_0, c_1 in P^1(k) avoid pi(D_s). relCurve C R -> Spec R is\nproper (instIsProperRelCurveHom,\
-  \ SupportTube.lean:194) hence closed, so the image of\nsupportLocus cap pi^-1({c_0,c_1})\
-  \ is closed and misses s. Over the open complement the divisor is\nconfined to pi^-1(P^1\
-  \ \\ {c_0,c_1}) = V_0 inf V_1 for the gamma-twist carrying {c_0,c_1} to\n{0,infinity}.\n\
-  \nPAYOFF, ALREADY LANDED: chartPairCoverData / ofChartPair and\nforall_finite_colength_of_pieces_eq_chart\
-  \ (Picard/DivSchemeCertZarChartPair.lean) then give\nclause (c1) FREE — no fibre,\
-  \ no tube, no packet idempotent. The base-open spread it needs is\nconfine-open's\
-  \ exists_opens_supportLocus_subset_chartInter.\n\nTWO HYPOTHESES TO WATCH, both\
-  \ real risks, neither to be assumed silently:\n (i) k INFINITE. Challenge.lean states\
-  \ the Jacobian over an arbitrary field. A finite-field route\n     needs |P^1(k)|\
-  \ > deg D, i.e. a base change to k(T) or a degree-d point; schedule it, do not\n\
-  \     assume it.\n (ii) FINITENESS OF THE SUPPORT OVER THE BASE must come from the\
-  \ seed's own degree data, NOT from\n     the certificate — otherwise the argument\
-  \ is circular. This is the one genuinely load-bearing\n     input of this leaf.\n"
+summary: 'DONE FOR INFINITE k, commit c6a47016f. P1.exists_matrix_finite_subset_chartInter
+  proves that one GL2 twist puts any finite subset of P1 inside the two twisted standard
+  charts. DivSchemeCertZarFibreAvoid derives finite residue support from regular local
+  equations on a smooth integral proper curve, maps that support into P1, chooses
+  the twist, and spreads confinement over a Zariski neighbourhood by properness. The
+  ThetaGeneratorSeed theorem is noncircular: its fibre_regular field supplies residue-pullback
+  regularity before colength, projectivity, or certification is used. SCOPE LIMIT:
+  every avoidance theorem that chooses two scalars assumes Infinite k. This row therefore
+  closes exactly the infinite-field branch, not the arbitrary-field gate. The missing
+  finite-field degree bound and finite-cardinality variant are tracked by finite-field-avoid.'
 status: done
 kind: proof
 priority: high
@@ -44,7 +35,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-27T03:51:15.717633+00:00'
+  updated_at: '2026-07-27T04:11:46.276847+00:00'
   milestone: w4-gate
   pinned_commits:
   - c6a47016f
