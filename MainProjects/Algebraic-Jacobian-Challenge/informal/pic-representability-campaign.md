@@ -273,9 +273,20 @@ House pattern: Prop-classes, **no sorried instances**, deleted on discharge.
 
 Order: P1 → (P5, B3, G2 in parallel) → D4' → J5 → G3 → G5. Final state: **zero campaign gates**; `HasRationalPoint` remains as an honest hypothesis; `HasSmoothProperQuotient` remains empty, unused, docstring-flagged. Off-path and untouched: the Quot-lane sorries in `QuotRepresentability.lean`, `QuotFunctorDef.lean` (two) and `SerreFiniteness.lean` (two), and `WeilDivisor.principal_degree_zero` (P3 may close it as a bonus).
 
-**Gate-table status, re-measured 2026-07-27.** The table above is the plan; this is the
+**Gate-table status, re-measured 2026-07-28.** The table above is the plan; this is the
 state. Resolve everything by declaration name — the wave sections below cite line numbers
-that have drifted.
+that have drifted. Every count below is regenerable: the frontier from `lake env lean
+scripts/axiom-frontier.lean` (107 declarations, 70 clean, 37 carrying `sorryAx`, with the
+root build green at 8,744 jobs), the carrier list from `lake build AlgebraicJacobian 2>&1 |
+grep 'declaration uses' | sort -u` (26 over 11 modules).
+
+- **`instHasPicScheme` — still the target, and still the only genuine synthesis leak on this
+  route.** Of the tree's 26 `sorry` carriers exactly *two* are instances, so exactly two can
+  reach a consumer without being named in the statement it depends on: `instHasPicScheme`
+  itself and `pullback_preservesFiniteLimits` (the flat-pullback left-exactness of the
+  cohomology lane, off this route). Everything else on the route is honest debt — visible in
+  the signature of whatever depends on it. That is the useful shape of the remaining work: the
+  campaign has one hidden obligation, not a diffuse cloud of them, and G5 closes it.
 
 - **`HasRigidPushforward C` — DISCHARGED (2026-07-27, commits `d6bfd59be`/`f4a56a754`).**
   `Adelic.instHasRigidPushforwardOfCurve`
