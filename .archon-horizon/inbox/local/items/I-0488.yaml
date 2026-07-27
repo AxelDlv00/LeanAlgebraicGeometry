@@ -1,0 +1,58 @@
+id: I-0488
+provider: local
+kind: memory
+body: "WHEN TWO INDEPENDENT MEASUREMENTS AGREE ON THE ANSWER AND DIFFER ON THE DOMAIN,\
+  \ THE GAP IS\nTHE FINDING.\n\nShape (run 0054 session 0016, task ajc-truth, and\
+  \ it generalises well past `\\leanok`):\n\nI set out to re-measure a figure this\
+  \ task had published wrongly (\"eleven\" statement-level\nmarks on sorry carriers).\
+  \ I built an extractor sharing no code with the published recipe and\ngot 34 --\
+  \ exactly matching a ground review's independent 34. Two toolchains, no shared code,\n\
+  same answer. The natural move is to publish.\n\nBut the DOMAINS disagreed: 1552\
+  \ distinct statement-level pins against ground's 1560. Eight\npins. The answer was\
+  \ already corroborated and the discrepancy was 0.5% of the domain, so it\nlooked\
+  \ like a bookkeeping difference not worth the time.\n\nIt was a sixth instance of\
+  \ the exact bug class the whole exercise was about. In Python,\n\n    re.search(r'\\\
+  \\lean\\{([^}]*)\\}', body)     # keeps only the FIRST match\n    re.findall(r'\\\
+  \\lean\\{([^}]*)\\}', body)    # what you actually want\n\nA blueprint statement\
+  \ may carry SEVERAL `\\lean{}` macros, and two nodes in\n`Picard_QuotScheme.tex`\
+  \ do: `def:graded_subquotientHilb` has 3 and `lem:graded_lastVarAlgHom`\nhas 7.\
+  \ `search` silently kept one each. So my extractor -- written specifically to replace\n\
+  one that had lost pins in five documented ways -- was losing pins in a sixth.\n\n\
+  WHY THE AGREEMENT WAS NOT REASSURANCE. The two measurements agreed because those\
+  \ 8 pins\nhappened to be axiom-clean, so they could not move the `sorryAx` count.\
+  \ Agreement on the\nANSWER is compatible with either measurement having an arbitrarily\
+  \ wrong domain: the answer\nonly samples the domain. And domain size was precisely\
+  \ what every previous false \"zero\ndefects\" line had been wrong about -- the finding\
+  \ was never the count, it was always \"you\nmeasured less than you think\".\n\n\
+  RULE: when a second independent measurement corroborates yours, compare the DOMAIN\
+  \ SIZES\nbefore reporting the agreement, and chase any gap to a named cause even\
+  \ when it cannot move\nthe answer. A discrepancy you can explain is a check that\
+  \ passed; one you wave off is a bug\nyou have not found yet.\n\nCOROLLARY: assert\
+  \ reconciliation identities per measurement, not once for a family of them.\nApplying\
+  \ the identity to one of two sibling figures certifies one of them -- which is exactly\n\
+  how \"eleven\" survived a session that fixed its sibling and published five sub-bugs.\
+  \ I-0486\nrecords that version of the failure.\n\nThe fix is structural and landed:\
+  \ `scripts/leanok-audit.sh`, one command, exits non-zero if\neither mark position's\
+  \ identity fails or the private lane's positive control stops firing.\nEvery wrong\
+  \ number this check ever published came from a recipe transcribed into a comment\n\
+  and drifting from the code that produced the numbers printed beside it -- so the\
+  \ recipe is\nnow executed, not copied. Related: [[I-0483]], [[I-0485]], [[I-0486]]."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T23:47:30.076924+00:00'
+updated_at: '2026-07-27T23:48:08.859926+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0016-horizon-ajc-truth
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge

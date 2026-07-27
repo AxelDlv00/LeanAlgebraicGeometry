@@ -1,41 +1,62 @@
 id: I-0482
 provider: local
 kind: memory
-body: "[persistent] THE INBOX YOU CAN LIST IS NOT THE INBOX THAT EXISTS — reconcile\
-  \ the warning's count against the store before believing either\n\nEstablished by\
-  \ the janitor pass for `ajc-truth` (run 0055), and it invalidates an assumption\
-  \ six previous janitor passes made.\n\n**THE FACT.** `horizon inbox list --status\
-  \ open --json` and the advisory warning printed by that same command disagree. Measured:\
-  \ the list returned **32** items while the warning said **36 non-protection**; a\
-  \ direct count of `status: open` in `.archon-horizon/inbox/local/items/*.yaml` confirmed\
-  \ the warning (37 open / 36 non-protection / 20 memory). Five open items are counted\
-  \ but not listed, and `inbox show <id>` on them prints nothing while exiting **0**\
-  \ — a silent empty success, not an error. Filed as `I-0481`.\n\n**WHY IT MATTERS\
-  \ MORE THAN A COUNT.** One of the hidden items is `I-0372`, the workspace's top\
-  \ open decision (étale-sheafify the Picard functor, or accept a theorem weaker than\
-  \ the challenge asks), addressed to the human and scoped to this project. `I-0411`\
-  \ cites it as the reason `AJC.jacobian.assembly` cannot be marked done. So an agent\
-  \ can spend a session reasoning about the Jacobian headline while the item that\
-  \ gates it is unreadable through every tool the agent has.\n\n**THE RULE.** When\
-  \ a collection-health warning's number disagrees with what you can list, do not\
-  \ assume the warning is stale and do not assume your list is complete. Parse the\
-  \ store:\n\n    python3 -c \"import yaml,glob; print(sum(1 for f in glob.glob('.archon-horizon/inbox/local/items/*.yaml')\
-  \ if yaml.safe_load(open(f))['status']=='open'))\"\n\nand diff the ids against `inbox\
-  \ list --json`. It costs one command and it is the only way to see an item the CLI\
-  \ will not show you.\n\n**THE GENERALISATION, which is the durable part.** A read\
-  \ path and a count path over the same store can diverge, and when they do, the *filtered*\
-  \ path is the one that lies by omission — silently, because absence produces no\
-  \ error. This is the same shape as three defects already on record here: `#print\
-  \ axioms` halting at 100 and printing a clean-looking partial result (`I-0473`),\
-  \ the \\leanok join restricting its domain to adjacent pairs and reporting clean\
-  \ by construction (same), and an unrooted module contributing zero build jobs so\
-  \ nothing looks wrong (`I-0362`). **In each case a tool reported success over a\
-  \ domain smaller than the one it claimed.** Before trusting any clean or complete\
-  \ result, ask what the tool's actual domain was and whether it asserted that domain's\
-  \ size.\n\n**COROLLARY FOR `I-0387`** (the standing complaint that the advisory\
-  \ caps are unreachable): five of the counted items cannot be triaged by any agent,\
-  \ because you cannot archive, complete, or comment on an item you cannot list or\
-  \ show. That is a permanent floor under the count which no cleanup pass can lower."
+body: "[persistent] A READ PATH AND A COUNT PATH OVER THE SAME STORE CAN DIVERGE —\
+  \ reconcile the inbox warning against the store, and check a tool's exit code before\
+  \ recording it as broken\n\nEstablished by the janitor pass for `ajc-truth` (run\
+  \ 0055), **corrected by the ajc-truth session lead (run 0054 s0014) and trimmed\
+  \ 2026-07-28 (janitor pass, run 0054)**. This item was `[persistent]` while its\
+  \ body still asserted three claims its own comment C-0001 retracts; per the `I-0381`\
+  \ precedent and `I-0439`'s corollary the wrong half is deleted rather than left\
+  \ to outlive the right half. The full correction remains in C-0001.\n\n**THE FACT,\
+  \ as it actually stands.** `horizon inbox list --json` and the advisory warning\
+  \ printed by that same command disagree, and the warning is the one that matches\
+  \ the store. Measured again this pass: list returned **39** items, warning said\
+  \ **43 non-protection**, and parsing `status: open` out of `.archon-horizon/inbox/local/items/*.yaml`\
+  \ gave **44 open / 43 non-protection**, confirming the warning. The gap is the same\
+  \ five items both times.\n\n**THE RULE — reconcile against the store.** When a collection-health\
+  \ warning's number disagrees with what you can list, do not assume the warning is\
+  \ stale and do not assume your list is complete:\n\n    python3 -c \"import yaml,glob;\
+  \ print(sum(1 for f in glob.glob('.archon-horizon/inbox/local/items/*.yaml') if\
+  \ yaml.safe_load(open(f))['status']=='open'))\"\n\nDiff the ids against `inbox list\
+  \ --json`. The comment read path also works on an item you cannot `show`:\n\n  \
+  \  cat .archon-horizon/inbox/local/comments/<ID>/*.md\n\n**WHY THE FIVE ARE HIDDEN\
+  \ — this is a deliberate access rule, not a data-loss bug.** The filter is `reaches_horizon`\
+  \ in `Archon-Horizon/src/archon_horizon/core/inbox.py:191`, and it is worth knowing\
+  \ exactly because it decides what any agent can see:\n\n- **Project scope wins first.**\
+  \ `scope.projects` non-empty and not containing your project hides the item outright.\
+  \ Three of the five (`I-0144`, `I-0354`, `I-0367`) are scoped to `Algebraic-Jacobian-Challenge-Rebuild`\
+  \ and are hidden *correctly*.\n- **`audience: human` alone does NOT hide an item.**\
+  \ `I-0387` and `I-0481` are `--to human` and list fine. What hides `I-0372` and\
+  \ `I-0346` is audience `human` **plus a different creating team**: with no `horizon`\
+  \ / `project:` / `task:` / `run:` target matching, the last resort is `metadata.provenance.task|run`,\
+  \ so a `--to human` item is listable only by the team that filed it. `I-0372` was\
+  \ filed by `ajc-optimize`, `I-0346` by `ajcr-w4-rep-free`.\n- **`inbox show` on\
+  \ a hidden item exits 2** with `Error: Invalid value: <ID> is not addressed to this\
+  \ team`. It is an accurate diagnostic, not a silent failure; the synchronizer banner\
+  \ precedes it on stderr, which is how it got read as empty output.\n- **`inbox comment\
+  \ <ID>` WORKS on a hidden item.** `I-0372` carries real comments from three sessions\
+  \ of run 0054. Nothing was lost.\n\n**THE GENERALISATION, which is the durable part.**\
+  \ A read path and a count path over the same store can diverge, and when they do\
+  \ the *filtered* path is the one that lies by omission — silently, because absence\
+  \ produces no error. Same shape as three defects on record here: `#print axioms`\
+  \ halting at 100 and printing a clean-looking partial result (`I-0473`), the `\\\
+  leanok` join restricting its domain to adjacent pairs and reporting clean by construction\
+  \ (`I-0483`, six such bugs in one 20-line check), and an unrooted module contributing\
+  \ zero build jobs so nothing looks wrong (`I-0362`). **In each case a tool reported\
+  \ success over a domain smaller than the one it claimed.** Before trusting a clean\
+  \ or complete result, ask what the tool's actual domain was and whether it asserted\
+  \ that domain's size.\n\n**THE META-LESSON, and it is the reason this item needed\
+  \ trimming.** This memory inferred a data-loss bug from an absence it had not verified\
+  \ was an absence: \"show printed nothing\" was really \"show printed an error I\
+  \ did not read\", and \"unreadable through every tool the agent has\" was really\
+  \ \"unreadable through the two tools I tried, writable through the third\". **Before\
+  \ recording a tool as broken, check its exit code and try the write path** — the\
+  \ same domain discipline this item preaches, applied to itself.\n\n**COROLLARY FOR\
+  \ `I-0387`** (the standing complaint that the advisory caps are unreachable): the\
+  \ five hidden items cannot be archived or completed by the calling team, so they\
+  \ are a floor under the counted total that no cleanup pass by that team can lower\
+  \ — though they *can* be commented on. That part of the original stands."
 labels:
 - agent-ready
 status: open
@@ -44,7 +65,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-27T22:30:07.552841+00:00'
-updated_at: '2026-07-27T22:38:27.556165+00:00'
+updated_at: '2026-07-27T23:45:56.861265+00:00'
 metadata:
   provenance:
     run: '0054'

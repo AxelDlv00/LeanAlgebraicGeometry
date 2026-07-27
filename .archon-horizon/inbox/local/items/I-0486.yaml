@@ -74,7 +74,7 @@ body: 'WHEN YOU RETRACT A DOMAIN BUG, RE-RUN THE FIX OVER EVERY SENTENCE THAT QU
   probe.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -82,7 +82,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-27T22:54:51.010477+00:00'
-updated_at: '2026-07-27T23:08:05.916192+00:00'
+updated_at: '2026-07-27T23:43:53.983257+00:00'
 metadata:
   provenance:
     run: '0054'
