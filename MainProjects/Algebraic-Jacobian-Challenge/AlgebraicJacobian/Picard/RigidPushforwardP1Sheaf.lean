@@ -25,15 +25,23 @@ the rank identification:
 
 * `AlgebraicGeometry.specAwayToSpec_opensRange` — the open range of the
   localisation morphism `Spec R_f ⟶ Spec R` is the basic open `D(f)`.
-* `AlgebraicGeometry.module_free_gamma_pullback_specAwayToSpec` — semilinear
-  transport of freeness: if `Γ(Spec R, N)` becomes free of rank `r` after
-  localising at the powers of `f`, then the sections of the pullback of a
-  quasi-coherent `N` along `specAwayToSpec f` are free of rank `r` over
-  `Localization.Away f`.
+* `Module.free_and_finrank_of_isLocalizedModule` — freeness and rank pass
+  between two models of the same localisation of a module.
+* `AlgebraicGeometry.free_finite_finrank_gammaPullbackTop` — semilinear
+  transport along an open immersion of affines `j : Spec S ⟶ Spec R`: freeness,
+  finiteness and the rank of `Γ(N, j ''ᵁ ⊤)` over `Γ(Spec R, j ''ᵁ ⊤)` pass to
+  `Γ(j^* N, ⊤)` over `S`.
+* `AlgebraicGeometry.nonempty_pullbackIsoFree_of_free_sections` — a
+  quasi-coherent module whose sections are free of rank `n` *is* the free sheaf
+  of rank `n`.
 * `AlgebraicGeometry.exists_free_restrict_of_finite_projective_sections` — the
   crux: a quasi-coherent module on `Spec R` whose global sections are finite
   projective is free on a basic open neighbourhood of any prime, with the
-  free rank read off as `Module.rankAtStalk` at that prime.
+  free rank read off as `Module.rankAtStalk` at that prime.  The variant
+  `…_sections'` states the same with `Γ`-spelled hypotheses and the rank
+  packaged as `AlgebraicGeometry.sectionsRankAtStalk`.
+* `AlgebraicGeometry.module_finite_top_of_gammaSpecTop` and its projective
+  companion — change of scalars along `Γ(Spec R, ⊤) ≅ R`.
 * `AlgebraicGeometry.Adelic.pushforwardTop_linearEquiv_ker` — the identification
   `Γ(Spec A, p_* M) ≃ₗ[Γ(Spec A, ⊤)] ker d`, together with its `Module.Finite`
   and `Module.Projective` corollaries.
@@ -95,7 +103,7 @@ The comparison is the `IsLocalization.algEquiv`-semilinear upgrade of
 `IsLocalizedModule.iso`: `t = a/s` acts on `Mₛ` by the unique map inverting `s`,
 so the `R`-linear comparison is automatically semilinear.  Freeness transports by
 `Module.Free.of_equiv`, the rank by `rank_eq_of_equiv_equiv`. -/
-theorem Module.free_and_finrank_of_isLocalizedModule {R : Type u} [CommRing R] {M : Type u}
+theorem _root_.Module.free_and_finrank_of_isLocalizedModule {R : Type u} [CommRing R] {M : Type u}
     [AddCommGroup M] [Module R M] (S : Submonoid R) (Rₛ : Type u) [CommRing Rₛ] [Algebra R Rₛ]
     [IsLocalization S Rₛ] (Mₛ : Type u) [AddCommGroup Mₛ] [Module R Mₛ] [Module Rₛ Mₛ]
     [IsScalarTower R Rₛ Mₛ] (g : M →ₗ[R] Mₛ) [IsLocalizedModule S g]
@@ -176,7 +184,7 @@ theorem free_finite_finrank_gammaPullbackTop {R S : CommRingCat.{u}} (j : Spec S
   have hsemi : ∀ (r : S) (x : Γ((Scheme.Modules.pullback j).obj N, ⊤)),
       E (r • x) = σ r • E x := by
     intro r x
-    show (Scheme.Modules.gammaPullbackImageIso j N (⊤ : (Spec S).Opens)).hom.hom (r • x) = _
+    change (Scheme.Modules.gammaPullbackImageIso j N (⊤ : (Spec S).Opens)).hom.hom (r • x) = _
     rw [Scheme.Modules.smul_Spec_def (M := (Scheme.Modules.pullback j).obj N) r x, hmid]
     exact Scheme.Modules.gammaPullbackImageIso_hom_semilinear j N _ _ x
   refine ⟨?_, ?_, ?_⟩
@@ -291,7 +299,7 @@ theorem exists_free_restrict_of_finite_projective_sections {R : CommRingCat.{u}}
     (hKrank.trans h3)
   refine ⟨specBasicOpen f, hf, ⟨?_⟩⟩
   have hcomp : (basicOpenIsoSpecAway f).hom ≫ specAwayToSpec f = (specBasicOpen f).ι := by
-    show (basicOpenIsoSpecAway f).hom ≫ (basicOpenIsoSpecAway f).inv ≫ (specBasicOpen f).ι
+    change (basicOpenIsoSpecAway f).hom ≫ (basicOpenIsoSpecAway f).inv ≫ (specBasicOpen f).ι
       = (specBasicOpen f).ι
     rw [← Category.assoc, (basicOpenIsoSpecAway f).hom_inv_id, Category.id_comp]
   exact ((Scheme.Modules.pullbackCongr hcomp).symm.app N) ≪≫
@@ -300,7 +308,89 @@ theorem exists_free_restrict_of_finite_projective_sections {R : CommRingCat.{u}}
     Scheme.Modules.pullbackFreeIso (basicOpenIsoSpecAway f).hom
       (ULift.{u} (Fin (Module.rankAtStalk (moduleSpecΓFunctor.obj N) t)))
 
-/-! ## §4. The pushforward sections of a module on `ℙ¹_A` -/
+/-- **The rank of the global sections of a module on `Spec R` at a point.**
+Notation for `Module.rankAtStalk Γ(N, ⊤) t`, introduced as a named definition so
+that it can be *stated* over a section ring of the shape `CommRingCat.of A`
+(where the `R`-module structure on `Γ(N, ⊤)`, which is restriction of scalars
+along `ΓSpecIso`, is not reachable by type-class search from the reduced
+carrier). -/
+noncomputable def sectionsRankAtStalk {R : CommRingCat.{u}} (N : (Spec R).Modules)
+    (t : PrimeSpectrum R) : ℕ :=
+  Module.rankAtStalk Γ(N, (⊤ : (Spec R).Opens)) t
+
+/-- **A2, section-ring spelling.**  `exists_free_restrict_of_finite_projective_sections`
+with the finiteness and projectivity of the global sections taken as explicit
+hypotheses in the `Γ(N, ⊤)` presentation and the rank written as
+`sectionsRankAtStalk`.  Logically identical to the instance-argument form; this
+is the shape consumed by the `ℙ¹` output bridge. -/
+theorem exists_free_restrict_of_finite_projective_sections' {R : CommRingCat.{u}}
+    (N : (Spec R).Modules) [N.IsQuasicoherent]
+    (hfin : Module.Finite R Γ(N, (⊤ : (Spec R).Opens)))
+    (hproj : Module.Projective R Γ(N, (⊤ : (Spec R).Opens)))
+    (t : PrimeSpectrum R) :
+    ∃ U : (Spec R).Opens, t ∈ U ∧ Nonempty ((Scheme.Modules.pullback U.ι).obj N ≅
+      _root_.SheafOfModules.free (R := U.toScheme.ringCatSheaf)
+        (ULift.{u} (Fin (sectionsRankAtStalk N t)))) := by
+  haveI : Module.Finite R (moduleSpecΓFunctor.obj N) := hfin
+  haveI : Module.Projective R (moduleSpecΓFunctor.obj N) := hproj
+  exact exists_free_restrict_of_finite_projective_sections N t
+
+/-! ## §4. Changing scalars along `Γ(Spec R, ⊤) ≅ R`
+
+The engine's output is a statement about `Γ(Spec A, ⊤)`-modules; §3 consumes
+`A`-modules.  The two structures on `Γ(N, ⊤)` differ by restriction of scalars
+along the isomorphism `ΓSpecIso : Γ(Spec A, ⊤) ≅ A`, so finiteness and
+projectivity transport verbatim. -/
+
+/-- **The `R`-action on global sections is the `Γ(Spec R, ⊤)`-action through
+`ΓSpecIso`.**  Unfolding `Scheme.Modules.smul_Spec_def` at `U = ⊤`, where the
+restriction map `Γ(Spec R, ⊤) ⟶ Γ(Spec R, ⊤)` is the identity. -/
+theorem smul_gammaSpecTop {R : CommRingCat.{u}} (M : (Spec R).Modules) (r : R)
+    (x : Γ(M, (⊤ : (Spec R).Opens))) :
+    r • x = ((Scheme.ΓSpecIso R).inv.hom r) • x := by
+  have hmid : (Spec R).presheaf.map ((⊤ : (Spec R).Opens).leTop).op = 𝟙 _ := by
+    rw [show ((⊤ : (Spec R).Opens).leTop) = 𝟙 (⊤ : (Spec R).Opens) from rfl]
+    exact (Spec R).presheaf.map_id _
+  rw [Scheme.Modules.smul_Spec_def (M := M) r x, hmid]
+  rfl
+
+/-- **Finiteness of global sections descends along `ΓSpecIso`**: a module on
+`Spec R` whose global sections are finite over `Γ(Spec R, ⊤)` has global sections
+finite over `R`, the two actions differing by the ring isomorphism `ΓSpecIso`. -/
+theorem module_finite_top_of_gammaSpecTop {R : CommRingCat.{u}} (M : (Spec R).Modules)
+    (h : Module.Finite Γ(Spec R, (⊤ : (Spec R).Opens)) Γ(M, (⊤ : (Spec R).Opens))) :
+    Module.Finite R Γ(M, (⊤ : (Spec R).Opens)) :=
+  Module.Finite.of_addEquiv_semilinear
+    ((Scheme.ΓSpecIso R).commRingCatIsoToRingEquiv.symm : R →+* Γ(Spec R, (⊤ : (Spec R).Opens)))
+    (Scheme.ΓSpecIso R).commRingCatIsoToRingEquiv.symm.surjective (AddEquiv.refl _)
+    (fun r x => smul_gammaSpecTop M r x) h
+
+attribute [local instance] RingHomInvPair.of_ringEquiv RingHomInvPair.of_ringEquiv_symm in
+/-- **Projectivity of global sections descends along `ΓSpecIso`**, the companion
+of `module_finite_top_of_gammaSpecTop`. -/
+theorem module_projective_top_of_gammaSpecTop {R : CommRingCat.{u}} (M : (Spec R).Modules)
+    (h : Module.Projective Γ(Spec R, (⊤ : (Spec R).Opens)) Γ(M, (⊤ : (Spec R).Opens))) :
+    Module.Projective R Γ(M, (⊤ : (Spec R).Opens)) := by
+  haveI := h
+  have hcancel : ∀ s : Γ(Spec R, (⊤ : (Spec R).Opens)),
+      (Scheme.ΓSpecIso R).inv.hom
+        ((Scheme.ΓSpecIso R).commRingCatIsoToRingEquiv s) = s := by
+    intro s
+    have h1 := congrArg (fun φ : Γ(Spec R, (⊤ : (Spec R).Opens)) ⟶ Γ(Spec R, ⊤) => φ.hom s)
+      (Scheme.ΓSpecIso R).hom_inv_id
+    simp only [CommRingCat.hom_comp, RingHom.comp_apply, CommRingCat.hom_id,
+      RingHom.id_apply] at h1
+    exact h1
+  have E : Γ(M, (⊤ : (Spec R).Opens))
+      ≃ₛₗ[((Scheme.ΓSpecIso R).commRingCatIsoToRingEquiv :
+        Γ(Spec R, (⊤ : (Spec R).Opens)) →+* R)] Γ(M, (⊤ : (Spec R).Opens)) := by
+    refine { __ := AddEquiv.refl _, map_smul' := ?_ }
+    intro s x
+    exact ((congrArg (fun z : Γ(Spec R, (⊤ : (Spec R).Opens)) => z • x) (hcancel s)).symm).trans
+      (smul_gammaSpecTop M ((Scheme.ΓSpecIso R).commRingCatIsoToRingEquiv s) x).symm
+  exact Module.Projective.of_equiv E
+
+/-! ## §5. The pushforward sections of a module on `ℙ¹_A` -/
 
 namespace Scheme.Modules
 
@@ -464,6 +554,66 @@ theorem module_projective_pushforwardTop (A : Type u) [CommRing A] [Algebra k A]
       ((p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂)
   haveI := hproj
   exact Module.Projective.of_equiv (pushforwardTop_linearEquiv_ker A M).symm
+
+/-! ## §6. The output bridge, conditional on the rank identification -/
+
+set_option maxHeartbeats 1600000 in
+-- Heartbeat headroom: the `letI`-laden bridge `Prop` forces large `isDefEq`
+-- checks when the engine's kernel hypotheses are matched against the
+-- pushforward-section statements (fleet recipe).
+/-- **Leaf 3 (`P1PushforwardLocalFreenessBridge`) modulo the rank
+identification.**  Granting that the pointwise rank of the `Γ(Spec A, ⊤)`-module
+`Γ(Spec A, p_* M)` at `t` is the fibre invariant `p.fiberH0 M t`, the output
+bridge of `Picard/RigidPushforwardGate.lean` §2 follows from the sheaf-theoretic
+package of this file:
+
+* `Γ(Spec A, p_* M) ≅ ker d` (`pushforwardTop_linearEquiv_ker`), so the engine's
+  finiteness and projectivity of `ker d` are finiteness and projectivity of the
+  pushforward sections (`module_finite_pushforwardTop`,
+  `module_projective_pushforwardTop`), read over `A` rather than
+  `Γ(Spec A, ⊤)` via `module_finite_top_of_gammaSpecTop` and its projective
+  companion;
+* `p_* M` is quasi-coherent (`Scheme.Modules.pushforward_isQuasicoherent`,
+  Stacks 01XJ, `p` being quasi-compact and quasi-separated as a base change of
+  the proper `ℙ¹_k ⟶ Spec k`);
+* hence `p_* M` is free of rank `sectionsRankAtStalk (p_* M) t` on a
+  neighbourhood of `t` (`exists_free_restrict_of_finite_projective_sections'`,
+  Stacks 00NX).
+
+The hypothesis `hrank` is *not* proved here: it is the fibre-chart base-change
+comparison `κ(t) ⊗_{Γ(Spec A,⊤)} H⁰ ≅ H⁰(ℙ¹_t, M_t)` (Stacks 02KG in degree 0),
+the `B = κ(t)` case of the engine's fourth conclusion, and is the remaining half
+of leaf 3.
+
+Sources: Stacks 00NX, 01XJ, 02KG; Mumford, *Abelian Varieties*, II §5;
+EGA III 7.9.9. -/
+theorem p1PushforwardLocalFreenessBridge_of_rank
+    (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+    (hrank : ∀ (M : (Limits.pullback (p1Over k).hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules), M.IsFinitePresentation →
+      ∀ t : Spec (CommRingCat.of A),
+        sectionsRankAtStalk ((Scheme.Modules.pushforward (pullback.snd (p1Over k).hom
+            (Spec.map (CommRingCat.ofHom (algebraMap k A))))).obj M) t
+          = (pullback.snd (p1Over k).hom
+              (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberH0 M t) :
+    P1PushforwardLocalFreenessBridge k A := by
+  intro M hfp hsurj hfin hproj hbc t
+  haveI := hfp
+  haveI : ((Scheme.Modules.pushforward (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A))))).obj M).IsQuasicoherent :=
+    Scheme.Modules.pushforward_isQuasicoherent _ M
+  have hfin' := module_finite_top_of_gammaSpecTop
+    ((Scheme.Modules.pushforward (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A))))).obj M)
+    (module_finite_pushforwardTop A M hfin)
+  have hproj' := module_projective_top_of_gammaSpecTop
+    ((Scheme.Modules.pushforward (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A))))).obj M)
+    (module_projective_pushforwardTop A M hproj)
+  obtain ⟨U, htU, hiso⟩ := exists_free_restrict_of_finite_projective_sections'
+    ((Scheme.Modules.pushforward (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A))))).obj M) hfin' hproj' t
+  exact ⟨U, htU, (hrank M hfp t) ▸ hiso⟩
 
 end Adelic
 
