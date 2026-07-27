@@ -649,5 +649,162 @@ theorem degree_principal_eq_zero_of_hasRationalResidues
 
 end RationalResidueConsequences
 
+/-! ## §7. Discharging `HasRationalResidues` from algebraic closedness
+
+§5 reduced `[κ(P):k] = 1` to the approximation statement, and §6 drew the consequences.
+This section **proves** the approximation statement, for an algebraically closed `k`,
+from the stalk data.  The result is `hasRationalResidues_of_isAlgClosed`: the residue
+hypothesis of §6 is no longer an assumption about residue fields but a consequence of
+`IsAlgClosed k` plus the finiteness `[Module.Finite k (κ_P)]` of the *stalk's* residue
+field.
+
+The argument, at the point `P` with stalk `R := 𝒪_{X,P}` (a DVR):
+
+1. `ord_P f ≥ 0` lets `f` be lifted to `a ∈ R` (`exists_stalk_lift_of_order_nonneg`);
+2. `k → IsLocalRing.ResidueField R` is an integral algebra map (finiteness), and `k` is
+   algebraically closed, so it is **bijective**
+   (`IsAlgClosed.algebraMap_bijective_of_isIntegral`); pick `c` with
+   `residue a = c`;
+3. then `a − c ∈ 𝔪_R`, and membership in the maximal ideal is `ord_P ≥ 1` — that is the
+   valuation bridge `HeightOneSpectrum.valuation_lt_one_iff_mem` read through
+   `order_eq_neg_log_pointValuation`.
+
+Step 3 is the only place where the two languages have to be matched, and it is where the
+work is: the project's `order` is `-log ∘ v_P`, so `ord_P x ≥ 1` is `v_P x < 1`, which is
+exactly membership in the height-one ideal of the DVR.
+-/
+
+section AlgClosed
+
+variable (k : Type u) [Field k] {X : Scheme.{u}} [IsIntegral X]
+    [IsLocallyNoetherian X] [Scheme.IsRegularInCodimensionOne X]
+    [Algebra k X.functionField] [IsConstantField k X]
+
+/-- **Membership in the maximal ideal of the stalk is membership in `orderGe P 1`.**  For
+`a` in the DVR stalk `𝒪_P`, the image of `a` in `K(X)` lies in `orderGe P 1` exactly when
+`a` lies in the maximal ideal.
+
+This is the valuation bridge: `ord_P = -log ∘ v_P` (`order_eq_neg_log_pointValuation`), so
+`ord_P ≥ 1` says `v_P < 1`, and for an element *of the DVR* that is membership in the
+height-one ideal (`HeightOneSpectrum.valuation_lt_one_iff_mem`).  The maximal ideal of a
+DVR is the `asIdeal` of its height-one place, which is how the two sides are matched.
+
+**Why `orderGe P 1` and not `1 ≤ ord_P`.**  The project's `order` carries the junk
+convention `ord_P 0 = 0` rather than `+∞`, so for `a = 0` — which *is* in the maximal
+ideal — the inequality `1 ≤ ord_P 0` is false and the `←` direction would fail.
+`orderGe P 1` admits the zero function through its separate `f = 0` disjunct, which is
+exactly why the substrate is phrased on `orderGe` throughout; stating this bridge on the
+raw inequality would be a false statement that happens to typecheck. -/
+theorem mem_orderGe_one_iff_mem_maximalIdeal (P : X.PrimeDivisor)
+    (a : X.presheaf.stalk P.point) :
+    algebraMap (X.presheaf.stalk P.point) X.functionField a ∈ orderGe P 1 ↔
+      a ∈ IsLocalRing.maximalIdeal (X.presheaf.stalk P.point) := by
+  rcases eq_or_ne a 0 with rfl | ha0
+  · simp only [map_zero]
+    exact iff_of_true (Or.inl rfl) (Submodule.zero_mem _)
+  have hane : algebraMap (X.presheaf.stalk P.point) X.functionField a ≠ 0 := by
+    simpa using (FaithfulSMul.algebraMap_injective
+      (X.presheaf.stalk P.point) X.functionField).ne_iff.mpr ha0
+  rw [mem_orderGe_of_ne_zero hane]
+  have hval := IsDedekindDomain.HeightOneSpectrum.valuation_lt_one_iff_mem
+    (R := X.presheaf.stalk P.point) (K := X.functionField)
+    (IsDiscreteValuationRing.maximalIdeal (X.presheaf.stalk P.point)) a
+  rw [show (IsDiscreteValuationRing.maximalIdeal
+      (X.presheaf.stalk P.point)).asIdeal =
+      IsLocalRing.maximalIdeal (X.presheaf.stalk P.point) from rfl] at hval
+  rw [← hval, order_eq_neg_log_pointValuation, pointValuation]
+  set v := (IsDiscreteValuationRing.maximalIdeal
+    (X.presheaf.stalk P.point)).valuation X.functionField with hv
+  constructor
+  · intro hord
+    -- `-log (v x) ≥ 1` gives `log (v x) ≤ -1 < 0`, hence `v x < 1`
+    by_contra hge
+    rw [not_lt] at hge
+    rcases eq_or_lt_of_le hge with heq | hlt
+    · rw [← heq] at hord
+      simp at hord
+    · -- `1 < v x` gives `log (v x) > 0`, contradicting `-log (v x) ≥ 1`
+      have hne : v (algebraMap (X.presheaf.stalk P.point) X.functionField a) ≠ 0 := by
+        intro h0
+        rw [h0] at hlt
+        exact absurd hlt (by simp)
+      have := (WithZero.log_lt_log (x := (1 : ℤᵐ⁰)) one_ne_zero hne).mpr hlt
+      rw [WithZero.log_one] at this
+      omega
+  · intro hlt
+    have hne : v (algebraMap (X.presheaf.stalk P.point) X.functionField a) ≠ 0 ∨
+        v (algebraMap (X.presheaf.stalk P.point) X.functionField a) = 0 := by
+      exact ne_or_eq _ _
+    rcases hne with hne | h0
+    · have := (WithZero.log_lt_log hne one_ne_zero).mpr hlt
+      rw [WithZero.log_one] at this
+      omega
+    · exact absurd h0 (by
+        simpa [hv] using (Valuation.zero_iff v).not.mpr hane)
+
+omit [IsConstantField k X] in
+/-- **`HasRationalResidues` holds over an algebraically closed base field.**
+
+Given at `P`:
+* an algebra structure `k → 𝒪_P` on the stalk compatible with `k → K(X)` (the tower the
+  structure morphism of a `k`-scheme provides — `Adelic/GateInstances.lean` builds exactly
+  this, `algebra_section_stalk` plus `functionField_isScalarTower`);
+* finiteness of the residue field of the stalk over `k`, `[κ_P : k] < ∞` — the same
+  keystone finiteness node N14 consumes;
+* `IsAlgClosed k`,
+
+every function of order `≥ 0` at `P` agrees with a constant to first order.
+
+Composed with §5–§6 this discharges the residue hypothesis of
+`exists_bound_forall_generatedAt_of_hasRationalResidues` and of
+`degree_principal_eq_zero_of_hasRationalResidues`: over an algebraically closed base they
+hold outright, with no residue-field assumption left.
+
+Note that `IsConstantField k X` is **not** used (hence the `omit`): the approximation
+statement is about the stalk and the order filtration only.  The constant-field gate is
+needed to make the section spaces `k`-subspaces, which this proof never touches. -/
+theorem hasRationalResidues_of_isAlgClosed [IsAlgClosed k] (P : X.PrimeDivisor)
+    [Algebra k (X.presheaf.stalk P.point)]
+    [IsScalarTower k (X.presheaf.stalk P.point) X.functionField]
+    [Module.Finite k (IsLocalRing.ResidueField (X.presheaf.stalk P.point))] :
+    HasRationalResidues k P := by
+  intro f hf
+  -- lift `f` to the stalk
+  rcases eq_or_ne f 0 with rfl | hf0
+  · refine ⟨0, ?_⟩
+    rw [map_zero, sub_zero]
+    exact (orderGe P 1).zero_mem
+  obtain ⟨a, ha⟩ := exists_stalk_lift_of_order_nonneg hf0
+    ((mem_orderGe_of_ne_zero hf0).mp hf)
+  -- the residue field is trivial over an algebraically closed `k`
+  haveI : Algebra.IsIntegral k
+      (IsLocalRing.ResidueField (X.presheaf.stalk P.point)) :=
+    Algebra.IsIntegral.of_finite k _
+  have hbij : Function.Bijective
+      (algebraMap k (IsLocalRing.ResidueField (X.presheaf.stalk P.point))) :=
+    IsAlgClosed.algebraMap_bijective_of_isIntegral
+  obtain ⟨c, hc⟩ := hbij.surjective
+    (IsLocalRing.residue (X.presheaf.stalk P.point) a)
+  refine ⟨c, ?_⟩
+  -- `a - c ∈ 𝔪_P`, so its image has order `≥ 1`
+  have hmem : a - algebraMap k (X.presheaf.stalk P.point) c ∈
+      IsLocalRing.maximalIdeal (X.presheaf.stalk P.point) := by
+    rw [← IsLocalRing.residue_eq_zero_iff, map_sub]
+    have hcomp : IsLocalRing.residue (X.presheaf.stalk P.point)
+        (algebraMap k (X.presheaf.stalk P.point) c) =
+        algebraMap k (IsLocalRing.ResidueField (X.presheaf.stalk P.point)) c := rfl
+    rw [hcomp, ← hc, sub_self]
+  have himg := (mem_orderGe_one_iff_mem_maximalIdeal P
+    (a - algebraMap k (X.presheaf.stalk P.point) c)).mpr hmem
+  rw [map_sub, ha] at himg
+  -- match the two `k`-algebra maps into `K(X)` through the tower
+  rwa [show algebraMap (X.presheaf.stalk P.point) X.functionField
+        (algebraMap k (X.presheaf.stalk P.point) c)
+      = algebraMap k X.functionField c from
+    (IsScalarTower.algebraMap_apply k (X.presheaf.stalk P.point)
+      X.functionField c).symm] at himg
+
+end AlgClosed
+
 end Adelic
 end AlgebraicGeometry
