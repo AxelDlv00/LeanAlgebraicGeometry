@@ -33,11 +33,14 @@ summary: 'NEEDS A HUMAN DECISION, and it is exactly one decision. references/cha
   rational point is a THEOREM, not a decision: hasRationalPoint_of_curve_of_isAlgClosed
   (Jacobian.lean) is axiom-clean, routed through Albanese.hasRationalPoint_of_isAlgClosed
   (Jacobson space => closed point; over k = k-bar a closed point IS a section), and
-  picardJacobianWitnessOfIsAlgClosed assembles the headline witness over k-bar on
-  four obligations instead of five. So the branch point concerns what is claimed over
-  an ARBITRARY base field, and nothing else. This narrows what the human is choosing
-  between; it does NOT choose. Neither branch is assumed anywhere, and the general-field
-  leaf is untouched.
+  picardJacobianWitnessOfIsAlgClosed assembles the headline witness over k-bar with
+  that leaf supplied rather than assumed. The obligation COUNT does not drop -- discharging
+  leaf A makes instHasPicScheme fire rather than removing it, so it is five either
+  way (measured as probe section 0b) -- but every one of the five is then a TRUE statement,
+  where the general-field witness carries a false one. So the branch point concerns
+  what is claimed over an ARBITRARY base field, and nothing else. This narrows what
+  the human is choosing between; it does NOT choose. Neither branch is assumed anywhere,
+  and the general-field leaf is untouched.
 
 
   ORTHOGONAL TO THE ROUTE CHOICE: the Milne-Kollar re-aim does not touch this. Both
@@ -69,4 +72,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-27T18:50:47.730737+00:00'
+  updated_at: '2026-07-27T20:25:21.874085+00:00'

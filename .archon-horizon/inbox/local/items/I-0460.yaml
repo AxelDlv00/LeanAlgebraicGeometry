@@ -1,0 +1,54 @@
+id: I-0460
+provider: local
+kind: memory
+body: "AJCR IS NOT PORTABLE INTO AJC'S ADELIC LANE, AND ITS EXTENSION UNIFORMITY IS\
+  \ D=0 ONLY\n\nSurveyed this run (0055 s0014) for task ajc-rr, so no future session\
+  \ needs to re-open the question.\nTwo separate lake packages; AJC does not depend\
+  \ on AJCR. Nothing is a drop-in import.\n\nABSTRACTIONS DO NOT MATCH. AJCR has no\
+  \ PrimeDivisor/WeilDivisor and NO Adelic/ folder at all. Its\ndivisor type is Scheme.CurveDivisor\
+  \ := {x // x != genericPoint X} ->0 Z (RiemannRoch/Divisor.lean)\nand its RR machinery\
+  \ is sheaf-cohomology based (Sheaf.HModule, Sheaf.chi, divisorSheaf, CechPic).\n\
+  AJC's Adelic layer carries sections as Submodule k X.functionField (sectionSub)\
+  \ with chi k U0 U1 D.\nAJCR is architecturally closer to AJC's OLDER WeilDivisor.lean\
+  \ layer than to the Adelic layer.\n\nTHE THREE CLUSTER-P ITEMS, honestly:\n1. Field-extension\
+  \ uniformity. AJCR PROVES IT ONLY FOR THE STRUCTURE SHEAF (D=0):\n   finrank_h1_baseField\
+  \ / finrank_h0_baseField / genus_baseField\n   (Cohomology/H1BaseFieldInvariance.lean:328-373),\
+  \ sorry-free. There is NO\n   'dim_k L(D) = dim_K L(D_K)' for general D anywhere\
+  \ in AJCR -- CarveDegree.lean:96-99\n   finrank_tensor_divisorSections is just Module.finrank_baseChange\
+  \ on K tensor L(D), NOT an iso\n   K tensor L(D) ~= L(D_K) on the base-changed curve.\
+  \ So the task statement's framing is right:\n   AJCR does not supply extension uniformity.\
+  \ Nobody should go looking for it there again.\n2. UniformVanishing.lean's core\
+  \ is exists_bound_subsingleton_hModule_one_of_isFinite_toP1\n   (line 71): needs\
+  \ an explicit finite dominant pi : Y -> P1 K supplied as a hypothesis, plus\n  \
+  \ Module.Finite of H0/H1 of the structure sheaf. Same SHAPE as AJC's\n   exists_bound_subsingleton_h1Mod\
+  \ but incompatible primitives: AJCR derives the bound\n   geometrically from fiber-divisor\
+  \ positivity, AJC combinatorially from a ledger identity + Peel.\n   Neither can\
+  \ import the other's proof text.\n3. Principal degree zero. AJCR's deg_divOf (RiemannRoch/ChiLedger.lean)\
+  \ is sorry-free but does\n   NOT go through finite-map-to-P1 pullback -- it telescopes\
+  \ its own chi-ledger by devissage over\n   closed points. AJCR's pullback-degree\
+  \ lemma classDeg_cechPicMap_eq_finrank_mul\n   (DegreePullback.lean:267-303, sorry-free)\
+  \ is the right SHAPE for AJC's open leaf but is stated\n   over CechPic/CurveDivisor.\
+  \ Transferable as a proof STRATEGY only.\n\nBOTTOM LINE for a future session: the\
+  \ only two genuinely transferable ideas are (a) the\ntwo-cover-Cech-termwise-base-change\
+  \ technique for uniformity -- and note AJCR only ever ran it at\nD=0, so even the\
+  \ idea is unproven for general D -- and (b) the finite-pullback degree\nmultiplicativity\
+  \ strategy for the principal-divisor leaf. Do not promise a mechanical port."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T20:11:53.173867+00:00'
+updated_at: '2026-07-27T20:11:53.173877+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

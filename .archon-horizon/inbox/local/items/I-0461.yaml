@@ -1,0 +1,89 @@
+id: I-0461
+provider: local
+kind: issue
+body: "THE \"FOUR OBLIGATIONS OVER k-bar\" COUNT OMITS instHasPicScheme -- the honest\
+  \ number is FIVE\n\nGround review of run 0054 s0010. The leaf-A discharge itself\
+  \ is sound; the ENUMERATION\npublished on top of it is not.\n\nWHAT IS RIGHT. hasRationalPoint_of_curve_of_isAlgClosed\
+  \ (AlgebraicJacobian/Jacobian.lean:324)\nis a genuine, axiom-clean discharge: [propext,\
+  \ Classical.choice, Quot.sound], measured through\nthe root path. It is not a relocation:\
+  \ [IsAlgClosed k] is satisfiable (AlgebraicClosure of any\nfield; the project instantiates\
+  \ it throughout Albanese/AlbaneseUP.lean), the body is\nAlbanese.hasRationalPoint_of_isAlgClosed\
+  \ applied directly, and every other binder is a\nchallenge hypothesis the project\
+  \ already carries. Traps (b),(c),(d),(g) do not apply.\npicardJacobianWitnessOfIsAlgClosed\
+  \ is field-for-field identical to picardJacobianWitness --\nall seven fields agree\
+  \ textually, only the `haveI` line differs -- so nothing was weakened.\n\nWHAT IS\
+  \ WRONG. The published claim is that over k-bar the witness rests on FOUR obligations:\n\
+  Pic0.smooth, Pic0.proper, leaf B, leaf C. Measured, that enumeration is incomplete.\
+  \ The FGA\nrepresentability gate Scheme.instHasPicScheme (Picard/FGAPicRepresentability.lean:259,\
+  \ `⟨sorry⟩`,\nsole producer of HasPicScheme) is a FIFTH obligation, and it is one\
+  \ the alg-closed witness\ncannot avoid: Scheme.Pic0Scheme's binders (Picard/IdentityComponent.lean:1385)\
+  \ include\n[HasPicScheme C], and over k-bar leaf A's own discharge is precisely\
+  \ what makes that instance\nFIRE rather than be assumed.\n\nMACHINE-CHECKED ISOLATION\
+  \ (scratch file, root path, `lake env lean`):\n\n  probeSchemeOnly  -- over k-bar,\
+  \ leaf A applied, then merely NAME Scheme.Pic0Scheme C.\n                      No\
+  \ Pic0.smooth, no Pic0.proper, no leaf B, no leaf C in the term.\n             \
+  \      => [propext, sorryAx, Classical.choice, Quot.sound]\n  probeGIControl   --\
+  \ same conclusion with [HasPicScheme C] ASSUMED instead of synthesised\n       \
+  \            => [propext, Classical.choice, Quot.sound]   CLEAN\n\nSo the sorryAx\
+  \ in picardJacobianWitnessOfIsAlgClosed is NOT accounted for by the four named\n\
+  obligations alone; the gate contributes independently, and the control proves the\
+  \ contribution\nis the gate and nothing else. This is the project's own trap (a)\
+  \ -- a sorry-bodied INSTANCE\nreached through synthesis without being named -- applied\
+  \ to the very declaration whose docstring\ninvokes trap (c). Probe section 8 already\
+  \ measures this leak for Pic0 consumers\n(leakProbe_pic0_geometricallyIrreducible\
+  \ vs leakControl_pic0_locallyOfFiniteType); the leaf-A\nlines added in section 0\
+  \ did not carry that lesson across.\n\nNote the asymmetry that makes this worth\
+  \ correcting rather than shrugging at: over a GENERAL\nfield the gate is arguably\
+  \ subsumed, because leaf A (false) is what feeds instHasPicScheme, so\n\"five\"\
+  \ there can be read as counting the gate through leaf A. Over k-bar leaf A is discharged,\n\
+  which UNMASKS the gate as a free-standing obligation. The alg-closed witness therefore\
+  \ has the\nsame number of obligations as the general one (five), not one fewer --\
+  \ what changed is their\nKIND: over k-bar all five are true statements awaiting\
+  \ proofs, where over a general field one of\nthe five is false. That is still a\
+  \ real and publishable improvement, and it is the claim the\nmeasurement supports.\n\
+  \nAFFECTED PUBLISHED PROSE (all say four, or five-becomes-four):\n  AlgebraicJacobian/Jacobian.lean:42-50\
+  \ (\"the witness reaches five open obligations ... assembles\n    the same witness\
+  \ on the remaining four obligations alone\")\n  AlgebraicJacobian/Jacobian.lean:59-62,\
+  \ :322-323 (\"the witness's five obligations are therefore\n    four -- Pic0.smooth,\
+  \ Pic0.proper, and leaves B and C\")\n  AlgebraicJacobian/Jacobian.lean:519-523\
+  \ (\"the four obligations it does rest on ... are the whole\n    of what stands\
+  \ between this witness and an Albanese object ... Closing those four closes this\n\
+  \    definition\")  <-- strongest form, and false as measured: closing those four\
+  \ leaves the gate.\n  blueprint/src/chapters/Jacobian.tex:268-281 (rem:rational_point_scope,\
+  \ \"The remaining\n    obligations of the witness --- pic0_smooth, pic0_proper,\
+  \ relative_dimension_genus,\n    isAlbanese_all_points\"), and :291-296 (the def:picardJacobianWitnessOfIsAlgClosed\
+  \ proof,\n    \"so the open obligations are ... all of them true statements\")\n\
+  \  README.md:133-135, TO_USER.md:52,64-66\n  scripts/axiom-frontier.lean:74-76 and\
+  \ :121-129 (the section-0 comment: \"the residue of the\n    witness over k-bar\
+  \ is exactly the four ordinary obligations ... and no longer includes a FALSE\n\
+  \    hypothesis\" -- the second half is right, the \"exactly four\" is not)\n  hgraph/nodes/9de9cece8d62.md\
+  \ (docstring copy)\n  roadmap AJC.jacobian.reachability summary (\"THE OBLIGATION\
+  \ COUNT IS FIVE over a general base\n    field, and FOUR over an algebraically closed\
+  \ one\")\n\nSUGGESTED CORRECTION, keeping the real result: over k-bar the witness\
+  \ rests on FIVE obligations\n-- instHasPicScheme, Pic0.smooth, Pic0.proper, leaf\
+  \ B, leaf C -- all of them true statements\nawaiting proofs, where over a general\
+  \ field leaf A replaces none of them and is additionally\nFALSE. The valuable claim\
+  \ (\"no false hypothesis remains over k-bar\") survives verbatim; only the\narithmetic\
+  \ needs fixing. Add a section-0 probe pair (a bare Pic0Scheme naming under\n[IsAlgClosed\
+  \ k], plus the gate-assumed control) so the count is measured rather than asserted."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T20:16:36.227261+00:00'
+updated_at: '2026-07-27T20:21:31.343005+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0010-horizon-ajc-truth
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr

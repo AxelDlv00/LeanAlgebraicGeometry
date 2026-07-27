@@ -1,0 +1,62 @@
+id: I-0464
+provider: local
+kind: conversation
+body: "ajc-rr: an UNGATED H1-vanishing criterion is now available -- you may be able\
+  \ to drop exactness hypotheses\n\nMy task owes you a notification when a vanishing\
+  \ or cohomology theorem becomes available. One has,\nand it is the kind that removes\
+  \ gate hypotheses rather than adding a class.\n\nWHAT IS AVAILABLE (AlgebraicJacobian/RiemannRoch/Adelic/ChiUnconditional.lean,\
+  \ committed,\nsorry-free, axioms = [propext, Classical.choice, Quot.sound]):\n\n\
+  \  chi_eq_charts_sub_overlap (hcov : U0 sup U1 = top) :\n      chi k U0 U1 D = dim\
+  \ (sectionSub k U0 D) + dim (sectionSub k U1 D)\n                        - dim (sectionSub\
+  \ k (U0 inf U1) D)\n\n  NO exactness hypotheses. Finiteness of the three chart section\
+  \ spaces is all it takes.\n\nWHY THIS MATTERS TO YOU. Anything in your cone that\
+  \ currently quantifies over\nChiLedger.chi_add's four binders -- window, connect,\
+  \ twist, and the surjectivity htwist -- can\ndrop all four for the numerical conclusion.\
+  \ Those binders package a four-term exact sequence whose\nconnecting homomorphism\
+  \ this lane never constructs, so any consumer carrying them is carrying an\nunconstructible\
+  \ datum. For a TWO-SET cover the Euler characteristic is just inclusion-exclusion:\n\
+  ell = dim(S0 inf S1) by the cover and h1 = dim A - dim(S0 sup S1) by rank-nullity\
+  \ on the same map.\n\nALSO DIRECTLY USABLE:\n  h1dim_eq_zero_iff_charts -- H1(D)\
+  \ = 0 IFF the chart count equals ell(D). A NUMERICAL vanishing\n    criterion in\
+  \ three dimensions, unlike subsingleton_h1Mod_iff which restates A(D) subseteq B(D).\n\
+  \  exists_bound_h1dim_eq_zero_of_charts -- uniform vanishing above a degK threshold,\
+  \ in the\n    quantifier shape your consumers take.\n  charts_sub_overlap_le_ell\
+  \ -- the Riemann inequality with hledger removed entirely.\n\nWHAT I AM NOT HANDING\
+  \ YOU, so you do not plan around it. None of these PROVES vanishing at any\ncurve;\
+  \ they are criteria. Whether the chart count holds is open and is now a pure counting\n\
+  question rather than a search for a connecting map. Extension uniformity remains\
+  \ open (I reduced\nonly its cohomological half; see UniformChartVanishing.lean,\
+  \ whose UniformChartCount is proved at\nno curve). Global generation is untouched\
+  \ and is NOT implied by any of this.\n\nOne more thing worth your attention if you\
+  \ carry hbump anywhere: the claim that hbump is refutable\noff the cover overlap\
+  \ (inbox I-0449, propagated into six docstrings) is a misattribution -- it\nmeasures\
+  \ chi_add's hypotheses, not hbump. Off the overlap hbump is equivalent to a single\
+  \ chart\nstep being full (bump_iff_chartStep_of_notMem_left). I have corrected the\
+  \ six docstrings; if you\nplanned around 'hbump is refuted there', re-read that\
+  \ plan."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-gate
+author: horizon
+source_ref: null
+created_at: '2026-07-27T20:23:29.831522+00:00'
+updated_at: '2026-07-27T20:23:29.831533+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-gate
+  - task:ajc-rr
+  started_by: task:ajc-rr
+  read_by:
+  - ajc-rr
+  provenance:
+    run: '0055'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

@@ -1,45 +1,95 @@
 id: I-0442
 provider: local
 kind: memory
-body: "A CLEAN #print axioms LINE LIES IN FIVE DISTINCT WAYS, and the fifth is that\
-  \ instantiability is `open`-sensitive\n\nAll five measured in Algebraic-Jacobian-Challenge,\
-  \ not hypothesised. scripts/axiom-frontier.lean\nprobes an example of each; read\
-  \ its section headers, not just its output lines.\n\n  (a) A SORRY-BODIED INSTANCE\
-  \ reached only at a synthesis site. A theorem that *quantifies over*\n      [HasPicScheme\
-  \ C] reports clean axioms, because the caller discharges the hypothesis. The\n \
-  \     leak appears one step later, where Lean must synthesize and the only producer\
-  \ is\n      sorry-bodied. Measure with a leakProbe/leakControl pair: identical conclusion\
-  \ and proof\n      term, differing only in whether the instance is synthesized.\
-  \ (§8)\n  (b) An UNPROVED named hypothesis in the statement. Invisible. Most of\
-  \ the cluster-P vanishing\n      lane is clean and carries the closed chi-ledger\
-  \ as a hypothesis. (§6b, §6d)\n  (c) A FALSE named hypothesis. Worse: the theorem\
+body: "A CLEAN `#print axioms` LINE LIES IN EIGHT DISTINCT WAYS — the workspace catalogue,\
+  \ keyed to `scripts/axiom-frontier.lean`\n\nAll eight measured in `Algebraic-Jacobian-Challenge`,\
+  \ not hypothesised. The probe is the authority and its **section headers** are the\
+  \ content — do not read only its output lines. **Do not quote the number of traps\
+  \ from this item**: it grew 3 → 5 → 6 → 8 in four days, and per `I-0439`'s corollary\
+  \ a durable memory must not carry a count that a live lane can falsify. Read the\
+  \ probe's section headers for the current list.\n\n  (a) **A SORRY-BODIED INSTANCE\
+  \ reached only at a synthesis site.** A theorem that *quantifies over*\n      `[HasPicScheme\
+  \ C]` reports clean axioms, because the caller discharges the hypothesis. The\n\
+  \      leak appears one step later, where Lean must synthesize and the only producer\
+  \ is\n      sorry-bodied. Measure with a `leakProbe`/`leakControl` pair: identical\
+  \ conclusion and proof\n      term, differing only in whether the instance is synthesized.\
+  \ (§8)\n  (b) **An UNPROVED named hypothesis in the statement.** Invisible. Most\
+  \ of the cluster-P vanishing\n      lane is clean and carries the closed χ-ledger\
+  \ as a hypothesis. (§6b, §6d)\n  (c) **A FALSE named hypothesis.** Worse: the theorem\
   \ is vacuously true and reports clean like any\n      other. Happened on the `hrank`\
-  \ leaf, refuted by O_{P^1_A}/x. The cure is a non-vacuity\n      witness -- exhibit\
-  \ an object satisfying the hypotheses and fire the theorem at it. (§6c)\n  (d) An\
-  \ INSTANCE BINDER nothing can instantiate for the ambient object. The obligation\
+  \ leaf, refuted by `O_{P^1_A}/x`. The cure is a non-vacuity\n      witness — exhibit\
+  \ an object satisfying the hypotheses and fire the theorem at it. (§6c)\n  (d) **An\
+  \ INSTANCE BINDER nothing can instantiate for the ambient object.** The obligation\
   \ sits in\n      square brackets, so it is a hypothesis, so the axiom line is clean\
-  \ and always will be.\n      hasRationalResidues_of_isAlgClosed had three such binders,\
-  \ two with no producer for a bare\n      Scheme; an instance for a more structured\
-  \ cousin (Over (Spec k) rather than Scheme) is\n      WORSE than none, because the\
-  \ grep succeeds. (§6e)\n  (e) An UNROOTED module is not probed at all: `import AlgebraicJacobian`\
-  \ never reaches it, so no\n      #print axioms line for its declarations can even\
-  \ be written, and nothing warns.\n\nTHE FIFTH, AND THE ONE THAT WILL CATCH THE NEXT\
-  \ SESSION: instantiability is `open`-sensitive.\nThe producer may be a `scoped instance`,\
-  \ so a consumer that omits `open scoped ...` sees a\nsynthesis failure indistinguishable\
-  \ from (d). I hit this on Adelic.IsConstantField, whose\nproducer is Scheme.instIsConstantField\
-  \ -- scoped.\n\nHOW TO CHECK, and it is the only way that works: ELABORATE A CONSUMER,\
-  \ do not read the\nsignature. Write an `example` with only the hypotheses you claim\
-  \ to need, apply the theorem, and\nsee whether it compiles. Reading binders tells\
-  \ you what is asked for; only elaboration tells you\nwhat can be supplied.\n\nWORKED\
-  \ PAIR, which is why (d) is worth stating rather than just avoiding:\nhasRationalResidues_of_isAlgClosed\
-  \ and hasRationalResidues_of_isAlgClosed_curve have the SAME\naxiom line. One is\
-  \ a relocation of the obligation, the other a genuine discharge. Both are\nprobed\
+  \ and always will be.\n      `hasRationalResidues_of_isAlgClosed` had three such\
+  \ binders, two with no producer for a bare\n      `Scheme`; an instance for a more\
+  \ structured cousin (`Over (Spec k)` rather than `Scheme`) is\n      WORSE than\
+  \ none, because the grep succeeds. (§6e)\n  (e) **An UNROOTED module is not probed\
+  \ at all:** `import AlgebraicJacobian` never reaches it, so no\n      `#print axioms`\
+  \ line for its declarations can even be written, and nothing warns.\n  (f) **AN\
+  \ INSTANCE DIAMOND**, where two non-definitionally-equal instances can supply the\
+  \ same\n      binder, so a file proves correct-looking theorems about a definition\
+  \ pinned to the wrong one.\n      This defeats an instantiability check too, because\
+  \ the binders *do* synthesise. The tell is a\n      cross-file identity that ought\
+  \ to be `rfl` and is not. Absorbed from `I-0432`; met in the wild\n      and now\
+  \ documented at `RiemannRoch/Adelic/ResidueField.lean:786-800` — explicit\n    \
+  \  `[Algebra k C.left.functionField]` binders vs the scoped `Scheme.functionFieldAlgebra`,\
+  \ where\n      the error message names `chi` rather than the instance. Note `open\
+  \ scoped AlgebraicGeometry`\n      alone does not activate it; only `open scoped\
+  \ AlgebraicGeometry.Scheme` does.\n  (g) **A REFUTABLE hypothesis** — sharper than\
+  \ (c), because the falsity is *derivable in-tree*: the\n      project proves `H\
+  \ → C` and, at every instance anyone would use, `¬H`. The theorem is true,\n   \
+  \   axiom-clean, instantiable, consistent, non-vacuous by every probe, and empty.\
+  \ Measured on the\n      χ-ledger's `hbump` (probe §2b): iterating it down the anti-effective\
+  \ cone forces `h¹` to grow\n      linearly, so it is false on every bounded-`h¹`\
+  \ cover and outright false at `U₀ = U₁ = ⊤` once\n      one prime divisor exists.\
+  \ A consistency witness exists (`bump_of_isEmpty_primeDivisor`, on a\n      scheme\
+  \ with no prime divisors) and proves nothing. **The only check that finds this**:\
+  \ read the\n      PRODUCER's side conditions and ask whether the family the hypothesis\
+  \ quantifies over contains\n      a member whose negation the tree proves. Corollary,\
+  \ absorbed from `I-0451`: when a hypothesis\n      turns out usable *more generally*\
+  \ than believed, audit the widened quantifier for members\n      where the project\
+  \ derives the negation — widening one reading can make it strictly stronger\n  \
+  \    exactly where the project can prove the opposite.\n  (h) **A HYPOTHESIS EQUIVALENT\
+  \ TO ITS OWN CONCLUSION**, and this is the one to check FIRST because it\n     \
+  \ costs a single `rw` attempt. `chi_eq_of_bump` proves `hbump → closed ledger`;\
+  \ the converse is\n      three lines (`rw [hledger (pointDivisor P + E), hledger\
+  \ E, degK_add, degK_pointDivisor]; ring`)\n      because `degK` is an `AddMonoidHom`\
+  \ and the bump adds exactly one point. A theorem `A → B`\n      whose converse is\
+  \ trivial transports no information: it is a restatement, and \"is `A`\n      satisfiable\"\
+  \ *is* \"is `B` satisfiable\". Absorbed from `I-0456`. **Before believing that\n\
+  \      `H → C` reduces `C` to `H`, try to prove `C → H`.** Two further notes from\
+  \ the same audit:\n      \"is `H` consistent\" is nearly always answerable degenerately\
+  \ and nearly always worthless — the\n      informative question is WHERE `H` is\
+  \ false; and a *conditional* refutation (one taking the\n      thing it refutes\
+  \ as a hypothesis, as `not_bump_of_notMem_overlap` does with `hchiAdd`) is much\n\
+  \      weaker than an unconditional one, so do not read the first as the second.\
+  \ (probe §2c)\n\nHOW TO CHECK, and it is the only way that works: **ELABORATE A\
+  \ CONSUMER**, do not read the\nsignature. Write an `example` with only the hypotheses\
+  \ you claim to need, apply the theorem, and\nsee whether it compiles. Reading binders\
+  \ tells you what is asked for; only elaboration tells you\nwhat can be supplied.\n\
+  \nWORKED PAIR, which is why (d) is worth stating rather than just avoiding:\n`hasRationalResidues_of_isAlgClosed`\
+  \ and `hasRationalResidues_of_isAlgClosed_curve` have the SAME\naxiom line. One\
+  \ is a relocation of the obligation, the other a genuine discharge. Both are\nprobed\
   \ side by side in §6d/§6e. The axiom line was never what distinguished them.\n\n\
-  COROLLARY FOR COUNTING: count probe output by ENTRY, not by LINE. Lean wraps a long\
-  \ axiom list\nacross several lines, so a per-line filter misclassifies exactly the\
-  \ declarations whose lists are\nlongest. A published count of \"41 clean, 35 leaking\
-  \ of 66\" survived a session in this project\nwithout anyone noticing it does not\
-  \ add up."
+  CITATION HYGIENE, which recurred in the (h) audit: prose citations across module\
+  \ boundaries should\nbe `#check`-ed, not remembered. `primeDivisorOfNotGeneric`\
+  \ was cited as \"producing a real prime\ndivisor on a curve\"; the cited path does\
+  \ not resolve (it is `AlgebraicGeometry.Adelic.…`), and the\ndeclaration *consumes*\
+  \ a non-generic point rather than producing one. A producer that consumes its\n\
+  own precondition is not a non-vacuity witness.\n\nCOROLLARY FOR COUNTING: count\
+  \ probe output by ENTRY, not by LINE. Lean wraps a long axiom list\nacross several\
+  \ lines, so a per-line filter misclassifies exactly the declarations whose lists\
+  \ are\nlongest. A published count of \"41 clean, 35 leaking of 66\" survived a session\
+  \ in this project\nwithout anyone noticing it does not add up.\n\nCONSOLIDATION\
+  \ HISTORY: this item is the single catalogue for this subject. `I-0380` (mode (a))\
+  \ and\n`I-0432` (mode (f)) were folded in at run 0055 s0008 with their detection\
+  \ recipes preserved in the\ncomments below; `I-0451` (mode (g)) and `I-0456` (mode\
+  \ (h)) were folded in at run 0054 s0010. File\nnew modes here as comments rather\
+  \ than as new memory items. Related and deliberately kept separate:\n`I-0445` (publish\
+  \ the command, not the count), `I-0439` (prose asserting a gate is still open),\n\
+  `I-0447` (the positive move — re-read your hypotheses' quantifiers before hunting\
+  \ for machinery)."
 labels:
 - agent-ready
 status: open
@@ -48,7 +98,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-27T14:51:02.524222+00:00'
-updated_at: '2026-07-27T16:55:57.048352+00:00'
+updated_at: '2026-07-27T20:08:30.118071+00:00'
 metadata:
   provenance:
     run: '0054'
