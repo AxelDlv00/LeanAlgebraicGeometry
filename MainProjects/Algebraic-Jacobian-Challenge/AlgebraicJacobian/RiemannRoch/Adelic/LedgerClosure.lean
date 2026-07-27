@@ -101,11 +101,9 @@ theorem eq_positivePart_sub_negativePart (D : X.WeilDivisor) :
     Finsupp.sub_apply _ _ _, positivePart_apply, positivePart_apply]
   rw [show (show X.PrimeDivisor →₀ ℤ from -D) P =
       -(show X.PrimeDivisor →₀ ℤ from D) P from Finsupp.neg_apply _ _]
-  rcases le_total 0 ((show X.PrimeDivisor →₀ ℤ from D) P) with h | h
-  · rw [max_eq_left h, max_eq_right (by omega : -(show X.PrimeDivisor →₀ ℤ from D) P ≤ 0)]
-    omega
-  · rw [max_eq_right h, max_eq_left (by omega : (0:ℤ) ≤ -(show X.PrimeDivisor →₀ ℤ from D) P)]
-    omega
+  -- `omega` treats `(show _ from D) P` and `D P` as distinct atoms, so name the value
+  set n : ℤ := (show X.PrimeDivisor →₀ ℤ from D) P with hn
+  omega
 
 end Positive
 
