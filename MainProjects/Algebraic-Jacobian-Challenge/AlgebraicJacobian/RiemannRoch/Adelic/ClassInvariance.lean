@@ -201,6 +201,14 @@ theorem map_coboundarySub_mulEquiv {D D' : X.WeilDivisor} {g : X.functionField}
     map_sectionSub_mulEquiv k hg (fun P _ => hD' P),
     map_sectionSub_mulEquiv k hg (fun P _ => hD' P)]
 
+/-- **Monotonicity of the coboundary subspace in the divisor.** The `k`-linear
+form of `coboundary_mono`: `D ≤ D'` gives `B(D) ⊆ B(D')`. -/
+theorem coboundarySub_mono {D D' : X.WeilDivisor}
+    (hle : ∀ P : X.PrimeDivisor, (show X.PrimeDivisor →₀ ℤ from D) P ≤
+      (show X.PrimeDivisor →₀ ℤ from D') P) :
+    coboundarySub k U₀ U₁ D ≤ coboundarySub k U₀ U₁ D' :=
+  sup_le_sup (sectionSub_mono k U₀ hle) (sectionSub_mono k U₁ hle)
+
 /-- **`Ȟ¹` is carried isomorphically onto the shifted `Ȟ¹`.**  Multiplication by
 `g` is a `k`-linear automorphism of `K(X)` mapping the overlap subspace `𝒜(D)`
 onto `𝒜(D')` and the coboundary `B(D)` onto `B(D')`, hence it descends to a
