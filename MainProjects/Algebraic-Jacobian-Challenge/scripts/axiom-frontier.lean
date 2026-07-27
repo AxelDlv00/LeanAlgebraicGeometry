@@ -39,7 +39,28 @@ wired to the stated theorem:
 At the time this probe was last re-measured that reports 97 reachable modules, up from
 8 before `picardJacobianWitness` was wired to `Scheme.Pic0Scheme` (the 97th is
 `Curve/GeometricallyReduced.lean`, which discharges the curve's geometric integrality).
-The denominator moves as modules land, so read the reachable count, not the ratio.
+The denominator moves as modules land, so read the reachable count, not the ratio — and
+note that the reachable count does *not* move when a module lands beside the headline
+cone rather than under it, which is the normal case for the rigid-pushforward and
+Riemann–Roch lanes.
+
+How to read the output.  Every line is one declaration; the only token that matters is
+`sorryAx`.  The clean/leaking split is worth summarising rather than eyeballing:
+
+    lake env lean scripts/axiom-frontier.lean > /tmp/ax.txt
+    python3 - <<'PY'
+    import re
+    entries = [e for e in re.split(r"\n(?=')", open('/tmp/ax.txt').read().strip())
+               if e.startswith("'")]
+    bad = [e.split("'")[1] for e in entries if 'sorryAx' in e]
+    print(f'{len(entries)} probed, {len(entries) - len(bad)} clean, {len(bad)} carry sorryAx')
+    for n in bad: print('  ', n)
+    PY
+
+Note the `re.split` rather than a plain line filter: Lean wraps a long axiom list over
+several lines, so a per-line scan misclassifies exactly the declarations whose axiom
+list is longest.  Measured 2026-07-27 on the rooted tree: 89 probed, 54 clean, 35
+carrying `sorryAx`.
 
 Companion measurement 2 — is every module on disk rooted?  A module that nothing
 imports compiles green, is invisible to the root build, and is therefore invisible to
@@ -166,6 +187,55 @@ carries finiteness content with no `Module.Finite` binder visible, because
 #print axioms AlgebraicGeometry.Adelic.exists_bound_subsingleton_h1Mod_of_pointPeel
 #print axioms AlgebraicGeometry.Adelic.chi_divisorOfList_eq_degK
 
+/-! §6d The global-generation and ledger-closure lane (task ajc-rr, requested in I-0410).
+
+Same caution as §6b, and ajc-rr asked for it to be kept: everything in the generation
+lane takes the closed χ-ledger `hledger` as an explicit hypothesis, so a clean axiom line
+on `exists_bound_generatedAt` says nothing about the ledger being available.  Measured
+open named hypotheses, read off the signatures rather than asserted:
+
+| declaration                                    | open named hypotheses                   |
+|------------------------------------------------|-----------------------------------------|
+| `evalMap_injective`                            | none (unconditional)                    |
+| `mem_orderGe_one_iff_mem_maximalIdeal`         | none (unconditional)                    |
+| `residueDeg_eq_one_iff_hasRationalResidues`    | none (unconditional; an equivalence)    |
+| `hasRationalResidues_of_isAlgClosed`           | none — see below, this is the exception |
+| `residueDeg_eq_one_of_hasRationalResidues`     | rational residues at every point        |
+| `degK_eq_degree_of_hasRationalResidues`        | rational residues at every point        |
+| `ell_sub_ell_sub_pointDivisor_eq`              | ledger + vanishing at `D` and `D − P`   |
+| `evalMap_surjective`                           | ledger + the same two vanishings        |
+| `generatedAt_of_evalMap_surjective`            | surjectivity of `evalMap` itself        |
+| `generatedAt_of_vanishing`                     | ledger + the same two vanishings        |
+| `exists_bound_generatedAt`                     | ledger + base vanishing + peel          |
+| `exists_bound_forall_generatedAt`              | the above, plus a uniform residue bound |
+| `exists_bound_forall_generatedAt_of_hasRationalResidues` | ledger + base vanishing + peel |
+| `degree_principal_eq_zero_of_hasRationalResidues` | ledger + rational residues          |
+| `chi_eq_of_bump_of_nonneg`                     | the one-point bump                      |
+| `chi_eq_iff_step_of_bump`                      | the one-point bump (an equivalence)     |
+
+The one genuine discharge, and the reason it is worth naming separately:
+`hasRationalResidues_of_isAlgClosed` takes no ledger, no vanishing and no bump — only
+`IsAlgClosed k`, an `Algebra`/`IsScalarTower` on the stalk and `Module.Finite` on its
+residue field.  A clean axiom line there really does mean an unconditional theorem, and it
+is what turns the two `_of_hasRationalResidues` results into unconditional statements over
+an algebraically closed field. -/
+#print axioms AlgebraicGeometry.Adelic.evalMap_injective
+#print axioms AlgebraicGeometry.Adelic.mem_orderGe_one_iff_mem_maximalIdeal
+#print axioms AlgebraicGeometry.Adelic.residueDeg_eq_one_iff_hasRationalResidues
+#print axioms AlgebraicGeometry.Adelic.hasRationalResidues_of_isAlgClosed
+#print axioms AlgebraicGeometry.Adelic.residueDeg_eq_one_of_hasRationalResidues
+#print axioms AlgebraicGeometry.Adelic.degK_eq_degree_of_hasRationalResidues
+#print axioms AlgebraicGeometry.Adelic.ell_sub_ell_sub_pointDivisor_eq
+#print axioms AlgebraicGeometry.Adelic.evalMap_surjective
+#print axioms AlgebraicGeometry.Adelic.generatedAt_of_evalMap_surjective
+#print axioms AlgebraicGeometry.Adelic.generatedAt_of_vanishing
+#print axioms AlgebraicGeometry.Adelic.exists_bound_generatedAt
+#print axioms AlgebraicGeometry.Adelic.exists_bound_forall_generatedAt
+#print axioms AlgebraicGeometry.Adelic.exists_bound_forall_generatedAt_of_hasRationalResidues
+#print axioms AlgebraicGeometry.Adelic.degree_principal_eq_zero_of_hasRationalResidues
+#print axioms AlgebraicGeometry.Adelic.chi_eq_of_bump_of_nonneg
+#print axioms AlgebraicGeometry.Adelic.chi_eq_iff_step_of_bump
+
 -- §6c The rigid-pushforward gate (task ajc-gate).  Per I-0377 the gate is NOT
 -- instantiated: `hasRigidPushforward_of_leaves` derives it from four named leaves,
 -- none proved.  Probed here so the frontier records that accurately.
@@ -182,6 +252,28 @@ carries finiteness content with no `Module.Finite` binder visible, because
 --   (b) a named hypothesis in the STATEMENT that is unproved (§6b);
 --   (c) a named hypothesis in the statement that is FALSE (§6c).
 #print axioms AlgebraicGeometry.Adelic.hasRigidPushforward_of_leaves
+
+-- The gate's state after `Picard/RigidPushforwardInstance.lean`.  Two of the three
+-- statements the frontier file listed are now theorems and this is where that is
+-- measured rather than taken on report: `instIsIntegralP1OverLeft` (from the chart-ring
+-- identification `Γ(ℙ¹_k, D₊(Xᵢ)) ≃ₐ[k] k[T]` plus the two-chart irreducibility
+-- argument) and `p1RankIdentity_proved` carry no named hypotheses at all, so a clean
+-- line on them is an unconditional discharge in the §6d sense.  The two consequences
+-- are clean and conditional in the *other* direction: they quantify over the curve's
+-- own instances only, which for an AJC curve are synthesized.
+--
+-- `hasRigidPushforward_of_gammaBaseChange` is the honest residue: the gate still has NO
+-- instance, and its whole remaining cost is `RigidPushforwardGammaBaseChange` at every
+-- finitely generated `k`-algebra — one statement rather than the former four leaves.
+-- Being an assembly theorem it reports clean axioms automatically (trap (a) again), so
+-- the line below is a record of the reduction, not of a discharge.
+#print axioms AlgebraicGeometry.Adelic.instIsIntegralP1OverLeft
+#print axioms AlgebraicGeometry.Adelic.p1RankIdentity_proved
+#print axioms AlgebraicGeometry.Adelic.p1RigidPushforwardStatement_proved
+#print axioms AlgebraicGeometry.Adelic.rigidPushforwardLocallyFree_proved
+#print axioms AlgebraicGeometry.Adelic.hasRigidPushforward_of_gammaBaseChange
+#print axioms AlgebraicGeometry.Adelic.p1ChartSectionsAlgEquivX
+#print axioms AlgebraicGeometry.Adelic.isIntegral_p1_of_isDomain_charts
 
 -- §7 Albanese cone
 #print axioms AlgebraicGeometry.Pic0.bundle

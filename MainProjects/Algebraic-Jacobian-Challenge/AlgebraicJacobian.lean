@@ -78,6 +78,20 @@ import AlgebraicJacobian.Picard.RigidPushforwardFrontier
 -- Aimed at the gate's H0-finiteness leaf: the P^1 chart-ring identification over the
 -- integral model. Sits over Adelic.P1ChartData, beside the cone rather than under it.
 import AlgebraicJacobian.Picard.RigidPushforwardP1ChartRing
+-- Second wave of the same cone (run 0053, task ajc-gate). None of these is below
+-- another: AffineDescent sits over Transfer + PullbackQuasicoherent, P1Topology over
+-- Adelic.FinitenessP1, P1ChartSections over P1ChartRing, and Rank over P1Sheaf +
+-- FiberChart. Four separate entries, for the same reason the first wave needed them.
+import AlgebraicJacobian.Picard.RigidPushforwardAffineDescent
+import AlgebraicJacobian.Picard.RigidPushforwardP1Topology
+import AlgebraicJacobian.Picard.RigidPushforwardP1ChartSections
+import AlgebraicJacobian.Picard.RigidPushforwardRank
+-- The assembly above all four: `IsIntegral ℙ¹_k` and the rank identity are theorems, so
+-- the gate's `locallyFree` field is unconditional and `HasRigidPushforward` costs one
+-- statement (`RigidPushforwardGammaBaseChange`) rather than four. There is deliberately
+-- no `instance : HasRigidPushforward`, so §6c of the axiom probe still records the gate
+-- as uninstantiated.
+import AlgebraicJacobian.Picard.RigidPushforwardInstance
 import AlgebraicJacobian.Picard.P1SectionsFinite
 import AlgebraicJacobian.Picard.TwoTermFiniteFree
 import AlgebraicJacobian.Picard.SemicontinuityH0
@@ -181,6 +195,15 @@ import AlgebraicJacobian.RiemannRoch.Adelic.GenusUnconditional
 import AlgebraicJacobian.RiemannRoch.Adelic.ClassInvariance
 import AlgebraicJacobian.RiemannRoch.Adelic.SectionBounds
 import AlgebraicJacobian.RiemannRoch.Adelic.BoundedVanishing
+-- Global generation and the ledger closure (run 0055, task ajc-rr). LedgerClosure
+-- imports GlobalGeneration, so the second entry alone would root both; both are kept
+-- explicit so retiring either cannot silently unroot the other. Same caveat as above:
+-- the generation lane takes the closed χ-ledger as a named hypothesis, so a clean
+-- `#print axioms` on it is not an unconditional theorem. The exception, measured
+-- separately in scripts/axiom-frontier.lean §6d, is
+-- `hasRationalResidues_of_isAlgClosed`, which takes no ledger at all.
+import AlgebraicJacobian.RiemannRoch.Adelic.GlobalGeneration
+import AlgebraicJacobian.RiemannRoch.Adelic.LedgerClosure
 import AlgebraicJacobian.RiemannRoch.CurveBaseChange
 import AlgebraicJacobian.RiemannRoch.CohomologyKit
 import AlgebraicJacobian.Picard.InvertibleSectionLocalization
