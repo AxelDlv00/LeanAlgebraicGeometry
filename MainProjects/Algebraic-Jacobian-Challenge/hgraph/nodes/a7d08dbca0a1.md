@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:quot_pullback_app_isoTensor_unitAtV
 lean_status: lean_ok
-order: 1240
+order: 1242
 title: Adjunction-unit base linear map at a section
 type: tex
-updated: '2026-07-27T20:11:17'
+updated: '2026-07-28T00:40:21'
 ---
 Given a morphism \(g : Y \to X\) of schemes, a sheaf of
   \(\mathcal{O}_X\)-modules \(\mathcal{N}\), and an open \(V \subseteq X\),

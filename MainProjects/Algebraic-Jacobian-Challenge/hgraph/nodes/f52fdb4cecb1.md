@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:graded_polyModule_C_smul
 lean_status: lean_ok
-order: 1074
+order: 1076
 title: A constant acts as a scalar
 type: tex
-updated: '2026-07-27T20:11:16'
+updated: '2026-07-28T00:40:21'
 ---
 In the polynomial-module structure (\cref{def:graded_polyModule}), \((C\,c) \cdot m =
   c \cdot m\) for all \(c \in \kappa\), \(m \in M\). Immediate from

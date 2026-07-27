@@ -8,10 +8,10 @@ label: lem:mathlib_specMap_localizationAway_isOpenImmersion
 lean_status: mathlib_ok
 mathlib_name:
 - AlgebraicGeometry.Scheme.isOpenImmersion_SpecMap_localizationAway
-order: 1383
+order: 1385
 title: \(\Spec\) of an away-localisation is an open immersion
 type: tex
-updated: '2026-07-27T20:11:17'
+updated: '2026-07-28T00:40:21'
 ---
 \textit{Provided by Mathlib.}
   Let \(R\) be a commutative ring and \(f \in R\). The morphism

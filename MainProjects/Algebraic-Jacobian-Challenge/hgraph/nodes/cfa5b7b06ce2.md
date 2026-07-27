@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:adelic_curve_coheight_le_one
 lean_status: lean_ok
-order: 1871
+order: 1873
 title: Coheight \(\le 1\) on the curve
 type: tex
-updated: '2026-07-27T20:42:21'
+updated: '2026-07-28T00:40:22'
 ---
 Every point \(z\) of \(C\) has topological coheight
   \(\operatorname{coheight} z \le 1\).

@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:graded_raisesDegree
 lean_status: lean_ok
-order: 1048
+order: 1050
 title: Degree-raising endomorphism
 type: tex
-updated: '2026-07-27T20:11:16'
+updated: '2026-07-28T00:40:21'
 ---
 Let \(M = \bigoplus_n \mathcal{M}_n\) be an internally graded \(\kappa\)-module. A
   \(\kappa\)-linear endomorphism \(x : M \to M\) \emph{raises degree by one} when it

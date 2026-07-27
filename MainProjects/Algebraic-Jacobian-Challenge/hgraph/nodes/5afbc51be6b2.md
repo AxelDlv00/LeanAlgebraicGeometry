@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:gr_opensMap_final
 lean_status: lean_ok
-order: 1471
+order: 1473
 title: The opens-pullback functor is final
 type: tex
-updated: '2026-07-27T20:11:17'
+updated: '2026-07-28T00:40:21'
 ---
 For any morphism of schemes \(\varphi : T' \to T\), the inverse-image functor on opens
   \(\mathrm{Opens.map}\,\varphi : \mathrm{Opens}(T) \to \mathrm{Opens}(T')\),

@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:isiso_pullbacktensormap_of_sheafifydelta
 lean_status: lean_ok
-order: 657
+order: 659
 title: Reduction of $\mathtt{pullbackTensorMap}$ iso-ness to the sheafified presheaf
   $\delta$
 type: tex
-updated: '2026-07-27T20:11:16'
+updated: '2026-07-28T00:40:21'
 ---
 Let \(f : Y \to X\) be a morphism of schemes and let
   \(M, N \in \Scheme.\mathtt{Modules}\,X\). Write
