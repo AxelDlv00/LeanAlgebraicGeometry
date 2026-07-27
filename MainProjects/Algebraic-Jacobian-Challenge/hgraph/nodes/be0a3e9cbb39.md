@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: chart_smul_baseMap_res
 type: lean
-updated: '2026-07-27T19:58:33'
+updated: '2026-07-27T22:48:27'
 ---
    lemma chart_smul_baseMap_res {f' : X' ⟶ Y'} {g' : X' ⟶ X} (M : X.Modules)
        {W W₀ : X.Opens} {W'' : X'.Opens}
@@ -25,6 +25,20 @@ updated: '2026-07-27T19:58:33'
 
    Both are the affine-base-change analogues of bricks already proved for fibres; the first is
    Stacks 02KG in degree `0` on a single affine chart, the second its restriction naturality.
+
+3b. **What actually happened (read this before corrections 1 and 4).**  The executed proof took
+   step 1's surjectivity and step 2's `bijective_kerBaseChange_of_surjective` after all, rather
+   than the engine's fourth conjunct — because the flatness that correction 1 calls an
+   unnecessary obligation is *free* on the campaign (`CoherentSheafFlat q L` for an invertible
+   `L` on the flat family `q`, read at the pair `(⊤, U₁ ⊓ U₂)` by
+   `flat_baseSections_of_coherentSheafFlat`), and taking it avoids moving the whole `letI`
+   dictionary off `p` and the pushforward module.  With that choice, correction 4's congruence
+   helper is **not needed at all**: `Function.Surjective ⇑d` mentions only the underlying
+   function of `d`, the module structures are instance arguments, and
+   `moduleSectionDiff_pushforward` is `rfl` — so the ℙ¹ statement and the `C_A` statement are
+   literally the same proposition and `exact` crosses `q = π_A ≫ p` for free.  Correction 3's
+   two-scalar-action glue is real, but is confined to one `map_smul` through
+   `pushforwardTopEquivBaseSections`.
 
 4. **Dependency warning.**  This route puts the `baseChange` field *downstream* of the
    `IsIntegral (ℙ¹_k)` leaf of `Picard/RigidPushforwardFrontier.lean`: step 1 consumes the
