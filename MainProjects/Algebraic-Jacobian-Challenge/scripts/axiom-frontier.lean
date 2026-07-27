@@ -118,18 +118,53 @@ open AlgebraicGeometry AlgebraicGeometry.Scheme
 #print axioms AlgebraicGeometry.Scheme.AffineCoverMVSquare.chi_unit_eq_one_sub_genus
 #print axioms AlgebraicGeometry.Scheme.AffineCoverMVSquare.h1_unit_eq_genus
 
--- §6b Cluster-P extensions (task ajc-rr).  Independent re-verification, in the
--- rooted environment, of the axiom claims made in I-0383.  CAUTION: several of
--- these are axiom-clean and still NOT unconditional mathematics — they take the
--- closed χ-ledger and/or a peel-surjectivity datum as *named hypotheses*, which
--- `#print axioms` cannot see.  Read this section as "no hidden sorry", not as
--- "theorem available".
+/-! §6b Cluster-P extensions (task ajc-rr).  Independent re-verification, in the
+rooted environment, of the axiom claims made in I-0383 and I-0403.
+
+CAUTION, and this is the section to read before quoting any line below as a
+completeness claim: several of these are axiom-clean and still NOT unconditional
+mathematics, because they take the closed χ-ledger and/or a peel-surjectivity
+datum as *named hypotheses* — invisible to `#print axioms`.  What each one is
+open in, as of 2026-07-27:
+
+| declaration                          | open named hypotheses                    |
+|--------------------------------------|------------------------------------------|
+| `chi_eq_of_linearEquivalence`        | none (unconditional)                     |
+| `degK`                               | none (a definition)                      |
+| `degK_principal_eq_zero`             | none (unconditional)                     |
+| `ell_eq_zero_of_degK_neg`            | closed χ-ledger                          |
+| `chi_divisorOfList_eq_degK`          | closed χ-ledger                          |
+| `coneVanishing_iff_base_and_peel`    | none (unconditional; an equivalence)     |
+| `exists_bound_subsingleton_h1Mod`    | base vanishing at one divisor + peel     |
+| `exists_bound_subsingleton_h1Mod_of_pointPeel` | base vanishing + point-peel    |
+| `exists_bound_h1dim_eq_zero`         | the above, plus the closed χ-ledger      |
+
+The honest one-line summary of the vanishing lane, in ajc-rr's own sharpened
+words: single-field bounded `H¹` vanishing is assembled and kernel-checked, and
+its hypothesis pair (base vanishing at one divisor plus peel-surjectivity) is
+*equivalent* to vanishing on the whole cone `{D' ≥ D₀}` — that equivalence is
+proved (`coneVanishing_iff_base_and_peel`).  So the content is "pointwise cone
+vanishing plus closed ledger ⟹ numerical-degree vanishing", a real reduction,
+since a divisor of large weighted degree need not dominate `D₀`.  It is NOT "one
+vanishing implies all vanishing".  Extension-uniformity and global generation are
+proved nowhere in AJC, and extension-uniformity is not currently even statable:
+the invariants are pinned to a chosen 2-affine cover and `CurveBaseChange.lean`
+does not transport it.
+
+One further caveat that no axiom line shows.  "`Subsingleton` rather than
+`h¹ = 0`, so no finiteness instance is needed" holds only for the
+vanishing-criterion and peel machinery.  Any theorem taking the closed χ-ledger
+carries finiteness content with no `Module.Finite` binder visible, because
+`Module.finrank` of an infinite-dimensional space is `0`. -/
 #print axioms AlgebraicGeometry.Adelic.chi_eq_of_linearEquivalence
 #print axioms AlgebraicGeometry.Adelic.degK
 #print axioms AlgebraicGeometry.Adelic.degK_principal_eq_zero
 #print axioms AlgebraicGeometry.Adelic.ell_eq_zero_of_degK_neg
 #print axioms AlgebraicGeometry.Adelic.exists_bound_h1dim_eq_zero
 #print axioms AlgebraicGeometry.Adelic.exists_bound_subsingleton_h1Mod
+#print axioms AlgebraicGeometry.Adelic.coneVanishing_iff_base_and_peel
+#print axioms AlgebraicGeometry.Adelic.exists_bound_subsingleton_h1Mod_of_pointPeel
+#print axioms AlgebraicGeometry.Adelic.chi_divisorOfList_eq_degK
 
 -- §6c The rigid-pushforward gate (task ajc-gate).  Per I-0377 the gate is NOT
 -- instantiated: `hasRigidPushforward_of_leaves` derives it from four named leaves,
