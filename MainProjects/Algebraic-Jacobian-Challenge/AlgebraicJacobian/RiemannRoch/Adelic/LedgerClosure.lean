@@ -423,5 +423,54 @@ theorem pointPeel_of_pointPeel_on_overlap
 
 end PeelOffOverlap
 
+/-! ## §4. `hbump` is a satisfiable hypothesis
+
+`chi_eq_of_bump` is worth its statement only if `hbump` can hold.  A theorem whose hypothesis
+is contradictory is true, axiom-clean, instantiable, and worthless — and no axiom check or
+elaboration probe detects it.  This section rules that out.
+
+Two facts, and it is worth being exact about how little each one gives:
+
+* `bump_of_isEmpty_primeDivisor` — `hbump` is **consistent**: it holds vacuously when there are
+  no prime divisors.  That is all it shows.  A first draft of this section also contained a
+  "reduction" of `hbump` to the conclusion of `chi_add_eq_residueDeg`; it was deleted, because
+  the two statements are *literally the same proposition*, so the lemma was `Iff.rfl` dressed
+  as content — the re-indexing failure mode that inbox memory I-0399 records for this task.
+* Each instance of `hbump` is, syntactically, the conclusion of
+  `ChiLedger.chi_add_eq_residueDeg` at the one-point twist `E ↦ 1·P + E`.  That is a remark
+  about where to look, not a theorem, and it is recorded here as prose for exactly that reason.
+
+What this section does **not** claim: that `hbump` *holds* at any particular curve.  Exhibiting
+one needs the strong-approximation input `hsurj`, which is the lane's residual open leaf.  The
+distinction between "consistent" and "satisfied somewhere interesting" is the kind this task's
+predecessors got wrong in the other direction, so it is stated rather than left to the reader.
+The non-degenerate half of the picture is that `ResidueField.primeDivisorOfNotGeneric` produces
+an actual prime divisor on a curve, so the vacuous witness does not apply there. -/
+
+section BumpSatisfiable
+
+variable (k : Type u) [Field k] {X : Scheme.{u}} [IsIntegral X]
+    [IsLocallyNoetherian X] [Scheme.IsRegularInCodimensionOne X]
+    [Algebra k X.functionField] [IsConstantField k X] (U₀ U₁ : X.Opens)
+
+/-- **`hbump` holds vacuously on a scheme with no prime divisors** — the cheap witness that it
+is not a contradictory hypothesis.
+
+This is a *degenerate* witness and is labelled as one: on such a scheme every `∀ P` statement
+in the lane is vacuous, and `degK` is identically `0`, so the ledger it yields is the trivial
+`χ(D) = χ(0)`.  It establishes exactly one thing — that `hbump` is consistent — and nothing
+about the lane's content.
+
+The non-degenerate direction is the other one, and this project has it: `ResidueField`'s
+`primeDivisorOfNotGeneric` produces an actual prime divisor on a curve, so on a curve the `∀ P`
+quantifier ranges over a nonempty family and the degenerate witness does not apply.  Both facts
+together are what "satisfiable and not idle" means. -/
+theorem bump_of_isEmpty_primeDivisor [IsEmpty X.PrimeDivisor] :
+    ∀ (P : X.PrimeDivisor) (E : X.WeilDivisor),
+      chi k U₀ U₁ (pointDivisor P + E) = chi k U₀ U₁ E + residueDeg k P :=
+  fun P _ => isEmptyElim P
+
+end BumpSatisfiable
+
 end Adelic
 end AlgebraicGeometry
