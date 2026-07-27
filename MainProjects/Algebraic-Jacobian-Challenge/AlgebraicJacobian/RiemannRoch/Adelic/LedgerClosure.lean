@@ -21,8 +21,11 @@ part" as an open item.
 
 **This file closes that extension.**  `chi_eq_of_bump` proves the ledger at every Weil
 divisor from the one-point bump alone, so `hledger` is not an independent open input of the
-lane: every consumer that takes it can instead take `hbump`, which is one application of
-`chi_add_eq_residueDeg` per step.
+lane: every consumer that takes it can instead take `hbump`.  But `hbump` is
+NOT merely one application of `chi_add_eq_residueDeg` per step: that theorem
+requires `P.point ∈ U₀ ⊓ U₁`, and off the overlap the lane proves the *negation* of the
+bump (`LedgerClosure.not_bump_of_notMem_overlap`), so `hbump` over all primes is strictly
+stronger than the exact sequence plus strong approximation.  See §5.
 
 ## What is proved
 
@@ -351,18 +354,22 @@ overlap.  If `P.point ∉ U₀ ⊓ U₁` then `1·P + E` and `E` impose the *sam
 they differ only at `P` — so `𝒜(1·P + E) = 𝒜(E)` and one may take `y = x`, with
 `x − y = 0` a coboundary for free.
 
-**How much this is worth, stated honestly.**  It is a reduction and not a discharge, and it is
-probably a *small* reduction — smaller than the phrase "only on the overlap" suggests.  On the
-covers this lane actually uses (two nonempty affine opens of an irreducible curve), the overlap
-`U₀ ⊓ U₁` should be a dense open omitting only finitely many closed points, so the primes
-disposed of here are the **few**, not the many, and the exceptional set cannot be shrunk by
-choosing a better cover — it is already nearly empty.
+**What this is actually worth — and the first answer here was wrong about it.**
 
-That last paragraph is a *mathematical expectation about the intended covers, not a theorem in
-this file*: nothing below quantifies over "the covers the lane uses", and the lemmas hold for
-arbitrary `U₀ U₁` where the exceptional set may be large or everything.  It is flagged this way
-deliberately, since the estimate argues against the value of my own lemma and it would be easy
-to state it as established fact in either direction.
+As a *reduction of the peel*, it is small.  On the covers this lane uses (two nonempty affine
+opens of an irreducible curve) the overlap should be a dense open omitting only finitely many
+closed points, so the primes disposed of are the few, not the many.  (That estimate is a
+mathematical expectation about the intended covers, **not** a theorem in this file: the lemmas
+below hold for arbitrary `U₀ U₁`, where the exceptional set may be large or everything.)
+
+But the identity `𝒜(1·P + E) = 𝒜(E)` that makes the peel free off the overlap is the *same*
+computation that shows the ledger exact sequence gives a `χ`-jump of `0` there, rather than
+`[κ(P):k]`.  So §3's real content is not modesty about a count: it is the evidence that **`hbump`
+is refutable at off-overlap primes** — see §5 (`not_bump_of_notMem_overlap`), which turns this
+observation into a theorem.  An earlier version of this paragraph offered the diagnosis "one
+cannot shrink the exceptional set by choosing a better cover, because it is already nearly
+empty", which is true and points away from that.  Credit for the re-reading: an independent
+`work-reviewer` audit (inbox I-0450).
 
 What remains at an overlap point is the substantive input: the
 Mittag-Leffler/strong-approximation statement that a section with a first-order pole at `P`
@@ -452,6 +459,68 @@ distinction between "consistent" and "satisfied somewhere interesting" is the ki
 predecessors got wrong in the other direction, so it is stated rather than left to the reader.
 The non-degenerate half of the picture is that `ResidueField.primeDivisorOfNotGeneric` produces
 an actual prime divisor on a curve, so the vacuous witness does not apply there. -/
+
+section BumpRefuted
+
+variable (k : Type u) [Field k] {X : Scheme.{u}} [IsIntegral X]
+    [IsLocallyNoetherian X] [Scheme.IsRegularInCodimensionOne X]
+    [Algebra k X.functionField] [IsConstantField k X] (U₀ U₁ : X.Opens)
+
+/-- **Off the overlap the local step is trivial.**  `𝒜(1·P + E) = 𝒜(E)` for `P.point ∉ U₀ ⊓ U₁`
+(`sectionSub_add_pointDivisor_of_notMem_overlap`), so the local step space is a subsingleton and
+its `k`-dimension is `0`. -/
+theorem finrank_localStepDom_eq_zero_of_notMem_overlap
+    {P : X.PrimeDivisor} (hP : P.point ∉ (U₀ ⊓ U₁ : X.Opens)) (E : X.WeilDivisor) :
+    Module.finrank k (localStepDom k (U₀ ⊓ U₁) E (pointDivisor P + E)) = 0 := by
+  have h := sectionSub_add_pointDivisor_of_notMem_overlap k U₀ U₁ hP E
+  haveI : Subsingleton (localStepDom k (U₀ ⊓ U₁) E (pointDivisor P + E)) := by
+    constructor
+    intro a b
+    obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective _ a
+    obtain ⟨y, rfl⟩ := Submodule.Quotient.mk_surjective _ b
+    rw [Submodule.Quotient.eq, Submodule.mem_comap, Submodule.subtype_apply]
+    exact Submodule.sub_mem _ (h ▸ x.2) (h ▸ y.2)
+  exact Module.finrank_zero_of_subsingleton
+
+/-- **`hbump` is REFUTED at every off-overlap prime, by the lane's own ledger exact sequence.**
+
+This is the sharpest thing to know about `hbump`, and it corrects the cost accounting that five
+docstrings in this lane carried (including this file's).  Those said each instance of `hbump` is
+"one application of `ChiLedger.chi_add_eq_residueDeg`".  **False off the overlap**, twice over:
+
+* `chi_add_eq_residueDeg` carries `hPV : P.point ∈ U₀ ⊓ U₁`, so at an off-overlap `P` the lane
+  has no route to the bump at all — not even a gated one;
+* worse, what the lane *can* prove there is the **negation**.  `chi_add` concludes
+  `χ(1·P + E) = χ(E) + dim_k(𝒜(1·P+E)/𝒜(E))`, and off the overlap that dimension is `0`
+  (`finrank_localStepDom_eq_zero_of_notMem_overlap`), while `hbump` asserts a jump of
+  `[κ(P):k] ≥ 1` (`one_le_residueDeg`).  Hence the conclusion below.
+
+So `hbump` as quantified over **all** primes is strictly stronger than "the ledger exact
+sequence plus strong approximation, one prime at a time": it additionally forces `chi_add`'s
+window/connect/twist exactness hypotheses to *fail* at every off-overlap one-point step.  Since
+a 2-affine cover of a proper curve has `U₀ ⊓ U₁ ≠ ⊤`, that exceptional set is nonempty for the
+covers of interest.
+
+**What this does and does not do to `chi_eq_of_bump`.**  It does not touch its proof, which is
+correct: from `hbump` the ledger follows at every divisor.  What it changes is how `hbump` should
+be read — as a hypothesis satisfiable only in the presence of cohomology data that differs from
+`chi_add`'s at off-overlap primes, not as a routine consequence of the exact sequence.  A
+consumer intending to discharge `hbump` from `chi_add_eq_residueDeg` **cannot**, and this theorem
+is why.
+
+Credit: found by an independent `work-reviewer` audit of this session's work (inbox I-0449 /
+I-0451), and machine-checked here rather than left as prose. -/
+theorem not_bump_of_notMem_overlap
+    {P : X.PrimeDivisor} (hP : P.point ∉ (U₀ ⊓ U₁ : X.Opens)) (E : X.WeilDivisor)
+    [Module.Finite k (localStepTgt k P 1)]
+    (hchiAdd : chi k U₀ U₁ (pointDivisor P + E) = chi k U₀ U₁ E
+      + Module.finrank k (localStepDom k (U₀ ⊓ U₁) E (pointDivisor P + E))) :
+    chi k U₀ U₁ (pointDivisor P + E) ≠ chi k U₀ U₁ E + residueDeg k P := by
+  rw [finrank_localStepDom_eq_zero_of_notMem_overlap k U₀ U₁ hP E] at hchiAdd
+  have h1 : 1 ≤ residueDeg k P := one_le_residueDeg k P
+  omega
+
+end BumpRefuted
 
 section BumpSatisfiable
 

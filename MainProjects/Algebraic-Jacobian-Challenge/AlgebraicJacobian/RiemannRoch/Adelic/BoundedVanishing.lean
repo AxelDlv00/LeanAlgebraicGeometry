@@ -26,8 +26,10 @@ from three inputs that are named explicitly in every statement:
 ledger at every Weil divisor from the one-point bump `hbump`, so the statements below can be
 read with `hledger` discharged; the ledger-free forms are in `LedgerClosure.lean` §2.  The
 theorems here keep the `hledger` binder because it is strictly more general.  Note this does
-**not** make the lane unconditional: the bump is one application of `chi_add_eq_residueDeg`
-per step, so the mathematics moved under the bump rather than away.  Input 2 is also
+**not** make the lane unconditional, and the bump is *not* merely one application of
+`chi_add_eq_residueDeg` per step: off the overlap that theorem does not apply and the lane
+proves the bump's negation (`LedgerClosure.not_bump_of_notMem_overlap`).  The mathematics moved
+under the bump rather than away, and there is more of it there than this file used to say.  Input 2 is also
 localised — `LedgerClosure.peel_pointDivisor_of_notMem_overlap` discharges the one-point peel
 at every prime divisor off the overlap `U₀ ⊓ U₁`, leaving its content at overlap points.
 
