@@ -81,12 +81,24 @@ this file, recorded so the next session does not re-derive it:
    `Scheme.AffineCoverMVSquare.globalSectionsEquivKerModuleSectionDiffBase`
    (`Picard/RigidPushforwardP1Engine.lean`:287).
 
-3. The genuinely missing piece is the **Čech square for an arbitrary affine base change**: the
-   generalisation of `Picard/RigidPushforwardFiberChart.lean` §5–§7 from the fibre embedding
-   `Spec κ(t) ⟶ Spec A` to an arbitrary `Spec A' ⟶ Spec A`, i.e.
-   `exists_fiberChartTensorEquiv` ↝ `exists_chartTensorEquiv` and
-   `fiberChart_smul_baseMap_res` ↝ `chart_smul_baseMap_res`.  The intended signatures, in the
-   spelling that type-checks against the bricks above (statements only):
+3. **This step is now DONE** — see `Picard/RigidPushforwardChartBaseChange.lean`, which proves
+   the **Čech square for an arbitrary affine base change**, i.e. the generalisation of
+   `Picard/RigidPushforwardFiberChart.lean` §5–§7 from the fibre embedding `Spec κ(t) ⟶ Spec A`
+   to an arbitrary `Spec A' ⟶ Spec A`:
+
+   * `isPushout_appLE_chartBaseChange` — the general-square replacement for
+     `isPushout_appLE_fiberChart` (a one-liner from `isPushout_appLE_of_isPullback'`);
+   * `exists_chartTensorEquiv` (↝ `exists_fiberChartTensorEquiv`) and
+     `chart_smul_baseMap_res` (↝ `fiberChart_smul_baseMap_res`);
+   * `exists_kerChartTensorEquiv` — the two-chart Čech square concluded on **kernels**,
+     `Γ(Y',⊤) ⊗_{Γ(Y,⊤)} ker d ≃+ ker d'`, taking the `hker` of correction 1 directly and
+     therefore carrying **no** flatness hypothesis.
+
+   All four are sorry-free and axiom-clean, and none of them needed the heartbeat headroom the
+   fibre originals carry.  What is left of this route is therefore assembly: instantiate the
+   engine's fourth conjunct at `B := Γ(Spec A', ⊤)`, feed `exists_kerChartTensorEquiv`, and
+   convert kernels to global sections on both sides — with correction 4 below the remaining
+   piece of real Lean engineering.  For the record, the intended signatures were:
 
    ```
    theorem exists_chartTensorEquiv {f : X ⟶ Y} {g : Y' ⟶ Y} {f' : X' ⟶ Y'} {g' : X' ⟶ X}
@@ -154,10 +166,17 @@ rediscover them:
    (`Picard/RigidPushforwardFiberChart.lean`:508-518) is about the whole Čech complex and
    carries the `Algebra` binder plus **three** `baseSectionsModule` binders (`U₁`, `U₂`,
    `U₁ ⊓ U₂` — there is no `⊤` binder); a statement about a *single* chart needs the `Algebra`
-   binder plus **one**, at that chart.  (An earlier draft of this paragraph said "four binders,
-   not the `Algebra` binder", which describes neither lemma; corrected after a fresh-context
-   review checked it against the source.)  Either way: write the statement with a placeholder
-   body and get it to elaborate first — that is where the time goes.
+   binder plus **one**, at that chart; and the kernel comparison
+   `exists_kerChartTensorEquiv` (`Picard/RigidPushforwardChartBaseChange.lean`) needs **seven**
+   — the `Algebra` binder, three on `X`, three on `X'`.  (An earlier draft of this paragraph
+   said "four binders, not the `Algebra` binder", which describes none of them; corrected after
+   a fresh-context review checked it against the source, and the counts above are measured.)
+   Two traps found while writing the seven-binder version: instance search does **not** see
+   `g' ⁻¹ᵁ 𝒰.U₁` as `(𝒰.preimage g').U₁`, so the target-side binders must be spelled with
+   `(𝒰.preimage g').Uᵢ`; and after `TensorProduct.induction_on` a goal that is syntactically
+   `X = X` may still need an explicit `rfl`, because the two sides carry different-but-defeq
+   module instances from the `letI` dictionary.  Either way: write the statement with a
+   placeholder body and get it to elaborate first — that is where the time goes.
 
 3. **The glue to §3 is not free.**  §3's map lives on the tensor product formed with the
    *native* pushforward module structure (that is what
