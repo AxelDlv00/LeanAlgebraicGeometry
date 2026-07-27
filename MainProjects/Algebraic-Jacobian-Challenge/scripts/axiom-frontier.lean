@@ -12,6 +12,13 @@ import AlgebraicJacobian
 
 open AlgebraicGeometry AlgebraicGeometry.Scheme
 
+-- §0 The three open leaves of the headline witness.  These are the whole
+-- mathematical distance between the tree and the theorem; everything in §1 is
+-- `sorryAx` because of them and nothing else.
+#print axioms AlgebraicGeometry.hasRationalPoint_and_geometricallyIntegral
+#print axioms AlgebraicGeometry.smoothOfRelativeDimension_genus_pic0
+#print axioms AlgebraicGeometry.isAlbanese_pic0
+
 -- §1 The headline (AlgebraicJacobian/Jacobian.lean, AbelJacobi.lean)
 #print axioms AlgebraicGeometry.picardJacobianWitness
 #print axioms AlgebraicGeometry.nonempty_jacobianWitness
