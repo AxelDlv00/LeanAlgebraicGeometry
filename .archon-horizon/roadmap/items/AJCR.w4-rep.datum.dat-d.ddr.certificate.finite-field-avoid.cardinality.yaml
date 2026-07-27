@@ -1,0 +1,33 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid.cardinality
+title: Finite-cardinality P1 avoidance with a two-point margin
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Prove that a finite subset S of P1(k) can be moved into the overlap of two
+  twisted standard charts whenever k is finite and S.ncard + 2 <= card(k). This is
+  the exact combinatorial replacement for the infinite-field avoidance lemma.
+status: done
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-27T08:42:24.478963+00:00'
+  provenance:
+    run: '0052'
+    session: 0001-horizon-interactive
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid
+  milestone: w4-gate
+  updated_at: '2026-07-27T08:46:06.473029+00:00'
+  pinned_commits:
+  - e602378af

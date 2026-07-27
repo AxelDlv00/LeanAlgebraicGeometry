@@ -1,24 +1,34 @@
 id: AJC.picrep.rigidpushforward
-title: Rigidified pushforward engine (gate factored into four named leaves)
+title: Rigidified pushforward engine (gate reduced to three statements)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'GATE FACTORED (run 0053). HasRigidPushforward is now four exactly-stated
-  leaves that are machine-checked to compose: Picard/RigidPushforwardGate.lean, hasRigidPushforward_of_leaves.
-  (1) IsIntegral (P^1_k) -- integrality of the projective line over the ONE field
-  k; this alone discharges the whole Serre-finiteness anchor hH0 at every finitely
-  generated k-algebra A (Picard/RigidPushforwardP1Constants.lean, p1Cech_h0_fg_of_isIntegral),
-  replacing the previous A-indexed family of anchors. GeometricallyIntegral is also
-  plumbed and is strictly stronger; it reduces further to the integral model Proj
-  Z[X0,X1]. (2) P1CechFibrewiseBridge -- fibrewise Cech H1-vanishing at scheme points
-  implies d tensor kappa(m) surjective at maximal ideals. (3) P1PushforwardLocalFreenessBridge
-  -- the engine module conclusion implies p_*M locally free of rank fiberH0. (4) RigidPushforwardBaseChange
-  -- the second gate field, zero infrastructure: every IsIso result for the adjoint
-  mate in this tree needs [IsAffineHom f] and q is proper, so the entire content of
-  the field is the non-affine case, and there is no composition/pasting API for pushforwardBaseChangeMap.
-  CORRECTIONS: HasFiniteMapToP1 is NOT an open gate (it synthesizes for an AJC curve,
-  sorry-free, clean axioms); and HasRigidPushforward has ZERO consumers anywhere in
-  the workspace, so it is a prerequisite for future DivFamily work rather than a live
-  blocker.'
+summary: 'GATE REDUCED TO THREE STATEMENTS (run 0053). Picard/RigidPushforwardFrontier.lean,
+  hasRigidPushforward_of_isIntegral_of_rank_of_baseChange, derives HasRigidPushforward
+  C for an AJC curve from exactly: (1) IsIntegral (P^1_k); (2) hrank, the rank identity
+  sectionsRankAtStalk (p_*M) t = p.fiberH0 M t; (3) RigidPushforwardBaseChange. Five
+  new sorry-free modules, all axiom-clean and warning-free under a single-module lake
+  build: RigidPushforwardP1Constants, RigidPushforwardGate, RigidPushforwardFiberChart,
+  RigidPushforwardP1Sheaf, RigidPushforwardFrontier.
+
+
+  WHAT CLOSED THIS SESSION. (a) The H0-finiteness anchor, formerly the audited Serre-finiteness
+  leaf, was de-parameterised in A and then sharpened: it is now IsIntegral (P^1_k),
+  a statement about the ONE field k -- p1Cech_h0_fg_of_isIntegral. (b) The fibrewise
+  Cech leaf is PROVED outright: p1_hfib_of_fiberH1Vanishing discharges the engine''s
+  pinned _hfib binder from fibrewise h1-vanishing at scheme points, via Stacks 02KG
+  in degree 0 on each affine chart of P^1_A; the enabling brick is isPushout_appLE_of_isPullback'',
+  which generalises the tree''s section-ring pushout from the pinned open f^-1 V to
+  an arbitrary affine U (necessary because p^-1 top = P^1_A is not affine). (c) The
+  output leaf''s SHEAF half is PROVED: a quasi-coherent module on Spec R with finite
+  projective global sections is free of rank rankAtStalk on a basic open (exists_free_restrict_of_finite_projective_sections),
+  and Gamma(Spec A, p_*M) = ker d (pushforwardTop_linearEquiv_ker); only the rank
+  identity remains, and it is assembly of bricks that now exist -- the same chart
+  comparison leaf 2 uses, plus kerBaseChange bijectivity at B = kappa(t).
+
+
+  STILL TRUE FROM BEFORE: HasFiniteMapToP1 is NOT an open gate (synthesizes for an
+  AJC curve, sorry-free); HasRigidPushforward has ZERO consumers workspace-wide, so
+  it is a prerequisite for future DivFamily work, not a live blocker.'
 status: active
 kind: proof
 priority: normal
@@ -41,5 +51,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-27T07:54:53.117811+00:00'
+  updated_at: '2026-07-27T08:39:52.871165+00:00'
   owner: ajc-gate

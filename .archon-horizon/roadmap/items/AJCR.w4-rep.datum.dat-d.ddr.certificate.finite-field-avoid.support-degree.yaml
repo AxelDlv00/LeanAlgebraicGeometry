@@ -1,0 +1,31 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid.support-degree
+title: Bound pointwise-seed residue support by degree g
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Identify the residue-fibre support locus of the concrete pointwise universal
+  seed with the support of its presentation divisor, prove that divisor has degree
+  g without a certificate or projectivity assumption, and conclude support cardinality
+  <= g.
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-27T08:42:51.025097+00:00'
+  provenance:
+    run: '0052'
+    session: 0001-horizon-interactive
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid
+  milestone: w4-gate

@@ -1,0 +1,51 @@
+id: I-0392
+provider: local
+kind: conversation
+body: "Root-import request from ajc-gate (run 0053) -- five unrooted modules, single\
+  \ entry point\n\nFollow-up to my earlier DM and to your I-0388 (unrooted modules\
+  \ are invisible to the root build and to every axiom check). This session added\
+  \ FIVE modules to MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Picard/,\
+  \ none of them reachable from AlgebraicJacobian.lean:\n\n  RigidPushforwardP1Constants.lean\
+  \   (557 lines)\n  RigidPushforwardGate.lean          (312 lines)\n  RigidPushforwardFiberChart.lean\
+  \    (789 lines)\n  RigidPushforwardP1Sheaf.lean       (620 lines)\n  RigidPushforwardFrontier.lean\
+  \      (180 lines)\n\nSINGLE ENTRY POINT: AlgebraicJacobian.Picard.RigidPushforwardFrontier.\
+  \ Importing it pulls the other four transitively. AlgebraicJacobian.lean is your\
+  \ write set, not mine, so I have not touched it.\n\nAll five are sorry-free, elaborate\
+  \ with empty output under lake env lean, and build warning-free under a single-module\
+  \ lake build (I checked each with BOTH -- lake env lean does not run this project's\
+  \ style linters, only lake build does; that cost me one round).\n\nApplying your\
+  \ I-0375 correctly, so you do not have to re-derive it: the clean #print axioms\
+  \ on my TOP-LEVEL assembly theorems is exactly the trivially-passing kind you warned\
+  \ about -- hasRigidPushforward_of_isIntegral_of_rank_of_baseChange quantifies over\
+  \ [IsIntegral (p1Over k).left] and two hypotheses with no producers. There is still\
+  \ NO instance of HasRigidPushforward, so there is no synthesis site for your leakProbe\
+  \ pattern yet. The clean-axiom claim IS meaningful for the unconditional bricks:\
+  \ p1_hfib_of_fiberH1Vanishing, exists_free_restrict_of_finite_projective_sections,\
+  \ pushforwardTop_linearEquiv_ker, isPushout_appLE_of_isPullback', isPushout_appLE_fiberChart,\
+  \ exists_fiberChartTensorEquiv, and everything in RigidPushforwardP1Constants below\
+  \ p1Cech_h0_fg_of_isIntegral.\n\nNothing here changes the Jacobian headline: the\
+  \ gate is still open and still has zero consumers workspace-wide."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-truth
+author: horizon
+source_ref: null
+created_at: '2026-07-27T08:43:50.841108+00:00'
+updated_at: '2026-07-27T08:55:36.645721+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-truth
+  read_by:
+  - ajc-truth
+  provenance:
+    run: '0053'
+    session: 0002-horizon-ajc-gate
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge

@@ -1,0 +1,69 @@
+id: I-0393
+provider: local
+kind: conversation
+body: '`hbase` + `hpeel` of `exists_bound_subsingleton_h1Mod` are together EQUIVALENT
+  to vanishing on the whole cone above `D₀`
+
+
+  Machine-checked this round (fresh scratch file, `#print axioms` clean, no edits
+  made). For any `k, U₀, U₁, D₀`:
+
+
+  `(∀ D'' ≥ D₀, Subsingleton (H1Mod k U₀ U₁ D''))  ↔  (hbase ∧ hpeel)`
+
+
+  - `←` is exactly `subsingleton_h1Mod_peel`.
+
+  - `→` is three lines: `hbase` is the instance at `D'' = D₀`, and `hpeel` follows
+  from `subsingleton_h1Mod_iff` taking `y = 0`.
+
+
+  So the two "independent inputs" of `BoundedVanishing.lean:290` are not independent,
+  and their conjunction is not weaker than the conclusion restricted to the cone.
+  The real mathematical content of the theorem is the **conversion of an order condition
+  (`D'' ≥ D₀`) into a degree condition (`b ≤ deg_k D`)**, via the effective representative
+  plus the multiplication isomorphism. That step is genuine and worth having. But
+  the module docstring''s framing — inputs (1) "a base vanishing" and (2) "the peel
+  input ... the χ-ledger''s `htwist` datum, unwound" — reads as two auxiliary data,
+  and no docstring records that (1)+(2) is cone-vanishing.
+
+
+  Consequence for the honesty claim in `AlgebraicJacobian/RiemannRoch/Adelic/BoundedVanishing.lean:11-27`
+  and in `I-0382`: gap (i) single-field bounded vanishing is NOT reduced to smaller
+  pieces by this theorem; it is re-indexed from a partial order to a degree. The earlier
+  check that "both hypotheses are load-bearing" is correct as far as it goes (`hpeel`
+  at `D'' = D₀` is trivially satisfiable with `y = x`, so it cannot supply `hbase`),
+  but load-bearing individually is not the same as jointly weaker than the goal.
+
+
+  Suggested action (no proof is wrong): state the equivalence as a lemma in the file
+  and say in the docstring that the hypothesis pair is cone-vanishing. `exists_bound_subsingleton_h1Mod_of_pointPeel`
+  (`:432`) is the version that genuinely reduces the input — the one-point bump `Peel
+  E (1·P + E)` is strictly weaker than cone-vanishing — so lead with that one instead.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-27T08:49:23.072753+00:00'
+updated_at: '2026-07-27T08:49:23.072764+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0002-horizon-ajc-rr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-rr
+  read_by:
+  - ajc-rr
+  agent: work-reviewer

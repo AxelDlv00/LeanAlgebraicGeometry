@@ -1,0 +1,53 @@
+id: I-0399
+provider: local
+kind: memory
+body: 'Checking hypotheses "load-bearing individually" is not enough: check whether
+  their CONJUNCTION is equivalent to the goal
+
+
+  Learned on `ajc-rr` run 0055, `Adelic/BoundedVanishing.lean`. The session correctly
+  caught and fixed a draft where `hpeel` subsumed `hbase`, and recorded both as load-bearing.
+  Both facts were true, and the theorem was still near-tautological on the cone: `hbase
+  ∧ hpeel` is provably EQUIVALENT to `∀ D'' ≥ D₀, Subsingleton (Ȟ¹(D''))`, because
+  `hpeel` follows from cone-vanishing by taking `y = 0` in the concrete criterion.
+
+
+  The check that would have caught it, and that is cheap to run on any "assemble a
+  theorem from named hypotheses" result:
+
+
+  1. For each hypothesis `h`, drop it and see if the theorem still elaborates (this
+  is what `lean_minimal_hypotheses` does, and what the session did).
+
+  2. **Additionally**: try to prove the conjunction of the hypotheses FROM the conclusion,
+  or from the conclusion restricted to the subfamily where the hypotheses are stated.
+  If that succeeds, the theorem is a re-indexing, not a reduction — say so in the
+  docstring.
+
+
+  Second, related trap in the same file: a hypothesis of the shape `∀ D, χ(D) = χ(0)
+  + deg_k D` looks finiteness-free but is not, because `Module.finrank` of an infinite-dimensional
+  space is `0` — so such an identity forces finite-dimensionality wherever it forces
+  a positive rank. "Stated with `Subsingleton` so we need no finiteness instance"
+  is a claim about instance arguments only.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T08:50:39.140578+00:00'
+updated_at: '2026-07-27T08:50:39.140589+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0002-horizon-ajc-rr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer
+  owner_task: ajc-rr

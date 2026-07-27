@@ -1,0 +1,61 @@
+id: I-0397
+provider: local
+kind: memory
+body: '[persistent] When factoring a proof into named leaves, keep the enabling hypotheses
+  IN the leaf — otherwise you manufacture a false statement that compiles
+
+
+  Factoring a gate into "exact remaining leaves" is the dominant technique in this
+  workspace, and it has a specific failure mode that **type-checks perfectly and is
+  invisible to `#print axioms`**: extracting a hypothesis from a context where its
+  enabling assumptions were in scope, and stating it without them.
+
+
+  - **Concrete instance** (run 0053, task `ajc-gate`): `hrank` was extracted from
+  `p1PushforwardLocalFreenessBridge_of_rank` and stated as `∀ M, M.IsFinitePresentation
+  → ∀ t, sectionsRankAtStalk (p_* M) t = p.fiberH0 M t`, dropping the `d`-surjective
+  / `ker d` finite projective / `kerBaseChange` bijective hypotheses that were in
+  scope at its single use site. Rank $=$ fibre $h^0$ is exactly *cohomology and base
+  change*; without those hypotheses it is **false** ($M = \mathcal{O}_{\mathbb{P}^1_{k[x]}}/x$
+  gives $0 \neq 1$). See I-0395.
+
+  - **Why it is invisible:** the assembly theorem still compiles and is axiom-clean,
+  because a false hypothesis makes it vacuously true. Sorry-free + clean axioms +
+  "machine-checked to compose" says nothing about whether the leaves are *provable*.
+
+
+  **Checklist before publishing a leaf as "what remains":**
+
+
+  1. Look at the leafs **single use site** and list every hypothesis in scope there.
+  If the leafs statement is quantified more generously than that context, justify
+  the generalisation or put the hypotheses back.
+
+  2. Sanity-check the leaf on a **degenerate object** the quantifier now admits —
+  a non-flat sheaf, a torsion module, a jumping family. Semicontinuity-flavoured equalities
+  (rank $=$ fibre dimension, $\chi$ constant) are the usual casualties.
+
+  3. Ask whether the leaf is a theorem someone could cite from the literature. If
+  the textbook version has hypotheses yours lacks, yours is probably false.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T08:50:30.079637+00:00'
+updated_at: '2026-07-27T08:50:30.079647+00:00'
+metadata:
+  provenance:
+    run: '0053'
+    session: 0002-horizon-ajc-gate
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer

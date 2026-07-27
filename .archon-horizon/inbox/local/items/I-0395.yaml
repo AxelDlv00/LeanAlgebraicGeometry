@@ -1,0 +1,75 @@
+id: I-0395
+provider: local
+kind: issue
+body: 'AJC B3 gate: the `hrank` frontier leaf is FALSE as stated — it drops the hypotheses
+  that make it true
+
+
+  **The statement.** `hrank` (`Picard/RigidPushforwardP1Sheaf.lean:592-598`, re-exported
+  at `Picard/RigidPushforwardFrontier.lean:120-127` and `:163-171`) quantifies over
+  **every** finitely presented `M` on $\mathbb{P}^1_A$, with no flatness and no fibrewise
+  $h^1$-vanishing:
+
+
+  - `∀ M, M.IsFinitePresentation → ∀ t, sectionsRankAtStalk (p_* M) t = p.fiberH0
+  M t`
+
+
+  **Counterexample.** Take $A = k[x]$ and $M = \mathcal{O}_{\mathbb{P}^1_A}/x$, the
+  structure sheaf of the closed fibre — finitely presented, being `coker(O --x-->
+  O)`.
+
+
+  - $\Gamma(\mathbb{P}^1_A, M) = A/(x)$, so at $t=(x)$, `sectionsRankAtStalk` is `Module.rankAtStalk
+  (A/(x)) (x)` = `finrank` over the DVR $k[x]_{(x)}$ of the **torsion** module $k$,
+  which is `0`.
+
+  - The fibre over $(x)$ is $\mathbb{P}^1_k$ with $M_t = \mathcal{O}_{\mathbb{P}^1_k}$,
+  so `fiberH0 M t` $= \dim_k H^0(\mathbb{P}^1_k,\mathcal{O}) = 1$.
+
+  - $0 \neq 1$. (`Module.rankAtStalk` is `finrank R_p M_p`, mathlib `FreeLocus.lean:187`;
+  `fiberH0` is `finrank κ(t) Γ(M_t, ⊤)`, `Picard/RigidPushforward.lean:257`.)
+
+
+  **Impact.** `p1RigidPushforwardStatement_of_isIntegral_of_rank` and `hasRigidPushforward_of_isIntegral_of_rank_of_baseChange`
+  are **vacuously true**. The advertised frontier of "three remaining statements"
+  is really two statements plus one that cannot be proved; a future session that attacks
+  `hrank` will spend its round on a false goal.
+
+
+  **The fix is cheap.** `hrank` has exactly one use site, `Picard/RigidPushforwardP1Sheaf.lean:616`
+  (`exact ⟨U, htU, (hrank M hfp t) ▸ hiso⟩`), where `hsurj`, `hfin`, `hproj` and `hbc`
+  (`kerBaseChange` bijective for **every** `Γ(Spec A, ⊤)`-algebra `B`) are all already
+  in scope. Restate `hrank` carrying those hypotheses; the proof body is unchanged.
+  It then becomes true and provable: `rankAtStalk` of a finite projective module at
+  `t` is $\dim_{\kappa(t)} \kappa(t) \otimes \ker d$, and `hbc` at $B = \kappa(t)$
+  identifies that with $H^0(\mathbb{P}^1_t, M_t)$.
+
+
+  **Not affected:** the bridge `Prop` itself, `Adelic.P1PushforwardLocalFreenessBridge`
+  (`Picard/RigidPushforwardGate.lean:167`), *does* carry those hypotheses and is correctly
+  stated and true. Only the extracted `hrank` is wrong.'
+labels:
+- agent-ready
+status: closed
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T08:49:57.934093+00:00'
+updated_at: '2026-07-27T09:00:35.495580+00:00'
+metadata:
+  provenance:
+    run: '0053'
+    session: 0002-horizon-ajc-gate
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer
+  read_by:
+  - ajc-gate

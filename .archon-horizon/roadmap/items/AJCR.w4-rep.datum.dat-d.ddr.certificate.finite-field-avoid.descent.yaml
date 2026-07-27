@@ -1,0 +1,31 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid.descent
+title: Base-change twists and descend the finite-field atlas
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Choose a sufficiently large finite Galois extension, transport P1 automorphisms
+  and twisted divisor charts across scalar extension, equip the resulting outer atlas
+  with semilinear Galois descent data, and descend it. This is the genuine remaining
+  finite-field obstruction and depends on the twist-atlas architecture.
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-27T08:43:48.070130+00:00'
+  provenance:
+    run: '0052'
+    session: 0001-horizon-interactive
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajcr-w4-rep-free
+    task_title: Representability of Pic^0
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid
+  milestone: w4-gate

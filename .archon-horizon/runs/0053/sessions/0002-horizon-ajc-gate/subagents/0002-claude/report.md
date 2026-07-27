@@ -1,1 +1,26 @@
-A0–A3 green in the main file. Now A4 — let me test its pieces.
+Sanity check complete: `lake env lean` output is empty, `lake build AlgebraicJacobian.Picard.RigidPushforwardP1Sheaf` is a clean `✔` with no warnings attached to my module, the file contains zero `sorry`, and all 17 declarations are axiom-clean.
+
+**All five of A0/A1/A2/A3/A4 landed.** File: `/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Picard/RigidPushforwardP1Sheaf.lean` (620 lines, 17 declarations, no other file touched).
+
+**(a) What landed**
+
+- **A0** — `AlgebraicGeometry.specAwayToSpec_opensRange {R : CommRingCat.{u}} (f : R) : (specAwayToSpec f).opensRange = specBasicOpen f`. Three lines, via `Scheme.Hom.opensRange_comp_of_isIso` + `Scheme.Opens.opensRange_ι`.
+- **A1** — split into three: `Module.free_and_finrank_of_isLocalizedModule` (two models of the same localisation compare `Module.Free` and `Module.finrank`, following mathlib's `mem_freeLocus_of_isLocalization` pattern); `AlgebraicGeometry.free_finite_finrank_gammaPullbackTop` (the semilinear transport, stated for a *general* open immersion of affines `j : Spec S ⟶ Spec R` rather than only `specAwayToSpec f` — see the note below on why); and `AlgebraicGeometry.nonempty_pullbackIsoFree_of_free_sections` (free sections ⟹ free sheaf, via `qcoh_iso_tilde_sections` + `tildeFinsupp`). Supporting: `sectionResBasicOpen` + the instance `isLocalizedModule_sectionResBasicOpen`.
+- **A2** — `AlgebraicGeometry.exists_free_restrict_of_finite_projective_sections`, **exactly the statement the brief pinned**, instance arguments and all. Plus a `Γ`-spelled variant `…_sections'` used by A4.
+- **A3** — `AlgebraicGeometry.Adelic.pushforwardTop_linearEquiv_ker` (a `noncomputable def`, since it is data), factored through the general `Scheme.Modules.pushforwardTopEquivBaseSections`, with corollaries `module_finite_pushforwardTop` and `module_projective_pushforwardTop`.
+- **A4** — `AlgebraicGeometry.Adelic.p1PushforwardLocalFreenessBridge_of_rank`, discharging `Adelic.P1PushforwardLocalFreenessBridge k A` from `hrank`. Supporting: `sectionsRankAtStalk`, `smul_gammaSpecTop`, `module_finite_top_of_gammaSpecTop`, `module_projective_top_of_gammaSpecTop`.
+
+**Two honest deviations from the brief's literal wording**
+
+1. A1's transport is stated for a general `j : Spec S ⟶ Spec R` with `S` a *variable* `CommRingCat`, not directly for `specAwayToSpec f`. Forced: `Module ↑(CommRingCat.of X) Γ(K, ⊤)` is not findable by type-class search (the `CommRingCat.of` coercion reduces and defeats the discrimination-tree key on `Scheme.Modules`' `Module R Γ(M,U)` instance), whereas with `S` a variable it resolves immediately. A2 instantiates it at `S := CommRingCat.of (Localization.Away f)`.
+2. A4's `hrank` hypothesis reads `sectionsRankAtStalk (p_* M) t = p.fiberH0 M t` rather than the brief's literal `Module.rankAtStalk Γ(p_* M, ⊤) t = …`. Same root cause: the literal spelling cannot be *elaborated* at ring `CommRingCat.of A`. `sectionsRankAtStalk N t` is a definition unfolding to `Module.rankAtStalk Γ(N, ⊤) t`, so the content is identical — but a consumer of A4 must supply the hypothesis in that spelling.
+
+Also worth flagging for the coordinator: the `with_unfolding_all rfl` hint for A3 did **not** work here (plain and `with_unfolding_all` `rfl` both failed — the two actions differ by `p.appLE ⊤ ⊤ le_top` vs `p.app ⊤`, i.e. by a `presheaf.map (𝟙 _)` that is only propositionally the identity). I closed it with `Scheme.Hom.appLE_eq_app` + `congrArg` instead.
+
+**(b) `lake env lean AlgebraicJacobian/Picard/RigidPushforwardP1Sheaf.lean`** — output is **empty** (exit clean, ~23s warm). `lake build AlgebraicJacobian.Picard.RigidPushforwardP1Sheaf` → `✔ Built AlgebraicJacobian.Picard.RigidPushforwardP1Sheaf (23s)`, `Build completed successfully`, no warning line for this module. (The `sorry` warnings in the build log are pre-existing, from `QuotFunctorDef.lean`, `WeilDivisor.lean`, `CodimOneExtension.lean`, `FGAPicRepresentability.lean` — not mine.)
+
+**(c)** Nothing failed to land.
+
+**(d) `#print axioms`** — all 17 declarations report exactly `[propext, Classical.choice, Quot.sound]`, zero occurrences of `sorryAx`: `specAwayToSpec_opensRange`, `Module.free_and_finrank_of_isLocalizedModule`, `sectionResBasicOpen`, `isLocalizedModule_sectionResBasicOpen`, `free_finite_finrank_gammaPullbackTop`, `nonempty_pullbackIsoFree_of_free_sections`, `exists_free_restrict_of_finite_projective_sections`, `sectionsRankAtStalk`, `exists_free_restrict_of_finite_projective_sections'`, `smul_gammaSpecTop`, `module_finite_top_of_gammaSpecTop`, `module_projective_top_of_gammaSpecTop`, `Scheme.Modules.pushforwardTopEquivBaseSections`, `Adelic.pushforwardTop_linearEquiv_ker`, `Adelic.module_finite_pushforwardTop`, `Adelic.module_projective_pushforwardTop`, `Adelic.p1PushforwardLocalFreenessBridge_of_rank`.
+
+result: Sheaf half of the B3 ℙ¹ output bridge landed green and axiom-clean in `AlgebraicJacobian/Picard/RigidPushforwardP1Sheaf.lean` — A0, A1, A2, A3 and the conditional A4 assembly `Adelic.p1PushforwardLocalFreenessBridge_of_rank` all proved, 17 declarations, no `sorry`, empty `lake env lean` output; only the rank half (fibre-chart base change) remains for leaf 3.

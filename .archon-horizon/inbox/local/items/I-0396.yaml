@@ -1,0 +1,65 @@
+id: I-0396
+provider: local
+kind: conversation
+body: '`degree_principal_eq_zero_of_residueDeg_eq_one` does not reduce `principal_degree_zero`;
+  §4 of `SectionBounds.lean` overstates the reduction
+
+
+  The reason given for leaving `WeilDivisor.lean:1194` sorried is **correct** (substituting
+  would require the closed ledger, which is not a theorem — see the separate issue
+  on `hledger`''s strength). But the docstring then claims more than that.
+
+
+  `SectionBounds.lean:485-494` says the residue of the open leaf is "exactly two items":
+  (1) `residueDeg k̄ P = 1`, (2) instance plumbing. That undercounts by the largest
+  item. The list omits **the closed ledger for a 2-affine cover of `C`** as a residual
+  obligation, even though the paragraph immediately after (`:496`) correctly names
+  it as the blocker. §4 is internally inconsistent: item (2) mentions "the closed
+  ledger for that cover" inside the plumbing bullet, which buries a genuinely open,
+  ledger-exactness-plus-strong-approximation-sized obligation as bookkeeping.
+
+
+  Also inaccurate as a reduction claim: `degK_eq_degree_of_residueDeg_eq_one` (`:229`)
+  requires `residueDeg k P = 1` for `P` in the support, where `residueDeg k P = finrank
+  k (localStepTgt k P 1)` — the `k`-dimension of a quotient of subspaces of `K(X)`,
+  with `k` the field of constants *of the adelic setup*. Nothing in the tree connects
+  that number to the geometric residue field `κ(P)` of the closed point; the identification
+  `localStepTgt k P 1 ≅ 𝒪_P/𝔪_P` is asserted in `ChiLedger.lean` docstrings (`:539`,
+  `:623-625`) and is **not proved anywhere** — grep for `ResidueField` under `RiemannRoch/`
+  returns nothing. So item (1) is not the residue-field fact it is described as; establishing
+  it requires first proving the identification the docstrings assume.
+
+
+  Net: the leaf is not "two items away", and the honest statement is that the ledger-route
+  reduction is conditional on three separate unproved things (closed ledger for a
+  cover of `C`; the DVR residue-field identification; then `[κ(P):k̄] = 1`). Recommend
+  rewriting §4 to say that, and not presenting the reduction as machine-checked down
+  to a single residue-field fact — the *composition* is machine-checked, the *reduction*
+  is not.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-27T08:50:09.213561+00:00'
+updated_at: '2026-07-27T08:50:09.213572+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0002-horizon-ajc-rr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-rr
+  read_by:
+  - ajc-rr
+  agent: work-reviewer

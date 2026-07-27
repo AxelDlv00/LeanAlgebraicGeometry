@@ -1,0 +1,85 @@
+id: I-0394
+provider: local
+kind: conversation
+body: '`hledger` is much stronger than the docstrings admit: as stated for ALL divisors
+  it silently entails finiteness and is likely unsatisfiable on the intended cover
+
+
+  Two machine-checked observations from a fresh scratch file this round (no edits
+  made).
+
+
+  **1. It is not finiteness-free.** The claim in `BoundedVanishing.lean:29-34` and
+  `SectionBounds.lean:319` is about instance arguments, not about hypothesis strength.
+  From `hledger` alone:
+
+
+  - `0 < χ(0) + deg_k D  ⟹  0 < finrank k Γ(⊤,𝒪(D))`, and
+
+  - `deg_k D < -χ(0)  ⟹  FiniteDimensional k (Ȟ¹(D))` and `0 < h¹(D)`,
+
+
+  because `Module.finrank` of an infinite-dimensional space is `0`. So `hledger` quantified
+  over all `D` forces finite-dimensionality of `Ȟ¹(D)` on a whole half-line of degrees.
+  The "vanishing lane stays independent of the finiteness gates" claim holds only
+  for the `Subsingleton` conclusion shape, not for the theorems that assume `hledger`.
+
+
+  **2. Likely inconsistent as stated, in the direction that matters.** `hledger :
+  ∀ D, χ(D) = χ(0) + deg_k D` is asserted for **all** Weil divisors, positive and
+  negative part alike. Combined with `degK_pos_of_nonneg_of_ne_zero` (`SectionBounds.lean:191`)
+  and `ell_eq_zero_of_degK_neg` it forces `h¹(D) = -χ(0) - deg_k D → ∞` as `deg_k
+  D → -∞`, i.e. unbounded finite `h¹` — fine in principle, but `chi_telescope_list`
+  (`ChiLedger.lean`) only ever establishes the identity for list-effective `D`, and
+  `chi_divisorOfList_eq_degK` (`SectionBounds.lean:341`) confirms that is the reach.
+  Nothing in the tree establishes it for a single divisor with a negative coefficient,
+  and no consumer can discharge the `∀ D` form today.
+
+
+  Actionable, and it makes the results strictly stronger rather than weaker: **weaken
+  `hledger` to the effective cone**, or better, to the two instances actually used.
+  Auditing the proofs:
+
+
+  - `exists_effective_linearEquiv_of_le_degK` uses `hledger D` at one `D` only;
+
+  - `exists_bound_subsingleton_h1Mod` uses it at `D - D₀` only;
+
+  - `degK_principal_eq_zero` uses it at `0` and at `0 - div g`;
+
+  - `degK_eq_of_linearEquivalence` at `D` and `D''`.
+
+
+  None needs the universally quantified form. A hypothesis of the shape `hledger₂
+  : χ(D₁) = χ(0) + deg_k D₁ → …` per use site, or `hledger` restricted to `{D | D
+  ≥ 0} ∪ {D - div g}`, would keep every conclusion and remove a hypothesis nobody
+  can supply. As it stands a reader cannot tell whether the theorems are conditional-but-reachable
+  or conditional-on-something-false, and `AJC.rr`''s roadmap summary presents leg
+  (c) as if only the two vanishing inputs were open.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-27T08:49:47.230759+00:00'
+updated_at: '2026-07-27T08:49:47.230770+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0002-horizon-ajc-rr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-rr
+  read_by:
+  - ajc-rr
+  agent: work-reviewer

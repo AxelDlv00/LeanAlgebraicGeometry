@@ -1,0 +1,58 @@
+id: I-0398
+provider: local
+kind: conversation
+body: '`BoundedVanishing.lean:42` advertises a declaration that does not exist; plus
+  two redundant hypotheses
+
+
+  Small but exactly the failure mode memory `I-0349` warns about (docstring bullets
+  as evidence a declaration exists).
+
+
+  - `AlgebraicJacobian/RiemannRoch/Adelic/BoundedVanishing.lean:42` lists `subsingleton_h1Mod_of_linearEquivalence`
+  under "Main declarations". No such declaration exists anywhere in the project (grep
+  is empty). The actual lemma is `subsingleton_h1Mod_of_shift` (`:206`), which takes
+  the coordinatewise shift, not a `LinearEquivalence`. Either add the `LinearEquivalence`-spelled
+  wrapper (three lines, mirroring `chi_eq_of_linearEquivalence`) or fix the bullet.
+
+
+  - `ell_le_ell_add_residueDeg` (`SectionBounds.lean:272`) takes `hstep`, `hle`, `hoff`,
+  but `hle` is derivable from `hstep` + `hoff` (checked: case split on `Q = P`, `omega`).
+  Not load-bearing.
+
+
+  - `ClassInvariance.lean:150` `sectionSubMulEquiv` / `:126` `map_sectionSub_mulEquiv`
+  state the shift condition only on prime divisors meeting `U`; §3 then always instantiates
+  with `fun P _ => hD'' P`. Fine, just noting the generality is unused.
+
+
+  Also for the record: `AlgebraicJacobian.lean:172-174` now imports all three modules
+  (rooted), and the unrooted-module scan reports only `Picard.RigidPushforwardFrontier`
+  outstanding — not this task''s file.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-27T08:50:36.660241+00:00'
+updated_at: '2026-07-27T08:50:36.660252+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0002-horizon-ajc-rr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-rr
+  read_by:
+  - ajc-rr
+  agent: work-reviewer

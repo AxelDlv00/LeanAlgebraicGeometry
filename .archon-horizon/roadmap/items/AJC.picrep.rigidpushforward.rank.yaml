@@ -1,0 +1,62 @@
+id: AJC.picrep.rigidpushforward.rank
+title: 'The rank identity: rankAtStalk (p_*M) = fiberH0 M'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'The last piece of the output leaf of the B3 gate. Picard/RigidPushforwardP1Sheaf.lean
+  proved the sheaf half: Adelic.p1PushforwardLocalFreenessBridge_of_rank discharges
+  the whole leaf from Adelic.P1RankIdentity k A.
+
+
+  THE STATEMENT AND WHY IT IS SHAPED THAT WAY. P1RankIdentity says: for M finitely
+  presented on P^1_A WHOSE CECH COMPLEX ALREADY SATISFIES THE ENGINE''S CONCLUSIONS
+  (d surjective, ker d finite projective over Gamma(Spec A,top), kerBaseChange bijective
+  for every base algebra), sectionsRankAtStalk (p_*M) t = p.fiberH0 M t. The engine
+  hypotheses are load-bearing. WITHOUT THEM THE STATEMENT IS FALSE: take A = k[x],
+  M = O/x = coker(O --x--> O), finitely presented; then Gamma(P^1_A,M) = A/(x) = k
+  is a TORSION A-module so Module.rankAtStalk at t=(x) is the junk value 0, while
+  the fibre is P^1_k with M_t = O and fiberH0 M t = 1. Module.Projective is exactly
+  what excludes it. This defect was in the first version of the leaf and was caught
+  by an independent fresh-context audit; it is worth remembering that a false leaf
+  compiles, reports clean axioms, and silently makes every consumer vacuous.
+
+
+  (sectionsRankAtStalk N t unfolds to Module.rankAtStalk Gamma(N,top) t. That spelling
+  is forced: the literal Module.rankAtStalk Gamma(...) does not elaborate at ring
+  CommRingCat.of A -- the CommRingCat.of coercion defeats the discrimination-tree
+  key on the Scheme.Modules instance.)
+
+
+  WHY THIS IS ASSEMBLY, NOT NEW MATHEMATICS: every brick now exists. Picard/RigidPushforwardFiberChart.lean''s
+  exists_fiberChartTensorEquiv gives kappa(t) tensor_{Gamma(Spec A,top)} Gamma(M,W)
+  = Gamma(M_t, W_t) for each affine chart W, and fiberChart_smul_baseMap_res gives
+  its restriction naturality; the same intertwining with moduleSectionDiffBase that
+  closed the hfib leaf identifies ker (d tensor kappa(t)) with the Cech H0 of the
+  fibre cover p1BaseChangeFiberCoverSquare A t, hence via globalSectionsEquivKerModuleSectionDiffBase
+  with Gamma(P^1_t, M_t). Then Module.rankAtStalk_eq (valid because ker d is finite
+  projective) plus the engine''s kerBaseChange bijectivity at B = kappa(t) give the
+  identity. Copy the kappa(t)-linear map_smul''/finrank_eq transport pattern of pushforward_finiteMapToP1BaseChange_fiberH0
+  (Picard/RigidPushforwardTransfer.lean:1242-1299) verbatim, and reconcile Scheme.Spec.residueFieldIso
+  with fiberResidueMap as that proof does.'
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-27T08:40:09.314251+00:00'
+  provenance:
+    run: '0053'
+    session: 0002-horizon-ajc-gate
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep.rigidpushforward
+  updated_at: '2026-07-27T09:00:07.293331+00:00'
