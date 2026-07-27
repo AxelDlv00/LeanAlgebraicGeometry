@@ -62,8 +62,9 @@ How to read the output.  Every line is one declaration; the only token that matt
 Note the `re.split` rather than a plain line filter: Lean wraps a long axiom list over
 several lines, so a per-line scan misclassifies exactly the declarations whose axiom
 list is longest.  Measured 2026-07-28 through the root path, with `lake build
-AlgebraicJacobian` green at 8744 jobs: **109 probed, 71 clean, 38 carrying `sorryAx`**
-(107/70/37 before the two leaf-A lines below were added).
+AlgebraicJacobian` green at 8744 jobs: **111 probed, 71 clean, 40 carrying `sorryAx`**
+(107/70/37 before this session added two leaf-A lines in §0 and two chapter-keystone
+synthesis probes in §8).
 Run the command above rather than adjusting this sentence's arithmetic by hand, which is
 how the two previous counts here went wrong.
 
@@ -581,11 +582,13 @@ theorem leakProbe_instPicSharpRepresentable [HasRationalPoint C] :
     PicScheme.PicSharpRepresentable C :=
   inferInstance
 
-/-- Companion measurement for the group-scheme structure. -/
-noncomputable def leakProbe_groupSchemeStructure [HasRationalPoint C]
+/-- Companion measurement for the group-scheme structure.  `Nonempty` rather than the bare
+class, so that this is a `theorem`: a `def` of class type draws a `@[reducible]` warning, and
+a probe should not add a warning to the build it is measuring. -/
+theorem leakProbe_groupSchemeStructure [HasRationalPoint C]
     [PicScheme.PicSchemeLocallyOfFiniteType C] :
-    CommGrpObj (PicScheme C) :=
-  PicScheme.groupSchemeStructure C
+    Nonempty (CommGrpObj (PicScheme C)) :=
+  ⟨PicScheme.groupSchemeStructure C⟩
 
 #print axioms leakProbe_pic0_geometricallyIrreducible
 #print axioms leakProbe_pic0_isSeparated

@@ -18,7 +18,7 @@
 
 - **Sorry-free is not axiom-clean, and there are seven separate ways to be misled.**
   Run `lake env lean scripts/axiom-frontier.lean` before believing any completeness
-  number; it probes 109 declarations, 71 clean and 38 carrying `sorryAx` as last
+  number; it probes 111 declarations, 71 clean and 40 carrying `sorryAx` as last
   measured (2026-07-28, root build green at 8,744 jobs).
   (1) Two `sorry`-bodied *instances* (`instHasPicScheme`,
   `pullback_preservesFiniteLimits`) leak through synthesis, so a theorem reports

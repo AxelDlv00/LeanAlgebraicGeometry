@@ -63,7 +63,7 @@ same theorem by a separate curve-specialized strategy.
   discharged by the caller; the leak appears at any call site that must
   synthesise the instance.  Run
   [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean) (`lake env lean
-  scripts/axiom-frontier.lean`, 109 declarations: 71 clean and 38 carrying `sorryAx`,
+  scripts/axiom-frontier.lean`, 111 declarations: 71 clean and 40 carrying `sorryAx`,
   measured 2026-07-28 with the root build green at 8,744 jobs) before believing any
   completeness claim — it measures the frontier rather than inferring it.  Count by
   output *entry*, not by output line:
