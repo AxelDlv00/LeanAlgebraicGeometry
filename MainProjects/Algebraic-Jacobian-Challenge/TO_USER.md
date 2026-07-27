@@ -17,10 +17,11 @@
   clean, verified: the adelic genus lane, degree-1 affine vanishing, and the Čech
   higher-direct-image comparison.
 
-- **The headline is wired.**  `picardJacobianWitness` is built from `Pic⁰_{C/k}`
-  and reaches 96 project modules, up from 8; four of its six fields are the landed
-  `Pic0AbelianVariety` theorems.  The remaining distance to the theorem is three
-  named leaves in `Jacobian.lean`: the hypothesis gap above, refining smoothness
-  of `Pic⁰` to relative dimension `genus C`, and the Albanese property over an
-  arbitrary base field (the landed proof covers the algebraically closed,
-  positive-genus case).
+- **The headline is wired, and now rests on five stated obligations.**
+  `picardJacobianWitness` is built from `Pic⁰_{C/k}` and reaches 96 project
+  modules, up from 8.  Two of its four structural fields are proved upstream
+  (`Pic0.grpObj`, `Pic0.geometricallyIrreducible`); the other two, `Pic0.smooth`
+  and `Pic0.proper`, are still `sorry`.  Added to those are three new named leaves
+  in `Jacobian.lean`: the hypothesis gap above, refining smoothness of `Pic⁰` to
+  relative dimension `genus C`, and the Albanese property over an arbitrary base
+  field (the landed proof covers the algebraically closed, positive-genus case).

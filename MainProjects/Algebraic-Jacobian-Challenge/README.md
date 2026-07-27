@@ -22,7 +22,7 @@ same theorem by a separate curve-specialized strategy.
 
 ## State (measured 2026-07-27)
 
-- **168 modules, 122,250 lines.**  **26 `sorry`** remain, spread over 11 modules;
+- **172 modules, 124,300 lines.**  **26 `sorry`** remain, spread over 11 modules;
   the rest are locally sorry-free.
 - A warm `lake build AlgebraicJacobian` is **green**: 8,723 jobs, exit 0.
 - **Locally sorry-free is not axiom-clean.**  Two `sorry`-bodied *instances* leak
@@ -36,8 +36,9 @@ same theorem by a separate curve-specialized strategy.
   [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean) (`lake env lean
   scripts/axiom-frontier.lean`, ~12s warm) before believing any completeness
   claim — it measures the frontier rather than inferring it.
-- Many modules still open with a bare `import Mathlib`; this is the dominant
-  build cost and is being converted bottom-up with the helpers in `scripts/`.
+- 66 of the 172 modules still open with a bare `import Mathlib`; this is the
+  dominant build cost and is being converted bottom-up with the helpers in
+  `scripts/`.
 
 ## Open decision
 
@@ -60,7 +61,8 @@ Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
 - [`AlgebraicJacobian.lean`](AlgebraicJacobian.lean): project import root.
 - [`AlgebraicJacobian/Jacobian.lean`](AlgebraicJacobian/Jacobian.lean): the final
   Jacobian witness interface and assembly point.  The witness is built from
-  `Pic⁰_{C/k}`; what remains open is three named leaves stated there.
+  `Pic⁰_{C/k}` and depends on five stated obligations: `Pic0.smooth` and
+  `Pic0.proper` upstream, plus three named leaves stated there.
 - [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean): the axiom-frontier
   probe, and the reachability measurement in its header.
 - [`blueprint/web/index.html`](blueprint/web/index.html): generated mathematical blueprint.
