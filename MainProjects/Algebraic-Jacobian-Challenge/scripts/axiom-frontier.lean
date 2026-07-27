@@ -8,6 +8,11 @@ declaration actually depends on, `sorryAx` included, so a declaration that is
 locally `sorry`-free but consumes a `sorry`-bodied *instance* through typeclass
 synthesis is exposed here and nowhere else.
 
+What this probe does NOT establish is at least as important as what it does, so read
+§6b, §6c and §8 before quoting any "clean" line as a completeness claim.  A clean axiom
+set means one thing only: no `sorry` is reachable from that proof term.  It says nothing
+about unproved or even false hypotheses carried in the statement.
+
 Companion measurement — reachability of the headline.  `#print axioms` says what
 the headline depends on; the import graph says what it *could* depend on.  A
 headline importing only `Genus.lean` cannot rest on the Picard, cohomology or
@@ -129,6 +134,18 @@ open AlgebraicGeometry AlgebraicGeometry.Scheme
 -- §6c The rigid-pushforward gate (task ajc-gate).  Per I-0377 the gate is NOT
 -- instantiated: `hasRigidPushforward_of_leaves` derives it from four named leaves,
 -- none proved.  Probed here so the frontier records that accurately.
+--
+-- THIRD TRAP, worse than the other two, demonstrated in this very cone (I-0395): a
+-- theorem whose named hypothesis is FALSE is vacuously true, and reports clean axioms
+-- like any other.  `hrank`, one of the gate's extracted leaves, quantifies over every
+-- finitely presented module with no flatness or fibrewise-vanishing hypothesis, and is
+-- refuted by `𝒪_{ℙ¹_A}/x` (rank 0 against fibre `h⁰ = 1`).  So the assembly theorems
+-- above it are clean, true, and empty.  `#print axioms` sees none of this.  It answers
+-- exactly one question — "is a `sorry` reachable from this proof term" — and three
+-- separate things it cannot see have now been measured here:
+--   (a) a sorry-bodied INSTANCE reached only at a synthesis site (§8);
+--   (b) a named hypothesis in the STATEMENT that is unproved (§6b);
+--   (c) a named hypothesis in the statement that is FALSE (§6c).
 #print axioms AlgebraicGeometry.Adelic.hasRigidPushforward_of_leaves
 
 -- §7 Albanese cone
