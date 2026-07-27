@@ -2,10 +2,58 @@ id: AJC.maintenance.blueprint.prose
 title: Timeless chapter prose and truth passes
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Eleven earlier scoped truth passes and the Quot affine-base-change pass are
-  complete. A bounded repository scan still finds residual visible development-journal
-  prose in RelPicFunctor and IdentityComponent, plus proof-status notes and comment-only
-  history tracked under the residual-journals child.
+summary: "Eleven earlier scoped truth passes, the Quot affine-base-change pass, and\
+  \ (2026-07-28) the Quot ROUTE-CLAIM pass are complete.\n\nTHE ROUTE-CLAIM PASS,\
+  \ which is what this item was mainly waiting on. Nine passages across four chapters\
+  \ described the Quot/quotient endgame in the present tense as the way the Picard\
+  \ scheme gets built, while the FGA chapter's own route comparison already said it\
+  \ is not the path being formalised. All re-aimed, none deleted, no statement weakened\
+  \ and no \\lean/\\label/\\uses/\\leanok touched:\n\n  Picard_QuotScheme.tex -- the\
+  \ relative-divisor section now names Grothendieck's QUOTIENT route and cross-references\
+  \ sec:fga_pic_setup; the dependency summary identifies Div/Hilb as that route's\
+  \ engine while noting the substrate serves either; an \"Out of scope\" bullet loses\
+  \ a dead internal route label (\"Route A\", which had no referent anywhere in the\
+  \ document).\n  Picard_FlatteningStratification.tex -- the chapter had framed its\
+  \ whole content as a step INSIDE the Quot construction. Order reversed: it states\
+  \ the flattening stratification and its universal property as a theorem of commutative\
+  \ algebra and scheme theory independent of any moduli construction, then records\
+  \ that Nitsure's Quot construction consumes it. That is the honest shape -- the\
+  \ mathematics does not depend on who uses it.\n  Picard_LineBundleCoherence.tex\
+  \ -- an \"on-path half of the A.2.c Quot-scheme embedding\" strategy note becomes\
+  \ a SCOPE note stating what the chapter proves, with the load-bearing caveat (the\
+  \ 0B8M converse spreading-out is not crossed) kept verbatim; two body phrases replace\
+  \ \"in the sense the Quot construction consumes\" and a \"flagged for the plan agent\"\
+  \ aside with the mathematical reason.\n  Picard_SectionGradedRing.tex -- \"the Hilbert-polynomial\
+  \ ROUTE of\" becomes \"development\".\n\nDeliberately unchanged: passages describing\
+  \ the INTERNAL architecture of the Quot construction (that is what those chapters\
+  \ are about, and they claim nothing about the Picard route), and the Grassmannian\
+  \ chapters, swept and found clean.\n\nALSO THIS PASS, in the FGA chapter itself:\
+  \ rem:representability_is_conditional. Four nodes there carry a statement \\leanok\
+  \ and are the ones a reader is most likely to read as \"the Picard scheme exists\
+  \ in this development\" -- thm:fga_pic_representability, def:pic_scheme, def:inst_pic_sharp_representable,\
+  \ thm:pic_is_group_scheme. Their Lean is clean AS STATED and picks up sorryAx at\
+  \ any synthesis site, measured by two new probes (leakProbe_instPicSharpRepresentable,\
+  \ leakProbe_groupSchemeStructure). The remark states the honest reading: the passage\
+  \ FROM representability to the Picard scheme and its group structure is complete;\
+  \ representability itself is def:inst_has_pic_scheme and is asserted. No flag was\
+  \ removed -- they are correct under the house convention, and the defect was that\
+  \ nothing nearby said what they did not mean.\n\nSTILL OPEN under the residual-journals\
+  \ child: residual visible development-journal prose in RelPicFunctor and IdentityComponent,\
+  \ proof-status notes, and comment-only history. One item found this pass and left\
+  \ for the chapter owner: a \"% HISTORICAL (abandoned route)\" comment at Picard_GrassmannianQuot.tex:151\
+  \ about an earlier gluing implementation -- project history, against house style,\
+  \ but a judgment call rather than a route claim.\n\nCONVENTION AUDIT, worth recording\
+  \ because it nearly caused a wrong edit. Statement-level \\leanok means the SIGNATURE\
+  \ is formalized, so it is honest on a sorry-bodied declaration; proof-level \\leanok\
+  \ is the one that would be false. Measured across the tree: 12 statement-level \\\
+  leanok nodes sit on sorry carriers, in 6 chapters, every one legitimate; ZERO proof-level\
+  \ \\leanok does. I began by deleting def:inst_has_pic_scheme's \\leanok as a false\
+  \ claim and reverted it after the audit -- the deletion would have introduced the\
+  \ inconsistency it was meant to remove. Recipe: cross the build's \"declaration\
+  \ uses sorry\" lines against \\lean{} pins, and check the statement and the adjacent\
+  \ proof environment SEPARATELY.\n\nVERIFIED: two lualatex passes, 624 pages, zero\
+  \ errors, zero undefined references, zero multiply-defined labels. Brace and environment\
+  \ balance checked per edited file with comments stripped, before compiling.\n"
 status: pending
 kind: blueprint
 priority: normal
@@ -28,7 +76,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint
-  updated_at: '2026-07-25T23:09:43.958928+00:00'
+  updated_at: '2026-07-27T19:31:50.768143+00:00'
   pinned_commits:
   - 9ee3841b2
   - 03889996b
@@ -40,3 +88,4 @@ metadata:
   - 3d7c61a1b
   - 5326a8295
   - bfaac46ec
+  owner: ajc-truth

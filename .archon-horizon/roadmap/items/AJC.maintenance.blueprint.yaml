@@ -2,43 +2,67 @@ id: AJC.maintenance.blueprint
 title: Blueprint prose and formalization pins
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Thirteen bounded prose and truth passes. The route-of-record work is complete
-  in the sense that matters: the blueprint no longer presents the Quot endgame as
-  the live route AND the committed Milne-Kollar route now has its own section with
-  landed mathematics in it rather than only a description.  NEW (run 0054): FGA chapter
-  sec:fga_pic_milne_kollar, five nodes with complete proofs and resolving Lean pins
-  -- thm:rigid_pushforward_locally_free over lem:p1_integral (the rigidified pushforward
-  and the integrality of P^1 under it), thm:speiser_descent, thm:galois_quotient_points,
-  lem:stable_affine_open (the finite Galois quotient), plus rem:orbit_in_affine_hypothesis.
-  That remark states what the route comparison had been leaving implicit: BOTH routes
-  need a hypothesis the Hironaka example fails, and the difference is availability,
-  not hypothesis-freeness. The dependency section gives each route its own input list,
-  and Jacobian.tex''s Albanese leaf is split so the algebraically closed case carries
-  its proof (lem:pic0_isAlbanese_algClosed).  Measured on the current tree (2026-07-27):
-  623-page LuaLaTeX PDF, ZERO errors, ZERO unresolved references, zero multiply-defined
-  labels. Two pre-existing LaTeX breakages fixed in Picard_GrassmannianCells.tex --
-  an unbraced ] closing an amsthm optional argument early, twice, which made the first
-  pass die and only produced a PDF because a second pass ran past it. Graph sync:
-  1935 blueprint nodes, 4629 Lean nodes. Printable debt remains 747 overfull boxes.  NEW
-  (run 0054 s0008): RiemannRoch_Adelic.tex gains thm:adelic_residue_degree_one, cor:adelic_degK_eq_degree
-  and thm:adelic_principal_geometric_degree_zero, closing I-0441 -- 15 landed sorry-free
-  declarations in the residue-field lane had no blueprint representation at all, and
-  a node reading ''proved: false'' for a proved theorem is what makes a future session
-  re-derive it. The third node carries its chi-ledger hypothesis IN the statement
-  rather than in a remark, because degree_principal_eq_zero_of_isAlgClosed_curve measures
-  axiom-clean while remaining conditional; pinning it as unconditional would have
-  been the exact defect the issue was filed to prevent. The trap-(b) reading went
-  on the hgraph node as a comment, not into the .tex. Sync after: 1933 blueprint nodes,
-  4629 lean nodes, zero pin warnings, both new pins lean_ok.  CORRECTION (run 0054
-  s0008): the previous summary claimed ''ZERO pin warnings (the 33 previously carried
-  are gone)''. That was wrong -- re-measured against both blueprint entry points (web.tex
-  and print.tex), sync still reports exactly 33 \lean{} pins naming declarations absent
-  from the Lean sources. Seven of the 33 are deliberate AlgebraicGeometry.TODO.* placeholders
-  (Quot-lane and etale-sheafification forward references); the remaining 26 are pins
-  to names that were renamed or never written, concentrated in the Cohomology pushforward/tilde
-  lanes and the section-graded-ring lane. None of the 33 is one of this session''s
-  five new nodes, all of which resolve. Remaining printable debt: 747 overfull boxes.
-  AJC.maintenance.blueprint.pins.remaining-contracts is where this work belongs.'
+summary: 'Thirteen bounded prose and truth passes. The route-of-record work is complete in the sense that
+  matters: the blueprint no longer presents the Quot endgame as the live route AND the committed Milne-Kollar
+  route now has its own section with landed mathematics in it rather than only a description.  NEW (run
+  0054): FGA chapter sec:fga_pic_milne_kollar, five nodes with complete proofs and resolving Lean pins
+  -- thm:rigid_pushforward_locally_free over lem:p1_integral (the rigidified pushforward and the integrality
+  of P^1 under it), thm:speiser_descent, thm:galois_quotient_points, lem:stable_affine_open (the finite
+  Galois quotient), plus rem:orbit_in_affine_hypothesis. That remark states what the route comparison
+  had been leaving implicit: BOTH routes need a hypothesis the Hironaka example fails, and the difference
+  is availability, not hypothesis-freeness. The dependency section gives each route its own input list,
+  and Jacobian.tex''s Albanese leaf is split so the algebraically closed case carries its proof (lem:pic0_isAlbanese_algClosed).  Measured
+  on the current tree (2026-07-27): 623-page LuaLaTeX PDF, ZERO errors, ZERO unresolved references, zero
+  multiply-defined labels. Two pre-existing LaTeX breakages fixed in Picard_GrassmannianCells.tex -- an
+  unbraced ] closing an amsthm optional argument early, twice, which made the first pass die and only
+  produced a PDF because a second pass ran past it. Graph sync: 1935 blueprint nodes, 4629 Lean nodes.
+  Printable debt remains 747 overfull boxes.  NEW (run 0054 s0008): RiemannRoch_Adelic.tex gains thm:adelic_residue_degree_one,
+  cor:adelic_degK_eq_degree and thm:adelic_principal_geometric_degree_zero, closing I-0441 -- 15 landed
+  sorry-free declarations in the residue-field lane had no blueprint representation at all, and a node
+  reading ''proved: false'' for a proved theorem is what makes a future session re-derive it. The third
+  node carries its chi-ledger hypothesis IN the statement rather than in a remark, because degree_principal_eq_zero_of_isAlgClosed_curve
+  measures axiom-clean while remaining conditional; pinning it as unconditional would have been the exact
+  defect the issue was filed to prevent. The trap-(b) reading went on the hgraph node as a comment, not
+  into the .tex. Sync after: 1933 blueprint nodes, 4629 lean nodes, zero pin warnings, both new pins lean_ok.  CORRECTION
+  (run 0054 s0008): the previous summary claimed ''ZERO pin warnings (the 33 previously carried are gone)''.
+  That was wrong -- re-measured against both blueprint entry points (web.tex and print.tex), sync still
+  reports exactly 33 \lean{} pins naming declarations absent from the Lean sources. Seven of the 33 are
+  deliberate AlgebraicGeometry.TODO.* placeholders (Quot-lane and etale-sheafification forward references);
+  the remaining 26 are pins to names that were renamed or never written, concentrated in the Cohomology
+  pushforward/tilde lanes and the section-graded-ring lane. None of the 33 is one of this session''s five
+  new nodes, all of which resolve. Remaining printable debt: 747 overfull boxes. AJC.maintenance.blueprint.pins.remaining-contracts
+  is where this work belongs.
+
+
+  NEW (run 0054 s0010) -- the route-of-record work is now complete on BOTH sides, which it was not before.
+  The FGA chapter had described the two routes correctly for a while, but four Quot-lane chapters still
+  described the quotient endgame in the PRESENT TENSE as how the Picard scheme gets built. Nine passages
+  re-aimed across Picard_QuotScheme, Picard_FlatteningStratification, Picard_LineBundleCoherence and Picard_SectionGradedRing
+  (details on the .prose child); no mathematics deleted, no statement weakened, no annotation touched.
+  Flattening stratification in particular now states its theorem independent of any moduli construction
+  and then records who consumes it, rather than presenting itself as a step inside Quot.
+
+
+  Jacobian.tex gains three nodes for leaf A: lem:curve_rational_point_algClosed (leanok, complete proof
+  -- Jacobian space gives a closed point, and over k = k-bar a closed point is a section), rem:rational_point_scope
+  (which of the headline''s five obligations is FALSE and which four are merely unproved -- a distinction
+  no axiom check can make), and def:picardJacobianWitnessOfIsAlgClosed. Picard_FGAPicRepresentability.tex
+  gains rem:representability_is_conditional, which states that this chapter''s representability leanoks
+  are about the EXISTENCE PREDICATE and not a construction; measured by two new synthesis probes rather
+  than asserted.
+
+
+  PIN WARNINGS: still 33, and now fully classified rather than merely counted (see the .pins.remaining-contracts
+  child). The load-bearing result of that audit: NONE of the 33 sits on a node claiming leanok, so no
+  completeness claim in this blueprint rides on an unresolved pin. Two of the 33 are a TOOLING false negative
+  -- the graph''s Lean indexer does not accept a declaration whose name carries a universe-binder suffix
+  (theorem foo.{u,v}); those two declarations exist and are axiom-clean, their nodes now correctly carry
+  leanok, and the warnings will persist until I-0452 is fixed upstream.
+
+
+  VERIFIED this session: two lualatex passes, 624 pages, zero errors, zero undefined references, zero
+  multiply-defined labels. Sync: 1938 blueprint nodes, 4638 Lean nodes, 6731 edges. The 747 overfull boxes
+  are unchanged printable debt.'
 status: pending
 kind: blueprint
 priority: normal

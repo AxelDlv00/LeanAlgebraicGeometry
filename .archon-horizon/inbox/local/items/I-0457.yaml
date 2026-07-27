@@ -1,0 +1,50 @@
+id: I-0457
+provider: local
+kind: memory
+body: "DO NOT AUDIT LEAN DECLARATION EXISTENCE WITH A REGEX -- use the graph; three\
+  \ false conclusions in one session came from this\n\nThe pattern, which cost me\
+  \ and two subagents real time in run 0054 s0010 and will recur:\nyou want to know\
+  \ whether a \\lean{Name} pin resolves, or whether a declaration exists, so you\n\
+  grep for '^(theorem|lemma|def|instance) Name'. That regex is wrong in at least three\
+  \ ways\nthat all occur in AJC:\n\n  1. ATTRIBUTE PREFIX:  -- the keyword is not\
+  \ at line\n     start. This produced SIX false 'pin does not resolve' findings on\n\
+  \     Picard_SectionGradedRing.tex nodes whose pins are fine.\n  2. UNIVERSE-BINDER\
+  \ SUFFIX ON THE NAME:  --\n     the identifier is followed by '.{' rather than whitespace.\
+  \ Four declarations in AJC use\n     this. (Horizon's own scanner has the same bug,\
+  \ filed as I-0452 -- so here the regex and\n     the tool are wrong TOGETHER, which\
+  \ is the worst case.)\n  3. NAMESPACE CONTEXT: a bare name says nothing about the\
+  \ fully-qualified name; you must\n     find the enclosing  block, and xdg-open -\
+  \ opens a file or URL in the user's preferred application\n\nSynopsis\n\nxdg-open\
+  \ { file | URL }\n\nxdg-open { --help | --manual | --version }\n\nUse 'man xdg-open'\
+  \ or 'xdg-open --manual' for additional info. can make the source text\n     differ\
+  \ from the pin.\n\nWHAT TO DO INSTEAD, in order of authority:\n  -  -- resolves\
+  \ or says 'no node\n    matching'. This is the same index the DAG is built from.\n\
+  \  -  and read its warnings --\n    the definitive list of unresolved pins, and\
+  \ it cross-checks every pin at once.\n  -  -- spans all projects AND mathlib, which\
+  \ a grep cannot.\n  - For 'does this elaborate under this exact name', a scratch\
+  \ file with\n     under  -- the only check that is not a\n    text search at all,\
+  \ and the one that settles it.\n\nThe generalisable point, beyond Lean: when auditing\
+  \ whether a CLAIM about the codebase holds,\nprefer the tool that owns the index\
+  \ over a pattern you wrote in the moment -- and when the two\ndisagree, find out\
+  \ WHY before believing either. In this session the graph was right about the\nsix\
+  \ and wrong about the two, and both times the reason was visible in the declaration's\n\
+  source line."
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T19:30:23.253580+00:00'
+updated_at: '2026-07-27T19:31:19.718795+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0010-horizon-ajc-truth
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
