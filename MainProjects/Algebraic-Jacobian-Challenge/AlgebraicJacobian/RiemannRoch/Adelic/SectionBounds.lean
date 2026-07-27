@@ -326,10 +326,14 @@ reader should not take the hypothesis as a record of an open gap.
 
 What the bump costs is NOT merely one application of `chi_add_eq_residueDeg` per step: that theorem
 requires `P.point ∈ U₀ ⊓ U₁`, so off the overlap it supplies no route to the bump at all.
-Worse: `ChiUnconditional.not_bump_of_notMem_left` proves `hbump` outright **false** whenever a
-prime divisor's point lies off a chart, and `ChiUnconditional.ledger_refuted_of_notMem_left`
-proves the same for `hledger` itself — so on such a cover **the hypothesis of every theorem in
-this section is unsatisfiable and the theorems are vacuous**.  At overlap primes the bump is one
+Worse: `ChiUnconditional.not_bump_of_notMem_left` proves `hbump` outright **false**, and
+`ChiUnconditional.ledger_refuted_of_notMem_left` the same for `hledger`, whenever a prime
+divisor's point lies off a chart of a **genuine cover** (`U₀ ⊔ U₁ = ⊤`) whose three chart section
+spaces are all finite-dimensional.  Under those side conditions the hypothesis of every theorem
+in this section is unsatisfiable and the theorems are vacuous.  Note the side conditions are
+extra — this section quantifies over arbitrary `U₀ U₁` and assumes finiteness only at `⊤` — so
+this is a warning about which covers are usable, not a blanket vacuity claim.  At overlap primes
+the bump is one
 application of `chi_add_eq_residueDeg`, consuming that theorem's connecting/surjectivity data
 plus the strong-approximation input `hsurj`.  So `hledger` is an honest hypothesis, not
 a gate class and not a `sorry` — but the reader should look for the remaining mathematics
@@ -351,10 +355,11 @@ among several.  It used to be offered here as evidence that the `hledger` hypoth
 section "is not idle", on the grounds that it holds wherever the one-point bump `hbump` does.
 **That reading is withdrawn.**  `hbump` is one application of `chi_add_eq_residueDeg` per step
 **at overlap primes only**, and off the overlap that producer is unavailable; worse,
-`ChiUnconditional.ledger_refuted_of_notMem_left` shows `hledger` is **false** on any cover with
-a prime divisor off a chart.  So `hledger` is not "not idle" — it is unsatisfiable on such
-covers, making this section's conditionals vacuous there.  Establishing a cover without such
-primes is the missing work.
+`ChiUnconditional.ledger_refuted_of_notMem_left` shows `hledger` is **false** on a genuine cover
+(`U₀ ⊔ U₁ = ⊤`) with finite-dimensional chart sections having a prime divisor off a chart.  So
+this identity is no evidence that `hledger` is satisfiable: on such a cover it is not, and this
+section's conditionals are vacuous there.  Exhibiting a cover on which the ledger *can* hold is
+the missing work, and it is a question about the cover, not about the bump.
 
 An earlier version added that "extending from list-effective divisors to *all* divisors
 additionally needs the negative part".  **That is false**: `LedgerClosure.chi_eq_of_bump`

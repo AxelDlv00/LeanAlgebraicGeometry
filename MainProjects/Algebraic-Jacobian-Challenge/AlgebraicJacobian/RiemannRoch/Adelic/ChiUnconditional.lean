@@ -488,16 +488,27 @@ variable (k : Type u) [Field k] {X : Scheme.{u}} [IsIntegral X]
 `deg_k P = [κ(P):k] ≥ 1`), while `chi_le_finrank_chart_along_tower` bounds χ there.  So
 `χ(D) = χ(0) + deg_k D` cannot hold at every `D`.
 
-**Consequence for the whole lane, stated plainly.**  Every conditional statement in
-`SectionBounds.lean` §3, `BoundedVanishing.lean` and `GlobalGeneration.lean` takes exactly this
-`hledger` as a hypothesis.  This theorem says those hypotheses are unsatisfiable — hence the
-theorems vacuous — for any cover admitting such a prime.  A 2-affine cover of a proper curve
-has `U₀, U₁ ≠ ⊤`, so the condition is not exotic; whether it bites depends on whether some
-prime divisor's point avoids a chart, which for the covers of interest it generally will.
+**Consequence for the lane — with the quantifiers stated exactly, because they matter.**  Every
+conditional statement in `SectionBounds.lean` §3, `BoundedVanishing.lean` and
+`GlobalGeneration.lean` takes this same `hledger`.  Where those consumers *also* satisfy this
+theorem's two extra hypotheses, their `hledger` is unsatisfiable and they are vacuous.
 
-So the lane's conditional results are not merely "still gated": they are gated on something
-false on the wrong cover, and the fix is a genuinely different cover hypothesis (or more charts),
-not more work on the bump.  This is the most important thing this module establishes. -/
+The two extra hypotheses are **not** automatic, and it would be an overclaim to drop them:
+
+* `hcov : U₀ ⊔ U₁ = ⊤`.  The consumers do **not** assume it — they are stated for arbitrary
+  `U₀ U₁`.  Without a cover, `chi` is not computing a Čech Euler characteristic and this
+  argument says nothing.
+* the three `∀ D, Module.Finite k (sectionSub k · D)` instances.  The consumers assume finiteness
+  only at `⊤` (`Module.Finite k (sectionSub k ⊤ D)`), never at the charts.  As the module header
+  notes, chart-level finiteness at a non-total open is a real restriction — it is what forbids
+  Riemann growth along the tower.
+
+So the honest statement is: **on a genuine two-chart cover whose chart section spaces are all
+finite-dimensional, and which has a prime divisor off a chart, the ledger is false and the lane's
+conditional results are vacuous.** Whether a given curve's cover meets that description is not
+settled here. What *is* settled is that the bump route cannot be repaired by supplying
+approximation data: on such a cover there is nothing to supply. The fix is a different cover
+hypothesis, or more charts. -/
 theorem ledger_refuted_of_notMem_left (hcov : U₀ ⊔ U₁ = ⊤)
     {P : X.PrimeDivisor} (hP : P.point ∉ U₀)
     [∀ D : X.WeilDivisor, Module.Finite k (sectionSub k U₀ D)]

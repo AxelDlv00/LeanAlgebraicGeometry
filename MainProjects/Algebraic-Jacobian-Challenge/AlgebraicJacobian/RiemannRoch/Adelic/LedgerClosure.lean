@@ -34,6 +34,10 @@ refutation conditionally; `Adelic/ChiUnconditional.lean` §5–§6 now prove it 
 * `ChiUnconditional.ledger_refuted_of_notMem_left` — the closed ledger `hledger` is itself
   false there.
 
+Both carry two side conditions this file does not assume: a genuine cover `U₀ ⊔ U₁ = ⊤`, and
+finite-dimensionality of all three *chart* section spaces (not merely at `⊤`).  So they say which
+covers are unusable rather than refuting the hypotheses outright for arbitrary `U₀ U₁`.
+
 The mechanism is the tower `n·P`: `Γ(U₀,−)` and `𝒜` freeze while `Γ(U₁,−) ⊆ 𝒜` is trapped, so
 χ is *bounded*, against the linear growth `hbump`/`hledger` demand.
 

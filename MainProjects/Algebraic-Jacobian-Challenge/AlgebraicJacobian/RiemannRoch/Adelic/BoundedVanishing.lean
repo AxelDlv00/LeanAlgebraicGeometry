@@ -28,11 +28,13 @@ read with `hledger` discharged; the ledger-free forms are in `LedgerClosure.lean
 theorems here keep the `hledger` binder because it is strictly more general.  Note this does
 **not** make the lane unconditional, and the bump is *not* merely one application of
 `chi_add_eq_residueDeg` per step: off the overlap that theorem does not apply.  **Stronger, and
-it bears on every theorem in this file:** on a cover with a prime divisor off a chart, both
-`hbump` and `hledger` are FALSE (`ChiUnconditional.not_bump_of_notMem_left`,
-`ChiUnconditional.ledger_refuted_of_notMem_left`) — χ is bounded along the tower `n·P` while
-both demand linear growth — so this file's `hledger`-conditional results are **vacuous** there.
-The mathematics moved
+it bears on every theorem in this file:** on a *genuine* cover (`U₀ ⊔ U₁ = ⊤`) whose three chart
+section spaces are finite-dimensional and which has a prime divisor off a chart, both `hbump` and
+`hledger` are FALSE (`ChiUnconditional.not_bump_of_notMem_left`,
+`ChiUnconditional.ledger_refuted_of_notMem_left`) — χ is bounded along the tower `n·P` while both
+demand linear growth — so this file's `hledger`-conditional results are **vacuous** there.  Those
+side conditions are extra (this file assumes neither a cover nor chart-level finiteness), so the
+claim is about which covers are usable rather than a blanket vacuity.  The mathematics moved
 under the bump rather than away, and there is more of it there than this file used to say.
 Input 2 is also
 localised — `LedgerClosure.peel_pointDivisor_of_notMem_overlap` discharges the one-point peel

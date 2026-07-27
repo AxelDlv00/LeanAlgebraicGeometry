@@ -485,12 +485,12 @@ The `hledger` hypothesis below is therefore discharged wherever the bump is avai
 lane's residual input is the **bump**.  At overlap primes that is one application of
 `chi_add_eq_residueDeg`, consuming the ledger exact sequence's connecting/surjectivity data plus
 strong approximation; off the overlap that producer is unavailable (it requires
-`P.point ∈ U₀ ⊓ U₁`).  **And on a cover with a prime divisor off a chart, both the bump and
-`hledger` are outright FALSE** (`ChiUnconditional.not_bump_of_notMem_left`,
-`ChiUnconditional.ledger_refuted_of_notMem_left`): χ is bounded along the tower `n·P` while both
-demand linear growth.  So the reduction below is a reduction from two open inputs to one *only
-on a cover where those hypotheses can hold* — otherwise it is a valid implication with an
-unsatisfiable hypothesis.  Subject to that, the
+`P.point ∈ U₀ ⊓ U₁`).  **And on a genuine cover (`U₀ ⊔ U₁ = ⊤`) with finite-dimensional chart
+sections and a prime divisor off a chart, both the bump and `hledger` are outright FALSE**
+(`ChiUnconditional.not_bump_of_notMem_left`, `ChiUnconditional.ledger_refuted_of_notMem_left`):
+χ is bounded along the tower `n·P` while both demand linear growth.  So the reduction below is a
+reduction from two open inputs to one *only on a cover where those hypotheses can hold* —
+otherwise it is a valid implication with an unsatisfiable hypothesis.  Subject to that, the
 remaining one is a local statement at a single prime divisor rather than a global identity. -/
 
 /-- **The weighted degree is the geometric degree on a curve over an algebraically closed
