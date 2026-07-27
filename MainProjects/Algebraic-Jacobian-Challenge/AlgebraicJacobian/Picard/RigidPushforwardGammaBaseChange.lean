@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.RigidPushforwardChartBaseChange
 import AlgebraicJacobian.Picard.RigidPushforwardInstance
+import AlgebraicJacobian.Curve.GeometricallyReduced
 
 /-!
 # `H⁰` commutes with affine base change, in the form the B3 gate consumes
