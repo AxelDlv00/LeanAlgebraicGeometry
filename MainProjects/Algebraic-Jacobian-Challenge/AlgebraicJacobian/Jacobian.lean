@@ -375,7 +375,18 @@ alone. It is *not* the dimension count. It is the two steps that turn a tangent-
 dimension into a relative dimension:
 
 1. `Scheme.Pic0.smooth` — bare smoothness of `Pic⁰_{C/k}` over `k`, itself `sorry`-bodied
-   upstream, so leaf B presupposes an obligation rather than reducing one;
+   upstream, so leaf B presupposes an obligation rather than reducing one. That obligation
+   is smaller than it looks, and worth stating here because it changes what a reader should
+   expect to have to build: its *entire* remaining content is
+   `GeometricallyReduced (Pic⁰_{C/k}).hom`. Mathlib's public `smooth_of_grpObj` takes
+   `[LocallyOfFiniteType f]`, `[GrpObj (Over.mk f)]` and `[GeometricallyReduced f]` and
+   returns `Smooth f` over an arbitrary field, so the translation argument that propagates
+   smoothness from the identity is already done there; the first two inputs are landed
+   (`Pic0.locallyOfFiniteType`, `Pic0.grpObj`) and elaborate at these hypotheses verbatim,
+   while `GeometricallyReduced` does not synthesize and its only producer in the tree is
+   `Smooth.geometricallyReduced`, which would be circular. So `Pic0.smooth` is Cartier's
+   theorem in characteristic zero and a genuine characteristic-`p` statement otherwise —
+   not a translation argument;
 2. the passage from "smooth, with `dim_{κ(e)} T_e = n`" to
    `SmoothOfRelativeDimension n`. Mathlib defines the latter by local standard-smooth
    presentations, not by a tangent-space dimension. There *is* a bridge, but it is at the
