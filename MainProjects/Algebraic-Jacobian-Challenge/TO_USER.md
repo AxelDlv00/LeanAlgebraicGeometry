@@ -24,7 +24,7 @@
 
 - **The headline is wired, and now rests on five stated obligations.**
   `picardJacobianWitness` is built from `Pic⁰_{C/k}` and reaches 97 project
-  modules, up from 8; all 173 modules on disk are reachable from the project root.
+  modules, up from 8; the whole committed tree is reachable from the project root.
   Two of its four structural fields are proved upstream (`Pic0.grpObj`,
   `Pic0.geometricallyIrreducible`); the other two, `Pic0.smooth` and `Pic0.proper`,
   are still `sorry`.  Added to those are three named leaves in `Jacobian.lean`: the

@@ -22,12 +22,23 @@ same theorem by a separate curve-specialized strategy.
 
 ## State (measured 2026-07-27)
 
-- **173 modules, 125,285 lines**, all of them reachable from
-  [`AlgebraicJacobian.lean`](AlgebraicJacobian.lean).  **26 `sorry`** remain,
-  spread over 11 modules; the rest are locally sorry-free.  Rootedness is worth
-  measuring, not assuming: a module nothing imports compiles green and is invisible
-  both to the root build and to the axiom probe.
-- A warm `lake build AlgebraicJacobian` is **green**: 8,732 jobs, exit 0.
+- **177 modules, 126,059 lines**; **26 `sorry`** over 11 modules, the rest locally
+  sorry-free; a warm `lake build AlgebraicJacobian` **green** at 8,733 jobs.  These
+  counts move whenever a module lands, so re-measure rather than quoting them:
+
+  ```bash
+  find AlgebraicJacobian -name '*.lean' | wc -l          # modules on disk
+  find AlgebraicJacobian -name '*.lean' -exec cat {} + | wc -l
+  lake build AlgebraicJacobian 2>&1 | grep -c 'declaration uses .sorry'
+  ```
+- **Rootedness is worth measuring, not assuming.**  A module that nothing imports
+  compiles green and is invisible *both* to the root build and to the axiom probe,
+  with nothing warning about it — `import AlgebraicJacobian` never reaches it, so no
+  `#print axioms` line for it can even be written.  The check is the second
+  measurement in [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean)'s
+  header.  Modules land here from several parallel efforts, so the unrooted set is
+  routinely non-empty for a short while: a module not yet committed to the workspace
+  ledger must **not** be rooted, since a clean checkout would then fail to build.
 - **Locally sorry-free is not axiom-clean.**  Two `sorry`-bodied *instances* leak
   through typeclass synthesis: `instHasPicScheme`
   (`Picard/FGAPicRepresentability.lean`, the sole producer of `HasPicScheme`) and
@@ -45,7 +56,7 @@ same theorem by a separate curve-specialized strategy.
   named hypothesis in the statement; and a *false* named hypothesis in the
   statement, which makes the theorem vacuously true and perfectly clean.  Read the
   probe's section headers, not just its output lines.
-- 66 of the 173 modules still open with a bare `import Mathlib`; this is the
+- 66 modules still open with a bare `import Mathlib`; this is the
   dominant build cost and is being converted bottom-up with the helpers in
   `scripts/`.
 
@@ -80,8 +91,8 @@ Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
 - [`AlgebraicJacobian/Jacobian.lean`](AlgebraicJacobian/Jacobian.lean): the final
   Jacobian witness interface and assembly point.  The witness is built from
   `Pic⁰_{C/k}` and depends on five stated obligations: `Pic0.smooth` and
-  `Pic0.proper` upstream, plus three named leaves stated there.  97 of the 173
-  modules are reachable from it.
+  `Pic0.proper` upstream, plus three named leaves stated there.  97 modules are
+  reachable from it.
 - [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean): the axiom-frontier
   probe, and the two reachability measurements in its header (headline cone, and
   whether every module on disk is rooted at all).
