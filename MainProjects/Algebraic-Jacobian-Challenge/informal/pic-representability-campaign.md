@@ -89,8 +89,15 @@
 > not a probe at all: read the *producer's* side conditions, and for a hypothesis
 > quantified over a family, ask where the tree derives the negation.
 >
+> An eighth, from the same audit, is the cheapest of all to check and therefore the
+> one to check first: a hypothesis **equivalent** to the conclusion it is supposed to
+> buy. `chi_eq_of_bump` proves `hbump → closed ledger`, and the converse is three
+> lines, so the theorem is a restatement rather than a reduction and "is `hbump`
+> satisfiable" *is* "is the closed ledger satisfiable". Before believing that `H → C`
+> reduces `C` to `H`, try to prove `C → H` (I-0456, probe §2c).
+>
 > `G5` below already says to verify axiom-cleanliness of `instHasPicScheme`; the
-> same discipline, in all seven forms, applies to every gate discharge in the
+> same discipline, in all eight forms, applies to every gate discharge in the
 > table. A milestone is done when its statement is true and unconditional, not when
 > its axiom line is short.
 >
@@ -341,7 +348,7 @@ grep 'declaration uses' | sort -u` (26 over 11 modules).
   and/or a peel-surjectivity datum. `scripts/axiom-frontier.lean` §6b/§6d carry the
   per-declaration open-hypothesis columns; a clean axiom line in this lane is not a
   discharge.
-- **The seven ways a milestone can look done and not be** are catalogued, the first five each
+- **The eight ways a milestone can look done and not be** are catalogued, the first five each
   measured in `scripts/axiom-frontier.lean`: a gate discharged by the caller; an unproved
   named hypothesis; a *false* named hypothesis; an instance binder nothing can instantiate
   for the ambient object; and an unrooted module, which no axiom check reaches at all. The
@@ -363,7 +370,14 @@ grep 'declaration uses' | sort -u` (26 over 11 modules).
   `residueDeg P ≥ 1`. The theorem is true, axiom-clean, consistent (vacuously, on a scheme
   with no prime divisors), instantiable, and empty at every prime outside the overlap. For a
   hypothesis quantified over a family, "is it satisfiable" is the wrong question; ask where
-  the tree derives the negation (I-0449, lesson I-0451, probe §2b).
+  the tree derives the negation (I-0449, I-0454, lesson I-0451, probe §2b).
+
+  The **eighth** is the cheapest to check and belongs first in any audit: a hypothesis
+  *equivalent* to the conclusion it is supposed to buy. `hbump` and the closed χ-ledger are
+  interderivable — the converse is `rw [hledger (D+P), hledger D, degK_add,
+  degK_pointDivisor]; ring` — so `chi_eq_of_bump` is a restatement, not a reduction, and no
+  axiom or vacuity check can see it. Attempt `C → H` before believing `H → C` reduces
+  anything (I-0456, probe §2c).
 
 ### Wave-1 parallel work list (6 agent tasks)
 

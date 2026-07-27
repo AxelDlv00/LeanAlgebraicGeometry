@@ -16,7 +16,7 @@
   what the project claims over an **arbitrary** base field — not whether the
   construction runs.
 
-- **Sorry-free is not axiom-clean, and there are seven separate ways to be misled.**
+- **Sorry-free is not axiom-clean, and there are eight separate ways to be misled.**
   Run `lake env lean scripts/axiom-frontier.lean` before believing any completeness
   number; it probes 111 declarations, 71 clean and 40 carrying `sorryAx` as last
   measured (2026-07-28, root build green at 8,744 jobs).
@@ -39,7 +39,9 @@
   would use, so the project proves both `H → C` and `¬H` and the theorem is true,
   clean, consistent, instantiable and empty.  Found this session in the χ-ledger lane
   and reported to its owner; it defeats every check above, including a consistency
-  witness.
+  witness.  (8) A hypothesis can be *equivalent* to the conclusion it is supposed to buy,
+  making `H → C` a restatement rather than a reduction; this is the cheapest of the eight
+  to check and the one to check first — attempt `C → H`.
   Genuinely clean and unconditional, verified: the adelic genus lane, degree-1
   affine vanishing, the Čech higher-direct-image comparison, and — new this week —
   the **whole B3 rigid-pushforward gate**, which now carries a real instance for

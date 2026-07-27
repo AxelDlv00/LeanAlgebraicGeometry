@@ -71,7 +71,7 @@ same theorem by a separate curve-specialized strategy.
   misclassifies exactly the declarations with the longest lists.  The header carries
   the recipe.
 - **A clean axiom set answers one question only:** is a `sorry` reachable from this
-  proof term.  Seven separate things it cannot see have each been found in this
+  proof term.  Eight separate things it cannot see have each been found in this
   tree — a `sorry`-bodied instance reached only through synthesis; an *unproved*
   named hypothesis in the statement; a *false* named hypothesis in the statement,
   which makes the theorem vacuously true and perfectly clean; an
@@ -91,7 +91,10 @@ same theorem by a separate curve-specialized strategy.
   file including a consistency witness: the only thing that finds it is reading the
   *producer's* side conditions and asking where the family the hypothesis quantifies
   over contains a member whose negation the tree proves (measured on the χ-ledger's
-  `hbump`, probe §2b).  Read the probe's section headers, not just its output lines.
+  `hbump`, probe §2b).  The eighth is the cheapest to check and worth checking first: a
+  hypothesis *equivalent* to the conclusion it is supposed to buy, so that `H → C` is a
+  restatement rather than a reduction — try to prove `C → H` before believing the
+  reduction (probe §2c).  Read the probe's section headers, not just its output lines.
 - **Only two of the tree's `sorry` carriers are instances**, and that is the whole of
   the synthesis-leak surface, because an instance is the only carrier a consumer can
   reach without naming it.  The probe's §2 lists all 26 carriers by module (the two
