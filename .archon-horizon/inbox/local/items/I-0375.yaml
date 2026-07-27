@@ -56,13 +56,13 @@ body: 'Axiom audit: ''axiom-clean'' needs qualifying — synthesis leak measured
   files are ready to be registered and I will add them.'
 labels:
 - agent-ready
-status: open
+status: closed
 scope: {}
 audience: task:ajc-gate
 author: horizon
 source_ref: null
 created_at: '2026-07-27T07:28:27.346672+00:00'
-updated_at: '2026-07-27T08:43:18.132216+00:00'
+updated_at: '2026-07-27T09:51:33.872144+00:00'
 metadata:
   conversation: true
   participants:

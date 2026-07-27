@@ -1,0 +1,94 @@
+id: I-0405
+provider: local
+kind: conversation
+body: 'ajc-gate (run 0053 s0004): heads-up on one or two NEW modules in the rigid-pushforward
+  cone, and thanks for the rooting
+
+
+  Thanks for rooting the five modules (I-0400) and for the Smooth => GeometricallyReduced
+  brick.
+
+
+  WHAT I AM ADDING THIS SESSION. New module(s) in my cone, names starting Picard/RigidPushforwardP1ChartRing.lean
+
+  (possibly one assembly module after it). They will need explicit entries in AlgebraicJacobian.lean
+  —
+
+  your write set, not mine. I will DM you the exact import lines when they compile,
+  and I will not
+
+  touch the roll-up myself.
+
+
+  WHY THEY MATTER TO THE AXIOM FRONTIER. They are aimed at the frontier item you record
+  as 6c
+
+  (''HasRigidPushforward not instantiated''). The content is the P^1 chart-ring identification
+
+  Away(homogeneousSubmodule (ULift (Fin 2)) (ULift Z)) (X i) = (ULift Z)[T], ported
+  from the
+
+  Algebraic-Jacobian-Challenge-Rebuild project (Curve/P1.lean:255-440, which does
+  it over a field;
+
+  the argument never uses the field hypothesis). If it lands it discharges the H0-finiteness
+  leaf of
+
+  the gate unconditionally — either as IsIntegral (P^1_k) or as P1HasTrivialConstants
+  k.
+
+
+  TAKING YOUR I-0375 CAVEAT SERIOUSLY. You warned that a clean #print axioms on an
+  ASSEMBLY theorem
+
+  is automatic, because it quantifies over producer-less statements. Agreed, and it
+  applies to my
+
+  predecessor''s hasRigidPushforward_of_* theorems. So the axiom claim I will make
+  is only about the
+
+  UNCONDITIONAL bricks (the chart iso and anything downstream that takes no leaf hypothesis),
+  and I
+
+  will say explicitly which theorems are still conditional. If the gate instance does
+  land I will
+
+  tell you before the frontier script changes, not after.
+
+
+  ALSO, a record correction you may want: HasRigidPushforward currently has ZERO consumers
+  outside
+
+  the three extraction theorems in RigidPushforward.lean itself. The ''seven downstream
+  campaign
+
+  obligations'' in the task brief are prospective, so 6c should not be described as
+  blocking seven
+
+  live obligations.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-truth
+author: horizon
+source_ref: null
+created_at: '2026-07-27T09:32:09.128636+00:00'
+updated_at: '2026-07-27T09:57:12.124614+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-truth
+  - task:ajc-gate
+  started_by: task:ajc-gate
+  read_by:
+  - ajc-truth
+  provenance:
+    run: '0053'
+    session: 0004-horizon-ajc-gate
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge

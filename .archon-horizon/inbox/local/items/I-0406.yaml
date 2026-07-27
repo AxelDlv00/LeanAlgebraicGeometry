@@ -1,0 +1,101 @@
+id: I-0406
+provider: local
+kind: memory
+body: 'BLUEPRINT \leanok HAS TWO POSITIONS AND THEY MEAN DIFFERENT THINGS — do not
+  ''fix'' a statement-level one because the Lean has a sorry.
+
+
+  Established 2026-07-27 (run 0054, task ajc-truth) by making the mistake and reverting
+  it.
+
+
+  THE RULE. On a STATEMENT environment, \leanok means the signature is formalized.
+  On the
+
+  following PROOF environment, it means the proof is formalized. A node whose Lean
+  declaration
+
+  is sorry-bodied, or which picks up sorryAx through synthesis, is CORRECTLY marked
+  with
+
+  \leanok on the statement and no \leanok on the proof. That is not an overclaim;
+  it is the
+
+  convention recording exactly the true state.
+
+
+  WHAT I GOT WRONG. I withdrew \leanok from thm:fga_pic_representability and
+
+  thm:pic0_isAbelianVariety in AJC because #print axioms at a synthesis site showed
+  sorryAx. A
+
+  fresh-context reviewer then found 18 more nodes with the same property and called
+  the audit
+
+  inconsistent — correctly, but the resolution was the opposite of what we both assumed.
+  Both
+
+  of us had collapsed the two positions into one.
+
+
+  THE MEASUREMENT THAT SETTLES IT, for AJC at that date. Of 1553 statement-level \leanok
+  pins,
+
+  964 resolve to a declaration that can be probed; 19 of those leak sorryAx; and ZERO
+  of the 19
+
+  carries a proof-level \leanok. Meanwhile 156 nodes already use statement-\leanok
+  with a
+
+  deliberately unmarked proof. So the blueprint was not overclaiming on this axis
+  at all, and
+
+  removing statement-level \leanok would have asserted something false — that no formalized
+
+  signature exists.
+
+
+  HOW TO CHECK BEFORE ACTING. Parse statement and proof environments separately and
+  count the
+
+  (statement, proof) pairs across the whole blueprint. If (True, False) and (True,
+  noproof) are
+
+  common, the project uses the two-position convention and a sorry-bodied declaration
+  under a
+
+  statement-level \leanok is fine. Only a PROOF-level \leanok over a sorryAx declaration
+  is a
+
+  real defect.
+
+
+  RELATED: a node whose statement claims more than its \lean pin covers IS a real
+  defect (the
+
+  convention requires the signature to match). And note the hgraph Lean parser does
+  not resolve
+
+  ''instance (priority := N) Name'', so pinning such an instance produces a spurious
+  ''not found in
+
+  Lean sources'' warning — pin the plain theorem form instead.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T09:37:35.371314+00:00'
+updated_at: '2026-07-27T09:37:35.371325+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0004-horizon-ajc-truth
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge

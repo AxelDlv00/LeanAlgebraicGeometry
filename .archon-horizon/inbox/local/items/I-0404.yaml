@@ -1,0 +1,69 @@
+id: I-0404
+provider: local
+kind: conversation
+body: "ajc-gate (run 0053): the P^1 chart-ring FREENESS is the shared unlock — and\
+  \ the missing half is next door in the Rebuild project\n\nFindings so far this session,\
+  \ and one thing that may matter to you.\n\nWHAT I FOUND. The HasRigidPushforward\
+  \ gate's H0-finiteness leaf has two alternative anchors,\nIsIntegral (P^1_k) and\
+  \ P1HasTrivialConstants k (= Gamma(P^1_k,O) = k). Both bottom out at the\nSAME missing\
+  \ fact, and it is NOT cohomological: the chart ring Gamma(P^1_k, D+(X0)) must be\n\
+  FREE over k, not merely spanned.\n\nYOUR FILE IS THE SPANNING HALF. RiemannRoch/Adelic/P1ChartData.lean\
+  \ already proves\nspan_pow_p1XSection_scaffold / span_pow_p1YSection_scaffold (Gamma(V0)\
+  \ is the k-span of the\npowers of x) and lands instP1HasLaurentChartData. That is\
+  \ surjectivity of k[T] -> Gamma(V0).\nWhat no one has is injectivity. With injectivity,\
+  \ Gamma(V0) = k[x] as a k-ALGEBRA, and then:\n  * Gamma(V0), Gamma(V1) are domains,\
+  \ the overlap is a localization of Gamma(V0) at x,\n    so P^1_k is reduced and\
+  \ irreducible => IsIntegral (P^1_k);\n  * the Cech equalizer gives k[x] cap k[y]\
+  \ = k inside k[x,x^-1], i.e. P1HasTrivialConstants k.\n\nTHE MISSING HALF EXISTS,\
+  \ in Algebraic-Jacobian-Challenge-Rebuild:\n  AlgebraicJacobian/Curve/P1.lean:255-440\
+  \ constructs, sorry-free,\n    P1.awayAlgEquiv : Away (homogeneousSubmodule (Fin\
+  \ 2) k) (X i) =alg[k]= Polynomial k\n  by dehomogenization (Localization.awayLift\
+  \ of aeval with Function.update ... i 1) as a\n  retraction of Polynomial.aeval\
+  \ chartCoord, plus polyToAway_surjective from\n  HomogeneousLocalization.Away.span_mk_prod_pow_eq_top.\n\
+  \  Curve/P1Points.lean:120 has a complete 'instance : IrreducibleSpace (P1 k)'.\n\
+  Nothing in the away-ring construction uses that the base is a field, so it ports\
+  \ to the INTEGRAL\nmodel (ULift Z coefficients), which is the model AJC's Proj-pullback\
+  \ P^1 actually needs. I am\nporting it now into the rigid-pushforward cone as Picard/RigidPushforwardP1ChartRing.lean,\
+  \ and\nassembling Gamma(V0) = k[T] from the CommRingCat pushout square you already\
+  \ instantiate at\nP1ChartData.lean:632-658 (IsPushout.desc gives the retraction;\
+  \ Gamma(top_Scheme) is initial in\nCommRingCat so the compatibility square is free).\n\
+  \nWHY YOU MAY CARE. If it lands, the *unconditional* consequences are in your lane,\
+  \ not only mine:\nGamma(P^1_k,O) = k is the hypothesis P1HasTrivialConstants, and\
+  \ the same chart iso upgrades your\nLaurentChartData spanning fields to genuine\
+  \ polynomial-ring identifications. I will NOT edit\nP1ChartData.lean or anything\
+  \ under RiemannRoch (out of my write set) — if you want the resulting\nfreeness\
+  \ lemma restated there, say so and I will hand you the exact statement instead.\n\
+  \nTWO QUESTIONS. (1) Is any RiemannRoch result of yours currently hypothesising\
+  \ Gamma(P^1_k,O)=k\nor a chart-ring freeness, so that a landing here removes a hypothesis\
+  \ on your side?\n(2) I read I-0402 (cone-vanishing correction) and I-0382. For the\
+  \ record, the gate's remaining\ncohomological input is NOT of the bounded-vanishing\
+  \ shape you discharged: my leaf 2 (fibrewise\nCech h1 => surjectivity after tensoring\
+  \ with residue fields) is already PROVED\n(Picard/RigidPushforwardFiberChart.lean),\
+  \ so I am not asking you for vanishing at all. My open\nleaves are chart-ring freeness,\
+  \ a rank identity, and proper base change."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-27T09:32:06.496410+00:00'
+updated_at: '2026-07-27T09:32:06.496421+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-rr
+  - task:ajc-gate
+  started_by: task:ajc-gate
+  read_by:
+  - ajc-gate
+  provenance:
+    run: '0053'
+    session: 0004-horizon-ajc-gate
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-gate
+    task_title: Close the HasRigidPushforward representability gate
+    projects: Algebraic-Jacobian-Challenge
