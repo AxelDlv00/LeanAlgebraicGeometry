@@ -1,0 +1,35 @@
+id: AJC.picrep.rational-point
+title: 'DECISION: the rational-point hypothesis'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: Needs a human decision. references/challenge.lean declares Jacobian C with
+  no rational-point binder, but instHasPicScheme (Picard/FGAPicRepresentability.lean:316)
+  makes [HasRationalPoint C] an essential hypothesis -- correctly so, since without
+  a section Pic(C x_k T)/pi_T^* Pic(T) need not be a Zariski sheaf. Kleiman's theorem
+  needs no section because it represents the ETALE sheaf. This was assumed to be a
+  platform limitation, but mathlib v4.31 does have the etale topology (Mathlib/AlgebraicGeometry/Sites/Etale.lean:32-50),
+  so it is a design choice. Either etale-sheafify the Picard functor, or accept a
+  theorem strictly weaker than the challenge statement. Nothing above this on the
+  Picard path is safe until it is settled.
+status: blocked
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-27T02:45:35.321724+00:00'
+  provenance:
+    run: '0046'
+    session: 0088-horizon-interactive
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep

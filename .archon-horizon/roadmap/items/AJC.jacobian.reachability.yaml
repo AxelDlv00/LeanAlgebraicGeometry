@@ -1,0 +1,35 @@
+id: AJC.jacobian.reachability
+title: Wire the headline to the infrastructure
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'AlgebraicJacobian/Jacobian.lean imports only AlgebraicJacobian.Genus, so
+  its transitive closure is 8 modules and NONE of the 122k lines of Picard, Albanese
+  or Cohomology work is reachable from picardJacobianWitness. Separately, two sorry-bodied
+  INSTANCES leak through typeclass synthesis and make ''sorry-free module'' a local
+  claim rather than an axiom-cleanliness claim: instHasPicScheme (Picard/FGAPicRepresentability.lean:317,
+  the sole producer of HasPicScheme, 41 use sites, 10 downstream modules) and pullback_preservesFiniteLimits
+  (Cohomology/CechHigherDirectImageUnconditional.lean:163). First action is to run
+  #print axioms on the headline declarations and publish the true sorry-free frontier;
+  the sibling AJCR carries a dedicated build-reach node and AJC should too.'
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-27T02:45:34.229709+00:00'
+  provenance:
+    run: '0046'
+    session: 0088-horizon-interactive
+    role: horizon
+    round: '0'
+    rounds: '1'
+    task: ajc-optimize
+    task_title: Make the project clean and optimized
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.jacobian.assembly

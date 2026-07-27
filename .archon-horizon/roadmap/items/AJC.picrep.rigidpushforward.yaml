@@ -1,14 +1,15 @@
 id: AJC.picrep.rigidpushforward
-title: Rigidified pushforward engine
+title: Rigidified pushforward engine (locally-free half done, gate open)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Sorry-free. The rigidified pushforward of a line bundle along the structure
-  morphism, the P^1 engine and its transfer, finiteness of chart and P^1 sections,
-  semicontinuity of h^0, faithfulness of the scalar endomorphisms, and section base
-  change. Modules: Picard/RigidPushforward, Picard/RigidPushforwardP1Engine, Picard/RigidPushforwardTransfer,
-  Picard/ChartSectionsFinite, Picard/P1SectionsFinite, Picard/SemicontinuityH0, Picard/ScalarEndFaithful,
-  Picard/SectionBaseChange.'
-status: done
+summary: 'CORRECTION to the status I set earlier today: this is NOT done. The eight
+  modules are sorry-free, and rigidPushforwardLocallyFree_of_p1Engine (Picard/RigidPushforwardTransfer.lean:1389)
+  discharges local freeness for the constant curve from the P^1 engine -- but the
+  file''s own docstring at :1386-1388 says the HasRigidPushforward gate ''is *not*
+  instantiated here: its baseChange field is still open''. The gate class has zero
+  instance producers. Closing baseChange is the cheapest real advance on the representability
+  path.'
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -30,3 +31,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
+  updated_at: '2026-07-27T02:45:32.918636+00:00'

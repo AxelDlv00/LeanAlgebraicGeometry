@@ -55,7 +55,7 @@ summary: 'THE COST OF REPAIR R1 (spec-dd-r ADDENDUM 3 §3). Every declaration in
   both.
 
   '
-status: pending
+status: done
 kind: proof
 priority: low
 depends_on: []
@@ -77,5 +77,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-26T06:49:28.066103+00:00'
+  updated_at: '2026-07-27T02:38:31.446942+00:00'
   milestone: w4-gate
+  pinned_commits:
+  - af99f2b70
