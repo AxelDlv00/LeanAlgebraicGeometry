@@ -51,11 +51,15 @@ same theorem by a separate curve-specialized strategy.
   scripts/axiom-frontier.lean`, ~8s warm, 66 declarations) before believing any
   completeness claim — it measures the frontier rather than inferring it.
 - **A clean axiom set answers one question only:** is a `sorry` reachable from this
-  proof term.  Three separate things it cannot see have each been measured in this
+  proof term.  Four separate things it cannot see have each been measured in this
   tree — a `sorry`-bodied instance reached only through synthesis; an *unproved*
-  named hypothesis in the statement; and a *false* named hypothesis in the
-  statement, which makes the theorem vacuously true and perfectly clean.  Read the
-  probe's section headers, not just its output lines.
+  named hypothesis in the statement; a *false* named hypothesis in the statement,
+  which makes the theorem vacuously true and perfectly clean; and an
+  *un-instantiable instance binder*, where the obligation sits in square brackets
+  and nothing in the project constructs it for the ambient object actually used
+  (an instance for a more structured cousin — `Over (Spec k)` rather than a bare
+  `Scheme` — does not count, and is worse than none, because the grep succeeds).
+  Read the probe's section headers, not just its output lines.
 - 66 modules still open with a bare `import Mathlib`; this is the
   dominant build cost and is being converted bottom-up with the helpers in
   `scripts/`.
