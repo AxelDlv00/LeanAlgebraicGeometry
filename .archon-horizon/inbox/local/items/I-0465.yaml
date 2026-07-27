@@ -1,0 +1,56 @@
+id: I-0465
+provider: local
+kind: memory
+body: "THE CECH EULER CHARACTERISTIC OF A TWO-SET COVER NEEDS NO EXACT SEQUENCE --\
+  \ and this lane spent four sessions gated on one\n\nDurable lesson from AJC run\
+  \ 0055 s0014 (task ajc-rr).\n\nTHE FACT. AJC's Adelic lane built its chi-additivity\
+  \ (ChiLedger.chi_add) on a four-term exact\nsequence 0 -> L(D')/L(D) -> A(D')/A(D)\
+  \ -> H1(D) -> H1(D') -> 0, carried as FOUR hypotheses\n(window, connect, twist,\
+  \ right-exactness) because the lane never constructs the connecting\nhomomorphism.\
+  \ Every downstream chi statement inherited those binders, and the residual leaf\n\
+  hbump was then a hypothesis nobody could discharge. All of it was avoidable. For\
+  \ a TWO-SET\ncover:\n\n  chi(D) = dim Gamma(U0,O(D)) + dim Gamma(U1,O(D)) - dim\
+  \ A(D)\n\nbecause ell(D) = dim(S0 inf S1) (the cover identity) and h1(D) = dim A(D)\
+  \ - dim(S0 sup S1)\n(rank-nullity on the SAME quotient), so chi = dim(S0 inf S1)\
+  \ + dim(S0 sup S1) - dim A, and the\nMODULAR LAW (mathlib Submodule.finrank_sup_add_finrank_inf_eq)\
+  \ collapses the first two terms.\nOne mathlib lemma, no connecting map, no approximation\
+  \ input.\n\nTHE GENERALISABLE LESSON. A long exact sequence is how one PROVES an\
+  \ Euler-characteristic\nidentity in general, but for a length-1 Cech complex the\
+  \ identity is inclusion-exclusion on two\nsubspaces, and inclusion-exclusion is\
+  \ a lattice fact. When a formalization is stuck on\nconstructing a connecting homomorphism,\
+  \ check whether the INDEX SET is small enough that the\nalternating sum is a modular-law\
+  \ computation instead. Nobody in four sessions asked that, because\nthe sheaf-cohomology\
+  \ framing makes the exact sequence look like the only route.\n\nSECOND LESSON, ON\
+  \ DIAGNOSING A REFUTATION. Three sessions plus an independent audit concluded\n\
+  'hbump is refutable off the cover overlap'. The derivation was valid and the attribution\
+  \ was\nwrong: it ran through chi_add, so what it showed is that CHI_ADD'S HYPOTHESES\
+  \ are unsatisfiable\noff the overlap. When a hypothesis H and a theorem T's conclusion\
+  \ are incompatible on some\nregion, you have learned that H and T's HYPOTHESES cannot\
+  \ both hold there -- deciding which one\ngives way needs an independent computation\
+  \ of the same quantity. Here the ungated formula\nsupplied it: off the overlap the\
+  \ chi-jump is the surviving one-chart step, and hbump is\nEQUIVALENT there to that\
+  \ step being full. Do not read 'H contradicts T's conclusion' as\n'H is false'.\n\
+  \nMEASUREMENT NOTE for anyone re-checking: 12 new declarations, axioms all\n[propext,\
+  \ Classical.choice, Quot.sound], zero sorryAx. Four elaboration probes pass, the\n\
+  load-bearing one being that the ungated formula discharges chi_add's conclusion\
+  \ at a consumer\nwith NONE of its four exactness hypotheses -- an axiom check cannot\
+  \ see that."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T20:29:32.284283+00:00'
+updated_at: '2026-07-27T20:29:32.284294+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
