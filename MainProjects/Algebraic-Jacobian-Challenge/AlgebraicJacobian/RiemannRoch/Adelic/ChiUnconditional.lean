@@ -247,6 +247,73 @@ theorem bump_iff_chartStep_of_notMem_left (hcov : U₀ ⊔ U₁ = ⊤)
   have h := chi_add_pointDivisor_of_notMem_left k U₀ U₁ hcov hP E
   omega
 
+/-! ## §3. Cluster-P consequences that no longer need the ledger
+
+The two statements cluster P actually wants downstream are a **section lower bound**
+(Riemann inequality) and an **H¹ vanishing criterion**.  Both follow from the ungated χ
+formula without `hledger`, `hbump`, or any exactness hypothesis.  What they still need is
+the *geometric* input relating the chart dimensions to `deg D`; that input is isolated as
+an explicit hypothesis rather than hidden, and it is the honest residual leaf. -/
+
+/-- **Riemann inequality, gate-free.**  `ℓ(D) ≥ χ(D)` is elementary (`chi_le_ell`), so the
+ungated χ formula turns any lower bound on the Čech count into a lower bound on `ℓ(D)`:
+
+`dim Γ(U₀,𝒪(D)) + dim Γ(U₁,𝒪(D)) − dim 𝒜(D) ≤ ℓ(D)`.
+
+Compare `SectionBounds.degK_add_chi_zero_le_ell` and
+`BoundedVanishing.exists_bound_ell_eq`, which reach comparable conclusions only under
+`hledger`.  Here there is no ledger hypothesis at all; the content has moved into the
+computable left-hand side. -/
+theorem charts_sub_overlap_le_ell (hcov : U₀ ⊔ U₁ = ⊤) (D : X.WeilDivisor)
+    [Module.Finite k (sectionSub k U₀ D)] [Module.Finite k (sectionSub k U₁ D)]
+    [Module.Finite k (sectionSub k (U₀ ⊓ U₁) D)] :
+    (Module.finrank k (sectionSub k U₀ D) : ℤ)
+      + Module.finrank k (sectionSub k U₁ D)
+      - Module.finrank k (sectionSub k (U₀ ⊓ U₁) D) ≤ (ell k D : ℤ) := by
+  rw [← chi_eq_charts_sub_overlap k U₀ U₁ hcov D]
+  exact chi_le_ell k U₀ U₁ D
+
+/-- **H¹ vanishing is equivalent to the Čech count being exact** — no gate.
+
+`Ȟ¹(D) = 0` iff `dim Γ(U₀,𝒪(D)) + dim Γ(U₁,𝒪(D)) − dim 𝒜(D) = ℓ(D)`, i.e. iff the
+inclusion–exclusion count computes `ℓ(D)` on the nose.
+
+This is the vanishing criterion cluster P needs, and unlike
+`BoundedVanishing.subsingleton_h1Mod_iff` (a restatement of `𝒜(D) ⊆ B(D)`) it is a
+**numerical** criterion: it can be certified by counting dimensions on the two charts,
+which is what an explicit cover computation actually produces.  Note it is a genuine
+two-way reduction, not a reformulation of `h1dim = 0` — the right-hand side mentions only
+the three chart dimensions and `ℓ`. -/
+theorem h1dim_eq_zero_iff_charts (hcov : U₀ ⊔ U₁ = ⊤) (D : X.WeilDivisor)
+    [Module.Finite k (sectionSub k U₀ D)] [Module.Finite k (sectionSub k U₁ D)]
+    [Module.Finite k (sectionSub k (U₀ ⊓ U₁) D)] :
+    h1dim k U₀ U₁ D = 0 ↔
+      (Module.finrank k (sectionSub k U₀ D) : ℤ)
+        + Module.finrank k (sectionSub k U₁ D)
+        - Module.finrank k (sectionSub k (U₀ ⊓ U₁) D) = (ell k D : ℤ) := by
+  have h := chi_eq_charts_sub_overlap k U₀ U₁ hcov D
+  rw [chi] at h
+  omega
+
+/-- **Uniform vanishing from a uniform chart count.**  If above some weighted-degree
+threshold `b` the Čech count is exact at every divisor, then `h¹` vanishes uniformly above
+`b`.  The quantifier structure is the one cluster P's consumers take, and the hypothesis is
+now a statement about chart dimensions rather than about a connecting homomorphism.
+
+This is deliberately stated with the finiteness binders as an instance-quantified
+hypothesis, matching `ResidueField.UniformlyBoundedVanishing`'s shape, so that a consumer
+proving the chart count over a family of divisors gets uniform vanishing directly. -/
+theorem exists_bound_h1dim_eq_zero_of_charts (hcov : U₀ ⊔ U₁ = ⊤) (b : ℤ)
+    [∀ D : X.WeilDivisor, Module.Finite k (sectionSub k U₀ D)]
+    [∀ D : X.WeilDivisor, Module.Finite k (sectionSub k U₁ D)]
+    [∀ D : X.WeilDivisor, Module.Finite k (sectionSub k (U₀ ⊓ U₁) D)]
+    (hcount : ∀ D : X.WeilDivisor, b ≤ degK k D →
+      (Module.finrank k (sectionSub k U₀ D) : ℤ)
+        + Module.finrank k (sectionSub k U₁ D)
+        - Module.finrank k (sectionSub k (U₀ ⊓ U₁) D) = (ell k D : ℤ)) :
+    ∀ D : X.WeilDivisor, b ≤ degK k D → h1dim k U₀ U₁ D = 0 :=
+  fun D hD => (h1dim_eq_zero_iff_charts k U₀ U₁ hcov D).mpr (hcount D hD)
+
 end ChiCharts
 
 end Adelic
