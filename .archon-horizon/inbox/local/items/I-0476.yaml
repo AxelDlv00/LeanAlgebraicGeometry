@@ -1,0 +1,60 @@
+id: I-0476
+provider: local
+kind: memory
+body: "BRANCH (2) OF I-0372 IS FURTHER ALONG THAN THIS PROJECT'S PROSE IMPLIES: the\
+  \ sibling has the etale-sheafified Picard functor BUILT AND SORRY-FREE. Found by\
+  \ Ground (run 0054 s0012) while adversarially checking the claim that branch (2)\
+  \ 'needs a representability input nobody has built'.\n\nWHAT IS ACTUALLY IN THE\
+  \ WORKSPACE, in MainProjects/Algebraic-Jacobian-Challenge-Rebuild:\n  Picard/PicEtAff.lean:218\
+  \    PicEtAff -- the one-step etale plus of the relative Picard functor at\n   \
+  \                           affine tests; docstring says one plus suffices because\
+  \ the presheaf is\n                              etale-separated, proved separately.\n\
+  \  Picard/RelPicCoverInjective.lean:81  relPicAlgMap_injective_of_etaleCover --\
+  \ the (C1)\n                              etale-separatedness corollary that licenses\
+  \ the gluing.\n  Picard/Pic0Functor.lean:151 pic0Functor -- the degree-zero subgroup\
+  \ subfunctor of the\n                              etale-sheafified functor, 'the\
+  \ Jacobian represents THIS functor'.\nBOTH FILES CONTAIN ZERO OCCURRENCES OF 'sorry'.\n\
+  \nWHY THE AJC CLAIM NEVERTHELESS SURVIVES, and this is the distinction to keep.\
+  \ Representability of\nthat functor is NOT proved there either: JacobianData (Picard/JacobianData.lean:93)\
+  \ carries it as a\nSTRUCTURE FIELD 'rep : (...).RepresentableBy J', explicitly documented\
+  \ as 'produced once, by explicit\nconstruction, in Wave 4 ... consumed as a section\
+  \ variable everywhere else. NEVER a sorried instance,\nNEVER Nonempty + choice'.\
+  \ So a representability THEOREM for the etale functor exists in no project,\nand\
+  \ README.md:151's 'needs a representability input nobody has built' is literally\
+  \ true.\n\nWHAT IS THEREFORE OVERSTATED, and it is a matter of degree rather than\
+  \ a false claim: 'branch (2) is\nnot reachable' / 'needs a representability input\
+  \ nobody has built' invites the reading that branch (2)\nstarts from nothing. It\
+  \ does not -- the FUNCTOR whose representability is at issue is constructed and\n\
+  sorry-free next door, which is the expensive half of writing the statement down\
+  \ at all. The honest\nform is: neither branch has its representability theorem;\
+  \ branch (1) can reuse THIS project's gate\n(instHasPicScheme) and branch (2) would\
+  \ need a new one for a functor that ALREADY EXISTS in AJCR.\nA human weighing I-0372\
+  \ should be told the functor exists, because 'nobody has built the input' and\n\
+  'the functor is built, its representability is not' are different decisions.\n\n\
+  ACTION FOR WHOEVER TOUCHES THE BRANCH PROSE NEXT: neither README.md, TO_USER.md,\
+  \ nor\ninformal/pic-representability-campaign.md mentions the AJCR etale layer anywhere\
+  \ (checked by grep for\nrebuild/AJCR near etale/sheafif -- zero hits). The workspace\
+  \ rule 'read the other projects' applies\ndirectly: this is the second time the\
+  \ AJCR tree turned out to hold the thing AJC described as absent\n(compare I-0460\
+  \ on the adelic lane, where the answer was the opposite way round)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T21:36:08.453014+00:00'
+updated_at: '2026-07-27T21:38:40.985031+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0012-horizon-ajc-truth
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr

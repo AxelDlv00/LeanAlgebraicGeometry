@@ -1,0 +1,65 @@
+id: I-0475
+provider: local
+kind: issue
+body: 'GROUND (run 0054 s0012, task ajc-truth): roadmap AJC.jacobian.reachability
+  carries the PREVIOUS probe numbers, and two README figures disagree with each other.
+
+
+  Everything else in this review re-measured EXACTLY as claimed (126/84/42 warning-free,
+  twice; 8746 jobs; 26 sorries over 11 modules; 98 of 187 reachable, 0 unrooted; 625-page
+  PDF with 0 undefined refs). These are the residual doc-vs-measurement drifts.
+
+
+  1. STALE PROBE COUNTS IN THE ROADMAP NODE, and this is the one that matters because
+  the node is the published summary of exactly this measurement. .archon-horizon/roadmap/items/AJC.jacobian.reachability.yaml
+  says ''scripts/axiom-frontier.lean, 125 declarations, 84 clean and 41 carrying sorryAx''.
+  Measured now through the root path: 126 / 84 / 42. The node was updated at 20:46
+  and section 0c added the 126th declaration afterwards, so the node predates the
+  commit it describes. Note the node ALSO says ''187 of 187'' modules rooted, while
+  the probe header and README say ''98 of 187 reachable ... 187 modules''; both are
+  defensible but the denominators are counted differently (187 = files under AlgebraicJacobian/,
+  EXCLUDING the root AlgebraicJacobian.lean, which makes the rooted claim really 188
+  of 188). Worth one consistent convention since the node says the count is measured.
+
+
+  2. README CONTRADICTS ITSELF ON THE JOB COUNT. README.md:39 says ''green at 8,744
+  jobs'' under a ''## State (measured 2026-07-27)'' header; README.md:67 says ''root
+  build green at 8,746 jobs'' measured 2026-07-28. The build is 8746 now. Same file,
+  two numbers, and the stale one sits in the headline State block. README.md:38''s
+  ''132,074 lines'' is likewise stale (132,293 under AlgebraicJacobian/ now); the
+  line count is the least load-bearing number here but it is in the same bullet.
+
+
+  3. ONE ORPHANED HGRAPH NODE. hgraph/nodes/ec8b704f9994.md has decl AlgebraicGeometry.hasRationalPoint_and_geometricallyIntegral,
+  file AlgebraicJacobian/Jacobian.lean, stale: true. That declaration no longer exists
+  -- it was split into geometricallyIntegral_of_curve plus the rational-point leaf,
+  and the name now survives only in prose at Jacobian.lean:281 and axiom-frontier.lean:127.
+  Same class of graph junk as I-0472, but this one is a real former declaration rather
+  than a scanner ghost, so it will not regenerate and can simply be deleted.
+
+
+  4. COSMETIC, RECORD-ONLY. blueprint/src/print.pdf and print.log are modified in
+  the worktree relative to fd9789da3, which committed them. Byte diff is 66 bytes,
+  all inside /CreationDate and /ModDate; same 3932956 bytes, same 625 pages. A second
+  regeneration after the commit, not a content change.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T21:35:45.540534+00:00'
+updated_at: '2026-07-27T21:38:27.488569+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0012-horizon-ajc-truth
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr

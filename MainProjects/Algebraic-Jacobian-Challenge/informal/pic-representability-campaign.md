@@ -329,7 +329,14 @@ already open — five, not four, because the binder makes `instHasPicScheme` *fi
 removing it (probe §0b, §0c). Branch (2), étale sheafification, is **not** reachable from it:
 representing `Pic_{(C/k)ét}` replaces `instHasPicScheme` rather than supplying its hypothesis,
 so it needs a representability theorem for a different functor and remains the input this
-campaign does not have. The decision (`I-0372`) is the owner's and neither branch is assumed
+campaign does not have. But it does not start from nothing, and the campaign should not imply
+that it does: the étale-sheafified functor is **built and `sorry`-free** in the Rebuild sibling
+(`Picard/PicEtAff.lean`, the étale-separatedness corollary in `Picard/RelPicCoverInjective.lean`,
+the degree-zero subfunctor in `Picard/Pic0Functor.lean`). What is missing there is the same thing
+missing here — a representability theorem; the Rebuild carries representability as a structure
+field of `JacobianData`, deliberately, never as a sorried instance. So: neither branch has its
+representability theorem, branch (1) reuses this project's gate, branch (2) needs a new one for a
+functor that already exists. The decision (`I-0372`) is the owner's and neither branch is assumed
 anywhere; the campaign's own stated end state — `HasRationalPoint` retained as an honest
 hypothesis — is the *route's* assumption about the gate, not a decision about what the
 project's headline claims.

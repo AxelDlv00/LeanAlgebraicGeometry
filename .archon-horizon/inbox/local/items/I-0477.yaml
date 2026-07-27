@@ -1,0 +1,66 @@
+id: I-0477
+provider: local
+kind: conversation
+body: "GROUND REVIEW (run 0055 s0014): the six-site correction pass MISSED a seventh\
+  \ site, and it is the one that still asserts the retracted position verbatim.\n\n\
+  SITE: LedgerClosure.lean:512-549, the docstring of not_bump_of_notMem_overlap. The\
+  \ three-commit correction sequence (3ccd42bb5 -> beb179537) edited that file's MODULE\
+  \ HEADER (lines 29-39) and section-3 note, and the header now correctly says hbump/hledger\
+  \ are FALSE off a chart. But the not_bump_of_notMem_overlap docstring BELOW it was\
+  \ left in the intermediate (round-2, too-weak) state and directly contradicts the\
+  \ header of its own file:\n\n  :520  'ChiUnconditional.chi_eq_charts_sub_overlap\
+  \ settles which one gives way: ... it is\n         chi_add's four hypotheses that\
+  \ cannot hold at such a prime'\n  :523  'A conditional refutation whose hypothesis\
+  \ is unsatisfiable exactly where the theorem\n         applies refutes nothing'\n\
+  \  :524  'bump_iff_chartStep_of_notMem_left gives the bump's actual off-overlap\
+  \ content, which\n         is a one-chart approximation statement'\n  :539  '**Which\
+  \ one gives way.** chi_add's.'\n  :543  'gets the one-chart step, which is >= 0\
+  \ and consistent with [kappa(P):k]'\n  :548  'It does *not* establish that hbump\
+  \ is false anywhere.'\n\nEvery one of those six sentences is the position retracted\
+  \ in c5877e030. Line 543 ('consistent with [kappa(P):k]') and 548 ('does not establish\
+  \ that hbump is false anywhere') are the exact inference I-0470 records as the session's\
+  \ error, still in the imperative voice. I-0467's closing paragraph explicitly listed\
+  \ 'LedgerClosure.lean lines 511-533' as needing reversion; the header got fixed,\
+  \ this block did not.\n\nNote the docstring also still frames the file as if ChiUnconditional\
+  \ had ADJUDICATED IN chi_add's FAVOUR, which is now backwards: sections 5-6 refute\
+  \ hbump WITHOUT chi_add, so 'which one gives way' is 'both' -- chi_add's exactness\
+  \ hypotheses fail there AND hbump is false there. The two are not alternatives.\n\
+  \nFIX: rewrite 512-549 to say (a) the theorem's statement and proof are unchanged\
+  \ and still worth having; (b) its hypothesis hchiAdd is indeed unsatisfiable where\
+  \ it applies, so THIS THEOREM refutes nothing by itself; (c) but hbump IS false\
+  \ there, unconditionally, by ChiUnconditional.not_bump_of_notMem_left -- on the\
+  \ weaker hypothesis P.point notin U0. Delete lines 539-549's adjudication in chi_add's\
+  \ favour and the 'consistent with [kappa(P):k]' clause.\n\nSECOND, SMALLER: GlobalGeneration.lean\
+  \ contains ZERO references to ChiUnconditional (grep -c = 0), while ChiUnconditional.lean:59-60\
+  \ and :492 name GlobalGeneration.lean as one of the three files whose hledger-conditional\
+  \ theorems are vacuous. The other two named consumers (SectionBounds:331, BoundedVanishing:31)\
+  \ each carry the warning. GlobalGeneration's own 'note on the ledger hypothesis'\
+  \ (lines 33-52) still ends 'Both concerns are now moot as gaps' and points readers\
+  \ at chi_eq_of_bump as the discharge -- the pre-retraction reading. A reader entering\
+  \ through GlobalGeneration gets no warning at all. Add the same qualified vacuity\
+  \ note there."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-27T21:40:42.196341+00:00'
+updated_at: '2026-07-27T21:40:42.196355+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-rr
+  started_by: task:ajc-rr
+  read_by:
+  - ajc-rr

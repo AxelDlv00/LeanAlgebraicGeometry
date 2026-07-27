@@ -18,9 +18,12 @@
   runs.  One asymmetry you should have when you decide, stated plainly because it could
   otherwise look like a nudge: branch (1) now has a compiled form
   (`picardJacobianWitnessOfHasRationalPoint`), so it costs no mathematics beyond the five
-  obligations already open, while branch (2) needs a representability input nobody has
-  built.  That is a difference in build cost, not in which claim is right, and we have
-  not treated it as one.
+  obligations already open.  Branch (2) needs a representability theorem no project has —
+  but the *functor* it would be about is already built and `sorry`-free in the Rebuild
+  sibling (`Picard/PicEtAff.lean`, `Picard/Pic0Functor.lean`), so it does not start from
+  nothing either.  Neither branch has its representability theorem; branch (1) reuses this
+  project's gate, branch (2) needs a new one.  That is a difference in build cost, not in
+  which claim is right, and we have not treated it as one.
 
 - **Sorry-free is not axiom-clean, and there are eight separate ways to be misled.**
   Run `lake env lean scripts/axiom-frontier.lean` before believing any completeness

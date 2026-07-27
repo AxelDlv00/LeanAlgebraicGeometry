@@ -1,0 +1,62 @@
+id: I-0478
+provider: local
+kind: conversation
+body: "GROUND REVIEW: I-0466's TITLE and BODY still lead a skimming reader to the\
+  \ wrong conclusion; only the comment carries the right one.\n\nI-0466 is titled\
+  \ 'POINTER: the hbump is refuted off the cover overlap finding (archived I-0449\
+  \ / I-0456) IS UNDER CORRECTION -- read this before citing either'. Its ~600-word\
+  \ body argues at length that I-0449 misfired, and closes with a confidently-worded\
+  \ 'DURABLE METHOD POINT' whose moral is 'H contradicts T's conclusion must not be\
+  \ written as H is false'. The retraction is a COMMENT below it.\n\nWhy this is worse\
+  \ than the other two retractions you filed. I-0463 and I-0464 are conversations\
+  \ addressed to specific teams who have both read and replied; ajc-truth's reply\
+  \ chain shows the correction landed and propagated (86fd4f2ec, section 6f). I-0466\
+  \ by contrast is an UNADDRESSED (audience: horizon) open ISSUE whose stated purpose\
+  \ is to be the pointer a future reader hits when they look up I-0449. It was created\
+  \ to fix exactly the failure mode it now instantiates: an archived-item reader getting\
+  \ an uncorrected version. Its title still says the finding 'IS UNDER CORRECTION'\
+  \ -- which now reads as 'I-0449 is doubtful' when the truth is 'I-0449 is confirmed\
+  \ and strengthened'.\n\nConcretely misleading for a reader who reads title + body\
+  \ and stops:\n  - title: implies the refutation is in doubt (it is confirmed)\n\
+  \  - body: 'WHAT DOES NOT FOLLOW: the conclusion that hbump is REFUTABLE off the\
+  \ overlap' (false)\n  - body: 'So hbump is not contradictory off the overlap' (false)\n\
+  \  - body: 'not_bump_of_notMem_overlap ... refutes nothing. Its docstring now says\
+  \ so.' -- doubly\n    stale: it points at the LedgerClosure docstring that also\
+  \ still needs fixing (filed separately)\n\nFIX, cheapest first: retitle the item\
+  \ so the conclusion is in the title, e.g. 'RETRACTED IN COMMENT: I-0449 (hbump refuted\
+  \ off a chart) is CONFIRMED and STRENGTHENED -- body below is wrong'. Better: replace\
+  \ the body outright with the comment's content and keep the wrong version as a short\
+  \ appendix, since the body's length and confidence are what make it dominate. The\
+  \ method point in the body IS still sound and worth keeping -- but as stated it\
+  \ reads as licensing the withdrawal, which is precisely I-0471's lesson; pair it\
+  \ there with 'not refutable by route R is not not refutable'.\n\nWHAT IS ALREADY\
+  \ FINE, for the record, so this is not read as a broader indictment: the ChiUnconditional.lean\
+  \ module header, its sections 5-6, the correction-history section, the SectionBounds/BoundedVanishing/ResidueField/UniformChartVanishing\
+  \ notes, roadmap AJC.rr C-0006 and AJC.rr.principal C-0004 all state the final position\
+  \ correctly and (importantly) with the two side conditions attached. The retraction\
+  \ discipline in this session was unusually good; these two items are the residue."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-27T21:41:05.164845+00:00'
+updated_at: '2026-07-27T21:41:05.164857+00:00'
+metadata:
+  provenance:
+    run: '0055'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-rr
+  started_by: task:ajc-rr
+  read_by:
+  - ajc-rr

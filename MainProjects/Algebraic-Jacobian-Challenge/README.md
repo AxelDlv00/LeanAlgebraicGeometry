@@ -33,10 +33,10 @@ available for the schemes this route quotients.
 It is developed alongside `Algebraic-Jacobian-Challenge-Rebuild`, which attacks the
 same theorem by a separate curve-specialized strategy.
 
-## State (measured 2026-07-27)
+## State (measured 2026-07-28)
 
-- **187 modules, 132,074 lines**; **26 `sorry`** over 11 modules, the rest locally
-  sorry-free; a warm `lake build AlgebraicJacobian` **green** at 8,744 jobs.  These
+- **187 modules, 132,344 lines**; **26 `sorry`** over 11 modules, the rest locally
+  sorry-free; a warm `lake build AlgebraicJacobian` **green** at 8,746 jobs.  These
   counts move whenever a module lands, so re-measure rather than quoting them:
 
   ```bash
@@ -146,11 +146,21 @@ about rather than leaving "both branches recorded" to imply they are equally clo
 and both witnesses are specialisations of it — so branch (1) costs no mathematics beyond
 the five obligations already open (probe §0c, which leaks and says so; five, not four,
 because the binder makes the representability gate fire rather than removing it).
-Branch (2), étale
-sheafification, is *not* reachable from it: it replaces `instHasPicScheme` rather than
-supplying its hypothesis, and needs a representability input nobody has built.  Neither
-branch is assumed, and having one of them cheaper to *build* is not an argument for it
-being the right claim — that judgement is the owner's.
+Branch (2), étale sheafification, is *not* reachable from that definition: it replaces
+`instHasPicScheme` rather than supplying its hypothesis.
+
+What branch (2) would start from is worth stating precisely, because "not reachable from
+here" invites the reading that it starts from nothing, and that is wrong.  The
+étale-sheafified functor itself is **built and `sorry`-free** in the sibling project
+(`../Algebraic-Jacobian-Challenge-Rebuild`: `Picard/PicEtAff.lean`, with the
+étale-separatedness corollary in `Picard/RelPicCoverInjective.lean` and the degree-zero
+subfunctor in `Picard/Pic0Functor.lean`).  What no project has is a representability
+*theorem* for it — the Rebuild carries representability as a structure field of
+`JacobianData`, deliberately, never as a sorried instance.  So the honest comparison is:
+neither branch has its representability theorem; branch (1) can reuse this project's gate,
+and branch (2) needs a new one for a functor that already exists next door.  Neither
+branch is assumed, and having one cheaper to *build* is not an argument for it being the
+right claim — that judgement is the owner's.
 
 The distinction matters for reading the frontier: over `k̄` every remaining
 obligation is a true statement awaiting a proof, whereas the general-field witness
