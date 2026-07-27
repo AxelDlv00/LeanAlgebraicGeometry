@@ -197,6 +197,55 @@ theorem p1_bijective_appTop_of_geometricallyIntegral
     P1HasTrivialConstants k :=
   Scheme.bijective_hom_appTop (p1Over k)
 
+/-! ### §3b. The leaf pushed down to the integral model `Proj ℤ[Xᵢ]`
+
+Relative projective space is by construction the base change of the integral
+model, `ℙ(n; S) = S ×_{⊤} Proj ℤ[Xᵢ]` with `ℙ(n; S) ↘ S = pullback.fst`
+(`ProjectiveSpace.over_eq_fst`), and `GeometricallyIntegral` is stable under
+base change.  So the leaf does not even depend on `k`: a *single* statement
+about the integral model discharges it over every field at once. -/
+
+open MvPolynomial in
+/-- **Geometric integrality of relative projective space from the integral
+model.**  `GeometricallyIntegral (ℙ(n; S) ↘ S)` for every base scheme `S`,
+given geometric integrality of `Proj ℤ[Xᵢ] ⟶ ⊤_Scheme`.
+
+(The explicit `MorphismProperty.pullback_fst` term is required: after
+rewriting with `over_eq_fst`, plain instance search does not fire on
+mathlib's `GeometricallyIntegral (pullback.fst f g)` instance here.) -/
+theorem geometricallyIntegral_projectiveSpace_over (n : Type u) (S : Scheme.{u})
+    [GeometricallyIntegral (terminal.from (Proj (homogeneousSubmodule n (ULift.{u} ℤ))))] :
+    GeometricallyIntegral (ℙ(n; S) ↘ S) := by
+  rw [ProjectiveSpace.over_eq_fst]
+  exact MorphismProperty.pullback_fst _ _ ‹_›
+
+open MvPolynomial in
+/-- `ℙ¹_k ⟶ Spec k` is geometrically integral, given the integral model is. -/
+theorem geometricallyIntegral_p1Over
+    [GeometricallyIntegral
+      (terminal.from (Proj (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))))] :
+    GeometricallyIntegral ((p1Over k).hom) :=
+  geometricallyIntegral_projectiveSpace_over _ _
+
+open MvPolynomial in
+/-- **The B3-H0 leaf, pushed all the way down to the integral model**: a
+single `k`-independent statement — `Proj ℤ[X₀, X₁] ⟶ ⊤_Scheme` is
+geometrically integral, i.e. `ℙ¹_K` is an integral scheme for every field
+`K` — discharges the field-of-constants anchor `Γ(ℙ¹_k, 𝒪) = k` over every
+field `k` simultaneously.
+
+This is the *whole* remaining B3-H0 frontier.  Mathlib has the analogous
+instances for **affine** space (`AlgebraicGeometry/AffineSpace.lean`:
+`GeometricallyIrreducible`, `GeometricallyReduced`, `GeometricallyIntegral`
+of `𝔸(n; S) ↘ S`) but nothing for `Proj`; supplying the projective analogue
+is the missing piece. -/
+theorem p1TrivialConstants_of_proj
+    [GeometricallyIntegral
+      (terminal.from (Proj (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))))] :
+    P1HasTrivialConstants k :=
+  letI := geometricallyIntegral_p1Over (k := k)
+  p1_bijective_appTop_of_geometricallyIntegral
+
 variable (A : Type u) [CommRing A] [Algebra k A]
 
 /-- **The `A`-level anchor from the `k`-level one**: `Γ(Spec A, 𝒪) → Γ(ℙ¹_A, 𝒪)`
