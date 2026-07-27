@@ -316,5 +316,68 @@ theorem exists_bound_h1dim_eq_zero_of_charts (hcov : U₀ ⊔ U₁ = ⊤) (b : �
 
 end ChiCharts
 
+/-! ## §4. The principal-divisor leaf, with the ledger removed from the hypothesis list
+
+`SectionBounds.degK_principal_eq_zero` derives `deg_k(div g) = 0` from the **closed ledger**.
+But the ingredient it really uses is `ClassInvariance.chi_eq_of_principal_shift`
+(`χ(D − div g) = χ(D)`), which is already *unconditional* in this lane — the ledger enters
+only to convert a χ-equality into a degree-equality.
+
+So the ledger can be replaced by the ungated χ formula, and what remains is visibly the
+**one honest geometric input**: that the Čech chart count sees `deg_k`.  Stating it that way
+turns the open leaf `Scheme.WeilDivisor.principal_degree_zero` from "needs the ledger"
+(a global hypothesis over all divisors, refutable-looking, hard to certify) into "needs the
+chart count at two divisors", which an explicit cover computation can supply. -/
+
+section PrincipalLeaf
+
+variable (k : Type u) [Field k] {X : Scheme.{u}} [IsIntegral X]
+    [IsNoetherian X] [Scheme.IsRegularInCodimensionOne X]
+    [Algebra k X.functionField] [IsConstantField k X] (U₀ U₁ : X.Opens)
+
+/-- **The Čech count is `deg_k` up to the constant `χ(0)`** — the single geometric input.
+
+`ChartCountsDegree` says the unconditional Čech Euler characteristic
+(`chi_eq_charts_sub_overlap`) is an affine function of the weighted degree with slope one.
+Given the ungated formula, this is *equivalent* to the closed ledger `hledger`, but it is
+stated in terms of the three chart dimensions, which is what makes it checkable on an
+explicit cover — and it is honest that this, and not any exactness datum, is the content.
+
+This is deliberately a `def` of a Prop rather than a class: the lane's instance-diamond
+hazard (recorded in `ResidueField.lean`) makes a new global class a liability here. -/
+def ChartCountsDegree : Prop :=
+  ∀ D : X.WeilDivisor, chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D
+
+/-- **Principal divisors have weighted degree zero, from χ class-invariance alone.**
+
+Identical conclusion to `SectionBounds.degK_principal_eq_zero`; the point is the proof's
+shape.  The only two facts used are `ClassInvariance.chi_eq_of_principal_shift` (which is
+unconditional in this lane) and the chart count at the two divisors `0` and `0 − div g`.
+No exactness hypothesis, no `hbump`, no approximation input. -/
+theorem degK_principal_eq_zero_of_chartCounts
+    (hcount : ChartCountsDegree k U₀ U₁) {g : X.functionField} (hg : g ≠ 0) :
+    degK k (Scheme.WeilDivisor.principal g hg) = 0 := by
+  have hchi := chi_eq_of_principal_shift k U₀ U₁ (0 : X.WeilDivisor) hg
+  rw [hcount ((0 : X.WeilDivisor) - Scheme.WeilDivisor.principal g hg),
+    hcount (0 : X.WeilDivisor), degK_sub, degK_zero] at hchi
+  omega
+
+/-- **The chart count is EQUIVALENT to the closed ledger.**
+
+Both directions are immediate from `chi_eq_charts_sub_overlap`, since `ChartCountsDegree` is
+by definition the ledger.  This lemma is recorded for exactly one reason: to make it
+impossible for a later reader to mistake `ChartCountsDegree` for a *weakening* of the
+ledger.  It is not a reduction — it is a restatement in checkable terms, and inbox memory
+`I-0456` records that presenting a restatement as a reduction is this task's recurring
+failure mode.  The honest gain is not logical strength; it is that the right-hand side is
+computable on a cover, whereas `hbump` invited a search for a connecting homomorphism that
+this lane never had. -/
+theorem chartCountsDegree_iff_ledger :
+    ChartCountsDegree k U₀ U₁ ↔
+      ∀ D : X.WeilDivisor, chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D :=
+  Iff.rfl
+
+end PrincipalLeaf
+
 end Adelic
 end AlgebraicGeometry
