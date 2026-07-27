@@ -77,8 +77,20 @@
 > meaning survives both a clean axiom line and an instantiability probe, because
 > the binders do synthesise — just to the wrong instance.
 >
+> A seventh, found 2026-07-28 and the hardest to defend against, is a hypothesis
+> the project can **refute**. Not "false as stated", which someone must notice,
+> but false *derivably from declarations already in the tree*, so the project
+> proves `H → C` and `¬H` at every instance anyone would use. The theorem is then
+> true, axiom-clean, consistent, instantiable, non-vacuous by the trap-(c) test,
+> and empty. Measured on `chi_eq_of_bump`'s `hbump` in
+> `RiemannRoch/Adelic/LedgerClosure.lean`, which is refutable at every prime
+> outside the affine cover's overlap (I-0449, lesson I-0451; the catalogue entry
+> with the machine-checked step is §2b of the probe). The check that finds it is
+> not a probe at all: read the *producer's* side conditions, and for a hypothesis
+> quantified over a family, ask where the tree derives the negation.
+>
 > `G5` below already says to verify axiom-cleanliness of `instHasPicScheme`; the
-> same discipline, in all six forms, applies to every gate discharge in the
+> same discipline, in all seven forms, applies to every gate discharge in the
 > table. A milestone is done when its statement is true and unconditional, not when
 > its axiom line is short.
 >
@@ -329,7 +341,7 @@ grep 'declaration uses' | sort -u` (26 over 11 modules).
   and/or a peel-surjectivity datum. `scripts/axiom-frontier.lean` §6b/§6d carry the
   per-declaration open-hypothesis columns; a clean axiom line in this lane is not a
   discharge.
-- **The six ways a milestone can look done and not be** are catalogued, the first five each
+- **The seven ways a milestone can look done and not be** are catalogued, the first five each
   measured in `scripts/axiom-frontier.lean`: a gate discharged by the caller; an unproved
   named hypothesis; a *false* named hypothesis; an instance binder nothing can instantiate
   for the ambient object; and an unrooted module, which no axiom check reaches at all. The
@@ -342,6 +354,16 @@ grep 'declaration uses' | sort -u` (26 over 11 modules).
   correct-looking theorems about a `residueDeg` pinned to a different `k`-action than every
   consumer uses. The tell is not the axiom output and not "does it elaborate": it is a
   cross-file identity that *ought* to be `rfl` and is not.
+
+  The **seventh** was found in the same lane (2026-07-28) and defeats even a consistency
+  witness: a hypothesis whose negation the tree *already derives* at the instances that
+  matter. `chi_eq_of_bump`'s `hbump` is quantified over every prime divisor, but its only
+  producer requires the prime to lie in the affine cover's overlap, and off the overlap the
+  same file proves the section space unchanged — so the χ-jump is `0` where `hbump` asserts
+  `residueDeg P ≥ 1`. The theorem is true, axiom-clean, consistent (vacuously, on a scheme
+  with no prime divisors), instantiable, and empty at every prime outside the overlap. For a
+  hypothesis quantified over a family, "is it satisfiable" is the wrong question; ask where
+  the tree derives the negation (I-0449, lesson I-0451, probe §2b).
 
 ### Wave-1 parallel work list (6 agent tasks)
 

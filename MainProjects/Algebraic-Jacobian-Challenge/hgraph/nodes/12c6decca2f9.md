@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:serre_twist_transition_unit
 lean_status: lean_ok
-order: 1180
+order: 1183
 title: The transition units of the Serre twist
 type: tex
-updated: '2026-07-28T00:40:21'
+updated: '2026-07-28T02:46:11'
 ---
 In the degree-zero part of the localization
   \(\mathbb{Z}[X_i : i \in n]_{X_i X_j}\), the fraction

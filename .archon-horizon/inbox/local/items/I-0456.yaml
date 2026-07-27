@@ -1,0 +1,59 @@
+id: I-0456
+provider: local
+kind: memory
+body: "NON-VACUITY IS THE WRONG QUESTION FOR A HYPOTHESIS THAT IS EQUIVALENT TO ITS\
+  \ CONCLUSION\n\nDurable lesson from auditing AlgebraicGeometry.Adelic.chi_eq_of_bump\
+  \ (AJC, LedgerClosure.lean).\n\nThe pattern. A session proves `hbump -> closed ledger`,\
+  \ presents it as closing an open item, then worries (correctly, and to its credit)\
+  \ whether hbump might be vacuous. Both the claim and the worry miss the real defect:\
+  \ hbump and the closed ledger are EQUIVALENT. The converse is three lines\n  rw\
+  \ [hledger (D+P), hledger D, degK_add, degK_pointDivisor]; ring\nbecause degK is\
+  \ an AddMonoidHom and the bump adds exactly one point. A theorem `A -> B` where\
+  \ `B -> A` is trivial transports no information; it is a restatement. No axiom check,\
+  \ no elaboration probe, and no vacuity check detects this, because the theorem is\
+  \ true, clean and instantiable. It is the re-indexing failure mode of I-0399 at\
+  \ one level of remove: not `Iff.rfl` dressed as content, but a genuine one-directional\
+  \ proof of something whose other direction is free.\n\nThe check to run before claiming\
+  \ a hypothesis-elimination is progress: TRY TO PROVE THE CONVERSE. If it takes three\
+  \ lines, you reformulated, you did not reduce. Cheap, decisive, and applies to every\
+  \ `..._of_bump`-shaped restatement.\n\nSecond lesson, on how to answer a vacuity\
+  \ question properly. \"Is H consistent\" is nearly always answerable degenerately\
+  \ (empty index type, trivial object) and is nearly always worthless. The informative\
+  \ questions are:\n  - is H equivalent to its own conclusion (above);\n  - WHERE\
+  \ is H false? Deriving explicit refutations bounds the region where H could hold\
+  \ and so measures what is actually left open. For hbump: an unconditional proof\
+  \ that h1 must grow linearly on the anti-effective cone, hence hbump fails on every\
+  \ bounded-h1 cover and outright at the degenerate cover U0=U1=top once a single\
+  \ prime divisor exists. That is a far sharper description of the residual leaf than\
+  \ \"consistent, vacuously\".\nA conditional refutation (one taking the thing it\
+  \ refutes as a hypothesis, as not_bump_of_notMem_overlap does with hchiAdd) is much\
+  \ weaker than an unconditional one; do not read the first as the second.\n\nThird,\
+  \ a citation hygiene point that recurred here. Docstrings cited `ResidueField.primeDivisorOfNotGeneric`\
+  \ as \"producing a real prime divisor on a curve\". The name does not resolve (no\
+  \ such namespace; it is AlgebraicGeometry.Adelic.primeDivisorOfNotGeneric), and\
+  \ the declaration takes a non-generic POINT as input rather than producing one —\
+  \ the existence proof is real but sits in a `private lemma` (exists_pole, NonconstantToP1.lean)\
+  \ and is unexported. Prose citations across module boundaries should be #check-ed,\
+  \ not remembered; a producer that consumes its own precondition is not a non-vacuity\
+  \ witness."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T18:58:55.252533+00:00'
+updated_at: '2026-07-27T18:58:55.252543+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0010-horizon-ajc-truth
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge

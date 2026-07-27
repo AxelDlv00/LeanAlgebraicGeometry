@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:pic_scheme_lft
 lean_status: lean_ok
-order: 1562
+order: 1565
 title: Local finite type of \(\Pic_{C/k}\)
 type: tex
-updated: '2026-07-28T00:40:22'
+updated: '2026-07-28T02:46:11'
 ---
 The predicate
   \[

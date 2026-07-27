@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:gr_transition_pre_unit
 lean_status: lean_ok
-order: 1361
+order: 1364
 title: The pre-hom sends \(P^J_I\) to a unit
 type: tex
-updated: '2026-07-28T00:40:21'
+updated: '2026-07-28T02:46:11'
 ---
 \textit{Source: [Nitsure], \S 1.}
   The pre-localisation hom \(\tilde\theta_{I,J}\) (\cref{def:gr_transition_pre})

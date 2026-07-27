@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:gr_matrixEndRect
 lean_status: lean_ok
-order: 1502
+order: 1505
 title: Rectangular matrix homomorphism of free sheaves
 type: tex
-updated: '2026-07-28T00:40:22'
+updated: '2026-07-28T02:46:11'
 ---
 Let \(S\) be a scheme, \(d, r \in \mathbb{N}\), and
   \(M \in \operatorname{Mat}_{d \times r}(\Gamma(S, \mathcal{O}_S))\) a rectangular matrix

@@ -9,9 +9,14 @@
   at the Lean leaf `hasRationalPoint_of_curve`; neither has been assumed.  The
   decision is now *exactly* the rational point: the leaf used to bundle geometric
   integrality with it, and that half turned out to be a theorem, now proved
-  (`geometricallyIntegral_of_curve`).
+  (`geometricallyIntegral_of_curve`).  It is also *bounded*: over an algebraically
+  closed field the rational point is a theorem too
+  (`hasRationalPoint_of_curve_of_isAlgClosed`, axiom-clean), and the witness
+  assembles there on four obligations rather than five.  So what you are deciding is
+  what the project claims over an **arbitrary** base field — not whether the
+  construction runs.
 
-- **Sorry-free is not axiom-clean, and there are six separate ways to be misled.**
+- **Sorry-free is not axiom-clean, and there are seven separate ways to be misled.**
   Run `lake env lean scripts/axiom-frontier.lean` before believing any completeness
   number; it probes 107 declarations, 70 clean and 37 carrying `sorryAx` as last
   measured (2026-07-28, root build green at 8,744 jobs).
@@ -29,7 +34,12 @@
   unrooted module is not probed at all, because the root import never reaches it.
   (6) Two different *instances* can supply one binder without being equal, so a file
   can prove correct-looking theorems about a definition pinned to the wrong one; this
-  one survives both the axiom check and an instantiability probe.
+  one survives both the axiom check and an instantiability probe.  (7) A hypothesis can
+  be *refutable*: its negation already derivable in the tree at every instance anyone
+  would use, so the project proves both `H → C` and `¬H` and the theorem is true,
+  clean, consistent, instantiable and empty.  Found this session in the χ-ledger lane
+  and reported to its owner; it defeats every check above, including a consistency
+  witness.
   Genuinely clean and unconditional, verified: the adelic genus lane, degree-1
   affine vanishing, the Čech higher-direct-image comparison, and — new this week —
   the **whole B3 rigid-pushforward gate**, which now carries a real instance for
@@ -37,7 +47,7 @@
   the synthesis site, not merely as stated, which is the only check that
   distinguishes it from case (1) above.
 
-- **The headline is wired, and now rests on five stated obligations.**
+- **The headline is wired, and now rests on five stated obligations — four over `k̄`.**
   `picardJacobianWitness` is built from `Pic⁰_{C/k}` and reaches 98 project
   modules, up from 8; the whole committed tree is reachable from the project root.
   Two of its four structural fields are proved upstream (`Pic0.grpObj`,
@@ -48,4 +58,9 @@
   latter two now have their landed half stated at the headline as a compiled theorem,
   so what each still owes is checkable rather than described: the *dimension count*
   `dim T_e Pic⁰ = genus C` holds already, and so does the Albanese property in the
-  algebraically closed, positive-genus case.
+  algebraically closed, positive-genus case.  The rational-point leaf is the one whose
+  algebraically closed case is a full discharge, so over `k̄` the witness
+  (`picardJacobianWitnessOfIsAlgClosed`) rests on four obligations — and, unlike the
+  general one, on no false hypothesis.  That distinction is not visible in any axiom
+  count: a witness resting on an inconsistent leaf reports exactly what an honest one
+  does.

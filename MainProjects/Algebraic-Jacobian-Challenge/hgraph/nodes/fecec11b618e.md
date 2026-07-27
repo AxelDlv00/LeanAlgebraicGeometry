@@ -70,7 +70,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picardJacobianWitness
 type: lean
-updated: '2026-07-27T17:00:52'
+updated: '2026-07-28T02:46:09'
 ---
 noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
@@ -84,3 +84,7 @@ noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
       geomIrred := Scheme.Pic0.geometricallyIrreducible C
       smoothGenus := smoothOfRelativeDimension_genus_pic0 C
       isAlbaneseFor := fun P => isAlbanese_pic0 C _ _ _ _ P }
+
+/-- **The witness over an algebraically closed field, free of the inconsistent leaf.**
+
+Identical to `picardJacobianWitness` except that the rational point is supplied by the

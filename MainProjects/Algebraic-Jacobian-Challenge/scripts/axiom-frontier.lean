@@ -223,7 +223,36 @@ command is written out here rather than the number alone. -/
 #print axioms AlgebraicGeometry.Scheme.AffineCoverMVSquare.chi_unit_eq_one_sub_genus
 #print axioms AlgebraicGeometry.Scheme.AffineCoverMVSquare.h1_unit_eq_genus
 
-/-! §6b Cluster-P extensions (task ajc-rr).  Independent re-verification, in the
+/-! §2b The SEVENTH trap, and the one that is hardest to defend against: a hypothesis the
+project can REFUTE.
+
+Trap (c) below is a named hypothesis that is false as stated — someone has to notice that it
+is false. This is the sharper version: a hypothesis whose negation is *derivable from
+declarations already in the tree*, so the project simultaneously proves `H → C` and, at every
+instance anyone would use, `¬H`. The theorem is true, axiom-clean, non-vacuous by every probe
+in this file, and empty.
+
+Measured instance (2026-07-28, `RiemannRoch/Adelic/LedgerClosure.lean`): `chi_eq_of_bump`
+takes `hbump : ∀ P E, χ(1·P + E) = χ(E) + residueDeg P`. Its only producer,
+`ChiLedger.chi_add_eq_residueDeg`, carries the side condition that `P` lie in the overlap
+`U₀ ∩ U₁` of the chosen affine cover. Off the overlap the same file's
+`sectionSub_add_pointDivisor_of_notMem_overlap` gives `A(1·P + E) = A(E)`, so the local step
+is a subsingleton, its `finrank` is `0`, and `ChiLedger.chi_add` yields a χ-jump of `0`
+against `hbump`'s `residueDeg P ≥ 1`. The exceptional set is empty only for `U₀ = U₁ = ⊤`,
+impossible for a 2-affine cover of a proper curve.
+
+What defeats each check, in order: `#print axioms` sees a clean line; a consistency witness
+exists (`bump_of_isEmpty_primeDivisor`, on a scheme with no prime divisors); an elaboration
+probe synthesises every binder; and non-vacuity in the trap-(c) sense holds, because the
+hypothesis is not contradictory — it is merely refutable where it is wanted. The only check
+that finds it is reading the PRODUCER's side conditions and asking whether the family the
+hypothesis quantifies over contains members where the tree proves the negation.
+
+So the discipline this adds to the other six: for a hypothesis quantified over a family, do
+not stop at "is it satisfiable". Ask where the project can derive its negation. Recorded as
+I-0449 with the machine-checked step, and as the durable lesson I-0451.
+
+§6b Cluster-P extensions (task ajc-rr).  Independent re-verification, in the
 rooted environment, of the axiom claims made in I-0383 and I-0403.
 
 CAUTION, and this is the section to read before quoting any line below as a

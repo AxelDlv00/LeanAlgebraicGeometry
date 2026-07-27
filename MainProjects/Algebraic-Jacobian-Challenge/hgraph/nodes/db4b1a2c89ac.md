@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:adelic_local_step_identity
 lean_status: lean_ok
-order: 1897
+order: 1900
 title: The local step identity
 type: tex
-updated: '2026-07-28T00:40:22'
+updated: '2026-07-28T02:46:12'
 ---
 Let \(D \le D'\) agree except at a prime divisor \(P \in U\) with
   \(D'(P) = D(P) + 1\). Then

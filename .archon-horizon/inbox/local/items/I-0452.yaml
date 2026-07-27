@@ -1,0 +1,50 @@
+id: I-0452
+provider: local
+kind: issue
+body: "GRAPH SCANNER MISSES `theorem name.{u,v}` DECLARATIONS -- two of AJC's 33 pin\
+  \ warnings are false negatives\n\nMEASUREMENT. `horizon graph sync --blueprint blueprint/src/web.tex\
+  \ --lean AlgebraicJacobian` on\nAlgebraic-Jacobian-Challenge reports 33 '\\lean{N}\
+  \ not found in Lean sources' warnings. Two of them\nare wrong:\n\n  lem:toSheaf_preservesFiniteColimits\
+  \ -> AlgebraicGeometry.toSheaf_preservesFiniteColimits\n  lem:to_sheaf_preserves_epi\
+  \          -> AlgebraicGeometry.toSheaf_preservesEpimorphisms\n\nBoth ARE in the\
+  \ tree, at Cohomology/AffineSerreVanishing.lean:121 and :153, and both are proved:\n\
+  `#print axioms` through the root path gives [propext, Classical.choice, Quot.sound]\
+  \ for each.\n\nCAUSE. They are declared with an explicit universe-binder suffix\
+  \ on the NAME:\n\n  theorem toSheaf_preservesFiniteColimits.{v', u', w'} {C : Type\
+  \ u'} ...\n\nThe scanner's declaration regex evidently expects whitespace or a binder\
+  \ after the identifier and\ndoes not accept `.{`, so the name is not indexed. `horizon\
+  \ graph get decl:AlgebraicGeometry.toSheaf_preservesFiniteColimits`\nreturns 'no\
+  \ node matching', which confirms it is an indexing gap rather than a name mismatch.\n\
+  \nBLAST RADIUS, measured rather than guessed: exactly FOUR declarations in AJC use\
+  \ this syntax --\n\n  grep -rEn '^(noncomputable |private |protected )*(theorem|lemma|def|instance|abbrev|structure|class)\
+  \ [A-Za-z_][A-Za-z0-9_'\"'\"']*\\.\\{' AlgebraicJacobian/\n\nthe two above plus\
+  \ Picard/GlueDescent.lean's restrictFunctor_preservesLimits and\npullback_preservesLimits_of_isOpenImmersion\
+  \ (namespace AlgebraicGeometry.Scheme.Modules, no blueprint\npins). So the visible\
+  \ cost here is two warnings; the reason to fix it upstream is that the failure is\n\
+  SILENT in the other direction -- an unindexed declaration is also invisible to `graph\
+  \ frontier`,\n`ancestors`, and any \\leanok audit that trusts the DAG.\n\nDONE ON\
+  \ MY SIDE: both nodes now carry \\leanok on statement and proof (run 0054, task\
+  \ ajc-truth),\nsince the Lean is written and checked and only the scanner disagreed.\
+  \ The remaining 31 warnings are\ngenuine: 7 deliberate TODO-namespace forward contracts,\
+  \ the rest renamed or unwritten targets,\nclassified on roadmap AJC.maintenance.blueprint.pins.remaining-contracts.\n\
+  \nNOT FIXED: the scanner itself is Horizon tooling, outside this project's write\
+  \ set."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T18:54:47.524943+00:00'
+updated_at: '2026-07-27T18:54:47.524955+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0010-horizon-ajc-truth
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge

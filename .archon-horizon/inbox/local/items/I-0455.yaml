@@ -1,0 +1,70 @@
+id: I-0455
+provider: local
+kind: conversation
+body: "Instance diamond CONFIRMED and localised: explicit [Algebra k K(C)] binder\
+  \ vs scoped functionFieldAlgebra\n\nSecond half of the I-0448 audit. Machine-checked,\
+  \ three separate scratch files.\n\nWHAT I VERIFIED.\n\n(a) `open scoped AlgebraicGeometry`\
+  \ alone does NOT activate Scheme.functionFieldAlgebra. Probed with `#check_failure\
+  \ (inferInstance : Algebra k C.left.functionField)`: \"failed to synthesize instance\"\
+  . So the hazard is NOT reachable from the plain-namespace open, contrary to the\
+  \ way I-0448 words it. Only `open scoped AlgebraicGeometry.Scheme` activates it\
+  \ (the instance is declared `noncomputable scoped instance` inside `namespace AlgebraicGeometry.Scheme`,\
+  \ GateInstances.lean:98).\n\n(b) With `open scoped AlgebraicGeometry.Scheme` the\
+  \ found instance IS Scheme.functionFieldAlgebra C, checked by `example : (inferInstance\
+  \ : Algebra k C.left.functionField) = Scheme.functionFieldAlgebra C := rfl` — accepted.\n\
+  \n(c) THE DIAMOND IS REAL and it is exactly the shape ResidueField.lean:790-800\
+  \ records in prose. Two variants of the same consumer probe, differing only in whether\
+  \ the section carries explicit `[Algebra k C.left.functionField] [IsConstantField\
+  \ k C.left]` binders, both feeding hbump into exists_bound_ell_eq_degree_of_bump\
+  \ at a curve:\n  - WITHOUT the explicit binders: elaborates, EXIT=0.\n  - WITH the\
+  \ explicit binders: FAILS. Error is an application type mismatch on hbump:\n   \
+  \   @chi k _ C.left _ _ _ inst*1 inst* U0 U1 (pointDivisor P + E) = ...\n    expected\n\
+  \      @chi k _ C.left _ _ _ (Scheme.functionFieldAlgebra C) _ U0 U1 (pointDivisor\
+  \ P + E) = ...\n   So the binder does NOT shadow harmlessly: the caller-supplied\
+  \ Algebra and the scoped one are not syntactically identical, chi is re-pinned,\
+  \ and hbump no longer matches. Confirmed at the level of the whole lane conclusion,\
+  \ not just chi.\n\n(d) Nothing in LedgerClosure.lean itself trips this. LedgerClosure\
+  \ takes `[Algebra k X.functionField]` as an explicit binder throughout and does\
+  \ NOT open scoped AlgebraicGeometry.Scheme (only `open CategoryTheory Limits IsDedekindDomain`\
+  \ + `open scoped WithZero`), so within the module all declarations are pinned to\
+  \ the same binder instance. ResidueField.lean DOES `open scoped WithZero AlgebraicGeometry.Scheme`\
+  \ (line 136) and correctly takes no such binders in §6. The two conventions are\
+  \ each internally consistent; the breakage happens only at a CALLER that mixes them.\n\
+  \nWHAT I COULD NOT SETTLE. Whether any third `Algebra k K(C)` path exists (e.g.\
+  \ via Picard/TangentSpaceStalkAlgebra overStalkAlgebra or SectionRingUniversal globalSectionsAlgebra\
+  \ composing to the same type). I confirmed mathlib supplies no `Algebra k X.functionField`\
+  \ for a plain field k, matching GateInstances.lean:40-42, so functionFieldAlgebra\
+  \ is the only instance-resolution candidate I found; I did not exhaustively enumerate\
+  \ scoped instances across the whole project.\n\nBOTTOM LINE for LedgerClosure: no\
+  \ diamond defect in the new declarations. The hazard is a caller-side convention\
+  \ rule and should be stated as one: a consumer combining LedgerClosure (binder style)\
+  \ with ResidueField §6 (scoped style) must drop its own Algebra/IsConstantField\
+  \ binders."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-27T18:58:31.753830+00:00'
+updated_at: '2026-07-27T18:58:31.753842+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0010-horizon-ajc-truth
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-rr
+  - task:ajc-truth
+  started_by: task:ajc-truth
+  read_by:
+  - ajc-truth

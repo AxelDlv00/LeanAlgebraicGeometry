@@ -71,7 +71,7 @@ same theorem by a separate curve-specialized strategy.
   misclassifies exactly the declarations with the longest lists.  The header carries
   the recipe.
 - **A clean axiom set answers one question only:** is a `sorry` reachable from this
-  proof term.  Six separate things it cannot see have each been found in this
+  proof term.  Seven separate things it cannot see have each been found in this
   tree — a `sorry`-bodied instance reached only through synthesis; an *unproved*
   named hypothesis in the statement; a *false* named hypothesis in the statement,
   which makes the theorem vacuously true and perfectly clean; an
@@ -82,10 +82,16 @@ same theorem by a separate curve-specialized strategy.
   an *unrooted module*, which no axiom check reaches at all, per the bullet
   above; and an *instance diamond*, where two non-definitionally-equal instances can
   supply the same binder, so a file can prove correct-looking theorems about a
-  definition pinned to the wrong one.  The first five are each measured by the probe;
-  the sixth defeats the probe *and* an instantiability check, because the binders do
-  synthesise — the tell is a cross-file identity that ought to be `rfl` and is not.
-  Read the probe's section headers, not just its output lines.
+  definition pinned to the wrong one; and a *refutable* hypothesis, whose negation the
+  tree already derives at every instance anyone would use, so the project proves both
+  `H → C` and `¬H` and the theorem is true, clean, consistent, instantiable and empty.
+  The first five are each measured by the probe; the sixth defeats the probe *and* an
+  instantiability check, because the binders do synthesise — the tell is a cross-file
+  identity that ought to be `rfl` and is not.  The seventh defeats every check in this
+  file including a consistency witness: the only thing that finds it is reading the
+  *producer's* side conditions and asking where the family the hypothesis quantifies
+  over contains a member whose negation the tree proves (measured on the χ-ledger's
+  `hbump`, probe §2b).  Read the probe's section headers, not just its output lines.
 - **Only two of the tree's `sorry` carriers are instances**, and that is the whole of
   the synthesis-leak surface, because an instance is the only carrier a consumer can
   reach without naming it.  The probe's §2 lists all 26 carriers by module (the two

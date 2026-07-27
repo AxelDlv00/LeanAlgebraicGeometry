@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:over_restrict_pullback_iso
 lean_status: lean_ok
-order: 1113
+order: 1116
 title: The slice-to-geometric isomorphism in pullback form (gap1, C, step 4')
 type: tex
-updated: '2026-07-28T00:40:21'
+updated: '2026-07-28T02:46:11'
 ---
 \textit{The pullback packaging of the slice-touching bridge; the form consumed by the P1 transport.}
   With \(X\) and \(U \subseteq X\) as above and \(M\) a sheaf of modules on \(X\), the transport of the

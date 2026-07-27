@@ -2,8 +2,49 @@ id: AJC.maintenance.blueprint.pins.remaining-contracts
 title: Resolve remaining pin contracts
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Classify or resolve the 33 remaining unresolved-pin warnings. These are scanner-coverage
-  gaps or genuine forward contracts; none is in the Adelic chapter.
+summary: "CLASSIFIED, and the load-bearing finding is that NONE of the 33 rides on\
+  \ a completeness claim. Measured 2026-07-28 by re-running the sync and reading each\
+  \ warned node's environment: not one of the 33 nodes carries \\leanok, \\mathlibok\
+  \ or any other assertion that its Lean is written and checked. So the warnings are\
+  \ unresolved FORWARD CONTRACTS and renames, never a false \"this is formalized\"\
+  \ claim. That is the question the item was really asking, and it is now answered\
+  \ by measurement rather than by inspection of a sample.\n\nREGENERATE THE LIST (the\
+  \ numbers move as modules land, so do not quote this one without re-running):\n\n\
+  \  horizon graph -p Algebraic-Jacobian-Challenge sync \\\n    --blueprint blueprint/src/web.tex\
+  \ --lean AlgebraicJacobian 2>&1 | grep warning:\n\nCurrent: 33 warnings, all of\
+  \ the form '\\lean{N} not found in Lean sources'. Sync itself is otherwise clean\
+  \ -- 1935 blueprint nodes, 4630 Lean nodes, 6719 generated edges, 8 marked stale.\n\
+  \nTHE THREE CLASSES, by cause rather than by chapter:\n\n  (a) DELIBERATE FORWARD\
+  \ CONTRACTS, 7 of 33, pinned under the AlgebraicGeometry.TODO namespace, which exists\
+  \ precisely to make an unwritten target visible: TODO.rel_pic_etale_sheaf_unit_canonical,\
+  \ TODO.quotReductionToPiStarW, TODO.quotBoundedness, TODO.quotAlphaInjective, TODO.quotValuativeCriterion,\
+  \ TODO.stage6_regular_stalk_assembly, TODO.weilDivisorObstruction. Four of the seven\
+  \ are Quot-endgame nodes, i.e. off-path mathematics retained deliberately (see the\
+  \ route note in Picard_QuotScheme.tex); leaving them unresolved is correct and they\
+  \ should NOT be repinned to anything.\n\n  (b) RENAMED OR RESHAPED TARGETS, where\
+  \ the mathematics landed under a different name. Resolvable by name, one node at\
+  \ a time, and this is the only class where work remains. Confirmed candidates found\
+  \ by horizon search: lem:toSheaf_preservesFiniteColimits and lem:to_sheaf_preserves_epi\
+  \ (the declarations exist with a trailing-dot artifact in the index), lem:presentation_restrict_basicOpen\
+  \ -> presentationModulesRestrictBasicOpen, lem:qcoh_localized_sections -> qcoh_iso_tilde_sections_hom/_inv,\
+  \ lem:qcoh_global_generation -> qcoh_iso_tilde_sections_of_genSections, lem:tilde_preserves_kernels\
+  \ -> tildePreservesFiniteLimits_of_toPresheaf or tilde_preservesFiniteLimits_of_preservesKernels,\
+  \ the two MvPolynomial height nodes -> MvPolynomial.height_eq_natCard_of_isMaximal.\
+  \ Each repin must be checked against the SIGNATURE, not just the name: a node whose\
+  \ statement no longer matches its renamed target is a worse defect than an unresolved\
+  \ pin, because it would then be eligible for \\leanok.\n\n  (c) GENUINELY UNWRITTEN,\
+  \ no candidate in any project or in mathlib: the four pushforwardPullbackBaseChange\
+  \ naturality/hom/natIso nodes (only pushforwardPullbackBaseChangeIso exists, which\
+  \ is a different statement), tilde_restrict_basicOpen, isQuasicoherent_restrict_basicOpen,\
+  \ qcoh_kernel_qcoh, the section-graded ring/module and Hilbert-polynomial-of-section-module\
+  \ nodes, the three graded-instance defs, gr_modules_glueHom, and the two standard-smooth\
+  \ Krull-dimension nodes. These are the blueprint running ahead of the Lean, which\
+  \ is the intended direction; they are not defects.\n\nWHY THIS IS NOT MERELY BOOKKEEPING:\
+  \ an unresolved pin is the fifth way a clean axiom line can mislead, in a mirror\
+  \ form. The probe cannot see a node whose Lean does not exist, so a chapter can\
+  \ look complete in the DAG while its pins resolve to nothing. The check that this\
+  \ is not happening is the \\leanok audit above, and it should be re-run whenever\
+  \ the warning count changes rather than only when it grows.\n"
 status: pending
 kind: blueprint
 priority: normal
@@ -26,5 +67,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint.pins
-  owner: ajc-optimize
+  owner: ajc-truth
   milestone: ajc-optimize
+  updated_at: '2026-07-27T18:52:11.224546+00:00'

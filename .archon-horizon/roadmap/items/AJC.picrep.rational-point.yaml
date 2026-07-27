@@ -8,25 +8,45 @@ summary: 'NEEDS A HUMAN DECISION, and it is exactly one decision. references/cha
   a section Pic(C x_k T)/pi_T^* Pic(T) need not be a Zariski sheaf. Kleiman''s theorem
   needs no section because it represents the ETALE sheaf, sheafification supplying
   etale-locally what a section supplies globally. Mathlib v4.31 carries the etale
-  topology, so this is a design choice, not a platform limitation.  THE TWO BRANCHES,
-  recorded without either assumed: (1) represent the plain functor and carry C(k)
-  nonempty as a hypothesis of the headline -- cheap, and proves something strictly
-  weaker than the challenge asks, since a smooth proper geometrically integral curve
-  need not have a k-rational point; (2) etale-sheafify the relative Picard functor
+  topology, so this is a design choice, not a platform limitation.
+
+
+  THE TWO BRANCHES, recorded without either assumed: (1) represent the plain functor
+  and carry C(k) nonempty as a hypothesis of the headline -- cheap, and proves something
+  strictly weaker than the challenge asks, since a smooth proper geometrically integral
+  curve need not have a k-rational point; (2) etale-sheafify the relative Picard functor
   and represent that -- Kleiman''s own formulation and the full strength, at the cost
-  of a new representability input.  SCOPE NARROWED AND HELD (2026-07-27). The headline
-  leaf used to bundle the rational point with geometric integrality. Geometric integrality
-  is NOT a decision: it follows from the challenge hypotheses via Smooth => GeometricallyReduced
-  (Curve/GeometricallyReduced.lean) and is proved (geometricallyIntegral_of_curve).
-  What remains is the rational point alone, and that half is FALSE in general rather
-  than merely unproved -- so the leaf hasRationalPoint_of_curve must be REPLACED by
-  whichever branch is chosen, never proved. Everything under picardJacobianWitness
-  currently rests on an inconsistent hypothesis, deliberately, to put the gap where
-  a reader of the headline meets it.  ORTHOGONAL TO THE ROUTE CHOICE: the Milne-Kollar
-  re-aim does not touch this. Both routes carry the rational point in the same way
-  (blueprint FGA chapter, sec:fga_pic_setup and the dependency section). Recorded
-  in five places -- I-0372, this node, the blueprint, the Lean leaf docstring, and
-  TO_USER.md -- with neither branch assumed anywhere.'
+  of a new representability input.
+
+
+  SCOPE NARROWED AND HELD (2026-07-27). The headline leaf used to bundle the rational
+  point with geometric integrality. Geometric integrality is NOT a decision: it follows
+  from the challenge hypotheses via Smooth => GeometricallyReduced (Curve/GeometricallyReduced.lean)
+  and is proved (geometricallyIntegral_of_curve). What remains is the rational point
+  alone, and that half is FALSE in general rather than merely unproved -- so the leaf
+  hasRationalPoint_of_curve must be REPLACED by whichever branch is chosen, never
+  proved. Everything under picardJacobianWitness currently rests on an inconsistent
+  hypothesis, deliberately, to put the gap where a reader of the headline meets it.
+
+
+  BOUNDED, STILL NOT DECIDED (2026-07-28). Over an algebraically closed field the
+  rational point is a THEOREM, not a decision: hasRationalPoint_of_curve_of_isAlgClosed
+  (Jacobian.lean) is axiom-clean, routed through Albanese.hasRationalPoint_of_isAlgClosed
+  (Jacobson space => closed point; over k = k-bar a closed point IS a section), and
+  picardJacobianWitnessOfIsAlgClosed assembles the headline witness over k-bar on
+  four obligations instead of five. So the branch point concerns what is claimed over
+  an ARBITRARY base field, and nothing else. This narrows what the human is choosing
+  between; it does NOT choose. Neither branch is assumed anywhere, and the general-field
+  leaf is untouched.
+
+
+  ORTHOGONAL TO THE ROUTE CHOICE: the Milne-Kollar re-aim does not touch this. Both
+  routes carry the rational point in the same way (blueprint FGA chapter, sec:fga_pic_setup
+  and the dependency section). Recorded in six places -- I-0372, this node, the blueprint
+  (lem:curve_hypothesis_gap, lem:curve_rational_point_algClosed, rem:rational_point_scope),
+  the Lean leaf docstring, README, and TO_USER.md -- with neither branch assumed anywhere.
+
+  '
 status: blocked
 kind: proof
 priority: normal
@@ -49,4 +69,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-27T12:49:26.233462+00:00'
+  updated_at: '2026-07-27T18:50:47.730737+00:00'

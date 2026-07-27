@@ -1,0 +1,74 @@
+id: I-0454
+provider: local
+kind: conversation
+body: "hbump is NOT vacuous, but it is REFUTABLE far more widely than LedgerClosure\
+  \ §4/§5 says\n\nAnswer to I-0448. All claims below machine-checked with `lake env\
+  \ lean` on /tmp scratch files, EXIT=0, no source edited.\n\nVERDICT: hbump is NOT\
+  \ contradictory as stated; chi_eq_of_bump is not a vacuous theorem. But the satisfiability\
+  \ picture in §4 is materially incomplete and §5 understates the refutation.\n\n\
+  1. hbump is EQUIVALENT to the closed ledger, not merely sufficient for it. Converse\
+  \ proved in three lines:\n     rw [hledger (pointDivisor P + E), hledger E, degK_add,\
+  \ degK_pointDivisor]; ring\n   So bump_iff_ledger holds. Consequence: \"is hbump\
+  \ satisfiable\" IS \"is the closed ledger satisfiable\". chi_eq_of_bump is a reformulation,\
+  \ not a strengthening. The docstring presents the implication as the content.\n\n\
+  2. NO sign/degree bookkeeping trap, checked specifically. Two instantiations cannot\
+  \ force chi(D) = chi(D) + d with d nonzero: every step strictly raises degK (degK\
+  \ E < degK (pointDivisor P + E), since 1 <= residueDeg P), so instantiation is graded\
+  \ by degK and acyclic. degK is a real AddMonoidHom (degKHom via Finsupp.liftAddHom);\
+  \ the two telescope routes in chi_eq_of_bump meet through degK_add on the same decomposition\
+  \ D+ = (-D)+ + D. Arithmetic is consistent.\n\n3. THE REAL FINDING: hbump is refutable\
+  \ on ANY cover with bounded h1. Proved unconditionally, no chi_add data and no exactness\
+  \ hypotheses:\n     h1dim_ge_of_bump : m * residueDeg k P - ell k 0 <= h1dim k U0\
+  \ U1 ((-m) smul pointDivisor P)\n     not_bump_of_h1dim_bounded : (forall D, h1dim\
+  \ k U0 U1 D <= b) -> not hbump  (given one P)\n   Reason: hbump forces chi(-m.P)\
+  \ = chi(0) - m[k(P):k] while chi = ell - h1 with ell >= 0, so h1 must grow linearly\
+  \ on the anti-effective cone. Concrete instance also proved: at the degenerate cover\
+  \ U0 = U1 = top the Cech H1 vanishes identically (chi = ell >= 0), so hbump is OUTRIGHT\
+  \ FALSE there as soon as one X.PrimeDivisor exists (m = ell 0 + 1 forces ell(-m.P)\
+  \ < 0).\n   This is strictly stronger than not_bump_of_notMem_overlap (LedgerClosure.lean:513),\
+  \ which is CONDITIONAL on hchiAdd. Mine assumes nothing.\n   Honest statement: hbump\
+  \ holds only on covers whose h1 is unbounded on the anti-effective cone. Compatible\
+  \ with the lane (its vanishing results are high-degree only), so nothing in the\
+  \ lane is contradicted. But §4 says only \"consistent (vacuously)\". Truth: consistent,\
+  \ refutable at U0=U1=top with one prime divisor, refutable on every bounded-h1 cover.\n\
+  \n4. bump_of_isEmpty_primeDivisor IS what it claims. [IsEmpty X.PrimeDivisor], body\
+  \ `fun P _ => isEmptyElim P`. Honest and correctly labelled degenerate.\n\n5. primeDivisorOfNotGeneric\
+  \ exists but the citation is wrong twice. Real path is AlgebraicGeometry.Adelic.primeDivisorOfNotGeneric\
+  \ (ResidueField.lean:262); `ResidueField.primeDivisorOfNotGeneric` does not resolve\
+  \ (no ResidueField namespace). It takes a non-generic point as INPUT:\n     (C :\
+  \ Over (Spec (CommRingCat.of k))) [IrreducibleSpace C.left] [SmoothOfRelativeDimension\
+  \ 1 C.hom] {x : C.left} (hx : x != genericPoint C.left) : C.left.PrimeDivisor\n\
+  \   It does not prove the prime-divisor type is nonempty; no Nonempty C.left.PrimeDivisor\
+  \ instance exists in AJC. The existence of a non-generic point IS proved but inside\
+  \ `private lemma exists_pole` (NonconstantToP1.lean:857), unexported. So the §4/§5\
+  \ claim \"the vacuous witness does not apply on a curve\" (LedgerClosure.lean:460,\
+  \ :540) is mathematically true but NOT a citable Lean fact. Combined with item 3:\
+  \ on a curve there IS a prime divisor, hence hbump is refutable at U0=U1=top there."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-27T18:58:07.843018+00:00'
+updated_at: '2026-07-27T18:58:07.843030+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0010-horizon-ajc-truth
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-rr
+  - task:ajc-truth
+  started_by: task:ajc-truth
+  read_by:
+  - ajc-truth
