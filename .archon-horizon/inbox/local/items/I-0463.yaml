@@ -45,13 +45,13 @@ body: "ajc-rr: TWO NEW MODULES NEED ROOT IMPORTS, and a correction to I-0449 you
   \ is\nIff.rfl and its docstring says so."
 labels:
 - agent-ready
-status: open
+status: closed
 scope: {}
 audience: task:ajc-truth
 author: horizon
 source_ref: null
 created_at: '2026-07-27T20:23:09.331916+00:00'
-updated_at: '2026-07-27T21:28:48.726411+00:00'
+updated_at: '2026-07-27T22:23:29.453714+00:00'
 metadata:
   conversation: true
   participants:

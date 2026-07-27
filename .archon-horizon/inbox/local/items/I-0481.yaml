@@ -1,0 +1,99 @@
+id: I-0481
+provider: local
+kind: hint
+body: 'INBOX LIST HIDES 5 OPEN ITEMS FROM EVERY AGENT WHILE THE ADVISORY WARNING COUNTS
+  THEM -- including I-0372, the workspace''s top open decision
+
+
+  Found by the janitor pass for `ajc-truth` (run 0055) while reconciling a discrepancy
+  between what `inbox list` shows and what the health warning counts. This is a CLI/store
+  defect, not a hygiene problem, so I am reporting rather than working around it.
+
+
+  **THE DISCREPANCY, measured two ways.** `horizon inbox list --status open --json`
+  returns **32** items (31 non-protection, 18 memory). The advisory warning printed
+  by the same command says **36 open non-protection items** and **20 open memory items**.
+  A direct count of `status: open` in `.archon-horizon/inbox/local/items/*.yaml` gives
+  **37 open, 36 non-protection, 20 memory** — so the *warning* is right and the *list*
+  is short by five. All 37 files parse as valid YAML and all five hidden items carry
+  `labels: [agent-ready]`.
+
+
+  **THE FIVE INVISIBLE ITEMS.** Not returned by an unfiltered list at any `--limit`
+  (tried 50, 100), and `inbox show <id>` prints **nothing at all** while still exiting
+  0:
+
+
+  - `I-0372` — `issue`, `--to human`, scope `Algebraic-Jacobian-Challenge` — **"DECISION
+  NEEDED: the rational-point hypothesis, and the blueprint describing an abandoned
+  route."**
+
+  - `I-0346` — `issue`, `--to human`, no scope — "STILL OPEN AND STILL YOURS: over
+  a small finite field, what is `DivFamZar` supposed to be?"
+
+  - `I-0144`, `I-0354`, `I-0367` — scoped to `Algebraic-Jacobian-Challenge-Rebuild`,
+  a *different* project. These are arguably hidden **correctly** (the skill says Horizon
+  ignores other projects'' items), but they are still counted by the warning, which
+  is the same bug from the other side.
+
+
+  **WHY I-0372 IS THE ONE THAT MATTERS.** It is addressed to you, scoped to *this*
+  project, and its own text says both questions "outrank every mechanical improvement
+  in flight" and that "nothing above this on the Picard path is safe until it is settled".
+  It asks whether to étale-sheafify the Picard functor or accept a theorem strictly
+  weaker than the challenge asks, and it notes the blueprint still advertises the
+  abandoned Quot route across 8,434 lines of `Picard_QuotScheme.tex`. Multiple downstream
+  items depend on it: `I-0411` cites it as the reason `AJC.jacobian.assembly` cannot
+  be marked done, and the retracted-headline analysis at `I-0473`/`I-0474` turns on
+  the same leaf. **Every agent that reasons about the Jacobian headline is reasoning
+  around a decision item it cannot read.** I only found it by parsing the YAML store
+  directly.
+
+
+  **THE LIKELY MECHANISM, from the metadata.** The two `--to human` items that are
+  hidden were filed by *other* tasks (`I-0372` by `ajc-optimize`, `I-0346` by `ajcr-w4-rep-free`),
+  while `I-0387` — also `--to human`, also `open` — is visible and was filed by `ajc-truth`,
+  the reading team. So the filter appears to restrict `audience: human` items to those
+  whose provenance task matches the reader, effectively treating a human-addressed
+  item as private to its filing team. Nothing in the `horizon-inbox` skill describes
+  that behaviour: it documents `--to human` as an audience, and per-team privacy as
+  a function of the separate `owner` field — and none of these five items has an `owner`
+  set at all. If the intent is that agents need not act on human-addressed items,
+  hiding them is still wrong for two reasons: the skill explicitly says the `agent-ready`
+  label on human-addressed notices exists so later agents can *see* the human has
+  been notified and avoid duplicate reports; and the warning counts them regardless,
+  so they consume advisory budget while being unreadable.
+
+
+  **IMPACT BEYOND THE ONE ITEM.** This also partly explains the standing complaint
+  at `I-0387` that the advisory caps are unreachable. Five of the 36 counted items
+  cannot be triaged by any agent, because a janitor cannot archive, complete, or comment
+  on an item it cannot list or show. The gap between 31 visible and 36 counted is
+  a permanent floor that no cleanup pass can reduce.
+
+
+  **WHAT I DID NOT DO.** I did not hand-edit the store to unhide anything — the skill
+  forbids editing inbox files by hand, and the audience/scope values look intentional.
+  `I-0372` needs your decision on its merits; this item is about the fact that nobody
+  can see it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-27T22:29:37.863631+00:00'
+updated_at: '2026-07-27T22:38:10.554454+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0014-horizon-ajc-truth
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-truth

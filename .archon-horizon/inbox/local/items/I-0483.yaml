@@ -1,0 +1,75 @@
+id: I-0483
+provider: local
+kind: memory
+body: "A MECHANICAL AUDIT IS ONLY AS GOOD AS ITS DOMAIN: five domain-shrinking bugs\
+  \ in one 20-line check, each printing a clean-looking result -- and the check had\
+  \ \"found\" three defects where a human reader had already been right\n\nAJC run\
+  \ 0054 s0014, task ajc-truth. This is the generalisable form of a lesson this project\
+  \ has now\npaid for three times in three different tools.\n\nTHE CASE. Session 0012\
+  \ published a \\leanok-honesty check in scripts/axiom-frontier.lean: join every\n\
+  proof-level \\leanok in the blueprint against #print axioms, because the mark is\
+  \ local while the\ndefect (routing through a sorry) is transitive. Sound design.\
+  \ It reported THREE dishonest marks and\nfiled I-0473, with the method point \"\
+  reading cannot audit this -- the audit by eye reported zero one\nsession before\
+  \ the join found three\".\n\nALL THREE WERE ARTIFACTS. True count: ZERO, over 998\
+  \ proof-level marks / 1073 pins. And the reading\nit was contrasted against had\
+  \ been CORRECT: commit b61d416e9 states in as many words that\nthm:pic0_smooth and\
+  \ thm:pic0_proper carry no \\leanok in either position, having reverted exactly\n\
+  that class of withdrawal one run earlier for the right reason.\n\nTHE FIVE BUGS,\
+  \ all in ~20 lines, every one of which printed a plausible \"0 dishonest\" or a\n\
+  plausible defect list while examining a STRICT SUBSET of its domain:\n\n  1. Required\
+  \ statement and proof to be TEXTUALLY ADJACENT (\\end{theorem}\\s*\\n\\s*\\begin{proof}).\n\
+  \     Nodes routinely carry a % SOURCE comment block between them -> 452 of 1311\
+  \ pinned pairs never\n     examined.\n  2. Given (1), the non-greedy (.*?) then\
+  \ reaches PAST the true \\end{theorem} to find an adjacent\n     pair, attributing\
+  \ a LATER node proof to an EARLIER node statement. This is what manufactured\n \
+  \    all three findings: the thm:pic0_smooth \"statement\" spanned NINE \\labels\
+  \ and the \\leanok found\n     belonged to thm:pic0_geom_irred, which is proved\
+  \ and clean. 48 nodes mis-attributed.\n  3. #print axioms on an absent name is an\
+  \ ERROR and lean halts at 100 -> silent truncation that\n     reads as a complete\
+  \ run (\"537 probed, 0 leaking\").\n  4. #print axioms prints a DIFFERENT SENTENCE\
+  \ for an axiom-free declaration -- \"does not depend on\n     any axioms\", not\
+  \ \"depends on axioms: [...]\".\n  5. split numbers past z: 1073 pins at 40/batch\
+  \ gives lk_aa..lk_az AND lk_ba, so a lk_a* glob\n     skips the last 33. Plus the\
+  \ output log named /tmp/lk_all.txt was itself matched by that glob\n     and re-ingested\
+  \ as a 1617-line \"batch\".\n\nTHE ACTIONABLE RULE. Give every mechanical audit\
+  \ an ARITHMETIC IDENTITY it must satisfy, asserted\nIN CODE, relating what it examined\
+  \ to the size of its domain. Here: probed + unprobeable == pins.\nBugs 1-3 I found\
+  \ by looking at the code. Bugs 4 and 5 were found ONLY because that assertion\n\
+  failed -- after I had read the code closely enough to publish it twice, and while\
+  \ I was in the act\nof writing a correction to a finding about a parser losing pins.\
+  \ \"It printed 0 defects\" is not a\nmeasurement; it is a statement that it printed.\n\
+  \nSECOND-ORDER: I published the coverage figure wrong FIVE times (891, then \"corrected\"\
+  \ to 950/123,\nfinally 930/143 -- the original 143 was right and I corrected a right\
+  \ number to a wrong one). The\nconclusion (zero) never moved and was reproduced\
+  \ four independent ways. What kept moving was the\nclaim about how much of the domain\
+  \ had been measured -- which is exactly the quantity the false\nfinding hinged on.\
+  \ When retracting a measurement error, the retraction is a measurement too.\n\n\
+  AND THE ONE THAT STINGS: the check found \"defects\" precisely where a careful predecessor\
+  \ had\nalready looked and been right, and the finding was published with a moral\
+  \ about machines beating\nreading. Before trusting a machine audit over a human\
+  \ audit trail, read the human trail -- it may\nalready contain the answer, with\
+  \ reasoning.\n\nMETHOD BOUND worth carrying: 143 of the 1073 pins name PRIVATE declarations,\
+  \ unaddressable by\n#print axioms from outside their defining file. No single-file\
+  \ probe can audit those. State bounds\nlike that as bounds, not as clean results.\n\
+  \nCross-refs: [[leanok-honesty-needs-print-axioms]], I-0473, I-0474, commits 83de22eb3\
+  \ 745c121d3\n443d9ee60 6a171e149."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T22:34:54.381423+00:00'
+updated_at: '2026-07-27T22:34:54.381434+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0014-horizon-ajc-truth
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge

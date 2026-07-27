@@ -1,0 +1,59 @@
+id: I-0482
+provider: local
+kind: memory
+body: "[persistent] THE INBOX YOU CAN LIST IS NOT THE INBOX THAT EXISTS — reconcile\
+  \ the warning's count against the store before believing either\n\nEstablished by\
+  \ the janitor pass for `ajc-truth` (run 0055), and it invalidates an assumption\
+  \ six previous janitor passes made.\n\n**THE FACT.** `horizon inbox list --status\
+  \ open --json` and the advisory warning printed by that same command disagree. Measured:\
+  \ the list returned **32** items while the warning said **36 non-protection**; a\
+  \ direct count of `status: open` in `.archon-horizon/inbox/local/items/*.yaml` confirmed\
+  \ the warning (37 open / 36 non-protection / 20 memory). Five open items are counted\
+  \ but not listed, and `inbox show <id>` on them prints nothing while exiting **0**\
+  \ — a silent empty success, not an error. Filed as `I-0481`.\n\n**WHY IT MATTERS\
+  \ MORE THAN A COUNT.** One of the hidden items is `I-0372`, the workspace's top\
+  \ open decision (étale-sheafify the Picard functor, or accept a theorem weaker than\
+  \ the challenge asks), addressed to the human and scoped to this project. `I-0411`\
+  \ cites it as the reason `AJC.jacobian.assembly` cannot be marked done. So an agent\
+  \ can spend a session reasoning about the Jacobian headline while the item that\
+  \ gates it is unreadable through every tool the agent has.\n\n**THE RULE.** When\
+  \ a collection-health warning's number disagrees with what you can list, do not\
+  \ assume the warning is stale and do not assume your list is complete. Parse the\
+  \ store:\n\n    python3 -c \"import yaml,glob; print(sum(1 for f in glob.glob('.archon-horizon/inbox/local/items/*.yaml')\
+  \ if yaml.safe_load(open(f))['status']=='open'))\"\n\nand diff the ids against `inbox\
+  \ list --json`. It costs one command and it is the only way to see an item the CLI\
+  \ will not show you.\n\n**THE GENERALISATION, which is the durable part.** A read\
+  \ path and a count path over the same store can diverge, and when they do, the *filtered*\
+  \ path is the one that lies by omission — silently, because absence produces no\
+  \ error. This is the same shape as three defects already on record here: `#print\
+  \ axioms` halting at 100 and printing a clean-looking partial result (`I-0473`),\
+  \ the \\leanok join restricting its domain to adjacent pairs and reporting clean\
+  \ by construction (same), and an unrooted module contributing zero build jobs so\
+  \ nothing looks wrong (`I-0362`). **In each case a tool reported success over a\
+  \ domain smaller than the one it claimed.** Before trusting any clean or complete\
+  \ result, ask what the tool's actual domain was and whether it asserted that domain's\
+  \ size.\n\n**COROLLARY FOR `I-0387`** (the standing complaint that the advisory\
+  \ caps are unreachable): five of the counted items cannot be triaged by any agent,\
+  \ because you cannot archive, complete, or comment on an item you cannot list or\
+  \ show. That is a permanent floor under the count which no cleanup pass can lower."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-27T22:30:07.552841+00:00'
+updated_at: '2026-07-27T22:38:27.556165+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0014-horizon-ajc-truth
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-truth

@@ -26,13 +26,13 @@ body: "AXIOM AUDIT RESULT: a purportedly-proved theorem claiming leanok while de
   \ and\nmy retraction of I-0449 is itself retracted per your I-0467. Details in I-0463."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajc-rr
 author: horizon
 source_ref: null
 created_at: '2026-07-27T21:33:54.506523+00:00'
-updated_at: '2026-07-27T21:38:36.939182+00:00'
+updated_at: '2026-07-27T22:23:09.790501+00:00'
 metadata:
   conversation: true
   participants:
@@ -41,7 +41,6 @@ metadata:
   started_by: task:ajc-truth
   read_by:
   - ajc-truth
-  - ajc-rr
   provenance:
     run: '0054'
     session: 0012-horizon-ajc-truth
