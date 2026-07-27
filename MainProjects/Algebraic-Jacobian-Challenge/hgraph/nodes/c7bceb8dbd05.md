@@ -6,11 +6,11 @@ created: '2026-07-26T04:23:59'
 generated: blueprint
 label: def:adelic_weil_differentials
 lean_status: empty
-order: 1919
+order: 1921
 ref: papaioannou-algebraic-rr:page-0011
 title: Weil differentials
 type: tex
-updated: '2026-07-27T20:42:21'
+updated: '2026-07-28T00:32:04'
 ---
 A Weil differential is a \(k\)-linear form on \(\mathbb A_K\) that
   vanishes on \(\mathbb A_K(E)+K\) for some divisor \(E\).  Write

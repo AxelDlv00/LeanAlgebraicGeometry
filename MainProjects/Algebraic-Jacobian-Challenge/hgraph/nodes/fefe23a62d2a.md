@@ -1,18 +1,24 @@
 ---
 author: sync
-content_type: theorem
+content_type: instance
 created: '2026-07-27T16:23:54'
 decl: AlgebraicGeometry.Adelic.here
-file: AlgebraicJacobian/RiemannRoch/Adelic/SectionBounds.lean
+file: AlgebraicJacobian/Picard/RigidPushforwardP1Witness.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.here
 type: lean
-updated: '2026-07-27T22:51:39'
+updated: '2026-07-28T00:32:01'
 ---
-theorem here (see §3) — so the substitution would move the gap rather than close
-it, while making a theorem whose statement mentions no hypotheses depend silently
-on one.  The Hartshorne II.6.10 route sketched in that docstring (build
-`φ : C → ℙ¹` from `g`, use multiplicativity of degree under finite pullback) is a
-*different*, heavier proof; the ledger route above is the cheaper one and is what
-the campaign's P3 milestone anticipated. -/
+instance here would export a term that nothing downstream could re-derive. -/
+local instance instIsStandardSmoothOfRelativeDimensionOneP1ChartSections
+    (i : ULift.{u} (Fin 2)) :
+    Algebra.IsStandardSmoothOfRelativeDimension 1 k
+      Γ(ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k)), p1Chart k i) := by
+  have e : Polynomial k ≃ₐ[k]
+      Γ(ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k)), p1Chart k i) := by
+    obtain ⟨i⟩ := i
+    match i with
+    | 0 => exact (p1ChartSectionsAlgEquivX k).symm
+    | 1 => exact (p1ChartSectionsAlgEquivY k).symm
+  exact Algebra.IsStandardSmoothOfRelativeDimension.of_algEquiv (n := 1) e
