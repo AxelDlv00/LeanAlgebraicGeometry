@@ -326,7 +326,16 @@ theorem generatedAt_of_evalMap_surjective (D : X.WeilDivisor) (P : X.PrimeDiviso
     omega
 
 /-- **Global generation at `P` from the two vanishings** — `evalMap_surjective`
-composed with `generatedAt_of_evalMap_surjective`. -/
+composed with `generatedAt_of_evalMap_surjective`.
+
+**Conjunction audit** (the check memory I-0399 requires for this task, run for this
+theorem): the hypotheses are *not* equivalent to the conclusion, so this is a reduction
+and not a re-indexing.  `GeneratedAt k D P` yields a section attaining the bound at `P`,
+which is exactly the statement that some section of `𝒪(D)` is **not** a section of
+`𝒪(D − P)` — i.e. a *strict* drop `ℓ(D − P) < ℓ(D)`.  The hypotheses give the **maximal**
+drop `ℓ(D) − ℓ(D − P) = [κ(P):k]`.  Those differ as soon as `[κ(P):k] ≥ 2`, so the
+converse fails and the vanishing input is doing real work.  (Over an algebraically closed
+base they coincide, which is the degenerate case, not the general one.) -/
 theorem generatedAt_of_vanishing
     (hledger : ∀ D : X.WeilDivisor, chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
     (D : X.WeilDivisor) (P : X.PrimeDivisor)
