@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:isRegularInCodimensionOne_open
 lean_status: lean_ok
-order: 1801
+order: 1802
 title: Regularity in codimension one is open-local
 type: tex
-updated: '2026-07-28T02:46:12'
+updated: '2026-07-28T03:14:54'
 ---
 If \(X\) is regular in codimension one, then every integral open subscheme
   \(U\subseteq X\) is regular in codimension one.

@@ -6,12 +6,12 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:adelic_serreDuality
 lean_status: empty
-order: 1932
+order: 1933
 ref: "papaioannou-algebraic-rr:page-0011,\n    papaioannou-algebraic-rr:page-0012,\n\
   \    papaioannou-algebraic-rr:page-0013"
 title: 'Serre duality: \(i(D) = \ell(K_C - D)\)'
 type: tex
-updated: '2026-07-28T02:46:12'
+updated: '2026-07-28T03:14:54'
 ---
 For a canonical divisor \(K_C = \operatorname{div}\omega\) of a nonzero
   Weil differential \(\omega\), the map \(x \mapsto x\omega\) induces a

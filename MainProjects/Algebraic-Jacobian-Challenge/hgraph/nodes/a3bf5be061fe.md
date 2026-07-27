@@ -6,11 +6,11 @@ created: '2026-07-26T01:29:35'
 generated: blueprint
 label: lem:jacobian_invariant_one_forms
 lean_status: empty
-order: 1775
+order: 1776
 ref: abelian-varieties:page-0098
 title: Invariant one-forms on the Jacobian
 type: tex
-updated: '2026-07-28T02:46:12'
+updated: '2026-07-28T03:14:54'
 ---
 Evaluation at the identity is an isomorphism
   \[

@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:adelic_riemann_inequality_conditional
 lean_status: lean_ok
-order: 1922
+order: 1923
 title: The Riemann inequality from a telescoped \(\chi\)
 type: tex
-updated: '2026-07-28T02:46:12'
+updated: '2026-07-28T03:14:54'
 ---
 Given \(\chi(D) = \chi(0) + \deg D\),
   \[

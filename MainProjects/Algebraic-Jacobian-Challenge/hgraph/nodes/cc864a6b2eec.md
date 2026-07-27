@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:codim1_cycles
 lean_status: lean_ok
-order: 1790
+order: 1791
 ref: hartshorne-algebraic-geometry:page-0147
 title: Weil divisor group
 type: tex
-updated: '2026-07-28T02:46:12'
+updated: '2026-07-28T03:14:54'
 ---
 The group of Weil divisors of \(X\) is the free abelian group on its prime
   divisors:

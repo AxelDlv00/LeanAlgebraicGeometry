@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:cohen_macaulay_local
 lean_status: lean_ok
-order: 1757
+order: 1758
 title: Cohen--Macaulay local ring
 type: tex
-updated: '2026-07-28T02:46:12'
+updated: '2026-07-28T03:14:54'
 ---
 \textit{Source: [Stacks Project], tag 00N4 (definition-local-ring-CM).}
   A Noetherian local ring \((R, \mathfrak{m})\) is called \emph{Cohen--Macaulay} if
