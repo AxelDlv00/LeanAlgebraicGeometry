@@ -479,6 +479,63 @@ theorem exists_bound_forall_generatedAt_of_isAlgClosed_curve [IsAlgClosed k]
   exists_bound_forall_generatedAt k U₀ U₁ hledger D₀ hbase hpeel 1
     (fun P => le_of_eq (residueDeg_eq_one_of_isAlgClosed_curve C P))
 
+/-! ### Riemann–Roch in the vanishing range, on the geometric degree
+
+The lane's numerical conclusions are all stated on the residue-weighted `deg_k`, because that
+is what the χ-ledger telescopes to.  On a curve over an algebraically closed base the two
+degrees agree (`degK_eq_degree_of_isAlgClosed_curve`), so those conclusions can be restated on
+`Scheme.WeilDivisor.degree` — the invariant the rest of the project, and the classical
+statement, use.
+
+`ell_eq_of_bound_degree` below is the `ℓ(D) = χ(0) + deg D` form; with `χ(0) = 1 − g` it is the
+classical `ℓ(D) = deg D + 1 − g` for `deg D` large.  Note it is *not* free of the lane's open
+inputs: it is `exists_bound_ell_eq` with the degree translated, so the ledger, the base
+vanishing and the peel are all still there.  What the translation removes is only the
+residue-weighting, which was never an open input but was an obstacle to *quoting* the result. -/
+
+/-- **The Riemann inequality on the geometric degree.**  `deg D + χ(0) ≤ ℓ(D)` for every
+divisor on a curve over an algebraically closed base, given the closed ledger.  The weighted
+form is `degK_add_chi_zero_le_ell`; here the weighting is discharged. -/
+theorem degree_add_chi_zero_le_ell_of_isAlgClosed_curve [IsAlgClosed k]
+    (C : Over (Spec (CommRingCat.of k))) [IsIntegral C.left]
+    [IsNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
+    [LocallyOfFiniteType C.hom] [SmoothOfRelativeDimension 1 C.hom]
+    (U₀ U₁ : C.left.Opens)
+    (hledger : ∀ D : C.left.WeilDivisor,
+      chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
+    (D : C.left.WeilDivisor) :
+    Scheme.WeilDivisor.degree D + chi k U₀ U₁ 0 ≤ (ell k D : ℤ) := by
+  rw [← degK_eq_degree_of_isAlgClosed_curve C D]
+  exact degK_add_chi_zero_le_ell k U₀ U₁ hledger D
+
+/-- **Riemann–Roch in the vanishing range, on the geometric degree.**  There is a threshold
+past which `ℓ(D) = χ(0) + deg D` — an equality, not merely the Riemann inequality — for every
+divisor of large geometric degree on a curve over an algebraically closed base.
+
+With `χ(0) = 1 − g` this is the classical `ℓ(D) = deg D + 1 − g`.  The threshold is stated on
+`deg` rather than `deg_k` because the two coincide here.
+
+Conditional on the lane's three inputs (closed ledger, base vanishing, peel) exactly as
+`exists_bound_ell_eq` is; the residue-weighting is what has been discharged, not those. -/
+theorem exists_bound_ell_eq_degree_of_isAlgClosed_curve [IsAlgClosed k]
+    (C : Over (Spec (CommRingCat.of k))) [IsIntegral C.left]
+    [IsNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
+    [LocallyOfFiniteType C.hom] [SmoothOfRelativeDimension 1 C.hom]
+    (U₀ U₁ : C.left.Opens)
+    (hledger : ∀ D : C.left.WeilDivisor,
+      chi k U₀ U₁ D = chi k U₀ U₁ 0 + degK k D)
+    (D₀ : C.left.WeilDivisor) (hbase : Subsingleton (H1Mod k U₀ U₁ D₀))
+    (hpeel : ∀ D' : C.left.WeilDivisor,
+      (∀ P : C.left.PrimeDivisor, (show C.left.PrimeDivisor →₀ ℤ from D₀) P ≤
+        (show C.left.PrimeDivisor →₀ ℤ from D') P) →
+      Peel k U₀ U₁ D₀ D') :
+    ∃ b : ℤ, ∀ D : C.left.WeilDivisor, b ≤ Scheme.WeilDivisor.degree D →
+      (ell k D : ℤ) = chi k U₀ U₁ 0 + Scheme.WeilDivisor.degree D := by
+  obtain ⟨b, hb⟩ := exists_bound_ell_eq k U₀ U₁ hledger D₀ hbase hpeel
+  refine ⟨b, fun D hD => ?_⟩
+  rw [← degK_eq_degree_of_isAlgClosed_curve C D] at hD ⊢
+  exact hb D hD
+
 end Discharge
 
 end Adelic
