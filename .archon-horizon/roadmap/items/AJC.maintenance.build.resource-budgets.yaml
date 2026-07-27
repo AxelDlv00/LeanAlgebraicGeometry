@@ -2,11 +2,17 @@ id: AJC.maintenance.build.resource-budgets
 title: Structural elaboration-budget reduction
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The source now contains 179 heartbeat scopes: 140 maxHeartbeats and 39 synthesis-heartbeat
-  scopes. It also has 15 synthesis-pending-depth and 5 recursion-depth overrides.
-  P1ChartData, QcohTildeSections, five CechTerm adjunction/presentation declarations,
-  and three Cech contraction declarations now elaborate at defaults; continue cone-by-cone
-  threshold testing and structural simplification.'
+summary: 'Open. 140 maxHeartbeats, 39 synthInstance.maxHeartbeats, 15 maxSynthPendingDepth
+  and 5 maxRecDepth scopes remain, against ZERO ''set_option maxHeartbeats'' in all
+  of Mathlib/ and exactly one synthInstance budget upstream. None of the 179 cites
+  a measured number, and Mathlib''s own ''#count_heartbeats in'' appears nowhere in
+  this project. Closed cones so far: P1ChartData, QcohTildeSections localisation,
+  the five CechTerm adjunction/presentation wrappers and the Cech contraction declarations
+  all elaborate at Lean defaults. STRATEGY: re-measure each remaining scope only AFTER
+  its module leaves the umbrella import -- a narrowed environment changes elaboration
+  cost in both directions, and GrassmannianQuot has already shown it can get slower.
+  Note that trimming a ceiling saves no compute by construction; the value here is
+  honesty about cost, not speed.'
 status: pending
 kind: refactor
 priority: normal
@@ -29,7 +35,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-25T21:32:56.065513+00:00'
+  updated_at: '2026-07-27T04:50:17.115026+00:00'
   pinned_commits:
   - 5edda3284
   - 885608a29

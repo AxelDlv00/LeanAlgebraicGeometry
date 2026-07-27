@@ -1,4 +1,0 @@
-{"at": "2026-07-25T17:36:56.494147+00:00", "actor": "horizon", "field": "created", "from": "", "to": "pending", "note": "opened"}
-{"at": "2026-07-25T18:49:51.245192+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "done", "note": ""}
-{"at": "2026-07-25T18:49:51.245360+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, pinned_commits updated"}
-{"at": "2026-07-25T18:56:32.829559+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "pinned_commits updated"}

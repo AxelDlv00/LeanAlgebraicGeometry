@@ -2,10 +2,13 @@ id: AJC.maintenance.cech
 title: Cech elaboration and dependency cleanup
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'The Cech maintenance subtree is complete: consumer closure, positive-degree
-  coordinates, the isolated degree-one contraction, lightweight coinductive packaging,
-  and controlled module benchmarks all pass. The expensive proof is now cached in
-  its own module; the wrapper and downstream resolution rebuild in seconds.'
+summary: 'Complete. The Cech elaboration hotspot is closed: the expensive degree-one
+  contracting identity is isolated in its own module and now consumes a direct restriction-product
+  augmentation, so its forced target runs in 6.85 s at 3.2 GB, down from 16:16 and
+  10.1 GB, with its former 1.6M-heartbeat and recursion-depth overrides removed. Generic
+  exact-augmentation lemmas replaced the specialized 4M-heartbeat adapter, CechTermAcyclic
+  is decoupled from the contractibility import chain, and the coinductive wrapper
+  packages at Lean defaults. Per-declaration benchmarks are in the ledger.'
 status: done
 kind: refactor
 priority: high
@@ -28,7 +31,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance
-  updated_at: '2026-07-25T01:57:23.224716+00:00'
+  updated_at: '2026-07-27T04:50:15.886836+00:00'
   pinned_commits:
   - ce7e4a001
   - ae9fe71c8

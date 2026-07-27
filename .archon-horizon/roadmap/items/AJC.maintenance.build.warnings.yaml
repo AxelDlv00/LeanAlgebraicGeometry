@@ -1,12 +1,21 @@
 id: AJC.maintenance.build.warnings
-title: Lean warning reduction
+title: Lean warning reduction (complete)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The latest full-project build passes all 8,723 jobs and reports 162 warning
-  heads across 28 files, down from 201. Of these, 24 are genuine sorry notices and
-  138 are style, API, or binder diagnostics; use this total until another whole-project
-  recount supersedes it.
-status: pending
+summary: 'Complete. The whole-project warning count went 1,174 -> 578 -> 262 -> 162
+  -> 24 across this campaign, and every surviving head is a genuine ''declaration
+  uses sorry''. The final pass (commit b0d13f686) cleared the last 102 mechanical
+  warnings across 14 files: nine overlapping-instance binders in AuslanderBuchsbaum
+  dropped where [IsRegularLocalRing R] already implies them, eight [Fintype][DecidableEq]
+  weakened to [Finite] with classical + Fintype.ofFinite, deprecated push_neg and
+  Ideal.minimalPrimes_isPrime replaced, and the usual show->change, omit [Inst] in,
+  unused simp arguments and line wrapping elsewhere. No declaration statement changed
+  beyond those linter-directed weakenings and no sorry moved. One documented exception:
+  GlueDescent''s hC1 cannot be fixed with omit (include overrides omit) without changing
+  two statements, so it is suppressed for that single declaration following the convention
+  already used in FreePresheafComplex and CechBridge. The per-file cleanup history
+  is in the ledger; the granular child nodes have been retired.'
+status: done
 kind: refactor
 priority: normal
 depends_on: []
@@ -28,7 +37,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.build
-  updated_at: '2026-07-25T23:09:49.007174+00:00'
+  updated_at: '2026-07-27T04:49:16.212908+00:00'
   pinned_commits:
   - 2148ff621
   - 773efe164
