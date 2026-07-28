@@ -810,10 +810,31 @@ its hypothesis pair (base vanishing at one divisor plus peel-surjectivity) is
 proved (`coneVanishing_iff_base_and_peel`).  So the content is "pointwise cone
 vanishing plus closed ledger ⟹ numerical-degree vanishing", a real reduction,
 since a divisor of large weighted degree need not dominate `D₀`.  It is NOT "one
-vanishing implies all vanishing".  Extension-uniformity and global generation are
-proved nowhere in AJC, and extension-uniformity is not currently even statable:
-the invariants are pinned to a chosen 2-affine cover and `CurveBaseChange.lean`
-does not transport it.
+vanishing implies all vanishing".
+
+**TWO CLAUSES OF THIS PARAGRAPH WERE STALE AND ARE RETRACTED (ajc-rr, run 0074
+r3).**  It used to end: "Extension-uniformity and global generation are proved
+nowhere in AJC, and extension-uniformity is not currently even statable."  Both
+halves were false at HEAD, and a janitor sweep caught them (`I-0649`).
+
+* **Global generation IS proved in AJC, in two places.**  On the adelic carrier:
+  `Adelic/GlobalGeneration.generatedAt_of_vanishing` (:374),
+  `exists_bound_generatedAt` (:424), `exists_bound_forall_generatedAt` (:452) —
+  which **§6d of this very file already tabulates, twenty lines below**, so the
+  sentence contradicted its own document.  On the ledger carrier, above a degree
+  bound: `Ledger/DegreeVanishing.surjective_eval_of_deg_ge` and
+  `generated_of_deg_ge`, off the third slot of the dévissage slice, with no
+  finiteness.
+* **Extension-uniformity IS statable.**  `Adelic/ResidueField.lean:689` defines
+  `UniformlyBoundedVanishing`, and `CurveBaseChange.lean` does transport the cover
+  (`AffineCoverMVSquare.baseChangeField`).  `Adelic/BoundedVanishing.lean:107-115`
+  and `GlobalGeneration.lean:80-84` each already carried an explicit "that was
+  wrong" for this exact sentence; this probe kept the retracted version.
+
+**What remains genuinely open is uniformity itself**, not its statability: flat
+base change for the section spaces, and a `WeilDivisor` pullback along
+`C_κ ⟶ C` (hard — points split).  That is the honest residue, and it is the only
+cluster-P item with nothing landed against it.
 
 One further caveat that no axiom line shows.  "`Subsingleton` rather than
 `h¹ = 0`, so no finiteness instance is needed" holds only for the

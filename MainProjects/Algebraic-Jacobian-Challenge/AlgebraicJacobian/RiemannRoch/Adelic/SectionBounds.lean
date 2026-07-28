@@ -55,7 +55,17 @@ Three distinct gaps in the vanishing story are kept apart deliberately:
    alone: it needs a base vanishing `h¹(𝒪(n₀·x₀)) = 0` plus surjectivity of
    `Ȟ¹(D) → Ȟ¹(D')` (the "peel an effective divisor" step).  The sibling project
    proves its analogue (`AJCR RiemannRoch/UniformVanishing.lean`) from an
-   FLV-class machine that has no AJC counterpart.
+   FLV-class machine that has no counterpart **on this adelic carrier**.
+
+   **AJC now proves it on a different carrier** (run 0074 r3): on the χ-ledger's
+   divisor-sheaf carrier, `Ledger/DegreeVanishing.subsingleton_hModule_one_of_deg_ge`
+   gives exactly `deg D ≥ deg D₀ + 1 − χ(𝒪_X) ⟹ H¹(𝒪(D)) = 0` from **one** base
+   vanishing, with the peel a theorem rather than a hypothesis
+   (`Ledger/SectionDrop`) and no cover chosen at all.  So the "no AJC counterpart"
+   remark is true of the *adelic* machinery only, and a reader arriving here wanting
+   bounded vanishing should go there.  Nothing transports between the two carriers:
+   this file's `ell`/`degK` live on a chosen 2-affine cover, `Ledger`'s
+   `Sheaf.h0`/`CurveDivisor.deg` do not.
 2. **Extension uniformity** — the *same* `b` for every field extension `κ/k`.
    Strictly more than (1): it needs flat base change of the bound along
    `k → κ`.  Nothing in this file quantifies over extensions.  The predicate itself is written
