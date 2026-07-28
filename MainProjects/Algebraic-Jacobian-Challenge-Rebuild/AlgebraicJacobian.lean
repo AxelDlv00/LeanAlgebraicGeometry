@@ -536,6 +536,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffGlue
 import AlgebraicJacobian.Picard.DivRepAffPullIndep
 import AlgebraicJacobian.Picard.DivRepAwayPush
 import AlgebraicJacobian.Picard.DivRepAffPullField
+import AlgebraicJacobian.Picard.DivRepAffPullNat
 
 /-!
 # AlgebraicJacobian — library root
