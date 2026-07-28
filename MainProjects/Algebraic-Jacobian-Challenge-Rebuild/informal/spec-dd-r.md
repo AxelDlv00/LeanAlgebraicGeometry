@@ -1457,7 +1457,28 @@ Picard/DivRepGlobalAffLift.lean                 -- A DD-R CONSUMER on the widene
 
 `[IsProper C.hom]` throughout (the widened `mapAlg` needs it, and the DD-R lane carries it
 everywhere); **no hypothesis on `|P¹(k)|` in any statement or on any route**, which is the whole
-purpose of R2.
+purpose of R2. The 328-module import closure of `DivRepGlobalAffLift` does not contain
+`Curve/P1Aut.lean`, and no module in it mentions `[Infinite k]` or an `ncard` bound.
+
+### 9.1a Verification status — MEASURED, and one of these four was RED
+
+Recorded here rather than in a commit message because ADDENDUM 9 is read as binding state.
+
+* `…AffMapKit.lean` — **GREEN**: olean exists, `lake build` `[8880/8885]`. So the widened
+  basic-open toolkit is kernel-checked and the explicit-`n` trap of §8.6 did **not** bite it.
+* `…AffMap.lean` — **was RED, fixed at `d876072d4e`, not re-checked.** `[8881/8885]` failed with
+  `Function expected at divFunctorAff` (:295, :301). **This is a third variety of RED WITH ZERO
+  SORRIES in this family**, and it is worth the same standing as the explicit-`n` trap: `C` and `n`
+  are file-level *implicit* variables, the `variable (C n)` that makes them explicit lived **inside**
+  `namespace divFamZarAff` and ended with it, and `divFunctorAff` was declared after that `end` — so
+  it bound them implicitly and its two `simp` lemmas could not elaborate. **A namespace boundary
+  silently changes the arity of everything declared after it.** The fix is a `section Functor` with
+  its own `variable (C n)`, closed before the affine-naturality section; no statement changed.
+* `…AffFunctorCompare.lean`, `DivRepGlobalAffLift.lean` — the build never reached them.
+
+**Do first**: `lake build AlgebraicJacobian.Picard.DivRepGlobalAffLift` to completion, with a cap
+well above 3300 s (an earlier attempt hit that cap rebuilding modules other lanes had invalidated,
+`EXIT=124`).
 
 ### 9.2 Why the transcription is legitimate, stated as the general principle
 
