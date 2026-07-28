@@ -4183,8 +4183,20 @@ telescope inverse and `pushPullMap (wmap …)` sitting between them — so `rw` 
 
 So half (a) is **not** a one-rewrite consequence of the mate law, and the residue is now sharply
 located: getting the LHS counit adjacent to its mate, i.e. commuting `pushPullMap (wmap …)` and the
-telescope past the counit.  That is a naturality statement about the `pV`-counit, one adjunction at
-a time — no longer anything about mates across squares.  Project-local. -/
+telescope past the counit.
+
+**And that step is NOT plain counit naturality — checked, so the next session does not start by
+trying it.**  `Adjunction.counit_naturality` for `pV^* ⊣ pV_*` reads
+`pV^*(pV_*(ψ)) ≫ counit = counit ≫ ψ` for `ψ` between objects of `V'.Modules`, i.e. it moves past
+the counit only maps that are already `pV_*` of something.  Here the map to be moved is
+`pushPullMap (g'^*F) (wmap …) : pushPullObj (g'^*F) (Over.mk pV_{σ'∘δᵏ}) ⟶ pushPullObj (g'^*F)
+(Over.mk pV_{σ'})`, whose **source is a pushforward along a different morphism** — so it is not of
+that form and the lemma does not apply.
+
+That is the honest frontier: a comparison of the counits of two *different* adjunctions along the
+slice map `wmap`.  Still a smaller and better-located obligation than "the mate across a change of
+square" — the mate is gone from it — but it is not free, and this note is here so it is not
+mispriced in either direction.  Project-local. -/
 theorem bareBC_pullback_counit {V V' : Scheme.{u}}
     (g' : X' ⟶ X) (p : V ⟶ X) (p' : V' ⟶ X') (gV : V' ⟶ V)
     (hsq : IsPullback gV p' p g') (c : V.Modules) :
