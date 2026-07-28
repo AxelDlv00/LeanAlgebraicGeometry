@@ -952,7 +952,10 @@ no widened declaration may depend on them, and none does.
 
 * **(i) fibrewise-finite support** is not a field of `AffCoverData`, `AffAdaptation` or
   `IsCertified`. Its per-piece form enters `isCertified_of_swallowedBy` as the explicit
-  hypothesis `hfib`.
+  hypothesis `hfib`. **(No longer an obligation — see ADDENDUM 7: it is discharged from the
+  seed by `ThetaGeneratorSeed.affAdaptation_fibre_regular`, and does not appear in the
+  endpoint's signature at all. The sentence above still correctly describes where it enters
+  `isCertified_of_swallowedBy`, which remains a hypothesis of that lower-level assembler.)**
 * **(ii) the fixed-pair confinement's silent contributions** were exactly two:
   `exists_mem_pieces` (now the joint cover field) and `flat_sections_pieces` (now §5.2).
 * The Stacks `0B8B` input is the named Prop `AffCoverData.SwallowedBy` — one piece contains
