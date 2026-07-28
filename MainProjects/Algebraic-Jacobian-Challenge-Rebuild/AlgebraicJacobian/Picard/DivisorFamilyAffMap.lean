@@ -275,6 +275,14 @@ end divFamZarAff
 
 /-! ## The widened divisor functor -/
 
+section Functor
+
+/- `C` and `n` are file-level IMPLICIT variables; the `variable (C n)` that made them explicit
+lived inside `namespace divFamZarAff` and ended with it.  Without re-declaring them here,
+`divFunctorAff` takes them implicitly and the `simp` lemmas below — which apply it to `C` and
+`n` — do not elaborate. -/
+variable (C n)
+
 /-- **The widened divisor functor**: the R2 carrier of protection I-0492 as a presheaf of types
 on the slice over `Spec k`, with the glued restriction `divFamZarAff.map` along arbitrary test
 morphisms.  The widened mirror of `divFunctor` (`DivisorFamilyZarFunctor.lean`), and the
@@ -300,6 +308,8 @@ lemma divFunctorAff_map {T T' : (Over (Spec (.of k)))ᵒᵖ} (g : T ⟶ T')
     (s : divFamZarAff C n T.unop) :
     (divFunctorAff C n).map g s = divFamZarAff.map C n g.unop s :=
   rfl
+
+end Functor
 
 /-! ## Naturality of the widened affine comparison -/
 
