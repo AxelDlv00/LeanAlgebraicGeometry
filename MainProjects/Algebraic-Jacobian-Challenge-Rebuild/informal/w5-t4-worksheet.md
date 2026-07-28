@@ -604,3 +604,62 @@ abstracted before the pair values can be compared, and the same-chart cases addi
 `sel x, sel y`. Do **not** try to `rw` inside the goal's types — that is the documented
 `motive is not type correct` wall, and it will appear four more times here than it did in
 (iii-b).
+
+### 6.8 (iii-c1) IS CLOSED — and the cost §6.6/§6.7 predicted was **not** paid
+
+*Run 0073 r2, `Tangent/TwoChartNormalize.lean` (267L, sorry-free, `lake env lean` exit 0).*
+
+**The prediction was wrong in the cheap direction, and the reason is worth more than the
+lemma.** §6.6 sized (iii-c1) as [M] because the normalizing `0`-cochain's *type* needed a
+`rw [… inf_idem]` transport, and each of four `Bool` cases would then need the chart index
+abstracted and `subst`ed — "it has to be done for each same-chart case". Neither cost exists:
+
+* **Restrict along an inequality, not along an equality of opens.** `γ.evInf x (base (sel x))`
+  lives on `V (sel x) ⊓ V (sel (base (sel x)))`. §6.6 proposed to *rewrite that type* down to
+  `V (sel x)` via `hbase` and `inf_idem`. Instead **restrict** it along
+  `V (sel x) ≤ V (sel x) ⊓ V (sel (base (sel x)))`. The result is `Γ(X, V (sel x))ˣ` **on the
+  nose**: an inequality of opens is a `Prop`, so all the index bookkeeping moves inside
+  `Prop`, where it is free. `hbase` is still needed — but only to *build* that inequality.
+* **The conjugation identity is uniform in whether the charts agree.** `normCochain_conj` is
+  three applications of one chart-level cocycle law (`cocycleValueOn_trans`) and holds for any
+  `x, y` with no case split at all. The four-case `Bool` split survives only in
+  `cocycleValueOn_base_eq_twoChartPairUnit`, where it is *identifying* the base values with
+  `twoChartPairUnit` — two cases are `cocycleValueOn_self`, one is the candidate by definition,
+  one its inverse by `cocycleValueOn_symm`. No case needs a transport.
+
+**Generalisable rule, and it is the same lesson as §6.0 from the other side:** when a
+`0`-cochain's type is *almost* right, look for a restriction map into the type you want before
+reaching for a rewrite of the type. `rw`/`▸` inside a type is what produces the
+`motive is not type correct` wall; a restriction along a `≤` never can, because `≤` is
+proof-irrelevant.
+
+**What landed** (all `Scheme`-namespaced, scheme-general, no dual numbers, portable to AJC):
+
+| declaration | content |
+|---|---|
+| `cocycleValueOn` | a pair value restricted to any open below both charts |
+| `cocycleValueOn_trans` | the cocycle law there — `unitsEvInf_trans` off the triple overlap |
+| `cocycleValueOn_self`, `_symm` | trivial diagonal (landed `unitsRestrict_unitsEvInf_self`), antisymmetry |
+| `normCochain` | the conjugating `0`-cochain, typed on the nose |
+| `normCochain_conj` | the conjugation identity, uniform in `sel x = sel y` |
+| `unitsRestrict_mixedValue`, `cocycleValueOn_eq_candidate` | the mixed base value **is** `twoChartCandidate` |
+| `cocycleValueOn_base_eq_twoChartPairUnit` | the four-case identification with `twoChartPairUnit` |
+| **`twoChartCocycle_isCohomologous`** | **(iii-c1) at cocycle level**: `γ ~ twoChartCocycle (candidate γ)` |
+| **`twoChartClassHom_mk_range`**, **`twoChartClass_mk_range`** | **(iii-c1)**: every class represented on the two-chart cover is in the range |
+
+With `twoChartClass_injective` (iii-b) this makes `twoChartClass` a **bijection** onto the
+classes representable on the two-chart cover. `twoChartCandidate_twoChartCocycle` (the landed
+left inverse) now has its right-inverse partner, so the pinning §6.7 wanted is complete.
+
+**The residue of the whole lane is now exactly (iii-c2)**, and it is the geometric half:
+an `ε`-kernel class is representable on the two-chart cover. Route unchanged from §6.6 — the
+thickened charts are affine, `cechPicEquivPic` + clause (ii) `baseChangeAlgEquiv` present the
+class as an invertible `Γ(V_i)[ε]`-module trivial mod `ε`, clause (i) `free_of_cyclic_mod_eps`
+makes it free, and `Picard/EffectivityMoving.lean` is the landed bridge to
+`CechPic.map (V s).ι L = 1`. All inputs landed; it is assembly, not construction.
+
+**One thing NOT claimed.** (iii-c1) says *representable on the cover ⟹ in the range*. It says
+nothing about which classes are representable — that is (iii-c2) and it is where every
+dual-number hypothesis is spent. Do not read `twoChartClass_mk_range` as surjectivity of
+`twoChartClass` onto `X.CechPic`; it is surjectivity onto the image of
+`CechPic.mk (twoChartCover …)`, which for a general scheme is a proper subgroup.

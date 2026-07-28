@@ -167,6 +167,101 @@ theorem normCochain_conj (sel : X → Bool) (hmem : ∀ x, x ∈ V (sel x))
   rw [ex, ey, exy, cocycleValueOn_trans sel hmem γ (base (sel x)) x y hbx hx hy,
     cocycleValueOn_trans sel hmem γ (base (sel x)) (base (sel y)) y hbx hby hy]
 
+/-! ## Identifying the conjugated values with the normalized pair values -/
+
+/-- **Restriction absorbs `mixedValue`.** Both sides are units on the *same* open `W`, so the
+statement needs no transport; `subst` then makes it `rfl`. This is the lemma that lets the
+chart-index bookkeeping happen inside `Prop` only. -/
+theorem unitsRestrict_mixedValue {s t : Bool} (hs : s = false) (ht : t = true)
+    (w : Γ(X, V s ⊓ V t)ˣ) {W : X.Opens} (hst : W ≤ V s ⊓ V t) (hft : W ≤ V false ⊓ V true) :
+    X.unitsRestrict hft (mixedValue hs ht w) = X.unitsRestrict hst w := by
+  subst hs
+  subst ht
+  rfl
+
+/-- **The mixed base value is the candidate**, after restriction to any common open. -/
+theorem cocycleValueOn_eq_candidate (sel : X → Bool) (hmem : ∀ x, x ∈ V (sel x))
+    (γ : X.unitsCocycle (twoChartCover V sel hmem)) {x₀ x₁ : X}
+    (h₀ : sel x₀ = false) (h₁ : sel x₁ = true) {W : X.Opens}
+    (hx : W ≤ V (sel x₀)) (hy : W ≤ V (sel x₁)) (hft : W ≤ V false ⊓ V true) :
+    cocycleValueOn sel hmem γ x₀ x₁ hx hy
+      = X.unitsRestrict hft (twoChartCandidate sel hmem γ h₀ h₁) :=
+  (unitsRestrict_mixedValue h₀ h₁ (Scheme.unitsEvInf γ x₀ x₁) (le_inf hx hy) hft).symm
+
+/-- **The conjugated pair values are exactly the normalized ones.** For chart indices `s`,
+`t`, the value of `γ` at the two base points, restricted to `V s ⊓ V t`, is
+`twoChartPairUnit u s t` for `u` the candidate overlap unit.
+
+The four `Bool` cases are: the diagonal, where both sides are `1` (`cocycleValueOn_self`
+against the definitional `1` of `twoChartPairUnit`); the mixed pair `(false, true)`, which is
+the candidate by `cocycleValueOn_eq_candidate`; and `(true, false)`, which is its inverse by
+`cocycleValueOn_symm`. -/
+theorem cocycleValueOn_base_eq_twoChartPairUnit (sel : X → Bool) (hmem : ∀ x, x ∈ V (sel x))
+    (γ : X.unitsCocycle (twoChartCover V sel hmem)) {base : Bool → X}
+    (hbase : ∀ s, sel (base s) = s) (s t : Bool)
+    (hs : V s ⊓ V t ≤ V (sel (base s))) (ht : V s ⊓ V t ≤ V (sel (base t))) :
+    cocycleValueOn sel hmem γ (base s) (base t) hs ht
+      = twoChartPairUnit (twoChartCandidate sel hmem γ (hbase false) (hbase true)) s t := by
+  cases s <;> cases t
+  · exact cocycleValueOn_self sel hmem γ (base false) hs ht
+  · refine (cocycleValueOn_eq_candidate sel hmem γ (hbase false) (hbase true) hs ht
+      le_rfl).trans ?_
+    exact unitsRestrict_rfl' _ _
+  · rw [← cocycleValueOn_symm sel hmem γ (base false) (base true) ht hs,
+      cocycleValueOn_eq_candidate sel hmem γ (hbase false) (hbase true) ht hs
+        (le_of_eq (inf_comm _ _)), ← map_inv]
+    rfl
+  · exact cocycleValueOn_self sel hmem γ (base true) hs ht
+
+/-! ## (iii-c1): every two-chart cocycle is cohomologous to a normalized one -/
+
+/-- **(iii-c1), cocycle level.** A general unit Čech cocycle on the two-chart pointed cover
+is cohomologous to `twoChartCocycle u`, where `u` is its own candidate overlap unit. The
+conjugating `0`-cochain is `normCochain`. -/
+theorem twoChartCocycle_isCohomologous (sel : X → Bool) (hmem : ∀ x, x ∈ V (sel x))
+    {base : Bool → X} (hbase : ∀ s, sel (base s) = s)
+    (γ : X.unitsCocycle (twoChartCover V sel hmem)) :
+    γ.IsCohomologous
+      (twoChartCocycle (twoChartCandidate sel hmem γ (hbase false) (hbase true))
+        sel hmem) := by
+  refine Scheme.unitsCocycle_isCohomologous (normCochain sel hmem γ hbase) fun x y => ?_
+  have hbx : (twoChartCover V sel hmem).opens x ⊓ (twoChartCover V sel hmem).opens y
+      ≤ V (sel (base (sel x))) := le_trans inf_le_left (le_of_eq (congrArg V (hbase _)).symm)
+  have hby : (twoChartCover V sel hmem).opens x ⊓ (twoChartCover V sel hmem).opens y
+      ≤ V (sel (base (sel y))) := le_trans inf_le_right (le_of_eq (congrArg V (hbase _)).symm)
+  rw [twoChartCocycle_unitsEvInf, normCochain_conj sel hmem γ hbase x y hbx hby]
+  exact congrArg (· * X.unitsRestrict inf_le_right (normCochain sel hmem γ hbase y))
+    (cocycleValueOn_base_eq_twoChartPairUnit sel hmem γ hbase (sel x) (sel y) hbx hby)
+
+/-- **(iii-c1).** Every `CechPic` class *represented on the two-chart cover* lies in the range
+of `twoChartClassHom` — the surjectivity half that `twoChartClass_injective` was waiting for.
+
+Combined with (iii-b) this makes the two-chart Čech `Ȟ¹` of units isomorphic onto the
+subgroup of classes representable on the cover; only the *geometric* clause (iii-c2) —
+"an `ε`-kernel class is representable on the two-chart cover" — remains. -/
+theorem twoChartClassHom_mk_range (sel : X → Bool) (hmem : ∀ x, x ∈ V (sel x))
+    {base : Bool → X} (hbase : ∀ s, sel (base s) = s)
+    (a : X.unitsH1 (twoChartCover V sel hmem)) :
+    ∃ u : Γ(X, V false ⊓ V true)ˣ,
+      twoChartClassHom V sel hmem u = Scheme.CechPic.mk (twoChartCover V sel hmem) a := by
+  induction a using Quot.ind with
+  | _ γ =>
+    refine ⟨twoChartCandidate sel hmem γ (hbase false) (hbase true), ?_⟩
+    rw [twoChartClassHom_apply]
+    exact congrArg (Scheme.CechPic.mk (twoChartCover V sel hmem))
+      (twoChartCocycle_isCohomologous sel hmem hbase γ).class_eq.symm
+
+/-- **(iii-c1) for the descended comparison.** Same statement for `twoChartClass`, so that
+with `twoChartClass_injective` the map is a bijection onto the classes representable on the
+two-chart cover. -/
+theorem twoChartClass_mk_range (sel : X → Bool) (hmem : ∀ x, x ∈ V (sel x))
+    (hsel : Function.Surjective sel) (a : X.unitsH1 (twoChartCover V sel hmem)) :
+    ∃ q, twoChartClass V sel hmem hsel q
+      = Scheme.CechPic.mk (twoChartCover V sel hmem) a := by
+  obtain ⟨u, hu⟩ :=
+    twoChartClassHom_mk_range sel hmem (Function.surjInv_eq hsel) a
+  exact ⟨QuotientGroup.mk u, by rw [twoChartClass_mk]; exact hu⟩
+
 end Scheme
 
 end AlgebraicGeometry
