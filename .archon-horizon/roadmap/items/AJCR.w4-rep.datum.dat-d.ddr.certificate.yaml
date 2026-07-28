@@ -3,53 +3,53 @@ title: 'DD-R certificate: inherited certificate, epsilon projection, U1/U2, and 
   laws'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'DECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. The certificate
-  lane is unblocked and is now execution work, not a design question. Binding form:
-  protection I-0492. Full reasoning: I-0346 (human comment, same date).
-
-
-  WHAT DivFamZar IS TO BE: the predicate whose cover pieces are ARBITRARY AFFINE OPENS,
-  not basic opens of a fixed pair of pinned P1 charts. Justification to use rather
-  than re-derive: supp D is finite over R, hence lies in a single affine open of C
-  x_k Spec R (Stacks 0B8B); spec-dd-r.md ADDENDUM 4 carries it.
-
-
-  WHY NOT THE ALTERNATIVES. A field-size hypothesis is unavailable — archon-protected.yaml
-  freezes the arbitrary-field statement, so |P1(k)| >= n+2 would answer a different
-  question. R1 (vary the pinned pair via Aut(P1)) is live only over infinite k and
-  F_q with q >= g+1, so it needs descent bolted on to reach the challenge field: two
-  mechanisms where one suffices. R2 is the only FIELD-UNIFORM fix.
-
-
-  CONSEQUENCE THAT SAVES A LANE: the GL_2(k) action on P1 is NOT to be built. Sibling
-  leaf ...certificate.p1-aut stays pending and DEPRIORITISED (not rejected — R1 may
-  accelerate the large-field case someday), and no consumer may be written against
-  it.
-
-
-  THE STRUCTURAL MOVE, and it is the whole content: the CHART-WISE PARTITIONS OF UNITY
-  have to go. Per-piece swallow-or-miss needs only openness (DivSchemeCertZarConn.lean
-  uses only openness); the partitions are what upgrade inside one piece to inside
-  one chart. Consumers will break — repair them deliberately, and do not smuggle the
-  old typing back by typing pieces INTO the charts (DivisorFamily.lean h0/h1/pieces
-  is exactly the pattern that made the joint-cover option vacuous).
-
-
-  TWO RELOCATED OBLIGATIONS, to be discharged explicitly and never hidden inside a
-  LocalEquations: fibrewise-finite support, from the seeds own degree data; and whatever
-  the old fixed-pair confinement was silently supplying to the certificate clauses.
-
-
-  STANDING NEGATIVE RESULTS, all still binding: chart-avoid is NO; the counterexample
-  is FIELD-INDEPENDENT so enlarging the field is no escape; NO repair keeping pieces
-  inside preimages of a FIXED PAIR of P1 points can work; the joint-cover variant
-  is refuted (leaf ...joint-cover, rejected) and is not to be retried. The sharpness
-  result (leaf ...field-size, done) stands.
-
-
-  LANDED WORK THIS SUPERSEDES NOTHING OF: the GL_2 groundwork, finite-field-avoid.cardinality
-  (e602378af) and .support-degree (d6c67f41d) remain valid mathematics; they simply
-  stop being the route to the certificate.'
+summary: "DECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. Binding\
+  \ form: protection I-0492. Full reasoning: I-0346 (human comment, same date).\n\n\
+  EXECUTED. The widened layer exists, is sorry-free, axiom-clean, rooted, and green\
+  \ in the full root build (9160 jobs, exit 0). Ten DivisorFamilyAff*.lean files,\
+  \ of which four landed 2026-07-28 in run 0070 s0006:\n\n  AffCoverData         \
+  \ -- m / pieces : Fin m -> Opens / isAffineOpen / cover (iSup = top).\n        \
+  \                   NO pi argument, NO partitions of unity, NO Sum index, NO chart\
+  \ typing.\n  AffAdaptation         -- eqn per piece + eqn_rel; IsCertified with\
+  \ (c1)-(c4) VERBATIM.\n  CertifiedDivisorFamilyAff / IsLocallyCertifiedAff / DivFamZarAff\
+  \ (mk, mk_eq_mk_iff, picClass)\n  DivFamZar.toAff       -- the widened value RECEIVES\
+  \ every chart-typed one, same picClass\n  isCertified_of_swallowedBy_of_c1 -- cert-collapse:\
+  \ all seven clauses from (c1) + the rank datum\n  DivFamZarAff.mapAlg   -- and the\
+  \ whole S5b layer: IsLocallyCertifiedAff.pullback,\n                           mapAlg_id/comp,\
+  \ picClass_mapAlg, eq_of_away_eq, toAff_mapAlg\n\nWHAT RUN 0070 s0006 FOUND AND\
+  \ FIXED, and it is the kind of gap a green build hides: the widened value was a\
+  \ TYPE WITH NO FUNCTORIALITY. Nothing could base-change a widened class along R\
+  \ -> R'. The chart-typed DivFamZar owned that whole layer (DivisorFamilyZarMapAlg.lean);\
+  \ the widened one had none of it.\n\nWHY THE WIDENING MADE BASE CHANGE CHEAPER,\
+  \ NOT HARDER (measured, not guessed):\n * pieces j := relCurveMap preimage (pieces\
+  \ j) makes pieces_baseChange rfl, and the base-changed\n   OVERLAP is the preimage\
+  \ of the overlap by rfl. The entire ovlGen / basicOpen_ovlGen /\n   isAffineOpen_chart_inf\
+  \ apparatus, which existed only to re-present a piece overlap as a basic\n   open\
+  \ of a CHART overlap, has no widened analogue.\n * the arbitrary-affine-open section\
+  \ keystone was ALREADY IN THE TREE: Over.pieceRingEquiv\n   (EffectivityPieces.lean:181),\
+  \ hypothesis IsAffineOpen only, from mathlib's affine\n   pushoutSection -- no freeness,\
+  \ no flatness. Its cg IS relCurveMap. The chart route\n   (relTermBaseChange, freeness-based,\
+  \ then localize at a generator) has neither a generator\n   nor a base-curve presentation\
+  \ available and dies; this one does not.\n * FinCoverData.baseChange had two partition\
+  \ obligations to discharge. AffCoverData.baseChange\n   has NONE, because the partitions\
+  \ are exactly what R2 deleted.\n * (c2)/(c3)/(c4) ride the abstract FlatCokernel\
+  \ keystones, stated for bare modules.\n\nTHE ONE COST OF THE R2 SHAPE, named rather\
+  \ than bundled: AffCoverData demands affineness of the\nPIECES only, so the certificate\
+  \ transport needs the OVERLAPS affine. That is\nAffCoverData.HasAffineOverlaps,\
+  \ and it is FREE for proper C (hasAffineOverlaps_of_isProper, via\nOver.isAffineOpen_inf\
+  \ on the separated relative curve) and propagates along a tower. It is NOT a\nfield\
+  \ of anything -- bundling it would quietly re-strengthen the widened structure.\n\
+  \nSTILL OPEN, and it is the honest residue of the whole lane: NO PRODUCER OF A DivFamZarAff\
+  \ FROM\nGEOMETRY that does not pass through the chart-typed predicate (I-0539).\
+  \ The two relocated\nobligations of I-0492 clause 4 -- fibrewise-finite support\
+  \ (hfib) and SwallowedBy -- are explicit\nin signatures as the protection demands,\
+  \ but nothing in the tree CONSTRUCTS them. Whoever builds\na widened certificate\
+  \ from an actual divisor owes both. That is a throughput gap, not an error.\n\n\
+  STANDING NEGATIVE RESULTS, all still binding: chart-avoid is NO, and the counterexample\
+  \ is\nFIELD-INDEPENDENT; no repair keeping the pieces inside preimages of a FIXED\
+  \ PAIR of P1 points can\nwork (joint-cover REJECTED); p1-aut stays pending and DEPRIORITISED,\
+  \ no consumer against it. The\nlanded finite-field-avoid work is valid mathematics\
+  \ and is not to be deleted.\n"
 status: active
 kind: proof
 priority: high
@@ -72,8 +72,9 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T03:01:33.606313+00:00'
+  updated_at: '2026-07-28T08:48:16.179991+00:00'
   pinned_commits:
+  - 107cd5581
   - c843eafd7
   - 359c0a38d
   - 2ff846d74
