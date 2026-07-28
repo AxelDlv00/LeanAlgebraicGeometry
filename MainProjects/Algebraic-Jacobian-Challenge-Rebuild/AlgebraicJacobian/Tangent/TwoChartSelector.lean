@@ -62,9 +62,14 @@ be used at the overlap with no transport. That reduction is the whole reason thi
   characterized**: surjectivity is `V₀ ≠ ⊥ ∧ V₀ ≠ ⊤`.
 * `AlgebraicGeometry.Scheme.AffineTwoCover.isAffineOpen_boolFamily` — each chart of the family is
   affine, and `isAffineOpen_boolFamily_inf` for the overlap.
+* `AlgebraicGeometry.Scheme.surjective_selector_comp` — **the producer for the second surjectivity
+  binder** `hsel'` of `Scheme.map_twoChartClass`, which inbox `I-0688` found had none: selector
+  surjectivity at the pulled-back end follows from surjectivity at the base end plus surjectivity of
+  `f.base`.
 * `AlgebraicGeometry.overSpecMap_eps_eq_overDualNumberZero` — **(3b)**: the `ε ↦ 0` test-object
   morphism and the coefficient comparison `overSpecMap k[ε] k` have the *same underlying scheme
-  morphism*, by `rfl` under the `scoped` `epsAlgebra`.
+  morphism*, by `rfl` under the `scoped` `epsAlgebra`. It says **nothing** about the source objects
+  — see its docstring for the withdrawn claim that it did.
 * `AlgebraicGeometry.ofHom_algebraMap_self_eq_id` / `specMap_algebraMap_self_eq_id` — the (3c)
   measurement: the first is `rfl`, the second is **not** (it needs `Spec.map_id`), which is why
   (3c) is a genuine object transport and not free. See that docstring for the retraction it forces.
@@ -190,6 +195,29 @@ end AffineTwoCover
 
 end Scheme
 
+/-! ## The SECOND surjectivity binder, and a producer for it
+
+`Scheme.map_twoChartClass` (`Tangent/TwoChartQuotientNaturality.lean`) takes **two** surjectivity
+hypotheses — `hsel` for the selector on `Y` and `hsel'` for `sel ∘ f.base` on `X`. A reviewer
+(inbox `I-0688`) found that the second had **no producer anywhere in the project**: grepping `hsel'`
+returns only occurrences inside the declaration itself, so every consumer would have had to invent
+it. That is an obligation *moved*, not discharged, and a carrier-level "level check" cannot see it
+because binders do not appear in carriers.
+
+The lemma below is the producer. It is deliberately stated as the general composition fact rather
+than at `f = ε ↦ 0`, because that is where the content is: **surjectivity of the selector at the
+pulled-back end follows from surjectivity at the base end together with surjectivity of `f.base`.**
+So a consumer owes a topological fact about `f`, not a new combinatorial one about charts.
+
+For the Wave-5 instance `f = ` the `ε ↦ 0` map `C ⟶ C_ε`, `f.base` is surjective — it is a
+homeomorphism on points, `Spec k → Spec k[ε]` being a bijection of one-point spaces (the standing
+observation of `Tangent/RelPicPointTest.lean`). That last step is **not** proved here; it is named as
+what the consumer supplies, in the same spirit as `V₀ ≠ ⊥`/`V₀ ≠ ⊤` above. -/
+theorem Scheme.surjective_selector_comp {X Y : Scheme.{u}} (f : X ⟶ Y) (sel : Y → Bool)
+    (hsel : Function.Surjective sel) (hf : Function.Surjective f.base) :
+    Function.Surjective (fun x ↦ sel (f.base x)) :=
+  hsel.comp hf
+
 /-! ## (3b): the `ε ↦ 0` test-object morphism IS the coefficient comparison -/
 
 section EpsilonZero
@@ -211,13 +239,21 @@ from `relCurveMap`, whereas the test-object side of the tangent computation is p
 `Over.homMk (Spec.map (ofHom (TruncExpCech.fstRingHom)))`, and under `epsAlgebra` the structure map
 `algebraMap k[ε] k` **is** `TrivSqZeroExt.fst` definitionally
 (`algebraMap_eps_eq_fst`) — so the two `RingHom`s are equal, and `Over.homMk`'s proof field is
-irrelevant. The source objects agree for the same reason: `overSpec k k` is
-`Over.mk (Spec.map (ofHom (algebraMap k k)))` and `algebraMap k k = RingHom.id k`.
+irrelevant.
 
-So the seam that looked like missing infrastructure is a **spelling** difference across a
-deliberately-`scoped` instance, which is the `I-0567`/`I-0634` family again: the thing exists
-upstream (here: in the tree), it is just not in ambient scope. Recorded in
-`informal/w5-t4-worksheet.md` §6.22. -/
+**But this is a statement about the two MORPHISMS ONLY, and their source OBJECTS do not agree
+definitionally.** An earlier version of this docstring added *"the source objects agree for the same
+reason: `overSpec k k` is `Over.mk (Spec.map (ofHom (algebraMap k k)))` and
+`algebraMap k k = RingHom.id k`"*. **That sentence was false and is withdrawn** (reviewer finding,
+inbox `I-0687`): the ring-level equation is indeed `rfl`, but `Spec.map` of it is not, so
+`Over.mk (Spec.map (ofHom (algebraMap k k)))` and `Over.mk (𝟙 (Spec k))` are equal objects that are
+**not** definitionally equal. See `specMap_algebraMap_self_eq_id` immediately below, and
+`informal/w5-t4-worksheet.md` §6.23. Do not use this lemma as if it identified the objects.
+
+So the seam that looked like missing infrastructure is, *at the level of the morphisms*, a
+**spelling** difference across a deliberately-`scoped` instance — the `I-0567`/`I-0634` family: the
+thing exists upstream (here: in the tree), it is just not in ambient scope. The object-level seam is
+a separate, genuine obligation. Recorded in `informal/w5-t4-worksheet.md` §§6.22–6.23. -/
 theorem overSpecMap_eps_eq_overDualNumberZero :
     (overSpecMap (k := k) (DualNumber k) k).left = (overDualNumberZero k).left :=
   rfl

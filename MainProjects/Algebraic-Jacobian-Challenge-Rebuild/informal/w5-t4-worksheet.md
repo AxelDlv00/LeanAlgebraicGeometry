@@ -1454,7 +1454,7 @@ Two different faces of one seam:
    (`CyclicQuotientGenerator.lean`). The AJC sibling confirmed on 2026-07-28 that it does **not**
    have this in any spelling either, so it is genuinely open on both sides.
 
-Nothing else stands between the two-chart comparison and the T2 engine at quotient level.
+~~Nothing else stands between the two-chart comparison and the T2 engine at quotient level.~~ **WITHDRAWN (§§6.24–6.25): the arrow identification ((3c)) and the `hsel'` binder both stand between them.**
 
 ### 6.22 ITEM (3): (3a) IS MEASURED AND (3b) IS A `rfl` — THE SEAM WAS A SPELLING, NOT INFRASTRUCTURE
 
@@ -1522,8 +1522,10 @@ restricts trivially along `ε ↦ 0`" ⟹ "the chart module's reduction `M/(ε)M
 the `hcyc` binder in `Tangent/DualNumberChartPic.lean`, so a sorry census does not see it, and open
 in the AJC sibling too (confirmed by `ajc-pic0av`, 2026-07-28). **Per §6.18's rule this is stated
 with its consumer named**: the binder is consumed by
-`Opens.cechPicMap_ι_eq_one_of_dualNumberChart_of_cyclic`, and nothing else in the chain now stands
-between the T2 engine and the two-chart comparison at quotient level.
+`Opens.cechPicMap_ι_eq_one_of_dualNumberChart_of_cyclic`, ~~and nothing else in the chain now stands
+between the T2 engine and the two-chart comparison at quotient level.~~ **WITHDRAWN (§§6.24–6.25):
+two further things do stand between them — the arrow identification (3c), and the `hsel'` binder,
+which had no producer until §6.25.**
 
 ### 6.23 RETRACTION OF §6.22: (3c) IS NOT THE SAME `rfl`, AND THE KERNEL IS WHAT CAUGHT IT
 
@@ -1621,3 +1623,50 @@ successor reads §§6.21–6.22 as "the intertwining is done".
 
 So the residue of §6.23 stands unchanged and is now justified rather than asserted: **(3c)** and
 **(iii-c2-aff-geo)**.
+
+### 6.25 REVIEWER FINDINGS ACCEPTED: a level check does not see BINDERS, and a retraction must reach the docstrings
+
+*Fresh-context reviewer, inbox `I-0687` and `I-0688`. Both accepted in full; both point at the same
+weakness from different sides, and one of them is a genuinely new failure mode for this lane.*
+
+**`I-0688`, and it is the sharper of the two. §6.24's level check passed while an obligation was
+being MOVED rather than discharged.** `Scheme.map_twoChartClass` takes **two** surjectivity binders:
+`hsel` for `sel` on `Y`, and `hsel'` for `sel ∘ f.base` on `X`. I characterized the first
+(`surjective_selector_iff`) and never asked who produces the second. Measured on the reviewer's
+instruction: `grep -rn "hsel'"` returns **only occurrences inside my own declaration** — zero
+producers anywhere in the project. A carrier-by-carrier comparison cannot detect this, because
+**binders do not appear in carriers**.
+
+> **Rule: "does this meet its consumer" is TWO passes, not one.** (1) do the carriers/types line up;
+> (2) does every explicit hypothesis binder of the new lemma have a **producer** in the tree — grep
+> the binder's statement and count occurrences *outside* the declaration itself. Zero means the
+> consumer must invent it. Pass 2 is one grep, and it is the pass that catches an obligation being
+> relocated rather than discharged. Corollary the reviewer states and I endorse: **characterizing
+> one of two binders does not size the residue.**
+
+**Acted on, not merely recorded.** `Tangent/TwoChartSelector.lean` now carries
+`Scheme.surjective_selector_comp`: `hsel` plus `Function.Surjective f.base` gives `hsel'`. Stated as
+the general composition fact on purpose — it relocates the obligation from a *combinatorial* fact
+about charts to a *topological* fact about `f`, which is where it belongs and where the Wave-5
+instance can discharge it (the `ε ↦ 0` map is a bijection on points, `Spec k → Spec k[ε]` being a map
+of one-point spaces). That last step is named, not proved, exactly like `V₀ ≠ ⊥`/`V₀ ≠ ⊤`.
+
+**`I-0687`: my §6.23 retraction did not reach the docstring of the theorem it was about.** The
+sentence *"the source objects agree for the same reason: `overSpec k k` is
+`Over.mk (Spec.map (ofHom (algebraMap k k)))` and `algebraMap k k = RingHom.id k`"* survived,
+unstruck, in `overSpecMap_eps_eq_overDualNumberZero`'s docstring — **two declarations above the
+theorem that refutes it.** So a reader of that docstring alone got the withdrawn claim with no
+marker. Fixed in place: the docstring now says the lemma is about the two *morphisms only*, names the
+sentence as withdrawn with its inbox reference, and points at
+`specMap_algebraMap_self_eq_id`. Two stale worksheet lines ("nothing else stands between…", §§6.21
+and 6.22) are struck likewise.
+
+**This is "retract where the claim is" recurring in the file that records the lesson**, which is the
+second time today, and the reason is worth naming: I struck the *worksheet* prose and treated the
+Lean docstrings as a separate artifact. They are not — **a docstring is the copy a consumer actually
+reads.** When retracting, grep the retracted sentence across `.lean` files too, not only the notes.
+
+**Residue after this section, unchanged in substance and better sized:** **(3c)** the object
+transport, **(iii-c2-aff-geo)**, and — newly explicit — the two named consumer inputs
+(`V₀ ≠ ⊥ ∧ V₀ ≠ ⊤`, and `Surjective f.base` at the `ε ↦ 0` map) which are satisfiable, unwitnessed in
+the tree, and now each have a producer or a named owner.
