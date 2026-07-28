@@ -42,10 +42,17 @@ and there is one `Z` again — the chart index's — and nothing to feed back.
 Exactly one input beyond the landed splitting: a divisor of the twisted fibre class over the
 splitting field with vanishing `H¹`.  That is DAT-0a at the fibre field, and it is genuinely
 per-fibre (I-0204, `w4-datb` §0.2.2): no uniform `m₀` exists, so the exponent `m` must be chosen
-against `L`'s own threshold `b_L`.  `mem_chartLocus_of_vanishing_bound` below takes `b_L` in
-exactly the shape `exists_bound_subsingleton_hModule_one_of_isFinite_toP1`
-(`RiemannRoch/UniformVanishing.lean:71`) produces it, and *derives* the `m` — so what remains of
-step 3 is instantiating DAT-0a at the base-changed curve, not choosing anything.
+against `L`'s own threshold `b_L`.
+
+**RETRACTED 2026-07-29 (I-0660).**  This paragraph continued: `mem_chartLocus_of_vanishing_bound`
+"takes `b_L` in exactly the shape `exists_bound_subsingleton_hModule_one_of_isFinite_toP1`
+produces it, and *derives* the `m` — so what remains of step 3 is instantiating DAT-0a at the
+base-changed curve, not choosing anything."  That is FALSE.  At a chart index legal at parameter
+`n` the `hdeg` hypothesis **forces `b = n`**, and at `n = g` the resulting `hb` is a statement
+that is false in general — see the retraction note on
+`mem_chartLocus_of_vanishing_bound` itself and `Picard/Pic0ChartCoverageIndexSlack.lean` for the
+three machine-checked statements that replace it.  The theorem below is sound; only this account
+of what remains was wrong.
 
 ## Main declarations
 
@@ -53,8 +60,8 @@ step 3 is instantiating DAT-0a at the base-changed curve, not choosing anything.
   vanishing witness in the twisted class gives `t ∈ chartLocus`.  No `g`, no `e`, no `χ`, no
   oracle, no effectivity.
 * `AlgebraicGeometry.mem_chartLocus_of_vanishing_bound` — the same with the witness *produced*
-  from a DAT-0a-shaped degree threshold at the splitting field, with the twist exponent `m`
-  derived rather than assumed.
+  from a degree threshold at the splitting field.  Sound; but read its retraction note before
+  reading the threshold as DAT-0a's (it is forced to equal the chart parameter, I-0660).
 * `AlgebraicGeometry.exists_mem_chartLocus_of_vanishing_bound` — the `∃ m` form: the coverage
   statement `w4-datb` §1.2 targets, at a fixed chart-index shape.
 -/
@@ -118,19 +125,32 @@ theorem mem_chartLocus_of_witness_h1 {T : Over (Spec (.of k))} (lam : picEt C T)
 /-! ## Producing the witness from a degree threshold -/
 
 variable (C) in
-/-- **Coverage from a DAT-0a threshold at the splitting field**, with the twist exponent
-*derived*.
+/-- **Coverage from a vanishing threshold at the splitting field.**  The theorem is TRUE and
+correctly proved; the paragraph that described `hb` as "DAT-0a's threshold, so the twist exponent
+is *derived*" was WRONG and is retracted below.
 
-`hb` is the conclusion of `exists_bound_subsingleton_hModule_one_of_isFinite_toP1`
-(`RiemannRoch/UniformVanishing.lean:71`) instantiated at the base-changed curve `C_L`: every
-divisor of degree `≥ b` has vanishing `H¹`.  `hdeg` is the degree ledger of the twisted
-presenting class, which `classDeg_presenting_twist` (`Pic0ChartCoverageDegreeStep2.lean`)
-computes as `m·d₁ − deg_k Z` for a degree-zero `lam` — so this hypothesis is *supplied*, not
-assumed, once the chart index is fixed.
+`hb`: every divisor of degree `≥ b` on `C_L` has vanishing `H¹`.  `hdeg`: the twisted presenting
+class has `classDeg = b`, which `classDeg_presenting_twist`
+(`Pic0ChartCoverageDegreeStep2.lean`) computes as `m·d₁ − deg_k Z` for a degree-zero `lam`.
+Every divisor of the class has that degree (`classDeg_picClass`), so the threshold applies to the
+representative `exists_picClass_eq` produces, and `mem_chartLocus_of_witness_h1` finishes.  No
+effectivity is needed anywhere, which is why no drop appears.
 
-Every divisor of the class then has that degree (`classDeg_picClass`), so the threshold applies
-to the representative `exists_picClass_eq` produces, and `mem_chartLocus_of_witness_h1` finishes.
-No effectivity is needed at any point, which is why no drop appears. -/
+**RETRACTED 2026-07-29 (I-0660; adjudicated in `Picard/Pic0ChartCoverageIndexSlack.lean`).**  The
+claim that `hdeg` is "*supplied*, not assumed, once the chart index is fixed", i.e. that `b` may
+be taken to be DAT-0a's bound, is FALSE at the parameter that matters:
+
+* at a chart index legal at parameter `n` (`deg_k Z = m·d₁ − n`, which
+  `chartValue_mem_pic0Subgroup` requires) `hdeg` **forces `b = n`** — it determines `b` rather
+  than accepting it (`ledger_forces_b_eq_n`);
+* at `n = g`, `hb` at `b = g` forces **every** degree-`g` divisor to have `h⁰ = 1`
+  (`hb_forces_h0_eq_one`), which is false on a curve with a moving degree-`g` family.  DAT-0a's
+  own bound is `n₁·deg F + g` with `0 < deg F`, i.e. strictly above `g` for `n₁ ≥ 1`.
+
+What survives: `hdeg` is not unsatisfiable — for any `b ≥ 0` a legal index at parameter `b.toNat`
+satisfies it by construction (`index_of_threshold`), since `n` is free throughout the chart layer.
+So this theorem is usable, and the residue of B-5 step 3 is the reconciliation of the chart
+parameter with the threshold, not an instantiation of DAT-0a. -/
 theorem mem_chartLocus_of_vanishing_bound {T : Over (Spec (.of k))} (lam : picEt C T)
     (t : T.left) (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
     {L : Type u} [Field L] [Algebra k L] [Algebra (Over.testPointField t) L]

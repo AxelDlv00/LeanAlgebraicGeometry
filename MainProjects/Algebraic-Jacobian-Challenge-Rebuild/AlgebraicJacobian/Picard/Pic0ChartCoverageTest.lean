@@ -141,10 +141,17 @@ right; what was wrong is treating the drop as *necessary*.
   drop gone there is one `Z` and nothing to feed back;
 * step 2 is landed (`PicEtAff.degAff_map` → `classDeg_presenting_eq_zero`).
 
-What remains of B-5 is step 3's per-fibre `m`, and even that is now *derived* rather than
-chosen: `mem_chartLocus_of_vanishing_bound` takes the DAT-0a threshold `b_L` in the shape
+What remains of B-5 is step 3's per-fibre `m`.
+
+**RETRACTED 2026-07-29 (I-0660).**  This said "and even that is now *derived* rather than chosen:
+`mem_chartLocus_of_vanishing_bound` takes the DAT-0a threshold `b_L` in the shape
 `exists_bound_subsingleton_hModule_one_of_isFinite_toP1` produces it, so instantiating DAT-0a at
-the base-changed curve is the whole remaining work.
+the base-changed curve is the whole remaining work."  FALSE.  At a chart index legal at parameter
+`n` that theorem's `hdeg` **forces** the threshold to equal `n` (`ledger_forces_b_eq_n`), and at
+`n = g` the resulting hypothesis says every degree-`g` divisor has `h⁰ = 1`
+(`hb_forces_h0_eq_one`) — false on a curve with a moving degree-`g` family, and strictly above
+DAT-0a's own bound `n₁·deg F + g`.  See `Picard/Pic0ChartCoverageIndexSlack.lean`; the residue is
+reconciling the chart parameter with the threshold, not instantiating DAT-0a.
 
 `mem_chartLocus_of_drop` stays sound and is still the right theorem when the `h⁰ = 1`
 normalisation is wanted (DAT-C / GAP-2 need it; membership does not); use it knowing its `Z` is
@@ -186,8 +193,8 @@ discharged".  Three of those five are; the other two are not:
   formulation of this theorem can produce `m` for the caller.
 
 **Note one conclusion this theorem deliberately drops** — wanted not by coverage (which needs no
-drop at all, see the step-6 entry above) but by DAT-C's canonical section and GAP-2 uniqueness: the fibre
-step returns `S`'s support clause (`coeffAt hx S ≠ 0 → x ∈ P`), and the `-` pattern below
+drop at all, see the step-6 entry above) but by DAT-C's canonical section and GAP-2 uniqueness:
+the fibre step returns `S`'s support clause (`coeffAt hx S ≠ 0 → x ∈ P`), and the `-` pattern below
 discards it.  A lane closing step 6 should re-expose it — it is what says `Σ` is supported in
 the rational points whose graph classes the index is built from. -/
 theorem mem_chartLocus_of_drop {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left)

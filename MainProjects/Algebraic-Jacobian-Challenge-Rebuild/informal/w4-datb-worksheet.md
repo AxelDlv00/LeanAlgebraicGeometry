@@ -150,19 +150,40 @@ the row's own step-6 typing gap is diagnosed (see the §1.2 amendment).**  Lande
 `classDeg_of_presenting` was in this table as a step-2 input; it is **not** one (its right-hand
 side reads the degree at `L`, not at `K`) and it has no consumers.  See its own docstring.
 
-**WHAT B-5 STILL OWES — corrected TWICE on 2026-07-28.  Current state: ONE residue, and it is
-step 3, which is also now derived rather than chosen.**
+**WHAT B-5 STILL OWES — corrected THREE times, most recently 2026-07-29.  Current state: ONE
+residue, step 3, and it is NOT "instantiate DAT-0a".**
 
 History matters here because two of the three residues were removed by *reading the predicates
 more carefully*, not by proving anything about the drop:
 
 1. **step 3 — the twist exponent `m`.**  STILL the residue, and irreducibly so as an `∃ m`: no
-   uniform `m₀` exists (§0.2.2, I-0204).  **But it is no longer a CHOICE the coverage proof must
-   make.**  `mem_chartLocus_of_vanishing_bound`
-   (`Picard/Pic0ChartCoverageNoDrop.lean`) takes the DAT-0a threshold `b_L` in exactly the shape
-   `exists_bound_subsingleton_hModule_one_of_isFinite_toP1`
-   (`RiemannRoch/UniformVanishing.lean:71`) produces it, so what remains is *instantiating DAT-0a
-   at the base-changed curve* `C_L`.
+   uniform `m₀` exists (§0.2.2, I-0204).
+
+   **RETRACTED 2026-07-29 (I-0660, adjudicated in `Picard/Pic0ChartCoverageIndexSlack.lean`).**
+   The previous text read: "But it is no longer a CHOICE the coverage proof must make.
+   `mem_chartLocus_of_vanishing_bound` takes the DAT-0a threshold `b_L` in exactly the shape
+   `exists_bound_subsingleton_hModule_one_of_isFinite_toP1` produces it, so what remains is
+   *instantiating DAT-0a at the base-changed curve* `C_L`."  That is FALSE, and the correction is
+   three machine-checked statements:
+
+   * `ledger_forces_b_eq_n` — at a chart index legal at parameter `n` (the constraint
+     `deg_k Z = m·d₁ − n` that `chartValue_mem_pic0Subgroup` requires) the `hdeg` hypothesis
+     **determines** the threshold: `b = n`.  It is not an input DAT-0a may supply.
+   * `hb_forces_h0_eq_one` — at `n = g`, the resulting `hb` forces **every** degree-`g` divisor to
+     have `h⁰ = 1`.  That is false on a curve carrying a moving degree-`g` family, so there is no
+     route through `b = g` at all.  DAT-0a's own bound is `n₁·deg F + 1 − χ = n₁·deg F + g` with
+     `0 < deg F`, hence strictly above `g` whenever `n₁ ≥ 1`.
+   * `index_of_threshold` — what survives: `hdeg` is *satisfiable* for every `b ≥ 0`, at the chart
+     parameter `n := b.toNat`, because `n` is free throughout the chart layer (`divFunctor`,
+     `chartValue`, `chartValueTrans`, `abelSigmaChart` are all stated at arbitrary `n`; `n = g` is
+     where the *divisor-representability* lane instantiates).
+
+   **So the residue is: reconcile the chart parameter with the threshold.**  The available move is
+   to carry the slack in `Z` at parameter `g` — the `g + e` shape
+   `classDeg_presenting_twist_eq_add` already has — and its open question is the legality of such
+   an index (§1.1 demands `0 ≤ Σ` *and* `deg = m·d₁ − g`).  Note this is also *not* the reviewer's
+   proposed repair verbatim: they proposed restating with slack and themselves observed it
+   collides with that legality condition.
 2. **step 2 — DISCHARGED (run 0072 s0008).**  The missing brick was base-field invariance of
    `degAff` under `PicEtAff.map`; it is `PicEtAff.degAff_map`
    (`Picard/DegreeZeroBaseField.lean`) and is **unconditional in `L/K`** — no finiteness, no
