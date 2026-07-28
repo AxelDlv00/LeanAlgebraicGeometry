@@ -103,6 +103,27 @@ a carrier mismatch", which is what I would have recorded had I stopped at the mi
 a hypothesis in the reduction below until the port is actually made, because an unmeasured port
 is not an available theorem.
 
+**The AJC-native route to input (1), measured.**  Because the carriers agree, there is a second
+option besides porting AJCR's file: assemble the identity from bricks AJC already owns.  What is
+present, checked at HEAD:
+
+* a **cover on `C`**: `Adelic.LaurentChartData.pullbackSquare` (`Adelic/FinitenessP1.lean:439`)
+  builds a `C.left.AffineCoverMVSquare` from the ℙ¹ chart data and any finite `π`, and
+  `Ledger/MapToP1.exists_isFinite_isDominant_toP1` supplies the `π` at AJC's curve;
+* a **cover on `C_κ`**: `Scheme.AffineCoverMVSquare.baseChangeField` (`CurveBaseChange.lean:340`)
+  transports it, since the first projection `C_κ ⟶ C` is affine;
+* the **genus read on that cover**: `AffineCoverMVSquare.h1_unit_baseChangeField_eq_genus`
+  (`CohomologyKit.lean:582`) already says `h¹(𝒪_{C_κ})` on the base-changed cover *is*
+  `genus C_κ`, and `h0_unit_baseChangeField_eq_one` gives `h⁰ = 1`.
+
+So AJC has both sides of the comparison expressed on transported covers; what is **missing** is
+the comparison itself — the termwise base-change equivalence `Γ(C, V) ⊗_k κ ≃ Γ(C_κ, V_κ)` on
+chart sections, which is what AJCR's `relSectionsBaseChange` supplies and what makes `h¹` agree
+rather than merely both being defined.  That equivalence is the actual deliverable, on either
+route.  Note the shape of the two projects' cover carriers differs — AJCR uses `AffineTwoCover`,
+AJC `AffineCoverMVSquare` (and `AffineTwoCover` does not occur anywhere in AJC) — so a port
+crosses a second carrier boundary that the `rfl` above does *not* cover.
+
 **Input (2), a uniform base-divisor degree bound: open, and not located in either project.**
 It asks for one `d` with a vanishing `D₀` of degree `≤ d` over *every* `κ`.  Nothing in AJC or
 AJCR bounds `n₀(κ)` uniformly; AJCR's analogue is a `Nat.find` per field
