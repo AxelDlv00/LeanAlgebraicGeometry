@@ -35,9 +35,14 @@ Milne's formula was not expressible in the tree.
 * `PiTensorProduct.permMulSemiringAction` — the left `S_n`-action, taking `σ` to
   `permAlgHom σ⁻¹`. The inverse is forced by the previous item, exactly as
   `SymPowColimit.permEnd` needs `σ⁻¹` on the geometric side.
-* `symTensorPowSubalgebra R A n` — **Milne's `(A^{⊗ n})^{S_n}`**, as an `R`-subalgebra.
-* `symTensorPowSubalgebra_universal` — its universal property in algebra terms: an
-  `S_n`-invariant `R`-algebra map into `A^{⊗ n}` factors uniquely through it.
+* `PiTensorProduct.permSMulCommClass` — the action commutes with scalars (one `map_smul`).
+  `FixedPoints.subalgebra` needs this *in addition to* the `MulSemiringAction`, and mathlib
+  supplies neither at a tensor power; it is also what makes the action a diagram over the
+  base ring (`Albanese/SymPowInvariantsUnder.lean`).
+* `symTensorPowSubalgebra R A` — **Milne's `(A^{⊗ n})^{S_n}`**, as an `R`-subalgebra, with
+  `mem_symTensorPowSubalgebra_iff` and `symTensorPowSubalgebra_toSubring`. The universal
+  property is *not* restated here as an algebra statement; it arrives in categorical form
+  through the next item, which is where the limit/colimit property is proved.
 * `hasLimit_actionDiagram_symTensorPow` / `hasColimit_actionDiagram_op_symTensorPow` — the
   same fact as a limit in `CommRingCat` and a colimit in `CommRingCatᵒᵖ`, obtained by
   instantiating `SymPowInvariants`' general theorems at this action. This is the first
@@ -182,6 +187,20 @@ noncomputable def permMulSemiringAction :
   smul_add σ x y := map_add (permAlgHom R A σ⁻¹) x y
   smul_one σ := map_one (permAlgHom R A σ⁻¹)
   smul_mul σ x y := map_mul (permAlgHom R A σ⁻¹) x y
+
+/-- **The action commutes with scalars.** Immediate from `permAlgHom` being an *algebra*
+hom, hence `R`-linear — one `map_smul`.
+
+Needed because `FixedPoints.subalgebra` requires `[SMulCommClass G R B]` in addition to the
+`MulSemiringAction`, and mathlib supplies neither at a tensor power. It is also the
+hypothesis under which the action is a diagram in `Under R` rather than merely in
+`CommRingCat`; see `Albanese/SymPowInvariantsUnder.lean`. -/
+@[implicit_reducible]
+noncomputable def permSMulCommClass :
+    letI := permMulSemiringAction R (ι := ι) A
+    SMulCommClass (Equiv.Perm ι) R (⨂[R] _ : ι, A) :=
+  letI := permMulSemiringAction R (ι := ι) A
+  ⟨fun σ r x => map_smul (permAlgHom R A σ⁻¹) r x⟩
 
 /-- The action, unfolded. Note `(ι := ι)`: `permMulSemiringAction`'s index type is
 implicit and does not appear in its explicit arguments, so a bare
