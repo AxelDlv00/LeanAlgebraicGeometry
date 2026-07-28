@@ -413,12 +413,16 @@ open Limits
 the many-object quantifier collapses because the index category has one object and
 `SingleObj.toEnd` is an equivalence onto its endomorphisms.
 
-This is what makes the affine case below *computable* rather than merely abstract. Limits
-in `CommRingCat` are computed as sections (`CommRingCat.limitCone`), so dually the colimit
-of the permutation action on an affine scheme is `Spec` of the **invariant subring** of the
-`n`-fold tensor power — which is exactly the ring Milne writes as `(A^{⊗n})^{S_n}` in
-III.3 Proposition 3.1. Without this the affine inhabitation would be a black box; with it,
-the carrier is named. -/
+**What this is for, stated so it does not overclaim.** It is the reason to *expect* that the
+affine colimit is `Spec` of the invariant subring of the `n`-fold tensor power — Milne's
+`(A^{⊗n})^{S_n}` in III.3 Proposition 3.1 — because limits in `CommRingCat` are computed as
+sections (`CommRingCat.limitCone`) and, by this lemma, a one-object diagram's sections are
+its fixed points.
+
+It is **not** a proof of that identification: the statement below is about
+`SingleObj G ⥤ Type` and mentions neither `CommRingCat` nor `Spec` nor a tensor power. So
+the carrier is *not* named in Lean; see the §5 header. An earlier version of this docstring
+claimed it was, which is why the caveat is spelled out here rather than only there. -/
 theorem mem_sections_singleObj_iff {G : Type u} [Group G] (F : SingleObj G ⥤ Type v)
     (x : (j : SingleObj G) → F.obj j) :
     x ∈ F.sections ↔

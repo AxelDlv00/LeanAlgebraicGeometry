@@ -68,9 +68,13 @@ structure is nearly free, and exhibiting *some* `SymPowData` proves nothing.
 
 What the downstream theorems actually quantify over is the **pair**
 `(D, hproj)`, where `hproj : ∀ σ, permAut C σ ≫ D.proj = D.proj` says the projection
-is genuinely symmetric. The `proj := 𝟙` trick fails that for `n ≥ 2` (it would need
-`permAut C σ = 𝟙`). So the pair is the meaningful object, and this file witnesses it
-for `n = 1`: `symPowDataOne` plus `symPowDataOne_proj_perm`.
+is genuinely symmetric. The `proj := 𝟙` trick fails that whenever `permAut C σ ≠ 𝟙`, which
+for `n ≥ 2` holds as soon as `C` has two distinct global points — the case of interest, and
+proved in `Albanese/SymPowColimit.lean` (`permAut_swap_ne_id_of_points`). It is *not*
+automatic from `n ≥ 2` alone: at a **terminal** `C` the trivial datum does satisfy `hproj`
+at every `n` (`permAut_eq_id_of_isTerminal`), so an unqualified "fails for `n ≥ 2`" is
+false. So the pair is the meaningful object away from that degenerate case, and this file
+witnesses it for `n = 1`: `symPowDataOne` plus `symPowDataOne_proj_perm`.
 
 Two honest caveats about that witness:
 
@@ -312,8 +316,11 @@ universal property vacuous. This declaration exists so that the limitation is a 
 fact in the tree rather than a remark someone might doubt or forget.
 
 Its purpose is contrastive: a downstream theorem is only meaningful because it *also*
-requires `hproj : ∀ σ, permAut C σ ≫ D.proj = D.proj`, which this datum **fails** for
-`n ≥ 2` (it would force `permAut C σ = 𝟙`). Do not use it for anything; if a future
+requires `hproj : ∀ σ, permAut C σ ≫ D.proj = D.proj`, which this datum **fails** whenever
+`permAut C σ ≠ 𝟙` — for `n ≥ 2` that holds as soon as `C` has two distinct global points
+(`permAut_swap_ne_id_of_points`), though **not** at a terminal `C`, where it genuinely
+satisfies `hproj` (`permAut_eq_id_of_isTerminal`); both in
+`Albanese/SymPowColimit.lean`. Do not use it for anything; if a future
 lemma over `SymPowData` can be instantiated at `symPowDataTrivial`, that lemma is
 vacuous and the bug is in the lemma.
 
@@ -331,7 +338,8 @@ omit [CartesianMonoidalCategory K] in
 /-- **The other half of the witness: `symPowDataOne`'s projection is symmetric.**
 
 Every downstream theorem quantifies over a `SymPowData` *paired with* this hypothesis,
-and the pairing is what rules out the trivial `proj := 𝟙` datum for `n ≥ 2`. Here it is
+and the pairing is what rules out the trivial `proj := 𝟙` datum once `C` has two distinct
+global points (see `permAut_swap_ne_id_of_points`; not at a terminal `C`). Here it is
 immediate: `Equiv.Perm (Fin 1)` is a subsingleton, so `σ 0 = 0` and `permAut_π` closes
 it.
 

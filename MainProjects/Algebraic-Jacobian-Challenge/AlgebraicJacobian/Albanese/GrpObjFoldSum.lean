@@ -80,8 +80,10 @@ goal in a form mathlib's own instances solve. See `Albanese/AVSelfProduct.lean`.
 
 This file deliberately stops at the symmetry statement. It does **not** construct
 `Sym^n C`: at this Mathlib pin there is no quotient of a scheme by a finite group
-action (see `analogies/m3-route-audit.md`, which scopes that construction at
-roughly 2400–3800 lines). What is supplied here is the *input* to the symmetric
+action. (`analogies/m3-route-audit.md` scoped that construction at roughly 2400–3800 lines;
+treat the figure as **historical** — `Albanese/SymPowColimit.lean` since reduced the
+obligation to one `HasColimit` instance and discharged the affine-algebra half outright.)
+What is supplied here is the *input* to the symmetric
 power's universal property, which is the half of Milne's symmetrisation step that
 does not depend on the quotient existing.
 
