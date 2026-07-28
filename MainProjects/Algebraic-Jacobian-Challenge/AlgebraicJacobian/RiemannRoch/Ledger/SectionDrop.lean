@@ -56,12 +56,24 @@ finiteness, and they carry it.
 Read this before quoting anything above as "uniform vanishing":
 
 1. **Single-field bounded vanishing** — "there is `N` such that `deg D ≥ N` implies
-   `h¹(𝒪(D)) = 0`".  NOT proved here and not implied by anything here.  The peel moves
-   vanishing *up the divisor order* `D₀ ≤ D`, and a divisor of large *degree* need not
-   dominate `D₀`; the two are different partial data.  (The adelic lane states exactly this
-   gap as `Adelic.coneVanishing_iff_base_and_peel`; the present file discharges its *peel*
-   half on this carrier, not its base half.)  A base vanishing `H¹(𝒪(D₀)) = 0` at even one
-   `D₀` is an input nothing in this file produces.
+   `h¹(𝒪(D)) = 0`".  NOT proved *in this file* and not implied by anything in it: the peel
+   moves vanishing *up the divisor order* `D₀ ≤ D`, and a divisor of large *degree* need not
+   dominate `D₀`.  A base vanishing `H¹(𝒪(D₀)) = 0` at even one `D₀` is an input nothing here
+   produces.
+
+   **BUT THE GAP FROM THE ORDER-CONE TO THE DEGREE HALF-SPACE IS NOW CLOSED, one import
+   above.**  `Ledger/DegreeVanishing.lean` proves
+   `subsingleton_hModule_one_of_deg_ge`: from **one** base vanishing at `D₀`, `H¹(𝒪(D))`
+   vanishes for every `D` with `deg D ≥ deg D₀ + 1 − χ(𝒪_X)`.  An earlier version of this
+   docstring called the bridging cofinality statement open and said "nothing in AJC or AJCR
+   currently produces it".  That was **wrong**: the missing move was not a new input but the
+   observation that the peel may be applied to a *linearly equivalent translate* of `D₀` —
+   `mulEquivDivisorSheaf` (already in `Ledger/MulEquiv.lean`) makes `H¹` vanishing a class
+   invariant, and `riemann_inequality` (already in `Ledger/ChiLedger.lean`) manufactures the
+   translating function from `deg (D − D₀) + χ ≥ 1`.  Both were in the tree; nobody had put
+   them together.  So `exists_bound_of_cofinal_vanishing` below is now a *corollary* of a
+   theorem rather than a reduction to an open hypothesis — see
+   `DegreeVanishing.exists_le_subsingleton_of_deg_ge`, which is exactly its `hcof`.
 
    **Where the base actually stands, and a correction.**  Inside *this project's* Ledger tree
    the base is unavailable: `H¹(𝒪) = 0` at `ℙ¹` would need `ledgerGenus (Adelic.p1Over k) = 0`,
@@ -94,9 +106,11 @@ Read this before quoting anything above as "uniform vanishing":
    carrier and gated on `hledger` plus two vanishings; nothing here transports it, because
    this file has no evaluation map to feed it.
 
-So the honest summary: on this carrier the **peel** is unconditional at every closed point,
-the **base** is not supplied, and the **degree threshold** is reduced to one named cofinality
-hypothesis (`exists_bound_of_cofinal_vanishing`) that remains open.
+So the honest summary **for this file**: the **peel** is unconditional at every closed point,
+the **base** is not supplied, and the **degree threshold** is isolated as
+`exists_bound_of_cofinal_vanishing`.  That last hypothesis is no longer open — it is proved in
+`Ledger/DegreeVanishing.lean` from `MulEquiv` plus `riemann_inequality` — so the residual input
+for the whole layer is now exactly **one** base vanishing at **one** divisor.
 -/
 
 set_option autoImplicit false
@@ -455,14 +469,18 @@ therefore: the adelic peel is discharged off the overlap and open on it, while
 dévissage quotient is a skyscraper at each of them and no cover is chosen at all.  The
 carrier difference is the absence of a cover, not a difference in proof difficulty.
 
-What no amount of peeling supplies is the step from the **order**-cone to a **degree**
+What no amount of peeling *alone* supplies is the step from the **order**-cone to a **degree**
 half-space.  `exists_bound_of_cofinal_vanishing` below isolates that step as a single named
-hypothesis, so that a future session sees precisely one obligation rather than a vague gap:
-one needs, for each large-degree `D`, *some* divisor `D₀` with `H¹(𝒪(D₀)) = 0` and `D₀ ≤ D`.
-That is a cofinality statement about where vanishing occurs in the divisor order, and nothing
-in AJC or AJCR currently produces it — for the reason recorded in item 1 of the module
-docstring: `deg` is a sum of residue-weighted coefficients, so a divisor can have huge degree
-while being small at every point of `supp D₀`. -/
+hypothesis: one needs, for each large-degree `D`, *some* divisor `D₀` with `H¹(𝒪(D₀)) = 0` and
+`D₀ ≤ D`.  Note why it is not bookkeeping: `deg` is a sum of residue-weighted coefficients, so a
+divisor can have huge degree while being small at every point of `supp D₀`.
+
+**AND IT IS PROVED, one import above** (`Ledger/DegreeVanishing.exists_le_subsingleton_of_deg_ge`).
+The resolution is that the `D₀` fed to the peel need not be the *given* one: `H¹` vanishing is a
+linear-equivalence invariant, so the whole class of `D₀` is available, and the Riemann inequality
+picks out a member below `D` as soon as `deg D ≥ deg D₀ + 1 − χ(𝒪_X)`.  An earlier version of
+this paragraph asserted that nothing in AJC or AJCR produces the cofinality statement; that was
+false, and it was false about ingredients already in this same directory. -/
 
 section DegreeThreshold
 
@@ -471,10 +489,16 @@ vanishing locus is *cofinal in the divisor order* — i.e. every `D` of degree `
 some `D₀` at which `H¹` vanishes — then `H¹(𝒪(D)) = 0` for every such `D`, and Riemann–Roch
 is an equality there.
 
-The hypothesis is exactly the missing input and is deliberately left named and open: this is
-*not* a proof of single-field bounded vanishing, it is a reduction of it to one cofinality
-statement.  Compare `Adelic.exists_bound_subsingleton_h1Mod`, which needs a base, a peel and
-the ledger; here the peel and the ledger are discharged and only this remains. -/
+The hypothesis is named so that the obligation is visible: *this theorem* is not a proof of
+single-field bounded vanishing, it is a reduction of it to one cofinality statement.  Compare
+`Adelic.exists_bound_subsingleton_h1Mod`, which needs a base, a peel and the ledger; here the
+peel and the ledger are discharged.
+
+**The hypothesis itself is now a theorem** —
+`Ledger/DegreeVanishing.exists_le_subsingleton_of_deg_ge` supplies exactly this `hcof` from one
+base vanishing, so `DegreeVanishing.subsingleton_hModule_one_of_deg_ge` *is* the single-field
+bounded vanishing this theorem was shaped to receive.  Prefer that statement over instantiating
+`hcof` by hand. -/
 theorem exists_bound_of_cofinal_vanishing {b : ℤ}
     (hcof : ∀ D : X.CurveDivisor, b ≤ CurveDivisor.deg K D →
       ∃ D₀ : X.CurveDivisor, D₀ ≤ D ∧
