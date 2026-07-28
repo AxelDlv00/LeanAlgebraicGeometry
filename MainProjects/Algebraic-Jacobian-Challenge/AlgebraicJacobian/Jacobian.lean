@@ -7,6 +7,7 @@ import Mathlib
 import AlgebraicJacobian.Genus
 import AlgebraicJacobian.Curve.GeometricallyReduced
 import AlgebraicJacobian.Picard.Pic0AbelianVariety
+import AlgebraicJacobian.Picard.Pic0Et
 import AlgebraicJacobian.Albanese.AlbaneseUP
 
 /-! # The Jacobian of a smooth proper curve
@@ -285,37 +286,32 @@ theorem geometricallyIntegral_of_curve (C : Over (Spec (.of k)))
     GeometricallyIntegral C.hom :=
   SmoothOfRelativeDimension.geometricallyIntegral 1 C.hom
 
-/-- **Leaf A: the `k`-rational point.** The one genuine gap between the challenge
-statement and the FGA route, and the only part of the former combined leaf that is a
-decision rather than a theorem.
+/-! ### Former leaf A: the `k`-rational point — DELETED, not proved
 
-`Scheme.instHasPicScheme` takes `[HasRationalPoint C]` and is correct to do so: without
-a section, `Pic(C ×_k T)/π_T^* Pic(T)` need not even be a Zariski sheaf. Kleiman's
-theorem needs no section because it represents the *étale* sheaf, and sheafifying
-supplies étale-locally what a section supplies globally. So the two ways to close the
-gap are
+**The decision is made and this is not an open branch** (owner decision of 2026-07-28,
+protection I-0491). The Jacobian headline is stated over an arbitrary field with no
+rational-point binder, and the étale-sheafified relative Picard functor is what gets
+represented (`Scheme.PicScheme.picEt` and `Scheme.fgaPicardRepresentability`,
+`Picard/PicEtSheaf.lean` and `Picard/FGAPicRepresentability.lean`). Sheafifying supplies
+étale-locally what a section supplies globally, which is why Kleiman's theorem needs no
+section; and Mathlib `v4.31` carries the étale topology, so this was never a platform
+limitation.
 
-1. carry `[Scheme.HasRationalPoint C]` as a hypothesis of the headline — cheap, and
-   proves something strictly weaker than the challenge asks; or
-2. étale-sheafify the relative Picard functor and represent that — Kleiman's own
-   formulation, and the full strength, at the cost of a new representability input.
+The former leaf
+`hasRationalPoint_of_curve` asserted `Scheme.HasRationalPoint C` from the challenge
+hypotheses alone. That statement is **false**, not merely unproved: a smooth proper
+geometrically integral curve over a general field need not have a `k`-rational point.
+While it existed, every consequence of `picardJacobianWitness` rested on an inconsistent
+hypothesis, so those consequences were vacuously true and no axiom check could tell the
+difference.
 
-Neither is chosen (the decision is recorded as an open owner decision; see
-`README.md` and `informal/pic-representability-campaign.md`), and it is not a platform
-limitation: Mathlib `v4.31` does carry the étale topology.
-
-**Read this leaf as a gap marker, not as an obligation to discharge.** The statement is
-false as stated, so it is not merely unproved but unprovable, and everything downstream
-of `picardJacobianWitness` currently rests on an inconsistent hypothesis rather than on
-an open frontier. That is deliberate — it puts the gap where a reader of the headline
-meets it, instead of leaving it implicit in the Picard hypotheses — but it means this
-leaf must be **replaced** once the decision above is made, by either a rational-point
-binder on the Jacobian itself or an étale-sheafified representability input. It must not
-be "proved". -/
-theorem hasRationalPoint_of_curve (C : Over (Spec (.of k)))
-    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
-    Scheme.HasRationalPoint C :=
-  sorry
+It has been removed rather than proved, and nothing may reintroduce it. What replaced it
+is not a different proof of the same statement but a different *statement*: the
+representability obligation is now taken for the **étale-sheafified** relative Picard
+functor (`Scheme.fgaPicardRepresentability`, `Picard/FGAPicRepresentability.lean`),
+which is Kleiman's own formulation and needs no hypothesis on `C(k)`. The rational point
+survives only where it is a theorem (`hasRationalPoint_of_curve_of_isAlgClosed`, over
+`k̄`) or an explicit hypothesis (`picardJacobianWitnessOfHasRationalPoint`). -/
 
 /-- **Leaf A over an algebraically closed field: a theorem, not a decision.**
 
@@ -358,6 +354,39 @@ theorem smoothOfRelativeDimension_genus_pic0 (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]
     [Scheme.HasPicScheme C] [Scheme.PicScheme.PicSchemeLocallyOfFiniteType C] :
     SmoothOfRelativeDimension (genus C) (Scheme.Pic0Scheme C).hom :=
+  sorry
+
+/-! ### The étale leaves: B and C for the headline witness
+
+The two leaves above and below are stated for `Scheme.Pic0Scheme C`, the identity
+component of the scheme representing the *unsheafified* functor, so they carry
+`[Scheme.HasPicScheme C]` — a hypothesis whose only producer is now the conditional
+`Scheme.picSchemeOfHasRationalPoint`. The headline witness is assembled instead from
+`Scheme.Pic0SchemeEt C` (`Picard/Pic0Et.lean`), so it needs the same two statements
+there. These are those statements. Each is a **true** statement awaiting a proof, and
+neither carries a hypothesis on `C(k)`. -/
+
+/-- **Leaf B, étale formulation: the dimension refinement.**
+
+`Scheme.Pic0Et.smooth` gives bare smoothness of `Pic⁰_{C/k}` over `k`; the witness field
+`smoothGenus` needs it at the specific relative dimension `genus C`. Kleiman §5 Thm 5.11:
+the tangent space at the identity is `H¹(C, 𝒪_C)`, of dimension `genus C` by definition
+of `genus`, and for a smooth group scheme the relative dimension is the dimension of that
+tangent space.
+
+What it owes over and above the `picSharp` leaf `smoothOfRelativeDimension_genus_pic0` is
+the same two steps recorded there — `Pic0Et.smooth` itself, plus the translation between
+a tangent-space dimension and Mathlib's presentation-based `SmoothOfRelativeDimension`
+(which is characterised by `Module.rank S Ω[S⁄R]`, a different invariant) — with one
+addition: the landed dimension chain
+`Scheme.Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne` is stated for `Pic0Scheme`,
+so transporting it to `Pic0SchemeEt` needs the comparison of the two Picard schemes,
+which is available only under a section. That transport is the honest remaining cost of
+the étale formulation at this leaf, and it is why this is a separate statement rather
+than a corollary. -/
+theorem smoothOfRelativeDimension_genus_pic0Et (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom] :
+    SmoothOfRelativeDimension (genus C) (Scheme.Pic0SchemeEt C).hom :=
   sorry
 
 /-- **Leaf B's dimension count, at the headline and against the landed development.**
@@ -452,6 +481,35 @@ theorem isAlbanese_pic0 (C : Over (Spec (.of k)))
     @IsAlbanese k _ C P (Scheme.Pic0Scheme C) grp pr sm gi :=
   sorry
 
+/-- **Leaf C, étale formulation: the Albanese universal property of `Pic⁰_{C/k}`.**
+
+The same statement as `isAlbanese_pic0`, for the identity component of the scheme
+representing the étale-sheafified functor — over an arbitrary base field, for every
+`k`-rational marked point, and with **no hypothesis on `C(k)`**.
+
+Its content over the landed `Albanese.Pic0.albanese_universal_property` is the three
+pieces recorded on `isAlbanese_pic0_of_isAlgClosed`: arbitrary base field in place of
+algebraically closed (the Galois-descent step of cluster `G`), `genus C = 0` as well as
+positive genus (Mumford §4 rigidity), and the basepoint condition `P ≫ ι_P = η`. To those
+the étale formulation adds the same transport `isAlbanese_pic0` does not need: the landed
+Abel–Jacobi morphism `Pic0.abelJacobi` is constructed for `Pic0Scheme`, and carrying it
+to `Pic0SchemeEt` is part of this leaf.
+
+Note that the marked point `P` appears here as an argument, not as a hypothesis on `C`:
+`IsAlbanese` is a statement *about* a pointing, and `JacobianWitness.isAlbaneseFor`
+quantifies over all of them. That is exactly why the headline needs no rational point —
+the witness scheme `J` is intrinsic to `C`, and only the universal morphism depends on a
+choice of `P`, in the same way `Challenge.lean` binds a point only in
+`AbelJacobi.Jacobian.ofCurve`. -/
+theorem isAlbanese_pic0Et (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]
+    (grp : GrpObj (Scheme.Pic0SchemeEt C)) (pr : IsProper (Scheme.Pic0SchemeEt C).hom)
+    (sm : Smooth (Scheme.Pic0SchemeEt C).hom)
+    (gi : GeometricallyIrreducible (Scheme.Pic0SchemeEt C).hom)
+    (P : 𝟙_ (Over (Spec (.of k))) ⟶ C) :
+    @IsAlbanese k _ C P (Scheme.Pic0SchemeEt C) grp pr sm gi :=
+  sorry
+
 /-- **Leaf C in the case the landed proof covers**, over an algebraically closed field and
 in positive genus, with the basepoint condition as an explicit hypothesis.
 
@@ -529,14 +587,16 @@ remains the default. -/
 noncomputable def picardJacobianWitnessOfHasRationalPoint (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
     [Scheme.HasRationalPoint C] :
-    JacobianWitness C where
-  J := Scheme.Pic0Scheme C
-  grpObj := (Scheme.Pic0.grpObj C).some
-  proper := Scheme.Pic0.proper C
-  smooth := Scheme.Pic0.smooth C
-  geomIrred := Scheme.Pic0.geometricallyIrreducible C
-  smoothGenus := smoothOfRelativeDimension_genus_pic0 C
-  isAlbaneseFor := fun P => isAlbanese_pic0 C _ _ _ _ P
+    JacobianWitness C :=
+  haveI : GeometricallyIntegral C.hom := geometricallyIntegral_of_curve C
+  haveI := Scheme.picSchemeOfHasRationalPoint C
+  { J := Scheme.Pic0Scheme C
+    grpObj := (Scheme.Pic0.grpObj C).some
+    proper := Scheme.Pic0.proper C
+    smooth := Scheme.Pic0.smooth C
+    geomIrred := Scheme.Pic0.geometricallyIrreducible C
+    smoothGenus := smoothOfRelativeDimension_genus_pic0 C
+    isAlbaneseFor := fun P => isAlbanese_pic0 C _ _ _ _ P }
 
 /-- The Albanese witness for a smooth proper geometrically irreducible curve `C`,
 constructed **uniformly in the genus** as the identity component `Pic⁰_{C/k}` of the
@@ -573,9 +633,14 @@ development is *not* among them: it is synthesised from the challenge hypotheses
 through `Smooth.geometricallyIntegral` (see `geometricallyIntegral_of_curve`). -/
 noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
-    JacobianWitness C :=
-  haveI := hasRationalPoint_of_curve C
-  picardJacobianWitnessOfHasRationalPoint C
+    JacobianWitness C where
+  J := Scheme.Pic0SchemeEt C
+  grpObj := (Scheme.Pic0Et.grpObj C).some
+  proper := Scheme.Pic0Et.proper C
+  smooth := Scheme.Pic0Et.smooth C
+  geomIrred := Scheme.Pic0Et.geometricallyIrreducible C
+  smoothGenus := smoothOfRelativeDimension_genus_pic0Et C
+  isAlbaneseFor := fun P => isAlbanese_pic0Et C _ _ _ _ P
 
 /-- **The witness over an algebraically closed field, free of the inconsistent leaf.**
 

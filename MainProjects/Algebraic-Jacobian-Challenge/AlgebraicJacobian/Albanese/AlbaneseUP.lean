@@ -282,14 +282,24 @@ The upstream declarations run under `[GeometricallyIntegral C.hom]`,
 these are discharged honestly here:
 `geometricallyReduced_of_smooth` + `GeometricallyIrreducible C.hom` give
 `GeometricallyIntegral C.hom`; `hasRationalPoint_of_isAlgClosed` gives
-`[HasRationalPoint C]`, whence `instHasPicScheme` supplies `[HasPicScheme C]` and
-`instPicSchemeLocallyOfFiniteType` the local-finiteness carrier. -/
+`[HasRationalPoint C]`, whence `Scheme.picSchemeOfHasRationalPoint` supplies
+`[HasPicScheme C]` and `instPicSchemeLocallyOfFiniteType` the local-finiteness
+carrier.
+
+Note the shape of that middle step since the étale rewire of 2026-07-28: the
+`picSharp`-shaped gate `HasPicScheme` no longer has an instance, so it is named
+explicitly here rather than synthesized. That is deliberate — nothing may pick up a
+rational-point hypothesis by synthesis — and it is why this `k̄` bundle is honest: over
+an algebraically closed field the rational point is a theorem, so supplying the gate
+costs nothing. Over a general field it would not be available, which is exactly the
+distinction the rewire makes visible. -/
 noncomputable def bundle : Bundle C := by
   haveI : Smooth C.hom := SmoothOfRelativeDimension.smooth 1 C.hom
   haveI : GeometricallyReduced C.hom := geometricallyReduced_of_smooth C.hom
   haveI : GeometricallyIntegral C.hom :=
     GeometricallyIntegral.of_geometricallyReduced_of_geometricallyIrreducible C.hom
   haveI : Scheme.HasRationalPoint C := hasRationalPoint_of_isAlgClosed C
+  haveI := Scheme.picSchemeOfHasRationalPoint C
   exact
     { scheme := Scheme.Pic0Scheme C
       grpObj := (Scheme.Pic0.grpObj C).some
