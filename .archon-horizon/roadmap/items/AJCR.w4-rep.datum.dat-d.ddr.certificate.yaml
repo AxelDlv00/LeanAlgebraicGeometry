@@ -3,21 +3,56 @@ title: 'DD-R certificate: inherited certificate, epsilon projection, U1/U2, and 
   laws'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'CURRENT STATE 2026-07-27. The fixed two-chart DivFamZar is a proper subfunctor
-  of relative effective divisors, so the certificate lane must be widened before it
-  can cover Pic0. R1, varying the P1 coordinate, is selected after auditing R2 and
-  R3. LANDED: the GL2 action and twisted relative covers (p1-aut), plus noncircular
-  fibre avoidance over infinite ground fields (fibre-avoid). REJECTED: cert-relocalize
-  cannot put the twist quantifier inside one DivRepGlobalData equivalence because
-  that equivalence and all theta data are fixed in pi. ACTIVE SUCCESSORS: twist-atlas
-  builds an outer atlas of fixed-twist classifiers and glues them on common divisor
-  loci; finite-field-avoid proves a degree-bounded finite-cardinality variant and
-  connects it to finite Galois descent. After those, the certificate-production chain
-  continues through swallow-adapt, cert-collapse, and cert-assemble. The parent remains
-  blocked on ordinary formalization work, not on a human decision.'
-status: blocked
+summary: 'DECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. The certificate
+  lane is unblocked and is now execution work, not a design question. Binding form:
+  protection I-0492. Full reasoning: I-0346 (human comment, same date).
+
+
+  WHAT DivFamZar IS TO BE: the predicate whose cover pieces are ARBITRARY AFFINE OPENS,
+  not basic opens of a fixed pair of pinned P1 charts. Justification to use rather
+  than re-derive: supp D is finite over R, hence lies in a single affine open of C
+  x_k Spec R (Stacks 0B8B); spec-dd-r.md ADDENDUM 4 carries it.
+
+
+  WHY NOT THE ALTERNATIVES. A field-size hypothesis is unavailable — archon-protected.yaml
+  freezes the arbitrary-field statement, so |P1(k)| >= n+2 would answer a different
+  question. R1 (vary the pinned pair via Aut(P1)) is live only over infinite k and
+  F_q with q >= g+1, so it needs descent bolted on to reach the challenge field: two
+  mechanisms where one suffices. R2 is the only FIELD-UNIFORM fix.
+
+
+  CONSEQUENCE THAT SAVES A LANE: the GL_2(k) action on P1 is NOT to be built. Sibling
+  leaf ...certificate.p1-aut stays pending and DEPRIORITISED (not rejected — R1 may
+  accelerate the large-field case someday), and no consumer may be written against
+  it.
+
+
+  THE STRUCTURAL MOVE, and it is the whole content: the CHART-WISE PARTITIONS OF UNITY
+  have to go. Per-piece swallow-or-miss needs only openness (DivSchemeCertZarConn.lean
+  uses only openness); the partitions are what upgrade inside one piece to inside
+  one chart. Consumers will break — repair them deliberately, and do not smuggle the
+  old typing back by typing pieces INTO the charts (DivisorFamily.lean h0/h1/pieces
+  is exactly the pattern that made the joint-cover option vacuous).
+
+
+  TWO RELOCATED OBLIGATIONS, to be discharged explicitly and never hidden inside a
+  LocalEquations: fibrewise-finite support, from the seeds own degree data; and whatever
+  the old fixed-pair confinement was silently supplying to the certificate clauses.
+
+
+  STANDING NEGATIVE RESULTS, all still binding: chart-avoid is NO; the counterexample
+  is FIELD-INDEPENDENT so enlarging the field is no escape; NO repair keeping pieces
+  inside preimages of a FIXED PAIR of P1 points can work; the joint-cover variant
+  is refuted (leaf ...joint-cover, rejected) and is not to be retried. The sharpness
+  result (leaf ...field-size, done) stands.
+
+
+  LANDED WORK THIS SUPERSEDES NOTHING OF: the GL_2 groundwork, finite-field-avoid.cardinality
+  (e602378af) and .support-degree (d6c67f41d) remain valid mathematics; they simply
+  stop being the route to the certificate.'
+status: active
 kind: proof
-priority: normal
+priority: high
 depends_on: []
 inbox_refs: []
 task_refs: []
@@ -37,10 +72,11 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-27T04:12:46.823505+00:00'
+  updated_at: '2026-07-28T03:01:33.606313+00:00'
   pinned_commits:
   - c843eafd7
   - 359c0a38d
   - 2ff846d74
   - 5e6d8ac6c
   milestone: w4-gate
+  owner: ajcr-cert-r2

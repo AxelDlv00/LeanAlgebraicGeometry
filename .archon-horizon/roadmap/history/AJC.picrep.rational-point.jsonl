@@ -3,3 +3,5 @@
 {"at": "2026-07-27T12:49:26.233221+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-27T18:50:47.730540+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-27T20:25:21.873922+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T03:01:10.436850+00:00", "actor": "human", "field": "status", "from": "blocked", "to": "active", "note": ""}
+{"at": "2026-07-28T03:01:10.437102+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "summary, title, priority, owner updated"}

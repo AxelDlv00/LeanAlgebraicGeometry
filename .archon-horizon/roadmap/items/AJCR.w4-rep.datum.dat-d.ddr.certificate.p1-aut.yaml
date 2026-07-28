@@ -1,60 +1,22 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.certificate.p1-aut
-title: 'P1-aut: the GL_2(k) action on P^1 — the one missing input of repair R1'
+title: 'R1/p1-aut: DEPRIORITISED by the R2 decision — do not build the GL_2 action'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'THE COST OF REPAIR R1 (spec-dd-r ADDENDUM 3 §3). Every declaration in the
-  DD-R chain is generic
-
-  in pi, constrained only by [IsFinite pi] / [IsAffineHom pi] (+ [IsDominant pi])
-  and
-
-  hpi : pi >> P1.structureMap k = C.left -> Spec k (DivSchemeSeedUnivFields.lean:58).
-  So replacing
-
-  pi by gamma . pi for gamma in Aut(P^1_k) costs NOTHING in the landed material: every
-  lemma
-
-  applies verbatim to the twisted map, and the twisted charts pi^-1(P^1 \ {c}) are
-  affine because
-
-  pi is affine.
+summary: 'DEPRIORITISED BY HUMAN DECISION 2026-07-28 (I-0346, protection I-0492).
+  Not rejected, and not because the mathematics is wrong.
 
 
-  WHAT IS MISSING: Aut(P^1) does not exist in this project. P1 k is a Proj (Curve/P1.lean:135)
-
-  with chartOpen : Fin 2 -> Opens (:200); a workspace-wide search finds no PGL_2 action,
-  no Mobius
-
-  transformation and no automorphism of P1 anywhere.
+  R2 (generalize the piece type to arbitrary affine opens) was chosen over R1 because
+  R1 is live only over infinite k and over F_q with q >= g+1, so it must be paired
+  with descent to reach the challenge field, while archon-protected.yaml freezes the
+  arbitrary-field statement. Two mechanisms where one suffices.
 
 
-  OBLIGATION. (i) The GL_2(k) action on Proj (k[X_0,X_1]) as a scheme automorphism
-  — mathlib''s
-
-  Proj functoriality for graded ring isomorphisms is the intended route; check what
-  this exact
-
-  mathlib rev ships before hand-rolling. (ii) Transitivity on P^1(k), or the weaker
-  form actually
-
-  needed: for any two distinct c_0, c_1 in P^1(k) an automorphism carrying them to
-  [1:0], [0:1].
-
-  (iii) The compatibility hpi is preserved (gamma is over k), and fiberTwoCover (gamma
-  . pi) is the
-
-  gamma-twisted two-chart cover.
-
-
-  ALTERNATIVE IF THIS IS TOO EXPENSIVE: repair R2 (generalize FinCoverData to sigma-charts,
-  the
-
-  non-vanishing loci of theta sections). Wider refactor, stays inside the relThetaSections
-
-  vocabulary, owes affineness of the complement of an ample divisor. Do not attempt
-  both.
-
-  '
+  BINDING: no session is to build the GL_2(k) / Aut(P1) action, and no consumer may
+  be written against it. Left pending rather than rejected only because varying the
+  pinned pair may one day accelerate the large-field case; that is a future optimisation,
+  not current work. The landed groundwork (finite-field-avoid.cardinality e602378af,
+  .support-degree d6c67f41d) remains valid mathematics and is not to be deleted.'
 status: done
 kind: proof
 priority: low
@@ -77,7 +39,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-27T02:38:31.446942+00:00'
+  updated_at: '2026-07-28T03:01:44.316995+00:00'
   milestone: w4-gate
   pinned_commits:
   - af99f2b70

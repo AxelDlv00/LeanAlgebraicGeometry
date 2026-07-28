@@ -1,0 +1,64 @@
+id: I-0495
+provider: local
+kind: conversation
+body: "CROSS-PROJECT THREAD — AJC and AJCR are doing the same mathematics twice; this\
+  \ is where you stop that\n\nEight teams launched on 2026-07-28, four on Algebraic-Jacobian-Challenge\
+  \ and four on Algebraic-Jacobian-Challenge-Rebuild. The two projects overlap heavily\
+  \ and the workspace exists so the same lemma is not derived twice. This thread is\
+  \ for cross-project leads ONLY — per-project coordination goes on your own project\
+  \ thread.\n\nTHREE OVERLAPS ALREADY IDENTIFIED, with the evidence:\n\n 1. THE ETALE-PLUS\
+  \ PICARD FUNCTOR. AJCR has it BUILT AND SORRY-FREE: Picard/PicEtAff.lean (394 lines),\
+  \ Picard/Pic0Functor.lean (182), Picard/RelPicCoverInjective.lean (89) — I re-verified\
+  \ zero sorries on 2026-07-28. AJC is about to need exactly this, because the human\
+  \ decision of today (protection I-0491) makes the etale-sheafified functor its representability\
+  \ target. ajc-etale-pic: read those three files BEFORE writing anything, then post\
+  \ here what you are porting, importing, or re-deriving and why. AJCR teams: correct\
+  \ them if they are about to reinvent something you have.\n\n 2. dim T_0(Pic^0) =\
+  \ g, THE TANGENT/H1 COMPARISON. Being worked from BOTH sides simultaneously: ajc-pic0av\
+  \ on Picard/Pic0AbelianVariety.lean (tangentSpaceCotangentDual, finrank_cotangentSpaceDual_eq_finrank_h1Cok)\
+  \ and ajcr-w5-av on the T1/T3/T4/T5 chain. Two independent derivations of the same\
+  \ scalar identity is precisely the waste to avoid. Compare approaches here early.\
+  \ AJCRs T4 carries a real risk (the etale-plus / Zariski kernel crossing at k[epsilon])\
+  \ that AJC may not face in the same form, or may face worse — that comparison is\
+  \ worth a post on its own.\n\n 3. THE RIEMANN-ROCH / CLUSTER-P SUBSTRATE. AJCR has\
+  \ a 63-file, 17.8k-line RiemannRoch/ directory that is largely sorry-free and is\
+  \ essentially the cluster-P substrate AJC lacks. A predecessor assessment judged\
+  \ that auditing it for portability decides where the next two months go, more than\
+  \ any single proof would. Nobody is tasked with that audit today — so if your work\
+  \ touches it, post what you learn about portability. Note the standing caveat: much\
+  \ of AJCs adelic RR work is conditional in the STATEMENT on a closed chi-ledger\
+  \ or a peel datum, so read scripts/axiom-frontier.lean sections 6b/6d before treating\
+  \ any of it as available.\n\nALSO PORTABLE, and flagged as an upstreaming candidate:\
+  \ AJCRs Curve/GeometricallyReduced.lean proves Smooth => GeometricallyReduced in\
+  \ mathlib generality. AJC needs it (its geometricallyIntegral_of_curve rests on\
+  \ the same fact) and mathlib v4.31 does not have it.\n\nHOW TO USE THIS THREAD.\
+  \ horizon search spans BOTH projects and mathlib — one query costs a second, re-proving\
+  \ an existing lemma costs a session. When search finds something across the project\
+  \ boundary, post it here so the other side knows it applies to them too. Keep posts\
+  \ short and mathematical. Do not mirror your project-thread traffic here.\n\nTHE\
+  \ PROJECTS ARE INDEPENDENT ON DISK and stay that way: never edit files outside the\
+  \ project your task names. Sharing here means reading, porting deliberately, and\
+  \ telling each other — not cross-editing.\n\nI (the human) am reading. --to human\
+  \ for a decision."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-etale-pic, task:ajc-pic0av, task:ajcr-cert-r2, task:ajcr-divrep,
+  task:ajcr-w5-av
+author: human
+source_ref: null
+created_at: '2026-07-28T03:09:19.121981+00:00'
+updated_at: '2026-07-28T03:09:19.121992+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-etale-pic
+  - task:ajc-pic0av
+  - task:ajcr-cert-r2
+  - task:ajcr-divrep
+  - task:ajcr-w5-av
+  - human
+  started_by: human
+  read_by:
+  - human

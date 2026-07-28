@@ -1,0 +1,69 @@
+id: ajc-albanese
+project: Algebraic-Jacobian-Challenge
+objective: "CLOSE THE ALBANESE LEG. Roadmap AJC.albanese and its three children (.codim1,\
+  \ .symmetric, .universal). The headline universal-property theorem is ALREADY sorry-free\
+  \ — what is missing is the construction layer beneath it, so this task is about\
+  \ supplying real inputs to a statement that already stands, not about restating\
+  \ anything.\n\nTHREE FRONTS, with the actual sorry sites.\n\n (a) CODIMENSION-ONE\
+  \ RATIONAL-MAP EXTENSION (AJC.albanese.codim1). Albanese/CodimOneExtension.lean:\
+  \ CodimOneFree (:216, :218), gammaSpecField_ringEquiv (:752), localRing_dvr_of_codim_one\
+  \ (:1402), indeterminacy_pure_codim_one_into_grpScheme (:1751). Finish the diagonal-intersection\
+  \ and function-field pullback steps showing a rational map to an abelian variety\
+  \ has no codimension-one indeterminacy. The blueprint frontier flags Milne Lemma\
+  \ 3.3 (pure-codim-1 structure of the indeterminacy locus into a group variety) as\
+  \ 22 unlocks / 23 uses — the highest-leverage node in this cone, and the sibling\
+  \ Rebuild has a whole Albanese/CodimOne* family (CodimOneMilne31, CodimOneStalkRegularity,\
+  \ CodimOneDVRStalk, CodimOneSmoothReduced) covering the same ground. READ THOSE\
+  \ FIRST.\n\n (b) ABEL-JACOBI AND SYMMETRIC POWERS (AJC.albanese.symmetric). Albanese/AlbaneseUP.lean:\
+  \ abelJacobi (:335), SymmetricPower (:382), symmetricPowerAVMap (:416), symmetricPowerToJacobian\
+  \ (:453), descentThroughBirationalSigma (:496), albanese_eq_iff_symmetricPower_eq\
+  \ (:533). Six honest construction and bridge gaps: Abel-Jacobi, the symmetric-power\
+  \ carrier and quotient API, symmetric sums, the map to Pic0, birational descent,\
+  \ the factorisation connector. The characteristic-free symmetric-power route is\
+  \ already specified cleanly in the blueprint — follow it rather than inventing a\
+  \ route.\n\n (c) THE UNIVERSAL PROPERTY (AJC.albanese.universal). Complete descent\
+  \ through the birational g-th symmetric power and the factorisation biconditional.\
+  \ The connector now has the correct two directions: pointed rigidity plus quotient\
+  \ uniqueness forward, restriction along Q -> Q+(g-1)P0 backward. Two typed-sorry\
+  \ bridges; once they close, the existing theorem stands unconditionally.\n\nRIGIDITY\
+  \ IS YOURS TOO, if it blocks you: RigidityLemma.lean has three open obligations\
+  \ (:481 saturated-open-to-affine, :673 dense-open, :764 rigidity_core) and pointed\
+  \ rigidity is a direct input to (c).\n\nDISCIPLINE. Search before proving — horizon\
+  \ search spans your project, the sibling Rebuild, the standalone SubProjects/Albanese,\
+  \ and mathlib. The Rebuild Albanese/ directory is 24 files / 7.3k lines and its\
+  \ codim-one family is more developed than yours in places. Use the LSP loop between\
+  \ edits, lake build at session boundaries.\n\nCOORDINATION. You are one of four\
+  \ AJC teams. You consume Pic0 facts from ajc-pic0av (degree map, Pic0(k) = ker degree)\
+  \ — ask on the AJC conversation thread rather than proving them yourself or editing\
+  \ Picard/. Your files are Albanese/ and RigidityLemma.lean. Never edit files outside\
+  \ Algebraic-Jacobian-Challenge."
+title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers, universal
+  property'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge
+priority: high
+status: queued
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+roadmap_refs:
+- AJC.albanese
+- AJC.albanese.codim1
+- AJC.albanese.symmetric
+- AJC.albanese.universal
+inbox_refs:
+- I-0074
+- I-0493
+artifact_refs: []
+created_at: '2026-07-28T03:03:51.969489+00:00'
+updated_at: '2026-07-28T03:09:39.192213+00:00'
+metadata:
+  author: human

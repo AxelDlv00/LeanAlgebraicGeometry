@@ -1,0 +1,68 @@
+id: ajc-fbc
+project: Algebraic-Jacobian-Challenge
+objective: "CLOSE FLAT BASE CHANGE for higher direct images along a flat g. Roadmap\
+  \ AJC.fbc and AJC.cohomology. The global scaffolding (Cohomology/FlatBaseChange,\
+  \ FlatBaseChangeGlobal) and the affine termwise comparison are already sorry-free;\
+  \ all three remaining obligations live in Cohomology/CechHigherDirectImageUnconditional.lean.\n\
+  \nTHE THREE DELIVERABLES.\n\n (1) FLAT PULLBACK PRESERVES FINITE LIMITS (AJC.fbc.exactness)\
+  \ — pullback_preservesFiniteLimits, CechHigherDirectImageUnconditional.lean:162.\
+  \ THIS IS THE PRIORITY, and it is more than one leaf: it is one of only two sorry-bodied\
+  \ INSTANCES in the project that leak through typeclass synthesis, so it silently\
+  \ contaminates the axiom cleanliness of anything that synthesises it. Closing it\
+  \ is worth more than its line count suggests. Route: prove left exactness of Scheme.Modules.pullback\
+  \ for a flat morphism by reducing presheaf pullback to inverse image followed by\
+  \ flat extension of scalars. The blueprint frontier lists the supporting chain (presheaf\
+  \ inverse image is exact; inverse-image model of presheaf pullback; the underlying-abelian-sheaf\
+  \ functor preserves finite colimits) — those are unproved nodes with high unlock\
+  \ counts, so expect to build some of them.\n\n (2) PUSHFORWARD CECH BASE-CHANGE\
+  \ NATURALITY (AJC.fbc.cosimplicial.pushforward) — the remaining cech_pushforward_baseChange_natIso\
+  \ naturality square on cover-intersection restriction maps (:1634, with coverInterOpen_baseChange_eq\
+  \ at :639 and pushPullObj_coverInter_baseChange at :1588 in the same chain).\n\n\
+  \ (3) TWISTED CECH NERVE COMPATIBILITY (AJC.fbc.cosimplicial.twisted) — twisted_cech_nerve_iso\
+  \ (:1705) compatibility with cosimplicial faces on cover intersections.\n\nMEASURE\
+  \ THE LEAK. Before and after, run scripts/axiom-frontier.lean and report what changes.\
+  \ A declaration that quantifies over the instance reports clean axioms as stated\
+  \ and only picks up sorryAx at a synthesis site — so measure at a synthesis site.\
+  \ If (1) lands, say explicitly which previously-contaminated declarations become\
+  \ genuinely clean; that is the headline of this task.\n\nALSO IN SCOPE, cheaply:\
+  \ the two sibling openImmersion_pushPull_essImage obligations (:1038, :1055) if\
+  \ they fall out of the same machinery.\n\nDISCIPLINE. Search before proving — the\
+  \ sibling Rebuild has a 60-file Cohomology/ directory and a completed Cech port\
+  \ (roadmap AJCR.cech-port is done); check it before building anything from scratch.\
+  \ horizon search spans both projects and mathlib. Use the LSP loop between edits.\n\
+  \nCOORDINATION. You are one of four AJC teams and you OWN Cohomology/ — other teams\
+  \ have been told to ask you rather than edit it. ajc-pic0av may need base-change\
+  \ facts from you; answer on the AJC conversation thread. Never edit files outside\
+  \ Algebraic-Jacobian-Challenge."
+title: 'Flat base change: close the three Cech obligations and the pullback exactness
+  axiom leak'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge
+priority: high
+status: queued
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+roadmap_refs:
+- AJC.fbc
+- AJC.fbc.exactness
+- AJC.fbc.cosimplicial
+- AJC.fbc.cosimplicial.pushforward
+- AJC.fbc.cosimplicial.twisted
+- AJC.cohomology
+inbox_refs:
+- I-0074
+- I-0493
+artifact_refs: []
+created_at: '2026-07-28T03:03:24.077275+00:00'
+updated_at: '2026-07-28T03:09:38.611233+00:00'
+metadata:
+  author: human

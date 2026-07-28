@@ -1,0 +1,72 @@
+id: ajcr-w5-av
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: "CLOSE WAVE 5: Pic^0 is an abelian variety of dimension g. Roadmap AJCR.w5-av\
+  \ and its nine children. The interface layer is COMPLETE (JacobianData consumption\
+  \ interface, IsSeparated, translation transport, H1/genus base-field invariance,\
+  \ trunc-exp Cech kernel, the conditional AbelSourceData package) — so this task\
+  \ is the tangent-space mathematics, which is the largest block of work in the project\
+  \ that does NOT wait on the DD shape freeze.\n\nTHE CHAIN, in dependency order.\n\
+  \n (1) T1 — THE DUAL-NUMBER TANGENT KIT: pointed k[epsilon]-points, the cotangent\
+  \ dual, finrank reduction. Pure infrastructure, no gate, start here.\n\n (2) T3\
+  \ — ker(relPic(k[epsilon]) -> relPic(k)) is additively isomorphic to H1(C, O_C).\n\
+  \n (3) T4 (WORKSHEET-FIRST, flagged risk R1) — the etale-plus / Zariski kernel crossing\
+  \ at k[epsilon]. This is the honest risk of the lane: the tangent computation is\
+  \ naturally Zariski but the functor is etale-plus. Write the worksheet before the\
+  \ Lean, and if the crossing does not go through, say so early and loudly rather\
+  \ than grinding — it changes the shape of T5.\n\n (4) T5 — THE SCALAR IDENTITY dim_k\
+  \ T_0(d.J) = g, under the scalar-identity-first discipline the roadmap names.\n\n\
+  \ (5) S1 (WORKSHEET-FIRST, risk R2) — geometric reducedness at the identity via\
+  \ the two-term H2 = 0 argument. S2 — Smooth d.J.hom via smooth_of_grpObj. S3 (WORKSHEET-FIRST,\
+  \ risk R3) — SmoothOfRelativeDimension g assembly, the frozen instance.\n\nBLOCKED,\
+  \ AND NOT YOURS TO UNBLOCK: P1 (AbelSourceData discharge, proper Div^d-source) is\
+  \ a CROSS-WAVE GATE on the DD shapes freeze held by ajcr-divrep. Do not attempt\
+  \ it; do not build against a guessed shape. If the freeze lands during your run,\
+  \ take it then.\n\nWORKSHEET-FIRST IS BINDING on T4, S1 and S3 — three of the four\
+  \ hardest items carry it explicitly because this lane has burned sessions on premature\
+  \ Lean before. The worksheet section is written or updated BEFORE the Lean, every\
+  \ time.\n\nDISCIPLINE. Search before proving: horizon search spans this project,\
+  \ the AJC sibling, and mathlib. AJC has a Picard/Pic0AbelianVariety.lean working\
+  \ the SAME tangent/H1 comparison from the other side (tangentSpaceCotangentDual,\
+  \ finrank_cotangentSpaceDual_eq_finrank_h1Cok) and an ajc-pic0av team is on it concurrently\
+  \ — read their work and talk to them; two independent derivations of dim T_0 = g\
+  \ is the exact waste the workspace exists to prevent. Use the LSP loop between edits.\n\
+  \nCONCURRENCY IS BINDING. Four AJCR teams at once. Follow informal/protocol-concurrent-lanes.md\
+  \ exactly: private-index compare-and-swap ledger commits (never a bare git commit),\
+  \ and the mkdir lake mutex at /tmp/claude-1001/ajcr-locks/lake.lock (DIRECTORY lock;\
+  \ never flock it).\n\nCOORDINATION. Your files are the Wave-5 tangent/AV modules.\
+  \ Use the AJCR conversation thread for the DD freeze and the CROSS-PROJECT thread\
+  \ to compare notes with ajc-pic0av. Never edit files outside Algebraic-Jacobian-Challenge-Rebuild."
+title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: high
+status: queued
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+roadmap_refs:
+- AJCR.w5-av
+- AJCR.w5-av.t1
+- AJCR.w5-av.t3
+- AJCR.w5-av.t4
+- AJCR.w5-av.t5
+- AJCR.w5-av.s1
+- AJCR.w5-av.s2
+- AJCR.w5-av.s3
+inbox_refs:
+- I-0492
+- I-0494
+- I-0495
+artifact_refs: []
+created_at: '2026-07-28T03:07:40.576801+00:00'
+updated_at: '2026-07-28T03:09:41.563341+00:00'
+metadata:
+  author: human

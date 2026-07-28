@@ -1,0 +1,68 @@
+id: ajc-pic0av
+project: Algebraic-Jacobian-Challenge
+objective: "CLOSE THE A.3 LEG: upgrade the Picard identity component to an abelian\
+  \ variety of dimension g. Roadmap AJC.pic0av and its three children (.tangent, .structure,\
+  \ .identity), plus AJC.rr.principal, which is the one-point local input the degree\
+  \ story needs.\n\nTHE FOUR OPEN FRONTS, with the actual sorry sites.\n\n (a) TANGENT\
+  \ / H1 COMPARISON (AJC.pic0av.tangent). Picard/Pic0AbelianVariety.lean: tangentSpaceCotangentDual\
+  \ (:595, :612) and finrank_cotangentSpaceDual_eq_finrank_h1Cok (:672). Identify\
+  \ the cotangent-space dual at the identity with the Cech H1 cokernel and hence with\
+  \ H1(C, O_C), including the k-linearity and the finrank comparison. This is the\
+  \ scalar identity dim_k T_0 = g, and it is the load-bearing one: smoothness of relative\
+  \ dimension g reduces to it.\n\n (b) SMOOTHNESS AND PROPERNESS (AJC.pic0av.structure).\
+  \ Pic0AbelianVariety.lean smooth (:806) and proper (:826). Combine with the already-complete\
+  \ geometric-irreducibility and group-object infrastructure to obtain the abelian-variety\
+  \ structure. Note these two currently report CLEAN axioms as stated because they\
+  \ quantify over [HasPicScheme C] and the caller discharges it — so measure at a\
+  \ SYNTHESIS SITE, not at the declaration, or you will report a completeness number\
+  \ that is not true.\n\n (c) DEGREE AND DEGREE-ZERO POINTS (AJC.pic0av.identity).\
+  \ Picard/IdentityComponent.lean: Pic0Scheme (:1426), degree (:1432), finrank_eq_genus\
+  \ (:1475, :1494), kPoints_iff_kerDegree (:1504). Construct the degree map, identify\
+  \ Pic0(k) with its kernel, prove the dimension statement.\n\n (d) PRINCIPAL DIVISORS\
+  \ HAVE DEGREE ZERO (AJC.rr.principal). RiemannRoch/WeilDivisor.lean:1194, deliberately\
+  \ left in place. Read the roadmap node first: both items of the old two-item residue\
+  \ are closed and what remains is ONE input, a one-point local statement rather than\
+  \ a global identity. Do not re-derive the closed halves.\n\nDISCIPLINE. Search before\
+  \ proving — horizon search spans your project AND mathlib AND the sibling Rebuild,\
+  \ whose RiemannRoch/ directory is 63 files / 17.8k lines and largely sorry-free;\
+  \ the lemma you need may be next door. Use the Lean LSP loop (lean_goal / lean_diagnostic_messages)\
+  \ between edits and keep lake build for session boundaries.\n\nCOORDINATION. You\
+  \ are one of four AJC teams. Your representability INTERFACE comes from ajc-etale-pic,\
+  \ which is re-stating it without the rational-point binder per the human decision\
+  \ of 2026-07-28 (protection I-0491) — agree the shape with them EARLY on the AJC\
+  \ conversation thread and do not build against the old [HasRationalPoint C] form.\
+  \ ajc-fbc owns Cohomology/; if you need a base-change fact from there, ask on the\
+  \ thread rather than editing their files. Never edit files outside Algebraic-Jacobian-Challenge."
+title: Pic^0 is an abelian variety of dimension g — tangent, smoothness, properness,
+  degree
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge
+priority: high
+status: queued
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+roadmap_refs:
+- AJC.pic0av
+- AJC.pic0av.tangent
+- AJC.pic0av.structure
+- AJC.pic0av.identity
+- AJC.rr.principal
+inbox_refs:
+- I-0491
+- I-0074
+- I-0493
+- I-0495
+artifact_refs: []
+created_at: '2026-07-28T03:02:39.755524+00:00'
+updated_at: '2026-07-28T03:09:38.025038+00:00'
+metadata:
+  author: human

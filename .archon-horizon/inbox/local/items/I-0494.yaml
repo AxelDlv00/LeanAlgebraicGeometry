@@ -1,0 +1,67 @@
+id: I-0494
+provider: local
+kind: conversation
+body: "AJCR TEAM THREAD — four lanes on one critical path; the shapes are the coupling,\
+  \ post them here\n\nYou are four teams launched together on Algebraic-Jacobian-Challenge-Rebuild\
+  \ on 2026-07-28. Three of you sit on ONE dependency chain and the fourth is deliberately\
+  \ parallel. Nobody manages anybody; this thread is the coordination.\n\nTHE CHAIN,\
+  \ and it is a chain of SHAPES, not of proofs:\n ajcr-cert-r2 (widened DivFamZar\
+  \ / FinCoverData) -> ajcr-divrep (classifier, inverse laws, U2, datum tail, DAT-G/glue/J)\
+  \ -> ajcr-charts (chartLocus, the (f,hf) pair, DAT-B/C packaging)\n ajcr-w5-av runs\
+  \ PARALLEL: the tangent kit T1/T3/T4/T5 and S1/S2/S3 need no DD shape. Its P1 leaf\
+  \ DOES and is blocked — leave it blocked.\n\nTHE ONE THING THAT MATTERS MOST: ajcr-cert-r2,\
+  \ FREEZE THE WIDENED SHAPES AS EARLY AS YOU HONESTLY CAN AND POST THEM HERE. Two\
+  \ lanes are blocked on the shape, not on your proofs. A provisional shape posted\
+  \ early, clearly labelled provisional, is worth more than a perfect one posted at\
+  \ the end. Announce every change the moment it happens — a silent shape change costs\
+  \ the other lanes a session each.\n\najcr-charts: CHART-U(a)/(b) and C9b are developable\
+  \ PARAMETRICALLY in those shapes. Do not idle. State what you are assuming here\
+  \ and let cert-r2 confirm or correct it.\n\najcr-divrep: publish the divRep endpoint\
+  \ signature before it is proved, for the same reason.\n\najcr-w5-av: you are downstream\
+  \ of nobody today. If the DD freeze lands mid-run, take P1 then; otherwise ignore\
+  \ it.\n\nTWO BINDING CONCURRENCY RULES — informal/protocol-concurrent-lanes.md,\
+  \ and they exist because each has already caused a real incident:\n 1. LEDGER COMMITS\
+  \ VIA A PRIVATE INDEX + COMPARE-AND-SWAP. Never a bare git commit against the workspace\
+  \ ledger. It has silently reverted another lanes work THREE times (862 lines vanished\
+  \ in 6197c9676; a JacobianDataCharts.lean deletion narrowly averted in I-0366).\
+  \ The shared index goes stale after every CAS commit BY DESIGN, so re-check before\
+  \ you finish: status --porcelain | grep ^D must be empty, and repair with the NARROWEST\
+  \ reset covering your own paths. Expect to repeat it more than once in a long session.\n\
+  \ 2. THE LAKE MUTEX IS A mkdir DIRECTORY LOCK at /tmp/claude-1001/ajcr-locks/lake.lock.\
+  \ NEVER flock it — a lane that did deadlocked all four lanes for four hours on 2026-07-16\
+  \ until a human deleted the file. Hold it only around the build.\n\nSTALE-CLAIM\
+  \ DISCIPLINE, specific to this project: do NOT trust a MISSING claim in a worksheet\
+  \ or roadmap node without checking the ledger for files added by an integrate commit.\
+  \ informal/w4-rep-critical-path.md SECTION 7 corrects four rows of its own section-1\
+  \ table for exactly this reason. Read section 7 before section 1.\n\nALSO CLOSED,\
+  \ do not re-open: the GeometricallyReduced scare at Picard/Pic0SigmaSheaf.lean:79\
+  \ is a redundant hypothesis, not a gap (Curve/GeometricallyReduced.lean:130/:140,\
+  \ record at Picard/JacobianDataCharts.lean:210).\n\nWHAT TO POST: a shape you are\
+  \ freezing or changing; a lemma that turned out to already exist here, in the AJC\
+  \ sibling, or in mathlib; a dead end with its reason; a correction to your own earlier\
+  \ post. Retractions are welcome — this project has a good record of them and it\
+  \ is why its numbers can be trusted. Keep it short and mathematical, comment on\
+  \ THIS thread rather than opening new ones, and do not post session diaries.\n\n\
+  I (the human) am reading. Use --to human for a decision."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:ajcr-cert-r2, task:ajcr-divrep, task:ajcr-charts, task:ajcr-w5-av
+author: human
+source_ref: null
+created_at: '2026-07-28T03:08:50.815470+00:00'
+updated_at: '2026-07-28T03:08:50.815483+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajcr-cert-r2
+  - task:ajcr-divrep
+  - task:ajcr-charts
+  - task:ajcr-w5-av
+  - human
+  started_by: human
+  read_by:
+  - human

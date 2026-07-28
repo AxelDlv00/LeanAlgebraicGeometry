@@ -1,0 +1,70 @@
+id: ajcr-charts
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: "BUILD THE CHART LAYER: chartLocus and the (f, hf) chart pair, then close\
+  \ DAT-B coverage/injectivity and DAT-C Sigma-charts. Roadmap AJCR.w4-rep.datum.dat-c.c9-chartlocus\
+  \ (with .c9b and .chart-u) plus dat-b and dat-c. C9 is the sole gate of DAT-B B-6\
+  \ AND of the whole dat-glue assembly, so this is the second-highest-leverage lane\
+  \ in the project.\n\nFOUR DELIVERABLES.\n\n (1) CHART-U(a)/(b) — THE CO-SIGNED BRICK,\
+  \ and start here because nothing in the tree implements it. chartLocus c lambda\
+  \ (w4-datc-worksheet.md section 3.3, CHART-U(a)) is a locus over a GENERAL TEST\
+  \ T indexed by a plus class lambda, and isOpen_chartLocus is CHART-U(b). Its node\
+  \ names three missing inputs — read them before writing. This is a genuine construction\
+  \ task, not a proof-hunting one, and it is developable PARAMETRICALLY, i.e. without\
+  \ waiting for the certificate lane.\n\n (2) C9a IS DONE, C9b IS THE DELIVERABLE\
+  \ PROPER. chartLocus is already DEFINED and OPEN at the parameter-space carrier\
+  \ level (the C9 split of 2026-07-26). What remains is f_c, the chart morphism, and\
+  \ the (f, hf) pair that pic0RepresentableByOfCharts (Picard/Pic0SigmaSheaf.lean:161)\
+  \ consumes. HONEST GATE, corrected and adversarially verified: c9b is NOT merely\
+  \ divRep-gated — read its node for what the real gate is, and note it is developable\
+  \ parametrically ahead of CERT-Sigma.\n\n (3) DAT-B COVERAGE AND INJECTIVITY: every\
+  \ pic^0 point is Zariski-locally a chart point. Coverage-drop, separably-closed\
+  \ points, divisor-family field surjectivity, local chart openness and fibre-field\
+  \ invariance are ALL LANDED — what remains is B5/B6/chart-locus packaging, which\
+  \ is exactly what (1) and (2) unblock.\n\n (4) DAT-C SIGMA-CHARTS: C0-C5 are landed.\
+  \ C6-C8 and the canonical-section certificate depend on the certificate/divRep chain\
+  \ — take them as far as the frozen shapes allow and say plainly where you stopped.\n\
+  \nONE SCARE ALREADY CLOSED, do not re-open it: the GeometricallyReduced hypothesis\
+  \ at Picard/Pic0SigmaSheaf.lean:79 is REDUNDANT, not a gap — Curve/GeometricallyReduced.lean:130/:140\
+  \ supply it as instances and the module is in the import closure (record at Picard/JacobianDataCharts.lean:210).\
+  \ That file also proves Smooth => GeometricallyReduced in mathlib generality and\
+  \ is flagged as an upstreaming candidate.\n\nWORKSHEET-FIRST IS THE HOUSE RULE on\
+  \ this lane: w4-datc-worksheet.md governs, and where a node says WORKSHEET-FIRST\
+  \ the worksheet section is written or updated BEFORE the Lean.\n\nCONCURRENCY IS\
+  \ BINDING. Four AJCR teams at once. Follow informal/protocol-concurrent-lanes.md\
+  \ exactly: private-index compare-and-swap ledger commits (never a bare git commit),\
+  \ and the mkdir lake mutex at /tmp/claude-1001/ajcr-locks/lake.lock (DIRECTORY lock;\
+  \ never flock it).\n\nCOORDINATION. You consume the divRep endpoint from ajcr-divrep\
+  \ and the widened DivFamZar shape from ajcr-cert-r2 — but the point of this lane\
+  \ is that CHART-U and C9b are developable PARAMETRICALLY in those shapes, so do\
+  \ not idle waiting. State your assumed shape on the AJCR conversation thread and\
+  \ ask them to confirm or correct it. Never edit files outside Algebraic-Jacobian-Challenge-Rebuild."
+title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: high
+status: queued
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+roadmap_refs:
+- AJCR.w4-rep.datum.dat-c
+- AJCR.w4-rep.datum.dat-c.c9-chartlocus
+- AJCR.w4-rep.datum.dat-c.c9-chartlocus.c9b
+- AJCR.w4-rep.datum.dat-c.c9-chartlocus.chart-u
+- AJCR.w4-rep.datum.dat-b
+inbox_refs:
+- I-0492
+- I-0494
+artifact_refs: []
+created_at: '2026-07-28T03:07:13.792736+00:00'
+updated_at: '2026-07-28T03:09:40.977451+00:00'
+metadata:
+  author: human

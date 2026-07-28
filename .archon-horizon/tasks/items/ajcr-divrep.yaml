@@ -1,0 +1,81 @@
+id: ajcr-divrep
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: "CLOSE THE divRep MOUNTAIN AND THE DATUM TAIL — the critical path to Challenge.lean:99.\
+  \ Roadmap AJCR.w4-rep.datum.dat-d.ddr.divrep, its U2 gate, .datum-tail, and the\
+  \ assembly nodes dat-g / dat-glue / dat-j. READ informal/w4-rep-critical-path.md\
+  \ SECTION 7 FIRST: four rows of the section-1 table have MOVED, and section 7 carries\
+  \ the per-link evidence. Do not trust any MISSING claim in this project without\
+  \ checking the ledger for files added by an integrate commit — that is exactly how\
+  \ the round-4 framing went stale.\n\nFIVE DELIVERABLES.\n\n (1) U2, THE LAST GATE\
+  \ (leaf ...divrep.u2, currently blocked and re-scoped TWICE). The DDR9-U epsilon-identity\
+  \ at the universal point: at the universal point the pair-chart tautological data\
+  \ must satisfy the epsilon identity. informal/w4-ddr9-worksheet.md section 3.1 is\
+  \ the specification. The second rescope CORRECTS a stale blocker this lane had been\
+  \ quoting — read the node before believing it is blocked, and if the blocker really\
+  \ is stale, say so and proceed.\n\n (2) divRep PROPER: package the affine classify/inverse\
+  \ laws, the DivFamZar and S6b interfaces, divRepAff, and the global RepresentableBy\
+  \ endpoint. What remains of L11 per section 7.1 is the general-test CLASSIFIER and\
+  \ the two inverse laws — the forward half is landed (DivRepAffinePullback.pullGlobal,\
+  \ Picard/DivRepGlobalLift.lean:102, with pullGlobal_comp at :132). L9 is rooted\
+  \ and kernel-checked; the two finiteness certificates of L3/L4 are no longer obligations\
+  \ (locallyOfFiniteType_gluedHom :154, quasiCompact_gluedHom :164 derive them).\n\
+  \n (3) THE DATUM TAIL: universal family, then feed DAT-B/C/Q, finite-stage descent,\
+  \ gluing, and the final Pic^0 RepresentableBy datum.\n\n (4) DAT-G AND DAT-GLUE:\
+  \ finite-Galois/Speiser descent of the PicRepDatum from a finite separable stage\
+  \ to the challenge field, and the 01JJ RepresentableBy assembly over k-prime (slice\
+  \ trick DAT-6). The 01JJ slice assembly is mechanically prepared at the separably\
+  \ closed stage; the remaining DAT-G0 work is filtered-colimit compatibility of pic0\
+  \ plus descent of the representing datum.\n\n (5) DAT-J: JacobianData assembly —\
+  \ DJ-0 compact-image qc is landed; DJ-1 Abel-image qc and DJ-2 JacobianData packaging\
+  \ remain. Note JacobianData now has TWO producers (ofRepresentableBy :71 and ofCharts,\
+  \ Picard/JacobianDataCharts.lean:182, sorry-free and kernel-checked), which is more\
+  \ than the older docs say.\n\nONE SCARE ALREADY CLOSED, do not re-open it: the GeometricallyReduced\
+  \ hypothesis at Picard/Pic0SigmaSheaf.lean:79 is REDUNDANT, not a gap — Curve/GeometricallyReduced.lean:130/:140\
+  \ supply it as instances and that module is in the import closure (machine-checked\
+  \ record at Picard/JacobianDataCharts.lean:210).\n\nFALLBACK, if divRep genuinely\
+  \ stalls: leaf ...ddr.flattening-fallback (universal flattening strata or the affine\
+  \ Hilbert algebra chart) had its REJECTION REOPENED — the recorded rejection rationale\
+  \ was checked and is factually wrong, and it predates the route change that created\
+  \ the obligation. It is a legitimate option, not a dead end.\n\nCONCURRENCY IS BINDING.\
+  \ Four AJCR teams at once. Follow informal/protocol-concurrent-lanes.md exactly:\
+  \ private-index compare-and-swap ledger commits (NEVER a bare git commit — it has\
+  \ silently reverted other lanes work three times), and the mkdir lake mutex at /tmp/claude-1001/ajcr-locks/lake.lock\
+  \ (a DIRECTORY lock; never flock it).\n\nCOORDINATION. You depend on ajcr-cert-r2\
+  \ for the widened DivFamZar shape — get the frozen shape from them on the AJCR conversation\
+  \ thread before building the classifier, and do not fork your own variant. ajcr-charts\
+  \ consumes your divRep endpoint; publish its signature early. ajcr-w5-av is downstream\
+  \ of the DD shape freeze. Never edit files outside Algebraic-Jacobian-Challenge-Rebuild."
+title: 'divRep and the datum tail: Div^g-lite representability through to the Pic^0
+  datum'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: urgent
+status: queued
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+roadmap_refs:
+- AJCR.w4-rep.datum.dat-d.ddr.divrep
+- AJCR.w4-rep.datum.dat-d.ddr.divrep.u2
+- AJCR.w4-rep.datum.dat-d.ddr.datum-tail
+- AJCR.w4-rep.datum.dat-g
+- AJCR.w4-rep.datum.dat-glue
+- AJCR.w4-rep.datum.dat-j
+- AJCR.w4-rep.datum.dat-d.ddq
+inbox_refs:
+- I-0492
+- I-0494
+- I-0495
+artifact_refs: []
+created_at: '2026-07-28T03:06:48.022795+00:00'
+updated_at: '2026-07-28T03:09:40.375506+00:00'
+metadata:
+  author: human

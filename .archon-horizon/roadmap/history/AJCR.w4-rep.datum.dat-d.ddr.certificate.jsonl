@@ -15,3 +15,5 @@
 {"at": "2026-07-26T06:46:06.961274+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "blocked", "note": ""}
 {"at": "2026-07-27T04:12:46.822786+00:00", "actor": "horizon", "field": "status", "from": "blocked", "to": "blocked", "note": ""}
 {"at": "2026-07-27T04:12:46.823272+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T03:01:33.606024+00:00", "actor": "human", "field": "status", "from": "blocked", "to": "active", "note": ""}
+{"at": "2026-07-28T03:01:33.606217+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "summary, priority, owner updated"}

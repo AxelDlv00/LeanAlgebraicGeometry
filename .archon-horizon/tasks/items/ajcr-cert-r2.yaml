@@ -1,0 +1,77 @@
+id: ajcr-cert-r2
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: "EXECUTE THE HUMAN DECISION OF 2026-07-28 (protection I-0492, inbox I-0346,\
+  \ roadmap AJCR.w4-rep.datum.dat-d.ddr.certificate): DivFamZar is widened so its\
+  \ cover pieces are ARBITRARY AFFINE OPENS rather than basic opens of a fixed pair\
+  \ of pinned P1 charts. The certificate lane is unblocked and this is the lane that\
+  \ unblocks everything downstream. READ I-0492 AND I-0346 FIRST, then informal/spec-dd-r.md\
+  \ ADDENDUM 3 and 4.\n\nTHE JUSTIFICATION TO USE, NOT RE-DERIVE: supp D is finite\
+  \ over R, hence lies in a single affine open of C x_k Spec R (Stacks 0B8B). ADDENDUM\
+  \ 4 carries the argument.\n\nTHE STRUCTURAL MOVE, and it is the whole content of\
+  \ the task: THE CHART-WISE PARTITIONS OF UNITY HAVE TO GO. Per-piece swallow-or-miss\
+  \ needs only openness (DivSchemeCertZarConn.lean:98 uses only openness); it is the\
+  \ partitions that upgrade inside one piece to inside one chart. Consumers WILL break\
+  \ — repair them deliberately. Do not smuggle the old typing back in by typing pieces\
+  \ INTO the charts: DivisorFamily.lean:166/168/186 (h0 into V0, h1 into V1, pieces\
+  \ := Sum.elim (basicOpen . h0) (basicOpen . h1)) is exactly the pattern that made\
+  \ the previously-refuted joint-cover option vacuous, and changing partition FIELDS\
+  \ cannot change where the pieces LIVE.\n\nTWO OBLIGATIONS THE WIDENING RELOCATES\
+  \ RATHER THAN REMOVES. Discharge both explicitly; neither may hide inside a LocalEquations:\
+  \ (i) fibrewise-finite support, which must come from the seeds own degree data and\
+  \ is NOT implied by anything a LocalEquations carries; (ii) whatever the old fixed-pair\
+  \ confinement was silently supplying to the certificate clauses.\n\nTHEN LAND THE\
+  \ CONSUMER CHAIN, in the order the roadmap already ranks it: cert-collapse (read\
+  \ its node first — the original free claim was REFUTED by work-reviewer at I-0340;\
+  \ do not re-derive it), swallow-adapt (coarse chart-pair adaptation is LANDED; the\
+  \ chart-principality datum remains), cert-assemble (compose into isLocallyCertified_of_forall_prime_exists_certified_adaptation,\
+  \ DivSchemeCertZarPointwise.lean:162, and its DivFamZar packaging), and away-kerspan\
+  \ (BLOCKED and likely an artifact — do NOT grind it before cert-collapse is tried;\
+  \ its node says so).\n\nBINDING PROHIBITIONS, from the decision:\n * DO NOT build\
+  \ the GL_2(k) / Aut(P1) action on P1 (leaf ...p1-aut is deprioritised, priority\
+  \ low). No consumer against it.\n * Chart-avoid is NO. The counterexample is FIELD-INDEPENDENT,\
+  \ so enlarging the field is not an escape.\n * NO repair keeping the pieces inside\
+  \ preimages of a FIXED PAIR of P1 points can work. The joint-cover variant is refuted\
+  \ (leaf ...joint-cover, rejected) — do not retry it.\n * The landed finite-field-avoid\
+  \ work (cardinality e602378af, support-degree d6c67f41d) is valid mathematics; it\
+  \ stops being the route but is not to be deleted.\n\nCONCURRENCY IS BINDING HERE.\
+  \ Four AJCR teams run at once. Follow informal/protocol-concurrent-lanes.md exactly:\
+  \ private-index compare-and-swap commits (never a bare git commit against the ledger),\
+  \ and the mkdir lake mutex at /tmp/claude-1001/ajcr-locks/lake.lock — it is a DIRECTORY\
+  \ lock, never flock it.\n\nCOORDINATION. You are the upstream of ajcr-divrep and\
+  \ ajcr-charts. FREEZE the widened DivFamZar/FinCoverData shapes as early as you\
+  \ honestly can and announce them on the AJCR conversation thread; both downstream\
+  \ teams are blocked on the shape, not the proofs. Announce every shape change immediately.\
+  \ Never edit files outside Algebraic-Jacobian-Challenge-Rebuild."
+title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: urgent
+status: queued
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+roadmap_refs:
+- AJCR.w4-rep.datum.dat-d.ddr.certificate
+- AJCR.w4-rep.datum.dat-d.ddr.certificate.cert-collapse
+- AJCR.w4-rep.datum.dat-d.ddr.certificate.swallow-adapt
+- AJCR.w4-rep.datum.dat-d.ddr.certificate.cert-assemble
+- AJCR.w4-rep.datum.dat-d.ddr.certificate.away-kerspan
+- AJCR.w4-rep.datum.dat-d.ddr
+inbox_refs:
+- I-0492
+- I-0346
+- I-0494
+- I-0495
+artifact_refs: []
+created_at: '2026-07-28T03:06:19.580073+00:00'
+updated_at: '2026-07-28T03:09:39.777475+00:00'
+metadata:
+  author: human

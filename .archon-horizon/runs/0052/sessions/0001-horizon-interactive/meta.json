@@ -9,5 +9,23 @@
   ],
   "started_at": "2026-07-27T01:20:13.540575+00:00",
   "workspace_base_sha": "5b814c394070d6bd77cc49777ee2146deb2177d5",
-  "status": "running"
+  "status": "ok",
+  "ended_at": "2026-07-28T02:22:38.487585+00:00",
+  "returncode": 0,
+  "workspace_agent_sha": "fd129dc671b55e74b35811681fc9cb8be584006c",
+  "commit_shas": [
+    "af99f2b700335756f088b6dfe14cd705967bae21",
+    "7b1b9a4302d1c44e263c41d72ff1cf22cc895fd1",
+    "c6a47016fd6b12a484604549a2d4e26633f697c5",
+    "6e3565f4672623b5f5c5effd7ec577d37f5f374a",
+    "204a4d4dc64dd10f366c413fc2b3c18ea051a963",
+    "e602378af1b5335e35f95626080058535eebdb17",
+    "d6c67f41de4cad9a27d6539caacb6c1db8d9af71",
+    "16fd84d392d057ce582fc9e4810569b079d50c88",
+    "6596e18652fafb9ee518ddfad10af91c272a94de",
+    "885bf3a1eb235ee54464dbf45cd119d19e3b70ab",
+    "b6c334611da5ea7a7474a156b241ab8302020acb",
+    "fd129dc671b55e74b35811681fc9cb8be584006c"
+  ],
+  "workspace_commit": "6d72dc4f0f5d1ecbfe98de52e0f4961353ee52b1"
 }

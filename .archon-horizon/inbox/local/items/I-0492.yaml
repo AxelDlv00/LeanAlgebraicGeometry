@@ -1,0 +1,46 @@
+id: I-0492
+provider: local
+kind: protection
+body: "[persistent] HUMAN DECISION, BINDING (2026-07-28): DivFamZar is widened to\
+  \ ARBITRARY AFFINE OPEN pieces. R2 of I-0346 is chosen and closed; R1 (the GL_2/Aut(P1)\
+  \ route) is NOT to be built.\n\nTHE RULE, for any session on the DD-R certificate\
+  \ lane or its consumers:\n\n 1. DO NOT BUILD THE GL_2(k) ACTION ON P1. Roadmap leaf\
+  \ AJCR.w4-rep.datum.dat-d.ddr.certificate.p1-aut stays pending and DEPRIORITISED\
+  \ — not rejected (R1 may still accelerate the large-field case one day), but no\
+  \ session spends time on it, and no consumer may be written against it. Same for\
+  \ any descent work whose only purpose is to rescue R1.\n\n 2. The widening target:\
+  \ FinCoverData s pieces become arbitrary affine opens rather than basic opens of\
+  \ a FIXED PAIR of pinned P1 charts. Justification to use, not to re-derive: supp\
+  \ D is finite over R, hence lies in a single affine open of C x_k Spec R (Stacks\
+  \ 0B8B); spec-dd-r.md ADDENDUM 4 carries the argument.\n\n 3. THE CHART-WISE PARTITIONS\
+  \ OF UNITY ARE WHAT HAS TO GO. Per-piece swallow-or-miss needs only openness (DivSchemeCertZarConn.lean\
+  \ uses only openness); it is the partitions that upgrade inside one piece to inside\
+  \ one chart. Removing them will break consumers — repair the consumers deliberately,\
+  \ and do not smuggle the old typing back in by typing pieces INTO the charts (DivisorFamily.lean\
+  \ h0/h1/pieces is exactly the pattern that made the previous cheaper option vacuous).\n\
+  \n 4. TWO OBLIGATIONS THE WIDENING RELOCATES RATHER THAN REMOVES, both to be discharged\
+  \ explicitly and neither to be hidden inside a LocalEquations: (i) fibrewise-finite\
+  \ support, which must come from the seed s own degree data; (ii) whatever the old\
+  \ fixed-pair confinement was silently supplying to the certificate clauses.\n\n\
+  \ 5. THE STANDING NEGATIVE RESULTS REMAIN BINDING, all established by predecessor\
+  \ sessions and adversarially checked. Chart-avoid is NO. The counterexample is FIELD-INDEPENDENT,\
+  \ so enlarging the field is not an escape. And the sharp form to quote: NO repair\
+  \ that keeps the pieces inside the preimages of a FIXED PAIR of points of P1 can\
+  \ work. The joint-cover variant is refuted (leaf ...joint-cover, rejected) — do\
+  \ not retry it.\n\nWHY R2 AND NOT A FIELD-SIZE HYPOTHESIS: archon-protected.yaml\
+  \ freezes the arbitrary-field statement, so |P1(k)| >= n+2 would answer a different\
+  \ question. R2 is the only field-uniform fix. The sharpness result (leaf ...field-size,\
+  \ done) stands and needs no further human input.\n\nFull reasoning: I-0346 (human\
+  \ comment, 2026-07-28). Executing task: ajcr-cert-r2."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-28T03:00:42.305631+00:00'
+updated_at: '2026-07-28T03:00:42.305643+00:00'
+metadata: {}

@@ -1,58 +1,40 @@
 id: AJC.picrep.rational-point
-title: 'DECISION: the rational-point hypothesis'
+title: 'DECIDED: etale-sheafify — no rational-point binder on the headline'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'NEEDS A HUMAN DECISION, and it is exactly one decision. references/challenge.lean
-  declares Jacobian C with no rational-point binder, but instHasPicScheme (Picard/FGAPicRepresentability.lean)
-  makes [HasRationalPoint C] an essential hypothesis -- correctly so, since without
-  a section Pic(C x_k T)/pi_T^* Pic(T) need not be a Zariski sheaf. Kleiman''s theorem
-  needs no section because it represents the ETALE sheaf, sheafification supplying
-  etale-locally what a section supplies globally. Mathlib v4.31 carries the etale
-  topology, so this is a design choice, not a platform limitation.
-
-
-  THE TWO BRANCHES, recorded without either assumed: (1) represent the plain functor
-  and carry C(k) nonempty as a hypothesis of the headline -- cheap, and proves something
-  strictly weaker than the challenge asks, since a smooth proper geometrically integral
-  curve need not have a k-rational point; (2) etale-sheafify the relative Picard functor
-  and represent that -- Kleiman''s own formulation and the full strength, at the cost
-  of a new representability input.
-
-
-  SCOPE NARROWED AND HELD (2026-07-27). The headline leaf used to bundle the rational
-  point with geometric integrality. Geometric integrality is NOT a decision: it follows
-  from the challenge hypotheses via Smooth => GeometricallyReduced (Curve/GeometricallyReduced.lean)
-  and is proved (geometricallyIntegral_of_curve). What remains is the rational point
-  alone, and that half is FALSE in general rather than merely unproved -- so the leaf
-  hasRationalPoint_of_curve must be REPLACED by whichever branch is chosen, never
-  proved. Everything under picardJacobianWitness currently rests on an inconsistent
-  hypothesis, deliberately, to put the gap where a reader of the headline meets it.
-
-
-  BOUNDED, STILL NOT DECIDED (2026-07-28). Over an algebraically closed field the
-  rational point is a THEOREM, not a decision: hasRationalPoint_of_curve_of_isAlgClosed
-  (Jacobian.lean) is axiom-clean, routed through Albanese.hasRationalPoint_of_isAlgClosed
-  (Jacobson space => closed point; over k = k-bar a closed point IS a section), and
-  picardJacobianWitnessOfIsAlgClosed assembles the headline witness over k-bar with
-  that leaf supplied rather than assumed. The obligation COUNT does not drop -- discharging
-  leaf A makes instHasPicScheme fire rather than removing it, so it is five either
-  way (measured as probe section 0b) -- but every one of the five is then a TRUE statement,
-  where the general-field witness carries a false one. So the branch point concerns
-  what is claimed over an ARBITRARY base field, and nothing else. This narrows what
-  the human is choosing between; it does NOT choose. Neither branch is assumed anywhere,
-  and the general-field leaf is untouched.
-
-
-  ORTHOGONAL TO THE ROUTE CHOICE: the Milne-Kollar re-aim does not touch this. Both
-  routes carry the rational point in the same way (blueprint FGA chapter, sec:fga_pic_setup
-  and the dependency section). Recorded in six places -- I-0372, this node, the blueprint
-  (lem:curve_hypothesis_gap, lem:curve_rational_point_algClosed, rem:rational_point_scope),
-  the Lean leaf docstring, README, and TO_USER.md -- with neither branch assumed anywhere.
-
-  '
-status: blocked
+summary: "DECIDED BY THE HUMAN 2026-07-28: BRANCH (2), ETALE-SHEAFIFY. This node is\
+  \ no longer a decision; it is execution work. Binding form: protection I-0491. Full\
+  \ reasoning: I-0372 (human comment, same date).\n\nTHE CLAIM THE PROJECT NOW MAKES:\
+  \ the Jacobian headline is stated over an ARBITRARY base field with NO rational-point\
+  \ binder, exactly as Challenge.lean declares it. The relative Picard functor is\
+  \ ETALE-sheafified and that is what gets represented — Kleimans own formulation,\
+  \ full challenge strength.\n\nWHY, and it is a specification argument. Challenge.lean\
+  \ binds Jacobian C with no rational point, and binds a point explicitly only where\
+  \ Abel-Jacobi needs one (ofCurve (P : 1 -> C)). A headline carrying [HasRationalPoint\
+  \ C] therefore answers a different question than the one posed. Moreover hasRationalPoint_of_curve\
+  \ is FALSE rather than unproved, so everything under the general-field witness rested\
+  \ on an inconsistent hypothesis. The build-cost asymmetry between branches, reported\
+  \ honestly by ajc-truth over four sessions, was explicitly NOT the deciding factor.\n\
+  \nTHE FOUR EXECUTION CLAUSES (protection I-0491 carries the binding text):\n 1.\
+  \ DELETE hasRationalPoint_of_curve. Never prove it; no new consumer.\n 2. Restate\
+  \ the representability obligation for the etale-sheafified functor, without [HasRationalPoint\
+  \ C]. One named sorry, docstring saying it is expected to stay open.\n 3. Port from\
+  \ the sibling Rebuild project, which already has the functor SORRY-FREE: Picard/PicEtAff.lean\
+  \ (394 lines), Picard/Pic0Functor.lean (182), Picard/RelPicCoverInjective.lean (89),\
+  \ re-verified zero sorries 2026-07-28. AJC is the outlier, not the standard.\n 4.\
+  \ KEEP picardJacobianWitnessOfHasRationalPoint as an explicitly labelled CONDITIONAL\
+  \ milestone and picardJacobianWitnessOfIsAlgClosed as a genuine k-bar theorem. Neither\
+  \ is the headline, anywhere.\n\nDOCUMENTS TO RE-AIM: blueprint FGA chapter (sec:fga_pic_setup\
+  \ should name the etale formulation as the one realised; lem:curve_hypothesis_gap\
+  \ and rem:rational_point_scope now record a decision rather than an open branch),\
+  \ README.md, TO_USER.md.\n\nORTHOGONAL AND UNCHANGED: the Milne-Kollar route stays\
+  \ committed, Quot stays retained-not-revived. Both routes carried the rational point\
+  \ identically, so the route choice never depended on this. Over k-bar the point\
+  \ remains a THEOREM (hasRationalPoint_of_curve_of_isAlgClosed, axiom-clean) and\
+  \ that lane is untouched."
+status: active
 kind: proof
-priority: normal
+priority: high
 depends_on: []
 inbox_refs: []
 task_refs: []
@@ -72,4 +54,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-27T20:25:21.874085+00:00'
+  updated_at: '2026-07-28T03:01:10.437233+00:00'
+  owner: ajc-etale-pic

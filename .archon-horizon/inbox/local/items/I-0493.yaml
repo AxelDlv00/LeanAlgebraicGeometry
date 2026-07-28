@@ -1,0 +1,61 @@
+id: I-0493
+provider: local
+kind: conversation
+body: "AJC TEAM THREAD — four lanes, one project, use this instead of re-deriving\
+  \ each others work\n\nYou are four teams launched together on Algebraic-Jacobian-Challenge\
+  \ on 2026-07-28. Nobody manages anybody; this thread is how you stay coherent. Post\
+  \ here when you have something another lane needs, and READ it before you build\
+  \ something that smells like someone elses problem.\n\nWHO HOLDS WHAT, and the file\
+  \ boundaries are hard — never edit another lanes files:\n * ajc-etale-pic — Picard/\
+  \ representability seam, Jacobian.lean headline, blueprint FGA chapter. Executing\
+  \ the human decision of today: etale-sheafify, NO rational-point binder (protection\
+  \ I-0491).\n * ajc-pic0av — Picard/Pic0AbelianVariety.lean, Picard/IdentityComponent.lean,\
+  \ RiemannRoch/WeilDivisor.lean.\n * ajc-fbc — Cohomology/. You OWN it; the others\
+  \ have been told to ask you rather than edit.\n * ajc-albanese — Albanese/, RigidityLemma.lean.\n\
+  \nTHE TWO COUPLINGS THAT WILL BITE, and they are the reason this thread exists:\n\
+  \n 1. THE REPRESENTABILITY INTERFACE. ajc-etale-pic is restating it for the etale-sheafified\
+  \ functor WITHOUT [HasRationalPoint C]. ajc-pic0av consumes it. ajc-etale-pic: post\
+  \ the intended shape EARLY, before it is proved, and announce any change immediately.\
+  \ ajc-pic0av: do NOT build against the old [HasRationalPoint C] instHasPicScheme\
+  \ — it is not the target and work resting on it may have to be redone. If you need\
+  \ to start before the shape is frozen, say what you are assuming HERE so it can\
+  \ be corrected cheaply.\n\n 2. dim T_0 = g. ajc-pic0av owns the tangent/H1 comparison\
+  \ (tangentSpaceCotangentDual, finrank_cotangentSpaceDual_eq_finrank_h1Cok). ajc-albanese\
+  \ needs the Pic0 degree map and Pic0(k) = ker degree. Ask here rather than proving\
+  \ it twice.\n\nWHAT TO POST, and keep it short and mathematical:\n * an interface\
+  \ you are about to freeze, or just changed;\n * a lemma you needed that turned out\
+  \ to exist (in AJC, in the Rebuild sibling, or in mathlib) — that saves someone\
+  \ a session;\n * a dead end with the reason, so nobody repeats it;\n * a correction\
+  \ to something you posted earlier. Retractions are welcome and this workspace has\
+  \ a good record of them; a wrong finding left standing is worse than a retracted\
+  \ one.\n\nWHAT NOT TO DO: do not open a new conversation per finding — comment on\
+  \ THIS thread. Do not post a session diary; the report is for that.\n\nONE STANDING\
+  \ WARNING FROM THE LEDGER: two sorry-bodied INSTANCES leak through typeclass synthesis\
+  \ (instHasPicScheme, and pullback_preservesFiniteLimits at Cohomology/CechHigherDirectImageUnconditional.lean:162,\
+  \ which is ajc-fbcs first deliverable). A declaration quantifying over them reports\
+  \ CLEAN axioms as stated and only picks up sorryAx at a synthesis site. So measure\
+  \ at a synthesis site, and do not quote a sorry-free module count as an axiom-cleanliness\
+  \ claim. scripts/axiom-frontier.lean is the tool.\n\nI (the human) am reading this\
+  \ thread. Address me with --to human if you need a decision; I answer."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-etale-pic, task:ajc-pic0av, task:ajc-fbc, task:ajc-albanese
+author: human
+source_ref: null
+created_at: '2026-07-28T03:08:23.562266+00:00'
+updated_at: '2026-07-28T03:08:23.562280+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-etale-pic
+  - task:ajc-pic0av
+  - task:ajc-fbc
+  - task:ajc-albanese
+  - human
+  started_by: human
+  read_by:
+  - human
