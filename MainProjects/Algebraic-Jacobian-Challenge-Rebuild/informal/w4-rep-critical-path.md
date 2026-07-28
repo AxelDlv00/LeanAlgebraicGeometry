@@ -673,7 +673,8 @@ that session** (janitor pass): a full root build ran 9271 jobs to exit 0 at 05:5
 `JacobianDataAbelSquare` all have `.olean`s and are imported by `AlgebraicJacobian.lean` (lines
 599-601, 603). So the caveats below reading "no root measurement covers them" are stale as facts —
 they are now kernel-green and rooted. What they say about **mathematics** is unaffected: §7.11.3 is
-still retracted, and the row is still unpriced.*
+still retracted. **The "still unpriced" verdict is itself superseded by §7.12.1**, which prices
+the ε-half (open, and immune to the no-go) and confines "unpriced" to the class half.*
 
 §7.10 priced U2 as "one certificate plus one scalar". Both halves of that pricing were about the
 *spelling* of the residue rather than about mathematics, and both are now removed.
@@ -723,7 +724,13 @@ lemma, so the relation between the two is machine-checked rather than asserted i
 ### 7.11.3 The residue is now a single type mismatch, and it is the whole critical path
 
 > **RETRACTED THE SAME SESSION, by a fresh-context review (inbox `I-0705`, confirmed by the no-go's
-> own owner). Read this subsection as UNPRICED, not as "one type mismatch".** The table below is
+> own owner). Read this subsection as UNPRICED, not as "one type mismatch".**
+>
+> **PARTLY SUPERSEDED 2026-07-29 by §7.12.1 — read that first.** The retraction below is right
+> that the *class* half may be false, and wrong to extend that to the ε-half: the ε-identity
+> consumes only `d`'s window quotient, and the no-go's proof runs through certificate clause
+> **(c1)**, so it does not bear on it. "UNPRICED" now applies to the class half alone. The table
+> below is
 > correct about the two carriers and wrong about the *status* of the chart-typed statement, which it
 > treats as merely open. `forall_not_isCertified_of_straddling`
 > (`Picard/DivisorFamilyAffStrict.lean:127`) concludes `∀ (A : DivisorAdaptation C R π d) (n : ℕ),
@@ -740,7 +747,8 @@ lemma, so the relation between the two is machine-checked rather than asserted i
 >
 > **The decisive unmeasured fact, for the old residue as much as the new:** is
 > `(univSeed …).localEquations`'s `supportLocus` preconnected with points off `V₀` and off `V₁`? No
-> file in the tree measures it. Until it is measured this row is unpriced. **And note which way it
+> file in the tree measures it. Until it is measured this row is unpriced — **narrowed by §7.12.1
+> to the class half only; the probe no longer bears on the ε-half at all.** **And note which way it
 > cuts: if the universal seed straddles, R2 is not an inconvenience for divrep — it is the only
 > route, because no chart-typed adaptation can ever certify.**
 >
