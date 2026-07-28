@@ -384,7 +384,23 @@ two factorizations is handled by the very lemma that handles one factorization's
 `isDivRepClassify_pull` (the glued pulled class satisfies the characterizing clause) and
 `DivRepChartFamily.IsCompatible` for the universal family — which by
 `isCompatible_of_isDivRepClassify_divRepPullAt` is itself the per-chart clause, i.e. U2.
-`pull_naturality` is still unwritten but is the same glue machinery as `pull`.
+`pull_naturality` is still unwritten but is the same glue machinery as `pull`; its carrier
+transport is landed (`Picard/DivRepAwayPush.lean`).
+
+**A qualification a fresh-context review forced, and it is the honest limit of the above.**
+"U2-free" is a claim about the *proof*, not about the gate. `DivRepChartFamily.IsCompatible`
+has no producer, and its only intended producer is U2. So nothing above lets a consumer
+actually instantiate the new theorems without proving U2 first: the set of unproved statements
+is unchanged. What changed is its **partition** — factorization-independence is no longer a
+second obligation standing beside U2 — and therefore the size of the remaining target. Read
+the round's result as "the tail is one structure with two ε-gated fields", not as "a gate
+cleared". The general form of this trap is inbox `I-0512`.
+
+**Also landed but not yet consumed by anything**: the `pull` field itself is still not
+*defined*. The ingredients are all here (`divScheme_exists_chartFactor` gives the
+factorization, `exists_divRepPullGlue` glues it, `divRepPullGlue_eq_of_chartFactors` makes the
+result choice-free), and assembling them is a `Classical.choice` over the factorization
+characterized by the restriction property. That is the concrete next step and it is small.
 
 **§7.6's finding stands and is unaffected.** L8 (local surjectivity of the Abel map out of a
 too-small divisor functor) remains the campaign's real gate; nothing above touches it. What
