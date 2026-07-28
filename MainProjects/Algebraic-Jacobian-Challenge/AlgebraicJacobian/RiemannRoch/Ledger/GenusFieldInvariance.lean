@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.RiemannRoch.Ledger.SectionsFieldBaseChange
 import AlgebraicJacobian.RiemannRoch.Ledger.ExtensionUniformity
+import AlgebraicJacobian.RiemannRoch.Adelic.FinitenessP1
 
 /-!
 # `Ȟ¹(𝒪)` commutes with field base change, and the genus is base-field invariant
@@ -361,6 +362,48 @@ cluster-P statements have been conflated before:
 section Reduction
 
 variable {k : Type u} [Field k] (C : Over (Spec (CommRingCat.of k)))
+
+/-- **Non-vacuity: the cover argument is not a hidden hypothesis.**  `genus_baseChangeField` and
+the reduction below take an `AffineCoverMVSquare` on `C.left`, and a statement taking a datum the
+project cannot produce would be vacuous progress.  It can: on AJC's curve a 2-affine cover
+follows from the three curve binders alone, via `Ledger/MapToP1`'s finite dominant `π : C ⟶ ℙ¹`
+pulled back along the standard ℙ¹ charts (`Adelic.P1HasLaurentChartData` is a global instance
+over every field, `Adelic.LaurentChartData.pullbackSquare` does the pullback).
+
+Stated as a theorem rather than asserted in a docstring, because "the caller supplies a cover"
+and "no caller can" look identical from the statement. -/
+theorem nonempty_affineCoverMVSquare_of_curve [IsProper C.hom]
+    [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]
+    [GeometricallyIntegral C.hom] :
+    Nonempty C.left.AffineCoverMVSquare := by
+  obtain ⟨S, -⟩ := Adelic.exists_affineCoverMVSquare_module_finite_H1Cok C
+  exact ⟨S⟩
+
+/-- **The genus identity with the cover discharged** (★★): `genus C_κ = genus C` for every field
+extension, on the three curve binders and **nothing else** — no cover argument.
+
+This is the form a downstream consumer should call.  It is `genus_baseChangeField` composed with
+`nonempty_affineCoverMVSquare_of_curve`, and the composition is what makes "for every field
+extension" an unqualified claim about AJC's curve rather than one about curves that happen to
+come with a cover. -/
+theorem genus_baseChangeField_curve [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom]
+    [GeometricallyIrreducible C.hom] [GeometricallyIntegral C.hom]
+    (κ : Type u) [Field κ] [Algebra k κ] :
+    genus (Scheme.baseChangeField C κ) = genus C := by
+  obtain ⟨S⟩ := nonempty_affineCoverMVSquare_of_curve C
+  exact Scheme.genus_baseChangeField κ S
+
+/-- **The reduction with the cover discharged too** (★★): extension-uniform bounded vanishing
+follows from `UniformBaseDivisor C d` alone, on the three curve binders.
+
+`UniformBaseDivisor C d` is the **one** remaining open input, and it is open in AJC and in AJCR
+both.  Nothing else is assumed. -/
+theorem uniformVanishing_of_uniformBaseDivisor_curve [IsProper C.hom]
+    [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]
+    [GeometricallyIntegral C.hom] {d : ℤ} (hbase : UniformBaseDivisor C d) :
+    UniformVanishing C :=
+  uniformVanishing_of_uniform_base_of_genus_invariant C (g := genus C) hbase
+    (fun κ _ _ => genus_baseChangeField_curve C κ)
 
 /-- **Extension-uniform bounded vanishing from the base-divisor bound alone** (★★): with base-field
 invariance of the genus now a theorem (§3), the reduction of `Ledger/ExtensionUniformity.lean`

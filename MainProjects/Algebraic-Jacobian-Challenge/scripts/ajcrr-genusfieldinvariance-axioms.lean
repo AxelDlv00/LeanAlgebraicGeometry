@@ -80,6 +80,17 @@ open AlgebraicGeometry CategoryTheory Limits TensorProduct
 #print axioms AlgebraicGeometry.Scheme.chi_moduleKSheaf_baseChangeField_eq
 #print axioms AlgebraicGeometry.uniformVanishing_of_uniformBaseDivisor
 
+/-! ### The cover-discharged forms
+
+`nonempty_affineCoverMVSquare_of_curve` is the non-vacuity check: the `AffineCoverMVSquare`
+argument the statements above take is *derivable* from the three curve binders, so it is not a
+hidden hypothesis no caller can supply.  The two `_curve` forms are what a consumer should call —
+three curve binders and nothing else. -/
+
+#print axioms AlgebraicGeometry.nonempty_affineCoverMVSquare_of_curve
+#print axioms AlgebraicGeometry.genus_baseChangeField_curve
+#print axioms AlgebraicGeometry.uniformVanishing_of_uniformBaseDivisor_curve
+
 /-! ## §3. Synthesis sites
 
 The declarations above bind their curve instances.  Here they are *supplied*, so every instance
@@ -99,6 +110,17 @@ theorem synth_genus (S : C.left.AffineCoverMVSquare) :
     genus (Scheme.baseChangeField C κ) = genus C :=
   Scheme.genus_baseChangeField κ S
 
+/-- Synthesis site 1b: the same with the **cover produced too**, so nothing at all is bound
+beyond the three curve binders.  This is the strictest reading available: every instance and the
+cover datum are synthesised, and the ℙ¹ chart-data gate `P1HasLaurentChartData` is resolved from
+its global instance rather than assumed. -/
+theorem synth_genus_curve : genus (Scheme.baseChangeField C κ) = genus C :=
+  genus_baseChangeField_curve C κ
+
+/-- Synthesis site 1c: the reduction with the cover produced as well. -/
+theorem synth_reduction_curve {d : ℤ} (h : UniformBaseDivisor C d) : UniformVanishing C :=
+  uniformVanishing_of_uniformBaseDivisor_curve C h
+
 /-- Synthesis site 2: the reduction, with `UniformBaseDivisor` still a hypothesis (it is open)
 but everything else synthesised. -/
 theorem synth_reduction (S : C.left.AffineCoverMVSquare) {d : ℤ}
@@ -115,7 +137,9 @@ theorem synth_chi (S : C.left.AffineCoverMVSquare) :
 end Synthesis
 
 #print axioms synth_genus
+#print axioms synth_genus_curve
 #print axioms synth_reduction
+#print axioms synth_reduction_curve
 #print axioms synth_chi
 
 /-! ## §4. The controls — both MUST report `sorryAx`
