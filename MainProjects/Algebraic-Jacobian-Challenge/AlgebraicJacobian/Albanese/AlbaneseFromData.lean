@@ -7,6 +7,7 @@ import Mathlib
 import AlgebraicJacobian.Albanese.SymPowInterface
 import AlgebraicJacobian.Albanese.DenseOpenDescent
 import AlgebraicJacobian.Albanese.AVCommutative
+import AlgebraicJacobian.Albanese.AVSelfProduct
 
 /-!
 # The Albanese universal property, proved over the symmetric-power interface
@@ -395,5 +396,64 @@ theorem hom_ext_of_dense_open
   haveI : A.left.IsSeparated := Scheme.RationalMap.isSeparated_left_of_isProper A
   haveI := isDominant_opens_ι V hV
   exact ext_of_isDominant V.ι h
+
+/-! ## §3. End to end: `SymPowData` + birationality ⟹ the Albanese universal property
+
+The capstone. Everything above is assembled into one statement whose hypotheses are
+**only** the two things this leg genuinely owes:
+
+1. `D : SymPowData C g` — the symmetric power with its universal property;
+2. Milne III.5.1(a) birationality of `f^{(g)}`, in the concrete form of a section `s`
+   over a dense open `V`, a matching retraction, dominance, and two density facts.
+
+No `sorry`-bodied object appears, no rational-map reasoning is left at the call site,
+and the result is axiom-clean. That is the precise sense in which Milne's proof of
+Proposition III.6.1 is *finished* here, and the sense in which what remains is the
+construction of `Sym^g C` rather than any part of his argument. -/
+
+/-- **Milne Proposition III.6.1, end to end.**
+
+From the symmetric-power interface and Milne III.5.1(a)'s birationality data alone, a
+pointed `φ : C ⟶ A` into an abelian variety factors uniquely through the pointed
+`aj : C ⟶ J` whose symmetrisation is `f`:
+
+`∃! ψ : J ⟶ A, φ = aj ≫ ψ`.
+
+**Axiom-clean** (`[propext, Classical.choice, Quot.sound]`). The chain is
+`exists_unique_descent_of_birational` → `exists_unique_descent_over` →
+`exists_unique_albanese_factorisation`, with commutativity and pointed rigidity
+supplied by `Albanese/AVSelfProduct.lean`.
+
+Note that no curve hypothesis appears: `g` is just the number of factors. -/
+theorem exists_unique_albanese_factorisation_of_birational
+    {C : Over (Spec (.of kbar))} {g : ℕ}
+    (D : SymPowData C g)
+    (hproj : ∀ σ : Equiv.Perm (Fin g), permAut C σ ≫ D.proj = D.proj)
+    (P0 : 𝟙_ (Over (Spec (.of kbar))) ⟶ C) (i₀ : Fin g)
+    {J A : Over (Spec (.of kbar))}
+    [GrpObj J] [IsProper J.hom] [Smooth J.hom] [GeometricallyIrreducible J.hom]
+    [IsIntegral J.left] [IsReduced J.left]
+    [GrpObj A] [IsProper A.hom] [Smooth A.hom] [GeometricallyIrreducible A.hom]
+    [IsReduced (D.carrier).left]
+    (φ : C ⟶ A) (hφ : P0 ≫ φ = η[A])
+    (aj : C ⟶ J) (f : D.carrier ⟶ J)
+    (hf : letI : IsCommMonObj J := isCommMonObj_of_isProper_smooth_of_package J
+      D.proj ≫ f = powSum g aj)
+    (haj0 : P0 ≫ aj = η[J])
+    (hfd : IsDominant f.left)
+    (V : J.left.Opens) (hV : Dense (V : Set J.left))
+    (hVpre : Dense ((f.left ⁻¹ᵁ V : (D.carrier).left.Opens) : Set (D.carrier).left))
+    (s : (V : Scheme) ⟶ (D.carrier).left) (hs : s ≫ f.left = V.ι)
+    (hsr : f.left.resLE V (f.left ⁻¹ᵁ V) le_rfl ≫ s = (f.left ⁻¹ᵁ V).ι)
+    (hover : letI : IsCommMonObj A := isCommMonObj_of_isProper_smooth_of_package A
+      (Scheme.PartialMap.mk V hV (s ≫ (D.symAVMap φ).left)).toRationalMap.compHom A.hom
+        = J.hom.toRationalMap) :
+    ∃! ψ : J ⟶ A, φ = aj ≫ ψ := by
+  letI : IsCommMonObj J := isCommMonObj_of_isProper_smooth_of_package J
+  letI : IsCommMonObj A := isCommMonObj_of_isProper_smooth_of_package A
+  refine exists_unique_albanese_factorisation D f P0 i₀ hproj aj hf haj0 φ hφ
+    (fun ψ hψ => isMonHom_of_pointed ψ hψ) ?_
+  exact exists_unique_descent_over f (D.symAVMap φ) hfd
+    (exists_unique_descent_of_birational f.left (D.symAVMap φ).left V hV hVpre s hs hsr hover)
 
 end AlgebraicGeometry
