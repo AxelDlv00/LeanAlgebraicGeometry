@@ -1733,8 +1733,103 @@ by term with no transport at all.
 > `(C ⊗ overSpec k k).left` vs `relCurve C k` **are** (that is the spelling). Confusing the two costs
 > either a false claim or an invented obstacle.
 
-**T4's residue after §6.26 — one statement plus two named consumer inputs.** **(iii-c2-aff-geo)**
+**T4's residue after §6.26 — one statement plus two named consumer inputs.** ~~**(iii-c2-aff-geo)**
 ("L restricts trivially along `ε ↦ 0`" ⟹ "the chart module's reduction `M/(ε)M` is cyclic"), carried
 as the `hcyc` binder of `Opens.cechPicMap_ι_eq_one_of_dualNumberChart_of_cyclic` and open in the AJC
 sibling too; plus `V₀ ≠ ⊥ ∧ V₀ ≠ ⊤` and `Surjective f.base` at `ε ↦ 0`, both satisfiable and both
-still unwitnessed.
+still unwitnessed.~~ **ALL THREE CLOSED — §6.27.**
+
+### 6.27 (iii-c2-aff-geo) AND BOTH CONSUMER INPUTS ARE CLOSED — three items, three mis-pricings, one cause
+
+*Run 0073 r6. Five new modules, all kernel-green on the lock-free scratch root and all rooted;
+eleven headlines axiom-clean against in-file controls that fire `sorryAx`. Commits `93f84ed2`,
+`2755a58e`, `80e6da8e`.*
+
+**THE CAUSE, stated first because it is the transferable part.** Each of the three items had been
+priced by a *correct* piece of reading, and each price was wrong for the same reason: **the
+obligation was searched for in this project's own vocabulary.**
+
+| item | priced at | what it was |
+|---|---|---|
+| the leftover square of (iii-c2-aff-geo) | >1 600 000 heartbeats, "elaboration-expensive" (§6.17(5)) | mathlib's `Hom.resLE_app_top` — three rewrites |
+| `Surjective f.base` at `ε ↦ 0` | "a bijection of one-point spaces", over a field | `PrimeSpectrum.isHomeomorph_comap`, over an arbitrary ring |
+| `V₀ ≠ ⊥ ∧ V₀ ≠ ⊤` | two geometric facts about the curve | one, `¬ IsAffine`; non-emptiness is not an input at all |
+
+**(1) THE SQUARE — `Tangent/ChartClassNaturality.lean`.** §6.17 stated the target as a typeable
+Lean statement (the rule it had just adopted), reduced it correctly, and landed on the pure
+`CommRingCat` equality `O.ιTop ≫ (g.resLE …).appTop = g.appLE … ≫ (g⁻¹O).ιTop`. It reported `exact?`
+failing on it, prescribed `appLE_comp_appLE` plus a congruence transported along `resLE_comp_ι`,
+measured that route at over 1 600 000 heartbeats without finishing in 300 s, and filed the item as
+expensive-but-not-hard.
+
+That equality **is** `Scheme.Hom.resLE_app_top`, a `@[simp]` lemma at
+`Mathlib/AlgebraicGeometry/Restrict.lean:796`. The only work is that mathlib says `topIso` where
+this project says `ιTop`; they agree by `simp [ιTop, topIso]` then `rfl` — *not* syntactically, hence
+`ιTop_resLE_appTop` as a named lemma rather than an inline rewrite. `Opens.cechPicClass_map` then
+follows §6.17's own recipe verbatim, at the **default** heartbeat budget.
+
+> **Rule: when you recognise a leftover goal as a known square, search the UPSTREAM vocabulary too.**
+> §6.17 searched for "the `appLE`/`ιTop` square" — with `ιTop`, which is ours. A correct
+> recognition plus a same-vocabulary search produced a 1.6M-heartbeat estimate for a three-line
+> proof. The estimate was honestly measured; it was measuring the wrong route.
+
+**(2) THE RING LINK — `Tangent/PicEpsKernelTrivial.lean`.** §6.17 named the residue as the square
+alone. It was the square *plus* one composition that **three** module docstrings had described
+without writing down: `DualNumberFstKernel` built `A[ε] ⧸ (ε) ≃+* A` "so a consumer can feed
+`QuotSMulTop.equivQuotTensor`"; `ReductionTrivialCyclic` phrased its hypothesis on the quotient "so
+that no ring identification is needed *here*"; `DualNumberChartPic` carried the gap as `hcyc`.
+Nobody composed them. `quotientSpanEpsRingEquiv_comp_mk` is **`rfl`**, and
+`pic_eq_one_of_mapRingHom_fst` is three rewrites on top of it.
+
+**(3) THE ASSEMBLY — `Tangent/ChartTrivialityGeo.lean`.** Four lines, given (1) and (2). One thing
+worth recording: the statement needs **two** ring equivalences. Asking only for
+`e : Γ(Z,O) ≃+* A[ε]` with `g.appLE = fst ∘ e` does not typecheck — `g.appLE` lands in
+`Γ(X, g⁻¹O)` and `fst ∘ e` in `A` — so `hsq` is a commuting **square** and the downstairs chart
+needs its own presentation `e'`. A mis-stated intertwining announced itself as a type error naming
+exactly the two rings that had been conflated.
+
+**(4) `Surjective f.base` — `Tangent/EpsZeroSurjective.lean`.** §6.25 predicted "a bijection of
+one-point spaces, `Spec k → Spec k[ε]`". True over a field, and the wrong proof: it pins the lemma
+to `k` and needs re-deriving the moment the tangent computation is instantiated at a chart's section
+ring. `PrimeSpectrum.isHomeomorph_comap` gives it over an **arbitrary commutative ring** from two
+cheap inputs — `fst` is surjective, and `ker fst = (ε)` is nilpotent (`ker_fstRingHom_le_nilradical`,
+one `rw`). *The general case was cheaper than the case we needed.*
+
+**(5) `V₀ ≠ ⊥ ∧ V₀ ≠ ⊤` — `Tangent/TwoChartHonest.lean`; this had been two obligations for three
+sessions.** Both conjuncts are symptoms of one fact: `V₀ = ⊤` makes `⊤` an affine open, `V₀ = ⊥`
+makes `V₁ = ⊤` by `sup_eq_top`, and either way `Scheme.topIso` makes `Y` affine. So `¬ IsAffine Y`
+supplies both, in four lines each. **And non-emptiness of the curve was never an input** — the empty
+scheme *is* affine (`Spec 0`), so `¬ IsAffine` already excludes it. That is why the predicted "two
+geometric facts" was one too many.
+
+> **Rule: a hypothesis PAIR read off a characterization need not be two obligations.**
+> `surjective_selector_iff` is an honest `↔` and its two conjuncts are genuinely different
+> conditions *on `V₀`* — but they share a cause one level up, and that cause is what a consumer can
+> actually supply. Before shipping "the consumer owes A and B", ask what A and B are both symptoms
+> of.
+
+**WHAT T4 OWES NOW.** No mathematical statement of the clause itself. Two *instantiation* items,
+both named in the new docstrings, neither a wall:
+
+1. **`¬ IsAffine C.left`** for the smooth proper positive-dimensional curve — a genuine geometric
+   statement, and absent from this project, the sibling and mathlib (searched). One statement where
+   §6.25 left two.
+2. **The two chart presentations and the square `hsq`** at the thickened charts:
+   `e = Over.dualNumberSectionsOfIsAffineOpen`, `e'` its `ε ↦ 0` reduction, and the commuting square
+   between them. The pieces exist (`Over.relSectionsMap_dualNumberSections` is `(b-coeff)`); the
+   square is not assembled. `relCover` supplies `hgO` (affine preimage) via `isAffineOpen₀/₁`.
+
+**TWO TOOLING FINDINGS, one of which corrected a false claim I had already committed.**
+
+* **A lock-free `lean -o` check must carry `lakefile.toml`'s `leanOptions`.** Without
+  `-D maxSynthPendingDepth=3`, `PicEpsKernelTrivial` reports three hard elaboration errors that
+  `lake` and the LSP both accept (`Pic.mapRingHom` at `Ideal.Quotient.mk` cannot synthesize the
+  quotient's `CommRing`). I diagnosed that as *a conflict between import sets*, wrote it into the
+  file as a structural constraint ("do not tidy these two files into one"), committed it, then
+  refuted it by re-running with the option. **Retracted at both sites.** A tooling artefact can
+  produce a precise, plausible, mechanism-shaped diagnosis.
+* **But run the check anyway.** It caught a real error the LSP could not: the first split put
+  `namespace TruncExpCech` inside `namespace AlgebraicGeometry` (it is top-level), and because the
+  new modules had no oleans yet the LSP could only say `Imports are out of date`. Nine errors in
+  twelve seconds. **A new module importing another NEW module is invisible to the LSP; one import
+  complaint is not a pass.**

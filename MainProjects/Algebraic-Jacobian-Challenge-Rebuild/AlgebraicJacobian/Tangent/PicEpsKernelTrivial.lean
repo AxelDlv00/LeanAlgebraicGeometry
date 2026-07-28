@@ -56,6 +56,12 @@ the project's `leanOptions` reports three errors here that a `lake` build and th
 > pass), but read a failure it reports against a `lake`-green file as a possible OPTION gap before
 > reading it as mathematics.
 
+**The cheap immunity, adopted from `ajcr-charts` (inbox `I-0494`): this file states
+`set_option maxSynthPendingDepth 3` itself.** A file-local `set_option` travels with the module, so
+any lock-free check gets the option whether or not the command line supplies it, and the
+project-level `leanOptions` becomes a convenience rather than a correctness dependency. Worth doing
+in any module whose elaboration needs a non-default option.
+
 ## Main declarations
 
 * `TruncExpCech.quotientSpanEpsRingEquiv_comp_mk` — `fst` factors through `A[ε] ⧸ (ε)`, by `rfl`.
@@ -67,6 +73,11 @@ Reference: Kleiman, "The Picard scheme", §5 Thm. 5.11 (arXiv:math/0504020);
 -/
 
 set_option autoImplicit false
+
+-- Required for `Pic.mapRingHom` at `Ideal.Quotient.mk`; `lakefile.toml` sets it globally, but
+-- stating it in the file makes the module immune to a lock-free check that forgets the project's
+-- `leanOptions` (see the docstring above, and `ajcr-charts` on inbox `I-0494`).
+set_option maxSynthPendingDepth 3
 
 universe u
 

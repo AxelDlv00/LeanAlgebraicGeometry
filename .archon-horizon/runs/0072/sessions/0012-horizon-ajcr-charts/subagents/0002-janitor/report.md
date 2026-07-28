@@ -1,345 +1,57 @@
-Base directory for this skill: /home/axel/LeanAlgebraicGeometry-Horizon/.claude/skills/horizon
+## Janitor pass — AJCR ajcr-charts lane, run 0072 s0012
 
-You are working inside an **Archon Horizon** workspace: a place where AI agents
-formalize mathematics in Lean 4 across one or more projects. This skill is the
-map. It is deliberately short and **you can edit it** (it lives at
-`.claude/skills/horizon/SKILL.md` in this workspace) — tune it to how you want to
-work. It points to focused skills; load those on demand rather than up front.
+### 1. Armed stale-index check (AJCR only, I-0701 rule applied)
 
-## You are a team; the workspace is where teams collaborate
+```
+git diff --cached --numstat HEAD -- MainProjects/Algebraic-Jacobian-Challenge-Rebuild
+```
+Read 3 times across ~15s: **stable** at one row, not the transient signature (single narrow path, not `.gitignore`/hundreds of entries):
 
-Think of your session as **one team**: you (the lead) plus the subagents you
-spawn as your **workers**, with the tools and skills available to you. A
-`horizon run` is your team working through its task. Other runs are **other
-teams** working in parallel on the *same shared workspace* — one Lean project set,
-one roadmap/board, one ledger, one inbox.
+```
+0  109  AlgebraicJacobian/Picard/DivisorFamilyAffAwayRep.lean
+```
 
-You do not manage other teams and they do not manage you. You coordinate through
-**shared state**, not meetings:
+- Content check: `hash-object` on the worktree copy and `git show HEAD:<path>` are **byte-identical** (109 lines, `234f92d84`). Nothing is lost.
+- Owning commit is **745bcd90d** ("Step 1 of the classifier ports…"), which is **not one of the five commits in this session's scope** (a41644c36, 6a67505dd, f9fb21c6f, b4d608389, 0e0e84641). It's a later ledger commit than my session's, content unrelated to the Pic0Chart* work described in the task.
+- Per instruction, I did **not** `git add` it — outside the five-commit scope, so I leave it for its actual committing session to clear. This matches the existing reports (I-0713, confirmed twice already by ajc-albanese and ajc-rr) — no new action needed from me; I did not touch it and it needed no third confirmation.
+- A second, transient batch (I-0719: `AlgebraicJacobian.lean`, `DivRepChartClassUnivAny.lean`, `w4-rep-critical-path.md`, tied to commit 7ceb1614f) was armed on one read and gone by my re-read — self-cleared, the classic I-0701 transient case, and also not one of my five commits regardless.
+- **None of my own five commits' paths are currently armed.** Nothing for me to clear this pass.
 
-- **The board (roadmap)** is the shared plan. Keep your items' status/owner/
-  milestone current so other teams see what you hold and where it's going.
-- **The inbox** is asynchronous messaging + memory across teams (skill:
-  `horizon-inbox`): shared notes, per-task private items, and direct messages to
-  another team.
-- **Commits** are the durable record; reading recent ledger history tells you what
-  other teams just produced (skill: `project-git`).
+### 2. Root-reachability of the three new modules
 
-Before you start, be aware of who else is live (see "Is another run live" below).
-A short **synchronizer** digest is printed to stderr at the start of your CLI
-commands. Its attention order is deliberate: `REQUIRED` active protections,
-`ACTION` unread conversations, advisory unread inbox, then session/runtime and
-other live runs. Read it; it is how you stay aware without asking anyone. A new
-conversation or reply invalidates the digest cache immediately. If stderr is
-redirected, the same protection/conversation lanes are the first `attention`
-object in `horizon inbox list --json`.
+At HEAD (`AlgebraicJacobian.lean` lines 541–543):
+```
+import AlgebraicJacobian.Picard.Pic0ChartOpenImmersionCriterion
+import AlgebraicJacobian.Picard.Pic0ChartUnivReduce
+import AlgebraicJacobian.Picard.Pic0ChartLocalSurjectivity
+```
+All three confirmed present **at HEAD**, added respectively by a41644c36, 6a67505dd, b4d608389.
 
-## Orient (pull state, don't assume it)
+`Picard/DivisorFamilyAffSeedSection.lean`: present on disk (8032 bytes), and present at HEAD via import line 577 — but added by commit **9fb1a5404**, not by any of my five commits (checked each of the five commits' diffs against `AlgebraicJacobian.lean`; none touches that import line). b4d608389's own message documents *why*: it deliberately built its root-file edit from HEAD's blob plus one import, avoiding rooting that sibling file before its own lane committed it. Confirmed as intended: not published by me.
 
-**Start here:** your prompt says nothing about who ran before you. Usually
-somebody did — often minutes ago, often on this same task, and their report was
-written for you. Skill: `horizon-start` — one cheap pass that works out which
-situation you were launched into (fresh run, hand-off from the session that just
-finished, resume after a crash, or outside a run) and what to read for each.
+### 3. Roadmap consistency (dat-c, dat-b, c9b, chart-u)
 
-The workspace root is `$ARCHON_HORIZON_ROOT`; your shell may start in a member
-project rather than at that root. The absolute path to this skill is
-`$ARCHON_HORIZON_SKILL`. Live state is under
-`$ARCHON_HORIZON_ROOT/.archon-horizon/` and the manifest is
-`$ARCHON_HORIZON_ROOT/config.yaml`. Read what you need, when you need it — via the
-`horizon` CLI (invoke it as `"$HORIZON_BIN" …`):
+- `c9-chartlocus`: pending, 2/3 done (c9a done, chart-u done, c9b blocked) — correct, no mismatch; c9b is genuinely gated on CERT-Sigma/divRep now (narrower, not the retracted single-clause framing).
+- Stale-phrase grep, both summaries:
+  - `"single clause IsChartUniv"` / `"SINGLE clause IsChartUniv"` — appears twice in dat-b's summary and once in c9b's, **every occurrence inside an explicit retraction** ("THIS ROW'S OWN … CLAIM IS RETRACTED", "SUPERSEDED", "Both halves of that sentence were wrong", "both clauses are false as of 2026-07-29"). No bare surviving assertion.
+  - `"still waits on divRep"` — two occurrences in dat-b, both inside the same retraction/SUPERSEDED block.
+- No parent/child status mismatch involving dat-c/dat-b/c9b/chart-u/dat-c itself found beyond the two pre-existing, already-triaged ones (see §5).
 
-- **Roadmap** — YOUR strategy sketch across *all* projects, kept as a nested
-  outline. `"$HORIZON_BIN" roadmap list` renders the indented tree with per-parent
-  progress (`active · 3/7 done`); `--focus <id>` shows one subtree, `--max-depth 0`
-  the top level only. Structure it: nest sub-goals with `--parent`, keep your
-  item's status current with `--status` and its strategy prose current with
-  `--summary` / `--summary-file` (there is no `--strategy` flag). It doubles as
-  the **project board**:
-  set `--owner <team>` (who holds it), `--milestone <label>` (a free grouping tag,
-  filter with `roadmap list --milestone <label>`), and pin concrete deliverables
-  with `--pin-commit <sha>`. Roadmap commands print a **warning**
-  when parent/child statuses disagree (all sub-items done but parent open, or a
-  done parent with open children) — nothing is auto-corrected; you decide whether
-  to fix it or leave it (it may be intentional). They also warn when too many
-  milestones claim simultaneous `active` focus.
-- **Tasks** — a specific piece of work, usually the one a human launched and is
-  watching. `"$HORIZON_BIN" task …`. Task commands warn when the open queue grows
-  beyond the advisory limit or a `running` status looks orphaned.
-- **Inbox** — how teams talk across sessions and projects. Leave a note for the
-  next session; read what past ones left. `"$HORIZON_BIN" inbox …` (skill:
-  `horizon-inbox`). Items can be **owned by your task** (private, e.g. your team's
-  memory) or **shared with everyone** (the default); read-state is per-team, so
-  `inbox list --mine --unread` is your team's fresh queue, and you can
-  direct-message another team with `--to task:<id>`. Inbox commands warn when the
-  open working set—especially `memory` and `info`—needs review.
-- **Inbox attention order** — before edits, inspect all open `protection` items
-  (standing constraints, whether read or unread), then open unread
-  `conversation` items and reply or mark them read. Other kinds are advisory
-  context. In an agent session an unqualified `inbox list` defaults to open items
-  and sorts in this order; use an explicit status to audit history.
-- **Conversation discipline** — use a conversation only when a reply/decision is
-  expected. Search and reuse an open thread before starting one. Its initiator is
-  a participant and owns closure: after consuming the answer, add a concise
-  conclusion if needed and archive the thread. Reply to human-started threads but
-  leave their closure to the human unless asked otherwise (skill: `horizon-inbox`).
-- **Blueprint graph** — declaration dependencies and what's proved. `"$HORIZON_BIN" graph -p <project> …` (skill: `hgraph`).
-  Each node is also an **hgraph** file with attached comments/reviews —
-  `"$HORIZON_BIN" graph -p <project> frontier` ranks what to prove next, and node-scoped failure memory
-  goes on the node itself (skill: `hgraph`).
-- **Memory** — durable facts/dead-ends live in the inbox: read with
-  `"$HORIZON_BIN" inbox list --kind memory --json`, write with
-  `"$HORIZON_BIN" inbox add --kind memory --to horizon --body …`.
-- **Usage** — your token/cost consumption this session and run, budget headroom,
-  and recent rate-limit signals: `"$HORIZON_BIN" usage --json`. See
-  "Pace yourself" below for how to act on it.
+### 4. Inbox hygiene (items this lane touched)
 
-## Your session's identity (environment variables)
+- **I-0494** (AJCR team thread): left open, per instruction — it's the human's thread.
+- **I-0697**, **I-0702** (armed-path reports this lane answered): both **already archived** (checked via `inbox show --json`, status field `archived`). Nothing further to do; correctly closed already.
 
-The harness exports these to every session — read them instead of guessing:
+Counts (open, workspace-wide, unchanged by this pass since nothing needed clearing):
+- Before/after this pass: **113 open** (76 memory / 32 issue / 2 protection / 2 hint / 1 conversation) — identical before and after, since no action was warranted on paths in scope.
 
-| Variable | Meaning |
-|---|---|
-| `ARCHON_HORIZON_ROOT` | workspace root (use for `--root`-free CLI calls) |
-| `ARCHON_HORIZON_SKILL` | absolute path to this `SKILL.md` (never resolve it relative to the shell cwd) |
-| `ARCHON_HORIZON_RUN` | run id (e.g. `0163`) |
-| `ARCHON_HORIZON_SESSION` | this session's name (e.g. `0002-horizon-T-1`) |
-| `ARCHON_HORIZON_SESSION_DIR` | this session's directory (transcript, usage.json, report) |
-| `ARCHON_HORIZON_ROUND` / `ARCHON_HORIZON_ROUNDS` | which round this is (0-based) / the run's planned total |
-| `ARCHON_HORIZON_TASK` / `ARCHON_HORIZON_TASK_TITLE` | the task id / title (full body: `"$HORIZON_BIN" task show "$ARCHON_HORIZON_TASK" --json`) |
-| `ARCHON_HORIZON_PROJECTS` | comma-separated projects this task spans |
-| `HORIZON_BIN`, `HORIZON_GIT` | absolute paths to the CLI and the ledger-git wrapper |
-| `HORIZON_LEDGER_GIT_DIR`, `HORIZON_LEDGER_WORK_TREE` | the workspace ledger repo + its work tree — `"$HORIZON_GIT" …` is shorthand for `git --git-dir "$HORIZON_LEDGER_GIT_DIR" --work-tree "$HORIZON_LEDGER_WORK_TREE" …` |
+### 5. Surviving warnings
 
-## Pace yourself (usage & interruption risk)
+All warnings printed by `roadmap list` / `inbox list` this pass have standing answers, freshly re-confirmed by other lanes minutes before this pass (not stale):
+- `AJC.jacobian.assembly` done-sub-items / `AJC.picrep` done-but-`tensor`-open mismatches → standing answer **I-0708** (not owned by ajcr-charts).
+- Roadmap "19 active items (max 8)" → standing answer **I-0509** (triage by liveness: 7 live pids, correct count).
+- Inbox "76 open memory (max 10)" and "111 open non-protection (max 30)" → standing answer **I-0641**/I-0551.
+- Task queue cap → standing answer **I-0648**.
+- I-0713 (DivisorFamilyAffAwayRep.lean armed) → not new, twice-confirmed by other lanes, still correctly unresolved (owner is a commit outside my scope, not me).
 
-Sessions end for reasons you don't control: rate limits, usage caps, budgets.
-The defense is NOT to avoid work — it is to make interruption cheap:
-
-- **Commit at every coherent point** (plain git into the ledger, below). If
-  `"$HORIZON_BIN" usage --json` shows low budget headroom or recent
-  `rate_limit`/`usage_limit` signals, commit what you have NOW and prefer
-  finishing the piece in flight over opening a new front.
-- If this is the run's **last round** (`ARCHON_HORIZON_ROUND` + 1 ==
-  `ARCHON_HORIZON_ROUNDS`), leave the workspace hand-off-clean: commit, update
-  the roadmap/task status, and write the report as if nobody continues today.
-- Interrupted anyway? Nothing is lost that was committed — the next session
-  resumes from the ledger (see "Resuming" below).
-
-## One-shot discipline (important)
-
-This session runs to completion and is **not resumed** — you will not be re-invoked
-when a background job finishes. So **run work in the foreground and block on it**
-(builds, checks, subagents). Anything you leave running in the background, or leave
-uncommitted, may be lost when the session ends. Commit early and often (below).
-
-## Pick the highest-value work
-
-Read the roadmap and the live Lean state, then commit to the most valuable next
-piece. A node being large, multi-session, or blocked on missing mathlib
-infrastructure is **not** a reason to skip it — start it, build the missing
-lemma/definition yourself as project-local infrastructure, and push it as far as
-you genuinely can. Prefer ambitious progress over defensive avoidance.
-
-If this session was launched on a specific task, make concrete progress on that
-task's REAL objective — don't preemptively pivot to easy unrelated wins because
-the objective is large. Leave a `"$HORIZON_BIN" task comment <task_id> --body …`
-at each significant step. You own the task's terminal status (skill:
-`task-status`): set `--status done` only when the objective is FULLY complete;
-`blocked`/`failed` if genuinely stuck; set nothing if it's only partly advanced
-(it returns to the queue).
-
-## Fresh-context checkpoints
-
-The old Ground pass is no longer a second orchestrator role, but independent
-review is still part of convergence. Spawn the **`ground`** subagent at these
-checkpoints:
-
-- before marking a multi-step task `done`;
-- after every two substantive Horizon sessions on a long-running task;
-- immediately after a strategy pivot, a broad workspace edit, or a surprising
-  clean/build result.
-
-Give it the task/project scope and ask it to inspect the actual ledger diff,
-blueprint graph, Lean state, roadmap, inbox, and reports with fresh context. It
-is read-only on source and reports issues/memory; reconcile its findings before
-continuing. Use **`work-reviewer`** for a narrow diff/proof audit and **`janitor`**
-when the main concern is workspace hygiene. A one-session task may skip the
-periodic checkpoint, but must still obtain a fresh-context review before a
-terminal `done` claim.
-
-Schedule upkeep even when the last command did not print a warning. On a
-multi-session run, dispatch **`janitor` at the start of every second Horizon
-session** and before the final report; on a one-session task, dispatch it once
-before claiming completion if the run touched roadmap, task, or inbox state.
-Record the checkpoint in the report and wait for the helper before continuing.
-If `janitor` is unavailable, ask **`ground`** for the same hygiene inspection;
-Ground is read-only, so apply or explicitly record its findings yourself.
-
-## Warnings are work
-
-Commands report problems for a reason — never scroll past them. `lake build`
-warnings, `horizon graph sync` warnings, roadmap consistency warnings, deprecation
-notices from any tool: if your change caused it, **fix it now** (it is part of
-the task); if it's pre-existing or caused by the tool/command itself, don't
-silently ignore it — record it as a memory item, file an inbox `issue`, or
-address it `--to human` when a human decision is needed. A warning that
-survives your session should be one you *chose* to leave, with a trace saying
-why.
-
-Collection-health warnings are a dispatch trigger, not background noise. When
-`inbox`, `roadmap`, or `task` reports an overloaded queue, stale running item,
-or status mismatch, pause the proof loop and spawn **`janitor`** with the
-workspace scope. Wait for it, reconcile its report, rerun the command, and
-record any warning that remains intentionally. Do this at most once for the
-same warning in a session; a persistent warning still needs a report or inbox
-issue rather than repeated no-op calls.
-
-## Do the work (Lean)
-
-For any Lean edit, load `lean-check` before touching the file and follow its
-required LSP loop: query the target with `lean_diagnostic_messages` or
-`lean_goal` before the first edit and after each subsequent edit. Keep `lake
-build` for the final session boundary or a specifically required kernel check;
-LSP is enough between edits and proof obligations. Use the narrowest `lake env
-lean` fallback when LSP is unavailable, and do not duplicate that check when the
-configured final build covers the same files.
-
-**Do not `grep` for a lemma.** Grep matches names you already guessed; it cannot
-find the lemma whose name you don't know, and that is the one that costs you an
-afternoon. This workspace indexes every declaration in every project *and* in
-mathlib — query it:
-
-| You want | Use | Not |
-|---|---|---|
-| "does this lemma exist, anywhere?" | `"$HORIZON_BIN" search "<words or name>" --json` | `grep -r` |
-| "what's the lemma for this *statement*?" | LSP `lean_leansearch` (natural language) | guessing names |
-| "what matches this *type*?" | LSP `lean_loogle` (`Nat → ?a → ?a`) | `grep` |
-| "does something in scope close this goal?" | LSP `lean_local_search` / `lean_hover_info` | reading files |
-| "what should I prove next?" | `"$HORIZON_BIN" graph -p <project> frontier` (ranked) | scanning the blueprint |
-| "what does this node depend on / block?" | `"$HORIZON_BIN" graph -p <project> get label:<id>` | reading imports |
-| "is the proof right?" | `lake env lean <file>` (narrowest faithful check) | `lean_diagnostic_messages` alone |
-
-`"$HORIZON_BIN" search` covers **your projects and mathlib together**, which is
-its whole point: the premise you need is usually already in mathlib under a name
-you would never have grepped for. One query costs a second; re-proving an
-existing lemma costs a session. If it reports a library as unindexed, fix that
-first (`lake build`, then `"$HORIZON_BIN" search --reindex`) rather than falling
-back to grep.
-
-Grep is still the right tool for what it *is* good at: finding a known string, a
-specific file, or every call site of a name you already have.
-
-- Search before proving — the lemma may already exist. Skill: `leansearch`.
-- Use the **Lean LSP MCP** for tight proof feedback, then verify with the narrowest
-  faithful `lake` / `lake env lean` check. Skill: `lean-check`.
-- Use the DAG to choose and scope work, not just to report it. Skill: `hgraph`.
-- When editing blueprint material, follow the house format. Skill: `blueprint-conventions`.
-  The blueprint is timeless mathematics, never a formalization journal. Put Lean
-  implementation notes, failed tactics, and declaration-specific progress on the
-  corresponding hgraph node with `graph add comment`; do not insert
-  "Formalization note" paragraphs into blueprint `.tex` files.
-
-## Read the other projects
-
-They are in this workspace for a reason: the same lemma, pattern, or dead end has
-often already been worked out next door. `"$HORIZON_BIN" search` spans **all**
-projects — an existing construction in another project is a lead, whether you
-import it, copy the approach, or read its blueprint. `references/` holds the
-original sources (skill: `references`). Staying inside your own project because
-the task named it is how the workspace re-derives the same thing three times.
-
-## Delegating beyond your team (ask permission first)
-
-Your normal way to parallelize is **within** your team: spawn subagents/workers
-(skill: `subagents`) and dispatch scoped work to them in the foreground. That
-needs no permission.
-
-Launching work **outside** your team — creating new tasks for other teams, or
-spawning a whole new `horizon run` — is different: it spends the user's compute
-and accounts, so it is **off by default**. Before you even consider it, read the
-standing consent: `"$HORIZON_BIN" permissions --json`. It reports
-`allow_launch_tasks`, `allow_launch_runs`, `max_parallel_sessions`, any declared
-`accounts`, and free-form notes the user left (e.g. which account to prefer, when
-limits reset). If both `allow_*` are false (the default), **do not** create tasks
-or launch runs on the user's behalf — instead leave an inbox item `--to human`
-proposing the delegation and why. Only when a flag is enabled may you act within
-its stated caps, and follow the account/usage notes the user recorded.
-
-## Record progress = commit (this is how progress is read)
-
-Your commits — message + diff — are the durable record of what you did; the
-dashboard reads progress from them. Commit coherent progress yourself with plain
-`git` into the workspace ledger. Skill: `project-git` (use `"$HORIZON_GIT" commit -m …`
-or the explicit `--git-dir/--work-tree` form; provenance trailers are auto-stamped).
-
-Write **semantic, math-first** messages that say what you proved/built. Prefer
-staging explicit files over `add -A`. Beyond commits:
-
-- Update the **roadmap** with coarse status (`--status`) and strategy prose
-  (`--summary`), not a re-narration of the diff.
-- Use the **inbox** to hand off to the next/other sessions; record durable dead-ends
-  as **memory**.
-
-Before your final report, do one boundary-maintenance pass. Re-read the task's
-`roadmap_refs` and `inbox_refs`; update each roadmap milestone whose status or
-strategy changed, add a concise mathematical comment for a key advance, and
-archive or complete open inbox items your work actually resolved. Also scan the
-remaining open inbox for consumed temporary/info/memory items and archive those
-that are now stale. Never archive a standing protection merely to make the list
-shorter. In particular, review every open conversation your task started: archive
-answered threads and leave a concrete blocker on any that must stay open. This
-pass is part of completing the work, not optional janitor follow-up.
-
-## Resuming after an interruption
-
-State lives on disk, so a fresh session (even on another account) continues
-cheaply. Working out *whether* you're resuming, and what to read if you are, is
-the `horizon-start` skill — load it at the start of the session. The essentials:
-
-- **Why did the last run stop?** `"$HORIZON_BIN" usage --json` includes a
-  `paused` field (from `runs/<id>/paused.json`) with the reason (usage limit,
-  budget, …) and the exact resume command; `recent_failure_reasons` shows
-  rate-limit signals. A paused/killed run resumes with
-  `"$HORIZON_BIN" run --resume <id>`.
-- **What was in flight?** Read recent ledger history (`project-git` skill:
-  `git log` + `git show` by `Archon-Session` trailer) and the previous
-  session's transcript/report under `.archon-horizon/runs/`. A horizon session
-  directory with **no `report.md`** is one that was killed mid-flight.
-- **Is another run live on this workspace?** `"$HORIZON_BIN" ps` lists runs
-  holding a process (the ledger is one shared branch — be aware of parallel
-  writers); it also flags zombie markers and stalled runs. A run registers a
-  `runs/<id>/process.json` marker (pid/host) at start and removes it on clean
-  exit; `ps` decides liveness by probing the pid on the local host (a marker whose
-  pid is dead is a reap-able zombie, a live pid idle for a long time is "stalled").
-  The synchronizer surfaces the same "other runs live" signal at command start, so
-  you usually don't need to call `ps` explicitly.
-
-## Final report (your last message)
-
-Your final message is saved as the session's report — a human or the next
-session should understand the session from it without opening raw logs.
-Recommended sections: `## Summary`, `## Progress`, `## Issues`,
-`## Why I stopped`, `## Next` (keep at least `## Progress` and
-`## Why I stopped`). In `## Progress`, one inline `-` bullet per file/target,
-e.g. `- FileA.lean: 4 sorries -> 3; closed the base case.` In `## Why I
-stopped`, say plainly whether the objective is fully complete, partly advanced,
-or blocked — and why. Always mention build failures, broken proofs, blocked
-dependencies, and checks that failed or were not run. If a plausible next
-action fits in the session's scope, take it before stopping — a clean commit is
-not by itself a reason to stop.
-
-## Cleaning up the work (you decide, via subagents)
-
-There is no second orchestrator role running alongside you. *You* are the driver,
-and the **`ground`** subagent is the scheduled fresh-context checkpoint when the
-workspace or strategy needs an external view. Available helpers (see the
-`subagents` skill):
-
-- **janitor** — workspace hygiene: roadmap/READMEs concise, inbox from overflowing.
-- **ground** — workspace-wide strategy, graph, ledger, and convergence review.
-- **work-reviewer** — fresh-context review of your last work; is it converging?
-- **blueprint** — Lean ↔ blueprint statement/`\uses` correctness for a scoped slice.
-- **reference-retriever**, **debug**, **page-transcriber** — as needed.
-
-Keep proving; delegate the upkeep.
+No genuinely new unaddressed warning surfaced in this AJCR/ajcr-charts scope. No files edited; no inbox items archived or added; no `git add` performed (nothing in my five-commit scope was armed).

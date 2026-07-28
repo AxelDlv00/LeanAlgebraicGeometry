@@ -2,35 +2,40 @@ id: AJC.fbc.cosimplicial.twisted
 title: Twisted Čech nerve compatibility
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Twisted Cech nerve compatibility. ONE named residue, everything around it\
-  \ discharged (run 0068 r4).\n\nSTATE. twisted_cech_nerve_iso's naturality sorry\
-  \ is still in the file, but the obligation is now\nreduced to a single equation\
-  \ with no cosimplicial vocabulary in it, and the reduction is proved:\n\n * alternatingCofaceComplexIsoOfDelta\
-  \ -- the consumer (alternatingCofaceMapComplex) has differential\n   sum (-1)^i\
-  \ delta_i and never mentions a codegeneracy, so a complex isomorphism needs only\
-  \ COFACE\n   compatibility, not the general-phi naturality NatIso.ofComponents demands.\
-  \ This is load-bearing:\n   this tree's sigma-coordinate lemmas exist for delta\
-  \ ONLY, and no general-phi analogue exists here\n   or in mathlib, so the wide interface\
-  \ was unprovable from what we have.\n * cechNerve_backbone_δ_sigma / cechNerve_drop_δ_sigma\
-  \ -- the coface in sigma-coordinates is\n   'reindex by delta^k, then restrict'.\
-  \ One rw over four pre-existing lemmas that were merely\n   OUTSIDE the consumer's\
-  \ import cone; three sessions had priced their absence as mathematics.\n * sigmaAssembled_δ_square\
-  \ + twistedNerve_δ_square{,_concrete} -- the coface square FOLLOWS from the\n  \
-  \ per-sigma compatibility. Pi.hom_ext does fire; the earlier 'it cannot' was true\
-  \ only of the\n   obligation as posed, before the coordinate formula was available.\n\
-  \nTHE RESIDUE, and it is the honest one: TwistedPerSigmaDeltaCompat --\nbase-change-then-restrict\
-  \ = restrict-then-base-change for the per-sigma Beck-Chevalley isos\ntwisted_cech_nerve_per_sigma\
-  \ and the intersection-open inclusions interLegHom. Both sides are\ncomposites of\
-  \ landed sorry-free declarations. Equivalently: twisted_cech_nerve_per_sigma is\
-  \ built\nper-sigma, and what is missing is its NATURALITY in the over-object --\
-  \ a Y-natural Beck-Chevalley for\npush-pull, which a workspace-wide search found\
-  \ nowhere (pushPullFunctor has no API beyond being\nwhiskered once).\n\nNEXT. Either\
-  \ prove TwistedPerSigmaDeltaCompat directly (unfold twisted_cech_nerve_per_sigma:\
-  \ an\nopenImmersion_beckChevalley composed with a pushPullObjCongr along an isoOfRangeEq\
-  \ slice iso; the\ncontent is that both are induced by the same inclusions), or build\
-  \ the Y-natural mate once and get\nit as a component. The second is more work and\
-  \ more reusable.\n\nSeven new declarations measured axiom-clean; controls (twisted_cech_nerve_iso,\n\
-  cech_flatBaseChange_oneLeaf, pullback_preservesMonomorphisms) still sorryAx, correctly.\n"
+summary: "Twisted Cech nerve compatibility. TWO items remain, and only one of them\
+  \ is mathematics (run 0068 r4).\n\nWHAT IS PROVED, all sorry-free and axiom-measured\
+  \ clean:\n * alternatingCofaceComplexIsoOfDelta -- the consumer (alternatingCofaceMapComplex)\
+  \ has differential\n   sum (-1)^i delta_i and never mentions a codegeneracy, so\
+  \ a complex isomorphism needs only COFACE\n   compatibility, not the general-phi\
+  \ naturality NatIso.ofComponents demands. Load-bearing, not\n   cosmetic: this tree's\
+  \ sigma-coordinate lemmas exist for delta ONLY, and no general-phi analogue\n  \
+  \ exists here or in mathlib, so the obligation was out of reach AS STATED.\n * cechNerve_backbone_δ_sigma\
+  \ / cechNerve_drop_δ_sigma -- the coface in sigma-coordinates is\n   'reindex by\
+  \ delta^k, then restrict'. One rw over four lemmas that had been in the project\
+  \ for\n   many sessions and were merely OUTSIDE the consumer's import cone (see\
+  \ I-0725); three sessions\n   priced their absence as mathematics.\n * sigmaAssembled_δ_square,\
+  \ twistedNerve_δ_square{,_concrete} -- the coface square FROM one per-sigma\n  \
+  \ equation. Pi.hom_ext does fire; the earlier 'it cannot' was true only of the obligation\
+  \ as posed.\n * tcnps_eq / slice_compat / twistedPerSigmaCompat_of_bcNaturality\
+  \ -- the residue SPLITS at a rfl\n   seam, and half (b) is FREE by mono-cancellation\
+  \ in Over X'. That half is exactly what this\n   project's docstrings named as THE\
+  \ residue for three rounds, so that pricing is retracted.\n\nWHAT REMAINS -- TWO\
+  \ items, and earlier r4 commit messages named only the second:\n (i) WIRING, mechanical\
+  \ and unwritten. The square is proved in SIGMA-DECOMPOSED form (target a Pi\n  \
+  \   product, target coface a Pi.lift). Feeding it to alternatingCofaceComplexIsoOfDelta\
+  \ at\n     twisted_cech_nerve_iso's own spelling needs the Pi product identified\
+  \ with the base-changed\n     nerve's degree object via pushPull_sigma_iso FOR THE\
+  \ BASE-CHANGED COVER, plus the nerve's coface\n     put in Pi.lift shape.\n (ii)\
+  \ HALF (a), the mathematics: naturality of the restricted-square Beck-Chevalley\
+  \ iso in the\n     SQUARE, not the module. Nothing in the tree relates the mate\
+  \ across a change of square.\n\nROUTE FOR (ii), two facts machine-checked at r4:\
+  \ openImmersion_bareBC never uses cartesianness (by\nrfl it is the w-only mate,\
+  \ so it covers the degenerate square that is pushPullMap's own shape), and\nthe\
+  \ two restricted squares paste vertically. So mateEquiv_vcomp is the glue. The missing\
+  \ brick is\n'pushPullMap is the degenerate-square mate' -- TYPECHECKS but is NOT\
+  \ rfl, and simp does not close it.\n\nMEASUREMENT: axiom-frontier section 6h, with\
+  \ three controls that must keep reporting sorryAx. Nothing\nhere has made a previously-contaminated\
+  \ declaration clean.\n"
 status: active
 kind: proof
 priority: high
@@ -53,5 +58,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc.cosimplicial
-  updated_at: '2026-07-28T20:26:06.965663+00:00'
+  updated_at: '2026-07-28T22:02:11.571243+00:00'
   owner: ajc-fbc
