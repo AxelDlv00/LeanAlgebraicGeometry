@@ -297,6 +297,12 @@ import AlgebraicJacobian.Albanese.TensorPowerCofan
 -- with the S_n-actions matched (and the match carries `e⁻¹` — the kernel forced it). The
 -- QUOTIENT carrier is still anonymous; see that file's Scope section for what separates them.
 import AlgebraicJacobian.Albanese.SymPowAffineCarrier
+-- …and the composition that names the QUOTIENT: the colimit of the S_n-action on (Spec_k A)^n
+-- IS Spec_k ((A^{⊗n})^{S_n}) -- Milne III.3 Prop 3.1's affine half with the object identified,
+-- which is what SymPowColimit §5's bold caveat asked for. Note that the accompanying HasColimit
+-- is NOT a new fact (cocompleteness gives it); the deliverable is the iso, because only an
+-- equation mentioning the object can name it.
+import AlgebraicJacobian.Albanese.SymPowAffineQuotient
 import AlgebraicJacobian.Albanese.AlbaneseFromData
 import AlgebraicJacobian.Albanese.AlbaneseFromColimit
 import AlgebraicJacobian.Albanese.AlbaneseJacobian

@@ -389,28 +389,28 @@ that the pair `(D, hproj)` exists in `(Under k)ᵒᵖ` at every `n`. Two further
 * that `(Under k)ᵒᵖ` is the category of affine `k`-schemes. Morally it is, via
   `Over.opEquivOpUnder` and `AffineScheme.equivCommRingCat`, but no declaration below builds
   that bridge;
-* that the resulting carrier is `Spec` of the `S_n`-invariants of the `n`-fold tensor
-  power — Milne's `(A^{⊗ n})^{S_n}`. `mem_sections_singleObj_iff` is the *reason to expect*
-  it (limits in `CommRingCat` are computed as sections, and a one-object diagram's sections
-  are its fixed points), but it is a statement about `SingleObj G ⥤ Type` and mentions
-  neither `CommRingCat` nor `Spec`. **The carrier is not named in Lean.**
+**The carrier: NOW NAMED, elsewhere (2026-07-29, run 0069 r7).** This bullet used to end with
+"**The carrier is not named in Lean**", and it no longer holds. It is *still* true that nothing
+in **this file** names it — `symPowData_affineAlgebra` below takes its colimit from
+`(Under k)ᵒᵖ`'s cocompleteness, so the object it produces is an anonymous `colimit` and
+`mem_sections_singleObj_iff` remains only the *reason to expect* the identification, being a
+statement about `SingleObj G ⥤ Type` that mentions neither `CommRingCat` nor `Spec`. What changed
+is that the identification is now a theorem:
 
-**Update 2026-07-29 (run 0069 r7): the INPUT is now named; the carrier above still is not.**
-`Albanese/SymPowAffineCarrier.lean` proves `tensorPowerOpIsoPiObj`: the `n`-fold product
-`∏ᶜ (fun _ : Fin n => op (mkUnder k A))` — the object `permDiagram` below is built on — is
-`op (mkUnder k (⨂[k] _ : Fin n, A))`, i.e. `(Spec_k A)^n = Spec_k (A^{⊗ n})`, with the actions
-matched (`permAut_eq_op_permAlgHom`, and note it carries `e⁻¹`) and a transport law carrying
-`Pi.π i` to `op (singleAlgHom i)`. Separately
-`SymPowInvariantsUnder.hasColimit_actionDiagramUnder_op` names the *quotient* of the
-`S_n`-action on the tensor power as `op` of the invariant subalgebra.
+`PiTensorProduct.colimitPermDiagramIsoFixed` (`Albanese/SymPowAffineQuotient.lean`) proves
 
-So both ends of Milne's affine picture are now named objects — but **not composed**, which is
-why the caveat above stands as written. The composition needs the index-category transport of
-`SymPowInvariantsUnder` §5 (`(SingleObj G)ᵒᵖ` versus `SingleObj G`, via
-`Groupoid.invEquivalence`) applied across `tensorPowerOpIsoPiObj`, and nothing writes it.
-`symPowData_affineAlgebra` below still gets its colimit from `(Under k)ᵒᵖ`'s completeness, so
-its carrier is still an anonymous `colimit`. Whoever writes that composition should delete this
-caveat rather than adding a third note to it.
+`colimit (permDiagram (op (mkUnder k A)) n) ≅ op (fixedUnder k (Perm (Fin n)) (⨂[k] _ : Fin n, A))`
+
+— the colimit of the diagram *this file* takes a colimit of is `Spec_k` of Milne's
+`(A^{⊗ n})^{S_n}`. It rests on two comparisons that were landed separately and never composed:
+`SymPowAffineCarrier.tensorPowerOpIsoPiObj` (the `n`-fold product in `(Under k)ᵒᵖ` is `op` of the
+tensor power, actions matched — and the match carries `e⁻¹`) and
+`SymPowInvariantsUnder.fixedCoconeUnderIsColimitOp` (the quotient is `op` of the invariant
+subalgebra), glued by a diagram isomorphism plus the `(SingleObj G)ᵒᵖ` index transport.
+
+One thing NOT to read into it: the accompanying `hasColimit_permDiagram_op_mkUnder` is **not** a
+new fact — cocompleteness already gives that instance, `infer_instance` discharges it. Only the
+*iso* is new, because only a statement mentioning the object can name it.
 
 So read this section as: *the affine algebra case of the interface is inhabited at every
 `n`, from mathlib's colimits, with no construction written*. Not as: *Milne III.3
@@ -465,12 +465,19 @@ theorem symPowData_type (X : Type u) (n : ℕ) :
 `(Under k)ᵒᵖ` has all colimits (they are limits in `Under k`), so the pair `(D, hproj)` is
 inhabited there at every `n`, with no construction written.
 
-**What this is and is not.** It is the inhabitation statement. It is *not* a formalisation
-of Milne III.3 Proposition 3.1's affine half, which also identifies the object: morally
-`(Under k)ᵒᵖ` is affine `k`-schemes (via `Over.opEquivOpUnder` and
-`AffineScheme.equivCommRingCat`) and the carrier is `Spec` of the invariant subring of the
-`n`-fold tensor power — but neither bridge is built here. `mem_sections_singleObj_iff` is
-the reason to expect the second; it is not a proof of it. See the §5 header. -/
+**What this is and is not.** It is the inhabitation statement, for an *arbitrary* `X`. It is
+*not* a formalisation of Milne III.3 Proposition 3.1's affine half, which also identifies the
+object; two bridges are needed for that, and as of 2026-07-29 exactly one of them is built:
+
+* the carrier is `Spec` of the invariant subring of the `n`-fold tensor power — **built**, at
+  `X = op (mkUnder k A)`, by `PiTensorProduct.colimitPermDiagramIsoFixed`
+  (`Albanese/SymPowAffineQuotient.lean`). So `mem_sections_singleObj_iff` is no longer the only
+  reason to expect it. Note the instantiation: this theorem quantifies over every `X : (Under k)ᵒᵖ`
+  and the identification is available only at the `mkUnder` ones, which is the affine case Milne
+  states it for;
+* `(Under k)ᵒᵖ` *is* the category of affine `k`-schemes, via `Over.opEquivOpUnder` and
+  `AffineScheme.equivCommRingCat` — **still not built**, so everything above is `k`-algebra
+  language rather than `Spec`-language. See the §5 header. -/
 theorem symPowData_affineAlgebra (k : CommRingCat.{u}) (X : (Under k)ᵒᵖ) (n : ℕ) :
     letI : CartesianMonoidalCategory (Under k)ᵒᵖ := ofHasFiniteProducts
     ∃ D : SymPowData X n, ∀ σ : Equiv.Perm (Fin n),
