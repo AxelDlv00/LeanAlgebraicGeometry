@@ -908,3 +908,64 @@ lemma rather than by an `ε`-specific one; what remains owed of the intertwining
 covers and cocycles and is now general; (b) is about *rings* and needs `sectionsBaseChange ∘
 baseChangeAlgEquiv`. Do not let the two be conflated again — the reason §6.10 could believe (c)
 was `unitsRestrict` functoriality is that it was half-thinking of (b).
+
+**LANDED**: `Tangent/TwoChartNaturality.lean` (204L, sorry-free, `lake env lean` exit 0) —
+`pullbackOverlapUnit`, `twoChartCover_pullback`, `unitsAppLE_twoChartPairUnit`,
+`map_twoChartCocycle`, `map_twoChartClassHom`, `map_twoChartClassHom_eq_one_iff`.
+
+### 6.13 STEP (b) SPLITS, AND ONLY THE COEFFICIENT HALF IS LEFT
+
+*Worksheet-first pass, run 0073 r3, LSP-measured before the Lean.*
+
+Step (b) — the carrier translation — is **two** statements, and the split is not the one §6.10
+implied ("compose `sectionsBaseChange` with `baseChangeAlgEquiv`, plus
+`sectionsBaseChange_naturality` for the two restrictions"). That description covers the
+**open** direction only. The `ε`-kernel computation also needs the **coefficient** direction:
+the map induced by `ε ↦ 0` must become `TrivSqZeroExt.fst`. Naming them:
+
+> **(b-open)** `Γ(C, W)[ε] ≃+* Γ(C_ε, fst⁻¹ W)`, naturally in `W ≤ W'`.
+> **(b-coeff)** across that equivalence, the section map induced by `overDualNumberZero`
+> **is** `fstHom` — equivalently, `unitsFst` on units.
+
+**(b-open) IS LANDED** — `Tangent/DualNumberCarrier.lean` (sorry-free, `lake env lean` exit 0):
+`Over.dualNumberSections` and its affine form, `Over.resHom_dualNumberSections`, and the unit
+forms `Over.dualNumberSectionsUnits` / `Over.unitsMap_resHom_dualNumberSectionsUnits`. The
+composite the §6.10 box found *asserted in a docstring and absent as a declaration* now exists.
+Cost was as predicted, and one factorization paid for itself: the coefficient naturality of the
+algebra comparison, `TruncExpCech.baseChangeAlgEquiv_symm_map`, was proved **for an arbitrary
+`f : A →ₐ[k] B]`** rather than just for the restriction — so (b-coeff)'s algebra half is
+already in hand.
+
+**(b-coeff) IS NOT LANDED, and here is the concrete obstruction — measure it before pricing.**
+The tree's coefficient-direction tool is `AlgebraicGeometry.relSectionsMap`
+(`Cohomology/RelativeSectionsLinear.lean:193`), with `relSectionsMap_resHom`,
+`relSectionsMap_smul`, `relSectionsMap_overAlgebraMap` beside it — exactly the right shape. It
+does **not** apply off the shelf: its binders are `[Algebra R R'] [IsScalarTower k R R']`, and
+at `R := k[ε]`, `R' := k` the instance **`Algebra k[ε] k` does not exist** (LSP-confirmed:
+`failed to synthesize Algebra k[ε] k`). The reduction `fstRingHom : k[ε] →+* k` *is* a
+`k`-algebra map, but it is not registered as an algebra *structure*, and registering it globally
+would collide with `Algebra k k`.
+
+So (b-coeff) has three honest routes, and a session should pick deliberately rather than
+discover this again:
+
+1. **Generalize `relSectionsMap` from `[Algebra R R']` to a bare `f : R →ₐ[k] R'`.** The
+   cleanest, and the file's own proofs look like they only use `algebraMap R R'` through
+   `overSpecMap`, which is `Spec` of a ring map — but this edits a file other lanes consume, so
+   check consumers first. Note `Over.overSpecMap` already takes an `AlgHom` in one spelling
+   (`ThetaShift.lean:88`'s `toBaseTest_overSpec` mentions `Over.overSpecMap (Algebra.ofId k A)`),
+   so the generalized form may already be available under another name — **search before
+   editing**.
+2. **A local `letI : Algebra k[ε] k := fstRingHom.toAlgebra` at the use site**, with
+   `IsScalarTower k k[ε] k` proved by hand. Cheap, contained, and it is a `letI` so it cannot
+   leak into instance search elsewhere. Risk: the `IsScalarTower` may not hold on the nose with
+   the `Algebra k k[ε]` that `overDualNumber` uses — check that *first*, it is one probe.
+3. **Bypass the coefficient square entirely.** `overDualNumberZero` is a morphism of test
+   objects, so `C ◁ overDualNumberZero` gives the scheme morphism directly, and its `appLE` on
+   the preimage opens is the map wanted; identify *that* with `fstHom` through
+   `sectionsBaseChange_one_tmul` / `_tmul_one` rather than through `relSectionsMap`. Most
+   elementary, most bookkeeping.
+
+**Do not restate (b-coeff) as landed on the strength of (b-open).** This is `I-0571`'s rule at
+one remove: the equivalence exists at each `W`, and *that says nothing about the reduction map*
+— which is the whole content, and the third time this lane has had to write that sentence.
