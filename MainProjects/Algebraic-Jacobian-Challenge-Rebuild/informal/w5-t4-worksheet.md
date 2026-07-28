@@ -850,3 +850,61 @@ negotiate (contrast the `rr.principal` situation, which was blocked by exactly t
    `I-0533`; do not repeat it silently).
 4. `Opens.cechPicMap_ι_eq_one_of_cechPicClass_eq_one` to exit back to
    `CechPic.map (V s).ι L = 1`.
+
+### 6.12 THE REDUCTION SQUARE IS **NOT** A COHOMOLOGY ARGUMENT — the cocycles are equal
+
+*Worksheet-first pass, run 0073 r3, written before the Lean per the binding rule on T4.
+LSP-measured on scratch before anything was committed; every claim below is machine-checked,
+not predicted.*
+
+§6.10's box owed step (c), "the reduction square intertwining `twoChartClass` with
+`unitsReduction`", and priced it *cheap but not landed*. Cheap was right. **The reason it is
+cheap is not the one §6.10 gave**, and the difference decides how to state it.
+
+§6.10 guessed the square would "reduce to `unitsRestrict` functoriality on representatives via
+`twoChartClass_mk` and `CechPic.map_mk`" — i.e. an argument at the level of *classes*, where the
+two sides would agree up to a coboundary. Measured: the two sides agree **on the nose, as
+cocycles**, before any quotient is taken. So the square is a `OneCocycle.ext` and four `Bool`
+cases of `simp`, with no cohomology and no coboundary bookkeeping anywhere.
+
+**The three facts that make it collapse, all confirmed by LSP probe:**
+
+1. **`(twoChartCover V sel hmem).pullback f = twoChartCover (f ⁻¹ᵁ V ·) (sel ∘ f.base) _`
+   holds by `rfl`.** Both sides are `fun x ↦ f ⁻¹ᵁ V (sel (f.base x))` after unfolding
+   `PointedCover.pullback` and `twoChartCover`; the `mem_opens` fields are proof-irrelevant.
+   *This is the whole reason there is no transport.* The predicted difficulty — "the pulled-back
+   cover is a different cover, so the classes live in different `unitsH1` groups and must be
+   compared along a refinement" — does not arise: they are the *same* cover.
+2. **`f ⁻¹ᵁ V false ⊓ f ⁻¹ᵁ V true = f ⁻¹ᵁ (V false ⊓ V true)` holds by `rfl`** (not merely by
+   `Scheme.Hom.preimage_inf`), so the pulled-back overlap unit is typed on the nose at the
+   preimage-chart overlap and needs no `Opens` rewrite either.
+3. **The four-case core is one `simp only`.** With `pbUnit f u := f.unitsAppLE (V₀ ⊓ V₁) (f⁻¹V₀ ⊓ f⁻¹V₁) le_rfl u`,
+   the identity `f.unitsAppLE _ _ _ (twoChartPairUnit u s t) = unitsRestrict _ (twoChartPairUnit (pbUnit f u) s t)`
+   closes by `cases s <;> cases t <;> simp only [twoChartPairUnit, map_one, map_inv,
+   Hom.unitsAppLE_map, Hom.map_unitsAppLE]`. Diagonals are `map_one`; the `(1,0)` case is
+   `map_inv` plus the two `unitsAppLE` commutation lemmas, which already handle the `inf_comm`
+   restriction inside `twoChartPairUnit`.
+
+**One trap, and it is §6.8/`I-0554`'s again in a new place.** In the cocycle-level lemma the
+pair indices are `sel (f.base x)` and `sel (f.base y)` — *terms*, not variables. Writing
+`cases h : sel (f.base x)` fails with **`generalize failed: result is not type correct`**,
+because the type `Γ(X, V (sel (f.base x)) ⊓ …)ˣ` mentions the term being generalized. The fix is
+not `subst` this time: state the four-case identity as a **standalone lemma in `s t : Bool`**
+(where they *are* variables, so `cases` is free) and apply it at the instantiated indices. Rule,
+now twice-confirmed in this lane: *never case-split on a `Bool` that a dependent type mentions —
+factor the split into a lemma quantified over that `Bool` first.*
+
+**What this changes about the shape of the residue.** The square is scheme-general: it is a
+statement about an arbitrary `f : X ⟶ Y` and an arbitrary two-open family on `Y`, with **no
+dual numbers, no affineness, no curve, and no `Function.Surjective sel`**. So it belongs beside
+(iii-a)/(iii-b) in `TwoChartCechPic`-land, not in the dual-number files, and AJC can take it as
+directly as it can take the other four clauses. In particular it is *not* specific to the `ε ↦ 0`
+map, which is only the instance the T2 engine consumes.
+
+**Consequence for §6.10's box, stated plainly.** Step (c) is discharged by a general naturality
+lemma rather than by an `ε`-specific one; what remains owed of the intertwining is only the
+*carrier* half, step (b) — identifying `Γ(X_ε, f⁻¹(V₀ ⊓ V₁))` with `Γ(X, V₀ ⊓ V₁)[ε]` so that
+`pbUnit` along `ε ↦ 0` becomes `unitsFst`. That is genuinely a different statement: (c) is about
+covers and cocycles and is now general; (b) is about *rings* and needs `sectionsBaseChange ∘
+baseChangeAlgEquiv`. Do not let the two be conflated again — the reason §6.10 could believe (c)
+was `unitsRestrict` functoriality is that it was half-thinking of (b).
