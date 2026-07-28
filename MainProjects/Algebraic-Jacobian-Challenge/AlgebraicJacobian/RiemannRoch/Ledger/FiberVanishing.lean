@@ -320,7 +320,8 @@ variable {K : Type u} [Field K] {Y : Scheme.{u}} [IsIntegral Y]
   [LocallyOfFiniteType (Y ↘ Spec (CommRingCat.of K))]
   [QuasiCompact (Y ↘ Spec (CommRingCat.of K))]
 
-/-- **Fibrewise large-twist vanishing along a finite map**: for a **finite** dominant `π : Y ⟶ ℙ¹` compatible
+/-- **Fibrewise large-twist vanishing along a finite map**: for a **finite** dominant
+`π : Y ⟶ ℙ¹` compatible
 with the structure morphisms, the base `H¹(𝒪_Y)`-finiteness input is discharged from
 finiteness of `π` (`moduleFinite_hModule_one_of_isFinite_toP1`); only the `H⁰` properness
 input remains a hypothesis. -/
