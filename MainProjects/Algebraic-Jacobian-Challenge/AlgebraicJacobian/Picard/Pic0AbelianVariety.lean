@@ -933,7 +933,17 @@ development:
 
 What remains is therefore exactly `GeometricallyReduced (Pic0Scheme C).hom`
 and nothing else — see `geometricallyReduced` below for why that single residue
-is a genuine theorem rather than a synthesis step. -/
+is a genuine theorem rather than a synthesis step.
+
+"Exactly" is MEASURED, not estimated (run 0067). At a probe site with the
+`HasPicScheme` gate *assumed* rather than synthesised (so the gate cannot
+contribute) and `GeometricallyReduced` supplied as a hypothesis, this theorem's
+conclusion reports `[propext, Classical.choice, Quot.sound]` — axiom-clean —
+while the control `Pic0.smooth` at the same binders reports `sorryAx`. So
+supplying geometric reducedness discharges smoothness outright, with no residual
+leak elsewhere in the assembly, and the control confirms the probe would have
+detected one. Same probe/control technique as
+`scripts/axiom-frontier.lean` §0b. -/
 theorem smooth_of_geometricallyReduced {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1025,7 +1035,14 @@ single `sorry`: the two discharged conjuncts are now *used* rather than merely
 present in the file, and `universallyClosed` may additionally be attacked by
 base change to `k̄` through the already-proved
 `universallyClosed_of_baseChange` (Stacks 02KS descent), which reduces it to
-the algebraically closed case where Kleiman's projectivity argument lives. -/
+the algebraically closed case where Kleiman's projectivity argument lives.
+
+MEASURED (run 0067), same probe/control as `smooth_of_geometricallyReduced`: at a
+probe site with the `HasPicScheme` gate assumed rather than synthesised and
+`UniversallyClosed` supplied as a hypothesis, this theorem's conclusion reports
+`[propext, Classical.choice, Quot.sound]` — axiom-clean — so universal
+closedness is the entire residue of properness, with nothing leaking through the
+separatedness or finite-type conjuncts. -/
 theorem proper_of_universallyClosed {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
