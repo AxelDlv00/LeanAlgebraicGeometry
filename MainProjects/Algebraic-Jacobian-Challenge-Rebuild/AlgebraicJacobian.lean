@@ -509,6 +509,7 @@ import AlgebraicJacobian.Picard.Pic0ChartLocus
 import AlgebraicJacobian.Picard.Pic0ChartShiftedDatum
 import AlgebraicJacobian.Picard.Pic0ChartSplit
 import AlgebraicJacobian.Picard.Pic0ChartTwistCollapse
+import AlgebraicJacobian.Picard.Pic0ChartHonest
 import AlgebraicJacobian.Picard.Pic0ChartLocusIsOpen
 import AlgebraicJacobian.Picard.Pic0ChartPair
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivGen
