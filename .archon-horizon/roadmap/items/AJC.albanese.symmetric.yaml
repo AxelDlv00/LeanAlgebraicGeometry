@@ -2,40 +2,29 @@ id: AJC.albanese.symmetric
 title: Abel-Jacobi and symmetric-power factorisation
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Abel-Jacobi and symmetric-power factorisation. BLOCKED on exactly ONE object;\
-  \ the surrounding mathematics is proved (run 0069, session 0004).\n\nWHAT IS PROVED,\
-  \ sorry-free, in Albanese/SymPowInterface.lean:\n * SymPowData C n -- the universal\
-  \ property of the n-th symmetric power as DATA (carrier, symmetrisation projection\
-  \ pi, unique factorisation of every S_n-symmetric morphism out of C^n).\n * SymPowData.symAVMap\
-  \ -- Milne's Sym^n phi. This is now a CONSTRUCTION rather than a hypothesis: powSum\
-  \ is S_n-symmetric (powSum_perm, Milne's 'clearly this is symmetric'), so the interface\
-  \ descends it. Plus its defining equation and uniqueness.\n * MonObj.basePointShift\
-  \ and basePointShift_comp_powSum -- Milne's Q |-> Q + (n-1)P0, and the collapse\
-  \ showing that summing a POINTED phi over (Q,P0,...,P0) returns phi. Every slot\
-  \ but one contributes the hom-monoid identity (Finset.prod_ite_eq). This is the\
-  \ whole content of 'restrict along the basepoint shift and use phi(P0) = eta_A'.\n\
-  \ * symPowDataOne -- THE INTERFACE IS INHABITED: Sym^1 C = C, since S_1 is trivial\
-  \ and the single projection C^1 -> C is an iso. This is the check that separates\
-  \ an interface from a relabelled sorry: statements quantifying over SymPowData are\
-  \ not vacuous, and the Albanese argument assembled over it is a genuine theorem\
-  \ for n = 1.\n\nSTILL BLOCKED, and the sizing is unchanged: SymPowData C g for g\
-  \ >= 2, i.e. a quotient of a scheme by a finite group action. Mathlib at this pin\
-  \ has none (its SymmetricPower is for modules); analogies/m3-route-audit.md sizes\
-  \ the construction at roughly 2400-3800 lines -- an action typeclass, the affine\
-  \ quotient Spec(A^{S_g}) with its universal property, the glued global quotient,\
-  \ and smoothness of Sym^g C for a curve. A subproject, not a step.\n\nA CORRECTION\
-  \ TO HOW THIS ROW USED TO BE READ. The six sorries in Albanese/AlbaneseUP.lean are\
-  \ NOT the work of this row. They are stated against Pic0.SymmetricPower, a sorry-BODIED\
-  \ definition, so they are equations between morphisms out of a junk term: not dischargeable,\
-  \ and discharging them would establish nothing. Sizing them as 'five obligations\
-  \ blocked on an object' overstated them. The AlbaneseUP.lean header now says this\
-  \ and points at the four files where Milne's argument is actually proved.\n\nALSO\
-  \ WORTH KNOWING: Milne III.6.1 needs NO curve hypotheses once the symmetric power\
-  \ is given -- the genus enters only as the NUMBER of factors (albanese_universal_property_of_symPowData_generic).\
-  \ The curve is needed to CONSTRUCT Sym^g and to prove f^(g) birational, not to run\
-  \ the universal-property argument. So whoever opens the Sym^g subproject can develop\
-  \ it for a general scheme and specialise afterwards.\n"
-status: blocked
+summary: "Abel-Jacobi and symmetric-power factorisation. UNBLOCKED 2026-07-28 (run\
+  \ 0069, ajc-albanese):\nthe obligation was mis-sized, not hard.\n\nThe gap had been\
+  \ \"inhabit SymPowData C n for n >= 2\", priced at 2400-3800 lines\n(analogies/m3-route-audit.md)\
+  \ as a scheme quotient by a finite group action. Albanese/\nSymPowColimit.lean identifies\
+  \ that object instead: SymPowData C n TOGETHER WITH its symmetry\nhypothesis IS\
+  \ a colimit of the S_n-action on C^n, in both directions\n(symPowOfColimit / SymPowData.isColimit;\
+  \ hasColimit_permDiagram_iff states the equivalence, so\nthe reduction is lossless\
+  \ rather than a relocation into something harder).\n\nLanded, all axiom-clean:\n\
+  \ * the symmetry hypothesis -- the half that previously had only an n = 1 witness\
+  \ -- is now\n   colimit.w, free at every n;\n * the AFFINE case of Milne III.3 Prop\
+  \ 3.1 is PROVED at every n (symPowData_affine, on affine\n   k-schemes (Under k)^op)\
+  \ with no construction written; mem_sections_singleObj_iff names the\n   carrier\
+  \ as Spec of the invariant subring of the n-fold tensor power, i.e. Milne's\n  \
+  \ (A^{tensor n})^{S_n};\n * the trivial witness (proj := 1) is REFUTED in-tree at\
+  \ n = 2 (permAut_swap_ne_id), which the\n   interface header had only asserted;\n\
+  \ * Albanese/AlbaneseFromColimit.lean states Milne III.6.1 with NO SymPowData and\
+  \ NO hproj\n   argument.\n\nREMAINING, and it is one instance rather than a subproject:\n\
+  HasColimitsOfShape (SingleObj (Equiv.Perm (Fin g))) Scheme -- the gluing half of\
+  \ III.3.1. Note\nit is a statement about Scheme with no base and no curve in it:\
+  \ Over.forget creates colimits, so\nthe over-category layer does not exist (symPowData_over_of_scheme_colimits).\n\
+  \nAlso still open and NOT part of this node's debt: Milne III.5.1(a) birationality\
+  \ of f^(g), whose\ninputs sit downstream of the Picard seam.\n"
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -57,7 +46,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-28T07:28:09.934041+00:00'
+  updated_at: '2026-07-28T10:01:27.267536+00:00'
   pinned_commits:
   - 1fedb22e4
   - f7391b281

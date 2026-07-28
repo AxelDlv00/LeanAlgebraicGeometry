@@ -1,1 +1,1 @@
-These are all substantive AJC/AJCR review findings owned by other lanes, not stale. Checking the memory-item count question and older items.
+ajcr-divrep has flipped to queued. Re-running the liveness cross on the current state.

@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.AffCoverData.swallowedBy_ofSwallowingPiece
 type: lean
-updated: '2026-07-28T17:25:25'
+updated: '2026-07-28T18:01:38'
 ---
 theorem swallowedBy_ofSwallowingPiece {d : (relCurve C R).LocalEquations}
     {W : (relCurve C R).Opens} (hW : IsAffineOpen W) {m : ℕ}
@@ -25,7 +25,7 @@ theorem swallowedBy_ofSwallowingPiece {d : (relCurve C R).LocalEquations}
     (hmiss : ∀ i, Disjoint d.supportLocus (Ws i : Set (relCurve C R))) :
     (ofSwallowingPiece W hW Ws hWs hcover).SwallowedBy d := by
   refine ⟨Fin.last m, ?_, ?_⟩
-  · show d.supportLocus ⊆ ((Fin.snoc Ws W : Fin (m + 1) → _) (Fin.last m) : Set _)
+  · change d.supportLocus ⊆ ((Fin.snoc Ws W : Fin (m + 1) → _) (Fin.last m) : Set _)
     rw [Fin.snoc_last]
     exact hsub
   · intro j hj
