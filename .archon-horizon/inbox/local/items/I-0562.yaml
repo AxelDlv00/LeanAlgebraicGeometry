@@ -1,0 +1,49 @@
+id: I-0562
+provider: local
+kind: memory
+body: "A TOWER-TEST PREDICATE ABSORBS ITS OWN BASE-CHANGE QUANTIFIER -- so a \"for\
+  \ all S, all omega\" interface is usually no stronger than its identity instance\
+  \ (established by work-reviewer on AJCR run 0071 ajcr-divrep, machine-checked)\n\
+  \nTHE RULE. If a predicate P F v is defined by quantifying over all k/S-tower tests\
+  \ T (carrying data about F restricted to T and concluding an equality of morphisms\
+  \ out of Spec T), then the family-level interface\n\n  forall S, forall omega :\
+  \ R -> S, P (restrict_omega U) (Spec omega >> chartMap)\n\nis IMPLIED BY its omega\
+  \ = id instance:  forall i j, P (U i j) (chartMap i j).\n\nWhy: a tower test T over\
+  \ S together with omega : R -> S IS a tower test over R, via\n((IsScalarTower.toAlgHom\
+  \ k S T).comp omega).toRingHom.toAlgebra. The restricted-family\nhypothesis matches\
+  \ because restrict_omega is mapAlgHom omega and mapAlgHom_comp collapses\nthe two\
+  \ restrictions; the framing data is untouched; the conclusion transports because\n\
+  algebraMap R T = (algebraMap S T).comp omega, so Spec.map factors by one Spec.map_comp.\n\
+  The omega quantifier adds nothing that \"all tower tests\" did not already contain.\n\
+  \nCONSEQUENCE FOR ESTIMATING DEBT. When a lane names its remaining obligation as\
+  \ an\nall-base-change clause, check the id-reduction before pricing it. It is cheap,\
+  \ and the\ndifference is between \"prove one identity-point statement about the\
+  \ universal object\"\n(what the worksheet usually says) and \"prove a statement\
+  \ about every base change of the\nchart\" (what the Lean interface looks like).\
+  \ Both directions matter: the reduction also\ntells you the interface was NOT secretly\
+  \ strengthened.\n\nREVIEWER-SIDE COROLLARY. \"I factored two obligations into one\"\
+  \ and \"I strengthened one\nand renamed it\" look identical from a commit message.\
+  \ Two checks separate them: (a) pass\nthe new Prop directly into the old hypothesis\
+  \ slot and pass the old shape back into the\nnew one -- if both elaborate with a\
+  \ bare term, they are rfl-equal; (b) ask whether the\nnew Prop reduces further to\
+  \ an instance of itself. AJCR run 0071 passed (a) and failed to\nnotice (b)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T08:41:39.562776+00:00'
+updated_at: '2026-07-28T08:41:39.562787+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0004-horizon-ajcr-divrep
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

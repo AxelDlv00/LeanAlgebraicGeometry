@@ -1,0 +1,56 @@
+id: I-0561
+provider: local
+kind: issue
+body: "IsChartClause IS EQUIVALENT TO ITS omega=id INSTANCE -- the residual U2 debt\
+  \ is smaller than the interface advertises (work-reviewer on 5fcbe39a4 / 0b67179bb,\
+  \ task ajcr-divrep run 0071)\n\nNOT a defect. Both commits are sound, sorry-free,\
+  \ axiom-clean, and the \"two obligations are one\" claim survives an rfl check in\
+  \ BOTH directions (verified). This is a misstated SIZE of the residual debt, in\
+  \ the direction that makes it look larger than it is.\n\nTHE FACT. DivRepChartFamily.IsChartClause\
+  \ (Picard/DivRepAffPullClause.lean:119) quantifies over every test algebra S and\
+  \ every omega : ChartRing i j -> S. The worksheet U2 (informal/w4-ddr9-worksheet.md:309-322)\
+  \ is stated only at the identity point (S = R_Z, omega = id, w = divCarveChartMk).\
+  \ The header calls IsChartClause \"the DDR9-U interface, named\", inviting the reading\
+  \ that they are one statement. They are not syntactically -- but they ARE equivalent,\
+  \ via ~20 lines of already-landed material.\n\nMACHINE-CHECKED at HEAD, sorry-free,\
+  \ axioms [propext, Classical.choice, Quot.sound]:\n\n  theorem chartClause_of_id\
+  \ (U : ...)\n    (hid : forall i j, IsDivRepClassify hpi g r1 r2 b1 b2 (U i j)\n\
+  \             (divCarveChartToDivScheme ... i j)) :\n    DivRepChartFamily.IsChartClause\
+  \ (hpi := hpi) g r1 r2 b1 b2 U\n\nPROOF. IsDivRepClassify already quantifies over\
+  \ ALL k/S-tower tests, so the omega quantifier adds no strength. Given omega and\
+  \ a tower test T over S, retopologize T as a ChartRing-algebra via ((IsScalarTower.toAlgHom\
+  \ k S T).comp omega).toRingHom.toAlgebra. A certified representative of divRepPullAt\
+  \ U i j omega over T IS one of (U i j) over T -- divRepPullAt is mapAlgHom omega,\
+  \ so mapAlgHom_comp collapses the two restrictions -- and the framing (i,j,w,hw1,hw2)\
+  \ is untouched. Apply hid; the conclusion transports because algebraMap ChartRing\
+  \ T = (algebraMap S T).comp omega, so Spec.map factors with one Spec.map_comp.\n\
+  \nWHY IT MATTERS. A producer reading IsChartClause sees a clause over arbitrary\
+  \ base-change points and prices the discharge accordingly. What is actually owed\
+  \ is the identity-point statement -- exactly the U2 that divUniversalFamily is built\
+  \ to satisfy (worksheet: LHS is divUniversalFst definitionally, DivSchemeFamilyUniv.lean:72-79).\n\
+  \nNEXT. Land it as DivRepChartFamily.IsChartClause.of_id next to the definition,\
+  \ so divFunctor_representableBy_of_chartClause is quotable at the identity-point\
+  \ hypothesis and the \"verbatim U2\" claim becomes literally true. Note it on roadmap\
+  \ leaf AJCR.w4-rep.datum.dat-d.ddr.divrep.u2."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T08:41:16.506926+00:00'
+updated_at: '2026-07-28T08:41:16.506935+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0004-horizon-ajcr-divrep
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
