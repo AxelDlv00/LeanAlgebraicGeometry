@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: is
 type: lean
-updated: '2026-07-27T09:02:48'
+updated: '2026-07-27T14:06:26'
 ---
   class is trivial, some trivialization has comparison unit `1` on the nose —
   `picClass_eq_one_iff` produces the cobounding unit, the seams of

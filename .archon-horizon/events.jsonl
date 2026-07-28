@@ -3393,3 +3393,4 @@
 {"type": "blueprint.dags", "id": "eb4b212311ba4b1891a7b8b9ad89db4b", "created_at": "2026-07-28T00:10:20.345439+00:00", "actor": "orchestrator", "data": {"projects": {"Algebraic-Jacobian-Challenge": {"nodes": 1941, "edges": 4505}}}}
 {"type": "publish.completed", "id": "405ef7bf18734d4985ce8b3b146e1b93", "created_at": "2026-07-28T00:10:20.349804+00:00", "actor": "orchestrator", "data": {"run_id": "0054", "reports": [], "blueprints": [".archon-horizon/blueprints/Algebraic-Jacobian-Challenge.json"]}}
 {"type": "run.finished", "id": "52e3de2942944d88aef5fb324b3fb3db", "created_at": "2026-07-28T00:10:20.574534+00:00", "actor": "orchestrator", "data": {"run_id": "0054"}}
+{"type": "workspace.run_integrated", "id": "654235712ef84af1bf60dfc11aba6560", "created_at": "2026-07-28T00:10:23.834404+00:00", "actor": "orchestrator", "data": {"run_id": "0054", "sha": "fd129dc671b55e74b35811681fc9cb8be584006c", "changed": true}}
