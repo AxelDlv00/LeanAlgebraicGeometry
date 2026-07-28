@@ -576,3 +576,91 @@ divRep-gated) and a per-point lift. Both remain open; the lift stays binding-Cha
 L8 — local surjectivity of the Abel map out of a too-small divisor functor — remains the campaign's
 real gate and is arguably false as stated. Nothing above bears on it. The tail becoming an equation
 is not progress toward L8, and should not be read as any.
+
+## 7.10 ROUND-0071 s0008 AMENDMENT: the wall was measured off the wrong seed, and the file that
+disproves it is unrooted
+
+*Run 0071 session 0008, task `ajcr-divrep`, 2026-07-28. Everything below was read at HEAD. **Neither
+new Lean file completed a kernel check** — the box was swap-bound (load ~70, <1 GB free) and produced
+zero `.olean`s workspace-wide for 40+ minutes, so both files are committed and **unverified**. Read
+the reductions as measured statements about what exists, not as green Lean.*
+
+### 7.10.1 Two seeds over one ring, and only one of them is gated
+
+§7.9.1 and the `…divrep.u2` row both quoted, as U2's residue, the germ-divisibility wall of I-0302
+§residual 2b/2c — `SeedUnivRDN`. That is measured off `ThetaGeneratorSeed.isGenerator_seedUniv'`
+(`Picard/DivSchemeRedesignSeedUniv.lean:205`), which genuinely takes `SeedUnivRDN` plus a per-point
+`hfib`. **It is not the only generator over the chart ring.** Enumerating every declaration in the
+tree whose conclusion is `(…).IsGenerator`, exactly one is ungated over `R_Z`:
+
+> `PointwiseAchiever.isGenerator_highWindowPointwiseGeneratorSeed`
+> (`Picard/DivSchemeHighWindowPointwiseGenerator.lean:89`)
+
+at `K = divUniversalSeedK` over `R_Z = DivCarveChartRing` — U2's own ring and U2's own seed module —
+from `hO`, `hχ` and `hb : 0 < windowBound π hπ` **only**. `isGenerator_pointwiseGeneratorSeed` (`:274`)
+takes `PointwiseSeedRDN` alone, and `pointwiseSeedRDN_of_highWindow`
+(`…HighWindowQuotientBridge.lean:119`) discharges *that* from `hb`.
+
+Hence `Picard/DivRepChartClassUniv.lean` (commit `76759f498`): `ε` of the certified family of the
+high-window universal seed **is** the universal tautological pair, from `IsCertified` alone. The other
+three inputs of the landed ε-projection identity (`DivSchemeEps.lean:312`) are all available at the
+universal point — the generator clause above, the second-window containment
+`divUniversalSndWindow_le_highWindow_divisorWindow` (`…SecondContainment.lean:114`) *for that same
+seed*, and **both** `thetaGluedEval` surjectivities from the certificate itself
+(`DivisorAdaptation.IsCertified.thetaGluedEval_surjective`, `DivisorThetaFibreData.lean:271`; the
+second window `M + s` is `≥ M`). No transport is needed: `divUniversalSeedK` is *syntactically* the
+`K` binder of the ε-identity at `x₁ = divUniversalFstWindow`.
+
+**So U2 owes one certificate and one scalar** — `IsCertified g` at the universal seed, which is
+precisely the widened certificate lane's endpoint shape (I-0565), and `hb`, used only to get
+`0 < windowS_choice`. Since `windowBound` is a `Classical.choose` from a predicate upward-closed in
+`b` (`UniformVanishing.lean:71`), "some valid bound is positive" is trivial while "the chosen one is"
+is not: normalise the choice rather than proving positivity of it.
+
+### 7.10.2 Why nobody saw it — rootedness is not sorry-freeness
+
+The `DivSchemeHighWindow*` family is **44 files, zero `sorry`s, zero occurrences in
+`AlgebraicJacobian.lean`**. Only 6 of the 44 are in the root import closure, nothing outside the
+family imports its two endpoint files, and one transitive member
+(`Picard/DivSchemeWindowMulGeneral.lean`) has **no `.olean` at all** — it has never been compiled in
+this tree. So no root build ever elaborated it, no `sorry` census counted it, and no axiom probe
+measured it.
+
+This is inbox I-0362 (unrooted = not measured) at 44-file scale, on the critical path, and it is the
+mirror of §7.1's own lesson: §7.1 warns against trusting a **MISSING** claim across an integrate
+commit; this is a **discharge** hiding outside the root cone. Check rootedness *separately* from
+sorry-freeness — `grep -c <module> AlgebraicJacobian.lean = 0` means "not measured", not "not proved".
+
+### 7.10.3 DAT-J step 3 is a square, because the relative wall is vacuous fibrewise
+
+§7.9.2 recorded the remaining lift as "divRep-gated". The **morphism half is neither gated nor
+missing**. `Picard/DivisorFamilyFieldSurj.lean` — *rooted*, sorry-free, and with zero consumers when
+measured — carries the whole fibrewise chain, and it is short for a reason:
+
+> `DivisorAdaptation.isCertified_of_deg` (`:104`): over a **field**, an adaptation whose presentation
+> divisor has degree `n` is `IsCertified n`.
+
+All seven clauses fall out of a bare degree equation: projectivity and both flat-cokernel clauses are
+`Module.Free.of_divisionRing` instances, `(c1)` finiteness is `moduleFinite_colength`, and the `(c2)`
+rank clause is the *unconditional* CRT identity `deg_presentationDivisor`. No support separation —
+which the file records as a deviation of record, since full support separation is *unachievable* when
+a support point lies in both charts' overlap. On top: `exists_divFam_divFamDivisor_eq` (`:147`) and
+`effectiveDivisorClassifyZar` (`:217`).
+
+**This is the constructive form of §7.6's own argument.** §7.6 observes the `DivFamZar` no-go is a
+purely *relative* phenomenon, vacuous over a field. The mirror is that the certificate difficulty
+which makes U2 hard **does not exist fibrewise**. Any obligation phrased over a residue field should
+be priced against this file, not against the relative certificate machinery.
+
+What is left is that the classification sits over the *right point*: `effectiveDivisorClassifyZar_spec`
+(`:231`) never mentions `abel`. So step 3's residue is an **Abel-compatibility square** plus a
+Riemann–Roch effectivity input — the "groups agree ≠ maps agree" shape (I-0525) — stated as
+`IsAbelClassifyCompatible` / `exists_residueField_lift_of_abelCompatible` in
+`Picard/JacobianDataAbelSquare.lean` (commit `cf73332ac`), the second giving `hlift` verbatim as
+`ofAbelLifts` consumes it. The effectivity input stays binding-`Challenge`-free per §0.5.
+
+### 7.10.4 §7.6 still stands
+
+Unchanged by all of the above, and worth repeating because two reductions in one session invite the
+opposite reading: **L8 is still the gate and is arguably false as stated.** Nothing in §7.10 bears on
+it.
