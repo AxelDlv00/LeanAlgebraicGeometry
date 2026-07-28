@@ -20,10 +20,16 @@ The assembler takes, at each prime `p` of the base, an away localization `r ∉ 
 
 * the pulled system has an adaptation whose cover has a **straddling piece**
   (`SwallowedBy`) — the Stacks `0B8B` geometric input, explicit per I-0492 clause 2;
-* the **glued clauses** (c2)/(c3)/(c4) hold.  These are NOT free: `cert-collapse` showed the
-  diagonal of the difference arrow vanishes identically, so (c4) always forces flatness of
-  the diagonal overlap colengths (I-0340).  They are therefore hypotheses here rather than
-  conclusions, and that is the corrected reading of the leaf;
+* the **glued clauses** (c2)/(c3)/(c4) hold.  These are not free **in general**:
+  `cert-collapse` showed the diagonal of the difference arrow vanishes identically, so (c4)
+  always forces flatness of the diagonal overlap colengths (I-0340).  That refutation stands
+  and is about an ARBITRARY adaptation.  **But under `SwallowedBy` — which this assembler
+  already assumes — they are derivable rather than assumed**: `ovlColengthDiagEquiv`
+  (`…AffGlue.lean`) identifies `ovlColength i i` with `colength i`, so the flatness (c4)
+  forces *is* (c1)-flatness, and `AffAdaptation.isCertified_of_swallowedBy_of_c1` delivers all
+  seven clauses from (c1) plus the rank datum with these five hypotheses gone.  This
+  five-hypothesis form is kept because it survives for covers that are **not** swallowed;
+  a caller on a straddling cover should prefer the derived form (I-0668);
 * the **fibrewise-regularity** input for (c1)-projectivity, which is I-0492 clause 4(i) in
   its per-piece form.  It is a hypothesis, not carrier data.
 
@@ -66,9 +72,14 @@ variable (A : AffAdaptation D d)
 /-- **The certificate from a straddling piece.**  Clauses (c1) are PRODUCED: finiteness from
 the straddling piece through the support-trace engine, projectivity from the fibrewise
 regularity input through the widened flatness route (`AffCoverData.flat_sections_pieces`).
-Clauses (c2)/(c3)/(c4) are hypotheses — by `cert-collapse`/I-0340 they cannot be free, since
-the vanishing diagonal of the difference arrow makes (c4) imply flatness of the diagonal
-overlap colengths for every adaptation whatsoever. -/
+Clauses (c2)/(c3)/(c4) are hypotheses **here**, and the reason is narrower than it may look:
+by `cert-collapse`/I-0340 the vanishing diagonal of the difference arrow makes (c4) imply
+flatness of the diagonal overlap colengths for every adaptation whatsoever, so they are not
+free in general.  Under the `hswallow` hypothesis this theorem already carries, however, they
+ARE derivable — `AffAdaptation.isCertified_of_swallowedBy_of_c1` (`…AffGlue.lean`) gets all
+seven clauses from (c1) plus the rank datum, because `ovlColengthDiagEquiv` makes the flatness
+(c4) demands coincide with (c1)-flatness.  Prefer that form on a straddling cover; this one is
+kept for covers that are not swallowed (I-0668). -/
 theorem isCertified_of_swallowedBy [IsProper C.hom] [IsNoetherianRing R] {n : ℕ}
     (hswallow : D.SwallowedBy d)
     (hfib : ∀ (j : D.index) (p : PrimeSpectrum R),
