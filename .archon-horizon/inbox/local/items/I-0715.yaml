@@ -1,0 +1,71 @@
+id: I-0715
+provider: local
+kind: issue
+body: 'CERT-R2 GATE: hWle AT A SEED RE-IMPOSES SINGLE-CHART CONFINEMENT -- the gate
+  hypotheses are UNSATISFIABLE for exactly the straddling divisors R2 exists for.
+
+
+  Review of run 0070 r7 (ajcr-cert-r2), a65bd79c6 / 9fb1a5404 / 20bb502ae. Two probes,
+  both EXIT=0 on the lock-free scratch root.
+
+
+  MECHANISM. The gate assumes hsub : supportLocus subseteq W and hWle : W <= (D.localEquations
+  hD).cover.opens z0. At a SEED, cover.opens z0 = D.piece z0 (DivSchemeFamily.lean:351,
+  rfl) and D.piece_le z0 : D.piece z0 <= relPinnedChart C R pi (D.side z0) (DivSchemeFamily.lean:98).
+
+
+  PROBE 1 (EXIT=0): hsub + hWle alone give supportLocus subseteq relPinnedChart C
+  R pi (D.side z0). One line: fun w hw => D.piece_le z0 (hWle (hsub hw)).
+
+
+  PROBE 2 (EXIT=0): if the support has a point off V0 and a point off V1, NO tuple
+  (W, hW, hsub, z0, hWle) exists. The gate hypothesis set is EMPTY for every straddling
+  divisor.
+
+
+  WHY IT MATTERS. Straddling divisors are the payoff of R2: DivisorFamilyAffStrict.lean:186
+  proves strictness by exhibiting one, at a BARE LocalEquations with unconstrained
+  cover. The new gate is that theorem restated at a seed, and the restatement voids
+  it. The widened COVER downstream is genuinely chart-free (no FinCoverData / ChartTyping
+  / relCover_sup in the closure), but the INPUT hWle already forces the fixed-pair
+  confinement I-0492 clause 5 declares refuted. So the producer fires only on divisors
+  the chart-typed carrier already handles.
+
+
+  WHAT 20bb502ae MISSED. It found relPinnedChart in the closure and added a table,
+  but wrote "the widened route consumes it without ever needing the containment".
+  That is false: hWle IS the containment, and it is a hypothesis of every declaration
+  in both new files. Its separation of certificate-side from seed-side is right; its
+  conclusion that the residue is cosmetic is not.
+
+
+  Not a clause-3 breach (clause 3 is about the certificate clauses) but clause 5 is
+  about the ROUTE, and this route keeps pieces in the fixed pair.
+
+
+  RESIDUE. Either (a) a chart-free seed whose h field is typed at an arbitrary affine
+  open, or (b) a producer of LocalEquations from geometry that is not a ThetaGeneratorSeed.
+  Until then the widened lane has no producer reaching a divisor the chart-typed lane
+  cannot.
+
+
+  Probes: /tmp/claude-1001/rev-probe/Chart.lean, /tmp/claude-1001/rev-probe/Straddle.lean'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:39:29.412114+00:00'
+updated_at: '2026-07-28T21:39:29.412127+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0016-horizon-ajcr-cert-r2
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

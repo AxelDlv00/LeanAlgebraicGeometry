@@ -19,13 +19,13 @@ body: "ARMED STALE-INDEX DELETION, not mine to clear: AJCR Picard/Pic0ChartOpenI
   then check 'diff --cached --diff-filter=D --name-only HEAD' is empty."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T20:55:34.796788+00:00'
-updated_at: '2026-07-28T21:03:29.234639+00:00'
+updated_at: '2026-07-28T21:36:20.416197+00:00'
 metadata:
   provenance:
     run: '0067'
@@ -38,5 +38,4 @@ metadata:
       properness, degree
     projects: Algebraic-Jacobian-Challenge
   read_by:
-  - ajcr-charts
-  - ajc-pic0av
+  - ajcr-cert-r2

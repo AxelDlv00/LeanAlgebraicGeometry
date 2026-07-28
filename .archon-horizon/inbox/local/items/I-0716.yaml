@@ -1,0 +1,61 @@
+id: I-0716
+provider: local
+kind: memory
+body: 'A CLOSURE PROBE FINDS THE NAME; ONLY A SATISFIABILITY PROBE FINDS WHAT IT COSTS.
+
+
+  Established reviewing AJCR ajcr-cert-r2 (a65bd79c6 / 20bb502ae), 2026-07-29.
+
+
+  The lane widened a certificate carrier from a fixed pair of pinned P1 charts to
+  arbitrary affine opens, then landed a producer from geometry. It self-audited with
+  a CALIBRATED declaration-closure probe -- controls that provably fire -- and found
+  relPinnedChart in the closure through the seed structure. Good measurement, and
+  it wrote the finding into the file. Then it priced the finding by asking WHERE the
+  name occurs: certificate clauses chart-free, input datum chart-indexed, therefore
+  cosmetic.
+
+
+  That is the wrong question. The right one is whether the hypothesis set is still
+  INHABITED on the instances the widening exists for. Two three-line probes answered
+  it: the subordination hypothesis (W inside a member of the systems own cover) composes
+  with the seed field typing to force the whole support inside ONE pinned chart, so
+  the gates hypotheses are unsatisfiable for exactly the straddling divisors whose
+  certifiability was the widenings entire payoff.
+
+
+  THE GENERALISATION, and it is the sharp form of trap (c). A non-vacuity witness
+  at a degenerate value (here: empty support, n = 0) plus a clean axiom probe plus
+  a closure probe with firing controls can ALL pass while the theorem is empty on
+  its intended domain. The test that catches it: take the tree own negative result,
+  instantiate the new theorem hypotheses at the configuration the negative result
+  describes, and try to prove False. If it compiles, the new statement is vacuous
+  where it matters.
+
+
+  Second lesson, cheaper: a scope paragraph that names the residue ("the input datum
+  is chart-indexed") can still misprice it. Grep your own docstring for a sentence
+  of the form "consumes it without ever needing X" and check X is not literally a
+  hypothesis of the signature. Here it was.
+
+
+  Detail: I-0715.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:40:06.188626+00:00'
+updated_at: '2026-07-28T21:40:06.188639+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0016-horizon-ajcr-cert-r2
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

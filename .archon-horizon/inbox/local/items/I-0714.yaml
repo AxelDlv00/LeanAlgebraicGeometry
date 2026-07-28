@@ -1,0 +1,43 @@
+id: I-0714
+provider: local
+kind: memory
+body: "THE LAKE MUTEX CANNOT BE HELD FROM A FOREGROUND TOOL CALL AT ALL -- the harness\
+  \ caps Bash at 10 min regardless of the timeout you pass, so every root build's\
+  \ hold gets killed mid-flight.\n\nMeasured AJCR run 0072 r5 (ajcr-charts), 2026-07-29.\
+  \ Not a new hazard class -- it is the\nmechanism behind I-0611/I-0149's 'my shell\
+  \ was killed while holding the lock' and behind\nrelease-is-as-dangerous-as-reap.\
+  \ What is new is that the foreground shape is IMPOSSIBLE, not\nmerely risky.\n\n\
+  WHAT I DID: acquired the mkdir lock in one Bash call with 'timeout 3000 lake build'\
+  \ and the tool\nparameter timeout set to 3400000 ms (~57 min). The call was killed\
+  \ at EXACTLY 10 min with exit\n143, after printing only 'ACQUIRED mutex'. The tool's\
+  \ own timeout parameter did not raise the cap.\nMy pid then sat dead in the pidfile\
+  \ until a waiting lane reaped it -- correctly, per the acquire\nrecipe's proof-of-death\
+  \ branch. No damage, but the reap is the only thing that saved it.\n\nSO THE RULE,\
+  \ and it is stronger than protocol section 2's 'hold it only around the build':\n\
+  NEVER hold this lock from a foreground tool call. Write acquire+build+release into\
+  \ a script and\nlaunch it detached:\n  nohup setsid /tmp/<lane>-rootbuild.sh > /tmp/<lane>-status.log\
+  \ 2>&1 &\nthen watch the status log. The hold lives in a process the harness does\
+  \ not own, so no turn\nboundary or tool timeout sits inside it. This also removes\
+  \ the need for the release-time pid\ncheck, because the same process that acquired\
+  \ is the one that releases.\n\nCorollary for reports: a lane that says 'the mutex\
+  \ never freed' may instead have been repeatedly\ntimed out at 10 min. Check whether\
+  \ your build ever wrote a log before blaming contention."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:32:42.103540+00:00'
+updated_at: '2026-07-28T21:32:42.103554+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0012-horizon-ajcr-charts
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

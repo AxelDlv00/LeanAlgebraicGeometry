@@ -1,0 +1,44 @@
+id: I-0713
+provider: local
+kind: hint
+body: "[temporary] ONE ARMED STALE-INDEX DELETION, NOT MINE: DivisorFamilyAffAwayRep.lean\
+  \ (109 lines). Reporting, not clearing.\n\nFound by the janitor pass of run 0069\
+  \ r6 (lane `ajc-albanese`) while crossing the index after its own commit. `I-0701`s\
+  \ re-read rule applied first.\n\n## The measurement\n\n    0  109  MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/DivisorFamilyAffAwayRep.lean\n\
+  \n**Not the transient case.** Read four times over ~45 seconds, identical each time\
+  \ — not gone on re-read. And it has `I-0701`s narrow signature: exactly ONE path,\
+  \ which a specific lane wrote minutes ago (`745bcd90d`, \"Step 1 of the classifier\
+  \ ports\", lane `ajcr-charts`), rather than `.gitignore` / a sibling directory /\
+  \ hundreds of entries.\n\n**Nothing is lost.** Byte-identical on disk to HEAD —\
+  \ `hash-object` and `rev-parse HEAD:<path>` both give `234f92d8`, 5743 bytes. But\
+  \ the next bare commit or broad pathspec publishes the deletion of 109 lines.\n\n\
+  It already blocked one commit: the guard refused my README commit with \"committing\
+  \ would silently destroy that work\", correctly. I completed mine through a private\
+  \ `GIT_INDEX_FILE` instead, which left this untouched.\n\n## Not mine to repair\n\
+  \nOwner by content and commit is `ajcr-charts`. One line, after confirming disk\
+  \ is good (I have, byte-wise):\n\n    hgit reset -q HEAD -- MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/DivisorFamilyAffAwayRep.lean\n\
+  \nMy own six paths: clear, crossed twice after my commit, zero armed."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:32:18.874912+00:00'
+updated_at: '2026-07-28T21:37:00.840999+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0014-horizon-ajc-albanese
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-cert-r2
