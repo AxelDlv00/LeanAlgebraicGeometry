@@ -152,9 +152,17 @@ bounds the scheme's dimension from below.**
 
 At a regular point, `IsRegularLocalRing.iff_finrank_cotangentSpace` identifies
 `dim_{κ(z)} m_z/m_z²` with `dim 𝒪_{X,z}`, and that is at most `dim X` by
-`ringKrullDim_stalk_le_topologicalKrullDim`. `[IsLocallyNoetherian X]` is what
-makes the stalk Noetherian; for a scheme locally of finite type over a field it
-is free (`LocallyOfFiniteType.isLocallyNoetherian`).
+`ringKrullDim_stalk_le_topologicalKrullDim`.
+
+No Noetherian hypothesis is needed, and an earlier version of this docstring got
+that backwards: it carried `[IsLocallyNoetherian X]` and explained it as "what
+makes the stalk Noetherian, which is what
+`IsRegularLocalRing.iff_finrank_cotangentSpace` consumes". But
+`class IsRegularLocalRing R extends IsLocalRing R, IsNoetherianRing R`, so the
+`hreg` hypothesis already *supplies* that instance. The binder was dead, and it
+had pulled a helper (`Pic0.isLocallyNoetherian`) into existence downstream purely
+to discharge it. Before adding a side instance to feed a consumer of a regularity
+hypothesis, read the class's `extends` clause.
 
 **This is the direction the tangent-space identity `dim_k T₀ Pic⁰ = g` feeds**,
 and it needs data at the identity only — no quantifier over the points of
@@ -162,7 +170,7 @@ and it needs data at the identity only — no quantifier over the points of
 is the linear dual of the tangent space, and `Subspace.dual_finrank_eq` makes
 that a dimension-preserving step. -/
 theorem le_topologicalKrullDim_of_finrank_cotangentSpace
-    (X : Scheme.{u}) [IsLocallyNoetherian X] (d : ℕ) (z : X)
+    (X : Scheme.{u}) (d : ℕ) (z : X)
     (hreg : IsRegularLocalRing (X.presheaf.stalk z))
     (h : Module.finrank (IsLocalRing.ResidueField (X.presheaf.stalk z))
       (IsLocalRing.CotangentSpace (X.presheaf.stalk z)) = d) :
@@ -182,7 +190,7 @@ dimension computation should use
 `le_topologicalKrullDim_of_finrank_cotangentSpace` for the ≥ half together with
 `topologicalKrullDim_le_of_forall_ringKrullDim_stalk_le` for the ≤ half. -/
 theorem topologicalKrullDim_eq_of_forall_finrank_cotangentSpace_eq
-    (X : Scheme.{u}) [Nonempty X] [IsLocallyNoetherian X] (d : ℕ)
+    (X : Scheme.{u}) [Nonempty X] (d : ℕ)
     (hreg : ∀ z : X, IsRegularLocalRing (X.presheaf.stalk z))
     (h : ∀ z : X, Module.finrank (IsLocalRing.ResidueField (X.presheaf.stalk z))
       (IsLocalRing.CotangentSpace (X.presheaf.stalk z)) = d) :

@@ -1816,23 +1816,30 @@ resulting identity `dim X = ⨆ z, dim 𝒪_{X,z}`, for an arbitrary scheme, is
 
 STATE OF THE TWO DIRECTIONS (`Picard/Pic0Dimension.lean`):
 
-* **≥ is proved**, and from data at the identity *alone*:
+* **≥ is REDUCED TO FRONT (a)**, and to nothing else:
   `Pic0.genus_le_topologicalKrullDim_of_smooth` derives `g(C) ≤ dim Pic⁰_{C/k}`
   from `Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne` plus regularity of the
   single stalk at the identity — which over a **perfect** base field follows from
   smoothness of `Pic⁰` by
-  `Scheme.isRegularLocalRing_stalk_of_smooth_of_perfectField`. So this half costs
-  nothing beyond front (b).
-* **≤ is the open content**, and it is one *uniform* statement:
+  `Scheme.isRegularLocalRing_stalk_of_smooth_of_perfectField`. It adds **no** new
+  obligation: no quantifier over points, no new geometry. But it is *not*
+  axiom-clean, and saying otherwise would be the error this lane keeps making —
+  `#print axioms` at the full root reports `sorryAx`, inherited from the open
+  cocycle comparison `Pic0.semilinearComparison_cotangentSpaceDual_h1Cok`
+  (`Picard/Pic0AbelianVariety.lean:805`) through the tangent-space identity. The
+  dimension *bridge* it uses (`Picard/SchemeKrullDimStalk.lean`) is axiom-clean.
+* **≤ is separately open**, and it is one *uniform* statement:
   `∀ z, ringKrullDim (stalk z) ≤ g`. It cannot come from the tangent space at one
   point, since the dimension is a supremum over all points.
   `Pic0.topologicalKrullDim_eq_genus_of_forall_ringKrullDim_stalk_le` states this
   theorem against exactly that hypothesis.
 
-So the tangent-space side of Milne III.1 Rmk 1.4(e) is fully consumed, and what
-remains is the equidimensionality bound. Consumers wanting only a dimension
-*index* may still find `SmoothOfRelativeDimension (genus C) (Pic0Scheme C).hom`
-the cheaper target — it is also what would supply the `≤` hypothesis above.
+So the *dimension-theoretic* content of Milne III.1 Rmk 1.4(e) is consumed: what
+is left is front (a) for the `≥` direction and the equidimensionality bound for
+the `≤` direction, with nothing between them and the statement. Consumers wanting
+only a dimension *index* may still find
+`SmoothOfRelativeDimension (genus C) (Pic0Scheme C).hom` the cheaper target — it
+is also what would supply the `≤` hypothesis above.
 
 Scope of this retraction, checked rather than assumed: the retracted paragraph
 concerned `topologicalKrullDim`, and that invariant is named nowhere in

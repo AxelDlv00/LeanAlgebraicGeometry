@@ -124,8 +124,20 @@ namespace Pic0
 
 /-- **`Pic⁰_{C/k}` is locally Noetherian** — free from finite type over a field,
 via `Pic0.locallyOfFiniteType` and mathlib's
-`LocallyOfFiniteType.isLocallyNoetherian`. Needed to make the stalks Noetherian,
-which is what `IsRegularLocalRing.iff_finrank_cotangentSpace` consumes. -/
+`LocallyOfFiniteType.isLocallyNoetherian`.
+
+**NOT needed by anything in this file**, and worth saying so where a reader will
+look. It was written to discharge an `[IsLocallyNoetherian X]` binder on
+`Scheme.le_topologicalKrullDim_of_finrank_cotangentSpace`, and that binder was
+dead: `class IsRegularLocalRing R extends IsLocalRing R, IsNoetherianRing R`, so
+the regularity hypothesis sitting beside it already supplied the Noetherian
+instance. The binder is gone and this helper no longer has a consumer here.
+
+Kept rather than deleted because the statement is true, cheap, and the natural
+thing for a *later* consumer to want — `IsLocallyNoetherian` is the hypothesis of
+mathlib's Noetherian-scheme API, and the `≤` half of the dimension statement
+(still open, see below) is likely to need it where no regularity hypothesis is in
+scope. Do not read its presence as evidence that it is used. -/
 theorem isLocallyNoetherian {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -135,8 +147,19 @@ theorem isLocallyNoetherian {k : Type u} [Field k]
   haveI : LocallyOfFiniteType (Pic0Scheme C).hom := Pic0.locallyOfFiniteType C
   exact LocallyOfFiniteType.isLocallyNoetherian (Pic0Scheme C).hom
 
-/-- **The genus is a LOWER bound for the dimension of `Pic⁰_{C/k}`** — proved,
-modulo regularity of the single stalk at the identity.
+/-- **The genus is a LOWER bound for the dimension of `Pic⁰_{C/k}`** — a
+*reduction*, not an axiom-clean theorem: see the measurement note below.
+
+**MEASURED (`#print axioms`, full-root import): this reports `sorryAx`.** It
+consumes `Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne`, which is gated on
+the open cocycle comparison
+`Pic0.semilinearComparison_cotangentSpaceDual_h1Cok`
+(`Picard/Pic0AbelianVariety.lean:805`, front (a) of this chapter). So the honest
+reading is: the dimension inequality needs **nothing beyond** the tangent-space
+identity plus regularity at one point — no new geometry, no quantifier over
+points — but the tangent-space identity is itself not yet closed. Everything in
+`Picard/SchemeKrullDimStalk.lean` that this rests on *is* axiom-clean; the leak is
+inherited from front (a) alone.
 
 This is the half of Milne III.1 Rmk 1.4(e) that the tangent-space computation
 gives away for free, and it needs data at **one** point:
@@ -161,9 +184,8 @@ theorem genus_le_topologicalKrullDim_of_isRegular {k : Type u} [Field k]
     (hreg : IsRegularLocalRing ((Pic0Scheme C).left.presheaf.stalk
       ((identitySection C).base default))) :
     ((AlgebraicGeometry.genus C : ℕ) : WithBot ℕ∞)
-      ≤ topologicalKrullDim (Pic0Scheme C).left := by
-  haveI := isLocallyNoetherian C
-  exact le_topologicalKrullDim_of_finrank_cotangentSpace _ _ _ hreg
+      ≤ topologicalKrullDim (Pic0Scheme C).left :=
+  le_topologicalKrullDim_of_finrank_cotangentSpace _ _ _ hreg
     (finrank_cotangentSpace_eq_finrank_hModuleOne C)
 
 /-- **The genus lower bound, with regularity discharged from smoothness over a
@@ -194,8 +216,11 @@ This is the honest factoring of `Pic0Scheme.finrank_eq_genus`
 (`Picard/IdentityComponent.lean`), and it makes visible that the two directions
 have genuinely different costs:
 
-* **≥** is discharged here, from the tangent-space identity at the identity alone
-  (`genus_le_topologicalKrullDim_of_smooth`);
+* **≥** is *reduced to front (a)* here — `genus_le_topologicalKrullDim_of_smooth`
+  derives it from the tangent-space identity at the identity alone, adding no new
+  obligation, but that identity is itself open, so this direction reports
+  `sorryAx` (see the measurement note on
+  `genus_le_topologicalKrullDim_of_isRegular`);
 * **≤** is the hypothesis `hle`, and it cannot be obtained from data at one
   point: it says every local ring of `Pic⁰_{C/k}` has dimension at most `g`. On a
   smooth *equidimensional* scheme this is the statement that the relative
@@ -204,8 +229,10 @@ have genuinely different costs:
   `Picard/IdentityComponent.lean` already flags as the cheaper target for
   consumers wanting a dimension index.
 
-So the remaining open content of the dimension statement is one *uniform* bound,
-with the tangent-space side fully consumed.
+So the *dimension-theoretic* content is consumed, and what is left is one uniform
+bound for `≤` plus front (a) for `≥`. This theorem reports `sorryAx` for the
+latter reason; only the `Picard/SchemeKrullDimStalk.lean` bridge underneath is
+axiom-clean.
 
 WHERE THE `≤` BOUND IS **NOT** AVAILABLE, measured so the next session does not
 re-search. `Albanese/StandardSmoothDimension.lean` looks like it should supply it
