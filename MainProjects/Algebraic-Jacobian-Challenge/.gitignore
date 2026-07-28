@@ -28,8 +28,21 @@
 # swept into HEAD by another lane's integration commit on 2026-07-28, which is
 # precisely the phantom-deletion failure described above. Both cases are covered
 # now, plus the bare `probe_*` / `scratch_*` prefixes at the project root.
+#
+# THIRD RECURRENCE, 2026-07-29 (found by the run 0069 r7 janitor pass): the two
+# `Scratch` patterns above are root-anchored AND require an underscore, so a probe
+# written as `AlgebraicJacobian/Albanese/ZScratchCompose.lean` matched none of the
+# five lines and was swept into HEAD by commit 7223f5b92 (another lane's integrate
+# sweep) -- again exactly the failure the block above describes. The `*Scratch*`
+# patterns below are unanchored and case-split like the `Probe` pair, so a scratch
+# file anywhere in the tree is covered. Note what this means for a probe already in
+# HEAD: gitignore does not untrack it, so it must be removed with `git rm --cached`
+# by whoever owns it -- and per the workspace memory on this, do NOT `add -f` a
+# probe to work around the refusal, because that re-arms it permanently.
 *Probe*.lean
 *probe*.lean
+*Scratch*.lean
+*scratch*.lean
 /probe_*.lean
 /scratch_*.lean
 /Scratch_*.lean
