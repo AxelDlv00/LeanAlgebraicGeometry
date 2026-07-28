@@ -1607,7 +1607,7 @@ reader who knows the endpoint has a non-vacuity witness would otherwise assume i
 `I-0667` and ADDENDUM 9's closing paragraph price clause 3 as 33 textual `partition₀`/`partition₁`
 hits across 11 files. That is a **file-level** measurement, and by `I-0678` (price a port by
 declaration reference, not by import closure) it cannot decide whether the widened route *depends*
-on the partitioned datum. `scripts/partition-probe.lean` walks the transitive constant-dependency
+on the partitioned datum. `Picard/DivisorFamilyAffPartitionAudit.lean` (`#eval partitionAuditReport`) walks the transitive constant-dependency
 closure and answers it:
 
 | declaration | closure | depends on `FinCoverData`? |
@@ -1623,6 +1623,17 @@ So the widened certificate route is partition-free where it counts, and the 33 h
 declaration of that route reaches. This does **not** say the 49-file migration is unnecessary — it
 says the two measurements answer different questions, and that the 33 hits are not a blocker on the
 widened route.
+
+**Where this artefact lives, corrected 2026-07-29 (`I-0692`).** It was first committed as
+`scripts/partition-probe.lean`, which matches `*probe*.lean` in this project's `.gitignore` — so
+`git add` refuses it, it only ever landed by `add -f`, and it re-armed as a phantom staged deletion
+after every foreign sweep. A BINDING addendum must not cite a path the repository is configured
+never to track. Per the `.gitignore` instruction ("if a probe earns a place in the library, move it
+under `AlgebraicJacobian/` and import it"), it is now a ROOTED library module carrying the same
+measurement — the `#eval` re-run after the move gives identical closures and identical control
+readings — plus the claim as a theorem, `isCertified_partitionFree`, whose docstring states plainly
+that it is proved by `id` and is a type-level assertion, the `#eval` being what measures the proof
+terms. Neither alone is honest evidence.
 
 **The calibration failure is the part to carry forward.** The first version of that probe searched
 for the FIELD names `partition₀`/`partition₁`/`cover₀`/`cover₁` and reported EMPTY *on both sides,
