@@ -233,8 +233,8 @@ The colimit of the `S_n`-action on `(Spec_k A)^n` — the very diagram
 subalgebra `(A^{⊗ n})^{S_n}`.
 
 This is what `SymPowColimit.lean` §5's former bold caveat "**The carrier is not named in Lean**"
-asked for, and unlike the `HasColimit` statement above it is not obtainable from cocompleteness: it is
-an equation between the anonymous colimit and a named object, so it needs both
+asked for, and unlike the `HasColimit` statement above it is not obtainable from
+cocompleteness: it is an equation between the anonymous colimit and a named object, needing both
 `permDiagramIsoTransportedAction` (this file) and `fixedCoconeUnderIsColimitOp`
 (`SymPowInvariantsUnder`).
 
