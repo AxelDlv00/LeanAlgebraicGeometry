@@ -29,6 +29,11 @@ appendix left unprobed — turns out to have a clean route through mathlib's
 `SmoothOfRelativeDimension` being a **local-at-source** property, so no
 "locally constant relative dimension on an irreducible base" theorem is needed at all (§3),
 and the t4-§5 codescent brick is contingency rather than a requirement.
+**Local-at-source is now MACHINE-VERIFIED, not inferred from the statement shape** (§3.1, run
+0073 r5): `MorphismProperty.IsLocalAtSource (@SmoothOfRelativeDimension n)
+Scheme.zariskiPrecoverage` fires by `inferInstance`, with `Smooth` as an in-file control. That
+also **dissolves §3's closing caveat** — the translated charts have only to *cover* `d.J`, not to
+exhaust its scheme points — while leaving the §5 brick in place as a genuine contingency.
 
 **The single sentence that matters for planning:** after T1/T5 (landed), the T5 numeral,
 S1-a and the S3 count are three consumers of **one** computation, T3/T4. Nothing in the
