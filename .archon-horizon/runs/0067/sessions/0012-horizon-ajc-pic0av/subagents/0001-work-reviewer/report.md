@@ -1,1 +1,1 @@
-Now the deeper question: is `Pic0Scheme` / `identitySection` sorry-bodied, and does the ≥ half consume `sorryAx`?
+Confirmed: the `[IsLocallyNoetherian X]` binder is redundant. Now checking whether the `PerfectField` binder is needed at a rational point.

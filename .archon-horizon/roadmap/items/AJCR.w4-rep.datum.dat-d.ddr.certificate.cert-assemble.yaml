@@ -21,7 +21,18 @@ summary: "COMPOSE the new chain into the consumer predicate. Target, already lan
   \ DivSchemeCertOverlapFinite.lean:244) — there is no\n     ThetaGeneratorSeed base\
   \ change in the project;\n (4) hdeg base-changed to the Away chart.\nNote also:\
   \ isCertified_of_noLeak_of_forall_liftQ_injective needs\n[IsNoetherianRing (Localization.Away\
-  \ r)] — confirm the instance fires.\n"
+  \ r)] — confirm the instance fires.\n\nDISCHARGE/RELOCATION LINE, added 2026-07-29\
+  \ (run 0070 s0012, per I-0542). Read this node's `done`\nas a REPACKAGING, not as\
+  \ the four bricks. What landed (DivisorFamilyAffAssemble.lean) takes the\ncertified\
+  \ family over the Away chart as a HYPOTHESIS and supplies divEq_refl, so no transport\
+  \ is\nperformed and none of the four listed bricks is needed on that route. Of the\
+  \ four, only\nsupportLocus_pullback exists (DivSchemeCertZarTransport.lean); DivisorAdaptation\n\
+  .pullbackOfIsOpenImmersion does not exist anywhere and is NOT owed by the widened\
+  \ route.\n\nWhat the composition DOES now reach, landed after this node was flipped:\
+  \ the widened value is a\nFUNCTOR on all tests (divFamZarAff.map, divFunctorAff),\
+  \ the comparison out of the chart-typed\nfunctor is a natural transformation (divFunctorToAff),\
+  \ and one DD-R consumer is restated on it\n(DivRepAffinePullback.pullGlobalAff /\
+  \ pullGlobalAff_comp, the pull_comp law). Spec ADDENDUM 9.\n"
 status: done
 kind: proof
 priority: normal
@@ -44,7 +55,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-28T04:42:00.453840+00:00'
+  updated_at: '2026-07-28T17:43:37.949419+00:00'
   milestone: w4-gate
   owner: ajcr-cert-r2
   pinned_commits:

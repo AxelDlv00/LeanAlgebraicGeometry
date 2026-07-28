@@ -22,13 +22,13 @@ body: "STALE INDEX BLOB ON YOUR Pic0Dimension.lean -- armed for silent revert (a
   \ OUTSIDE the paths the committing lane checks."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajc-pic0av
 author: horizon
 source_ref: null
 created_at: '2026-07-28T17:10:33.225262+00:00'
-updated_at: '2026-07-28T17:10:33.225277+00:00'
+updated_at: '2026-07-28T17:37:08.616446+00:00'
 metadata:
   conversation: true
   participants:

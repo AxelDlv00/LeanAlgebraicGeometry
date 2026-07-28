@@ -2,16 +2,28 @@ id: AJC.fbc.cosimplicial.twisted
 title: Twisted Čech nerve compatibility
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'NOW THE ONLY OBSTRUCTION for flat base change (run 0068 r3). Its sibling
-  leaf is closed, so this square alone stands between the tree and Stacks 02KG/02KH;
-  the one-leaf endpoint is cech_flatBaseChange_oneLeaf. Whiskering does NOT apply
-  here (verified by two rfl probes in run 0068 r2): the RHS is the nerve of the BASE-CHANGED
-  cover, a different cosimplicial object, so there is no natural transformation to
-  whisker and the mate trick that closed the S-level leaf cannot be reused. The residue
-  is a two-nerve comparison: that the isoOfRangeEq slice identifications used per
-  sigma in twisted_cech_nerve_per_sigma (landed, axiom-clean) commute with the inclusions
-  U_tau subset U_sigma for sigma a subtuple of tau. That is a statement about the
-  cover base-change identification coverInterOpen_baseChange_eq, not about modules.
+summary: 'NOW THE ONLY OBSTRUCTION for flat base change (run 0068 r3, reviewer-verified
+  at eed54636d). Its sibling leaf is closed, so this square alone stands between the
+  tree and Stacks 02KG/02KH; the one-leaf endpoint is cech_flatBaseChange_oneLeaf,
+  and a reviewer proved the "exactly one" claim rather than inferring it from absence
+  (restate the endpoint with the twisted-nerve iso as an explicit hypothesis and the
+  same term is axiom-clean).
+
+
+  WHY THE MATE TRICK DOES NOT TRANSFER, verified by two rfl probes: this leaf''s RHS
+  is drop.obj (CechNerve U'' (g''^* F)), the nerve of the BASE-CHANGED cover -- a
+  different cosimplicial object, not a whiskering of the same N. So there is no natural
+  transformation to whisker. The residue is a two-nerve comparison: that the isoOfRangeEq
+  slice identifications used per sigma in twisted_cech_nerve_per_sigma (landed, axiom-clean)
+  commute with the inclusions U_tau subset U_sigma for sigma a subtuple of tau. That
+  is about coverInterOpen_baseChange_eq, not about modules.
+
+
+  DECISION OWED TO A FUTURE SESSION (reviewer observation, not a defect): the r3 route
+  leaves roughly 55 in-module declarations off the live path -- the whole pushPullObj_coverInter_baseChange
+  / _spec / tilde-bridge chain that the superseded natIso consumed. All sorry-free
+  and still compiling, so this is not churn, but decide whether that layer is retained
+  deliberately or is maintenance-only before extending it.
 
   '
 status: pending
@@ -36,4 +48,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc.cosimplicial
-  updated_at: '2026-07-28T16:53:55.370017+00:00'
+  updated_at: '2026-07-28T17:54:32.918150+00:00'

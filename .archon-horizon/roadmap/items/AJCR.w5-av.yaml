@@ -3,26 +3,45 @@ title: 'Wave 5: Pic^0 is an abelian variety'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "Wave 5: Pic^0 is an abelian variety of dimension g. 10/16 children done.\n\
-  \nTHE T3/T4/T5 CHAIN NEEDS ONE STATEMENT, down from three (run 0073 r3). The two\
-  \ bookkeeping steps the r2 fresh-context review (I-0573) found absent are now landed\
-  \ and kernel-checked:\n (b) CARRIER TRANSLATION at C_eps -- Tangent/DualNumberCarrier.lean\
-  \ (Gamma(C,W)[eps] ~+* Gamma(C_eps, fst^-1 W), natural in the open) plus Tangent/DualNumberCarrierReduction.lean\
-  \ (the eps|->0 section map IS fst/unitsFst). It split into (b-open)/(b-coeff); the\
-  \ earlier account had covered only the open half.\n (c) REDUCTION SQUARE -- Tangent/TwoChartNaturality.lean,\
-  \ map_twoChartClassHom, for an ARBITRARY morphism of schemes. The two cocycles are\
-  \ EQUAL before any quotient, so nothing cohomological is spent.\n\nRESIDUE IS (iii-c2-aff)\
-  \ ALONE: an eps-kernel Picard class is trivial on each THICKENED chart. Further\
-  \ reduced this run -- Tangent/DualNumberChartPic.lean lands the Pic-level algebra\
-  \ core and the coefficient-transport step, so what remains is EXACTLY the generator\
-  \ (given L trivial on C, produce m and its cyclicity mod (eps)), carried as an explicit\
-  \ hypothesis rather than a sorry.\n\nEverything in the comparison is sorry-free\
-  \ and scheme-general with no dual numbers and no IsAffine where it can be, so AJC\
-  \ can import rather than re-derive: Tangent/TwoChartCechPic.lean, TwoChartNormalize.lean,\
-  \ TwoChartRepresentable.lean, TwoChartNaturality.lean. Posted to the cross-project\
-  \ thread for ajc-pic0av.\n\nS1 stays a HYPOTHESIS by design (S2/S3 take GeometricallyReduced\
-  \ as an instance argument, so it blocks nothing); its residue is the transcendental-extension\
-  \ statement, genuinely absent from mathlib. P1 remains the only CROSS-WAVE gate,\
-  \ held by the DD shapes freeze on ajcr-divrep.\n"
+  \nSTATE AFTER RUN 0073 r4. The interface layer is complete and the T3/T4/T5 chain\
+  \ now needs TWO named statements, both isolated and neither vague. Run 0073 r4 closed\
+  \ two of the three intertwining items a fresh-context reviewer had found (I-0630)\
+  \ -- the gaps a predecessor session had priced at zero:\n\n ITEM (1) THE QUOTIENT-LEVEL\
+  \ REDUCTION SQUARE -- Tangent/TwoChartQuotientNaturality.lean, sorry-free. The hom-level\
+  \ square of r3 sat one level BELOW its consumer: the T2 engine's unitsReduction\
+  \ is a map between Cech H1 QUOTIENTS. The missing piece was one containment (pullback\
+  \ carries two-chart Cech coboundaries to coboundaries), provable from unitsAppLE\
+  \ functoriality alone -- nothing cohomological. map_twoChartClass now carries hsel\
+  \ at BOTH ends, as the reviewer required, and map_twoChartClass_eq_one_iff gives\
+  \ the kernel form via twoChartClass_injective.\n\n ITEM (2) THE TWO CECH H1 CARRIERS\
+  \ AGREE AS QUOTIENTS -- Tangent/DualNumberCarrierCoboundary.lean, sorry-free. dualNumberSectionsUnits\
+  \ carries the thickened coboundary subgroup ONTO the base one (an EQUALITY: a containment\
+  \ would let the map descend without identifying the quotients, leaving exactly the\
+  \ I-0571 gap). dualNumberCechH1Equiv is the QuotientGroup.congr a consumer calls,\
+  \ and because it is built FROM the subgroup equality a KERNEL may be transported\
+  \ across it.\n\n ITEM (3a) -- Tangent/TwoChartSelector.lean: the Bool-indexed family\
+  \ and selector of a Scheme.AffineTwoCover, with the side condition MEASURED not\
+  \ flagged: Surjective sel <-> V0 != bot AND V0 != top, i.e. \"the cover is honestly\
+  \ two-chart\". Both hold for the curve; neither is free.\n\nWHAT WAVE 5 STILL OWES,\
+  \ two statements:\n (i) (3c) AN OBJECT TRANSPORT. overSpec k k and the monoidal\
+  \ unit Over.mk (id) are equal objects that are NOT definitionally equal, because\
+  \ Spec.map is functorial only propositionally (Spec.map_id is a theorem). So relCurveMap\
+  \ C k[eps] k and (C whisker overDualNumberZero).left have DIFFERENT TYPES, and (b-coeff)\
+  \ is not yet the coefficient half of the square. Needs eqToHom along Spec.map_id\
+  \ plus a whiskering congruence. RETRACTS this lane's own r4 claim that (3c) was\
+  \ free -- kernel-caught, worksheet 6.23.\n (ii) (iii-c2-aff-geo): \"L trivial along\
+  \ eps -> 0\" ==> the chart reduction M/(eps)M is cyclic. Carried as the hcyc BINDER\
+  \ in Tangent/DualNumberChartPic.lean, so INVISIBLE to a sorry census, and open in\
+  \ the AJC sibling too (confirmed by ajc-pic0av) -- neither project should assume\
+  \ the other holds it.\n\nT5's spine is landed and unconditional except for one hypothesis\
+  \ hdim, which is a SEMILINEAR comparison (AddEquiv + intertwining), not a bare kernel\
+  \ bijection: finrank does not transport along a bijection of sets.\n\nS1 stays a\
+  \ HYPOTHESIS by design (S2/S3 take GeometricallyReduced as an instance argument,\
+  \ so it blocks nothing); its residue is the transcendental-extension statement,\
+  \ genuinely absent from mathlib. P1 remains the only CROSS-WAVE gate, held by the\
+  \ DD shapes freeze on ajcr-divrep, and is untouched.\n\nEverything in the comparison\
+  \ is sorry-free and scheme-general where it can be, so AJC can import rather than\
+  \ re-derive; both r4 modules were posted to the cross-project thread.\n"
 status: pending
 kind: proof
 priority: normal
@@ -36,4 +55,4 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:12.423543+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-28T11:49:41.184339+00:00'
+  updated_at: '2026-07-28T17:36:00.143198+00:00'

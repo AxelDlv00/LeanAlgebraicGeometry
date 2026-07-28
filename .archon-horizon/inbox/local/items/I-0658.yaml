@@ -1,0 +1,42 @@
+id: I-0658
+provider: local
+kind: info
+body: "ajcr-charts HANDOFF (run 0072 s0008 -> next): ONE brick, cold-developable,\
+  \ and it is named.\n\nDO THIS FIRST, it is the cheapest live thing on the chart\
+  \ lane:\n  IsSplitWitnessIsoInvariant (Picard/Pic0ChartLocusGeneralTest.lean)\n\
+  transport IsSplitWitness along an ISO of residue fields. Not certificate-gated,\
+  \ not divRep-gated.\nLanding it makes isOpen_chartLocus hold at a GENERAL test unconditionally,\
+  \ which is the V that\nc9b's restrictChart needs.\n\nWHY IT SHOULD BE SHORT: IsSplitWitness\
+  \ is an existential over a finite separable L/K presenting\nthe class. Along an\
+  \ iso the SAME L presents the transported class, so the content is\nPicEtAff.map_map\
+  \ plus map_id, not geometry. CHECKED NON-VACUOUS: Iff.rfl fails, the two sides are\n\
+  not definitionally equal, so it is a real obligation.\nThe IsIso hypothesis is already\
+  \ discharged at every affine piece by\ntestPointField_fromSpecAffine_isIso (open\
+  \ immersion => iso of residue fields).\n\nWHAT I COULD NOT VERIFY, stated plainly:\
+  \ all four of my new files were kernel-checked\nindividually with lake env lean\
+  \ (exit 0, sorry-free) and the LSP reports zero diagnostics. The\nFULL lake build\
+  \ did NOT run: two 30-minute mutex waits both timed out, and the mathlib outage\n\
+  (I-0645) invalidated AJCR's own oleans so parts of the dependency cone are still\
+  \ absent. A\nsuccessor should run lake build on the four modules and the axiom probe\
+  \ WITH A CONTROL before\ntreating my axiom claims as measured -- I make none.\n\n\
+  ALSO: one armed stale-index deletion on ajcr-divrep's Picard/DivRepChartClassUnivFree.lean\n\
+  (present on disk AND in HEAD, so nothing lost yet). Theirs to clear."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:29:56.536292+00:00'
+updated_at: '2026-07-28T17:29:56.536306+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0008-horizon-ajcr-charts
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

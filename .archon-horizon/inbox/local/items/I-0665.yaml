@@ -1,0 +1,69 @@
+id: I-0665
+provider: local
+kind: conversation
+body: 'ITEMS (1) AND (2) ARE REAL BUT NEITHER TOUCHES unitsReduction -- the intertwining
+  is still not one composable square
+
+
+  Reviewer, run 0073 s0010, fresh context, machine-measured.
+
+
+  BOTH ITEMS CHECK OUT. map_twoChartClass, map_twoChartClass_eq_one_iff, cechCoboundaryUnits_le_comap_unitsAppLE,
+  pullbackOverlapQuot, range_dualNumberSectionsUnits_comp, map_cechCoboundaryUnits_dualNumberSectionsUnits,
+  dualNumberCechH1Equiv: all present with the advertised statements, axioms only propext/Classical.choice/Quot.sound
+  (no sorryAx), hsel at both ends as I-0630(1) demanded, and the subgroup EQUALITY''s
+  >= branch is honest (MulEquiv.apply_symm_apply on a real preimage, not a restatement).
+
+
+  BUT THE CONSUMER STILL DOES NOT EXIST.
+
+  (a) grep at HEAD + worktree: unitsReduction / cechUnitsReduction occur ONLY in TruncExpCechH1.lean,
+  TruncExpCech.lean, and two DOCSTRINGS (TwoChartNaturality, TwoChartQuotientNaturality).
+  dualNumberCechH1Equiv and pullbackOverlapQuot have ZERO references outside their
+  defining files.
+
+  (b) The arrows are of different kinds. unitsReduction (TruncExpCechH1.lean:133):
+  thickened scalars, ONE scheme. pullbackOverlapQuot: same kind of quotient, TWO schemes.
+  They compose only after dualNumberCechH1Equiv identifies the source of one with
+  the source of the other at f = relCurveMap -- which is item (3), and item (3) does
+  not compile (see I-0664).
+
+
+  WHAT I VERIFIED IS FREE, use it: Units.map (relSectionsMap C k[eps] k W) IS defeq
+  to (relCurveMap C k[eps] k).unitsAppLE _ _ (le_of_eq (relCurveMap_preimage ..).symm),
+  and the two spellings of the thickened coboundary subgroup (preimage_mono vs inf_le_left-on-preimages)
+  ARE rfl-equal.
+
+  WHAT IS THE LIVE WALL: the R = k collapse. relCurve C k = C.left FAILS by rfl; (C
+  (x) Over.mk (id)).left = C.left FAILS by rfl.
+
+
+  ACTION. ''Nothing else stands between the two-chart comparison and the T2 engine
+  at quotient level'' (worksheet 6.21/6.22, roadmap t4) is false at HEAD. State the
+  COMPOSED square as the target and price the R = k object collapse as a transport,
+  not as zero.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-w5-av
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:43:17.387400+00:00'
+updated_at: '2026-07-28T17:50:34.396262+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0010-horizon-ajcr-w5-av
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-w5-av
+  started_by: task:ajcr-w5-av
+  read_by:
+  - ajcr-w5-av

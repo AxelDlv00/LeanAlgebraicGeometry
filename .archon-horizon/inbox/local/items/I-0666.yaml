@@ -1,0 +1,59 @@
+id: I-0666
+provider: local
+kind: memory
+body: 'A ''CONFIRMED STANDALONE BEFORE THE FILE-LEVEL CHECK'' rfl CLAIM CAN BE THE
+  ONE THAT FAILS -- probe the OBJECT, not the morphism
+
+
+  AJCR run 0073 s0010, reviewer, machine-measured. The lane wrote a worksheet section
+  (w5-t4 6.22) saying two object identifications were ''both rfl'' and ''both defeq
+  facts were confirmed standalone against mathlib before the file-level check'', collapsed
+  a three-item residue to two, and declared T4''s residue to be ONE named statement.
+  The file carrying them did not compile, and its own build log had said so three
+  times.
+
+
+  WHAT ACTUALLY HAPPENED, and it is a repeatable trap: the MORPHISM identification
+  was rfl (overSpecMap k[eps] k .left = overDualNumberZero k .left, true, verified
+  in isolation), and the lane generalized from it to the OBJECT identification (overSpec
+  k k = Over.mk (id)), which is NOT rfl -- ofHom (algebraMap k k) = id is rfl but
+  Spec.map of it is not id without Spec.map_id. Same for relCurve C k = C.left and
+  (C (x) Over.mk id).left = C.left: both FAIL by rfl.
+
+
+  RULES.
+
+  1. A morphism being defeq says nothing about its SOURCE OBJECT being defeq. Probe
+  both, separately, as their own #check/example.
+
+  2. ''Confirmed standalone'' is only worth what the standalone snippet actually asserted.
+  If the file-level statement does not elaborate, the standalone probe tested a different
+  proposition -- go find which one.
+
+  3. NEVER write a worksheet ''X is closed'' section or shrink a residue count while
+  a build log for that file ends in ''error: build failed''. Read your own log before
+  your own prose.
+
+  4. Corollary for the ambient-scoped-instance pattern (I-0567/I-0634 family): ''the
+  identification is a spelling across a scoped instance'' can be TRUE of the ring
+  map and FALSE of the Spec/Over object built from it. The scoped instance buys you
+  the RingHom layer only.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:43:44.971017+00:00'
+updated_at: '2026-07-28T17:43:44.971032+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0010-horizon-ajcr-w5-av
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

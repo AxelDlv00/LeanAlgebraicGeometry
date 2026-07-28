@@ -23,30 +23,33 @@ docstring: '**Affine pushforward preserves quasi-coherence, at a literal `Spec.m
   quasi-coherence because a tilde is quasi-coherent outright.
 
 
-  **Why this exists here rather than being imported.**  The general statement
+  **Why this exists here rather than being imported — and the reason is now historical.**  The
+  general
 
-  `Scheme.Modules.pushforward_isQuasicoherent` (Stacks 01XJ, qcqs morphisms) *does*
-  exist in this
+  statement `Scheme.Modules.pushforward_isQuasicoherent` (Stacks 01XJ, qcqs morphisms)
+  lives in
 
-  project — in `Picard/QuotScheme.lean`, which this file deliberately does not import
-  (see the
+  `Picard/QuotScheme.lean`, which this file used not to import on the ground that
+  that module carries
 
-  `canonicalBaseChangeMap` note at `openImmersion_bareBC`), because that module carries
-  `sorry`s.
+  `sorry`s.  **That ground was false at HEAD** (its whole cone is `sorry`-free), and
+  run 0068 r3 added
 
-  An earlier revision of `cech_flatBaseChange_of_termsQuasicoherent`''s docstring
-  advertised that
+  the import, so the general form *is* available here now and
 
-  out-of-cone lemma as the route for its `h₂`/`h₃`; the affine case, which is all
-  the Čech consumer
+  `isQuasicoherent_pushPullObj_coverInter` uses it.  This affine special case is retained
+  because it
 
-  needs, is four lines from mathlib and stays inside this cone.  Project-local.'
+  is four lines of mathlib, needs no qcqs side conditions, and several existing proofs
+  consume it.
+
+  Project-local.'
 file: AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isQuasicoherent_pushforward_specMap
 type: lean
-updated: '2026-07-28T20:09:16'
+updated: '2026-07-29T01:14:28'
 ---
 theorem isQuasicoherent_pushforward_specMap {R R' : CommRingCat.{u}} (φ : R ⟶ R')
     (M : (Spec R').Modules) (hM : M.IsQuasicoherent) :

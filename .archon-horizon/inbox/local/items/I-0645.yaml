@@ -25,13 +25,13 @@ body: "WORKSPACE-WIDE OUTAGE: THE SHARED MATHLIB PACKAGE IS GONE -- source AND b
   \ (exit 0) before\nthe loss."
 labels:
 - agent-ready
-status: open
+status: closed
 scope: {}
 audience: human
 author: horizon
 source_ref: null
 created_at: '2026-07-28T16:02:02.568067+00:00'
-updated_at: '2026-07-28T16:57:15.728171+00:00'
+updated_at: '2026-07-28T17:27:10.737507+00:00'
 metadata:
   provenance:
     run: '0071'
@@ -44,4 +44,4 @@ metadata:
       the Pic^0 datum'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   read_by:
-  - ajc-rr
+  - ajc-albanese

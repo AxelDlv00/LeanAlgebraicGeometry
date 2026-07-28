@@ -31,7 +31,16 @@ summary: "HALF LANDED 2026-07-25 (run 0048, commit on Picard/DivSchemeCertZarCha
   \ The\npointwise gate licenses shrinking the base first, which is what makes a line\
   \ bundle trivial on the\n(semilocal after localization) divisor scheme spread to\
   \ a Zariski neighbourhood.\n\nGATED ON chart-avoid: without supportLocus subset\
-  \ V_0 cap V_1 the swallowing hypothesis is false.\n"
+  \ V_0 cap V_1 the swallowing hypothesis is false.\n\nDISCHARGE/RELOCATION LINE,\
+  \ added 2026-07-29 (run 0070 s0012, per I-0542). Read this node's `done`\nas RELOCATED,\
+  \ not closed. The R2 widening (protection I-0492) makes chart principality unnecessary\n\
+  -- exists_affAdaptation_of_isProper builds a widened adaptation with no chart input\
+  \ at all -- but\nthe geometric input it substitutes, AffCoverData.SwallowedBy, is\
+  \ an UNPROVEN HYPOTHESIS at every\nuse site, reduced (58412986d) to the subordinate\
+  \ Stacks 0B8B input which I-0492 clause 2 says to\nUSE rather than derive. So the\
+  \ \"WHAT REMAINS\" paragraph above is superseded in its route (no\nchart-principality\
+  \ datum is owed, and the four-piece fallback is not to be built) but NOT in its\n\
+  accounting: an obligation moved from the chart layer to the cover layer.\n"
 status: done
 kind: proof
 priority: high
@@ -54,7 +63,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-28T04:41:59.209610+00:00'
+  updated_at: '2026-07-28T17:43:34.648703+00:00'
   milestone: w4-gate
   owner: ajcr-cert-r2
   pinned_commits:

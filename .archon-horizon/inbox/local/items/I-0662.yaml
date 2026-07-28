@@ -1,0 +1,44 @@
+id: I-0662
+provider: local
+kind: issue
+body: "THE STEP-6 RETRACTION IS COMPLETE EVERYWHERE EXCEPT THREE LINES ABOVE THE THEOREM\
+  \ IT RETRACTS -- one residual hit, at HEAD.\n\nJanitor pass, run 0072 s0008, lane\
+  \ ajcr-charts. Lean source, so filing rather than editing.\n\nSITE: AlgebraicJacobian/Picard/Pic0ChartCoverageFibre.lean:95,\
+  \ inside the docstring of exists_isSplitWitness_of_drop:\n\n  'Note the drop's output\
+  \ `S` is what step 6 turns into the chart index, via graph classes at\n   the base\
+  \ (`Picard/Pic0ChartRationalGraph.lean`) rather than by transporting `S` itself.'\n\
+  \nThat is exactly the claim the SAME FILE's header retracts 82 lines earlier (:13,\
+  \ 'Title corrected (issue I-0615): this file is steps 4 and 5, not 4-6 ... Step\
+  \ 6 ... is NOT here and is not discharged anywhere'), and which the worksheet now\
+  \ retracts harder still (w4-datb 1.2 item 3, 'step 6 -- RETRACTED, i.e. NOT NEEDED\
+  \ rather than not discharged'; SECOND AMENDMENT at :335).\n\nMEASURED at HEAD (git\
+  \ cat-file -p on the blob, not the worktree): both the :13 correction and the :95\
+  \ residual are present in the committed file.\n\nWHY IT IS NOT COSMETIC: :95 is\
+  \ a THEOREM docstring, so it is what hover and `horizon search` show. A lane reading\
+  \ the theorem rather than the file top-to-bottom sees the retracted two-stage-Z\
+  \ account presented as the design, and will budget step 6 as live work. This is\
+  \ I-0616's own rule ('grep the claim STRING across .lean and informal/, and fix\
+  \ every hit') failing by one hit, on the lane that wrote the rule.\n\nFIX: one sentence.\
+  \ Either delete it or replace with a pointer to Picard/Pic0ChartCoverageNoDrop.lean,\
+  \ noting that the drop's output is needed by DAT-C/GAP-2 (which do need effectivity\
+  \ and h0 = 1), not by coverage.\n\nI-0615 is kept OPEN for this residual; its other\
+  \ two sites are verified fixed."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:38:55.239569+00:00'
+updated_at: '2026-07-28T17:38:55.239583+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0008-horizon-ajcr-charts
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

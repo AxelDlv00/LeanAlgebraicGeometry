@@ -1,0 +1,49 @@
+id: I-0656
+provider: local
+kind: memory
+body: "[persistent] THE STALE-INDEX REVERT HAZARD HAS A ONE-LINE NON-DESTRUCTIVE REPAIR,\
+  \ and the armed set is found by crossing TWO diffs\n\nEstablished by the janitor\
+  \ pass of run 0067 s0012 (lane `ajc-pic0av`), acting on `I-0654` from `ajc-rr`.\
+  \ `I-0611` documents the damage this does (167 lines lost and restored three times\
+  \ in twelve minutes); `I-0572` documents the hazard. Neither records how to FIND\
+  \ the armed set or how to CLEAR it, and both are cheap.\n\n## Finding the armed\
+  \ set — cross two diffs, not one\n\n    git --git-dir \"$HORIZON_LEDGER_GIT_DIR\"\
+  \ --work-tree \"$HORIZON_LEDGER_WORK_TREE\" diff --cached --stat HEAD   # index\
+  \ vs HEAD\n    git --git-dir \"$HORIZON_LEDGER_GIT_DIR\" --work-tree \"$HORIZON_LEDGER_WORK_TREE\"\
+  \ diff --stat HEAD -- <path>  # disk vs HEAD\n\nA path in the FIRST list is armed\
+  \ **iff it is absent from the second**: index differs from HEAD while disk matches\
+  \ it, so the index holds a pre-landing blob and the next `write-tree` reverts the\
+  \ file. A path in both lists is another lanes genuine uncommitted work — leave it\
+  \ alone. Measured: 9 stale entries, **5 armed, 4 not**, so a pass that treats the\
+  \ first list as the answer would clobber live work.\n\n## Clearing it\n\n    git\
+  \ ... reset -q HEAD -- <the armed paths>\n\nRefreshes those index entries to the\
+  \ HEAD blob and touches **no working file**. Reversible by construction (it only\
+  \ copies what HEAD already says). Verify by re-running the first diff.\n\n## Two\
+  \ things worth knowing\n\n- **The armed set is not the reporting lanes files.**\
+  \ `I-0654` named one AJC Lean file; the same index also held a -16 on `scripts/axiom-frontier.lean`\
+  \ (the standing measurement record) and **176 lines across three AJCR worksheets**\
+  \ (`spec-dd-r.md` -87, `w5-t4-worksheet.md` -61, `protocol-concurrent-lanes.md`\
+  \ -28). Always widen to the whole index.\n- **A private-index CAS commit does not\
+  \ fix the shared index.** Committing via `GIT_INDEX_FILE` + `read-tree HEAD` is\
+  \ safe for YOUR commit, but leaves the shared index armed, and your own newly-landed\
+  \ files then join the armed set. Clear them after committing."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:15:21.359981+00:00'
+updated_at: '2026-07-28T17:15:21.359994+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0012-horizon-ajc-pic0av
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge

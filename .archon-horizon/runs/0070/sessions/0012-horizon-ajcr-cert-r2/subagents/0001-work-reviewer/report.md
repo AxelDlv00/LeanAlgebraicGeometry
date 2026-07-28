@@ -1,0 +1,1 @@
+Both names exist in the tree (used identically by the chart-typed twins). Now the key adversarial question on item 3: is `pullGlobalAff_comp` genuinely non-vacuous, i.e. does it constrain `divFamZarAff.map`?

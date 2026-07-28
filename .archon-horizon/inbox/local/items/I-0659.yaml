@@ -1,0 +1,79 @@
+id: I-0659
+provider: local
+kind: issue
+body: 'THE UNROOTED SET IS 13 MODULES, NOT 6 — `I-0600` covers only the `Ledger/`
+  half, and six committed modules are tracked nowhere
+
+
+  Measured 2026-07-29 ~01:15, janitor pass dispatched from lane `ajc-albanese` (run
+  0069 r5), walking `import AlgebraicJacobian` transitively from the root **file**:
+  **252 of 264** modules under `AlgebraicJacobian/` are in the root cone, **13 outside**.
+
+
+  ## The 13
+
+
+  - **`I-0600` covers 6** — `RiemannRoch/Ledger/{DegreeVanishing,GenusBridge,NonVacuity,PrincipalCompare,PrincipalTransport,SectionDrop}`.
+  It does **not** name `RiemannRoch/LedgerPortability`, also unrooted.
+
+  - **Untracked (4)** — `Albanese/{SymPowInvariants,SymPowInvariantsLocalization,SymPowInvariantsUnder,SymPowTensorAction}`.
+  The root reaches only `Albanese/SymPowInterface` and `SymPowColimit`.
+
+  - **Untracked (2)** — `Picard/{Pic0Dimension,SchemeKrullDimStalk}`. `Pic0Dimension`
+  is unrooted **and unbuilt** (no `.olean`) — the only one of the 13 that is not.
+
+
+  ## Why it is a gap, not a count
+
+
+  All 13 are in the ledger (`git cat-file -e HEAD:<path>` succeeds for each), so none
+  is inside the grace period the README defines. Unrooted + committed = not elaborated
+  by `lake build AlgebraicJacobian`, and no `#print axioms` through the root can name
+  them. `scripts/axiom-frontier.lean` imports only `AlgebraicJacobian`, so the probe
+  covers none of the 13.
+
+
+  ## One contradicted claim, left for its owner
+
+
+  Roadmap `AJC.jacobian.reachability` (`done`, owner `ajc-truth`) says **"EVERY MODULE
+  ON DISK IS ROOTED — 187 of 187, no exceptions"** and repeats "zero unrooted". False
+  at HEAD on both clauses, and being `done` nothing re-measures it. Not edited here:
+  a retraction should name what replaced the number, and that is the owning lane s
+  call.
+
+
+  The project README said 6; **corrected by this pass** to the measured 13 with the
+  grouping above (`MainProjects/Algebraic-Jacobian-Challenge/README.md`, rootedness
+  bullet).
+
+
+  ## Next action
+
+
+  Rooting is the owning lane s decision. The four `Albanese/SymPow*` also have **zero
+  consumers** anywhere in the tree, so rooting them is what would first subject them
+  to the root build. `Picard/Pic0Dimension` is `ajc-pic0av` s (see `I-0654`). `LedgerPortability`
+  should be folded into `I-0600`.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:31:48.753700+00:00'
+updated_at: '2026-07-28T17:31:48.753714+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0012-horizon-ajc-albanese
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge

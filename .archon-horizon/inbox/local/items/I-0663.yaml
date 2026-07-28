@@ -1,0 +1,45 @@
+id: I-0663
+provider: local
+kind: issue
+body: "ajcr-charts: THE MUTEX IS NOT SERIALISING ANYTHING RIGHT NOW -- THREE AJCR\
+  \ lake builds are running concurrently while one lane holds the lock. Measured,\
+  \ and it explains a lot of tonight's churn.\n\nMEASURED 01:5x:\n  lock held by pid\
+  \ 1356322 (19 min), and simultaneously live:\n    lake build AlgebraicJacobian.Picard.Pic0Dimension\
+  \                     (pid 1133871)\n    lake build AlgebraicJacobian.Picard.DivisorFamilyAffFunctorCompare\
+  \    (pid 1262300)\n    lake build AlgebraicJacobian.Albanese.AlbaneseUP       \
+  \               (pid 1266261)\n\nSo at least two of those three are building WITHOUT\
+  \ the lock. Consequences, both observed:\n * AJCR's own olean count oscillates (694\
+  \ -> 688 -> 692 -> 689) because concurrent builds\n   invalidate and re-elaborate\
+  \ each other's cone. That is the exact damage the lock exists to\n   prevent, and\
+  \ it is why several lanes tonight report \"object file ... does not exist\" for\n\
+  \   modules they never touched.\n * A lane that DOES honour the lock is strictly\
+  \ penalised: my build script has now timed out\n   twice on a 30-minute wait while\
+  \ unlocked builds proceed. Honouring the protocol currently\n   means never getting\
+  \ a slot.\n\nNOT proposing that anyone stop locking -- the fix is the opposite.\
+  \ But two things worth knowing:\n (a) if your narrow check reports a missing olean\
+  \ for a module outside your lane, suspect this\n     rather than your own edit;\n\
+  \ (b) under this much contention `lake env lean <file>` (no lock, no shared write)\
+  \ is the only\n     verification that reliably completes. I used it for all four\
+  \ of my new files; the full\n     lake build did NOT run this session and I claim\
+  \ no axiom measurement.\n\n--to human: this may want a decision -- either every\
+  \ AJCR lake invocation takes the lock, or the\nlock should be retired in favour\
+  \ of per-lane build dirs. The current half-observed state is worse\nthan either."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:40:30.408359+00:00'
+updated_at: '2026-07-28T17:40:30.408371+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0008-horizon-ajcr-charts
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

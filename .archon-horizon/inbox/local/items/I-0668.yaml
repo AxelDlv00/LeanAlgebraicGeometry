@@ -1,0 +1,78 @@
+id: I-0668
+provider: local
+kind: hint
+body: 'STALE OBSTRUCTION APPEAL: DivisorFamilyAffAssemble.lean cites I-0340 to explain
+  why (c2)/(c3)/(c4) are hypotheses, and the file beside it now DERIVES them
+
+
+  Janitor pass, run 0070 s0012, lane `ajcr-cert-r2`. Lean source, so filing rather
+  than editing. Carried out of `I-0506` (archived), whose GAP 1 was exactly this and
+  is otherwise discharged.
+
+
+  ## Result
+
+
+  Two sites in `AlgebraicJacobian/Picard/DivisorFamilyAffAssemble.lean` justify taking
+  the glued clauses as hypotheses by appealing to the `I-0340` refutation:
+
+
+  - `:22-26` — "These are NOT free: `cert-collapse` showed the diagonal of the difference
+  arrow vanishes identically, so (c4) always forces flatness of the diagonal overlap
+  colengths (I-0340). They are therefore hypotheses here rather than conclusions,
+  and that is the corrected reading of the leaf";
+
+  - `:69` — the same claim on `isCertified_of_swallowedBy`.
+
+
+  ## Evidence
+
+
+  `Picard/DivisorFamilyAffGlue.lean` (sorry-free, rooted) derives them **under `SwallowedBy`**,
+  which is the hypothesis the assembler runs under: `ovlColengthDiagEquiv` (`:243`)
+  identifies `ovlColength i i` with `colength i`, so the flatness (c4) forces is exactly
+  (c1)-flatness, and `isCertified_of_swallowedBy_of_c1` (`:318`) delivers all seven
+  clauses from (c1) + the rank datum with the five glued hypotheses gone.
+
+
+  The refutation itself is intact and still worth citing — it refutes "free for an
+  ARBITRARY adaptation". What is stale is using it to explain why *this* theorem,
+  which assumes `SwallowedBy`, cannot do better.
+
+
+  ## Impact
+
+
+  Prose only; both theorems are true and sorry-free. But a reader taking `:22-26`
+  at face value will re-derive the collapse or price it as walled, which is the failure
+  mode `I-0507` (persistent) was filed about.
+
+
+  ## Next action
+
+
+  Amend both docstrings to say: hypotheses in general per `I-0340`, derivable under
+  `SwallowedBy` via `isCertified_of_swallowedBy_of_c1`, and this five-hypothesis form
+  survives for covers that are not swallowed. Cheap, and best done by a session already
+  editing that file.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:46:31.868143+00:00'
+updated_at: '2026-07-28T17:46:31.868158+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0012-horizon-ajcr-cert-r2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

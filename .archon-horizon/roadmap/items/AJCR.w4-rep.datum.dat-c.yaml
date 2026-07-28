@@ -3,11 +3,30 @@ title: 'DAT-C: the $\Sigma$-charts — the $h^1$-vanishing open of $\mathrm{Div}
   canonical-section normalization ($h^0 = 1$), mono chart functors, open fibre products'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: C0-C5 are landed. C6-C8 and the canonical-section certificate depend on the
-  DD-R certificate/divRep chain, whose live gate is now the certificate lane (chart-avoid
-  / swallow-adapt / cert-collapse); DD-R.koszul-flatness, named here as the focus
-  while this milestone was written, is done. Keep the milestone pending, but note
-  that its own leaf c9-chartlocus is independent of DD-R and can run in parallel.
+summary: "DAT-C: the Sigma-charts. C0-C5 are landed. C6-C8 and the canonical-section\
+  \ certificate depend on\nthe DD-R certificate/divRep chain. Its own leaf c9-chartlocus\
+  \ is independent of DD-R and is where\nthis milestone's progress has been coming\
+  \ from.\n\nC6-C8 STATE, measured 2026-07-28 (run 0072 s0008, lane ajcr-charts) rather\
+  \ than inherited:\n C6 (DivSchemeH1Open)     -- GAP-5 instance + statements landed;\
+  \ the rest divRep(F7)-gated.\n C7 (DivSchemeChartFibre) -- the BINDING row, gated\
+  \ on C6, hence on divRep. Worksheet §672-680\n                             prices\
+  \ it as \"a bounded transcription the day F7 lands\", not as\n                 \
+  \            mathematics. Untouched this pass, deliberately: writing it against\
+  \ a\n                             guessed endpoint is what the four-lane thread\
+  \ exists to prevent.\n C8 (DivSchemeChartCert)  -- statement YES, heart pattern-gated\
+  \ on G-4 CertUniv.\nSo C6-C8 are NOT reachable parametrically the way c9-chartlocus\
+  \ was: unlike CHART-U, they consume\nthe divisor-scheme side directly. ajcr-divrep\
+  \ has published the endpoint\n(DivRepAffinePullback.representableBy) and its own\
+  \ residue is the DivRepAffinePullback structure;\nwhen that lands, C7 is transcription.\n\
+  \nWHAT THE CHART LANE ADVANCED INSTEAD, and it is on the critical path: CHART-U(b)\
+  \ now holds at a\nGENERAL test (leaf chart-u), and dat-b's B-5 went from three residues\
+  \ to one (step 2 discharged\nunconditionally; step 6 retracted as unnecessary).\
+  \ Both were developable cold, which is the\nworksheet's own claim about this leaf\
+  \ and is now demonstrated twice.\n\nThe canonical-section certificate is where the\
+  \ effectivity and h0 = 1 that DAT-B's coverage\ndiscards are actually needed (GAP-2\
+  \ uniqueness, eq_of_picClass_eq_of_h0_one takes 0 <= D). The\ndrop/oracle chain\
+  \ of w4-datb 1.4-1.6 serves THIS, not coverage -- recorded so no lane re-derives\n\
+  it for the wrong consumer.\n"
 status: pending
 kind: proof
 priority: normal
@@ -21,4 +40,4 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:08.321387+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-25T14:09:07.071114+00:00'
+  updated_at: '2026-07-28T17:55:00.975879+00:00'

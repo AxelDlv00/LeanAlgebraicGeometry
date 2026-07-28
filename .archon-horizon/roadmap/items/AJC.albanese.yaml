@@ -2,29 +2,37 @@ id: AJC.albanese
 title: Albanese and abelian-variety leg
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Albanese and abelian-variety leg.
-
-
-  The characteristic-free symmetric-power route is specified cleanly in the blueprint,
-  and the CODIMENSION-ONE EXTENSION LEG IS CLOSED as of run 0069: Milne Lemma 3.3
-  is proved, Milne Theorem 3.2 (extend_to_av) is unconditional and axiom-clean, and
-  the whole RigidityLemma.lean chain is sorry-free and axiom-clean.
-
-
-  Lean still needs the Abel-Jacobi and symmetric-power constructions, the birational
-  comparison, the rational-map descent, and the connector -- the six sorries of Albanese/AlbaneseUP.lean.
-
-
-  THE HEADLINE IS NOT SORRY-FREE. albanese_universal_property is honest ASSEMBLY from
-  descentThroughBirationalSigma and albanese_eq_iff_symmetricPower_eq, but measured
-  (run 0069) #print axioms reports [propext, sorryAx, Classical.choice, Quot.sound).
-  It inherits sorryAx from all six open AlbaneseUP declarations, decisively from abelJacobi
-  -- a sorry-BODIED DEFINITION, so the equation phi = abelJacobi C P0 >> psi does
-  not yet say what it is meant to say. It must not be reported as a landed theorem.
-  (An earlier version of this summary said the headline was already sorry-free; that
-  was wrong.)
-
-  '
+summary: "Albanese and abelian-variety leg. Three of five children done (.ab, .codim1,\
+  \ .rationalmaps);\n.symmetric and .universal remain, and BOTH are blocked on the\
+  \ same single object.\n\nSTATE AT RUN 0069 r5, measured not estimated:\n * Milne\
+  \ III.6.1 (the Albanese universal property) is PROVED over the symmetric power taken\n\
+  \   as an interface -- Albanese/AlbaneseFromData.lean, sorry-free, both directions.\n\
+  \ * Milne Lemma 3.3 (pure codim-1 indeterminacy into a group variety) is PROVED,\
+  \ and with it\n   Thm 3.2's rational-map extension is unconditional. CodimOneExtension.lean\
+  \ and\n   RigidityLemma.lean are at ZERO sorries -- any brief or note citing sorries\
+  \ there is\n   quoting docstring prose.\n * ALL SIX remaining sorries in the leg\
+  \ are in Albanese/AlbaneseUP.lean, and every one is\n   stated against SymmetricPower,\
+  \ a sorry-BODIED definition. They are undischargeable as\n   stated, not merely\
+  \ unproved: an equation between morphisms out of a junk term carries no\n   information.\
+  \ albanese_universal_property reports sorryAx and must not be called landed.\n\n\
+  THE ONE MISSING OBJECT is Sym^g C for the proper curve, equivalently the instance\n\
+  HasColimit (permDiagram C g) in Over (Spec kbar) -- proved EQUIVALENT to the datum\
+  \ the\nAlbanese theorems consume (SymPowColimit.hasColimit_permDiagram_iff), so\
+  \ the reduction is\nlossless. Over.forget creates colimits, so no over-category\
+  \ bookkeeping is needed: it is a\nstatement about Scheme.\n\nTHE AFFINE HALF IS\
+  \ NOW DONE, with its carrier named and over the base: SymPowTensorAction\n.lean\
+  \ (the S_n-action on the n-fold tensor power of a RING -- mathlib had permutation\
+  \ only as\na linear equiv, so Milne's carrier was not even STATEABLE) and SymPowInvariantsUnder.lean\n\
+  (the invariants ARE the limit in Under k, dually a colimit in (Under k)^op).\n\n\
+  WHAT REMAINS IS THE GLUING, and it is now three named inputs rather than an unsized\n\
+  subproject. One of the three closed this round: StableAffineCoverGroup.lean proves\
+  \ every\npoint has a G-STABLE affine open neighbourhood for a bare finite group\
+  \ -- the same proof as\nPicard/StableAffineCover.lean, whose Galois binder its body\
+  \ never touches. The other two:\n(i) cocycle/overlap agreement of the affine chart\
+  \ quotients; (ii) OrbitsInAffineOpen for the\ncurve, which is where quasi-projectivity\
+  \ enters and mathlib has no quasi-projectivity\nvocabulary at this pin.\n\nAvailability\
+  \ measured at this pin so nobody re-searches: HasCoproducts Scheme YES,\nHasCoequalizers/HasPushouts\
+  \ Scheme NO, Scheme.GlueData YES.\n"
 status: active
 kind: proof
 priority: normal
@@ -37,7 +45,7 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:47.569594+00:00'
-  updated_at: '2026-07-28T05:59:28.159371+00:00'
+  updated_at: '2026-07-28T17:57:00.910190+00:00'
   parent: AJC.jacobian
   pinned_commits:
   - 21eefaf60

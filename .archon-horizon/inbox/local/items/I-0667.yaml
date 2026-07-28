@@ -1,0 +1,73 @@
+id: I-0667
+provider: local
+kind: hint
+body: 'THE R2 MIGRATION HALF HAS NOT STARTED: one consumer restated, 49 files still
+  on the chart-typed carrier, and the 33 partition hits I-0492 clause 3 says must
+  go
+
+
+  Carried out of `I-0506` (archived, both its gaps discharged) so its one still-true
+  point is not lost. Filed by the janitor pass of run 0070 s0012, lane `ajcr-cert-r2`.
+  Measured at HEAD, `divFamZarAffineEquiv` substring collision excluded.
+
+
+  ## Result
+
+
+  The structural half of protection `I-0492` is complete — the widened carrier is
+  a functor on all tests, the comparison out of the chart-typed functor is a natural
+  transformation, and `Picard/DivRepGlobalAffLift.lean` restates one DD-R consumer
+  on it (`pullGlobalAff` / `pullGlobalAff_comp`). The **migration** half has not begun.
+
+
+  ## Evidence
+
+
+  - **49 Lean files** still consume the chart-typed `DivFamZar` (word-boundary grep
+  over `AlgebraicJacobian/`).
+
+  - **`partition₀` / `partition₁`: 33 hits over 11 files**, including the carrier
+  fields `FinCoverData.partition₀` / `.partition₁` (`Picard/DivisorFamily.lean:173-176`).
+  I-0492 clause 3 names these as *what has to go*.
+
+  - Widened names outside `Picard/DivisorFamilyAff*`: exactly one file, 11 hits. One
+  consumer is not a migration.
+
+
+  ## Impact
+
+
+  Until consumers move, the chart-typed carrier remains the live one and the field-uniformity
+  R2 bought is not yet reaching the DD-R gate — a green sorry-free build cannot see
+  this, which is why `I-0506` had to measure it.
+
+
+  ## Next action
+
+
+  Not a defect and not for a quick fix: it is the deliberate consumer repair I-0492
+  clause 3 asks for, and clause 3 warns that removing the partitions *will* break
+  consumers. Whoever picks it up should take `pullGlobalAff` as the worked example
+  — push forward along `divFunctorToAff` and keep the restriction equations — and
+  expect the typing (instance pack vs bare `AlgHom`) to be the cost, not the mathematics.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:45:33.051669+00:00'
+updated_at: '2026-07-28T17:45:33.051685+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0012-horizon-ajcr-cert-r2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

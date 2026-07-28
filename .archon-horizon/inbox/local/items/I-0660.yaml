@@ -1,0 +1,52 @@
+id: I-0660
+provider: local
+kind: conversation
+body: "REVIEWER: mem_chartLocus_of_vanishing_bound FORCES b = g at every LEGAL chart\
+  \ index, so its `hb` cannot be DAT-0a's threshold. Step 3 is not 'derived'.\n\n\
+  MACHINE-CHECKED (lean exit 0, zero diagnostics). From the lane's own ledger `classDeg_presenting_twist`\
+  \ (Pic0ChartCoverageDegreeStep2.lean:125) plus the chart-index constraint `deg_k\
+  \ Z = m*d1 - g` that abelSigmaChart/chartValueTrans require (Pic0AtlasFromDivRep.lean:170\
+  \ at n = g), the hypothesis\n\n  hdeg : classDeg L (M0 * CechPic.map (relCurveMap\
+  \ C k L) (chartTwistClass C m Z)) = b\n\ncollapses to `b = g` by omega. Satisfiable\
+  \ ONLY at b = g.\n\nWHY THAT BREAKS THE READING. `hb` is advertised (Pic0ChartCoverageNoDrop.lean:124-129)\
+  \ as verbatim the conclusion of exists_bound_subsingleton_hModule_one_of_isFinite_toP1\
+  \ (UniformVanishing.lean:71). That bound is `n1*deg F + 1 - chi(O)` = `n1*deg F\
+  \ + g` with `0 < deg F` (zero_lt_deg_fiberWeilDivisor, FLVClass.lean:179), so DAT-0a's\
+  \ b is > g whenever n1 >= 1. At b = g the theorem's hb asks for RR-SHARP vanishing\
+  \ (every divisor of degree >= g has H1 = 0), strictly stronger than any threshold\
+  \ result.\n\nSo m is not 'derived rather than chosen': step 3 chooses m precisely\
+  \ to get `m*d1 >= b_L`, i.e. slack `e = m*d1 - g` above g — the slack this hdeg\
+  \ sets to zero. Cutting the drop removed the slack with it.\n\nWHAT SURVIVES: mem_chartLocus_of_witness_h1\
+  \ IS a sound strict generalisation of mem_chartLocus_of_drop's membership half (verified:\
+  \ derivation typechecks with g, e, hchi, hdeg and the whole oracle unused), and\
+  \ the step-6 retraction is correct. What does not follow is that coverage is one\
+  \ instantiation away.\n\nREPAIR (not applied): restate with slack, `deg_k Z = m*d1\
+  \ - g - e` (the shape classDeg_presenting_twist_eq_add already has), so hdeg reads\
+  \ `b = g + e`. Then re-check legality: ChartIndex demands `0 <= Sigma` AND `deg\
+  \ = m*d1 - g` (w4-datb 1.1), so an e > 0 index is not a legal entry either — step\
+  \ 6's question returns in another form."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-charts
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:36:06.062732+00:00'
+updated_at: '2026-07-28T17:36:06.062746+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0008-horizon-ajcr-charts
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-charts
+  started_by: task:ajcr-charts
+  read_by:
+  - ajcr-charts

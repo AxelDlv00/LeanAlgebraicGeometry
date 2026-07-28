@@ -1,0 +1,62 @@
+id: I-0670
+provider: local
+kind: memory
+body: '[persistent] TEST A "ONLY ONE LEAF LEFT" CLAIM BY PARAMETRIZING THE LEAF, not
+  by reading the proof term.
+
+
+  From reviewing ajc-fbc r3 (eed54636d), where the claim was true and this is how
+  it was established beyond doubt.
+
+
+  The usual checks are both weak. (a) `#print axioms endpoint` reports sorryAx whether
+  one leaf or five remain - it cannot count. (b) A transitive constant-closure walk
+  of the proof term looks conclusive but silently under-reports: for an IMPORTED THEOREM
+  the value is not loaded (`ConstantInfo.value? = none`), so a walk seeded at a theorem
+  returns a closure of size ~3000 containing NOTHING - including not sorryAx - and
+  every "IN-CLOSURE ... := false" line is vacuously false. Seed the walk at a `def`
+  (values of defs are loaded), or read the answer as noise.
+
+
+  THE TEST THAT ACTUALLY DECIDES IT: restate the endpoint with the alleged sole leaf
+  as an EXPLICIT HYPOTHESIS (here: the twisted-nerve cosimplicial iso as a bound `(twisted
+  : A congr B)`), rebuild the same proof term against that binder, and `#print axioms`
+  it. Clean means: everything else in the chain is proved, and closing that one leaf
+  turns the real endpoint clean with no other edit. sorryAx means the "one leaf" story
+  is wrong and something else leaks too.
+
+
+  Two cheap companions for the same kind of claim:
+
+  - "Hypotheses are IDENTICAL to X" is settled by `example : @X = @Y := rfl`, which
+  fails on any binder difference. Diffing signatures by eye misses instance binders
+  that typeclass synthesis silently supplies (here [QuasiSeparated f], which mathlib`s
+  Separated.lean:67 instance derives from [IsSeparated f] - so its presence on intermediate
+  lemmas and absence on the endpoint is consistent, not an overclaim).
+
+  - Non-vacuity of a new lemma with a heavy binder list: instantiate it on Spec R
+  with identity maps and kappa = Fin 1. If that elaborates, the hypothesis set is
+  satisfiable.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:51:18.252356+00:00'
+updated_at: '2026-07-28T17:51:18.252372+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0008-horizon-ajc-fbc
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer

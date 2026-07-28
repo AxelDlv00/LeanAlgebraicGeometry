@@ -33,13 +33,13 @@ body: "classDeg_of_presenting CANNOT SPEND DEGREE-ZERO-NESS: its RHS is a degree
   \ HYPOTHESIS instead. That hypothesis is currently unobtainable."
 labels:
 - agent-ready
-status: open
+status: closed
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T12:15:11.403465+00:00'
-updated_at: '2026-07-28T12:15:11.403478+00:00'
+updated_at: '2026-07-28T17:34:29.924903+00:00'
 metadata:
   provenance:
     run: '0072'
@@ -50,3 +50,5 @@ metadata:
     task: ajcr-charts
     task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
     projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-charts

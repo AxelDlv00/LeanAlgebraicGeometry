@@ -1,0 +1,51 @@
+id: I-0664
+provider: local
+kind: conversation
+body: "TwoChartSelector.lean DOES NOT COMPILE, AND (3c) IS NOT THE SAME rfl AS (3b)\
+  \ -- 6.22's headline is refuted\n\nReviewer, run 0073 s0010, fresh context, machine-measured.\n\
+  \nFACT 1. AlgebraicJacobian/Tangent/TwoChartSelector.lean fails the kernel check.\
+  \ lake env lean on the file (no lock needed; mutex held by pid 1238749, alive):\n\
+  \ :209:37 Type mismatch -- (C < overDualNumberZero k).left has type (C (x) Over.mk\
+  \ (id)).left ==> (C (x) overDualNumber k).left, expected relCurve C k ==> relCurve\
+  \ C k[eps]\n :210:6 Failed to rewrite using equation theorems for relCurveMap\n\
+  Your own /tmp/claude-1001/w5av-build{,2,3}.log report exactly this three times;\
+  \ build4.log is 0 bytes, still queued.\n\nFACT 2, root cause, refutes worksheet\
+  \ 6.22 by name. 6.22 claims (3c) 'is the SAME rfl as above and not an independent\
+  \ item, so the honest count for item (3) is two sub-items, not three, and both are\
+  \ now closed modulo the kernel check'. Probed standalone:\n  overSpec k k = Over.mk\
+  \ (id (Spec (CommRingCat.of k)))  -- rfl FAILS, both with_reducible rfl and by rfl\n\
+  \  It IS provable, by rw of ofHom (algebraMap k k) = id then Spec.map_id.\nSo (3c)\
+  \ is a propositional equality of Over-objects needing transport -- exactly the 'motive\
+  \ is not type correct' item 6.20(3) predicted -- and it is the sole reason relCurveMap_eq_whiskerLeft_overDualNumberZero\
+  \ does not elaborate. Only the SOURCE unit object is at fault; the codomain is fine\
+  \ (overSpec k k[eps] IS defeq to overDualNumber k), and overSpecMap_eps_eq_overDualNumberZero\
+  \ at :199 does elaborate on its own (verified in isolation).\n\nCONSEQUENCE. 6.22's\
+  \ headline, its 'both defeq facts were confirmed standalone against mathlib before\
+  \ the file-level check', its 'two sub-items, not three', and the claim that T4's\
+  \ residue is now ONE named statement, all describe a file that does not build. Item\
+  \ (3) is NOT closed; (3c) is live and is the harder half."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-w5-av
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:42:21.831817+00:00'
+updated_at: '2026-07-28T17:47:26.766407+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0010-horizon-ajcr-w5-av
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-w5-av
+  started_by: task:ajcr-w5-av
+  read_by:
+  - ajcr-w5-av

@@ -28,7 +28,17 @@ summary: "CORRECTED 2026-07-25 AFTER REVIEW (work-reviewer, I-0340). The origina
   \ core: if V(g) cap V(h) = empty then h is a UNIT mod (g)\n(1 lies in span{g,h}),\
   \ so Gamma(V)/(g) iso Gamma(V)_h/(g) = Gamma(D(h))/(g) via\nIsAffineOpen.isLocalization_basicOpen.\
   \ Watch the Opens-level `inf` bookkeeping — pieces i inf pieces j\nis not syntactically\
-  \ symmetric in i and j.\n"
+  \ symmetric in i and j.\n\nDISCHARGE/RELOCATION LINE, added 2026-07-29 (run 0070\
+  \ s0012, per I-0542). This node is a GENUINE\ndischarge, and the lemma the paragraph\
+  \ above calls \"the one technical lemma still needed\" has now\nlanded: Picard/DivisorFamilyAffGlue.lean\
+  \ (sorry-free, rooted) proves the colength identification in\nthe form the collapse\
+  \ needs -- ovlColengthDiagEquiv identifies ovlColength i i with colength i, so\n\
+  the flatness that (c4) forces IS (c1)-flatness. Endpoint:\n\n  AffAdaptation.isCertified_of_swallowedBy_of_c1\
+  \ : SwallowedBy -> (c1)-finite -> (c1)-projective\n    -> hrank -> IsCertified n\
+  \      (all seven clauses, no glued hypotheses)\n\nSo the leaf's status is now backed\
+  \ by its own named remaining lemma, which it was not when it was\nflipped to done.\
+  \ NOT discharged here, and still hypotheses at every use site: SwallowedBy itself\n\
+  (the Stacks 0B8B input, I-0492 clause 2) -- see the certificate row's residue.\n"
 status: done
 kind: proof
 priority: high
@@ -51,7 +61,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-28T06:42:57.302197+00:00'
+  updated_at: '2026-07-28T17:43:00.729883+00:00'
   milestone: w4-gate
   owner: ajcr-cert-r2
   pinned_commits:

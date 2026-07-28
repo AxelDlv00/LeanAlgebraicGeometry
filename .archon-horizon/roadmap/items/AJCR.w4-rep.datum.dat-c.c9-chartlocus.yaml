@@ -3,10 +3,12 @@ title: 'C9 chartLocus: the sole gate of dat-b B-6 AND the whole dat-glue assembl
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'SPLIT 2026-07-26 into c9a (DONE) and c9b (blocked). CHART-U(a)/(b) are DONE
-  (leaf chart-u).
+  (leaf chart-u), and
+
+  as of 2026-07-28 CHART-U(b) holds AT A GENERAL TEST, not only over an affine one.
 
 
-  STATE 2026-07-28 (run 0072 s0006, lane ajcr-charts):
+  STATE 2026-07-28 (run 0072 s0008, lane ajcr-charts):
 
 
   c9a: chartLocus DEFINED and OPEN at the parameter-space carrier level. Certificate-free,
@@ -14,46 +16,54 @@ summary: 'SPLIT 2026-07-26 into c9a (DONE) and c9b (blocked). CHART-U(a)/(b) are
   divRep-free.
 
 
-  chart-u: DONE. Its residue IsChartDatumPresentation now has its REVERSE HALF landed
-  --
+  chart-u: DONE, and EXTENDED. isOpen_chartLocus_of_affineLocal
 
-  isSplitWitness_of_presenting_witness_self (Picard/Pic0ChartTwistSplit.lean), the
-  trivial
+  (Picard/Pic0ChartLocusGeneralTest.lean) reduces general-test openness to the landed
+  affine
 
-  splitting L := K, which memory I-0564 had recorded as unelaborable. That record
-  is RETRACTED
+  openness by affine-piece locality. Two corrections came out of building it, both
+  on this lane''s
 
-  IN PART: positional introduction of IsSplitWitness works once the existentials are
-  STAGED
+  own prose: the file that justifies chart-independence cites testPointField_affineOpen_iso,
+  which
 
-  (eight refine Exists.intro, default heartbeats). The five variants I-0564 measured
-  all hand
+  EXISTS NOWHERE (supplied here as testPointField_fromSpecAffine_isIso; filed I-0650);
+  and the
 
-  the twelve components to ONE anonymous constructor, and those do time out. Do NOT
-  restate
+  "needs no new mathematics" claim is FALSE by exactly one lemma, IsSplitWitnessIsoInvariant,
+  now
 
-  IsSplitWitness with one curve spelling -- that was the old suggested fix and it
-  refactors a
+  isolated and CHECKED NON-VACUOUS. That residue is the cheapest live brick on the
+  whole C9 row --
 
-  co-signed definition for a tactic-level problem.
-
-
-  c9b: f_c and the (f, hf) pair. STILL the deliverable proper and still CERT-Sigma-gated;
-  the
-
-  composition half of hf is landed (Pic0ChartPair.lean), the mathematics is CHART-U(c).
+  neither certificate- nor divRep-gated.
 
 
-  WHAT THIS LANE PROVED INSTEAD THIS PASS, because c9b''s gate is real: dat-b''s B-5
-  (COV-1) is
+  c9b: f_c and the (f, hf) pair. STILL the deliverable proper and still CERT-Sigma-gated
+  through
 
-  assembled over a general test -- mem_chartLocus_of_drop, five new files, sorry-free
-  and
+  CHART-U(c) / IsChartUniv. The composition half of hf is landed (Pic0ChartPair.lean).
+  What is no
 
-  axiom-clean against a sorryAx control. C9 gates dat-b B-6, not B-5, and B-5 turned
-  out to be
+  longer part of the wall is the V that restrictChart needs: chartLocus openness at
+  a general test,
 
-  the reachable half. See the dat-b row.
+  landed modulo the one residue above.
+
+
+  WHAT THIS LANE ALSO DID, since c9b''s gate is real: dat-b''s B-5 went from THREE
+  residues to ONE.
+
+  Step 2 discharged (PicEtAff.degAff_map, unconditional in L/K), and step 6 RETRACTED
+  as unnecessary
+
+  -- coverage needs no drop, because IsSplitWitness asks for h1 = 0 and for neither
+  effectivity nor
+
+  degree g. See the dat-b row for the full account, including where the discarded
+  properties are
+
+  still genuinely needed (GAP-2 uniqueness / the canonical section, i.e. injectivity).
 
   '
 status: pending
@@ -78,4 +88,4 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c
-  updated_at: '2026-07-28T11:34:22.592798+00:00'
+  updated_at: '2026-07-28T17:54:22.053817+00:00'

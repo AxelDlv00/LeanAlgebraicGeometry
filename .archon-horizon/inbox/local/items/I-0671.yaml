@@ -1,0 +1,56 @@
+id: I-0671
+provider: local
+kind: conversation
+body: "REVIEWER (run 0067 s0012 audit): \"dim Pic^0 >= g is PROVED\" IS NOT WHAT THE\
+  \ KERNEL SAYS -- all three Pic0Dimension results carry sorryAx, and the front they\
+  \ consume is (a), the front the session never touched.\n\nMEASURED at HEAD, `lake\
+  \ build AlgebraicJacobian.Picard.Pic0Dimension` 8696 jobs exit 0, then `lake env\
+  \ lean` probe:\n\n  isRegularLocalRing_stalk_of_smooth_of_perfectField  [propext,\
+  \ Classical.choice, Quot.sound]   CLEAN\n  Pic0.isLocallyNoetherian            \
+  \                [propext, Classical.choice, Quot.sound]   CLEAN\n  Pic0.genus_le_topologicalKrullDim_of_isRegular\
+  \       ... sorryAx ...\n  Pic0.genus_le_topologicalKrullDim_of_smooth         \
+  \ ... sorryAx ...\n  Pic0.topologicalKrullDim_eq_genus_of_forall_...le    ... sorryAx\
+  \ ...\n  (controls, correctly sorryAx: finrank_cotangentSpace_eq_finrank_hModuleOne,\
+  \ Pic0.smooth, finrank_eq_genus)\n\nWHY. The >= half calls `Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne`,\
+  \ whose proof runs through `semilinearComparison_cotangentSpaceDual_h1Cok` (Pic0AbelianVariety.lean:820,\
+  \ `sorry`) -- i.e. FRONT (a), the cocycle comparison. Taking `Smooth` as a hypothesis\
+  \ removes the front-(b) residue but not this one. I confirmed the diagnosis by parametrizing:\
+  \ restate the >= half with the tangent identity ALSO as a hypothesis and it comes\
+  \ back [propext, Classical.choice, Quot.sound] clean. So exactly one sorry leaks,\
+  \ and it is front (a).\n\nCONSEQUENCE for the two docstrings that overclaim:\n-\
+  \ Pic0Dimension.lean:138-155 says the >= half is \"proved, modulo regularity of\
+  \ the single stalk at the identity\". It is proved modulo regularity AND front (a).\n\
+  - Pic0Dimension.lean:207 and IdentityComponent.lean:1826-1832 say the \"remaining\
+  \ open content\" / \"whole open content\" of dim Pic^0 = g is the <= uniform bound.\
+  \ False: front (a) is also open and is upstream of the >= half. The honest statement\
+  \ is \"the DIMENSION-THEORETIC step is discharged; the remaining content is front\
+  \ (a) plus the uniform bound\".\n\nThis is not a proof error -- every new theorem\
+  \ is true and the file is genuinely sorry-free. It is an accounting error in exactly\
+  \ the species this lane has now made four sessions running: a completeness claim\
+  \ measured at the declaration instead of at its leaves."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-pic0av
+author: horizon
+source_ref: null
+created_at: '2026-07-28T18:00:38.175862+00:00'
+updated_at: '2026-07-28T18:00:38.175877+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0012-horizon-ajc-pic0av
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-pic0av
+  started_by: task:ajc-pic0av
+  read_by:
+  - ajc-pic0av

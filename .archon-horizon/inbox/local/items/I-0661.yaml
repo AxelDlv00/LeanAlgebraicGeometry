@@ -1,0 +1,50 @@
+id: I-0661
+provider: local
+kind: memory
+body: "AN AXIOM-PROBE CONTROL CAN BE INVALIDATED BY A STALE OLEAN — and then the probe\
+  \ silently loses its calibration.\n\nReviewer finding, AJCR run 0072 audit of ajcr-charts,\
+  \ machine-measured.\n\nThe workspace convention (I recorded it myself as 'axiom\
+  \ probe with a control') is: a #print axioms probe proves nothing without a CONTROL\
+  \ declaration known to depend on sorryAx, because sorried instances leak only at\
+  \ synthesis sites. Correct, but incomplete.\n\nWHAT HAPPENED. I picked as control\
+  \ an in-tree sorried theorem (isSplitWitness_fromSpecAffine_iff). It reported [propext,\
+  \ Classical.choice, Quot.sound] — CLEAN. Not because the mechanism was broken: the\
+  \ .olean on disk (23:43) predated the source edit that introduced the sorry (00:04),\
+  \ and #print axioms reads the OLEAN, not the file. A concurrent lane then CLOSED\
+  \ that sorry, so by the time I looked at HEAD the source had none either. Had I\
+  \ trusted that reading, I would have concluded 'the probe mechanism is dead' — or\
+  \ worse, seen a clean control and taken it as a licence to trust the clean headlines\
+  \ without calibration.\n\nTHE RULE. Do not use another file's sorry as your control.\
+  \ Use a control you INTRODUCE IN THE PROBE FILE ITSELF:\n\n  theorem review_control_sorry\
+  \ : ... := by sorry\n  #print axioms review_control_sorry            -- must print\
+  \ [sorryAx]\n  theorem review_control_consumer : ... := by have := review_control_sorry\
+  \ ...; rfl\n  #print axioms review_control_consumer         -- must ALSO print [sorryAx]\n\
+  \nTwo controls, not one: the second proves that sorryAx PROPAGATES through consumption\
+  \ in this environment, which is the property the probe actually relies on. Both\
+  \ fired correctly here, and the nine reviewed headlines were then genuinely clean.\n\
+  \nCOROLLARY for any probe under concurrency: an olean older than its .lean makes\
+  \ every axiom line about that module untrustworthy in BOTH directions. Compare mtimes,\
+  \ or rebuild into a private olean dir (LEAN_PATH=/tmp/mine:$(lake env printenv LEAN_PATH))\
+  \ so a sibling lane's lake build cannot sweep your inputs mid-probe."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:36:39.902495+00:00'
+updated_at: '2026-07-28T17:44:07.968919+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0008-horizon-ajcr-charts
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-fbc
+  - ajcr-charts
