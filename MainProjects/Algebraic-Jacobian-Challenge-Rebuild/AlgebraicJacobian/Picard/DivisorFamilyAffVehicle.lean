@@ -26,14 +26,23 @@ old one with `DivFamZar` replaced by `DivFamZarAff` and `mapAlgHom` by the widen
 `[IsProper C.hom]` is carried throughout: the widened base change needs it (an arbitrary affine
 open's overlaps are not affine by fiat), and it is a hypothesis the DD-R lane has everywhere.
 
-## What this does NOT claim
+## What this file does NOT do, stated precisely
 
-It does not claim the widened functor is *representable*, nor that it agrees with `divFunctor`
-as a functor.  It gives the widened value a Zariski-continuous extension and the functor
-packaging, so a consumer can be stated against it at all.  The comparison natural
-transformation from the chart-typed functor is `divFunctorToAff` below, built from the already
-landed `DivFamZar.toAff` and its explicit-face naturality — it goes old → new, which is the
-only direction R2 asserts (the converse is exactly what R2 says fails).
+It defines the widened vehicle and proves its affine collapse.  It does **not** define the
+restriction `divFamZarAff.map` along an arbitrary morphism of test objects, and therefore does
+not define the widened *functor* either.  That is the remaining item of the R2 lane
+(`informal/spec-dd-r.md` ADDENDUM 8 §8.3 item 2): its input is the widened form of the base-side
+Zariski gluing keystone `DivFamZar.exists_glue_of_away_compat`
+(`Picard/DivisorFamilyZarGlue.lean`), which should port because R2 left the base side alone —
+but "should port" is a price, not a result, and nothing here assumes it.
+
+So a consumer can today be given a widened section over an **affine** test, and the general-test
+statement is still owed.  Saying which is which is the point of this paragraph: a docstring that
+advertises declarations a file does not contain is its own failure mode, and this tree has
+already been bitten by it once.
+
+The comparison from the chart-typed side, `divFamZarToAffVehicle` below, does exist, and it goes
+old → new only — the direction R2 asserts.  The converse is exactly what R2 says fails.
 
 ## Main declarations
 
@@ -41,9 +50,8 @@ only direction R2 asserts (the converse is exactly what R2 says fails).
 * `divFamZarAff.eval`, `divFamZarAff.compat`, `divFamZarAff.ext` — the section API.
 * `AlgebraicGeometry.divFamZarAffAffineEquiv` — on an affine test the limit collapses to
   `DivFamZarAff` of the test algebra.
-* `AlgebraicGeometry.divFunctorAff` — the widened divisor functor, and `divFunctorAff_obj`.
-* `AlgebraicGeometry.divFunctorToAff` — the natural transformation from the chart-typed
-  divisor functor to the widened one.
+* `AlgebraicGeometry.divFamZarToAffVehicle` — the comparison of vehicles, with
+  `divFamZarAffAffineEquiv_toAffVehicle` for its coherence with the two affine collapses.
 -/
 
 set_option autoImplicit false
@@ -190,7 +198,15 @@ affine-opens poset to the widened value `DivFamZarAff C R n` of the test algebra
 
 This is what makes the vehicle a genuine extension rather than a new object: the widened
 certificate lane's endpoint lands in the right-hand side, so this equivalence is the step that
-carries it into the vehicle, and from there to a general test. -/
+carries it into the vehicle.
+
+**Exactly how far that reaches, stated so nobody over-reads it.**  It carries the endpoint into
+a vehicle *section over an affine test*, and no further.  Getting from there to a general test
+is `divFamZarAff.map` along an arbitrary morphism of test objects, which does **not** exist yet
+(`informal/spec-dd-r.md` ADDENDUM 8 §8.3 item 2); its input is the widened form of the base-side
+Zariski gluing keystone `DivFamZar.exists_glue_of_away_compat`.  So the honest reading of this
+file is: the widened value now has a vehicle and collapses correctly on affine tests; the
+Zariski-continuous *extension* to all tests is still owed. -/
 def divFamZarAffAffineEquiv :
     divFamZarAff C n (overSpec k R) ≃ DivFamZarAff C R n where
   toFun := divFamZarAffToAff C n R
