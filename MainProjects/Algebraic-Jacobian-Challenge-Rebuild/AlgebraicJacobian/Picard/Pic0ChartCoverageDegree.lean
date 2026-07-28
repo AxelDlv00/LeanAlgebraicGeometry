@@ -96,7 +96,7 @@ theorem classDeg_chartTwistClass_baseChange (L : Type u) [Field L] [Algebra k L]
         (chartTwistClass C m Z))
       = (m : ℤ) * classDeg k (thetaCechClass C) - Scheme.CurveDivisor.deg k Z := by
   rw [classDeg_cechPicMap_base_of_field C L]
-  change classDeg k (thetaCechClass C ^ m * (Scheme.CurveDivisor.picClass k Z)⁻¹) = _
+  show classDeg k (thetaCechClass C ^ m * (Scheme.CurveDivisor.picClass k Z)⁻¹) = _
   rw [classDeg_mul, classDeg_inv, classDeg_pow, classDeg_picClass]
   ring
 
