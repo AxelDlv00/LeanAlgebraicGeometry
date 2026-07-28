@@ -769,6 +769,39 @@ CLAUSES (i) AND (ii) ARE NO LONGER OPEN (run 0067):
 * (ii) is `DualNumber.baseChangeAlgEquiv` (`Picard/Pic0DualNumberCocycle.lean`),
   which was already available.
 
+**WHAT CLAUSE (iii) ACTUALLY NEEDS, measured run 0067 r6 — and it is not a port.**
+Three earlier sessions recorded the sibling project's two-chart Čech machinery
+(`Tangent/TwoChartCechPic.lean`, `TwoChartNormalize.lean`,
+`TwoChartRepresentable.lean` in `Algebraic-Jacobian-Challenge-Rebuild`) as the live
+route here. It cannot close this clause, on either side of the workspace, and the
+obstruction is the **carrier** rather than the price.
+
+The sibling's `Scheme.CechPic` is a *self-contained definitional* Picard group — a
+quotient of unit Čech cocycles over pointed covers. Its only bridge to invertible
+*sheaves* is `Scheme.cechPicEquivPic`, and that carries `[IsAffine X]` irremovably:
+the proof needs a trivializing basic open at every point together with
+`Module.Invertible.span_tensor_free_eq_top` over `Γ(X, ⊤)`. No non-affine comparison
+exists in either project, and none exists in mathlib, which has no Picard group of a
+*scheme* at all (`CommRing.Pic` is ring-level).
+
+But this clause compares a kernel of `PicSharp.relPresheaf` — a setoid quotient of
+`LineBundle.OnProduct`, i.e. honest invertible sheaves — against a Čech `Ȟ¹` on
+`C ×_k Spec k[ε]`, a **proper curve**. That is not affine, and it is not affine
+precisely *because* the `ε`-kernel is nonzero; on an affine with trivial Picard group
+there would be nothing to compute. So the one hypothesis the dictionary needs is the
+one the problem structurally denies. Porting the carrier does not help: at the end of
+17k sorry-free lines one holds a class in `X.CechPic` with no theorem relating it to
+`LineBundle.OnProduct` at a non-affine `X`.
+
+So the genuinely missing statement — absent from both projects and from mathlib — is
+
+```
+Ȟ¹(X, 𝒪ˣ) ≅ {isomorphism classes of invertible sheaves on X}   for non-affine X
+```
+
+which is new mathematics for this development rather than a port. Full measurement,
+including the closure counts priced both ways, is inbox I-0689.
+
 So the residue is clause (iii) alone: the cocycle-level identification. A
 cross-project note from the AJCR side (inbox I-0495, 2026-07-28) confirms that
 this leg does *not* require Hilbert 90 or any henselian cover-splitting brick:

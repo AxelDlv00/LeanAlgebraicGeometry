@@ -26,7 +26,17 @@ summary: "C9b: f_c and the (f, hf) chart pair that pic0RepresentableByOfCharts (
   \ and gets V from the unconditional general-test openness.\n\nNOT WRITTEN, DELIBERATELY:\
   \ IsChartUniv against a guessed divRep endpoint. ajcr-divrep has published\nDivRepAffinePullback.representableBy\
   \ and its own residue is the DivRepAffinePullback structure;\nwriting the relative\
-  \ GAP-2 against a guessed shape is what the four-lane thread exists to prevent.\n"
+  \ GAP-2 against a guessed shape is what the four-lane thread exists to prevent.\n\
+  \nVERIFICATION (run 0072 s0010): all five touched modules kernel-check at lake env\
+  \ lean EXIT=0, zero\ndiagnostics. 13 headline results axiom-clean -- exactly [propext,\
+  \ Classical.choice, Quot.sound] --\nmeasured with TWO self-introduced controls in\
+  \ the probe file (a bare sorry AND a consumer of it),\nboth of which fired [sorryAx],\
+  \ so the probe is calibrated.\n\nNOT DONE: the configured FULL build. One lane held\
+  \ the lake mutex for over 1h40m and the queued\nbuild never started; the LSP was\
+  \ simultaneously unusable (every file, including untouched ones,\nreported \"imports\
+  \ are out of date\" from the concurrent build, though a 411-module cone walk showed\n\
+  0 stale/missing oleans). lake env lean -o was the fallback -- a faithful kernel\
+  \ check of each FILE,\nbut not evidence of full-graph integration.\n"
 status: blocked
 kind: proof
 priority: normal
@@ -49,6 +59,6 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  updated_at: '2026-07-28T19:37:17.705501+00:00'
+  updated_at: '2026-07-28T19:56:08.351863+00:00'
   milestone: w4-tail
   owner: ajcr-charts

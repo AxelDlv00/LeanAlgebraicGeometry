@@ -26,7 +26,26 @@ summary: "DAT-C: the Sigma-charts. C0-C5 are landed. C6-C8 and the canonical-sec
   \ effectivity and h0 = 1 that DAT-B's coverage\ndiscards are actually needed (GAP-2\
   \ uniqueness, eq_of_picClass_eq_of_h0_one takes 0 <= D). The\ndrop/oracle chain\
   \ of w4-datb 1.4-1.6 serves THIS, not coverage -- recorded so no lane re-derives\n\
-  it for the wrong consumer.\n"
+  it for the wrong consumer.\n\nUPDATE 2026-07-29 (run 0072 s0010, lane ajcr-charts).\
+  \ C6-C8 UNTOUCHED again, deliberately and for\nthe reason recorded above: they consume\
+  \ the divisor-scheme side directly and are divRep(F7)-gated,\nand writing C7 against\
+  \ a guessed endpoint is what the four-lane thread exists to prevent. C6's own\n\
+  brick DOES exist (DivFamZar.isOpen_setOf_isH1VanishingAt, DivisorFamilyH1Locus.lean:363)\
+  \ -- checked\nby declaration search, not by import closure (I-0678) -- so C7 remains\
+  \ transcription-when-F7-lands\nrather than mathematics.\n\nWHAT THE CHART LANE ADVANCED\
+  \ INSTEAD, all on the critical path and all developable cold:\n * c9-chartlocus.chart-u\
+  \ is now CLOSED and UNCONDITIONAL: IsSplitWitnessIsoInvariant discharged\n   (2b6228f6a),\
+  \ so CHART-U(b) at a general test carries no hypothesis. c9b's openness half is\
+  \ off\n   the wall entirely and its gate is now the SINGLE clause IsChartUniv.\n\
+  \ * B-5 step 3's status was RETRACTED and twice restated (e3593861a, ab27f5c0b,\
+  \ b9a1572bc): a\n   reviewer refuted this milestone's sibling claim that step 3\
+  \ was \"instantiate DAT-0a\", and the\n   corrected residue is a question for the\
+  \ divRep lane about which parameters divFunctor C pi n is\n   representable at --\
+  \ because the atlas turns out to be CHART-PARAMETER HETEROGENEOUS.\n\nTHE CANONICAL-SECTION\
+  \ CERTIFICATE reading above is unchanged and was reconfirmed this pass: it is\n\
+  where the effectivity and h0 = 1 that DAT-B's coverage discards are actually needed\
+  \ (GAP-2\nuniqueness, eq_of_picClass_eq_of_h0_one takes 0 <= D). That is DAT-C's\
+  \ business, not coverage's.\n"
 status: pending
 kind: proof
 priority: normal
@@ -40,4 +59,4 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:08.321387+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-28T17:55:00.975879+00:00'
+  updated_at: '2026-07-28T19:56:38.617935+00:00'

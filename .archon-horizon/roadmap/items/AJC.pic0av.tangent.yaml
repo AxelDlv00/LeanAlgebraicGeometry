@@ -27,8 +27,48 @@ summary: "Identify the cotangent-space dual at the identity with the Cech H1 cok
   \ never register a staged\nfact). Correct discipline, but it makes their open content\
   \ invisible to a sorry census -- so\n\"AJCR is sorry-free here\" had been read as\
   \ \"AJCR has this\". They do not. Neither side had the\ngenerator until this round.\n\
-  \nWHERE AJCR IS GENUINELY AHEAD, all sorry-free and scheme-general: (iii-a) twoChartClass,\n\
-  (iii-b) its injectivity, (iii-c1) twoChartClassHom_mk_range, (iii-c2-Zar)\ntwoChartClassHom_surjOn_of_chartTrivial.\
+  \n*** RUN 0067 r6: THE AJCR PORT IS REFUTED AS A ROUTE, AND NOT ON COST. ***\n\n\
+  r3/r4/r5 of this row all treated porting AJCR's two-chart Cech machinery as the\
+  \ live way to close\nclause (iii). Measured properly (2026-07-29), it cannot close\
+  \ it -- on EITHER side of the workspace\n-- and the reason is the CARRIER, not the\
+  \ price.\n\nTHE DECISIVE FACT, one grep. AJCR's Scheme.CechPic is a SELF-CONTAINED\
+  \ definitional Picard group\n(Quotient of unitsH1 over PointedCover, Picard/Pic.lean:60).\
+  \ Its ONLY bridge to invertible SHEAVES\nis Scheme.cechPicEquivPic (Picard/CechPicSurjective.lean:283),\
+  \ and that carries\n\n    [IsAffine X]\n\nirremovably: the proof needs a trivializing\
+  \ basic open per point plus\nModule.Invertible.span_tensor_free_eq_top over Gamma(X,\
+  \ top). There is NO non-affine comparison\nanywhere in either project, and none\
+  \ in mathlib -- which has no Picard group of a SCHEME at all\n(CommRing.Pic is ring-level).\
+  \ AJCR's other consumers of the dictionary (EtaleSeparatedness,\nEtaleSeparatednessClose)\
+  \ use it at affine schemes only, and one says so in prose.\n\nWHY THAT IS FATAL\
+  \ HERE. Clause (iii) must compare AJC's dual-number kernel of PicSharp.relPresheaf\n\
+  -- a setoid quotient of LineBundle.OnProduct, i.e. honest invertible sheaves --\
+  \ with a two-chart\nCech H1 on C x_k Spec k[eps]. That scheme is a PROPER CURVE\
+  \ over the dual numbers: not affine, and\nnot affine PRECISELY BECAUSE the interesting\
+  \ eps-kernel is nonzero (for an affine with trivial Pic\nthere is nothing to compute).\
+  \ So the single hypothesis the dictionary needs is the one the problem\nstructurally\
+  \ denies.\n\nPORT COST, recorded for the ledger and priced both ways per I-0678\
+  \ -- here BOTH are large, which is\nitself the signal:\n * import closure of the\
+  \ three TwoChart* endpoint files: 57 modules, 46 absent from AJC, 13,691 lines\n\
+  \ * closure of the 10-file genuine core (UnitsPresheaf, UnitsCocycle, CechH1, Pic,\
+  \ PicAffineCover,\n   RefinementInjectivity, TwoChart{CechPic,Selector,Normalize,Representable}):\
+  \ 76 modules, 60 absent,\n   17,031 lines\nAll sorry-free. 17k lines of sorry-free\
+  \ Lean is a real asset and a plausible multi-session port; the\nNUMBER is not the\
+  \ objection. The objection is that when you finish you hold a class in X.CechPic\
+  \ and\nno theorem connecting it to LineBundle.OnProduct at a non-affine X.\n\nSO\
+  \ THE RESIDUE OF THIS NODE IS NOT ANY OF THE FOUR AJCR THEOREMS. It is one missing\
+  \ statement:\n\n    Cech H1 of units on a NON-AFFINE scheme  =  isomorphism classes\
+  \ of invertible sheaves\n\nabsent from both projects and from mathlib. That is genuinely\
+  \ new mathematics for this workspace\nrather than a port, and it is the honest shape\
+  \ of front (a)'s wall. Detail: inbox I-0689.\n\nRULE established here: when a port\
+  \ is priced and the price is paid, ask what CARRIER you are left\nholding and whether\
+  \ it has the FACE your consumer needs. \"Sorry-free and portable\" says nothing\n\
+  about whether the destination type connects to yours. This is I-0684 (matching the\
+  \ category is not\nmatching the object) at the scale of a whole subsystem; the test\
+  \ is one grep for the comparison\ntheorem plus a read of its binders.\n\nWHAT r5\
+  \ SAID ABOUT THE SIBLING, still true and now sharpened -- the welding observation\
+  \ was right\nand its consequence was understated:\nWHERE AJCR IS GENUINELY AHEAD,\
+  \ all sorry-free and scheme-general: (iii-a) twoChartClass,\n(iii-b) its injectivity,\
+  \ (iii-c1) twoChartClassHom_mk_range, (iii-c2-Zar)\ntwoChartClassHom_surjOn_of_chartTrivial.\
   \ But all four are welded to X.CechPic over\nX.PointedCover, and AJC HAS NEITHER\
   \ -- zero occurrences. Not importable (no cross-project\ndependency), and porting\
   \ means first building the sheaf-side glue-from-a-transition-unit\ncomparison against\
@@ -70,5 +110,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-28T13:48:10.654366+00:00'
+  updated_at: '2026-07-28T19:58:13.932851+00:00'
   owner: ajc-pic0av
