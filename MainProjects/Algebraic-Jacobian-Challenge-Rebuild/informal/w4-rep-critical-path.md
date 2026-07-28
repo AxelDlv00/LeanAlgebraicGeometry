@@ -667,10 +667,13 @@ it.
 
 ## 7.11 ROUND-0071 s0010 AMENDMENT: both of U2's inputs were artefacts of how the residue was spelled
 
-*Run 0071 session 0010, task `ajcr-divrep`, 2026-07-29. Every theorem below was elaborated with
-zero diagnostics against the built `.olean`s; **none of the three modules has been through a `lake
-build`** and none is imported by `AlgebraicJacobian.lean`, so no root measurement covers them.
-§7.11.4 states exactly what that does and does not license.*
+*Run 0071 session 0010, task `ajcr-divrep`, 2026-07-29. **VERIFICATION SUPERSEDED at the close of
+that session** (janitor pass): a full root build ran 9271 jobs to exit 0 at 05:57, and
+`DivRepChartClassUniv`, `DivRepChartClassUnivFree`, `DivRepChartClassUnivAny` and
+`JacobianDataAbelSquare` all have `.olean`s and are imported by `AlgebraicJacobian.lean` (lines
+599-601, 603). So the caveats below reading "no root measurement covers them" are stale as facts —
+they are now kernel-green and rooted. What they say about **mathematics** is unaffected: §7.11.3 is
+still retracted, and the row is still unpriced.*
 
 §7.10 priced U2 as "one certificate plus one scalar". Both halves of that pricing were about the
 *spelling* of the residue rather than about mathematics, and both are now removed.
@@ -767,11 +770,14 @@ re-typed onto the widened adaptation. **The second is cheaper than it looks**, f
 `windowBound_pos_of_genus_ne_zero`, `certifiedFamilyOfAdaptation`, `HasCertifiedAdaptation`,
 `hasCertifiedAdaptation_of_divisorAdaptation` and `divFamEps_certifiedFamilyOfAdaptation` were each
 elaborated standalone against the built `.olean`s with **zero diagnostics**. That is a kernel
-elaboration of statement *and* proof. It is **not** a `lake build` of the modules: three builds were
-launched under the mkdir mutex this session — one failed transiently (a concurrent build in the same
-tree removed olean output directories mid-run; four AJCR lanes were building at once) and one timed
-out at 8000 s inside the ~9000-job cone the 2026-07-29 mathlib restore invalidated. So: read these as
-verified theorems in unrooted modules, and root them once a green build exists.
+elaboration of statement *and* proof. Three builds were launched under the mkdir mutex during the
+session — one failed transiently (a concurrent build in the same tree removed olean output
+directories mid-run; four AJCR lanes were building at once) and one timed out at 8000 s inside the
+~9000-job cone the 2026-07-29 mathlib restore invalidated. **The fourth landed: `lake build` of the
+root, 9271 jobs, exit 0 at 05:57, with all four modules replayed/built and rooted.** The only
+diagnostics naming them are two `longLine` lint warnings (`…UnivFree.lean:43`, `…UnivAny.lean:41`).
+So they are kernel-green rooted theorems, and the "root them once a green build exists" instruction
+below is discharged.
 
 **The first kernel check `DivRepChartClassUniv.lean` ever received found a real error in it** — the
 file §7.10 committed unverified. It called `hc.thetaGluedEval_surjective hO hchi …`; dot notation
