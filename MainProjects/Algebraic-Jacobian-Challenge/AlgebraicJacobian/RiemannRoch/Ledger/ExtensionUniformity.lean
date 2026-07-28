@@ -142,9 +142,17 @@ route.  Note the shape of the two projects' cover carriers differs — AJCR uses
 AJC `AffineCoverMVSquare` (and `AffineTwoCover` does not occur anywhere in AJC) — so a port
 crosses a second carrier boundary that the `rfl` above does *not* cover.
 
-**Input (2), a uniform base-divisor degree bound: open, and not located in either project.**
-It asks for one `d` with a vanishing `D₀` of degree `≤ d` over *every* `κ`.  Nothing in AJC or
-AJC bounds `n₀(κ)` uniformly.
+**Input (2), a uniform base-divisor degree bound: open for `genus C ≥ 1`; closed at genus 0.**
+It asks for one `d` with a vanishing `D₀` of degree `≤ d` over *every* `κ`.  Nothing in AJC
+bounds `n₀(κ)` uniformly, and `n₀` is a `Classical.choose` on Noetherian stabilization of the
+fiber-lattice chain (`Ledger/FiberVanishing.lean`), re-run at each base field with no numeric
+extraction — so the route "bound AJC's own `n₀` uniformly" is not available.
+
+What *is* available, and is the genus-0 closure: `Ledger/VanishingFieldDescent.lean` bypasses
+`n₀` entirely.  Instead of transporting the *stabilization index*, it transports the *vanishing
+statement*, using faithful flatness of `κ/k` on `GenusFieldInvariance`'s `Ȟ¹` comparison.  The
+witness divisor is then `0` at every `κ`, whose degree is `0` with no choice involved.  That
+works exactly when `H¹(𝒪_C)` already vanishes, i.e. `genus C = 0`.
 
 **The claim about AJCR that used to stand here is withdrawn** — see
 `Ledger/GenusFieldInvariance.lean` §"What is NOT closed".  It said AJCR's analogue is a `Nat.find`
@@ -171,9 +179,25 @@ because a caller who has a genus bound by some other route may still want it.
 2. **Extension-uniformity** — free half now *witnessed* at `C_κ` (was: asserted of morphism
    classes); open half decomposed into a genus identity plus a uniform base-divisor degree bound.
    **The genus identity is now proved** (`Ledger/GenusFieldInvariance.lean`), so the open half is
-   *exactly* the base-divisor bound — one input, not two.  Still open, and still open in AJCR
-   in AJC.  Whether AJCR has it is **unmeasured** — the "`Nat.find` per field" claim that stood
-   here is withdrawn (its window constant is computed at `k`, not per field).
+   *exactly* the base-divisor bound — one input, not two.  Open in AJC for `genus C ≥ 1`.
+
+   **Genus 0 is now closed** (`Ledger/VanishingFieldDescent.lean`): `H¹(𝒪)` vanishing is
+   base-field invariant in *both* directions by faithfully flat descent of the `Ȟ¹` comparison,
+   which produces `UniformBaseDivisor C 0` and hence `UniformVanishing C` whenever
+   `H¹(𝒪_C)` vanishes.  That is the whole of what is closed: for `genus C ≥ 1` the hypothesis is
+   false and the base-divisor bound is still a missing production from geometry.
+
+   On AJCR: whether it has input (2) was measured this round and the answer is **effectively no,
+   for AJC's purposes**.  `WindowFieldTransport.deg_windowN` does give a `κ`-independent degree
+   (`windowM_choice π hπ g * windowδ π`, both factors at `k`) with `subsingleton_h1_windowN`
+   giving the vanishing — so the *content* of a uniform base divisor exists there.  But it is
+   uniform **by construction of the statement** (its `π` is bound at `P1 k`, pinning every
+   constant to `k`) rather than by a theorem, it is stated on the `relCurve`/glued-datum carrier,
+   and neither `UniformBaseDivisor` nor `UniformVanishing` occurs in AJCR at all.  The transport
+   cost is an 88–139 file dependency cone plus two carrier boundaries with no bridge in either
+   project (`AffineTwoCover`↔`AffineCoverMVSquare`, `relCurve`↔`baseChangeField`).  The earlier
+   "`Nat.find` per field" claim stays withdrawn; the correct reading is that the constant does
+   move and the obstacle is carriers, not mathematics.
 3. **Global generation** — closed at AJC's curve by the dévissage route
    (`FiberBound.exists_bound_generated_of_isFinite_toP1`), independent of (1).  This file does
    not touch it; in particular nothing here makes generation uniform over extensions either.

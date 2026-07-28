@@ -286,15 +286,29 @@ AJCR half is false.  `WindowFieldTransport.deg_windowN` gives the degree over `K
 `windowM_choice π hπ g * windowδ π` with **both factors computed at `k`**, and `windowM_choice` is
 a single `Nat.find` at `k` (`WindowLedger.lean:186`), so the constant there does *not* vary with
 the field.  `WindowFieldTransport.lean` does transport vanishing facts, but that is not evidence
-the constant cannot move.  Whether AJCR has a uniform base divisor, or material for one, is
-**unmeasured** and must not be cited as evidence that the input is hard.
+the constant cannot move.
 
-So the honest statement of the residue is **not** "vanishing over extensions is unavailable" — it
-is "the constant does not transport".  The two named inputs that would fix it are unchanged: flat
-base change for the section spaces (`Γ(C_κ, 𝒪(D_κ)) ≃ Γ(C, 𝒪(D)) ⊗_k κ`, so the `κ`-dimensions
-are comparable to the `k`-dimensions) and a `WeilDivisor` pullback along `C_κ ⟶ C` (hard: closed
-points split).  With those, `b k` itself would serve as the uniform bound; without them, no
-amount of re-firing the theorem produces one. -/
+**AJCR IS NOW MEASURED** (the paragraph above said "unmeasured"; that clause is discharged, not
+retracted).  AJCR does have the *content* of a uniform base divisor — `subsingleton_h1_windowN`
+plus `deg_windowN` give a vanishing divisor of `κ`-independent degree for every `K/k` — but it is
+uniform **by construction of the statement**, since its `π` is bound at `P1 k` which pins every
+constant to `k`, and it is not stated as a uniformity theorem: neither `UniformBaseDivisor` nor
+`UniformVanishing` occurs anywhere in AJCR.  Reaching it from AJC is an 88–139 file dependency
+cone plus two carrier boundaries with no bridge in either project
+(`AffineTwoCover`↔`AffineCoverMVSquare`, `relCurve`↔`baseChangeField`).  So: not hard mathematics
+next door, and not portable either.
+
+**The prescription below is superseded, and the way it was wrong is instructive.**  It named two
+inputs — section-space flat base change, and a `WeilDivisor` pullback along `C_κ ⟶ C` — and said
+that without them "no amount of re-firing the theorem produces one".  The first input landed
+(`Ledger/SectionsFieldBaseChange.lean`).  The second was **never needed**: the route that worked
+(`Ledger/VanishingFieldDescent.lean`) transports the *vanishing statement* by faithful flatness
+rather than transporting a divisor at all, so it needs no pullback of closed points and never
+meets the splitting problem.  `b k` did not have to serve as the uniform bound; the zero divisor
+did.  A residue described as "these two bricks" was really "one brick and one dispensable
+assumption about the proof shape" — worth keeping visible, since the dispensable half is what
+priced this input as expensive for several rounds.  What that route does *not* do is reach
+`genus C ≥ 1`, where the input is still open; see `Ledger/ExtensionUniformity.lean` §3. -/
 
 section ExtensionUniformity
 

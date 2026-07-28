@@ -48,6 +48,15 @@ Composing, `κ ⊗[k] Ȟ¹(S, 𝒪) ≃ₗ[κ] Ȟ¹(S_κ, 𝒪)`, and a `finrank
    every `κ` some divisor of degree `≤ d` already has vanishing `H¹`.  That is **still open**,
    in AJC.  **`UniformVanishing C` is not proved by this file.**
 
+   **Update (`Ledger/VanishingFieldDescent.lean`): input (2) now has a producer, at genus 0
+   only.**  The "no producer anywhere in AJC" verdict recorded below at
+   `uniformVanishing_of_uniformBaseDivisor_curve` is superseded as a *fact* and stands as a
+   *method*: `uniformBaseDivisor_zero_of_subsingleton` produces `UniformBaseDivisor C 0` from
+   `Subsingleton (H¹(𝒪_C))`, and `uniformVanishing_of_subsingleton_h1` is the first
+   `UniformVanishing` instance in AJC.  For AJC's curve that hypothesis *is* `genus C = 0`, so
+   for `genus C ≥ 1` — the case that matters — input (2) is still a missing production from
+   geometry and this file's reduction is still the honest statement of what remains.
+
    **On AJCR: I withdraw the stronger claim I made about it.**  Earlier versions of this and two
    sibling docstrings said AJCR's analogue is "a `Nat.find` per field", making input (2) look
    equally open next door.  A reviewer checked the arity and the constant, and the assertion does
@@ -418,7 +427,16 @@ from the three curve binders.  For `UniformBaseDivisor` **none does**: it is a `
 consumers and no producer anywhere in AJC.
 
 So the gap is not a missing consumer or a carrier mismatch — it is a missing **production from
-geometry**, and that is the form the next attempt should take. -/
+geometry**, and that is the form the next attempt should take.
+
+**That measurement has since been acted on, and its "no producer" clause is now false as
+stated.**  `Ledger/VanishingFieldDescent.uniformBaseDivisor_zero_of_subsingleton` is a producer:
+its conclusion is `UniformBaseDivisor C 0` and its input is a property of `C` alone.  The
+prediction the paragraph made was right about the *form* — it came from geometry, via faithfully
+flat descent of the `H¹` comparison this file builds — and wrong about the *difficulty*, since it
+was one unused step away.  What it did not predict is how narrow the producer would be: its
+hypothesis `Subsingleton (H¹(𝒪_C))` is `genus C = 0`, so `genus C ≥ 1` is untouched and the
+sentence above still describes that case correctly. -/
 theorem uniformVanishing_of_uniformBaseDivisor_curve [IsProper C.hom]
     [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]
     [GeometricallyIntegral C.hom] {d : ℤ} (hbase : UniformBaseDivisor C d) :
