@@ -792,3 +792,120 @@ variables before the structure argument — and no `sorry` census sees the resul
 **L8 remains the gate and is arguably false as stated.** Two spellings collapsing in one session is
 exactly the reading §7.10.4 warned against: nothing in §7.11 bears on local surjectivity of the Abel
 map out of a too-small divisor functor.
+
+## 7.12 ROUND-0071 s0012 AMENDMENT: U2's ε-half is no-go-immune, and DAT-J's first row was vacuous
+
+*Run 0071 session 0012, task `ajcr-divrep`, 2026-07-29. Both new modules are sorry-free, rooted
+in `AlgebraicJacobian.lean`, and pass a lock-free scratch-olean check (`lake env lean` against a
+symlinked olean root with the lakefile `leanOptions` passed explicitly) at **EXIT=0 with zero
+warnings**. **No full `lake build` ran this session** — four concurrent AJCR lanes held the
+mutex — so read these as kernel-elaborated modules, not as a green root.*
+
+§7.11.3 was retracted the same session it was written, leaving the `…divrep.u2` row **unpriced**:
+`forall_not_isCertified_of_straddling` (`Picard/DivisorFamilyAffStrict.lean:127`) concludes
+`∀ (A : DivisorAdaptation C R π d) (n : ℕ), ¬ A.IsCertified n`, which negates
+`HasCertifiedAdaptation` at the same binder, so the residue might be *false* rather than open.
+
+**That retraction was right about one half of U2 and wrong about the other, and this round
+separates them in Lean.**
+
+### 7.12.1 The ε-identity consumes the window quotient, not a certificate
+
+`Picard/DivRepChartClassUnivQuot.lean` (commit `ae01cfcb2`):
+
+> `divisorWindow_eq_of_le_of_quotientData` : a Grassmannian point `x` contained in `K_a(d)`
+> **equals** it as soon as `(R ⊗[k] H_a) ⧸ K_a(d)` is projective over `R` of constant fibre
+> rank `g`. No `DivisorAdaptation`, no `IsCertified`, no cover, no chart typing.
+
+The reason is a chain of definitions nobody had unfolded end to end. `divFamEps` is two
+`divisorWindow`s (`Picard/DivisorFamilyWindow.lean:260`); `divisorWindow d` reads only `d` — its
+own docstring says so at `:101`; and `divisorWindow_eq_of_le` (`Picard/DivSchemeEps.lean:176`) is
+the rank engine `Submodule.eq_of_le_of_rankAtStalk_quotient_eq` (`:115`) applied to the nested
+pair `x.toSubmodule ≤ divisorWindow d`. **The adaptation enters that proof only as a vehicle**:
+`windowQuotEquiv` transports finiteness/projectivity/rank from `A.ThetaGlued a` to the quotient,
+and the quotient is the only place they are used. Cut the vehicle and the hypothesis is a
+property of `d`.
+
+Also landed: `divFamEps_eq_of_le_of_quotientData`, the ε-**pair** identity at an **arbitrary**
+`F : DivFam C R π g` — the form a producer on either carrier can feed — and
+`divisorWindow_eq_of_le_of_isCertified_of_quotientData`, which recovers the landed chart-typed
+statement as a corollary so the generalisation is machine-checked rather than asserted.
+
+**Why the refutation misses this.** The no-go's proof runs through clause **(c1)**: finiteness of
+the *chart-local colength* modules forces `supportLeak = ∅`, hence
+`supportLocus_subset_chart_of_isCertified`, hence confinement to one pinned chart
+(`Picard/DivSchemeCertZarVerdict.lean:62-71`). A hypothesis about `d`'s window quotient
+quantifies over no adaptation, so it is **not an instance of that `∀`**.
+
+**The honest partition of U2**, and this is what the row should now be read as:
+
+| half | what it needs | vs. the no-go |
+|---|---|---|
+| the **ε-value** | `d`'s window quotient projective of constant rank `g` | untouched: no adaptation occurs |
+| the **class** | a term of `DivFamZar C R_Z π g` (locally certified) | carries the whole bite of `I-0705` |
+
+So the ε-half is **open, not false**, and the entire remaining bite is on the class — which is
+exactly the face protection `I-0492`'s widening exists to supply. The consequence for the
+cert-r2 seam is concrete: **the ε layer needs no `AffAdaptation.IsCertified` →
+`DivisorAdaptation.IsCertified` bridge at all**, so the type mismatch §7.11.3 called "the whole
+critical path" is off the ε path and survives only on the class half.
+
+**One free sub-finding, measured rather than assumed.** *Finiteness of the window quotient is not
+an input.* The rank engine takes its `Module.Finite` slot at the **Grassmannian point's**
+quotient, which `grFunctorAff` carries as a field, so the window side owes only projectivity plus
+the rank equation. I had written finiteness in by analogy with the landed statement; the
+`unusedVariables` linter reported it on the first elaboration. **General form: when you generalise
+a lemma by removing its vehicle, re-derive which hypotheses the *engine* needs — do not copy the
+vehicle's hypothesis list.**
+
+### 7.12.2 DAT-J's obligation 1 was vacuous, and its consumer is a tautology at the witness
+
+§7.10.3 and §7.9.2 built up DAT-J's ledger to three items, the first being
+`IsAbelClassifyCompatible` for the campaign Abel morphism — the `dat-j` roadmap row calls it
+*"bookkeeping-shaped, but a real statement, and nobody has written it"*. **It is not a statement
+about `abel`.** `Picard/JacobianDataAbelSquareVacuity.lean` (commit `7133fc1d6`):
+
+> `exists_isAbelClassifyCompatible` : for an **arbitrary** `abel : DivScheme g ⟶ J`, *some* `pt`
+> satisfies `IsAbelClassifyCompatible … abel pt`.
+
+The only hypothesis beyond `abel` is that the point-map **type** is inhabited, which fills the
+junk branch of a case split on exactly the two hypotheses the square quantifies over; on its own
+branch the square is `dif_pos`. **Because `pt` is an argument of the predicate rather than pinned
+campaign data**, a consumer entitled to choose it can choose the classifier composite itself.
+
+This is the recorded "isolating a residue as a class" failure mode (`I-0605`): a residue whose
+witness is existentially quantified over the very datum that would make it non-trivial demands
+nothing, and the cheap test — *inhabit it with junk before pricing it* — is one probe that nobody
+ran, this lane included, across two sessions that both re-scoped the row.
+
+**The damage is in the consumer, and that is the half worth reading.**
+`exists_residueField_lift_of_abelCompatible` (`Picard/JacobianDataAbelSquare.lean:158`) takes
+`pt`, `hsq` and `heff` and concludes `∀ y, ∃ q, q ≫ abel = J.fromSpecResidueField y`. Instantiate
+at the `pt` above and unfold `heff`: it asks for an effective degree-`g` `D` with
+`pt κ(y) D = J.fromSpecResidueField y`, which on the `dif_pos` branch **is verbatim the
+conclusion**. `heff_iff_conclusion_of_pt_eq` records that as a lemma. So the theorem is a
+tautology there, and all the content item 1 appeared to carry had silently migrated into the
+hypothesis that looked like a separate row.
+
+**What DAT-J actually owes: one statement, not two, and it is stronger than item 2 stated.** For
+every point `y` of `J`, an effective degree-`g` divisor on the curve over `κ(y)` **whose
+classifying morphism composes with `abel` to `fromSpecResidueField y`**. The Riemann–Roch half
+produces the divisor; the compatibility half is the honest residue. The split cannot be restored:
+any `pt` making it statable is either the pinned campaign one (in which case there is no separate
+row to prove) or a chosen one (in which case the split is vacuous). Spelling of the
+Riemann–Roch half stays binding per w4-datj §0.5 — `exists_effective_of_picClass` /
+`riemann_inequality`, **never** `riemann_inequality_curve`.
+
+**General form, and it generalises §7.9.1's own lesson rather than repeating it.** §7.9.1 found
+that a `∀`-heavy clause collapsed to an equation because its satisfier was *total and unique*.
+The mirror is this: a clause whose satisfier is **existentially quantified and unconstrained**
+collapses to nothing. Both are answered by the same question — *which of this predicate's
+arguments does the consumer get to choose?* — and neither is visible from reading the predicate's
+statement for whether it "says something geometric".
+
+### 7.12.3 §7.6 still stands
+
+**L8 remains the gate and is arguably false as stated.** Two rows moved this session and neither
+touches local surjectivity of the Abel map out of a too-small divisor functor. §7.12.1 makes the
+ε-half of U2 open rather than false, and §7.12.2 *removes* a row from DAT-J's ledger; both shrink
+the tail, and §7.10.4's warning applies verbatim — a shrinking tail is not progress toward L8.
