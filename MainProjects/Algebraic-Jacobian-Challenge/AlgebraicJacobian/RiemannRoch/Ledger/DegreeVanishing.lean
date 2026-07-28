@@ -21,6 +21,39 @@ divisor.  `Ledger/MulEquiv.lean` already supplies the translation
 the Riemann inequality that manufactures the translating function.  Both were in the tree
 before this file; what was missing was to put them together.
 
+## PROVENANCE, AND IT IS NOT "NEW": THIS IS AJCR'S ARGUMENT
+
+Read this before describing anything below as novel.  The sibling project
+`Algebraic-Jacobian-Challenge-Rebuild` **already runs exactly this argument**, in
+`RiemannRoch/UniformVanishing.lean:71`
+(`exists_bound_subsingleton_hModule_one_of_isFinite_toP1`), whose conclusion is literally the
+shape of `exists_bound_subsingleton_hModule_one` below and whose bound
+`n₁·deg F + 1 − χ(𝒪_Y)` has the same `+ 1 − χ` form as ours.  Its three steps are ours:
+
+1. class invariance of `H¹` vanishing — AJCR's `RiemannRoch/ClassCohomology.lean:111`
+   `subsingleton_hModule_one_of_picClass_eq`, proved by exactly the transport
+   `(Sheaf.HModule.mapEquiv … 1).toEquiv` that `subsingleton_hModule_one_sub_divOf` uses here;
+2. an effective witness in the class from a degree bound (`exists_effective_of_picClass`), which
+   is our `exists_unit_nonneg_of_h0_pos` composed with the Riemann inequality;
+3. peel the effective part (`peel_effective`), which is `SectionDrop`'s
+   `subsingleton_hModule_one_add_effective`.
+
+So what is genuinely this file's own is **not the mathematics**.  It is (a) that the argument
+runs on AJC's Ledger carrier with **no Picard vocabulary at all** — AJCR routes every step
+through `picClass`, `classDeg` and `CechPic`, which AJC's Ledger tree does not have and whose
+import would drag in eleven `Picard/` presentation modules; (b) that it is stated from an
+*arbitrary* base vanishing rather than specialised to the fibre tower of a finite map to `ℙ¹`,
+so it does not require `π` at all; and (c) the global-generation half (item 3 below), which
+AJCR does not derive from this bound.
+
+An earlier version of this docstring, and the commit message that landed it, presented the
+insight as new to the workspace and said the ingredients had merely never been "put together".
+That was the *third* time this lane misjudged availability by searching too narrowly — here the
+whole assembled theorem existed next door, and a predecessor session had even read
+`UniformVanishing.lean` and reported it as "single-field bounded vanishing AJC already owns",
+without noticing that the argument inside it was the very step this lane went on to publish as
+open.  Treat the value of this file as a *port with a carrier change*, not a discovery.
+
 ## The argument, in one paragraph
 
 Fix any `D₀` with `H¹(𝒪(D₀)) = 0`.  Let `D` be a divisor with
@@ -93,6 +126,13 @@ This file closes exactly one of the three, and it is worth being blunt about whi
      dependency.  **That is now the only thing between AJC and unconditional bounded
      vanishing at every curve**, and it is strictly smaller than it was before this file,
      because the peel, the ledger, the translation and the cofinality step are all done.
+
+     Note that AJCR has *already assembled* those two halves into the unconditional bound, in
+     `RiemannRoch/UniformVanishing.lean:71` — it specialises the base to the fibre tower `n₁·F`
+     of a finite dominant `π : Y ⟶ ℙ¹` and gets `∃ b, ∀ D, b ≤ deg D → H¹(𝒪(D)) = 0` outright.
+     So the *statement* AJC still lacks is not novel anywhere; it is the AJCR port above.  What
+     this file contributes to that end is the half that does **not** need `π`: everything from
+     an arbitrary base vanishing onwards.
 2. **Extension-uniformity — UNTOUCHED, and nothing here bears on it.** Every statement in
    this file is over the one field `K`; `CurveDivisor.deg K` and `residueDeg K` are pinned to
    it.  A bound uniform over finite extensions `K'/K` would need the bound
@@ -144,13 +184,15 @@ This is the only place in the file where a section is unpacked. -/
 /-- **A nonzero global section is an effectivity certificate** (the bridge): if `𝒪(A)` has a
 nonzero global section then there is `g ∈ K(X)ˣ` with `0 ≤ A + div g`.
 
-**Provenance.** AJCR proves the same fact as
-`RiemannRoch/SectionBound.exists_effective_of_h0_pos`, but *states* it as "the class of `A` is
-realised by an effective divisor", through `CurveDivisor.picClass` — Picard vocabulary that
-AJC's Ledger tree does not import and does not want here.  The three steps (extract a nonzero
-element of `H⁰` through `linearEquiv₀`, read it as a nonzero rational function, turn the pole
-bound into `0 ≤ A + div g` at each point) are AJCR's; the statement is stripped of `picClass`
-so that it lands one import above `DivisorSheaf`/`MulEquiv` and needs no Picard layer. -/
+**Provenance: this proof is AJCR's, line for line.**  It is
+`RiemannRoch/SectionBound.exists_effective_of_h0_pos`, whose body performs the same four steps
+(nontriviality from `finrank_pos`, extract a nonzero element of `H⁰` through `linearEquiv₀`,
+read it as a nonzero rational function via `divisorVal`, turn the pole bound into
+`0 ≤ A + div g` pointwise through `ord_val_eq`).  The **only** change is the conclusion: AJCR
+says "the class of `A` is realised by an effective divisor" using `CurveDivisor.picClass`, and
+this states the underlying unit-and-inequality fact directly, so that it lands one import above
+`DivisorSheaf`/`MulEquiv` and needs no Picard layer.  Do not read the restatement as new
+mathematics; it is a carrier change. -/
 theorem exists_unit_nonneg_of_h0_pos (A : X.CurveDivisor)
     (hA : 0 < Sheaf.h0 (X.divisorSheaf K A)) :
     ∃ g : X.functionFieldˣ,
