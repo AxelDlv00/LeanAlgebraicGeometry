@@ -254,6 +254,10 @@ import AlgebraicJacobian.Albanese.Milne33RowSection
 import AlgebraicJacobian.Albanese.Milne33Pullback
 import AlgebraicJacobian.Albanese.Milne33Transport
 import AlgebraicJacobian.Albanese.Milne33
+-- Descent of a morphism from a dense open into an abelian variety: the
+-- extension half of Milne III.6.1's "it therefore defines a rational map
+-- psi : J -> A, which (I 3.2) shows to be a regular map".
+import AlgebraicJacobian.Albanese.DenseOpenDescent
 import AlgebraicJacobian.Albanese.RationalMapFunctionField
 import AlgebraicJacobian.Albanese.RationalMapPrecomp
 import AlgebraicJacobian.Albanese.RationalMapProd

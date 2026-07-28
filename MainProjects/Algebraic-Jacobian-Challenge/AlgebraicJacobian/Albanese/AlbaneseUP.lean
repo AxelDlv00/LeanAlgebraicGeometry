@@ -521,9 +521,23 @@ on all of `Pic⁰_{C/k̄}` via Milne's Theorem I.3.2 (sibling
 standard reduced-and-separated agreement principle: two regular
 morphisms `Pic⁰_{C/k̄} ⟶ A` agreeing on a dense open are equal.
 
-**Not yet proved.** The proof invokes `Scheme.RationalMap.extend_to_av` on
-the rational map produced by inverting `f^{(g)}` on its dense open of
-isomorphism. -/
+**Not yet proved — but the extension half is done.** The gap is now precisely
+one thing: the *birationality data*. Specifically:
+
+* `Scheme.RationalMap.exists_unique_hom_restrict_eq_of_dense_open`
+  (`Albanese/DenseOpenDescent.lean`) says that given **any** dense open
+  `V ⊆ Pic⁰_{C/k̄}` and **any** morphism `h : V ⟶ A` compatible with the
+  structure maps, there is a unique `ψ : Pic⁰_{C/k̄} ⟶ A` with `V.ι ≫ ψ = h`.
+  It is proved and axiom-clean, resting on `extend_to_av` (Milne Theorem 3.2),
+  itself unconditional since Milne Lemma 3.3 closed.
+
+So no further extension, properness or agreement argument is needed here. What
+remains is to *produce* `V` and `h`: the dense open of `Pic⁰_{C/k̄}` over which
+`f^{(g)}` admits a section, and that section composed with `Sym^g φ`. That needs
+(i) `Sym^g C` and `f^{(g)}` to exist at all, and (ii) Milne III Theorem 5.1(a)'s
+birationality in a usable form — mathlib at this pin has no API for inverting a
+birational morphism on a dense open (`Mathlib/AlgebraicGeometry/Birational/`
+supplies `IsDominant`, not an inverse). -/
 theorem descentThroughBirationalSigma
     (P0 : 𝟙_ (Over (Spec (.of kbar))) ⟶ C)
     {A : Over (Spec (.of kbar))}
