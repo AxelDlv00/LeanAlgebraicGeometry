@@ -132,6 +132,34 @@ echo $$ > "$LOCK/pid" 2>/dev/null      # record holder so a later reaper can pro
 # … lake build … ; rm -rf "$LOCK"      # release (rm -rf, not rmdir — the pidfile makes the dir non-empty)
 ```
 
+### 2a. THE RELEASE IS AS DANGEROUS AS THE REAP — check the pidfile before `rm -rf` (2026-07-28, run 0072)
+
+The acquire loop above is careful; the release (`rm -rf "$LOCK"`) is not, and that asymmetry
+caused a real incident. **A lane removed the lock directory while its pidfile named a LIVE pid
+belonging to another lane's build**, having printed `ALIVE` for that pid one line earlier.
+
+The mechanism is worth stating because nothing in the recipe warns about it. The offending lane
+had legitimately acquired the lock, and then **its own shell was killed by a harness timeout
+while it held it**. On the next turn it reasoned "the lock is mine and my holder is dead, so
+release it" — but in the interval a *different* lane had acquired the lock, so the pid in the
+file had never been its own. The lane was running the release branch on a belief about history
+rather than on a reading of the file.
+
+> **Before `rm -rf "$LOCK"`, verify the pidfile still names YOUR pid.**
+> `[ "$(cat "$LOCK/pid" 2>/dev/null)" = "$$" ] && rm -rf "$LOCK"`
+> If it names anything else, the lock is not yours to release: say so and leave it alone.
+
+Two corollaries:
+
+* **"It was mine a minute ago" is not evidence**, especially when a harness can kill the shell
+  between acquire and release. Every turn boundary is a window for another lane to take the lock.
+* **Do not "repair" the mistake by re-creating the directory with the other lane's pid.**
+  Fabricating a pidfile for a build you do not own makes the lock unreapable by its real owner
+  and hides the incident. Report it on the thread and let the owner re-take it.
+
+For long builds, prefer a form that cannot outlive its own hold: run the build detached with a
+release trailing it in the *same* script, so the release is not a separate turn.
+
 Two stale shapes, both now handled above (do NOT just `sleep` forever on either):
 - A plain FILE at the lock path is by definition stale (mkdir makes directories) — reap immediately.
 - An orphaned DIRECTORY from a build that crashed before `rm -rf` (the 2026-07-19 C4 incident,
