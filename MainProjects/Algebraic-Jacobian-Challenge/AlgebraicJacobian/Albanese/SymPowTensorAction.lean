@@ -183,8 +183,12 @@ noncomputable def permMulSemiringAction :
   smul_one σ := map_one (permAlgHom R A σ⁻¹)
   smul_mul σ x y := map_mul (permAlgHom R A σ⁻¹) x y
 
+/-- The action, unfolded. Note `(ι := ι)`: `permMulSemiringAction`'s index type is
+implicit and does not appear in its explicit arguments, so a bare
+`letI := permMulSemiringAction R A` in a *statement* leaves `ι` a metavariable and the
+`HSMul` instance search gets stuck. Every `letI` of this action below names `ι`. -/
 theorem permSmul_def (σ : Equiv.Perm ι) (x : ⨂[R] _ : ι, A) :
-    letI := permMulSemiringAction R A
+    letI := permMulSemiringAction R (ι := ι) A
     σ • x = permAlgHom R A σ⁻¹ x := rfl
 
 /-! ## §3. Milne's carrier `(A^{⊗ n})^{S_n}`
@@ -218,6 +222,7 @@ noncomputable def symTensorPowSubalgebra : Subalgebra R (⨂[R] _ : ι, A) where
   zero_mem' σ := map_zero _
   algebraMap_mem' r σ := AlgHom.commutes _ r
 
+omit [Finite ι] in
 @[simp]
 theorem mem_symTensorPowSubalgebra_iff (x : ⨂[R] _ : ι, A) :
     x ∈ symTensorPowSubalgebra R A ↔ ∀ σ : Equiv.Perm ι, permAlgHom R A σ x = x := Iff.rfl
@@ -229,25 +234,29 @@ quantifies over the whole group.
 This is the lemma that lets `Albanese/SymPowInvariants.lean`'s general theorems — stated for
 `FixedPoints.subring` — be read as statements about Milne's carrier. -/
 theorem symTensorPowSubalgebra_toSubring :
-    letI := permMulSemiringAction R A
+    letI := permMulSemiringAction R (ι := ι) A
     (symTensorPowSubalgebra R A).toSubring
       = FixedPoints.subring (⨂[R] _ : ι, A) (Equiv.Perm ι) := by
-  letI := permMulSemiringAction R A
+  letI := permMulSemiringAction R (ι := ι) A
   ext x
   constructor
+  · intro h g
+    exact h g⁻¹
   · intro h σ
-    exact (h σ⁻¹).symm
-  · intro h σ
-    have hx := (h σ⁻¹).symm
-    change permAlgHom R A σ⁻¹⁻¹ x = x at hx
+    have hx : permAlgHom R A σ⁻¹⁻¹ x = x := h σ⁻¹
     rwa [inv_inv] at hx
 
+omit [Finite ι] in
 /-- **A tensor of a constant tuple is invariant** — the diagonal `a ⊗ ⋯ ⊗ a` lies in
 Milne's carrier, since permuting a constant tuple does nothing.
 
-Kept as a non-vacuity witness: `symTensorPowSubalgebra` contains more than the image of
-`R`, so the carrier is not the trivial subalgebra whenever `A ≠ R`. Compare
-`SymPowColimit.permAut_swap_ne_id_of_points`, the same concern on the geometric side. -/
+Kept as a supply of elements: it exhibits the diagonal image of `A` inside the carrier, so
+the invariants are not obviously just `algebraMap R`'s image. Note what this does **not**
+prove — that the containment is *strict* for some `A`, which would need an element of
+`⨂ A` shown outside the image of `R`, and no declaration here does that. So read it as a
+witness that the carrier has describable elements, not as a non-vacuity theorem; contrast
+`SymPowColimit.permAut_swap_ne_id_of_points`, which is a genuine non-vacuity statement
+because it refutes an equality. -/
 theorem tprod_const_mem_symTensorPowSubalgebra (a : A) :
     tprod R (fun _ : ι => a) ∈ symTensorPowSubalgebra R A := by
   intro σ
