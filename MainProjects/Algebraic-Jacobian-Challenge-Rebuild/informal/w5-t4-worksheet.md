@@ -1203,3 +1203,49 @@ both were true only after removing another layer of algebra that already existed
 *when you name the residue of a clause, state it as a Lean statement you could type, not as a phrase
 like "the geometric part".* A phrase cannot be checked against the tree; a statement can, and both
 times the check would have found the layer immediately.
+
+### 6.18 REVIEWER CORRECTION: THE INTERTWINING HAS A THIRD GAP, AND I PRICED IT AT ZERO AGAIN
+
+*Fresh-context reviewer pass, run 0073 r3, inbox `I-0630` and `I-0633`. Recorded here because
+§§6.12–6.14 overstated what the square buys, and this is the third time this lane has made the
+same class of error in one day.*
+
+**The finding, and it is correct.** `map_twoChartClassHom` (§6.12) is naturality of
+`twoChartClassHom` — the map **before** the quotient. The T2 engine's reduction
+`TwoCover.unitsReduction` is a map between the Čech `H¹` **quotients**. Three things stand between
+them, none in the tree:
+
+1. **Naturality of the DESCENDED `twoChartClass`** (`TwoChartCechPic.lean:428`). That needs
+   `Function.Surjective sel` at *both* ends (`sel` and `sel ∘ f.base`), plus the statement that
+   `pullbackOverlapUnit` maps `cechCoboundaryUnits` into `cechCoboundaryUnits`. My "no
+   `Function.Surjective sel`" is true of the hom-level lemma and **does not carry to the quotient
+   level the engine works at**.
+2. **That `Over.dualNumberSectionsUnits` carries `cechCoboundaryUnits (mapRingHom res₀) (mapRingHom res₁)`
+   onto `cechCoboundaryUnits res₀ res₁`** at the thickened charts. `resHom_dualNumberSections`
+   makes it provable; nobody proved it. So the two `H¹` carriers remain only *abstractly*
+   isomorphic — the `I-0571` shape, in the file I wrote to fix an `I-0571` problem.
+3. **A typing/transport seam.** `pullbackOverlapUnit` is typed at `f⁻¹V₀ ⊓ f⁻¹V₁` via `le_rfl`;
+   `relSectionsMap` at `(fst C (overSpec k R)).left ⁻¹ᵁ W` via `le_of_eq relCurveMap_preimage.symm`.
+   Nothing produces the `Bool`-indexed `V` plus selector from `relCover`; nothing identifies
+   `(C ◁ overDualNumberZero).left` with `relCurveMap C k[ε] k`, nor `overSpec k k` with the monoidal
+   unit that `overDualNumberZero`'s source is. **(b-coeff) is a real statement about
+   `relSectionsMap`, but it is not yet the coefficient half of the `twoChartClass`/`unitsReduction`
+   square.**
+
+**The generality lesson (`I-0633`), which is the transferable half.** The binders of
+`map_twoChartClassHom` *are* fully general — verified by reading them. But its **consumer** is the
+quotient-level `twoChartClass`, whose existence needs `hsel`. So "no `Function.Surjective sel`" is
+true of the declaration and false of the square the kernel computation needs. Likewise "steps 1–2
+over an arbitrary commutative ring" in `DualNumberChartPic.lean` is true and buys **portability, not
+progress**, since the class transported comes from an affine chart of a curve.
+
+> **Rule: a generality claim is scoped to the declaration it is written on, not to the chain.** When
+> reporting "this landed at full generality", ask which declaration the generality is a property of,
+> and whether the consumer instantiates at that generality. A general lemma one level below a
+> hypothesis-bearing consumer does not remove the hypothesis.
+
+**Corrected accounting of T4, superseding §§6.12–6.17's summaries.** Landed: the five clauses, the
+carrier translation (both halves), the reduction square at *hom* level, and the whole module-level
+chain of (iii-c2-aff) bar one square. **Still owed for the T5 numeral:** (a) the three intertwining
+items above, (b) (iii-c2-aff-geo), the `cechPicClass` naturality square of §6.17. Do not describe the
+T4 residue as "one statement" again without naming which statement and checking its consumer.
