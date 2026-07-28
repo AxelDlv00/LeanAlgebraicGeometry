@@ -219,7 +219,16 @@ reduction whose new hypothesis is *satisfiable by construction* is vacuous, and 
 happens.  Probed at arbitrary `μ`, `D`, `t`, `L`: `rfl` fails on the left-hand side, and `simp`
 and `aesop` both leave unsolved goals.  So it is a genuine equation between two plus classes and
 not a `Prop` true for free.  (A passing automation attempt would have refuted the reduction, which
-is why the probe is worth running before pricing anything as a residue.) -/
+is why the probe is worth running before pricing anything as a residue.)
+
+**And the probe has a second form, which the first does not cover.**  Junk-inhabitation is the risk
+when the hypothesis is *consumer-chosen* — `D` here.  When it is *determined* by the setting, the
+mirror risk is **unsatisfiability**: a reduction to a false hypothesis passes every `sorry` census
+and every axiom probe, because it then *is* a theorem.  `hplus` is determined in `μ`, so that
+direction needs a witness, and the witness is landed and unconditional:
+`exists_splitting_of_picEt` produces, for **any** plus class over **any** reading field, a finite
+separable `L` and a presenting class `M` with exactly the identity `hplus` asserts.  So the
+plus-class identity is *inhabited* at every `μ`, not merely consistent. -/
 theorem isChartDatumPlusFibreAt_self {A : Type u} [CommRing A] [Algebra k A]
     (μ : picEt C (overSpec k A)) (D : BasicOpenCocycleDatum C A π)
     (t : (overSpec k A).left) (h : IsChartDatumPlusFibre C π μ D) :
