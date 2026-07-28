@@ -25,6 +25,23 @@ things rather than one:
    instance or `χ`-ledger gate in the chain were sorry-backed, this is where it would surface and
    the declaration-site reading would not.
 
+## Rootedness caveat — measured, disclosed, and NOT fixable from this lane
+
+Both modules under audit are **outside the root import cone**: 262 modules are reachable from
+`AlgebraicJacobian.lean`, and `Ledger/SectionsFieldBaseChange`, `Ledger/GenusFieldInvariance`,
+`Ledger/ExtensionUniformity`, `Ledger/FiberBound` and `Ledger/DegreeVanishing` are all absent from
+it (`CohomologyKit` and `CurveBaseChange`, which they import, *are* in it).  This is the
+pre-existing condition of the whole `Ledger` vanishing chain, not something introduced here.
+
+**What the caveat does and does not invalidate.**  It does *not* weaken the readings below:
+`lake env lean` on this file elaborates the full import closure of the declarations named, so each
+`#print axioms` is a faithful measurement of that declaration.  What it means is narrower and
+still worth stating: a project-wide audit that walks axioms *starting from the root roll-up* will
+not reach these declarations at all, so their cleanliness is invisible to that audit.
+
+Rooting is one `import` line in `AlgebraicJacobian.lean`, which is **outside this task's write
+scope**, so it is disclosed rather than fixed.
+
 ## The controls are live and MUST fire
 
 Two negative controls are included, and both are checked to *resolve* (a control that fails to
