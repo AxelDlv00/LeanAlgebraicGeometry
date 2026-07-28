@@ -998,8 +998,15 @@ Consequences for this file's own claims, stated because several were wrong:
    (h))" — that inference is now void for curves, since the refutations have no instances there.
    The `hledger`-conditional results of `SectionBounds`/`BoundedVanishing`/`GlobalGeneration` are
    NOT shown vacuous.
- * The `⊤` binders those files use are unaffected: `IsAffineOpen U` is load-bearing in the
-   collapse and `⊤` is not affine on a proper curve.
+ * The `⊤` binders those files use are unaffected AT A PROPER CURVE, and only there.
+   `IsAffineOpen U` is load-bearing in the collapse, and `⊤` is not affine on a proper curve — but
+   it IS affine when `X` is, and then the `⊤` binder dies too
+   (`not_chart_finite_top_of_isAffine`). This matters because `GlobalGeneration.lean`,
+   `LedgerClosure.lean` and `SectionBounds.lean` are stated over a bare `Scheme X` with NO
+   `IsProper` binder, so at the affine members of the family they quantify over their hypotheses
+   are unsatisfiable and their conclusions vacuous. An earlier version of this section said
+   flatly that the `⊤` binders are unaffected; that was the same overstatement as the one this
+   section exists to record, made one level down.
 
 What no axiom line shows here, and it is the fifth such thing this file has had to record: that
 a hypothesis is unsatisfiable at the object of interest. Only instantiation shows it.
@@ -1017,6 +1024,7 @@ numbers. Requested on the AJC thread I-0493. -/
 #print axioms AlgebraicGeometry.Adelic.chart_finiteness_iff_module_finite_functionField
 #print axioms AlgebraicGeometry.Adelic.not_module_finite_functionField_of_primeDivisor
 #print axioms AlgebraicGeometry.Adelic.not_chart_finite_of_primeDivisor
+#print axioms AlgebraicGeometry.Adelic.not_chart_finite_top_of_isAffine
 #print axioms AlgebraicGeometry.Adelic.sectionSub_mul_mem_zero
 #print axioms AlgebraicGeometry.Adelic.algebraMap_chart_mem_sectionSub_zero
 
