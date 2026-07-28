@@ -1911,8 +1911,29 @@ theorem leakProbe_counitSide_from_pullbackSide (f : X ⟶ S) (g' : X' ⟶ X) (�
     (hpb : BcSquarePullbackSide f g' 𝒰 F hF) : BcSquareCounitSide f g' 𝒰 F hF :=
   bcSquareCounitSide_of_pullbackSide f g' 𝒰 F hF hpb
 
+/-- **The mate-elimination brick.**  Under `p'^*` and past the counit, the Beck-Chevalley mate IS
+the pullback telescope — so nothing on the right-hand side is a mate.  Clean, and it is the one
+genuinely new mathematical input of this round: it turns "naturality of the mate across a change of
+square" into pseudofunctor coherence.
+
+SCOPE, measured and stated so this line is not over-read: applied to `BcSquareCounitSide` it fires on
+the RIGHT-hand side only (mate and counit at the same σ'); on the left the mate is at `σ' ∘ δᵏ` with
+the counit at `σ'`, so half (a) is NOT a one-rewrite consequence of it. -/
+theorem leakProbe_bareBC_mateElimination {V V' : Scheme.{u}}
+    (g' : X' ⟶ X) (p : V ⟶ X) (p' : V' ⟶ X') (gV : V' ⟶ V)
+    (hsq : IsPullback gV p' p g') (c : V.Modules) :
+    (Scheme.Modules.pullback p').map ((openImmersion_bareBC g' p p' gV hsq).app c) ≫
+        (Scheme.Modules.pullbackPushforwardAdjunction p').counit.app _
+      = (((Scheme.Modules.pullbackComp p' g') ≪≫ Scheme.Modules.pullbackCongr hsq.w.symm ≪≫
+            (Scheme.Modules.pullbackComp gV p).symm).hom).app
+          ((Scheme.Modules.pushforward p).obj c) ≫
+          (Scheme.Modules.pullback gV).map
+            ((Scheme.Modules.pullbackPushforwardAdjunction p).counit.app c) :=
+  bareBC_pullback_counit g' p p' gV hsq c
+
 end Section6i
 
+#print axioms leakProbe_bareBC_mateElimination
 #print axioms leakProbe_wiredDeltaSquare
 #print axioms leakProbe_bcNerveCoface_sigma
 #print axioms leakProbe_halfA_equiv

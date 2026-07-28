@@ -4149,6 +4149,54 @@ theorem bcSquareNaturality_iff_pullbackSide (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 
   ⟨bcSquarePullbackSide_of_naturality f g' 𝒰 F hF,
    bcSquareNaturality_of_pullbackSide f g' 𝒰 F hF⟩
 
+/-- **THE MATE IS ELIMINABLE: `openImmersion_bareBC` under `p'^*` and past the counit IS the
+pullback telescope.**  For any cartesian square,
+```
+  p'^*(bareBC.app c) ≫ counit_{p'} = telescope.app (p_* c) ≫ gV^*(counit_p.app c),
+```
+where `telescope = (pullbackComp p' g') ≪≫ pullbackCongr ≪≫ (pullbackComp gV p).symm` is the
+pseudofunctor 2-cell `openImmersion_bareBC` was defined as the mate of.
+
+**This is the brick half (a) was missing, and it costs one `rw` plus mathlib's
+`CategoryTheory.mateEquiv_counit`** — measured, not conjectured.  Its significance: the right-hand
+side contains **no mate at all**.  Everything in it is either a pullback-pseudofunctor coherence
+isomorphism (`pullbackComp`, `pullbackCongr`) or a counit of a *single* adjunction, and this tree
+has lemmas about both.  So in `BcSquareCounitSide` — half (a) read under `pV^*` and past the
+counit — both occurrences of the Beck–Chevalley mate can be replaced by telescopes, turning
+"naturality of the mate across a change of square", for which nothing exists here or in mathlib,
+into a pseudofunctor coherence statement.
+
+Note what this does *not* use: no open immersion, no flatness, no quasi-coherence, and (per
+`bareBC_eq_of_w`) not even cartesianness — `mateEquiv_counit` is a general fact about mates.  The
+`IsPullback` binder is carried only to match `openImmersion_bareBC`'s signature.
+
+The previously recorded route needed the brick "`pushPullMap` is the degenerate-square mate", which
+was measured to typecheck but not be `rfl`.  That brick is still unproved and is still the blocker
+for the `mateEquiv_vcomp` route; this one sidesteps it.
+
+**HOW FAR IT GETS, MEASURED — and it is not all the way, said here rather than left to be
+discovered.**  Applied to `BcSquareCounitSide` after unfolding `bcv`, this lemma fires on the
+**right-hand side only**.  There the mate and the counit are at the *same* σ', so the pattern
+matches.  On the left-hand side the mate is at `σ' ∘ δᵏ` while the counit is at `σ'`, with a
+telescope inverse and `pushPullMap (wmap …)` sitting between them — so `rw` does not fire (measured:
+"did not find an occurrence", with the counit's argument visibly at the other index).
+
+So half (a) is **not** a one-rewrite consequence of the mate law, and the residue is now sharply
+located: getting the LHS counit adjacent to its mate, i.e. commuting `pushPullMap (wmap …)` and the
+telescope past the counit.  That is a naturality statement about the `pV`-counit, one adjunction at
+a time — no longer anything about mates across squares.  Project-local. -/
+theorem bareBC_pullback_counit {V V' : Scheme.{u}}
+    (g' : X' ⟶ X) (p : V ⟶ X) (p' : V' ⟶ X') (gV : V' ⟶ V)
+    (hsq : IsPullback gV p' p g') (c : V.Modules) :
+    (Scheme.Modules.pullback p').map ((openImmersion_bareBC g' p p' gV hsq).app c) ≫
+        (Scheme.Modules.pullbackPushforwardAdjunction p').counit.app _
+      = (((pullbackComp p' g') ≪≫ pullbackCongr hsq.w.symm ≪≫
+            (pullbackComp gV p).symm).hom).app ((pushforward p).obj c) ≫
+          (Scheme.Modules.pullback gV).map
+            ((Scheme.Modules.pullbackPushforwardAdjunction p).counit.app c) := by
+  rw [openImmersion_bareBC]
+  exact CategoryTheory.mateEquiv_counit _ _ _ c
+
 /-! (2) THE PASTE STRUCTURE -- an alternative route to half (a), NOT the one taken.
 
 MEASURED NEGATIVE: the statement
