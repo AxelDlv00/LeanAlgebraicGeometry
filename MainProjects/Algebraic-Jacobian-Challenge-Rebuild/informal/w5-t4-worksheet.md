@@ -563,3 +563,44 @@ that makes (iii-c2) assembly rather than construction.
 
 **Revised residue of the whole lane:** (iii-c1) [M, dual-number-free, portable to AJC] +
 (iii-c2) [M, all three inputs landed]. Nothing else stands between AJCR and the numeral.
+
+### 6.7 State of (iii-c1) at the end of run 0073 r1 — read this before starting it
+
+What is **landed** towards it (`Tangent/TwoChartCechPic.lean`, sorry-free, commit
+`e691846c1`):
+
+* `mixedValue` — transport of an overlap unit along the chart indices by `subst`;
+* `twoChartCandidate` — the candidate overlap unit `γ.evInf x₀ x₁` at points of the two
+  charts;
+* `twoChartCandidate_twoChartCocycle` — **it inverts**: the candidate of `twoChartCocycle u`
+  is `u`. This pins the target, so (iii-c1) will be an inverse, not just a surjection.
+
+What is **machine-checked but not yet committed as Lean** (probed this session, reproduce with
+`lean_run_code`): the normalizing `0`-cochain
+
+```
+normCochain … x := γ.evInf x (base (sel x))   :  Γ(X, (twoChartCover V sel hmem).opens x)ˣ
+```
+
+constructs, via `rw [twoChartCover_opens, twoChartCover_opens, hbase, inf_idem]`. So the
+*definition* is not the obstacle.
+
+What remains is the **cohomology relation** itself:
+
+```
+normCochain x  *  γ.evInf x y  =  twoChartPairUnit (twoChartCandidate …) (sel x) (sel y)  *  normCochain y
+```
+
+restricted to `opens x ⊓ opens y`. The route is the cocycle law `unitsEvInf_trans` (landed)
+plus `OneCocycle.ev_symm` to reverse a pair, in four `Bool` cases. The reason it was not
+finished this session is not a mathematical obstruction but the case-by-case `subst`
+bookkeeping the §6.6 cost note predicted: each of the four cases needs the chart indices
+abstracted before the pair values can be compared, and the same-chart cases additionally need
+`inf_idem` to line up two spellings of the same open.
+
+**Advice to the next session, concretely:** prove the relation first as a statement about
+*abstract* chart indices `s, t` with the pair values passed in as arguments (the shape of
+`twoChartCoboundary_of_pairRelation`, which worked), and only then instantiate at
+`sel x, sel y`. Do **not** try to `rw` inside the goal's types — that is the documented
+`motive is not type correct` wall, and it will appear four more times here than it did in
+(iii-b).
