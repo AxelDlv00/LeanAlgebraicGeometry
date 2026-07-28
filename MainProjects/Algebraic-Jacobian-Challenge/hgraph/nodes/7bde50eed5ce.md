@@ -8,9 +8,9 @@ generated: lean
 lean_status: lean_ok
 title: HomogeneousLocalization.algebraMap_val
 type: lean
-updated: '2026-07-28T18:12:37'
+updated: '2026-07-28T19:06:36'
 ---
-lemma algebraMap_val (r : R) :
+private lemma algebraMap_val (r : R) :
     (algebraMap R (HomogeneousLocalization 𝒜 x) r).val =
       algebraMap A (Localization x) (algebraMap R A r) := by
   rw [algebraMap_eq', RingHom.comp_apply, val_fromZeroRingHom,

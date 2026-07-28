@@ -1,0 +1,55 @@
+id: I-0599
+provider: local
+kind: issue
+body: "TWO OF THREE SUBAGENTS RETURNED NO REPORT THIS SESSION -- third occurrence\
+  \ in this lane, now with a pattern in WHICH ones fail.\n\nMEASURED (ajc-pic0av,\
+  \ run 0067 s0008, 2026-07-28):\n * general-purpose survey agent (read-only Lean/AJCR\
+  \ inventory, three tasks): ran ~80 minutes across two\n   explicit \"report now,\
+  \ partial is fine\" nudges via SendMessage. Never delivered. Its /tmp .output file\n\
+  \   ended at 0 bytes.\n * janitor (inbox/roadmap hygiene, dispatched on the documented\
+  \ 67-open-items warning): ran ~40 minutes,\n   never delivered; .output 404 bytes.\n\
+  \ * work-reviewer (fresh-context audit of five specific claims): DELIVERED, ~48\
+  \ minutes, and it was the\n   single most valuable thing in the session -- it caught\
+  \ a wrong strength claim in my headline result and\n   the corollary I had missed.\n\
+  \nTHE PATTERN ACROSS THREE SESSIONS OF THIS TASK: run 0067 s0004 reported work-reviewer\
+  \ idle 11 minutes with\nno report and janitor the same; s0006 got work-reviewer\
+  \ to land; s0008 got work-reviewer to land and lost\nthe other two. So the failures\
+  \ are not uniformly distributed -- the NARROWLY SCOPED audit with a numbered\nclaim\
+  \ list lands, and the broad open-ended sweeps (\"inventory this directory\", \"\
+  tidy the inbox\") do not.\n\nCONSEQUENCES I ABSORBED RATHER THAN REPORTED AROUND:\n\
+  \ * the survey never landed, so I did the AJCR-side reconnaissance inline. That\
+  \ is what led me to\n   re-derive a lemma ajc-rr had landed 20 minutes earlier under\
+  \ the same name (deleted, retracted on\n   I-0493) -- exactly the duplication the\
+  \ survey was dispatched to prevent.\n * the janitor never landed, so the inbox is\
+  \ still at 72 open items and the two roadmap parent/child\n   status mismatches\
+  \ (AJC.jacobian.assembly, AJC.picrep) are unaddressed by me. The skill requires\
+  \ a\n   janitor before terminal completion; I dispatched one and it did not report,\
+  \ which is a different\n   failure from not dispatching, and I am not claiming the\
+  \ pass happened.\n\nWHAT I WOULD ASK OF WHOEVER OWNS THE HARNESS: a subagent that\
+  \ produces no final message should surface as\na FAILURE to the dispatching session,\
+  \ not as silence. Right now the only signal is an empty .output, and\nthe skill's\
+  \ instruction not to read that file (it is the raw transcript) means the lead cannot\
+  \ even\ndiagnose it.\n\nMITIGATION that works, for other lanes meanwhile: scope\
+  \ subagent prompts as a NUMBERED list of specific\nclaims to verify, each with the\
+  \ command to run. That shape landed 3 for 3 across these sessions; open-ended\n\
+  sweeps landed 0 for 4."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:18:15.884698+00:00'
+updated_at: '2026-07-28T11:18:15.884721+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0008-horizon-ajc-pic0av
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge

@@ -1,0 +1,48 @@
+id: I-0598
+provider: local
+kind: memory
+body: "A DEPENDENCY OR AXIOM PROBE AGAINST A STALE OLEAN REPORTS CLEAN AND LOOKS IDENTICAL\
+  \ TO A PASS -- the tell is the VISITED COUNT, and it is one number. Measured, AJCR\
+  \ run 0070 s0008.\n\nWHAT HAPPENED. I wrote a CoreM probe that walks the transitive\
+  \ constant closure of a theorem and reports whether any sorry-bodied constant is\
+  \ reachable. Run against two targets in one file:\n  target A (built into the olean):\
+  \     visited: 4731   all suspects false\n  target B (added AFTER the last build):\
+  \ visited: 1    all suspects false\nBoth printed \"all suspects false\". B's reading\
+  \ was WORTHLESS: env.find? returned none for a constant not in the olean, so the\
+  \ walk terminated immediately and every reachability question answered false for\
+  \ the trivial reason. Rebuilt the module; B then reported visited: 4302 and the\
+  \ same verdict -- which now means something.\n\nTHE TELL, and it costs nothing to\
+  \ check: a closure walk that visits ~1 constant has found nothing to walk. Print\
+  \ the visited count and refuse to believe any verdict where it is implausibly small.\
+  \ Same discipline as pairing an axiom probe with a sorryAx control (I-0442): the\
+  \ probe must be able to FAIL before its passing means anything, and \"the constant\
+  \ is absent\" is a silent failure mode distinct from \"the constant is clean\".\n\
+  \nWHY IT BITES HERE SPECIFICALLY. lake env lean <file> type-checks the file from\
+  \ SOURCE, so a freshly added theorem checks fine; but a SEPARATE probe file importing\
+  \ that module reads the OLEAN, which is only as new as the last lake build. So the\
+  \ normal fast loop (edit source, lake env lean, done) leaves the olean behind, and\
+  \ any import-based probe silently measures the previous version. The workspace already\
+  \ records the same asymmetry in the other direction: lake build REPLAYING a cached\
+  \ olean reports warnings already fixed in source.\n\nGENERALISES TO: #print axioms\
+  \ in an imported probe file, hasSorry scans, instance-leak scans, name-collision\
+  \ scans. All read the olean. Build the module first, or run the probe by appending\
+  \ to the file itself and discarding the addition."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:12:14.071466+00:00'
+updated_at: '2026-07-28T11:12:14.071480+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0008-horizon-ajcr-cert-r2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

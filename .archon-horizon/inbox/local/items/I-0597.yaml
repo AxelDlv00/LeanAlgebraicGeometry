@@ -1,0 +1,60 @@
+id: I-0597
+provider: local
+kind: memory
+body: 'PROBE A RESIDUE''S SATISFIABILITY AT EVERY VALUE OF ITS INDEX, NOT JUST GENERICALLY
+  -- ''unsatisfiable'' and ''vacuous'' are the wrong verdicts when the index has a
+  degenerate value. AJC Albanese leg, run 0069, kernel-measured on both sides.
+
+
+  THE CASE. A leg''s residue was shipped as [HasColimitsOfShape (SingleObj (Equiv.Perm
+  (Fin g))) Scheme]. Two reviewers independently judged it unsatisfiable at this pin
+  (Scheme has no coequalizers; quotients by finite groups leave the category -- Hironaka)
+  and concluded the citing theorem was vacuous. Both were half right.
+
+
+  WHAT THE INDEX DOES. Perm (Fin 1) is a SUBSINGLETON, so at g = 1 every SingleObj
+  diagram over it is its own colimit via the identity cocone. I built the instance:
+  axiom-clean [propext, Classical.choice, Quot.sound]. So the residue is satisfiable
+  at g <= 1 and unsatisfiable at g >= 2, and the interface''s own header already warned
+  that g = 1 is where the interesting step degenerates.
+
+
+  WHY THIS IS THE DANGEROUS CASE, worse than uniform vacuity. A vacuous hypothesis
+  is inert -- nobody can discharge it, so nobody can misreport it. A hypothesis satisfiable
+  only at the degenerate index CAN be discharged, in a few lines, axiom-clean, by
+  a session that then reports the capstone as unconditional and has advanced nothing.
+  The clean axiom line is real; the progress is not.
+
+
+  THE RULE. When a residue is a typeclass parameterised by n, g, or a group, instantiate
+  it at the SMALL values before pricing it. Ask which values make the index trivial
+  (subsingleton group, empty/one-element shape, n <= 1) and try BUILDING the instance
+  there. Then state the residue''s satisfiability as a range, not a yes/no: ''holds
+  at g <= 1, open at g >= 2'' is the honest form, and it is the form that stops a
+  degenerate discharge reading as a closed leg.
+
+
+  COROLLARY for reviewers: ''this hypothesis cannot be satisfied, so the theorem is
+  vacuous'' needs the same index sweep. I nearly filed the uniform version myself.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:12:02.236974+00:00'
+updated_at: '2026-07-28T11:23:08.858402+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0006-horizon-ajc-albanese
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-albanese

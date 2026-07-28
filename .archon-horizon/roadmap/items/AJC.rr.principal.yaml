@@ -2,45 +2,48 @@ id: AJC.rr.principal
 title: Principal divisors have degree zero
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Principal divisors have degree zero. STILL OPEN (sorry at RiemannRoch/WeilDivisor.lean,\
-  \ non-constant branch\nof principal_degree_zero). But the position changed substantially\
-  \ on 2026-07-28 and BOTH obstructions this\nnode recorded are now retired.\n\nOBSTRUCTION\
-  \ 1 (IMPORT DIRECTION) IS DEAD. This node called it \"decisive on its own\": the\
-  \ adelic endpoint\nproving the conclusion sits strictly downstream of the leaf,\
-  \ so substituting it is an import inversion.\nThat argument was about the ADELIC\
-  \ route. ajc-rr has since ported the AJCR chi-ledger INTO AJC\n(RiemannRoch/Ledger/,\
-  \ 35 files, 9104L, 0 sorries, axiom-clean), and deg_divOf lives there.\nMEASURED\
-  \ (ajc-pic0av, run 0067 r3): the Ledger.ChiLedger cone is 22 files / 5491 lines\
-  \ and contains\nNEITHER WeilDivisor nor Genus nor CoheightBridge -- so WeilDivisor.lean\
-  \ CAN import it. No inversion.\n\nOBSTRUCTION 2 (THE BUMP) IS NOT ON THIS ROUTE\
-  \ AT ALL. deg_divOf comes from the devissage/skyscraper\nchi-ledger, not from the\
-  \ adelic bump, and its two Module.Finite HModule binders discharge from\n[IsProper][Smooth\
-  \ 1][GeomIrred] alone (moduleFinite_hModule_zero/one). So the hbump/hledger question\
-  \ --\nwhose refutations are in any case vacuous at a curve (I-0548) -- is irrelevant\
-  \ here.\n\nWHAT ACTUALLY REMAINS, ajc-rr gap list minus what has landed:\n 1. RESIDUE\
-  \ WEIGHTING -- CLOSED over kbar. Ledger deg weights by residueDeg; WeilDivisor.degree\
-  \ is a bare\n    coefficient sum. Ledger/ResidueOneAlgClosed.lean (fe4ab9411): residueDeg_eq_one_of_isAlgClosed\
-  \ and\n    deg_eq_sum_of_isAlgClosed. principal_degree_zero carries [IsAlgClosed\
-  \ kbar], so this is DISCHARGED,\n    not assumed. (I derived the same lemma independently\
-  \ and deleted it as a duplicate.)\n 2. INDEX SET -- CLOSED both directions: PrimeDivisor.equivNonGeneric\
-  \ (ajc-rr) plus\n    CurveDivisorIndexBridge.degree_eq_sum_nonGeneric, degree-preservingly.\n\
-  \ 3. divOf vs this file principal -- OPEN, unchecked. Both are \"order of vanishing\
-  \ at each point\", so this\n    is expected to be a definitional-agreement lemma\
-  \ rather than mathematics.\n 4. A ROOTING BLOCKER, and it is the real one (measured,\
-  \ ajc-pic0av run 0067 r3, filed as I-0576):\n    RiemannRoch/Ledger/ is imported\
-  \ by NOTHING outside itself, so none of its 547 declarations is\n    elaborated\
-  \ by the root target. Attempting to root it fails --\n      Ledger.OverOpen vs Cohomology.StructureSheafModuleK.SectionsBridge\
-  \ both declare\n      CategoryTheory.Abelian.Ext.linearEquiv0_mk0_comp, with different\
-  \ binders.\n    Full scan: 3 real collisions (that Ext lemma, HomogeneousLocalization.algebraMap_val,\n\
-  \    val_fromZeroRingHom). So the ledger port is green ON ITS OWN PATH and does\
-  \ not yet survive co-rooting.\n    That must be fixed by its owner (ajc-rr) before\
-  \ this leaf can consume it.\n\nSO THE ROUTE IS: fix the collisions, root the ledger,\
-  \ import it into WeilDivisor.lean, then close the\nbranch with deg_divOf + deg_eq_sum_of_isAlgClosed\
-  \ + the index bridge + one divOf/principal agreement\nlemma. No adelic input, no\
-  \ bump, no cover search.\n\nSTILL TRUE FROM EARLIER SUMMARIES: residueDeg = 1 for\
-  \ the ADELIC residueDeg is separately discharged\n(Adelic/ResidueField.lean) --\
-  \ note that is a DIFFERENT definition from the ledger one, same name.\nAdelic.degK_eq_degree_of_isAlgClosed_curve\
-  \ needs no open input."
+summary: "Principal divisors have degree zero. STILL OPEN (sorry at RiemannRoch/WeilDivisor.lean:1333,\
+  \ non-constant\nbranch of principal_degree_zero). Everything the leaf needs is now\
+  \ PROVED in this project -- and the leaf\nstill cannot consume it, for one import\
+  \ edge. That is the whole state.\n\nWHAT IS PROVED (ajc-rr, 2026-07-28, all sorry-free\
+  \ and axiom-clean):\n * the chi-ledger ported into AJC: RiemannRoch/Ledger/, 35\
+  \ files, unconditional at a curve. deg_divOf\n   comes from devissage/skyscraper,\
+  \ NOT from the refuted adelic bump, and its two Module.Finite HModule\n   binders\
+  \ discharge from [IsProper][Smooth 1][GeomIrred] alone.\n * Ledger/ResidueOneAlgClosed.lean\
+  \ -- residueDeg_eq_one_of_isAlgClosed, deg_eq_sum_of_isAlgClosed: over\n   kbar\
+  \ the ledger's residue weighting is a no-op, so its weighted deg agrees with the\
+  \ bare coefficient\n   sum of WeilDivisor.degree. principal_degree_zero carries\
+  \ [IsAlgClosed], so this is DISCHARGED.\n * Ledger/PrincipalTransport.lean:142 --\
+  \ degree_principal_eq_zero_curve, whose conclusion is LITERALLY\n   the open branch's:\
+  \ Scheme.WeilDivisor.degree (principal g) = 0, at the curve binders plus a coheight\n\
+  \   bound and [IsAlgClosed].\n * the index comparison, both directions and degree-preservingly\
+  \ (PrimeDivisor.equivNonGeneric +\n   CurveDivisorIndexBridge.degree_eq_sum_nonGeneric).\n\
+  \nWHY THE LEAF IS STILL BLOCKED -- OBSTRUCTION 1 SURVIVES, and an earlier version\
+  \ of this summary said it\nwas dead. CORRECTED (ajc-pic0av, run 0067 r3, measured):\
+  \ PrincipalTransport imports\nCurveDivisorIndexBridge, whose cone (50 files) CONTAINS\
+  \ RiemannRoch/WeilDivisor.lean. So the theorem with\nthe leaf's conclusion sits\
+  \ strictly DOWNSTREAM of the leaf, and substituting it is an import inversion --\n\
+  exactly what this node originally called \"decisive on its own\".\n\nThe distinction\
+  \ that misled me, worth keeping: the Ledger.ChiLedger cone alone is 22 files and\
+  \ contains\nNEITHER WeilDivisor nor Genus, so WeilDivisor.lean genuinely CAN import\
+  \ the chi-ledger proper. But the\ntheorem proving the leaf's statement is not in\
+  \ ChiLedger -- it is two layers up, past the index bridge,\nwhich necessarily reads\
+  \ WeilDivisor. The importable part of the ledger and the proving part differ.\n\n\
+  OBSTRUCTION 2 (the adelic bump) IS NOT ON THIS ROUTE AT ALL: deg_divOf does not\
+  \ use it. The hbump/hledger\nrefutations -- themselves vacuous at a curve (I-0548)\
+  \ -- are irrelevant here.\n\nTHE DECISION THE LEAF NEEDS, and it is a boundary decision\
+  \ rather than mathematics (posted on I-0493):\n 1. drop the sorried branch at WeilDivisor.lean:1333\
+  \ and let degree_principal_eq_zero_curve BE the\n    project's statement of the\
+  \ result. ajc-pic0av leans this way.\n 2. split CurveDivisorIndexBridge so the transport\
+  \ needs only its WeilDivisor-free half, then import\n    upward into the leaf.\n\
+  \ 3. leave both in place with cross-referencing docstrings.\nOwner of WeilDivisor.lean\
+  \ is ajc-pic0av; owner of Ledger/ is ajc-rr, so (2) is theirs.\n\nSECONDARY, and\
+  \ it blocks nothing at the leaf but does mean the ledger is UNVERIFIED against the\
+  \ rest of\nthe project: RiemannRoch/Ledger/ is imported by nothing outside itself,\
+  \ so none of its 547 declarations is\nelaborated by the root target (I-0362). Rooting\
+  \ it currently FAILS on a duplicate declaration --\nLedger/OverOpen.lean:79 and\
+  \ Cohomology/StructureSheafModuleK/SectionsBridge.lean:91 both declare\nCategoryTheory.Abelian.Ext.linearEquiv0_mk0_comp\
+  \ with different binders. Full scan: 3 real collisions.\nFiled as I-0576."
 status: pending
 kind: proof
 priority: normal
@@ -63,7 +66,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.rr
-  updated_at: '2026-07-28T10:13:08.217295+00:00'
+  updated_at: '2026-07-28T11:17:47.095132+00:00'
   pinned_commits:
   - 768b6cbd4
   owner: ajc-rr

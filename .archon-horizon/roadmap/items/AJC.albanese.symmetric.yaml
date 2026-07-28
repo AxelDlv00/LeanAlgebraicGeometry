@@ -3,27 +3,37 @@ title: Abel-Jacobi and symmetric-power factorisation
 projects:
 - Algebraic-Jacobian-Challenge
 summary: "Abel-Jacobi and symmetric-power factorisation. UNBLOCKED 2026-07-28 (run\
-  \ 0069, ajc-albanese):\nthe obligation was mis-sized, not hard.\n\nThe gap had been\
-  \ \"inhabit SymPowData C n for n >= 2\", priced at 2400-3800 lines\n(analogies/m3-route-audit.md)\
-  \ as a scheme quotient by a finite group action. Albanese/\nSymPowColimit.lean identifies\
-  \ that object instead: SymPowData C n TOGETHER WITH its symmetry\nhypothesis IS\
-  \ a colimit of the S_n-action on C^n, in both directions\n(symPowOfColimit / SymPowData.isColimit;\
-  \ hasColimit_permDiagram_iff states the equivalence, so\nthe reduction is lossless\
-  \ rather than a relocation into something harder).\n\nLanded, all axiom-clean:\n\
-  \ * the symmetry hypothesis -- the half that previously had only an n = 1 witness\
-  \ -- is now\n   colimit.w, free at every n;\n * the AFFINE case of Milne III.3 Prop\
-  \ 3.1 is PROVED at every n (symPowData_affine, on affine\n   k-schemes (Under k)^op)\
-  \ with no construction written; mem_sections_singleObj_iff names the\n   carrier\
-  \ as Spec of the invariant subring of the n-fold tensor power, i.e. Milne's\n  \
-  \ (A^{tensor n})^{S_n};\n * the trivial witness (proj := 1) is REFUTED in-tree at\
-  \ n = 2 (permAut_swap_ne_id), which the\n   interface header had only asserted;\n\
-  \ * Albanese/AlbaneseFromColimit.lean states Milne III.6.1 with NO SymPowData and\
-  \ NO hproj\n   argument.\n\nREMAINING, and it is one instance rather than a subproject:\n\
-  HasColimitsOfShape (SingleObj (Equiv.Perm (Fin g))) Scheme -- the gluing half of\
-  \ III.3.1. Note\nit is a statement about Scheme with no base and no curve in it:\
-  \ Over.forget creates colimits, so\nthe over-category layer does not exist (symPowData_over_of_scheme_colimits).\n\
-  \nAlso still open and NOT part of this node's debt: Milne III.5.1(a) birationality\
-  \ of f^(g), whose\ninputs sit downstream of the Picard seam.\n"
+  \ 0069, ajc-albanese):\nthe obligation was mis-sized, not hard. Read the two corrections\
+  \ at the end before citing this.\n\nThe gap had been \"inhabit SymPowData C n for\
+  \ n >= 2\", priced at 2400-3800 lines\n(analogies/m3-route-audit.md) as a scheme\
+  \ quotient by a finite group action. Albanese/\nSymPowColimit.lean identifies the\
+  \ object instead: SymPowData C n TOGETHER WITH its symmetry\nhypothesis IS a colimit\
+  \ of the S_n-action on C^n, in both directions (symPowOfColimit /\nSymPowData.isColimit,\
+  \ with hasColimit_permDiagram_iff stating the equivalence).\n\nLanded, all axiom-clean,\
+  \ both files sorry-free (SymPowColimit.lean 24 decls,\nAlbaneseFromColimit.lean\
+  \ 1):\n * the symmetry hypothesis -- the half that previously had only an n = 1\
+  \ witness -- is\n   colimit.w, free at every n;\n * the pair is inhabited at every\
+  \ n in Type and in (Under k)^op, the opposite of k-algebras\n   (symPowData_affineAlgebra),\
+  \ with no construction written;\n * non-vacuity is now checked IN THE CATEGORY THAT\
+  \ MATTERS: permAut_swap_ne_id_of_points\n   shows two distinct global points defeat\
+  \ the trivial datum, category-generally, so it\n   covers a curve in Over (Spec\
+  \ kbar); permAut_eq_id_of_isTerminal records the converse\n   boundary (at a terminal\
+  \ object the trivial datum DOES satisfy the hypothesis);\n * Albanese/AlbaneseFromColimit.lean\
+  \ states Milne III.6.1 with NO SymPowData and NO hproj\n   argument, over the per-diagram\
+  \ binder.\n\nREMAINING: HasColimit (permDiagram C g) for the curve -- the gluing\
+  \ half of Milne III.3.1.\nMeasured availability at this pin: HasCoproducts Scheme\
+  \ yes; HasCoequalizers / HasPushouts\nScheme no; Scheme.GlueData yes. So the next\
+  \ step is assembling a GlueData from the affine\nquotients, not waiting on a missing\
+  \ mathlib theory.\n\nTWO CORRECTIONS from a fresh-context review, both applied in-tree:\n\
+  \ 1. The residue must be stated PER DIAGRAM. An earlier draft shipped\n    HasColimitsOfShape\
+  \ (SingleObj (Perm (Fin g))) Scheme, which is strictly stronger, is NOT\n    what\
+  \ the iff proves equivalent, and is believed false at this pin -- so the capstone\
+  \ was\n    vacuous. Fixed; do not restate it in the quantified form.\n 2. The affine\
+  \ result is an INHABITATION statement, not Milne III.3.1's affine half. That\n \
+  \   (Under k)^op is affine k-schemes, and that the carrier is Spec of the S_n-invariants\
+  \ of\n    the n-fold tensor power, are both EXPECTED and NOT PROVED here.\n\nAlso\
+  \ still open and NOT this node's debt: Milne III.5.1(a) birationality of f^(g),\
+  \ whose\ninputs sit downstream of the Picard seam.\n"
 status: active
 kind: proof
 priority: high
@@ -46,7 +56,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-28T10:01:27.267536+00:00'
+  updated_at: '2026-07-28T11:19:30.098813+00:00'
   pinned_commits:
   - 1fedb22e4
   - f7391b281

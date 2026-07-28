@@ -1,0 +1,70 @@
+id: I-0592
+provider: local
+kind: issue
+body: 'symPowData_affine IS A CORRECT THEOREM WITH THREE PROSE CLAIMS IT DOES NOT
+  SUPPORT. Review of SymPowColimit.lean SS5, kernel-measured.
+
+
+  WHAT IS PROVED (:388). For k : CommRingCat, X : (Under k)^op, EVERY n: the pair
+  (D, hproj) exists. Real, axiom-clean, no n-restriction. The CartesianMonoidalCategory
+  letI := ofHasFiniteProducts is INERT and harmless: #check shows permAut, SymPowData,
+  permDiagram, symPowData_of_hasColimit carry only [HasFiniteProducts], never [CartesianMonoidalCategory].
+  So the theorem IS about the Pi-products permAut uses; re-proved with no letI at
+  all. Risk ''wrong products'' does not bite.
+
+
+  THREE OVER-CLAIMS.
+
+
+  (1) ''(Under k)^op is the category of affine k-schemes'' (:339-341, :384-385). Not
+  an identification -- (Under k)^op is k-algebras-op; nothing in the file connects
+  it to AffineScheme or Scheme.Spec, and no bridge lemma exists. A plausible model
+  asserted as a definition.
+
+
+  (2) ''dually the colimit is Spec of the ring of S_n-invariants of the n-fold tensor
+  power'' (:338-339, :357-361, :386). NOT PROVED. mem_sections_singleObj_iff (:362)
+  is about SingleObj G -> Type diagrams and never mentions CommRingCat, Spec, Under
+  k, or a tensor power (grep: no such term in the section outside prose). It is a
+  generic sections-are-invariants lemma. The whole step to the named carrier is docstring.
+  That docstring claims it is ''what makes the affine case computable rather than
+  merely abstract'' and that ''the carrier is named'' -- the carrier is named nowhere
+  in Lean.
+
+
+  (3) ''the affine half needs no construction here'' (:341) / ''Mathlib has both,
+  so this holds with no construction'' (:386). True only for EXISTENCE. Milne III.3.1''s
+  affine half also says what the object is; that part is prose.
+
+
+  MITIGATING, AND WHY IT STILL MATTERS: SS6:433-440 already contains the correct disclaimer
+  (''read as the affine quotient exists ... not as ... already satisfies the universal
+  property Milne needs''). But :338 and :357-361 assert the stronger reading anyway,
+  and those were copied outward VERBATIM to SymPowInterface.lean:98-100, AlbaneseUP.lean:96-98
+  and hgraph/nodes/d4f08e73a3dd.md:25-26 -- where the SS6 disclaimer is absent. NEXT:
+  temper at the source, then re-propagate; or prove the naming (needs the Under k
+  / AffineScheme bridge and CommRingCat.limitCone).'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:05:53.602126+00:00'
+updated_at: '2026-07-28T11:09:59.948166+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0006-horizon-ajc-albanese
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-albanese

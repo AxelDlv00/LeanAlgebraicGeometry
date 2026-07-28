@@ -3,37 +3,51 @@ title: Smoothness, properness, and irreducibility
 projects:
 - Algebraic-Jacobian-Challenge
 summary: "Smoothness, properness, and irreducibility of Pic^0. Irreducibility and\
-  \ the group structure are DONE\n(Pic0.geometricallyIrreducible, Pic0.grpObj). The\
-  \ two open conjuncts each now have ONE residue, and run\n0067 r3 REPLACED BOTH with\
-  \ statements the pinned mathlib has vocabulary for.\n\nSMOOTHNESS -- residue is\
-  \ IsReduced of ONE scheme, over kbar.\n  Pic0.smooth_of_isReduced_algebraicClosureBaseChange\
-  \ (Picard/Pic0AbelianVariety.lean)\ntakes IsReduced (Pic0 x_{Spec k} Spec kbar)\
-  \ and nothing else. Previously the residue was the CLASS\nGeometricallyReduced,\
-  \ which quantifies over every field base change and has no producer here; the\n\
-  converse implication (kbar => all fields) is the transcendental half, absent from\
-  \ mathlib v4.31 and\nmachine-confirmed absent by both projects (I-0495). So this\
-  \ is a STRICTLY weaker hypothesis.\n\nHow it became available: mathlib reduces to\
-  \ the kbar case internally but through a PRIVATE lemma.\nBoth projects had recorded\
-  \ 'make smooth_of_grpObj_of_isAlgClosed public' as an upstream PR. Not needed\n\
-  -- private hides the name, not the proof, and the proof uses only public API. Re-derived\
-  \ in\nPicard/GroupSchemeSmoothAlgClosed.lean (sorry-free, rooted, one mathlib import,\
-  \ portable to AJCR).\nMEASURED at a probe site with the HasPicScheme gate ASSUMED\
-  \ not synthesised: probe axiom-clean,\ncontrol Pic0.smooth reports sorryAx.\n\n\
-  PROPERNESS -- residue is a LIFTING statement, not quasi-projectivity.\n  Pic0.proper_of_valuativeCriterion\n\
-  gets IsProper from ValuativeCriterion.Existence ALONE. The other three conjuncts\
-  \ are theorems of the\nfile: isSeparated, locallyOfFiniteType, quasiCompact (the\
-  \ last was filed 'not needed for the proper\nassembly' -- it is exactly what this\
-  \ route consumes).\nThis retires the standing caveat I-0074 Caveat 2, that Kleiman\
-  \ th:qpp&p argues via quasi-projectivity\nand mathlib v4.31 has no such vocabulary.\
-  \ The valuative criterion (Stacks 01KF) is mathlib's\nUniversallyClosed.of_valuativeCriterion.\
-  \ Through representability the lifting condition IS 'an\ninvertible sheaf on C x_k\
-  \ Spec K extends over the valuation ring' -- the classical content of\nproperness,\
-  \ and the same species of statement as this chapter's DualNumber.free_of_cyclic_mod_eps.\n\
-  \nSTILL OPEN, and neither is claimed proved: reducedness over kbar; the valuative\
-  \ existence half.\nEarlier routes retained beside the new ones (smooth_of_forall_isReduced,\
-  \ universallyClosed_of_ambient,\nuniversallyClosed_of_baseChange). ajc-etale-pic's\
-  \ Pic0Et.smooth/.proper carry the same two residues and\nboth reductions apply verbatim\
-  \ there -- their file, not edited."
+  \ the group structure are DONE\n(Pic0.geometricallyIrreducible, Pic0.grpObj). Run\
+  \ 0067 r3 replaced BOTH open conjuncts' residues with\nstatements the pinned mathlib\
+  \ has vocabulary for, and a review then corrected the strength claim on one\nof\
+  \ them.\n\nSMOOTHNESS -- residue is IsReduced of ONE scheme, over kbar, and it discharges\
+  \ TWO obligations.\n  Pic0.smooth_of_isReduced_algebraicClosureBaseChange\n  Pic0.geometricallyReduced_of_isReduced_algebraicClosureBaseChange\n\
+  Both in Picard/Pic0AbelianVariety.lean, both axiom-clean. The single hypothesis\n\
+  IsReduced (Pic0 x_{Spec k} Spec kbar) gives smoothness AND the class GeometricallyReduced\
+  \ (via the\nin-tree instance Smooth.geometricallyReduced) -- so it also discharges\
+  \ the file's own open sorry\nPic0.geometricallyReduced. Compare smooth_of_forall_isReduced,\
+  \ which asks one reducedness statement PER\nfield extension.\n\nHow it became available:\
+  \ mathlib reduces to the kbar case internally but through a PRIVATE lemma. Both\n\
+  projects had recorded \"make smooth_of_grpObj_of_isAlgClosed public\" as an upstream\
+  \ PR. Not needed --\nprivate hides the name, not the proof, and the proof uses only\
+  \ public API. Re-derived in\nPicard/GroupSchemeSmoothAlgClosed.lean (sorry-free,\
+  \ rooted, single mathlib import, portable to AJCR).\nMEASURED at a probe site with\
+  \ the HasPicScheme gate ASSUMED not synthesised: probe axiom-clean, control\nPic0.smooth\
+  \ reports sorryAx.\n\nCORRECTION, recorded because it was published wrong first:\
+  \ the criterion is NOT a strictly weaker\nhypothesis, it is a RESTATEMENT. I claimed\
+  \ IsReduced-over-kbar => GeometricallyReduced is absent; it is\nabsent from mathlib\
+  \ but PRESENT in AJC (Smooth.geometricallyReduced), so at these binders the two\
+  \ are\ninterprovable. The error was measuring \"absent\" inside the edited file's\
+  \ import cone (99 modules, which\nexcludes Curve/GeometricallyReduced) instead of\
+  \ the root cone (215, which contains it) -- a synthesis\nprobe cannot see a bridge\
+  \ its own imports exclude, and it fails silently. Negative availability claims\n\
+  must be measured at the ROOT (I-0588). The restatement is still worth having: interprovable\
+  \ is not\nequally attackable, and GeometricallyReduced has no non-circular producer\
+  \ here.\n\nPROPERNESS -- residue is a LIFTING statement, not quasi-projectivity.\n\
+  \  Pic0.proper_of_valuativeCriterion  gets IsProper from ValuativeCriterion.Existence\
+  \ ALONE.\n  Pic0.universallyClosed_of_valuativeCriterion  its universal-closedness\
+  \ half.\nThe other three conjuncts are theorems of the file: isSeparated, locallyOfFiniteType,\
+  \ quasiCompact (the\nlast was filed \"not needed for the proper assembly\" -- it\
+  \ is exactly what this route consumes).\nThis retires the standing caveat I-0074\
+  \ Caveat 2, that Kleiman th:qpp&p argues via quasi-projectivity and\nmathlib v4.31\
+  \ has no such vocabulary. The valuative criterion (Stacks 01KF) is mathlib's\nUniversallyClosed.of_valuativeCriterion.\
+  \ Through representability the lifting condition IS \"an invertible\nsheaf on C\
+  \ x_k Spec K extends over the valuation ring\" -- the classical content of properness,\
+  \ and the\nsame species of statement as this chapter's DualNumber.free_of_cyclic_mod_eps.\n\
+  Caveat from review: mathlib carries the criterion as an EQUALITY, so this hypothesis\
+  \ is interprovable with\nthe sorry it replaces. Change of shape, not of strength\
+  \ -- but the shape is what is attackable.\n\nSTILL OPEN, neither claimed proved:\
+  \ reducedness of Pic0 x_k Spec kbar; the valuative existence half.\nEarlier routes\
+  \ retained beside the new ones (smooth_of_forall_isReduced, universallyClosed_of_ambient,\n\
+  universallyClosed_of_baseChange). ajc-etale-pic's Pic0Et.smooth/.proper carry the\
+  \ same two residues and\nboth reductions apply verbatim there -- their file, not\
+  \ edited."
 status: active
 kind: proof
 priority: high
@@ -56,7 +70,8 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-28T09:40:32.157283+00:00'
+  updated_at: '2026-07-28T11:11:34.871789+00:00'
   owner: ajc-pic0av
   pinned_commits:
+  - 74c715147
   - 012a5bd75

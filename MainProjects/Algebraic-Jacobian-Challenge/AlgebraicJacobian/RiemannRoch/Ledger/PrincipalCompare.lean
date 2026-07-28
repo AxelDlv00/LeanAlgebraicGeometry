@@ -3,7 +3,7 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import AlgebraicJacobian.RiemannRoch.Ledger.PrincipalDivisor
+import AlgebraicJacobian.RiemannRoch.Ledger.OrdCompare
 import AlgebraicJacobian.RiemannRoch.WeilDivisor
 
 /-!
@@ -70,45 +70,10 @@ namespace AlgebraicGeometry
 
 variable {K : Type u} [Field K] {X : Scheme.{u}}
 
-/-- `WithZero.log` of a coerced unit of `ℤᵐ⁰`, after inversion, is `toAdd` of the inverse in the
-units group: the pure `WithZero` bookkeeping separating the two spellings of "order". -/
-private lemma log_coe_units_inv (u : (WithZero (Multiplicative ℤ))ˣ) :
-    WithZero.log ((u : WithZero (Multiplicative ℤ))⁻¹)
-      = Multiplicative.toAdd (invMonoidHom (WithZero.unitsWithZeroEquiv u)) := by
-  obtain ⟨a, ha⟩ : ∃ a : Multiplicative ℤ,
-      (u : WithZero (Multiplicative ℤ)) = (a : WithZero _) :=
-    ⟨WithZero.unitsWithZeroEquiv u, by simp [WithZero.unitsWithZeroEquiv]⟩
-  simp only [ha, invMonoidHom]
-  rw [← WithZero.coe_inv]
-  have hlog : ∀ b : Multiplicative ℤ,
-      WithZero.log (b : WithZero (Multiplicative ℤ)) = Multiplicative.toAdd b :=
-    fun b => (Equiv.symm_apply_eq Multiplicative.toAdd).mp rfl
-  rw [hlog]
-  simp [WithZero.unitsWithZeroEquiv, ha]
-
-/-- **The two order functions agree** (★): the ported ledger's `ordZ`, read additively, is
-mathlib's `Ring.ordFrac` on the stalk, read through `WithZero.log` — which is exactly the
-integer `Scheme.RationalMap.order` uses.
-
-Both are the adic valuation of the maximal ideal of the DVR stalk: `Scheme.ord` *is* that
-valuation by construction, `stalkHeightOne` is definitionally
-`IsDiscreteValuationRing.maximalIdeal`, and `Ring.ordFrac_eq_valuation_inv` supplies the single
-inversion that `ordZ` performs on the other side of the units equivalence.
-
-The sign conventions agree with no correction term. -/
-theorem Scheme.ordZ_toAdd_eq_log_ordFrac (f : X ⟶ Spec (CommRingCat.of K))
-    [SmoothOfRelativeDimension 1 f] [IsIntegral X] [IsLocallyNoetherian X]
-    (g : X.functionFieldˣ) {x : X} (hx : x ≠ genericPoint X)
-    [Ring.KrullDimLE 1 (X.presheaf.stalk x)] :
-    Multiplicative.toAdd (Scheme.ordZ f hx g)
-      = WithZero.log (Ring.ordFrac (X.presheaf.stalk x) (g : X.functionField)) := by
-  letI := isDiscreteValuationRing_stalk f hx
-  letI := isDedekindDomain_stalk f hx
-  rw [Ring.ordFrac_eq_valuation_inv (K := X.functionField)]
-  have hv : (IsDiscreteValuationRing.maximalIdeal (X.presheaf.stalk x)).valuation
-      X.functionField (g : X.functionField) = Scheme.ord f hx (g : X.functionField) := rfl
-  rw [hv]
-  exact (log_coe_units_inv (Units.map (Scheme.ord f hx).toMonoidWithZeroHom.toMonoidHom g)).symm
+/-! The coefficient identity itself now lives in `Ledger/OrdCompare.lean`, which does **not**
+import `WeilDivisor.lean` — see that file's docstring for why the split matters (an import
+inversion blocks substituting a downstream theorem into an upstream `sorry`).  Re-exported here
+under its `RationalMap.order` spelling for consumers already downstream. -/
 
 /-- **The ledger's principal divisor has this project's coefficients** (★): at a prime divisor
 `Y` of the curve, the coefficient of `Scheme.divOf f g` at `Y.point` is

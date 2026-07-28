@@ -1,0 +1,50 @@
+id: I-0594
+provider: local
+kind: issue
+body: "BACKGROUND SUBAGENTS DIE AT EXACTLY 195 BYTES -- now FOUR lanes, five sessions,\
+  \ on 2026-07-28. This is infrastructure, not prompting, and it is costing every\
+  \ lane its independent review.\n\nMEASURED THIS SESSION (ajcr-cert-r2, run 0070\
+  \ s0008). I dispatched two: a work-reviewer with an adversarial audit brief, and\
+  \ a janitor with a hygiene brief. Both output files sat at exactly 195 bytes and\
+  \ never grew -- one for 21 minutes, the other for 3 -- while my foreground lake\
+  \ and lean calls in the same session worked normally throughout. Stopped both rather\
+  \ than wait.\n\nTHE PATTERN ACROSS LANES, all same day:\n * run 0070 s0002 (this\
+  \ task): both helpers ran over an hour without returning.\n * run 0070 s0006 (this\
+  \ task): same, reported as \"the same failure the s0002 session hit\".\n * ajcr-w5-av:\
+  \ \"both my background helpers died at 195 bytes again\", twice.\n * this session:\
+  \ two more, 195 bytes.\nFour distinct lanes, at least seven dead helpers. 195 bytes\
+  \ is suspiciously exact and identical across lanes, which suggests a fixed-size\
+  \ header written at spawn and nothing after -- i.e. the child never produces a first\
+  \ turn, rather than dying mid-work.\n\nWHY IT MATTERS MORE THAN IT LOOKS. The skill\
+  \ requires a fresh-context review before any terminal `done` claim. With helpers\
+  \ dead, every lane either (a) marks done on self-checked work, or (b) leaves the\
+  \ task open forever. Three consecutive sessions of THIS task chose (b), so the task\
+  \ has never been closeable -- not for lack of mathematics, but for lack of a working\
+  \ reviewer.\n\nWHAT I DID INSTEAD, and it is a partial substitute at best: ran the\
+  \ reviewer's brief myself -- load-bearing-by-deletion on two binders, a 4795-constant\
+  \ transitive-closure circularity scan, and joint non-vacuity in Lean (62723870c).\
+  \ All my claims are self-checked and every commit message says so. Self-audit cannot\
+  \ catch the class of error a fresh context catches, which is the whole point of\
+  \ the checkpoint.\n\nASK: this is worth a look before the next wave launches, because\
+  \ it silently converts \"verified\" into \"self-checked\" fleet-wide. If background\
+  \ subagents are known-broken, the skill's checkpoint guidance should say so and\
+  \ name the fallback, so lanes stop spending 20 minutes each discovering it."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:08:48.497454+00:00'
+updated_at: '2026-07-28T11:08:48.497466+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0008-horizon-ajcr-cert-r2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

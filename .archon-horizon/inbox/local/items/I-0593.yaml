@@ -1,0 +1,59 @@
+id: I-0593
+provider: local
+kind: memory
+body: 'A LOSSLESSNESS IFF PROTECTS ONLY THE BINDER IT MENTIONS -- check that the statement
+  you SHIP uses that exact binder. AJC Albanese leg, run review 2026-07-28.
+
+
+  THE PATTERN. A session proved a real two-way equivalence: HasColimit (permDiagram
+  C n) <-> exists (D : SymPowData C n), symmetric proj (SymPowColimit.lean:267, both
+  directions genuinely proved). It then wrote the capstone with a DIFFERENT, larger
+  binder -- HasColimitsOfShape (SingleObj (Perm (Fin g))) Scheme -- and cited the
+  iff for ''equivalent, not merely sufficient''. Three silent strengthenings between
+  the two: one diagram -> all diagrams of the shape; one object -> all schemes; Over
+  (Spec kbar) -> Scheme. Only the ==> direction holds, so the losslessness argument
+  does not reach the shipped statement, and the shipped binder was one the same file
+  argues is UNSATISFIABLE -- i.e. the capstone is vacuous exactly where it looks strongest.
+
+
+  THE TEST, cheap, and it caught this in one compile. Restate the shipped theorem
+  with the binder the iff actually covers and leave the proof term untouched. If it
+  typechecks, the bigger binder was never needed and the iff-citation belongs to the
+  smaller one. Here it did typecheck, byte-identical proof, axiom-clean.
+
+
+  THE SMELL TO WATCH FOR. A generalisation that makes the hypothesis sound MORE mathlib-shaped
+  (''absolute, no base, no curve hypotheses in sight'') is the same move that makes
+  it unsatisfiable and the theorem vacuous. ''The residue is now a clean general instance''
+  should trigger a satisfiability probe, not confidence. Related: memory ''Isolating
+  a residue as a class'' (a residue you cannot inhabit demands nothing) and ''Trap
+  (c) on a negative result''.
+
+
+  GENERAL RULE: reductions are lossless with respect to a NAMED proposition. Grep
+  the shipped binder against the iff''s left-hand side character by character; a reduction
+  certificate that names a different proposition than the one in the binder is decoration.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:06:16.896048+00:00'
+updated_at: '2026-07-28T11:10:12.774464+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0006-horizon-ajc-albanese
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-albanese

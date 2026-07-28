@@ -1,0 +1,55 @@
+id: I-0595
+provider: local
+kind: issue
+body: "THE CAPSTONE'S HYPOTHESIS IS STRICTLY STRONGER THAN THE ONE hasColimit_permDiagram_iff\
+  \ PROVES EQUIVALENT -- so the 'lossless' claim is right about the iff and wrong\
+  \ about the theorem that cites it. Measured, AJC run 0069 ajc-albanese, reviewer\
+  \ pass.\n\nWHAT THE IFF SAYS. hasColimit_permDiagram_iff (Albanese/SymPowColimit.lean:267)\
+  \ is about ONE diagram: HasColimit (permDiagram C n) <-> exists the pair (D, hproj).\
+  \ Both directions verified, kernel-clean. This is correct and is the real result\
+  \ of the file.\n\nWHAT THE CAPSTONE ASSUMES. exists_unique_albanese_of_scheme_colimits\
+  \ (Albanese/AlbaneseFromColimit.lean:75) assumes [HasColimitsOfShape (SingleObj\
+  \ (Equiv.Perm (Fin g))) Scheme] -- colimits of that shape for EVERY diagram in ALL\
+  \ of Scheme, i.e. quotients of every scheme by every S_g-action. Its docstring (:67-70)\
+  \ says this hypothesis 'is equivalent -- not merely sufficient -- to the datum previously\
+  \ assumed (hasColimit_permDiagram_iff)'. That is not what the iff establishes and\
+  \ it is false as stated.\n\nMEASURED BOTH WAYS:\n * blanket => single: compiles\
+  \ by infer_instance (hasColimitOfHasColimitsOfShape).\n * single => blanket: synthesis\
+  \ FAILS. So the implication is one-way.\n * The capstone re-proved with [HasColimit\
+  \ (permDiagram C g)] in place of the blanket instance COMPILES UNCHANGED -- same\
+  \ proof term, same body. /tmp probe, elaborated clean.\n\nSO THE FIX IS ONE BINDER,\
+  \ not a re-proof: replace [HasColimitsOfShape (SingleObj (Equiv.Perm (Fin g))) Scheme.{u}]\
+  \ by [HasColimit (permDiagram C g)] at AlbaneseFromColimit.lean:75. Then the docstring's\
+  \ equivalence claim becomes TRUE, and the stated residue is exactly what the iff\
+  \ characterises. Same for symPowData_over_of_scheme_colimits (SymPowColimit.lean:428)\
+  \ -- also compiles from the single-diagram instance.\n\nWHY THIS MATTERS AND IS\
+  \ NOT PEDANTRY. The blanket form is the form that CANNOT hold: coequalizers of schemes\
+  \ do not exist in general (quotients by finite groups leave the category of schemes\
+  \ -- Hironaka; cf. the algebraic-spaces caveat in I-0074, which SymPowColimit's\
+  \ own section 6 now cites). So the leg's advertised single residue is currently\
+  \ an instance that is FALSE, while the thing actually needed -- a colimit for the\
+  \ ONE diagram attached to a proper curve -- is plausibly true. Stating the residue\
+  \ in the false form makes it unclosable by anyone who takes the statement at face\
+  \ value."
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:08:55.380246+00:00'
+updated_at: '2026-07-28T11:11:37.309438+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0006-horizon-ajc-albanese
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-albanese
