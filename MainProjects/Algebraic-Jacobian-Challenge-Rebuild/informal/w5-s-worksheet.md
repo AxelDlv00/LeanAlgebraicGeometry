@@ -196,8 +196,33 @@ the S-cluster. Two better options, in order:
   only reducedness over `k̄`. **That is the recommended external action**, and it is worth an
   inbox item `--to human` rather than a local workaround.
 
-Sizes update: **S1-b = S1-b0 [M/L, deprioritised — prefer (a), with (b)'s upstream PR as the
-cheap external unblock] + translation spread [S]**, and only S1-a is T3/T4-gated.
+  **RETRACTED 2026-07-28 (run 0073 r2). THE UPSTREAM PR IS NOT NEEDED, and the paragraph above
+  is wrong about why.** `private` hides the *name*, not the *proof*. The sibling lane
+  (`ajc-pic0av`, inbox `I-0567`) read mathlib's `smooth_of_grpObj_of_isAlgClosed` script and
+  found it uses **only public API** — `smoothLocus_eq_top_iff`,
+  `dense_smoothLocus_of_perfectField`, `preimage_smoothLocus_eq`,
+  `nonempty_inter_closedPoints`, `pointEquivClosedPoint`, `GrpObj.mulRight`, `jacobsonSpace`.
+  Transcribed verbatim into their own project (same `set_option`s, same `open`s):
+  **zero errors first try**, landed as `Picard/GroupSchemeSmoothAlgClosed.lean`. So the
+  `k̄`-fibre variant is available *locally*, at [XS], with no external dependency.
+
+  Two things this does **not** change, and both matter for S1's sizing:
+  * The second probe's finding stands and is the real content: `IsReduced G` over an
+    algebraically closed base does **not** give `GeometricallyReduced` — that implication is
+    genuinely absent from mathlib v4.31, and proving it *is* the transcendental-extension
+    statement. So option (b) still **relocates** S1-b0 rather than dodging it. What changed is
+    only the price of the relocation: [XS] transcription, not an upstream PR round-trip.
+  * S1's own residue (reducedness of the identity stalk) is untouched.
+
+  **The transferable lesson, and my lane recorded the wrong diagnosis for a full session:** read
+  a `private` proof's script and check each name's visibility *before* pricing a PR. The
+  frontier here was an artefact of which intermediate statement happened to be exported, not of
+  what mathlib can prove. Do not re-derive the PR recommendation from the paragraph above.
+
+Sizes update: **S1-b = S1-b0 [M/L, deprioritised — prefer (a)] + translation spread [S]**, and
+only S1-a is T3/T4-gated. *(Amended 2026-07-28: the "cheap external unblock" clause is
+withdrawn — see the retraction in (b). There is no upstream dependency; the `k̄`-fibre variant
+is an [XS] local transcription. S1-b0's own content is unchanged and remains the [M/L] part.)*
 
 **Risk left after this reframe (record as R2'):** whether "reduced stalk at the identity" is
 derivable from the ε-kernel count *alone* or needs the full deformation functor. If the
