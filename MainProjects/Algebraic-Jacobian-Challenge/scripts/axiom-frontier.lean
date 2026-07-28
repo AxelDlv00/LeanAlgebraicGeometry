@@ -521,7 +521,24 @@ instHasPicScheme` and `instance pullback_preservesFiniteLimits`. Do not derive t
 grepping the sources for `:= sorry`: that misses the last two entries above, whose `sorry`
 sits in a structure field, and it counts prose mentions of the word. Two earlier revisions of
 this file got the arithmetic wrong in exactly one of those ways, which is the reason the
-command is written out here rather than the number alone. -/
+command is written out here rather than the number alone.
+
+"Exactly two are instances" is what the whole synthesis-leak argument rests on, so check it
+against the DECLARATION KEYWORD at each carrier line rather than against the enumeration
+above — a prose list is the thing that rots, and reading this file is how you would miss an
+instance added to it:
+
+    lake build AlgebraicJacobian 2>&1 | grep 'declaration uses' | sort -u |
+      while read -r l; do
+        f=${l#warning: }; f=${f%%:*}
+        n=$(printf '%s' "$l" | sed 's/.*\.lean:\([0-9]*\):.*/\1/')
+        sed -n "${n}p" "$f" | grep -oE '(instance|theorem|def)' | head -1
+      done | sort | uniq -c
+
+Measured 2026-07-28: **17 theorem + 7 def + 2 instance = 26**, agreeing with the enumeration.
+Note the line numbers move as docstrings are edited, so re-run the build rather than reusing a
+saved carrier list — a stale list silently misattributes a keyword to whatever now sits at
+that line. -/
 #print axioms AlgebraicGeometry.Scheme.instHasPicScheme
 #print axioms AlgebraicGeometry.pullback_preservesFiniteLimits
 
