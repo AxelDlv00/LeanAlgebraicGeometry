@@ -3,38 +3,69 @@ title: Identity component and degree-zero points
 projects:
 - Algebraic-Jacobian-Challenge
 summary: "Identity component and degree-zero points (AJC.pic0av.identity).\n\nSTATE\
-  \ at run 0067 r5. IdentityComponent.lean carries 2 sorries: finrank_eq_genus\nand\
-  \ kPoints_iff_kerDegree. PicScheme.degree is constructed (r4).\n\nDIMENSION LEG,\
-  \ reduced to TWO named inputs and no dimension theory (r5, commits\nb9bfa997f /\
-  \ 476236c3b / b653ef4d6 / b5ceb8ff0 / 5dca5e7cc). The recorded blocker --\n\"mathlib\
-  \ v4.31 has almost no topologicalKrullDim API, so the route must go through\nAlgebra.IsStandardSmoothOfRelativeDimension\
-  \ and an affine-local presentation\" -- was a\nmis-measurement: it read the API\
-  \ surface, not the DEFINITION. topologicalKrullDim IS\nkrullDim of the irreducible\
-  \ closeds; a scheme is sober and T0, so\nirreducibleSetEquivPoints is an order iso\
-  \ onto the carrier, krullDim_eq_iSup_coheight\napplies, and the project's own ringKrullDim_stalk_eq_coheight\
-  \ finishes. For ANY scheme:\ndim X = sup over z of dim O_{X,z} (Picard/SchemeKrullDimStalk.lean,\
-  \ axiom-clean,\n7 declarations).\n\nConsequences (Picard/Pic0Dimension.lean):\n\
-  \ * \">=\" (\"genus <= dim Pic^0\") is REDUCED TO FRONT (a) AND NOTHING ELSE: it\
-  \ follows\n   from the tangent-space identity at the IDENTITY ALONE plus regularity\
-  \ of that one\n   stalk, and over a PERFECT base field the regularity comes from\
-  \ smoothness of Pic^0.\n   MEASURED HONESTLY: this reports sorryAx, inherited from\
-  \ the open cocycle comparison\n   semilinearComparison_cotangentSpaceDual_h1Cok\
-  \ (Pic0AbelianVariety.lean:805) via\n   finrank_cotangentSpace_eq_finrank_hModuleOne.\
-  \ An earlier version of this row said\n   \"PROVED\"; that was wrong and the axiom\
-  \ probe caught it. The dimension BRIDGE\n   underneath is axiom-clean.\n * \"<=\"\
-  \ is separately open: one UNIFORM bound (forall z, ringKrullDim (stalk z) <=\n \
-  \  genus C), unobtainable from data at one point. finrank_eq_genus is now stated\n\
-  \   against exactly that hypothesis. Measured absence direction: Albanese/\n   StandardSmoothDimension.lean\
-  \ has only LOWER bounds, and only at MAXIMAL ideals.\n   SmoothOfRelativeDimension\
-  \ (genus C) (Pic0Scheme C).hom would supply it.\n\nSPIN-OFF, upstream of this node:\
-  \ stalks of a smooth scheme over a PERFECT field are\nregular local rings, with\
-  \ no other hypothesis\n(Scheme.isRegularLocalRing_stalk_of_smooth_of_perfectField,\
-  \ axiom-clean). AJC had this\nonly over k-bar and with five further binders (Albanese/CodimOneExtension);\
-  \ the\nalg-closed form is unusable here because Pic^0_{C/k} lives over the given\
-  \ k and stalk\nregularity descends along Spec k-bar -> Spec k by no route in this\
-  \ tree.\n\nkPoints_iff_kerDegree is untouched: its easy direction is landed\n(degreeOfSection_eq_zero_of_factors),\
-  \ the converse -- that the degree separates the\ncomponents of Pic_{C/k} -- is the\
-  \ open half.\n"
+  \ at run 0067 r6. IdentityComponent.lean carries 2 sorries: finrank_eq_genus and\n\
+  kPoints_iff_kerDegree. PicScheme.degree is constructed (r4).\n\n*** r6: THE \"<=\"\
+  \ HALF IS NOW AXIOM-CLEAN AT Pic^0, AND MY r5 \"GENUINELY ABSENT\" VERDICT WAS A\n\
+  MEASUREMENT OF THE WRONG QUANTITY. ***\n\nr5 recorded: \"'<=' is separately open\
+  \ ... Measured absence direction: Albanese/\nStandardSmoothDimension.lean has only\
+  \ LOWER bounds, and only at MAXIMAL ideals ... So the <=\ndirection is genuinely\
+  \ absent rather than merely unlocated.\" The search was for an upper bound on\n\
+  ringKrullDim. But this chapter's tangent leg produces COTANGENT dimensions, and\
+  \ the passage\n\n    ringKrullDim R <= finrank_{kappa(R)} (m/m^2)\n\nholds for EVERY\
+  \ Noetherian local ring, with NO regularity and NO condition on the residue field.\n\
+  Two pinned-mathlib facts compose to it: ringKrullDim_le_spanFinrank_maximalIdeal\
+  \ (Krull's height\ntheorem) and IsLocalRing.spanFinrank_maximalIdeal_eq_finrank_cotangentSpace\
+  \ (Nakayama). spanFinrank\nappeared in exactly ONE AJC file, for an unrelated purpose.\
+  \ Regularity is the case of EQUALITY\n(IsRegularLocalRing.iff_finrank_cotangentSpace)\
+  \ and that iff was the only form the project had.\n\nLANDED r6, Picard/EmbeddingDimensionBound.lean\
+  \ (rooted), all AXIOM-CLEAN:\n  ringKrullDim_le_finrank_cotangentSpace         \
+  \                     the ring-level inequality\n  Scheme.ringKrullDim_stalk_le_finrank_cotangentSpace\
+  \                 at a scheme point\n  Scheme.topologicalKrullDim_le_of_forall_finrank_cotangentSpace_le\
+  \   the <= half\n  Scheme.topologicalKrullDim_eq_of_forall_finrank_cotangentSpace_le_of_regular\n\
+  plus in Pic0Dimension.lean:\n  Pic0.topologicalKrullDim_le_genus_of_forall_finrank_cotangentSpace_le\
+  \   AXIOM-CLEAN\n  Pic0.topologicalKrullDim_eq_genus_of_forall_finrank_cotangentSpace_le\
+  \   leaks via front (a)\nProbe calibrated: both controls (finrank_cotangentSpace_eq_finrank_hModuleOne,\n\
+  genus_le_topologicalKrullDim_of_isRegular) correctly report sorryAx. lake build\
+  \ 8819 jobs exit 0.\n\nIT ALSO DROPS [PerfectField k], which is material and not\
+  \ cosmetic. Under the owner decision\nI-0491 the headline is stated over an ARBITRARY\
+  \ field. The r5 \"=\" theorem\n(topologicalKrullDim_eq_genus_of_forall_ringKrullDim_stalk_le)\
+  \ carries [PerfectField k] because it\ndischarges regularity from smoothness via\
+  \ isRegularLocalRing_stalk_of_smooth_of_perfectField, whose\nown upstream input\
+  \ carries the binder irremovably in its signature -- so it cannot be removed there.\n\
+  The r6 \"=\" form takes regularity at the identity as a hypothesis and carries no\
+  \ field condition.\n\nTHE TWO DIRECTIONS, and their genuinely different costs --\
+  \ now visible in the statements:\n * \"<=\" is UNCONDITIONAL as a conversion. It\
+  \ consumes a uniform bound on the embedding dimension at\n   every point of Pic^0;\
+  \ given that, no regularity and no perfectness are needed. What is still\n   owed\
+  \ is that uniform cotangent bound, which is a statement about embedding dimensions,\
+  \ NOT about\n   dimension theory. SmoothOfRelativeDimension (genus C) (Pic0Scheme\
+  \ C).hom would supply it.\n * \">=\" is REDUCED TO FRONT (a) AND NOTHING ELSE, and\
+  \ needs regularity at the identity ALONE. That\n   regularity is irreducible here:\
+  \ an embedding dimension bounds the Krull dimension from BELOW only\n   at a regular\
+  \ point -- at a cusp k[x,y]/(y^2-x^3) it is 2 against dimension 1. MEASURED HONESTLY:\n\
+  \   reports sorryAx, inherited from semilinearComparison_cotangentSpaceDual_h1Cok.\
+  \ An r5 version of\n   this row said \"PROVED\"; retracted in 48eea9212.\n\nDIMENSION\
+  \ BRIDGE, r5, axiom-clean and unchanged: topologicalKrullDim IS krullDim of the\
+  \ irreducible\ncloseds; a scheme is sober and T0, so irreducibleSetEquivPoints is\
+  \ an order iso onto the carrier,\nkrullDim_eq_iSup_coheight applies, and ringKrullDim_stalk_eq_coheight\
+  \ finishes. For ANY scheme,\ndim X = sup over z of dim O_{X,z} (Picard/SchemeKrullDimStalk.lean,\
+  \ 7 declarations). The r5\nretraction of the \"mathlib has no topologicalKrullDim\
+  \ API\" blocker stands: it read the API surface,\nnot the DEFINITION.\n\nSPIN-OFF,\
+  \ upstream of this node: stalks of a smooth scheme over a PERFECT field are regular\
+  \ local\nrings, with no other hypothesis (Scheme.isRegularLocalRing_stalk_of_smooth_of_perfectField,\n\
+  axiom-clean). AJC had this only over k-bar and with five further binders\n(Albanese/CodimOneExtension);\
+  \ the alg-closed form is unusable here because Pic^0_{C/k} lives over\nthe given\
+  \ k and stalk regularity descends along Spec k-bar -> Spec k by no route in this\
+  \ tree.\n\nkPoints_iff_kerDegree is UNTOUCHED and is now the only open item of this\
+  \ node besides the cotangent\nbound. Its easy direction is landed (degreeOfSection_eq_zero_of_factors);\
+  \ the converse -- that the\ndegree separates the components of Pic_{C/k} -- is the\
+  \ open half. NOTE the degree interface state:\nClassDegree is VACUOUS (inhabited\
+  \ by the zero map, machine-verified), ClassDegreePinned is the\nrepair and its non-vacuity\
+  \ is conditional on a producer of a DivFamily of nonzero constant fibre\ndegree,\
+  \ which this project does not have. A LEAD NOT YET TAKEN: AJCR RiemannRoch/RelPicDegree.lean\n\
+  builds relPicDeg sorry-free from the chi-ledger, and ajc-rr has now ported that\
+  \ ledger into AJC\n(RiemannRoch/Ledger/, 40 files, 0 sorries) -- so the input that\
+  \ route needs is in-tree as of r4/r6.\n"
 status: active
 kind: proof
 priority: normal
@@ -57,7 +88,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-28T18:14:48.419812+00:00'
+  updated_at: '2026-07-28T19:46:44.597924+00:00'
   owner: ajc-pic0av
   pinned_commits:
   - b9bfa997f

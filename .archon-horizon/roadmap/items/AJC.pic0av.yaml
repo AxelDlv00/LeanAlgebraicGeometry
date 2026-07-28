@@ -14,13 +14,29 @@ summary: "Pic^0 is an abelian variety of dimension g (A.3 leg of Route A).\n\nWH
   \ / proper (AJC.pic0av.structure): both are assemblies now. Smoothness\n     reduces\
   \ to GeometricallyReduced and thence to reducedness over k-bar ALONE\n     (smooth_of_isReduced_algebraicClosureBaseChange,\
   \ which also discharges the\n     geometricallyReduced sorry). Properness reduces\
-  \ to UniversallyClosed, attackable\n     three ways: from the ambient Pic, by fpqc\
-  \ descent to k-bar, or by the VALUATIVE\n     criterion -- the last needing no quasi-projectivity\
-  \ vocabulary, which is what\n     I-0074 Caveat 2 says mathlib lacks.\n\n (c) degree\
-  \ / dimension (AJC.pic0av.identity): PicScheme.degree constructed (r4). The\n  \
-  \   dimension statement is reduced to ONE uniform bound in r5 -- see that child;\
-  \ the\n     \"no topologicalKrullDim API\" pricing was a mis-measurement of the\
-  \ API surface\n     rather than the definition. The >= half is REDUCED to front\
+  \ to UniversallyClosed -- and r6\n     REFUTED one of the three routes r3 listed\
+  \ for it. NOT \"attackable three ways\":\n     the ambient route is DEAD, because\
+  \ UniversallyClosed (PicScheme C).hom is FALSE,\n     not merely hard. Universal\
+  \ closedness over an affine base implies CompactSpace of\n     the source (mathlib's\
+  \ priority-900 instance to QuasiCompact -- which is why\n     IsProper has no quasi-compactness\
+  \ field -- plus PrimeSpectrum.compactSpace), while\n     Pic_{C/k} is an infinite\
+  \ disjoint union over deg in Z, the same th:main(1) clause\n     HasPicScheme bundles.\
+  \ So universallyClosed_of_ambient and\n     proper_of_ambient_universallyClosed\
+  \ are trap (c): true, axiom-clean, reducing\n     NOTHING. Kernel-checked at scheme\
+  \ generality in Picard/AmbientPicNotProper.lean.\n     TWO routes remain, both about\
+  \ Pic^0 itself (whose source IS quasi-compact): the\n     VALUATIVE criterion, needing\
+  \ no quasi-projectivity vocabulary -- which is what\n     I-0074 Caveat 2 says mathlib\
+  \ lacks -- and fpqc descent to k-bar. r5 asked\n     ajc-etale-pic to add a UniversallyClosed\
+  \ conjunct to HasPicScheme; that ask is\n     WITHDRAWN on I-0493, since it would\
+  \ have put a false statement in the shared\n     interface.\n\n (c) degree / dimension\
+  \ (AJC.pic0av.identity): PicScheme.degree constructed (r4). The\n     dimension\
+  \ statement is reduced to ONE uniform bound in r5, and in r6 the \"<=\" half\n \
+  \    of that bound became AXIOM-CLEAN at Pic^0 and lost its [PerfectField k] binder\
+  \ --\n     r5's \"genuinely absent\" verdict had measured the wrong invariant, since\n\
+  \     ringKrullDim R <= finrank(m/m^2) holds for EVERY Noetherian local ring (Krull\n\
+  \     height + Nakayama, both pinned-mathlib). See that child; the earlier\n   \
+  \  \"no topologicalKrullDim API\" pricing was likewise a mis-measurement of the\
+  \ API\n     surface rather than the definition. The >= half is REDUCED to front\
   \ (a) and nothing else --\n     but it REPORTS sorryAx, inherited from the open\
   \ cocycle comparison at\n     Pic0AbelianVariety.lean:805; only the dimension BRIDGE\
   \ underneath is axiom-clean.\n     An earlier version of this row said \"proved\"\
@@ -41,6 +57,6 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:42.107460+00:00'
-  updated_at: '2026-07-28T18:21:01.876239+00:00'
+  updated_at: '2026-07-28T19:50:37.244260+00:00'
   parent: AJC.jacobian
   owner: ajc-pic0av
