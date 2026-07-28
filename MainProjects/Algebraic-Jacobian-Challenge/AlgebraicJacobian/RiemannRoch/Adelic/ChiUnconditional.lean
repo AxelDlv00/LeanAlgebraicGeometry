@@ -48,37 +48,46 @@ on a cover), the modular law
   bump equivalent to that step being full.  Both ungated.  These are one-step statements and
   must not be read as consistency claims — see the next item.
 
-* `chi_le_finrank_chart_along_tower` and `not_bump_of_notMem_left` (§5) — **`hbump` is
-  unconditionally FALSE** whenever some prime divisor's point lies off a chart.  Along the
-  tower `n·P` both `Γ(U₀,−)` and `𝒜` freeze while `Γ(U₁,−) ⊆ 𝒜` stays trapped, so χ is
-  *bounded* — against `hbump`'s linear growth `n·[κ(P):k]`.  This is the sharp answer to
-  the question inbox `I-0456` posed ("*where* is the hypothesis false?"), and it
-  **strengthens** the audit at `I-0449` from a conditional to an unconditional refutation.
+* `chi_le_finrank_chart_along_tower` and `not_bump_of_notMem_left` (§5) — `hbump` is FALSE
+  **under this file's chart-finiteness binders** whenever some prime divisor's point lies off a
+  chart.  Along the tower `n·P` both `Γ(U₀,−)` and `𝒜` freeze while `Γ(U₁,−) ⊆ 𝒜` stays
+  trapped, so χ is *bounded* — against `hbump`'s linear growth `n·[κ(P):k]`.  **READ THE NEXT
+  SECTION BEFORE QUOTING THIS**: those binders are unsatisfiable on a curve, so this refutation
+  does not reach a curve.  Earlier versions of this header called it "unconditional"; it is
+  unconditional in *exactness data* only, never in the finiteness binders.
 
-* `ledger_refuted_of_notMem_left` (§6) — the same tower refutes the **closed ledger**
-  `hledger` itself on such a cover.  Since every conditional theorem in `SectionBounds.lean`
-  §3, `BoundedVanishing.lean` and `GlobalGeneration.lean` takes `hledger` as a hypothesis,
-  those results are *vacuous* for any cover admitting such a prime.  That is the most
-  consequential statement in this file, and it redirects the route: the fix is a different
-  cover hypothesis, not more work on the bump.
+* `ledger_refuted_of_notMem_left` (§6) — the same tower refutes the **closed ledger** `hledger`
+  on such a cover, under the same binders and with the same caveat.
 
-## The finiteness binders are NOT innocent — read them before using anything here
+## The finiteness binders are NOT innocent — and they are UNSATISFIABLE on a curve
 
-`Module.Finite k (sectionSub k U D)` at a **non-total** open `U`, quantified over all `D`, is a
-substantive geometric restriction, not bookkeeping.  The sharpest form is
-`ell_le_finrank_chart_along_tower`:
+`Module.Finite k (sectionSub k U D)` at a **non-total** open `U` is a substantive restriction,
+not bookkeeping.  The `ℓ`-level form is `ell_le_finrank_chart_along_tower`:
 
 `ℓ(n·P + E) ≤ dim Γ(U₀,𝒪(E))` for all `n`, whenever `P.point ∉ U₀`
 
-— no cover, no χ, no exactness datum.  **It forbids Riemann growth outright**: Riemann–Roch says
-`ℓ(D)` grows like `deg D`, and this says it cannot along any such tower.  Everything in §5–§6 is
-a corollary, and any theorem assuming these binders over all divisors has already excluded the
-curves Riemann–Roch is about.
+— **it forbids Riemann growth outright**.
 
-So read the binders as hypotheses about the geometry, and prefer stating results at `⊤` (where
-`Module.Finite` is the honest finiteness of `L(D)`) over the charts wherever possible.  Flagged
-because it was not obvious to the author until an audit and a fresh-context review pointed it out
-(`I-0468` lesson 3; the `ℓ`-level form is the reviewer's sharpening).
+**This was originally read as a restriction on the COVER, and that reading is wrong.**
+`Adelic/ChartFinitenessRefuted.lean` proves that a *single* instance of the binder, at the zero
+divisor alone, forces `K(X)` to be a **finite extension of `k`**
+(`module_finite_functionField_of_chart_finite`), and that the binder is *equivalent* to that
+statement — one with no cover, no chart and no divisor in it
+(`chart_finiteness_iff_module_finite_functionField`).  Mechanism: `Γ(U,𝒪(0))` is a ring
+containing `Γ(X,U)`; a `k`-finite domain is a field; a field between `Γ(X,U)` and its own
+fraction field is all of `K(X)`.
+
+Consequences, and they are the ones to carry forward:
+
+* On a curve with a nonconstant function the binder holds at **no chart and no cover**.  So
+  §5–§6 refute nothing *about a curve*: `hbump` and `hledger` are **open** there, not false.
+* "Exhibit a cover on which the ledger can hold" — the direction this file's earlier header and
+  `WeilDivisor.lean` recommended — is **not** the open problem.  There is no cover to find.
+* Prefer stating results at `⊤`, where `Module.Finite` is the honest finiteness of `L(D)`.
+
+This is trap (c) of `scripts/axiom-frontier.lean` applied to a *negative* result, a case the
+catalogue did not cover: a refutation whose own hypotheses are unsatisfiable reports clean
+axioms exactly like a useful one.
 
 ## Provenance
 
@@ -95,6 +104,16 @@ This module shipped, within one session, with docstrings claiming that the audit
 review (`I-0467`) showed the opposite from this file's own formula, and §5/§6 now carry the
 refutations in Lean.  The retracted claim is left described rather than silently deleted, since
 it was broadcast to two other teams before being corrected.
+
+**Third correction (task `ajc-rr`, 2026-07-28), and it goes the other way from the second.**
+The refutations of §5–§6 were then presented as "unconditional" and as redirecting the route
+towards a better cover.  Both readings were wrong, and the second one sent the next session at a
+non-problem.  They are unconditional in *exactness data* only; their chart-finiteness binders are
+unsatisfiable on a curve (`ChartFinitenessRefuted.lean`), so on a curve the refutations are
+vacuous and `hbump`/`hledger` are open rather than false.  The theorems are unchanged and still
+true — only their scope was overstated.  Pattern worth naming, since this module has now
+produced it twice in opposite directions: "not refutable by this route" does not give "fine",
+and "refuted under my binders" does not give "refuted".
 -/
 
 set_option autoImplicit false
@@ -347,9 +366,19 @@ finite-dimensional.  So `Module.Finite k (sectionSub k U D)` at a **non-total** 
 bookkeeping — it is a substantive geometric restriction, and any theorem assuming it over all
 divisors has already excluded the curves Riemann–Roch is about.
 
+**How substantive was underestimated here, and the sharp form is not about towers at all.**  This
+docstring says the binder "excludes the curves Riemann–Roch is about"; in fact it excludes *every*
+curve with a nonconstant function, and needs neither a tower nor a cover to see it.  A single
+instance at `D = 0` forces `K(X)/k` finite — `Γ(U,𝒪(0))` is a ring containing `Γ(X,U)`, a
+`k`-finite domain is a field, and a field between `Γ(X,U)` and its own fraction field is all of
+`K(X)`.  See `ChartFinitenessRefuted.module_finite_functionField_of_chart_finite`, and
+`chart_finiteness_iff_module_finite_functionField` for the equivalence.
+
 Consequence for reading this whole module: the `[∀ D, Module.Finite k (sectionSub k Uᵢ D)]`
-binders on §5–§6 are what make the refutations available, and a consumer who supplies them for
-convenience has chosen the geometry.  Found by a fresh-context review of this module. -/
+binders on §5–§6 are what make the refutations available, and a consumer who supplies them has not
+merely "chosen the geometry" — it has assumed something false of any curve, so the §5–§6
+conclusions do not transfer to a curve.  Tower form found by a fresh-context review of this
+module; the field-theoretic sharpening by task `ajc-rr`. -/
 theorem ell_le_finrank_chart_along_tower (k : Type u) [Field k] {X : Scheme.{u}} [IsIntegral X]
     [IsLocallyNoetherian X] [Scheme.IsRegularInCodimensionOne X]
     [Algebra k X.functionField] [IsConstantField k X] (U₀ : X.Opens)
@@ -363,11 +392,18 @@ theorem ell_le_finrank_chart_along_tower (k : Type u) [Field k] {X : Scheme.{u}}
   rw [sectionSub_divisorOfList_replicate_of_notMem k U₀ hP E n] at hsub
   exact Submodule.finrank_mono hsub
 
-/-- **`hbump` IS FALSE whenever some prime divisor sits off one chart of the cover.**
+/-- **`hbump` is FALSE under this file's chart-finiteness binders**, whenever some prime divisor
+sits off one chart of the cover.
 
-Unconditional: no `chi_add`, no exactness hypothesis, no approximation input.  `hbump` forces
-`χ` to grow linearly along the tower `n·P` while `chi_le_finrank_chart_along_tower` bounds it,
-so `hbump` cannot hold.
+No `chi_add`, no exactness hypothesis, no approximation input: `hbump` forces `χ` to grow
+linearly along the tower `n·P` while `chi_le_finrank_chart_along_tower` bounds it.
+
+**DO NOT QUOTE THIS AS A REFUTATION AT A CURVE.**  The three
+`[∀ D, Module.Finite k (sectionSub k Uᵢ D)]` binders are unsatisfiable there:
+`ChartFinitenessRefuted.module_finite_functionField_of_chart_finite` shows one instance of them,
+at `D = 0` alone, already forces `K(X)/k` finite.  So on a curve with a nonconstant function this
+theorem has no instances and `hbump` is **open**, not false.  What is genuinely refuted is
+`hbump` *together with* chart finiteness — and it is the finiteness half that fails.
 
 **This is inbox `I-0449`'s conclusion, strengthened.**  That audit derived the same
 incompatibility *conditionally*, from `ChiLedger.chi_add`'s conclusion; an earlier version of
@@ -516,8 +552,11 @@ found by the audit at inbox `I-0467`:
    restatement is a restatement does not make it worth adding; `I-0456`'s lesson is to delete or
    fold, not to relabel.
 2. It was *vacuous on the covers this file is about*.  `ledger_refuted_of_notMem_left` below
-   shows the ledger is outright false whenever a prime divisor lies off one chart — the same
-   tower argument as §5, since `deg_k` grows linearly along `n·P` while χ stays bounded.
+   shows the ledger is false whenever a prime divisor lies off one chart **and the chart section
+   spaces are finite-dimensional** — the same tower argument as §5, since `deg_k` grows linearly
+   along `n·P` while χ stays bounded.  (Reason 1 is unaffected by the 2026-07-28 correction and
+   is by itself sufficient for the deletion.  Reason 2 is weaker than it reads: those covers do
+   not exist on a curve — see the module header and `ChartFinitenessRefuted.lean`.)
 
 What survives is sharper than what was deleted, and it is a genuine constraint on the route
 rather than a theorem about it. -/
@@ -551,10 +590,23 @@ The two extra hypotheses are **not** automatic, and it would be an overclaim to 
 
 So the honest statement is: **on a genuine two-chart cover whose chart section spaces are all
 finite-dimensional, and which has a prime divisor off a chart, the ledger is false and the lane's
-conditional results are vacuous.** Whether a given curve's cover meets that description is not
-settled here. What *is* settled is that the bump route cannot be repaired by supplying
-approximation data: on such a cover there is nothing to supply. The fix is a different cover
-hypothesis, or more charts. -/
+conditional results are vacuous.**
+
+**AND NO CURVE MEETS THAT DESCRIPTION** — settled after this docstring was written, by
+`Adelic/ChartFinitenessRefuted.lean`.  The sentence above asked "whether a given curve's cover
+meets that description is not settled here"; the answer is *none does*, for a reason having
+nothing to do with covers.  One instance of the chart-finiteness binder, at `D = 0` alone, forces
+`K(X)/k` finite (`module_finite_functionField_of_chart_finite`), and the binder is *equivalent* to
+that (`chart_finiteness_iff_module_finite_functionField`).  So on a curve with a nonconstant
+function this theorem is instance-free and refutes nothing there: `hledger` is **open** at a
+curve, and the lane's `hledger`-conditional results are **not** shown vacuous.
+
+The last two sentences of the previous paragraph were the actively misleading part and are
+withdrawn: "the fix is a different cover hypothesis, or more charts" pointed the next session at a
+non-problem.  There is no cover to find.  The genuine open question is the ledger itself, and the
+route with real evidence behind it is the sibling project's dévissage-over-closed-points proof
+(`Algebraic-Jacobian-Challenge-Rebuild`, `RiemannRoch/ChiLedger.lean`, sorry-free), which uses no
+chart-finiteness binder at all. -/
 theorem ledger_refuted_of_notMem_left (hcov : U₀ ⊔ U₁ = ⊤)
     {P : X.PrimeDivisor} (hP : P.point ∉ U₀)
     [∀ D : X.WeilDivisor, Module.Finite k (sectionSub k U₀ D)]
