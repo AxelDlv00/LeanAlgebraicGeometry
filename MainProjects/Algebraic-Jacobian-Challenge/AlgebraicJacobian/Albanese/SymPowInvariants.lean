@@ -23,8 +23,15 @@ taken in `CommRingCatᵒᵖ`, is `A^G`. It becomes Milne's `(A^{⊗n})^{S_n}` on
 the `n`-fold tensor power carrying the `S_n`-action — which is **not** supplied below (see
 the scope section). So read this as *the carrier of a ring-action quotient is now a named
 object with a proved universal property*, not as *`SymPowColimit`'s flagged obligation is
-discharged*: that obligation also wants the tensor power, the `S_n`-action on it, and a
-category match, and all three are still open.
+discharged by this file*.
+
+**Update 2026-07-29 (run 0069 r7): the three things this file left open have all landed, and
+the quoted caveat is deleted.** The paragraph above used to end "that obligation also wants the
+tensor power, the `S_n`-action on it, and a category match, and all three are still open".
+Each is now supplied: the action is `SymPowTensorAction.permMulSemiringAction`, the category
+match is `SymPowInvariantsUnder.fixedCoconeUnderIsColimitOp`, and the composition identifying
+the colimit is `SymPowAffineQuotient.colimitPermDiagramIsoFixed`. `SymPowColimit.lean` §5 no
+longer carries the bold caveat quoted above; do not cite it as live.
 
 ## Why naming the carrier is real content, not bookkeeping
 
@@ -35,10 +42,14 @@ it **is**, and the difference is not cosmetic: the gluing step — the leg's rem
 each side. An abstract `colimit (permDiagram …)` supports no such comparison; `A^G` does,
 because restriction of invariants along `A → A_b` is a ring map one can write down.
 
-So this file supplies a prerequisite for gluing rather than restating what was known. Note
-the modest claim: it is *a* prerequisite, and no declaration in the tree consumes it yet
-(grep for `fixedConeIsLimit` outside this file returns nothing). Calling it "what the next
-step consumes" would be premature until the category caveat below is closed.
+So this file supplies a prerequisite for gluing rather than restating what was known. The
+"no consumer" note that stood here is now **false and retracted**: it read "no declaration in
+the tree consumes it yet (grep for `fixedConeIsLimit` outside this file returns nothing)".
+As of run 0069 r7 `fixedConeIsLimit` is consumed by
+`Albanese/SymPowInvariantsUnder.lean` (the `Under k` insertion) and
+`Albanese/SymPowTensorAction.lean` (at the tensor-power action), and downstream of those by
+`Albanese/SymPowAffineQuotient.lean`. Still modest, and for a different reason: the chain is
+`k`-algebra language over `mkUnder k A`, whereas the gluing is about a proper curve.
 
 ## Main results
 
@@ -74,7 +85,10 @@ its dual in `CommRingCatᵒᵖ`. Two things are deliberately *not* claimed:
 * The index category here is `SingleObj G` for an arbitrary group acting on an arbitrary
   ring. Specialising `G := Equiv.Perm (Fin n)` and `A := A^{⊗ n}` is what makes it Milne's
   statement; that specialisation needs the `S_n`-action on the tensor power, which mathlib
-  has for modules and which is not built here.
+  has only for modules and which is **not built here** — it is built in
+  `Albanese/SymPowTensorAction.lean` (`permMulSemiringAction`), and the specialisation is
+  carried out in `Albanese/SymPowAffineQuotient.lean` (`colimitPermDiagramIsoFixed`), both
+  run 0069 r7. So this bullet bounds *this file*, not the tree.
 
 So: the carrier of the affine quotient is now a named object with a written-down universal
 property, which is what the next step consumes. It is not the symmetric power of a curve.
@@ -245,10 +259,18 @@ property, in both variances: `A^G`, with no finiteness and no Noetherian hypothe
   power of a commutative *ring* is not built here (mathlib's `SymmetricPower` /
   `TensorPower` symmetric API is for modules — `PiTensorProduct.reindex` is a *linear*
   equiv). So `A^G` above is Milne's `(A^{⊗n})^{S_n}` only once that action is supplied.
+  **Supplied since run 0069 r7**, in `Albanese/SymPowTensorAction.lean`
+  (`permMulSemiringAction`); this bullet now bounds only this file.
 * **The category.** `SymPowColimit`'s affine statement is over `(Under k)ᵒᵖ`; everything
-  here is over `CommRingCatᵒᵖ`. No declaration bridges them, so nothing in that file can
-  consume anything in this one. `Over.opEquivOpUnder` and `AffineScheme.equivCommRingCat`
-  are the mathlib pieces a bridge would use; neither is imported.
+  here is over `CommRingCatᵒᵖ`. **Bridged since run 0069 r7** — this bullet used to end
+  "No declaration bridges them, so nothing in that file can consume anything in this one",
+  and that is now false: `Albanese/SymPowInvariantsUnder.lean` redoes the identification in
+  `Under k` (`fixedUnder`, `fixedCoconeUnderIsColimitOp`) reusing `fixedConeIsLimit`, and
+  `Albanese/SymPowAffineQuotient.lean` consumes it to identify
+  `colimit (permDiagram (op (mkUnder k A)) n)`. Note *how* it was bridged: by rebuilding in
+  `Under k`, **not** via `Over.opEquivOpUnder` / `AffineScheme.equivCommRingCat` as this
+  bullet predicted. That `Spec`-language bridge is still unbuilt, so the whole chain remains
+  `k`-algebra language.
 
 The first two were named in the first draft of this file; the third was not, and its absence
 made the header read as though the flagged obligation had been discharged. Recorded because
