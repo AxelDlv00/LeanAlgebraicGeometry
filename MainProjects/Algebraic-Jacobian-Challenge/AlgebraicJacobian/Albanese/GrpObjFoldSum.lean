@@ -53,6 +53,20 @@ it this way is not a shortcut: it is the correct observation that Milne's
   symmetric", and the hypothesis the symmetric-power universal property consumes.
 * `MonObj.comp_powSum` — `powSum` is natural in the source.
 
+## Instantiating this at an abelian variety
+
+`powSum` requires `[IsCommMonObj A]`, which is *load-bearing*: without it the
+hom-set is only a `Monoid`, the `∏` notation cannot be written, and the symmetry
+is false. The project's abelian-variety hypothesis package does not yield
+`IsCommMonObj` by synthesis, so use
+`AlgebraicGeometry.isCommMonObj_of_isProper_smooth`
+(`Albanese/AVCommutative.lean`, Milne §I.1 Corollary 1.4 — proved from the
+Rigidity Lemma) and thread it explicitly:
+
+```
+letI := isCommMonObj_of_isProper_smooth (A := A)
+```
+
 ## Scope
 
 This file deliberately stops at the symmetry statement. It does **not** construct

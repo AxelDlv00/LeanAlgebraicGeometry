@@ -242,6 +242,9 @@ import AlgebraicJacobian.Albanese.PolePurity
 -- The g-fold sum `C^g ⟶ A` into a commutative group object and its
 -- permutation symmetry: Milne's "clearly this is symmetric" (III.6.1).
 import AlgebraicJacobian.Albanese.GrpObjFoldSum
+-- Milne I.1.4: an abelian variety is commutative. Supplies the `IsCommMonObj`
+-- instance that the g-fold sum above needs at its intended target.
+import AlgebraicJacobian.Albanese.AVCommutative
 import AlgebraicJacobian.Albanese.Milne33Substeps
 -- Milne Lemma 3.3 (`lem:milne_codim1_indeterminacy`) and its substep layers:
 -- ported sorry-free from the sibling Rebuild tree in run 0069, closing the last
