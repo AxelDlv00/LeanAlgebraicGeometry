@@ -55,9 +55,16 @@ tree today:
   scheme** — the Abel map of a degree-`n` divisor scheme onto the Picard functor has projective
   spaces `|D|` as its fibres, so it is not a monomorphism, let alone an open immersion.  It
   becomes an open immersion only after restricting to the open locus where the fibre is a single
-  point, i.e. where `h⁰ = 1`; that locus is the reserved `chartLocus` of `w4-datc` §3.3, which
-  does not exist in Lean (see `Picard/Pic0ChartLocusClass.lean`, whose header states the
-  remaining gaps).
+  point, i.e. where `h⁰ = 1`; that locus is the reserved `chartLocus` of `w4-datc` §3.3.
+
+  Two updates to this bullet, both 2026-07-29.  `chartLocus` **now exists in Lean**
+  (`Picard/Pic0ChartLocus.lean`, and open at a general test unconditionally), so the closing
+  clause above — that it does not — is stale.  And the implication "not a monomorphism, hence
+  not `IsOpenImmersion.presheaf`" is a **derivation**, not an extra fact: it is
+  `mono_of_isOpenImmersion_presheaf` (`Picard/Pic0ChartOpenImmersionCriterion.lean`), from
+  mathlib's `presheaf_mono_of_le` at `IsOpenImmersion.le_monomorphisms`.  The same file gives
+  the criterion that makes the restricted statement provable, and
+  `Picard/Pic0ChartUnivReduce.lean` instantiates it here.
 * `Presheaf.IsLocallySurjective Scheme.zariskiTopology (Sigma.desc …)` is the statement that
   every degree-zero class is Zariski-locally the twisted class of a divisor family in the
   window.  Over a field this is Riemann–Roch; the relative statement is DAT-B's coverage row.

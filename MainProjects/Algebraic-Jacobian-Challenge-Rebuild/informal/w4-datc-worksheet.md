@@ -570,6 +570,52 @@ the boundary as a NAMED interface so the DAT-B lane slots in:
   equality: forward by construction, uniqueness by §3.2 mono + `IsDivRepClassify`
   uniqueness (`DivRepClassifyZar.lean:168-200`).
 
+  **CORRECTION 2026-07-29 (run 0072 r5, lane `ajcr-charts`): THE `hf` TARGET IS A
+  CONJUNCTION OF TWO INDEPENDENT CLAUSES, AND THIS ROW — LIKE THE `c9b` ROADMAP ROW —
+  PRICED IT AS ONE.**  Both said the residue is "relative GAP-2 plus the classifier,
+  CERT-Σ-gated".  `IsOpenImmersion.presheaf` is `MorphismProperty.relative` at `yoneda`,
+  whose *definition* (mathlib `MorphismProperty/Representable.lean:315`) conjoins
+
+  1. **relative representability** — for every `g : yoneda.obj T ⟶ pic0SigmaSheaf`, the
+     fibre product is representable **by a scheme**; and
+  2. **the property clause** — every represented pullback is an open immersion.
+
+  The construction+uniqueness story above is the input to (2).  It says nothing about (1),
+  and (1) is where the whole CERT-Σ wait was being spent for no reason: supplying it needs
+  only an OPEN OF THE TEST, and `chartLocus` is one, unconditionally.
+
+  Landed this pass, both sorry-free and rooted:
+  `Picard/Pic0ChartOpenImmersionCriterion.lean` states the elementwise datum
+  (`ChartFibrePresented`: an open `W` of the test, a chart point `r` over it, the square,
+  and a coverage clause `exists_factor`), proves it presents the fibre product
+  (`ChartFibrePresented.isPullback` — pointwise pullbacks plus `Types.isPullback_iff`, with
+  the joint-injectivity half FREE because `W.ι` is a monomorphism), and concludes
+  `IsOpenImmersion.presheaf` from a family of such data.  Then
+  `Picard/Pic0ChartUnivReduce.lean` instantiates at the Abel chart: `chartLocusOpens`
+  supplies `W` by CONSTRUCTION, so **the datum a lane owes drops from four fields to
+  three**, and `isChartUniv_of_isChartLocusFibre` composes with the already-landed
+  composition half (`isOpenImmersion_presheaf_restrictChart`) to give `IsChartUniv` at any
+  open.
+
+  **The residue is genuinely moved, not renamed, and that is checked in both directions:**
+  `isEmpty_forall_chartFibrePresented_of_not_injective` shows the datum cannot be
+  *satisfied* by a chart map failing injectivity on even one test (so it is not vacuous, and
+  in particular is unsatisfiable for the UNRESTRICTED Abel chart whose fibres are the linear
+  systems `|D|`); and `injective_of_isChartUniv` shows `IsChartUniv` cannot be *reached*
+  without that injectivity.  So relative GAP-2 remains a real gate — it now gates ONE FIELD
+  (`exists_factor`) of ONE structure rather than the certificate.
+
+  **Two by-products worth not re-deriving.**  (i) "The Abel map is not a monomorphism, hence
+  `IsOpenImmersion.presheaf` fails unrestricted" is cited as a *reason* in three files
+  (`Pic0AtlasFromDivRep.lean:54`, `Pic0ChartPair.lean:14`, and this row's own preamble); it
+  is a **derivation** from mathlib's `presheaf_mono_of_le` at
+  `IsOpenImmersion.le_monomorphisms`, now recorded as
+  `mono_of_isOpenImmersion_presheaf`, not an independent obligation.  (ii) The open `V` in
+  `restrictChart` is **arbitrary** for `hf` to hold — `IsOpenImmersion.presheaf` is stable
+  under precomposition with an open immersion, so restricting to the chart locus is not what
+  makes `hf` true.  The chart locus is where the *unrestricted* statement becomes true,
+  which is a fact about `IsChartLocusFibre` and not about `V`.
+
 Transition opens/isos between charts `(m,Σ) → (m',Σ')` need NO separate brick:
 01JJ manufactures them from the certificates at `T := VOver`-tests
 (`LocalRepresentability.glueData`, mathlib `Representability.lean:66-80`) — record

@@ -41,6 +41,21 @@ So: the *composition* half of the `hf` certificate is discharged here, unconditi
 *chart-locus* half is CHART-U(c) and is stated but not proved (it needs GAP-2 plus the
 classifier, and the openness of the locus itself, `Pic0ChartLocusIsOpen`).
 
+## CORRECTION 2026-07-29: step 2 above is itself TWO clauses, not one
+
+The description of step 2 as "*the* honest content" is right that it is not bookkeeping and
+wrong that it is a single obligation.  `IsOpenImmersion.presheaf` conjoins **relative
+representability** (the fibre product is a scheme at all) with **the property clause** (each
+represented pullback is an open immersion).  The GAP-2/classifier story is the input to the
+second only.  The first needs just an open of the test, and `chartLocus` is one
+unconditionally — so it is not CERT-Σ-gated at all.
+
+That split is landed: `Picard/Pic0ChartOpenImmersionCriterion.lean` (the criterion, from
+elementwise data) and `Picard/Pic0ChartUnivReduce.lean` (instantiated at the Abel chart,
+reducing the datum from four fields to three).  `IsChartUniv` below is unchanged as a
+*statement* — it is still the right pin — but it is no longer the right unit of *pricing*.
+Read `isChartUniv_of_isChartLocusFibre` for what a lane now actually owes.
+
 ## Main declarations
 
 * `AlgebraicGeometry.isOpenImmersion_presheaf_yoneda_map` — an open immersion of schemes is
