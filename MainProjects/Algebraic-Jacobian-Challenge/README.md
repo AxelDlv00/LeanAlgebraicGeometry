@@ -35,7 +35,7 @@ same theorem by a separate curve-specialized strategy.
 
 ## State (measured 2026-07-28)
 
-- **273 modules, 158,653 lines** (re-measured 2026-07-29 02:55, up from 264/155,729 two
+- **284 modules, 163,544 lines** (re-measured 2026-07-29 07:03, up from 273/158,653 four
   hours earlier); a warm `lake build AlgebraicJacobian` was **green** at 8,746 jobs when last
   measured, which was before the 2026-07-28 lanes landed.  The `sorry` count is deliberately
   not restated here: it was 28 over 11 modules at the earlier measurement and four AJC lanes
@@ -56,33 +56,20 @@ same theorem by a separate curve-specialized strategy.
   routinely non-empty for a short while: a module not yet committed to the workspace
   ledger must **not** be rooted, since a clean checkout would then fail to build.  That
   grace period ends at the commit — once a module is in the ledger, leaving it unrooted
-  means the build does not check it.  **Currently violated in 18 modules** (measured
-  2026-07-29 05:10 by walking `import AlgebraicJacobian` from the root module: 262 of 281
-  modules — the 280 under `AlgebraicJacobian/` plus the root aggregator — in the root cone,
-  18 outside it).  All 18 are committed to the ledger, so none is inside the grace period,
-  and every one is now in `RiemannRoch/`:
-  - `RiemannRoch/Ledger/{DegreeVanishing,GenusBridge,NonVacuity,PrincipalCompare,`
-    `PrincipalTransport,SectionDrop}` and `RiemannRoch/LedgerPortability` — 37 of the 54
-    `Ledger/` files are in the cone via `RiemannRoch/WeilDivisor.lean` (commit
-    `8b654f78d`); these are not.  Tracked as inbox issue `I-0600`.
-  - `RiemannRoch/Ledger/{FiberChart,FiberDivisor,FiberLattice,FiberVanishing,FiberBound,`
-    `QcohSections,AffineVanishingQcoh,DivisorSheafQcoh}` — the fibrewise large-twist
-    vanishing layer ported from the sibling project (run 0074 r4, task `ajc-rr`), which
-    makes the cluster-P statements unconditional at this project's own curve.  Landed
-    unrooted because the root roll-up is outside that lane's write scope; same `I-0600`.
-  - `RiemannRoch/Ledger/{ExtensionUniformity,GenusFieldInvariance,SectionsFieldBaseChange}`
-    — the same lane's later files, landed unrooted for the same reason.
+  means the build does not check it.  **Currently violated in 19 modules** (measured
+  2026-07-29 07:03 by walking `import AlgebraicJacobian` from the root module: 266 of 285
+  in the root cone, 19 outside it).  All 19 are committed to the ledger, so none is inside
+  the grace period, and every one is `RiemannRoch/Ledger/*` plus
+  `RiemannRoch/LedgerPortability` — the χ-ledger port and the fibrewise large-twist
+  vanishing layer, landed unrooted because the root roll-up is outside the porting lane's
+  write scope.  Tracked as inbox issue `I-0600`, which carries the current list.
 
-  `Picard/{Pic0Dimension,SchemeKrullDimStalk}`, which this bullet used to list, were rooted
-  by run 0067 r7: the new `Picard/GroupSchemeHomogeneity.lean` imports `Pic0Dimension`, and
-  its own root import line pulls both into the cone.  The four `Albanese/SymPow*` modules
-  were rooted by run 0069 r5 and are likewise no longer in the set.
-
-  Their declarations are not elaborated by `lake build AlgebraicJacobian` and no
-  `#print axioms` line through the root can reach them.  Re-measure with the
-  reachability snippet in [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean)'s
-  header (seed it at `AlgebraicJacobian`, not `AlgebraicJacobian.Jacobian`) rather than
-  quoting these counts; tracked as inbox issue `I-0600`.
+  The count has moved 6 → 14 → 18 → 19 over four measurements, so the cone is growing
+  faster than it is being rooted; re-measure rather than quoting.  Declarations in these
+  modules are not elaborated by `lake build AlgebraicJacobian`, and no `#print axioms`
+  line through the root can reach them.  Use the reachability snippet in
+  [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean)'s header, seeded at
+  `AlgebraicJacobian` rather than `AlgebraicJacobian.Jacobian`.
 - **Locally sorry-free is not axiom-clean.**  The synthesis-leak surface is now a single
   instance: `instHasPicSchemeEt` (`Picard/FGAPicRepresentability.lean`), whose body cites
   the one named `sorry` `fgaPicardRepresentability`, so every site that *synthesises*
@@ -118,9 +105,9 @@ same theorem by a separate curve-specialized strategy.
   ```bash
   lake build AlgebraicJacobian 2>&1 | grep 'declaration uses' | sort -u
   ```
-- 81 modules still open with a bare `import Mathlib`; this is the
-  dominant build cost and is being converted bottom-up with the helpers in
-  `scripts/`.
+- 99 modules still open with a bare `import Mathlib` (measured 2026-07-29 07:03, up from
+  81); this is the dominant build cost and is being converted bottom-up with the helpers
+  in `scripts/`.
 
 ## Decision made: the headline is stated over an arbitrary field
 
@@ -250,10 +237,10 @@ monument, run 0068 r4), `AJC.rr`, `AJC.picrep`
 - `AlgebraicJacobian/Albanese/`: rigidity and extension of rational maps, plus the
   Albanese factorization.
 - `AlgebraicJacobian/RiemannRoch/`: divisor and adelic Riemann–Roch infrastructure.
-  `RiemannRoch/Ledger/` (54 files) is the χ-ledger ported from the sibling
+  `RiemannRoch/Ledger/` (55 files) is the χ-ledger ported from the sibling
   Algebraic-Jacobian-Challenge-Rebuild project, plus four AJC-native rederivations and
-  the fibrewise large-twist vanishing layer.  Partly rooted (37 of 54, via
-  `WeilDivisor.lean`); the remaining 17 are outside the root cone — see the rootedness
+  the fibrewise large-twist vanishing layer.  Partly rooted (37 of 55, via
+  `WeilDivisor.lean`); the remaining 18 are outside the root cone — see the rootedness
   note above and inbox issue `I-0600`.
 - `blueprint/src/chapters/`: the mathematical blueprint.
 - `hgraph/`: the generated statement/declaration dependency graph.
