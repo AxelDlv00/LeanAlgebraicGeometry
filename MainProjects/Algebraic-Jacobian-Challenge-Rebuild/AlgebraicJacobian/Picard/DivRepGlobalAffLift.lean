@@ -100,8 +100,7 @@ namespace DivRepAffinePullback
 
 /-! ## The widened general-test pullback -/
 
--- No `[IsAffineHom pi]` binder here: the file-level `[IsFinite pi]` already implies it, and
--- carrying both made every declaration below report an overlapping-instance warning.
+variable [IsAffineHom pi]
 
 /-- **The widened general-test pullback**: the chart-typed `pullGlobal` pushed forward along the
 vehicle comparison of R2.  Its value at an affine open is the widened value of the chart-typed

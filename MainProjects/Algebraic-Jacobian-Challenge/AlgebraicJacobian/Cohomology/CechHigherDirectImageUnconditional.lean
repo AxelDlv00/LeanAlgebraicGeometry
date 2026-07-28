@@ -19,6 +19,18 @@ import AlgebraicJacobian.Cohomology.PullbackQuasicoherent
 -- `sorry`s": that was FALSE at HEAD and is the reason two obligations here were priced as open.
 -- Its cone is `sorry`-free (five modules new here), and it does not import this file: no cycle.
 import AlgebraicJacobian.Picard.QuotScheme
+-- Added run 0068 r4.  Supplies the σ-COORDINATE FORMULA FOR THE ČECH NERVE COFACE, which is what
+-- the twisted-nerve square needs and what this file could not previously see:
+-- `backboneIncl_nerveδ` (`…LegMid1`) factors the σ'-summand inclusion followed by the geometric
+-- coface as the open inclusion `U_{σ'} ⊆ U_{σ'∘δᵏ}` followed by the reindexed summand inclusion,
+-- and `pushPull_sigma_iso_π_incl` / `cechNerve_drop_δ` (`…Leg`) turn that into a statement about
+-- `pushPull_sigma_iso` and the nerve's own `δ`.
+--
+-- These lemmas had been in the project for many sessions and were NOT in this file's import cone;
+-- a `#check` in this file was the one-second test, and three predecessor sessions priced the
+-- twisted square without running it.  Cone: 8 modules, all already reachable except these two, and
+-- neither imports this file (checked transitively) — no cycle.
+import AlgebraicJacobian.Cohomology.CechSectionIdentificationLegMid1
 
 /-!
 # Unconditional higher direct images via Čech complexes, and flat base change
@@ -1024,18 +1036,25 @@ Weakening the *interface* is therefore what makes the residue reachable — the 
 
 Pure category theory: no additivity of any functor, no abelian structure, and no relation between
 `Y` and `Z` beyond the supplied data.  Project-local. -/
+private theorem objD_comm_of_delta {Y Z : CosimplicialObject C}
+    (e : ∀ n : ℕ, Y.obj (SimplexCategory.mk n) ≅ Z.obj (SimplexCategory.mk n))
+    (hδ : ∀ (n : ℕ) (k : Fin (n + 2)), (e n).hom ≫ Z.δ k = Y.δ k ≫ (e (n + 1)).hom) (n : ℕ) :
+    (e n).hom ≫ AlternatingCofaceMapComplex.objD Z n
+      = AlternatingCofaceMapComplex.objD Y n ≫ (e (n + 1)).hom := by
+  rw [AlternatingCofaceMapComplex.objD, AlternatingCofaceMapComplex.objD,
+    Preadditive.comp_sum, Preadditive.sum_comp]
+  refine Finset.sum_congr rfl fun k _ => ?_
+  rw [Preadditive.comp_zsmul, Preadditive.zsmul_comp]
+  exact congrArg _ (hδ n k)
+
 noncomputable def alternatingCofaceComplexIsoOfDelta (Y Z : CosimplicialObject C)
     (e : ∀ n : ℕ, Y.obj (SimplexCategory.mk n) ≅ Z.obj (SimplexCategory.mk n))
     (hδ : ∀ (n : ℕ) (k : Fin (n + 2)), (e n).hom ≫ Z.δ k = Y.δ k ≫ (e (n + 1)).hom) :
     (alternatingCofaceMapComplex C).obj Y ≅ (alternatingCofaceMapComplex C).obj Z :=
   HomologicalComplex.Hom.isoOfComponents (fun n => e n) (by
     rintro i j (rfl : i + 1 = j)
-    rw [alternatingCofaceMapComplex_d, alternatingCofaceMapComplex_d,
-      AlternatingCofaceMapComplex.objD, AlternatingCofaceMapComplex.objD,
-      Preadditive.comp_sum, Preadditive.sum_comp]
-    refine Finset.sum_congr rfl fun k _ => ?_
-    rw [Preadditive.comp_zsmul, Preadditive.zsmul_comp]
-    exact congrArg _ (hδ i k))
+    rw [alternatingCofaceMapComplex_d, alternatingCofaceMapComplex_d]
+    exact objD_comm_of_delta e hδ i)
 
 end AlternatingCoface
 
@@ -2732,6 +2751,54 @@ noncomputable def cech_pushforward_baseChange_natIso
         (Scheme.Modules.pushforward f').mapIso
           ((Scheme.Modules.pullback g').mapIso (pushPull_sigma_iso 𝒰 F n.len).symm))
     (fun {n m} φ => sorry)
+
+/-! ### The Čech nerve coface IN σ-COORDINATES — the statement the tree had but never wrote down
+
+The twisted-nerve square is a compatibility between the per-σ identifications and the *coface*
+maps.  To state it one needs to know what the coface **does** in σ-coordinates, and that fact was
+already available in this project — one import away, in `CechSectionIdentification{Leg,LegMid1}`:
+
+* `backboneIncl_nerveδ` — the σ'-summand inclusion of the degree-`(p+1)` backbone followed by the
+  geometric coface equals the open inclusion `U_{σ'} ⊆ U_{σ'∘δᵏ}` followed by the summand inclusion
+  at the **reindexed** tuple `σ' ∘ δᵏ`;
+* `pushPull_sigma_iso_π_incl` — the σ-projection of `pushPull_sigma_iso` is `pushPullMap F` of that
+  summand inclusion;
+* `cechNerve_drop_δ` — the nerve's own coface **is** `pushPullMap F` of the geometric coface.
+
+Three predecessor sessions priced the twisted square without these, because a `#check` in *this*
+file failed and the absence was read as mathematical rather than cone-relative.  The lemma below
+is what those three compose to, and it is the only genuinely new content on the σ-coordinate side.
+-/
+
+/-- **The coface of the dropped Čech nerve, read through the σ-product decomposition.**
+
+Projecting `(drop.obj (CechNerve 𝒰 F)).δ k` onto the `σ'`-component of the degree-`(p+1)`
+decomposition is the `σ' ∘ δᵏ`-component of the degree-`p` decomposition followed by the push–pull
+restriction along the intersection-open inclusion `U_{σ'} ⊆ U_{σ' ∘ δᵏ}`:
+```
+  sigma_iso(p) ≫ π_{σ'∘δᵏ} ≫ pushPullMap F (interLegHom 𝒰 σ' k)
+    = nerve.δ k ≫ sigma_iso(p+1) ≫ π_{σ'}.
+```
+So the coface is "reindex the tuple by `δᵏ`, then restrict" — index-omission on the nose.
+
+Every input is a one-line composition of existing lemmas; what was missing was that they were not
+in this file's import cone.  Project-local. -/
+theorem cechNerve_drop_δ_sigma (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules) (p : ℕ)
+    (k : Fin (p + 2)) (σ' : Fin (p + 2) → 𝒰.I₀) :
+    (pushPull_sigma_iso 𝒰 F p).hom ≫
+        Pi.π (fun τ : Fin (p + 1) → 𝒰.I₀ =>
+          pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ))))
+          (σ' ∘ (SimplexCategory.δ k).toOrderHom) ≫
+        pushPullMap F (interLegHom 𝒰 σ' k)
+      = (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ k ≫
+          (pushPull_sigma_iso 𝒰 F (p + 1)).hom ≫
+          Pi.π (fun τ : Fin (p + 2) → 𝒰.I₀ =>
+            pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ)))) σ' := by
+  -- RHS: rewrite both the nerve coface and the σ'-projection into `pushPullMap` form, then the
+  -- functoriality of `pushPullMap` (contravariant) turns the composite into `pushPullMap` of
+  -- `backboneIncl (p+1) σ' ≫ geometric coface` — which `backboneIncl_nerveδ` factors.
+  rw [cechNerve_drop_δ, pushPull_sigma_iso_π_incl, pushPull_sigma_iso_π_incl,
+    ← pushPullMap_comp, ← pushPullMap_comp, backboneIncl_nerveδ]
 
 /-- **The base-changed nerve is the nerve of the base-changed data** (Stacks 02KG, the
 mechanical half). Applying `(g')^*` (at the `X`-level) to the dropped Čech nerve of
