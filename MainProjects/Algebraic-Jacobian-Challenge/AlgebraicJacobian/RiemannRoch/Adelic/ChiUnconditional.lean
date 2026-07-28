@@ -81,6 +81,18 @@ Consequences, and they are the ones to carry forward:
 
 * On a curve with a nonconstant function the binder holds at **no chart and no cover**.  So
   §5–§6 refute nothing *about a curve*: `hbump` and `hledger` are **open** there, not false.
+
+  **The other refutation route, checked so this claim is not narrower than it sounds.**
+  `LedgerClosure.not_bump_of_notMem_overlap` refutes the bump off the *overlap* and carries **no**
+  chart-finiteness binder at all, so the argument above does not touch it.  It does not reach a
+  curve either, for an independent reason: its hypothesis `hchiAdd` is the conclusion of
+  `ChiLedger.chi_add`, whose four exactness data (`window`, `connect`, `twist`, `htwist` — the
+  connecting homomorphism and right-exactness of the ledger four-term sequence) are constructed
+  **nowhere** in the lane.  So it is conditional on unbuilt data rather than on a false binder.
+  Two routes, two different reasons, same conclusion: nothing in AJC currently refutes `hbump` at
+  a curve.  This was worth checking rather than asserting, because §2b round 2 of
+  `scripts/axiom-frontier.lean` is precisely the error of inferring "not refutable" from "not
+  refutable by the route I looked at".
 * "Exhibit a cover on which the ledger can hold" — the direction this file's earlier header and
   `WeilDivisor.lean` recommended — is **not** the open problem.  There is no cover to find.
 * Prefer stating results at `⊤`, where `Module.Finite` is the honest finiteness of `L(D)`.
