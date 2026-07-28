@@ -1420,9 +1420,10 @@ Note what this does and does not do: it witnesses *satisfiability*, not strength
 claim rests on `leakProbe_qcohRoute_*` versus `leakControl_qcohRoute_oldRoute`; `g` being an
 identity-like `Spec` map here would be the wrong argument for *that* comparison (§6b). -/
 theorem leakWitness_qcohRoute_nonvacuous {R R' : CommRingCat.{u}} (φ : R ⟶ R')
-    (hφ : φ.hom.Flat) [Flat (Spec.map φ)] (M : ModuleCat.{u} R) :
+    (hφ : φ.hom.Flat) (M : ModuleCat.{u} R) :
     Limits.PreservesLimit (Limits.parallelPair (𝟙 (tilde M)) 0)
       (Scheme.Modules.pullback (Spec.map φ)) :=
+  haveI : Flat (Spec.map φ) := Flat.SpecMap_iff.mpr hφ
   leakProbe_qcohRoute_kernel (Spec.map φ) (𝟙 (tilde M)) inferInstance inferInstance
 
 #print axioms leakProbe_qcohRoute_kernel
