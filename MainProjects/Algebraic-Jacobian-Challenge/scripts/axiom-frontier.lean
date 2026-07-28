@@ -351,13 +351,46 @@ import AlgebraicJacobian
 
 open AlgebraicGeometry AlgebraicGeometry.Scheme
 
--- §0 The three open leaves of the headline witness, plus the two `sorry`-bodied
--- upstream theorems the assembly invokes (`Pic0.smooth`, `Pic0.proper`, §4).
--- Together these five are the whole mathematical distance between the tree and the
--- theorem; everything in §1 is `sorryAx` because of them and nothing else.
-#print axioms AlgebraicGeometry.hasRationalPoint_of_curve
+-- §0 THE FIVE OBLIGATIONS OF THE HEADLINE, after the étale rewire of 2026-07-28.
+-- The headline witness `picardJacobianWitness` is now assembled from `Pic0SchemeEt`
+-- (`Picard/Pic0Et.lean`) with NO rational-point binder, so its obligations are:
+--   1. `Scheme.fgaPicardRepresentability`  -- representability of the ÉTALE-sheafified
+--      relative Picard functor over an arbitrary field (the project's central open
+--      obligation, expected to stay open);
+--   2. `Scheme.Pic0Et.smooth`, 3. `Scheme.Pic0Et.proper`  -- the two Kleiman §5
+--      statements about the identity component;
+--   4. `smoothOfRelativeDimension_genus_pic0Et`, 5. `isAlbanese_pic0Et`  -- the two
+--      étale leaves stated at exactly the strength the assembly consumes.
+-- COUNT UNCHANGED AT FIVE; what changed is that **none of the five is a false
+-- statement** any more.  The deleted leaf `hasRationalPoint_of_curve` asserted a
+-- rational point from the challenge hypotheses alone and was FALSE, so the witness
+-- rested on an inconsistent hypothesis and its consequences were vacuously true --- a
+-- state no axiom check can distinguish from an honest one.  That is the deliverable of
+-- the rewire, and it is not visible in these axiom sets: every line below still reports
+-- `sorryAx`.  What IS visible is that `hasRationalPoint_of_curve` no longer exists to
+-- probe, and that the witness now elaborates without a `[HasRationalPoint C]` binder.
+#print axioms AlgebraicGeometry.Scheme.fgaPicardRepresentability
+#print axioms AlgebraicGeometry.Scheme.Pic0Et.smooth
+#print axioms AlgebraicGeometry.Scheme.Pic0Et.proper
+#print axioms AlgebraicGeometry.smoothOfRelativeDimension_genus_pic0Et
+#print axioms AlgebraicGeometry.isAlbanese_pic0Et
+
+-- The étale functor itself, and the sheaf property that makes the obligation above a
+-- CONSISTENT statement rather than a false one.  These are the parts that are PROVED:
+-- clean lines here are the substance of the rewire.
+#print axioms AlgebraicGeometry.Scheme.PicSharp.etaleSheaf
+#print axioms AlgebraicGeometry.Scheme.PicSharp.etaleSheaf_isSheaf
+#print axioms AlgebraicGeometry.Scheme.PicScheme.picEt_isSheaf_forget
+#print axioms AlgebraicGeometry.Scheme.zariskiTopologyOver_le_etaleTopologyOver
+#print axioms AlgebraicGeometry.Scheme.Pic0Et.grpObj
+#print axioms AlgebraicGeometry.Scheme.Pic0Et.geometricallyIrreducible
+#print axioms AlgebraicGeometry.Scheme.Pic0Et.locallyOfFiniteType
+
+-- The legacy `picSharp`-shaped leaves, retained: they are the obligations of the
+-- CONDITIONAL milestone `picardJacobianWitnessOfHasRationalPoint`, not of the headline.
 #print axioms AlgebraicGeometry.smoothOfRelativeDimension_genus_pic0
 #print axioms AlgebraicGeometry.isAlbanese_pic0
+#print axioms AlgebraicGeometry.Scheme.picSchemeOfHasRationalPoint
 
 -- The half of the former combined leaf `hasRationalPoint_and_geometricallyIntegral`
 -- that turned out to be a theorem rather than a decision: geometric integrality of the
@@ -432,6 +465,7 @@ noncomputable def probe_pic0Scheme_named_of_isAlgClosed [IsAlgClosed k] :
     CategoryTheory.Over (Spec (.of k)) := by
   haveI := hasRationalPoint_of_curve_of_isAlgClosed C
   haveI : GeometricallyIntegral C.hom := geometricallyIntegral_of_curve C
+  haveI := Scheme.picSchemeOfHasRationalPoint C
   exact Scheme.Pic0Scheme C
 
 /-- The control: the same object with `HasPicScheme` assumed rather than synthesised.  Clean,
@@ -539,7 +573,9 @@ Measured 2026-07-28: **17 theorem + 7 def + 2 instance = 26**, agreeing with the
 Note the line numbers move as docstrings are edited, so re-run the build rather than reusing a
 saved carrier list — a stale list silently misattributes a keyword to whatever now sits at
 that line. -/
-#print axioms AlgebraicGeometry.Scheme.instHasPicScheme
+-- The `picSharp` gate's producer is no longer an instance (étale rewire, 2026-07-28):
+-- `picSchemeOfHasRationalPoint` is a named theorem, so it cannot leak through synthesis.
+-- Exactly ONE `sorry`-bodied instance now remains in the tree.
 #print axioms AlgebraicGeometry.pullback_preservesFiniteLimits
 
 -- §3 Picard cone keystones
@@ -979,21 +1015,24 @@ variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 
 /-- Instantiated at a curve with a rational point, `Pic0.geometricallyIrreducible`
 has to synthesise `HasPicScheme C`, whose sole producer is `sorry`-bodied. -/
-theorem leakProbe_pic0_geometricallyIrreducible [HasRationalPoint C]
-    [PicScheme.PicSchemeLocallyOfFiniteType C] :
+theorem leakProbe_pic0_geometricallyIrreducible [HasRationalPoint C] :
+    haveI := picSchemeOfHasRationalPoint C
     GeometricallyIrreducible (Pic0Scheme C).hom :=
+  haveI := picSchemeOfHasRationalPoint C
   Pic0.geometricallyIrreducible C
 
 /-- The same measurement for the separatedness carrier. -/
-theorem leakProbe_pic0_isSeparated [HasRationalPoint C]
-    [PicScheme.PicSchemeLocallyOfFiniteType C] :
+theorem leakProbe_pic0_isSeparated [HasRationalPoint C] :
+    haveI := picSchemeOfHasRationalPoint C
     IsSeparated (Pic0Scheme C).hom :=
+  haveI := picSchemeOfHasRationalPoint C
   Pic0.isSeparated C
 
 /-- Same measurement for the local-finiteness carrier. -/
-theorem leakProbe_pic0_locallyOfFiniteType [HasRationalPoint C]
-    [PicScheme.PicSchemeLocallyOfFiniteType C] :
+theorem leakProbe_pic0_locallyOfFiniteType [HasRationalPoint C] :
+    haveI := picSchemeOfHasRationalPoint C
     LocallyOfFiniteType (Pic0Scheme C).hom :=
+  haveI := picSchemeOfHasRationalPoint C
   Pic0.locallyOfFiniteType C
 
 /-- The control that isolates the leak to synthesis and nothing else: identical
@@ -1010,15 +1049,18 @@ a blueprint `\leanok` on them would be honest.  `PicScheme.representable` is
 `sorry`-bodied `smooth` and `proper` conjuncts, so both pick up `sorryAx` here even
 though each reports clean as stated. -/
 noncomputable def leakProbe_picScheme_representable [HasRationalPoint C] :
+    haveI := picSchemeOfHasRationalPoint C
     (PicScheme.picSharp C).RepresentableBy (PicScheme C) :=
+  haveI := picSchemeOfHasRationalPoint C
   PicScheme.representable C
 
 /-- Companion measurement for the abelian-variety assembly. -/
-theorem leakProbe_pic0_isAbelianVariety [HasRationalPoint C]
-    [PicScheme.PicSchemeLocallyOfFiniteType C] :
+theorem leakProbe_pic0_isAbelianVariety [HasRationalPoint C] :
+    haveI := picSchemeOfHasRationalPoint C
     IsProper (Pic0Scheme C).hom ∧ Smooth (Pic0Scheme C).hom ∧
       GeometricallyIrreducible (Pic0Scheme C).hom ∧
       Nonempty (GrpObj (Pic0Scheme C)) :=
+  haveI := picSchemeOfHasRationalPoint C
   Pic0.isAbelianVariety C
 
 /-- The two FGA *chapter* carriers that a blueprint `\leanok` is most likely to be read off:
@@ -1029,16 +1071,97 @@ rather than assumed.  This is the measurement that decides whether
 `thm:pic_is_group_scheme` may be read as "the Picard scheme exists in this development".
 They may not: what is formalised is the extraction *from* the gate. -/
 theorem leakProbe_instPicSharpRepresentable [HasRationalPoint C] :
+    haveI := picSchemeOfHasRationalPoint C
     PicScheme.PicSharpRepresentable C :=
+  haveI := picSchemeOfHasRationalPoint C
   inferInstance
 
 /-- Companion measurement for the group-scheme structure.  `Nonempty` rather than the bare
 class, so that this is a `theorem`: a `def` of class type draws a `@[reducible]` warning, and
 a probe should not add a warning to the build it is measuring. -/
-theorem leakProbe_groupSchemeStructure [HasRationalPoint C]
-    [PicScheme.PicSchemeLocallyOfFiniteType C] :
+theorem leakProbe_groupSchemeStructure [HasRationalPoint C] :
+    haveI := picSchemeOfHasRationalPoint C
     Nonempty (CommGrpObj (PicScheme C)) :=
+  haveI := picSchemeOfHasRationalPoint C
   ⟨PicScheme.groupSchemeStructure C⟩
+
+/-! §8b The ÉTALE gate at a synthesis site — the measurement that matters after the
+rewire of 2026-07-28.
+
+Unlike the `picSharp` gate above, `HasPicSchemeEt` DOES have an instance
+(`instHasPicSchemeEt`), and it is unconditional: it fires for every smooth proper
+geometrically integral curve with no hypothesis on `C(k)`.  So these probes measure the
+étale interface exactly where a consumer picks it up.  Every one of them reports
+`sorryAx`, from the single obligation `fgaPicardRepresentability` — which is the honest
+state and is expected to persist.
+
+What to read off them, and what NOT to.  A `sorryAx` here does NOT mean the same thing it
+meant before the rewire.  Before, the headline's `sorryAx` came partly from a leaf that was
+FALSE, so the surrounding theorems were vacuous.  Now every obligation is a true statement
+awaiting a proof, and no declaration in the cone rests on an inconsistent hypothesis.  That
+difference is invisible to `#print axioms` — it is a property of the STATEMENTS, not of the
+proof terms — which is precisely why it has to be argued at the binders (below) rather than
+measured here. -/
+
+/-- The étale representability witness at a synthesis site, with NO rational point
+anywhere in the binders.  This is the étale-formulation counterpart of
+`leakProbe_picScheme_representable`, and the contrast is the deliverable: that one needs
+`[HasRationalPoint C]`, this one does not. -/
+noncomputable def etProbe_representableEt :
+    (PicScheme.picEt C).RepresentableBy (PicSchemeEt C) :=
+  representableEt C
+
+/-- The group-scheme structure on `Pic_{C/k}` over an arbitrary field, at a synthesis
+site.  `Nonempty` so this is a `theorem` and adds no `@[reducible]` warning. -/
+theorem etProbe_groupSchemeStructureEt :
+    Nonempty (CommGrpObj (PicSchemeEt C)) :=
+  ⟨groupSchemeStructureEt C⟩
+
+/-- Local finiteness and separatedness of `Pic_{C/k}` over an arbitrary field. -/
+theorem etProbe_picSchemeEt_carriers :
+    LocallyOfFiniteType (PicSchemeEt C).hom ∧ IsSeparated (PicSchemeEt C).hom :=
+  ⟨inferInstance, inferInstance⟩
+
+/-- The three PROVED abelian-variety properties of `Pic⁰_{C/k}` in the étale formulation,
+at a synthesis site.  These still report `sorryAx` because they are extractions from the
+gate, but they are the ones that need no NEW mathematics beyond it. -/
+theorem etProbe_pic0Et_proved :
+    Nonempty (GrpObj (Pic0SchemeEt C)) ∧
+      GeometricallyIrreducible (Pic0SchemeEt C).hom ∧
+      LocallyOfFiniteType (Pic0SchemeEt C).hom :=
+  ⟨Pic0Et.grpObj C, Pic0Et.geometricallyIrreducible C, Pic0Et.locallyOfFiniteType C⟩
+
+/-! ### The headline carries no rational-point binder — checked, not asserted.
+
+`#print axioms` cannot see this, so it is checked at the binders instead.  Each `example`
+below elaborates the headline declaration under EXACTLY the three challenge hypotheses
+`[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]`
+(the `variable` block above supplies `GeometricallyIntegral`, which is derived from them by
+`geometricallyIntegral_of_curve`, not assumed).  If a `[HasRationalPoint _]` binder ever
+returns to the headline cone, these stop elaborating.  That is the regression test for the
+owner decision of 2026-07-28. -/
+
+section HeadlineBinders
+
+variable {K : Type u} [Field K] (D : Over (Spec (.of K)))
+  [SmoothOfRelativeDimension 1 D.hom] [IsProper D.hom] [GeometricallyIrreducible D.hom]
+
+noncomputable example : JacobianWitness D := picardJacobianWitness D
+example : Nonempty (JacobianWitness D) := nonempty_jacobianWitness D
+noncomputable example : Over (Spec (.of K)) := Jacobian D
+noncomputable example : GrpObj (Jacobian D) := Jacobian.instGrpObj D
+example : SmoothOfRelativeDimension (genus D) (Jacobian D).hom :=
+  Jacobian.smoothOfRelativeDimension_genus D
+example : IsProper (Jacobian D).hom := Jacobian.instIsProper D
+example : GeometricallyIrreducible (Jacobian D).hom :=
+  Jacobian.instGeometricallyIrreducible D
+
+end HeadlineBinders
+
+#print axioms etProbe_representableEt
+#print axioms etProbe_groupSchemeStructureEt
+#print axioms etProbe_picSchemeEt_carriers
+#print axioms etProbe_pic0Et_proved
 
 #print axioms leakProbe_pic0_geometricallyIrreducible
 #print axioms leakProbe_pic0_isSeparated
