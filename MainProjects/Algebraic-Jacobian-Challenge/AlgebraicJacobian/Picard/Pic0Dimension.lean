@@ -309,7 +309,18 @@ than about dimension theory.
 `IsLocallyNoetherian (Pic0Scheme C).left` is supplied by `Pic0.isLocallyNoetherian`
 above — the helper the previous session kept with the note "the ≤ half of the
 dimension statement is likely to need it where no regularity hypothesis is in scope".
-That is exactly this. -/
+That is exactly this.
+
+**AND THE `hle` HYPOTHESIS IS NO LONGER OPEN CONTENT (run 0067 r7).** The paragraph above
+describes what is owed as "the uniform *cotangent* bound", a statement about embedding
+dimensions. On a **group** scheme that is not a separate statement: translations are
+automorphisms of the underlying scheme, so the embedding dimension is constant along a
+translate orbit, and `Pic0.forall_finrank_cotangentSpace_le_of_homogeneous`
+(`Picard/GroupSchemeHomogeneity.lean`) derives `hle` from the value at *one* point plus the
+orbit condition. Since the value at the identity is an equality, one point serves both
+directions of the dimension statement —
+`Pic0.topologicalKrullDim_eq_genus_of_homogeneous` is the resulting form, axiom-clean.
+Prefer that theorem to instantiating `hle` by hand. -/
 theorem topologicalKrullDim_le_genus_of_forall_finrank_cotangentSpace_le
     {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

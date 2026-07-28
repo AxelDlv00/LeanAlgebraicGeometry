@@ -1855,6 +1855,31 @@ STATE OF THE TWO DIRECTIONS (`Picard/Pic0Dimension.lean`):
   about embedding dimensions rather than about dimension theory. It also carries no
   `[PerfectField k]`, which the r5 form did.
 
+  **SUPERSEDED (run 0067 r7): the uniform cotangent bound is NOT a separate piece of
+  mathematics, and naming it as the `≤` half's open content was the third framing of
+  this leg to be wrong.** `Pic⁰_{C/k}` is a *group* scheme, so its translations are
+  automorphisms of the underlying scheme, and the embedding dimension is therefore
+  constant along a translate orbit. `Picard/GroupSchemeHomogeneity.lean` supplies the
+  transport (`finrank_cotangentSpace_stalk_eq_of_isIso`, axiom-clean) and derives the
+  uniform hypothesis from the value at *one* point
+  (`Pic0.forall_finrank_cotangentSpace_le_of_homogeneous`). Since the value at the
+  identity is an **equality**, one point serves both directions, and
+  `Pic0.topologicalKrullDim_eq_genus_of_homogeneous` gives `dim Pic⁰ = g` outright and
+  axiom-clean from it.
+
+  So the dimension leg's residue is now: front (a), plus regularity of the single stalk
+  at the identity, plus the orbit condition "every point of `Pic⁰` is a `k`-rational
+  translate of the identity". The last of these is the honest gap — translations are
+  indexed by `k`-rational sections, and over a non-closed field there are points no such
+  translation reaches — but it is a statement about *points*, not about dimension theory,
+  and no bound on embedding dimensions is owed at all.
+
+  Note on transporting a cotangent dimension, since this cost a search: mathlib v4.31 has
+  **no** functoriality for `IsLocalRing.CotangentSpace` — no map along a ring
+  homomorphism of any kind. The route is `Submodule.spanFinrank` (`Ideal.spanRank_map_le`
+  applied in both directions, then antisymmetry, which needs no Noetherian hypothesis)
+  followed by Nakayama.
+
 So the *dimension-theoretic* content of Milne III.1 Rmk 1.4(e) is consumed: what
 is left is front (a) for the `≥` direction and the equidimensionality bound for
 the `≤` direction, with nothing between them and the statement. Consumers wanting
