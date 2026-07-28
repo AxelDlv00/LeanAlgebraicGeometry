@@ -220,6 +220,57 @@ lemma divFamZarAffAffineEquiv_symm_apply_val (x : DivFamZarAff C R n)
 
 end Affine
 
+/-! ## The comparison from the chart-typed vehicle
+
+`DivFamZar.toAff` (`…AffCompare.lean`) sends a chart-typed class to a widened one at a single
+affine test, and `DivFamZar.toAff_mapAlgHom` (`…AffFace.lean`) makes that compatible with
+restriction on the explicit face.  Together they lift the comparison to the *vehicles*, which is
+what a consumer holding a section over a general test needs.
+
+The direction is old → new and only old → new.  That is not a limitation of the construction: it
+is the content of R2.  A widened certificate cover is an arbitrary family of affine opens, and by
+`informal/spec-dd-r.md` ADDENDUM 3 §2 / ADDENDUM 4 §4.3 there is a straddling divisor at every
+genus `≥ 2` that no fixed pair of `P¹` charts can confine, so no map back can exist. -/
+
+section Compare
+
+variable {π : C.left ⟶ P1 k} [IsAffineHom π]
+
+variable (π) in
+/-- **The comparison of vehicles**: componentwise `DivFamZar.toAff`, compatible under
+restriction by `DivFamZar.toAff_mapAlgHom`.
+
+This is the statement that makes the widened vehicle usable by a consumer that already holds a
+chart-typed section: it does not have to be re-derived over the widened cover, it transports. -/
+def divFamZarToAffVehicle {T : Over (Spec (.of k))} (s : divFamZar C π n T) :
+    divFamZarAff C n T :=
+  ⟨fun U => (s.1 U).toAff,
+    fun U V h => by
+      beta_reduce
+      rw [← s.compat U V h, DivFamZar.toAff_mapAlgHom]⟩
+
+/-- The value of the vehicle comparison at an affine open is the comparison of the value. -/
+@[simp]
+lemma divFamZarToAffVehicle_val {T : Over (Spec (.of k))} (s : divFamZar C π n T)
+    (U : T.left.affineOpens) :
+    (divFamZarToAffVehicle C n π s).1 U = (s.1 U).toAff :=
+  rfl
+
+/-- **The comparison intertwines the two affine comparisons**: on an affine test, passing to the
+widened vehicle and collapsing agrees with collapsing and passing to the widened value.
+
+Stated because it is the coherence a consumer actually uses — it says the widened vehicle's
+value at an affine test is the widened value of the chart-typed one, with no ambiguity about
+which of the two routes was taken. -/
+lemma divFamZarAffAffineEquiv_toAffVehicle (R : Type u) [CommRing R] [Algebra k R]
+    (s : divFamZar C π n (overSpec k R)) :
+    divFamZarAffAffineEquiv C n R (divFamZarToAffVehicle C n π s)
+      = (divFamZarAffineEquiv C π n R s).toAff := by
+  rw [divFamZarAffAffineEquiv_apply, divFamZarAffineEquiv_apply,
+    divFamZarToAffVehicle_val, DivFamZar.toAff_mapAlgHom]
+
+end Compare
+
 end
 
 end AlgebraicGeometry
