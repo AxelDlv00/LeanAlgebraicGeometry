@@ -436,7 +436,7 @@ theorem AffAdaptation.eqn_tmul_one_mem_nonZeroDivisors_iff {D : AffCoverData C R
       (relSectionsBaseChangeAff C p.asIdeal.ResidueField (D.isAffineOpen j)).toRingEquiv
   have hval : e (A.eqn j ⊗ₜ[R] (1 : p.asIdeal.ResidueField))
       = relAffSectionsMap C p.asIdeal.ResidueField (D.pieces j) (A.eqn j) := by
-    show (relSectionsBaseChangeAff C p.asIdeal.ResidueField (D.isAffineOpen j))
+    change (relSectionsBaseChangeAff C p.asIdeal.ResidueField (D.isAffineOpen j))
         (Algebra.TensorProduct.comm R Γ(relCurve C R, D.pieces j)
           p.asIdeal.ResidueField (A.eqn j ⊗ₜ[R] (1 : p.asIdeal.ResidueField))) = _
     rw [Algebra.TensorProduct.comm_tmul,
