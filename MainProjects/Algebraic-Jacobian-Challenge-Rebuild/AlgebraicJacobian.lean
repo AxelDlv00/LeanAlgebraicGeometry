@@ -447,6 +447,11 @@ import AlgebraicJacobian.Tangent.TruncExpUnits
 import AlgebraicJacobian.Tangent.TruncExpCech
 import AlgebraicJacobian.Tangent.DualNumberBaseChange
 import AlgebraicJacobian.Tangent.TruncExpCechH1
+import AlgebraicJacobian.Tangent.TangentDualNumbers
+import AlgebraicJacobian.Tangent.TangentSchemePoints
+import AlgebraicJacobian.Tangent.TangentStalkAlgebra
+import AlgebraicJacobian.Tangent.TangentIdentitySection
+import AlgebraicJacobian.Tangent.TangentCotangentCount
 import AlgebraicJacobian.Picard.RelPicCurveMap
 import AlgebraicJacobian.Curve.CrossBaseSquare
 import AlgebraicJacobian.RiemannRoch.DegreeIsoTransport
