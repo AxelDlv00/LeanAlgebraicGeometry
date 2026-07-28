@@ -46,6 +46,15 @@ import would drag in eleven `Picard/` presentation modules; (b) that it is state
 so it does not require `π` at all; and (c) the global-generation half (item 3 below), which
 AJCR does not derive from this bound.
 
+**Claim (c) machine-checked, since (a) and (b) are the kind of claim this lane has now got
+wrong three times.**  AJCR *has* the slice lemma `RiemannRoch/ChiSlice.exact_map_g_delta`, but
+its only two uses in that project are inside `ChiSlice.lean` itself, for χ-additivity; and the
+only `Function.Surjective (Sheaf.HModule.map …)` anywhere in AJCR is
+`SectionBound.lean:74`, which is the **peel** `map … .f 1`, not the evaluation `map … .g 0`.
+So neither project derived generation from the slice before this file.  Grep, not inference —
+and it is a *negative* claim about a name, so it is measured across the whole sibling project,
+per the cone-scoping rule that caught this lane twice (`I-0622`, `I-0642`).
+
 An earlier version of this docstring, and the commit message that landed it, presented the
 insight as new to the workspace and said the ingredients had merely never been "put together".
 That was the *third* time this lane misjudged availability by searching too narrowly — here the
