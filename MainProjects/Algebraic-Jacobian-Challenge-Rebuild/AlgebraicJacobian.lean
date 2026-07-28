@@ -559,7 +559,6 @@ import AlgebraicJacobian.Picard.DivRepAffPullNat
 import AlgebraicJacobian.Picard.DivRepAffPullClause
 import AlgebraicJacobian.Picard.DivRepChartRange
 import AlgebraicJacobian.Picard.JacobianDataAbelImage
-import AlgebraicJacobian.Picard.JacobianDataAbelSurj
 
 /-!
 # AlgebraicJacobian — library root
