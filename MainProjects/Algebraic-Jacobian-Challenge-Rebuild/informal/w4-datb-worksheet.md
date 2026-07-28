@@ -500,8 +500,8 @@ defs, maxRecDepth near window defeq, no two-level `letI` algebra towers).
 | B-1 | `RiemannRoch/CoverageDrop.lean` | §1.4: the oracle-parametrized greedy drop `exists_effective_sub_h0_eq_one` + the exact-drop step lemma | M→L | none | **NOW** |
 | B-2 | `Curve/SepPointsDense.lean` | §1.5: `dense_baseChange_rationalPoints` (DAT-P + singleton-fibre + tensor argument) | M | none | **NOW** |
 | B-3 | `Picard/DivisorFamilyFieldSurj.lean` | §1.7: `exists_divFam_divFamDivisor_eq`, unconditional `divFamFieldEquiv`, the field DivScheme-point corollary | M→L | none (F4 landed) | **NOW** |
-| B-4 | `Picard/Pic0ChartLocusOpen.lean` | §1.6: DAT-B's half of CHART-U — the split predicate (a-amendment) + transports (i)/(ii) + `isOpen_chartLocus` assembly against DAT-C's shifted-datum half | M→L | CHART-U co-sign (this §1.6); DAT-C C0/GAP-1 | after co-sign |
-| B-5 | `Picard/Pic0Coverage.lean` | §1.2: `pic0_chartLocus_cover` (COV-1) at the `K_s` instantiation | M→L | B-1, B-2, B-4(a-part), DAT-C C5 (`chartValue`/`sigmaFamily` names) | mostly pre-divRep |
+| B-4 | ~~`Picard/Pic0ChartLocusOpen.lean`~~ → **landed as `Pic0ChartLocus{,IsOpen}.lean`** | §1.6: the split predicate (a-amendment) **DONE** (`IsSplitWitness`); `isOpen_chartLocus` assembled **conditionally** (one declared `sorry`); transports (i)/(ii) reduce to the landed separable invariance given a presentation | M→L | ~~co-sign~~ **acknowledged**; residue is DAT-C GAP-1's **mul/tensor** half | **partly done 2026-07-28** |
+| B-5 | `Picard/Pic0Coverage.lean` | §1.2: `pic0_chartLocus_cover` (COV-1) at the `K_s` instantiation | M→L | B-1, B-2, ~~B-4(a-part)~~ **available**, DAT-C C5 (`chartValue`/`sigmaFamily` names — landed) | **NOW** — `chartLocus` exists, so the statement is expressible |
 | B-6 | `Picard/Pic0CoverageSurj.lean` | §1.1 instance + §3.3 export + the §2 consumption-map docstring | M | B-4, B-5, DAT-C C9 (CHART-U(c) — gated on divRep F7 + CERT-Σ) | no |
 
 Lane order under the memory constraint: B-1 ∥ B-2 ∥ B-3 (light, disjoint imports) →
