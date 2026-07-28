@@ -478,6 +478,32 @@ theorem Modules.pullback_iso_isEquivalence {X Y : Scheme.{u}} (e : X ≅ Y) :
     (Scheme.Modules.pushforwardEquivOfIso e.symm).isEquivalence_functor
   exact Functor.isEquivalence_of_iso (Scheme.Modules.pullbackIsoPushforwardInv e).symm
 
+/-- **Quasi-coherence is closed under finite products over an affine base.**  Over `Spec R` a
+finite product of quasi-coherent modules is quasi-coherent.
+
+The proof is the tilde dictionary, and it is short *because* of
+`essImage_tilde_of_isQuasicoherent`: each factor is `M_j^~` for some `R`-module `M_j`, the tilde
+functor preserves finite limits (`tildePreservesFiniteLimits`, `Cohomology/TildeExactness.lean`)
+so it carries `∏ M_j` to `∏ M_j^~`, and a tilde is quasi-coherent outright (mathlib's instance via
+`presentationTilde`).  Quasi-coherence is closed under isomorphism, which transports the conclusion
+back along that comparison.
+
+Over a *general* base this is not available by this argument — the tilde dictionary is affine — and
+the corresponding statement is a genuine gap; mathlib's `Quasicoherent.lean` offers only
+`IsClosedUnderIsomorphisms` and `IsQuasicoherent.of_coversTop`.  But the affine case is the only one
+the Čech consumer needs, since `cech_flatBaseChange` carries `[IsAffine S]`.  Project-local. -/
+theorem isQuasicoherent_pi_of_isAffineBase {R : CommRingCat.{u}} {J : Type} [Finite J]
+    (A : J → (Spec R).Modules) (hA : ∀ j, (A j).IsQuasicoherent) :
+    (∏ᶜ A).IsQuasicoherent := by
+  haveI : Limits.PreservesFiniteLimits (tilde.functor R) := tildePreservesFiniteLimits
+  haveI : Fintype J := Fintype.ofFinite J
+  choose M e using fun j => essImage_tilde_of_isQuasicoherent (A j) (hA j)
+  refine (SheafOfModules.isQuasicoherent.{u} (Spec R).ringCatSheaf).prop_of_iso
+    (Limits.PreservesProduct.iso (tilde.functor R) M ≪≫
+      Limits.Pi.mapIso (fun j => (e j).some)) ?_
+  exact (presentationTilde.{u} (∏ᶜ M) Set.univ (by simp) _
+    (Submodule.span_eq _)).isQuasicoherent
+
 /-- **`Γ(g)` is flat for a flat `g` between affine schemes.**  Specialisation of
 `Flat.flat_appLE` to `U = V = ⊤`, where `appLE` is `appTop` up to the identity restriction map.
 Project-local. -/
@@ -2404,14 +2430,18 @@ are genuine open mathematics (Stacks 02KG; see the docstrings of
 exactly one source instead of two, and that source is the Beck–Chevalley heart rather than a
 statement about arbitrary modules that nobody needs.
 
-`h₂`/`h₃` are expected to be discharged, not assumed, once quasi-coherence of the Čech terms is
-available.  Each term is a finite product of push–pull objects over affine intersection opens
-(`pushPull_sigma_iso`), each factor quasi-coherent by `isQuasicoherent_pullback_opens` plus
-`pushforward_isQuasicoherent`; the missing step is closure of quasi-coherence under *finite
-products*, which neither mathlib nor this workspace currently has (mathlib's
-`Quasicoherent.lean` offers only `IsClosedUnderIsomorphisms` and `of_coversTop`).  That is the
-one named obligation between here and a flat-exactness-free statement with no extra hypotheses.
-Project-local. -/
+`h₂`/`h₃` are expected to be discharged, not assumed.  Each Čech term is a finite product of
+push–pull objects over affine intersection opens (`pushPull_sigma_iso`), each factor quasi-coherent
+by `isQuasicoherent_pullback_opens` plus `pushforward_isQuasicoherent`, and the finite product of
+quasi-coherent modules over an affine base is quasi-coherent — that is
+`isQuasicoherent_pi_of_isAffineBase` above.  So what remains is bookkeeping: matching the two
+`(CechComplex f 𝒰 F).sc i` terms to that product decomposition through `pushPull_sigma_iso`, with
+the degree indices `c.prev i`/`c.next i` resolved.  Nothing on that path is open mathematics.
+
+(An earlier revision of this paragraph asserted that closure of quasi-coherence under finite
+products "neither mathlib nor this workspace currently has".  That was wrong over an affine base,
+which is the only case this theorem is stated in: the tilde dictionary proves it in a few lines.
+The general-base statement is a real gap, and no consumer needs it.)  Project-local. -/
 theorem cech_flatBaseChange_of_termsQuasicoherent
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
     (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f]
