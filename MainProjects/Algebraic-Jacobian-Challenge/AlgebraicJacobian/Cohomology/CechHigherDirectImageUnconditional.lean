@@ -277,8 +277,9 @@ Two routes that do **not** work, and why:
   above by `preservesFiniteLimits_of_preservesMonomorphisms` — so the categorical glue is
   *not* what is missing.  The whole obligation is now this one mono statement.
 
-**What IS discharged**: the *open-immersion* case, `Modules.pullback_preservesMonomorphisms_of_isOpenImmersion`
-above, sorry-free — because there `g^*` is isomorphic to the sectionwise `restrictFunctor`.
+**What IS discharged**: the *open-immersion* case, sorry-free, as
+`Modules.pullback_preservesMonomorphisms_of_isOpenImmersion` above — because there `g^*` is
+isomorphic to the sectionwise `restrictFunctor`.
 So the residual is genuinely about a general flat `g`, where no sectionwise formula holds and
 the stalk model is unavoidable. -/
 theorem pullback_preservesMonomorphisms (g : S' ⟶ S) [Flat g] :
@@ -289,21 +290,33 @@ right exact (a left adjoint, `pullback_preservesFiniteColimits`), so by
 `pullback_preservesFiniteLimits_of_preservesMonomorphisms` left exactness follows from
 mono-preservation, which for a flat `g` is `pullback_preservesMonomorphisms`.
 
-This declaration is still an `instance` with a `sorry` *behind* it, so it still leaks
-`sorryAx` into anything that synthesises it — but the leak now has a single named carrier,
-`pullback_preservesMonomorphisms`, whose statement is one line of mathematics
-(flat base change preserves injections, stalkwise) rather than a three-functor
-sheafification argument.  Measure the leak at a synthesis site, e.g.
+**DELIBERATELY NOT AN `instance`.**  It was one until this revision, and that was the worse
+choice: as an instance it was picked up by typeclass synthesis at arbitrary sites, so any
+declaration *quantifying over* it reported clean axioms while every *synthesis site* silently
+acquired `sorryAx` — the leak the AJC ledger warns about.  As a plain theorem the dependency is
+visible in every proof term that uses it (`haveI := pullback_preservesFiniteLimits g` below),
+and no declaration acquires `sorryAx` without naming it.  Do **not** restore the `instance`
+attribute before `pullback_preservesMonomorphisms` is proved; once it is, the attribute is free
+and harmless.
+
+The leak now has a single named carrier, `pullback_preservesMonomorphisms`, whose statement is
+one line of mathematics (flat base change preserves injections, stalkwise) rather than a
+three-functor sheafification argument.  Measure at a synthesis site, e.g.
 `scripts/axiom-frontier.lean`'s `leakProbe_pullback_finiteLimits`. -/
-instance pullback_preservesFiniteLimits (g : S' ⟶ S) [Flat g] :
+theorem pullback_preservesFiniteLimits (g : S' ⟶ S) [Flat g] :
     Limits.PreservesFiniteLimits (Scheme.Modules.pullback g) :=
   pullback_preservesFiniteLimits_of_preservesMonomorphisms g
     (pullback_preservesMonomorphisms g)
 
 /-- **Flat implies `g^*` preserves homology**, derived from left-exactness together with
-left-adjointness via `Functor.preservesHomologyOfExact`. -/
-instance pullback_preservesHomology (g : S' ⟶ S) [Flat g] :
-    (Scheme.Modules.pullback g).PreservesHomology := inferInstance
+left-adjointness via `Functor.preservesHomologyOfExact`.  Not an `instance`, for the same
+reason as `pullback_preservesFiniteLimits`: its only unproved input is
+`pullback_preservesMonomorphisms`, and that dependency should be visible rather than
+synthesised. -/
+theorem pullback_preservesHomology (g : S' ⟶ S) [Flat g] :
+    (Scheme.Modules.pullback g).PreservesHomology :=
+  haveI := pullback_preservesFiniteLimits g
+  Functor.preservesHomologyOfExact _
 
 /-- **`g^*` commutes with Čech homology** (flat exactness, at the level of complexes).
 A specialisation of `mapHomologicalComplexHomologyIso` to `g^* = pullback g`, which is
@@ -312,6 +325,7 @@ noncomputable def pullback_mapHC_homologyIso (g : S' ⟶ S) [Flat g]
     (K : CochainComplex S.Modules ℕ) (i : ℕ) :
     (((Scheme.Modules.pullback g).mapHomologicalComplex (ComplexShape.up ℕ)).obj K).homology i
       ≅ (Scheme.Modules.pullback g).obj (K.homology i) :=
+  haveI := pullback_preservesHomology g
   mapHomologicalComplexHomologyIso (Scheme.Modules.pullback g) K i
 
 /-! ## Additive functors and the alternating coface complex
