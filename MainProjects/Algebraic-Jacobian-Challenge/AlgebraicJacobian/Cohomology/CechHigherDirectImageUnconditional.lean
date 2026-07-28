@@ -73,6 +73,16 @@ objects through the `tilde` dictionary over `Spec`.
 * `cechOuterBC` / `cech_pushforward_baseChange_natIso_of_isIso` / `isIso_app_pi_of_isIso_app`:
   the cosimplicial comparison as a *whiskered mate*, which removes the cosimplicial naturality
   obligation entirely and leaves one `IsIso` per index tuple.
+* `cechNerve_backbone_δ_sigma` / `cechNerve_drop_δ_sigma` (run 0068 r4): the Čech nerve's coface
+  read through the σ-product decomposition — "reindex the tuple by `δᵏ`, then restrict along
+  `U_{σ'} ⊆ U_{σ'∘δᵏ}`".  Composed from lemmas that had been in the project for many sessions and
+  were merely outside this file's import cone.
+* `alternatingCofaceComplexIsoOfDelta` (run 0068 r4): an isomorphism of alternating coface
+  complexes from **coface** compatibility alone, no general-`φ` naturality.  The differential is
+  `∑ᵢ (-1)ⁱ • δᵢ`, so that is all any consumer here can see — and it is all this tree's
+  σ-coordinate lemmas can supply.
+* `sigmaAssembled_δ_square` / `twistedNerve_δ_square_concrete` (run 0068 r4): the twisted leaf's
+  coface square, **proved** from the per-σ compatibility `TwistedPerSigmaDeltaCompat`.
 
 ## Obligations not yet discharged
 
@@ -124,6 +134,21 @@ Three statements below are still assumed rather than proved.
   spent: the first leaf is closed, and this square is **the single remaining obstruction** between
   this file and Stacks 02KG/02KH.  Its axiom-clean-modulo-this-one form is
   `cech_flatBaseChange_oneLeaf`.
+
+  **RUN 0068 r4 REDUCED IT TO ONE PER-σ EQUATION, and the `sorry` stands only because that equation
+  is unproved — not because anything around it is.**  The obligation as posed asked for naturality
+  in *every* simplex map; the consumer chain bottoms out at `alternatingCofaceMapComplex`, whose
+  differential is `∑ᵢ (-1)ⁱ • δᵢ`, so **coface** compatibility suffices
+  (`alternatingCofaceComplexIsoOfDelta`).  That distinction is load-bearing rather than cosmetic:
+  this tree's σ-coordinate lemmas are stated for `δ k` **only**, and no general-`φ` analogue exists
+  in this workspace or in mathlib, so the obligation was out of reach *as stated* and is in reach
+  once narrowed.  Given the narrowing, `cechNerve_drop_δ_sigma` +
+  `sigmaAssembled_δ_square` + `twistedNerve_δ_square_concrete` **prove** the coface square from
+  `TwistedPerSigmaDeltaCompat` alone, which says the per-σ Beck–Chevalley isos commute with the
+  intersection-open inclusions.  Read that as: `twisted_cech_nerve_per_sigma` is built per σ and its
+  **naturality in the over-object** is what is missing.  A `Y`-natural Beck–Chevalley for
+  `pushPullFunctor` would supply it as a component; a workspace-wide search found none, and
+  `pushPullFunctor` has no API beyond being whiskered once in `cechNerveCosimplicial`.
 
 Neither `pullback_preservesFiniteLimits` nor `pullback_preservesHomology` is an `instance`, and
 that is deliberate: as instances they leaked `sorryAx` into every *synthesis site* while
@@ -2857,9 +2882,31 @@ the `isoOfRangeEq` slice identifications used per σ in `twisted_cech_nerve_per_
 the inclusions `U_τ ⊆ U_σ` for `σ` a subtuple of `τ`.  That is a statement about the cover
 base-change identification, not about modules, and it is the honest residue here.
 
-Consequently: attempt `cech_pushforward_baseChange_natIso` **first** (its naturality is already
-free, and only a per-σ `IsIso` of a mate remains), and treat this leaf as the harder of the two
-despite its lighter hypotheses.  Project-local. -/
+**THAT RESIDUE IS NOW ISOLATED AND THE REST IS PROVED (run 0068 r4) — DO NOT DISCHARGE THIS `sorry`,
+AND DO NOT READ THE PARAGRAPH ABOVE AS A PRICE.**  Two things changed.
+
+*The general-`φ` obligation was over-strong.*  This declaration's only consumer is
+`cechComplex_baseChange_cosimplicialIso`, and *its* only consumer takes
+`alternatingCofaceMapComplex`, whose differential is `∑ᵢ (-1)ⁱ • δᵢ` — no codegeneracy appears
+anywhere downstream.  `alternatingCofaceComplexIsoOfDelta` therefore builds the same complex
+isomorphism from **coface** compatibility alone.  That is what brings the obligation into range:
+this tree's σ-coordinate lemmas are stated for `δ k` only, and no general-`φ` analogue exists in
+this workspace or in mathlib, so the wide obligation was unprovable from the lemmas we have while
+the narrow one is not.
+
+*And the coface square is proved from a per-σ hypothesis.*  See `cechNerve_drop_δ_sigma` (the
+coface in σ-coordinates is "reindex by `δᵏ`, then restrict"), `sigmaAssembled_δ_square` and
+`twistedNerve_δ_square_concrete`.  What is left is `TwistedPerSigmaDeltaCompat`: that the per-σ
+Beck–Chevalley isos commute with the intersection-open inclusions — exactly the residue named in
+prose above, now a Lean equation between composites of landed `sorry`-free declarations, with no
+nerve, product or cosimplicial vocabulary in it.
+
+Equivalently, and this is the useful way to see what is missing: `twisted_cech_nerve_per_sigma` is
+built *per σ*, and the residue is its **naturality in the over-object**.  A `Y`-natural
+Beck–Chevalley for `pushPullFunctor` would give it as a component, and a workspace-wide search found
+none — `pushPullFunctor` has no API at all beyond being whiskered once in `cechNerveCosimplicial`.
+
+Project-local. -/
 noncomputable def twisted_cech_nerve_iso
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
     (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
