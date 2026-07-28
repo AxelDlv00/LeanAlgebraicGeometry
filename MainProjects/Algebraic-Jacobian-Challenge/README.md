@@ -178,8 +178,9 @@ retained-not-revived.
 
 
 Cones closed: `AJC.substrate`, `AJC.linebundle`, `AJC.grquot`, `AJC.cech`.
-Cones open: `AJC.fbc` (flat base change; one walled naturality leaf plus one
-bypassed monument, run 0068 r3), `AJC.rr`, `AJC.picrep`
+Cones open: `AJC.fbc` (flat base change; one naturality leaf, now *reduced* to a
+single per-σ equation — mate-naturality in the square — plus one bypassed
+monument, run 0068 r4), `AJC.rr`, `AJC.picrep`
 (Picard representability), `AJC.pic0av` (Pic⁰ is an abelian variety),
 `AJC.albanese`.  Run `horizon roadmap list --focus AJC.jacobian` for the live tree
 — the roadmap, not this file, is the authority on status.

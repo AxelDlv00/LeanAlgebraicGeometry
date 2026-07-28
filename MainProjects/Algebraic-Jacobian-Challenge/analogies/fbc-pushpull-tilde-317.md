@@ -1,5 +1,16 @@
 # Analogy: the `pushPullObj F Yₙ ≅ tilde Mₙ` abstract→affine bridge for the FBC leaves
 
+> **STATUS 2026-07-29 (run 0068 r4) — the line numbers and leaf counts below are HISTORICAL.**
+> This is a dated research note; the file has moved a long way since. At HEAD:
+> `cech_pushforward_baseChange_natIso` is **replaced** (r3) by the sorry-free
+> `cech_pushforward_baseChange_natIso_flat`; `pullback_preservesFiniteLimits` is a deliberate
+> non-instance **monument**, off the critical path (see roadmap `AJC.fbc.exactness`); and the
+> single remaining leaf, `twisted_cech_nerve_iso`'s naturality, is **reduced** to one per-σ
+> equation (mate-naturality in the square) with the slice half proved free. Read
+> `AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean`'s module header, or the
+> roadmap, for current state — not the line references here.
+
+
 ## Mode
 api-alignment
 
