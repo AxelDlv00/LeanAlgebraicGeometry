@@ -407,8 +407,18 @@ theorem genus_baseChangeField_curve [IsProper C.hom] [SmoothOfRelativeDimension 
 /-- **The reduction with the cover discharged too** (★★): extension-uniform bounded vanishing
 follows from `UniformBaseDivisor C d` alone, on the three curve binders.
 
-`UniformBaseDivisor C d` is the **one** remaining open input, and it is open in AJC and in AJCR
-both.  Nothing else is assumed. -/
+`UniformBaseDivisor C d` is the **one** remaining open input.  Nothing else is assumed.
+
+**The shape of that gap, measured rather than described.**  Applying the producer/consumer test
+of I-0711 (from the AJCR certificate lane, which spent three sessions mis-pricing exactly this):
+ask whether a declaration exists whose *conclusion* is the type in question, with primitive
+inputs.  For every comparison in this file and its companion, one does — `sectionsBaseChangeField`
+from a qcqs open, `h1CokₗBaseChangeField` from a cover, `nonempty_affineCoverMVSquare_of_curve`
+from the three curve binders.  For `UniformBaseDivisor` **none does**: it is a `def` with five
+consumers and no producer anywhere in AJC.
+
+So the gap is not a missing consumer or a carrier mismatch — it is a missing **production from
+geometry**, and that is the form the next attempt should take. -/
 theorem uniformVanishing_of_uniformBaseDivisor_curve [IsProper C.hom]
     [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]
     [GeometricallyIntegral C.hom] {d : ℤ} (hbase : UniformBaseDivisor C d) :
