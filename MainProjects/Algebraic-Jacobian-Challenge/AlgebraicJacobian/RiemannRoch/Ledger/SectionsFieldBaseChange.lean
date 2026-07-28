@@ -45,17 +45,25 @@ not have applied unchanged:
 
 So the provenance is: **argument adapted, statement rederived at AJC's carriers, and the
 carrier agreement measured rather than reported.**  The one substantive difference from AJCR is
-that this file needs no `backward.isDefEq.respectTransparency` escape on the *statements* (only
-inside two proofs), because AJC's `C_κ` is the pullback on the nose rather than a semireducible
-monoidal product.
+that this file and its companion need **no** `backward.isDefEq.respectTransparency` escape at all,
+because AJC's `C_κ` is the pullback on the nose rather than a semireducible monoidal product.
+
+That claim is stronger than the one first committed here, which said "no escape on the
+*statements* (only inside two proofs)".  A reviewer flagged the two `set_option` lines as possibly
+dead; I removed both and rebuilt, and the kernel agrees — 8699 jobs, exit 0, no diagnostics.  So
+they were cargo carried over from the AJCR files this argument was adapted from, where the
+`relCurve` product genuinely needs them.  Removed rather than left in place: a live `set_option`
+tells a reader "there is a defeq wall here", and a dead one sends them looking for a wall that
+does not exist.
 
 ## What this does and does not close
 
 It closes the **map**.  It does *not* by itself close `genus C_κ = genus C`: that needs the
 two-term Čech complex of the base-changed cover to be the base change of the original's, i.e.
 this equivalence intertwined with the difference maps, and then right-exactness of `⊗` on the
-cokernel.  §3 supplies the intertwining (`sectionsBaseChangeFieldₗ_res`,
-`sectionDiff_baseChangeField`) and §4 the cokernel consequence; the genus identity itself is
+cokernel.  §3 supplies the restriction-naturality (`sectionsBaseChangeField_res`) that
+`Ledger/GenusFieldInvariance.sectionDiffₗ_baseChangeField` turns into the intertwining, and §4 the
+termwise dimension consequence; the genus identity itself is
 assembled in `Ledger/GenusFieldInvariance.lean`.
 
 Three statements stay apart, as everywhere in this cluster:
@@ -298,7 +306,6 @@ section Restriction
 
 variable {C}
 
-set_option backward.isDefEq.respectTransparency false in
 /-- **Restriction-naturality of the field base change of sections.**  For qcqs opens `W ≤ V` of
 `C.left`, restricting a base-changed section from `fst ⁻¹ᵁ V` to `fst ⁻¹ᵁ W` is the base change
 of the restricted section.

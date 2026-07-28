@@ -31,7 +31,8 @@ Composing, `κ ⊗[k] Ȟ¹(S, 𝒪) ≃ₗ[κ] Ȟ¹(S_κ, 𝒪)`, and a `finrank
 * `sectionDiffₗ_baseChangeField` — §1: the base-changed difference map **is** the base change
   of the difference map.  This is where the two `κ`-dependencies could have hidden and do not.
 * `h1CokₗBaseChangeField` — §2: the `κ`-linear cokernel comparison.
-* `h1_unit_baseChangeField_eq` / `genus_baseChangeField` — §3: the scalars.  `genus C_κ = genus C`
+* `h1_unit_baseChangeField_eq_h1_unit` / `genus_baseChangeField` — §3: the scalars.
+  `genus C_κ = genus C`
   with no hypothesis on `κ/k` at all.
 * `chi_moduleKSheaf_baseChangeField_eq` — §4: the χ-ledger entry, `χ(𝒪_{C_κ}) = χ(𝒪_C) = 1 − g`.
 * `uniformVanishing_of_uniformBaseDivisor` — §5: **the reduction with input (1) discharged.**
@@ -164,7 +165,6 @@ noncomputable def diffCodBaseChangeField :
   sectionsBaseChangeFieldₗ κ S.isAffineOpen_inf.isCompact
     S.isAffineOpen_inf.isQuasiSeparated
 
-set_option backward.isDefEq.respectTransparency false in
 /-- **The Čech difference map base-changes** (★): the difference map of the base-changed cover,
 read through the term comparisons, is the base change of the original difference map.
 
