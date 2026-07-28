@@ -3673,6 +3673,48 @@ theorem twistedComponent_eq (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : 
   simp only [twistedComponent, sigmaAssembledComponent, Iso.trans_hom, Category.assoc]
   rfl
 
+/-- **`sigmaAssembled_δ_square` with the target's σ-decomposition CANCELLED**, over abstract target
+data.  Given the target degree objects `Tobj`, `Tobj'`, their σ-decompositions `A`, `B` and a target
+coface `dT` whose σ-coordinate description is the hypothesis `hlift`, the assembled components
+composed with `A.symm` / `B.symm` commute with `dT`.
+
+Stated over variables for the same reason as the `SigmaCalculus` section above: the real `A`, `B`
+are `pushPull_sigma_iso` at the base-changed cover, whose `IsIso` instance is keyed on the spelling
+`h.isoPullback.symm.hom`.  Any `Iso.symm_hom` rewrite normalises that to `.inv` and the goal stops
+typechecking ("motive is not type correct"); and the real `Pi` families then print with the cover
+unfolded, so the `Pi.lift` in `hlift` and the one in `sigmaAssembled_δ_square` fail to match
+syntactically even though they are the same term.  With everything a variable neither can fire.
+Project-local. -/
+theorem sigmaAssembled_δ_square_cancel {Y : Scheme.{u}} (q : Y ⟶ X)
+    (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules) (n : ℕ) (k : Fin (n + 2))
+    {Tobj Tobj' : Y.Modules}
+    (T : (Fin (n + 1) → 𝒰.I₀) → Y.Modules) (T' : (Fin (n + 2) → 𝒰.I₀) → Y.Modules)
+    (e : ∀ σ, (Scheme.Modules.pullback q).obj
+        (pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))) ≅ T σ)
+    (e' : ∀ σ, (Scheme.Modules.pullback q).obj
+        (pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))) ≅ T' σ)
+    (A : Tobj ≅ ∏ᶜ T) (B : Tobj' ≅ ∏ᶜ T') (dT : Tobj ⟶ Tobj')
+    (r : ∀ σ' : Fin (n + 2) → 𝒰.I₀, T (σ' ∘ (SimplexCategory.δ k).toOrderHom) ⟶ T' σ')
+    (hcompat : ∀ σ' : Fin (n + 2) → 𝒰.I₀,
+      (e (σ' ∘ (SimplexCategory.δ k).toOrderHom)).hom ≫ r σ'
+        = (Scheme.Modules.pullback q).map (pushPullMap F (interLegHom 𝒰 σ' k)) ≫ (e' σ').hom)
+    (hlift : dT ≫ B.hom
+      = A.hom ≫ Limits.Pi.lift (fun σ' : Fin (n + 2) → 𝒰.I₀ =>
+          Limits.Pi.π T (σ' ∘ (SimplexCategory.δ k).toOrderHom) ≫ r σ')) :
+    (sigmaAssembledComponent q 𝒰 F n T e ≪≫ A.symm).hom ≫ dT
+      = (Scheme.Modules.pullback q).map
+            (pushPullMap F ((coverCechNerveOver 𝒰).map ((SimplexCategory.δ k).op))) ≫
+          (sigmaAssembledComponent q 𝒰 F (n + 1) T' e' ≪≫ B.symm).hom := by
+  rw [Iso.trans_hom, Iso.trans_hom, Iso.symm_hom, Iso.symm_hom, Category.assoc]
+  -- Cancel `A` and `B` against `hlift`: the target coface, conjugated, IS the `Pi.lift`.
+  have h1 : A.inv ≫ dT
+      = Limits.Pi.lift (fun σ' : Fin (n + 2) → 𝒰.I₀ =>
+          Limits.Pi.π T (σ' ∘ (SimplexCategory.δ k).toOrderHom) ≫ r σ') ≫ B.inv := by
+    rw [Iso.inv_comp_eq, ← Category.assoc, ← hlift, Category.assoc, Iso.hom_inv_id,
+      Category.comp_id]
+  rw [h1, ← Category.assoc, sigmaAssembled_δ_square q 𝒰 F n T T' e e' k r hcompat,
+    Category.assoc]
+
 /-- **THE WIRING, COMPLETE: the coface square at the nerve's own spelling.**
 
 `sigmaAssembled_δ_square` gives the square with the target a `Pi` product and the target coface a

@@ -30,12 +30,17 @@ docstring: "**NON-VACUITY WITNESS** for the two hypothesis-carrying probes above
   \ below are\nthe endpoint, its hypothesis-free form, and the two structural lemmas\
   \ that removed the\ncosimplicial naturality obligation.\n\nRead the group as follows.\n\
   \n* `leakEndpoint_cech_flatBaseChange` and `leakEndpoint_cech_flatBaseChange_qcoh`\
-  \ are both\n  expected to report `sorryAx`, and for a **single** reason: `cechComplex_baseChange_iso`\
-  \ carries\n  the two cosimplicial naturality `sorry`s of `cech_pushforward_baseChange_natIso`\
-  \ and\n  `twisted_cech_nerve_iso`.  That is now the *only* obstruction — the `_qcoh`\
-  \ form no longer\n  routes through flat exactness and no longer carries the `h₂`/`h₃`\
-  \ quasi-coherence hypotheses.\n* `leakProbe_cechTerm_isQuasicoherent` is the discharge\
-  \ of those hypotheses and must be **clean**.\n  If it ever reports `sorryAx`, `cech_flatBaseChange_qcoh`\
+  \ are both\n  expected to report `sorryAx`, because `cechComplex_baseChange_iso`\
+  \ carries the cosimplicial\n  naturality `sorry`s of `cech_pushforward_baseChange_natIso`\
+  \ and `twisted_cech_nerve_iso`.\n  The `_qcoh` form no longer routes through flat\
+  \ exactness and no longer carries the `h₂`/`h₃`\n  quasi-coherence hypotheses, so\
+  \ naturality is its only remaining obstruction.\n\n  **These two lines are NOT the\
+  \ current best state, and this bullet used to imply they were.**\n  Of those two\
+  \ naturality `sorry`s only `twisted_cech_nerve_iso`'s survives at HEAD; §6g's\n\
+  \  `leakEndpoint_cech_flatBaseChange_oneLeaf` has the same statement with the other\
+  \ one gone.\n  Compare the §6g line rather than this one when judging how far the\
+  \ lane has got.\n* `leakProbe_cechTerm_isQuasicoherent` is the discharge of those\
+  \ hypotheses and must be **clean**.\n  If it ever reports `sorryAx`, `cech_flatBaseChange_qcoh`\
   \ has silently regressed to depending on\n  something unproved *besides* naturality.\n\
   * `leakProbe_whiskeredBC_natIso` is the structural half: the cosimplicial natural\
   \ isomorphism\n  built by whiskering the outer mate.  It must be **clean**, and\
@@ -49,10 +54,9 @@ docstring: "**NON-VACUITY WITNESS** for the two hypothesis-carrying probes above
 file: scripts/axiom-frontier.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.leakProbe_cechTerm_isQuasicoherent
 type: lean
-updated: '2026-07-29T06:43:26'
+updated: '2026-07-29T07:08:53'
 ---
 theorem leakProbe_cechTerm_isQuasicoherent {S X : Scheme.{u}} (f : X ⟶ S) [IsSeparated f]
     [IsAffine S] (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [∀ i, IsAffine (𝒰.X i)]
