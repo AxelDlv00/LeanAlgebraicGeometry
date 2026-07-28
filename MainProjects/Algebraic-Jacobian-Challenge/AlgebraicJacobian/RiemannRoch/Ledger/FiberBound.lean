@@ -5,6 +5,8 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.RiemannRoch.Ledger.FiberVanishing
 import AlgebraicJacobian.RiemannRoch.Ledger.DegreeVanishing
+import AlgebraicJacobian.RiemannRoch.Ledger.MapToP1
+import AlgebraicJacobian.RiemannRoch.Ledger.GenusBridge
 
 /-!
 # The conditional layer discharged: bounded vanishing, Riemann–Roch and generation from `π`
@@ -164,5 +166,124 @@ theorem exists_bound_generated_of_isFinite_toP1
   exact surjective_eval_of_deg_ge K hD₀ hx D hD
 
 end Unconditional
+
+/-! ## At AJC's own curve: no `π`, no vanishing, no finiteness hypothesis
+
+The section above still asks the caller for a finite dominant `π` and for
+`Module.Finite K (H⁰ 𝒪_Y)`.  On the challenge curve both are **theorems of this project**:
+`Ledger/MapToP1.exists_isFinite_isDominant_toP1` constructs the `π` by spreading out a
+transcendental rational function, and `Ledger/ChiCurve.lean` discharges both cohomology
+finiteness binders.  So on `C` the statements below carry the three curve hypotheses and nothing
+else — this is where the layer stops being conditional on anything a caller must supply.
+
+The `letI : C.left.Over _ := .ofHom C.hom` in each statement is the standard `ChiCurve` idiom: it
+makes the ambient structure morphism `C.left ↘ Spec k` *definitionally* `C.hom`, so the smoothness
+and quasi-compactness binders transfer by `inferInstanceAs` rather than being assumed again. -/
+
+section Curve
+
+variable {k : Type u} [Field k]
+
+/-- **Bounded `H¹` vanishing on the challenge curve** (★): on a smooth proper geometrically
+irreducible curve `C/k` there is a degree threshold past which `H¹(𝒪(D)) = 0` for **every** Weil
+divisor `D`.  Three curve binders, nothing else: the `π`, the dominance, and both cohomology
+finiteness instances are all *synthesised*.
+
+Contrast `Ledger/DegreeVanishing.lean`, whose statements of the same shape carry a base-vanishing
+hypothesis that AJC could witness at no proper curve.  This is that gap closed.
+
+Scope unchanged and worth repeating: the threshold is over the single field `k`. See the module
+docstring, item 2 — extension-uniformity does not follow. -/
+theorem exists_bound_subsingleton_hModule_one_curve (C : Over (Spec (CommRingCat.of k)))
+    [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom] :
+    letI : C.left.Over (Spec (CommRingCat.of k)) := .ofHom C.hom
+    haveI : SmoothOfRelativeDimension 1 (C.left ↘ Spec (CommRingCat.of k)) :=
+      inferInstanceAs (SmoothOfRelativeDimension 1 C.hom)
+    ∃ b : ℤ, ∀ D : C.left.CurveDivisor, b ≤ CurveDivisor.deg k D →
+      Subsingleton (Sheaf.HModule (C.left.divisorSheaf k D) 1) := by
+  letI : C.left.Over (Spec (CommRingCat.of k)) := .ofHom C.hom
+  haveI : SmoothOfRelativeDimension 1 (C.left ↘ Spec (CommRingCat.of k)) :=
+    inferInstanceAs (SmoothOfRelativeDimension 1 C.hom)
+  haveI : QuasiCompact (C.left ↘ Spec (CommRingCat.of k)) :=
+    inferInstanceAs (QuasiCompact C.hom)
+  haveI : LocallyOfFiniteType (C.left ↘ Spec (CommRingCat.of k)) :=
+    inferInstanceAs (LocallyOfFiniteType C.hom)
+  haveI : Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0) :=
+    moduleFinite_hModule_zero C
+  obtain ⟨π, hfin, hdom, hcomp⟩ := exists_isFinite_isDominant_toP1 (k := k) (C := C)
+  haveI := hfin
+  haveI := hdom
+  exact exists_bound_subsingleton_hModule_one_of_isFinite_toP1 π hcomp
+
+/-- **Exact Riemann–Roch on the challenge curve** (★★): `h⁰(𝒪(D)) = 1 − genus C + deg D` for
+every divisor of large enough degree, on three curve binders.
+
+The equality is the `χ`-ledger's `χ(𝒪(D)) = 1 − genus C + deg D`
+(`Ledger/GenusBridge.chi_divisorSheaf_genus`) with `h¹` known to vanish, so `χ = h⁰`. -/
+theorem exists_bound_h0_eq_genus_curve (C : Over (Spec (CommRingCat.of k)))
+    [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom] :
+    letI : C.left.Over (Spec (CommRingCat.of k)) := .ofHom C.hom
+    haveI : SmoothOfRelativeDimension 1 (C.left ↘ Spec (CommRingCat.of k)) :=
+      inferInstanceAs (SmoothOfRelativeDimension 1 C.hom)
+    ∃ b : ℤ, ∀ D : C.left.CurveDivisor, b ≤ CurveDivisor.deg k D →
+      (Sheaf.h0 (C.left.divisorSheaf k D) : ℤ) = 1 - genus C + CurveDivisor.deg k D := by
+  letI : C.left.Over (Spec (CommRingCat.of k)) := .ofHom C.hom
+  haveI : SmoothOfRelativeDimension 1 (C.left ↘ Spec (CommRingCat.of k)) :=
+    inferInstanceAs (SmoothOfRelativeDimension 1 C.hom)
+  obtain ⟨b, hb⟩ := exists_bound_subsingleton_hModule_one_curve C
+  refine ⟨b, fun D hD => ?_⟩
+  haveI := hb D hD
+  have hchi : Sheaf.chi (C.left.divisorSheaf k D) = 1 - genus C + CurveDivisor.deg k D :=
+    chi_divisorSheaf_genus C D
+  have h1 : Sheaf.h1 (C.left.divisorSheaf k D) = 0 := Sheaf.h1_eq_zero (hb D hD)
+  rw [Sheaf.chi, h1] at hchi
+  omega
+
+end Curve
+
+/-! ## Extension-uniformity: exactly which half is free, and which is open
+
+The scope note (item 2) says extension-uniformity does not follow.  That is worth making precise
+rather than leaving as a disclaimer, because the two halves of it have very different costs, and
+conflating them is how the gap gets mis-priced.
+
+**The free half — PER-FIELD vanishing over every extension.**  All three binders of
+`exists_bound_subsingleton_hModule_one_curve` are stable under base change along a field
+extension `κ/k`: properness and smoothness of relative dimension one by their mathlib
+`IsStableUnderBaseChange` instances, and `GeometricallyIrreducible` likewise (checked: mathlib
+provides that instance directly).  So the theorem re-fires at `C_κ` for **every** `κ`, and one
+gets a threshold `b κ` for each — with no new mathematics whatsoever.
+`baseChange_binders_stable` below records the stability, which is the whole of the free half.
+
+**The open half — a threshold chosen BEFORE `κ`.**  Uniformity asks for a single `b` with
+`∀ κ, ∀ D on C_κ, b ≤ deg_κ D → H¹ = 0`.  What blocks it is not the binders but that the `b κ`
+above are produced independently: `b κ = deg_κ (n₀(κ) • F_κ) + 1 − χ(𝒪_{C_κ})`, where `n₀(κ)`
+comes from a `Classical.choose` on the Noetherian stabilization of the fiber ladder over `κ`, and
+that stabilization is re-run from scratch at each base field.  Nothing relates `n₀(κ)` to `n₀(k)`.
+This is the same obstruction AJCR names on its own carrier: its `windowM_choice` is a `Nat.find`
+per field (`RiemannRoch/WindowLedger.lean:186`), which is why
+`RiemannRoch/WindowFieldTransport.lean` transports vanishing *facts* one field at a time instead
+of transporting the constant.
+
+So the honest statement of the residue is **not** "vanishing over extensions is unavailable" — it
+is "the constant does not transport".  The two named inputs that would fix it are unchanged: flat
+base change for the section spaces (`Γ(C_κ, 𝒪(D_κ)) ≃ Γ(C, 𝒪(D)) ⊗_k κ`, so the `κ`-dimensions
+are comparable to the `k`-dimensions) and a `WeilDivisor` pullback along `C_κ ⟶ C` (hard: closed
+points split).  With those, `b k` itself would serve as the uniform bound; without them, no
+amount of re-firing the theorem produces one. -/
+
+section ExtensionUniformity
+
+/-- **The curve binders are stable under field base change.**  This is the free half of
+extension-uniformity, recorded so that the open half is not mistaken for it: the vanishing
+theorem re-fires over every extension, giving a threshold *per field*.  What does not follow is a
+threshold chosen before the field — see the section docstring. -/
+theorem baseChange_binders_stable :
+    MorphismProperty.IsStableUnderBaseChange @IsProper ∧
+      MorphismProperty.IsStableUnderBaseChange (@SmoothOfRelativeDimension 1) ∧
+        MorphismProperty.IsStableUnderBaseChange @GeometricallyIrreducible :=
+  ⟨inferInstance, smoothOfRelativeDimension_isStableUnderBaseChange 1, inferInstance⟩
+
+end ExtensionUniformity
 
 end AlgebraicGeometry
