@@ -1486,10 +1486,15 @@ cosimplicial naturality obligation.
 Read the group as follows.
 
 * `leakEndpoint_cech_flatBaseChange` and `leakEndpoint_cech_flatBaseChange_qcoh` are both
-  expected to report `sorryAx`, and for a **single** reason: `cechComplex_baseChange_iso` carries
-  the two cosimplicial naturality `sorry`s of `cech_pushforward_baseChange_natIso` and
-  `twisted_cech_nerve_iso`.  That is now the *only* obstruction — the `_qcoh` form no longer
-  routes through flat exactness and no longer carries the `h₂`/`h₃` quasi-coherence hypotheses.
+  expected to report `sorryAx`, because `cechComplex_baseChange_iso` carries the cosimplicial
+  naturality `sorry`s of `cech_pushforward_baseChange_natIso` and `twisted_cech_nerve_iso`.
+  The `_qcoh` form no longer routes through flat exactness and no longer carries the `h₂`/`h₃`
+  quasi-coherence hypotheses, so naturality is its only remaining obstruction.
+
+  **These two lines are NOT the current best state, and this bullet used to imply they were.**
+  Of those two naturality `sorry`s only `twisted_cech_nerve_iso`'s survives at HEAD; §6g's
+  `leakEndpoint_cech_flatBaseChange_oneLeaf` has the same statement with the other one gone.
+  Compare the §6g line rather than this one when judging how far the lane has got.
 * `leakProbe_cechTerm_isQuasicoherent` is the discharge of those hypotheses and must be **clean**.
   If it ever reports `sorryAx`, `cech_flatBaseChange_qcoh` has silently regressed to depending on
   something unproved *besides* naturality.
@@ -1536,9 +1541,14 @@ theorem leakProbe_isIso_app_pi {C D : Type*} [Category C] [Category D]
     (h : ∀ j, IsIso (α.app (A j))) : IsIso (α.app (∏ᶜ A)) :=
   isIso_app_pi_of_isIso_app α A h
 
-/-- **THE ENDPOINT, in its hypothesis-free form.**  Expected `sorryAx`, from the two cosimplicial
+/-- **THE ENDPOINT, in its hypothesis-free form.**  Expected `sorryAx`, from the cosimplicial
 naturality leaves and nothing else.  Compare `leakProbe_cechTerm_isQuasicoherent` above, which is
-the discharge of the hypotheses this form no longer carries, and is clean. -/
+the discharge of the hypotheses this form no longer carries, and is clean.
+
+Kept deliberately as the **two-leaf comparison point** for §6g's
+`leakEndpoint_cech_flatBaseChange_oneLeaf`, which has the identical statement with the S-level leaf
+gone; the pair is the instrument, not this line alone.  (This docstring said "the two cosimplicial
+naturality leaves" until r3 closed one of them.) -/
 theorem leakEndpoint_cech_flatBaseChange_qcoh {S S' X X' : Scheme.{u}}
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
     (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f]
