@@ -87,24 +87,33 @@ assembly needs *four* things:
 
 1. ✓ a `G`-stable affine cover — below, with both `S_n` instantiations.
 2. ✓ the `Aut`-valued `S_n`-action — `MonObj.permAutHom` (`Albanese/GrpObjFoldSum.lean`).
-3. **Partly.** The `n`-ary coproduct of commutative algebras = `n`-fold tensor power, with the
-   permutation action matched to `PiTensorProduct.permAlgHom`, is
-   `Albanese/TensorPowerCoproduct.lean` (`existsUnique_coprodLift`, `coprodLift_permAlgHom`,
-   `permAlgHom_comp_singleAlgHom`). What is **not** built is the `Cofan`/`IsColimit` packaging
-   in `(Under k)ᵒᵖ`, so `SymPowColimit.symPowData_affineAlgebra` still does not literally
-   consume it. The algebra-level universal property is the mathematics; the categorical
-   crossing is undone bookkeeping.
+3. ✓ **(completed run 0069 r7; this entry read "Partly" until then.)** The `n`-ary coproduct of
+   commutative algebras = `n`-fold tensor power, with the permutation action matched to
+   `PiTensorProduct.permAlgHom`. The algebra level is `Albanese/TensorPowerCoproduct.lean`
+   (`existsUnique_coprodLift`, `coprodLift_permAlgHom`, `permAlgHom_comp_singleAlgHom`); the
+   `Cofan`/`IsColimit` packaging in `Under k` that was the missing half is
+   `Albanese/TensorPowerCofan.lean` (`tensorPowerCofanIsColimit`, with
+   `tensorPowerFanIsLimit` for the `(Under k)ᵒᵖ` variance and
+   `tensorPowerCofan_inj_permAlgHom` for the equivariance on coprojections).
 4. **Open, and the honest wall.** The cocycle/overlap agreement of the chart quotients, plus
    `OrbitsInAffineOpen` **for the curve** — where quasi-projectivity would enter, and mathlib
    has no quasi-projectivity vocabulary at this pin.
 
-So: **2 supplied, 1 partial, 1 open.** Do not round that to 3. A fresh-context review of run
-0069 r6 found the roadmap saying "3 of 4", the team thread saying "2 of 4", and this header
-asserting both at once — which is why the count now lives here and nowhere else.
+So: **3 supplied, 1 open.** A fresh-context review of run 0069 r6 found the roadmap saying
+"3 of 4", the team thread saying "2 of 4", and this header asserting both at once — which is why
+the count lives here and nowhere else. It is now 3 for a different reason than that stale row
+gave, so do not read the two as having agreed.
 
-**Nothing outside this file consumes any of it.** That is four consecutive rounds on this lane
-shipping a layer with no consumer, and it should be read as the signal it is rather than as an
-incidental gap.
+**Consumption, which is the part to read sceptically.** Item 3's packaging *is* consumed, by
+`Albanese/SymPowAffineCarrier.lean` and then `Albanese/SymPowAffineQuotient.lean`, which
+together prove that the colimit `SymPowColimit.symPowData_affineAlgebra` takes is
+`op ((A^{⊗ n})^{S_n})` (`colimitPermDiagramIsoFixed`) — the first time anything in this cone
+consumed a layer this lane built. But the honest scope of that chain is *within* the affine
+story: `symPowData_affineAlgebra` itself was **not rewritten** to consume the named carrier, and
+nothing in `AlbaneseUP.lean` / `AlbaneseFromData.lean` / `AlbaneseFromColimit.lean` mentions any
+of it, because those are about the curve and item 4 is what stands between. Five rounds of this
+lane shipped layers with no consumer; this is one consumer inside the same subject, not
+integration with the capstone.
 
 ## References
 
