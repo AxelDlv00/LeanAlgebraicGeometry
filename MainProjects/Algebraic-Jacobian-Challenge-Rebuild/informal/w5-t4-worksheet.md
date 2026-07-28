@@ -941,8 +941,11 @@ The tree's coefficient-direction tool is `AlgebraicGeometry.relSectionsMap`
 (`Cohomology/RelativeSectionsLinear.lean:193`), with `relSectionsMap_resHom`,
 `relSectionsMap_smul`, `relSectionsMap_overAlgebraMap` beside it — exactly the right shape. It
 does **not** apply off the shelf: its binders are `[Algebra R R'] [IsScalarTower k R R']`, and
-at `R := k[ε]`, `R' := k` the instance **`Algebra k[ε] k` does not exist** (LSP-confirmed:
-`failed to synthesize Algebra k[ε] k`). The reduction `fstRingHom : k[ε] →+* k` *is* a
+at `R := k[ε]`, `R' := k` the instance ~~**`Algebra k[ε] k` does not exist**~~ **is not found by
+synthesis** (LSP-confirmed: `failed to synthesize Algebra k[ε] k`) — **but it does exist upstream**:
+`TrivSqZeroExt.algebraBase` (`Mathlib/Algebra/TrivSqZeroExt/Basic.lean:890`) is deliberately *not* an
+instance. See the §6.19 retraction; do not repeat "absent" from a failed synthesis.
+The reduction `fstRingHom : k[ε] →+* k` *is* a
 `k`-algebra map, but it is not registered as an algebra *structure*, and registering it globally
 would collide with `Algebra k k`.
 
@@ -997,9 +1000,11 @@ an absent instance looks exactly like an absent theorem in the error message, an
 orders of magnitude less.* Compare `I-0555` (side conditions that were instance keying) and
 `I-0570`'s converse; this is the same family from the coefficient side.
 
-**Why `scoped` and not global**, recorded so nobody promotes it: a global `Algebra k[ε] k`
-diamonds with `Algebra k k` and makes `algebraMap` ambiguous at every site that mentions both.
-`scoped` costs a consumer one `open` and nothing else.
+**Why `scoped` and not global**, recorded so nobody promotes it: ~~a global `Algebra k[ε] k`
+diamonds with `Algebra k k` and makes `algebraMap` ambiguous at every site that mentions both.~~
+**That reason was invented (see §6.19; different types cannot clash).** Mathlib's actual reason for
+keeping `algebraBase` a non-instance is the clash at `Algebra (tsze R' M) (tsze R' M)` with
+`algebra'`. `scoped` costs a consumer one `open` and nothing else.
 
 **Two `rw` walls, both the elided-restriction family of §6.10(3), both closed as terms** — the
 standing rule in this lane is *never fight that wall, restate and `exact`*:
@@ -1453,6 +1458,11 @@ Nothing else stands between the two-chart comparison and the T2 engine at quotie
 
 ### 6.22 ITEM (3): (3a) IS MEASURED AND (3b) IS A `rfl` — THE SEAM WAS A SPELLING, NOT INFRASTRUCTURE
 
+> **SUPERSEDED IN PART BY §6.23 (below).** (3a) and (3b) stand. The two closing claims of this
+> section do **not**: (3c) is *not* the same `rfl`, so item (3) has three sub-items rather than
+> two, and T4's residue is **two** named statements rather than one. Read §6.23 before acting on
+> anything below.
+
 *Run 0073 r4, continuing §6.21. §6.20(3) predicted this sub-item was "where a session can
 disappear": four identifications of objects, each able to produce a "motive is not type correct".
 Measured, that prediction was **wrong in the cheap direction** — but only after the right question
@@ -1500,11 +1510,14 @@ also `rfl`). Both defeq facts were confirmed standalone against mathlib before t
 > costs one `#check`. In this lane the wrong answer has cost a session's worth of pricing three
 > times.
 
-**What (3c) turns out to be.** §6.20 listed `overSpec k k` vs the monoidal unit `Over.mk (𝟙 _)`
+**What (3c) turns out to be.** ~~§6.20 listed `overSpec k k` vs the monoidal unit `Over.mk (𝟙 _)`
 separately. It is the *same* `rfl` as above and not an independent item, so the honest count for item
-(3) is **two sub-items, not three**, and both are now closed modulo the kernel check.
+(3) is **two sub-items, not three**, and both are now closed modulo the kernel check.~~
+**WITHDRAWN by §6.23** — the kernel refuted it: `overSpec k k` vs `Over.mk (𝟙 _)` needs
+`Spec.map_id`, not `rfl`. Item (3) has three sub-items.
 
-**T4's residue after §§6.21–6.22, and it is now ONE named statement:** **(iii-c2-aff-geo)** — "L
+**T4's residue after §§6.21–6.22** — ~~and it is now ONE named statement~~ (**withdrawn; §6.23
+gives TWO**, the object transport plus the following): **(iii-c2-aff-geo)** — "L
 restricts trivially along `ε ↦ 0`" ⟹ "the chart module's reduction `M/(ε)M` is cyclic". Carried as
 the `hcyc` binder in `Tangent/DualNumberChartPic.lean`, so a sorry census does not see it, and open
 in the AJC sibling too (confirmed by `ajc-pic0av`, 2026-07-28). **Per §6.18's rule this is stated
