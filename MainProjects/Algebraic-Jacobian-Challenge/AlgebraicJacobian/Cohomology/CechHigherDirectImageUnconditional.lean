@@ -413,6 +413,60 @@ theorem flat_appTop_of_flat (g : S' ⟶ S) [Flat g] [IsAffine S] [IsAffine S'] :
   rw [Scheme.Hom.appLE] at h
   simpa [Scheme.Hom.appTop] using h
 
+/-! ### The consumer needs ONE kernel, not global exactness
+
+This is the second half of the reduction, and it is what makes the tilde-image restriction
+usable rather than merely true.  Mathlib's homology comparison `ShortComplex.mapHomologyIso`
+does **not** require `F.PreservesHomology`: it requires `F.PreservesLeftHomologyOf S` for the
+one short complex `S` at hand.  And a left homology datum of `S` is preserved as soon as `F`
+preserves *the kernel of `S.g`* — the cokernel half of `LeftHomologyData.IsPreservedBy` is free
+for a left adjoint (`pullback_preservesFiniteColimits`).
+
+So the chain `PreservesFiniteLimits ⟸ PreservesMonomorphisms` that the older revisions of this
+file treated as the only route is a detour: the Čech consumer never needs `g^*` to be exact on
+all of `S.Modules`, only to preserve the single kernel appearing in each degree, where the
+objects are quasi-coherent. -/
+
+/-- **Left-homology preservation from a single kernel.**  For an additive, right-exact `F`
+between abelian categories and a *fixed* short complex `S`, preserving the kernel of `S.g`
+already gives `F.PreservesLeftHomologyOf S`, hence `ShortComplex.mapHomologyIso`.  Project-local:
+mathlib has `PreservesLeftHomologyOf.mk'` (from one *datum*) but not this form, which is the one
+a consumer can discharge, since `parallelPair S.g 0` is a diagram it can name. -/
+theorem preservesLeftHomologyOf_of_preservesKernel {C D : Type*} [Category.{u} C] [Category.{u} D]
+    [Abelian C] [Abelian D] (F : C ⥤ D) [F.Additive] [Limits.PreservesFiniteColimits F]
+    (S : ShortComplex C) [Limits.PreservesLimit (Limits.parallelPair S.g 0) F] :
+    F.PreservesLeftHomologyOf S :=
+  ⟨fun _ => ⟨inferInstance, inferInstance⟩⟩
+
+/-! ### From `Spec.map (Γ g)` to a general flat `g` between affine schemes
+
+`tildePullback_preservesKernel` is stated for a literal `Spec.map φ`.  The Čech consumer carries
+`[IsAffine S] [IsAffine S']`, where `g` is `isoSpec`-conjugate to `Spec.map (Γ g)` by
+`Scheme.isoSpec_hom_naturality`.  The conjugating functors are pullbacks along *isomorphisms*,
+which are equivalences (`Scheme.Modules.pullbackIsoPushforwardInv` identifies them with
+pushforwards along the inverse), so they neither create nor destroy preserved limits. -/
+
+/-- **The conjugation isomorphism.**  For `g` between affine schemes,
+`isoSpec^* ⋙ g^* ≅ (Spec Γg)^* ⋙ isoSpec^*`, from `Scheme.isoSpec_hom_naturality` through
+`pullbackComp`/`pullbackCongr`.  Project-local. -/
+noncomputable def pullbackConjSpecIso (g : S' ⟶ S) [IsAffine S] [IsAffine S'] :
+    Scheme.Modules.pullback S.isoSpec.hom ⋙ Scheme.Modules.pullback g ≅
+      Scheme.Modules.pullback (Spec.map (Scheme.Hom.appTop g)) ⋙
+        Scheme.Modules.pullback S'.isoSpec.hom :=
+  Scheme.Modules.pullbackComp g S.isoSpec.hom ≪≫
+    Scheme.Modules.pullbackCongr (Scheme.isoSpec_hom_naturality g).symm ≪≫
+    (Scheme.Modules.pullbackComp S'.isoSpec.hom (Spec.map (Scheme.Hom.appTop g))).symm
+
+/-- **Pullback along an isomorphism is an equivalence.**  Via
+`Scheme.Modules.pullbackIsoPushforwardInv`, which identifies it with the pushforward along the
+inverse, itself half of `pushforwardEquivOfIso`.  Project-local; needed to move preserved limits
+across the conjugation of `pullbackConjSpecIso`. -/
+theorem Modules.pullback_iso_isEquivalence {X Y : Scheme.{u}} (e : X ≅ Y) :
+    (Scheme.Modules.pullback e.hom).IsEquivalence := by
+  haveI : (Scheme.Modules.pushforward e.inv).IsEquivalence :=
+    (Scheme.Modules.pushforwardEquivOfIso e.symm).isEquivalence_functor
+  exact Functor.isEquivalence_of_iso (Scheme.Modules.pullbackIsoPushforwardInv e).symm
+
 /-- **Flat base change has left-adjoint pullback**, hence `g^*` preserves finite
 colimits (free: `g^* = pullback g` is a left adjoint). -/
 instance pullback_preservesFiniteColimits (g : S' ⟶ S) :

@@ -1,0 +1,65 @@
+id: I-0563
+provider: local
+kind: memory
+body: 'A NEW QUOTIENT TYPE IS NOT A FUNCTOR VALUE UNTIL SOMETHING BASE-CHANGES IT
+  -- and a green sorry-free build cannot tell you the difference (AJCR run 0070 s0006,
+  task ajcr-cert-r2, machine-verified).
+
+
+  THE INCIDENT. The R2 widening of the DD-R certificate layer landed DivFamZarAff
+  (a DivEq quotient of a widened locally-certified predicate) across two sessions,
+  both of which got independent fresh-context audits that passed. Neither audit, nor
+  the audits'' own checklists, noticed that the value had NO mapAlg: nothing in the
+  tree could transport a widened class along R -> R''. The chart-typed sibling DivFamZar
+  owned that entire layer (DivisorFamilyZarMapAlg.lean: pullback of the predicate,
+  mapAlg + id/comp laws, picClass_mapAlg, eq_of_away_eq). The widened value had none
+  of it.
+
+
+  WHY NOTHING CAUGHT IT. Every check anyone ran was of the form ''is this declaration
+  true / sorry-free / non-vacuous / clause-for-clause identical to its predecessor''.
+  All of those pass on an island. The missing property is not about any declaration
+  -- it is about an ABSENCE, and the only way to see it is to enumerate what the OLD
+  value could do and ask which of those the new one can.
+
+
+  THE CHECK THAT WOULD HAVE CAUGHT IT, and it is cheap: when you introduce a parallel
+  version V'' of an existing value V, list V''s public API by name (grep the namespace)
+  and diff it against V''s. Missing base change, missing functor laws, and missing
+  separation keystones are the three that matter, because downstream consumers are
+  typed at V and can only be moved to V'' if V'' supports them.
+
+
+  A SECOND SIGNAL, worth naming separately: a predecessor had already filed the observation
+  that ''DivFamZarAff appears in only four files''. That IS the symptom, and it was
+  recorded as a throughput note rather than read as a missing-API finding. A new type
+  appearing in very few files is either unfinished or unused; decide which before
+  calling the lane done.
+
+
+  GOOD NEWS ON THE COST. In this case the whole layer was cheap (four files, one session)
+  BECAUSE the widening deletes structure rather than adding it: defining base change
+  by PREIMAGE made the piece and overlap identities rfl, and the arbitrary-affine-open
+  section keystone already existed in the tree at exactly the right generality. So
+  the absence was not evidence of difficulty -- nobody had looked.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T09:01:30.207716+00:00'
+updated_at: '2026-07-28T09:02:08.074781+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0006-horizon-ajcr-cert-r2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-cert-r2
