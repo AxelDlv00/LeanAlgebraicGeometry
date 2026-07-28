@@ -1426,15 +1426,23 @@ describes. Two facts make it work, and neither needs Quot:
    `χ(𝒪(D)) = χ(𝒪_X) + deg D` (`RiemannRoch/ChiLedger.lean`), whose 22-file / 5.5k-line
    closure I measured to be free of `sorry`.
 
-WHY `degree` ABOVE STAYS OPEN, and this is a statement-level defect rather than a missing
-proof: it takes an *arbitrary* morphism `Spec k ⟶ (PicScheme C).left`, not a morphism over
-`Spec k`. Such a morphism need not be a section of `(PicScheme C).hom` — the goal
+WHY `degree`'s DOMAIN IS AWKWARD — but *not* a reason it cannot be defined. `degree` takes an
+*arbitrary* morphism `Spec k ⟶ (PicScheme C).left`, not a morphism over `Spec k`. Such a
+morphism need not be a section of `(PicScheme C).hom` — the goal
 `lambda ≫ (PicScheme C).hom = 𝟙 (Spec k)` is not derivable — so it does not name a
-`k`-*rational* point and representability says nothing about it. A total function of that
-type therefore cannot be built from the Picard functor at all; it would have to invent a
-value off the sections. `degreeOfSection` below is the same construction on the correct
-domain, and is total. Consumers should migrate; `degree` is retained only because
-`kPoints_iff_kerDegree` is pinned against it. -/
+`k`-*rational* point and representability says nothing about it.
+
+⚠ AN EARLIER VERSION OF THIS PARAGRAPH DREW A FALSE CONCLUSION from that, and it is corrected
+at `degree` (now closed, run 0067 r4) rather than only here. It read: "A total function of that
+type therefore cannot be built from the Picard functor at all; it would have to invent a value
+off the sections." Inventing a value off the sections is precisely what a total function of
+this type is *allowed* to do — `fun _ => 0` inhabits the type — so the impossibility claim was
+false, and the observation only ever constrained which values are **pinned**. `degree` is now
+defined by cases on the section condition, agreeing with `degreeOfSectionPinned` where that is
+meaningful; see `degree_eq_degreeOfSectionPinned`.
+
+Consumers should still prefer `degreeOfSection` / `degreeOfSectionPinned`, which carry the
+section hypothesis in their types and so cannot be misread as speaking about non-sections. -/
 
 /-- An additive integer-valued function on relative Picard classes of `C` over the base field
 — the carrier shape of Milne III.1 p.~88.
@@ -1837,15 +1845,25 @@ morphism `Pic⁰_{C/k} ⟶ Pic_{C/k}` (extracted from
 characterisation of `k`-points factoring through it as those with degree
 zero.
 
-This depends on the still-unconstructed `PicScheme.degree`, and is not yet
-formalised: the proof is `sorry`.
+Not yet formalised: the proof is `sorry`.
 
 SPLIT (run 0067): the *first* of the two packaged pieces — existence of the
 inclusion morphism `Pic⁰_{C/k} ⟶ Pic_{C/k}` — is not open at all, and is now
 recorded separately as `inclusion` below, proved from
 `GroupScheme.IdentityComponent.isOpenSubgroupScheme`. So the only open content
-of this statement is the degree characterisation, and it is blocked on
-`PicScheme.degree` rather than on anything about the identity component. -/
+of this statement is the degree characterisation, and nothing about the identity
+component.
+
+STATE OF THE DEPENDENCY (updated run 0067 r4). This used to say the statement "depends on the
+still-unconstructed `PicScheme.degree`". `PicScheme.degree` is now **constructed** (see its
+docstring for why the previous impossibility verdict was wrong), so this theorem is no longer
+waiting on a declaration that could not exist. It is waiting on mathematics, and specifically
+on the same thing `degree`'s pinned half is: a producer of `ClassDegreePinned C`, whose
+`[ClassDegreePinned C]` binder this statement therefore now carries. What has to be proved is
+the characterisation itself — that a `k`-point factors through `Pic⁰` exactly when its pinned
+degree vanishes. `degreeOfSectionPinned_eq_zero_of_class_eq_zero` and
+`degree_eq_zero_of_class_eq_zero` supply the easy direction (trivial class ⟹ degree zero); the
+converse is the open content. -/
 theorem kPoints_iff_kerDegree {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
