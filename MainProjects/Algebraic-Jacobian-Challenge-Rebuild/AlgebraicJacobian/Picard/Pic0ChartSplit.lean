@@ -174,26 +174,31 @@ theorem isSplitWitness_iff_exists_splitting_witness {K : Type u} [Field K] [Alge
                     ((C ⊗ overSpec k L).left.divisorSheaf L W) 1) :=
   Iff.rfl
 
-/-! ## A note on the intro rule that is deliberately ABSENT
+/-! ## A note on the intro rule — SUPERSEDED, and the correction matters
 
-An `isSplitWitness_of_splitting` taking the twelve components as separate arguments was
-written and then **removed**, because it cannot be elaborated at acceptable cost and the
-`iff` above already serves as it: `(isSplitWitness_iff_exists_splitting_witness C μ).mpr`
-takes exactly the bundled tuple.
+**The intro rule EXISTS.** It is `isSplitWitness_of_presenting_witness`
+(`Picard/Pic0ChartTwistSplit.lean`), it elaborates at the default heartbeat budget, and its
+`L := K` case — the one this note's earlier version called out as wanted but unreachable — is
+a one-liner there.  Read that theorem's docstring, not this paragraph, for the current state.
 
-The measurement, recorded so nobody re-attempts it: `IsSplitWitness` mixes the two spellings
-of the base-changed curve — `(relCurve C L).CechPic` for the presenting class and
-`((C ⊗ overSpec k L).left).CurveDivisor` for the witness divisor.  Handing the tuple to one
-anonymous constructor makes Lean unify the seven instance slots while `L` is still a
-metavariable, re-checking those carriers on each attempted assignment.  Every variant tried
-(`refine` instead of `exact`; bundling the witness clause as a single `have`; normalising
-either spelling; routing through the `iff`) still timed out at 1000000 heartbeats.  Going
-through `.mpr` at a call site where `L` is already fixed costs nothing, because there is then
-no metavariable to unify around.
+What this note originally recorded, and what remains TRUE: an `isSplitWitness_of_splitting`
+handing all twelve components to **one anonymous constructor** does not elaborate.
+`IsSplitWitness` mixes the two spellings of the base-changed curve —
+`(relCurve C L).CechPic` for the presenting class, `((C ⊗ overSpec k L).left).CurveDivisor` for
+the witness divisor — so a single tuple makes Lean unify the seven instance slots *while `L` is
+still a metavariable*, re-checking those carriers on each attempted assignment.  `refine`
+instead of `exact`, pre-bundling the witness clause, normalising either spelling, and routing
+through the `iff` are all the same shape, and all of them time out.
 
-The general shape of the hazard: a definition that spells one object two ways is cheap to
-*use* and expensive to *introduce* positionally.  Prefer `Iff.rfl` plus `.mpr` to a bespoke
-constructor lemma. -/
+What it got wrong was the conclusion drawn from that: it read "the tuple is too expensive" as
+"there is no introduction rule", and proposed restating `IsSplitWitness` with one spelling —
+a refactor of a definition co-signed in `w4-datb` §1.6.  The actual fix is tactic-level:
+**stage the existentials.**  Eight `refine Exists.intro x ?_`s fix `L` at the first step, after
+which every later component is checked against a closed type and the two spellings never race.
+
+So the corrected rule is not "prefer `Iff.rfl` plus `.mpr`" but: *a deep existential over
+types-carrying-instances must have its intros staged, not bundled.*  The diagnosis above is
+not refuted by this — it is precisely why staging works. -/
 
 end
 
