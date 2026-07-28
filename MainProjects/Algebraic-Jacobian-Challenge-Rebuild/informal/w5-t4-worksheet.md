@@ -1886,3 +1886,46 @@ is an explicit `rw [show … from rfl]` — `I-0685` again, met for the third ti
 both projects and mathlib, and NOT to be priced as obvious — memory `I-0729` records the route
 (`IsFinite.iff_isProper_and_isAffineHom`, whose last link, `SmoothOfRelativeDimension` against
 fibre dimension or `IsFinite`, mathlib does not have).
+
+### 6.29 `¬ IsAffine C.left` IS OFF THE CRITICAL PATH — it was a chosen sufficient condition, not the content
+
+*Run 0073 r6, `Tangent/TwoChartHonestGenus.lean`, `2d46afeb3`. Kernel-green, rooted, three
+headlines axiom-clean against a control that fires `sorryAx`.*
+
+**THE SEQUENCE, because the useful part is the order in which the price fell.**
+
+1. §6.27's `TwoChartHonest` reduced both chart-side inputs to `¬ IsAffine Y`, and I filed the route
+   to it (`I-0729`): `IsFinite.iff_isProper_and_isAffineHom`, then quasi-finiteness against
+   `SmoothOfRelativeDimension 1`.
+2. A second probe **improved** the decomposition — `IsFinite.iff_isProper_and_locallyQuasiFinite`
+   plus `Scheme.Hom.quasiFiniteAt` reduces it to *one* statement: relative dimension 1 excludes
+   `QuasiFiniteAt`. Three mathlib names plus one brick.
+3. A third probe **priced that brick honestly, by unfolding the definition**:
+   `SmoothOfRelativeDimension n f` is `∀ x, ∃ U V e, IsStandardSmoothOfRelativeDimension n …`, and
+   that is `∃ P : SubmersivePresentation …, P.dimension = n` — a **combinatorial count on a
+   presentation**, not a fibre or Krull dimension. Connecting it to quasi-finiteness is the smooth
+   dimension theory mathlib has not developed for `n ≠ 0`. Multi-session, and that verdict stands.
+4. Then the question that should have come first: **what is `¬ IsAffine` used FOR?** To rule out a
+   degenerate two-chart cover. And degeneracy is visible in `H¹` *directly*: if `U₀ = ⊤` the overlap
+   `⊤ ⊓ U₁` **is** `U₁`, so every overlap section already extends to `U₁`, and the landed
+   `TwoCover.h1Cok_mk_resHom_right` kills its class. Two `resHom` lemmas
+   (`resHom_resHom`, `resHom_refl`). **No affineness, no quasi-coherence, and specifically not
+   `affine_serre_vanishing`** (which would have needed `EnoughInjectives` and the whole
+   quasi-coherent machinery — the tempting route, and the wrong one).
+
+So `ne_top_of_h1Cok_ne_zero` gives both conditions `surjective_selector_iff` asks for, and since the
+tree computes `h¹(𝒪_C) = g`, **`g ≠ 0` replaces `¬ IsAffine C.left` entirely.**
+
+> **Rule: a predecessor's hypothesis is a chosen sufficient condition until you check.** Steps 1–3
+> are three rounds of increasingly careful work on the wrong question, and each was *correct* — the
+> route improved, the pricing became honest, and the definitional measurement is a real datum. What
+> none of them asked is what the hypothesis was *for*. §6.27 already records the pair-of-conditions
+> version of this ("what are A and B both symptoms of"); this is the single-hypothesis version, and
+> it is the more expensive one because a single hypothesis looks like a fact rather than a choice.
+
+`¬ IsAffine C.left` itself remains unproved, `I-0729` remains the record of how to get it, and
+nothing in T3/T4 needs it.
+
+**T4's RESIDUE AFTER §6.29: none.** Clause (iii) is complete, instantiated at the charts
+(§6.28), and its last geometric input is replaced by a cohomological one the tree already computes.
+What remains in the T-chain is T3's assembly and T5's numeral — consumers, not comparisons.
