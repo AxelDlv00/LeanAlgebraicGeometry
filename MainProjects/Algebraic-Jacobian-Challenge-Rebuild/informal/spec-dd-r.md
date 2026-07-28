@@ -994,3 +994,76 @@ why the widened `DivFamZarAff` carries no hypothesis on `|P¹(k)|` anywhere.
    always forces flatness of the diagonal overlap colengths. It stays blocked, not rejected,
    and the flattening-fallback lead in its node is now the live one.
 3. The Θ-layer keeps its two-chart structure via `ChartTyping` and was not rewritten.
+
+## ADDENDUM 6 (2026-07-28, run 0070 session 0006) — the widened carrier is now a FUNCTOR value, and it has its own producer (BINDING)
+
+ADDENDUM 5 recorded R2 as executed and listed, as leftover bookkeeping, only the
+`CertifiedDivisorFamily → CertifiedDivisorFamilyAff` packaging.  That list was incomplete in a
+way worth recording, because the omission was structural rather than clerical.
+
+**1. `DivFamZarAff` had NO base-change layer, and two passing audits did not see it.**
+The chart-typed `DivFamZar` owns an entire S5b layer (`Picard/DivisorFamilyZarMapAlg.lean`):
+`IsLocallyCertified.pullback`, `DivFamZar.mapAlg` with `mapAlg_id`/`mapAlg_comp`,
+`picClass_mapAlg`, and the Zariski separation keystone `eq_of_away_eq`.  The widened value had
+none of them, so nothing could transport a widened class along `R → R'` — it was a *type*, not a
+functor value.  Every check run on it (true / sorry-free / non-vacuous / clause-for-clause
+identical to its predecessor) passes on an island; the missing property is an **absence**, and
+a green sorry-free build cannot see it.  Recorded as inbox memory I-0563.
+
+Now landed, all sorry-free and axiom-clean:
+`Picard/DivisorFamilyAffSections.lean`, `…AffBaseChange.lean`, `…AffCert.lean`,
+`…AffMapAlg.lean` (commits `2e295a587`, `ed45211537`, `2118e90e6`, `107cd5581`), giving
+`AffCoverData.baseChange`, `AffAdaptation.pullback`, `isCertified_pullback` (**all seven
+clauses**), `CertifiedDivisorFamilyAff.mapAlg`, `IsLocallyCertifiedAff.pullback`,
+`DivFamZarAff.mapAlg` with the functor laws and `eq_of_away_eq`, and `DivFamZar.toAff_mapAlg`
+— so `toAff` is a map of **functors**, not merely of values.
+
+**2. The widening makes base change CHEAPER, and the reason generalises.**
+The chart-typed route reaches a piece *through* its chart: `relTermBaseChange` is freeness-based
+(over the base curve) and `pieceTermBaseChangeAlg` then localises at a generator.  An arbitrary
+affine open of `relCurve C R` has neither a generator nor a base-curve presentation, so both
+steps die.  Three replacements, none of them work:
+
+* the section keystone at an arbitrary affine open was **already in the tree**, from an
+  unrelated lane: `Over.pieceRingEquiv` (`Picard/EffectivityPieces.lean`), hypothesis
+  `IsAffineOpen` only, out of mathlib's *affine* `pushoutSection` — no flatness, no freeness.
+  Its cover map is `rfl`-equal to `relCurveMap`;
+* defining the base-changed cover by **preimage** makes `pieces_baseChange` `rfl`, and makes the
+  base-changed overlap `rfl`-equal to the preimage of the overlap.  The whole
+  `ovlGen` / `basicOpen_ovlGen` / `isAffineOpen_chart_inf` apparatus — which existed only to
+  re-present a piece overlap as a basic open of a *chart* overlap — has no widened analogue, and
+  `relQuotBaseChangeAff` serves both the (c1) and the overlap transport as one declaration;
+* `FinCoverData.baseChange` had two partition-of-unity obligations.  `AffCoverData.baseChange`
+  has none, because the partitions are exactly what R2 deleted.
+
+**3. The one cost of the R2 shape, and it is free where it matters.**  `AffCoverData` demands
+affineness of the *pieces* only, so the certificate transport needs the *overlaps* affine.  That
+is `AffCoverData.HasAffineOverlaps`, deliberately **not** a field — bundling it would quietly
+re-strengthen the widened structure.  It is free for proper `C`
+(`hasAffineOverlaps_of_isProper`, via `Over.isAffineOpen_inf` on the separated relative curve)
+and propagates along a tower, so no such hypothesis appears from
+`IsLocallyCertifiedAff.pullback` onward.
+
+**4. The widened predicate now has a producer that does not route through the charts**
+(`Picard/DivisorFamilyAffExtraction.lean`, `321af6cb6`).  This was the standing complaint of
+I-0539: the only way to obtain an `AffAdaptation` was `FinCoverData.toAffCoverData` followed by
+`DivisorAdaptation.toAff`, i.e. through the very predicate R2 exists to avoid.
+
+  `exists_affAdaptation_of_isProper (d : LocalEquations) : ∃ D : AffCoverData C R, Nonempty (AffAdaptation D d)`
+
+with no hypothesis on `d`, no `π`, no chart, no partition of unity.  Short for the same reason as
+(2): the chart-typed `exists_divisorAdaptation` runs the basic-open refinement on *each* pinned
+chart and glues with a per-chart partition of unity, whereas widened there is nothing to glue —
+affine opens are a basis of any scheme, so choose one inside `d.cover.opens z` at each `z` and
+take a finite subcover.  Compactness is not a hypothesis either:
+`instQuasiCompactRelCurveHom` (`IsProper ⟹ QuasiCompact`, stable under base change) then
+`QuasiCompact.compactSpace_of_compactSpace`.
+
+**5. What is still owed, and it is now the whole residue of the lane: the CERTIFICATE half.**
+The two obligations I-0492 clause 4 relocated — fibrewise-finite support (`hfib`) and
+`SwallowedBy` — remain obligations that nothing in the tree constructs, and a cover produced by
+the extraction of (4) has no reason to carry a straddling piece.  Arranging one is precisely
+where the Stacks `0B8B` input enters.  Obligation 4(i) is at least now readable by the layer that
+owes it: `AffAdaptation.eqn_tmul_one_mem_nonZeroDivisors_iff` (`09396353c`) restates the tensor
+condition as regularity of the pulled equation **on the fibre curve over `κ(p)`**, which is the
+vocabulary the seed layer speaks.
