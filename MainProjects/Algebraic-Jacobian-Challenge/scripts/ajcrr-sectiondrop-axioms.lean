@@ -7,6 +7,19 @@ Measured at a SYNTHESIS SITE, not at the declaration: a theorem quantifying over
 instantiates the whole drop layer at the challenge curve `C`, where `ChiCurve` discharges
 both binders by synthesis, and prints axioms of the *instantiated* statements.
 
+MEASURED 2026-07-28 (run 0074 r2), on the SCRATCH path: all 15 probes report
+`[propext, Classical.choice, Quot.sound]`, zero `sorryAx`, zero errors, zero warnings.
+The three `probe_*_curve` lines are the ones that matter — they are the synthesis site, where
+`ChiCurve` actually constructs both `Module.Finite` cohomology instances at the curve.
+
+SCRATCH PATH, NOT THE ROOT TARGET.  `Ledger/SectionDrop.lean` is not in the root cone:
+measured from the root *file* `AlgebraicJacobian.lean` (closure 251 modules, 2026-07-28),
+`ChiLedger`/`ChiCurve`/`ChiSlice` are IN but `SectionDrop` is OUT.  Its incremental cone is one
+file — itself — since it imports only `ChiLedger`, so a single roll-up import would root the
+whole layer; the roll-up is outside this lane's write scope (tracked at I-0600).  Until then the
+standing root probe does not see any of this, which is exactly the cone-relativity of a
+*positive* availability claim recorded in I-0622.
+
 NOTE ON WHAT A CLEAN LINE HERE DOES AND DOES NOT SAY (axiom-frontier §6b's trap (b)):
 `subsingleton_hModule_one_of_le` takes a vanishing `Subsingleton (H¹ 𝒪(D₀))` as an explicit
 hypothesis.  A clean axiom line says nothing about that hypothesis being *available* — it is
