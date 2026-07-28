@@ -304,6 +304,42 @@ matter to anyone planning off it.**
 
 Everything below the atlas — L9 through L14 — exists to produce (1) and (2).
 
+## 7.6 The gate is L8, not U2 — and that is the round's main finding
+
+Inbox **I-0365**. The framing "the divrep tail is independent of the certificate; the certificate
+gates U2" is false, but not in the direction the tree assumed.
+
+`DivFamZar` is **by definition** a quotient of *locally certified* families
+(`Picard/DivisorFamilyZar.lean:224` the setoid, `:235` the def, `:71` `IsLocallyCertified` — note it
+localises on the base only). So certificates are **free on the consuming side**:
+`DivFamZar.exists_certChartCover` (`Picard/DivRepClassifyZarKit.lean:433`) is a landed theorem,
+unfolded by every classifier keystone (`DivRepClassifyZar.lean:128/:176/:230`,
+`DivRepClassifyZarSep.lean:361/:363`), and `IsDivRepClassify` (`DivRepClassifyZar.lean:90`)
+quantifies over certified families as a *hypothesis*, so their scarcity makes it easier, not harder.
+
+The bite is on the other side. The no-go (`DivSchemeCertZarC1.lean:123` — clause (c1) *is*
+leak-freeness — and `:131`) says `DivFamZar` is blind to connected divisors meeting both pinned
+fibres. So `divFunctor C π g` is a **proper subfunctor** of degree-`g` relative divisors.
+Representing it is not the problem; the L9–L13 tail does that honestly. The problem is that a
+too-small divisor functor **cannot cover Pic⁰**: the Abel map out of it is not Zariski-locally
+surjective, because the classes whose only witnesses are the invisible divisors are never hit.
+
+One nuance that sharpens where to look: the no-go's hypothesis is `IsPreconnected d.supportLocus`,
+and **over a field it is vacuous** — the support of a divisor is a finite set of closed points, so
+preconnected forces a single point, which cannot meet two disjoint fibres. The blindness is a
+purely *relative* phenomenon: a family over a positive-dimensional base whose total support is a
+connected horizontal curve sweeping from `π⁻¹(0)` to `π⁻¹(∞)` is invisible, and base shrinking does
+not help because every neighbourhood of the crossing contains points on both sides. So
+Riemann–Roch-level, fibrewise coverage is untouched — but local surjectivity of a *presheaf* map is
+tested on arbitrary scheme tests, which is exactly the relative direction.
+
+**Consequences.** (i) Stop calling U2 or the affine package "the gate": they are tail work and are
+nearly finished. (ii) Do not attack L8 against `divFunctor` as it stands — it is arguably false,
+not merely hard. (iii) Judge R1 and R2 by whether they widen `DivFamZar` enough for L8, not by
+whether they make a certificate easier to prove. A third widening is worth costing beside them:
+replace `IsLocallyCertified` outright by the standard relative effective Cartier divisor (finite
+locally free of rank `g` over the base), which carries no chart-adaptation artifact at all.
+
 ## 7.7 ROUND-0071 AMENDMENT: §7.1's own L11 row is now stale, the same way §1 was
 
 *Run 0071, task `ajcr-divrep`, 2026-07-28. Everything below was checked at HEAD or landed as
@@ -354,39 +390,3 @@ two factorizations is handled by the very lemma that handles one factorization's
 too-small divisor functor) remains the campaign's real gate; nothing above touches it. What
 changed is only that the *tail* below L9 is now one structure with one ε-gated field, so the
 cost of the tail is no longer a reason to defer confronting L8.
-
-## 7.6 The gate is L8, not U2 — and that is the round's main finding
-
-Inbox **I-0365**. The framing "the divrep tail is independent of the certificate; the certificate
-gates U2" is false, but not in the direction the tree assumed.
-
-`DivFamZar` is **by definition** a quotient of *locally certified* families
-(`Picard/DivisorFamilyZar.lean:224` the setoid, `:235` the def, `:71` `IsLocallyCertified` — note it
-localises on the base only). So certificates are **free on the consuming side**:
-`DivFamZar.exists_certChartCover` (`Picard/DivRepClassifyZarKit.lean:433`) is a landed theorem,
-unfolded by every classifier keystone (`DivRepClassifyZar.lean:128/:176/:230`,
-`DivRepClassifyZarSep.lean:361/:363`), and `IsDivRepClassify` (`DivRepClassifyZar.lean:90`)
-quantifies over certified families as a *hypothesis*, so their scarcity makes it easier, not harder.
-
-The bite is on the other side. The no-go (`DivSchemeCertZarC1.lean:123` — clause (c1) *is*
-leak-freeness — and `:131`) says `DivFamZar` is blind to connected divisors meeting both pinned
-fibres. So `divFunctor C π g` is a **proper subfunctor** of degree-`g` relative divisors.
-Representing it is not the problem; the L9–L13 tail does that honestly. The problem is that a
-too-small divisor functor **cannot cover Pic⁰**: the Abel map out of it is not Zariski-locally
-surjective, because the classes whose only witnesses are the invisible divisors are never hit.
-
-One nuance that sharpens where to look: the no-go's hypothesis is `IsPreconnected d.supportLocus`,
-and **over a field it is vacuous** — the support of a divisor is a finite set of closed points, so
-preconnected forces a single point, which cannot meet two disjoint fibres. The blindness is a
-purely *relative* phenomenon: a family over a positive-dimensional base whose total support is a
-connected horizontal curve sweeping from `π⁻¹(0)` to `π⁻¹(∞)` is invisible, and base shrinking does
-not help because every neighbourhood of the crossing contains points on both sides. So
-Riemann–Roch-level, fibrewise coverage is untouched — but local surjectivity of a *presheaf* map is
-tested on arbitrary scheme tests, which is exactly the relative direction.
-
-**Consequences.** (i) Stop calling U2 or the affine package "the gate": they are tail work and are
-nearly finished. (ii) Do not attack L8 against `divFunctor` as it stands — it is arguably false,
-not merely hard. (iii) Judge R1 and R2 by whether they widen `DivFamZar` enough for L8, not by
-whether they make a certificate easier to prove. A third widening is worth costing beside them:
-replace `IsLocallyCertified` outright by the standard relative effective Cartier divisor (finite
-locally free of rank `g` over the base), which carries no chart-adaptation artifact at all.

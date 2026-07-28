@@ -8,7 +8,7 @@ summary: Maintain the ambitious AJC route through measured elaboration, warning 
   Open work is residual journal prose, 33 classified pin warnings, 734 print overflows
   plus 95 glyph notices, 162 Lean warning heads, 179 heartbeat-budget scopes, 20 depth
   overrides, umbrella-import review, and historical design-note consolidation.
-status: active
+status: pending
 kind: refactor
 priority: normal
 depends_on: []
@@ -30,7 +30,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
-  updated_at: '2026-07-25T23:25:00.668495+00:00'
+  updated_at: '2026-07-28T05:19:32.506332+00:00'
   pinned_commits:
   - c1d535ce6
   - c9946fdfa

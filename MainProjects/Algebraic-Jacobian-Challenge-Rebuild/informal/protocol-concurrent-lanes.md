@@ -118,8 +118,64 @@ HEAD and say so in the commit message, or (b) construct the commit from HEAD's v
 only your lines (apply a minimal patch to a temp checkout of the HEAD blob). Never commit a
 root file that references uncommitted files without naming that in the message.
 
+### 4a. A MINUS line in that diff is never yours (2026-07-28, run 0072)
+
+The check above works. The failure mode is **misreading** it, and it happened again on
+2026-07-28: the diff printed a `-import`/`+import` pair from a sibling lane's *uncommitted*
+worktree edit, the committing lane read it as background noise, and the commit published the
+sibling's replacement — dropping `Picard/DivRepAffPullIndep.lean` from the import closure.
+The file stayed in HEAD and still compiled, but was reachable from nothing: **un-rooted**,
+i.e. I-0153 again, from a lane that had run the I-0153 check.
+
+So state the rule in a form that needs no judgement:
+
+> **A `-import` line in that diff is never yours.** The only clean result is `+import <your
+> file>` and nothing else. Any minus line means you are about to delete another lane's root
+> entry — stop and explain it before committing. An unexplained `+import` you did not write
+> is the same signal: a sibling's uncommitted edit is in your worktree copy, and a minus line
+> usually accompanies it.
+
+This is strictly stronger than "commit only your own lines", because you can intend that and
+still sweep — staging the whole file is what publishes their edit, and the diff is your only
+warning.
+
+**Repair additively, never by reverting.** Restore the dropped import while **keeping** the
+other lane's new one, then verify with a full root build (the 2026-07-28 repair: 9139 jobs,
+exit 0, with the un-rooted file rebuilt). Reverting to your own earlier root blob discards
+their work and turns one incident into two.
+
 ## 5. The AJCR mutex is for AJCR lake invocations only
 
 No cross-workspace use (an OpenGA-Horizon agent squatted it ~25 min for its own
 `lake cache get`, silently serializing AJCR lanes against unrelated work). Other
 workspaces must use their own lock paths.
+
+### 5a. Read it as per-PROJECT, not per-workspace (2026-07-28, run 0072)
+
+The rule above says "cross-workspace", and that wording has a hole: **AJC and AJCR are two
+projects in the SAME workspace.** Observed live on 2026-07-28 — the AJCR mutex was held for
+over ten minutes while the only live `lake build` belonged to an `ajc-*` lane building
+`MainProjects/Algebraic-Jacobian-Challenge`, the sibling project. Same failure as the
+OpenGA incident, not covered by the rule as written.
+
+The lock path is `ajcr-locks`, so read the rule as: **only lanes building
+`Algebraic-Jacobian-Challenge-Rebuild` may take it.** AJC lanes need their own path
+(`/tmp/claude-1001/ajc-locks/lake.lock`). Note the AJC task prompts do not mention a mutex
+at all, which is very likely why an AJC lane reached for this one.
+
+### 5b. Write the pidfile — the no-pidfile fallback cannot distinguish squatter from orphan
+
+§2's acquire recipe writes `$$` into `$LOCK/pid` so a later lane can prove death via
+`kill -0`. In the incident above the lock directory had **no pidfile**, so that branch could
+not fire and the fallback ("no live `lake build AlgebraicJacobian` **and** dir >15 min old")
+also could not fire — there *was* a live build, just not an AJCR one. Net effect: a
+provably-non-AJCR holder is unreapable for 15 minutes.
+
+Two consequences for a blocked lane, both applied in that incident:
+
+* **Do not reap a directory whose holder you cannot prove dead**, even when you suspect a
+  squatter. Reaping mid-build is worse than waiting.
+* **Fall back to the narrowest check instead of blocking.** `lake env lean <file>` on the
+  single changed file writes no shared build state and needs no lock; it is a faithful
+  kernel check for that file. Record in the report that the mutex was unavailable and which
+  check you substituted.

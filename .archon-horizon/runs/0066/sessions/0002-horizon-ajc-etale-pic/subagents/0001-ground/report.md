@@ -1,0 +1,34 @@
+You are doing a fresh-context Ground review for task `ajc-etale-pic` in the Archon Horizon workspace at /home/axel/LeanAlgebraicGeometry-Horizon, project MainProjects/Algebraic-Jacobian-Challenge.
+
+Read the binding protection `I-0491` first (`"$HORIZON_BIN" inbox list --mine --status open --kind protection --json`, or `inbox show I-0491`). It is a human decision with four clauses. Also read inbox `I-0372` (human comment of 2026-07-28) for the reasoning.
+
+The claim I need you to verify or refute, INDEPENDENTLY and by inspecting actual state (Lean source, `lake build`, `#print axioms`, the ledger diff, blueprint, README/TO_USER, hgraph):
+
+**THE HEADLINE CARRIES NO RATIONAL-POINT BINDER.**
+
+Session commits to inspect (ledger git; use `"$HORIZON_GIT" show <sha>`):
+  c9691933b, d63ea89c3, 32823e7b1, e65ca0954
+
+Specific things to check, and please be adversarial about each:
+
+1. `AlgebraicGeometry.picardJacobianWitness`, `AlgebraicGeometry.Jacobian` and the four `Jacobian.*` instances in `AlgebraicJacobian/Jacobian.lean`: do their binders consist of EXACTLY `[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]` and nothing else? In particular no `[Scheme.HasRationalPoint C]`, and no `[Scheme.HasPicScheme C]` (whose only producer is now conditional on a rational point). Check with `#check @...` in a scratch file under `lake env lean`, not by reading docstrings.
+
+2. Is `AlgebraicGeometry.hasRationalPoint_of_curve` really GONE as a declaration (not merely renamed or commented out), and does nothing in the tree consume it? Clause 1 of I-0491.
+
+3. Does the headline cone reach the rational point INDIRECTLY? This is the subtle failure mode and the most important check: `picardJacobianWitness` is built from `Scheme.Pic0SchemeEt` (`AlgebraicJacobian/Picard/Pic0Et.lean`), which is built from `Scheme.PicSchemeEt` (`AlgebraicJacobian/Picard/FGAPicRepresentability.lean`). Trace whether any step of that chain synthesizes `HasRationalPoint`, `HasPicScheme`, or calls `picSchemeOfHasRationalPoint`. If the headline secretly routes through the conditional gate, the whole deliverable is void — say so plainly.
+
+4. `Scheme.fgaPicardRepresentability`: is it exactly ONE `sorry`, stated for the ETALE-sheafified functor (`Scheme.PicScheme.picEt`) with no rational-point binder? Note it has TWO clauses (clause 2 is the Kleiman 2.5 comparison, conditional on a rational point). Is bundling those two into one obligation defensible, or is it hiding a second obligation? I argued that splitting it would report the headline as resting on six obligations where the mathematics has five. Push back if you disagree.
+
+5. Is the sheaf property of the étale functor actually PROVED rather than assumed or a structure field? See `AlgebraicJacobian/Picard/PicEtSheaf.lean`, `picEt_isSheaf_forget` and `etaleSheaf_isSheaf`. Is that file genuinely sorry-free?
+
+6. Count the headline's obligations. I claim FIVE: `fgaPicardRepresentability`, `Pic0Et.geometricallyReduced`, `Pic0Et.universallyClosed`, `smoothOfRelativeDimension_genus_pic0Et`, `isAlbanese_pic0Et`. (`Pic0Et.smooth` and `Pic0Et.proper` are assemblies over the first two of those, not bare sorries.) Verify the count and that NONE of the five is a false statement. If any is false or unprovable as stated, that is a critical finding.
+
+7. Are `picardJacobianWitnessOfHasRationalPoint` and `picardJacobianWitnessOfIsAlgClosed` still present, and are they labelled as conditional / k-bar rather than as the headline — in Lean docstrings, in `blueprint/src/chapters/Jacobian.tex`, in README.md and TO_USER.md? Clause 4 of I-0491.
+
+8. Documents: does anything still say the decision is OPEN or pending? Check README.md, TO_USER.md, `blueprint/src/chapters/Picard_FGAPicRepresentability.tex` (`sec:fga_pic_setup`), `blueprint/src/chapters/Jacobian.tex` (`lem:curve_hypothesis_gap`, `rem:rational_point_scope`), and the hgraph node for the rational-point leaf. Also: do all blueprint `\lean{...}` targets I added actually exist, and do the new labels resolve?
+
+9. Run `lake build AlgebraicJacobian` and `lake env lean scripts/axiom-frontier.lean` yourself. Report whether the build is green and whether the probe exits 0 with no errors. I measured: build green at 8761 jobs; probe exit 0, 144 probed / 89 clean / 55 sorryAx; 28 sorry-bodied declarations tree-wide, zero of them instances.
+
+10. Did I edit any file outside `MainProjects/Algebraic-Jacobian-Challenge`? That would violate the task's file boundary. Note that I did edit `AlgebraicJacobian/Albanese/AlbaneseUP.lean` (one line + a docstring paragraph), which is inside my project but is a file the `ajc-albanese` lane also works in — assess whether that repair was necessary and minimal.
+
+You are read-only on source. Report findings, most severe first, and state clearly whether the central claim (headline carries no rational-point binder) is CONFIRMED or REFUTED. Be specific with file:line evidence. If you find that something I reported is overstated, say so — I would rather have the correction than the agreement.

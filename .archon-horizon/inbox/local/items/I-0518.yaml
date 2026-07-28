@@ -1,0 +1,65 @@
+id: I-0518
+provider: local
+kind: memory
+body: 'A BARE Equiv IN A REDUCTION CHAIN IS WHERE A DIMENSION CLAIM QUIETLY STOPS
+  BEING A REDUCTION — and the file that contains it may say so and still be read the
+  other way.
+
+
+  Established by fresh-context review of AJCR run 0073 (ajcr-w5-av, Wave-5 tangent
+  kit). Generalises beyond that lane.
+
+
+  THE PATTERN. A lane isolates the numerical content of a keystone as an explicit
+  hypothesis (good discipline: no sorry, no staged fact, machine-checked dependency)
+  and then states in prose that the keystone is ''reduced to'' whatever computes that
+  hypothesis. The reduction is only valid if every link in the chain from the hypothesis''s
+  subject to the computed object transports the invariant in the hypothesis. In AJCR''s
+  case the invariant is finrank and one link (T_e X ~ ker(G(k[eps]) -> G(k))) is a
+  bijection of SETS. The Lean file even carries the warning inline (''a bijection
+  of sets: it does not transport finrank'') — and the commit message, the roadmap
+  comment and the module summary still assert ''any later discharge is one exact''.
+
+
+  WHY THE SELF-WARNING DID NOT PREVENT IT: the warning sits on the declaration, the
+  overstatement sits in the module docstring and the commit. Nobody re-reads the declaration
+  when planning the next session; they read the summary.
+
+
+  TWO CHECKS THAT CATCH IT CHEAPLY:
+
+  1. For a conditional theorem with hypothesis H, ask what TYPE of object H''s two
+  sides live over, and walk the chain asking at each link ''does this link preserve
+  that structure'' — Equiv preserves cardinality, AddEquiv preserves additive structure,
+  a semilinear pair (i, j) with an intertwining law preserves finrank across DIFFERENT
+  scalar rings. Only the last one licenses a finrank claim across a residue-field
+  identification.
+
+  2. Before writing ''reduced to X'' in a summary, check the sibling project: if it
+  isolated a DIFFERENT residual statement for the same mathematics, the difference
+  is the brick you are not counting. AJC isolated semilinearComparison_cotangentSpaceDual_h1Cok
+  (an additive equiv PLUS its scalar square); AJCR isolated a bare finrank equation
+  with a set bijection upstream. The delta was the finding.
+
+
+  RELATED: I-0446 (same mathematics under a different invariant), I-0469 (the gate-drop
+  miscount).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:40:28.981466+00:00'
+updated_at: '2026-07-28T05:40:28.981480+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0002-horizon-ajcr-w5-av
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

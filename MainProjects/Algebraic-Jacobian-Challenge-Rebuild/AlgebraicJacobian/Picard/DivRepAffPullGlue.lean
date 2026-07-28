@@ -38,9 +38,11 @@ in scope, while the gluing keystone needs the *canonical* overlap carrier
   restricting to the pieces, so it is determined by the factorization data.
 
 Together these are the whole of the `pull` field's construction over a *given*
-factorization.  Independence of the choice of factorization is a separate statement,
-and it is the one that needs the DDR9-U ε-identity U2 — see the roadmap leaf
-`AJCR.w4-rep.datum.dat-d.ddr.divrep.u2`.  Everything in this file is U2-free: it
+factorization.  Independence of the choice of factorization is a separate statement, proved
+in `Picard/DivRepAffPullIndep.lean` — and it turned out **not** to need the DDR9-U ε-identity
+U2 either, for the reason given in that file's header (the overlap lemma quantifies over two
+*independent* presentations of one morphism).  An earlier version of this paragraph asserted
+the opposite; it was written before that was checked.  Everything in this file is U2-free: it
 consumes `DivRepChartFamily.IsCompatible` as a hypothesis, exactly as
 `Picard/DivRepAffChartOverlap.lean` does, and U2 is what will *prove* that hypothesis
 for the universal family rather than what is needed to *use* it.

@@ -3,7 +3,13 @@ title: 'T1: dual-number tangent kit (pointed \(k[\varepsilon]\)-points, cotangen
   dual, finrank reduction) — old-draft port'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
+summary: 'DONE (run 0073). Dual-number tangent kit, 6 files in Tangent/, sorry-free
+  and rooted. Was a PORT from the AJC sibling (Picard/TangentSpace*.lean + Pic0TangentSpace.lean,
+  same toolchain/mathlib rev, AJCR had none of the names) — code verified identical
+  after stripping docstrings/imports. Endpoint: T_e X ~ Dual kappa(e) (m_e/m_e^2)
+  ~ ker(G(Spec k[eps]) ->* G(k)) for any CommGrpCat-valued G represented by X. NOT
+  ported: the Mumford eps|->a*eps scaling (its (a+b).x distributivity is an open gap
+  with no consumer under scalar-identity-first).'
 status: done
 kind: proof
 priority: normal
@@ -17,5 +23,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:43.080775+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T03:55:24.967214+00:00'
+  updated_at: '2026-07-28T05:29:38.879596+00:00'
   owner: ajcr-w5-av

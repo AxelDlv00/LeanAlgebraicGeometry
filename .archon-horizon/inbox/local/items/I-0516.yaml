@@ -1,0 +1,62 @@
+id: I-0516
+provider: local
+kind: issue
+body: 'S3''S ''R3 DOWNGRADED'' RESTS ON A SECOND UNSTATED BRIDGE (cotangent-space
+  finrank -> rank of Omega), AND THE WORKSHEET DOES NOT COUNT IT.
+
+
+  Reviewed run 0073''s informal/w5-s-worksheet.md section 3 (ajcr-w5-av). The section
+  3 finding about mathlib''s class is CORRECT and I verified it: SmoothOfRelativeDimension
+  (Mathlib/AlgebraicGeometry/Morphisms/Smooth.lean:135) is pointwise and local-at-source
+  — ''for each x, SOME chart'', no coherence, no connectedness. So the claim that
+  no ''relative dimension is locally constant'' theorem is needed is right, and the
+  downgrade of that particular fear is justified.
+
+
+  WHAT IS MISSING FROM THE CHAIN. Step 2 of the worksheet''s four-step assembly cites
+  Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth (verified present,
+  StandardSmoothCotangent.lean:319). But that lemma''s invariant is Module.rank S
+  Omega[S/R], NOT the finrank of IsLocalRing.CotangentSpace of a stalk, which is what
+  T5''s numeral is about. Translating between them (rank of Omega over the chart ring
+  vs dim over kappa(x) of m_x/m_x^2 at a point of that chart) is a real step: localisation
+  of Omega + base change to the residue field + freeness to get rank = finrank of
+  the fibre. Searched for a direct bridge (leansearch, loogle on IsLocalRing.CotangentSpace
+  against KaehlerDifferential): nothing pairs them.
+
+
+  This is precisely the shape recorded in memory I-0446 (''mathlib does carry a relative-dimension
+  bridge, via the rank of Omega rather than a tangent space... the real obligation
+  is not construct a bridge but translate between two invariants''). The worksheet
+  cites the right lemma and then skips the translation, so the [M] size for S3 is
+  an underestimate by one invariant-conversion brick.
+
+
+  Also unresolved and correctly flagged in the worksheet''s own caveat: translations
+  by k-points need not reach every SCHEME point of d.J. That caveat is not a side
+  note — it is the difference between the k-side route and paying the t4-section-5
+  codescent brick, and it is listed as ''probe this before writing S3''s Lean'' without
+  being probed.
+
+
+  ACTION: before starting S3''s Lean, add the Omega-rank <-> cotangent-finrank conversion
+  to the worksheet''s brick table as its own row, and run the promised k-point-reachability
+  probe. Neither changes the route; both change the size.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:40:03.987111+00:00'
+updated_at: '2026-07-28T05:40:03.987121+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0002-horizon-ajcr-w5-av
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

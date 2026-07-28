@@ -99,6 +99,20 @@ theorem awayMulOfDvd_algebraMap (f a b : S) (h : a * b = f) (x : S) :
   IsLocalization.Away.lift_eq a
     (IsLocalization.Away.isUnit_of_dvd (S := Localization.Away f) (x := f) ⟨b, h.symm⟩) x
 
+set_option maxHeartbeats 3200000 in
+-- The composite is checked against the `IsScalarTower` structure map of the localization,
+-- which unfolds the section-ring algebra tower on both sides; the defeq check is well
+-- past the default budget (measured: over 800000 heartbeats).
+/-- **The comparison map is a map over the base ring**: composing the structure map
+`S → Localization.Away a` with the comparison into `Localization.Away f` gives the
+structure map `S → Localization.Away f`.  This is the form consumed when a class pulled
+back from `S` is compared across two different away localizations. -/
+theorem awayMulOfDvd_toAlgHom (f a b : S) (h : a * b = f) (x : S) :
+    awayMulOfDvd (k := k) f a b h (IsScalarTower.toAlgHom k S (Localization.Away a) x)
+      = IsScalarTower.toAlgHom k S (Localization.Away f) x :=
+  IsLocalization.Away.lift_eq a
+    (IsLocalization.Away.isUnit_of_dvd (S := Localization.Away f) (x := f) ⟨b, h.symm⟩) x
+
 section Pack
 
 variable {m : ℕ} (f : Fin m → S)
@@ -208,18 +222,18 @@ theorem exists_glue_of_awaySpan {m : ℕ} (f : Fin m → S)
 `S` agreeing after base change to every `Localization.Away (f p)` of a finite spanning
 family agree — `DivFamZar.eq_of_away_eq` at the canonical carriers, whose instance pack
 is the ambient one, with the hypothesis read on the explicit `mapAlgHom` face. -/
-theorem eq_of_awaySpan_eq {m : ℕ} (f : Fin m → S)
+theorem eq_of_awaySpan_eq {ι : Type} [Finite ι] (f : ι → S)
     (hspan : Ideal.span (Set.range f) = ⊤)
     {F G : DivFamZar C S π n}
-    (h : ∀ p : Fin m,
+    (h : ∀ p : ι,
       DivFamZar.mapAlgHom (IsScalarTower.toAlgHom k S (Localization.Away (f p))) F
         = DivFamZar.mapAlgHom (IsScalarTower.toAlgHom k S (Localization.Away (f p))) G) :
     F = G := by
-  -- the keystone indexes over `Type u`, so the cover is reindexed by `ULift (Fin m)`
-  refine DivFamZar.eq_of_away_eq (fun l : ULift.{u} (Fin m) => f l.down)
-    (fun l : ULift.{u} (Fin m) => Localization.Away (f l.down))
+  -- the keystone indexes over `Type u`, so the cover is reindexed by `ULift ι`
+  refine DivFamZar.eq_of_away_eq (fun l : ULift.{u} ι => f l.down)
+    (fun l : ULift.{u} ι => Localization.Away (f l.down))
     (by
-      rw [show (Set.range fun l : ULift.{u} (Fin m) => f l.down) = Set.range f from
+      rw [show (Set.range fun l : ULift.{u} ι => f l.down) = Set.range f from
         ULift.down_surjective.range_comp f]
       exact hspan)
     (fun l => ?_)
@@ -232,10 +246,15 @@ theorem eq_of_awaySpan_eq {m : ℕ} (f : Fin m → S)
 /-! ## The `∃!` form -/
 
 /-- **The away-span glue, uniquely**: the glued class of `exists_glue_of_awaySpan` is the
-unique class over `S` restricting to the given family, by `eq_of_awaySpan_eq`.  This is
-the form the DDR-9 forward map consumes (`w4-ddr9` worksheet §3.4, "choice-independence
-of the factorization"): a value characterized by an `∃!` does not depend on how the
-cover was produced, so the forward map needs no separate well-definedness argument. -/
+unique class over `S` restricting to the given family, by `eq_of_awaySpan_eq`.
+
+**Note what this `∃!` does and does not say.**  It pins the value against *one* cover `f` and
+*one* family `F`: it says the glue is determined by that data, not that it is independent of
+the data.  Independence across two different covers is a genuinely separate statement — for
+the DDR-9 forward map it is `divRepPullGlue_eq_of_chartFactors`
+(`Picard/DivRepAffPullIndep.lean`), and it needs the overlap agreement, not just separation.
+An earlier version of this docstring claimed the `∃!` made that argument unnecessary; it does
+not, and a fresh-context review caught the overclaim. -/
 theorem existsUnique_glue_of_awaySpan {m : ℕ} (f : Fin m → S)
     (hspan : Ideal.span (Set.range f) = ⊤)
     (F : ∀ p : Fin m, DivFamZar C (Localization.Away (f p)) π n)

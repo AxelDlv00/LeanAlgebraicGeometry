@@ -22,7 +22,7 @@ summary: "COMPOSE the new chain into the consumer predicate. Target, already lan
   \ change in the project;\n (4) hdeg base-changed to the Away chart.\nNote also:\
   \ isCertified_of_noLeak_of_forall_liftQ_injective needs\n[IsNoetherianRing (Localization.Away\
   \ r)] — confirm the instance fires.\n"
-status: pending
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -44,5 +44,8 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-26T06:43:08.385709+00:00'
+  updated_at: '2026-07-28T04:42:00.453840+00:00'
   milestone: w4-gate
+  owner: ajcr-cert-r2
+  pinned_commits:
+  - db94ce21a94102ebb3074271ef5422a115777321

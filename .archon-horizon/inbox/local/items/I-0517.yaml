@@ -1,0 +1,59 @@
+id: I-0517
+provider: local
+kind: issue
+body: "THE ONE SORRY IS DISHONESTLY SCOPED: it quantifies over ARBITRARY Algebra A\
+  \ instances, so it is NOT the transcription its comment claims\n\nReviewer finding\
+  \ on ajcr-charts run 0072.\n`isOpen_setOf_hasWitnessH1Vanishing_testPointField`\
+  \ (Picard/Pic0ChartLocusIsOpen.lean:146) takes\n\n  (alg : ∀ t, Algebra A (Over.testPointField\
+  \ t))\n  (tow : ∀ t, letI := alg t; IsScalarTower k A (Over.testPointField t))\n\
+  \nas EXPLICIT ∀-bound arguments, and concludes openness of the `alg`/`tow`-indexed\
+  \ set. Its comment\n(lines 156-172) claims the statement is TRUE and \"transcription,\
+  \ not mathematics\", reducing to\nthree goals of which (3) is `Spec.residueFieldIso`\
+  \ fed to\n`hasWitnessH1Vanishing_iff_of_fieldExtension`.\n\nThe claim is not accurate\
+  \ as stated, for a structural reason the comment itself half-notices:\n\n* Because\
+  \ `alg`/`tow` are ∀-bound, the theorem asserts openness for EVERY pair, not for\
+  \ the\n  canonical `instAlgebraTestPointFieldAffine` / `instIsScalarTowerTestPointFieldAffine`.\
+  \ I verified\n  by instantiation that arbitrary `alg`/`tow` typecheck (scratch file,\
+  \ no edits).\n* The stated proof route only works for the canonical pair. `Spec.residueFieldIso`\
+  \ identifies\n  `(Spec A).residueField t` with `t.asIdeal.ResidueField` as an `A`-algebra\
+  \ ONLY for the canonical\n  `A`-structure. For a non-canonical `alg t`, the two\
+  \ fields are still isomorphic as fields but the\n  witness predicate `D.HasWitnessH1Vanishing\
+  \ L` genuinely depends on the `Algebra A L` instance --\n  it is `Scheme.CechPic.map\
+  \ (relCurveMap C A L) D.cechPicClass` that the divisor must match, and\n  `relCurveMap\
+  \ C A L` is built from `algebraMap A L`. Change the algebra map, change the class,\n\
+  \  change the predicate.\n* The comment's last two lines (\"Doing it properly means\
+  \ transporting the Algebra A / IsScalarTower\n  instances across that iso, which\
+  \ is why alg/tow are explicit arguments here rather than\n  instances: a lane closing\
+  \ this should supply the transported pair\") describe the fix for a\n  DIFFERENT\
+  \ statement -- one where `alg`/`tow` are existentially supplied or fixed to the\n\
+  \  canonical pair. As written, the burden is on the PROVER for all pairs, not on\
+  \ the caller for one.\n\nNet: the sorry is either (a) unprovable as stated, or (b)\
+  \ provable only by an argument nobody has\nsketched -- not the three-goal transcription\
+  \ advertised. It should be restated with the canonical\ninstances (which is what\
+  \ `isOpen_setOf_isSplitWitness_of_presentation` and every prospective caller\nactually\
+  \ instantiate -- verified) before anyone budgets it as bookkeeping.\n\nSame over-generality\
+  \ is inherited by `IsChartDatumPresentation` (`:112`) and\n`isOpen_setOf_isSplitWitness_of_presentation`\
+  \ (`:224`), but there it is harmless-to-weak rather\nthan wrong: those take `alg`/`tow`\
+  \ as hypotheses on the consumer side, so a caller picks the\ncanonical pair. Only\
+  \ the sorry's statement is on the wrong side of the quantifier."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:40:26.802212+00:00'
+updated_at: '2026-07-28T05:40:26.802229+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0002-horizon-ajcr-charts
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

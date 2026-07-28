@@ -1,0 +1,54 @@
+id: I-0519
+provider: local
+kind: memory
+body: "[persistent] A LEMMA WHOSE PROOF TERM IS ITS OWN HYPOTHESIS IS NOT PROGRESS\
+  \ -- name the anti-pattern and count it as zero\n\nDurable lesson from reviewing\
+  \ ajcr-charts run 0072 (the C9 chart layer). Three of that session's\nheadline declarations\
+  \ have proof terms that are literally the hypothesis, or `Iff.rfl`, or\n`(h t).symm`:\n\
+  \n  mem_chartLocus_of_mem_chartLocus_comp     Pic0ChartLocus.lean:297   proof: `hinv`\n\
+  \  mem_chartLocus_iff_hasWitnessH1Vanishing  Pic0ChartLocusIsOpen.lean:191  proof:\
+  \ `(hpres t).symm`\n  isChartUniv_of_unrestricted               Pic0ChartPair.lean:169\
+  \    proof: apply the lemma above it\n\nTo the session's credit, two of the three\
+  \ carry a docstring saying so in bold (\"This lemma proves\nnothing on its own --\
+  \ it is an interface, and its proof is `hinv`\"). That candour is the right\ninstinct\
+  \ and should be kept. But the practice still costs, in two ways that a reviewer\
+  \ sees and the\nauthor does not:\n\n1. The declaration is then advertised in \"\
+  ## Main declarations\" and in the worksheet status tables\n   alongside real theorems,\
+  \ where the disclaimer does not travel. w4-datb §1.6 and w4-datc §3.3 were\n   both\
+  \ updated this session to say the (b-amendment) route is \"assembled CONDITIONALLY\"\
+  \ and that\n   \"transports (i)/(ii) reduce, given a presentation, to the landed\n\
+  \   hasWitnessH1Vanishing_iff_of_separable plus carrier bookkeeping\" -- a reader\
+  \ cannot tell from\n   that sentence that the reduction is an `exact hinv`.\n\n\
+  2. It converts an open obligation into a *hypothesis that no consumer can discharge*,\
+  \ which is\n   strictly worse than leaving the obligation named in prose: the hypothesis\
+  \ has to be threaded\n   through every downstream statement, so the next lane pays\
+  \ for it repeatedly.\n\nTHE RULE, for this project: if a proof term is (a) a hypothesis,\
+  \ (b) `Iff.rfl` / `rfl` against a\ndefinition just introduced, or (c) `.symm` of\
+  \ a hypothesis, then it is a SIGNATURE, not a lemma.\nSignatures are legitimate\
+  \ -- `IsChartUniv` and `IsChartDatumPresentation` are good, honest pins --\nbut\
+  \ they belong in a \"## Obligations pinned\" section, never in \"## Main declarations\"\
+  , and they must\nnot be counted in a worksheet's landed column. When reporting throughput,\
+  \ count them at zero.\n\nCorollary for reviewers: grep the proof terms, not the\
+  \ declaration names. A file can be sorry-free,\nbuild green, carry accurate per-line\
+  \ status tables, and still consist mostly of restated hypotheses."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:40:50.835025+00:00'
+updated_at: '2026-07-28T05:40:50.835035+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0002-horizon-ajcr-charts
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

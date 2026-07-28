@@ -2,13 +2,32 @@ id: AJC.albanese.symmetric
 title: Abel-Jacobi and symmetric-power factorisation
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Formalize the six honest construction and bridge gaps exposed by the rewritten
-  chapter: Abel--Jacobi, the symmetric-power carrier and quotient API, symmetric sums,
-  the map to Pic0, birational descent, and the factorisation connector. The stronger
-  divisor formula, separability/nonsingularity, one-form differential, and characteristic-p
-  birationality statements are deliberately separate unpinned mathematical nodes,
-  downstream of Serre duality and Riemann--Roch.'
-status: pending
+summary: 'Abel-Jacobi and symmetric-power factorisation. BLOCKED ON A SUBPROJECT,
+  sized run 0069.
+
+
+  Five of the six AlbaneseUP.lean sorries are downstream of Sym^g C, which does not
+  exist: mathlib has no quotient of a scheme by a finite group action (its SymmetricPower
+  is modules only). analogies/m3-route-audit.md scopes the construction at ~2400-3800
+  LOC: group-action typeclass, affine quotient Spec(A^{S_g}) with universal property,
+  glued global quotient, and smoothness of Sym^g C for a curve. Treat as a subproject,
+  not a step.
+
+
+  LANDED run 0069 (commit a1dd46a99): the INPUT the quotient''s universal property
+  consumes. MonObj.powSum (the g-fold sum C^g -> A) and MonObj.powSum_perm (its S_g-invariance
+  -- Milne''s "clearly this is symmetric"), axiom-clean, in Albanese/GrpObjFoldSum.lean.
+  Only the factorisation through pi : C^g -> Sym^g C is now missing, not the symmetry
+  that licenses it. Also added MonObj.preHom (precomposition as a MonoidHom on hom-sets),
+  which mathlib lacked.
+
+
+  abelJacobi is separately blocked: it wants PicScheme.degree / Pic0(k) = ker degree,
+  and ajc-pic0av reports degree unconstructed with no route it is confident in (I-0493,
+  run 0067).
+
+  '
+status: blocked
 kind: proof
 priority: high
 depends_on: []
@@ -30,6 +49,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-25T17:39:00.718412+00:00'
+  updated_at: '2026-07-28T04:28:36.034001+00:00'
   pinned_commits:
+  - a1dd46a99
   - 21eefaf60

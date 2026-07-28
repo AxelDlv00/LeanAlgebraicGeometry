@@ -29,7 +29,7 @@ summary: "CORRECTED 2026-07-25 AFTER REVIEW (work-reviewer, I-0340). The origina
   \ so Gamma(V)/(g) iso Gamma(V)_h/(g) = Gamma(D(h))/(g) via\nIsAffineOpen.isLocalization_basicOpen.\
   \ Watch the Opens-level `inf` bookkeeping — pieces i inf pieces j\nis not syntactically\
   \ symmetric in i and j.\n"
-status: pending
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -51,5 +51,8 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-26T06:43:06.602526+00:00'
+  updated_at: '2026-07-28T04:41:57.931744+00:00'
   milestone: w4-gate
+  owner: ajcr-cert-r2
+  pinned_commits:
+  - adf4492f5a4002ceba00f7fda429b3d6533926e5

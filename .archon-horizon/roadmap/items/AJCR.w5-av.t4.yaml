@@ -3,7 +3,16 @@ title: 'T4 (WORKSHEET-FIRST, risk R1): the étale-plus/Zariski kernel crossing a
   — probe tonight'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
+summary: 'PENDING — WORKSHEET RATIFIED (informal/w5-t4-worksheet.md, route (ii): kernel-level
+  cancellation over k, uniform in K/k). Two fears are dead: the Artin-local splitting
+  needs NO henselian machinery (the thickening k[eps]->k is square-zero, so FormallyEtale.comp_bijective
+  does the whole job, and mathlib has no henselian cover-splitting anyway), and the
+  "Hilbert-90 cancellation" dissolves into the already-landed module-level Amitsur
+  exactness (Descent/ModuleDescent.lean:247) because the trunc-exp linearisation happens
+  BEFORE descent, making the descent condition additive. Five bricks T4-a..T4-e; T4-a
+  and T4-c have NO gates and launch immediately. THIS IS THE ONE REMAINING TARGET
+  OF WAVE 5: the T5 numeral, S1-a and the S3 count are all consumers of this single
+  computation.'
 status: pending
 kind: proof
 priority: normal
@@ -17,4 +26,4 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:45.485310+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-24T09:13:11.341362+00:00'
+  updated_at: '2026-07-28T05:30:31.976671+00:00'

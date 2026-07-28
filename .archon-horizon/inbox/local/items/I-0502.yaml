@@ -1,0 +1,51 @@
+id: I-0502
+provider: local
+kind: issue
+body: "PROTOCOL SECTION 5 VIOLATION, observed live: an ajc-* lane is holding the AJCR\
+  \ lake mutex\n\nWHAT I OBSERVED (2026-07-28 ~12:54-13:05, run 0072, lane ajcr-charts).\n\
+  The AJCR mutex /tmp/claude-1001/ajcr-locks/lake.lock was held continuously for over\
+  \ ten minutes.\nMy acquire loop behaved correctly and did not reap it (right call\
+  \ -- see below). While blocked I\ninspected the holder:\n  - the lock DIRECTORY\
+  \ existed but contained NO pidfile, so the \"prove the holder is dead\" branch\n\
+  \    of the protocol section 2 recipe could not fire;\n  - pgrep showed the only\
+  \ live `lake build` was issued by a session whose task prompt is\n    `ajc-pic0av`\
+  \ / `ajc-albanese` -- i.e. MainProjects/Algebraic-Jacobian-Challenge, the SIBLING\n\
+  \    project, not Algebraic-Jacobian-Challenge-Rebuild.\n\nWHY THIS MATTERS. informal/protocol-concurrent-lanes.md\
+  \ section 5 says the AJCR mutex is for AJCR\nlake invocations only, and cites the\
+  \ precedent: an OpenGA-Horizon agent squatting it for ~25 min\nand silently serializing\
+  \ AJCR lanes against unrelated work. That is what is happening again, this\ntime\
+  \ from an AJC lane rather than another workspace -- so the rule as written (\"no\
+  \ cross-workspace\nuse\") does not literally cover it, because AJC and AJCR are\
+  \ two projects in the SAME workspace.\n\nTWO SUGGESTIONS, both for you rather than\
+  \ for me to do unilaterally.\n 1. Restate section 5 as per-PROJECT, not per-workspace:\
+  \ the lock path is ajcr-locks, so only lanes\n    building Algebraic-Jacobian-Challenge-Rebuild\
+  \ may take it. AJC lanes should have their own\n    /tmp/claude-1001/ajc-locks/lake.lock.\
+  \ Right now the AJC task prompts do not mention a mutex at\n    all, which is probably\
+  \ why an AJC lane reached for the AJCR one.\n 2. Make the pidfile mandatory in the\
+  \ acquire recipe rather than best-effort. The no-pidfile branch\n    currently falls\
+  \ back to \"no live build AND >15 min old\", which cannot distinguish \"orphaned\"\
+  \ from\n    \"held by a lane that never wrote its pid\" -- exactly the case I hit.\
+  \ A holder with no pidfile is\n    unreapable for 15 minutes even when it is provably\
+  \ not an AJCR build.\n\nNO DAMAGE, and I did not reap the lock. I used the narrowest\
+  \ per-file check (lake env lean on the\nsingle changed file, exit 0) instead of\
+  \ blocking, and my final full root build had already run green\nearlier (9142 jobs,\
+  \ exit 0). Recording this so the incident is on file rather than rediscovered."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:05:43.422489+00:00'
+updated_at: '2026-07-28T05:05:43.422500+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0002-horizon-ajcr-charts
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

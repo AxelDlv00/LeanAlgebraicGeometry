@@ -1,0 +1,55 @@
+id: I-0509
+provider: local
+kind: memory
+body: "[persistent] TRIAGE THE ROADMAP ACTIVE-COUNT WARNING BY LANE LIVENESS, NOT\
+  \ BY COUNT — with 8 lanes live, 13 active rows is the correct number\n\nEstablished\
+  \ by the janitor pass of run 0073 (2026-07-28), when `roadmap list` warned \"13\
+  \ active items (recommended maximum 8)\" while eight `horizon run`s held live pids.\
+  \ The temptation is to set rows `pending` until the number drops. That is wrong,\
+  \ and this is the cheap check that tells you which rows are genuinely stale.\n\n\
+  ## The method\n\nAn `active` row is legitimate iff a **live** lane holds it, either\
+  \ directly (`owner` is a running task) or because it is an `active` **ancestor**\
+  \ of such a row. Ancestors matter: a leaf held by a live lane drags its whole active\
+  \ spine along, so one working lane can account for three or four rows on its own.\n\
+  \n    # live tasks\n    horizon task list --json | jq -r '.tasks[]|select(.status==\"\
+  running\")|.id'\n    # active rows + owner, then walk metadata.parent upward\n \
+  \   grep -l 'status: active' .archon-horizon/roadmap/items/*.yaml\n\nCross the two\
+  \ sets. What is left over — active, unowned or owned by a **queued** task, and not\
+  \ an ancestor of anything live — is the actual candidate for `pending`.\n\n## The\
+  \ measurement, as an example of the shape\n\n13 active rows, 8 live lanes. Seven\
+  \ rows directly held: `AJC.pic0av` + `.tangent` + `.structure` (`ajc-pic0av`), `AJC.picrep.rational-point`\
+  \ (`ajc-etale-pic`), `AJCR.w4-rep.datum.dat-d.ddr.certificate` (`ajcr-cert-r2`),\
+  \ `…ddr.divrep` (`ajcr-divrep`), `AJCR.w5-av.t5` (`ajcr-w5-av`). Six more are active\
+  \ ancestors of those: `AJC.jacobian`, `AJCR.jacobian`, `AJCR.w4-rep`, `AJCR.w4-rep.datum`,\
+  \ `…dat-d`, `…ddr`. **Leftover: exactly one** — `AJC.maintenance`, owned by `ajc-optimize`,\
+  \ which is *queued*, last touched three days earlier, tracking quality work deferred\
+  \ behind eight proof lanes. Set `pending` with the reasoning on the row.\n\n## The\
+  \ generalisable part\n\nThe advisory maximum of 8 was written for a workspace running\
+  \ 3-5 lanes; at 8 concurrent lanes the floor for legitimately-active rows is roughly\
+  \ *(lanes) + (depth of their active spines)*, which here is 13. So **the warning\
+  \ firing is not evidence of staleness** — it is evidence that the count exceeded\
+  \ a fixed threshold. Do the liveness cross once, act on the leftovers, and record\
+  \ what you deliberately left; do not shrink a real focus to satisfy a number. Same\
+  \ reasoning applies to the task-queue and inbox caps (`I-0387` argues this for the\
+  \ inbox at workspace scale)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:27:54.668146+00:00'
+updated_at: '2026-07-28T05:29:32.637165+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0002-horizon-ajcr-w5-av
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-albanese

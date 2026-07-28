@@ -128,6 +128,54 @@ theorem isOpenImmersion_presheaf_restrictChart {X : Scheme.{u}}
   MorphismProperty.IsStableUnderComposition.comp_mem _ _
     (isOpenImmersion_presheaf_yoneda_map V.ι) hfV
 
+/-! ## CHART-U(c): the remaining obligation, pinned
+
+With the composition half discharged, `hf` for a restricted Abel chart reduces to a single
+statement.  It is pinned here as a definition so that the gate has a name in Lean and not
+only in a worksheet — the pattern `Pic0ChartLocusIsOpen.IsChartDatumPresentation` uses.
+
+**Its field-level input is available.**  DAT-C GAP-2 (Σ-UNIQ-fld) is *landed*:
+`Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one`
+(`RiemannRoch/EffectiveUniqueness.lean:144`) — for effective `D`, `D'` with equal Čech class
+and `h⁰(𝒪(D)) = 1`, `D' = D`.  (The `w4-datc` §0.3 GAP-2 row claimed no such lemma existed;
+that claim was stale and is corrected there as of 2026-07-28.)  What CHART-U(c) still needs
+beyond it is the *relative* statement — uniqueness in families over the locus — plus the
+classifier `divRepClassifyZar`. -/
+
+variable (C π n) in
+/-- **CHART-U(c), pinned**: the chart map is an open immersion of presheaves after restriction
+to the locus where the fibre class has a unique effective representative.
+
+This is the whole remaining content of C9b's `hf`.  Stated as a `Prop`-valued definition
+rather than proved, because its proof needs the *relative* form of GAP-2 over `chartLocus`
+together with `divRepClassifyZar`; a lane that discharges it gets `hf` by feeding it to
+`isOpenImmersion_presheaf_restrictChart`.
+
+Deliberately stated about `abelSigmaChart` and a *given* open `V`, rather than about
+`chartLocus` directly: the openness of `chartLocus` is a separate obligation
+(`Pic0ChartLocusIsOpen`), and keeping the two apart means neither has to wait for the
+other. -/
+def IsChartUniv {D : Over (Spec (.of k))} (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    (V : D.left.Opens) : Prop :=
+  IsOpenImmersion.presheaf (restrictChart (abelSigmaChart C π n rep m Z hdeg) V)
+
+/-- The pinned obligation is exactly what `isOpenImmersion_presheaf_restrictChart` would
+give from an unrestricted certificate — recorded so that no lane proves the same thing
+twice, and so that the *reason* the unrestricted route is unavailable stays visible: the
+hypothesis of that lemma is false for the Abel chart at `V = ⊤`. -/
+lemma isChartUniv_of_unrestricted {D : Over (Spec (.of k))}
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    (V : D.left.Opens)
+    (h : IsOpenImmersion.presheaf (abelSigmaChart C π n rep m Z hdeg)) :
+    IsChartUniv C π n rep m Z hdeg V :=
+  isOpenImmersion_presheaf_restrictChart V h
+
 /-! ## The structure morphism of a restricted chart -/
 
 /-- **The structure morphism of a restricted chart is the restriction of the structure

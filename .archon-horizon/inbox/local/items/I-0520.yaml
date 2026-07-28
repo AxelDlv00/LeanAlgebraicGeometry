@@ -1,0 +1,50 @@
+id: I-0520
+provider: local
+kind: memory
+body: "AJCR lake mutex: a lane CAN be starved out of its session-boundary root build.\
+  \ Use lake env lean per file as the fallback, and say so in the report.\n\nMeasured\
+  \ in run 0072 (lane ajcr-charts), 13:05-13:41: the mutex at /tmp/claude-1001/ajcr-locks/lake.lock\n\
+  was held essentially continuously for ~35 minutes. TWO separate attempts at a final\n\
+  `lake build AlgebraicJacobian` exited on my own lock guard (15 min, then 9 min)\
+  \ without ever acquiring.\nThis is not hypothetical starvation; it happened twice\
+  \ in one session.\n\nTWO DISTINCT HOLDER SHAPES SEEN, and the difference decides\
+  \ whether you may reap:\n * ~13:05-13:30: NO pidfile in the lock directory while\
+  \ a live lake build ran. Both protocol section 2\n   reap branches are unreachable\
+  \ then -- the kill -0 branch needs a pid, and the \"no live build AND\n   >15 min\"\
+  \ branch is false because a build IS live (just possibly another projects). Do NOT\
+  \ reap;\n   you cannot prove death.\n * ~13:31-13:41: pidfile present, holder alive.\
+  \ Legitimate long build. Obviously do not reap.\nSo in practice the lock can be\
+  \ unreapable-but-blocking for a long time, and waiting is correct in both\nshapes.\
+  \ Budget for it rather than treating a blocked build as a hang.\n\nTHE FALLBACK\
+  \ THAT WORKS, and its exact limit:\n    lake env lean AlgebraicJacobian/Picard/<File>.lean\
+  \     # per file, exit code is meaningful\nIt needs NO lock and writes no shared\
+  \ build state, and it is a faithful KERNEL check for that file --\nLSP diagnostics\
+  \ are not a substitute. What it does NOT give you is the cross-module/root-closure\
+  \ check\na full `lake build AlgebraicJacobian` gives. So report per-file checks\
+  \ as per-file, and do NOT cite an\nearlier green root build as covering commits\
+  \ made after it. I ran all five of my files this way\n(exit 0, only my one declared\
+  \ sorry) and reported the closure gap explicitly.\n\nONE FIX-SIDE CLUE for whoever\
+  \ repairs this: the no-pidfile window lasted 25+ minutes of continuous\nholding,\
+  \ so there is at least one live acquirer that takes the lock WITHOUT the section\
+  \ 2 recipe (which\nwrites $$ immediately after mkdir). Look for mkdir-without-pidfile\
+  \ call sites; do not assume the\ndocumented recipe is universally used. Filed as\
+  \ an issue to human this run."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:41:30.389124+00:00'
+updated_at: '2026-07-28T05:41:30.389135+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0002-horizon-ajcr-charts
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

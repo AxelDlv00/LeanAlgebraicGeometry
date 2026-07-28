@@ -2,7 +2,14 @@ id: AJCR.w5-av.t5
 title: 'T5: the scalar identity \(\dim_k T_0(d.J) = g\) (scalar-identity-first discipline)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
+summary: 'SPINE LANDED, numeral open (run 0073). Tangent/Pic0TangentSpace.lean states
+  the Wave-5 tangent results against (d : JacobianData C). UNCONDITIONAL: identitySection
+  (the group unit, hence a section, hence automatically k-rational — no rationality
+  hypothesis anywhere downstream); T_0(d.J) ~ cotangent dual; T_0(d.J) ~ ker(Pic^0(k[eps])
+  ->* Pic^0(k)); finiteDimensional_cotangentSpace. CONDITIONAL on ONE named hypothesis
+  hdim (= the T3/T4 output, a hypothesis NOT a sorry): finrank_cotangentSpaceDual_eq_genus
+  and nonempty_cotangentSpace_addEquiv_h1. hdim verified load-bearing, so not vacuous.
+  Consequence: the tangent keystone has no scheme theory left in it.'
 status: active
 kind: proof
 priority: normal
@@ -16,5 +23,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:46.290588+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T04:01:51.539647+00:00'
+  updated_at: '2026-07-28T05:29:40.146221+00:00'
   owner: ajcr-w5-av

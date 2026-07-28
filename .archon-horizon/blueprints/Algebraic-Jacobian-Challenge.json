@@ -18027,11 +18027,11 @@
     "entry": "MainProjects/Algebraic-Jacobian-Challenge/blueprint/src/web.tex",
     "macros": {},
     "states": {
-      "blocked": 131,
-      "closed": 6171,
-      "formalized_open": 201,
-      "informal": 170,
-      "ready": 132
+      "blocked": 129,
+      "closed": 6298,
+      "formalized_open": 203,
+      "informal": 171,
+      "ready": 134
     },
     "warnings": [
       "lem:pushforwardPullbackBaseChange_restrict_naturality: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChange_restrict_naturality} not found in Lean sources",
@@ -18059,6 +18059,7 @@
       "def:sectionGradedGOne: \\lean{AlgebraicGeometry.Scheme.Modules.instGOneNatSectionDeg} not found in Lean sources",
       "def:moduleSectionGradedGSMul: \\lean{AlgebraicGeometry.Scheme.Modules.instGSMulNatSectionDegModuleSectionDeg} not found in Lean sources",
       "def:gr_modules_glueHom: \\lean{AlgebraicGeometry.Scheme.Modules.glueHom} not found in Lean sources",
+      "def:inst_has_pic_scheme: \\lean{AlgebraicGeometry.Scheme.instHasPicScheme} not found in Lean sources",
       "lem:smooth_algebra_krull_dim_formula: \\lean{Algebra.IsStandardSmoothOfRelativeDimension.ringKrullDim_localization_eq_relativeDimension} not found in Lean sources",
       "lem:finrank_residue_kaehler_of_standardSmooth_reldim: \\lean{AlgebraicGeometry.Scheme.finrank_residueField_tensor_kaehlerDifferential_of_isStandardSmoothOfRelativeDimension} not found in Lean sources",
       "lem:stage6_regular_stalk_assembly: \\lean{AlgebraicGeometry.TODO.stage6_regular_stalk_assembly} not found in Lean sources",
@@ -22288,7 +22289,7 @@
       "statement": "\\textit{Source: Milne, \\emph{Abelian Varieties}, \\S I.3, p.~16.}\n  Let \\(f \\colon X \\dashrightarrow Y\\) be a rational map between varieties over \\(\\bar k\\).\n  The \\emph{domain of definition} of \\(f\\) is the open set\n  \\[\n    \\mathrm{Dom}(f) \\;:=\\; \\bigcup_{(U, \\varphi_U) \\in f} U \\;\\subseteq\\; X,\n  \\]\n  i.e.\\ the union of the dense opens of all representatives of \\(f\\). The\n  \\emph{indeterminacy locus} of \\(f\\) is the closed complement\n  \\[\n    Z(f) \\;:=\\; X \\smallsetminus \\mathrm{Dom}(f) \\;\\subseteq\\; X.\n  \\]\n  The map \\(f\\) is regular (i.e.\\ defined on all of \\(X\\)) if and only if \\(Z(f) = \\emptyset\\).",
       "title": "Indeterminacy locus of a rational map",
       "type": "definition",
-      "unlocks": 27,
+      "unlocks": 26,
       "uses": []
     },
     {
@@ -23247,7 +23248,7 @@
       "id": "lem:smooth_to_regular_local_ring",
       "lean_file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
       "lean_name": "AlgebraicGeometry.Scheme.isRegularLocalRing_stalk_of_smooth",
-      "lean_source": "private theorem isRegularLocalRing_stalk_of_smooth\n    {kbar : Type u} [Field kbar] [IsAlgClosed kbar]\n    (X : Over (Spec (.of kbar)))\n    [Smooth X.hom] [GeometricallyIrreducible X.hom]\n    [IsSeparated X.hom] [LocallyOfFiniteType X.hom]\n    [IsIntegral X.left] [IsReduced X.left]\n    (z : X.left) :\n    IsRegularLocalRing (X.left.presheaf.stalk z) := by\n  -- Stage 2 chart: a standard-smooth section ring on an affine chart `V \u220b z`.\n  obtain \u27e8U, hU, V, hV, hzV, e, hSS\u27e9 := exists_isStandardSmooth_at_of_smooth X z\n  -- Base identification `\u0393(Spec k\u0304, U) \u2243+* k\u0304` (U is nonempty: it contains the\n  -- image of z).\n  let \u03b5 : kbar \u2243+* \u0393(Spec (.of kbar), U) :=\n    (gammaSpecField_ringEquiv kbar U \u27e8\u27e8_, e hzV\u27e9\u27e9).symm\n  have hSS' : ((X.hom.appLE U V e).hom.comp \u03b5.toRingHom).IsStandardSmooth :=\n    RingHom.isStandardSmooth_respectsIso.2 _ \u03b5 hSS\n  letI : Algebra kbar \u0393(X.left, V) :=\n    ((X.hom.appLE U V e).hom.comp \u03b5.toRingHom).toAlgebra\n  haveI : Algebra.IsStandardSmooth kbar \u0393(X.left, V) := hSS'.toAlgebra\n  -- The stalk as the localisation of the chart ring at the prime of `z`.\n  letI : Algebra \u0393(X.left, V) (X.left.presheaf.stalk z) :=\n    TopCat.Presheaf.algebra_section_stalk X.left.presheaf \u27e8z, hzV\u27e9\n  haveI hLoc : IsLocalization.AtPrime (X.left.presheaf.stalk z)\n      (hV.primeIdealOf \u27e8z, hzV\u27e9).asIdeal :=\n    isLocalization_atPrime_stalk_of_affineOpen hV z hzV\n  letI : Algebra kbar (X.left.presheaf.stalk z) :=\n    ((algebraMap \u0393(X.left, V) (X.left.presheaf.stalk z)).comp\n      (algebraMap kbar \u0393(X.left, V))).toAlgebra\n  haveI : IsScalarTower kbar \u0393(X.left, V) (X.left.presheaf.stalk z) :=\n    IsScalarTower.of_algebraMap_eq fun _ => rfl\n  haveI : Nonempty V := \u27e8\u27e8z, hzV\u27e9\u27e9\n  haveI : Nontrivial \u0393(X.left, V) :=\n    AlgebraicGeometry.Scheme.component_nontrivial X.left V\n  -- Conclude by the Serre-free Stacks-00TT theorem at arbitrary primes.\n  exact isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perfectField\n    (k := kbar) (hV.primeIdealOf \u27e8z, hzV\u27e9).asIdeal\n    (hV.primeIdealOf \u27e8z, hzV\u27e9).isPrime (X.left.presheaf.stalk z)",
+      "lean_source": "theorem isRegularLocalRing_stalk_of_smooth\n    {kbar : Type u} [Field kbar] [IsAlgClosed kbar]\n    (X : Over (Spec (.of kbar)))\n    [Smooth X.hom] [GeometricallyIrreducible X.hom]\n    [IsSeparated X.hom] [LocallyOfFiniteType X.hom]\n    [IsIntegral X.left] [IsReduced X.left]\n    (z : X.left) :\n    IsRegularLocalRing (X.left.presheaf.stalk z) := by\n  -- Stage 2 chart: a standard-smooth section ring on an affine chart `V \u220b z`.\n  obtain \u27e8U, hU, V, hV, hzV, e, hSS\u27e9 := exists_isStandardSmooth_at_of_smooth X z\n  -- Base identification `\u0393(Spec k\u0304, U) \u2243+* k\u0304` (U is nonempty: it contains the\n  -- image of z).\n  let \u03b5 : kbar \u2243+* \u0393(Spec (.of kbar), U) :=\n    (gammaSpecField_ringEquiv kbar U \u27e8\u27e8_, e hzV\u27e9\u27e9).symm\n  have hSS' : ((X.hom.appLE U V e).hom.comp \u03b5.toRingHom).IsStandardSmooth :=\n    RingHom.isStandardSmooth_respectsIso.2 _ \u03b5 hSS\n  letI : Algebra kbar \u0393(X.left, V) :=\n    ((X.hom.appLE U V e).hom.comp \u03b5.toRingHom).toAlgebra\n  haveI : Algebra.IsStandardSmooth kbar \u0393(X.left, V) := hSS'.toAlgebra\n  -- The stalk as the localisation of the chart ring at the prime of `z`.\n  letI : Algebra \u0393(X.left, V) (X.left.presheaf.stalk z) :=\n    TopCat.Presheaf.algebra_section_stalk X.left.presheaf \u27e8z, hzV\u27e9\n  haveI hLoc : IsLocalization.AtPrime (X.left.presheaf.stalk z)\n      (hV.primeIdealOf \u27e8z, hzV\u27e9).asIdeal :=\n    isLocalization_atPrime_stalk_of_affineOpen hV z hzV\n  letI : Algebra kbar (X.left.presheaf.stalk z) :=\n    ((algebraMap \u0393(X.left, V) (X.left.presheaf.stalk z)).comp\n      (algebraMap kbar \u0393(X.left, V))).toAlgebra\n  haveI : IsScalarTower kbar \u0393(X.left, V) (X.left.presheaf.stalk z) :=\n    IsScalarTower.of_algebraMap_eq fun _ => rfl\n  haveI : Nonempty V := \u27e8\u27e8z, hzV\u27e9\u27e9\n  haveI : Nontrivial \u0393(X.left, V) :=\n    AlgebraicGeometry.Scheme.component_nontrivial X.left V\n  -- Conclude by the Serre-free Stacks-00TT theorem at arbitrary primes.\n  exact isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perfectField\n    (k := kbar) (hV.primeIdealOf \u27e8z, hzV\u27e9).asIdeal\n    (hV.primeIdealOf \u27e8z, hzV\u27e9).isPrime (X.left.presheaf.stalk z)",
       "lean_status": "lean_ok",
       "level": "medium",
       "mathlib_ok": false,
@@ -23395,7 +23396,7 @@
       "statement": "Let \\(p \\colon W \\to X\\) be a morphism of schemes whose underlying continuous map is\n  \\emph{open}, and let \\(f \\colon X \\dashrightarrow Y\\) be a rational map. The\n  \\textbf{precomposition} \\(f \\circ p \\colon W \\dashrightarrow Y\\) is the rational map\n  represented, for any partial-map representative \\((V, \\varphi_V)\\) of \\(f\\), by\n  \\[\n    \\bigl(p^{-1}(V),\\; \\; p^{-1}(V) \\xrightarrow{\\;p|_{p^{-1}(V)}\\;} V\n    \\xrightarrow{\\;\\varphi_V\\;} Y\\bigr).\n  \\]\n  The domain \\(p^{-1}(V)\\) is dense because the preimage of a dense open set under an open\n  continuous map is dense; the same fact makes the construction independent of the chosen\n  representative, so it descends to a well-defined rational map.",
       "title": "def:rationalMap_precomp",
       "type": "definition",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23422,7 +23423,7 @@
       "statement": "Precomposition on the left commutes with right-composition by a morphism: for\n  \\(p \\colon W \\to X\\) open, \\(f \\colon X \\dashrightarrow Y\\), and \\(g \\colon Y \\to Z\\),\n  \\[\n    (f \\circ p) \\circ g \\;=\\; (f \\circ g) \\circ p\n    \\qquad\\text{in}\\qquad W \\dashrightarrow Z .\n  \\]\n  Furthermore, if \\(p\\) and \\(f\\) are defined over a base scheme \\(S\\), then so is\n  \\(f \\circ p\\).",
       "title": "lem:rationalMap_precomp_compHom",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23449,7 +23450,7 @@
       "statement": "Precomposing the rational map of an honest morphism \\(g \\colon X \\to Y\\) with an open\n  morphism \\(p \\colon W \\to X\\) is the rational map of the composite:\n  \\[\n    (g \\text{ as a rational map}) \\circ p \\;=\\; (p \\circ g) \\text{ as a rational map} .\n  \\]",
       "title": "lem:rationalMap_precomp_hom",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23476,7 +23477,7 @@
       "statement": "Let \\(s_X \\colon X \\to S\\), \\(s_Y \\colon Y \\to S\\), \\(s_Z \\colon Z \\to S\\) be structure\n  morphisms with \\(X\\) integral and \\(s_Y, s_Z\\) locally of finite type, and let\n  \\(a \\colon X \\dashrightarrow Y\\), \\(b \\colon X \\dashrightarrow Z\\) be rational maps over\n  \\(S\\) (i.e.\\ \\(a\\) restricted to the generic point commutes with the structure morphisms,\n  and likewise for \\(b\\)). The \\textbf{pairing} \\(a \\times_S b \\colon X \\dashrightarrow\n  Y \\times_S Z\\) is the rational map corresponding, under the function-field correspondence,\n  to the morphism\n  \\[\n    \\operatorname{Spec} K(X)\n    \\xrightarrow{\\;\\langle a_\\eta,\\, b_\\eta \\rangle\\;}\n    Y \\times_S Z\n  \\]\n  obtained from the generic-point morphisms \\(a_\\eta \\colon \\operatorname{Spec} K(X) \\to Y\\)\n  and \\(b_\\eta \\colon \\operatorname{Spec} K(X) \\to Z\\) by the universal property of the fibre\n  product (their composites with the structure morphisms both equal\n  \\(\\operatorname{Spec} K(X) \\to \\operatorname{Spec}\\mathcal O_{X,\\eta} \\to X \\to S\\)).",
       "title": "def:rationalMap_prod",
       "type": "definition",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23503,7 +23504,7 @@
       "statement": "The two projections of the pairing recover the factors, and the pairing is again over\n  \\(S\\):\n  \\[\n    (a \\times_S b) \\circ \\mathrm{pr}_1 = a,\n    \\qquad\n    (a \\times_S b) \\circ \\mathrm{pr}_2 = b,\n    \\qquad\n    (a \\times_S b) \\circ \\bigl(\\mathrm{pr}_1 \\circ s_Y\\bigr) = s_X,\n  \\]\n  where \\(\\mathrm{pr}_1 \\colon Y \\times_S Z \\to Y\\), \\(\\mathrm{pr}_2 \\colon Y \\times_S Z \\to Z\\)\n  are the projections (the last equation being the statement that \\(a \\times_S b\\) is over\n  \\(S\\)).",
       "title": "lem:rationalMap_prod_proj",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23530,7 +23531,7 @@
       "statement": "Let \\(G\\) be a group object in a cartesian-monoidal category. The \\textbf{difference\n  morphism} \\(\\operatorname{diff}_G \\colon G \\otimes G \\to G\\) is\n  \\(\\operatorname{fst} / \\operatorname{snd}\\), the division in the group structure on the\n  hom-set \\(\\operatorname{Hom}(G \\otimes G, G)\\); pointwise it is\n  \\((g,h) \\mapsto g \\cdot h^{-1}\\), i.e.\\ the group law composed with inversion on the second\n  factor. Equivalently, it is built from the group structure on the hom-set. When \\(G\\)\n  lives over \\(\\operatorname{Spec}\\bar k\\), its underlying scheme morphism\n  \\(\\operatorname{diff}_G^{\\,\\mathrm{left}} \\colon G \\times_{\\bar k} G \\to G\\) is Milne's\n  \\(m \\circ (\\mathrm{id} \\times \\mathrm{inv})\\).",
       "title": "def:grpObj_diff",
       "type": "definition",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23557,7 +23558,7 @@
       "statement": "The difference morphism is over the base: \\(\\operatorname{diff}_G^{\\,\\mathrm{left}} \\circ\n  (G \\to \\operatorname{Spec}\\bar k) = \\mathrm{pr}_1 \\circ (G \\to \\operatorname{Spec}\\bar k)\\).",
       "title": "lem:grpObjDiffLeft_comp_hom",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23584,7 +23585,7 @@
       "statement": "Let \\(X\\) be smooth over an algebraically closed field \\(\\bar k\\) with \\(X \\times_{\\bar k} X\\)\n  integral, let \\(G\\) be a group variety over \\(\\bar k\\), and let\n  \\(f \\colon X \\dashrightarrow G\\) be a rational map over \\(\\bar k\\). Milne's\n  \\textbf{difference rational map}\n  \\[\n    \\Phi \\;=\\; \\bigl((f \\circ \\mathrm{pr}_1) \\times_{\\bar k} (f \\circ \\mathrm{pr}_2)\\bigr)\n    \\circ \\operatorname{diff}_G^{\\,\\mathrm{left}}\n    \\colon\\; X \\times_{\\bar k} X \\;\\dashrightarrow\\; G\n  \\]\n  is \\((x,y) \\mapsto f(x) \\cdot f(y)^{-1}\\). The projections \\(\\mathrm{pr}_i\\) are open (being\n  base changes of the smooth structure morphism), so the precompositions\n  \\(f \\circ \\mathrm{pr}_i\\) are defined; both are over \\(\\bar k\\)\n  (\\cref{lem:rationalMap_precomp_compHom}, \\cref{lem:rationalMap_precomp_hom}) with common\n  structure composite \\(\\mathrm{pr}_1 \\circ (X \\to \\operatorname{Spec}\\bar k)\\), since\n  \\(\\mathrm{pr}_1\\) and \\(\\mathrm{pr}_2\\) agree after \\(X \\to \\operatorname{Spec}\\bar k\\).",
       "title": "def:rationalMap_difference",
       "type": "definition",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23611,7 +23612,7 @@
       "statement": "The difference map is a \\(\\bar k\\)-rational map: \\(\\Phi \\circ (G \\to \\operatorname{Spec}\\bar k)\n  = \\mathrm{pr}_1 \\circ (X \\to \\operatorname{Spec}\\bar k)\\), the structure morphism of\n  \\(X \\times_{\\bar k} X\\).",
       "title": "lem:rationalMap_difference_over",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23638,7 +23639,7 @@
       "statement": "Right-composition of a rational map \\(F \\colon X \\dashrightarrow Y\\) with a morphism\n  \\(g \\colon Y \\to Z\\) enlarges the domain of definition:\n  \\(\\mathrm{Dom}(F) \\subseteq \\mathrm{Dom}(F \\circ g)\\).",
       "title": "lem:compHom_domain_monotone",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23665,7 +23666,7 @@
       "statement": "\\textbf{(Milne Lemma~3.3, Sub-step~1 domain bound / Sub-step~2 easy direction.)} The\n  difference rational map \\(\\Phi\\) is defined on \\(\\mathrm{Dom}(f) \\times_{\\bar k}\n  \\mathrm{Dom}(f)\\): every point of \\(X \\times_{\\bar k} X\\) projecting into\n  \\(\\mathrm{Dom}(f)\\) under both projections lies in \\(\\mathrm{Dom}(\\Phi)\\). In\n  particular \\(\\Phi\\) is defined at the diagonal point \\((x, x)\\) whenever \\(f\\) is\n  defined at \\(x\\).",
       "title": "lem:difference_map_domain_lower_bound",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23692,7 +23693,7 @@
       "statement": "For a rational map \\(f \\colon X \\dashrightarrow Y\\) and an open morphism\n  \\(p \\colon W \\to X\\), the precomposition is defined on the preimage of the domain:\n  \\(p^{-1}(\\mathrm{Dom}(f)) \\subseteq \\mathrm{Dom}(f \\circ p)\\).",
       "title": "lem:rationalMap_precomp_domain_bound",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23719,7 +23720,7 @@
       "statement": "Let \\(X\\) be integral, let \\(S\\), \\(Y\\), \\(Z\\) be separated schemes with structure\n  morphisms \\(s_Y \\colon Y \\to S\\), \\(s_Z \\colon Z \\to S\\) locally of finite type, and let\n  \\(a \\colon X \\dashrightarrow Y\\), \\(b \\colon X \\dashrightarrow Z\\) be rational maps over\n  \\(S\\). Then the pairing is defined on the intersection of the two domains:\n  \\(\\mathrm{Dom}(a) \\cap \\mathrm{Dom}(b) \\subseteq \\mathrm{Dom}(a \\times_S b)\\).",
       "title": "lem:rationalMap_prod_domain_bound",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23746,7 +23747,7 @@
       "statement": "Let \\(G\\) be a group object in a cartesian-monoidal category and \\(a, b \\colon T \\to G\\)\n  two \\(T\\)-points. Then\n  \\(\\bigl\\langle \\langle a, b\\rangle \\circ \\operatorname{diff}_G,\\ b \\bigr\\rangle \\circ m\n  = a\\), i.e.\\ \\((a \\cdot b^{-1}) \\cdot b = a\\).",
       "title": "lem:grpObj_reconstruction",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23773,7 +23774,7 @@
       "statement": "Let \\(G\\) be a group variety over \\(\\bar k\\) and \\(A, B \\colon T \\to G\\) two\n  \\(\\bar k\\)-morphisms sharing a structure map (\\(A \\circ (G \\to \\operatorname{Spec}\\bar k)\n  = B \\circ (G \\to \\operatorname{Spec}\\bar k)\\)). Then the scheme-level reconstruction holds:\n  \\[\n    m^{\\mathrm{left}} \\circ \\bigl\\langle\n      \\operatorname{diff}_G^{\\,\\mathrm{left}} \\circ \\langle A, B\\rangle,\\ B\n    \\bigr\\rangle \\;=\\; A .\n  \\]",
       "title": "lem:scheme_reconstruction",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23800,7 +23801,7 @@
       "statement": "The reconstruction \\(f(x) = \\Phi(x,y) \\cdot f(y)\\) holds as an identity of rational maps\n  on \\(X \\times_{\\bar k} X\\):\n  \\[\n    f \\circ \\mathrm{pr}_1 \\;=\\; m^{\\mathrm{left}} \\circ\n    \\bigl(\\Phi \\times_{\\bar k} (f \\circ \\mathrm{pr}_2)\\bigr).\n  \\]",
       "title": "lem:rationalMap_difference_reconstruct",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23827,7 +23828,7 @@
       "statement": "\\textbf{(Milne Lemma~3.3, Sub-step~2 hard direction, algebraic content.)}\n  \\(f \\circ \\mathrm{pr}_1\\) is defined wherever \\(\\Phi\\) is defined and \\(f \\circ\n  \\mathrm{pr}_2\\) is defined:\n  \\[\n    \\mathrm{Dom}(\\Phi) \\cap \\mathrm{pr}_2^{-1}(\\mathrm{Dom}(f)) \\;\\subseteq\\;\n    \\mathrm{Dom}(f \\circ \\mathrm{pr}_1) .\n  \\]\n  This is the group-theoretic half of Milne's converse: at a point where \\(\\Phi\\) is\n  defined and \\(f\\) is defined on the second coordinate, the reconstruction\n  \\(f(x) = \\Phi(x,u) \\cdot f(u)\\) exhibits \\(f \\circ \\mathrm{pr}_1\\) as regular.",
       "title": "lem:difference_map_domain_reconstruction",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23908,7 +23909,7 @@
       "statement": "\\textbf{(Milne Lemma~3.3, Sub-step~2, topological existence half.)} Let \\(X\\) be\n  smooth and geometrically irreducible over \\(\\bar k\\), let \\(x \\in X\\), let\n  \\(V \\subseteq X \\times_{\\bar k} X\\) be an open set meeting the fibre\n  \\(\\mathrm{pr}_1^{-1}\\{x\\}\\) (at some point \\(p_0\\)), and let \\(D \\subseteq X\\) be a\n  dense open subset. Then there is a point \\(p\\) of the fibre\n  \\(\\mathrm{pr}_1^{-1}\\{x\\}\\) with \\(p \\in V\\) and \\(\\mathrm{pr}_2(p) \\in D\\).\n\n  Consequently, if Milne's difference rational map \\(\\Phi\\)\n  (\\cref{def:rationalMap_difference}) is defined at a point \\(p_0\\) lying over\n  \\(x\\) --- in particular at the diagonal point \\((x, x)\\) --- then there is a\n  point \\(p\\) over \\(x\\), with \\(p \\in \\mathrm{Dom}(\\Phi)\\), at which the\n  precomposition \\(f \\circ \\mathrm{pr}_1\\) is defined.",
       "title": "Slice existence for the fibre of the self-product, and its difference-map corollary",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23962,7 +23963,7 @@
       "statement": "On an irreducible scheme \\(X\\), a function-field element regular at a point\n  \\(P\\) is regular at every generisation \\(z\\) of \\(P\\) (a point \\(z\\) with\n  \\(z \\leadsto P\\), i.e.\\ \\(P\\) a specialisation of \\(z\\)): the germ pullback\n  \\(\\mathcal O_{X,P} \\to K(X)\\) factors through the stalk map\n  \\(\\mathcal O_{X,P} \\to \\mathcal O_{X,z}\\) induced by the specialisation,\n  so its image is contained in the image of \\(\\mathcal O_{X,z} \\to K(X)\\).",
       "title": "Regularity propagates to a generisation",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23989,7 +23990,7 @@
       "statement": "\\textbf{(Milne Lemma~3.3, Sub-step~4, scheme wrapper.)} Let \\(X\\) be an\n  integral, locally Noetherian scheme with regular local rings at every point\n  (e.g.\\ \\(X\\) smooth over a field). Let \\(P \\in X\\) and let \\(s\\) be an\n  element of the maximal ideal of \\(\\mathcal O_{X,P}\\) whose image \\(t\\) in\n  the function field \\(K(X)\\) is nonzero. Then there is a generisation\n  \\(z \\leadsto P\\) of coheight \\(1\\) and an element \\(s'\\) of the maximal\n  ideal of \\(\\mathcal O_{X,z}\\) whose image in \\(K(X)\\) is again \\(t\\).\n\n  Geometrically: the zero locus of a nonzero regular function on \\(X\\) is of\n  pure codimension \\(1\\), passing through \\(P\\).",
       "title": "Zero loci of regular functions are pure codimension one: the diagonal transport",
       "type": "lemma",
-      "unlocks": 23,
+      "unlocks": 22,
       "uses": []
     },
     {
@@ -23998,21 +23999,21 @@
       "dep_count": 23,
       "descendant_count": 22,
       "group": "c1519",
-      "has_sorry": true,
+      "has_sorry": false,
       "hgraph_id": "ca0776c343e5",
       "id": "lem:milne_codim1_indeterminacy",
-      "lean_file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
+      "lean_file": "AlgebraicJacobian/Albanese/Milne33.lean",
       "lean_name": "AlgebraicGeometry.Scheme.RationalMap.indeterminacy_pure_codim_one_into_grpScheme",
-      "lean_source": "theorem indeterminacy_pure_codim_one_into_grpScheme\n    {kbar : Type u} [Field kbar] [IsAlgClosed kbar]\n    {X : Over (Spec (.of kbar))}\n    [Smooth X.hom] [GeometricallyIrreducible X.hom]\n    [IsSeparated X.hom] [LocallyOfFiniteType X.hom]\n    [IsIntegral X.left] [IsReduced X.left]\n    {G : Over (Spec (.of kbar))}\n    [GrpObj G] [Smooth G.hom] [GeometricallyIrreducible G.hom]\n    [IsSeparated G.hom] [LocallyOfFiniteType G.hom]\n    [IsIntegral G.left] [IsReduced G.left]\n    (f : X.left.RationalMap G.left)\n    (_hover : f.compHom G.hom = X.hom.toRationalMap) :\n    indeterminacyLocus f = \u2205 \u2228\n      \u2200 x \u2208 indeterminacyLocus f,\n        \u2203 z \u2208 indeterminacyLocus f,\n          Order.coheight z = 1 \u2227 x \u2208 closure ({z} : Set X.left) := by\n  -- Milne's 4-substep proof body \u2014 see informal/milne-lemma-3.3.md for the\n  -- full transcribed proof, substep DAG, and current status. Each substep is\n  -- project-side buildable on top of Mathlib's Weil-divisor apparatus and the\n  -- group-object API; substep 4b (pole-divisor intersection with the diagonal\n  -- is pure codim-1) is the substantive Mathlib gap.\n  --\n  -- * Substep 1: construct the difference rational map\n  --   `\u03a6 := (id \u00d7 inv) \u2218 (f \u00d7 f) \u2218 m : X \u00d7 X \u21e2 G`. **DONE**\n  --   (`Albanese/DifferenceMap.lean`, `differenceRationalMap`); its domain\n  --   contains `Dom(f) \u00d7_{k\u0304} Dom(f)` (**DONE**, session 0042,\n  --   `le_domain_differenceRationalMap`), which is the easy direction of\n  --   substep 2 (`\u03a6` defined at `(x,x)` if `f` defined at `x`).\n  -- * Substep 2 (hard direction): `(x, x) \u2208 Dom(\u03a6) \u27f9 x \u2208 Dom(f)` via the\n  --   formula `f(x) = \u03a6(x, u) \u00b7 f(u)` for any `u \u2208 Dom(f)` in a chosen open\n  --   neighbourhood \u2014 from the group-law + openness of `Dom(\u03a6)` and density\n  --   of `Dom(f)`. **OPEN.**\n  -- * Substep 3: pullback of the local ring at the identity `e \u2208 G`:\n  --   `\u03a6` defined at `(x, x)` \u27fa `\u03a6^* (\ud835\udcaa_{G,e}) \u2286 \ud835\udcaa_{X\u00d7X, (x,x)}`. Uses the\n  --   `Scheme.RationalMap`-to-function-field machinery (the same gap that\n  --   blocks `thm:weil_divisor_obstruction` at L744 below).\n  -- * Substep 4: on the nonsingular variety `X \u00d7 X`, the pole divisor\n  --   `div(g)_\u221e` of any non-zero rational function `g \u2208 \u03a6^*(\ud835\udcaa_{G,e})` is\n  --   pure codim-1; its intersection with the diagonal is pure codim-1 in\n  --   the diagonal (Hartshorne AG 9.2, Krull's principal-ideal theorem).\n  --   **Substep 4a (pole-divisor purity) is PROVED (run-0006 T6, session\n  --   0019)**: `Albanese/PolePurity.lean` provides\n  --   `Scheme.exists_specializes_coheight_eq_one_of_notMem_stalk_range` \u2014\n  --   on a locally Noetherian integral scheme with regular stalks (e.g.\n  --   `X \u00d7 X` smooth over `k\u0304`, via `isRegularLocalRing_stalk_of_smooth`\n  --   applied to the product), an `h \u2208 K(X\u00d7X)` not regular at a point `Q\u2080`\n  --   fails to be regular at some coheight-1 generization `z \u2933 Q\u2080`. The\n  --   proof is Serre-free/UFD-free (elementary swap-pair argument replaces\n  --   normality; blueprint node `lem:pole_divisor_purity`, axiom-clean).\n  --   **Substep 4b (diagonal intersection)** remains: transport the\n  --   coheight-1 pole point of `X \u00d7 X` through `\u0394` to a coheight-1 point\n  --   of `X` inside `Z(f)` (Krull height bound for the diagonal, a local\n  --   complete intersection of codim `dim X` since `X` is smooth).\n  --\n  -- Iter-200+ tracked: gated on (a) the function-field-pullback bridge for\n  -- `Scheme.RationalMap` (Substeps 1\u20133: difference map, slice argument,\n  -- `\u03a6^*` of `\ud835\udcaa_{G,e}`; also blocks `thm:weil_divisor_obstruction`),\n  -- (b) Substep 4b, the codim-1 diagonal-intersection bound (Hartshorne\n  -- AG 9.2 scheme-level form). Substep 4a is closed by\n  -- `Albanese/PolePurity.lean` (imported above).\n  sorry\n\n/-! ## \u00a76. Definedness at a prime-divisor generic point\n\nA truthful, lightweight reformulation of definedness at a prime-divisor\ngeneric point: `f` is defined at `W.point` iff `f` admits a `PartialMap`\nrepresentative whose domain contains `W.point`. This is a definitional\nre-shuffle of `Mathlib.AlgebraicGeometry.Scheme.RationalMap.mem_domain`\nswapping the order of the two conjuncts under the existential for downstream\nergonomics (so the `toRationalMap = f` conjunct lands first, the way later\nwitnesses are constructed in this project).\n\n### Status note (iter-179 Lane D, Path D2)\n\nThe blueprint pin `thm:weil_divisor_obstruction` (Hartshorne II.6\npp. 130\u2013131) calls for the genuinely substantive statement\n\n> `f` is defined at `W.point` iff every regular function on every affine\n> open `V \u2286 Y` around `f(W.point)` pulls back to an element of\n> `O_{X,W.point}` \u2282 `K(X)` of `ord_W`-value `\u2265 0`,\n\nwhich requires the pullback machinery\n`Scheme.RationalMap \u2192 K(Y) \u2192 K(X)` and the project's existing\n`Scheme.RationalMap.order : X.functionField \u2192 \u2124` valuation from\n`RiemannRoch/WeilDivisor.lean`. The Lean-level construction of the\n`RationalMap`-to-function-field ring map is **not** shipped by Mathlib\nat commit `b80f227`, and building it inside this file would constitute\na substantive new sub-build (cf. `analogies/relative-spec-encoding.md`\non the pullback of a sheaf-of-algebras along a morphism).\n\niter-178's `extend_iff_order_nonneg` claimed the substantive statement\nin its docstring but only proved this reshuffle; the lemma's name and\ndocumentation are corrected here (auditor 178B's Path D2 honest fallback)\nto match the proven content. The `[Ring.KrullDimLE 1]` and\n`[IsLocallyNoetherian X.left]` typeclass binders that the substantive\nstatement would have required are dropped along with the renaming, since\nthe reshuffle does not use them. The substantive statement is deferred to\na future lemma (working title: `extend_iff_pullback_order_nonneg`) once\nthe pullback machinery lands.\n\nBlueprint reference (in its current weakened form): a definitional unfold\nof `Mathlib.AlgebraicGeometry.Scheme.RationalMap.mem_domain`. -/",
-      "lean_status": "sorry",
+      "lean_source": "theorem indeterminacy_pure_codim_one_into_grpScheme\n    (f : X.left.RationalMap G.left) (hover : f.compHom G.hom = X.hom.toRationalMap)\n    [GeometricallyIrreducible X.hom] [IsSeparated X.hom]\n    [IsIntegral X.left] [IsReduced X.left]\n    [GeometricallyIrreducible G.hom] [IsSeparated G.hom]\n    [IsIntegral G.left] [IsReduced G.left] :\n    indeterminacyLocus f = \u2205 \u2228\n      \u2200 x \u2208 indeterminacyLocus f,\n        \u2203 z \u2208 indeterminacyLocus f,\n          Order.coheight z = 1 \u2227 x \u2208 closure ({z} : Set X.left) := by\n  -- `IsIntegral` on the source gives irreducibility of its space.\n  haveI : IrreducibleSpace \u21a5X.left := inferInstance\n  -- Scheme-level separatedness of the target: `G.hom` is separated, and\n  -- `Spec k\u0304` is affine, hence separated over the terminal scheme.\n  haveI : G.left.IsSeparated := by\n    rw [Scheme.isSeparated_iff]\n    have heq : terminal.from G.left = G.hom \u226b terminal.from _ :=\n      Subsingleton.elim _ _\n    rw [heq]; infer_instance\n  exact indeterminacy_pure_codim_one_into_grpScheme_core f hover",
+      "lean_status": "lean_ok",
       "level": "medium",
       "mathlib_ok": false,
       "order": 1707,
-      "proved": false,
+      "proved": true,
       "rdep_count": 1,
       "review_count": 0,
       "sources": [],
-      "state": "ready",
+      "state": "closed",
       "statement": "\\textit{Source: Milne, \\emph{Abelian Varieties}, Lemma~3.3, \\S I.3, p.~17.}\n  Let \\(X\\) be a nonsingular variety over \\(\\bar k\\), let \\(G\\) be a group variety over\n  \\(\\bar k\\) (a smooth group scheme of finite type), and let \\(f \\colon X \\dashrightarrow\n  G\\) be a rational map. Then either \\(f\\) is defined on all of \\(X\\), or the indeterminacy\n  locus \\(Z(f) \\subseteq X\\) is a closed subset of pure codimension \\(1\\) (i.e.\\ a finite\n  union of prime divisors).\n\n  Equivalently: it is \\emph{never} the case that \\(f\\) has a non-empty indeterminacy\n  locus all of whose irreducible components have codimension \\(\\geq 2\\).",
       "title": "Milne Lemma~3.3: pure-codim-\\(1\\) structure of the indeterminacy locus into a group variety",
       "type": "lemma",
@@ -26052,13 +26053,13 @@
       "dep_count": 4,
       "descendant_count": 58,
       "group": "c1368",
-      "has_sorry": true,
+      "has_sorry": false,
       "hgraph_id": "03ccc83e89b1",
       "id": "def:inst_has_pic_scheme",
-      "lean_file": "AlgebraicJacobian/Picard/FGAPicRepresentability.lean",
-      "lean_name": "AlgebraicGeometry.Scheme.instHasPicScheme",
-      "lean_source": "noncomputable instance instHasPicScheme {k : Type u} [Field k]\n    (C : Over (Spec (.of k)))\n    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]\n    [GeometricallyIntegral C.hom] [HasRationalPoint C] : HasPicScheme C :=\n  \u27e8sorry\u27e9\n\nnamespace PicScheme\n\n/-! ## \u00a72. The Abel map \u2014 line-bundle / Quot correspondence\n\nThe bridge from line bundles on `C \u00d7_k T` to the Quot scheme is the **Abel\nmap**: a relative effective divisor `D \u2286 C \u00d7_k T` over `T` determines a\n`T`-point of `Div_{C/k}`, and the dual ideal sheaf\n`O_{C \u00d7_k T}(D) := I_D\u207b\u00b9` represents a class in `Pic^\u266f_{C/k}(T)`.\n\nBlueprint reference: `lem:line_bundle_quot_correspondence` (Kleiman \u00a73\nDef. `dfn:Abel` + Thm. `th:repDiv`). -/\n\n/-! ### The Abel map\n\nThe class `HasAbelMap` carries the map itself (a data field `abel`), so that\n`abelMap` has the defining property `abelMap_app_mk` below; the instance\nsupplies the explicit natural transformation `abelMapWitness C`.\n\nConstruction of `abelMapWitness C : Div_{C/k} \u27f6 Pic^\u266f_{C/k}`, `[D] \u21a6 [O(D)]`:\na relative effective divisor family `\u27e8F, q\u27e9` on `C \u00d7_k T` has invertible ideal\n`I_D = ker q`; the Abel map sends its class to\n`[O(D)] = [I_D\u207b\u00b9] = -[I_D]`, the additive inverse (in the group-valued target\n`Pic^\u266f_{C/k}(T)`) of the class of the ideal sheaf.  It is assembled as the\ncomposite `abelKernelNatTrans C \u226b picNeg C`, where `abelKernelNatTrans` is the\nsubstantive `[D] \u21a6 [I_D]` transformation and `picNeg` is the (natural)\nnegation on the group-valued functor.\n\nNaturality of `abelKernelNatTrans` is the mathematical heart: for a test map\n`g : T' \u27f6 T` the base-change square is cartesian (`quotBaseSquare`), and the\n**kernel\u2013pullback comparison** `g_C^*(ker q) \u27f6 ker(g_C^* q)` is an isomorphism\nunder the divisor conditions (`Modules.isIso_pullbackKernelComparison`, whose\nside hypotheses \u2014 epi `q`, quasi-coherent source, finitely-presented `F`,\n`T`-flat `F`, invertible kernel \u2014 are exactly the fields of `DivFamily`), so\n`ker` commutes with base change and the class `[ker q]` is natural.  Negation\nis natural because `Pic^\u266f`'s pullback maps are group homomorphisms.\n\nThe `dual` route (`Modules.dual (ker q)` as an explicit inverse) is available\nfor the *object-level* invertibility (`dual_isLocallyTrivial`) but is not used\nhere: the group-inverse `-[ker q]` is the canonical `[I_D\u207b\u00b9]` and makes\nnaturality rest only on the kernel\u2013pullback comparison, avoiding the\nnot-yet-formalised sheaf-level dual-pullback commutation.\n\nBlueprint reference: `lem:line_bundle_quot_correspondence` (Kleiman \u00a73\nDef. `dfn:Abel`); this instance is the **natural-transformation half** \u2014 `Div`\nrepresentability (Kleiman \u00a73 Thm. `th:repDiv`) is NOT claimed here. -/",
-      "lean_status": "sorry",
+      "lean_file": null,
+      "lean_name": null,
+      "lean_source": null,
+      "lean_status": "empty",
       "level": "coarse",
       "mathlib_ok": false,
       "order": 1564,
@@ -26192,7 +26193,7 @@
       "id": "def:inst_pic_scheme_lft",
       "lean_file": "AlgebraicJacobian/Picard/FGAPicRepresentability.lean",
       "lean_name": "AlgebraicGeometry.Scheme.PicScheme.instPicSchemeLocallyOfFiniteType",
-      "lean_source": "instance instPicSchemeLocallyOfFiniteType {k : Type u} [Field k]\n    (C : Over (Spec (.of k)))\n    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]\n    [GeometricallyIntegral C.hom] [HasPicScheme C] :\n    PicSchemeLocallyOfFiniteType C :=\n  \u27e8(HasPicScheme.has_pic_scheme (C := C)).choose_spec.2.1\u27e9\n\n/-- Projection of `PicSchemeLocallyOfFiniteType` to the Mathlib morphism\nproperty, so that instance search finds `LocallyOfFiniteType (PicScheme\nC).hom` whenever the carrier class is in scope (as the identity-component\nsubstrate requires). -/\ninstance {k : Type u} [Field k] (C : Over (Spec (.of k)))\n    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]\n    [GeometricallyIntegral C.hom] [HasPicScheme C]\n    [PicSchemeLocallyOfFiniteType C] :\n    LocallyOfFiniteType (PicScheme C).hom :=\n  PicSchemeLocallyOfFiniteType.locallyOfFiniteType",
+      "lean_source": "instance instPicSchemeLocallyOfFiniteType {k : Type u} [Field k]\n    (C : Over (Spec (.of k)))\n    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]\n    [GeometricallyIntegral C.hom] [HasPicScheme C] :\n    PicSchemeLocallyOfFiniteType C :=\n  \u27e8(HasPicScheme.has_pic_scheme (C := C)).choose_spec.2.1\u27e9",
       "lean_status": "lean_ok",
       "level": "fine",
       "mathlib_ok": false,
@@ -55041,21 +55042,21 @@
       "dep_count": 4,
       "descendant_count": 33,
       "group": "c1368",
-      "has_sorry": true,
+      "has_sorry": false,
       "hgraph_id": "f8b4d6258596",
       "id": "thm:pic0_smooth",
       "lean_file": "AlgebraicJacobian/Picard/Pic0AbelianVariety.lean",
       "lean_name": "AlgebraicGeometry.Scheme.Pic0.smooth",
-      "lean_source": "theorem smooth {k : Type u} [Field k]\n    (C : Over (Spec (.of k)))\n    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]\n    [GeometricallyIntegral C.hom] [HasPicScheme C]\n    [PicScheme.PicSchemeLocallyOfFiniteType C] :\n    Smooth (Pic0Scheme C).hom :=\n  sorry",
-      "lean_status": "sorry",
+      "lean_source": "theorem smooth {k : Type u} [Field k]\n    (C : Over (Spec (.of k)))\n    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]\n    [GeometricallyIntegral C.hom] [HasPicScheme C]\n    [PicScheme.PicSchemeLocallyOfFiniteType C] :\n    Smooth (Pic0Scheme C).hom :=\n  smooth_of_geometricallyReduced C (geometricallyReduced C)",
+      "lean_status": "lean_ok",
       "level": "medium",
       "mathlib_ok": false,
       "order": 1639,
-      "proved": false,
+      "proved": true,
       "rdep_count": 4,
       "review_count": 0,
       "sources": [],
-      "state": "blocked",
+      "state": "formalized_open",
       "statement": "\\textit{Source: [Kleiman], ``The Picard scheme'', \\S 5,\n  Cor.~5.13 + Cor.~5.14; cf.\\ [Milne], ``Abelian Varieties''\n  (course notes, 2008), \\S III.1, Rmk.~1.4(e), p.~86 (dimension of \\(J\\)\n  equals the genus).}\n  Let \\(C/k\\) be a smooth proper geometrically integral curve of genus\n  \\(g\\) over a field \\(k\\). The identity component \\(\\Pic^0_{C/k}\\)\n  (\\cref{def:pic_zero_subscheme}) is smooth over \\(k\\) of dimension\n  \\(g\\): the structural morphism\n  \\((\\Pic^0_{C/k}) \\to \\Spec k\\) is smooth, and every closed point of\n  \\(\\Pic^0_{C/k}\\) lies in a smooth open neighbourhood.",
       "title": "Smoothness of \\(\\Pic^0_{C/k}\\)",
       "type": "theorem",
@@ -55068,21 +55069,21 @@
       "dep_count": 4,
       "descendant_count": 33,
       "group": "c1368",
-      "has_sorry": true,
+      "has_sorry": false,
       "hgraph_id": "12c4a179a67e",
       "id": "thm:pic0_proper",
       "lean_file": "AlgebraicJacobian/Picard/Pic0AbelianVariety.lean",
       "lean_name": "AlgebraicGeometry.Scheme.Pic0.proper",
-      "lean_source": "theorem proper {k : Type u} [Field k]\n    (C : Over (Spec (.of k)))\n    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]\n    [GeometricallyIntegral C.hom] [HasPicScheme C]\n    [PicScheme.PicSchemeLocallyOfFiniteType C] :\n    IsProper (Pic0Scheme C).hom :=\n  sorry",
-      "lean_status": "sorry",
+      "lean_source": "theorem proper {k : Type u} [Field k]\n    (C : Over (Spec (.of k)))\n    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]\n    [GeometricallyIntegral C.hom] [HasPicScheme C]\n    [PicScheme.PicSchemeLocallyOfFiniteType C] :\n    IsProper (Pic0Scheme C).hom :=\n  proper_of_universallyClosed C (universallyClosed C)",
+      "lean_status": "lean_ok",
       "level": "medium",
       "mathlib_ok": false,
       "order": 1640,
-      "proved": false,
+      "proved": true,
       "rdep_count": 2,
       "review_count": 0,
       "sources": [],
-      "state": "blocked",
+      "state": "formalized_open",
       "statement": "\\textit{Source: [Kleiman], ``The Picard scheme'', \\S 5,\n  Thm.~5.4; cf.\\ [Milne], ``Abelian Varieties'' (course notes,\n  2008), \\S I.6 (abelian varieties are projective, p.~27).}\n  Let \\(C/k\\) be a smooth proper geometrically integral curve over a\n  field \\(k\\). The identity component \\(\\Pic^0_{C/k}\\)\n  (\\cref{def:pic_zero_subscheme}) is projective over \\(k\\), in\n  particular proper: the structural morphism\n  \\((\\Pic^0_{C/k}) \\to \\Spec k\\) is a projective morphism, hence\n  satisfies the universal closedness and separatedness conditions of\n  properness.",
       "title": "Properness of \\(\\Pic^0_{C/k}\\)",
       "type": "theorem",
@@ -59235,7 +59236,7 @@
       "statement": "A prime divisor of \\(X\\) is a codimension-one integral closed subscheme.\n  Equivalently, it is determined by a point \\(x\\in X\\) whose closure has\n  codimension one.  We encode the latter condition by\n  \\[\n    \\operatorname{coheight}(x)=1.\n  \\]\n  The reduced closed subscheme on \\(\\overline{\\{x\\}}\\) is integral, so this\n  point and its codimension witness determine the prime divisor.",
       "title": "Prime divisor",
       "type": "definition",
-      "unlocks": 73,
+      "unlocks": 72,
       "uses": []
     },
     {
@@ -59264,7 +59265,7 @@
       "statement": "The group of Weil divisors of \\(X\\) is the free abelian group on its prime\n  divisors:\n  \\[\n    \\operatorname{Div}(X)\n      =\\bigoplus_{Y\\in X^{(1)}}\\mathbb Z\\cdot Y.\n  \\]\n  Thus a divisor is a finite formal sum \\(D=\\sum_Y n_Y Y\\).  It is\n  \\emph{effective} when every \\(n_Y\\geq 0\\).",
       "title": "Weil divisor group",
       "type": "definition",
-      "unlocks": 65,
+      "unlocks": 64,
       "uses": []
     },
     {
@@ -59781,7 +59782,7 @@
       "statement": "Let \\(X\\) be integral and locally Noetherian, and let \\(Y\\in X^{(1)}\\)\n  have local ring of dimension at most one.  The \\emph{order of vanishing}\n  of \\(f\\in K(X)\\) along \\(Y\\) is the integer\n  \\[\n    \\operatorname{ord}_Y(f)=v_Y(f).\n  \\]\n  We use the harmless total convention \\(\\operatorname{ord}_Y(0)=0\\).",
       "title": "Order along a prime divisor",
       "type": "definition",
-      "unlocks": 63,
+      "unlocks": 62,
       "uses": []
     },
     {
@@ -60352,7 +60353,7 @@
       "statement": "Let \\(X\\) be a Noetherian integral scheme regular in codimension one.\n  For every \\(f\\in K(X)\\), the set\n  \\[\n    \\{Y\\in X^{(1)}\\mid\\operatorname{ord}_Y(f)\\neq0\\}\n  \\]\n  is finite.",
       "title": "Finite support of the order function",
       "type": "lemma",
-      "unlocks": 29,
+      "unlocks": 28,
       "uses": []
     },
     {
@@ -60408,7 +60409,7 @@
       "statement": "For a nonzero \\(f\\in K(X)\\), its principal divisor is\n  \\[\n    \\operatorname{div}(f)\n      =\\sum_{Y\\in X^{(1)}}\\operatorname{ord}_Y(f)\\,Y.\n  \\]\n  The sum is finite by \\cref{lem:rationalMap_order_finite_support}.",
       "title": "Principal divisor",
       "type": "definition",
-      "unlocks": 28,
+      "unlocks": 27,
       "uses": []
     },
     {
@@ -60592,7 +60593,7 @@
       "id": "thm:principal_deg_zero",
       "lean_file": "AlgebraicJacobian/RiemannRoch/WeilDivisor.lean",
       "lean_name": "AlgebraicGeometry.Scheme.WeilDivisor.principal_degree_zero",
-      "lean_source": "theorem principal_degree_zero {kbar : Type u} [Field kbar] [IsAlgClosed kbar]\n    (C : Over (Spec (.of kbar))) [IsProper C.hom]\n    [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]\n    [IsIntegral C.left] [IsNoetherian C.left]\n    [Scheme.IsRegularInCodimensionOne C.left]\n    (f : C.left.functionField) (hf : f \u2260 0) :\n    degree (principal f hf) = 0 := by\n  -- Hartshorne II.6.10. Case-split on whether every\n  -- prime-divisor order of `f` vanishes. On a complete nonsingular curve,\n  -- this case split exactly recovers Hartshorne's constant-vs-non-constant\n  -- split: `(\u2200 Y, ord_Y f = 0)` \u27fa `f \u2208 k\u0304 \\ {0}` (a nowhere-vanishing\n  -- rational function on a complete curve is constant; that direction is\n  -- Hartshorne II.6.10's \"if `f \u2208 k\u0304` then `(f) = 0`\").\n  by_cases hconst : \u2200 Y : C.left.PrimeDivisor, Scheme.RationalMap.order Y f = 0\n  \u00b7 -- Constant branch: every order vanishes \u27f9 `principal f hf = 0` \u27f9\n    -- `degree (principal f hf) = degree 0 = 0`.\n    have hprincipal_zero : principal f hf = 0 := by\n      apply Finsupp.ext\n      intro Y\n      change Scheme.RationalMap.order Y f = 0\n      exact hconst Y\n    rw [hprincipal_zero]\n    unfold degree\n    exact Finsupp.sum_zero_index\n  \u00b7 -- Non-constant branch (Hartshorne II.6.10 `f \u2209 k\u0304`): the inclusion\n    -- `k\u0304(f) \u2282 K(C)` defines a finite morphism `\u03c6 : C \u2192 \u2119\u00b9_{k\u0304}` via the\n    -- function-field-determines-curve correspondence (Hartshorne I.6.12),\n    -- and `principal f hf = \u03c6^*([0] - [\u221e])`. Pullback along a finite\n    -- morphism of curves multiplies degrees by `deg(\u03c6)` (Hartshorne\n    -- II.6.9), so `deg(principal f hf) = deg(\u03c6) \u00b7 deg([0] - [\u221e]) =\n    -- deg(\u03c6) \u00b7 0 = 0`.\n    -- This branch uses the morphism `\u03c6 : C \u2192 \u2119\u00b9` defined by `f` and\n    -- multiplicativity of degree under finite pullback (Hartshorne II.6.9).\n    sorry\n\n/-! ## \u00a76. Positive part of a Weil divisor\n\nThe carrier\n`X.WeilDivisor = X.PrimeDivisor \u2192\u2080 \u2124` is a finitely supported integer-valued\nfunction on prime divisors; the *positive part* `(D)_0` is obtained by\nreplacing each coefficient `n_Y` with `max(n_Y, 0)`. Equivalently this is\nthe lattice join `D \u2294 0` in the pointwise lattice structure (the\n`semilatticeSup` instance on `Finsupp` is noncomputable). The complementary\n*negative part* `(D)_\u221e := (-D)_0` then gives the canonical decomposition\n`D = (D)_0 - (D)_\u221e` into a difference of effective divisors.\n\nBlueprint reference: `def:WeilDivisor_positivePart` in\n`RiemannRoch_WeilDivisor.tex`.\n-/",
+      "lean_source": "theorem principal_degree_zero {kbar : Type u} [Field kbar] [IsAlgClosed kbar]\n    (C : Over (Spec (.of kbar))) [IsProper C.hom]\n    [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]\n    [IsIntegral C.left] [IsNoetherian C.left]\n    [Scheme.IsRegularInCodimensionOne C.left]\n    (f : C.left.functionField) (hf : f \u2260 0) :\n    degree (principal f hf) = 0 := by\n  -- Hartshorne II.6.10. Case-split on whether every\n  -- prime-divisor order of `f` vanishes. On a complete nonsingular curve,\n  -- this case split exactly recovers Hartshorne's constant-vs-non-constant\n  -- split: `(\u2200 Y, ord_Y f = 0)` \u27fa `f \u2208 k\u0304 \\ {0}` (a nowhere-vanishing\n  -- rational function on a complete curve is constant; that direction is\n  -- Hartshorne II.6.10's \"if `f \u2208 k\u0304` then `(f) = 0`\").\n  by_cases hconst : \u2200 Y : C.left.PrimeDivisor, Scheme.RationalMap.order Y f = 0\n  \u00b7 -- Constant branch: every order vanishes \u27f9 `principal f hf = 0` \u27f9\n    -- `degree (principal f hf) = degree 0 = 0`.\n    have hprincipal_zero : principal f hf = 0 := by\n      apply Finsupp.ext\n      intro Y\n      change Scheme.RationalMap.order Y f = 0\n      exact hconst Y\n    rw [hprincipal_zero]\n    unfold degree\n    exact Finsupp.sum_zero_index\n  \u00b7 -- Non-constant branch (Hartshorne II.6.10 `f \u2209 k\u0304`): the inclusion\n    -- `k\u0304(f) \u2282 K(C)` defines a finite morphism `\u03c6 : C \u2192 \u2119\u00b9_{k\u0304}` via the\n    -- function-field-determines-curve correspondence (Hartshorne I.6.12),\n    -- and `principal f hf = \u03c6^*([0] - [\u221e])`. Pullback along a finite\n    -- morphism of curves multiplies degrees by `deg(\u03c6)` (Hartshorne\n    -- II.6.9), so `deg(principal f hf) = deg(\u03c6) \u00b7 deg([0] - [\u221e]) =\n    -- deg(\u03c6) \u00b7 0 = 0`.\n    -- This branch uses the morphism `\u03c6 : C \u2192 \u2119\u00b9` defined by `f` and\n    -- multiplicativity of degree under finite pullback (Hartshorne II.6.9).\n    --\n    -- WHY THIS SORRY IS STILL HERE, and why the obvious substitution does not\n    -- work (audited run 0067; the roadmap node AJC.rr.principal is optimistic\n    -- on the first point and silent on the second):\n    --\n    -- (1) IMPORT DIRECTION. The adelic route's endpoint\n    --     `Adelic.degree_principal_eq_zero_of_isAlgClosed_curve`\n    --     (`Adelic/ResidueField.lean:521`) proves exactly this conclusion, but\n    --     it is not in scope here: this module imports only `Genus` and\n    --     `Albanese.CoheightBridge`, while `Adelic/ResidueField.lean` imports\n    --     `Adelic.LedgerClosure`, `GateInstances`, `FiniteMapToP1` and\n    --     `CurveBaseChange`, all of which sit strictly downstream of this file.\n    --     Closing the branch that way is an import inversion, not a proof step.\n    --\n    -- (2) THE ADELIC INPUT IS NOT ONE LOCAL LEMMA. That endpoint carries an\n    --     explicit `hledger` hypothesis, and the bump route to it is *refuted*\n    --     in-tree: `Adelic.ChiUnconditional.not_bump_of_notMem_left` proves\n    --     `hbump` outright false \u2014 unconditionally, with no exactness or\n    --     approximation datum \u2014 whenever a prime divisor lies off a chart of a\n    --     genuine cover `U\u2080 \u2294 U\u2081 = \u22a4` whose three chart section spaces are all\n    --     finite-dimensional, and `ledger_refuted_of_notMem_left` does the same\n    --     for `hledger`. `Adelic/SectionBounds.lean:327` already withdraws the\n    --     earlier reading that the bump makes the ledger satisfiable.\n    --\n    --     That refutation is not fatal, though, and the distinction matters for\n    --     whoever picks this up: its load-bearing binder is\n    --     `[\u2200 D, Module.Finite k (sectionSub k U\u1d62 D)]` at a NON-TOTAL `U\u1d62`,\n    --     which `ChiUnconditional.ell_le_finrank_chart_along_tower` documents as\n    --     \"a substantive geometric restriction\" that \"has already excluded the\n    --     curves Riemann\u2013Roch is about\" \u2014 affine charts of a curve do not have\n    --     finite-dimensional section spaces over `k`. So what is ruled out is a\n    --     class of covers, not the ledger. The open work is to exhibit a cover\n    --     on which the ledger can hold, which is a question about the cover\n    --     rather than a one-point local statement.\n    sorry\n\n/-! ## \u00a76. Positive part of a Weil divisor\n\nThe carrier\n`X.WeilDivisor = X.PrimeDivisor \u2192\u2080 \u2124` is a finitely supported integer-valued\nfunction on prime divisors; the *positive part* `(D)_0` is obtained by\nreplacing each coefficient `n_Y` with `max(n_Y, 0)`. Equivalently this is\nthe lattice join `D \u2294 0` in the pointwise lattice structure (the\n`semilatticeSup` instance on `Finsupp` is noncomputable). The complementary\n*negative part* `(D)_\u221e := (-D)_0` then gives the canonical decomposition\n`D = (D)_0 - (D)_\u221e` into a difference of effective divisors.\n\nBlueprint reference: `def:WeilDivisor_positivePart` in\n`RiemannRoch_WeilDivisor.tex`.\n-/",
       "lean_status": "sorry",
       "level": "medium",
       "mathlib_ok": false,
@@ -70617,7 +70618,7 @@
       "id": "lem:twisted_cech_nerve_iso",
       "lean_file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
       "lean_name": "AlgebraicGeometry.twisted_cech_nerve_iso",
-      "lean_source": "noncomputable def twisted_cech_nerve_iso\n    (f : X \u27f6 S) (g : S' \u27f6 S) (f' : X' \u27f6 S') (g' : X' \u27f6 X)\n    (h : IsPullback g' f' f g) (\ud835\udcb0 : X.OpenCover) [Finite \ud835\udcb0.I\u2080]\n    [IsSeparated f] [IsAffine S] [\u2200 i, IsAffine (\ud835\udcb0.X i)]\n    [Finite ((Scheme.Pullback.openCoverOfLeft \ud835\udcb0 f g).pushforwardIso\n      h.isoPullback.symm.hom).I\u2080]\n    [\u2200 i, IsAffine (((Scheme.Pullback.openCoverOfLeft \ud835\udcb0 f g).pushforwardIso\n      h.isoPullback.symm.hom).X i)]\n    (F : X.Modules) (hF : F.IsQuasicoherent) :\n    ((CosimplicialObject.whiskering X.Modules X'.Modules).obj\n        (Scheme.Modules.pullback g')).obj\n      (CosimplicialObject.Augmented.drop.obj (CechNerve \ud835\udcb0 F))\n      \u2245 CosimplicialObject.Augmented.drop.obj\n          (CechNerve ((Scheme.Pullback.openCoverOfLeft \ud835\udcb0 f g).pushforwardIso\n            h.isoPullback.symm.hom) ((Scheme.Modules.pullback g').obj F)) :=\n  -- LHS COPRODUCT/PRODUCT LAYER \u2014 NOW CLOSED (compiling).  The degree-`n` `app` obligation is the\n  -- X-level Beck\u2013Chevalley iso\n  --     `(pullback g').obj (pushPullObj F Y\u2099) \u2245 pushPullObj (g'^* F) Y'\u2099`\n  -- (`g'^*(p_* p^* F) \u2245 p'_* p'^*(g'^* F)`), where `Y\u2099 = (coverCechNerveOver \ud835\udcb0).obj (op n)` and\n  -- `Y'\u2099 = (coverCechNerveOver \ud835\udcb0').obj (op n)` for the base-changed cover `\ud835\udcb0'`.  The LHS\n  -- decomposes as a product over the index tuples `\u03c3` via the sorry-free `pushPull_sigma_iso` and\n  -- preservation of finite products by `pullback g'` (`PreservesProduct.iso`):\n  --     LHS \u2245 \u220f_\u03c3 (pullback g').obj (pushPullObj F (Over.mk j_\u03c3)).\n  --\n  -- RESIDUAL (the genuine open content + the RHS-matching obstruction): the remaining goal is\n  --     `\u220f_\u03c3 (pullback g').obj (pushPullObj F (Over.mk j_\u03c3)) \u2245 pushPullObj (g'^* F) Y'\u2099`.\n  -- The per-\u03c3 X-level Beck\u2013Chevalley iso `(pullback g').obj (pushPullObj F (Over.mk j_\u03c3)) \u2245\n  -- pushPullObj (g'^* F) (Over.mk j'_\u03c3)` (base change of push\u2013pull along the open immersion j_\u03c3,\n  -- for the restricted cartesian square over `U_\u03c3`) is the per-\u03c3 content; reassembling\n  -- the \u03c3-product on the RHS would use `(pushPull_sigma_iso \ud835\udcb0' (g'^* F) n.len).symm`, but\n  -- that needs\n  -- `[Finite \ud835\udcb0'.I\u2080]` and `[\u2200 i, IsAffine (\ud835\udcb0'.X i)]` for the base-changed cover `\ud835\udcb0'`, which are NOT\n  -- available in this signature (the X-level leaf carries no `[IsAffine S']`; the\n  -- base-changed cover members' affineness is the geometric cover-base-change route\n  -- `coverInterOpen \ud835\udcb0' \u03c3 = g'\u207b\u00b9(U_\u03c3)`).\n  -- That cover-base-change identification is the residual Beck\u2013Chevalley heart of this leaf.\n  -- STEP-1 sig extension landed `[Finite \ud835\udcb0'.I\u2080]`/`[\u2200 i, IsAffine (\ud835\udcb0'.X i)]` for the base-changed\n  -- cover `\ud835\udcb0'`, so the \u03c3-product on the RHS *can now* be reassembled by\n  -- `(pushPull_sigma_iso \ud835\udcb0' (g'^* F) n.len).symm`.  The residual per-\u03c3 content is isolated into the\n  -- named leaf `twisted_cech_nerve_per_sigma` (the open-immersion Beck\u2013Chevalley and\n  -- cover-base-change identification). Only the cosimplicial `naturality` remains beyond\n  -- that leaf.\n  NatIso.ofComponents\n    (fun n =>\n      (Scheme.Modules.pullback g').mapIso (pushPull_sigma_iso \ud835\udcb0 F n.len) \u226a\u226b\n        Limits.PreservesProduct.iso (Scheme.Modules.pullback g') _ \u226a\u226b\n        Limits.Pi.mapIso (fun \u03c3 => twisted_cech_nerve_per_sigma f g f' g' h \ud835\udcb0 F hF \u03c3) \u226a\u226b\n        (pushPull_sigma_iso ((Scheme.Pullback.openCoverOfLeft \ud835\udcb0 f g).pushforwardIso\n          h.isoPullback.symm.hom) ((Scheme.Modules.pullback g').obj F) n.len).symm)\n    (fun {n m} \u03c6 => sorry)",
+      "lean_source": "noncomputable def twisted_cech_nerve_iso\n    (f : X \u27f6 S) (g : S' \u27f6 S) (f' : X' \u27f6 S') (g' : X' \u27f6 X)\n    (h : IsPullback g' f' f g) (\ud835\udcb0 : X.OpenCover) [Finite \ud835\udcb0.I\u2080]\n    [IsSeparated f] [IsAffine S] [\u2200 i, IsAffine (\ud835\udcb0.X i)]\n    [Finite ((Scheme.Pullback.openCoverOfLeft \ud835\udcb0 f g).pushforwardIso\n      h.isoPullback.symm.hom).I\u2080]\n    [\u2200 i, IsAffine (((Scheme.Pullback.openCoverOfLeft \ud835\udcb0 f g).pushforwardIso\n      h.isoPullback.symm.hom).X i)]\n    (F : X.Modules) (hF : F.IsQuasicoherent) :\n    ((CosimplicialObject.whiskering X.Modules X'.Modules).obj\n        (Scheme.Modules.pullback g')).obj\n      (CosimplicialObject.Augmented.drop.obj (CechNerve \ud835\udcb0 F))\n      \u2245 CosimplicialObject.Augmented.drop.obj\n          (CechNerve ((Scheme.Pullback.openCoverOfLeft \ud835\udcb0 f g).pushforwardIso\n            h.isoPullback.symm.hom) ((Scheme.Modules.pullback g').obj F)) :=\n  -- LHS COPRODUCT/PRODUCT LAYER \u2014 NOW CLOSED (compiling).  The degree-`n` `app` obligation is the\n  -- X-level Beck\u2013Chevalley iso\n  --     `(pullback g').obj (pushPullObj F Y\u2099) \u2245 pushPullObj (g'^* F) Y'\u2099`\n  -- (`g'^*(p_* p^* F) \u2245 p'_* p'^*(g'^* F)`), where `Y\u2099 = (coverCechNerveOver \ud835\udcb0).obj (op n)` and\n  -- `Y'\u2099 = (coverCechNerveOver \ud835\udcb0').obj (op n)` for the base-changed cover `\ud835\udcb0'`.  The LHS\n  -- decomposes as a product over the index tuples `\u03c3` via the sorry-free `pushPull_sigma_iso` and\n  -- preservation of finite products by `pullback g'` (`PreservesProduct.iso`):\n  --     LHS \u2245 \u220f_\u03c3 (pullback g').obj (pushPullObj F (Over.mk j_\u03c3)).\n  --\n  -- RESIDUAL (the genuine open content + the RHS-matching obstruction): the remaining goal is\n  --     `\u220f_\u03c3 (pullback g').obj (pushPullObj F (Over.mk j_\u03c3)) \u2245 pushPullObj (g'^* F) Y'\u2099`.\n  -- The per-\u03c3 X-level Beck\u2013Chevalley iso `(pullback g').obj (pushPullObj F (Over.mk j_\u03c3)) \u2245\n  -- pushPullObj (g'^* F) (Over.mk j'_\u03c3)` (base change of push\u2013pull along the open immersion j_\u03c3,\n  -- for the restricted cartesian square over `U_\u03c3`) is the per-\u03c3 content; reassembling\n  -- the \u03c3-product on the RHS would use `(pushPull_sigma_iso \ud835\udcb0' (g'^* F) n.len).symm`, but\n  -- that needs\n  -- `[Finite \ud835\udcb0'.I\u2080]` and `[\u2200 i, IsAffine (\ud835\udcb0'.X i)]` for the base-changed cover `\ud835\udcb0'`, which are NOT\n  -- available in this signature (the X-level leaf carries no `[IsAffine S']`; the\n  -- base-changed cover members' affineness is the geometric cover-base-change route\n  -- `coverInterOpen \ud835\udcb0' \u03c3 = g'\u207b\u00b9(U_\u03c3)`).\n  -- That cover-base-change identification is the residual Beck\u2013Chevalley heart of this leaf.\n  -- STEP-1 sig extension landed `[Finite \ud835\udcb0'.I\u2080]`/`[\u2200 i, IsAffine (\ud835\udcb0'.X i)]` for the base-changed\n  -- cover `\ud835\udcb0'`, so the \u03c3-product on the RHS *can now* be reassembled by\n  -- `(pushPull_sigma_iso \ud835\udcb0' (g'^* F) n.len).symm`.  The residual per-\u03c3 content is isolated into the\n  -- named leaf `twisted_cech_nerve_per_sigma` (the open-immersion Beck\u2013Chevalley and\n  -- cover-base-change identification). Only the cosimplicial `naturality` remains beyond\n  -- that leaf.\n  NatIso.ofComponents\n    (fun n =>\n      (Scheme.Modules.pullback g').mapIso (pushPull_sigma_iso \ud835\udcb0 F n.len) \u226a\u226b\n        Limits.PreservesProduct.iso (Scheme.Modules.pullback g') _ \u226a\u226b\n        Limits.Pi.mapIso (fun \u03c3 => twisted_cech_nerve_per_sigma f g f' g' h \ud835\udcb0 F hF \u03c3) \u226a\u226b\n        (pushPull_sigma_iso ((Scheme.Pullback.openCoverOfLeft \ud835\udcb0 f g).pushforwardIso\n          h.isoPullback.symm.hom) ((Scheme.Modules.pullback g').obj F) n.len).symm)\n    (fun {n m} \u03c6 => by\n      sorry)",
       "lean_status": "sorry",
       "level": "medium",
       "mathlib_ok": false,

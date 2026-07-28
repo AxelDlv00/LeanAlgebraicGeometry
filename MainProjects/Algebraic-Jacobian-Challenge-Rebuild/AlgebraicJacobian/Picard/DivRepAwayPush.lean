@@ -45,44 +45,35 @@ namespace DivFamZar
 variable {k : Type u} [Field k]
 variable {A B : Type u} [CommRing A] [Algebra k A] [CommRing B] [Algebra k B]
 
-/-! ## The pushed carrier -/
+/-! ## The pushed carrier
 
-/-- **The comparison of away carriers along an algebra map**: mathlib's
-`Localization.awayMap` of `φ` at `a`, upgraded to a map of `k`-algebras.  Both structure
-maps factor through `φ`, which is what makes it one. -/
-noncomputable def awayPush (φ : A →ₐ[k] B) (a : A) :
-    Localization.Away a →ₐ[k] Localization.Away (φ a) :=
-  { Localization.awayMap φ.toRingHom a with
-    commutes' := fun x => by
-      rw [IsScalarTower.algebraMap_apply k A (Localization.Away a)]
-      change Localization.awayMap φ.toRingHom a
-        (algebraMap A (Localization.Away a) (algebraMap k A x)) = _
-      rw [show Localization.awayMap φ.toRingHom a
-              (algebraMap A (Localization.Away a) (algebraMap k A x))
-            = algebraMap B (Localization.Away (φ a)) (φ (algebraMap k A x)) by
-          simp [Localization.awayMap, IsLocalization.Away.map], φ.commutes]
-      exact (IsScalarTower.algebraMap_apply k B (Localization.Away (φ a)) x).symm }
+**This is mathlib's map, not ours.**  `Localization.awayMapₐ`
+(`Mathlib/RingTheory/Localization/Away/Basic.lean`) already gives
+`Localization.Away a →ₐ[R] Localization.Away (f a)` for `f : A →ₐ[R] B` over an arbitrary
+base ring `R`, which is exactly the transport this lane needs at `R := k`.  An earlier draft
+of this file re-derived it from the `RingHom`-level `Localization.awayMap` by supplying
+`commutes'` by hand; a fresh-context review caught the duplication.  What remains here is the
+naturality square, which mathlib does not state in the `IsScalarTower.toAlgHom` spelling the
+`DivFamZar` statements use. -/
 
-/-- **The characterizing property of `awayPush`**: on the image of `A` it is `φ` followed by
-the structure map of the pushed carrier. -/
+/-- **The characterizing property of the pushed carrier map**: on the image of `A`,
+`Localization.awayMapₐ φ a` is `φ` followed by the structure map of the pushed carrier. -/
 @[simp]
-theorem awayPush_algebraMap (φ : A →ₐ[k] B) (a : A) (x : A) :
-    awayPush φ a (algebraMap A (Localization.Away a) x)
+theorem awayMapₐ_algebraMap (φ : A →ₐ[k] B) (a : A) (x : A) :
+    Localization.awayMapₐ φ a (algebraMap A (Localization.Away a) x)
       = algebraMap B (Localization.Away (φ a)) (φ x) := by
-  simp [awayPush, Localization.awayMap, IsLocalization.Away.map]
+  simp [Localization.awayMapₐ, IsLocalization.Away.mapₐ, IsLocalization.Away.map]
 
-set_option maxHeartbeats 3200000 in
--- The composite is checked against the `IsScalarTower` structure maps of two localizations
--- at once, which unfolds the section-ring algebra towers on both sides; the defeq check is
--- well past the default budget (as for `awayMulOfDvd_toAlgHom`).
 /-- **The naturality square of the away carriers**: restricting to `Localization.Away a` and
 then pushing forward along `φ` is the same as applying `φ` and then restricting to
 `Localization.Away (φ a)`.  This is the identity that converts `pull_naturality` into a
-comparison over the pushed cover. -/
-theorem awayPush_comp_toAlgHom (φ : A →ₐ[k] B) (a : A) :
-    (awayPush φ a).comp (IsScalarTower.toAlgHom k A (Localization.Away a))
+comparison over the pushed cover, and it is the one thing here that mathlib does not already
+state — its `awayMapₐ` lemmas are in the `algebraMap A (Localization.Away a)` spelling, while
+the `DivFamZar.mapAlgHom` statements consume `IsScalarTower.toAlgHom`. -/
+theorem awayMapₐ_comp_toAlgHom (φ : A →ₐ[k] B) (a : A) :
+    (Localization.awayMapₐ φ a).comp (IsScalarTower.toAlgHom k A (Localization.Away a))
       = (IsScalarTower.toAlgHom k B (Localization.Away (φ a))).comp φ :=
-  AlgHom.ext fun x => awayPush_algebraMap φ a x
+  AlgHom.ext fun x => awayMapₐ_algebraMap φ a x
 
 /-! ## The pushed cover is a cover -/
 

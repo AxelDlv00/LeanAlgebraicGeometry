@@ -3,7 +3,16 @@ title: 'P1 (CROSS-WAVE GATE: DD shapes freeze): AbelSourceData discharge — pro
   \(\mathrm{Div}^d\)-source + Abel morphism via rep.homEquiv'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
+summary: 'BLOCKED — cross-wave gate on the DD shapes freeze; not to be attempted against
+  a guessed shape. Owes exactly the five AbelSourceData fields (D, isProper, geometricallyIrreducible,
+  abel, surjective) and nothing else. Discharging it delivers THREE of the four AV
+  conjuncts at once, since P2/P3/G1 are already proved against the interface and isAbelianVariety_of_abelSource
+  (AbelianVariety/JacobianAbelianVariety.lean) is landed. TRAP for the eventual prover
+  (worksheet §3.5, from ajcr-charts audit on I-0494): the witness predicates do NOT
+  assert effectivity or degree, deliberately, and must not be strengthened — but P1
+  field-point surjectivity comes from riemann_inequality_curve (h0 >= deg+1-g >= 1),
+  which IS an effectivity statement. Address for the stronger reading: eq_of_picClass_eq_of_h0_one,
+  which takes 0 <= D.'
 status: blocked
 kind: proof
 priority: normal
@@ -17,3 +26,4 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:49.433840+00:00'
   parent: AJCR.w5-av
+  updated_at: '2026-07-28T05:30:08.556924+00:00'

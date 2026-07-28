@@ -1,0 +1,81 @@
+id: I-0515
+provider: local
+kind: issue
+body: "NINE OF THE FIVE CHART FILES' ADVERTISED \"Main declarations\" DO NOT EXIST\
+  \ (grepped at HEAD)\n\nReviewer finding on ajcr-charts run 0072. The module headers\
+  \ of the five new\nAlgebraicJacobian/Picard/Pic0Chart*.lean files list, under \"\
+  ## Main declarations\" or in prose,\nnames that are not in the tree. Each of these\
+  \ greps to ZERO hits across the whole project:\n\n  Pic0ChartLocus.lean:49,62  isSplitWitness_iff_forall\
+  \    -- advertised as the theorem carrying\n                                   \
+  \                          the (a-amendment)'s \"some\n                        \
+  \                                     (equivalently every)\". NOT PRESENT.\n   \
+  \                                                          The ∀-form is never proved;\
+  \ only the\n                                                             ∃-form\
+  \ (the definition) and a\n                                                     \
+  \        one-directional upward-closure lemma\n                                \
+  \                             (exists_witness_of_separable_extension)\n        \
+  \                                                     exist.\n  Pic0ChartLocus.lean:70\
+  \     mem_chartLocus_iff_forall\n  Pic0ChartLocus.lean:71     chartLocus_preimage_subset\
+  \   -- what exists is\n                                                        \
+  \     mem_chartLocus_of_mem_chartLocus_comp,\n                                 \
+  \                            whose proof is literally its own\n                \
+  \                                             hypothesis (`:= hinv`)\n  Pic0ChartTestPoint.lean:43\
+  \ Over.testPoint_comp          -- what exists is testPoint_comp_left\n  Pic0ChartTestPoint.lean:48\
+  \ Over.testPointAffine         -- the affine comparison, advertised as\n       \
+  \                                                      \"so every affine-indexed\
+  \ predicate of\n                                                             the\
+  \ tree can be read through\n                                                   \
+  \          testPoint\". NOT PRESENT -- and this is\n                           \
+  \                                  exactly the missing content of the\n        \
+  \                                                     file's one sorry.\n  Pic0ChartTestPoint.lean:58\
+  \ testPointField_affineOpen_iso\n  Pic0ChartShiftedDatum.lean:29 isGluingCocycle_inv\
+  \       -- the actual name is\n                                                \
+  \             Scheme.IsGluingCocycle.inv\n  Pic0ChartShiftedDatum.lean:36 inv_inv\
+  \                   -- actual: invDatum_invDatum\n  Pic0ChartShiftedDatum.lean:37\
+  \ pieces_inv / unit_inv_coe -- actual: pieces_invDatum /\n                     \
+  \                                        unit_invDatum\n  Pic0ChartLocusIsOpen.lean:58\
+  \ chartLocus_eq_cechWitnessLocus_of_presentation\n                             \
+  \                             -- advertised as \"transports (0) and\n          \
+  \                                                   (iii) discharged\". NOT PRESENT.\
+  \ What\n                                                             exists is\n\
+  \                                                             mem_chartLocus_iff_hasWitnessH1Vanishing,\n\
+  \                                                             whose whole proof\
+  \ is `(hpres t).symm`\n                                                        \
+  \     -- i.e. it re-states the hypothesis,\n                                   \
+  \                          it does not discharge a transport.\n  Pic0ChartLocusIsOpen.lean:61\
+  \ isOpen_chartLocus_of_presentation\n                                          \
+  \                -- actual:\n                                                  \
+  \           isOpen_setOf_isSplitWitness_of_presentation\n\nThe isOpen file's own\
+  \ status table (lines 21-32) is accurate about what is landed. The problem is\n\
+  the \"Main declarations\" blocks, which are the part a downstream lane greps. Two\
+  \ of the phantoms\nname the exact obligations that are open (testPointAffine = the\
+  \ sorry's content;\nchartLocus_eq_cechWitnessLocus_of_presentation = the transport\
+  \ that was not done), so the headers\nread as more complete than the files are.\n\
+  \nALSO, `isOpen_chartLocus` -- the keystone the worksheets reserve, and which\n\
+  w4-datb §1.6 and w4-datc §3.3 both now describe as \"assembled CONDITIONALLY\" --\
+  \ does not exist\nunder that name in any form, conditional or otherwise. The conditional\
+  \ statement that does exist\nis about a set defined inline (`{t | IsSplitWitness\
+  \ …}`), not about `chartLocus`, and applies only\nto an AFFINE test with a class\
+  \ over `A`; `chartLocus` itself is never shown open, not even\nconditionally, over\
+  \ the general test the definition is stated for."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:39:47.375566+00:00'
+updated_at: '2026-07-28T05:39:47.375579+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0002-horizon-ajcr-charts
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

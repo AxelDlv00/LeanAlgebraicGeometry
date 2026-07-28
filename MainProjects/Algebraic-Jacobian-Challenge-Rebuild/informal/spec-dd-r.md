@@ -889,3 +889,95 @@ those terms.
 
 Also: `DivSchemeCertZarConn.lean:170-175`'s docstring model is genus 0 — annotate it as
 off-stratum and point here.
+
+---
+
+## ADDENDUM 5 (2026-07-28, run 0070) — R2 IS EXECUTED: the widened carrier is landed (BINDING; closes the design question of I-0346/I-0492)
+
+The human decision of 2026-07-28 (protection I-0492) chose R2 and closed the design question.
+This addendum records what was built, in Lean, and what remains. Everything below is
+kernel-checked and sorry-free; the full root build (`lake build AlgebraicJacobian`, 9136 jobs)
+is green.
+
+### 5.1 The decomposition, which is the whole design
+
+The old `FinCoverData` conflated three independent things. Separating them is what made R2
+mechanical rather than a rewrite:
+
+1. an open cover of the relative curve by **affine** pieces — all the certificate layer uses;
+2. a **chart assignment** of each piece to one of the two pinned charts — only the Θ-layer
+   needs this (the theta cocycle lives on `V₀ ⊓ V₁`);
+3. the **chart-wise partitions of unity** — the (β2) upgrade, and the obstruction itself.
+
+(1) becomes `AffCoverData` (`Picard/DivisorFamilyAffCover.lean`): `m : ℕ`,
+`pieces : Fin m → Opens`, `isAffineOpen`, and the **joint** cover `(⨆ j, pieces j) = ⊤`. It
+takes no `π` argument — nothing in it refers to a chart. (2) becomes the separate optional
+`ChartTyping`, required by no certificate clause. (3) is **deleted**.
+
+### 5.2 The one new commutative-algebra input, and it is unconditional
+
+Widening costs exactly one lemma, `flat_sections_of_flat_hom`. The old flatness route
+(`flat_sections_basicOpen ∘ flat_sections_relPinnedChart`) rested on
+`Γ(V_bᴿ) ≅ R ⊗_k Γ(C, V_b)` being **free**, which an arbitrary affine open does not give.
+Replacement: `Scheme.overAlgebraMap` factors as `ΓSpecIso.inv` then the structure morphism's
+`appLE ⊤ V`; `AlgebraicGeometry.Flat` is a `HasRingHomProperty` for `RingHom.Flat`, so the
+`appLE` is flat on an affine open, the iso half is flat, and `RingHom.Flat` composes. And
+`relCurve C R ↘ Spec R` is flat because `snd` is the base change of `C.hom` along
+`overSpec k R` (`Over.isPullback_left`) and a morphism to a field spectrum is flat. No
+Noetherian, no finiteness, no hypothesis on `R`.
+
+### 5.3 The claim of I-0492 clause 3, in its sharpest form
+
+Per-piece swallow-or-miss and the clopen-trace argument turned out to mention neither the
+adaptation nor the cover. They are now stated for a **bare open set** `U` of the relative
+curve (`Picard/DivisorFamilyAffPerPiece.lean`):
+
+  `supportLeak_eq_empty_of_subset_or_disjoint (U)`,
+  `subset_or_disjoint_of_isPreconnected_of_supportLeak (U)`
+
+i.e. `DivSchemeCertZarConn.lean:98` with the chart structure deleted. Clause (c1)-finiteness
+uses only **affineness**, through the landed
+`IsAffineOpen.finite_quotient_span_singleton_of_isClosed`. So the entire per-piece layer
+transports, and the covering hypothesis enters in exactly ONE place
+(`iSup_basicOpen_eqn_eq_unitLocus`), in its weaker joint form.
+
+### 5.4 What died, deliberately
+
+`subset_chart₀_or_disjoint_chart₀` / `…chart₁…` (`DivSchemeCertZarSwallow.lean:156,171`) and
+`supportLocus_subset_chart_of_isPreconnected` (`DivSchemeCertZarConn.lean:149`) consume the
+partitions and are the (β2) upgrade. They remain in the tree as the RECORD of the refutation;
+no widened declaration may depend on them, and none does.
+
+### 5.5 The two relocated obligations, and where they now live VISIBLY
+
+* **(i) fibrewise-finite support** is not a field of `AffCoverData`, `AffAdaptation` or
+  `IsCertified`. Its per-piece form enters `isCertified_of_swallowedBy` as the explicit
+  hypothesis `hfib`.
+* **(ii) the fixed-pair confinement's silent contributions** were exactly two:
+  `exists_mem_pieces` (now the joint cover field) and `flat_sections_pieces` (now §5.2).
+* The Stacks `0B8B` input is the named Prop `AffCoverData.SwallowedBy` — one piece contains
+  `supp D`, all others are disjoint from it — used and not re-derived per I-0492 clause 2.
+  Mathlib has no `0B8B` and this tree constructs no curve but `P¹`, so formalising it is out
+  of the certificate lane's scope. It is a hypothesis in every signature that needs it.
+
+### 5.6 The asymmetry that makes R2 work and the pinned pair fail
+
+`V₀ ⊓ V₁` is the complement of a FIXED PAIR of vertical fibres, and §4.3 exhibits a
+straddling divisor at every genus `≥ 2`, so it cannot always be arranged. An affine open
+containing a support finite over `R` always exists. That is the entire difference, and it is
+why the widened `DivFamZarAff` carries no hypothesis on `|P¹(k)|` anywhere.
+
+### 5.7 What remains on this lane
+
+1. **The comparison** `CertifiedDivisorFamily → CertifiedDivisorFamilyAff`. The COVER half is
+   landed sorry-free (`FinCoverData.toAffCoverData`) and (c1) transports pointwise;
+   (c2)/(c3)/(c4) need an equalizer transport along `Fin m₀ ⊕ Fin m₁ ≃ Fin (m₀+m₁)` commuting
+   with `deltaLeft`/`deltaRight`, plus `rankAtStalk` invariance. ~100 lines, no clause
+   changes, only the index. Nothing downstream needs it; it matters only for REUSING a
+   chart-typed certificate.
+2. **`away-kerspan` is CONFIRMED a real obligation, not an artifact.** `cert-collapse` was
+   tried first, as its node instructed, and the answer is negative: `deltaSub_apply_diag`
+   shows every diagonal component of the difference arrow vanishes identically, so (c4)
+   always forces flatness of the diagonal overlap colengths. It stays blocked, not rejected,
+   and the flattening-fallback lead in its node is now the live one.
+3. The Θ-layer keeps its two-chart structure via `ChartTyping` and was not rewritten.

@@ -1,0 +1,60 @@
+id: I-0513
+provider: local
+kind: issue
+body: "T5's hdim IS NOT DISCHARGEABLE FROM T3/T4 AS THE LANE'S OWN DOCUMENTS DESCRIBE\
+  \ IT: THE MISSING PIECE IS A SEMILINEARITY SQUARE, AND THE SIBLING ALREADY NAMED\
+  \ IT.\n\nFound by fresh-context review of run 0073 (ajcr-w5-av, commits 2cca45aca..5ada23c14).\
+  \ Not a defect in the landed Lean — all nine files are genuinely sorry-free and\
+  \ axiom-clean. It is a defect in the ROUTE the commit message, the t5 roadmap comment\
+  \ and the module docstring assert.\n\nTHE CLAIM MADE. Tangent/Pic0TangentSpace.lean:41\
+  \ ('the Wave-5 tangent keystone is, at HEAD, reduced to a statement about ker(Pic^0(k[eps])\
+  \ -> Pic^0(k)) with no scheme theory left in it') and commit 45dd5aec6 ('Any later\
+  \ discharge is exact against these two signatures'). The t5 roadmap comment repeats\
+  \ it.\n\nWHY IT DOES NOT FOLLOW. hdim is a finrank equation:\n  Module.finrank kappa(e)\
+  \ (CotangentSpace O_{d.J,e}) = genus C.\nWhat the landed chain provides is tangentSpaceEquivPic0Kernel\
+  \ / cotangentSpaceDual_equiv_pic0Kernel — BARE Equiv of SETS. The file says so itself\
+  \ (Pic0TangentSpace.lean:124, DualNumberTestObject.lean:356). A set bijection does\
+  \ not transport finrank, and T3/T4's output is a statement about that kernel. So\
+  \ T3/T4 + this chain do NOT yield hdim: you additionally need (a) a scalar action\
+  \ on the eps-kernel or an additive structure matching, and (b) the intertwining\
+  \ law along kappa(e) ~+* k. That is exactly the content the SIBLING isolated as\
+  \ its single remaining sorry:\n  Scheme.Pic0.semilinearComparison_cotangentSpaceDual_h1Cok\
+  \  (AJC Picard/Pic0AbelianVariety.lean:694)\n  exists i : kappa(e) -> k, j : Dual(m/m^2)\
+  \ ~+ H1Cok, Bijective i and forall r x, j (r . x) = i r . j x\nplus the finrank\
+  \ bridge Scheme.Pic0.finrank_eq_of_addEquiv_of_bijective_smul (:636), which mathlib\
+  \ does NOT have in finrank form (it is rank_eq_of_equiv_equiv).\n\nMEASURED AT AJCR\
+  \ HEAD: neither is present. grep for rank_eq_of_equiv_equiv, bijective_smul, IsSemilinear\
+  \ over AlgebraicJacobian/ returns nothing; Module.finrank appears in Tangent/ only\
+  \ inside the three hypothesis/goal positions of TangentCotangentCount and Pic0TangentSpace.\
+  \ The port took the sibling's five GENERIC tangent files but NOT the two declarations\
+  \ that make the count possible.\n\nCONSEQUENCE FOR PLANNING. 'T3/T4 then one exact'\
+  \ understates the remaining work by one brick that the sibling has already sized\
+  \ and named. The honest statement of the gap is: T3/T4 give the eps-kernel; a semilinear-comparison\
+  \ brick (port of the sibling's two declarations, [S] for the finrank bridge + the\
+  \ real work in the square) turns it into hdim. The w5-worksheet D6 'scalar-identity-first'\
+  \ discipline does not remove this — it relocates the linearity to the cocycle side,\
+  \ where TruncExpCechH1 does carry the k-action (smul_delta, mumfordScaling_*), but\
+  \ nothing yet connects that action across the representability leg.\n\nACTION: port\
+  \ AJC's finrank_eq_of_addEquiv_of_bijective_smul now ([XS], pure linear algebra,\
+  \ no gate), and restate T3/T4's target as the semilinear comparison rather than\
+  \ a bare kernel bijection, so the next session builds the thing that actually discharges\
+  \ hdim."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:36:38.071351+00:00'
+updated_at: '2026-07-28T05:36:38.071363+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0002-horizon-ajcr-w5-av
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,63 @@
+id: I-0507
+provider: local
+kind: memory
+body: '[persistent] WHEN A LANE IS RE-BUILT ON A WIDENED CARRIER, PORT ITS PROOFS,
+  NOT JUST ITS SIGNATURES — AND RE-CHECK WHICH REFUTATION ACTUALLY APPLIES. Lesson
+  from the R2 widening (run 0070, DivisorFamilyAff*.lean).
+
+
+  The widening itself was done well: AffCoverData carries only m / pieces / isAffineOpen
+  / joint cover, takes no pi argument, and the chart typing was correctly split out
+  into an optional ChartTyping that no certificate clause mentions. flat_sections_of_flat_hom
+  is a real proof of a true statement. Zero sorries.
+
+
+  What went wrong is subtler and is the reusable lesson. The old lane had TWO certificate
+  assemblers: a heavy kernel-spanning one (DivSchemeCertUniv.lean:71) and a light
+  collapse one (DivSchemeCertZarSep.lean:277, isCertified_of_separated) that PROVES
+  (c2)/(c3)/(c4) from nothing but ''off-diagonal overlap colengths vanish''. Only
+  the heavy shape was carried across; the light one was left behind and its four collapse
+  lemmas re-appear as HYPOTHESES in DivisorFamilyAffAssemble.lean:79-84. The justification
+  given was a standing refutation (I-0340: the difference arrow''s diagonal vanishes
+  identically, so (c4) is never free FOR AN ARBITRARY ADAPTATION). But the new assembler
+  runs under SwallowedBy, where off-diagonal overlaps are all subsingleton and the
+  diagonal factors are either the swallowing piece''s own colength or subsingleton
+  — i.e. precisely the situation the collapse lemma covers. A refutation of ''free
+  in general'' is not a refutation of ''free under the extra hypothesis this theorem
+  assumes''.
+
+
+  TWO CHECKS TO RUN BEFORE ACCEPTING A HYPOTHESIS IN A PORTED THEOREM. (1) grep the
+  pre-widening lane for a lemma that CONCLUDES that hypothesis, and check whether
+  its own hypotheses are available in the new setting — DivSchemeCertZarSep.lean imports
+  no chart file, so all of it transports. (2) If a docstring cites a refutation to
+  explain why something is assumed rather than proved, restate the refutation''s exact
+  quantifier and confirm the theorem''s hypotheses do not escape it.
+
+
+  THIRD, SEPARATE LESSON: ''landed alongside'' is not ''executed''. DivFamZarAff has
+  zero consumers, AffCoverData has zero producers beyond the migration map, SwallowedBy
+  has zero witnesses, and the 33 partition0/partition1 hits the decision said had
+  to go are all still there. A widening that no consumer reaches leaves the old carrier
+  as the live one.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:21:19.512894+00:00'
+updated_at: '2026-07-28T05:21:19.512904+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0002-horizon-ajcr-cert-r2
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  owner_task: ajcr-cert-r2

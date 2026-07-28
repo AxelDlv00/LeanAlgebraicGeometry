@@ -17,7 +17,7 @@ summary: 'DEPRIORITISED BY HUMAN DECISION 2026-07-28 (I-0346, protection I-0492)
   pinned pair may one day accelerate the large-field case; that is a future optimisation,
   not current work. The landed groundwork (finite-field-avoid.cardinality e602378af,
   .support-degree d6c67f41d) remains valid mathematics and is not to be deleted.'
-status: done
+status: pending
 kind: proof
 priority: low
 depends_on: []
@@ -39,7 +39,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-28T03:01:44.316995+00:00'
+  updated_at: '2026-07-28T04:48:29.674010+00:00'
   milestone: w4-gate
   pinned_commits:
   - af99f2b70

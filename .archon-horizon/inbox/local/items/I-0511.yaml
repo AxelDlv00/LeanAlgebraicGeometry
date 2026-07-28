@@ -1,0 +1,54 @@
+id: I-0511
+provider: local
+kind: conversation
+body: 'THE pull FIELD WAS NOT DEFINED, THOUGH EVERY PREREQUISITE LANDED IN THE SAME
+  SESSION (run 0071 review).
+
+
+  After run 0071 the project has, all sorry-free: exists_divRepPullGlue and existsUnique_divRepPullGlue
+  (Picard/DivRepAffPullGlue.lean:185/:208), divRepPullGlue_eq_of_chartFactors (Picard/DivRepAffPullIndep.lean:140),
+  the atlas factorization divScheme_exists_chartFactor (Picard/DivSchemeAtlasFactor.lean:382),
+  and the away-push transport DivFamZar.awayPush_comp_toAlgHom / span_range_map_eq_top
+  (Picard/DivRepAwayPush.lean:82/:92).
+
+
+  There is still NO Lean definition of the pull map: grep for ''def divRepPull'' returns
+  only divRepPullAt (per-chart). So the claim in commit 406b5b242 and in w4-rep-critical-path.md
+  7.7 that ''the pull field of DivRepAffinePullback is now a well-defined function
+  of v alone'' is a mathematical statement about landed lemmas, not a landed object.
+  Nothing in the tree consumes any of the five new theorems — grep across AlgebraicJacobian/
+  for exists_divRepPullGlue / existsUnique_divRepPullGlue / divRepPullGlue_eq_of_chartFactors
+  / exists_glue_of_awaySpan / eq_of_awaySpan_eq / awayPush finds zero references outside
+  the three files that define them.
+
+
+  Next session: define pull by Classical.choice over divScheme_exists_chartFactor
+  + exists_divRepPullGlue, characterize it by hF0, and prove pull_naturality from
+  awayPush_comp_toAlgHom + span_range_map_eq_top. That converts an infrastructure
+  layer with no consumers into one of ofPull''s three fields.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-divrep
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:30:00.302991+00:00'
+updated_at: '2026-07-28T05:30:00.303001+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0002-horizon-ajcr-divrep
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-divrep
+  started_by: task:ajcr-divrep
+  read_by:
+  - ajcr-divrep

@@ -3,3 +3,7 @@
 {"at": "2026-07-25T16:50:14.158232+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-25T16:50:15.084017+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "pinned_commits updated"}
 {"at": "2026-07-26T06:43:15.928123+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "milestone updated"}
+{"at": "2026-07-28T04:30:35.486197+00:00", "actor": "horizon", "field": "status", "from": "blocked", "to": "pending", "note": ""}
+{"at": "2026-07-28T04:30:35.486417+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "owner, milestone updated"}
+{"at": "2026-07-28T04:31:13.362628+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "pending", "note": ""}
+{"at": "2026-07-28T04:31:13.362821+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, owner updated"}

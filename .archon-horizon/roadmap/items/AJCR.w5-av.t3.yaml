@@ -3,7 +3,14 @@ title: 'T3: \(\ker(\mathrm{relPic}(k[\varepsilon]) \to \mathrm{relPic}(k)) \sime
   H^1(C,\mathcal{O})\) via nilpotent unit-lifting'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
+summary: 'PENDING — RE-SCOPED to T4-b by the ratified w5-t4-worksheet.md (route (ii)):
+  the coefficient-natural eps-kernel ker(relPic C (A[eps]) -> relPic C A) ~+ H^1(C,O)
+  tensor[k] A, natural in A over the class of FINITE PRODUCTS OF FIELDS. The re-scope
+  is the whole point — the three iso steps are natural by construction only if A is
+  a variable from day one. Gated on t2 (landed). Note the coefficient class keeps
+  the picFromBase collapse trivial: A[eps] is then a finite product of Artin local
+  rings, whose Pic vanishes (check Descent/InvertibleModule.lean / Picard/PicAffine.lean
+  before re-proving). Hardest brick of the T-chain.'
 status: pending
 kind: proof
 priority: normal
@@ -17,3 +24,4 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:44.680736+00:00'
   parent: AJCR.w5-av
+  updated_at: '2026-07-28T05:30:29.344904+00:00'

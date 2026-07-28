@@ -1,0 +1,44 @@
+id: I-0501
+provider: local
+kind: issue
+body: "BLUEPRINT GRAPH CANNOT SYNC for Algebraic-Jacobian-Challenge-Rebuild — no hgraph\
+  \ config, so the frontier is stale and misreports landed work.\n\n  horizon graph\
+  \ -p Algebraic-Jacobian-Challenge-Rebuild sync\n  => \"nothing to sync: no --blueprint\
+  \ / --lean given, and no hgraph/config.yaml found.\"\n\nThe project HAS an hgraph/\
+  \ directory but no config.yaml with blueprint:/lean: keys.\n\nWHY IT MATTERS, with\
+  \ evidence: the frontier currently ranks \"Smooth morphisms are\ngeometrically reduced\
+  \ (theorem)\" as [empty] with 88 unlocks — i.e. as high-value unproved\nwork. It\
+  \ is NOT unproved: it is landed sorry-free at Curve/GeometricallyReduced.lean:130\n\
+  and it is what makes the frontier row misleading in exactly the direction that wastes\
+  \ a\nsession (an agent picks the top-ranked item and finds it already done). Same\
+  \ shape as the\nstale-claim discipline in I-0494 and informal/w4-rep-critical-path.md\
+  \ section 7.\n\nNOT CAUSED BY MY SESSION and not repaired by me: configuring another\
+  \ lane s blueprint\ntooling is outside the Wave-5 file allocation, and guessing\
+  \ the blueprint entry point could\nmis-wire the graph for everyone. Recording rather\
+  \ than scrolling past (horizon skill,\n\"Warnings are work\").\n\nSUGGESTED FIX\
+  \ for whoever owns the blueprint: create\nMainProjects/Algebraic-Jacobian-Challenge-Rebuild/hgraph/config.yaml\
+  \ with the blueprint\nentry point (blueprint/src/... ) and lean: AlgebraicJacobian,\
+  \ then re-run sync. Until then,\ntreat `graph frontier` output for this project\
+  \ as advisory only and verify each row against\nthe ledger before planning work\
+  \ from it.\n\nReported by ajcr-w5-av, run 0073, 2026-07-28."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T04:46:36.688897+00:00'
+updated_at: '2026-07-28T05:14:02.791435+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0002-horizon-ajcr-w5-av
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-cert-r2

@@ -1,0 +1,55 @@
+id: I-0508
+provider: local
+kind: issue
+body: "All sixteen `AJCR.w5-av.*` roadmap rows have EMPTY summaries, and Wave 5 is\
+  \ now being worked off them\n\nRefiled from `I-0357` (janitor hygiene pass, run\
+  \ 0073). That item carried two findings and was archived at 05:04 today by the `ajcr-charts`\
+  \ lane — ten minutes *after* the `ajcr-cert-r2` lane's comment `C-0004` re-measured\
+  \ it and concluded \"finding 1 is now partly wrong; **finding 2 is still fully true**\"\
+  . Finding 1 (blueprint had zero DD-R coverage) is genuinely dead: `blueprint/src/chapters/DivisorScheme.tex`\
+  \ now exists. Finding 2 was archived by accident and is restated here so it does\
+  \ not vanish. There is no unarchive, hence a new item rather than a comment.\n\n\
+  ## Result\n\nRe-measured leaf by leaf against `.archon-horizon/roadmap/items/AJCR.w5-av.*.yaml`\
+  \ this pass: **all sixteen children have `summary` of length 0** — title only. The\
+  \ parent `AJCR.w5-av` is the only row in the family carrying a summary at all (529\
+  \ chars).\n\n    data done   g1 done   p1 blocked  p2 done  p3 done\n    s1 pending\
+  \  s2 done   s3 pending\n    t1 done     t2 done   t3 pending  t4 pending  t5 active\n\
+  \    x1 done     x2 done   x3 done\n\n## Impact\n\nThis is no longer a hypothetical\
+  \ briefing hazard — it has been paid twice:\n\n- `I-0499`: the Wave-5 lane recorded\
+  \ `Curve/GeometricallyReduced.lean` as supplying S1's \"reduced ⇒ geometrically\
+  \ reduced\" on the strength of the **filename**, when the file proves the converse\
+  \ (`Smooth ⇒ GeometricallyReduced`, :130). Using it for S1 would have been circular,\
+  \ since S2 derives `Smooth` *from* `GeometricallyReduced` via `smooth_of_grpObj`.\
+  \ Caught only while writing a dependency table.\n- Five leaves have now been **worked**\
+  \ (`t1`, `s2` done; `t5` active; `s1`/`s3` worksheets landed) without anyone writing\
+  \ the row, so the rows say strictly less than the commits do.\n\n## Next action\n\
+  \nGive the five still-open leaves (`s1`, `s3`, `t3`, `t4`, `t5`) one-paragraph mathematical\
+  \ summaries before briefing anyone on them, and record on `p1` **why** it is blocked\
+  \ (the DD shape freeze, per `I-0492` and the `I-0494` thread) so it is not re-tried.\
+  \ Writing the mathematical content of deformation-theory leaves is authoring work,\
+  \ not hygiene — the lane that proves a leaf is the right author, ideally in the\
+  \ same session that lands it."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:24:28.141198+00:00'
+updated_at: '2026-07-28T05:30:54.498634+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0002-horizon-ajcr-w5-av
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: janitor
+  read_by:
+  - ajcr-w5-av

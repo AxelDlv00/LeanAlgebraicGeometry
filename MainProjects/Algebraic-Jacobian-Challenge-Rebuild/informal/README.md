@@ -1,7 +1,8 @@
 # `informal/` — index of design worksheets, specs, and recon dumps
 
-76 files, ~26k lines. This index exists so a new session can tell **which file is still
-authoritative** without reading them. Created 2026-07-27 (janitor pass, run 0048 round 5).
+78 files, ~27k lines. This index exists so a new session can tell **which file is still
+authoritative** without reading them. Created 2026-07-27 (janitor pass, run 0048 round 5);
+re-reconciled against the directory 2026-07-28 (janitor pass, run 0073).
 
 **How the status column was derived — read this before trusting it.** Each entry's title comes
 from reading the file's header. `SUPERSEDED-BY` is recorded **only** where the file itself (or its
@@ -94,17 +95,26 @@ All **LANDED**.
 | `zeta2ii-api-recon.md`, `spec-zeta2i-close.md`, `spec-zeta2iia-tensor-away.md`, `spec-zeta2iib-pi-assembly.md`, `spec-zeta3-close.md` | The ζ2/ζ3 brick specs (coherent Čech witness, tensor-Away algebra, pi-assembly, `PicEtAff.unit_injective`). |
 | `finiteness-plan.md` | The two-lattice plan for finiteness of H¹(C,𝒪_C) — Wave-1 finale. |
 
-## Waves 5–7 — not yet started (`AJCR.w5-av`, `w6-albanese`, `w7-functor` all **pending**)
+## Wave 5 — `Pic⁰` is an abelian variety (`AJCR.w5-av`, **live since 2026-07-28**)
 
-These are **CURRENT but unconsumed** — design work done ahead of the lanes. Inbox `I-0357` records
-that the eight `AJCR.w5-av` leaves have title-only summaries and no briefing, so these files are
-the only briefing that exists.
+Wave 5 is being worked, not merely designed: the AV lane runs in parallel with the Wave-4 DD chain
+because the tangent kit and the S-cluster consume only `JacobianData`. Inbox `I-0357` still records
+that the `AJCR.w5-av` leaves carry title-only summaries, so these files remain the only briefing
+that exists for them.
 
 | File | What it is |
 |---|---|
 | `w5-recon.md` | Wave-5 recon — the `Pic⁰` abelian-variety package. Headline in §0. |
 | `w5-worksheet.md` | Wave-5 BINDING worksheet. §0 is the lane protocol (mandates `protocol-concurrent-lanes.md`). |
 | `w5-t4-worksheet.md` | W5-T4: the étale-plus/Zariski kernel crossing at `k[ε]` (risk R1). |
+| `w5-s-worksheet.md` | **CURRENT.** W5 S-cluster: geometric reducedness (S1/R2), `Smooth` (S2, landed), the frozen numeral (S3/R3). Written 2026-07-28 by the AV lane; discharges `w5-worksheet.md` §1 D4's worksheet-first obligation. Its §2 corrects `w5-recon.md` on which S1 brick is hard. |
+
+## Waves 6–7 — not yet started (`AJCR.w6-albanese`, `w7-functor` both **pending**)
+
+These are **CURRENT but unconsumed** — design work done ahead of the lanes.
+
+| File | What it is |
+|---|---|
 | `w6-albanese-port-recon.md` | Wave-6 Albanese PORT recon — what the old work offers vs what must be rebuilt. **STATUS: RECON, not design** (its own header). Verified against the tree 2026-07-16. |
 | `w6-port-worksheet.md` | Wave-6 BINDING port worksheet — the Albanese algebra/rational-map layer. |
 | `w7-recon.md` | Wave-7 recon — functoriality and base change of fields. |

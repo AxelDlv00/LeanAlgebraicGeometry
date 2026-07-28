@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.resHom_relThetaWindowEquiv_one_tmul_fst
 type: lean
-updated: '2026-07-28T11:16:20'
+updated: '2026-07-28T11:16:39'
 ---
 private lemma resHom_relThetaWindowEquiv_one_tmul_fst (S : Type u) [CommRing S]
     [Algebra k S] (h : ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) :

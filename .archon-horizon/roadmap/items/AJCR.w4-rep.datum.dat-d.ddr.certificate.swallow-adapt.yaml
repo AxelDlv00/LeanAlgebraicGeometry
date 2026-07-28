@@ -32,7 +32,7 @@ summary: "HALF LANDED 2026-07-25 (run 0048, commit on Picard/DivSchemeCertZarCha
   \ bundle trivial on the\n(semilocal after localization) divisor scheme spread to\
   \ a Zariski neighbourhood.\n\nGATED ON chart-avoid: without supportLocus subset\
   \ V_0 cap V_1 the swallowing hypothesis is false.\n"
-status: pending
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -54,5 +54,8 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-26T06:43:10.409706+00:00'
+  updated_at: '2026-07-28T04:41:59.209610+00:00'
   milestone: w4-gate
+  owner: ajcr-cert-r2
+  pinned_commits:
+  - e3d45e2d658c18ad6e5dbe0672a177de3601c5c2
