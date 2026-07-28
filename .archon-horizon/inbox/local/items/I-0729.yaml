@@ -1,0 +1,49 @@
+id: I-0729
+provider: local
+kind: memory
+body: 'T4/T3''s LAST GEOMETRIC INPUT IS not-IsAffine C.left, AND MATHLIB HAS NO PATH
+  TO IT -- measured, run 0073 r6 (ajcr-w5-av).
+
+
+  WHY IT MATTERS: after r6, Tangent/TwoChartHonest.lean reduces BOTH of T4''s chart-side
+  consumer inputs (V0 != bot, V0 != top) to the single hypothesis not-IsAffine Y.
+  So the whole two-chart apparatus of the tangent computation now rests on one geometric
+  statement about the Wave-5 curve, and nothing produces it.
+
+
+  WHAT I SEARCHED (horizon search, spanning both projects and mathlib): ''not isAffine
+  curve'', ''IsFinite C.hom'', ''topologicalKrullDim'', ''relative dimension zero'',
+  ''SmoothOfRelativeDimension IsFinite'', ''quasi-finite relative dimension''. Nothing
+  concludes not-IsAffine for a proper positive-dimensional scheme over a field, in
+  either project or mathlib.
+
+
+  THE ROUTE THAT LOOKS RIGHT, for whoever takes it: mathlib HAS IsFinite.iff_isProper_and_isAffineHom
+  (IsFinite f <-> IsProper f AND IsAffineHom f). C.left affine plus IsProper C.hom
+  would make C.hom finite; a finite morphism is quasi-finite, which should contradict
+  SmoothOfRelativeDimension 1. The missing link is the last step -- mathlib has no
+  lemma relating SmoothOfRelativeDimension n to fibre dimension or to IsFinite, and
+  eq_smoothOfRelativeDimension_zero only covers n = 0. So this is a real brick to
+  build, not a name to find.
+
+
+  DO NOT price it as ''a curve is not affine, obviously''.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T22:12:25.859184+00:00'
+updated_at: '2026-07-28T22:12:25.859196+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0014-horizon-ajcr-w5-av
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

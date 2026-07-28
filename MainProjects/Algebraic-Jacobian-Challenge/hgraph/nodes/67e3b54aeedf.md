@@ -20,10 +20,10 @@ docstring: "**Flat base change for the Čech higher direct images — ONE OPEN L
   \ §6e."
 file: AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean
 generated: lean
-lean_status: sorry
+lean_status: lean_ok
 title: AlgebraicGeometry.cech_flatBaseChange_oneLeaf
 type: lean
-updated: '2026-07-29T05:40:30'
+updated: '2026-07-29T06:00:33'
 ---
 theorem cech_flatBaseChange_oneLeaf
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
@@ -59,33 +59,4 @@ So the per-σ compatibility splits along that seam, and the two halves are not c
 **HALF (b) IS FREE, AND THIS RETRACTS THIS FILE'S OWN PRICING OF THE RESIDUE.**  The
 `twisted_cech_nerve_iso` docstring names the residue in prose as "the `isoOfRangeEq` slice
 identifications commute with the inclusions `U_τ ⊆ U_σ`".  That sentence describes half (b), and
-half (b) costs nothing: both composites are morphisms of `Over X'` into an object whose structure map
-is an open immersion, hence a **mono**, so they agree by `ext` + `cancel_mono` with no geometry, no
-cover base change and no transport (`slice_compat`).  Anything priced against that sentence is
-mispriced; the real content is half (a).
-
-**HALF (a) IS THE CRUX, and it is naturality in the SQUARE, not in the module.**
-`bc_square_naturality` states it: for affine opens `V₀ ≤ W₀` and their base changes along `g'`, the
-two restricted-square Beck–Chevalley isos commute with restriction along the inclusion.  It is *not*
-`openImmersion_bareBC_app_eq` (that is naturality in the module) nor `pushPullMap_comp`/`_id` (those
-are functor laws in the slice variable) — nothing in the tree relates the mate across a *change of
-square*.
-
-Two facts make it actionable, both machine-checked here and neither previously recorded:
-
-* `openImmersion_bareBC` **never uses cartesianness** — `bareBC_eq_of_w` says it is `bareBC_of_w` at
-  `hsq.w`, by `rfl`.  So the mate exists for *any* commuting square, including the degenerate one
-  with right edge `𝟙 X`, which is the shape `pushPullMap` has.  The `IsPullback` binder is decoration
-  on this leaf; only the invertibility node consumes it.
-* the two restricted squares **paste vertically**: `inclusion_square_comm` gives
-  `gV ≫ homOfLE hle = w.left ≫ gW` by cancelling the mono `W₀.ι`.  So `mateEquiv_vcomp` is the
-  applicable glue.
-
-MEASURED NEGATIVE, recorded so it is not re-attempted as a triviality: "`pushPullMap F u` is the
-degenerate-square mate" — the composite of `(pullbackId X).inv`, `bareBC_of_w (𝟙 X) …` and the two
-telescope corrections — **typechecks but is not `rfl`**, and `simp` with `bareBC_of_w`, `pushPullMap`,
-`rawPushPullMap`, `mateEquiv_apply` does not close it (`aesop_cat` times out in `whnf`).  It is a
-genuine lemma, and it is the brick half (a) needs.
-
-`TwistedPerSigmaDeltaCompat` follows from half (a) alone: `twistedPerSigmaCompat_of_bcNaturality`.
-Everything else in this section is `sorry`-free. -/
+half (b) costs nothing: both composites are morphisms of `Over X'` into an object whose

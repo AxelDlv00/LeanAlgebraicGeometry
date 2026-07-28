@@ -1,0 +1,52 @@
+id: I-0727
+provider: local
+kind: issue
+body: "STALE-CLAIM SWEEP OF ajcr-divrep s0010: THREE OF THE FOUR REVIEW FINDINGS ARE\
+  \ RECORDED NOWHERE, and one stale claim survives in LEAN SOURCE (janitor, run 0071\
+  \ s0010).\n\nMeasured at HEAD 7da481204 over 259 roadmap rows, the worksheet, and\
+  \ the Lean tree.\n\n(a) SCALAR SIDE CONDITION hb -- CLEAN. No row and no doc still\
+  \ calls hb : 0 < windowBound an obligation. Both .divrep and .divrep.u2 retract\
+  \ it explicitly, and worksheet 7.11.1 does too. Nothing to fix.\n\n(b) \"ONE CERTIFICATE\"\
+  \ / \"ONE TYPE MISMATCH\" -- CLEAN IN THE ROADMAP AND WORKSHEET, STALE IN LEAN.\
+  \ Both rows carry the RETRACTION AT THE TOP block naming both phrases, and worksheet\
+  \ 7.11.3 is retracted in place. But:\n    Picard/DivRepChartClassUnivFree.lean:49\
+  \ (docstring, \"What this does NOT do\"):\n      \"U2-s residue after this file\
+  \ is **exactly one statement**, IsCertified g at the high-window\n       universal\
+  \ seed-s adaptation over the chart ring -- no scalar beside it.\"\nThat is the retracted\
+  \ pricing, in a rooted kernel-green module, with no retraction note. This is exactly\
+  \ the recorded trap retract-where-the-claim-is (a retraction in a note left the\
+  \ same false claim in the theorem-s own docstring). A Lean edit, so filed not fixed.\n\
+  \n(c) I-0703, I-0704, I-0706 APPEAR IN NO ROADMAP ROW AND NO DOC. Grep over the\
+  \ roadmap JSON and the worksheet: I-0705 and I-0707 each appear twice/once, I-0703/I-0704/I-0706\
+  \ ZERO times. I-0704 is the one that matters -- it argues the honest residue is\
+  \ at least TWO (certificate, plus eps-value -> classifier equation, since U2 as\
+  \ pinned at DivRepChartRange.lean:183 is a morphism equality and no lemma composes\
+  \ the eps-value into it) and that the chart rings may differ (DivCarveChartRing\
+  \ ... b1 b2 vs ChartRing-s b2.map (windowShiftEquiv hpi g).symm). The rows currently\
+  \ say the retraction makes the row UNPRICED, which does not capture \"at least two,\
+  \ and one of them is a ring mismatch\". I-0703 (the two DivFamZar endpoints Classical.choose\
+  \ away the eps-witness they exist to carry) and I-0706 (the eps-layer port is ~6\
+  \ files, not a re-typing, because no DivisorFamilyAff* file mentions ThetaGlued)\
+  \ are likewise unrecorded.\n\nNEXT SESSION MUST: fold I-0704 into the .divrep.u2\
+  \ row (it changes the residue COUNT, not just its price), and retract the UnivFree.lean:49\
+  \ docstring."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T22:11:50.112717+00:00'
+updated_at: '2026-07-28T22:11:50.112729+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0010-horizon-ajcr-divrep
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

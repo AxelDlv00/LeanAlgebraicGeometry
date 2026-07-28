@@ -18,9 +18,10 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.twistedPerSigmaCompat_of_bcNaturality
 type: lean
-updated: '2026-07-29T05:40:32'
+updated: '2026-07-29T06:00:33'
 ---
-theorem twistedPerSigmaCompat_of_bcNaturality (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+theorem twistedPerSigmaCompat_of_bcNaturality
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
     (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [IsSeparated f] [IsAffine S]
     [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent)
     (hBC : ∀ (p : ℕ) (k : Fin (p + 2)) (σ' : Fin (p + 2) → 𝒰.I₀),

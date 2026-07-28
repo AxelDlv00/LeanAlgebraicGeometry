@@ -3,31 +3,30 @@ title: 'T3: \(\ker(\mathrm{relPic}(k[\varepsilon]) \to \mathrm{relPic}(k)) \sime
   H^1(C,\mathcal{O})\) via nilpotent unit-lifting'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "T3 is the CONSUMER of the T4 comparison, not independent work: ker(relPic(k[eps])\
-  \ -> relPic(k)) =+ H1(C,O) follows once T4's residue lands.\n\nWHAT IS IN PLACE.\
-  \ The T2 truncated-exponential engine gives H1(C,O) = ker of the two-chart Cech\
-  \ unit quotient. Clause (i) (nilpotent chart triviality) and clause (ii) (DualNumber.baseChangeAlgEquiv,\
-  \ composed to the cover level rather than only asserted in a docstring) are landed.\
-  \ The relative-to-absolute step was already landed: picFromBase is TRIVIAL at Spec\
-  \ k[eps] -- a one-point space has no cover with nontrivial overlap -- with the compatibility\
-  \ square intertwining relPicMap with CechPic.map (Tangent/RelPicPointTest.lean).\n\
-  \nRUN 0073 r4 CLOSED THE TWO INTERTWINING ITEMS T3 ACTUALLY CONSUMES, which is the\
-  \ substantive change to this row:\n * the reduction square now exists AT QUOTIENT\
-  \ LEVEL (Tangent/TwoChartQuotientNaturality.lean, map_twoChartClass), where the\
-  \ T2 engine's unitsReduction lives -- the hom-level square of r3 was one level below\
-  \ the consumer;\n * the two Cech H1 carriers now agree AS QUOTIENTS, not merely\
-  \ as carriers (Tangent/DualNumberCarrierCoboundary.lean, dualNumberCechH1Equiv,\
-  \ built FROM a subgroup EQUALITY so a kernel may be transported across it).\n\n\
-  Both were reviewer findings (I-0630) that a predecessor session had priced at zero;\
-  \ both turned out cheap, and neither was cohomological.\n\nWHAT T3 STILL WAITS ON,\
-  \ and it is exactly T4's named residue: the scheme-object identifications of item\
-  \ (3b)/(3c), and (iii-c2-aff-geo) -- \"L trivial along eps -> 0\" ==> the chart\
-  \ reduction is cyclic -- which is carried as the hcyc BINDER in Tangent/DualNumberChartPic.lean\
-  \ (not a sorry, hence invisible to a sorry census) and is open in the AJC sibling\
-  \ too.\n\nNOTE FOR WHOEVER TAKES T5 AFTER THIS: what T3 must hand T5 is the SEMILINEAR\
-  \ COMPARISON (AddEquiv + intertwining across kappa(e) ~+* k), NOT a bare eps-kernel\
-  \ bijection -- finrank does not transport along a bijection of sets. See the t5\
-  \ row.\n"
+summary: 'T3 is the CONSUMER of the T4 comparison, not independent work: ker(relPic(k[eps])
+  -> relPic(k)) =+ H1(C,O).
+
+
+  T3''s STATED BLOCKER IS GONE as of run 0073 r6. The previous version of this row
+  said T3 "waits on exactly T4''s named residue: the scheme-object identifications
+  (3b)/(3c), and (iii-c2-aff-geo) carried as the hcyc binder in DualNumberChartPic".
+  All of those are now closed: (3b)/(3c) in r4/r5, and (iii-c2-aff-geo) plus BOTH
+  consumer inputs in r6 (Tangent/ChartClassNaturality, PicEpsKernelTrivial, ChartTrivialityGeo,
+  EpsZeroSurjective, TwoChartHonest; worksheet 6.27).
+
+
+  WHAT T3 NOW WAITS ON is instantiation, not a comparison: the two chart presentations
+  at the thickened charts (e = Over.dualNumberSectionsOfIsAffineOpen, e'' its eps-zero
+  reduction) plus the commuting square hsq between them, and not-IsAffine C.left.
+  Neither is a wall; both are named in the new docstrings. A successor should START
+  by assembling hsq, since every other piece of the chain is landed and rooted.
+
+
+  STILL TRUE AND STILL THE TRAP FOR T5: what T3 must hand T5 is the SEMILINEAR COMPARISON
+  (AddEquiv plus intertwining across kappa(e) ~+* k), NOT a bare eps-kernel bijection
+  — finrank does not transport along a bijection of sets. See the t5 row.
+
+  '
 status: pending
 kind: proof
 priority: normal
@@ -41,5 +40,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:44.680736+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T16:42:16.107473+00:00'
+  updated_at: '2026-07-28T22:12:07.383940+00:00'
   owner: ajcr-w5-av

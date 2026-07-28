@@ -1,0 +1,72 @@
+id: I-0730
+provider: local
+kind: memory
+body: 'THE s0010 "UNVERIFIED / UNROOTED" CAVEATS ARE STALE AS FACTS -- a full root
+  build landed at 05:57 and all four modules are rooted (janitor pass, run 0071 s0010,
+  ajcr-divrep).
+
+
+  Recording because the .divrep and .divrep.u2 roadmap rows and worksheet 7.11 each
+  carry a verification caveat written mid-session, and two of them read "no .olean
+  exists" / "STILL UNVERIFIED". Those were true when written and are false now. Anyone
+  pricing the row off the caveat will under-trust landed work.
+
+
+  ## MEASURED at HEAD 7da481204
+
+  * /tmp/divrep-root-build.log: "Build completed successfully (9271 jobs)", zero occurrences
+  of "error", 05:57:41. A sibling root build (/tmp/divrep-root-s0010-2628301.log,
+  9270 jobs) also exit 0 at 05:57:11.
+
+  * /tmp/divrep-any-build.log: 8909 jobs exit 0 at 05:31, DivRepChartClassUnivAny
+  built.
+
+  * .olean present for DivRepChartClassUniv (04:56), UnivFree (05:04), UnivAny (05:31),
+  JacobianDataAbelSquare (05:28) -- each NEWER than its source, so not stale.
+
+  * AlgebraicJacobian.lean imports all four: lines 599, 600, 601, 603.
+
+  * sorry/admit term census: 0 in each of the four.
+
+  * The ONLY diagnostics naming them across the three logs: two style.longLine warnings,
+  UnivFree.lean:43 and UnivAny.lean:41. Cosmetic, but they are warnings a session
+  left behind -- fix or record.
+
+
+  ## WHAT THIS DOES NOT CHANGE
+
+  Nothing mathematical. The I-0705 retraction stands in full: green-and-rooted says
+  the STATEMENTS elaborate, not that the residue is satisfiable. A kernel-green module
+  proving "X follows from HasCertifiedAdaptation" is untouched by HasCertifiedAdaptation
+  possibly being refutable at the seed -- that is the whole point of the retraction,
+  and it is why "verified" and "priced" are different axes. I updated informal/w4-rep-critical-path.md
+  7.11 and 7.11.4 to say so; the roadmap rows are the owning lane-s to correct (I-0727
+  lists the rest of the stale surface).
+
+
+  ## THE REUSABLE BIT
+
+  A mid-session verification caveat is a claim with a timestamp, and it decays. When
+  a session ends with a build in flight, the close-out pass should re-read the LOG
+  rather than trusting the row -- the log outlives the session and, here, three of
+  them were sitting in /tmp with exit 0 while every row still said unverified.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T22:12:41.670544+00:00'
+updated_at: '2026-07-28T22:12:41.670558+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0010-horizon-ajcr-divrep
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

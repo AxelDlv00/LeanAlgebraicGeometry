@@ -1,0 +1,70 @@
+id: I-0726
+provider: local
+kind: issue
+body: 'dat-j SURVIVES THE s0010 RETRACTION AND CONTAINS ITS CHEAP DECIDER -- boundary
+  check of ajcr-divrep run 0071 s0010 (janitor).
+
+
+  s0010 updated 2 of its 7 roadmap_refs. I crossed the other five. NO CONTRADICTION
+  in any of them; one is more useful than its row realises.
+
+
+  THE FIVE: .datum-tail (3 lines, pure gating prose, no certificate claim -- nothing
+  to contradict); .ddq (blocked ON ddr.divrep, strictly weaker than the retraction);
+  .dat-g/.dat-glue (gated behind DAT-G0/divRep, no certificate claim); .dat-j (below).
+  All left byte-identical.
+
+
+  WHY dat-j LOOKS LIKE A CONTRADICTION AND IS NOT. dat-j asserts DivisorAdaptation.isCertified_of_deg
+  (DivisorFamilyFieldSurj.lean:104): over a FIELD, an ARBITRARY adaptation of degree-n
+  data is IsCertified n, with NO separation hypothesis. The retraction rests on forall_not_isCertified_of_straddling
+  (DivisorFamilyAffStrict.lean:127): forall A n, NOT A.IsCertified n. Positive and
+  negative, same predicate, both rooted and sorry-free. Resolution is dat-j-s own
+  point: the no-go needs IsPreconnected supportLocus with witnesses off each pinned
+  chart; over a field the support is finitely many closed points, so a straddling
+  support is not preconnected and the hypothesis is unmeetable. Relative vs fibrewise.
+  Consistent -- and this is the satisfiability check trap-c-on-a-negative-result asks
+  for, run in the direction nobody ran it.
+
+
+  THE ACTIONABLE PART, sharpening the "decisive unmeasured fact" (is the univSeed-s
+  supportLocus preconnected with points off V0 and off V1?):
+
+
+  1. THE PINNED PAIR COVERS. AffineTwoCover has sup_eq_top : V0 sup V1 = top (AffineTwoCover.lean:61);
+  relCover_sup is what the dichotomy consumes (DivSchemeCertZarConn.lean:160, DivisorFamilyAffStrict.lean:74).
+  So x notin V0 forces x in V1: the straddle needs TWO DISTINCT witnesses, one in
+  each chart-complement, never one.
+
+  2. THE NO-GO IS DRIVEN BY CLAUSE (c1) ALONE. It bottoms out at supportLocus_subset_chart_of_isCertified
+  (DivSchemeCertZarC1.lean:131), whose only certificate input is hc.finite_colength.
+  That is why it needs no leak hypothesis and why it is so strong.
+
+
+  So the measurement is concrete: two distinct points of the universal seed-s supportLocus,
+  one in V1\V0 and one in V0\V1, plus preconnectedness. Grep confirms no file does
+  it. It decides whether .divrep.u2 is open or dead; if it straddles, R2 (protection
+  I-0492) is the only route.
+
+
+  NOT DONE: no mathematical content rewritten (out of janitor scope).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T22:11:25.611822+00:00'
+updated_at: '2026-07-28T22:11:25.611834+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0010-horizon-ajcr-divrep
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

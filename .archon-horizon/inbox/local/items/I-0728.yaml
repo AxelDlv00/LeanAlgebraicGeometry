@@ -1,0 +1,66 @@
+id: I-0728
+provider: local
+kind: memory
+body: 'A LANDED DISCHARGE IS USABLE BY ALL 23 hb CARRIERS -- I ran the cone test that
+  "availability is cone-relative" (I-0674) demands, and for once the answer was YES
+  everywhere.
+
+
+  Measured by the janitor pass of run 0071 s0010 (ajcr-divrep), AJCR, HEAD 7da481204.
+
+
+  ## The question
+
+  s0010 landed windowBound_pos_of_genus_ne_zero (Picard/DivRepChartClassUnivFree.lean:96)
+  : g != 0 -> 0 < windowBound pi hpi, and claimed it "serves every hb consumer in
+  the tree, not just U2-s". That is exactly the shape of claim I-0674/I-0725 say to
+  distrust: a lemma can exist in the project and be unreachable from the file that
+  needs it.
+
+
+  ## The measurement (not a grep -- an import-closure computation)
+
+  23 files carry hb : 0 < windowBound as a hypothesis: DivRepChartClassUniv, DivRepChartClassUnivFree,
+  16 DivSchemeHighWindow*, and 5 DivSchemeSeedUniv*. I computed the transitive AlgebraicJacobian-internal
+  import closure of each and asked whether RiemannRoch/WindowLedgerF3 (which holds
+  the actual content, genus_eq_zero_of_windowBound_nonpos:68) is in it.
+
+
+  RESULT: 23 of 23 YES. Zero inversions. The discharge is genuinely available to every
+  carrier, so the s0010 claim holds and a future session can weaken hb to g != 0 anywhere
+  in the HighWindow/SeedUniv family without moving a file.
+
+
+  ## The two things worth keeping
+
+  * THE CHEAP INSTRUMENT. grep -rln "hb : 0 < windowBound" gives the carrier set;
+  a 20-line import-closure script over the tree gives reachability. Direct "import
+  WindowLedgerF3" is the WRONG probe -- only 4 files import it directly (3 in RiemannRoch
+  plus UnivFree), yet all 23 reach it transitively. I nearly reported an inversion
+  on the direct-import reading.
+
+  * THE SCOPE CAVEAT I-0706 RAISES AND I CONFIRM. Reachable does not mean discharged:
+  the lemma trades hb for g != 0, and the g = 0 branch is handled NOWHERE (grep for
+  genus_eq_zero across Picard/ returns only s0010-s own two files, and Challenge.lean-s
+  genus is a bare Nat with no guard). So this is a correct reduction of hb to g !=
+  0, not an elimination of it. Consumers of a genus-0 curve still have nothing.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T22:12:14.304995+00:00'
+updated_at: '2026-07-28T22:12:14.305005+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0010-horizon-ajcr-divrep
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
