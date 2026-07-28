@@ -122,9 +122,21 @@ This file closes exactly one of the three, and it is worth being blunt about whi
    `H¹(𝒪(D₀)) = 0`; note it is a *single* hypothesis at a *single* divisor, not a family, and
    the bound is then explicit: `deg D₀ + 1 − χ(𝒪_X)`.
 
-   **BUT BE PRECISE ABOUT WHAT "ONE DIVISOR, NOT A FAMILY" BUYS, BECAUSE IT IS NOT A CURVE.**
-   Measured, at the whole project rather than this subtree: **AJC currently proves that
-   antecedent at no proper curve at all.**  The only producer of
+   **THE ANTECEDENT IS NOW WITNESSED — the paragraphs that follow are HISTORY, kept because the
+   distinction they draw is still the right one to draw.**  `Ledger/FiberVanishing.lean` (the
+   AJCR port named in the third paragraph below) landed, and `Ledger/FiberBound.lean` composes it
+   with the χ-ledger, so at a smooth proper geometrically irreducible curve the conclusions of
+   this file hold **with no vanishing hypothesis at all**: see
+   `exists_bound_subsingleton_hModule_one_curve` and `exists_bound_h0_eq_genus_curve`, which carry
+   the three curve binders only.  Consume those when you want an unconditional statement; consume
+   the theorems in *this* file when you have a base vanishing from somewhere else, or want the
+   explicit bound in terms of your own `D₀`.  What has NOT changed is item 2 below:
+   extension-uniformity remains untouched.
+
+   What follows is the state as measured before that port, and it records the failure mode worth
+   remembering — a file can be sorry-free and axiom-clean while every theorem in it rests on an
+   antecedent the project cannot produce.  At that time: **AJC proved that antecedent at no proper
+   curve at all.**  The only producer of
    `Subsingleton (Sheaf.HModule (X.moduleKSheaf k) 1)` in the project is
    `Ledger/AffineVanishing.Scheme.subsingleton_moduleKSheaf_hModule_one` (:329), and it carries
    `[IsAffine X]` — which a proper curve never satisfies.  No `genus … = 0` or
@@ -135,8 +147,8 @@ This file closes exactly one of the three, and it is worth being blunt about whi
    currently unwitnessed in this project**.  The theorems are not vacuous — the hypothesis is
    satisfiable, and AJCR discharges its analogue (see the provenance section) — but nobody should
    read "the residue is one base vanishing" as "AJC is one lemma from unconditional bounded
-   vanishing at a curve".  The residue is the AJCR port named below, and until it lands, every ★
-   and ★★ here fires only under a hypothesis AJC cannot yet supply.
+   vanishing at a curve".  The residue was the AJCR port named below — which has since landed, so
+   every ★ and ★★ here now has an unconditional counterpart in `Ledger/FiberBound.lean`.
    - Over a curve of genus `0` (equivalently `h¹(𝒪_X) = 0` with the `Subsingleton` spelling),
      `D₀ = 0` works and the whole thing is unconditional — `subsingleton_of_deg_ge_of_zero`.
      Recorded as the cheapest *shape* of the input, not as an available instance: per the
@@ -144,22 +156,27 @@ This file closes exactly one of the three, and it is worth being blunt about whi
    - In general it is a port: AJCR's `RiemannRoch/FLVVanishing.lean:302`
      (`subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1`) produces, for a finite dominant
      `π : Y ⟶ ℙ¹`, an `n₀` with `H¹(𝒪(D + n·F)) = 0` for `n ≥ n₀`.  Any one member of that
-     tower is a `D₀`.  **Measured port cost** (I did the closure, do not re-guess it): that
-     theorem's AJCR-local import closure is 59 modules, of which the genuinely new layer for
-     AJC is `FLVFiberToolkit` / `FLVLattice` / `FLVQcoh` / `FiberTwist` / `Degree` plus
-     `Cohomology.AffineVanishingQcoh` / `QcohSections` — and `Degree` drags in eleven
-     `Picard/` presentation modules that AJC's Ledger tree deliberately does not have.  So it
-     is a real port, not a copy: ~2.5k lines of new material and a Picard-presentation
-     dependency.  **That is now the only thing between AJC and unconditional bounded
-     vanishing at every curve**, and it is strictly smaller than it was before this file,
-     because the peel, the ledger, the translation and the cofinality step are all done.
+     tower is a `D₀`.  **The port cost recorded here was an overestimate, and the correction is
+     the reusable lesson.**  This paragraph used to price the port at 59 closure modules with an
+     unavoidable Picard-presentation dependency, "~2.5k lines and a Picard dependency".  That
+     counted IMPORT LINES.  Counted instead by DECLARATION REFERENCE, the vanishing chain uses
+     `picClass`, `CechPic`, `divisorClass` and `classDeg` exactly zero times: the twelve
+     `Picard/` modules enter only through AJCR `FiberTwist.lean`'s class-side material
+     (`fiberDivisor`/`fiberTwist`/`classDeg_fiberTwist`), which the argument never mentions, and
+     `AlgebraicJacobian.Challenge` arrives the same way through `ChiCurve ← Degree ← classDeg`.
+     Dropping the class half and keeping the cover half, the port is
+     `FiberChart` / `FiberDivisor` / `FiberLattice` / `DivisorSheafQcoh` / `FiberVanishing` plus
+     the two `Qcoh` files — no Picard module, and the only thing that edge was carrying was the
+     `coeffAt` calculus, now in `Ledger/FiberDivisor.lean`.  An import closure is an upper bound
+     and can overstate tenfold when a file bundles a construction with its class-side theory.
 
      Note that AJCR has *already assembled* those two halves into the unconditional bound, in
      `RiemannRoch/UniformVanishing.lean:71` — it specialises the base to the fibre tower `n₁·F`
      of a finite dominant `π : Y ⟶ ℙ¹` and gets `∃ b, ∀ D, b ≤ deg D → H¹(𝒪(D)) = 0` outright.
-     So the *statement* AJC still lacks is not novel anywhere; it is the AJCR port above.  What
-     this file contributes to that end is the half that does **not** need `π`: everything from
-     an arbitrary base vanishing onwards.
+     So the statement was never novel anywhere; it was the AJCR port above.  What *this* file
+     contributes is the half that does **not** need `π` — everything from an arbitrary base
+     vanishing onwards — and that is exactly the half `Ledger/FiberBound.lean` now feeds the
+     ported `π`-side into.
 2. **Extension-uniformity — UNTOUCHED, and nothing here bears on it.** Every statement in
    this file is over the one field `K`; `CurveDivisor.deg K` and `residueDeg K` are pinned to
    it.  A bound uniform over finite extensions `K'/K` would need the bound
@@ -430,8 +447,9 @@ degree at least `1 − χ(𝒪_X)`, with no other input.  On a genus-zero curve 
 bound is `deg D ≥ 0`, the classical statement.
 
 Note what this does and does not say: it is unconditional *given* `H¹(𝒪_X) = 0`, which is a
-genus-zero hypothesis, not a fact about every curve.  The general case needs the AJCR port
-named in item 1 of the module docstring. -/
+genus-zero hypothesis, not a fact about every curve.  For the general case use
+`Ledger/FiberBound.exists_bound_subsingleton_hModule_one_curve`, which needs no vanishing
+hypothesis at any genus. -/
 theorem subsingleton_of_deg_ge_of_zero
     (h₀ : Subsingleton (Sheaf.HModule (X.divisorSheaf K (0 : X.CurveDivisor)) 1))
     (D : X.CurveDivisor)
