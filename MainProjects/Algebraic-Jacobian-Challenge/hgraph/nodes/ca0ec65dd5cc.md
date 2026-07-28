@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: '`FixedPoints.subring`/`subalgebra`'
 type: lean
-updated: '2026-07-29T01:14:28'
+updated: '2026-07-29T03:18:56'
 ---
 instance `FixedPoints.subring`/`subalgebra` cannot even be *stated* at the tensor power, so
 Milne's formula was not expressible in the tree.
@@ -41,8 +41,15 @@ Milne's formula was not expressible in the tree.
 
 Nothing here averages over the group, so no `n!` is inverted and the statements hold in
 every characteristic — which matters, since `Sym^g C` is wanted over an arbitrary
-algebraically closed `k̄` and `g!` may vanish there. `ι` is arbitrary (not even finite) for
-the action itself; `Fin n` enters only when specialising to Milne's `n`-fold power.
+algebraically closed `k̄` and `g!` may vanish there.
+
+Where finiteness of `ι` *is* needed, precisely (an earlier version of this paragraph said the
+action needs none, which is false — `permMulSemiringAction ℤ (ι := ℕ) ℤ` fails to synthesize
+`Finite ℕ`): `permAlgHom`, `symTensorPowSubalgebra`, `mem_symTensorPowSubalgebra_iff` and
+`tprod_const_mem_symTensorPowSubalgebra` need none; `permAlgHom_comp`, `permAlgHom_one`,
+`permAlgEquiv` and hence the **action** do, because `PiTensorProduct.algHom_ext` (extensionality
+over `singleAlgHom`) requires `[Finite ι]`. `Fin n` in particular enters only when specialising
+to Milne's `n`-fold power.
 
 ## Scope — what this is not
 

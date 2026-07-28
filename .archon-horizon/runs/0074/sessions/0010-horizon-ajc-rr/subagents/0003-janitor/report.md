@@ -1,1 +1,1 @@
-The archive ran but the comment was rejected for length. Re-adding a trimmed conclusion.
+Running I-0609's own cheap check across all open items.
