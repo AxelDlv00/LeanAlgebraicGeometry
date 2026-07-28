@@ -1445,8 +1445,11 @@ describes. Two facts make it work, and neither needs Quot:
    `T = Spec k` (the trivial over-object `Over.mk (𝟙 (Spec k))`) sends a `k`-rational point
    of `Pic_{C/k}` to a relative Picard class over the base. This is `classOfSection` below,
    and it is sorry-free.
-2. **The degree is a homomorphism on those classes.** That is the one remaining input,
-   isolated as the class `ClassDegree`. The sibling project builds exactly this
+2. **The degree is a homomorphism on those classes.** ⚠ This was described here as "the one
+   remaining input, isolated as the class `ClassDegree`". That is **false** and is corrected at
+   `ClassDegree` below: the class is inhabited by the zero homomorphism with no hypothesis, so
+   it demands nothing and `degreeOfSection` is not pinned to the degree. What is actually
+   missing is a *characterisation* of the homomorphism. The sibling project builds exactly this
    homomorphism sorry-free and without Quot — `Algebraic-Jacobian-Challenge-Rebuild`,
    `RiemannRoch/RelPicDegree.lean`, `relPicDeg : Additive (relPic C (overSpec k K)) →+ ℤ`,
    descended from `classDeg` along the observation that `Spec K` is a one-point space so its
@@ -1464,17 +1467,36 @@ value off the sections. `degreeOfSection` below is the same construction on the 
 domain, and is total. Consumers should migrate; `degree` is retained only because
 `kPoints_iff_kerDegree` is pinned against it. -/
 
-/-- **The one remaining input to the degree map**: a degree homomorphism on relative Picard
-classes of `C` over the base field.
+/-- An additive integer-valued function on relative Picard classes of `C` over the base field
+— the carrier shape of Milne III.1 p.~88.
 
-This is Milne III.1 p.~88 in the only form the construction needs — additive, integer-valued,
-on `Pic(C ×_k Spec k)/π^* Pic(Spec k)`. Additivity is not decoration: `kPoints_iff_kerDegree`
-needs `degree` to vanish on the trivial class, which is `map_zero`.
+**⚠ THIS CLASS IS VACUOUS AS STATED, and the docstring that used to sit here — "the one
+remaining input to the degree map" — was FALSE.** Corrected run 0067 r2 after inbox issue
+I-0534, re-verified by machine rather than accepted on report:
 
-The sibling project's `relPicDeg` (see the section note) has exactly this shape after
-transporting its `Additive`/`CechPic` carrier to this project's `relPresheaf` carrier; that
-transport is the open work, and it is a carrier comparison rather than a new theorem about
-degrees. -/
+```
+theorem probe_classDegree_no_gate … : PicScheme.ClassDegree C := ⟨⟨0⟩⟩
+-- axioms: [propext, Classical.choice, Quot.sound]   -- no gate, no sorry
+```
+
+The field asks only for `Nonempty (… →+ ℤ)`, and the **zero homomorphism** inhabits that type
+with no hypothesis whatsoever. So `ClassDegree` is a *theorem* of this project, not an open
+input, and nothing here demands that the chosen map be a degree.
+
+WHAT THAT COSTS THE CONSUMERS BELOW, stated plainly: `degreeOfSection` is total but **not
+pinned to the degree** — `degreeOfSection ≡ 0` is a permitted reading of every statement in this
+section — and `degreeOfSection_eq_zero_of_class_eq_zero` is correspondingly contentless (it is
+`map_zero`, true of the zero map too). Do not cite them as a constructed degree map.
+
+THE REAL MISSING INPUT is a **characterisation**, not an existence claim: agreement of the
+chosen homomorphism with `Scheme.WeilDivisor.degree` on the class of `𝒪(D)`, or with the
+sibling's `relPicDeg` under the carrier comparison. That is what would make the class
+non-vacuous and the degree unique. The class is retained (rather than deleted) only because
+`degreeOfSection` is pinned against it; whoever adds the pinning field owns updating both.
+
+Contrast the house pattern: `HasPicScheme` and `HasFiniteMapToP1` work because they assert
+existence of an object satisfying a *nontrivial property*. This one asserts existence of a map
+with no property, which is why it collapsed. -/
 class ClassDegree {k : Type u} [Field k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIntegral C.hom] : Prop where
