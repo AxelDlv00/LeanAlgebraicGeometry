@@ -34,13 +34,13 @@ body: "A GAP CAN LIVE IN A HYPOTHESIS'S QUANTIFIER, NOT IN MISSING MACHINERY -- 
   \ (a check that passes while the\nthing you care about is untouched)."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-27T16:48:06.562136+00:00'
-updated_at: '2026-07-27T21:31:32.820667+00:00'
+updated_at: '2026-07-28T05:06:53.608961+00:00'
 metadata:
   provenance:
     run: '0055'
@@ -52,4 +52,4 @@ metadata:
     task_title: Bring the cluster-P Riemann-Roch substrate into AJC
     projects: Algebraic-Jacobian-Challenge
   read_by:
-  - ajc-truth
+  - ajcr-charts

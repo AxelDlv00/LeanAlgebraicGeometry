@@ -1,0 +1,61 @@
+id: I-0505
+provider: local
+kind: issue
+body: "A BINDING PROTECTION CAN BE INVISIBLE TO THE SESSION IT BINDS — the inbox filter\
+  \ hides 16 of 52 open items, and one of them is a protection\n\nFiled by the janitor\
+  \ pass for lane `ajcr-charts` (run 0072). This escalates one specific, safety-relevant\
+  \ consequence of the filter defect already reported in `I-0481` / `I-0489`; those\
+  \ items are about *readability* and *hand-off*, and this one is about a **binding\
+  \ constraint not reaching the agent it binds**. Not a hygiene problem, so I am reporting\
+  \ rather than working around it.\n\n## Measurement\n\nAt the start of this pass,\
+  \ from the workspace root:\n\n- `horizon inbox list --status open --json` → **36**\
+  \ items\n- `status: open` parsed from `.archon-horizon/inbox/local/items/*.yaml`\
+  \ → **52**\n- hidden from the CLI: **16**\n\n## Why this one is worse than a read\
+  \ failure\n\nThe workspace's attention order says: *before editing, inspect all\
+  \ open `protection` items*, via `horizon inbox list --mine --status open --kind\
+  \ protection --json`. That command returns **two** protections (`I-0492`, `I-0074`)\
+  \ and the pre-command synchronizer banner names the same two.\n\nThere is a **third**:\
+  \ `I-0491`, `kind: protection`, `[persistent]`, from the human, dated 2026-07-28,\
+  \ scope `Algebraic-Jacobian-Challenge`. It carries the binding branch-(2) decision\
+  \ — the Jacobian headline is stated over an arbitrary field with no rational-point\
+  \ binder, `hasRationalPoint_of_curve` must be **deleted, never proved**, and no\
+  \ new declaration may consume it. It is hidden from any session whose project scope\
+  \ does not match, because `reaches_horizon` applies project scope before anything\
+  \ else and does not exempt `protection`.\n\nSo a cross-project session — a janitor,\
+  \ a Ground pass, or any lane touching both trees — is told authoritatively that\
+  \ there are two active protections when there are three, and the missing one forbids\
+  \ proving a specific false statement. I only found it by parsing the store directly.\n\
+  \n## Suggested fix, in priority order\n\n1. **Never scope-filter `kind: protection`.**\
+  \ A standing constraint costs one row to display and its whole purpose is to be\
+  \ seen by whoever might violate it; project scope should narrow *relevance*, not\
+  \ *visibility*, for this kind. Same argument applies to the synchronizer's `REQUIRED`\
+  \ lane, which counts from the filtered set.\n2. Have `inbox list` report the count\
+  \ it suppressed (\"36 shown, 16 not addressed to this team\"), so the gap is visible\
+  \ rather than inferable only by parsing YAML.\n3. `inbox show` on a hidden item\
+  \ should keep exiting non-zero with the existing clear message, and ideally point\
+  \ at `.archon-horizon/inbox/local/comments/<ID>/`.\n\n## Interim workaround for\
+  \ agents\n\nUntil this is fixed, enumerate protections from the store rather than\
+  \ the CLI:\n\n    python3 -c \"import yaml,glob; [print(d['id'],d['kind']) for f\
+  \ in glob.glob('.archon-horizon/inbox/local/items/*.yaml') for d in [yaml.safe_load(open(f))]\
+  \ if d.get('status')=='open' and d.get('kind')=='protection']\"\n\nI have recorded\
+  \ the same workaround as a comment on memory `I-0482`, which already holds the read-path/count-path\
+  \ rule and the `reaches_horizon` analysis."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:17:18.548367+00:00'
+updated_at: '2026-07-28T05:18:02.903576+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0002-horizon-ajcr-charts
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

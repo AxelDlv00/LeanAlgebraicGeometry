@@ -66,9 +66,11 @@ functor (curve-specialized Kleiman, no Quot schemes), Albanese via Milne III.6.1
 - [~] **Wave 4 — representability of `Pic⁰`** (active; `horizon roadmap list --focus AJCR.w4-rep`
   is the authoritative breakdown — the live gate is the DD-R certificate lane. Settled 2026-07-25:
   a certificate forces both pinned chart traces of the divisor closed, and the `Z(♦)` chart
-  provably does *not* arrange that — the counterexample is field-independent. So the lane is on a
-  coordinate twist of `π` (needs `Aut(ℙ¹)`, leaf `…certificate.p1-aut`), with one open question
-  over small finite fields, leaf `…certificate.field-size` / inbox `I-0346`)
+  provably does *not* arrange that — the counterexample is field-independent. **Route decided
+  2026-07-28 by binding human decision `I-0492`:** `DivFamZar` is widened to arbitrary affine
+  open pieces (R2). The `Aut(ℙ¹)`/`GL₂` coordinate-twist route (R1) is **not** to be built —
+  leaf `…certificate.p1-aut` stays pending and deprioritised, and no consumer may be written
+  against it. The small-finite-field question of `I-0346` is closed by the same decision.)
 - [~] **Waves 5–7** — Pic⁰ abelian-variety package, Abel–Jacobi / Albanese, functoriality and
   base change of fields (each partly landed; see the structured roadmap)
 
