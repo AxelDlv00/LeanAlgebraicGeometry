@@ -2,34 +2,42 @@ id: AJCR.w4-rep.datum.dat-c.c9-chartlocus
 title: 'C9 chartLocus: the sole gate of dat-b B-6 AND the whole dat-glue assembly'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "SPLIT 2026-07-26 into c9a (DONE) and c9b (blocked). chart-u is REOPENED\
-  \ as of 2026-07-29 -- see\nits own row; it had been set done on a reading of \"\
-  unconditional\" that covered only one of the\ntwo hypotheses of the general-test\
-  \ openness theorem.\n\nSTATE 2026-07-29 (run 0072 r6, lane ajcr-charts):\n\nc9a:\
-  \ chartLocus DEFINED and OPEN at the parameter-space carrier level. Certificate-free,\n\
-  divRep-free. Unchanged.\n\nchart-u: REOPENED, then advanced. isOpen_chartLocus_of_affineLocal'\
-  \ is unconditional in\nIsSplitWitnessIsoInvariant (discharged at s0010) but STILL\
-  \ TAKES the affine-local haff, which\nnothing in the tree discharges -- the affine\
-  \ case is conditional on IsChartDatumPresentation,\nB-4's residue. That residue\
-  \ then MOVED this pass: its converse half hconv is DISCHARGED, so both\nhalves are\
-  \ now witness-free and what remains is a cechPicClass base-change identity. Full\
-  \ account\non the chart-u row, including which ingredient the three-session pricing\
-  \ of hconv was missing\n(plus-unit injectivity, not a transport).\n\nc9b: STILL\
-  \ the deliverable proper and still blocked on CERT-Sigma through IsChartLocusFibre's\n\
-  exists_factor. What changed is that its gate is now honestly THREE-WAY rather than\
-  \ two, because\nthe \"clause (i) needs nothing\" half of the r5 split was mispriced.\
-  \ The criterion and the\nthree-field reduction stand.\n\nTHE PATTERN THIS LEAF KEEPS\
-  \ PRODUCING, worth reading before pricing anything else on it. Three\nsuccessive\
-  \ sessions each found the previous session's gate statement wrong in the SAME direction\n\
-  -- too confident that something was closed:\n * s0008 found \"needs no new mathematics\"\
-  \ false by exactly one lemma (IsSplitWitnessIsoInvariant);\n * s0010/r5 priced the\
-  \ residue as \"map_map plus map_id\" and missed the INSTANCE side, which was\n \
-  \  the content;\n * r6 found \"the W field costs zero\" false, and the thing it\
-  \ costs (B-4) had a residue whose\n   own pricing was also short by one ingredient\
-  \ -- one that had been in the tree for weeks.\nThe common cause is not carelessness\
-  \ about mathematics; it is that each closure was measured\nagainst the hypothesis\
-  \ the session had just removed rather than against ALL the hypotheses the\ntheorem\
-  \ still carries. CHECK WHAT A DISCHARGED THEOREM STILL TAKES.\n"
+summary: "SPLIT 2026-07-26 into c9a (DONE) and c9b (blocked). chart-u was reopened\
+  \ at r6 and reached its\nENDPOINT at r7 -- still active, and the reason it is not\
+  \ done is a producer, not a proof.\n\nSTATE 2026-07-29 (run 0072 r7, lane ajcr-charts):\n\
+  \nc9a: chartLocus DEFINED and OPEN at the parameter-space carrier level. Certificate-free,\n\
+  divRep-free. Unchanged.\n\nchart-u: CHART-U(b) AT A GENERAL TEST NOW HOLDS from\
+  \ a witness-free hypothesis\n(isOpen_chartLocus_of_plusFibre, plus chartLocusOpensOfPlusFibre\
+  \ giving the open as DATA). The\nhaff residue r6 named is discharged; B-4 is closed\
+  \ as a chain. The one r7 ingredient was a\ntransport THAT THIS LANE'S OWN DOCSTRING\
+  \ ADVERTISED BY NAME AND NEVER WROTE -- see the row.\nRemaining: a PRODUCER of the\
+  \ per-affine-piece datum, which is a different obligation from every\nrow in the\
+  \ chain and is not claimed.\n\nc9b: still the deliverable proper, still blocked\
+  \ -- but the gate is now clause (ii) ALONE\n(CERT-Sigma/divRep through IsChartLocusFibre's\
+  \ exists_factor). Clauses (i) and (iii) are closed\nmodulo that producer and wait\
+  \ on no sibling lane.\n\nTHE PATTERN THIS LEAF KEEPS PRODUCING, and r7 is the FOURTH\
+  \ instance -- read this before pricing\nanything on it. Each session found the previous\
+  \ session's gate statement wrong in the SAME\ndirection, too confident that something\
+  \ was closed:\n * s0008: \"needs no new mathematics\" false by exactly one lemma\
+  \ (IsSplitWitnessIsoInvariant);\n * s0010/r5: priced the residue as \"map_map plus\
+  \ map_id\", missed the INSTANCE side;\n * r6: \"the W field costs zero\" false,\
+  \ and the thing it costs (B-4) had a residue itself short by\n   one ingredient\
+  \ that had been in the tree for weeks;\n * r7: the transport closing that residue\
+  \ was CITED BY NAME IN A DOCSTRING AND DID NOT EXIST, and\n   the sentence citing\
+  \ it made the obligation read as already discharged.\n\nr7 SHARPENS THE COMMON CAUSE.\
+  \ r6 diagnosed it as \"each closure was measured against the\nhypothesis the session\
+  \ had just removed rather than against ALL the hypotheses the theorem still\ncarries\"\
+  . True, and r7 adds the mechanism that lets it happen: THE PROSE IS NOT CHECKED.\
+  \ A\ndocstring may name a declaration that does not exist, and a `sorry` census,\
+  \ an axiom probe and a\ngreen root build are all silent about it. The cheap test\
+  \ is to grep the tree for every declaration\nname a header cites before trusting\
+  \ the sentence around it.\n\nAND ONE MORE, from r7's own self-correction: a hypothesis\
+  \ can be over-strong INSIDE A BINDER.\nhasWitnessH1Vanishing_of_isSplitWitness_at's\
+  \ hplus quantified an instance too freely and was\nthereby unprovable from the thing\
+  \ meant to supply it. A census sees argument positions, not the\ninstances they\
+  \ quantify.\n\nVERIFICATION r7: full root build GREEN -- 9283 jobs, EXIT=0, zero\
+  \ errors, zero sorry warnings,\n129 pre-existing warnings, none in this lane's files.\
+  \ Mutex hold 39 seconds.\n"
 status: pending
 kind: proof
 priority: urgent
@@ -52,5 +60,5 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c
-  updated_at: '2026-07-28T22:56:02.569598+00:00'
+  updated_at: '2026-07-28T23:43:39.357394+00:00'
   owner: ajcr-charts

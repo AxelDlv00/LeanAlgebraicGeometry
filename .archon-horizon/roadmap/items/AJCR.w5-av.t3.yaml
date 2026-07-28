@@ -3,29 +3,61 @@ title: 'T3: \(\ker(\mathrm{relPic}(k[\varepsilon]) \to \mathrm{relPic}(k)) \sime
   H^1(C,\mathcal{O})\) via nilpotent unit-lifting'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'T3 is the CONSUMER of the T4 comparison, not independent work: ker(relPic(k[eps])
-  -> relPic(k)) =+ H1(C,O).
-
-
-  T3''S STATED BLOCKER IS GONE as of run 0073 r6, and so is the instantiation item
-  that replaced it. The previous version of this row said T3 waits on T4''s named
-  residue — the (3b)/(3c) object identifications and (iii-c2-aff-geo) carried as the
-  hcyc binder in DualNumberChartPic. All closed: (3b)/(3c) in r4/r5; (iii-c2-aff-geo)
-  plus BOTH consumer inputs in r6; and the chart-level instantiation (the two presentations
-  plus the square hsq) in EpsChartSquare.lean, aaa4627bb. Worksheet 6.27.
-
-
-  WHAT T3 WAITS ON NOW is one geometric fact, not a comparison: not-IsAffine C.left
-  (see the t4 row and memory I-0729). Every other input of the chain is landed, rooted
-  and axiom-clean. A successor should start there, or start assembling the eps-kernel
-  statement itself over that hypothesis — the pieces no longer have gaps between them.
-
-
-  STILL TRUE AND STILL THE TRAP FOR T5: what T3 must hand T5 is the SEMILINEAR COMPARISON
-  (AddEquiv plus intertwining across kappa(e) ~+* k), NOT a bare eps-kernel bijection
-  — finrank does not transport along a bijection of sets. See the t5 row.
-
-  '
+summary: "T3 IS THREE ARROWS AND ALL THREE ARE LANDED (run 0073 r7). The eps-kernel\
+  \ comparison chain of worksheet section 7.1 is complete except for its composition.\n\
+  \nWHAT THE PREVIOUS VERSION OF THIS ROW GOT WRONG, recorded because it cost three\
+  \ sessions. It said \"WHAT T3 WAITS ON NOW is one geometric fact, not a comparison:\
+  \ not-IsAffine C.left\" and \"the pieces no longer have gaps between them\". Both\
+  \ false. (a) not-IsAffine had been replaced by g != 0 in the same session that wrote\
+  \ the row (see the .t4 row, worksheet 6.29). (b) Worksheet 6.24 had recorded, at\
+  \ r4, that \"exactly one link\" was missing between the truncated-exponential engine\
+  \ and the two-chart CechPic comparison -- and the cheap test nobody ran is a CONSUMER\
+  \ GREP: each of the four objects 6.24 named as the two sides of that link (pullbackOverlapQuot,\
+  \ dualNumberCechH1Equiv, unitsReduction, relSectionsMapUnits) was consumed by NOTHING\
+  \ outside its own defining file, three of them by nothing at all. So T3 was not\
+  \ assembly-over-a-hypothesis; it was four carriers with the arrows between them\
+  \ absent. I-0711 island shape.\n\nLANDED THIS ROUND -- three modules, all kernel-green\
+  \ on the lock-free scratch root, all rooted in AlgebraicJacobian.lean, all headlines\
+  \ axiom-clean against two controls that both fire sorryAx:\n\n * (T3-4) Tangent/CechPicIsoTransport.lean\
+  \ -- CechPic.map along an ISOMORPHISM is a MulEquiv (cechPicMapEquivOfIso), with\
+  \ both faces named since a kernel inclusion consumes only one. Pic.lean carried\
+  \ map_id and map_comp and nothing composing them into invertibility; a workspace\
+  \ search found only classDeg_cechPicMap_of_isIso, which is about degrees. Instantiated\
+  \ at the (3c) seam: cechPicMap_transportLeft_injective. transportLeft had been landed\
+  \ as an IsIso whose own docstring said a consumer \"may transport a kernel in either\
+  \ direction\" -- the sentence cashing that in did not exist.\n\n * (T3-2) Tangent/EpsArrowIdentification.lean\
+  \ -- THE 6.24 LINK, and it is TWO rfls. cechCoboundaryUnits_preimage_eq: dualNumberCechH1Equiv's\
+  \ target subgroup (spelled with preimage_mono) and pullbackOverlapQuot's source\
+  \ subgroup (spelled with inf_le_left at the pulled-back family) are the SAME TERM,\
+  \ because preimage distributes over inf definitionally. pullbackOverlapQuot_dualNumberCechH1Equiv_mk:\
+  \ the square itself, on generators.\n\n * (T3-3) Tangent/TwoChartKernelComparison.lean\
+  \ -- twoChartKernelEquiv: twoChartClass is a BIJECTION ker(pullbackOverlapQuot f)\
+  \ = ker(CechPic.map f), for an arbitrary morphism and two-chart cover. A bijection\
+  \ and not two surjections is the point (I-0571): a dimension count cannot use mutual\
+  \ surjectability, and Wave 5's numeral is a dimension count. The one hypothesis\
+  \ is clause (iii-c2) verbatim -- classes killed by f are chart-trivial -- which\
+  \ is the chain's ONLY geometric input, has a producer at the Wave-5 instance, and\
+  \ was checked satisfiable with a junk witness.\n\nTWO PRICING CORRECTIONS FROM THIS\
+  \ ROUND, both mine, both recorded in the worksheet at the site. (i) Worksheet 7.3\
+  \ priced (T3-2) at [M] and called it \"the real residue\", on the strength of \"\
+  both ingredients are landed\" -- while the same subsection said the number was a\
+  \ guess until someone wrote the statement. It was; 7.4 retracts it and strikes the\
+  \ sizing table. (ii) My first draft of (T3-3) had a sorry AND was vacuous from one\
+  \ cause: toFun could not prove chart-triviality of a twoChartClass value, so I widened\
+  \ the target subtype to include \"and L is a twoChartClass value from the kernel\"\
+  , which typechecks and states that a set is in bijection with its own image. Moving\
+  \ the obligation to a binder the consumer discharges made the residue unnecessary\
+  \ in both directions. Worksheet 7.5.\n\nT3'S RESIDUE: the COMPOSITION, and nothing\
+  \ else. (T3-1) h1AddEquivTruncExpCechKernel, (T3-2), (T3-3), (T3-4) are four landed\
+  \ statements; H1(C,O) ~+ ker(CechPic(C_eps) -> CechPic(C)) is their composite and\
+  \ is written nowhere. Per 7.4's own rule that is a decomposition, not a measurement\
+  \ -- write the composite statement and read the leftover goals before pricing it.\
+  \ Note what changed though: four arrows to compose, where the start of this session\
+  \ found four carriers with the arrows absent.\n\nSTILL TRUE AND STILL THE TRAP FOR\
+  \ T5: what T3 must hand T5 is the SEMILINEAR comparison (AddEquiv plus intertwining\
+  \ across kappa(e) ~+* k), NOT a bare kernel bijection -- finrank does not transport\
+  \ along a bijection of sets. The .t5 row records it, and Pic0TangentSpace.finrank_eq_of_addEquiv_of_bijective_smul\
+  \ is the landed bridge that consumes it.\n"
 status: pending
 kind: proof
 priority: normal
@@ -39,5 +71,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:44.680736+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T22:22:54.757214+00:00'
+  updated_at: '2026-07-28T23:52:07.117002+00:00'
   owner: ajcr-w5-av

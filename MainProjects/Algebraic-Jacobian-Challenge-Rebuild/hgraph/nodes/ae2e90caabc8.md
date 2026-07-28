@@ -39,7 +39,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.divFamEps_eq_of_le_of_quotientData
 type: lean
-updated: '2026-07-29T06:51:20'
+updated: '2026-07-29T07:37:18'
 ---
 theorem divFamEps_eq_of_le_of_quotientData (F : DivFam C R π g)
     (x₁ : Grassmannian.grFunctorAff k
@@ -76,3 +76,10 @@ theorem divFamEps_eq_of_le_of_quotientData (F : DivFam C R π g)
   Prod.ext
     (divisorWindowQuot_eq_of_le_of_quotientData F _ x₁ hproj₁ hrank₁ hle₁)
     (divisorWindowQuot_eq_of_le_of_quotientData F _ x₂ hproj₂ hrank₂ hle₂)
+
+set_option maxHeartbeats 2000000 in
+-- both landed window-quotient lemmas unfold `DivFam.window` through the section-ring algebra
+-- tower at each of the two pinned ledger windows; this is the defeq profile the satisfiability
+-- probe was measured at, and the default budget does not reach it
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in

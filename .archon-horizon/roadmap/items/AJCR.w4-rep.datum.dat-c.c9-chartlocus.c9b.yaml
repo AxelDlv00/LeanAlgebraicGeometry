@@ -3,62 +3,43 @@ title: 'C9b: f_c and the (f, hf) chart pair (CERT-Sigma-gated; developable param
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "C9b: f_c and the (f, hf) chart pair that pic0RepresentableByOfCharts (Pic0SigmaSheaf.lean:161)\n\
-  consumes.\n\nSTATE 2026-07-29 (run 0072 r6, lane ajcr-charts). The r5 SPLIT of the\
-  \ gate STANDS; the r5\nPRICING of one half is RETRACTED.\n\nWHAT STANDS FROM r5.\
-  \ IsChartUniv is IsOpenImmersion.presheaf = MorphismProperty.relative at\nyoneda,\
-  \ whose DEFINITION (mathlib MorphismProperty/Representable.lean:315) conjoins\n\
-  \ (i) relative representability -- the fibre product along any test point is representable\
-  \ by a\n     SCHEME;\n (ii) the property clause -- every represented pullback is\
-  \ an open immersion.\nThe relative-GAP-2 + classifier story is input to (ii) ONLY.\
-  \ The criterion discharging both from\nelementwise data (isOpenImmersion_presheaf_of_chartFibrePresented,\n\
-  Pic0ChartOpenImmersionCriterion.lean) and the reduction of the datum to three fields\n\
-  (isChartUniv_of_isChartLocusFibre, Pic0ChartUnivReduce.lean) both stand, sorry-free\
-  \ and rooted,\nbracketed both ways by isEmpty_forall_chartFibrePresented_of_not_injective\
-  \ and\ninjective_of_isChartUniv.\n\nWHAT IS RETRACTED, and it is this row's own\
-  \ sentence. The row said clause (i) \"needs only AN OPEN\nOF THE TEST, and chartLocus\
-  \ is one unconditionally\", and that the W field \"needs nothing\".\nFALSE, and\
-  \ false in the direction that hides an obligation from a census. chartLocusOpens\
-  \ takes\nhaff (affine-local openness at every affine open of the test) and NOTHING\
-  \ IN THE TREE DISCHARGES\nIT: isOpen_chartLocus_of_affineLocal' removed only the\
-  \ IsSplitWitnessIsoInvariant hypothesis and\npasses haff through, and the affine\
-  \ case that would feed it\n(isOpen_setOf_isSplitWitness_of_presentation) is conditional\
-  \ on IsChartDatumPresentation -- B-4's\nown named residue. Measured: chartLocusOpens\
-  \ had ZERO consumers, and haff occurs only as an\nargument position, which is exactly\
-  \ why an unnamed hypothesis in a DEFINITION's signature is\ninvisible to a search\
-  \ for open obligations. Corrected at all four asserting sites (8fc0df182,\nc401ed616)\
-  \ and on the chart-u row, which is REOPENED from done.\n\nSO THE HONEST SPLIT IS\
-  \ THREE-WAY, not two:\n (i)  relative representability -- needs an open of the test\
-  \ W. NOT free: costs B-4 through haff.\n      Named ChartLocusAffineLocal and reduced\
-  \ to B-4 by chartLocusAffineLocal_of_presentation\n      (Pic0ChartCoverageAbel.lean).\
-  \ NOTE the W of a COVERAGE datum is free (any neighbourhood\n      works, see the\
-  \ dat-b row) -- it is specifically the CHART-LOCUS W that costs B-4.\n (ii) the\
-  \ property clause -- CERT-Sigma/divRep-gated through IsChartLocusFibre's exists_factor\n\
-  \      and the classifier-produced r. UNCHANGED, and still the real wall.\n (iii)\
-  \ B-4 itself, which moved a long way this session: hconv is DISCHARGED\n      (hasWitnessH1Vanishing_of_isSplitWitness_at,\
-  \ Pic0ChartPresentationConverse.lean), so both\n      halves of the pointwise presentation\
-  \ are witness-free, H1-free and divisor-free and what\n      remains is a cechPicClass\
-  \ base-change identity. The missing ingredient was NOT a transport\n      -- it\
-  \ was PicEtAff.unit_injective (Kleiman 2.5(1), the zeta3 close) plus\n      relPicMk_injective_of_subsingleton,\
-  \ both in the tree for weeks and cited by NO CHART-U row.\n\nALSO LANDED, for whoever\
-  \ supplies the datum: abelChartApp_eq gives the Abel chart's value at a\npoint of\
-  \ the divisor scheme with BOTH components. A producer must match the Sigma-component\
-  \ (an\nequation of morphisms to Spec k) BEFORE the classes are in the same type;\
-  \ leaving that to unfold\nat a use site is how it gets forgotten.\n\nVERIFICATION\
-  \ THIS PASS: each touched module kernel-checks at lake env lean EXIT=0 with the\n\
-  lakefile leanOptions passed explicitly (-DmaxSynthPendingDepth=3 -Dlinter.mathlibStandardSet=true)\n\
-  and ZERO output -- so linter-clean too, which the bare fallback cannot show. Every\
-  \ headline\nresult axiom-clean ([propext, Classical.choice, Quot.sound]) against\
-  \ a control that fires sorryAx.\nFULL ROOT BUILD: RAN AND GREEN. `lake build AlgebraicJacobian`\
-  \ completed successfully, 9279\njobs, BUILD_EXIT=0, ZERO errors; all five touched\
-  \ modules built in-graph. The only \"declaration\nuses sorry\" warnings in the log\
-  \ are Challenge.lean's 13 declared frontier ones, and of the 116\nnon-sorry warnings\
-  \ ZERO are in this lane's files (all pre-existing linters). So this is\nfull-graph\
-  \ integration, not only per-file kernel checks. The mutex hold was SEVENTY-TWO SECONDS\n\
-  (06:57:32-06:58:44) because other lanes had warmed the graph -- a lane that skips\
-  \ a root build\nassuming contention should just try it.\n\nSTATUS stays blocked:\
-  \ (ii) is genuinely CERT-Sigma/divRep-gated. But note the gate is now on ONE\nfield\
-  \ of ONE structure, and the other two legs are project-local commutative algebra\
-  \ rather than\nanything waiting on a sibling lane.\n"
+  consumes.\n\nSTATE 2026-07-29 (run 0072 r7, lane ajcr-charts). The r5 SPLIT stands.\
+  \ r6's RETRACTION of the\nr5 pricing of clause (i) stands. What r7 changes is that\
+  \ clause (i)'s cost is now PAID.\n\nTHE THREE-WAY SPLIT, updated:\n (i)  RELATIVE\
+  \ REPRESENTABILITY -- needs an open of the test W. r5 said \"free\"; r6 retracted\
+  \ that\n      to \"costs B-4 through haff\". r7 DISCHARGES IT: isOpen_chartLocus_of_plusFibre\
+  \ gives\n      CHART-U(b) at a general test, and chartLocusOpensOfPlusFibre gives\
+  \ the open AS DATA, which\n      is the shape the W field actually consumes. Cost\
+  \ is now one witness-free hypothesis\n      (IsChartDatumPlusFibre per affine piece)\
+  \ and nothing else. See the chart-u row.\n (ii) THE PROPERTY CLAUSE -- CERT-Sigma/divRep-gated\
+  \ through IsChartLocusFibre's exists_factor\n      and the classifier-produced r.\
+  \ UNCHANGED. STILL THE REAL WALL, and r7 does not touch it.\n (iii) B-4 -- CLOSED\
+  \ as a chain: hconv discharged at r6, hplus discharged at r7 by the transport\n\
+  \      isChartDatumPlusFibreAt_of_isScalarTower. IsChartDatumPresentation now rests\
+  \ on\n      IsChartDatumPlusFibre alone: witness-free, H1-free, divisor-free, certificate-free.\n\
+  \nWHAT r7 ALSO FOUND, and it is a statement-level defect rather than a missing proof.\n\
+  hasWitnessH1Vanishing_of_isSplitWitness_at (the r6 descent step) quantifies its\
+  \ hplus binder over\n(_ : Algebra A L) with only IsScalarTower k A L. That is stronger\
+  \ than its own proof consumes AND\nUNPROVABLE FROM hfib -- IsChartDatumPlusFibreAt\
+  \ mentions relCurveMap C A L, so at an A-structure\nunrelated to the composite A\
+  \ -> kappa(t) -> L the RHS pulls D.cechPicClass along a DIFFERENT\nmorphism. Restated\
+  \ with IsScalarTower A kappa(t) L, exactly the component\ntowerOfResidueFieldExtension\
+  \ already returns and which the landed proof already discards.\nprice-the-instances-not-the-data,\
+  \ occurring inside a BINDER, hence invisible to a census.\n\nSTATUS STAYS BLOCKED,\
+  \ and the reason is now sharper than before: the gate is clause (ii) ALONE.\nClauses\
+  \ (i) and (iii) are project-local and closed modulo a datum PRODUCER (see chart-u\
+  \ -- no\nproducer exists, and that is a different obligation from anything in this\
+  \ split). So c9b is\nblocked on ONE field of ONE structure via CERT-Sigma, with\
+  \ the other two legs no longer waiting\non any sibling lane.\n\nVERIFICATION r7:\
+  \ FULL ROOT BUILD GREEN -- lake build AlgebraicJacobian, 9283 jobs, BUILD_EXIT=0,\n\
+  ZERO errors, ZERO 'declaration uses sorry' warnings anywhere in the log; all three\
+  \ new modules\nbuilt in-graph with no diagnostics of their own; 129 warnings all\
+  \ pre-existing (same count and\nbreakdown two lanes measured independently at r6).\
+  \ Mutex hold 39 SECONDS. Every new declaration\naxiom-clean [propext, Classical.choice,\
+  \ Quot.sound] against a control that fires sorryAx.\n\nALSO STILL TRUE, for whoever\
+  \ supplies the datum: abelChartApp_eq gives the Abel chart's value with\nBOTH components,\
+  \ and a producer must match the Sigma-component (an equation of morphisms to\nSpec\
+  \ k) BEFORE the classes are in the same type.\n"
 status: blocked
 kind: proof
 priority: normal
@@ -81,6 +62,6 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  updated_at: '2026-07-28T22:59:54.468434+00:00'
+  updated_at: '2026-07-28T23:43:14.706110+00:00'
   milestone: w4-tail
   owner: ajcr-charts

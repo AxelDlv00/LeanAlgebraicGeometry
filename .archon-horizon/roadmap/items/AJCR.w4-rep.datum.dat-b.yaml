@@ -4,89 +4,87 @@ title: 'DAT-B: coverage + injectivity — every $\mathrm{pic}^0$ point is Zarisk
   lane'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "DAT-B: coverage + injectivity. Injectivity LANDED (worksheet 0.4/2, consumed\
-  \ not proved).\n\nB-6 IS CLOSED AND ITS FEED IS NOW WRITTEN (run 0072 r5 + r6, lane\
-  \ ajcr-charts).\n\nr5 closed B-6 itself: three files carry\n[Presheaf.IsLocallySurjective\
-  \ Scheme.zariskiTopology (Sigma.desc f)] as a variable\n(JacobianDataCharts.lean:117,\
-  \ JacobianDataAbelSurj.lean:183, JacobianDataAbelImage.lean:131)\nand nothing produced\
-  \ one. isLocallySurjective_sigmaDesc (Pic0ChartLocalSurjectivity.lean,\ncommit b4d608389)\
-  \ fills it from the coverage hypothesis ChartsCoverLocally.\n\nR6 FOUND THAT MY\
-  \ OWN r5 ROW ASSERTED A BRIDGE NOBODY HAD WRITTEN. That row said a producer\ndischarges\
-  \ ChartsCoverLocally \"by exhibiting one open neighbourhood and one index per point\
-  \ of\nT\". But ChartsCoverLocally is a GROTHENDIECK TOPOLOGY MEMBERSHIP and the\
-  \ geometry is\npointwise; the sentence described a reduction that existed only in\
-  \ prose. Now landed\n(Pic0ChartCoveragePointwise.lean, 1362ddf8f; kernel EXIT=0\
-  \ with the lakefile linter options,\naxiom-clean against a control that fires sorryAx):\n\
-  \n * mem_zariskiTopology_iSup_of_pointwise -- pointwise opens W t plus a PER-POINT\
-  \ index make the\n   SUPREMUM sieve Zariski-covering. Stated for an arbitrary family\
-  \ of sieves on an arbitrary\n   scheme: no presheaf, no chart, no pic0. The cover\
-  \ is {W t} indexed by the POINTS of T, which\n   is the only index available before\
-  \ any geometry is known -- a finite subcover would need\n   quasi-compactness, which\
-  \ no row of this plan assumes.\n * chartsCoverLocally_of_pointwise -- the hypothesis\
-  \ from FOUR THINGS AT A POINT: an open\n   W containing t, an index i, a point of\
-  \ chart i over W, and the class equation.\n * isLocallySurjective_sigmaDesc_of_pointwise\
-  \ -- B-5 => B-6 IN ONE STEP.\n * pointwise_of_chartsCoverLocally -- THE CONVERSE,\
-  \ so this is a reduction and not a\n   restatement. Its one honest gap is named\
-  \ in the docstring: mem_grothendieckTopology_iff\n   returns a cover by arbitrary\
-  \ schemes with open-immersion maps, not by opens of T.\n\nTWO CORRECTIONS TO THIS\
-  \ PLAN'S OWN DEPENDENCY ACCOUNTING, both from that work:\n\n (i) B-6's dependency\
-  \ column listed B-4 and DAT-C C9 (hence divRep F7 + CERT-Sigma). NEITHER\n     is\
-  \ an input. Coverage needs no openness of chartLocus at all -- the W of the pointwise\n\
-  \     datum may be ANY open neighbourhood -- and no IsChartUniv and no certificate.\
-  \ B-4 and C9\n     are inputs to the CHARTS half of pic0RepresentableByOfCharts\
-  \ (hf), not to the coverage\n     half; the row conflated the two halves of one\
-  \ theorem. NO ROW OF THE DAT-B PLAN WAITS FOR\n     divRep.\n (ii) worksheet 1.1,\
-  \ the paragraph pinning the FINAL TARGET, ended \"so the instance follows\n    \
-  \ from 1.2 + CHART-U(b)+(c)\". It follows from 1.2 in its POINTWISE FORM ALONE.\
-  \ Also\n     corrected there: the Sigma-component is free (a section over a bare\
-  \ T is the pair <a,lam>\n     and (Over.mk a).left is T DEFINITIONALLY, so no big-site/slice\
-  \ transport is needed) but is\n     NOT only bookkeeping -- matching a chart value\
-  \ against <a,lam> is TWO equations, the\n     Sigma one before the class. abelChartApp_eq\
-  \ (Pic0ChartCoverageAbel.lean) states both.\n\nTHE TRANSFERABLE FACT, and it retracts\
-  \ the SCOPE of this row's own r5 question to divrep: THE\nPER-POINT INDEX COSTS\
-  \ NOTHING. A supremum sieve never asks its members to agree. So \"does\ndivFunctor\
-  \ representability generalise in n, or is g load-bearing\" does NOT gate the coverage\n\
-  sieve -- a different chart parameter at every point of every test is free. It still\
-  \ gates\nmixedParamChart's rep i, i.e. the ATLAS BEING INHABITED. That is the third\
-  \ setting in which\nchart-parameter heterogeneity has turned out to be harmless.\n\
-  \nB-4 OPENNESS -- MY r5/s0010 \"CLOSED\" CLAIM IS RETRACTED, and this is the session's\
-  \ other\nfinding. isOpen_chartLocus_of_affineLocal' is unconditional only in IsSplitWitnessIsoInvariant;\n\
-  it still takes the affine-local haff, and NOTHING IN THE TREE DISCHARGES IT. So\n\
-  Pic0ChartUnivReduce's headline \"the W field costs zero, a real reduction of the\
-  \ datum from four\nfields to three\" was false -- the datum went from four fields\
-  \ to three SHAPES but not to three\nOBLIGATIONS. Corrected at all four asserting\
-  \ sites (commits 8fc0df182, c401ed616), and the\nresidue is now named in Lean (ChartLocusAffineLocal)\
-  \ and reduced to B-4's own named obligation\nby chartLocusAffineLocal_of_presentation\
-  \ -- the link Pic0ChartLocusIsOpen's docstring describes\n(\"not stated here only\
-  \ because it would need the presentation hypothesis per affine piece\")\nand never\
-  \ states.\n\nAND THEN B-4'S RESIDUE ITSELF MOVED, same session. IsChartDatumPresentation\
-  \ is an iff whose\nconverse hconv (the descent direction: from a split witness at\
-  \ SOME L_t/kappa(t), produce the\ndatum's predicate at kappa(t)) had been the named\
-  \ residue for three sessions. IT IS DISCHARGED\n(hasWitnessH1Vanishing_of_isSplitWitness_at,\
-  \ Pic0ChartPresentationConverse.lean, 83bda0672).\n\nTHE TRANSFERABLE CONTENT IS\
-  \ WHICH INGREDIENT WAS MISSING. Pic0ChartPresentationHalf's docstring\npriced the\
-  \ obstruction correctly -- \"the witness received lies in mu's class at L_t rather\
-  \ than\nvisibly in D's at kappa(t)\" -- and named two TRANSPORT lemmas as the ingredients.\
-  \ The step that\nmakes the class VISIBLE is not a transport at all: it is PicEtAff.unit_injective\n\
-  (CechKernelLemma.lean:361, Kleiman 2.5(1), the unconditional close of the zeta3\
-  \ campaign) plus\nrelPicMk_injective_of_subsingleton, which force the presenting\
-  \ class to EQUAL D's fibre class at\nL_t. Both have been in the tree for weeks and\
-  \ NO CHART-U ROW CITES EITHER.\n\nSo BOTH halves of B-4's pointwise presentation\
-  \ are now witness-free, H1-free and divisor-free,\nand what remains is exactly the\
-  \ cechPicClass base-change identity the row's own 0.3 retraction\npredicted. Scope\
-  \ stated in the file: the identity is needed at EVERY extension of kappa(t),\nstrictly\
-  \ more than IsChartDatumPlusFibre asks; isChartDatumPlusFibreAt_self measures the\
-  \ gap (at\nL := kappa(t) the two coincide by Iff.rfl). Also measured: htow is bookkeeping,\
-  \ not an\nobligation -- Algebra A L does NOT synthesize, so towerOfResidueFieldExtension\
-  \ is what tells a\nreader that.\n\nB-5 STEP 3 -- unchanged from r5 and still the\
-  \ residue: reconcile the chart parameter with the\nthreshold. ledger_forces_b_eq_n,\
-  \ hb_forces_h0_eq_one and index_of_threshold\n(Pic0ChartCoverageIndexSlack.lean)\
-  \ stand; steps 1, 2, 4, 5 discharged; step 6 retracted as\nunnecessary. What r6\
-  \ changes is that step 3 is now the ONLY thing between the tree and the\nlocal-surjectivity\
-  \ instance -- everything else on the coverage side, including the sieve\npackaging\
-  \ that was invisible until today, is landed.\n\nWHERE THE DISCARDED PROPERTIES DO\
-  \ MATTER, unchanged: effectivity and h0 = 1 are needed by\nDAT-C's canonical section\
-  \ and GAP-2 uniqueness, i.e. by INJECTIVITY, not by coverage.\n"
+summary: 'DAT-B: coverage + injectivity -- every pic^0 point is Zariski-locally a
+  chart point (RE-5 descent
+
+  + engine + DAT-P points); injectivity from the separatedness lane.
+
+
+  STATE 2026-07-29 (run 0072 r7, lane ajcr-charts). B-4 IS CLOSED AS A CHAIN; B-5/B-6
+  PACKAGING IS
+
+  COMPLETE; what DAT-B still owes is GEOMETRY, and it is now the only thing it owes.
+
+
+  B-4 (the pointwise presentation, this row''s long-standing residue): CLOSED modulo
+  a producer.
+
+  Both halves of IsChartDatumPresentation are witness-free -- forward at r6 (trivial
+  splitting),
+
+  converse at r6 (plus-unit injectivity), and the hplus side condition the converse
+  traded for is
+
+  DISCHARGED at r7 by isChartDatumPlusFibreAt_of_isScalarTower. So B-4 rests on
+
+  IsChartDatumPlusFibre alone: no witness, no H1, no divisor, no certificate, no divRep.
+  The r7
+
+  ingredient was a transport this lane''s OWN docstring named and never wrote; full
+  account on the
+
+  chart-u row.
+
+
+  B-5 -> B-6 (the site-theoretic packaging): COMPLETE since r6 and unchanged.
+
+  isLocallySurjective_sigmaDesc_of_pointwise takes B-5 to the
+
+  [Presheaf.IsLocallySurjective Scheme.zariskiTopology (Sigma.desc f)] instance in
+  ONE step, and
+
+  pointwise_of_chartsCoverLocally is its converse, so the pointwise form is not a
+  strengthening
+
+  chosen to be provable. Three files carry that instance as an unproduced variable
+
+  (JacobianDataCharts.lean:117, JacobianDataAbelSurj.lean:183, JacobianDataAbelImage.lean:131)
+  and
+
+  the ONLY remaining input to it is B-5''s pointwise data: per test point, an open
+  neighbourhood, an
+
+  index, and a chart point over that open with the right class.
+
+
+  WHAT REMAINS, stated as the one thing it is. The pointwise data is where the chart-parameter
+  /
+
+  threshold reconciliation lives (exists_mem_chartLocus_of_vanishing_bound already
+  gives the
+
+  existential form at a point given a splitting and a threshold hit). r7 supplies
+  what that data
+
+  needs on the OPENNESS side -- chartLocusOpensOfPlusFibre is exactly an open neighbourhood
+  of every
+
+  chart point -- so the residue is the reconciliation itself plus a DATUM PRODUCER,
+  not any
+
+  site-theoretic or openness step. No sibling lane gates either.
+
+
+  ALREADY LANDED AND UNCHANGED: coverage-drop, separably-closed points, divisor-family
+  field
+
+  surjectivity, local chart openness, fibre-field invariance.
+
+
+  VERIFICATION r7: full root build GREEN, 9283 jobs, EXIT=0, zero errors, zero sorry
+  warnings.
+
+  '
 status: pending
 kind: proof
 priority: normal
@@ -100,7 +98,7 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:09.039287+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-28T22:54:12.429191+00:00'
+  updated_at: '2026-07-28T23:44:04.441106+00:00'
   milestone: w4-tail
   owner: ajcr-charts
   pinned_commits:

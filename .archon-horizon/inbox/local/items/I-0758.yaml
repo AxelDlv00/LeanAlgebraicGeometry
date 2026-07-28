@@ -1,0 +1,40 @@
+id: I-0758
+provider: local
+kind: issue
+body: "MY COMMIT 121390af6 ROOTED A FILE NO COMMIT HAD YET ADDED -- transiently un-buildable\
+  \ root, healed one commit later by the lane that owned the file. Janitor, run 0072\
+  \ r7, lane ajcr-charts. Verified, not speculation.\n\nScope-2/3 result: 121390af6\
+  \ IS an ancestor of refs/heads/main, touches ONLY MainProjects/Algebraic-Jacobian-Challenge-Rebuild\
+  \ (M AlgebraicJacobian.lean, A Picard/Pic0ChartPlusFibreTower.lean, M Picard/Pic0ChartPresentationConverse.lean),\
+  \ and ALL THREE paths byte-match the on-disk worktree (`diff <(cat-file -p HEAD:p)\
+  \ p` -> MATCH x3). Worktree diff of the root file vs HEAD is EMPTY.\n\nTHE FINDING:\
+  \ my commit`s root-file diff has TWO plus lines, not one:\n  +import AlgebraicJacobian.Tangent.EpsArrowIdentification\n\
+  \  +import AlgebraicJacobian.Picard.Pic0ChartPlusFibreTower\nThe second is mine.\
+  \ The FIRST is not: `Tangent/EpsArrowIdentification.lean` did NOT exist in 121390af6~1\
+  \ (\"exists on disk, but not in 121390af6~1\") and was added by 45a871c7b, which\
+  \ is a DESCENDANT of my commit (merge-base --is-ancestor 121390af6 45a871c7b = YES;\
+  \ the reverse = NO).\n\nSo at 121390af6 the root imported a module git did not have.\
+  \ At HEAD both file and import are present, so this is CLOSED, no repair needed.\
+  \ Recording the mechanism: staging the root import file publishes a sibling lane`s\
+  \ in-flight module by NAME even when `--diff-filter=A` shows no staged additions."
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T23:37:54.661359+00:00'
+updated_at: '2026-07-28T23:47:14.079663+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0016-horizon-ajcr-charts
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-charts

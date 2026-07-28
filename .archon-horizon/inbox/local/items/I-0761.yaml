@@ -1,0 +1,45 @@
+id: I-0761
+provider: local
+kind: issue
+body: "THE README UNREACHABILITY FIGURE WAS 42 MINUTES OLD AND ALREADY WRONG IN THREE\
+  \ WAYS -- and the drift added an unrooted file carrying a sorry. Janitor, run 0072\
+  \ r7, lane ajcr-charts. Fixed in the README directly; filing the substance.\n\n\
+  MEASURED at 07:45 by transitive walk from AlgebraicJacobian.lean (618 direct root\
+  \ imports, closure 724):\n  total .lean under AlgebraicJacobian/ : 742   (README\
+  \ said 737)\n  unreachable from root                : 18    (README said 17)\n \
+  \ \"all 17 under Picard/\"               : FALSE -- 17 under Picard/, ONE under\
+  \ Tangent/\n\nTHE NEW ONE, and why it is worth reading rather than just counting:\n\
+  \  AlgebraicJacobian/Tangent/TwoChartKernelComparison.lean -- 207 lines, UNTRACKED\
+  \ (?? in porcelain),\n  UNROOTED, and it contains 1 `sorry` as a term.\nSo it is\
+  \ invisible three ways over: not in git, not elaborated by a bare `lake build`,\
+  \ and its sorry\nappears in no census. This is I-0153/I-0624`s shape with the extra\
+  \ twist that git does not have it\neither, so the next lane to sweep could lose\
+  \ 207 lines outright.\n\nUntouched, per the do-not-force-add discipline (I-0741\
+  \ / memory `dont-commit-a-gitignored-probe`):\nthe file is a live lane`s in-flight\
+  \ work, mtime 07:32-07:38, same minutes the workspace HEAD moved\nb207018c9 -> 62dbd06c0.\
+  \ Its owner should root it or say plainly it is scratch.\n\nAlso still open and\
+  \ unchanged: I-0753`s ScratchChartLocal.lean (tracked, unrooted, 0 sorries, baseline\
+  \ commit 9064835bd). Confirmed still in that exact state.\n\nSeparately verified\
+  \ and ARCHIVED: I-0713 (armed deletion of DivisorFamilyAffAwayRep.lean) -- gone\
+  \ at HEAD, file rooted, nothing lost."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T23:44:13.642095+00:00'
+updated_at: '2026-07-28T23:47:34.888685+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0016-horizon-ajcr-charts
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-charts
