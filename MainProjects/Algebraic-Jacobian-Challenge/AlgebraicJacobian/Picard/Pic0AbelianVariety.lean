@@ -708,7 +708,26 @@ this leg does *not* require Hilbert 90 or any henselian cover-splitting brick:
 after the truncated-exponential linearisation the descent condition is additive,
 and for the square-zero thickening `k[ε] → k` mathlib's
 `Algebra.FormallyEtale.comp_bijective` suffices. The square-zero-ness that note
-relies on is exactly `DualNumber.augIdeal_mul_self_eq_bot`, now a theorem. -/
+relies on is exactly `DualNumber.augIdeal_mul_self_eq_bot`, now a theorem. The
+sibling project restated its own T3/T4 target as this same comparison after
+porting clauses (i) and (ii), so clause (iii) is the *joint* residue of both
+developments and whichever side proves it hands it to the other.
+
+WHY CLAUSE (iii) IS NOT SPLIT OUT AS ITS OWN NAMED `sorry` HERE, recorded because
+it is the obvious next move and it does not work yet. Naming it requires stating
+an *additive* equivalence out of the kernel subtype
+`{a : Pic^♯(Spec k[ε]) // restriction along ε ↦ 0 vanishes}`, and that subtype
+carries no `AddCommGroup` instance in this development: `relPicKernelSMul` gives
+it a multiplicative-monoid `k`-action, and `pointedDualNumberPointsEquivAddKernel`
+produces it as a `Subtype` of a group rather than as an `AddSubgroup` bundle. So a
+clause-(iii) statement written today is either about a bare `Equiv` — which does
+not transport `finrank`, the exact error the sibling retracted on this lane — or it
+has to carry its own additivity side conditions, which reintroduces the
+bookkeeping that `semilinearComparison_cotangentSpaceDual_h1Cok` was factored to
+avoid. Promoting the kernel to an `AddSubgroup` (or transporting the group
+structure along `pointedDualNumberPointsEquivAddKernel`) is the real prerequisite,
+and it is a small but genuine piece of work rather than a restatement. Until then
+this docstring, not a second sorry, is the honest home for the residue. -/
 theorem semilinearComparison_cotangentSpaceDual_h1Cok {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
