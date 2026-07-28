@@ -344,6 +344,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffCover
 import AlgebraicJacobian.Picard.DivisorFamilyAffAdaptation
 import AlgebraicJacobian.Picard.DivisorFamilyAffPerPiece
 import AlgebraicJacobian.Picard.DivisorFamilyAffCollapse
+import AlgebraicJacobian.Picard.DivisorFamilyAffSwallow
 import AlgebraicJacobian.Picard.DivisorFamilyExtraction
 import AlgebraicJacobian.Picard.DivisorFamilyField
 import AlgebraicJacobian.Picard.DivisorFamilyFieldDegree
