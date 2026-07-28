@@ -53,11 +53,7 @@ expressible, so the remaining question is a proof, not a redesign.
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option synthInstance.maxHeartbeats 800000
 set_option maxSynthPendingDepth 3
--- the two `eps_fst`/`eps_snd` projections unfold the window through the section-ring algebra
--- instances, which exceeds the default recursion depth even though each proof is `rfl`
-set_option maxRecDepth 4000
 
 universe u
 
@@ -81,6 +77,9 @@ variable (hpi : pi ≫ P1.structureMap k = C.left ↘ Spec (.of k)) (g : ℕ)
 
 namespace CertifiedDivisorFamilyAff
 
+-- the window's `H`-finiteness instances are found through the moduleKSheaf tower, which
+-- exceeds the default instance budget
+set_option synthInstance.maxHeartbeats 800000 in
 /-- **The ε-pair of a WIDENED certified family.**  Verbatim `divFamEps`, with the widened
 carrier in place of the chart-typed one — which type-checks because both carriers have the same
 `eqns : LocalEquations` field and `divisorWindow` reads nothing else.
@@ -100,6 +99,8 @@ variable (b₁ : Module.Basis (Fin r₁) k ↥(Scheme.divisorSections k
 variable (b₂ : Module.Basis (Fin r₂) k ↥(Scheme.divisorSections k
   ((windowM_choice pi hpi g + windowS_choice pi hpi g) • fiberWeilDivisor pi) ⊤))
 
+-- same instance tower as `eps`, plus the Grassmannian side
+set_option synthInstance.maxHeartbeats 800000 in
 /-- **The pair-chart framing clause, over the WIDENED carrier.**  Exactly the two Grassmannian
 equations of `DivFamZar.exists_certChartCover`, with `divFamEps (DivFam.mk G)` replaced by
 `F.eps`.
@@ -118,12 +119,19 @@ def IsPairChartFramed (F : CertifiedDivisorFamilyAff C R g)
       = Submodule.map (LinearMap.baseChange R b₂.equivFun.toLinearMap)
         (F.eps hpi g).2
 
+-- `rfl`, but the window unfolds through the section-ring algebra instances and exceeds the
+-- default recursion depth on the way
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 4000 in
 /-- The ε-pair of a widened family is its two windows, by definition.  Recorded because it is
 the seam a restatement of `exists_certChartCover` would rewrite along. -/
 @[simp]
 lemma eps_fst (F : CertifiedDivisorFamilyAff C R g) :
     (F.eps hpi g).1 = divisorWindow F.eqns (relThetaPairH1_windowM C pi hpi g) := rfl
 
+-- as `eps_fst`
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 4000 in
 @[simp]
 lemma eps_snd (F : CertifiedDivisorFamilyAff C R g) :
     (F.eps hpi g).2 = divisorWindow F.eqns (relThetaPairH1_windowMS C pi hpi g) := rfl
