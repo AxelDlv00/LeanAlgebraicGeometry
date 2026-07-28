@@ -556,6 +556,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffFibre
 import AlgebraicJacobian.Picard.DivisorFamilyAffRank
 import AlgebraicJacobian.Picard.DivisorFamilyAffSeedEndpoint
 import AlgebraicJacobian.Picard.DivisorFamilyAffFraming
+import AlgebraicJacobian.Picard.DivisorFamilyAffFace
 import AlgebraicJacobian.Picard.DivRepAffPullIndep
 import AlgebraicJacobian.Picard.DivRepAwayPush
 import AlgebraicJacobian.Picard.DivRepAffPullField
