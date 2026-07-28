@@ -5,28 +5,33 @@ projects:
 summary: "Identity component and degree-zero points (AJC.pic0av.identity).\n\nSTATE\
   \ at run 0067 r5. IdentityComponent.lean carries 2 sorries: finrank_eq_genus\nand\
   \ kPoints_iff_kerDegree. PicScheme.degree is constructed (r4).\n\nDIMENSION LEG,\
-  \ reduced to ONE uniform bound (r5, commits b9bfa997f / 476236c3b /\nb653ef4d6).\
-  \ The recorded blocker -- \"mathlib v4.31 has almost no topologicalKrullDim\nAPI,\
-  \ so the route must go through Algebra.IsStandardSmoothOfRelativeDimension and an\n\
-  affine-local presentation\" -- was a mis-measurement: it read the API surface, not\
-  \ the\nDEFINITION. topologicalKrullDim IS krullDim of the irreducible closeds; a\
-  \ scheme is\nsober and T0, so irreducibleSetEquivPoints is an order iso onto the\
-  \ carrier,\nkrullDim_eq_iSup_coheight applies, and the project's own ringKrullDim_stalk_eq_coheight\n\
-  finishes. For ANY scheme: dim X = sup over z of dim O_{X,z}\n(Picard/SchemeKrullDimStalk.lean).\n\
-  \nConsequences (Picard/Pic0Dimension.lean):\n * \"genus <= dim Pic^0\" is PROVED\
-  \ from the tangent space at the IDENTITY ALONE, its\n   only side condition being\
-  \ regularity of that one stalk -- and over a PERFECT base\n   field that follows\
-  \ from smoothness of Pic^0, i.e. from AJC.pic0av.structure and\n   nothing else.\n\
-  \ * the remaining open content is \"dim <= genus\": one UNIFORM bound\n   (forall\
-  \ z, ringKrullDim (stalk z) <= genus C). It cannot come from one point,\n   since\
-  \ the dimension is a supremum. finrank_eq_genus is now stated against exactly\n\
-  \   that hypothesis as topologicalKrullDim_eq_genus_of_forall_ringKrullDim_stalk_le.\n\
-  \   SmoothOfRelativeDimension (genus C) (Pic0Scheme C).hom would supply it.\n\n\
-  SPIN-OFF, upstream of this node: stalks of a smooth scheme over a PERFECT field\
-  \ are\nregular local rings, with no other hypothesis\n(Scheme.isRegularLocalRing_stalk_of_smooth_of_perfectField).\
-  \ AJC had this only over\nk-bar and with five further binders (Albanese/CodimOneExtension);\
-  \ the alg-closed form\nis unusable here because Pic^0_{C/k} lives over the given\
-  \ k and stalk regularity\ndescends along Spec k-bar -> Spec k by no route in this\
+  \ reduced to TWO named inputs and no dimension theory (r5, commits\nb9bfa997f /\
+  \ 476236c3b / b653ef4d6 / b5ceb8ff0 / 5dca5e7cc). The recorded blocker --\n\"mathlib\
+  \ v4.31 has almost no topologicalKrullDim API, so the route must go through\nAlgebra.IsStandardSmoothOfRelativeDimension\
+  \ and an affine-local presentation\" -- was a\nmis-measurement: it read the API\
+  \ surface, not the DEFINITION. topologicalKrullDim IS\nkrullDim of the irreducible\
+  \ closeds; a scheme is sober and T0, so\nirreducibleSetEquivPoints is an order iso\
+  \ onto the carrier, krullDim_eq_iSup_coheight\napplies, and the project's own ringKrullDim_stalk_eq_coheight\
+  \ finishes. For ANY scheme:\ndim X = sup over z of dim O_{X,z} (Picard/SchemeKrullDimStalk.lean,\
+  \ axiom-clean,\n7 declarations).\n\nConsequences (Picard/Pic0Dimension.lean):\n\
+  \ * \">=\" (\"genus <= dim Pic^0\") is REDUCED TO FRONT (a) AND NOTHING ELSE: it\
+  \ follows\n   from the tangent-space identity at the IDENTITY ALONE plus regularity\
+  \ of that one\n   stalk, and over a PERFECT base field the regularity comes from\
+  \ smoothness of Pic^0.\n   MEASURED HONESTLY: this reports sorryAx, inherited from\
+  \ the open cocycle comparison\n   semilinearComparison_cotangentSpaceDual_h1Cok\
+  \ (Pic0AbelianVariety.lean:805) via\n   finrank_cotangentSpace_eq_finrank_hModuleOne.\
+  \ An earlier version of this row said\n   \"PROVED\"; that was wrong and the axiom\
+  \ probe caught it. The dimension BRIDGE\n   underneath is axiom-clean.\n * \"<=\"\
+  \ is separately open: one UNIFORM bound (forall z, ringKrullDim (stalk z) <=\n \
+  \  genus C), unobtainable from data at one point. finrank_eq_genus is now stated\n\
+  \   against exactly that hypothesis. Measured absence direction: Albanese/\n   StandardSmoothDimension.lean\
+  \ has only LOWER bounds, and only at MAXIMAL ideals.\n   SmoothOfRelativeDimension\
+  \ (genus C) (Pic0Scheme C).hom would supply it.\n\nSPIN-OFF, upstream of this node:\
+  \ stalks of a smooth scheme over a PERFECT field are\nregular local rings, with\
+  \ no other hypothesis\n(Scheme.isRegularLocalRing_stalk_of_smooth_of_perfectField,\
+  \ axiom-clean). AJC had this\nonly over k-bar and with five further binders (Albanese/CodimOneExtension);\
+  \ the\nalg-closed form is unusable here because Pic^0_{C/k} lives over the given\
+  \ k and stalk\nregularity descends along Spec k-bar -> Spec k by no route in this\
   \ tree.\n\nkPoints_iff_kerDegree is untouched: its easy direction is landed\n(degreeOfSection_eq_zero_of_factors),\
   \ the converse -- that the degree separates the\ncomponents of Pic_{C/k} -- is the\
   \ open half.\n"
@@ -52,7 +57,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-28T16:37:20.560932+00:00'
+  updated_at: '2026-07-28T18:14:48.419812+00:00'
   owner: ajc-pic0av
   pinned_commits:
   - b9bfa997f

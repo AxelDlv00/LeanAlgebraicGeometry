@@ -20,8 +20,11 @@ summary: "Pic^0 is an abelian variety of dimension g (A.3 leg of Route A).\n\nWH
   \ / dimension (AJC.pic0av.identity): PicScheme.degree constructed (r4). The\n  \
   \   dimension statement is reduced to ONE uniform bound in r5 -- see that child;\
   \ the\n     \"no topologicalKrullDim API\" pricing was a mis-measurement of the\
-  \ API surface\n     rather than the definition, and the >= half is now proved from\
-  \ the identity alone.\n\n (d) AJC.rr.principal: CLOSED in r4 (principal_degree_zero,\
+  \ API surface\n     rather than the definition. The >= half is REDUCED to front\
+  \ (a) and nothing else --\n     but it REPORTS sorryAx, inherited from the open\
+  \ cocycle comparison at\n     Pic0AbelianVariety.lean:805; only the dimension BRIDGE\
+  \ underneath is axiom-clean.\n     An earlier version of this row said \"proved\"\
+  ; retracted in 48eea9212.\n\n (d) AJC.rr.principal: CLOSED in r4 (principal_degree_zero,\
   \ at its original binders).\n\nMEASUREMENT DISCIPLINE for this node: smooth/proper\
   \ quantify over [HasPicScheme C],\nwhich the caller discharges, so they report CLEAN\
   \ axioms at the declaration. Measure at\na SYNTHESIS site (scripts/axiom-frontier.lean)\
@@ -38,6 +41,6 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:42.107460+00:00'
-  updated_at: '2026-07-28T16:19:53.387729+00:00'
+  updated_at: '2026-07-28T18:21:01.876239+00:00'
   parent: AJC.jacobian
   owner: ajc-pic0av

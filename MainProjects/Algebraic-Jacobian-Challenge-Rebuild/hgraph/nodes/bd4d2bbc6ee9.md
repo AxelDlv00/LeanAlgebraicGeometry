@@ -21,12 +21,12 @@ docstring: '**The residue-field comparison along an affine-open test object is a
   open immersion,
 
   and the residue-field map of an open immersion is an iso in mathlib already.'
-file: Scratch_gt.lean
+file: AlgebraicJacobian/Picard/Pic0ChartLocusGeneralTest.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.testPointField_fromSpecAffine_isIso
 type: lean
-updated: '2026-07-29T00:03:04'
+updated: '2026-07-29T00:15:32'
 ---
 instance testPointField_fromSpecAffine_isIso (T : Over (Spec (.of k)))
     (U : T.left.affineOpens) (t : (overSpec k Γ(T.left, U.1)).left) :

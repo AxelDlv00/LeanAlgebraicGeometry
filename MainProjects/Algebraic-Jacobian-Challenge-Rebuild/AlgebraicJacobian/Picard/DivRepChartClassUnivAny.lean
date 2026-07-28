@@ -141,9 +141,10 @@ theorem divFamEps_certifiedFamilyOfAdaptation [IsNoetherianRing R] {g : ℕ}
     divFamEps hπ g (DivFam.mk (D.certifiedFamilyOfAdaptation hD A hc))
       = (x₁.toSubmodule, x₂.toSubmodule) :=
   divFamEps_mk_eq_of_le hπ (D.certifiedFamilyOfAdaptation hD A hc) x₁ x₂
-    (hc.thetaGluedEval_surjective hO hχ (relThetaPairH1_windowM C π hπ g) le_rfl)
-    (hc.thetaGluedEval_surjective hO hχ (relThetaPairH1_windowMS C π hπ g)
-      (Nat.le_add_right _ _))
+    (DivisorAdaptation.IsCertified.thetaGluedEval_surjective C π hπ hc hO hχ
+      (relThetaPairH1_windowM C π hπ g) le_rfl)
+    (DivisorAdaptation.IsCertified.thetaGluedEval_surjective C π hπ hc hO hχ
+      (relThetaPairH1_windowMS C π hπ g) (Nat.le_add_right _ _))
     (Submodule.map_le_iff_le_comap.mp (D.le_vanishingSubmodule hD)) hle₂
 
 /-- **The residue, named**: *some* adaptation of the seed's local-equation system carries a

@@ -5,14 +5,25 @@ projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. Binding\
   \ form: protection I-0492.\nFull reasoning: I-0346 (human comment, same date).\n\
-  \nEXECUTED, AND THE WIDENED LAYER IS NOW A FUNCTOR WITH A CONSUMER. Sorry-free,\
-  \ rooted (twenty-seven\nDivisorFamilyAff*.lean files plus DivRepGlobalAffLift.lean).\
-  \ Of the two obligations I-0492 clause 4\nrelocated, 4(i) is DISCHARGED rather than\
-  \ assumed.\n\n  AffCoverData          -- m / pieces : Fin m -> Opens / isAffineOpen\
-  \ / cover (iSup = top).\n                           NO pi argument, NO partitions\
-  \ of unity, NO Sum index, NO chart typing.\n  AffAdaptation         -- eqn per piece\
-  \ + eqn_rel; IsCertified with (c1)-(c4) VERBATIM.\n  CertifiedDivisorFamilyAff /\
-  \ IsLocallyCertifiedAff / DivFamZarAff (mk, mk_eq_mk_iff, picClass)\n  DivFamZar.toAff\
+  \nEXECUTED, AND THE WIDENED LAYER IS NOW A FUNCTOR WITH A CONSUMER. Rooted (twenty-seven\n\
+  DivisorFamilyAff*.lean files plus DivRepGlobalAffLift.lean).\n\nVERIFICATION STATUS,\
+  \ and read it before quoting any of the below as green (I-0675, work-reviewer,\n\
+  2026-07-29): everything landed BEFORE session 0012 is kernel-checked. The FOUR modules\
+  \ of residue\n(b) -- DivisorFamilyAffMapKit / AffMap / AffFunctorCompare / DivRepGlobalAffLift\
+  \ -- are CLAIMED,\nNOT VERIFIED. No sorries and no oleans either: the session's\
+  \ own lake build hit its 3300s cap while\nstill rebuilding unrelated modules other\
+  \ lanes had invalidated (EXIT=124), and the per-file fallback\nfailed environmentally\
+  \ on a missing transitive olean, not on a proof. DO FIRST next session: run\n'lake\
+  \ build AlgebraicJacobian.Picard.DivRepGlobalAffLift' to completion with a cap well\
+  \ above 3300s.\nThe lane's own recorded hazard applies with full force here -- DivFamZarAff.eq_of_away_eq\
+  \ takes n as\nan EXPLICIT leading argument (AffMapKit.lean:96 passes it, chart-typed\
+  \ ZarMapKit.lean:54 does not),\nso a mis-port is RED WITH ZERO SORRIES and a census\
+  \ cannot see it. Of the two obligations I-0492 clause 4\nrelocated, 4(i) is DISCHARGED\
+  \ rather than assumed.\n\n  AffCoverData          -- m / pieces : Fin m -> Opens\
+  \ / isAffineOpen / cover (iSup = top).\n                           NO pi argument,\
+  \ NO partitions of unity, NO Sum index, NO chart typing.\n  AffAdaptation      \
+  \   -- eqn per piece + eqn_rel; IsCertified with (c1)-(c4) VERBATIM.\n  CertifiedDivisorFamilyAff\
+  \ / IsLocallyCertifiedAff / DivFamZarAff (mk, mk_eq_mk_iff, picClass)\n  DivFamZar.toAff\
   \       -- the widened value RECEIVES every chart-typed one, same picClass\n  isCertified_of_swallowedBy_of_c1\
   \ -- cert-collapse: all seven clauses from (c1) + the rank datum\n  exists_isCertified_of_seed_of_swallowing_affineOpen\
   \ -- the endpoint at a seed\n  DivFamZarAff.mapAlg + mapAlgHom + mapAlgHom_eq_mapAlg\
@@ -63,7 +74,19 @@ summary: "DECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. Bin
   chart-typed one BY NAME, and by name the list was complete. Cheap check, to run\
   \ on any replacement\ntype: grep the new carrier's name OUTSIDE its defining files,\
   \ and exclude substring collisions\n(divFamZarAffineEquiv is chart-typed and matches\
-  \ \"divFamZarAff\") before believing the count.\n"
+  \ \"divFamZarAff\") before believing the count.\n\nTHE MIGRATION HALF HAS NOT STARTED,\
+  \ and that is the honest scope of this node (I-0667, measured\n2026-07-29 with the\
+  \ divFamZarAffineEquiv substring collision excluded). The STRUCTURAL half of\nI-0492\
+  \ is complete; the migration is separate:\n * 49 Lean files still consume the chart-typed\
+  \ DivFamZar;\n * partition0/partition1: 33 hits over 11 files, INCLUDING the carrier\
+  \ fields\n   FinCoverData.partition0/.partition1 (DivisorFamily.lean:173-176) that\
+  \ I-0492 clause 3 names as\n   what has to go;\n * widened names outside Picard/DivisorFamilyAff*:\
+  \ exactly ONE file. One consumer is not a\n   migration.\nUntil consumers move,\
+  \ the chart-typed carrier is still the live one and R2's field-uniformity is\nnot\
+  \ yet reaching the DD-R gate -- which no sorry census or job count can see. Whoever\
+  \ takes it\nshould use pullGlobalAff as the worked example (push forward along divFunctorToAff,\
+  \ keep the\nrestriction equations) and expect the typing, not the mathematics, to\
+  \ be the cost.\n"
 status: active
 kind: proof
 priority: high
@@ -86,7 +109,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T16:57:09.897718+00:00'
+  updated_at: '2026-07-28T18:08:55.286919+00:00'
   pinned_commits:
   - 46d751465
   - 81c17f256

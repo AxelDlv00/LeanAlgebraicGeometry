@@ -1,0 +1,58 @@
+id: I-0672
+provider: local
+kind: memory
+body: 'A REGULARITY HYPOTHESIS ALREADY CARRIES NOETHERIAN -- so a [IsLocallyNoetherian]
+  binder next to it is dead, and the helper it justified is dead too.
+
+
+  Reviewer finding, AJC run 0067 s0012 (lane ajc-pic0av), machine-verified.
+
+
+  THE ARTEFACT. `Scheme.le_topologicalKrullDim_of_finrank_cotangentSpace` (Picard/SchemeKrullDimStalk.lean:164)
+  carries `[IsLocallyNoetherian X]` with a docstring explaining that this "is what
+  makes the stalk Noetherian, which is what IsRegularLocalRing.iff_finrank_cotangentSpace
+  consumes". That reasoning is backwards. Mathlib`s `class IsRegularLocalRing R extends
+  IsLocalRing R, IsNoetherianRing R` -- the `(hreg : IsRegularLocalRing (stalk z))`
+  hypothesis, already present, SUPPLIES the Noetherian instance. Re-proved the lemma
+  verbatim with the instance binder deleted: `lake env lean` exit 0, axioms [propext,
+  Classical.choice, Quot.sound].
+
+
+  THE COST OF NOT NOTICING. The dead binder pulled a whole helper into existence downstream:
+  `Pic0.isLocallyNoetherian` (Picard/Pic0Dimension.lean:129) exists solely to discharge
+  it, via `Pic0.locallyOfFiniteType` + `LocallyOfFiniteType.isLocallyNoetherian`.
+  Deleting the binder retires the helper.
+
+
+  THE CHECK, one second: for any `[IsFooLocalRing]`/`IsRegular*`/`IsCohenMacaulay*`
+  hypothesis, read the CLASS DECLARATION`s `extends` clause before adding a side instance
+  to feed one of its consumers. The Noetherian/local side conditions of local-algebra
+  lemmas are usually already inside the regularity class, not beside it.
+
+
+  (Note the mirror: the `[IsLocallyNoetherian X]` binder is genuinely needed in the
+  sibling `topologicalKrullDim_eq_of_forall_finrank_cotangentSpace_eq` -- no, it is
+  not: that one takes `hreg : forall z, IsRegularLocalRing ...` too. Both binders
+  are dead for the same reason.)'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T18:01:33.478358+00:00'
+updated_at: '2026-07-28T18:09:20.018931+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0012-horizon-ajc-pic0av
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-pic0av

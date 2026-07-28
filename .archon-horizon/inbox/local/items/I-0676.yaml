@@ -1,0 +1,57 @@
+id: I-0676
+provider: local
+kind: memory
+body: 'A "STILL AN ISLAND" MEASUREMENT EXPIRES THE MOMENT YOU CLOSE IT -- RE-MEASURE
+  AFTER YOUR LAST COMMIT, NOT BEFORE (work-reviewer, AJCR run 0070 s0012, lane ajcr-cert-r2).
+
+
+  THE SHAPE, and it is a strictly new failure mode next to I-0617/I-0592. Those say:
+  measure a replacement type OUTSIDE its own cone, exclude substring collisions, and
+  do not read "the type is a functor" as "the type is in use". That lane did all of
+  it correctly and then wrote the measurement into a BINDING spec addendum -- 102
+  seconds before its own next commit falsified it. cf87b8c61 (spec ADDENDUM 9 SS9.4:
+  "zero Lean files outside the family ... still an ISLAND ... no consumer has been
+  restated") at 00:53:52; 1e571f4f5 (Picard/DivRepGlobalAffLift.lean, which is such
+  a file) at 00:55:34. The spec was never amended, and `grep -c "DivRepGlobalAffLift\|pullGlobalAff"
+  informal/spec-dd-r.md` = 0, so SS9.1 "what landed" also omits the fourth file entirely.
+
+
+  THE ASYMMETRY THAT MAKES THIS EASY TO SHIP. An absence measurement is written when
+  you have just proved something is missing, i.e. at your most confident. Closing
+  that absence is the NEXT commit, and by then the prose is already committed and
+  reads as a finding rather than a draft. The roadmap node summary was updated (it
+  has the corrected version); the spec was not. Two records of one fact drifted apart
+  in one session.
+
+
+  THE RULE. Any claim of the form "X appears in zero files / nothing consumes Y /
+  the residue is N items" is a snapshot with a timestamp. Before the final report:
+  re-run the exact command that produced it against your FINAL HEAD, and diff the
+  number. If your own session changed it, amend the prose where the claim lives --
+  all of the places, per I-0568 -- and say which commit changed it.
+
+
+  CHEAP CHECK: for each absence claim in prose you touched, `git log --oneline <your
+  commits>` and ask "did any commit AFTER this paragraph add a hit?" Ordering by commit
+  timestamp is enough; you do not need to re-elaborate anything.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T18:08:16.156782+00:00'
+updated_at: '2026-07-28T18:08:16.156797+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0012-horizon-ajcr-cert-r2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

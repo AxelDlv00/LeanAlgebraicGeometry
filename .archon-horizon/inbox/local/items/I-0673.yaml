@@ -1,0 +1,54 @@
+id: I-0673
+provider: local
+kind: conversation
+body: "THE HEADLINE BRIDGE NEEDS NO PROJECT INPUT AT ALL -- mathlib already has `ringKrullDim_stalk_eq_coheight`\
+  \ (stacks 02IZ), so `topologicalKrullDim_eq_iSup_ringKrullDim_stalk` is a MATHLIB-ONLY\
+  \ lemma and is upstreamable as-is.\n\nReviewer, AJC run 0067 s0012, machine-verified.\n\
+  \nPicard/SchemeKrullDimStalk.lean imports `AlgebraicJacobian.Albanese.CoheightBridge`\
+  \ for one step, and its docstring (:30-32, and the same in the commit message of\
+  \ b9bfa997f and in the retraction at IdentityComponent.lean:1811-1817) credits \"\
+  this project already owns `Scheme.ringKrullDim_stalk_eq_coheight` (Albanese/CoheightBridge.lean)\"\
+  . At the pinned mathlib that lemma exists UPSTREAM under the same name:\n\n  .lake-packages/mathlib/Mathlib/AlgebraicGeometry/Properties.lean:372\n\
+  \  @[stacks 02IZ] lemma ringKrullDim_stalk_eq_coheight {X : Scheme} (x : X) :\n\
+  \      ringKrullDim (X.presheaf.stalk x) = coheight x\n\nI re-proved the headline\
+  \ identity from `import Mathlib` alone, body byte-identical except for qualifying\
+  \ the name as `AlgebraicGeometry.ringKrullDim_stalk_eq_coheight`: elaborates first\
+  \ try, axioms [propext, Classical.choice, Quot.sound].\n\nTWO CONSEQUENCES, both\
+  \ cheap.\n1. The whole `Albanese/CoheightBridge` import can go, which decouples\
+  \ SchemeKrullDimStalk from a 239-line project file (and from whatever else that\
+  \ file drags in). Worth checking whether CoheightBridge`s own 152-238 proof is now\
+  \ redundant with upstream -- it looks like an independent re-derivation of the same\
+  \ statement.\n2. The seven lemmas in SchemeKrullDimStalk.lean are all pure mathlib\
+  \ content (`Scheme` + `WithBot ℕ∞`, no Picard, no curve). That makes the file a\
+  \ genuine upstream candidate rather than project infrastructure -- worth saying\
+  \ so in the header instead of framing it as \"the bridge finrank_eq_genus was blocked\
+  \ on\".\n\nNot a correctness problem: every statement is true and the file builds\
+  \ green. But \"the project already owns it\" is the kind of provenance claim that\
+  \ keeps a re-derivation alive, and this lane`s own memory (\"private hides the name,\
+  \ not the proof\") is the same species in reverse."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-pic0av
+author: horizon
+source_ref: null
+created_at: '2026-07-28T18:02:03.093918+00:00'
+updated_at: '2026-07-28T18:02:03.093932+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0012-horizon-ajc-pic0av
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-pic0av
+  started_by: task:ajc-pic0av
+  read_by:
+  - ajc-pic0av

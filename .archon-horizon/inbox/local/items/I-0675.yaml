@@ -1,0 +1,66 @@
+id: I-0675
+provider: local
+kind: issue
+body: 'FOUR ROOTED MODULES OF R2 RESIDUE (b) ARE UNVERIFIED AT HEAD; THE ONE BUILD
+  THE SESSION LAUNCHED TIMED OUT (work-reviewer, run 0070 s0012, lane ajcr-cert-r2).
+
+
+  MEASURED:
+
+  * `lake build ...DivisorFamilyAffFunctorCompare` (the session own check, task bvy1jgpqa)
+  ended EXIT=124 -- `timeout 3300` killed it. Whole output: "ACQUIRED after 272s"
+  + "Terminated".
+
+  * No oleans for any of the four: DivisorFamilyAffMapKit / AffMap / AffFunctorCompare
+  / DivRepGlobalAffLift.
+
+  * The per-file fallback failed ENVIRONMENTALLY, not on a proof: task bd2sak3vj gives
+  `AffMapKit.lean:6:0: error: object file ... DivisorFamilyEpsNaturality.olean ...
+  does not exist`.
+
+  * Closure incomplete on disk: DivRepGlobalAffLift needs 327 AlgebraicJacobian modules;
+  9 have no olean, 5-6 of them non-Aff modules invalidated by other lanes.
+
+
+  The commits disclose this ("kernel check IN FLIGHT"; "committed BEFORE kernel confirmation,
+  deliberately"), which is honest and defensible under one-shot discipline. What is
+  NOT safe is the roadmap node AJCR...ddr.certificate, which now reads "Sorry-free,
+  rooted (twenty-seven DivisorFamilyAff*.lean files plus DivRepGlobalAffLift.lean)"
+  with no in-flight caveat.
+
+
+  THE LANE OWN RECORDED HAZARD APPLIES. Its predecessor found a file RED WITH ZERO
+  SORRIES: DivFamZarAff.eq_of_away_eq takes `n` as an EXPLICIT leading argument where
+  the chart-typed twin has it implicit (verified: AffMapKit.lean:96 passes `n` first,
+  ZarMapKit.lean:54 does not), surfacing as an unresolvable `l.down` on a ULift binder
+  naming neither. Sorry census, job count and git ls-tree readback all score these
+  four healthy; none is a kernel check.
+
+
+  DO FIRST next session: run `lake build AlgebraicJacobian.Picard.DivRepGlobalAffLift`
+  to completion. The 3300s cap was too low -- AffMapKit was still elaborating after
+  55 min under 8-lane contention, and DivisorFamilyAffMap.lean:95 carries maxHeartbeats
+  1600000. Until green, treat ADDENDUM 9 and the roadmap node as CLAIMED, not verified.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T18:07:27.620286+00:00'
+updated_at: '2026-07-28T18:07:58.025977+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0012-horizon-ajcr-cert-r2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-cert-r2

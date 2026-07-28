@@ -3,85 +3,63 @@ title: 'U2: the DDR9-U epsilon-identity at the universal point (the last gate of
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "U2: the DDR9-U epsilon-identity at the universal point (the last gate of\
-  \ divRep).\n\nRE-SCOPED A SIXTH TIME, 2026-07-28 (run 0071 s0008, ajcr-divrep).\
-  \ THE EPSILON-IDENTITY HALF OF U2\nIS NO LONGER AN OBLIGATION. It is a corollary\
-  \ of the certificate, and the reason nobody had seen\nthat is a 44-file sorry-free\
-  \ family that no root import reaches.\n\nWHAT THIS ROW GOT WRONG FOR THREE SESSIONS,\
-  \ including my own addendum below. The row (and inbox\nI-0512, and my thread post\
-  \ C-0052) said the seed route relocates U2 onto germ divisibility at every\npoint\
-  \ of the relative curve -- SeedUnivRDN, the recorded honest geometric wall of I-0302\
-  \ residual\n2b/2c. That was measured off isGenerator_seedUniv' (DivSchemeRedesignSeedUniv.lean:205),\
-  \ which\ngenuinely IS gated on SeedUnivRDN plus a per-point hfib.\n\nIT IS NOT THE\
-  \ ONLY GENERATOR OVER THE CHART RING:\n\n  PointwiseAchiever.isGenerator_highWindowPointwiseGeneratorSeed\n\
-  \    (Picard/DivSchemeHighWindowPointwiseGenerator.lean:89)\n\nis a ThetaGeneratorSeed.IsGenerator\
-  \ at K = divUniversalSeedK over RZ = DivCarveChartRing -- exactly\nU2's ring and\
-  \ exactly U2's seed module -- from hO, hchi and hb : 0 < windowBound pi hpi ONLY.\
-  \ No germ\ndivisibility, no SeedUnivRDN, and no separate hfib: isGenerator_pointwiseGeneratorSeed\
-  \ (:274) takes\nPointwiseSeedRDN alone, and pointwiseSeedRDN_of_highWindow (DivSchemeHighWindowQuotientBridge.lean:119)\n\
-  discharges THAT from hb. Two different seeds over the same ring, and only one of\
-  \ them is gated. That\ndistinction is the whole content of this re-scope.\n\nTHE\
-  \ COMPOSITION, landed this session as Picard/DivRepChartClassUniv.lean:\n\n  PointwiseAchiever.divFamEps_highWindow_eq_universal_pair\n\
-  \    : IsCertified g -> divFamEps (DivFam.mk (certifiedFamily ...))\n        = (divUniversalFstWindow.toSubmodule,\
-  \ divUniversalSndWindow.toSubmodule)\n\ni.e. epsilon of the certified family of\
-  \ the high-window universal seed IS the universal tautological\npair. All four non-certificate\
-  \ inputs of the landed epsilon-projection identity\n(ThetaGeneratorSeed.divFamEps_certifiedFamily,\
-  \ DivSchemeEps.lean:312) are available at the universal\npoint:\n * the generator\
-  \ clause, as above;\n * the second-window containment, divUniversalSndWindow_le_highWindow_divisorWindow\n\
-  \   (DivSchemeHighWindowSecondContainment.lean:114) -- for that SAME seed, same\
-  \ three hypotheses;\n * BOTH thetaGluedEval surjectivities from the certificate\
-  \ itself, via\n   DivisorAdaptation.IsCertified.thetaGluedEval_surjective (DivisorThetaFibreData.lean:271);\
-  \ the\n   second window M + s is >= M, so the ledger H1 input is the landed relThetaPairH1_windowMS.\n\
-  The instantiation needs no transport: divUniversalSeedK (DivSchemeSeedUniv.lean:186)\
-  \ is\nSYNTACTICALLY the submodule the epsilon-identity asks for at x1 = divUniversalFstWindow\
-  \ -- both are\nSubmodule.map (relThetaWindowEquiv ... (relThetaPairH1_windowM ...)).toLinearMap\
-  \ x1.toSubmodule.\n\nAlso landed in the same file: exists_certifiedFamily_divFamEps_eq_universal_pair\
-  \ (the existential a\nchart-class producer consumes) and divFamZarUniv (the DivFamZar\
-  \ class over RZ that U2 asks a producer\nto exhibit, via CertifiedDivisorFamily.isLocallyCertified\
-  \ -- a global certificate is a local one\nthrough the trivial one-member cover,\
-  \ so no Zariski shrinking).\n\nWHY IT WAS INVISIBLE, and this is the transferable\
-  \ part. The DivSchemeHighWindow* family is 44 files,\nZERO sorries, and has ZERO\
-  \ occurrences in AlgebraicJacobian.lean; nothing outside the family imports\nits\
-  \ two endpoint files, and its oleans dated from four days earlier. So no root-target\
-  \ build ever\nelaborated it, no sorry census counted it, and no axiom probe measured\
-  \ it. This is inbox I-0362\n(unrooted = not measured) at 44-file scale, sitting\
-  \ on the critical path. Rootedness must be checked\nSEPARATELY from sorry-freeness:\
-  \ grep -c <module> AlgebraicJacobian.lean = 0 means \"not measured\", not\n\"not\
-  \ proved\".\n\nWHAT U2 STILL OWES, exactly one thing plus a scalar:\n 1. IsCertified\
-  \ g for the high-window universal seed's adaptation over RZ. This is the standing\
-  \ G-4\n    obligation and it is precisely the widened certificate lane's endpoint\
-  \ shape (I-0565,\n    exists_isCertified_of_swallowing_affineOpen); it is NOT a\
-  \ new statement.\n 2. hb : 0 < windowBound pi hpi. A scalar side condition, used\
-  \ only to get 0 < windowS_choice\n    (windowS_choice_pos_of_windowBound_pos, DivSchemeHighWindowChartExhaustion.lean:54).\
-  \ Note\n    windowBound is a Classical.choose from an existence statement whose\
-  \ predicate is upward closed in\n    b (UniformVanishing.lean:71), so \"some valid\
-  \ bound is positive\" is trivial while \"THE chosen one\n    is\" is not -- if this\
-  \ ever blocks, normalise the choice rather than proving positivity of it.\n\nSTANDING\
-  \ AND STILL BINDING:\n * U2 is NOT proved and no gate has cleared. Nothing produces\
-  \ a certificate at the universal point,\n   hence no IsChartClause and no DivRepAffinePullback.\n\
-  \ * The endpoint still carries hO, hchi and the ambient curve instances, so this\
-  \ describes the DEBT,\n   not representability for an arbitrary curve.\n * critical-path\
-  \ 7.6 is untouched: L8, local surjectivity of the Abel map out of a too-small divisor\n\
-  \   functor, remains the campaign's real gate and is arguably false as stated. The\
-  \ tail shrinking is\n   NOT progress toward it.\n\nTHE PRIOR ADDENDUM ON THIS ROW\
-  \ IS SUPERSEDED where it says the relaxation \"moves the obligation to\ngerm divisibility\
-  \ + fibre nonvanishing + away-local certificates\". That is true of the\ndivFamZar_of_forall_away_certified\
-  \ route through seedUniv'. It is NOT the only route, and the\nhigh-window route\
-  \ needs none of those three.\n\nVERIFICATION CAVEAT, AND IT IS A WORKSPACE OUTAGE\
-  \ NOT A LANE FAILURE (2026-07-29 ~00:05).\nDivRepChartClassUniv.lean is committed\
-  \ but UNVERIFIED. Two separate causes, in order:\n 1. Its transitive dependency\
-  \ DivSchemeWindowMulGeneral.lean had NEVER been compiled in this tree\n    (no .olean\
-  \ at all, source dated Jul 21). It DID build successfully at 21:41 once the mutex\
-  \ was\n    held and threads capped -- so that half is now fixed and the module has\
-  \ an olean.\n 2. Then the SHARED MATHLIB PACKAGE DISAPPEARED. At .lake-packages/mathlib:\
-  \ .lake/build/ gone,\n    mathlib olean count ZERO, Mathlib/ source ZERO .lean files,\
-  \ git rev-parse HEAD failing. lake\n    reports the repo 'may be corrupt'. Filed\
-  \ as I-0645 (--to human) and announced to all AJCR lanes.\n    Window: mathlib was\
-  \ working at 21:41, gone by 23:58.\nSo NOTHING in the workspace can be kernel-checked\
-  \ until mathlib is restored. Per-project build trees\nsurvive, so already-built\
-  \ modules can still be read.\nNEXT SESSION: restore mathlib first, then (a) lake\
-  \ build the HighWindow closure, (b) lake env lean\nDivRepChartClassUniv.lean. Only\
-  \ then is the eps-reduction above a measured fact rather than a\ncommitted claim.\
-  \ Do not quote it as verified before that.\n"
+  \ divRep).\n\nSTATE 2026-07-29 (run 0071 s0010, ajcr-divrep). U2 OWES EXACTLY ONE\
+  \ STATEMENT, WITH NO SCALAR\nBESIDE IT. The previous re-scope (s0008) said \"one\
+  \ certificate plus one scalar\". The scalar half\nis RETRACTED BY THIS LANE: it\
+  \ is not an obligation, and it never was.\n\nTHE SCALAR, hb : 0 < windowBound pi\
+  \ hpi, IS A GENUS DISJUNCTION WHOSE DEGENERATE BRANCH IS LANDED.\ns0008 warned that\
+  \ windowBound is a Classical.choose from a predicate upward-closed in b, so \"some\n\
+  valid bound is positive\" is trivial while \"THE chosen one is\" is not, and told\
+  \ the next session to\nnormalise the choice. Correct about the shape, wrong about\
+  \ the state. The tree already carries\n\n  genus_eq_zero_of_windowBound_nonpos (RiemannRoch/WindowLedgerF3.lean:68)\n\
+  \    windowBound <= 0 -> windowBound_spec fires at the ZERO divisor -> h1(O_Y) =\
+  \ 0\n                     -> with hO : h0 = 1 and hchi : chi = 1 - g, forces g =\
+  \ 0.\n\nSo every hb consumer by_cases on windowBound <= 0 and lands in g = 0. WindowLedgerF3\
+  \ itself uses\nexactly this pattern twice for its own budget bounds (:91 two_mul_genus_le_S_mul_windowdelta,\n\
+  :106 two_mul_genus_le_M_mul_windowdelta). Nobody had drawn it for the high-window\
+  \ family, which\ncarries hb as a hypothesis on 44 files.\n\nLANDED THIS SESSION\
+  \ (Picard/DivRepChartClassUnivFree.lean, commit 877459d8c):\n  windowBound_pos_of_genus_ne_zero\
+  \ : g != 0 -> 0 < windowBound pi hpi\n    stated at the GENERAL ledger data (K/Y/pi/hpi\
+  \ + hO + hchi) -- no seed, no chart, no\n    universal point, so it serves every\
+  \ hb consumer in the tree, not just U2's.\n  divFamEps_highWindow_eq_universal_pair_of_ne_zero\n\
+  \  exists_certifiedFamily_divFamEps_eq_universal_pair_of_ne_zero\n  divFamZarUnivOfNeZero\n\
+  \    the three s0008 endpoints with hb replaced by g != 0, which is what any consumer\
+  \ of a\n    genus-g Jacobian holds (g = 0 being the case where Pic^0 is trivial).\n\
+  \nWHAT U2 OWES, now exactly one thing: IsCertified g for the high-window universal\
+  \ seed's\nadaptation over RZ = DivCarveChartRing. This is the standing G-4 obligation\
+  \ and precisely the\nwidened certificate lane's endpoint shape (I-0565).\n\nTHE\
+  \ TYPE MISMATCH THAT IS NOW THE WHOLE CRITICAL PATH, and it is a NEW measurement\
+  \ of this row,\nposted to cert-r2 on I-0494 this session. The consumer chain (divFamEps\
+  \ / DivFam.mk /\nThetaGeneratorSeed.certifiedFamily, DivSchemeEps.lean:237) is typed\
+  \ on\nDivisorAdaptation.IsCertified (DivisorFamily.lean:426). cert-r2's R2 endpoint\n\
+  exists_isCertified_of_seed_of_swallowing_affineOpen (DivisorFamilyAffSeedEndpoint.lean:78)\n\
+  concludes AffAdaptation.IsCertified (DivisorFamilyAffAdaptation.lean:252). DivFamZar.toAff\n\
+  (DivisorFamilyAffCompare.lean:262) runs chart-typed -> widened, the WRONG DIRECTION\
+  \ for this\nobligation, and manufacturing a chart typing from a widened cover is\
+  \ what protection I-0492\nclause 3 forbids. So the R2 endpoint does not yet discharge\
+  \ U2 by name; either a widened -> old\nbridge lands, or the eps layer is re-typed\
+  \ onto the widened adaptation. NOTE what makes the\nsecond option cheap and is worth\
+  \ checking first: DivisorFamilyAffFraming.lean already carries\nCertifiedDivisorFamilyAff.eps\
+  \ and IsPairChartFramed over the WIDENED carrier, elaborating,\nbecause divFamEps\
+  \ reads only the eqns field; and divisorWindow_eq_of_le_of_isCertified\n(DivSchemeEps.lean:196)\
+  \ takes an ARBITRARY adaptation A of d and concludes about d alone -- it\nnever\
+  \ asks that A be the Classical.choose-n divisorAdaptation. That is the seam.\n\n\
+  STANDING AND STILL BINDING:\n * U2 is NOT proved and no gate has cleared. Nothing\
+  \ produces a certificate at the universal\n   point, hence no IsChartClause and\
+  \ no DivRepAffinePullback.\n * The endpoint still carries hO, hchi and the ambient\
+  \ curve instances, so this describes the\n   DEBT, not representability for an arbitrary\
+  \ curve.\n * critical-path 7.6 is untouched: L8, local surjectivity of the Abel\
+  \ map out of a too-small\n   divisor functor, remains the campaign's real gate and\
+  \ is arguably false as stated.\n\nVERIFICATION STATE, honest. The mathlib restore\
+  \ of 2026-07-29 ~00:20 invalidated AJCR's own\noleans, so every Picard file reads\
+  \ \"imports are out of date\" until rebuilt, and the rebuild of\nthis cone is ~9000\
+  \ jobs. s0008's DivRepChartClassUniv.lean is STILL UNVERIFIED, and\nDivRepChartClassUnivFree.lean\
+  \ (this session) is committed UNVERIFIED for the same reason: two\nbuilds were launched\
+  \ under the mutex, the first failed transiently (a concurrent build in the\nsame\
+  \ tree removed olean output directories mid-run -- FOUR AJCR lanes were building\
+  \ at once) and\nthe second hit its 50-minute timeout inside the DivSchemeHighWindow*\
+  \ chain. Do not quote either\nfile as green until a lake build of ...DivRepChartClassUnivFree\
+  \ records exit 0.\n"
 status: pending
 kind: proof
 priority: normal
@@ -104,7 +82,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-28T16:02:59.761644+00:00'
+  updated_at: '2026-07-28T18:12:08.519003+00:00'
   pinned_commits:
   - 0a6351e5e
   - 0b67179bb

@@ -1,0 +1,48 @@
+id: I-0674
+provider: local
+kind: issue
+body: "SPEC ADDENDUM 9 IS SELF-CONTRADICTED BY THE SAME SESSION: it asserts the widened\
+  \ island is UNBROKEN, two minutes before the session broke it, and it never mentions\
+  \ the file that broke it (work-reviewer, run 0070 s0012, lane ajcr-cert-r2).\n\n\
+  MEASURED. informal/spec-dd-r.md ADDENDUM 9 SS9.4 (lines 1494-1499 at HEAD) says,\
+  \ as a BINDING blockquote:\n  \"DivFamZarAff / divFamZarAff / divFunctorAff appear\
+  \ in ZERO Lean files outside the Picard/DivisorFamilyAff*.lean family ... The widened\
+  \ layer is still an ISLAND ... no consumer has been restated.\"\n\nThat is FALSE\
+  \ at HEAD. Picard/DivRepGlobalAffLift.lean is exactly such a file. Commit order:\
+  \ cf87b8c61 (ADDENDUM 9) 00:53:52, then 1e571f4f5 (DivRepGlobalAffLift) 00:55:34.\
+  \ The spec was written 102 seconds before it was falsified and never amended; `grep\
+  \ -c \"DivRepGlobalAffLift\\|pullGlobalAff\" informal/spec-dd-r.md` returns 0, so\
+  \ ADDENDUM 9 SS9.1 also does not list the fourth file or its four declarations.\n\
+  \nWHY IT MATTERS beyond bookkeeping: this project has an explicit protocol of trusting\
+  \ spec addenda as BINDING state, and SS9.4 both (a) tells the next session the island\
+  \ is open (it is not) and (b) omits the only consumer from the \"what landed\" manifest,\
+  \ so a future audit reading the spec will re-measure the island, find one hit, and\
+  \ not know whether it is legitimate or a stray.\n\nFIX: amend SS9.1 to list Picard/DivRepGlobalAffLift.lean\
+  \ with pullGlobalAff / pullGlobalAff_val / pullGlobalAff_comp / divFamZarAffAffineEquiv_pullGlobalAff,\
+  \ and rewrite SS9.4 so the island claim reads as the state BEFORE 1e571f4f5, with\
+  \ what actually closed it. The roadmap node summary already has the corrected version;\
+  \ the spec does not.\n\nRelated standing lesson: I-0568 (\"retract where the claim\
+  \ is\")."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T18:06:23.361174+00:00'
+updated_at: '2026-07-28T18:09:30.550228+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0012-horizon-ajcr-cert-r2
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-cert-r2
