@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivisorFamilyAffSwallow
 import AlgebraicJacobian.Picard.DivisorFamilyAffExtraction
+import AlgebraicJacobian.Picard.DivisorFamilyAffGlue
 
 /-!
 # `SwallowedBy` from the Stacks `0B8B` input ALONE (R2, human decision I-0492)
@@ -30,10 +31,16 @@ narrows the obligation to that one statement and discharges everything around it
 
 ## Main declarations
 
+* `AlgebraicGeometry.AffCoverData.swallowedBy_ofSwallowingPiece` — `SwallowedBy` for the explicit
+  `ofSwallowingPiece` cover, when the other pieces avoid the support.
 * `AlgebraicGeometry.exists_affCoverData_swallowedBy` — from an affine open `W ⊇ supp d`, a
   widened cover with `W` as a piece which `SwallowedBy d`.
-* `AlgebraicGeometry.AffCoverData.swallowedBy_ofSwallowingPiece` — the same conclusion for the
-  explicit `ofSwallowingPiece` cover, when the other pieces avoid the support.
+* `AlgebraicGeometry.exists_affAdaptation_swallowedBy` — the same **carrying an adaptation**, from
+  the *subordinate* form of the input (`W` inside one member of `d.cover`).  `AffAdaptation` needs
+  subordination and the bare containment does not give it — see the section comment there.
+* `AlgebraicGeometry.exists_isCertified_of_swallowing_affineOpen` — the endpoint: the two named
+  geometric inputs plus the rank datum give a widened cover, an adaptation, and **all seven**
+  certificate clauses, with no hypothesis on `|P¹(k)|` anywhere in the chain.
 -/
 
 set_option autoImplicit false
@@ -42,7 +49,7 @@ set_option maxSynthPendingDepth 3
 
 universe u
 
-open CategoryTheory TopologicalSpace Opposite
+open CategoryTheory TopologicalSpace Opposite TensorProduct
 
 namespace AlgebraicGeometry
 
@@ -90,6 +97,8 @@ theorem exists_affCoverData_swallowedBy [IsProper C.hom]
     (hW : IsAffineOpen W) (hsub : d.supportLocus ⊆ (W : Set (relCurve C R))) :
     ∃ D : AffCoverData C R, D.SwallowedBy d := by
   classical
+  -- (the cover produced here is swallowed; whether it also carries an ADAPTATION is a
+  -- separate question, answered by `exists_affAdaptation_swallowedBy` below)
   -- the complement of the support is open, and contains everything outside `W`
   let U : (relCurve C R).Opens := ⟨d.supportLocusᶜ, d.isClosed_supportLocus.isOpen_compl⟩
   -- an affine open inside `U` around each point of `U`
@@ -132,5 +141,127 @@ theorem exists_affCoverData_swallowedBy [IsProper C.hom]
   · refine AffCoverData.swallowedBy_ofSwallowingPiece hW _ _ hsub fun j => ?_
     refine Set.disjoint_left.mpr fun z hzsupp hzV => ?_
     exact (hVle (e j).1 hzV) hzsupp
+
+/-! ## A swallowed cover that also carries an adaptation
+
+`exists_affCoverData_swallowedBy` gives a cover, but `AffAdaptation` additionally needs every
+piece to be **subordinate** to a member of `d.cover` (that is what `ofAnchors` consumes, and
+`eqn_rel` is not derivable without it).  The non-swallowing pieces of the construction above
+are already subordinate — they were carved out of a basis, so they can be shrunk into any
+member — but the swallowing piece `W` is only known to CONTAIN the support.
+
+So the input has to be the 0B8B statement in its subordinate form:
+
+> `supp D` lies in a single affine open `W` **which is contained in one member of `d.cover`**.
+
+That is not a strengthening of 0B8B in substance — `supp D` finite over `R` sits inside a member
+of any pointed cover of a neighbourhood of it — but it IS a strengthening of the Lean hypothesis,
+and stating it is better than discovering later that the two producers do not compose. -/
+
+/-- **A swallowed cover carrying an adaptation**, from the subordinate form of the 0B8B input:
+the affine open containing the support is required to lie inside one member of `d.cover`.
+
+Both conclusions at once, which is what the assembler
+`AffAdaptation.isCertified_of_swallowedBy` needs: a cover swallowed by `d`, and an adaptation of
+`d` to it. -/
+theorem exists_affAdaptation_swallowedBy [IsProper C.hom]
+    (d : (relCurve C R).LocalEquations) {W : (relCurve C R).Opens}
+    (hW : IsAffineOpen W) (hsub : d.supportLocus ⊆ (W : Set (relCurve C R)))
+    (z₀ : relCurve C R) (hWle : W ≤ d.cover.opens z₀) :
+    ∃ (D : AffCoverData C R) (_ : AffAdaptation D d), D.SwallowedBy d := by
+  classical
+  let U : (relCurve C R).Opens := ⟨d.supportLocusᶜ, d.isClosed_supportLocus.isOpen_compl⟩
+  -- around each point of `U`, an affine open inside `U` AND inside a member of `d.cover`
+  have hV : ∀ z : U, ∃ V : (relCurve C R).Opens, IsAffineOpen V ∧ (z : relCurve C R) ∈ V
+      ∧ V ≤ U ⊓ d.cover.opens (z : relCurve C R) := by
+    intro z
+    obtain ⟨V, hVmem, hzV, hVle⟩ :=
+      Opens.isBasis_iff_nbhd.mp (relCurve C R).isBasis_affineOpens
+        (show (z : relCurve C R) ∈ U ⊓ d.cover.opens (z : relCurve C R) from
+          ⟨z.2, d.cover.mem_opens _⟩)
+    exact ⟨V, hVmem, hzV, hVle⟩
+  choose V hVaff hzV hVle using hV
+  have hcov : (W : Set (relCurve C R))ᶜ ⊆ ⋃ z : U, (V z : Set (relCurve C R)) := by
+    intro z hz
+    have hzU : z ∈ d.supportLocusᶜ := fun hc => hz (hsub hc)
+    exact Set.mem_iUnion.mpr ⟨⟨z, hzU⟩, hzV ⟨z, hzU⟩⟩
+  obtain ⟨t, ht⟩ := ((isClosed_compl_iff.mpr W.isOpen).isCompact).elim_finite_subcover
+    (fun z : U => (V z : Set (relCurve C R))) (fun z => (V z).isOpen) hcov
+  set e : Fin (Fintype.card {z // z ∈ t}) ≃ {z // z ∈ t} :=
+    (Fintype.equivFin {z // z ∈ t}).symm with he
+  have hcover : W ⊔ (⨆ j, V (e j).1) = ⊤ := by
+    refine top_le_iff.mp fun z _ => ?_
+    by_cases hz : z ∈ (W : Set (relCurve C R))
+    · exact (Opens.mem_sup ..).mpr (Or.inl hz)
+    · obtain ⟨s, hs, hzs⟩ := Set.mem_iUnion₂.mp (ht hz)
+      exact (Opens.mem_sup ..).mpr (Or.inr
+        (Opens.mem_iSup.mpr ⟨e.symm ⟨s, hs⟩, by rw [Equiv.apply_symm_apply]; exact hzs⟩))
+  set D := AffCoverData.ofSwallowingPiece W hW (fun j => V (e j).1)
+    (fun j => hVaff (e j).1) hcover with hD
+  -- every piece is subordinate: the last to `d.cover.opens z₀`, the others to their own point
+  set pt : D.index → relCurve C R :=
+    Fin.snoc (fun j => ((e j).1 : relCurve C R)) z₀ with hpt
+  have hle : ∀ j : D.index, D.pieces j ≤ d.cover.opens (pt j) := by
+    refine Fin.lastCases ?_ ?_
+    · show (Fin.snoc (fun j => V (e j).1) W : Fin _ → _) (Fin.last _)
+        ≤ d.cover.opens (pt (Fin.last _))
+      rw [hpt, Fin.snoc_last, Fin.snoc_last]
+      exact hWle
+    · intro i
+      show (Fin.snoc (fun j => V (e j).1) W : Fin _ → _) i.castSucc
+        ≤ d.cover.opens (pt i.castSucc)
+      rw [hpt, Fin.snoc_castSucc, Fin.snoc_castSucc]
+      exact (hVle (e i).1).trans inf_le_right
+  refine ⟨D, AffAdaptation.ofAnchors
+    (fun j => ((relCurve C R).presheaf.map (homOfLE (hle j)).op).hom (d.eqn (pt j)))
+    pt hle (fun _ => 1) (fun _ => by rw [Units.val_one, one_mul]), ?_⟩
+  refine AffCoverData.swallowedBy_ofSwallowingPiece hW _ _ hsub fun j => ?_
+  refine Set.disjoint_left.mpr fun z hzsupp hzV => ?_
+  exact ((hVle (e j).1).trans inf_le_left) hzV hzsupp
+
+/-! ## The endpoint: a CERTIFIED widened family from the two named inputs
+
+This is what the lane is for, and it composes the pieces so that the remaining obligations are
+visible in one signature rather than spread over five files. -/
+
+/-- **A certified widened family from the two geometric inputs, and nothing else.**  Given
+
+* the subordinate Stacks `0B8B` input — an affine open `W` containing `supp d` and contained in
+  one member of `d.cover` (I-0492 clause 2: USE, do not re-derive);
+* `hfib`, fibrewise regularity of the piece equations, which must come from the seed's own degree
+  data (I-0492 clause 4(i); `AffAdaptation.eqn_tmul_one_mem_nonZeroDivisors_iff` reads it on the
+  fibre curve);
+* `hrank`, the constant-fibre-rank datum, which is the honest content of "the divisor has degree
+  `n`" and cannot come from anywhere else,
+
+there is a widened cover, an adaptation of `d` to it, and a degree-`n` certificate — **all seven
+clauses**.
+
+Everything between those inputs and this conclusion is landed: the swallowed cover and its
+adaptation (`exists_affAdaptation_swallowedBy`), (c1)-finiteness from the straddling piece
+(`forall_finite_colength_of_swallowedBy`), (c1)-projectivity from `hfib` through the widened
+flatness route (`projective_colength_of_forall_tmul_residueField`), and (c2)/(c3)/(c4) from (c1)
+plus the rank datum on a straddling cover (`isCertified_of_swallowedBy_of_c1`).
+
+No hypothesis on `|P¹(k)|` appears anywhere in the chain — that is the point of R2. -/
+theorem exists_isCertified_of_swallowing_affineOpen [IsProper C.hom] [IsNoetherianRing R]
+    {n : ℕ} (d : (relCurve C R).LocalEquations)
+    {W : (relCurve C R).Opens} (hW : IsAffineOpen W)
+    (hsub : d.supportLocus ⊆ (W : Set (relCurve C R)))
+    (z₀ : relCurve C R) (hWle : W ≤ d.cover.opens z₀)
+    (hfib : ∀ (D : AffCoverData C R) (A : AffAdaptation D d) (j : D.index)
+      (p : PrimeSpectrum R),
+      (A.eqn j ⊗ₜ[R] (1 : p.asIdeal.ResidueField) :
+          Γ(relCurve C R, D.pieces j) ⊗[R] p.asIdeal.ResidueField) ∈
+        nonZeroDivisors (Γ(relCurve C R, D.pieces j) ⊗[R] p.asIdeal.ResidueField))
+    (hrank : ∀ (D : AffCoverData C R) (A : AffAdaptation D d) (p : PrimeSpectrum R),
+      Module.rankAtStalk A.Glued p = n) :
+    ∃ (D : AffCoverData C R) (A : AffAdaptation D d), A.IsCertified n := by
+  obtain ⟨D, A, hsw⟩ := exists_affAdaptation_swallowedBy C R d hW hsub z₀ hWle
+  haveI hfin : ∀ j, Module.Finite R (A.colength j) :=
+    A.forall_finite_colength_of_swallowedBy hsw
+  refine ⟨D, A, A.isCertified_of_swallowedBy_of_c1 hsw hfin (fun j => ?_) (hrank D A)⟩
+  haveI := hfin j
+  exact A.projective_colength_of_forall_tmul_residueField j (hfib D A j)
 
 end AlgebraicGeometry
