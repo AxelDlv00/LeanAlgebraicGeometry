@@ -3,48 +3,51 @@ title: Cotangent space and H1 comparison
 projects:
 - Algebraic-Jacobian-Challenge
 summary: "Identify the cotangent-space dual at the identity with the Cech H1 cokernel\
-  \ and hence with\nH1(C,O_C), including the required linearity and finrank comparison.\n\
-  \nSTATE (run 0067 round 2, ajc-pic0av, commits bec31ea23 + 2e5a71f57 + 6ea200abb).\n\
-  THE RELATIVE QUOTIENT IS GONE FROM THE PROBLEM. Previously the residue was \"clause\
-  \ (iii),\nthe cocycle identification\"; that clause silently also had to bridge\
-  \ a carrier mismatch,\nbecause the Cech side computes with ABSOLUTE Picard classes\
-  \ while the representability leg\ndelivers a class in the RELATIVE functor Pic/pi^*\
-  \ Pic(T). That half is now closed.\n\nNEW, sorry-free and axiom-clean (Picard/OnePointRelPicCollapse.lean,\
-  \ 8 decls, all\n[propext, Classical.choice, Quot.sound]; work-reviewer verified\
-  \ independently this round):\n * LineBundle.IsLocallyTrivial.trivial_of_subsingleton\
-  \ -- SCHEME-GENERAL, upstreamable: a\n   locally trivial module on a one-point scheme\
-  \ is GLOBALLY trivial. Every nonempty open of a\n   one-point space is top, so the\
-  \ chart trivialisation already IS global. Cover-free.\n * relPicQuotAddEquivAbs\
-  \ : Pic(C x_S T)/pi_T^* Pic(T) =+ Pic(C x_S T) for Subsingleton T.\n * kerRelPresheafAddEquivKerAbs,\
-  \ and its name in the tangent file\n   relPicDualKernelAddEquivAbsKernel : relPicDualKernel\
-  \ C =+ ker((PicSharp C).map (eps->0)).\n   relPicDualKernel C is LITERALLY the domain,\
-  \ not a lookalike (reviewer-checked).\n\nWHY IT WAS CHEAP, and this is the transferable\
-  \ lesson (I-0544, I-0495): the collapse is\nTOPOLOGICAL. Both AJCR's t4 worksheet\
-  \ and this project had priced it as commutative algebra --\n\"Pic of a finite product\
-  \ of Artin local rings vanishes\", true, real algebra, and unnecessary.\nSearch\
-  \ the shape of the OBJECT (a one-point space), not of the argument you expect.\n\
-  \nCROSS-CARRIER NOTE: AJCR proved the same collapse in five lines because its relative\
-  \ group is a\nQuotientGroup by an honest subgroup picFromBase. AJC's carrier is\
-  \ a SETOID quotient of\nLineBundle.OnProduct with no subgroup to name, so it had\
-  \ to be proved at the level of the\nRELATION (relPicRel_iff_iso_of_subsingleton,\
-  \ both directions). The IDEA ported; the proof did not.\n\nRESIDUE, and it is now\
-  \ genuinely one thing: the cocycle map itself, sending a kernel class to\nits transition\
-  \ unit, statable directly against the ABSOLUTE kernel. ajcr-w5-av split it further\n\
-  (I-0495): (iii-a) the two-chart Cech-units hom and (iii-b) its injectivity are LANDED\
-  \ on the\nAJCR side for any scheme with a two-open cover; only (iii-c), surjectivity\
-  \ onto the eps-kernel,\nis open. That is the joint residue of both developments.\n\
-  \nCARRIER TRAP, recorded twice now in this lane: instance SYNTHESIS, not missing\
-  \ structure.\nrelPicQuotAddEquivAbs is stated on bare Quotients; consumers see (relPresheaf\
-  \ C).obj (op T),\nwhich is AddCommGrpCat.of of that Quotient. They agree but NOT\
-  \ at instances transparency --\nAddMonoidHom.mem_ker against the raw Quotient fails\
-  \ with a Membership INSTANCE mismatch, which\nreads like a missing simp lemma. Fix:\
-  \ relPresheafObjAddEquivAbs, the same equivalence restated\nonce at the functor-object\
-  \ carriers. Same genus as the subtype-vs-AddSubgroup trap on\nrelPicDualKernel last\
-  \ round.\n\nSTILL TRUE, do not re-derive: finrank_eq_of_addEquiv_of_bijective_smul;\n\
-  cotangentSpaceDual_equiv_relPicKernel; relPicKernelSMul and laws;\nDualNumber.truncExpCechKernelAddEquiv;\
-  \ residueFieldIso_of_section_over_field;\nDualNumber.baseChangeAlgEquiv (clause\
-  \ (ii)); free_of_cyclic_mod_eps (clause (i)).\nNo Hilbert 90 and no henselian campaign\
-  \ -- the thickening is square-zero.\n"
+  \ and hence with\nH1(C,O_C), including linearity and the finrank comparison.\n\n\
+  STATE (run 0067 r4). ONE sorry: semilinearComparison_cotangentSpaceDual_h1Cok\n\
+  (Pic0AbelianVariety.lean:820). Its content is clause (iii), the cocycle map sending\
+  \ a\ndual-number kernel class to its transition unit, as an ADDITIVE equivalence\
+  \ plus the Mumford\nscaling intertwining. Clauses (i) and (ii) are closed, and the\
+  \ relative-Picard quotient is out\nof the problem (OnePointRelPicCollapse, run 0067\
+  \ r2).\n\nCLOSED THIS ROUND -- THE GENERATOR OBLIGATION, and it was open on BOTH\
+  \ sides of the workspace.\nPicard/DualNumberChartTriviality.lean now carries, sorry-free\
+  \ and axiom-clean:\n  Submodule.exists_sub_smul_mem_of_quotient_cyclic   M/N cyclic\
+  \ => exists m with the binder\n  Submodule.quotient_cyclic_of_exists_sub_smul_mem\
+  \   the CONVERSE\n  DualNumber.free_of_quotient_eps_cyclic             invertible\
+  \ A[eps]-mod, cyclic M/(eps)M => free\nAJC's free_of_cyclic_mod_eps and AJCR's Opens.cechPicMap_iota_eq_one_of_dualNumberChart\
+  \ both\ntook the generator m AND the binder (forall x, exists r, x - r*m in span{eps}*top)\
+  \ as GIVEN,\nand both docstrings named \"produce m from L is trivial on C\" as the\
+  \ residue -- character for\ncharacter the same obligation. It is not geometry: that\
+  \ binder IS cyclicity of M/(eps)M written\nwithout naming the quotient, so m comes\
+  \ from Submodule.Quotient.mk_surjective on the generator\nplus mk_eq_zero. Arbitrary\
+  \ commutative ring, no finiteness, no cover, no scheme, no curve. The\nconverse\
+  \ is included per I-0571, so this is a strict reduction and not a restatement.\n\
+  \nMEASURED ABOUT THE SIBLING, and it corrects a reading this node encouraged: AJCR's\
+  \ (iii-c2-aff)\nis NOT a sorry, it is a HYPOTHESIS BINDER (their worksheet SS0(4):\
+  \ never register a staged\nfact). Correct discipline, but it makes their open content\
+  \ invisible to a sorry census -- so\n\"AJCR is sorry-free here\" had been read as\
+  \ \"AJCR has this\". They do not. Neither side had the\ngenerator until this round.\n\
+  \nWHERE AJCR IS GENUINELY AHEAD, all sorry-free and scheme-general: (iii-a) twoChartClass,\n\
+  (iii-b) its injectivity, (iii-c1) twoChartClassHom_mk_range, (iii-c2-Zar)\ntwoChartClassHom_surjOn_of_chartTrivial.\
+  \ But all four are welded to X.CechPic over\nX.PointedCover, and AJC HAS NEITHER\
+  \ -- zero occurrences. Not importable (no cross-project\ndependency), and porting\
+  \ means first building the sheaf-side glue-from-a-transition-unit\ncomparison against\
+  \ AJC's LineBundle.OnProduct setoid, where their Quot.ind-on-a-Cech-\nrepresentative\
+  \ proof has nothing to land on. Genuinely portable instead:\nTangent/DualNumberCarrier.lean\
+  \ and DualNumberCarrierReduction.lean -- clause (ii) ON UNITS in\nsheaf vocabulary,\
+  \ where AJC has only the algebra-level baseChangeAlgEquiv.\n\nMATHLIB v4.31 HAS\
+  \ NOTHING for the surjectivity half: there is no Picard group of a SCHEME at\nall\
+  \ (zero hits in Mathlib/AlgebraicGeometry). Only ring-level CommRing.Pic, whose\
+  \ one exact\nsequence is a localisation sequence. Mayer-Vietoris there is AddCommGrp-valued\
+  \ so it cannot see\nO^times. AJCR's is the only implementation in either tree.\n\
+  \nRESIDUE, in order of size: (1) the cocycle map itself, clause (iii) -- the sorry;\
+  \ (2) within\nchart triviality, identifying \"L restricts trivially along eps ->\
+  \ 0\" with \"M/(eps)M is cyclic\",\ni.e. freeness of the RESTRICTION, which is what\
+  \ remains of (iii-c2-aff) now that the generator\nis closed.\n\nSTILL TRUE, do not\
+  \ re-derive: finrank_eq_of_addEquiv_of_bijective_smul;\ncotangentSpaceDual_equiv_relPicKernel;\
+  \ relPicKernelSMul and laws;\nDualNumber.truncExpCechKernelAddEquiv; residueFieldIso_of_section_over_field;\n\
+  baseChangeAlgEquiv (clause ii); free_of_cyclic_mod_eps (clause i);\nrelPicDualKernelAddEquivAbsKernel.\
+  \ No Hilbert 90, no henselian campaign.\n"
 status: active
 kind: proof
 priority: high
@@ -67,5 +70,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-28T07:55:18.163165+00:00'
+  updated_at: '2026-07-28T13:48:10.654366+00:00'
   owner: ajc-pic0av

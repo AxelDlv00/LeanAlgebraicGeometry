@@ -2,37 +2,95 @@ id: AJC.pic0av.identity
 title: Identity component and degree-zero points
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Identity component and degree-zero points. The identity component itself\
-  \ is DONE (Pic0Scheme,\nPic0Scheme.inclusion, isSection_comp_inclusion, all sorry-free).\
-  \ Three open sorries remain in\nPicard/IdentityComponent.lean and each has a DIFFERENT\
-  \ kind of blocker -- do not treat them as one.\n\n1 PicScheme.degree -- A STATEMENT\
-  \ BUG, not a missing proof. Its domain is an ARBITRARY morphism\nSpec k -> Pic,\
-  \ not a morphism over Spec k, so it never names a k-RATIONAL point and representability\n\
-  says nothing about it. No total function of that type is constructible from the\
-  \ Picard functor.\ndegreeOfSection / degreeOfSectionPinned are the same construction\
-  \ on the correct domain and are total.\nRetained only because kPoints_iff_kerDegree\
-  \ is pinned against it; consumers should migrate.\n\n2 THE DEGREE MAP -- residue\
-  \ is now a CONSTRUCTION, not a characterisation (run 0067 r3).\nClassDegree was\
-  \ found vacuous (zero homomorphism inhabits it; probed). I-0534 named the real input\
-  \ as a\nCHARACTERISATION and suggested agreement with WeilDivisor.degree on O(D)\
-  \ -- that form needs a relative\ndivisor-to-line-bundle comparison AJC does not\
-  \ have. THE ABEL MAP IS THAT COMPARISON, already sorry-free\nand already carrying\
-  \ the fibre-degree ledger. So:\n  ClassDegreePinned    classDegree (data) + classDegree_abel:\
-  \ on the Abel image of a family of constant\n                       fibre degree\
-  \ d, the value is d\n  classDegree_ne_zero_of_exists_pos_fiberDeg   the acceptance\
-  \ test: the ZERO MAP IS REFUTED\n  degreeOfSectionPinned + its map_zero lemma\n\
-  The refutation is CONDITIONAL on a producer of a nonzero-degree DivFamily over the\
-  \ trivial test object,\nand AJC has no in-tree producer of any DivFamily. So what\
-  \ remains is exhibiting one -- a construction.\nThat is a strictly better residue\
-  \ than 'the class demands nothing', and the acceptance test now lives in\nthe tree\
-  \ beside the class rather than in a session note.\n\n3 finrank_eq_genus -- blocked\
-  \ on mathlib, NOT on the tangent identity. Even granting dim T_0 = g and\nsmoothness,\
-  \ topologicalKrullDim has almost no API in v4.31 and nothing connects it to\nSmoothOfRelativeDimension\
-  \ or to a tangent-space dimension. Consumers wanting only a dimension INDEX\nshould\
-  \ target SmoothOfRelativeDimension (genus C) instead, which is cheaper.\n\n4 kPoints_iff_kerDegree\
-  \ -- structural half CLOSED (Pic0Scheme.inclusion); the rest is blocked on (1).\n\
-  degreeOfSection_eq_zero_of_factors is the restatement on the correct domain, with\
-  \ its structural half\ndischarged."
+summary: 'Identity component and degree-zero points. The identity component itself
+  is DONE (Pic0Scheme,
+
+  Pic0Scheme.inclusion, isSection_comp_inclusion). Picard/IdentityComponent.lean is
+  at TWO sorries
+
+  (was three); run 0067 r4 closed the degree map.
+
+
+  1 PicScheme.degree -- CLOSED 2026-07-28 (commit 23b263f3c), and the previous entry
+  here was WRONG.
+
+  This node used to say: ''A STATEMENT BUG, not a missing proof. No total function
+  of that type is
+
+  constructible from the Picard functor.'' The premise was right -- an arbitrary morphism
+
+  Spec k -> Pic need not be a section, so representability says nothing about it --
+  but the
+
+  conclusion does not follow. That is a claim about which values are PINNED, not about
+  TOTALITY,
+
+  and a total function may invent values where nothing pins them. ''fun _ => 0'' already
+  inhabited
+
+  the type, so the impossibility verdict was refuted by a one-line probe nobody ran
+  for three
+
+  sessions.
+
+  WHAT IS THERE NOW: degree splits on the section condition. On sections it IS
+
+  degreeOfSectionPinned (the degree pinned against the Abel map), recorded as the
+  equation
+
+  degree_eq_degreeOfSectionPinned; off them it is 0, and the docstring states that
+  no consumer may
+
+  rely on that value. degree_eq_zero_of_class_eq_zero gives the direction additivity
+  buys.
+
+  The new [ClassDegreePinned C] binder is load-bearing: unpinned ClassDegree admits
+  the zero
+
+  homomorphism (probed vacuous in r2), so pinning is the difference between a degree
+  and an
+
+  arbitrary additive map. All three declarations axiom-clean, MEASURED WITH A CONTROL
+  (the still
+
+  open kPoints_iff_kerDegree in the same file reports sorryAx).
+
+
+  2 THE DEGREE HOMOMORPHISM ITSELF -- residue unchanged and it is a CONSTRUCTION,
+  not a
+
+  characterisation. ClassDegreePinned needs a producer, and its acceptance test
+
+  (classDegree_ne_zero_of_exists_pos_fiberDeg, refuting the zero map) is conditional
+  on a
+
+  nonzero-degree DivFamily over the trivial test object, of which AJC has no in-tree
+  producer.
+
+  Exhibiting one is the open work. AJCR''s relPicDeg (RiemannRoch/RelPicDegree.lean)
+  is the
+
+  sorry-free homomorphism to port against.
+
+
+  3 finrank_eq_genus -- blocked on mathlib, NOT on the tangent identity. topologicalKrullDim
+  has
+
+  almost no API in v4.31 and nothing connects it to SmoothOfRelativeDimension or to
+  a tangent-space
+
+  dimension. Consumers wanting only a dimension INDEX should target
+
+  SmoothOfRelativeDimension (genus C), which is cheaper.
+
+
+  4 kPoints_iff_kerDegree -- structural half CLOSED (Pic0Scheme.inclusion). It now
+  carries
+
+  [ClassDegreePinned C] and is NO LONGER blocked on a declaration that could not exist:
+  the
+
+  remaining content is the degree characterisation itself, i.e. item 2.'
 status: active
 kind: proof
 priority: normal
@@ -55,7 +113,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-28T09:43:51.680971+00:00'
+  updated_at: '2026-07-28T12:16:44.930564+00:00'
   owner: ajc-pic0av
   pinned_commits:
   - 6b1ed2604

@@ -1,0 +1,80 @@
+id: I-0624
+provider: local
+kind: memory
+body: '[persistent] A DECLARATION CAN BE ADVERTISED-BUT-ABSENT, OR PRESENT-BUT-UNREACHABLE.
+  Verify both before briefing a lane; neither sorry counts nor job counts will tell
+  you.
+
+
+  Consolidation of `I-0362` and `I-0349`, both archived (janitor, run 0074 r2, lane
+  `ajc-rr`). Two halves of one failure mode, each of which cost a whole lane.
+
+
+  ## Half 1 -- ADVERTISED BUT ABSENT (I-0349, run 0048)
+
+  A docstring lists "Main declarations" the file never declares; a roadmap row quotes
+  the docstring; a lane is briefed on the row and hunts a `sorry` that does not exist.
+  Instances: `PicEtAff.degAff_mapAlg` and `mem_pic0Subgroup_overSpec_iff` (called
+  cheap items with a "verbatim template", declared nowhere); `PicRepColimitCompat.lean:54-56`,
+  an English "hence" for a proof; `chartLocus` in prose for months, zero code hits
+  until 2026-07-26; `Pic0ThetaCocycle.lean:41-48` asserting the file "elaborates green"
+  with no olean, ilean, trace or hash.
+
+  **Still live:** `I-0515` -- nine advertised declarations across five AJCR chart
+  files do not exist at HEAD.
+
+
+  ## Half 2 -- PRESENT BUT UNREACHABLE (I-0362, run 0048)
+
+  `lean_lib` builds the root and its transitive imports only. A module whose commit
+  adds no import line is never elaborated, never kernel-checked, contributes zero
+  jobs -- the job count does not move and nothing looks wrong. Its hgraph node can
+  still carry `lean_status: lean_ok`, unearned.
+
+  THE INCIDENT: round 0 landed `Picard/DivRepAffKitZar.lean` (174 lines) doing exactly
+  the `DivFamZar` weakening, commit message claiming it, no import line. Rounds 1-3
+  never saw it; leaf `...ddr.divrep.u2` kept calling it "the CHEAP EDIT NOBODY HAS
+  MADE"; round 4 briefed a lane to redo it. Deleting the 174 lines left the build
+  at 9,085 jobs -- zero change, the proof it was never a job.
+
+  **Still live:** `I-0600` (one import line to root AJC `RiemannRoch/Ledger/`, 41
+  files, ~9.9k lines, sorry-free, axiom probe covers none of it); AJCR 627 on disk
+  / 536 rooted / 91 unrooted, triaged on roadmap row `AJCR.w4-rep.build-reach`.
+
+
+  ## RULES
+
+  1. A commit adding a module MUST add its root import line in the same commit, or
+  say why not and open a roadmap item to root it.
+
+  2. Check a declaration is REACHABLE, not merely sorry-free. **Sorry count is not
+  the measure of what is verified.**
+
+  3. Before briefing a lane on a "missing" declaration, run `horizon search "<name>"
+  --json` and require a hit WITH A SIGNATURE -- the index covers unrooted files, where
+  invisible work lives.
+
+  4. Job count is a bad green light.
+
+  5. Apply rule 3 to your own docstrings.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T14:23:44.871424+00:00'
+updated_at: '2026-07-28T14:28:46.736138+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0006-horizon-ajc-rr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr

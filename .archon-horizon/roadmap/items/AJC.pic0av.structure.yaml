@@ -2,52 +2,56 @@ id: AJC.pic0av.structure
 title: Smoothness, properness, and irreducibility
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Smoothness, properness, and irreducibility of Pic^0. Irreducibility and\
-  \ the group structure are DONE\n(Pic0.geometricallyIrreducible, Pic0.grpObj). Run\
-  \ 0067 r3 replaced BOTH open conjuncts' residues with\nstatements the pinned mathlib\
-  \ has vocabulary for, and a review then corrected the strength claim on one\nof\
-  \ them.\n\nSMOOTHNESS -- residue is IsReduced of ONE scheme, over kbar, and it discharges\
-  \ TWO obligations.\n  Pic0.smooth_of_isReduced_algebraicClosureBaseChange\n  Pic0.geometricallyReduced_of_isReduced_algebraicClosureBaseChange\n\
-  Both in Picard/Pic0AbelianVariety.lean, both axiom-clean. The single hypothesis\n\
-  IsReduced (Pic0 x_{Spec k} Spec kbar) gives smoothness AND the class GeometricallyReduced\
-  \ (via the\nin-tree instance Smooth.geometricallyReduced) -- so it also discharges\
-  \ the file's own open sorry\nPic0.geometricallyReduced. Compare smooth_of_forall_isReduced,\
-  \ which asks one reducedness statement PER\nfield extension.\n\nHow it became available:\
-  \ mathlib reduces to the kbar case internally but through a PRIVATE lemma. Both\n\
-  projects had recorded \"make smooth_of_grpObj_of_isAlgClosed public\" as an upstream\
-  \ PR. Not needed --\nprivate hides the name, not the proof, and the proof uses only\
-  \ public API. Re-derived in\nPicard/GroupSchemeSmoothAlgClosed.lean (sorry-free,\
-  \ rooted, single mathlib import, portable to AJCR).\nMEASURED at a probe site with\
-  \ the HasPicScheme gate ASSUMED not synthesised: probe axiom-clean, control\nPic0.smooth\
-  \ reports sorryAx.\n\nCORRECTION, recorded because it was published wrong first:\
-  \ the criterion is NOT a strictly weaker\nhypothesis, it is a RESTATEMENT. I claimed\
-  \ IsReduced-over-kbar => GeometricallyReduced is absent; it is\nabsent from mathlib\
-  \ but PRESENT in AJC (Smooth.geometricallyReduced), so at these binders the two\
-  \ are\ninterprovable. The error was measuring \"absent\" inside the edited file's\
-  \ import cone (99 modules, which\nexcludes Curve/GeometricallyReduced) instead of\
-  \ the root cone (215, which contains it) -- a synthesis\nprobe cannot see a bridge\
-  \ its own imports exclude, and it fails silently. Negative availability claims\n\
-  must be measured at the ROOT (I-0588). The restatement is still worth having: interprovable\
-  \ is not\nequally attackable, and GeometricallyReduced has no non-circular producer\
-  \ here.\n\nPROPERNESS -- residue is a LIFTING statement, not quasi-projectivity.\n\
-  \  Pic0.proper_of_valuativeCriterion  gets IsProper from ValuativeCriterion.Existence\
-  \ ALONE.\n  Pic0.universallyClosed_of_valuativeCriterion  its universal-closedness\
-  \ half.\nThe other three conjuncts are theorems of the file: isSeparated, locallyOfFiniteType,\
-  \ quasiCompact (the\nlast was filed \"not needed for the proper assembly\" -- it\
-  \ is exactly what this route consumes).\nThis retires the standing caveat I-0074\
-  \ Caveat 2, that Kleiman th:qpp&p argues via quasi-projectivity and\nmathlib v4.31\
-  \ has no such vocabulary. The valuative criterion (Stacks 01KF) is mathlib's\nUniversallyClosed.of_valuativeCriterion.\
-  \ Through representability the lifting condition IS \"an invertible\nsheaf on C\
-  \ x_k Spec K extends over the valuation ring\" -- the classical content of properness,\
-  \ and the\nsame species of statement as this chapter's DualNumber.free_of_cyclic_mod_eps.\n\
-  Caveat from review: mathlib carries the criterion as an EQUALITY, so this hypothesis\
-  \ is interprovable with\nthe sorry it replaces. Change of shape, not of strength\
-  \ -- but the shape is what is attackable.\n\nSTILL OPEN, neither claimed proved:\
-  \ reducedness of Pic0 x_k Spec kbar; the valuative existence half.\nEarlier routes\
-  \ retained beside the new ones (smooth_of_forall_isReduced, universallyClosed_of_ambient,\n\
-  universallyClosed_of_baseChange). ajc-etale-pic's Pic0Et.smooth/.proper carry the\
-  \ same two residues and\nboth reductions apply verbatim there -- their file, not\
-  \ edited."
+summary: "Smoothness, properness and irreducibility of Pic^0. Irreducibility and the\
+  \ group structure are\nDONE (Pic0.geometricallyIrreducible, Pic0.grpObj). TWO sorries\
+  \ remain in\nPicard/Pic0AbelianVariety.lean: geometricallyReduced (:1102) and universallyClosed\
+  \ (:1332).\nNOT ADVANCED in run 0067 r4 -- that session closed AJC.rr.principal,\
+  \ the degree map, and the\ntangent lane's generator obligation instead. The state\
+  \ below is r3's and was re-read, not\nre-derived.\n\nSMOOTHNESS -- residue is IsReduced\
+  \ of ONE scheme over kbar, and it discharges TWO obligations.\n  Pic0.smooth_of_isReduced_algebraicClosureBaseChange\n\
+  \  Pic0.geometricallyReduced_of_isReduced_algebraicClosureBaseChange\nBoth axiom-clean.\
+  \ The single hypothesis IsReduced (Pic0 x_{Spec k} Spec kbar) gives smoothness\n\
+  AND the class GeometricallyReduced (via the in-tree instance Smooth.geometricallyReduced),\
+  \ so it\nalso discharges this file's own open sorry Pic0.geometricallyReduced. Compare\n\
+  smooth_of_forall_isReduced, which asks one reducedness statement PER field extension.\n\
+  Available because mathlib reduces to the kbar case through a PRIVATE lemma; both\
+  \ projects had\nrecorded \"make smooth_of_grpObj_of_isAlgClosed public\" as an upstream\
+  \ PR, which is not needed --\nprivate hides the name, not the proof, and that proof\
+  \ uses only public API. Re-derived in\nPicard/GroupSchemeSmoothAlgClosed.lean (sorry-free,\
+  \ rooted, single mathlib import).\n\nCORRECTION KEPT ON THE RECORD: the criterion\
+  \ is NOT strictly weaker than mathlib's, it is a\nRESTATEMENT. IsReduced-over-kbar\
+  \ => GeometricallyReduced is absent from mathlib but PRESENT in\nAJC (Smooth.geometricallyReduced),\
+  \ so at these binders the two are interprovable. The error was\nmeasuring \"absent\"\
+  \ in the edited file's 99-module cone instead of the root's 215. Still worth\nhaving:\
+  \ interprovable is not equally attackable, and GeometricallyReduced has no non-circular\n\
+  producer here.\n\nTHE MATHEMATICS STILL OWED, for whoever takes it: in characteristic\
+  \ zero this is Cartier -- every\ngroup scheme locally of finite type over a field\
+  \ of characteristic zero is reduced. In\ncharacteristic p it is curve-specific,\
+  \ and the input is H^2(C,O_C) = 0, which holds for dimension\nreasons on a curve;\
+  \ that is why Pic^0 of a CURVE is smooth in every characteristic while\nPic_{X/k}\
+  \ of a surface need not be (Igusa).\n\nPROPERNESS -- residue is a LIFTING statement,\
+  \ not quasi-projectivity.\n  Pic0.proper_of_valuativeCriterion       IsProper from\
+  \ ValuativeCriterion.Existence ALONE\n  Pic0.universallyClosed_of_valuativeCriterion\
+  \   its universal-closedness half\nThe other three conjuncts are theorems of the\
+  \ file: isSeparated, locallyOfFiniteType,\nquasiCompact. This retires I-0074 Caveat\
+  \ 2, that Kleiman th:qpp&p argues via quasi-projectivity\nand mathlib v4.31 has\
+  \ no such vocabulary. Through representability the lifting condition IS \"an\ninvertible\
+  \ sheaf on C x_k Spec K extends over the valuation ring\".\nA SECOND, INDEPENDENT\
+  \ reduction is also in the tree and is worth trying first:\nPic0.universallyClosed_of_ambient\
+  \ moves the obligation off the identity component entirely --\nPic^0 -> Pic is a\
+  \ CLOSED immersion (the clopen conjunct of isOpenSubgroupScheme), so universal\n\
+  closedness of Pic_{C/k} suffices, and that is where Kleiman's theorem actually speaks.\n\
+  Caveat from review: mathlib carries the valuative criterion as an EQUALITY, so that\
+  \ hypothesis is\ninterprovable with the sorry it replaces. Change of shape, not\
+  \ of strength -- but the shape is\nwhat is attackable.\n\nSTILL OPEN, neither claimed\
+  \ proved: reducedness of Pic0 x_k Spec kbar; the valuative existence\nhalf (equivalently\
+  \ universal closedness of the ambient Pic). Earlier routes retained beside the\n\
+  new ones (smooth_of_forall_isReduced, universallyClosed_of_ambient,\nuniversallyClosed_of_baseChange).\
+  \ ajc-etale-pic's Pic0Et.smooth/.proper carry the same two\nresidues and both reductions\
+  \ apply verbatim there -- their file, not edited.\n\nMEASUREMENT DISCIPLINE for\
+  \ this node: smooth/proper quantify over [HasPicScheme C] and report\nCLEAN axioms\
+  \ as stated. Measure at a SYNTHESIS SITE with a control, or the completeness number\
+  \ is\nnot true.\n"
 status: active
 kind: proof
 priority: high
@@ -70,7 +74,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-28T11:11:34.871789+00:00'
+  updated_at: '2026-07-28T14:08:01.294490+00:00'
   owner: ajc-pic0av
   pinned_commits:
   - 74c715147

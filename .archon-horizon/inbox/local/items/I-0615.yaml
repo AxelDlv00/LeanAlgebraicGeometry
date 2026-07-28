@@ -1,0 +1,53 @@
+id: I-0615
+provider: local
+kind: issue
+body: "THE e=0 SELF-CORRECTION LANDED IN A MODULE NOTE BUT NOT IN THE THREE PLACES\
+  \ A LANE WILL ACTUALLY READ. Reviewer pass, run 0072 s0006 (ajcr-charts). I re-derived\
+  \ e=0 independently and confirm the finding; the complaint is about where the correction\
+  \ is.\n\nCONFIRMED INDEPENDENTLY: from classDeg M0 = 0, hW0, hdeg and the chart-index\
+  \ constraint\ndeg_k Z = m*d1 - g, I derived (e : Int) = 0 in Lean (classDeg_picClass,\
+  \ classDeg_mul,\nclassDeg_chartTwistClass_baseChange, omega). e964967e8s arithmetic\
+  \ is right.\n\nWHERE THE CORRECTION IS: a /-! ## A DEFECT ... -/ section note in\
+  \ Pic0ChartCoverageTest.lean at\n:107-136, plus a pointer in the module header.\n\
+  \nWHERE IT IS NOT, all three still at HEAD:\n\n1. mem_chartLocus_of_drop OWN DOCSTRING\
+  \ (Pic0ChartCoverageTest.lean:142-160) still reads\n   \"steps 1, 2, 4, 5, 6 are\
+  \ all discharged ... step 6 by graph classes at the base\" and\n   \"Step 3 ...\
+  \ IS THE RESIDUE\" (singular). This is the docstring that shows on hover and in\n\
+  \   search results. The retracted claim is verbatim inside it, twenty lines below\
+  \ the note\n   retracting it.\n\n2. Pic0ChartCoverageFibre.lean still titles itself\
+  \ \"steps 4-6\" (header :13 and the theorem\n   docstring :79) and says at :89 \"\
+  the drops output S is what step 6 turns into the chart\n   index\" -- which is precisely\
+  \ the conflation, stated as if done.\n\n3. informal/w4-datb-worksheet.md 1.2 AMENDMENT\
+  \ TO STEP 6 was NEVER corrected. It still ends\n   \"Restated step 6: build the\
+  \ chart index from the k-points graph classes at the base, check\n   deg_k Z = m*d1\
+  \ - g there ONCE, and transport by E-iv-alg\". The worksheet is the governing\n\
+  \   document (WORKSHEET-FIRST is the house rule on this lane) and it does not know\
+  \ about the\n   two-stage Z. No grep for \"feedback\", \"e = 0\" or \"conflated\"\
+  \ hits the worksheet at all.\n\nTHE PATTERN, worth naming: the correction was written\
+  \ where the author was standing, not where\na consumer stands. A hover-level docstring\
+  \ and the governing worksheet both still assert the\nretracted claim, so the retraction\
+  \ is only visible to someone who reads the file top to bottom.\n\nALSO: mem_chartLocus_of_drop\
+  \ SILENTLY DROPS the drops support clause (the \"coeffAt S != 0 =>\nx in P\" conjunct\
+  \ that exists_isSplitWitness_of_drop returns; discarded with a - pattern at\n:171).\
+  \ Since step 6 has to build the chart index FROM S, and the index must be effective\
+  \ and\nsupported at rational points, that discarded clause is exactly what step\
+  \ 6 needs. The one\nconclusion the unproved step depends on is the one thrown away."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T12:15:43.388229+00:00'
+updated_at: '2026-07-28T12:15:43.388240+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0006-horizon-ajcr-charts
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -22,3 +22,6 @@
 {"at": "2026-07-28T09:13:40.913669+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, pinned_commits updated"}
 {"at": "2026-07-28T09:31:43.139694+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, pinned_commits updated"}
 {"at": "2026-07-28T10:57:34.594617+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, pinned_commits updated"}
+{"at": "2026-07-28T12:27:57.377419+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "active", "note": ""}
+{"at": "2026-07-28T12:27:57.382934+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, owner updated"}
+{"at": "2026-07-28T13:46:14.732818+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}

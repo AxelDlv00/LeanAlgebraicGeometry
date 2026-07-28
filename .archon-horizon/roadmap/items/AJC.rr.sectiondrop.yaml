@@ -1,0 +1,64 @@
+id: AJC.rr.sectiondrop
+title: Section drop and the H1 peel on the ledger carrier
+projects:
+- Algebraic-Jacobian-Challenge
+summary: "Ledger/SectionDrop.lean, new, ~490 lines, 19 declarations, 0 sorries, LSP\
+  \ clean, KERNEL-CHECKED (olean built after last edit).\n\nTHE RESULT: on the ported\
+  \ chi-ledger carrier, H1-vanishing propagation is a theorem rather than a hypothesis.\
+  \ The devissage quotient 0 -> O(D-x) -> O(D) -> sky -> 0 has a SKYSCRAPER third\
+  \ term, so H1(sky) = 0, so ChiSlice.surjective_map_f applies at n = 1 and H1(O(D-x))\
+  \ -> H1(O(D)) is onto.\n\nGENUINELY NEW HERE (checked against AJCR after a false\
+  \ first claim, see below):\n * subsingleton_hModule_one_of_le -- the D0 <= D ORDER\
+  \ form of the peel;\n * the two-sided section drop h0(O(D-x)) <= h0(O(D)) <= h0(O(D-x))\
+  \ + [kappa(x):K];\n * the drop IDENTITY: h0 gain plus h1 loss equals the residue\
+  \ degree exactly;\n * exact Riemann-Roch on the order-cone above a vanishing D0,\
+  \ and the exact drop there;\n * exists_bound_of_cofinal_vanishing -- degree-threshold\
+  \ vanishing reduced to one named COFINALITY hypothesis.\n\nTHE PEEL CHAIN NEEDS\
+  \ NO FINITENESS: 11 of 19 declarations omit both Module.Finite cohomology binders\
+  \ (the linter found this, not me). Hence vanishing is stated as Subsingleton (H1\
+  \ ...), never h1 = 0 -- the latter is vacuously true for infinite-dimensional H1\
+  \ since Module.finrank reads 0 there. Filed as memory I-0620.\n\nTWO RETRACTIONS\
+  \ OF THIS LANE'S OWN CLAIMS, found by fresh-context ground review (I-0623), verified\
+  \ in AJCR source and fixed at b7383a4d5:\n\n 1. The PEEL CHAIN IS A RE-DERIVATION,\
+  \ not new. AJCR RiemannRoch/FLVClass.lean already has peel_single (:260), peel_nsmul_single\
+  \ (:277), peel_effective (:292) -- the same three steps, the same Subsingleton spelling,\
+  \ the same variable block, the same surjective_map_f. Cause: this lane searched\
+  \ SectionBound.lean (where the finrank INEQUALITY lives), found it, and never opened\
+  \ FLVClass.lean (where the PROPAGATION lives). Also h0_divisorSheaf_of_subsingleton_of_le\
+  \ duplicates AJCR h0_eq_deg_add_chi_of_subsingleton_hModule_one at a fixed divisor.\n\
+  \n 2. THE BASE VANISHING IS NOT OPEN. This lane reported it open \"at every curve,\
+  \ P^1 included\"; that was measured inside AJC's Ledger tree only and is false about\
+  \ the workspace. AJCR RiemannRoch/FLVVanishing.lean:302, subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1,\
+  \ proves it ON THIS CARRIER: for finite dominant pi : Y -> P^1 compatible with the\
+  \ structure maps and any D, there is n0 with H1(O(D + n*F)) = 0 for all n >= n0,\
+  \ F the fibre divisor.\n\nSO THE NEXT STEP IS A PORT, NOT A PROOF: AJC has no fibre-divisor\
+  \ / finite-map-to-P1 layer on the Ledger carrier. Porting it discharges the base,\
+  \ and exists_bound_of_cofinal_vanishing is already the right shape to consume it,\
+  \ since a tower D + n*F is exactly a cofinal family.\n\nSTILL OPEN: extension-uniformity\
+  \ (nothing here quantifies over a second field; AJCR lacks it too). Global generation\
+  \ is untouched on this carrier -- the adelic lane owns that bridge on its own degK\
+  \ carrier, gated on hledger.\n"
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-28T13:39:37.155415+00:00'
+  provenance:
+    run: '0074'
+    session: 0006-horizon-ajc-rr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.rr
+  owner: ajc-rr
+  updated_at: '2026-07-28T14:09:05.953041+00:00'

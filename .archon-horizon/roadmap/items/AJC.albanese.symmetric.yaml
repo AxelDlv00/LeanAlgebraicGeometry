@@ -2,38 +2,42 @@ id: AJC.albanese.symmetric
 title: Abel-Jacobi and symmetric-power factorisation
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Abel-Jacobi and symmetric-power factorisation. UNBLOCKED 2026-07-28 (run\
-  \ 0069, ajc-albanese):\nthe obligation was mis-sized, not hard. Read the two corrections\
-  \ at the end before citing this.\n\nThe gap had been \"inhabit SymPowData C n for\
-  \ n >= 2\", priced at 2400-3800 lines\n(analogies/m3-route-audit.md) as a scheme\
-  \ quotient by a finite group action. Albanese/\nSymPowColimit.lean identifies the\
-  \ object instead: SymPowData C n TOGETHER WITH its symmetry\nhypothesis IS a colimit\
-  \ of the S_n-action on C^n, in both directions (symPowOfColimit /\nSymPowData.isColimit,\
-  \ with hasColimit_permDiagram_iff stating the equivalence).\n\nLanded, all axiom-clean,\
-  \ both files sorry-free (SymPowColimit.lean 24 decls,\nAlbaneseFromColimit.lean\
-  \ 1):\n * the symmetry hypothesis -- the half that previously had only an n = 1\
-  \ witness -- is\n   colimit.w, free at every n;\n * the pair is inhabited at every\
-  \ n in Type and in (Under k)^op, the opposite of k-algebras\n   (symPowData_affineAlgebra),\
-  \ with no construction written;\n * non-vacuity is now checked IN THE CATEGORY THAT\
-  \ MATTERS: permAut_swap_ne_id_of_points\n   shows two distinct global points defeat\
-  \ the trivial datum, category-generally, so it\n   covers a curve in Over (Spec\
-  \ kbar); permAut_eq_id_of_isTerminal records the converse\n   boundary (at a terminal\
-  \ object the trivial datum DOES satisfy the hypothesis);\n * Albanese/AlbaneseFromColimit.lean\
-  \ states Milne III.6.1 with NO SymPowData and NO hproj\n   argument, over the per-diagram\
-  \ binder.\n\nREMAINING: HasColimit (permDiagram C g) for the curve -- the gluing\
-  \ half of Milne III.3.1.\nMeasured availability at this pin: HasCoproducts Scheme\
-  \ yes; HasCoequalizers / HasPushouts\nScheme no; Scheme.GlueData yes. So the next\
-  \ step is assembling a GlueData from the affine\nquotients, not waiting on a missing\
-  \ mathlib theory.\n\nTWO CORRECTIONS from a fresh-context review, both applied in-tree:\n\
-  \ 1. The residue must be stated PER DIAGRAM. An earlier draft shipped\n    HasColimitsOfShape\
-  \ (SingleObj (Perm (Fin g))) Scheme, which is strictly stronger, is NOT\n    what\
-  \ the iff proves equivalent, and is believed false at this pin -- so the capstone\
-  \ was\n    vacuous. Fixed; do not restate it in the quantified form.\n 2. The affine\
-  \ result is an INHABITATION statement, not Milne III.3.1's affine half. That\n \
-  \   (Under k)^op is affine k-schemes, and that the carrier is Spec of the S_n-invariants\
-  \ of\n    the n-fold tensor power, are both EXPECTED and NOT PROVED here.\n\nAlso\
-  \ still open and NOT this node's debt: Milne III.5.1(a) birationality of f^(g),\
-  \ whose\ninputs sit downstream of the Picard seam.\n"
+summary: "Abel-Jacobi and symmetric-power factorisation.\n\nSTATE (run 0069 r4). Milne's\
+  \ ARGUMENT is proved; the missing thing is one object.\n\nPROVED, sorry-free and\
+  \ axiom-clean, over the symmetric power as an INTERFACE:\n * SymPowInterface.lean\
+  \  -- SymPowData C n; symAVMap (Milne's Sym^n phi) as a\n   CONSTRUCTION; basePointShift_comp_powSum\
+  \ (the \"use phi(P0)=eta_A\" collapse).\n * AlbaneseFromData.lean -- the connector\
+  \ in BOTH directions and Milne III.6.1\n   assembled; exists_unique_descent_of_birational\
+  \ is Milne's step 2 in full.\n * SymPowColimit.lean    -- the pair (D, hproj) IS\
+  \ a colimit of the S_n-action on\n   C^n, in both directions (hasColimit_permDiagram_iff),\
+  \ so the reduction is\n   LOSSLESS; hproj is colimit.w, free at every n.\n * AlbaneseFromColimit.lean\
+  \ -- the same capstone with no SymPowData argument.\n\nTHE CARRIER IS NOW NAMED\
+  \ (this round, SymPowInvariants.lean). SymPowColimit had\nflagged three times that\
+  \ the affine quotient was inhabited but NOT identified.\nfixedConeIsLimit: the invariant\
+  \ subring A^G IS the limit of the SingleObj G action\ndiagram in CommRingCat; fixedCoconeIsColimitOp\
+  \ dualises it into CommRingCat^op,\nthe variance the interface consumes. No finiteness\
+  \ on G and no Noetherian\nhypothesis -- finiteness is what the GEOMETRY of Spec\
+  \ A -> Spec A^G needs\n(integrality, surjectivity), not the universal property.\
+  \ This matters because\ngluing compares two overlapping charts' quotients, and a\
+  \ comparison needs a\nformula per side: an abstract colimit supplies none, A^G does.\n\
+  \nONE GLUING INPUT LANDED (SymPowInvariantsLocalization.lean): the action transports\n\
+  to a localization at an invariant element (awayMap), and an invariant element of\n\
+  A_b has an INVARIANT NUMERATOR (exists_invariant_numerator) -- the substantive\n\
+  half of (A_b)^G = (A^G)_b, which mathlib lacks. Characteristic-free: no averaging\n\
+  over G, since |G| = g! may vanish in A. Finiteness is spent only on a max of\nexponents;\
+  \ invariance of b is what makes b^m*a invariant.\n\nOPEN, and this is the whole\
+  \ residue of the leg: HasColimit (permDiagram C g) for\nthe curve -- i.e. the GLUING\
+  \ of the affine quotients into a scheme. State it\nper-diagram, NEVER as HasColimitsOfShape\
+  \ (SingleObj (Perm (Fin g))) Scheme: the\nquantified form is strictly stronger and\
+  \ believed false at this pin (schemes have\nno coequalizers), so a theorem carrying\
+  \ it would be vacuous. Availability measured:\nHasCoproducts Scheme YES, HasCoequalizers/HasPushouts\
+  \ NO, Scheme.GlueData YES.\nRemaining work is the cocycle/overlap compatibility\
+  \ of the chart quotients.\n\nNOT the residue, and not this node's debt: abelJacobi.\
+  \ It is blocked on a\nDIFFERENT and earlier brick -- the line bundle O(Delta - {P0}xC\
+  \ - Cx{P0}) on CxC\nis nowhere constructed in the tree, and there is no in-tree\
+  \ producer of any\nDivFamily to feed PicScheme.abelMap. Measured this round. The\
+  \ 2400-3800 line\nfigure in analogies/m3-route-audit.md is HISTORICAL; read SymPowColimit.lean\
+  \ and\nSymPowInvariants.lean before budgeting from it.\n"
 status: active
 kind: proof
 priority: high
@@ -56,7 +60,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-28T11:19:30.098813+00:00'
+  updated_at: '2026-07-28T14:29:22.204514+00:00'
   pinned_commits:
   - 1fedb22e4
   - f7391b281

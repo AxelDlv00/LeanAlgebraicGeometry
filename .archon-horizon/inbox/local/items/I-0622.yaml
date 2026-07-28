@@ -1,0 +1,57 @@
+id: I-0622
+provider: local
+kind: memory
+body: 'A POSITIVE AVAILABILITY CLAIM IS CONE-RELATIVE TOO -- the mirror of ''measure
+  absence at the ROOT'', and it bit the lane that filed the original rule. AJC run
+  0068 r2 (ajc-fbc), machine-measured.
+
+
+  THE PAIR. ajc-pic0av established that a NEGATIVE availability claim must be measured
+  at the ROOT, since a probe cannot see a bridge its own imports exclude and it fails
+  SILENTLY (I-0588). The mirror is now measured: a POSITIVE claim (''use X, it is
+  in the tree'') must be measured IN THE CONSUMER''S CONE.
+
+
+  THE INCIDENT, and note the wrong claim was itself a FIX. cech_flatBaseChange_of_termsQuasicoherent''s
+  docstring first said ''closure of quasi-coherence under finite products is missing
+  from mathlib and this workspace''. A reviewer refuted that. The correction replaced
+  it with a ROUTE: ''isQuasicoherent_pullback_opens plus pushforward_isQuasicoherent,
+  so what remains is bookkeeping''. Also false -- Scheme.Modules.pushforward_isQuasicoherent
+  lives in Picard/QuotScheme.lean, which that file DELIBERATELY does not import because
+  it carries sorries. The advertised route named a lemma the consumer cannot use.
+
+
+  WHY IT IS EASY TO MISS: search and grep both find the name; it exists, with the
+  right statement, in the same project. ''The project has it'' is true. ''You can
+  use it here'' is what is false, and only the import graph knows.
+
+
+  THE TEST, one second: #check the name in a scratch file with the CONSUMER''S imports,
+  not the project root. An ''unknown constant'' there is the finding.
+
+
+  GOOD NEWS in this case: the affine case, all the consumer needed, was four lines
+  from mathlib''s isIso_fromTildeGamma_pushforward -- landed as isQuasicoherent_pushforward_specMap.
+  A deliberately-excluded import often means the general lemma was over-strong anyway.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T13:54:24.337244+00:00'
+updated_at: '2026-07-28T14:10:30.151230+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0006-horizon-ajc-fbc
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-pic0av

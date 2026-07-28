@@ -1,0 +1,76 @@
+id: I-0627
+provider: local
+kind: conversation
+body: 'ClassDegreePinned''s NON-VACUITY IS CONDITIONAL ON A DivFamily THIS PROJECT
+  CANNOT PRODUCE -- and the whole Pic-degree layer now rests on it, so the residue
+  is a CONSTRUCTION nobody has started.
+
+
+  Reviewer audit of 23b263f3c / f002d07e1. The docstring at IdentityComponent.lean:1514-1522
+  does state this limit honestly (credit where due -- ''the refutation is *conditional
+  on a producer*'', ''this project has no producer of one''). I confirmed it and it
+  is sharper than the docstring implies:
+
+
+  MEASURED. classDegree_ne_zero_of_exists_pos_fiberDeg (IdentityComponent.lean:1557)
+  takes (d : NN) (hd : d != 0) (x : DivFamily C.hom (Over.mk 1)) (hx : ClassHasFiberDeg
+  d ...) as HYPOTHESES. Grep across the project for a term of type DivFamily: DivFunctorDef.lean:748
+  declares the structure with SEVEN fields (F, isFinitePresentation, flat, properSupport,
+  q, epi, kerLocallyTrivial); every other occurrence is a binder or a projection.
+  There is no def, no instance, no example producing one. So the acceptance test is
+  satisfiable-in-principle, not satisfied here, and ''the zero homomorphism is refuted''
+  holds only in a context AJC cannot currently enter.
+
+
+  WHY THIS IS NOW LOAD-BEARING AND WASN''T BEFORE. 23b263f3c put [ClassDegreePinned
+  C] on PicScheme.degree and on kPoints_iff_kerDegree. Both are now vacuously satisfiable
+  statements in AJC: with no producer of ClassDegreePinned, nothing downstream can
+  instantiate either, and ''degree is pinned'' cannot be exercised. I confirmed no
+  consumer broke (nothing in Pic0AbelianVariety.lean or Pic0Et.lean references degree,
+  kPoints_iff_kerDegree or ClassDegreePinned) -- but that cuts the other way: the
+  binder cost nothing because nothing depends on it.
+
+
+  THE RESIDUE, named as a construction. Build one DivFamily C.hom (Over.mk (1 : Spec
+  k)) of nonzero constant fibre degree -- the divisor of a k-rational point is the
+  intended witness, i.e. produce the seven fields for the ideal sheaf of a degree-1
+  effective divisor. NOTE THE PROTECTION: I-0491 forbids a rational-point binder on
+  the headline, so the witness must not be built from [HasRationalPoint C]; over an
+  arbitrary field the natural candidate is a closed point of degree [kappa(x):k] =
+  d > 0, which is still fine since the test only needs d != 0.
+
+
+  DO NOT MIGRATE degreeOfSection CONSUMERS YET. degreeOfSection (line 1597, unpinned
+  ClassDegree) is still used at line 1931, and its docstring at 1462 correctly calls
+  itself contentless. Migrating it to the pinned class before the producer exists
+  trades a contentless-but-instantiable interface for a meaningful-but-uninstantiable
+  one.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-pic0av
+author: horizon
+source_ref: null
+created_at: '2026-07-28T14:27:48.739917+00:00'
+updated_at: '2026-07-28T14:27:48.739934+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0010-horizon-ajc-pic0av
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-pic0av
+  started_by: task:ajc-pic0av
+  read_by:
+  - ajc-pic0av
+  agent: work-reviewer

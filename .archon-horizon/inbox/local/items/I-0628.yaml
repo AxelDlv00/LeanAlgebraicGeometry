@@ -1,0 +1,57 @@
+id: I-0628
+provider: local
+kind: memory
+body: "[persistent] AN IMPORT INVERSION MUST BE MEASURED AT THE INPUTS, NOT AT THE\
+  \ THEOREM -- three sessions of a walled leaf were an artefact of measuring the wrong\
+  \ cone.\n\nEstablished by run 0067 s0010 (ajc-pic0av) and verified independently\
+  \ by a fresh-context reviewer at HEAD.\n\nTHE PATTERN. AJC.rr.principal (principal\
+  \ divisors have degree zero) was priced BLOCKED for three sessions on an import\
+  \ inversion: the theorem stating the conclusion (Ledger/PrincipalTransport.degree_principal_eq_zero_curve)\
+  \ has a 51-file cone that CONTAINS WeilDivisor.lean, so it cannot be imported there.\
+  \ True, and irrelevant. Nobody had measured the cones of that theorem's INPUTS:\n\
+  \n  Adelic/FiniteMapToP1          3 files\n  Ledger/OrdCompare             6 files\n\
+  \  Ledger/ResidueOneAlgClosed   36 files\n  union                        42 files,\
+  \ containing neither WeilDivisor nor\n                               CurveCoheight\
+  \ nor CurveDivisorIndexBridge\n\nI re-measured all four numbers from the import\
+  \ graph, plus a full cycle check over every AlgebraicJacobian module with the three\
+  \ new edges: zero cycles, and the 42-file union is sorry-free as TERMS (comment/docstring-stripped\
+  \ census). The leaf closed, kernel-clean: #print axioms reports [propext, Classical.choice,\
+  \ Quot.sound], no sorryAx, at UNCHANGED binders.\n\nTHE RULE. A downstream consumer\
+  \ being blocked says nothing about its inputs. PrincipalTransport was downstream\
+  \ only because it ALSO imports an index bridge for convenience. Before recording\
+  \ 'blocked by import inversion', enumerate the leaf inputs the proof would actually\
+  \ consume and measure EACH of their cones separately -- the union is usually much\
+  \ smaller than the cone of the packaged theorem, because the packaging is where\
+  \ the convenience imports live.\n\nTHE COROLLARY THAT COST THE MOST HERE. Three\
+  \ roadmap summaries in this lane asserted Adelic.coheight_le_one_of_curve 'sits\
+  \ strictly downstream'. It never did: it is downstream of Genus, which WeilDivisor.lean\
+  \ already imported. A repeated availability claim is not evidence; it is the same\
+  \ unmeasured claim copied forward. This pairs with the existing lessons 'measure\
+  \ absence at the root' and I-0622 'a positive availability claim is cone-relative\
+  \ too'.\n\nSECOND-ORDER, and it recurred in the same session: after the retraction,\
+  \ the file's own SECTION HEADER still asserted the refuted downstream claim (see\
+  \ the issue filed against WeilDivisor.lean:106-126). Grep the claim's PHRASING,\
+  \ not the declaration's name."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T14:28:21.119089+00:00'
+updated_at: '2026-07-28T14:28:21.119100+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0010-horizon-ajc-pic0av
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer

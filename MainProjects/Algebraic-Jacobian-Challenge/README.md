@@ -35,10 +35,12 @@ same theorem by a separate curve-specialized strategy.
 
 ## State (measured 2026-07-28)
 
-- **210 modules, 140,213 lines**; **28 `sorry`** over 11 modules, the rest locally
-  sorry-free; a warm `lake build AlgebraicJacobian` **green** at 8,746 jobs (job count last
-  measured before the 2026-07-28 lanes landed).  These counts move whenever a module lands, and
-  four AJC lanes were live when they were taken, so re-measure rather than quoting them:
+- **257 modules, 153,196 lines** (re-measured 2026-07-28 evening, up from 210/140,213 earlier
+  the same day); a warm `lake build AlgebraicJacobian` was **green** at 8,746 jobs when last
+  measured, which was before the 2026-07-28 lanes landed.  The `sorry` count is deliberately
+  not restated here: it was 28 over 11 modules at the earlier measurement and four AJC lanes
+  have landed work since.  These counts move whenever a module lands, so re-measure rather
+  than quoting them:
 
   ```bash
   find AlgebraicJacobian -name '*.lean' | wc -l          # modules on disk
@@ -54,7 +56,7 @@ same theorem by a separate curve-specialized strategy.
   routinely non-empty for a short while: a module not yet committed to the workspace
   ledger must **not** be rooted, since a clean checkout would then fail to build.  That
   grace period ends at the commit — once a module is in the ledger, leaving it unrooted
-  means the build does not check it.  **Currently violated:** the 41 files of
+  means the build does not check it.  **Currently violated:** the 42 files of
   `RiemannRoch/Ledger/` are committed and rooted by nothing, so none of their
   declarations is elaborated by `lake build AlgebraicJacobian` and the axiom probe
   never reaches them.  Adding the import is one line; see inbox issue `I-0600`.

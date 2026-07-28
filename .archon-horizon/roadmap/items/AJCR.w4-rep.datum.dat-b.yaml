@@ -4,30 +4,33 @@ title: 'DAT-B: coverage + injectivity — every $\mathrm{pic}^0$ point is Zarisk
   lane'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "DAT-B: coverage + injectivity. Injectivity is LANDED (worksheet §0.4/§2,\
-  \ consumed not proved).\nCoverage (COV-1 = B-5) is now ASSEMBLED over a general\
-  \ test, 2026-07-28 run 0072 s0006.\n\nWHAT LANDED THIS PASS (five files, all sorry-free,\
-  \ all axiom-clean measured against a sorryAx\ncontrol; Picard/Pic0Chart{TwistSplit,CoverageDegree,RationalGraph,CoverageFibre,CoverageTest}.lean):\n\
-  \n  mem_chartLocus_of_drop -- for a point t of an ARBITRARY test T and any plus\
-  \ class lam:\n  a splitting of the fibre class at kappa(t), a divisor W0 in the\
-  \ twisted class over the\n  splitting field of degree g+e with vanishing H1, and\
-  \ the admissible point oracle, give\n  t in chartLocus C m Z lam TOGETHER WITH the\
-  \ h0 = 1 normalisation.\n\nSteps 1, 2, 4, 5, 6 of worksheet §1.2 are discharged.\
-  \ The satisfiability of the hypothesis\npack was CHECKED (it instantiates at the\
-  \ trivial splitting L := kappa(t) with every instance\nsynthesised), not assumed\
-  \ -- this lane has shipped a vacuous statement before.\n\nWHAT REMAINS OF B-5 IS\
-  \ STEP 3 ALONE: choosing the twist exponent m against the FIBRE'S OWN\nDAT-0a bound.\
-  \ No formulation can produce it for the caller -- b_L is per-fibre and provably\n\
-  does not transport across k -> kappa(t) (I-0204, worksheet §0.2.2) -- so it appears\
-  \ as the\nhypothesis \"a W0 of degree g+e with h1 = 0 exists\". Honest rather than\
-  \ hidden.\n\nTWO CORRECTIONS TO THE WORKSHEET, both in it now: step 6 hid a TYPING\
-  \ gap (the chart index\nlives on the BASE curve, the drop's divisor over L), and\
-  \ the natural repair was the wrong\nobligation. There is NO CurveDivisor base-change\
-  \ operation anywhere in the tree, and none is\nneeded: everything downstream mentions\
-  \ only the CLASS, and the class-level base change of a\nrational point's one-point\
-  \ divisor is the landed graph square (Curve/GraphDivisor.lean:263 +\nRiemannRoch/GraphDegree.lean:422/:445).\
-  \ Never transport a coefficient function.\n\nB-6 (the IsLocallySurjective instance\
-  \ + DAT-glue handoff) still waits on divRep through C9b.\n"
+summary: "DAT-B: coverage + injectivity. Injectivity is LANDED (worksheet 0.4/2, consumed\
+  \ not proved).\nCoverage (COV-1 = B-5) is ASSEMBLED over a general test but has\
+  \ THREE open residues.\n\nLANDED 2026-07-28 (run 0072 s0006): six files, sorry-free,\
+  \ axiom-clean against a sorryAx\ncontrol. mem_chartLocus_of_drop -- for a point\
+  \ t of an ARBITRARY test and any plus class lam,\na splitting of the fibre class\
+  \ at kappa(t) plus a divisor W0 in the twisted class over L of\ndegree g+e with\
+  \ h1=0 plus the point oracle give t in chartLocus, with the h0=1 normalisation.\n\
+  Satisfiability CHECKED at the trivial splitting, not assumed.\n\nTHREE RESIDUES,\
+  \ corrected twice the same session -- first by my own degree probe, then by a\n\
+  fresh-context review, each refuting part of what I had just written:\n\n step 3\
+  \  the twist exponent m, chosen against the FIBRE'S OWN DAT-0a bound. Irreducible:\
+  \ no\n         uniform m0 exists (I-0204, worksheet 0.2.2), so no formulation can\
+  \ produce it.\n step 2  the degree of the presenting class. classDeg_of_presenting\
+  \ relates classDeg L M to\n         the plus-class degree at L while the argument\
+  \ holds it at K; base-field invariance of\n         degAff under PicEtAff.map is\
+  \ ABSENT from the tree. Small, real, shaped like the landed\n         degAff_baseFieldShuffle.\
+  \ (My docstring had cited a lemma 'degAff_map_eq' that does not\n         exist\
+  \ -- I-0614.)\n step 6  the FEEDBACK. The drop runs at Z := 0 (budget e = m*d1 -\
+  \ g, nonzero); its OUTPUT Sigma\n         is then the index's Z. One Z is an input,\
+  \ the other an output, and the landed graph\n         transport goes upward from\
+  \ a k-point, not from the L-level Sigma. Machine-derived:\n         under the single-Z\
+  \ reading the pack forces e = 0.\n\nSteps 1, 4, 5 are discharged. None of the three\
+  \ is divRep- or certificate-gated.\n\nALSO ESTABLISHED: there is NO CurveDivisor\
+  \ base change in the tree and none is needed -- the\nclass-level graph square (Curve/GraphDivisor.lean:263,\
+  \ GraphDegree.lean:422/:445) does it.\nNever transport a coefficient function.\n\
+  \nB-6 (the IsLocallySurjective instance + DAT-glue handoff) still waits on divRep\
+  \ through C9b.\n"
 status: pending
 kind: proof
 priority: normal
@@ -41,10 +44,12 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:09.039287+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-28T11:32:31.018865+00:00'
+  updated_at: '2026-07-28T12:23:59.580266+00:00'
   milestone: w4-tail
   owner: ajcr-charts
   pinned_commits:
+  - d5dbabd1c
+  - de63abac6
   - bb9ff83fc
   - bcae33ba3
   - a54e27a21

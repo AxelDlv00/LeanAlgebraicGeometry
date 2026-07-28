@@ -32,77 +32,96 @@ docstring: 'The **degree map** `Pic_{C/k}(k) → ℤ`.
   `k` being left to separate lemmas.
 
 
-  ROUTE CHANGE (run 0067). The construction is still an open obligation, but it is
-  no
+  ROUTE CHANGE (run 0067). The construction is not the *Quot* obligation the original
 
-  longer the *Quot* obligation the previous docstring described, and the difference
-  matters
+  docstring described, and the difference matters because Quot is retained-not-revived
+  in this
 
-  because Quot is retained-not-revived in this project. See `ClassDegree` and
+  project. Representability already transports a `k`-rational point to a relative
+  Picard class
 
-  `degreeOfSection` below: representability already transports a `k`-rational point
-  to a
+  over the base (`classOfSection`, sorry-free), so no Hilbert polynomial and no representing
 
-  relative Picard class over the base, so the only missing input is a degree homomorphism
-  on
+  sheaf extraction is needed — only a degree homomorphism on those classes, which
+  is
 
-  those classes — no Hilbert polynomial and no representing sheaf extraction.
+  `ClassDegreePinned`.
 
 
-  The body is still `sorry`, and deliberately so: see `degreeOfSection` for the honest
+  **CLOSED (run 0067 r4), and the docstring this replaces was wrong on a point of
+  fact.**
 
-  version, which is total, and for why *this* declaration cannot be closed as stated.'
+  It read: "A total function of that type therefore cannot be built from the Picard
+  functor at
+
+  all; it would have to invent a value off the sections." The first clause does not
+  follow from
+
+  the second. Inventing a value off the sections is exactly what a total function
+  of this type
+
+  is *permitted* to do, and `fun _ => 0` already witnesses that the type is inhabited
+  — so
+
+  "cannot be built" was never true, and a `sorry` is not the honest encoding of "the
+  domain is
+
+  wrong".
+
+
+  What IS true is the observation the old note was reaching for: a morphism
+
+  `Spec k ⟶ (PicScheme C).left` need not satisfy `lambda ≫ (PicScheme C).hom = 𝟙`,
+  so it need
+
+  not name a `k`-*rational* point, and representability says nothing about it. That
+  is a
+
+  statement about which values are *pinned*, not about totality. So the construction
+  below
+
+  splits on precisely that condition:
+
+
+  * on sections it is `degreeOfSectionPinned`, i.e. *the* degree, pinned against the
+  Abel map;
+
+  * off them it is `0`, an arbitrary choice that no consumer may rely on.
+
+
+  `degree_eq_degreeOfSectionPinned` below records the first half as an equation, so
+  the value
+
+  on the rational points — the only place the classical degree map is defined — is
+  determined
+
+  rather than chosen. Consumers should still prefer `degreeOfSectionPinned`, which
+  carries the
+
+  section hypothesis in its type and therefore cannot be misread; `degree` exists
+  because
+
+  `kPoints_iff_kerDegree` is stated against it, and it now has a body rather than
+  a `sorry`.
+
+
+  The `[ClassDegreePinned C]` binder is new and is what makes the pinned half meaningful;
+  the
+
+  unpinned `ClassDegree` would have permitted the zero homomorphism (see its docstring).'
 file: AlgebraicJacobian/Picard/IdentityComponent.lean
 generated: lean
-lean_status: sorry
+lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.degree
 type: lean
-updated: '2026-07-28T16:26:23'
+updated: '2026-07-28T20:09:57'
 ---
 noncomputable def degree {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIntegral C.hom] [HasPicScheme C] :
+    [GeometricallyIntegral C.hom] [HasPicScheme C] [ClassDegreePinned C] :
     (Spec (.of k) ⟶ (PicScheme C).left) → ℤ :=
-  sorry
-
-/-! ### The degree, factored through the relative Picard group
-
-The route below replaces the Quot/Hilbert-polynomial construction the section header
-describes. Two facts make it work, and neither needs Quot:
-
-1. **Representability already does the transport.** `PicScheme.representable C` is a
-   bijection `(T ⟶ Pic_{C/k}) ≃ Pic(C ×_k T)/π_T^* Pic(T)` natural in `T`; taking
-   `T = Spec k` (the trivial over-object `Over.mk (𝟙 (Spec k))`) sends a `k`-rational point
-   of `Pic_{C/k}` to a relative Picard class over the base. This is `classOfSection` below,
-   and it is sorry-free.
-2. **The degree is a homomorphism on those classes.** ⚠ This was described here as "the one
-   remaining input, isolated as the class `ClassDegree`". That is **false** and is corrected at
-   `ClassDegree` below: the class is inhabited by the zero homomorphism with no hypothesis, so
-   it demands nothing and `degreeOfSection` is not pinned to the degree. What is actually
-   missing is a *characterisation* of the homomorphism. The sibling project builds exactly this
-   homomorphism sorry-free and without Quot — `Algebraic-Jacobian-Challenge-Rebuild`,
-   `RiemannRoch/RelPicDegree.lean`, `relPicDeg : Additive (relPic C (overSpec k K)) →+ ℤ`,
-   descended from `classDeg` along the observation that `Spec K` is a one-point space so its
-   Čech Picard group is trivial and cannot contribute. Its own input is the closed χ-ledger
-   `χ(𝒪(D)) = χ(𝒪_X) + deg D` (`RiemannRoch/ChiLedger.lean`), whose 22-file / 5.5k-line
-   closure I measured to be free of `sorry`.
-
-WHY `degree` ABOVE STAYS OPEN, and this is a statement-level defect rather than a missing
-proof: it takes an *arbitrary* morphism `Spec k ⟶ (PicScheme C).left`, not a morphism over
-`Spec k`. Such a morphism need not be a section of `(PicScheme C).hom` — the goal
-`lambda ≫ (PicScheme C).hom = 𝟙 (Spec k)` is not derivable — so it does not name a
-`k`-*rational* point and representability says nothing about it. A total function of that
-type therefore cannot be built from the Picard functor at all; it would have to invent a
-value off the sections. `degreeOfSection` below is the same construction on the correct
-domain, and is total. Consumers should migrate; `degree` is retained only because
-`kPoints_iff_kerDegree` is pinned against it. -/
-
-/-- An additive integer-valued function on relative Picard classes of `C` over the base field
-— the carrier shape of Milne III.1 p.~88.
-
-**⚠ THIS CLASS IS VACUOUS AS STATED, and the docstring that used to sit here — "the one
-remaining input to the degree map" — was FALSE.** Corrected run 0067 r2 after inbox issue
-I-0534, re-verified by machine rather than accepted on report:
-
-```
+  fun lambda =>
+    if h : lambda ≫ (PicScheme C).hom = 𝟙 (Spec (.of k)) then
+      degreeOfSectionPinned C lambda h
+    else 0

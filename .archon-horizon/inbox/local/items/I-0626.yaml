@@ -1,0 +1,62 @@
+id: I-0626
+provider: local
+kind: conversation
+body: "FOURTH STALE CLAIM OF RUN 0067 s0010: WeilDivisor.lean's SECTION HEADER still\
+  \ says coheight_le_one_of_curve lives DOWNSTREAM -- 1120 lines above the proof that\
+  \ imports and calls it.\n\nReviewer audit of session 0010-horizon-ajc-pic0av (8b654f78d\
+  \ / 23b263f3c / f002d07e1 / c1ed5be8b). Four of the five audited claims CONFIRMED;\
+  \ this is the fourth overclaim the session asked to have hunted and did not find\
+  \ itself.\n\nWHERE. /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/RiemannRoch/WeilDivisor.lean,\
+  \ lines 106-126, section header 'Prime divisors are non-generic points'. At HEAD\
+  \ it reads:\n\n  'coheight <= 1 (the substantive half -- via the standard-smooth\
+  \ stalk bound and the\n   coheight/stalk bridge, which is Adelic.coheight_le_one_of_curve\
+  \ and lives *downstream* of\n   this file).\n   So the direction needed to *produce*\
+  \ prime divisors is the one that is still out of scope\n   here; the direction needed\
+  \ to *consume* them is available.'\n\nWHY FALSE AT HEAD. Commit 8b654f78d added\
+  \ 'import AlgebraicJacobian.RiemannRoch.Adelic.FiniteMapToP1' to this very file;\
+  \ coheight_le_one_of_curve is declared at Adelic/FiniteMapToP1.lean:275. principal_degree_zero\
+  \ at line 1245 CALLS it, and its own comment says: 'This is the ONE input that had\
+  \ been recorded across this lane as strictly downstream and unavailable here: it\
+  \ is not.' The file therefore asserts and refutes the same availability claim, 1100\
+  \ lines apart, and the header is what a browsing reader hits first.\n\nSECOND STALENESS\
+  \ IN THE SAME PARAGRAPH. 'the sibling project ... closes degree-zero-of-principal\
+  \ sorry-free on that carrier. Transporting that route here needs the two index sets\
+  \ compared' is future-tense about work landed in this file (the inline equiv at\
+  \ lines 1275-1280). And 'the direction needed to produce prime divisors is still\
+  \ out of scope here' is now false: e.invFun does exactly that.\n\nFIX: rewrite 106-126\
+  \ to say both directions are available in this file's cone at HEAD, cross-reference\
+  \ principal_degree_zero. No proof change; no sorry change.\n\nWHY IT MATTERS BEYOND\
+  \ ONE PARAGRAPH. This is the generalisation of the lesson f002d07e1 filed 50 minutes\
+  \ earlier in the OTHER file: a retraction must be placed at every SITE THAT ASSERTS\
+  \ THE CLAIM, and the grep must be on the claim's PHRASING ('downstream', 'out of\
+  \ scope', 'not available here'), not on the declaration's name. Four sites in one\
+  \ day in one lane."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-pic0av
+author: horizon
+source_ref: null
+created_at: '2026-07-28T14:26:48.929953+00:00'
+updated_at: '2026-07-28T14:26:48.929968+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0010-horizon-ajc-pic0av
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-pic0av
+  started_by: task:ajc-pic0av
+  read_by:
+  - ajc-pic0av
+  agent: work-reviewer

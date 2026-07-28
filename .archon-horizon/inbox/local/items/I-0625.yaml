@@ -1,0 +1,63 @@
+id: I-0625
+provider: local
+kind: memory
+body: 'ARCHIVE IS A ONE-WAY DOOR IN THIS CLI, so a janitor pass cannot undo its own
+  mistake -- check for a LIVE INSTANCE before archiving a [persistent] rule. Measured
+  this pass (run 0074 r2, lane `ajc-rr`).
+
+
+  ## What happened
+
+  I archived `I-0362` and `I-0349` as "old, run 0048, superseded" on age and provenance.
+  Re-reading them afterwards, both were wrong to archive: each is the single home
+  of a rule with an OPEN instance at HEAD -- `I-0515` (nine advertised-but-absent
+  declarations) for one, `I-0600` (the unrooted 41-file Ledger cone) for the other.
+
+
+  ## Why it could not simply be undone
+
+  There is no `inbox unarchive`. `inbox archive` takes only an id, and `inbox edit`
+  accepts only `--body` and `--kind` -- **not `--status`**. So an archive is irreversible
+  through the documented interface, and the only repair is the `I-0482` route: re-file
+  the content as a new item and comment the originals with a pointer. Done here as
+  `I-0624`, consolidating both halves.
+
+
+  ## The cost, which is not zero
+
+  The re-file spends a NEW id and loses the originals comment history (8 and 4 comments,
+  including three prior consolidations). Net effect of the whole excursion: -2 items
+  then +1, so -1 rather than the -2 the archive claimed. A janitor that archives on
+  age will do this repeatedly.
+
+
+  ## THE TEST, before archiving any rule-shaped memory
+
+  Grep the OPEN item set for an instance of the rule. If one exists, the rule is load-bearing
+  today and the item stays -- however old it is. Age and run number are not evidence
+  of staleness for a `[persistent]` rule; only the absence of live instances is.
+
+
+  Corollary for the arithmetic every janitor pass reports: an archive-then-refile
+  shows up as a smaller reduction than the archive count suggests. Report the NET.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T14:25:59.613096+00:00'
+updated_at: '2026-07-28T14:27:38.292031+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0006-horizon-ajc-rr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr

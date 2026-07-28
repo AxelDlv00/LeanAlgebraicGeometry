@@ -3,32 +3,38 @@ title: Flat pullback preserves finite limits (bypassed on quasi-coherent objects
   arbitrary-module case open)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "BYPASSED, NOT PROVED -- and the arbitrary-module form should NOT be attempted\
-  \ (run 0068 r1, ajc-fbc).\n\npullback_preservesMonomorphisms (flat g^* preserves\
-  \ monos of ARBITRARY O_S-modules) is genuinely\nwalled: mathlib gives SheafOfModules.pullback\
-  \ no pointwise model, and the sibling\nMR0555258-Compactifying-Picard independently\
-  \ reduced j_! to the same missing brick. It is also NOT\nNEEDED. Every consumer\
-  \ instantiates flat exactness at QUASI-COHERENT objects, where it is now proved\n\
-  sorry-free:\n\n * pullback_preservesKernel_of_isQuasicoherent -- general flat g,\
-  \ affine base, any map of\n   quasi-coherent modules -- via cone-cancellation (preservesLimit_comp_cancel)\
-  \ off the tilde-image\n   exactness already in the tree, plus the FULLNESS of tilde;\n\
-  \ * mapHomologicalComplexHomologyIso_of_preservesKernel -- because ShortComplex.mapHomologyIso\
-  \ needs\n   ONE KERNEL per degree, not global exactness;\n * cech_flatBaseChange_of_termsQuasicoherent\
-  \ -- the capstone with the leaf out of its proof term.\n\nMEASURED, not asserted:\
-  \ axiom-frontier's leakProbe_qcohRoute_kernel / _homologyIso / _coneCancel and\n\
-  leakWitness_qcohRoute_nonvacuous all report clean, while leakControl_qcohRoute_oldRoute\
-  \ (same\nconclusion, old route) still reports sorryAx. All four explicit binders\
-  \ of the main theorem verified\nload-bearing with populated breaks.\n\nREMAINING\
-  \ on this row is BOOKKEEPING, not mathematics. A reviewer (I-0580) correctly refuted\
-  \ this\nrow's earlier claim that closure of quasi-coherence under FINITE PRODUCTS\
-  \ was absent from mathlib and\nthis workspace: over an affine base -- the only case\
-  \ stated -- it follows in a few lines from\nessImage_tilde_of_isQuasicoherent, and\
-  \ is now landed as isQuasicoherent_pi_of_isAffineBase (79a30f40d).\nSo discharging\
-  \ h2/h3 of cech_flatBaseChange_of_termsQuasicoherent is a matter of matching the\
-  \ two\n(CechComplex).sc i terms to the sigma-product decomposition through pushPull_sigma_iso.\
-  \ The\ngeneral-BASE product statement is a genuine gap; no consumer needs it.\n\n\
-  The :681/:707 sorry stays as a monument to the reduction; do not price it.\n"
-status: active
+summary: 'BYPASSED AND NOW ALSO OFF THE HYPOTHESIS LIST -- and the task brief that
+  calls this the PRIORITY is stale (run 0068 r2).
+
+
+  WHY THE BRIEF IS STALE, since it will be read again: it says pullback_preservesFiniteLimits
+  is one of only two sorry-bodied INSTANCES leaking through typeclass synthesis, which
+  made closing it worth more than its line count. That was true when written. r0 de-instanced
+  it -- it is a plain theorem, and the file''s own census reports 0 instance carriers
+  -- so the synthesis-leak argument no longer applies. The arbitrary-module statement
+  should NOT be attempted.
+
+
+  MEASURED ANSWER to the brief''s real question (which declarations become clean if
+  this lands): ONLY the two probes that name it. Nothing else in the lane routes through
+  it. cech_flatBaseChange_qcoh does not touch it and is still dirty, for an unrelated
+  reason.
+
+
+  WHAT REPLACED IT, all sorry-free: pullback_preservesKernel_of_isQuasicoherent (r1)
+  plus, this session, isQuasicoherent_cechComplex_X -- which discharges the two quasi-coherence
+  hypotheses h2/h3 that the bypass route previously had to ASSUME. So cech_flatBaseChange_qcoh
+  now has the full cech_flatBaseChange conclusion, no flat-exactness leaf in its proof
+  term, and NO extra hypotheses.
+
+
+  The mono statement stays a MONUMENT: keep it for the reduction''s legibility, do
+  not prove it, route new work through the _of_isQuasicoherent forms. mathlib gives
+  SheafOfModules.pullback no pointwise model and a sibling project hit the same brick
+  for j_!; over an affine base Scheme.Modules is strictly larger than ModuleCat, so
+  the tilde route cannot reach arbitrary modules. Status pending rather than active:
+  this is deliberately not a frontier.'
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -50,7 +56,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc
-  updated_at: '2026-07-28T10:46:54.505699+00:00'
+  updated_at: '2026-07-28T13:46:55.123512+00:00'
   owner: ajc-fbc
   pinned_commits:
   - 672a8c656

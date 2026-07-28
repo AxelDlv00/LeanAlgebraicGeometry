@@ -5,11 +5,11 @@ content_type: definition
 created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:pic_zero_subscheme
-lean_status: lean_ok
+lean_status: sorry
 order: 1608
 title: The identity component of the Picard scheme
 type: tex
-updated: '2026-07-28T18:12:22'
+updated: '2026-07-28T20:09:24'
 ---
 \textit{Source: [Kleiman], ``The Picard scheme'', \S 5, opening +
   Prp.~5.3.}

@@ -43,7 +43,21 @@ summary: "R1 RESOLVED IN THE GOOD DIRECTION (the etale-plus/Zariski crossing nev
   \ as a CommRing.Pic element and mathlib's Pic.AsModule / mk_eq_self / mk_eq_one_iff_free\
   \ complete the passage; EffectivityMoving's own cechPicClass_basicOpen_eq_one_of_free\
   \ already uses that pattern. Real risk in general, not sited here, and it should\
-  \ not be carried forward.\n\nWorksheet informal/w5-t4-worksheet.md 6.8-6.15.\n"
+  \ not be carried forward.\n\nWorksheet informal/w5-t4-worksheet.md 6.8-6.15.\n\n\
+  \nCORRECTION TO THIS ROW'S OWN ADVERTISING (accepted from ajc-pic0av, cross-project\
+  \ I-0495 C-0034): \"residue is one statement\" reads as further along than the Lean\
+  \ is. (iii-c2-aff) is carried as a BINDER, not proved -- Tangent/DualNumberChartPic.lean\
+  \ takes the chart-module hypothesis explicitly, which is correct discipline (never\
+  \ register a staged fact) but invisible to a sorry census. A reader comparing \"\
+  AJCR sorry-free\" against the sibling's sorry must not conclude AJCR is ahead on\
+  \ this clause; the same content is open on both sides.\n\nWHAT (iii-c2-aff) OWES\
+  \ AFTER RUN 0073 r3, precisely one statement: identify \"L restricts trivially along\
+  \ eps -> 0\" with \"the chart module's reduction M/(eps)M is cyclic\" -- i.e. freeness\
+  \ of the RESTRICTION on the chart. The generator half is CLOSED and is not geometry:\
+  \ Tangent/CyclicQuotientGenerator.lean (ported from AJC c1ed5be8b via I-0495) proves\
+  \ the \"fixed m\" binder IS cyclicity of the reduction, with the converse, so Opens.cechPicMap_i_eq_one_of_dualNumberChart_of_cyclic\
+  \ consumes cyclicity directly. One deviation from a verbatim port: AJCR's free_of_cyclic_mod_eps\
+  \ is universe-monomorphic, so the port is pinned to Type u.\n"
 status: active
 kind: proof
 priority: normal
@@ -57,5 +71,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:45.485310+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T11:49:16.629240+00:00'
+  updated_at: '2026-07-28T14:26:34.302210+00:00'
   owner: ajcr-w5-av

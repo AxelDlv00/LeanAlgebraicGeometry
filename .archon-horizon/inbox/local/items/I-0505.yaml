@@ -42,13 +42,13 @@ body: "A BINDING PROTECTION CAN BE INVISIBLE TO THE SESSION IT BINDS — the inb
   \ rule and the `reaches_horizon` analysis."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: human
 author: horizon
 source_ref: null
 created_at: '2026-07-28T05:17:18.548367+00:00'
-updated_at: '2026-07-28T06:37:43.816621+00:00'
+updated_at: '2026-07-28T14:08:12.869220+00:00'
 metadata:
   provenance:
     run: '0072'

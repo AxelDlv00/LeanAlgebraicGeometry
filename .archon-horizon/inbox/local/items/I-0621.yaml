@@ -1,0 +1,54 @@
+id: I-0621
+provider: local
+kind: issue
+body: "EVERY horizon MUTATION LOADS THE WHOLE COLLECTION, so one half-written YAML\
+  \ from a concurrent lane crashes an unrelated write. Measured live 2026-07-28 (janitor\
+  \ pass, run 0070 s0010, lane ajcr-cert-r2).\n\nTHE CRASH, verbatim tail:\n\n   \
+  \ File \"archon_horizon/inboxes/filesystem.py\", line 172, in _replace\n      items\
+  \ = self._load()\n    File \"archon_horizon/store/serde.py\", line 146, in inbox_item_from_dict\n\
+  \      scope = scope_from_dict(data.get(\"scope\") or {})\n    AttributeError: NoneType\
+  \ object has no attribute get\n\n`horizon inbox archive I-0579` exited non-zero\
+  \ and wrote NOTHING. The item stayed `open`. Retried the same id minutes later:\
+  \ exit 0, archived. So the failing input was a TRANSIENT file, not a corrupt store\
+  \ — I scanned all 618 inbox items and all 258 roadmap items immediately afterwards\
+  \ and found zero malformed files.\n\nMECHANISM. `_replace` calls `_load()`, which\
+  \ parses EVERY item in the collection before touching the one you named. `inbox_item_from_dict`\
+  \ assumes `data` is a dict. A sibling lane mid-write leaves an item momentarily\
+  \ empty or partial, `yaml.safe_load` returns `None`, and the whole call dies. Nothing\
+  \ about the crash mentions the file that caused it, so the operator has no way to\
+  \ know it was someone elses item.\n\nWHY IT MATTERS MORE THAN A RETRY. It converts\
+  \ a foreign lanes normal write into YOUR failed mutation, and the failure is at\
+  \ least honest here (non-zero exit, nothing written). But the SAME `_load` runs\
+  \ behind `roadmap comment`: one of mine printed this identical traceback AND the\
+  \ comment landed as C-0040. So the traceback is not a reliable signal of failure\
+  \ either — read the state back regardless of what the exit shows. Compare I-0612\
+  \ (accepts-and-drops) and I-0618 (blind read path); this is a third shape, a foreign-write\
+  \ crash.\n\nSECONDARY, and it is the practical cost today: with 8 lanes live, load\
+  \ average 81 and 23 concurrent `lake build`s, a single `inbox archive` took 4-11\
+  \ MINUTES in state D. Two of my calls were killed by a 120s timeout while the underlying\
+  \ process was alive and eventually landed the write. Do NOT re-issue a mutation\
+  \ that timed out — read the status field first, or you will double-apply.\n\nASK,\
+  \ for whoever owns the store layer: skip-and-warn on an unparseable item instead\
+  \ of aborting (`if not isinstance(data, dict): continue`), and name the offending\
+  \ path. A collection-wide parse should not be a precondition for changing one row."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T13:47:56.427972+00:00'
+updated_at: '2026-07-28T13:53:53.804081+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0010-horizon-ajcr-cert-r2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-pic0av

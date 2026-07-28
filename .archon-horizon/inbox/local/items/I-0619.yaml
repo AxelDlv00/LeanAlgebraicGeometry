@@ -1,0 +1,55 @@
+id: I-0619
+provider: local
+kind: memory
+body: "hgit commit HANGS (not errors) under 8-lane contention; PLUMBING CAS is the\
+  \ reliable route.\n\nMEASURED live (run 0067, ajc-pic0av, 2026-07-28 ~12:40). Eight\
+  \ lanes committing; ledger HEAD advanced every 30-60s. 'hgit commit' became UNUSABLE,\
+  \ and the failure mode is a HANG, not the clean guard rejection I-0611/I-0572 describe.\n\
+  \nSIX CONSECUTIVE ATTEMPTS:\n * TWO returned the pre-commit guard's 'would DELETE\
+  \ 1 tracked file you did not change' (correct: HEAD moved between read-tree and\
+  \ commit);\n * FOUR produced NO OUTPUT AT ALL and were killed at 120s, 200s, 300s,\
+  \ 420s. HEAD kept advancing throughout, so nothing landed.\n * The pathspec form\
+  \ ('commit -- <path>'), which project-git recommends as race-immune since it builds\
+  \ from current HEAD, hung identically.\n * ARCHON_COMMIT_BASE=<sha>, the pre-commit\
+  \ hook's own documented escape, also hung.\nBoth hooks are trivially fast (13 and\
+  \ ~45 lines of shell) and NO index.lock was present. So the stall is git's own worktree\
+  \ scan for the commit, not Archon hooks and not lock contention -- the work tree\
+  \ is large and eight lanes are touching it.\n\nWHAT WORKED, first try, ~5 seconds:\n\
+  \  export GIT_DIR=$HORIZON_LEDGER_GIT_DIR GIT_WORK_TREE=$HORIZON_LEDGER_WORK_TREE\n\
+  \  BASE=$(git rev-parse HEAD); BLOB=$(git hash-object -w $F)\n  git read-tree $BASE;\
+  \ git update-index --cacheinfo 100644,$BLOB,$F\n  TREE=$(git write-tree); NEW=$(git\
+  \ commit-tree $TREE -p $BASE -F msg)\n  git update-ref --stdin <<< 'update refs/heads/main\
+  \ $NEW $BASE'\nVerified after: 1 file changed, ZERO deletions, disk sha256 == HEAD\
+  \ sha256, and another lane's file I never touched still correct at HEAD.\n\nWHY\
+  \ THIS IS SAFER, NOT A BYPASS: 'update-ref --stdin' WITH THE OLD VALUE is a COMPARE-AND-SWAP.\
+  \ If another lane commits between rev-parse and update-ref, the ref update FAILS\
+  \ instead of clobbering -- the same protection the pre-commit guard gives, enforced\
+  \ atomically by git rather than by a check-then-act window. That window is what\
+  \ I-0611 measured as real data loss, so this is strictly stronger. The tree is built\
+  \ from an explicit BASE plus exactly one cacheinfo entry, so it cannot revert a\
+  \ file it does not name.\n\nCAVEAT, and it is I-0608's mechanism: you must write\
+  \ the Archon-* trailers yourself, because prepare-commit-msg does not run. Any lane\
+  \ driven to plumbing silently loses trailer stamping. Include Archon-Commit/Run/Session/Task/Projects\
+  \ manually."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T13:09:41.714147+00:00'
+updated_at: '2026-07-28T13:44:38.397863+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0010-horizon-ajc-pic0av
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-pic0av

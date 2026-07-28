@@ -2,66 +2,38 @@ id: AJC.fbc.cosimplicial.pushforward
 title: Pushforward Čech base-change naturality
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'PROBED AND CONFIRMED HARD (run 0068 r1, ajc-fbc) -- this leaf is NOT mis-scoped,
-  unlike
-
-  AJC.fbc.exactness.
+summary: 'REPLACE THE DECLARATION, DO NOT PROVE THE SQUARE (run 0068 r2, verified
+  in Lean).
 
 
-  Prove the remaining cech_pushforward_baseChange_natIso naturality square on cover-intersection
-
-  restriction maps. The sorry is the ''naturality'' field of a NatIso.ofComponents
-  whose components are
-
-  7-step Iso chains through pushPull_sigma_iso / PreservesProduct.iso / Pi.mapIso.
+  r1 recorded this leaf as PROBED AND CONFIRMED HARD, needing per-sigma projection
+  lemmas nobody has built, because Pi.hom_ext cannot fire through the buried sigma-decomposition.
+  That is right about the DEGREEWISE CONSTRUCTION, and the construction is the mistake.
 
 
-  MEASURED THIS SESSION: the obvious tool is Limits.Pi.hom_ext -- exactly what the
-  project''s TWO
-
-  ALREADY-PROVED cosimplicial naturality squares use (homCechSectionCosimplicialIso,
-  CechBridge.lean:230;
-
-  the coreIso_comm chain, CechSectionIdentificationLegAux.lean:66). It does NOT fire:
-  ''apply
-
-  Limits.Pi.hom_ext'' fails to unify, because the sigma decomposition is buried mid-chain
-  behind
-
-  pushforward/pullback applications, so neither side of the goal is syntactically
-  a map INTO a product.
-
-  After ''simp only [Iso.trans_hom, Category.assoc]'' the goal is a readable 7-factor
-  equation, still not
-
-  of Pi.hom_ext shape.
+  LANDED, sorry-free: cech_pushforward_baseChange_natIso_of_isIso builds the SAME
+  cosimplicial isomorphism by whiskering the natural transformation cechOuterBC (=
+  openImmersion_bareBC at the OUTER square; that lemma needs no open immersion and
+  no flatness despite its name). Both sides are DEFEQ to N >> (a composite), rfl-checked
+  both ways, so Functor.whiskerLeft gives the map and its coface compatibility IS
+  the mate''s own naturality. NO NATURALITY OBLIGATION. Then isIso_app_pi_of_isIso_app
+  (landed) reduces the residue to one IsIso per index tuple.
 
 
-  WHAT IS MISSING, sharply: a characterising pi-projection lemma for pushPullObj_coverInter_baseChange.
-
-  The proved analogue pushPull_sigma_iso_pi (CechSectionIdentificationBase.lean:1229)
-  is exactly why the
-
-  coreIso chain closed; the heavy iso has no _pi / _comm / _naturality companion anywhere
-  in the tree.
-
-  Expensive because it is built from openImmersion_beckChevalley, an asIso of a mateEquiv
-  component, so
-
-  the compatibility must route through mathlib''s mateEquiv_vcomp / _hcomp / _square
-  -- unused in this
-
-  project so far. The nerve-coface transport identity DOES exist (backboneIncl_nerveDelta,
-
-  CechSectionIdentificationLegMid1.lean:171) with its consuming rewrite chain visible
-  at
-
-  CechSectionIdentificationLegTop.lean:508-520, so the pattern to imitate is on disk.
+  WHAT IS OPEN, with the trap named: IsIso (cechOuterBC.app (pushPullObj F (Over.mk
+  j_sigma))). The file HAS an iso with those endpoints (pushPullObj_coverInter_baseChange)
+  but an iso between two objects is NOT IsIso of a specific map -- the recorded groups-agree-vs-maps-agree
+  error.
 
 
-  Full diagnosis: I-0570. Do not expect Pi.hom_ext + simp to close it.
+  ROUTE, identified not built: mateEquiv_vcomp splits the mate of a vertically composed
+  square. Stack the inner square over U_sigma on the outer square h: the composite
+  is the square for j_sigma >> f : U_sigma -> S, between AFFINE schemes, where flat
+  base change is the sorry-free affinePushforwardPullbackBaseChange; the inner factor
+  is openImmersion_beckChevalley, already sorry-free.
 
-  '
+
+  DO THIS LEAF FIRST, before the twisted sibling.'
 status: pending
 kind: proof
 priority: high
@@ -84,6 +56,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc.cosimplicial
-  updated_at: '2026-07-28T10:29:05.840963+00:00'
+  updated_at: '2026-07-28T13:48:32.084214+00:00'
   pinned_commits:
   - 672a8c656

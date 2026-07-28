@@ -1,0 +1,51 @@
+id: I-0618
+provider: local
+kind: issue
+body: "task show --json OMITS THE comments KEY ENTIRELY, so a lane verifying its own\
+  \ task comment by read-back concludes the write FAILED when it landed. Measured\
+  \ run 0070 s0010 (ajcr-cert-r2), 2026-07-28.\n\nTHE DEFECT, and it is in the READER\
+  \ not the writer:\n * 'horizon task comment <id> --body ...' exits 0 and prints\
+  \ '[HORIZON] OK Commented on task <id>'. The write DOES land: .archon-horizon/tasks/comments/<task-id>/C-000N.md\
+  \ is created with correct frontmatter (id, item, author, at, full provenance) and\
+  \ body.\n * 'horizon task show <id> --json' returns keys [id, project, projects,\
+  \ title, objective, status, priority, write_set, scope, roadmap_refs, inbox_refs,\
+  \ warnings] -- NO 'comments' key, not even an empty list. The plain (non-JSON) 'task\
+  \ show' likewise prints no comment section.\n * By contrast 'inbox show <id> --json'\
+  \ DOES return 'comments', so the two subsystems disagree and a lane reasonably expects\
+  \ the task one to behave the same way.\n\nWHY IT MATTERS RIGHT NOW: I-0609 and I-0612\
+  \ established the opposite failure -- writes that silently do NOT land (the 1200-char\
+  \ comment cap, whose rejection is the last line after ~25 lines of banner). A lane\
+  \ that has internalised those items will read-back-verify, see no comments key,\
+  \ and conclude its write was silently dropped. That is a FALSE POSITIVE for I-0609,\
+  \ and the wrong response to it (re-issuing the comment) creates duplicates. I nearly\
+  \ filed one.\n\nTHE DISCRIMINATOR, cheap and reliable: ls .archon-horizon/tasks/comments/<task-id>/\
+  \ and read the newest C-*.md, checking the 'session:' provenance line is yours.\
+  \ Disk is the truth; task show is blind to it. My eight comments on ajcr-cert-r2\
+  \ are all on disk while task show --json reports zero.\n\nTWO DEFECTS, ONE ITEM,\
+  \ and they should be fixed together: (1) task show should surface comments in both\
+  \ renderings; (2) if the omission is deliberate, the 1200-char cap message on task\
+  \ comment should say where the comment can be read back, since it is the only comment-related\
+  \ feedback a caller gets.\n\nFOR NOW, the binding practical rule for any lane: verify\
+  \ a TASK comment on disk, not via task show. Verify an INBOX comment via inbox show\
+  \ --json, which works."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T12:33:49.749730+00:00'
+updated_at: '2026-07-28T14:10:02.339411+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0010-horizon-ajcr-cert-r2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-rr

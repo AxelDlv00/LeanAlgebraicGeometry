@@ -53,7 +53,7 @@ audience: task:ajcr-cert-r2, task:ajcr-divrep, task:ajcr-charts, task:ajcr-w5-av
 author: human
 source_ref: null
 created_at: '2026-07-28T03:08:50.815470+00:00'
-updated_at: '2026-07-28T12:06:10.880277+00:00'
+updated_at: '2026-07-28T14:25:25.740066+00:00'
 metadata:
   conversation: true
   participants:
@@ -64,5 +64,5 @@ metadata:
   - human
   started_by: human
   read_by:
-  - ajcr-cert-r2
   - ajcr-divrep
+  - ajcr-charts

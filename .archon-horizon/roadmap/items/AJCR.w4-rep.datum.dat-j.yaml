@@ -4,39 +4,54 @@ title: 'DAT-J: JacobianData assembly — quasi-compactness via the Abel image of
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DAT-J: JacobianData assembly -- quasi-compactness via the Abel image of\
-  \ Div^g-lite.\n\nSTATUS 2026-07-28 (run 0071 s0006, ajcr-divrep). DAT-J IS NOW TWO\
-  \ INPUTS, BOTH VISIBLE IN ONE\nSIGNATURE, and the assembly between them is landed\
-  \ rather than asserted.\n\nPicRepDatum.toJacobianDataOfAbelLifts (Picard/JacobianDataFromPicRepDatum.lean,\
-  \ sorry-free,\nkernel exit 0, rooted, axiom-clean with a control) takes exactly\
-  \ two arguments:\n * a PicRepDatum k k C -- DAT-G/DAT-G0, divRep-gated;\n * an Abel\
-  \ morphism DivScheme g --> d.J.left with a residue-field lift at EVERY POINT.\n\
-  Nothing else. So \"the assembly\" is no longer a step that could hide work.\n\n\
-  LANDED THIS RUN, both new files.\n\n1. Picard/JacobianDataAbelSurj.lean -- DJ-1's\
-  \ TOPOLOGICAL half.\n   surjective_of_forall_exists_residueField_lift: per-point\
-  \ lifts q : Spec kappa(y) --> X with\n   q >> f = fromSpecResidueField y give Function.Surjective\
-  \ f.base.\n   This was a real gap, not bookkeeping. w4-datj 2.3 produces a MORPHISM\
-  \ out of a residue field\n   (fiberTwist shift + exists_effective_of_picClass),\
-  \ while the qc field consumes a statement\n   about Hom.base, and nothing in the\
-  \ tree converted the one into the other. The proof is\n   mathlib's range_fromSpecResidueField\
-  \ plus nontriviality of a field. PURE SCHEME TOPOLOGY --\n   no curve, no Picard\
-  \ functor, no divisor scheme -- so it is reusable by anyone holding lifts\n   rather\
-  \ than a surjection.\n   Also landed there: quasiCompact_of_forall_residueField_lift_from_divScheme,\n\
-  \   JacobianData.ofAbelLifts, and JacobianData.ofChartsOfAbelLifts (the infinite-atlas\
-  \ producer\n   critical-path 7.5 says to aim at).\n\n2. Picard/JacobianDataFromPicRepDatum.lean\
-  \ -- DJ-IN, the DAT-G handoff.\n   PicRepDatum.toJacobianData (d) (hqc) : JacobianData\
-  \ C.\n   THE TELL that this was missing: PicRepDatum occurred in NO other Lean file\
-  \ in the tree. Its\n   rep-field defeq was recorded as an example in its own module,\
-  \ so nothing CONSUMED it. This is\n   the first declaration to use it. w4-datj 1.1\
-  \ asserted the handoff was free; that assertion is\n   now machine-checked rather\
-  \ than asserted.\n\nWHAT REMAINS OF DAT-J, unchanged in substance:\n * step 3, the\
-  \ LIFT itself -- divRep-gated, and BINDING (w4-datj 0.5): spell it with\n   exists_effective_of_picClass\
-  \ / riemann_inequality (FLVClass.lean:208/205), NEVER\n   riemann_inequality_curve\
-  \ (ChiCurve.lean:183), which imports Challenge.lean and would create\n   an import\
-  \ cycle;\n * a PicRepDatum k k C from DAT-G;\n * DJ-3, the Challenge.lean discharge,\
-  \ gated on a real jacobianData term.\n\nJacobianData now has SEVEN producers (ofRepresentableBy\
-  \ :71, ofCharts :182,\nofChartsOfCompactSpace :199, ofAbelImage, ofChartsOfAbelImage,\
-  \ ofAbelLifts,\nofChartsOfAbelLifts) plus the two PicRepDatum entry points. The\
-  \ atlas is NOT finite, so aim at\none of the ofCharts* forms.\n"
+  \ Div^g-lite.\n\nSTATUS 2026-07-28 (run 0071 s0008, ajcr-divrep). STEP 3 IS A COMPATIBILITY\
+  \ SQUARE, NOT A\nCONSTRUCTION -- because the fibrewise half was already built, rooted,\
+  \ and had zero consumers.\n\nWHAT THE PREVIOUS RE-SCOPE GOT RIGHT: DAT-J's two inputs\
+  \ are visible in one signature,\nPicRepDatum.toJacobianDataOfAbelLifts -- a PicRepDatum\
+  \ k k C, and a per-point lift\n  hlift : forall y, exists q : Spec kappa(y) -->\
+  \ DivScheme g, q >> abel = fromSpecResidueField y.\n\nWHAT IT GOT WRONG, OR AT LEAST\
+  \ LEFT UNMEASURED: it recorded step 3 as \"the LIFT itself --\ndivRep-gated\", i.e.\
+  \ as geometry blocked behind U2. The morphism half is NOT gated and is NOT\nmissing.\
+  \ Picard/DivisorFamilyFieldSurj.lean (ROOTED, sorry-free) already carries:\n\n \
+  \ DivisorAdaptation.isCertified_of_deg (:104)\n    Over a FIELD, an adaptation whose\
+  \ presentation divisor has degree n is IsCertified n. All\n    seven clauses: projectivity\
+  \ and both flat-cokernel clauses are Module.Free.of_divisionRing\n    instances,\
+  \ (c1) finiteness is moduleFinite_colength, and the (c2) rank clause is the\n  \
+  \  UNCONDITIONAL CRT identity deg_presentationDivisor read against the degree hypothesis.\
+  \ No\n    support separation -- the file records that as a deviation of record,\
+  \ since full support\n    separation is unachievable when a support point lies in\
+  \ both charts' overlap.\n  exists_divFam_divFamDivisor_eq (:147)\n    hence every\
+  \ effective degree-g divisor over K IS the divisor of a DivFam.\n  effectiveDivisorClassifyZar\
+  \ (:217), spec at (:231)\n    and it classifies: overSpec k K --> divSchemeOver.\n\
+  \nTHE STRATEGIC POINT, and it is the sharp form of critical-path 7.6's own argument:\
+  \ the\nDivFamZar no-go is a purely RELATIVE phenomenon (over a field a divisor's\
+  \ support is finitely\nmany closed points, so IsPreconnected supportLocus is vacuous).\
+  \ The certificate difficulty that\nmakes U2 hard DOES NOT EXIST FIBREWISE. Any obligation\
+  \ phrased over a residue field should be\npriced against DivisorFamilyFieldSurj,\
+  \ not against the relative certificate machinery.\n\nSO WHAT REMAINS OF STEP 3 IS\
+  \ ONE SQUARE. effectiveDivisorClassifyZar_spec says the morphism is\ndivRepClassifyZar\
+  \ of a family presenting D. It says NOTHING about abel. Joining it to hlift needs\n\
+  exactly that the classification, composed with abel, is the structural morphism\
+  \ of the point.\nLanded this session as an interface in Picard/JacobianDataAbelSquare.lean:\n\
+  \n  IsAbelClassifyCompatible hpi g hO hchi r1 r2 b1 b2 abel      -- the square,\
+  \ named\n  exists_residueField_lift_of_abelCompatible                    -- square\
+  \ + effectivity => hlift\n      verbatim in the shape ofAbelLifts / toJacobianDataOfAbelLifts\
+  \ consume\n\nThis is the recorded \"groups agree /= maps agree\" shape (I-0525):\
+  \ a correspondence between\ndivisor classes and DivScheme-points is unusable until\
+  \ the square relating the two NAMED\nmorphisms lands.\n\nDAT-J NOW OWES, exactly\
+  \ three things and no construction:\n 1. IsAbelClassifyCompatible for the campaign's\
+  \ Abel morphism -- bookkeeping-shaped, but a real\n    statement, and nobody has\
+  \ written it;\n 2. the fibrewise effectivity input heff -- Riemann-Roch over a field.\
+  \ BINDING (w4-datj 0.5):\n    spell it with exists_effective_of_picClass / riemann_inequality\
+  \ (FLVClass.lean:208/205),\n    NEVER riemann_inequality_curve (ChiCurve.lean:183),\
+  \ which imports Challenge.lean and would\n    create an import cycle;\n 3. a PicRepDatum\
+  \ k k C from DAT-G (still divRep-gated, unchanged).\n\nDJ-0 (compact-image qc) and\
+  \ DJ-2 (packaging) remain landed. JacobianData has seven producers plus\nthe two\
+  \ PicRepDatum entry points; the atlas is NOT finite, so aim at an ofCharts* form.\n\
+  \nCAVEAT ON THE NEW FILE: JacobianDataAbelSquare.lean was written this session and\
+  \ its kernel check\nwas still in flight when the session ended under a swap-bound\
+  \ box (load 70, ~0G free, zero oleans\nproduced workspace-wide for 40 minutes).\
+  \ Treat it as unverified until a green check is recorded.\n"
 status: pending
 kind: proof
 priority: normal
@@ -50,7 +65,7 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:11.223347+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-28T11:36:24.081978+00:00'
+  updated_at: '2026-07-28T14:22:45.750485+00:00'
   milestone: w4-tail
   owner: ajcr-divrep
   pinned_commits:

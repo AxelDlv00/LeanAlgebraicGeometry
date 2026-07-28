@@ -1,0 +1,52 @@
+id: I-0614
+provider: local
+kind: issue
+body: "classDeg_of_presenting CANNOT SPEND DEGREE-ZERO-NESS: its RHS is a degree at\
+  \ L, the hypothesis is a degree at K, and the seam between them DOES NOT EXIST.\
+  \ Reviewer pass on run 0072 s0006 (ajcr-charts), machine-measured.\n\nWHAT THE THEOREM\
+  \ PROVES (Picard/Pic0ChartCoverageDegree.lean:121, sorry-free, true):\n  classDeg\
+  \ L M = PicEtAff.degAff L (PicEtAff.map C L (picEtAffineEquiv C K nu))\ni.e. classDeg\
+  \ of the presenting class = degAff of the BASE-CHANGED plus class. Its proof is\n\
+  two rewrites (degAff_unit, relPicDeg_relPicMk) and is correct.\n\nWHAT ITS DOCSTRING\
+  \ CLAIMS: \"classDeg L M = degAt nu (identity point of overSpec k K)\". That is\n\
+  a DIFFERENT statement. degAt nu (id) unfolds to degAff K (picEtAffineEquiv C K nu)\
+  \ -- NO\nPicEtAff.map. The docstring says the K -> L step is \"absorbed by degAff\
+  \ being computed on any\nrefining field ... reading it at L rather than at K costs\
+  \ nothing\" and names degAff_map_eq as\nthe justification.\n\ndegAff_map_eq DOES\
+  \ NOT EXIST. Grepped the whole workspace: the only occurrence of that string\nis\
+  \ this docstring. The eight degAff lemmas in the tree are degAff_mk, _mk_ofField,\
+  \ _unit, _one,\n_mul, _inv, _curveMap_eq_zero, and degAff_baseFieldShuffle (a DIFFERENT\
+  \ square: shuffle at a\nfixed K, not base change K -> L).\n\nMEASURED: exact? on\n\
+  \  degAff L (PicEtAff.map C L a) = degAff K a\nfails. And the intended use fails\
+  \ with exactly the expected mismatch:\n  have : classDeg L M = 0   -- from lam degree\
+  \ zero\nleaves goal   degAff L (map C L (picEtAffineEquiv C K nu)) = 0\nwith hzero\
+  \ : degAff K (picEtAffineEquiv C K nu) = 0 in context. Type mismatch, not a rw away.\n\
+  \nWHY IT MATTERS: the file header says this is \"where degree-zero-ness is SPENT\"\
+  \ and \"the reason\nthis file exists\". The coverage argument knows degAt lam_t\
+  \ = 0 at K and needs classDeg L M0 = 0\nat L. This theorem does not bridge that.\
+  \ So COV-1 step 2 is NOT discharged: the missing brick\nis base-field invariance\
+  \ of degAff under PicEtAff.map. It is a real, small lemma (degAff_mk on a\ncommon\
+  \ refinement, the same shape as degAff_baseFieldShuffle) -- it should be BUILT,\
+  \ not\ndocumented as already absorbed.\n\nNote the downstream files never actually\
+  \ use classDeg_of_presenting (zero call sites outside its\nown file), which is why\
+  \ nothing broke: the e=0 derivation of e964967e8 supplied classDeg M0 = 0\nas a\
+  \ HYPOTHESIS instead. That hypothesis is currently unobtainable."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T12:15:11.403465+00:00'
+updated_at: '2026-07-28T12:15:11.403478+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0006-horizon-ajcr-charts
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

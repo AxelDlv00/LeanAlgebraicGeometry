@@ -1,0 +1,55 @@
+id: I-0623
+provider: local
+kind: issue
+body: "AJC SectionDrop's PEEL CHAIN RE-DERIVES AJCR FLVClass.peel_effective, and the\
+  \ file's provenance note asserts the opposite.\n\nGround review of ajc-rr run 0074\
+  \ r2 (b2d3b9ac2 / 99f80fdad / 58a9fa36b).\n\nFALSE CLAIM. SectionDrop.lean says\
+  \ \"AJCR has the h1 INEQUALITY; it does not have the vanishing propagation\", citing\
+  \ AJCR SectionBound.lean h1_add_effective_le (finrank) as the ancestor it \"ADAPTS\
+  \ ... run on Subsingleton instead of finrank, which is what removes the finiteness\"\
+  .\n\nAJCR already has the propagation in Subsingleton form, already finiteness-free:\n\
+  \  AJCR/AlgebraicJacobian/RiemannRoch/FLVClass.lean:260 peel_single, :277 peel_nsmul_single,\
+  \ :292 peel_effective\npeel_effective matches AJC subsingleton_hModule_one_add_effective\
+  \ statement-for-statement up to the name (same binders (A E : X.CurveDivisor) (hE\
+  \ : 0 <= E)); FLVClass's Peel variable block (:253-257) has no Module.Finite binder.\
+  \ Bodies are near-verbatim (same locals b, E', hdecomp, hcard, hsingle, hsplit;\
+  \ same lemmas), differing only at the last line. Also AJC h1_le_h1_sub_point = AJCR\
+  \ SectionBound.lean:67 h1_le_h1_sub_single.\n\nSo the team-thread headline \"nobody\
+  \ had connected those two facts\" over-claims: a sibling connected them, same form,\
+  \ same carrier. AJC's own Adelic/BoundedVanishing.lean:83-96 already names FLVClass.peel_effective.\n\
+  \nGENUINELY NEW (verified absent from AJCR, keep): h0_sub_point_le; h0_le_h0_sub_point_add_residueDeg\
+  \ (two-sided drop -- residueDeg never co-occurs with Sheaf.h0 in AJCR); the Z-valued\
+  \ drop identity; subsingleton_hModule_one_of_le (ORDER-CONE form; AJCR only does\
+  \ degree-threshold + class transport); the exact-RR and cofinality layer.\n\nRULE.\
+  \ The lane did search AJCR but searched by expected proof technique (finrank inequality),\
+  \ found the finrank file, stopped. Grep the target CONCLUSION TYPE across siblings\
+  \ -- here Subsingleton (Sheaf.HModule _ 1) as both hypothesis and conclusion.\n\n\
+  ALSO: scripts/ajcrr-sectiondrop-axioms.lean is UNMEASURED -- Lean reports \"Imports\
+  \ are out of date\" (Ledger/Basic.lean newer than ChiCurve.olean), so its #print\
+  \ axioms lines assert nothing. Re-run when quiet. Instantiability is fine by a cheaper\
+  \ check: SectionDrop's variable block (:102-106) is byte-identical to ChiLedger.lean:65-69,\
+  \ and ChiCurve.chi_divisorSheaf_curve elaborates against it at a curve. Trap (d)\
+  \ does not apply."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T13:58:11.854626+00:00'
+updated_at: '2026-07-28T14:10:52.009724+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0006-horizon-ajc-rr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr

@@ -4,38 +4,66 @@ title: 'DD-R divRep: affine classification, Zariski/global representability, and
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DD-R divRep: affine classification, Zariski/global representability, and\
-  \ consumer export.\n\nSTATUS 2026-07-28 (run 0071 s0006, ajcr-divrep). THE CHAIN\
-  \ IS COMPLETE EXCEPT FOR ONE EQUATION.\n\nThere are now TWO sorry-free producers\
-  \ of the endpoint, from progressively simpler hypotheses:\n\n  divFunctor_representableBy_of_chartClause\
-  \  (Picard/DivRepAffPullClause.lean)\n    : IsChartClause U -> (divFunctor C pi\
-  \ g).RepresentableBy DivOver\n  divFunctor_representableBy_of_chartRange   (Picard/DivRepChartRange.lean,\
-  \ NEW this run)\n    : (forall i j, exists F, (divRepClassifyZar F).left = ChartMap\
-  \ i j) -> the same\n\nThe second is the one to quote. Its hypothesis is RANGE MEMBERSHIP\
-  \ of the chart maps under a\nLANDED map, at glueData-many points -- not a quantified\
-  \ submodule identity. See the u2 leaf for\nwhy the two are equivalent and why the\
-  \ equivalence is proved in both directions.\n\nDONE, all sorry-free, kernel-checked,\
-  \ rooted, root build green at 9181 jobs:\n * the GLOBAL ENDPOINT DivRepAffinePullback.representableBy\
-  \ (DivRepGlobalClassify.lean:306).\n   L10/L11 have zero remaining obligations.\
-  \ THIS IS STILL THE SIGNATURE CONSUMERS SHOULD WRITE\n   AGAINST (ajcr-charts confirmed)\
-  \ -- the new producers are additional entry points, not\n   replacements.\n * all\
-  \ three fields of ofPull, discharged from the clause: pull (divRepPullValue),\n\
-  \   pull_naturality (epsilon-FREE), isDivRepClassify_pull.\n * THE REUSABLE TOOLS,\
-  \ none of which mentions a chart family:\n     isDivRepClassify_of_forall_away \
-  \         -- IsDivRepClassify is LOCAL ON THE BASE\n     isDivRepClassify_iff_divRepClassifyZar_left_eq\
-  \ -- and it is an EQUATION with the\n       classifier, because divRepClassifyZar\
-  \ is TOTAL and its satisfier is UNIQUE\n * supporting: DivRepAffPullGlue, DivRepAffPullIndep,\
-  \ DivRepAwaySpanGlue, DivRepAwayPush.\n\nTHE RESIDUE IS ONE EQUATION: for each pair\
-  \ chart, exhibit a locally certified class over\nR_Z(i,j) whose backward classifier\
-  \ is that chart's own map to DivScheme. That is U2. See the u2\nleaf, including\
-  \ the measured finding that the pointwise certificate gate is a strictly WEAKER\n\
-  sufficient condition than the global one usually quoted, and that it is unattempted.\n\
-  \nQUALIFICATION, worth repeating at every re-scope of this row: NOTHING HERE PROVES\
-  \ U2, and no\ngate has cleared. Nobody can construct a DivRepAffinePullback yet.\
-  \ What changed across this run\nis the SHAPE of the debt -- from \"one statement,\
-  \ quantified over tower tests and framings\" to\n\"one equation between two landed\
-  \ morphisms\". Read it that way, and not as progress toward L8,\nwhich is untouched\
-  \ (critical-path 7.6: the campaign's real gate is local surjectivity of the\nAbel\
-  \ map out of a too-small divisor functor, and it is arguably false as stated).\n"
+  \ consumer export.\n\nSTATUS 2026-07-28 (run 0071 s0008, ajcr-divrep). THE CHAIN\
+  \ IS COMPLETE EXCEPT FOR ONE CERTIFICATE.\n\nTHE ENDPOINT IS UNCHANGED and is still\
+  \ what consumers should write against:\n  DivRepAffinePullback.representableBy (Picard/DivRepGlobalClassify.lean:306)\n\
+  with two additional entry points to the SAME conclusion (divFunctor C pi g).RepresentableBy\
+  \ DivOver:\n  divFunctor_representableBy_of_chartClause (DivRepAffPullClause.lean)\n\
+  \  divFunctor_representableBy_of_chartRange  (DivRepChartRange.lean:220)\nL10/L11\
+  \ have zero remaining obligations; all three fields of ofPull are discharged from\
+  \ the clause.\n\nWHAT MOVED THIS SESSION, and it is a correction of this row's own\
+  \ gate, not a re-partition of U2.\n\nPrevious re-scopes said U2's residue was the\
+  \ epsilon-identity at the universal point, gated on G-4,\nand (per the addendum\
+  \ this row carried) that the seed route relocates it onto GERM DIVISIBILITY at\n\
+  every point -- I-0302 residual 2b/2c, the recorded honest geometric wall. That was\
+  \ measured off\nThetaGeneratorSeed.isGenerator_seedUniv' (DivSchemeRedesignSeedUniv.lean:205),\
+  \ which genuinely is\ngated on SeedUnivRDN plus a per-point hfib.\n\nIT IS NOT THE\
+  \ ONLY GENERATOR OVER THE CHART RING. Verified by enumerating every declaration\
+  \ in the\ntree whose conclusion is (..).IsGenerator: exactly one is ungated over\
+  \ R_Z, namely\n\n  PointwiseAchiever.isGenerator_highWindowPointwiseGeneratorSeed\n\
+  \    (Picard/DivSchemeHighWindowPointwiseGenerator.lean:89)\n\nat K = divUniversalSeedK\
+  \ over RZ = DivCarveChartRing -- U2's own ring and U2's own seed module --\nfrom\
+  \ hO, hchi and hb : 0 < windowBound pi hpi ONLY. isGenerator_pointwiseGeneratorSeed\
+  \ (:274) takes\nPointwiseSeedRDN alone, and pointwiseSeedRDN_of_highWindow (…QuotientBridge.lean:119)\
+  \ discharges that\nfrom hb. Two seeds over one ring; only one gated. See the u2\
+  \ leaf for the full measurement.\n\nLANDED THIS SESSION (Picard/DivRepChartClassUniv.lean,\
+  \ commit 76759f498):\n  divFamEps_highWindow_eq_universal_pair\n    : IsCertified\
+  \ g -> divFamEps (DivFam.mk (certifiedFamily ..))\n        = (divUniversalFstWindow.toSubmodule,\
+  \ divUniversalSndWindow.toSubmodule)\n  exists_certifiedFamily_divFamEps_eq_universal_pair\
+  \   -- the existential a producer consumes\n  divFamZarUniv                    \
+  \                    -- the DivFamZar over R_Z that U2 asks for\nAll four non-certificate\
+  \ inputs of the landed eps-projection identity\n(ThetaGeneratorSeed.divFamEps_certifiedFamily,\
+  \ DivSchemeEps.lean:312) are available at the universal\npoint: the generator clause\
+  \ as above; the second-window containment\ndivUniversalSndWindow_le_highWindow_divisorWindow\
+  \ (…SecondContainment.lean:114) for that same seed;\nand BOTH thetaGluedEval surjectivities\
+  \ from the certificate itself\n(DivisorAdaptation.IsCertified.thetaGluedEval_surjective,\
+  \ DivisorThetaFibreData.lean:271).\n\nWHY THIS WAS INVISIBLE FOR THREE SESSIONS,\
+  \ and it is the transferable finding: the\nDivSchemeHighWindow* family is 44 files,\
+  \ ZERO sorries, and has ZERO occurrences in\nAlgebraicJacobian.lean. Only 6 of the\
+  \ 44 are in the root import closure; nothing outside the family\nimports the two\
+  \ endpoint files; and one transitive member (DivSchemeWindowMulGeneral) has NO OLEAN\
+  \ AT\nALL -- it has never been compiled in this tree. So no root build elaborated\
+  \ it, no sorry census\ncounted it, no axiom probe measured it. This is I-0362 (unrooted\
+  \ = not measured) at 44-file scale,\nsitting on the critical path. ROOTEDNESS MUST\
+  \ BE CHECKED SEPARATELY FROM SORRY-FREENESS.\n\nWHAT divRep NOW OWES: one certificate\
+  \ plus one scalar.\n 1. IsCertified g for the high-window universal seed's adaptation\
+  \ over R_Z. This is the standing G-4\n    obligation and precisely the widened certificate\
+  \ lane's endpoint shape (I-0565); it is NOT a new\n    statement, and cert-r2's\
+  \ exists_isCertified_of_swallowing_affineOpen is its target.\n 2. hb : 0 < windowBound\
+  \ pi hpi. Used only to get 0 < windowS_choice\n    (windowS_choice_pos_of_windowBound_pos,\
+  \ …ChartExhaustion.lean:54). windowBound is a\n    Classical.choose from an existence\
+  \ statement upward-closed in b (UniformVanishing.lean:71), so\n    \"some valid\
+  \ bound is positive\" is trivial while \"the chosen one is\" is not -- normalise\
+  \ the\n    choice rather than proving positivity of it.\n\nQUALIFICATION, and it\
+  \ is binding at every re-scope of this row: NOTHING HERE PROVES U2 and no gate\n\
+  has cleared. Nobody can construct a DivRepAffinePullback. Critical-path 7.6 is untouched:\
+  \ L8 --\nlocal surjectivity of the Abel map out of a too-small divisor functor --\
+  \ remains the campaign's real\ngate and is arguably FALSE as stated. The tail shrinking\
+  \ is not progress toward it.\n\nVERIFICATION CAVEAT: DivRepChartClassUniv.lean's\
+  \ kernel check did NOT complete. The box was\nswap-bound (load 70, under 1G free)\
+  \ and produced zero oleans workspace-wide for 40+ minutes; the\nbuild of the never-compiled\
+  \ transitive module was abandoned so as not to squat the lake mutex. The\nfile is\
+  \ committed and must be treated as UNVERIFIED until a green lake env lean is recorded.\n"
 status: active
 kind: proof
 priority: normal
@@ -58,7 +86,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T11:59:02.663967+00:00'
+  updated_at: '2026-07-28T14:23:57.612605+00:00'
   owner: ajcr-divrep
   pinned_commits:
   - 0b67179bb

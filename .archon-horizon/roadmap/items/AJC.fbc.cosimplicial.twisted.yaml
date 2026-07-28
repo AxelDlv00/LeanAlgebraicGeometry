@@ -2,34 +2,27 @@ id: AJC.fbc.cosimplicial.twisted
 title: Twisted Čech nerve compatibility
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'PROBED (run 0068 r1, ajc-fbc): same shape and same missing input as the
-  sibling
-
-  AJC.fbc.cosimplicial.pushforward -- see that row and I-0570 for the measurement.
-
-
-  Prove the remaining twisted_cech_nerve_iso compatibility with cosimplicial faces
-  on cover
-
-  intersections. The per-sigma component twisted_cech_nerve_per_sigma
-
-  (CechHigherDirectImageUnconditional.lean:1675) likewise has no characterising pi-projection
-
-  companion, and is likewise an asIso of a mateEquiv component.
-
-
-  Both leaves are genuinely the Beck-Chevalley heart of Stacks 02KG, NOT artefacts
-  of an over-strong
-
-  statement (which is what AJC.fbc.exactness turned out to be). Treat the two as ONE
-  obligation with two
-
-  instances: the per-sigma projection lemma is the same construction twice, so whoever
-  builds it for one
-
-  should do both.
-
-  '
+summary: "NOT THE SAME SHAPE AS ITS SIBLING -- and I am the lane that wrongly said\
+  \ it was, twice (run 0068 r2, verified by rfl).\n\nr1's summary here said 'same\
+  \ shape and same missing input as the sibling AJC.fbc.cosimplicial.pushforward'.\
+  \ Then r2 landed a whiskered-mate construction that removes the sibling's naturality\
+  \ obligation entirely, and initially claimed the same fix applies here. BOTH claims\
+  \ are wrong, and the reason is one rfl check:\n\n * the sibling's two sides are\
+  \ BOTH N >> (a composite) for one cosimplicial N, so a whiskered natural transformation\
+  \ maps between them and naturality is inherited;\n * THIS leaf's left side is N\
+  \ >> g'^*, but its right side is drop.obj (CechNerve U' (g'^* F)) -- the nerve of\
+  \ the BASE-CHANGED COVER, whose degree-n backbone lives in Over X' rather than Over\
+  \ X. It is NOT a whiskering of N, so THERE IS NO NATURAL TRANSFORMATION TO WHISKER.\n\
+  \nSo this leaf's naturality is genuine work of a DIFFERENT KIND from the sibling's:\
+  \ it is a comparison of TWO NERVES. The content is that the cover base-change identification\
+  \ coverInterOpen_baseChange_eq (landed, sorry-free) is compatible with the index-omission\
+  \ maps -- i.e. that the isoOfRangeEq slice identifications used per sigma in twisted_cech_nerve_per_sigma\
+  \ commute with the inclusions U_tau subset U_sigma for sigma a subtuple of tau.\
+  \ That is a statement about the cover base change, not about modules.\n\nPRIORITY,\
+  \ reversed from the earlier advice: do AJC.fbc.cosimplicial.pushforward FIRST. Its\
+  \ naturality is already free and only a per-sigma IsIso of a mate remains. This\
+  \ leaf is the HARDER of the two despite carrying lighter hypotheses (no base affineness,\
+  \ no f_*/f'_* layer) -- lighter hypotheses are not lighter work."
 status: pending
 kind: proof
 priority: high
@@ -52,4 +45,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc.cosimplicial
-  updated_at: '2026-07-28T10:23:38.603522+00:00'
+  updated_at: '2026-07-28T13:46:26.115257+00:00'

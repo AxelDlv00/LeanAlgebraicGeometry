@@ -5,69 +5,53 @@ projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. Binding\
   \ form: protection I-0492.\nFull reasoning: I-0346 (human comment, same date).\n\
-  \nEXECUTED, AND THE RESIDUE IS NOW ONE GEOMETRIC STATEMENT. The widened layer is\
-  \ sorry-free,\naxiom-clean and rooted; thirteen DivisorFamilyAff*.lean files. Of\
-  \ the two obligations I-0492\nclause 4 relocated, 4(i) is now DISCHARGED rather\
-  \ than assumed:\n\n  AffCoverData          -- m / pieces : Fin m -> Opens / isAffineOpen\
-  \ / cover (iSup = top).\n                           NO pi argument, NO partitions\
-  \ of unity, NO Sum index, NO chart typing.\n  AffAdaptation         -- eqn per piece\
-  \ + eqn_rel; IsCertified with (c1)-(c4) VERBATIM.\n  CertifiedDivisorFamilyAff /\
-  \ IsLocallyCertifiedAff / DivFamZarAff (mk, mk_eq_mk_iff, picClass)\n  DivFamZar.toAff\
-  \       -- the widened value RECEIVES every chart-typed one, same picClass\n  isCertified_of_swallowedBy_of_c1\
-  \ -- cert-collapse: all seven clauses from (c1) + the rank datum\n  DivFamZarAff.mapAlg\
-  \   -- and the whole S5b layer (pullback, mapAlg_id/comp, picClass_mapAlg,\n   \
-  \                        eq_of_away_eq, toAff_mapAlg)\n\nOBLIGATION 4(i) IS DISCHARGED\
-  \ (2026-07-28, run 0070 s0008, 5e77976f4):\n\n  ThetaGeneratorSeed.affAdaptation_fibre_regular\
-  \ (hD : D.IsGenerator) (Dc : AffCoverData C R)\n    (A : AffAdaptation Dc (D.localEquations\
-  \ hD)) (j) (p) :\n    A.eqn j (x) 1 in nonZeroDivisors (Gamma(Dc.pieces j) (x)_R\
-  \ kappa(p))\n\nquantified over EVERY widened cover and EVERY widened adaptation,\
-  \ not an extracted one.\n\nWHY IT TRANSPORTED, and it is a fact about the SHAPE\
-  \ of the seed's clause rather than new\nmathematics. The chart-typed discharge looks\
-  \ like chart machinery and is not: it bottoms out at\nThetaGeneratorSeed.germ_self_pullbackEqn_mem_nonZeroDivisors,\
-  \ whose STATEMENT mentions the system\nd and the fibre curve over kappa(p) and NOTHING\
-  \ ELSE — no cover, no pieces, no chart, no partition\nof unity. It says the pulled\
-  \ SYSTEM equation is regular at its own point. All the chart layer adds\nis the\
-  \ comparison \"pulled piece equation = unit * pulled system equation\", and eqn_rel\
-  \ is a field\nof AffAdaptation too. So the piece enters only through eqn_rel and\
-  \ the affine germ seam, both of\nwhich an arbitrary affine open supplies.\n\nTHE\
-  \ ASYMMETRY THAT MADE IT CHEAP, worth quoting because reusing the existing lemma\
-  \ does NOT work:\ngerm_pullbackEqn_mem_nonZeroDivisors takes the pulled piece equation\
-  \ as an INPUT, so it costs\nModule.Projective R (colength j). In the reverse orientation\
-  \ the piece equation is the\nCONCLUSION's subject and no projectivity is needed\
-  \ — which is exactly what lets it PRODUCE the\nfibrewise datum instead of consume\
-  \ it. Reverse comparison:\nAffAdaptation.exists_germ_pulledEqn_eq_unit_mul_pullbackEqn.\n\
-  \nTHE RANK DATUM ALSO REDUCED, unplanned (81c17f256). hrank was stated about the\
-  \ GLUED module over\nthe whole cover, but a degree statement is about the divisor,\
-  \ which on a straddling cover lives\ninside the swallowing piece. On such a cover\
-  \ Glued ~= chartProd (the difference arrow vanishes\nidentically), Module.rankAtStalk_pi\
-  \ splits the product, and every non-swallowing colength is\nSUBSINGLETON hence free\
-  \ hence flat with empty support hence rank 0. So\n\n  rankAtStalk_glued_eq_of_swallowedBy\
-  \ : rankAtStalk A.Glued p = rankAtStalk (A.colength j0) p\n  isCertified_of_swallowedBy_of_c1_of_rank_piece\
-  \ -- the assembler with the one-piece datum\n\nNon-vacuity is checked (I-0442 trap\
-  \ (c)) by\nrankAtStalk_colength_eq_zero_of_supportLocus_empty, not assumed.\n\n\
-  THE ENDPOINT (46d751465), composed rather than asserted, because run 0070 s0006\
-  \ learned that a\nproducer and a consumer can each be correct and still not compose\
-  \ (AffAdaptation needs\nSUBORDINATION; containment does not give it):\n\n  exists_isCertified_of_seed_of_swallowing_affineOpen\
-  \ (hD) (hW : IsAffineOpen W)\n    (hsub : supp d subset W) (hWle : W <= d.cover.opens\
-  \ z0)\n    (hrank : rank of the SWALLOWING colength = n) : exists Dc A, A.IsCertified\
-  \ n\n\nhfib is gone from the signature; hproj is gone as a hypothesis and DERIVED\
-  \ inside, since the\ndischarged fibrewise datum feeds projective_colength_of_forall_tmul_residueField.\n\
-  \nSTILL OPEN — the whole residue of the lane, now ONE statement: the subordinate\
-  \ Stacks 0B8B input,\nan affine open W of C x_k Spec R containing d.supportLocus\
-  \ AND contained in one member of\nd.cover. Protection I-0492 clause 2 directs the\
-  \ lane to USE it, not re-derive it; mathlib has no\nform of 0B8B and this project\
-  \ constructs no curve but P1. Given it,\nexists_isCertified_of_seed_of_swallowing_affineOpen\
-  \ delivers all seven clauses and\ndivFamZarAff_of_forall_prime_certified_adaptation\
-  \ delivers the class.\n\nTHE ONE COST OF THE R2 SHAPE, named rather than bundled:\
-  \ AffCoverData demands affineness of the\nPIECES only, so the certificate transport\
-  \ needs the OVERLAPS affine. That is\nAffCoverData.HasAffineOverlaps, FREE for proper\
-  \ C (hasAffineOverlaps_of_isProper) and propagating\nalong a tower. It is NOT a\
-  \ field of anything — bundling it would quietly re-strengthen the\nwidened structure.\n\
-  \nSTANDING NEGATIVE RESULTS, all still binding: chart-avoid is NO and the counterexample\
-  \ is\nFIELD-INDEPENDENT; no repair keeping the pieces inside preimages of a FIXED\
-  \ PAIR of P1 points can\nwork (joint-cover REJECTED); p1-aut stays pending and DEPRIORITISED,\
-  \ no consumer against it. The\nlanded finite-field-avoid work is valid mathematics\
-  \ and is not to be deleted.\n"
+  \nEXECUTED. The widened certificate layer is sorry-free, axiom-clean and rooted\
+  \ (fifteen\nDivisorFamilyAff*.lean files). Of the two obligations I-0492 clause\
+  \ 4 relocated, 4(i) is\nDISCHARGED rather than assumed. Read the residue in the\
+  \ CORRECTED form below, not in the form\nsessions 0006/0008 reported it.\n\n  AffCoverData\
+  \          -- m / pieces : Fin m -> Opens / isAffineOpen / cover (iSup = top).\n\
+  \                           NO pi argument, NO partitions of unity, NO Sum index,\
+  \ NO chart typing.\n  AffAdaptation         -- eqn per piece + eqn_rel; IsCertified\
+  \ with (c1)-(c4) VERBATIM.\n  CertifiedDivisorFamilyAff / IsLocallyCertifiedAff\
+  \ / DivFamZarAff (mk, mk_eq_mk_iff, picClass)\n  DivFamZar.toAff       -- the widened\
+  \ value RECEIVES every chart-typed one, same picClass\n  isCertified_of_swallowedBy_of_c1\
+  \ -- cert-collapse: all seven clauses from (c1) + the rank datum\n  exists_isCertified_of_seed_of_swallowing_affineOpen\
+  \ -- the endpoint at a seed\n  DivFamZarAff.mapAlg + the S5b layer (mapAlg_id/comp,\
+  \ picClass_mapAlg, eq_of_away_eq)\n  DivFamZarAff.mapAlgHom + mapAlgHom_eq_mapAlg\
+  \ -- the EXPLICIT-MAP face (session 0010)\n  divFamZarAff + divFamZarAffAffineEquiv\
+  \ -- the widened vehicle and its affine collapse\n\nTHE RESIDUE IS TWO ITEMS OF\
+  \ DIFFERENT KINDS (corrected 2026-07-28 session 0010; spec-dd-r\nADDENDUM 8). Sessions\
+  \ 0006 and 0008 reported ONE, and that claim was true of the CERTIFICATE\nbut not\
+  \ of the lane:\n\n (a) THE SUBORDINATE STACKS 0B8B INPUT. An affine open W with\
+  \ supp d inside W, and W inside one\n     member of d.cover. Out of scope per I-0492\
+  \ clause 2: USE it, do not re-derive it. Mathlib\n     has no form of 0B8B and this\
+  \ tree constructs no curve but P1. Unchanged.\n\n (b) divFamZarAff.map ALONG AN\
+  \ ARBITRARY MORPHISM OF TEST OBJECTS, and divFunctorAff on top of\n     it. This\
+  \ is what DivRepGlobalData.pull_comp consumes. Priced as a PORT, not as mathematics:\n\
+  \     its input is the base-side Zariski gluing keystone DivFamZar.exists_glue_of_away_compat\n\
+  \     (DivisorFamilyZarGlue.lean), whose argument is entirely about the Zariski\
+  \ cover of the BASE\n     -- which R2 did not touch. MEASURED 2026-07-28 s0010 and\
+  \ the pricing is SHARPER than\n     \"a port\": awayGluedEquations (DivisorFamilyZariskiGlue.lean:454),\
+  \ the divisor assembly\n     itself, projects only .eqns (8x) and .cover (7x, =\
+  \ eqns.cover) across its whole body --\n     never .adaptation, never .certified\
+  \ -- returns a bare LocalEquations and mentions pi zero\n     times, yet its DECLARED\
+  \ input is the full chart-typed CertifiedDivisorFamily. That\n     STATEMENT/proof\
+  \ mismatch is the blocker and no call-site cleverness removes it: a widened\n  \
+  \   class has no chart-typed certificate at all, which is the CONTENT of R2. The\
+  \ fix is to\n     restate the assembly at bare local-equation systems plus the pullback\
+  \ regularity the\n     certificate used to supply, carried explicitly (Scheme.LocalEquations.PullRegular,\
+  \ landed\n     with its open-immersion discharge; the restated assembly itself is\
+  \ NOT landed). So (b) is\n     DECOMPOSED, not closed. Full argument: spec-dd-r\
+  \ ADDENDUM 8 SS8.5 (132ac965a).\n\nWHY (b) WAS INVISIBLE FOR FOUR SESSIONS, and\
+  \ it is the lane's generalisable finding. A carrier\nthat base-changes has TWO FACES\
+  \ of one operation: mapAlg, taking an algebra-tower instance pack,\nand mapAlgHom,\
+  \ taking a bare AlgHom. They are interderivable in a few lines. The widened carrier\n\
+  had the first only. But the vehicle indexes its compatibility by Over.resAlgHom,\
+  \ a bare AlgHom\ncarrying no tower, so divFamZar, divFunctor and DivRepGlobalData\
+  \ are ALL spelled at the second.\nEvery audit compared the widened S5b layer to\
+  \ the chart-typed one BY NAME, and by name the list\nwas complete. Cheap check that\
+  \ would have caught it, and the one to run on any replacement type:\ngrep the new\
+  \ carrier's name OUTSIDE the files defining it. It returned zero hits.\n"
 status: active
 kind: proof
 priority: high
@@ -90,7 +74,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T10:57:34.596692+00:00'
+  updated_at: '2026-07-28T13:46:14.732987+00:00'
   pinned_commits:
   - 46d751465
   - 81c17f256
