@@ -343,6 +343,7 @@ import AlgebraicJacobian.Picard.DivisorFamily
 import AlgebraicJacobian.Picard.DivisorFamilyAffCover
 import AlgebraicJacobian.Picard.DivisorFamilyAffAdaptation
 import AlgebraicJacobian.Picard.DivisorFamilyAffPerPiece
+import AlgebraicJacobian.Picard.DivisorFamilyAffCollapse
 import AlgebraicJacobian.Picard.DivisorFamilyExtraction
 import AlgebraicJacobian.Picard.DivisorFamilyField
 import AlgebraicJacobian.Picard.DivisorFamilyFieldDegree
@@ -521,6 +522,7 @@ import AlgebraicJacobian.Picard.DivSchemeRedesignCascade
 import AlgebraicJacobian.Picard.DivSchemeRedesignFreeFlat
 import AlgebraicJacobian.Picard.DivSchemeRedesignFreeFlatChart
 import AlgebraicJacobian.Picard.DivisorFamilyAffZar
+import AlgebraicJacobian.Picard.DivRepAffPullIndep
 
 /-!
 # AlgebraicJacobian — library root
