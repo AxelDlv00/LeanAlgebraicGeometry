@@ -392,6 +392,61 @@ theorem DivFamZarAff.eq_of_away_eq [IsProper C.hom] {ι : Type u} [Finite ι] (g
     (fun i => ?_)
   exact DivFamZarAff.mk_eq_mk_iff.mp (h i)
 
+/-! ## Obligation I-0492 4(i) read on the FIBRE CURVE
+
+The widened assembler's fibrewise-regularity input (`hfib` of
+`AffAdaptation.isCertified_of_swallowedBy`, `DivisorFamilyAffAssemble.lean`) is stated as a
+tensor condition: `eqn j ⊗ 1` is a nonzerodivisor in `Γ(pieces j) ⊗[R] κ(p)`.  Protection
+I-0492 clause 4(i) says that datum must come from the seed's own degree data, and a tensor
+product is not the shape any geometric argument produces.
+
+The section base change of this file's upstream turns it into the shape that IS produced:
+`Γ(pieces j) ⊗[R] κ(p) ≅ Γ(relCurve C κ(p), relCurveMap ⁻¹ᵁ pieces j)`, so `hfib` at `p` says
+exactly that the **pulled equation is regular on the fibre curve over `κ(p)`** — a statement
+about a section of a sheaf on a curve over a field, checkable germ by germ.
+
+This is a restatement, not a discharge: the obligation stays an obligation, as clause 4(i)
+requires.  What changes is that it is now stated in the vocabulary the seed layer speaks.  -/
+
+section Fibre
+
+variable {n}
+
+/-- **The fibrewise-regularity obligation, read on the fibre curve.**  `eqn j ⊗ 1` is a
+nonzerodivisor in `Γ(pieces j) ⊗[R] κ(p)` **iff** the compared equation is a nonzerodivisor in
+the sections of the fibre curve over `κ(p)` on the preimage of the piece.
+
+Both directions are the same ring isomorphism, so this is an honest translation with no
+hypothesis beyond affineness of the piece — which is a field of `AffCoverData`. -/
+theorem AffAdaptation.eqn_tmul_one_mem_nonZeroDivisors_iff {D : AffCoverData C R}
+    {d : (relCurve C R).LocalEquations} (A : AffAdaptation D d) (j : D.index)
+    (p : PrimeSpectrum R) :
+    (A.eqn j ⊗ₜ[R] (1 : p.asIdeal.ResidueField) :
+        Γ(relCurve C R, D.pieces j) ⊗[R] p.asIdeal.ResidueField) ∈
+      nonZeroDivisors (Γ(relCurve C R, D.pieces j) ⊗[R] p.asIdeal.ResidueField)
+    ↔ relAffSectionsMap C p.asIdeal.ResidueField (D.pieces j) (A.eqn j) ∈
+        nonZeroDivisors
+          Γ(relCurve C p.asIdeal.ResidueField,
+            relCurveMap C R p.asIdeal.ResidueField ⁻¹ᵁ D.pieces j) := by
+  let e : Γ(relCurve C R, D.pieces j) ⊗[R] p.asIdeal.ResidueField ≃+*
+      Γ(relCurve C p.asIdeal.ResidueField,
+        relCurveMap C R p.asIdeal.ResidueField ⁻¹ᵁ D.pieces j) :=
+    (Algebra.TensorProduct.comm R Γ(relCurve C R, D.pieces j)
+        p.asIdeal.ResidueField).toRingEquiv.trans
+      (relSectionsBaseChangeAff C p.asIdeal.ResidueField (D.isAffineOpen j)).toRingEquiv
+  have hval : e (A.eqn j ⊗ₜ[R] (1 : p.asIdeal.ResidueField))
+      = relAffSectionsMap C p.asIdeal.ResidueField (D.pieces j) (A.eqn j) := by
+    show (relSectionsBaseChangeAff C p.asIdeal.ResidueField (D.isAffineOpen j))
+        (Algebra.TensorProduct.comm R Γ(relCurve C R, D.pieces j)
+          p.asIdeal.ResidueField (A.eqn j ⊗ₜ[R] (1 : p.asIdeal.ResidueField))) = _
+    rw [Algebra.TensorProduct.comm_tmul,
+      relSectionsBaseChangeAff_one_tmul C p.asIdeal.ResidueField (D.isAffineOpen j)]
+  refine ⟨fun h => hval ▸ map_mem_nonZeroDivisors' e h, fun h => ?_⟩
+  have hback := map_mem_nonZeroDivisors' e.symm (hval ▸ h)
+  rwa [e.symm_apply_apply] at hback
+
+end Fibre
+
 /-! ## `toAff` is a map of FUNCTORS, not just of values
 
 `DivisorFamilyAffCompare.lean` gave `DivFamZar.toAff` on values.  With `mapAlg` in place the

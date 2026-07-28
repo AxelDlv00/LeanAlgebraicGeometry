@@ -54,8 +54,9 @@ namespace AlgebraicGeometry
 attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
 
 /-- A ring isomorphism carries nonzerodivisors to nonzerodivisors (the `private` helper of
-`Picard/DivisorFamilyPullbackMap.lean`, restated here because that one is file-private). -/
-private lemma map_mem_nonZeroDivisors' {A B : Type u} [CommRing A] [CommRing B]
+`Picard/DivisorFamilyPullbackMap.lean`, restated here because that one is file-private —
+and public here, because the widened layer needs it in more than one file). -/
+lemma map_mem_nonZeroDivisors' {A B : Type u} [CommRing A] [CommRing B]
     (e : A ≃+* B) {a : A} (ha : a ∈ nonZeroDivisors A) : e a ∈ nonZeroDivisors B := by
   rw [mem_nonZeroDivisors_iff] at ha ⊢
   obtain ⟨hl, hr⟩ := ha
