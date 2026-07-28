@@ -74,20 +74,26 @@ Three statements below are still assumed rather than proved.
   axioms while `leakControl_qcohRoute_oldRoute` — the same conclusion via the old route — still
   reports `sorryAx`.  Prefer the `_of_isQuasicoherent` forms in anything new; the two `[Flat g]`
   declarations that route through mono-preservation are kept only so the reduction stays legible.
-* the two `sorry`s in `cech_pushforward_baseChange_natIso` and `twisted_cech_nerve_iso`.  These
-  are `NatIso.ofComponents` naturality obligations, and **they should not be discharged — those
-  two declarations should be replaced.**  Naturality is an artefact of building the cosimplicial
-  isomorphism degreewise; `cech_pushforward_baseChange_natIso_of_isIso` builds the same object by
-  whiskering the natural transformation `cechOuterBC`, so naturality holds by construction, and
-  `isIso_app_pi_of_isIso_app` then reduces the whole residue to **one `IsIso` per index tuple `σ`**.
-  Both replacements are sorry-free.
+* the two `sorry`s in `cech_pushforward_baseChange_natIso` and `twisted_cech_nerve_iso`.  Both are
+  `NatIso.ofComponents` naturality obligations, but **they are not the same kind of obligation**,
+  and the difference decides how to spend a session on them.
 
-  What is genuinely open is that per-σ `IsIso` *of the mate's component*.  The file has an
-  isomorphism with the right endpoints (`pushPullObj_coverInter_baseChange`,
-  `twisted_cech_nerve_per_sigma`), but an isomorphism between two objects is not `IsIso` of a
-  given map.  See the docstring of `cech_pushforward_baseChange_natIso` for the two routes, of
-  which splitting the mate by `CategoryTheory.mateEquiv_vcomp` (affine mate over `U_σ ⟶ S`
-  composed with the landed `openImmersion_beckChevalley`) is the promising one.
+  For `cech_pushforward_baseChange_natIso` the naturality is an *artefact of the construction* and
+  **that declaration should be replaced rather than proved**: both sides are `N ⋙ (a composite)`
+  for the same cosimplicial `N`, so `cech_pushforward_baseChange_natIso_of_isIso` builds the same
+  isomorphism by whiskering the natural transformation `cechOuterBC` — naturality free — and
+  `isIso_app_pi_of_isIso_app` reduces the whole residue to **one `IsIso` per index tuple `σ`**.
+  Both replacements are sorry-free.  What is genuinely open there is that per-σ `IsIso` *of the
+  mate's component*: the file has an isomorphism with the right endpoints
+  (`pushPullObj_coverInter_baseChange`) but an isomorphism between two objects is not `IsIso` of a
+  given map.  The promising route is `CategoryTheory.mateEquiv_vcomp` — split the per-σ mate into
+  the affine mate over `U_σ ⟶ S` and the landed `openImmersion_beckChevalley`.
+
+  For `twisted_cech_nerve_iso` the whiskering argument **does not apply**: its right-hand side is
+  the nerve of the *base-changed cover*, a different cosimplicial object, so there is no natural
+  transformation to whisker.  Its naturality is genuine work — the compatibility of the cover
+  base-change identification `coverInterOpen_baseChange_eq` with the index-omission maps.  Attempt
+  the first leaf before this one, despite this one's lighter hypotheses.
 
 Neither `pullback_preservesFiniteLimits` nor `pullback_preservesHomology` is an `instance`, and
 that is deliberate: as instances they leaked `sorryAx` into every *synthesis site* while
@@ -2521,21 +2527,27 @@ itself a Beck–Chevalley identification `g'^* (p_* p^* F) ≅ p'_* p'^* (g'^* F
 restricted cartesian square — and the identifications are compatible with the cosimplicial
 structure maps because both are induced by the same inclusions of intersections.
 
-**THE SAME STRUCTURAL CORRECTION APPLIES HERE** (run 0068 r2).  The residual `sorry` is again the
-`NatIso.ofComponents` naturality obligation, and again it is an artefact of the degreewise
-construction rather than of the mathematics — see the section note above
-("The cosimplicial comparison is a WHISKERED MATE") and the extended note on
-`cech_pushforward_baseChange_natIso`.
+**THE WHISKERING CORRECTION DOES *NOT* TRANSFER TO THIS LEAF — the two leaves are asymmetric**
+(run 0068 r2; recorded because the obvious guess is wrong).
 
-The X-level analogue of `cechOuterBC` is the mate of the *X-level* square, i.e.
-`openImmersion_bareBC` at `(g', 𝟙, …)` for this leaf's data; whiskering it with the dropped nerve
-gives this isomorphism with naturality for free, and `isIso_app_pi_of_isIso_app` reduces the
-residue to one `IsIso` per index tuple.  Here the per-σ statement is exactly
-`twisted_cech_nerve_per_sigma`'s endpoint pair, and the same caveat holds: that declaration is an
-*isomorphism* between those objects, not a proof that the *mate's component* is invertible.
+For `cech_pushforward_baseChange_natIso` the naturality obligation evaporates because *both* sides
+are `N ⋙ (a composite of functors)` for one and the same cosimplicial object
+`N = drop.obj (CechNerve 𝒰 F)`, so a whiskered natural transformation maps between them and
+naturality is inherited.  Here that fails: the left side is indeed `N ⋙ g'^*`, but the right side
+is `drop.obj (CechNerve 𝒰' (g'^* F))` — **a different cosimplicial object**, the nerve of the
+base-changed cover, not a whiskering of `N`.  There is no natural transformation to whisker,
+because the source and target cosimplicial objects are not built from a common one.
 
-This leaf is the structurally lighter of the two — there is no base affineness and no
-`f_*`/`f'_*` layer — so it is the one to attempt first.  Project-local. -/
+So this leaf's naturality is genuine work, and it is a *comparison of two nerves*: the content is
+that the geometric backbone base-changes, `coverInterOpen 𝒰' σ = (g')⁻¹(coverInterOpen 𝒰 σ)`
+(`coverInterOpen_baseChange_eq`, landed), **compatibly with the index-omission maps** — i.e. that
+the `isoOfRangeEq` slice identifications used per σ in `twisted_cech_nerve_per_sigma` commute with
+the inclusions `U_τ ⊆ U_σ` for `σ` a subtuple of `τ`.  That is a statement about the cover
+base-change identification, not about modules, and it is the honest residue here.
+
+Consequently: attempt `cech_pushforward_baseChange_natIso` **first** (its naturality is already
+free, and only a per-σ `IsIso` of a mate remains), and treat this leaf as the harder of the two
+despite its lighter hypotheses.  Project-local. -/
 noncomputable def twisted_cech_nerve_iso
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
     (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
