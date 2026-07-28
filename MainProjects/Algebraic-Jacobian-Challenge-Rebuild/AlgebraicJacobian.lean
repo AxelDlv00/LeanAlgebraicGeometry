@@ -523,6 +523,7 @@ import AlgebraicJacobian.Picard.DivSchemeRedesignCascade
 import AlgebraicJacobian.Picard.DivSchemeRedesignFreeFlat
 import AlgebraicJacobian.Picard.DivSchemeRedesignFreeFlatChart
 import AlgebraicJacobian.Picard.DivisorFamilyAffZar
+import AlgebraicJacobian.Picard.DivisorFamilyAffAssemble
 import AlgebraicJacobian.Picard.DivRepAffPullIndep
 import AlgebraicJacobian.Picard.DivRepAwayPush
 
