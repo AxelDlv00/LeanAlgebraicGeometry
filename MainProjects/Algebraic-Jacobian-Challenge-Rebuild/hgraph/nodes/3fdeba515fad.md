@@ -6,9 +6,10 @@ decl: controlSorry
 file: ScratchAxiomProbe.lean
 generated: lean
 lean_status: sorry
+stale: true
 title: controlSorry
 type: lean
-updated: '2026-07-29T07:37:19'
+updated: '2026-07-29T07:53:27'
 ---
 theorem controlSorry : 1 = 1 := by sorry
 
