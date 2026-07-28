@@ -438,6 +438,27 @@ theorem preservesLeftHomologyOf_of_preservesKernel {C D : Type*} [Category.{u} C
     F.PreservesLeftHomologyOf S :=
   ⟨fun _ => ⟨inferInstance, inferInstance⟩⟩
 
+/-- **Complex-level homology comparison from ONE kernel per degree.**  The weakening of
+`mapHomologicalComplexHomologyIso` that this file's flat-base-change consumer can actually
+discharge: instead of the global `[F.PreservesHomology]`, it asks only that `F` preserve the
+kernel of the degree-`i` differential-out `(K.sc i).g`.  Everything else is
+`preservesLeftHomologyOf_of_preservesKernel` plus the same
+`ShortComplex.mapHomologyIso (K.sc i) F` as the strong version — the degree-`i` short complex of
+`(F.mapHomologicalComplex c).obj K` is definitionally `F` applied to `K.sc i`.
+
+This is the declaration that removes `pullback_preservesMonomorphisms` from the critical path:
+`Rⁱ f_* F` is the homology of a complex whose terms are quasi-coherent, and on quasi-coherent
+objects the needed kernel is preserved by `tildePullback_preservesKernel`.  Project-local. -/
+noncomputable def mapHomologicalComplexHomologyIso_of_preservesKernel {C D : Type*}
+    [Category.{u} C] [Category.{u} D] [Abelian C] [Abelian D] (F : C ⥤ D) [F.Additive]
+    [Limits.PreservesFiniteColimits F]
+    {ι : Type*} {c : ComplexShape ι} (K : HomologicalComplex C c) (i : ι)
+    [Limits.PreservesLimit (Limits.parallelPair (K.sc i).g 0) F] :
+    ((F.mapHomologicalComplex c).obj K).homology i ≅ F.obj (K.homology i) :=
+  haveI : F.PreservesLeftHomologyOf (K.sc i) :=
+    preservesLeftHomologyOf_of_preservesKernel F (K.sc i)
+  ShortComplex.mapHomologyIso (K.sc i) F
+
 /-! ### From `Spec.map (Γ g)` to a general flat `g` between affine schemes
 
 `tildePullback_preservesKernel` is stated for a literal `Spec.map φ`.  The Čech consumer carries
