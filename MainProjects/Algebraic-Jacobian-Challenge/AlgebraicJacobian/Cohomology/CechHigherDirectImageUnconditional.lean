@@ -3531,10 +3531,10 @@ So the per-σ compatibility splits along that seam, and the two halves are not c
 **HALF (b) IS FREE, AND THIS RETRACTS THIS FILE'S OWN PRICING OF THE RESIDUE.**  The
 `twisted_cech_nerve_iso` docstring names the residue in prose as "the `isoOfRangeEq` slice
 identifications commute with the inclusions `U_τ ⊆ U_σ`".  That sentence describes half (b), and
-half (b) costs nothing: both composites are morphisms of `Over X'` into an object whose structure map
-is an open immersion, hence a **mono**, so they agree by `ext` + `cancel_mono` with no geometry, no
-cover base change and no transport (`slice_compat`).  Anything priced against that sentence is
-mispriced; the real content is half (a).
+half (b) costs nothing: both composites are morphisms of `Over X'` into an object whose
+structure map is an open immersion, hence a **mono**, so they agree by `ext` + `cancel_mono`
+with no geometry, no cover base change and no transport (`slice_compat`).  Anything priced
+against that sentence is mispriced; the real content is half (a).
 
 **HALF (a) IS THE CRUX, and it is naturality in the SQUARE, not in the module.**
 `bc_square_naturality` states it: for affine opens `V₀ ≤ W₀` and their base changes along `g'`, the
@@ -3547,17 +3547,17 @@ Two facts make it actionable, both machine-checked here and neither previously r
 
 * `openImmersion_bareBC` **never uses cartesianness** — `bareBC_eq_of_w` says it is `bareBC_of_w` at
   `hsq.w`, by `rfl`.  So the mate exists for *any* commuting square, including the degenerate one
-  with right edge `𝟙 X`, which is the shape `pushPullMap` has.  The `IsPullback` binder is decoration
-  on this leaf; only the invertibility node consumes it.
+  with right edge `𝟙 X`, which is the shape `pushPullMap` has.  The `IsPullback` binder is
+  decoration on this leaf; only the invertibility node consumes it.
 * the two restricted squares **paste vertically**: `inclusion_square_comm` gives
   `gV ≫ homOfLE hle = w.left ≫ gW` by cancelling the mono `W₀.ι`.  So `mateEquiv_vcomp` is the
   applicable glue.
 
 MEASURED NEGATIVE, recorded so it is not re-attempted as a triviality: "`pushPullMap F u` is the
 degenerate-square mate" — the composite of `(pullbackId X).inv`, `bareBC_of_w (𝟙 X) …` and the two
-telescope corrections — **typechecks but is not `rfl`**, and `simp` with `bareBC_of_w`, `pushPullMap`,
-`rawPushPullMap`, `mateEquiv_apply` does not close it (`aesop_cat` times out in `whnf`).  It is a
-genuine lemma, and it is the brick half (a) needs.
+telescope corrections — **typechecks but is not `rfl`**, and `simp` with `bareBC_of_w`,
+`pushPullMap`, `rawPushPullMap`, `mateEquiv_apply` does not close it (`aesop_cat` times out in
+`whnf`).  It is a genuine lemma, and it is the brick half (a) needs.
 
 `TwistedPerSigmaDeltaCompat` follows from half (a) alone: `twistedPerSigmaCompat_of_bcNaturality`.
 Everything else in this section is `sorry`-free. -/
@@ -3682,7 +3682,8 @@ set_option synthInstance.maxHeartbeats 800000 in
 restricted-square Beck-Chevalley iso `bcv` with respect to the morphism of cartesian squares
 induced by the intersection-open inclusion `U_{σ'} ⊆ U_{σ'∘δᵏ}`.  Everything else -- the two
 `isoOfRangeEq` slice transports and the index bookkeeping -- is discharged here. -/
-theorem attempt_of_bc (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+theorem twistedPerSigmaCompat_of_bcNaturality
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
     (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [IsSeparated f] [IsAffine S]
     [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent)
     (hBC : ∀ (p : ℕ) (k : Fin (p + 2)) (σ' : Fin (p + 2) → 𝒰.I₀),
