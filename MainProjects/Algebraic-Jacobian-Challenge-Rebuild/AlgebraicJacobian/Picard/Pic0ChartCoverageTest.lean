@@ -31,7 +31,13 @@ is the law, and `mem_chartLocus_of_isSplitWitness_fibre` is the resulting member
 
 ## What remains of B-5 after this file
 
-Exactly the two per-fibre choices `w4-datb` §1.2 makes and this lane cannot make generically:
+**Corrected — see the "DEFECT" section below, which supersedes the list that stood here.**  This
+header originally said the only residues were the two per-fibre choices.  A degree probe found a
+third: step 6's *feedback*, i.e. that the drop's output `Σ` becomes the chart index's `Z`, so the
+drop stage and the index stage carry **different** `Z`.  Read that section before relying on any
+"discharged" claim in this file.
+
+The two per-fibre choices, which are residues as stated:
 
 * **step 3, the twist exponent `m`.**  Chosen against the fibre's OWN DAT-0a bound `b_L`.  No
   uniform `m₀` exists (§0.2.2, I-0204), so this is a genuine `∃ m` produced inside the
@@ -96,6 +102,39 @@ theorem mem_chartLocus_of_isSplitWitness_fibre (m : ℕ)
   rw [mem_chartLocus_iff, picEtMap_chartTwist,
     chartTwist_eq_mul_thetaFamily_chartTwistClass]
   exact h
+
+/-! ## A DEFECT IN THIS FILE'S OWN COMPOSITION CLAIM — read before using `mem_chartLocus_of_drop`
+
+Found by a degree probe on this file, the same session it was written, and stated here rather
+than quietly repaired because the theorems below are **true and correctly proved** — what was
+wrong is the account of how they compose.
+
+**The arithmetic.** `hW₀` puts `W₀` in the class `M₀ · (twist class at Z)`.  For a degree-zero
+`λ` the presenting class `M₀` has `classDeg = 0`, so
+
+  `deg W₀ = m·d₁ − deg_k Z`,
+
+and `hdeg` demands `deg W₀ = g + e`.  Under the chart-index constraint `deg_k Z = m·d₁ − g`
+those force **`e = 0`**: the drop budget is zero and the greedy drop does nothing.  (Verified by
+deriving `(e : ℤ) = 0` from exactly this hypothesis pack.)
+
+**What that means.** The pack is *satisfiable* — it instantiates, and at `e = 0` the theorem is
+the true statement "a witness of degree `g` gives `chartLocus` membership".  It is not vacuous.
+But `w4-datb` §1.2's argument runs the drop at a **different stage** from the chart index:
+
+* the drop runs on `λ·θᵐ` — i.e. at `Z := 0`, where `chartTwistClass C m 0 = θᵐ` and the degree
+  is `m·d₁`, so the budget is `e = m·d₁ − g`, nonzero for the `m` step 3 chooses;
+* its **output** `Σ` is then the chart index's `Z`, at which the twisted class has degree `g`.
+
+So one `Z` is an input and the other is an output, and this file's headline claim that "steps
+4–6 are discharged" conflated them.  Steps 4 and 5 (the vanishing witness and the drop) are
+discharged **at `Z := 0`** by `exists_isSplitWitness_of_drop`; step 6 — feeding `Σ` back as the
+index and re-reading membership at the *new* `Z` — is **NOT** discharged, and needs the
+graph-class transport of `Picard/Pic0ChartRationalGraph.lean` applied to the drop's output.
+
+**Corrected status of B-5**: two residues, not one — step 3's per-fibre `m`, and the feedback of
+step 6.  The rest stands.  `mem_chartLocus_of_drop` is sound; use it knowing its `Z` is the
+drop's input stage. -/
 
 /-! ## The assembly -/
 

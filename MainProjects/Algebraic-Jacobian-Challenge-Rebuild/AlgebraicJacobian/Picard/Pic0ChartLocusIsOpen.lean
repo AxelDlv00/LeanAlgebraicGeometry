@@ -27,11 +27,11 @@ Reading the (b-amendment) against the tree at HEAD:
 | datum openness | `isOpen_setOf_exists_witness_h1_vanishing` (`LocusOpen:80`) | **landed** |
 | fibre-field | `hasWitnessH1Vanishing_iff_of_separable` (`FibreField:157`) | **landed** |
 | GAP-1 inverse | `BasicOpenCocycleDatum.invDatum` (`Pic0ChartShiftedDatum`) | **landed** |
-| carrier/field translation | `isOpen_setOf_hasWitnessH1Vanishing_testPointField` | **landed** |
+| carrier/field translation | `isOpen_setOf_hasWitnessH1Vanishing_testPointField` (below) | **landed** |
 | twist collapse | `chartTwist_collapse` (`Pic0ChartTwistCollapse`) | **landed** |
 | ~~GAP-1 mul~~ | ~~a datum for a *product*, on a common cover refinement~~ | **NOT NEEDED** |
 | honesty over the étale carrier | `PicEtAff.map_mk_eq_unit_self` (`Pic0ChartHonest`) | **landed** |
-| pointwise presentation | `IsChartDatumPresentation` (below) | **HALF landed** (see note) |
+| pointwise presentation | `IsChartDatumPresentation` (below) | **NOT landed** |
 | `cechPicClass_inv` | the class law of `invDatum` | **NOT landed**, and off the path |
 
 (The engine is Noetherian-free; the GAP-1 inverse and the carrier/field translation landed
@@ -69,23 +69,6 @@ reviewer of I-0558 asked for).  Two things, and neither is bookkeeping:
    to correct one level up.
 
 Everything downstream of a presenting datum is landed.
-
-**UPDATE 2026-07-28 (`de63abac6`): the residue of row 2 is now HALF discharged, and the half
-that fell was the one this paragraph did not expect.**
-`Picard/Pic0ChartPresentationHalf.lean` proves the **forward** direction of
-`IsChartDatumPresentation` from a hypothesis containing no witness, no `H¹` and no divisor:
-`IsChartDatumPlusFibre`, which says only that the datum presents `μ` at every residue field *as
-plus classes*.  The move is to take the splitting extension to be `κ(t)` **itself** — the datum's
-witness divisor is already in the right class over `κ(t)` with vanishing `H¹`, so nothing needs
-transporting.  That trivial splitting `L := K` had been recorded as unelaborable (memory I-0564);
-it is one line since that record's partial retraction (see
-`isSplitWitness_of_presenting_witness` in `Picard/Pic0ChartTwistSplit.lean`).
-
-What is still owed is the **converse**, and the per-point quantification of `L` this paragraph
-warns about is exactly where it bites: one receives a witness over some `L_t` varying with `t`,
-lying in `μ`'s class there rather than visibly in `D`'s at `κ(t)`.
-`isChartDatumPresentation_of_plusFibre_of_converse` assembles the `↔` from the two halves, so a
-lane closing this row faces one obligation instead of two.
 
 ## The shape of this file
 
