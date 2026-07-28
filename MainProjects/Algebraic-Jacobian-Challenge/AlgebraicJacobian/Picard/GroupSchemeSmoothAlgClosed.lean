@@ -54,6 +54,17 @@ same conclusion. That is the point: a consumer owing smoothness now owes reduced
 scheme over one algebraically closed field, which is where Kleiman §5's argument (and
 Cartier's theorem in characteristic zero) actually speaks.
 
+**The trade is NOT lossless, and which direction fails is worth saying plainly** rather than
+letting "strictly weaker" read as "equally good". The two hypotheses are *not* equivalent
+here: `GeometricallyReduced ⟹ IsReduced`-over-`k̄` is available, `IsReduced`-over-`k̄ ⟹
+GeometricallyReduced` is not (that is the missing transcendental half). So anything that
+genuinely needs the *class* — as opposed to needing smoothness — cannot be recovered from this
+criterion, and a consumer wanting `GeometricallyReduced` itself gains nothing from it. What
+makes the trade correct anyway is that the weaker statement already suffices for the
+conclusion at hand. A restatement whose converse *is* provable would be the better shape (see
+`ajc-albanese`'s `Sym^g` colimit trade, inbox I-0493, for that stronger discipline); this one
+is a genuine weakening that happens to be enough.
+
 ## References
 
 Mathlib `AlgebraicGeometry/Group/Smooth.lean`; Kleiman, "The Picard scheme"
