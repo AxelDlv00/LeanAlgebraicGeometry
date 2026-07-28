@@ -31,8 +31,11 @@ Everything comes off the six-term slice of the dévissage sequence
   the `h¹` loss add up to the residue degree exactly.
 * `subsingleton_hModule_one_of_subsingleton_sub_point` (★ the peel) — `H¹` vanishing
   **propagates upward** across a dévissage step: if `H¹(𝒪(D − x)) = 0` then `H¹(𝒪(D)) = 0`.
-  This is the one implication the adelic lane can only take as a hypothesis
-  (`Adelic/BoundedVanishing.lean`'s peel datum); here it is a theorem of the slice.
+  AJC's *adelic* lane takes this as a hypothesis on its own carrier
+  (`Adelic/BoundedVanishing.lean`'s peel datum, discharged only off the overlap); on the ledger
+  carrier it is a theorem of the slice.  It is **not new to the workspace**: AJCR proves the
+  same chain in `RiemannRoch/FLVClass.lean` (`peel_single`, `peel_nsmul_single`,
+  `peel_effective`).  See the provenance note on `subsingleton_hModule_one_add_effective`.
 * `subsingleton_hModule_one_of_le` (★) — the same statement along **any** divisor increase
   `D₀ ≤ D`, by dévissage induction: `H¹` vanishing is **upward closed on the effective cone
   above `D₀`**.  Together with `chi_divisorSheaf` this turns one vanishing into the exact
@@ -60,15 +63,24 @@ Read this before quoting anything above as "uniform vanishing":
    half on this carrier, not its base half.)  A base vanishing `H¹(𝒪(D₀)) = 0` at even one
    `D₀` is an input nothing in this file produces.
 
-   **How far the base is from being available, measured rather than guessed.**  Not even the
-   easiest instance is on hand: `H¹(𝒪) = 0` at `ℙ¹` would need
-   `ledgerGenus (Adelic.p1Over k) = 0`, and `Ledger/NonVacuity.lean` is explicit that it does
-   *not* prove genus zero there — it proves the hypothesis bundle is inhabited, which is a
-   different claim.  Meanwhile the one `H¹`-vanishing producer in the Ledger tree,
-   `AffineVanishing.Scheme.subsingleton_moduleKSheaf_hModule_one`, requires `[IsAffine X]`, so
-   it cannot reach a proper curve at all (a proper affine curve over a field is a point).  So
-   the base is open on this carrier at *every* curve, including the rational one, and closing
-   it is a genuine piece of mathematics rather than a plumbing gap.
+   **Where the base actually stands, and a correction.**  Inside *this project's* Ledger tree
+   the base is unavailable: `H¹(𝒪) = 0` at `ℙ¹` would need `ledgerGenus (Adelic.p1Over k) = 0`,
+   which `Ledger/NonVacuity.lean` explicitly does *not* prove (it proves the hypothesis bundle
+   is inhabited — a different claim), and the tree's only `H¹`-vanishing producer,
+   `AffineVanishing.Scheme.subsingleton_moduleKSheaf_hModule_one`, requires `[IsAffine X]` and
+   so cannot reach a proper curve at all.
+
+   **But the base is NOT open in the workspace.**  The sibling project
+   `Algebraic-Jacobian-Challenge-Rebuild` proves a base vanishing on this very carrier:
+   `RiemannRoch/FLVVanishing.subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1` (:302)
+   gives, for a finite dominant `π : Y ⟶ ℙ¹` compatible with the structure maps and any `D`,
+   an `n₀` with `H¹(𝒪(D + n·F)) = 0` for all `n ≥ n₀`, where `F` is the fibre divisor.  An
+   earlier version of this docstring said the base was open "at every curve"; that was measured
+   only in AJC's own tree and is **false as a statement about the workspace** — the same
+   cone-scoping error this lane has now made repeatedly.  What AJC lacks is the *import*: AJCR's
+   fibre-divisor and finite-map-to-`ℙ¹` layer is not present here.  So the honest gap is a
+   **port**, not an open problem, and `exists_bound_of_cofinal_vanishing` is the right shape to
+   receive it — AJCR's conclusion is a tower `D + n·F`, which is exactly a cofinal family.
 2. **Extension-uniformity** — a bound uniform over finite extensions `K'/K`.  Untouched:
    no statement here quantifies over a second field, and `CurveDivisor`/`residueDeg` are
    pinned to the single base field `K`.
@@ -284,9 +296,22 @@ theorem subsingleton_hModule_one_add_nsmul_single {x : X} (hx : x ≠ genericPoi
 omit [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 0)]
   [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 1)] in
 /-- **Effective peeling**: `H¹(𝒪(A)) = 0` forces `H¹(𝒪(A + E)) = 0` for every effective `E`.
-Induction on the size of the support of `E`, one multiplicity block at a time — the
-`h1_add_effective_le` skeleton of the sibling project's `RiemannRoch/SectionBound.lean`,
-run on `Subsingleton` instead of on `finrank` so that no finiteness enters. -/
+Induction on the size of the support of `E`, one multiplicity block at a time.
+
+**PROVENANCE, CORRECTED.**  This is a **re-derivation of existing sibling-project work**, not a
+new result.  `Algebraic-Jacobian-Challenge-Rebuild`'s `RiemannRoch/FLVClass.lean` already has
+this exact three-step chain in the exact `Subsingleton` spelling — `peel_single`,
+`peel_nsmul_single`, `peel_effective` (:260, :277, :292) — on the same variable block, from the
+same `Sheaf.HModule.surjective_map_f` on `devissageSES`.  An earlier version of this docstring
+said the adaptation was of `SectionBound.h1_add_effective_le` (the `finrank` *inequality*) and
+that AJCR "does not have the vanishing propagation".  That was **false**, and it was found by a
+fresh-context review, not by me: I checked `SectionBound.lean`, which is where the *inequality*
+lives, and never opened `FLVClass.lean`, where the *propagation* lives.  See `I-0623`.
+
+What this file does add over `FLVClass`: the `D₀ ≤ D` order form
+(`subsingleton_hModule_one_of_le`), the two-sided section drop, the drop identity, exact
+Riemann–Roch on the order-cone, and the cofinality reduction.  The peel chain itself is
+duplicated mathematics, kept here only because AJC cannot import AJCR. -/
 theorem subsingleton_hModule_one_add_effective (A E : X.CurveDivisor) (hE : 0 ≤ E)
     (h : Subsingleton (Sheaf.HModule (X.divisorSheaf K A) 1)) :
     Subsingleton (Sheaf.HModule (X.divisorSheaf K (A + E)) 1) := by
@@ -368,7 +393,12 @@ if `H¹(𝒪(D₀)) = 0` and `D₀ ≤ D`, then `h⁰(𝒪(D)) = χ(𝒪_X) + de
 
 Not to be read as "Riemann–Roch for large degree": the hypothesis is `D₀ ≤ D` in the
 divisor order.  A `D` of huge degree supported away from `D₀` is not covered, and supplying
-`D₀` itself is the open base problem (module docstring, item 1). -/
+`D₀` itself is the base problem (module docstring, item 1).
+
+**Provenance.**  The `D₀ ≤ D` form is new here, but its content at a *fixed* vanishing divisor
+is AJCR's `RiemannRoch/FLVClass.h0_eq_deg_add_chi_of_subsingleton_hModule_one` — same carrier,
+same one-line proof from `Sheaf.chi_eq_h0` and `chi_divisorSheaf`.  This theorem is that plus
+the peel, so the only genuinely new part is the `hle` quantifier. -/
 theorem h0_divisorSheaf_of_subsingleton_of_le {D₀ D : X.CurveDivisor} (hle : D₀ ≤ D)
     (h : Subsingleton (Sheaf.HModule (X.divisorSheaf K D₀) 1)) :
     (Sheaf.h0 (X.divisorSheaf K D) : ℤ) =
