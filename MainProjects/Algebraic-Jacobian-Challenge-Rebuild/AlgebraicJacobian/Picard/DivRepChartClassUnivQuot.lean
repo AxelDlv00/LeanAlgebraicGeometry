@@ -79,6 +79,21 @@ than "unpriced", and it is what tells the certificate lane which face to widen.
 It produces no certificate, no adaptation and no class, so **no gate clears**: nothing here
 lets a consumer instantiate `DivRepAffinePullback`.  It re-partitions the debt and removes a
 *refutation* from one half of it.  Critical-path §7.6 (L8) is untouched.
+
+**The honest limit of the headline, and it is the probe this file does not run.**  "The ε-half is
+open, not false" is a claim about the **no-go**: `forall_not_isCertified_of_straddling` does not
+bear on a hypothesis that names no adaptation.  It is *silent about satisfiability*.  The mirror
+risk is real and unmeasured: if the window quotient at the universal point can never be
+projective of constant rank `g`, then this file has reduced U2's ε-half to a **false**
+hypothesis — and such a reduction passes every `sorry` census and every axiom probe, because it
+is then a theorem.
+
+Note the asymmetry with the junk-witness probe that refuted DAT-J's Abel square
+(`Picard/JacobianDataAbelSquareVacuity.lean`): *that* residue was vacuous because its witness was
+**consumer-chosen**.  Here the window quotient is determined by `d`, so vacuity is impossible and
+satisfiability is the only live failure mode.  A reduction owes both checks; this one carries
+"not silently stronger" (the corollary above, which recovers the landed statement) and owes the
+satisfiability one.
 -/
 
 set_option autoImplicit false
