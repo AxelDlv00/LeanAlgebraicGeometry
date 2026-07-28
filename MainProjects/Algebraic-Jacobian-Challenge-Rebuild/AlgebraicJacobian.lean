@@ -558,6 +558,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffSeedEndpoint
 import AlgebraicJacobian.Picard.DivisorFamilyAffFraming
 import AlgebraicJacobian.Picard.DivisorFamilyAffFace
 import AlgebraicJacobian.Picard.DivisorFamilyAffVehicle
+import AlgebraicJacobian.Picard.DivisorFamilyAffGlueZarKit
 import AlgebraicJacobian.Picard.DivRepAffPullIndep
 import AlgebraicJacobian.Picard.DivRepAwayPush
 import AlgebraicJacobian.Picard.DivRepAffPullField
