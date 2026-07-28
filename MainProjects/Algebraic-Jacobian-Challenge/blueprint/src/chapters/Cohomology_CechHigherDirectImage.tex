@@ -5308,9 +5308,10 @@ and finite basic-open refinements of covers, as in the Stacks Project section
   epimorphism of sheaves.
 \end{proof}
 
-\begin{lemma}[The tilde functor preserves kernels]
+\begin{lemma}[The tilde functor preserves kernels]\leanok
   \label{lem:tilde_preserves_kernels}
-  \lean{AlgebraicGeometry.tildePreservesFiniteLimits, AlgebraicGeometry.tilde_preservesFiniteColimits, AlgebraicGeometry.tilde_toStalk_map_injective, AlgebraicGeometry.tilde_preservesFiniteLimits_of_preservesKernels, AlgebraicGeometry.tilde_stalkFunctor_map_toStalk, AlgebraicGeometry.tildePreservesFiniteLimits_of_toPresheaf, AlgebraicGeometry.tilde_germ_algebraMap_smul, AlgebraicGeometry.stalkMapₗ, AlgebraicGeometry.stalkMapₗ_eq, AlgebraicGeometry.stalkMapₗ_injective}
+  \lean{AlgebraicGeometry.tildePreservesFiniteLimits, AlgebraicGeometry.tilde_preservesMonomorphisms, AlgebraicGeometry.tilde_preservesHomology, AlgebraicGeometry.sectMapₗ, AlgebraicGeometry.sectMapₗ_eq, AlgebraicGeometry.tilde_injective_app_basicOpen, AlgebraicGeometry.tilde_preservesFiniteColimits, AlgebraicGeometry.tilde_toStalk_map_injective, AlgebraicGeometry.stalkMapₗ, AlgebraicGeometry.stalkMapₗ_eq, AlgebraicGeometry.stalkMapₗ_injective}
+  \uses{lem:right_exact_mono_left_exact}
   % SOURCE: [Stacks Project], Schemes, \texttt{lemma-kernel-cokernel-quasi-coherent}
   % (proof) (read from references/stacks-schemes.tex, L1425--1432).
   % SOURCE QUOTE: "This follows from the exactness of the functor $\widetilde{\ }$
@@ -5330,6 +5331,28 @@ and finite basic-open refinements of covers, as in the Stacks Project section
   and more generally \(\widetilde{(-)}\) carries finite limits of \(R\)-modules to the
   corresponding limits of associated sheaves.
 \end{lemma}
+
+\begin{proof}\leanok
+  \uses{lem:right_exact_mono_left_exact}
+  Right exactness is free: \(\widetilde{(-)}\) is a left adjoint. By
+  Lemma~\ref{lem:right_exact_mono_left_exact} it therefore suffices to show that
+  \(\widetilde{(-)}\) preserves monomorphisms, and monomorphy may be checked on the sections
+  over a basis of \(\operatorname{Spec} R\) --- basis injectivity gives injectivity on stalks,
+  and a morphism of sheaves with injective stalk maps is a monomorphism.
+
+  Take the basis of basic opens. Over \(D(r)\) the sections of \(\widetilde{M}\) are the
+  localisation \(M_r\): the canonical map \(M \to \Gamma(D(r), \widetilde{M})\) exhibits the
+  target as a localisation of \(M\) at the powers of \(r\). The section map of
+  \(\widetilde{\varphi}\) over \(D(r)\) agrees with \(\varphi\) after composing with that
+  canonical map --- which is the naturality of \(M \mapsto \Gamma(D(r), \widetilde{M})\) in
+  \(M\) --- so, both being \(R\)-linear maps out of a localisation, the section map *is* the
+  localisation \(\varphi_r\) of \(\varphi\). Localisation is flat, so \(\varphi_r\) is injective
+  whenever \(\varphi\) is, which is the required basis injectivity.
+
+  Note that no stalk is formed in the argument: the flatness input is applied over the basic
+  opens, and the passage to stalks is only the standard basis-to-stalk implication used to
+  recognise a monomorphism.
+\end{proof}
 
 % SOURCE QUOTE PROOF: "Let us compute the stalk of $\widetilde M$ at a point
 % $x \in \Spec(R)$. Suppose that $x$ corresponds to the prime
