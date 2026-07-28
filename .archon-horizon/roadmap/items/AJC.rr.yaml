@@ -5,21 +5,31 @@ projects:
 summary: 'Riemann--Roch, divisors, and the adelic genus. Cluster-P items 1 and 3 (bounded
   H1 vanishing, global generation) and exact Riemann--Roch are CLOSED at AJC''s own
   curve under three curve binders (RiemannRoch/Ledger/FiberBound.lean). Item 2, extension-uniformity,
-  remains OPEN and is now precisely decomposed rather than disclaimed (Ledger/ExtensionUniformity.lean,
-  r5): the FREE half is witnessed at the base-changed curve C_kappa itself, not merely
-  asserted of morphism classes -- one missing instance (GeometricallyIrreducible on
-  Scheme.baseChangeField) was all that blocked every curve-level statement from re-firing
-  at C_kappa by synthesis. The OPEN half needs TWO inputs, not one: (a) base-field
-  invariance of the genus, and (b) a kappa-independent degree bound on a vanishing
-  base divisor. An earlier reading collapsed these into (a) alone via a 2g-1 threshold;
-  that is Serre duality, which exists nowhere in this workspace, and the claim is
-  retracted in place. Input (a) is reachable: AJCR''s H1BaseFieldInvariance.lean proves
-  it sorry-free and the base-change carriers agree by rfl (verified at AJC''s spelling
-  with a negative control), but the cover carriers differ (AffineTwoCover vs AffineCoverMVSquare)
-  so the port crosses a second boundary. AJC owns both SIDES of the genus comparison
-  on transported covers and lacks the comparison map itself -- the termwise base change
-  Gamma(C,V) tensor kappa = Gamma(C_kappa,V_kappa). Input (b) is genuinely open in
-  both projects.'
+  is still OPEN but is now ONE input rather than two. r5 decomposed the open half
+  into (a) base-field invariance of the genus and (b) a kappa-independent degree bound
+  on a vanishing base divisor; r6 PROVED (a). Ledger/SectionsFieldBaseChange.lean
+  supplies the comparison map r5 identified as the actual deliverable -- Gamma(C,V)
+  tensor_k kappa = Gamma(C_kappa, fst^-1 V), kappa-linearly, for every qcqs open and
+  every field extension -- and Ledger/GenusFieldInvariance.lean turns it into genus
+  C_kappa = genus C for EVERY field extension, with no finiteness, separability, perfectness
+  or algebraic-closedness hypothesis. Both files sorry-free, kernel-built, 20 declarations
+  axiom-clean measured at SYNTHESIS sites with two live controls (one reaching a sorry
+  through an import). Engine: termwise Cech base change plus right-exactness on the
+  cokernel -- not semicontinuity, not Mumford II.5, and not Serre duality, which this
+  workspace still does not have (r5''s retraction of the 2g-1 shortcut stands). Provenance:
+  argument adapted from AJCR''s H1BaseFieldInvariance.lean, statements rederived at
+  AJC carriers; not portable as-is because AJCR states it over AffineTwoCover (absent
+  from AJC entirely) and because AJC lacked the right-exactness brick quotRangeBaseChangeEquiv.
+  r5''s carrier measurement is corrected: the object-level rfl between AJC and AJCR
+  base-change carriers was true but was NOT the obstacle -- the cover-level assembly
+  and the missing brick were. WHAT REMAINS: input (b) only, uniformVanishing_of_uniformBaseDivisor''s
+  single hypothesis, genuinely open in AJC and AJCR both (AJCR''s analogue is a Nat.find
+  per field). UniformVanishing C is NOT proved. Global generation is untouched and
+  is still not uniform over extensions. Caveat: the Ledger vanishing chain including
+  these two files sits outside the root import cone (262 modules reachable from the
+  roll-up); rooting is one import line, outside this task''s write scope.
+
+  '
 status: done
 kind: proof
 priority: normal
@@ -42,7 +52,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
-  updated_at: '2026-07-28T20:29:46.910664+00:00'
+  updated_at: '2026-07-28T21:29:14.313712+00:00'
   owner: ajc-rr
   pinned_commits:
   - 37f95374c
