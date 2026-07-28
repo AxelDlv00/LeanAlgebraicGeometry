@@ -1,0 +1,28 @@
+import AlgebraicJacobian.Albanese.AlbaneseFromData
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj
+
+universe v u
+variable {K : Type u} [Category.{v} K] [CartesianMonoidalCategory K]
+  [HasFiniteProducts K] [BraidedCategory K]
+variable {C J A : K} {g : ℕ}
+
+/-- ADVERSARIAL (circularity): the CONVERSE of
+`exists_unique_albanese_factorisation`. If this goes through with exactly the
+same auxiliary hypotheses, then `hdesc` is not weaker than the conclusion --
+the two are inter-derivable and the theorem is pure transport. -/
+theorem converse_hdesc [MonObj A] [IsCommMonObj A] [MonObj J] [IsCommMonObj J]
+    (D : SymPowData C g) (f : D.carrier ⟶ J) (P0 : 𝟙_ K ⟶ C) (i₀ : Fin g)
+    (hproj : ∀ σ : Equiv.Perm (Fin g), MonObj.permAut C σ ≫ D.proj = D.proj)
+    (aj : C ⟶ J) (hf : D.proj ≫ f = powSum g aj) (haj0 : P0 ≫ aj = η[J])
+    (φ : C ⟶ A) (hφ : P0 ≫ φ = η[A])
+    (hom : ∀ ψ : J ⟶ A, η[J] ≫ ψ = η[A] → IsMonHom ψ)
+    (halb : ∃! ψ : J ⟶ A, φ = aj ≫ ψ) :
+    ∃! ψ : J ⟶ A, D.symAVMap φ = f ≫ ψ := by
+  have hpt : ∀ ψ : J ⟶ A, φ = aj ≫ ψ → η[J] ≫ ψ = η[A] := by
+    intro ψ hψ; rw [← haj0, Category.assoc, ← hψ, hφ]
+  obtain ⟨ψ, hψ, huniq⟩ := halb
+  haveI := hom ψ (hpt ψ hψ)
+  refine ⟨ψ, symAVMap_eq_of_albanese_eq D f hproj aj hf φ ψ hψ, ?_⟩
+  intro ψ' hψ'
+  exact huniq ψ' (albanese_eq_of_symAVMap_eq D f P0 i₀ aj hf haj0 φ hφ ψ' hψ')

@@ -1,0 +1,55 @@
+id: I-0548
+provider: local
+kind: memory
+body: "DURABLE: AJC's two-chart ADELIC Riemann-Roch count cannot be repaired by weakening\
+  \ hypotheses. It is squeezed from both sides, and this is the strategic conclusion\
+  \ of task ajc-rr run 0074 (all machine-checked, RiemannRoch/Adelic/ChartFinitenessRefuted.lean\
+  \ + ChiUnconditional.lean, sorry-free).\n\nTHE SQUEEZE.\n * AT A GENUINE TWO-CHART\
+  \ COVER the finiteness binders [Module.Finite k (sectionSub k Ui D)] at a non-total\
+  \ open are UNSATISFIABLE on a curve. One instance at D=0 forces K(X)/k finite (sectionSub\
+  \ k U 0 is a RING containing Gamma(X,U); a k-finite domain is a field; a field between\
+  \ Gamma(X,U) and its own fraction field IS K(X)), and K(X)/k is never finite once\
+  \ a prime divisor exists (a DVR is not a field).\n * AT THE DEGENERATE COVER U0=U1=top\
+  \ the conclusion is vacuous: A(D) = Gamma(top,O(D)) too, the count dim+dim-dim collapses\
+  \ to ell(D), and h1dim k top top D = 0 holds unconditionally. Correct and useless.\n\
+  \nSo the object to REPLACE is the two-chart count itself. Do not spend a session\
+  \ weakening the binders, hunting a better cover, or instantiating at top -- all\
+  \ three are closed above.\n\nWHAT THIS DOES AND DOES NOT SAY. hbump and the closed\
+  \ chi-ledger are OPEN at a curve, not false: the published refutations (not_bump_of_notMem_left,\
+  \ ledger_refuted_of_notMem_left) run on the unsatisfiable binders, so they refute\
+  \ nothing there. The Module.Finite-at-TOP binders used in GlobalGeneration/LedgerClosure/SectionBounds\
+  \ are UNAFFECTED -- IsAffineOpen is load-bearing in the collapse and top is not\
+  \ affine on a proper curve. Finiteness at top is finiteness of L(D), which Riemann-Roch\
+  \ asserts; finiteness at an affine U is a disguised finiteness of K(X)/k, which\
+  \ is false.\n\nTHE ROUTE WITH EVIDENCE BEHIND IT is the sibling project's sheaf-theoretic\
+  \ ledger: Algebraic-Jacobian-Challenge-Rebuild RiemannRoch/ChiLedger.lean proves\
+  \ chi_divisorSheaf and deg_divOf SORRY-FREE by devissage over closed points with\
+  \ skyscraper quotients -- no bump, no chart-finiteness binder anywhere. Measured\
+  \ cone: 22 files / 5,491 lines, only 7 non-RR; that is the cheap end of AJCR's 17.8k-line\
+  \ RiemannRoch by a factor of 3 (UniformVanishing needs 62 files / 16,750 lines;\
+  \ WindowFieldTransport 139 / 39,929). Carrier mismatch #1 (index sets) is already\
+  \ closed by RiemannRoch/CurveCoheight.lean: PrimeDivisor =~ non-generic points.\n\
+  \nGENERALISABLE LESSON, filed as trap (i) in scripts/axiom-frontier.lean section\
+  \ 2b/6g: a REFUTATION whose own hypotheses are unsatisfiable reports clean axioms\
+  \ exactly like a useful theorem and is TRUE, but says nothing about the object you\
+  \ have. It is trap (c) with the sign flipped, and worse, because a negative result\
+  \ is normally treated as closing a route."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T07:47:44.739621+00:00'
+updated_at: '2026-07-28T07:47:44.739633+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0002-horizon-ajc-rr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

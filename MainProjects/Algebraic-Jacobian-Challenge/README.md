@@ -35,7 +35,7 @@ same theorem by a separate curve-specialized strategy.
 
 ## State (measured 2026-07-28)
 
-- **202 modules, 137,433 lines**; **28 `sorry`** over 11 modules, the rest locally
+- **210 modules, 140,213 lines**; **28 `sorry`** over 11 modules, the rest locally
   sorry-free; a warm `lake build AlgebraicJacobian` **green** at 8,746 jobs (job count last
   measured before the 2026-07-28 lanes landed).  These counts move whenever a module lands, and
   four AJC lanes were live when they were taken, so re-measure rather than quoting them:
@@ -55,12 +55,14 @@ same theorem by a separate curve-specialized strategy.
   ledger must **not** be rooted, since a clean checkout would then fail to build.  That
   grace period ends at the commit — once a module is in the ledger, leaving it unrooted
   means the build does not check it.
-- **Locally sorry-free is not axiom-clean.**  Two `sorry`-bodied *instances* leak
-  through typeclass synthesis: `instHasPicScheme`
-  (`Picard/FGAPicRepresentability.lean`, the sole producer of `HasPicScheme`) and
-  `pullback_preservesFiniteLimits`
-  (`Cohomology/CechHigherDirectImageUnconditional.lean`).  A theorem that merely
-  *quantifies over* such a gate reports clean axioms, because the hypothesis is
+- **Locally sorry-free is not axiom-clean.**  The synthesis-leak surface is now a single
+  instance: `instHasPicSchemeEt` (`Picard/FGAPicRepresentability.lean`), whose body cites
+  the one named `sorry` `fgaPicardRepresentability`, so every site that *synthesises*
+  `HasPicSchemeEt` acquires `sorryAx`.  (`instHasPicScheme` no longer exists; its
+  successor `picSchemeOfHasRationalPoint` is a named theorem, and
+  `pullback_preservesFiniteLimits` is deliberately **not** an instance — the `sorry`
+  there sits in the named theorem `pullback_preservesMonomorphisms`.)  A theorem that
+  merely *quantifies over* such a gate reports clean axioms, because the hypothesis is
   discharged by the caller; the leak appears at any call site that must
   synthesise the instance.  Run
   [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean) (`lake env lean
@@ -73,41 +75,22 @@ same theorem by a separate curve-specialized strategy.
   misclassifies exactly the declarations with the longest lists.  The header carries
   the recipe.
 - **A clean axiom set answers one question only:** is a `sorry` reachable from this
-  proof term.  Eight separate things it cannot see have each been found in this
-  tree — a `sorry`-bodied instance reached only through synthesis; an *unproved*
-  named hypothesis in the statement; a *false* named hypothesis in the statement,
-  which makes the theorem vacuously true and perfectly clean; an
-  *un-instantiable instance binder*, where the obligation sits in square brackets
-  and nothing in the project constructs it for the ambient object actually used
-  (an instance for a more structured cousin — `Over (Spec k)` rather than a bare
-  `Scheme` — does not count, and is worse than none, because the grep succeeds);
-  an *unrooted module*, which no axiom check reaches at all, per the bullet
-  above; and an *instance diamond*, where two non-definitionally-equal instances can
-  supply the same binder, so a file can prove correct-looking theorems about a
-  definition pinned to the wrong one; and a *refutable* hypothesis, whose negation the
-  tree already derives at every instance anyone would use, so the project proves both
-  `H → C` and `¬H` and the theorem is true, clean, consistent, instantiable and empty.
-  The first five are each measured by the probe; the sixth defeats the probe *and* an
-  instantiability check, because the binders do synthesise — the tell is a cross-file
-  identity that ought to be `rfl` and is not.  The seventh defeats every check in this
-  file including a consistency witness: the only thing that finds it is reading the
-  *producer's* side conditions and asking where the family the hypothesis quantifies
-  over contains a member whose negation the tree proves (measured on the χ-ledger's
-  `hbump`, probe §2b).  The eighth is the cheapest to check and worth checking first: a
-  hypothesis *equivalent* to the conclusion it is supposed to buy, so that `H → C` is a
-  restatement rather than a reduction — try to prove `C → H` before believing the
-  reduction (probe §2c).  Read the probe's section headers, not just its output lines.
-- **Only two of the tree's `sorry` carriers are instances**, and that is the whole of
-  the synthesis-leak surface, because an instance is the only carrier a consumer can
-  reach without naming it.  The probe's §2 lists all 26 carriers by module (the two
-  instances plus 24 theorems and definitions), so the claim is checkable rather than
-  folklore; note that two of those 24 hold their `sorry` in a *field*, which a grep
-  for `:= sorry` misses.  Re-derive rather than trust the number:
+  proof term.  It says nothing about unproved, false, refutable, un-instantiable or
+  conclusion-equivalent hypotheses carried in the *statement*, nor about a module the
+  probe never reaches.  Every such mode found in this tree is catalogued, with the
+  declaration it was measured on and the check that finds it, in inbox memory `I-0442`
+  (keyed to the probe's section headers).  Read the probe's section headers, not just its
+  output lines.
+- **Every `sorry` carrier in the tree is now a named theorem or definition**, which is why
+  the synthesis-leak surface reduces to the one instance above (an instance is the only
+  carrier a consumer can reach without naming it).  The probe's §2 lists the carriers by
+  module; note that two of them hold their `sorry` in a *field*, which a grep for
+  `:= sorry` misses.  Re-derive rather than trust the number:
 
   ```bash
   lake build AlgebraicJacobian 2>&1 | grep 'declaration uses' | sort -u
   ```
-- 66 modules still open with a bare `import Mathlib`; this is the
+- 81 modules still open with a bare `import Mathlib`; this is the
   dominant build cost and is being converted bottom-up with the helpers in
   `scripts/`.
 
@@ -178,9 +161,9 @@ Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
 - [`AlgebraicJacobian/Jacobian.lean`](AlgebraicJacobian/Jacobian.lean): the final
   Jacobian witness interface and assembly point.  The witness is built from
   `Pic⁰_{C/k}` in its étale form (`Picard/Pic0Et.lean`) and carries **no**
-  rational-point hypothesis.  It depends on five stated obligations:
+  rational-point hypothesis.  It depends on the same five obligations listed above:
   `fgaPicardRepresentability` (the representability of `Pic_{(C/k)ét}`),
-  `Pic0Et.smooth` and `Pic0Et.proper` upstream, plus the two leaves
+  `Pic0Et.geometricallyReduced` and `Pic0Et.universallyClosed` upstream, plus the two leaves
   `smoothOfRelativeDimension_genus_pic0Et` and `isAlbanese_pic0Et` stated there.  All
   five are **true** statements awaiting proofs.  The two leaves carry *companions*
   stating what the landed development already reaches
@@ -200,33 +183,28 @@ Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
   published came from a recipe copied out of a comment and drifting from the code that
   produced it.
 
-  Current result, both mark positions under the same reconciliation identity:
+  > [!WARNING]
+  > **The audit's positive control has gone stale (inbox `I-0545`, 2026-07-28), so its
+  > clean verdicts currently prove nothing.**  Its control
+  > `av_indeterminacyLocus_eq_empty` no longer reports `sorryAx` — `ajc-albanese` proved
+  > Milne 3.3 — so the check can no longer demonstrate that it still detects what it was
+  > built to detect.  Re-pick a control before quoting a result.  `I-0545` also names one
+  > genuine proof-level defect: `def:inst_has_pic_scheme` pins
+  > `picSchemeOfHasRationalPoint`, which reports `sorryAx` at HEAD.
+
+  Last published result, both mark positions under the same reconciliation identity:
   **proof-level, 1073 pinned declarations across 1078 marks = 930 public + 143 `private`,
   zero carrying `sorryAx`; statement-level, 1560 declarations across 1567 marks = 1372
   public + 188 `private`, of which 34 carry `sorryAx`.**  Only the proof-level zero is a
   defect count: a statement-level mark on a `sorry` carrier is legitimate, since it claims
   the signature is formalised.  Do not delete those 34.
 
-  Read that check's own history before writing another one, because it is the sharpest
-  cautionary tale in this tree.  Its first version reported three dishonest marks; all
-  three were artifacts of its regex pairing one node's statement with a *later* node's
-  proof, and one of them had already been settled correctly, by reading, in a commit
-  message.  Fixing it exposed **six** separate ways it had been silently examining a
-  strict subset of its domain while printing a clean-looking result — and the last three
-  were found only because the corrected version *asserts* that
-  `public + private + unresolved == pins` and the assertion failed.  The lesson is not
-  "machines beat reading": it is that a mechanical audit needs an arithmetic identity it
-  must satisfy, checked in code, or "it printed 0 defects" means only that it printed.
-
-  Two sharper lessons came out of correcting the correction, and both generalise past
-  `\leanok`.  The statement-level count above stood as "eleven" for two revisions, and
-  eleven was *precisely* the intersection with the probe's own output — the very artifact
-  the paragraph above retracts, still live one paragraph below its own retraction.  So a
-  domain bug is not fixed when its instance is: every other figure derived by the same
-  route needs the same identity.  And the 143 `private` pins were published twice as
-  undecidable, which is true of `#print axioms` and false of `Lean.collectAxioms`; all
-  1073 are decided, with a positive control to show the private lane is not vacuously
-  clean.  "My probe cannot see it" is a fact about the probe.
+  Before writing another mechanical audit, read this one's history — it is the sharpest
+  cautionary tale in the tree, kept in inbox memory `I-0483`.  Short form: a mechanical
+  audit needs an arithmetic identity it must satisfy, asserted in code
+  (`public + private + unresolved == pins`), or "it printed 0 defects" means only that it
+  printed; a domain bug is not fixed when one of its instances is; and "my probe cannot
+  see it" is a fact about the probe.
 - [`blueprint/web/index.html`](blueprint/web/index.html): generated mathematical blueprint.
 - [`analogies/README.md`](analogies/README.md): index to the historical design notes.
 - [`../Algebraic-Jacobian-Challenge-Rebuild/README.md`](../Algebraic-Jacobian-Challenge-Rebuild/README.md):

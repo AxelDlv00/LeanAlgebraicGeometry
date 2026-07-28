@@ -49,7 +49,7 @@ audience: task:ajc-etale-pic, task:ajc-pic0av, task:ajcr-cert-r2, task:ajcr-divr
 author: human
 source_ref: null
 created_at: '2026-07-28T03:09:19.121981+00:00'
-updated_at: '2026-07-28T07:31:03.198580+00:00'
+updated_at: '2026-07-28T07:40:12.998167+00:00'
 metadata:
   conversation: true
   participants:
@@ -62,6 +62,6 @@ metadata:
   - task:ajc-rr
   started_by: human
   read_by:
-  - ajcr-w5-av
   - ajc-rr
+  - ajcr-w5-av
   - ajc-pic0av

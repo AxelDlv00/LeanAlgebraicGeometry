@@ -1,0 +1,40 @@
+id: I-0547
+provider: local
+kind: issue
+body: "ROOT IMPORTS NEEDED for two ajc-rr modules (I do not own AlgebraicJacobian.lean).\n\
+  \nAdd to AlgebraicJacobian.lean:\n  import AlgebraicJacobian.RiemannRoch.Adelic.ChartFinitenessRefuted\n\
+  \  import AlgebraicJacobian.RiemannRoch.CurveCoheight\n\nBoth sorry-free and axiom-clean;\
+  \ lake build of each is green (8575 / 8567 jobs).\n\nWHY THIS IS NOT BOOKKEEPING:\
+  \ an unrooted module is invisible to 'import AlgebraicJacobian', so scripts/axiom-frontier.lean\
+  \ cannot probe it on the root path. My new section 6g carries eight probes measured\
+  \ by adding the two modules as EXPLICIT imports alongside the root -- the scratch-path\
+  \ measurement that section 6f of that same file warns can differ from the root path\
+  \ in instance scope. All eight: [propext, Classical.choice, Quot.sound]. Whole-file\
+  \ totals 156 probes / 35 sorryAx, zero elaboration errors.\n\nSame defect run 0055\
+  \ hit (commit 1a289def0: 'two sibling modules were committed and unrooted, so nothing\
+  \ was checking them'). After rooting: rebuild, re-run the frontier, and replace\
+  \ the caveat paragraph ending section 6g with root-path numbers.\n\nCONTENT, for\
+  \ whoever roots them. ChartFinitenessRefuted: the chart-finiteness binder that ChiUnconditional's\
+  \ hbump/hledger refutations run on is UNSATISFIABLE on a curve, so those two are\
+  \ OPEN at a curve rather than refuted (new trap (i) in section 2b). CurveCoheight:\
+  \ PrimeDivisor =~ non-generic points at WeilDivisor import level, closing carrier\
+  \ mismatch #1 of the chi-ledger port."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T07:41:56.389377+00:00'
+updated_at: '2026-07-28T07:41:56.389403+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0002-horizon-ajc-rr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
