@@ -65,13 +65,25 @@ consumed by both routes --- and is not the path currently being formalised.
 
 \medskip
 
-\textbf{Comparison with the sheafified Picard functor.} Kleiman \S 4 represents
-the \'etale-sheafified functor \(\Pic_{(C/k)\et}\). This chapter instead
-works throughout under the standing hypothesis that \emph{\(C\) has a
-\(k\)-rational point} (\cref{def:has_rational_point}) and states
-representability against the \emph{plain} relative Picard functor
-\(\Pic^\sharp_{C/k}\) of \cref{def:rel_pic_sharp}. This is justified by
-Kleiman \S 2, Thm.~2.5 (\texttt{th:comp}): if \(f : X \to S\) has a section
+\textbf{The functor being represented: the \'etale sheafification.} Kleiman \S 4
+represents the \'etale-sheafified functor \(\Pic_{(C/k)\et}\), and that is the
+formulation this project realises: representability is asserted for
+\(\Pic_{(C/k)\et}\) over an \emph{arbitrary} base field, with \emph{no}
+hypothesis on \(C(k)\) (\cref{def:pic_et_sheaf},
+\cref{thm:fga_pic_representability_etale}).
+
+The reason is not a preference between equivalent options. The plain relative
+Picard functor \(\Pic^\sharp_{C/k}\) of \cref{def:rel_pic_sharp} is not a sheaf
+for any topology in general --- not even the Zariski one --- and a representable
+functor is a sheaf for every subcanonical topology, so an unconditional
+representability statement for \(\Pic^\sharp_{C/k}\) is not merely unproved but
+\emph{false}. Sheafifying repairs this by construction; a rational point repairs
+it by hypothesis, and the resulting theorem is about a smaller class of curves.
+
+\medskip
+
+\textbf{What a rational point buys, and why it is kept.} Kleiman \S 2, Thm.~2.5
+(\texttt{th:comp}): if \(f : X \to S\) has a section
 and \(\mathcal O_{S'} = f'_* \mathcal O_{X'}\) holds for all base changes
 (automatic for our proper geometrically integral curve, by cohomology and
 base change), then the comparison maps
@@ -79,38 +91,41 @@ base change), then the comparison maps
   \Pic_{X/S}(T) \longrightarrow \Pic_{(X/S)\et}(T) \longrightarrow
   \Pic_{(X/S)\fppf}(T)
 \]
-are bijective for every \(T\). Hence under the rational-point hypothesis the
-plain relative functor \emph{is} the \'etale sheaf, so the rational point
-allows us to work directly with \(\Pic^\sharp_{C/k}\).
+are bijective for every \(T\). Hence under a rational-point hypothesis the
+plain relative functor \emph{is} the \'etale sheaf, and one may work directly
+with \(\Pic^\sharp_{C/k}\).
 
-The hypothesis is not a convenience: without a section the plain functor is not
-even a Zariski sheaf in general, so a representability statement for
-\(\Pic^\sharp_{C/k}\) with no rational point would be false. Two honest
-formulations are therefore available, and they prove different theorems.
+So there are two formulations, and they prove different theorems.
 
 \begin{enumerate}
-  \item Represent \(\Pic^\sharp_{C/k}\) and carry \(C(k) \neq \emptyset\) as a
-    hypothesis. This is the formulation of
-    \cref{thm:fga_pic_representability} and of every representability assertion
-    in this chapter. It is strictly weaker than a statement about all smooth
-    proper geometrically integral curves, since such a curve need not have a
-    rational point --- a conic without rational points, or a genus-\(2\) curve
-    over \(\mathbb{Q}\) with no rational point, satisfies every other
-    hypothesis.
-  \item Represent the \'etale sheafification \(\Pic_{(C/k)\et}\) and drop the
-    rational point. This is Kleiman's own formulation, and needs no section
+  \item \textbf{The one realised.} Represent the \'etale sheafification
+    \(\Pic_{(C/k)\et}\) (\cref{def:pic_et_sheaf}) and carry no hypothesis on
+    \(C(k)\). This is Kleiman's own formulation, and it needs no section
     precisely because sheafifying supplies \'etale-locally what the section
-    would have supplied globally. It requires developing the Picard functor on
-    the \'etale site.
+    would have supplied globally. It is the statement of
+    \cref{thm:fga_pic_representability_etale}, and it is what the Jacobian
+    headline (\cref{chap:Jacobian}) rests on.
+  \item \textbf{Retained, and strictly weaker.} Represent
+    \(\Pic^\sharp_{C/k}\) and carry \(C(k) \neq \emptyset\) as a hypothesis.
+    This is the formulation of \cref{thm:fga_pic_representability} and of the
+    \(\Pic^\sharp\)-shaped assertions later in this chapter. It is strictly
+    weaker than a statement about all smooth proper geometrically integral
+    curves, since such a curve need not have a rational point --- a conic
+    without rational points, or a genus-\(2\) curve over \(\mathbb{Q}\) with no
+    rational point, satisfies every other hypothesis. It is retained because it
+    is true and because the tangent-space development is written against the
+    \(\Pic^\sharp\) shape, and it may not be presented as the project's
+    headline.
 \end{enumerate}
 
-Which formulation the project should target is a decision about what theorem is
-being claimed, not a limitation of the platform. The two are recorded here
-side by side; the chapter as written realises the first.
-
-Every representability assertion of this chapter accordingly carries the
-rational-point hypothesis. A pointed curve \((C,P)\), as in
-\cref{chap:AbelJacobi}, supplies such a section.
+Which formulation to target was a decision about what theorem is being claimed,
+not a limitation of the platform, and it is \emph{settled}: formulation (1), by
+owner decision of 2026-07-28. What follows from that decision, and is worth
+stating because a reader of the later sections will meet the
+\(\Pic^\sharp\)-shaped statements first: those sections' rational-point
+hypothesis is now the mark of a conditional milestone rather than a standing
+convention of the chapter. A pointed curve \((C,P)\), as in
+\cref{chap:AbelJacobi}, supplies the section they need.
 
 % SOURCE: [Kleiman], ``The Picard scheme'', \S 4 (FGA Explained Ch.~9 \S 9.4);
 % arXiv:math/0504020, p.~26. Read from
@@ -977,35 +992,131 @@ when the predicate is inhabited.
   extracts the representing object. The local-finiteness clause belongs to
   the same existence package as representability: Kleiman \S 4,
   Thm.~th:main exhibits \(\Pic_{C/k}\) as a disjoint union of open
-  quasi-projective \(k\)-subschemes. The witness
-  \cref{def:inst_has_pic_scheme} is conditional on the \(k\)-rational point
-  of \cref{def:has_rational_point}.
+  quasi-projective \(k\)-subschemes.
+
+  This predicate concerns the \emph{unsheafified} functor, so its only witness
+  \cref{def:inst_has_pic_scheme} is conditional on the \(k\)-rational point of
+  \cref{def:has_rational_point} --- necessarily so, since without a section
+  \(\Pic^\sharp_{C/k}\) is not a sheaf and the predicate is false in general.
+  The unconditional statement, for the \'etale sheafification, is
+  \cref{thm:fga_pic_representability_etale}.
 \end{definition}
 
 \begin{proof}
   This is the defining existence predicate.
 \end{proof}
 
-\begin{definition}[Picard scheme exists]\leanok
-  \label{def:inst_has_pic_scheme}
-  \lean{AlgebraicGeometry.Scheme.instHasPicScheme}
-  \uses{def:has_pic_scheme, def:has_rational_point}
-  Let \(C/k\) be a smooth proper geometrically integral curve with a
-  \(k\)-rational point. Then the relative Picard functor of \(C\) is
-  represented by a scheme locally of finite type over \(k\).
+\begin{definition}[\'Etale-sheafified relative Picard functor]\leanok
+  \label{def:pic_et_sheaf}
+  \lean{AlgebraicGeometry.Scheme.PicScheme.picEt}
+  \uses{def:rel_pic_sharp}
+  The associated \'etale sheaf \(\Pic_{(C/k)\et}\) of the relative Picard
+  presheaf \(\Pic^\sharp_{C/k}\) of \cref{def:rel_pic_sharp}, on the site
+  \((\Sch/k)\) equipped with the \'etale topology, with its abelian-group
+  structure retained and (for representability) its underlying set-valued
+  functor taken. This is Kleiman's \(\Pic_{(X/S)\et}\) of \S 2 (\texttt{df:Pfs}).
+
+  The \'etale topology on \((\Sch/k)\) is the big \'etale topology on schemes
+  localised at \(\Spec k\) in the sense of SGA 4 III 5.2.1: a sieve on a
+  \(k\)-scheme \(T\) covers exactly when the sieve it generates on the
+  underlying scheme covers \'etale-locally.
 \end{definition}
 
+\begin{proof}\leanok
+  \uses{def:rel_pic_sharp}
+  Sheafification of the group-valued presheaf of \cref{def:rel_pic_sharp} for
+  the \'etale topology.
+\end{proof}
+
+\begin{lemma}[\(\Pic_{(C/k)\et}\) is a sheaf]\leanok
+  \label{lem:pic_et_is_sheaf}
+  \lean{AlgebraicGeometry.Scheme.PicScheme.picEt_isSheaf_forget}
+  \uses{def:pic_et_sheaf}
+  \(\Pic_{(C/k)\et}\) satisfies the sheaf axiom for the \'etale topology on
+  \((\Sch/k)\), and so does its underlying set-valued functor.
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{def:pic_et_sheaf}
+  By construction: \cref{def:pic_et_sheaf} is a sheafification. The set-valued
+  claim follows because the forgetful functor \(\Ab \to \Set\) preserves the
+  limits the sheaf condition is expressed by.
+
+  This lemma is what makes \cref{thm:fga_pic_representability_etale} a
+  \emph{consistent} statement rather than a false one: a representable functor
+  is a sheaf for any subcanonical topology, so the corresponding assertion for
+  the unsheafified \(\Pic^\sharp_{C/k}\) --- which is not a sheaf --- could not
+  hold with no hypothesis on \(C(k)\).
+\end{proof}
+
+\begin{theorem}[FGA representability, \'etale formulation]
+  \label{thm:fga_pic_representability_etale}
+  \lean{AlgebraicGeometry.Scheme.fgaPicardRepresentability}
+  \uses{def:pic_et_sheaf, lem:pic_et_is_sheaf, def:rel_pic_sharp}
+  Let \(k\) be a field and \(C/k\) a smooth proper geometrically integral
+  curve --- with \emph{no} hypothesis on \(C(k)\). Then:
+  \begin{enumerate}
+    \item the \'etale-sheafified relative Picard functor \(\Pic_{(C/k)\et}\) of
+      \cref{def:pic_et_sheaf} is representable by a \(k\)-scheme that is
+      separated and locally of finite type over \(k\); and
+    \item if \(C\) has a \(k\)-rational point, the comparison
+      \(\Pic^\sharp_{C/k} \to \Pic_{(C/k)\et}\) is an isomorphism.
+  \end{enumerate}
+
+  This is the project's central open obligation, and it is expected to remain
+  open. It is the only assertion of this chapter that is not proved, and the
+  Jacobian headline (\cref{chap:Jacobian}) rests on it.
+\end{theorem}
+
 \begin{proof}
-  \uses{thm:rigid_pushforward_locally_free, thm:galois_quotient_points}
-  The rational point rigidifies line bundles along the section, which is what
-  makes the plain relative functor a sheaf at all. Either route of
-  \cref{sec:fga_pic_setup} then produces the representing scheme. Along the
-  Milne--Koll\'ar route the degree pieces \(\Pic^r\) are glued from the loci
-  \(J^\Sigma\) over a separably closed field, descended to \(k\) by a finite
-  Galois quotient, and assembled over \(\mathbb{Z}\) as a coproduct, which is
-  locally of finite type because each piece is. Along the quotient route the
-  bounded Hilbert-polynomial strata of \cref{thm:fga_pic_representability} glue
-  to the same conclusion.
+  \uses{thm:rigid_pushforward_locally_free, thm:galois_quotient_points,
+    lem:smooth_proper_quotient}
+  Clause (1) is Kleiman \S 4, Thm.~\texttt{th:main} together with Cor.\
+  \texttt{cor:algsch}: the Abel map exhibits the sheafified Picard functor as a
+  quotient of a quasi-projective scheme by a smooth proper equivalence
+  relation, and Altman--Kleiman descent (\cref{lem:smooth_proper_quotient})
+  represents the quotient as a disjoint union of open quasi-projective
+  \(k\)-subschemes. Along the Milne--Koll\'ar route the degree pieces
+  \(\Pic^r\) are instead glued from the loci \(J^\Sigma\) over a separably
+  closed field, descended to \(k\) by a finite Galois quotient, and assembled
+  over \(\mathbb{Z}\) as a coproduct, which is locally of finite type because
+  each piece is.
+
+  Clause (2) is Kleiman \S 2, Thm.~2.5, as displayed in
+  \cref{sec:fga_pic_setup}.
+
+  The two clauses are stated together, rather than as separate assertions,
+  because both are theorems of the same paper and neither is formalised, while
+  the \(\Pic^\sharp\)-shaped statements later in this chapter need clause (2)
+  to exist at all. Splitting clause (2) out would report the Jacobian headline
+  as resting on six obligations where the mathematics has five.
+\end{proof}
+
+\begin{definition}[Picard scheme of a pointed curve]\leanok
+  \label{def:inst_has_pic_scheme}
+  \lean{AlgebraicGeometry.Scheme.picSchemeOfHasRationalPoint}
+  \uses{def:has_pic_scheme, def:has_rational_point,
+    thm:fga_pic_representability_etale}
+  Let \(C/k\) be a smooth proper geometrically integral curve \emph{with a
+  \(k\)-rational point}. Then the plain relative Picard functor
+  \(\Pic^\sharp_{C/k}\) is represented by a scheme separated and locally of
+  finite type over \(k\), so \cref{def:has_pic_scheme} holds.
+
+  This is a \emph{conditional milestone}, strictly weaker than
+  \cref{thm:fga_pic_representability_etale}, and it may not be presented as the
+  project's headline. It is retained because it is true, because it records
+  exactly what a rational point buys, and because the tangent-space development
+  is written against the \(\Pic^\sharp\) shape.
+\end{definition}
+
+\begin{proof}\leanok
+  \uses{thm:fga_pic_representability_etale}
+  Both inputs are clauses of \cref{thm:fga_pic_representability_etale}: clause
+  (1) supplies a scheme representing \(\Pic_{(C/k)\et}\) with the required
+  properties, and clause (2) --- available because \(C\) has a rational point
+  --- identifies \(\Pic^\sharp_{C/k}\) with \(\Pic_{(C/k)\et}\), so the same
+  scheme represents it. Transport the representability witness along that
+  isomorphism.
 \end{proof}
 
 \begin{remark}[What the representability statements of this chapter assert]
@@ -1027,6 +1138,17 @@ when the predicate is inhabited.
   every consequence above depends on \cref{def:inst_has_pic_scheme}. So the correct reading
   of this chapter is that the passage \emph{from} representability to the Picard scheme and
   its group structure is complete, and representability is not.
+
+  Two things sharpen this since the \'etale formulation was adopted. First, the
+  \(\Pic^\sharp\)-shaped predicate is supplied only for a \emph{pointed} curve, so the
+  consequences above are conditional statements in a second and independent way: their
+  hypothesis is not just unproved but unavailable over a general field. Second, the
+  corresponding \'etale predicate \emph{is} supplied unconditionally, and everything said
+  here applies to it verbatim with
+  \cref{thm:fga_pic_representability_etale} in place of
+  \cref{def:inst_has_pic_scheme} --- the passage from representability to the Picard
+  scheme, its group structure, its separatedness and its local finiteness is complete
+  there too, and representability is still the one thing that is not.
 \end{remark}
 
 \begin{definition}[Representability of \(\Pic^\sharp_{C/k}\)]\leanok

@@ -155,48 +155,57 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   required witness.
 \end{proof}
 
-\begin{remark}[What the pointed witness settles and what it leaves open]
+\begin{remark}[What the pointed witness settles, and why it is not the headline]
   \label{rem:pointed_witness_scope}
   \uses{def:picardJacobianWitnessOfHasRationalPoint, lem:curve_hypothesis_gap,
-    def:inst_has_pic_scheme}
-  \Cref{def:picardJacobianWitnessOfHasRationalPoint} separates the construction of
-  the witness from the question of where the rational point comes from, and the two
-  witnesses below are the two answers to that question:
-  \cref{def:picardJacobianWitness} takes the point from
-  \cref{lem:curve_hypothesis_gap} and \cref{def:picardJacobianWitnessOfIsAlgClosed}
-  from \cref{lem:curve_rational_point_algClosed}. Nothing beyond the choice of
-  source distinguishes them.
+    def:inst_has_pic_scheme, thm:fga_pic_representability_etale}
+  \Cref{def:picardJacobianWitnessOfHasRationalPoint} is a \emph{conditional
+  milestone}: it constructs the witness for a curve that has a \(k\)-rational point,
+  using the \(\Pic^\sharp\)-shaped representability of
+  \cref{def:inst_has_pic_scheme}. It is true, and it is strictly weaker than the
+  challenge. \Cref{def:picardJacobianWitnessOfIsAlgClosed} is its specialisation to
+  \(\bar k\), where the rational point is a theorem
+  (\cref{lem:curve_rational_point_algClosed}). Neither may be presented as the
+  project's headline.
 
-  This bears on the open question of \cref{rem:rational_point_scope}
-  asymmetrically, and the asymmetry is worth recording. A theorem for a curve
-  \emph{with} a rational point is exactly the statement above, so that formulation
-  requires no mathematics beyond the obligations already listed there. The étale
-  formulation is not obtained from it: representing
-  \(\Pic_{(C/k)\et}\) replaces \cref{def:inst_has_pic_scheme} rather than
-  supplying its hypothesis, so it needs a representability theorem for a different
-  functor --- a theorem which, unlike the functor itself, has not been proved. That
-  one formulation is nearer to hand is not an argument that it is the right claim to
-  make.
+  The headline \cref{def:picardJacobianWitness} is \emph{not} obtained from either.
+  It is built from the identity component of the scheme representing the \'etale
+  sheafification (\cref{thm:fga_pic_representability_etale}), which is a different
+  representability input for a different functor --- one that replaces
+  \cref{def:inst_has_pic_scheme} rather than supplying its hypothesis. That is why the
+  headline carries no rational point while these two do, and it is the whole content
+  of the decision recorded in \cref{rem:rational_point_scope}.
 \end{remark}
 
 \begin{theorem}[The Picard identity component is a Jacobian witness]
   \label{def:picardJacobianWitness}
-  \uses{def:JacobianWitness, def:genus, thm:fga_pic_representability,
+  \uses{def:JacobianWitness, def:genus, thm:fga_pic_representability_etale,
     thm:pic0_isAbelianVariety, thm:pic_zero_dimension_equals_genus,
     thm:albanese_universal_property_northstar}
   \lean{AlgebraicGeometry.picardJacobianWitness}
-  The identity component \(\Pic^0_{C/k}\) carries a Jacobian witness for
-  \(C\).
+  Let \(k\) be an arbitrary field and \(C/k\) a smooth proper geometrically
+  irreducible curve --- with \emph{no} hypothesis on \(C(k)\). Then the identity
+  component \(\Pic^0_{C/k}\) carries a Jacobian witness for \(C\).
 \end{theorem}
 
 \begin{proof}
-  \uses{def:picardJacobianWitnessOfHasRationalPoint, lem:curve_hypothesis_gap,
-    rem:pointed_witness_scope}
-  Apply \cref{def:picardJacobianWitnessOfHasRationalPoint}, whose rational-point
-  hypothesis is supplied by \cref{lem:curve_hypothesis_gap}. That hypothesis is the
-  single genuine gap, and it is a gap only over a general base field: over an
-  algebraically closed field it is \cref{lem:curve_rational_point_algClosed} and the
-  witness is \cref{def:picardJacobianWitnessOfIsAlgClosed}.
+  \uses{thm:fga_pic_representability_etale, lem:pic0_relative_dimension_genus,
+    lem:pic0_isAlbanese_all_points, rem:pointed_witness_scope,
+    rem:rational_point_scope}
+  Take \(J = \Pic^0_{C/k}\), the identity component of the scheme representing the
+  \'etale-sheafified relative Picard functor
+  (\cref{thm:fga_pic_representability_etale}). Its group-object structure, geometric
+  irreducibility and local finiteness follow from that representability with no
+  further hypothesis, by Yoneda transport and Kleiman \S 5 Lem.~\texttt{lem:agps};
+  smoothness and properness are \cref{thm:pic0_smooth} and \cref{thm:pic0_proper};
+  the relative dimension is \cref{lem:pic0_relative_dimension_genus}; and the
+  Albanese property for every marked point is
+  \cref{lem:pic0_isAlbanese_all_points}.
+
+  No rational point is used, and none is available in general: see
+  \cref{rem:rational_point_scope} for why this rather than the pointed statement is
+  the theorem being claimed, and \cref{rem:pointed_witness_scope} for the conditional
+  milestones kept beside it.
 \end{proof}
 
 \begin{lemma}[A smooth geometrically irreducible curve is geometrically integral]
@@ -259,31 +268,32 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   reduced ring and is therefore reduced.
 \end{proof}
 
-\begin{lemma}[The curve has a \(k\)-rational point]
+\begin{remark}[The rational point is not a hypothesis of the Jacobian]
   \label{lem:curve_hypothesis_gap}
-  \lean{AlgebraicGeometry.hasRationalPoint_of_curve}
-  \uses{def:has_rational_point}
-  A smooth proper geometrically irreducible curve \(C\) over a field \(k\) has a
-  \(k\)-rational point.
-\end{lemma}
+  \uses{def:has_rational_point, thm:fga_pic_representability_etale}
+  A smooth proper geometrically integral curve \(C/k\) need \emph{not} have a
+  \(k\)-rational point: a conic over \(\mathbb{Q}\) with no rational point is a
+  genus-\(0\) example, and there are genus-\(2\) curves over \(\mathbb{Q}\) with
+  no rational point. Over an algebraically closed field a rational point always
+  exists (\cref{lem:curve_rational_point_algClosed}).
 
-\begin{proof}
-  This assertion is \emph{false} as stated. A smooth proper geometrically
-  integral curve need not have a \(k\)-rational point: a conic over \(\mathbb{Q}\)
-  with no rational point is a genus-\(0\) example, and there are genus-\(2\)
-  curves over \(\mathbb{Q}\) with no rational point. Over an algebraically closed
-  field a rational point always exists, since a curve there is a nonempty
-  Jacobson space whose closed points are rational.
+  An earlier revision of this blueprint stated the opposite as a lemma, in order
+  to name the gap between the hypotheses of the Jacobian witness and those of the
+  Picard construction. That statement was false, and the witness built on it
+  therefore rested on an inconsistent hypothesis: its consequences were vacuously
+  true, and no axiom check could distinguish that state from an honest one. The
+  lemma has been \emph{removed}, in the blueprint and in the formalisation, and
+  it must not be reinstated or proved.
 
-  The lemma is therefore stated here only to name the gap between the hypotheses
-  of the witness and those of the Picard construction, and it is not provable in
-  this form. Closing it requires either weakening the claim --- carry
-  \(C(k) \neq \emptyset\) as a hypothesis of the Jacobian itself, which proves
-  something weaker than intended --- or replacing the input by a representability
-  statement that needs no section, namely representability of the \'etale
-  sheafification (\cref{sec:fga_pic_setup}). That choice is open. The algebraically
-  closed case is not affected by it and is \cref{lem:curve_rational_point_algClosed}.
-\end{proof}
+  What replaced it is not a proof but a different \emph{statement}. The Jacobian
+  is now built on representability of the \'etale sheafification
+  \(\Pic_{(C/k)\et}\) (\cref{thm:fga_pic_representability_etale}), which needs no
+  section, so the witness of \cref{def:picardJacobianWitness} carries the three
+  challenge hypotheses and nothing else. The rational point survives in this
+  chapter only where it is a theorem
+  (\cref{lem:curve_rational_point_algClosed}, over \(\bar k\)) or an explicit
+  hypothesis (\cref{def:picardJacobianWitnessOfHasRationalPoint}).
+\end{remark}
 
 \begin{lemma}[A curve over an algebraically closed field has a rational point]
   \label{lem:curve_rational_point_algClosed}
@@ -305,30 +315,38 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   which is the required rational point.
 \end{proof}
 
-\begin{remark}[Which leaf is false and which is merely unproved]
+\begin{remark}[The scope of the headline: an arbitrary base field]
   \label{rem:rational_point_scope}
   \uses{lem:curve_hypothesis_gap, lem:curve_rational_point_algClosed,
-    def:inst_has_pic_scheme}
-  \Cref{lem:curve_hypothesis_gap} and \cref{lem:curve_rational_point_algClosed} state the
-  same conclusion under different hypotheses, and the pair delimits what is open. Over an
-  arbitrary base field the statement is false, so it admits no proof and the witness built
-  on it rests on an inconsistent hypothesis --- its consequences are vacuously true. Over
-  an algebraically closed field the same statement is a theorem. So the open question is
-  not the existence of a rational point in general, but which of two formulations is
-  claimed over an arbitrary \(k\): representability of \(\Pic^\sharp_{C/k}\) with
-  \(C(k) \neq \emptyset\) as a hypothesis, or representability of the \'etale
-  sheafification \(\Pic_{(C/k)\et}\), which needs no section
-  (\cref{sec:fga_pic_setup}). The remaining obligations of the witness ---
-  representability itself (\cref{def:inst_has_pic_scheme}), \cref{thm:pic0_smooth},
-  \cref{thm:pic0_proper}, \cref{lem:pic0_relative_dimension_genus} and
-  \cref{lem:pic0_isAlbanese_all_points} --- are of the other kind: true statements awaiting
-  proofs.
+    thm:fga_pic_representability_etale}
+  The Jacobian of this chapter is constructed over an \emph{arbitrary} base field, with no
+  hypothesis on \(C(k)\), and the functor whose representability it rests on is the
+  \'etale sheafification \(\Pic_{(C/k)\et}\)
+  (\cref{thm:fga_pic_representability_etale}). This is a settled choice, not an open
+  branch, and it is the formulation the challenge asks for: the statement being answered
+  binds \(\Jac(C)\) for a curve with no marked point, and binds a point only where
+  Abel--Jacobi genuinely needs one.
 
-  Discharging the rational point does not reduce their number. The identity component is
-  defined only once \(\Pic_{C/k}\) exists, so over an algebraically closed field the
-  discharge makes representability an obligation that must be met rather than one carried
-  along inside the rational-point hypothesis. What changes is the kind of every remaining
-  obligation, not the count.
+  The alternative --- represent \(\Pic^\sharp_{C/k}\) and carry
+  \(C(k) \neq \emptyset\) as a hypothesis of the Jacobian --- is strictly weaker, since a
+  smooth proper geometrically integral curve need not have a rational point
+  (\cref{lem:curve_hypothesis_gap}). It is retained as
+  \cref{def:picardJacobianWitnessOfHasRationalPoint}, explicitly as a conditional
+  milestone, and may not be presented as the headline. Neither may the \(\bar k\) witness
+  \cref{def:picardJacobianWitnessOfIsAlgClosed}, which is a genuine theorem over an
+  algebraically closed field and nothing more.
+
+  \textbf{Five obligations, and now none of them false.} The witness of
+  \cref{def:picardJacobianWitness} rests on representability
+  (\cref{thm:fga_pic_representability_etale}), \cref{thm:pic0_smooth},
+  \cref{thm:pic0_proper}, \cref{lem:pic0_relative_dimension_genus} and
+  \cref{lem:pic0_isAlbanese_all_points}. The count is the same as before the decision;
+  what changed is the \emph{kind} of the obligations. Previously one of them asserted a
+  rational point over an arbitrary field and was false, so the witness rested on an
+  inconsistent hypothesis and its consequences were vacuously true. Now all five are true
+  statements awaiting proofs. That difference is invisible to an axiom check --- it is a
+  property of the statements, not of the proof terms --- and it is the substance of the
+  change.
 \end{remark}
 
 \begin{theorem}[A Jacobian witness over an algebraically closed field]

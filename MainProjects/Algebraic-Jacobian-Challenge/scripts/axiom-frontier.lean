@@ -358,7 +358,10 @@ open AlgebraicGeometry AlgebraicGeometry.Scheme
 --      relative Picard functor over an arbitrary field (the project's central open
 --      obligation, expected to stay open);
 --   2. `Scheme.Pic0Et.smooth`, 3. `Scheme.Pic0Et.proper`  -- the two Kleiman §5
---      statements about the identity component;
+--      statements about the identity component.  Both are ASSEMBLIES, not bare
+--      `sorry`s: their actual residues are `Pic0Et.geometricallyReduced` (Cartier in
+--      char 0) and `Pic0Et.universallyClosed` (Kleiman §5 `th:qpp&p`), probed below.
+--      Cite THOSE, not smoothness and properness, when sizing what is left;
 --   4. `smoothOfRelativeDimension_genus_pic0Et`, 5. `isAlbanese_pic0Et`  -- the two
 --      étale leaves stated at exactly the strength the assembly consumes.
 -- COUNT UNCHANGED AT FIVE; what changed is that **none of the five is a false
@@ -372,6 +375,9 @@ open AlgebraicGeometry AlgebraicGeometry.Scheme
 #print axioms AlgebraicGeometry.Scheme.fgaPicardRepresentability
 #print axioms AlgebraicGeometry.Scheme.Pic0Et.smooth
 #print axioms AlgebraicGeometry.Scheme.Pic0Et.proper
+-- the actual residues of those two, one statement each:
+#print axioms AlgebraicGeometry.Scheme.Pic0Et.geometricallyReduced
+#print axioms AlgebraicGeometry.Scheme.Pic0Et.universallyClosed
 #print axioms AlgebraicGeometry.smoothOfRelativeDimension_genus_pic0Et
 #print axioms AlgebraicGeometry.isAlbanese_pic0Et
 
@@ -385,6 +391,7 @@ open AlgebraicGeometry AlgebraicGeometry.Scheme
 #print axioms AlgebraicGeometry.Scheme.Pic0Et.grpObj
 #print axioms AlgebraicGeometry.Scheme.Pic0Et.geometricallyIrreducible
 #print axioms AlgebraicGeometry.Scheme.Pic0Et.locallyOfFiniteType
+#print axioms AlgebraicGeometry.Scheme.Pic0Et.isSeparated
 
 -- The legacy `picSharp`-shaped leaves, retained: they are the obligations of the
 -- CONDITIONAL milestone `picardJacobianWitnessOfHasRationalPoint`, not of the headline.

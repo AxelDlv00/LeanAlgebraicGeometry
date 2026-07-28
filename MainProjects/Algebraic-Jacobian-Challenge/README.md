@@ -35,9 +35,10 @@ same theorem by a separate curve-specialized strategy.
 
 ## State (measured 2026-07-28)
 
-- **187 modules, 132,344 lines**; **26 `sorry`** over 11 modules, the rest locally
-  sorry-free; a warm `lake build AlgebraicJacobian` **green** at 8,746 jobs.  These
-  counts move whenever a module lands, so re-measure rather than quoting them:
+- **202 modules, 137,433 lines**; **28 `sorry`** over 11 modules, the rest locally
+  sorry-free; a warm `lake build AlgebraicJacobian` **green** at 8,746 jobs (job count last
+  measured before the 2026-07-28 lanes landed).  These counts move whenever a module lands, and
+  four AJC lanes were live when they were taken, so re-measure rather than quoting them:
 
   ```bash
   find AlgebraicJacobian -name '*.lean' | wc -l          # modules on disk
@@ -109,63 +110,58 @@ same theorem by a separate curve-specialized strategy.
   dominant build cost and is being converted bottom-up with the helpers in
   `scripts/`.
 
-## Open decision
+## Decision made: the headline is stated over an arbitrary field
 
-Whether to represent the plain relative Picard functor while carrying a
-`k`-rational-point hypothesis — strictly weaker than the challenge statement,
-since such a curve need not have a rational point — or to étale-sheafify and drop
-the hypothesis, is an open decision for the project owner (roadmap
-`AJC.picrep.rational-point`).  Both branches are recorded in the blueprint's FGA
-chapter and at the Lean leaf `hasRationalPoint_of_curve`
-(`AlgebraicJacobian/Jacobian.lean`); neither is assumed.
+**Settled 2026-07-28 by the project owner** (roadmap `AJC.picrep.rational-point`,
+inbox `I-0372`, protection `I-0491`).  The Jacobian headline is stated over an
+**arbitrary** base field with **no** rational-point hypothesis, and what gets
+represented is the **étale-sheafified** relative Picard functor.  This is Kleiman's
+own formulation and the full strength the challenge asks for.  It is not a branch to
+revisit.
 
-This is now the *whole* of that gap.  The leaf used to assert geometric integrality
-as well, which obscured the fact that only one of the two is a decision: geometric
-integrality of a smooth geometrically irreducible curve is a theorem
-(`geometricallyIntegral_of_curve`, via `Smooth ⇒ GeometricallyReduced` in
-[`AlgebraicJacobian/Curve/GeometricallyReduced.lean`](AlgebraicJacobian/Curve/GeometricallyReduced.lean)),
-and it is now proved rather than assumed.  The rational point is a genuine
-mathematical gap: the statement is *false* in general, so the leaf must be replaced
-by whichever branch the owner picks, never proved.
+What that means concretely, and each piece is checkable:
 
-The decision is also *bounded*, which is worth stating because the leaf's falsity
-invites the reading that nothing here is reachable.  Over an algebraically closed
-field the rational point is a theorem — `hasRationalPoint_of_curve_of_isAlgClosed`,
-axiom-clean — and `picardJacobianWitnessOfIsAlgClosed` builds the same witness with that
-leaf supplied rather than assumed.  The obligation *count* does not drop: discharging the
-rational point makes the representability gate `instHasPicScheme` fire instead of removing
-it, so it is five either way, and what changes is that over `k̄` all five are true
-statements (measured, not asserted — probe §0b).  What the owner decides is therefore what
-the project claims over an *arbitrary* base field, not whether the construction runs
-at all.  Note also that this does not move the protected `Jacobian` declarations, which
-still route through the general witness and its false leaf.
+- `Picard/PicEtSheaf.lean` builds the étale-sheafified relative Picard functor
+  `Pic_{(C/k)ét}` and **proves its sheaf property** (`picEt_isSheaf_forget`) — it is
+  a sheafification, so the axiom holds by construction rather than by hypothesis.  The
+  étale site is Mathlib v4.31's `Scheme.etaleTopology` localised at `Spec k` along
+  SGA 4 III 5.2.1.  The file is `sorry`-free.
+- `Scheme.fgaPicardRepresentability` (`Picard/FGAPicRepresentability.lean`) is the
+  representability obligation, restated for that functor with no rational point.  It
+  is **one named `sorry`** and is the project's central open obligation; it is
+  expected to stay open, and that is the honest state rather than a defect.
+- `hasRationalPoint_of_curve` has been **deleted**.  It asserted a `k`-rational point
+  from the challenge hypotheses alone, which is *false* — a conic over `ℚ` without
+  rational points, or a genus-2 curve over `ℚ` without one, satisfies every other
+  hypothesis.  While it existed the witness rested on an inconsistent hypothesis, so
+  its consequences were vacuously true and no axiom check could tell.  It must never
+  be proved or reinstated.
+- `picardJacobianWitness` now carries exactly the three challenge hypotheses
+  (`SmoothOfRelativeDimension 1`, `IsProper`, `GeometricallyIrreducible`) and nothing
+  else.  This is checked, not asserted: `scripts/axiom-frontier.lean` has a
+  `HeadlineBinders` section whose `example`s stop elaborating if a
+  `[HasRationalPoint _]` binder ever returns to the headline cone.
 
-One of the two branches now has a compiled form, and the asymmetry is worth being explicit
-about rather than leaving "both branches recorded" to imply they are equally close.
-`picardJacobianWitnessOfHasRationalPoint` is the assembly with `C(k) ≠ ∅` as a hypothesis,
-and both witnesses are specialisations of it — so branch (1) costs no mathematics beyond
-the five obligations already open (probe §0c, which leaks and says so; five, not four,
-because the binder makes the representability gate fire rather than removing it).
-Branch (2), étale sheafification, is *not* reachable from that definition: it replaces
-`instHasPicScheme` rather than supplying its hypothesis.
+**The obligation count is unchanged at five, and that is the deliverable.**  The
+witness rests on `fgaPicardRepresentability`, `Pic0Et.smooth`, `Pic0Et.proper`,
+`smoothOfRelativeDimension_genus_pic0Et` and `isAlbanese_pic0Et`.  What changed is not
+the number but the *kind*: **none of the five is a false statement any more**.  All
+five are true statements awaiting proofs.  That difference is invisible to
+`#print axioms` — it is a property of the statements, not of the proof terms — which
+is why it is argued at the binders instead.
 
-What branch (2) would start from is worth stating precisely, because "not reachable from
-here" invites the reading that it starts from nothing, and that is wrong.  The
-étale-sheafified functor itself is **built and `sorry`-free** in the sibling project
-(`../Algebraic-Jacobian-Challenge-Rebuild`: `Picard/PicEtAff.lean`, with the
-étale-separatedness corollary in `Picard/RelPicCoverInjective.lean` and the degree-zero
-subfunctor in `Picard/Pic0Functor.lean`).  What no project has is a representability
-*theorem* for it — the Rebuild carries representability as a structure field of
-`JacobianData`, deliberately, never as a sorried instance.  So the honest comparison is:
-neither branch has its representability theorem; branch (1) can reuse this project's gate,
-and branch (2) needs a new one for a functor that already exists next door.  Neither
-branch is assumed, and having one cheaper to *build* is not an argument for it being the
-right claim — that judgement is the owner's.
+Two things are kept beside the headline and **neither may be presented as it**:
+`picardJacobianWitnessOfHasRationalPoint`, an explicitly *conditional* milestone
+(true under a section, strictly weaker than the challenge), and
+`picardJacobianWitnessOfIsAlgClosed`, a genuine theorem over `k̄`.  The
+`picSharp`-shaped gate `HasPicScheme` survives for the consumers written against it,
+but it is **no longer an instance**: its only producer is the named theorem
+`picSchemeOfHasRationalPoint`, so nothing picks up a rational-point hypothesis by
+synthesis.
 
-The distinction matters for reading the frontier: over `k̄` every remaining
-obligation is a true statement awaiting a proof, whereas the general-field witness
-rests on an inconsistent hypothesis and its consequences are vacuously true — a
-state no axiom check can distinguish from an honest one (trap (c) above).
+The route choice is unaffected: Milne–Kollár stays committed, Quot stays
+retained-not-revived.
+
 
 Cones closed: `AJC.substrate`, `AJC.linebundle`, `AJC.grquot`, `AJC.cech`.
 Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
@@ -178,14 +174,16 @@ Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
 - [`AlgebraicJacobian.lean`](AlgebraicJacobian.lean): project import root.
 - [`AlgebraicJacobian/Jacobian.lean`](AlgebraicJacobian/Jacobian.lean): the final
   Jacobian witness interface and assembly point.  The witness is built from
-  `Pic⁰_{C/k}` and depends on five stated obligations: `Pic0.smooth` and
-  `Pic0.proper` upstream, plus three named leaves stated there.  98 modules are
-  reachable from it.  Each of the three leaves carries a *companion* stating what the
-  landed development already reaches — `hasRationalPoint_of_curve_of_isAlgClosed`,
-  `finrank_tangentSpace_pic0_eq_genus`, `isAlbanese_pic0_of_isAlgClosed` — so each
-  leaf's remaining distance is compiler-checked rather than described in prose.  The
-  first of the three is a genuine discharge and measures clean; the other two record a
-  distance and carry `sorryAx`, and the probe's §0 says which is which and why.
+  `Pic⁰_{C/k}` in its étale form (`Picard/Pic0Et.lean`) and carries **no**
+  rational-point hypothesis.  It depends on five stated obligations:
+  `fgaPicardRepresentability` (the representability of `Pic_{(C/k)ét}`),
+  `Pic0Et.smooth` and `Pic0Et.proper` upstream, plus the two leaves
+  `smoothOfRelativeDimension_genus_pic0Et` and `isAlbanese_pic0Et` stated there.  All
+  five are **true** statements awaiting proofs.  The two leaves carry *companions*
+  stating what the landed development already reaches
+  (`finrank_tangentSpace_pic0_eq_genus`, `isAlbanese_pic0_of_isAlgClosed`), so each
+  leaf's remaining distance is compiler-checked rather than described in prose; both
+  companions record a distance and carry `sorryAx`, and the probe's §0 says why.
 - [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean): the axiom-frontier
   probe, and the three companion measurements in its header: reachability of the
   headline cone, whether every module on disk is rooted at all, and whether every
