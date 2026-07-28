@@ -147,6 +147,10 @@ theorem pullGlobalAff_comp
   rw [pullGlobal_comp (hpi := hpi) (g := g) (hO := hO) (hchi := hchi) (r1 := r1) (r2 := r2)
       (b1 := b1) (b2 := b2) D f v,
     divFamZarToAffVehicle_map f]
+  -- Both sides are now `divFamZarAff.map C g f` applied to the same term, but the right-hand one
+  -- still wears the folded name `pullGlobalAff`.  That unfolding is definitional and `rw`'s
+  -- terminal `rfl` runs at reducible transparency only, so it must be discharged explicitly.
+  rfl
 
 set_option linter.unusedSectionVars false in
 /-- **Affine consistency of the widened pullback**: on an affine test it collapses through the

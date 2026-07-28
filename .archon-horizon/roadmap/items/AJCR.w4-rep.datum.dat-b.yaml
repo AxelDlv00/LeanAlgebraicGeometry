@@ -4,43 +4,46 @@ title: 'DAT-B: coverage + injectivity — every $\mathrm{pic}^0$ point is Zarisk
   lane'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "DAT-B: coverage + injectivity. Injectivity is LANDED (worksheet 0.4/2, consumed\
+summary: "DAT-B: coverage + injectivity. Injectivity LANDED (worksheet 0.4/2, consumed\
   \ not proved).\nCoverage (COV-1 = B-5) is ASSEMBLED over a general test and owes\
-  \ ONE residue, not three.\n\nSTATE 2026-07-28 (run 0072 s0008, lane ajcr-charts).\
-  \ Two of the three residues the previous\nround recorded are GONE, and only one\
-  \ of them by proving something:\n\n step 2  DISCHARGED. The named-absent brick was\
-  \ base-field invariance of degAff under\n         PicEtAff.map; it is PicEtAff.degAff_map\
-  \ (Picard/DegreeZeroBaseField.lean) and is\n         UNCONDITIONAL in L/K -- no\
-  \ finiteness, no separability, no algebraicity, which the\n         degAff_baseFieldShuffle\
-  \ analogy did not predict. Two expected prices were not paid: the\n         L/K\
-  \ step is free (relPicDeg_relPicAlgMap needs only a k-algebra map OF FIELDS) and\n\
-  \         relPicAlgMap_congr is not needed at all (baseChangeMap_comp_baseChangeInclude\
-  \ makes the\n         two K-algebra maps LITERALLY EQUAL). The one real constraint:\
-  \ the common reading field\n         must be BUILT from the K-side one (a field\
-  \ factor of L tensor_K N) -- for K = Q,\n         N = Q(i), L = R no K-embedding\
-  \ of N into an arbitrary finite separable P/L exists.\n         Step 2 itself +\
-  \ the twisted ledger closing to g + e:\n         Picard/Pic0ChartCoverageDegreeStep2.lean.\n\
-  \n step 6  RETRACTED -- NOT NEEDED rather than not discharged. The predecessor's\
-  \ feedback\n         diagnosis is CORRECT about the route through the greedy drop\
-  \ (drop at Z := 0, its\n         output Sigma becomes the index's Z, two different\
-  \ Z). The error was treating the drop\n         as NECESSARY. IsSplitWitness asks\
-  \ for h1 = 0 and for NEITHER effectivity NOR degree g;\n         the drop manufactures\
-  \ exactly those two, which membership discards -- visible in\n         mem_chartLocus_of_drop's\
-  \ own proof, whose split-witness half never mentions the drop,\n         the oracle,\
-  \ g, e, hchi or hdeg. Cut the drop: one Z, nothing to feed back.\n         Picard/Pic0ChartCoverageNoDrop.lean.\n\
-  \n step 3  STILL the residue, but now DERIVED not chosen. mem_chartLocus_of_vanishing_bound\
-  \ takes\n         the DAT-0a threshold b_L in exactly the shape\n         exists_bound_subsingleton_hModule_one_of_isFinite_toP1\
-  \ produces it, so what remains is\n         INSTANTIATING DAT-0a at the base-changed\
-  \ curve C_L. The I-0204 non-uniformity of m\n         stands and is honoured.\n\n\
-  WHERE THE DISCARDED PROPERTIES DO MATTER, so nothing is smuggled away: effectivity\
-  \ and h0 = 1\nare needed by DAT-C's canonical section and GAP-2 uniqueness (eq_of_picClass_eq_of_h0_one\
-  \ takes\n0 <= D), i.e. by the chart map's INJECTIVITY, not by coverage. Worksheet\
-  \ 1.4/1.5/1.6 are to be\nread as serving that; mem_chartLocus_of_drop stays the\
-  \ right theorem there.\n\nB-4 openness: CHART-U(b) AT A GENERAL TEST is now landed\
-  \ too\n(isOpen_chartLocus_of_affineLocal, Picard/Pic0ChartLocusGeneralTest.lean)\
-  \ -- see the\nc9-chartlocus.chart-u row for the two ingredients that were not where\
-  \ the tree said they were.\n\nB-6 (the IsLocallySurjective instance + DAT-glue handoff)\
-  \ still waits on divRep through C9b.\n"
+  \ ONE residue -- but the residue is\nNOT the one this row claimed yesterday.\n\n\
+  B-4 OPENNESS: CLOSED 2026-07-29 (run 0072 s0010, commit 2b6228f6a). CHART-U(b) at\
+  \ a general test is\nnow UNCONDITIONAL -- isOpen_chartLocus_of_affineLocal' (Picard/Pic0ChartLocusIsoInvariance.lean),\n\
+  IsSplitWitnessIsoInvariant discharged. See the c9-chartlocus.chart-u row for the\
+  \ instance-side\npricing lesson that came out of it.\n\nB-5 STEP 3 -- RETRACTED\
+  \ AND RESTATED 2026-07-29 (I-0660; commits e3593861a + 05cad5d80).\nThis row said\
+  \ step 3 was \"STILL the residue, but now DERIVED not chosen ... so what remains\
+  \ is\nINSTANTIATING DAT-0a at the base-changed curve C_L\". That is FALSE. A reviewer\
+  \ measured it and\nthree machine-checked statements now replace it (Picard/Pic0ChartCoverageIndexSlack.lean):\n\
+  \n * ledger_forces_b_eq_n -- at a chart index legal at parameter n (the constraint\n\
+  \   deg_k Z = m*d1 - n that chartValue_mem_pic0Subgroup requires) the hdeg hypothesis\
+  \ of\n   mem_chartLocus_of_vanishing_bound DETERMINES the threshold: b = n. It was\
+  \ never an input DAT-0a\n   could supply.\n * hb_forces_h0_eq_one -- at n = g the\
+  \ resulting hb forces EVERY degree-g divisor to have h0 = 1\n   (rank anchor + chi-ledger).\
+  \ That is FALSE on a curve with a moving degree-g family, so there is\n   no route\
+  \ through b = g at all. This SHARPENS the reviewer, who priced it as \"stronger\
+  \ than any\n   threshold result in the tree\" -- it is stronger than what is true.\
+  \ DAT-0a's own bound is\n   n1*deg F + g with 0 < deg F, hence strictly above g\
+  \ for n1 >= 1.\n * index_of_threshold -- what survives, and it corrects the reviewer's\
+  \ conclusion: hdeg IS\n   satisfiable for every b >= 0, at chart parameter n :=\
+  \ b.toNat, because n is FREE across the\n   whole chart layer (divFunctor, chartValue,\
+  \ chartValueTrans, abelSigmaChart are all stated at\n   arbitrary n; n = g is where\
+  \ the DIVISOR REPRESENTABILITY lane instantiates, not something the\n   coverage\
+  \ theorem knows). So coverage-at-an-index is not blocked.\n\nTHE RESIDUE, therefore,\
+  \ is neither prior reading: it is RECONCILE THE CHART PARAMETER WITH THE\nTHRESHOLD\
+  \ -- carry the slack in Z at parameter g, the g + e shape classDeg_presenting_twist_eq_add\n\
+  already has, whose legality (worksheet 1.1 demands 0 <= Sigma AND deg = m*d1 - g)\
+  \ is the open\nquestion. That is also not the reviewer's proposed repair verbatim:\
+  \ they proposed restating with\nslack and themselves noted it collides with that\
+  \ legality.\n\nSTEPS 1, 2, 4, 5 stand as before; step 2 discharged via PicEtAff.degAff_map\n\
+  (Picard/DegreeZeroBaseField.lean, unconditional in L/K); step 6 RETRACTED as unnecessary\
+  \ since\nIsSplitWitness asks for h1 = 0 and for neither effectivity nor degree g\n\
+  (Picard/Pic0ChartCoverageNoDrop.lean). The reviewer independently re-verified both\
+  \ of those and\nneither is disturbed.\n\nWHERE THE DISCARDED PROPERTIES DO MATTER:\
+  \ effectivity and h0 = 1 are needed by DAT-C's canonical\nsection and GAP-2 uniqueness,\
+  \ i.e. by INJECTIVITY, not by coverage.\n\nB-6 (the IsLocallySurjective instance\
+  \ + DAT-glue handoff) still waits on divRep through C9b, whose\nown gate is now\
+  \ the single clause IsChartUniv.\n"
 status: pending
 kind: proof
 priority: normal
@@ -54,7 +57,7 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:09.039287+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-28T17:37:13.287446+00:00'
+  updated_at: '2026-07-28T19:37:49.611215+00:00'
   milestone: w4-tail
   owner: ajcr-charts
   pinned_commits:

@@ -2,29 +2,31 @@ id: AJCR.w4-rep.datum.dat-c.c9-chartlocus.c9b
 title: 'C9b: f_c and the (f, hf) chart pair (CERT-Sigma-gated; developable parametrically)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "The C9 DELIVERABLE PROPER: f_c, the chart morphism, and the (f, hf) pair\
-  \ that\npic0RepresentableByOfCharts (Pic0SigmaSheaf.lean:161) consumes.\n\nGATE,\
-  \ unchanged and still real: CERT-Sigma, not merely divRep. hf needs CHART-U(c) --\
-  \ on the chart\nlocus the Abel map is a bijection onto its image because the normalized\
-  \ effective representative\nis unique (DAT-C GAP-2, relative form) -- plus the classifier.\
-  \ The composition half of hf is\nlanded (isOpenImmersion_presheaf_restrictChart,\
-  \ Picard/Pic0ChartPair.lean), and CHART-U(c) is\npinned in Lean as IsChartUniv rather\
-  \ than left in a worksheet.\n\nWHAT MOVED 2026-07-28 (run 0072 s0008, lane ajcr-charts)\
-  \ -- the V of restrictChart:\n\nc9b consumes `restrictChart f V` at V := chartLocus,\
-  \ so it needs chartLocus OPEN over the test\nthat carries the universal family,\
-  \ i.e. a GENERAL test, not an affine one. That openness is now\nlanded at the general\
-  \ test: isOpen_chartLocus_of_affineLocal\n(Picard/Pic0ChartLocusGeneralTest.lean),\
-  \ which reduces general-test openness to the landed affine\nopenness by affine-piece\
-  \ locality.\n\nIts ONE remaining input is IsSplitWitnessIsoInvariant -- the transport\
-  \ of IsSplitWitness along an\nISO of residue fields. Checked NON-VACUOUS (Iff.rfl\
-  \ fails). It is NOT certificate- or\ndivRep-gated, so it is the cheapest live brick\
-  \ on this row; expected route is PicEtAff.map_map\nplus map_id, not geometry. Two\
-  \ related corrections are recorded on the chart-u row, including one\nadvertised\
-  \ declaration that does not exist (I-0650).\n\nSO THE HONEST SPLIT of what c9b owes,\
-  \ after this pass:\n (a) CHART-U(c) / IsChartUniv -- CERT-Sigma-gated, genuinely\
-  \ blocked;\n (b) chartLocus openness at the general test -- landed modulo IsSplitWitnessIsoInvariant,\
-  \ and\n     that residue is developable COLD, today, by any lane.\nThe row stays\
-  \ blocked because (a) is, but (b) is no longer part of the wall.\n"
+summary: "C9b: f_c and the (f, hf) chart pair that pic0RepresentableByOfCharts (Pic0SigmaSheaf.lean:161)\n\
+  consumes. STILL BLOCKED, and the gate is now a SINGLE clause.\n\nSTATE 2026-07-29\
+  \ (run 0072 s0010, lane ajcr-charts, commit 2b6228f6a):\n\nTHE OPENNESS HALF IS\
+  \ OFF THE WALL ENTIRELY. c9b consumes restrictChart f V at V := chartLocus, so\n\
+  it needs chartLocus open over the test carrying the universal family, i.e. a GENERAL\
+  \ test. That is\nnow UNCONDITIONAL: isOpen_chartLocus_of_affineLocal' (Picard/Pic0ChartLocusIsoInvariance.lean)\n\
+  carries no hypothesis, because IsSplitWitnessIsoInvariant is discharged. Certificate-free\
+  \ and\ndivRep-free. The 2026-07-28 split of what c9b owed into (a) + (b) is therefore\
+  \ resolved on (b).\n\nWHAT REMAINS IS EXACTLY (a): CHART-U(c) / IsChartUniv (pinned\
+  \ in Lean at Pic0ChartPair.lean:158,\nnot left in a worksheet). On the chart locus\
+  \ the Abel map is a bijection onto its image because the\nnormalized effective representative\
+  \ is unique -- the RELATIVE form of DAT-C GAP-2 -- plus the\nclassifier divRepClassifyZar.\
+  \ CERT-Sigma-gated, genuinely.\n\nWHAT IS ALREADY LANDED ON THE hf SIDE, so no lane\
+  \ re-derives it:\n * the composition half: isOpenImmersion_presheaf_restrictChart\
+  \ (Pic0ChartPair.lean), unconditional\n   in the restriction, via MorphismProperty.relative\
+  \ stability under composition;\n * the field-level input of GAP-2: Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one\n\
+  \   (RiemannRoch/EffectiveUniqueness.lean:144). What is missing is its RELATIVE\
+  \ form over the locus;\n * chartHom_restrictChart, so the LocallyOfFiniteType hypothesis\
+  \ of JacobianData.ofCharts is\n   inherited by every restriction.\n\nSO THE HONEST\
+  \ SPLIT IS NOW ONE ITEM, NOT TWO: (a) relative GAP-2 + classifier, CERT-Sigma-gated.\n\
+  Nothing else. A lane that discharges IsChartUniv gets hf by feeding it to\nisOpenImmersion_presheaf_restrictChart,\
+  \ and gets V from the unconditional general-test openness.\n\nNOT WRITTEN, DELIBERATELY:\
+  \ IsChartUniv against a guessed divRep endpoint. ajcr-divrep has published\nDivRepAffinePullback.representableBy\
+  \ and its own residue is the DivRepAffinePullback structure;\nwriting the relative\
+  \ GAP-2 against a guessed shape is what the four-lane thread exists to prevent.\n"
 status: blocked
 kind: proof
 priority: normal
@@ -47,6 +49,6 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  updated_at: '2026-07-28T16:58:01.055892+00:00'
+  updated_at: '2026-07-28T19:37:17.705501+00:00'
   milestone: w4-tail
   owner: ajcr-charts

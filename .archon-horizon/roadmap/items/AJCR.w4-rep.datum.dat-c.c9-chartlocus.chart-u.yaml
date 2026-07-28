@@ -3,39 +3,41 @@ title: 'CHART-U(a)/(b): the co-signed chartLocus c lambda and isOpen_chartLocus 
   missing inputs, all divRep-free)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "THE CO-SIGNED BRICK. chartLocus and isOpen_chartLocus. DONE as of 2026-07-26;\
-  \ EXTENDED TO A\nGENERAL TEST 2026-07-28 (run 0072 s0008, lane ajcr-charts).\n\n\
-  WHAT LANDED THIS PASS: isOpen_chartLocus_of_affineLocal\n(Picard/Pic0ChartLocusGeneralTest.lean)\
-  \ -- chartLocus open over every affine-open test object\nimplies open over T. Pic0ChartLocusIsOpen's\
-  \ docstring promised exactly this \"by the affine-piece\nlocality of transport (iii)\
-  \ ... needs no new mathematics\". The assembly is proved; TWO of its\nstated ingredients\
-  \ were not where the tree said they were, and both corrections are the point of\n\
-  this row:\n\n 1. ADVERTISED-BUT-ABSENT (I-0624). Pic0ChartTestPoint's header justifies\
-  \ chart-independence\n    being free by \"the chart comparison becomes a lemma (testPointField_affineOpen_iso)\
-  \ instead\n    of a side condition. That is the whole reason this file is short.\"\
-  \ NO DECLARATION OF THAT\n    NAME EXISTS anywhere in the workspace -- the sole\
-  \ occurrence was that sentence, and it was\n    load-bearing prose (cited as the\
-  \ reason a side condition is unnecessary). Now supplied as\n    testPointField_fromSpecAffine_isIso,\
-  \ and for a DIFFERENT reason than the header implies: not\n    a Spec.residueFieldIso\
-  \ computation but the structural fact that fromSpecAffine is an OPEN\n    IMMERSION\
-  \ on carriers, and mathlib already knows an open immersion induces an ISO of residue\n\
-  \    fields (Scheme.instIsIsoCommRingCatResidueFieldMapOfIsOpenImmersion).\n\n 2.\
-  \ \"NEEDS NO NEW MATHEMATICS\" IS FALSE, BY EXACTLY ONE LEMMA. The tree's landed\
-  \ fibre-field\n    invariance is about HasWitnessH1Vanishing; nothing transports\
-  \ IsSplitWitness along a field\n    ISO (measured: its only invariance mentions\
-  \ are two docstring sentences). Isolated as\n    IsSplitWitnessIsoInvariant, and\
-  \ CHECKED NON-VACUOUS -- Iff.rfl fails, the two sides are not\n    definitionally\
-  \ equal, so this is a real obligation and not a restatement. Believable and\n  \
-  \  small: along an iso the same L presents the transported class, so it should be\n\
-  \    PicEtAff.map_map plus map_id, not geometry.\n\nAlso corrected: the locality\
-  \ bookkeeping is NOT the isOpen_iff_forall_isOpen_inter the docstring\nnames, because\
-  \ the affine piece's locus lives in a DIFFERENT SPACE (Spec Gamma(T.left,U), not\n\
-  T.left). The bridge is IsAffineOpen.range_fromSpec plus the image of an open immersion;\n\
-  chartLocus_fromSpecAffine_eq_preimage carries it, and it also DISCHARGES transport\
-  \ (i) for the\naffine-piece maps in BOTH directions (a one-sided containment would\
-  \ not give openness).\n\nNEXT ON THIS ROW: prove IsSplitWitnessIsoInvariant. It\
-  \ is the only input between the landed\naffine openness and isOpen_chartLocus over\
-  \ a general test.\n"
+summary: "CHART-U(a)/(b): DONE, and as of 2026-07-29 UNCONDITIONAL at a GENERAL TEST.\n\
+  \nWHAT LANDED THIS PASS (run 0072 s0010, lane ajcr-charts, commit 2b6228f6a):\n\
+  IsSplitWitnessIsoInvariant is DISCHARGED (Picard/Pic0ChartLocusIsoInvariance.lean),\
+  \ which was the\nONE input between the landed affine openness and isOpen_chartLocus\
+  \ over a general test. So\nisOpen_chartLocus_of_affineLocal' and chartLocus_fromSpecAffine_eq_preimage'\
+  \ now carry NO\nhypothesis. This row is closed as far as (a)/(b) go.\n\nTHE PREDICTION\
+  \ ON THIS ROW WAS HALF RIGHT, AND THE MISSING HALF IS THE TRANSFERABLE PART.\nBoth\
+  \ this row and c9b priced the residue as \"PicEtAff.map_map plus map_id, not geometry\"\
+  . True of\nthe CLASS side: map_mapAlg_eq_map (map_map with an explicit AlgHom into\
+  \ a common target) plus\npicEtAffineEquiv_naturality, with the witness clause carried\
+  \ through untouched.\n\nWhat neither row mentioned is the INSTANCE side, which is\
+  \ the actual content. IsSplitWitness\nexistentially quantifies a splitting field\
+  \ L TOGETHER WITH FOUR INSTANCES about L over the reading\nfield (Algebra, IsScalarTower,\
+  \ Module.Finite, Algebra.IsSeparable). Transporting along\ne : K equiv K' keeps\
+  \ THE SAME L and must re-derive all four over K' along e.symm: two by\nIsScalarTower.of_algebraMap_eq,\
+  \ two by mathlib transports stated for exactly that commuting square\n(Module.Finite.of_equiv_equiv,\
+  \ Algebra.IsSeparable.of_equiv_equiv). RULE: price the instances a\npredicate quantifies,\
+  \ not only its data.\n\nTWO BRICKS NOBODY HAD, both about testPoint and both now\
+  \ supplied:\n 1. Over.testPointFieldMap_comp_algebraMap -- the residue-field extension\
+  \ a morphism of tests\n    induces is a k-ALGEBRA map. The tree recorded it only\
+  \ as an Algebra over the SOURCE field\n    (testPointFieldAlgebra), and without\
+  \ the k-compatibility it cannot feed PicEtAff.mapAlg at\n    all. It is Spec.preimage\
+  \ of the testPoint_comp_left square plus the two Over triangles.\n 2. Over.testPoint_comp\
+  \ -- the same naturality square as an equality of morphisms IN THE SLICE,\n    through\
+  \ Over.overSpecMap. Pic0ChartTestPoint states it only for the underlying scheme\n\
+  \    morphisms, but picEtMap is indexed by Over-morphisms, so every class-level\
+  \ transport needs\n    this form.\n\nAND THE IsIso HYPOTHESIS IS NOT PACKAGING --\
+  \ checked, expecting it to be. The transported\nAlgebra K' L is algebraMap K L composed\
+  \ with e.symm, so it needs e SURJECTIVE. Along a\nnon-invertible K -> K' the old\
+  \ L carries no K'-structure at all and one must base-change L, which\nis the separable\
+  \ route (exists_witness_of_separable_extension) and strictly harder. Do not weaken\n\
+  that hypothesis to an AlgHom anywhere.\n\nThe two 2026-07-28 corrections on this\
+  \ row stand: testPointField_affineOpen_iso was advertised and\nabsent (supplied\
+  \ as testPointField_fromSpecAffine_isIso, I-0650), and \"needs no new mathematics\"\
+  \nwas false by exactly the one lemma now proved.\n"
 status: done
 kind: proof
 priority: normal
@@ -58,7 +60,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  updated_at: '2026-07-28T17:37:19.117533+00:00'
+  updated_at: '2026-07-28T19:36:49.439141+00:00'
   milestone: w4-tail
   owner: ajcr-charts
   pinned_commits:
