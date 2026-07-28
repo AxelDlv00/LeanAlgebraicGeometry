@@ -13276,10 +13276,10 @@
     "macros": {},
     "states": {
       "blocked": 20,
-      "closed": 8009,
+      "closed": 8250,
       "formalized_open": 169,
       "informal": 18,
-      "ready": 28
+      "ready": 32
     },
     "warnings": [
       "thm:jacobian_proper: \\lean{AlgebraicGeometry.Jacobian.instIsProper} not found in Lean sources",
@@ -28611,7 +28611,7 @@
       "id": "def:baseChange",
       "lean_file": "AlgebraicJacobian/Challenge.lean",
       "lean_name": "AlgebraicGeometry.baseChange",
-      "lean_source": "noncomputable abbrev baseChange (k L : Type u) [Field k] [Field L] [Algebra k L] :\n    Over (Spec (.of k)) \u2964 Over (Spec (.of L)) :=\n  Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap k L)))\n\ninstance {k L : Type u} [Field k] [Field L] [Algebra k L] (C : Over (Spec (.of k)))\n    [IsProper C.hom] : IsProper ((baseChange k L).obj C).hom :=\n  MorphismProperty.baseChange_obj (Spec.map (CommRingCat.ofHom (algebraMap k L))) C inferInstance\n\ninstance {k L : Type u} [Field k] [Field L] [Algebra k L] (C : Over (Spec (.of k)))\n    [GeometricallyIrreducible C.hom] : GeometricallyIrreducible ((baseChange k L).obj C).hom :=\n  MorphismProperty.baseChange_obj (Spec.map (CommRingCat.ofHom (algebraMap k L))) C inferInstance\n\ninstance {k L : Type u} [Field k] [Field L] [Algebra k L] (C : Over (Spec (.of k)))\n    [SmoothOfRelativeDimension 1 C.hom] :\n    SmoothOfRelativeDimension 1 ((baseChange k L).obj C).hom :=\n  have : MorphismProperty.IsStableUnderBaseChange (@SmoothOfRelativeDimension 1) :=\n    smoothOfRelativeDimension_isStableUnderBaseChange 1\n  MorphismProperty.baseChange_obj (Spec.map (CommRingCat.ofHom (algebraMap k L))) C inferInstance\n\n-- The coherences mention curves of the form `(\ud835\udfed _).obj C` and `(F \u22d9 G).obj C`.\ninstance {k : Type u} [Field k] (C : Over (Spec (.of k))) [IsProper C.hom] :\n    IsProper ((\ud835\udfed (Over (Spec (.of k)))).obj C).hom := \u2039_\u203a\ninstance {k : Type u} [Field k] (C : Over (Spec (.of k))) [GeometricallyIrreducible C.hom] :\n    GeometricallyIrreducible ((\ud835\udfed (Over (Spec (.of k)))).obj C).hom := \u2039_\u203a\ninstance {k : Type u} [Field k] (C : Over (Spec (.of k))) [SmoothOfRelativeDimension 1 C.hom] :\n    SmoothOfRelativeDimension 1 ((\ud835\udfed (Over (Spec (.of k)))).obj C).hom := \u2039_\u203a\n\ninstance {k L M : Type u} [Field k] [Field L] [Field M] [Algebra k L] [Algebra L M]\n    (C : Over (Spec (.of k))) [IsProper C.hom] :\n    IsProper ((baseChange k L \u22d9 baseChange L M).obj C).hom :=\n  inferInstanceAs (IsProper ((baseChange L M).obj ((baseChange k L).obj C)).hom)\ninstance {k L M : Type u} [Field k] [Field L] [Field M] [Algebra k L] [Algebra L M]\n    (C : Over (Spec (.of k))) [GeometricallyIrreducible C.hom] :\n    GeometricallyIrreducible ((baseChange k L \u22d9 baseChange L M).obj C).hom :=\n  inferInstanceAs (GeometricallyIrreducible ((baseChange L M).obj ((baseChange k L).obj C)).hom)\ninstance {k L M : Type u} [Field k] [Field L] [Field M] [Algebra k L] [Algebra L M]\n    (C : Over (Spec (.of k))) [SmoothOfRelativeDimension 1 C.hom] :\n    SmoothOfRelativeDimension 1 ((baseChange k L \u22d9 baseChange L M).obj C).hom :=\n  inferInstanceAs (SmoothOfRelativeDimension 1 ((baseChange L M).obj ((baseChange k L).obj C)).hom)",
+      "lean_source": "noncomputable abbrev baseChange (k L : Type u) [Field k] [Field L] [Algebra k L] :\n    Over (Spec (.of k)) \u2964 Over (Spec (.of L)) :=\n  Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap k L)))",
       "lean_status": "lean_ok",
       "level": "coarse",
       "mathlib_ok": false,

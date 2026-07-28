@@ -1,0 +1,50 @@
+id: I-0522
+provider: local
+kind: memory
+body: "WHEN PORTING FROM A SIBLING PROJECT, THE UNCOUNTED BRICK IS THE DELTA BETWEEN\
+  \ THEIR SORRY AND YOUR HYPOTHESIS.\n\nPaid 2026-07-28 (run 0073, ajcr-w5-av), caught\
+  \ by work-reviewer, fixed in commit e441cf715.\n\nWHAT HAPPENED. AJC had the dual-number\
+  \ tangent kit sorry-free in five generic files. I ported all five faithfully (verified\
+  \ code-identical) and declared the Wave-5 keystone \"reduced to the eps-kernel,\
+  \ any later discharge is exact\". False. The eps-kernel identification is a bijection\
+  \ of SETS and finrank does not transport along a bare Equiv — which my OWN DOCSTRING\
+  \ stated two lines above the overstatement. The count additionally needs an AddEquiv\
+  \ plus the intertwining law j (r.x) = i r . j x across the residue-field bijection\
+  \ kappa(e) -> k, because the two sides are modules over genuinely different rings\
+  \ (neither LinearEquiv.finrank_eq nor restrictScalars applies).\n\nTHE DIAGNOSTIC\
+  \ I SHOULD HAVE RUN, and it costs one minute: the sibling was working the SAME mathematics\
+  \ and had isolated its own residue as two declarations I did not port —\n  finrank_eq_of_addEquiv_of_bijective_smul\
+  \       Pic0AbelianVariety.lean:636 (the finrank bridge)\n  semilinearComparison_cotangentSpaceDual_h1Cok\
+  \  Pic0AbelianVariety.lean:712 (the residue proper)\nThe five files I took were\
+  \ the easy self-contained part; the two I left were exactly where the sibling had\
+  \ already concentrated the difficulty. So: after porting, ask WHICH RESIDUAL STATEMENT\
+  \ THE OTHER SIDE ISOLATED for the same theorem. If their sorry is not the same shape\
+  \ as your hypothesis, the difference is a brick you have not counted.\n\nSECOND,\
+  \ GENERAL CHECK (this is the reusable one): walk your reduction chain link by link\
+  \ and ask what STRUCTURE each link preserves. A bare Equiv in a chain that ends\
+  \ in a dimension claim is where the reduction silently stops being a reduction.\
+  \ Set bijection -> no finrank. AddEquiv without scalar compatibility -> no finrank\
+  \ over different rings. The bridge for the last case is mathlib rank_eq_of_equiv_equiv\
+  \ (Dimension/Basic.lean:239), which needs only a BIJECTION of scalars, not a ring\
+  \ hom — but mathlib has no finrank-level form, so it must be ported.\n\nAlso: mathlib\
+  \ has rank_eq_of_equiv_equiv, NOT a finrank version. Both projects now carry the\
+  \ finrank unfolding locally."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:46:58.015437+00:00'
+updated_at: '2026-07-28T05:46:58.015447+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0002-horizon-ajcr-w5-av
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

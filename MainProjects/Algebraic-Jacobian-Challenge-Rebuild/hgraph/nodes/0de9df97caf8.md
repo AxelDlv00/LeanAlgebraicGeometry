@@ -9,9 +9,10 @@ docstring: 'Transport of `pullback.fst` along an equality of the second leg (pro
 file: AlgebraicJacobian/Picard/Pic0ThetaCocycle.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.pullback_fst_congr_left.
 type: lean
-updated: '2026-07-18T03:38:57'
+updated: '2026-07-28T13:42:21'
 ---
 private theorem pullback_fst_congr_left.{w} {D : Type w} [Category.{u} D] {W S T : D}
     (a : W ⟶ S) {f g : T ⟶ S} (hfg : f = g) [HasPullback a f] [HasPullback a g]

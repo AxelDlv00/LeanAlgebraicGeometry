@@ -1,0 +1,75 @@
+id: I-0521
+provider: local
+kind: issue
+body: 'R2 WIDENING IS LANDED BUT UNREVIEWED — the three checks a fresh-context reviewer
+  should do first (ajcr-cert-r2, run 0070).
+
+
+  The widening of DivFamZar to arbitrary affine-open pieces (human decision I-0492)
+  is executed: nine files Picard/DivisorFamilyAff{Cover,Adaptation,Reindex,PerPiece,Zar,Collapse,Swallow,Assemble}.lean,
+  all sorry-free, full root build green (lake build AlgebraicJacobian, 9143 jobs,
+  exit 0). Commits 3bfd760e9, 2bbb924c3, 787291cbf, 564b6b8bd, caf76407f, adf4492f5,
+  e3d45e2d6, db94ce21a, plus spec-dd-r ADDENDUM 5 (40c548c8a, amended c71a8f684).
+
+
+  WHY THIS ISSUE EXISTS: I dispatched a work-reviewer audit, a consumer-surface survey
+  and a janitor pass. None of the three returned — output files went quiet and no
+  completion notification arrived. So the material is self-checked only. It builds
+  and it is sorry-free, but nobody independent has looked at it.
+
+
+  THREE THINGS TO CHECK, in the order a silent error would be most expensive:
+
+
+  1. flat_sections_of_flat_hom (DivisorFamilyAffCover.lean) — the ONE new commutative-algebra
+  input; everything (c1)-flat rests on it. Claim: X over Spec K with Flat (X -> Spec
+  K) and V affine open implies Module.Flat K Gamma(X,V). Route: Scheme.overAlgebraMap
+  factors as GammaSpecIso.inv then (X -> Spec K).appLE top V; HasRingHomProperty.appLE
+  gives RingHom.Flat of the second, RingHom.Flat.of_bijective the first, RingHom.Flat.comp
+  finishes. VERIFY the factorisation really is the overAlgebraMap of Cohomology/ModuleKSheaf.lean:192
+  and that the proof is not accidentally vacuous. Also instFlatRelCurveHom: does Flat.isStableUnderBaseChange.of_isPullback
+  applied to Over.isPullback_left C (overSpec k R) conclude flatness of relCurve C
+  R -> Spec R, and not of some other leg? (I hit and fixed exactly one type mismatch
+  there when I wrongly inserted a .flip, which is why I flag it.)
+
+
+  2. AffAdaptation.IsCertified (DivisorFamilyAffAdaptation.lean) vs DivisorAdaptation.IsCertified
+  (DivisorFamily.lean:426-441) — all seven clauses should be present with identical
+  content. The whole ''consumers port by reindexing alone'' claim depends on nothing
+  having been quietly weakened. I wrote it to match and believe it does; unchecked
+  by anyone else.
+
+
+  3. AffCoverData.SwallowedBy (DivisorFamilyAffSwallow.lean) — the Stacks 0B8B input,
+  deliberately an explicit Prop rather than derived (mathlib has no 0B8B; this tree
+  builds no curve but P1). Confirm it is genuinely a HYPOTHESIS at every use site
+  and not accidentally satisfiable from nothing, and that it is not a field of AffCoverData
+  / AffAdaptation / IsCertified (obligation I-0492 4(i) forbids hiding it).
+
+
+  WHAT I DID VERIFY MYSELF: no widened declaration references the refuted chart machinery
+  (grep for subset_chart0_or_disjoint_chart0 etc. returns only prose); the certificate
+  layer never mentions ChartTyping; all commits are ancestors of HEAD and all files
+  byte-match HEAD; the shared ledger index has no staged deletions.
+
+
+  Task ajcr-cert-r2 was left NOT done for this reason. Flip it once the above is checked.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:46:31.483550+00:00'
+updated_at: '2026-07-28T05:46:31.483562+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0002-horizon-ajcr-cert-r2
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

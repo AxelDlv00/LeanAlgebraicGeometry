@@ -2,48 +2,53 @@ id: AJC.pic0av.structure
 title: Smoothness, properness, and irreducibility
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Prove Pic0 is smooth and proper; combine these with the completed geometric-irreducibility\
+summary: "Prove Pic0 is smooth and proper; combine with the completed geometric-irreducibility\
   \ and\ngroup-object infrastructure to obtain the abelian-variety structure.\n\n\
-  STATE (run 0067, ajc-pic0av, commit 082109747): BOTH structural sorries are now\
-  \ assemblies over\nstrictly smaller named obligations, and the discharged parts\
-  \ are PROVED rather than asserted. The\npinned statements smooth / proper / isAbelianVariety\
-  \ keep their types verbatim.\n\nSMOOTHNESS -- fully reduced to GeometricallyReduced\
-  \ (Pic0Scheme C).hom, and nothing else.\nPic0.smooth_of_geometricallyReduced is\
-  \ PROVED from mathlib's smooth_of_grpObj\n(AlgebraicGeometry/Group/Smooth.lean:64),\
-  \ which ALREADY CONTAINS the two things the old docstring\ndescribed as remaining\
-  \ work: the propagation of smoothness from the identity by the translation\nisomorphisms\
-  \ GrpObj.mulRight, and the descent to a non-closed base field by\nMorphismProperty.of_pullback_snd_of_descendsAlong\
-  \ along Spec kbar -> Spec k. So neither translation\nnor the tangent space is owed\
-  \ here. Its two structural inputs are landed in the file:\nPic0.locallyOfFiniteType,\
-  \ and Pic0.grpObj keyed at the Over.mk spelling (Over.mk X.hom is X by\nstructure\
-  \ eta for Comma, so the letI ascription is pure defeq; instance SEARCH alone will\
-  \ not unfold\nOver.mk, which is why it is written out).\n  The single open input,\
-  \ Pic0.geometricallyReduced, is a genuine theorem and NOT a synthesis step:\nSmooth.geometricallyReduced\
-  \ (Curve/GeometricallyReduced.lean) is the CONVERSE direction and using it\nwould\
-  \ be circular, and no other producer exists in the import closure for a scheme not\
-  \ already known\nsmooth. The mathematics is Cartier's theorem in characteristic\
-  \ zero (Kleiman 5 Cor cor:ch0) and, in\ncharacteristic p, the curve-specific H^2(C,O_C)\
-  \ = 0 making the deformation functor unobstructed\n(Kleiman 5 Cor cor:sm, Ex ex:jac).\
-  \ H^2 vanishes on a curve for dimension reasons, which is why the\ncurve case holds\
-  \ in EVERY characteristic unlike the general Picard scheme (Igusa's surface).\n\
-  \  This confirms in Lean the assessment recorded at Jacobian.lean:377-394.\n\nPROPERNESS\
-  \ -- reduced to UniversallyClosed alone.\nPic0.proper_of_universallyClosed is PROVED:\
-  \ mathlib's IsProper is the three-field structure\nIsSeparated + UniversallyClosed\
-  \ + LocallyOfFiniteType (Morphisms/Proper.lean; quasi-compactness is\nNOT a field,\
-  \ being implied by universal closedness), and TWO OF THE THREE were already theorems\
-  \ of\nthis file -- Pic0.isSeparated and Pic0.locallyOfFiniteType. They are now used\
-  \ rather than merely\npresent.\n  The single open input, Pic0.universallyClosed,\
-  \ is additionally attackable through the already-proved\nPic0.universallyClosed_of_baseChange\
-  \ (Stacks 02KS fpqc descent), which reduces it to the algebraically\nclosed case\
-  \ where Kleiman's projectivity argument lives. Note the standing caveat of inbox\
-  \ I-0074\n(Caveat 2): PicScheme.smoothProperQuotient is weaker than Kleiman lm:qt\
-  \ and unprovable as stated\nbecause mathlib v4.31 has no quasi-projectivity vocabulary\
-  \ -- which is exactly the vocabulary\nKleiman's first conclusion needs. So expect\
-  \ this to be discharged by base change, NOT by formalising\nquasi-projectivity from\
-  \ scratch.\n\nMEASUREMENT CAVEAT, per the human's standing warning on inbox I-0493:\
-  \ smooth and proper report CLEAN\naxioms as stated only because they quantify over\
-  \ [HasPicScheme C] and the caller discharges it. Do not\nquote a declaration-level\
-  \ axiom check here as a completeness claim; measure at a synthesis site with\nscripts/axiom-frontier.lean.\n"
+  STATE (run 0067 round 1, ajc-pic0av, commit 9833750f9). Both structural residues\
+  \ are assemblies\nover ONE named input each, and for PROPERNESS that input no longer\
+  \ mentions the identity\ncomponent at all.\n\nPROPERNESS -- reduced to universal\
+  \ closedness of the AMBIENT Picard scheme.\n * Pic0.proper_of_universallyClosed\
+  \ (run 0067 r0, PROVED): IsProper is the three-field\n   IsSeparated + UniversallyClosed\
+  \ + LocallyOfFiniteType (quasi-compactness is NOT a field),\n   and this file already\
+  \ proved the other two.\n * Pic0.universallyClosed_of_ambient (run 0067 r1, PROVED):\
+  \ UniversallyClosed (PicScheme C).hom\n   implies UniversallyClosed (Pic0Scheme\
+  \ C).hom. Pic^0 -> Pic is a CLOSED immersion (second\n   conjunct of the sibling's\
+  \ isOpenSubgroupScheme), a closed immersion is universally closed,\n   the property\
+  \ is stable under composition, and the composite IS (Pic0Scheme C).hom by Over.w.\n\
+  \   The clopen-ness is load-bearing -- an OPEN immersion is not universally closed,\
+  \ so this\n   would fail for a general open subgroup scheme.\n * Pic0.proper_of_ambient_universallyClosed\
+  \ (PROVED): the composite. Pic^0 is proper as soon as\n   PIC is universally closed.\n\
+  WHY THAT IS THE RIGHT SHAPE, and it is the reason this is progress rather than bookkeeping:\n\
+  Kleiman 5 Thm th:qpp&p is a theorem about Pic_{C/k}, NOT about its identity component.\
+  \ The\nold reduction stated its open input on Pic^0, so the eventual proof would\
+  \ have had to\nre-descend to the component; the residue now sits exactly where the\
+  \ source argument speaks.\nNote the standing caveat of I-0074 (Caveat 2): PicScheme.smoothProperQuotient\
+  \ is weaker than\nKleiman lm:qt and unprovable as stated because mathlib v4.31 has\
+  \ no quasi-projectivity\nvocabulary. Combined with the above, expect the residue\
+  \ to be discharged by base change to kbar\n(universallyClosed_of_baseChange, Stacks\
+  \ 02KS, already proved) rather than by formalising\nquasi-projectivity.\n\nSMOOTHNESS\
+  \ -- reduced to GeometricallyReduced (Pic0Scheme C).hom and nothing else.\nPic0.smooth_of_geometricallyReduced\
+  \ is PROVED from mathlib's smooth_of_grpObj, which already\ncontains BOTH the translation\
+  \ propagation (GrpObj.mulRight) and the descent along\nSpec kbar -> Spec k (of_pullback_snd_of_descendsAlong).\
+  \ So neither translation nor the tangent\nspace is owed. The single open input Pic0.geometricallyReduced\
+  \ is a genuine theorem, not a\nsynthesis step: Smooth.geometricallyReduced is the\
+  \ CONVERSE and using it is circular, and no\nother producer exists in the import\
+  \ closure for a scheme not already known smooth. Cartier in\ncharacteristic zero\
+  \ (Kleiman 5 cor:ch0); in characteristic p the curve-specific H^2(C,O_C) = 0\n(cor:sm,\
+  \ ex:jac), which vanishes for dimension reasons -- that is why the curve case holds\
+  \ in\nEVERY characteristic unlike the general Picard scheme (Igusa's surface).\n\
+  \  A CROSS-PROJECT NEGATIVE worth having (I-0495, ajcr-w5-av, machine-probed): 'IsReduced\
+  \ after\nbase change to kbar => GeometricallyReduced' is NOT in mathlib and NOT\
+  \ in either project.\nMathlib handles algebraic K/k and stops; Algebra.IsGeometricallyReduced\
+  \ has ZERO consumers under\nMathlib/AlgebraicGeometry/. And mathlib's smooth_of_grpObj_of_isAlgClosed\
+  \ is PRIVATE -- making\nit public would leave both projects needing only reducedness\
+  \ over kbar. Possible upstream ask.\n\nMEASUREMENT CAVEAT (human's standing warning,\
+  \ I-0493/I-0491): smooth and proper report clean\naxioms as stated only because\
+  \ they quantify over [HasPicScheme C]. All run-0067 claims here were\nmeasured at\
+  \ a synthesis site WITH A CONTROL (probe_proper_given_ambient_uc clean vs\nprobe_proper_bare\
+  \ sorryAx). Sharper form of the same caveat, from ajc-albanese's reviewer: no\n\
+  axiom-clean inhabitant of the [HasPicScheme C] package exists in this development,\
+  \ so\n'axiom-clean given the package' is the only claim anyone here can make."
 status: active
 kind: proof
 priority: high
@@ -66,5 +71,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-28T03:51:23.598040+00:00'
+  updated_at: '2026-07-28T05:42:43.709723+00:00'
   owner: ajc-pic0av
