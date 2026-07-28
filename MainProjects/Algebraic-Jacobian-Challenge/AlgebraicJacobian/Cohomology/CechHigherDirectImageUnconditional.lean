@@ -165,6 +165,70 @@ theorem preservesFiniteLimits_of_preservesMonomorphisms (F : C ⥤ D) [F.Additiv
 
 end RightExactMono
 
+/-! ### Monomorphisms of `𝒪_X`-modules are sectionwise
+
+The mono half of flat left-exactness is checked on sections, so both directions of
+"mono ⟺ injective on sections" are needed.  The `⟸` direction (over a basis) is
+`Modules.mono_of_injective_app_of_isBasis` in `Picard/FlatKernelBase.lean`; the `⟹`
+direction is below.  Together they make mono-preservation of a *sectionwise* functor
+mechanical, which discharges the open-immersion case of `pullback_preservesMonomorphisms`
+outright. -/
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **A monomorphism of `𝒪_X`-modules is injective on sections over every open.**  The
+forgetful functor `Scheme.Modules.toPresheaf` preserves limits, hence monomorphisms; a
+monomorphism of `Ab`-valued presheaves is one sectionwise (evaluation preserves limits);
+and mono in `Ab` is injectivity.  Converse of `Modules.mono_of_injective_app_of_isBasis`
+(`Picard/FlatKernelBase.lean`).  Project-local: mathlib has the iso-level
+`Scheme.Modules.Hom.isIso_iff_isIso_app` but not the mono-level statement. -/
+theorem Modules.injective_app_of_mono {X : Scheme.{u}} {M N : X.Modules} (φ : M ⟶ N)
+    [Mono φ] (U : X.Opens) : Function.Injective (φ.app U) := by
+  have h1 : Mono ((Scheme.Modules.toPresheaf X).map φ) := inferInstance
+  haveI := h1
+  have h2 : Mono (((Scheme.Modules.toPresheaf X).map φ).app (Opposite.op U)) := inferInstance
+  exact (AddCommGrpCat.mono_iff_injective _).mp h2
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **Sectionwise criterion for a monomorphism of `𝒪_X`-modules.**  If `φ` is injective on
+sections over *every* open then `φ` is a monomorphism: injectivity on all opens makes the
+underlying `Ab`-presheaf morphism sectionwise mono, hence mono in the functor category, and
+the faithful `Scheme.Modules.toPresheaf` reflects monomorphisms.  Converse of
+`Modules.injective_app_of_mono`; a basis-local sharpening (only basic opens needed) is
+`Modules.mono_of_injective_app_of_isBasis` in `Picard/FlatKernelBase.lean`, which this file
+does not import.  Project-local. -/
+theorem Modules.mono_of_injective_app {X : Scheme.{u}} {M N : X.Modules} {φ : M ⟶ N}
+    (h : ∀ U : X.Opens, Function.Injective (φ.app U)) : Mono φ := by
+  have hpre : Mono ((Scheme.Modules.toPresheaf X).map φ) := by
+    haveI : ∀ U, Mono (((Scheme.Modules.toPresheaf X).map φ).app U) := fun U =>
+      (AddCommGrpCat.mono_iff_injective _).mpr (h U.unop)
+    exact NatTrans.mono_of_mono_app _
+  haveI := hpre
+  exact (Scheme.Modules.toPresheaf X).mono_of_mono_map hpre
+
+/-- **Restriction along an open immersion preserves monomorphisms.**  Restriction is
+*sectionwise* — `((restrictFunctor f).map φ).app U = φ.app (f ''ᵁ U)` holds by `rfl`
+(`Scheme.Modules.restrict_obj`) — so injectivity on sections transfers verbatim, and
+`Modules.mono_of_injective_app_of_isBasis` over the basis of *all* opens concludes.
+Combined with `Scheme.Modules.restrictFunctorIsoPullback` this gives the open-immersion
+case of `pullback_preservesMonomorphisms` with no flatness input beyond the (automatic)
+flatness of an open immersion.  Project-local. -/
+theorem Modules.restrictFunctor_preservesMonomorphisms {X Y : Scheme.{u}} (f : X ⟶ Y)
+    [IsOpenImmersion f] : (Scheme.Modules.restrictFunctor f).PreservesMonomorphisms where
+  preserves {M N} φ hφ := by
+    haveI := hφ
+    refine Modules.mono_of_injective_app (fun U => ?_)
+    exact Modules.injective_app_of_mono φ (f ''ᵁ U)
+
+/-- **Flat pullback along an open immersion preserves monomorphisms** — the open-immersion
+case of `pullback_preservesMonomorphisms`, transported from
+`Modules.restrictFunctor_preservesMonomorphisms` along
+`Scheme.Modules.restrictFunctorIsoPullback`.  Project-local. -/
+theorem Modules.pullback_preservesMonomorphisms_of_isOpenImmersion {X Y : Scheme.{u}}
+    (f : X ⟶ Y) [IsOpenImmersion f] :
+    (Scheme.Modules.pullback f).PreservesMonomorphisms :=
+  haveI := Modules.restrictFunctor_preservesMonomorphisms f
+  Functor.preservesMonomorphisms.of_iso (Scheme.Modules.restrictFunctorIsoPullback f)
+
 /-- **Flat base change has left-adjoint pullback**, hence `g^*` preserves finite
 colimits (free: `g^* = pullback g` is a left adjoint). -/
 instance pullback_preservesFiniteColimits (g : S' ⟶ S) :
@@ -211,7 +275,12 @@ Two routes that do **not** work, and why:
   *not* `ModuleCat Γ(S,⊤)`, so quasi-coherence cannot be dropped from that route;
 * there is no mathlib "right exact + preserves monos ⟹ exact" gap any more — that is closed
   above by `preservesFiniteLimits_of_preservesMonomorphisms` — so the categorical glue is
-  *not* what is missing.  The whole obligation is now this one mono statement. -/
+  *not* what is missing.  The whole obligation is now this one mono statement.
+
+**What IS discharged**: the *open-immersion* case, `Modules.pullback_preservesMonomorphisms_of_isOpenImmersion`
+above, sorry-free — because there `g^*` is isomorphic to the sectionwise `restrictFunctor`.
+So the residual is genuinely about a general flat `g`, where no sectionwise formula holds and
+the stalk model is unavoidable. -/
 theorem pullback_preservesMonomorphisms (g : S' ⟶ S) [Flat g] :
     (Scheme.Modules.pullback g).PreservesMonomorphisms := sorry
 
