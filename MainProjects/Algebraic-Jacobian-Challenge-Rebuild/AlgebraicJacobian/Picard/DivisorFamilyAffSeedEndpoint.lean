@@ -121,4 +121,28 @@ theorem exists_isCertified_of_seed_of_swallowing_affineOpen_of_rank_glued [IsPro
   exists_isCertified_of_swallowing_affineOpen C R (D.localEquations hD) hW hsub z₀ hWle
     (fun Dc A j p => D.affAdaptation_fibre_regular hD Dc A j p) hrank
 
+/-! ## Non-vacuity of the endpoint
+
+Trap (c) of the workspace axiom-probe catalogue (`I-0442`): a theorem whose hypotheses cannot
+be jointly satisfied is vacuously true and reports clean axioms like any other.  The endpoint
+above has five hypotheses, and a clean `#print axioms` says nothing about whether they can hold
+together.  So the joint inhabitation is exhibited rather than assumed. -/
+
+/-- **The endpoint's hypothesis set is jointly inhabited**, at the zero divisor with `n = 0`:
+the support locus is empty, so the `0B8B` containment holds for ANY affine open inside a cover
+member, and every colength vanishes so the degree datum holds at `n = 0`.
+
+This does not make the endpoint useful at the zero divisor — it certifies that the five
+hypotheses are simultaneously satisfiable, so the theorem is not about nothing. -/
+theorem exists_isCertified_of_seed_of_supportLocus_empty [IsProper C.hom] [IsNoetherianRing R]
+    {D : ThetaGeneratorSeed C R pi a K} (hD : D.IsGenerator)
+    (hempty : (D.localEquations hD).supportLocus = (∅ : Set (relCurve C R)))
+    {W : (relCurve C R).Opens} (hW : IsAffineOpen W)
+    (z₀ : relCurve C R) (hWle : W ≤ (D.localEquations hD).cover.opens z₀) :
+    ∃ (Dc : AffCoverData C R) (A : AffAdaptation Dc (D.localEquations hD)),
+      A.IsCertified 0 :=
+  exists_isCertified_of_seed_of_swallowing_affineOpen C R hD hW
+    (by rw [hempty]; exact Set.empty_subset _) z₀ hWle
+    (fun _ A _ _ _ p => A.rankAtStalk_colength_eq_zero_of_supportLocus_empty hempty _ p)
+
 end AlgebraicGeometry
