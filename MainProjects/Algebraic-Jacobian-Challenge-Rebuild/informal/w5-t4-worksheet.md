@@ -1814,10 +1814,11 @@ both named in the new docstrings, neither a wall:
 1. **`¬ IsAffine C.left`** for the smooth proper positive-dimensional curve — a genuine geometric
    statement, and absent from this project, the sibling and mathlib (searched). One statement where
    §6.25 left two.
-2. **The two chart presentations and the square `hsq`** at the thickened charts:
+2. ~~**The two chart presentations and the square `hsq`** at the thickened charts:
    `e = Over.dualNumberSectionsOfIsAffineOpen`, `e'` its `ε ↦ 0` reduction, and the commuting square
    between them. The pieces exist (`Over.relSectionsMap_dualNumberSections` is `(b-coeff)`); the
-   square is not assembled. `relCover` supplies `hgO` (affine preimage) via `isAffineOpen₀/₁`.
+   square is not assembled.~~ **CLOSED the same session — `Tangent/EpsChartSquare.lean`,
+   `aaa4627bb`; see §6.28.** `relCover` supplies `hgO` (affine preimage) via `isAffineOpen₀/₁`.
 
 **TWO TOOLING FINDINGS, one of which corrected a false claim I had already committed.**
 
@@ -1833,3 +1834,55 @@ both named in the new docstrings, neither a wall:
   new modules had no oleans yet the LSP could only say `Imports are out of date`. Nine errors in
   twelve seconds. **A new module importing another NEW module is invisible to the LSP; one import
   complaint is not a pass.**
+
+### 6.28 THE INSTANTIATION ITEM I HAD JUST FILED AS A SUCCESSOR'S TASK WAS THREE QUARTERS LANDED
+
+*Run 0073 r6, `Tangent/EpsChartSquare.lean`, `aaa4627bb`. Kernel-green, rooted, both headlines
+axiom-clean against a control that fires `sorryAx`. Written after the Lean and saying so: §6.27's
+worksheet-first pass had already named the item precisely, which is exactly what makes what follows
+worth recording.*
+
+**WHAT LANDED.** `relSectionsMap_eq_fstRingHom_comp` is the `hsq` hypothesis of
+`Opens.cechPicMap_ι_eq_one_of_map_eq_one`, instantiated at `g = relCurveMap C k[ε] k`,
+`A = Γ(C.left, W)`, `e = (Over.dualNumberSectionsOfIsAffineOpen C hW).symm` and
+`e' = epsChartDown C hW` (the new downstairs presentation, `sectionsBaseChange.symm` then
+`Algebra.TensorProduct.rid`).
+
+**WHY IT WAS NEARLY FREE, and none of this required new mathematics.** Two facts I did not check
+before pricing it:
+
+* `relSectionsMap` **is** `(relCurveMap C R R').appLE` at the two chart preimages —
+  by *definition* (`Cohomology/RelativeSectionsLinear.lean:193`). So the `appLE` that
+  §6.27's statement demands and the `relSectionsMap` the tangent layer already uses are the same
+  arrow, with nothing to bridge.
+* `Over.relSectionsMap_dualNumberSections` already *is* the square's content. Its own docstring
+  calls it *"the statement the `ε`-kernel computation spends"*. The only gap was that its
+  right-hand side is a base-changed **pure tensor** where the consumer wants an element of
+  `Γ(C.left, W)` — and `Algebra.TensorProduct.rid` is that step, which is also all `epsChartDown`
+  is.
+
+**THE FAILURE, and it is mine and it is the session's own lesson recurring inside the session.**
+§6.27 closed by naming two instantiation items and calling neither a wall. I then wrote that
+assessment into the `.t3` and `.t4` roadmap rows and into memory `I-0729` as *"a successor should
+START by assembling `hsq`"* — that is, I priced it at a session's opening work **without probing
+it**, in the very session whose central finding was that this lane mis-prices obligations by not
+probing them. Two `horizon search` calls and one 12-second kernel check would have caught it, and
+they are what closed it.
+
+> **Rule: a residue named accurately in a hand-off has not thereby been measured.** §6.27's naming
+> was correct — right pieces, right shape, right consumer. Correct naming is what makes a residue
+> *checkable*, not what makes it checked. Before writing "the successor should start here" into a
+> roadmap row, spend the two searches; the cost of not doing so is a row that tells the next
+> session to build what is already built (`I-0729` now carries the self-correction).
+
+**THE TWO SPELLING COSTS, for the record.** Both scoped instances must be opened —
+`attribute [local instance] Over.sectionsAlgebra` (else `Algebra k Γ(C.left, W)` fails) and
+`open scoped TruncExpCech.EpsilonReduction` (else `Algebra k[ε] k` fails); neither absence is
+missing infrastructure (`I-0567`/`I-0634`). And `sectionsBaseChangeOfIsAffineOpen` is
+`sectionsBaseChange` at the affine witness by `rfl` while `rw` will not see through it, so that step
+is an explicit `rw [show … from rfl]` — `I-0685` again, met for the third time in this lane.
+
+**T4's residue after §6.28: exactly one statement, `¬ IsAffine C.left`.** Geometric, absent from
+both projects and mathlib, and NOT to be priced as obvious — memory `I-0729` records the route
+(`IsFinite.iff_isProper_and_isAffineHom`, whose last link, `SmoothOfRelativeDimension` against
+fibre dimension or `IsFinite`, mathlib does not have).
