@@ -99,6 +99,59 @@ instance (X : Scheme.{u}) : Inhabited X.WeilDivisor :=
 
 end Scheme.WeilDivisor
 
+/-! ## Prime divisors are non-generic points
+
+Two structural facts about the index set of `Scheme.WeilDivisor`, recorded here because they
+are the **index-set half of the bridge to the χ-ledger route** for
+`principal_degree_zero` (see the discussion at that theorem).
+
+This project indexes divisors by `Scheme.PrimeDivisor X` — a point together with a proof that
+its coheight is `1`. The sibling project `Algebraic-Jacobian-Challenge-Rebuild` indexes them
+by `{x : X // x ≠ genericPoint X}` (`RiemannRoch/Divisor.lean`), and its χ-ledger closes
+degree-zero-of-principal sorry-free on that carrier. Transporting that route here needs the
+two index sets compared, and the comparison splits cleanly:
+
+* **coheight 1 ⟹ non-generic** is `Scheme.PrimeDivisor.point_ne_genericPoint` below. It is
+  unconditional and elementary, so it is proved here.
+* **non-generic ⟹ coheight 1** is *not* elementary: it needs the curve hypothesis, since it
+  fails as soon as the space has dimension `> 1`. Its two halves are
+  `1 ≤ coheight` (elementary, `one_le_coheight_of_ne_genericPoint` below) and
+  `coheight ≤ 1` (the substantive half — via the standard-smooth stalk bound and the
+  coheight/stalk bridge, which is `Adelic.coheight_le_one_of_curve` and lives *downstream* of
+  this file).
+
+So the direction needed to *produce* prime divisors is the one that is still out of scope
+here; the direction needed to *consume* them is available. -/
+
+/-- **A prime divisor is not the generic point.** If it were, it would be a maximum in the
+specialisation order and its coheight would be `0`, contradicting `coheight = 1`.
+
+Unconditional apart from irreducibility (which is what gives a generic point at all). -/
+theorem Scheme.PrimeDivisor.point_ne_genericPoint {X : Scheme.{u}} [IrreducibleSpace X]
+    (Y : X.PrimeDivisor) : Y.point ≠ genericPoint X := by
+  intro h
+  have hmax : IsMax Y.point := by
+    intro z _
+    rw [h]
+    exact genericPoint_specializes z
+  have h0 : Order.coheight Y.point = 0 := Order.coheight_eq_zero.mpr hmax
+  rw [Y.coheight] at h0
+  simp at h0
+
+/-- **A non-generic point has coheight at least one.** The elementary half of the converse of
+`Scheme.PrimeDivisor.point_ne_genericPoint`: a point that is not the generic point is not
+maximal in the specialisation order (the generic point strictly dominates it), and coheight
+`0` is equivalent to maximality.
+
+The *other* half — `coheight ≤ 1`, which is what upgrades this to `coheight = 1` and so
+produces a `Scheme.PrimeDivisor` — is genuinely about curves and is not available at this
+point in the import graph; see `Adelic.coheight_le_one_of_curve`. -/
+theorem Scheme.one_le_coheight_of_ne_genericPoint {X : Scheme.{u}} [IrreducibleSpace X]
+    {x : X} (hx : x ≠ genericPoint X) : 1 ≤ Order.coheight x := by
+  have hnotmax : ¬ IsMax x := fun hmax =>
+    hx ((genericPoint_specializes x).antisymm (hmax (genericPoint_specializes x))).symm.eq
+  exact Order.one_le_iff_ne_zero.mpr fun h => hnotmax (Order.coheight_eq_zero.mp h)
+
 /-! ## Prime divisors and open immersions
 
 The project-local lemma `Order.coheight_eq_of_isOpenEmbedding` lets us package
@@ -1225,6 +1278,44 @@ theorem principal_degree_zero {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     --     class of covers, not the ledger. The open work is to exhibit a cover
     --     on which the ledger can hold, which is a question about the cover
     --     rather than a one-point local statement.
+    --
+    -- (3) A THIRD ROUTE, AND IT IS THE ONE TO TAKE (found run 0067). The adelic
+    --     ledger is not the only ledger. The sibling project
+    --     `Algebraic-Jacobian-Challenge-Rebuild` proves this exact statement
+    --     SORRY-FREE, and not through the refuted bump:
+    --       `RiemannRoch/ChiLedger.lean:126`, `deg_divOf (g : X.functionFieldˣ) :
+    --          CurveDivisor.deg K (divOf _ g) = 0`
+    --     from the CLOSED χ-ledger `χ(𝒪(D)) = χ(𝒪_X) + deg D` (`chi_divisorSheaf`,
+    --     same file), by transporting `χ` along the multiplication isomorphism
+    --     `𝒪(0) ≅ 𝒪(0 − div g)` (`mulEquivDivisorSheaf`) and cancelling. The
+    --     ledger itself is a dévissage induction over closed points with
+    --     skyscraper quotients (`chi_step`, `χ(sky_x M) = dim_K M`), not an
+    --     adelic bump. I measured its transitive closure at HEAD: 22 files,
+    --     5491 lines, ZERO `sorry` tokens.
+    --
+    --     WHAT THE PORT COSTS, so the next session can size it rather than guess.
+    --     Two carrier mismatches, one cheap and one real:
+    --      * INDEX SET. The Rebuild indexes divisors by
+    --        `{x : X // x ≠ genericPoint X}`; this project indexes them by
+    --        `Scheme.PrimeDivisor X` (a point plus `coheight = 1`). The
+    --        consuming direction is now available in this file —
+    --        `Scheme.PrimeDivisor.point_ne_genericPoint` — and the producing
+    --        direction needs `coheight ≤ 1`, i.e. the curve hypothesis, which is
+    --        `Adelic.coheight_le_one_of_curve` and sits downstream. See the
+    --        section "Prime divisors are non-generic points" above.
+    --      * DEGREE WEIGHTS. The Rebuild's `deg` weights each point by
+    --        `residueDeg K x`; this file's `degree` sums the bare coefficients.
+    --        Over `k̄` those agree (each residue degree is `1` — this project
+    --        already has that as `Adelic.residueDeg_eq_one_of_isAlgClosed_curve`),
+    --        and this theorem's binder set is exactly the `IsAlgClosed` one, so
+    --        the mismatch is discharged rather than assumed away.
+    --     The χ-machinery itself (`Sheaf.chi`, `divisorSheaf`, `skyModule`,
+    --     dévissage) has NO counterpart in this project's `RiemannRoch/`, which
+    --     holds only `CohomologyKit`, `CurveBaseChange`, `WeilDivisor` and
+    --     `Adelic/`. So the port is a real piece of work — but it is a port of
+    --     sorry-free material along two identified comparisons, which is a
+    --     different kind of task from "exhibit a cover on which the refuted
+    --     ledger can hold". Prefer it.
     sorry
 
 /-! ## §6. Positive part of a Weil divisor
