@@ -73,7 +73,25 @@ the nine file-plan rows are launchable before `divRep` lands** (§5).
 
 ### §0.3 Gaps found in the landed tree (pinned as named bricks; the w4-ddr9 §0.2 pattern)
 
-* **GAP-1 (Σ-INV, S→M, launchable now).**  No datum in the class `[𝒪(d)]` exists —
+* **GAP-1 (Σ-INV) — HALF LANDED 2026-07-28 (run 0072), and the two halves are of very
+  different size.  Do not read "half done" as "nearly done".**
+  * **The inverse half is LANDED**, `Picard/Pic0ChartShiftedDatum.lean`, sorry-free:
+    `BasicOpenCocycleDatum.invDatum` (same cover data — same pieces, same partitions, same
+    index; units inverted, so `pieces_invDatum` is `rfl` and every piece-level fact of `D`
+    transports verbatim), `invDatum_invDatum` (the involution), and the cocycle law
+    `Scheme.IsGluingCocycle.inv` — stated for an arbitrary unit family so the θ/Σ layer can
+    reuse it without building a datum.  The only real content is that the triple-overlap
+    section ring is **commutative**: `(ab)⁻¹ = a⁻¹b⁻¹` fails non-commutatively without a
+    transposed index pair.
+  * **The mul/tensor half is NOT landed and is the larger one.**  It needs two data on a
+    **common refinement** of their covers plus a comparison of the two `cechPicClass`
+    readings there.  This is the live gate of CHART-U(b) (see §3.3).
+  * **`cechPicClass_inv` is NOT landed either.**  Stating it needs the subordinated-cocycle
+    `inv_unitsEvInf`-style calculus that `Picard/DivSchemeFibreH1.lean:63-66` keeps
+    *private*; publishing that is its own brick.  The paragraph below describes the route
+    for it, not a landed lemma.
+
+  Original statement (route for the remaining halves).  No datum in the class `[𝒪(d)]` exists —
   every landed datum built from a divisor family is the *twisted ideal*
   `thetaIdealDatum a` of class `θᵃ·[d]⁻¹` (`Picard/DivisorThetaDatum.lean:362`,
   class law §0.2.7).  Pin `BasicOpenCocycleDatum.inv` (same pieces, units
@@ -395,8 +413,48 @@ the boundary as a NAMED interface so the DAT-B lane slots in:
   h¹ part is the witness clause at the κ(t)-collapse — for classes reached through
   §3.2's `chartValue` this is (V1a) on the nose).  DAT-C states everything against
   `chartLocus`; membership-vs-fibre-product is the mono (§3.2) + normalization (§2).
+  **STATUS 2026-07-28 (run 0072): `chartLocus` IS NOW DEFINED**, in
+  `Picard/Pic0ChartLocus.lean`, in the (a-amendment) split form, over a general test, at
+  the twisted class — sorry-free.  Three corrections this pass, all measured against the
+  tree rather than inferred:
+
+  * **The input list above was incomplete: there is a FOURTH input, prior to all three.**
+    The predicate is a condition on *points of a general test*, and nothing in the tree
+    converted a point of `T.left` into anything at which a class can be evaluated: every
+    witness predicate is indexed by `q : PrimeSpectrum B` over an *affine* base, and every
+    class is evaluated at a field point only through a morphism `overSpec k K ⟶ T` for an
+    abstract `K`.  That conversion is `Over.testPoint` (`Picard/Pic0ChartTestPoint.lean`),
+    built from mathlib's canonical `Scheme.fromSpecResidueField`, which makes
+    chart-independence *free* rather than a well-definedness side condition.  (The affine
+    -chart route — pick `U ∋ t`, use `IsAffineOpen.primeIdealOf` and
+    `Over.fromSpecAffine` — was tried and abandoned: it needs an independence-of-`U`
+    lemma before it can define anything.)
+  * **The split predicate is `IsSplitWitness`**, and the amendment's "some (equivalently
+    every)" is *not* symmetric in cost.  The ∃-form is the definition; the comparison of
+    two splittings goes through a common separable extension
+    (`exists_witness_of_separable_extension`, which rests on the co-owned
+    `hasWitnessH1Vanishing_iff_of_separable`), not through a direct comparison.  The
+    splitting itself is `Algebra.EtaleCover.exists_finiteSeparableField_algHom`
+    (`Algebra/EtaleCover.lean:287`, landed) applied to the étale cover of the plus class.
+  * **The twist has a class-side avatar now**: `chartTwist`, with
+    `degAt_chartTwist` giving fibre degree `deg Z − m·d₁`, matching `degAt_chartValue` at
+    `n = 0` — which is the ledger reason the locus tests `λθᵐ(−Σ)` rather than `λ`.
+
 * **CHART-U(b) — openness of `chartLocus` (SHARED brick, DAT-B co-owner; honest new
-  work, M→L).**  The datum-worksheet §2.3 chain, now fully landed except its last
+  work, M→L).**
+
+  **STATUS 2026-07-28 (run 0072): assembled CONDITIONALLY** in
+  `Picard/Pic0ChartLocusIsOpen.lean`.  Every link of the (b-amendment) chain is landed
+  except one, and the file's header table names each with its anchor.  The residue is
+  **not** the point-set transports: it is the *shifted-datum presentation* — a
+  `BasicOpenCocycleDatum` whose class is the twisted class — pinned as
+  `IsChartDatumPresentation` and consumed by
+  `isOpen_setOf_isSplitWitness_of_presentation`.  Producing it needs the **mul/tensor**
+  half of GAP-1 (below), which needs a common refinement of two basic-open covers.
+  One declared `sorry` remains, `isOpen_setOf_hasWitnessH1Vanishing_testPointField`; it
+  is transcription (carrier identification `Spec A = PrimeSpectrum A`, the topology
+  agreement, and `Spec.residueFieldIso` fed to `hasWitnessH1Vanishing_iff_of_fieldExtension`),
+  and the exact three residual goals are recorded at the `sorry`.  The datum-worksheet §2.3 chain, now fully landed except its last
   step: (1) extraction of the plus class to cocycle data on an étale carrier
   (`PicEtAff` + `exists_cechPicClass_eq`, `GluedSheafExtraction.lean:301`); (2) RE-5
   to a Noetherian stage (`DatumDescent.lean:514`); (3) the datum engine open on the

@@ -324,6 +324,25 @@ Size M.  Consumed by COV-1 step 5 (as the `hdense` oracle for `P :=` base-change
 
 ### §1.6 CHART-U(a)/(b) — the CO-SIGNED shared brick (w4-datc §3.3, accepted with two amendments)
 
+**ACKNOWLEDGED AND BUILT, 2026-07-28 (run 0072, lane `ajcr-charts`).**  Both amendments
+are accepted as written and are now Lean:
+
+* the (a-amendment) split form is `AlgebraicGeometry.IsSplitWitness`, and `chartLocus`
+  (`Picard/Pic0ChartLocus.lean`) is defined against it — general test, twisted class,
+  split predicate.  Sorry-free.
+* the (b-amendment) route of record is assembled in `Picard/Pic0ChartLocusIsOpen.lean`;
+  its header carries a link-by-link status table.
+* the division of labour below is honoured, with one correction to its *sizing*: DAT-C's
+  half was budgeted as "the shifted-datum constructor".  Its **inverse** part is small and
+  is landed (`BasicOpenCocycleDatum.invDatum`, `Picard/Pic0ChartShiftedDatum.lean`); its
+  **mul/tensor** part is not, and it — not transports (i)/(ii) — is what still gates the
+  openness.  Transports (i)/(ii) reduce, given a presentation, to the landed
+  `hasWitnessH1Vanishing_iff_of_separable` plus carrier bookkeeping.
+* **a FOURTH input, prior to all three listed, had to be built first**: nothing in the tree
+  converted a point of a general test into a field point at which a class could be read.
+  That is `Over.testPoint` (`Picard/Pic0ChartTestPoint.lean`); see w4-datc §3.3 for the
+  detail and for the affine-chart route that was tried and abandoned.
+
 DAT-C froze `chartLocus c λ` and flagged CHART-U(b) as co-owned.  **DAT-B co-signs
 the interface with these amendments** (to be acknowledged by the DAT-C lane before
 either builds — this section is the coordination handle, the DDR9-U pattern):
