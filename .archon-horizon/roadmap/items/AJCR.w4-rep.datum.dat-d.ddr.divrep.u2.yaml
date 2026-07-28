@@ -68,7 +68,21 @@ summary: "U2: the DDR9-U epsilon-identity at the universal point (the last gate 
   \ appears anywhere\nin the log, so neither contributed an error or a linter warning.\
   \ Axiom probe with a CONTROL that\nfires (I-0661): AlgebraicGeometry.Jacobian reports\
   \ sorryAx, while all six new theorems report only\n[propext, Classical.choice, Quot.sound].\
-  \ Both modules rooted in AlgebraicJacobian.lean."
+  \ Both modules rooted in AlgebraicJacobian.lean.\n\nTHE HONEST LIMIT OF THIS ROW'S\
+  \ HEADLINE, added at s0012 close after ajcr-charts pointed out on\nI-0494 that a\
+  \ reduction owes TWO probes and I had run only one on my own. 'The eps-half is OPEN,\n\
+  not false' is a claim about the NO-GO: forall_not_isCertified_of_straddling does\
+  \ not bear on a\nhypothesis naming no adaptation. IT IS SILENT ABOUT SATISFIABILITY.\
+  \ The mirror risk is real and\nUNMEASURED: if the window quotient at the universal\
+  \ point can never be projective of constant\nrank g, then the eps-half has been\
+  \ reduced to a FALSE hypothesis -- which passes every sorry\ncensus and every axiom\
+  \ probe, because it is then a theorem.\n\nNote the asymmetry with the junk probe\
+  \ that refuted DAT-J's Abel square: that residue was vacuous\nbecause its witness\
+  \ was CONSUMER-CHOSEN. Here the window quotient is determined by d, so vacuity\n\
+  is impossible and satisfiability is the only live failure mode. The 'not silently\
+  \ stronger' probe\nIS discharged (divisorWindow_eq_of_le_of_isCertified_of_quotientData\
+  \ recovers the landed\nchart-typed statement as a corollary); the satisfiability\
+  \ probe is owed and is the cheapest next\nmeasurement on this row."
 status: pending
 kind: proof
 priority: normal
@@ -91,7 +105,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-28T23:06:01.963653+00:00'
+  updated_at: '2026-07-28T23:14:23.961962+00:00'
   pinned_commits:
   - 0a6351e5e
   - 0b67179bb
