@@ -27,10 +27,12 @@ Reading the (b-amendment) against the tree at HEAD:
 | datum openness | `isOpen_setOf_exists_witness_h1_vanishing` (`LocusOpen:80`) | **landed** |
 | fibre-field | `hasWitnessH1Vanishing_iff_of_separable` (`FibreField:157`) | **landed** |
 | GAP-1 inverse | `BasicOpenCocycleDatum.invDatum` (`Pic0ChartShiftedDatum`) | **landed** |
+| carrier/field translation | `isOpen_setOf_hasWitnessH1Vanishing_testPointField` (below) | **landed** |
 | GAP-1 mul | a datum for a *product*, on a common cover refinement | **NOT landed** |
 | `cechPicClass_inv` | the class law of `invDatum` | **NOT landed** |
 
-(The engine is Noetherian-free; the GAP-1 inverse landed this session.)
+(The engine is Noetherian-free; the GAP-1 inverse and the carrier/field translation landed
+2026-07-28.)
 
 So the chain is landed *except* at one place, and it is worth being exact about where,
 because the roadmap node's phrasing ("transports (i)/(ii) are DAT-B's") suggests the residue
@@ -51,6 +53,16 @@ discharge.
 
 Writing it the other way round — stating `isOpen_chartLocus` unconditionally with a `sorry`
 — would hide the fact that the missing input is a *construction*, not a proof.
+
+**This file is sorry-free as of 2026-07-28.**  Its earlier single `sorry` (the carrier/field
+translation) was not a mathematical gap: it was an artifact of taking the `Algebra A` /
+`IsScalarTower k A` structures on `κ(t)` as explicit `alg`/`tow` *arguments*, which both made
+the statement unprovable — an arbitrary regrading of `κ(t)` over `A` is not a legal reading of
+the fibre — and forced every consumer to carry two dead parameters.  With the canonical
+instances of `Picard/Pic0ChartTestPoint.lean` the whole translation is
+`hasWitnessH1Vanishing_iff_of_fieldExtension` across `Spec.residueFieldIso`, and the carrier
+identification `↥(overSpec k A).left = PrimeSpectrum A` is definitional.  The general lesson
+is recorded on the `chart-u` roadmap node.
 
 ## Main declarations
 
@@ -108,17 +120,16 @@ Two remarks on the shape, both deliberate:
   the mul/tensor of GAP-1, whereas a lane that can produce the pointwise agreement by any
   other route may use this theorem immediately;
 * the split predicate is read at `Over.testPoint`, i.e. at the canonical residue-field point
-  of the affine test, so no choice of affine chart enters. -/
+  of the affine test, so no choice of affine chart enters;
+* the `Algebra A (testPointField t)` / `IsScalarTower k A (testPointField t)` instances the
+  datum predicate needs are the **canonical** ones of `Picard/Pic0ChartTestPoint.lean`.  An
+  earlier draft of this file carried them as explicit `alg`/`tow` arguments; that was strictly
+  worse — it made the statement unprovable (an arbitrary regrading of `κ(t)` over `A` is not a
+  legal reading of the fibre) as well as unusable. -/
 def IsChartDatumPresentation {A : Type u} [CommRing A] [Algebra k A]
-    (μ : picEt C (overSpec k A)) (D : BasicOpenCocycleDatum C A π)
-    (alg : ∀ t : (overSpec k A).left,
-      Algebra A (Over.testPointField (T := overSpec k A) t))
-    (tow : ∀ t : (overSpec k A).left,
-      letI := alg t; IsScalarTower k A (Over.testPointField (T := overSpec k A) t)) :
-    Prop :=
+    (μ : picEt C (overSpec k A)) (D : BasicOpenCocycleDatum C A π) : Prop :=
   ∀ t : (overSpec k A).left,
-    (letI := alg t; letI := tow t
-      D.HasWitnessH1Vanishing (Over.testPointField (T := overSpec k A) t))
+    D.HasWitnessH1Vanishing (Over.testPointField (T := overSpec k A) t)
       ↔ IsSplitWitness C (picEtMap C (Over.testPoint t) μ)
 
 /-! ## The carrier translation: `testPointField` on `Spec A` versus `Ideal.ResidueField`
@@ -130,8 +141,34 @@ The two carriers are the same space, but the two *fields* are only canonically i
 isomorphism.  That is what this section does, and it is the transport the (b-amendment) folds
 into "affine pieces glue by (V1c)-style locality". -/
 
+/-- **The residue-field comparison at a point of an affine test, as an algebra map.**
+
+`Over.testPointField t` is the *scheme* residue field `(Spec A).residueField t`, while every
+engine-facing predicate reads the *algebraic* residue field `t.asIdeal.ResidueField` of the
+prime.  Mathlib's `Spec.residueFieldIso` identifies them; this records the identification in
+the form the tower needs, namely that the canonical `A`-algebra structure on the scheme
+residue field (`Over.instAlgebraTestPointFieldAffine`) factors through the algebraic one.
+
+Proof: both sides are `Spec.preimage` of a morphism out of `Spec κ(t)`, and `Spec.map` is
+injective on homs, so it suffices to compare after applying `Spec.map` — where the identity is
+mathlib's `Spec.map_residueFieldIso_inv_eq_fromSpecResidueField`. -/
+lemma algebraMap_testPointFieldAffine_factors {A : Type u} [CommRing A] [Algebra k A]
+    (t : (overSpec k A).left) :
+    algebraMap A (Over.testPointField (T := overSpec k A) t)
+      = ((Scheme.Spec.residueFieldIso (.of A) t).inv).hom.comp
+          (algebraMap A (t : PrimeSpectrum A).asIdeal.ResidueField) := by
+  rw [Over.algebraMap_testPointFieldAffine]
+  have h : Spec.preimage ((overSpec k A).left.fromSpecResidueField t)
+      = CommRingCat.ofHom (algebraMap A (t : PrimeSpectrum A).asIdeal.ResidueField)
+          ≫ (Scheme.Spec.residueFieldIso (.of A) t).inv := by
+    apply Spec.map_injective
+    rw [Spec.map_preimage, Spec.map_comp]
+    exact (Scheme.Spec.map_residueFieldIso_inv_eq_fromSpecResidueField (.of A) t).symm
+  rw [h]
+  rfl
+
 /-- **The witness predicate at a scheme-residue field agrees with the one at the prime's
-residue field.**
+residue field, and the resulting locus is open.**
 
 `Over.testPointField t` is `(Spec A).residueField t` and the engine reads
 `t.asIdeal.ResidueField`; `Spec.residueFieldIso` identifies them, and the witness predicate
@@ -139,41 +176,54 @@ transfers along any field extension in the `A`-tower
 (`hasWitnessH1Vanishing_iff_of_fieldExtension`, `Pic0ChartLocusFibreField.lean:142`), in
 particular along an isomorphism.
 
-This is stated as the openness of the `testPointField`-indexed set directly, because that is
-the only form the assembly consumes, and stating the field isomorphism separately would
-require pinning the `Algebra A` instances on both sides — which the `letI` route below avoids
-entirely. -/
+Three points about the proof, each of which was a suspected wall and is not:
+
+* the **carrier identification** `↥(overSpec k A).left = PrimeSpectrum A` is *definitional*
+  (`Scheme.Spec`'s carrier is `PrimeSpectrum` on the nose), so the two index sets need no
+  transport and the two topologies agree by `rfl`.  The set equality below is therefore a
+  pointwise `Iff`, not a homeomorphism argument;
+* the `Algebra A (testPointField t)` and `IsScalarTower k A (testPointField t)` instances the
+  predicate needs are **already canonical** (`Over.instAlgebraTestPointFieldAffine`,
+  `Over.instIsScalarTowerTestPointFieldAffine`), so nothing has to be passed in as an
+  argument.  An earlier draft of this file took `alg`/`tow` as explicit hypotheses and left
+  the conclusion as a `sorry`; that was a statement-shape artifact, not a gap — and worse,
+  the hypothesis form is *unprovable*, since an arbitrary `alg` need not be the canonical
+  instance and the predicate is not invariant under regrading the field over `A`;
+* the only genuine content is the transport across `Spec.residueFieldIso`, which is
+  `hasWitnessH1Vanishing_iff_of_fieldExtension` applied to the isomorphism, in the tower
+  `A → κ(q) → (Spec A).residueField t` supplied by
+  `algebraMap_testPointFieldAffine_factors`. -/
 theorem isOpen_setOf_hasWitnessH1Vanishing_testPointField
     (hπ : π ≫ P1.structureMap k = C.hom) {A : Type u} [CommRing A] [Algebra k A]
-    (D : BasicOpenCocycleDatum C A π)
-    (alg : ∀ t : (overSpec k A).left,
-      Algebra A (Over.testPointField (T := overSpec k A) t))
-    (tow : ∀ t : (overSpec k A).left,
-      letI := alg t; IsScalarTower k A (Over.testPointField (T := overSpec k A) t)) :
+    (D : BasicOpenCocycleDatum C A π) :
     IsOpen {t : (overSpec k A).left |
-      letI := alg t; letI := tow t
-      D.HasWitnessH1Vanishing (Over.testPointField (T := overSpec k A) t)} :=
-  -- OBLIGATION (the only `sorry` in this file, and it is a TRUE statement whose proof is
-  -- transcription, not mathematics).  `convert` against
-  -- `D.isOpen_setOf_exists_witness_h1_vanishing hπ` reduces it to exactly three goals,
-  -- measured this session:
-  --   (1) `↥(overSpec k A).left = PrimeSpectrum A`     -- carrier identification
-  --   (2) the two topologies agree under (1)           -- `Spec` is `PrimeSpectrum` as a space
-  --   (3) `(fun t => D.HasWitnessH1Vanishing (testPointField t))`
-  --         = `(fun q => ∃ W, picClass κ(q) W = … ∧ Subsingleton …)`
-  -- (1) and (2) are `Scheme.Spec`-carrier bookkeeping, and the anchor for both is mathlib's
-  -- `AlgebraicGeometry.Spec.topObj_forget` (`Mathlib/AlgebraicGeometry/Spec.lean:61`, a
-  -- `simp` lemma): `ToType (Spec.topObj R) = PrimeSpectrum R`.  Checked this session that it
-  -- exists, so (1)/(2) are not a hidden wall.  (3) is the field identification
-  -- `Spec.residueFieldIso : (Spec A).residueField t ≅ .of t.asIdeal.ResidueField`
-  -- (mathlib `AlgebraicGeometry/ResidueField.lean:286`) fed to
-  -- `hasWitnessH1Vanishing_iff_of_fieldExtension` (`Pic0ChartLocusFibreField.lean:142`),
-  -- which transfers the predicate along any field extension in the `A`-tower and so in
-  -- particular along an isomorphism.
-  -- Doing it properly means transporting the `Algebra A` / `IsScalarTower k A` instances
-  -- across that iso, which is why `alg`/`tow` are explicit arguments here rather than
-  -- instances: a lane closing this should supply the transported pair, not re-derive it.
-  sorry
+      D.HasWitnessH1Vanishing (Over.testPointField (T := overSpec k A) t)} := by
+  -- The two loci are the SAME set of the SAME type: `↥(overSpec k A).left` is
+  -- `PrimeSpectrum A` definitionally, so only the fibre field differs, and the predicate is
+  -- invariant under the isomorphism between the two readings of it.
+  have hset : {t : (overSpec k A).left |
+        D.HasWitnessH1Vanishing (Over.testPointField (T := overSpec k A) t)}
+      = {q : PrimeSpectrum A |
+          ∃ W : ((C ⊗ overSpec k q.asIdeal.ResidueField).left).CurveDivisor,
+            Scheme.CurveDivisor.picClass q.asIdeal.ResidueField W
+                = Scheme.CechPic.map (relCurveMap C A q.asIdeal.ResidueField)
+                    D.cechPicClass
+              ∧ Subsingleton (Sheaf.HModule
+                  ((C ⊗ overSpec k q.asIdeal.ResidueField).left.divisorSheaf
+                    q.asIdeal.ResidueField W) 1)} := by
+    refine Set.ext fun t => ?_
+    -- the comparison iso as an algebra structure, and its tower over `A`
+    letI : Algebra (t : PrimeSpectrum A).asIdeal.ResidueField
+        (Over.testPointField (T := overSpec k A) t) :=
+      ((Scheme.Spec.residueFieldIso (.of A) t).inv).hom.toAlgebra
+    haveI : IsScalarTower A (t : PrimeSpectrum A).asIdeal.ResidueField
+        (Over.testPointField (T := overSpec k A) t) :=
+      IsScalarTower.of_algebraMap_eq' (algebraMap_testPointFieldAffine_factors t)
+    exact (D.hasWitnessH1Vanishing_iff_of_fieldExtension
+      (t : PrimeSpectrum A).asIdeal.ResidueField
+      (Over.testPointField (T := overSpec k A) t)).symm
+  rw [hset]
+  exact D.isOpen_setOf_exists_witness_h1_vanishing hπ
 
 /-! ## Transports (0) and (iii): the identification with the landed locus -/
 
@@ -194,14 +244,9 @@ applied to an isomorphism). -/
 theorem mem_chartLocus_iff_hasWitnessH1Vanishing
     {A : Type u} [CommRing A] [Algebra k A]
     {μ : picEt C (overSpec k A)} {D : BasicOpenCocycleDatum C A π}
-    {alg : ∀ t : (overSpec k A).left,
-      Algebra A (Over.testPointField (T := overSpec k A) t)}
-    {tow : ∀ t : (overSpec k A).left,
-      letI := alg t; IsScalarTower k A (Over.testPointField (T := overSpec k A) t)}
-    (hpres : IsChartDatumPresentation C π μ D alg tow) (t : (overSpec k A).left) :
+    (hpres : IsChartDatumPresentation C π μ D) (t : (overSpec k A).left) :
     IsSplitWitness C (picEtMap C (Over.testPoint t) μ)
-      ↔ (letI := alg t; letI := tow t
-          D.HasWitnessH1Vanishing (Over.testPointField (T := overSpec k A) t)) :=
+      ↔ D.HasWitnessH1Vanishing (Over.testPointField (T := overSpec k A) t) :=
   (hpres t).symm
 
 /-! ## The keystone, conditionally -/
@@ -227,11 +272,7 @@ the mul/tensor brick that produces the presentations. -/
 theorem isOpen_setOf_isSplitWitness_of_presentation (hπ : π ≫ P1.structureMap k = C.hom)
     {A : Type u} [CommRing A] [Algebra k A]
     {μ : picEt C (overSpec k A)} {D : BasicOpenCocycleDatum C A π}
-    {alg : ∀ t : (overSpec k A).left,
-      Algebra A (Over.testPointField (T := overSpec k A) t)}
-    {tow : ∀ t : (overSpec k A).left,
-      letI := alg t; IsScalarTower k A (Over.testPointField (T := overSpec k A) t)}
-    (hpres : IsChartDatumPresentation C π μ D alg tow) :
+    (hpres : IsChartDatumPresentation C π μ D) :
     IsOpen {t : (overSpec k A).left |
       IsSplitWitness C (picEtMap C (Over.testPoint t) μ)} := by
   -- The engine's open set is indexed by primes of `A`; the locus is indexed by points of
@@ -240,11 +281,10 @@ theorem isOpen_setOf_isSplitWitness_of_presentation (hπ : π ≫ P1.structureMa
   have hset : {t : (overSpec k A).left |
         IsSplitWitness C (picEtMap C (Over.testPoint t) μ)}
       = {t : (overSpec k A).left |
-          letI := alg t; letI := tow t
           D.HasWitnessH1Vanishing (Over.testPointField (T := overSpec k A) t)} :=
     Set.ext fun t => mem_chartLocus_iff_hasWitnessH1Vanishing hpres t
   rw [hset]
-  exact isOpen_setOf_hasWitnessH1Vanishing_testPointField hπ D alg tow
+  exact isOpen_setOf_hasWitnessH1Vanishing_testPointField hπ D
 
 end
 
