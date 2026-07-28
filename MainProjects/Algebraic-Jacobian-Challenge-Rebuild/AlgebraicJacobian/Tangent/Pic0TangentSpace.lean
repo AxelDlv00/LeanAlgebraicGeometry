@@ -31,15 +31,23 @@ bookkeeping. This file is that discipline made structural:
 * `JacobianData.tangentSpaceEquivPic0Kernel` is the representability leg,
   unconditional and sorry-free. It is a bijection of **sets**; it deliberately
   does *not* claim to transport dimension (a bare `Equiv` cannot).
-* `JacobianData.finrank_cotangentSpace_eq_genus` isolates the numerical content
-  as a **hypothesis** `hdim`, phrased on the `ε`-kernel of `pic0Functor`. That
-  hypothesis is precisely the output of the T3/T4 chain, and it is the only
-  thing between this file and the frozen numeral.
+* `JacobianData.finrank_cotangentSpaceDual_eq_genus` isolates the numerical
+  content as a **hypothesis** `hdim`. That hypothesis is what the T3/T4 chain must
+  deliver.
 * `JacobianData.nonempty_cotangentSpace_addEquiv_h1` then produces the additive
   equivalence from the count, once.
 
-So the Wave-5 tangent keystone is, at HEAD, reduced to a statement about
-`ker(Pic⁰(k[ε]) → Pic⁰(k))` with no scheme theory left in it. Note that the
+So the Wave-5 tangent keystone is, at HEAD, reduced to a statement about the
+`ε`-kernel of `pic0Functor` — **but note precisely which statement**. The
+`ε`-kernel *bijection* above is not enough on its own: it is a bijection of sets,
+and `finrank` does not transport along one. What `hdim` needs is the **semilinear
+comparison** — an additive equivalence plus the intertwining law across
+`κ(e) ≃+* k` — fed through `finrank_eq_of_addEquiv_of_bijective_smul` (proved
+below, unconditionally). Stating T3/T4's target as a bare kernel bijection would
+leave the count unreachable; this is the same residue the AJC sibling isolated as
+`semilinearComparison_cotangentSpaceDual_h1Cok`. See inbox I-0513.
+
+Note that the
 identity point of `d.J` needs no rationality hypothesis: it is the image of the
 group-object unit, hence a section, hence automatically `k`-rational
 (`bijective_algebraMap_residueField_of_section`).
@@ -57,9 +65,13 @@ group-object unit, hence a section, hence automatically `k`-rational
 * `AlgebraicGeometry.JacobianData.finiteDimensional_cotangentSpace` — the
   cotangent space at the identity is finite-dimensional (from
   `d.locallyOfFiniteType`).
-* `AlgebraicGeometry.JacobianData.finrank_cotangentSpace_eq_genus` /
+* `AlgebraicGeometry.JacobianData.finrank_eq_of_addEquiv_of_bijective_smul` —
+  **unconditional**: `finrank` transports across a scalar *bijection* given an
+  additive equivalence and the intertwining law. The bridge that makes the count
+  reachable at all.
+* `AlgebraicGeometry.JacobianData.finrank_cotangentSpaceDual_eq_genus` /
   `nonempty_cotangentSpace_addEquiv_h1` — the frozen scalar identity and its
-  additive consequence, each conditional on the T3/T4 kernel count.
+  additive consequence, each conditional on the T3/T4 semilinear comparison.
 
 Reference: Kleiman, "The Picard scheme", §5 Thm. 5.11 (arXiv:math/0504020);
 Milne, "Abelian varieties", Prop. 2.1.
@@ -68,7 +80,7 @@ Milne, "Abelian varieties", Prop. 2.1.
 set_option autoImplicit false
 set_option maxSynthPendingDepth 3
 
-universe u
+universe u v
 
 open CategoryTheory IsLocalRing Opposite
 
@@ -152,19 +164,56 @@ theorem finiteDimensional_cotangentSpace (d : JacobianData C) :
   letI : IsLocallyNoetherian d.J.left := LocallyOfFiniteType.isLocallyNoetherian d.J.hom
   inferInstance
 
-/-! ## The frozen scalar identity
+/-! ## The frozen scalar identity, and the bridge T3/T4 must actually cross
 
-Everything above is unconditional. What follows carries the T3/T4 output as an
+Everything above is unconditional. What follows carries the numerical input as an
 explicit hypothesis, named once:
 
 ```
 hdim : Module.finrank κ(e) (m_e/m_e²) = genus C
 ```
 
-is the *conclusion* T5 wants; the T3/T4 chain delivers it in the equivalent
-`ε`-kernel form. Keeping it a hypothesis rather than a `sorry` is the
-w5-worksheet §0(4) rule (never register a staged fact) and makes the dependency
-machine-checked: any later discharge is `exact` against these statements. -/
+Keeping it a hypothesis rather than a `sorry` is the w5-worksheet §0(4) rule
+(never register a staged fact).
+
+**What `hdim` needs, stated precisely — the `ε`-kernel bijection alone is NOT
+enough.** `tangentSpaceEquivPic0Kernel` is a bijection of *sets* (it says so on
+its own docstring) and a bare `Equiv` does not determine `finrank`. So T3/T4's
+kernel computation does not by itself give `hdim`: additionally required is an
+**additive** equivalence together with the intertwining law across the
+residue-field bijection `κ(e) → k`, because the two sides are modules over
+genuinely different rings — neither `LinearEquiv.finrank_eq` nor a
+`restrictScalars` argument applies.
+
+`finrank_eq_of_addEquiv_of_bijective_smul` below is exactly that bridge, and it
+is unconditional. With it in hand the residual obligation on T3/T4 is the
+**semilinear comparison**: a scalar bijection `i`, an additive equivalence `j`
+from `Dual κ(e) (m_e/m_e²)` to `H¹(C,𝒪)`, and `j (r • x) = i r • j x`. That is
+the honest target to state T3/T4 against — and it is the same residue the AJC
+sibling isolated (`semilinearComparison_cotangentSpaceDual_h1Cok`), which is why
+porting the generic kit without this bridge would have left the count
+unreachable. Found by fresh-context review; see inbox I-0513. -/
+
+/-- **`finrank` across a scalar bijection** (the linearity bridge the Wave-5
+count needs, and the reason the `ε`-kernel *set* bijection is insufficient on its
+own). If `i : R → R'` is a bijection of scalars, `j : M ≃+ M₁` an additive
+equivalence, and the two intertwine (`j (r • m) = i r • j m`), then `M` and `M₁`
+have equal `finrank` over their respective rings.
+
+`i` need only be a **bijection**, not a ring homomorphism, and the module
+structures live over genuinely different rings — which is precisely the situation
+of the Kleiman §5 Thm. 5.11 count, comparing a `κ(e)`-dimension with a
+`k`-dimension across `κ(e) ≃+* k`. Mathlib has this at the level of
+`Module.rank` (`rank_eq_of_equiv_equiv`) but not in `finrank` form; this is the
+`Module.finrank = toNat ∘ Module.rank` unfolding of it. -/
+theorem finrank_eq_of_addEquiv_of_bijective_smul
+    {R : Type*} {R' : Type*} {M M₁ : Type v} [Semiring R] [AddCommMonoid M] [Module R M]
+    [Semiring R'] [AddCommMonoid M₁] [Module R' M₁]
+    (i : R → R') (j : M ≃+ M₁) (hi : Function.Bijective i)
+    (hc : ∀ (r : R) (m : M), j (r • m) = i r • j m) :
+    Module.finrank R M = Module.finrank R' M₁ := by
+  unfold Module.finrank
+  rw [rank_eq_of_equiv_equiv i j hi hc]
 
 variable (d : JacobianData C)
 
