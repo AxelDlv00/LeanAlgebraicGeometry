@@ -69,9 +69,12 @@ ring.
 **The precise statement, and it is NOT "⊤ is safe".**  What decides the matter is whether `⊤` is
 affine, i.e. whether `X` is affine — *not* whether `U` is written `⊤`:
 
-* On a **proper** curve `⊤` is not affine, `chartRing_isFractionRing` is unavailable there, and
-  the collapse does not run.  This is the case the `hledger`-consuming results are *about*, and
-  their `⊤` binders survive.
+* On a **proper** curve `⊤` is not affine, so `chartRing_isFractionRing` is unavailable and **this
+  derivation** does not run.  Stated carefully, because the careless version is the error this
+  whole module is about: what is established there is the *absence of this route*, not the
+  satisfiability of the binder.  Nothing here proves `Module.Finite k (sectionSub k ⊤ D)` holds at
+  a proper curve — that is finiteness of `L(D)`, which is Riemann–Roch's own content and is open
+  in AJC.  So the honest statement is "not refuted by this argument", not "survives".
 * On an **affine** `X` with a prime divisor, `isAffineOpen_top` applies and
   `not_chart_finite_of_primeDivisor` kills the `⊤` binder as well.  Machine-checked, not
   reasoned: `not_chart_finite_of_primeDivisor k (isAffineOpen_top X) P` elaborates.
@@ -79,15 +82,22 @@ affine, i.e. whether `X` is affine — *not* whether `U` is written `⊤`:
 That second bullet is a real caveat rather than a curiosity, because the consumers in
 `GlobalGeneration.lean`, `LedgerClosure.lean` and `SectionBounds.lean` are stated for a **bare
 `Scheme X`** with no `IsProper` binder anywhere.  So their `⊤` binders are unsatisfiable on the
-affine members of the family they quantify over.  They are not thereby wrong or useless — at a
-proper curve, the case of interest, the binder is exactly the finiteness of `L(D)` that
-Riemann–Roch asserts — but a consumer instantiating them at an affine scheme gets a vacuous
-statement, and no docstring in that lane says so.
+affine members of the family they quantify over, and no docstring in that lane says so.
 
-The honest asymmetry, stated with the hypothesis it needs: at a **proper** curve,
-`Module.Finite k (sectionSub k ⊤ D)` is finiteness of `L(D)`, which Riemann–Roch asserts, while
-`Module.Finite k (sectionSub k U D)` at an affine chart is a disguised finiteness of `K(X)/k`,
-which is false.  Drop properness and the distinction collapses with it.
+**What is proved and what is not, kept apart — a fresh-context review caught an earlier version
+of this section presenting the second as the first.**
+
+* PROVED: on an affine `X` with a prime divisor, the `⊤` binder fails
+  (`not_chart_finite_top_of_isAffine`).
+* NOT PROVED, and not provable here: that the `⊤` binder *holds* at a proper curve.  That is
+  finiteness of `L(D)` — Riemann–Roch's own content, and open in AJC.  All this module gives at a
+  proper curve is that *its* argument does not apply.  "Not refuted by this route" is the claim;
+  "survives", "is fine", or "is safe" would all be stronger than anything checked.
+
+The asymmetry worth carrying, stated at that strength: `Module.Finite k (sectionSub k U D)` at an
+affine chart is a **disguised finiteness of `K(X)/k`**, which is false — that is a theorem.
+`Module.Finite k (sectionSub k ⊤ D)` at a proper curve is finiteness of `L(D)`, which is what one
+wants to be true and which this module says nothing about either way.
 
 `ell_le_finrank_chart_along_tower` is the one to compare: it needs no cover and no affineness, so
 it applies at any `U`, but its *conclusion* is vacuous when `U = ⊤` (`ℓ(D) ≤ ℓ(E)` with the tower
@@ -391,8 +401,8 @@ because the prose version invites exactly the wrong summary ("`⊤` is safe").  
 Consequence a consumer should know: `GlobalGeneration.lean`, `LedgerClosure.lean` and
 `SectionBounds.lean` assume `Module.Finite k (sectionSub k ⊤ D)` over a **bare `Scheme X`** with
 no `IsProper` binder, so at the affine members of that family their hypotheses are unsatisfiable
-and their conclusions vacuous.  At a proper curve — the intended case — the binder is the honest
-finiteness of `L(D)` and they are fine. -/
+and their conclusions vacuous.  At a proper curve this argument does not apply — which is *not*
+the same as the binder holding there; that is finiteness of `L(D)`, open in AJC. -/
 theorem not_chart_finite_top_of_isAffine [IsAffine X] [Nonempty (X : Type u)]
     (P : X.PrimeDivisor) :
     ¬ Module.Finite k (sectionSub k (⊤ : X.Opens) (0 : X.WeilDivisor)) := by

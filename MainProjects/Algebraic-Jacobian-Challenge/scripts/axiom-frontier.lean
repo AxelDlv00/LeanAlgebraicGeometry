@@ -998,7 +998,11 @@ Consequences for this file's own claims, stated because several were wrong:
    (h))" — that inference is now void for curves, since the refutations have no instances there.
    The `hledger`-conditional results of `SectionBounds`/`BoundedVanishing`/`GlobalGeneration` are
    NOT shown vacuous.
- * The `⊤` binders those files use are unaffected AT A PROPER CURVE, and only there.
+ * The `⊤` binders those files use are NOT REACHED BY THIS ARGUMENT at a proper curve — which is
+   weaker than "unaffected", and the difference is trap (i) again. Nothing proves those binders
+   HOLD at a proper curve; that is finiteness of `L(D)`, i.e. Riemann-Roch's own content, open in
+   AJC. What is proved is only that this collapse does not apply there. A fresh-context review
+   caught an earlier version of this bullet asserting survival.
    `IsAffineOpen U` is load-bearing in the collapse, and `⊤` is not affine on a proper curve — but
    it IS affine when `X` is, and then the `⊤` binder dies too
    (`not_chart_finite_top_of_isAffine`). This matters because `GlobalGeneration.lean`,
