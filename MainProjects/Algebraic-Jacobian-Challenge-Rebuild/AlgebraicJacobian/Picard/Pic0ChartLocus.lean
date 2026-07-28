@@ -188,7 +188,17 @@ value means multiplying by `θᵐ` and dividing by `Σ` — hence `chartTwist` i
 `deg Z − m·d₁ = −g`; since `Subsingleton H¹(𝒪(W))` forces `deg W ≥ g − 1`, that locus was
 **empty for every `g ≥ 1`** and its openness was the openness of `∅`.  The comparison point is
 `degAt_chartValue` at `n = g` (where the chart index is calibrated and `chartValue` lands in
-`pic0`), NOT at `n = 0`. -/
+`pic0`), NOT at `n = 0`.
+
+**An independent confirmation that `+g` is the right target**, worth recording because the
+wrong sign survived two sessions: at `deg W = g` the rank anchor
+`h0_eq_deg_add_chi_of_subsingleton_hModule_one` (`RiemannRoch/FLVClass.lean:412`) gives, for a
+witness with `h¹ = 0`,
+`h⁰ = deg W + χ(𝒪) = g + (1 − g) = 1` — exactly the `h⁰ = 1` normalization that DAT-C §2 and
+GAP-2's uniqueness both require.  So `+g` is not merely the sign that makes the locus nonempty;
+it is the unique degree at which the witness is *unique*, which is what the chart map needs to be
+injective.  At `−g` the same anchor gives `h⁰ = 1 − 2g`, negative for `g ≥ 1` — the contradiction
+that made the locus empty. -/
 theorem degAt_chartTwist (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
     {T : Over (Spec (.of k))} {lam : picEt C T} (hlam : lam ∈ pic0Subgroup C T)
     {K : Type u} [Field K] [Algebra k K] (t : overSpec k K ⟶ T) :
