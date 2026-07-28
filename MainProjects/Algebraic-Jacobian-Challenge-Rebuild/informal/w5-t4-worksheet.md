@@ -1160,6 +1160,35 @@ The shape to build: for `g : X ⟶ Z` and an affine open `O` of `Z` with affine 
 `Opens.cechPicClass_of_le`'s proof is the model: it chases an `appLE` square through
 `CechPic.toPic_map` and `Pic.mapRingHom_mapRingHom`.
 
+**I ATTEMPTED IT AND GOT PART-WAY — start from here, the statement typechecks and the reduction
+works.** Measured on scratch (not committed, nothing to clean up):
+
+1. The statement above **elaborates** as written, with `hO : IsAffineOpen O` and
+   `hgO : IsAffineOpen (g ⁻¹ᵁ O)` as separate hypotheses (the preimage being affine is *not*
+   automatic and must be assumed — at the thickened charts it comes from `relCover`, which carries
+   `isAffineOpen₀/₁` for the base-changed cover).
+2. The **whole Picard-side reduction goes through**, in this order:
+   `Opens.cechPicClass` (twice) → collapse the two pullbacks with a `have` proving
+   `CechPic.map (g ⁻¹ᵁ O).ι (CechPic.map g L) = CechPic.map ((g ⁻¹ᵁ O).ι ≫ g) L`
+   (`CechPic.map_comp` then `rfl`) → `← Scheme.Hom.resLE_comp_ι g le_rfl` (this is the key
+   factorisation: `(g⁻¹O).ι ≫ g = resLE ≫ O.ι`, and `Hom.resLE_comp_ι` **exists**) →
+   `CechPic.map_comp`, `MonoidHom.comp_apply`, `CechPic.toPic_map` at the `resLE`, then
+   `Pic.mapRingHom_mapRingHom` twice.
+3. **What is left after that is a pure `CommRingCat` equality**, no Picard groups and no schemes'
+   worth of structure:
+   `O.ιTop ≫ (g.resLE O (g⁻¹O) le_rfl).appTop = g.appLE O (g⁻¹O) le_rfl ≫ (g⁻¹O).ιTop`
+   — the `appLE`/`ιTop` square for the restriction of `g`. `exact?` does not find it and it is not
+   in the tree under any spelling I searched.
+4. **Where I stopped, and it is bookkeeping not mathematics:** both sides are `appLE` of the *same*
+   composite morphism, so the intended proof is `Scheme.Hom.appLE_comp_appLE` on each side plus
+   `appLE_congr_hom` (the `subst`-based congruence, `private` in
+   `Cohomology/RelativeSectionsLinear.lean` and re-derivable in three lines) to identify the two
+   composites via `resLE_comp_ι`. My attempt failed on the *inclusion-witness* argument of the
+   intermediate `appLE` — the `⊤ ≤ ((g⁻¹O).ι ≫ g) ⁻¹ᵁ O` proof obligation, which has to be
+   transported along `resLE_comp_ι` rather than built from `preimage_top`. That is exactly the
+   elided-restriction-argument family of §6.10(3): **state the step as a `have` with the
+   inequalities named and close with `exact`, do not let `rw` infer them.**
+
 **THE METHOD LESSON, since this lane has now mis-sized the same clause twice in one session.**
 §6.15 said "the geometry is in step 3"; §6.16 said "the geometry is freeness of the restriction";
 both were true only after removing another layer of algebra that already existed or was cheap. Rule:
