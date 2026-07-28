@@ -11,6 +11,7 @@ import AlgebraicJacobian.Picard.Pic0TangentSpace
 import AlgebraicJacobian.Picard.Pic0DualNumberCocycle
 import AlgebraicJacobian.Picard.OnePointRelPicCollapse
 import AlgebraicJacobian.Picard.GroupSchemeSmoothAlgClosed
+import AlgebraicJacobian.Curve.GeometricallyReduced
 import AlgebraicJacobian.RiemannRoch.Adelic.GenusUnconditional
 import AlgebraicJacobian.Genus
 
@@ -1232,7 +1233,6 @@ theorem geometricallyReduced_of_isReduced_algebraicClosureBaseChange {k : Type u
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIntegral C.hom] [HasPicScheme C]
     [PicScheme.PicSchemeLocallyOfFiniteType C]
-    [∀ {X Y : Scheme.{u}} (f : X ⟶ Y) [Smooth f], GeometricallyReduced f]
     (h : IsReduced (Limits.pullback (Pic0Scheme C).hom
       (Spec.map (CommRingCat.ofHom (algebraMap k (AlgebraicClosure k)))))) :
     GeometricallyReduced (Pic0Scheme C).hom :=
