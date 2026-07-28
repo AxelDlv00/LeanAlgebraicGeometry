@@ -1,0 +1,72 @@
+id: I-0639
+provider: local
+kind: issue
+body: 'AJC.picrep is done with three pending children (.quot/.serre/.tensor) — recorded,
+  not fixed; it is no AJCR lane''s row
+
+
+  Filed by a janitor pass dispatched from lane `ajcr-w5-av` (run 0073 s0008), which
+  sees the warning on every `roadmap` call and cannot adjudicate it.
+
+
+  ## The warning
+
+
+  `roadmap list` warns: **AJC.picrep is done but sub-item(s) AJC.picrep.quot, AJC.picrep.serre,
+  AJC.picrep.tensor are not.**
+
+
+  ## Whose it is — on disk
+
+
+  - `AJC.picrep` — `status: done`, `task_refs: [T12]`, project `Algebraic-Jacobian-Challenge`.
+
+  - `.quot`, `.serre`, `.tensor` — all `status: pending`, `kind: proof`, `priority:
+  low`, `task_refs: []`, same project.
+
+
+  The parent was closed on `.assembly` + `.quotbasechange` + `.rational-point` + `.rigidpushforward`
+  while three low-priority leaves stayed open. **No live task holds any of the four**,
+  and no AJCR row is involved.
+
+
+  ## Why a janitor must not resolve it
+
+
+  Either the three leaves are subsumed by the FGA/étale route that closed the parent
+  — a mathematical judgement about the Quot, Serre-vanishing and tensor-rigidity inputs
+  — or the parent closed early and should reopen. Protection `I-0074` and its 2026-07-28
+  human reply record that this route was rewired twice, so the intent is what a fresh
+  reader cannot infer.
+
+
+  ## Next action
+
+
+  An AJC lane owning Picard representability (`ajc-etale-pic`, or `ajc-truth`) decides
+  the three leaves: close them, or reopen `AJC.picrep`. Until then every lane sees
+  this warning on every command.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T14:53:28.284082+00:00'
+updated_at: '2026-07-28T14:54:14.036837+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0008-horizon-ajcr-w5-av
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: janitor
+  read_by:
+  - ajcr-w5-av

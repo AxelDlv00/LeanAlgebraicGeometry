@@ -18,9 +18,13 @@ was **not identified**:
 > `SingleObj G ⥤ Type` and mentions neither `CommRingCat` nor `Spec`. **The carrier is not
 > named in Lean.**
 
-That gap is closed here. The colimit of a finite-group action on a ring, taken in
-`CommRingCatᵒᵖ`, is `A^G` — the honest Milne `(A^{⊗n})^{S_n}` once `A` is the `n`-fold
-tensor power.
+The *naming* half of that gap is answered here: the colimit of a group action on a ring,
+taken in `CommRingCatᵒᵖ`, is `A^G`. It becomes Milne's `(A^{⊗n})^{S_n}` only once `A` is
+the `n`-fold tensor power carrying the `S_n`-action — which is **not** supplied below (see
+the scope section). So read this as *the carrier of a ring-action quotient is now a named
+object with a proved universal property*, not as *`SymPowColimit`'s flagged obligation is
+discharged*: that obligation also wants the tensor power, the `S_n`-action on it, and a
+category match, and all three are still open.
 
 ## Why naming the carrier is real content, not bookkeeping
 
@@ -31,7 +35,10 @@ it **is**, and the difference is not cosmetic: the gluing step — the leg's rem
 each side. An abstract `colimit (permDiagram …)` supports no such comparison; `A^G` does,
 because restriction of invariants along `A → A_b` is a ring map one can write down.
 
-So this file is the prerequisite for gluing, not a restatement of what was already known.
+So this file supplies a prerequisite for gluing rather than restating what was known. Note
+the modest claim: it is *a* prerequisite, and no declaration in the tree consumes it yet
+(grep for `fixedConeIsLimit` outside this file returns nothing). Calling it "what the next
+step consumes" would be premature until the category caveat below is closed.
 
 ## Main results
 
@@ -41,11 +48,20 @@ So this file is the prerequisite for gluing, not a restatement of what was alrea
   the cone over `actionDiagram` with vertex the fixed subring `A^G` (mathlib's
   `FixedPoints.subring`) is a limit cone. Nothing is assumed about `G` — not even
   finiteness — because the universal property of the invariants needs none.
-* `fixedCoconeIsColimitOp` — the same fact **dualised**: in `CommRingCatᵒᵖ`, which is
-  where the symmetric-power interface lives, `A^G` is a *colimit* of the action. This is
-  the statement `SymPowColimit`'s §5 wanted and did not have.
-* `hasColimit_actionDiagram_op` — hence the `HasColimit` instance for the opposite
+* `fixedCoconeIsColimitOp` — the same fact **dualised**: in `CommRingCatᵒᵖ`, `A^G` is a
+  *colimit* of the action, which is the variance a quotient has.
+* `hasColimit_actionDiagram_op` — hence the `HasColimit` statement for the opposite
   diagram, with the carrier now named.
+
+**One category caveat, and it is load-bearing — a fresh-context review caught an earlier
+draft of this header asserting otherwise.** `SymPowColimit`'s affine statement
+(`symPowData_affineAlgebra`) lives in `(Under k)ᵒᵖ`, the opposite of `k`-algebras; this file
+lives in `CommRingCatᵒᵖ`, with no base ring. **Those are different categories**, and no
+declaration here bridges them (`Over.opEquivOpUnder` and `AffineScheme.equivCommRingCat`
+exist in mathlib but are not used below). So nothing in `SymPowColimit.lean` can currently
+*consume* `hasColimit_actionDiagram_op`: this is a parallel identification of the same
+mathematics over a different base, not a plugged-in input. Supplying the bridge — or
+restating the below over `Under k` — is unfinished work.
 
 ## Scope — read this before quoting it
 
@@ -180,53 +196,65 @@ theorem hasLimit_actionDiagram : HasLimit (actionDiagram G A) :=
 
 /-! ## §3. Dualised: the affine quotient is a colimit in `CommRingCatᵒᵖ`
 
-The symmetric-power interface lives on the geometric side, so what it consumes is a
-*colimit*. `IsLimit.op` crosses that gap with no further mathematics: a limit cone in
-`CommRingCat` is a colimit cocone in `CommRingCatᵒᵖ` over the opposite diagram.
+A quotient is a *colimit*, so the geometric side wants the dual statement. `IsLimit.op`
+crosses that gap with no further mathematics: a limit cone in `CommRingCat` is a colimit
+cocone in `CommRingCatᵒᵖ` over the opposite diagram.
 
-This is the form `SymPowColimit`'s §5 wanted. Its `symPowData_affineAlgebra` produced the
-interface from mathlib's colimits without knowing what the object was; the two together now
-say the affine symmetric power exists **and** is `Spec` of the invariants. -/
+**Do not read this as `SymPowColimit`'s §5 obligation discharged**, which an earlier draft
+of this header did. That obligation is about `(Under k)ᵒᵖ` — `k`-algebras — and the
+statements below are about `CommRingCatᵒᵖ`, with no base ring. Different categories, no
+bridge built here, so `symPowData_affineAlgebra` cannot consume these. What the two say
+*jointly*, with that caveat live, is: the affine quotient's carrier is the invariants over
+`CommRingCat`, and the interface is inhabited over `Under k`. Making those one statement is
+open work. -/
 
 /-- **The affine quotient, named, as a colimit in `CommRingCatᵒᵖ`.**
 
 Dual to `fixedConeIsLimit`. The cocone vertex is `A^G` viewed in the opposite category —
 geometrically, `Spec (A^G)` — and it is a colimit of the opposite action diagram.
 
-Read this as the algebraic half of Milne III.3 Proposition 3.1 *with its object
-identified*: the quotient of `Spec A` by `G` is `Spec (A^G)`. The half that remains is
-gluing such charts, for which see `Albanese/SymPowColimit.lean` §6. -/
+This identifies the object of a ring-action quotient: dually, the quotient of `Spec A` by
+`G` is `Spec (A^G)`. It is **not** Milne III.3 Proposition 3.1's affine half, which is about
+the `n`-fold tensor power with its `S_n`-action; see the scope section for the two things
+that specialisation still needs. Gluing such charts is a separate matter again
+(`Albanese/SymPowColimit.lean` §6). -/
 noncomputable def fixedCoconeIsColimitOp :
     IsColimit (fixedCone G A).op :=
   (fixedConeIsLimit G A).op
 
-/-- **The `HasColimit` form of the affine quotient.** The obligation
-`SymPowColimit.lean` isolates — a `HasColimit` for the action diagram — holds on the
-opposite of `CommRingCat`, with the colimit now a named object rather than an abstract
-one. -/
+/-- **The `HasColimit` form of the affine quotient**, on the opposite of `CommRingCat`,
+with the colimit a named object rather than an abstract one.
+
+This is the same *shape* as the obligation `SymPowColimit.lean` isolates, over a different
+category (`CommRingCatᵒᵖ`, not `(Under k)ᵒᵖ` and not `Over (Spec k̄)`), so it does not
+discharge it. -/
 theorem hasColimit_actionDiagram_op : HasColimit (actionDiagram G A).op :=
   ⟨⟨⟨(fixedCone G A).op, fixedCoconeIsColimitOp G A⟩⟩⟩
 
 /-! ## §4. What this does and does not settle
 
-**Settled.** The affine symmetric-power carrier has a name and a proved universal property,
-in both variances. Anyone building the gluing now has a formula for each chart's quotient
-instead of an abstract colimit, which is what a chart-overlap comparison requires.
+**Settled.** The carrier of a quotient by a ring action has a name and a proved universal
+property, in both variances: `A^G`, with no finiteness and no Noetherian hypothesis.
 
-**Not settled, and neither is smaller than it was.**
+**Not settled — three things, and a fresh-context review had to point out the third.**
 
 * The curve case. `Over (Spec k̄)` with `C` proper still has no
-  `HasColimit (permDiagram C g)`, and this file does not touch it. What changed is the
-  *input* to that construction, not the construction.
+  `HasColimit (permDiagram C g)`, and this file does not touch it.
 * The specialisation to Milne's actual ring. `G := Equiv.Perm (Fin n)` acting on the
   `n`-fold tensor power `A^{⊗ n}` is the case Milne uses; the `S_n`-action on a tensor
   power of a commutative *ring* is not built here (mathlib's `SymmetricPower` /
-  `TensorPower` symmetric API is for modules). So `A^G` above is Milne's
-  `(A^{⊗n})^{S_n}` only once that action is supplied.
+  `TensorPower` symmetric API is for modules — `PiTensorProduct.reindex` is a *linear*
+  equiv). So `A^G` above is Milne's `(A^{⊗n})^{S_n}` only once that action is supplied.
+* **The category.** `SymPowColimit`'s affine statement is over `(Under k)ᵒᵖ`; everything
+  here is over `CommRingCatᵒᵖ`. No declaration bridges them, so nothing in that file can
+  consume anything in this one. `Over.opEquivOpUnder` and `AffineScheme.equivCommRingCat`
+  are the mathlib pieces a bridge would use; neither is imported.
 
-The second point is worth stating plainly because the header could be read as claiming
-Milne's affine half outright. It does not: what is proved is the *general* invariants
-identification, which is strictly more than the previous inhabitation statement and
-strictly less than Milne III.3.1's affine case. -/
+The first two were named in the first draft of this file; the third was not, and its absence
+made the header read as though the flagged obligation had been discharged. Recorded because
+the pattern is this lane's recurring one (inbox `I-0571`, `I-0592`, `I-0637`): a scope
+section can be scrupulous about the axis you thought of and silent about the one you did
+not. What is proved is the *general* invariants identification — strictly more than the
+previous inhabitation statement, strictly less than Milne III.3.1's affine case. -/
 
 end AlgebraicGeometry

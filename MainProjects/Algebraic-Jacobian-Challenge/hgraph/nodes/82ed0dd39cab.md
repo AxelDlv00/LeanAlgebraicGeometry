@@ -6,10 +6,10 @@ created: '2026-07-26T01:01:50'
 generated: blueprint
 label: def:basepoint_section_symmetric_power
 lean_status: empty
-order: 1804
+order: 1806
 title: The basepoint section of the symmetric power
 type: tex
-updated: '2026-07-28T18:12:22'
+updated: '2026-07-28T22:30:29'
 ---
 Define
   \[

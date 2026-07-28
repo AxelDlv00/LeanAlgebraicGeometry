@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: rem:IsAlbanese_unique_iso
 lean_status: empty
-order: 567
+order: 569
 title: rem:IsAlbanese_unique_iso
 type: tex
-updated: '2026-07-28T18:12:21'
+updated: '2026-07-28T22:30:26'
 ---
 Consequently the Albanese object is unique up to a unique isomorphism
   compatible with the universal morphism.

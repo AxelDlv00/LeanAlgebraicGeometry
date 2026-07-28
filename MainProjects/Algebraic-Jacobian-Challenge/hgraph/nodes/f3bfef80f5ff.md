@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:relspec_pullback_iso_desc_isiso
 lean_status: lean_ok
-order: 611
+order: 613
 title: Base-change descent is invertible
 type: tex
-updated: '2026-07-28T18:12:21'
+updated: '2026-07-28T22:30:27'
 ---
 The colimit descent map
   \(\underline{\Spec}_T(\mathcal{A}_g) \to

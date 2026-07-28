@@ -13,7 +13,7 @@ summary: 'OFF-PATH, retained not revived. Under projectivity, relative very ampl
   and flattening substrate is sorry-free, genuinely reusable, and imported by the
   committed route; only this node''s own leaf and AJC.picrep.serre are exclusive to
   the endgame. Do not build new consumers against HasSmoothProperQuotient.'
-status: pending
+status: rejected
 kind: proof
 priority: low
 depends_on: []
@@ -35,4 +35,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-27T21:16:41.905232+00:00'
+  updated_at: '2026-07-28T14:54:19.808533+00:00'

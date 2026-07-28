@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:generic_flatness_algebraic
 lean_status: lean_ok
-order: 940
+order: 942
 ref: nitsure-hilbert-quot
 title: Generic flatness, algebraic form
 type: tex
-updated: '2026-07-28T18:12:21'
+updated: '2026-07-28T22:30:27'
 ---
 \textit{Source: [Nitsure], \S4, ``Lemma on Generic Flatness''.}
   Let \(A\) be a noetherian domain, \(B\) a finite-type \(A\)-algebra, and \(M\) a finite

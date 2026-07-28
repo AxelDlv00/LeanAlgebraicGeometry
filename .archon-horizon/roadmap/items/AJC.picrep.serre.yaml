@@ -10,7 +10,7 @@ summary: 'OFF-PATH, retained not revived. Finite generation of the section grade
   route, whose uniform-H1 input comes from cluster P instead (AJC.rr, task ajc-rr).
   Serre finiteness remains of independent interest and may yet be the cheapest route
   to the H0-finite-generation leaf flagged in RigidPushforwardP1Engine.lean.'
-status: pending
+status: rejected
 kind: proof
 priority: low
 depends_on: []
@@ -32,4 +32,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-27T21:16:43.174362+00:00'
+  updated_at: '2026-07-28T14:54:24.586930+00:00'

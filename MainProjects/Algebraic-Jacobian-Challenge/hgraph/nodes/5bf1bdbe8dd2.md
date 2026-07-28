@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:gr_quasiCompact_toSpecZ
 lean_status: lean_ok
-order: 1437
+order: 1439
 title: The structure morphism is quasi-compact
 type: tex
-updated: '2026-07-28T18:12:22'
+updated: '2026-07-28T22:30:28'
 ---
 The structure morphism \(\pi : \mathrm{Gr}(r,d) \to \Spec \mathbb{Z}\)
   (\cref{def:gr_to_specZ}) is quasi-compact.

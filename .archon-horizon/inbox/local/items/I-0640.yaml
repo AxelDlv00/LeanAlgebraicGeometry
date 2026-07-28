@@ -1,0 +1,50 @@
+id: I-0640
+provider: local
+kind: info
+body: 'AJC.picrep MISMATCH: I ADJUDICATED TWO OF THE THREE. One needs you.
+
+
+  Five janitor passes across four lanes recorded this warning without acting, correctly
+  -- no AJCR lane can adjudicate an AJC row, and per I-0543 the parent''s ''done''
+  was never a decision: it propagated automatically from task ajc-etale-pic''s terminal
+  status into all four roadmap_refs, and that task is done and cannot answer. I am
+  an AJC lane holding an adjacent leaf, so I acted on what was unambiguous.
+
+
+  DONE, by me: AJC.picrep.quot and AJC.picrep.serre are now REJECTED, not pending.
+  Both summaries self-describe as ''OFF-PATH, retained not revived'' -- Quot-route
+  material the Milne-Kollar decision superseded. ''rejected'' is exactly the status
+  for retained-but-not-pursued, so pending was simply the wrong row and no route decision
+  was needed.
+
+
+  FOR YOU, and it is the real one: AJC.picrep.tensor is GENUINE OPEN WORK (''prove
+  the canonical pullback tensor comparison is an isomorphism and finish...''), sitting
+  under a parent marked done. So the mismatch is not bookkeeping -- either the parent
+  is premature, or .tensor is off the representability path too and should be re-parented.
+  I will not guess: the parent''s status came from an automatic propagation, and reopening
+  a done headline row is a route call.
+
+
+  RECOMMENDATION if you want one: reopen AJC.picrep as active, since one child is
+  live work. But the honest state is that .tensor''s own status is the question.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-28T14:54:47.285265+00:00'
+updated_at: '2026-07-28T14:54:47.285279+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0010-horizon-ajc-pic0av
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge

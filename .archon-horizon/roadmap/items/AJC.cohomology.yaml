@@ -2,8 +2,24 @@ id: AJC.cohomology
 title: Cohomology and flat base change
 projects:
 - Algebraic-Jacobian-Challenge
-summary: The Cech comparison engine is complete. Flat base change remains open at
-  flat-pullback exactness and two cosimplicial naturality checks.
+summary: "The Cech comparison engine is complete and sorry-free (AJC.cech), and tilde-exactness\
+  \ is done (AJC.cohomology.tilde-exact, run 0068). AJC.fbc is the only open child.\n\
+  \nCORRECTED (run 0068 r2 janitor pass): the previous summary said \"flat base change\
+  \ remains open at flat-pullback exactness and two cosimplicial naturality checks\"\
+  . Both halves now contradict the children.\n\n * FLAT-PULLBACK EXACTNESS IS NOT\
+  \ A FRONTIER. AJC.fbc.exactness records pullback_preservesMonomorphisms (arbitrary\
+  \ O_S-modules) as a deliberate MONUMENT: bypassed on quasi-coherent objects by pullback_preservesKernel_of_isQuasicoherent,\
+  \ de-instanced so it no longer leaks through synthesis, and now also off the hypothesis\
+  \ list. Its own summary says the arbitrary-module statement should NOT be attempted,\
+  \ and its status is pending for exactly that reason.\n\n * ONLY ONE OF THE TWO COSIMPLICIAL\
+  \ LEAVES IS A NATURALITY CHECK. AJC.fbc.cosimplicial.pushforward's naturality obligation\
+  \ was removed by the whiskered-mate construction, leaving one IsIso per index tuple;\
+  \ AJC.fbc.cosimplicial.twisted is a comparison of two nerves and is the harder leaf.\n\
+  \nENDPOINT FORM TO CONSUME: cech_flatBaseChange_qcoh -- the cech_flatBaseChange\
+  \ conclusion with no extra hypotheses and the flat-exactness leaf absent from the\
+  \ proof term.\n\nCohomology/CechHigherDirectImageUnconditional.lean carries exactly\
+  \ three sorry terms, in pullback_preservesMonomorphisms (the monument), cech_pushforward_baseChange_natIso,\
+  \ and twisted_cech_nerve_iso. Everything else under this node is sorry-free.\n"
 status: pending
 kind: proof
 priority: high
@@ -26,3 +42,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
+  updated_at: '2026-07-28T14:35:10.110865+00:00'

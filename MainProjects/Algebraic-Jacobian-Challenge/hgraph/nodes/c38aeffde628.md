@@ -6,10 +6,10 @@ created: '2026-07-26T01:17:25'
 generated: blueprint
 label: lem:symmetric_power_nonsingular
 lean_status: empty
-order: 1790
+order: 1792
 ref: abelian-varieties:page-0100
 title: Nonsingularity of a symmetric power of a curve
 type: tex
-updated: '2026-07-28T18:12:22'
+updated: '2026-07-28T22:30:29'
 ---
 If \(C\) is nonsingular, then \(C^{(r)}\) is nonsingular.

@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:tensorPowAdd_zero_left
 lean_status: lean_ok
-order: 1312
+order: 1314
 title: Left-unit constraint for the tensor-power comparison
 type: tex
-updated: '2026-07-28T18:12:22'
+updated: '2026-07-28T22:30:28'
 ---
 For a sheaf of modules \(\mathcal{L}\) and \(n \in \mathbb{N}\), the degree-\((0,n)\)
   comparison isomorphism \(\mu_{0,n}\) (\cref{lem:sheafTensorPow_add}) is the left

@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:factor_rank_stratum_unique
 lean_status: lean_ok
-order: 1020
+order: 1022
 ref: nitsure-hilbert-quot
 title: "Unique factorization through the rank-\\(e\\) stratum of the\n  base"
 type: tex
-updated: '2026-07-28T18:12:21'
+updated: '2026-07-28T22:30:28'
 ---
 Let \(S\) be locally noetherian, \(\F\) a finitely presented
   \(\OO_S\)-module, and \(\varphi : T \to S\) a morphism such that

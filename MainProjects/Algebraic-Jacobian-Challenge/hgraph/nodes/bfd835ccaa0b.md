@@ -17,16 +17,33 @@ docstring: "**The base-changed nerve is the nerve of the base-changed data** (St
   \ —\nitself a Beck–Chevalley identification `g'^* (p_* p^* F) ≅ p'_* p'^* (g'^*\
   \ F)` for the\nrestricted cartesian square — and the identifications are compatible\
   \ with the cosimplicial\nstructure maps because both are induced by the same inclusions\
-  \ of intersections.\n\n*(STUB — the residual `sorry` is the termwise commuting of\
-  \ `g'^*` with `pushPullFunctor`\nalong the base-changed fibre powers; structurally\
-  \ lighter than\n`cech_pushforward_baseChange_natIso` but still a Beck–Chevalley\
-  \ identification.)*\nProject-local."
+  \ of intersections.\n\n**THE WHISKERING CORRECTION DOES *NOT* TRANSFER TO THIS LEAF\
+  \ — the two leaves are asymmetric**\n(run 0068 r2; recorded because the obvious\
+  \ guess is wrong).\n\nFor `cech_pushforward_baseChange_natIso` the naturality obligation\
+  \ evaporates because *both* sides\nare `N ⋙ (a composite of functors)` for one and\
+  \ the same cosimplicial object\n`N = drop.obj (CechNerve \U0001D4B0 F)`, so a whiskered\
+  \ natural transformation maps between them and\nnaturality is inherited.  Here that\
+  \ fails: the left side is indeed `N ⋙ g'^*`, but the right side\nis `drop.obj (CechNerve\
+  \ \U0001D4B0' (g'^* F))` — **a different cosimplicial object**, the nerve of the\n\
+  base-changed cover, not a whiskering of `N`.  There is no natural transformation\
+  \ to whisker,\nbecause the source and target cosimplicial objects are not built\
+  \ from a common one.\n\nSo this leaf's naturality is genuine work, and it is a *comparison\
+  \ of two nerves*: the content is\nthat the geometric backbone base-changes, `coverInterOpen\
+  \ \U0001D4B0' σ = (g')⁻¹(coverInterOpen \U0001D4B0 σ)`\n(`coverInterOpen_baseChange_eq`,\
+  \ landed), **compatibly with the index-omission maps** — i.e. that\nthe `isoOfRangeEq`\
+  \ slice identifications used per σ in `twisted_cech_nerve_per_sigma` commute with\n\
+  the inclusions `U_τ ⊆ U_σ` for `σ` a subtuple of `τ`.  That is a statement about\
+  \ the cover\nbase-change identification, not about modules, and it is the honest\
+  \ residue here.\n\nConsequently: attempt `cech_pushforward_baseChange_natIso` **first**\
+  \ (its naturality is already\nfree, and only a per-σ `IsIso` of a mate remains),\
+  \ and treat this leaf as the harder of the two\ndespite its lighter hypotheses.\
+  \  Project-local."
 file: AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean
 generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.twisted_cech_nerve_iso
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-07-28T22:30:22'
 ---
 noncomputable def twisted_cech_nerve_iso
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)

@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: thm:rel_pic_addcommgroup_via_tensorobj
 lean_status: lean_ok
-order: 709
+order: 711
 title: Abelian-group instance on the relative Picard quotient via \(\Scheme.\mathtt{Modules}.\mathtt{tensorObj}\)
 type: tex
-updated: '2026-07-28T18:12:21'
+updated: '2026-07-28T22:30:27'
 ---
 \textit{Source: [Kleiman], ``The Picard scheme'', \S 2,
   Defs.~df:aPf + df:Pfs (the target category is the category of abelian

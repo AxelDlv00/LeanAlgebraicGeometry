@@ -2,28 +2,35 @@ id: AJC.fbc
 title: Flat base change (2 walled naturality leaves + 1 bypassed monument)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "FLAT BASE CHANGE: the endpoint now needs NO side hypotheses, and the residue\
-  \ is ONE kind of statement.\n\nLANDED run 0068 r2 (all kernel-checked, lake build\
-  \ 2896 jobs exit 0, file still exactly 3 sorries):\n * cech_flatBaseChange_qcoh\
-  \ -- the cech_flatBaseChange conclusion with the flat-exactness leaf ABSENT from\
-  \ the proof term and with NO extra hypotheses. THE FORM TO CONSUME.\n * isQuasicoherent_cechComplex_X\
-  \ -- every degree term of the relative Cech complex is quasi-coherent; this discharges\
-  \ the h2/h3 that the previous best form had to assume. Built on isQuasicoherent_pushforward_specMap\
-  \ (four lines from mathlib's isIso_fromTildeGamma_pushforward), its isoSpec-conjugated\
-  \ form, and isQuasicoherent_pi_of_isAffine.\n * cechOuterBC + cech_pushforward_baseChange_natIso_of_isIso\
-  \ + isIso_app_pi_of_isIso_app -- the cosimplicial comparison as a WHISKERED MATE,\
-  \ which removes the cosimplicial naturality obligation from the S-level leaf entirely\
-  \ and reduces it to one IsIso per index tuple.\n\nREMAINING, exactly: the two cosimplicial\
-  \ naturality sorries, and they are NOT the same obligation.\n (a) cech_pushforward_baseChange_natIso\
-  \ -- REPLACE, do not prove. Naturality is free via whiskering; what is open is the\
-  \ per-sigma IsIso OF THE MATE'S COMPONENT. The file has an iso with those endpoints\
-  \ but that is not IsIso of a given map. Route: mateEquiv_vcomp splits it into the\
-  \ affine mate over U_sigma -> S plus the landed openImmersion_beckChevalley.\n (b)\
-  \ twisted_cech_nerve_iso -- whiskering does NOT apply (verified: its RHS is the\
-  \ nerve of the base-changed cover, not a whiskering of N). Its naturality is a comparison\
-  \ of two nerves: coverInterOpen_baseChange_eq compatible with the index-omission\
-  \ maps. HARDER than (a) despite lighter hypotheses.\n\nDo (a) first. pullback_preservesMonomorphisms\
-  \ stays a monument -- no consumer needs it."
+summary: "FLAT BASE CHANGE: the endpoint is now a STRICT DROP-IN for cech_flatBaseChange,\
+  \ and the residue is one kind of statement.\n\nLANDED run 0068 r2 (kernel-checked,\
+  \ lake build 2896 jobs exit 0, file still exactly 3 sorries):\n * cech_flatBaseChange_qcoh\
+  \ -- hypotheses and conclusion BYTE-IDENTICAL to cech_flatBaseChange's, with the\
+  \ flat-exactness leaf absent from the proof term. THE FORM TO CONSUME. (An earlier\
+  \ revision carried an extra [X.IsSeparated]; that was my own over-hypothesising\
+  \ -- coverInterOpen_isAffine derives separatedness of X from [IsSeparated f] + [IsAffine\
+  \ S].)\n * isQuasicoherent_cechComplex_X -- every degree term of the relative Cech\
+  \ complex is quasi-coherent; this DISCHARGES the h2/h3 that the previous best form\
+  \ had to assume. Built on isQuasicoherent_pushforward_specMap (four lines from mathlib's\
+  \ isIso_fromTildeGamma_pushforward), its isoSpec-conjugated form, and isQuasicoherent_pi_of_isAffine.\n\
+  \ * cechOuterBC + cech_pushforward_baseChange_natIso_of_isIso + isIso_app_pi_of_isIso_app\
+  \ -- the cosimplicial comparison as a WHISKERED MATE, which removes the naturality\
+  \ obligation from the S-level leaf entirely and reduces it to one IsIso per index\
+  \ tuple.\n\nMEASURED (new axiom-frontier SS6d; nothing previously measured the lane's\
+  \ own endpoint): all four reductions CLEAN; the endpoints sorryAx; the control pullback_mapHC_homologyIso\
+  \ still sorryAx. So closing flat pullback exactness would clean ONLY the two probes\
+  \ naming it -- the task brief's stated priority is worth two probe lines.\n\nREMAINING,\
+  \ exactly the two cosimplicial naturality sorries, and they are NOT the same obligation:\n\
+  \ (a) cech_pushforward_baseChange_natIso -- REPLACE, do not prove. Naturality is\
+  \ free via whiskering; open is the per-sigma IsIso OF THE MATE'S COMPONENT (the\
+  \ file's existing per-sigma iso has the right endpoints, which is not the same thing).\
+  \ Route: mateEquiv_vcomp splits it into the affine mate over U_sigma -> S plus the\
+  \ landed openImmersion_beckChevalley; cost is TwoSquare hComp/vComp bookkeeping.\n\
+  \ (b) twisted_cech_nerve_iso -- whiskering does NOT apply (verified: its RHS is\
+  \ the nerve of the base-changed cover, not a whiskering of N). Naturality is a two-nerve\
+  \ comparison: coverInterOpen_baseChange_eq compatible with the index-omission maps.\
+  \ HARDER than (a) despite lighter hypotheses.\n\nDo (a) first. pullback_preservesMonomorphisms\
+  \ stays a monument -- no consumer needs it.\n"
 status: active
 kind: proof
 priority: high
@@ -36,7 +43,7 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:43.293058+00:00'
-  updated_at: '2026-07-28T13:44:36.384058+00:00'
+  updated_at: '2026-07-28T14:44:48.847148+00:00'
   parent: AJC.cohomology
   pinned_commits:
   - 875b1172e

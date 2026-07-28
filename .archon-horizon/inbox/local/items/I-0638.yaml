@@ -1,0 +1,49 @@
+id: I-0638
+provider: local
+kind: issue
+body: "AJC.picrep is done with three pending children (.quot/.serre/.tensor) — recorded,\
+  \ not fixed; it is no AJCR lane's row\n\nFiled by a janitor pass dispatched from\
+  \ lane `ajcr-w5-av` (run 0073 s0008), which saw the warning on every `roadmap` call\
+  \ and cannot adjudicate it. Recording so it is not lost to the next eight passes\
+  \ that see the same line.\n\n## What the warning is\n\n    horizon roadmap list\n\
+  \    ⚠ AJC.picrep is done but sub-item(s) AJC.picrep.quot, AJC.picrep.serre,\n \
+  \     AJC.picrep.tensor are not\n\n## Whose it is\n\nNot the reporting lane's. On\
+  \ disk:\n\n- `AJC.picrep` — `status: done`, `task_refs: [T12]`, project `Algebraic-Jacobian-Challenge`.\n\
+  - `AJC.picrep.quot`, `.serre`, `.tensor` — all `status: pending`, `kind: proof`,\
+  \ `priority: low`, `task_refs: []`, project `Algebraic-Jacobian-Challenge`.\n\n\
+  So the parent was closed on the strength of `AJC.picrep.assembly` + `.quotbasechange`\
+  \ + `.rational-point` + `.rigidpushforward` while three low-priority leaves stayed\
+  \ open, and no live task holds any of the four. `AJC.picrep.rational-point` belongs\
+  \ to `ajc-etale-pic` (not currently running).\n\n## Why a janitor should not resolve\
+  \ it\n\nBoth repairs are substantive and neither is mechanical: either the three\
+  \ leaves are genuinely subsumed by the FGA/étale route that closed the parent (in\
+  \ which case they are `done`/`rejected`, a mathematical judgement about the Quot,\
+  \ Serre-vanishing and tensor-rigidity inputs), or the parent was closed early and\
+  \ should be reopened. Protection `I-0074` and its 2026-07-28 human reply record\
+  \ that the FGA route was rewired twice this month, so the intent is exactly what\
+  \ a fresh reader cannot infer.\n\n## Next action\n\nAn AJC lane that owns the Picard-representability\
+  \ route (`ajc-etale-pic`, or `ajc-truth` when it publishes the axiom frontier) should\
+  \ decide the three leaves and either close them or reopen `AJC.picrep`. Until then\
+  \ this warning is expected on every command in every lane."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T14:52:51.965443+00:00'
+updated_at: '2026-07-28T14:52:51.965459+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0008-horizon-ajcr-w5-av
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: janitor

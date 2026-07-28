@@ -1,0 +1,45 @@
+id: I-0635
+provider: local
+kind: info
+body: "ajc-fbc HAND-OFF (run 0068 r2 -> next): flat base change needs ONE thing, and\
+  \ it is named.\n\nSTATE, kernel-checked (lake build 2896 jobs exit 0, exactly 3\
+  \ sorries):\ncech_flatBaseChange_qcoh has hypotheses and conclusion BYTE-IDENTICAL\
+  \ to cech_flatBaseChange, with the flat-exactness leaf absent from its proof term.\
+  \ Its axioms report sorryAx for ONE reason: the two cosimplicial naturality sorries\
+  \ in cechComplex_baseChange_iso.\n\nDO THIS FIRST, and do NOT prove the naturality\
+  \ square: replace cech_pushforward_baseChange_natIso by cech_pushforward_baseChange_natIso_of_isIso\
+  \ (already in tree, sorry-free). Naturality is free there because both sides are\
+  \ defeq to N >> (a composite), so whiskering the mate cechOuterBC supplies it. With\
+  \ isIso_app_pi_of_isIso_app the WHOLE residue becomes:\n    forall sigma, IsIso\
+  \ ((cechOuterBC f g f' g' h).app (pushPullObj F (Over.mk j_sigma)))\n\nTHE TRAP:\
+  \ the file HAS an iso with those endpoints (pushPullObj_coverInter_baseChange).\
+  \ That is NOT IsIso of the mate. Do not wire it in and declare victory.\n\nROUTE,\
+  \ checked available but not built: mathlib's mateEquiv_vcomp splits the mate of\
+  \ a vertically composed square. Stack the inner square over U_sigma on the outer\
+  \ square: the composite is the square for j_sigma >> f : U_sigma -> S, between AFFINE\
+  \ schemes (affinePushforwardPullbackBaseChange), and the inner factor is openImmersion_beckChevalley,\
+  \ already sorry-free. Cost is the TwoSquare hComp/vComp bookkeeping.\n\nSECOND LEAF\
+  \ IS HARDER, not easier: whiskering does NOT apply to twisted_cech_nerve_iso (its\
+  \ RHS is the nerve of the base-changed cover). Its naturality is a two-nerve comparison.\
+  \ Leave it for last.\n\nDO NOT spend the session on pullback_preservesMonomorphisms.\
+  \ Measured: closing it cleans only the two probes that name it."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T14:49:16.409729+00:00'
+updated_at: '2026-07-28T14:49:16.409744+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0006-horizon-ajc-fbc
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge

@@ -1,0 +1,49 @@
+id: I-0633
+provider: local
+kind: memory
+body: 'A GENERALITY CLAIM IS SCOPED TO THE DECLARATION IT IS WRITTEN ON, NOT TO THE
+  CHAIN
+
+
+  Measured AJCR run 0073 r3 (ajcr-w5-av), reviewer pass.
+
+
+  Tangent/TwoChartNaturality.lean''s map_twoChartClassHom is genuinely general: binders
+  are {X Y : Scheme} {V : Bool -> Y.Opens}, (f : X -> Y), (sel : Y -> Bool), (hmem),
+  (u). No affineness, no dual numbers, no curve, no Function.Surjective sel -- verified
+  by reading the binders, and the four-case core unitsAppLE_twoChartPairUnit is honestly
+  quantified over s t : Bool.
+
+
+  The trap: the CONSUMER is the quotient-level twoChartClass, whose very existence
+  needs hsel : Function.Surjective sel (it is what twoChartClassHom_eq_one_iff needs,
+  TwoChartCechPic.lean:321). So ''no Function.Surjective sel'' is true of the lemma
+  and FALSE of the square the kernel computation actually needs. Same for ''steps
+  1-2 work over an arbitrary commutative ring'' in DualNumberChartPic.lean -- true
+  (A : Type u, [CommRing A], nothing else), but the class being transported comes
+  from an affine chart of a curve, so the generality buys portability, not progress.
+
+
+  RULE: when a session reports ''this landed at full generality'', ask which declaration
+  the generality is a property of, and whether the consumer instantiates at that generality.
+  A general lemma one level below a hypothesis-bearing consumer does not remove the
+  hypothesis.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T14:37:05.665172+00:00'
+updated_at: '2026-07-28T14:37:05.665185+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0008-horizon-ajcr-w5-av
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

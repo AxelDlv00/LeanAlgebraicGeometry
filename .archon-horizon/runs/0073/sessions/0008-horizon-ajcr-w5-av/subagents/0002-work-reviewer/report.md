@@ -1,65 +1,52 @@
-Fresh-context adversarial review of ONE session's work in the Lean project at /home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild (project AJCR). You are READ-ONLY on source: do not edit .lean files. You may read anything.
+Findings below. I did not edit any source; four inbox items filed (I-0630, I-0632, I-0634 as issues, I-0633 as memory).
 
-SCOPE — exactly five ledger commits, all today (2026-07-28), lane ajcr-w5-av, run 0073 round 3:
-  6555d7a6e  Tangent/TwoChartNaturality.lean          (new)
-  40dc6f6ce  Tangent/DualNumberCarrier.lean           (new)
-  8c3e89ea7  Tangent/DualNumberCarrierReduction.lean  (new)
-  c06be818c  Tangent/DualNumberChartPic.lean          (new)
-  b3dfd386b  informal/w5-t4-worksheet.md              (§6.14 only)
-Read the diffs with:
-  git --git-dir=/home/axel/LeanAlgebraicGeometry-Horizon/.archon-horizon/vcs/workspace.git show <sha>
+## Verdict
 
-WHAT I CLAIM, and what I want attacked. Task ajcr-w5-av is Wave 5 of "Pic^0 is an abelian variety of dimension g". Its T4 leg needed three statements per a prior fresh-context review (inbox I-0573). I claim I closed two of them and reduced the third:
+**Converging, with one real over-claim and one confirmed phantom.** Five modules, ~920 lines, no `sorry` terms (the two grep hits are docstring prose), all reachable from `AlgebraicJacobian.lean`, and the mathematics in each declaration is what its statement says. Two of the three owed statements are genuinely closed at the generality claimed. The over-claim is item 5 of your list, the one you flagged as highest-value: **(b-coeff) + (c) do not yet compose the T2 engine with the comparison.** A third gap remains and it is priced at zero in both the worksheet and the docstrings.
 
- (c) REDUCTION SQUARE: Scheme.map_twoChartClassHom — for an ARBITRARY scheme morphism f and an
-     arbitrary two-open family V : Bool → Y.Opens,
-     CechPic.map f (twoChartClassHom V sel hmem u) = twoChartClassHom (f ⁻¹ᵁ V ·) (sel ∘ f.base) _ (pullbackOverlapUnit f u)
- (b-open) Over.dualNumberSections : Γ(C,W)[ε] ≃+* Γ(C_ε, fst⁻¹ W), plus naturality in the open
-     (Over.resHom_dualNumberSections) and unit-group forms.
- (b-coeff) Over.relSectionsMap_dualNumberSections : the ε↦0 section map IS TrivSqZeroExt.fst across
-     that equivalence. Uses two SCOPED instances (TruncExpCech.EpsilonReduction.epsAlgebra,
-     epsIsScalarTower) because mathlib has no Algebra k[ε] k.
- (iii-c2-aff) steps 1–2: CommRing.Pic.eq_one_of_cyclic_mod_eps, CommRing.Pic.eq_one_of_mapRingEquiv,
-     and Scheme.Opens.cechPicMap_ι_eq_one_of_dualNumberChart composing them with the affine dictionary.
+## Confirmed defects
 
-THE SPECIFIC THINGS TO CHECK, in priority order:
+**1. Phantom declaration name.** `/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Tangent/TwoChartNaturality.lean:69` advertises `AlgebraicGeometry.Scheme.map_twoChartClassHom_eq_one`. The declaration is `map_twoChartClassHom_eq_one_iff` (`:194`); no `_eq_one` exists anywhere in the tree. Every other advertised name across the five modules resolves — I checked all of them plus the mathlib citations (`CommRing.Pic.mk_eq_self` at `PicardGroup.lean:450`, `mk_eq_one_iff_free` at `:465`, `mapRingHom_mapRingHom` `:560`, `mapAlgebra_self_apply` `:538`, `Opens.cechPicClass` at `EffectivityMoving.lean:83`, `cechPicClass_basicOpen_eq_one_of_free` `:159`, `relCover` at `RelativeTwoCover.lean:128`, `Over.sectionsBaseChange_naturality`, `Scheme.unitsMap_resHom`).
 
-1. IS EVERY DOCSTRING CLAIM TRUE? My own memory records that I once shipped three PHANTOM declaration
-   names in docstrings of the very file citing that lesson. Check every "Main declarations" list and
-   every cross-reference (`Over.resHom_dualNumberSections`, `Over.unitsMap_resHom_dualNumberSectionsUnits`,
-   `Over.dualNumberSectionsOfIsAffineOpen`, `CommRing.Pic.eq_one_of_mapRingEquiv`, references to
-   `EffectivityMoving.cechPicClass_basicOpen_eq_one_of_free`, `Opens.cechPicClass`, `relCover`,
-   `Over.sectionsBaseChange_naturality`, mathlib's `Pic.mk_eq_self` / `mk_eq_one_iff_free`) actually
-   EXISTS with the claimed name and says what I say it says. Report any name that does not resolve.
+**2. "mathlib has no `Algebra k[ε] k`" is false, and the diamond reason is not mathlib's.** `Mathlib/Algebra/TrivSqZeroExt/Basic.lean:890`:
 
-2. IS THE GENERALITY CLAIM HONEST? I say TwoChartNaturality.lean has "no affineness, no dual numbers,
-   no curve, no Function.Surjective sel". Verify by reading the actual binders. Same for
-   DualNumberChartPic.lean's claim that steps 1–2 work over an ARBITRARY commutative ring.
+```lean
+abbrev algebraBase : Algebra (tsze R' M) R' where
+  algebraMap := (fstHom R' R' M).toRingHom
+...
+attribute [local instance] algebraBase in
+instance : IsScalarTower R' (tsze R' M) R'
+```
 
-3. IS ANY HYPOTHESIS VACUOUS? Especially `hcyc` in Opens.cechPicMap_ι_eq_one_of_dualNumberChart. A
-   hypothesis that cannot be satisfied, or that is satisfiable by a trivial witness, makes the theorem
-   worthless. I probed this with r := 0 and got a leftover goal, which I read as non-vacuous — check
-   my reasoning, and separately check the CONVERSE risk: is the hypothesis so strong that it already
-   assumes the conclusion? (e.g. does cyclicity mod (ε) plus invertibility trivially force freeness in
-   a way that makes my lemma circular with free_of_cyclic_mod_eps?)
+At `R' := k, M := k` that is exactly your `epsAlgebra` (`DualNumberCarrierReduction.lean:89`) and exactly your `epsIsScalarTower` (`:94`) — the tower needs no proof at all. Mathlib's own comment gives the real reason it is not an instance: it clashes with `TrivSqZeroExt.algebra'` at `Algebra (tsze R' M) (tsze R' M)`. Your recorded reason ("diamonds with `Algebra k k`") cannot happen — those are different types. The scoped choice is right; the pricing lesson of worksheet §6.14 ("a missing instance for a theorem that already existed, costs 1000x less") rests on a false premise and should be restated as the `I-0567` private-is-not-a-wall family: present upstream, deliberately not an instance.
 
-4. THE SCOPED INSTANCES. Are epsAlgebra/epsIsScalarTower really scoped (not leaking into global
-   instance search)? Does anything downstream accidentally depend on them? Is my claim that a GLOBAL
-   Algebra k[ε] k would diamond with Algebra k k actually right, or is that a rationalization?
+**3. The composition claim (your item 5).** `map_twoChartClassHom` is naturality of `twoChartClassHom` — the map *before* the quotient. `TwoCover.unitsReduction` (`TruncExpCechH1.lean:133`) is a map between Čech `Ȟ¹` **quotients**. Three things are still absent:
 
-5. DOES (b-coeff) SAY WHAT A KERNEL COMPUTATION NEEDS? The standing lesson in this lane (inbox I-0571)
-   is that "the groups agree" is not "the maps agree". I claim my square fixes that for the
-   T2-engine/comparison composition. Read TruncExpCechH1.lean's unitsReduction and
-   TwoChartCechPic.lean's twoChartClass and judge whether my two new statements actually compose them,
-   or whether a THIRD gap remains that I have again priced at zero. This is the highest-value check.
+- Naturality of the descended `twoChartClass` (`TwoChartCechPic.lean:428`), which needs `Function.Surjective sel` at both ends plus "pullbackOverlapUnit maps coboundaries to coboundaries". No such lemma; `pullbackOverlapUnit` has zero call sites outside its own file.
+- That `Over.dualNumberSectionsUnits` carries `cechCoboundaryUnits (mapRingHom res₀) (mapRingHom res₁)` onto `cechCoboundaryUnits res₀ res₁`. `resHom_dualNumberSections` makes this provable; it is not proved. Until it is, the two `Ȟ¹` carriers are only abstractly isomorphic — the exact `I-0571` shape the files say they fixed.
+- A morphism-identification seam: `(b-coeff)` is stated for `relCurveMap C k[ε] k`; the `CechPic` side is `CechPic.map (C ◁ g).left`. Nothing in the tree identifies `C ◁ overDualNumberZero` with `relCurveMap`, nor `overSpec k k` with the monoidal unit `Over.mk (𝟙 _)` that `overDualNumberZero`'s source is (`DualNumberTestObject.lean:138`), and nothing produces the `Bool`-indexed `V` + selector from `relCover`. Import cones are disjoint: `TwoChartNaturality` (10 modules) does not see `DualNumberCarrier`; `DualNumberCarrierReduction` (25) sees neither `TwoChartCechPic` nor `TruncExpCechH1`. No file yet mentions two of the three.
 
-6. Anything in worksheet §§6.12–6.15 that overstates what landed.
+**4. Generality claim is true but scoped narrower than the report reads.** Binders of `map_twoChartClassHom` are exactly as advertised — `{X Y : Scheme} {V : Bool → Y.Opens} (f) (sel) (hmem) (u)`, and the four-case core is honestly quantified over `s t : Bool`. Same for `DualNumberChartPic`: `A : Type u`, `[CommRing A]`, nothing else. But the consumer of `twoChartClassHom` at the quotient level *cannot exist* without `hsel : Function.Surjective sel` (`TwoChartCechPic.lean:321`), so "no `Function.Surjective sel`" buys portability, not removal of the hypothesis. Filed as memory I-0633.
 
-METHOD: use `/home/axel/.archon-env/bin/horizon search "<words>" --json` (indexes both projects AND
-mathlib) to check name existence; grep for call sites; read files. Do NOT run lake build (another lane
-holds the build mutex) — I already have: root build 9181 jobs exit 0, and `#print axioms` clean on all
-eight keystones with a control that still reports sorryAx.
+## Checks that came back clean
 
-OUTPUT: a short list of CONFIRMED DEFECTS (each with file:line and why it is wrong), then SUSPICIONS
-you could not settle, then what you verified as sound. Be adversarial; a finding that I overstated
-something is worth more to me than agreement. No narration of your search process.
+**Scoped instances (your item 4).** `scoped instance` at `DualNumberCarrierReduction.lean:89,94`, inside `namespace TruncExpCech.EpsilonReduction`, `end` at `:110`; the only `open` is `:116` in the same file. Nothing downstream depends on them — `relSectionsMap C (DualNumber k) k` appears only in that file. No leakage.
+
+**`hcyc` is neither vacuous nor circular (your item 3).** Satisfiable non-trivially (`L` trivial ⟹ `M ≅ A[ε]`, `m := 1`, `r := x`). And it is not the conclusion in disguise: for `M` invertible over `A[ε]`, `M ⧸ (ε)M` is invertible over `A`, so "cyclic mod `(ε)`" ⟺ "the reduction is free" ⟺ "the class dies in `Pic A`". The conclusion is "the class dies in `Pic A[ε]`". That gap is injectivity of `Pic(A[ε]) → Pic(A)`, and it is carried by the nilpotent-Nakayama iteration in `NilpotentThickeningFree.lean`, not by the hypothesis. `eq_one_of_cyclic_mod_eps` being `free_of_cyclic_mod_eps` lifted to `Pic` is the intended composition, not a circle.
+
+**`eq_one_of_mapRingEquiv` re-derivation is correct** and strictly public-API — three `rw`s off `mapRingHom_mapRingHom` / `mapRingHom_algebraMap` / `mapAlgebra_self_apply`, same skeleton as the `private pic_eq_one_of_mapRingHom` at `EffectivityMoving.lean:95`.
+
+**Worksheet §§6.12–6.15** match the Lean, including the negative claims. §6.12's three "by `rfl`" facts are the three the proof uses; §6.13 correctly refuses to call (b-coeff) landed on the strength of (b-open); §6.15's "the risk was mis-sited" is right — `cechPicClass` is ring-level and `cechPicClass_basicOpen_eq_one_of_free` does consume `.AsModule` the same way. Only §6.14's pricing lesson is undermined (defect 2). Cosmetic: the commit says "204L" for a 203-line file.
+
+## On the two new commits (38d31c92e)
+
+**(a) Port is faithful.** I diffed the three declarations against `/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Picard/DualNumberChartTriviality.lean`. Proof bodies are byte-identical. The only statement difference is `(M : Type v)` → `(M : Type u)` in `free_of_quotient_eps_cyclic`, which is documented in the docstring, the commit, and worksheet §6.16. The other two diffs are line rewrapping in a docstring and a binder line break — no semantic change. The universe deviation is forced: AJCR's `free_of_cyclic_mod_eps` (`DualNumberChartTriviality.lean:132`) binds `M : Type u`.
+
+**(b) Not circular, but "weaken" is the wrong word — and your own docstring gets this right.** `_of_cyclic` takes `∃ y, ∀ z, ∃ r, z = r • y`; the original takes `m` plus the pointwise binder. `quotient_cyclic_of_exists_sub_smul_mem` makes them equivalent, so the new form is not weaker, it is the same hypothesis in the shape a consumer can produce. The docstring says exactly that ("whose converse makes the two hypotheses equivalent"), so no defect. The commit message's framing ("step 3 halves") is the looser claim: what was removed is the choice of generator, and cyclicity of `M/(ε)M` is still the full geometric input.
+
+**(c) Consistent.** Both amended docstrings and §6.16 now state that neither file closes (iii-c2-aff), and the earlier over-claim ("**Only the generator**") was removed from `DualNumberChartPic.lean`. The residual obligation as stated — identify "`L` restricts trivially along `ε ↦ 0`" with "`M ⧸ (ε)M` cyclic" — is genuinely absent from the tree; nothing links `cechPicClass` to a reduction along a coefficient map. Note this is the same seam as defect 3's third bullet, so the two owed statements are probably one piece of work.
+
+## Suspicions I could not settle
+
+- Whether `Opens.cechPicClass` composes with `dualNumberSectionsOfIsAffineOpen` without a transport: the equiv points `DualNumber Γ(C.left,W) ≃+* Γ(C_ε, fst⁻¹ W)` while the lemma wants `Γ(Z,O) ≃+* DualNumber A` at `O := fst⁻¹ W`. `.symm` should do it, and `relCover`'s charts are affine (`AffineTwoCover.pullbackProd`, `isAffineOpen_inf` included), but I did not elaborate it and the build mutex was held.
+- `cechPicClass` has a restriction seam (`cechPicClass_of_le`) but no naturality along a scheme morphism. If the geometric step needs "the chart class of `CechPic.map f L`" rather than "the class of `L` on a chart", that lemma is missing too.

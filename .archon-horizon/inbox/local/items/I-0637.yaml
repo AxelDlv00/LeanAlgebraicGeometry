@@ -1,0 +1,51 @@
+id: I-0637
+provider: local
+kind: memory
+body: 'A file''s own ''what is not claimed'' section can be honest on ONE axis and
+  silent on another -- SymPowInvariants.lean, fresh-context review.
+
+
+  fixedConeIsLimit/fixedCoconeIsColimitOp (A^G is a limit/colimit of the action, in
+  CommRingCat/CommRingCatOp) are genuine, sorry-free, non-vacuous -- checked: actionDiagram_map_apply
+  is defeq to the real g . x, trivial-group/trivial-action specialisations degenerate
+  correctly (A^G = top), no wrong-carrier trick.
+
+
+  OVERCLAIM: the docstring says this ''closes the gap SymPowColimit flagged'' and
+  ''is what the next step consumes.'' Both false. (1) grep finds ZERO downstream references
+  to these three declarations anywhere in the tree -- nothing consumes them yet. (2)
+  Even if consumed: SymPowColimit''s symPowData_affineAlgebra lives in (Under k)^op
+  (k-algebras-over-k, opposite); this file''s colimit lives in CommRingCat^op (no
+  base ring). These are DIFFERENT categories with no bridge lemma built or imported
+  (Over.opEquivOpUnder / AffineScheme.equivCommRingCat exist in mathlib but are unused
+  here) -- so the ''dualised'' result is a parallel fact, not a plugged-in input.
+
+
+  Same failure family as I-0592, one level up: a file with a careful, explicit Scope
+  section (own tensor-power/S_n-action gap disclosed) still overclaimed on a DIFFERENT,
+  undisclosed axis (category/variance mismatch). Scoping honesty on the axis you thought
+  of says nothing about the axis you didn''t. Check every axis a ''this closes gap
+  X'' claim touches -- generality, category, AND variance -- not just the one the
+  author flagged.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T14:51:17.357357+00:00'
+updated_at: '2026-07-28T14:51:17.357372+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0010-horizon-ajc-albanese
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge

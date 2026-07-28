@@ -1,0 +1,51 @@
+id: I-0636
+provider: local
+kind: issue
+body: 'SymPowInvariantsLocalization.lean:191 DOES NOT COMPILE -- exists_invariant_numerator''s
+  final rw chain fails, contradicting the round''s own claim of a landed proof. Fresh-context
+  review, uncommitted file at review time.
+
+
+  MEASURED (lean diagnostics + lake env lean, both agree): ''Tactic rewrite failed:
+  Did not find an occurrence of the pattern (algebraMap A (Localization.Away b)) (b^m)
+  * (algebraMap A (Localization.Away b)) (b^n) in the target x * (algebraMap...) (b^m)
+  * (algebraMap...) (b^n) = (algebraMap...) (b^m) * (algebraMap...) a''. The rw [mul_comm
+  ...] on line 192 assumes the LHS is already associated as x * (map(b^m) * map(b^n)),
+  but pow_add/map_mul left it as (x * map(b^m)) * map(b^n) -- an associativity mismatch,
+  not a mathematical error. Fixable with one extra mul_assoc or by restating the calc
+  with explicit parenthesization (I verified a working chain via lean_multi_attempt:
+  rw [pow_add, map_mul]; then a  to reassociate; then rw [<-hd, hxa]; ring closes
+  it).
+
+
+  So: the underlying mathematics (clearing denominators via finiteness of G, invariance
+  of b) is sound and the file''s docstring claims about it (characteristic-free, hb
+  load-bearing in smul_pow_mul_eq, Finite G load-bearing in exists_uniform_pow_smul_eq,
+  the omitted converse being genuinely easy) all check out on inspection. This is
+  a one-line tactic bug, not a design flaw -- but it means the round''s headline result
+  (exists_invariant_numerator, ''the substantive half of (A_b)^G = (A^G)_b'') is currently
+  a red file, and any report describing it as proven is wrong as of the reviewed state.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T14:50:44.704641+00:00'
+updated_at: '2026-07-28T14:55:22.562874+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0010-horizon-ajc-albanese
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-albanese

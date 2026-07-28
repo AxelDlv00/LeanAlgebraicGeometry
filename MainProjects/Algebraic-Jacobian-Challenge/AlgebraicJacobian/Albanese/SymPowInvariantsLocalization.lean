@@ -48,11 +48,13 @@ merely `b^m`-torsion-equivalent to something invariant. Neither is decorative.
 
 ## What is deliberately not claimed
 
-The converse inclusion — a fraction with invariant numerator is `awayMap`-fixed — is the
-easy direction and is *not* proved here; nothing downstream needed it yet, and I would
-rather leave it named than ship it unproved. So this file does **not** assert the equality
-`(A_b)^G = (A^G)_b` as a ring isomorphism; it asserts the direction that a gluing argument
-consumes (getting an invariant representative), which is the hard one.
+The converse inclusion — a fraction with invariant numerator is `awayMap`-fixed — is *not*
+proved here. It should be routine (push the invariant numerator through `algebraMap` and
+apply `awayMap_algebraMap`, needing no finiteness), but that is an expectation and not a
+checked fact: nobody has written it, so do not cite it as done. So this file does **not**
+assert the equality `(A_b)^G = (A^G)_b` as a ring isomorphism; it asserts the direction a
+gluing argument consumes — getting an invariant representative — which is the substantive
+one.
 
 Nor is this the gluing. It is one input to it: the comparison map on a single overlap. The
 cocycle condition across three charts is untouched.
@@ -188,9 +190,17 @@ theorem exists_invariant_numerator [Finite G] (b : A) (hb : ∀ g : G, g • b =
   obtain ⟨m, hm⟩ :=
     exists_uniform_pow_smul_eq b a (fun g => exists_pow_smul_eq b a g (key g))
   refine ⟨b ^ m * a, m + n, smul_pow_mul_eq b a m hb hm, ?_⟩
-  rw [pow_add, map_mul, map_mul, ← mul_assoc, mul_comm (algebraMap A (Localization.Away b)
-    (b ^ m)) (algebraMap A (Localization.Away b) (b ^ n))]
-  rw [← mul_assoc, ← hd, hxa]
-  ring
+  -- Restate the defining equation of the representative with its denominator as `b ^ n`.
+  have hx' : x * algebraMap A (Localization.Away b) (b ^ n)
+      = algebraMap A (Localization.Away b) a := by rw [← hd]; exact hxa
+  rw [pow_add, map_mul, map_mul]
+  calc x * (algebraMap A (Localization.Away b) (b ^ m)
+        * algebraMap A (Localization.Away b) (b ^ n))
+      = (x * algebraMap A (Localization.Away b) (b ^ n))
+          * algebraMap A (Localization.Away b) (b ^ m) := by ring
+    _ = algebraMap A (Localization.Away b) a
+          * algebraMap A (Localization.Away b) (b ^ m) := by rw [hx']
+    _ = algebraMap A (Localization.Away b) (b ^ m)
+          * algebraMap A (Localization.Away b) a := by ring
 
 end AlgebraicGeometry

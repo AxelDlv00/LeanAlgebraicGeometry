@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:gr_valuativeUniqueness_toSpecZ
 lean_status: lean_ok
-order: 1440
+order: 1442
 title: Uniqueness half of the valuative criterion
 type: tex
-updated: '2026-07-28T18:12:22'
+updated: '2026-07-28T22:30:28'
 ---
 The structure morphism \(\pi : \mathrm{Gr}(r,d) \to \Spec \mathbb{Z}\)
   (\cref{def:gr_to_specZ}) satisfies the \emph{uniqueness} part of the valuative

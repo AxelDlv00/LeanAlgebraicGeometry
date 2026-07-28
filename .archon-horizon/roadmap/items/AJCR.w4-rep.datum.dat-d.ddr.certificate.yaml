@@ -42,9 +42,24 @@ summary: "DECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. Bin
   \ regularity the\n     certificate used to supply, carried explicitly (Scheme.LocalEquations.PullRegular,\
   \ landed\n     with its open-immersion discharge; the restated assembly itself is\
   \ NOT landed). So (b) is\n     DECOMPOSED, not closed. Full argument: spec-dd-r\
-  \ ADDENDUM 8 SS8.5 (132ac965a).\n\nWHY (b) WAS INVISIBLE FOR FOUR SESSIONS, and\
-  \ it is the lane's generalisable finding. A carrier\nthat base-changes has TWO FACES\
-  \ of one operation: mapAlg, taking an algebra-tower instance pack,\nand mapAlgHom,\
+  \ ADDENDUM 8 SS8.5 (132ac965a).\n\n     (b) UPDATE, SAME SESSION: THE KEYSTONE IS\
+  \ PROVED (fae9b7448 + 0743f5a5c, sorry-free,\n     axiom-clean vs a sorryAx control,\
+  \ lake build 8838 exit 0). 8.5's prescription executed:\n     DivFamZarAff.exists_glue_of_away_compat,\
+  \ plus the restated bare-input assembly it stands on\n     (AwayCompatPullDivEq,\
+  \ awayGluedEquationsLoc, divEq_pullback_awayGluedEquationsLoc,\n     CertifiedDivisorFamilyAff.isLocallyCertifiedAff\
+  \ / toZarAff,\n     exists_glue_of_certified_away_compat). With the landed eq_of_away_eq\
+  \ for uniqueness, the\n     widened value is a Zariski SHEAF value. So (b) now owes\
+  \ only ONE PACKAGING LAYER --\n     divFamZarAff.map along an arbitrary test morphism,\
+  \ then divFunctorAff -- because the\n     keystone was that construction's input.\
+  \ Record: spec ADDENDUM 8 SS8.6 (2cdf3e343).\n\n     A DEFECT WORTH CARRYING FROM\
+  \ THAT WORK: the keystone file was RED WITH ZERO SORRIES.\n     DivFamZarAff.eq_of_away_eq\
+  \ takes n as an EXPLICIT leading argument where the chart-typed\n     one has it\
+  \ implicit there, so a port copying the chart-typed call site feeds the cover\n\
+  \     family where n belongs, and the error surfaces as an unresolvable l.down on\
+  \ a ULift binder,\n     naming neither n nor eq_of_away_eq. Sorry census and job\
+  \ count both call the file healthy.\n\nWHY (b) WAS INVISIBLE FOR FOUR SESSIONS,\
+  \ and it is the lane's generalisable finding. A carrier\nthat base-changes has TWO\
+  \ FACES of one operation: mapAlg, taking an algebra-tower instance pack,\nand mapAlgHom,\
   \ taking a bare AlgHom. They are interderivable in a few lines. The widened carrier\n\
   had the first only. But the vehicle indexes its compatibility by Over.resAlgHom,\
   \ a bare AlgHom\ncarrying no tower, so divFamZar, divFunctor and DivRepGlobalData\
@@ -74,7 +89,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T13:46:14.732987+00:00'
+  updated_at: '2026-07-28T14:35:39.154000+00:00'
   pinned_commits:
   - 46d751465
   - 81c17f256

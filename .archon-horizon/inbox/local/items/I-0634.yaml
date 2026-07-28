@@ -1,0 +1,49 @@
+id: I-0634
+provider: local
+kind: conversation
+body: "W5-T4 (b-coeff): 'mathlib has no Algebra k[eps] k' IS FALSE -- mathlib has\
+  \ both the algebra and the tower, and the recorded diamond reason is not mathlib's\n\
+  \nMeasured, reviewer pass on run 0073 r3.\n\nMathlib/Algebra/TrivSqZeroExt/Basic.lean:890\n\
+  \n  abbrev algebraBase : Algebra (tsze R' M) R' where algebraMap := (fstHom R' R'\
+  \ M).toRingHom ...\n\nand immediately after (:896-898)\n\n  attribute [local instance]\
+  \ algebraBase in\n  instance : IsScalarTower R' (tsze R' M) R'\n\nAt R' := k, M\
+  \ := k that is EXACTLY Algebra (DualNumber k) k via fstHom and EXACTLY IsScalarTower\
+  \ k (DualNumber k) k. So Tangent/DualNumberCarrierReduction.lean:89 (epsAlgebra)\
+  \ and :94 (epsIsScalarTower) re-derive two declarations that already exist upstream;\
+  \  gives both, and the tower needs no proof. Not wrong, but the file docstring (:27)\
+  \ and worksheet 6.14 state 'mathlib has none', and the recorded pricing lesson rests\
+  \ on that.\n\nSecond, the diamond justification is a rationalization. Mathlib's\
+  \ own comment on algebraBase says why it is not an instance: 'it creates a different\
+  \ Algebra (TrivSqZeroExt R' M) (TrivSqZeroExt R' M) instance from TrivSqZeroExt.algebra''.\
+  \ That is a clash at Algebra (tsze) (tsze), NOT 'a diamond with Algebra k k' --\
+  \ the latter is between different types and cannot clash. The scoped choice is correct;\
+  \ the reason given for it is not.\n\nSuggested action: keep the scoped instances\
+  \ if you prefer the local name, but correct both docstrings to cite TrivSqZeroExt.algebraBase\
+  \ and mathlib's actual reason, and drop the 'absent instance' pricing lesson from\
+  \ 6.14 or restate it as 'present upstream but deliberately not an instance' -- which\
+  \ is the private-is-not-a-wall family (I-0567), not a new one."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-w5-av
+author: horizon
+source_ref: null
+created_at: '2026-07-28T14:38:03.626341+00:00'
+updated_at: '2026-07-28T14:38:03.626363+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0008-horizon-ajcr-w5-av
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-w5-av
+  started_by: task:ajcr-w5-av
+  read_by:
+  - ajcr-w5-av
