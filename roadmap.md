@@ -16,8 +16,8 @@ migration debt.)*
 
 | Project | Stage | Open `sorry` |
 | --- | --- | --- |
-| Algebraic-Jacobian-Challenge-Rebuild | prover ✨ | 17 — 15 protected `Challenge.lean` targets, 1 in `Picard/DivRepAffPullClause.lean`, 1 in `Picard/Pic0ThetaCocycle.lean`. `Pic0ThetaCocycle` is imported from nowhere and has **never been elaborated** (no `.olean`/`.trace`), so its two theta coherences are unverified rather than proved; it is also not elaborable as written — 34 GB RSS and still climbing at 5 min, so it needs a split (roadmap `AJCR.w4-rep.build-reach`, `AJCR.w7-functor.k1`) |
-| Algebraic-Jacobian-Challenge | prover | 28 — in 11 of 210 modules *(grouped by the nested AJC roadmap below)* |
+| Algebraic-Jacobian-Challenge-Rebuild | prover ✨ | 16 — 15 protected `Challenge.lean` targets, 1 in `Picard/Pic0ThetaCocycle.lean` (`Picard/DivRepAffPullClause.lean` is now sorry-free). `Pic0ThetaCocycle` is imported from nowhere and has **never been elaborated** (no `.olean`), so its theta coherence is unverified rather than proved; it is also not elaborable as written — 34 GB RSS and still climbing at 5 min, so it needs a split (roadmap `AJCR.w4-rep.build-reach`, `AJCR.w7-functor.k1`) |
+| Algebraic-Jacobian-Challenge | prover | 28 — in 11 of 252 modules *(grouped by the nested AJC roadmap below)* |
 | Cech-Cohomology | ✅ complete · merged → AJC | 0 |
 | GR-Quot-Closure | ✅ complete · merged → AJC | 0 |
 | Line-Bundle-Comparison-Iso | ✅ complete · merged → AJC | 0 |
@@ -80,14 +80,14 @@ functor (curve-specialized Kleiman, no Quot schemes), Albanese via Milne III.6.1
 Blueprint: Challenge/BaseChange/Curves/Algebra/Cohomology/AbelianVariety chapters all synced
 1-to-1 with the Lean, `\leanok` only after kernel checks, `\source{}` read-before-cite.
 
-## Algebraic-Jacobian-Challenge  *(core engine — prover stage, 28 open `sorry` in 11 of 210 modules)*
+## Algebraic-Jacobian-Challenge  *(core engine — prover stage, 28 open `sorry` in 11 of 252 modules)*
 
 **Goal:** construct the Jacobian of a smooth proper geometrically integral curve as
 `Pic^0`, prove that it is an abelian variety of dimension equal to the genus, and
 establish the Albanese universal property. The structured roadmap command
 `horizon roadmap list --focus AJC.jacobian` is the authoritative work breakdown.
 
-*199 of the 210 modules are sorry-free; all 28 remaining `sorry`s live in 11 modules. Counts
+*241 of the 252 modules are sorry-free; all 28 remaining `sorry`s live in 11 modules. Counts
 drift as modules land — re-derive with
 `lake build AlgebraicJacobian 2>&1 | grep 'declaration uses' | sort -u`
 rather than quoting these.*
@@ -144,7 +144,7 @@ rather than quoting these.*
   - [x] Record controlled-clean and warm full-project build and warning baselines.
   - [x] Normalize the copyright header of every module (164 at the time); restore the 1,123 blueprint
     statement titles that LaTeX was swallowing into the statement body.
-  - [~] **Import hygiene — the dominant build cost.** 81 of 210 modules still open with a bare
+  - [~] **Import hygiene — the dominant build cost.** 89 of 252 modules still open with a bare
     `import Mathlib` (wave 2 landed at `3fbc2cace`), and every module in their
     transitive closure still loads the whole library. Measured: a 49-line module costs 16.6 s
     and ~7 GB with the umbrella and 3.5 s and 2.0 GB with four precise imports. The conversion
