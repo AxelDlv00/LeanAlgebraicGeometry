@@ -618,22 +618,29 @@ set_option maxHeartbeats 1000000 in
 /-- **Every term of the relative Čech complex is quasi-coherent** — the discharge of the `h₂`/`h₃`
 hypotheses of `cech_flatBaseChange_of_termsQuasicoherent`.
 
-Over an affine base `S`, for a separated `f` and a finite affine open cover of a separated `X`,
-the degree-`p` term `Čᵖ(𝒰, F) = f_*(∏_σ (j_σ)_*((j_σ)^* F))` is quasi-coherent.  Three inputs, all
-now in this cone:
+Over an affine base `S` and for a separated `f`, the degree-`p` term
+`Čᵖ(𝒰, F) = f_*(∏_σ (j_σ)_*((j_σ)^* F))` is quasi-coherent.
+
+Affineness of the intersection opens is a *hypothesis* `hσ` here rather than derived, only because
+`coverInterOpen_isAffine` — which does derive it from `[IsSeparated f]` and `[IsAffine S]`, with no
+separatedness assumption on `X` — is declared further down this file.  Callers pass
+`fun σ => coverInterOpen_isAffine f 𝒰 σ`, so nothing extra is assumed downstream.  Three inputs,
+all in this cone:
 
 * the degree-`p` term *is* `f_*(pushPullObj F (backbone p))` — definitionally (`rfl`), the same
   identity `cechTerm_pushforward_acyclic` uses;
 * the σ-product decomposition `pushPull_sigma_iso`, transported through `f_*` (which preserves
   the finite product), reduces to one factor;
-* per factor, `f_*((j_σ)_* N) ≅ (j_σ ≫ f)_* N` (`pushforwardComp`) with `U_σ` affine
-  (`isAffineOpen_coverInterOpen`) and `S` affine, so `isQuasicoherent_pushforward_of_isAffine`
-  applies to a `(j_σ)^* F` that is quasi-coherent by `isQuasicoherent_pullback_opens`;
+* per factor, `f_*((j_σ)_* N) ≅ (j_σ ≫ f)_* N` (`pushforwardComp`) with `U_σ` affine (`hσ`) and
+  `S` affine, so `isQuasicoherent_pushforward_of_isAffine` applies to a `(j_σ)^* F` that is
+  quasi-coherent by `isQuasicoherent_pullback_opens`;
 * reassembly over the affine base by `isQuasicoherent_pi_of_isAffine`.
 
 Project-local. -/
-theorem isQuasicoherent_cechComplex_X (f : X ⟶ S) [IsSeparated f] [X.IsSeparated] [IsAffine S]
-    (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (h𝒰 : ∀ i, IsAffine (𝒰.X i))
+theorem isQuasicoherent_cechComplex_X (f : X ⟶ S) [IsSeparated f] [IsAffine S]
+    (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    (hσ : ∀ {κ : Type} [Finite κ] [Nonempty κ] (σ : κ → 𝒰.I₀),
+      IsAffineOpen (coverInterOpen 𝒰 σ))
     (F : X.Modules) (hF : F.IsQuasicoherent) (p : ℕ) :
     ((CechComplex f 𝒰 F).X p).IsQuasicoherent := by
   change ((Scheme.Modules.pushforward f).obj
@@ -643,7 +650,7 @@ theorem isQuasicoherent_cechComplex_X (f : X ⟶ S) [IsSeparated f] [X.IsSeparat
     (((Scheme.Modules.pushforward f).mapIso (pushPull_sigma_iso 𝒰 F p)) ≪≫
       Limits.PreservesProduct.iso (Scheme.Modules.pushforward f) _).symm ?_
   refine isQuasicoherent_pi_of_isAffine (J := Fin (p + 1) → 𝒰.I₀) _ (fun σ => ?_)
-  haveI : IsAffine (↑(coverInterOpen 𝒰 σ) : Scheme.{u}) := isAffineOpen_coverInterOpen 𝒰 h𝒰 σ
+  haveI : IsAffine (↑(coverInterOpen 𝒰 σ) : Scheme.{u}) := hσ σ
   refine (SheafOfModules.isQuasicoherent.{u} S.ringCatSheaf).prop_of_iso
     ((Scheme.Modules.pushforwardComp (Scheme.Opens.ι (coverInterOpen 𝒰 σ)) f).app _).symm ?_
   exact isQuasicoherent_pushforward_of_isAffine _ _
@@ -2769,9 +2776,10 @@ theorem cech_flatBaseChange_of_termsQuasicoherent
 /-- **Flat base change for the Čech higher direct images, with the flat-exactness leaf REMOVED and
 NO extra hypotheses** (Stacks 02KH).
 
-The form to use.  Hypotheses are exactly those of `cech_flatBaseChange` plus `[X.IsSeparated]`
-(which the affineness of the Čech intersection opens needs, and which every consumer of this file
-already carries), and the conclusion is identical.  The two quasi-coherence facts that
+The form to use.  Hypotheses and conclusion are **exactly** those of `cech_flatBaseChange` — no
+extra binder of any kind (an earlier revision carried `[X.IsSeparated]`; that was unnecessary,
+since `coverInterOpen_isAffine` *derives* separatedness of `X` from `[IsSeparated f]` and
+`[IsAffine S]`).  The two quasi-coherence facts that
 `cech_flatBaseChange_of_termsQuasicoherent` takes as `h₂`/`h₃` are *discharged* here by
 `isQuasicoherent_cechComplex_X`, so the homology half runs through
 `pullback_mapHC_homologyIso_of_isQuasicoherent` and `pullback_preservesMonomorphisms` does not
@@ -2785,7 +2793,7 @@ this route, and so are the two quasi-coherence hypotheses.  Measure at
 `scripts/axiom-frontier.lean`. -/
 theorem cech_flatBaseChange_qcoh
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
-    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f] [X.IsSeparated]
+    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f]
     [IsAffine S] [IsAffine S']
     (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [h𝒰 : ∀ i, IsAffine (𝒰.X i)]
     [Finite ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
@@ -2797,11 +2805,17 @@ theorem cech_flatBaseChange_qcoh
       cechHigherDirectImage f'
         ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso h.isoPullback.symm.hom)
         ((Scheme.Modules.pullback g').obj F) i) :=
-  -- `h₂` is at degree `i` and `h₃` at degree `(ComplexShape.up ℕ).next i`, written explicitly
-  -- rather than as `_`: `isQuasicoherent_cechComplex_X` proves *every* degree, so an underscore
-  -- would elaborate to whatever index unification produced and a reader could not check which.
+  -- Affineness of the Čech intersection opens is DERIVED, not assumed:
+  -- `coverInterOpen_isAffine` gets it from `[IsSeparated f]` + `[IsAffine S]` (the composite
+  -- `terminal.from X = f ≫ terminal.from S` is separated).  That is why this theorem needs no
+  -- `[X.IsSeparated]` binder and its hypotheses are *exactly* `cech_flatBaseChange`'s.
+  --
+  -- `h₂` is at degree `i` and `h₃` at `(ComplexShape.up ℕ).next i`, written explicitly rather than
+  -- as `_`: `isQuasicoherent_cechComplex_X` proves *every* degree, so an underscore would elaborate
+  -- to whatever unification produced and a reader could not check which.
   cech_flatBaseChange_of_termsQuasicoherent f g f' g' h 𝒰 F hF i
-    (isQuasicoherent_cechComplex_X f 𝒰 (fun j => h𝒰 j) F hF i)
-    (isQuasicoherent_cechComplex_X f 𝒰 (fun j => h𝒰 j) F hF ((ComplexShape.up ℕ).next i))
+    (isQuasicoherent_cechComplex_X f 𝒰 (fun σ => coverInterOpen_isAffine f 𝒰 σ) F hF i)
+    (isQuasicoherent_cechComplex_X f 𝒰 (fun σ => coverInterOpen_isAffine f 𝒰 σ) F hF
+      ((ComplexShape.up ℕ).next i))
 
 end AlgebraicGeometry

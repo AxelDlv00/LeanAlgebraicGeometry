@@ -1484,10 +1484,10 @@ supporting reductions clean, and the delta between them is exactly the per-σ Be
 comparison. -/
 
 theorem leakProbe_cechTerm_isQuasicoherent {S X : Scheme.{u}} (f : X ⟶ S) [IsSeparated f]
-    [X.IsSeparated] [IsAffine S] (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
-    (h𝒰 : ∀ i, IsAffine (𝒰.X i)) (F : X.Modules) (hF : F.IsQuasicoherent) (p : ℕ) :
+    [IsAffine S] (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [∀ i, IsAffine (𝒰.X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent) (p : ℕ) :
     ((CechComplex f 𝒰 F).X p).IsQuasicoherent :=
-  isQuasicoherent_cechComplex_X f 𝒰 h𝒰 F hF p
+  isQuasicoherent_cechComplex_X f 𝒰 (fun σ => coverInterOpen_isAffine f 𝒰 σ) F hF p
 
 noncomputable def leakProbe_whiskeredBC_natIso {S S' X X' : Scheme.{u}}
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
@@ -1520,7 +1520,7 @@ naturality leaves and nothing else.  Compare `leakProbe_cechTerm_isQuasicoherent
 the discharge of the hypotheses this form no longer carries, and is clean. -/
 theorem leakEndpoint_cech_flatBaseChange_qcoh {S S' X X' : Scheme.{u}}
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
-    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f] [X.IsSeparated]
+    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f]
     [IsAffine S] [IsAffine S']
     (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [∀ i, IsAffine (𝒰.X i)]
     [Finite ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
