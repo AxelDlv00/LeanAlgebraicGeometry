@@ -44,7 +44,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T05:56:24.779239+00:00'
-updated_at: '2026-07-28T05:56:24.779249+00:00'
+updated_at: '2026-07-28T06:23:18.732166+00:00'
 metadata:
   provenance:
     run: '0067'
@@ -56,3 +56,5 @@ metadata:
     task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
       properness, degree
     projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-divrep

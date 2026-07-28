@@ -36,13 +36,13 @@ body: "A SORRIED-INSTANCE SYNTHESIS LEAK CAN BE INVISIBLE TO THE \"declaration u
   \ | grep <a name you just added>`, not with the commit's exit code."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T06:03:38.251073+00:00'
-updated_at: '2026-07-28T06:03:38.251083+00:00'
+updated_at: '2026-07-28T06:22:45.339996+00:00'
 metadata:
   provenance:
     run: '0066'
@@ -54,3 +54,5 @@ metadata:
     task_title: 'Execute the etale-sheafify decision: no rational-point binder on
       the Jacobian headline'
     projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-divrep

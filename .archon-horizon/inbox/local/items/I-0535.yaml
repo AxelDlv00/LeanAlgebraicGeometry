@@ -1,0 +1,63 @@
+id: I-0535
+provider: local
+kind: issue
+body: '**THE `rr.principal` CHI-LEDGER PORT IS UNDER-SIZED BY THE COMMENT THAT SIZES
+  IT (commit 6aba106ab, `RiemannRoch/WeilDivisor.lean` obstruction (3)). The measurement
+  is right; the mismatch list is missing the two that cost the most.**
+
+
+  CONFIRMED independently: the Rebuild''s `RiemannRoch/ChiLedger.lean:126 deg_divOf`
+  exists, is axiom-clean (`[propext, Classical.choice, Quot.sound]`), and its transitive
+  project-import closure is exactly **22 files / 5491 lines / 0 `sorry` tokens**.
+  `chi_divisorSheaf` likewise clean. Both stated carrier mismatches are real: index
+  set `{x // x ≠ genericPoint X}` vs `Scheme.PrimeDivisor`, and `deg = Σ n · residueDeg
+  K x` (`RiemannRoch/Divisor.lean:61`) vs AJC''s `degree = Σ n` bare coefficients.
+
+
+  TWO MORE, both unnamed at the site and both larger than the two listed:
+
+
+  1. **THE HYPOTHESIS BUNDLE IS NOT DISCHARGED IN AJC.** `deg_divOf` binds `[Module.Finite
+  K (Sheaf.HModule (X.moduleKSheaf K) 0)]` and `[... 1]`. The Rebuild discharges these
+  from `Cohomology/Finiteness.lean:388 moduleFinite_hModule_one` (clean), whose own
+  closure is a further **18 files / 5071 lines**; the union with the ChiLedger closure
+  is **34 files**, not 22. In AJC the nearest thing is `Scheme.module_finite_H1Cokₗ_unit`
+  (`RiemannRoch/CohomologyKit.lean:548`) against a *different* carrier (Čech `H1Cok`,
+  not `Sheaf.HModule`). So the port drags a second five-thousand-line closure, or
+  a carrier comparison for the finiteness instances too. The comment''s "22 files,
+  5491 lines" is a true measurement of the wrong boundary.
+
+
+  2. **THE ORDER FUNCTION IS A THIRD CARRIER MISMATCH.** AJC''s `Scheme.RationalMap.order`
+  (`WeilDivisor.lean:437`) is `WithZero.log ∘ Ring.ordFrac` on the stalk at `Y.point`;
+  the Rebuild''s `Scheme.divOf` (`RiemannRoch/PrincipalDivisor.lean:150`) is `Multiplicative.toAdd
+  ∘ Scheme.ordZ`. Neither name exists in the other project (`grep ordZ` in AJC: empty;
+  `grep RationalMap.order` in AJCR: empty). Transporting `deg (div g) = 0` needs these
+  two order functions identified pointwise — that is the statement of the theorem
+  being ported, so it cannot be waved through as bookkeeping.
+
+
+  Nothing here refutes preferring route (3); it is a better route than the refuted
+  adelic bump. The problem is the sizing: a next session reads "port of sorry-free
+  material along two identified comparisons" and budgets accordingly, when the honest
+  count is four comparisons and roughly twice the closure.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T06:15:09.725655+00:00'
+updated_at: '2026-07-28T06:15:09.725668+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0004-horizon-ajc-pic0av
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge

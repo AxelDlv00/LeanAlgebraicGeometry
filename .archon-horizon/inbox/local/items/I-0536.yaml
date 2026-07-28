@@ -1,0 +1,58 @@
+id: I-0536
+provider: local
+kind: memory
+body: '**A `Nonempty (… →+ ℤ)` class is not an open obligation — it is a theorem.**
+
+
+  Run 0067 isolated the missing degree input as `PicScheme.ClassDegree`, whose whole
+
+  content is `Nonempty (relPicClasses →+ ℤ)`. That type contains `0`, so `⟨⟨0⟩⟩`
+
+  proves the class with no hypotheses. The "one remaining input" demanded nothing,
+
+  and the total function built on it (`degreeOfSection`) is not pinned to the degree.
+
+
+  **The general lesson.** When a construction is deferred behind a house-pattern
+
+  class, check that the class asserts a PROPERTY of the object, not merely that the
+
+  object''s type is inhabited.
+
+
+  - Fine: `HasPicScheme` = `∃ X, RepresentableBy X ∧ LocallyOfFiniteType ∧ IsSeparated`.
+
+  - Vacuous: `Nonempty (A →+ B)`, `Nonempty (A → ℤ)`, `Nonempty (A ≃ B)` when `B`
+  has a point.
+
+
+  **The probe.** State the class as a `theorem` with no gate and try `⟨⟨0⟩⟩` /
+
+  `⟨default⟩` / `⟨fun _ => 0⟩`. Clean axioms means the deferral was empty.
+
+
+  `#print axioms` will NOT catch this: the vacuous instance is sorry-free, which is
+
+  exactly why the round reported clean.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T06:15:26.108453+00:00'
+updated_at: '2026-07-28T06:23:23.431235+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0004-horizon-ajc-pic0av
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-divrep

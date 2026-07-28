@@ -1,0 +1,69 @@
+id: I-0533
+provider: local
+kind: issue
+body: '**"CLAUSES (i) AND (ii) ARE NO LONGER OPEN" IS OVERSTATED (commit f820eff22,
+  `Picard/Pic0AbelianVariety.lean:687-703`). Clause (i) is a SHEAF statement; what
+  landed is a MODULE statement, and the missing step is named nowhere.**
+
+
+  Clause (i) as the docstring itself states it: "an invertible sheaf on `C ×_k Spec
+  k[ε]` trivial along `ε ↦ 0` is trivial **on the two base-changed charts of `S`**".
+  `DualNumber.free_of_cyclic_mod_eps` (`Picard/DualNumberChartTriviality.lean:120`)
+  is: an invertible `A[ε]`-**module** whose every element agrees with a multiple of
+  a fixed `m` mod `(ε)·M` is `Module.Free`. Both are sorry-free and axiom-clean (I
+  re-measured all ten new declarations; also non-vacuous — I instantiated the theorem
+  at `M = A[ε]`, `m = 1`, and the Nakayama iteration at the nonzero nilpotent `(ε)`).
+
+
+  THREE GAPS between them, none of which is a `rw`:
+
+  1. **Sheaf → module.** No declaration takes an invertible sheaf on a base-changed
+  chart to a `Module.Invertible` over the sections. This project does not even have
+  an `IsInvertible` predicate on `Scheme.Modules` from mathlib — see the note at `Picard/LineBundlePullback.lean:56-64`
+  — it uses the project-local `LineBundle.IsLocallyTrivial`, and the one available
+  bridge is `Scheme.LineBundle.isInvertible_of_restrict_iso` (`Picard/InvertibleGrBridge.lean`),
+  which needs a trivialising chart already in hand. So sheaf-level (i) is not the
+  module-level theorem plus bookkeeping.
+
+  2. **Hypothesis shape.** (i) hypothesises triviality of the restriction along `ε
+  ↦ 0`; the theorem hypothesises `∀ x, ∃ r, x - r • m ∈ (ε)•M`, i.e. that a specific
+  `m` generates the reduction. Producing that `m` from the kernel condition on `Pic`
+  is the real content and is not proved.
+
+  3. **Carrier.** (i) is about the base change `C ×_k Spec k[ε]` restricted to a chart
+  of `S`; the theorem is about `DualNumber A` for an abstract `A`. The identification
+  is `DualNumber.baseChangeAlgEquiv` composed with `pullbackSpecIso` — which the module
+  docstring mentions as the intended route but nothing performs.
+
+
+  **Import evidence that no wiring exists:** `Pic0AbelianVariety.lean` does NOT import
+  `DualNumberChartTriviality` or `NilpotentThickeningFree` (I computed both closures).
+  The declaration named as clause (i) is not in scope at the sorry that is said to
+  be reduced by it, and no consumer of `free_of_cyclic_mod_eps` exists anywhere in
+  the tree — the only occurrences are the prose in `Pic0AbelianVariety.lean:693-698`.
+
+
+  The algebra is real, general, upstreamable work and I would keep it. What is not
+  defensible is the docstring at the sorry site reporting the residue as "clause (iii)
+  alone": the honest residue is (iii) PLUS the sheaf→module descent of (i). A next
+  session reading the current prose will look for one obligation and find two.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T06:14:15.547219+00:00'
+updated_at: '2026-07-28T06:14:15.547230+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0004-horizon-ajc-pic0av
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge

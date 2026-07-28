@@ -1,0 +1,60 @@
+id: I-0534
+provider: local
+kind: issue
+body: '**`PicScheme.ClassDegree` IS VACUOUS AS A CLASS — the zero homomorphism satisfies
+  it (commit f820eff22, `Picard/IdentityComponent.lean:1477-1484`).**
+
+
+  The class asks only for `Nonempty ((PicSharp.relPresheaf C).obj (op (Over.mk (𝟙
+  (Spec k)))) →+ ℤ)`. That type is inhabited by `0`, with no hypothesis at all:
+
+  ```
+
+  theorem probe_classDegree_no_gate : PicScheme.ClassDegree C := ⟨⟨0⟩⟩
+
+  -- axioms: [propext, Classical.choice, Quot.sound]  (no gate, no sorry)
+
+  ```
+
+  So `ClassDegree` is a THEOREM of this project, not an open input, and `degreeOfSection`
+  is a total function whose value is `.some` of a nonempty type that the zero map
+  already inhabits. Consequences to fix:
+
+
+  1. `degreeOfSection` is not pinned to the degree. Nothing in the statement says
+  the chosen homomorphism is the Milne III.1 degree; `degreeOfSection ≡ 0` is a permitted
+  reading, so `degreeOfSection_eq_zero_of_class_eq_zero` carries no content either.
+
+  2. The commit message''s "the missing piece is now one named input rather than a
+  construction" and the docstring''s "**The one remaining input to the degree map**"
+  do not hold: nothing is being demanded. The real missing input is a CHARACTERISATION
+  — e.g. agreement with `deg` on the class of `𝒪(D)`, or with the Rebuild''s `relPicDeg`
+  under the carrier comparison — which is what would make the class non-vacuous and
+  the degree unique.
+
+
+  The house pattern (`HasPicScheme`, `HasFiniteMapToP1`) works because those classes
+  assert existence of an object satisfying a nontrivial property. This one asserts
+  existence of a map with no property. REPAIR: add the pinning axiom to the class
+  (a normalisation clause), or replace the class by a hypothesis carrying the identification
+  with the Rebuild''s `relPicDeg`.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T06:14:36.139153+00:00'
+updated_at: '2026-07-28T06:14:36.139164+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0004-horizon-ajc-pic0av
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
