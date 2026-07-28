@@ -132,10 +132,55 @@ noncomputable def mapHomologicalComplexHomologyIso (F : C ⥤ D) [F.Additive]
 
 end HomologyComm
 
+/-! ### Right exact + mono-preserving ⟹ left exact
+
+The categorical step that converts the flat-pullback obligation from a statement about
+*all* finite limits into a statement about *monomorphisms only*.  For an additive functor
+between abelian categories, right exactness (which `g^*` has for free, being a left
+adjoint) plus preservation of monomorphisms already forces left exactness.  Indeed
+`Functor.preservesFiniteLimits_iff_forall_exact_map_and_mono` says left exactness is
+equivalent to: every short exact `0 → A → B → C → 0` maps to an exact `F A → F B → F C`
+with `F A → F B` mono.  The exactness half is `ShortComplex.Exact.map_of_epi_of_preservesCokernel`
+(available from right exactness alone, since `B → C` is epi), and the mono half is the
+hypothesis.  Note this is *not* a "right exact ⟹ exact" fallacy: the mono hypothesis is
+exactly the flatness input, and without it the statement is false (tensoring by a
+non-flat module is right exact and not left exact). -/
+section RightExactMono
+
+variable {C D : Type*} [Category.{u} C] [Category.{u} D] [Abelian C] [Abelian D]
+
+/-- **Right exact + mono-preserving ⟹ left exact**, for an additive functor between abelian
+categories.  Project-local categorical supplement: mathlib has the TFAE
+`Functor.preservesFiniteLimits_tfae` characterising left exactness by "short exact sequences
+map to left-exact ones", and the right-exactness transport
+`ShortComplex.Exact.map_of_epi_of_preservesCokernel`, but not this packaged criterion.
+It is what reduces `pullback_preservesFiniteLimits` to mono-preservation. -/
+theorem preservesFiniteLimits_of_preservesMonomorphisms (F : C ⥤ D) [F.Additive]
+    [Limits.PreservesFiniteColimits F] [F.PreservesMonomorphisms] :
+    Limits.PreservesFiniteLimits F := by
+  rw [F.preservesFiniteLimits_iff_forall_exact_map_and_mono]
+  intro T hT
+  have := hT.mono_f
+  exact ⟨hT.exact.map_of_epi_of_preservesCokernel F hT.epi_g inferInstance, inferInstance⟩
+
+end RightExactMono
+
 /-- **Flat base change has left-adjoint pullback**, hence `g^*` preserves finite
 colimits (free: `g^* = pullback g` is a left adjoint). -/
 instance pullback_preservesFiniteColimits (g : S' ⟶ S) :
     Limits.PreservesFiniteColimits (Scheme.Modules.pullback g) := inferInstance
+
+/-- **Reduction of flat left-exactness to mono-preservation.**  For any `g`, if the module
+pullback `g^*` preserves monomorphisms then it preserves finite limits: it is additive and
+right exact (a left adjoint), so `preservesFiniteLimits_of_preservesMonomorphisms` applies.
+This is the *whole* categorical content of `pullback_preservesFiniteLimits`; the residual
+mathematics is the single statement `Mono (g^* ι)` for a mono `ι`, i.e. that flat pullback
+does not destroy injections (Stacks 00HL / 01BG stalkwise).  Project-local. -/
+theorem pullback_preservesFiniteLimits_of_preservesMonomorphisms (g : S' ⟶ S)
+    (h : (Scheme.Modules.pullback g).PreservesMonomorphisms) :
+    Limits.PreservesFiniteLimits (Scheme.Modules.pullback g) :=
+  haveI := h
+  preservesFiniteLimits_of_preservesMonomorphisms (Scheme.Modules.pullback g)
 
 /-- **Flat implies `g^*` is left-exact.**  This is not yet proved; what follows records the
 reduction.
@@ -1702,8 +1747,7 @@ noncomputable def twisted_cech_nerve_iso
         Limits.Pi.mapIso (fun σ => twisted_cech_nerve_per_sigma f g f' g' h 𝒰 F hF σ) ≪≫
         (pushPull_sigma_iso ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
           h.isoPullback.symm.hom) ((Scheme.Modules.pullback g').obj F) n.len).symm)
-    (fun {n m} φ => by
-      sorry)
+    (fun {n m} φ => sorry)
 
 /-- **The cosimplicial Beck–Chevalley iso `e`** consumed by
 `cechComplex_baseChange_iso_of_cosimplicialIso`. It is the whiskered composite of the
