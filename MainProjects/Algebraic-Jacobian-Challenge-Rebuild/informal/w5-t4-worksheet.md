@@ -969,3 +969,49 @@ discover this again:
 **Do not restate (b-coeff) as landed on the strength of (b-open).** This is `I-0571`'s rule at
 one remove: the equivalence exists at each `W`, and *that says nothing about the reduction map*
 — which is the whole content, and the third time this lane has had to write that sentence.
+
+### 6.14 (b-coeff) IS CLOSED — route 2 won, and the obstruction was an INSTANCE not a theorem
+
+*Same session (run 0073 r3), written after the Lean because §6.13's three routes were the
+worksheet-first pass for it; this section records which one paid and why.*
+
+**Route 2 wins outright.** `Tangent/DualNumberCarrierReduction.lean` (sorry-free, `lake env
+lean` exit 0): `Over.relSectionsMap_dualNumberSections` and its unit form
+`Over.relSectionsMapUnits_dualNumberSectionsUnits`. So all three steps §6.10 owed — (iii-c2-aff)
+aside — are landed, and **(iii-c2-aff) is now genuinely the last statement in the T4 chain.**
+
+Two `scoped` instances in `namespace TruncExpCech.EpsilonReduction` — `epsAlgebra` (from
+`fstHom.toAlgebra`) and `epsIsScalarTower` — and then the **entire** landed `relSectionsMap`
+calculus applies unchanged. `relSectionsMap_pullback` handles the curve-pullback factor,
+`relSectionsMap_overAlgebraMap` the structure factor, and the identification is *`rfl`*: with
+`epsAlgebra` in scope, `algebraMap k[ε] k` **is** `TrivSqZeroExt.fst`, so the reduction computes
+itself and the `ε` component dies because `fst ε = 0`. Zero new geometry.
+
+**The generalisable point, and it is a pricing lesson not a Lean one.** §6.13 named the
+obstruction correctly (`Algebra k[ε] k` absent) but implicitly treated it as a *mathematical*
+gap in the tree's coefficient layer — the three routes were all about restructuring something.
+It was neither: it is a **missing instance for a theorem that already existed**, and a `letI`-
+scale fix unlocks a whole landed API. Rule, and it generalises past this file: *when a landed
+lemma "does not apply", check whether what is missing is an instance rather than a hypothesis —
+an absent instance looks exactly like an absent theorem in the error message, and costs three
+orders of magnitude less.* Compare `I-0555` (side conditions that were instance keying) and
+`I-0570`'s converse; this is the same family from the coefficient side.
+
+**Why `scoped` and not global**, recorded so nobody promotes it: a global `Algebra k[ε] k`
+diamonds with `Algebra k k` and makes `algebraMap` ambiguous at every site that mentions both.
+`scoped` costs a consumer one `open` and nothing else.
+
+**Two `rw` walls, both the elided-restriction family of §6.10(3), both closed as terms** — the
+standing rule in this lane is *never fight that wall, restate and `exact`*:
+
+1. `map_add` of `relSectionsMap` will not `rw` into a goal spelled `(C ⊗ overSpec k R).left`
+   when the lemma is stated at `relCurve C R`. They are `rfl`, not syntactically equal, and
+   `rw` matches syntactically. Apply `RingHom.map_add` as a **term** and chain with `.trans`.
+2. The residual `a + 0 = a` likewise resists `rw [add_zero]`; `exact add_zero _` closes it.
+
+**And one diagnostic trap that cost two wrong line numbers.** `open CategoryTheory` **shadows
+`Algebra`**, so `instance foo : Algebra (DualNumber k) k` elaborates against the wrong constant
+— and the resulting *"typeclass instance problem is stuck"* error is reported at the **next**
+declaration, not at the shadowed one. Spell it `_root_.Algebra` in any file that opens
+`CategoryTheory`, and when a stuck-instance error names a declaration that looks fine, suspect
+the one above it.
