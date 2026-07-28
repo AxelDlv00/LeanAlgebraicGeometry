@@ -34,12 +34,22 @@ algebra proved here.
   hypothesis of the general statement in `Picard/NilpotentThickeningFree.lean`.
 * `DualNumber.free_of_cyclic_mod_eps` — the chart statement: an invertible `A[ε]`-module in
   which every element agrees with a multiple of a fixed `m` modulo `(ε)·M` is free.
+* `Submodule.exists_sub_smul_mem_of_quotient_cyclic` and its converse
+  `Submodule.quotient_cyclic_of_exists_sub_smul_mem` — **the generator obligation, closed**
+  (run 0067 r4). See §"The generator is not an extra hypothesis" below: both projects had
+  recorded "produce `m`" as open geometric work, and it is a one-line lift of the generator of
+  a cyclic quotient. Stated for an arbitrary submodule of an arbitrary module over a
+  commutative ring; nothing about dual numbers, curves or covers enters.
+* `DualNumber.free_of_quotient_eps_cyclic` — the consumable form: an invertible `A[ε]`-module
+  with **cyclic** reduction `M ⧸ (ε)·M` is free, generator supplied internally.
 
 ## What this does and does not close
 
 It closes the *chart-triviality* clause of the geometric middle, for arbitrary affine charts
 and with no finiteness hypothesis on the sections (see the discussion in
-`Picard/NilpotentThickeningFree.lean` — the nilpotent Nakayama iteration is what buys that).
+`Picard/NilpotentThickeningFree.lean` — the nilpotent Nakayama iteration is what buys that),
+and as of run 0067 r4 it closes that clause **without assuming a generator**.
+
 The two remaining clauses of the middle are the identification
 `Γ(V ×_k Spec k[ε], 𝒪) ≅ Γ(V, 𝒪)[ε]` — already available as
 `DualNumber.baseChangeAlgEquiv` — and the statement that under these identifications a
@@ -124,5 +134,102 @@ theorem free_of_cyclic_mod_eps
       x - r • m ∈ Ideal.span {(ε : DualNumber A)} • (⊤ : Submodule (DualNumber A) M)) :
     Module.Free (DualNumber A) M :=
   Module.Invertible.free_of_nilpotent_of_exists_sub_smul_mem (isNilpotent_span_eps A) h
+
+end DualNumber
+
+/-! ## The generator is not an extra hypothesis
+
+`free_of_cyclic_mod_eps` above, and the sibling project's
+`Opens.cechPicMap_ι_eq_one_of_dualNumberChart`
+(`Algebraic-Jacobian-Challenge-Rebuild`, `Tangent/DualNumberChartPic.lean:127`), both take the
+generator `m` **and** the pointwise binder `∀ x, ∃ r, x - r • m ∈ (ε)·M` as *given*. Both
+projects' docstrings then name "produce `m` from the hypothesis that `L` is trivial on `C`" as
+the remaining obligation — AJCR carrying it as a hypothesis rather than a `sorry`
+(their worksheet §0(4): never register a staged fact), AJC inside the `sorry` of
+`semilinearComparison_cotangentSpaceDual_h1Cok`. Surveyed and read on 2026-07-28: it is
+character-for-character the same obligation on both sides, and neither side had discharged it.
+
+**It is not a geometric obligation at all.** The pointwise binder is nothing more than
+*cyclicity of the quotient* `M ⧸ (ε)·M` written without naming a quotient, so producing `m`
+from the module-theoretic hypothesis is a one-line surjectivity argument on
+`Submodule.Quotient.mk` — no cover, no scheme, no dual numbers. That is what this section
+proves, and both directions are given, so `exists_sub_smul_mem_of_quotient_cyclic` is a genuine
+**reduction** of the binder rather than a restatement of it (the safeguard of inbox `I-0571`).
+
+The residual geometric content of the clause is therefore *only* the identification of
+"`L` restricts trivially along `ε ↦ 0`" with "`M ⧸ (ε)·M` is cyclic" — which is the trivialising
+section on the chart, i.e. the freeness of the restriction, not a statement about generators.
+-/
+
+namespace Submodule
+
+variable {R : Type u} [CommRing R] {M : Type v} [AddCommGroup M] [Module R M]
+
+/-- **The generator of a cyclic quotient can be lifted** — so the "fixed `m` with
+`∀ x, ∃ r, x - r • m ∈ N`" binder of `DualNumber.free_of_cyclic_mod_eps` follows from the
+quotient `M ⧸ N` being cyclic, with no further input.
+
+Both this project and the sibling had recorded producing `m` as open work on the tangent lane's
+chart-triviality clause. The proof is `Submodule.Quotient.mk_surjective` on the generator
+followed by `Submodule.Quotient.mk_eq_zero`: pick any preimage `m` of the generator `y`, and for
+`x : M` take the `r` with `⟦x⟧ = r • y`; then `⟦x - r • m⟧ = ⟦x⟧ - r • ⟦m⟧ = r • y - r • y = 0`,
+which is membership in `N`. -/
+theorem exists_sub_smul_mem_of_quotient_cyclic (N : Submodule R M)
+    (h : ∃ y : M ⧸ N, ∀ z : M ⧸ N, ∃ r : R, z = r • y) :
+    ∃ m : M, ∀ x : M, ∃ r : R, x - r • m ∈ N := by
+  obtain ⟨y, hy⟩ := h
+  obtain ⟨m, hm⟩ := Submodule.Quotient.mk_surjective N y
+  refine ⟨m, fun x => ?_⟩
+  obtain ⟨r, hr⟩ := hy (Submodule.Quotient.mk x)
+  refine ⟨r, ?_⟩
+  have hq : (Submodule.Quotient.mk (x - r • m) : M ⧸ N) = 0 := by
+    rw [Submodule.Quotient.mk_sub, Submodule.Quotient.mk_smul, hm, hr, sub_self]
+  exact (Submodule.Quotient.mk_eq_zero N).mp hq
+
+/-- **The converse**, which is what makes the lemma above a reduction rather than a
+restatement: the pointwise binder *implies* that `M ⧸ N` is cyclic, generated by the class of
+`m`. So "there is a generator satisfying the binder" and "the quotient is cyclic" are
+equivalent, and replacing one by the other loses nothing.
+
+Recorded per inbox `I-0571`: a restatement is only a reduction if the converse holds. -/
+theorem quotient_cyclic_of_exists_sub_smul_mem (N : Submodule R M)
+    (m : M) (h : ∀ x : M, ∃ r : R, x - r • m ∈ N) :
+    ∀ z : M ⧸ N, ∃ r : R, z = r • (Submodule.Quotient.mk m : M ⧸ N) := by
+  intro z
+  obtain ⟨x, hx⟩ := Submodule.Quotient.mk_surjective N z
+  obtain ⟨r, hr⟩ := h x
+  refine ⟨r, ?_⟩
+  have hz : (Submodule.Quotient.mk (x - r • m) : M ⧸ N) = 0 :=
+    (Submodule.Quotient.mk_eq_zero N).mpr hr
+  rw [Submodule.Quotient.mk_sub, Submodule.Quotient.mk_smul, sub_eq_zero] at hz
+  rw [← hx, hz]
+
+end Submodule
+
+namespace DualNumber
+
+variable (A : Type u) [CommRing A]
+
+/-- **Chart triviality with the generator produced, not assumed** — the form of
+`free_of_cyclic_mod_eps` that a consumer holding only "the restriction along `ε ↦ 0` is
+trivial" can actually use.
+
+An invertible `A[ε]`-module whose reduction `M ⧸ (ε)·M` is **cyclic** is free. This closes the
+gap that both this project and the sibling recorded as the open half of the chart-triviality
+clause: `Submodule.exists_sub_smul_mem_of_quotient_cyclic` supplies `m`, and
+`free_of_cyclic_mod_eps` finishes.
+
+Still no finiteness on `M` and no hypothesis on `A` beyond commutativity — the nilpotent
+Nakayama iteration of `Picard/NilpotentThickeningFree.lean` is what buys that, and cyclicity of
+the reduction is exactly the input it needs. -/
+theorem free_of_quotient_eps_cyclic
+    (M : Type v) [AddCommGroup M] [Module (DualNumber A) M]
+    [Module.Invertible (DualNumber A) M]
+    (h : ∃ y : M ⧸ (Ideal.span {(ε : DualNumber A)} • (⊤ : Submodule (DualNumber A) M)),
+      ∀ z, ∃ r : DualNumber A, z = r • y) :
+    Module.Free (DualNumber A) M := by
+  obtain ⟨m, hm⟩ := Submodule.exists_sub_smul_mem_of_quotient_cyclic
+    (Ideal.span {(ε : DualNumber A)} • (⊤ : Submodule (DualNumber A) M)) h
+  exact free_of_cyclic_mod_eps A M m hm
 
 end DualNumber
