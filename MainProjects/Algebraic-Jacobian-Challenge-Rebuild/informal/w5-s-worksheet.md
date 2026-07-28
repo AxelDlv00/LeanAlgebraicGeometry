@@ -279,6 +279,47 @@ steps 1–3 after base change to `k̄` (where closed points are rational and mat
 §5 codescent brick. So the §5 brick is the **contingency for exactly this caveat**, not for
 the count itself. Probe this before writing S3's Lean.
 
+### 3.1 THE CAVEAT IS PROBED (run 0073 r5) — the class is ZARISKI-LOCAL AT SOURCE, and that changes step 3
+
+*§3 above ends with "probe this before writing S3's Lean". Done, and the answer is better than
+the caveat feared. Recorded here rather than in the Lean because S3's Lean is still numeral-gated.*
+
+**MEASURED, `lake env lean` EXIT=0, with `Smooth` as an in-file control (both fire):**
+
+```
+MorphismProperty.RespectsIso (@SmoothOfRelativeDimension n)                        -- inferInstance
+MorphismProperty.IsLocalAtSource (@SmoothOfRelativeDimension n) Scheme.zariskiPrecoverage  -- inferInstance
+MorphismProperty.IsLocalAtSource (@Smooth) Scheme.zariskiPrecoverage               -- control, fires
+```
+
+and the source-iso transport step 3 needs is then derivable rather than assumed:
+`RespectsIso.precomp` gives `SmoothOfRelativeDimension n (e.hom ≫ f)` from an iso `e : X' ≅ X`.
+(`infer_instance` alone does **not** find that one — the instance is on the property, not on the
+composite — which is worth knowing since a failed `infer_instance` here reads as absence.)
+
+**WHY THIS MATTERS FOR STEP 3.** `IsLocalAtSource … zariskiPrecoverage` gives `of_forall_comp`:
+the property for `f` follows from the property for `g ≫ f` over any Zariski cover of the *source*.
+So the obligation is not "hit every scheme point by a translation" but **"cover `d.J` by opens on
+each of which the count is `genus C`"** — and a translation of the identity's chart is such an open.
+Rational points do not have to *be* every point; their translated charts only have to **cover**.
+That is a weaker demand, and it is met by the same X2 transport §3 already cites.
+
+**Consequence for the §5 contingency, stated carefully.** §3 said the codescent brick is "the
+contingency for exactly this caveat". The caveat as stated — pointwise unreachability — is
+**dissolved**, so that contingency is no longer the expected path. **But this does not retire the
+§5 brick**, and I am not claiming it does: what the locality result removes is the *pointwise*
+obstruction, not any need to know the translated charts cover. If a future prover finds the
+`k`-rational translates do not cover (e.g. `d.J` has a closed point whose residue field is a
+non-trivial extension and no `k`-translate of the identity chart meets it), the `k̄` route plus §5
+returns. Sizing unchanged: **S3 stays [M]**, now with one fewer named risk.
+
+**METHOD NOTE, since this lane has been burned by the opposite mistake twice today.** The
+worksheet's caveat was a *correct* reading of the class's statement (`∀ (x : X), ∃ U V e, …`) that
+priced a consequence the statement does not have. Unfolding a class tells you what must be
+produced; it does not tell you what *machinery exists to produce it*. Two `inferInstance` calls
+answered a question three paragraphs of correct reading had left open — and both are the kind of
+one-line probe §6.26 of the t4 worksheet says to run before pricing.
+
 ## §3.5 A warning for whoever takes P1 (not the S-cluster, but it belongs in a Wave-5 doc)
 
 Recorded 2026-07-28 from `ajcr-charts`' audit on inbox I-0494, because the lane it affects
@@ -318,7 +359,7 @@ predicates. Nothing landed needs revisiting — this is a note for the future P1
 | S1-b0 `IsReduced (X ×_k k̄) ⇒ GeometricallyReduced` | none (mathlib-facing) | S/M | **yes** — see §2.1; upstreamable |
 | S1-b translation spread | S1-a + X2 (landed) | S | after S1-a |
 | S1-a reduced stalk at identity | T3/T4 | M/L | **no** |
-| S3 assembly | S2 + T5 + X2 | M | shape frozen here; numeral waits on T3/T4 |
+| S3 assembly | S2 + T5 + X2 | M | shape frozen here; numeral waits on T3/T4. §3's pointwise-reachability caveat is **probed and dissolved** (§3.1): the class is Zariski-local at source, so translated charts need only **cover**, not exhaust the points. |
 
 The honest bottom line for the lane: **after T1/T5, every remaining Wave-5 item funnels
 through T3/T4.** S1-a, T5's numeral and S3's count are three consumers of one computation.
