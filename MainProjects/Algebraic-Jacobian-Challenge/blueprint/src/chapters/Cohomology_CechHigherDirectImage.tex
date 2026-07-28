@@ -11678,10 +11678,100 @@ already proved; the genuine open content is isolated in the two clearly-flagged 
 \subsection{Left exactness of flat pullback}
 \label{sec:pullback_pfl_decomposition}
 
-Let \(\varphi\) be the morphism of ring sheaves underlying \(g\). Pullback of sheaves
-of modules factors through presheaves: one forgets the sheaf condition, applies
-presheaf pullback, and sheafifies. Left exactness can therefore be checked on these
-three factors.
+Left exactness of \(g^*\) is not a statement about three functors but about one property:
+monomorphisms. For an additive functor between abelian categories, right exactness together
+with preservation of monomorphisms already forces left exactness
+(Lemma~\ref{lem:right_exact_mono_left_exact}); \(g^*\) is a left adjoint, so it is right exact
+for free, and the entire flatness-dependent content is that \(g^*\) preserves injections
+(Lemma~\ref{lem:pullback_preserves_monos}). This is not the fallacy ``right exact implies
+exact'': the mono hypothesis is exactly where flatness enters, and without flatness the
+statement is false --- tensoring with a non-flat module is right exact and not left exact.
+
+Monomorphisms of \(\mathcal{O}_X\)-modules are sectionwise
+(Lemma~\ref{lem:mono_iff_injective_sections}), which settles the case of an open immersion
+outright (Lemma~\ref{lem:pullback_preserves_monos_openImmersion}), because there \(g^*\) is the
+restriction functor and restriction does not move sections. For a general flat \(g\) no
+sectionwise formula for \(g^*\) is available and the argument must be stalkwise; the record of
+that gap is Remark~\ref{rem:pullback_mono_missing_stalk_model}.
+
+\begin{lemma}[Right exact and mono-preserving implies left exact]\leanok
+  \label{lem:right_exact_mono_left_exact}
+  \lean{AlgebraicGeometry.preservesFiniteLimits_of_preservesMonomorphisms}
+  Let \(F : \mathcal{C} \to \mathcal{D}\) be an additive functor between abelian categories
+  which preserves finite colimits and monomorphisms. Then \(F\) preserves finite limits.
+\end{lemma}
+
+\begin{proof}\leanok
+  Preservation of finite limits is equivalent to: for every short exact sequence
+  \(0 \to A \to B \to C \to 0\), the image \(F A \to F B \to F C\) is exact and \(F A \to F B\)
+  is a monomorphism. The second clause is the hypothesis. For the first, \(B \to C\) is an
+  epimorphism, so \(C\) is the cokernel of \(A \to B\); a right exact functor carries that
+  cokernel presentation to a cokernel presentation, which is exactness of the image at \(F B\).
+\end{proof}
+
+\begin{lemma}[Monomorphisms of \(\mathcal{O}_X\)-modules are sectionwise]\leanok
+  \label{lem:mono_iff_injective_sections}
+  \lean{AlgebraicGeometry.Modules.injective_app_of_mono}
+  A morphism \(\varphi : M \to N\) of \(\mathcal{O}_X\)-modules is a monomorphism if and only if
+  \(\Gamma(U, \varphi)\) is injective for every open \(U \subseteq X\).
+\end{lemma}
+
+\begin{proof}\leanok
+  The forgetful functor to abelian presheaves preserves limits, hence monomorphisms, and is
+  faithful, hence reflects them; a morphism of abelian presheaves is a monomorphism precisely
+  when it is one in every section, evaluation being limit-preserving; and a morphism of abelian
+  groups is a monomorphism precisely when it is injective.
+\end{proof}
+
+\begin{lemma}[Flat pullback preserves monomorphisms]
+  \label{lem:pullback_preserves_monos}
+  \lean{AlgebraicGeometry.pullback_preservesMonomorphisms}
+  \uses{lem:mono_iff_injective_sections}
+  If \(g : S' \to S\) is flat then \(g^*\) preserves monomorphisms of
+  \(\mathcal{O}_S\)-modules --- for arbitrary modules, not only quasi-coherent ones.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:mono_iff_injective_sections}
+  Stalkwise. For \(x \in S'\) the stalk of \(g^* M\) is
+  \(M_{g(x)} \otimes_{\mathcal{O}_{S, g(x)}} \mathcal{O}_{S', x}\); the stalk map
+  \(\mathcal{O}_{S, g(x)} \to \mathcal{O}_{S', x}\) of a flat morphism is a flat ring map, and a
+  flat base change preserves injections, so each stalk map of \(g^* \varphi\) is injective.
+  Monomorphy of a morphism of sheaves of modules is detected on stalks.
+\end{proof}
+
+\begin{lemma}[Pullback along an open immersion preserves monomorphisms]\leanok
+  \label{lem:pullback_preserves_monos_openImmersion}
+  \lean{AlgebraicGeometry.Modules.pullback_preservesMonomorphisms_of_isOpenImmersion}
+  \uses{lem:mono_iff_injective_sections}
+  If \(j : U \to X\) is an open immersion then \(j^*\) preserves monomorphisms.
+\end{lemma}
+
+\begin{proof}\leanok
+  Along an open immersion the pullback is isomorphic to the restriction functor, and restriction
+  does not move sections: \(\Gamma(V, M|_U) = \Gamma(j(V), M)\), with the restricted morphism
+  acting as \(\Gamma(j(V), \varphi)\). So injectivity on sections transfers verbatim and
+  Lemma~\ref{lem:mono_iff_injective_sections} concludes in both directions.
+\end{proof}
+
+\begin{remark}[No stalk model of the module pullback]
+  \label{rem:pullback_mono_missing_stalk_model}
+  The stalk formula used in the proof of Lemma~\ref{lem:pullback_preserves_monos} is the one
+  piece of the flat-base-change chapter with no counterpart in the ambient library. The pullback
+  of sheaves of modules is characterised there as a left adjoint of the pushforward, with no
+  pointwise description; the factorisation of
+  Lemma~\ref{lem:sheafOfModules_pullbackIso} does not help, since its middle factor
+  (presheaf-level pullback) is characterised the same way, while its outer two factors are
+  unconditionally left exact and so were never the obstruction. The affine section formula of the
+  Picard chapter (\texttt{Scheme.Modules.pullback\_app\_isoTensor}) computes
+  \(\Gamma(U, g^* N)\) as a tensor product but only for quasi-coherent \(N\), whereas the
+  statement above quantifies over all modules; over
+  an affine base the category of \(\mathcal{O}_S\)-modules is strictly larger than the category
+  of \(\Gamma(S, \mathcal{O}_S)\)-modules, so quasi-coherence cannot be dropped from that route.
+\end{remark}
+
+The three factors of the pullback, recorded because the older route through them is still the
+one a reader is likely to try.
 
 \begin{lemma}[Factorisation of the sheaf-of-modules pullback]
   \label{lem:sheafOfModules_pullbackIso}
@@ -11787,19 +11877,25 @@ and~\ref{lem:sheafification_pfl_mathlib}. It remains to treat presheaf pullback.
   to such a composite does as well.
 \end{proof}
 
-\begin{lemma}[Flat pullback is left exact]\leanok
+\begin{lemma}[Flat pullback is left exact]
   \label{lem:pullback_preserves_finite_limits}
   \lean{AlgebraicGeometry.pullback_preservesFiniteLimits}
-  \uses{lem:sheafOfModules_pullbackIso, lem:forget_sheafOfModules_pfl_mathlib,
-        lem:sheafification_pfl_mathlib, lem:presheaf_pullback_pfl_flat}
-  If \(g\) is flat then \(g^*\) preserves finite limits. The flatness-dependent
-  content reduces, via the factorisation of
-  Lemma~\ref{lem:sheafOfModules_pullbackIso}, to the single middle factor
-  (Lemma~\ref{lem:presheaf_pullback_pfl_flat}); the two outer factors are left-exact
-  unconditionally.
+  \uses{lem:right_exact_mono_left_exact, lem:pullback_preserves_finite_colimits,
+        lem:pullback_preserves_monos}
+  If \(g\) is flat then \(g^*\) preserves finite limits.
 \end{lemma}
 
 \begin{proof}
+  \uses{lem:right_exact_mono_left_exact, lem:pullback_preserves_finite_colimits,
+        lem:pullback_preserves_monos}
+  \(g^*\) is additive and preserves finite colimits, being a left adjoint
+  (Lemma~\ref{lem:pullback_preserves_finite_colimits}), and it preserves monomorphisms because
+  \(g\) is flat (Lemma~\ref{lem:pullback_preserves_monos}). Apply
+  Lemma~\ref{lem:right_exact_mono_left_exact}.
+\end{proof}
+
+\begin{remark}[The older three-factor route, and why it is not the one taken]
+  \label{rem:pullback_pfl_three_factor_route}
   \uses{lem:sheafOfModules_pullbackIso, lem:forget_sheafOfModules_pfl_mathlib,
         lem:sheafification_pfl_mathlib, lem:presheaf_pullback_pfl_flat}
   By Lemma~\ref{lem:sheafOfModules_pullbackIso}, on the genuine scheme site \(g^*\)
@@ -11812,9 +11908,16 @@ and~\ref{lem:sheafification_pfl_mathlib}. It remains to treat presheaf pullback.
   site). The middle factor preserves finite limits because \(g\) is flat
   (Lemma~\ref{lem:presheaf_pullback_pfl_flat}). A composite of
   finite-limit-preserving functors preserves finite limits, so \(g^*\) does.
-\end{proof}
 
-\begin{lemma}[Flat pullback preserves homology]\leanok
+  This is a correct argument and it is not the one used, because its middle input is no easier
+  than the conclusion: presheaf-level pullback is characterised as a left adjoint with no
+  pointwise description, so Lemma~\ref{lem:presheaf_pullback_pfl_flat} needs the same stalk
+  model that Remark~\ref{rem:pullback_mono_missing_stalk_model} records as missing, while
+  additionally carrying two sheafification hypotheses. The mono route reaches the same place
+  through one statement instead of four.
+\end{remark}
+
+\begin{lemma}[Flat pullback preserves homology]
   \label{lem:pullback_preserves_homology}
   \lean{AlgebraicGeometry.pullback_preservesHomology}
   \uses{lem:pullback_preserves_finite_colimits, lem:pullback_preserves_finite_limits}
