@@ -70,7 +70,8 @@ only at an involution.
 
 **Does**: name the affine carrier. `SymPowColimit.lean` §5's bold caveat is now dischargeable,
 and the honest statement of Milne III.3 Proposition 3.1's affine half — the object, not merely
-its existence — is `symPowData_affine_named` together with `SymPowInvariantsUnder.fixedUnder`.
+its existence — is `colimitPermDiagramIsoFixed` together with
+`SymPowInvariantsUnder.fixedUnder`.
 
 **Does not**: touch the gluing. `HasColimit (permDiagram C n)` for a proper curve `C` in
 `Over (Spec k̄)` is a statement about a non-affine object, and nothing here bears on it —
@@ -78,6 +79,19 @@ its existence — is `symPowData_affine_named` together with `SymPowInvariantsUn
 `sorryAx`. Milne's route from here is to glue these affine quotients over an open affine cover
 of the curve (`SymPowColimit.lean` §6's availability table), which needs their compatibility on
 overlaps and is the remaining item of `StableAffineCoverGroup.lean`'s four-item bill.
+
+**And one gap that is easy to overlook, because a name exists for it.** The capstone
+`AlbaneseFromColimit.exists_unique_albanese_of_scheme_colimits` binds
+`HasColimit (permDiagram C g)` for `C : Over (Spec (.of k̄))` — a diagram in **`Over (Spec k̄)`,
+a category of schemes**. Everything here is a diagram in **`(Under k)ᵒᵖ`, a category of
+algebras**. `CategoryTheory.Over.opEquivOpUnder` does exist, and it is tempting to read it as
+the bridge, but its statement is `Over (op X) ≌ (Under X)ᵒᵖ` **inside one category** — at
+`X := k` that is a statement about `CommRingCat`, not about `Scheme`. Crossing to
+`Over (Spec k̄)` additionally needs `AffineScheme.equivCommRingCat` and the identification of
+`(Under k)ᵒᵖ` with affine `k`-schemes, which `SymPowColimit.lean` §5 lists as its *first*
+unbuilt bridge and which nothing in this cone supplies. So the affine chain cannot feed the
+capstone today even for an affine curve — a second gap beside the gluing, and the one whose
+absence is disguised by a plausibly-named mathlib lemma.
 
 ## References
 
