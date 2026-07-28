@@ -1,39 +1,48 @@
-All four archives landed on disk; every standing protection and every human-addressed item is untouched. Here is the pass.
+Hygiene pass complete. Everything you asked me to fold in is verified, and one of your two extra checks turned up a live defect that I fixed.
 
-## Answers to your four warnings
+## Your two extra checks
 
-**1. Roadmap active count (18 vs 8) — I-0509 still applies, verified not assumed.** I probed all eight `runs/*/process.json` pids with `kill -0`; all eight alive (`ajc-pic0av`, `ajc-fbc`, `ajc-albanese`, `ajc-rr`, `ajcr-cert-r2`, `ajcr-divrep`, `ajcr-charts`, `ajcr-w5-av`). 10 rows held directly, 7 active ancestors. **But the recipe as written flags one spurious leftover, `AJC.fbc`**: it has `owner: None`, yet live task `ajc-fbc` lists it in its `roadmap_refs` and its child carries `owner: ajc-fbc`. Cross on the **union** of `metadata.owner` and live tasks' `roadmap_refs` and the leftover is zero. Recorded as I-0509 C-0009 — this is the eighth consecutive "all legitimate", now with the method fixed.
+**1. The second rewrite of `AJC.pic0av.identity` landed correctly — but the PARENT still carried the retracted claim, and I fixed it.**
 
-**2. AJC.picrep / .tensor — the human route call has NOT been answered.** `I-0640` and `I-0605` both have **zero comments**, and there is no human-authored comment anywhere in the store after 12:00. Two of three children were resolved by `ajc-rr` at 14:54 (`.quot`/`.serre` → `rejected`), so the warning shrank from three children to one. `.tensor` is genuine open work ("prove the canonical pullback tensor comparison is an isomorphism…") under a `done` parent — exactly the question awaiting the human. Recorded as I-0638 C-0003; I touched no picrep row.
+`AJC.pic0av.identity` on disk (updated 18:14:48, 2,682 chars) is the corrected version: contains "reports sorryAx", does not contain "is PROVED", and carries the explicit retraction — *"An earlier version of this row said 'PROVED'; that was wrong and the axiom probe caught it. The dimension BRIDGE underneath is axiom-clean."* Pins `[b9bfa997f, b653ef4d6, 6b1ed2604]`, both new ones present.
 
-**3. AJC.jacobian.assembly — artefact, not a completion.** I checked the five obligations its summary names; all five exist as open statements at HEAD (`fgaPicardRepresentability` at `FGAPicRepresentability.lean:339`, `Pic0Et.geometricallyReduced` at `Pic0Et.lean:170`, `universallyClosed` at `Pic0AbelianVariety.lean:1326`, and the two leaves at `Jacobian.lean:407`/`:524`). The row's own summary states the mismatch is deliberate and must not be "fixed" — the parent is the assembly step, not a container. **I changed nothing on this row** (it is not yours either). The warning is the CLI's parent/child heuristic misreading a legitimate state.
+`AJC.pic0av` (the parent) did **not** pass. Line 24 still read *"the >= half is now proved from the identity alone"* — the exact claim `48eea9212` retracted. I rewrote it via `--summary-file` and read it back from disk (now 2,148 chars, updated 18:21:01): the `≥` half is described as REDUCED to front (a), REPORTING sorryAx from the cocycle comparison at `Pic0AbelianVariety.lean:805`, with only the dimension bridge axiom-clean, and the retraction attributed to `48eea9212`. This is your own I-0616 pattern: the retraction landed on the child and the Lean docstring, and the parent row was the third place a reader looks.
 
-**4. Inbox counts — I-0641/I-0551 hold.** Non-protection open **113 → 114**, memory **62 → 64**. I archived 4 and the fleet filed 7 during the pass (I-0650…I-0656). No standing protection archived.
+**2. No scratch or probe file reached HEAD.** All six commits (`b9bfa997f`, `476236c3b`, `b653ef4d6`, `5dca5e7cc`, `b5ceb8ff0`, `48eea9212`) resolve in the ledger; a combined `show --name-only` over all six matches nothing on `scratch|probe|pic0dim_r5`. `ls-tree -r HEAD` over the project returns only the legitimate `scripts/axiom-frontier.lean`. The 18 probe files still on disk are all `.gitignore`-matched (`check-ignore` confirms both the `*Probe*.lean` and `/probe_*.lean` rules fire), so the case-sensitivity hole is genuinely closed.
+
+## Verdict on your four warnings
+
+**Roadmap active count (18 vs 8) — I-0509 still applies, verified at the current lane count.** All eight `runs/*/process.json` pids probed with `kill -0`; all eight alive. 10 rows held directly, 7 active ancestors. The recipe as written flags one spurious leftover, `AJC.fbc`: `owner: None`, but live task `ajc-fbc` lists it in `roadmap_refs` and its child carries `owner: ajc-fbc`. **Cross on the union of `metadata.owner` and live tasks' `roadmap_refs`** and the leftover is zero. Eighth consecutive "all legitimate", method fixed — I-0509 C-0009.
+
+**AJC.picrep.tensor — the human route call is NOT answered.** I-0640 and I-0605 both have zero comments and there is no human-authored comment anywhere in the store after 12:00. The warning shrank from three children to one (`ajc-rr` set `.quot`/`.serre` to `rejected` at 14:54). `.tensor` is genuine open work under a `done` parent — the exact question awaiting the human. Recorded as I-0638 C-0003; no picrep row touched.
+
+**AJC.jacobian.assembly — artefact, not a completion.** All five obligations its summary names exist as open statements at HEAD (`fgaPicardRepresentability` `:339`, `Pic0Et.geometricallyReduced` `:170`, `universallyClosed` `:1326`, and the two `Jacobian.lean` leaves `:407`/`:524`). The row's summary states the mismatch is deliberate. **I changed nothing on this row** — not yours, not mine.
+
+**Inbox counts — I-0641/I-0551 hold.** Non-protection open 113 → 126, memory 62 → 69 over the pass. I archived 4; the fleet filed ~19 (through I-0670). No standing protection archived; I-0491, I-0074, I-0492, I-0647 all verified `open`.
 
 ## What I changed
 
-- **Archived 4, each with a verification comment first** (per I-0609, state change then comment): **I-0532** (`degree` is a real definition at `IdentityComponent.lean:1702`, false clause retracted at both named sites), **I-0635** (superseded by I-0651 — `cech_flatBaseChange_oneLeaf` landed, residue went 2 sorries → 1), **I-0585** (correction landed at both `GroupSchemeSmoothAlgClosed.lean:50-66` and `Pic0AbelianVariety.lean:1164-1178`, and turned into the theorem `geometricallyReduced_of_isReduced_algebraicClosureBaseChange`), **I-0589** (superseded by I-0627, same lane, same finding, three hours apart).
-- **Commit `99a9745e1`** (survives at HEAD, verified after two later commits): retracted the `topologicalKrullDim` pricing in `/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/hgraph/nodes/40f8673046ce.md`, which still carried the whole paragraph your `5dca5e7cc` retracted in the Lean source — the I-0616 pattern at graph scale. Also re-measured the AJC README counts (257/153,196 → **264/155,729**).
-- **I-0656** (new `[persistent]` memory): the stale-index repair method.
+- **Archived 4, verification comment first each time** (per I-0609): **I-0532**, **I-0635** (superseded by I-0651), **I-0585**, **I-0589** (superseded by I-0627).
+- **Roadmap `AJC.pic0av`** summary corrected, read back from disk.
+- **Commit `99a9745e1`**: retracted the stale `topologicalKrullDim` pricing in `/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/hgraph/nodes/40f8673046ce.md`; re-measured AJC README counts (257/153,196 → 264/155,729).
+- **Commit `a8f1885b5`** — a self-correction. My own `99a9745e1` was written from the source as it stood, which was *before* `48eea9212`, so my fix re-introduced the `">= is PROVED"` claim one commit after you removed it. The node now matches `IdentityComponent.lean:1819-1830`. The lesson, turned on the janitor: **read the latest commit touching the claim, not the file.** Both commits verified: exactly the named files, zero collateral Lean changes.
+- **I-0656** (new `[persistent]` memory) + a recurrence comment.
 
-## The thing worth your attention
+## The finding worth your attention
 
-`I-0654` (from `ajc-rr`) warned that one file of yours was armed for silent revert. **It was five, and I repaired all five.** Crossing `diff --cached HEAD` against `diff HEAD` per path separates armed (index stale, disk matches HEAD) from another lane's live work (both differ): 9 stale entries, 5 armed, 4 not.
+`I-0654` reported one file of yours armed for silent revert. Across two sweeps I found and cleared **eleven**, ~366 staged deletions against files whose disk content matched HEAD:
 
-Armed: `Picard/Pic0Dimension.lean` (−13, yours), **`scripts/axiom-frontier.lean` (−16, the standing measurement record)**, and 176 lines across three AJCR worksheets (`spec-dd-r.md` −87, `w5-t4-worksheet.md` −61, `protocol-concurrent-lanes.md` −28). Cleared with `git reset -q HEAD -- <paths>` — non-destructive, touches no working file. Note for your own discipline: a private-index CAS commit is safe for *your* commit but leaves the shared index armed, and **your newly-landed files then join the armed set** — I had to clear my own two after committing.
+- Sweep 1 (5): `Picard/Pic0Dimension.lean` (yours), **`scripts/axiom-frontier.lean`** (the standing measurement record), and 176 lines across three AJCR worksheets.
+- Sweep 2, ~20 min later (6): four AJCR Lean modules plus `spec-dd-r.md` and `w5-t4-worksheet.md` **re-armed inside the same pass**.
 
-## Your boundary maintenance
+Method: a path in `diff --cached HEAD` is armed iff it is *absent* from `diff HEAD` — index stale, disk matches. Paths in both are another lane's live work; I left those alone (9 stale → 5 armed in sweep 1, so treating the first list as the answer would have clobbered live work). Repair is `git reset -q HEAD -- <paths>`: non-destructive, touches no working file. Armed set is now zero.
 
-- **4 commits verified**, one file each, no probe files: `b9bfa997f`/`476236c3b` (`Picard/SchemeKrullDimStalk.lean`), `b653ef4d6` (`Picard/Pic0Dimension.lean`), `5dca5e7cc` (`Picard/IdentityComponent.lean`).
-- **No probe file of yours reached HEAD.** `ls-tree HEAD` over the project returns only `scripts/axiom-frontier.lean` (legitimate). The 18 probe files on disk — including your `probe_pic0dim_r5.lean` — are all matched by `.gitignore` (`check-ignore` confirms both the `*Probe*.lean` and `/probe_*.lean` rules fire). Both `scratch_pic0dim*.lean` are gone.
-- **Roadmap summaries landed intact, not truncated:** `AJC.pic0av` 1,910 chars / 30 lines, `AJC.pic0av.identity` 2,237 / 36, both ending on complete sentences and both naming the r5 commits.
-- **`AJC.rr.principal` is still `done`, pin intact:** `pinned_commits: [8b654f78d, 768b6cbd4]`, both resolvable in the ledger, `owner: ajc-pic0av`.
-- **Comments confirmed on disk:** I-0493 C-0089/C-0091/C-0094 (yours; C-0090/C-0092/C-0093/C-0095 are the sibling lanes), and task comment `ajc-pic0av/C-0009` at 16:25.
+Two things this implies for you: it is **per-commit hygiene, not a one-time repair**; and a private-index CAS commit protects your commit but leaves the shared index armed — **your newly-landed files then join the armed set**, which is exactly what happened to my two and why I cleared them after each commit. The I-0611 reply describing a `janitor(docs)` commit that reverted three Lean files is this hazard; my two commits avoided it.
 
-## Open items your work resolved that I left open, deliberately
+## Deliberately left open
 
-**I-0587 is the live one and I kept it open with the concrete next action** (comment added). Your two valuative theorems are correct at `Pic0AbelianVariety.lean:1377`/`:1403`, but the finding is about the *docstrings* and they still overstate: `:1341` says the route "needs no quasi-projectivity vocabulary at all" and `:1400` says it "replaces that residue". `grep interprovable` over the file returns two hits, both the `geometricallyReduced` correction at `:1173`/`:1222` — **nothing at the valuative site**. Mathlib carries the criterion as an equality (`UniversallyClosed.eq_valuativeCriterion`), so `Existence` and the open `universallyClosed` sorry at `:1326` are interprovable given the already-proved `QuasiCompact`. One paragraph, in the shape your file already uses at `:1164`.
+**I-0587 is the live one**, with the concrete next action in a comment: your two valuative theorems are correct at `Pic0AbelianVariety.lean:1377`/`:1403`, but the docstrings still overstate (`:1341` "needs no quasi-projectivity vocabulary at all"; `:1400` "replaces that residue"). `grep interprovable` returns two hits, both the `geometricallyReduced` correction — **nothing at the valuative site**, though mathlib carries the criterion as an equality so `Existence` and the open `universallyClosed` sorry at `:1326` are interprovable given the proved `QuasiCompact`. One paragraph, in the shape your file already uses at `:1164`.
 
-Also left open, correctly: **I-0531** (the duplicate `Scheme.one_le_coheight_of_ne_genericPoint` is still live — `WeilDivisor.lean:163` and `Milne33TransportLocal.lean:66`), **I-0533**, **I-0535**, **I-0627**, and **I-0645** (`audience: human`, outage repaired and verified — mathlib at `fabf563a7c9`, 8,176 oleans — but a prior pass deliberately left it for the human).
+Also left: **I-0531** (duplicate `Scheme.one_le_coheight_of_ne_genericPoint`, still live at `WeilDivisor.lean:163` and `Milne33TransportLocal.lean:66`), **I-0533**, **I-0535**, **I-0627**, and **I-0645** (`audience: human`; outage repaired and independently verified — mathlib at `fabf563a7c9`, 8,176 oleans — but a prior pass left it for the human).
 
-I did not start a competing build.
+I ran no competing build and never exported `GIT_DIR`/`GIT_WORK_TREE`.

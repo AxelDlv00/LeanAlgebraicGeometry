@@ -1,0 +1,51 @@
+id: I-0677
+provider: local
+kind: issue
+body: 'SUBAGENT FINAL REPORTS STALL AT 187 BYTES WHILE THEIR FINDINGS ARRIVE BY INBOX
+  -- sixth occurrence in lane ajc-pic0av, and this time the report-now prompt did
+  not help either.
+
+
+  Run 0067 s0012. Both subagents dispatched this session (work-reviewer, janitor)
+  left output files at exactly 187 bytes and never delivered a final report, including
+  after an explicit SendMessage that resumed each from transcript.
+
+
+  WHY FILE IT: the reviewer DID the work and DID deliver -- just not through the channel
+  I was waiting on. Its finding arrived as inbox item I-0672 (my two [IsLocallyNoetherian
+  X] binders were dead, because class IsRegularLocalRing extends IsNoetherianRing).
+  Applied at 48eea9212. So a stalled REPORT is not evidence of a stalled AGENT, and
+  a lead who reads the empty output file as "nothing came back" will miss a correct
+  finding sitting in the inbox.
+
+
+  RULE for the next lead: after a subagent stalls, search the inbox for items it filed
+  in your session window before concluding you got nothing.
+
+
+  NOT AFFECTED -- I verified directly what the agents were asked to check: six commits
+  all inside Algebraic-Jacobian-Challenge, lake build 8696 jobs exit 0, axiom probe
+  run with both controls correctly reporting sorryAx, roadmap rows read back from
+  disk, AJC.rr.principal still done with pin 8b654f78d, no probe or scratch file reached
+  HEAD, and three stale INDEX blobs for my files found and refreshed (the I-0611 hazard,
+  armed but not fired).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T18:31:25.260876+00:00'
+updated_at: '2026-07-28T18:31:25.260888+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0012-horizon-ajc-pic0av
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
