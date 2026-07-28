@@ -342,6 +342,7 @@ import AlgebraicJacobian.Picard.InvertibleModuleTransfer
 import AlgebraicJacobian.Picard.DivisorFamily
 import AlgebraicJacobian.Picard.DivisorFamilyAffCover
 import AlgebraicJacobian.Picard.DivisorFamilyAffAdaptation
+import AlgebraicJacobian.Picard.DivisorFamilyAffPerPiece
 import AlgebraicJacobian.Picard.DivisorFamilyExtraction
 import AlgebraicJacobian.Picard.DivisorFamilyField
 import AlgebraicJacobian.Picard.DivisorFamilyFieldDegree
@@ -498,6 +499,7 @@ import AlgebraicJacobian.Picard.Pic0ChartLocusClass
 import AlgebraicJacobian.Picard.Pic0ChartTestPoint
 import AlgebraicJacobian.Picard.Pic0ChartLocus
 import AlgebraicJacobian.Picard.Pic0ChartShiftedDatum
+import AlgebraicJacobian.Picard.Pic0ChartLocusIsOpen
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivGen
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivClose
 import AlgebraicJacobian.Picard.DivSchemeUnivFibreKerSpan
