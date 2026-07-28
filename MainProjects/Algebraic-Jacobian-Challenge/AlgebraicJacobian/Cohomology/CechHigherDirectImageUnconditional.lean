@@ -1981,8 +1981,18 @@ by `rfl`) the mate `canonicalBaseChangeMap h` of `Picard/QuotScheme.lean` — th
 the same `pullbackComp`/`pullbackCongr` 2-isomorphism — and `canonicalBaseChangeMap_isIso` proves
 that mate invertible at every quasi-coherent module for `[QuasiCompact f] [QuasiSeparated f]
 [Flat g]`, `sorry`-free.  So the only thing that had to be supplied here is *quasi-coherence of the
-degree-`n` Čech nerve object*, which is what `isQuasicoherent_pushPullObj_coverInter` and
-`isQuasicoherent_cechNerve_obj` below do.
+single-intersection-open push–pull object*, which is `isQuasicoherent_pushPullObj_coverInter` below;
+the degree-`n` object needs no separate quasi-coherence lemma, because
+`isIso_cechOuterBC_nerve_obj` splits the degree into its σ-factors *first*, via
+`isIso_app_of_iso_obj` and `isIso_app_pi_of_isIso_app`, and only then applies the mate theorem
+factorwise.
+
+(An earlier revision of this paragraph advertised a second lemma `isQuasicoherent_cechNerve_obj`
+"below".  **No such declaration exists, here or anywhere in the project** — I named a lemma the
+route does not need, inside the very note whose subject is an unchecked absence claim.  Found by a
+fresh-context reviewer, not by me.  The recorded failure mode is "docstring declaration lists are
+unchecked"; the cheap guard is to grep each advertised name and see it resolve to a `def`/`theorem`
+line rather than only to the docstring that promises it.)
 
 Why it was missed: this file's own docstring asserted that `Picard/QuotScheme` "is deliberately not
 imported because it carries `sorry`s".  That was false at HEAD — its whole five-module cone is
@@ -2021,17 +2031,20 @@ theorem isQuasicoherent_pushPullObj_coverInter (f : X ⟶ S) [IsSeparated f] [Is
     (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).hom _
 
 /-- **`IsIso` of a natural transformation transports along an isomorphism of the object.**
-If `α.app Z'` is invertible and `Z ≅ Z'`, then `α.app Z` is invertible: the naturality square at
-`e.hom` exhibits `α.app Z ≫ Q.map e.hom = P.map e.hom ≫ α.app Z'` with both outer maps isos.
+If `α.app Z'` is invertible and `Z ≅ Z'`, then `α.app Z` is invertible.
 
-Small, but it is the bridge that lets the per-σ product decomposition `pushPull_sigma_iso` be used
-on the *object* side of an `IsIso`-of-a-map obligation, where "an isomorphism with the right
-endpoints" is not enough.  Project-local. -/
+**This is mathlib's `CategoryTheory.NatTrans.isIso_app_iff_of_iso`, in its `.mpr` direction**, and
+it is kept only as a named one-directional abbreviation because it reads better at the single use
+site below.  An earlier revision of this docstring called it "the bridge that lets…" and gave it a
+four-line proof of its own; a fresh-context reviewer found the mathlib lemma, so the proof is now
+that lemma rather than a duplicate of it.  Do not treat this as project infrastructure.
+
+What it is *for*: the per-σ decomposition `pushPull_sigma_iso` is an isomorphism of *objects*, and
+the obligation is `IsIso` of a *map*, so the decomposition cannot be substituted directly — that
+gap is the "groups agree ≠ maps agree" error, and this lemma is what bridges it. -/
 theorem isIso_app_of_iso_obj {C D : Type*} [Category C] [Category D] {P Q : C ⥤ D} (α : P ⟶ Q)
-    {Z Z' : C} (e : Z ≅ Z') (h : IsIso (α.app Z')) : IsIso (α.app Z) := by
-  have hsq : P.map e.hom ≫ α.app Z' = α.app Z ≫ Q.map e.hom := α.naturality e.hom
-  haveI : IsIso (α.app Z ≫ Q.map e.hom) := by rw [← hsq]; infer_instance
-  exact IsIso.of_isIso_comp_right (α.app Z) (Q.map e.hom)
+    {Z Z' : C} (e : Z ≅ Z') (h : IsIso (α.app Z')) : IsIso (α.app Z) :=
+  (CategoryTheory.NatTrans.isIso_app_iff_of_iso α e).mpr h
 
 /-- **The outer mate is invertible at a single-intersection-open push–pull object.**  This is the
 per-σ obligation that `isIso_app_pi_of_isIso_app` reduces the degreewise one to, and it is a *direct
@@ -2958,14 +2971,17 @@ degree-`i` short complex of `Č•(𝒰, F)`.  In exchange, the homology half is
 `pullback_mapHC_homologyIso_of_isQuasicoherent` rather than `pullback_mapHC_homologyIso`, so
 `pullback_preservesMonomorphisms` does not appear in the proof term at all.
 
-**What this does and does not buy.**  It does *not* make flat base change axiom-clean: the second
-half, `cechComplex_baseChange_iso`, still carries a cosimplicial naturality `sorry` — as of run
-0068 r3 exactly one, `twisted_cech_nerve_iso`'s, since the S-level one is replaced by
-`cech_pushforward_baseChange_natIso_flat`; for both improvements at once use
-`cech_flatBaseChange_oneLeaf`.  What it does buy is that the
-*flat-exactness* leaf is no longer one of the reasons this theorem is unproved — the leak now has
-exactly one source instead of two, and that source is the Beck–Chevalley heart rather than a
-statement about arbitrary modules that nobody needs.
+**What this does and does not buy.**  It does *not* make flat base change axiom-clean.  Its second
+half is `cechComplex_baseChange_iso`, and that declaration still reaches **both** cosimplicial
+naturality `sorry`s — it is the `_flat` variant `cechComplex_baseChange_iso_flat` that reaches only
+`twisted_cech_nerve_iso`'s.  So for the one-leaf route use `cech_flatBaseChange_oneLeaf`, whose
+hypotheses and conclusion are identical to this theorem's.  (An earlier revision of this sentence
+said *this* declaration carried "exactly one" as of run 0068 r3: false of the declaration it named,
+true only of what the reader should use instead.  Caught by a fresh-context reviewer.)
+
+What this theorem does buy is that the *flat-exactness* leaf is no longer one of the reasons it is
+unproved — that source of the leak is gone, and what remains is the Beck–Chevalley heart rather than
+a statement about arbitrary modules that nobody needs.
 
 **`h₂`/`h₃` ARE NOW DISCHARGEABLE, and `cech_flatBaseChange_qcoh` below does it** — see
 `isQuasicoherent_cechComplex_X`.  Prefer that form; this one is kept because taking the two
