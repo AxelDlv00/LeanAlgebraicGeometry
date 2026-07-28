@@ -6,6 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import Mathlib
 import AlgebraicJacobian.Picard.FGAPicRepresentability
 import AlgebraicJacobian.Picard.GeometricallyConnectedSection
+import AlgebraicJacobian.Picard.DivDegree
 import AlgebraicJacobian.Genus
 
 /-!
@@ -1504,6 +1505,95 @@ class ClassDegree {k : Type u} [Field k] (C : Over (Spec (.of k)))
   nonempty_classDegree : Nonempty
     ((PicSharp.relPresheaf C).obj (Opposite.op (Over.mk (𝟙 (Spec (.of k))))) →+ ℤ)
 
+/-- **The pinned degree interface** — `ClassDegree` with the missing characterisation supplied,
+so that the chosen homomorphism *is* a degree rather than an arbitrary map. (Run 0067 r3.)
+
+`ClassDegree` above asks only for `Nonempty (… →+ ℤ)` and is therefore inhabited by the zero
+map with no hypothesis — machine-verified, see its docstring. This class is the repair, and
+the pin is taken **against the Abel map**, which is the one degree-carrying structure this
+project already owns sorry-free:
+
+* `classDegree` is the homomorphism (now *data*, not a `Nonempty`, so that consumers get the
+  same map rather than a re-chosen one);
+* `classDegree_abel` is the characterisation: on the class of `𝒪(D)` for a relative divisor
+  family of constant fibre degree `d`, the value is `d`. `PicScheme.abelMap` is
+  `abelMapWitness` (`Picard/FGAPicRepresentability.lean`, sorry-free), and
+  `DivFamily.ClassHasFiberDeg` is the constant-fibre-degree predicate of `Picard/DivDegree.lean`.
+
+WHY THIS PIN AND NOT THE `WeilDivisor.degree` ONE. Agreement with `Scheme.WeilDivisor.degree`
+on `𝒪(D)` — the characterisation the previous docstring named — needs a divisor-to-line-bundle
+comparison that this project does not have at the relative level; the Abel map *is* that
+comparison, already built and already carrying the degree ledger
+(`PicScheme.abelDeg_app_mk`, `DivFamily.ClassHasFiberDeg.finrank_fiber_cokernel`). So the pin
+is stated where the existing structure can discharge it.
+
+THE ACCEPTANCE TEST, run before landing this — the lesson of `ClassDegree`'s own collapse and
+of the parallel `SymPowData` defect (inbox I-0493, 2026-07-28) is that a class must be probed
+with the trivial witness, so: **the zero homomorphism no longer inhabits this class**, provided
+one nonzero fibre degree is realized on the trivial test object. Machine-checked as
+`classDegree_ne_zero_of_exists_pos_fiberDeg` below, which derives `False` from
+`classDegree = 0` together with a degree-`d`, `d ≠ 0` family. So the pin *demands* something,
+which is exactly what `ClassDegree` failed to do.
+
+AND THE LIMIT OF THAT TEST, stated because it is the honest state and it is easy to overclaim
+here. The refutation is *conditional on a producer*: it needs a `DivFamily C.hom (Over.mk 𝟙)`
+of nonzero constant fibre degree, and **this project has no producer of one** — grep finds no
+in-tree construction of a `DivFamily` at all, only hypotheses of that type. So what is
+established is that the pin is non-vacuous *as a statement about any curve carrying an
+effective divisor of positive degree*, not that it is non-vacuous unconditionally in this
+development. Exhibiting the producer (the divisor of a `k`-rational point, once one is given)
+is the remaining input, and it is a construction rather than a characterisation — which is a
+strictly better place for the residue than "the class demands nothing".
+
+Not made an instance, and no producer is claimed: this is the shape the degree map needs, with
+its acceptance test recorded beside it. -/
+class ClassDegreePinned {k : Type u} [Field k] (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] where
+  /-- The degree homomorphism on relative Picard classes over the base — *data*, so that all
+  consumers share one map. -/
+  classDegree :
+    (PicSharp.relPresheaf C).obj (Opposite.op (Over.mk (𝟙 (Spec (.of k))))) →+ ℤ
+  /-- **The pin**: on the Abel image of a relative divisor family of constant fibre degree `d`,
+  the homomorphism takes the value `d`. This is what makes `classDegree` a degree. -/
+  classDegree_abel : ∀ (d : ℕ)
+    (x : DivFamily C.hom (Over.mk (𝟙 (Spec (.of k)))))
+    (_hx : DivFamily.ClassHasFiberDeg d
+      (Quotient.mk (DivFamily.setoid C.hom (Over.mk (𝟙 (Spec (.of k))))) x)),
+    classDegree ((PicScheme.abelMap C).app
+      (Opposite.op (Over.mk (𝟙 (Spec (.of k)))))
+      (Quotient.mk (DivFamily.setoid C.hom (Over.mk (𝟙 (Spec (.of k))))) x)) = (d : ℤ)
+
+/-- **The acceptance test for `ClassDegreePinned`: the zero homomorphism is refuted.**
+(Run 0067 r3, and it is the check `ClassDegree` never had.)
+
+Given a relative divisor family of constant fibre degree `d ≠ 0` on the trivial test object,
+no inhabitant of `ClassDegreePinned` can have `classDegree = 0` — the pin forces the value at
+the Abel image to be `d`, and `0 ≠ d` in `ℤ`.
+
+This is what distinguishes the pinned class from `ClassDegree`, which the zero map inhabits
+unconditionally. Recorded as a theorem next to the class rather than left in a session note,
+so that the next reader can see the class demands something rather than take it on trust —
+the discipline the `ClassDegree` and `SymPowData` vacuity defects both taught (inbox I-0493).
+
+Note precisely what it is conditional on: the *existence* of the degree-`d` family is a
+hypothesis here, and this project has no producer of one. See the class docstring. -/
+theorem classDegree_ne_zero_of_exists_pos_fiberDeg {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom]
+    (d : ℕ) (hd : d ≠ 0) (x : DivFamily C.hom (Over.mk (𝟙 (Spec (.of k)))))
+    (hx : DivFamily.ClassHasFiberDeg d
+      (Quotient.mk (DivFamily.setoid C.hom (Over.mk (𝟙 (Spec (.of k))))) x))
+    (inst : ClassDegreePinned C) (h0 : inst.classDegree = 0) : False := by
+  have h := inst.classDegree_abel d x hx
+  rw [h0] at h
+  simp only [AddMonoidHom.zero_apply] at h
+  exact hd (Nat.cast_injective h.symm)
+
+/-! The pinned degree of a `k`-rational point, `degreeOfSectionPinned`, is defined below
+`classOfSection` (whose transport it consumes) — see the end of this section. -/
+
 /-- **The relative Picard class of a `k`-rational point of `Pic_{C/k}`** — sorry-free.
 
 Representability at the trivial test object `T = Spec k`. A section `lambda` of
@@ -1550,6 +1640,39 @@ theorem degreeOfSection_eq_zero_of_class_eq_zero {k : Type u} [Field k]
     (hclass : classOfSection C lambda hlambda = 0) :
     degreeOfSection C lambda hlambda = 0 := by
   rw [degreeOfSection, hclass, map_zero]
+
+/-- **The degree of a `k`-rational point, from the PINNED interface** — total, sorry-free, and
+unlike `degreeOfSection` it is pinned to an actual degree.
+
+Same construction as `degreeOfSection` (representability at the trivial test object, then the
+degree homomorphism), with two differences that matter:
+
+* the homomorphism comes from `ClassDegreePinned`, so it is *the* one satisfying the Abel
+  characterisation rather than an arbitrary choice out of a `Nonempty`;
+* consequently `degreeOfSectionPinned ≡ 0` is **not** a permitted reading — see
+  `classDegree_ne_zero_of_exists_pos_fiberDeg`.
+
+Consumers of `degreeOfSection` should migrate here as soon as the pinned class has a producer.
+Until then both are available and only this one is honestly called a degree. -/
+noncomputable def degreeOfSectionPinned {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C] [inst : ClassDegreePinned C]
+    (lambda : Spec (.of k) ⟶ (PicScheme C).left)
+    (hlambda : lambda ≫ (PicScheme C).hom = 𝟙 (Spec (.of k))) : ℤ :=
+  inst.classDegree (classOfSection C lambda hlambda)
+
+/-- The pinned degree of a `k`-rational point vanishes when its relative Picard class is
+trivial — `map_zero`, as for the unpinned version, but now of a map that is a degree. -/
+theorem degreeOfSectionPinned_eq_zero_of_class_eq_zero {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C] [inst : ClassDegreePinned C]
+    (lambda : Spec (.of k) ⟶ (PicScheme C).left)
+    (hlambda : lambda ≫ (PicScheme C).hom = 𝟙 (Spec (.of k)))
+    (hclass : classOfSection C lambda hlambda = 0) :
+    degreeOfSectionPinned C lambda hlambda = 0 := by
+  rw [degreeOfSectionPinned, hclass, map_zero]
 
 end PicScheme
 
