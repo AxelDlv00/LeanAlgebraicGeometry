@@ -428,7 +428,16 @@ So the honest shape of the remaining work is *not* "wait for mathlib to add sche
 quotients". It is: assemble a `Scheme.GlueData` from the affine quotients of
 `symPowData_affine`, which is the second half of Milne III.3 Proposition 3.1 and needs the
 compatibility of those quotients on overlaps. That is real work, but it is bounded and its
-inputs now exist. -/
+inputs now exist.
+
+**One sharpening, because it is exactly where the affine result stops.** `Scheme.Spec` is
+fully faithful and preserves limits, so the affine quotient's universal property transfers
+into `Scheme` *against affine test objects*. It does **not** transfer against an arbitrary
+scheme target: a morphism out of the quotient into a non-affine `T` is not detected by the
+affine story, and that is precisely the gap gluing closes. So "the affine case is proved"
+should be read as *the affine quotient exists and is `Spec` of the invariants*, not as *the
+symmetric power of an affine curve chart already satisfies the universal property Milne
+needs*. The second reading would be the over-claim, and it is the one to avoid. -/
 
 namespace AlgebraicGeometry
 
