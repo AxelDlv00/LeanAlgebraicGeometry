@@ -258,6 +258,7 @@ import AlgebraicJacobian.Albanese.GrpObjFoldSum
 import AlgebraicJacobian.Albanese.AVCommutative
 import AlgebraicJacobian.Albanese.AVSelfProduct
 import AlgebraicJacobian.Albanese.SymPowInterface
+import AlgebraicJacobian.Albanese.SymPowColimit
 import AlgebraicJacobian.Albanese.AlbaneseFromData
 import AlgebraicJacobian.Albanese.AlbaneseJacobian
 import AlgebraicJacobian.Albanese.Milne33Substeps
