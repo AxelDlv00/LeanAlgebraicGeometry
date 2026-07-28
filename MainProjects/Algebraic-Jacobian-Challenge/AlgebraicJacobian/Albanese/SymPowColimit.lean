@@ -409,7 +409,26 @@ is now
 
 — quotients of a scheme by a finite group action, absolute, no base and no curve
 hypotheses in sight. Which is the right shape for it: it is a general fact about schemes
-that mathlib is missing, not something specific to Milne III.6. -/
+that mathlib is missing, not something specific to Milne III.6.
+
+**What is and is not available for it, measured at this pin** (so the next session does not
+re-derive the search):
+
+* `HasCoproducts Scheme` — **available**. So the disjoint-union half of any glueing is free.
+* `HasCoequalizers Scheme`, `HasPushouts Scheme` — **not available**, neither synthesizes.
+  This is the actual obstruction: a colimit over `SingleObj G` is a coequalizer-type colimit,
+  and schemes do not admit them in general (the quotient of a scheme by an equivalence
+  relation need not be a scheme — cf. the standing caveat in inbox `I-0074` about
+  algebraic spaces).
+* `AlgebraicGeometry.Scheme.GlueData` — **available**, with `GlueData.openCover`. This is the
+  tool Milne's affine-and-glue route would use: build the affine quotients (done here, at
+  every `n`) and glue them along the standard open cover.
+
+So the honest shape of the remaining work is *not* "wait for mathlib to add scheme
+quotients". It is: assemble a `Scheme.GlueData` from the affine quotients of
+`symPowData_affine`, which is the second half of Milne III.3 Proposition 3.1 and needs the
+compatibility of those quotients on overlaps. That is real work, but it is bounded and its
+inputs now exist. -/
 
 namespace AlgebraicGeometry
 
