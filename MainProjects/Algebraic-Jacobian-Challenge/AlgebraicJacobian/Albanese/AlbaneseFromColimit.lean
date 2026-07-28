@@ -23,14 +23,23 @@ symmetric-power argument at all.
 * **no `SymPowData` argument** — the symmetric power is `symPowOfColimit C g`;
 * **no `hproj` argument** — the symmetry is discharged internally by
   `symPowOfColimit_proj_perm`, i.e. by `colimit.w`;
-* one typeclass hypothesis in their place:
-  `HasColimitsOfShape (SingleObj (Equiv.Perm (Fin g))) Scheme`.
+* one typeclass hypothesis in their place: `HasColimit (permDiagram C g)`.
 
 That hypothesis is the honest residue of the whole leg, and by
 `hasColimit_permDiagram_iff` it is *equivalent* to what the previous statement assumed —
-so nothing was strengthened in the trade. What it is not is a curve statement, a base
-statement, or a 2400-line construction scope: it is quotients of schemes by finite group
-actions, absolute.
+so nothing was strengthened in the trade.
+
+**Read the binder precisely, because an earlier draft of this file got it wrong.** It is
+`HasColimit (permDiagram C g)`: **one** diagram, for **this** curve and **this** `g`, in
+`Over (Spec k̄)`. It is *not*
+`HasColimitsOfShape (SingleObj (Equiv.Perm (Fin g))) Scheme` — that says every such diagram
+over every scheme has a colimit, which is strictly stronger, is *not* what
+`hasColimit_permDiagram_iff` covers, and is in fact believed **false** at this pin
+(`Albanese/SymPowColimit.lean` §6: schemes have no coequalizers in general, and a quotient
+by an equivalence relation need be only an algebraic space). A hypothesis nobody can satisfy
+would make this theorem vacuously true at every call site and its "single open obligation"
+undischargeable in principle. The per-diagram binder is satisfiable — one curve, one `g` —
+and is exactly the one the equivalence theorem names.
 
 ## What is still assumed, and why it is not this leg's debt
 
@@ -64,15 +73,16 @@ symmetric-power interface and its symmetry hypothesis are gone: the symmetric po
 symmetry is `colimit.w`.
 
 The remaining hypotheses are exactly Milne III.5.1(a)'s birationality data, unchanged from
-the sibling statement. The one typeclass hypothesis
-`HasColimitsOfShape (SingleObj (Equiv.Perm (Fin g))) Scheme` is this leg's single open
-obligation, and it is equivalent — not merely sufficient — to the datum previously
-assumed (`hasColimit_permDiagram_iff`).
+the sibling statement. The one typeclass hypothesis `HasColimit (permDiagram C g)` — the
+colimit of the `S_g`-action on `C^g`, for this curve and this `g` — is this leg's single
+open obligation, and it is equivalent, not merely sufficient, to the datum previously
+assumed (`hasColimit_permDiagram_iff`). See the module header for why the *shape-quantified*
+form would have been the wrong binder.
 
 Axiom-clean. -/
 theorem exists_unique_albanese_of_scheme_colimits
     {C : Over (Spec (.of kbar))} {g : ℕ}
-    [HasColimitsOfShape (SingleObj (Equiv.Perm (Fin g))) Scheme.{u}]
+    [HasColimit (permDiagram C g)]
     (P0 : 𝟙_ (Over (Spec (.of kbar))) ⟶ C) (i₀ : Fin g)
     {J A : Over (Spec (.of kbar))}
     [GrpObj J] [IsProper J.hom] [Smooth J.hom] [GeometricallyIrreducible J.hom]

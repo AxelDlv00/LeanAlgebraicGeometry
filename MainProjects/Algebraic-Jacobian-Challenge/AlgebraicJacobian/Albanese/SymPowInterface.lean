@@ -95,14 +95,16 @@ presentation of the object — Milne's affine-and-glue construction — and
   equivalence, so the identification loses nothing);
 * consequently `hproj` — the half that only `n = 1` witnessed here — is `colimit.w`, free
   at every `n`;
-* and the **affine** case of Milne III.3 Proposition 3.1 is *proved* at every `n`
-  (`symPowData_affine`), with `mem_sections_singleObj_iff` naming the carrier as `Spec` of
-  the invariant subring of the `n`-fold tensor power, i.e. Milne's `(A^{⊗n})^{S_n}`.
+* and the **affine algebra** case is *inhabited* at every `n`
+  (`symPowData_affineAlgebra`, in `(Under k)ᵒᵖ`), with no construction written. Note the
+  careful wording: that is the inhabitation statement, not a formalisation of Milne III.3
+  Proposition 3.1's affine half — identifying the carrier as `Spec (A^{⊗n})^{S_n}` is
+  expected but **not proved**. See that file's §5 header.
 
-What is genuinely still missing is the **gluing**: `HasColimitsOfShape (SingleObj
-(Equiv.Perm (Fin n))) Scheme`. So the boundary moved from a construction subproject to one
-instance about one named diagram, and — since `Over.forget` creates colimits — it is a
-statement about `Scheme` with no base and no curve in it.
+What is genuinely still missing is the **gluing**, as `HasColimit (permDiagram C n)` for the
+curve at hand. So the boundary moved from a construction subproject to one instance about
+one named diagram. (State it per-diagram, not as `HasColimitsOfShape … Scheme`: the
+quantified form is strictly stronger and believed false at this pin.)
 
 Also note the warning above is now *checked* rather than asserted: `permAut_swap_ne_id`
 exhibits `permAut ≠ 𝟙` at a transposition (in `Type`, at `Bool`, `n = 2`), so

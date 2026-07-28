@@ -313,6 +313,51 @@ theorem permAut_swap_ne_id :
     (fun (f : (Bool : Type) ⟶ (Bool : Type)) => ConcreteCategory.hom f true) h1
   simp at h2
 
+/-- **The general criterion: two distinct global points defeat the trivial datum.**
+
+If `C` has two distinct global points `p ≠ q : 𝟙_ K ⟶ C`, then `permAut C` at a
+transposition is not the identity — evaluate the two projections at the pair `(p, q)`.
+
+This is stated in an arbitrary cartesian monoidal `K`, so unlike `permAut_swap_ne_id`
+(which lives in `Type`) it applies **in `Over (Spec k̄)` at the actual curve**: a smooth
+proper geometrically irreducible curve over an algebraically closed field has more than one
+`k̄`-point, so the pair `(D, hproj)` is a non-trivial demand *where the Albanese theorems are
+instantiated*, not merely in a toy category.
+
+That distinction is the point of having this lemma as well as the `Type` witness: a
+non-vacuity argument has to be run in the category the application uses. -/
+theorem permAut_swap_ne_id_of_points {K : Type u} [Category.{v} K]
+    [CartesianMonoidalCategory K] [HasFiniteProducts K]
+    {C : K} (p q : 𝟙_ K ⟶ C) (hpq : p ≠ q) :
+    MonObj.permAut C (Equiv.swap (0 : Fin 2) 1) ≠ 𝟙 _ := by
+  intro hc
+  set t : 𝟙_ K ⟶ (∏ᶜ fun _ : Fin 2 => C) :=
+    Pi.lift (fun i : Fin 2 => if i = 0 then p else q) with ht
+  have h0 := congrArg (fun f => f ≫ Pi.π (fun _ : Fin 2 => C) 0) hc
+  simp only [MonObj.permAut_π, Category.id_comp] at h0
+  rw [Equiv.swap_apply_left] at h0
+  have h1 : t ≫ Pi.π (fun _ : Fin 2 => C) 1 = t ≫ Pi.π (fun _ : Fin 2 => C) 0 := by rw [h0]
+  rw [ht, Pi.lift_π, Pi.lift_π] at h1
+  simp at h1
+  exact hpq h1.symm
+
+/-- **And the converse boundary: at a terminal object the trivial datum *does* satisfy
+`hproj`.** `permAut C σ = 𝟙` whenever `C` is terminal, since any two morphisms into a
+terminal object agree.
+
+So the claim "the trivial datum fails `hproj` for `n ≥ 2`" is **false as a general
+statement about every `C`** — it is true exactly at objects with enough points to separate
+the projections (`permAut_swap_ne_id_of_points`). `SymPowInterface.lean`'s docstring
+originally made the unqualified claim; this pair of lemmas is the correction, and the
+qualification matters because a class satisfied by a trivial witness demands nothing. -/
+theorem permAut_eq_id_of_isTerminal {K : Type u} [Category.{v} K]
+    [CartesianMonoidalCategory K] [HasFiniteProducts K]
+    {C : K} (hC : IsTerminal C) {n : ℕ}
+    (σ : Equiv.Perm (Fin n)) : MonObj.permAut C σ = 𝟙 _ := by
+  refine Pi.hom_ext _ _ fun i => ?_
+  rw [MonObj.permAut_π, Category.id_comp]
+  exact hC.hom_ext _ _
+
 /-- **The trivial datum fails the symmetry hypothesis.** So `symPowDataTrivial` is not a
 witness for the pair `(D, hproj)` at `n = 2`, and the `SymPowInterface` header's
 contrastive claim is now a checked fact rather than a remark. -/
@@ -334,15 +379,30 @@ Two categories where `HasColimit (permDiagram C n)` is available with no new geo
 the pair `(D, hproj)` is inhabited **at every `n`**:
 
 * `Type u` — colimits of every shape;
-* affine `k`-schemes, presented as `(Under k)ᵒᵖ`. This is the affine case of Milne III.3
-  Proposition 3.1: dually the colimit is `Spec` of the ring of `S_n`-invariants of the
-  `n`-fold tensor power, which is exactly Milne's `Spec (A^{⊗n})^{S_n}`. Mathlib supplies
-  it through limits in `Under k`, so the affine half of that proposition needs no
-  construction here.
+* `(Under k)ᵒᵖ`, the opposite of the category of `k`-algebras. Mathlib supplies its colimits
+  as limits in `Under k`, so `symPowData_of_hasColimit` applies at every `n`.
 
-What is *not* here is the curve case: `Over (Spec k̄)` with `C` proper. The gluing of the
-affine quotients — the remaining half of Milne III.3.1 — is what would give that, and it
-is the honest boundary. -/
+**State this one carefully — an earlier draft of this header did not.** What is *proved* is
+that the pair `(D, hproj)` exists in `(Under k)ᵒᵖ` at every `n`. Two further things are
+*expected* and are **not** proved here:
+
+* that `(Under k)ᵒᵖ` is the category of affine `k`-schemes. Morally it is, via
+  `Over.opEquivOpUnder` and `AffineScheme.equivCommRingCat`, but no declaration below builds
+  that bridge;
+* that the resulting carrier is `Spec` of the `S_n`-invariants of the `n`-fold tensor
+  power — Milne's `(A^{⊗ n})^{S_n}`. `mem_sections_singleObj_iff` is the *reason to expect*
+  it (limits in `CommRingCat` are computed as sections, and a one-object diagram's sections
+  are its fixed points), but it is a statement about `SingleObj G ⥤ Type` and mentions
+  neither `CommRingCat` nor `Spec`. **The carrier is not named in Lean.**
+
+So read this section as: *the affine algebra case of the interface is inhabited at every
+`n`, from mathlib's colimits, with no construction written*. Not as: *Milne III.3
+Proposition 3.1's affine half is formalised* — that proposition also says what the object
+is, and identifying the carrier is unfinished work.
+
+What is likewise *not* here is the curve case: `Over (Spec k̄)` with `C` proper. The gluing
+of the affine quotients — the remaining half of Milne III.3.1 — is what would give that, and
+it is the honest boundary. -/
 
 namespace CategoryTheory
 
@@ -379,13 +439,18 @@ theorem symPowData_type (X : Type u) (n : ℕ) :
       MonObj.permAut X σ ≫ D.proj = D.proj :=
   symPowData_of_hasColimit X n
 
-/-- **Every `n`, for affine `k`-schemes** — the affine case of Milne III.3 Proposition 3.1.
+/-- **Every `n`, in the opposite of `k`-algebras** — the affine algebra case.
 
-`(Under k)ᵒᵖ` is the category of affine `k`-schemes; its colimits are limits in
-`Under k`, and dually the colimit of the permutation action on the `n`-fold coproduct is
-`Spec` of the invariant subring of the `n`-fold tensor power. Mathlib has both, so this
-holds with no construction. -/
-theorem symPowData_affine (k : CommRingCat.{u}) (X : (Under k)ᵒᵖ) (n : ℕ) :
+`(Under k)ᵒᵖ` has all colimits (they are limits in `Under k`), so the pair `(D, hproj)` is
+inhabited there at every `n`, with no construction written.
+
+**What this is and is not.** It is the inhabitation statement. It is *not* a formalisation
+of Milne III.3 Proposition 3.1's affine half, which also identifies the object: morally
+`(Under k)ᵒᵖ` is affine `k`-schemes (via `Over.opEquivOpUnder` and
+`AffineScheme.equivCommRingCat`) and the carrier is `Spec` of the invariant subring of the
+`n`-fold tensor power — but neither bridge is built here. `mem_sections_singleObj_iff` is
+the reason to expect the second; it is not a proof of it. See the §5 header. -/
+theorem symPowData_affineAlgebra (k : CommRingCat.{u}) (X : (Under k)ᵒᵖ) (n : ℕ) :
     letI : CartesianMonoidalCategory (Under k)ᵒᵖ := ofHasFiniteProducts
     ∃ D : SymPowData X n, ∀ σ : Equiv.Perm (Fin n),
       MonObj.permAut X σ ≫ D.proj = D.proj :=
@@ -402,14 +467,18 @@ construction to be an over-category one, with structure-map bookkeeping on top o
 quotient. It is not: `Over.forget` **creates** colimits, so a colimit of the permutation
 action in `Scheme` gives one in `Over (Spec k̄)` for free.
 
-That removes a whole layer from the remaining work. The single open obligation of this leg
-is now
+That removes a whole layer from the remaining work: the leg's single open obligation is
+`HasColimit (permDiagram C n)` — one diagram, for the curve at hand — and by
+`hasColimit_permDiagram_iff` that is exactly equivalent to the datum the Albanese theorems
+consume.
 
-  `HasColimitsOfShape (SingleObj (Equiv.Perm (Fin n))) Scheme`
-
-— quotients of a scheme by a finite group action, absolute, no base and no curve
-hypotheses in sight. Which is the right shape for it: it is a general fact about schemes
-that mathlib is missing, not something specific to Milne III.6.
+**Do not strengthen it to `HasColimitsOfShape (SingleObj (Equiv.Perm (Fin n))) Scheme`.**
+That form is tempting because it reads as "schemes have finite-group quotients", but it is
+strictly stronger, it is *not* what the equivalence covers, and by the availability table
+below it is believed false at this pin — so a theorem carrying it would be vacuously true
+and its obligation undischargeable in principle. The per-diagram binder is satisfiable and
+is the honest residue. `symPowData_over_of_scheme_colimits` below is stated with the
+quantified form deliberately, as a *sufficient* condition and nothing more.
 
 **What is and is not available for it, measured at this pin** (so the next session does not
 re-derive the search):
@@ -426,7 +495,7 @@ re-derive the search):
 
 So the honest shape of the remaining work is *not* "wait for mathlib to add scheme
 quotients". It is: assemble a `Scheme.GlueData` from the affine quotients of
-`symPowData_affine`, which is the second half of Milne III.3 Proposition 3.1 and needs the
+`symPowData_affineAlgebra`, which is the second half of Milne III.3 Proposition 3.1 and needs the
 compatibility of those quotients on overlaps. That is real work, but it is bounded and its
 inputs now exist.
 
@@ -450,7 +519,14 @@ open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 The transfer is free: `Over.forget` creates colimits, so no compatibility with the
 structure morphism has to be checked. Compare `Albanese/AlbaneseFromData.lean`'s
 `comp_hom_of_descent_eq`, where the analogous crossing for the *descent* datum also turned
-out to be automatic. -/
+out to be automatic.
+
+**This hypothesis is SUFFICIENT, not the leg's residue.** It is the shape-quantified form,
+strictly stronger than `HasColimit (permDiagram C n)` and believed false at this pin (§6),
+so this theorem is probably vacuous as stated. It is kept because the *implication* is the
+content — it is what shows the over-category layer costs nothing — and it is stated in the
+strong form because that is the form in which "schemes have finite-group quotients" would
+arrive. The obligation to discharge is the per-diagram one. -/
 theorem symPowData_over_of_scheme_colimits {kbar : Type u} [Field kbar]
     (C : Over (Spec (.of kbar))) (n : ℕ)
     [HasColimitsOfShape (SingleObj (Equiv.Perm (Fin n))) Scheme.{u}] :
