@@ -141,30 +141,64 @@ the row's own step-6 typing gap is diagnosed (see the §1.2 amendment).**  Lande
 |---|---|---|
 | step 1, splitting with the twist carried | `picEtAffineEquiv_map_chartTwistFactor_eq_unit` | `Picard/Pic0ChartTwistSplit.lean` |
 | the `chartLocus` intro rule | `isSplitWitness_of_witness_twistClass` | same |
-| steps 2–4, degree of the presenting class | `classDeg_chartTwistClass_baseChange`, `classDeg_of_presenting` | `Picard/Pic0ChartCoverageDegree.lean` |
+| steps 2–4, twist factor's degree | `classDeg_chartTwistClass_baseChange` | `Picard/Pic0ChartCoverageDegree.lean` |
 | step 6, chart index base change — **HALF: transport upward from a `k`-point only** | `graphPicClass_base_of_field`, `classDeg_graphPicClass_base` | `Picard/Pic0ChartRationalGraph.lean` |
+| **step 2 proper** (`classDeg L M = degAt λ t`) | `classDeg_presenting_eq_degAff`, `classDeg_presenting_eq_zero`, `classDeg_presenting_twist_eq_add` | `Picard/Pic0ChartCoverageDegreeStep2.lean` |
+| its missing brick, unconditional in `L/K` | `PicEtAff.degAff_map` | `Picard/DegreeZeroBaseField.lean` |
+| **coverage, drop-free** (supersedes the step-6 route) | `mem_chartLocus_of_witness_h1`, `mem_chartLocus_of_vanishing_bound` | `Picard/Pic0ChartCoverageNoDrop.lean` |
 
-**WHAT B-5 STILL OWES — corrected 2026-07-28 later the same session (issues I-0614, I-0615),
-after a degree probe and a fresh-context review each refuted part of the paragraph that stood
-here.  It claimed steps 1/2/4/5/6 discharged and step 3 the sole residue.  THREE residues:**
+`classDeg_of_presenting` was in this table as a step-2 input; it is **not** one (its right-hand
+side reads the degree at `L`, not at `K`) and it has no consumers.  See its own docstring.
 
-1. **step 3 — the twist exponent `m`**, chosen against the fibre's OWN DAT-0a bound.  No uniform
-   `m₀` exists (§0.2.2, I-0204), so this is irreducibly a per-fibre `∃ m` and no formulation can
-   produce it for a caller.  (This was correctly identified.)
-2. **step 2 — the degree of the presenting class.**  `classDeg_of_presenting` relates
-   `classDeg L M` to the plus-class degree **at `L`**, while the coverage argument holds it at
-   `K`.  Bridging them needs **base-field invariance of `degAff` under `PicEtAff.map`**, which
-   does not exist in the tree (measured: nothing matches it).  Small, real, shaped like the
-   landed `degAff_baseFieldShuffle` (`Picard/Pic0ThetaAssembly.lean:67`).
-3. **step 6 — the FEEDBACK.**  The drop runs at `Z := 0` (where `chartTwistClass C m 0 = θᵐ`,
-   degree `m·d₁`, so the budget `e = m·d₁ − g` is nonzero); its output `Σ` is then the chart
-   index's `Z`, at which the twisted degree is `g`.  **One `Z` is an input and the other an
-   output**, and the landed graph transport goes upward from a `k`-point rather than from the
-   `L`-level `Σ` the drop produces.  Machine-derived: under the single-`Z` reading the hypothesis
-   pack forces `e = 0`, i.e. a zero drop budget.
+**WHAT B-5 STILL OWES — corrected TWICE on 2026-07-28.  Current state: ONE residue, and it is
+step 3, which is also now derived rather than chosen.**
 
-Steps 1, 4 and 5 are discharged.  None of the three residues is `divRep`- or certificate-gated;
-all three are statements about the fibre curve over `L` or the `k`-level index.
+History matters here because two of the three residues were removed by *reading the predicates
+more carefully*, not by proving anything about the drop:
+
+1. **step 3 — the twist exponent `m`.**  STILL the residue, and irreducibly so as an `∃ m`: no
+   uniform `m₀` exists (§0.2.2, I-0204).  **But it is no longer a CHOICE the coverage proof must
+   make.**  `mem_chartLocus_of_vanishing_bound`
+   (`Picard/Pic0ChartCoverageNoDrop.lean`) takes the DAT-0a threshold `b_L` in exactly the shape
+   `exists_bound_subsingleton_hModule_one_of_isFinite_toP1`
+   (`RiemannRoch/UniformVanishing.lean:71`) produces it, so what remains is *instantiating DAT-0a
+   at the base-changed curve* `C_L`.
+2. **step 2 — DISCHARGED (run 0072 s0008).**  The missing brick was base-field invariance of
+   `degAff` under `PicEtAff.map`; it is `PicEtAff.degAff_map`
+   (`Picard/DegreeZeroBaseField.lean`) and is **unconditional in `L/K`** — no finiteness, no
+   separability, no algebraicity, which the `degAff_baseFieldShuffle` analogy did not predict.
+   Two prices the prediction expected were not paid: the `L/K` step is free because
+   `relPicDeg_relPicAlgMap` (E-iv-alg descended) needs only a `k`-algebra map of *fields*, and
+   `relPicAlgMap_congr` is not needed at all because
+   `EtaleCover.baseChangeMap_comp_baseChangeInclude` makes the two `K`-algebra maps out of the
+   cover carrier *literally equal*.  The one genuine constraint is that the common reading field
+   must be built from the `K`-side one (a field factor of `L ⊗_K N`), since for `K = ℚ`,
+   `N = ℚ(i)`, `L = ℝ` no `K`-embedding of `N` into an arbitrary finite separable `P/L` exists.
+   Step 2 itself is `classDeg_presenting_eq_zero`, and the twisted ledger closes to `g + e` at
+   `classDeg_presenting_twist_eq_add` (`Picard/Pic0ChartCoverageDegreeStep2.lean`).
+3. **step 6 — RETRACTED, i.e. NOT NEEDED rather than not discharged (run 0072 s0008).**  The
+   feedback diagnosis below is *correct about the route through the drop*, and its arithmetic
+   stands.  What was wrong is treating the drop as necessary.  **`IsSplitWitness` asks for
+   `h¹ = 0` and for NEITHER effectivity NOR degree `g`** (its own docstring says so at length,
+   and the tree's GAP-6 dictionary cannot see either property).  The greedy drop exists to
+   manufacture exactly those two, and membership of `chartLocus` throws them away — visible in
+   `mem_chartLocus_of_drop`'s own proof, whose split-witness half never mentions the drop, the
+   oracle, `g`, `e`, `hχ` or `hdeg`.  So cut the drop and there is **one `Z`** — the chart
+   index's — and nothing to feed back.  `mem_chartLocus_of_witness_h1` strictly generalises the
+   membership half with the whole apparatus deleted.
+
+   *The superseded diagnosis, kept because it is true of the drop route:* the drop runs at
+   `Z := 0` (`chartTwistClass C m 0 = θᵐ`, degree `m·d₁`, budget `e = m·d₁ − g` nonzero); its
+   output `Σ` would be the chart index's `Z`, at which the twisted degree is `g`; one `Z` is an
+   input and the other an output, and under the single-`Z` reading the pack forces `e = 0`.
+
+Steps 1, 4 and 5 are discharged.  The remaining residue is not `divRep`- or certificate-gated.
+
+**Where the discarded properties DO matter, so that nothing is smuggled away:** effectivity and
+the `h⁰ = 1` normalisation are needed by DAT-C's canonical section and by GAP-2's uniqueness
+(`Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one`, which takes `0 ≤ D`) — i.e. by the chart
+map's *injectivity*, not by coverage.  `mem_chartLocus_of_drop` remains the right theorem there
+and still returns them.
 
 ### §0.6 Standing context
 
@@ -297,6 +331,21 @@ Two findings, both measured:
 check `deg_k Z = m·d₁ − g` there **once**, and transport by E-iv-alg — the degree then holds at
 every fibre field with no per-field computation, honouring I-0204 (ledger constants do not
 cross).  Never transport a coefficient function.
+
+**SECOND AMENDMENT, later the same day (run 0072 s0008) — STEP 6 IS NOT NEEDED FOR COVERAGE AT
+ALL, so the amendment above is solving a problem the proof does not have.**  Both findings above
+stand as stated (there is no `CurveDivisor` base change; the class-level route is the right one
+if you need it).  What is now retracted is the *premise* that COV-1 must get `Σ` from the drop:
+
+`IsSplitWitness` asks for a divisor in the presenting class with `h¹ = 0`, and for **neither
+effectivity nor degree `g`**.  Steps 4–6 exist to produce an effective drop divisor with
+`h⁰ = 1`; coverage discards all of it.  So COV-1 runs with the chart index's own `Z` throughout,
+one `Z`, and needs no packaging step: `mem_chartLocus_of_witness_h1` /
+`mem_chartLocus_of_vanishing_bound` (`Picard/Pic0ChartCoverageNoDrop.lean`).
+
+Steps 4–6 remain the right route for **DAT-C's canonical section** and **GAP-2 uniqueness**,
+which do need `0 ≤ W` and `h⁰ = 1`.  Read §1.4/§1.5/§1.6 as serving the chart map's injectivity,
+not its coverage.
 
 ### §1.3 What is spent where (the parent's clause map)
 
