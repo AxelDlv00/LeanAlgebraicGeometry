@@ -131,8 +131,24 @@ re-proves any of it.
   `Cohomology/DatumDescent.lean:514`, engine open `Cohomology/GluedSheafEngine.lean:221`).
 * Gated on DAT-C names only (their C5, launchable now on their plan): **B-5** (the
   pointwise coverage theorem).
-* Gated on divRep(F7)+CERT-Σ through DAT-C's C9: **B-6** (the `IsLocallySurjective`
-  instance + DAT-glue handoff) — the ONLY row of this plan that waits for `divRep`.
+* ~~Gated on divRep(F7)+CERT-Σ through DAT-C's C9: **B-6** (the `IsLocallySurjective`
+  instance + DAT-glue handoff) — the ONLY row of this plan that waits for `divRep`.~~
+  **RETRACTED AND CLOSED 2026-07-29 (run 0072, lane `ajcr-charts`).**  B-6 waited on nothing
+  `divRep`-side.  It is `isLocallySurjective_sigmaDesc` (`Picard/Pic0ChartLocalSurjectivity.lean`)
+  from the coverage hypothesis `ChartsCoverLocally`, and its whole content beyond B-5 is that
+  `Sigma.desc`'s image sieve contains each chart's — no cross-chart compatibility, no
+  injectivity.  **And the bridge from B-5's actual output to that hypothesis is now written**
+  (`Picard/Pic0ChartCoveragePointwise.lean`): `ChartsCoverLocally` is a Grothendieck-topology
+  membership while the geometry is pointwise, and `chartsCoverLocally_of_pointwise` closes the
+  gap from four things at a point (an open `W ∋ t`, an index, a chart point over `W`, and the
+  class equation).  `isLocallySurjective_sigmaDesc_of_pointwise` is B-5 ⟹ B-6 in one step, and
+  `pointwise_of_chartsCoverLocally` is the converse, so the pointwise form is not a
+  strengthening chosen for provability.
+
+  **The transferable fact, and it reshapes step 3 below**: the per-point index costs
+  *nothing*.  A supremum sieve never asks its members to agree, so the chart-parameter
+  heterogeneity recorded under step 3 is not an obstruction to *coverage* — only to the atlas
+  being inhabited (`mixedParamChart`'s `rep i`).
 
 **B-5 STATUS 2026-07-28 (run 0072, lane `ajcr-charts`): three of its inputs are now Lean, and
 the row's own step-6 typing gap is diagnosed (see the §1.2 amendment).**  Landed this pass:
@@ -277,11 +293,33 @@ where `ChartIndex C := (m : ℕ) × {Σ : (C ⊗ overSpec k k).left.CurveDivisor
 obligation is: for every `T : Scheme`, every section `(a, λ)` of `pic0SigmaFunctor C`
 over `T` (`Pic0SigmaSheaf.lean:125`-region; `λ ∈ pic0Subgroup C (Over.mk a)`), the
 sieve of maps along which `(a, λ)` becomes a chart value contains an open cover of
-`T`.  By CHART-U(c) (w4-datc §3.3 — on `chartLocus c λ` the class IS a chart value,
-through the classified normalized family), the covering family can be taken to be the
-chart loci themselves, so the instance follows from §1.2 + CHART-U(b)+(c).  The
-Σ-component bookkeeping (`a` restricted along the loci) is the landed
-`Over.sigmaExtension` calculus (`Picard/OverSigmaExtension.lean:118-125`).
+`T`.
+
+**LANDED 2026-07-29, and the sentence that used to close this paragraph OVER-ATTRIBUTED**
+(lane `ajcr-charts`, `Picard/Pic0ChartLocalSurjectivity.lean` +
+`Picard/Pic0ChartCoveragePointwise.lean`).  It read: "By CHART-U(c) (w4-datc §3.3 — on
+`chartLocus c λ` the class IS a chart value, through the classified normalized family), the
+covering family can be taken to be the chart loci themselves, so the instance follows from
+§1.2 + CHART-U(b)+(c)."  Three corrections, and they are what make the instance *available*:
+
+1. **The instance needs neither CHART-U(b) nor CHART-U(c).**  It needs the covering family to
+   consist of *some* opens on which the class is a chart value — not the chart loci, and not
+   the maximal such open.  So the openness of `chartLocus` (b) and the universal element on it
+   (c) are inputs to the **`hf`** half of `pic0RepresentableByOfCharts`, not to this half.
+2. **What it does need is a cover construction, and that was the missing step.**
+   `ChartsCoverLocally` (the sieve statement) follows from *pointwise* data —
+   for each `t : T`, an open `W ∋ t`, an index, a chart point over `W`, and the class equation
+   — by `chartsCoverLocally_of_pointwise`, whose cover is `{W t}` **indexed by the points of
+   `T`**.  Indexing by points is what avoids needing quasi-compactness, which no row assumes.
+3. **The Σ-component is not only bookkeeping, though it is free.**  A section over a *bare*
+   `T` is the pair `⟨a, λ⟩` and `(Over.mk a).left` is `T` **definitionally**, so no transport
+   is needed to read `chartLocus` at a point of `T` — but matching a chart value against
+   `⟨a, λ⟩` is *two* equations, the Σ-component before the class, and
+   `abelChartApp_eq` (`Picard/Pic0ChartCoverageAbel.lean`) states both.
+
+So the instance follows from **§1.2 in its pointwise form alone**:
+`isLocallySurjective_sigmaDesc_of_pointwise`.  The converse
+(`pointwise_of_chartsCoverLocally`) holds, so nothing was strengthened to get there.
 
 ### §1.2 (COV-1) the pointwise coverage theorem — DAT-B's keystone
 
@@ -690,10 +728,18 @@ defs, maxRecDepth near window defeq, no two-level `letI` algebra towers).
 | B-3 | `Picard/DivisorFamilyFieldSurj.lean` | §1.7: `exists_divFam_divFamDivisor_eq`, unconditional `divFamFieldEquiv`, the field DivScheme-point corollary | M→L | none (F4 landed) | **NOW** |
 | B-4 | ~~`Picard/Pic0ChartLocusOpen.lean`~~ → **landed as `Pic0ChartLocus{,IsOpen,Split,TwistCollapse}.lean`** | §1.6: the split predicate (a-amendment) **DONE** (`IsSplitWitness`, plus the unconditional `exists_splitting_of_picEt`); `isOpen_chartLocus` assembled conditionally and now **sorry-free**; the twist collapse retracts the GAP-1 gate | M→L | ~~co-sign~~ **acknowledged**; ~~residue is DAT-C GAP-1's mul/tensor half~~ residue is the pointwise `IsChartDatumPresentation` ONLY | **partly done 2026-07-28** |
 | B-5 | `Picard/Pic0Coverage.lean` | §1.2: `pic0_chartLocus_cover` (COV-1) at the `K_s` instantiation | M→L | B-1, B-2, ~~B-4(a-part)~~ **available**, DAT-C C5 (`chartValue`/`sigmaFamily` names — landed) | **NOW** — `chartLocus` exists, so the statement is expressible |
-| B-6 | `Picard/Pic0CoverageSurj.lean` | §1.1 instance + §3.3 export + the §2 consumption-map docstring | M | B-4, B-5, DAT-C C9 (CHART-U(c) — gated on divRep F7 + CERT-Σ) | no |
+| B-6 | ~~`Picard/Pic0CoverageSurj.lean`~~ → **landed as `Pic0ChartLocalSurjectivity.lean` + `Pic0ChartCoveragePointwise.lean`** | §1.1 instance + §3.3 export | M | ~~B-4, B-5, DAT-C C9~~ **B-5 ONLY, and only in its pointwise form** | **DONE 2026-07-29** |
+
+**THE B-6 DEPENDENCY COLUMN WAS WRONG IN TWO PLACES**, both retracted 2026-07-29 (lane
+`ajcr-charts`).  It listed B-4 and DAT-C C9 (hence divRep F7 + CERT-Σ).  Neither is an input:
+`isLocallySurjective_sigmaDesc` needs only `ChartsCoverLocally`, and
+`chartsCoverLocally_of_pointwise` needs only pointwise coverage — no openness of `chartLocus`
+(the `W` of the pointwise datum may be *any* open neighbourhood), no `IsChartUniv`, no
+certificate.  B-4 and C9 are inputs to the **charts** side of the DAT-glue seam (`hf`), not to
+the coverage side; the row conflated the two halves of `pic0RepresentableByOfCharts`.
 
 Lane order under the memory constraint: B-1 ∥ B-2 ∥ B-3 (light, disjoint imports) →
-[co-sign note] → B-4 → B-5 → [DAT-C C9 lands] → B-6.  **Three of six rows are
+[co-sign note] → B-4 → B-5 → ~~[DAT-C C9 lands]~~ → B-6 (**done; needed neither**).  **Three of six rows are
 launchable cold today; five of six before divRep.**  B-6 is a bounded assembly the
 day DAT-C's C9 lands (which itself waits on F7 + CERT-Σ).
 
@@ -752,4 +798,5 @@ the §0.3 staging decision + the DAT-G0 flag (new debt at the DAT-glue/DAT-G
 boundary), the §1.6 CHART-U co-sign amendments (awaiting DAT-C lane acknowledgment),
 and the §0.4 finding that the node's injectivity half is landed.  B-1/B-2/B-3 can be
 handed to implementation lanes cold, today; B-4 the moment the co-sign note is
-acknowledged; B-6 is the only divRep-gated row.*
+acknowledged; ~~B-6 is the only divRep-gated row~~ — **B-6 is DONE and was never divRep-gated
+(2026-07-29); no row of this plan waits for `divRep`.***

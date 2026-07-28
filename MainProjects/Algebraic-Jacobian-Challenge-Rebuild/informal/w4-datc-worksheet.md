@@ -733,7 +733,19 @@ the *whole* of C9 and wrong for the part of it that carries the `hf` obligation:
 * the `IsOpenImmersion.presheaf` **plumbing** — the criterion, the fibre-product
   presentation, and the reduction of `IsChartUniv` to a three-field datum — depends on
   **none** of C4–C8 and is landed (`Picard/Pic0ChartOpenImmersionCriterion.lean`,
-  `Picard/Pic0ChartUnivReduce.lean`).  Its only geometric input is CHART-U(b), already done;
+  `Picard/Pic0ChartUnivReduce.lean`);
+
+  **CORRECTION 2026-07-29, later the same day** (`Picard/Pic0ChartCoverageAbel.lean`).  This
+  bullet ended "Its only geometric input is CHART-U(b), already done".  CHART-U(b) is **not**
+  done in the sense that sentence needs.  `isOpen_chartLocus_of_affineLocal'` is unconditional
+  only in `IsSplitWitnessIsoInvariant`; it still takes the affine-local `haff`, and nothing in
+  the tree discharges that — the affine case
+  (`isOpen_setOf_isSplitWitness_of_presentation`) is conditional on
+  `IsChartDatumPresentation`, i.e. on this row's own §3.3 CHART-U(b) residue, which the
+  CHART-U(b) row above states correctly and this bullet contradicted.  The residue is now
+  named in Lean (`ChartLocusAffineLocal`) and reduced to it
+  (`chartLocusAffineLocal_of_presentation`), so the two readings agree and the plumbing's
+  geometric input is B-4's presentation, not nothing;
 * what genuinely waits on C6/C7/C8 is one field of one structure, `IsChartLocusFibre`'s
   `exists_factor` together with the classifier-produced `r`.
 
