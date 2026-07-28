@@ -285,8 +285,9 @@ file does not settle".  **They are equivalent, and the answer was cheaper than t
 suggested**: the identity at `L` is the identity at `κ(t)` pushed forward along `PicEtAff.map C L`,
 so it needs `PicEtAff.map_map`, `PicEtAff.map_unit` and `relCurveMap_comp` and nothing about
 `cechPicClass` specifically.  `isChartDatumPlusFibreAt_of_isScalarTower`
-(`Picard/Pic0ChartPlusFibreTower.lean`) is the transport; `isChartDatumPresentation_of_plusFibre_tower`
-is this theorem with the `hplus` argument removed.  Use that one.
+(`Picard/Pic0ChartPlusFibreTower.lean`) is the transport, and
+`isChartDatumPresentation_of_plusFibre_tower` is this theorem with the `hplus` argument
+removed.  Use that one.
 
 The one caveat the transport does carry is the tower compatibility `IsScalarTower A κ(t) L`, which
 is genuinely needed (see the correction in this file's header) and is supplied by

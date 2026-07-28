@@ -36,9 +36,18 @@ plus classes per point of `U`.  That hypothesis is:
 * **witness-free, `H¹`-free and divisor-free.**  No effective divisor, no vanishing cohomology, no
   degree.  This matters because those three are exactly what the certificate lane produces, and
   their absence is why this leg was always developable ahead of CERT-Σ.
-* **certificate-free and divRep-free.**  Nothing here mentions `DivFamZar`, `FinCoverData`,
-  `divRep` or a classifier.  Verified by the import closure: this module's transitive imports
-  contain no certificate module.
+* **certificate-free and divRep-free** — and the instrument matters here, because the obvious one
+  gives the wrong answer.  This module's **import closure is not certificate-free**: it reaches
+  `DivSchemeCertificate`, `DivSchemeClassify*` and `Pic0AtlasFromDivRep` along
+  `Pic0ChartLocusFibreField → DivisorFamilyH1Locus → DivRepClassifyZarKit → …`, purely incidentally
+  (the fibre-field file wants an `H¹` locus, which lives in a module that also serves the
+  classifier).  So "no certificate module in the imports" is false, and a lane checking
+  certificate-freedom by grepping imports would wrongly conclude this leg is gated.
+  What is true is the statement about the **theorems**: walking the transitive *constant*
+  dependencies of `isOpen_chartLocus_of_plusFibre` (7445 constants) and
+  `chartLocusAffineLocal_of_plusFibre` (7448) yields **zero** constants whose name contains
+  `Cert`, `DivFamZar`, `FinCover`, `Classify`, `DivRep` or `divRep`.  Availability is cone-relative
+  and so is gatedness: measure the declaration's own closure, not the module's imports.
 * **not vacuous.**  `IsChartDatumPlusFibre` is a genuine equation between plus classes — `rfl` and
   `simp` both fail on it at arbitrary `μ`, `D` (measured; recorded on
   `isChartDatumPlusFibreAt_self` and re-run for the transport).
