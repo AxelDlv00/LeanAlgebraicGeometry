@@ -469,6 +469,7 @@ import AlgebraicJacobian.Tangent.TwoChartNormalize
 import AlgebraicJacobian.Tangent.TwoChartRepresentable
 import AlgebraicJacobian.Tangent.TwoChartNaturality
 import AlgebraicJacobian.Tangent.TwoChartQuotientNaturality
+import AlgebraicJacobian.Tangent.TwoChartSelector
 import AlgebraicJacobian.Tangent.DualNumberCarrier
 import AlgebraicJacobian.Tangent.DualNumberCarrierCoboundary
 import AlgebraicJacobian.Tangent.DualNumberCarrierReduction

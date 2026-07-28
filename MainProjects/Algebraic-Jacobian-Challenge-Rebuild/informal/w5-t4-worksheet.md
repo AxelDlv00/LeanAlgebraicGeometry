@@ -1511,3 +1511,61 @@ in the AJC sibling too (confirmed by `ajc-pic0av`, 2026-07-28). **Per §6.18's r
 with its consumer named**: the binder is consumed by
 `Opens.cechPicMap_ι_eq_one_of_dualNumberChart_of_cyclic`, and nothing else in the chain now stands
 between the T2 engine and the two-chart comparison at quotient level.
+
+### 6.23 RETRACTION OF §6.22: (3c) IS NOT THE SAME `rfl`, AND THE KERNEL IS WHAT CAUGHT IT
+
+*Run 0073 r4, self-caught by the kernel check before any reviewer saw it, but only after the claim
+had already been committed (`ece8432d63`). Recorded in full because the shape of the error is the
+one this lane keeps repeating.*
+
+**What §6.22 claimed.** That `overSpec k k` versus the monoidal unit `Over.mk (𝟙 _)` "is the *same*
+`rfl` as above and not an independent item", hence *"item (3) is **two sub-items, not three**, and
+both are now closed modulo the kernel check"*.
+
+**What the kernel said.** `lake build` refutes it with a type mismatch, not a proof failure:
+
+```
+Over.Hom.left (C ◁ overDualNumberZero k) has type
+  (C ⊗ Over.mk (𝟙 (Spec (CommRingCat.of k)))).left ⟶ (C ⊗ overDualNumber k).left
+but is expected to have type
+  relCurve C k ⟶ relCurve C (DualNumber k)
+```
+
+**Why, measured to the exact step.** Two facts, and the distinction between them is the whole
+finding:
+
+* `CommRingCat.ofHom (algebraMap k k) = 𝟙 (CommRingCat.of k)` — **`rfl`**;
+* `Spec.map (CommRingCat.ofHom (algebraMap k k)) = 𝟙 (Spec k)` — **NOT `rfl`**. It is `Spec.map_id`,
+  a propositional lemma, because `Spec.map` is functorial only up to propositional equality.
+
+So `overSpec k k` and the monoidal unit are *equal objects that are not definitionally equal*, the
+whiskerings `C ⊗ (−)` of them are different objects, and `relCurveMap C k[ε] k` and
+`(C ◁ overDualNumberZero k).left` therefore have **different types**. No amount of `congr` closes a
+type mismatch. Item (3) is **three** sub-items, (3c) needs an honest object transport
+(`eqToHom`/`Over.isoMk` along `Spec.map_id`, then a whiskering congruence), and it is **not built** —
+`Tangent/TwoChartSelector.lean` states the two measurements instead and says so in its docstring.
+
+**HOW I GOT IT WRONG, which is the part worth carrying.** §6.22's own rule was right and I applied
+it one step too far. The rule says: *unfold both sides to the `RingHom` they are built from and try
+`rfl`*. I did that, found `algebraMap k k = RingHom.id k` by `rfl`, and **transported that verdict
+across `Spec.map` without re-testing it**. The ring level was defeq; the scheme level was not. And
+(3b) — which really is `rfl` — sits one `Spec.map` away from (3c), which is not, so the successful
+neighbour is exactly what made the false claim plausible.
+
+> **Rule: a defeq verdict does not survive a functor.** Establishing `f = g` by `rfl` licenses
+> nothing about `F f = F g` unless `F`'s action is itself definitional — and for `Spec.map`,
+> `Scheme.map`, and most category-level constructions in mathlib it is not (`Spec.map_id` and
+> `Spec.map_comp` exist precisely because they are theorems). **Re-run `rfl` at every level you
+> intend to use it at.** One `#check` per level; the cost of skipping one is a committed false
+> claim, as here.
+
+**Second-order note, and it is the reason this section exists rather than a silent fix.** §6.21
+celebrated §6.20's predictions holding "on both mechanisms — the first time in this lane". That
+celebration was one section too early: the very next prediction in the same family was wrong. A
+run of correct predictions is not evidence that the *next* one needs less checking, and writing down
+that a streak has started is a good way to stop checking. The streak claim in §6.21 stands as
+written for the two items it describes; it should not be read as a trend.
+
+**T4's residue, corrected once more and this is the count that should be quoted:** **(3c)** the
+object transport above, **plus (iii-c2-aff-geo)**. Two named statements, not one. §6.22's closing
+line ("T4's residue is now ONE named statement") is hereby withdrawn.

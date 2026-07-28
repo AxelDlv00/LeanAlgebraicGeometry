@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Tangent.TwoChartQuotientNaturality
+import AlgebraicJacobian.Tangent.DualNumberCarrierReduction
+import AlgebraicJacobian.Tangent.DualNumberTestObject
 import AlgebraicJacobian.Picard.AffineTwoCover
 
 /-!
@@ -46,9 +48,9 @@ using `sup_eq_top` for the `x ∉ V₀` branch: a point of `⊤ = V₀ ⊔ V₁`
 (`TopologicalSpace.Opens.mem_sup`).
 
 The family is `boolFamily D := fun s ↦ bif s then D.V₁ else D.V₀`, chosen over a `match` so that
-`boolFamily D false` and `boolFamily D true` reduce by `rfl` and the `⊓` of the two is *syntactically*
-`D.V₀ ⊓ D.V₁` — which is what lets the landed affineness field `isAffineOpen_inf` be used at the
-overlap with no transport. That reduction is the whole reason this file is short.
+`boolFamily D false` and `boolFamily D true` reduce by `rfl` and the `⊓` of the two is
+*syntactically* `D.V₀ ⊓ D.V₁` — which is what lets the landed affineness field `isAffineOpen_inf`
+be used at the overlap with no transport. That reduction is the whole reason this file is short.
 
 ## Main declarations
 
@@ -60,15 +62,29 @@ overlap with no transport. That reduction is the whole reason this file is short
   characterized**: surjectivity is `V₀ ≠ ⊥ ∧ V₀ ≠ ⊤`.
 * `AlgebraicGeometry.Scheme.AffineTwoCover.isAffineOpen_boolFamily` — each chart of the family is
   affine, and `isAffineOpen_boolFamily_inf` for the overlap.
+* `AlgebraicGeometry.overSpecMap_eps_eq_overDualNumberZero` — **(3b)**: the `ε ↦ 0` test-object
+  morphism and the coefficient comparison `overSpecMap k[ε] k` have the *same underlying scheme
+  morphism*, by `rfl` under the `scoped` `epsAlgebra`.
+* `AlgebraicGeometry.ofHom_algebraMap_self_eq_id` / `specMap_algebraMap_self_eq_id` — the (3c)
+  measurement: the first is `rfl`, the second is **not** (it needs `Spec.map_id`), which is why
+  (3c) is a genuine object transport and not free. See that docstring for the retraction it forces.
 
-Reference: `informal/w5-t4-worksheet.md` §6.20(3a).
+## What this file deliberately does NOT contain
+
+An identification of `relCurveMap C k[ε] k` with `(C ◁ overDualNumberZero k).left`. Those two have
+**different types** — a kernel check refuted the attempt — because their sources are the monoidal
+unit and `overSpec k k` respectively, which are equal objects but not definitionally equal. Building
+that transport is (3c), left to a successor with the diagnosis recorded rather than attempted
+blind; `informal/w5-t4-worksheet.md` §6.23.
+
+Reference: `informal/w5-t4-worksheet.md` §§6.20(3a), 6.23.
 -/
 
 set_option autoImplicit false
 
 universe u
 
-open CategoryTheory Opposite
+open CategoryTheory Opposite MonoidalCategory CartesianMonoidalCategory
 
 namespace AlgebraicGeometry
 
@@ -120,8 +136,117 @@ theorem selector_mem (x : Y) : x ∈ D.boolFamily (D.selector x) := by
     rw [← D.sup_eq_top] at hx
     exact (TopologicalSpace.Opens.mem_sup.mp hx).resolve_left h
 
+/-! ## The side condition, characterized -/
+
+/-- **The selector is surjective exactly when the first chart is neither empty nor everything.**
+
+This is the measurement `informal/w5-t4-worksheet.md` §6.20(3a) called for, and it sharpens the flag
+raised there: `hsel` is not bookkeeping, it is the statement that the cover is *honestly*
+two-chart. `V₀ = ⊥` degenerates to the one-chart cover `V₁ = ⊤`; `V₀ = ⊤` says `X` is covered by a
+single affine chart, hence affine.
+
+Neither condition is proved here — for the Wave-5 curve both hold (a curve is non-empty; a proper
+positive-dimensional scheme over a field is not affine) but each is a real geometric input, and the
+consumer supplies them. -/
+theorem surjective_selector_iff :
+    Function.Surjective D.selector ↔ D.V₀ ≠ ⊥ ∧ D.V₀ ≠ ⊤ := by
+  classical
+  constructor
+  · intro hs
+    refine ⟨?_, ?_⟩
+    · obtain ⟨x, hx⟩ := hs false
+      rw [selector] at hx
+      have hxV : x ∈ D.V₀ := by by_contra h; simp [h] at hx
+      intro hbot
+      rw [hbot] at hxV
+      exact hxV
+    · obtain ⟨x, hx⟩ := hs true
+      rw [selector] at hx
+      have hxV : x ∉ D.V₀ := by by_contra h; simp [h] at hx
+      intro htop
+      exact hxV (htop ▸ trivial)
+  · rintro ⟨h0, h1⟩ s
+    cases s
+    · obtain ⟨x, hx⟩ : ∃ x, x ∈ D.V₀ := by
+        by_contra hc
+        simp only [not_exists] at hc
+        exact h0 (by ext x; simpa using hc x)
+      exact ⟨x, by rw [selector, if_pos hx]⟩
+    · obtain ⟨x, hx⟩ : ∃ x, x ∉ D.V₀ := by
+        by_contra hc
+        simp only [not_exists, not_not] at hc
+        exact h1 (by ext x; simpa using hc x)
+      exact ⟨x, by rw [selector, if_neg hx]⟩
+
 end AffineTwoCover
 
 end Scheme
+
+/-! ## (3b): the `ε ↦ 0` test-object morphism IS the coefficient comparison -/
+
+section EpsilonZero
+
+open TruncExpCech.EpsilonReduction DualNumber
+
+variable (k : Type u) [Field k]
+
+/-- **(3b): `overDualNumberZero` is `overSpecMap k[ε] k`**, hence its whiskering is
+`relCurveMap C k[ε] k`.
+
+This is the identification inbox `I-0630`(3) reported as absent: `(b-coeff)`
+(`Over.relSectionsMap_dualNumberSections`) is a statement about `relSectionsMap`, which is built
+from `relCurveMap`, whereas the test-object side of the tangent computation is phrased with
+`overDualNumberZero`. Without this lemma the two are different morphisms that happen to look alike.
+
+**And it is a `rfl`, once the `scoped` instance is open.** `overSpecMap k[ε] k` is
+`Over.homMk (Spec.map (ofHom (algebraMap k[ε] k)))`, `overDualNumberZero k` is
+`Over.homMk (Spec.map (ofHom (TruncExpCech.fstRingHom)))`, and under `epsAlgebra` the structure map
+`algebraMap k[ε] k` **is** `TrivSqZeroExt.fst` definitionally
+(`algebraMap_eps_eq_fst`) — so the two `RingHom`s are equal, and `Over.homMk`'s proof field is
+irrelevant. The source objects agree for the same reason: `overSpec k k` is
+`Over.mk (Spec.map (ofHom (algebraMap k k)))` and `algebraMap k k = RingHom.id k`.
+
+So the seam that looked like missing infrastructure is a **spelling** difference across a
+deliberately-`scoped` instance, which is the `I-0567`/`I-0634` family again: the thing exists
+upstream (here: in the tree), it is just not in ambient scope. Recorded in
+`informal/w5-t4-worksheet.md` §6.22. -/
+theorem overSpecMap_eps_eq_overDualNumberZero :
+    (overSpecMap (k := k) (DualNumber k) k).left = (overDualNumberZero k).left :=
+  rfl
+
+/-- **(3c) IS NOT FREE, and this is the measurement** — recorded as a theorem about the *source
+objects* rather than left as a claim in prose.
+
+`overDualNumberZero k` has source the monoidal unit `Over.mk (𝟙 (Spec k))`, whereas
+`overSpecMap k[ε] k` has source `overSpec k k = Over.mk (Spec.map (ofHom (algebraMap k k)))`. The
+two structure morphisms agree only *propositionally*:
+
+* `CommRingCat.ofHom (algebraMap k k) = 𝟙 (CommRingCat.of k)` **is** `rfl` (this lemma), but
+* `Spec.map (ofHom (algebraMap k k)) = 𝟙 (Spec k)` is **NOT** `rfl` — it needs `Spec.map_id`,
+  because `Spec.map` is functorial only up to propositional equality.
+
+So `overSpec k k` and the monoidal unit are equal objects but not *definitionally* equal ones, and
+consequently `relCurveMap C k[ε] k` and `(C ◁ overDualNumberZero k).left` have **different types**:
+`relCurve C k ⟶ relCurve C k[ε]` against
+`(C ⊗ Over.mk (𝟙 _)).left ⟶ (C ⊗ overDualNumber k).left`. A kernel check refuted the `congr`-plus-
+`rfl` attempt with exactly that type mismatch.
+
+**This retracts `informal/w5-t4-worksheet.md` §6.22's claim that (3c) "is the same `rfl`" and that
+item (3) is "two sub-items, not three".** It is three, and the third needs an object transport (an
+`eqToHom`/`Over.isoMk` along `Spec.map_id`, then a whiskering-congruence), which is deliberately
+**not** built here: see §6.23. What is true and useful is the ring-level half below plus
+`overSpecMap_eps_eq_overDualNumberZero` above, which is where the `ε ↦ 0` content actually lives. -/
+theorem ofHom_algebraMap_self_eq_id :
+    CommRingCat.ofHom (algebraMap k k) = 𝟙 (CommRingCat.of k) :=
+  rfl
+
+/-- The propositional identification of the two structure morphisms, which is what an object
+transport for (3c) must be built from: `Spec.map` of the identity algebra map is the identity, by
+`Spec.map_id` and **not** by `rfl`. -/
+theorem specMap_algebraMap_self_eq_id :
+    Spec.map (CommRingCat.ofHom (algebraMap k k)) = 𝟙 (Spec (CommRingCat.of k)) := by
+  rw [ofHom_algebraMap_self_eq_id, Spec.map_id]
+
+end EpsilonZero
 
 end AlgebraicGeometry
