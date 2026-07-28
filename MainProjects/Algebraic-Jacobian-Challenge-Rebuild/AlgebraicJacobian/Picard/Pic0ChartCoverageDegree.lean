@@ -123,9 +123,17 @@ claimed to make is genuinely absent:
   (`Picard/Pic0ThetaAssembly.lean:67`) — measured, not guessed: `exact?` on
   `degAff L (map C L a) = degAff K a` finds nothing.
 
-So **COV-1 step 2 is NOT discharged**, and this theorem has zero consumers, which is why
-nothing broke.  It is kept because it is true and is half of the seam; a lane closing step 2
-proves the `degAff` invariance and composes it here.
+**STEP 2 IS NOW DISCHARGED (2026-07-28), and this paragraph's "NOT discharged" is superseded.**
+The missing `degAff` invariance was proved as `PicEtAff.degAff_map`
+(`Picard/DegreeZeroBaseField.lean`) — and it needs *no* hypothesis on `L/K` at all, not even
+finiteness, so it is weaker-premised than the `degAff_baseFieldShuffle` shape predicted above.
+Step 2 itself is `classDeg_presenting_eq_degAff` / `classDeg_presenting_eq_zero`
+(`Picard/Pic0ChartCoverageDegreeStep2.lean`), which reaches `classDeg L M = degAff K a`
+directly and therefore does **not** route through this theorem.
+
+This theorem is kept because it is true and was the first half of the seam, but it remains
+without consumers: the landed route reads the `K`-side degree rather than the `L`-side one, so
+its `PicEtAff.map`-shaped right-hand side is no longer the useful spelling.
 
 The other half of the ledger — the twist factor's contribution — IS complete
 (`classDeg_chartTwistClass_baseChange` above, via E-iv-alg). -/

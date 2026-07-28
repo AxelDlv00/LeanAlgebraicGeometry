@@ -31,13 +31,13 @@ is the law, and `mem_chartLocus_of_isSplitWitness_fibre` is the resulting member
 
 ## What remains of B-5 after this file
 
-**Corrected — see the "DEFECT" section below, which supersedes the list that stood here.**  This
-header originally said the only residues were the two per-fibre choices.  A degree probe found a
-third: step 6's *feedback*, i.e. that the drop's output `Σ` becomes the chart index's `Z`, so the
-drop stage and the index stage carry **different** `Z`.  Read that section before relying on any
-"discharged" claim in this file.
+**Twice corrected; read the DEFECT section for the full history.**  This header first said the
+only residues were the two per-fibre choices; a degree probe added a third (step 6's feedback);
+and on 2026-07-28 that third was **removed again** — not by discharging it but by showing
+coverage needs no drop, hence no feedback (`Picard/Pic0ChartCoverageNoDrop.lean`).  Step 2 is
+likewise landed now (`Picard/Pic0ChartCoverageDegreeStep2.lean`).
 
-The two per-fibre choices, which are residues as stated:
+The two per-fibre choices, which are residues *of the route through this file*:
 
 * **step 3, the twist exponent `m`.**  Chosen against the fibre's OWN DAT-0a bound `b_L`.  No
   uniform `m₀` exists (§0.2.2, I-0204), so this is a genuine `∃ m` produced inside the
@@ -132,9 +132,23 @@ discharged **at `Z := 0`** by `exists_isSplitWitness_of_drop`; step 6 — feedin
 index and re-reading membership at the *new* `Z` — is **NOT** discharged, and needs the
 graph-class transport of `Picard/Pic0ChartRationalGraph.lean` applied to the drop's output.
 
-**Corrected status of B-5**: two residues, not one — step 3's per-fibre `m`, and the feedback of
-step 6.  The rest stands.  `mem_chartLocus_of_drop` is sound; use it knowing its `Z` is the
-drop's input stage. -/
+**Corrected status of B-5, 2026-07-28 — and the correction is a REMOVAL of both residues this
+section named.**  The arithmetic above is right and the two-stage reading of `w4-datb` §1.2 is
+right; what was wrong is treating the drop as *necessary*.
+
+* the step-6 feedback is not a residue: coverage needs no drop at all, because
+  `IsSplitWitness` asks for `h¹ = 0` alone (`Picard/Pic0ChartCoverageNoDrop.lean`).  With the
+  drop gone there is one `Z` and nothing to feed back;
+* step 2 is landed (`PicEtAff.degAff_map` → `classDeg_presenting_eq_zero`).
+
+What remains of B-5 is step 3's per-fibre `m`, and even that is now *derived* rather than
+chosen: `mem_chartLocus_of_vanishing_bound` takes the DAT-0a threshold `b_L` in the shape
+`exists_bound_subsingleton_hModule_one_of_isFinite_toP1` produces it, so instantiating DAT-0a at
+the base-changed curve is the whole remaining work.
+
+`mem_chartLocus_of_drop` stays sound and is still the right theorem when the `h⁰ = 1`
+normalisation is wanted (DAT-C / GAP-2 need it; membership does not); use it knowing its `Z` is
+the drop's input stage. -/
 
 /-! ## The assembly -/
 
@@ -152,17 +166,21 @@ discharged".  Three of those five are; the other two are not:
 
 * **step 1 — discharged.**  The `hM₀` hypothesis, which `exists_splitting_of_picEt` supplies
   unconditionally.
-* **step 2 — NOT discharged.**  It needs `degAt λ_t = 0` transported to the presenting Čech
-  class, and the theorem meant to do that (`classDeg_of_presenting`) cannot: it relates
-  `classDeg L M` to the plus-class degree **at `L`**, while the coverage argument has it at `K`,
-  and base-field invariance of `degAff` under `PicEtAff.map` does not exist in the tree.  See
-  that theorem's docstring; the missing lemma is small but real.
+* **step 2 — DISCHARGED 2026-07-28, this line supersedes the "NOT discharged" it replaced.**
+  The missing input was base-field invariance of `degAff` under `PicEtAff.map`; it is now
+  `PicEtAff.degAff_map` (`Picard/DegreeZeroBaseField.lean`) and holds for an **arbitrary** field
+  extension `L/K`, with no finiteness or separability.  Step 2 itself is
+  `classDeg_presenting_eq_zero` (`Picard/Pic0ChartCoverageDegreeStep2.lean`), and the whole
+  twisted ledger closes to `g + e` there.
 * **step 4 — discharged** as an input: `hdeg` + `h1`.
 * **step 5 — discharged** by the oracle.
-* **step 6 — NOT discharged.**  The drop's output `Σ` must become the chart index's `Z`, and
-  the graph transport of `Picard/Pic0ChartRationalGraph.lean` goes *upward from a `k`-point*,
-  not from the `L`-level divisor the drop produces.  See the DEFECT section above for why the
-  two stages carry different `Z`.
+* **step 6 — NOT NEEDED, which supersedes "NOT discharged".**  The feedback is real for the
+  route *through the drop*, and the DEFECT section's arithmetic stands.  But coverage does not
+  need the drop: `IsSplitWitness` asks for `h¹ = 0` and for **neither** effectivity **nor**
+  degree `g`, so a witness of the twisted class suffices and there is only ever one `Z`.  See
+  `Picard/Pic0ChartCoverageNoDrop.lean`, whose `mem_chartLocus_of_witness_h1` strictly
+  generalises this theorem's membership half — with `g`, `e`, `hχ`, `hdeg` and the whole oracle
+  deleted rather than discharged.
 * **step 3 — the residue this paragraph originally named**, and still a residue: `m`, `W₀` and
   `hdeg` are *inputs*, because `b_L` is per-fibre and does not transport (I-0204), so no
   formulation of this theorem can produce `m` for the caller.
