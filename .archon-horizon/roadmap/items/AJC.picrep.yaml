@@ -23,9 +23,29 @@ summary: 'Represent the relative Picard functor by the Milne-Kollar route select
   so (rem:orbit_in_affine_hypothesis): the quotient route needs quasi-projectivity
   of the Abel-map slice, this route needs every finite Galois orbit in an affine open,
   and the same Hironaka example defeats both. The difference is that the orbit condition
-  is available for the schemes this route quotients.  THE RATIONAL POINT REMAINS AN
-  OPEN HUMAN DECISION (I-0372, AJC.picrep.rational-point) and is orthogonal to the
-  route choice -- both routes carry it identically.'
+  is available for the schemes this route quotients.  THE RATIONAL POINT IS NO LONGER
+  AN OPEN DECISION. I-0372 was CLOSED on 2026-07-28 by protection I-0491: branch (2)
+  ETALE-SHEAFIFY is chosen, the headline is stated over an ARBITRARY field with no
+  rational-point binder, and hasRationalPoint_of_curve was FALSE as stated and has
+  been deleted rather than proved. An earlier version of this summary said the decision
+  remained open and was carried identically by both routes; that reading is stale.
+  AJC.picrep.rational-point is done.
+
+
+  STATUS MISMATCH, KNOWN AND ESCALATED -- DO NOT RE-TRIAGE. This row is `done` while
+  children .quot, .serre and .tensor are `pending`, so `roadmap list` warns. Per I-0543
+  the `done` was NOT a decision anyone made: it propagated automatically from task
+  ajc-etale-pic''s terminal status into all four of its roadmap_refs at 2026-07-28T06:04:16.
+  Five hygiene passes have converged on the reading (thread I-0538, C-0001..C-0004)
+  and it SPLITS the children rather than giving one verdict: .quot and .serre say
+  in their OWN summaries that they are ''OFF-PATH, retained not revived'' and serve
+  the abandoned Quot endgame, so they want `rejected` or re-parenting out of picrep;
+  .tensor carries no such disclaimer and is a live input to Hilbert-function base
+  change, so it is the only evidence this parent is premature. Also unreconciled:
+  I-0491 clause 2 says the honest state of the etale-sheafified obligation is ONE
+  NAMED OPEN SORRY, which sits badly with a `done` representability parent. Executing
+  any of that is a route decision, not bookkeeping; it is with the human as I-0605.
+  Until that returns, THIS WARNING IS EXPECTED AND SHOULD BE LEFT ALONE.'
 status: done
 kind: proof
 priority: high
@@ -39,5 +59,5 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:40.928722+00:00'
-  updated_at: '2026-07-28T06:04:16.158698+00:00'
+  updated_at: '2026-07-28T11:52:09.868868+00:00'
   parent: AJC.jacobian

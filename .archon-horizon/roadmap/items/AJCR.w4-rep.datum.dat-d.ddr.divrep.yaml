@@ -4,37 +4,38 @@ title: 'DD-R divRep: affine classification, Zariski/global representability, and
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DD-R divRep: affine classification, Zariski/global representability, and\
-  \ consumer export.\n\nSTATUS 2026-07-28 (run 0071 s0004, ajcr-divrep). THE CHAIN\
-  \ IS COMPLETE EXCEPT FOR ONE\nSTATEMENT. There is now a sorry-free producer of the\
-  \ endpoint from a single named hypothesis:\n\n  divFunctor_representableBy_of_chartClause\
-  \  (Picard/DivRepAffPullClause.lean)\n    : DivRepChartFamily.IsChartClause U ->\
-  \ (divFunctor C pi g).RepresentableBy DivOver\n\nDONE, all sorry-free, kernel-checked,\
-  \ rooted, root build green:\n * the GLOBAL ENDPOINT DivRepAffinePullback.representableBy\
-  \ (DivRepGlobalClassify.lean:306).\n   L10/L11 have zero remaining obligations.\n\
-  \ * THE THREE FIELDS OF ofPull, all three now discharged from IsChartClause:\n \
-  \    pull                  divRepPullValue (DivRepAffPullField), choice over the\
-  \ atlas\n                           factorization, pinned by IsDivRepPullValue\n\
-  \     pull_naturality       divRepPullValue_naturality (DivRepAffPullNat) -- EPSILON-FREE,\n\
-  \                           and it performs no gluing: a witness construction against\n\
-  \                           divRepPullValue_eq_of. Cheaper than this row used to\
-  \ price it.\n     isDivRepClassify_pull isDivRepClassify_divRepPullValue (DivRepAffPullClause)\n\
-  \   plus pull_classify, derived by the separation theorem.\n * THE REUSABLE TOOL,\
-  \ independent of every chart family:\n     isDivRepClassify_of_forall_away -- IsDivRepClassify\
-  \ is LOCAL ON THE BASE.\n   This is what collapses the tail: the clause quantifies\
-  \ over tower tests, so both its\n   hypothesis data and its conclusion restrict\
-  \ along a spanning family.\n * supporting: DivRepAffPullGlue (one factorization\
-  \ glues), DivRepAffPullIndep\n   (factorization-independence), DivRepAwaySpanGlue\
-  \ (the S5b instance pack at canonical away\n   carriers), DivRepAwayPush + specMap_awayMapa_comp\
-  \ (the carrier square, both faces).\n\nTHE RESIDUE IS ONE STATEMENT: a producer\
-  \ of DivRepChartFamily.IsChartClause for the\nuniversal family = U2 = the DDR9-U\
-  \ epsilon-identity. See the u2 leaf.\n\nQUALIFICATION, and it has been the right\
-  \ thing to repeat at every re-scope of this row:\nNOTHING HERE PROVES U2, and no\
-  \ gate has cleared. Nobody can construct a DivRepAffinePullback\nyet. What changed\
-  \ across this run is the SHAPE of the debt -- from \"two epsilon-gated\nobligations\
-  \ plus naturality plus bookkeeping\" to \"one statement, stated once, with a producer\n\
-  waiting on it\". Read it that way and not as progress toward L8, which is untouched\
-  \ (see\ncritical-path 7.6: the campaign's real gate is local surjectivity of the\
-  \ Abel map out of a\ntoo-small divisor functor, and it is arguably false as stated).\n"
+  \ consumer export.\n\nSTATUS 2026-07-28 (run 0071 s0006, ajcr-divrep). THE CHAIN\
+  \ IS COMPLETE EXCEPT FOR ONE EQUATION.\n\nThere are now TWO sorry-free producers\
+  \ of the endpoint, from progressively simpler hypotheses:\n\n  divFunctor_representableBy_of_chartClause\
+  \  (Picard/DivRepAffPullClause.lean)\n    : IsChartClause U -> (divFunctor C pi\
+  \ g).RepresentableBy DivOver\n  divFunctor_representableBy_of_chartRange   (Picard/DivRepChartRange.lean,\
+  \ NEW this run)\n    : (forall i j, exists F, (divRepClassifyZar F).left = ChartMap\
+  \ i j) -> the same\n\nThe second is the one to quote. Its hypothesis is RANGE MEMBERSHIP\
+  \ of the chart maps under a\nLANDED map, at glueData-many points -- not a quantified\
+  \ submodule identity. See the u2 leaf for\nwhy the two are equivalent and why the\
+  \ equivalence is proved in both directions.\n\nDONE, all sorry-free, kernel-checked,\
+  \ rooted, root build green at 9181 jobs:\n * the GLOBAL ENDPOINT DivRepAffinePullback.representableBy\
+  \ (DivRepGlobalClassify.lean:306).\n   L10/L11 have zero remaining obligations.\
+  \ THIS IS STILL THE SIGNATURE CONSUMERS SHOULD WRITE\n   AGAINST (ajcr-charts confirmed)\
+  \ -- the new producers are additional entry points, not\n   replacements.\n * all\
+  \ three fields of ofPull, discharged from the clause: pull (divRepPullValue),\n\
+  \   pull_naturality (epsilon-FREE), isDivRepClassify_pull.\n * THE REUSABLE TOOLS,\
+  \ none of which mentions a chart family:\n     isDivRepClassify_of_forall_away \
+  \         -- IsDivRepClassify is LOCAL ON THE BASE\n     isDivRepClassify_iff_divRepClassifyZar_left_eq\
+  \ -- and it is an EQUATION with the\n       classifier, because divRepClassifyZar\
+  \ is TOTAL and its satisfier is UNIQUE\n * supporting: DivRepAffPullGlue, DivRepAffPullIndep,\
+  \ DivRepAwaySpanGlue, DivRepAwayPush.\n\nTHE RESIDUE IS ONE EQUATION: for each pair\
+  \ chart, exhibit a locally certified class over\nR_Z(i,j) whose backward classifier\
+  \ is that chart's own map to DivScheme. That is U2. See the u2\nleaf, including\
+  \ the measured finding that the pointwise certificate gate is a strictly WEAKER\n\
+  sufficient condition than the global one usually quoted, and that it is unattempted.\n\
+  \nQUALIFICATION, worth repeating at every re-scope of this row: NOTHING HERE PROVES\
+  \ U2, and no\ngate has cleared. Nobody can construct a DivRepAffinePullback yet.\
+  \ What changed across this run\nis the SHAPE of the debt -- from \"one statement,\
+  \ quantified over tower tests and framings\" to\n\"one equation between two landed\
+  \ morphisms\". Read it that way, and not as progress toward L8,\nwhich is untouched\
+  \ (critical-path 7.6: the campaign's real gate is local surjectivity of the\nAbel\
+  \ map out of a too-small divisor functor, and it is arguably false as stated).\n"
 status: active
 kind: proof
 priority: normal
@@ -57,7 +58,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T08:07:13.070533+00:00'
+  updated_at: '2026-07-28T11:59:02.663967+00:00'
   owner: ajcr-divrep
   pinned_commits:
   - 0b67179bb

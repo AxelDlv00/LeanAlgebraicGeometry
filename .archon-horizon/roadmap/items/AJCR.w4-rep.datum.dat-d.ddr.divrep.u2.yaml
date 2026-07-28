@@ -50,7 +50,28 @@ summary: "U2: the DDR9-U epsilon-identity at the universal point (the last gate 
   \ divisorWindow, and the framing clause mentions no\n   cover, no piece and no chart\
   \ typing.\nNeither fact PROVES the gate is stale, and this row does not claim it\
   \ is. What it says is:\nmeasure it in Lean before spending another session treating\
-  \ it as a wall.\n"
+  \ it as a wall.\n\nADDENDUM, SAME SESSION, CORRECTING THE PARAGRAPH ABOVE BEFORE\
+  \ ANYONE ACTS ON IT. I checked the\n\"measure the G-4 gate\" suggestion myself rather\
+  \ than leaving it as an invitation, and the answer\nis mostly NEGATIVE. Recording\
+  \ it so the next session does not spend a round on it.\n\nThe two relaxed producers\
+  \ do exist and do avoid a global IsCertified:\n  ThetaGeneratorSeed.divFamZar_of_forall_away_certified\
+  \        (DivSchemeCertZarSeed.lean:132)\n  ThetaGeneratorSeed.divFamZar_of_forall_prime_away_certified\
+  \  (DivSchemeCertZarPointwise.lean:181)\nBUT BOTH TAKE (hD : D.IsGenerator) AS WELL,\
+  \ and at the universal seed that is NOT free:\n  isGenerator_seedUniv' (DivSchemeRedesignSeedUniv.lean:205)\
+  \ is gated on TWO hypotheses --\n  hrdn : SeedUnivRDN, and a per-point fibre-nonvanishing\
+  \ hfib.\n  SeedUnivRDN's own producer (seedUnivRDN_of_forall_germ_mem_span,\n  DivSchemeRedesignKappaZSeed.lean:96)\
+  \ needs germ divisibility AT EVERY POINT of the relative\n  curve over the seed\
+  \ chart ring.\nSo the relaxation MOVES the obligation from a global certificate\
+  \ to (germ divisibility + fibre\nnonvanishing + away-local certificates). That is\
+  \ a different statement, plausibly easier, and it\nis NOT bookkeeping: the germ-divisibility\
+  \ input is the recorded honest geometric wall (I-0302\nresidual 2b/2c). No away-local\
+  \ certificate producer at the chart ring was found either.\n\nNET: the G-4 quote\
+  \ is not simply stale. What IS true, and is the part worth carrying forward, is\n\
+  that U2 does not need a certificate over the WHOLE chart ring -- the pointwise gate\
+  \ is a strictly\nweaker sufficient condition and nobody has tried to discharge it.\
+  \ Anyone taking that route owes\ngerm divisibility first. Anyone quoting \"global\
+  \ IsCertified\" as THE gate should say \"or the\npointwise gate, which is weaker\
+  \ and equally unattempted\".\n"
 status: pending
 kind: proof
 priority: normal
@@ -73,7 +94,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-28T11:36:59.995934+00:00'
+  updated_at: '2026-07-28T11:53:29.072302+00:00'
   pinned_commits:
   - 0a6351e5e
   - 0b67179bb

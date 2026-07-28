@@ -1,0 +1,54 @@
+id: I-0610
+provider: local
+kind: issue
+body: "THE 96-OPEN-ITEMS WARNING IS COUNTED OVER A DIFFERENT SET THAN inbox list SHOWS\
+  \ -- 21 open items, INCLUDING ONE BINDING HUMAN PROTECTION, ARE INVISIBLE TO THE\
+  \ LANE THAT IS SUPPOSED TO ACT ON THEM.\n\nMEASURED (janitor pass, run 0067, lane\
+  \ ajc-pic0av, 2026-07-28 ~19:45). This is the concrete mechanism behind I-0482 and\
+  \ it makes I-0505 reproducible on demand.\n\n * The stderr health warning says '96\
+  \ open non-protection items (recommended maximum 30)'.\n * 'horizon inbox list --status\
+  \ open --json' returns 78 items. With '--limit 500' it still returns 78, so it is\
+  \ not pagination.\n * An on-disk census of .archon-horizon/inbox/local/items/*.yaml\
+  \ by 'status:' field gives 99 open (438 archived, 70 closed).\n\nSo the WARNING\
+  \ counts the disk set and the LIST filters by audience/scope for the calling team.\
+  \ A janitor dispatched on '96 open, cap 30' cannot see 21 of them and cannot archive\
+  \ what it cannot read -- which is a standing reason janitor passes under-deliver\
+  \ against this warning.\n\nTHE 21, BY MECHANISM:\n * 8 scoped to Algebraic-Jacobian-Challenge-Rebuild\
+  \ (my task spans AJC only)\n * 7 audience=human\n * 2 audience empty\n * 2 audience=task:ajc-albanese,\
+  \ 2 audience=task:ajc-fbc\n\nTHE SERIOUS ONE. Protection I-0492 -- '[persistent]\
+  \ HUMAN DECISION, BINDING (2026-07-28): DivFamZar is widened to ARBITRARY AFFINE\
+  \ OPEN pieces' -- is status open, kind protection, author human, and is ABSENT from\
+  \ both 'inbox list --status open --kind protection' and the REQUIRED-protections\
+  \ synchronizer digest in my sessions. Only I-0491 and I-0074 appear. The differentiator\
+  \ is scope.projects: I-0491 is scoped to Algebraic-Jacobian-Challenge, I-0492 to\
+  \ Algebraic-Jacobian-Challenge-Rebuild. Their YAML is otherwise structurally identical.\n\
+  \nProject-scoping a protection is defensible. Silently hiding it from the attention\
+  \ lane whose whole purpose is 'inspect all open protection items before edits' is\
+  \ not, because the digest presents its list as complete -- it says '2 active protections',\
+  \ not '2 of 3 visible to you'. An AJCR lane bound by I-0492 that happens to be reading\
+  \ a shared file has no way to know it exists. That is exactly I-0505's 'A BINDING\
+  \ PROTECTION CAN BE INVISIBLE TO THE SESSION IT BINDS', now with the mechanism named.\n\
+  \nTWO ASKS:\n (a) Count and report over the SAME set the lane can read, or state\
+  \ the split explicitly ('96 open workspace-wide, 78 visible to this team'). Either\
+  \ fixes the impossible instruction.\n (b) Never scope-filter kind: protection out\
+  \ of the required-attention lane, or at minimum print the count of hidden ones."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:52:57.112511+00:00'
+updated_at: '2026-07-28T11:52:57.112524+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0010-horizon-ajc-pic0av
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge

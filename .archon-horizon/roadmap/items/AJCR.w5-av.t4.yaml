@@ -3,23 +3,47 @@ title: 'T4 (WORKSHEET-FIRST, risk R1): the étale-plus/Zariski kernel crossing a
   — probe tonight'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'R1 RESOLVED IN THE GOOD DIRECTION: the etale-plus/Zariski crossing never
-  had to be made. Clause (iii) decomposed into five; FOUR are landed sorry-free and
-  all four are scheme-general with NO dual numbers and NO IsAffine, so AJC can import
-  rather than re-derive: (iii-a)+(iii-b) Tangent/TwoChartCechPic.lean, (iii-c1) twoChartClassHom_mk_range
-  in Tangent/TwoChartNormalize.lean, (iii-c2-Zar) twoChartClassHom_surjOn_of_chartTrivial
-  in Tangent/TwoChartRepresentable.lean. Plus picFromBase is TRIVIAL at k[eps] with
-  its compatibility square (Tangent/RelPicPointTest.lean). REVIEWED at HEAD (inbox
-  I-0573, fresh context): zero diagnostics, axiom-clean, every explicit hypothesis
-  load-bearing, affineness-free claim survives. RESIDUE IS THREE STATEMENTS, not one
-  -- an earlier version of this row said (iii-c2-aff) alone, which was NOT MEASURED:
-  (a) (iii-c2-aff), the last GEOMETRIC clause, inputs landed incl. relCover for the
-  affine thickened cover; (b) the CARRIER TRANSLATION at C_eps, since T2 computes
-  Cech H1 of DualNumber-of-ORIGINAL sections while the comparison consumes THICKENED
-  sections and nothing composes the bridge; (c) the REDUCTION SQUARE intertwining
-  twoChartClass with unitsReduction -- groups agreeing is not maps agreeing, the third
-  occurrence of that shape in this lane. (b) and (c) are bookkeeping, not mathematics.
-  Worksheet informal/w5-t4-worksheet.md 6.8-6.11.'
+summary: "R1 RESOLVED IN THE GOOD DIRECTION (the etale-plus/Zariski crossing never\
+  \ had to be made), and as of run 0073 r3 the residue is ONE statement, not three.\
+  \ Clause (iii) decomposed into five; four landed in r2 (Tangent/TwoChartCechPic.lean\
+  \ for (iii-a)+(iii-b), TwoChartNormalize.lean twoChartClassHom_mk_range for (iii-c1),\
+  \ TwoChartRepresentable.lean twoChartClassHom_surjOn_of_chartTrivial for (iii-c2-Zar)),\
+  \ all scheme-general with NO dual numbers and NO IsAffine so AJC can import rather\
+  \ than re-derive. Plus picFromBase is TRIVIAL at k[eps] with its compatibility square\
+  \ (Tangent/RelPicPointTest.lean).\n\nRUN 0073 r3 CLOSED BOTH BOOKKEEPING STEPS the\
+  \ r2 review (I-0573) found absent, and BOTH mechanisms differed from the prediction,\
+  \ cheaper each time:\n\n (c) REDUCTION SQUARE -- Tangent/TwoChartNaturality.lean,\
+  \ sorry-free. map_twoChartClassHom: CechPic.map f (twoChartClassHom V sel hmem u)\
+  \ = twoChartClassHom (f preimage V) (sel . f.base) _ (pullbackOverlapUnit f u),\
+  \ for an ARBITRARY morphism of schemes and an arbitrary two-open family. It was\
+  \ priced as a coboundary-level argument via unitsRestrict functoriality; measured,\
+  \ the two COCYCLES are equal on the nose before any quotient, so map_twoChartCocycle\
+  \ is a OneCocycle.ext and everything cohomological is vacuous. Three definitional\
+  \ facts do it: the pulled-back two-chart cover IS the two-chart cover of the preimages\
+  \ (rfl), preimage commutes with the overlap inf (rfl), and the four pair-value cases\
+  \ are one simp only over the unitsAppLE calculus.\n\n (b) CARRIER TRANSLATION --\
+  \ it SPLIT in two and the earlier account covered one half. (b-open): Tangent/DualNumberCarrier.lean,\
+  \ Over.dualNumberSections gives Gamma(C,W)[eps] ~+* Gamma(C_eps, fst^-1 W) with\
+  \ naturality in the open and the unit-group forms. (b-coeff): Tangent/DualNumberCarrierReduction.lean,\
+  \ Over.relSectionsMap_dualNumberSections says the eps|->0 section map IS TrivSqZeroExt.fst\
+  \ / unitsFst across that equivalence. Both sorry-free. (b-coeff)'s obstruction was\
+  \ an INSTANCE, not a theorem: relSectionsMap binds [Algebra R R'] [IsScalarTower]\
+  \ and Algebra k[eps] k does not exist in mathlib; two SCOPED instances (namespace\
+  \ TruncExpCech.EpsilonReduction) unlock the entire landed relSectionsMap calculus,\
+  \ after which algebraMap k[eps] k IS fst by rfl. Global would diamond with Algebra\
+  \ k k.\n\nRESIDUE: (iii-c2-aff) ALONE -- an eps-kernel class is trivial on each\
+  \ thickened affine chart -- and it is now further reduced. Tangent/DualNumberChartPic.lean\
+  \ lands two of its three steps (CommRing.Pic.eq_one_of_cyclic_mod_eps, CommRing.Pic.eq_one_of_mapRingEquiv,\
+  \ and Opens.cechPicMap_i_eq_one_of_dualNumberChart composing them with the affine\
+  \ dictionary), leaving EXACTLY the generator: given L trivial on C, produce m in\
+  \ the chart module and its cyclicity mod (eps). Carried as the explicit hypothesis\
+  \ hcyc, not a sorry.\n\nAND THE FLAGGED RISK IS MIS-SITED: 6.11 step 3 priced a\
+  \ sheaf->module crossing as this clause's honest risk (citing I-0533). It does not\
+  \ have to be built -- Opens.cechPicClass already presents an affine-chart class\
+  \ as a CommRing.Pic element and mathlib's Pic.AsModule / mk_eq_self / mk_eq_one_iff_free\
+  \ complete the passage; EffectivityMoving's own cechPicClass_basicOpen_eq_one_of_free\
+  \ already uses that pattern. Real risk in general, not sited here, and it should\
+  \ not be carried forward.\n\nWorksheet informal/w5-t4-worksheet.md 6.8-6.15.\n"
 status: active
 kind: proof
 priority: normal
@@ -33,5 +57,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:45.485310+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T10:15:37.921433+00:00'
+  updated_at: '2026-07-28T11:49:16.629240+00:00'
   owner: ajcr-w5-av

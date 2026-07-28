@@ -3,14 +3,26 @@ title: 'T3: \(\ker(\mathrm{relPic}(k[\varepsilon]) \to \mathrm{relPic}(k)) \sime
   H^1(C,\mathcal{O})\) via nilpotent unit-lifting'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'T3 is the consumer of the T4 comparison, not independent work: with (iii-a)(iii-b)(iii-c1)(iii-c2-Zar)
-  landed and the T2 truncated-exponential engine already giving H1(C,O) = ker of the
-  two-chart Cech unit quotient, ker(relPic(k[eps]) -> relPic(k)) =+ H1(C,O) follows
-  once (iii-c2-aff) lands. The relative-to-absolute step is also landed: picFromBase
-  is TRIVIAL at Spec k[eps] (a one-point space has no cover with nontrivial overlap),
-  with the compatibility square intertwining relPicMap with CechPic.map -- Tangent/RelPicPointTest.lean.
+summary: 'T3 is the consumer of the T4 comparison, not independent work. With (iii-a)(iii-b)(iii-c1)(iii-c2-Zar)
+  landed, the T2 truncated-exponential engine already giving H1(C,O) = ker of the
+  two-chart Cech unit quotient, and -- as of run 0073 r3 -- BOTH intertwining steps
+  landed (the carrier translation Tangent/DualNumberCarrier.lean + DualNumberCarrierReduction.lean,
+  and the reduction square Tangent/TwoChartNaturality.lean), ker(relPic(k[eps]) ->
+  relPic(k)) =+ H1(C,O) follows once (iii-c2-aff) lands.
+
+
+  The relative-to-absolute step was already landed: picFromBase is TRIVIAL at Spec
+  k[eps] (a one-point space has no cover with nontrivial overlap), with the compatibility
+  square intertwining relPicMap with CechPic.map -- Tangent/RelPicPointTest.lean.
   Clause (i) (nilpotent chart triviality) and clause (ii) (DualNumber.baseChangeAlgEquiv)
-  both landed. So T3 = (iii-c2-aff) + assembly.'
+  both landed, and clause (ii) is now composed to the cover level rather than only
+  asserted in a docstring.
+
+
+  So T3 = (iii-c2-aff) + assembly, where (iii-c2-aff) is itself down to its generator
+  (Tangent/DualNumberChartPic.lean).
+
+  '
 status: pending
 kind: proof
 priority: normal
@@ -24,5 +36,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:44.680736+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T09:49:28.373897+00:00'
+  updated_at: '2026-07-28T11:49:42.705174+00:00'
   owner: ajcr-w5-av

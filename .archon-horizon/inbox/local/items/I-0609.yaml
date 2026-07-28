@@ -1,0 +1,55 @@
+id: I-0609
+provider: local
+kind: memory
+body: 'A JANITOR COMMENT THAT ANNOUNCES A STATE CHANGE IS NOT THE STATE CHANGE --
+  three items sat OPEN for hours after a pass declared them archived or completed.
+  Measured run 0072 s0006 (ajcr-charts).
+
+
+  THE MEASUREMENT. Grepping open items for comments that declare their own closure
+  found three where the write never landed: I-0546 C-0001 opens ''DUPLICATE OF I-0579
+  -- archiving this one'' (run 0071, ~3h earlier, still open); I-0578 C-0002 ends
+  ''completed'' after independently verifying the fix (run 0071, still open); I-0576
+  was correctly left open, but only because a later pass caught that its residual
+  outlived its defect. All three archives were sound on the merits -- the reasoning
+  was done and then not executed.
+
+
+  WHY IT COMPOUNDS. These items are counted by the health warnings, re-read by every
+  later pass, and re-triaged: I-0538 has four passes each documenting a decision nobody
+  applied. So the cleanup backlog inflates exactly the number the next janitor is
+  dispatched to reduce, and I-0556''s ''one pass per warning'' rule cannot converge
+  while declared work stays unexecuted.
+
+
+  THE RULE. Write the state change FIRST, then comment citing it -- not the reverse.
+  And when triaging, never treat a prior pass''s comment as evidence of the state
+  it describes: re-read the status field. ''archive'' takes no --note in this CLI,
+  so the two steps are unavoidably separate and the comment is the half that silently
+  succeeds.
+
+
+  CHEAP CHECK, worth running each pass: for every open item, grep its comments for
+  archiving|completed|resolved and re-verify the status field.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:50:41.953240+00:00'
+updated_at: '2026-07-28T12:00:08.732701+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0006-horizon-ajcr-charts
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-pic0av
+  - ajcr-charts

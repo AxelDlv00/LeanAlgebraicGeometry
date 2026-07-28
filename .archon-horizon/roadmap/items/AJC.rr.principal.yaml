@@ -2,49 +2,48 @@ id: AJC.rr.principal
 title: Principal divisors have degree zero
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Principal divisors have degree zero. STILL OPEN (sorry at RiemannRoch/WeilDivisor.lean:1333,\
-  \ non-constant\nbranch of principal_degree_zero). Everything the leaf needs is now\
-  \ PROVED in this project -- and the leaf\nstill cannot consume it, for one import\
-  \ edge. That is the whole state.\n\nWHAT IS PROVED (ajc-rr, 2026-07-28, all sorry-free\
-  \ and axiom-clean):\n * the chi-ledger ported into AJC: RiemannRoch/Ledger/, 35\
-  \ files, unconditional at a curve. deg_divOf\n   comes from devissage/skyscraper,\
-  \ NOT from the refuted adelic bump, and its two Module.Finite HModule\n   binders\
-  \ discharge from [IsProper][Smooth 1][GeomIrred] alone.\n * Ledger/ResidueOneAlgClosed.lean\
-  \ -- residueDeg_eq_one_of_isAlgClosed, deg_eq_sum_of_isAlgClosed: over\n   kbar\
-  \ the ledger's residue weighting is a no-op, so its weighted deg agrees with the\
-  \ bare coefficient\n   sum of WeilDivisor.degree. principal_degree_zero carries\
-  \ [IsAlgClosed], so this is DISCHARGED.\n * Ledger/PrincipalTransport.lean:142 --\
-  \ degree_principal_eq_zero_curve, whose conclusion is LITERALLY\n   the open branch's:\
-  \ Scheme.WeilDivisor.degree (principal g) = 0, at the curve binders plus a coheight\n\
-  \   bound and [IsAlgClosed].\n * the index comparison, both directions and degree-preservingly\
-  \ (PrimeDivisor.equivNonGeneric +\n   CurveDivisorIndexBridge.degree_eq_sum_nonGeneric).\n\
-  \nWHY THE LEAF IS STILL BLOCKED -- OBSTRUCTION 1 SURVIVES, and an earlier version\
-  \ of this summary said it\nwas dead. CORRECTED (ajc-pic0av, run 0067 r3, measured):\
-  \ PrincipalTransport imports\nCurveDivisorIndexBridge, whose cone (50 files) CONTAINS\
-  \ RiemannRoch/WeilDivisor.lean. So the theorem with\nthe leaf's conclusion sits\
-  \ strictly DOWNSTREAM of the leaf, and substituting it is an import inversion --\n\
-  exactly what this node originally called \"decisive on its own\".\n\nThe distinction\
-  \ that misled me, worth keeping: the Ledger.ChiLedger cone alone is 22 files and\
-  \ contains\nNEITHER WeilDivisor nor Genus, so WeilDivisor.lean genuinely CAN import\
-  \ the chi-ledger proper. But the\ntheorem proving the leaf's statement is not in\
-  \ ChiLedger -- it is two layers up, past the index bridge,\nwhich necessarily reads\
-  \ WeilDivisor. The importable part of the ledger and the proving part differ.\n\n\
-  OBSTRUCTION 2 (the adelic bump) IS NOT ON THIS ROUTE AT ALL: deg_divOf does not\
-  \ use it. The hbump/hledger\nrefutations -- themselves vacuous at a curve (I-0548)\
-  \ -- are irrelevant here.\n\nTHE DECISION THE LEAF NEEDS, and it is a boundary decision\
-  \ rather than mathematics (posted on I-0493):\n 1. drop the sorried branch at WeilDivisor.lean:1333\
-  \ and let degree_principal_eq_zero_curve BE the\n    project's statement of the\
-  \ result. ajc-pic0av leans this way.\n 2. split CurveDivisorIndexBridge so the transport\
-  \ needs only its WeilDivisor-free half, then import\n    upward into the leaf.\n\
-  \ 3. leave both in place with cross-referencing docstrings.\nOwner of WeilDivisor.lean\
-  \ is ajc-pic0av; owner of Ledger/ is ajc-rr, so (2) is theirs.\n\nSECONDARY, and\
-  \ it blocks nothing at the leaf but does mean the ledger is UNVERIFIED against the\
-  \ rest of\nthe project: RiemannRoch/Ledger/ is imported by nothing outside itself,\
-  \ so none of its 547 declarations is\nelaborated by the root target (I-0362). Rooting\
-  \ it currently FAILS on a duplicate declaration --\nLedger/OverOpen.lean:79 and\
-  \ Cohomology/StructureSheafModuleK/SectionsBridge.lean:91 both declare\nCategoryTheory.Abelian.Ext.linearEquiv0_mk0_comp\
-  \ with different binders. Full scan: 3 real collisions.\nFiled as I-0576."
-status: pending
+summary: "Principal divisors have degree zero. CLOSED 2026-07-28 (run 0067, ajc-pic0av,\
+  \ commit 8b654f78d).\nRiemannRoch/WeilDivisor.lean has ZERO sorries. principal_degree_zero\
+  \ is proved at its own binders\n(smooth proper geometrically irreducible curve over\
+  \ kbar, regular in codim 1), axiom-clean\n([propext, Classical.choice, Quot.sound],\
+  \ no sorryAx), 8607 jobs, zero warnings.\n\nTHE IMPORT INVERSION WAS NEVER REAL,\
+  \ and that is the whole story of why this took four sessions.\nThree predecessor\
+  \ summaries -- including two of mine -- recorded the leaf as blocked because\nLedger/PrincipalTransport.degree_principal_eq_zero_curve,\
+  \ the theorem with the leaf's conclusion,\nhas a 51-file cone containing WeilDivisor.lean.\
+  \ That measurement is correct and irrelevant: it is\nthe cone of the CONSUMER, and\
+  \ PrincipalTransport is downstream only because it also imports the\nindex bridge\
+  \ for convenience. The INPUTS were always importable:\n  Ledger/OrdCompare     \
+  \        7 files, WeilDivisor-free\n  Ledger/ResidueOneAlgClosed   37 files, WeilDivisor-free\n\
+  \  Adelic/FiniteMapToP1          4 files, WeilDivisor-free\nUnion 42, containing\
+  \ neither WeilDivisor nor CurveCoheight nor CurveDivisorIndexBridge; cycle\ndetection\
+  \ over all modules with the three new edges returns zero.\n\nAdelic.coheight_le_one_of_curve\
+  \ is the one nobody had checked. It was called 'strictly downstream'\nin three roadmap\
+  \ summaries, in CurveCoheight.lean's own docstring and in the leaf's comment block,\n\
+  and its cone is FOUR files -- it is downstream of Genus, which WeilDivisor.lean\
+  \ already imported.\nSo the coheight bound, which CurveCoheight.lean carries as\
+  \ an explicit hypothesis precisely\nbecause it was thought unavailable upstream,\
+  \ is simply discharged at the leaf.\n\nTHE PROOF, and it needs NO case split. Hartshorne\
+  \ II.6.10's route (finite phi : C -> P^1 from a\nnon-constant f, then degree multiplicativity\
+  \ under finite pullback) is NOT taken and its two\ngeometric sub-lemmas are no longer\
+  \ owed by this project. Instead the ported chi-ledger\nchi(O(D)) = chi(O_C) + deg\
+  \ D gives deg(div g) = 0 by transporting chi along O(0) = O(-div g)\n(Ledger/ChiLedger.deg_divOf,\
+  \ a devissage induction over closed points with skyscraper quotients).\nThree carrier\
+  \ comparisons connect it to this project's degree, each DISCHARGED not assumed:\n\
+  \ * ORDERS: ordZ read additively = the Ring.ordFrac-based RationalMap.order, no\
+  \ sign correction\n   (Ledger/OrdCompare.ordZ_toAdd_eq_log_ordFrac);\n * INDEX SETS:\
+  \ PrimeDivisor = {x != eta}, reproved inline in two lines (le_antisymm of the\n\
+  \   coheight bound against one_le_coheight_of_ne_genericPoint) since CurveCoheight\
+  \ imports the leaf;\n * WEIGHTS: over kbar the residue weighting collapses to the\
+  \ bare coefficient sum\n   (Ledger/ResidueOneAlgClosed). This is where [IsAlgClosed]\
+  \ is load-bearing and it is NOT\n   bookkeeping -- over a general field the weighted\
+  \ and unweighted degrees are different numbers.\nSince the chain is uniform in f,\
+  \ the former constant/non-constant split is deleted: a constant f\nhas every coefficient\
+  \ zero and the same chain returns 0.\n\nSCOPE, stated plainly: the theorem carries\
+  \ [IsAlgClosed kbar], as it always did. The\ngeneral-field statement is NOT proved\
+  \ and is not what this node asked for. An earlier version of\nthis summary said\
+  \ the leaf had no IsAlgClosed binder; that was wrong, and ajc-rr repeated it from\n\
+  here -- the theorem has bound it since it was written."
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -66,7 +65,8 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.rr
-  updated_at: '2026-07-28T11:17:47.095132+00:00'
+  updated_at: '2026-07-28T11:58:17.895181+00:00'
   pinned_commits:
+  - 8b654f78d
   - 768b6cbd4
-  owner: ajc-rr
+  owner: ajc-pic0av

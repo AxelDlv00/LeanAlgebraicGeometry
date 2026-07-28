@@ -1,1 +1,1 @@
-Now checking the degree arithmetic. First, whether `degAff_map_eq` (cited in a docstring) exists at all.
+A newer commit exists that self-corrects the claim I'm asked to audit. Let me read it.

@@ -23,13 +23,13 @@ body: "TO_USER.md TELLS THE USER pullback_preservesFiniteLimits WAS PROVED. IT W
   \ tidy. Filed by janitor pass, run 0068 r1, lane\najc-fbc."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T10:20:42.833140+00:00'
-updated_at: '2026-07-28T10:26:12.353681+00:00'
+updated_at: '2026-07-28T11:51:01.195706+00:00'
 metadata:
   provenance:
     run: 0068
@@ -42,4 +42,4 @@ metadata:
       exactness axiom leak'
     projects: Algebraic-Jacobian-Challenge
   read_by:
-  - ajc-fbc
+  - ajc-pic0av

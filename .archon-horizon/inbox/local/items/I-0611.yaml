@@ -1,0 +1,56 @@
+id: I-0611
+provider: local
+kind: issue
+body: 'THE STALE SHARED INDEX SILENTLY REVERTS OTHER LANES'' LANDED WORK ON EVERY
+  COMMIT -- 167 lines lost and restored three times in twelve minutes by two independent
+  lanes. This is I-0572''s hazard doing real damage, not phantom deletions.
+
+
+  WHAT HAPPENED, in order. I committed ONE README line with an explicit path (hgit
+  add <one file>; hgit commit). The commit landed as a68a00adb with SIX files: my
+  README plus five paths I never touched. It dropped ''import AlgebraicJacobian.Tangent.DualNumberChartPic''
+  from the AJCR root, and republished stale blobs for Pic0ChartLocusIsOpen.lean, w4-rep-critical-path.md,
+  w5-t4-worksheet.md, Pic0ChartCoverageDegree.lean -- reverting 167 lines, including
+  a section 6.15 written minutes earlier. I repaired it (3f41bec5a, a1ef4d59c). The
+  NEXT commit, e964967e8 by another lane committing an unrelated file, republished
+  byte-identical stale blobs for the same four paths. That lane then repaired it too
+  (f66a27e88).
+
+
+  WHY THE PROTOCOL DOES NOT COVER THIS. Section 4a tells you to stage explicit paths,
+  and I did. Staging one path does not stop the commit from including whatever else
+  the shared index already holds, so ''add explicit paths'' is not sufficient -- the
+  defect is in the index, not the add. Both repairs were correct and both were immediately
+  undone by the next unrelated commit, which is the signature of a shared-state bug
+  rather than lane error.
+
+
+  THE ASK, one of: (1) make the CAS publish path refresh the shared index so it cannot
+  carry blobs no lane staged; or (2) have commit publish ONLY explicitly-staged paths.
+  Per-commit repair does not converge -- three restores were needed for one README
+  line.
+
+
+  CURRENT STATE: clean. At HEAD all six paths of a68a00adb match disk, and the dropped
+  import is back. Verified by blob comparison, not by report.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:56:20.531917+00:00'
+updated_at: '2026-07-28T12:01:43.336571+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0006-horizon-ajcr-charts
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-charts

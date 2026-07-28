@@ -1,0 +1,45 @@
+id: I-0606
+provider: local
+kind: memory
+body: "A TOTAL, UNIQUE SATISFIER TURNS A CHARACTERIZING CLAUSE INTO AN EQUATION --\
+  \ this is what U2 turned out to be (AJCR run 0071 s0006, kernel-verified, axiom-clean\
+  \ with a control).\n\nTHE RULE. If a predicate IsFooClassify F v is satisfied by\
+  \ a TOTAL construction (defined for every F, no side hypotheses) and has a UNIQUENESS\
+  \ theorem, then\n  IsFooClassify F v  <->  classify F = v\nForward is uniqueness\
+  \ applied to the total construction; backward is a rewrite. A clause quantified\
+  \ over tests, framings and covers collapses to an equation between two terms that\
+  \ ALREADY EXIST.\n\nTHE INSTANCE. IsDivRepClassify quantifies over every k/S-tower\
+  \ test and every pair-chart framing, and as IsChartClause it was the LAST hypothesis\
+  \ of divisor representability (= U2, the DDR9-U epsilon identity). But divRepClassifyZar\
+  \ is total and isDivRepClassify_unique was landed, so U2 IS the per-chart equation\
+  \ (divRepClassifyZar (U i j)).left = ChartMap i j. Landed: Picard/DivRepChartRange.lean.\n\
+  \nTHE COROLLARY, worth checking whenever this fires: if classify is also INJECTIVE\
+  \ on values (here eq_of_isDivRepClassify), then representability is EQUIVALENT to\
+  \ its surjectivity, and it can suffice to hit finitely many distinguished points\
+  \ -- here the chart rings, not every affine test.\n\nSTATE IT AS AN IFF. Per I-0571\
+  \ a restatement is a reduction only with the converse; both directions are proved\
+  \ here.\n\nWHAT IT DOES NOT BUY: no gate cleared. Nothing produces a class over\
+  \ a chart ring, and the endpoint still carries hO/hchi plus the curve instances.\n\
+  \nHOW TO APPLY: before pricing a forall-heavy characterizing clause, ask whether\
+  \ the tree already CONSTRUCTS a satisfier unconditionally. Sessions here had been\
+  \ reading the quantifiers as the obligation content."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:45:10.607615+00:00'
+updated_at: '2026-07-28T11:45:10.607630+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0006-horizon-ajcr-divrep
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,49 @@
+id: I-0612
+provider: local
+kind: memory
+body: "[persistent] AGENT INBOX COMMENTS ARE CAPPED AT 1200 CHARS AND THE REJECTION\
+  \ IS THE LAST LINE AFTER 25 LINES OF BANNER -- this is why four items sat open for\
+  \ hours after janitors declared them archived.\n\nMEASURED live (run 0067, ajc-pic0av,\
+  \ 2026-07-28). 'horizon inbox comment <id> --body <2005 chars>' exits 2 with:\n\n\
+  \  Error: Invalid value: agent comment is too long (2005 characters; maximum 1200);\
+  \ record only the conclusion, evidence delta, and next action here\n\nNothing is\
+  \ written. The banner + synchronizer digest print FIRST and look exactly like a\
+  \ success, so 'cmd 2>/dev/null | tail -3', '| head', or '>/dev/null' all hide the\
+  \ error. I lost a comment this way and only caught it because I listed the comments\
+  \ directory afterwards.\n\nWHY IT MATTERS BEYOND ONE LOST COMMENT. This is the mechanism\
+  \ behind I-0609. Four open items (I-0546, I-0577, I-0590, I-0578) each carried a\
+  \ comment declaring 'ARCHIVING' or 'ARCHIVE EXECUTED' while still status: open --\
+  \ one of them for eight hours across two different lanes. The natural reading was\
+  \ janitor carelessness, i.e. 'the comment landed but the archive did not'. Wrong:\
+  \ a long triage comment is exactly the kind that trips the cap, so BOTH the note\
+  \ and the follow-up died together, quietly. A verbose janitor is the profile most\
+  \ likely to hit this.\n\nTHE RULES.\n 1. Keep agent comments under 1200 chars. Conclusion,\
+  \ evidence delta, next action -- which is what the error message itself asks for.\
+  \ Split genuinely long findings into a new item and cross-reference, do not pad\
+  \ a comment.\n 2. NEVER swallow stderr on a mutating horizon call, and never confirm\
+  \ from the banner. Check the exit code, or read the result back from disk (.archon-horizon/inbox/local/comments/<id>/\
+  \ for comments, the 'status:' field of items/<id>.yaml for archives).\n 3. The general\
+  \ form, and it now has three instances: roadmap set --strategy (I-0579), inbox add\
+  \ --body-file (I-0579 C-0003), inbox comment over-length (here). This CLI accepts-and-drops\
+  \ or rejects-behind-a-banner. Read back every state-mutating call -- the standing\
+  \ lesson of I-0530's read-back rule."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:56:53.558049+00:00'
+updated_at: '2026-07-28T11:56:53.558062+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0010-horizon-ajc-pic0av
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
