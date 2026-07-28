@@ -87,7 +87,23 @@ theorem probeIffCurve :
       Subsingleton (Sheaf.HModule (C.left.moduleKSheaf k) 1) :=
   subsingleton_hModule_one_baseChangeField_iff_curve C κ
 
-/-! ### §3 the producer and the `UniformVanishing` instance -/
+/-! ### §3 the scope translation, the producer, and the `UniformVanishing` producer -/
+
+/-- Synthesis site: the scope translation `Subsingleton (H¹(𝒪_C)) ↔ genus C = 0`.  Landed as a
+theorem after a review found it asserted in prose at three sites; probed here because every scope
+claim in the module rests on it. -/
+theorem probeGenusIff :
+    (letI : C.left.Over (Spec (CommRingCat.of k)) := .ofHom C.hom
+     Subsingleton (Sheaf.HModule (C.left.moduleKSheaf k) 1)) ↔ genus C = 0 :=
+  subsingleton_hModule_one_iff_genus_eq_zero C
+
+/-- Synthesis site: the producer in `genus C = 0` form. -/
+theorem probeProducerGenus (hg : genus C = 0) : UniformBaseDivisor C 0 :=
+  uniformBaseDivisor_zero_of_genus_eq_zero C hg
+
+/-- Synthesis site: `UniformVanishing` in `genus C = 0` form. -/
+theorem probeUniformVanishingGenus (hg : genus C = 0) : UniformVanishing C :=
+  uniformVanishing_of_genus_eq_zero C hg
 
 /-- Synthesis site: the producer for `UniformBaseDivisor`. -/
 theorem probeProducer
@@ -126,6 +142,22 @@ end Synthesis
 #print axioms probeIffCurve
 #print axioms probeProducer
 #print axioms probeUniformVanishing
+#print axioms probeGenusIff
+#print axioms probeProducerGenus
+#print axioms probeUniformVanishingGenus
+
+-- The genus-form declarations, named directly.  #print axioms errors on an unknown identifier,
+-- so listing every cited name here is what makes a phantom name impossible to ship green.
+#print axioms AlgebraicGeometry.subsingleton_hModule_one_iff_genus_eq_zero
+#print axioms AlgebraicGeometry.uniformBaseDivisor_zero_of_genus_eq_zero
+#print axioms AlgebraicGeometry.uniformVanishing_of_genus_eq_zero
+#print axioms AlgebraicGeometry.Scheme.subsingleton_h1Cokₗ_unit_baseChangeField_iff
+#print axioms AlgebraicGeometry.Scheme.subsingleton_hModule_one_moduleKSheaf_baseChangeField_iff
+#print axioms AlgebraicGeometry.subsingleton_hModule_one_baseChangeField_iff_curve
+#print axioms AlgebraicGeometry.uniformBaseDivisor_zero_of_subsingleton
+#print axioms AlgebraicGeometry.uniformVanishing_of_subsingleton_h1
+#print axioms AlgebraicGeometry.Scheme.faithfullyFlat_of_field_extension
+#print axioms AlgebraicGeometry.moduleFinite_genus_carrier
 
 -- The two consumed statements this file's results are composed with, measured here too so the
 -- report does not have to cite another script for them.

@@ -450,8 +450,16 @@ carries only its second antecedent.
 
 `UniformBaseDivisor C d` — one degree bound `d` such that over *every* extension `κ/k` some
 divisor of degree `≤ d` already has vanishing `H¹` — is **the single remaining gap** in
-extension-uniformity, and it is open in AJC and in AJCR both.  The threshold produced here is
-`d + genus C`, an honest constant of `C` with no `κ` in it.
+extension-uniformity.  It is open in AJC **for `genus C ≥ 1`**; at genus 0 it is discharged by
+`Ledger/VanishingFieldDescent.uniformBaseDivisor_zero_of_genus_eq_zero`.  The threshold produced
+here is `d + genus C`, an honest constant of `C` with no `κ` in it.
+
+**Two corrections to what this paragraph used to say**, both found by a fresh-context review of
+the round that was itself correcting this file's gap index — which is how a stale claim survives a
+correction pass. (i) It said the gap is flatly "open in AJC", with no genus qualifier. (ii) It said
+"open in AJC and in AJCR both", which the same round withdrew twelve lines above and in
+`Ledger/FiberBound.lean`: AJCR *does* have the content, on a carrier 88–139 files away. Grep the
+claim's text, not the file you edited.
 
 The cover argument is supplied by the caller, since `genus_baseChangeField` reads the genus on
 one; on the challenge curve `Adelic.LaurentChartData.pullbackSquare` produces it. -/

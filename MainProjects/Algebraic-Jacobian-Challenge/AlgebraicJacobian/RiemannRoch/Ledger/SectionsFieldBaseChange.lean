@@ -71,8 +71,13 @@ Three statements stay apart, as everywhere in this cluster:
 1. **single-field bounded vanishing** — closed at AJC's curve (`Ledger/FiberBound.lean`),
    untouched here;
 2. **extension-uniformity** — this file advances *one of its two inputs* and nothing else.  It
-   says nothing about the base-divisor degree bound (input (2)), which remains open in AJC and
-   AJCR both;
+   says nothing about the base-divisor degree bound (input (2)), which remains open in AJC for
+   `genus C ≥ 1`.  **Two clauses of this sentence were stale and are corrected here**: it said
+   input (2) is open "in AJC and AJCR both", which was withdrawn elsewhere in the cluster (AJCR
+   *has* the content, on a carrier 88–139 files away), and it gave no genus qualifier, though
+   genus 0 is discharged by `Ledger/VanishingFieldDescent.lean`.  This was the **fifth** surviving
+   copy of the withdrawn claim and it was found by grepping the claim's *text* rather than the
+   files being edited — the correction pass that withdrew it never opened this file;
 3. **global generation** — untouched, and in particular nothing here makes generation uniform
    over extensions.
 -/

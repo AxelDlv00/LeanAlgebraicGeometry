@@ -18,8 +18,10 @@ consumers and **no producer anywhere in AJC**.
 
 This file supplies a producer.  It is a genuine one — `uniformBaseDivisor_zero_of_subsingleton`
 below concludes `UniformBaseDivisor C 0` from a hypothesis about `C` alone, with no `κ` in it —
-and it is **narrow**: its hypothesis is `Subsingleton (H¹(𝒪_C))`, which for AJC's curve means
-`genus C = 0`.  Read the scope section before citing it, because the distance between "a
+and it is **narrow**: its hypothesis is `Subsingleton (H¹(𝒪_C))`, which for AJC's curve is
+equivalent to `genus C = 0` (`subsingleton_hModule_one_iff_genus_eq_zero`, a theorem of this file
+— it was prose in an earlier version, and a review pointed out that every scope claim below rests
+on it).  Read the scope section before citing it, because the distance between "a
 producer exists" and "the input is discharged" is exactly where this cluster has gone wrong
 before.
 
@@ -50,17 +52,26 @@ vanishing established over *any* single extension — however large, e.g. `k̄` 
 
 ## What is proved, and what it does and does not give
 
-* `subsingleton_h1_unit_baseChangeField_iff` — the equivalence above, on a cover.  No hypothesis
-  on `κ/k`: not finiteness, not separability, not perfectness, not algebraic closedness.
-* `subsingleton_h1_unit_baseChangeField_iff_curve` — the same with the cover discharged, so it
+* `Scheme.subsingleton_h1Cokₗ_unit_baseChangeField_iff` — the equivalence above, on the Čech
+  carrier.  No hypothesis on `κ/k` (not finiteness, separability, perfectness or algebraic
+  closedness) and, measured rather than claimed, **no curve hypothesis at all**.
+* `Scheme.subsingleton_hModule_one_moduleKSheaf_baseChangeField_iff` — the same on the
+  `Sheaf.HModule` carrier that the `Ledger` divisor statements bind, across the `Ext` universe
+  annotation hop of `Ledger/GenusBridge.lean`.
+* `subsingleton_hModule_one_baseChangeField_iff_curve` — the same with the cover discharged, so it
   carries the three curve binders and nothing else.
+* `subsingleton_hModule_one_iff_genus_eq_zero` — the scope translation, as a **theorem**:
+  `Subsingleton (H¹(𝒪_C)) ↔ genus C = 0`.
 * `uniformBaseDivisor_zero_of_subsingleton` — **the producer**: `UniformBaseDivisor C 0` from
   `Subsingleton (H¹(𝒪_C))`.  The witness at each `κ` is the zero divisor: `deg_κ 0 = 0 ≤ 0`, and
   its `H¹` vanishes by the ascent composed with `divisorSheafZeroIso`.
 * `uniformVanishing_of_subsingleton_h1` — chaining it through
   `GenusFieldInvariance.uniformVanishing_of_uniformBaseDivisor_curve`: **`UniformVanishing C` is
-  a theorem when `H¹(𝒪_C)` vanishes.**  This is the first unconditional instance of
-  `UniformVanishing` in AJC — previously it had none, only the reduction.
+  a theorem when `H¹(𝒪_C)` vanishes.**  This is the first *producer* of `UniformVanishing` in AJC
+  — previously the type had none, only the reduction.  It is an **implication, not an
+  unconditional instance**, and AJC exhibits no curve satisfying its hypothesis; see §NON-VACUITY.
+* `uniformBaseDivisor_zero_of_genus_eq_zero`, `uniformVanishing_of_genus_eq_zero` — the same two
+  with the hypothesis in the `genus C = 0` form a consumer meets.
 
 ## SCOPE: what this does NOT do, stated precisely
 
@@ -69,9 +80,8 @@ mistaken for.
 
 1. **It does not close input (2) in general.**  `UniformBaseDivisor C d` for `d` large is what a
    positive-genus curve needs, and this file produces only the `d = 0` case under a hypothesis
-   that forces `genus C = 0`.  For `genus C ≥ 1`, `Subsingleton (H¹(𝒪_C))` is **false**
-   (`Ledger/GenusBridge.moduleFinite_genus_carrier` makes `genus C` the dimension of an honestly
-   finite-dimensional space, so it is nonzero exactly when that space is nontrivial), and the
+   equivalent to `genus C = 0` (`subsingleton_hModule_one_iff_genus_eq_zero`).  For `genus C ≥ 1`
+   that hypothesis is therefore **false** — by the theorem, not by the docstring — and the
    producer says nothing.  So the gap named by the previous round is **narrowed, not closed**:
    it now has a producer with a restrictive hypothesis rather than no producer at all.
 2. **It is not extension-uniformity for positive genus.**  `uniformVanishing_of_subsingleton_h1`
@@ -225,8 +235,9 @@ end Scheme
 §2 with the cover discharged (`GenusFieldInvariance.nonempty_affineCoverMVSquare_of_curve`) and
 composed with `divisorSheafZeroIso` to land on the carrier `UniformBaseDivisor` binds.
 
-Read §"SCOPE" of the module docstring on what the hypothesis costs: for AJC's curve
-`Subsingleton (H¹(𝒪_C))` is `genus C = 0`, so these are genus-0 statements. -/
+Read §"SCOPE" of the module docstring on what the hypothesis costs: `Subsingleton (H¹(𝒪_C))` is
+equivalent to `genus C = 0` (`subsingleton_hModule_one_iff_genus_eq_zero`, below), so these are
+genus-0 statements. -/
 
 section Producer
 
@@ -250,17 +261,60 @@ theorem subsingleton_hModule_one_baseChangeField_iff_curve (κ : Type u) [Field 
   obtain ⟨S⟩ := nonempty_affineCoverMVSquare_of_curve C
   exact Scheme.subsingleton_hModule_one_moduleKSheaf_baseChangeField_iff κ S
 
+set_option synthInstance.maxHeartbeats 800000 in
+-- The `Module.Finite` instance for the genus carrier is found through the `Ext`/`Sheaf.HModule`
+-- annotation diamond of `Ledger/GenusBridge.lean`, whose synthesis exceeds the default budget.
+omit [GeometricallyIntegral C.hom] in
+/-- **The hypothesis of §3 is exactly `genus C = 0`** (★): `Subsingleton (H¹(𝒪_C)) ↔ genus C = 0`.
+
+Proved rather than asserted, because it is the sentence that makes every scope claim in this
+file checkable.  An earlier version of this module stated the identification in prose at three
+sites and cited `Ledger/GenusBridge.moduleFinite_genus_carrier`, which is only the finiteness
+half — enough for `←`, and not a proof of either direction.  A fresh-context review flagged it;
+this is the theorem.
+
+Both directions are short and neither is free:
+
+* `→` (the one that limits scope, and the one the prose most needed): `finrank` of a subsingleton
+  is `0`, across the `Ext` universe hop of `Ledger/GenusBridge.lean`.  No finiteness needed.
+* `←`: needs `moduleFinite_genus_carrier`, since `finrank = 0` forces triviality only in finite
+  dimension — this is the standing `Subsingleton`-vs-`finrank` asymmetry again, here as the
+  reason the two directions have different hypotheses rather than as a caveat. -/
+theorem subsingleton_hModule_one_iff_genus_eq_zero :
+    (letI : C.left.Over (Spec (CommRingCat.of k)) := .ofHom C.hom
+     Subsingleton (Sheaf.HModule (C.left.moduleKSheaf k) 1)) ↔ genus C = 0 := by
+  letI : C.left.Over (Spec (CommRingCat.of k)) := .ofHom C.hom
+  haveI hfin : Module.Finite k (Scheme.HModule k (Scheme.toModuleKSheaf C) 1) :=
+    moduleFinite_genus_carrier C
+  constructor
+  · intro h
+    have h2 : Subsingleton (Scheme.HModule k (Scheme.toModuleKSheaf C) 1) :=
+      (Abelian.Ext.chgUnivLinearEquiv (R := k)).toEquiv.subsingleton_congr.mp h
+    haveI := h2
+    change Module.finrank k (Scheme.HModule k (Scheme.toModuleKSheaf C) 1) = 0
+    exact Module.finrank_zero_of_subsingleton
+  · intro h
+    change Module.finrank k (Scheme.HModule k (Scheme.toModuleKSheaf C) 1) = 0 at h
+    haveI h2 : Subsingleton (Scheme.HModule k (Scheme.toModuleKSheaf C) 1) :=
+      Module.finrank_zero_iff.mp h
+    exact (Abelian.Ext.chgUnivLinearEquiv (R := k)).toEquiv.subsingleton_congr.mpr h2
+
 /-- **The producer** (★★): `UniformBaseDivisor C 0` from vanishing of `H¹(𝒪_C)`.
 
 This is the first declaration in AJC whose *conclusion* is `UniformBaseDivisor`, which is the
 producer/consumer test `Ledger/GenusFieldInvariance.lean` applied to record that the type had
-five consumers and none.  The witness at each `κ` is the **zero divisor**: `deg_κ 0 = 0 ≤ 0`, and
+consumers and none.  The witness at each `κ` is the **zero divisor**: `deg_κ 0 = 0 ≤ 0`, and
 its `H¹` vanishes by §2's ascent composed with `divisorSheafZeroIso` at `κ`.
 
+(The earlier record of that test said "five consumers".  Re-measured: **three** signature sites —
+`ExtensionUniformity.lean:364`, `GenusFieldInvariance.lean:442` and `:461` — plus the `def`.  A
+figure re-asserted across files instead of re-counted is the same failure as a prose claim carried
+without checking, so it is corrected rather than repeated.)
+
 **Its hypothesis is restrictive and that is the honest content of the result.**  For AJC's curve
-`Subsingleton (H¹(𝒪_C))` says `genus C = 0` (`Ledger/GenusBridge.moduleFinite_genus_carrier`
-makes `genus C` the dimension of a genuinely finite-dimensional space, so it vanishes exactly
-when that space is trivial).  So this closes input (2) for rational curves and says **nothing**
+`Subsingleton (H¹(𝒪_C))` is *equivalent* to `genus C = 0` — proved above as
+`subsingleton_hModule_one_iff_genus_eq_zero`, not asserted here.  So this closes input (2) for
+rational curves and says **nothing**
 about `genus C ≥ 1`, where the input remains a missing production from geometry.  See the module
 docstring §SCOPE item 1. -/
 theorem uniformBaseDivisor_zero_of_subsingleton
@@ -280,12 +334,20 @@ theorem uniformBaseDivisor_zero_of_subsingleton
   exact (Sheaf.HModule.mapEquiv (Scheme.divisorSheafZeroIso κ) 1).toEquiv.subsingleton_congr.mpr
     hκ
 
-/-- **`UniformVanishing C` is a theorem when `H¹(𝒪_C)` vanishes** (★★) — the first
-unconditional instance of extension-uniform bounded vanishing in AJC.
+/-- **`UniformVanishing C` is a theorem when `H¹(𝒪_C)` vanishes** (★★) — the first *producer* of
+extension-uniform bounded vanishing in AJC.
 
-Before this, `UniformVanishing` had **no** instances: `Ledger/ExtensionUniformity.lean` stated it
+Before this, `UniformVanishing` had **no** producer: `Ledger/ExtensionUniformity.lean` stated it
 and `Ledger/GenusFieldInvariance.lean` reduced it to `UniformBaseDivisor`, but nothing produced
-either.  The uniform threshold here is `0 + genus C = 0`.
+either.  The uniform threshold is `0 + genus C`, which is `0` exactly when the hypothesis holds
+(`subsingleton_hModule_one_iff_genus_eq_zero`).
+
+**This is an implication, not an unconditional instance.**  An earlier version of this docstring
+said "the first unconditional instance", which is false: the statement carries an explicit
+hypothesis, and AJC discharges it at no curve (§NON-VACUITY in the module docstring).  The word
+survived the round that added the non-vacuity caveat, which is exactly how a caveat fails —
+it corrected the weaker phrase and left the stronger one standing.  Caught by a fresh-context
+review.
 
 **Genus 0, and the general case is untouched.**  Composing `uniformBaseDivisor_zero_of_subsingleton`
 with `GenusFieldInvariance.uniformVanishing_of_uniformBaseDivisor_curve` inherits that theorem's
@@ -296,6 +358,26 @@ theorem uniformVanishing_of_subsingleton_h1
          Subsingleton (Sheaf.HModule (C.left.moduleKSheaf k) 1)) :
     UniformVanishing C :=
   uniformVanishing_of_uniformBaseDivisor_curve C (uniformBaseDivisor_zero_of_subsingleton C h)
+
+/-! ### The same two results with the hypothesis in genus form
+
+`genus C = 0` is how a consumer meets this hypothesis, and having the translation as a theorem
+(`subsingleton_hModule_one_iff_genus_eq_zero`) rather than a docstring sentence is what stops
+this file's scope claims from resting on prose. -/
+
+/-- **`UniformBaseDivisor C 0` for a curve of genus zero** (★★). -/
+theorem uniformBaseDivisor_zero_of_genus_eq_zero (hg : genus C = 0) :
+    UniformBaseDivisor C 0 :=
+  uniformBaseDivisor_zero_of_subsingleton C
+    ((subsingleton_hModule_one_iff_genus_eq_zero C).mpr hg)
+
+/-- **Extension-uniform bounded vanishing for a curve of genus zero** (★★).
+
+Read `§NON-VACUITY` in the module docstring before citing this: AJC exhibits **no** curve with
+`genus C = 0`, so it is a true implication with no known instance, not a settled case. -/
+theorem uniformVanishing_of_genus_eq_zero (hg : genus C = 0) : UniformVanishing C :=
+  uniformVanishing_of_subsingleton_h1 C
+    ((subsingleton_hModule_one_iff_genus_eq_zero C).mpr hg)
 
 end Producer
 
