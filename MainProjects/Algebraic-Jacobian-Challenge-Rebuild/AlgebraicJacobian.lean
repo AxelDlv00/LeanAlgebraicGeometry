@@ -492,6 +492,7 @@ import AlgebraicJacobian.Picard.Pic0ChartLocusFibreField
 import AlgebraicJacobian.Picard.Pic0ChartLocusClass
 import AlgebraicJacobian.Picard.Pic0ChartTestPoint
 import AlgebraicJacobian.Picard.Pic0ChartLocus
+import AlgebraicJacobian.Picard.Pic0ChartShiftedDatum
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivGen
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivClose
 import AlgebraicJacobian.Picard.DivSchemeUnivFibreKerSpan
