@@ -129,8 +129,9 @@ def IsChartClause
 set_option maxHeartbeats 1600000 in
 -- The `letI` re-topologization of the tower test as a `ChartRing`-algebra makes the
 -- elaborator unify TWO algebra structures on `T` (through `omega`, and the ambient
--- `k`/`S`-tower) while `divRepPullAt` unfolds `mapAlgHom`; the defeq check is the same
--- profile as `divRepPullAt_awayMul_compat`, well past the default budget.
+-- `k`/`S`-tower) while `divRepPullAt` unfolds `mapAlgHom`; same defeq profile as
+-- `divRepPullAt_awayMul_compat`, well past the default budget.
+set_option linter.unusedSectionVars false in
 /-- **The `ω`-quantifier of `IsChartClause` adds no strength**: it suffices to have the
 clause at the *identity point* of every chart, which is exactly U2 as the worksheet states
 it (`informal/w4-ddr9-worksheet.md` §3.1: `S = R_Z`, `ω = id`, `w = divCarveChartMk`).
@@ -152,12 +153,6 @@ Note the curve-properness/irreducibility instances are genuinely unused here: th
 a base-change bookkeeping fact about the clause, with no curve geometry in it (the linter is
 silenced rather than `omit`-ed, because the ambient curve instances of this section are
 mutually referenced and cannot be dropped individually). -/
-set_option maxHeartbeats 1600000 in
--- The `letI` re-topologization of the tower test as a `ChartRing`-algebra makes the
--- elaborator unify TWO algebra structures on `T` (through `omega`, and the ambient
--- `k`/`S`-tower) while `divRepPullAt` unfolds `mapAlgHom`; same defeq profile as
--- `divRepPullAt_awayMul_compat`, well past the default budget.
-set_option linter.unusedSectionVars false in
 theorem IsChartClause.of_id
     {U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
       DivFamZar C (ChartRing i j) pi g}
