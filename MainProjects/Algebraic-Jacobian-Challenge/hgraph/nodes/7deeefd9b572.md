@@ -1,0 +1,19 @@
+---
+author: sync
+content_type: theorem
+created: '2026-07-28T18:12:20'
+decl: AlgebraicGeometry.isAffineOpen_preimage_chartOpen
+docstring: 'The preimage of each standard chart of `ℙ¹` under an affine (e.g. finite)
+  morphism is an
+
+  affine open.'
+file: AlgebraicJacobian/RiemannRoch/Ledger/MapToP1.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.isAffineOpen_preimage_chartOpen
+type: lean
+updated: '2026-07-28T18:12:20'
+---
+theorem isAffineOpen_preimage_chartOpen [IsAffineHom π] (i : Fin 2) :
+    IsAffineOpen (π ⁻¹ᵁ P1.chartOpen k i) :=
+  (P1.isAffineOpen_chartOpen k i).preimage π

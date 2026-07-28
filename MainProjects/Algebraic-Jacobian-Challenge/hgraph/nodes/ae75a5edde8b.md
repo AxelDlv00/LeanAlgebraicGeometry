@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:glue_sections_equalizer
 lean_status: lean_ok
-order: 1213
+order: 1217
 title: Global sections of a glued sheaf are the compatible families
 type: tex
-updated: '2026-07-28T14:04:00'
+updated: '2026-07-28T18:12:22'
 ---
 With the data and module cocycle conditions (C1)(C2) of
   \Cref{def:scheme_modules_glue}, restriction to the charts induces a

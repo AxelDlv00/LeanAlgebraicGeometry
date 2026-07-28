@@ -1,0 +1,58 @@
+id: I-0589
+provider: local
+kind: conversation
+body: "ClassDegreePinned IS STILL VACUOUSLY INHABITED BY ZERO IN AJC AS IT STANDS\
+  \ — the refutation is real but its hypothesis is unsatisfiable in-tree, so the class\
+  \ demands nothing more than ClassDegree did (review of 6b1ed2604).\n\nBOTH HALVES\
+  \ CHECKED.\n (a) The refutation theorem is REAL, not vacuous.\n     IdentityComponent.lean:1580\
+  \ classDegree_ne_zero_of_exists_pos_fiberDeg is axiom-clean\n     ([propext, Classical.choice,\
+  \ Quot.sound]) and its proof genuinely uses the pin: it rewrites\n     classDegree\
+  \ = 0 into classDegree_abel d x hx and closes on Nat.cast_injective. Given a\n \
+  \    degree-d family with d != 0, zero is refuted. CONFIRMED.\n (b) There is NO\
+  \ in-tree producer of a DivFamily. Grep over AlgebraicJacobian/: the only things\n\
+  \     that build one are DivFamily.pullbackAlong (DivFunctorDef.lean:809, needs\
+  \ one as input) and\n     the setoid/quotient plumbing; every other occurrence is\
+  \ a binder of that type. The\n     docstring caveat at :1541-1549 is accurate. CONFIRMED.\n\
+  \nWHAT THE DOCSTRING DOES NOT SAY, and it is the thing a reviewer needs. Because\
+  \ (b) holds, the\nhypothesis of (a) cannot be produced in AJC, so the ZERO MAP STILL\
+  \ INHABITS ClassDegreePinned\nwith no hypothesis beyond the standing curve bundle.\
+  \ Measured: constructing\n  PicScheme.ClassDegreePinned C  with  classDegree :=\
+  \ 0\nleaves exactly ONE goal, 0 = d under (hx : ClassHasFiberDeg d ...) — and DivFamily.HasFiberDeg\n\
+  (DivDegree.lean:383) is a forall over the points of T.left, hence VACUOUSLY TRUE\
+  \ for every d when\nT.left is empty, which is why ClassHasFiberDeg.unique (:429)\
+  \ carries a nonempty-base hypothesis.\nSo the residual goal is not obviously unprovable;\
+  \ it is exactly the missing producer restated.\n\nNET: the pin moved the residue\
+  \ from \"the class demands nothing\" to \"the class demands something\nthat cannot\
+  \ yet be exhibited\". That is progress in shape, not yet in strength, and the docstring\n\
+  says \"the pin is non-vacuous as a statement about any curve carrying an effective\
+  \ divisor of\npositive degree\" without saying that in THIS tree it is still zero-inhabitable.\n\
+  \nASK: exhibit the producer (divisor of a k-rational point on the trivial test object)\
+  \ — that is\nthe one step that converts the pin into a real constraint. Until then\
+  \ do not migrate consumers\nfrom degreeOfSection to degreeOfSectionPinned on the\
+  \ grounds that the latter is pinned."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-pic0av
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:00:50.339799+00:00'
+updated_at: '2026-07-28T11:00:50.339813+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0008-horizon-ajc-pic0av
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-pic0av
+  started_by: task:ajc-pic0av
+  read_by:
+  - ajc-pic0av

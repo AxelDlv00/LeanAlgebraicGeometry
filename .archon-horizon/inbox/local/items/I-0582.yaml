@@ -1,0 +1,55 @@
+id: I-0582
+provider: local
+kind: memory
+body: "A MIS-SCOPED OBLIGATION IS REAL, AND THE WAY TO PROVE IT IS THE PROBE/CONTROL\
+  \ PAIR AT MATCHED BINDERS — verified adversarially on AJC ajc-fbc, run 0068 r1.\n\
+  \nTHE PATTERN. AJC carried pullback_preservesMonomorphisms (flat g^* preserves monos\
+  \ of ARBITRARY O_S-modules) as \"the sole residual content of flat left-exactness\"\
+  \ for three sessions. It was posed at the strongest generality that makes the sentence\
+  \ true; no consumer instantiates it there. Proving the QUASI-COHERENT statement\
+  \ instead (pullback_preservesKernel_of_isQuasicoherent) discharges every consumer,\
+  \ sorry-free. Two observations did it, both cheap and both reusable:\n * CONE-CANCELLATION:\
+  \ F preserves lim K and F cmp G preserves lim K ==> G preserves lim (K cmp F). Converts\
+  \ \"the composite (~) cmp g^* is exact\" into \"g^* is exact on tilde-SHAPED diagrams\"\
+  \ — the form a consumer holds.\n * FULLNESS UPGRADES SHAPE TO CLASS: tilde is full,\
+  \ so a map between objects of its essential image IS tilde.map of a module map,\
+  \ not merely isomorphic to one. That turns \"kernels of maps f~\" into \"kernels\
+  \ of ALL maps of quasi-coherent modules\".\n * mathlib ShortComplex.mapHomologyIso\
+  \ never wanted PreservesHomology: LeftHomologyData.IsPreservedBy needs one KERNEL\
+  \ (the cokernel half is free for a left adjoint). So a homology comparison costs\
+  \ one kernel per degree, not global exactness.\n\nHOW TO PROVE THE BYPASS IS REAL,\
+  \ not a relabelling. Clean #print axioms lines prove nothing alone. What convinced\
+  \ me as an adversarial reviewer:\n * a CONTROL reaching the SAME conclusion via\
+  \ the old route, which must still report sorryAx; AND\n * that control stated at\
+  \ the PROBE'S OWN BINDERS. A control stated more generally than the probe is a rigged\
+  \ comparison — the extra generality could be the whole reason it leaks. I re-derived\
+  \ it at matched binders ([IsAffine S] [IsAffine S'] plus the two unused quasi-coherence\
+  \ hypotheses) and it still reported sorryAx, which is what makes the pair a measurement.\n\
+  \ * DROP-EACH-BINDER tests: removing [Flat g], the quasi-coherence hypotheses, or\
+  \ [IsAffine S'] each makes the application fail to elaborate. All load-bearing;\
+  \ no hidden vacuity.\n * a satisfiability witness that DISCHARGES its instance binders\
+  \ rather than assuming them (see I-0581).\n\nASK BEFORE PRICING A WALLED LEAF: what\
+  \ does my consumer instantiate this at? If the answer is narrower than the statement,\
+  \ prove the narrow one."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T10:32:53.295580+00:00'
+updated_at: '2026-07-28T10:32:53.295592+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0004-horizon-ajc-fbc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge

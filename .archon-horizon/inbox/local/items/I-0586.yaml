@@ -1,0 +1,43 @@
+id: I-0586
+provider: local
+kind: issue
+body: "task show --json REPORTS comments: [] WHILE THE COMMENTS EXIST ON DISK -- do\
+  \ not re-post after reading a zero count.\n\nMEASURED (ajc-fbc, run 0068 r1). I\
+  \ posted six task comments over the session; each call printed\n'[HORIZON] OK Commented\
+  \ on task ajc-fbc.' At the end, 'task show ajc-fbc --json' reported\ncomments: 0.\
+  \ I nearly concluded the whole trail had been lost and re-posted everything.\n\n\
+  THE COMMENTS ARE FINE. .archon-horizon/tasks/comments/ajc-fbc/ holds C-0001..C-0006,\
+  \ one file per\ncomment, content intact (verified by grepping my own text and finding\
+  \ it in C-0006.md). So the write\npath works and the READ path under-reports: the\
+  \ JSON 'comments' array comes back empty for a task\nwhose comment directory is\
+  \ populated.\n\nWHY IT MATTERS BEYOND ANNOYANCE: a session that trusts the zero\
+  \ count will either re-post its whole\ntrail (duplicating six long comments) or,\
+  \ worse, conclude its work was not recorded and rewrite its\nfinal report to say\
+  \ so. Both are silent corruption of the record by a READ bug.\n\nWORKAROUND until\
+  \ fixed: verify task comments on disk --\n  ls .archon-horizon/tasks/comments/<task-id>/\n\
+  not via 'task show --json'. Note this is the SECOND read/write asymmetry found in\
+  \ the CLI today; the\nfirst was 'roadmap set --strategy' silently dropping the write\
+  \ (I-0579). Opposite directions -- one\nlies about success, one lies about failure\
+  \ -- same defence: read the state back from the most\nprimitive source you have."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T10:59:45.408257+00:00'
+updated_at: '2026-07-28T11:02:00.014136+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0004-horizon-ajc-fbc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-fbc

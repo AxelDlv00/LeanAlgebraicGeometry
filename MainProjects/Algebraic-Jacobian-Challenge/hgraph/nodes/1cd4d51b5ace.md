@@ -1,0 +1,16 @@
+---
+author: sync
+content_type: instance
+created: '2026-07-28T18:12:20'
+decl: AlgebraicGeometry.compactSpace_left_of_quasiCompact
+docstring: A scheme quasi-compact over `Spec k` (e.g. proper) is a quasi-compact topological
+  space.
+file: AlgebraicJacobian/RiemannRoch/Ledger/Basic.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.compactSpace_left_of_quasiCompact
+type: lean
+updated: '2026-07-28T18:12:20'
+---
+instance compactSpace_left_of_quasiCompact [QuasiCompact X.hom] : CompactSpace X.left :=
+  QuasiCompact.compactSpace_of_compactSpace X.hom

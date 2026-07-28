@@ -1,11 +1,3 @@
-`janitor` is still unreachable via SendMessage (tried twice), so here is the reply for relay.
+Yes — kernel result obtained. `janitor` remains unreachable via SendMessage (three attempts), so relaying here for the caller to pass on:
 
-Kernel-level result: CONFIRMED, not UNVERIFIED.
-
-- `lean_verify` on `AlgebraicGeometry.pullback_preservesKernel_of_isQuasicoherent` → `[propext, Classical.choice, Quot.sound]`. No `sorryAx`.
-- `lean_verify` on `AlgebraicGeometry.mapHomologicalComplexHomologyIso_of_preservesKernel` → `[propext, Classical.choice, Quot.sound]`. No `sorryAx`.
-- `#print axioms` in a scratch file importing the module reproduced both, and additionally: `pullback_mapHC_homologyIso_of_isQuasicoherent` clean, `preservesLeftHomologyOf_of_preservesKernel` clean, `tildePullback_preservesKernel` clean, while `pullback_mapHC_homologyIso` and `pullback_preservesMonomorphisms` both report `sorryAx`.
-
-On the control: I did not run the 92KB `scripts/axiom-frontier.lean`. Instead I copied `leakControl_qcohRoute_oldRoute` verbatim, together with the kernel probe, the homologyIso probe and the non-vacuity witness, into a scratch file and printed axioms. The control reports `sorryAx`; the two probes and the witness report clean. The probe/control contrast therefore holds at kernel level, measured on verbatim copies rather than on the script itself.
-
-Supporting: full LSP diagnostics on `/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean` returned complete (`partial: false`) with zero errors and exactly the three `sorry` warnings at 681, 2158, 2224 — so lines 519 and 588 carry no `sorry` warning of their own.
+Yes: `pullback_preservesKernel_of_isQuasicoherent` → `[propext, Classical.choice, Quot.sound]` (lean_verify, and reconfirmed by `#print axioms`); `mapHomologicalComplexHomologyIso_of_preservesKernel` → `[propext, Classical.choice, Quot.sound]` (same two methods); `leakControl_qcohRoute_oldRoute` → `[propext, sorryAx, Classical.choice, Quot.sound]` (`#print axioms` on a verbatim copy in a scratch file, not on the 92KB script itself).

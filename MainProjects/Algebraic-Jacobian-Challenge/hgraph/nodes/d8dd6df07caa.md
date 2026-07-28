@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:tensorObjAssoc_hom_sectionsMul
 lean_status: lean_ok
-order: 1328
+order: 1332
 title: Associator through the section multiplication
 type: tex
-updated: '2026-07-28T14:04:00'
+updated: '2026-07-28T18:12:22'
 ---
 Let \(\mathcal{A}, \mathcal{B}, \mathcal{C}\) be sheaves of
   \(\mathcal{O}_X\)-modules and \(a \in \Gamma(X,\mathcal{A})\),

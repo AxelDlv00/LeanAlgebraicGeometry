@@ -45,25 +45,36 @@ hypothesis is a single `IsReduced`.
   criterion this project actually consumes: `G ⟶ Spec k` is smooth as soon as the base change
   `G ×_{Spec k} Spec k̄` is reduced. No `GeometricallyReduced`, no quantifier over fields.
 
-## Why this is a strict reduction and not a restatement
+## Change of attack surface, NOT of strength — corrected after review
 
-`GeometricallyReduced f → IsReduced (pullback f (Spec.map (algebraMap K (AlgebraicClosure K))))`
-holds (it is one instance of the definition), and the converse is exactly what mathlib lacks.
-So the criterion below has a **strictly weaker** hypothesis than `smooth_of_grpObj`, at the
-same conclusion. That is the point: a consumer owing smoothness now owes reducedness of one
-scheme over one algebraically closed field, which is where Kleiman §5's argument (and
-Cartier's theorem in characteristic zero) actually speaks.
+An earlier version of this docstring called the criterion's hypothesis **strictly weaker** than
+`smooth_of_grpObj`'s. **That is wrong in this project, and the correction is the interesting
+part.** Fresh-context review (run 0067) established:
 
-**The trade is NOT lossless, and which direction fails is worth saying plainly** rather than
-letting "strictly weaker" read as "equally good". The two hypotheses are *not* equivalent
-here: `GeometricallyReduced ⟹ IsReduced`-over-`k̄` is available, `IsReduced`-over-`k̄ ⟹
-GeometricallyReduced` is not (that is the missing transcendental half). So anything that
-genuinely needs the *class* — as opposed to needing smoothness — cannot be recovered from this
-criterion, and a consumer wanting `GeometricallyReduced` itself gains nothing from it. What
-makes the trade correct anyway is that the weaker statement already suffices for the
-conclusion at hand. A restatement whose converse *is* provable would be the better shape (see
-`ajc-albanese`'s `Sym^g` colimit trade, inbox I-0493, for that stronger discipline); this one
-is a genuine weakening that happens to be enough.
+* in **mathlib alone**, `IsReduced`-over-`k̄ ⟹ GeometricallyReduced` is indeed unavailable —
+  `infer_instance` fails for it on a bare `import Mathlib`;
+* but **this project owns the converse**: `Smooth.geometricallyReduced`
+  (`AlgebraicJacobian/Curve/GeometricallyReduced.lean`, an instance) derives the class from
+  smoothness. So `IsReduced`-over-`k̄` → (this criterion) → `Smooth` → `GeometricallyReduced`
+  closes by `inferInstance`, axiom-clean.
+
+At these binders the two hypotheses are therefore **interprovable**, and this file is a
+restatement rather than a weakening. The mistake was methodological and worth recording: the
+"missing in mathlib" measurement was taken inside the *edited file's* import cone (99 modules),
+which does not contain `Curve/GeometricallyReduced`, while the root cone (215 modules) does.
+A synthesis probe cannot see a bridge its own imports exclude — measure at the root.
+
+**What the restatement is still good for**, which is why it stays: the two hypotheses are
+equivalent but not equally *attackable*. `GeometricallyReduced` quantifies over every field
+extension and has no producer here other than the circular one; reducedness of one scheme over
+one algebraically closed field is where Kleiman §5's argument (and Cartier's theorem in
+characteristic zero) actually speaks. Same strength, better attack surface.
+
+**And the corollary the first version missed**: since the criterion yields `Smooth` and
+`Smooth.geometricallyReduced` yields the class, the `k̄` hypothesis discharges
+`Pic0.geometricallyReduced` — an open `sorry` of `Picard/Pic0AbelianVariety.lean` — as well as
+the smoothness leg. One statement, two obligations. Verified axiom-clean at the root; see
+`Pic0.geometricallyReduced_of_isReduced_algebraicClosureBaseChange` there.
 
 ## References
 
@@ -138,9 +149,10 @@ to the base change by `Over.grpObjMkPullbackSnd`. What changes is only *where th
 hypothesis is taken*: `smooth_of_grpObj` derives `IsReduced` of the pullback from the
 `GeometricallyReduced` instance, whereas here it is supplied directly.
 
-Strictly weaker hypothesis, same conclusion — see the module docstring for why the converse
-implication (`IsReduced` over `k̄` ⟹ `GeometricallyReduced`) is *not* available in mathlib
-v4.31, which is what makes the difference load-bearing rather than cosmetic. -/
+Same strength, different attack surface — **not** a weaker hypothesis. In mathlib alone the
+converse (`IsReduced` over `k̄` ⟹ `GeometricallyReduced`) is unavailable, but this project owns
+it through `Smooth.geometricallyReduced`, so at these binders the two are interprovable. See
+the module docstring for the correction and for why the restatement is still worth having. -/
 theorem smooth_of_grpObj_of_isReduced_algebraicClosureBaseChange
     (h : IsReduced (Limits.pullback f
       (Spec.map (CommRingCat.ofHom (algebraMap K (AlgebraicClosure K)))))) :

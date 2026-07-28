@@ -1,6 +1,0 @@
-import AlgebraicJacobian.Albanese.AlbaneseJacobian
-#print axioms AlgebraicGeometry.Pic0.jacobianScheme
-#print axioms AlgebraicGeometry.Pic0.jacobianScheme_grpObj
-#print axioms AlgebraicGeometry.Pic0.jacobianScheme_isProper
-#print axioms AlgebraicGeometry.Pic0.jacobianScheme_smooth
-#print axioms AlgebraicGeometry.Pic0.jacobianScheme_geomIrred

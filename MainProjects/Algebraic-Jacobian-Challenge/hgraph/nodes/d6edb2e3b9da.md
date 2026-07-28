@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:coverinter_ring_pushout
 lean_status: lean_ok
-order: 518
+order: 522
 title: The restricted square carves into a ring pushout
 type: tex
-updated: '2026-07-28T14:03:59'
+updated: '2026-07-28T18:12:21'
 ---
 In the setting of \cref{lem:pushpullobj_coverinter_basechange}, write
   \(V = \operatorname{Spec} A_\sigma\) for the affine intersection open

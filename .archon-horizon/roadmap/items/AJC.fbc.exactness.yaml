@@ -19,10 +19,15 @@ summary: "BYPASSED, NOT PROVED -- and the arbitrary-module form should NOT be at
   leakWitness_qcohRoute_nonvacuous all report clean, while leakControl_qcohRoute_oldRoute\
   \ (same\nconclusion, old route) still reports sorryAx. All four explicit binders\
   \ of the main theorem verified\nload-bearing with populated breaks.\n\nREMAINING\
-  \ on this row: closure of quasi-coherence under FINITE PRODUCTS, which discharges\
-  \ the two\nhypotheses of cech_flatBaseChange_of_termsQuasicoherent. Absent from\
-  \ mathlib and from this workspace.\nThe :681 sorry stays as a monument to the reduction;\
-  \ do not price it.\n"
+  \ on this row is BOOKKEEPING, not mathematics. A reviewer (I-0580) correctly refuted\
+  \ this\nrow's earlier claim that closure of quasi-coherence under FINITE PRODUCTS\
+  \ was absent from mathlib and\nthis workspace: over an affine base -- the only case\
+  \ stated -- it follows in a few lines from\nessImage_tilde_of_isQuasicoherent, and\
+  \ is now landed as isQuasicoherent_pi_of_isAffineBase (79a30f40d).\nSo discharging\
+  \ h2/h3 of cech_flatBaseChange_of_termsQuasicoherent is a matter of matching the\
+  \ two\n(CechComplex).sc i terms to the sigma-product decomposition through pushPull_sigma_iso.\
+  \ The\ngeneral-BASE product statement is a genuine gap; no consumer needs it.\n\n\
+  The :681/:707 sorry stays as a monument to the reduction; do not price it.\n"
 status: active
 kind: proof
 priority: high
@@ -45,7 +50,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc
-  updated_at: '2026-07-28T10:22:48.129525+00:00'
+  updated_at: '2026-07-28T10:46:54.505699+00:00'
   owner: ajc-fbc
   pinned_commits:
   - 672a8c656

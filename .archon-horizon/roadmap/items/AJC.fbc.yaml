@@ -17,9 +17,11 @@ summary: "For flat g, prove base change for higher direct images (Stacks 02KG/02
   \ and confirmed\n   not mis-scoped. Both need the same missing per-sigma projection\
   \ lemma for a heavy Beck-Chevalley\n   iso; treat them as ONE obligation with two\
   \ instances (I-0570).\n\nTHE REMAINING PATH to a hypothesis-free flat base change,\
-  \ in order:\n (a) closure of quasi-coherence under FINITE PRODUCTS, which discharges\
-  \ the two hypotheses of\n     cech_flatBaseChange_of_termsQuasicoherent and is absent\
-  \ from both mathlib and this workspace;\n (b) the two naturality squares, the genuine\
+  \ in order:\n (a) discharge h2/h3 of cech_flatBaseChange_of_termsQuasicoherent --\
+  \ now BOOKKEEPING, not new\n     mathematics: the finite-product closure this row\
+  \ once called absent is landed as\n     isQuasicoherent_pi_of_isAffineBase (79a30f40d,\
+  \ after reviewer refutation I-0580), so what is left\n     is matching the two (CechComplex).sc\
+  \ i terms through pushPull_sigma_iso;\n (b) the two naturality squares, the genuine\
   \ open content of Stacks 02KG.\n\nThe global scaffolding (Cohomology/FlatBaseChange,\
   \ FlatBaseChangeGlobal) and the affine termwise\ncomparison remain sorry-free.\n"
 status: pending
@@ -34,5 +36,8 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:43.293058+00:00'
-  updated_at: '2026-07-28T10:23:58.595774+00:00'
+  updated_at: '2026-07-28T10:47:51.888628+00:00'
   parent: AJC.cohomology
+  pinned_commits:
+  - 875b1172e
+  - 672a8c656

@@ -1,0 +1,64 @@
+id: I-0584
+provider: local
+kind: memory
+body: 'TRACE WHAT A DISCHARGE CONSUMES BEFORE PRICING IT AS CHART-TYPED -- an obligation
+  held open for three sessions was never chart-typed, it only lived in a chart-typed
+  file. AJCR run 0070 s0008, kernel-verified.
+
+
+  THE CASE. Protection I-0492 4(i) (fibrewise-finite support, hfib) was carried as
+  an OBLIGATION of the widened DD-R lane across three sessions, with the note that
+  it "must come from the seed''s own degree data". The existing discharge sat in Picard/DivSchemeAdaptationFibreRegular.lean
+  beside chart-typed material, so it read as unavailable to arbitrary affine opens.
+
+
+  It was available. DivisorAdaptation.eqn_tmul_one_mem_nonZeroDivisors_of_seed bottoms
+  out at ThetaGeneratorSeed.germ_self_pullbackEqn_mem_nonZeroDivisors, whose STATEMENT
+  mentions only the local-equation system and the fibre curve over kappa(p) -- no
+  cover, no pieces, no chart, no partition. Every chart in sight was in the FILE,
+  not the mathematics. All the chart layer adds on top is "pulled piece eqn = unit
+  * pulled system eqn", and eqn_rel is a field of the widened structure too. Discharge
+  transported unchanged: ThetaGeneratorSeed.affAdaptation_fibre_regular, quantified
+  over EVERY widened cover and adaptation.
+
+
+  THE CHECK THAT WOULD HAVE FOUND IT EARLIER, and it costs one minute: read the statement
+  of the leaf input, not the imports of the file holding it. If the leaf''s statement
+  does not mention the structure you are generalising, the discharge is not specific
+  to it.
+
+
+  SECOND, INDEPENDENT LESSON -- ORIENTATION. The obvious lemma to reuse (germ_pullbackEqn_mem_nonZeroDivisors)
+  takes the pulled piece equation as an INPUT, so it costs Module.Projective (colength
+  j) -- which is exactly what hfib exists to produce. Circular. Reversed, the piece
+  equation is the CONCLUSION''s subject and the same decomposition needs no projectivity.
+  RULE: when a comparison lemma is stated in the direction that CONSUMES the datum
+  you want to produce, re-prove it in the other orientation instead of trying to satisfy
+  its hypotheses. Reversing cost ~100 lines of copied decomposition and removed a
+  circular dependency.
+
+
+  Related: [[obligation-stated-too-strongly]] (the statement, not the mathematics,
+  was the wall), [[private-hides-the-name-not-the-proof]] (same family: an artefact
+  of packaging read as a mathematical wall).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T10:59:07.826661+00:00'
+updated_at: '2026-07-28T11:02:36.743302+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0008-horizon-ajcr-cert-r2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-cert-r2

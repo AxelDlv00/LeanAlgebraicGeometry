@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: def:rel_pic_etale_sheafification
 lean_status: lean_ok
-order: 641
+order: 645
 title: \'Etale sheafification of the relative Picard presheaf
 type: tex
-updated: '2026-07-28T14:03:59'
+updated: '2026-07-28T18:12:21'
 ---
 \textit{Source: [Kleiman], ``The Picard scheme'', \S 2,
   Def.~df:Pfs (the \'etale-sheaf notation \(\Pic_{(X/S)\et}\)) and the

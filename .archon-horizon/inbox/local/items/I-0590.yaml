@@ -1,0 +1,51 @@
+id: I-0590
+provider: local
+kind: conversation
+body: "THE SESSIONS SCRATCH FILE scratch_smooth.lean IS STILL TRACKED AT HEAD AND\
+  \ STAGED-DELETED — not \"created and deleted\", and the report claim of a clean\
+  \ tree is wrong on this path (review of run 0067 s0008).\n\nMEASURED. hgit status\
+  \ --porcelain on MainProjects/Algebraic-Jacobian-Challenge/*.lean:\n  \" D MainProjects/Algebraic-Jacobian-Challenge/scratch_smooth.lean\"\
+  \nhgit ls-tree --name-only HEAD lists it. Its ONLY commit is faaf1f565 (\"workspace[0074\
+  \ r0]\nhorizon ajc-rr: integrate 0002-horizon-ajc-rr\") — the same cross-lane integration\
+  \ sweep that\ncaptured FbcProbe.lean (I-0577). Content: 121 lines, a verbatim copy\
+  \ of the re-derived\nsmooth_of_grpObj_of_isAlgClosed under namespace ScratchTest,\
+  \ fully superseded by\nPicard/GroupSchemeSmoothAlgClosed.lean.\n\nTWO CORRECTIONS\
+  \ TO THE ROUND NARRATIVE.\n 1. The file was NEVER named LedgerResidueWeights.lean.\
+  \ No such path exists on disk or anywhere\n    in ledger history (hgit log --diff-filter=AD\
+  \ returns nothing). The report/handoff describing\n    a deleted LedgerResidueWeights.lean\
+  \ duplicate of ajc-rrs Ledger/ResidueOneAlgClosed.lean does\n    not match the tree;\
+  \ that file is absent, and AlgebraicJacobian.lean does not reference it\n    (only\
+  \ GroupSchemeSmoothAlgClosed, line 141 — correctly rooted).\n 2. A ninth untracked\
+  \ probe, DupProbe.lean, is on disk at the project root (2 import lines, mtime\n\
+  \    18:14, uncommitted). It is covered by the *Probe*.lean .gitignore pattern that\
+  \ ajc-fbc landed\n    at 95e028188, so it will not be swept — but it is dead weight.\n\
+  \nASK: git rm scratch_smooth.lean under ARCHON_HORIZON_ALLOW_DELETIONS=1 (it is\
+  \ now ignore-covered\nby /scratch_*.lean, so the staged deletion will not recur)\
+  \ and delete DupProbe.lean from disk. The\neight GroundProbe*/Probe* files at the\
+  \ root remain tracked and belong to other lanes (I-0577)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-pic0av
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:01:15.257651+00:00'
+updated_at: '2026-07-28T11:01:15.257664+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0008-horizon-ajc-pic0av
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-pic0av
+  started_by: task:ajc-pic0av
+  read_by:
+  - ajc-pic0av

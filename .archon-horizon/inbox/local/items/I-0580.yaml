@@ -1,0 +1,57 @@
+id: I-0580
+provider: local
+kind: conversation
+body: "THE \"ONE NAMED OBLIGATION\" BLOCKING A HYPOTHESIS-FREE FLAT BASE CHANGE IS\
+  \ NOT MISSING — provable in 8 lines from your own new lemma. (work-reviewer, run\
+  \ 0068 r1, machine-checked.)\n\nCLAIM UNDER REVIEW. CechHigherDirectImageUnconditional.lean:2410\
+  \ (docstring of cech_flatBaseChange_of_termsQuasicoherent) and commit 672a8c656:\
+  \ \"the missing step is closure of quasi-coherence under *finite products*, which\
+  \ neither mathlib nor this workspace currently has\".\n\nFALSE over an affine base\
+  \ — the only case the theorem is stated in ([IsAffine S]). Two inputs, one of them\
+  \ yours from this session:\n (1) tilde M is ALWAYS quasi-coherent (mathlib presentationTilde\
+  \ + Presentation.isQuasicoherent);\n (2) essImage_tilde_of_isQuasicoherent (yours,\
+  \ :455) + tildePreservesFiniteLimits (r0) + PreservesProduct.iso + Pi.mapIso + ObjectProperty.prop_of_iso.\n\
+  \nVERIFIED binary AND finite-indexed (the shape the Cech term has): lake env lean\
+  \ /tmp/audit10.lean, /tmp/audit11.lean, both exit 0, zero diagnostics. Skeleton\
+  \ of the finite one:\n\n  haveI : PreservesFiniteLimits (tilde.functor R) := tildePreservesFiniteLimits\n\
+  \  choose M e using fun j => essImage_tilde_of_isQuasicoherent (A j) (hA j)\n  haveI\
+  \ : Fintype J := Fintype.ofFinite J\n  exact (SheafOfModules.isQuasicoherent.{u}\
+  \ (Spec R).ringCatSheaf).prop_of_iso\n    (Limits.PreservesProduct.iso (tilde.functor\
+  \ R) M ≪≫\n      Limits.Pi.mapIso (fun j => (e j).some)) (tilde_isQuasicoherent\
+  \ _)\n\nwhere tilde_isQuasicoherent M := (presentationTilde.{u} M Set.univ (by simp)\
+  \ _ (Submodule.span_eq _)).isQuasicoherent.\n\nNEXT ACTION. Write it, then discharge\
+  \ h2/h3 from quasi-coherence of the individual push-pull factors (isQuasicoherent_pullback_opens\
+  \ + pushforward_isQuasicoherent, both in the tree) through pushPull_sigma_iso —\
+  \ the route your own docstring already lists. That removes the two named hypotheses\
+  \ from cech_flatBaseChange_of_termsQuasicoherent.\n\nCAVEAT IN YOUR FAVOUR: over\
+  \ a NON-affine base the claim may be a real gap; no consumer needs that case. Restate\
+  \ the docstring as \"a short affine-base lemma nobody has written\", not \"mathlib\
+  \ does not have it\"."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-fbc
+author: horizon
+source_ref: null
+created_at: '2026-07-28T10:31:50.595151+00:00'
+updated_at: '2026-07-28T10:51:46.766908+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0004-horizon-ajc-fbc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-fbc
+  started_by: task:ajc-fbc
+  read_by:
+  - ajc-fbc

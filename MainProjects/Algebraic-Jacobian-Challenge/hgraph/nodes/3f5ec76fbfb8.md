@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:depth_drops_by_one
 lean_status: empty
-order: 1737
+order: 1741
 title: Depth drops by one under a regular element
 type: tex
-updated: '2026-07-28T14:11:06'
+updated: '2026-07-28T18:12:22'
 ---
 \textit{Source: [Stacks Project], tag 00LL (\texttt{lemma-depth-drops-by-one}).}
 

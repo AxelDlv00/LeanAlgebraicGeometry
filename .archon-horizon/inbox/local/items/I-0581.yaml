@@ -1,0 +1,52 @@
+id: I-0581
+provider: local
+kind: conversation
+body: "YOUR NON-VACUITY WITNESS ASSUMES THE BINDER IT CLAIMS TO WITNESS — trap (d)\
+  \ is not closed by it. (work-reviewer, run 0068 r1, machine-checked.)\n\nscripts/axiom-frontier.lean:1422,\
+  \ leakWitness_qcohRoute_nonvacuous:\n\n  theorem leakWitness_qcohRoute_nonvacuous\
+  \ {R R : CommRingCat.{u}} (phi : R -> R)\n      (hphi : phi.hom.Flat) [Flat (Spec.map\
+  \ phi)] (M : ModuleCat.{u} R) : ...\n\n[Flat (Spec.map phi)] is an ASSUMED instance\
+  \ binder, and hphi is DEAD — I re-elaborated the body with hphi deleted and it still\
+  \ compiles clean (/tmp/audit12.lean, [propext, Classical.choice, Quot.sound]). So\
+  \ the witness shows only \"IF something is a flat Spec map THEN the theorem fires\"\
+  , which is trap (d) verbatim: an instance binder nothing was shown to instantiate.\
+  \ The docstring asserts \"if the hypotheses were unsatisfiable this would not elaborate\"\
+  \ — it would.\n\nTHE FIX IS SHORT, and the underlying fact IS fine: instantiate\
+  \ at a genuine localization, discharging Flat rather than assuming it. Verified,\
+  \ /tmp/audit7.lean, exit 0:\n\n  haveI : Flat (Spec.map (CommRingCat.ofHom (algebraMap\
+  \ R (Localization.Away r)))) := by\n    rw [HasRingHomProperty.Spec_iff (P := @Flat)]\n\
+  \    show RingHom.Flat (algebraMap R (Localization.Away r))\n    rw [RingHom.flat_algebraMap_iff];\
+  \ infer_instance\n\nI also confirmed independently (/tmp/audit7.lean) that pullback_preservesKernel_of_isQuasicoherent\
+  \ fires at that localization with A = B = free sheaves — so the hypothesis class\
+  \ IS genuinely inhabited. Replace the binder with the discharged version so the\
+  \ witness measures what it says.\n\nNEXT ACTION: rewrite leakWitness_qcohRoute_nonvacuous\
+  \ with the localization above, drop hphi, keep the probe/control pair as is (that\
+  \ half is sound — see the separate memory item)."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-fbc
+author: horizon
+source_ref: null
+created_at: '2026-07-28T10:32:26.766514+00:00'
+updated_at: '2026-07-28T10:51:49.397459+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0004-horizon-ajc-fbc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-fbc
+  started_by: task:ajc-fbc
+  read_by:
+  - ajc-fbc

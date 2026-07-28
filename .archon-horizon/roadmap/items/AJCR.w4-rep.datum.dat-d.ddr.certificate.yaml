@@ -4,80 +4,70 @@ title: 'DD-R certificate: inherited certificate, epsilon projection, U1/U2, and 
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. Binding\
-  \ form: protection I-0492. Full reasoning: I-0346 (human comment, same date).\n\n\
-  EXECUTED. The widened layer exists, is sorry-free, axiom-clean, rooted, and green\
-  \ in the full root build (9160 jobs, exit 0). Ten DivisorFamilyAff*.lean files,\
-  \ of which four landed 2026-07-28 in run 0070 s0006:\n\n  AffCoverData         \
-  \ -- m / pieces : Fin m -> Opens / isAffineOpen / cover (iSup = top).\n        \
-  \                   NO pi argument, NO partitions of unity, NO Sum index, NO chart\
-  \ typing.\n  AffAdaptation         -- eqn per piece + eqn_rel; IsCertified with\
-  \ (c1)-(c4) VERBATIM.\n  CertifiedDivisorFamilyAff / IsLocallyCertifiedAff / DivFamZarAff\
-  \ (mk, mk_eq_mk_iff, picClass)\n  DivFamZar.toAff       -- the widened value RECEIVES\
-  \ every chart-typed one, same picClass\n  isCertified_of_swallowedBy_of_c1 -- cert-collapse:\
-  \ all seven clauses from (c1) + the rank datum\n  DivFamZarAff.mapAlg   -- and the\
-  \ whole S5b layer: IsLocallyCertifiedAff.pullback,\n                           mapAlg_id/comp,\
-  \ picClass_mapAlg, eq_of_away_eq, toAff_mapAlg\n\nWHAT RUN 0070 s0006 FOUND AND\
-  \ FIXED, and it is the kind of gap a green build hides: the widened value was a\
-  \ TYPE WITH NO FUNCTORIALITY. Nothing could base-change a widened class along R\
-  \ -> R'. The chart-typed DivFamZar owned that whole layer (DivisorFamilyZarMapAlg.lean);\
-  \ the widened one had none of it.\n\nWHY THE WIDENING MADE BASE CHANGE CHEAPER,\
-  \ NOT HARDER (measured, not guessed):\n * pieces j := relCurveMap preimage (pieces\
-  \ j) makes pieces_baseChange rfl, and the base-changed\n   OVERLAP is the preimage\
-  \ of the overlap by rfl. The entire ovlGen / basicOpen_ovlGen /\n   isAffineOpen_chart_inf\
-  \ apparatus, which existed only to re-present a piece overlap as a basic\n   open\
-  \ of a CHART overlap, has no widened analogue.\n * the arbitrary-affine-open section\
-  \ keystone was ALREADY IN THE TREE: Over.pieceRingEquiv\n   (EffectivityPieces.lean:181),\
-  \ hypothesis IsAffineOpen only, from mathlib's affine\n   pushoutSection -- no freeness,\
-  \ no flatness. Its cg IS relCurveMap. The chart route\n   (relTermBaseChange, freeness-based,\
-  \ then localize at a generator) has neither a generator\n   nor a base-curve presentation\
-  \ available and dies; this one does not.\n * FinCoverData.baseChange had two partition\
-  \ obligations to discharge. AffCoverData.baseChange\n   has NONE, because the partitions\
-  \ are exactly what R2 deleted.\n * (c2)/(c3)/(c4) ride the abstract FlatCokernel\
-  \ keystones, stated for bare modules.\n\nTHE ONE COST OF THE R2 SHAPE, named rather\
-  \ than bundled: AffCoverData demands affineness of the\nPIECES only, so the certificate\
-  \ transport needs the OVERLAPS affine. That is\nAffCoverData.HasAffineOverlaps,\
-  \ and it is FREE for proper C (hasAffineOverlaps_of_isProper, via\nOver.isAffineOpen_inf\
-  \ on the separated relative curve) and propagates along a tower. It is NOT a\nfield\
-  \ of anything -- bundling it would quietly re-strengthen the widened structure.\n\
-  \nTHE ADAPTATION HALF OF THE PRODUCER GAP IS NOW CLOSED (321af6cb6):\n\n  exists_affAdaptation_of_isProper\
-  \ (d : LocalEquations) :\n    exists D : AffCoverData C R, Nonempty (AffAdaptation\
-  \ D d)\n\nwith NO hypothesis on d, no pi, no chart, no partition of unity. Until\
-  \ this landed, the only route\nto an AffAdaptation was FinCoverData.toAffCoverData\
-  \ then DivisorAdaptation.toAff -- i.e. THROUGH\nthe chart-typed predicate, exactly\
-  \ what R2 exists to avoid, which was the standing complaint of\nI-0539. It is short\
-  \ for the same reason the base change was: the chart-typed extraction runs the\n\
-  basic-open refinement on EACH pinned chart and glues with a per-chart partition\
-  \ of unity (those\npartitions being what I-0492 deleted), whereas widened there\
-  \ is nothing to glue -- affine opens are\na basis of any scheme, so pick one inside\
-  \ d.cover.opens z at each z and take a finite subcover.\nCompactness is free as\
-  \ well: instQuasiCompactRelCurveHom (IsProper => QuasiCompact, base-change\nstable)\
-  \ then QuasiCompact.compactSpace_of_compactSpace.\n\nSwallowedBy IS NOW REDUCED\
-  \ TO THE 0B8B INPUT ALONE (58412986d):\n\n  exists_affCoverData_swallowedBy (d)\
-  \ (hW : IsAffineOpen W) (hsub : d.supportLocus subset W) :\n    exists D : AffCoverData\
-  \ C R, D.SwallowedBy d\n\nSwallowedBy asks for TWO things -- one piece contains\
-  \ the whole support, and every OTHER piece\nmisses it -- and the lane carried both\
-  \ as the geometric obligation since it was defined. The second\nhalf is free: the\
-  \ support locus is CLOSED, so its complement is OPEN, so choose the other pieces\n\
-  inside that complement and they miss the support by construction; affine opens are\
-  \ a basis and the\ncomplement of the affine W is compact, so finitely many suffice.\
-  \ What remains is exactly the half\nclause 2 directs the lane to USE rather than\
-  \ re-derive: supp D is finite over R, hence lies in a\nsingle affine open. Nothing\
-  \ in the tree re-derives 0B8B, and nothing should.\n\nSTILL OPEN -- the residue\
-  \ of the lane, now narrow and precisely two statements:\n (a) the 0B8B input itself:\
-  \ an affine open W of C x_k Spec R containing d.supportLocus. Mathlib has\n    \
-  \ no form of it and this project constructs no curve but P1, so it stays an obligation.\n\
-  \ (b) fibrewise-finite support (hfib) from the seed's own degree data. Obligation\
-  \ 4(i) is at least\n     now readable by the layer that owes it: AffAdaptation.eqn_tmul_one_mem_nonZeroDivisors_iff\n\
-  \     (09396353c) restates the tensor condition as regularity of the pulled equation\
-  \ on the FIBRE\n     CURVE over kappa(p), which is the vocabulary the seed layer\
-  \ speaks (cf.\n     ThetaGeneratorSeed.eqn_tmul_one_mem_nonZeroDivisors, whose whole\
-  \ content is that conversion).\nGiven (a) and (b), isCertified_of_swallowedBy_of_c1\
+  \ form: protection I-0492.\nFull reasoning: I-0346 (human comment, same date).\n\
+  \nEXECUTED, AND THE RESIDUE IS NOW ONE GEOMETRIC STATEMENT. The widened layer is\
+  \ sorry-free,\naxiom-clean and rooted; thirteen DivisorFamilyAff*.lean files. Of\
+  \ the two obligations I-0492\nclause 4 relocated, 4(i) is now DISCHARGED rather\
+  \ than assumed:\n\n  AffCoverData          -- m / pieces : Fin m -> Opens / isAffineOpen\
+  \ / cover (iSup = top).\n                           NO pi argument, NO partitions\
+  \ of unity, NO Sum index, NO chart typing.\n  AffAdaptation         -- eqn per piece\
+  \ + eqn_rel; IsCertified with (c1)-(c4) VERBATIM.\n  CertifiedDivisorFamilyAff /\
+  \ IsLocallyCertifiedAff / DivFamZarAff (mk, mk_eq_mk_iff, picClass)\n  DivFamZar.toAff\
+  \       -- the widened value RECEIVES every chart-typed one, same picClass\n  isCertified_of_swallowedBy_of_c1\
+  \ -- cert-collapse: all seven clauses from (c1) + the rank datum\n  DivFamZarAff.mapAlg\
+  \   -- and the whole S5b layer (pullback, mapAlg_id/comp, picClass_mapAlg,\n   \
+  \                        eq_of_away_eq, toAff_mapAlg)\n\nOBLIGATION 4(i) IS DISCHARGED\
+  \ (2026-07-28, run 0070 s0008, 5e77976f4):\n\n  ThetaGeneratorSeed.affAdaptation_fibre_regular\
+  \ (hD : D.IsGenerator) (Dc : AffCoverData C R)\n    (A : AffAdaptation Dc (D.localEquations\
+  \ hD)) (j) (p) :\n    A.eqn j (x) 1 in nonZeroDivisors (Gamma(Dc.pieces j) (x)_R\
+  \ kappa(p))\n\nquantified over EVERY widened cover and EVERY widened adaptation,\
+  \ not an extracted one.\n\nWHY IT TRANSPORTED, and it is a fact about the SHAPE\
+  \ of the seed's clause rather than new\nmathematics. The chart-typed discharge looks\
+  \ like chart machinery and is not: it bottoms out at\nThetaGeneratorSeed.germ_self_pullbackEqn_mem_nonZeroDivisors,\
+  \ whose STATEMENT mentions the system\nd and the fibre curve over kappa(p) and NOTHING\
+  \ ELSE — no cover, no pieces, no chart, no partition\nof unity. It says the pulled\
+  \ SYSTEM equation is regular at its own point. All the chart layer adds\nis the\
+  \ comparison \"pulled piece equation = unit * pulled system equation\", and eqn_rel\
+  \ is a field\nof AffAdaptation too. So the piece enters only through eqn_rel and\
+  \ the affine germ seam, both of\nwhich an arbitrary affine open supplies.\n\nTHE\
+  \ ASYMMETRY THAT MADE IT CHEAP, worth quoting because reusing the existing lemma\
+  \ does NOT work:\ngerm_pullbackEqn_mem_nonZeroDivisors takes the pulled piece equation\
+  \ as an INPUT, so it costs\nModule.Projective R (colength j). In the reverse orientation\
+  \ the piece equation is the\nCONCLUSION's subject and no projectivity is needed\
+  \ — which is exactly what lets it PRODUCE the\nfibrewise datum instead of consume\
+  \ it. Reverse comparison:\nAffAdaptation.exists_germ_pulledEqn_eq_unit_mul_pullbackEqn.\n\
+  \nTHE RANK DATUM ALSO REDUCED, unplanned (81c17f256). hrank was stated about the\
+  \ GLUED module over\nthe whole cover, but a degree statement is about the divisor,\
+  \ which on a straddling cover lives\ninside the swallowing piece. On such a cover\
+  \ Glued ~= chartProd (the difference arrow vanishes\nidentically), Module.rankAtStalk_pi\
+  \ splits the product, and every non-swallowing colength is\nSUBSINGLETON hence free\
+  \ hence flat with empty support hence rank 0. So\n\n  rankAtStalk_glued_eq_of_swallowedBy\
+  \ : rankAtStalk A.Glued p = rankAtStalk (A.colength j0) p\n  isCertified_of_swallowedBy_of_c1_of_rank_piece\
+  \ -- the assembler with the one-piece datum\n\nNon-vacuity is checked (I-0442 trap\
+  \ (c)) by\nrankAtStalk_colength_eq_zero_of_supportLocus_empty, not assumed.\n\n\
+  THE ENDPOINT (46d751465), composed rather than asserted, because run 0070 s0006\
+  \ learned that a\nproducer and a consumer can each be correct and still not compose\
+  \ (AffAdaptation needs\nSUBORDINATION; containment does not give it):\n\n  exists_isCertified_of_seed_of_swallowing_affineOpen\
+  \ (hD) (hW : IsAffineOpen W)\n    (hsub : supp d subset W) (hWle : W <= d.cover.opens\
+  \ z0)\n    (hrank : rank of the SWALLOWING colength = n) : exists Dc A, A.IsCertified\
+  \ n\n\nhfib is gone from the signature; hproj is gone as a hypothesis and DERIVED\
+  \ inside, since the\ndischarged fibrewise datum feeds projective_colength_of_forall_tmul_residueField.\n\
+  \nSTILL OPEN — the whole residue of the lane, now ONE statement: the subordinate\
+  \ Stacks 0B8B input,\nan affine open W of C x_k Spec R containing d.supportLocus\
+  \ AND contained in one member of\nd.cover. Protection I-0492 clause 2 directs the\
+  \ lane to USE it, not re-derive it; mathlib has no\nform of 0B8B and this project\
+  \ constructs no curve but P1. Given it,\nexists_isCertified_of_seed_of_swallowing_affineOpen\
   \ delivers all seven clauses and\ndivFamZarAff_of_forall_prime_certified_adaptation\
-  \ delivers the class.\n\nSTANDING NEGATIVE RESULTS, all still binding: chart-avoid\
-  \ is NO, and the counterexample is\nFIELD-INDEPENDENT; no repair keeping the pieces\
-  \ inside preimages of a FIXED PAIR of P1 points can\nwork (joint-cover REJECTED);\
-  \ p1-aut stays pending and DEPRIORITISED, no consumer against it. The\nlanded finite-field-avoid\
-  \ work is valid mathematics and is not to be deleted.\n"
+  \ delivers the class.\n\nTHE ONE COST OF THE R2 SHAPE, named rather than bundled:\
+  \ AffCoverData demands affineness of the\nPIECES only, so the certificate transport\
+  \ needs the OVERLAPS affine. That is\nAffCoverData.HasAffineOverlaps, FREE for proper\
+  \ C (hasAffineOverlaps_of_isProper) and propagating\nalong a tower. It is NOT a\
+  \ field of anything — bundling it would quietly re-strengthen the\nwidened structure.\n\
+  \nSTANDING NEGATIVE RESULTS, all still binding: chart-avoid is NO and the counterexample\
+  \ is\nFIELD-INDEPENDENT; no repair keeping the pieces inside preimages of a FIXED\
+  \ PAIR of P1 points can\nwork (joint-cover REJECTED); p1-aut stays pending and DEPRIORITISED,\
+  \ no consumer against it. The\nlanded finite-field-avoid work is valid mathematics\
+  \ and is not to be deleted.\n"
 status: active
 kind: proof
 priority: high
@@ -100,8 +90,11 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T09:31:43.141534+00:00'
+  updated_at: '2026-07-28T10:57:34.596692+00:00'
   pinned_commits:
+  - 46d751465
+  - 81c17f256
+  - 5e77976f4
   - 58412986d
   - 321af6cb6
   - 107cd5581

@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:dual_number_fst_unit_inv
 lean_status: lean_ok
-order: 1640
+order: 1644
 title: First component of an inverse unit
 type: tex
-updated: '2026-07-28T14:04:00'
+updated: '2026-07-28T18:12:22'
 ---
 For a unit \(u \in (R[\varepsilon])^{\times}\), the first components
   of \(u^{-1}\) and of \(u\) multiply to \(1\); that is, reduction mod

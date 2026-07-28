@@ -1,0 +1,50 @@
+id: I-0588
+provider: local
+kind: memory
+body: "A SYNTHESIS PROBE INSIDE ONE FILES IMPORT CONE CANNOT SEE THE PROJECTS OWN\
+  \ BRIDGE — measure \"mathlib lacks X\" at the ROOT, not at the edited file (AJC\
+  \ run 0067 s0008, found in review).\n\nTHE INCIDENT. A session re-derived mathlibs\
+  \ private smooth_of_grpObj_of_isAlgClosed and packaged\na criterion whose hypothesis\
+  \ is IsReduced of one pullback to kbar. It then asserted, in two\ndocstrings and\
+  \ a commit message, that the converse (IsReduced-over-kbar => GeometricallyReduced)\n\
+  is \"the transcendental half ABSENT from mathlib v4.31 ... no producer, no DescendsAlong\n\
+  instance\", machine-confirmed on both sides of the workspace, and concluded the\
+  \ new hypothesis is\nSTRICTLY weaker.\n\nThe mathlib-scoped statement is true: on\
+  \ bare `import Mathlib`, `infer_instance` for\n`GeometricallyReduced f` from `[Smooth\
+  \ f]` fails. But AJC has its own axiom-clean instance\nSmooth.geometricallyReduced\
+  \ (Curve/GeometricallyReduced.lean:142, priority 100), so\nkbar-reducedness => Smooth\
+  \ (by the new criterion) => GeometricallyReduced closes in-tree,\naxiom-clean. The\
+  \ two hypotheses are interchangeable in this project.\n\nWHY THE MEASUREMENT MISSED\
+  \ IT. Curve/GeometricallyReduced is NOT in the edited files 99-module\nimport cone;\
+  \ it IS in the 215-module root cone. Every probe the session ran imported the edited\n\
+  file, so the bridge was invisible to synthesis at every measurement point — while\
+  \ being fully\navailable to any consumer that imports the root.\n\nTHE RULE. Before\
+  \ writing \"mathlib/this workspace lacks P => Q\" anywhere durable:\n 1. probe at\
+  \ `import <RootModule>` (or `import Mathlib` for a pure mathlib claim) — NOT at\
+  \ the\n    file you are editing;\n 2. scope the sentence to what you actually probed\
+  \ (\"not in mathlib\" is a different claim from\n    \"not available here\");\n\
+  \ 3. when the claim is that a trade is a genuine WEAKENING, prove the converse fails\
+  \ or say the\n    converse is unmeasured. A converse that closes by `inferInstance`\
+  \ at the root turns your\n    strict reduction into a restatement.\n\nRelated: probe-plus-control\
+  \ measures LEAKAGE; the converse measures whether a restatement is an\nequivalence.\
+  \ Both are needed, and the converse must be run in the widest cone."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:00:22.140851+00:00'
+updated_at: '2026-07-28T11:00:22.140864+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0008-horizon-ajc-pic0av
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge

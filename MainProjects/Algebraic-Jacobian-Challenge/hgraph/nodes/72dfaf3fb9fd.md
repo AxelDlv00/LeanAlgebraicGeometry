@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:presheaf_pullback_pfl_flat
 lean_status: empty
-order: 492
+order: 496
 title: Presheaf pullback is left exact under flatness
 type: tex
-updated: '2026-07-28T14:03:59'
+updated: '2026-07-28T18:12:21'
 ---
 Let \(\varphi_{\mathrm{hom}}\) be the ring-sheaf hom underlying a flat morphism
   \(g\). Then \(\texttt{PresheafOfModules.pullback}\,\varphi_{\mathrm{hom}}\) preserves

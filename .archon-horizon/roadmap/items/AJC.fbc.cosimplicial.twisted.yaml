@@ -2,8 +2,34 @@ id: AJC.fbc.cosimplicial.twisted
 title: Twisted Čech nerve compatibility
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Prove the remaining twisted_cech_nerve_iso compatibility with cosimplicial
-  faces on cover intersections.
+summary: 'PROBED (run 0068 r1, ajc-fbc): same shape and same missing input as the
+  sibling
+
+  AJC.fbc.cosimplicial.pushforward -- see that row and I-0570 for the measurement.
+
+
+  Prove the remaining twisted_cech_nerve_iso compatibility with cosimplicial faces
+  on cover
+
+  intersections. The per-sigma component twisted_cech_nerve_per_sigma
+
+  (CechHigherDirectImageUnconditional.lean:1675) likewise has no characterising pi-projection
+
+  companion, and is likewise an asIso of a mateEquiv component.
+
+
+  Both leaves are genuinely the Beck-Chevalley heart of Stacks 02KG, NOT artefacts
+  of an over-strong
+
+  statement (which is what AJC.fbc.exactness turned out to be). Treat the two as ONE
+  obligation with two
+
+  instances: the per-sigma projection lemma is the same construction twice, so whoever
+  builds it for one
+
+  should do both.
+
+  '
 status: pending
 kind: proof
 priority: high
@@ -26,3 +52,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc.cosimplicial
+  updated_at: '2026-07-28T10:23:38.603522+00:00'

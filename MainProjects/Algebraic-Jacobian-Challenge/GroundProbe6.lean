@@ -1,5 +1,0 @@
-import AlgebraicJacobian.Albanese.AlbaneseFromData
-#print axioms AlgebraicGeometry.exists_unique_descent_of_birational
-#print axioms AlgebraicGeometry.comp_hom_of_descent_eq
-#print axioms AlgebraicGeometry.exists_unique_descent_over
-#print axioms AlgebraicGeometry.exists_unique_albanese_factorisation_of_birational

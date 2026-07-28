@@ -1,0 +1,65 @@
+id: I-0591
+provider: local
+kind: issue
+body: 'THE ALBANESE LEG''S ADVERTISED RESIDUE IS STRICTLY STRONGER THAN THE IFF THAT
+  IS CITED FOR IT, AND IT IS FALSE AT THIS PIN -- so the capstone is vacuous at that
+  binder. Review of SymPowColimit/AlbaneseFromColimit, kernel-measured.
+
+
+  WHAT IS RIGHT. hasColimit_permDiagram_iff (SymPowColimit.lean:267) is a genuine
+  two-way equivalence, checked field by field. symPowOfColimit.desc''s uniqueness
+  is colimit.hom_ext at the unique object; SymPowData.isColimit''s uniq feeds hu (star)
+  into D.desc''s choose_spec.2, so it does prove uniqueness against an ARBITRARY cocone.
+  Not circular, not weaker. Axiom-clean.
+
+
+  THE PROBLEM. That iff is about HasColimit (permDiagram C n) -- ONE diagram in the
+  ambient category. What AlbaneseFromColimit.lean:75 and SymPowColimit.lean:405-408
+  adopt as ''this leg''s single open obligation'' is HasColimitsOfShape (SingleObj
+  (Equiv.Perm (Fin g))) Scheme: ALL diagrams of that shape, and in Scheme rather than
+  Over (Spec kbar). Scheme-instance ==> the pair is verified (symPowData_over_of_scheme_colimits).
+  The converse is not proved and is not true.
+
+
+  So AlbaneseFromColimit.lean:29-31 and :68-70 -- ''equivalent, not merely sufficient,
+  to the datum previously assumed (hasColimit_permDiagram_iff)'' -- is FALSE AS WRITTEN;
+  the citation does not support it.
+
+
+  WORSE: SymPowColimit.lean:419-422 argues that instance CANNOT exist (''schemes do
+  not admit them in general''). A hypothesis believed unsatisfiable makes exists_unique_albanese_of_scheme_colimits
+  vacuously true at every call site.
+
+
+  FIX, ONE LINE, ALREADY COMPILED. Replace the binder by [HasColimit (permDiagram
+  C g)], proof term byte-identical: typechecks, axiom-clean ([propext, Classical.choice,
+  Quot.sound]). That binder IS the one the iff covers, so the ''equivalent not sufficient''
+  sentence becomes true and the residue becomes satisfiable (one curve, one n). Keep
+  the Scheme instance only as a downstream sufficient condition.
+
+
+  Synthesis probes at this pin (SS6''s table is accurate): HasCoproducts Scheme YES;
+  HasCoequalizers NO; HasPushouts NO; HasColimitsOfShape (SingleObj (Perm (Fin 2)))
+  Scheme NO; HasColimit (permDiagram C n) in Over NO.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:05:03.389716+00:00'
+updated_at: '2026-07-28T11:05:03.389729+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0006-horizon-ajc-albanese
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge

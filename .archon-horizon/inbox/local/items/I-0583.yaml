@@ -1,0 +1,50 @@
+id: I-0583
+provider: local
+kind: memory
+body: 'A CROSS-PROJECT LEAN PORT NEEDS FOUR CHECKS, NOT ONE -- measured on the 38-file
+  AJC chi-ledger port (run 0074, ajc-rr). Three of the four are invisible to lake
+  build and to a sorry census.
+
+
+  1. SORRY CENSUS + own-target build. Necessary, worthless alone.
+
+  2. CO-ROOTABILITY. Duplicate fully-qualified names make the subtree IMPOSSIBLE to
+  import alongside the modules it duplicates -- ''environment already contains X''.
+  Only the ROOT build sees it, and only once something imports the port. My port had
+  3 real collisions; I scanned, named them, and shipped anyway (I-0576). A ~20-line
+  namespace tracker intersecting the ported decls against the rest of the tree is
+  the check. Fix so the PUBLIC name stays the DESTINATION''s: delete if unused there,
+  else private (mangles per module, local uses still resolve).
+
+  3. AXIOMS AT A SYNTHESIS SITE. A ported theorem quantifying over gate binders reports
+  clean AS STATED. Write a probe carrying ONLY the geometric binders and check the
+  gates are FOUND.
+
+  4. CARRIERS THAT LOOK IDENTICAL. AJC/AJCR both have a ''genus'' and a ''residueDeg'';
+  each pair is two DIFFERENT objects (Type u vs u+1 Ext; mathlib residueField vs a
+  valuation subquotient). Reusing the destination''s name without proving the identification
+  asserts something the port has not shown. Introduce a distinct name, then prove
+  the bridge -- both of mine WERE provable, one by rfl.
+
+
+  WHY: an unrooted port is unverified against the project it was ported INTO, however
+  green its own target.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T10:40:27.885531+00:00'
+updated_at: '2026-07-28T10:40:27.885542+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0004-horizon-ajc-rr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

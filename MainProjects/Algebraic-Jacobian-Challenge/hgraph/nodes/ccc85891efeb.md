@@ -1,0 +1,16 @@
+---
+author: sync
+content_type: definition
+created: '2026-07-28T18:12:20'
+decl: CategoryTheory.Sheaf.freeModuleSheafMap
+docstring: Functoriality of the free sheaf of modules in the object of the site.
+file: AlgebraicJacobian/RiemannRoch/Ledger/OverOpen.lean
+generated: lean
+lean_status: lean_ok
+title: CategoryTheory.Sheaf.freeModuleSheafMap
+type: lean
+updated: '2026-07-28T18:12:20'
+---
+noncomputable def freeModuleSheafMap {U V : C} (i : U ⟶ V) :
+    freeModuleSheaf J R U ⟶ freeModuleSheaf J R V :=
+  (presheafToSheaf J _).map (Functor.whiskerRight (yoneda.map i) (ModuleCat.free R))

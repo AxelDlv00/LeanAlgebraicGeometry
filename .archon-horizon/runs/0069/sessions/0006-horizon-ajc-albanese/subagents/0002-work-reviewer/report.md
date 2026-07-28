@@ -1,1 +1,1 @@
-Now the instance-level checks for the affine claim.
+Two final probes: the terminal-object trivial satisfaction, and the AlbaneseUP header claim.

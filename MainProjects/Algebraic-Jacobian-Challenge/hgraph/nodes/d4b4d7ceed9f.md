@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:gr_universalMatrix_submatrix_self
 lean_status: lean_ok
-order: 1379
+order: 1383
 title: The \(I\)-minor of \(X^I\) is the identity
 type: tex
-updated: '2026-07-28T14:04:00'
+updated: '2026-07-28T18:12:22'
 ---
 The \(I\)-minor of the universal matrix \(X^I\)
   (\cref{def:gr_universal_matrix}), with its \(I\)-columns read through the order

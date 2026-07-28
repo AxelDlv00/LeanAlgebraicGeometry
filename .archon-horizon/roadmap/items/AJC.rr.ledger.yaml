@@ -1,0 +1,67 @@
+id: AJC.rr.ledger
+title: The AJCR chi-ledger, ported into AJC and unconditional at a curve
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'RiemannRoch/Ledger/, 38 files, ~9.4k lines, sorry-free. PORT of the AJCR
+  chi-ledger cone
+
+  (proof bodies byte-identical bar named adaptations) plus four AJC-native rederivations.
+
+
+  LANDED: chi(O(D)) = 1 - genus C + deg D on AJC''s OWN frozen genus, binders
+
+  [IsProper][SmoothOfRelativeDimension 1][GeometricallyIrreducible] only -- both Module.Finite
+
+  cohomology binders are SYNTHESISED, not assumed, measured at a synthesis site rather
+  than at
+
+  the declaration. Plus riemann_inequality, h0 unbounded along n*x, deg_divOf.
+
+
+  AJC-NATIVE (not ports, no producer existed in either project): ledgerGenus_eq_genus
+  (the
+
+  universe gap is an annotation, discharged via chgUnivLinearEquiv); residueDeg =
+  1 over kbar,
+
+  which collapses the residue weighting to the bare coefficient sum; divOf agrees
+  with
+
+  WeilDivisor.principal coefficient-wise INCLUDING SIGNS.
+
+
+  NOT DONE: the port is rootable (verified co-importable with Cohomology/ and Picard/
+  after
+
+  fixing three name collisions, I-0576) but is imported by nothing -- the root roll-up
+  is not
+
+  this lane''s file. Extension-uniformity and global generation remain untouched;
+  single-field
+
+  bounded vanishing is not supplied by this ledger.
+
+  '
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-28T10:40:05.570230+00:00'
+  provenance:
+    run: '0074'
+    session: 0004-horizon-ajc-rr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.rr
+  owner: ajc-rr

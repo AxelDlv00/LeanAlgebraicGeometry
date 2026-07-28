@@ -20,22 +20,36 @@ summary: "UNBLOCKED FOR THE COVERS R2 USES (2026-07-28, run 0070); still open in
   \ the \"every other piece misses the support\" half is free (the support locus is\n\
   CLOSED, so choose the other pieces inside its open complement). So the escape route\
   \ this leaf\noffers is reachable from one geometric statement rather than two.\n\
-  \nStraddling covers are exactly the covers protection I-0492 directs the lane to\
-  \ use, so nothing on\nthe DD-R critical path needs this leaf any more.\n\nWHY IT\
-  \ STAYS BLOCKED RATHER THAN DONE. The discharge is specific to the straddling shape:\
-  \ off the\ndiagonal it needs every non-swallowing piece to miss the support, which\
-  \ makes deltaLeft - deltaRight\nthe ZERO map. For an ARBITRARY adaptation over an\
-  \ arbitrary finite cover -- e.g. the\nexists_divisorAdaptation choice at DivSchemeFamily.lean:367,\
-  \ or the new chart-free\nexists_affAdaptation_of_isProper (321af6cb6), about neither\
-  \ of which anything is known -- the\nobligation is untouched and is still a genuine\
-  \ relative-flatness statement over a possibly\nnonreduced base. Anyone who needs\
-  \ THAT case is not served by the new files.\n\nTHE I-0340 REFUTATION IS NOT RETIRED,\
-  \ and should not be read as such. (c4) still implies flatness of\nthe diagonal overlap\
-  \ colengths; that is a theorem (deltaSub_apply_diag, DivisorFamilyAffCollapse.lean).\n\
-  What changed is that the implication became harmless in the case of interest, not\
-  \ false.\n\nFALLBACK FOR THE GENERAL CASE, unchanged: the flattening route. ddr.flattening-fallback\
-  \ was rejected\n2026-07-23 with an EMPTY note, two days before the route change\
-  \ that created this obligation.\n"
+  \nSTRENGTHENED AGAIN 2026-07-28 (run 0070 s0008): BOTH remaining inputs of that\
+  \ endpoint are now\nsmaller, so on the R2 covers this leaf's escape route costs\
+  \ one geometric statement in total.\n * the (c1)-projectivity input is DISCHARGED\
+  \ from the seed for every widened cover and adaptation\n   (ThetaGeneratorSeed.affAdaptation_fibre_regular,\
+  \ 5e77976f4) -- obligation I-0492 4(i) is no\n   longer owed;\n * hrank is no longer\
+  \ about the glued module over the whole cover. On a straddling cover\n   Glued ~=\
+  \ chartProd, Module.rankAtStalk_pi splits the product, and every NON-swallowing\
+  \ colength\n   is subsingleton hence rank 0 -- so the datum is the rank of the ONE\
+  \ swallowing colength\n   (rankAtStalk_glued_eq_of_swallowedBy, isCertified_of_swallowedBy_of_c1_of_rank_piece,\n\
+  \   81c17f256). This is the same collapse this leaf already exploits for flatness,\
+  \ applied to the\n   rank: the whole certificate on a straddling cover is carried\
+  \ by the straddling piece.\nComposed endpoint: exists_isCertified_of_seed_of_swallowing_affineOpen\
+  \ (46d751465).\n\nStraddling covers are exactly the covers protection I-0492 directs\
+  \ the lane to use, so nothing on\nthe DD-R critical path needs this leaf any more.\n\
+  \nWHY IT STAYS BLOCKED RATHER THAN DONE. The discharge is specific to the straddling\
+  \ shape: off the\ndiagonal it needs every non-swallowing piece to miss the support,\
+  \ which makes deltaLeft - deltaRight\nthe ZERO map. The rank collapse added in s0008\
+  \ has exactly the same restriction and is NOT an\nindependent strengthening of the\
+  \ general case -- it is the same degeneracy read on a different\nmodule. For an\
+  \ ARBITRARY adaptation over an arbitrary finite cover -- e.g. the\nexists_divisorAdaptation\
+  \ choice at DivSchemeFamily.lean:367, or the chart-free\nexists_affAdaptation_of_isProper\
+  \ (321af6cb6), about neither of which anything is known -- the\nobligation is untouched\
+  \ and is still a genuine relative-flatness statement over a possibly\nnonreduced\
+  \ base. Anyone who needs THAT case is not served by the new files.\n\nTHE I-0340\
+  \ REFUTATION IS NOT RETIRED, and should not be read as such. (c4) still implies\
+  \ flatness of\nthe diagonal overlap colengths; that is a theorem (deltaSub_apply_diag,\
+  \ DivisorFamilyAffCollapse.lean).\nWhat changed is that the implication became harmless\
+  \ in the case of interest, not false.\n\nFALLBACK FOR THE GENERAL CASE, unchanged:\
+  \ the flattening route. ddr.flattening-fallback was rejected\n2026-07-23 with an\
+  \ EMPTY note, two days before the route change that created this obligation.\n"
 status: blocked
 kind: proof
 priority: low
@@ -58,5 +72,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-28T09:32:19.131623+00:00'
+  updated_at: '2026-07-28T11:01:49.768356+00:00'
   milestone: w4-gate
+  pinned_commits:
+  - 81c17f256

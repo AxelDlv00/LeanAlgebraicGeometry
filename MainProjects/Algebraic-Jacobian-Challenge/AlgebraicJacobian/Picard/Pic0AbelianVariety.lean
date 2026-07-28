@@ -1161,13 +1161,26 @@ no quantifier over field extensions and no `GeometricallyReduced` class. Compare
 `smooth_of_forall_isReduced` directly above, which asks for one reducedness statement *per*
 field extension of `k`: this asks for one, at the algebraic closure.
 
-WHY THIS IS A STRICT IMPROVEMENT AND NOT A RESTATEMENT. `GeometricallyReduced` is *defined*
-by base change along every `Spec K ⟶ Spec k`, so it implies the `k̄` instance; the converse
-— reducedness over `k̄` implies reducedness over every field extension — is the transcendental
-half of the descent, and it is **absent from mathlib v4.31**: there is no producer, and
-`GeometricallyReduced` has no `MorphismProperty.DescendsAlong` instance (checked from this
-side and independently by the sibling project; inbox I-0495, 2026-07-28). So the two
-hypotheses are *not* interchangeable, and this one is the weaker.
+SAME STRENGTH, BETTER ATTACK SURFACE — corrected after review, because the first version of
+this paragraph claimed a strict improvement and that was wrong. `GeometricallyReduced` is
+*defined* by base change along every `Spec K ⟶ Spec k`, so it implies the `k̄` instance. The
+converse is **absent from mathlib v4.31** (no producer, and no `MorphismProperty.DescendsAlong`
+instance — checked here and independently by the sibling project, inbox I-0495), which is what
+the original claim rested on. But **this project owns the converse anyway**, through
+`Smooth.geometricallyReduced` (`Curve/GeometricallyReduced.lean`): the `k̄` hypothesis gives
+smoothness by this theorem, and smoothness gives the class. So at these binders the two
+hypotheses are *interprovable* and this is a restatement.
+
+The methodological error is worth more than the lemma: the "absent from mathlib" measurement
+was taken inside this file's import cone (99 modules), which excludes
+`Curve/GeometricallyReduced`, while the root cone (215 modules) contains it. A synthesis probe
+cannot see a bridge its own imports exclude. Measure at the root.
+
+WHAT THE RESTATEMENT IS STILL FOR. Interprovable is not equally attackable.
+`GeometricallyReduced` has no non-circular producer in this development, whereas reducedness of
+one scheme over one algebraically closed field is exactly where Kleiman §5 Cor.~`cor:sm` and
+Cartier's theorem speak. And it discharges *two* obligations rather than one — see
+`geometricallyReduced_of_isReduced_algebraicClosureBaseChange` below.
 
 HOW IT IS AVAILABLE AT ALL. Mathlib's own `smooth_of_grpObj` reduces to exactly the `k̄` case
 internally, but through a `private` lemma, so the intermediate statement is unreachable by
@@ -1194,6 +1207,37 @@ theorem smooth_of_isReduced_algebraicClosureBaseChange {k : Type u} [Field k]
   haveI : LocallyOfFiniteType (Pic0Scheme C).hom := locallyOfFiniteType C
   letI : GrpObj (Over.mk (Pic0Scheme C).hom) := (grpObj C).some
   exact smooth_of_grpObj_of_isReduced_algebraicClosureBaseChange (Pic0Scheme C).hom h
+
+/-- **The `k̄` hypothesis discharges `geometricallyReduced` too** — the corollary the first
+version of this section missed, found by fresh-context review (run 0067).
+
+`geometricallyReduced` above is an open `sorry` of this file, and it is *implied* by the very
+hypothesis `smooth_of_isReduced_algebraicClosureBaseChange` consumes: reducedness over `k̄`
+gives smoothness (that theorem), and smoothness gives the class
+(`Smooth.geometricallyReduced`, `Curve/GeometricallyReduced.lean`). So one statement discharges
+**both** the smoothness leg and the reducedness sorry.
+
+That is also why the "strictly weaker hypothesis" claim above had to be withdrawn: the same
+in-tree instance that makes this corollary work makes the two hypotheses interprovable. The
+corollary is the useful half of that correction — a reviewer's negative finding turning into a
+positive one.
+
+Note this does **not** close `geometricallyReduced`: that theorem is stated with no hypothesis,
+and what is proved here is the implication from the `k̄` statement. What it does is collapse two
+apparently independent obligations into one, so a consumer supplying reducedness over `k̄` owes
+nothing further on either. Verified axiom-clean at the *root* import (not inside this file's
+cone, where `Smooth.geometricallyReduced` is invisible — see the correction above). -/
+theorem geometricallyReduced_of_isReduced_algebraicClosureBaseChange {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    [∀ {X Y : Scheme.{u}} (f : X ⟶ Y) [Smooth f], GeometricallyReduced f]
+    (h : IsReduced (Limits.pullback (Pic0Scheme C).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k (AlgebraicClosure k)))))) :
+    GeometricallyReduced (Pic0Scheme C).hom :=
+  haveI := smooth_of_isReduced_algebraicClosureBaseChange C h
+  inferInstance
 
 /-- **Smoothness of `Pic⁰_{C/k}`.**
 

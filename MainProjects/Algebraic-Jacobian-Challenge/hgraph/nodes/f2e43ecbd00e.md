@@ -7,9 +7,10 @@ docstring: Local finiteness and separatedness of `Pic_{C/k}` over an arbitrary f
 file: scripts/axiom-frontier.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.etProbe_picSchemeEt_carriers
 type: lean
-updated: '2026-07-28T14:28:37'
+updated: '2026-07-28T18:12:24'
 ---
 theorem etProbe_picSchemeEt_carriers :
     LocallyOfFiniteType (PicSchemeEt C).hom ∧ IsSeparated (PicSchemeEt C).hom :=

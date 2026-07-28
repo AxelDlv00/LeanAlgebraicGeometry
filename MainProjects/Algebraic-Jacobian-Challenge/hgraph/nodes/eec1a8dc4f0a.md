@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:map_tensorhom_comp3
 lean_status: lean_ok
-order: 868
+order: 872
 title: Functor image of the threefold interchange
 type: tex
-updated: '2026-07-28T14:04:00'
+updated: '2026-07-28T18:12:21'
 ---
 For a functor \(F : C \to D\) out of a monoidal category, the \(F\)-image of the
   threefold tensor/composition interchange (\cref{lem:tensorhom_comp3}) splits as the
