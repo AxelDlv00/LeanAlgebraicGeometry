@@ -11777,6 +11777,81 @@ that gap is Remark~\ref{rem:pullback_mono_missing_stalk_model}.
   Lemma~\ref{lem:mono_iff_injective_sections} concludes in both directions.
 \end{proof}
 
+\begin{lemma}[Cancellation of preserved limits]\leanok
+  \label{lem:preserves_limit_comp_cancel}
+  \lean{AlgebraicGeometry.preservesLimit_comp_cancel}
+  Let \(K : \mathcal{J} \to \mathcal{C}\) be a diagram admitting a limit, and let
+  \(F : \mathcal{C} \to \mathcal{D}\), \(G : \mathcal{D} \to \mathcal{E}\) be functors. If \(F\)
+  preserves the limit of \(K\) and \(F \circ G\) preserves the limit of \(K\), then \(G\)
+  preserves the limit of the transported diagram \(K \circ F\).
+\end{lemma}
+
+\begin{proof}\leanok
+  Let \(c\) be a limit cone of \(K\). Since \(F\) preserves that limit, \(F c\) is a limit cone of
+  \(K \circ F\); a functor preserves the limit of a diagram as soon as it carries one limit cone
+  of that diagram to a limit cone, so it suffices to check \(G\) on \(F c\). That \(G (F c)\) is a
+  limit cone is precisely the hypothesis that \(F \circ G\) preserves the limit of \(K\).
+\end{proof}
+
+\begin{lemma}[Flat affine pullback is exact on quasi-coherent modules]\leanok
+  \label{lem:flat_pullback_kernels_qcoh}
+  \lean{AlgebraicGeometry.pullback_preservesKernel_of_isQuasicoherent}
+  \uses{lem:preserves_limit_comp_cancel, lem:tilde_preserves_kernels}
+  Let \(g : S' \to S\) be a flat morphism of affine schemes and \(\psi : A \to B\) a morphism of
+  quasi-coherent \(\mathcal{O}_S\)-modules. Then \(g^*\) preserves \(\ker \psi\).
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{lem:preserves_limit_comp_cancel, lem:tilde_preserves_kernels}
+  First let \(S = \operatorname{Spec} R\), \(S' = \operatorname{Spec} R'\) and \(g\) be
+  \(\operatorname{Spec}\) of a flat ring map \(\varphi\). The composite \(M \mapsto g^*(\widetilde
+  M)\) is exact, and \(\widetilde{(-)}\) is exact, so by
+  Lemma~\ref{lem:preserves_limit_comp_cancel} the functor \(g^*\) preserves the limit of any
+  finite diagram of the form \(K \circ \widetilde{(-)}\); taking \(K\) a parallel pair gives that
+  \(g^*\) preserves \(\ker(\widetilde f)\) for every morphism \(f\) of \(R\)-modules. Now
+  \(\widetilde{(-)}\) is fully faithful, so a morphism between two objects of its essential image
+  becomes, after conjugating by the two witnessing isomorphisms, equal to \(\widetilde f\) for an
+  actual morphism \(f\) of modules; kernels are preserved along an isomorphism of parallel pairs,
+  so the claim holds for every morphism of quasi-coherent modules, these being exactly the objects
+  of the essential image over an affine scheme.
+
+  For general affine \(S, S'\) transport along the isomorphisms \(S \cong \operatorname{Spec}
+  \Gamma(S, \mathcal{O}_S)\): the section map \(\Gamma(g)\) is flat, quasi-coherence is stable
+  under pullback, and the conjugating functors are pullbacks along isomorphisms, hence
+  equivalences. An equivalence preserves the limit and, being fully faithful, also reflects it, so
+  preservation of the kernel descends from the conjugate to \(g^*\) itself.
+\end{proof}
+
+\begin{lemma}[Homology comparison from a single kernel]\leanok
+  \label{lem:homology_iso_of_preserves_kernel}
+  \lean{AlgebraicGeometry.mapHomologicalComplexHomologyIso_of_preservesKernel}
+  Let \(F\) be an additive, right exact functor between abelian categories, \(K\) a homological
+  complex and \(i\) a degree. If \(F\) preserves the kernel of the differential out of \(K_i\),
+  then \(H^i(F K) \cong F(H^i K)\).
+\end{lemma}
+
+\begin{proof}\leanok
+  The degree-\(i\) homology of \(K\) is that of the short complex
+  \(K_{i-1} \to K_i \to K_{i+1}\), and the corresponding short complex of \(F K\) is the image of
+  that one under \(F\). A left homology datum of a short complex is preserved by \(F\) as soon as
+  \(F\) preserves the kernel of its right-hand map and the cokernel of the induced map from the
+  left-hand object; the latter is automatic for a right exact \(F\). Preservation of one left
+  homology datum gives the canonical comparison isomorphism.
+\end{proof}
+
+\begin{remark}[Flat exactness is needed only on quasi-coherent modules]
+  \label{rem:flat_exactness_qcoh_suffices}
+  \uses{lem:flat_pullback_kernels_qcoh, lem:homology_iso_of_preserves_kernel}
+  Lemma~\ref{lem:pullback_preserves_monos}, which quantifies over arbitrary
+  \(\mathcal{O}_S\)-modules, is not needed for flat base change of the \v{C}ech higher direct
+  images. The higher direct images are the homology of a complex whose terms are quasi-coherent,
+  and by Lemma~\ref{lem:homology_iso_of_preserves_kernel} the comparison of homology with \(g^*\)
+  requires only that \(g^*\) preserve one kernel in each degree --- which
+  Lemma~\ref{lem:flat_pullback_kernels_qcoh} supplies. The general statement remains open, and
+  Remark~\ref{rem:pullback_mono_missing_stalk_model} records why; the point here is that it is not
+  on the path to Lemma~\ref{lem:cech_flat_base_change}.
+\end{remark}
+
 \begin{remark}[No stalk model of the module pullback]
   \label{rem:pullback_mono_missing_stalk_model}
   The stalk formula used in the proof of Lemma~\ref{lem:pullback_preserves_monos} is the one
