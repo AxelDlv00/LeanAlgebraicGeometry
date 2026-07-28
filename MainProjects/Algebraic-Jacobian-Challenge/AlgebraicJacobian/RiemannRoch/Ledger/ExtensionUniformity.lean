@@ -144,8 +144,16 @@ crosses a second carrier boundary that the `rfl` above does *not* cover.
 
 **Input (2), a uniform base-divisor degree bound: open, and not located in either project.**
 It asks for one `d` with a vanishing `D₀` of degree `≤ d` over *every* `κ`.  Nothing in AJC or
-AJCR bounds `n₀(κ)` uniformly; AJCR's analogue is a `Nat.find` per field
-(`RiemannRoch/WindowLedger.lean`), and its `WindowFieldTransport.lean` transports vanishing
+AJC bounds `n₀(κ)` uniformly.
+
+**The claim about AJCR that used to stand here is withdrawn** — see
+`Ledger/GenusFieldInvariance.lean` §"What is NOT closed".  It said AJCR's analogue is a `Nat.find`
+per field; in fact `WindowFieldTransport.deg_windowN` gives the degree over `K` as
+`windowM_choice π hπ g * windowδ π` with **both factors computed at `k`**, so that constant does
+move.  Whether AJCR has input (2), or material for it, is unmeasured here and must not be cited
+as evidence that the input is hard.  The paragraph below is kept because it correctly describes
+**AJC's own** `n₀`; its AJCR clause is the retracted part.  AJCR's `WindowFieldTransport.lean`
+transports vanishing
 *facts* one field at a time precisely because the constant does not move.
 
 So `uniformVanishing_of_uniform_base_of_genus_invariant` **was** a conditional result with one
@@ -164,7 +172,8 @@ because a caller who has a genus bound by some other route may still want it.
    classes); open half decomposed into a genus identity plus a uniform base-divisor degree bound.
    **The genus identity is now proved** (`Ledger/GenusFieldInvariance.lean`), so the open half is
    *exactly* the base-divisor bound — one input, not two.  Still open, and still open in AJCR
-   too: its analogue is a `Nat.find` per field.
+   in AJC.  Whether AJCR has it is **unmeasured** — the "`Nat.find` per field" claim that stood
+   here is withdrawn (its window constant is computed at `k`, not per field).
 3. **Global generation** — closed at AJC's curve by the dévissage route
    (`FiberBound.exists_bound_generated_of_isFinite_toP1`), independent of (1).  This file does
    not touch it; in particular nothing here makes generation uniform over extensions either.

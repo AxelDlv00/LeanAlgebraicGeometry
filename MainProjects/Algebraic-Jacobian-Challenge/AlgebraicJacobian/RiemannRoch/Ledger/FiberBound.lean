@@ -51,9 +51,9 @@ carried by the linear-equivalence translate manufactured inside
    What remains open is the *base-divisor* half only: one degree bound `d` with a vanishing
    divisor of degree `≤ d` over every `κ`.  So the sentence "nothing in AJC or AJCR closes this"
    was true when written and is now half wrong; the residue is one named input, not two.  The
-   `Classical.choose`/`Nat.find` observation below still describes that surviving half correctly
-   (AJCR's `RiemannRoch/WindowFieldTransport.lean` moves vanishing *facts* one field at a time
-   because the constant does not move).
+   `Classical.choose` observation below still describes **AJC's own** surviving half correctly.
+   Its claim about AJCR is retracted in place further down: AJCR's window constant is computed at
+   `k`, not per field, so AJCR must not be cited as evidence that this input is hard.
 3. **Global generation: CLOSED here too, but by an independent route.**
    `exists_bound_generated_of_isFinite_toP1` below is not a corollary of (1): it comes from the
    dévissage slice in `DegreeVanishing`, whose evaluation map *is* the quotient map, and the
@@ -280,10 +280,14 @@ degree and retracts the `2g − 1` shortcut (Serre duality, which this workspace
 above are produced independently: `b κ = deg_κ (n₀(κ) • F_κ) + 1 − χ(𝒪_{C_κ})`, where `n₀(κ)`
 comes from a `Classical.choose` on the Noetherian stabilization of the fiber ladder over `κ`, and
 that stabilization is re-run from scratch at each base field.  Nothing relates `n₀(κ)` to `n₀(k)`.
-This is the same obstruction AJCR names on its own carrier: its `windowM_choice` is a `Nat.find`
-per field (`RiemannRoch/WindowLedger.lean:186`), which is why
-`RiemannRoch/WindowFieldTransport.lean` transports vanishing *facts* one field at a time instead
-of transporting the constant.
+**RETRACTED — the AJCR half of this sentence.**  It read "this is the same obstruction AJCR names
+on its own carrier: its `windowM_choice` is a `Nat.find` per field".  The AJC half stands; the
+AJCR half is false.  `WindowFieldTransport.deg_windowN` gives the degree over `K` as
+`windowM_choice π hπ g * windowδ π` with **both factors computed at `k`**, and `windowM_choice` is
+a single `Nat.find` at `k` (`WindowLedger.lean:186`), so the constant there does *not* vary with
+the field.  `WindowFieldTransport.lean` does transport vanishing facts, but that is not evidence
+the constant cannot move.  Whether AJCR has a uniform base divisor, or material for one, is
+**unmeasured** and must not be cited as evidence that the input is hard.
 
 So the honest statement of the residue is **not** "vanishing over extensions is unavailable" — it
 is "the constant does not transport".  The two named inputs that would fix it are unchanged: flat

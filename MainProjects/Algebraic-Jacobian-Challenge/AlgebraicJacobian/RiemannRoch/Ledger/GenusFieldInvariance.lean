@@ -46,10 +46,21 @@ Composing, `κ ⊗[k] Ȟ¹(S, 𝒪) ≃ₗ[κ] Ȟ¹(S_κ, 𝒪)`, and a `finrank
 2. **Extension-uniformity** — this file discharges **one of its two inputs**.  After it, the
    open half of extension-uniformity is *exactly* input (2): one degree bound `d` such that over
    every `κ` some divisor of degree `≤ d` already has vanishing `H¹`.  That is **still open**,
-   in AJC and in AJCR both — AJCR's analogue is a `Nat.find` per field
-   (`RiemannRoch/WindowLedger.lean`) and its `WindowFieldTransport.lean` moves vanishing *facts*
-   one field at a time precisely because the constant does not move.  Nothing here changes that,
-   and in particular **`UniformVanishing C` is not proved by this file**.
+   in AJC.  **`UniformVanishing C` is not proved by this file.**
+
+   **On AJCR: I withdraw the stronger claim I made about it.**  Earlier versions of this and two
+   sibling docstrings said AJCR's analogue is "a `Nat.find` per field", making input (2) look
+   equally open next door.  A reviewer checked the arity and the constant, and the assertion does
+   not survive: `WindowFieldTransport.deg_windowN` gives the degree over `K` as
+   `windowM_choice π hπ g * windowδ π`, and **both factors are computed at `k`** —
+   `windowM_choice` is a `Nat.find` taken once at `k` (`WindowLedger.lean:186`) and `windowδ` is
+   `classDeg` of a `k`-fiber twist, with no `K` in either.  `subsingleton_h1_windowN` then gets
+   `H¹` vanishing at `K` from a `k`-side hypothesis.  So the constant demonstrably *does* move;
+   what is per-`K` there is the block of instance binders the transport section assumes.
+
+   The honest statement is therefore narrower: input (2) is open **in AJC**, and whether AJCR
+   already has it, or has something a `κ`-indexed version could be built from, is **unmeasured
+   by me**.  It should not be cited as evidence that the input is hard.
 3. **Global generation** — untouched.  Nothing here makes generation uniform over extensions;
    the generation statement of `FiberBound` is over a single field and stays that way.
 
