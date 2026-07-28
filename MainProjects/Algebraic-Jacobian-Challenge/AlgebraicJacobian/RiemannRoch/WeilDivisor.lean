@@ -1255,7 +1255,7 @@ theorem principal_degree_zero {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     degree (principal f hf) = 0 := by
   -- The coheight bound at every point of the curve.  This is the ONE input that had been
   -- recorded across this lane as "strictly downstream and unavailable here": it is not.
-  -- `Adelic.coheight_le_one_of_curve` sits in a four-file import cone
+  -- `Adelic.coheight_le_one_of_curve` sits in an import cone of three files besides itself
   -- (`Albanese.CoheightBridge`, `Picard.ProjectiveSpace`, `Adelic.P1BaseCase`), all of which
   -- this module already reaches through `Genus`.
   have hdim : ∀ z : C.left, Order.coheight z ≤ 1 :=
