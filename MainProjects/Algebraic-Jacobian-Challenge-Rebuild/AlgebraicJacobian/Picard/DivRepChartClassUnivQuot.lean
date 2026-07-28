@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivRepChartClassUnivAny
+import AlgebraicJacobian.Picard.DivSchemeFrameCover
 
 /-!
 # The ε-identity does not consume a certificate: it consumes the WINDOW QUOTIENT
@@ -216,6 +217,13 @@ end WindowQuot
 
 section EpsQuot
 
+-- the three curve instances below are consumed by `divFamEps_eq_of_le` (through the landed
+-- `DivSchemeFrameCover` window-quotient lemmas) but NOT by the carrier-free theorems above it.
+-- `omit`-ing them per-theorem is rejected (they are referenced elsewhere in the section), so the
+-- unused-section-variable linter is disabled here rather than the section being split.
+set_option linter.unusedSectionVars false
+variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIrreducible C.hom]
 variable [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0)]
   [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1)]
 variable (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (.of k))
@@ -270,6 +278,68 @@ theorem divFamEps_eq_of_le_of_quotientData (F : DivFam C R π g)
   Prod.ext
     (divisorWindowQuot_eq_of_le_of_quotientData F _ x₁ hproj₁ hrank₁ hle₁)
     (divisorWindowQuot_eq_of_le_of_quotientData F _ x₂ hproj₂ hrank₂ hle₂)
+
+set_option maxHeartbeats 2000000 in
+-- both landed window-quotient lemmas unfold `DivFam.window` through the section-ring algebra
+-- tower at each of the two pinned ledger windows; this is the defeq profile the satisfiability
+-- probe was measured at, and the default budget does not reach it
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- **THE ε-PAIR IDENTITY FROM CONTAINMENT ALONE — the satisfiability probe, discharged.**
+
+The module docstring says this file owes a satisfiability check: the window-quotient hypotheses
+are *determined* by `F` rather than consumer-chosen, so the live failure mode is not vacuity but
+**unsatisfiability** — a reduction to a false hypothesis passes every `sorry` census and axiom
+probe, because it is then a theorem.
+
+**The check comes back positive, and better than positive: the hypotheses are already landed,
+unconditionally, on `DivFam`.**  `Picard/DivSchemeFrameCover.lean` carries
+`DivFam.projective_window_quotient` and `DivFam.rankAtStalk_window_quotient` for *every*
+`F : DivFam C R π g` at *every* window `a ≥ windowM_choice`, discharged inside from the
+representative's own certificate — which `DivFam` has by construction, since
+`CertifiedDivisorFamily` is a triple carrying one.
+
+So at the two pinned ledger windows the ε-pair identity needs **only the two containments**:
+
+* `hle₁` is DDR-3's `le_vanishingSubmodule` at the seed;
+* `hle₂` is the named DDR-5 second-window boundary.
+
+**What this does and does not settle.**  It settles that the ε-half of U2 is not a reduction to
+a false hypothesis — the hypothesis holds for every `DivFam`, so it is satisfiable wherever a
+`DivFam` exists.  It does **not** produce a `DivFam` over the chart ring: that is the class
+half, and it remains the whole open obligation (protection `I-0492`'s widening is the route).
+
+**The sharp reading, and it is a demotion of this file's own headline.**  If the window-quotient
+facts were already unconditional on `DivFam`, then the ε-half of U2 was never gated on a
+certificate *at all* — not even on the weakened `HasCertifiedAdaptation` of
+`Picard/DivRepChartClassUnivAny.lean`.  What the earlier sessions read as "U2 needs a
+certificate" was the **class** requirement leaking into the ε statement through the carrier:
+you cannot *write* `divFamEps hπ g F` without an `F`, and every `F` carries a certificate.  The
+ε layer never asked for one beyond that. -/
+theorem divFamEps_eq_of_le (F : DivFam C R π g)
+    (hπ' : π ≫ P1.structureMap k = C.hom)
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    (x₁ : Grassmannian.grFunctorAff k
+      (↥(Scheme.divisorSections k (windowM_choice π hπ g • fiberWeilDivisor π) ⊤)) g R)
+    (x₂ : Grassmannian.grFunctorAff k
+      (↥(Scheme.divisorSections k
+        ((windowM_choice π hπ g + windowS_choice π hπ g) • fiberWeilDivisor π) ⊤)) g R)
+    (hle₁ : x₁.toSubmodule ≤ F.window (relThetaPairH1_windowM C π hπ g))
+    (hle₂ : x₂.toSubmodule ≤ F.window (relThetaPairH1_windowMS C π hπ g)) :
+    divFamEps hπ g F = (x₁.toSubmodule, x₂.toSubmodule) :=
+  divFamEps_eq_of_le_of_quotientData hπ F x₁ x₂
+    (DivFam.projective_window_quotient hπ' g hO hχ (windowM_choice π hπ g)
+      (relThetaPairH1_windowM C π hπ g) le_rfl F)
+    (DivFam.rankAtStalk_window_quotient hπ' g hO hχ (windowM_choice π hπ g)
+      (relThetaPairH1_windowM C π hπ g) le_rfl F)
+    (DivFam.projective_window_quotient hπ' g hO hχ
+      (windowM_choice π hπ g + windowS_choice π hπ g)
+      (relThetaPairH1_windowMS C π hπ g) (Nat.le_add_right _ _) F)
+    (DivFam.rankAtStalk_window_quotient hπ' g hO hχ
+      (windowM_choice π hπ g + windowS_choice π hπ g)
+      (relThetaPairH1_windowMS C π hπ g) (Nat.le_add_right _ _) F)
+    hle₁ hle₂
 
 end EpsQuot
 
