@@ -85,6 +85,30 @@ regularity — so of the two directions of `dim Pic⁰ = g`, the one previously 
 * `Scheme.topologicalKrullDim_eq_of_forall_finrank_cotangentSpace_le_of_regular` —
   the two halves combined: a uniform cotangent bound at every point plus a
   regular point where the cotangent dimension is exactly `d`.
+
+## What is still owed, located precisely (run 0067 r6)
+
+The remaining input for `dim Pic⁰ ≤ g` is the *uniform* bound
+`∀ z, dim_κ (m_z/m_z²) ≤ g`. The natural source is
+`SmoothOfRelativeDimension (genus C) (Pic0Scheme C).hom`, whose field gives a
+standard-smooth chart of relative dimension `n` at every point. That does **not**
+immediately give the bound, and it is worth recording exactly where it stops, because
+the gap is easy to miss:
+
+`Algebra.IsStandardSmoothOfRelativeDimension n k S` unfolds to a presentation with
+generator set `ι` and relation set `σ` satisfying `#ι - #σ = n`. Surjecting from the
+polynomial ring bounds the dimension by
+`ringKrullDim (MvPolynomial ι k) = #ι = n + #σ`
+(`ringKrullDim_le_of_surjective` with
+`MvPolynomial.ringKrullDim_of_isNoetherianRing`; verified to elaborate). That is the
+**weak** bound: it is `n` only when `#σ = 0`. Getting `n` requires the `#σ` relations
+to cut dimension by exactly `#σ`, i.e. that they form a regular sequence — which is
+true for a standard-smooth presentation (the Jacobian is invertible) but is a real
+theorem, not a rearrangement, and mathlib at this pin has no
+`ringKrullDim`-of-a-standard-smooth-algebra lemma. `Albanese/StandardSmoothDimension.lean`
+proves the matching *lower* bound `n ≤ height m` at maximal ideals by exactly this kind
+of argument (Krull's height theorem plus the cardinality bookkeeping `n + #σ = #ι`), so
+that file is the model for the missing upper half rather than a source of it.
 -/
 
 universe u
@@ -114,6 +138,39 @@ theorem ringKrullDim_le_finrank_cotangentSpace
     ringKrullDim R ≤ ((Module.finrank (ResidueField R) (CotangentSpace R) : ℕ) : WithBot ℕ∞) := by
   rw [← IsLocalRing.spanFinrank_maximalIdeal_eq_finrank_cotangentSpace R]
   exact ringKrullDim_le_spanFinrank_maximalIdeal R
+
+/-- **The weak dimension bound from a standard-smooth presentation** — proved, and
+stated to mark exactly how far the presentation alone gets.
+
+For `S` standard-smooth of relative dimension `n` over a field `k`, the presentation
+has generators `ι` and relations `σ` with `#ι - #σ = n`, and surjecting from
+`MvPolynomial ι k` gives `dim S ≤ #ι = n + #σ`. This is *weaker* than `dim S ≤ n`
+whenever there is at least one relation.
+
+It is stated existentially, in the form the proof actually delivers, rather than as
+`dim S ≤ n + #σ`: the presentation's `ι` and `σ` are bound inside the class field, so
+naming them in the conclusion would require choosing a presentation first. What the
+statement records is the honest content — *some* bound follows from the presentation
+for free — while making clear that the sharp value does not.
+
+**Why the sharp bound `dim S ≤ n` is a real theorem and not available here.** It needs
+the `#σ` relations to cut the dimension by exactly `#σ`, i.e. to form a regular
+sequence. That holds for a standard-smooth presentation, because the Jacobian is
+invertible, but it is genuine commutative algebra and mathlib at this pin carries no
+`ringKrullDim`-of-a-standard-smooth-algebra lemma. Compare
+`Albanese/StandardSmoothDimension.lean`, which proves the matching **lower** bound
+`n ≤ height m` at maximal ideals by Krull's height theorem plus the same cardinality
+bookkeeping `n + #σ = #ι`; it is the model for the missing upper half, not a source
+of it. -/
+theorem Algebra.IsStandardSmoothOfRelativeDimension.exists_ringKrullDim_le
+    {k : Type u} [Field k] {S : Type u} [CommRing S] [Nontrivial S] [Algebra k S]
+    (n : ℕ) [H : Algebra.IsStandardSmoothOfRelativeDimension n k S] :
+    ∃ m : ℕ, ringKrullDim S ≤ (m : WithBot ℕ∞) := by
+  obtain ⟨ι, σ, hσ, hι, P, hPdim⟩ := H.out
+  refine ⟨Nat.card ι, ?_⟩
+  refine le_trans (ringKrullDim_le_of_surjective _ P.algebraMap_surjective) ?_
+  rw [MvPolynomial.ringKrullDim_of_isNoetherianRing (R := k) (ι := ι),
+    ringKrullDim_eq_zero_of_field k, zero_add]
 
 namespace AlgebraicGeometry.Scheme
 
