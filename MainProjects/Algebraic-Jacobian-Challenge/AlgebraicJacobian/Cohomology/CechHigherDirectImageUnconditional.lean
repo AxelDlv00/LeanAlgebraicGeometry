@@ -403,6 +403,49 @@ theorem tildePullback_preservesKernel {R R' : CommRingCat.{u}} (φ : R ⟶ R')
       Limits.parallelPair f 0 ⋙ tilde.functor R ≅
         Limits.parallelPair ((tilde.functor R).map f) 0)
 
+/-- **Flat affine pullback preserves the kernel of ANY map of quasi-coherent modules.**  The
+linchpin: `tildePullback_preservesKernel` only speaks about maps *of the form* `f^~`, which looks
+like a severe restriction until one remembers that `tilde` is **full**
+(`tilde.fullyFaithfulFunctor`, from `IsIso (tilde.adjunction).unit`).  So a map between objects of
+the tilde essential image, transported along the two witnessing isomorphisms, *is* `tilde.map` of
+a module map — not merely isomorphic to one — and preservation transports back along the iso of
+parallel pairs.
+
+Quasi-coherence enters only through `isIso_fromTildeΓ_iff : IsIso M.fromTildeΓ ↔ essImage M`,
+which the tree already supplies for quasi-coherent modules over an affine base
+(`isIso_fromTildeΓ_of_quasicoherent`, `Cohomology/QcohTildeSections.lean`).
+
+This is the statement that makes flat base change for the Čech complex reachable without
+`pullback_preservesMonomorphisms`: it is exactly the hypothesis of
+`mapHomologicalComplexHomologyIso_of_preservesKernel`, at the objects the Čech complex actually
+has.  Project-local. -/
+theorem tildePullback_preservesKernel_of_essImage {R R' : CommRingCat.{u}} (φ : R ⟶ R')
+    (hφ : φ.hom.Flat) {A B : (Spec R).Modules} (ψ : A ⟶ B)
+    (hA : (tilde.functor R).essImage A) (hB : (tilde.functor R).essImage B) :
+    Limits.PreservesLimit (Limits.parallelPair ψ 0) (Scheme.Modules.pullback (Spec.map φ)) := by
+  obtain ⟨M, ⟨eA⟩⟩ := hA
+  obtain ⟨N, ⟨eB⟩⟩ := hB
+  set ψ' : (tilde.functor R).obj M ⟶ (tilde.functor R).obj N := eA.hom ≫ ψ ≫ eB.inv with hψ'
+  obtain ⟨f, hf⟩ : ∃ f : M ⟶ N, (tilde.functor R).map f = ψ' :=
+    ⟨(tilde.functor R).preimage ψ', (tilde.functor R).map_preimage ψ'⟩
+  haveI : Limits.PreservesLimit (Limits.parallelPair ψ' 0)
+      (Scheme.Modules.pullback (Spec.map φ)) := by
+    rw [← hf]; exact tildePullback_preservesKernel φ hφ f
+  refine Limits.preservesLimit_of_iso_diagram _
+    (Limits.parallelPair.ext eA eB ?_ ?_ :
+      Limits.parallelPair ψ' 0 ≅ Limits.parallelPair ψ 0)
+  · simp [hψ']
+  · simp
+
+/-- **Quasi-coherent modules over an affine base lie in the tilde essential image.**  Repackaging
+of `isIso_fromTildeΓ_iff` with the project's `isIso_fromTildeΓ_of_quasicoherent`, so that
+`tildePullback_preservesKernel_of_essImage` can be applied from a quasi-coherence hypothesis
+directly.  Project-local. -/
+theorem essImage_tilde_of_isQuasicoherent {R : CommRingCat.{u}} (M : (Spec R).Modules)
+    (hM : M.IsQuasicoherent) : (tilde.functor R).essImage M := by
+  haveI := hM
+  exact isIso_fromTildeΓ_iff.mp inferInstance
+
 /-- **`Γ(g)` is flat for a flat `g` between affine schemes.**  Specialisation of
 `Flat.flat_appLE` to `U = V = ⊤`, where `appLE` is `appTop` up to the identity restriction map.
 Project-local. -/
