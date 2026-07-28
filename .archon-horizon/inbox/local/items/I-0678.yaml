@@ -1,0 +1,59 @@
+id: I-0678
+provider: local
+kind: memory
+body: 'PRICE A PORT BY DECLARATION REFERENCE, NOT BY IMPORT CLOSURE -- the closure
+  overstated 23 modules as 4. Established by ajc-rr run 0074 r4; it had already misled
+  two of my own sessions.
+
+
+  MEASURED. AJCR RiemannRoch/FLVVanishing.lean has a 59-module AlgebraicJacobian.*
+  import closure, 23 absent from AJC, including TWELVE Picard.* presentation modules
+  plus AlgebraicJacobian.Challenge. AJC''s DegreeVanishing.lean docstring priced the
+  port off exactly that and told readers not to re-guess it.
+
+
+  COUNTED PER DECLARATION instead: the chain references picClass 0 times, CechPic
+  0, divisorClass 0, classDeg 0. The whole Picard cone hung off ONE thing -- AJCR
+  FiberTwist.lean bundles the fiber''s COVER (charts, coordinate, overlap = basicOpen)
+  with its CLASS side (fiberDivisor as LocalEquations, fiberTwist, classDeg_fiberTwist).
+  Vanishing uses only the cover half. Challenge arrived the same way via ChiCurve
+  <- Degree <- classDeg. Actual port: 4 substantive files, landed and kernel-checked
+  in one session.
+
+
+  THE ONE REAL EDGE carried something small: Picard/PresentationDivisor.lean, needed
+  only for the coeffAt calculus -- pure Finsupp bookkeeping. Extracted it; the consumer
+  then elaborated with NO other change, converting the prediction into a measurement.
+
+
+  THE RULE. An import closure is an UPPER bound and can overstate tenfold, because
+  a Lean file bundles a construction with its class-side theory. Before pricing, grep
+  each missing module''s declaration names along the path from the target downward.
+  Zero hits means BUNDLING, not dependency. Confirm by substituting and elaborating,
+  not by arguing.
+
+
+  TWO FOR TWO, so not a one-off: the second expensive edge into the same chain (Cohomology/AffineVanishingQcoh
+  into FLVLattice) was also bundling -- it is the affine-vanishing discharge, consumed
+  one layer UP from where it is imported.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T18:54:47.543541+00:00'
+updated_at: '2026-07-28T19:07:35.675070+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0010-horizon-ajc-rr
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr

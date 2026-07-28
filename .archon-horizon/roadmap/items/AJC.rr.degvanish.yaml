@@ -2,39 +2,39 @@ id: AJC.rr.degvanish
 title: Single-field bounded vanishing on a degree half-space
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'DONE (run 0074 r3, ajc-rr). Ledger/DegreeVanishing.lean, 12 decls, 0 sorries,
-  kernel-checked (lake build 8581 jobs exit 0), 16/16 axiom-clean including four synthesis-site
-  probes at the challenge curve.
-
-
-  The order-cone peel of AJC.rr.sectiondrop reaches a DEGREE HALF-SPACE. subsingleton_hModule_one_of_deg_ge:
-  from ONE base vanishing at ONE divisor D0, H1(O(D)) = 0 for every D with deg D >=
-  deg D0 + 1 - chi(O_X). Also exact Riemann-Roch above that bound, the D0 = 0 form
-  (unconditional given H1(O_C) = 0, hence unconditional at genus zero), and the contrapositive
-  that non-vanishing H1 is a bounded-degree phenomenon.
-
-
-  The mathematical point, and it retracts this lane''s own r2 claim: sectiondrop published
-  exists_bound_of_cofinal_vanishing as an OPEN hypothesis, saying nothing in AJC or
-  AJCR produces it. Both ingredients were in the same directory. H1 vanishing is a
-  linear-equivalence invariant (Ledger/MulEquiv.mulEquivDivisorSheaf), so the whole
-  class of D0 is available to the peel; and riemann_inequality (Ledger/ChiLedger)
-  manufactures the translating unit once deg(D - D0) + chi >= 1. The peel never needed
-  the GIVEN D0.
-
-
-  RESIDUE: one base vanishing at a general curve, i.e. the AJCR FLVVanishing:302 port
-  (measured: 59-module local closure; new layer FLVFiberToolkit/FLVLattice/FLVQcoh/FiberTwist/Degree
-  plus AffineVanishingQcoh/QcohSections; Degree drags in Picard/ presentation modules
-  the Ledger tree lacks).
-
-
-  NOT this row, and still genuinely open: extension-uniformity (every statement is
-  over the single field K; the bound depends on X, K, D0) and global generation (no
-  evaluation map appears). Scratch-path: DegreeVanishing imports SectionDrop, which
-  is out of the root cone (I-0600).
-
-  '
+summary: "DONE (run 0074 r3, ajc-rr). Ledger/DegreeVanishing.lean, 12 decls, 0 sorries,\
+  \ kernel-checked (lake build 8581 jobs exit 0), 16/16 axiom-clean including four\
+  \ synthesis-site probes at the challenge curve.\n\nThe order-cone peel of AJC.rr.sectiondrop\
+  \ reaches a DEGREE HALF-SPACE. subsingleton_hModule_one_of_deg_ge: from ONE base\
+  \ vanishing at ONE divisor D0, H1(O(D)) = 0 for every D with deg D >= deg D0 + 1\
+  \ - chi(O_X). Also exact Riemann-Roch above that bound, the D0 = 0 form (unconditional\
+  \ given H1(O_C) = 0, hence unconditional at genus zero), and the contrapositive\
+  \ that non-vanishing H1 is a bounded-degree phenomenon.\n\nThe mathematical point,\
+  \ and it retracts this lane's own r2 claim: sectiondrop published exists_bound_of_cofinal_vanishing\
+  \ as an OPEN hypothesis, saying nothing in AJC or AJCR produces it. Both ingredients\
+  \ were in the same directory. H1 vanishing is a linear-equivalence invariant (Ledger/MulEquiv.mulEquivDivisorSheaf),\
+  \ so the whole class of D0 is available to the peel; and riemann_inequality (Ledger/ChiLedger)\
+  \ manufactures the translating unit once deg(D - D0) + chi >= 1. The peel never\
+  \ needed the GIVEN D0.\n\nRESIDUE: one base vanishing at a general curve, i.e. the\
+  \ AJCR FLVVanishing:302 port (measured: 59-module local closure; new layer FLVFiberToolkit/FLVLattice/FLVQcoh/FiberTwist/Degree\
+  \ plus AffineVanishingQcoh/QcohSections; Degree drags in Picard/ presentation modules\
+  \ the Ledger tree lacks).\n\nNOT this row, and still genuinely open: extension-uniformity\
+  \ (every statement is over the single field K; the bound depends on X, K, D0) and\
+  \ global generation (no evaluation map appears). Scratch-path: DegreeVanishing imports\
+  \ SectionDrop, which is out of the root cone (I-0600).\n\nRESIDUE CLOSED 2026-07-28\
+  \ (run 0074 r4, same lane). The \"one base vanishing at a general curve\"\nabove\
+  \ is no longer a residue. Ledger/FiberVanishing.lean ports AJCR's fibrewise large-twist\n\
+  vanishing (bodies unchanged) and Ledger/FiberBound.lean composes it with the chi-ledger,\
+  \ giving\n\n  exists_bound_subsingleton_hModule_one_curve : three curve binders,\
+  \ NO vanishing hypothesis\n  exists_bound_h0_eq_genus_curve             : h0(O(D))\
+  \ = 1 - genus C + deg D above a threshold\n\nThe pi is CONSTRUCTED inside (MapToP1.exists_isFinite_isDominant_toP1)\
+  \ and both Module.Finite\nbinders are SYNTHESISED by ChiCurve, so nothing is left\
+  \ for a caller to instantiate. The quantifier\norder is what makes the bound uniform\
+  \ in D: the tower threshold is taken at the FIXED divisor 0,\nfixing one D0 = n0*F\
+  \ before any D is seen, and the degree slack is then carried by the\nlinear-equivalence\
+  \ translate this row already built.\n\n41/41 axiom-clean with a firing control.\
+  \ Eight new files, 2,556 lines, 0 sorries.\n\nSTILL OPEN, unchanged: extension-uniformity.\
+  \ Every constant here lives over the single field K."
 status: done
 kind: proof
 priority: normal
@@ -58,3 +58,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.rr
   owner: ajc-rr
+  updated_at: '2026-07-28T18:52:16.180582+00:00'

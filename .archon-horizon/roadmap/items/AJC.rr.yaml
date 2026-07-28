@@ -54,7 +54,36 @@ summary: "Riemann--Roch, divisors, and the adelic genus.\n\nCluster-P substrate,
   \ carries [IsAlgClosed kbar], as it always\ndid. The general-field statement of\
   \ degree-zero-of-principal is NOT proved and was never this\nnode's target -- over\
   \ a general field the ledger proves the residue-WEIGHTED degree vanishes,\nand the\
-  \ unweighted degree is a different number (see Ledger/ResidueOneAlgClosed).\n"
+  \ unweighted degree is a different number (see Ledger/ResidueOneAlgClosed).\n\n\
+  DELTA 2026-07-28 (run 0074 r4, ajc-rr): GAP 1 IS NO LONGER CONDITIONAL, GAP 2 IS\
+  \ UNCHANGED.\n\nThe list above describes the ADELIC lane, where single-field vanishing\
+  \ is conditional on the bump\nand the overlap peel. A second, independent route\
+  \ now closes it outright on the LEDGER carrier:\n\n  Ledger/FiberChart, FiberDivisor,\
+  \ FiberLattice, QcohSections, AffineVanishingQcoh,\n  DivisorSheafQcoh, FiberVanishing,\
+  \ FiberBound -- 2,556 lines, 0 sorries, kernel-checked.\n\nAJCR's fibrewise large-twist\
+  \ H1 vanishing, ported (bodies unchanged), then composed with the\nlanded chi-ledger.\
+  \ The endpoint is CURVE-LEVEL and hypothesis-free:\n\n  FiberBound.exists_bound_subsingleton_hModule_one_curve\
+  \  and  exists_bound_h0_eq_genus_curve\n\ncarry only [IsProper C.hom], [SmoothOfRelativeDimension\
+  \ 1 C.hom], [GeometricallyIrreducible\nC.hom]. The finite dominant pi is CONSTRUCTED\
+  \ inside (Ledger/MapToP1.exists_isFinite_isDominant_\ntoP1), and both Module.Finite\
+  \ cohomology binders are SYNTHESISED by ChiCurve. So there is no\nbinder left for\
+  \ a caller to fail to instantiate -- which is exactly what Ledger/DegreeVanishing\n\
+  lacked: its clean axiom lines sat above an antecedent AJC witnessed at no proper\
+  \ curve.\n\n41/41 axiom-clean [propext, Classical.choice, Quot.sound] with the control\n\
+  Scheme.fgaPicardRepresentability correctly reporting sorryAx\n(scripts/ajcrr-fibervanishing-axioms.lean).\n\
+  \nGAP 3 (global generation) is closed on the ledger carrier too, but by an INDEPENDENT\
+  \ route (the\ndevissage slice), not as a corollary of vanishing.\n\nGAP 2 (extension\
+  \ uniformity) IS UNTOUCHED AND STILL OPEN. Every constant in the new layer --\n\
+  n0, b, deg, chi -- lives over the single field K, and n0 comes from a Classical.choose\
+  \ on a\nNoetherian stabilization re-run from scratch at each base field. Nothing\
+  \ landed today bears on it.\nThe row stays `done` because the SUBSTRATE was its\
+  \ target, not uniformity; do not read the new\nfiles as progress on gap 2.\n\nPORT-COST\
+  \ CORRECTION worth carrying: the port was priced at 23 missing modules including\
+  \ twelve\nPicard.* presentation modules. Counted by DECLARATION REFERENCE rather\
+  \ than import line, the\nvanishing chain uses picClass/CechPic/divisorClass/classDeg\
+  \ zero times -- the Picard cone hung\noff AJCR's class-side fiberDivisor/fiberTwist,\
+  \ which the argument never mentions. Import closures\nare upper bounds and can overstate\
+  \ tenfold when a file bundles a construction with its class\ntheory.\n"
 status: done
 kind: proof
 priority: normal
@@ -77,7 +106,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
-  updated_at: '2026-07-28T14:56:29.284059+00:00'
+  updated_at: '2026-07-28T18:51:51.829044+00:00'
   owner: ajc-rr
   pinned_commits:
   - 37f95374c
