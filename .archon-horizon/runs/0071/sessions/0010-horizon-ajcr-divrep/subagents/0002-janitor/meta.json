@@ -1,6 +1,6 @@
 {
-  "name": "work-reviewer",
-  "native_subagent_id": "toolu_bdrk_01AtvbKDDmkrHRqnEdm85yw4",
+  "name": "janitor",
+  "native_subagent_id": "toolu_bdrk_01VE93gjyubrV53iyxnabmmG",
   "parent_session": "0010-horizon-ajcr-divrep",
   "role": "subagent",
   "usage": {
