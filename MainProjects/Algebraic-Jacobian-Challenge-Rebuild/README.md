@@ -28,14 +28,14 @@ which carries the full charter (target, constraints, working model, and phases).
 - `AlgebraicJacobian/Challenge.lean` — the single, reviewable **statement file**: every signature a
   reviewer must trust, and nothing else. Agents own the proofs, never these signatures.
 - `AlgebraicJacobian/` — the infrastructure that discharges the statement (added as the rebuild
-  proceeds; house limit 500 lines per file, currently exceeded by 18 files tracked in inbox
+  proceeds; house limit 500 lines per file, currently exceeded by 19 files tracked in inbox
   `I-0220`; layout mirrors the mathematical structure of the paper).
 - `AlgebraicJacobian.lean` — the library root import list, and the index of what is actually
   checked: `lake build`'s default target is this module, so a new file is **not** elaborated by a
   bare `lake build` until it is imported here. Add the import, or check the file explicitly by
-  module name. **This gap is large, not hypothetical:** re-measured 2026-07-28 late evening, 697
-  `.lean` files exist under `AlgebraicJacobian/`, 627 are reachable and **70 are unreachable** from
-  the root, so they are never kernel-checked by a bare `lake build` — 38 of the 70 are the
+  module name. **This gap is large, not hypothetical:** re-measured 2026-07-29 (janitor, run 0072),
+  710 `.lean` files exist under `AlgebraicJacobian/`, 640 are reachable and **70 are unreachable**
+  from the root, so they are never kernel-checked by a bare `lake build` — 38 of the 70 are the
   `Picard/DivSchemeHighWindow*` family (44 files, all unrooted bar six), which is sorry-free and
   holds a discharged gate. Count
   reachability transitively, not by the root's import lines; parallel lanes move these figures
