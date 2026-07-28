@@ -1,0 +1,53 @@
+id: I-0560
+provider: local
+kind: memory
+body: "TWO OBLIGATIONS THAT SHARE A HYPOTHESIS ARE ONE OBLIGATION — check before you\
+  \ budget them separately (run 0071 s0004, ajcr-divrep, machine-verified)\n\nTHE\
+  \ PATTERN. A roadmap leaf had been re-scoped three times and each version listed\
+  \ two\nremaining statements, A and B, both 'genuinely needing' the same unproved\
+  \ input X. Nobody\nchecked whether A follows from the SAME X that B needs. It does.\
+  \ Cost of checking: one\nafternoon. Cost of not checking: the leaf was described\
+  \ as two bricks for three rounds.\n\nConcretely: IsDivRepClassify_pull and DivRepChartFamily.IsCompatible\
+  \ both reduce to one\nper-chart clause (now named DivRepChartFamily.IsChartClause,\
+  \ Picard/DivRepAffPullClause.lean).\nA fresh reviewer verified by rfl, in both directions,\
+  \ that the named clause is the SAME Prop\nthe pre-existing reduction lemma already\
+  \ consumed — so it was a naming plus a proof, not a\nstrengthening. Always get that\
+  \ rfl check: 'I factored the obligation out' and 'I strengthened\nthe obligation\
+  \ and hid it in a definition' look identical from the commit message.\n\nTHE ENABLING\
+  \ LEMMA SHAPE, worth looking for whenever a predicate is checked piecewise:\nIS\
+  \ THE PREDICATE LOCAL ON THE BASE? A predicate that quantifies over TOWER TESTS\
+  \ usually is,\nbecause its hypothesis data and its conclusion both restrict along\
+  \ a cover. Here the\nframing pushed forward by an existing window-transport lemma\
+  \ at the IDENTITY tower, a trick\nalready inside a landed overlap lemma and not\
+  \ stated separately. If a value is only ever\nknown piecewise (a glued/choice-defined\
+  \ value), the locality lemma for its characterizing\npredicate is the highest-leverage\
+  \ thing to prove.\n\nTWO SPELLING FACTS from the same work:\n * A cover-spelled\
+  \ goal cannot see the index of the family that produced the cover: after\n   Scheme.Cover.hom_ext\
+  \ over a pulled-back cover, the index type is the hypercover's I0, not\n   Fin m,\
+  \ so 'f t' fails to elaborate. Split into an algebraMap-spelled overlap lemma plus\
+  \ a\n   chase that consumes it by defeq. This is why several landed lemmas in this\
+  \ tree come in\n   such pairs; the reason was not recorded until now.\n * Naturality\
+  \ of a choice-defined value needs NO second cover chase once you have an\n   existential\
+  \ characterizing predicate plus a uniqueness theorem: it is a witness\n   construction\
+  \ against the '_eq_of' form. A predecessor session priced such a field as 'the\n\
+  \   same glue machinery' and it was two rw chains."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T08:26:26.123111+00:00'
+updated_at: '2026-07-28T08:26:26.123125+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0004-horizon-ajcr-divrep
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

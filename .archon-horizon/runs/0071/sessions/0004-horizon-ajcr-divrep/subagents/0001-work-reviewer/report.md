@@ -1,1 +1,1 @@
-Probe6 typechecked: `divRepPullValue_naturality` fills `pull_naturality` with a bare `:=`. One last adversarial probe — whether `IsChartClause` is broader than the worksheet's U2.
+The remaining probe is the sharpest test of (4): the worksheet's U2 is stated at `ω = id` only, while `IsChartClause` quantifies over all `S, ω`. Let me fix the annotation.

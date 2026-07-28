@@ -57,7 +57,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.PicScheme.degree
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-07-28T16:26:23'
 ---
 noncomputable def degree {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
@@ -76,8 +76,11 @@ describes. Two facts make it work, and neither needs Quot:
    `T = Spec k` (the trivial over-object `Over.mk (𝟙 (Spec k))`) sends a `k`-rational point
    of `Pic_{C/k}` to a relative Picard class over the base. This is `classOfSection` below,
    and it is sorry-free.
-2. **The degree is a homomorphism on those classes.** That is the one remaining input,
-   isolated as the class `ClassDegree`. The sibling project builds exactly this
+2. **The degree is a homomorphism on those classes.** ⚠ This was described here as "the one
+   remaining input, isolated as the class `ClassDegree`". That is **false** and is corrected at
+   `ClassDegree` below: the class is inhabited by the zero homomorphism with no hypothesis, so
+   it demands nothing and `degreeOfSection` is not pinned to the degree. What is actually
+   missing is a *characterisation* of the homomorphism. The sibling project builds exactly this
    homomorphism sorry-free and without Quot — `Algebraic-Jacobian-Challenge-Rebuild`,
    `RiemannRoch/RelPicDegree.lean`, `relPicDeg : Additive (relPic C (overSpec k K)) →+ ℤ`,
    descended from `classDeg` along the observation that `Spec K` is a one-point space so its
@@ -94,3 +97,12 @@ type therefore cannot be built from the Picard functor at all; it would have to 
 value off the sections. `degreeOfSection` below is the same construction on the correct
 domain, and is total. Consumers should migrate; `degree` is retained only because
 `kPoints_iff_kerDegree` is pinned against it. -/
+
+/-- An additive integer-valued function on relative Picard classes of `C` over the base field
+— the carrier shape of Milne III.1 p.~88.
+
+**⚠ THIS CLASS IS VACUOUS AS STATED, and the docstring that used to sit here — "the one
+remaining input to the degree map" — was FALSE.** Corrected run 0067 r2 after inbox issue
+I-0534, re-verified by machine rather than accepted on report:
+
+```
