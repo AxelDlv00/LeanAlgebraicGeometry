@@ -10,8 +10,9 @@ document for a declaration or cone that is still open.  Status as of 2026-07-27.
   `instHasPicScheme` (D3 Milne–Kollár route, with the milestone DAG).  The largest
   open cone; 18 live references in the tree.
 - `milne-lemma-3.3.md` — verbatim Milne source plus the four-substep Lean
-  decomposition for the single `sorry` gating the Albanese chain.
-  `Albanese/Milne33Substeps.lean` and `Albanese/CodimOneExtension.lean` both exist.
+  decomposition.  **No longer open:** the lemma is proved in `Albanese/Milne33.lean`
+  (run 0069) and `Albanese/CodimOneExtension.lean` is `sorry`-free.  Kept as the
+  source transcription behind that chain.
 - `higherDirectImage.md` — records the foundational
   `EnoughInjectives`/`IsGrothendieckAbelian (SheafOfModules R)` mathlib gap and the
   decision to carry `[HasInjectiveResolutions]` as a hypothesis.  Still in force.

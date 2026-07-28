@@ -1,9 +1,11 @@
 # Milne Lemma 3.3 — indeterminacy of a rational map into a group variety
 
-Reference for `AlgebraicGeometry.Scheme.RationalMap.indeterminacy_pure_codim_one_into_grpScheme`
-(`Albanese/CodimOneExtension.lean:1692`). This is the **single remaining sorry** gating the whole
-Albanese rational-map-extension chain (Milne Theorem 3.2 → `extend_to_av` →
-Albanese universal property). Blueprint node: `lem:milne_codim1_indeterminacy`
+Reference for `AlgebraicGeometry.Scheme.RationalMap.indeterminacy_pure_codim_one_into_grpScheme`.
+**PROVED as of run 0069** in `Albanese/Milne33.lean` (not in `CodimOneExtension.lean`, which
+imports would cycle: the difference-map / pole-purity layers sit downstream of it).
+`CodimOneExtension.lean` is `sorry`-free, and so is the whole `RigidityLemma.lean` chain; this
+note is retained for the verbatim Milne source and the substep decomposition, not as a record of
+open work. Blueprint node: `lem:milne_codim1_indeterminacy`
 (`blueprint/src/chapters/Albanese_CodimOneExtension.tex`).
 
 ## Milne's statement (Abelian Varieties, §I.3 Lemma 3.3, p. 17)
