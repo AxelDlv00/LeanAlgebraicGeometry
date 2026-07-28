@@ -99,6 +99,7 @@ end SynthesisSite
 #print axioms AlgebraicGeometry.exists_isFinite_isDominant_toP1
 #print axioms AlgebraicGeometry.chi_divisorSheaf_genus
 #print axioms probe_curve_consumer
+#print axioms AlgebraicGeometry.baseChange_binders_stable
 
 /-! ## §3 — the control
 
