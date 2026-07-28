@@ -46,6 +46,10 @@ does still need the algebra, and is out of scope here.
   `relPicMulEquivCechPic_relPicMk`.
 * `AlgebraicGeometry.subsingleton_overDualNumber_left`,
   `AlgebraicGeometry.picFromBase_overDualNumber_eq_bot` — the two Wave-5 instances.
+* `AlgebraicGeometry.relPicMulEquivCechPic_relPicMap` — the compatibility square: the
+  equivalence intertwines `relPicMap` with `CechPic.map`. This is what makes the reduction
+  usable rather than merely true, since Wave 5 computes the *kernel* of the `ε`-restriction,
+  not just the groups at its two ends.
 
 Reference: Kleiman, "The Picard scheme", §5 Thm. 5.11 (arXiv:math/0504020).
 -/
@@ -124,5 +128,25 @@ quotient removed. -/
 noncomputable def relPicOverDualNumberMulEquivCechPic :
     relPic C (overDualNumber k) ≃* (C ⊗ overDualNumber k).left.CechPic :=
   relPicMulEquivCechPic C _
+
+/-! ## The compatibility square (what makes the reduction usable, not merely true) -/
+
+/-- **The equivalence intertwines restriction along `g` with pullback of Čech classes.**
+
+Without this, `relPicMulEquivCechPic` would identify the two *groups* at each end of the
+`ε`-restriction while saying nothing about the *map* between them — and it is the kernel of
+that map that Wave 5 computes. With it, the statement
+`ker(relPic(k[ε]) → relPic(k)) ≃ ker(CechPic(C_ε) → CechPic(C))` is immediate.
+
+The proof is `relPicMap_mk`: the relative restriction is *defined* as `CechPic.map (C ◁ g)`
+descended to the quotients, so once the quotient is trivial there is nothing left to check.
+Recorded explicitly because "the groups agree" and "the maps agree" are different claims and
+only the second one is usable. -/
+theorem relPicMulEquivCechPic_relPicMap (T T' : Over (Spec (.of k)))
+    [Subsingleton T.left] [Subsingleton T'.left] (g : T' ⟶ T) (x : relPic C T) :
+    relPicMulEquivCechPic C T' (relPicMap C g x)
+      = Scheme.CechPic.map (C ◁ g).left (relPicMulEquivCechPic C T x) := by
+  induction x using relPic.ind with
+  | mk L => rw [relPicMap_mk, relPicMulEquivCechPic_relPicMk, relPicMulEquivCechPic_relPicMk]
 
 end AlgebraicGeometry
