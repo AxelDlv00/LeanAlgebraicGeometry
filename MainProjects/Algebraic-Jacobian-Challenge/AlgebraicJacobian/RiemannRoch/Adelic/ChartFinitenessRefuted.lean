@@ -57,6 +57,23 @@ report clean axioms.
 visibly interchangeable with a hypothesis about `k ⊆ K(X)` alone — no cover, no charts, no
 divisors.
 
+## The `⊤` binders used everywhere else in the lane are NOT affected — and here is why
+
+This matters more than the negative result itself, because if the argument reached `⊤` it would
+demolish `GlobalGeneration.lean`, `LedgerClosure.lean` and `SectionBounds.lean` as well, all of
+which assume `Module.Finite k (sectionSub k ⊤ D)`.  It does not, and the reason is visible in the
+signature: **`IsAffineOpen U` is load-bearing**, used exactly once, for
+`chartRing_isFractionRing` — the step that identifies `K(X)` as the fraction field of the chart
+ring.  On a *proper* curve `⊤` is not affine, so that step is unavailable at `⊤` and the collapse
+does not run.  This is the honest asymmetry: `Module.Finite k (sectionSub k ⊤ D)` is finiteness of
+`L(D)`, which is what Riemann–Roch asserts; `Module.Finite k (sectionSub k U D)` at an affine `U`
+is a disguised finiteness of `K(X)/k`, which is false.
+
+`ell_le_finrank_chart_along_tower` is the one to compare: it needs no cover and no affineness, so
+it applies at any `U`, but its *conclusion* is vacuous when `U = ⊤` (`ℓ(D) ≤ ℓ(E)` with the tower
+frozen is then no restriction at all). The bite comes only from a non-total open, which is
+precisely where affineness is available and the binder collapses.
+
 ## What this file does NOT claim
 
 It does not prove `hbump` or `hledger`. It does not prove `K(X)/k` is infinite for AJC's
