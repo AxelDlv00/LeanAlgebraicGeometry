@@ -290,6 +290,89 @@ theorem forall_finrank_cotangentSpace_le_of_homogeneous {k : Type u} [Field k]
   rw [h]
   exact hz₀
 
+/-- **`dim Pic⁰_{C/k} = g(C)` from the identity point alone, plus homogeneity.**
+
+This is what the homogeneity reduction is for, and it is the sharpest form of the dimension
+statement this chapter can state: the *only* local input is at the identity section, where
+front (a)'s tangent identity `Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne` computes
+`dim_{κ(e)} m_e/m_e² = dim_k H¹(C, 𝒪_C) = g(C)` exactly.
+
+Compare `Pic0.topologicalKrullDim_eq_genus_of_forall_finrank_cotangentSpace_le`, which takes
+the uniform bound as a hypothesis. That hypothesis is here *derived*, from:
+
+* the exact value at the identity (`hid`, which front (a) supplies);
+* regularity at the identity (`hreg`, which over a perfect field follows from smoothness by
+  `Scheme.isRegularLocalRing_stalk_of_smooth_of_perfectField`, and which is taken as a
+  hypothesis here so that the statement holds over an **arbitrary** field, per I-0491);
+* the orbit condition `htrans`.
+
+So the three remaining inputs are all statements this chapter already names, and the
+dimension theory is fully consumed: nothing here is about Krull dimension any more.
+
+Note that `hid` is an *equality*, not a bound. That is what makes one point enough for both
+directions: the `≤` half needs it only as `≤` (transported around the orbit), and the `≥`
+half needs the exact value together with regularity at that same point. -/
+theorem topologicalKrullDim_eq_genus_of_homogeneous {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    [GrpObj (Pic0Scheme C)]
+    (hid : Module.finrank
+        (IsLocalRing.ResidueField ((Pic0Scheme C).left.presheaf.stalk
+          ((identitySection C).base default)))
+        (IsLocalRing.CotangentSpace ((Pic0Scheme C).left.presheaf.stalk
+          ((identitySection C).base default)))
+      = AlgebraicGeometry.genus C)
+    (hreg : IsRegularLocalRing ((Pic0Scheme C).left.presheaf.stalk
+      ((identitySection C).base default)))
+    (htrans : ∀ z : (Pic0Scheme C).left,
+      ∃ x y : 𝟙_ (Over (Spec (.of k))) ⟶ Pic0Scheme C,
+        (pointTranslationIso (Pic0Scheme C) x y).hom.base
+          ((identitySection C).base default) = z) :
+    topologicalKrullDim (Pic0Scheme C).left
+      = ((AlgebraicGeometry.genus C : ℕ) : WithBot ℕ∞) := by
+  haveI := AlgebraicGeometry.Scheme.Pic0.isLocallyNoetherian C
+  exact topologicalKrullDim_eq_of_forall_finrank_cotangentSpace_le_of_regular
+    (Pic0Scheme C).left _
+    (forall_finrank_cotangentSpace_le_of_homogeneous C _ hid.le htrans)
+    _ hreg hid
+
+/-- **`dim Pic⁰_{C/k} = g(C)`, with front (a) plugged in: the dimension statement now has
+exactly TWO open inputs, both named.**
+
+`topologicalKrullDim_eq_genus_of_homogeneous` above with `hid` discharged from front (a)'s
+tangent-space identity `Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne` composed with the
+genus definition `dim_k H¹(C, 𝒪_C) = g(C)`. What is left is:
+
+* `hreg` — regularity of the stalk at the identity (free over a perfect field from smoothness;
+  a hypothesis here to keep the statement over an arbitrary field, per I-0491);
+* `htrans` — the orbit condition: every point of `Pic⁰` is a `k`-rational translate of the
+  identity.
+
+**MEASURE BEFORE QUOTING.** Like everything consuming front (a), this reports `sorryAx` at the
+full root, inherited from `Pic0.semilinearComparison_cotangentSpaceDual_h1Cok`. The homogeneity
+machinery of this file is axiom-clean on its own; the leak is front (a)'s and nothing else's.
+This theorem is a *reduction*, and the honest reading is: given the tangent identity, the
+dimension statement costs one regularity fact and one statement about points — no dimension
+theory, no equidimensionality, no uniform bound. -/
+theorem topologicalKrullDim_eq_genus_of_homogeneous_of_regular {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    [GrpObj (Pic0Scheme C)]
+    (hreg : IsRegularLocalRing ((Pic0Scheme C).left.presheaf.stalk
+      ((identitySection C).base default)))
+    (htrans : ∀ z : (Pic0Scheme C).left,
+      ∃ x y : 𝟙_ (Over (Spec (.of k))) ⟶ Pic0Scheme C,
+        (pointTranslationIso (Pic0Scheme C) x y).hom.base
+          ((identitySection C).base default) = z) :
+    topologicalKrullDim (Pic0Scheme C).left
+      = ((AlgebraicGeometry.genus C : ℕ) : WithBot ℕ∞) :=
+  topologicalKrullDim_eq_genus_of_homogeneous C
+    (AlgebraicGeometry.Scheme.Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne C) hreg htrans
+
 end Scheme.Pic0
 
 end AlgebraicGeometry
