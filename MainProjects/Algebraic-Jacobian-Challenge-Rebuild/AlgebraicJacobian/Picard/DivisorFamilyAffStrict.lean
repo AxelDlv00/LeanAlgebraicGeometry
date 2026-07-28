@@ -62,6 +62,26 @@ straddling divisor has nonempty support by definition.  What the conditional doe
 that the two carriers are separated *by one named geometric input and nothing else* — no second
 hypothesis is smuggled in on the chart-typed side, because the refutation needs none.
 
+## WHY THE REFUTATION DOES NOT ALSO KILL THE WIDENED SIDE
+
+The two conjuncts below look close enough that a reader should be suspicious: both carriers get
+per-piece swallow-or-miss from the *same* clopen-trace argument, which needs only that the piece
+is **open** (`AffAdaptation.subset_or_disjoint_of_isPreconnected_of_supportLeak`, the chart-free
+twin of `DivSchemeCertZarConn.lean:98`). So why is only the chart-typed side refuted?
+
+Because the chart-typed verdict is not the per-piece statement — it is an *upgrade* of it, and the
+upgrade is where the pinned pair enters. `supportLocus_subset_chart_of_isPreconnected` runs the
+dichotomy at `V₀` and then uses **`relCover_sup`, i.e. `V₀ ⊔ V₁ = ⊤`**, to conclude that a support
+missing `V₀` lies in `V₁`. That step consumes the fact that there are exactly **two** charts
+covering everything, so "misses this one" forces "inside that one".
+
+A widened `AffCoverData` has `m` pieces with `⨆ j, pieces j = ⊤` and no distinguished pair, so
+missing one piece forces nothing — the support can sit inside a piece that is neither, which is
+exactly what a straddling `W` from Stacks `0B8B` is. The widened layer therefore has swallow-or-miss
+and **no** confinement verdict, and that asymmetry is the whole content of R2 rather than an
+oversight. Grepping for a widened analogue of `supportLocus_subset_chart_*` returns nothing, and
+the paragraph above is why nothing is missing.
+
 ## Main declarations
 
 * `AlgebraicGeometry.isCertified_affine_and_not_isCertified_chart` — the separation at one
