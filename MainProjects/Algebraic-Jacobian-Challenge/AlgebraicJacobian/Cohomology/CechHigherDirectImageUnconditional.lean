@@ -2797,8 +2797,11 @@ theorem cech_flatBaseChange_qcoh
       cechHigherDirectImage f'
         ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso h.isoPullback.symm.hom)
         ((Scheme.Modules.pullback g').obj F) i) :=
+  -- `h₂` is at degree `i` and `h₃` at degree `(ComplexShape.up ℕ).next i`, written explicitly
+  -- rather than as `_`: `isQuasicoherent_cechComplex_X` proves *every* degree, so an underscore
+  -- would elaborate to whatever index unification produced and a reader could not check which.
   cech_flatBaseChange_of_termsQuasicoherent f g f' g' h 𝒰 F hF i
     (isQuasicoherent_cechComplex_X f 𝒰 (fun j => h𝒰 j) F hF i)
-    (isQuasicoherent_cechComplex_X f 𝒰 (fun j => h𝒰 j) F hF _)
+    (isQuasicoherent_cechComplex_X f 𝒰 (fun j => h𝒰 j) F hF ((ComplexShape.up ℕ).next i))
 
 end AlgebraicGeometry
