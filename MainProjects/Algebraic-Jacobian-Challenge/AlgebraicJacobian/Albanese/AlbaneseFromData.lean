@@ -59,6 +59,10 @@ equation `Sym^g φ = f^{(g)} ≫ ψ`. Both directions are proved here:
   `f^{(g)}` over a dense open `V`, a matching retraction, and density of `V` and of
   `f⁻¹V`. Its conclusion `∃! ψ, h = f ≫ ψ` is an equation on *all* of `Sym^g C`, not
   merely on `V`, which is what the connector consumes.
+* `exists_unique_descent_over` (§2) — the same datum transported from underlying
+  scheme morphisms into `Over (Spec k̄)`, which is where the connector lives. The
+  structure-map compatibility is **not** an extra hypothesis: it follows from
+  dominance of `f` (`comp_hom_of_descent_eq`).
 * `hom_ext_of_dense_open` — the agreement principle used for uniqueness.
 
 ## What remains, precisely
@@ -335,6 +339,49 @@ theorem exists_unique_descent_of_birational
     refine huniq ψ' ?_
     change V.ι ≫ ψ' = s ≫ h
     rw [← hs, Category.assoc, ← hψ']
+
+/-! ### Crossing from scheme morphisms to `Over (Spec k̄)` morphisms
+
+`exists_unique_descent_of_birational` concludes about `J.left ⟶ A.left`, whereas the
+connector of §1 lives in `Over (Spec k̄)`. The two lemmas below cross that gap, and the
+crossing is free rather than an extra hypothesis: compatibility with the structure
+morphisms is *automatic* once `f` is dominant. -/
+
+omit [IsAlgClosed kbar] in
+/-- **Compatibility over `k̄` is automatic.** If `f : S ⟶ J` has dominant underlying
+morphism and `ψ` satisfies `h.left = f.left ≫ ψ`, then `ψ` is a morphism over `k̄`:
+`ψ ≫ A.hom = J.hom`.
+
+Both sides agree after the dominant `f.left` (each reduces to the structure morphism of
+`S`, by `h.w` and `f.w`), and `J.left` is reduced, so `ext_of_isDominant` concludes.
+This is why the descent produces an honest `Over` morphism without assuming it. -/
+theorem comp_hom_of_descent_eq
+    {S J A : Over (Spec (.of kbar))} [IsReduced J.left]
+    (f : S ⟶ J) (h : S ⟶ A) (ψ : J.left ⟶ A.left)
+    (hfd : IsDominant f.left) (hψ : h.left = f.left ≫ ψ) :
+    ψ ≫ A.hom = J.hom := by
+  refine ext_of_isDominant f.left ?_
+  rw [← Category.assoc, ← hψ]
+  exact h.w.trans f.w.symm
+
+omit [IsAlgClosed kbar] in
+/-- **Transport the descent datum into `Over (Spec k̄)`.** A unique factorisation of
+underlying scheme morphisms upgrades to a unique factorisation of `k̄`-morphisms, using
+`comp_hom_of_descent_eq` for the structure-map compatibility.
+
+This delivers `hdesc` in exactly the shape `exists_unique_albanese_factorisation`
+consumes. -/
+theorem exists_unique_descent_over
+    {S J A : Over (Spec (.of kbar))} [IsReduced J.left]
+    (f : S ⟶ J) (h : S ⟶ A) (hfd : IsDominant f.left)
+    (hyp : ∃! ψ : J.left ⟶ A.left, h.left = f.left ≫ ψ) :
+    ∃! ψ : J ⟶ A, h = f ≫ ψ := by
+  obtain ⟨ψ, hψ, huniq⟩ := hyp
+  refine ⟨Over.homMk ψ (comp_hom_of_descent_eq f h ψ hfd hψ),
+    Over.OverMorphism.ext (by simpa using hψ), ?_⟩
+  intro ψ' hψ'
+  refine Over.OverMorphism.ext ?_
+  exact huniq ψ'.left (by simpa using congrArg Over.Hom.left (a₁ := h) hψ')
 
 omit [IsAlgClosed kbar] in
 /-- **Uniqueness of the Albanese descent, geometrically.** Two morphisms from the
