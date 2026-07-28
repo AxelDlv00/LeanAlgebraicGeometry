@@ -2,40 +2,47 @@ id: AJC.albanese.universal
 title: Albanese universal property
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Albanese universal property. THE ARGUMENT IS NOW PROVED (run 0069, session\
-  \ 0004); what remains is one missing OBJECT.\n\nMILNE III.6.1 IS PROVED, both connector\
-  \ directions, over the symmetric power taken as an interface rather than a sorry\
-  \ -- Albanese/AlbaneseFromData.lean and Albanese/AlbaneseJacobian.lean, sorry-free.\
-  \ Forward (symAVMap_eq_of_albanese_eq) needs psi to be a HOMOMORPHISM: pushing psi\
-  \ through the g-fold sum is map_prod (IsMonHom.monoidHom), which is exactly where\
-  \ Milne's step 5 uses homomorphy. Backward (albanese_eq_of_symAVMap_eq) needs NEITHER\
+summary: "Albanese universal property. THE ARGUMENT IS PROVED (run 0069); what remains\
+  \ is one precisely-named typeclass instance, not \"one missing object\" in general.\n\
+  \nMILNE III.6.1 IS PROVED, both connector directions, over the symmetric power taken\
+  \ as an interface rather than a sorry -- Albanese/AlbaneseFromData.lean and Albanese/AlbaneseJacobian.lean,\
+  \ sorry-free. Forward (symAVMap_eq_of_albanese_eq) needs psi to be a HOMOMORPHISM:\
+  \ pushing psi through the g-fold sum is map_prod (IsMonHom.monoidHom), exactly where\
+  \ Milne's step 5 uses homomorphy. Backward (albanese_eq_of_symAVMap_eq) needs neither\
   \ that nor the quotient universal property -- it is restriction along Q |-> (Q,P0,...,P0)\
-  \ plus the collapse basePointShift_comp_powSum. The pinned docstring described both\
-  \ as one step; they are not the same difficulty.\n\nMilne's identification of the\
-  \ Abel-Jacobi map with 'Q |-> Q + (g-1)P0 followed by f^(g)' is DERIVED (basePointShift_proj_comp),\
-  \ not assumed; and pointed rigidity is applied only after PROVING the candidate\
-  \ psi is pointed.\n\nTHE MEASUREMENT, which attributes the residual sorry rather\
-  \ than asserting whose it is:\n    #print axioms albanese_universal_property_of_symPowData_generic\
-  \ -> [propext, Classical.choice, Quot.sound]  AXIOM-CLEAN\n    #print axioms Pic0.albanese_universal_property_of_symPowData\
+  \ plus the collapse basePointShift_comp_powSum.\n\nTHE RESIDUE IS NOW PRECISE (Albanese/AlbaneseFromColimit.lean,\
+  \ corrected 2026-07-28 commit af3d7b6a2 after an earlier draft got the binder wrong):\
+  \ exists_unique_albanese_of_scheme_colimits takes no SymPowData argument and no\
+  \ hproj argument -- the symmetric power is symPowOfColimit C g and its symmetry\
+  \ is colimit.w, free at every n. The single remaining typeclass hypothesis is HasColimit\
+  \ (permDiagram C g): ONE diagram, for THIS curve and THIS g, in Over (Spec kbar).\
+  \ It is NOT HasColimitsOfShape (SingleObj (Equiv.Perm (Fin g))) Scheme -- that shape-quantified\
+  \ form is strictly stronger, is not what hasColimit_permDiagram_iff covers, and\
+  \ is believed FALSE at this pin (schemes have no coequalizers in general); a theorem\
+  \ carrying it would be vacuous. See AJC.albanese.symmetric for the state of discharging\
+  \ that instance (SymPowInvariants.lean names the affine carrier as A^G; the open\
+  \ residue is the gluing/cocycle compatibility of the chart quotients).\n\nTHE MEASUREMENT,\
+  \ which attributes the residual sorry rather than asserting whose it is:\n    #print\
+  \ axioms exists_unique_albanese_of_scheme_colimits -> [propext, Classical.choice,\
+  \ Quot.sound]  AXIOM-CLEAN\n    #print axioms Pic0.albanese_universal_property_of_symPowData\
   \    -> [propext, sorryAx, Classical.choice, Quot.sound]\nSame statement; the sole\
   \ difference is whether the target group object is Pic0.jacobianScheme C or an arbitrary\
   \ abelian variety. So the entire sorryAx residue of the Pic0 form is the PICARD\
-  \ REPRESENTABILITY SEAM upstream of this leg, and none of it is Milne's argument.\
-  \ Re-runnable by a later session in one command.\n\nDISCHARGED UNCONDITIONALLY THIS\
-  \ RUN (Albanese/AVSelfProduct.lean, on the project's four-instance abelian-variety\
-  \ package): commutativity of an abelian variety (Milne I.1.4) and pointed rigidity\
-  \ (Milne I.1.2). A previous session had recorded these as unavailable; the obstruction\
-  \ was instance KEYING through the monoidal notation -- (A (x) A).hom is reducibly\
-  \ pullback.fst A.hom A.hom >> A.hom -- not missing mathematics.\n\nREMAINING INPUTS:\
-  \ (1) SymPowData C (genus C) -- see AJC.albanese.symmetric; (2) Milne III.5.1(a)\
-  \ birationality as a SECTION of f^(g) over a dense open. The descent around them\
-  \ is closed: extend_to_av (Milne Thm 3.2) is unconditional and axiom-clean, and\
-  \ exists_unique_descent_of_section / hom_ext_of_dense_open package it in elementary\
-  \ terms with no rational map in the statement.\n\nNOT A CLOSED RESULT ABOUT THE\
-  \ JACOBIAN, and the module headers say so in those words. The pinned Pic0.albanese_universal_property\
-  \ still reports sorryAx and its six sorries are UNCHANGED -- they are stated against\
-  \ a sorry-BODIED SymmetricPower and are undischargeable as stated, which the AlbaneseUP.lean\
-  \ header now records along with a pointer to where the mathematics lives.\n"
+  \ REPRESENTABILITY SEAM upstream of this leg, and none of it is Milne's argument.\n\
+  \nDISCHARGED UNCONDITIONALLY (Albanese/AVSelfProduct.lean, on the project's four-instance\
+  \ abelian-variety package): commutativity of an abelian variety (Milne I.1.4) and\
+  \ pointed rigidity (Milne I.1.2). The obstruction had been instance KEYING through\
+  \ the monoidal notation, not missing mathematics.\n\nREMAINING INPUTS: (1) HasColimit\
+  \ (permDiagram C g) -- see AJC.albanese.symmetric; (2) Milne III.5.1(a) birationality\
+  \ as a SECTION of f^(g) over a dense open. The descent around them is closed: extend_to_av\
+  \ (Milne Thm 3.2) is unconditional and axiom-clean, and exists_unique_descent_of_section\
+  \ / hom_ext_of_dense_open package it in elementary terms with no rational map in\
+  \ the statement.\n\nNOT A CLOSED RESULT ABOUT THE JACOBIAN, and the module headers\
+  \ say so in those words. The pinned Pic0.albanese_universal_property still reports\
+  \ sorryAx and its six sorries in AlbaneseUP.lean are UNCHANGED -- they are stated\
+  \ against a sorry-BODIED SymmetricPower and are undischargeable as stated, which\
+  \ the AlbaneseUP.lean header now records along with a pointer to where the mathematics\
+  \ lives.\n"
 status: active
 kind: proof
 priority: high
@@ -58,8 +65,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-28T07:28:08.400337+00:00'
+  updated_at: '2026-07-28T15:09:26.183979+00:00'
   pinned_commits:
+  - af3d7b6a2
   - 7b71f602f
   - a88231902
   - 2e58d6cd1

@@ -27,7 +27,7 @@ body: 'SymPowInvariantsLocalization.lean:191 DOES NOT COMPILE -- exists_invarian
   a red file, and any report describing it as proven is wrong as of the reviewed state.'
 labels:
 - agent-ready
-status: open
+status: closed
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -35,7 +35,7 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-28T14:50:44.704641+00:00'
-updated_at: '2026-07-28T14:55:22.562874+00:00'
+updated_at: '2026-07-28T15:03:54.416807+00:00'
 metadata:
   provenance:
     run: 0069

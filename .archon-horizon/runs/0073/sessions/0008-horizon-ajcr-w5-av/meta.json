@@ -3,15 +3,23 @@
   "round": 3,
   "project": "Algebraic-Jacobian-Challenge-Rebuild",
   "task_id": "ajcr-w5-av",
-  "status": "running",
-  "started_at": "2026-07-28T10:18:37.714376+00:00",
   "projects": [
     "Algebraic-Jacobian-Challenge-Rebuild"
   ],
+  "status": "queued",
+  "started_at": "2026-07-28T10:18:37.714376+00:00",
+  "ended_at": "2026-07-28T15:10:02.257420+00:00",
   "harness_name": "opus5",
   "harness_kind": "claude-code",
   "model": "claude-opus-5",
   "effort": "ultracode",
+  "config_dir": null,
   "auth": "api-key",
-  "workspace_sha": "d8f929a5edc973d8f4c676628487f0f65b7d4d8e"
+  "usage": {
+    "tokens_in": 134501101,
+    "tokens_out": 131574,
+    "cost_usd": 816.32791
+  },
+  "engine_session_id": "de5421ff-b16e-4ad7-9018-6f1ee52d8b12",
+  "workspace_sha": "d49d92862d76c04eb9ff356620f899d743543924"
 }

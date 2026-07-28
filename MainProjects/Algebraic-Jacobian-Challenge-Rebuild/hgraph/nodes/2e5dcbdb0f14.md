@@ -3,8 +3,10 @@ author: sync
 content_type: theorem
 created: '2026-07-28T19:44:57'
 decl: AlgebraicGeometry.exists_isSplitWitness_of_drop
-docstring: '**B-5''s fibre step** (`w4-datb` §1.2 steps 4–6, run at the splitting
-  field).
+docstring: '**B-5''s fibre step** (`w4-datb` §1.2 steps 4–5, run at the splitting
+  field; **not** step 6 —
+
+  see the header correction and issue I-0615).
 
 
   Given the twisted fibre class presented over `L` by `M`, a divisor `W₀` in `M` of
@@ -38,7 +40,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_isSplitWitness_of_drop
 type: lean
-updated: '2026-07-28T19:44:57'
+updated: '2026-07-28T22:23:04'
 ---
 theorem exists_isSplitWitness_of_drop {K : Type u} [Field K] [Algebra k K]
     (μ : picEt C (overSpec k K)) (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

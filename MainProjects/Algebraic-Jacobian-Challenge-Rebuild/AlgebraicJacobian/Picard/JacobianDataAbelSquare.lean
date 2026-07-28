@@ -70,6 +70,7 @@ an effectivity input, both stated here rather than assumed anywhere.
 -/
 
 set_option autoImplicit false
+set_option quotPrecheck false
 set_option backward.isDefEq.respectTransparency false
 set_option maxSynthPendingDepth 3
 
@@ -129,16 +130,19 @@ is the shape `hlift` consumes: `hlift` needs, *for each* `y`, *some* divisor; th
 content is producing `D`, and the bookkeeping content is this square.  Separating them is
 the point of this file (compare inbox `I-0525`: an isomorphism of class groups is unusable
 without the square relating the named morphisms). -/
-def IsAbelClassifyCompatible {J : Scheme.{u}} (abel : DivSch ⟶ J) : Prop :=
-  ∀ (y : J) (D : (relCurve C (J.residueField y)).CurveDivisor)
-    (hD : 0 ≤ D) (hdeg : Scheme.CurveDivisor.deg (J.residueField y) D = (g : ℤ))
-    [IsIntegral (relCurve C (J.residueField y))]
-    [SmoothOfRelativeDimension 1
-      (relCurve C (J.residueField y) ↘ Spec (CommRingCat.of (J.residueField y)))]
-    [QuasiCompact
-      (relCurve C (J.residueField y) ↘ Spec (CommRingCat.of (J.residueField y)))],
+def IsAbelClassifyCompatible {J : Scheme.{u}} (abel : DivSch ⟶ J)
+    (pt : ∀ (K : Type u) [Field K] [Algebra k K] [IsIntegral (relCurve C K)]
+      [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+      [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))],
+      (relCurve C K).CurveDivisor → (Spec (CommRingCat.of K) ⟶ J)) : Prop :=
+  ∀ (K : Type u) [Field K] [Algebra k K]
+    [IsIntegral (relCurve C K)]
+    [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+    [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+    (D : (relCurve C K).CurveDivisor) (hD : 0 ≤ D)
+    (hdeg : Scheme.CurveDivisor.deg K D = (g : ℤ)),
     (effectiveDivisorClassifyZar hpi g hO hchi r1 r2 b1 b2 D hD hdeg).left ≫ abel
-      = J.fromSpecResidueField y
+      = pt K D
 
 /-- **The `hlift` obligation from the square plus fibrewise effectivity** — `DAT-J` step 3
 in the exact shape `JacobianData.ofAbelLifts` and
@@ -152,20 +156,26 @@ class on a curve of genus `g` over a field has an effective representative, to b
 with `exists_effective_of_picClass` / `riemann_inequality` and **never** with
 `riemann_inequality_curve`, which imports `Challenge.lean`). -/
 theorem exists_residueField_lift_of_abelCompatible {J : Scheme.{u}} (abel : DivSch ⟶ J)
-    (hsq : IsAbelClassifyCompatible hpi g hO hchi r1 r2 b1 b2 abel)
-    (heff : ∀ y : J, ∃ (_ : IsIntegral (relCurve C (J.residueField y)))
+    (pt : ∀ (K : Type u) [Field K] [Algebra k K] [IsIntegral (relCurve C K)]
+      [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+      [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))],
+      (relCurve C K).CurveDivisor → (Spec (CommRingCat.of K) ⟶ J))
+    (hsq : IsAbelClassifyCompatible hpi g hO hchi r1 r2 b1 b2 abel pt)
+    (heff : ∀ y : J, ∃ (_ : Algebra k (J.residueField y))
+      (_ : IsIntegral (relCurve C (J.residueField y)))
       (_ : SmoothOfRelativeDimension 1
         (relCurve C (J.residueField y) ↘ Spec (CommRingCat.of (J.residueField y))))
       (_ : QuasiCompact
         (relCurve C (J.residueField y) ↘ Spec (CommRingCat.of (J.residueField y))))
-      (D : (relCurve C (J.residueField y)).CurveDivisor) (hD : 0 ≤ D),
-      Scheme.CurveDivisor.deg (J.residueField y) D = (g : ℤ)) :
+      (D : (relCurve C (J.residueField y)).CurveDivisor) (_ : 0 ≤ D)
+      (_ : Scheme.CurveDivisor.deg (J.residueField y) D = (g : ℤ)),
+      pt (J.residueField y) D = J.fromSpecResidueField y) :
     ∀ y : J, ∃ q : Spec (J.residueField y) ⟶ DivSch,
       q ≫ abel = J.fromSpecResidueField y := by
   intro y
-  obtain ⟨_, _, _, D, hD, hdeg⟩ := heff y
+  obtain ⟨_, _, _, _, D, hD, hdeg, hpt⟩ := heff y
   exact ⟨(effectiveDivisorClassifyZar hpi g hO hchi r1 r2 b1 b2 D hD hdeg).left,
-    hsq y D hD hdeg⟩
+    (hsq (J.residueField y) D hD hdeg).trans hpt⟩
 
 end AbelSquare
 
