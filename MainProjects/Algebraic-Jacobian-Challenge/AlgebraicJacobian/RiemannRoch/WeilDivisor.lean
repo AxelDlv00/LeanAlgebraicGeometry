@@ -1191,6 +1191,40 @@ theorem principal_degree_zero {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     -- deg(φ) · 0 = 0`.
     -- This branch uses the morphism `φ : C → ℙ¹` defined by `f` and
     -- multiplicativity of degree under finite pullback (Hartshorne II.6.9).
+    --
+    -- WHY THIS SORRY IS STILL HERE, and why the obvious substitution does not
+    -- work (audited run 0067; the roadmap node AJC.rr.principal is optimistic
+    -- on the first point and silent on the second):
+    --
+    -- (1) IMPORT DIRECTION. The adelic route's endpoint
+    --     `Adelic.degree_principal_eq_zero_of_isAlgClosed_curve`
+    --     (`Adelic/ResidueField.lean:521`) proves exactly this conclusion, but
+    --     it is not in scope here: this module imports only `Genus` and
+    --     `Albanese.CoheightBridge`, while `Adelic/ResidueField.lean` imports
+    --     `Adelic.LedgerClosure`, `GateInstances`, `FiniteMapToP1` and
+    --     `CurveBaseChange`, all of which sit strictly downstream of this file.
+    --     Closing the branch that way is an import inversion, not a proof step.
+    --
+    -- (2) THE ADELIC INPUT IS NOT ONE LOCAL LEMMA. That endpoint carries an
+    --     explicit `hledger` hypothesis, and the bump route to it is *refuted*
+    --     in-tree: `Adelic.ChiUnconditional.not_bump_of_notMem_left` proves
+    --     `hbump` outright false — unconditionally, with no exactness or
+    --     approximation datum — whenever a prime divisor lies off a chart of a
+    --     genuine cover `U₀ ⊔ U₁ = ⊤` whose three chart section spaces are all
+    --     finite-dimensional, and `ledger_refuted_of_notMem_left` does the same
+    --     for `hledger`. `Adelic/SectionBounds.lean:327` already withdraws the
+    --     earlier reading that the bump makes the ledger satisfiable.
+    --
+    --     That refutation is not fatal, though, and the distinction matters for
+    --     whoever picks this up: its load-bearing binder is
+    --     `[∀ D, Module.Finite k (sectionSub k Uᵢ D)]` at a NON-TOTAL `Uᵢ`,
+    --     which `ChiUnconditional.ell_le_finrank_chart_along_tower` documents as
+    --     "a substantive geometric restriction" that "has already excluded the
+    --     curves Riemann–Roch is about" — affine charts of a curve do not have
+    --     finite-dimensional section spaces over `k`. So what is ruled out is a
+    --     class of covers, not the ledger. The open work is to exhibit a cover
+    --     on which the ledger can hold, which is a question about the cover
+    --     rather than a one-point local statement.
     sorry
 
 /-! ## §6. Positive part of a Weil divisor
