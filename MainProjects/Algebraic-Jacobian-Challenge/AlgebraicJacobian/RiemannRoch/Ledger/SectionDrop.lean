@@ -37,7 +37,16 @@ Everything comes off the six-term slice of the dévissage sequence
   `D₀ ≤ D`, by dévissage induction: `H¹` vanishing is **upward closed on the effective cone
   above `D₀`**.  Together with `chi_divisorSheaf` this turns one vanishing into the exact
   Riemann–Roch equality `h⁰(𝒪(D)) = χ(𝒪_X) + deg D` at every `D ≥ D₀`
-  (`h0_divisorSheaf_of_subsingleton_of_le`).
+  (`h0_divisorSheaf_of_subsingleton_of_le`), and makes the section drop *exact*
+  (`h0_eq_h0_sub_point_add_residueDeg_of_subsingleton`).
+
+**The peel chain uses no finiteness at all.**  Ten of the seventeen declarations below `omit` both
+`Module.Finite` cohomology instances: surjectivity of a map is not a dimension count.  That
+is also why the peel is stated on `Subsingleton (H¹ …)` rather than on `h¹ … = 0` — the
+latter is vacuously true for an infinite-dimensional `H¹`, since `Module.finrank` reads `0`
+there, so the `Subsingleton` form is both the stronger statement and the honest one.  The
+`h¹`-spellings (`h1_le_h1_sub_point`, `h1_eq_zero_of_h1_sub_point_eq_zero`) do need the
+finiteness, and they carry it.
 
 ## What this does NOT supply — the three cluster-P items, kept apart
 
@@ -328,6 +337,56 @@ theorem subsingleton_hModule_one_of_le {D₀ D : X.CurveDivisor} (hle : D₀ ≤
   rwa [add_sub_cancel] at hpeel
 
 end Cone
+
+/-! ## Exact Riemann–Roch on the cone above a vanishing divisor
+
+The ledger gives `χ = h⁰ − h¹`; the peel kills `h¹` above `D₀`.  Together they upgrade the
+Riemann *inequality* to an *equality* — but only on the order-cone `{D | D₀ ≤ D}`, never on
+a degree half-space.  That distinction is the whole content of the caveat in the module
+docstring and is the reason these theorems carry `D₀ ≤ D` rather than `N ≤ deg D`. -/
+
+section ExactRR
+
+/-- **Riemann–Roch as an equality, on the cone above a vanishing divisor** (★):
+if `H¹(𝒪(D₀)) = 0` and `D₀ ≤ D`, then `h⁰(𝒪(D)) = χ(𝒪_X) + deg D` exactly.
+
+Not to be read as "Riemann–Roch for large degree": the hypothesis is `D₀ ≤ D` in the
+divisor order.  A `D` of huge degree supported away from `D₀` is not covered, and supplying
+`D₀` itself is the open base problem (module docstring, item 1). -/
+theorem h0_divisorSheaf_of_subsingleton_of_le {D₀ D : X.CurveDivisor} (hle : D₀ ≤ D)
+    (h : Subsingleton (Sheaf.HModule (X.divisorSheaf K D₀) 1)) :
+    (Sheaf.h0 (X.divisorSheaf K D) : ℤ) =
+      Sheaf.chi (X.moduleKSheaf K) + CurveDivisor.deg K D := by
+  have hvan : Subsingleton (Sheaf.HModule (X.divisorSheaf K D) 1) :=
+    subsingleton_hModule_one_of_le K hle h
+  have hchi := chi_divisorSheaf K D
+  rw [Sheaf.chi_eq_h0 hvan] at hchi
+  exact hchi
+
+omit [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 0)]
+  [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 1)] in
+/-- **`h¹` vanishes identically above `D₀`**, in the `h¹`-spelling. -/
+theorem h1_divisorSheaf_eq_zero_of_le {D₀ D : X.CurveDivisor} (hle : D₀ ≤ D)
+    (h : Subsingleton (Sheaf.HModule (X.divisorSheaf K D₀) 1)) :
+    Sheaf.h1 (X.divisorSheaf K D) = 0 :=
+  Sheaf.h1_eq_zero (subsingleton_hModule_one_of_le K hle h)
+
+/-- **The section drop is exact above `D₀`** (★): once `H¹` has vanished, every further
+point adds its full residue degree, `h⁰(𝒪(D)) = h⁰(𝒪(D − x)) + [κ(x) : K]` — the drop
+inequality `h0_le_h0_sub_point_add_residueDeg` becomes an equality.  The hypothesis is
+vanishing at `D − x`, which the peel then transports to `D`. -/
+theorem h0_eq_h0_sub_point_add_residueDeg_of_subsingleton {x : X}
+    (hx : x ≠ genericPoint X) (D : X.CurveDivisor)
+    (h : Subsingleton (Sheaf.HModule (X.divisorSheaf K (D - CurveDivisor.single hx 1)) 1)) :
+    (Sheaf.h0 (X.divisorSheaf K D) : ℤ) =
+      Sheaf.h0 (X.divisorSheaf K (D - CurveDivisor.single hx 1)) + X.residueDeg K x := by
+  have hvan : Subsingleton (Sheaf.HModule (X.divisorSheaf K D) 1) :=
+    subsingleton_hModule_one_of_subsingleton_sub_point K hx D h
+  have hstep := chi_step K hx D
+  rw [Sheaf.chi_eq_h0 hvan, Sheaf.chi_eq_h0 h] at hstep
+  exact hstep
+
+end ExactRR
 
 end Drop
 
