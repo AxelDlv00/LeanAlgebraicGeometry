@@ -277,8 +277,14 @@ import AlgebraicJacobian.Albanese.SymPowInvariantsLocalization
 import AlgebraicJacobian.Albanese.SymPowTensorAction
 import AlgebraicJacobian.Albanese.SymPowInvariantsUnder
 -- The `G`-stable affine cover for a bare finite group action: the same proof as
--- `Picard/StableAffineCover.lean`, whose Galois binder its body never uses.
+-- `Picard/StableAffineCover.lean`, whose Galois binder its body never uses. Since run 0069 r6
+-- it also carries the `S_n` instantiation, via `MonObj.permAutHom` in `GrpObjFoldSum`.
 import AlgebraicJacobian.Albanese.StableAffineCoverGroup
+-- The `n`-fold tensor power IS the `n`-ary coproduct of commutative algebras, with the
+-- factor-permutation action matched to `permAlgHom`. Item 3 of the four-item glue-data bill
+-- for `Sym^n C`; both halves of the universal property were already in mathlib unbundled
+-- (`liftAlgHom` / `algHom_ext`) rather than absent, as two earlier sessions had recorded.
+import AlgebraicJacobian.Albanese.TensorPowerCoproduct
 import AlgebraicJacobian.Albanese.AlbaneseFromData
 import AlgebraicJacobian.Albanese.AlbaneseFromColimit
 import AlgebraicJacobian.Albanese.AlbaneseJacobian
