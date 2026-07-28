@@ -9,6 +9,7 @@ import AlgebraicJacobian.Picard.TangentSpaceDualNumbers
 import AlgebraicJacobian.Picard.TangentSpaceIdentitySection
 import AlgebraicJacobian.Picard.Pic0TangentSpace
 import AlgebraicJacobian.Picard.Pic0DualNumberCocycle
+import AlgebraicJacobian.Picard.OnePointRelPicCollapse
 import AlgebraicJacobian.RiemannRoch.Adelic.GenusUnconditional
 import AlgebraicJacobian.Genus
 
@@ -274,6 +275,33 @@ theorem relPicDualKernel_eq_subtype {k : Type u} [Field k]
       = {a : (PicSharp.relPresheaf C).obj (Opposite.op (overDualNumber k)) //
           ((PicSharp.relPresheaf C).map (overDualNumberZero k).op).hom a = 0} :=
   rfl
+
+/-- **The relative quotient leaves clause (iii)** (run 0067 r2): the dual-number kernel of
+the *relative* Picard functor is additively the dual-number kernel of the **absolute** Picard
+group `Pic(C ×_k Spec k[ε])`.
+
+`Picard/OnePointRelPicCollapse.lean` proves the input: at a test object with a one-point
+underlying space — and `Spec k[ε]` is one, `DualNumber k` being local with nilpotent maximal
+ideal — the coset subgroup `π_T^* Pic(T)` that `relPresheaf` quotients by is *trivial*,
+because a locally trivial module on a one-point scheme is globally trivial (every nonempty
+open is `⊤`). So `relPicDualKernel C`, which is the left-hand side verbatim, may be replaced
+by an honest kernel on the absolute Picard group.
+
+WHY THIS MATTERS FOR THE `sorry` BELOW. The Čech side of the comparison
+(`AffineCoverMVSquare.h1CokAddEquivTruncExpCechKernel`, and the whole §6 unit-cocycle engine
+of `Picard/Pic0DualNumberCocycle.lean`) computes with *absolute* Picard classes of the
+thickened curve — transition units on a two-chart cover. It never had a coset quotient in it.
+Before this, clause (iii) had to bridge that mismatch as part of its own content; now the
+`H_T`-quotient is gone from the problem and what remains is the cocycle identification alone.
+
+Recorded as a named bridge rather than inlined, so the `sorry` below can be restated against
+the absolute side by whoever builds the cocycle map, on either project (inbox I-0495). -/
+noncomputable def relPicDualKernelAddEquivAbsKernel {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] :
+    relPicDualKernel C ≃+
+      ((PicSharp C).map (overDualNumberZero k).op).hom.ker :=
+  PicSharp.kerRelPresheafAddEquivKerAbs C
 
 /-- **The Čech side of the Kleiman §5 Thm 5.11 cocycle leg, assembled**:
 for any 2-affine cover `S` of the curve, the concrete Čech cokernel
