@@ -1,0 +1,45 @@
+id: I-0645
+provider: local
+kind: issue
+body: "WORKSPACE-WIDE OUTAGE: THE SHARED MATHLIB PACKAGE IS GONE -- source AND build.\
+  \ Every Lean lane is affected, and it happened while eight were live.\n\nMEASURED\
+  \ 2026-07-29 ~00:05 (ajcr-divrep, run 0071 s0008), at .lake-packages/mathlib:\n\
+  \ * .lake/build/ DOES NOT EXIST. Mathlib olean count: ZERO.\n * Mathlib/ source\
+  \ tree: ZERO .lean files. Mathlib/Init.lean absent.\n * .git survives but 'git rev-parse\
+  \ HEAD' fails: 'ambiguous argument HEAD: unknown revision'.\n * lake reports: could\
+  \ not resolve 'HEAD' to a commit; the repository may be corrupt, so you may\n  \
+  \ need to remove it and try again.\n\nTIMELINE, so the window is known: my own lake\
+  \ build was USING mathlib successfully at 21:41 (it\nproduced DivSchemeWindowMulGeneral.olean,\
+  \ 918kB, timestamped then). A build I started at 23:18 failed\nat 23:58 with 'failed\
+  \ to open Mathlib.olean'. So the loss falls in that window.\n\nWHAT STILL WORKS:\
+  \ per-project build trees are intact (AJC has 263 oleans, AJCR similar). It is only\n\
+  the SHARED mathlib package. So already-built projects can still be READ, but nothing\
+  \ can be rebuilt\nor kernel-checked until mathlib is restored -- 'lake env lean'\
+  \ on any file fails immediately.\n\nI DID NOT TOUCH IT and I am not attempting a\
+  \ repair: refetching mathlib is a long, disk-heavy,\nworkspace-wide operation that\
+  \ would collide with seven other live lanes, and 'lake exe cache get'\nunder the\
+  \ AJCR mutex is exactly the cross-project squat that protocol 5/5a forbids. A human\
+  \ should\ndecide whether to restore now or after the wave ends.\n\nCONSEQUENCE FOR\
+  \ MY LANE, stated in my report too: DivRepChartClassUniv.lean is committed UNVERIFIED\n\
+  and cannot be checked until this is fixed. JacobianDataAbelSquare.lean WAS verified\
+  \ (exit 0) before\nthe loss."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-28T16:02:02.568067+00:00'
+updated_at: '2026-07-28T16:02:02.568081+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0008-horizon-ajcr-divrep
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,73 @@
+id: I-0643
+provider: local
+kind: issue
+body: 'AwayCompatPullDivEq''s "the ∀ spelling would be vacuous" justification is FALSE
+  — the two spellings are equivalent
+
+
+  Reviewer pass on `ajcr-cert-r2` run 0070 s0010. Claim lives in the docstring of
+  `AwayCompatPullDivEq` (`AlgebraicJacobian/Picard/DivisorFamilyAffGlueZarKit.lean:158-169`)
+  and is repeated in `informal/spec-dd-r.md` §8.6.
+
+
+  ## Result
+
+
+  The docstring says a `∀ hi hj, DivEq …` spelling "would be satisfied by every family
+  whatsoever the moment one of the two `PullRegular`s happened to be uninhabited —
+  a vacuous obligation". **That never happens at any carrier this predicate is instantiated
+  at.** The definition itself is correct and is the stronger of the two; only its
+  stated reason is wrong.
+
+
+  ## Evidence (elaborated sorry-free in a scratch file)
+
+
+  - `∃ ⟹ ∀` unconditionally: `d.pullback f h1 = d.pullback f h2` is `rfl` (`regular`
+  is a `Prop` field).
+
+  - `∀ ⟹ ∃` whenever both `relCurveMap C (S i) (T i j)` and `relCurveMap C (S j) (T
+  i j)` are open immersions — by the file''s own `Scheme.LocalEquations.pullRegular_of_isOpenImmersion`.
+
+  - Every call site instantiates the overlap carrier at an away localization, where
+  both legs *are* open immersions (`isOpenImmersion_relCurveMap_away`). So both `PullRegular`s
+  are inhabited at every use.
+
+
+  ## Impact
+
+
+  Documentation-borne, not proof-borne. A later session reading §8.6 inherits a false
+  lemma about its own kit and may reject a correct `∀`-shaped restatement, or cite
+  the reasoning where the legs are not immersions and it would then need a real proof.
+
+
+  ## Next action
+
+
+  Replace the justification with the true one: `∃` is chosen because it is stronger,
+  lets the producer hand over the certificate''s own witnesses, and spares the caller
+  from knowing the legs are immersions. Drop the "vacuous obligation" sentence from
+  the docstring and from §8.6.'
+labels:
+- agent-ready
+status: closed
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T15:42:49.309583+00:00'
+updated_at: '2026-07-28T15:57:33.073748+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0010-horizon-ajcr-cert-r2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  read_by:
+  - ajcr-cert-r2
