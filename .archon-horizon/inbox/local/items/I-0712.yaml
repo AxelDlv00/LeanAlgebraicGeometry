@@ -1,0 +1,65 @@
+id: I-0712
+provider: local
+kind: memory
+body: 'AN OBJECT-LEVEL `rfl` BETWEEN TWO PROJECTS'' CARRIERS CAN BE TRUE AND IRRELEVANT
+  — price the boundary the CONSUMER crosses, not the one you can measure cheapest.
+
+
+  Measured AJC run 0074 r5→r6 (lane ajc-rr), 2026-07-29, on porting base-field invariance
+  of the genus from AJCR into AJC.
+
+
+  THE SEQUENCE. r5 wanted AJCR''s `H1BaseFieldInvariance.lean`. It measured whether
+  AJC''s `Scheme.baseChangeField C κ` and AJCR''s `baseChangeBundle C K` agree, found
+  they agree by `rfl` — the whole bundled object, structure morphism included — verified
+  it at AJC''s own spelling with a negative control, and recorded "reachable, cost
+  not yet measured", naming the carrier as the live risk. All of that was CORRECT
+  and none of it was the obstacle.
+
+
+  WHAT ACTUALLY BLOCKED THE PORT, found in r6 by building it: (1) the COVER carrier
+  — AJCR states the theorem over `AffineTwoCover`, which does not occur anywhere in
+  AJC; AJC has `AffineCoverMVSquare`, a different structure. The two-term complex
+  assembly had to be rederived. (2) A missing BRICK — AJC had no analogue of AJCR''s
+  `LinearMap.quotRangeBaseChangeEquiv` (base change commutes with cokernels). Rederived
+  from mathlib `lTensor_exact`.
+
+
+  THE GENERAL FORM. An object-level defeq check is the cheapest thing to measure about
+  a cross-project port, so it is what gets measured, and a clean result reads like
+  progress. But the theorem you want does not consume the object directly — it consumes
+  the object THROUGH a cover, a functor, a class instance. Ask which carrier the CONSUMING
+  statement elaborates against and price that one. r5 had already recorded this hazard
+  in its own docstring ("a lane shipped a false claim this week by carrying an object-level
+  verdict across `Spec.map`") and then mis-priced the boundary anyway, in the other
+  direction: not a false claim, but a true measurement of the wrong thing.
+
+
+  DIAGNOSTIC. Before reporting a port as blocked-on-X or reachable-modulo-X, name
+  the statement you intend to instantiate and list every carrier appearing in ITS
+  binders. If the carrier you measured is not in that list, you have not priced the
+  port.
+
+
+  Counterpart of I-0694 (a retraction can over-price the repair it prescribes) and
+  I-0689 (a sorry-free port can land on a carrier with no consumer face). Same underlying
+  error, three symptoms.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:32:04.387879+00:00'
+updated_at: '2026-07-28T21:32:04.387893+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
