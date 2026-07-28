@@ -17,3 +17,4 @@
 /MainProjects/Algebraic-Jacobian-Challenge-*/
 # ...but the Rebuild is a first-class registered project (config.yaml), not a backup:
 !/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/
+.archon-horizon/cache/

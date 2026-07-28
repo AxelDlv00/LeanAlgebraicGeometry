@@ -1,2 +1,0 @@
-import AlgebraicJacobian.Picard.IdentityComponent
-#print axioms AlgebraicGeometry.Scheme.Pic0Scheme.kPoints_iff_kerDegree

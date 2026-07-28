@@ -1,2 +1,0 @@
-import AlgebraicJacobian.RiemannRoch.WeilDivisor
-#print axioms AlgebraicGeometry.Scheme.WeilDivisor.principal_degree_zero
