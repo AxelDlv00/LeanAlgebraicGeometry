@@ -147,7 +147,15 @@ single affine chart, hence affine.
 
 Neither condition is proved here — for the Wave-5 curve both hold (a curve is non-empty; a proper
 positive-dimensional scheme over a field is not affine) but each is a real geometric input, and the
-consumer supplies them. -/
+consumer supplies them.
+
+**And "both hold for the curve" is at present an argument, not a witness in this project** — the
+distinction inbox `I-0679` names (a hypothesis can be satisfiable and yet witnessed nowhere, which
+every ordinary check reports as healthy). Measured: `Scheme.AffineTwoCover.nonempty_of_curve`
+supplies a cover of the curve but says nothing about either chart being proper or non-empty, and a
+search of both projects and mathlib finds no declaration concluding `V₀ ≠ ⊥` or `V₀ ≠ ⊤` for it. So a
+consumer instantiating this lemma at the Wave-5 curve **must still produce those two facts**, and
+should not expect to find them lying about. Recorded rather than papered over. -/
 theorem surjective_selector_iff :
     Function.Surjective D.selector ↔ D.V₀ ≠ ⊥ ∧ D.V₀ ≠ ⊤ := by
   classical
