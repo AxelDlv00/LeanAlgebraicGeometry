@@ -525,6 +525,8 @@ import AlgebraicJacobian.Picard.Pic0ChartRationalGraph
 import AlgebraicJacobian.Picard.Pic0ChartCoverageFibre
 import AlgebraicJacobian.Picard.Pic0ChartCoverageTest
 import AlgebraicJacobian.Picard.Pic0ChartPresentationHalf
+import AlgebraicJacobian.Picard.DegreeZeroBaseField
+import AlgebraicJacobian.Picard.Pic0ChartCoverageDegreeStep2
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivGen
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivClose
 import AlgebraicJacobian.Picard.DivSchemeUnivFibreKerSpan
@@ -569,6 +571,7 @@ import AlgebraicJacobian.Picard.DivRepAffPullNat
 import AlgebraicJacobian.Picard.DivRepAffPullClause
 import AlgebraicJacobian.Picard.DivRepChartRange
 import AlgebraicJacobian.Picard.JacobianDataAbelImage
+import AlgebraicJacobian.Picard.JacobianDataAbelSquare
 import AlgebraicJacobian.Picard.JacobianDataAbelSurj
 import AlgebraicJacobian.Picard.JacobianDataFromPicRepDatum
 
