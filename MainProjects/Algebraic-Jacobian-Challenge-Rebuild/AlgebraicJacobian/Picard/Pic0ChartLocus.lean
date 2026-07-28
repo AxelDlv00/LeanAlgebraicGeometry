@@ -278,33 +278,6 @@ theorem picEtMap_chartTwist (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDiviso
   rw [chartTwist, chartTwist, map_mul, map_inv, map_mul, map_pow,
     sigmaFamily_natural, thetaFamily_natural]
 
-/-- **`chartLocus` pulls back into `chartLocus`** — transport (i) of `w4-datb` §1.6, in the
-form the assembly consumes.
-
-For `f : T' ⟶ T` and `t : T'.left`, membership of `t` in the pulled-back locus and of `f t`
-in the original are the *same* condition on the *same* twisted class, read at two fields:
-`κ(t)` and `κ(f t)`, with `κ(f t) → κ(t)` the induced extension (`testPointFieldMap`).  So
-the transport is exactly the invariance of `IsSplitWitness` under that extension.
-
-**This lemma proves nothing on its own — it is an interface, and its proof is `hinv`.**  Said
-plainly so that no lane cites it as if transport (i) were discharged.  What it *does* is fix
-the exact shape of the obligation and put the burden where it belongs: on the morphism `f`,
-via the field extension `κ(f t) → κ(t)` it induces, rather than hidden inside the locus.  The
-tree's landed invariance (`hasWitnessH1Vanishing_iff_of_separable`) discharges `hinv` when
-that extension is separable — which is the étale-carrier case the (b-amendment) needs, and is
-*not* automatic for an arbitrary morphism of tests.  The residue between the two is why
-`hinv` is a hypothesis and not a `rw`. -/
-theorem mem_chartLocus_of_mem_chartLocus_comp (m : ℕ)
-    (Z : (C ⊗ overSpec k k).left.CurveDivisor)
-    {T T' : Over (Spec (.of k))} (f : T' ⟶ T) (lam : picEt C T) (t : T'.left)
-    (hinv : IsSplitWitness C
-        (picEtMap C (Over.testPoint (T := T) (f.left.base t)) (chartTwist C m Z T lam))
-      → IsSplitWitness C
-        (picEtMap C (Over.testPoint t) (chartTwist C m Z T' (picEtMap C f lam)))) :
-    f.left.base t ∈ chartLocus C m Z lam
-      → t ∈ chartLocus C m Z (picEtMap C f lam) :=
-  hinv
-
 end
 
 end AlgebraicGeometry
