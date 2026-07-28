@@ -1795,32 +1795,51 @@ by `def:genus`.
 
 This argument is not yet formalised: the proof is `sorry`.
 
-WHERE THE BLOCKER ACTUALLY IS (measured run 0067). It is *not* the tangent-space
-identity. Even granting `dim_k T₀ Pic⁰ = g` — which the sibling
-`Picard/Pic0AbelianVariety.lean` has now reduced to a single geometric cocycle
-comparison — and granting smoothness, the passage to `topologicalKrullDim` is a
-separate construction, because mathlib v4.31 has almost no API for that
-invariant: `IsHomeomorph.topologicalKrullDim_eq`,
-`IsInducing.topologicalKrullDim_le`, `topologicalKrullDim_subspace_le`,
-`topologicalKrullDim_zero_of_discreteTopology` and
-`PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim`. Nothing connects it to
-`SmoothOfRelativeDimension` or to a tangent-space dimension.
+**RETRACTED (run 0067 r5): the paragraph that used to stand here priced the
+blocker wrongly, and the "≥" half of this statement is now proved.** What it said
+was that `topologicalKrullDim` has almost no mathlib API — listing
+`IsHomeomorph.topologicalKrullDim_eq`, `IsInducing.topologicalKrullDim_le`,
+`topologicalKrullDim_subspace_le`, `topologicalKrullDim_zero_of_discreteTopology`,
+`PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim` — and that the route therefore
+had to run through `Algebra.IsStandardSmoothOfRelativeDimension` and an
+affine-local presentation.
 
-The available bridge runs through a *different* invariant and at the algebra
-level: `Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth`
-characterises relative dimension `n` as `Module.rank S Ω[S⁄R] = n`, the rank of
-the module of Kähler differentials. So closing this needs (i) the identification
-of that rank with the tangent-space dimension at the identity — over a field the
-two are dual, but the statement has to be made and the `rank`/`finrank`
-mismatch is where it would bite — and (ii) the passage from an affine-local
-presentation statement to a scheme-level Krull dimension, which quantifies over
-an affine cover of `Pic⁰_{C/k}` rather than over one point. The same analysis is
-recorded at `Jacobian.lean:395-410` for
-`smoothOfRelativeDimension_genus_pic0`.
+That measured mathlib's API *surface* and never the *definition*.
+`topologicalKrullDim` is by definition `krullDim (IrreducibleCloseds X)`; a scheme
+is sober and `T0`, so `irreducibleSetEquivPoints` is an order isomorphism onto the
+carrier, `Order.krullDim_eq_iSup_coheight` rewrites the dimension as a supremum of
+coheights, and this project's own `Scheme.ringKrullDim_stalk_eq_coheight`
+(`Albanese/CoheightBridge.lean`) turns each coheight into a stalk dimension. The
+resulting identity `dim X = ⨆ z, dim 𝒪_{X,z}`, for an arbitrary scheme, is
+`Scheme.topologicalKrullDim_eq_iSup_ringKrullDim_stalk`
+(`Picard/SchemeKrullDimStalk.lean`). No standard-smooth presentation is involved.
 
-Consumers wanting only a dimension *index* (e.g. the Albanese lane) may find
-`SmoothOfRelativeDimension (genus C) (Pic0Scheme C).hom` a cheaper target than
-this Krull-dimension form. -/
+STATE OF THE TWO DIRECTIONS (`Picard/Pic0Dimension.lean`):
+
+* **≥ is proved**, and from data at the identity *alone*:
+  `Pic0.genus_le_topologicalKrullDim_of_smooth` derives `g(C) ≤ dim Pic⁰_{C/k}`
+  from `Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne` plus regularity of the
+  single stalk at the identity — which over a **perfect** base field follows from
+  smoothness of `Pic⁰` by
+  `Scheme.isRegularLocalRing_stalk_of_smooth_of_perfectField`. So this half costs
+  nothing beyond front (b).
+* **≤ is the open content**, and it is one *uniform* statement:
+  `∀ z, ringKrullDim (stalk z) ≤ g`. It cannot come from the tangent space at one
+  point, since the dimension is a supremum over all points.
+  `Pic0.topologicalKrullDim_eq_genus_of_forall_ringKrullDim_stalk_le` states this
+  theorem against exactly that hypothesis.
+
+So the tangent-space side of Milne III.1 Rmk 1.4(e) is fully consumed, and what
+remains is the equidimensionality bound. Consumers wanting only a dimension
+*index* may still find `SmoothOfRelativeDimension (genus C) (Pic0Scheme C).hom`
+the cheaper target — it is also what would supply the `≤` hypothesis above.
+
+Scope of this retraction, checked rather than assumed: the retracted paragraph
+concerned `topologicalKrullDim`, and that invariant is named nowhere in
+`Jacobian.lean`, so its leaf-B docstrings are *not* affected. They price a
+different translation — from a tangent-space dimension to mathlib's
+presentation-based `SmoothOfRelativeDimension`, characterised by
+`Module.rank S Ω[S⁄R]` — which is untouched by anything here and remains open. -/
 theorem finrank_eq_genus {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
