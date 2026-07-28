@@ -62,7 +62,7 @@ same theorem by a separate curve-specialized strategy.
   18 outside it).  All 18 are committed to the ledger, so none is inside the grace period,
   and every one is now in `RiemannRoch/`:
   - `RiemannRoch/Ledger/{DegreeVanishing,GenusBridge,NonVacuity,PrincipalCompare,`
-    `PrincipalTransport,SectionDrop}` and `RiemannRoch/LedgerPortability` — 37 of the 51
+    `PrincipalTransport,SectionDrop}` and `RiemannRoch/LedgerPortability` — 37 of the 54
     `Ledger/` files are in the cone via `RiemannRoch/WeilDivisor.lean` (commit
     `8b654f78d`); these are not.  Tracked as inbox issue `I-0600`.
   - `RiemannRoch/Ledger/{FiberChart,FiberDivisor,FiberLattice,FiberVanishing,FiberBound,`
@@ -249,10 +249,10 @@ bypassed monument, run 0068 r3), `AJC.rr`, `AJC.picrep`
 - `AlgebraicJacobian/Albanese/`: rigidity and extension of rational maps, plus the
   Albanese factorization.
 - `AlgebraicJacobian/RiemannRoch/`: divisor and adelic Riemann–Roch infrastructure.
-  `RiemannRoch/Ledger/` (51 files) is the χ-ledger ported from the sibling
+  `RiemannRoch/Ledger/` (54 files) is the χ-ledger ported from the sibling
   Algebraic-Jacobian-Challenge-Rebuild project, plus four AJC-native rederivations and
-  the fibrewise large-twist vanishing layer.  Partly rooted (37 of 51, via
-  `WeilDivisor.lean`); the remaining 14 are outside the root cone — see the rootedness
+  the fibrewise large-twist vanishing layer.  Partly rooted (37 of 54, via
+  `WeilDivisor.lean`); the remaining 17 are outside the root cone — see the rootedness
   note above and inbox issue `I-0600`.
 - `blueprint/src/chapters/`: the mathematical blueprint.
 - `hgraph/`: the generated statement/declaration dependency graph.
