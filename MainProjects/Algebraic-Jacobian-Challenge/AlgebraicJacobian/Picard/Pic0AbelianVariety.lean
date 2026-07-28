@@ -156,6 +156,11 @@ set_option autoImplicit false
 
 universe u
 
+-- `v` is used only by the scalar-transport dimension lemma
+-- `Pic0.finrank_eq_of_addEquiv_of_bijective_smul`, whose two modules must share
+-- a universe because mathlib's `rank_eq_of_equiv_equiv` states them at one.
+universe v
+
 open CategoryTheory Limits
 
 namespace AlgebraicGeometry
@@ -615,6 +620,94 @@ theorem tangentSpaceCotangentDual {k : Type u} [Field k]
       (GroupScheme.identitySection_comp (Pic0Scheme C))
       (congrArg _ (Subsingleton.elim _ _))⟩
 
+/-- **Sorry-free, fully general: a dimension count across a change of scalar
+ring.** (Run 0067.) If `j : M ≃+ M₁` is additive, `i : R → R'` is a bijection
+of the scalar rings, and `j` intertwines the two scalar actions along `i`, then
+`M` and `M₁` have the same `finrank` over their respective rings.
+
+This is the `finrank` form of mathlib's `rank_eq_of_equiv_equiv`
+(`Mathlib/LinearAlgebra/Dimension/Basic.lean`), obtained by unfolding
+`Module.finrank` as `toNat` of `Module.rank`. It is the right tool for the
+Kleiman §5 Thm 5.11 dimension count, which compares a `κ(e)`-dimension with a
+`k`-dimension across the residue-field isomorphism `κ(e) ≃+* k`: `i` need only
+be a *bijection*, not a ring homomorphism, and the module structures live over
+genuinely different rings, so neither `LinearEquiv.finrank_eq` nor a
+`restrictScalars` argument applies. -/
+theorem finrank_eq_of_addEquiv_of_bijective_smul
+    {R : Type*} {R' : Type*} {M M₁ : Type v} [Semiring R] [AddCommMonoid M] [Module R M]
+    [Semiring R'] [AddCommMonoid M₁] [Module R' M₁]
+    (i : R → R') (j : M ≃+ M₁) (hi : Function.Bijective i)
+    (hc : ∀ (r : R) (m : M), j (r • m) = i r • j m) :
+    Module.finrank R M = Module.finrank R' M₁ := by
+  unfold Module.finrank
+  rw [rank_eq_of_equiv_equiv i j hi hc]
+
+/-- **The one remaining input to the Kleiman §5 Thm 5.11 dimension identity**
+(run 0067): the geometric cocycle comparison, packaged with exactly the
+scalar-compatibility data a dimension count needs and no more.
+
+The statement asks for a bijection `i` of scalars `κ(e) → k`, an additive
+equivalence `j` from the tangent space `Dual_{κ(e)}(m_e/m_e²)` at the identity
+of `Pic⁰_{C/k}` to the two-chart Čech cokernel `Ȟ¹(S, 𝒪_C)`, and the
+intertwining law `j (r • x) = i r • j x`. Given those,
+`finrank_cotangentSpaceDual_eq_finrank_h1Cok` follows outright by
+`finrank_eq_of_addEquiv_of_bijective_smul` — so the former "linearity
+bookkeeping" leg (step 2 of the old reduction) is discharged and this is the
+whole residue.
+
+Why this is the honest packaging rather than a weakening: a bare `Equiv` does
+*not* determine `finrank`, and the older reduction knew that, which is why it
+listed semilinearity as a separate obligation. Bundling the equivalence with its
+compatibility square is precisely the strength required — no more, since `i` is
+asked only to be bijective, and no less, since dropping `hc` would make the
+statement insufficient.
+
+WHAT IS ALREADY AVAILABLE towards it, none of which needs redoing:
+
+* the set-level chain
+  `Dual_{κ(e)}(m_e/m_e²) ≃ T₀ Pic⁰ ≃ T₀ Pic ≃ ker(Pic^♯(k[ε]) → Pic^♯(k))`
+  — `cotangentSpaceDual_equiv_relPicKernel` above;
+* the Mumford `ε ↦ aε` scaling on that kernel with its monoid-action laws
+  (`relPicKernelSMul`, `Picard/Pic0DualNumberCocycle.lean`), which is the
+  source of the `•` on the left-hand side;
+* the two-chart Čech unit-cocycle engine
+  `Γ(U₁ ⊓ U₂) ⧸ (Γ(U₁) + Γ(U₂)) ≃+ ker(Ȟ¹ˣ(B[ε]) → Ȟ¹ˣ(B))`
+  (`DualNumber.truncExpCechKernelAddEquiv`) together with
+  `AffineCoverMVSquare.h1CokAddEquivTruncExpCechKernel` above, which is the
+  additive equivalence on the Čech side, and
+  `DualNumber.unitsScale_mk_truncExpUnit`, which is exactly the `t • b`
+  equivariance `hc` needs on that side;
+* the scalar bijection: `residueFieldIso_of_section_over_field` gives
+  `κ(e) ≅ k` as rings at a `k`-rational section point, so `i` is available and
+  only has to be threaded.
+
+WHAT IS GENUINELY OPEN is the geometric middle: that an invertible sheaf on
+`C ×_k Spec k[ε]` trivial along `ε ↦ 0` is trivial on the two base-changed
+charts of `S` (a square-zero thickening does not change the underlying space,
+and units lift along it), that `Γ(V × Spec k[ε], 𝒪) ≅ Γ(V, 𝒪)[ε]` for affine
+`V`, and that under these identifications a kernel element goes to its
+transition unit. A cross-project note from the AJCR side (inbox I-0495,
+2026-07-28) confirms that this leg does *not* require Hilbert 90 or any
+henselian cover-splitting brick: after the truncated-exponential linearisation
+the descent condition is additive, and for the square-zero thickening
+`k[ε] → k` mathlib's `Algebra.FormallyEtale.comp_bijective` suffices. -/
+theorem semilinearComparison_cotangentSpaceDual_h1Cok {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    (S : C.left.AffineCoverMVSquare) :
+    ∃ (i : (IsLocalRing.ResidueField
+              ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default))) → k)
+      (j : (Module.Dual
+              (IsLocalRing.ResidueField
+                ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default)))
+              (IsLocalRing.CotangentSpace
+                ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default))))
+            ≃+ S.H1Cok (Scheme.toModuleKSheaf C)),
+      Function.Bijective i ∧ ∀ r x, j (r • x) = i r • j x :=
+  sorry
+
 /-- **The reduced Kleiman §5 Thm 5.11 core** (wave-5 W12-cocycle shrink; the
 single remaining `sorry` of the tangent-space keystone `tangentSpaceIso`):
 the `κ(e)`-dimension of the **dual** of the cotangent space `m_e/m_e²` at the
@@ -677,7 +770,14 @@ REMAINING MATHEMATICAL CONTENT (Kleiman §5, proof of Thm 5.11):
    statement, transporting bases along `κ(e) ≃+* k` as in
    `Module.nonempty_addEquiv_of_finrank_eq_of_ringEquiv`.
 
-Neither step weakens the pinned `tangentSpaceIso`; both are multi-session. -/
+Neither step weakens the pinned `tangentSpaceIso`; both are multi-session.
+
+REDUCED (run 0067) to exactly the semilinear comparison, via
+`finrank_eq_of_addEquiv_of_bijective_smul` below: see
+`semilinearComparison_cotangentSpaceDual_h1Cok`. Step 2 above — the
+"linearity bookkeeping" and the dimension count — is now *discharged*, so the
+remaining content is step 1 alone, packaged as the additive equivalence
+together with its scalar-compatibility square. -/
 theorem finrank_cotangentSpaceDual_eq_finrank_h1Cok {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -693,7 +793,8 @@ theorem finrank_cotangentSpaceDual_eq_finrank_h1Cok {k : Type u} [Field k]
           (IsLocalRing.CotangentSpace
             ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default))))
       = Module.finrank k (S.H1Cok (Scheme.toModuleKSheaf C)) := by
-  sorry
+  obtain ⟨i, j, hi, hc⟩ := semilinearComparison_cotangentSpaceDual_h1Cok C S
+  exact finrank_eq_of_addEquiv_of_bijective_smul i j hi hc
 
 /-- **The Kleiman §5 Thm 5.11 dimension identity**
 `dim_{κ(e)} m_e/m_e² = dim_k H¹(C, 𝒪_C)` at the identity section of
