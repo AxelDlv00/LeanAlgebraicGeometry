@@ -42,6 +42,30 @@ closed in run 0009 — `IdentityComponent.lean`, Kleiman §5 Lem.~`lem:agps`(3))
 the `isAbelianVariety` assembly, and the moved
 `Pic0Scheme.isAbelianVariety` (blueprint pin `thm:pic_zero_is_abelian_variety`).
 
+## Update (run 0067): `smooth` and `proper` are now assemblies
+
+Both former structural `sorry`s were replaced by reductions, so the file still
+carries three `sorry` bodies but each is a smaller named statement:
+
+* `smooth` = `smooth_of_geometricallyReduced` + `geometricallyReduced`. The
+  first is PROVED from mathlib's `smooth_of_grpObj`, which already contains the
+  translation argument and the descent along `Spec k̄ → Spec k`; its two
+  structural inputs (`locallyOfFiniteType`, `grpObj`) are landed here. The only
+  open input is `GeometricallyReduced (Pic0Scheme C).hom` — Cartier in
+  characteristic zero, `H²(C, 𝒪_C) = 0` in characteristic `p`. Note that
+  `Smooth.geometricallyReduced` is the *converse* and using it would be
+  circular.
+* `proper` = `proper_of_universallyClosed` + `universallyClosed`. The first is
+  PROVED: mathlib's `IsProper` is `IsSeparated` + `UniversallyClosed` +
+  `LocallyOfFiniteType`, and the separatedness and finite-type conjuncts are
+  the already-proved `isSeparated` / `locallyOfFiniteType` of this file. The
+  only open input is `UniversallyClosed`, attackable through the proved
+  `universallyClosed_of_baseChange` (Stacks 02KS fpqc descent) to the
+  algebraically closed case.
+
+Neither reduction weakens a pinned statement: `smooth`, `proper` and the
+`isAbelianVariety` assembly keep their types verbatim.
+
 Remaining `sorry` bodies: `finrank_cotangentSpaceDual_eq_finrank_h1Cok` —
 the wave-5 W12-cocycle reduced core of the Kleiman §5 Thm 5.11 dimension
 identity: `dim_{κ(e)} Dual(m_e/m_e²) = dim_k Ȟ¹(S, 𝒪_C)` against the concrete
@@ -782,28 +806,98 @@ theorem tangentSpaceIso {k : Type u} [Field k]
   -- the named sub-lemma above (its docstring records the reduction state).
   exact finrank_cotangentSpace_eq_finrank_hModuleOne C
 
+/-- **Smoothness of `Pic⁰_{C/k}` from geometric reducedness — the whole
+translation argument, discharged.** (Run 0067.)
+
+Mathlib's `smooth_of_grpObj` (`Mathlib/AlgebraicGeometry/Group/Smooth.lean`)
+already contains the entire geometric content that the older `smooth`
+docstring described as remaining work: for a group scheme over an *arbitrary*
+field which is locally of finite type and geometrically reduced, smoothness at
+the identity is propagated everywhere by the translation isomorphisms
+`GrpObj.mulRight`, and the descent to a non-closed base field is done by
+`MorphismProperty.of_pullback_snd_of_descendsAlong` along `Spec k̄ → Spec k`.
+
+So nothing about translation, and nothing about the tangent space, is owed
+here. Both of `smooth_of_grpObj`'s structural hypotheses are landed in this
+development:
+
+* `[LocallyOfFiniteType (Pic0Scheme C).hom]` — `Pic0.locallyOfFiniteType`
+  (the first conjunct of the sibling's
+  `IdentityComponent.isFiniteTypeGeometricallyIrreducible`);
+* `[GrpObj (Over.mk (Pic0Scheme C).hom)]` — `Pic0.grpObj`, keyed at the
+  `Over.mk` spelling. `Over.mk X.hom` is definitionally `X` by structure eta
+  for `Comma`, so the `letI` ascription is pure defeq and no transport lemma is
+  needed; instance *search* alone will not unfold `Over.mk`, which is why the
+  ascription is written out.
+
+What remains is therefore exactly `GeometricallyReduced (Pic0Scheme C).hom`
+and nothing else — see `geometricallyReduced` below for why that single residue
+is a genuine theorem rather than a synthesis step. -/
+theorem smooth_of_geometricallyReduced {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    (h : GeometricallyReduced (Pic0Scheme C).hom) :
+    Smooth (Pic0Scheme C).hom := by
+  haveI : LocallyOfFiniteType (Pic0Scheme C).hom := locallyOfFiniteType C
+  haveI := h
+  letI : GrpObj (Over.mk (Pic0Scheme C).hom) := (grpObj C).some
+  exact smooth_of_grpObj (Pic0Scheme C).hom
+
+/-- **The sole remaining input to smoothness of `Pic⁰_{C/k}`: geometric
+reducedness.** (Run 0067 — the shrunk residue of the former `smooth` sorry.)
+
+`Pic⁰_{C/k}` is geometrically reduced over `k`. This is **not** a
+bookkeeping step, and it is worth being precise about why, because the
+surrounding development makes it look available when it is not:
+
+* `Smooth.geometricallyReduced` (`Curve/GeometricallyReduced.lean`) derives
+  geometric reducedness *from* smoothness, so using it here is circular — it is
+  the converse direction of what `smooth_of_geometricallyReduced` consumes;
+* no other producer of `GeometricallyReduced` exists in this import closure for
+  a scheme that is not already known smooth, so the class does not synthesize.
+
+The genuine mathematics, following Kleiman §5: in characteristic zero this is
+Cartier's theorem — every group scheme locally of finite type over a field of
+characteristic zero is reduced, hence smooth (Kleiman §5 Cor.~`cor:ch0`). In
+characteristic `p` it is a real curve-specific statement, and the input is the
+vanishing `H²(C, 𝒪_C) = 0` for a curve, which makes the deformation functor of
+an invertible sheaf unobstructed so that `Pic_{C/k}` is smooth of dimension
+`dim H¹(C, 𝒪_C)` (Kleiman §5 Cor.~`cor:sm`, Ex.~`ex:jac`). Since `dim C = 1`,
+`H²` vanishes for dimension reasons on a curve — which is why the curve case
+holds in *every* characteristic, unlike the general Picard scheme, where
+`Pic_{X/k}` can be non-smooth in characteristic `p` (Igusa's surface).
+
+Stated as its own named obligation so that `smooth` below is an assembly and
+the open mathematical content sits at one site with its source attached. -/
+theorem geometricallyReduced {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C] :
+    GeometricallyReduced (Pic0Scheme C).hom :=
+  sorry
+
 /-- **Smoothness of `Pic⁰_{C/k}`.**
 
 For a smooth proper geometrically integral curve `C/k`, the identity component
 `Pic⁰_{C/k}` is smooth over `k` (Kleiman §5 Cor.~`cor:sm` + Cor.~`cor:ch0` in
 characteristic zero + Ex.~`ex:jac` for the curve case).
 
-The proof (iter-194+): smoothness at the identity propagates to smoothness
-everywhere by translation (Pic⁰ is a `k`-group scheme, so multiplication by
-any `λ ∈ Pic⁰(k̄)` is an automorphism). At the identity, smoothness reduces
-to the inequality
-`dim_0 Pic⁰_{C/k} ≤ dim_k T₀ Pic⁰_{C/k} = dim_k H¹(C, 𝒪_C) = g(C)`
-(`tangentSpaceIso`) becoming an equality. For a smooth proper curve this
-equality holds: in characteristic zero by Cartier's theorem (every
-`k`-group scheme is smooth), in positive characteristic by the curve-specific
-vanishing `H²(C, 𝒪_C) = 0` (the obstruction to lifting tangent vectors). -/
+REDUCED (run 0067): this is now an assembly, not an obligation. The
+translation argument and the descent to a non-closed base field are mathlib's
+(`smooth_of_grpObj`, via `smooth_of_geometricallyReduced` above), and the
+finite-type and group-object inputs are landed in this file. The single open
+input is `geometricallyReduced` above — Cartier in characteristic zero,
+`H²(C, 𝒪_C) = 0` in characteristic `p`. -/
 theorem smooth {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIntegral C.hom] [HasPicScheme C]
     [PicScheme.PicSchemeLocallyOfFiniteType C] :
     Smooth (Pic0Scheme C).hom :=
-  sorry
+  smooth_of_geometricallyReduced C (geometricallyReduced C)
 
 /-- **Properness of `Pic⁰_{C/k}`.**
 
@@ -811,19 +905,75 @@ For a smooth proper geometrically integral curve `C/k`, the identity component
 `Pic⁰_{C/k}` is proper over `k` (Kleiman §5 Thm.~`th:qpp&p`; a smooth proper
 curve is geometrically normal, hence the projectivity upgrade applies).
 
-The proof (iter-194+): `Pic⁰_{C/k}` is quasi-projective (Kleiman §5
-Thm.~`th:qpp&p`, first conclusion); to upgrade to projective (hence proper)
-we use the Chevalley–Rosenlicht structure theorem to reduce to ruling out
-non-constant `k̄`-morphisms `𝔾_m → Pic⁰_{C/k̄}`. The latter follows from
-normality of `C ×_k 𝔾_m` and Hartshorne II Ex.~6.15 (invertible sheaves on
-a normal integral scheme are sheaves of Cartier divisors). -/
+REDUCED (run 0067) to its universal-closedness conjunct alone. Mathlib's
+`IsProper` is a three-field structure — `IsSeparated`, `UniversallyClosed`,
+`LocallyOfFiniteType` (`Mathlib/AlgebraicGeometry/Morphisms/Proper.lean`;
+quasi-compactness is *not* a field, being implied by universal closedness) —
+and two of the three are already theorems of this file:
+
+* `isSeparated` — the clopen inclusion `Pic⁰ ↪ Pic` is a monomorphism, hence
+  separated, and `picScheme_isSeparated` gives separatedness of the ambient
+  `Pic_{C/k}` from the strengthened `HasPicScheme` existential; separatedness
+  is stable under composition;
+* `locallyOfFiniteType` — the first conjunct of the sibling's
+  `IdentityComponent.isFiniteTypeGeometricallyIrreducible`.
+
+So the entire open content of properness is `UniversallyClosed`, named as
+`universallyClosed` below. This is a strictly better factoring than the old
+single `sorry`: the two discharged conjuncts are now *used* rather than merely
+present in the file, and `universallyClosed` may additionally be attacked by
+base change to `k̄` through the already-proved
+`universallyClosed_of_baseChange` (Stacks 02KS descent), which reduces it to
+the algebraically closed case where Kleiman's projectivity argument lives. -/
+theorem proper_of_universallyClosed {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    (h : UniversallyClosed (Pic0Scheme C).hom) :
+    IsProper (Pic0Scheme C).hom := by
+  haveI : IsSeparated (Pic0Scheme C).hom := isSeparated C
+  haveI : LocallyOfFiniteType (Pic0Scheme C).hom := locallyOfFiniteType C
+  haveI := h
+  constructor
+
+/-- **The sole remaining input to properness of `Pic⁰_{C/k}`: universal
+closedness.** (Run 0067 — the shrunk residue of the former `proper` sorry.)
+
+The mathematics, Kleiman §5 Thm.~`th:qpp&p`: `Pic⁰_{C/k}` is quasi-projective
+(first conclusion of that theorem), and for `C/k` geometrically normal — which
+a smooth proper curve is — the identity component is *projective*, hence
+universally closed. The upgrade from quasi-projective to projective goes
+through the Chevalley–Rosenlicht structure theorem, reducing to ruling out
+non-constant `k̄`-morphisms `𝔾_m → Pic⁰_{C/k̄}`; that in turn follows from
+normality of `C ×_k 𝔾_m` together with Hartshorne II Ex.~6.15 (on a normal
+integral scheme invertible sheaves are sheaves of Cartier divisors).
+
+Note the standing project caveat (inbox I-0074, Caveat 2) that
+`PicScheme.smoothProperQuotient` is *weaker* than Kleiman lm:qt and is not
+provable as stated, because mathlib v4.31 has no quasi-projectivity
+vocabulary. That is exactly the vocabulary the first conclusion above needs, so
+this obligation is expected to be discharged by base change to `k̄` via
+`universallyClosed_of_baseChange` rather than by formalising quasi-projectivity
+from scratch. -/
+theorem universallyClosed {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C] :
+    UniversallyClosed (Pic0Scheme C).hom :=
+  sorry
+
+/-- **Properness of `Pic⁰_{C/k}`** — assembly (run 0067) of the two landed
+conjuncts `isSeparated` / `locallyOfFiniteType` with the single open conjunct
+`universallyClosed`, via `proper_of_universallyClosed`. -/
 theorem proper {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIntegral C.hom] [HasPicScheme C]
     [PicScheme.PicSchemeLocallyOfFiniteType C] :
     IsProper (Pic0Scheme C).hom :=
-  sorry
+  proper_of_universallyClosed C (universallyClosed C)
 
 /-- **Geometric irreducibility of `Pic⁰_{C/k}`.**
 
