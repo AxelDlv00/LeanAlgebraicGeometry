@@ -1291,7 +1291,13 @@ theorem principal_degree_zero {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     --     ledger itself is a dévissage induction over closed points with
     --     skyscraper quotients (`chi_step`, `χ(sky_x M) = dim_K M`), not an
     --     adelic bump. I measured its transitive closure at HEAD: 22 files,
-    --     5491 lines, ZERO `sorry` tokens.
+    --     5491 lines, ZERO `sorry` tokens — and, more to the point, checked it
+    --     with the kernel rather than by counting occurrences of a word:
+    --       `#print axioms AlgebraicGeometry.deg_divOf`
+    --       `#print axioms AlgebraicGeometry.chi_divisorSheaf`
+    --     both report `[propext, Classical.choice, Quot.sound]`, no `sorryAx`.
+    --     So the conclusion this branch needs is *proved* next door, not merely
+    --     un-sorried in its own file.
     --
     --     WHAT THE PORT COSTS, so the next session can size it rather than guess.
     --     Two carrier mismatches, one cheap and one real:
