@@ -681,16 +681,34 @@ WHAT IS ALREADY AVAILABLE towards it, none of which needs redoing:
   `κ(e) ≅ k` as rings at a `k`-rational section point, so `i` is available and
   only has to be threaded.
 
-WHAT IS GENUINELY OPEN is the geometric middle: that an invertible sheaf on
-`C ×_k Spec k[ε]` trivial along `ε ↦ 0` is trivial on the two base-changed
-charts of `S` (a square-zero thickening does not change the underlying space,
-and units lift along it), that `Γ(V × Spec k[ε], 𝒪) ≅ Γ(V, 𝒪)[ε]` for affine
-`V`, and that under these identifications a kernel element goes to its
-transition unit. A cross-project note from the AJCR side (inbox I-0495,
-2026-07-28) confirms that this leg does *not* require Hilbert 90 or any
-henselian cover-splitting brick: after the truncated-exponential linearisation
-the descent condition is additive, and for the square-zero thickening
-`k[ε] → k` mathlib's `Algebra.FormallyEtale.comp_bijective` suffices. -/
+WHAT IS GENUINELY OPEN is the geometric middle, whose three clauses are
+
+  (i) an invertible sheaf on `C ×_k Spec k[ε]` trivial along `ε ↦ 0` is trivial
+      on the two base-changed charts of `S`;
+ (ii) `Γ(V × Spec k[ε], 𝒪) ≅ Γ(V, 𝒪)[ε]` for affine `V`;
+(iii) under those identifications a kernel element goes to its transition unit.
+
+CLAUSES (i) AND (ii) ARE NO LONGER OPEN (run 0067):
+
+* (i) is `DualNumber.free_of_cyclic_mod_eps`
+  (`Picard/DualNumberChartTriviality.lean`): on an affine chart `Spec A` the
+  base change is `Spec A[ε]`, the augmentation ideal is square-zero
+  (`DualNumber.augIdeal_mul_self_eq_bot`) hence nilpotent, and an invertible
+  module over a nilpotent thickening which is cyclic modulo the ideal is free
+  (`Module.Invertible.free_of_nilpotent_of_exists_sub_smul_mem`,
+  `Picard/NilpotentThickeningFree.lean`). No finiteness of the sections is
+  assumed — affine charts of a curve do not have finite-dimensional section
+  spaces over `k`, so a version requiring that would be unusable here.
+* (ii) is `DualNumber.baseChangeAlgEquiv` (`Picard/Pic0DualNumberCocycle.lean`),
+  which was already available.
+
+So the residue is clause (iii) alone: the cocycle-level identification. A
+cross-project note from the AJCR side (inbox I-0495, 2026-07-28) confirms that
+this leg does *not* require Hilbert 90 or any henselian cover-splitting brick:
+after the truncated-exponential linearisation the descent condition is additive,
+and for the square-zero thickening `k[ε] → k` mathlib's
+`Algebra.FormallyEtale.comp_bijective` suffices. The square-zero-ness that note
+relies on is exactly `DualNumber.augIdeal_mul_self_eq_bot`, now a theorem. -/
 theorem semilinearComparison_cotangentSpaceDual_h1Cok {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

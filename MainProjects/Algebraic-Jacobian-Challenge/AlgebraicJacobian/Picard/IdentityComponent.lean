@@ -1419,17 +1419,115 @@ The degree map is a group homomorphism from the additive structure on
 function is stated here, the homomorphism property and the functoriality in
 `k` being left to separate lemmas.
 
-The construction is an open obligation: the value should be obtained by
-extracting a representing invertible sheaf from `PicScheme.representable C`,
-forming its Hilbert polynomial with the machinery of the sibling file
-`Picard/QuotScheme.lean`, and taking the leading coefficient. The body is
-currently `sorry`. -/
+ROUTE CHANGE (run 0067). The construction is still an open obligation, but it is no
+longer the *Quot* obligation the previous docstring described, and the difference matters
+because Quot is retained-not-revived in this project. See `ClassDegree` and
+`degreeOfSection` below: representability already transports a `k`-rational point to a
+relative Picard class over the base, so the only missing input is a degree homomorphism on
+those classes — no Hilbert polynomial and no representing sheaf extraction.
+
+The body is still `sorry`, and deliberately so: see `degreeOfSection` for the honest
+version, which is total, and for why *this* declaration cannot be closed as stated. -/
 noncomputable def degree {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIntegral C.hom] [HasPicScheme C] :
     (Spec (.of k) ⟶ (PicScheme C).left) → ℤ :=
   sorry
+
+/-! ### The degree, factored through the relative Picard group
+
+The route below replaces the Quot/Hilbert-polynomial construction the section header
+describes. Two facts make it work, and neither needs Quot:
+
+1. **Representability already does the transport.** `PicScheme.representable C` is a
+   bijection `(T ⟶ Pic_{C/k}) ≃ Pic(C ×_k T)/π_T^* Pic(T)` natural in `T`; taking
+   `T = Spec k` (the trivial over-object `Over.mk (𝟙 (Spec k))`) sends a `k`-rational point
+   of `Pic_{C/k}` to a relative Picard class over the base. This is `classOfSection` below,
+   and it is sorry-free.
+2. **The degree is a homomorphism on those classes.** That is the one remaining input,
+   isolated as the class `ClassDegree`. The sibling project builds exactly this
+   homomorphism sorry-free and without Quot — `Algebraic-Jacobian-Challenge-Rebuild`,
+   `RiemannRoch/RelPicDegree.lean`, `relPicDeg : Additive (relPic C (overSpec k K)) →+ ℤ`,
+   descended from `classDeg` along the observation that `Spec K` is a one-point space so its
+   Čech Picard group is trivial and cannot contribute. Its own input is the closed χ-ledger
+   `χ(𝒪(D)) = χ(𝒪_X) + deg D` (`RiemannRoch/ChiLedger.lean`), whose 22-file / 5.5k-line
+   closure I measured to be free of `sorry`.
+
+WHY `degree` ABOVE STAYS OPEN, and this is a statement-level defect rather than a missing
+proof: it takes an *arbitrary* morphism `Spec k ⟶ (PicScheme C).left`, not a morphism over
+`Spec k`. Such a morphism need not be a section of `(PicScheme C).hom` — the goal
+`lambda ≫ (PicScheme C).hom = 𝟙 (Spec k)` is not derivable — so it does not name a
+`k`-*rational* point and representability says nothing about it. A total function of that
+type therefore cannot be built from the Picard functor at all; it would have to invent a
+value off the sections. `degreeOfSection` below is the same construction on the correct
+domain, and is total. Consumers should migrate; `degree` is retained only because
+`kPoints_iff_kerDegree` is pinned against it. -/
+
+/-- **The one remaining input to the degree map**: a degree homomorphism on relative Picard
+classes of `C` over the base field.
+
+This is Milne III.1 p.~88 in the only form the construction needs — additive, integer-valued,
+on `Pic(C ×_k Spec k)/π^* Pic(Spec k)`. Additivity is not decoration: `kPoints_iff_kerDegree`
+needs `degree` to vanish on the trivial class, which is `map_zero`.
+
+The sibling project's `relPicDeg` (see the section note) has exactly this shape after
+transporting its `Additive`/`CechPic` carrier to this project's `relPresheaf` carrier; that
+transport is the open work, and it is a carrier comparison rather than a new theorem about
+degrees. -/
+class ClassDegree {k : Type u} [Field k] (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] : Prop where
+  /-- An additive degree on the relative Picard classes over the base. -/
+  nonempty_classDegree : Nonempty
+    ((PicSharp.relPresheaf C).obj (Opposite.op (Over.mk (𝟙 (Spec (.of k))))) →+ ℤ)
+
+/-- **The relative Picard class of a `k`-rational point of `Pic_{C/k}`** — sorry-free.
+
+Representability at the trivial test object `T = Spec k`. A section `lambda` of
+`(PicScheme C).hom` is a morphism `Over.mk (𝟙 (Spec k)) ⟶ PicScheme C` in `Over (Spec k)`,
+and `representable`'s `homEquiv` sends it to a class in
+`Pic(C ×_k Spec k)/π^* Pic(Spec k)`. Nothing is chosen and nothing is open here; this is the
+transport step that the old Quot route was going to perform by extracting a representing
+sheaf. -/
+noncomputable def classOfSection {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    (lambda : Spec (.of k) ⟶ (PicScheme C).left)
+    (hlambda : lambda ≫ (PicScheme C).hom = 𝟙 (Spec (.of k))) :
+    (PicSharp.relPresheaf C).obj (Opposite.op (Over.mk (𝟙 (Spec (.of k))))) :=
+  (PicScheme.representable C).homEquiv
+    (Over.homMk lambda hlambda : Over.mk (𝟙 (Spec (.of k))) ⟶ PicScheme C)
+
+/-- **The degree of a `k`-rational point of `Pic_{C/k}`** — total, no `sorry`, given
+`ClassDegree`.
+
+The composite of `classOfSection` (representability, sorry-free) with the degree homomorphism
+of `ClassDegree`. This is the honest form of `degree` above: the domain is sections of
+`(PicScheme C).hom`, which is what "`k`-point of `Pic_{C/k}`" means. -/
+noncomputable def degreeOfSection {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C] [ClassDegree C]
+    (lambda : Spec (.of k) ⟶ (PicScheme C).left)
+    (hlambda : lambda ≫ (PicScheme C).hom = 𝟙 (Spec (.of k))) : ℤ :=
+  (ClassDegree.nonempty_classDegree (C := C)).some (classOfSection C lambda hlambda)
+
+/-- The degree of a `k`-rational point vanishes when its relative Picard class is trivial —
+`map_zero` of the `ClassDegree` homomorphism.
+
+Recorded because it is the direction of `kPoints_iff_kerDegree` that additivity buys: a point
+factoring through the identity has trivial class, hence degree zero. -/
+theorem degreeOfSection_eq_zero_of_class_eq_zero {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C] [ClassDegree C]
+    (lambda : Spec (.of k) ⟶ (PicScheme C).left)
+    (hlambda : lambda ≫ (PicScheme C).hom = 𝟙 (Spec (.of k)))
+    (hclass : classOfSection C lambda hlambda = 0) :
+    degreeOfSection C lambda hlambda = 0 := by
+  rw [degreeOfSection, hclass, map_zero]
 
 end PicScheme
 
