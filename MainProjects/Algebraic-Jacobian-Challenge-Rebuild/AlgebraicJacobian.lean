@@ -459,6 +459,7 @@ import AlgebraicJacobian.Tangent.TangentCotangentCount
 import AlgebraicJacobian.Tangent.DualNumberTestObject
 import AlgebraicJacobian.Tangent.Pic0TangentSpace
 import AlgebraicJacobian.AbelianVariety.JacobianSmooth
+import AlgebraicJacobian.AbelianVariety.JacobianAbelianVariety
 import AlgebraicJacobian.Picard.RelPicCurveMap
 import AlgebraicJacobian.Curve.CrossBaseSquare
 import AlgebraicJacobian.RiemannRoch.DegreeIsoTransport

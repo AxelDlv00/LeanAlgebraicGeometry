@@ -70,7 +70,7 @@ three links:
 | square-zero lifting criterion for `FormallySmooth` | **present** — `Algebra.FormallySmooth.iff_comp_surjective` / `comp_surjective` (`RingTheory/Smooth/Basic.lean:83`) |
 | formally smooth local `k̄`-algebra ⇒ regular | **PARTIAL** — the general statement is Cohen-structure-flavoured; what mathlib has is `RegularLocalRing` API (`RingTheory/RegularLocalRing/Defs.lean`) and smooth⇒regular for *scheme* morphisms, not the local-algebra implication under a bare `FormallySmooth` |
 | regular local ⇒ reduced | **present** — regular local rings are domains, hence reduced |
-| `IsReduced J_k̄` ⇒ `GeometricallyReduced` | **present in-project** — `Curve/GeometricallyReduced.lean` (mathlib-general; flagged in I-0495 as an upstreaming candidate) |
+| `IsReduced J_k̄` ⇒ `GeometricallyReduced` | **ABSENT — see the retraction in §2.1.** I first read `Curve/GeometricallyReduced.lean` as supplying this; it supplies the converse (`Smooth ⇒ GeometricallyReduced`), which would be circular here |
 
 So R2's real content is link 2, and it is a **local-algebra** gap, not a geometric one.
 
@@ -89,11 +89,105 @@ supplies *uniformly in `K`* — this is exactly the payoff the t4 worksheet prom
 "why (ii) over (i)" item 3), and then
 
 > **S1-b**: `IsReduced J_k̄` from S1-a by translation homogeneity (X2, landed:
-> `AbelianVariety/Translation.lean`), and `GeometricallyReduced d.J.hom` from S1-b via
-> `Curve/GeometricallyReduced.lean`.
+> `AbelianVariety/Translation.lean`, which already exports the exact transport
+> `isReduced_stalk_pointTranslationIso_iff`), and then `GeometricallyReduced d.J.hom`.
 
 **Gate**: S1-a genuinely needs T3/T4. It cannot be started before them, and pretending
-otherwise is how this lane burned sessions before. S1-b is startable now and is [S].
+otherwise is how this lane burned sessions before.
+
+### 2.1 CORRECTION to my own §2 above: S1-b is NOT [S], and the reason is a mathlib gap
+
+I wrote "S1-b is startable now and is [S]" one paragraph ago on the strength of
+`Curve/GeometricallyReduced.lean` being available. **That was wrong and I am retracting it
+in the same document** (the project's retraction discipline, I-0494). What that file
+actually proves is the implication in the *other* direction —
+`Smooth f ⟹ GeometricallyReduced f` (`:130`), plus
+`SmoothOfRelativeDimension n f ⟹ GeometricallyReduced f` (`:147`). Using it for S1 would be
+circular: S2 derives `Smooth` *from* `GeometricallyReduced`.
+
+What S1-b actually needs is the descent step
+
+> `IsReduced (J ×_k k̄)` ⟹ `GeometricallyReduced d.J.hom`,
+
+i.e. "reduced after base change to the algebraic closure ⟹ reduced after base change to
+*every* field extension". Checked this session, and this is the finding:
+
+* the scheme-level class is `GeometricallyReduced f ↔ geometrically IsReduced f`
+  (`AlgebraicGeometry/Geometrically/Reduced.lean:44`), and `geometrically P f` quantifies
+  over **all** fields `K` with a map to the base (`Geometrically/Basic.lean:46`). The file
+  offers base-change stability, fibre reformulations, and
+  `isReduced_of_flat_of_isLocallyNoetherian` — but **no reduction of the quantifier to the
+  algebraically closed case**.
+* the algebra-level analogue *does* have exactly that reduction:
+  `Algebra.IsGeometricallyReduced` with
+  `isGeometricallyReduced_field_iff : IsGeometricallyReduced k A ↔ IsReduced (AlgebraicClosure k ⊗[k] A)`
+  (`RingTheory/Nilpotent/GeometricallyReduced.lean:62`), plus the useful instance at `:71`
+  giving `IsReduced (K ⊗[k] A)` for every algebraic `K/k`.
+* **but the two are not connected**: `grep -rl IsGeometricallyReduced Mathlib/AlgebraicGeometry/`
+  returns *nothing*. There is no `HasAffineProperty`/`HasRingHomProperty` instance tying the
+  scheme class `GeometricallyReduced` to the algebra class `Algebra.IsGeometricallyReduced`.
+
+So S1-b decomposes into a **new mathlib-facing brick**:
+
+> **S1-b0** (`AbelianVariety/GeomReducedAlgClosed.lean`): `GeometricallyReduced f` for
+> `f : X ⟶ Spec (.of k)` follows from `IsReduced (X ×_k k̄)`. Route: affine-locally, via
+> `geometrically_iff_of_commRing_of_isClosedUnderIsomorphisms` (`Geometrically/Basic.lean:136`)
+> to reduce the quantifier to pullbacks, then an algebra bridge on section rings.
+
+**Sizing it honestly, by machine probe rather than by eye** (three `lean_run_code` probes
+this session, results recorded because they are what a later session would otherwise redo):
+
+1. `IsGeometricallyReduced k A` + `[Algebra.IsAlgebraic k K]` ⟹ `IsReduced (K ⊗[k] A)` —
+   **fires by `infer_instance`** (mathlib's instance at
+   `RingTheory/Nilpotent/GeometricallyReduced.lean:71`).
+2. the same **without** `IsAlgebraic` — **fails**: no instance, and `exact?` finds nothing.
+3. the crux the textbook proof reduces to — `k` algebraically closed, `A` reduced, `K/k` an
+   arbitrary field extension ⟹ `IsReduced (K ⊗[k] A)` — **also absent**; `exact?` finds
+   nothing.
+
+So the gap is **exactly the transcendental case**. Mathlib's `IsGeometricallyReduced` is
+defined by base change to `AlgebraicClosure` of residue fields and its transport lemmas stop
+at algebraic extensions; the passage to a general extension is the standard
+"reduced ⊗ field stays reduced over an algebraically closed base" argument (Stacks 030U
+neighbourhood), which is genuine commutative algebra — f.g. reduction via
+`IsReduced.tensorProduct_of_flat_of_forall_fg` (`RingTheory/Flat/Basic.lean:642`, present)
+plus a separating-transcendence-basis or Noether-normalisation step that is **not** present.
+
+**Size correction: S1-b0 is [M/L], not [S/M].** I revise my own estimate of two paragraphs
+ago. It is still a clean, self-contained, genuinely upstreamable statement with no
+dependency on anything else in Wave 5 — but it is not the afternoon's work the first reading
+suggested, and a session that starts it expecting [S] will overrun.
+
+**Recommendation, and the reason this worksheet exists:** do **not** start S1-b0 as part of
+the S-cluster. Two better options, in order:
+
+* **(a) Keep S1 a hypothesis.** S2 and S3 already take `GeometricallyReduced` as an instance
+  argument, so the entire AV package can be assembled *conditionally* on S1 with no further
+  work. That is strictly more valuable per session than S1-b0, because it unblocks S3 and
+  the AV assembly while leaving one clearly-labelled input open.
+* **(b) A `smooth_of_grpObj` variant taking the `k̄`-fibre directly.** Mathlib's
+  `smooth_of_grpObj` consumes `GeometricallyReduced`, but its *proof* only ever uses the
+  `AlgebraicClosure k` fibre (it base-changes there immediately and descends along
+  `@Surjective ⊓ @Flat ⊓ @QuasiCompact`). So a variant hypothesised on
+  `IsReduced (X ×_k k̄)` looked like it would bypass S1-b0 for an [S] price.
+
+  **PROBED THIS SESSION, AND IT DOES NOT.** Two further probes: `IsReduced G` +
+  `[IsAlgClosed K]` ⟹ `Smooth f` for a group scheme — `exact?` finds nothing (the useful
+  half, `smooth_of_grpObj_of_isAlgClosed`, is `private` in mathlib and therefore not
+  reachable from a downstream project); and, more fundamentally, `IsReduced G` +
+  `[IsAlgClosed K]` ⟹ `GeometricallyReduced f` — **also absent**. That second failure is the
+  informative one: even over an algebraically closed base, mathlib will not upgrade
+  `IsReduced` to `GeometricallyReduced`, because doing so *is* the transcendental-extension
+  statement of probe 3. Option (b) does not dodge S1-b0's content; it relocates it.
+
+  Salvage: the `private` marker is the only obstacle to the *first* half. An upstream PR
+  making `smooth_of_grpObj_of_isAlgClosed` public (or adding the `IsReduced`-hypothesised
+  variant next to it) would be a genuinely [XS] mathlib contribution that leaves AJCR needing
+  only reducedness over `k̄`. **That is the recommended external action**, and it is worth an
+  inbox item `--to human` rather than a local workaround.
+
+Sizes update: **S1-b = S1-b0 [M/L, deprioritised — prefer (a), with (b)'s upstream PR as the
+cheap external unblock] + translation spread [S]**, and only S1-a is T3/T4-gated.
 
 **Risk left after this reframe (record as R2'):** whether "reduced stalk at the identity" is
 derivable from the ε-kernel count *alone* or needs the full deformation functor. If the
@@ -155,7 +249,8 @@ the count itself. Probe this before writing S3's Lean.
 | brick | gate | size | startable at HEAD? |
 |---|---|---|---|
 | S2 `Smooth d.J.hom` | S1 as instance arg | XS | **yes — landed this session** |
-| S1-b `IsReduced J_k̄ ⇒ GeometricallyReduced` | X2 (landed) | S | yes |
+| S1-b0 `IsReduced (X ×_k k̄) ⇒ GeometricallyReduced` | none (mathlib-facing) | S/M | **yes** — see §2.1; upstreamable |
+| S1-b translation spread | S1-a + X2 (landed) | S | after S1-a |
 | S1-a reduced stalk at identity | T3/T4 | M/L | **no** |
 | S3 assembly | S2 + T5 + X2 | M | shape frozen here; numeral waits on T3/T4 |
 
