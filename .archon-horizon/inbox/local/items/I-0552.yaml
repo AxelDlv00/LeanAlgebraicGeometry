@@ -1,0 +1,76 @@
+id: I-0552
+provider: local
+kind: memory
+body: '[persistent] AT EIGHT LIVE LANES THE INBOX AND ROADMAP WARNINGS ARE STRUCTURAL,
+  NOT BACKLOG — measure the arrival rate before you start archiving
+
+
+  Established by the janitor hygiene pass of run 0074 (lane `ajc-rr`), and it is the
+  fifth pass today to reach a version of this conclusion. Written so the sixth does
+  not re-derive it.
+
+
+  ## The measurement that settles it
+
+
+  Start of pass: **56** open non-protection items (limit 30). End of pass, after a
+  full read of every open item: **60**. Nine items (`I-0543`-`I-0551`) arrived from
+  other lanes during the ~50 minutes it took, each a substantive unresolved finding.
+  Exactly **one** item was justifiably archivable (`I-0541`, a verification receipt
+  for an already-archived `I-0521`).
+
+
+  **A janitor pass at this fleet size makes the number go up.** That is arithmetic,
+  not failure.
+
+
+  ## Why so little is archivable
+
+
+  Four earlier passes today already did the consolidation: `I-0442`, `I-0349`, `I-0397`,
+  `I-0483`, `I-0529`, `I-0512` and `I-0480` each absorbed one to three sibling memories,
+  with the absorbed content preserved as comments. What survives is distinct and mostly
+  `[persistent]`. The issues are live findings against code being written right now
+  — I re-checked two at HEAD (`I-0531`, `I-0534`) and both still hold.
+
+
+  ## The rule
+
+
+  1. **Count arrivals, not just totals.** Diff the open-id set at the start and end
+  of your pass. If arrivals exceed archivals, say so in the report rather than lowering
+  the bar for what counts as consumed.
+
+  2. **Do not archive a live lane''s working memory to hit a number.** `horizon ps`
+  first; an item filed minutes ago by a running task is in-flight context.
+
+  3. **The thresholds are sized for one or two lanes.** `AdvisoryHealthLimits` is
+  `open_inbox=30`, `open_memories=10`, `active_roadmap=8`. Eight lanes running fresh-context
+  reviews that are *designed* to produce findings cannot sit under those. Reported
+  to the human as `I-0551`; the roadmap half is `I-0509`.
+
+  4. **What a pass at this scale is actually for:** re-measure stale numbers in open
+  items, record drift as comments, consolidate genuine duplicates, and file the one
+  or two structural problems nobody owns. Not shrinking a count.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T08:01:14.022463+00:00'
+updated_at: '2026-07-28T08:12:39.931103+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0002-horizon-ajc-rr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-pic0av
+  - ajc-rr

@@ -1,1 +1,39 @@
-The CLI source explains the discrepancy I measured. Let me confirm the two warning paths differ.
+Hygiene pass done. The headline: this inbox is not a backlog, and cleaning cannot clear the warning.
+
+## What I archived or completed
+
+Exactly one item was defensibly consumable:
+
+- **I-0541** (memory, `ajcr-cert-r2`) — archived. It exists only to say "I-0521's three checks all pass, do not redo them", and I-0521 is itself already archived. Its content (the flatness factorisation through `Scheme.overAlgebraMap`, the right-leg `instFlatRelCurveHom`, 7/7 `IsCertified` clause parity) is a receipt for one commit of the R2 widening, not a durable lesson. The durable half of that audit stays open as **I-0539**. I added the rationale as a comment so the archive is self-explaining.
+
+## What I deliberately left, and why
+
+- **I-0491, I-0074** — standing protections, untouched per your constraint.
+- **I-0493, I-0495** — human-started team threads, left open. Also **I-0494** (AJCR team thread, human-started, hidden from this project's CLI view by its scope).
+- **26 memories.** Four earlier janitor passes today already consolidated hard: I-0442, I-0349, I-0397, I-0483, I-0529, I-0512 and I-0480 each absorbed one to three siblings, with absorbed content preserved as comments. The survivors are distinct lessons, eight tagged `[persistent]`. I found no superseded pair. I checked one candidate closely — I-0460 (AJCR-not-portable) vs the newly filed I-0548 (two-chart squeeze) — and they are different subjects, so both stay.
+- **28 issues.** These are live, machine-verified findings against code being written right now by running lanes. I re-checked two at HEAD rather than assuming: I-0531's duplicate `AlgebraicGeometry.Scheme.one_le_coheight_of_ne_genericPoint` still exists in both `RiemannRoch/WeilDivisor.lean:149` and `Albanese/Milne33TransportLocal.lean:66`; I-0534's `PicScheme.ClassDegree` is still the vacuous class at `Picard/IdentityComponent.lean:1478`. Neither is closable.
+- **I-0511, I-0538** — agent-started conversations, but both unanswered. On I-0538 I recorded that its sole recipient `ajc-etale-pic` is now `done`, so the thread has no live respondent.
+- **issue-1, issue-2** — GitHub-provider shadows of live remote issues. The CLI cannot touch them (`inbox archive issue-1` raises `KeyError`), and they are not local clutter.
+
+## Roadmap warnings, all three survive
+
+- **`AJC.jacobian.assembly`** (children done, parent open) — intentional, and I verified it rather than trusting the summary. Its five obligations are genuinely open at HEAD: `Pic0Et.geometricallyReduced` and `Pic0Et.universallyClosed` are `sorry`-bodied at `Picard/Pic0Et.lean:170` and `:223`, and `fgaPicardRepresentability` carries the file's single `sorry` at `FGAPicRepresentability.lean:347`. The summary already states the mismatch is deliberate. No change.
+- **`AJC.picrep` done with three pending children** — left alone. Evidence points to option 1 (the étale route routes around them: both `.quot` and `.serre` summaries open "OFF-PATH, retained not revived" for the abandoned Quot endgame), but choosing between `rejected`, re-parenting, and documenting the mismatch is a route decision, and the only lane with standing has exited. Recorded on I-0538.
+- **17 active items vs limit 8** — all 17 legitimate. I applied I-0509's own liveness test: 12 rows held directly by running tasks, 5 active ancestors of those, **zero orphans**. This is the fourth consecutive pass to measure it and the fourth to find nothing demotable. I left `AJC.rr.principal` and every `ajc-pic0av` row untouched.
+
+## Counts
+
+| | before | after |
+|---|---|---|
+| open non-protection (store) | 56 | 61 |
+| memories | 20 | 27 |
+| issues | 26 | 29 |
+
+The count rose because nine items arrived from live lanes during the pass: `I-0543`–`I-0546`, `I-0548`–`I-0550` from other lanes, plus my two. Also worth knowing: the CLI's `list` shows 41 while the store holds 64 open — the `reaches_horizon` filter at `inbox.py:191` hides project-scoped and other-team items. I read the store directly, per I-0482.
+
+## Filed
+
+- **I-0551** (issue → human): the 30-item limit is below the fleet's steady state. Nine arrivals against one archival in one pass; `AdvisoryHealthLimits` (`open_inbox=30`, `open_memories=10`, `active_roadmap=8`) is sized for one or two lanes. Three options offered: scale the limits with fleet size, accept the warnings as permanent and say so in `CLAUDE.md`, or reduce fleet size.
+- **I-0552** (memory, `[persistent]`): count arrivals as well as totals before archiving, and don't lower the bar for "consumed" to hit a number.
+
+Two notes for you. The AJCR README's rootedness figures were stale when I measured (663 files / 594 reachable / 69 unrooted), but another lane corrected them to exactly my numbers mid-pass, so no edit was needed. And I recorded a live drift on **I-0083**: `ajc-fbc`'s comment says two `sorry`s in `Cohomology/CechHigherDirectImageUnconditional.lean`, HEAD has three (`:421`, `:1922`, `:1993`) — not a contradiction, since `:421` was de-instanced into a named theorem, but the ambiguity is why that count keeps oscillating.

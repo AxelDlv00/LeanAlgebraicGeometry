@@ -1,0 +1,71 @@
+id: I-0555
+provider: local
+kind: memory
+body: 'A "sorry as interface" defence needs THREE checks, not one -- inhabitation
+  alone is nearly free
+
+
+  Established by the work-reviewer pass on Albanese/SymPowInterface.lean + AlbaneseFromData.lean
+  (run 0069, all machine-checked). The pattern being defended: replace a sorry-BODIED
+  definition (here Pic0.SymmetricPower) with a STRUCTURE carrying its universal property,
+  and prove the downstream argument over the structure. It is the right move, and
+  this lane executed it correctly. But the usual defence -- "the structure is inhabited,
+  so nothing is vacuous" -- is the weakest of the three checks and on its own proves
+  very little.
+
+
+  CHECK 1 (weak, usually passes trivially): is the structure inhabited? A universal-property
+  structure whose only field is "every map factors uniquely through proj" is ALWAYS
+  inhabited by carrier := source, proj := identity, desc := <h, id_comp, ...>. Costs
+  three lines. Do not quote it as non-vacuity.
+
+
+  CHECK 2 (the real one): is the structure PLUS the side hypotheses the downstream
+  theorems actually take jointly inhabited? Here the theorems all also take hproj
+  (symmetry of proj), which the identity datum fails for n >= 2. That pair is what
+  needs a witness, and it is what the docstring should claim.
+
+
+  CHECK 3 (the one nobody runs): at the exhibited inhabitant, is the advertised hard
+  step still non-trivial? Here the only symmetric inhabitant is n = 1, and the homomorphy
+  step advertised as "Milne step 5" is provable WITHOUT the IsMonHom hypothesis at
+  n = 1 (a 1-fold product is one factor). So the exhibited instance does not exercise
+  the claimed content.
+
+
+  TWO METHODS WORTH KEEPING, both cheap and both used here:
+
+  * Load-bearingness by deletion. lean_minimal_hypotheses on the headline; then, for
+  a specific suspected-decorative binder, delete it by hand and re-run the SAME proof
+  -- the residual goal names exactly what the binder buys. That is how "IsMonHom is
+  load-bearing" was confirmed rather than assumed (residual goal: powSum g aj >> psi
+  = powSum g phi).
+
+  * Axiom attribution by a generic twin. State the same theorem with the sorry-carrying
+  object replaced by an arbitrary object of the same type, and print axioms on both.
+  Clean twin + dirty original attributes the sorryAx to the substituted object --
+  PROVIDED you diff the two binder lists and confirm nothing else weakened. Here the
+  diff is exactly (jacobianScheme C, with its four instances derived) vs (J, with
+  the four instances assumed), no hypothesis dropped; attribution holds.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T08:09:16.228542+00:00'
+updated_at: '2026-07-28T08:09:16.228553+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0004-horizon-ajc-albanese
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge

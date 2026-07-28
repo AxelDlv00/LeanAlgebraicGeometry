@@ -4,35 +4,72 @@ projects:
 - Algebraic-Jacobian-Challenge
 summary: 'Construct picardJacobianWitness from Picard representability, the Pic0 abelian-variety
   structure, dimension g, and the Albanese universal property; discharge the protected
-  Jacobian interface.  The structure is built and wired: the witness IS Scheme.Pic0Scheme,
-  and 98 modules are reachable from the headline. What remains is mathematics, not
-  assembly, so this item stays open with its only child done -- that status mismatch
-  is deliberate.  FIVE OBLIGATIONS, measured with scripts/axiom-frontier.lean rather
-  than asserted: Pic0.smooth and Pic0.proper are sorry-bodied upstream, and three
-  leaves are stated at the headline. Their distances to the landed tree are now unequal
-  and known:  - LEAF C (Albanese) is the closest. isAlbanese_pic0_of_isAlgClosed is
-  a THEOREM: over an algebraically closed field, in positive genus, and given the
-  basepoint condition, the universal property is Albanese.Pic0.albanese_universal_property
-  applied with no transport. So leaf C adds exactly three things -- arbitrary base
-  field (cluster G descent), genus zero (Mumford rigidity), and the basepoint condition
-  P o iota_P = eta. The third is the one easily overlooked: it is a conjunct of IsAlbanese
-  that the landed theorem never states, and it cannot be discharged before Pic0.abelJacobi
-  is constructed, since it is a statement about that morphism.  - LEAF A (rational
-  point) is not a distance at all: the statement is FALSE, so it must be replaced
-  by whichever branch the owner picks in I-0372, never proved.  - LEAF B (dimension
-  refinement) now has its landed half at the headline too, and it is NOT the dimension
-  count. finrank_tangentSpace_pic0_eq_genus proves dim T_e Pic0 = genus C by Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne
-  with no transport, since genus C is definitionally dim_k H^1(C,O_C). So leaf B owes
-  exactly two things: Pic0.smooth (itself unproved, so the leaf presupposes an obligation
-  rather than reducing one), and a TRANSLATION between two invariants of smoothness.
-  On the second: mathlib''s SmoothOfRelativeDimension mentions no tangent space, but
-  it is not bridge-free -- Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth
-  characterises relative dimension n as Module.rank S Omega[S/R] = n, an iff -- so
-  the work is the duality over a field between rank Omega and the tangent-space dimension,
-  plus the affine-local-to-scheme-level passage over a cover of Pic0. An earlier summary
-  called this missing mathematics with no bridge; that was retracted (memory I-0446).  Pic0.smooth
-  and Pic0.proper belong to no current task and are the nearest unowned work under
-  the headline.'
+  Jacobian interface.
+
+
+  The structure is built and wired: the witness IS Scheme.Pic0SchemeEt, the identity
+  component of the scheme representing the etale-sheafified relative Picard functor.
+  What remains is mathematics, not assembly, so THIS ITEM STAYS OPEN WITH ITS ONLY
+  CHILD DONE -- that status mismatch is deliberate and must not be "fixed". The parent
+  is the assembly step, not a container, and it rests on five open obligations.
+
+
+  THE FIVE OBLIGATIONS, restated after the owner decision of 2026-07-28 (protection
+  I-0491, branch (2) ETALE-SHEAFIFY): none of them is a false statement any more,
+  which is the substance of that change rather than the count.
+
+
+  - Scheme.fgaPicardRepresentability -- representability of the etale-sheafified functor
+  over an ARBITRARY field, with no rational-point binder. The project''s central open
+  obligation, expected to stay open.
+
+  - Scheme.Pic0Et.geometricallyReduced -- Cartier in characteristic zero, a genuine
+  statement in characteristic p.
+
+  - Scheme.Pic0Et.universallyClosed -- Kleiman section 5.
+
+  - smoothOfRelativeDimension_genus_pic0Et and isAlbanese_pic0Et -- the two leaves
+  stated at the headline.
+
+
+  Note the middle two rather than Pic0Et.smooth / Pic0Et.proper: those are ASSEMBLIES
+  over them, not obligations of their own, so citing them as the open statements is
+  a stale reading. An earlier version of this summary did exactly that, and also listed
+  a "leaf A (rational point)"; hasRationalPoint_of_curve was FALSE as stated and has
+  been deleted, never proved (I-0491 clause 1).
+
+
+  DISTANCES TO THE LANDED TREE, measured with scripts/axiom-frontier.lean rather than
+  asserted, and unequal:
+
+
+  - LEAF C (Albanese) is the closest. isAlbanese_pic0_of_isAlgClosed is a THEOREM:
+  over an algebraically closed field, in positive genus, and given the basepoint condition,
+  the universal property is Albanese.Pic0.albanese_universal_property applied with
+  no transport. So leaf C adds exactly three things -- arbitrary base field (cluster
+  G descent), genus zero (Mumford rigidity), and the basepoint condition P o iota_P
+  = eta. The third is easily overlooked: it is a conjunct of IsAlbanese that the landed
+  theorem never states, and it cannot be discharged before Pic0.abelJacobi is constructed,
+  since it is a statement about that morphism.
+
+  - LEAF B (dimension refinement) has its landed half at the headline too, and it
+  is NOT the dimension count. finrank_tangentSpace_pic0_eq_genus proves dim T_e Pic0
+  = genus C via Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne with no transport,
+  since genus C is definitionally dim_k H^1(C,O_C). So leaf B owes a TRANSLATION between
+  two invariants of smoothness, plus the transport of that landed chain from Pic0Scheme
+  to Pic0SchemeEt (the honest extra cost of the etale formulation). On the translation:
+  mathlib''s SmoothOfRelativeDimension mentions no tangent space, but it is not bridge-free
+  -- Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth characterises
+  relative dimension n as Module.rank S Omega[S/R] = n, an iff -- so the work is the
+  duality over a field between rank Omega and the tangent-space dimension, plus the
+  affine-local-to-scheme-level passage over a cover of Pic0. An earlier summary called
+  this missing mathematics with no bridge; that was retracted (memory I-0446).
+
+
+  Pic0Et.geometricallyReduced and Pic0Et.universallyClosed belong to no current task
+  and are the nearest unowned work under the headline.
+
+  '
 status: pending
 kind: proof
 priority: high
@@ -55,4 +92,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
-  updated_at: '2026-07-28T06:35:22.018319+00:00'
+  updated_at: '2026-07-28T08:11:38.038093+00:00'

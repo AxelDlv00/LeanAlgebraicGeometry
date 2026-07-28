@@ -1,0 +1,54 @@
+id: I-0549
+provider: local
+kind: issue
+body: "SymPowData is UNDER-SPECIFIED: it does not pin Sym^n, and hproj is a separate\
+  \ load-bearing axiom\n\nGround review of run 0069 s0004 (task ajc-albanese). Machine-checked,\
+  \ not asserted.\n\nTHE DEFECT. structure SymPowData C n (Albanese/SymPowInterface.lean:94)\
+  \ asks only for a carrier, a proj : C^n -> carrier, and unique factorisation of\
+  \ S_n-SYMMETRIC morphisms. It does NOT require proj itself to be S_n-invariant.\
+  \ Consequence: the IDENTITY inhabits SymPowData C n for EVERY n, including n >=\
+  \ 2 --\n\n  noncomputable def symPowDataTrivial (C : K) (n : Nat) : SymPowData C\
+  \ n where\n    carrier := (the product of fun _ : Fin n => C)\n    proj := 1 (identity\
+  \ morphism)\n    desc := fun {T} h _ => <h, by simp, fun u hu => by simpa using\
+  \ hu>\n\ntypechecks (verified with lake env lean, zero errors). So symPowDataOne\
+  \ (Sym^1 C = C) is NOT evidence that the structure is inhabitable at g >= 2 -- the\
+  \ structure is trivially inhabitable at every n, and inhabiting it says nothing\
+  \ about the symmetric power existing.\n\nWHAT ACTUALLY CARRIES THE CONTENT. Every\
+  \ downstream theorem takes a SEPARATE hypothesis\n  hproj : forall sigma, permAut\
+  \ C sigma >> D.proj = D.proj\nThat binder, not the structure, is what forces proj\
+  \ to be a genuine symmetrisation. It is not derivable from SymPowData (the trivial\
+  \ datum satisfies the structure and fails hproj at n = 2), and the only exhibited\
+  \ inhabitant satisfies it only because S_1 is trivial. So the honest name of the\
+  \ interface is the PAIR (SymPowData, hproj), and \"the interface is inhabited\"\
+  \ has been demonstrated only for the pair at n = 1.\n\nWHY THIS IS NOT FATAL. The\
+  \ genuine mathematical Sym^n C, once constructed, satisfies both clauses; and lean_minimal_hypotheses\
+  \ confirms hproj is load-bearing in exists_unique_albanese_factorisation, so nothing\
+  \ is vacuously discharged. The theorems are real implications. The overstatement\
+  \ is specifically the claim that symPowDataOne rules out vacuity at g >= 2.\n\n\
+  TWO FIXES, either suffices:\n (1) Move hproj INTO the structure as a field (proj_symm),\
+  \ so \"a SymPowData\" means what the docstrings say, and the trivial datum stops\
+  \ inhabiting it at n >= 2. symPowDataOne still goes through (permAut for S_1 is\
+  \ the identity up to Subsingleton.elim -- checked).\n (2) Keep the split but correct\
+  \ the docstrings that read symPowDataOne as anti-vacuity evidence: SymPowInterface.lean:49-53,\
+  \ :216-221, :226-228; AlbaneseUP.lean:74-76.\n\nFix (1) is strictly better: it makes\
+  \ the type carry the invariant."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T07:54:14.827759+00:00'
+updated_at: '2026-07-28T07:54:14.827773+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0004-horizon-ajc-albanese
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge

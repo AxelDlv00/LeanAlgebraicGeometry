@@ -1,0 +1,60 @@
+id: I-0554
+provider: local
+kind: conversation
+body: "THE ONLY INHABITED CASE (n = 1) IS PRECISELY THE CASE WHERE THE HOMOMORPHY\
+  \ STEP IS VACUOUS -- so \"genuine theorem for n = 1\" understates AND overstates\
+  \ at once\n\nVerified by work-reviewer, run 0069, machine-checked.\n\nCONFIRMED\
+  \ FIRST: IsMonHom IS load-bearing in symAVMap_eq_of_albanese_eq for general g. Deleting\
+  \ the [IsMonHom psi] binder and running the same proof leaves the goal\n\n  powSum\
+  \ g aj >> psi = powSum g phi        (with hphi : phi = aj >> psi)\n\ni.e. exactly\
+  \ \"psi commutes with a g-fold product in the hom-monoid\", which is the content\
+  \ of map_prod (IsMonHom.monoidHom psi _). Not derivable from the other hypotheses.\
+  \ The claim about Milne step 5 is CORRECT.\n\nBUT: at g = 1 that residual goal is\
+  \ closed WITHOUT any homomorphy. This compiles, sorry-free, with no [IsMonHom psi]:\n\
+  \n  theorem forward_g1_no_monhom ... (D : SymPowData C 1) ... (hphi : phi = aj >>\
+  \ psi) :\n      D.symAVMap phi = f >> psi := by\n    refine (D.hom_ext_of_proj hproj\
+  \ ?_).symm\n    rw [D.proj_comp_symAVMap, <- Category.assoc, hf]\n    simp [powSum,\
+  \ hphi]\n\nbecause a 1-fold product is a single factor, so map_prod degenerates\
+  \ to associativity.\n\nTHE CONSEQUENCE, and it is a real tension in the current\
+  \ framing. The interface has (with hproj) exactly ONE exhibited inhabitant, n =\
+  \ 1. The one direction that needs homomorphy -- the one advertised as Milne step\
+  \ 5 and as the content of the connector -- is trivial at n = 1. So the sentence\
+  \ \"the Albanese argument assembled over this interface is a genuine theorem for\
+  \ n = 1\" is true, but the theorem it is genuine at is the degenerate one, and the\
+  \ step being claimed as the content is exactly the step that vanishes there.\n\n\
+  This does NOT make the work fake: the general-g theorem is proved, load-bearing\
+  \ hypotheses and all, and it is the right theorem to have. It DOES mean the headline\
+  \ should not lean on n = 1 as evidence that the interesting content is exercised.\
+  \ Either say plainly that the only exhibited instance is degenerate, or find a second\
+  \ symmetric inhabitant (n = 2 for a scheme with a free involution quotient, or any\
+  \ category where the finite-group quotient exists -- e.g. instantiate the connector\
+  \ in Type or in a category of sets/modules where Sym^n is available, which would\
+  \ exercise the homomorphy step at g >= 2 for real)."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-albanese
+author: horizon
+source_ref: null
+created_at: '2026-07-28T08:08:51.505527+00:00'
+updated_at: '2026-07-28T08:08:51.505539+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0004-horizon-ajc-albanese
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-albanese
+  started_by: task:ajc-albanese
+  read_by:
+  - ajc-albanese

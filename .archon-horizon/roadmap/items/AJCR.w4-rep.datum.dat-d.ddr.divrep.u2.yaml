@@ -3,43 +3,50 @@ title: 'U2: the DDR9-U epsilon-identity at the universal point (the last gate of
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "U2: the DDR9-U epsilon-identity at the universal point (the last gate of\
-  \ divRep).\n\nRE-SCOPED A THIRD TIME, 2026-07-28 (run 0071, ajcr-divrep). The previous\
-  \ summary said the\naffine package is \"U2 + choice bookkeeping\". THE BOOKKEEPING\
-  \ HALF IS NOW LANDED, AND IT WAS\nNEVER U2-GATED. So this leaf is smaller than it\
-  \ has been described, and it is no longer\nBLOCKED in the sense of having nothing\
-  \ to pick up.\n\nWHAT U2 IS (informal/w4-ddr9-worksheet.md 3.1): at the universal\
-  \ point the pair-chart\ntautological submodules ARE the coordinate images of divFamEps\
-  \ of the universal family.\nStill exists in no Lean declaration.\n\nWHAT LANDED\
-  \ THIS RUN, and why it removes the bookkeeping from this leaf:\n * DivRepAffPullGlue.lean\
-  \ -- the chart pulls of ONE atlas factorization glue\n   (exists_divRepPullGlue)\
-  \ and the glued class is the UNIQUE one restricting to the pieces\n   (existsUnique_divRepPullGlue).\n\
-  \ * DivRepAffPullIndep.lean -- divRepPullGlue_eq_of_chartFactors: two DIFFERENT\n\
-  \   factorizations of the same morphism give the SAME class. This is w4-ddr9 3.4s\n\
-  \   \"choice-independence of the factorization\", and it consumes NO epsilon-identity.\n\
-  \ * DivRepAwaySpanGlue.lean -- the instance pack of the S5b gluing keystone at canonical\n\
-  \   away carriers, which was the mechanical obstruction to all of the above.\n\n\
-  WHY THE INDEPENDENCE WAS FREE, recorded so nobody re-derives it the hard way:\n\
-  divRepPullAt_mapAlgHom_eq_of_chartFactor (DivRepAffChartOverlap.lean:126) compares\
-  \ ANY TWO\nchart presentations of the SAME morphism v, over any two carriers, restricted\
-  \ to any common\ntower ring. It never requires the two presentations to come from\
-  \ one factorization. So the\ncross-refinement of two factorizations is handled by\
-  \ exactly the lemma that handles a single\nfactorizations own overlaps.\n\nWHAT\
-  \ IS ACTUALLY LEFT ON THIS LEAF, both genuinely needing the epsilon-identity:\n\
-  \ 1. isDivRepClassify_pull -- the glued pulled class satisfies IsDivRepClassify\
-  \ for the\n    morphism it came from. This is the second of ofPulls three fields.\n\
-  \ 2. DivRepChartFamily.IsCompatible for the universal family. Per\n    isCompatible_of_isDivRepClassify_divRepPullAt\
-  \ (DivRepAffPullbackReduce.lean:98) this\n    reduces to the per-chart clause, i.e.\
-  \ to U2 itself.\nAlso still open but not U2-gated: pull_naturality, which is the\
-  \ same glue machinery as\npull.\n\nSTANDING CORRECTIONS, both verified this run:\n\
-  \ * the I-0234 windowS blocker this row used to quote is DONE (windowS_spec_three,\n\
-  \   RiemannRoch/WindowLedger.lean:157). Do not quote it again.\n * the \"cheap edit\
-  \ nobody has made\" (retype divRepPullAt at DivFamZar) is ALSO done --\n   DivRepAffKit.lean:99-104\
-  \ already takes DivFamZar.\n * U2 remains gated on the G-4 certificate discharge:\
-  \ ThetaGeneratorSeed.certifiedFamily\n   (DivSchemeEps.lean:237) demands a GLOBAL\
-  \ IsCertified over the chart ring. Note the R2\n   widening (protection I-0492)\
-  \ landed a parallel predicate IsLocallyCertifiedAff, but\n   cert-r2 explicitly\
-  \ did NOT land the comparison CertifiedDivisorFamily ->\n   CertifiedDivisorFamilyAff,\
-  \ so that widening does not yet reach this obligation.\n"
+  \ divRep).\n\nRE-SCOPED A FOURTH TIME, 2026-07-28 (run 0071 s0004, ajcr-divrep).\
+  \ THE TWO OBLIGATIONS THIS\nROW LISTED SIDE BY SIDE ARE ONE OBLIGATION, and the\
+  \ reduction is now Lean, not a plan.\n\nThe previous summary named two things left,\
+  \ both \"genuinely needing the epsilon-identity\":\n 1. isDivRepClassify_pull (the\
+  \ second field of ofPull)\n 2. DivRepChartFamily.IsCompatible for the universal\
+  \ family\nIt is now proved that BOTH follow from a single per-chart statement, and\
+  \ there is a producer\nof the whole endpoint from that statement alone.\n\nTHE NAMED\
+  \ INTERFACE (Picard/DivRepAffPullClause.lean, sorry-free, kernel-checked, rooted):\n\
+  \  DivRepChartFamily.IsChartClause U :\n    for every chart (i,j) and every omega\
+  \ : R_Z(i,j) -> S, the chart pull\n    divRepPullAt U i j omega satisfies IsDivRepClassify\
+  \ for Spec omega >> ChartMap i j.\nThis is VERBATIM the hypothesis isCompatible_of_isDivRepClassify_divRepPullAt\
+  \ already took,\nso it is not a strengthening -- it is the same statement, named.\n\
+  \nWHAT IT NOW BUYS:\n * IsChartClause.isCompatible            -- obligation 2 (the\
+  \ old lemma, renamed)\n * isDivRepClassify_divRepPullValue      -- obligation 1,\
+  \ four lines\n * divRepAffinePullback_ofChartClause    -- a producer of DivRepAffinePullback\n\
+  \ * divFunctor_representableBy_of_chartClause -- (divFunctor C pi g).RepresentableBy\
+  \ DivOver\n\nTHE TOOL THAT MADE IT WORK, and it mentions no chart family at all:\n\
+  \  isDivRepClassify_of_forall_away -- IsDivRepClassify IS LOCAL ON THE BASE. If\
+  \ every\n  restriction of F0 to Localization.Away (f t) along a spanning family\
+  \ is classified by the\n  corresponding restriction of v, then F0 is classified\
+  \ by v.\nWhy: the clause quantifies over tower tests, so its hypothesis data AND\
+  \ its conclusion both\nrestrict; the framing over T pushes along the left leg into\
+  \ TensorProduct S T A by\nmap_window_frame_toSubmodule at the IDENTITY tower, and\
+  \ the certified representative pushes\nwith it. Once that exists, obligation 1 is\
+  \ immediate: on the t-th piece of the atlas\nfactorization the value IS the chart\
+  \ pull (divRepPullValue_spec) and the chart morphism IS\nthe restriction of v.left,\
+  \ so the chart clause IS the piecewise statement.\nSpelling hazard recorded: this\
+  \ needs TWO declarations, the overlap comparison in the\nalgebraMap spelling plus\
+  \ the cover chase consuming it by defeq. A one-declaration version\ndoes not elaborate,\
+  \ because the pullback cover's index is not Fin m on the nose.\n\nALSO LANDED THIS\
+  \ RUN: pull_naturality (divRepPullValue_naturality,\nPicard/DivRepAffPullNat.lean),\
+  \ which is epsilon-FREE and performs no gluing -- it is a\nwitness construction\
+  \ against divRepPullValue_eq_of. The predecessor summary priced it as\n\"the same\
+  \ glue machinery as pull\"; that was wrong and cost nothing to correct.\n\nSO WHAT\
+  \ IS LEFT ON THIS LEAF IS EXACTLY ONE STATEMENT: a producer of IsChartClause for\
+  \ the\nuniversal family, i.e. U2 itself. No bookkeeping, no second obligation, no\
+  \ naturality.\n\nSTANDING, unchanged and still binding:\n * U2 is NOT proved. Nothing\
+  \ in the tree produces an IsChartClause.\n * U2 remains gated on the G-4 certificate\
+  \ discharge: ThetaGeneratorSeed.certifiedFamily\n   (DivSchemeEps.lean:237) demands\
+  \ a GLOBAL IsCertified over the chart ring. The R2 widening\n   (I-0492) does not\
+  \ reach it -- cert-r2 landed DivFamZar.toAff (DivisorFamilyAffCompare)\n   but that\
+  \ maps the OLD value into the widened one, which is the wrong direction for this\n\
+  \   obligation.\n * the I-0234 windowS blocker this row used to quote is DONE. Do\
+  \ not quote it again.\n"
 status: pending
 kind: proof
 priority: normal
@@ -62,8 +69,9 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-28T04:31:13.362938+00:00'
+  updated_at: '2026-07-28T08:06:47.174340+00:00'
   pinned_commits:
+  - 0b67179bb
   - 909ad18ad
   - 0b3ab49b8
   milestone: w4-gate

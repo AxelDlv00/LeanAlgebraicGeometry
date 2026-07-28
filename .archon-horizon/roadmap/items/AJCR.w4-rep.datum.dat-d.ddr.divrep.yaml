@@ -4,35 +4,37 @@ title: 'DD-R divRep: affine classification, Zariski/global representability, and
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DD-R divRep: affine classification, Zariski/global representability, and\
-  \ consumer export.\n\nSTATUS 2026-07-28 (run 0071, ajcr-divrep). THE ENDPOINT IS\
-  \ LANDED AND ROOTED, and the residue\nof the whole divisor-representability chain\
-  \ is now TWO FIELDS of one structure. Root build\ngreen, 9149 jobs.\n\nDONE, all\
-  \ sorry-free and kernel-checked by the configured build:\n * the GLOBAL ENDPOINT:\
-  \ DivRepAffinePullback.representableBy (DivRepGlobalClassify.lean:306)\n   yields\
-  \ (divFunctor C pi g).RepresentableBy DivOver. Landed 2026-07-27 (31930badb +\n\
-  \   aeb77e174) -- AFTER the round-5 critical-path doc, which is why that doc called\
-  \ it\n   missing. L10/L11 have ZERO remaining obligations.\n * the pull FIELD IS\
-  \ DEFINED: divRepPullValue (DivRepAffPullField.lean), Classical.choice over\n  \
-  \ the atlas factorization, pinned by IsDivRepPullValue with no residual ambiguity\
-  \ so the\n   choice never leaks into a statement. divRepPullValue_eq_of is the usable\
-  \ form.\n * its two supporting theorems: the chart pulls of one factorization glue\
-  \ uniquely\n   (DivRepAffPullGlue), and the result is INDEPENDENT of the factorization\n\
-  \   (DivRepAffPullIndep, divRepPullGlue_eq_of_chartFactors) -- the latter U2-free\
-  \ in its proof.\n * infrastructure: DivRepAwaySpanGlue (the eight-field instance\
-  \ pack of the S5b gluing\n   keystone at canonical away carriers -- the mechanical\
-  \ gap between the atlas factorization,\n   which returns a BARE spanning family,\
-  \ and every gluing keystone, which wants carriers as\n   instance data) and DivRepAwayPush\
-  \ (the pull_naturality carrier transport, on mathlib\n   Localization.awayMapₐ).\n\
-  \nTHE RESIDUE: a producer of DivRepAffinePullback (DivRepAffKit.lean:175). Via ofPull\
-  \ that is\nthree fields, of which one is done:\n   pull                  -- DEFINED\
-  \ (divRepPullValue), conditional on a supplied chart family\n   pull_naturality\
-  \       -- carrier transport landed; the proof is not written\n   isDivRepClassify_pull\
-  \ -- THE EPSILON-GATED FIELD, where DDR9-U enters\n\nIMPORTANT QUALIFICATION, do\
-  \ not read the above as a cleared gate. Everything here is\nconditional on DivRepChartFamily.IsCompatible\
-  \ for the supplied family, which has NO producer\nother than U2 (isCompatible_of_isDivRepClassify_divRepPullAt).\
-  \ So nobody can construct a\nDivRepAffinePullback yet. The set of unproved statements\
-  \ is unchanged since round 5; what\nchanged is its partition and hence the size\
-  \ of the target. General form: inbox I-0512.\n"
+  \ consumer export.\n\nSTATUS 2026-07-28 (run 0071 s0004, ajcr-divrep). THE CHAIN\
+  \ IS COMPLETE EXCEPT FOR ONE\nSTATEMENT. There is now a sorry-free producer of the\
+  \ endpoint from a single named hypothesis:\n\n  divFunctor_representableBy_of_chartClause\
+  \  (Picard/DivRepAffPullClause.lean)\n    : DivRepChartFamily.IsChartClause U ->\
+  \ (divFunctor C pi g).RepresentableBy DivOver\n\nDONE, all sorry-free, kernel-checked,\
+  \ rooted, root build green:\n * the GLOBAL ENDPOINT DivRepAffinePullback.representableBy\
+  \ (DivRepGlobalClassify.lean:306).\n   L10/L11 have zero remaining obligations.\n\
+  \ * THE THREE FIELDS OF ofPull, all three now discharged from IsChartClause:\n \
+  \    pull                  divRepPullValue (DivRepAffPullField), choice over the\
+  \ atlas\n                           factorization, pinned by IsDivRepPullValue\n\
+  \     pull_naturality       divRepPullValue_naturality (DivRepAffPullNat) -- EPSILON-FREE,\n\
+  \                           and it performs no gluing: a witness construction against\n\
+  \                           divRepPullValue_eq_of. Cheaper than this row used to\
+  \ price it.\n     isDivRepClassify_pull isDivRepClassify_divRepPullValue (DivRepAffPullClause)\n\
+  \   plus pull_classify, derived by the separation theorem.\n * THE REUSABLE TOOL,\
+  \ independent of every chart family:\n     isDivRepClassify_of_forall_away -- IsDivRepClassify\
+  \ is LOCAL ON THE BASE.\n   This is what collapses the tail: the clause quantifies\
+  \ over tower tests, so both its\n   hypothesis data and its conclusion restrict\
+  \ along a spanning family.\n * supporting: DivRepAffPullGlue (one factorization\
+  \ glues), DivRepAffPullIndep\n   (factorization-independence), DivRepAwaySpanGlue\
+  \ (the S5b instance pack at canonical away\n   carriers), DivRepAwayPush + specMap_awayMapa_comp\
+  \ (the carrier square, both faces).\n\nTHE RESIDUE IS ONE STATEMENT: a producer\
+  \ of DivRepChartFamily.IsChartClause for the\nuniversal family = U2 = the DDR9-U\
+  \ epsilon-identity. See the u2 leaf.\n\nQUALIFICATION, and it has been the right\
+  \ thing to repeat at every re-scope of this row:\nNOTHING HERE PROVES U2, and no\
+  \ gate has cleared. Nobody can construct a DivRepAffinePullback\nyet. What changed\
+  \ across this run is the SHAPE of the debt -- from \"two epsilon-gated\nobligations\
+  \ plus naturality plus bookkeeping\" to \"one statement, stated once, with a producer\n\
+  waiting on it\". Read it that way and not as progress toward L8, which is untouched\
+  \ (see\ncritical-path 7.6: the campaign's real gate is local surjectivity of the\
+  \ Abel map out of a\ntoo-small divisor functor, and it is arguably false as stated).\n"
 status: active
 kind: proof
 priority: normal
@@ -55,9 +57,10 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T06:43:36.295136+00:00'
+  updated_at: '2026-07-28T08:07:13.070533+00:00'
   owner: ajcr-divrep
   pinned_commits:
+  - 0b67179bb
   - 994e0d5ea
   - 406b5b242
   - 4ac067ed1

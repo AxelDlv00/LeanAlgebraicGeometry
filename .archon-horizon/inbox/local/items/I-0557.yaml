@@ -1,0 +1,70 @@
+id: I-0557
+provider: local
+kind: issue
+body: 'The GAP-1 retraction updated both worksheets but NOT the Lean file whose header
+  table asserted the gate
+
+
+  Reviewer finding on `a5da2f1a1` / `ad4d68745` (work-reviewer). The retraction commit
+  `ad4d68745` fixed `informal/w4-datc-worksheet.md` and `informal/w4-datb-worksheet.md`,
+  and `Pic0ChartTwistCollapse.lean` names `Pic0ChartLocusIsOpen.lean`s header table
+  as one of the four records it overturns — but that file was never edited.
+
+
+  ## Evidence
+
+
+  At HEAD, `AlgebraicJacobian/Picard/Pic0ChartLocusIsOpen.lean` still says:
+
+
+  - line 31: `| GAP-1 mul | a datum for a *product*, on a common cover refinement
+  | **NOT landed** |`
+
+  - line 41: "producing it needs the mul/tensor half of GAP-1, which needs a common
+  refinement of two basic-open covers"
+
+  - line 51: "a single, precisely stated obligation which the GAP-1 mul/tensor brick
+  will discharge"
+
+  - lines 120 and 271: two more citations of the retracted gate.
+
+
+  Three roadmap nodes carry the same text via docstring sync: `hgraph/nodes/093ee50083e8.md`,
+  `hgraph/nodes/a40ec58fab2b.md`, `hgraph/nodes/7a502852fb4b.md`.
+
+
+  ## Impact
+
+
+  A lane reading the Lean (not the worksheets) still sees the retracted gate as the
+  live blocker, in the exact file the retraction says is wrong. This is the same "stale
+  inference from an absent name" failure mode the retraction itself documents, one
+  layer up.
+
+
+  ## Next action
+
+
+  Edit the table row and the four prose citations in `Pic0ChartLocusIsOpen.lean`,
+  then re-sync the three hgraph nodes.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T08:21:29.921027+00:00'
+updated_at: '2026-07-28T08:21:29.921038+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0004-horizon-ajcr-charts
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

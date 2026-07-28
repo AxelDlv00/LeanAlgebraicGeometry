@@ -3,8 +3,32 @@ title: 'DAT-J: JacobianData assembly — quasi-compactness via the Abel image of
   discharge of the frozen $\mathrm{Jacobian}$ and $\mathrm{instGrpObj}$'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: DJ-0 compact-image qc is landed. DJ-1 Abel-image qc, DJ-2 JacobianData packaging,
-  and the frozen Jacobian declarations remain gated on DAT-G/divRep.
+summary: "DAT-J: JacobianData assembly -- quasi-compactness via the Abel image of\
+  \ Div^g-lite.\n\nSTATUS 2026-07-28 (run 0071 s0004, ajcr-divrep). DJ-1's QC STEP\
+  \ AND DJ-2 ARE LANDED; WHAT\nREMAINS OF DAT-J IS EXACTLY ONE STATEMENT, and it is\
+  \ not packaging.\n\nPicard/JacobianDataAbelImage.lean (sorry-free, kernel exit 0,\
+  \ rooted):\n * quasiCompact_of_surjective_from_divScheme -- w4-datj 2.2 steps 1,\
+  \ 2, 4: a point-surjective\n   morphism from DivScheme g onto J.left gives QuasiCompact\
+  \ J.hom. The compact source is\n   DD-Q's compactSpace_divScheme INSTANCE, the base\
+  \ is affine, DJ-0's\n   quasiCompact_of_surjective (CompactImageQc.lean:60) converts.\n\
+  \ * JacobianData.ofAbelImage -- DJ-2, the four-field packaging with the qc field\
+  \ replaced by\n   the Abel-image hypothesis.\n * JacobianData.ofChartsOfAbelImage\
+  \ -- the same against a chart atlas. This is the one that\n   matters: ofChartsOfCompactSpace\
+  \ asks for CompactSpace of the glued object, which 2.1\n   records as genuinely\
+  \ a-posteriori BECAUSE THE CHART INDEX IS INFINITE (one chart per\n   divisor class\
+  \ with an effective witness). A surjection supplies it with no finiteness of\n \
+  \  the atlas anywhere.\n\nWHAT REMAINS: step 3 only -- SURJECTIVITY OF THE ABEL\
+  \ MAP ON POINTS (DJ-1's honest brick).\nIt needs the universal degree-g class (hence\
+  \ divRep), the fiberTwist degree shift, and\nexists_effective_of_picClass. BINDING\
+  \ (w4-datj 0.5): that brick must stay Challenge-free --\nuse exists_effective_of_picClass\
+  \ / riemann_inequality (FLVClass.lean:208/205), NEVER\nriemann_inequality_curve\
+  \ (ChiCurve.lean:183), which imports Challenge.lean and would create\nan import\
+  \ cycle.\n\nAlso still true and worth not re-discovering: JacobianData has THREE\
+  \ producers now\n(ofRepresentableBy :71, ofCharts :182, ofChartsOfCompactSpace :199)\
+  \ plus the two above, and\nthe atlas is NOT finite -- so ofChartsOfCompactSpace\
+  \ / ofChartsOfAbelImage is the producer to\naim at, not ofCharts (critical-path\
+  \ 7.5).\nDJ-3 (the Challenge.lean discharge) is untouched and gated on a real jacobianData\
+  \ term.\n"
 status: pending
 kind: proof
 priority: normal
@@ -18,5 +42,8 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:11.223347+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-26T06:43:32.118542+00:00'
+  updated_at: '2026-07-28T08:07:33.960711+00:00'
   milestone: w4-tail
+  owner: ajcr-divrep
+  pinned_commits:
+  - fb275d7f9

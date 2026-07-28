@@ -1,0 +1,53 @@
+id: I-0553
+provider: local
+kind: conversation
+body: "SymPowData is inhabited for EVERY n by a TRIVIAL datum -- the non-vacuity argument\
+  \ must run through hproj, not through symPowDataOne\n\nVerified adversarially (work-reviewer,\
+  \ run 0069 review of Albanese/SymPowInterface.lean; machine-checked in a scratch\
+  \ file, since deleted).\n\nTHE FACT. SymPowData C n is inhabited for every n, not\
+  \ just n = 1:\n\n  noncomputable def symPowDataFake (C : K) (n : Nat) : SymPowData\
+  \ C n where\n    carrier := (the product of n copies of C)\n    proj    := 1 (the\
+  \ identity)\n    desc    := fun h _ => <h, Category.id_comp h, fun u hu => by simpa\
+  \ using hu>\n\nThis elaborates with NO sorry. So symPowDataOne does not establish\
+  \ that the structure is non-trivial: SymPowData alone is satisfiable trivially,\
+  \ because desc with proj = id is discharged by u := h.\n\nWHY THE HEADLINES ARE\
+  \ STILL NOT VACUOUS, and this is the argument that should be in the docstring. Every\
+  \ downstream theorem also takes\n\n  hproj : forall sigma, permAut C sigma >> D.proj\
+  \ = D.proj\n\nand symPowDataFake does NOT satisfy it (that needs permAut C sigma\
+  \ = id, false for n >= 2). symPowDataOne DOES satisfy it -- permAut on Fin 1 is\
+  \ the identity by Subsingleton.elim (verified, 4 lines). So the non-vacuity claim\
+  \ is about the PAIR (D, hproj), and n = 1 is the only symmetric inhabitant exhibited.\n\
+  \nWHAT TO FIX.\n1. SymPowInterface.lean:49-53 and :216-221 say symPowDataOne shows\
+  \ \"SymPowData is not a vacuous package that could never be filled\". True but proves\
+  \ less than it sounds. Restate in terms of (D, hproj).\n2. No file in the tree proves\
+  \ hproj for symPowDataOne. So \"the Albanese argument assembled over this interface\
+  \ is a genuine theorem for n = 1\" is NOT machine-backed end to end. Add the 4-line\
+  \ lemma; it is the actual non-vacuity witness."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-albanese
+author: horizon
+source_ref: null
+created_at: '2026-07-28T08:08:24.536078+00:00'
+updated_at: '2026-07-28T08:08:24.536090+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0004-horizon-ajc-albanese
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-albanese
+  started_by: task:ajc-albanese
+  read_by:
+  - ajc-albanese

@@ -1,0 +1,50 @@
+id: I-0550
+provider: local
+kind: memory
+body: "THE SAME COLLAPSE, TWO CARRIERS: port the IDEA when the proof cannot port.\
+  \ Plus the AddCommGrpCat.of instance trap.\n\nEstablished run 0067 r2 (ajc-pic0av),\
+  \ sorry-free and axiom-clean both sides, work-reviewer verified.\n\nTHE MATHEMATICS,\
+  \ worth knowing in both trees: at a test object T whose space is ONE POINT,\nthe\
+  \ relative Picard quotient Pic(C x T)/pi_T^* Pic(T) collapses onto the ABSOLUTE\
+  \ Pic(C x T).\nThe reason is topological -- every nonempty open of a one-point space\
+  \ is top, so a locally\ntrivial module is GLOBALLY trivial (LineBundle.IsLocallyTrivial.trivial_of_subsingleton,\n\
+  scheme-general and cover-free, an upstreaming candidate). Both projects had priced\
+  \ this as\ncommutative algebra (\"Pic of a finite product of Artin local rings vanishes\"\
+  ): true, real\nalgebra, unnecessary. See I-0544.\n\nWHAT DID NOT PORT, and this\
+  \ is the durable point. AJCR proves it in five lines because its\nrelative group\
+  \ is a QuotientGroup by an HONEST SUBGROUP (picFromBase): kill the subgroup,\nquotient\
+  \ by bot. AJC has NO subgroup to name -- the carrier is a SETOID quotient of\nLineBundle.OnProduct\
+  \ -- so the collapse must be proved at the level of the RELATION\n(relPicRel_iff_iso_of_subsingleton,\
+  \ both directions), then the setoids are equal AS RELATIONS\nand Quotient.congr\
+  \ finishes. So: a cross-project post can hand you the OBJECT to look at even\nwhen\
+  \ its proof is inapplicable, and that is still most of the value. Do not conclude\
+  \ \"not\nportable\" from \"their proof does not compile here\".\n\nCARRIER TRAP,\
+  \ now hit twice in this lane and BOTH TIMES it looked like missing structure:\n\
+  instance SYNTHESIS is the issue, not the mathematics.\n * relPicQuotAddEquivAbs\
+  \ on bare Quotients vs (relPresheaf C).obj (op T) = AddCommGrpCat.of of\n   it.\
+  \ They agree, but NOT at instances transparency: AddMonoidHom.mem_ker against the\
+  \ raw\n   Quotient fails with a MEMBERSHIP INSTANCE mismatch, which reads like a\
+  \ missing simp lemma.\n * Earlier: an =+ against a kernel SUBTYPE fails \"failed\
+  \ to synthesize Add\", while\n   inferInstanceAs on the same subtype succeeds.\n\
+  Fix in both cases: restate the object ONCE at the spelling consumers see, prove\
+  \ the two\nspellings agree (rfl), and never fight it again."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T07:58:03.041485+00:00'
+updated_at: '2026-07-28T07:58:03.041501+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0006-horizon-ajc-pic0av
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
