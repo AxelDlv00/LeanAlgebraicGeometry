@@ -161,7 +161,10 @@ theorem isOpen_setOf_hasWitnessH1Vanishing_testPointField
   --   (2) the two topologies agree under (1)           -- `Spec` is `PrimeSpectrum` as a space
   --   (3) `(fun t => D.HasWitnessH1Vanishing (testPointField t))`
   --         = `(fun q => ∃ W, picClass κ(q) W = … ∧ Subsingleton …)`
-  -- (1) and (2) are `Scheme.Spec`-carrier bookkeeping.  (3) is the field identification
+  -- (1) and (2) are `Scheme.Spec`-carrier bookkeeping, and the anchor for both is mathlib's
+  -- `AlgebraicGeometry.Spec.topObj_forget` (`Mathlib/AlgebraicGeometry/Spec.lean:61`, a
+  -- `simp` lemma): `ToType (Spec.topObj R) = PrimeSpectrum R`.  Checked this session that it
+  -- exists, so (1)/(2) are not a hidden wall.  (3) is the field identification
   -- `Spec.residueFieldIso : (Spec A).residueField t ≅ .of t.asIdeal.ResidueField`
   -- (mathlib `AlgebraicGeometry/ResidueField.lean:286`) fed to
   -- `hasWitnessH1Vanishing_iff_of_fieldExtension` (`Pic0ChartLocusFibreField.lean:142`),
