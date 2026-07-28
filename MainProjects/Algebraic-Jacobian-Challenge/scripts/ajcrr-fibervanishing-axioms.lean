@@ -14,8 +14,18 @@ So the probe below is in three parts:
 * §2 measures at a SYNTHESIS SITE: `probe_curve_*` elaborate consumers at an AJC curve bundle
   where the two `Module.Finite` binders and the `IsFinite`/`IsDominant` binders on `π` are
   actually discharged, not assumed.  These are the lines that matter.
-* §3 is the CONTROL.  `probe_control_leaky` must report `sorryAx`.  If it ever comes back clean,
-  the probe has lost its calibration (a stale olean, per I-0661) and §§1-2 mean nothing.
+* §3 is the CONTROL.  `AlgebraicGeometry.Scheme.fgaPicardRepresentability` must report `sorryAx`.
+  If it ever comes back clean, the probe has lost its calibration (a stale olean, per I-0661) and
+  §§1-2 mean nothing.
+
+FOURTH CAVEAT, AND IT LIMITS EVERY LINE BELOW: all eight modules measured here are **outside the
+root import cone**.  Measured 2026-07-29: `import AlgebraicJacobian` reaches 257 of 274 modules,
+and these eight are among the 17 it does not (see `README.md` and inbox `I-0600`).  They are
+committed to the ledger, so they are past the grace period — `lake build AlgebraicJacobian` does
+not elaborate them, and no `#print axioms` line *through the root* can reach them.  The results
+below are therefore **scratch-path**: real, kernel-checked, reproducible by running this file, but
+not certified by the root build.  Rooting them is one import line in `AlgebraicJacobian.lean`,
+which was outside task `ajc-rr`'s write scope.
 -/
 import AlgebraicJacobian.RiemannRoch.Ledger.FiberBound
 import AlgebraicJacobian.RiemannRoch.Ledger.MapToP1
