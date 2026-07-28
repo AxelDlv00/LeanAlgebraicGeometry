@@ -3,3 +3,5 @@
 {"at": "2026-07-28T03:09:37.443541+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "inbox_refs updated"}
 {"at": "2026-07-28T03:11:09.486174+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-07-28T03:11:13.909316+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-07-28T03:11:55.210683+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-07-28T03:11:59.721995+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
