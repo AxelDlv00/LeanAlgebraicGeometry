@@ -203,6 +203,11 @@ local notation "RZ" => DivCarveChartRing k
   (windowS_choice pi hpi g • fiberWeilDivisor pi)
   (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j
 
+set_option maxHeartbeats 2400000 in
+-- The universal instantiation unfolds `DivCarveChartRing` (an `Ideal.Quotient`) while
+-- unifying `glueData`'s `ULift` index, over the `relThetaSections` tower: the same defeq
+-- profile as `divFamEps_highWindow_eq_universal_pair`, which is budgeted identically.
+set_option synthInstance.maxHeartbeats 800000 in
 /-- **U2's ε-identity and its `DivFamZar` class from the WEAKEST certificate obligation.**
 
 Inputs: `g ≠ 0` (which discharges the scalar, `Picard/DivRepChartClassUnivFree.lean`) and
@@ -212,12 +217,17 @@ the universal tautological pair, i.e. exactly what U2 asks a producer to exhibit
 
 The two are packaged together on purpose: a class without its ε-value does not serve
 `isChartClause_iff_forall_classify_eq` (`Picard/DivRepChartRange.lean`), and an ε-value
-without the class cannot be fed to it. -/
-set_option maxHeartbeats 2400000 in
--- The universal instantiation unfolds `DivCarveChartRing` (an `Ideal.Quotient`) while
--- unifying `glueData`'s `ULift` index, over the `relThetaSections` tower: the same defeq
--- profile as `divFamEps_highWindow_eq_universal_pair`, which is budgeted identically.
-set_option synthInstance.maxHeartbeats 800000 in
+without the class cannot be fed to it.
+
+**WARNING, and read it before planning off this theorem** (inbox `I-0705`, confirmed by the
+no-go's owner): the hypothesis `HasCertifiedAdaptation` is **refuted** by
+`forall_not_isCertified_of_straddling` (`Picard/DivisorFamilyAffStrict.lean:127`) whenever the
+seed's local equations are connected and meet both pinned fibres — that theorem concludes
+`∀ A n, ¬ A.IsCertified n`, which is this existential's negation at the same binder.  Whether
+the high-window universal seed straddles in that sense is **unmeasured**, and the same no-go
+refutes the older `(D.divisorAdaptation hD).IsCertified g` spelling too, since that is one
+instance of its `∀`.  So this theorem is a sound *reduction* whose hypothesis may be false;
+do not read it as "U2 is one certificate away". -/
 theorem exists_divFamZar_divFamEps_eq_universal_pair_of_hasCertifiedAdaptation
     (hg : g ≠ 0)
     (hca : (univSeed C hpi g r1 r2 b1 b2 i j hO hchi

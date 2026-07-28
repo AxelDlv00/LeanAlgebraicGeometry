@@ -719,6 +719,31 @@ lemma, so the relation between the two is machine-checked rather than asserted i
 
 ### 7.11.3 The residue is now a single type mismatch, and it is the whole critical path
 
+> **RETRACTED THE SAME SESSION, by a fresh-context review (inbox `I-0705`, confirmed by the no-go's
+> own owner). Read this subsection as UNPRICED, not as "one type mismatch".** The table below is
+> correct about the two carriers and wrong about the *status* of the chart-typed statement, which it
+> treats as merely open. `forall_not_isCertified_of_straddling`
+> (`Picard/DivisorFamilyAffStrict.lean:127`) concludes `∀ (A : DivisorAdaptation C R π d) (n : ℕ),
+> ¬ A.IsCertified n` for a connected `d` whose support meets both pinned fibres — which is exactly
+> the negation of `HasCertifiedAdaptation` at the same binder.
+>
+> **And the sharp form is worse, in a way that exonerates §7.11.2's weakening.** Because that no-go
+> quantifies over **all** `A`, it refutes the *old* spelling too: `(D.divisorAdaptation hD).IsCertified g`
+> is one instance of that `∀`. So the existential did not introduce any falsity — if the high-window
+> universal seed's local equations straddle, **both** residues are false, and every re-scope of the
+> `…divrep.u2` row has been pricing a false statement. §7.11.2 stands as a *reduction* (the ε layer
+> genuinely does not care which adaptation, and that is kernel-checked); what does not stand is
+> calling the remainder a type mismatch.
+>
+> **The decisive unmeasured fact, for the old residue as much as the new:** is
+> `(univSeed …).localEquations`'s `supportLocus` preconnected with points off `V₀` and off `V₁`? No
+> file in the tree measures it. Until it is measured this row is unpriced. **And note which way it
+> cuts: if the universal seed straddles, R2 is not an inconvenience for divrep — it is the only
+> route, because no chart-typed adaptation can ever certify.**
+>
+> The methodological error is recorded as `I-0707`: this session crossed the new existential against
+> its *producers* and never against the tree's *refutations*.
+
 With the generator clause free (`isGenerator_highWindowPointwiseGeneratorSeed`, ungated over `R_Z`),
 the scalar free (§7.11.1), the adaptation choice free (§7.11.2) and the ε-identity a corollary
 (§7.10.1), what U2 owes is: **some certified adaptation of the high-window universal seed's local

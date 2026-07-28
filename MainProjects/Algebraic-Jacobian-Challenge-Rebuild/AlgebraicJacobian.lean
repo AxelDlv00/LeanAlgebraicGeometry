@@ -593,6 +593,9 @@ import AlgebraicJacobian.Picard.DivRepAffPullField
 import AlgebraicJacobian.Picard.DivRepAffPullNat
 import AlgebraicJacobian.Picard.DivRepAffPullClause
 import AlgebraicJacobian.Picard.DivRepChartRange
+import AlgebraicJacobian.Picard.DivRepChartClassUniv
+import AlgebraicJacobian.Picard.DivRepChartClassUnivFree
+import AlgebraicJacobian.Picard.DivRepChartClassUnivAny
 import AlgebraicJacobian.Picard.JacobianDataAbelImage
 import AlgebraicJacobian.Picard.JacobianDataAbelSquare
 import AlgebraicJacobian.Picard.JacobianDataAbelSurj
