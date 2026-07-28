@@ -292,6 +292,11 @@ import AlgebraicJacobian.Albanese.TensorPowerCoproduct
 -- categorical crossing of the bill; the one trap is that `CommRingCat.toAlgHom` is typed
 -- over the rebuilt algebra instance, not the ambient one.
 import AlgebraicJacobian.Albanese.TensorPowerCofan
+-- Naming the affine carrier's INPUT: the n-fold product in `(Under k)ᵒᵖ` that `permDiagram`
+-- is built on IS `op (mkUnder k (⨂[k] _ : Fin n, A))`, i.e. `(Spec_k A)^n = Spec_k (A^{⊗n})`,
+-- with the S_n-actions matched (and the match carries `e⁻¹` — the kernel forced it). The
+-- QUOTIENT carrier is still anonymous; see that file's Scope section for what separates them.
+import AlgebraicJacobian.Albanese.SymPowAffineCarrier
 import AlgebraicJacobian.Albanese.AlbaneseFromData
 import AlgebraicJacobian.Albanese.AlbaneseFromColimit
 import AlgebraicJacobian.Albanese.AlbaneseJacobian

@@ -395,6 +395,23 @@ that the pair `(D, hproj)` exists in `(Under k)ᵒᵖ` at every `n`. Two further
   are its fixed points), but it is a statement about `SingleObj G ⥤ Type` and mentions
   neither `CommRingCat` nor `Spec`. **The carrier is not named in Lean.**
 
+**Update 2026-07-29 (run 0069 r7): the INPUT is now named; the carrier above still is not.**
+`Albanese/SymPowAffineCarrier.lean` proves `tensorPowerOpIsoPiObj`: the `n`-fold product
+`∏ᶜ (fun _ : Fin n => op (mkUnder k A))` — the object `permDiagram` below is built on — is
+`op (mkUnder k (⨂[k] _ : Fin n, A))`, i.e. `(Spec_k A)^n = Spec_k (A^{⊗ n})`, with the actions
+matched (`permAut_eq_op_permAlgHom`, and note it carries `e⁻¹`) and a transport law carrying
+`Pi.π i` to `op (singleAlgHom i)`. Separately
+`SymPowInvariantsUnder.hasColimit_actionDiagramUnder_op` names the *quotient* of the
+`S_n`-action on the tensor power as `op` of the invariant subalgebra.
+
+So both ends of Milne's affine picture are now named objects — but **not composed**, which is
+why the caveat above stands as written. The composition needs the index-category transport of
+`SymPowInvariantsUnder` §5 (`(SingleObj G)ᵒᵖ` versus `SingleObj G`, via
+`Groupoid.invEquivalence`) applied across `tensorPowerOpIsoPiObj`, and nothing writes it.
+`symPowData_affineAlgebra` below still gets its colimit from `(Under k)ᵒᵖ`'s completeness, so
+its carrier is still an anonymous `colimit`. Whoever writes that composition should delete this
+caveat rather than adding a third note to it.
+
 So read this section as: *the affine algebra case of the interface is inhabited at every
 `n`, from mathlib's colimits, with no construction written*. Not as: *Milne III.3
 Proposition 3.1's affine half is formalised* — that proposition also says what the object
