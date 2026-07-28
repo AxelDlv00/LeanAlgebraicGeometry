@@ -1,0 +1,60 @@
+id: AJC.rr.degvanish
+title: Single-field bounded vanishing on a degree half-space
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'DONE (run 0074 r3, ajc-rr). Ledger/DegreeVanishing.lean, 12 decls, 0 sorries,
+  kernel-checked (lake build 8581 jobs exit 0), 16/16 axiom-clean including four synthesis-site
+  probes at the challenge curve.
+
+
+  The order-cone peel of AJC.rr.sectiondrop reaches a DEGREE HALF-SPACE. subsingleton_hModule_one_of_deg_ge:
+  from ONE base vanishing at ONE divisor D0, H1(O(D)) = 0 for every D with deg D >=
+  deg D0 + 1 - chi(O_X). Also exact Riemann-Roch above that bound, the D0 = 0 form
+  (unconditional given H1(O_C) = 0, hence unconditional at genus zero), and the contrapositive
+  that non-vanishing H1 is a bounded-degree phenomenon.
+
+
+  The mathematical point, and it retracts this lane''s own r2 claim: sectiondrop published
+  exists_bound_of_cofinal_vanishing as an OPEN hypothesis, saying nothing in AJC or
+  AJCR produces it. Both ingredients were in the same directory. H1 vanishing is a
+  linear-equivalence invariant (Ledger/MulEquiv.mulEquivDivisorSheaf), so the whole
+  class of D0 is available to the peel; and riemann_inequality (Ledger/ChiLedger)
+  manufactures the translating unit once deg(D - D0) + chi >= 1. The peel never needed
+  the GIVEN D0.
+
+
+  RESIDUE: one base vanishing at a general curve, i.e. the AJCR FLVVanishing:302 port
+  (measured: 59-module local closure; new layer FLVFiberToolkit/FLVLattice/FLVQcoh/FiberTwist/Degree
+  plus AffineVanishingQcoh/QcohSections; Degree drags in Picard/ presentation modules
+  the Ledger tree lacks).
+
+
+  NOT this row, and still genuinely open: extension-uniformity (every statement is
+  over the single field K; the bound depends on X, K, D0) and global generation (no
+  evaluation map appears). Scratch-path: DegreeVanishing imports SectionDrop, which
+  is out of the root cone (I-0600).
+
+  '
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-28T15:15:03.015806+00:00'
+  provenance:
+    run: '0074'
+    session: 0008-horizon-ajc-rr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.rr
+  owner: ajc-rr

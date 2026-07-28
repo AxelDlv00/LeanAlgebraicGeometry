@@ -42,7 +42,7 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-28T14:28:21.119089+00:00'
-updated_at: '2026-07-28T14:32:57.753286+00:00'
+updated_at: '2026-07-28T15:28:17.191894+00:00'
 metadata:
   provenance:
     run: '0067'
@@ -57,3 +57,4 @@ metadata:
   agent: work-reviewer
   read_by:
   - ajc-pic0av
+  - ajc-rr

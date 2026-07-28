@@ -33,7 +33,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_unit_nonneg_of_h0_pos
 type: lean
-updated: '2026-07-28T22:57:23'
+updated: '2026-07-28T23:00:33'
 ---
 theorem exists_unit_nonneg_of_h0_pos (A : X.CurveDivisor)
     (hA : 0 < Sheaf.h0 (X.divisorSheaf K A)) :
@@ -52,30 +52,28 @@ theorem exists_unit_nonneg_of_h0_pos (A : X.CurveDivisor)
     intro h
     exact hsne (divisorSection_ext K
       (show divisorVal K s = divisorVal K (0 : _) from by rw [← hg, h]; rfl))
-  refine ⟨Units.mk0 g hgne, ?_⟩
+  set u : X.functionFieldˣ := Units.mk0 g hgne with hu
+  refine ⟨u, ?_⟩
   refine Finsupp.le_def.mpr (fun p => ?_)
   have htop : ((⊤ : X.Opens) : Set X).Nonempty := ⟨genericPoint X, trivial⟩
   have hb := (mem_divisorSections_of_nonempty K htop).mp hgmem p.1 p.2 trivial
-  have hval : Scheme.ord (X ↘ Spec (CommRingCat.of K)) p.2
-      ((Units.mk0 g hgne : X.functionFieldˣ) : X.functionField)
-      = divisorBound (- Scheme.divOf (X ↘ Spec (CommRingCat.of K))
-          (Units.mk0 g hgne)) p.2 :=
-    Scheme.ord_val_eq K (Units.mk0 g hgne) p.2
-  rw [show ((Units.mk0 g hgne : X.functionFieldˣ) : X.functionField) = g from rfl,
-    hval] at hb
-  -- both sides are `ofAdd` of an integer coefficient, so the valuation inequality is an
-  -- inequality of coefficients.
+  -- `ord_val_eq` reads the valuation of the unit `u` as the bound of `-div u`; the two sides
+  -- of `hb` are then `ofAdd` of integer coefficients.
+  have hval : Scheme.ord (X ↘ Spec (CommRingCat.of K)) p.2 g
+      = divisorBound (- Scheme.divOf (X ↘ Spec (CommRingCat.of K)) u) p.2 := by
+    have h := Scheme.ord_val_eq K u p.2
+    rwa [show ((u : X.functionFieldˣ) : X.functionField) = g from rfl] at h
+  rw [hval] at hb
   simp only [divisorBound, WithZero.coe_le_coe, Multiplicative.ofAdd_le] at hb
   change (0 : ℤ) ≤ (toFinsupp
-    (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) (Units.mk0 g hgne))) p
+    (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) u)) p
   have hadd : (toFinsupp
-      (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) (Units.mk0 g hgne))) p
+      (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) u)) p
       = (toFinsupp A) p
-        + (toFinsupp (Scheme.divOf (X ↘ Spec (CommRingCat.of K)) (Units.mk0 g hgne))) p :=
+        + (toFinsupp (Scheme.divOf (X ↘ Spec (CommRingCat.of K)) u)) p :=
     rfl
-  have hneg : (toFinsupp (- Scheme.divOf (X ↘ Spec (CommRingCat.of K))
-      (Units.mk0 g hgne))) p
-      = - (toFinsupp (Scheme.divOf (X ↘ Spec (CommRingCat.of K)) (Units.mk0 g hgne))) p :=
+  have hneg : (toFinsupp (- Scheme.divOf (X ↘ Spec (CommRingCat.of K)) u)) p
+      = - (toFinsupp (Scheme.divOf (X ↘ Spec (CommRingCat.of K)) u)) p :=
     rfl
   rw [hadd]
   rw [hneg] at hb

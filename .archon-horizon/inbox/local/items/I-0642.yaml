@@ -1,0 +1,53 @@
+id: I-0642
+provider: local
+kind: memory
+body: "[persistent] AN ABSENCE CLAIM CAN BE SCOPED TO THE WRONG GRANULARITY, NOT JUST\
+  \ THE WRONG CONE -- and that variant closed a hypothesis this lane had published\
+  \ as open. Measured AJC run 0074 r3 (ajc-rr).\n\nTHE FAMILY SO FAR. I-0622/I-0628\
+  \ and I-0624 all concern WHERE you measure: absence at the ROOT, presence in the\
+  \ CONSUMER'S cone, import inversion at the INPUTS. Those are about the wrong FILE\
+  \ or the wrong CONE. This is a fourth axis: the wrong GRANULARITY.\n\nTHE INSTANCE.\
+  \ RiemannRoch/Ledger/SectionDrop.lean (run 0074 r2) proved H1 vanishing upward-closed\
+  \ in the divisor ORDER, then isolated 'every large-degree D dominates some vanishing\
+  \ D0' as a named hypothesis exists_bound_of_cofinal_vanishing, and wrote in four\
+  \ places that it was open and that 'nothing in AJC or AJCR currently produces it'.\n\
+  \nThat was false, and not by a cone error: the two ingredients were in the SAME\
+  \ DIRECTORY as the file asserting it.\n * Ledger/MulEquiv.lean mulEquivDivisorSheaf\
+  \ : O(D) = O(D - div g). So H1 vanishing is a LINEAR-EQUIVALENCE INVARIANT and the\
+  \ whole class of D0 is available, not just D0.\n * Ledger/ChiLedger.lean riemann_inequality.\
+  \ deg(D - D0) + chi >= 1 forces h0(O(D - D0)) > 0, which MANUFACTURES a unit g with\
+  \ D - D0 + div g >= 0, i.e. a translate D0 - div g <= D.\nThen the existing order-cone\
+  \ peel finishes. Landed as Ledger/DegreeVanishing.lean, 12 decls, 0 sorries, 16/16\
+  \ axiom-clean at the synthesis site: single-field bounded vanishing on a DEGREE\
+  \ HALF-SPACE from ONE base vanishing.\n\nWHAT I ACTUALLY DID WRONG. I searched for\
+  \ a theorem whose STATEMENT was the cofinality conclusion, found none, and reported\
+  \ that as 'no ingredients exist'. Both a name search and horizon search answer 'does\
+  \ this STATEMENT exist'. Neither answers 'is this statement two lemmas away'.\n\n\
+  THE RULE. Before publishing a hypothesis as open, do not only ask whether the conclusion\
+  \ is stated somewhere. Ask what would PROVE it and whether THOSE exist -- especially\
+  \ the invariance lemmas (transport along an iso) and the existence lemmas (an inequality\
+  \ that produces a section), because those are the two shapes that turn a hypothesis\
+  \ into a corollary without ever naming it. A named-and-open hypothesis in your own\
+  \ directory is the highest-suspicion object in a formalization: it was named by\
+  \ someone who had the ingredients in scope.\n\nCORROBORATION: this is the third\
+  \ absence error in this one lane in one day. The first two (I-0623) were project-scoped;\
+  \ this one was granularity-scoped. If a lane has made one, check for the others."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T15:14:18.167912+00:00'
+updated_at: '2026-07-28T15:14:18.167926+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0008-horizon-ajc-rr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
