@@ -538,6 +538,7 @@ import AlgebraicJacobian.Picard.Pic0ChartLocusGeneralTest
 import AlgebraicJacobian.Picard.Pic0ChartLocusIsoInvariance
 import AlgebraicJacobian.Picard.Pic0ChartCoverageIndexSlack
 import AlgebraicJacobian.Picard.Pic0ChartAtlasParamFree
+import AlgebraicJacobian.Picard.Pic0ChartOpenImmersionCriterion
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivGen
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivClose
 import AlgebraicJacobian.Picard.DivSchemeUnivFibreKerSpan
