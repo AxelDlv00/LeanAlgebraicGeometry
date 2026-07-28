@@ -725,6 +725,28 @@ C4 → C8-statement → [divRep lands] → C6 → C7 → [CertUniv pattern + CHA
 co-sign] → C8-proof → C9.  **Six of nine rows are fully launchable before divRep**;
 C7 (the binding consumption row) is a bounded transcription the day F7 lands.
 
+**AMENDMENT 2026-07-29 (run 0072 r5, lane `ajcr-charts`): the C9 ROW'S DEPENDENCY LIST IS
+TOO LONG, and the lane order above therefore serialises more than it must.**  Row C9 lists
+`C4–C8 + CHART-U(b)`, and the lane order puts C9 last, after C8's proof.  That is right for
+the *whole* of C9 and wrong for the part of it that carries the `hf` obligation:
+
+* the `IsOpenImmersion.presheaf` **plumbing** — the criterion, the fibre-product
+  presentation, and the reduction of `IsChartUniv` to a three-field datum — depends on
+  **none** of C4–C8 and is landed (`Picard/Pic0ChartOpenImmersionCriterion.lean`,
+  `Picard/Pic0ChartUnivReduce.lean`).  Its only geometric input is CHART-U(b), already done;
+* what genuinely waits on C6/C7/C8 is one field of one structure, `IsChartLocusFibre`'s
+  `exists_factor` together with the classifier-produced `r`.
+
+So the honest reading of the table is that C9 splits, and its *first* half was launchable
+before divRep along with the "six of nine" already counted — making it seven.  A lane
+picking up C9 after C8 lands should not re-derive the plumbing; it should supply
+`IsChartLocusFibre` and call `isChartUniv_of_isChartLocusFibre`.
+
+**DAT-B's B-6 is likewise off the critical path** (`Picard/Pic0ChartLocalSurjectivity.lean`,
+`isLocallySurjective_sigmaDesc`): the local-surjectivity instance
+`pic0RepresentableByOfCharts` consumes is now produced from B-5 alone, certificate-free and
+divRep-free.  Nothing in the C-row chain gates it.
+
 **Honest risks (expanding §0.4).**
 
 1. **CERT-Σ (high — the only new mathematics wholly inside DAT-C's scope).**  The
