@@ -1067,3 +1067,39 @@ though it is bookkeeping.
 priced the whole clause as the geometric block; two of its three steps are transport that
 already exists. Step 3 remains, and *it should be sized on its own* rather than inheriting the
 old estimate.
+
+### 6.16 STEP 3 IS SMALLER THAN §6.15 SAID — the generator came from the sibling, not from geometry
+
+*Run 0073 r3, after §6.15. This is a correction to §6.15's own sizing, made the same session.*
+
+§6.15 called step 3 "where the geometry is, and the only genuinely open part". **Half of it was
+not geometry at all**, and the sibling project proved that half while this session was running:
+`ajc-pic0av` posted `Submodule.exists_sub_smul_mem_of_quotient_cyclic` on the cross-project
+thread (`I-0495` C-0036, AJC commit `c1ed5be8b`).
+
+**The content.** The "fixed `m` with `∀ x, ∃ r, x - r • m ∈ (ε)·M`" binder — which both projects
+had been carrying as open work — **is cyclicity of `M ⧸ (ε)·M` written without naming the
+quotient.** Producing `m` is `Submodule.Quotient.mk_surjective` on the generator plus
+`mk_eq_zero`: take a preimage `m` of the generator `y`, pick `r` with `⟦x⟧ = r • y`, and
+`⟦x - r•m⟧ = 0`. Arbitrary commutative ring, no finiteness, no scheme, no dual numbers. The
+**converse** is included, so per `I-0571` it is a strict reduction rather than a restatement.
+
+**Ported, not re-derived**: `Tangent/CyclicQuotientGenerator.lean`, with
+`Opens.cechPicMap_ι_eq_one_of_dualNumberChart_of_cyclic` in `DualNumberChartPic.lean` consuming
+cyclicity directly. This is what the cross-project thread exists for — two lanes had the same
+obligation open on the same day and only one of them had to pay for it.
+
+**ONE REAL DEVIATION, and it is worth recording because "ports verbatim" was said and was very
+nearly true.** The sibling's `free_of_quotient_eps_cyclic` is stated at `M : Type v` independent
+of `A : Type u`. AJCR's `free_of_cyclic_mod_eps` is universe-**monomorphic** (`M : Type u`), so
+the port had to be pinned to `Type u`. It cost one line and a `lake env lean` cycle. Rule:
+*a cross-project port can be mathematically identical and still fail to elaborate on a universe
+binder* — check the universe signature of the local lemma the port will consume, not only its
+statement. (This is the same family as `I-0592`'s "a new type needs its old API", one level down.)
+
+**WHAT (iii-c2-aff) NOW OWES, and it is one statement:** identifying *"`L` restricts trivially
+along `ε ↦ 0`"* with *"the chart module's reduction `M ⧸ (ε)·M` is cyclic"*. That is freeness of
+the **restriction** on the chart, and it is genuinely geometric — the trivialising section is
+what makes the reduction cyclic. Untouched. Do not read either new file as closing the clause;
+`ajc-pic0av`'s C-0034 makes exactly that point about a sorry-free census hiding binder content,
+and it applies to this lane's files.

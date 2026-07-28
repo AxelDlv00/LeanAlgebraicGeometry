@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.EffectivityMoving
-import AlgebraicJacobian.Tangent.DualNumberChartTriviality
+import AlgebraicJacobian.Tangent.CyclicQuotientGenerator
 
 /-!
 # Chart triviality at the Picard-group level (W5-T4, clause (iii-c2-aff), steps 1–2)
@@ -18,9 +18,12 @@ generator:
   `(ε)` is trivial;
 * `CommRing.Pic.eq_one_of_mapRingEquiv` — triviality transports back along a ring **equivalence**
   of the coefficient ring;
-* `AlgebraGeometry.Scheme.Opens.cechPicMap_ι_eq_one_of_dualNumberChart` — the two composed with
+* `AlgebraicGeometry.Scheme.Opens.cechPicMap_ι_eq_one_of_dualNumberChart` — the two composed with
   the tree's affine dictionary: a class trivial after transport to `A[ε]` restricts trivially to
-  the chart.
+  the chart;
+* `AlgebraicGeometry.Scheme.Opens.cechPicMap_ι_eq_one_of_dualNumberChart_of_cyclic` — the same
+  with the generator **produced** from cyclicity of the reduction rather than assumed, which is
+  the form (iii-c2-aff) actually consumes.
 
 ## The sheaf→module step is already in the tree — do not rebuild it
 
@@ -43,10 +46,16 @@ needed for it.
 
 ## What is still owed of (iii-c2-aff)
 
-**Only the generator.** With this file, the clause reduces to: given `L` on the thickened curve
-with `L` restricting trivially to `C`, produce `m` in the chart module together with
-`∀ x, ∃ r, x - r • m ∈ (ε) • ⊤`. That is where the hypothesis "trivial on `C`" is spent, and it
-is the genuinely geometric step; it is *not* in this file and must not be assumed from it.
+**Not the generator — that is now produced rather than assumed.**
+`Tangent/CyclicQuotientGenerator.lean` (ported from the sibling project, cross-project thread
+`I-0495`) shows the "fixed `m`" binder *is* cyclicity of the reduction `M ⧸ (ε)·M`, with the
+converse, so
+`cechPicMap_ι_eq_one_of_dualNumberChart_of_cyclic` below consumes cyclicity directly.
+
+What remains is the **geometric** input, and only it: identifying *"`L` restricts trivially along
+`ε ↦ 0`"* with *"the chart module's reduction is cyclic"* — i.e. freeness of the restriction on
+the chart. Nothing in this file or in `CyclicQuotientGenerator.lean` supplies that, and neither
+may be read as closing (iii-c2-aff).
 
 Reference: Kleiman, "The Picard scheme", §5 Thm. 5.11 (arXiv:math/0504020);
 `informal/w5-t4-worksheet.md` §§6.11, 6.15.
@@ -136,6 +145,31 @@ theorem Opens.cechPicMap_ι_eq_one_of_dualNumberChart {O : Z.Opens} (hO : IsAffi
   Opens.cechPicMap_ι_eq_one_of_cechPicClass_eq_one hO
     (CommRing.Pic.eq_one_of_mapRingEquiv e
       (CommRing.Pic.eq_one_of_cyclic_mod_eps _ m hcyc))
+
+/-- **Chart triviality from cyclicity of the reduction** — the form clause (iii-c2-aff) consumes,
+with the generator produced rather than chosen.
+
+Same statement as `cechPicMap_ι_eq_one_of_dualNumberChart` except that the hypothesis is
+*"`M ⧸ (ε)·M` is cyclic"*, which is what "the restriction of `L` to `C` is trivial on this chart"
+delivers — a trivialising section, not a choice of generator. The generator is then supplied by
+`Submodule.exists_sub_smul_mem_of_quotient_cyclic`
+(`Tangent/CyclicQuotientGenerator.lean`, ported from the sibling project per `I-0495`), whose
+converse makes the two hypotheses equivalent.
+
+The remaining obligation of (iii-c2-aff) is therefore exactly the geometric one: produce the
+cyclicity from triviality along `ε ↦ 0`. -/
+theorem Opens.cechPicMap_ι_eq_one_of_dualNumberChart_of_cyclic {O : Z.Opens}
+    (hO : IsAffineOpen O) (L : Z.CechPic) (A : Type u) [CommRing A]
+    (e : Γ(Z, O) ≃+* DualNumber A)
+    (hcyc : ∃ y : (CommRing.Pic.mapRingHom (e : Γ(Z, O) →+* DualNumber A)
+        (O.cechPicClass hO L)).AsModule ⧸
+          (Ideal.span {(ε : DualNumber A)} • (⊤ : Submodule (DualNumber A)
+            (CommRing.Pic.mapRingHom (e : Γ(Z, O) →+* DualNumber A)
+              (O.cechPicClass hO L)).AsModule)),
+      ∀ z, ∃ r : DualNumber A, z = r • y) :
+    Scheme.CechPic.map O.ι L = 1 := by
+  obtain ⟨m, hm⟩ := Submodule.exists_sub_smul_mem_of_quotient_cyclic _ hcyc
+  exact Opens.cechPicMap_ι_eq_one_of_dualNumberChart hO L A e m hm
 
 end Scheme
 
