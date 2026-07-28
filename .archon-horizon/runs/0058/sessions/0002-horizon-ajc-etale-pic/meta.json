@@ -1,0 +1,17 @@
+{
+  "role": "horizon",
+  "round": 0,
+  "project": "Algebraic-Jacobian-Challenge",
+  "task_id": "ajc-etale-pic",
+  "status": "running",
+  "started_at": "2026-07-28T03:11:09.500947+00:00",
+  "projects": [
+    "Algebraic-Jacobian-Challenge"
+  ],
+  "harness_name": "opus5",
+  "harness_kind": "claude-code",
+  "model": "claude-opus-5",
+  "effort": "ultracode",
+  "auth": "subscription",
+  "workspace_sha": "bbfe2df44c1b94eab714379322401bc7d4d789a4"
+}
