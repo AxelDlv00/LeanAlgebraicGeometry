@@ -2,13 +2,13 @@
   "role": "horizon",
   "round": 1,
   "project": "Algebraic-Jacobian-Challenge-Rebuild",
-  "task_id": "ajcr-cert-r2",
+  "task_id": "ajcr-divrep",
   "projects": [
     "Algebraic-Jacobian-Challenge-Rebuild"
   ],
   "status": "queued",
-  "started_at": "2026-07-28T03:12:23.684178+00:00",
-  "ended_at": "2026-07-28T03:12:27.068403+00:00",
+  "started_at": "2026-07-28T03:12:28.077317+00:00",
+  "ended_at": "2026-07-28T03:12:31.680255+00:00",
   "harness_name": "opus5",
   "harness_kind": "claude-code",
   "model": "claude-opus-5",
@@ -20,6 +20,6 @@
     "tokens_out": 0,
     "cost_usd": 0.0
   },
-  "engine_session_id": "74d2faec-9cd9-48aa-b46f-f403b4cd773c",
-  "workspace_sha": "5991a349cc4b6daa9667a883fc250ed3376d2957"
+  "engine_session_id": "516c9f31-cbd6-4008-b671-c589df343353",
+  "workspace_sha": "32b845d1003cd75459d223855af2b94c2451d551"
 }
