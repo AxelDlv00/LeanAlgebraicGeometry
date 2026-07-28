@@ -1,0 +1,54 @@
+id: I-0698
+provider: local
+kind: issue
+body: "ITEM 2 OF THE Sym^n GLUE BILL IS SUPPLIED AT THE WRONG C^n -- exists_stable_affineOpen_perm\
+  \ forms the product in Scheme, the leg forms it in Over (Spec kbar). Found by work-reviewer\
+  \ on run 0069 r6 (task ajc-albanese, commit 80dc38917).\n\nTHE MEASUREMENT. StableAffineCoverGroup.lean:263-268\
+  \ states exists_stable_affineOpen_perm for (C : Scheme.{u}) and the object (∏ᶜ fun\
+  \ _ : Fin n => C : Scheme.{u}). But the Albanese leg C^n is the Over-category product:\
+  \ SymPowInterface.lean:153-162 (SymPowData.proj : (∏ᶜ fun _ : Fin n => C) ⟶ carrier\
+  \ with C : K) is instantiated at K = Over (Spec kbar) in SymPowColimit.lean:535\
+  \ (symPowData_over_of_scheme_colimits) and everything in AlbaneseUP/AlbaneseFromData\
+  \ is over Over (Spec (.of kbar)).\n\nThese are DIFFERENT OBJECTS, and the kernel\
+  \ says so:\n * feeding MonObj.permAutHom C n at C : Over (Spec (.of kbar)) into\
+  \ StableGroupAction.OrbitsInAffineOpen is an \"Application type mismatch: has type\
+  \ Equiv.Perm (Fin n) →* Aut (∏ᶜ fun x => C) but is expected to have type ?m →* Aut\
+  \ ?m\" -- Aut in Over is not Aut in Scheme;\n * PreservesLimitsOfShape (Discrete\
+  \ (Fin 2)) (Over.forget (Spec (CommRingCat.of kbar))) FAILS to synthesize, so the\
+  \ Over-product does not forget to the Scheme-product. In Over (Spec k) the terminal\
+  \ object is Spec k, so ∏ᶜ is the fibre product over Spec k; in Scheme it is the\
+  \ fibre product over Spec (ULift Z). For n ≥ 2 over a field these differ.\n\nSo\
+  \ the S_n instantiation is a true theorem about the WRONG object, and the header/roadmap\
+  \ claim that item 2 \"is now supplied\" and \"makes item 1 consumable\" overstates:\
+  \ nothing in the leg can consume it as stated.\n\nTHE REPAIR IS AVAILABLE AND SHORT\
+  \ (verified to compile in /tmp/rev-r6-m.lean): push the Over-action along Over.forget\
+  \ with mathlib CategoryTheory.Functor.mapAut, i.e.\n  (Functor.mapAut _ (Over.forget\
+  \ (Spec (CommRingCat.of kbar)))).comp (MonObj.permAutHom C n)\n  : Equiv.Perm (Fin\
+  \ n) →* Aut ((Over.forget _).obj (∏ᶜ fun _ : Fin n => C))\nand apply exists_stable_affineOpen_of_orbits\
+  \ to that. It typechecks. grep finds ZERO uses of mapAut anywhere in AlgebraicJacobian/,\
+  \ so this transport has never been built in the tree. Note the resulting statement\
+  \ is about the UNDERLYING scheme of the Over-product, which is what a Scheme.GlueData\
+  \ actually needs -- so this is the right target, not a workaround.\n\nWHAT IS NOT\
+  \ WRONG: permAutHom itself is correct at every K (checked), the universe generalization\
+  \ G : Type w is strictly weaker and both the old Type-u shape and the mixed Perm(Fin\
+  \ n)/Scheme.{u} shape typecheck."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T20:57:03.945632+00:00'
+updated_at: '2026-07-28T20:57:03.945643+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0014-horizon-ajc-albanese
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge

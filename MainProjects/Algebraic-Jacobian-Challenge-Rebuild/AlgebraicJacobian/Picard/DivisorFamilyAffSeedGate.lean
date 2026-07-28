@@ -241,6 +241,43 @@ noncomputable def divFamZarAff_of_forall_prime_certified_adaptation [IsNoetheria
   DivFamZarAff.mk (D.localEquations hD)
     (isLocallyCertifiedAff_of_forall_prime_certified_adaptation hD h)
 
+/-! ## Non-vacuity, and the exact strength of the witness
+
+Trap (c) of the workspace probe catalogue (`I-0442`): a theorem whose hypotheses cannot hold
+jointly is vacuously true and reports clean axioms like any other, so `#print axioms` on the gate
+says nothing about whether it is about anything.  The inhabitation is therefore exhibited.
+
+**The caveat is inherited and must be stated here rather than only upstream.**  The gate's
+hypotheses are exactly the endpoint's, so the endpoint's witness inhabits them — and that witness
+sits at `n = 0` with an EMPTY support locus (`exists_isCertified_of_seed_of_supportLocus_empty`,
+`…AffSeedEndpoint.lean`).  Its own scope paragraph says what it is worth, and the same reading
+applies verbatim to the gate: it rules out the hypotheses contradicting each other outright, and
+it does **not** rule out the weaker-but-real possibility that they hold only at `n = 0`.  Read the
+lemma below as *"the gate is not about nothing"*, never as *"the gate is non-trivially
+inhabited"*.
+
+What is known about `n > 0` is unchanged by this file: the gate fires whenever the degree datum is
+supplied at that `n`, and nothing in the hypothesis set forces `n = 0`; supplying that datum from
+geometry at a specific `n > 0` is the seed layer's business.  The genuinely non-vacuous witness
+would need a straddling divisor, which exists over every field (spec ADDENDUM 4 §4.3) but is out
+of scope to formalise (§4.5 — it needs `Sym^g C`).  Cf. `DivisorFamilyAffStrict.lean`, whose
+strictness theorem carries the identical caveat for the identical reason. -/
+
+/-- **The gate's hypothesis set is jointly inhabited**, at the zero divisor with `n = 0`: the
+support locus is empty, so the `0B8B` containment holds for any affine open inside a cover member
+and every colength vanishes.
+
+See the section note above for exactly how much this is worth — it is a non-self-contradiction
+certificate, not a claim of non-trivial inhabitation. -/
+theorem isLocallyCertifiedAff_of_supportLocus_empty [IsProper C.hom] [IsNoetherianRing R]
+    (hD : D.IsGenerator)
+    (hempty : (D.localEquations hD).supportLocus = (∅ : Set (relCurve C R)))
+    {W : (relCurve C R).Opens} (hW : IsAffineOpen W)
+    (z₀ : relCurve C R) (hWle : W ≤ (D.localEquations hD).cover.opens z₀) :
+    IsLocallyCertifiedAff 0 (D.localEquations hD) :=
+  isLocallyCertifiedAff_of_isCertified hD
+    (exists_isCertified_of_seed_of_supportLocus_empty C R hD hempty hW z₀ hWle)
+
 end ThetaGeneratorSeed
 
 end AlgebraicGeometry

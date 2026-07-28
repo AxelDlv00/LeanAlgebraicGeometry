@@ -3,40 +3,56 @@ title: 'C9b: f_c and the (f, hf) chart pair (CERT-Sigma-gated; developable param
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "C9b: f_c and the (f, hf) chart pair that pic0RepresentableByOfCharts (Pic0SigmaSheaf.lean:161)\n\
-  consumes. STILL BLOCKED, and the gate is now a SINGLE clause.\n\nSTATE 2026-07-29\
-  \ (run 0072 s0010, lane ajcr-charts, commit 2b6228f6a):\n\nTHE OPENNESS HALF IS\
-  \ OFF THE WALL ENTIRELY. c9b consumes restrictChart f V at V := chartLocus, so\n\
-  it needs chartLocus open over the test carrying the universal family, i.e. a GENERAL\
-  \ test. That is\nnow UNCONDITIONAL: isOpen_chartLocus_of_affineLocal' (Picard/Pic0ChartLocusIsoInvariance.lean)\n\
-  carries no hypothesis, because IsSplitWitnessIsoInvariant is discharged. Certificate-free\
-  \ and\ndivRep-free. The 2026-07-28 split of what c9b owed into (a) + (b) is therefore\
-  \ resolved on (b).\n\nWHAT REMAINS IS EXACTLY (a): CHART-U(c) / IsChartUniv (pinned\
-  \ in Lean at Pic0ChartPair.lean:158,\nnot left in a worksheet). On the chart locus\
-  \ the Abel map is a bijection onto its image because the\nnormalized effective representative\
-  \ is unique -- the RELATIVE form of DAT-C GAP-2 -- plus the\nclassifier divRepClassifyZar.\
-  \ CERT-Sigma-gated, genuinely.\n\nWHAT IS ALREADY LANDED ON THE hf SIDE, so no lane\
-  \ re-derives it:\n * the composition half: isOpenImmersion_presheaf_restrictChart\
-  \ (Pic0ChartPair.lean), unconditional\n   in the restriction, via MorphismProperty.relative\
-  \ stability under composition;\n * the field-level input of GAP-2: Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one\n\
-  \   (RiemannRoch/EffectiveUniqueness.lean:144). What is missing is its RELATIVE\
-  \ form over the locus;\n * chartHom_restrictChart, so the LocallyOfFiniteType hypothesis\
-  \ of JacobianData.ofCharts is\n   inherited by every restriction.\n\nSO THE HONEST\
-  \ SPLIT IS NOW ONE ITEM, NOT TWO: (a) relative GAP-2 + classifier, CERT-Sigma-gated.\n\
-  Nothing else. A lane that discharges IsChartUniv gets hf by feeding it to\nisOpenImmersion_presheaf_restrictChart,\
-  \ and gets V from the unconditional general-test openness.\n\nNOT WRITTEN, DELIBERATELY:\
-  \ IsChartUniv against a guessed divRep endpoint. ajcr-divrep has published\nDivRepAffinePullback.representableBy\
-  \ and its own residue is the DivRepAffinePullback structure;\nwriting the relative\
-  \ GAP-2 against a guessed shape is what the four-lane thread exists to prevent.\n\
-  \nVERIFICATION (run 0072 s0010): all five touched modules kernel-check at lake env\
-  \ lean EXIT=0, zero\ndiagnostics. 13 headline results axiom-clean -- exactly [propext,\
-  \ Classical.choice, Quot.sound] --\nmeasured with TWO self-introduced controls in\
-  \ the probe file (a bare sorry AND a consumer of it),\nboth of which fired [sorryAx],\
-  \ so the probe is calibrated.\n\nNOT DONE: the configured FULL build. One lane held\
-  \ the lake mutex for over 1h40m and the queued\nbuild never started; the LSP was\
-  \ simultaneously unusable (every file, including untouched ones,\nreported \"imports\
-  \ are out of date\" from the concurrent build, though a 411-module cone walk showed\n\
-  0 stale/missing oleans). lake env lean -o was the fallback -- a faithful kernel\
-  \ check of each FILE,\nbut not evidence of full-graph integration.\n"
+  consumes.\n\nSTATE 2026-07-29 (run 0072 r5, lane ajcr-charts, commits a41644c36\
+  \ + 6a67505dd).\n\nTHIS ROW'S OWN 2026-07-29 CLAIM IS RETRACTED. It said \"the gate\
+  \ is now a SINGLE clause\nIsChartUniv ... CERT-Sigma-gated, genuinely\". That is\
+  \ wrong, and wrong in the direction that\ncosts sessions. IsChartUniv IS IsOpenImmersion.presheaf,\
+  \ i.e. MorphismProperty.relative at\nyoneda, whose DEFINITION (mathlib MorphismProperty/Representable.lean:315)\
+  \ is a conjunction:\n\n (i) relative representability -- for every g : yoneda.obj\
+  \ T -> pic0SigmaSheaf, the fibre\n     product of the chart map along g is representable\
+  \ BY A SCHEME;\n (ii) the property clause -- every represented pullback is an open\
+  \ immersion.\n\nThe relative-GAP-2 + classifier story this row tells is the input\
+  \ to (ii) ONLY. It says nothing\nabout (i). Priced as one clause the lane waits\
+  \ on CERT-Sigma for both halves; priced as two,\n(i) needs only AN OPEN OF THE TEST,\
+  \ and chartLocus is one unconditionally.\n\nLANDED THIS PASS, both sorry-free, rooted,\
+  \ axiom-clean against firing controls:\n\n * Picard/Pic0ChartOpenImmersionCriterion.lean\
+  \ -- ChartFibrePresented (the elementwise datum:\n   an open W of the test, a chart\
+  \ point r over it, the square, and a coverage clause\n   exists_factor), ChartFibrePresented.isPullback\
+  \ (it presents the fibre product -- pointwise\n   pullbacks via IsPullback.of_forall_isPullback_app\
+  \ plus Types.isPullback_iff, with the joint\n   INJECTIVITY half free because W.iota\
+  \ is a monomorphism), and\n   isOpenImmersion_presheaf_of_chartFibrePresented, THE\
+  \ CRITERION, discharging both clauses.\n   Stated over an arbitrary f and V: no\
+  \ divRep, no certificate, no Z, no theta.\n * Picard/Pic0ChartUnivReduce.lean --\
+  \ chartLocusOpens supplies W BY CONSTRUCTION, so the datum\n   a lane owes drops\
+  \ from FOUR fields to THREE; isChartUniv_of_isChartLocusFibre composes the\n   criterion\
+  \ with the already-landed composition half (isOpenImmersion_presheaf_restrictChart)\n\
+  \   to give IsChartUniv at any open. The two halves of C9b meet with no seam.\n\n\
+  THE RESIDUE IS MOVED, NOT RENAMED, AND THAT IS BRACKETED FROM BOTH SIDES BY PROOF:\n\
+  \ * isEmpty_forall_chartFibrePresented_of_not_injective -- the datum cannot be SATISFIED\
+  \ by a\n   chart map failing injectivity on even one test. So it is not vacuous,\
+  \ and in particular is\n   unsatisfiable for the UNRESTRICTED Abel chart whose fibres\
+  \ are the linear systems |D|.\n * injective_of_isChartUniv -- IsChartUniv cannot\
+  \ be REACHED without that injectivity.\nRelative GAP-2 therefore remains a real\
+  \ gate. It now gates ONE FIELD (exists_factor) of ONE\nstructure rather than the\
+  \ whole certificate, and (i) is off the wall entirely.\n\nWHAT REMAINS, honestly:\
+  \ exists_factor and the r/sq pair, i.e. IsChartLocusFibre. r is the\nclassifier's\
+  \ output (CHART-U(c)'s construction, divRepClassifyZar), sq is its characterising\n\
+  property, exists_factor is relative GAP-2. CERT-Sigma/divRep-gated -- genuinely,\
+  \ this time,\nand narrower.\n\nTWO BY-PRODUCTS, both corrections to this tree's\
+  \ own prose (commit f9fb21c6f):\n * \"the Abel map is not a monomorphism, hence\
+  \ IsOpenImmersion.presheaf fails unrestricted\" is\n   cited as a REASON in three\
+  \ files. It is a DERIVATION -- mono_of_isOpenImmersion_presheaf,\n   from mathlib\
+  \ presheaf_mono_of_le at IsOpenImmersion.le_monomorphisms.\n * The open V in restrictChart\
+  \ is ARBITRARY for hf to hold, since IsOpenImmersion.presheaf is\n   stable under\
+  \ precomposition with an open immersion. Restricting to the chart locus is NOT\n\
+  \   what makes hf true; the chart locus is where the UNRESTRICTED statement becomes\
+  \ true, a\n   fact about IsChartLocusFibre and not about V.\n\nVERIFICATION: each\
+  \ touched module kernel-checks at lake env lean EXIT=0, zero diagnostics.\nThirteen\
+  \ headline results axiom-clean ([propext, Classical.choice, Quot.sound]) measured\
+  \ with\ntwo self-introduced controls (a bare sorry AND a consumer of it) that both\
+  \ fired sorryAx.\nNOT DONE: the full root build -- another lane held the lake mutex\
+  \ (live pid) for this session's\nduration, so this is per-file kernel verification,\
+  \ not full-graph integration.\n"
 status: blocked
 kind: proof
 priority: normal
@@ -59,6 +75,6 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  updated_at: '2026-07-28T19:56:08.351863+00:00'
+  updated_at: '2026-07-28T21:12:09.925270+00:00'
   milestone: w4-tail
   owner: ajcr-charts

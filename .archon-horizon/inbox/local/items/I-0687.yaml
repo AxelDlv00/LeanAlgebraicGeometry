@@ -29,7 +29,7 @@ body: "THE SS6.23 RETRACTION DID NOT REACH TWO LINES INSIDE THE LEAN FILE IT CIT
   \ 1525."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -37,7 +37,7 @@ audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-28T19:09:47.182805+00:00'
-updated_at: '2026-07-28T19:32:08.711192+00:00'
+updated_at: '2026-07-28T20:43:42.252443+00:00'
 metadata:
   provenance:
     run: '0073'

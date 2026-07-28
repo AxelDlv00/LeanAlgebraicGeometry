@@ -3,17 +3,71 @@ title: 'S3 (WORKSHEET-FIRST, risk R3): \(\mathrm{SmoothOfRelativeDimension}\ (g)
   assembly — the frozen numeral'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'WORKSHEET LANDED (run 0073), informal/w5-s-worksheet.md §3 — R3 DOWNGRADED
-  to [M] with NO mathlib-absent brick. The t4 appendix left the uniformity half unprobed
-  ("rel-dim locally constant on an irreducible base"); probed, and no such theorem
-  is needed: mathlib SmoothOfRelativeDimension (Morphisms/Smooth.lean:135) is POINTWISE
-  and LOCAL-AT-SOURCE — for each x, SOME chart of rel dim n, no coherence between
-  charts, no connectedness. So X2 translation homogeneity transporting the T5 identity
-  count IS the uniformity argument, and since route (ii) hands the count at k the
-  chain never leaves k, making the t4-§5 codescent brick contingency-only (for the
-  named caveat that k-point translations may not reach every scheme point). Statement
-  named in Lean as JacobianData.smoothOfRelativeDimension_statement; consumer is isAbelianVariety_of_abelSource_of_relativeDimension.
-  Remaining: chartwise consumption of the numeral, waits on T3/T4.'
+summary: 'S3 (WORKSHEET-FIRST, risk R3): $\mathrm{SmoothOfRelativeDimension}\ (g)$
+  assembly — the frozen numeral.
+
+
+  **The CRITERION is landed and R3''s last named risk is dissolved (run 0073 r5)**
+  —
+
+  `AbelianVariety/RelativeDimensionLocal.lean`, `lake env lean` EXIT=0. `SmoothOfRelativeDimension
+  n`
+
+  is `IsLocalAtSource` at the Zariski precoverage (verified by `inferInstance`, with
+  `Smooth` as a
+
+  control), so `IsLocalAtSource.of_zeroHypercover` applies: the obligation is **"cover
+  `d.J.left` by
+
+  opens on which the count holds"**, not "exhibit a chart at every scheme point".
+  The `k`-rational
+
+  translates of the identity chart therefore need only **cover** — precisely the weaker
+  demand
+
+  worksheet §3''s caveat feared they could not meet.
+
+
+  Landed: `smoothOfRelativeDimension_comp_iso` (the source-iso transport, named because
+
+  `infer_instance` does *not* find it — the instance is on the property, not the composite),
+
+  `smoothOfRelativeDimension_of_zeroHypercover` plus its `iff` form, and the two Jacobian
+  shapes
+
+  `JacobianData.smoothOfRelativeDimension_of_translation_cover` /
+
+  `..._pointTranslationIso` (the X2 bridge at the level the criterion consumes).
+
+
+  **TWO INPUTS REMAIN, and the file names both rather than hiding them.** (1) The
+  **numeral**:
+
+  $n = g$ at the identity is T5, itself conditional on the T3/T4 $\varepsilon$-kernel
+  count, so S3''s
+
+  numeral is still gated on T4. (2) The **cover**: that translated identity charts
+  cover `d.J.left`,
+
+  carried as the `hcov` hypothesis. If (2) fails, worksheet §3''s $\bar{k}$ route
+  plus the t4-§5
+
+  codescent brick is the documented contingency — **this work does not retire that
+  brick**, it only
+
+  removes the third input (pointwise reachability).
+
+
+  Method note worth keeping (inbox `I-0695`): the caveat was a *correct* reading of
+  the class''s
+
+  unfolded statement that priced a consequence the statement does not have. Unfolding
+  a class says
+
+  what must be **produced**; it says nothing about the machinery available to produce
+  it.
+
+  '
 status: pending
 kind: proof
 priority: normal
@@ -27,4 +81,4 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:48.660776+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T05:30:06.211194+00:00'
+  updated_at: '2026-07-28T20:47:40.655177+00:00'

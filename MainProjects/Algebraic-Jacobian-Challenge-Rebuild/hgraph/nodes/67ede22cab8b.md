@@ -6,9 +6,10 @@ decl: report
 file: scripts/partition-probe.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: report
 type: lean
-updated: '2026-07-29T04:13:40'
+updated: '2026-07-29T04:41:56'
 ---
 def report (label : Name) : CoreM Unit := do
   let env ← getEnv

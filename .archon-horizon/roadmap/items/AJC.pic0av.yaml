@@ -2,49 +2,30 @@ id: AJC.pic0av
 title: Pic^0 is an abelian variety (A.3)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Pic^0 is an abelian variety of dimension g (A.3 leg of Route A).\n\nWHERE\
-  \ THE LEG STANDS after run 0067 r5. The abelian-variety ASSEMBLY is sorry-free\n\
-  (Pic0.isAbelianVariety); every remaining obligation is a named leaf, and each of\
-  \ the\nfour fronts has been reduced at least once this run.\n\n (a) tangent / H1\
-  \ (AJC.pic0av.tangent): ONE open statement, the geometric cocycle\n     comparison\
-  \ at Pic0AbelianVariety.lean:805 -- clause (iii), sending a dual-number\n     kernel\
-  \ class to its transition unit. Clauses (i) and (ii) closed in r3/r4; the\n    \
-  \ linearity bookkeeping is discharged (finrank_eq_of_addEquiv_of_bijective_smul),\n\
-  \     and the SCALAR dimension identity dim T_0 = g is proved FROM it.\n\n (b) smooth\
-  \ / proper (AJC.pic0av.structure): both are assemblies now. Smoothness\n     reduces\
-  \ to GeometricallyReduced and thence to reducedness over k-bar ALONE\n     (smooth_of_isReduced_algebraicClosureBaseChange,\
-  \ which also discharges the\n     geometricallyReduced sorry). Properness reduces\
-  \ to UniversallyClosed -- and r6\n     REFUTED one of the three routes r3 listed\
-  \ for it. NOT \"attackable three ways\":\n     the ambient route is DEAD, because\
-  \ UniversallyClosed (PicScheme C).hom is FALSE,\n     not merely hard. Universal\
-  \ closedness over an affine base implies CompactSpace of\n     the source (mathlib's\
-  \ priority-900 instance to QuasiCompact -- which is why\n     IsProper has no quasi-compactness\
-  \ field -- plus PrimeSpectrum.compactSpace), while\n     Pic_{C/k} is an infinite\
-  \ disjoint union over deg in Z, the same th:main(1) clause\n     HasPicScheme bundles.\
-  \ So universallyClosed_of_ambient and\n     proper_of_ambient_universallyClosed\
-  \ are trap (c): true, axiom-clean, reducing\n     NOTHING. Kernel-checked at scheme\
-  \ generality in Picard/AmbientPicNotProper.lean.\n     TWO routes remain, both about\
-  \ Pic^0 itself (whose source IS quasi-compact): the\n     VALUATIVE criterion, needing\
-  \ no quasi-projectivity vocabulary -- which is what\n     I-0074 Caveat 2 says mathlib\
-  \ lacks -- and fpqc descent to k-bar. r5 asked\n     ajc-etale-pic to add a UniversallyClosed\
-  \ conjunct to HasPicScheme; that ask is\n     WITHDRAWN on I-0493, since it would\
-  \ have put a false statement in the shared\n     interface.\n\n (c) degree / dimension\
-  \ (AJC.pic0av.identity): PicScheme.degree constructed (r4). The\n     dimension\
-  \ statement is reduced to ONE uniform bound in r5, and in r6 the \"<=\" half\n \
-  \    of that bound became AXIOM-CLEAN at Pic^0 and lost its [PerfectField k] binder\
-  \ --\n     r5's \"genuinely absent\" verdict had measured the wrong invariant, since\n\
-  \     ringKrullDim R <= finrank(m/m^2) holds for EVERY Noetherian local ring (Krull\n\
-  \     height + Nakayama, both pinned-mathlib). See that child; the earlier\n   \
-  \  \"no topologicalKrullDim API\" pricing was likewise a mis-measurement of the\
-  \ API\n     surface rather than the definition. The >= half is REDUCED to front\
-  \ (a) and nothing else --\n     but it REPORTS sorryAx, inherited from the open\
-  \ cocycle comparison at\n     Pic0AbelianVariety.lean:805; only the dimension BRIDGE\
-  \ underneath is axiom-clean.\n     An earlier version of this row said \"proved\"\
-  ; retracted in 48eea9212.\n\n (d) AJC.rr.principal: CLOSED in r4 (principal_degree_zero,\
-  \ at its original binders).\n\nMEASUREMENT DISCIPLINE for this node: smooth/proper\
-  \ quantify over [HasPicScheme C],\nwhich the caller discharges, so they report CLEAN\
-  \ axioms at the declaration. Measure at\na SYNTHESIS site (scripts/axiom-frontier.lean)\
-  \ or the number is not true.\n"
+summary: "Pic^0 is an abelian variety of dimension g (A.3). FIVE open sorries across\
+  \ the leg, on four\nfronts. Front (d), AJC.rr.principal, is CLOSED -- RiemannRoch/WeilDivisor.lean\
+  \ is sorry-free.\n\n (a) TANGENT / H1 (AJC.pic0av.tangent). ONE sorry: Pic0AbelianVariety.lean:853,\n\
+  \     semilinearComparison_cotangentSpaceDual_h1Cok. The load-bearing one -- everything\
+  \ else\n     in this leg that leaks sorryAx leaks it from here and nowhere else,\
+  \ measured. Its own\n     residue is clause (iii) alone (clauses (i) and (ii) are\
+  \ theorems). Do NOT retry the\n     AJCR two-chart CechPic port: refuted at the\
+  \ CARRIER, not on cost (I-0689) -- AJCR's only\n     sheaf-side bridge cechPicEquivPic\
+  \ carries [IsAffine] irremovably and this clause lives on\n     a proper curve.\n\
+  \n (b) SMOOTHNESS / PROPERNESS (AJC.pic0av.structure). Two sorries, both fully reduced:\n\
+  \     geometricallyReduced (:1135) and universallyClosed (:1373). Properness has\
+  \ exactly ONE\n     live route, universallyClosed_of_valuativeCriterion -- the ambient\
+  \ route is REFUTED\n     (universal closedness of Pic_{C/k} would force CompactSpace\
+  \ on an infinite disjoint union\n     over deg in Z; Picard/AmbientPicNotProper.lean),\
+  \ and the quasi-projectivity route needs\n     vocabulary mathlib v4.31 does not\
+  \ have (I-0074 Caveat 2).\n\n (c) DEGREE / DIMENSION (AJC.pic0av.identity). Two\
+  \ sorries. The degree map is BUILT and\n     sorry-free; the dimension half is now\
+  \ reduced to front (a) + regularity at ONE stalk +\n     an orbit condition, with\
+  \ the \"uniform cotangent bound\" of the r5/r6 framing REFUTED as a\n     separate\
+  \ obligation (run 0067 r7, Picard/GroupSchemeHomogeneity.lean). See that node.\n\
+  \nMEASURE AT A SYNTHESIS SITE, not at the declaration: smooth/proper and their reductions\n\
+  quantify over [HasPicScheme C] and report clean axioms as stated. Every clean claim\
+  \ in this\nleg has been probed against controls that DO fire sorryAx; keep that\
+  \ discipline.\n"
 status: active
 kind: proof
 priority: normal
@@ -57,6 +38,6 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:42.107460+00:00'
-  updated_at: '2026-07-28T19:50:37.244260+00:00'
+  updated_at: '2026-07-28T21:00:55.474184+00:00'
   parent: AJC.jacobian
   owner: ajc-pic0av

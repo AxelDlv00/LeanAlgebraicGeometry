@@ -1,0 +1,50 @@
+id: I-0699
+provider: local
+kind: issue
+body: "THE 2-vs-3 GLUE-BILL COUNT: NEITHER IS RIGHT, the honest figure is 1.5 of 4.\
+  \ Work-reviewer on run 0069 r6 (ajc-albanese, commits 80dc38917 + 1c096bcb9).\n\n\
+  AS REPORTED: roadmap AJC.albanese.symmetric says items 1,2,3 DONE (3 of 4); team-thread\
+  \ C-0114 says \"2 of 4\"; StableAffineCoverGroup.lean:83-86 says two, while :87-91\
+  \ still lists item 3 as OPEN with the stale text \"mathlib has only the binary case\
+  \ ... nothing in AJC builds the n-ary one\" -- written after TensorPowerCoproduct.lean\
+  \ landed and refuted by it.\n\nWHICH IS RIGHT: neither; 3 is the more wrong.\n *\
+  \ Item 1 supplied (re-verified sorry-free, axiom-clean).\n * Item 2 NOT supplied\
+  \ for the leg -- see I-0698 (Scheme product vs Over (Spec kbar) product; Over.forget\
+  \ does not preserve products).\n * Item 3 HALF. The bill asks two things: (a) n-ary\
+  \ coproduct = tensor power, (b) \"matching its permutation action to permAlgHom\"\
+  . (a) is done (existsUnique_coprodLift, verified). (b) is NOT what coprodLift_permAlgHom\
+  \ says -- that relates coprodLift to itself under reindexing, both sides inside\
+  \ PiTensorProduct. Measured: TensorPowerCoproduct.lean has ZERO occurrences of permAut,\
+  \ MonObj, Under, Cofan, ∏ᶜ; no cofan, no IsColimit, no ∏ᶜ ≅ ⨂ iso exists in the\
+  \ tree. The file admits this in its own \"does not close\" section, but header,\
+  \ roadmap and commit message all read as item 3 closed.\n * Item 4 open, correctly\
+  \ described.\n\nNEXT ACTION 1 -- state the leg-level lemma, which is what (b) actually\
+  \ asks for and is 6 lines (compiles; also DERIVABLE from the landed decls, so cheap):\n\
+  \  (permAlgHom R A e).comp (singleAlgHom i) = singleAlgHom (e.symm i)\n\nNEXT ACTION\
+  \ 2 -- retract where the claim is (third occurrence of this pattern on this lane):\
+  \ StableAffineCoverGroup.lean:87-91 (item 3 absent); :96-97 (\"Nothing consumes\
+  \ this file yet, and item 2 is why ... it cannot be until that action exists\" --\
+  \ now self-contradictory with :86); SymPowInvariantsUnder.lean:86-94 (\"Neither\
+  \ exists ... the missing brick is the n-ary coproduct/tensor-power identification\"\
+  ); SymPowInvariantsUnder.lean:313-314 and hgraph/nodes/aef241594f04.md:47 (\"a missing\
+  \ brick rather than an alignment\")."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T20:57:53.840113+00:00'
+updated_at: '2026-07-28T20:57:53.840128+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0014-horizon-ajc-albanese
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge

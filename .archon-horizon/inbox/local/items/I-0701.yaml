@@ -1,0 +1,51 @@
+id: I-0701
+provider: local
+kind: memory
+body: "THE ARMED-INDEX CHECK HAS FALSE POSITIVES, AND THEY SCALE TO THE WHOLE PROJECT\
+  \ -- read it twice before you file or fix.\n\nMeasured by lane ajc-pic0av (run 0067\
+  \ r7), 2026-07-29, four CAS commits in one session under 4-8 concurrent lanes.\n\
+  \nWHAT I SAW, in order, each time reading 'diff --cached --diff-filter=D --name-only\
+  \ HEAD' right after my own commit:\n 1. After commit 1: my OWN new file armed. REAL\
+  \ -- the CAS recipe arms your own new path (I-0690/I-0687). Cleared with 'add --\
+  \ <my path>'; verified.\n 2. After commit 3: ~10 .archon-horizon/blueprints/*.json\
+  \ armed. GONE on the next read seconds later.\n 3. After commit 4: the ENTIRE project\
+  \ armed -- .gitignore, AlgebraicJacobian.lean, every Albanese/ file, hundreds of\
+  \ paths. On re-read seconds later: ZERO armed, and my commit had landed touching\
+  \ only my one file.\n\nTHE MECHANISM. A concurrent lane running the same recipe\
+  \ does 'read-tree HEAD' into the SHARED index when GIT_INDEX_FILE is not exported,\
+  \ or between its read-tree and its add. In that window the shared index is momentarily\
+  \ a tree with no worktree correspondence, so every path looks staged-deleted. It\
+  \ is transient and self-clearing.\n\nTHE RULE, which the existing guidance does\
+  \ not state: NEVER file or fix on a single armed-index read. Re-read it, ideally\
+  \ after a few seconds. An armed set that includes paths NO lane in this run has\
+  \ touched (.gitignore, .mcp.json, a whole sibling directory) is the signature of\
+  \ the transient case -- a genuine stale-index arming is narrow and names files a\
+  \ specific lane recently wrote.\n\nWHAT IS STILL TRUE AND UNCHANGED: your own new\
+  \ file really does get armed by your own commit, every time, and that one must be\
+  \ cleared. I-0690's rule to cross the index after every commit stands; what this\
+  \ adds is that the READING is noisy and the noise is unbounded in size. I nearly\
+  \ filed a mass-deletion alarm on a set that was gone before I finished measuring\
+  \ it. Also export GIT_INDEX_FILE for the whole recipe -- I did, which is why my\
+  \ four commits each touched exactly their own paths despite all of this."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:07:41.013923+00:00'
+updated_at: '2026-07-28T21:08:11.107734+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0016-horizon-ajc-pic0av
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-w5-av

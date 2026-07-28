@@ -2,92 +2,119 @@ id: AJC.pic0av.tangent
 title: Cotangent space and H1 comparison
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Identify the cotangent-space dual at the identity with the Cech H1 cokernel\
-  \ and hence with\nH1(C,O_C), including linearity and the finrank comparison.\n\n\
-  STATE (run 0067 r4). ONE sorry: semilinearComparison_cotangentSpaceDual_h1Cok\n\
-  (Pic0AbelianVariety.lean:820). Its content is clause (iii), the cocycle map sending\
-  \ a\ndual-number kernel class to its transition unit, as an ADDITIVE equivalence\
-  \ plus the Mumford\nscaling intertwining. Clauses (i) and (ii) are closed, and the\
-  \ relative-Picard quotient is out\nof the problem (OnePointRelPicCollapse, run 0067\
-  \ r2).\n\nCLOSED THIS ROUND -- THE GENERATOR OBLIGATION, and it was open on BOTH\
-  \ sides of the workspace.\nPicard/DualNumberChartTriviality.lean now carries, sorry-free\
-  \ and axiom-clean:\n  Submodule.exists_sub_smul_mem_of_quotient_cyclic   M/N cyclic\
-  \ => exists m with the binder\n  Submodule.quotient_cyclic_of_exists_sub_smul_mem\
-  \   the CONVERSE\n  DualNumber.free_of_quotient_eps_cyclic             invertible\
-  \ A[eps]-mod, cyclic M/(eps)M => free\nAJC's free_of_cyclic_mod_eps and AJCR's Opens.cechPicMap_iota_eq_one_of_dualNumberChart\
-  \ both\ntook the generator m AND the binder (forall x, exists r, x - r*m in span{eps}*top)\
-  \ as GIVEN,\nand both docstrings named \"produce m from L is trivial on C\" as the\
-  \ residue -- character for\ncharacter the same obligation. It is not geometry: that\
-  \ binder IS cyclicity of M/(eps)M written\nwithout naming the quotient, so m comes\
-  \ from Submodule.Quotient.mk_surjective on the generator\nplus mk_eq_zero. Arbitrary\
-  \ commutative ring, no finiteness, no cover, no scheme, no curve. The\nconverse\
-  \ is included per I-0571, so this is a strict reduction and not a restatement.\n\
-  \nMEASURED ABOUT THE SIBLING, and it corrects a reading this node encouraged: AJCR's\
-  \ (iii-c2-aff)\nis NOT a sorry, it is a HYPOTHESIS BINDER (their worksheet SS0(4):\
-  \ never register a staged\nfact). Correct discipline, but it makes their open content\
-  \ invisible to a sorry census -- so\n\"AJCR is sorry-free here\" had been read as\
-  \ \"AJCR has this\". They do not. Neither side had the\ngenerator until this round.\n\
-  \n*** RUN 0067 r6: THE AJCR PORT IS REFUTED AS A ROUTE, AND NOT ON COST. ***\n\n\
-  r3/r4/r5 of this row all treated porting AJCR's two-chart Cech machinery as the\
-  \ live way to close\nclause (iii). Measured properly (2026-07-29), it cannot close\
-  \ it -- on EITHER side of the workspace\n-- and the reason is the CARRIER, not the\
-  \ price.\n\nTHE DECISIVE FACT, one grep. AJCR's Scheme.CechPic is a SELF-CONTAINED\
-  \ definitional Picard group\n(Quotient of unitsH1 over PointedCover, Picard/Pic.lean:60).\
-  \ Its ONLY bridge to invertible SHEAVES\nis Scheme.cechPicEquivPic (Picard/CechPicSurjective.lean:283),\
-  \ and that carries\n\n    [IsAffine X]\n\nirremovably: the proof needs a trivializing\
-  \ basic open per point plus\nModule.Invertible.span_tensor_free_eq_top over Gamma(X,\
-  \ top). There is NO non-affine comparison\nanywhere in either project, and none\
-  \ in mathlib -- which has no Picard group of a SCHEME at all\n(CommRing.Pic is ring-level).\
-  \ AJCR's other consumers of the dictionary (EtaleSeparatedness,\nEtaleSeparatednessClose)\
-  \ use it at affine schemes only, and one says so in prose.\n\nWHY THAT IS FATAL\
-  \ HERE. Clause (iii) must compare AJC's dual-number kernel of PicSharp.relPresheaf\n\
-  -- a setoid quotient of LineBundle.OnProduct, i.e. honest invertible sheaves --\
-  \ with a two-chart\nCech H1 on C x_k Spec k[eps]. That scheme is a PROPER CURVE\
-  \ over the dual numbers: not affine, and\nnot affine PRECISELY BECAUSE the interesting\
-  \ eps-kernel is nonzero (for an affine with trivial Pic\nthere is nothing to compute).\
-  \ So the single hypothesis the dictionary needs is the one the problem\nstructurally\
-  \ denies.\n\nPORT COST, recorded for the ledger and priced both ways per I-0678\
-  \ -- here BOTH are large, which is\nitself the signal:\n * import closure of the\
-  \ three TwoChart* endpoint files: 57 modules, 46 absent from AJC, 13,691 lines\n\
-  \ * closure of the 10-file genuine core (UnitsPresheaf, UnitsCocycle, CechH1, Pic,\
-  \ PicAffineCover,\n   RefinementInjectivity, TwoChart{CechPic,Selector,Normalize,Representable}):\
-  \ 76 modules, 60 absent,\n   17,031 lines\nAll sorry-free. 17k lines of sorry-free\
-  \ Lean is a real asset and a plausible multi-session port; the\nNUMBER is not the\
-  \ objection. The objection is that when you finish you hold a class in X.CechPic\
-  \ and\nno theorem connecting it to LineBundle.OnProduct at a non-affine X.\n\nSO\
-  \ THE RESIDUE OF THIS NODE IS NOT ANY OF THE FOUR AJCR THEOREMS. It is one missing\
-  \ statement:\n\n    Cech H1 of units on a NON-AFFINE scheme  =  isomorphism classes\
-  \ of invertible sheaves\n\nabsent from both projects and from mathlib. That is genuinely\
-  \ new mathematics for this workspace\nrather than a port, and it is the honest shape\
-  \ of front (a)'s wall. Detail: inbox I-0689.\n\nRULE established here: when a port\
-  \ is priced and the price is paid, ask what CARRIER you are left\nholding and whether\
-  \ it has the FACE your consumer needs. \"Sorry-free and portable\" says nothing\n\
-  about whether the destination type connects to yours. This is I-0684 (matching the\
-  \ category is not\nmatching the object) at the scale of a whole subsystem; the test\
-  \ is one grep for the comparison\ntheorem plus a read of its binders.\n\nWHAT r5\
-  \ SAID ABOUT THE SIBLING, still true and now sharpened -- the welding observation\
-  \ was right\nand its consequence was understated:\nWHERE AJCR IS GENUINELY AHEAD,\
-  \ all sorry-free and scheme-general: (iii-a) twoChartClass,\n(iii-b) its injectivity,\
-  \ (iii-c1) twoChartClassHom_mk_range, (iii-c2-Zar)\ntwoChartClassHom_surjOn_of_chartTrivial.\
-  \ But all four are welded to X.CechPic over\nX.PointedCover, and AJC HAS NEITHER\
-  \ -- zero occurrences. Not importable (no cross-project\ndependency), and porting\
-  \ means first building the sheaf-side glue-from-a-transition-unit\ncomparison against\
-  \ AJC's LineBundle.OnProduct setoid, where their Quot.ind-on-a-Cech-\nrepresentative\
-  \ proof has nothing to land on. Genuinely portable instead:\nTangent/DualNumberCarrier.lean\
-  \ and DualNumberCarrierReduction.lean -- clause (ii) ON UNITS in\nsheaf vocabulary,\
-  \ where AJC has only the algebra-level baseChangeAlgEquiv.\n\nMATHLIB v4.31 HAS\
-  \ NOTHING for the surjectivity half: there is no Picard group of a SCHEME at\nall\
-  \ (zero hits in Mathlib/AlgebraicGeometry). Only ring-level CommRing.Pic, whose\
-  \ one exact\nsequence is a localisation sequence. Mayer-Vietoris there is AddCommGrp-valued\
-  \ so it cannot see\nO^times. AJCR's is the only implementation in either tree.\n\
-  \nRESIDUE, in order of size: (1) the cocycle map itself, clause (iii) -- the sorry;\
-  \ (2) within\nchart triviality, identifying \"L restricts trivially along eps ->\
-  \ 0\" with \"M/(eps)M is cyclic\",\ni.e. freeness of the RESTRICTION, which is what\
-  \ remains of (iii-c2-aff) now that the generator\nis closed.\n\nSTILL TRUE, do not\
-  \ re-derive: finrank_eq_of_addEquiv_of_bijective_smul;\ncotangentSpaceDual_equiv_relPicKernel;\
-  \ relPicKernelSMul and laws;\nDualNumber.truncExpCechKernelAddEquiv; residueFieldIso_of_section_over_field;\n\
-  baseChangeAlgEquiv (clause ii); free_of_cyclic_mod_eps (clause i);\nrelPicDualKernelAddEquivAbsKernel.\
-  \ No Hilbert 90, no henselian campaign.\n"
+summary: 'Cotangent space and H1 comparison. ONE sorry: Picard/Pic0AbelianVariety.lean:853,
+
+  semilinearComparison_cotangentSpaceDual_h1Cok. THIS IS THE LOAD-BEARING OBLIGATION
+  OF THE
+
+  WHOLE A.3 LEG -- measured, not asserted: every declaration in this leg that reports
+  sorryAx
+
+  inherits it from here and from nowhere else, and the leg''s assembly
+
+  Pic0.isAbelianVariety_of_dimension_genus (Picard/GroupSchemeHomogeneity.lean) is
+  AXIOM-CLEAN
+
+  once this is supplied as a hypothesis.
+
+
+  WHAT IS ALREADY DISCHARGED around it: the set-level chain Dual(m_e/m_e^2) = T_0
+  Pic^0 = T_0 Pic
+
+  = ker(Pic#(k[eps]) -> Pic#(k)); the Mumford eps -> a*eps scaling with its action
+  laws; the
+
+  truncated-exponential unit splitting and its naturality; the two-chart Cech unit-cocycle
+  engine;
+
+  the Cech target H^1(C,O_C) = H1Cok on any 2-affine cover; finite-dimensionality
+  of both sides;
+
+  the scalar bijection kappa(e) = k. The old "linearity bookkeeping" leg is fully
+  discharged --
+
+  finrank_eq_of_addEquiv_of_bijective_smul consumes the semilinear package directly.
+
+
+  RESIDUE = CLAUSE (iii) ALONE: send a dual-number kernel class to its transition
+  unit. Clauses
+
+  (i) (chart triviality, via nilpotent Nakayama -- no finiteness of sections assumed)
+  and (ii)
+
+  (Gamma(V x Spec k[eps]) = Gamma(V)[eps]) are THEOREMS.
+
+
+  DO NOT RETRY THE AJCR TWO-CHART CechPic PORT. Refuted at the CARRIER, not on cost
+  (I-0689):
+
+  AJCR''s Scheme.CechPic is a self-contained definitional Picard group whose ONLY
+  bridge to
+
+  invertible SHEAVES is cechPicEquivPic, carrying [IsAffine X] irremovably (the proof
+  needs a
+
+  trivializing basic open per point plus span_tensor_free_eq_top over Gamma(X,top)).
+  Clause (iii)
+
+  lives on a PROPER CURVE -- non-affine precisely because the eps-kernel is nonzero.
+  60 files /
+
+  17k sorry-free lines would land on a carrier with no face onto LineBundle.OnProduct.
+  AJCR
+
+  confirmed the finding does not transfer to their side (their target IS that quotient),
+  which
+
+  strengthens it for us.
+
+
+  NOTE AJC''s LineBundle.OnProduct is a PREDICATE subtype -- {M : Modules // IsLocallyTrivial
+  M}
+
+  (LineBundlePullback.lean:136-137), not cover+trivialization data. So producing one
+  from a
+
+  cocycle requires proving invertibility of the glued sheaf, which is why the cocycle
+  route is not
+
+  direct here. AJCR''s Cohomology/GluedSheaf.lean + TwistedSheaf.lean do build sheaves
+
+  from cocycles over an ARBITRARY scheme with no [IsAffine] -- I chased that lead
+  and it FAILS on
+
+  a CATEGORY mismatch. AJC''s carrier is X.Modules = SheafOfModules X.ringCatSheaf
+  (sheaves of
+
+  O_X-modules, mathlib Modules/Sheaf.lean:37); AJCR''s gluedSheaf/twistSheaf is
+
+  Sheaf (Opens.grothendieckTopology X) (ModuleCat k), i.e. k-modules over the CONSTANT
+  base k
+
+  (GluedSheaf.lean:266). grep across ALL of AJCR: SheafOfModules.unit ZERO files,
+  Scheme.Modules
+
+  ZERO files, IsLocallyTrivial ZERO files. gluedTriv is a k-linear equivalence of
+  SECTION MODULES,
+
+  while IsLocallyTrivial demands an iso of SHEAVES OF O_U-MODULES onto SheafOfModules.unit
+  over an
+
+  AFFINE chart -- a change of enriching base, not bookkeeping, and the O_X-module
+  version of the
+
+  glue ports from nothing in AJCR. DO NOT RE-RUN THIS LEAD.
+
+
+  The genuinely missing statement, absent from both projects AND from mathlib (which
+  has no Picard
+
+  group of a SCHEME at all; CommRing.Pic is ring-level), is: Cech H^1(X, O^x) = isomorphism
+  classes
+
+  of invertible sheaves, for NON-AFFINE X.
+
+  '
 status: active
 kind: proof
 priority: high
@@ -110,5 +137,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-28T19:58:13.932851+00:00'
+  updated_at: '2026-07-28T21:12:57.191066+00:00'
   owner: ajc-pic0av

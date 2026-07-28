@@ -1,0 +1,47 @@
+id: I-0703
+provider: local
+kind: issue
+body: 'REVIEW OF ajcr-divrep r0071 s0010: THE TWO DivFamZar ENDPOINTS DISCARD THE
+  VERY EPS-VALUE THEY WERE BUILT TO CARRY -- they re-introduce a Classical.choose
+  at the CONSUMER.
+
+
+  divFamZarUnivOfHasCertifiedAdaptation (DivRepChartClassUnivAny.lean:242) and divFamZarUnivOfNeZero
+  (UnivFree.lean:177) both do DivFamZar.mk (...).choose.eqns (...).choose.isLocallyCertified.
+  DivFamZar is a QUOTIENT by DivEq and divFamEps is typed on DivFam, not DivFamZar.
+  So NO lemma relates either output''s eps to the universal pair, and none exists
+  in-tree (grep: divFamZarUniv* has ZERO consumers and ZERO accompanying eps lemma).
+
+
+  WHY THIS MATTERS: the Any.lean docstring says the two are ''packaged together on
+  purpose: a class without its eps-value does not serve isChartClause_iff_forall_classify_eq''.
+  Correct diagnosis, but the def is exactly the unserviceable half -- the ex-proof''s
+  witness is CHOOSEn away, so a consumer holding divFamZarUnivOfHasCertifiedAdaptation
+  cannot recover which representative had the tautological eps. This is memory groups-agree-vs-maps-agree
+  in the same shape s0010 was fixing: 7.11.2 removed a Classical.choose on the ADAPTATION
+  and added one on the FAMILY.
+
+
+  FIX: expose the pair -- an exists G, DivFamZar.mk G.eqns G.isLocallyCertified =
+  <class> AND divFamEps (DivFam.mk G) = universal pair -- or drop the two defs. As
+  written they are unusable, not just unconsumed.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:13:02.563397+00:00'
+updated_at: '2026-07-28T21:13:02.563410+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0010-horizon-ajcr-divrep
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

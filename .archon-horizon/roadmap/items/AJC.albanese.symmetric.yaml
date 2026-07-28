@@ -7,32 +7,46 @@ summary: "Abel-Jacobi and symmetric-power factorisation. Milne's argument over t
   \ residue is the OBJECT\nSym^g C, equivalently the single instance HasColimit (permDiagram\
   \ C g)\n(SymPowColimit.hasColimit_permDiagram_iff -- an equivalence, so the reduction\
   \ is lossless).\n\nRoute: explicit Scheme.GlueData from affine charts. The bill\
-  \ is four items; 2 are supplied\nas of run 0069 r6, and BOTH of the two closed this\
-  \ round had been recorded by earlier\nsessions of this same lane as genuine walls:\n\
-  \n 1. DONE. G-stable affine open neighbourhoods for a finite group acting by automorphisms\n\
-  \    (Albanese/StableAffineCoverGroup.lean), plus its S_n instantiation\n    exists_stable_affineOpen_perm.\
-  \ The instantiation was blocked only by a universe binder\n    copied from the Galois\
-  \ source (G : Type u tied to Scheme.{u}, excluding\n    Equiv.Perm (Fin n) : Type\
-  \ 0); the prime-avoidance lemma was already index-polymorphic.\n 2. DONE. The Aut-valued\
-  \ S_n-action MonObj.permAutHom (Albanese/GrpObjFoldSum.lean).\n    Recorded for\
-  \ three rounds as \"not free\" because permAut was never shown invertible;\n   \
-  \ permAut sigma-inverse is a two-sided inverse, since permAut is a HOMOMORPHISM\
-  \ for\n    composition. The inverse in SymPowColimit.permEnd is an artefact of End's\
-  \ reversed\n    multiplication, not a fact about permAut.\n 3. DONE. The n-ary coproduct-of-commutative-algebras\
+  \ is four items. As of run 0069 r6:\n2 SUPPLIED, 1 PARTIAL, 1 OPEN -- do not round\
+  \ that to 3. (A fresh-context review caught this\nrow saying \"3 of 4\" while the\
+  \ team thread said \"2 of 4\"; the authoritative count now lives in\nStableAffineCoverGroup.lean's\
+  \ header.) Both items closed this round had been recorded by\nearlier sessions of\
+  \ THIS SAME LANE as genuine walls:\n\n 1. DONE. G-stable affine open neighbourhoods\
+  \ for a finite group acting by automorphisms\n    (Albanese/StableAffineCoverGroup.lean),\
+  \ plus its S_n instantiation\n    exists_stable_affineOpen_perm. The instantiation\
+  \ was blocked only by a universe binder\n    copied from the Galois source (G :\
+  \ Type u tied to Scheme.{u}, excluding\n    Equiv.Perm (Fin n) : Type 0); the prime-avoidance\
+  \ lemma was already index-polymorphic.\n 2. DONE. The Aut-valued S_n-action MonObj.permAutHom\
+  \ (Albanese/GrpObjFoldSum.lean).\n    Recorded for three rounds as \"not free\"\
+  \ because permAut was never shown invertible;\n    permAut sigma-inverse is a two-sided\
+  \ inverse, since permAut is a HOMOMORPHISM for\n    composition. The inverse in\
+  \ SymPowColimit.permEnd is an artefact of End's reversed\n    multiplication, not\
+  \ a fact about permAut.\n 3. PARTIAL. The n-ary coproduct-of-commutative-algebras\
   \ = n-fold tensor power comparison,\n    WITH its permutation action matched to\
   \ permAlgHom (Albanese/TensorPowerCoproduct.lean:\n    coprodLift, existsUnique_coprodLift,\
   \ coprodLift_permAlgHom). Previously recorded as\n    absent from mathlib on the\
   \ basis of the binary pushout; in fact both halves were in\n    mathlib unbundled\
   \ -- uniqueness IS PiTensorProduct.algHom_ext, existence is one\n    liftAlgHom.\
   \ Note the equivariance is on f . e-inverse, not f . e (permAlgHom is an\n    ANTI-homomorphism,\
-  \ unlike permAut).\n 4. OPEN, and genuinely geometric: the overlap/cocycle agreement\
-  \ of the chart quotients,\n    and OrbitsInAffineOpen FOR THE CURVE -- where quasi-projectivity\
-  \ enters and mathlib has\n    no such vocabulary at this pin. This is the honest\
-  \ remaining wall.\n\nAlbaneseUP.lean's six pinned sorries are unchanged and should\
-  \ stay so: they are stated\nagainst a sorry-bodied SymmetricPower, so discharging\
-  \ them would establish nothing.\nabelJacobi is blocked EARLIER than any Pic0 fact\
-  \ -- O(Delta - {P0}xC - Cx{P0}) on CxC is\nconstructed nowhere, and no lane produces\
-  \ a DivFamily to feed PicScheme.abelMap.\n"
+  \ unlike permAut); permAlgHom_comp_singleAlgHom gives the\n    coprojection-level\
+  \ clause. What is NOT written is the Cofan/IsColimit packaging in\n    (Under k)-op,\
+  \ so symPowData_affineAlgebra does not literally consume this yet -- the\n    mathematics\
+  \ is proved, the categorical crossing is not. Hence PARTIAL, not DONE.\n 4. OPEN,\
+  \ and genuinely geometric: the overlap/cocycle agreement of the chart quotients,\n\
+  \    and OrbitsInAffineOpen FOR THE CURVE -- where quasi-projectivity enters and\
+  \ mathlib has\n    no such vocabulary at this pin. This is the honest remaining\
+  \ wall.\n\nAlbaneseUP.lean's six pinned sorries are unchanged and should stay so:\
+  \ they are stated\nagainst a sorry-bodied SymmetricPower, so discharging them would\
+  \ establish nothing.\nabelJacobi is blocked EARLIER than any Pic0 fact -- O(Delta\
+  \ - {P0}xC - Cx{P0}) on CxC is\nconstructed nowhere, and no lane produces a DivFamily\
+  \ to feed PicScheme.abelMap.\n\nINTEGRATION DEBT, recorded because it is now four\
+  \ rounds old: nothing outside its own files\nconsumes ANY of this layer (permAutHom,\
+  \ exists_stable_affineOpen_perm{,_over}, coprodLift*).\nThe r6 review also found\
+  \ that the first S_n instantiation was on the wrong ambient category\n-- Scheme\
+  \ rather than Over (Spec kbar), which the leg uses and which Over.forget does not\n\
+  map products to. Repaired (exists_stable_affineOpen_perm_over), but the pattern\
+  \ to watch is\nthat a correct fix one layer down was reported as fixing the layer\
+  \ above.\n"
 status: active
 kind: proof
 priority: high
@@ -55,7 +69,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-28T20:26:37.985852+00:00'
+  updated_at: '2026-07-28T21:07:40.129889+00:00'
   pinned_commits:
   - 1fedb22e4
   - f7391b281

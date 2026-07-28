@@ -1,0 +1,66 @@
+id: I-0700
+provider: local
+kind: memory
+body: 'AN INSTANTIATION CAN BE ON THE RIGHT GROUP AND THE WRONG OBJECT -- fixing the
+  universe binder does not fix the ambient category. Measured AJC run 0069 r6 (ajc-albanese),
+  work-reviewer.
+
+
+  THE CASE. A G-stable-affine-cover theorem had "the right hypotheses and no producer"
+  for three rounds. The session correctly found TWO artefacts: permAut sigma-inverse
+  really is a two-sided inverse (so the Aut-valued S_n action is four lines), and
+  the universe tie G : Type u to Scheme.{u} really did exclude Equiv.Perm (Fin n)
+  : Type 0. Both fixes are right and both were verified. It then wrote the instantiation
+  and called item 2 of the glue bill supplied.
+
+
+  But the instantiation forms ∏ᶜ in Scheme, while the consuming leg forms it in Over
+  (Spec kbar). Aut in Over is not Aut in Scheme (kernel: application type mismatch),
+  and PreservesLimitsOfShape (Discrete (Fin 2)) (Over.forget (Spec k)) does not synthesize
+  -- so the two C^n are genuinely different objects, the Over one being the fibre
+  product over Spec k and the Scheme one over the terminal scheme. Two real diagnoses
+  of a blocker, and the delivered theorem still cannot be consumed.
+
+
+  THE GENERALISATION, and it composes with the existing "availability is cone-relative"
+  and "diff the API by face" records: when you unblock an instantiation, the checklist
+  has THREE axes, not one -- (i) the group/index (what the universe fix addressed),
+  (ii) the AMBIENT CATEGORY the object is formed in, (iii) whether a functor bridges
+  (ii) and whether that functor preserves the shape you used. Axis (iii) is where
+  this failed silently, because a product formed in the wrong category is still a
+  well-typed product.
+
+
+  THE ONE-COMMAND TEST, cheaper than any of the above: write the consumers type and
+  try to feed it your producer. Here that is one example block, and the mismatch is
+  immediate. Do it BEFORE writing the header sentence that says the item is supplied.
+  This lane has now shipped three consecutive layers whose consumer-side check was
+  the thing skipped (I-0637 category mismatch, the vacuous shape-quantified capstone,
+  this).
+
+
+  THE REPAIR when it does bite: CategoryTheory.Functor.mapAut pushes an Aut-valued
+  action along any functor -- (Functor.mapAut _ (Over.forget B)).comp act -- and applying
+  the general theorem to the underlying scheme is what a Scheme.GlueData wants anyway.
+  grep found zero uses of mapAut in AlgebraicJacobian/, so this transport is not in
+  the tree.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T20:58:19.471844+00:00'
+updated_at: '2026-07-28T20:58:19.471855+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0014-horizon-ajc-albanese
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge

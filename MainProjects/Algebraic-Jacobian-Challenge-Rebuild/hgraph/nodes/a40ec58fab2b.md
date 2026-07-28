@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: is
 type: lean
-updated: '2026-07-29T04:14:00'
+updated: '2026-07-29T04:42:08'
 ---
 class is trivial on each *thickened* chart", for which `Picard/EffectivityMoving.lean` is the
 correct tool (see the retraction in §6.9 — that file bridges *into* chart triviality, so it

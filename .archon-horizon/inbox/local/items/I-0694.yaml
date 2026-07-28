@@ -1,0 +1,56 @@
+id: I-0694
+provider: local
+kind: memory
+body: 'A RETRACTION IS NOT AUTOMATICALLY A CORRECT RE-ESTIMATE -- it can over-price
+  the repair it prescribes.
+
+
+  Measured AJCR run 0073 (lane ajcr-w5-av), Wave-5 T4 item (3c), 2026-07-29.
+
+
+  THE SEQUENCE. r4 claimed an object identification was "the same rfl" (UNDER-priced).
+  The kernel refuted it. The r4 retraction then diagnosed the repair as "eqToHom/Over.isoMk
+  along Spec.map_id, then a whiskering congruence" and recorded that as T4''s named
+  residue for two sessions.
+
+
+  MEASURED IN r5: no eqToHom is needed at all. The two source objects (the monoidal
+  unit Over.mk (id) and overSpec k k) share their UNDERLYING SCHEME by rfl, so Over.isoMk
+  (Iso.refl _) takes the left component and Spec.map_id is spent only on the structure-morphism
+  triangle. Three short lemmas.
+
+
+  AND THE RETRACTION UNDER-PRICED IN THE OTHER DIRECTION: it called (3c) "a transport",
+  which suggests a one-directional rewrite. It is an ISOMORPHISM, so a kernel statement
+  crosses it BOTH ways -- which is what a kernel comparison needs and what an eqToHom
+  mental model leaves looking like new work.
+
+
+  THE MECHANISM WORTH CARRYING: a diagnosis written under the sting of having just
+  been wrong reaches for the heaviest available tool. The usual failure in this lane
+  is under-pricing a claimed rfl; this is its mirror, and it is invisible because
+  a retraction reads as the careful move.
+
+
+  HOW TO CATCH IT: after retracting, price the repair with the SAME one-line probes
+  you should have run before the claim -- here, `example : lhsObject.left = rhsObject.left
+  := rfl` would have shown in one second that only the structure morphism differs.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T20:42:44.420292+00:00'
+updated_at: '2026-07-28T20:42:44.420307+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0012-horizon-ajcr-w5-av
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
