@@ -10,9 +10,10 @@ docstring: 'Single-bump induction for finitely supported `ℤ`-valued functions:
 file: AlgebraicJacobian/RiemannRoch/ChiFiniteness.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.finsupp_induction_bump
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-28T17:25:28'
 ---
 private theorem finsupp_induction_bump {α : Type u} {P : (α →₀ ℤ) → Prop} (zero : P 0)
     (bump : ∀ (a : α) (f : α →₀ ℤ), P (f + Finsupp.single a 1) ↔ P f) (f : α →₀ ℤ) :

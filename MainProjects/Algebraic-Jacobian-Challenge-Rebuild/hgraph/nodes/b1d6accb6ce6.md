@@ -8,9 +8,10 @@ docstring: The tensor-element identity finishing `ΓSpecIso_hom_tripleSection` (
 file: AlgebraicJacobian/Picard/WitnessAway.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Over.triple_elt_eq
 type: lean
-updated: '2026-07-24T17:02:48'
+updated: '2026-07-28T17:25:28'
 ---
 private lemma triple_elt_eq (x y z : B) :
     (x ⊗ₜ[A] ((1 : B) ⊗ₜ[A] (1 : B)))

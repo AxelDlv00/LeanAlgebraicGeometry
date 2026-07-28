@@ -8,9 +8,10 @@ docstring: (Implementation) Powers of an endomorphism acting as `a₀ • ·` ac
 file: AlgebraicJacobian/Cohomology/GluedAlgebra.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicJacobian.RigidEngine.pow_apply_of_smul
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-28T17:25:21'
 ---
 private lemma pow_apply_of_smul (a₀ : A) (e : Module.End R M)
     (he : ∀ m : M, e m = a₀ • m) (n : ℕ) (m : M) : (e ^ n) m = a₀ ^ n • m := by

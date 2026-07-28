@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.windowA_exists
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivFibre.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.windowA_exists
 type: lean
-updated: '2026-07-19T10:31:16'
+updated: '2026-07-28T17:25:25'
 ---
 private theorem windowA_exists : ∃ a : ℕ, windowBound π hπ ≤ (a : ℤ) * windowδ π := by
   refine ⟨(windowBound π hπ).toNat, ?_⟩

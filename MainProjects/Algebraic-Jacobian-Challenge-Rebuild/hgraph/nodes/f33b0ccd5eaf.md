@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.whisker_eval_covers
 file: AlgebraicJacobian/Picard/RelPicPi.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.whisker_eval_covers
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-28T17:25:27'
 ---
 private lemma whisker_eval_covers [Finite ι] (x : (C ⊗ overSpec k (Π j, B j)).left) :
     ∃ i, x ∈ Scheme.Hom.opensRange

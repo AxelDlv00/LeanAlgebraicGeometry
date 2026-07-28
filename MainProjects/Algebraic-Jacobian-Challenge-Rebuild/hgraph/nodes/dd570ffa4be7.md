@@ -13,9 +13,10 @@ docstring: 'The core comparison behind `toPic_map`: for a morphism `g : X ⟶ Y`
 file: AlgebraicJacobian/Picard/CechPicToPicNaturality.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.CechPic.pic_pullback_eq_mapRingHom
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-28T17:25:23'
 ---
 private lemma pic_pullback_eq_mapRingHom [IsAffine X] [IsAffine Y] (g : X ⟶ Y)
     {𝒰 : Y.PointedCover} (γ : Y.unitsCocycle 𝒰)

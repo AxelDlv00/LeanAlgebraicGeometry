@@ -13,9 +13,10 @@ docstring: 'The cocycle identity for the extension pair values: on triple overla
 file: AlgebraicJacobian/Picard/CechPicClopenGlue.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.CechPic.extPairs_cocycle
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-28T17:25:23'
 ---
 private lemma extPairs_cocycle (hdisj : w.opensRange ⊓ Ω' = ⊥) (y y' y'' : Y) :
     Y.unitsRestrict (inf_le_left :

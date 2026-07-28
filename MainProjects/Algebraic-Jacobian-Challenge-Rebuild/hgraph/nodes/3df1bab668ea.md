@@ -8,9 +8,10 @@ docstring: Two `B`-functionals on `B ⊗[A] X` that agree on the tensors `1 ⊗�
 file: AlgebraicJacobian/Descent/InvertibleModule.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: Module.dual_ext
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-28T17:25:22'
 ---
 private theorem dual_ext {X : Type u} [AddCommGroup X] [Module A X]
     {F G : Dual B (B ⊗[A] X)} (h : ∀ x : X, F (1 ⊗ₜ x) = G (1 ⊗ₜ x)) : F = G := by

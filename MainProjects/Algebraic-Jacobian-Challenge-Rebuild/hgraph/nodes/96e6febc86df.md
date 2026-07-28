@@ -8,9 +8,10 @@ docstring: Over an open avoiding `x`, the module of sections of the skyscraper s
 file: AlgebraicJacobian/RiemannRoch/Skyscraper.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.skyModule_subsingleton_of_not_mem
 type: lean
-updated: '2026-07-16T21:33:29'
+updated: '2026-07-28T17:25:29'
 ---
 private lemma skyModule_subsingleton_of_not_mem (x : X) (M : ModuleCat.{u} K) {U : X.Opens}
     (h : x ∉ U) : Subsingleton ((skyModule x M).obj.obj (op U)) := by

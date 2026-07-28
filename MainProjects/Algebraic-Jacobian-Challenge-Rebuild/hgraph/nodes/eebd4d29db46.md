@@ -10,9 +10,10 @@ docstring: 'Membership of a *nonzero* rational function in a bounded lattice, re
 file: AlgebraicJacobian/RiemannRoch/FLVQcoh.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.mem_boundedSections_unit_iff
 type: lean
-updated: '2026-07-28T15:00:54'
+updated: '2026-07-28T17:25:28'
 ---
 private lemma mem_boundedSections_unit_iff (s : X.functionFieldˣ) (A : X.CurveDivisor)
     (U : X.Opens) :

@@ -8,9 +8,10 @@ docstring: Restriction of a section along `W ≤ V ≤ U` composes to restrictio
 file: AlgebraicJacobian/Picard/DivisorClass.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.sectionRestrict_comp
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-28T17:25:25'
 ---
 private lemma sectionRestrict_comp {W V U : X.Opens} (h₁ : W ≤ V) (h₂ : V ≤ U)
     (s : Γ(X, U)) :

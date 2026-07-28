@@ -16,9 +16,10 @@ docstring: "The trivializing unit at `a`. -/\nprivate noncomputable def μunit (
 file: AlgebraicJacobian/Picard/DescentClassRepBuild.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Over.basicOpen_mul_le_left
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-28T17:25:23'
 ---
 private lemma basicOpen_mul_le_left
     (f g : Γ(SA, ⊤)) :

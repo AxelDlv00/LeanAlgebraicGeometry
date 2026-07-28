@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.IdealPurity.finite_mul_read_mem_span
 file: AlgebraicJacobian/Picard/DivSchemeMulIdealFinite.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.IdealPurity.finite_mul_read_mem_span
 type: lean
-updated: '2026-07-21T12:01:58'
+updated: '2026-07-28T17:25:24'
 ---
 private theorem finite_mul_read_mem_span
     (m : ι → B) (r : K →ₗ[R] B) (x : ι → K) :

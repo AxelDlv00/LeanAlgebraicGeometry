@@ -9,9 +9,10 @@ docstring: 'The `w₁₃`-pullback of the descended comparison unit, in canonica
 file: AlgebraicJacobian/Picard/CoherentWitnessExists.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.stepG_R₁₃
 type: lean
-updated: '2026-07-24T17:02:46'
+updated: '2026-07-28T17:25:23'
 ---
 private lemma stepG_R₁₃ (𝒲 : (Sq).PointedCover) (θ₀ : ∀ x : Sq, Γ(Sq, 𝒲.opens x)ˣ)
     (𝒜 : (XB).PointedCover) (α : ∀ v : XB, Γ(XB, 𝒜.opens v)ˣ)

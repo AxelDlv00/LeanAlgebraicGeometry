@@ -7,9 +7,10 @@ docstring: The degree function evaluates a divisor's own class to its degree.
 file: AlgebraicJacobian/RiemannRoch/Degree.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.classDegFun_picClass
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-28T17:25:28'
 ---
 private theorem classDegFun_picClass (D : X.CurveDivisor) :
     classDegFun K (CurveDivisor.picClass K D) = CurveDivisor.deg K D :=

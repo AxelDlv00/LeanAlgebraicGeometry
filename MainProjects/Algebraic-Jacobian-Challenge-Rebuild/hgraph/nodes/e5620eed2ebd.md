@@ -10,9 +10,10 @@ docstring: 'The restriction of the first equation to a piece overlap vanishes al
 file: AlgebraicJacobian/Picard/DivisorThetaDatum.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.DivisorAdaptation.germ_res_eqn_left
 type: lean
-updated: '2026-07-17T16:57:13'
+updated: '2026-07-28T17:25:26'
 ---
 private lemma germ_res_eqn_left (i j : A.index) :
     ∀ (z : relCurve C R) (hz : z ∈ A.pieces i ⊓ A.pieces j),

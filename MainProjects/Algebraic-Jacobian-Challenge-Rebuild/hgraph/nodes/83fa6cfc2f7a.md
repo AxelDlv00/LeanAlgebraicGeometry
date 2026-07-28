@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Over.sectionsPushoutIso_tmul_one
 file: AlgebraicJacobian/Picard/SectionsDescent.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Over.sectionsPushoutIso_tmul_one
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-28T17:25:27'
 ---
 private lemma sectionsPushoutIso_tmul_one {U : (XA).Opens} (hU : IsAffineOpen U) (s : Γ(XA, U)) :
     (sectionsPushoutIso (R := R) hU).hom (s ⊗ₜ 1)

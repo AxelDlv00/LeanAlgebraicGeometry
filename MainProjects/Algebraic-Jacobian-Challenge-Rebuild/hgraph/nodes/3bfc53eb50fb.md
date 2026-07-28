@@ -19,9 +19,10 @@ docstring: '**Split injection into a free module from the residue-fibre injectiv
 file: AlgebraicJacobian/Picard/DivSchemeRedesignFreeFlat.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: exists_comp_eq_id_of_lTensor_residueField_injective
 type: lean
-updated: '2026-07-20T11:31:57'
+updated: '2026-07-28T17:25:24'
 ---
 private lemma exists_comp_eq_id_of_lTensor_residueField_injective
     [Module.Finite R M] [Module.Free R N] (ψ : M →ₗ[R] N)

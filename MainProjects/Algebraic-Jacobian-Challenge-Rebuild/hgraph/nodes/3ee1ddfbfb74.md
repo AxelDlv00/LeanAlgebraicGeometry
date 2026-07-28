@@ -7,9 +7,10 @@ docstring: The chosen refinement map into the chosen field refinement.
 file: AlgebraicJacobian/Picard/DegreeZero.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.degAffHom
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-28T17:25:23'
 ---
 private def degAffHom (E : Algebra.EtaleCover K) : E.Carrier →ₐ[K] degAffField E :=
   E.exists_finiteSeparableField_algHom.choose_spec.choose_spec.choose_spec.choose_spec

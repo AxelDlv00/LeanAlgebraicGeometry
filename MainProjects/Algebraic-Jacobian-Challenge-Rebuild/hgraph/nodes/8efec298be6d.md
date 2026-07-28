@@ -10,9 +10,10 @@ docstring: 'The chosen finite separable field refinement of a presented étale c
 file: AlgebraicJacobian/Picard/DegreeZero.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.degAffField
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-28T17:25:23'
 ---
 private def degAffField (E : Algebra.EtaleCover K) : Type u :=
   E.exists_finiteSeparableField_algHom.choose

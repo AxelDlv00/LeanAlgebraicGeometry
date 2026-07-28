@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.descentMul₁₂_comp_descentFace₁₂
 file: AlgebraicJacobian/Picard/SpecDegeneracy.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.descentMul₁₂_comp_descentFace₁₂
 type: lean
-updated: '2026-07-24T17:02:48'
+updated: '2026-07-28T17:25:28'
 ---
 private lemma descentMul₁₂_comp_descentFace₁₂ :
     (descentMul₁₂ (A := A) (B := B)).comp (Module.descentFace₁₂ A B)

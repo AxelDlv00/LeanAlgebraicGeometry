@@ -10,9 +10,10 @@ docstring: 'Germs at a point commute with `resHom`: the germ of a restricted sec
 file: AlgebraicJacobian/RiemannRoch/GluedDivisorSheaf.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.germ_resHom
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-28T17:25:28'
 ---
 private lemma germ_resHom {V W : X.Opens} (h : W ≤ V) (x : X) (hx : x ∈ W)
     (t : Γ(X, V)) :

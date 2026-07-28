@@ -12,9 +12,10 @@ docstring: '(Implementation) The top-restricted `k`-level section is the chart-0
 file: AlgebraicJacobian/Picard/DivSchemeEpsCarveKit.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.twistRes_relThetaFieldSection
 type: lean
-updated: '2026-07-19T10:01:15'
+updated: '2026-07-28T17:25:24'
 ---
 private lemma twistRes_relThetaFieldSection
     (h : ↥(divisorSections k (n • fiberWeilDivisor π) ⊤)) :

@@ -7,9 +7,10 @@ docstring: The pair value of an inverse unit cocycle is the inverse pair value.
 file: AlgebraicJacobian/Picard/DivisorDatumInverse.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.inv_unitsEvInf
 type: lean
-updated: '2026-07-19T15:01:16'
+updated: '2026-07-28T17:25:25'
 ---
 private lemma inv_unitsEvInf {X : Scheme.{u}} {𝒰 : X.PointedCover}
     (γ : X.unitsCocycle 𝒰) (i j : X) :

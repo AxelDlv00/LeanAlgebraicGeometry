@@ -13,9 +13,10 @@ docstring: 'The `k[T;T⁻¹]`-algebra structure map on the sections of the chart
 file: AlgebraicJacobian/Cohomology/Finiteness.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.overlapLaurentHom
 type: lean
-updated: '2026-07-16T21:33:27'
+updated: '2026-07-28T17:25:21'
 ---
 private noncomputable def overlapLaurentHom :
     LaurentPolynomial k →+* Γ(Y, π ⁻¹ᵁ P1.chartOpen k 0 ⊓ π ⁻¹ᵁ P1.chartOpen k 1) :=

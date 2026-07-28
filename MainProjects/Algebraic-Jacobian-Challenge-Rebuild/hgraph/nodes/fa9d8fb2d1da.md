@@ -18,9 +18,10 @@ docstring: '**`ord` transport along an isomorphism, germ form**: for an isomorph
 file: AlgebraicJacobian/RiemannRoch/DegreeIsoTransport.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.ord_functionFieldMap_germ_of_isIso
 type: lean
-updated: '2026-07-17T16:57:14'
+updated: '2026-07-28T17:25:28'
 ---
 private lemma ord_functionFieldMap_germ_of_isIso (f : W ⟶ X) [IsIso f]
     (hgen : f.base (genericPoint W) = genericPoint X)

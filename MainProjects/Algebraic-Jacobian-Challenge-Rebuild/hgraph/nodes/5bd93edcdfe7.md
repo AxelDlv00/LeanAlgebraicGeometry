@@ -7,9 +7,10 @@ docstring: The value of a restricted unit.
 file: AlgebraicJacobian/Picard/DivisorThetaDatum.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.FinCoverData.val_unitsRestrict
 type: lean
-updated: '2026-07-17T16:57:13'
+updated: '2026-07-28T17:25:26'
 ---
 private lemma val_unitsRestrict {W U : (relCurve C R).Opens} (h : W ≤ U)
     (u : Γ(relCurve C R, U)ˣ) :

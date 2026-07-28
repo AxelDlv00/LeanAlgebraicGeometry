@@ -19,9 +19,10 @@ docstring: 'The product basic refinement of a pulled-back pointed cover: given a
 file: AlgebraicJacobian/Picard/CechPicToPicNaturality.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.prodRefinement
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-28T17:25:23'
 ---
 private def prodRefinement (g : X ⟶ Y) {𝒰 : Y.PointedCover} (P : 𝒰.BasicRefinement)
     (Q : (𝒰.pullback g).BasicRefinement) : (𝒰.pullback g).BasicRefinement where

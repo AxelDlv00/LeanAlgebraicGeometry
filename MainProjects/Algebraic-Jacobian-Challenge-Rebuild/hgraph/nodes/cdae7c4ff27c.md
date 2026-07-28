@@ -18,9 +18,10 @@ docstring: '(Implementation) **One frame piece of an overlap ring, against a cla
 file: AlgebraicJacobian/Picard/DivRepClassifyZarCompat.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.specMap_awayPiece_eq_of_clause
 type: lean
-updated: '2026-07-19T14:01:14'
+updated: '2026-07-28T17:25:23'
 ---
 private theorem specMap_awayPiece_eq_of_clause
     {S₀ : Type u} [CommRing S₀] [Algebra k S₀]

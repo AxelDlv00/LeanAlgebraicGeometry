@@ -7,9 +7,10 @@ docstring: (Implementation) Chart-1 twin of `relSectionsBaseChange_mul_fiberCoor
 file: AlgebraicJacobian/Cohomology/RigidEngine4Relative.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.relSectionsBaseChange_mul_fiberCoord₁
 type: lean
-updated: '2026-07-24T17:02:46'
+updated: '2026-07-28T17:25:22'
 ---
 private lemma relSectionsBaseChange_mul_fiberCoord₁ [IsAffineHom π] (a : R)
     (s : Γ(C.left, fiberChart₁ π)) :

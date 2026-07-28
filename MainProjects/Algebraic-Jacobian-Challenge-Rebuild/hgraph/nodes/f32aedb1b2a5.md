@@ -10,9 +10,10 @@ docstring: 'The `w₁₃`-coface expansion of the per-piece comparison unit, in 
 file: AlgebraicJacobian/Picard/EffectivityPieceClass.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Over.pieceCoherent_exp₁₃
 type: lean
-updated: '2026-07-24T17:02:47'
+updated: '2026-07-28T17:25:26'
 ---
 private theorem pieceCoherent_exp₁₃
     {𝒩 : (XB).PointedCover} {γ : (XB).unitsCocycle 𝒩}

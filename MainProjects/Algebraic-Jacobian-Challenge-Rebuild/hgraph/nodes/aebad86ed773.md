@@ -17,9 +17,10 @@ docstring: "The descent-class transport commutes with refinement transport — w
 file: AlgebraicJacobian/Picard/PicEtAffTransport.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.RelPicTransportFamily.mapSig_rel
 type: lean
-updated: '2026-07-17T16:57:14'
+updated: '2026-07-28T17:25:27'
 ---
 private lemma mapSig_rel {U V : Algebra.EtaleCover A} {x : descentClasses E U}
     {y : descentClasses E V} (F : Algebra.EtaleCover A) (f : U.Carrier →ₐ[A] F.Carrier)

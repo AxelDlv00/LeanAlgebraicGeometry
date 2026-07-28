@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Over.basicOpen_mul_le_right
 file: AlgebraicJacobian/Picard/DescentClassRepBuild.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Over.basicOpen_mul_le_right
 type: lean
-updated: '2026-07-24T17:02:47'
+updated: '2026-07-28T17:25:23'
 ---
 private lemma basicOpen_mul_le_right
     (f g : Γ(SA, ⊤)) :

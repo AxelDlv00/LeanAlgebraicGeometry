@@ -10,9 +10,10 @@ docstring: 'The cross-chart theta twisting unit agrees with the whole-chart thet
 file: AlgebraicJacobian/Picard/DivSchemeFibreH1.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.DivisorAdaptation.theta_chart_inl_inr
 type: lean
-updated: '2026-07-18T19:01:11'
+updated: '2026-07-28T17:25:24'
 ---
 private lemma theta_chart_inl_inr (a : ℕ) (i : Fin A.m₀) (j : Fin A.m₁)
     {O : (relCurve C R).Opens}

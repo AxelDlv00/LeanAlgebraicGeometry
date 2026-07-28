@@ -10,9 +10,10 @@ docstring: 'The single-point case of EV-main: pulling back the class of a one-po
 file: AlgebraicJacobian/RiemannRoch/DegreePullback.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.classDeg_cechPicMap_picClass_single
 type: lean
-updated: '2026-07-28T15:00:54'
+updated: '2026-07-28T17:25:28'
 ---
 private theorem classDeg_cechPicMap_picClass_single (f : X ⟶ Y) [IsFinite f]
     (hcomp : f ≫ (Y ↘ Spec (CommRingCat.of K)) = X ↘ Spec (CommRingCat.of K))

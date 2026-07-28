@@ -7,9 +7,10 @@ docstring: '`fiberEqn` in `resHom` normal form on the chart-0 members.'
 file: AlgebraicJacobian/Cohomology/RelCurveCollapse.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.fiberEqn_of_mem'
 type: lean
-updated: '2026-07-17T21:17:12'
+updated: '2026-07-28T17:25:21'
 ---
 private lemma fiberEqn_of_mem' {z : Y} (h : z ∈ fiberChart₀ π) :
     fiberEqn π a z

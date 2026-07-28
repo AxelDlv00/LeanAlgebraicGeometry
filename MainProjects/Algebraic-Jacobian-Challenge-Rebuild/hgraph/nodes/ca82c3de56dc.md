@@ -16,9 +16,10 @@ docstring: '(Implementation) The `Module.Grassmannian.map` `letI` seam, closed: 
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivRes.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.divUniversalFst_toSubmodule_eq_span_aux
 type: lean
-updated: '2026-07-19T16:01:13'
+updated: '2026-07-28T17:25:25'
 ---
 private lemma divUniversalFst_toSubmodule_eq_span_aux :
     (divUniversalFst k (windowS_choice π hπ g • fiberWeilDivisor π)

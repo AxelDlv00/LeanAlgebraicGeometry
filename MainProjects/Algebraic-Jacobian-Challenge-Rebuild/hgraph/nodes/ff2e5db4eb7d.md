@@ -10,9 +10,10 @@ docstring: 'Cancellation core of the transition telescope: `a = b ⋅ c₁`, `b 
 file: AlgebraicJacobian/Picard/EffectivitySplice.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Over.telescope_core
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-28T17:25:26'
 ---
 private lemma telescope_core {G : Type u} [CommGroup G] {a b d c₁ c₂ c₃ : G}
     (h₁ : a = b * c₁) (h₂ : b = d * c₂) (h₃ : a = d * c₃) : c₁ * c₂ = c₃ := by

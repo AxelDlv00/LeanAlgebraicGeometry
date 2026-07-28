@@ -12,9 +12,10 @@ docstring: '**Purity of the image from a flat cokernel**: if `N ⧸ range δ` is
 file: AlgebraicJacobian/Picard/FlatCokernel.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: LinearMap.lTensor_barMap_injective_of_flat_coker
 type: lean
-updated: '2026-07-17T08:41:25'
+updated: '2026-07-28T17:25:26'
 ---
 private theorem lTensor_barMap_injective_of_flat_coker
     [Module.Flat R (N ⧸ LinearMap.range δ)]

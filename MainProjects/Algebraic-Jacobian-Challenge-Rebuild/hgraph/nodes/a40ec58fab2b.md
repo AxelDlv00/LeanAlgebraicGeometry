@@ -1,69 +1,47 @@
 ---
 author: sync
-content_type: theorem
+content_type: class
 created: '2026-07-24T17:02:46'
 decl: is
-file: AlgebraicJacobian/Picard/Pic0ChartLocusIsOpen.lean
+file: AlgebraicJacobian/Tangent/TwoChartRepresentable.lean
 generated: lean
-lean_status: sorry
+lean_status: lean_ok
 title: is
 type: lean
-updated: '2026-07-28T15:00:54'
+updated: '2026-07-28T17:25:29'
 ---
-theorem is real mathematics (it is the three transports plus the dictionary), and the
-hypothesis is a single, precisely stated obligation which the GAP-1 mul/tensor brick will
-discharge.
+class is trivial on each *thickened* chart", for which `Picard/EffectivityMoving.lean` is the
+correct tool (see the retraction in §6.9 — that file bridges *into* chart triviality, so it
+belongs to `(iii-c2-aff)`, not here).
 
-Writing it the other way round — stating `isOpen_chartLocus` unconditionally with a `sorry`
-— would hide the fact that the missing input is a *construction*, not a proof.
+## The argument
 
-**This file is sorry-free as of 2026-07-28.**  Its earlier single `sorry` (the carrier/field
-translation) was not a mathematical gap: it was an artifact of taking the `Algebra A` /
-`IsScalarTower k A` structures on `κ(t)` as explicit `alg`/`tow` *arguments*, which both made
-the statement unprovable — an arbitrary regrading of `κ(t)` over `A` is not a legal reading of
-the fibre — and forced every consumer to carry two dead parameters.  With the canonical
-instances of `Picard/Pic0ChartTestPoint.lean` the whole translation is
-`hasWitnessH1Vanishing_iff_of_fieldExtension` across `Spec.residueFieldIso`, and the carrier
-identification `↥(overSpec k A).left = PrimeSpectrum A` is definitional.  The general lesson
-is recorded on the `chart-u` roadmap node.
+Write `L = mk 𝒩 γ.class`.
 
-## Main declarations
-
-* `AlgebraicGeometry.IsChartDatumPresentation` — the residue, named.
-* `AlgebraicGeometry.chartLocus_eq_cechWitnessLocus_of_presentation` — the identification of
-  `chartLocus` over an affine test with the landed class-indexed witness locus.  This is
-  transports (0) and (iii) discharged.
-* `AlgebraicGeometry.isOpen_chartLocus_of_presentation` — **the keystone, conditionally**:
-  `chartLocus` is open over an affine test given the presentation.
+1. **Per-chart cochains.** `CechPic.map (V s).ι L = 1` feeds the landed
+   `exists_trimmed_trivializing_of_cechPicMap_ι_eq_one` — which carries **no affineness
+   hypothesis** — giving units `t s b : Γ(X, 𝒩.opens b ⊓ V s)ˣ` with
+   `t s b · γ(b,b') = t s b'` on trimmed pairwise overlaps.
+2. **The overlap unit.** On `𝒩.opens b ⊓ V₀ ⊓ V₁` the ratio `t false b · (t true b)⁻¹` is
+   **independent of `b`**: the two instances of step 1 contribute the same factor `γ(b,b')`,
+   which cancels because units of a commutative ring of sections commute. These opens cover
+   `V₀ ⊓ V₁`, so `exists_unitsRestrict_eq` glues them to `u : Γ(X, V₀ ⊓ V₁)ˣ`.
+3. **The comparison.** On the refinement `𝒩 ⊓ twoChartCover V sel hmem`, whose member at `b`
+   is `𝒩.opens b ⊓ V (sel b)`, the `0`-cochain `b ↦ t (sel b) b` conjugates `γ` into
+   `twoChartCocycle u`. Note `t (sel b) b` typechecks at that member **on the nose**: the
+   `Bool` index is instantiated, never transported — the §6.8 lesson once more.
 -/
 
 set_option autoImplicit false
-/- Statements mix `relCurve C L` with the product spelling `(C ⊗ overSpec k L).left`. -/
-set_option backward.isDefEq.respectTransparency false
-/- `lake env lean` drops the lakefile's `[leanOptions]` (I-0161). -/
-set_option maxSynthPendingDepth 3
 
 universe u
 
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
-open TopologicalSpace Opposite
-
-open scoped TensorProduct
+open CategoryTheory Opposite CategoryTheory.PresheafOfGroups TopologicalSpace
 
 namespace AlgebraicGeometry
 
-open AlgebraicJacobian
+namespace Scheme
 
-attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
-attribute [local instance 10000] relCurve.instOver
+variable {X : Scheme.{u}} {V : Bool → X.Opens}
 
-variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
-variable {π : C.left ⟶ P1 k} [IsFinite π]
-variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-  [GeometricallyIrreducible C.hom]
-
-noncomputable section
-
-/-! ## The residue of the chain, named -/
-
-variable (C π) in
+/-! ## Step 1–2: the glued overlap unit -/

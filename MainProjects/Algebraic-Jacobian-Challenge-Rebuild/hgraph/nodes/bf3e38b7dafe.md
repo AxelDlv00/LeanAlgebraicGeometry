@@ -13,9 +13,10 @@ docstring: 'A nonzero-prime witness at a closed point of an affine Dedekind char
 file: AlgebraicJacobian/RiemannRoch/ResidueDegree.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.primeIdealOf_ne_bot
 type: lean
-updated: '2026-07-16T21:33:29'
+updated: '2026-07-28T17:25:29'
 ---
 private theorem primeIdealOf_ne_bot {X : Scheme.{u}} [IsIntegral X] {V : X.Opens}
     (hV : IsAffineOpen V) [IsDomain Γ(X, V)] {x : X} (hx : x ∈ V) (hxg : x ≠ genericPoint X) :

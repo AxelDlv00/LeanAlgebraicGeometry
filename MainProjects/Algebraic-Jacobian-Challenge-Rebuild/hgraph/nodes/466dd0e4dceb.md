@@ -10,9 +10,10 @@ docstring: 'The mathlib pushout-sections square for the base-change square of th
 file: AlgebraicJacobian/Picard/SectionsDescent.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Over.isPushout_sections_gen
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-28T17:25:27'
 ---
 private lemma isPushout_sections_gen {U : (XA).Opens} (hU : IsAffineOpen U) :
     IsPushout

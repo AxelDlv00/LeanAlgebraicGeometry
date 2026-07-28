@@ -7,9 +7,10 @@ docstring: (Implementation) Germs commute with `resHom`.
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivAssemble.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.germ_resHom_assemble
 type: lean
-updated: '2026-07-19T14:31:14'
+updated: '2026-07-28T17:25:24'
 ---
 private lemma germ_resHom_assemble {X : Scheme.{u}} {W V : X.Opens} (h : W ≤ V) (z : X)
     (hz : z ∈ W) (t : Γ(X, V)) :

@@ -8,9 +8,10 @@ docstring: Sections of `𝒪(D)` over an empty open form a subsingleton, at the 
 file: AlgebraicJacobian/RiemannRoch/FLVQcoh.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.divisorSheaf_obj_subsingleton
 type: lean
-updated: '2026-07-16T21:33:29'
+updated: '2026-07-28T17:25:28'
 ---
 private lemma divisorSheaf_obj_subsingleton {D : X.CurveDivisor} {W : X.Opens}
     (hW : ¬ (W : Set X).Nonempty) :

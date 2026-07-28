@@ -16,9 +16,10 @@ docstring: '**Separation of test objects over their affine-open test objects**: 
 file: AlgebraicJacobian/Picard/DivRepGlobalClassify.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.hom_ext_fromSpecAffine
 type: lean
-updated: '2026-07-27T01:04:30'
+updated: '2026-07-28T17:25:23'
 ---
 private theorem hom_ext_fromSpecAffine {T Y : Over (Spec (CommRingCat.of k))} (a b : T ⟶ Y)
     (h : ∀ U : T.left.affineOpens,

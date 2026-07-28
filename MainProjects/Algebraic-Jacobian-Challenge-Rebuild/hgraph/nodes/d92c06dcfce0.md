@@ -13,9 +13,10 @@ docstring: 'The gluing datum: the family `classifyPiece` is compatible with the 
 file: AlgebraicJacobian/Picard/DivRepGlobalClassify.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.DivRepAffinePullback.homOfLE_classifyPiece
 type: lean
-updated: '2026-07-27T01:04:30'
+updated: '2026-07-28T17:25:23'
 ---
 private theorem homOfLE_classifyPiece
     (D : DivRepAffinePullback hpi g hO hchi r1 r2 b1 b2)

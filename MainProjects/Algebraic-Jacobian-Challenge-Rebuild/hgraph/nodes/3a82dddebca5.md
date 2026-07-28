@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.IdealPurity.productReadMap_mem_span_range
 file: AlgebraicJacobian/Picard/DivSchemeMulIdealBridge.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.IdealPurity.productReadMap_mem_span_range
 type: lean
-updated: '2026-07-20T18:02:05'
+updated: '2026-07-28T17:25:24'
 ---
 private theorem productReadMap_mem_span_range
     (m : S →ₗ[R] B) (r : K →ₗ[R] B) (x : S ⊗[R] K) :

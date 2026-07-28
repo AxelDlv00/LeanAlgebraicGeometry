@@ -9,9 +9,10 @@ docstring: 'Two elements cobounding the same comparison have equal ratios:
 file: AlgebraicJacobian/Picard/ComparisonUnique.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.coboundary_div_congr
 type: lean
-updated: '2026-07-16T21:33:28'
+updated: '2026-07-28T17:25:23'
 ---
 private lemma coboundary_div_congr {G : Type u} [CommGroup G] {a a' b b' P Q : G}
     (h : a * P = Q * b) (h' : a' * P = Q * b') : a / a' = b / b' := by
