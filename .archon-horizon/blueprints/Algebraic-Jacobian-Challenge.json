@@ -18028,10 +18028,10 @@
     "macros": {},
     "states": {
       "blocked": 131,
-      "closed": 6171,
+      "closed": 6170,
       "formalized_open": 201,
       "informal": 170,
-      "ready": 132
+      "ready": 133
     },
     "warnings": [
       "lem:pushforwardPullbackBaseChange_restrict_naturality: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChange_restrict_naturality} not found in Lean sources",
