@@ -255,6 +255,21 @@ provides that instance directly).  So the theorem re-fires at `C_κ` for **every
 gets a threshold `b κ` for each — with no new mathematics whatsoever.
 `baseChange_binders_stable` below records the stability, which is the whole of the free half.
 
+**SUPERSEDED — read `Ledger/ExtensionUniformity.lean` instead.**  The sentence above is wrong in
+a way worth stating rather than quietly editing: class stability is *not* the whole of the free
+half, because a class being stable under base change says nothing until some **object** is
+exhibited carrying the base-changed instances in the spelling the consuming theorem elaborates
+against.  `baseChange_binders_stable` never mentions `C_κ`, so it does not witness the re-firing
+it is claimed to record.  `ExtensionUniformity.vanishing_baseChangeField` and
+`riemannRoch_baseChangeField` are the actual free half, stated at `Scheme.baseChangeField C κ`;
+what was needed was one missing named instance (`GeometricallyIrreducible` on that carrier),
+after which the theorems above apply verbatim.
+
+The open-half paragraph that follows is also **mis-priced**, in the same file's own terms: the
+threshold is existential and monotone in `b`, so `n₀(κ)` never has to transport.  See
+`ExtensionUniformity.lean`, which decomposes `b κ` into a genus scalar plus a base-divisor
+degree and retracts the `2g − 1` shortcut (Serre duality, which this workspace does not have).
+
 **The open half — a threshold chosen BEFORE `κ`.**  Uniformity asks for a single `b` with
 `∀ κ, ∀ D on C_κ, b ≤ deg_κ D → H¹ = 0`.  What blocks it is not the binders but that the `b κ`
 above are produced independently: `b κ = deg_κ (n₀(κ) • F_κ) + 1 − χ(𝒪_{C_κ})`, where `n₀(κ)`
@@ -274,10 +289,13 @@ amount of re-firing the theorem produces one. -/
 
 section ExtensionUniformity
 
-/-- **The curve binders are stable under field base change.**  This is the free half of
-extension-uniformity, recorded so that the open half is not mistaken for it: the vanishing
-theorem re-fires over every extension, giving a threshold *per field*.  What does not follow is a
-threshold chosen before the field — see the section docstring. -/
+/-- **The curve binders are stable under field base change.**
+
+Kept as a true statement about morphism classes, but **do not read it as the free half of
+extension-uniformity** — that is what its previous docstring claimed and it does not follow.
+Nothing here mentions the base-changed curve, so nothing here witnesses the vanishing theorem
+re-firing anywhere.  For the free half proper, stated at `Scheme.baseChangeField C κ`, use
+`Ledger/ExtensionUniformity.vanishing_baseChangeField`. -/
 theorem baseChange_binders_stable :
     MorphismProperty.IsStableUnderBaseChange @IsProper ∧
       MorphismProperty.IsStableUnderBaseChange (@SmoothOfRelativeDimension 1) ∧
