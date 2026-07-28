@@ -48,6 +48,8 @@ open CategoryTheory AlgebraicGeometry Scheme
 #print axioms AlgebraicGeometry.subsingleton_of_deg_ge_of_zero
 #print axioms AlgebraicGeometry.subsingleton_of_deg_ge_of_moduleKSheaf
 #print axioms AlgebraicGeometry.deg_lt_of_not_subsingleton
+#print axioms AlgebraicGeometry.subsingleton_of_h1_eq_zero
+#print axioms AlgebraicGeometry.subsingleton_hModule_one_of_deg_ge_of_h1_eq_zero
 
 /-! ## §2 The synthesis site: instantiate at the challenge curve
 
