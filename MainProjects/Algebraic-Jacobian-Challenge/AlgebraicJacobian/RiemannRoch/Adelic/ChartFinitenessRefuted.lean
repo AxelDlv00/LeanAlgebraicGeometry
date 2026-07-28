@@ -76,11 +76,21 @@ precisely where affineness is available and the binder collapses.
 
 ## What this file does NOT claim
 
-It does not prove `hbump` or `hledger`. It does not prove `K(X)/k` is infinite for AJC's
-curve: that needs a nonconstant rational function, which is
-`Adelic.exists_nonconstant_of_...` territory (`NonconstantToP1.lean`) and is not wired in
-here. `not_module_finite_functionField_of_exists_transcendental` states the missing input
-precisely as one hypothesis, so a consumer can see exactly what closing it costs.
+It does not prove `hbump` or `hledger` — those are now *open* at a curve rather than refuted,
+which is a statement about the state of knowledge, not a proof of either.
+
+**The residual input IS discharged, and more cheaply than first expected.**  An earlier
+version of this header said proving `K(X)/k` infinite "needs a nonconstant rational function,
+which is `NonconstantToP1.lean` territory and is not wired in here".  That turned out to be
+unnecessary: `not_module_finite_functionField_of_primeDivisor` gets it from the existence of a
+**single prime divisor**, with no polynomial argument and no morphism to `ℙ¹`.  The DVR stalk
+`𝒪_P` sits between `k` and `K(X)`; finiteness would make it a `k`-finite domain, hence a field,
+and `exists_order_eq` produces an element of order `1` whose inverse has order `-1` and so
+cannot lie in it.  A discrete valuation ring is not a field.
+
+So `not_chart_finite_of_primeDivisor` is the unconditional statement: on a curve with a prime
+divisor and a nonempty affine chart, the binder holds nowhere.  The
+`_of_transcendental` variants are kept as the general field-theoretic form.
 
 ## The three cluster-P gaps, kept apart
 
@@ -272,6 +282,84 @@ theorem not_module_finite_functionField_of_transcendental
     ¬ Module.Finite k X.functionField := fun hfin => by
   haveI : FiniteDimensional k X.functionField := hfin
   exact hf (Algebra.IsIntegral.isIntegral f).isAlgebraic
+
+/-- **The order-nonnegative subring at a prime divisor `P`, as a `k`-subalgebra of `K(X)`.**
+This is the DVR stalk `𝒪_P` seen inside the function field. `sectionSub k U 0` is the
+intersection of these over the primes meeting `U`; this is the single-prime version, and it is
+what makes the residual input of this file discharge with no transcendence hypothesis. -/
+def valSubalg (P : X.PrimeDivisor) : Subalgebra k X.functionField where
+  carrier := orderGeSub k P 0
+  mul_mem' := by
+    intro f g hf hg
+    rcases eq_or_ne f 0 with rfl | hf0
+    · simp only [zero_mul]; exact Submodule.zero_mem _
+    rcases eq_or_ne g 0 with rfl | hg0
+    · simp only [mul_zero]; exact Submodule.zero_mem _
+    refine Or.inr ?_
+    rw [Scheme.RationalMap.order_mul_of_ne_zero P hf0 hg0]
+    have h1 := (mem_orderGe_of_ne_zero hf0).mp hf
+    have h2 := (mem_orderGe_of_ne_zero hg0).mp hg
+    linarith
+  one_mem' := Or.inr (by rw [Scheme.RationalMap.order_one])
+  add_mem' := (orderGeSub k P 0).add_mem
+  zero_mem' := (orderGeSub k P 0).zero_mem
+  algebraMap_mem' := fun c => by
+    have h1 : (1 : X.functionField) ∈ orderGeSub k P 0 :=
+      Or.inr (by rw [Scheme.RationalMap.order_one])
+    have := (orderGeSub k P 0).smul_mem c h1
+    rwa [Algebra.smul_def, mul_one] at this
+
+/-- **`K(X)/k` IS NOT FINITE as soon as ONE prime divisor exists — no transcendence
+hypothesis needed.**
+
+This discharges the residual input of this module outright.  The argument needs no polynomial
+and no nonconstant morphism: if `K(X)/k` were finite then the order-nonnegative subring `𝒪_P`
+(`valSubalg`) would be a `k`-finite domain, hence a **field** — but `exists_order_eq` supplies
+`t` with `ord_P t = 1`, and `t · u = 1` forces `ord_P u = -1 < 0`, contradicting membership in
+`𝒪_P`.  In one line: *a discrete valuation ring is not a field, and finiteness over `k` would
+make it one.*
+
+The hypothesis "some prime divisor exists" is exactly what
+`Scheme.IsRegularInCodimensionOne` is about, and it is far weaker than a nonconstant map to
+`ℙ¹`: a curve without prime divisors has nothing for `sectionSub` to read. -/
+theorem not_module_finite_functionField_of_primeDivisor (P : X.PrimeDivisor) :
+    ¬ Module.Finite k X.functionField := by
+  intro hfin
+  haveI : FiniteDimensional k X.functionField := hfin
+  haveI : FiniteDimensional k (valSubalg k P) :=
+    Module.Finite.of_injective (valSubalg k P).toSubmodule.subtype Subtype.val_injective
+  have hfield : IsField (valSubalg k P) := (fieldOfFiniteDimensional k (valSubalg k P)).toIsField
+  obtain ⟨t, ht0, ht⟩ := exists_order_eq P 1
+  have htmem : t ∈ valSubalg k P := Or.inr (by rw [ht]; norm_num)
+  obtain ⟨u, hu⟩ := hfield.mul_inv_cancel (a := (⟨t, htmem⟩ : valSubalg k P))
+    (by simp only [ne_eq, Subtype.ext_iff]; exact ht0)
+  have hval : t * (u : X.functionField) = 1 := by
+    have := congrArg (fun z : valSubalg k P => (z : X.functionField)) hu
+    simpa using this
+  have hu0 : (u : X.functionField) ≠ 0 := by
+    intro h; rw [h, mul_zero] at hval; exact one_ne_zero hval.symm
+  have hsum : Scheme.RationalMap.order P t
+      + Scheme.RationalMap.order P (u : X.functionField) = 0 := by
+    rw [← Scheme.RationalMap.order_mul_of_ne_zero P ht0 hu0, hval,
+      Scheme.RationalMap.order_one]
+  have huge : 0 ≤ Scheme.RationalMap.order P (u : X.functionField) :=
+    (mem_orderGe_of_ne_zero hu0).mp u.2
+  rw [ht] at hsum
+  omega
+
+/-- **THE UNCONDITIONAL FORM: the refutations' binder is satisfiable at NO curve with a prime
+divisor.**  No transcendence hypothesis, no nonconstant map, no cover condition — a single
+prime divisor plus a nonempty affine chart is enough.
+
+Combined with `ChiUnconditional.not_bump_of_notMem_left` and `ledger_refuted_of_notMem_left`
+— whose hypotheses this contradicts — the conclusion is that those two theorems have **no
+instances** on such a curve.  `hbump` and the closed χ-ledger are therefore **open** there,
+not false, and the "find a better cover" reading of them is void. -/
+theorem not_chart_finite_of_primeDivisor {U : X.Opens} (hU : IsAffineOpen U) [Nonempty U]
+    (P : X.PrimeDivisor) :
+    ¬ Module.Finite k (sectionSub k U (0 : X.WeilDivisor)) := fun hfin =>
+  not_module_finite_functionField_of_primeDivisor k P
+    (module_finite_functionField_of_chart_finite k hU hfin)
 
 /-- **The refutations' binder is unsatisfiable on a curve with a nonconstant function.**  The
 contrapositive form a consumer wants: no nonempty affine chart of such a curve has
