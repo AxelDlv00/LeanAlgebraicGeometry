@@ -2000,7 +2000,7 @@ and the chain that computes it, right to left:
 |---|---|---|
 | (T3-1) | `H¹(C,𝒪) ≃+ Additive (unitsReduction C.left U₀ U₁).ker` | **LANDED** — T2, `h1AddEquivTruncExpCechKernel` |
 | (T3-2) | that kernel `≃` the kernel of `pullbackOverlapQuot (relCurveMap C k[ε] k)` | ~~THE MISSING LINK — §6.24; two ingredients landed, arrow absent~~ **CLOSED §7.4, `rfl`** — `EpsArrowIdentification.lean` |
-| (T3-3) | that kernel `≃` `ker(CechPic(Z) → CechPic(X))` | inputs LANDED, **assembly NOT written** — `map_twoChartClass_eq_one_iff` + `twoChartClass_injective` + (iii-c2) surjectivity. T3's residue after §7.4 |
+| (T3-3) | that kernel `≃` `ker(CechPic(Z) → CechPic(X))` | ~~inputs LANDED, assembly NOT written~~ **CLOSED §7.5** — `TwoChartKernelComparison.lean`, a genuine `Equiv` with (iii-c2) as a satisfiable binder |
 | (T3-4) | `CechPic(X) ≃ CechPic(C.left)` and the map matches | **NOT MEASURED before this session** — §7.2; **CLOSED**, `CechPicIsoTransport.lean` |
 
 (T3-2) is the arrow §6.24 named. (T3-4) is a step **no section of this worksheet has ever named**,
@@ -2071,7 +2071,7 @@ and `CechPic.map (f ≫ g) L = CechPic.map f (CechPic.map g L)` needs `rw [CechP
 | `cechPicMap_injective_of_isIso` | ~~[XS], probed green~~ **LANDED** | `CechPicIsoTransport.lean`; shipped as a `MulEquiv` (`cechPicMapEquivOfIso`) since a kernel needs both directions |
 | (T3-4) instantiated at `transportLeft` | ~~[S]~~ **LANDED** | `cechPicMap_transportLeft_injective` / `cechPicTransportLeftEquiv`. The `relCurveMap_preimage` transport is still NOT `rfl` and is named in that file's Scope section |
 | (T3-2), the §6.24 arrow | ~~[M], and it is the real residue~~ **RETRACTED — it is `rfl`, §7.4** | I priced it by "both ingredients are landed" and then wrote, in this same subsection, that the number was a guess. It was. `EpsArrowIdentification.lean`, `rfl`, and neither named ingredient appears in it |
-| (T3-3) surjectivity leg wiring | [S/M] | every input landed (§§6.10, 6.27–6.28); no gap named |
+| (T3-3) surjectivity leg wiring | ~~[S/M]~~ **LANDED §7.5** | and the residue I was about to ship (`chartTrivial_twoChartClass`) turned out not to be needed in either direction |
 
 **What NOT to conclude, stated because this lane's failure mode is exactly this.** The above is a
 *decomposition plus one probe*, not a discharge. In particular (T3-2) is priced [M] on the strength
@@ -2145,3 +2145,63 @@ right that the pieces were needed *somewhere*.
 (iii-c2) surjectivity leg. Every input is landed; (T3-2) and (T3-4) are now the arrows between them,
 so this is genuinely assembly. **And that sentence is subject to §7.4's own rule** — it is a
 decomposition, not a measurement, and the next session should write the statement before pricing it.
+(Done immediately, §7.5.)
+
+### 7.5 (T3-3) IS LANDED, AND THE RESIDUE I WAS ABOUT TO SHIP DISSOLVED WHEN THE OBLIGATION MOVED TO A BINDER
+
+*Run 0073 r7, `Tangent/TwoChartKernelComparison.lean`. Kernel-green, rooted, five headlines
+axiom-clean against two firing controls, and the load-bearing binder checked satisfiable.*
+
+**WHAT LANDED.** `twoChartKernelEquiv` — `twoChartClass` is a **bijection**
+
+```
+ker( pullbackOverlapQuot f )  ≃  ker( CechPic.map f )
+```
+
+for an arbitrary morphism `f : X ⟶ Y` and two-chart cover, plus the two legs
+(`map_eq_one_of_pullbackOverlapQuot_eq_one`, `exists_unique_pullbackOverlapQuot_eq_one`) and the named
+preimage `chartSection` with its defining equation.
+
+**THE ONE HYPOTHESIS:** `hchart : ∀ L, CechPic.map f L = 1 → ∀ s, CechPic.map (V s).ι L = 1`. That is
+clause **(iii-c2)** verbatim, it is the chain's *only* geometric input, and it has a producer at the
+Wave-5 instance (`Opens.cechPicMap_ι_eq_one_of_map_eq_one` + `EpsChartSquare`). Checked satisfiable
+with a junk witness (`f = 𝟙 Y`, `V s = ⊤`: the `𝟙`-kernel is trivial and `1` restricts to `1`), so
+the `Equiv` is not a theorem about nothing.
+
+**THE FINDING, and it is a shape worth naming.** My first draft of this file **had a `sorry` and was
+vacuous at the same time**, and the two faults had one cause. I stated the bijection against
+
+```
+{L // (∀ s, L|_{V s} = 1) ∧ ∃ q, twoChartClass … q = L ∧ pullbackOverlapQuot f q = 1}
+```
+
+because `toFun` could not produce chart-triviality of a `twoChartClass` value — nothing in the tree
+says a comparison class is trivial on each chart. So I widened the target to *include* the
+existential, which made `toFun` typecheck and made the statement say **a set is in bijection with its
+own image**. I then wrote a paragraph naming `chartTrivial_twoChartClass` as (T3-3)'s residue, and was
+one commit from shipping "two thirds landed, one statement owed".
+
+**It was zero statements owed.** Taking `hchart` as a *hypothesis* instead of trying to prove
+chart-triviality of `twoChartClass` values:
+
+* `toFun` needs no chart-triviality at all — only `map_twoChartClass_eq_one_iff`;
+* the target becomes the honest `ker(CechPic.map f)`;
+* `invFun` is `chartSection` at `hchart L L.2`;
+* and the named residue is **not needed**, in either direction.
+
+> **Rule: when a construction needs a fact nothing provides, check whether the CONSUMER could supply
+> it before you weaken the statement to avoid needing it.** Widening the target to dodge a missing
+> lemma is the move that produces a vacuous theorem, and it announces itself the same way an honest
+> one does — it typechecks. The diagnostic question is *"does my conclusion mention my hypothesis's
+> own construction?"* Here it did. Moving the obligation to a binder the Wave-5 instance already
+> discharges made the statement stronger, shorter, and `sorry`-free at once.
+
+Related and distinct: `isolating-a-residue-as-a-class` is the same failure with a `Nonempty` field;
+`I-0571` is the "two ends of a map" version. This is the **subtype-target** version, and the tell is
+specifically that the target's defining predicate names the source's map.
+
+**T3's RESIDUE AFTER §7.5: the composition, and nothing else.** (T3-1)…(T3-4) are four landed
+statements; `H¹(C,𝒪) ≃+ ker(CechPic(C_ε) → CechPic(C))` is the composite and is written nowhere. Per
+§7.4's rule this is a decomposition rather than a measurement — but note what changed: it is now four
+*arrows* to compose, not four carriers with gaps between them, which is what §7.0 found at the start
+of this session.
