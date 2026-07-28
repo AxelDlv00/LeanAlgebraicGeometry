@@ -345,6 +345,74 @@ noncomputable def tildePullback_preservesFiniteLimits {R R' : CommRingCat.{u}} (
       (ModuleCat.extendScalars.{u, u, u} φ.hom ⋙ tilde.functor R') := inferInstance
   exact Limits.preservesFiniteLimits_of_natIso (tildePullbackNatIso φ).symm
 
+/-! ### Cone-cancellation: exactness ON THE TILDE IMAGE, not merely of the composite
+
+`tildePullback_preservesFiniteLimits` says the *composite* `(~) ⋙ g^*` is left exact.  That is
+weaker than what a consumer needs, because a consumer holds a diagram of `𝒪_S`-modules that
+*happen to be* tildes, not a diagram of modules over the ring.  The gap is closed by pure
+category theory: if `F` preserves the limit of `K` and `F ⋙ G` preserves the limit of `K`, then
+`G` preserves the limit of `K ⋙ F` — because `F` maps the limit cone of `K` to a limit cone,
+which is therefore *the* limit cone of `K ⋙ F`, and `G` sends it to a limit cone by hypothesis
+on the composite.
+
+This is the step that was missing when the previous session concluded "the affine case holds
+only on the tilde image".  It does hold only on the tilde image — but "on the tilde image" is
+exactly the hypothesis the Čech consumer can supply, and cone-cancellation converts the
+composite statement into a statement about `g^*` applied to tilde-shaped diagrams. -/
+
+/-- **Cone-cancellation for preserved limits.**  If `F` preserves the limit of `K`, and the
+composite `F ⋙ G` preserves the limit of `K`, then `G` preserves the limit of the *transported*
+diagram `K ⋙ F`.  Pure category theory, no schemes: `F` carries the limit cone of `K` to a limit
+cone of `K ⋙ F`, and it suffices to check `G` on that one cone
+(`preservesLimit_of_preserves_limit_cone`).  Project-local; mathlib has the composition and
+reflection lemmas but not this cancellation. -/
+theorem preservesLimit_comp_cancel {J C D E : Type*} [Category J] [Category C]
+    [Category D] [Category E] (K : J ⥤ C) (F : C ⥤ D) (G : D ⥤ E)
+    [Limits.HasLimit K] [Limits.PreservesLimit K F] [Limits.PreservesLimit K (F ⋙ G)] :
+    Limits.PreservesLimit (K ⋙ F) G :=
+  Limits.preservesLimit_of_preserves_limit_cone
+    (Limits.isLimitOfPreserves F (Limits.limit.isLimit K))
+    (Limits.isLimitOfPreserves (F ⋙ G) (Limits.limit.isLimit K))
+
+/-- **Affine flat pullback preserves finite limits of diagrams of tildes.**  For a flat ring map
+`φ : R ⟶ R'` and any finite diagram `K` of `R`-modules, `(Spec φ)^*` preserves the limit of the
+diagram `K ⋙ (~)` of `𝒪_{Spec R}`-modules.  Cone-cancellation
+(`preservesLimit_comp_cancel`) applied to the two exactness facts already available:
+`tildePreservesFiniteLimits` for `(~)` and `tildePullback_preservesFiniteLimits` for the
+composite.  Project-local. -/
+theorem tildePullback_preservesLimit_comp {R R' : CommRingCat.{u}} (φ : R ⟶ R')
+    (hφ : φ.hom.Flat) {J : Type} [SmallCategory J] [FinCategory J] (K : J ⥤ ModuleCat.{u} R) :
+    Limits.PreservesLimit (K ⋙ tilde.functor R) (Scheme.Modules.pullback (Spec.map φ)) := by
+  haveI := tildePreservesFiniteLimits (R := R)
+  haveI := tildePullback_preservesFiniteLimits φ hφ
+  exact preservesLimit_comp_cancel K (tilde.functor R) _
+
+/-- **Affine flat pullback preserves the kernel of a map of tildes.**  The parallel-pair
+specialisation of `tildePullback_preservesLimit_comp`: for flat `φ` and `f : M ⟶ N` a map of
+`R`-modules, `(Spec φ)^*` preserves `ker (f^~)`.  The diagram
+`parallelPair f 0 ⋙ (~)` is isomorphic to `parallelPair (f^~) 0` (the tilde functor is additive,
+so it sends the zero map to the zero map), and preservation transports along an iso of diagrams.
+Project-local. -/
+theorem tildePullback_preservesKernel {R R' : CommRingCat.{u}} (φ : R ⟶ R')
+    (hφ : φ.hom.Flat) {M N : ModuleCat.{u} R} (f : M ⟶ N) :
+    Limits.PreservesLimit (Limits.parallelPair ((tilde.functor R).map f) 0)
+      (Scheme.Modules.pullback (Spec.map φ)) := by
+  haveI := tildePullback_preservesLimit_comp φ hφ (Limits.parallelPair f 0)
+  exact Limits.preservesLimit_of_iso_diagram (Scheme.Modules.pullback (Spec.map φ))
+    (Limits.parallelPair.ext (Iso.refl _) (Iso.refl _) :
+      Limits.parallelPair f 0 ⋙ tilde.functor R ≅
+        Limits.parallelPair ((tilde.functor R).map f) 0)
+
+/-- **`Γ(g)` is flat for a flat `g` between affine schemes.**  Specialisation of
+`Flat.flat_appLE` to `U = V = ⊤`, where `appLE` is `appTop` up to the identity restriction map.
+Project-local. -/
+theorem flat_appTop_of_flat (g : S' ⟶ S) [Flat g] [IsAffine S] [IsAffine S'] :
+    (Scheme.Hom.appTop g).hom.Flat := by
+  have h := Flat.flat_appLE g (U := ⊤) (isAffineOpen_top S) (V := ⊤) (isAffineOpen_top S')
+    (by simp)
+  rw [Scheme.Hom.appLE] at h
+  simpa [Scheme.Hom.appTop] using h
+
 /-- **Flat base change has left-adjoint pullback**, hence `g^*` preserves finite
 colimits (free: `g^* = pullback g` is a left adjoint). -/
 instance pullback_preservesFiniteColimits (g : S' ⟶ S) :
