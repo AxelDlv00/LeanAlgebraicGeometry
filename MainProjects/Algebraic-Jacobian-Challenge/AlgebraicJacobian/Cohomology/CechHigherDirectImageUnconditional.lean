@@ -46,15 +46,27 @@ objects through the `tilde` dictionary over `Spec`.
 
 Three statements below are still assumed rather than proved.
 
-* `pullback_preservesMonomorphisms`: for `g` flat, `g^*` preserves monomorphisms.  This is the
-  *sole* carrier behind flat left-exactness — `pullback_preservesFiniteLimits` is a two-line
-  consequence of it (`pullback_preservesFiniteLimits_of_preservesMonomorphisms`) and its own body
-  is sorry-free.  Note this is **not** the presheaf-pullback route the older revisions of this
-  header prescribed: that route is retired as a dead end, for the reasons set out in the
-  docstring of `pullback_preservesMonomorphisms`.  Three of its four ingredients now exist
-  sorry-free (the open-immersion case, cover-locality on the source, and the affine case on the
-  tilde image); what is missing is the affine case for *arbitrary* rather than quasi-coherent
-  modules.
+* `pullback_preservesMonomorphisms`: for `g` flat, `g^*` preserves monomorphisms — for
+  *arbitrary* `𝒪_S`-modules.  **It is no longer on the critical path, and it should not be
+  attempted.**  The statement is walled: mathlib gives `SheafOfModules.pullback` no pointwise
+  model, and the sibling project `MR0555258-Compactifying-Picard` independently reduced `j_!` to
+  the same missing brick.  What changed (run 0068 r1) is that nothing needs it:
+
+  - flat left-exactness was being demanded at the strongest generality that makes the sentence
+    true, while every consumer instantiates it at *quasi-coherent* objects;
+  - on quasi-coherent objects it is now **proved**, sorry-free, by
+    `pullback_preservesKernel_of_isQuasicoherent` — via cone-cancellation
+    (`preservesLimit_comp_cancel`) off the tilde-image exactness already in the tree, plus the
+    fullness of `tilde`;
+  - and the homology comparison the Čech proof consumes needs only *one kernel per degree*
+    (`mapHomologicalComplexHomologyIso_of_preservesKernel`), not global exactness — so
+    `pullback_mapHC_homologyIso_of_isQuasicoherent` is an axiom-clean replacement for
+    `pullback_mapHC_homologyIso`.
+
+  Measured, not asserted: `scripts/axiom-frontier.lean`'s `leakProbe_qcohRoute_*` report clean
+  axioms while `leakControl_qcohRoute_oldRoute` — the same conclusion via the old route — still
+  reports `sorryAx`.  Prefer the `_of_isQuasicoherent` forms in anything new; the two `[Flat g]`
+  declarations that route through mono-preservation are kept only so the reduction stays legible.
 * the cosimplicial naturality of `cech_pushforward_baseChange_natIso` and of
   `twisted_cech_nerve_iso`.  In both cases the degreewise isomorphisms are constructed, and
   what remains is their compatibility with the index-omission maps generating the
@@ -105,9 +117,11 @@ The proof decomposes into two independent halves, assembled in `cech_flatBaseCha
    `HomologicalComplex.homology`:
    * `pullback_preservesFiniteColimits` — `g^*` is a left adjoint;
    * `pullback_preservesFiniteLimits` — `g` flat implies `g^*` left-exact.  Reduced to
-     mono-preservation by `preservesFiniteLimits_of_preservesMonomorphisms`, so the single open
-     input is `pullback_preservesMonomorphisms`; the sheafification route this line used to
-     describe is retired (see that declaration's docstring);
+     mono-preservation by `preservesFiniteLimits_of_preservesMonomorphisms`, whose open input
+     `pullback_preservesMonomorphisms` is walled — **and is no longer needed**: for the
+     quasi-coherent objects this complex actually has, use
+     `pullback_preservesKernel_of_isQuasicoherent` and
+     `pullback_mapHC_homologyIso_of_isQuasicoherent`, which are axiom-clean;
    * `pullback_preservesHomology` — derived from the two previous items via
      `Functor.preservesHomologyOfExact`;
    * `mapHomologicalComplexHomologyIso` and `pullback_mapHC_homologyIso` — the complex-level
@@ -643,16 +657,27 @@ sorry-free:
   (`ModuleCat.preservesFiniteLimits_extendScalars_of_flat` for flat `φ`, and
   `tildePreservesFiniteLimits` — proved this session in `Cohomology/TildeExactness.lean`).
 
-**WHAT IS ACTUALLY MISSING**, stated sharply so the next session starts from it rather than from
-the dead ends above: the affine case is available only *on the tilde image*, i.e. for
-quasi-coherent modules, while `PreservesMonomorphisms` quantifies over **all** `𝒪_S`-modules.
-Over an affine base `Scheme.Modules` is strictly larger than `ModuleCat Γ(S, ⊤)` — the tilde
-functor is not an equivalence — so the assembly needs either
-(a) a mono-preservation statement for the affine pullback on arbitrary modules (which is the
-    stalk model again, now only over an affine base), or
-(b) the observation that mono-preservation for arbitrary modules follows from the
-    quasi-coherent case, which would need quasi-coherent modules to generate — false in general.
-Route (a) over an affine base is the smaller of the two and is the recommended next target. -/
+**WHAT IS STILL MISSING, AND WHY YOU SHOULD NOT PAY FOR IT** (revised run 0068 r1).  The affine
+case is available only *on the tilde image*, i.e. for quasi-coherent modules, while
+`PreservesMonomorphisms` quantifies over **all** `𝒪_S`-modules; over an affine base
+`Scheme.Modules` is strictly larger than `ModuleCat Γ(S, ⊤)`, since `tilde` is fully faithful but
+not essentially surjective.  Closing that gap needs either
+(a) a mono-preservation statement for the affine pullback on arbitrary modules — the stalk model
+    again, now only over an affine base, or
+(b) mono-preservation for arbitrary modules from the quasi-coherent case, which would need the
+    quasi-coherent objects to generate — false in general.
+
+**Neither is worth attempting, because the obligation was mis-scoped.**  Every consumer in this
+file instantiates flat exactness at quasi-coherent objects, and there it is now *proved*:
+`pullback_preservesKernel_of_isQuasicoherent`.  Two observations did it, and both are downstream:
+cone-cancellation (`preservesLimit_comp_cancel`) turns "the composite `(~) ⋙ g^*` is exact" into
+"`g^*` is exact on tilde-shaped diagrams", the fullness of `tilde` upgrades that to *all* maps of
+quasi-coherent modules, and `ShortComplex.mapHomologyIso` never wanted global exactness in the
+first place — one kernel per degree suffices.
+
+So this declaration is a **monument, not a frontier**: keep it for the reduction's legibility,
+do not prove it, and route new work through the `_of_isQuasicoherent` forms.  If you believe you
+need the arbitrary-module statement, check first what your consumer instantiates it at. -/
 theorem pullback_preservesMonomorphisms (g : S' ⟶ S) [Flat g] :
     (Scheme.Modules.pullback g).PreservesMonomorphisms := sorry
 
