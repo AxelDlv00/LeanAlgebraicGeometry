@@ -35,8 +35,8 @@ same theorem by a separate curve-specialized strategy.
 
 ## State (measured 2026-07-28)
 
-- **257 modules, 153,196 lines** (re-measured 2026-07-28 evening, up from 210/140,213 earlier
-  the same day); a warm `lake build AlgebraicJacobian` was **green** at 8,746 jobs when last
+- **264 modules, 155,729 lines** (re-measured 2026-07-29 00:30, up from 257/153,196 a few
+  hours earlier); a warm `lake build AlgebraicJacobian` was **green** at 8,746 jobs when last
   measured, which was before the 2026-07-28 lanes landed.  The `sorry` count is deliberately
   not restated here: it was 28 over 11 modules at the earlier measurement and four AJC lanes
   have landed work since.  These counts move whenever a module lands, so re-measure rather
