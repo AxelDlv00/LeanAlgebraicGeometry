@@ -30,17 +30,18 @@ docstring: "**THE B-5 ASSEMBLY** (`w4-datb` §1.2, everything except the two per
   \ discharged.\n* **step 3 — the residue this paragraph originally named**, and still\
   \ a residue: `m`, `W₀` and\n  `hdeg` are *inputs*, because `b_L` is per-fibre and\
   \ does not transport (I-0204), so no\n  formulation of this theorem can produce\
-  \ `m` for the caller.\n\n**Note one conclusion this theorem deliberately drops and\
-  \ step 6 will want back**: the fibre\nstep returns `S`'s support clause (`coeffAt\
-  \ hx S ≠ 0 → x ∈ P`), and the `-` pattern below\ndiscards it.  A lane closing step\
-  \ 6 should re-expose it — it is what says `Σ` is supported in\nthe rational points\
-  \ whose graph classes the index is built from."
+  \ `m` for the caller.\n\n**Note one conclusion this theorem deliberately drops**\
+  \ — wanted not by coverage (which needs no\ndrop at all, see the step-6 entry above)\
+  \ but by DAT-C's canonical section and GAP-2 uniqueness: the fibre\nstep returns\
+  \ `S`'s support clause (`coeffAt hx S ≠ 0 → x ∈ P`), and the `-` pattern below\n\
+  discards it.  A lane closing step 6 should re-expose it — it is what says `Σ` is\
+  \ supported in\nthe rational points whose graph classes the index is built from."
 file: AlgebraicJacobian/Picard/Pic0ChartCoverageTest.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.mem_chartLocus_of_drop
 type: lean
-updated: '2026-07-29T00:02:39'
+updated: '2026-07-29T02:23:55'
 ---
 theorem mem_chartLocus_of_drop {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left)
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

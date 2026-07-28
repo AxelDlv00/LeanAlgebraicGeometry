@@ -28,19 +28,36 @@ docstring: '**B-5''s fibre step** (`w4-datb` §1.2 steps 4–5, run at the split
 
   `h⁰ = 1` half is what DAT-C''s normalization and the GAP-2 uniqueness of the effective
 
-  representative consume.  Note the drop''s output `S` is what step 6 turns into the
-  chart index,
+  representative consume.
 
-  via graph classes at the base (`Picard/Pic0ChartRationalGraph.lean`) rather than
-  by
 
-  transporting `S` itself.'
+  **The `S`-becomes-the-chart-index sentence that stood here is RETRACTED** (issue
+  I-0615, and this
+
+  was its last residual site — the file header at the top of this module already carried
+  the
+
+  correction, and the worksheet''s `w4-datb` §1.2 SECOND AMENDMENT retracts it harder).  Coverage
+  does
+
+  not feed `S` back as the chart index, because it does not need the drop at all:
+
+  `IsSplitWitness` asks for `h¹ = 0` and for **neither** effectivity **nor** degree
+  `g`
+
+  (`Picard/Pic0ChartCoverageNoDrop.lean`, `mem_chartLocus_of_witness_h1`).  What the
+  drop''s output
+
+  *is* needed for is DAT-C''s canonical section and GAP-2''s uniqueness, which do
+  require `0 ≤ W` and
+
+  `h⁰ = 1` — i.e. the chart map''s injectivity, not its coverage.'
 file: AlgebraicJacobian/Picard/Pic0ChartCoverageFibre.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_isSplitWitness_of_drop
 type: lean
-updated: '2026-07-28T22:23:04'
+updated: '2026-07-29T02:23:55'
 ---
 theorem exists_isSplitWitness_of_drop {K : Type u} [Field K] [Algebra k K]
     (μ : picEt C (overSpec k K)) (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

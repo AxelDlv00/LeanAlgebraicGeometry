@@ -7,24 +7,30 @@ summary: "DECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. Bin
   \ form: protection I-0492.\nFull reasoning: I-0346 (human comment, same date).\n\
   \nEXECUTED, AND THE WIDENED LAYER IS NOW A FUNCTOR WITH A CONSUMER. Rooted (twenty-seven\n\
   DivisorFamilyAff*.lean files plus DivRepGlobalAffLift.lean).\n\nVERIFICATION STATUS,\
-  \ and read it before quoting any of the below as green (I-0675, work-reviewer,\n\
-  2026-07-29): everything landed BEFORE session 0012 is kernel-checked. The FOUR modules\
-  \ of residue\n(b) -- DivisorFamilyAffMapKit / AffMap / AffFunctorCompare / DivRepGlobalAffLift\
-  \ -- are CLAIMED,\nNOT VERIFIED. No sorries and no oleans either: the session's\
-  \ own lake build hit its 3300s cap while\nstill rebuilding unrelated modules other\
-  \ lanes had invalidated (EXIT=124), and the per-file fallback\nfailed environmentally\
-  \ on a missing transitive olean, not on a proof. DO FIRST next session: run\n'lake\
-  \ build AlgebraicJacobian.Picard.DivRepGlobalAffLift' to completion with a cap well\
-  \ above 3300s.\nThe lane's own recorded hazard applies with full force here -- DivFamZarAff.eq_of_away_eq\
-  \ takes n as\nan EXPLICIT leading argument (AffMapKit.lean:96 passes it, chart-typed\
-  \ ZarMapKit.lean:54 does not),\nso a mis-port is RED WITH ZERO SORRIES and a census\
-  \ cannot see it. Of the two obligations I-0492 clause 4\nrelocated, 4(i) is DISCHARGED\
-  \ rather than assumed.\n\n  AffCoverData          -- m / pieces : Fin m -> Opens\
-  \ / isAffineOpen / cover (iSup = top).\n                           NO pi argument,\
-  \ NO partitions of unity, NO Sum index, NO chart typing.\n  AffAdaptation      \
-  \   -- eqn per piece + eqn_rel; IsCertified with (c1)-(c4) VERBATIM.\n  CertifiedDivisorFamilyAff\
-  \ / IsLocallyCertifiedAff / DivFamZarAff (mk, mk_eq_mk_iff, picClass)\n  DivFamZar.toAff\
-  \       -- the widened value RECEIVES every chart-typed one, same picClass\n  isCertified_of_swallowedBy_of_c1\
+  \ MEASURED (do not quote past this line as green):\n * DivisorFamilyAffMapKit.lean\
+  \ -- GREEN. olean exists, lake build [8880/8885]. So the widened\n   basic-open\
+  \ toolkit (eq_of_basic_eq, exists_glue_of_basic_compat, mapAlgHom_appLE_eq) is\n\
+  \   kernel-checked, and the recorded explicit-n trap did NOT bite it.\n * DivisorFamilyAffMap.lean\
+  \ -- was RED, is FIXED, NOT RE-CHECKED. The build failed at [8881/8885]\n   with\
+  \ 'Function expected at divFunctorAff' (:295, :301). This is a THIRD variety of\
+  \ RED WITH ZERO\n   SORRIES in this family, after the explicit-n trap: C and n are\
+  \ file-level IMPLICIT variables, the\n   'variable (C n)' making them explicit lived\
+  \ INSIDE 'namespace divFamZarAff' and ended with it, so\n   divFunctorAff bound\
+  \ them implicitly and its two simp lemmas could not elaborate. A namespace\n   boundary\
+  \ silently changes the arity of everything declared after it. Fixed at d876072d4e\
+  \ by a\n   'section Functor' carrying its own 'variable (C n)', closed before AffineNaturality;\
+  \ no statement\n   changed.\n * DivisorFamilyAffFunctorCompare.lean, DivRepGlobalAffLift.lean\
+  \ -- never reached by the build.\nDO FIRST next session: 'lake build AlgebraicJacobian.Picard.DivRepGlobalAffLift'\
+  \ to completion, cap\nwell above 3300s (an earlier attempt hit that cap rebuilding\
+  \ modules other lanes had invalidated,\nEXIT=124, and the lake mutex was held elsewhere\
+  \ for the last ~70 minutes of this session). Of the two obligations I-0492 clause\
+  \ 4\nrelocated, 4(i) is DISCHARGED rather than assumed.\n\n  AffCoverData      \
+  \    -- m / pieces : Fin m -> Opens / isAffineOpen / cover (iSup = top).\n     \
+  \                      NO pi argument, NO partitions of unity, NO Sum index, NO\
+  \ chart typing.\n  AffAdaptation         -- eqn per piece + eqn_rel; IsCertified\
+  \ with (c1)-(c4) VERBATIM.\n  CertifiedDivisorFamilyAff / IsLocallyCertifiedAff\
+  \ / DivFamZarAff (mk, mk_eq_mk_iff, picClass)\n  DivFamZar.toAff       -- the widened\
+  \ value RECEIVES every chart-typed one, same picClass\n  isCertified_of_swallowedBy_of_c1\
   \ -- cert-collapse: all seven clauses from (c1) + the rank datum\n  exists_isCertified_of_seed_of_swallowing_affineOpen\
   \ -- the endpoint at a seed\n  DivFamZarAff.mapAlg + mapAlgHom + mapAlgHom_eq_mapAlg\
   \ -- both faces (s0010)\n  DivFamZarAff.eq_of_away_eq / exists_glue_of_away_compat\
@@ -109,7 +115,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T18:08:55.286919+00:00'
+  updated_at: '2026-07-28T19:22:05.016195+00:00'
   pinned_commits:
   - 46d751465
   - 81c17f256

@@ -172,9 +172,13 @@ theorem divFamEps_highWindow_eq_universal_pair (hb : 0 < windowBound pi hpi)
     (divUniversalSndWindow C pi hpi g r1 r2 b1 b2 i j)
     (univSeed C hpi g r1 r2 b1 b2 i j hO hchi hb)
     (isGenerator_univSeed C hpi g r1 r2 b1 b2 i j hO hchi hb) hc
-    (hc.thetaGluedEval_surjective hO hchi
+    -- NOTE the explicit `C pi hpi`: `thetaGluedEval_surjective`'s section variables
+    -- `C`, `pi`, `hpi` are EXPLICIT and precede `hc`, so the dot-notation spelling
+    -- `hc.thetaGluedEval_surjective hO hchi …` does not elaborate — it feeds `hO` to
+    -- the `C` binder.  Measured, not guessed (this file's first kernel check).
+    (DivisorAdaptation.IsCertified.thetaGluedEval_surjective C pi hpi hc hO hchi
       (relThetaPairH1_windowM C pi hpi g) le_rfl)
-    (hc.thetaGluedEval_surjective hO hchi
+    (DivisorAdaptation.IsCertified.thetaGluedEval_surjective C pi hpi hc hO hchi
       (relThetaPairH1_windowMS C pi hpi g) (Nat.le_add_right _ _))
     (divUniversalSndWindow_le_highWindow_divisorWindow
       C hpi g r1 r2 b1 b2 i j hO hchi hb)
