@@ -2949,6 +2949,146 @@ def TwistedPerSigmaDeltaCompat (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g'
       = (Scheme.Modules.pullback g').map (pushPullMap F (interLegHom 𝒰 σ' k)) ≫
           (twisted_cech_nerve_per_sigma f g f' g' h 𝒰 F hF σ').hom
 
+/-! #### The σ-product calculus, over an ABSTRACT target cover
+
+Everything below about assembling the degreewise component out of the per-σ isomorphisms is
+independent of *which* cover of `X'` is on the right.  It is stated that way deliberately, and the
+reason is mechanical rather than aesthetic: the actual target cover is
+`(openCoverOfLeft 𝒰 f g).pushforwardIso h.isoPullback.symm.hom`, whose `IsIso` instance is keyed on
+the spelling `h.isoPullback.symm.hom`.  Any `rw`/`simp` that normalises that to `h.isoPullback.inv`
+— `Iso.symm_hom` does, and it is hard to avoid once the composite is being reassociated — makes the
+goal fail to typecheck, reported as "motive is not type correct" naming the `IsIso` argument.
+Abstracting the cover as a variable removes the term from the proof entirely, so the trap cannot
+fire; the real cover is supplied only at the application site, where nothing is rewritten. -/
+
+section SigmaCalculus
+
+variable {Y : Scheme.{u}} (q : Y ⟶ X)
+
+/-- The degreewise component of a twisted-nerve-style identification, assembled from a family of
+per-σ isomorphisms and the source σ-product decomposition.
+
+The target is an **arbitrary** family `T` of `𝒪_Y`-modules indexed by tuples, not the base-changed
+cover's push–pull objects.  Two reasons, both mechanical.  First, the real target cover is
+`(openCoverOfLeft 𝒰 f g).pushforwardIso h.isoPullback.symm.hom`, whose `IsIso` instance is keyed on
+the spelling `h.isoPullback.symm.hom`; any `rw`/`simp` normalising that to `h.isoPullback.inv`
+(`Iso.symm_hom` does) makes the goal fail to typecheck, reported as "motive is not type correct".
+Second, that cover's index type is only *propositionally* `𝒰.I₀`, and a transport `hI ▸ σ l` does
+not commute syntactically with `σ ∘ δᵏ`, so the reindexed tuple and the tuple-then-reindex disagree
+as terms.  Abstracting the target removes both obstructions from every proof below; the real data is
+supplied at the application site, where nothing is rewritten. -/
+noncomputable def sigmaAssembledComponent (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    (F : X.Modules) (n : ℕ) (T : (Fin (n + 1) → 𝒰.I₀) → Y.Modules)
+    (e : ∀ σ, (Scheme.Modules.pullback q).obj
+        (pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))) ≅ T σ) :
+    (Scheme.Modules.pullback q).obj
+        (pushPullObj F ((coverCechNerveOver 𝒰).obj (Opposite.op (SimplexCategory.mk n))))
+      ≅ ∏ᶜ T :=
+  (Scheme.Modules.pullback q).mapIso (pushPull_sigma_iso 𝒰 F n) ≪≫
+    Limits.PreservesProduct.iso (Scheme.Modules.pullback q) _ ≪≫
+    Limits.Pi.mapIso e
+
+/-- **The σ-projection of the assembled component**: decompose the source, project, apply the
+per-σ iso.  Pure `piComparison`/`Pi.map` calculus. -/
+theorem sigmaAssembledComponent_π (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    (F : X.Modules) (n : ℕ) (T : (Fin (n + 1) → 𝒰.I₀) → Y.Modules)
+    (e : ∀ σ, (Scheme.Modules.pullback q).obj
+        (pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))) ≅ T σ)
+    (σ : Fin (n + 1) → 𝒰.I₀) :
+    (sigmaAssembledComponent q 𝒰 F n T e).hom ≫ Limits.Pi.π T σ
+      = (Scheme.Modules.pullback q).map ((pushPull_sigma_iso 𝒰 F n).hom ≫
+          Limits.Pi.π (fun τ : Fin (n + 1) → 𝒰.I₀ =>
+            pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ)))) σ) ≫ (e σ).hom := by
+  rw [sigmaAssembledComponent, Iso.trans_hom, Iso.trans_hom, Functor.mapIso_hom,
+    Category.assoc, Category.assoc, Limits.Pi.mapIso_hom_π,
+    Limits.PreservesProduct.iso_hom, Limits.piComparison_comp_π_assoc, ← Functor.map_comp_assoc]
+
+/-- **The coface square for the assembled components, from the per-σ compatibility alone.**
+
+This is the reduction, stated over an abstract target cover.  The hypothesis `hcompat` is
+"base-change-then-restrict = restrict-then-base-change" for the intersection-open inclusions; the
+conclusion is that the assembled degreewise components commute with the two Čech cofaces, after the
+target-side σ-decomposition.
+
+Why `Pi.hom_ext` fires here and did not for the original `NatIso.ofComponents` obligation: the
+earlier diagnosis was that the σ-decomposition sits mid-chain behind pushforward/pullback
+applications, so the projections cannot be pushed through.  With `cechNerve_drop_δ_sigma` the coface
+*is* reindex-then-restrict in σ-coordinates, so both sides reduce to per-σ' statements and `hcompat`
+closes each. -/
+theorem sigmaAssembled_δ_square (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    (F : X.Modules) (n : ℕ)
+    (T : (Fin (n + 1) → 𝒰.I₀) → Y.Modules) (T' : (Fin (n + 2) → 𝒰.I₀) → Y.Modules)
+    (e : ∀ σ, (Scheme.Modules.pullback q).obj
+        (pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))) ≅ T σ)
+    (e' : ∀ σ, (Scheme.Modules.pullback q).obj
+        (pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))) ≅ T' σ)
+    (k : Fin (n + 2))
+    -- the target-side restriction maps, indexed by the top tuple
+    (r : ∀ σ' : Fin (n + 2) → 𝒰.I₀, T (σ' ∘ (SimplexCategory.δ k).toOrderHom) ⟶ T' σ')
+    (hcompat : ∀ σ' : Fin (n + 2) → 𝒰.I₀,
+      (e (σ' ∘ (SimplexCategory.δ k).toOrderHom)).hom ≫ r σ'
+        = (Scheme.Modules.pullback q).map (pushPullMap F (interLegHom 𝒰 σ' k)) ≫ (e' σ').hom) :
+    (sigmaAssembledComponent q 𝒰 F n T e).hom ≫
+        Limits.Pi.lift (fun σ' : Fin (n + 2) → 𝒰.I₀ =>
+          Limits.Pi.π T (σ' ∘ (SimplexCategory.δ k).toOrderHom) ≫ r σ')
+      = (Scheme.Modules.pullback q).map
+            (pushPullMap F ((coverCechNerveOver 𝒰).map ((SimplexCategory.δ k).op))) ≫
+          (sigmaAssembledComponent q 𝒰 F (n + 1) T' e').hom := by
+  -- Compare σ'-projections of the target product.
+  refine Limits.Pi.hom_ext _ _ (fun σ' => ?_)
+  rw [Category.assoc, Limits.Pi.lift_π]
+  -- LHS: the σ'-leg is "project at the OMITTED tuple, then restrict"; feed it to `hcompat`.
+  rw [← Category.assoc, sigmaAssembledComponent_π, Category.assoc, hcompat σ']
+  -- RHS: project the assembled component at σ', then the σ-coordinate coface formula closes it.
+  rw [Category.assoc, sigmaAssembledComponent_π, ← Category.assoc, ← Functor.map_comp,
+    ← Category.assoc, ← Functor.map_comp, ← cechNerve_backbone_δ_sigma 𝒰 F n k σ',
+    Category.assoc]
+
+end SigmaCalculus
+
+/-- **The twisted leaf's coface square, at the real base-change data.**  `sigmaAssembled_δ_square`
+instantiated with the per-σ Beck–Chevalley isomorphisms `twisted_cech_nerve_per_sigma` — so the
+hypothesis is exactly `TwistedPerSigmaDeltaCompat`, and everything else is discharged.
+
+`r` is the target-side restriction, supplied as an argument rather than computed: the base-changed
+cover's index type is only propositionally `𝒰.I₀`, so `interLegHom 𝒰' (transport σ') k` does not
+have the type `T (σ' ∘ δᵏ) ⟶ T' σ'` on the nose.  Naming it as data is what keeps the transport out
+of the proof; the caller supplies it with the compatibility it must satisfy.  Project-local. -/
+theorem twistedNerve_δ_square
+    (g' : X' ⟶ X) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    (F : X.Modules) (n : ℕ) (k : Fin (n + 2))
+    (T : (Fin (n + 1) → 𝒰.I₀) → X'.Modules) (T' : (Fin (n + 2) → 𝒰.I₀) → X'.Modules)
+    (e : ∀ σ, (Scheme.Modules.pullback g').obj
+        (pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))) ≅ T σ)
+    (e' : ∀ σ, (Scheme.Modules.pullback g').obj
+        (pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))) ≅ T' σ)
+    (r : ∀ σ' : Fin (n + 2) → 𝒰.I₀, T (σ' ∘ (SimplexCategory.δ k).toOrderHom) ⟶ T' σ')
+    (hcompat : ∀ σ' : Fin (n + 2) → 𝒰.I₀,
+      (e (σ' ∘ (SimplexCategory.δ k).toOrderHom)).hom ≫ r σ'
+        = (Scheme.Modules.pullback g').map (pushPullMap F (interLegHom 𝒰 σ' k)) ≫ (e' σ').hom) :
+    (sigmaAssembledComponent g' 𝒰 F n T e).hom ≫
+        Limits.Pi.lift (fun σ' : Fin (n + 2) → 𝒰.I₀ =>
+          Limits.Pi.π T (σ' ∘ (SimplexCategory.δ k).toOrderHom) ≫ r σ')
+      = (Scheme.Modules.pullback g').map
+            (pushPullMap F ((coverCechNerveOver 𝒰).map ((SimplexCategory.δ k).op))) ≫
+          (sigmaAssembledComponent g' 𝒰 F (n + 1) T' e').hom :=
+  sigmaAssembled_δ_square g' 𝒰 F n T T' e e' k r hcompat
+
+/-- The per-σ isomorphisms of the twisted leaf, as a target family for
+`sigmaAssembledComponent` — `twisted_cech_nerve_per_sigma` read as data.  Witnesses that the
+abstract σ-calculus above applies to the real base-change situation and is not vacuous. -/
+noncomputable def twistedPerSigmaTarget
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [IsSeparated f] [IsAffine S]
+    [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent) (n : ℕ) :
+    ∀ σ : Fin (n + 1) → 𝒰.I₀, (Scheme.Modules.pullback g').obj
+        (pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ))))
+      ≅ pushPullObj ((Scheme.Modules.pullback g').obj F)
+          (Over.mk (Scheme.Opens.ι (coverInterOpen
+            ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+              h.isoPullback.symm.hom) σ))) :=
+  fun σ => twisted_cech_nerve_per_sigma f g f' g' h 𝒰 F hF σ
+
 /-- **The cosimplicial Beck–Chevalley iso `e`** consumed by
 `cechComplex_baseChange_iso_of_cosimplicialIso`. It is the whiskered composite of the
 Beck–Chevalley natural iso `cech_pushforward_baseChange_natIso` with the twisted-nerve
