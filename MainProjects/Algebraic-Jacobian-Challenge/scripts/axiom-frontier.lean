@@ -1179,13 +1179,56 @@ end HeadlineBinders
 #print axioms leakProbe_instPicSharpRepresentable
 #print axioms leakProbe_groupSchemeStructure
 
-/-- Flat pullback along the identity: `Flat` is synthesised from a proved
-instance, but `PreservesFiniteLimits` still routes through the `sorry`-bodied
-`pullback_preservesFiniteLimits`. -/
-theorem leakProbe_pullback_finiteLimits (S : Scheme.{u}) :
-    PreservesFiniteLimits (Scheme.Modules.pullback (𝟙 S)) :=
-  inferInstance
+/-! ### The flat-pullback probe, RESTATED (run 0068) — and why the old one is now vacuous
+
+The old probe read
+```
+  theorem leakProbe_pullback_finiteLimits (S : Scheme.{u}) :
+      PreservesFiniteLimits (Scheme.Modules.pullback (𝟙 S)) := inferInstance
+```
+and reported `sorryAx` because `pullback_preservesFiniteLimits` was an `instance` and
+synthesis found it.  As of run 0068 that declaration is deliberately **not** an instance
+(the `instance` attribute *was* the leak mechanism: it let synthesis inject `sorryAx` at
+sites that never named the sorried declaration).  Two consequences:
+
+1. For a general flat `g`, `PreservesFiniteLimits (Scheme.Modules.pullback g)` no longer
+   synthesises **at all** — a consumer must name `pullback_preservesFiniteLimits`, so the
+   dependency is visible in the proof term.  That is the point of the change.
+2. The identity is the *worst possible* argument for this probe: for `𝟙 S` the pullback
+   coincides with the identity functor (`Scheme.Modules.pullbackId`), so synthesis now finds
+   a clean route and the probe reports clean **without measuring the obligation at all**.
+   Reading that clean line as progress would be exactly the error §6b warns about.
+
+So the probe below names the declaration instead of synthesising it, which is the only
+honest way to measure a non-instance carrier, and a control records that synthesis for a
+general flat `g` now fails rather than leaking. -/
+theorem leakProbe_pullback_finiteLimits {S S' : Scheme.{u}} (g : S' ⟶ S) [Flat g] :
+    PreservesFiniteLimits (Scheme.Modules.pullback g) :=
+  pullback_preservesFiniteLimits g
+
+/-- Companion: the residual carrier itself.  Everything the flat-base-change lane still owes
+is this one statement (flat base change preserves injections), so this line and the one above
+must agree — if they ever disagree, a second leak has appeared in the derivation. -/
+theorem leakProbe_pullback_monos {S S' : Scheme.{u}} (g : S' ⟶ S) [Flat g] :
+    (Scheme.Modules.pullback g).PreservesMonomorphisms :=
+  pullback_preservesMonomorphisms g
+
+/-- Control, and the one that should be read as the *reduction*: supplying mono-preservation
+as an explicit hypothesis makes left exactness axiom-clean.  Together with the two probes
+above this says the obligation is exactly one statement, with nothing hiding behind it. -/
+theorem leakControl_pullback_finiteLimits_given_monos {S S' : Scheme.{u}} (g : S' ⟶ S)
+    (hm : (Scheme.Modules.pullback g).PreservesMonomorphisms) :
+    PreservesFiniteLimits (Scheme.Modules.pullback g) :=
+  pullback_preservesFiniteLimits_of_preservesMonomorphisms g hm
+
+/-- Control: the open-immersion case is genuinely proved, not merely reduced. -/
+theorem leakControl_pullback_monos_openImmersion {X Y : Scheme.{u}} (f : X ⟶ Y)
+    [IsOpenImmersion f] : (Scheme.Modules.pullback f).PreservesMonomorphisms :=
+  Modules.pullback_preservesMonomorphisms_of_isOpenImmersion f
 
 #print axioms leakProbe_pullback_finiteLimits
+#print axioms leakProbe_pullback_monos
+#print axioms leakControl_pullback_finiteLimits_given_monos
+#print axioms leakControl_pullback_monos_openImmersion
 
 end AlgebraicGeometry
