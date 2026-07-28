@@ -1008,6 +1008,59 @@ theorem geometricallyReduced {k : Type u} [Field k]
     GeometricallyReduced (Pic0Scheme C).hom :=
   sorry
 
+/-- **Geometric reducedness from reducedness of every field base change** — proved (run 0067),
+and this is the honest unfolding of the class rather than a shortcut.
+
+`GeometricallyReduced f` is by definition `geometrically IsReduced f`, i.e. `X ×_Y Spec K` is
+reduced for every field `K` and every `Spec K ⟶ Y`. Since `IsReduced` is closed under
+isomorphisms, mathlib's `geometrically_iff_of_isClosedUnderIsomorphisms` lets the abstract
+pullback in the definition be replaced by the concrete `Limits.pullback`, so supplying
+reducedness of each `Limits.pullback (Pic0Scheme C).hom y` discharges the class.
+
+WHAT THIS DOES AND DOES NOT BUY. It converts the class into a statement about honest
+pullbacks, which is the form in which the deformation-theoretic argument (Kleiman §5
+`cor:sm`: `H²(C, 𝒪_C) = 0` makes the deformation functor unobstructed) can be applied to each
+base change. What it does *not* do is reduce to the algebraically closed case: I checked, and
+`GeometricallyReduced` has **no** `MorphismProperty.DescendsAlong` instance in mathlib v4.31,
+so the `of_pullback_snd_of_descendsAlong` trick that works for `UniversallyClosed`
+(`universallyClosed_of_baseChange` above) and that `smooth_of_grpObj` uses internally is *not*
+available here. That is worth recording because it is the natural first thing to try.
+
+This confirms from the AJC side a cross-project negative reported on inbox I-0495
+(ajcr-w5-av, 2026-07-28, machine-probed): "IsReduced after base change to `k̄` implies
+`GeometricallyReduced`" is in neither mathlib nor either project — mathlib handles algebraic
+`K/k` (`RingTheory/Nilpotent/GeometricallyReduced.lean`) and stops, and
+`Algebra.IsGeometricallyReduced` has zero consumers under `Mathlib/AlgebraicGeometry/`. So the
+transcendental case is the missing infrastructure, and the quantification over *all* field
+extensions in the statement below is not laziness — it is what the class actually asks for. -/
+theorem geometricallyReduced_of_forall_isReduced {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    (h : ∀ (K : Type u) [Field K] (y : Spec (.of K) ⟶ Spec (.of k)),
+      IsReduced (Limits.pullback (Pic0Scheme C).hom y)) :
+    GeometricallyReduced (Pic0Scheme C).hom := by
+  rw [geometricallyReduced_iff, geometrically_iff_of_isClosedUnderIsomorphisms]
+  intro K _ y
+  exact h K y
+
+/-- **Smoothness of `Pic⁰_{C/k}` from reducedness of every field base change** — proved
+(run 0067): `geometricallyReduced_of_forall_isReduced` composed with
+`smooth_of_geometricallyReduced`.
+
+The whole of the structural assembly is now discharged, and the residue is one reducedness
+statement per field extension of `k`. -/
+theorem smooth_of_forall_isReduced {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    (h : ∀ (K : Type u) [Field K] (y : Spec (.of K) ⟶ Spec (.of k)),
+      IsReduced (Limits.pullback (Pic0Scheme C).hom y)) :
+    Smooth (Pic0Scheme C).hom :=
+  smooth_of_geometricallyReduced C (geometricallyReduced_of_forall_isReduced C h)
+
 /-- **Smoothness of `Pic⁰_{C/k}`.**
 
 For a smooth proper geometrically integral curve `C/k`, the identity component
