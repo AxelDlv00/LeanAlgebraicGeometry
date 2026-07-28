@@ -1258,26 +1258,34 @@ theorem principal_degree_zero {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     --     `CurveBaseChange`, all of which sit strictly downstream of this file.
     --     Closing the branch that way is an import inversion, not a proof step.
     --
-    -- (2) THE ADELIC INPUT IS NOT ONE LOCAL LEMMA. That endpoint carries an
-    --     explicit `hledger` hypothesis, and the bump route to it is *refuted*
-    --     in-tree: `Adelic.ChiUnconditional.not_bump_of_notMem_left` proves
-    --     `hbump` outright false — unconditionally, with no exactness or
-    --     approximation datum — whenever a prime divisor lies off a chart of a
-    --     genuine cover `U₀ ⊔ U₁ = ⊤` whose three chart section spaces are all
-    --     finite-dimensional, and `ledger_refuted_of_notMem_left` does the same
-    --     for `hledger`. `Adelic/SectionBounds.lean:327` already withdraws the
-    --     earlier reading that the bump makes the ledger satisfiable.
+    -- (2) THE ADELIC INPUT IS AN OPEN HYPOTHESIS, NOT A REFUTED ONE.
+    --     CORRECTED run 0067 r2, and the correction is against my own earlier
+    --     note here: I wrote that `hbump` is "*refuted* in-tree" by
+    --     `Adelic.ChiUnconditional.not_bump_of_notMem_left` and that the open
+    --     work is therefore "to exhibit a cover on which the ledger can hold".
+    --     BOTH CLAUSES WERE WRONG, and following them would have cost a session
+    --     on a nonexistent problem. ajc-rr established why (inbox I-0493,
+    --     2026-07-28; `Adelic/ChartFinitenessRefuted.lean`, sorry-free):
     --
-    --     That refutation is not fatal, though, and the distinction matters for
-    --     whoever picks this up: its load-bearing binder is
-    --     `[∀ D, Module.Finite k (sectionSub k Uᵢ D)]` at a NON-TOTAL `Uᵢ`,
-    --     which `ChiUnconditional.ell_le_finrank_chart_along_tower` documents as
-    --     "a substantive geometric restriction" that "has already excluded the
-    --     curves Riemann–Roch is about" — affine charts of a curve do not have
-    --     finite-dimensional section spaces over `k`. So what is ruled out is a
-    --     class of covers, not the ledger. The open work is to exhibit a cover
-    --     on which the ledger can hold, which is a question about the cover
-    --     rather than a one-point local statement.
+    --       `not_chart_finite_of_transcendental` — for a nonempty affine chart
+    --       `U` of a curve carrying a non-algebraic `f ∈ K(X)`,
+    --       `¬ Module.Finite k (sectionSub k U 0)`.
+    --
+    --     So the refutations' load-bearing binder `[∀ D, Module.Finite k
+    --     (sectionSub k Uᵢ D)]` at a NON-TOTAL `Uᵢ` is *unsatisfiable* on a
+    --     curve — one instance at `D = 0` already forces `K(X)/k` finite,
+    --     because `sectionSub k U 0` is a ring (orders add) squeezed between
+    --     `Γ(X, U)` and its own fraction field, and a `k`-finite domain is a
+    --     field. A theorem with an unsatisfiable hypothesis refutes nothing:
+    --     `hbump` and the closed ledger are **OPEN** at a curve, not false, and
+    --     no better cover exists to look for. The `hledger`-conditional results
+    --     of the adelic lane are correspondingly *not* shown vacuous.
+    --
+    --     What survives from the old note: `Adelic/SectionBounds.lean:327` still
+    --     withdraws the reading that the bump *makes* the ledger satisfiable,
+    --     and the endpoint still carries `hledger` explicitly. So this branch
+    --     cannot be closed by substituting the adelic endpoint — but for the
+    --     import reason (1), not because the route is dead.
     --
     -- (3) A THIRD ROUTE, AND IT IS THE ONE TO TAKE (found run 0067). The adelic
     --     ledger is not the only ledger. The sibling project
