@@ -373,3 +373,41 @@ theorem symPowData_affine (k : CommRingCat.{u}) (X : (Under k)ᵒᵖ) (n : ℕ) 
   symPowData_of_hasColimit X n
 
 end CategoryTheory
+
+/-! ## §6. The curve case: the obligation is a statement about `Scheme`, not about
+`Over (Spec k̄)`
+
+The Albanese connector lives in `Over (Spec k̄)`, so one might expect the missing
+construction to be an over-category one, with structure-map bookkeeping on top of the
+quotient. It is not: `Over.forget` **creates** colimits, so a colimit of the permutation
+action in `Scheme` gives one in `Over (Spec k̄)` for free.
+
+That removes a whole layer from the remaining work. The single open obligation of this leg
+is now
+
+  `HasColimitsOfShape (SingleObj (Equiv.Perm (Fin n))) Scheme`
+
+— quotients of a scheme by a finite group action, absolute, no base and no curve
+hypotheses in sight. Which is the right shape for it: it is a general fact about schemes
+that mathlib is missing, not something specific to Milne III.6. -/
+
+namespace AlgebraicGeometry
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
+
+/-- **The curve case reduces to `Scheme`.** If `Scheme` has colimits of the
+`S_n`-action shape, then the pair the Albanese theorems quantify over exists for any
+`k̄`-scheme `C` — in particular for a proper curve.
+
+The transfer is free: `Over.forget` creates colimits, so no compatibility with the
+structure morphism has to be checked. Compare `Albanese/AlbaneseFromData.lean`'s
+`comp_hom_of_descent_eq`, where the analogous crossing for the *descent* datum also turned
+out to be automatic. -/
+theorem symPowData_over_of_scheme_colimits {kbar : Type u} [Field kbar]
+    (C : Over (Spec (.of kbar))) (n : ℕ)
+    [HasColimitsOfShape (SingleObj (Equiv.Perm (Fin n))) Scheme.{u}] :
+    ∃ D : SymPowData C n, ∀ σ : Equiv.Perm (Fin n),
+      MonObj.permAut C σ ≫ D.proj = D.proj :=
+  symPowData_of_hasColimit C n
+
+end AlgebraicGeometry

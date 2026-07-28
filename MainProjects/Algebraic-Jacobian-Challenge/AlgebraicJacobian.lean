@@ -261,6 +261,7 @@ import AlgebraicJacobian.Albanese.AVSelfProduct
 import AlgebraicJacobian.Albanese.SymPowInterface
 import AlgebraicJacobian.Albanese.SymPowColimit
 import AlgebraicJacobian.Albanese.AlbaneseFromData
+import AlgebraicJacobian.Albanese.AlbaneseFromColimit
 import AlgebraicJacobian.Albanese.AlbaneseJacobian
 import AlgebraicJacobian.Albanese.Milne33Substeps
 -- Milne Lemma 3.3 (`lem:milne_codim1_indeterminacy`) and its substep layers:
