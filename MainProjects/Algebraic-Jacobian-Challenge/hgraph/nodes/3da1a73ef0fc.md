@@ -3,7 +3,7 @@ author: sync
 content_type: structure
 created: '2026-07-24T17:02:57'
 decl: AlgebraicGeometry.homomorphism
-file: AlgebraicJacobian/Picard/Pic0DualNumberCocycle.lean
+file: AlgebraicJacobian/Picard/TangentSpaceIdentitySection.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.homomorphism
