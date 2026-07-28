@@ -159,6 +159,114 @@ theorem sectionSub_mul_mem_zero (U : X.Opens) {f g : X.functionField}
   simp only [Finsupp.coe_zero, Pi.zero_apply, neg_zero] at h1 h2 ⊢
   linarith
 
+/-- **`Γ(U, 𝒪(0))` as a `k`-subalgebra of the function field.**  The multiplicative closure
+`sectionSub_mul_mem_zero` plus `1 ∈ Γ(U, 𝒪(0))` upgrade the `k`-submodule to a subalgebra.
+Its being a *ring* is what converts a finiteness binder into a field, which is the whole
+mechanism of this file. -/
+def chartAlg (U : X.Opens) : Subalgebra k X.functionField where
+  carrier := sectionSub k U (0 : X.WeilDivisor)
+  mul_mem' := sectionSub_mul_mem_zero k U
+  one_mem' := one_mem_sectionOfDivisor_zero U
+  add_mem' := (sectionSub k U (0 : X.WeilDivisor)).add_mem
+  zero_mem' := (sectionSub k U (0 : X.WeilDivisor)).zero_mem
+  algebraMap_mem' := fun c => by
+    have h1 : (1 : X.functionField) ∈ sectionSub k U (0 : X.WeilDivisor) :=
+      one_mem_sectionOfDivisor_zero U
+    have := (sectionSub k U (0 : X.WeilDivisor)).smul_mem c h1
+    rwa [Algebra.smul_def, mul_one] at this
+
+@[simp] theorem mem_chartAlg {U : X.Opens} {f : X.functionField} :
+    f ∈ chartAlg k U ↔ f ∈ sectionSub k U (0 : X.WeilDivisor) := Iff.rfl
+
+/-- **If `Γ(U, 𝒪(0))` is a field, it is the whole function field.**  On a nonempty affine
+chart, `K(X) = Frac Γ(X, U)` (`chartRing_isFractionRing`), so every `f : K(X)` is `a/b` with
+`a, b ∈ Γ(X, U) ⊆ chartAlg`.  Inside a field, `b⁻¹` is available, so `f = a·b⁻¹` lies in
+`chartAlg` too. -/
+theorem chartAlg_eq_top_of_isField {U : X.Opens} (hU : IsAffineOpen U) [Nonempty U]
+    (hfield : IsField (chartAlg k U)) : chartAlg k U = ⊤ := by
+  haveI hfr : IsFractionRing Γ(X, U) X.functionField := chartRing_isFractionRing hU
+  refine Algebra.eq_top_iff.mpr fun f => ?_
+  obtain ⟨a, b, hb, hab⟩ := IsFractionRing.div_surjective (A := Γ(X, U)) f
+  have ha' : algebraMap Γ(X, U) X.functionField a ∈ chartAlg k U :=
+    algebraMap_chart_mem_sectionSub_zero k a
+  have hb' : algebraMap Γ(X, U) X.functionField b ∈ chartAlg k U :=
+    algebraMap_chart_mem_sectionSub_zero k b
+  have hbne : algebraMap Γ(X, U) X.functionField b ≠ 0 := fun h =>
+    (nonZeroDivisors.coe_ne_zero ⟨b, hb⟩) (IsFractionRing.to_map_eq_zero_iff.mp h)
+  obtain ⟨c, hc⟩ := hfield.mul_inv_cancel (a := (⟨_, hb'⟩ : chartAlg k U))
+    (by simpa [Subtype.ext_iff] using hbne)
+  have hbinv : (algebraMap Γ(X, U) X.functionField b)⁻¹ ∈ chartAlg k U := by
+    have hval : algebraMap Γ(X, U) X.functionField b * (c : X.functionField) = 1 := by
+      have := congrArg (fun z : chartAlg k U => (z : X.functionField)) hc
+      simpa using this
+    rw [← eq_inv_of_mul_eq_one_right hval]; exact c.2
+  rw [← hab, div_eq_mul_inv]
+  exact Subalgebra.mul_mem _ ha' hbinv
+
+/-- **THE MAIN RESULT — chart finiteness at the ZERO divisor already forces `K(X)/k` finite.**
+
+One instance of the binder that `ChiUnconditional.lean`'s refutations quantify over the whole
+divisor family — `Module.Finite k (sectionSub k U 0)` at a single nonempty affine chart — is
+enough to collapse the function field onto a finite extension of `k`.
+
+Chain: `Γ(U, 𝒪(0))` is a `k`-finite domain (`chartAlg`), hence a field
+(`fieldOfFiniteDimensional`); a field between `Γ(X, U)` and its own fraction field is
+everything (`chartAlg_eq_top_of_isField`); so `K(X)` *is* that finite `k`-module.
+
+**Why this is the sharp statement.** `ell_le_finrank_chart_along_tower` says chart finiteness
+bounds `ℓ` along a tower and calls that "a substantive geometric restriction". It is not a
+restriction on the *cover* at all — no cover appears in this statement. It is a restriction on
+`k ⊆ K(X)`, which no choice of charts can change. -/
+theorem module_finite_functionField_of_chart_finite {U : X.Opens} (hU : IsAffineOpen U)
+    [Nonempty U] (hfin : Module.Finite k (sectionSub k U (0 : X.WeilDivisor))) :
+    Module.Finite k X.functionField := by
+  haveI hfd : FiniteDimensional k (chartAlg k U) := hfin
+  have htop : chartAlg k U = ⊤ :=
+    chartAlg_eq_top_of_isField k hU (fieldOfFiniteDimensional k (chartAlg k U)).toIsField
+  exact Module.Finite.equiv
+    ((Subalgebra.equivOfEq _ _ htop).toLinearEquiv.trans
+      (Subalgebra.topEquiv (R := k) (A := X.functionField)).toLinearEquiv)
+
+/-- **The binder is EQUIVALENT to a statement with no cover, no chart and no divisor in it.**
+Forward is `module_finite_functionField_of_chart_finite`; backward, a `k`-submodule of a
+`k`-finite space is `k`-finite.  Stating the equivalence is the point: it makes visible that
+supplying the chart-finiteness binder is *exactly* assuming `K(X)/k` finite, and therefore that
+no cleverness about covers or charts can ever satisfy it on a curve. -/
+theorem chart_finiteness_iff_module_finite_functionField {U : X.Opens} (hU : IsAffineOpen U)
+    [Nonempty U] :
+    Module.Finite k (sectionSub k U (0 : X.WeilDivisor)) ↔ Module.Finite k X.functionField := by
+  refine ⟨fun h => module_finite_functionField_of_chart_finite k hU h, fun h => ?_⟩
+  exact Module.Finite.of_injective (sectionSub k U (0 : X.WeilDivisor)).subtype
+    Subtype.val_injective
+
+omit [IsLocallyNoetherian X] [Scheme.IsRegularInCodimensionOne X] [IsConstantField k X] in
+/-- **What closing this costs, as one hypothesis.**  If some `f : K(X)` is transcendental over
+`k` then `K(X)/k` is not finite, so — by
+`chart_finiteness_iff_module_finite_functionField` — the chart-finiteness binder fails at
+*every* nonempty affine chart, and with it every §5–§6 refutation of `ChiUnconditional.lean`.
+
+The hypothesis is exactly "the curve has a nonconstant function". AJC constructs such a
+function in `NonconstantToP1.lean` for its own curve; wiring that in is downstream of this
+module and is deliberately left as this named input rather than assumed here.
+
+Pure field theory — no geometry is used, hence the `omit`. -/
+theorem not_module_finite_functionField_of_transcendental
+    (f : X.functionField) (hf : ¬ IsAlgebraic k f) :
+    ¬ Module.Finite k X.functionField := fun hfin => by
+  haveI : FiniteDimensional k X.functionField := hfin
+  exact hf (Algebra.IsIntegral.isIntegral f).isAlgebraic
+
+/-- **The refutations' binder is unsatisfiable on a curve with a nonconstant function.**  The
+contrapositive form a consumer wants: no nonempty affine chart of such a curve has
+finite-dimensional `Γ(U, 𝒪(0))`, so `ChiUnconditional.not_bump_of_notMem_left` and
+`ledger_refuted_of_notMem_left` have unsatisfiable hypotheses there and refute nothing about a
+curve. `hbump` and the closed ledger are **open** at a curve, not false. -/
+theorem not_chart_finite_of_transcendental {U : X.Opens} (hU : IsAffineOpen U) [Nonempty U]
+    (f : X.functionField) (hf : ¬ IsAlgebraic k f) :
+    ¬ Module.Finite k (sectionSub k U (0 : X.WeilDivisor)) := fun hfin =>
+  not_module_finite_functionField_of_transcendental k f hf
+    (module_finite_functionField_of_chart_finite k hU hfin)
+
 end ChartFiniteness
 
 end Adelic
