@@ -70,14 +70,29 @@ without a consumer (inbox `I-0571`, `I-0637`).
 changed is that the obstruction is no longer a category mismatch.
 
 **Second — and this is a correction to a claim an earlier draft of this header made.** "Same
-category, same variance" is not by itself enough, because the *index* category differs too:
-`Functor.op` produces a diagram indexed by `(SingleObj G)ᵒᵖ`, while
-`SymPowColimit.permDiagram` is indexed by `SingleObj (Equiv.Perm (Fin n))`. §5 closes that
-third gap with `hasColimit_singleObj_of_op`, transporting along `Groupoid.invEquivalence`, and
-records that the reindexing is exactly the `σ ↦ σ⁻¹` convention already carried twice
-elsewhere in this cone. So the residual obstruction is mechanical (align `permAut` on
-`(Under k)ᵒᵖ` with the reindexed diagram), not structural — but it is nonzero, and calling
-this file's statements "directly consumable" would be the overclaim to avoid.
+category, same variance" is not enough, for **two** further reasons. A reviewer found both;
+one was in the draft and one the draft missed entirely.
+
+*(a) The index category.* `Functor.op` produces a diagram indexed by `(SingleObj G)ᵒᵖ`, while
+`SymPowColimit.permDiagram` is indexed by `SingleObj (Equiv.Perm (Fin n))`. §5 handles that
+with `hasColimit_singleObj_of_op`, transporting along `Groupoid.invEquivalence`, and records
+that the reindexing is exactly the `σ ↦ σ⁻¹` convention already carried twice elsewhere in
+this cone. (That lemma was first stated with all universes pinned to `u`, which excluded
+`Under k` — `Category.{u, u+1}` — so it was true and inapplicable at the one category the leg
+needs. Fixed to `{C : Type w} [Category.{v} C]`, same proof.)
+
+*(b) The **object**, and this is the one that actually blocks consumption.*
+`symPowData_affineAlgebra` builds `permDiagram X n` from the `n`-fold *product of `X` in
+`(Under k)ᵒᵖ`*, i.e. the `n`-fold *coproduct in `Under k`*. Everything here is about
+`⨂[k] _ : Fin n, A`. For those to be the same object one needs (i) the `n`-ary coproduct of
+`k`-algebras identified with the `n`-fold tensor power and (ii) the induced permutation action
+matched to `PiTensorProduct.permAlgHom`. Neither exists: mathlib has only the **binary** case
+(`Algebra/Category/Ring/Constructions.lean`), and nothing in AJC builds the `n`-ary one.
+
+So the honest reading is: this file fixed the *category* mismatch its predecessor had, and the
+same shape reappears one level down at the *object*. Calling these statements "directly
+consumable" would be the overclaim; the missing brick is the `n`-ary coproduct/tensor-power
+identification, which is cheap but real.
 
 ## References
 
@@ -87,7 +102,7 @@ the affine chart of `Albanese/SymPowColimit.lean` §5.
 
 set_option autoImplicit false
 
-universe u
+universe w v u
 
 open CategoryTheory Limits
 
@@ -293,15 +308,21 @@ reindexes the action by inversion, which is `rfl`-checked in
 third time. Three independent occurrences of one inversion is a sign the convention is
 coherent, not that something is off.
 
-What this does **not** do: it does not rewrite `symPowData_affineAlgebra` to consume the
-named carrier. The obstruction to that is now purely mechanical (align `permAut` on
-`(Under k)ᵒᵖ` with the reindexed action diagram), where before it was a category mismatch. -/
+What this does **not** do: it does not rewrite `symPowData_affineAlgebra` to consume the named
+carrier, and the obstruction is *not* merely mechanical — see (b) in the header. That file's
+diagram is built from the `n`-fold coproduct of algebras, this one's from the tensor power, and
+identifying those at `n ≥ 3` is a missing brick rather than an alignment.
+
+The universe binder here is `{C : Type w} [Category.{v} C]` deliberately. With everything pinned
+to `u` the lemma cannot be instantiated at `Under k` (`Category.{u, u+1}`) — it was landed that
+way and was true but unusable at the only category that matters. The proof is unchanged; only
+the binder moved. -/
 
 /-- **Transport across the groupoid inverse equivalence.** A colimit of `F.op` — indexed by
 `(SingleObj G)ᵒᵖ` — yields a colimit of a diagram indexed by `SingleObj G`, namely `F.op`
 reindexed by inversion. This is what makes §3's statement usable by a consumer written
 against `SingleObj G`. -/
-theorem hasColimit_singleObj_of_op {G : Type u} [Group G] {C : Type u} [Category.{u} C]
+theorem hasColimit_singleObj_of_op {G : Type u} [Group G] {C : Type w} [Category.{v} C]
     (F : SingleObj G ⥤ C) [HasColimit F.op] :
     HasColimit ((Groupoid.invEquivalence (SingleObj G)).functor ⋙ F.op) :=
   inferInstance
@@ -309,7 +330,7 @@ theorem hasColimit_singleObj_of_op {G : Type u} [Group G] {C : Type u} [Category
 /-- **The reindexing is exactly inversion**, on the nose. So the transported diagram of
 `hasColimit_singleObj_of_op` is the original action read backwards — the third appearance of
 the `σ ↦ σ⁻¹` convention in this cone. -/
-theorem invEquivalence_comp_op_map {G : Type u} [Group G] {C : Type u} [Category.{u} C]
+theorem invEquivalence_comp_op_map {G : Type u} [Group G] {C : Type w} [Category.{v} C]
     (F : SingleObj G ⥤ C) (g : G) :
     ((Groupoid.invEquivalence (SingleObj G)).functor ⋙ F.op).map (SingleObj.toEnd G g)
       = (F.map (SingleObj.toEnd G g⁻¹)).op := rfl

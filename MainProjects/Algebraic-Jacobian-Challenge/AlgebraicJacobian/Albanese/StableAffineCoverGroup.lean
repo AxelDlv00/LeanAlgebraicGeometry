@@ -44,8 +44,12 @@ direction that should go.
 * `exists_stable_affineOpen_of_orbits` — **the theorem**: under that hypothesis every point
   has a `G`-stable affine open neighbourhood. Prime avoidance puts the orbit in a basic open
   `D(s)` inside `⋂_g g⁻¹U`, and the norm `N = ∏_g g(s)` cuts out a stable affine basic open.
-* `permAction` — the `S_n`-action on a product, as the `MonoidHom` this file consumes, so the
-  symmetric-power case can be fed in directly.
+**No `S_n` instantiation is provided, and that is a real gap, not an omission.** An earlier
+version of this list advertised a `permAction : Equiv.Perm (Fin n) →* Aut (C^n)`; no such
+declaration exists, here or anywhere in the tree, and building it is not free:
+`MonObj.permAut` is a bare *morphism* never shown to be an isomorphism, and
+`SymPowColimit.permEnd` lands in `End`, not `Aut`. So the theorem below is stated at the
+generality `S_n` needs but has **no producer** for it yet — see the scope section.
 
 ## Why the proof needs no averaging, and so no characteristic hypothesis
 
@@ -56,18 +60,32 @@ through averaging would exclude exactly the cases the challenge is stated over.
 
 ## Scope — what this does and does not give
 
-**Does**: the stable-cover input to a glue-data construction, for `S_n` acting on `C^n`, with
-no Galois hypothesis and no characteristic hypothesis.
+**Does**: prove the stable-cover statement at the generality a glue-data construction wants —
+a *finite group acting on a scheme by automorphisms*, with no Galois hypothesis and no
+characteristic hypothesis.
 
-**Does not**: build the glue data. `HasColimit (permDiagram C g)` remains open, and
-`AlbaneseUP.lean`'s six sorries are unchanged. Two further inputs a glue-data assembly needs
-are also unaddressed here: that the affine chart quotients agree on overlaps (the cocycle
-condition), and `OrbitsInAffineOpen` **for the curve** — which is where quasi-projectivity
-would enter, and mathlib has no quasi-projectivity vocabulary at this pin. So this closes one
-of three, and the remaining two are named rather than estimated.
+**Does not**: apply it to `S_n` acting on `C^n`. An earlier version of this section said it
+did. That was wrong, and the missing piece is named above: there is no
+`Equiv.Perm (Fin n) →* Aut (C^n)` in the tree, because `MonObj.permAut` is not known to be an
+isomorphism. Until that exists, this theorem has the right hypotheses and no producer.
 
-Note also: nothing consumes this file yet. It is stated so the `S_n` case *can* consume it,
-which is a different claim from having wired it in.
+**Also does not**: build the glue data. `HasColimit (permDiagram C g)` remains open and
+`AlbaneseUP.lean`'s six sorries are unchanged. Counting honestly, a glue-data assembly still
+needs *four* things and this file supplies one of them:
+
+1. ✓ a `G`-stable affine cover — below;
+2. the `Aut`-valued `S_n`-action just described;
+3. the identification of the `n`-fold coproduct of algebras with the `n`-fold tensor power,
+   matching its permutation action to `PiTensorProduct.permAlgHom` — mathlib has only the
+   *binary* case (`Algebra/Category/Ring/Constructions.lean`), and nothing in AJC builds the
+   `n`-ary one. Without it the affine layer of `Albanese/SymPowInvariantsUnder.lean` and
+   `SymPowColimit.symPowData_affineAlgebra` are about different objects;
+4. the cocycle/overlap agreement of the chart quotients, plus `OrbitsInAffineOpen` **for the
+   curve** — where quasi-projectivity would enter, and mathlib has no quasi-projectivity
+   vocabulary at this pin.
+
+Nothing consumes this file yet, and item 2 is why: it is not wired in, and it cannot be until
+that action exists.
 
 ## References
 
