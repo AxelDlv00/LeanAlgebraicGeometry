@@ -120,9 +120,27 @@ This file closes exactly one of the three, and it is worth being blunt about whi
 1. **Single-field bounded vanishing — CLOSED HERE, conditionally on one base vanishing.**
    `subsingleton_hModule_one_of_deg_ge` is it.  The residual input is *one* divisor `D₀` with
    `H¹(𝒪(D₀)) = 0`; note it is a *single* hypothesis at a *single* divisor, not a family, and
-   the bound is then explicit: `deg D₀ + 1 − χ(𝒪_X)`.  Where does `D₀` come from?
+   the bound is then explicit: `deg D₀ + 1 − χ(𝒪_X)`.
+
+   **BUT BE PRECISE ABOUT WHAT "ONE DIVISOR, NOT A FAMILY" BUYS, BECAUSE IT IS NOT A CURVE.**
+   Measured, at the whole project rather than this subtree: **AJC currently proves that
+   antecedent at no proper curve at all.**  The only producer of
+   `Subsingleton (Sheaf.HModule (X.moduleKSheaf k) 1)` in the project is
+   `Ledger/AffineVanishing.Scheme.subsingleton_moduleKSheaf_hModule_one` (:329), and it carries
+   `[IsAffine X]` — which a proper curve never satisfies.  No `genus … = 0` or
+   `ledgerGenus … = 0` is proved anywhere either, so the genus-zero route below is a *shape*, not
+   an instance: it says what to feed the theorems, not that AJC can feed them.
+
+   So the honest reading of everything in this file is **conditional, with an antecedent that is
+   currently unwitnessed in this project**.  The theorems are not vacuous — the hypothesis is
+   satisfiable, and AJCR discharges its analogue (see the provenance section) — but nobody should
+   read "the residue is one base vanishing" as "AJC is one lemma from unconditional bounded
+   vanishing at a curve".  The residue is the AJCR port named below, and until it lands, every ★
+   and ★★ here fires only under a hypothesis AJC cannot yet supply.
    - Over a curve of genus `0` (equivalently `h¹(𝒪_X) = 0` with the `Subsingleton` spelling),
      `D₀ = 0` works and the whole thing is unconditional — `subsingleton_of_deg_ge_of_zero`.
+     Recorded as the cheapest *shape* of the input, not as an available instance: per the
+     paragraph above, AJC does not prove `H¹(𝒪_C) = 0` for any proper `C`.
    - In general it is a port: AJCR's `RiemannRoch/FLVVanishing.lean:302`
      (`subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1`) produces, for a finite dominant
      `π : Y ⟶ ℙ¹`, an `n₀` with `H¹(𝒪(D + n·F)) = 0` for `n ≥ n₀`.  Any one member of that
