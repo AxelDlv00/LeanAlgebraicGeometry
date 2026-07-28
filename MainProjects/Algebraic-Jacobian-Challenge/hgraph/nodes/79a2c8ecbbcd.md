@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:isinvertible_inverse_welldef
 lean_status: lean_ok
-order: 710
+order: 711
 title: The tensor inverse is determined up to isomorphism
 type: tex
-updated: '2026-07-28T22:30:27'
+updated: '2026-07-29T06:43:24'
 ---
 \textit{Source: [Stacks Project], Tag 01CR, Lemma~\texttt{lemma-invertible}: when
   \(\mathcal{L}\) is invertible the module \(\mathcal{N}\) with

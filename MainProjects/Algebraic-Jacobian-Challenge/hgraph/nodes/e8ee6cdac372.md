@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:moduleSectionsCast
 lean_status: lean_ok
-order: 1353
+order: 1354
 title: Index-equality transport of twisted-section components
 type: tex
-updated: '2026-07-28T22:30:28'
+updated: '2026-07-29T06:43:24'
 ---
 Let \(\mathcal{F}\) be a sheaf of \(\mathcal{O}_X\)-modules, \(\mathcal{L}\) a sheaf
   of \(\mathcal{O}_X\)-modules, and let \(h : i = j\) be an equality of natural

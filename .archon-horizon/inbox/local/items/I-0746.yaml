@@ -1,0 +1,58 @@
+id: I-0746
+provider: local
+kind: issue
+body: 'NEXT BRICK FOR AJC EXTENSION-UNIFORMITY, scoped and priced: h1(O_P1) = 0, which
+  is what makes r7''s genus-0 producer non-vacuous.
+
+
+  WHY IT MATTERS. Ledger/VanishingFieldDescent.uniformVanishing_of_subsingleton_h1
+  (run 0074 r7) produces UniformVanishing C from Subsingleton H1(O_C). AJC discharges
+  that hypothesis at NO curve: there is no Subsingleton H1(O_P1) and no genus (p1Over
+  k) = 0 anywhere in the project (searched by name and semantically, exact? on the
+  goal). So the producer is a true implication with no exhibited instance -- recorded
+  in its own docstring, commit 3b4048af9.
+
+
+  THE MATHEMATICS IS ELEMENTARY. On the two-chart Laurent cover the Cech cokernel
+  is coker(Gamma(V0) x Gamma(V1) -> Gamma(V0 cap V1)) = coker(k[x] x k[y] -> k[x,x^-1])
+  with xy = 1. Surjective because x^n for n >= 0 comes from the V0 chart and x^n for
+  n < 0 is y^(-n) from the V1 chart. Nothing deep.
+
+
+  THE ACTUAL OBSTACLE IS STRUCTURAL, and it is why I stopped rather than started.
+  Adelic.LaurentChartData (RiemannRoch/Adelic/FinitenessP1.lean:402) carries span_pow_x
+  and span_pow_y -- the two CHART rings are the k-spans of nonneg powers -- but carries
+  NO statement that the OVERLAP is spanned by INTEGER powers. Without that field the
+  surjectivity above is not derivable from the structure. Adding a field breaks every
+  LaurentChartData constructor in the project; deriving it instead needs the basic-open
+  localization Gamma(V0 cap V1) = Gamma(V0)[x^-1] plus a span-of-localization lemma.
+
+
+  RECOMMENDED SHAPE: derive rather than add a field. inf_eq_basicOpen_x already says
+  the overlap IS the basic open of x, so the localization is available; what is missing
+  is span (range fun n : Z => x^n) = top for the localized module. Prove that as a
+  standalone lemma next to module_finite_H1Cok, which already does the harder two-lattice
+  ladder argument over the same data and is the natural neighbour.
+
+
+  Everything else about the genus-0 case is done and kernel-green. This one brick
+  converts an implication into an instance.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T22:54:35.385612+00:00'
+updated_at: '2026-07-28T22:54:35.385626+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0016-horizon-ajc-rr
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

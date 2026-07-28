@@ -5,103 +5,88 @@ title: 'DAT-B: coverage + injectivity — every $\mathrm{pic}^0$ point is Zarisk
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DAT-B: coverage + injectivity. Injectivity LANDED (worksheet 0.4/2, consumed\
-  \ not proved).\n\nB-6 IS CLOSED 2026-07-29 (run 0072 r5, lane ajcr-charts, commit\
-  \ b4d608389). This row said B-6\n\"still waits on divRep through C9b, whose own\
-  \ gate is now the single clause IsChartUniv\". Both\nhalves of that sentence were\
-  \ wrong. B-6 waits on NOTHING divRep-side, and C9b's gate is not a\nsingle clause\
-  \ (see the c9b row's retraction).\n\nWHAT B-6 ACTUALLY WAS: three files carry\n\
-  [Presheaf.IsLocallySurjective Scheme.zariskiTopology (Sigma.desc f)] as a variable\
-  \ --\nJacobianDataCharts.lean:117, JacobianDataAbelSurj.lean:183, JacobianDataAbelImage.lean:131\
-  \ --\nand NOTHING anywhere produced one. That gap is now filled, certificate-free\
-  \ and divRep-free,\nin Picard/Pic0ChartLocalSurjectivity.lean (sorry-free, rooted,\
-  \ axiom-clean against firing\ncontrols):\n\n * ChartsCoverLocally -- the coverage\
-  \ hypothesis, stated as \"for every test T and every\n   degree-zero class s on\
-  \ it, the SUPREMUM of the per-chart image sieves is a Zariski covering\n   sieve\"\
-  . Deliberately per-chart rather than on the coproduct, so a producer discharges\
-  \ it by\n   exhibiting one open neighbourhood and one index per point of T and never\
-  \ reasons about a\n   coproduct of yoneda presheaves. This is B-5 verbatim.\n *\
-  \ isLocallySurjective_sigmaDesc -- B-6. The image sieve of Sigma.desc f contains\
-  \ each f i's\n   (transport a witness along Sigma.iota, then Sigma.iota_desc), hence\
-  \ their supremum, and a\n   sieve containing a covering sieve is covering.\n\nSO\
-  \ B-6 IS NOT A GEOMETRIC OBLIGATION ON TOP OF B-5: it is B-5 phrased against mathlib's\
-  \ sieve\ninterface plus that bookkeeping. And what the proof shows to be ABSENT\
-  \ is what lanes worried\nabout -- NO cross-chart compatibility and NO injectivity\
-  \ are needed, because Sigma.desc imposes\nno coherence across indices. That is the\
-  \ Pic0ChartAtlasParamFree observation about hf, holding\nagain for coverage: the\
-  \ CHART-PARAMETER HETEROGENEITY recorded below is not an obstruction to\nB-6 either.\n\
-  \nHypothesis checked SATISFIABLE, not assumed: chartsCoverLocally_of_forall_surjective\
-  \ derives it\nfrom a single chart surjective on every test. Degenerate, and not\
-  \ the geometry -- but it rules\nout an unsatisfiable Prop making the reduction vacuous.\n\
-  \nCONSEQUENCE FOR THIS ROW'S ACCOUNTING: what stands between the tree and the local-surjectivity\n\
-  instance is now exactly B-5, i.e. ChartsCoverLocally. Everything downstream of B-5\
-  \ on the\ncoverage side is discharged. The B-5 residue itself is unchanged and is\
-  \ stated below.\n\nCoverage (COV-1 = B-5) is ASSEMBLED over a general test and owes\
-  \ ONE residue -- but the residue is\nNOT the one this row claimed yesterday.\n\n\
-  B-4 OPENNESS: CLOSED 2026-07-29 (run 0072 s0010, commit 2b6228f6a). CHART-U(b) at\
-  \ a general test is\nnow UNCONDITIONAL -- isOpen_chartLocus_of_affineLocal' (Picard/Pic0ChartLocusIsoInvariance.lean),\n\
-  IsSplitWitnessIsoInvariant discharged. See the c9-chartlocus.chart-u row for the\
-  \ instance-side\npricing lesson that came out of it.\n\nB-5 STEP 3 -- RETRACTED\
-  \ AND RESTATED 2026-07-29 (I-0660; commits e3593861a + 05cad5d80).\nThis row said\
-  \ step 3 was \"STILL the residue, but now DERIVED not chosen ... so what remains\
-  \ is\nINSTANTIATING DAT-0a at the base-changed curve C_L\". That is FALSE. A reviewer\
-  \ measured it and\nthree machine-checked statements now replace it (Picard/Pic0ChartCoverageIndexSlack.lean):\n\
-  \n * ledger_forces_b_eq_n -- at a chart index legal at parameter n (the constraint\n\
-  \   deg_k Z = m*d1 - n that chartValue_mem_pic0Subgroup requires) the hdeg hypothesis\
-  \ of\n   mem_chartLocus_of_vanishing_bound DETERMINES the threshold: b = n. It was\
-  \ never an input DAT-0a\n   could supply.\n * hb_forces_h0_eq_one -- at n = g the\
-  \ resulting hb forces EVERY degree-g divisor to have h0 = 1\n   (rank anchor + chi-ledger).\
-  \ That is FALSE on a curve with a moving degree-g family, so there is\n   no route\
-  \ through b = g at all. This SHARPENS the reviewer, who priced it as \"stronger\
-  \ than any\n   threshold result in the tree\" -- it is stronger than what is true.\
-  \ DAT-0a's own bound is\n   n1*deg F + g with 0 < deg F, hence strictly above g\
-  \ for n1 >= 1.\n * index_of_threshold -- what survives, and it corrects the reviewer's\
-  \ conclusion: hdeg IS\n   satisfiable for every b >= 0, at chart parameter n :=\
-  \ b.toNat, because n is FREE across the\n   whole chart layer (divFunctor, chartValue,\
-  \ chartValueTrans, abelSigmaChart are all stated at\n   arbitrary n; n = g is where\
-  \ the DIVISOR REPRESENTABILITY lane instantiates, not something the\n   coverage\
-  \ theorem knows). So coverage-at-an-index is not blocked.\n\nTHE RESIDUE, therefore,\
-  \ is neither prior reading: it is RECONCILE THE CHART PARAMETER WITH THE\nTHRESHOLD\
-  \ -- carry the slack in Z at parameter g, the g + e shape classDeg_presenting_twist_eq_add\n\
-  already has, whose legality (worksheet 1.1 demands 0 <= Sigma AND deg = m*d1 - g)\
-  \ is the open\nquestion. That is also not the reviewer's proposed repair verbatim:\
-  \ they proposed restating with\nslack and themselves noted it collides with that\
-  \ legality.\n\nSTEPS 1, 2, 4, 5 stand as before; step 2 discharged via PicEtAff.degAff_map\n\
-  (Picard/DegreeZeroBaseField.lean, unconditional in L/K); step 6 RETRACTED as unnecessary\
-  \ since\nIsSplitWitness asks for h1 = 0 and for neither effectivity nor degree g\n\
-  (Picard/Pic0ChartCoverageNoDrop.lean). The reviewer independently re-verified both\
-  \ of those and\nneither is disturbed.\n\nWHERE THE DISCARDED PROPERTIES DO MATTER:\
-  \ effectivity and h0 = 1 are needed by DAT-C's canonical\nsection and GAP-2 uniqueness,\
-  \ i.e. by INJECTIVITY, not by coverage.\n\nB-6 (the IsLocallySurjective instance\
-  \ + DAT-glue handoff) -- SUPERSEDED, see the B-6 IS CLOSED\nsection at the top of\
-  \ this row. What stood here read \"still waits on divRep through C9b, whose\nown\
-  \ gate is now the single clause IsChartUniv\"; both clauses are false as of 2026-07-29.\
-  \ B-6\nneeded nothing divRep-side (isLocallySurjective_sigmaDesc, commit b4d608389)\
-  \ and C9b's gate was\nnever a single clause (see the c9b row).\n\nADDENDUM, same\
-  \ session (commit ab27f5c0b, Picard/Pic0ChartAtlasParamFree.lean): THE ATLAS IS\n\
-  CHART-PARAMETER HETEROGENEOUS, which reshapes the residue above once more -- and\
-  \ this correction\napplies to my own restatement as much as to the reviewer's.\n\
-  \nBoth readings above reason about \"the\" chart parameter as if the atlas had one.\
-  \ It does not.\npic0RepresentableByOfCharts takes a family over an ARBITRARY index\
-  \ type with a PER-INDEX\ncertificate and NO coherence condition across indices,\
-  \ so nothing ties the chart parameters of\ndifferent charts together. mixedParamChart\
-  \ builds such a family from nn : iota -> N with a\nper-index representation of divFunctor\
-  \ C pi (nn i) and a per-index index legal AT THAT index's own\nparameter; mixedParamRepresentableBy\
-  \ feeds it to the DAT-glue seam verbatim.\n\nCONSEQUENCE: b = n is a PER-CHART calibration.\
-  \ A point whose splitting field has threshold b_L can\nbe covered by the chart of\
-  \ parameter b_L.toNat and a different point by a different chart -- so the\nI-0204\
-  \ non-uniformity of m is NOT an obstruction to the atlas; it is an argument FOR\
-  \ an atlas\nindexed by the threshold.\n\nWHAT IS STILL MISSING, and it is now a\
-  \ question for ajcr-divrep rather than for this lane:\nmixedParamChart takes rep\
-  \ i as a HYPOTHESIS, one representation per parameter, and the divRep\nendpoint\
-  \ (divFunctor_representableBy_of_chartClause, DivRepAffPullClause.lean:475) is at\
-  \ g. So the\nheterogeneous atlas is ADMISSIBLE but not INHABITED beyond n = g. Asked\
-  \ on the AJCR thread: does\nanything in the divRep chain USE n = g, or is g incidental?\n\
-  \n - if representability generalises in n: coverage assembles chart-by-chart against\
-  \ each fibre's own\n   threshold, and the b = n forcing is harmless;\n - if it is\
-  \ g-only: the slack must go into Z at parameter g, and the legality question above\
-  \ (0 <=\n   Sigma AND deg = m*d1 - g) is the real residue.\n\nNot weakened by this:\
-  \ IsChartUniv (CERT-Sigma-gated) and local surjectivity / B-6, which is what\nwould\
-  \ actually consume the freedom.\n"
+  \ not proved).\n\nB-6 IS CLOSED AND ITS FEED IS NOW WRITTEN (run 0072 r5 + r6, lane\
+  \ ajcr-charts).\n\nr5 closed B-6 itself: three files carry\n[Presheaf.IsLocallySurjective\
+  \ Scheme.zariskiTopology (Sigma.desc f)] as a variable\n(JacobianDataCharts.lean:117,\
+  \ JacobianDataAbelSurj.lean:183, JacobianDataAbelImage.lean:131)\nand nothing produced\
+  \ one. isLocallySurjective_sigmaDesc (Pic0ChartLocalSurjectivity.lean,\ncommit b4d608389)\
+  \ fills it from the coverage hypothesis ChartsCoverLocally.\n\nR6 FOUND THAT MY\
+  \ OWN r5 ROW ASSERTED A BRIDGE NOBODY HAD WRITTEN. That row said a producer\ndischarges\
+  \ ChartsCoverLocally \"by exhibiting one open neighbourhood and one index per point\
+  \ of\nT\". But ChartsCoverLocally is a GROTHENDIECK TOPOLOGY MEMBERSHIP and the\
+  \ geometry is\npointwise; the sentence described a reduction that existed only in\
+  \ prose. Now landed\n(Pic0ChartCoveragePointwise.lean, 1362ddf8f; kernel EXIT=0\
+  \ with the lakefile linter options,\naxiom-clean against a control that fires sorryAx):\n\
+  \n * mem_zariskiTopology_iSup_of_pointwise -- pointwise opens W t plus a PER-POINT\
+  \ index make the\n   SUPREMUM sieve Zariski-covering. Stated for an arbitrary family\
+  \ of sieves on an arbitrary\n   scheme: no presheaf, no chart, no pic0. The cover\
+  \ is {W t} indexed by the POINTS of T, which\n   is the only index available before\
+  \ any geometry is known -- a finite subcover would need\n   quasi-compactness, which\
+  \ no row of this plan assumes.\n * chartsCoverLocally_of_pointwise -- the hypothesis\
+  \ from FOUR THINGS AT A POINT: an open\n   W containing t, an index i, a point of\
+  \ chart i over W, and the class equation.\n * isLocallySurjective_sigmaDesc_of_pointwise\
+  \ -- B-5 => B-6 IN ONE STEP.\n * pointwise_of_chartsCoverLocally -- THE CONVERSE,\
+  \ so this is a reduction and not a\n   restatement. Its one honest gap is named\
+  \ in the docstring: mem_grothendieckTopology_iff\n   returns a cover by arbitrary\
+  \ schemes with open-immersion maps, not by opens of T.\n\nTWO CORRECTIONS TO THIS\
+  \ PLAN'S OWN DEPENDENCY ACCOUNTING, both from that work:\n\n (i) B-6's dependency\
+  \ column listed B-4 and DAT-C C9 (hence divRep F7 + CERT-Sigma). NEITHER\n     is\
+  \ an input. Coverage needs no openness of chartLocus at all -- the W of the pointwise\n\
+  \     datum may be ANY open neighbourhood -- and no IsChartUniv and no certificate.\
+  \ B-4 and C9\n     are inputs to the CHARTS half of pic0RepresentableByOfCharts\
+  \ (hf), not to the coverage\n     half; the row conflated the two halves of one\
+  \ theorem. NO ROW OF THE DAT-B PLAN WAITS FOR\n     divRep.\n (ii) worksheet 1.1,\
+  \ the paragraph pinning the FINAL TARGET, ended \"so the instance follows\n    \
+  \ from 1.2 + CHART-U(b)+(c)\". It follows from 1.2 in its POINTWISE FORM ALONE.\
+  \ Also\n     corrected there: the Sigma-component is free (a section over a bare\
+  \ T is the pair <a,lam>\n     and (Over.mk a).left is T DEFINITIONALLY, so no big-site/slice\
+  \ transport is needed) but is\n     NOT only bookkeeping -- matching a chart value\
+  \ against <a,lam> is TWO equations, the\n     Sigma one before the class. abelChartApp_eq\
+  \ (Pic0ChartCoverageAbel.lean) states both.\n\nTHE TRANSFERABLE FACT, and it retracts\
+  \ the SCOPE of this row's own r5 question to divrep: THE\nPER-POINT INDEX COSTS\
+  \ NOTHING. A supremum sieve never asks its members to agree. So \"does\ndivFunctor\
+  \ representability generalise in n, or is g load-bearing\" does NOT gate the coverage\n\
+  sieve -- a different chart parameter at every point of every test is free. It still\
+  \ gates\nmixedParamChart's rep i, i.e. the ATLAS BEING INHABITED. That is the third\
+  \ setting in which\nchart-parameter heterogeneity has turned out to be harmless.\n\
+  \nB-4 OPENNESS -- MY r5/s0010 \"CLOSED\" CLAIM IS RETRACTED, and this is the session's\
+  \ other\nfinding. isOpen_chartLocus_of_affineLocal' is unconditional only in IsSplitWitnessIsoInvariant;\n\
+  it still takes the affine-local haff, and NOTHING IN THE TREE DISCHARGES IT. So\n\
+  Pic0ChartUnivReduce's headline \"the W field costs zero, a real reduction of the\
+  \ datum from four\nfields to three\" was false -- the datum went from four fields\
+  \ to three SHAPES but not to three\nOBLIGATIONS. Corrected at all four asserting\
+  \ sites (commits 8fc0df182, c401ed616), and the\nresidue is now named in Lean (ChartLocusAffineLocal)\
+  \ and reduced to B-4's own named obligation\nby chartLocusAffineLocal_of_presentation\
+  \ -- the link Pic0ChartLocusIsOpen's docstring describes\n(\"not stated here only\
+  \ because it would need the presentation hypothesis per affine piece\")\nand never\
+  \ states.\n\nAND THEN B-4'S RESIDUE ITSELF MOVED, same session. IsChartDatumPresentation\
+  \ is an iff whose\nconverse hconv (the descent direction: from a split witness at\
+  \ SOME L_t/kappa(t), produce the\ndatum's predicate at kappa(t)) had been the named\
+  \ residue for three sessions. IT IS DISCHARGED\n(hasWitnessH1Vanishing_of_isSplitWitness_at,\
+  \ Pic0ChartPresentationConverse.lean, 83bda0672).\n\nTHE TRANSFERABLE CONTENT IS\
+  \ WHICH INGREDIENT WAS MISSING. Pic0ChartPresentationHalf's docstring\npriced the\
+  \ obstruction correctly -- \"the witness received lies in mu's class at L_t rather\
+  \ than\nvisibly in D's at kappa(t)\" -- and named two TRANSPORT lemmas as the ingredients.\
+  \ The step that\nmakes the class VISIBLE is not a transport at all: it is PicEtAff.unit_injective\n\
+  (CechKernelLemma.lean:361, Kleiman 2.5(1), the unconditional close of the zeta3\
+  \ campaign) plus\nrelPicMk_injective_of_subsingleton, which force the presenting\
+  \ class to EQUAL D's fibre class at\nL_t. Both have been in the tree for weeks and\
+  \ NO CHART-U ROW CITES EITHER.\n\nSo BOTH halves of B-4's pointwise presentation\
+  \ are now witness-free, H1-free and divisor-free,\nand what remains is exactly the\
+  \ cechPicClass base-change identity the row's own 0.3 retraction\npredicted. Scope\
+  \ stated in the file: the identity is needed at EVERY extension of kappa(t),\nstrictly\
+  \ more than IsChartDatumPlusFibre asks; isChartDatumPlusFibreAt_self measures the\
+  \ gap (at\nL := kappa(t) the two coincide by Iff.rfl). Also measured: htow is bookkeeping,\
+  \ not an\nobligation -- Algebra A L does NOT synthesize, so towerOfResidueFieldExtension\
+  \ is what tells a\nreader that.\n\nB-5 STEP 3 -- unchanged from r5 and still the\
+  \ residue: reconcile the chart parameter with the\nthreshold. ledger_forces_b_eq_n,\
+  \ hb_forces_h0_eq_one and index_of_threshold\n(Pic0ChartCoverageIndexSlack.lean)\
+  \ stand; steps 1, 2, 4, 5 discharged; step 6 retracted as\nunnecessary. What r6\
+  \ changes is that step 3 is now the ONLY thing between the tree and the\nlocal-surjectivity\
+  \ instance -- everything else on the coverage side, including the sieve\npackaging\
+  \ that was invisible until today, is landed.\n\nWHERE THE DISCARDED PROPERTIES DO\
+  \ MATTER, unchanged: effectivity and h0 = 1 are needed by\nDAT-C's canonical section\
+  \ and GAP-2 uniqueness, i.e. by INJECTIVITY, not by coverage.\n"
 status: pending
 kind: proof
 priority: normal
@@ -115,7 +100,7 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:09.039287+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-28T21:13:22.956626+00:00'
+  updated_at: '2026-07-28T22:54:12.429191+00:00'
   milestone: w4-tail
   owner: ajcr-charts
   pinned_commits:

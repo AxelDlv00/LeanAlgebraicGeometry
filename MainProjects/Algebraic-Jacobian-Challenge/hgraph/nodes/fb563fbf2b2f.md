@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:islocallyinjective_whiskerleft_via_stalk
 lean_status: lean_ok
-order: 667
+order: 668
 title: Unconditional left-whiskering of the localizer, via d.2
 type: tex
-updated: '2026-07-28T22:30:27'
+updated: '2026-07-29T06:43:24'
 ---
 Let \(R\), \(J\) be as above with \(J.\mathtt{WEqualsLocallyBijective}\,\mathtt{Ab}\),
   let \(F\) be an \emph{arbitrary} presheaf of \(R\)-modules, and let \(g : M \to N\)

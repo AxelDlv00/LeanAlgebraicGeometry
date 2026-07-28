@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:gr_bundleCocycle_transport
 lean_status: lean_ok
-order: 1516
+order: 1517
 title: Transport and endpoint alignment of the bundle transitions
 type: tex
-updated: '2026-07-28T22:30:29'
+updated: '2026-07-29T06:43:24'
 ---
 Fix indices \(I, J, K\) with triple overlap \(V_{IJK} = U^I_J \times_{U^I} U^I_K\),
   and let \(\widehat{g}_{IJ}^{\,K}, \widehat{g}_{JK}^{\,I}, \widehat{g}_{IK}^{\,J}\) be

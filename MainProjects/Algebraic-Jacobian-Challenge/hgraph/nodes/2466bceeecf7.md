@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:rigidity_core
 lean_status: lean_ok
-order: 551
+order: 552
 title: Scheme-theoretic gluing core
 type: tex
-updated: '2026-07-28T22:30:26'
+updated: '2026-07-29T06:43:23'
 ---
 Suppose that \(X\) is proper, \(X\times Y\) is reduced, geometrically irreducible,
   and locally of finite type over \(\bar k\), and \(Z\) is separated.  Fix points

@@ -3,63 +3,62 @@ title: 'C9b: f_c and the (f, hf) chart pair (CERT-Sigma-gated; developable param
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "C9b: f_c and the (f, hf) chart pair that pic0RepresentableByOfCharts (Pic0SigmaSheaf.lean:161)\n\
-  consumes.\n\nSTATE 2026-07-29 (run 0072 r5, lane ajcr-charts, commits a41644c36\
-  \ + 6a67505dd).\n\nTHIS ROW'S OWN 2026-07-29 CLAIM IS RETRACTED. It said \"the gate\
-  \ is now a SINGLE clause\nIsChartUniv ... CERT-Sigma-gated, genuinely\". That is\
-  \ wrong, and wrong in the direction that\ncosts sessions. IsChartUniv IS IsOpenImmersion.presheaf,\
-  \ i.e. MorphismProperty.relative at\nyoneda, whose DEFINITION (mathlib MorphismProperty/Representable.lean:315)\
-  \ is a conjunction:\n\n (i) relative representability -- for every g : yoneda.obj\
-  \ T -> pic0SigmaSheaf, the fibre\n     product of the chart map along g is representable\
-  \ BY A SCHEME;\n (ii) the property clause -- every represented pullback is an open\
-  \ immersion.\n\nThe relative-GAP-2 + classifier story this row tells is the input\
-  \ to (ii) ONLY. It says nothing\nabout (i). Priced as one clause the lane waits\
-  \ on CERT-Sigma for both halves; priced as two,\n(i) needs only AN OPEN OF THE TEST,\
-  \ and chartLocus is one unconditionally.\n\nLANDED THIS PASS, both sorry-free, rooted,\
-  \ axiom-clean against firing controls:\n\n * Picard/Pic0ChartOpenImmersionCriterion.lean\
-  \ -- ChartFibrePresented (the elementwise datum:\n   an open W of the test, a chart\
-  \ point r over it, the square, and a coverage clause\n   exists_factor), ChartFibrePresented.isPullback\
-  \ (it presents the fibre product -- pointwise\n   pullbacks via IsPullback.of_forall_isPullback_app\
-  \ plus Types.isPullback_iff, with the joint\n   INJECTIVITY half free because W.iota\
-  \ is a monomorphism), and\n   isOpenImmersion_presheaf_of_chartFibrePresented, THE\
-  \ CRITERION, discharging both clauses.\n   Stated over an arbitrary f and V: no\
-  \ divRep, no certificate, no Z, no theta.\n * Picard/Pic0ChartUnivReduce.lean --\
-  \ chartLocusOpens supplies W BY CONSTRUCTION, so the datum\n   a lane owes drops\
-  \ from FOUR fields to THREE; isChartUniv_of_isChartLocusFibre composes the\n   criterion\
-  \ with the already-landed composition half (isOpenImmersion_presheaf_restrictChart)\n\
-  \   to give IsChartUniv at any open. The two halves of C9b meet with no seam.\n\n\
-  THE RESIDUE IS MOVED, NOT RENAMED, AND THAT IS BRACKETED FROM BOTH SIDES BY PROOF:\n\
-  \ * isEmpty_forall_chartFibrePresented_of_not_injective -- the datum cannot be SATISFIED\
-  \ by a\n   chart map failing injectivity on even one test. So it is not vacuous,\
-  \ and in particular is\n   unsatisfiable for the UNRESTRICTED Abel chart whose fibres\
-  \ are the linear systems |D|.\n * injective_of_isChartUniv -- IsChartUniv cannot\
-  \ be REACHED without that injectivity.\nRelative GAP-2 therefore remains a real\
-  \ gate. It now gates ONE FIELD (exists_factor) of ONE\nstructure rather than the\
-  \ whole certificate, and (i) is off the wall entirely.\n\nWHAT REMAINS, honestly:\
-  \ exists_factor and the r/sq pair, i.e. IsChartLocusFibre. r is the\nclassifier's\
-  \ output (CHART-U(c)'s construction, divRepClassifyZar), sq is its characterising\n\
-  property, exists_factor is relative GAP-2. CERT-Sigma/divRep-gated -- genuinely,\
-  \ this time,\nand narrower.\n\nTWO BY-PRODUCTS, both corrections to this tree's\
-  \ own prose (commit f9fb21c6f):\n * \"the Abel map is not a monomorphism, hence\
-  \ IsOpenImmersion.presheaf fails unrestricted\" is\n   cited as a REASON in three\
-  \ files. It is a DERIVATION -- mono_of_isOpenImmersion_presheaf,\n   from mathlib\
-  \ presheaf_mono_of_le at IsOpenImmersion.le_monomorphisms.\n * The open V in restrictChart\
-  \ is ARBITRARY for hf to hold, since IsOpenImmersion.presheaf is\n   stable under\
-  \ precomposition with an open immersion. Restricting to the chart locus is NOT\n\
-  \   what makes hf true; the chart locus is where the UNRESTRICTED statement becomes\
-  \ true, a\n   fact about IsChartLocusFibre and not about V.\n\nVERIFICATION: each\
-  \ touched module kernel-checks at lake env lean EXIT=0, zero diagnostics.\nThirteen\
-  \ headline results axiom-clean ([propext, Classical.choice, Quot.sound]) measured\
-  \ with\ntwo self-introduced controls (a bare sorry AND a consumer of it) that both\
-  \ fired sorryAx.\nFULL ROOT BUILD: RAN AND GREEN. `lake build` completed successfully,\
-  \ 9271 jobs, EXIT=0, zero\nerrors; the only `sorry` warnings in the whole log are\
-  \ Challenge.lean's 13 declared frontier ones,\nnone in any file this lane touched,\
-  \ and zero linter warnings on the three new modules. So this is\nfull-graph integration,\
-  \ not only per-file kernel checks.\n\nONE FALSE ALARM WORTH NOT REPEATING: the FIRST\
-  \ root build exited 1 with a single error --\n`Tangent/ChartClassNaturality.olean\
-  \ does not exist`. That module is ajcr-w5-av's and its root\nimport landed at 05:52,\
-  \ twenty minutes INTO my build, after lake had computed its target list. The\nre-run\
-  \ was green. A red root naming a file outside your write set with only an 'object\
-  \ file does\nnot exist' error is this race, not a defect (filed on the team thread).\n"
+  consumes.\n\nSTATE 2026-07-29 (run 0072 r6, lane ajcr-charts). The r5 SPLIT of the\
+  \ gate STANDS; the r5\nPRICING of one half is RETRACTED.\n\nWHAT STANDS FROM r5.\
+  \ IsChartUniv is IsOpenImmersion.presheaf = MorphismProperty.relative at\nyoneda,\
+  \ whose DEFINITION (mathlib MorphismProperty/Representable.lean:315) conjoins\n\
+  \ (i) relative representability -- the fibre product along any test point is representable\
+  \ by a\n     SCHEME;\n (ii) the property clause -- every represented pullback is\
+  \ an open immersion.\nThe relative-GAP-2 + classifier story is input to (ii) ONLY.\
+  \ The criterion discharging both from\nelementwise data (isOpenImmersion_presheaf_of_chartFibrePresented,\n\
+  Pic0ChartOpenImmersionCriterion.lean) and the reduction of the datum to three fields\n\
+  (isChartUniv_of_isChartLocusFibre, Pic0ChartUnivReduce.lean) both stand, sorry-free\
+  \ and rooted,\nbracketed both ways by isEmpty_forall_chartFibrePresented_of_not_injective\
+  \ and\ninjective_of_isChartUniv.\n\nWHAT IS RETRACTED, and it is this row's own\
+  \ sentence. The row said clause (i) \"needs only AN OPEN\nOF THE TEST, and chartLocus\
+  \ is one unconditionally\", and that the W field \"needs nothing\".\nFALSE, and\
+  \ false in the direction that hides an obligation from a census. chartLocusOpens\
+  \ takes\nhaff (affine-local openness at every affine open of the test) and NOTHING\
+  \ IN THE TREE DISCHARGES\nIT: isOpen_chartLocus_of_affineLocal' removed only the\
+  \ IsSplitWitnessIsoInvariant hypothesis and\npasses haff through, and the affine\
+  \ case that would feed it\n(isOpen_setOf_isSplitWitness_of_presentation) is conditional\
+  \ on IsChartDatumPresentation -- B-4's\nown named residue. Measured: chartLocusOpens\
+  \ had ZERO consumers, and haff occurs only as an\nargument position, which is exactly\
+  \ why an unnamed hypothesis in a DEFINITION's signature is\ninvisible to a search\
+  \ for open obligations. Corrected at all four asserting sites (8fc0df182,\nc401ed616)\
+  \ and on the chart-u row, which is REOPENED from done.\n\nSO THE HONEST SPLIT IS\
+  \ THREE-WAY, not two:\n (i)  relative representability -- needs an open of the test\
+  \ W. NOT free: costs B-4 through haff.\n      Named ChartLocusAffineLocal and reduced\
+  \ to B-4 by chartLocusAffineLocal_of_presentation\n      (Pic0ChartCoverageAbel.lean).\
+  \ NOTE the W of a COVERAGE datum is free (any neighbourhood\n      works, see the\
+  \ dat-b row) -- it is specifically the CHART-LOCUS W that costs B-4.\n (ii) the\
+  \ property clause -- CERT-Sigma/divRep-gated through IsChartLocusFibre's exists_factor\n\
+  \      and the classifier-produced r. UNCHANGED, and still the real wall.\n (iii)\
+  \ B-4 itself, which moved a long way this session: hconv is DISCHARGED\n      (hasWitnessH1Vanishing_of_isSplitWitness_at,\
+  \ Pic0ChartPresentationConverse.lean), so both\n      halves of the pointwise presentation\
+  \ are witness-free, H1-free and divisor-free and what\n      remains is a cechPicClass\
+  \ base-change identity. The missing ingredient was NOT a transport\n      -- it\
+  \ was PicEtAff.unit_injective (Kleiman 2.5(1), the zeta3 close) plus\n      relPicMk_injective_of_subsingleton,\
+  \ both in the tree for weeks and cited by NO CHART-U row.\n\nALSO LANDED, for whoever\
+  \ supplies the datum: abelChartApp_eq gives the Abel chart's value at a\npoint of\
+  \ the divisor scheme with BOTH components. A producer must match the Sigma-component\
+  \ (an\nequation of morphisms to Spec k) BEFORE the classes are in the same type;\
+  \ leaving that to unfold\nat a use site is how it gets forgotten.\n\nVERIFICATION\
+  \ THIS PASS: each touched module kernel-checks at lake env lean EXIT=0 with the\n\
+  lakefile leanOptions passed explicitly (-DmaxSynthPendingDepth=3 -Dlinter.mathlibStandardSet=true)\n\
+  and ZERO output -- so linter-clean too, which the bare fallback cannot show. Every\
+  \ headline\nresult axiom-clean ([propext, Classical.choice, Quot.sound]) against\
+  \ a control that fires sorryAx.\nFULL ROOT BUILD: RAN AND GREEN. `lake build AlgebraicJacobian`\
+  \ completed successfully, 9279\njobs, BUILD_EXIT=0, ZERO errors; all five touched\
+  \ modules built in-graph. The only \"declaration\nuses sorry\" warnings in the log\
+  \ are Challenge.lean's 13 declared frontier ones, and of the 116\nnon-sorry warnings\
+  \ ZERO are in this lane's files (all pre-existing linters). So this is\nfull-graph\
+  \ integration, not only per-file kernel checks. The mutex hold was SEVENTY-TWO SECONDS\n\
+  (06:57:32-06:58:44) because other lanes had warmed the graph -- a lane that skips\
+  \ a root build\nassuming contention should just try it.\n\nSTATUS stays blocked:\
+  \ (ii) is genuinely CERT-Sigma/divRep-gated. But note the gate is now on ONE\nfield\
+  \ of ONE structure, and the other two legs are project-local commutative algebra\
+  \ rather than\nanything waiting on a sibling lane.\n"
 status: blocked
 kind: proof
 priority: normal
@@ -82,6 +81,6 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  updated_at: '2026-07-28T21:59:51.292998+00:00'
+  updated_at: '2026-07-28T22:59:54.468434+00:00'
   milestone: w4-tail
   owner: ajcr-charts

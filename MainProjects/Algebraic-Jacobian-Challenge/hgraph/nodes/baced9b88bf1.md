@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:gr_matrixEndRect_pullback
 lean_status: lean_ok
-order: 1520
+order: 1521
 title: Rectangular matrix homomorphism is natural under pullback
 type: tex
-updated: '2026-07-28T22:30:29'
+updated: '2026-07-29T06:43:24'
 ---
 Let \(p : T \to S\) be a morphism of schemes and
   \(M \in \operatorname{Mat}_{d\times r}(\Gamma(S,\mathcal{O}_S))\), with entrywise

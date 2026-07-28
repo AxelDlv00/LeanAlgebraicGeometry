@@ -13,9 +13,10 @@ docstring: '**THE ENDPOINT, in its hypothesis-free form.**  Expected `sorryAx`, 
 file: scripts/axiom-frontier.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.leakEndpoint_cech_flatBaseChange_qcoh
 type: lean
-updated: '2026-07-28T22:57:24'
+updated: '2026-07-29T06:43:26'
 ---
 theorem leakEndpoint_cech_flatBaseChange_qcoh {S S' X X' : Scheme.{u}}
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)

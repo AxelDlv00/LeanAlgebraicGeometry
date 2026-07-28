@@ -2,70 +2,34 @@ id: AJCR.w4-rep.datum.dat-c.c9-chartlocus
 title: 'C9 chartLocus: the sole gate of dat-b B-6 AND the whole dat-glue assembly'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'SPLIT 2026-07-26 into c9a (DONE) and c9b (blocked). CHART-U(a)/(b) are DONE
-  (leaf chart-u), and
-
-  as of 2026-07-28 CHART-U(b) holds AT A GENERAL TEST, not only over an affine one.
-
-
-  STATE 2026-07-28 (run 0072 s0008, lane ajcr-charts):
-
-
-  c9a: chartLocus DEFINED and OPEN at the parameter-space carrier level. Certificate-free,
-
-  divRep-free.
-
-
-  chart-u: DONE, and EXTENDED. isOpen_chartLocus_of_affineLocal
-
-  (Picard/Pic0ChartLocusGeneralTest.lean) reduces general-test openness to the landed
-  affine
-
-  openness by affine-piece locality. Two corrections came out of building it, both
-  on this lane''s
-
-  own prose: the file that justifies chart-independence cites testPointField_affineOpen_iso,
-  which
-
-  EXISTS NOWHERE (supplied here as testPointField_fromSpecAffine_isIso; filed I-0650);
-  and the
-
-  "needs no new mathematics" claim is FALSE by exactly one lemma, IsSplitWitnessIsoInvariant,
-  now
-
-  isolated and CHECKED NON-VACUOUS. That residue is the cheapest live brick on the
-  whole C9 row --
-
-  neither certificate- nor divRep-gated.
-
-
-  c9b: f_c and the (f, hf) pair. STILL the deliverable proper and still CERT-Sigma-gated
-  through
-
-  CHART-U(c) / IsChartUniv. The composition half of hf is landed (Pic0ChartPair.lean).
-  What is no
-
-  longer part of the wall is the V that restrictChart needs: chartLocus openness at
-  a general test,
-
-  landed modulo the one residue above.
-
-
-  WHAT THIS LANE ALSO DID, since c9b''s gate is real: dat-b''s B-5 went from THREE
-  residues to ONE.
-
-  Step 2 discharged (PicEtAff.degAff_map, unconditional in L/K), and step 6 RETRACTED
-  as unnecessary
-
-  -- coverage needs no drop, because IsSplitWitness asks for h1 = 0 and for neither
-  effectivity nor
-
-  degree g. See the dat-b row for the full account, including where the discarded
-  properties are
-
-  still genuinely needed (GAP-2 uniqueness / the canonical section, i.e. injectivity).
-
-  '
+summary: "SPLIT 2026-07-26 into c9a (DONE) and c9b (blocked). chart-u is REOPENED\
+  \ as of 2026-07-29 -- see\nits own row; it had been set done on a reading of \"\
+  unconditional\" that covered only one of the\ntwo hypotheses of the general-test\
+  \ openness theorem.\n\nSTATE 2026-07-29 (run 0072 r6, lane ajcr-charts):\n\nc9a:\
+  \ chartLocus DEFINED and OPEN at the parameter-space carrier level. Certificate-free,\n\
+  divRep-free. Unchanged.\n\nchart-u: REOPENED, then advanced. isOpen_chartLocus_of_affineLocal'\
+  \ is unconditional in\nIsSplitWitnessIsoInvariant (discharged at s0010) but STILL\
+  \ TAKES the affine-local haff, which\nnothing in the tree discharges -- the affine\
+  \ case is conditional on IsChartDatumPresentation,\nB-4's residue. That residue\
+  \ then MOVED this pass: its converse half hconv is DISCHARGED, so both\nhalves are\
+  \ now witness-free and what remains is a cechPicClass base-change identity. Full\
+  \ account\non the chart-u row, including which ingredient the three-session pricing\
+  \ of hconv was missing\n(plus-unit injectivity, not a transport).\n\nc9b: STILL\
+  \ the deliverable proper and still blocked on CERT-Sigma through IsChartLocusFibre's\n\
+  exists_factor. What changed is that its gate is now honestly THREE-WAY rather than\
+  \ two, because\nthe \"clause (i) needs nothing\" half of the r5 split was mispriced.\
+  \ The criterion and the\nthree-field reduction stand.\n\nTHE PATTERN THIS LEAF KEEPS\
+  \ PRODUCING, worth reading before pricing anything else on it. Three\nsuccessive\
+  \ sessions each found the previous session's gate statement wrong in the SAME direction\n\
+  -- too confident that something was closed:\n * s0008 found \"needs no new mathematics\"\
+  \ false by exactly one lemma (IsSplitWitnessIsoInvariant);\n * s0010/r5 priced the\
+  \ residue as \"map_map plus map_id\" and missed the INSTANCE side, which was\n \
+  \  the content;\n * r6 found \"the W field costs zero\" false, and the thing it\
+  \ costs (B-4) had a residue whose\n   own pricing was also short by one ingredient\
+  \ -- one that had been in the tree for weeks.\nThe common cause is not carelessness\
+  \ about mathematics; it is that each closure was measured\nagainst the hypothesis\
+  \ the session had just removed rather than against ALL the hypotheses the\ntheorem\
+  \ still carries. CHECK WHAT A DISCHARGED THEOREM STILL TAKES.\n"
 status: pending
 kind: proof
 priority: urgent
@@ -88,4 +52,5 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c
-  updated_at: '2026-07-28T17:54:22.053817+00:00'
+  updated_at: '2026-07-28T22:56:02.569598+00:00'
+  owner: ajcr-charts

@@ -6,9 +6,9 @@ created: '2026-07-28T14:03:59'
 generated: blueprint
 label: lem:pullback_preserves_monos_openImmersion
 lean_status: lean_ok
-order: 483
+order: 484
 title: Pullback along an open immersion preserves monomorphisms
 type: tex
-updated: '2026-07-28T14:03:59'
+updated: '2026-07-29T06:43:23'
 ---
 If \(j : U \to X\) is an open immersion then \(j^*\) preserves monomorphisms.

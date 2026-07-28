@@ -3577,6 +3577,187 @@ only the mathematical residue.  So:
 
 Neither is a `sorry` in this file; `twisted_cech_nerve_iso`'s own square is still the only one. -/
 
+/-! ### (i) THE WIRING — the σ-decomposed square, at `twisted_cech_nerve_iso`'s own spelling
+
+`sigmaAssembled_δ_square` proves the coface square with the *target* a `Pi` product and the
+target-side coface a `Pi.lift`.  `alternatingCofaceComplexIsoOfDelta` wants it at the spelling
+`twisted_cech_nerve_iso` uses: source `(g'^* ∘ drop(nerve 𝒰 F))`, target `drop(nerve 𝒰' (g'^*F))`,
+whose degree object is `pushPullObj (g'^*F) ((coverCechNerveOver 𝒰').obj (op ⦋n⦌))`.
+
+The bridge is `cechNerve_drop_δ_sigma` **for the base-changed cover** — the same lemma, instantiated
+at `𝒰'` instead of `𝒰`.  It says the target nerve's coface, read through `pushPull_sigma_iso 𝒰'`,
+is reindex-then-restrict, which is exactly the `Pi.lift` shape.  Nothing new is needed: the index
+type of `𝒰'` is `𝒰.I₀` on the nose (`baseChangedCover_I₀`), so the two σ-families are the same
+family and no transport appears.  This is what r4 left unwritten. -/
+
+/-- The base-changed cover, abbreviated.  Named so the wiring lemmas below can mention it without
+repeating the `pushforwardIso`/`isoPullback.symm.hom` spelling whose `IsIso` instance is
+spelling-keyed (see the `SigmaCalculus` section note). -/
+noncomputable abbrev bcCover (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) : X'.OpenCover :=
+  (Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso h.isoPullback.symm.hom
+
+/-- **The target-side σ-decomposition of the base-changed nerve's coface.**
+`cechNerve_drop_δ_sigma` at the base-changed cover `𝒰'` and the base-changed module `g'^*F`,
+with the index type silently `𝒰.I₀` (`baseChangedCover_I₀`, `rfl`).
+
+Read it as: `sigma_iso(𝒰',n) ≫ π_{σ'∘δᵏ} ≫ restrict = nerve'.δ k ≫ sigma_iso(𝒰',n+1) ≫ π_{σ'}` —
+so post-composing with `(pushPull_sigma_iso 𝒰' _ n).symm` turns the `Pi.lift` produced by
+`sigmaAssembled_δ_square` into the nerve's own coface.  Project-local. -/
+theorem bcNerve_drop_δ_sigma (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover)
+    [Finite (bcCover f g f' g' h 𝒰).I₀] (F : X.Modules) (n : ℕ) (k : Fin (n + 2))
+    (σ' : Fin (n + 2) → 𝒰.I₀) :
+    (pushPull_sigma_iso (bcCover f g f' g' h 𝒰) ((Scheme.Modules.pullback g').obj F) n).hom ≫
+        Pi.π (fun τ : Fin (n + 1) → 𝒰.I₀ =>
+          pushPullObj ((Scheme.Modules.pullback g').obj F)
+            (Over.mk (Scheme.Opens.ι (coverInterOpen (bcCover f g f' g' h 𝒰) τ))))
+          (σ' ∘ (SimplexCategory.δ k).toOrderHom) ≫
+        pushPullMap ((Scheme.Modules.pullback g').obj F)
+          (interLegHom (bcCover f g f' g' h 𝒰) σ' k)
+      = (CosimplicialObject.Augmented.drop.obj
+            (CechNerve (bcCover f g f' g' h 𝒰) ((Scheme.Modules.pullback g').obj F))).δ k ≫
+          (pushPull_sigma_iso (bcCover f g f' g' h 𝒰)
+            ((Scheme.Modules.pullback g').obj F) (n + 1)).hom ≫
+          Pi.π (fun τ : Fin (n + 2) → 𝒰.I₀ =>
+            pushPullObj ((Scheme.Modules.pullback g').obj F)
+              (Over.mk (Scheme.Opens.ι (coverInterOpen (bcCover f g f' g' h 𝒰) τ)))) σ' :=
+  cechNerve_drop_δ_sigma (bcCover f g f' g' h 𝒰)
+    ((Scheme.Modules.pullback g').obj F) n k σ'
+
+/-- **The degreewise component of `twisted_cech_nerve_iso`, factored through the σ-product.**
+`sigmaAssembledComponent` for the real per-σ family, followed by the base-changed cover's own
+σ-decomposition read backwards.  This is *definitionally* the component
+`twisted_cech_nerve_iso` uses — same four factors, same order — so it is a renaming that makes
+the `Pi` product an explicit intermediate object the coface square can be stated against.
+Project-local. -/
+noncomputable def twistedComponent (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
+    [Finite (bcCover f g f' g' h 𝒰).I₀]
+    (F : X.Modules) (hF : F.IsQuasicoherent) (n : ℕ) :
+    (Scheme.Modules.pullback g').obj
+        (pushPullObj F ((coverCechNerveOver 𝒰).obj (Opposite.op (SimplexCategory.mk n))))
+      ≅ pushPullObj ((Scheme.Modules.pullback g').obj F)
+          ((coverCechNerveOver (bcCover f g f' g' h 𝒰)).obj
+            (Opposite.op (SimplexCategory.mk n))) :=
+  sigmaAssembledComponent g' 𝒰 F n _ (twistedPerSigmaTarget f g f' g' h 𝒰 F hF n) ≪≫
+    (pushPull_sigma_iso (bcCover f g f' g' h 𝒰)
+      ((Scheme.Modules.pullback g').obj F) n).symm
+
+/-- `twistedComponent` IS the degreewise component of `twisted_cech_nerve_iso`.
+
+Both are `(pullback g').mapIso (sigma_iso 𝒰) ≪≫ PreservesProduct.iso ≪≫ Pi.mapIso (per-σ) ≪≫
+(sigma_iso 𝒰').symm`: `sigmaAssembledComponent` is literally the first three factors and
+`twistedPerSigmaTarget` is literally the per-σ family.  This is what licenses reading the coface
+square below as a statement about `twisted_cech_nerve_iso`.
+
+**NOT `rfl`, and the reason is worth recording** (a first attempt asserted it and the kernel timed
+out rather than refusing).  `≪≫` is right-associated, so `twisted_cech_nerve_iso` spells its
+component `A ≪≫ (B ≪≫ (C ≪≫ D))` while factoring the first three into
+`sigmaAssembledComponent` forces `(A ≪≫ (B ≪≫ C)) ≪≫ D`.  Those differ by two applications of
+`Category.assoc` — an associativity of composition that no category has by definition.  The
+content is nil; the `rfl` claim was not. -/
+theorem twistedComponent_eq (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
+    [Finite (bcCover f g f' g' h 𝒰).I₀]
+    (F : X.Modules) (hF : F.IsQuasicoherent) (n : ℕ) :
+    twistedComponent f g f' g' h 𝒰 F hF n
+      = (Scheme.Modules.pullback g').mapIso (pushPull_sigma_iso 𝒰 F n) ≪≫
+          Limits.PreservesProduct.iso (Scheme.Modules.pullback g') _ ≪≫
+          Limits.Pi.mapIso (fun σ => twisted_cech_nerve_per_sigma f g f' g' h 𝒰 F hF σ) ≪≫
+          (pushPull_sigma_iso (bcCover f g f' g' h 𝒰)
+            ((Scheme.Modules.pullback g').obj F) n).symm := by
+  apply Iso.ext
+  simp only [twistedComponent, sigmaAssembledComponent, Iso.trans_hom, Category.assoc]
+  rfl
+
+/-- **THE WIRING, COMPLETE: the coface square at the nerve's own spelling.**
+
+`sigmaAssembled_δ_square` gives the square with the target a `Pi` product and the target coface a
+`Pi.lift`.  This turns both into the base-changed nerve's own vocabulary:
+
+* the source coface `(drop.obj (CechNerve 𝒰 F)).δ k` replaces `pushPullMap F (backbone.map δᵏ)`
+  by `cechNerve_drop_δ`;
+* the target `Pi` product is replaced by `pushPullObj (g'^*F) (backbone' (op ⦋n⦌))` through
+  `pushPull_sigma_iso 𝒰'`, and the `Pi.lift` becomes `(drop.obj (CechNerve 𝒰' (g'^*F))).δ k`
+  by `bcNerve_drop_δ_sigma` — the *same* σ-coordinate lemma at the base-changed cover.
+
+That last step is the one r4 named as unwritten.  It is `Pi.hom_ext` again: two maps into
+`∏ᶜ (per-σ targets)` agree because their σ'-legs do, and each leg is `bcNerve_drop_δ_sigma`.
+
+With this, `alternatingCofaceComplexIsoOfDelta` applies to `twistedComponent` directly, so the
+`twisted_cech_nerve_iso` obligation is `TwistedPerSigmaDeltaCompat` and nothing else.
+Project-local. -/
+theorem twistedComponent_δ_square (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
+    [Finite (bcCover f g f' g' h 𝒰).I₀]
+    (F : X.Modules) (hF : F.IsQuasicoherent)
+    (hcompat : TwistedPerSigmaDeltaCompat f g f' g' h 𝒰 F hF)
+    (n : ℕ) (k : Fin (n + 2)) :
+    (twistedComponent f g f' g' h 𝒰 F hF n).hom ≫
+        (CosimplicialObject.Augmented.drop.obj
+          (CechNerve (bcCover f g f' g' h 𝒰) ((Scheme.Modules.pullback g').obj F))).δ k
+      = (Scheme.Modules.pullback g').map
+            ((CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ k) ≫
+          (twistedComponent f g f' g' h 𝒰 F hF (n + 1)).hom := by
+  -- STEP 0.  Replace BOTH nerve cofaces by their geometric backbone form.  Everything below then
+  -- lives in the geometric spelling, where `Pi.lift_π` fires: inside a σ-projection composite the
+  -- `CosimplicialObject C` / `SimplexCategory ⥤ C` boundary makes `rw` report a motive failure
+  -- (the trap `cechNerve_drop_δ_sigma`'s docstring records).
+  rw [cechNerve_drop_δ 𝒰 F k, cechNerve_drop_δ (bcCover f g f' g' h 𝒰)
+    ((Scheme.Modules.pullback g').obj F) k]
+  -- Name the two σ-decompositions of the TARGET cover and the two assembled components, so the
+  -- iso algebra happens on named isos and the kernel is never asked to `whnf` the four-factor
+  -- Beck–Chevalley composite.
+  let A := pushPull_sigma_iso (bcCover f g f' g' h 𝒰) ((Scheme.Modules.pullback g').obj F) n
+  let B := pushPull_sigma_iso (bcCover f g f' g' h 𝒰)
+    ((Scheme.Modules.pullback g').obj F) (n + 1)
+  let P := sigmaAssembledComponent g' 𝒰 F n _ (twistedPerSigmaTarget f g f' g' h 𝒰 F hF n)
+  let P' := sigmaAssembledComponent g' 𝒰 F (n + 1) _
+    (twistedPerSigmaTarget f g f' g' h 𝒰 F hF (n + 1))
+  -- STEP 1.  The target-side coface, read through the target cover's OWN σ-decomposition, is the
+  -- `Pi.lift` that `sigmaAssembled_δ_square` produces.  Leg by leg this is the σ-coordinate coface
+  -- formula AT THE BASE-CHANGED COVER — the same lemma, other cover.  This is the step r4 left
+  -- unwritten, and it needs no transport: `𝒰'.I₀` is `𝒰.I₀` on the nose (`baseChangedCover_I₀`).
+  --
+  -- The `Pi.lift` is written out rather than bound by a `let`: as a `let` it is opaque to
+  -- `Pi.lift_π`, which is how a first attempt failed ("did not find an occurrence of
+  -- `Pi.lift ?p ≫ Pi.π ?m ?b`" against a goal that visibly contains one).
+  have hlift : pushPullMap ((Scheme.Modules.pullback g').obj F)
+        ((coverCechNerveOver (bcCover f g f' g' h 𝒰)).map ((SimplexCategory.δ k).op)) ≫ B.hom
+      = A.hom ≫ Limits.Pi.lift (fun σ' : Fin (n + 2) → 𝒰.I₀ =>
+          Limits.Pi.π _ (σ' ∘ (SimplexCategory.δ k).toOrderHom) ≫
+            pushPullMap ((Scheme.Modules.pullback g').obj F)
+              (interLegHom (bcCover f g f' g' h 𝒰) σ' k)) := by
+    refine (Limits.Pi.hom_ext _ _ (fun σ' => ?_)).symm
+    rw [Category.assoc, Limits.Pi.lift_π, ← Category.assoc]
+    exact (cechNerve_backbone_δ_sigma (bcCover f g f' g' h 𝒰)
+      ((Scheme.Modules.pullback g').obj F) n k σ').symm
+  -- STEP 2.  The σ-decomposed square.  Same `Pi.lift` term, so the two compose.
+  have hsq : P.hom ≫ Limits.Pi.lift (fun σ' : Fin (n + 2) → 𝒰.I₀ =>
+        Limits.Pi.π _ (σ' ∘ (SimplexCategory.δ k).toOrderHom) ≫
+          pushPullMap ((Scheme.Modules.pullback g').obj F)
+            (interLegHom (bcCover f g f' g' h 𝒰) σ' k))
+      = (Scheme.Modules.pullback g').map
+          (pushPullMap F ((coverCechNerveOver 𝒰).map ((SimplexCategory.δ k).op))) ≫ P'.hom :=
+    twistedNerve_δ_square_concrete f g f' g' h 𝒰 F hF n k (hcompat n k)
+  -- STEP 3.  Cancel `A` and `B`.  Stated with `.inv` rather than reached by `rw [Iso.symm_hom]`:
+  -- that rewrite also normalises `h.isoPullback.symm.hom` inside `bcCover`, whose `IsIso` instance
+  -- is spelling-keyed, and the goal then fails to typecheck ("motive is not type correct").
+  have hAinv : A.inv ≫ pushPullMap ((Scheme.Modules.pullback g').obj F)
+        ((coverCechNerveOver (bcCover f g f' g' h 𝒰)).map ((SimplexCategory.δ k).op))
+      = Limits.Pi.lift (fun σ' : Fin (n + 2) → 𝒰.I₀ =>
+          Limits.Pi.π _ (σ' ∘ (SimplexCategory.δ k).toOrderHom) ≫
+            pushPullMap ((Scheme.Modules.pullback g').obj F)
+              (interLegHom (bcCover f g f' g' h 𝒰) σ' k)) ≫ B.inv := by
+    rw [Iso.inv_comp_eq, ← Category.assoc, ← hlift, Category.assoc, Iso.hom_inv_id,
+      Category.comp_id]
+  show P.hom ≫ A.inv ≫ _ = _ ≫ P'.hom ≫ B.inv
+  rw [hAinv, ← Category.assoc, hsq, Category.assoc]
+
 /-- In a slice category over `T`, if the target's structure map is a mono then any two slice
 morphisms with the same source and target are equal. -/
 theorem over_hom_ext_of_mono {C : Type*} [Category C] {T : C} {A B : Over T}

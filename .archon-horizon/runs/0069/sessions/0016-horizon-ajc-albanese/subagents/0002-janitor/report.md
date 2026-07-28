@@ -1,1 +1,40 @@
-The two "imports out of date" reports are the known artifact, not real errors. Let me do a faithful lock-free kernel check.
+Everything verified. Final state: armed set zero, all my paths match HEAD by content, I-0741 closed.
+
+## 1. Stale-claim sweep — NOT clean, five sites found and repaired
+
+The deleted "carrier is not named in Lean" caveat survived as a live present-tense assertion in five places. All are docstring prose; I repaired all five and kernel-checked each (EXIT=0, no sorries introduced).
+
+- `/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Albanese/SymPowAffineCarrier.lean:97` — said "what is **not** written is the composition". It is written: `colimitPermDiagramIsoFixed`.
+- `.../Albanese/TensorPowerCofan.lean:63` — "the gap `SymPowColimit.lean` §5 **flags**", present tense.
+- `.../Albanese/SymPowAffineQuotient.lean:14` and `:220` — "flags in bold as", present tense.
+- `.../Albanese/SymPowColimit.lean:418` — **the same file's own closing paragraph**, 8 lines below the deleted caveat: "identifying the carrier is unfinished work". A grep for the caveat's exact text would not have caught this; it restates it in different words.
+
+The worst was a file this session never opened, absent from its diff:
+
+- `.../Albanese/SymPowInvariants.lean` — three independent stale claims. Header `:23-27` said "the tensor power, the `S_n`-action on it, and a category match, and all three are still open" (all three landed). `:38-41` carried a **measured** claim, "no declaration in the tree consumes it yet (grep for `fixedConeIsLimit` outside this file returns nothing)" — false at two call sites (`SymPowInvariantsUnder.lean:167`, `SymPowTensorAction.lean:318`). §4 predicted the category bridge would go via `Over.opEquivOpUnder`; it was actually done by rebuilding in `Under k`, so the file recorded an untaken route as the outstanding work.
+
+Two hgraph nodes served frozen copies of the old text (`hgraph/nodes/32dfc9f314a5.md`, `873721ca9dc0.md`); `graph sync` refreshed both.
+
+Categories that ARE clean: no count of the bill other than "3 supplied, 1 open" anywhere (the one `3 of 4` hit is `informal/pic-representability-campaign.md:756`, about B3 hypotheses, unrelated); no claim that the Cofan/IsColimit packaging is missing or that item 3 is "partial"; and no claim that `CodimOneExtension.lean` or `RigidityLemma.lean` carry sorries — I re-censused both as terms (0 and 0) and the only mentions assert sorry-freeness. I-0732 already records the stale brief.
+
+Commit: 52d5d1aaa.
+
+## 2. Roadmap rows — self-consistent, correctly pointer-shaped
+
+All three rows agree with each other and with the header. `AJC.albanese.symmetric` states in those words that the authoritative count lives in `StableAffineCoverGroup.lean`'s header and that the row is a pointer, not a second source. No row is a second source of truth. One thing worth knowing: the header at `:102-105` and the `.symmetric` row both warn against reading the new "3" as vindicating the older wrong "3 of 4" — that hedge is consistent across both.
+
+## 3. Health warnings — standing answers still apply, delta only
+
+I-0708 (picrep, jacobian.assembly) and I-0509/I-0551/I-0641 (active count) both still apply unchanged; I did not re-derive the triage. Posted the delta as comments on I-0708 and I-0641.
+
+Two deltas worth your attention. First, a **new** warning since I-0708: `AJC.rr` done with `AJC.rr.extuniform` open — already answered by I-0736, ajc-rr says it is deliberate. Second, the active-count cross showed five active rows held by tasks that are *queued* rather than running (the `AJC.pic0av` spine, and `AJCR...ddr.certificate`). Queued is not retired, so no change — but this is the second pass to reach that verdict, so I suggested folding "a queued owner counts as live" into I-0509. Inbox counts: 165→168 open non-protection, 88→89 memory, all three arrivals substantive. Conversations is the one cap that responds to work and it has climbed 5→17 since run 0073.
+
+## 4. Armed index — one hazard found, not mine; my paths clean
+
+At pass start four paths were armed, all in the sibling `Algebraic-Jacobian-Challenge-Rebuild` tree, two of them as staged **deletions** of files present on disk with content identical to HEAD (`Pic0ChartCoveragePointwise.lean`, `EpsChartSquare.lean`). Reported, not cleared. Both have since been committed by their owning lane, and the final cross is **zero armed**. None of my paths were ever armed, and all six match HEAD by content.
+
+## 5. Scratch files — a real one found, and the ignore pattern that let it through
+
+No `ZScratch*` file survives on disk. But one was **tracked in HEAD**: `AlgebraicJacobian/Albanese/ZScratchCompose.lean`, a `namespace Probe` file imported by nothing, swept in by another lane's integrate commit 7223f5b92. It dodged all five gitignore patterns — no "probe" substring, and the two `Scratch` patterns are root-anchored *and* require an underscore, so a `Scratch`-named file deep under `AlgebraicJacobian/` matched nothing. The `.gitignore` comment block predicts this exact failure and records two prior recurrences; this is the third.
+
+I widened the ignore to unanchored, case-split `*Scratch*.lean` / `*scratch*.lean` (commit 16f301e6f), verified it matches the probe and catches no library file. The blob itself was then untracked by c74dddda2. One correction to flag: my issue initially attributed ownership to ajc-fbc — wrong, the probe was this lane's own, and ajc-fbc merely swept it. Corrected in the item and closed. Filed I-0741 (closed) and I-0742 (the 5th-occurrence lesson, with the "grep the caveat's text, and read the whole enclosing section" check).

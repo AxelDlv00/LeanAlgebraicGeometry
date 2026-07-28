@@ -2,102 +2,73 @@ id: AJCR.w4-rep.datum.dat-d.ddr.divrep.u2
 title: 'U2: the DDR9-U epsilon-identity at the universal point (the last gate of divRep)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "RETRACTION AT THE TOP, 2026-07-29 (run 0071 s0010, ajcr-divrep), because\
-  \ it changes how the rest of\nthis row must be read. A fresh-context review (inbox\
-  \ I-0705, CONFIRMED by the no-go's own owner)\nestablished that the certificate\
-  \ residue of this row -- in BOTH its old and its new spelling -- may\nbe FALSE rather\
-  \ than open, and nobody had checked.\n\n  forall_not_isCertified_of_straddling (Picard/DivisorFamilyAffStrict.lean:127)\n\
-  \    concludes: forall (A : DivisorAdaptation C R pi d) (n : Nat), NOT A.IsCertified\
-  \ n\n    for a connected d whose support meets both pinned vertical fibres.\n\n\
-  That is the negation of \"some adaptation is certified\" at the SAME binder. And\
-  \ because it quantifies\nover ALL A, it equally refutes the older spelling (D.divisorAdaptation\
-  \ hD).IsCertified g, which is\none instance of that forall. So: if the high-window\
-  \ universal seed's local equations straddle in that\nsense, this row has been pricing\
-  \ a FALSE statement since s0004, and the weakening of s0010 neither\ncaused that\
-  \ nor escaped it.\n\nWHAT SURVIVES: the eps-layer reduction is sound and kernel-checked\
-  \ -- the identity genuinely does not\ncare WHICH adaptation carries the certificate.\
-  \ What does NOT survive is any statement that the\nremainder is \"one certificate\"\
-  \ or \"one type mismatch\"; both presume the chart-typed statement is\nmerely unproved.\n\
-  \nTHE DECISIVE UNMEASURED FACT, and it is cheap: is (univSeed ..).localEquations'\
-  \ supportLocus\npreconnected with a point off V0 and a point off V1? NO file in\
-  \ the tree measures it. Until it is\nmeasured, treat this row as UNPRICED.\n\nWHICH\
-  \ WAY IT CUTS: if the universal seed straddles, R2 (protection I-0492) is not an\
-  \ inconvenience\nfor divrep -- it is the ONLY route, because no chart-typed adaptation\
-  \ can ever certify.\n\nMethodological error recorded as I-0707: this lane crossed\
-  \ its new existential against the\ncertificate lane's PRODUCERS and never against\
-  \ the tree's REFUTATIONS.\n\nVERIFICATION UPDATE, superseding the caveat at the\
-  \ end of this row: lake build of\n...DivRepChartClassUnivAny returned EXIT=0, and\
-  \ DivRepChartClassUniv, DivRepChartClassUnivFree and\nDivRepChartClassUnivAny are\
-  \ now all imported by AlgebraicJacobian.lean. The kernel found THREE real\nerrors\
-  \ on the way (dot notation reassigning arguments; a missing DivisorFamilyZar import;\
-  \ a missing\n`include hO hchi`), none of which a sorry census or an extracted-fragment\
-  \ elaboration would see.\n\n--- the pre-retraction body follows, correct except\
-  \ where the retraction above overrides it ---\n\nU2: the DDR9-U epsilon-identity\
-  \ at the universal point (the last gate of divRep).\n\nSTATE 2026-07-29 (run 0071\
-  \ s0010, ajcr-divrep). U2 OWES EXACTLY ONE STATEMENT, WITH NO SCALAR\nBESIDE IT.\
-  \ The previous re-scope (s0008) said \"one certificate plus one scalar\". The scalar\
-  \ half\nis RETRACTED BY THIS LANE: it is not an obligation, and it never was.\n\n\
-  THE SCALAR, hb : 0 < windowBound pi hpi, IS A GENUS DISJUNCTION WHOSE DEGENERATE\
-  \ BRANCH IS LANDED.\ns0008 warned that windowBound is a Classical.choose from a\
-  \ predicate upward-closed in b, so \"some\nvalid bound is positive\" is trivial\
-  \ while \"THE chosen one is\" is not, and told the next session to\nnormalise the\
-  \ choice. Correct about the shape, wrong about the state. The tree already carries\n\
-  \n  genus_eq_zero_of_windowBound_nonpos (RiemannRoch/WindowLedgerF3.lean:68)\n \
-  \   windowBound <= 0 -> windowBound_spec fires at the ZERO divisor -> h1(O_Y) =\
-  \ 0\n                     -> with hO : h0 = 1 and hchi : chi = 1 - g, forces g =\
-  \ 0.\n\nSo every hb consumer by_cases on windowBound <= 0 and lands in g = 0. WindowLedgerF3\
-  \ itself uses\nexactly this pattern twice for its own budget bounds (:91 two_mul_genus_le_S_mul_windowdelta,\n\
-  :106 two_mul_genus_le_M_mul_windowdelta). Nobody had drawn it for the high-window\
-  \ family, which\ncarries hb as a hypothesis on 44 files.\n\nLANDED THIS SESSION\
-  \ (Picard/DivRepChartClassUnivFree.lean, commit 877459d8c):\n  windowBound_pos_of_genus_ne_zero\
-  \ : g != 0 -> 0 < windowBound pi hpi\n    stated at the GENERAL ledger data (K/Y/pi/hpi\
-  \ + hO + hchi) -- no seed, no chart, no\n    universal point, so it serves every\
-  \ hb consumer in the tree, not just U2's.\n  divFamEps_highWindow_eq_universal_pair_of_ne_zero\n\
-  \  exists_certifiedFamily_divFamEps_eq_universal_pair_of_ne_zero\n  divFamZarUnivOfNeZero\n\
-  \    the three s0008 endpoints with hb replaced by g != 0, which is what any consumer\
-  \ of a\n    genus-g Jacobian holds (g = 0 being the case where Pic^0 is trivial).\n\
-  \nWHAT U2 OWES, now exactly one thing: IsCertified g for the high-window universal\
-  \ seed's\nadaptation over RZ = DivCarveChartRing. This is the standing G-4 obligation\
-  \ and precisely the\nwidened certificate lane's endpoint shape (I-0565).\n\nTHE\
-  \ TYPE MISMATCH THAT IS NOW THE WHOLE CRITICAL PATH, and it is a NEW measurement\
-  \ of this row,\nposted to cert-r2 on I-0494 this session. The consumer chain (divFamEps\
-  \ / DivFam.mk /\nThetaGeneratorSeed.certifiedFamily, DivSchemeEps.lean:237) is typed\
-  \ on\nDivisorAdaptation.IsCertified (DivisorFamily.lean:426). cert-r2's R2 endpoint\n\
-  exists_isCertified_of_seed_of_swallowing_affineOpen (DivisorFamilyAffSeedEndpoint.lean:78)\n\
-  concludes AffAdaptation.IsCertified (DivisorFamilyAffAdaptation.lean:252). DivFamZar.toAff\n\
-  (DivisorFamilyAffCompare.lean:262) runs chart-typed -> widened, the WRONG DIRECTION\
-  \ for this\nobligation, and manufacturing a chart typing from a widened cover is\
-  \ what protection I-0492\nclause 3 forbids. So the R2 endpoint does not yet discharge\
-  \ U2 by name; either a widened -> old\nbridge lands, or the eps layer is re-typed\
-  \ onto the widened adaptation. NOTE what makes the\nsecond option cheap and is worth\
-  \ checking first: DivisorFamilyAffFraming.lean already carries\nCertifiedDivisorFamilyAff.eps\
-  \ and IsPairChartFramed over the WIDENED carrier, elaborating,\nbecause divFamEps\
-  \ reads only the eqns field; and divisorWindow_eq_of_le_of_isCertified\n(DivSchemeEps.lean:196)\
-  \ takes an ARBITRARY adaptation A of d and concludes about d alone -- it\nnever\
-  \ asks that A be the Classical.choose-n divisorAdaptation. That is the seam.\n\n\
-  STANDING AND STILL BINDING:\n * U2 is NOT proved and no gate has cleared. Nothing\
-  \ produces a certificate at the universal\n   point, hence no IsChartClause and\
-  \ no DivRepAffinePullback.\n * The endpoint still carries hO, hchi and the ambient\
-  \ curve instances, so this describes the\n   DEBT, not representability for an arbitrary\
+summary: "U2: the DDR9-U epsilon-identity at the universal point (the last gate of\
+  \ divRep).\n\nRE-PRICED 2026-07-29 (run 0071 s0012, ajcr-divrep), REPLACING THE\
+  \ \"UNPRICED\" VERDICT AT THE TOP\nOF THE PREVIOUS BODY. That verdict came from\
+  \ I-0705: forall_not_isCertified_of_straddling\n(Picard/DivisorFamilyAffStrict.lean:127)\
+  \ concludes forall (A : DivisorAdaptation ..) (n), NOT\nA.IsCertified n, which negates\
+  \ HasCertifiedAdaptation at the same binder, so the row's residue\nmight be FALSE\
+  \ rather than open. That was correct about the CLASS half and wrong about the\n\
+  EPSILON half, and the two are now separated in Lean.\n\nLANDED (Picard/DivRepChartClassUnivQuot.lean,\
+  \ commit ae01cfcb2; sorry-free, rooted, lock-free\nscratch-olean check EXIT=0, zero\
+  \ warnings):\n\n  divisorWindow_eq_of_le_of_quotientData\n    a Grassmannian point\
+  \ x contained in the window submodule K_a(d) EQUALS it as soon as the\n    window\
+  \ quotient (R (x)_k H_a) / K_a(d) is projective over R of constant fibre rank g.\n\
+  \    No DivisorAdaptation, no IsCertified, no cover, no chart typing.\n  divFamEps_eq_of_le_of_quotientData\n\
+  \    the epsilon-PAIR identity at an ARBITRARY F : DivFam C R pi g, from window-quotient\
+  \ data at\n    the two pinned windows. Feedable from EITHER carrier.\n  divisorWindow_eq_of_le_of_isCertified_of_quotientData\n\
+  \    the landed chart-typed statement recovered as a COROLLARY, so the generalisation\
+  \ is\n    machine-checked rather than asserted in prose.\n\nWHY THE REFUTATION MISSES\
+  \ THE EPSILON HALF. The no-go's proof runs through certificate clause\n(c1): finiteness\
+  \ of the CHART-LOCAL COLENGTH modules forces supportLeak = empty, hence\nsupportLocus_subset_chart_of_isCertified,\
+  \ hence confinement to one pinned chart. A hypothesis\nabout d's WINDOW QUOTIENT\
+  \ quantifies over no adaptation, so it is not an instance of that\nforall. The epsilon\
+  \ half is OPEN, not false.\n\nTHE HONEST PARTITION OF U2, which is what this row\
+  \ should now be read as:\n  epsilon-VALUE : d's window quotient is projective of\
+  \ constant rank g -- no-go-IMMUNE, open.\n  the CLASS     : a term of DivFamZar\
+  \ C R_Z pi g (a LOCALLY CERTIFIED family) -- this carries\n                  the\
+  \ WHOLE bite of I-0705, and it is precisely the face protection I-0492's\n     \
+  \             widening (R2) exists to supply.\n\nCONSEQUENCE FOR THE CERT-R2 SEAM,\
+  \ posted on I-0494: the epsilon layer needs NO\nAffAdaptation.IsCertified -> DivisorAdaptation.IsCertified\
+  \ bridge. The type mismatch this row\nrecorded on 2026-07-28 as \"the whole critical\
+  \ path\" is off the epsilon path entirely; it remains\nrelevant only to the class\
+  \ half, where cert-r2's divFamZarAff_of_swallowing_affineOpen\n(DivisorFamilyAffSeedGate.lean)\
+  \ is the live candidate.\n\nONE FREE SUB-FINDING, measured not assumed: FINITENESS\
+  \ OF THE WINDOW QUOTIENT IS NOT AN INPUT.\nThe rank engine Submodule.eq_of_le_of_rankAtStalk_quotient_eq\
+  \ (DivSchemeEps.lean:115) takes its\nModule.Finite slot at the GRASSMANNIAN POINT's\
+  \ quotient, which grFunctorAff carries as a field;\nso the window side owes only\
+  \ projectivity plus the rank equation. Caught by the unusedVariables\nlinter on\
+  \ the first elaboration -- I had written finiteness in by analogy with the landed\n\
+  statement, which threads finiteness of A.ThetaGlued for its own reasons.\n\nSTANDING\
+  \ AND STILL BINDING:\n * U2 IS NOT PROVED AND NO GATE HAS CLEARED. Nothing produces\
+  \ a DivFamZar term over the chart\n   ring, hence no IsChartClause and no DivRepAffinePullback.\n\
+  \ * The straddling probe (is (univSeed ..).localEquations' supportLocus preconnected\
+  \ while\n   meeting both pinned fibres?) is STILL UNMEASURED. It now decides only\
+  \ the class half.\n * The endpoint still carries hO, hchi and the ambient curve\
+  \ instances, so this describes the\n   DEBT, not representability for an arbitrary\
   \ curve.\n * critical-path 7.6 is untouched: L8, local surjectivity of the Abel\
   \ map out of a too-small\n   divisor functor, remains the campaign's real gate and\
-  \ is arguably false as stated.\n\nVERIFICATION STATE, honest. The mathlib restore\
-  \ of 2026-07-29 ~00:20 invalidated AJCR's own\noleans, so every Picard file reads\
-  \ \"imports are out of date\" until rebuilt, and the rebuild of\nthis cone is ~9000\
-  \ jobs. s0008's DivRepChartClassUniv.lean is STILL UNVERIFIED, and\nDivRepChartClassUnivFree.lean\
-  \ (this session) is committed UNVERIFIED for the same reason: two\nbuilds were launched\
-  \ under the mutex, the first failed transiently (a concurrent build in the\nsame\
-  \ tree removed olean output directories mid-run -- FOUR AJCR lanes were building\
-  \ at once) and\nthe second hit its 50-minute timeout inside the DivSchemeHighWindow*\
-  \ chain. Do not quote either\nfile as green until a lake build of ...DivRepChartClassUnivFree\
-  \ records exit 0.\nVERIFICATION, FINAL AND MEASURED (appended at s0010 close, superseding\
-  \ every earlier caveat on this row):\n  lake build AlgebraicJacobian -> [9269/9270],\
-  \ EXIT=0, ZERO \"uses sorry\" warnings in the whole log.\n  Axiom probe with a CONTROL\
-  \ that fires (I-0661): AlgebraicGeometry.Jacobian reports sorryAx, while\n  windowBound_pos_of_genus_ne_zero,\
-  \ ThetaGeneratorSeed.divFamEps_certifiedFamilyOfAdaptation,\n  PointwiseAchiever.divFamEps_highWindow_eq_universal_pair\
-  \ and\n  ..._of_hasCertifiedAdaptation each report only [propext, Classical.choice,\
-  \ Quot.sound].\nAll three modules are rooted (imported by AlgebraicJacobian.lean)\
-  \ and sorry-free. This is the first\nkernel measurement any of them has had.\n\n"
+  \ is arguably FALSE as stated. Two\n   spellings collapsing is not progress toward\
+  \ it.\n\n--- the previous body follows; its \"unpriced\" verdict is superseded for\
+  \ the epsilon half only ---\n\nWHAT SURVIVES from the earlier scoping: the epsilon-layer\
+  \ reduction is sound and kernel-checked\n-- the identity genuinely does not care\
+  \ WHICH adaptation carries the certificate\n(HasCertifiedAdaptation, DivRepChartClassUnivAny.lean),\
+  \ and now does not care whether there is\nan adaptation at all. The scalar is discharged:\
+  \ windowBound_pos_of_genus_ne_zero\n(DivRepChartClassUnivFree.lean) reduces hb to\
+  \ a genus disjunction whose degenerate branch is\ngenus_eq_zero_of_windowBound_nonpos\
+  \ (RiemannRoch/WindowLedgerF3.lean:68). The generator clause\nis free over R_Z (isGenerator_highWindowPointwiseGeneratorSeed,\n\
+  DivSchemeHighWindowPointwiseGenerator.lean:89).\n\nMethodological error of s0010\
+  \ recorded as I-0707: that session crossed its new existential\nagainst the certificate\
+  \ lane's PRODUCERS and never against the tree's REFUTATIONS. The\ncomplement, recorded\
+  \ this session: it then accepted the refutation without asking which CLAUSE\nof\
+  \ IsCertified the refutation's proof consumes.\n\n\nVERIFICATION, FINAL AND MEASURED\
+  \ (appended at s0012 close, superseding the 'no full lake build'\ncaveat above):\
+  \ lake build AlgebraicJacobian -> 'Build completed successfully (9279 jobs)', EXIT=0,\n\
+  ZERO errors and ZERO 'uses sorry' warnings in the whole log. Neither new module\
+  \ appears anywhere\nin the log, so neither contributed an error or a linter warning.\
+  \ Axiom probe with a CONTROL that\nfires (I-0661): AlgebraicGeometry.Jacobian reports\
+  \ sorryAx, while all six new theorems report only\n[propext, Classical.choice, Quot.sound].\
+  \ Both modules rooted in AlgebraicJacobian.lean."
 status: pending
 kind: proof
 priority: normal
@@ -120,7 +91,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-28T21:58:53.963566+00:00'
+  updated_at: '2026-07-28T23:06:01.963653+00:00'
   pinned_commits:
   - 0a6351e5e
   - 0b67179bb

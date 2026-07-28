@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:gr_universalMinorInv
 lean_status: lean_ok
-order: 1374
+order: 1375
 title: The Cramer inverse \((X^I_J)^{-1}\)
 type: tex
-updated: '2026-07-28T22:30:28'
+updated: '2026-07-29T06:43:24'
 ---
 \textit{Source: [Nitsure], \S 1.}
   Let \((X^I_J)^{-1} \in \operatorname{Mat}_{d \times d}(R^I_J)\) be the

@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:exists_ne_zero_ext_of_depth_eq
 lean_status: lean_ok
-order: 1760
+order: 1761
 title: A nonzero \(\text{Ext}\) class at the depth index
 type: tex
-updated: '2026-07-28T22:30:29'
+updated: '2026-07-29T06:43:25'
 ---
 For a nonzero finite \(R\)-module \(M\) over a Noetherian local ring \((R, \mathfrak m)\)
   with \(\text{depth}(M) = D\) finite, there is a nonzero element of

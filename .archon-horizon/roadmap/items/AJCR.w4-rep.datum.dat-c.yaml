@@ -6,52 +6,44 @@ projects:
 summary: "DAT-C: the Sigma-charts. C0-C5 are landed. C6-C8 and the canonical-section\
   \ certificate depend on\nthe DD-R certificate/divRep chain. Its own leaf c9-chartlocus\
   \ is independent of DD-R and is where\nthis milestone's progress has been coming\
-  \ from.\n\nUPDATE 2026-07-29 (run 0072 r5, lane ajcr-charts). C6-C8 UNTOUCHED AGAIN,\
-  \ for the reason recorded\nbelow -- but the C9 row's accounting was WRONG and is\
-  \ now corrected, and that changes what a lane\nshould do when C8 lands.\n\nTHE C9\
-  \ ROW LISTS C4-C8 + CHART-U(b) AND THE LANE ORDER PUTS C9 LAST. Right for the whole\
-  \ of C9,\nwrong for the part carrying the hf obligation. IsChartUniv is IsOpenImmersion.presheaf,\
-  \ i.e.\nMorphismProperty.relative at yoneda, a CONJUNCTION by definition (mathlib\n\
-  MorphismProperty/Representable.lean:315) of (i) relative representability of the\
-  \ fibre product and\n(ii) the open-immersion property of each represented pullback.\
-  \ The GAP-2 + classifier story every\nrow of this milestone told is input to (ii)\
-  \ ONLY. Clause (i) needs only AN OPEN OF THE TEST, and\nchartLocus is one unconditionally.\n\
-  \nLANDED, all sorry-free, rooted, and axiom-clean against controls that fired sorryAx:\n\
-  \ * Picard/Pic0ChartOpenImmersionCriterion.lean (a41644c36) -- ChartFibrePresented,\
-  \ its\n   isPullback, and isOpenImmersion_presheaf_of_chartFibrePresented, THE CRITERION,\
-  \ discharging\n   both clauses from elementwise data. Abstract in f and V: no divRep,\
-  \ certificate, Z or theta.\n * Picard/Pic0ChartUnivReduce.lean (6a67505dd) -- chartLocusOpens\
-  \ supplies the W field BY\n   CONSTRUCTION, so the datum drops from FOUR fields\
-  \ to THREE; isChartUniv_of_isChartLocusFibre\n   composes with the landed composition\
-  \ half, no seam.\n * informal/w4-datc-worksheet.md (f9fb21c6f, 0e0e84641) -- the\
-  \ correction carried to the\n   CHART-U(c) row AND to the section-5 file-plan table,\
-  \ whose \"six of nine rows launchable before\n   divRep\" is really SEVEN once C9\
-  \ splits.\n\nBRACKETED BOTH WAYS SO THE GATE IS DEMONSTRABLY MOVED AND NOT REMOVED:\n\
-  isEmpty_forall_chartFibrePresented_of_not_injective (the datum cannot be SATISFIED\
-  \ by a chart map\nfailing injectivity on one test, hence not by the UNRESTRICTED\
-  \ Abel chart whose fibres are the\nlinear systems) and injective_of_isChartUniv\
-  \ (the goal cannot be REACHED without it).\n\nSO WHAT A LANE OWES WHEN C6/C7/C8\
-  \ LAND is IsChartLocusFibre -- the r/sq/exists_factor triple, r\nfrom the classifier,\
-  \ exists_factor the relative form of GAP-2 -- and then a call to\nisChartUniv_of_isChartLocusFibre.\
-  \ It should NOT re-derive the plumbing.\n\nTWO BY-PRODUCTS, both corrections to\
-  \ this tree's own prose: \"the Abel map is not a monomorphism,\nhence IsOpenImmersion.presheaf\
-  \ fails unrestricted\" is cited as a REASON in three files and is a\nDERIVATION\
-  \ (mono_of_isOpenImmersion_presheaf, from mathlib presheaf_mono_of_le at\nIsOpenImmersion.le_monomorphisms);\
-  \ and the open V in restrictChart is ARBITRARY for hf, since the\nproperty is stable\
-  \ under precomposition with an open immersion -- restricting to the chart locus\n\
-  is not what makes hf true.\n\nC6-C8 STATE, unchanged and still measured rather than\
-  \ inherited:\n C6 (DivSchemeH1Open)     -- GAP-5 instance + statements landed; the\
-  \ rest divRep(F7)-gated. Its own\n                             brick exists (DivFamZar.isOpen_setOf_isH1VanishingAt,\n\
-  \                             DivisorFamilyH1Locus.lean:363).\n C7 (DivSchemeChartFibre)\
-  \ -- gated on C6, hence on divRep; a bounded transcription the day F7\n        \
-  \                     lands, not mathematics. No file exists yet.\n C8 (DivSchemeChartCert)\
-  \  -- statement YES, heart pattern-gated on G-4 CertUniv.\n\nTHE CANONICAL-SECTION\
-  \ CERTIFICATE reading is unchanged and reconfirmed: it is where the\neffectivity\
-  \ and h0 = 1 that DAT-B's coverage discards are actually needed (GAP-2 uniqueness,\n\
-  eq_of_picClass_eq_of_h0_one takes 0 <= D). That is DAT-C's business, not coverage's.\n\
-  \nVERIFICATION THIS PASS: full root `lake build` RAN (9213 targets) -- see the c9b\
-  \ row for the\noutcome and the one linter warning it caught that per-file checks\
-  \ could not.\n"
+  \ from.\n\nUPDATE 2026-07-29 (run 0072 r6, lane ajcr-charts). C6-C8 UNTOUCHED AGAIN,\
+  \ but this pass MEASURED\nthe gate instead of inheriting it, and the C6 row's accounting\
+  \ splits in a way the row does not\nsay. Plus the C9 row's r5 amendment is corrected\
+  \ -- see the c9b and chart-u rows.\n\nC6's GATE IS TWO THINGS, ONLY ONE OF WHICH\
+  \ IS divRep-GATED (I-0749):\n * GENUINELY divRep-GATED: univFam, V, VOver. Measured,\
+  \ not inferred -- the tokens `univFam` and\n   `VOver` occur in ZERO files in the\
+  \ entire AlgebraicJacobian tree. They are the universal\n   family over the divRep\
+  \ representing object, so nothing can define them before F7.\n * NOT divRep-GATED:\
+  \ GAP-5 itself, `IsOpenImmersion (divCarveChartToDivScheme i j)`. No such\n   instance\
+  \ exists (grep), and its route is FULLY STOCKED: the defining triangle\n   (divCarveChartToDivScheme_divSchemeι,\
+  \ DivSchemeAtlasFactor.lean:370), KeyChart LANDED as an\n   ideal identity (carveIdealSheaf_ideal_pairChartOpen,\
+  \ DivSchemeKeyChart.lean:321), pairChartMap\n   IS an open immersion (DivCarvePairChart.lean:169),\
+  \ and open immersions are stable under base\n   change. THE MISSING STEP IS EXACTLY\
+  \ ONE: turn the KeyChart IDEAL IDENTITY into a PULLBACK\n   SQUARE. Bounded, project-local,\
+  \ available NOW -- ahead of F7 and ahead of CERT-Sigma.\n\nSo \"C6 is divRep-gated\"\
+  \ is true of C6's conclusion and false of its hardest named input. That is\nthe\
+  \ cheapest live brick on this milestone after the CHART-U(b) residue.\n\nC7 (DivSchemeChartFibre)\
+  \ -- gated on C6, hence on divRep. No file exists. Confirmed absent.\nC8 (DivSchemeChartCert)\
+  \  -- statement YES, heart pattern-gated on G-4 CertUniv. Unchanged.\n\nWHAT THE\
+  \ c9-chartlocus LEAF DID THIS PASS, in brief (full accounts on its own rows):\n\
+  \ * chart-u REOPENED from done. The general-test openness theorem is unconditional\
+  \ in\n   IsSplitWitnessIsoInvariant but STILL TAKES the affine-local haff, which\
+  \ nothing discharges.\n   So \"the W field costs zero\" was false at four sites,\
+  \ all corrected.\n * hconv DISCHARGED -- B-4/CHART-U(b)'s named residue for three\
+  \ sessions. The missing ingredient\n   was PicEtAff.unit_injective (Kleiman 2.5(1),\
+  \ the zeta3 close) plus\n   relPicMk_injective_of_subsingleton, both in the tree\
+  \ for WEEKS and cited by no CHART-U row.\n   Both halves of the pointwise presentation\
+  \ are now witness-free, so CHART-U(b) reduces to a\n   cechPicClass base-change\
+  \ identity -- exactly what the section 3.3 row's own correction 2\n   predicted.\n\
+  \ * The C9 amendment's \"its only geometric input is CHART-U(b), already done\"\
+  \ is CORRECTED in\n   worksheet section 4: CHART-U(b) is not done in the sense that\
+  \ sentence needs.\n\nTHE CANONICAL-SECTION CERTIFICATE reading is unchanged and\
+  \ reconfirmed: it is where the\neffectivity and h0 = 1 that DAT-B's coverage discards\
+  \ are actually needed (GAP-2 uniqueness,\neq_of_picClass_eq_of_h0_one takes 0 <=\
+  \ D). That is DAT-C's business, not coverage's.\n\nVERIFICATION THIS PASS: full\
+  \ root `lake build AlgebraicJacobian` GREEN -- 9279 jobs, EXIT=0, zero\nerrors,\
+  \ zero warnings in any file this lane touched; the only sorry warnings are Challenge.lean's\n\
+  13 declared frontier ones. Mutex hold was 72 seconds.\n"
 status: pending
 kind: proof
 priority: normal
@@ -65,4 +57,4 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:08.321387+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-28T21:36:32.917997+00:00'
+  updated_at: '2026-07-28T23:06:01.185185+00:00'

@@ -9,31 +9,34 @@ docstring: '**A nonzero global section is an effectivity certificate** (the brid
   nonzero global section then there is `g ∈ K(X)ˣ` with `0 ≤ A + div g`.
 
 
-  **Provenance.** AJCR proves the same fact as
+  **Provenance: this proof is AJCR''s, line for line.**  It is
 
-  `RiemannRoch/SectionBound.exists_effective_of_h0_pos`, but *states* it as "the class
-  of `A` is
+  `RiemannRoch/SectionBound.exists_effective_of_h0_pos`, whose body performs the same
+  four steps
 
-  realised by an effective divisor", through `CurveDivisor.picClass` — Picard vocabulary
-  that
+  (nontriviality from `finrank_pos`, extract a nonzero element of `H⁰` through `linearEquiv₀`,
 
-  AJC''s Ledger tree does not import and does not want here.  The three steps (extract
-  a nonzero
+  read it as a nonzero rational function via `divisorVal`, turn the pole bound into
 
-  element of `H⁰` through `linearEquiv₀`, read it as a nonzero rational function,
-  turn the pole
+  `0 ≤ A + div g` pointwise through `ord_val_eq`).  The **only** change is the conclusion:
+  AJCR
 
-  bound into `0 ≤ A + div g` at each point) are AJCR''s; the statement is stripped
-  of `picClass`
+  says "the class of `A` is realised by an effective divisor" using `CurveDivisor.picClass`,
+  and
 
-  so that it lands one import above `DivisorSheaf`/`MulEquiv` and needs no Picard
-  layer.'
+  this states the underlying unit-and-inequality fact directly, so that it lands one
+  import above
+
+  `DivisorSheaf`/`MulEquiv` and needs no Picard layer.  Do not read the restatement
+  as new
+
+  mathematics; it is a carrier change.'
 file: AlgebraicJacobian/RiemannRoch/Ledger/DegreeVanishing.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_unit_nonneg_of_h0_pos
 type: lean
-updated: '2026-07-28T23:30:57'
+updated: '2026-07-29T06:43:23'
 ---
 theorem exists_unit_nonneg_of_h0_pos (A : X.CurveDivisor)
     (hA : 0 < Sheaf.h0 (X.divisorSheaf K A)) :

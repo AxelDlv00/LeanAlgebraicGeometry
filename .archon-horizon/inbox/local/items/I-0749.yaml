@@ -1,0 +1,45 @@
+id: I-0749
+provider: local
+kind: info
+body: "GAP-5 IS THE ONE C6 INPUT THAT IS NOT divRep-GATED, and its inputs are all\
+  \ in the tree -- measured, run 0072 r6 (ajcr-charts).\n\nWHY THIS IS WORTH A NOTE.\
+  \ The dat-c row and worksheet section 4 both say C6 (DivSchemeH1Open) is\n'GAP-5\
+  \ instance + statements landed; the rest divRep(F7)-gated'. I checked what the rest\
+  \ IS, and\nthe split is sharper than that sentence:\n\n * DIVREP-GATED, GENUINELY:\
+  \ univFam, V, VOver. Measured -- 'univFam' and 'VOver' occur in ZERO\n   files in\
+  \ the whole AlgebraicJacobian tree. They are the universal family over the divRep\n\
+  \   representing object, so nothing can define them before F7. Not an artefact.\n\
+  \ * NOT divRep-GATED: GAP-5 itself, IsOpenImmersion (divCarveChartToDivScheme i\
+  \ j). The worksheet\n   says it 'is not landed' and grep confirms no such instance\
+  \ exists.\n\nGAP-5's ROUTE IS FULLY STOCKED, which is what I did not expect:\n *\
+  \ the defining triangle: divCarveChartToDivScheme_divSchemeι (DivSchemeAtlasFactor.lean:370);\n\
+  \ * KeyChart: carveIdealSheaf_ideal_pairChartOpen (DivSchemeKeyChart.lean:321),\
+  \ LANDED, as an\n   ideal identity -- the carve ideal on the chart open is the comap\
+  \ of the chart's carve ideal;\n * pairChartMap IS an open immersion (DivCarvePairChart.lean:169);\n\
+  \ * open immersions are stable under base change (mathlib).\n\nSO THE MISSING STEP\
+  \ IS EXACTLY ONE THING: turn the KeyChart IDEAL IDENTITY into a PULLBACK SQUARE\n\
+  (Spec R_Z -> Spec PairChartRing, divCarveChartToDivScheme, divSchemeι, pairChartMap).\
+  \ The\nworksheet names this route; nobody has built it. That is a bounded construction\
+  \ in project-local\ncommutative algebra, and it is available NOW -- ahead of F7\
+  \ and ahead of CERT-Sigma.\n\nI did not build it (out of session budget after the\
+  \ CHART-U/B-4 work). Flagging it as the cheapest\nlive C6 brick, on the same footing\
+  \ as the CHART-U(b) residue: neither certificate- nor\ndivRep-gated."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T23:05:29.833578+00:00'
+updated_at: '2026-07-28T23:05:29.833593+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0014-horizon-ajcr-charts
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

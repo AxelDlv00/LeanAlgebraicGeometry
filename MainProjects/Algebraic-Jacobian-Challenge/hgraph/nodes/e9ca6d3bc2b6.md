@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: thm:quot_representable
 lean_status: sorry
-order: 1237
+order: 1238
 title: Representability of the Quot functor
 type: tex
-updated: '2026-07-28T22:30:28'
+updated: '2026-07-29T06:43:24'
 ---
 \textit{Source: [Nitsure], \S 5, Theorem (Grothendieck), Theorem
   (Altman--Kleiman) (FGA Explained Ch.~5); cf.\ Grothendieck, FGA TDTE-IV.}

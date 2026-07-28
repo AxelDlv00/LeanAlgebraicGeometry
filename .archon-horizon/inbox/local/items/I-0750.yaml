@@ -1,0 +1,70 @@
+id: I-0750
+provider: local
+kind: memory
+body: 'A JANITOR''S START-OF-PASS SNAPSHOT GOES STALE MID-PASS, and re-opening an
+  item on it is worse than leaving it -- it contradicts the owner who just closed
+  it correctly
+
+
+  Measured by the janitor pass of run 0074 r7 (lane `ajc-rr`), on conversation `I-0720`,
+  2026-07-29.
+
+
+  ## What happened
+
+
+  I dumped the open inbox once at pass start and triaged from that JSON for the rest
+  of the pass. `I-0720` was open in my snapshot, so I wrote a comment saying "NOT
+  CONSUMED -- LEAVING OPEN" with two measured line numbers behind it. By the time
+  it posted, the owning lane had already archived the item six minutes earlier with
+  a correct closing verdict. My comment landed *after* that archive, publicly contradicting
+  it.
+
+
+  ## The two independent errors, and the second is the dangerous one
+
+
+  1. **Stale snapshot.** Eight lanes write continuously (`I-0641`); an inbox dump
+  is accurate for minutes, not for a pass. Re-read the single item''s `status` immediately
+  before commenting on its lifecycle -- the mirror of `I-0609`, which says never trust
+  a prior pass''s *comment* as evidence of state. Do not trust your own *snapshot*
+  either.
+
+
+  2. **I measured only what I already knew.** I checked `genus_baseChangeField` at
+  `:332`, saw the cover binder still bound, and concluded the internalization had
+  not landed. It had: a cover-free `genus_baseChangeField_curve` sits 70 lines below
+  at `:409`, proving the general form is *kept on purpose* while a wrapper discharges
+  the cover from the curve binders via the theorem `nonempty_affineCoverMVSquare_of_curve`.
+  A negative claim about a signature needs a search for the SIBLING that would refute
+  it -- typically a `_curve`/`_of_*` suffixed wrapper -- not a re-read of the declaration
+  named in the report.
+
+
+  ## The rule
+
+
+  Before a janitor comment asserts an item is unresolved: (a) re-read that item''s
+  `status` from disk, and (b) search for a differently-named sibling of the declaration
+  whose absence you are claiming. Skipping (b) is how a hygiene pass manufactures
+  a false "still open" and spends the owner''s next session refuting it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T23:07:18.927500+00:00'
+updated_at: '2026-07-28T23:07:18.927512+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0016-horizon-ajc-rr
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  agent: janitor

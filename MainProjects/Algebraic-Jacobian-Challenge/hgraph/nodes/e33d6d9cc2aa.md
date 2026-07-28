@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.leakProbe_isIso_app_pi
 file: scripts/axiom-frontier.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.leakProbe_isIso_app_pi
 type: lean
-updated: '2026-07-28T22:30:24'
+updated: '2026-07-29T06:43:26'
 ---
 theorem leakProbe_isIso_app_pi {C D : Type*} [Category C] [Category D]
     {P Q : C ⥤ D} (α : P ⟶ Q) {J : Type*} [Finite J] (A : J → C)

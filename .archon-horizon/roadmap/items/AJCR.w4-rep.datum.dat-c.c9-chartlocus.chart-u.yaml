@@ -3,42 +3,68 @@ title: 'CHART-U(a)/(b): the co-signed chartLocus c lambda and isOpen_chartLocus 
   missing inputs, all divRep-free)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "CHART-U(a)/(b): DONE, and as of 2026-07-29 UNCONDITIONAL at a GENERAL TEST.\n\
-  \nWHAT LANDED THIS PASS (run 0072 s0010, lane ajcr-charts, commit 2b6228f6a):\n\
-  IsSplitWitnessIsoInvariant is DISCHARGED (Picard/Pic0ChartLocusIsoInvariance.lean),\
-  \ which was the\nONE input between the landed affine openness and isOpen_chartLocus\
-  \ over a general test. So\nisOpen_chartLocus_of_affineLocal' and chartLocus_fromSpecAffine_eq_preimage'\
-  \ now carry NO\nhypothesis. This row is closed as far as (a)/(b) go.\n\nTHE PREDICTION\
-  \ ON THIS ROW WAS HALF RIGHT, AND THE MISSING HALF IS THE TRANSFERABLE PART.\nBoth\
-  \ this row and c9b priced the residue as \"PicEtAff.map_map plus map_id, not geometry\"\
-  . True of\nthe CLASS side: map_mapAlg_eq_map (map_map with an explicit AlgHom into\
-  \ a common target) plus\npicEtAffineEquiv_naturality, with the witness clause carried\
-  \ through untouched.\n\nWhat neither row mentioned is the INSTANCE side, which is\
-  \ the actual content. IsSplitWitness\nexistentially quantifies a splitting field\
-  \ L TOGETHER WITH FOUR INSTANCES about L over the reading\nfield (Algebra, IsScalarTower,\
-  \ Module.Finite, Algebra.IsSeparable). Transporting along\ne : K equiv K' keeps\
-  \ THE SAME L and must re-derive all four over K' along e.symm: two by\nIsScalarTower.of_algebraMap_eq,\
-  \ two by mathlib transports stated for exactly that commuting square\n(Module.Finite.of_equiv_equiv,\
-  \ Algebra.IsSeparable.of_equiv_equiv). RULE: price the instances a\npredicate quantifies,\
-  \ not only its data.\n\nTWO BRICKS NOBODY HAD, both about testPoint and both now\
-  \ supplied:\n 1. Over.testPointFieldMap_comp_algebraMap -- the residue-field extension\
-  \ a morphism of tests\n    induces is a k-ALGEBRA map. The tree recorded it only\
-  \ as an Algebra over the SOURCE field\n    (testPointFieldAlgebra), and without\
-  \ the k-compatibility it cannot feed PicEtAff.mapAlg at\n    all. It is Spec.preimage\
-  \ of the testPoint_comp_left square plus the two Over triangles.\n 2. Over.testPoint_comp\
-  \ -- the same naturality square as an equality of morphisms IN THE SLICE,\n    through\
-  \ Over.overSpecMap. Pic0ChartTestPoint states it only for the underlying scheme\n\
-  \    morphisms, but picEtMap is indexed by Over-morphisms, so every class-level\
-  \ transport needs\n    this form.\n\nAND THE IsIso HYPOTHESIS IS NOT PACKAGING --\
-  \ checked, expecting it to be. The transported\nAlgebra K' L is algebraMap K L composed\
-  \ with e.symm, so it needs e SURJECTIVE. Along a\nnon-invertible K -> K' the old\
-  \ L carries no K'-structure at all and one must base-change L, which\nis the separable\
-  \ route (exists_witness_of_separable_extension) and strictly harder. Do not weaken\n\
-  that hypothesis to an AlgHom anywhere.\n\nThe two 2026-07-28 corrections on this\
-  \ row stand: testPointField_affineOpen_iso was advertised and\nabsent (supplied\
-  \ as testPointField_fromSpecAffine_isIso, I-0650), and \"needs no new mathematics\"\
-  \nwas false by exactly the one lemma now proved.\n"
-status: done
+summary: "CHART-U(a)/(b). REOPENED 2026-07-29 (run 0072 r6, lane ajcr-charts) FROM\
+  \ done, BY THE LANE THAT\nCLOSED IT, and then advanced. Read the reopening before\
+  \ the progress.\n\nWHY IT IS REOPENED. This row was set done at r5/s0010 on the\
+  \ strength of\nisSplitWitnessIsoInvariant_holds, which removed the ONE hypothesis\
+  \ standing between the landed\nAFFINE openness and general-test openness. That is\
+  \ true and stands. What the closure missed is\nthat isOpen_chartLocus_of_affineLocal'\
+  \ STILL TAKES haff -- the affine-local openness at every\naffine open of the test\
+  \ -- and NOTHING IN THE TREE DISCHARGES IT:\n\n * isOpen_chartLocus_of_affineLocal'\
+  \ (Pic0ChartLocusIsoInvariance.lean) passes haff straight\n   through to isOpen_chartLocus_of_affineLocal\
+  \ (Pic0ChartLocusGeneralTest.lean), which also\n   passes it through;\n * the affine\
+  \ case that would feed it, isOpen_setOf_isSplitWitness_of_presentation\n   (Pic0ChartLocusIsOpen.lean:321),\
+  \ is itself conditional on IsChartDatumPresentation.\n\nSo \"CHART-U(b) at a general\
+  \ test is UNCONDITIONAL\" was true only of the iso-invariance\nhypothesis, and the\
+  \ row read it as unconditional simpliciter. The consequence propagated: the\nc9b\
+  \ row and Pic0ChartUnivReduce's headline both said the chart-locus open \"costs\
+  \ zero\" / \"needs\nnothing\", which made B-4's residue invisible to a census. RETRACTED\
+  \ at all four asserting sites\n(8fc0df182, c401ed616).\n\nMEASURED, not inferred:\
+  \ chartLocusOpens had ZERO consumers in the whole tree at r6 start, and\nhaff appears\
+  \ only as an argument position -- which is exactly why an unnamed hypothesis in\
+  \ a\nDEFINITION's signature is invisible to a search for open obligations.\n\nWHAT\
+  \ LANDED THIS PASS, all sorry-free, rooted, kernel EXIT=0 with the lakefile linter\
+  \ options in\nforce, and axiom-clean against a control that fires sorryAx:\n\n *\
+  \ ChartLocusAffineLocal (Pic0ChartCoverageAbel.lean) -- the haff residue NAMED,\
+  \ so it appears\n   in a census. chartLocusOpens' carries the dependency explicitly\
+  \ in the API.\n * chartLocusAffineLocal_of_presentation -- THE RESIDUE REDUCED TO\
+  \ B-4'S OWN NAMED OBLIGATION:\n   a per-affine-piece IsChartDatumPresentation gives\
+  \ haff. This is the link\n   Pic0ChartLocusIsOpen's docstring DESCRIBES (\"not stated\
+  \ here only because it would need the\n   presentation hypothesis per affine piece\"\
+  ) and never states. IsFinite pi, not IsAffineHom pi,\n   is what that route needs\
+  \ -- the rigid engine.\n * abelChartApp_eq -- the Abel chart's value at a point\
+  \ of the divisor scheme, BOTH components.\n * hasWitnessH1Vanishing_of_isSplitWitness_at\
+  \ (Pic0ChartPresentationConverse.lean) -- hconv, THE\n   DESCENT DIRECTION, DISCHARGED.\
+  \ Open as B-4's named residue for three sessions.\n * isChartDatumPresentation_of_plusFibre\
+  \ -- IsChartDatumPresentation with no separate hconv.\n * towerOfResidueFieldExtension\
+  \ -- htow is bookkeeping, not an obligation (Algebra A L does NOT\n   synthesize;\
+  \ measured, which is why this had to be stated).\n * isChartDatumPlusFibreAt_self\
+  \ -- non-vacuity, in the sharp form: at L := kappa(t) the new\n   predicate IS IsChartDatumPlusFibre\
+  \ by Iff.rfl, so hplus's extra strength over hfib is exactly\n   \"the same identity\
+  \ at every extension\" and nothing else.\n\nTHE TRANSFERABLE LESSON, and it is the\
+  \ second one this row has produced about pricing:\nr5's lesson was PRICE THE INSTANCES\
+  \ A PREDICATE QUANTIFIES, NOT ONLY ITS DATA. This pass's is\nCHECK WHAT A \"DISCHARGED\"\
+  \ THEOREM STILL TAKES. Pic0ChartPresentationHalf priced hconv as \"two\ningredients\
+  \ both exist but composing them is not a rewrite\", naming two TRANSPORT lemmas.\
+  \ The\ndiagnosis of the obstruction was right and the ingredient list was short\
+  \ by one, and the missing\none was not a transport: PicEtAff.unit_injective (CechKernelLemma.lean:361,\
+  \ Kleiman 2.5(1), the\nunconditional close of the zeta3 campaign) plus relPicMk_injective_of_subsingleton\
+  \ force the\npresenting class to EQUAL D's fibre class at L_t, which is what \"\
+  visibly in D's class\" needed.\nBOTH HAVE BEEN IN THE TREE FOR WEEKS AND NO CHART-U\
+  \ ROW CITES EITHER.\n\nSTATE NOW. Both halves of the pointwise presentation are\
+  \ witness-free, H1-free and divisor-free:\nthe forward half already was (trivial\
+  \ splitting), the converse now is. So the whole of\nCHART-U(b) reduces to a cechPicClass\
+  \ base-change identity -- which is what this row's own\n2026-07-28 correction 2\
+  \ predicted (\"a cechPicClass base-change statement, and not any\nconstruction\"\
+  ). The one place the reduction is not tight, stated in the file rather than hidden:\n\
+  the identity is wanted at EVERY extension of kappa(t), strictly more than IsChartDatumPlusFibre\n\
+  asks, and isChartDatumPlusFibreAt_self measures that gap.\n\nThe two 2026-07-28\
+  \ corrections on this row stand: testPointField_affineOpen_iso was advertised\n\
+  and absent (supplied as testPointField_fromSpecAffine_isIso, I-0650), and \"needs\
+  \ no new\nmathematics\" was false by exactly the one lemma proved at s0010. And\
+  \ the IsIso hypothesis of the\niso-invariance is load-bearing, not packaging --\
+  \ do not weaken it to an AlgHom.\n"
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -60,7 +86,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  updated_at: '2026-07-28T19:36:49.439141+00:00'
+  updated_at: '2026-07-28T22:54:48.764984+00:00'
   milestone: w4-tail
   owner: ajcr-charts
   pinned_commits:

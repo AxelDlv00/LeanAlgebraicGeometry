@@ -6,10 +6,10 @@ created: '2026-07-28T14:03:59'
 generated: blueprint
 label: rem:pullback_pfl_three_factor_route
 lean_status: empty
-order: 498
+order: 499
 title: The older three-factor route, and why it is not the one taken
 type: tex
-updated: '2026-07-28T18:12:21'
+updated: '2026-07-29T06:43:23'
 ---
 By Lemma~\ref{lem:sheafOfModules_pullbackIso}, on the genuine scheme site \(g^*\)
   factors as the composite
