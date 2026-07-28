@@ -42,6 +42,11 @@ it this way is not a shortcut: it is the correct observation that Milne's
   precomposition through the products below.
 * `MonObj.permAut` — the automorphism of `∏ᶜ (fun _ : Fin n => C)` permuting the
   factors along `σ : Equiv.Perm (Fin n)`.
+* `MonObj.permAutIso` — `permAut` bundled as an element of `Aut (C^n)`, and
+  `MonObj.permAutHom : Equiv.Perm (Fin n) →* Aut (C^n)` — the `S_n`-action by
+  *automorphisms*. See the note in §1: `Albanese/StableAffineCoverGroup.lean` recorded the
+  absence of this homomorphism as a real gap blocking the `Sym^n C` glue data; it is four
+  lines from `permAut_comp`.
 * `MonObj.powSum` — the morphism `∏ᶜ (fun _ : Fin n => C) ⟶ A` sending
   `(P₁, …, P_n) ↦ φ(P₁) * ⋯ * φ(P_n)`, i.e. the product over `i : Fin n` of the
   projections composed with `φ`.
@@ -152,6 +157,83 @@ omit [CartesianMonoidalCategory K] in
 theorem permAut_π (C : K) {n : ℕ} (σ : Equiv.Perm (Fin n)) (i : Fin n) :
     permAut C σ ≫ Pi.π (fun _ : Fin n => C) i = Pi.π (fun _ : Fin n => C) (σ i) := by
   simp only [permAut, Pi.lift_π]
+
+/-! ### `permAut` is an isomorphism, and the action lands in `Aut`
+
+`Albanese/StableAffineCoverGroup.lean` needs an `S_n`-action valued in `Aut (C^n)` to
+instantiate its `G`-stable affine cover theorem, and recorded that as a real gap on the
+grounds that `permAut` "is a bare morphism never shown to be an isomorphism" and
+`SymPowColimit.permEnd` "lands in `End`, not `Aut`". Both observations were true and the
+conclusion drawn from them was not: the inverse is `permAut C σ⁻¹`, and the composition law
+below is the only thing needed to see it.
+
+The composition law is worth stating precisely because the `End` convention in
+`SymPowColimit.permEnd` makes it easy to get backwards. In the **category**,
+
+`permAut C σ ≫ permAut C τ = permAut C (σ * τ)`,
+
+so `permAut` is a *homomorphism* for `≫`. It is `End`'s reversed multiplication
+(`f * g = g ≫ f`) that forces the inverse in `permEnd`, not `permAut` itself. -/
+
+omit [CartesianMonoidalCategory K] in
+/-- **The composition law.** `permAut` is multiplicative for `≫`: permuting by `σ` and then
+by `τ` is permuting by `σ * τ`. (Contrast `SymPowColimit.permEnd`, which must insert an
+inverse because `End`'s multiplication is `≫` reversed.) -/
+@[reassoc]
+theorem permAut_comp (C : K) {n : ℕ} (σ τ : Equiv.Perm (Fin n)) :
+    permAut C σ ≫ permAut C τ = permAut C (σ * τ) := by
+  apply Pi.hom_ext; intro i
+  rw [Category.assoc, permAut_π, permAut_π, permAut_π]
+  rfl
+
+omit [CartesianMonoidalCategory K] in
+@[simp]
+theorem permAut_one (C : K) (n : ℕ) : permAut C (1 : Equiv.Perm (Fin n)) = 𝟙 _ := by
+  apply Pi.hom_ext; intro i
+  rw [permAut_π, Category.id_comp]; rfl
+
+/-- **`permAut` is an isomorphism**, with inverse `permAut C σ⁻¹`. Both triangles are
+`permAut_comp` followed by `mul_inv_cancel` / `inv_mul_cancel`.
+
+This is what `Albanese/StableAffineCoverGroup.lean` item 2 asked for; it costs four lines,
+not a construction. -/
+noncomputable def permAutIso (C : K) {n : ℕ} (σ : Equiv.Perm (Fin n)) :
+    Aut (∏ᶜ (fun _ : Fin n => C)) where
+  hom := permAut C σ
+  inv := permAut C σ⁻¹
+  hom_inv_id := by rw [permAut_comp, mul_inv_cancel, permAut_one]
+  inv_hom_id := by rw [permAut_comp, inv_mul_cancel, permAut_one]
+
+omit [CartesianMonoidalCategory K] in
+@[simp]
+theorem permAutIso_hom (C : K) {n : ℕ} (σ : Equiv.Perm (Fin n)) :
+    (permAutIso C σ).hom = permAut C σ := rfl
+
+/-- **The `S_n`-action on `C^n` by automorphisms.**
+
+The producer that `Albanese/StableAffineCoverGroup.lean`'s theorem was missing: a genuine
+`G →* Aut X` with `G = S_n` and `X = C^n`, so that `exists_stable_affineOpen_of_orbits`
+applies to the symmetric-power situation.
+
+`σ` is sent to `permAutIso C σ⁻¹`. The inverse is forced by mathlib's `Aut` multiplication
+(`f * g = g ≫ f` on the underlying homs, inherited from `End`), exactly as in
+`SymPowColimit.permEnd` — with it, multiplicativity is `permAut_comp` plus `mul_inv_rev`. -/
+noncomputable def permAutHom (C : K) (n : ℕ) :
+    Equiv.Perm (Fin n) →* Aut (∏ᶜ (fun _ : Fin n => C)) where
+  toFun σ := permAutIso C σ⁻¹
+  map_one' := by
+    apply Iso.ext
+    change permAut C (1 : Equiv.Perm (Fin n))⁻¹ = 𝟙 _
+    rw [inv_one, permAut_one]
+  map_mul' σ τ := by
+    apply Iso.ext
+    change permAut C (σ * τ)⁻¹ = permAut C τ⁻¹ ≫ permAut C σ⁻¹
+    rw [permAut_comp, ← mul_inv_rev]
+
+omit [CartesianMonoidalCategory K] in
+@[simp]
+theorem permAutHom_apply_hom (C : K) (n : ℕ) (σ : Equiv.Perm (Fin n)) :
+    ((permAutHom C n) σ).hom = permAut C σ⁻¹ := rfl
 
 end PermAut
 

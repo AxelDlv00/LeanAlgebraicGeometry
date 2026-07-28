@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import Mathlib
 import AlgebraicJacobian.Picard.StableAffineCover
+import AlgebraicJacobian.Albanese.GrpObjFoldSum
 
 /-!
 # The `G`-stable affine cover for a bare finite group action
@@ -44,12 +45,21 @@ direction that should go.
 * `exists_stable_affineOpen_of_orbits` — **the theorem**: under that hypothesis every point
   has a `G`-stable affine open neighbourhood. Prime avoidance puts the orbit in a basic open
   `D(s)` inside `⋂_g g⁻¹U`, and the norm `N = ∏_g g(s)` cuts out a stable affine basic open.
-**No `S_n` instantiation is provided, and that is a real gap, not an omission.** An earlier
-version of this list advertised a `permAction : Equiv.Perm (Fin n) →* Aut (C^n)`; no such
-declaration exists, here or anywhere in the tree, and building it is not free:
-`MonObj.permAut` is a bare *morphism* never shown to be an isomorphism, and
-`SymPowColimit.permEnd` lands in `End`, not `Aut`. So the theorem below is stated at the
-generality `S_n` needs but has **no producer** for it yet — see the scope section.
+* `exists_stable_affineOpen_perm` — **the `S_n` instantiation**: for `C` a `k̄`-scheme, every
+  point of `C^n` has an `S_n`-stable affine open neighbourhood, given the orbit hypothesis.
+
+**Correction (2026-07-29): the `S_n` producer exists and this file's scope note said it did
+not.** Two earlier revisions ran in opposite directions and both were wrong. One advertised a
+`permAction : Equiv.Perm (Fin n) →* Aut (C^n)` that did not exist; the correction then
+recorded building it as blocked, on the grounds that `MonObj.permAut` "is a bare morphism
+never shown to be an isomorphism" and `SymPowColimit.permEnd` "lands in `End`, not `Aut`".
+Both grounds were accurate statements about the tree and the inference from them was not:
+`permAut C σ⁻¹` is a two-sided inverse of `permAut C σ`, because
+`permAut C σ ≫ permAut C τ = permAut C (σ * τ)`. That is `MonObj.permAut_comp`, and the
+action is `MonObj.permAutHom`, both now in `Albanese/GrpObjFoldSum.lean` — four lines, no
+construction. The lesson is the `permEnd` convention: the inverse `permEnd` carries is forced
+by `End`'s reversed multiplication, and reading it as a fact about `permAut` is what made an
+isomorphism look absent.
 
 ## Why the proof needs no averaging, and so no characteristic hypothesis
 
@@ -64,17 +74,16 @@ through averaging would exclude exactly the cases the challenge is stated over.
 a *finite group acting on a scheme by automorphisms*, with no Galois hypothesis and no
 characteristic hypothesis.
 
-**Does not**: apply it to `S_n` acting on `C^n`. An earlier version of this section said it
-did. That was wrong, and the missing piece is named above: there is no
-`Equiv.Perm (Fin n) →* Aut (C^n)` in the tree, because `MonObj.permAut` is not known to be an
-isomorphism. Until that exists, this theorem has the right hypotheses and no producer.
+**Does** now also apply it to `S_n` acting on `C^n` — `exists_stable_affineOpen_perm` below,
+via `MonObj.permAutHom`. See the correction in the main-results list: the two previous
+revisions of this section, in both directions, were wrong about that.
 
-**Also does not**: build the glue data. `HasColimit (permDiagram C g)` remains open and
-`AlbaneseUP.lean`'s six sorries are unchanged. Counting honestly, a glue-data assembly still
-needs *four* things and this file supplies one of them:
+**Does not**: build the glue data. `HasColimit (permDiagram C g)` remains open and
+`AlbaneseUP.lean`'s six sorries are unchanged. Counting honestly, a glue-data assembly needs
+*four* things and this file now supplies two of them:
 
 1. ✓ a `G`-stable affine cover — below;
-2. the `Aut`-valued `S_n`-action just described;
+2. ✓ the `Aut`-valued `S_n`-action — `MonObj.permAutHom`, and its instantiation here;
 3. the identification of the `n`-fold coproduct of algebras with the `n`-fold tensor power,
    matching its permutation action to `PiTensorProduct.permAlgHom` — mathlib has only the
    *binary* case (`Algebra/Category/Ring/Constructions.lean`), and nothing in AJC builds the
@@ -99,7 +108,7 @@ orbit-in-affine hypothesis. The original proof is
 
 set_option autoImplicit false
 
-universe u
+universe w u
 
 open CategoryTheory AlgebraicJacobian.GaloisDescent
 
@@ -107,7 +116,13 @@ namespace AlgebraicGeometry
 
 namespace StableGroupAction
 
-variable {G : Type u} [Group G] [Finite G] {X : Scheme.{u}} (act : G →* Aut X)
+-- The group's universe `w` is **independent** of the scheme's universe `u`. The proof only
+-- ever indexes a `Finset.univ` by `G`, and the underlying prime-avoidance lemma
+-- `exists_basicOpen_le_of_finite` is already polymorphic in its index type (`{ι : Type*}`), so
+-- nothing forces `G : Type u`. Keeping them tied — as the first draft did, copying the Galois
+-- statement where `G = Gal(L/K)` happens to live in `Type u` — makes the theorem inapplicable
+-- to `Equiv.Perm (Fin n) : Type 0`, which is precisely the group the symmetric power needs.
+variable {G : Type w} [Group G] [Finite G] {X : Scheme.{u}} (act : G →* Aut X)
 
 /-- **Orbit-in-affine hypothesis for a bare action** (EGA II 4.5.4): every orbit is contained
 in an affine open. This hypothesis is *essential*, not a convenience — without it the
@@ -221,5 +236,35 @@ theorem exists_stable_affineOpen_of_orbits (h : OrbitsInAffineOpen act) (x : X) 
     · exact Finset.inf_le (Finset.mem_univ (d * tau))
 
 end StableGroupAction
+
+/-! ## The `S_n` instantiation
+
+The theorem above is stated for a bare `G →* Aut X`. The producer for `G = S_n`,
+`X = C^n` is `MonObj.permAutHom` (`Albanese/GrpObjFoldSum.lean`), so the instantiation is
+a one-line application. `Scheme` is cartesian monoidal with finite products
+(`AlgebraicGeometry.Limits`), which is what lets `∏ᶜ (fun _ : Fin n => C)` and `permAut` be
+formed here at all.
+
+This is item 2 of the four-item glue-data bill in the module header, and its being available
+is what makes item 1 consumable rather than free-standing. -/
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
+
+/-- **Every point of `C^n` has an `S_n`-stable affine open neighbourhood.**
+
+The `S_n`-equivariant form of `exists_stable_affineOpen_of_orbits`, obtained by feeding it
+the action `MonObj.permAutHom C n`. The orbit hypothesis is unchanged and still has to be
+supplied for the curve — that is item 4 of the glue-data bill, where quasi-projectivity
+would enter — but the *equivariance* half is now discharged.
+
+Note what is and is not claimed: this gives the stable charts a `Scheme.GlueData` for
+`Sym^n C` would be built on. It does not build that glue data, and `HasColimit
+(permDiagram C n)` remains open. -/
+theorem exists_stable_affineOpen_perm (C : Scheme.{u}) (n : ℕ)
+    (h : StableGroupAction.OrbitsInAffineOpen (MonObj.permAutHom C n))
+    (x : (∏ᶜ (fun _ : Fin n => C) : Scheme.{u})) :
+    ∃ U : (∏ᶜ (fun _ : Fin n => C) : Scheme.{u}).Opens,
+      IsAffineOpen U ∧ x ∈ U ∧ StableGroupAction.IsStableOpen (MonObj.permAutHom C n) U :=
+  StableGroupAction.exists_stable_affineOpen_of_orbits (MonObj.permAutHom C n) h x
 
 end AlgebraicGeometry
