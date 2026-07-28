@@ -18,7 +18,8 @@ the object the human decision of 2026-07-28 is about.
 ## Why this is strictly weaker than the old predicate, which is the whole point
 
 `FinCoverData.toAffCoverData` (`DivisorFamilyAffCover.lean`) turns every old cover datum into
-a widened one, so `isLocallyCertifiedAff_of_isLocallyCertified` holds: anything the old
+a widened one, and `DivisorFamilyAffCompare.lean` migrates the CERTIFICATE on top of it, so
+`isLocallyCertifiedAff_of_isLocallyCertified` holds: anything the old
 predicate certified, the new one certifies.  The converse fails, and its failure is exactly
 the content of R2 — a divisor straddling both pinned vertical fibres has no chart-typed
 certificate (`informal/spec-dd-r.md` ADDENDUM 4 §4.3, on-stratum witness at every `g ≥ 2`)
@@ -33,9 +34,10 @@ ARBITRARY field, with no `|P¹(k)| ≥ n + 2` hypothesis anywhere — the field-
 * **(i) fibrewise-finite support.** NOT a field of anything here.  It is not implied by
   what a `LocalEquations` carries (`d.eqn ≡ r` for a non-unit `r ∈ R` is germ-regular with a
   whole fibre curve in its support), so it must come from the seed's own degree data.  It
-  enters as an explicit hypothesis at the point of use, never as carrier data — see
-  `IsFibrewiseFiniteSupport` below, which is a *statement to be supplied*, deliberately not
-  bundled.
+  enters as an explicit hypothesis at the point of use, never as carrier data: concretely as
+  the `hfib` argument of `AffAdaptation.isCertified_of_swallowedBy`
+  (`DivisorFamilyAffAssemble.lean`) and as `AffCoverData.SwallowedBy`
+  (`DivisorFamilyAffSwallow.lean`).  Neither is a field of anything in this file.
 * **(ii) what the fixed-pair confinement was silently supplying.** Discharged in
   `DivisorFamilyAffCover.lean` (`exists_mem_pieces` from the joint cover,
   `flat_sections_pieces` from the flat structure morphism) and in
@@ -46,10 +48,11 @@ ARBITRARY field, with no `|P¹(k)| ≥ n + 2` hypothesis anywhere — the field-
 * `AlgebraicGeometry.CertifiedDivisorFamilyAff` — a certified family over a widened cover.
 * `AlgebraicGeometry.IsLocallyCertifiedAff` — the widened locally-certified predicate.
 * `IsLocallyCertifiedAff.of_divEq` — it respects divisor equality.
-* `AlgebraicGeometry.isLocallyCertifiedAff_of_isLocallyCertified` — the old predicate implies
-  the new one (via the cover migration); the converse is what R2 buys and is FALSE.
-* `AlgebraicGeometry.DivFamZarAff` — the widened functor value, with `mk`, `mk_eq_mk_iff`,
-  `picClass`, and the comparison `DivFamZar.toAff`.
+* `AlgebraicGeometry.DivFamZarAff` — the widened functor value, with `mk`, `mk_eq_mk_iff`
+  and `picClass`.
+
+The comparison with the chart-typed predicate — `isLocallyCertifiedAff_of_isLocallyCertified`
+and `DivFamZar.toAff` — is in `DivisorFamilyAffCompare.lean`, which imports this file.
 * `AlgebraicGeometry.isLocallyCertifiedAff_of_forall_prime_exists_away` — the pointwise gate,
   one base point at a time, over the widened predicate.
 -/
@@ -128,19 +131,18 @@ theorem IsLocallyCertifiedAff.of_divEq {n : ℕ} {d d' : (relCurve C R).LocalEqu
 sorry-free, and the adaptation's equations and `eqn_rel` transport with it because the pieces
 are literally the same opens, only reindexed along `finSumFinEquiv`.
 
-What is NOT yet landed is the migration of the CERTIFICATE, and the reason is worth stating
-precisely rather than hiding behind a `sorry`: clauses (c2)/(c3)/(c4) are statements about
-`gluedSubmodule`, a kernel inside `∀ j : index, colength j`, so migrating them means
-transporting an equalizer along the index equivalence `Fin m₀ ⊕ Fin m₁ ≃ Fin (m₀ + m₁)`.
-Clauses (c1) transport pointwise and are free; the glued clauses need a
-`LinearEquiv.piCongrLeft`-style transport that commutes with `deltaLeft`/`deltaRight`, plus
-`Module.rankAtStalk` invariance along it.  That is ordinary work of about a hundred lines and
-it is the next obligation on this lane, NOT a mathematical gap: no clause changes, only the
-index does.
+The migration of the CERTIFICATE is landed too, in `DivisorFamilyAffCompare.lean`
+(`DivisorAdaptation.isCertified_toAff`, all seven clauses).  Clauses (c1) are `rfl` at the
+relabelled index; the glued clauses (c2)/(c3)/(c4) transport along `LinearEquiv.piCongrLeft`
+in its `symm` direction, which evaluates cast-free, so the intertwining with
+`deltaLeft`/`deltaRight` is componentwise and `Module.rankAtStalk` invariance is
+`rankAtStalk_eq_of_equiv`.  No clause changes, only the index does.
 
-Nothing downstream needs it to proceed — the widened predicate, its quotient, and the
-pointwise gate below are all independent of the comparison.  It matters only for reusing a
-chart-typed certificate that some other lane already produced. -/
+A predecessor docstring here estimated that transport at about a hundred lines of equalizer
+bookkeeping.  That was wrong by an order of magnitude and the reason generalises: arrange the
+reindexed cover so its pieces are DEFINITIONALLY the original pieces at the relabelled index,
+and the overlap data at `(i, j)` becomes `rfl`-equal to the original at `(e i, e j)`, because
+reindexing acts diagonally on the pair index.  Then no intertwining lemma exists to prove. -/
 
 /-! ## The widened functor value -/
 
