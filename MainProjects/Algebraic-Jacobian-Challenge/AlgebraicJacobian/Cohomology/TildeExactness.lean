@@ -42,27 +42,31 @@ For `X = Spec R`, the tilde functor `~ : ModuleCat R ⥤ (Spec R).Modules`,
   and `(Spec R).Modules` has finite limits), `~` preserves finite limits as soon as the composite
   `~ ⋙ toPresheaf` does.  This is `Limits.preservesFiniteLimits_of_reflects_of_preserves`.
 
-## Why `tildePreservesFiniteLimits` itself is NOT closed here
+## `tildePreservesFiniteLimits` is CLOSED (run 0068)
 
-The mathematical route (blueprint `lem:tilde_preserves_kernels`) is stalkwise flatness.  The
-**categorical-glue obstruction is FALSE** — `tildePreservesFiniteLimits_of_toPresheaf` (above)
-discharges it via `preservesFiniteLimits_of_reflects_of_preserves`; no "right-exact + mono ⟹
-left-exact" lemma is needed.  The single remaining gap is the **stalkwise localisation step**:
-showing the composite `~ ⋙ Scheme.Modules.toPresheaf` preserves finite limits.  Stalkwise this is
-exactly localisation-is-flat:
-* The `Ab`-germ-induced stalk map of `~f` is identified on the image of `toStalk` with the localised
-  map of `f` by `tilde_stalkFunctor_map_toStalk`; and the localised map is injective
-  (`tilde_toStalk_map_injective`).
-* What still has to be built (~100–150 LOC): upgrade this to a full stalkwise *isomorphism* of the
-  kernel-comparison map.  Concretely, (a) prove the `Ab` stalk map is `R`-linear (via `germₗ` +
-  `R`-linearity of `Scheme.Modules.Hom.app`) so it equals `IsLocalizedModule.map …`, then (b)
-  feed `∀ x, PreservesFiniteLimits (~ ⋙ toPresheaf ⋙ stalkFunctor x)` through a jointly-reflecting
-  stalk family (`CategoryTheory.JointlyReflectIsomorphisms.jointlyReflectsLimit`) to obtain
-  `PreservesFiniteLimits (~ ⋙ toPresheaf)`, then `tildePreservesFiniteLimits_of_toPresheaf`.
-  The `ModuleCat R`-valued stalk path is dead (Mathlib privacy of `toStalkₗ'`, `stalkIsoₗ`,
-  `stalkToLocalizationₗ`, `structurePresheafInModuleCat`); use the public `Ab` path throughout.
+The named target of this file is proved, and **not** by the stalk route this header used to
+prescribe.  §2 does it over **basic opens** instead:
 
-See `task_results/AlgebraicJacobian.Cohomology.TildeExactness.md` for the precise next steps.
+* basic opens are a basis of `Spec R` (`PrimeSpectrum.isBasis_basic_opens`), and over `D(r)` the
+  sections of `M^~` are, *in Mathlib already*, a localisation of `M` at the powers of `r` —
+  `AlgebraicGeometry.tilde.toOpen` carries an `IsLocalizedModule.Away` instance;
+* so the section map of `~f` over `D(r)` **is** `IsLocalizedModule.map` of `f` (`sectMapₗ_eq`, by
+  `IsLocalizedModule.ext` against the naturality square `tilde.toOpen_map_app`), and it is
+  injective because localisation is flat (`IsLocalizedModule.map_injective`);
+* basis injectivity gives stalkwise injectivity, hence mono, which `toPresheaf` reflects —
+  `tilde_preservesMonomorphisms`;
+* right exactness is free (left adjoint), and for an additive functor between abelian categories
+  right exact + mono-preserving ⟹ left exact — `tildePreservesFiniteLimits`, with
+  `tilde_preservesHomology` for the two halves together.
+
+Two things the earlier plan got wrong, recorded because they cost the estimate: the stalk
+*colimit* was never needed (the basis check happens before any stalk is formed), and the
+"jointly-reflecting stalk family" step does not appear at all.  The `Ab`-vs-`ModuleCat` privacy
+problem the header worried about is likewise irrelevant on this route — the `R`-linearity that
+matters is on *sections*, where `Scheme.Modules.Hom.app_smul` supplies it directly (`sectMapₗ`).
+
+The §1 stalk material is retained: it is the same mathematics at a point, and
+`stalkMapₗ_injective` is still the sharpest per-point statement.
 -/
 
 universe u
@@ -227,5 +231,122 @@ theorem stalkMapₗ_injective {M N : ModuleCat R} (f : M ⟶ N) (hf : Function.I
     (x : PrimeSpectrum.Top R) : Function.Injective (stalkMapₗ f x) := by
   rw [stalkMapₗ_eq]
   exact tilde_toStalk_map_injective f hf x
+
+/-! ## §2. `tildePreservesFiniteLimits`, CLOSED — via basic opens rather than stalks
+
+The plan sketched in the header above (upgrade the *stalk* maps to a jointly-reflecting family)
+is not the cheapest route and is not the one taken.  Basic opens are already a basis of
+`Spec R`, and over a basic open `D(r)` the sections of `M^~` are *by Mathlib* a localisation of
+`M` at the powers of `r` (`AlgebraicGeometry.tilde.toOpen` carries an
+`IsLocalizedModule.Away` instance).  So the whole argument is one basis-local injectivity check
+whose content is `IsLocalizedModule.map_injective` — localisation is flat — with no stalk
+colimit anywhere.  The stalk material of §1 is retained: it is the same mathematics at a point,
+and `stalkMapₗ_injective` remains the sharpest per-point statement.
+
+Three steps: package the section map as `R`-linear (`sectMapₗ`), identify it with the localised
+map (`sectMapₗ_eq`, by `IsLocalizedModule.ext` — both agree after `toOpen`, which is the
+localisation map), and conclude. -/
+
+section BasicOpen
+
+variable {M N : ModuleCat.{u} R}
+
+/-- **The section map of `~f` over a basic open, as an `R`-linear map.**  `Scheme.Modules.Hom.app`
+is `Γ(Spec R, D(r))`-linear; restricting scalars along `algebraMap R Γ(Spec R, D(r))` makes it
+`R`-linear, which is what the localisation API needs.  Companion of the stalk-level `stalkMapₗ`;
+project-local for the same reason (the `ModuleCat R`-valued section functor is not exported). -/
+noncomputable def sectMapₗ (f : M ⟶ N) (r : R) :
+    Γ((tilde.functor R).obj M, PrimeSpectrum.basicOpen r) →ₗ[R]
+      Γ((tilde.functor R).obj N, PrimeSpectrum.basicOpen r) where
+  toFun := (Scheme.Modules.Hom.app ((tilde.functor R).map f) (PrimeSpectrum.basicOpen r))
+  map_add' a b := map_add _ a b
+  map_smul' c x := by
+    dsimp only [RingHom.id_apply]
+    exact Scheme.Modules.Hom.app_smul ((tilde.functor R).map f)
+      (U := PrimeSpectrum.basicOpen r)
+      (algebraMap R Γ(Spec (CommRingCat.of R), PrimeSpectrum.basicOpen r) c) x
+
+/-- **The section map over `D(r)` IS the localisation of `f` at the powers of `r`.**  Both are
+`R`-linear maps out of `Γ(M^~, D(r))`, which `tilde.toOpen M (D r)` exhibits as a localisation
+of `M`; they agree after precomposition with `toOpen` — that is exactly the naturality square
+`tilde.toOpen_map_app` — so `IsLocalizedModule.ext` identifies them.  Project-local; the
+section-level analogue of `stalkMapₗ_eq`. -/
+theorem sectMapₗ_eq (f : M ⟶ N) (r : R) :
+    sectMapₗ f r = IsLocalizedModule.map (Submonoid.powers r)
+      (tilde.toOpen M (PrimeSpectrum.basicOpen r)).hom
+      (tilde.toOpen N (PrimeSpectrum.basicOpen r)).hom f.hom := by
+  apply IsLocalizedModule.ext (Submonoid.powers r)
+    (tilde.toOpen M (PrimeSpectrum.basicOpen r)).hom
+    (fun s => IsLocalizedModule.map_units (tilde.toOpen N (PrimeSpectrum.basicOpen r)).hom s)
+  ext x
+  show sectMapₗ f r ((tilde.toOpen M (PrimeSpectrum.basicOpen r)).hom x)
+      = IsLocalizedModule.map (Submonoid.powers r)
+        (tilde.toOpen M (PrimeSpectrum.basicOpen r)).hom
+        (tilde.toOpen N (PrimeSpectrum.basicOpen r)).hom f.hom
+        ((tilde.toOpen M (PrimeSpectrum.basicOpen r)).hom x)
+  rw [IsLocalizedModule.map_apply]
+  exact congrArg (fun (m : M ⟶ _) => m.hom x) (tilde.toOpen_map_app f (PrimeSpectrum.basicOpen r))
+
+/-- **`~` is injective on sections over every basic open**, for an injective `f`: by
+`sectMapₗ_eq` the section map is the localisation of `f` at the powers of `r`, and localisation
+preserves injectivity (`IsLocalizedModule.map_injective` — this is flatness of `R → R_r`). -/
+theorem tilde_injective_app_basicOpen (f : M ⟶ N) (hf : Function.Injective f.hom) (r : R) :
+    Function.Injective
+      (Scheme.Modules.Hom.app ((tilde.functor R).map f) (PrimeSpectrum.basicOpen r)) := by
+  have hloc := sectMapₗ_eq f r
+  have hinj : Function.Injective (IsLocalizedModule.map (Submonoid.powers r)
+      (tilde.toOpen M (PrimeSpectrum.basicOpen r)).hom
+      (tilde.toOpen N (PrimeSpectrum.basicOpen r)).hom f.hom) :=
+    IsLocalizedModule.map_injective _ _ _ _ hf
+  rw [← hloc] at hinj
+  exact hinj
+
+end BasicOpen
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **`~` preserves monomorphisms** (Stacks 01HV, the mono half of exactness of the tilde
+functor).  Basic opens are a basis of `Spec R` (`PrimeSpectrum.isBasis_basic_opens`), over each
+of them `~f` is the localisation of `f` (`tilde_injective_app_basicOpen`), so basis injectivity
+gives stalkwise injectivity, hence monomorphy of the underlying `Ab`-sheaf morphism, which the
+faithful `Scheme.Modules.toPresheaf` reflects. -/
+theorem tilde_preservesMonomorphisms : (tilde.functor R).PreservesMonomorphisms where
+  preserves {M N} f hf := by
+    haveI := hf
+    have hinj : Function.Injective f.hom := (ModuleCat.mono_iff_injective f).mp hf
+    have happ : ∀ U ∈ Set.range (fun r : R => PrimeSpectrum.basicOpen r),
+        Function.Injective ((((Scheme.Modules.toPresheaf (Spec (.of R))).map
+          ((tilde.functor R).map f)).app (Opposite.op U))) := by
+      rintro U ⟨r, rfl⟩
+      exact tilde_injective_app_basicOpen f hinj r
+    let MS : TopCat.Sheaf Ab.{u} (Spec (.of R)) :=
+      ⟨((tilde.functor R).obj M).presheaf, ((tilde.functor R).obj M).isSheaf⟩
+    let NS : TopCat.Sheaf Ab.{u} (Spec (.of R)) :=
+      ⟨((tilde.functor R).obj N).presheaf, ((tilde.functor R).obj N).isSheaf⟩
+    let fS : MS ⟶ NS :=
+      ⟨(Scheme.Modules.toPresheaf (Spec (.of R))).map ((tilde.functor R).map f)⟩
+    haveI : ∀ x, Mono ((TopCat.Presheaf.stalkFunctor Ab.{u} x).map fS.1) := fun x =>
+      (AddCommGrpCat.mono_iff_injective _).mpr
+        (TopCat.Presheaf.stalkFunctor_map_injective_of_isBasis
+          PrimeSpectrum.isBasis_basic_opens happ x)
+    haveI hmS : Mono fS := TopCat.Presheaf.mono_of_stalk_mono fS
+    haveI : Mono ((Scheme.Modules.toPresheaf (Spec (.of R))).map ((tilde.functor R).map f)) :=
+      (CategoryTheory.Sheaf.Hom.mono_iff_presheaf_mono _ _ fS).mp hmS
+    exact (Scheme.Modules.toPresheaf (Spec (.of R))).mono_of_mono_map ‹_›
+
+/-- **`~` is left exact** (Stacks 01HV; blueprint `lem:tilde_preserves_kernels`) — the named
+target of this file, CLOSED.  `~` is additive and right exact (`tilde_preservesFiniteColimits`,
+being a left adjoint) and preserves monomorphisms (`tilde_preservesMonomorphisms`); for an
+additive functor between abelian categories those two force left exactness. -/
+theorem tildePreservesFiniteLimits : PreservesFiniteLimits (tilde.functor R) := by
+  haveI := tilde_preservesMonomorphisms (R := R)
+  rw [(tilde.functor R).preservesFiniteLimits_iff_forall_exact_map_and_mono]
+  intro T hT
+  have := hT.mono_f
+  exact ⟨hT.exact.map_of_epi_of_preservesCokernel _ hT.epi_g inferInstance, inferInstance⟩
+
+/-- **`~` is exact** (Stacks 01HV), both halves together. -/
+theorem tilde_preservesHomology : (tilde.functor R).PreservesHomology :=
+  haveI := tildePreservesFiniteLimits (R := R)
+  Functor.preservesHomologyOfExact _
 
 end AlgebraicGeometry
