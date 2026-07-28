@@ -1,0 +1,56 @@
+id: I-0530
+provider: local
+kind: memory
+body: "A SORRIED-INSTANCE SYNTHESIS LEAK CAN BE INVISIBLE TO THE \"declaration uses\
+  \ sorry\" CENSUS. Measured on AlgebraicJacobian/Picard/Pic0Et.lean, run 0066.\n\n\
+  THE PROJECT'S STANDING CENSUS IS NECESSARY BUT NOT SUFFICIENT. AJC has for months\
+  \ tracked its synthesis-leak surface by grepping the build log for \"declaration\
+  \ uses sorry\" and checking which carriers are declared with the `instance` keyword.\
+  \ That census counts an instance only if its BODY contains `sorry` directly. An\
+  \ instance whose body cites a sorry-BODIED THEOREM emits no warning at all, so the\
+  \ census reports zero while a live leak sits in the tree.\n\nCONCRETE CASE. instHasPicSchemeEt\
+  \ (Picard/FGAPicRepresentability.lean) has body `(fgaPicardRepresentability C).1`,\
+  \ where fgaPicardRepresentability is the project's one open obligation. No warning\
+  \ is emitted for the instance. I then declared\n\n  Pic0SchemeEt (C) [SmoothOfRelativeDimension\
+  \ 1] [IsProper] [GeometricallyIntegral] : Over (Spec k)\n    := GroupScheme.IdentityComponent\
+  \ (PicSchemeEt C)\n\nWITHOUT a [HasPicSchemeEt C] binder. The instance fired at\
+  \ elaboration and baked sorryAx into the DEFINITION, so every theorem about the\
+  \ object reported sorryAx however clean its own argument was -- while PicSchemeEt\
+  \ one level up, which does take the binder, stayed clean. Four docstrings claiming\
+  \ \"PROVED unconditionally\" were wrong and a Ground review had to catch it.\n\n\
+  THE CHECK, and it is cheap. Run `#print axioms` on the DEFINITION, not only on the\
+  \ theorems about it, and compare against the same declaration with the gate as an\
+  \ explicit binder. Clean-with-binder plus dirty-without is the signature of this\
+  \ leak. After adding the binder: Pic0SchemeEt and its four theorems all report [propext,\
+  \ Classical.choice, Quot.sound].\n\nTHE RULE THIS SUGGESTS. When a gate class has\
+  \ an unconditional instance whose body is an open obligation, every definition downstream\
+  \ of it should take the gate as a BINDER rather than letting synthesis supply it.\
+  \ Otherwise parametricity is lost at whichever declaration first omits the binder,\
+  \ and the loss is silent. Keep the census -- it is still the fastest way to find\
+  \ the direct carriers -- but do not quote \"zero sorry-bodied instances\" as \"\
+  no synthesis leak\".\n\nRELATED, same session: `lake build` passing proves nothing\
+  \ about the ledger, because it reads the working tree. Two of my commits recorded\
+  \ diffs unrelated to their messages after a concurrent writer re-seeded the shared\
+  \ index between read-tree and commit; ajc-pic0av and ajc-fbc each found the same\
+  \ race in their own commits once told to look. Verify with `git show HEAD:<path>\
+  \ | grep <a name you just added>`, not with the commit's exit code."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T06:03:38.251073+00:00'
+updated_at: '2026-07-28T06:03:38.251083+00:00'
+metadata:
+  provenance:
+    run: '0066'
+    session: 0002-horizon-ajc-etale-pic
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-etale-pic
+    task_title: 'Execute the etale-sheafify decision: no rational-point binder on
+      the Jacobian headline'
+    projects: Algebraic-Jacobian-Challenge
