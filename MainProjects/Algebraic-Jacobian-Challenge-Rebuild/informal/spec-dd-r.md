@@ -1067,3 +1067,99 @@ where the Stacks `0B8B` input enters.  Obligation 4(i) is at least now readable 
 owes it: `AffAdaptation.eqn_tmul_one_mem_nonZeroDivisors_iff` (`09396353c`) restates the tensor
 condition as regularity of the pulled equation **on the fibre curve over `κ(p)`**, which is the
 vocabulary the seed layer speaks.
+
+> **SUPERSEDED IN PART by ADDENDUM 7 (same day):** obligation 4(i) is no longer owed — it is
+> discharged from the seed. Read item 5 as history for `hfib`; the `SwallowedBy` half stands.
+
+## ADDENDUM 7 (2026-07-28, run 0070 session 0008) — obligation 4(i) is DISCHARGED, and the residue is ONE statement (BINDING)
+
+ADDENDUM 6 item 5 listed two owed obligations. One of them was never an obligation of the
+*widened* layer at all, and the reason is worth stating because it generalises past this lane.
+
+### 7.1 The discharge, and why it was available
+
+`ThetaGeneratorSeed.affAdaptation_fibre_regular` (`Picard/DivisorFamilyAffFibre.lean`,
+`5e77976f4`) supplies `hfib` for **every** `AffCoverData` and **every** `AffAdaptation` over it:
+
+```
+affAdaptation_fibre_regular (hD : D.IsGenerator) (Dc : AffCoverData C R)
+  (A : AffAdaptation Dc (D.localEquations hD)) (j) (p) :
+  A.eqn j ⊗ 1 ∈ nonZeroDivisors (Γ(Dc.pieces j) ⊗_R κ(p))
+```
+
+The chart-typed lane discharges its own `hfib` through
+`DivisorAdaptation.eqn_tmul_one_mem_nonZeroDivisors_of_seed`, and the natural reading is that
+this is chart machinery. **It is not.** Trace what it consumes: it bottoms out at
+`ThetaGeneratorSeed.germ_self_pullbackEqn_mem_nonZeroDivisors`, whose *statement* mentions the
+local-equation system `d`, the fibre curve over `κ(p)`, and nothing else — no cover, no pieces,
+no chart, no partition of unity. It says: *the pulled system equation is regular at its own
+point*. That is a property of the seed and the fibre.
+
+Everything the chart-typed layer adds on top of it is the comparison
+
+> pulled *piece* equation = unit × pulled *system* equation,
+
+and `eqn_rel` — a field of `AffAdaptation` just as much as of `DivisorAdaptation` — is the whole
+content of that comparison. So the piece enters only through `eqn_rel` and the affine germ seam,
+and an arbitrary affine open supplies both. Obligation 4(i) was never chart-typed; it merely
+*looked* it, because the only existing discharge sat in a chart-typed file.
+
+### 7.2 The orientation asymmetry, which is why the existing lemma could not be reused
+
+`AffAdaptation.germ_pullbackEqn_mem_nonZeroDivisors` (`…AffBaseChange.lean`) runs the same
+decomposition and is **useless here**, because it takes the pulled piece equation as an *input*
+and therefore costs `Module.Projective R (A.colength j)` — which is (c1)-projectivity, i.e. what
+`hfib` is supposed to produce. Reversed
+(`AffAdaptation.exists_germ_pulledEqn_eq_unit_mul_pullbackEqn`) the piece equation is the
+*conclusion's* subject and no projectivity is needed. Generalisable form: when a comparison
+lemma is stated in the direction that consumes the datum you want to produce, re-prove it in the
+other orientation rather than trying to satisfy its hypotheses.
+
+### 7.3 The rank datum reduced too, and this was not planned
+
+`hrank` was stated about the **glued** module over the whole cover, while a degree statement is
+about the divisor — which on a straddling cover lives inside the swallowing piece. On such a
+cover the difference arrow vanishes identically, so `Glued ≃ chartProd`
+(`gluedEquivChartProd_of_swallowedBy`); `Module.rankAtStalk_pi` splits the product; and every
+non-swallowing colength is **subsingleton**
+(`subsingleton_colength_of_disjoint_supportLocus`), hence free, hence flat, with empty
+`Module.support`, hence rank `0`. `finsum_eq_single` finishes:
+
+```
+rankAtStalk_glued_eq_of_swallowedBy : rankAtStalk A.Glued p = rankAtStalk (A.colength j₀) p
+isCertified_of_swallowedBy_of_c1_of_rank_piece   -- the assembler with the one-piece datum
+```
+
+(`Picard/DivisorFamilyAffRank.lean`, `81c17f256`.) Non-vacuity is *checked* — trap (c) of
+`I-0442` — by `rankAtStalk_colength_eq_zero_of_supportLocus_empty`, not assumed.
+
+One technical note: `rw` cannot rewrite under `Module.rankAtStalk A.chartProd`, because the
+target is not type-correct at `instances` transparency (`chartProd` unfolds through the
+section-ring algebra instances — the same shape as the `Submodule.comap` trap recorded in
+`Picard/DivisorFamilyAffReindex.lean`). Assemble the equalities as `have`s and close with
+`.trans`.
+
+### 7.4 The endpoint, COMPOSED rather than asserted
+
+`exists_isCertified_of_seed_of_swallowing_affineOpen`
+(`Picard/DivisorFamilyAffSeedEndpoint.lean`, `46d751465`):
+
+```
+(hD : D.IsGenerator) (hW : IsAffineOpen W) (hsub : supp d ⊆ W)
+  (hWle : W ≤ d.cover.opens z₀) (hrank : rank of the SWALLOWING colength = n)
+  : ∃ Dc A, A.IsCertified n
+```
+
+`hfib` is gone; `hproj` is gone as a hypothesis and **derived** inside, since the discharged
+fibrewise datum feeds `projective_colength_of_forall_tmul_residueField`. The file exists rather
+than a prose note precisely because ADDENDUM 6's session learned that a producer and a consumer
+can each be correct and still not compose — `AffAdaptation` needs *subordination*, and bare
+containment does not give it. Composition is checked by the elaborator here.
+
+### 7.5 What is left
+
+**Exactly one statement:** the subordinate Stacks `0B8B` input — an affine open `W` containing
+`supp D` and contained in one member of `d.cover`. I-0492 clause 2 directs the lane to USE it,
+not re-derive it; mathlib has no form of `0B8B` and this tree constructs no curve but `P¹`. The
+degree datum `hrank` is not a *missing* input in the same sense: it is the honest content of
+"the divisor has degree `n`", and it is now stated at the one affine open where the divisor is.
