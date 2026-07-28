@@ -46,15 +46,28 @@ order-cone peel to `D₀' ≤ D`.  Done — and note this is *exactly* the cofin
   and it is a *degree* half-space, not an order-cone.
 * `exists_bound_subsingleton_hModule_one` — the `∃ b, ∀ D, b ≤ deg D → …` shape, which is the
   form downstream consumers ask for.
+* `subsingleton_hModule_one_sub_divOf` — the invariance step on its own: `H¹` vanishing
+  transports along `𝒪(A) ≅ 𝒪(A − div g)`.  This is the lemma that makes the whole file work and
+  it needs no finiteness, being a transport of a `Subsingleton` along an isomorphism.
+* `h1_eq_zero_of_deg_ge`, `deg_lt_of_not_subsingleton` — the `h¹`-spelling of the headline, and
+  its contrapositive: a *non*-vanishing `H¹` forces `deg D < deg D₀ + 1 − χ(𝒪_X)`, so
+  non-vanishing is a bounded-degree phenomenon.
 * `subsingleton_of_h1_eq_zero`, `subsingleton_hModule_one_of_deg_ge_of_h1_eq_zero` — the entry
   point for a caller holding the base vanishing in the *numeric* `h¹ = 0` spelling plus
   finiteness of that `H¹`.  The `Subsingleton` form stays primitive throughout, because `h¹ = 0`
   alone is vacuous on an infinite-dimensional `H¹`; these only convert where finiteness is in
   hand, which is where a genus computation puts it.
-* `h0_eq_of_deg_ge`, `riemann_roch_of_deg_ge` (★★) — **exact Riemann–Roch above a degree
-  bound**: `h⁰(𝒪(D)) = χ(𝒪_X) + deg D`, and its curve spelling
-  `h⁰(𝒪(D)) = 1 − genus + deg D` is `RiemannRochCurve.lean`'s business, not this file's.
-* `deg_ge_one_sub_chi_of_no_sections`, `subsingleton_of_deg_ge_of_zero` — the specialisation
+* `h0_eq_of_deg_ge`, `exists_bound_h0_eq` (★★) — **exact Riemann–Roch above a degree bound**:
+  `h⁰(𝒪(D)) = χ(𝒪_X) + deg D`, in explicit-bound and existential forms.  The curve spelling
+  `h⁰(𝒪(D)) = 1 − genus + deg D` is not declared here; it is `χ(𝒪_C) = 1 − ledgerGenus C`
+  (`Ledger/ChiCurve.chi_moduleKSheaf`) substituted into the above, and the substituted form is
+  exercised by `probe_rr_deg_ge_curve` in `scripts/ajcrr-degreevanishing-axioms.lean`.
+* `h0_eq_h0_sub_point_add_residueDeg_of_deg_ge` — the section drop becomes **exact** above the
+  bound: every further point contributes its full residue degree.
+* `surjective_hModule_zero_devissageπ`, `surjective_eval_of_deg_ge`, `generated_of_deg_ge`
+  (★★) — **global generation**, cluster-P item 3: evaluation `H⁰(𝒪(D)) → H⁰(sky_x J) ≅ κ(x)` is
+  surjective at every closed point above the bound.  Off the six-term slice, with no finiteness.
+* `subsingleton_of_deg_ge_of_zero`, `subsingleton_of_deg_ge_of_moduleKSheaf` — the specialisation
   to `D₀ = 0`, whose base vanishing is `H¹(𝒪_X) = 0`, and which therefore fires exactly on the
   curves of genus zero.  Recorded to make the *shape* of the input honest.
 
@@ -86,11 +99,23 @@ This file closes exactly one of the three, and it is worth being blunt about whi
    `deg D₀ + 1 − χ(𝒪_X)` to be controlled *along base change*, and `χ` is exactly what base
    change is not known to preserve here.  Do not read `exists_bound_subsingleton_hModule_one`
    as uniform: its `b` depends on `X`, `K` and `D₀`.
-3. **Global generation — UNTOUCHED.** No evaluation map appears in this file.
-   `h0_eq_of_deg_ge` is a statement about *dimensions*; generation is surjectivity of
-   `H⁰(𝒪(D)) → κ(x)`, which is a different assertion and is not implied by any dimension
-   count here.  (`Adelic/GlobalGeneration.lean` has the bridge on the *adelic* carrier, gated
-   on `hledger` and two vanishings; nothing here transports it.)
+3. **Global generation — ALSO CLOSED HERE, on the same one base vanishing.**  An earlier
+   version of this docstring said generation was untouched "because no evaluation map appears
+   in this file".  That was a claim about the *file*, not about the *carrier*, and it was the
+   same mistake as item 1's: the carrier does supply an evaluation map, namely the dévissage
+   quotient `𝒪(D) ↠ sky_x J`.  Its `H⁰` is `H⁰(𝒪(D)) → H⁰(sky_x J) ≅ J ≅ κ(x)` — evaluation at
+   `x` up to the identification — and the six-term slice makes its surjectivity follow from
+   `H¹(𝒪(D − x)) = 0`, which above the degree bound is a theorem.  See
+   `surjective_eval_of_deg_ge` and `generated_of_deg_ge`.
+
+   Two things worth keeping straight.  First, this is generation *at a closed point*, and
+   `generated_of_deg_ge` is the same statement quantified over points — that is what "generated
+   by global sections" means here; no coherent-sheaf generation vocabulary is introduced.
+   Second, it is **not** the dimension count: `h0_eq_h0_sub_point_add_residueDeg_of_deg_ge` is
+   the numerical shadow of generation and is proved separately, and neither implies the other
+   without the exactness input.  Note also that the slice route needs **no finiteness at all**,
+   whereas `Adelic/GlobalGeneration.evalMap_surjective` needs two `Module.Finite` binders and
+   two ledger hypotheses, because it proves surjectivity by comparing dimensions.
 -/
 
 set_option autoImplicit false
@@ -360,6 +385,84 @@ theorem subsingleton_of_deg_ge_of_moduleKSheaf
     haveI := h₀
     (Sheaf.HModule.mapEquiv (Scheme.divisorSheafZeroIso K (X := X)) 1).toEquiv.subsingleton
   exact subsingleton_of_deg_ge_of_zero K hzero D hD
+
+/-! ## Global generation: evaluation is surjective above the bound
+
+Cluster-P item 3.  Read the module docstring's item 3 first, then this: the *original* version
+of this file claimed generation was untouched here, on the ground that "no evaluation map
+appears".  That was a statement about the file, not about the carrier, and the carrier does
+supply one — the dévissage quotient map.
+
+`H⁰(𝒪(D)) → H⁰(sky_x J)` is the third slot of the six-term slice, and `H⁰(sky_x J) ≅ J ≅ κ(x)`
+by `skyModuleGammaEquiv` and `jumpEquivResidueField`.  So that map **is** evaluation at `x`, up
+to the identification, and `ChiSlice.exact_map_g_delta` makes its surjectivity equivalent to the
+vanishing of the connecting map into `H¹(𝒪(D − x))`.  One sufficient condition is therefore
+`H¹(𝒪(D − x)) = 0` — which above the degree bound is a theorem, not a hypothesis.
+
+This is genuinely *generation at a point*, and it is weaker than "𝒪(D) is generated by global
+sections" only in that the latter is the statement for all `x` at once, which is the same
+theorem quantified (`generated_of_deg_ge` below). -/
+
+section GlobalGeneration
+
+omit [LocallyOfFiniteType (X ↘ Spec (CommRingCat.of K))]
+  [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 0)]
+  [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 1)] in
+/-- **Evaluation at a closed point is surjective when `H¹` vanishes below**: the dévissage
+quotient map `H⁰(𝒪(D)) → H⁰(sky_x J)` is onto as soon as `H¹(𝒪(D − x)) = 0`.
+
+The proof is the slice, not a computation: exactness at `H⁰(X₃)` says the image of this map is
+the kernel of the connecting `δ : H⁰(X₃) → H¹(X₁)`, and `X₁ = 𝒪(D − x)` has no `H¹`, so that
+kernel is everything.  No finiteness is used — surjectivity is not a dimension count, which is
+why this carries no `Module.Finite` binder (contrast `Adelic/GlobalGeneration.evalMap_surjective`,
+which goes through equal finite dimensions and so needs two, plus two ledger hypotheses).  The
+linter confirms it: three ambient binders are unused here and are omitted, `LocallyOfFiniteType`
+among them. -/
+theorem surjective_hModule_zero_devissageπ {x : X} (hx : x ≠ genericPoint X)
+    (D : X.CurveDivisor)
+    (h : Subsingleton (Sheaf.HModule (X.divisorSheaf K (D - CurveDivisor.single hx 1)) 1)) :
+    Function.Surjective
+      (Sheaf.HModule.map (devissageSES K hx D).g 0) := by
+  intro y
+  haveI hsub : Subsingleton (Sheaf.HModule (devissageSES K hx D).X₁ 1) := h
+  refine (Sheaf.HModule.exact_map_g_delta (devissageSES_shortExact K hx D) rfl y).mp ?_
+  exact Subsingleton.elim _ 0
+
+/-- **Generation at a point above the degree bound** (★★, cluster-P item 3): past
+`deg D₀ + 1 − χ(𝒪_X)` — with a degree of room for the point being peeled — evaluation
+`H⁰(𝒪(D)) → H⁰(sky_x J) ≅ κ(x)` is surjective at **every** closed point `x`.
+
+The hypothesis is stated on `deg (D − x)` rather than `deg D` because it is the vanishing at
+`D − x`, not at `D`, that the slice consumes; the difference is exactly one residue degree. -/
+theorem surjective_eval_of_deg_ge {D₀ : X.CurveDivisor}
+    (h₀ : Subsingleton (Sheaf.HModule (X.divisorSheaf K D₀) 1))
+    {x : X} (hx : x ≠ genericPoint X) (D : X.CurveDivisor)
+    (hD : CurveDivisor.deg K D₀ + 1 - Sheaf.chi (X.moduleKSheaf K)
+      ≤ CurveDivisor.deg K (D - CurveDivisor.single hx 1)) :
+    Function.Surjective (Sheaf.HModule.map (devissageSES K hx D).g 0) :=
+  surjective_hModule_zero_devissageπ K hx D
+    (subsingleton_hModule_one_of_deg_ge K h₀ _ hD)
+
+/-- **Global generation above the bound, all points at once** (★★): there is a degree bound
+past which `𝒪(D)` is generated at every closed point.  The bound absorbs the one residue
+degree of slack by requiring it of `D − x` uniformly, which is what the explicit hypothesis
+below spells out.
+
+This is the honest form of "𝒪(D) is generated by its global sections for `deg D` large": a
+statement about surjectivity of evaluation at each point, quantified over points — *not* the
+dimension count `h⁰(𝒪(D)) = h⁰(𝒪(D − x)) + [κ(x) : K]`, which is its numerical shadow and which
+`h0_eq_h0_sub_point_add_residueDeg_of_deg_ge` proves separately. -/
+theorem generated_of_deg_ge {D₀ : X.CurveDivisor}
+    (h₀ : Subsingleton (Sheaf.HModule (X.divisorSheaf K D₀) 1))
+    (D : X.CurveDivisor)
+    (hD : ∀ {x : X} (hx : x ≠ genericPoint X),
+      CurveDivisor.deg K D₀ + 1 - Sheaf.chi (X.moduleKSheaf K)
+        ≤ CurveDivisor.deg K (D - CurveDivisor.single hx 1)) :
+    ∀ {x : X} (hx : x ≠ genericPoint X),
+      Function.Surjective (Sheaf.HModule.map (devissageSES K hx D).g 0) :=
+  fun {_} hx => surjective_eval_of_deg_ge K h₀ hx D (hD hx)
+
+end GlobalGeneration
 
 /-! ### The `h¹ = 0` entry point
 

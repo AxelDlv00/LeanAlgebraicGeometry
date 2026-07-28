@@ -50,6 +50,9 @@ open CategoryTheory AlgebraicGeometry Scheme
 #print axioms AlgebraicGeometry.deg_lt_of_not_subsingleton
 #print axioms AlgebraicGeometry.subsingleton_of_h1_eq_zero
 #print axioms AlgebraicGeometry.subsingleton_hModule_one_of_deg_ge_of_h1_eq_zero
+#print axioms AlgebraicGeometry.surjective_hModule_zero_devissageπ
+#print axioms AlgebraicGeometry.surjective_eval_of_deg_ge
+#print axioms AlgebraicGeometry.generated_of_deg_ge
 
 /-! ## §2 The synthesis site: instantiate at the challenge curve
 
@@ -161,8 +164,36 @@ theorem probe_cofinality_curve (C : Over (Spec (CommRingCat.of k))) [IsProper C.
     moduleFinite_hModule_one C
   exact fun h hD => exists_le_subsingleton_of_deg_ge k h D hD
 
+/-- **Global generation at the challenge curve**, both finiteness instances synthesised: past
+the bound, evaluation `H⁰(𝒪(D)) → H⁰(sky_x J)` is surjective at every closed point.  Cluster-P
+item 3 measured where it is used.  Note the vanishing input is at `D − x`, which is why the
+degree hypothesis is stated there. -/
+theorem probe_generation_curve (C : Over (Spec (CommRingCat.of k))) [IsProper C.hom]
+    [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]
+    {D₀ : C.left.CurveDivisor} (D : C.left.CurveDivisor) :
+    letI : C.left.Over (Spec (CommRingCat.of k)) := .ofHom C.hom
+    haveI : SmoothOfRelativeDimension 1 (C.left ↘ Spec (CommRingCat.of k)) :=
+      inferInstanceAs (SmoothOfRelativeDimension 1 C.hom)
+    Subsingleton (Sheaf.HModule (C.left.divisorSheaf k D₀) 1) →
+      ∀ {x : C.left} (hx : x ≠ genericPoint C.left),
+        CurveDivisor.deg k D₀ + 1 - Sheaf.chi (C.left.moduleKSheaf k)
+            ≤ CurveDivisor.deg k (D - CurveDivisor.single hx 1) →
+          Function.Surjective
+            (Sheaf.HModule.map (devissageSES k hx D).g 0) := by
+  letI : C.left.Over (Spec (CommRingCat.of k)) := .ofHom C.hom
+  haveI : SmoothOfRelativeDimension 1 (C.left ↘ Spec (CommRingCat.of k)) :=
+    inferInstanceAs (SmoothOfRelativeDimension 1 C.hom)
+  haveI : QuasiCompact (C.left ↘ Spec (CommRingCat.of k)) :=
+    inferInstanceAs (QuasiCompact C.hom)
+  haveI : Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0) :=
+    moduleFinite_hModule_zero C
+  haveI : Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1) :=
+    moduleFinite_hModule_one C
+  exact fun h _ hx hD => surjective_eval_of_deg_ge k h hx D hD
+
 end SynthesisSite
 
+#print axioms probe_generation_curve
 #print axioms probe_bounded_vanishing_curve
 #print axioms probe_rr_deg_ge_curve
 #print axioms probe_deg_ge_of_zero_curve
