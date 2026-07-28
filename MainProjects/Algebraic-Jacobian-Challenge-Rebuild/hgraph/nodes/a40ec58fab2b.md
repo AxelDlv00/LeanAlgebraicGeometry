@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: is
 type: lean
-updated: '2026-07-28T11:13:02'
+updated: '2026-07-28T11:16:24'
 ---
   structure is carried by the explicit defs `Scheme.overAlgebraMap`/`Scheme.overModule`
   and, where needed, `attribute [local instance] Scheme.overModule`.
