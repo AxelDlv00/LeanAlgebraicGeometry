@@ -71,8 +71,21 @@ lives in `CommRingCatᵒᵖ`, with no base ring. **Those are different categorie
 declaration here bridges them (`Over.opEquivOpUnder` and `AffineScheme.equivCommRingCat`
 exist in mathlib but are not used below). So nothing in `SymPowColimit.lean` can currently
 *consume* `hasColimit_actionDiagram_op`: this is a parallel identification of the same
-mathematics over a different base, not a plugged-in input. Supplying the bridge — or
-restating the below over `Under k` — is unfinished work.
+mathematics over a different base, not a plugged-in input.
+
+**Which of the two exits was taken (2026-07-29, run 0069 r7).** This paragraph used to end
+"Supplying the bridge — or restating the below over `Under k` — is unfinished work", offering two
+routes. The **second** was taken: `Albanese/SymPowInvariantsUnder.lean` rebuilds the cone
+directly in `Under k` (the invariant subalgebra already *is* a `k`-algebra, so no transport is
+needed), and `Albanese/SymPowAffineQuotient.lean` then identifies the colimit. So that clause is
+no longer outstanding work — but note what did **not** happen: the *bridge* was never built, and
+`Over.opEquivOpUnder` is still unused here. Anyone wanting `CommRingCatᵒᵖ`-side results in
+`(Under k)ᵒᵖ` should restate as that file does, not look for a transport.
+
+The genuinely unfinished crossing is a different one: from `(Under k)ᵒᵖ` to *affine `k`-schemes*
+(`AffineScheme.equivCommRingCat`), which is what would turn all of this from `k`-algebra language
+into `Spec`-language. `Over.opEquivOpUnder` does not do it — its statement stays inside one
+category, so at `X := k` it is about `CommRingCat`, not `Scheme`.
 
 ## Scope — read this before quoting it
 
