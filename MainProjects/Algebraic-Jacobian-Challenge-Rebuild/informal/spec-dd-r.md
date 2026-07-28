@@ -1649,3 +1649,143 @@ Unchanged and still exactly one geometric statement: the subordinate **Stacks `0
 (`I-0565` half (a)), assumed per I-0492 clause 2. Obligation 4(i) stays discharged (ADDENDUM 7) and
 4(ii) is the joint-cover field of `AffCoverData` (ADDENDUM 5). The 49-file consumer migration is
 open but is now known not to gate the widened route's own correctness.
+
+
+## ADDENDUM 11 (2026-07-29, run 0070 session 0016) — R2's carrier finally has a PRODUCER FROM GEOMETRY, and the chart-freedom is measured at the right granularity (BINDING; sharpens ADDENDUM 10 §10.4)
+
+ADDENDUM 10 closed with "the 49-file consumer migration is open but is now known not to gate the
+widened route's own correctness". That is true and it named the wrong blocker. The blocker was
+one level earlier, and this addendum records it, closes it, and states two limits on the closure.
+
+### 11.1 The measurement that renames the blocker
+
+Measured at `a41644c36`, crossed in both directions rather than grepped once:
+
+* of the **thirty** `Picard/DivisorFamilyAff*.lean` files, exactly **two** mention
+  `ThetaGeneratorSeed` — `…AffFibre.lean` (obligation 4(i)) and `…AffSeedEndpoint.lean` (the
+  over-`R` endpoint) — and **neither** produces `IsLocallyCertifiedAff` or `DivFamZarAff`;
+* of **all** files mentioning `IsLocallyCertifiedAff`/`DivFamZarAff`, **zero** mention
+  `ThetaGeneratorSeed`.
+
+So every producer of a widened value was a producer *from another widened value*:
+`CertifiedDivisorFamilyAff.mapAlg`, `divFamZarAff.map`, and the trivial one-member glue.
+**Nothing turned geometry into a widened class.** The chart-typed lane has that join twice
+(`DivSchemeCertZarPointwise.lean:162` and `DivSchemeCertZarSeed.lean:115`).
+
+This is why "the widened layer is an island" (ADDENDUM 9 §9.4) kept being re-measured without
+moving: the island was diagnosed at the *consumer* end, and a consumer cannot be migrated onto a
+carrier that geometry cannot produce. **The generalisable form: when a replacement carrier looks
+complete and unused, check the PRODUCER side before pricing the consumer side.** A carrier with
+many consumers and no producer and a carrier with many producers and no consumers both read as
+"an island" to a name-grep, and they need opposite repairs.
+
+### 11.2 What landed
+
+```
+Picard/DivisorFamilyAffSeedGate.lean            -- geometry -> a widened CLASS
+  ThetaGeneratorSeed.isLocallyCertifiedAff_of_isCertified
+  ThetaGeneratorSeed.isLocallyCertifiedAff_of_swallowing_affineOpen
+  ThetaGeneratorSeed.divFamZarAff_of_swallowing_affineOpen
+  ThetaGeneratorSeed.picClass_divFamZarAff_of_swallowing_affineOpen   -- rfl
+  ThetaGeneratorSeed.isLocallyCertifiedAff_of_forall_prime_certified_adaptation
+  ThetaGeneratorSeed.divFamZarAff_of_forall_prime_certified_adaptation
+  ThetaGeneratorSeed.isLocallyCertifiedAff_of_supportLocus_empty      -- non-vacuity
+
+Picard/DivisorFamilyAffSeedSection.lean         -- geometry -> a FUNCTOR VALUE
+  ThetaGeneratorSeed.divFunctorAffSection
+  ThetaGeneratorSeed.divFamZarAffAffineEquiv_divFunctorAffSection
+  ThetaGeneratorSeed.divFunctorAffSection_val
+```
+
+Both rooted, sorry-free, kernel-green (`EXIT=0`, zero diagnostics), axiom-clean against controls
+that fire. Commits `a65bd79c6`, `9fb1a5404`, `20bb502ae`.
+
+**Why no away-base seed transport was needed, which is the whole reason this cost a session and
+not a wave.** The obvious route is the per-prime one, and it wants a certificate over
+`Localization.Away r` for the *pulled* system — which would need the seed's fibre datum
+transported to a localized base, and **this project has no `ThetaGeneratorSeed` base change**.
+It is not needed: `CertifiedDivisorFamilyAff.isLocallyCertifiedAff` (§8.6, `…AffGlueZarKit.lean`)
+already witnesses `IsLocallyCertifiedAff` at the trivial one-member cover `g = ![1]`, so an
+over-`R` certificate **is** a local one, and `exists_isCertified_of_seed_of_swallowing_affineOpen`
+is exactly an over-`R` certificate. The per-prime forms are stated too, at the seed, and they
+take the away certificate as a **hypothesis** — the transport is still owed and is named rather
+than hidden.
+
+### 11.3 The functor value was elaborated in a review and never named
+
+§8.7 records that a fresh-context reviewer *elaborated* the composition through
+`(divFamZarAffAffineEquiv …).symm` and confirmed it typechecks. Nobody landed it. So the project
+had a confirmed-correct composition, cited in a binding addendum, that **no declaration
+performed** — and a `sorry` census, a job count and an axiom probe all report that state as
+complete. `divFunctorAffSection` performs it, and
+`divFamZarAffAffineEquiv_divFunctorAffSection` is what makes it a *composition* rather than a
+fresh object: without that identification a consumer could conclude nothing about the section
+from the certificate.
+
+**Corrected in passing:** `divFamZarAffAffineEquiv`'s own docstring still says that getting from
+an affine section to a general test needs `divFamZarAff.map`, "which does **not** exist yet".
+It landed in ADDENDUM 9. Recorded in the new file rather than edited into the older one.
+
+### 11.4 TWO LIMITS ON THE CLOSURE, both measured, neither cosmetic
+
+**(a) The certificate side is chart-free; the SEED is not.** A declaration-closure probe, in the
+calibrated form §10.3 insists on, over `divFamZarAff_of_swallowing_affineOpen` (closure 4780) and
+`divFunctorAffSection` (4887):
+
+| probe | in closure? |
+|---|---|
+| `FinCoverData`, `FinCoverData.mk` | **no** |
+| `ChartTyping` | **no** |
+| `relCover_sup` | **no** |
+| `AffCoverData` | yes — the widened carrier, expected |
+| `relPinnedChart` | **YES**, and only via `ThetaGeneratorSeed` |
+
+`relCover_sup`'s absence is the load-bearing one: it is the step that turns "misses `V₀`" into
+"lies inside `V₁`", i.e. the exact mechanism the refuted fixed-pair repair rested on (ADDENDUM 3
+§2). Nothing on this route can reconstruct it. But `ThetaGeneratorSeed`
+(`DivSchemeFamily.lean:74`) has fields `side : relCurve C R → Bool` and
+`h : ∀ z, Γ(relCurve C R, relPinnedChart C R π (side z))`, so **the seed's pieces are basic opens
+of the pinned charts** and its `LocalEquations` cover is chart-typed even though the
+certificate's cover is not.
+
+That is a limit on the *claim*, not a breach of I-0492 clause 3. Clause 3 forbids the
+**certificate clauses** from confining pieces to a fixed chart pair — that confinement is what
+made the per-piece statement upgrade to a chart statement, and it is gone: the subordinate `0B8B`
+open `W` is an arbitrary affine open with no relation to `V₀`/`V₁`. What remains is that the
+**input datum** this tree happens to produce systems from is chart-indexed. A chart-free seed
+notion would remove the last occurrence; no consumer of these files needs one.
+
+**(b) The non-vacuity caveat is inherited, and had to be written down.** The gate's hypotheses are
+the endpoint's, so the endpoint's witness inhabits them — and that witness sits at `n = 0` with an
+**empty** support locus, which the endpoint's own scope paragraph calls "not self-contradictory",
+explicitly *not* "non-trivially inhabited". The first version of `…AffSeedGate.lean` asserted
+neither, which is the failure mode §10.2 already names for `…AffStrict.lean`: a reader who knows
+the endpoint has a witness assumes it transfers usefully. It does not, and for the same reason —
+a straddling divisor has nonempty support by the very witnesses that make it straddle. Now stated
+in the file, with `isLocallyCertifiedAff_of_supportLocus_empty` as the witness at its true
+strength.
+
+### 11.5 A method correction to §10.1, which is binding on anyone reusing it
+
+§10.1 records the lock-free check — `lean -o` into a scratch olean tree seeded by **symlinks** to
+`.lake` oleans — as costing ~18 s/module with no mutex. True, and it has a precondition that
+addendum does not state: **five of the modules §10.1 reports as verified have no `.lake` olean at
+all** (`DivisorFamilyAffMap`, `…AffFunctorCompare`, `DivRepGlobalAffLift`, `…AffStrict`,
+`…AffPartitionAudit` — checked 2026-07-29). A scratch root seeded only from `.lake` therefore
+cannot reach anything importing them, and the failure is a bare "object file … does not exist"
+that names the *missing* module rather than the method. Build the missing modules into the scratch
+root first, in dependency order; each is another ~10 s. The method is sound, its seed is
+incomplete, and the two are easy to confuse.
+
+### 11.6 What the lane owes after this
+
+Unchanged in kind and now one item shorter in practice:
+
+1. the subordinate **Stacks `0B8B`** input (`I-0565` half (a)), assumed per I-0492 clause 2 — still
+   the lane's only geometric residue;
+2. a `ThetaGeneratorSeed` **base change** along `R → Localization.Away r`, which is what the
+   per-prime forms of §11.2 take as a hypothesis. Newly *named* here rather than newly owed: the
+   chart-typed lane never had it either, and §11.2's route makes it unnecessary for the
+   affine-base case;
+3. the **49-file consumer migration**, open, and now known to be reachable: geometry produces a
+   widened class and a widened functor value, so a consumer that moves has something to move onto.
