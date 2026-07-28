@@ -59,6 +59,16 @@ Read this before quoting anything above as "uniform vanishing":
    gap as `Adelic.coneVanishing_iff_base_and_peel`; the present file discharges its *peel*
    half on this carrier, not its base half.)  A base vanishing `H¹(𝒪(D₀)) = 0` at even one
    `D₀` is an input nothing in this file produces.
+
+   **How far the base is from being available, measured rather than guessed.**  Not even the
+   easiest instance is on hand: `H¹(𝒪) = 0` at `ℙ¹` would need
+   `ledgerGenus (Adelic.p1Over k) = 0`, and `Ledger/NonVacuity.lean` is explicit that it does
+   *not* prove genus zero there — it proves the hypothesis bundle is inhabited, which is a
+   different claim.  Meanwhile the one `H¹`-vanishing producer in the Ledger tree,
+   `AffineVanishing.Scheme.subsingleton_moduleKSheaf_hModule_one`, requires `[IsAffine X]`, so
+   it cannot reach a proper curve at all (a proper affine curve over a field is a point).  So
+   the base is open on this carrier at *every* curve, including the rational one, and closing
+   it is a genuine piece of mathematics rather than a plumbing gap.
 2. **Extension-uniformity** — a bound uniform over finite extensions `K'/K`.  Untouched:
    no statement here quantifies over a second field, and `CurveDivisor`/`residueDeg` are
    pinned to the single base field `K`.
