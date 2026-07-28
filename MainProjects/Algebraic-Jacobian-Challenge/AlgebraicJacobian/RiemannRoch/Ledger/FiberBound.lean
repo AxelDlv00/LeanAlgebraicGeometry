@@ -42,13 +42,18 @@ carried by the linear-equivalence translate manufactured inside
 
 1. **Single-field bounded vanishing: CLOSED here**, for a curve bundle admitting a finite
    dominant map to `ℙ¹`, given the two `Module.Finite` binders on `H⁰`/`H¹` of `𝒪_Y`.
-2. **Extension-uniformity: OPEN, and untouched.**  Every constant below — `n₀`, `b`, `deg`,
-   `χ(𝒪_Y)` — lives over the single field `K`.  A bound serving `C_κ` for every finite `κ/K`
-   simultaneously does not follow: `n₀` is produced by `Classical.choose` on a Noetherian
-   stabilization that is re-run from scratch at each base field, and the AJCR analogue
-   (`RiemannRoch/WindowFieldTransport.lean`) is explicit that per-field ledger constants do not
-   transport — it moves vanishing *facts* one field at a time instead.  Nothing in AJC or AJCR
-   closes this.
+2. **Extension-uniformity: OPEN, and untouched *by this file*.**  Every constant below — `n₀`,
+   `b`, `deg`, `χ(𝒪_Y)` — lives over the single field `K`.
+
+   **Current status elsewhere, since this paragraph has been the project's index for the gap:**
+   `Ledger/ExtensionUniformity.lean` split it and `Ledger/GenusFieldInvariance.lean` closed one
+   of the two halves — `genus C_κ = genus C` is a theorem for every field extension, sorry-free.
+   What remains open is the *base-divisor* half only: one degree bound `d` with a vanishing
+   divisor of degree `≤ d` over every `κ`.  So the sentence "nothing in AJC or AJCR closes this"
+   was true when written and is now half wrong; the residue is one named input, not two.  The
+   `Classical.choose`/`Nat.find` observation below still describes that surviving half correctly
+   (AJCR's `RiemannRoch/WindowFieldTransport.lean` moves vanishing *facts* one field at a time
+   because the constant does not move).
 3. **Global generation: CLOSED here too, but by an independent route.**
    `exists_bound_generated_of_isFinite_toP1` below is not a corollary of (1): it comes from the
    dévissage slice in `DegreeVanishing`, whose evaluation map *is* the quotient map, and the

@@ -39,6 +39,8 @@ finiteness, not separability, not perfectness.
 * `uniformVanishing_of_uniform_base_of_genus_invariant` — the **reduction**: the open half
   follows from exactly **two** inputs, a uniform degree bound on a vanishing base divisor and
   base-field invariance of the genus.  Neither is proved here; both are named precisely.
+  **Update:** the genus input is now proved in `Ledger/GenusFieldInvariance.lean`, so prefer
+  `GenusFieldInvariance.uniformVanishing_of_uniformBaseDivisor`, which needs only the first.
 * `exists_deg_ge` — **non-vacuity**: degrees are unbounded above given one closed point of
   positive residue degree, so a degree half-space is never empty and `UniformVanishing` is not
   trivially satisfiable by having no instances.  Proved.
@@ -75,6 +77,19 @@ had published the one-input version on the team thread before checking it; this 
 corrected form.
 
 ## Where the two inputs stand (provenance, honestly)
+
+**INPUT (1) IS NOW A THEOREM OF AJC — everything in the rest of this section is history.**
+`Ledger/GenusFieldInvariance.genus_baseChangeField` proves `genus C_κ = genus C` for every field
+extension `κ/k`, sorry-free and axiom-clean, so the reduction below can be called with only its
+*first* antecedent: use `GenusFieldInvariance.uniformVanishing_of_uniformBaseDivisor`, which
+carries `UniformBaseDivisor C d` and nothing else.
+
+Read the paragraphs below as the record of what the cost estimate *was*, because one of them was
+wrong in a way worth keeping visible: the carrier note called the AJC/AJCR object-level `rfl` the
+live boundary.  It was not the obstacle.  What actually had to be built was (a) the cover-level
+assembly — AJCR states its version over `AffineTwoCover`, which does not exist in AJC — and (b)
+the right-exactness brick `quotRangeBaseChangeEquiv`, also absent here and rederived from
+`lTensor_exact`.  The object `rfl` was true, and irrelevant.
 
 **Input (1), genus invariance: proved sorry-free next door, on a different carrier.**
 `AlgebraicJacobian/Cohomology/H1BaseFieldInvariance.lean` in
@@ -133,16 +148,23 @@ AJCR bounds `n₀(κ)` uniformly; AJCR's analogue is a `Nat.find` per field
 (`RiemannRoch/WindowLedger.lean`), and its `WindowFieldTransport.lean` transports vanishing
 *facts* one field at a time precisely because the constant does not move.
 
-So `uniformVanishing_of_uniform_base_of_genus_invariant` is a **conditional** result with one
-antecedent that is proved-elsewhere-modulo-a-carrier and one that is genuinely open.
+So `uniformVanishing_of_uniform_base_of_genus_invariant` **was** a conditional result with one
+antecedent proved-elsewhere-modulo-a-carrier and one genuinely open.  It is now a conditional
+result with **one** open antecedent: input (1) is discharged in
+`Ledger/GenusFieldInvariance.lean`.  New consumers should call
+`GenusFieldInvariance.uniformVanishing_of_uniformBaseDivisor` instead of this theorem; this one
+stays because it is the honest statement of *which* two facts the implication rests on, and
+because a caller who has a genus bound by some other route may still want it.
 
 ## The three cluster-P statements, kept apart (unchanged discipline)
 
 1. **Single-field bounded vanishing** — closed at AJC's curve (`FiberBound`, three curve
    binders, nothing else).  This file changes nothing about it.
 2. **Extension-uniformity** — free half now *witnessed* at `C_κ` (was: asserted of morphism
-   classes); open half now *decomposed* into a genus identity plus a uniform base-divisor
-   degree bound, with the second one named rather than folded into the first.  Still open.
+   classes); open half decomposed into a genus identity plus a uniform base-divisor degree bound.
+   **The genus identity is now proved** (`Ledger/GenusFieldInvariance.lean`), so the open half is
+   *exactly* the base-divisor bound — one input, not two.  Still open, and still open in AJCR
+   too: its analogue is a `Nat.find` per field.
 3. **Global generation** — closed at AJC's curve by the dévissage route
    (`FiberBound.exists_bound_generated_of_isFinite_toP1`), independent of (1).  This file does
    not touch it; in particular nothing here makes generation uniform over extensions either.
