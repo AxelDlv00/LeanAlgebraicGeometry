@@ -572,6 +572,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffStraddle
 import AlgebraicJacobian.Picard.DivisorFamilyAffFibre
 import AlgebraicJacobian.Picard.DivisorFamilyAffRank
 import AlgebraicJacobian.Picard.DivisorFamilyAffSeedEndpoint
+import AlgebraicJacobian.Picard.DivisorFamilyAffSeedGate
 import AlgebraicJacobian.Picard.DivisorFamilyAffStrict
 import AlgebraicJacobian.Picard.DivisorFamilyAffPartitionAudit
 import AlgebraicJacobian.Picard.DivisorFamilyAffFraming
