@@ -836,6 +836,35 @@ base change for the section spaces, and a `WeilDivisor` pullback along
 `C_κ ⟶ C` (hard — points split).  That is the honest residue, and it is the only
 cluster-P item with nothing landed against it.
 
+**THE HYPOTHESIS PAIR IS NO LONGER THE PROJECT'S BEST STATEMENT (ajc-rr, run
+0074 r4).**  Everything above about "base vanishing at one divisor plus peel"
+still describes the ADELIC carrier faithfully, and the table rows are unchanged.
+But a second, independent route now closes single-field vanishing outright on the
+LEDGER carrier, with no hypothesis of either kind:
+
+* `Ledger/FiberVanishing.subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1`
+  — the ported AJCR fibrewise large-twist vanishing: for a finite dominant
+  `π : Y ⟶ ℙ¹`, `H¹(𝒪(D + n·F)) = 0` for all large `n`;
+* `Ledger/FiberBound.exists_bound_subsingleton_hModule_one_curve` and
+  `exists_bound_h0_eq_genus_curve` — the curve-level composition with the
+  χ-ledger.  Binders: `[IsProper C.hom]`,
+  `[SmoothOfRelativeDimension 1 C.hom]`, `[GeometricallyIrreducible C.hom]`, and
+  nothing else.  The `π` is *constructed* inside
+  (`Ledger/MapToP1.exists_isFinite_isDominant_toP1`) and both `Module.Finite`
+  cohomology binders are *synthesised* by `ChiCurve`.
+
+That last point is what distinguishes these from the §6b rows and from
+`Ledger/DegreeVanishing.lean`: there is no instance binder and no named
+hypothesis left for a consumer to fail to discharge.  `DegreeVanishing`'s clean
+lines were failure mode (b) of §8 with a twist — the named hypothesis was
+*satisfiable* but witnessed at no proper curve in this project, which is a third
+mode worth keeping apart from FALSE and VACUOUS.  Measured in
+`scripts/ajcrr-fibervanishing-axioms.lean`: 41/41 clean, control firing.
+
+Extension-uniformity is **unaffected** by all of that.  Every constant in the new
+layer lives over the single field `K`, and its `n₀` is a `Classical.choose` on a
+Noetherian stabilization re-run from scratch at each base field.
+
 One further caveat that no axiom line shows.  "`Subsingleton` rather than
 `h¹ = 0`, so no finiteness instance is needed" holds only for the
 vanishing-criterion and peel machinery.  Any theorem taking the closed χ-ledger
