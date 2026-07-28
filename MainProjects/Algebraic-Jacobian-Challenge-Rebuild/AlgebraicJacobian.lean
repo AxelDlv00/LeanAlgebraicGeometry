@@ -609,6 +609,7 @@ import AlgebraicJacobian.Picard.DivRepChartClassUnivAny
 import AlgebraicJacobian.Picard.DivRepChartClassUnivQuot
 import AlgebraicJacobian.Picard.JacobianDataAbelImage
 import AlgebraicJacobian.Picard.JacobianDataAbelSquare
+import AlgebraicJacobian.Picard.JacobianDataAbelSquareVacuity
 import AlgebraicJacobian.Picard.JacobianDataAbelSurj
 import AlgebraicJacobian.Picard.JacobianDataFromPicRepDatum
 
