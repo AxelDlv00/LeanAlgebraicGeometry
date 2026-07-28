@@ -343,3 +343,164 @@ irreducible base), out of this lane's scope.
 naturality); (3) the T4-a/T4-c immediate launches; (4) the fallback trigger (if T4-b's
 collapse sub-brick exceeds [M] on its own, drop to the route-(i) degenerate and queue the
 §5 brick).*
+
+---
+
+## §6 CLAUSE (iii) DECOMPOSED — worksheet-first pass, run 0073 r1 (task `ajcr-w5-av`)
+
+*Added 2026-07-28 by the Wave-5 AV lane, discharging the WORKSHEET-FIRST obligation before
+touching Lean. Both projects had converged on "clause (iii) alone" as the joint residue
+(inbox I-0495) while describing it as a single opaque step. It is not one step. This
+section splits it, and reports one **machine-verified simplification** that removes a
+sub-cliff §4 named.*
+
+### 6.0 The finding that changes the target statement: `picFromBase` is TRIVIAL at `k[ε]`
+
+`R-T4-1` lists "the picFromBase collapse" as one of two internal cliffs of T4-b, to be paid
+by finding or proving "`Pic` of a finite product of Artin local rings is trivial". **For the
+dual-number test that entire brick is unnecessary, for a reason that has nothing to do with
+Artin local rings.**
+
+`relPic C T` is by definition `(C ⊗ T).left.CechPic ⧸ picFromBase C T`, and `picFromBase C T`
+is the *range* of `CechPic.map (snd C T).left` — classes pulled back from `T`. Now
+`AlgebraicJacobian/Picard/Pic.lean:257` already carries
+
+```
+instance CechPic.subsingleton_of_subsingleton (X) [Subsingleton X] : Subsingleton X.CechPic
+```
+
+and `T.left = Spec k[ε]` has a **one-point** underlying space (`PrimeSpectrum` of a local
+ring with nilpotent maximal ideal). So `T.left.CechPic` is a subsingleton, its every element
+is `1`, and the range of a group homomorphism out of it is trivial:
+
+> **`picFromBase C T = ⊥` for every test object `T` with `Subsingleton T.left`** — in
+> particular at `T = overDualNumber k` *and* at `T = 𝟙_`.
+
+Consequences, all three checked by machine this session (`lean_run_code`, four probes, all
+green — the statements are reproduced in §6.4):
+
+1. `relPicMk C T` is **injective** as well as surjective, so `relPic C T ≃* (C ⊗ T).left.CechPic`
+   at both ends of the ε-restriction. The quotient bookkeeping disappears from T3/T4's target.
+2. T3/T4's target restates as a statement about **absolute** Čech Picard groups:
+   `ker( CechPic(C_ε) → CechPic(C) ) ≃+ H¹(C, 𝒪_C)`. No coset calculus, no
+   `relPicMk_eq_relPicMk_iff` range condition anywhere in the ε-kernel argument.
+3. The `picFromBase` cliff of `R-T4-1` is **retired at the dual-number test**. It survives
+   only for route (ii)'s general coefficient `A` (where `A[ε]` genuinely is a product of
+   Artin local rings and `Spec A` is not a point) — so if the lane ever needs coefficient
+   naturality it comes back, but the *numeral* does not wait on it.
+
+**Why nobody had noticed**, worth recording because it is a recurring shape: the collapse was
+being sought as a statement about `Pic` of a *ring* (Artin local ⟹ trivial Picard), which is
+true but needs commutative algebra. The cheap route is topological and was already in the tree
+— a one-point space has no nonconstant cover, hence no Čech `H¹` at all. The lemma had been
+sitting in `Pic.lean` since the Picard-group file was written, with an `example` for `Spec` of
+a field two lines below it, and the T4 worksheet (this document, §3 brick note T4-b) had asked
+a *different* question of a *different* file (`Descent/InvertibleModule.lean` /
+`Picard/PicAffine.lean`). Search for the shape of the object, not the shape of the argument.
+
+### 6.1 What is actually left of clause (iii), in three parts
+
+With §6.0 the residue is a statement about a two-chart cover of `C_ε`. Fix
+`D : C.left.AffineTwoCover` (exists: `AffineTwoCover.nonempty_of_curve`) and write
+`ρ₀, ρ₁ : Γ(X, V_i) →+* Γ(X, V₀ ⊓ V₁)` for the restrictions. The T2 engine already owns
+everything on the right of
+
+```
+Γ(X,V₀⊓V₁)ˣ ⧸ cechCoboundaryUnits ρ₀ ρ₁   ←?→   X.CechPic
+        ↑ (T2, LANDED: truncExpCechKernelAddEquiv, h1AddEquivTruncExpCechKernel)
+      H¹(X, 𝒪)
+```
+
+so clause (iii) *is* the `←?→` arrow, at `X = C_ε`. It splits:
+
+| part | statement | status / route |
+|---|---|---|
+| **(iii-a)** | the comparison map `twoChartClass : Γ(V₀⊓V₁)ˣ ⧸ cechCoboundaryUnits → X.CechPic` exists and is a group hom | **to build [M]** — §6.2. Pure Čech bookkeeping, no geometry, no dual numbers, any scheme |
+| **(iii-b)** | it is **injective** | **[S], and the input is LANDED** — `CechPic.mk_eq_one_iff` (`RefinementInjectivity.lean:195`) is exactly refinement injectivity, so a two-chart cocycle dying in `CechPic` dies on the two-chart cover itself |
+| **(iii-c)** | it is **surjective onto the ε-kernel** | **[M], gated on clause (i)** — §6.3. This is where `free_of_cyclic_mod_eps` is consumed, and it is the *only* part that is about dual numbers |
+
+**The structural point, and the reason this split is worth the document:** (iii-a) and (iii-b)
+are *not* about dual numbers, curves, or `H¹`. They are the general statement "the two-chart
+Čech `Ȟ¹` of units embeds in the Picard group", true for any scheme with a two-open cover.
+Only (iii-c) needs the thickening — and it needs clause (i), which is why clause (i) was the
+right first clause to port even though its role was described only as "chart triviality".
+
+**A correction to how both projects have been describing the residue.** The cross-project
+thread (I-0495) says clause (iii) is "a kernel element goes to its transition unit under the
+chart identifications", which reads as one map to be exhibited. Two thirds of it is a
+cover-comparison that has no dual numbers in it, and the third that remains is a
+*surjectivity* statement rather than the construction of a map. Sizing it as one step is how
+it stayed opaque on both sides for a day.
+
+### 6.2 (iii-a): the two-chart comparison map — construction, spelled out
+
+`CechPic` is built on **pointed** covers (one open per point, `PointedCover`), so a two-open
+cover enters through a selector.
+
+* **Selector.** `σ : X → Bool` with `x ∈ V_{σ x}`, from `hcov : V₀ ⊔ V₁ = ⊤` by
+  `by_cases x ∈ V₀`. Precedent for the pattern, including the `_of_mem` / `_of_notMem`
+  rewrite pair: `thetaFieldChartIndex` (`Picard/DivisorFamilyFieldDictionaryCore.lean:196ff`)
+  and `BasicOpenCocycleDatum.pieceIndex` (`Cohomology/GluedSheafClass.lean:250`). The pointed
+  cover is then `opens x := V_{σ x}`.
+* **Cocycle from one overlap unit.** For `u : Γ(X, V₀⊓V₁)ˣ` define the pair unit
+  `pairUnit s t : Γ(X, V_s ⊓ V_t)ˣ` by `1, 1` on the diagonal, `u` at `(0,1)`, and the
+  `inf_comm`-transport of `u⁻¹` at `(1,0)`; then
+  `ev i j a b := restrict (T ≤ V_{σ i} ⊓ V_{σ j}) (pairUnit (σ i) (σ j))`.
+* **Cocycle law** `ev i j * ev j k = ev i k`: eight `Bool` cases, each a restriction-compat
+  computation; the four with `σ i = σ k` cancel `u·u⁻¹`, the four others are `1·u = u`.
+  Checked by hand this session, all eight close.
+  *Note the shape that does NOT work:* the slick spelling `u ^ (δ(σ j) − δ(σ i))` with
+  `zpow_add` closing the law for free is **not available**, because on the diagonal `T` need
+  only be `≤ V_s`, where `u` cannot be restricted at all. The exponent trick requires a unit
+  living on the union; there isn't one. Case-bash is the honest route — budget lines, not
+  design.
+* **Descent to the quotient.** A chart unit `v ∈ Γ(V_s)ˣ` restricts to a coboundary: the
+  `0`-cochain `α x := (v or 1 by σ x)` exhibits it. So `cechCoboundaryUnits ≤ ker`, and
+  `QuotientGroup.lift` gives `twoChartClass`.
+
+Everything cited above is landed and re-checked at HEAD this session.
+
+### 6.3 (iii-c): surjectivity onto the ε-kernel is exactly where clause (i) is spent
+
+Let `E ∈ CechPic(C_ε)` with `E|_C = 1`. Then on each thickened chart `V_{i,ε}`:
+`V_{i,ε}` is affine, so `CechPic(V_{i,ε}) ≃* CommRing.Pic Γ(V_{i,ε})`
+(`cechPicEquivPic`, `CechPicSurjective.lean:283` — the full affine dictionary, **landed**),
+and `Γ(V_{i,ε}) ≅ Γ(V_i)[ε]` (clause (ii), `DualNumber.baseChangeAlgEquiv`,
+`Tangent/DualNumberBaseChange.lean:119`, landed since 2026-07-17). The hypothesis says the
+invertible `Γ(V_i)[ε]`-module is trivial mod `ε`; **clause (i)**
+(`DualNumber.free_of_cyclic_mod_eps`, `Tangent/DualNumberChartTriviality.lean:132`) makes it
+free. So `E` is trivial on both thickened charts, hence representable on the two-chart cover,
+hence in the range of `twoChartClass`. ∎-shape.
+
+**Gate, stated so no session mistakes it:** (iii-c) needs clause (i) *and* the affine
+dictionary *and* clause (ii) — all three landed — plus the bookkeeping that turns "trivial on
+each chart of a pointed cover refined by the two-chart cover" into "representable on the
+two-chart cover". That last bookkeeping is the honest remaining cost and is **not** [S].
+
+### 6.4 Probe record (so a later session does not redo it)
+
+Four `lean_run_code` probes this session, all green, against the pinned checkout and HEAD:
+
+1. `Subsingleton (overDualNumber k).left` — closes by
+   `inferInstanceAs (Subsingleton (PrimeSpectrum (DualNumber k)))`.
+2. `picFromBase C T = ⊥` for `[Subsingleton T.left]` — five lines, via
+   `CechPic.eq_one_of_subsingleton`.
+3. `Function.Injective (relPicMk C T)` under the same hypothesis — from 2 via
+   `QuotientGroup.eq` + `Subgroup.mem_bot`.
+4. `Function.Surjective (relPicMk C T)` — already landed as `relPicMk_surjective`.
+
+Negative result worth keeping: the `zpow` spelling of the two-chart cocycle (§6.2) does not
+typecheck, for the stated reason. Do not retry it.
+
+### 6.5 Revised sizing of the lane
+
+| item | old size | new size |
+|---|---|---|
+| picFromBase collapse at `k[ε]` | [S/M], listed as a T4-b cliff | **[XS] — DONE this session** |
+| (iii-a) two-chart comparison hom | inside one opaque clause (iii) | [M], scheme-general, **transferable to AJC verbatim** |
+| (iii-b) injectivity | " | [S], input landed |
+| (iii-c) surjectivity on the ε-kernel | " | [M], gated on clauses (i)+(ii)+affine dictionary — all landed |
+
+The lane's honest bottom line is unchanged in direction but sharper: after §6.0 the numeral
+waits on **(iii-a) + (iii-b) + (iii-c)** and on nothing else, and two of those three are
+dual-number-free general Čech theory that AJC can import rather than re-derive.
