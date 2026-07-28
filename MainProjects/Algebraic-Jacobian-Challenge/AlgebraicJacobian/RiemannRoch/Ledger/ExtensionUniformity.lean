@@ -80,13 +80,28 @@ Algebraic-Jacobian-Challenge-Rebuild proves `finrank_h1_baseField` (the `κ`-dim
 `genus_baseField`.  Its engine is termwise base change of the two-term Čech complex of an
 affine two-cover plus right-exactness of `⊗` — not semicontinuity, not Mumford II.5.
 
-The caveat is the one that matters and it is not cosmetic: AJCR states it at
-`baseChangeBundle C K`, built from its own `overSpec`/`⊗` `Over`-tensor spelling, whereas AJC's
-`C_κ` is `Over.mk (pullback.snd C.hom (Spec.map (CommRingCat.ofHom (algebraMap k κ))))`.
-Whether those agree up to defeq or need a comparison isomorphism is **unsettled here**.  A
-sorry-free sibling theorem whose carrier has no face onto the consumer's objects is unusable,
-and this workspace has a measured instance of exactly that failure.  So `hgenus` stays a
-hypothesis rather than being discharged by import.
+**The carrier question is settled, and favourably.**  AJCR states it at `baseChangeBundle C K`,
+built from its own `overSpec`/`⊗` `Over`-tensor spelling, whereas AJC's `C_κ` is
+`Over.mk (pullback.snd C.hom (Spec.map (CommRingCat.ofHom (algebraMap k κ))))`.  Those agree by
+`rfl` — **the whole bundled object, structure morphism included**, not merely the underlying
+scheme.  AJCR's `⊗` is the monoidal product in `Over (Spec k)`, whose `tensorObj` *is* the
+pullback and whose `snd` *is* `pullback.snd`, so the difference is notational indirection.
+
+Verified at *this* project's spelling rather than taken on report, with a negative control: the
+same `rfl` with the pullback arguments swapped fails on a type mismatch, so the check is not
+proving whatever it is handed.  Two caveats survive, and neither is cosmetic:
+
+* the verdict is defeq **at the object**.  A port that pushes it through a functor must re-run
+  `rfl` there; a lane in this workspace shipped a false claim this week by carrying an
+  object-level verdict across `Spec.map`.
+* defeq of carriers is necessary, not sufficient.  The genus statements also bind AJCR's own
+  curve-instance stack (`Curve.BaseChangeInstances`) and its two-cover `curveCover`, and whether
+  *those* land on AJC's `CurveBaseChange` instances is a separate measurement, not settled here.
+
+So the honest status of input (1) is: **reachable, cost not yet measured** — no longer "blocked on
+a carrier mismatch", which is what I would have recorded had I stopped at the mismatch.  It stays
+a hypothesis in the reduction below until the port is actually made, because an unmeasured port
+is not an available theorem.
 
 **Input (2), a uniform base-divisor degree bound: open, and not located in either project.**
 It asks for one `d` with a vanishing `D₀` of degree `≤ d` over *every* `κ`.  Nothing in AJC or
