@@ -1137,10 +1137,28 @@ every one landed and axiom-clean.
 `Opens.cechPicClass` commutes with the `ε ↦ 0` pullback — i.e. the chart module of the base-changed
 class is the base change of the chart module. It mentions no dual numbers, no freeness and no
 cyclicity; it is a naturality square for the affine dictionary, of the same *shape* as the reduction
-square §6.12 proved for the two-chart comparison. **That is a real lead for the next session**: the
-one already-proved square is naturality of `twoChartClassHom` in the scheme, and this is naturality
-of `cechPicClass` in the scheme. Look for it in `Picard/EffectivityMoving.lean` and
-`Picard/CechPicToPicNaturality.lean` (whose name says it may already exist) *before* building it.
+square §6.12 proved for the two-chart comparison — naturality of `Opens.cechPicClass` in the scheme,
+where §6.12 gave naturality of `twoChartClassHom`.
+
+**I checked the obvious homes and it is NOT there, so the next session builds it rather than
+hunting.** Measured at HEAD:
+
+* `Picard/CechPicToPicNaturality.lean` has exactly **two** declarations, `toPic_map` and
+  `toPic_mapAlgebra`, both requiring `[IsAffine X] [IsAffine Y]` on the *whole scheme*. They are
+  about `CechPic.toPic`, not about `Opens.cechPicClass` at an affine open of a possibly non-affine
+  `Z`. The file name is suggestive and its content is not what is needed.
+* Every other `cechPicClass` occurrence in `Picard/` is `BasicOpenCocycleDatum.cechPicClass` — a
+  **different function**, on divisor data (`Pic0ChartLocusFibreField.lean`,
+  `DivisorThetaFibreData.lean`, `Cohomology/GluedSheafClass.lean`). It *does* have a base-change
+  lemma (`cechPicClass_baseChange`), which is exactly the trap: the shared suffix makes it look like
+  the square is landed when it is about another object.
+* `Picard/EffectivityMoving.lean` has `Opens.cechPicClass_of_le` — the *restriction* seam along
+  `O' ≤ O` **inside one scheme**, nothing along a scheme morphism.
+
+The shape to build: for `g : X ⟶ Z` and an affine open `O` of `Z` with affine preimage,
+`(g ⁻¹ᵁ O).cechPicClass _ (CechPic.map g L) = Pic.mapRingHom (g.appLE O _ _) (O.cechPicClass _ L)`.
+`Opens.cechPicClass_of_le`'s proof is the model: it chases an `appLE` square through
+`CechPic.toPic_map` and `Pic.mapRingHom_mapRingHom`.
 
 **THE METHOD LESSON, since this lane has now mis-sized the same clause twice in one session.**
 §6.15 said "the geometry is in step 3"; §6.16 said "the geometry is freeness of the restriction";
