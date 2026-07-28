@@ -34,8 +34,8 @@ carried here as the hypothesis `hcov` and **not** proved (see "What this does no
 
 ## Why the transport needs a name
 
-`RespectsIso` holds for the class, so translating a chart is legal. But `infer_instance` does **not**
-discharge `SmoothOfRelativeDimension n (e.hom ≫ f)` from `SmoothOfRelativeDimension n f` and an iso
+`RespectsIso` holds for the class, so translating a chart is legal. But `infer_instance` does
+**not** discharge `SmoothOfRelativeDimension n (e.hom ≫ f)` from the same for `f` plus an iso
 `e`: the instance sits on the *property* (`MorphismProperty.RespectsIso`), not on the composite, so
 the producer has to be named (`MorphismProperty.RespectsIso.precomp`). A failed `infer_instance`
 here reads as absence and is not — the same shape as inbox `I-0567`/`I-0634`, and the reason

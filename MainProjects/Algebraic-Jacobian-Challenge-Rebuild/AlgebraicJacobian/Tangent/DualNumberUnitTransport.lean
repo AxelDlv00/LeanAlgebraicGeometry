@@ -12,8 +12,8 @@ import AlgebraicJacobian.Tangent.TwoChartSelector
 and then **measured a wall** where a predecessor had claimed a `rfl`: the `ε ↦ 0` test-object
 morphism `overDualNumberZero k` has source the **monoidal unit** `Over.mk (𝟙 (Spec k))`, whereas the
 coefficient comparison `overSpecMap k[ε] k` has source `overSpec k k`. Those are equal objects that
-are **not definitionally equal** — `Spec.map (ofHom (algebraMap k k)) = 𝟙 (Spec k)` is `Spec.map_id`,
-a theorem, not `rfl` (`specMap_algebraMap_self_eq_id`). Consequently `relCurveMap C k[ε] k` and
+are **not definitionally equal** — `Spec.map (ofHom (algebraMap k k)) = 𝟙 (Spec k)` is
+`Spec.map_id`, a theorem, not `rfl` (`specMap_algebraMap_self_eq_id`). So `relCurveMap C k[ε] k` and
 `(C ◁ overDualNumberZero k).left` have **different types**, and no `congr` closes a type mismatch.
 Worksheet §6.23 recorded that retraction and named the residue: *an object transport along
 `Spec.map_id`, then a whiskering congruence.* This file builds it.
@@ -94,7 +94,7 @@ algebra map is the identity only *propositionally*
 (`specMap_algebraMap_self_eq_id`, i.e. `Spec.map_id`). -/
 noncomputable def unitIso : Over.mk (𝟙 (Spec (CommRingCat.of k))) ≅ overSpec k k :=
   Over.isoMk (Iso.refl _) (by
-    show 𝟙 _ ≫ (overSpec k k).hom = (Over.mk (𝟙 (Spec (CommRingCat.of k)))).hom
+    change 𝟙 _ ≫ (overSpec k k).hom = (Over.mk (𝟙 (Spec (CommRingCat.of k)))).hom
     rw [Category.id_comp]
     exact specMap_algebraMap_self_eq_id k)
 
@@ -113,9 +113,9 @@ once the seam is applied the remaining equation is exactly the landed **(3b)**
 theorem overDualNumberZero_eq :
     overDualNumberZero k = (unitIso k).hom ≫ overSpecMap (k := k) (DualNumber k) k := by
   apply Over.OverMorphism.ext
-  show Spec.map (CommRingCat.ofHom (TruncExpCech.fstRingHom (R := k)))
+  change Spec.map (CommRingCat.ofHom (TruncExpCech.fstRingHom (R := k)))
       = (unitIso k).hom.left ≫ Spec.map (CommRingCat.ofHom (algebraMap (DualNumber k) k))
-  show Spec.map (CommRingCat.ofHom (TruncExpCech.fstRingHom (R := k)))
+  change Spec.map (CommRingCat.ofHom (TruncExpCech.fstRingHom (R := k)))
       = 𝟙 _ ≫ Spec.map (CommRingCat.ofHom (algebraMap (DualNumber k) k))
   rw [Category.id_comp]
   exact (overSpecMap_eps_eq_overDualNumberZero k).symm
