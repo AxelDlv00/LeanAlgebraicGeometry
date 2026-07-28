@@ -33,8 +33,8 @@ which carries the full charter (target, constraints, working model, and phases).
 - `AlgebraicJacobian.lean` — the library root import list, and the index of what is actually
   checked: `lake build`'s default target is this module, so a new file is **not** elaborated by a
   bare `lake build` until it is imported here. Add the import, or check the file explicitly by
-  module name. **This gap is large, not hypothetical:** measured 2026-07-28, 651 `.lean` files
-  exist under `AlgebraicJacobian/` and **583 are reachable** from the root (528 direct imports plus
+  module name. **This gap is large, not hypothetical:** measured 2026-07-28, 654 `.lean` files
+  exist under `AlgebraicJacobian/` and **586 are reachable** from the root (531 direct imports plus
   their transitive imports), so **68** modules are never kernel-checked by a bare `lake build`.
   Count reachability transitively, not by the root's import lines. Parallel lanes move this figure
   hourly — re-measure rather than quoting it. An unrooted module looks green because no job runs

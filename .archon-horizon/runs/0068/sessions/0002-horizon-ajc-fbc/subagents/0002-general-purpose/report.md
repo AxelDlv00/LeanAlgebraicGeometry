@@ -1,1 +1,1 @@
-Both outer factors of `pullbackIso` preserve monos. Now the route-C reduction and the mono-locality lemma.
+Route C's key factorization is next. Let me test it.
