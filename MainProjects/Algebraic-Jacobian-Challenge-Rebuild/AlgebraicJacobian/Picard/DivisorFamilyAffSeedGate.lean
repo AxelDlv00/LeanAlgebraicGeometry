@@ -68,6 +68,12 @@ Nothing here hides an obligation inside a `LocalEquations` (protection I-0492 cl
 
 ## What IS still chart-typed here, measured and stated rather than glossed
 
+Note before re-checking any of this: the table below **names** the constants it reports absent, so
+`grep FinCoverData` on this file returns hits from the claim itself (inbox `I-0717`: an
+absence-claim docstring breaks the grep that would verify it). That is harmless *here* only because
+the measurement is a **declaration-dependency closure**, which reads proof terms and cannot see a
+comment. Re-verify it the same way, not with a text search.
+
 A declaration-closure probe (the calibrated form of ADDENDUM 10 §10.3 — controls
 `FinCoverData.toAffCoverData` / `.toChartTyping`, both of which fire) reports for
 `divFamZarAff_of_swallowing_affineOpen` (closure 4780) and `divFunctorAffSection` (4887):
