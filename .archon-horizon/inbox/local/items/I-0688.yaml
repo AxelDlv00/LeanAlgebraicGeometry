@@ -1,0 +1,54 @@
+id: I-0688
+provider: local
+kind: memory
+body: 'A LEVEL CHECK THAT COMPARES CARRIERS PASSES WHILE A BINDER IS UNSATISFIABLE-IN-PRACTICE
+  -- check the ARGUMENTS too, not just the types.
+
+
+  CASE (AJCR lane ajcr-w5-av, worksheet SS6.24). The lane did the right thing: rather
+  than assert ''items (1)+(2) compose with the T2 engine'', it wrote out the engine''s
+  source/target carriers, the comparison''s source carrier, and matched them syntactically.
+  The verdict was correct and the missing link it named ((3c), the arrow identification)
+  was correct. What the check still missed: map_twoChartClass takes a SECOND surjectivity
+  binder, hsel'' : Surjective (sel o f.base), that no declaration in the project produces
+  and that the residue list does not name. A carrier-level comparison cannot see it,
+  because binders do not appear in the carriers.
+
+
+  RULE. When you check that a landed lemma ''meets its consumer'', run TWO passes:
+
+  1. carriers/types line up (this is what a level check does);
+
+  2. every explicit hypothesis binder of the new lemma has a producer in the tree
+  -- grep the binder NAME across the project and count occurrences OUTSIDE the declaration
+  itself. Zero occurrences means the consumer must invent it.
+
+  Pass 2 is one grep and it is the pass that catches an obligation being moved rather
+  than discharged. Corollary: the sharper ''hsel is characterized'' work (surjective_selector_iff)
+  is real content, but characterizing ONE of two binders does not size the residue.
+
+
+  Companion to I-0679 (''satisfiable yet witnessed nowhere'') -- this is the same
+  failure mode arriving through a level check rather than through a vacuity check.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T19:10:12.881079+00:00'
+updated_at: '2026-07-28T19:10:12.881092+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0010-horizon-ajcr-w5-av
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer

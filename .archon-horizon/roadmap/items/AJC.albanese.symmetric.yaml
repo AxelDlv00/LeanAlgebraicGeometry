@@ -3,35 +3,44 @@ title: Abel-Jacobi and symmetric-power factorisation
 projects:
 - Algebraic-Jacobian-Challenge
 summary: "Abel-Jacobi and symmetric-power factorisation. Milne's argument is PROVED\
-  \ over the\nsymmetric power taken as an interface (Albanese/AlbaneseFromData.lean);\
-  \ what is missing\nis the object. As of run 0069 r5 the affine half of Milne III.3\
-  \ Proposition 3.1 has a\nNAMED carrier with a proved quotient property, over the\
-  \ base:\n\n * SymPowTensorAction.lean -- the S_n-action on the n-fold tensor power\
-  \ of a commutative\n   RING. Mathlib had factor permutation only as a LINEAR equiv,\
-  \ so MulSemiringAction did\n   not synthesize and FixedPoints.subring could not\
-  \ be STATED at a tensor power; Milne's\n   (A^{tensor n})^{S_n} was not expressible.\
-  \ permAlgHom (an ALGEBRA hom, via liftAlgHom on\n   the domDomCongr'd tprod) plus\
-  \ permMulSemiringAction and permSMulCommClass fix that.\n   Characteristic-free:\
-  \ nothing averages, so no g! is inverted.\n * SymPowInvariantsUnder.lean -- the\
-  \ invariants ARE the limit in Under k, and dually a\n   colimit in (Under k)^op:\
-  \ the consumer's category AND variance. Cheaper by restating\n   than by transporting\
-  \ across Over.opEquivOpUnder, since FixedPoints.subalgebra is\n   already a k-algebra.\n\
-  \ * Index-category step: Functor.op yields a diagram over (SingleObj G)^op, NOT\
-  \ over\n   SingleObj G. hasColimit_singleObj_of_op transports along Groupoid.invEquivalence,\
-  \ with\n   the reindexing exactly sigma -> sigma-inverse (rfl).\n\nTHE RESIDUE IS\
-  \ THE GLUING, unchanged: HasColimit (permDiagram C g) in Over (Spec kbar)\nfor the\
-  \ proper curve. SymPowColimit.lean section 6 has the availability table measured\
-  \ at\nthis pin -- HasCoproducts Scheme yes, HasCoequalizers/HasPushouts Scheme NO,\n\
-  Scheme.GlueData yes -- so the route is explicit glue data plus overlap cocycles.\n\
-  \nTWO LEADS NOT YET SPENT, both in this project and both sorry-free: Picard/StableAffineCover\n\
-  .lean proves exists_stable_affineOpen_of_orbitsInAffineOpen (a Gamma-STABLE affine\
-  \ cover via\nthe norm trick) and Picard/FiniteGaloisQuotientAffine.lean proves isGaloisQuotient_spec\n\
-  unconditionally. Those are the two hardest inputs a glue-data assembly needs, built\
-  \ for\nsemilinear Galois actions rather than S_n; whether the S_n case can consume\
-  \ them is the\nnext question to settle, and it was NOT settled this round.\n\nAlbaneseUP.lean's\
-  \ six sorries are UNCHANGED and albanese_universal_property still reports\nsorryAx\
-  \ -- they are stated against a sorry-bodied SymmetricPower, so discharging them\
-  \ would\nestablish nothing.\n"
+  \ over the symmetric\npower taken as an interface (Albanese/AlbaneseFromData.lean);\
+  \ what is missing is the object.\nAlbaneseUP.lean's six sorries are UNCHANGED and\
+  \ albanese_universal_property still reports\nsorryAx (measured, with firing controls)\
+  \ -- they are stated against a sorry-BODIED\nSymmetricPower, so discharging them\
+  \ would establish nothing.\n\nLANDED run 0069 r5, all sorry-free and rooted (they\
+  \ were outside the root import cone until\nthis round -- I-0659):\n * SymPowTensorAction.lean\
+  \ -- the S_n-action on the n-fold tensor power of a commutative RING.\n   Mathlib\
+  \ has factor permutation only as a LINEAR equiv, so MulSemiringAction did not\n\
+  \   synthesize and FixedPoints.subring could not be APPLIED; Milne's (A^{tensor\
+  \ n})^{S_n} was\n   not expressible. permAlgHom (an ALGEBRA hom via liftAlgHom on\
+  \ the domDomCongr'd tprod),\n   permMulSemiringAction (sigma acts as permAlgHom\
+  \ sigma-inverse, since permAlgHom is an\n   ANTI-hom), permSMulCommClass. Characteristic-free:\
+  \ nothing averages, no g! inverted.\n * SymPowInvariantsUnder.lean -- the invariants\
+  \ ARE the limit in Under k, dually a colimit in\n   (Under k)^op. Cheaper by restating\
+  \ than by transporting across Over.opEquivOpUnder, since\n   FixedPoints.subalgebra\
+  \ is already a k-algebra.\n * StableAffineCoverGroup.lean -- every point has a G-STABLE\
+  \ affine open neighbourhood, for a\n   BARE finite group acting by automorphisms.\
+  \ Not new mathematics: the same proof as\n   Picard/StableAffineCover.lean:193,\
+  \ whose SemilinearGalAction binder its body never touches\n   (compat is never mentioned;\
+  \ FiniteDimensional buys only a Fintype). Verified by porting the\n   body verbatim\
+  \ with the binder replaced.\n\nTHE GLUING RESIDUE IS FOUR ITEMS, NOT THREE -- corrected\
+  \ by a fresh-context review after I\npublished three:\n 1. DONE -- the G-stable\
+  \ affine cover (above).\n 2. An Aut-valued S_n action: there is NO Equiv.Perm (Fin\
+  \ n) to* Aut (C^n) in the tree.\n    MonObj.permAut is a bare morphism never shown\
+  \ invertible; permEnd lands in End, not Aut.\n    So item 1 has the right hypotheses\
+  \ and no producer.\n 3. THE BLOCKING ONE. symPowData_affineAlgebra builds its diagram\
+  \ from the n-fold COPRODUCT of\n    algebras in Under k; the invariants work above\
+  \ is about the tensor power. Identifying them\n    needs the n-ary coproduct-vs-tensor-power\
+  \ comparison plus matching its permutation action\n    to permAlgHom. Mathlib has\
+  \ only the BINARY case (Algebra/Category/Ring/Constructions.lean);\n    AJC has\
+  \ nothing. So r5 fixed r4's CATEGORY mismatch and the same shape reappeared one\
+  \ level\n    down at the OBJECT.\n 4. Cocycle/overlap agreement of the chart quotients,\
+  \ and OrbitsInAffineOpen FOR THE CURVE --\n    where quasi-projectivity enters,\
+  \ and mathlib has no quasi-projectivity vocabulary at this\n    pin.\n\nNEXT ROUND\
+  \ IS NOT THE GLUING: items 2 and 3, both cheap, both prerequisites to anything\n\
+  consuming this layer. Zero consumers is three rounds deep now.\n\nAvailability at\
+  \ this pin, so nobody re-searches: HasCoproducts Scheme YES, HasCoequalizers /\n\
+  HasPushouts Scheme NO, Scheme.GlueData YES.\n"
 status: active
 kind: proof
 priority: high
@@ -54,7 +63,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-28T16:59:59.631733+00:00'
+  updated_at: '2026-07-28T19:12:49.246097+00:00'
   pinned_commits:
   - 1fedb22e4
   - f7391b281

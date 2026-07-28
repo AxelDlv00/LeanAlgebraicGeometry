@@ -35,7 +35,7 @@ same theorem by a separate curve-specialized strategy.
 
 ## State (measured 2026-07-28)
 
-- **264 modules, 155,729 lines** (re-measured 2026-07-29 00:30, up from 257/153,196 a few
+- **273 modules, 158,653 lines** (re-measured 2026-07-29 02:55, up from 264/155,729 two
   hours earlier); a warm `lake build AlgebraicJacobian` was **green** at 8,746 jobs when last
   measured, which was before the 2026-07-28 lanes landed.  The `sorry` count is deliberately
   not restated here: it was 28 over 11 modules at the earlier measurement and four AJC lanes
@@ -56,18 +56,23 @@ same theorem by a separate curve-specialized strategy.
   routinely non-empty for a short while: a module not yet committed to the workspace
   ledger must **not** be rooted, since a clean checkout would then fail to build.  That
   grace period ends at the commit — once a module is in the ledger, leaving it unrooted
-  means the build does not check it.  **Currently violated in 13 modules** (measured
-  2026-07-29 01:15 by walking `import AlgebraicJacobian`: 252 of 264 modules in the root
-  cone, 12 outside it plus `Picard/Pic0Dimension`, which is unrooted *and* unbuilt).  All
-  13 are committed to the ledger, so none is inside the grace period:
+  means the build does not check it.  **Currently violated in 17 modules** (measured
+  2026-07-29 02:55 by walking `import AlgebraicJacobian` from the root module: 257 of 274
+  modules — the 273 under `AlgebraicJacobian/` plus the root aggregator — in the root cone,
+  17 outside it).  All 17 are committed to the ledger, so none is inside the grace period:
   - `RiemannRoch/Ledger/{DegreeVanishing,GenusBridge,NonVacuity,PrincipalCompare,`
-    `PrincipalTransport,SectionDrop}` and `RiemannRoch/LedgerPortability` — 37 of the 43
+    `PrincipalTransport,SectionDrop}` and `RiemannRoch/LedgerPortability` — 37 of the 51
     `Ledger/` files are in the cone via `RiemannRoch/WeilDivisor.lean` (commit
-    `8b654f78d`); these 7 are not.  Tracked as inbox issue `I-0600`.
-  - `Albanese/{SymPowInvariants,SymPowInvariantsLocalization,SymPowInvariantsUnder,`
-    `SymPowTensorAction}` — the invariants/tensor-action family; the root reaches only
-    `Albanese/SymPowInterface` and `Albanese/SymPowColimit`.
+    `8b654f78d`); these are not.  Tracked as inbox issue `I-0600`.
+  - `RiemannRoch/Ledger/{FiberChart,FiberDivisor,FiberLattice,FiberVanishing,FiberBound,`
+    `QcohSections,AffineVanishingQcoh,DivisorSheafQcoh}` — the fibrewise large-twist
+    vanishing layer ported from the sibling project (run 0074 r4, task `ajc-rr`), which
+    makes the cluster-P statements unconditional at this project's own curve.  Landed
+    unrooted because the root roll-up is outside that lane's write scope; same `I-0600`.
   - `Picard/{Pic0Dimension,SchemeKrullDimStalk}`.
+
+  The four `Albanese/SymPow*` modules that this bullet used to list were rooted by run 0069
+  r5 and are no longer in the set.
 
   Their declarations are not elaborated by `lake build AlgebraicJacobian` and no
   `#print axioms` line through the root can reach them.  Re-measure with the
@@ -240,11 +245,11 @@ bypassed monument, run 0068 r3), `AJC.rr`, `AJC.picrep`
 - `AlgebraicJacobian/Albanese/`: rigidity and extension of rational maps, plus the
   Albanese factorization.
 - `AlgebraicJacobian/RiemannRoch/`: divisor and adelic Riemann–Roch infrastructure.
-  `RiemannRoch/Ledger/` (43 files) is the χ-ledger ported from the sibling
-  Algebraic-Jacobian-Challenge-Rebuild project, plus four AJC-native
-  rederivations.  Mostly rooted now (37 of 43, via `WeilDivisor.lean`); six leaves
-  are still outside the root cone — see the rootedness note above and inbox issue
-  `I-0600`.
+  `RiemannRoch/Ledger/` (51 files) is the χ-ledger ported from the sibling
+  Algebraic-Jacobian-Challenge-Rebuild project, plus four AJC-native rederivations and
+  the fibrewise large-twist vanishing layer.  Partly rooted (37 of 51, via
+  `WeilDivisor.lean`); the remaining 14 are outside the root cone — see the rootedness
+  note above and inbox issue `I-0600`.
 - `blueprint/src/chapters/`: the mathematical blueprint.
 - `hgraph/`: the generated statement/declaration dependency graph.
 - `scripts/`: import-minimization and budget-trimming helpers (`min-imports.sh`,

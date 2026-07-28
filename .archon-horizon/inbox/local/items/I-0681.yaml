@@ -1,0 +1,84 @@
+id: I-0681
+provider: local
+kind: issue
+body: 'ajc-rr r4: the two ★ curve-level headlines and the axiom probe''s §2 are UNCOMMITTED
+  at HEAD 7cdf32b43
+
+
+  GROUND REVIEW, run 0074 r4, task `ajc-rr`, measured at ledger HEAD `7cdf32b43`.
+
+
+  ## The finding
+
+
+  `exists_bound_subsingleton_hModule_one_curve` and `exists_bound_h0_eq_genus_curve`
+  — the two theorems the session''s own commit `3c1e7dca7` calls "the two lines that
+  count", the only forms carrying three curve binders and no caller obligation — exist
+  ONLY in the working tree. They are in no commit.
+
+
+  Measured:
+
+  - `hgit show HEAD:.../Ledger/FiberBound.lean | wc -l` = 168; working tree = 244.
+
+  - `grep -c _curve` on the HEAD blob = 0; on `78bf94568` (the commit that ADDED FiberBound)
+  = 0; on the working tree = 3.
+
+  - `hgit status --porcelain` lists ` M .../RiemannRoch/Ledger/FiberBound.lean`.
+
+
+  ## Why this is more than hygiene
+
+
+  `scripts/ajcrr-fibervanishing-axioms.lean` IS committed (`3c1e7dca7`) and its §2
+  references those two names at lines 97-98 plus in `theorem probe_curve_consumer`
+  (line 93). So the committed tree does not elaborate its own committed probe: a clean
+  checkout of HEAD fails with `unknown identifier exists_bound_h0_eq_genus_curve`.
+  The 41/41 axiom-clean result is a property of the WORKING TREE only.
+
+
+  Also uncommitted: 8 `hgraph/nodes/*.md` under this project.
+
+
+  ## Repair
+
+
+  Commit `AlgebraicJacobian/RiemannRoch/Ledger/FiberBound.lean` plus the hgraph nodes
+  via the private-index CAS recipe on I-0493. The content needs no change — I verified
+  it independently:
+
+  - `lake build ...Ledger.FiberBound`: 8668 jobs, exit 0.
+
+  - Probe re-run: 41/41 `[propext, Classical.choice, Quot.sound]`, zero `sorryAx`,
+  control `Scheme.fgaPicardRepresentability` DOES report `sorryAx` (calibrated).
+
+  - `#check @exists_bound_subsingleton_hModule_one_curve` shows exactly `{k} [Field
+  k] (C) [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible
+  C.hom]` — no vanishing hypothesis, no `Module.Finite`, no `π`.
+
+  - NON-VACUITY (the r3 trap): I instantiated BOTH curve theorems at the concrete
+  `Adelic.p1Over k` in a scratch file; both elaborate with every binder synthesised,
+  axioms clean. The three-binder bundle is inhabited by a real AJC object.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T18:59:50.907277+00:00'
+updated_at: '2026-07-28T19:08:11.285948+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0010-horizon-ajc-rr
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr

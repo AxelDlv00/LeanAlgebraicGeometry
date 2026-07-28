@@ -1322,7 +1322,15 @@ provable as stated, because mathlib v4.31 has no quasi-projectivity
 vocabulary. That is exactly the vocabulary the first conclusion above needs, so
 this obligation is expected to be discharged by base change to `k̄` via
 `universallyClosed_of_baseChange` rather than by formalising quasi-projectivity
-from scratch. -/
+from scratch.
+
+SUPERSEDED ROUTE ADVICE (run 0067 r3/r6). The paragraph above is retained for its
+mathematics, but `universallyClosed_of_valuativeCriterion` below is the better target:
+it needs no quasi-projectivity vocabulary at all, and the `QuasiCompact` side condition
+mathlib's valuative criterion wants is already a theorem here (`quasiCompact`). Do
+**not** attempt the ambient route via `universallyClosed_of_ambient` — its hypothesis is
+unsatisfiable, see the retraction there. Note that this statement, about
+`(Pic0Scheme C).hom`, is *not* affected by that: `Pic⁰` is quasi-compact, `Pic` is not. -/
 theorem universallyClosed {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1397,9 +1405,16 @@ Every conjunct of `IsProper` other than the valuative lifting is a theorem of th
 
 Compare the two earlier reductions in this file. `proper_of_universallyClosed` leaves
 universal closedness of `Pic⁰` open; `proper_of_ambient_universallyClosed` moves it to the
-ambient `Pic_{C/k}`, where Kleiman argues — but *his* argument is the quasi-projectivity one,
-whose vocabulary is missing. This version replaces that residue with a lifting statement,
-which is both formalisable in the pinned mathlib and the classical content of properness. -/
+ambient `Pic_{C/k}` — and **that move is now retracted** (run 0067 r6): universal closedness
+of `Pic_{C/k}` is not merely hard to prove, it is *false*, since it would force
+`CompactSpace (PicScheme C).left` while `Pic_{C/k}` is an infinite disjoint union over
+`deg ∈ ℤ`. See `universallyClosed_of_ambient` and `Picard/AmbientPicNotProper.lean`.
+
+**So this theorem is not one of three routes; it is the route.** Its hypothesis is about
+`(Pic0Scheme C).hom`, whose source is quasi-compact (`quasiCompact` above), so nothing
+here is obstructed the way the ambient version is. It also needs no quasi-projectivity
+vocabulary — the residue is a lifting statement, formalisable in the pinned mathlib and
+the classical content of properness. -/
 theorem proper_of_valuativeCriterion {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1423,15 +1438,40 @@ under composition (`universallyClosed_isStableUnderComposition`), and the compos
 `Pic⁰ ↪ Pic → Spec k` *is* `(Pic0Scheme C).hom` by `Over.w` of the inclusion. So universal
 closedness of the structural morphism of `Pic⁰` follows from that of `Pic`.
 
-Why this is worth stating separately: it moves the open content off the identity component
-and onto the ambient Picard scheme, where Kleiman's argument actually lives — Kleiman §5
-Thm.~`th:qpp&p` is a statement about `Pic_{C/k}`, and the passage to the identity component
-was never the difficulty. Combined with `proper_of_universallyClosed`, properness of `Pic⁰`
-now rests on a property of `Pic` alone.
-
 Note the closed-immersion conjunct is doing real work: an *open* immersion is not
 universally closed, so this argument needs the clopen-ness that
-`isOpenSubgroupScheme` provides and would fail for a general open subgroup scheme. -/
+`isOpenSubgroupScheme` provides and would fail for a general open subgroup scheme.
+
+⚠ **RETRACTED AS A REDUCTION (run 0067 r6). This theorem is true; its hypothesis is
+not satisfiable at `PicScheme C`, so it reduces nothing.** The paragraph deleted from
+here claimed this "moves the open content off the identity component and onto the
+ambient Picard scheme, where Kleiman's argument actually lives", and the roadmap row
+`AJC.pic0av.structure` accordingly called it "a SECOND, INDEPENDENT reduction … worth
+trying first". Both were wrong, and no `sorry` census or axiom probe could detect it,
+because a theorem with an unsatisfiable hypothesis is still a theorem.
+
+Why the hypothesis fails: `UniversallyClosed` carries finiteness of the *source* over
+an affine base. Mathlib derives `QuasiCompact` from it (the `priority := 900` instance
+of `Morphisms/UniversallyClosed.lean` — precisely why `IsProper` has three fields and
+no quasi-compactness one), and `Spec k` is compact, so `UniversallyClosed
+(PicScheme C).hom` would give `CompactSpace (PicScheme C).left`. But `Pic_{C/k}` is a
+**disjoint union over `deg ∈ ℤ`** — the second clause of Kleiman §4 Thm.~`th:main`(1),
+which `HasPicScheme` itself bundles — and an infinite disjoint cover by nonempty opens
+has no finite subcover. Kernel-checked at scheme generality in
+`Picard/AmbientPicNotProper.lean`
+(`Scheme.not_universallyClosed_of_infinite_disjoint_open_cover`).
+
+Retained rather than deleted, for two reasons. The closed-immersion transport is
+correct and is exactly what a *finite* ambient union would need — if a future
+development produces a single `Pic^d` as the ambient object, this is the right lemma.
+And `¬ UniversallyClosed (PicScheme C).hom` is not itself formalised here (it needs the
+degree decomposition of the scheme, which this project lacks — it has `PicScheme.degree`
+but not the fibrewise splitting), so the retraction is of the *route*, argued from a
+general theorem, not a formalised refutation of this hypothesis.
+
+USE INSTEAD: `proper_of_valuativeCriterion` / `universallyClosed_of_valuativeCriterion`,
+which speak about `(Pic0Scheme C).hom`, whose source **is** quasi-compact
+(`Pic0.quasiCompact`). What the roadmap called the fallback was the only route. -/
 theorem universallyClosed_of_ambient {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -1451,11 +1491,18 @@ theorem universallyClosed_of_ambient {k : Type u} [Field k]
 proved (run 0067). The composite of `universallyClosed_of_ambient` with
 `proper_of_universallyClosed`.
 
-This is the sharpest form of the properness reduction currently available: `Pic⁰_{C/k}` is
-proper over `k` as soon as `Pic_{C/k}` is universally closed over `k`. Both the separatedness
-and finite-type conjuncts of `IsProper`, and the passage from the ambient scheme to the
-identity component, are discharged; what remains is one property of `Pic_{C/k}`, which is
-where Kleiman §5 Thm.~`th:qpp&p` speaks. -/
+⚠ **RETRACTED AS A REDUCTION (run 0067 r6), for the reason given in full at
+`universallyClosed_of_ambient` above.** This text used to call it "the sharpest form of
+the properness reduction currently available … what remains is one property of
+`Pic_{C/k}`". It is a true theorem whose hypothesis `UniversallyClosed (PicScheme C).hom`
+cannot hold: universal closedness over an affine base implies `CompactSpace` of the
+source, while `Pic_{C/k}` is an infinite disjoint union over `deg ∈ ℤ`. See
+`Picard/AmbientPicNotProper.lean`.
+
+The separatedness and finite-type conjuncts, and the closed-immersion passage from the
+ambient scheme to the identity component, are genuinely discharged — the defect is
+entirely in *which object* the remaining property is asked of. Use
+`proper_of_valuativeCriterion` instead. -/
 theorem proper_of_ambient_universallyClosed {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

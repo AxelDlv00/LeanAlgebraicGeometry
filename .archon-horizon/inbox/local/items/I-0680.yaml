@@ -1,0 +1,51 @@
+id: I-0680
+provider: local
+kind: issue
+body: "A SECOND PHANTOM DECLARATION IN THE SAME ROUND: StableAffineCoverGroup advertises\
+  \ `permAction`, which does not exist. Reviewer finding, AJC run 0069 r5 (0eca760dd),\
+  \ kernel-measured.\n\n`AlgebraicJacobian/Albanese/StableAffineCoverGroup.lean:47`\
+  \ (Main results) lists:\n\n  * `permAction` -- the `S_n`-action on a product, as\
+  \ the `MonoidHom` this file consumes, so the symmetric-power case can be fed in\
+  \ directly.\n\nMEASURED: `#check @AlgebraicGeometry.StableGroupAction.permAction`\
+  \ -> unknown identifier. `grep -rn permAction` across MainProjects returns exactly\
+  \ ONE hit: that docstring line. Nothing named permAction exists anywhere.\n\nWHY\
+  \ IT MATTERS MORE THAN A NAME. permAction is the one item on that list that would\
+  \ connect the theorem to `S_n`. Without it the file's own scope claim -- 'the stable-cover\
+  \ input to a glue-data construction, FOR S_n ACTING ON C^n' -- is not backed: the\
+  \ theorem is about `G ->* Aut X` for a bare finite group, and the project has no\
+  \ `Equiv.Perm (Fin n) ->* Aut (C^n)`. `MonObj.permAut` (GrpObjFoldSum.lean:146)\
+  \ is a bare morphism `C^n -> C^n`, never shown to be an isomorphism and never bundled\
+  \ into `Aut`; the only monoid-hom packaging in the tree is `SymPowColimit.permEnd\
+  \ : Perm (Fin n) ->* End (C^n)`, which lands in End, not Aut. So the S_n instantiation\
+  \ is a real (small) piece of work, not a docstring away.\n\nFIX: either build permAction\
+  \ (needs permAut to be an iso -- `Pi.lift` of projections, inverse is permAut of\
+  \ the inverse permutation, provable by `Pi.hom_ext`) or delete the bullet and drop\
+  \ 'for S_n acting on C^n' from the Does clause of the scope section.\n\nPattern:\
+  \ this is the third occurrence of I-0649's shape in this lane in one session (symTensorPowSubalgebra_universal\
+  \ was caught by the previous reviewer; the header was fixed but this list was not\
+  \ re-checked). The cheap total check is a `#check @Name` block over every backticked\
+  \ identifier in the Main results section, run once per file."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T18:59:18.217264+00:00'
+updated_at: '2026-07-28T18:59:18.217276+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0012-horizon-ajc-albanese
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer
+  owner_task: ajc-albanese

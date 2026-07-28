@@ -1,0 +1,51 @@
+id: I-0687
+provider: local
+kind: issue
+body: "THE SS6.23 RETRACTION DID NOT REACH TWO LINES INSIDE THE LEAN FILE IT CITES\
+  \ -- the false half of the (3b) docstring survives at HEAD (work-reviewer, lane\
+  \ ajcr-w5-av).\n\nedd4d9af4 struck SS6.22's withdrawn lines in the worksheet in\
+  \ place (good, and the strike is complete there: I re-grepped 'two sub-items' and\
+  \ 'ONE named statement' and both are inside ~~...~~ with a WITHDRAWN pointer). But\
+  \ the SAME claim is still asserted, unstruck, in a THEOREM docstring:\n\nTangent/TwoChartSelector.lean:206-207,\
+  \ in the docstring of overSpecMap_eps_eq_overDualNumberZero:\n  'The source objects\
+  \ agree for the same reason: overSpec k k is\n   Over.mk (Spec.map (ofHom (algebraMap\
+  \ k k))) and algebraMap k k = RingHom.id k.'\n\nThat sentence IS the retracted claim:\
+  \ it asserts the source objects agree by the ring-level rfl. The retraction (SS6.23,\
+  \ and the neighbouring docstring at :217-238) says exactly the opposite -- they\
+  \ are equal objects but NOT definitionally, and I re-verified independently against\
+  \ mathlib:\n  * CommRingCat.ofHom (algebraMap k k) = 1_(CommRingCat.of k) closes\
+  \ by rfl;\n  * Spec.map (...) = 1_(Spec k) does NOT (rfl fails; Spec.map_id closes\
+  \ it);\n  * Over.mk (Spec.map (ofHom (algebraMap k k))) = Over.mk (1 (Spec k)) does\
+  \ NOT close by rfl.\nSo :206-207 is false as stated. A reader of that docstring\
+  \ alone gets the withdrawn claim with no marker, two declarations above the one\
+  \ that refutes it -- this is the I-0682/'retract where the claim is' pattern recurring\
+  \ in the very file that records it.\n\nALSO STALE, one line in the worksheet: SS6.21's\
+  \ closing line 1457 'Nothing else stands between the two-chart comparison and the\
+  \ T2 engine at quotient level.' is left unmarked. SS6.24 (line 1615) now says the\
+  \ opposite -- 'what is therefore still missing is exactly one link'. Line 1525 in\
+  \ SS6.22 has the same sentence and is likewise unstruck.\n\nACTION: strike or rewrite\
+  \ TwoChartSelector.lean:206-207 (say 'the source objects are equal but NOT defeq\
+  \ -- see specMap_algebraMap_self_eq_id below'), and mark worksheet lines 1457 and\
+  \ 1525."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T19:09:47.182805+00:00'
+updated_at: '2026-07-28T19:09:47.182818+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0010-horizon-ajcr-w5-av
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer

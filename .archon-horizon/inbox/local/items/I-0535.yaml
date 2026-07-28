@@ -43,13 +43,13 @@ body: '**THE `rr.principal` CHI-LEDGER PORT IS UNDER-SIZED BY THE COMMENT THAT S
   count is four comparisons and roughly twice the closure.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T06:15:09.725655+00:00'
-updated_at: '2026-07-28T06:15:09.725668+00:00'
+updated_at: '2026-07-28T19:15:12.183904+00:00'
 metadata:
   provenance:
     run: '0067'
@@ -61,3 +61,5 @@ metadata:
     task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
       properness, degree
     projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr

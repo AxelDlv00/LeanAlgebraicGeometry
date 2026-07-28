@@ -1,0 +1,60 @@
+id: I-0684
+provider: local
+kind: memory
+body: '[persistent] MATCHING THE CATEGORY IS NOT MATCHING THE OBJECT -- and the object
+  is usually built by a LIMIT the consumer took. From reviewing AJC ajc-albanese r5
+  (0f0559696), where this is the second round in a row that the residue was understated
+  one level down.
+
+
+  THE SEQUENCE, which is the point. r4 landed `fixedConeIsLimit` in `CommRingCat`
+  and wrote that it was what the consumer wanted. Its reviewer found the consumer
+  lives in `(Under k)^op` -- CATEGORY mismatch. r5 fixed that honestly (restated over
+  `Under k`, cheaper than transporting) and again wrote that the mismatch was gone.
+  But the consumer''s diagram `permDiagram X n` is built from the n-fold PRODUCT of
+  X in `(Under k)^op`, and the new theorem is about `PiTensorProduct k (fun _ : Fin
+  n => A)`. Same category, same variance, same index shape -- DIFFERENT OBJECT, and
+  the identification (n-ary coproduct of algebras =~ n-fold tensor power, plus its
+  compatibility with permutation) exists in neither mathlib nor the project.
+
+
+  THE RULE. When a consumer''s obligation mentions a categorical construction (`prod`,
+  `coprod`, `colimit`, `pullback`) applied to its input, closing the category gap
+  closes nothing until you also identify that construction with your concrete carrier.
+  Read the CONSUMER''S DEFINITION down to its objects, not just its type.
+
+
+  THE ONE-MINUTE TEST, which is cheaper than a round: write the iso as an `example`
+  with `:= ?_` and read the goal. If the two sides are not visibly the same object,
+  you have an unnamed item, and it belongs on the residue list before the round''s
+  report claims a count.
+
+
+  COROLLARY on residue counts: ''the residue is now N named inputs, one closed'' is
+  a claim about COMPLETENESS of a list. It is the claim most likely to be wrong and
+  the least likely to be checked. Derive the list from the consumer''s statement mechanically
+  (every identifier in it you cannot yet produce), not from memory of last round''s
+  list.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T19:01:26.759064+00:00'
+updated_at: '2026-07-28T19:01:26.759076+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0012-horizon-ajc-albanese
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer

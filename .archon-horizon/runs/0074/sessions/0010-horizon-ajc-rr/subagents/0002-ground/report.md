@@ -1,0 +1,47 @@
+All four claims checked. Here is what I found.
+
+## Verdict on the four claims
+
+**(1) PORT-COST CLAIM — substantially confirmed, two figures wrong.**
+
+The load-bearing part reproduces exactly. I computed the transitive `AlgebraicJacobian.*` import closure of `Ledger/FiberBound.lean` (55 modules) and grepped all 55 with block and line comments stripped: `picClass`, `CechPic`, `classDeg`, `divisorClass`, `PresentationDivisor`, `fiberTwist`, `fiberCocycle` occur **zero** times in code. Every textual hit is prose. Zero `Picard.*` modules in the closure; no `AlgebraicJacobian.Challenge`. Nothing dropped gets used. The cone really was bundling.
+
+Two quoted numbers do not reproduce:
+- The Picard cone is **fourteen** modules, not twelve (adding `DivisorClassCompat` and `DivisorClassMeromorphic` to the twelve named). "Twelve" is in commit `3e88fbaeb`, `DegreeVanishing.lean:163`, `DivisorSheafQcoh.lean:23`, and I-0678.
+- "23 absent from AJC" matches no measurement I can construct. Naive path comparison gives 58 (the port was renamed into `Ledger/`); counting a module present when its path *or* `Ledger/<basename>.lean` exists gives **21** = 14 Picard + `Challenge` + `RiemannRoch.Degree` + the 5 `FLV*`/`FiberTwist` files that *are* the port. The 59-module closure figure itself reproduces exactly.
+
+**(2) GAP-CLOSING CLAIM — confirmed, including the r3 trap.**
+
+`#check @exists_bound_subsingleton_hModule_one_curve` gives exactly `{k} [Field k] (C) [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]`. Three curve binders, no vanishing hypothesis, no `Module.Finite`, no `π`. Same for `exists_bound_h0_eq_genus_curve`.
+
+Non-vacuity, the exact test that caught r3: I instantiated both at the concrete `Adelic.p1Over k` in a scratch file. Both elaborate with every binder synthesised, axioms `[propext, Classical.choice, Quot.sound]`. So the bundle is inhabited by a real AJC object, not an empty class.
+
+`exists_isFinite_isDominant_toP1` (`/home/axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/RiemannRoch/Ledger/MapToP1.lean:125`) hides nothing — its binders are the same three (`SmoothOfRelativeDimension 1`, `IsProper`, `GeometricallyIrreducible`) plus `{k} [Field k]`, and it is axiom-clean. The gap r3 measured is genuinely closed.
+
+**(3) AXIOM CLAIM — reproduced, and the control fires.**
+
+First run failed: cold build tree, missing `DegreeVanishing.olean`. After `lake build`, the probe gives 41/41 `[propext, Classical.choice, Quot.sound]`, zero `sorryAx`, and `Scheme.fgaPicardRepresentability` **does** report `sorryAx` — calibrated. After the session's later `baseChange_binders_stable` addition I re-ran it: 42 clean plus the firing control, zero errors.
+
+**(4) SCOPE-HONESTY CLAIM — honest. No sentence overclaims extension-uniformity.**
+
+I read both module docstrings looking for a sentence a reader could take as extension-uniformity and did not find one. `FiberVanishing.lean:30-35` and `FiberBound.lean:45-51` both name the mechanism (per-field `Classical.choose` on a stabilization re-run at each base field) rather than just asserting the gap. Global generation is correctly flagged as closed by an independent route.
+
+The session then went further while I was reviewing and split (b) into a free half and an open half (`8157e43e5`). I checked that too: the prose claims the theorem "re-fires at `C_κ` for every `κ`", and I confirmed that substantively — instantiating the headline at the concrete `Scheme.baseChangeField C κ` elaborates axiom-clean. So the free half is real, not just a statement about `IsStableUnderBaseChange` instances, and the open half is correctly identified as the constant not transporting.
+
+## What I falsified
+
+**The two ★ headlines were uncommitted when I started.** At `7cdf32b43`, `FiberBound.lean` in the ledger was 168 lines with **zero** occurrences of `_curve`; the working tree had 244 with three. Meanwhile `scripts/ajcrr-fibervanishing-axioms.lean` **was** committed and referenced those names at lines 93/97/98 — so the committed tree did not elaborate its own committed probe. The 41/41 result was a property of the working tree only. Filed as I-0681; the session has since committed it (now 289 lines, 4 hits), so this is resolved but was real.
+
+**A phantom declaration name in a landed docstring.** `FiberBound.lean:53` cites `generated_unconditional_of_isFinite_toP1`. No such declaration exists anywhere in the workspace — one grep hit, the docstring itself. The theorem meant is `exists_bound_generated_of_isFinite_toP1` (line 156), named correctly in the same file at line 65. Same failure mode as `2f16ec34b`. Filed with the count corrections as I-0683.
+
+## The also-checks
+
+(i) Zero real `sorry` tokens under `AlgebraicJacobian/RiemannRoch/` — all 21 textual hits are prose in docstrings. (ii) `WeilDivisor.lean` untouched across the whole range; its last commit predates this session. (iii) No deletions in any ajc-rr commit; paths confined to `RiemannRoch/Ledger/` plus `scripts/` (`ajcrr-fibervanishing-axioms.lean`, `axiom-frontier.lean`). (iv) **Outside** the root roll-up — no `Ledger/` file appears in `AlgebraicJacobian.lean`, and no ajc-rr commit touches it. So the clean axiom lines are scratch-path, as expected. That is a real caveat: the `#print axioms` lines are measured at the narrow import cone, not at the full root, and this project has previously had a declaration report clean at a narrow cone and `sorryAx` at the root (commit `48eea9212`, the `genus ≤ dim Pic⁰` retraction).
+
+## One thing the workspace disagrees about
+
+`Ledger/SectionDrop.lean:79-92` still says "the base is unavailable" and "what AJC lacks is the *import*". That is now false — the import landed this session. The docstring was not updated. Also the graph: **zero** hgraph nodes exist for any declaration in the eight new files, so the blueprint graph does not know this layer exists.
+
+## Highest-value next action
+
+Run `horizon graph sync` for Algebraic-Jacobian-Challenge and update the stale `SectionDrop.lean` paragraph. The mathematics is converging and verified; what is now out of step is the navigation layer — 40-plus new declarations including the two headlines are invisible to `graph frontier`, and one docstring actively tells the next reader the gap is still open. Both are cheap, and both are the kind of drift that costs a future session a re-derivation. The count corrections in I-0683 are worth folding in at the same time, since "twelve" is repeated across three files and an inbox item that other lanes will read.

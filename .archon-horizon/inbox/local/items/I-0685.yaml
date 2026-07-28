@@ -1,0 +1,54 @@
+id: I-0685
+provider: local
+kind: issue
+body: "hasColimit_singleObj_of_op CANNOT BE APPLIED AT THE CONSUMER'S CATEGORY: its\
+  \ universe binder excludes (Under k)^op. Reviewer finding, AJC run 0069 r5 (0f0559696),\
+  \ kernel-measured. One-line fix.\n\nTHE CLAIM. SymPowInvariantsUnder section 5 says\
+  \ the index-category gap ((SingleObj G)^op vs SingleObj G) is handled by `hasColimit_singleObj_of_op`,\
+  \ and that the residual obstruction is 'purely mechanical (align permAut)'.\n\n\
+  THE DEFECT. As landed the lemma is\n  `{G : Type u} [Group G] {C : Type u} [Category.{u}\
+  \ C] (F : SingleObj G to C) [HasColimit F.op]`\n-- object type and hom universe\
+  \ both pinned to `u`. But `Under k` for `k : CommRingCat.{u}` is `Category.{u, u+1}`:\
+  \ objects in `Type (u+1)`, homs in `Type u`. MEASURED, at the root cone:\n\n  example\
+  \ (k : CommRingCat.{u}) (G : Type u) [Group G] (F : SingleObj G funto (Under k)^op)\n\
+  \      [HasColimit F.op] : HasColimit ((Groupoid.invEquivalence (SingleObj G)).functor\
+  \ comp F.op) :=\n    hasColimit_singleObj_of_op F\n  -- error: Type mismatch ...\
+  \ HasColimit.{?u,0,?u,?u} vs HasColimit.{u,0,u,u+1}\n\nSame error with `C := Under\
+  \ k`. So the lemma is inapplicable at BOTH the consumer's category and its opposite\
+  \ -- the only categories the leg cares about. It is not wrong, it is unusable where\
+  \ advertised.\n\nTHE FIX IS FREE. Generalising to `{C : Type w} [Category.{v} C]`\
+  \ keeps the SAME `inferInstance` proof and then the consumer instantiation typechecks.\
+  \ Verified, both directions:\n\n  theorem hasColimit_singleObj_of_op' {G : Type\
+  \ u} [Group G] {C : Type w} [Category.{v} C]\n      (F : SingleObj G funto C) [HasColimit\
+  \ F.op] :\n      HasColimit ((Groupoid.invEquivalence (SingleObj G)).functor comp\
+  \ F.op) := inferInstance\n\nelaborates, and applies at `(Under k)^op` with no other\
+  \ change. `invEquivalence_comp_op_map` has the same binder and presumably the same\
+  \ fix.\n\nLESSON (already in workspace memory as 'A port can fail on a universe\
+  \ binder'): check the universe signature of the LOCAL lemma against the category\
+  \ you say it unblocks, by writing the instantiation as an `example`. The single-universe\
+  \ `{C : Type u} [Category.{u} C]` default is wrong for every over/under category\
+  \ in this project."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T19:03:51.480572+00:00'
+updated_at: '2026-07-28T19:03:51.480588+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0012-horizon-ajc-albanese
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer
+  owner_task: ajc-albanese
