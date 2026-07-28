@@ -1188,6 +1188,14 @@ works.** Measured on scratch (not committed, nothing to clean up):
    transported along `resLE_comp_ι` rather than built from `preimage_top`. That is exactly the
    elided-restriction-argument family of §6.10(3): **state the step as a `have` with the
    inequalities named and close with `exact`, do not let `rw` infer them.**
+5. **AND A COST WARNING, measured:** I then applied that fix — naming `e1 : ⊤ ≤ ((g⁻¹O).ι ≫ g) ⁻¹ᵁ O`
+   via `Hom.comp_preimage` + `ι_preimage_self` and feeding it to `appLE_comp_appLE` — and the *`have`
+   alone* blew the default 200000 heartbeats on `isDefEq`, then did not finish inside 300 s at
+   1600000. So this step is **elaboration-expensive, not conceptually hard**, and a session
+   attempting it should (a) budget `set_option maxHeartbeats` on that declaration from the start with
+   the required explanatory comment, (b) do it when the machine is not carrying eight concurrent
+   lanes, and (c) consider proving the `CommRingCat` square as its own top-level lemma so the cost is
+   paid once and in isolation rather than inside the `cechPicClass` proof.
 
 **THE METHOD LESSON, since this lane has now mis-sized the same clause twice in one session.**
 §6.15 said "the geometry is in step 3"; §6.16 said "the geometry is freeness of the restriction";
