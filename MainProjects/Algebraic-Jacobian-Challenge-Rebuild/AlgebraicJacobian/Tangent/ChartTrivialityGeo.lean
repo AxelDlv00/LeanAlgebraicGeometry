@@ -68,17 +68,29 @@ kernel check against a scratch olean root found nine errors in twelve seconds.
 
 ## What this does NOT close
 
-**The two named consumer inputs of T4 are untouched** and remain unwitnessed: `V₀ ≠ ⊥ ∧ V₀ ≠ ⊤`,
-and `Surjective f.base` at the `ε ↦ 0` map (`Tangent/TwoChartSelector.lean`'s
-`surjective_selector_comp` relocated the latter to a topological fact about a map of one-point
-spaces). Both are satisfiable; neither is discharged here.
+*This section described the state when this file landed (`93f84ed2`). All three items it listed
+were discharged later the same session; kept with its resolutions so the file is not read as
+open work.*
 
-**Nor does this file produce the ring equivalences and the square its own hypotheses take.** At the
-thickened charts `e` is `Over.dualNumberSectionsOfIsAffineOpen` and `e'` its `ε ↦ 0` reduction; the
-square `hsq` between them is the next consumer-side obligation, and it is named rather than built.
-Stated plainly so a green sorry-free module is not read as an instantiated one — the standing
-lesson of inbox `I-0630`/`I-0679`, and of `I-0711`: a carrier with no producers reads as an island
-exactly like one with no consumers, and the two need opposite repairs.
+**The two named consumer inputs of T4** — `V₀ ≠ ⊥ ∧ V₀ ≠ ⊤` and `Surjective f.base` at the
+`ε ↦ 0` map (`Tangent/TwoChartSelector.lean`'s `surjective_selector_comp` relocated the latter to
+a topological fact about a map of one-point spaces) — were **both witnessed**:
+`Tangent/EpsZeroSurjective.lean` (`2755a58e`, over an arbitrary ring) and
+`Tangent/TwoChartHonest.lean` (`80e6da8e`, which reduced *both* chart conditions to the single
+hypothesis `¬ IsAffine Y`). `Tangent/TwoChartHonestGenus.lean` (`2d46afeb`) then made even that
+unnecessary: `¬ IsAffine` was a chosen sufficient condition, and `g ≠ 0` discharges what it was
+wanted for. Inbox `I-0729` records the `¬ IsAffine` route and its price, but it is not on the
+critical path.
+
+**The ring equivalences and the square this file's hypotheses take are also built**, in
+`Tangent/EpsChartSquare.lean` (`aaa4627bb`): `e` is `Over.dualNumberSectionsOfIsAffineOpen`, `e'`
+its `ε ↦ 0` reduction, and `relSectionsMap_eq_fstRingHom_comp` is the square `hsq`, instantiated at
+`A = Γ(C.left, W)`. The original note here — that `hsq` was "the next consumer-side obligation,
+named rather than built" — priced work that was three quarters landed; see worksheet §6.28.
+
+The standing lesson of inbox `I-0630`/`I-0679`/`I-0711` still applies to how this file is read: a
+carrier with no producers reads as an island exactly like one with no consumers, and the two need
+opposite repairs. So does `I-0687`: a retraction that misses a docstring has not landed.
 
 ## Main declarations
 
