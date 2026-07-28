@@ -346,8 +346,23 @@ are accepted as written and are now Lean:
   inferred from an absent NAME rather than from the obligation).  Transports (i)/(ii) reduce,
   given a presentation, to the landed `hasWitnessH1Vanishing_iff_of_separable` plus carrier
   bookkeeping — and that carrier bookkeeping is now landed too (`e6a7b0582`;
-  `Pic0ChartLocusIsOpen.lean` is sorry-free).  The one remaining input of the row is the
-  pointwise `IsChartDatumPresentation`.
+  `Pic0ChartLocusIsOpen.lean` is sorry-free).  ~~The one remaining input of the row is the
+  pointwise `IsChartDatumPresentation`.~~  **Corrected: TWO inputs remain, and neither is
+  bookkeeping** (issue I-0558): (i) **honesty over a general affine base** — the extraction
+  corollary takes an honest Čech class over `B` as a *hypothesis*, and nothing in the tree
+  supplies one, since the splitting theorem needs `[Field K]` (its engine is étale
+  field-cofinality) and the only other plus-unit surjectivity is field-only too; obtaining it IS
+  the (b-amendment)'s "collapse over the étale carrier" step, i.e. a construction; and (ii) the
+  **pointwise `IsChartDatumPresentation`**, which wants one datum over `A` matching, at every
+  residue field simultaneously, a split predicate whose splitting field varies point to point.
+* **A SIGN ERROR IN THE CO-SIGNED BRICK, found by review and fixed 2026-07-28 (`8ef9493ff`,
+  issue I-0514).**  `chartTwist` had applied the SAME twist as `chartValue` rather than its
+  inverse, giving fibre degree `−g`; since `h¹ = 0` forces `deg ≥ g − 1`, `chartLocus` was
+  **empty for every `g ≥ 1`**, so §1.2's COV-1 would have been *unprovable* against it rather
+  than merely unproved.  Now `λ · θᵐ · Σ⁻¹`, degree `+g`, with the direction pinned by
+  `chartTwist_chartValue` (a round-trip law, false of the old definition) rather than by a
+  degree — the wrong-signed ledger was internally consistent, which is exactly why a ledger
+  could not catch it.
 * **a FOURTH input, prior to all three listed, had to be built first**: nothing in the tree
   converted a point of a general test into a field point at which a class could be read.
   That is `Over.testPoint` (`Picard/Pic0ChartTestPoint.lean`); see w4-datc §3.3 for the

@@ -499,9 +499,26 @@ the boundary as a NAMED interface so the DAT-B lane slots in:
     exists**, deliberately: `IsSplitWitness` spells the base-changed curve two ways, so
     handing its tuple to one anonymous constructor while `L` is a metavariable does not
     elaborate at any budget tried.  Use `Iff.rfl` plus `.mpr` at a site where `L` is fixed.
-  * **The twist has a class-side avatar now**: `chartTwist`, with
-    `degAt_chartTwist` giving fibre degree `deg Z − m·d₁`, matching `degAt_chartValue` at
-    `n = 0` — which is the ledger reason the locus tests `λθᵐ(−Σ)` rather than `λ`.
+  * **The twist has a class-side avatar now**: `chartTwist`.  ~~with `degAt_chartTwist` giving
+    fibre degree `deg Z − m·d₁`, matching `degAt_chartValue` at `n = 0`~~ — **that was a SIGN
+    ERROR and it made the locus VACUOUS.  Fixed 2026-07-28, `8ef9493ff`, issue I-0514.**
+
+    `chartTwist` must be the INVERSE of `chartValue`'s twist.  `chartValue` is
+    `abelDiv · Σ · (θᵐ)⁻¹`, so recovering the Abel class means multiplying by `θᵐ` and dividing
+    by `Σ`: `chartTwist := λ · θᵐ · Σ⁻¹`, with `degAt_chartTwist = m·d₁ − deg Z = +g` under the
+    chart-index constraint.  The earlier version applied the `chartValue` twist itself, giving
+    `−g`; since `Subsingleton H¹(𝒪(W))` forces `deg W ≥ g − 1`, **that locus was empty for every
+    `g ≥ 1`** and CHART-U(b)'s openness of it was the openness of `∅`.  The comparison point is
+    `degAt_chartValue` at **`n = g`** (where the chart index is calibrated and `chartValue` lands
+    in `pic0`), not at `n = 0`.
+
+    **Why no ledger caught it, and this is the transferable part:** the wrong-signed
+    `degAt_chartTwist` was *internally consistent*.  It computed `−g` faithfully and its docstring
+    said so out loud.  A degree ledger recomputes a sign error rather than detecting it.  The fix
+    therefore ships an **inversion law** instead of just a corrected ledger:
+    `chartTwist_chartValue : chartTwist C m Z T (chartValue C π n m Z T s) = abelDiv C π n T s`
+    (by `group`), which is FALSE of the old definition.  Pin a direction with a round-trip law,
+    not with a degree.
 
 * **CHART-U(b) — openness of `chartLocus` (SHARED brick, DAT-B co-owner; honest new
   work, M→L).**
