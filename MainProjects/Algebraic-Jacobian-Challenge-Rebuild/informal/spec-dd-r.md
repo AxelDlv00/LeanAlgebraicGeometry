@@ -1315,3 +1315,47 @@ statement was read. Here an assembly is carrier-free in its *proof* and chart-ty
 *statement*, and the port is blocked by the statement alone. Same underlying question in both
 directions: **read what the declaration consumes, not what its signature demands** — and when the
 two differ, the fix is to weaken the signature to what the body actually uses.
+
+### 8.6 The widened gluing keystone IS proved, and §8.5's prescription is what proved it
+
+§8.5 diagnosed residue item (b) as blocked by a statement shape and prescribed the fix: restate
+the assembly at bare local-equation systems, weakening the signature to what the body actually
+consumes. That was executed the same session, and it worked.
+
+```
+DivFamZarAff.exists_glue_of_away_compat
+  (g : ι → R) (S : ι → Type u) (T : ι → ι → Type u) …
+  (hg : Ideal.span (Set.range g) = ⊤)
+  (F : ∀ i, DivFamZarAff C (S i) n)
+  (hcompat : ∀ i j, mapAlg (T i j) n (F i) = mapAlg (T i j) n (F j)) :
+  ∃ F₀ : DivFamZarAff C R n, ∀ i, mapAlg (S i) n F₀ = F i
+```
+
+Uniqueness is `DivFamZarAff.eq_of_away_eq`, already landed. **So the widened value is a Zariski
+sheaf value, not merely a functor value**, and no hypothesis on `|P¹(k)|` occurs in the statement
+or anywhere on its route — which is the entire purpose of R2.
+
+Landed in `Picard/DivisorFamilyAffGlueZar.lean` on the kit of `…AffGlueZarKit.lean`, which now
+carries the restated assembly in full: `AwayCompatPullDivEq` (with the regularity witnesses
+existentially bound — the `∀` spelling would be a vacuous obligation),
+`germ_awayTransportLoc_mem_nonZeroDivisors`, `exists_res_awayTransportLoc_eq_unit_mul`,
+`awayGluedEquationsLoc`, `divEq_pullback_awayGluedEquationsLoc`,
+`CertifiedDivisorFamilyAff.isLocallyCertifiedAff` / `.toZarAff`, and
+`DivFamZarAff.exists_glue_of_certified_away_compat`. All sorry-free; `lake env lean` exit 0;
+`lake build` 8838 jobs; axiom-clean against a `sorryAx` control.
+
+**One defect found by checking rather than counting, and it is the transferable part.** The
+keystone file was **red with zero `sorry`s**. `DivFamZarAff.eq_of_away_eq` takes `n : ℕ` as an
+**explicit leading argument**, where the chart-typed `DivFamZar.eq_of_away_eq` has it implicit at
+that position; a port that copies the chart-typed call site therefore feeds the away-cover family
+where `n` is expected, and the error surfaces far away as an unresolvable `l.down` on a `ULift`
+binder — a message naming neither `n` nor `eq_of_away_eq`. One argument. A `sorry` census and a
+job count both report such a file as healthy; only elaborating it does not. Cf. inbox `I-0624`
+(advertised-but-absent versus present-but-unreachable) — this is a third variety: *present,
+reachable, and red*.
+
+**What residue item (b) still owes.** `divFamZarAff.map` along an arbitrary morphism of test
+objects, and `divFunctorAff` on top of it. The keystone above was that construction's *input*
+(the chart-typed `map` is built from `DivFamZar.exists_glue_of_away_compat` via the basic-cover
+gluing kit), so item (b) is now one packaging layer from done rather than one keystone plus a
+packaging layer.
