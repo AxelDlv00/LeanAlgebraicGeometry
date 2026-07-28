@@ -1712,4 +1712,105 @@ theorem leakEndpoint_cech_flatBaseChange_oneLeaf {S S' X X' : Scheme.{u}}
 #print axioms cech_pushforward_baseChange_natIso_flat
 #print axioms canonicalBaseChangeMap_isIso
 
+/-! ### §6h. THE TWISTED LEAF'S COFACE SQUARE IS PROVED FROM A PER-σ HYPOTHESIS (run 0068 r4)
+
+**Read the headline before the lines: NO PREVIOUSLY-CONTAMINATED DECLARATION BECAME CLEAN.**  Same
+as §6g, and stated first because it is what a reader wants and what a lane is tempted to blur.
+`cech_flatBaseChange_oneLeaf` still reports `sorryAx`, and `twisted_cech_nerve_iso`'s naturality
+`sorry` is still in the file.  What changed is *what that `sorry` is*, and this section measures the
+chain that establishes it rather than the endpoint, because the endpoint did not move.
+
+Why the chain is worth measuring anyway.  The obligation as posed asked for naturality in **every**
+simplex map.  Its whole consumer chain bottoms out at `alternatingCofaceMapComplex`, whose
+differential is `∑ᵢ (-1)ⁱ • δᵢ` — no codegeneracy appears downstream — so **coface** compatibility
+suffices, which is `leakProbe_cofaceOnlyIso`.  That narrowing is load-bearing, not cosmetic: this
+tree's σ-coordinate lemmas are stated for `δ k` **only**, and a workspace-wide search found no
+general-`φ` analogue here or in mathlib, so the obligation was out of reach *as stated*.  Given the
+narrowing, `leakProbe_cechCoface_sigma` (the coface is "reindex by `δᵏ`, then restrict") and
+`leakProbe_twistedDeltaSquare` **prove** the square from one per-σ equation.
+
+The residue is that equation: the per-σ Beck–Chevalley isos commute with the intersection-open
+inclusions — equivalently, `twisted_cech_nerve_per_sigma` is built per σ and its **naturality in the
+over-object** is missing.
+
+MEASURED 2026-07-29 at HEAD, from a minimal-import scratch file (`lake env lean` on this whole
+script needs an olean for every project module, and under concurrent lane rebuilds that is the
+*less* reliable check — see §6g's caveat, which held again this session).  Ten declarations clean:
+the six probed below plus `sigmaAssembledComponent`, `sigmaAssembledComponent_π`,
+`twistedNerve_δ_square` and `twistedPerSigmaTarget`.  Three controls still `sorryAx`, each
+correctly: `twisted_cech_nerve_iso`, `cech_flatBaseChange_oneLeaf`,
+`pullback_preservesMonomorphisms`.  The controls are the point — a clean line here means nothing
+unless they still leak, and they do. -/
+
+/-- Coface-only interface: the same complex isomorphism `alternatingCofaceMapComplex`'s consumers
+need, from a degreewise family plus `δ`-compatibility, with no general-`φ` naturality.  Clean. -/
+noncomputable def leakProbe_cofaceOnlyIso {C : Type*} [Category.{u} C] [Preadditive C]
+    (Y Z : CosimplicialObject C)
+    (e : ∀ n : ℕ, Y.obj (SimplexCategory.mk n) ≅ Z.obj (SimplexCategory.mk n))
+    (hδ : ∀ (n : ℕ) (k : Fin (n + 2)), (e n).hom ≫ Z.δ k = Y.δ k ≫ (e (n + 1)).hom) :
+    (AlgebraicTopology.alternatingCofaceMapComplex C).obj Y
+      ≅ (AlgebraicTopology.alternatingCofaceMapComplex C).obj Z :=
+  alternatingCofaceComplexIsoOfDelta Y Z e hδ
+
+/-- The Čech coface in σ-coordinates: "reindex the tuple by `δᵏ`, then restrict".  Clean, and
+composed entirely from lemmas that predate run 0068 r4 — they were merely outside the consuming
+file's import cone, which is why three sessions priced this as open mathematics. -/
+theorem leakProbe_cechCoface_sigma {X : Scheme.{u}} (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    (F : X.Modules) (p : ℕ) (k : Fin (p + 2)) (σ' : Fin (p + 2) → 𝒰.I₀) :
+    (pushPull_sigma_iso 𝒰 F p).hom ≫
+        Limits.Pi.π (fun τ : Fin (p + 1) → 𝒰.I₀ =>
+          pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ))))
+          (σ' ∘ (SimplexCategory.δ k).toOrderHom) ≫
+        pushPullMap F (interLegHom 𝒰 σ' k)
+      = (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ k ≫
+          (pushPull_sigma_iso 𝒰 F (p + 1)).hom ≫
+          Limits.Pi.π (fun τ : Fin (p + 2) → 𝒰.I₀ =>
+            pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ)))) σ' :=
+  cechNerve_drop_δ_sigma 𝒰 F p k σ'
+
+/-- **The reduction itself**: the twisted leaf's coface square, from the per-σ compatibility alone.
+Clean.  This is the line that says the twisted `sorry` is one equation about intersection-open
+inclusions and not a two-nerve comparison. -/
+theorem leakProbe_twistedDeltaSquare {S S' X X' : Scheme.{u}}
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent) (n : ℕ) (k : Fin (n + 2))
+    (hcompat : ∀ σ' : Fin (n + 2) → 𝒰.I₀,
+      (twistedPerSigmaTarget f g f' g' h 𝒰 F hF n
+            (σ' ∘ (SimplexCategory.δ k).toOrderHom)).hom ≫
+          pushPullMap ((Scheme.Modules.pullback g').obj F)
+            (interLegHom ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+              h.isoPullback.symm.hom) σ' k)
+        = (Scheme.Modules.pullback g').map (pushPullMap F (interLegHom 𝒰 σ' k)) ≫
+            (twistedPerSigmaTarget f g f' g' h 𝒰 F hF (n + 1) σ').hom) :
+    (sigmaAssembledComponent g' 𝒰 F n _ (twistedPerSigmaTarget f g f' g' h 𝒰 F hF n)).hom ≫
+        Limits.Pi.lift (fun σ' : Fin (n + 2) → 𝒰.I₀ =>
+          Limits.Pi.π _ (σ' ∘ (SimplexCategory.δ k).toOrderHom) ≫
+            pushPullMap ((Scheme.Modules.pullback g').obj F)
+              (interLegHom ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+                h.isoPullback.symm.hom) σ' k))
+      = (Scheme.Modules.pullback g').map
+            (pushPullMap F ((coverCechNerveOver 𝒰).map ((SimplexCategory.δ k).op))) ≫
+          (sigmaAssembledComponent g' 𝒰 F (n + 1) _
+            (twistedPerSigmaTarget f g f' g' h 𝒰 F hF (n + 1))).hom :=
+  twistedNerve_δ_square_concrete f g f' g' h 𝒰 F hF n k hcompat
+
+/-- The index-type identification the reduction rests on, `rfl`.  Measured because an earlier
+revision of the σ-calculus assumed it was only propositional and paid a transport for it. -/
+theorem leakProbe_baseChangedCover_I₀ {S S' X X' : Scheme.{u}}
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) :
+    ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso h.isoPullback.symm.hom).I₀ = 𝒰.I₀ :=
+  baseChangedCover_I₀ f g f' g' h 𝒰
+
+#print axioms leakProbe_cofaceOnlyIso
+#print axioms leakProbe_cechCoface_sigma
+#print axioms leakProbe_twistedDeltaSquare
+#print axioms leakProbe_baseChangedCover_I₀
+-- CONTROLS for §6h.  If either ever comes back clean without an edit to the twisted leaf, the
+-- probes above have stopped measuring anything.
+#print axioms twisted_cech_nerve_iso
+#print axioms cech_flatBaseChange_oneLeaf
+
 end AlgebraicGeometry
