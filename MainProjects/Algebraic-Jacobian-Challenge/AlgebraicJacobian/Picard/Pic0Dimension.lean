@@ -205,7 +205,19 @@ have genuinely different costs:
   consumers wanting a dimension index.
 
 So the remaining open content of the dimension statement is one *uniform* bound,
-with the tangent-space side fully consumed. -/
+with the tangent-space side fully consumed.
+
+WHERE THE `≤` BOUND IS **NOT** AVAILABLE, measured so the next session does not
+re-search. `Albanese/StandardSmoothDimension.lean` looks like it should supply it
+and does not: its
+`Algebra.IsStandardSmoothOfRelativeDimension.le_ringKrullDim_of_isLocalization_atPrime`
+gives `n ≤ ringKrullDim Sₘ` — the **lower** bound, and only at a *maximal* ideal.
+Every dimension lemma in that file points the same way (`natCast_le_height_of_isMaximal`,
+`MvPolynomial.height_eq_natCard_of_isMaximal`), because the file exists to feed
+`IsRegularLocalRing.of_finrank_cotangentSpace_le_ringKrullDim`, whose hypothesis
+is a lower bound on the Krull dimension. So the `≤` direction is genuinely absent
+rather than merely unlocated, and it is absent in the direction that matters: an
+upper bound at *every* prime, not just the maximal ones. -/
 theorem topologicalKrullDim_eq_genus_of_forall_ringKrullDim_stalk_le
     {k : Type u} [Field k] [PerfectField k]
     (C : Over (Spec (.of k)))
