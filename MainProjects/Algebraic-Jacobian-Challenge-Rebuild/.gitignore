@@ -4,3 +4,26 @@
 
 # Archon state directory
 .archon/
+
+# Scratch probe files at the project root.
+#
+# Throwaway single-file experiments (axiom probes, goal inspection, tactic trials)
+# that sessions create beside the library and delete when done. They are NOT part
+# of the `AlgebraicJacobian` lib target, so nothing imports or elaborates them and
+# a stale one is invisible to every build.
+#
+# They are ignored because the shared workspace index sweeps whatever sits in the
+# tree into whichever commit lands next: a probe created and deleted inside one
+# session can be committed by ANOTHER lane's integration commit, and then shows up
+# forever afterwards as a phantom staged deletion (inbox `I-0611`). Ignoring the
+# pattern is the only fix that does not depend on every session's discipline.
+#
+# Ported from the sibling project's `.gitignore`, which hardened these patterns on
+# 2026-07-28 after a case-sensitive version let `probe_*.lean` through. If a probe
+# earns a place in the library, move it under `AlgebraicJacobian/` and import it
+# from `AlgebraicJacobian.lean` — do not rename it to dodge this pattern.
+*Probe*.lean
+*probe*.lean
+/probe_*.lean
+/scratch_*.lean
+/Scratch_*.lean
