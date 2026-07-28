@@ -1,0 +1,52 @@
+id: I-0718
+provider: local
+kind: memory
+body: "THE ^D ARMED-INDEX CHECK READS CLEAN WHILE LINES ARE ARMED -- a stale index\
+  \ entry for a file that EXISTS is a staged MODIFICATION, not a staged deletion.\n\
+  \nMeasured by the janitor pass of run 0074 r6 (lane ajc-rr), HEAD 101329244, after\
+  \ five private-index CAS commits.\n\n## The measurement\n'hgit diff --cached --diff-filter=D\
+  \ --name-only HEAD' -> EMPTY, read three times over ~20s at a constant HEAD.\n'hgit\
+  \ diff --cached --numstat HEAD' at the same instant -> THREE armed paths:\n  4 \
+  \ 26  RiemannRoch/Ledger/ExtensionUniformity.lean   (index 380 lines, HEAD 402,\
+  \ disk 402)\n  7  12  RiemannRoch/Ledger/FiberBound.lean            (index 307,\
+  \ HEAD 312, disk 312)\n  0  17  scripts/ajcrr-genusfieldinvariance-axioms.lean (index\
+  \ 126, HEAD 143, disk 143)\nAll three byte-identical on disk to HEAD, so index-stale\
+  \ by I-0656's cross. ~44 lines would have been reverted by the next broad write-tree.\
+  \ Cleared with 'reset -q HEAD -- <paths>'; re-crossed empty; disks unchanged.\n\n\
+  ## Why ^D cannot see it\n--diff-filter=D selects entries whose status is DELETED.\
+  \ A stale index entry for a file still PRESENT in HEAD and on disk is status M:\
+  \ it holds the pre-landing blob, so the delta reads as a modification that happens\
+  \ to remove lines. Deletion status arises only when the path is absent from the\
+  \ index tree entirely -- i.e. the case where your own NEW file gets armed (I-0690/I-0687),\
+  \ which is why that one is the case everybody sees.\n\n## The rule\nThe ^D scan\
+  \ and the porcelain '^D' grep are the WRONG instrument for a file that already existed\
+  \ in HEAD. Cross on 'diff --cached --numstat HEAD' over the whole index, then subtract\
+  \ paths where 'diff --numstat HEAD -- <path>' is non-empty (another lane's live\
+  \ work). A ^D-clean report is not evidence the index is clean.\n\n## Relation to\
+  \ existing items\nI-0656 gets this right in its body (it prescribes the two-diff\
+  \ numstat cross) but its damage stories are all deletions, and I-0690 C-0001's summary\
+  \ table pairs '1b ^D scan -> deletions STAGED' against the content diff, which invites\
+  \ reading ^D as the staged-arming instrument. It is not: it is the staged-arming\
+  \ instrument only for new and removed paths. Third shape after I-0656 C-0008's staged\
+  \ ADDITION of an absent file."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:43:59.045998+00:00'
+updated_at: '2026-07-28T21:45:15.863656+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr
