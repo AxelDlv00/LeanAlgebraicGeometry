@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:divisor_degree
 lean_status: lean_ok
-order: 1825
+order: 1828
 title: Coefficient degree
 type: tex
-updated: '2026-07-28T04:57:38'
+updated: '2026-07-28T13:22:18'
 ---
 For any scheme \(X\), define the coefficient degree of
   \(D=\sum_Y n_YY\) by

@@ -15,9 +15,10 @@ docstring: 'The counit isomorphism of the module sheafification adjunction: shea
 file: AlgebraicJacobian/Picard/SectionGradedRing.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.sheafificationCounitIso
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-28T13:22:17'
 ---
 private noncomputable def sheafificationCounitIso (G : X.Modules) :
     sheafification.obj ((toPresheafOfModules X).obj G) ≅ G :=

@@ -7,9 +7,10 @@ docstring: '**The `awayLift` normal form**: `awayLift ψ (a / fⁿ) · ψ(f)ⁿ 
 file: AlgebraicJacobian/RiemannRoch/Adelic/NonconstantToP1.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Adelic.awayLift_mul_eq
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma awayLift_mul_eq {f : MvPolynomial (ULift.{u} (Fin 2)) (ULift.{u} ℤ)} {i : ℕ}
     (hf : f ∈ homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ) i)

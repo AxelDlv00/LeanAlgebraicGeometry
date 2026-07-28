@@ -21,9 +21,10 @@ docstring: '**Degree-`0` augmentation comm-square (engine identification).** Eva
 file: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.cechFreeAug_eval_eqFam
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma cechFreeAug_eval_eqFam
     (V : TopologicalSpace.Opens ↥X) :

@@ -29,9 +29,10 @@ docstring: '**Separatedness/torsion field of the section-localization descent.**
 file: AlgebraicJacobian/Picard/QuotScheme.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.descent_smul_eq_zero
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma descent_smul_eq_zero {R : CommRingCat.{u}} (M : (Spec R).Modules) (f : R)
     (t : Finset R) (hspan : Ideal.span (t : Set R) = ⊤)

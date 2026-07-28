@@ -25,7 +25,8 @@ docstring: '**Matrix-collapse on Ext.** For an R-linear map `A : R^m →ₗ R^n`
 file: AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: RingTheory.Module.ext_comp_mk₀_ofHom_eq_zero_of_entries_mem_annihilator
 type: lean
-updated: '2026-07-27T12:05:09'
+updated: '2026-07-28T13:22:15'
 ---

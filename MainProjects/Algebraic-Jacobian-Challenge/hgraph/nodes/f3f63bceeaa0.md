@@ -6,8 +6,9 @@ decl: AlgebraicGeometry.Scheme.Modules.tensorPow_zero
 file: AlgebraicJacobian/Picard/SectionGradedRing.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.tensorPow_zero
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-28T13:22:17'
 ---
 @[simp] private lemma tensorPow_zero (L : X.Modules) : tensorPow L 0 = unitModule X := rfl

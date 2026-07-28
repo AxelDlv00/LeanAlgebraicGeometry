@@ -10,9 +10,10 @@ docstring: 'The defining property of `liftToBaseOfMemRange`: composing the cores
 file: AlgebraicJacobian/Picard/GrassmannianCells.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Grassmannian.algebraMap_comp_liftToBaseOfMemRange
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma algebraMap_comp_liftToBaseOfMemRange {A R K : Type*} [CommRing A] [CommRing R]
     [Field K] [Algebra R K] [IsFractionRing R K] (φ : A →+* K)

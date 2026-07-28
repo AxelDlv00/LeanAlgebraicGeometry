@@ -17,9 +17,10 @@ docstring: 'The braiding isomorphism `F ⊗ G ≅ G ⊗ F` of the sheaf tensor p
 file: AlgebraicJacobian/Picard/SectionGradedRing.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.tensorBraiding
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-28T13:22:17'
 ---
 private noncomputable def tensorBraiding (F G : X.Modules) :
     sheafTensorObj F G ≅ sheafTensorObj G F :=

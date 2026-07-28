@@ -13,9 +13,10 @@ docstring: '**Triangle identity**: sheafifying the localization unit at `P` give
 file: AlgebraicJacobian/Picard/SectionGradedRing.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.sheafification_map_unit_eq
 type: lean
-updated: '2026-07-25T06:32:31'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma sheafification_map_unit_eq (P : MonoidalPresheaf X) :
     sheafification.map

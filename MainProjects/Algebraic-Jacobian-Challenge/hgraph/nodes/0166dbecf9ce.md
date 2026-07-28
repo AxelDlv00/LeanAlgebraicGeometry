@@ -25,9 +25,10 @@ docstring: '**Presheaf-morphism factorization of the associator** (`lem:tensorOb
 file: AlgebraicJacobian/Picard/SectionGradedRing.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_eta_factor
 type: lean
-updated: '2026-07-25T06:32:31'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma tensorObjAssoc_eta_factor (A B C : X.Modules) :
     (MonoidalCategory.whiskerRight (C := MonoidalPresheaf X)

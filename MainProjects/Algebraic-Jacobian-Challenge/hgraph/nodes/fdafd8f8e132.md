@@ -20,9 +20,10 @@ docstring: '**Descent equation for the self-braiding**
 file: AlgebraicJacobian/Picard/SectionGradedRing.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.braiding_comp_unit_eq_unit_of_isInvertible
 type: lean
-updated: '2026-07-25T06:32:31'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma braiding_comp_unit_eq_unit_of_isInvertible (L : X.Modules) [IsInvertibleGr L] :
     (BraidedCategory.braiding (C := MonoidalPresheaf X)

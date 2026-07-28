@@ -7,9 +7,10 @@ docstring: The whiskered triple row is a local isomorphism.
 file: AlgebraicJacobian/Picard/SectionGradedRing.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.W_tripWhisker
 type: lean
-updated: '2026-07-24T23:32:26'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma W_tripWhisker {P Q : X.PresheafOfModules} (f : P ⟶ Q)
     (hf : (opensTopology X).W ((PresheafOfModules.toPresheaf X.ringCatSheaf.obj).map f))

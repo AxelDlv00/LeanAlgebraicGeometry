@@ -1,39 +1,44 @@
 <!-- Shared notice board. Keep to at most three short bullets. -->
 
-- **Your decision is blocking the Picard path** (inbox `I-0372`, roadmap
-  `AJC.picrep.rational-point`).  Representability as currently built carries a
-  `k`-rational-point hypothesis, so it would prove something strictly weaker than
-  the challenge asks — such a curve need not have a rational point.  Dropping the
-  hypothesis means étale-sheafifying the Picard functor, which Mathlib v4.31 does
-  support.  Both branches are now written down in the blueprint's FGA chapter and
-  at the Lean leaf `hasRationalPoint_of_curve`; neither has been assumed.  The
-  decision is now *exactly* the rational point: the leaf used to bundle geometric
-  integrality with it, and that half turned out to be a theorem, now proved
-  (`geometricallyIntegral_of_curve`).  It is also *bounded*: over an algebraically
-  closed field the rational point is a theorem too
-  (`hasRationalPoint_of_curve_of_isAlgClosed`, axiom-clean), and the witness assembles
-  there with it supplied rather than assumed — so every obligation that remains is a
-  true statement awaiting a proof, not a false one.  So what you are deciding is what
-  the project claims over an **arbitrary** base field — not whether the construction
-  runs.  One asymmetry you should have when you decide, stated plainly because it could
-  otherwise look like a nudge: branch (1) now has a compiled form
-  (`picardJacobianWitnessOfHasRationalPoint`), so it costs no mathematics beyond the five
-  obligations already open.  Branch (2) needs a representability theorem no project has —
-  but the *functor* it would be about is already built and `sorry`-free in the Rebuild
-  sibling (`Picard/PicEtAff.lean`, `Picard/Pic0Functor.lean`), so it does not start from
-  nothing either.  Neither branch has its representability theorem; branch (1) reuses this
-  project's gate, branch (2) needs a new one.  That is a difference in build cost, not in
-  which claim is right, and we have not treated it as one.
+- **Your étale-sheafify decision is EXECUTED** (inbox `I-0372`, protection
+  `I-0491`, roadmap `AJC.picrep.rational-point`).  Nothing is waiting on you here.
+  The Jacobian headline now carries **no** rational-point hypothesis — exactly the
+  three challenge hypotheses and nothing else — and what gets represented is the
+  étale-sheafified relative Picard functor.  Four things landed: the functor itself
+  with its sheaf property **proved** (`Picard/PicEtSheaf.lean`, `sorry`-free, on
+  Mathlib v4.31's étale site localised at `Spec k`); the representability obligation
+  restated for it as one named `sorry`
+  (`Scheme.fgaPicardRepresentability`) which is expected to stay open; the false leaf
+  `hasRationalPoint_of_curve` **deleted**, never proved; and
+  `picardJacobianWitness` reassembled on `Pic⁰` in its étale form.  The two
+  conditional results are kept and relabelled as such —
+  `picardJacobianWitnessOfHasRationalPoint` (true under a section, strictly weaker
+  than the challenge) and `picardJacobianWitnessOfIsAlgClosed` (a genuine `k̄`
+  theorem) — and neither is presented as the headline.  **The obligation count is
+  still five, and that is the deliverable**: what changed is that none of the five is
+  a *false* statement any more, so nothing downstream rests on an inconsistent
+  hypothesis.  The five are `fgaPicardRepresentability`,
+  `Pic0Et.geometricallyReduced`, `Pic0Et.universallyClosed`,
+  `smoothOfRelativeDimension_genus_pic0Et` and `isAlbanese_pic0Et`.  That the
+  headline carries no rational-point binder is checked rather than asserted: the
+  `HeadlineBinders` section of `scripts/axiom-frontier.lean` stops elaborating if one
+  ever returns.  Route choice unaffected: Milne–Kollár stays committed, Quot stays
+  retained-not-revived.
 
 - **Sorry-free is not axiom-clean, and there are eight separate ways to be misled.**
   Run `lake env lean scripts/axiom-frontier.lean` before believing any completeness
-  number; it probes 126 declarations, 84 clean and 42 carrying `sorryAx` as last
-  measured (2026-07-28, root build green at 8,746 jobs).
-  (1) Two `sorry`-bodied *instances* (`instHasPicScheme`,
-  `pullback_preservesFiniteLimits`) leak through synthesis, so a theorem reports
-  clean axioms while every real consumer depends on `sorryAx`.  Those two are the
-  *whole* synthesis-leak surface, now measured rather than assumed: of the tree's 26
-  `sorry` carriers exactly two are instances, and the probe's §2 lists all 26.
+  number; it probes 144 declarations, 89 clean and 55 carrying `sorryAx` as last
+  measured (2026-07-28, root build green at 8,761 jobs).
+  (1) A `sorry`-bodied *instance* leaks through synthesis, so a theorem reports
+  clean axioms while every real consumer depends on `sorryAx`.  As of 2026-07-28 there
+  are **none left**, which is worth stating precisely because this trap has been the
+  headline caveat for months: `instHasPicScheme` was demoted to the named theorem
+  `picSchemeOfHasRationalPoint` by the étale rewire (so it cannot fire by synthesis at
+  all), and `pullback_preservesFiniteLimits` was proved by `ajc-fbc`.  Measured, not
+  assumed: of the tree's 28 `sorry` carriers, zero are instances.  The trap remains
+  worth understanding — it costs nothing to re-check and a reintroduced sorried
+  instance would be invisible again — and the probe's §2 and §8/§8b are where to
+  check it.
   (2) An *unproved*
   named hypothesis in a statement is invisible to the check.  (3) So is a *false*
   one — which makes the theorem vacuously true and perfectly clean; this was found
@@ -79,9 +84,10 @@
   algebraically closed, positive-genus case.  The rational-point leaf is the one whose
   algebraically closed case is a full discharge, so over `k̄` the witness
   (`picardJacobianWitnessOfIsAlgClosed`) rests on no false hypothesis, unlike the general
-  one.  The *number* of obligations does not drop — discharging the rational point makes
-  the representability gate `instHasPicScheme` fire rather than removing it — so it is
-  five either way, and the difference is that over `k̄` all five are true.  That
+  one.  The *number* of obligations does not drop either way — it is five before and
+  after the étale rewire — and the difference is that all five are now true.  That
   distinction is not visible in any axiom count: a witness resting on an inconsistent
-  leaf reports exactly what an honest one does.  Nothing about the protected `Jacobian`
-  declarations changes; they still route through the general witness.
+  leaf reports exactly what an honest one does, which is why the headline's binders are
+  checked by elaboration instead (`HeadlineBinders` in the probe).  The protected
+  `Jacobian` declarations now route through the étale witness, so they no longer
+  depend on a false statement.

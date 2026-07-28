@@ -51,9 +51,10 @@ docstring: '**Spec-level pullback-of-tilde formula** (iter-187 Lane F NAMED HELP
 file: AlgebraicJacobian/Picard/QuotScheme.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.pullback_tildeIso
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-28T13:22:16'
 ---
 private theorem pullback_tildeIso
     {A B : CommRingCat.{u}} (φ : A ⟶ B) (M : ModuleCat.{u} A) :

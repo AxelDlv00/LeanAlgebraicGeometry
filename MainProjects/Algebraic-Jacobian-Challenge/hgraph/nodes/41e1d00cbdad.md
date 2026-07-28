@@ -18,9 +18,10 @@ docstring: '**Positive-degree exactness** of the constant-coefficient Čech comp
 file: AlgebraicJacobian/Cohomology/CechAcyclic.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.CombinatorialCech.combDifferential_exact
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma combDifferential_exact (r : ι) (n : ℕ) :
     Function.Exact (combDifferential : ((Fin (n + 1) → ι) → M) → ((Fin (n + 2) → ι) → M))

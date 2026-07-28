@@ -17,9 +17,10 @@ docstring: 'On an **invertible** module the `ModuleCat` self-braiding is the ide
 file: AlgebraicJacobian/Picard/SectionGradedRing.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.moduleCat_braiding_self_hom_eq_id
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma moduleCat_braiding_self_hom_eq_id {R : Type u} [CommRing R]
     (M : ModuleCat.{u} R) (hM : Module.Invertible R M) :

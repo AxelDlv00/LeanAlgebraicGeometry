@@ -7,9 +7,10 @@ docstring: Composition collapse for section restrictions of a sheaf of modules.
 file: AlgebraicJacobian/Picard/QuotScheme.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.modules_res_res
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma modules_res_res {Y : Scheme.{u}} (N : Y.Modules) {W₁ W₂ W₃ : Y.Opens}
     (i₁ : W₁ ≤ W₂) (i₂ : W₂ ≤ W₃) (i₃ : W₁ ≤ W₃) (ξ : Γ(N, W₃)) :

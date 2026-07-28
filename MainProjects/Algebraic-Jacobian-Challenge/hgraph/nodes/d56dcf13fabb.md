@@ -13,9 +13,10 @@ docstring: 'A finite (nonempty-indexed) infimum of affine opens of a separated s
 file: AlgebraicJacobian/Cohomology/CechTermAcyclic.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.isAffineOpen_iInf_fin
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma isAffineOpen_iInf_fin [X.IsSeparated] :
     ∀ (p : ℕ) (W : Fin (p + 1) → X.Opens), (∀ k, IsAffineOpen (W k)) →

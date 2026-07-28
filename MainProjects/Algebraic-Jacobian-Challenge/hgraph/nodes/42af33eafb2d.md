@@ -9,9 +9,10 @@ docstring: 'Precomposition preserves equality of morphisms. Kept opaque so large
 file: AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.precomp_eq_of_eq
 type: lean
-updated: '2026-07-24T03:32:13'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma precomp_eq_of_eq {C : Type*} [Category C] {W Y Z : C}
     (e : W ⟶ Y) {f g : Y ⟶ Z} (h : f = g) : e ≫ f = e ≫ g :=

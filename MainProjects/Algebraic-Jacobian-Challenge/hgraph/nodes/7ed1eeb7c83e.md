@@ -7,9 +7,10 @@ docstring: 'The natural bijection `(T ⟶ G⁰) ≃ {f : T ⟶ G | im f ⊆ G⁰
 file: AlgebraicJacobian/Picard/IdentityComponent.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.GroupScheme.identityComponentHomEquiv
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-28T13:22:16'
 ---
 private noncomputable def identityComponentHomEquiv (T : Over (Spec (.of k))) :
     (T ⟶ IdentityComponent G) ≃ ↥(identityComponentSubgroup G T) where

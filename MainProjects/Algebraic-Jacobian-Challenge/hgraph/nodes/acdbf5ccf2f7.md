@@ -12,9 +12,10 @@ docstring: 'Bridge: the hand-built left-whiskering `tensorObjWhiskerLeftIso F e`
 file: AlgebraicJacobian/Picard/SectionGradedRing.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.tensorObjWhiskerLeftIso_eq
 type: lean
-updated: '2026-07-25T06:32:31'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma tensorObjWhiskerLeftIso_eq (F : X.Modules) {G G' : X.Modules} (e : G ≅ G') :
     tensorObjWhiskerLeftIso F e

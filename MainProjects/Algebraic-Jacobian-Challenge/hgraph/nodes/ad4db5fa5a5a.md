@@ -18,9 +18,10 @@ docstring: '**Differential comm-square of the engine identification.** The degre
 file: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.cechFreeEvalEngine_commFam
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma cechFreeEvalEngine_commFam
     (V : TopologicalSpace.Opens ↥X) (p : ℕ) :

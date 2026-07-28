@@ -9,9 +9,10 @@ docstring: 'Reading the inverse comparison coordinatewise: applying `sectionToMo
 file: AlgebraicJacobian/Cohomology/CechAcyclic.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.sectionProdEquiv_symm_apply
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma sectionProdEquiv_symm_apply (q : ℕ) (z : ∀ σ : Fin (q + 1) → ι, dCoeff s M σ)
     (τ : Fin (q + 1) → ι) :

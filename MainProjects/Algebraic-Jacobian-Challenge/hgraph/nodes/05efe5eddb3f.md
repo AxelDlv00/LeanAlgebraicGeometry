@@ -5,17 +5,29 @@ created: '2026-07-24T17:02:56'
 decl: AlgebraicGeometry.Scheme.HasPicScheme
 docstring: 'Typeclass asserting existence of a scheme over `Spec k` that represents
 
-  the relative Picard functor `picSharp C` and is **separated and locally of
+  the **unsheafified** relative Picard functor `picSharp C` and is separated and
 
-  finite type over `k`**. The instance below is the file''s only `sorry`, and it
+  locally of finite type over `k`.
 
-  is **conditional on `[HasRationalPoint C]`** — without a section the plain
 
-  relative functor is not representable in general, so an unconditional instance
+  **This is the legacy, conditional interface, not the headline target.** Its only
 
-  would assert a false statement. Consumers that quantify over `[HasPicScheme
+  producer is `picSchemeOfHasRationalPoint`, which needs both
 
-  C]` as a hypothesis remain kernel-clean.
+  `[HasRationalPoint C]` and the comparison class `PicEtComparisonIso C`, and
+
+  there is deliberately **no instance**: without a section the plain relative
+
+  functor is not representable in general, so an unconditional instance would
+
+  assert a false statement. The unconditional étale target is `HasPicSchemeEt`.
+
+
+  Consumers that quantify over `[HasPicScheme C]` as a hypothesis remain
+
+  kernel-clean and valid; what they prove are conditional statements until
+
+  restated against `picEt`.
 
 
   Representability, local finiteness and separatedness are bundled into a single
@@ -36,7 +48,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.HasPicScheme
 type: lean
-updated: '2026-07-27T12:33:55'
+updated: '2026-07-28T13:22:16'
 ---
 class HasPicScheme {k : Type u} [Field k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

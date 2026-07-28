@@ -7,9 +7,10 @@ docstring: The second chart morphism is functorial in restriction.
 file: AlgebraicJacobian/RiemannRoch/Adelic/NonconstantToP1.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Adelic.homOfLE_chartMor₁
 type: lean
-updated: '2026-07-24T17:02:57'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma homOfLE_chartMor₁ {U V : Y.Opens} (h : V ≤ U) (s : Γ(Y, U)) :
     Y.homOfLE h ≫ chartMor₁ U s = chartMor₁ V (Y.presheaf.map (homOfLE h).op s) := by

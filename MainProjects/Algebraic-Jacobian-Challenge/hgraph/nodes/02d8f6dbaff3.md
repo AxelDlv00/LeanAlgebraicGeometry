@@ -27,9 +27,10 @@ docstring: '**Kernel commutes with base change for a divisor family** (the mathe
 file: AlgebraicJacobian/Picard/FGAPicRepresentability.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.PicScheme.abelKernelBaseChangeIso
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-28T13:22:16'
 ---
 private noncomputable def abelKernelBaseChangeIso {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

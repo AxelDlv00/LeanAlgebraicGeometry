@@ -39,9 +39,10 @@ docstring: '**Open-cover gluing for the section-wise flat base change**
 file: AlgebraicJacobian/Picard/QuotScheme.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.canonicalBaseChangeMap_app_app_isIso_of_affineCover
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-28T13:22:16'
 ---
 private theorem canonicalBaseChangeMap_app_app_isIso_of_affineCover
     {X X' S S' : Scheme.{u}}

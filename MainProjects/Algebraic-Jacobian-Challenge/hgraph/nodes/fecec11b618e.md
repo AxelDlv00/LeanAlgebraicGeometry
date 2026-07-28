@@ -77,10 +77,15 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picardJacobianWitness
 type: lean
-updated: '2026-07-28T04:57:33'
+updated: '2026-07-28T13:22:16'
 ---
 noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
-    JacobianWitness C :=
-  haveI := hasRationalPoint_of_curve C
-  picardJacobianWitnessOfHasRationalPoint C
+    JacobianWitness C where
+  J := Scheme.Pic0SchemeEt C
+  grpObj := (Scheme.Pic0Et.grpObj C).some
+  proper := Scheme.Pic0Et.proper C
+  smooth := Scheme.Pic0Et.smooth C
+  geomIrred := Scheme.Pic0Et.geometricallyIrreducible C
+  smoothGenus := smoothOfRelativeDimension_genus_pic0Et C
+  isAlbaneseFor := fun P => isAlbanese_pic0Et C _ _ _ _ P

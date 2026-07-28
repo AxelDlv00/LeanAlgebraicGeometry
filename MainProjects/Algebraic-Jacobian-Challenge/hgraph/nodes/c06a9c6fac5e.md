@@ -13,9 +13,10 @@ docstring: 'Evaluated naturality of the augmentation: `(eval V)` applied to the 
 file: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.freeYonedaAug_app_comp
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma freeYonedaAug_app_comp {A B V : TopologicalSpace.Opens ↥X} (h₁ : A ≤ B) :
     (PresheafOfModules.evaluation X.ringCatSheaf.obj (Opposite.op V)).map

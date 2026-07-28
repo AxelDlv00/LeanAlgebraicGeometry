@@ -18,9 +18,10 @@ docstring: '**Canonical self-braiding of an invertible sheaf is the identity** (
 file: AlgebraicJacobian/Picard/SectionGradedRing.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.braiding_canonical_self_eq_id_of_isInvertible
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma braiding_canonical_self_eq_id_of_isInvertible (L : X.Modules) [IsInvertibleGr L] :
     (β_ L L).hom = 𝟙 (L ⊗ L) := by

@@ -30,9 +30,10 @@ docstring: '**The 3×3 chase behind Stacks 00HL**, over an arbitrary presentatio
 file: AlgebraicJacobian/Picard/FlatKernelBase.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: Module.Flat.rTensor_injective_of_exact_aux
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-28T13:22:16'
 ---
 private theorem Module.Flat.rTensor_injective_of_exact_aux
     {R : Type*} [CommRing R] {A B C K F₀ N : Type*}

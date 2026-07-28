@@ -23,9 +23,10 @@ docstring: '**The standard-cover {\v C}ech vanishing residual `htilde`, discharg
 file: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.affine_tildeVanishing
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-28T13:22:16'
 ---
 private theorem affine_tildeVanishing {R : CommRingCat.{u}} (F : (Spec R).Modules)
     (n : ℕ) (g : Fin n → R) (f : R)

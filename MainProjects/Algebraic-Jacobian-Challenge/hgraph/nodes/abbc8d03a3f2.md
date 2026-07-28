@@ -16,9 +16,10 @@ docstring: 'Each face map `δ i : K(U)_1 ⟶ K(U)_0` composed with the augmentat
 file: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.cechFreeSimplicial_δ_comp_augFam
 type: lean
-updated: '2026-07-24T17:02:56'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma cechFreeSimplicial_δ_comp_augFam (i : Fin 2) :
     (cechFreeSimplicialFam U).δ i ≫ cechFreeAugFam U

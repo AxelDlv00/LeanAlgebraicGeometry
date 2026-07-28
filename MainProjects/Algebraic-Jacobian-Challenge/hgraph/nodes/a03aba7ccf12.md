@@ -13,9 +13,10 @@ docstring: 'Per-cover-member surjectivity datum: from the hypothesis that the `(
 file: AlgebraicJacobian/Cohomology/QcohTildeSections.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.per_j_surj
 type: lean
-updated: '2026-07-24T03:02:10'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma per_j_surj (g : M →ₗ[R] N) (f : R) (c : R)
     (hj : IsLocalizedModule (Submonoid.powers f)

@@ -11,9 +11,10 @@ docstring: '**Inner descent of the reverse map** (fixed `A`-section `a` over `U`
 file: AlgebraicJacobian/Picard/TensorObjSubstrate/StalkTensor.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: PresheafOfModules.revInner
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-28T13:22:17'
 ---
 private noncomputable def revInner (U : Opens X) (hxU : x ∈ U) (a : ↑(A.obj (op U))) :
     TopCat.Presheaf.stalk B.presheaf x ⟶

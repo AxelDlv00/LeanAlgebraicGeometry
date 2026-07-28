@@ -7,9 +7,10 @@ docstring: 'The presheaf of groups `T ↦ {f : T ⟶ G | im f ⊆ G⁰}`.'
 file: AlgebraicJacobian/Picard/IdentityComponent.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.GroupScheme.identityComponentSubgroupFunctor
 type: lean
-updated: '2026-07-27T12:33:55'
+updated: '2026-07-28T13:22:16'
 ---
 private noncomputable def identityComponentSubgroupFunctor :
     (Over (Spec (.of k)))ᵒᵖ ⥤ GrpCat.{u} where

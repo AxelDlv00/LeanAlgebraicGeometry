@@ -8,9 +8,10 @@ docstring: Reflexivity of the hand-built left-whiskering.  Route (b), via the ca
 file: AlgebraicJacobian/Picard/SectionGradedRing.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.tensorObjWhiskerLeftIso_refl
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma tensorObjWhiskerLeftIso_refl (F G : X.Modules) :
     tensorObjWhiskerLeftIso F (Iso.refl G) = Iso.refl _ := by

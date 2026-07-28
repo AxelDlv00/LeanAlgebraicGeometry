@@ -15,7 +15,8 @@ docstring: 'Existence instance for `PicSchemeLocallyOfFiniteType`: Kleiman §4 T
 
   `[HasRationalPoint C]`: the rational-point conditionality lives entirely in
 
-  `instHasPicScheme` (which supplies `HasPicScheme C`), and any consumer able
+  `picSchemeOfHasRationalPoint` (the sole producer of `HasPicScheme C`), and any consumer
+  able
 
   to name `PicScheme C` already quantifies over `[HasPicScheme C]`.'
 file: AlgebraicJacobian/Picard/FGAPicRepresentability.lean
@@ -23,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.instPicSchemeLocallyOfFiniteType
 type: lean
-updated: '2026-07-27T12:33:55'
+updated: '2026-07-28T13:22:16'
 ---
 instance instPicSchemeLocallyOfFiniteType {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
@@ -31,14 +32,3 @@ instance instPicSchemeLocallyOfFiniteType {k : Type u} [Field k]
     [GeometricallyIntegral C.hom] [HasPicScheme C] :
     PicSchemeLocallyOfFiniteType C :=
   ⟨(HasPicScheme.has_pic_scheme (C := C)).choose_spec.2.1⟩
-
-/-- Projection of `PicSchemeLocallyOfFiniteType` to the Mathlib morphism
-property, so that instance search finds `LocallyOfFiniteType (PicScheme
-C).hom` whenever the carrier class is in scope (as the identity-component
-substrate requires). -/
-instance {k : Type u} [Field k] (C : Over (Spec (.of k)))
-    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIntegral C.hom] [HasPicScheme C]
-    [PicSchemeLocallyOfFiniteType C] :
-    LocallyOfFiniteType (PicScheme C).hom :=
-  PicSchemeLocallyOfFiniteType.locallyOfFiniteType

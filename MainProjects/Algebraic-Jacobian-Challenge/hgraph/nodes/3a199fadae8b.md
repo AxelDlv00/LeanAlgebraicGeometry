@@ -14,9 +14,10 @@ docstring: '**The overlap-as-basic-open identity (route step 3).**  The overlap 
 file: AlgebraicJacobian/RiemannRoch/Adelic/P1ChartData.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Adelic.p1Chart_inf_eq_basicOpen_coordSection
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma p1Chart_inf_eq_basicOpen_coordSection (k : Type u) [Field k]
     (i j : ULift.{u} (Fin 2)) :

@@ -19,9 +19,10 @@ docstring: '**Degreewise differential identification** of the hom-complex with t
 file: AlgebraicJacobian/Cohomology/CechBridge.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.homCechComplex_d_eq
 type: lean
-updated: '2026-07-24T13:02:37'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma homCechComplex_d_eq (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
     (F : X.PresheafOfModules) (p : ℕ) :

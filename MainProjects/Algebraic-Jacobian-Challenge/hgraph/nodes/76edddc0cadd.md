@@ -13,9 +13,10 @@ docstring: 'The ring morphism along `U.ι.opensFunctor` underlying `Scheme.Modul
 file: AlgebraicJacobian/Picard/SheafOverEquivalence.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.psiRestrict
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-28T13:22:17'
 ---
 private noncomputable def psiRestrict :
     (↑U : Scheme).ringCatSheaf ⟶

@@ -9,9 +9,10 @@ docstring: 'The comparison morphism from the base-changed total space into the
 file: AlgebraicJacobian/Picard/ProjectiveMorphism.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Hom.IsProjectiveWith.baseChangeLift
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-28T13:22:16'
 ---
 private def baseChangeLift {S' : Scheme.{0}} (g : S' ⟶ S) {d : ℕ}
     (i : X ⟶ ℙ(Fin (d + 1); S)) (hcomp : i ≫ (ℙ(Fin (d + 1); S) ↘ S) = π) :

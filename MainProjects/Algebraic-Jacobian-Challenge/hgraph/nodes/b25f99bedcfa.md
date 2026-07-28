@@ -22,9 +22,10 @@ docstring: '**Overlap agreement for the surjectivity field.**  If a section `br`
 file: AlgebraicJacobian/Picard/QuotScheme.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.descent_overlap_agree
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma descent_overlap_agree {R : CommRingCat.{u}} (M : (Spec R).Modules) (f : R) (r : R)
     (N : ℕ) (U : (Spec R).Opens) (hUr : U ≤ PrimeSpectrum.basicOpen r)

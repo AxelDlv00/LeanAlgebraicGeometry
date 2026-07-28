@@ -13,9 +13,10 @@ docstring: 'A coproduct injection transported along an equality of indices: `eqT
 file: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.sigma_ι_eqToHom_transport
 type: lean
-updated: '2026-07-24T17:02:56'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma sigma_ι_eqToHom_transport {C : Type*} [Category C] {β : Type*} (B : β → C)
     [HasCoproduct B] {a b : β} (e : a = b) :

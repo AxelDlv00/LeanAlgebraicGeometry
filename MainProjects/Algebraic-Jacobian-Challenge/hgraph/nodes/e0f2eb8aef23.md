@@ -7,9 +7,10 @@ docstring: '`awayLift` only depends on the evaluation.'
 file: AlgebraicJacobian/RiemannRoch/Adelic/NonconstantToP1.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Adelic.awayLift_congr
 type: lean
-updated: '2026-07-24T03:02:13'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma awayLift_congr {f : MvPolynomial (ULift.{u} (Fin 2)) (ULift.{u} ℤ)}
     {ψ₁ ψ₂ : MvPolynomial (ULift.{u} (Fin 2)) (ULift.{u} ℤ) →+* B} (h : ψ₁ = ψ₂)

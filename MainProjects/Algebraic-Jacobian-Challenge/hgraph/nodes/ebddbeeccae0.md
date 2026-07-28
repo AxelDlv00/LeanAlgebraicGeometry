@@ -12,9 +12,10 @@ docstring: "**Step C (blueprint `lem:trivialisation_dual_chain_leg`): the dual-c
 file: AlgebraicJacobian/Picard/TensorObjInverse.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.trivialisation_restrict_dual_leg
 type: lean
-updated: '2026-07-25T02:33:16'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma trivialisation_restrict_dual_leg {X : Scheme.{u}} {L : X.Modules}
     {U V : X.Opens} (hVU : V ≤ U)

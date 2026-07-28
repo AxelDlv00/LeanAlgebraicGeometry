@@ -9,9 +9,10 @@ docstring: 'Sign-cancellation behind `d² = 0`: under the index swap
 file: AlgebraicJacobian/Cohomology/CechAcyclic.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.CombinatorialCech.combSign_flip
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma combSign_flip (j : Fin (n + 2)) (i : Fin (n + 1)) :
     ((-1 : ℤ) ^ (j : ℕ)) * ((-1) ^ (i : ℕ))

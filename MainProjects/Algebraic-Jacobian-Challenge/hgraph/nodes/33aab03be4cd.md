@@ -10,9 +10,10 @@ docstring: '`restrictScalars φ` is a right adjoint: it is definitionally `pushf
 file: AlgebraicJacobian/Picard/TensorObjSubstrate.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.restrictScalarsIsRightAdjoint
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma restrictScalarsIsRightAdjoint (φ : S ⟶ F.op ⋙ R) :
     (PresheafOfModules.restrictScalars.{u} φ).IsRightAdjoint :=

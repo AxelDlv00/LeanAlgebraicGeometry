@@ -26,7 +26,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.twisted_cech_nerve_iso
 type: lean
-updated: '2026-07-25T20:41:00'
+updated: '2026-07-28T13:22:16'
 ---
 noncomputable def twisted_cech_nerve_iso
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)

@@ -7,9 +7,10 @@ docstring: 'Evaluation of the outer leg: it is the inner descent.'
 file: AlgebraicJacobian/Picard/TensorObjSubstrate/StalkTensor.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: PresheafOfModules.revOuterLeg_apply
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma revOuterLeg_apply (U : Opens X) (hxU : x ∈ U) (a : ↑(A.obj (op U)))
     (ξ : ↑(TopCat.Presheaf.stalk B.presheaf x)) :

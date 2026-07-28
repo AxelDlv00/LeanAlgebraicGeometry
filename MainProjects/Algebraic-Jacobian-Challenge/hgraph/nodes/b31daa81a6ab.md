@@ -14,9 +14,10 @@ docstring: 'Generic two-square paste used to assemble the module-naturality of `
 file: AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullbackNatural.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.combine_naturality_squares
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma combine_naturality_squares {C : Type*} [Category C]
     {A B₁ B₂ E F G : C}

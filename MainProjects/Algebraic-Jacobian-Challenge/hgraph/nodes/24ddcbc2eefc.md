@@ -29,9 +29,10 @@ docstring: '**Stacks 04KV / EGA IV₂ 4.5.14**: a connected `k`-scheme with a `k
 file: AlgebraicJacobian/Picard/IdentityComponent.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.GroupScheme.geometricallyConnected_of_connected_of_section
 type: lean
-updated: '2026-07-27T12:33:55'
+updated: '2026-07-28T13:22:16'
 ---
 private theorem geometricallyConnected_of_connected_of_section
     {k : Type u} [Field k] {X : Scheme.{u}}

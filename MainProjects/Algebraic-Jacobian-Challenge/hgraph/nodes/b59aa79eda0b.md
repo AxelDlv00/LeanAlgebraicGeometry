@@ -1,0 +1,115 @@
+---
+author: sync
+content_type: theorem
+created: '2026-07-28T12:23:40'
+decl: until
+file: AlgebraicJacobian/Albanese/AlbaneseUP.lean
+generated: lean
+lean_status: lean_ok
+title: until
+type: lean
+updated: '2026-07-28T12:23:40'
+---
+theorem until they close.
+
+What *has* landed, and is genuinely unconditional, is the rational-map
+extension this file consumes: `Scheme.RationalMap.extend_to_av` (Milne Theorem
+3.2) is proved and axiom-clean as of run 0069, Milne Lemma 3.3 with it. So
+`descentThroughBirationalSigma`'s *extension* step has a real input; what it
+still lacks is the birationality data to build the rational map in the first
+place (mathlib at this pin has no "invert a birational morphism on a dense
+open" API).
+
+The single root cause of five of the six gaps is that `Sym^g C` does not exist
+yet: mathlib has no quotient of a scheme by a finite group action (its
+`SymmetricPower` is for modules), and the project's `analogies/m3-route-audit.md`
+scopes the construction at roughly 2400–3800 lines — an action typeclass, the
+affine quotient `Spec(A^{S_g})` with its universal property, the glued global
+quotient, and smoothness of `Sym^g C` for a curve. That is a subproject, not a
+step. The `S_g`-symmetry that the quotient's universal property *consumes* is
+however proved: see `Albanese/GrpObjFoldSum.lean` (`MonObj.powSum`,
+`MonObj.powSum_perm`).
+
+The six declarations stated without proof:
+
+* `abelJacobi` — the moduli classifier of the rigidified diagonal
+  correspondence `𝓛^{P₀} = 𝓞_{C × C}(Δ − {P₀} × C − C × {P₀})`, taken as a
+  relative degree-zero line bundle over the second factor.
+* `SymmetricPower` — the affine-and-glue construction `Spec(A^{⊗ g})^{S_g}`
+  of Milne III.3 Proposition 3.1 (Mumford 1970 §II.7 / §III.11). Mathlib has
+  no scheme-theoretic symmetric power, only `Sym` for types and modules.
+* `symmetricPowerAVMap` and `symmetricPowerToJacobian` — the two invocations
+  of the universal property of `Sym^g C`, which need the symmetric projection
+  `π : C^g ⟶ Sym^g C` supplied by that construction. Their *symmetric input* is
+  proved (`MonObj.powSum` / `MonObj.powSum_perm`, `Albanese/GrpObjFoldSum.lean`);
+  only the factorisation through `π` is missing.
+* `descentThroughBirationalSigma` — extension of the rational map
+  `Sym^g φ ∘ (f^{(g)})^{-1}` to a regular morphism (Milne Theorem I.3.2). The
+  extension theorem `extend_to_av` is now proved and unconditional; the gap is
+  upstream of it — producing the rational map, which needs the dense open on
+  which `f^{(g)}` is an isomorphism *and* a way to invert it there.
+* `albanese_eq_iff_symmetricPower_eq` — Milne's identification of `ι_{P₀}`
+  with `Q ↦ Q + (g − 1) P₀` followed by `f^{(g)}`.
+
+## The scheme `Pic⁰_{C/k̄}`
+
+`Pic⁰_{C/k̄}` is taken from `Picard/Pic0AbelianVariety.lean` through a thin
+`Pic0.Bundle` structure that carries the underlying scheme together with its
+four abelian-variety attributes (`GrpObj`, `IsProper`, `Smooth`,
+`GeometricallyIrreducible`), the carrier `Pic0.bundle C`, and the derived
+definition `Pic0.jacobianScheme C := (bundle C).scheme`.
+
+The upstream declarations `Scheme.Pic0.{grpObj, proper, smooth,
+geometricallyIrreducible}` run under `[GeometricallyIntegral C.hom]`,
+`[HasPicScheme C]` and `[PicScheme.PicSchemeLocallyOfFiniteType C]`, whereas
+the Albanese curve enters carrying only smoothness, properness and geometric
+irreducibility over `k̄`. The three bridges of §0.0
+(`geometricallyReduced_of_smooth`, `GeometricallyIntegral.of_…`,
+`hasRationalPoint_of_isAlgClosed`) discharge the missing hypotheses over an
+algebraically closed base.
+
+## Abelian-variety conventions
+
+Following the project (cf. `AbelianVarietyRigidity.lean`, `Jacobian.lean`),
+an **abelian variety over `k̄`** is encoded as an object
+`A : Over (Spec (.of k̄))` carrying the four instances:
+
+- `[GrpObj A]` (group-object structure on the over-category),
+- `[IsProper A.hom]` (complete),
+- `[Smooth A.hom]` (nonsingular),
+- `[GeometricallyIrreducible A.hom]` (geometrically irreducible).
+
+A **smooth proper geometrically irreducible curve over `k̄`** carries:
+
+- `[SmoothOfRelativeDimension 1 C.hom]`,
+- `[IsProper C.hom]`,
+- `[GeometricallyIrreducible C.hom]`.
+
+These instances are supplied by `inferInstance` at the call site.
+
+## References
+
+Blueprint: `blueprint/src/chapters/Albanese_AlbaneseUP.tex`.
+Milne, *Abelian Varieties*, §III.6 Proposition 6.1, p. 104;
+§III.3 Proposition 3.1 (symmetric power), p. 94; §III.5 Theorem 5.1(a)
+(birationality of `f^{(g)}`), p. 101 (`references/abelian-varieties.pdf`).
+-/
+
+set_option autoImplicit false
+
+universe u
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj
+
+namespace AlgebraicGeometry
+
+/-! ## §0.0. Substrate bridges: geometric integrality and rational points
+
+`Picard/Pic0AbelianVariety.lean` states `Pic⁰_{C/k}` smooth,
+proper and geometrically irreducible under the hypotheses
+`[GeometricallyIntegral C.hom] [HasPicScheme C]
+[PicScheme.PicSchemeLocallyOfFiniteType C]`, whereas the Albanese curve `C`
+enters here carrying only `[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+[GeometricallyIrreducible C.hom]` over an algebraically closed field `k̄`. The
+three bridging facts below discharge the missing hypotheses, so that
+`Pic0.bundle` can be assembled from the upstream declarations. -/

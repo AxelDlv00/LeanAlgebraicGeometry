@@ -13,9 +13,10 @@ docstring: '`pushforward₀ F R` is a right adjoint: it is definitionally `pushf
 file: AlgebraicJacobian/Picard/TensorObjSubstrate.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.pushforward₀IsRightAdjoint
 type: lean
-updated: '2026-07-24T17:02:57'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma pushforward₀IsRightAdjoint (F : C ⥤ D) (R : Dᵒᵖ ⥤ RingCat.{u}) :
     (PresheafOfModules.pushforward₀.{u} F R).IsRightAdjoint :=

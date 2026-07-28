@@ -39,9 +39,10 @@ docstring: '**Stage 3 (Stacks 00TT, scheme-to-algebra bridge for the standard sm
 file: AlgebraicJacobian/Albanese/CodimOneExtension.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.exists_algebra_isStandardSmooth_section_stalk_isLocalization_of_smooth
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-28T13:22:16'
 ---
 private theorem exists_algebra_isStandardSmooth_section_stalk_isLocalization_of_smooth
     {kbar : Type u} [Field kbar] [IsAlgClosed kbar]

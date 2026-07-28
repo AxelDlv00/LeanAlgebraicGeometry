@@ -10,9 +10,10 @@ docstring: 'Definitional unfolding of the graded multiplication, as a clean rewr
 file: AlgebraicJacobian/Picard/SectionGradedRing.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.gMul_mul_apply
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma gMul_mul_apply (L : X.Modules) {i j : ℕ}
     (a : sectionDeg L i) (b : sectionDeg L j) :

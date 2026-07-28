@@ -15,9 +15,10 @@ docstring: '`Option`-adjoining step of the finite induction: given the result fo
 file: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.coprodToProd_isIso_option
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-28T13:22:16'
 ---
 private theorem coprodToProd_isIso_option (F : X.Modules) {α : Type u}
     (ih : ∀ (legs : α → Over X), IsIso (coprodToProdMap F legs))

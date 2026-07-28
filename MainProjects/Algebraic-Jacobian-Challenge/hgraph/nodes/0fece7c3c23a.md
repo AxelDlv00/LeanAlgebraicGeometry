@@ -8,9 +8,10 @@ docstring: The push-pull comparison for an inclusion of opens, with its five-map
 file: AlgebraicJacobian/Cohomology/CechSectionIdentificationLegTop.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.pushPull_openOverHom_restrict
 type: lean
-updated: '2026-07-24T06:32:13'
+updated: '2026-07-28T13:22:16'
 ---
 private lemma pushPull_openOverHom_restrict (F : X.Modules)
     {U W : TopologicalSpace.Opens X} (h : U ≤ W) :

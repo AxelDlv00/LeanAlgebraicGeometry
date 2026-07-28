@@ -14,9 +14,10 @@ docstring: '**Commutativity of `S`-linear endomorphisms of the regular module of
 file: AlgebraicJacobian/Picard/TensorObjInverse.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.linearEndo_apply_comm
 type: lean
-updated: '2026-07-24T03:02:12'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma linearEndo_apply_comm {S : Type u} [CommRing S] (a b : S →ₗ[S] S) :
     a (b 1) = b (a 1) := by

@@ -12,9 +12,10 @@ docstring: 'Descended negation on the relative Picard quotient: `-[L] := [Linv]`
 file: AlgebraicJacobian/Picard/RelPicFunctor.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.PicSharp.relNeg
 type: lean
-updated: '2026-07-27T01:33:11'
+updated: '2026-07-28T13:22:16'
 ---
 private noncomputable def relNeg {S C T : Scheme.{u}} {πC : C ⟶ S} {πT : T ⟶ S} :
     Quotient (RelPicPresheaf.preimage_subgroup πC πT) →

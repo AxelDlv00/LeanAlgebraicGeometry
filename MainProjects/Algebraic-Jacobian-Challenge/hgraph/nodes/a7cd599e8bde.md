@@ -42,9 +42,10 @@ docstring: '**Part III of the B1-crux: the sheaf pullback unit, transported by `
 file: AlgebraicJacobian/Picard/TensorObjInverse.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Scheme.Modules.sheafPullbackUnit_forget_eq
 type: lean
-updated: '2026-07-25T02:33:16'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma sheafPullbackUnit_forget_eq {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
     (M : X.Modules) :

@@ -32,21 +32,32 @@ docstring: 'The **degree map** `Pic_{C/k}(k) → ℤ`.
   `k` being left to separate lemmas.
 
 
-  The construction is an open obligation: the value should be obtained by
+  ROUTE CHANGE (run 0067). The construction is still an open obligation, but it is
+  no
 
-  extracting a representing invertible sheaf from `PicScheme.representable C`,
+  longer the *Quot* obligation the previous docstring described, and the difference
+  matters
 
-  forming its Hilbert polynomial with the machinery of the sibling file
+  because Quot is retained-not-revived in this project. See `ClassDegree` and
 
-  `Picard/QuotScheme.lean`, and taking the leading coefficient. The body is
+  `degreeOfSection` below: representability already transports a `k`-rational point
+  to a
 
-  currently `sorry`.'
+  relative Picard class over the base, so the only missing input is a degree homomorphism
+  on
+
+  those classes — no Hilbert polynomial and no representing sheaf extraction.
+
+
+  The body is still `sorry`, and deliberately so: see `degreeOfSection` for the honest
+
+  version, which is total, and for why *this* declaration cannot be closed as stated.'
 file: AlgebraicJacobian/Picard/IdentityComponent.lean
 generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.PicScheme.degree
 type: lean
-updated: '2026-07-27T12:33:55'
+updated: '2026-07-28T13:22:16'
 ---
 noncomputable def degree {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
@@ -55,24 +66,31 @@ noncomputable def degree {k : Type u} [Field k]
     (Spec (.of k) ⟶ (PicScheme C).left) → ℤ :=
   sorry
 
-end PicScheme
+/-! ### The degree, factored through the relative Picard group
 
-/-! ## §4. `Pic⁰_{C/k}` is an abelian variety
+The route below replaces the Quot/Hilbert-polynomial construction the section header
+describes. Two facts make it work, and neither needs Quot:
 
-The terminal statement of the chapter identifies `Pic⁰_{C/k}` with an
-abelian variety of dimension `g(C)` --- the Jacobian variety of `C`. In
-this project, "abelian variety" is the conjunction of the four properties
-`[GrpObj A] [IsProper A.hom] [Smooth A.hom] [GeometricallyIrreducible A.hom]`
-threaded through `AlgebraicJacobian.AbelianVarietyRigidity` and consumed by
-`AlgebraicJacobian.Albanese.AlbaneseUP`.
+1. **Representability already does the transport.** `PicScheme.representable C` is a
+   bijection `(T ⟶ Pic_{C/k}) ≃ Pic(C ×_k T)/π_T^* Pic(T)` natural in `T`; taking
+   `T = Spec k` (the trivial over-object `Over.mk (𝟙 (Spec k))`) sends a `k`-rational point
+   of `Pic_{C/k}` to a relative Picard class over the base. This is `classOfSection` below,
+   and it is sorry-free.
+2. **The degree is a homomorphism on those classes.** That is the one remaining input,
+   isolated as the class `ClassDegree`. The sibling project builds exactly this
+   homomorphism sorry-free and without Quot — `Algebraic-Jacobian-Challenge-Rebuild`,
+   `RiemannRoch/RelPicDegree.lean`, `relPicDeg : Additive (relPic C (overSpec k K)) →+ ℤ`,
+   descended from `classDeg` along the observation that `Spec K` is a one-point space so its
+   Čech Picard group is trivial and cannot contribute. Its own input is the closed χ-ledger
+   `χ(𝒪(D)) = χ(𝒪_X) + deg D` (`RiemannRoch/ChiLedger.lean`), whose 22-file / 5.5k-line
+   closure I measured to be free of `sorry`.
 
-Blueprint reference: `thm:pic_zero_is_abelian_variety` (Kleiman §5
-Ex.~`ex:jac` + Rmk.~`rmk:Jac`; cf. Milne §I.1, Rmk. III.1.4(e)). -/
-
-namespace Pic0Scheme
-
-/- The abelian-variety identification `Pic0Scheme.isAbelianVariety`
-(blueprint `thm:pic_zero_is_abelian_variety`) lives in the sibling file
-`Picard/Pic0AbelianVariety.lean`, where it is assembled from the per-conjunct
-theorems `Pic0.proper` / `Pic0.smooth` / `Pic0.geometricallyIrreducible` /
-`Pic0.grpObj` of that chapter. -/
+WHY `degree` ABOVE STAYS OPEN, and this is a statement-level defect rather than a missing
+proof: it takes an *arbitrary* morphism `Spec k ⟶ (PicScheme C).left`, not a morphism over
+`Spec k`. Such a morphism need not be a section of `(PicScheme C).hom` — the goal
+`lambda ≫ (PicScheme C).hom = 𝟙 (Spec k)` is not derivable — so it does not name a
+`k`-*rational* point and representability says nothing about it. A total function of that
+type therefore cannot be built from the Picard functor at all; it would have to invent a
+value off the sections. `degreeOfSection` below is the same construction on the correct
+domain, and is total. Consumers should migrate; `degree` is retained only because
+`kPoints_iff_kerDegree` is pinned against it. -/

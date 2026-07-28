@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Adelic.chartHom₀_mk
 file: AlgebraicJacobian/RiemannRoch/Adelic/NonconstantToP1.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: AlgebraicGeometry.Adelic.chartHom₀_mk
 type: lean
-updated: '2026-07-24T17:02:57'
+updated: '2026-07-28T13:22:17'
 ---
 private lemma chartHom₀_mk (b : B) {i : ℕ}
     (hf : (X ⟨0⟩ : MvPolynomial (ULift.{u} (Fin 2)) (ULift.{u} ℤ))

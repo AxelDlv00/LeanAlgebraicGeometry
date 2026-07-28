@@ -14,7 +14,8 @@ docstring: '**Nakayama witness.** For a Noetherian local ring `(R, 𝔪)` with
 file: AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: RingTheory.CohenMacaulay.exists_notMemSq_of_spanFinrank_pos
 type: lean
-updated: '2026-07-27T12:05:10'
+updated: '2026-07-28T13:22:15'
 ---

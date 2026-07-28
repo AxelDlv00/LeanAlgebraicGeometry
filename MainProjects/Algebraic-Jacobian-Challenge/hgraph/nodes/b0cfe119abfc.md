@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:pic_zero_subscheme
 lean_status: lean_ok
-order: 1595
+order: 1598
 title: The identity component of the Picard scheme
 type: tex
-updated: '2026-07-28T04:57:38'
+updated: '2026-07-28T13:22:18'
 ---
 \textit{Source: [Kleiman], ``The Picard scheme'', \S 5, opening +
   Prp.~5.3.}
