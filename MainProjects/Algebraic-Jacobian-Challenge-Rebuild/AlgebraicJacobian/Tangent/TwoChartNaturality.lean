@@ -66,7 +66,7 @@ and then applied at the instantiated indices.
 * `AlgebraicGeometry.Scheme.map_twoChartCocycle` — naturality at cocycle level (an equality).
 * `AlgebraicGeometry.Scheme.map_twoChartClassHom` — **the reduction square**, at the level of
   `CechPic`.
-* `AlgebraicGeometry.Scheme.map_twoChartClassHom_eq_one` — the form a kernel computation
+* `AlgebraicGeometry.Scheme.map_twoChartClassHom_eq_one_iff` — the form a kernel computation
   consumes.
 
 Reference: Kleiman, "The Picard scheme", §5, proof of Thm. 5.11 (arXiv:math/0504020);
