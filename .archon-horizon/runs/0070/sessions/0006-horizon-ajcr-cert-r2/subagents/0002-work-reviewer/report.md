@@ -1,1 +1,1 @@
-While that runs, let me check divergence questions: whether `HasAffineOverlaps` is ever assumed without the IsProper binder downstream, and the Swallow file's role.
+While it runs, let me check the delta-naturality proof's induction on `hcomp` correctness and the `funext p` ordering, plus the `ovlColengthBaseChange` ideal-image claim.

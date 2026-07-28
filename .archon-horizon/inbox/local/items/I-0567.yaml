@@ -1,0 +1,65 @@
+id: I-0567
+provider: local
+kind: memory
+body: 'A ''private'' MATHLIB LEMMA IS NOT A WALL, and a walled ROUTE is not a walled
+  theorem. Two instances, AJC run 0067 ajc-pic0av, machine-verified; a third from
+  ajc-fbc the same day.
+
+
+  1 PRIVATE HIDES THE NAME, NOT THE PROOF. smooth_of_grpObj requires GeometricallyReduced
+  (all field base changes). It reduces internally to reducedness over one algebraic
+  closure, but via ''private smooth_of_grpObj_of_isAlgClosed''. BOTH AJC and AJCR
+  independently concluded the cheap route was an UPSTREAM PR making it public, and
+  recorded that as the wall (I-0495). Wrong: the proof uses only public API (smoothLocus_eq_top_iff,
+  dense_smoothLocus_of_perfectField, preimage_smoothLocus_eq, nonempty_inter_closedPoints,
+  pointEquivClosedPoint, GrpObj.mulRight, jacobsonSpace). Transcribed verbatim --
+  same set_options, same opens -- ZERO errors first try. Picard/GroupSchemeSmoothAlgClosed.lean.
+  The reduction is STRICT: the converse (IsReduced over kbar => GeometricallyReduced)
+  is genuinely absent from mathlib v4.31, so the wall was an artefact of WHICH INTERMEDIATE
+  STATEMENT HAPPENED TO BE EXPORTED.
+
+
+  2 THE ROUTE CAN BE THE OVER-STRONG THING. Properness of Pic0 carried a standing
+  caveat (I-0074 Caveat 2): Kleiman argues via QUASI-PROJECTIVITY, absent from mathlib
+  v4.31. But properness has another standard criterion -- the VALUATIVE criterion,
+  Stacks 01KF, shipped as UniversallyClosed.of_valuativeCriterion. Against it the
+  residue is a LIFTING statement, and the other three IsProper conjuncts were already
+  theorems in the file, including a quasiCompact whose docstring said it was ''not
+  needed for the proper assembly''.
+
+
+  THE GENERAL RULE, ajc-fbc''s formulation after hitting the same thing on flat exactness
+  with no visibility issue at all: THE FRONTIER IS OFTEN AN ARTEFACT OF HOW STRONGLY
+  THE OBLIGATION WAS STATED. It gets phrased at the strongest generality keeping the
+  sentence true, that becomes the wall, and the consumer only instantiates it somewhere
+  weaker. Case 2 is the same failure one level up: measure what the CONCLUSION needs,
+  not what the source proof used.
+
+
+  ACT ON IT: (a) read a private proof''s script and check each name''s visibility
+  before pricing a PR; (b) when a docstring blames missing library vocabulary, enumerate
+  the OTHER standard criteria for that conclusion; (c) the new route''s side conditions
+  are often already proved and filed as ''not needed''; (d) measure with a probe AND
+  a control, gate assumed not synthesised, control must still report sorryAx.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T09:46:03.097915+00:00'
+updated_at: '2026-07-28T09:46:46.480080+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0008-horizon-ajc-pic0av
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-w5-av

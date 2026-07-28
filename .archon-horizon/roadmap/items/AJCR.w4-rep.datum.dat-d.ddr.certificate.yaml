@@ -51,19 +51,33 @@ summary: "DECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. Bin
   \ is nothing to glue -- affine opens are\na basis of any scheme, so pick one inside\
   \ d.cover.opens z at each z and take a finite subcover.\nCompactness is free as\
   \ well: instQuasiCompactRelCurveHom (IsProper => QuasiCompact, base-change\nstable)\
-  \ then QuasiCompact.compactSpace_of_compactSpace.\n\nSTILL OPEN, and it is now the\
-  \ WHOLE residue of the lane: the CERTIFICATE half. The two relocated\nobligations\
-  \ of I-0492 clause 4 -- fibrewise-finite support (hfib) and SwallowedBy -- are explicit\
-  \ in\nsignatures as the protection demands, but nothing in the tree CONSTRUCTS them,\
-  \ and a cover produced\nby the extraction above has no reason to carry a straddling\
-  \ piece. Arranging one is precisely where\nthe Stacks 0B8B input enters. Obligation\
-  \ 4(i) is at least now readable by the layer that owes it:\nAffAdaptation.eqn_tmul_one_mem_nonZeroDivisors_iff\
-  \ (09396353c) restates the tensor condition as\nregularity of the pulled equation\
-  \ on the FIBRE CURVE over kappa(p).\n\nSTANDING NEGATIVE RESULTS, all still binding:\
-  \ chart-avoid is NO, and the counterexample is\nFIELD-INDEPENDENT; no repair keeping\
-  \ the pieces inside preimages of a FIXED PAIR of P1 points can\nwork (joint-cover\
-  \ REJECTED); p1-aut stays pending and DEPRIORITISED, no consumer against it. The\n\
-  landed finite-field-avoid work is valid mathematics and is not to be deleted.\n"
+  \ then QuasiCompact.compactSpace_of_compactSpace.\n\nSwallowedBy IS NOW REDUCED\
+  \ TO THE 0B8B INPUT ALONE (58412986d):\n\n  exists_affCoverData_swallowedBy (d)\
+  \ (hW : IsAffineOpen W) (hsub : d.supportLocus subset W) :\n    exists D : AffCoverData\
+  \ C R, D.SwallowedBy d\n\nSwallowedBy asks for TWO things -- one piece contains\
+  \ the whole support, and every OTHER piece\nmisses it -- and the lane carried both\
+  \ as the geometric obligation since it was defined. The second\nhalf is free: the\
+  \ support locus is CLOSED, so its complement is OPEN, so choose the other pieces\n\
+  inside that complement and they miss the support by construction; affine opens are\
+  \ a basis and the\ncomplement of the affine W is compact, so finitely many suffice.\
+  \ What remains is exactly the half\nclause 2 directs the lane to USE rather than\
+  \ re-derive: supp D is finite over R, hence lies in a\nsingle affine open. Nothing\
+  \ in the tree re-derives 0B8B, and nothing should.\n\nSTILL OPEN -- the residue\
+  \ of the lane, now narrow and precisely two statements:\n (a) the 0B8B input itself:\
+  \ an affine open W of C x_k Spec R containing d.supportLocus. Mathlib has\n    \
+  \ no form of it and this project constructs no curve but P1, so it stays an obligation.\n\
+  \ (b) fibrewise-finite support (hfib) from the seed's own degree data. Obligation\
+  \ 4(i) is at least\n     now readable by the layer that owes it: AffAdaptation.eqn_tmul_one_mem_nonZeroDivisors_iff\n\
+  \     (09396353c) restates the tensor condition as regularity of the pulled equation\
+  \ on the FIBRE\n     CURVE over kappa(p), which is the vocabulary the seed layer\
+  \ speaks (cf.\n     ThetaGeneratorSeed.eqn_tmul_one_mem_nonZeroDivisors, whose whole\
+  \ content is that conversion).\nGiven (a) and (b), isCertified_of_swallowedBy_of_c1\
+  \ delivers all seven clauses and\ndivFamZarAff_of_forall_prime_certified_adaptation\
+  \ delivers the class.\n\nSTANDING NEGATIVE RESULTS, all still binding: chart-avoid\
+  \ is NO, and the counterexample is\nFIELD-INDEPENDENT; no repair keeping the pieces\
+  \ inside preimages of a FIXED PAIR of P1 points can\nwork (joint-cover REJECTED);\
+  \ p1-aut stays pending and DEPRIORITISED, no consumer against it. The\nlanded finite-field-avoid\
+  \ work is valid mathematics and is not to be deleted.\n"
 status: active
 kind: proof
 priority: high
@@ -86,8 +100,9 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T09:13:40.913840+00:00'
+  updated_at: '2026-07-28T09:31:43.141534+00:00'
   pinned_commits:
+  - 58412986d
   - 321af6cb6
   - 107cd5581
   - c843eafd7

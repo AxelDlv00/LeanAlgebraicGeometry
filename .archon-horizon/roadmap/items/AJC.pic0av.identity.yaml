@@ -2,49 +2,37 @@ id: AJC.pic0av.identity
 title: Identity component and degree-zero points
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Construct the degree map, identify Pic0(k) with its kernel, prove the dimension\
-  \ statement.\n\nSTATE (run 0067 round 1, ajc-pic0av, commit f820eff22). The degree\
-  \ map HAS A ROUTE, and it is\nnot the Quot route. I am explicitly retracting my\
-  \ own round-0 summary line 'no route found I\nwould stand behind'.\n\nTHE ROUTE,\
-  \ and the transport half is landed sorry-free:\n * PicScheme.classOfSection (SORRY-FREE)\
-  \ -- representability AT THE TRIVIAL TEST OBJECT\n   T = Spec k. A k-rational point\
-  \ of Pic_{C/k} is a morphism Over.mk (id Spec k) -> PicScheme C,\n   and representable's\
-  \ homEquiv sends it to a class in Pic(C x_k Spec k)/pi^* Pic(Spec k). This\n   is\
-  \ the step the Quot route was going to perform by extracting a representing sheaf\
-  \ and\n   forming its Hilbert polynomial; it is free, nothing is chosen.\n * PicScheme.degreeOfSection\
-  \ (SORRY-FREE, TOTAL, given the one input) + the class\n   PicScheme.ClassDegree\
-  \ (the one input: an additive Z-valued degree on relative Picard classes\n   over\
-  \ the base) + degreeOfSection_eq_zero_of_class_eq_zero (map_zero -- the direction\
-  \ of\n   kPoints_iff_kerDegree that additivity buys).\n * WHY THE INPUT IS CREDIBLE\
-  \ rather than merely named: the sibling Rebuild has exactly this\n   homomorphism\
-  \ sorry-free and WITHOUT Quot -- RiemannRoch/RelPicDegree.lean relPicDeg, descended\n\
-  \   from classDeg because Spec K is a one-point space so its Cech Picard group is\
-  \ trivial and\n   cannot contribute. Its own input is the closed chi-ledger (ChiLedger.lean),\
-  \ 22 files / 5491\n   lines / ZERO sorry tokens, measured at HEAD. So the open work\
-  \ is a CARRIER TRANSPORT, not a\n   theorem about degrees.\n\nA DEFECT IN THE PINNED\
-  \ STATEMENT, and this is the finding that matters most in this lane.\nPicScheme.degree\
-  \ takes an ARBITRARY morphism Spec k -> (PicScheme C).left, not a morphism OVER\n\
-  Spec k. Such a morphism need not be a section of (PicScheme C).hom -- the goal\n\
-  l >> hom = id is NOT derivable -- so it does not name a k-RATIONAL point and representability\n\
-  says nothing about it. A total function of that type cannot be built from the Picard\
-  \ functor at\nall; it would have to invent values off the sections. So that sorry\
-  \ is a STATEMENT bug, not a\nmissing proof, and no amount of degree theory will\
-  \ close it as stated. degreeOfSection is the\nsame construction on the correct domain.\
-  \ Consumers should migrate. kPoints_iff_kerDegree is\npinned against the broken\
-  \ form, which is why degree is retained rather than replaced --\nwhoever owns the\
-  \ pin should decide.\n\nFINRANK_EQ_GENUS -- unchanged from round 0, and the diagnosis\
-  \ stands: the blocker is NOT the\ntangent identity but a MISSING MATHLIB BRIDGE.\
-  \ topologicalKrullDim has essentially no API in\nv4.31 (IsHomeomorph.topologicalKrullDim_eq,\
-  \ two monotonicity lemmas,\nPrimeSpectrum.topologicalKrullDim_eq_ringKrullDim) and\
-  \ nothing connects it to\nSmoothOfRelativeDimension or to a tangent-space dimension.\
-  \ The available bridge is\nAlgebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth,\
-  \ i.e. Module.rank of Kahler\ndifferentials, which needs (i) that rank identified\
-  \ with the tangent-space dimension and (ii)\npassage from an affine-local presentation\
-  \ to a scheme-level Krull dimension over a cover.\nCHEAPER TARGET for consumers\
-  \ wanting a dimension INDEX: SmoothOfRelativeDimension (genus C).\n\nMEASURED with\
-  \ a control, gate assumed not synthesised: probe_classOfSection and\nprobe_degreeOfSection\
-  \ both [propext, Classical.choice, Quot.sound]; CONTROL probe_degree_bare\nstill\
-  \ sorryAx."
+summary: "Identity component and degree-zero points. The identity component itself\
+  \ is DONE (Pic0Scheme,\nPic0Scheme.inclusion, isSection_comp_inclusion, all sorry-free).\
+  \ Three open sorries remain in\nPicard/IdentityComponent.lean and each has a DIFFERENT\
+  \ kind of blocker -- do not treat them as one.\n\n1 PicScheme.degree -- A STATEMENT\
+  \ BUG, not a missing proof. Its domain is an ARBITRARY morphism\nSpec k -> Pic,\
+  \ not a morphism over Spec k, so it never names a k-RATIONAL point and representability\n\
+  says nothing about it. No total function of that type is constructible from the\
+  \ Picard functor.\ndegreeOfSection / degreeOfSectionPinned are the same construction\
+  \ on the correct domain and are total.\nRetained only because kPoints_iff_kerDegree\
+  \ is pinned against it; consumers should migrate.\n\n2 THE DEGREE MAP -- residue\
+  \ is now a CONSTRUCTION, not a characterisation (run 0067 r3).\nClassDegree was\
+  \ found vacuous (zero homomorphism inhabits it; probed). I-0534 named the real input\
+  \ as a\nCHARACTERISATION and suggested agreement with WeilDivisor.degree on O(D)\
+  \ -- that form needs a relative\ndivisor-to-line-bundle comparison AJC does not\
+  \ have. THE ABEL MAP IS THAT COMPARISON, already sorry-free\nand already carrying\
+  \ the fibre-degree ledger. So:\n  ClassDegreePinned    classDegree (data) + classDegree_abel:\
+  \ on the Abel image of a family of constant\n                       fibre degree\
+  \ d, the value is d\n  classDegree_ne_zero_of_exists_pos_fiberDeg   the acceptance\
+  \ test: the ZERO MAP IS REFUTED\n  degreeOfSectionPinned + its map_zero lemma\n\
+  The refutation is CONDITIONAL on a producer of a nonzero-degree DivFamily over the\
+  \ trivial test object,\nand AJC has no in-tree producer of any DivFamily. So what\
+  \ remains is exhibiting one -- a construction.\nThat is a strictly better residue\
+  \ than 'the class demands nothing', and the acceptance test now lives in\nthe tree\
+  \ beside the class rather than in a session note.\n\n3 finrank_eq_genus -- blocked\
+  \ on mathlib, NOT on the tangent identity. Even granting dim T_0 = g and\nsmoothness,\
+  \ topologicalKrullDim has almost no API in v4.31 and nothing connects it to\nSmoothOfRelativeDimension\
+  \ or to a tangent-space dimension. Consumers wanting only a dimension INDEX\nshould\
+  \ target SmoothOfRelativeDimension (genus C) instead, which is cheaper.\n\n4 kPoints_iff_kerDegree\
+  \ -- structural half CLOSED (Pic0Scheme.inclusion); the rest is blocked on (1).\n\
+  degreeOfSection_eq_zero_of_factors is the restatement on the correct domain, with\
+  \ its structural half\ndischarged."
 status: active
 kind: proof
 priority: normal
@@ -67,5 +55,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-28T05:43:20.403837+00:00'
+  updated_at: '2026-07-28T09:43:51.680971+00:00'
   owner: ajc-pic0av
+  pinned_commits:
+  - 6b1ed2604

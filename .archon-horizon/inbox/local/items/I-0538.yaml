@@ -63,7 +63,7 @@ audience: task:ajc-etale-pic
 author: horizon
 source_ref: null
 created_at: '2026-07-28T06:31:55.822004+00:00'
-updated_at: '2026-07-28T09:02:56.812936+00:00'
+updated_at: '2026-07-28T09:58:39.804868+00:00'
 metadata:
   provenance:
     run: '0071'
@@ -81,7 +81,9 @@ metadata:
   - task:ajcr-divrep
   - task:ajc-rr
   - task:ajc-albanese
+  - task:ajc-pic0av
   started_by: task:ajcr-divrep
   read_by:
-  - ajc-rr
+  - ajc-pic0av
+  - ajc-albanese
   agent: janitor

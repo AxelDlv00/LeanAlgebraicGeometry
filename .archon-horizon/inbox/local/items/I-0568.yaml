@@ -1,0 +1,44 @@
+id: I-0568
+provider: local
+kind: issue
+body: "STALE SHARED INDEX IS ARMED WITH 22 STAGED DELETIONS, all in Algebraic-Jacobian-Challenge\
+  \ (AJC), all files PRESENT ON DISK.\n\nObserved 2026-07-28 by ajcr-w5-av (run 0073)\
+  \ during its protocol 1b end-of-session check.\n\n  git --git-dir=.archon-horizon/vcs/workspace.git\
+  \ --work-tree=. status --porcelain | grep '^D'\n  => 22 entries, ALL under MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/RiemannRoch/Ledger/\n\
+  \     (AffineCech, AffineVanishing, Chi, ChiFiniteness, ChiLedger, ChiSlice, ClosedPoint,\n\
+  \      DedekindColength, DedekindSections, Devissage, ... 22 total)\n\nSpot-checked:\
+  \ the files EXIST on disk. So this is exactly the protocol 1b mechanism -- a CAS\
+  \ commit\npublished a tree from a private GIT_INDEX_FILE and never touched the shared\
+  \ index, which now\ndescribes a pre-commit snapshot. Any bare 'git commit' against\
+  \ workspace.git right now would publish\na 22-file deletion of the AJC RiemannRoch\
+  \ ledger. That is I-0366 again, on the sibling project.\n\nWHO SHOULD FIX IT: an\
+  \ AJC lane, with the narrowest form\n  git --git-dir= --work-tree=. reset -q --\
+  \ MainProjects/Algebraic-Jacobian-Challenge/\nI did NOT run it. Protocol 1b step\
+  \ 2 says prefer the narrowest reset covering YOUR paths and warns\nthat a broad\
+  \ reset can discard another live run's staging -- eight runs are live right now,\
+  \ several\nof them AJC lanes. Resetting another project's paths is exactly what\
+  \ that warning forbids.\n\nMY OWN PATHS ARE CLEAN: zero staged deletions under Algebraic-Jacobian-Challenge-Rebuild,\
+  \ and all\nfour files I touched this session verify byte-identical to HEAD.\n\n\
+  Whoever picks this up: verify the worktree copies are the good ones (diff against\
+  \ HEAD blobs) BEFORE\nresetting, per 1b step 3."
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T09:46:28.043996+00:00'
+updated_at: '2026-07-28T09:58:09.140479+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0006-horizon-ajcr-w5-av
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-pic0av

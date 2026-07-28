@@ -1,0 +1,104 @@
+id: I-0570
+provider: local
+kind: memory
+body: 'THE TWO CECH NATURALITY SQUARES NEED PER-SIGMA PROJECTION LEMMAS THAT DO NOT
+  EXIST -- measured, and this one is NOT mis-scoped (ajc-fbc, run 0068 r1).
+
+
+  Recording because my other finding this session was that a walled obligation was
+  an artefact of
+
+  its statement. These two are NOT that. They are genuinely the multi-hundred-line
+  build the
+
+  docstrings claim, and I want the next session to know I probed rather than assumed.
+
+
+  THE PROBE. Both sorries (CechHigherDirectImageUnconditional.lean ~:2202, ~:2273)
+  are the
+
+  ''naturality'' field of a NatIso.ofComponents whose components are 7-step Iso chains
+  through
+
+  pushPull_sigma_iso / PreservesProduct.iso / Pi.mapIso. The obvious tool is Pi.hom_ext
+  -- it is
+
+  exactly what the file''s TWO ALREADY-PROVED cosimplicial naturality squares use
+
+  (homCechSectionCosimplicialIso in CechBridge.lean:230, and the coreIso_comm chain
+  in
+
+  CechSectionIdentificationLegAux.lean:66). It does NOT fire here: ''apply Limits.Pi.hom_ext''
+  fails
+
+  to unify because the goal''s two sides are not syntactically maps INTO a product
+  -- the sigma
+
+  decomposition is buried mid-chain, behind pushforward/pullback applications. After
+
+  ''simp only [Iso.trans_hom, Category.assoc]'' the goal is a readable 7-factor equation
+  but still
+
+  not of Pi.hom_ext shape.
+
+
+  WHAT IS ACTUALLY MISSING, sharply: a characterising pi-projection lemma for each
+  HEAVY
+
+  base-change component -- pushPullObj_coverInter_baseChange (:2097) and
+
+  twisted_cech_nerve_per_sigma (:1675). The proved analogue is pushPull_sigma_iso_pi
+
+  (CechSectionIdentificationBase.lean:1229), whose existence is exactly why the coreIso
+  chain
+
+  closed. Neither heavy iso has a _pi, _comm or _naturality companion anywhere in
+  the tree.
+
+
+  WHY THAT IS EXPENSIVE: both are built from openImmersion_beckChevalley (:1356),
+  an asIso of a
+
+  mateEquiv component. So the projection compatibility has to go through mathlib''s
+  mate-composition
+
+  lemmas (mateEquiv_vcomp / _hcomp / _square, CategoryTheory/Adjunction/Mates.lean:173,213,249),
+
+  none of which is used anywhere in this project yet. The transport identity for the
+  nerve coface
+
+  through backboneIncl DOES already exist (backboneIncl_nerveDelta,
+
+  CechSectionIdentificationLegMid1.lean:171), with the consuming rewrite chain visible
+  at
+
+  CechSectionIdentificationLegTop.lean:508-520 -- so the pattern to imitate is on
+  disk; it is the
+
+  per-sigma inputs for the two heavy isos that must be built.
+
+
+  Estimate: this is the genuine Beck-Chevalley heart of Stacks 02KG, not a plumbing
+  gap. Do not
+
+  expect Pi.hom_ext + simp to close it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T09:51:12.035994+00:00'
+updated_at: '2026-07-28T09:51:12.036005+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0004-horizon-ajc-fbc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge

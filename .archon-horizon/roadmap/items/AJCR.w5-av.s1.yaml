@@ -3,20 +3,19 @@ title: 'S1 (WORKSHEET-FIRST, risk R2): geometric reducedness at the identity via
   = 0\) square-zero lifting'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'WORKSHEET LANDED (run 0073), informal/w5-s-worksheet.md §2+§2.1. Route alpha-1
-  survives but splits differently than the recon said. CHEAP half, structurally: the
-  two-term-H^2=0 step is free because pic0Functor is built on a TWO-chart Cech cover,
-  so the degree-2 term is absent by construction (hence the ban on porting EGA III
-  7.7.5/7.7.10 Exchange costs nothing). EXPENSIVE half: "IsReduced J_kbar => GeometricallyReduced"
-  is ABSENT from mathlib — the gap is exactly the TRANSCENDENTAL extension case (mathlib
-  covers algebraic K/k at Nilpotent/GeometricallyReduced.lean:71; no scheme-level
-  reduction of the field quantifier exists; IsGeometricallyReduced has zero consumers
-  under AlgebraicGeometry/). Do NOT reach for Curve/GeometricallyReduced.lean — it
-  proves the CONVERSE and using it here is circular (this mistake was made and retracted
-  in §2.1; cost recorded in I-0499/I-0508). RECOMMENDATION: keep S1 a hypothesis;
-  the AV package already assembles conditionally on it. Cheap unblock is UPSTREAM
-  (mathlib smooth_of_grpObj_of_isAlgClosed is private). S1-a (reduced stalk at identity)
-  is T3/T4-gated.'
+summary: 'WORKSHEET-FIRST (informal/w5-s-worksheet.md 2, 2.1). S1 is a HYPOTHESIS
+  by design: S2 and S3 take GeometricallyReduced as an instance argument, so keeping
+  S1 open blocks no other Wave-5 item. Two live corrections to earlier sizings, both
+  recorded in 2.1: (i) Curve/GeometricallyReduced.lean proves the CONVERSE of what
+  S1 needs, so citing it is circular; (ii) RETRACTED 2026-07-28 (run 0073 r2) -- my
+  own claim that the cheap unblock was an upstream mathlib PR making smooth_of_grpObj_of_isAlgClosed
+  public is WRONG. private hides the name, not the proof: the script uses only public
+  API and transcribes verbatim ([XS], local; sibling did it in Picard/GroupSchemeSmoothAlgClosed.lean,
+  inbox I-0567). What survives and sizes the row: IsReduced over an algebraically
+  closed base does NOT give GeometricallyReduced -- absent from mathlib v4.31, and
+  proving it IS the transcendental-extension statement. So the kbar-fibre variant
+  RELOCATES S1-b0 at [XS] rather than dodging it. Residue: S1-b0 [M/L] plus S1-a''s
+  reduced-identity-stalk question (R2'', gated on T3/T4).'
 status: pending
 kind: proof
 priority: normal
@@ -30,4 +29,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:47.063766+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T05:30:03.764516+00:00'
+  updated_at: '2026-07-28T09:48:59.735414+00:00'
+  owner: ajcr-w5-av

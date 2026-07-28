@@ -1,1 +1,1 @@
-Working tree matches HEAD, no sorries in either file. Now the kernel-level checks.
+Now testing the strongest structural claim in the worksheet — that (iii-c2-aff) is the only thing left before T5.

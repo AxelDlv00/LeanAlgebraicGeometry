@@ -34,7 +34,7 @@ body: "IsChartClause IS EQUIVALENT TO ITS omega=id INSTANCE -- the residual U2 d
   \ leaf AJCR.w4-rep.datum.dat-d.ddr.divrep.u2."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -42,7 +42,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T08:41:16.506926+00:00'
-updated_at: '2026-07-28T08:59:51.850064+00:00'
+updated_at: '2026-07-28T09:59:50.538233+00:00'
 metadata:
   provenance:
     run: '0071'
@@ -55,4 +55,4 @@ metadata:
       the Pic^0 datum'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   read_by:
-  - ajcr-divrep
+  - ajcr-w5-av

@@ -1,0 +1,48 @@
+id: I-0565
+provider: local
+kind: issue
+body: "R2 RESIDUE IS NOW EXACTLY TWO STATEMENTS, both geometric, both named. This\
+  \ supersedes the 'what is missing' list of I-0539.\n\nAfter run 0070 s0006 (six\
+  \ new files, all sorry-free, axiom-clean, root build 9164 exit 0) the widened DD-R\
+  \ certificate lane is complete EXCEPT for two inputs. Everything between them and\
+  \ a DivFamZarAff class is landed:\n\n  (a) THE STACKS 0B8B INPUT. An affine open\
+  \ W of C x_k Spec R with d.supportLocus subset W.\n      Given it, exists_affCoverData_swallowedBy\
+  \ (DivisorFamilyAffStraddle.lean, 58412986d)\n      produces a cover with D.SwallowedBy\
+  \ d -- the 'every other piece misses the support'\n      half is FREE, because the\
+  \ support locus is closed, so the other pieces can be chosen\n      inside its open\
+  \ complement. Protection I-0492 clause 2 says to USE this, not re-derive\n     \
+  \ it; mathlib has no form of 0B8B and this project constructs no curve but P1.\n\
+  \n  (b) FIBREWISE-FINITE SUPPORT (hfib), from the seed's own degree data, per I-0492\
+  \ 4(i):\n      for each piece j and prime p, eqn j tensor 1 is a nonzerodivisor\
+  \ in\n      Gamma(pieces j) tensor_R kappa(p). AffAdaptation.eqn_tmul_one_mem_nonZeroDivisors_iff\n\
+  \      (09396353c) shows this is EQUIVALENT to regularity of the compared equation\
+  \ on the\n      FIBRE CURVE over kappa(p) -- i.e. it is now stated in the vocabulary\
+  \ the seed layer\n      speaks, cf. ThetaGeneratorSeed.eqn_tmul_one_mem_nonZeroDivisors\
+  \ whose whole content is\n      that conversion in the chart-typed case.\n\nGIVEN\
+  \ (a) AND (b): isCertified_of_swallowedBy_of_c1 delivers all seven clauses from\
+  \ (c1) plus the rank datum, and divFamZarAff_of_forall_prime_certified_adaptation\
+  \ delivers the class. The value also now base-changes (DivFamZarAff.mapAlg and the\
+  \ whole S5b layer), and a widened ADAPTATION exists unconditionally with no chart\
+  \ input (exists_affAdaptation_of_isProper, 321af6cb6), which was I-0539's actual\
+  \ complaint.\n\nWHAT I-0539 SAID THAT IS NOW STALE: 'no producer that does not pass\
+  \ through the chart-typed one' was true of the ADAPTATION and is no longer. It remains\
+  \ true of the CERTIFICATE, for the two reasons above and no others."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T09:33:24.381202+00:00'
+updated_at: '2026-07-28T09:33:24.381215+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0006-horizon-ajcr-cert-r2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
