@@ -148,7 +148,21 @@ witness-free plus-class identity, the `→` direction is free, and what remains 
 per point, produce the datum's predicate at `κ(t)` itself.  Its two ingredients both exist —
 `hasWitnessH1Vanishing_iff_of_fieldExtension` carries a *datum* predicate across a field
 extension, and `hfib` identifies the classes — but composing them is not a rewrite, because the
-witness received lies in `μ`'s class at `L_t` rather than visibly in `D`'s at `κ(t)`. -/
+witness received lies in `μ`'s class at `L_t` rather than visibly in `D`'s at `κ(t)`.
+
+**`hconv` IS DISCHARGED as of 2026-07-29** (`Picard/Pic0ChartPresentationConverse.lean`,
+`hasWitnessH1Vanishing_of_isSplitWitness_at`), and the diagnosis above was right about the
+obstruction while **naming only two of the three ingredients**.  The step that makes the
+received witness *visibly* lie in `D`'s class is not a transport at all: it is
+`PicEtAff.unit_injective` (`Picard/CechKernelLemma.lean:361`, Kleiman 2.5(1), the unconditional
+close of the ζ3 campaign) followed by `relPicMk_injective_of_subsingleton`, which together force
+the presenting class `M` to *equal* `D`'s fibre class at `L_t`.  Then
+`hasWitnessH1Vanishing_iff_of_fieldExtension` descends it, exactly as predicted.
+
+What the discharge consumes in place of `hconv` is the same plus-class identity as `hfib` but at
+an arbitrary extension of `κ(t)` (`IsChartDatumPlusFibreAt`); at `L := κ(t)` it *is* `hfib` by
+`Iff.rfl`.  So use `isChartDatumPresentation_of_plusFibre` rather than supplying `hconv` by
+hand — this theorem remains correct and is the general form. -/
 theorem isChartDatumPresentation_of_plusFibre_of_converse {A : Type u} [CommRing A]
     [Algebra k A] {μ : picEt C (overSpec k A)} {D : BasicOpenCocycleDatum C A π}
     (hfib : IsChartDatumPlusFibre C π μ D)

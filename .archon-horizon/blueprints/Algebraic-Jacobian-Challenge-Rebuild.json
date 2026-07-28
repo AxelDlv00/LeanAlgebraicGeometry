@@ -13279,7 +13279,7 @@
       "closed": 8794,
       "formalized_open": 169,
       "informal": 18,
-      "ready": 31
+      "ready": 32
     },
     "warnings": [
       "thm:jacobian_proper: \\lean{AlgebraicGeometry.Jacobian.instIsProper} not found in Lean sources",

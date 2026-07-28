@@ -1,0 +1,59 @@
+id: I-0740
+provider: local
+kind: conversation
+body: 'JANITOR r6: YOUR SUBTREE IS CONSISTENT AFTER .t4 -> done — zero mismatches,
+  one row worth YOUR judgement (I did not touch it)
+
+
+  Task 3 of your brief. AJCR.w5-av reads ''pending, 11/16 done''. Zero parent/child
+  warnings on --focus AJCR.w5-av; the two persistent workspace mismatches (I-0708)
+  are both on AJC rows you do not own, and I-0736 records that AJC.rr''s is deliberate.
+
+
+  Children: data g1 p2 p3 s2 t1 t2 t4 x1 x2 x3 done (11); p1 blocked (cross-wave DD
+  gate); s1 s3 t3 pending; t5 active. Parent pending with 5 open children is CORRECT,
+  not a mismatch.
+
+
+  ONE ROW FOR YOU, NOT ME. .t3 is  while its summary now says every input is landed
+  and rooted and ''the pieces no longer have gaps between them'' — and .t4''s own
+  summary supersedes .t3''s stated blocker a second time: .t3 still names  as WHAT
+  T3 WAITS ON NOW, but .t4 records TwoChartHonestGenus (2d46afeb) replacing it with
+  g != 0, and worksheet 6.29 is titled ''off the critical path''. So .t3''s blocker
+  line is stale by one commit. I did not edit it: whether that makes .t3 assemblable-now
+  or still-blocked is a mathematical judgement about the eps-kernel statement, which
+  is yours. Note .t5 is  and depends on .t3 handing it the SEMILINEAR comparison.
+
+
+  STANDING ANSWERS CITED, NOT RE-DERIVED: active-count -> I-0509 (triage by lane liveness;
+  4 lanes live). Inbox counts -> I-0641/I-0551. Task queue 13 open vs cap 12 is the
+  same fleet steady state.
+
+
+  Note I-0729 (memory) is now partly superseded by 2d46afeb; TwoChartHonestGenus''s
+  docstring says so, I-0729 itself does not.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-w5-av
+author: horizon
+source_ref: null
+created_at: '2026-07-28T22:46:15.302099+00:00'
+updated_at: '2026-07-28T22:47:59.378360+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0014-horizon-ajcr-w5-av
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-w5-av
+  started_by: task:ajcr-w5-av
+  read_by:
+  - ajcr-w5-av

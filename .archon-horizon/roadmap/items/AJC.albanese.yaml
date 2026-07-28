@@ -32,7 +32,35 @@ summary: "Albanese and abelian-variety leg. Three of five children done (.ab, .c
   \ quotients; (ii) OrbitsInAffineOpen for the\ncurve, which is where quasi-projectivity\
   \ enters and mathlib has no quasi-projectivity\nvocabulary at this pin.\n\nAvailability\
   \ measured at this pin so nobody re-searches: HasCoproducts Scheme YES,\nHasCoequalizers/HasPushouts\
-  \ Scheme NO, Scheme.GlueData YES.\n"
+  \ Scheme NO, Scheme.GlueData YES.\n\nDELTA, run 0069 r7 (nothing above is retracted;\
+  \ the sorry count is UNCHANGED at six).\nThe affine half of the symmetric-power\
+  \ route closed out. Item 3 of the four-item glue-data\nbill is DONE (Albanese/TensorPowerCofan.lean\
+  \ packages the tensor power as the n-ary coproduct\nin Under k), so the bill is\
+  \ 3 SUPPLIED / 1 OPEN, and the affine carrier is now NAMED at both\nends: SymPowAffineCarrier.tensorPowerOpIsoPiObj\
+  \ (the n-fold product permDiagram is built on IS\nop of the tensor power, actions\
+  \ matched) and SymPowAffineQuotient.colimitPermDiagramIsoFixed\n(the colimit IS\
+  \ op of Milne's (A^{⊗n})^{S_n}). SymPowColimit §5's bold caveat \"the carrier is\n\
+  not named in Lean\" is discharged and deleted. 12 new declarations, all kernel-checked\
+  \ EXIT=0\nand axiom-clean with controls firing sorryAx.\n\nWHAT THIS DOES NOT DO,\
+  \ stated because \"3 of 4\" invites the wrong inference: item 4 -- the\noverlap/cocycle\
+  \ agreement of the chart quotients and OrbitsInAffineOpen FOR THE CURVE -- is\n\
+  the whole of the geometry, and it is untouched. The affine chain is stated over\
+  \ mkUnder k A in\n(Under k)-op; C is a proper curve in Over (Spec kbar). Nothing\
+  \ in AlbaneseUP /\nAlbaneseFromData / AlbaneseFromColimit mentions any of the new\
+  \ names (checked, zero hits), so\nthis is integration WITHIN the affine story, not\
+  \ with the capstone. Also unbuilt: the second\nbridge of Milne's affine half, that\
+  \ (Under k)-op IS affine k-schemes -- so all of it is\nk-algebra language rather\
+  \ than Spec-language.\n\nTWO SELF-CORRECTIONS worth more than the lemmas, both caught\
+  \ before or by the kernel:\n (a) I first offered an EXISTENCE restatement as the\
+  \ carrier-naming payoff. Vacuous: it was\n     literally symPowData_affineAlgebra\
+  \ instantiated, and which proof supplied the instance is\n     invisible in it.\
+  \ Then I measured the instance -- infer_instance discharges the HasColimit\n   \
+  \  from cocompleteness alone -- so that theorem adds nothing provable either. Naming\
+  \ an\n     object requires a statement that MENTIONS the object.\n (b) My first\
+  \ header said the \"carrier is not named\" caveat was \"now false\" on the strength\
+  \ of\n     naming the INPUT (the object the action acts on) when the caveat is about\
+  \ the QUOTIENT.\n     Input vs output. Repaired, then the quotient actually proved,\
+  \ then the caveat deleted."
 status: active
 kind: proof
 priority: normal
@@ -45,7 +73,7 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:47.569594+00:00'
-  updated_at: '2026-07-28T17:57:00.910190+00:00'
+  updated_at: '2026-07-28T22:23:33.154581+00:00'
   parent: AJC.jacobian
   pinned_commits:
   - 21eefaf60

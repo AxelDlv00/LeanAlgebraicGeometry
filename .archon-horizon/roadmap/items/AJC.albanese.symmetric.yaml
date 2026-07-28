@@ -7,46 +7,53 @@ summary: "Abel-Jacobi and symmetric-power factorisation. Milne's argument over t
   \ residue is the OBJECT\nSym^g C, equivalently the single instance HasColimit (permDiagram\
   \ C g)\n(SymPowColimit.hasColimit_permDiagram_iff -- an equivalence, so the reduction\
   \ is lossless).\n\nRoute: explicit Scheme.GlueData from affine charts. The bill\
-  \ is four items. As of run 0069 r6:\n2 SUPPLIED, 1 PARTIAL, 1 OPEN -- do not round\
-  \ that to 3. (A fresh-context review caught this\nrow saying \"3 of 4\" while the\
-  \ team thread said \"2 of 4\"; the authoritative count now lives in\nStableAffineCoverGroup.lean's\
-  \ header.) Both items closed this round had been recorded by\nearlier sessions of\
-  \ THIS SAME LANE as genuine walls:\n\n 1. DONE. G-stable affine open neighbourhoods\
-  \ for a finite group acting by automorphisms\n    (Albanese/StableAffineCoverGroup.lean),\
-  \ plus its S_n instantiation\n    exists_stable_affineOpen_perm. The instantiation\
-  \ was blocked only by a universe binder\n    copied from the Galois source (G :\
-  \ Type u tied to Scheme.{u}, excluding\n    Equiv.Perm (Fin n) : Type 0); the prime-avoidance\
-  \ lemma was already index-polymorphic.\n 2. DONE. The Aut-valued S_n-action MonObj.permAutHom\
-  \ (Albanese/GrpObjFoldSum.lean).\n    Recorded for three rounds as \"not free\"\
-  \ because permAut was never shown invertible;\n    permAut sigma-inverse is a two-sided\
-  \ inverse, since permAut is a HOMOMORPHISM for\n    composition. The inverse in\
-  \ SymPowColimit.permEnd is an artefact of End's reversed\n    multiplication, not\
-  \ a fact about permAut.\n 3. PARTIAL. The n-ary coproduct-of-commutative-algebras\
-  \ = n-fold tensor power comparison,\n    WITH its permutation action matched to\
-  \ permAlgHom (Albanese/TensorPowerCoproduct.lean:\n    coprodLift, existsUnique_coprodLift,\
-  \ coprodLift_permAlgHom). Previously recorded as\n    absent from mathlib on the\
-  \ basis of the binary pushout; in fact both halves were in\n    mathlib unbundled\
-  \ -- uniqueness IS PiTensorProduct.algHom_ext, existence is one\n    liftAlgHom.\
-  \ Note the equivariance is on f . e-inverse, not f . e (permAlgHom is an\n    ANTI-homomorphism,\
-  \ unlike permAut); permAlgHom_comp_singleAlgHom gives the\n    coprojection-level\
-  \ clause. What is NOT written is the Cofan/IsColimit packaging in\n    (Under k)-op,\
-  \ so symPowData_affineAlgebra does not literally consume this yet -- the\n    mathematics\
-  \ is proved, the categorical crossing is not. Hence PARTIAL, not DONE.\n 4. OPEN,\
-  \ and genuinely geometric: the overlap/cocycle agreement of the chart quotients,\n\
-  \    and OrbitsInAffineOpen FOR THE CURVE -- where quasi-projectivity enters and\
-  \ mathlib has\n    no such vocabulary at this pin. This is the honest remaining\
-  \ wall.\n\nAlbaneseUP.lean's six pinned sorries are unchanged and should stay so:\
-  \ they are stated\nagainst a sorry-bodied SymmetricPower, so discharging them would\
-  \ establish nothing.\nabelJacobi is blocked EARLIER than any Pic0 fact -- O(Delta\
-  \ - {P0}xC - Cx{P0}) on CxC is\nconstructed nowhere, and no lane produces a DivFamily\
-  \ to feed PicScheme.abelMap.\n\nINTEGRATION DEBT, recorded because it is now four\
-  \ rounds old: nothing outside its own files\nconsumes ANY of this layer (permAutHom,\
-  \ exists_stable_affineOpen_perm{,_over}, coprodLift*).\nThe r6 review also found\
-  \ that the first S_n instantiation was on the wrong ambient category\n-- Scheme\
-  \ rather than Over (Spec kbar), which the leg uses and which Over.forget does not\n\
-  map products to. Repaired (exists_stable_affineOpen_perm_over), but the pattern\
-  \ to watch is\nthat a correct fix one layer down was reported as fixing the layer\
-  \ above.\n"
+  \ is four items. As of run 0069 r7:\n3 SUPPLIED, 1 OPEN. The authoritative count\
+  \ lives in StableAffineCoverGroup.lean's header --\nthis row is a pointer to it,\
+  \ not a second source of truth (a review found the two disagreeing).\nRead the change\
+  \ from r6's \"2 supplied, 1 partial, 1 open\" as item 3 completing, NOT as\nvindicating\
+  \ an older row that said \"3 of 4\" for a different and wrong reason.\n\n 1. DONE.\
+  \ G-stable affine open neighbourhoods for a finite group acting by automorphisms\n\
+  \    (Albanese/StableAffineCoverGroup.lean) plus exists_stable_affineOpen_perm{,_over}.\n\
+  \ 2. DONE. The Aut-valued S_n-action MonObj.permAutHom (Albanese/GrpObjFoldSum.lean).\n\
+  \ 3. DONE (r7). Algebra level: TensorPowerCoproduct.lean (existsUnique_coprodLift,\n\
+  \    coprodLift_permAlgHom, permAlgHom_comp_singleAlgHom). The Cofan/IsColimit packaging\
+  \ that\n    was the missing half: TensorPowerCofan.lean (tensorPowerCofanIsColimit,\
+  \ plus\n    tensorPowerFanIsLimit for the (Under k)-op variance and tensorPowerCofan_inj_permAlgHom\n\
+  \    for equivariance on the coprojections). The one trap, measured: CommRingCat.toAlgHom\
+  \ is\n    typed over the algebra instance REBUILT from the structure morphism, not\
+  \ the ambient one,\n    so it does not unify -- algHomOfMkUnderHom is the version\
+  \ over the ambient instance\n    (proof: Under.w plus a congrArg; both round trips\
+  \ rfl).\n 4. OPEN, and genuinely geometric: the overlap/cocycle agreement of the\
+  \ chart quotients, and\n    OrbitsInAffineOpen FOR THE CURVE -- where quasi-projectivity\
+  \ enters and mathlib has no\n    such vocabulary at this pin. THIS IS THE WHOLE\
+  \ REMAINING RESIDUE of the affine-and-glue\n    route.\n\nBEYOND THE BILL, r7 also\
+  \ named the affine carrier, which three files had recorded as expected\nbut unproved:\n\
+  \ * SymPowAffineCarrier.tensorPowerOpIsoPiObj -- the n-fold product in (Under k)-op\
+  \ that\n   permDiagram is BUILT ON is op (mkUnder k (tensor power)), i.e. (Spec_k\
+  \ A)^n = Spec_k A^{⊗n},\n   with permAut_eq_op_permAlgHom matching the actions (and\
+  \ it carries e-inverse; the kernel\n   forced that -- the wrong variance leaves\
+  \ a goal true only at an involution).\n * SymPowAffineQuotient.colimitPermDiagramIsoFixed\
+  \ -- the QUOTIENT:\n   colimit (permDiagram (op (mkUnder k A)) n) is iso to op (fixedUnder\
+  \ ... (tensor power)),\n   Milne III.3 Prop 3.1's affine half with the object identified.\
+  \ SymPowColimit §5's bold\n   caveat \"the carrier is not named in Lean\" is discharged\
+  \ and deleted.\n\nTWO HONEST LIMITS ON THAT, both measured this round rather than\
+  \ assumed:\n (a) The accompanying HasColimit (permDiagram (op (mkUnder k A)) n)\
+  \ is NOT a new fact --\n     infer_instance discharges it from cocompleteness. Only\
+  \ the ISO is new. An earlier draft\n     offered an existence restatement as the\
+  \ payoff; it was vacuous, because naming an object\n     needs a statement that\
+  \ MENTIONS the object.\n (b) The SECOND bridge of Milne's affine half -- that (Under\
+  \ k)-op IS the category of affine\n     k-schemes, via Over.opEquivOpUnder and AffineScheme.equivCommRingCat\
+  \ -- is still unbuilt.\n     So all of the above is k-ALGEBRA language, not Spec-language,\
+  \ and symPowData_affineAlgebra\n     was not rewritten to consume the named carrier.\n\
+  \nCONSUMPTION, checked by grep not asserted: SymPowAffineCarrier.lean consumes the\
+  \ Cofan layer in\nproof bodies (:138, :150, :184) and SymPowAffineQuotient consumes\
+  \ that -- the first consumer of\nanything this lane has built in five rounds. But\
+  \ AlbaneseUP / AlbaneseFromData /\nAlbaneseFromColimit mention NONE of these names\
+  \ (zero hits). This is a consumer inside the\naffine story, not integration with\
+  \ the capstone; item 4 is what stands between.\n\nAlbaneseUP.lean's six sorries\
+  \ are UNCHANGED and albanese_universal_property still reports\nsorryAx. All six\
+  \ are stated against the sorry-BODIED SymmetricPower, so they remain\nundischargeable\
+  \ as stated rather than merely unproved.\n"
 status: active
 kind: proof
 priority: high
@@ -69,7 +76,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-28T21:07:40.129889+00:00'
+  updated_at: '2026-07-28T22:22:42.698242+00:00'
   pinned_commits:
   - 1fedb22e4
   - f7391b281

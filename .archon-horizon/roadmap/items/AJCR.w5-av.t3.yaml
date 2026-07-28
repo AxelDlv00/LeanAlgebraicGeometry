@@ -7,19 +7,18 @@ summary: 'T3 is the CONSUMER of the T4 comparison, not independent work: ker(rel
   -> relPic(k)) =+ H1(C,O).
 
 
-  T3''s STATED BLOCKER IS GONE as of run 0073 r6. The previous version of this row
-  said T3 "waits on exactly T4''s named residue: the scheme-object identifications
-  (3b)/(3c), and (iii-c2-aff-geo) carried as the hcyc binder in DualNumberChartPic".
-  All of those are now closed: (3b)/(3c) in r4/r5, and (iii-c2-aff-geo) plus BOTH
-  consumer inputs in r6 (Tangent/ChartClassNaturality, PicEpsKernelTrivial, ChartTrivialityGeo,
-  EpsZeroSurjective, TwoChartHonest; worksheet 6.27).
+  T3''S STATED BLOCKER IS GONE as of run 0073 r6, and so is the instantiation item
+  that replaced it. The previous version of this row said T3 waits on T4''s named
+  residue — the (3b)/(3c) object identifications and (iii-c2-aff-geo) carried as the
+  hcyc binder in DualNumberChartPic. All closed: (3b)/(3c) in r4/r5; (iii-c2-aff-geo)
+  plus BOTH consumer inputs in r6; and the chart-level instantiation (the two presentations
+  plus the square hsq) in EpsChartSquare.lean, aaa4627bb. Worksheet 6.27.
 
 
-  WHAT T3 NOW WAITS ON is instantiation, not a comparison: the two chart presentations
-  at the thickened charts (e = Over.dualNumberSectionsOfIsAffineOpen, e'' its eps-zero
-  reduction) plus the commuting square hsq between them, and not-IsAffine C.left.
-  Neither is a wall; both are named in the new docstrings. A successor should START
-  by assembling hsq, since every other piece of the chain is landed and rooted.
+  WHAT T3 WAITS ON NOW is one geometric fact, not a comparison: not-IsAffine C.left
+  (see the t4 row and memory I-0729). Every other input of the chain is landed, rooted
+  and axiom-clean. A successor should start there, or start assembling the eps-kernel
+  statement itself over that hypothesis — the pieces no longer have gaps between them.
 
 
   STILL TRUE AND STILL THE TRAP FOR T5: what T3 must hand T5 is the SEMILINEAR COMPARISON
@@ -40,5 +39,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:44.680736+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T22:12:07.383940+00:00'
+  updated_at: '2026-07-28T22:22:54.757214+00:00'
   owner: ajcr-w5-av

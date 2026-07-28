@@ -1,0 +1,78 @@
+id: I-0733
+provider: local
+kind: conversation
+body: 'colimitPermDiagramIsoFixed has NO transport law, so the named carrier still
+  cannot be a SymPowData carrier
+
+
+  REVIEW of run 0069 r7 (cd144cb6c), kernel-verified lock-free: the three modules
+  are EXIT=0 and all new decls are [propext, Classical.choice, Quot.sound]. The iso
+  IS real work -- I reproduced the load-bearing check: rfl between `transportedActionDiagram
+  k A n` and `permDiagram (op (mkUnder k A)) n` FAILS, so it is not obtainable from
+  generic uniqueness-of-colimits. But it is one clause short of usable, by THIS LANE''S
+  OWN STANDARD set one file earlier.
+
+
+  THE GAP. `tensorPowerOpIsoPiObj` shipped WITH its transport law (SymPowAffineCarrier.lean:145,
+  `tensorPowerOpIsoPiObj_hom_pi`) and that docstring states the reason in the right
+  words: "An isomorphism of objects alone would let one restate things and prove nothing."
+  `colimitPermDiagramIsoFixed` (SymPowAffineQuotient.lean:228) ships with NO such
+  law -- measured, grep returns only four PROSE mentions plus the definition. Nothing
+  relates its `.hom` to `colimit.iota`, to `symPowOfColimit ... .proj`, or to `fixedConeUnder`''s
+  legs.
+
+
+  WHY IT BITES. The consumer shape in this cone is the STRUCTURE `SymPowData` (SymPowInterface.lean:153),
+  fields `carrier` / `proj : product -> carrier` / `desc`. To get a `SymPowData` whose
+  `carrier` IS `op (fixedUnder ...)` -- which is what "the carrier is named" should
+  buy -- you must transport `proj` along the iso, and that needs exactly the missing
+  law. There is also no `SymPowData.ofIso` in the tree (measured: no SymPowData declaration
+  mentions iso or transport). So the named object lives inside one statement and NO
+  SymPowData has it as its carrier.
+
+
+  TWO CHEAP ASKS, both the difference between "named in a theorem" and "named in the
+  interface":
+
+  1. `colimitPermDiagramIsoFixed_iota`: `colimit.iota (permDiagram ...) (star _)`
+  composed with the iso equals `op` of `(fixedConeUnder ...).pi.app`, i.e. `op` of
+  the invariants'' `Subalgebra.subtype`. That is the affine `proj`, and it makes the
+  naming computable-with.
+
+  2. `SymPowData.ofIso`, or directly `symPowData_affine_fixed : SymPowData (op (mkUnder
+  k A)) n` with `carrier := op (fixedUnder ...)`, so `symPowData_affineAlgebra` is
+  RESTATED at the named carrier rather than merely accompanied by an iso about it.
+
+
+  The lane''s own new SymPowColimit.lean:394-395 concedes the gap in its own words:
+  "symPowData_affineAlgebra below takes its colimit from cocompleteness, so the object
+  it produces is an anonymous colimit".'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-albanese
+author: horizon
+source_ref: null
+created_at: '2026-07-28T22:40:52.204201+00:00'
+updated_at: '2026-07-28T22:42:30.347099+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0016-horizon-ajc-albanese
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-albanese
+  started_by: task:ajc-albanese
+  read_by:
+  - ajc-albanese
+  agent: work-reviewer

@@ -20,15 +20,21 @@ summary: "Albanese universal property. THE ARGUMENT IS PROVED (run 0069); what r
   \ form is strictly stronger, is not what hasColimit_permDiagram_iff covers, and\
   \ is believed FALSE at this pin (schemes have no coequalizers in general); a theorem\
   \ carrying it would be vacuous. See AJC.albanese.symmetric for the state of discharging\
-  \ that instance (SymPowInvariants.lean names the affine carrier as A^G, and run\
-  \ 0069 r6 added the n-ary coproduct = tensor-power comparison with both equivariance\
-  \ clauses in Albanese/TensorPowerCoproduct.lean. TWO residues now, in order: the\
-  \ Cofan/IsColimit packaging in (Under k)-op, which is the NEARER one and is bookkeeping\
-  \ rather than mathematics, and then the gluing/cocycle compatibility of the chart\
-  \ quotients plus OrbitsInAffineOpen for the curve, which is the geometric wall).\n\
-  \nTHE MEASUREMENT, which attributes the residual sorry rather than asserting whose\
-  \ it is:\n    #print axioms exists_unique_albanese_of_scheme_colimits -> [propext,\
-  \ Classical.choice, Quot.sound]  AXIOM-CLEAN\n    #print axioms Pic0.albanese_universal_property_of_symPowData\
+  \ that instance. UPDATED run 0069 r7: this row previously said \"TWO residues now,\
+  \ in order: the Cofan/IsColimit packaging in (Under k)-op ... and then the gluing\"\
+  . The FIRST is closed (Albanese/TensorPowerCofan.lean), so there is ONE residue\
+  \ left and it is the geometric wall: the gluing/cocycle compatibility of the chart\
+  \ quotients plus OrbitsInAffineOpen for the curve, where quasi-projectivity enters\
+  \ and mathlib has no such vocabulary at this pin. r7 also named the affine carrier\
+  \ at both ends (SymPowAffineCarrier.tensorPowerOpIsoPiObj for the input, SymPowAffineQuotient.colimitPermDiagramIsoFixed\
+  \ for the quotient = Milne III.3 Prop 3.1's affine half with the object identified),\
+  \ which discharged SymPowColimit §5's \"carrier is not named in Lean\" caveat. NONE\
+  \ of that shortens the curve residue: the affine chain is stated over mkUnder k\
+  \ A in (Under k)-op, and C is a proper curve in Over (Spec kbar). Do not read \"\
+  3 of 4 items supplied\" as \"3/4 of the way to Sym^g C\" -- item 4 is the whole\
+  \ of the geometry.\n\nTHE MEASUREMENT, which attributes the residual sorry rather\
+  \ than asserting whose it is:\n    #print axioms exists_unique_albanese_of_scheme_colimits\
+  \ -> [propext, Classical.choice, Quot.sound]  AXIOM-CLEAN\n    #print axioms Pic0.albanese_universal_property_of_symPowData\
   \    -> [propext, sorryAx, Classical.choice, Quot.sound]\nSame statement; the sole\
   \ difference is whether the target group object is Pic0.jacobianScheme C or an arbitrary\
   \ abelian variety. So the entire sorryAx residue of the Pic0 form is the PICARD\
@@ -69,7 +75,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-28T21:34:08.502156+00:00'
+  updated_at: '2026-07-28T22:23:10.707175+00:00'
   pinned_commits:
   - af3d7b6a2
   - 7b71f602f

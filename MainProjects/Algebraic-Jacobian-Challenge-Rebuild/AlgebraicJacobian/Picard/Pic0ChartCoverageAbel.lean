@@ -44,9 +44,13 @@ affine open of the test, and *nothing in the tree discharges it*:
 `IsSplitWitnessIsoInvariant` hypothesis and passes `haff` straight through, as does
 `isOpen_chartLocus_of_affineLocal` before it.  The affine case that would feed it is
 `isOpen_setOf_isSplitWitness_of_presentation` (`Pic0ChartLocusIsOpen.lean:321`), which is
-itself conditional on `IsChartDatumPresentation` — B-4's *named residue*, half landed
-(`isChartDatumPresentation_of_plusFibre_of_converse` still owes `hconv`, the descent
-direction).
+itself conditional on `IsChartDatumPresentation` — B-4's *named residue*.
+
+**Update, same session** (`Picard/Pic0ChartPresentationConverse.lean`): that residue is now
+*entirely witness-free*.  Its forward half already was (the trivial splitting), and its
+converse `hconv` — the descent direction, open for three sessions — is discharged by plus-unit
+injectivity.  So what `haff` ultimately costs is a `cechPicClass` base-change identity: no
+witness, no `H¹`, no divisor, and nothing certificate- or divRep-gated.
 
 So the honest accounting is: **`W` costs `haff`, which costs B-4's presentation residue.**  The
 datum went from four fields to three *shapes* but not to three *obligations*.  What is

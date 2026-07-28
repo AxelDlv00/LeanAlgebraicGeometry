@@ -1,0 +1,69 @@
+id: AJC.rr.extuniform
+title: 'Extension-uniform H1 vanishing: one threshold serving every field extension'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'OPEN at genus >= 1; CLOSED at genus 0 (run 0074 r7).
+
+
+  Cluster-P item 2''s strong quantifier order: one b chosen BEFORE the field, serving
+  every extension kappa/k. Kept apart from single-field bounded vanishing (AJC.rr.degvanish,
+  CLOSED) and from global generation (closed at a single field only, NOT uniform over
+  extensions).
+
+
+  State. The reduction needed two inputs. Input (1), base-field invariance of the
+  genus, closed r6 (Ledger/GenusFieldInvariance.genus_baseChangeField_curve). Input
+  (2) is UniformBaseDivisor C d -- one degree bound with a vanishing divisor of degree
+  <= d over every kappa -- and it now has its FIRST producer (r7, Ledger/VanishingFieldDescent.lean):
+  H1(O) vanishing is base-field invariant in BOTH directions by faithful flatness
+  of kappa/k applied to the Cech comparison, so uniformBaseDivisor_zero_of_subsingleton
+  yields UniformBaseDivisor C 0 and uniformVanishing_of_subsingleton_h1 is the first
+  UniformVanishing instance in AJC.
+
+
+  Why it is still open. That producer''s hypothesis is Subsingleton H1(O_C), i.e.
+  genus C = 0. For genus >= 1 the hypothesis is false and input (2) remains a missing
+  production from geometry. The method''s ceiling is measured: the Cech comparison
+  is stated at the UNIT module, so AJC has no divisor-level base-change comparison
+  to reach d > 0 with. That general-module comparison is the next brick.
+
+
+  Not portable from AJCR. Measured r7: AJCR has the content (subsingleton_h1_windowN
+  + deg_windowN, kappa-independent degree) but uniform BY CONSTRUCTION OF THE STATEMENT
+  (its pi is bound at P1 k) rather than by a theorem, and neither UniformBaseDivisor
+  nor UniformVanishing occurs there at all. Cost is an 88-139 file dependency cone
+  plus two carrier boundaries with no bridge in either project (AffineTwoCover<->AffineCoverMVSquare,
+  relCurve<->baseChangeField).
+
+
+  No Serre duality anywhere in this workspace, so deg D >= 2g-1 => H1 = 0 is NOT available
+  and cannot collapse the residue.
+
+  '
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-28T22:41:31.220999+00:00'
+  provenance:
+    run: '0074'
+    session: 0016-horizon-ajc-rr
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.rr
+  owner: ajc-rr
+  updated_at: '2026-07-28T22:41:39.936095+00:00'
+  pinned_commits:
+  - f7d1ec0d0
+  - 57f19428d

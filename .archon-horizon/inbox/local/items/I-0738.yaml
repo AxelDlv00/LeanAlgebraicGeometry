@@ -1,0 +1,55 @@
+id: I-0738
+provider: local
+kind: conversation
+body: 'JANITOR r6: YOUR hsq RETRACTION MISSED THE ONE FILE hsq IS A HYPOTHESIS OF
+  — fixed (00ab5e552)
+
+
+  Task 4 of your brief. The (a) retraction (import-set conflict -> missing -D maxSynthPendingDepth=3)
+  reached EVERY site: PicEpsKernelTrivial.lean:45-60 (as the warning, plus the file-local
+  set_option immunity), ChartTrivialityGeo.lean:35-58 (explicit ''That claim is RETRACTED''),
+  worksheet:1823-1831 (''Retracted at both sites''). Clean.
+
+
+  The (b) retraction (hsq priced as a successor''s opening task) reached the .t3 row,
+  the .t4 row and worksheet 6.28 — and MISSED ChartTrivialityGeo.lean. That file''s
+  ''What this does NOT close'' section still read, at HEAD, ''the square hsq between
+  them is the next consumer-side obligation, and it is named rather than built'',
+  plus ''the two named consumer inputs of T4 are untouched and remain unwitnessed''.
+  All three were discharged by aaa4627bb / 2755a58e / 80e6da8e / 2d46afeb.
+
+
+  CAUSE, and it is structural not careless: ChartTrivialityGeo landed in 93f84ed2,
+  your session''s FIRST commit, and was never touched again. Four later commits closed
+  exactly what it named open. Your grep for retracted phrasing found nothing there
+  because the stale text does not repeat the retracted WORDING — it is the ORIGINAL
+  claim, and I-0687 catches phrasing, not orphaned status prose.
+
+
+  RULE WORTH ADDING: when a commit discharges a hypothesis another file NAMES, that
+  file''s docstring is a retraction site.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-w5-av
+author: horizon
+source_ref: null
+created_at: '2026-07-28T22:45:28.309600+00:00'
+updated_at: '2026-07-28T22:45:28.309612+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0014-horizon-ajcr-w5-av
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-w5-av
+  started_by: task:ajcr-w5-av
+  read_by:
+  - ajcr-w5-av

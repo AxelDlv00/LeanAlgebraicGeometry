@@ -1,0 +1,55 @@
+id: I-0741
+provider: local
+kind: issue
+body: "A SCRATCH PROBE IS TRACKED IN HEAD at AlgebraicJacobian/Albanese/ZScratchCompose.lean\
+  \ -- needs git rm --cached from ajc-fbc, and do NOT add -f it\n\nFound by the janitor\
+  \ pass of run 0069 r7 (lane ajc-albanese). THIRD recurrence of the failure that\
+  \ AJC's own .gitignore comment block describes.\n\nWHAT IS IN HEAD. MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Albanese/ZScratchCompose.lean,\
+  \ a 'namespace Probe' scratch file (Probe.D, Probe.D_map, Probe.diagIso, Probe.hasColimit_permDiagram_op_mkUnder).\
+  \ It is:\n * NOT on disk (deleted by its author), so it crosses as ' D' -- an unstaged\
+  \ deletion sitting in the shared tree;\n * tracked at HEAD as a blob, committed\
+  \ by 7223f5b92 = 'workspace[0068 r4] horizon ajc-fbc: integrate 0010-horizon-ajc-fbc',\
+  \ i.e. swept in by ANOTHER lane's integrate commit, not by its author;\n * imported\
+  \ by nothing (grep returns zero hits outside itself), so no build elaborates it\
+  \ and a stale copy is invisible to every build.\n\nWHY IT DODGED THE IGNORE. The\
+  \ five patterns were *Probe*.lean, *probe*.lean, /probe_*.lean, /scratch_*.lean,\
+  \ /Scratch_*.lean. This filename has no 'probe' substring, and the two Scratch patterns\
+  \ are ROOT-ANCHORED and require an underscore -- so a file named ZScratchCompose.lean\
+  \ deep under AlgebraicJacobian/ matched none of them. I widened the ignore to unanchored,\
+  \ case-split *Scratch*.lean / *scratch*.lean (commit 16f301e6f), verified it matches\
+  \ the probe and catches no real library file.\n\nWHAT REMAINS, AND WHY I DID NOT\
+  \ DO IT. Gitignore does not untrack what is already in HEAD. Removing the blob needs\
+  \ 'git rm --cached -- <path>' (content-preserving, no worktree effect) from whoever\
+  \ owns it -- the commit that introduced it is ajc-fbc's. I did not do it: it is\
+  \ another live lane's path and dropping a tracked file is not a cosmetic edit.\n\
+  \nTHE TRAP, per the workspace memory 'Never add -f a gitignored probe': if you try\
+  \ to re-add this file and git refuses because of the new pattern, the REFUSAL IS\
+  \ THE ANSWER. Do not 'add -f'; that re-arms it permanently. If any binding record\
+  \ cites Probe.diagIso etc., promote the content into the library under AlgebraicJacobian/\
+  \ with a real name and import it from AlgebraicJacobian.lean -- do not keep the\
+  \ probe.\n\nSIDE EFFECT ALREADY VISIBLE: 'horizon graph sync' generated four hgraph\
+  \ nodes from it (c9779f9848a1, b373eedce5f8, 98929c06a42e, 53ac19b01a2c), now correctly\
+  \ flagged 'stale: true' since the source is gone. They should disappear on a sync\
+  \ after the blob is untracked."
+labels:
+- agent-ready
+status: closed
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T22:46:47.267704+00:00'
+updated_at: '2026-07-28T22:50:32.953352+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0016-horizon-ajc-albanese
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-albanese

@@ -1,0 +1,65 @@
+id: I-0737
+provider: local
+kind: memory
+body: 'TRANSPORT THE PROPERTY, NOT THE OBJECT -- and a docstring that prescribes ''the
+  two bricks this needs'' is a claim about proof SHAPE that nothing audits. Measured
+  AJC run 0074 r7 (ajc-rr), kernel-checked.
+
+
+  THE PATTERN, reusable. Goal: get a vanishing/finiteness/subsingleton fact from a
+  base field k to every extension kappa. The obvious route transports the OBJECT witnessing
+  it (a divisor, a cover, a stabilization index) and immediately meets hard geometry
+  -- for divisors, closed points split under base change. The route that worked transports
+  the STATEMENT instead: if you already have a base-change comparison M_kappa = kappa
+  (x)_k M for the cohomology carrier, and the extension is FAITHFULLY FLAT, then kappa
+  (x)_k - both preserves and REFLECTS triviality, so the comparison upgrades from
+  an isomorphism of modules to an equivalence of VANISHING statements, in BOTH directions.
+  No object crosses the boundary at all.
+
+
+  Bricks: Module.FaithfullyFlat.subsingleton_tensorProduct_iff_right, and for the
+  instance Module.FaithfullyFlat.instOfNontrivialOfFree (a field extension is NOT
+  a direct FaithfullyFlat instance -- checked, synthesis fails; it goes through Module.Free
+  k kappa, which needs Mathlib.LinearAlgebra.Basis.VectorSpace in scope).
+
+
+  WHY IT MATTERED HERE. AJC''s FiberBound docstring named two bricks for the uniform-base-divisor
+  input and said that without them ''no amount of re-firing the theorem produces one''.
+  One landed. THE OTHER WAS NEVER NEEDED: it asked for a WeilDivisor pullback along
+  C_kappa -> C, priced hard exactly because points split. The working route never
+  transports a divisor, so it never meets that. The uniform bound turned out to be
+  the ZERO DIVISOR, not the prescribed b(k).
+
+
+  THE GENERAL LESSON. A residue documented as ''these two bricks'' was one brick plus
+  one dispensable assumption about the shape of the proof -- and the dispensable half
+  is what priced the input expensive for several rounds. Measurements get re-audited
+  in this workspace; PRESCRIPTIONS do not, and they set the cost estimate every later
+  lane inherits. Treat a named brick list as a hypothesis, not a fact, and ask whether
+  some route avoids the obstacle entirely.
+
+
+  NOTE THE LIMIT, so nobody over-reads this. The upgrade needs Subsingleton, not finrank:
+  finrank reads 0 on infinite-dimensional spaces, so a dimension identity (e.g. a
+  genus identity) canNOT decide vanishing in either direction. And the comparison
+  must exist at the module you care about -- AJC''s is stated at the UNIT module only,
+  which is exactly why the resulting producer reaches degree 0 and no further.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T22:43:51.518167+00:00'
+updated_at: '2026-07-28T22:43:51.518179+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0016-horizon-ajc-rr
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

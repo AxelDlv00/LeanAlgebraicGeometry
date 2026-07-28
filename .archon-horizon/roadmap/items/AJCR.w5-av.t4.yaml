@@ -4,23 +4,27 @@ title: 'T4 (WORKSHEET-FIRST, risk R1): the étale-plus/Zariski kernel crossing a
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "T4 (WORKSHEET-FIRST, risk R1) — the etale-plus/Zariski kernel crossing at\
-  \ k[eps].\n\nCLAUSE (iii) IS MATHEMATICALLY COMPLETE as of run 0073 r6. (iii-c2-aff-geo),\
-  \ open since r3 and the last named statement, is CLOSED by Tangent/ChartClassNaturality.lean\
-  \ + PicEpsKernelTrivial.lean + ChartTrivialityGeo.lean (93f84ed2). BOTH named consumer\
-  \ inputs are also closed: EpsZeroSurjective.lean (2755a58e) and TwoChartHonest.lean\
-  \ (80e6da8e). Five modules, kernel-green, rooted, eleven headlines axiom-clean against\
-  \ controls that fire sorryAx. Worksheet 6.27.\n\nWHAT REMAINS IS INSTANTIATION,\
-  \ NOT MATHEMATICS — two items, neither a wall:\n 1. not-IsAffine C.left for the\
-  \ smooth proper positive-dimensional curve. ONE statement where 6.25 left two (non-emptiness\
-  \ is not an input: the empty scheme is affine). Absent from this project, the sibling\
-  \ and mathlib.\n 2. The two chart presentations at the thickened charts (e = Over.dualNumberSectionsOfIsAffineOpen,\
-  \ e' its eps-zero reduction) and the commuting square hsq between them. Pieces exist;\
-  \ the square is not assembled. relCover supplies the affine-preimage hypothesis\
-  \ via isAffineOpen0/1.\n\nTHE LESSON 6.27 RECORDS, because it mis-priced all three\
-  \ items the same way: each obligation had been searched for in THIS project's vocabulary.\
-  \ The square my own r3 priced at >1.6M heartbeats is mathlib's Hom.resLE_app_top,\
-  \ stated for topIso where we spell iotaTop — three rewrites at the default budget.\n"
-status: active
+  \ k[eps]. RESIDUE: NONE.\n\nCLOSED as of run 0073 r6, in seven modules, all kernel-green\
+  \ on the lock-free scratch root, all rooted, sixteen headlines axiom-clean against\
+  \ controls that fire sorryAx. Worksheet 6.27-6.29.\n\n * (iii-c2-aff-geo), open\
+  \ since r3 and the last named statement: ChartClassNaturality + PicEpsKernelTrivial\
+  \ + ChartTrivialityGeo (93f84ed2).\n * Both named consumer inputs: EpsZeroSurjective\
+  \ (2755a58e), TwoChartHonest (80e6da8e).\n * The chart-level instantiation, i.e.\
+  \ the two presentations and the square hsq: EpsChartSquare (aaa4627bb).\n * The\
+  \ last geometric input REPLACED rather than proved: TwoChartHonestGenus (2d46afeb3).\
+  \ A chart = top makes the two-chart H1Cok zero, so a nonzero class gives both conditions\
+  \ surjective_selector_iff wants, and g != 0 replaces not-IsAffine C.left entirely.\
+  \ not-IsAffine itself stays unproved and unneeded; memory I-0729 records its route\
+  \ and its honest price (multi-session dimension theory: SmoothOfRelativeDimension\
+  \ bottoms out at a submersive presentation's combinatorial P.dimension, which mathlib\
+  \ relates to nothing for n != 0).\n\nTHE METHOD RECORD, since FOUR items closed\
+  \ here had been priced wrong the same way: each had been priced by CORRECT reading\
+  \ plus a search in this project's own vocabulary, or by accepting a predecessor's\
+  \ chosen sufficient condition. The r3 square priced at >1.6M heartbeats is mathlib's\
+  \ Hom.resLE_app_top under the spelling topIso. The hsq item I filed as a successor's\
+  \ opening task was three quarters landed. And not-IsAffine was never the content.\
+  \ Ask what a hypothesis is a symptom of, and search the upstream name.\n"
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -33,5 +37,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:45.485310+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T22:05:34.767710+00:00'
+  updated_at: '2026-07-28T22:33:05.388816+00:00'
   owner: ajcr-w5-av

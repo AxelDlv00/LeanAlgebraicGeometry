@@ -552,6 +552,29 @@ the boundary as a NAMED interface so the DAT-B lane slots in:
      identification `IsChartDatumPresentation` — a `cechPicClass` base-change statement — and
      not any construction.
 
+  **THIRD CORRECTION, 2026-07-29 (run 0072 r6, lane `ajcr-charts`): the residue's WITNESS half
+  is discharged, so the row is now entirely a plus-class statement.**
+  `IsChartDatumPresentation` is an `↔`; `Picard/Pic0ChartPresentationHalf.lean` proved the
+  forward half by the trivial splitting and named the converse `hconv` (the descent direction:
+  from a split witness at *some* `L_t/κ(t)`, produce the datum's predicate at `κ(t)`).  `hconv`
+  is now proved — `hasWitnessH1Vanishing_of_isSplitWitness_at`,
+  `Picard/Pic0ChartPresentationConverse.lean`.
+
+  **The transferable content is which ingredient was missing.**  That file's docstring priced
+  the obstruction correctly ("the witness received lies in `μ`'s class at `L_t` rather than
+  visibly in `D`'s at `κ(t)`") and named two transport lemmas as the ingredients.  The step that
+  makes the class *visible* is not a transport: it is `PicEtAff.unit_injective`
+  (`Picard/CechKernelLemma.lean:361`, Kleiman 2.5(1) — the unconditional close of the ζ3
+  campaign) together with `relPicMk_injective_of_subsingleton`, which force the presenting class
+  to **equal** `D`'s fibre class at `L_t`.  Both have been in the tree for weeks and **no
+  CHART-U row cites either**.
+
+  So both halves of this row's residue are now witness-free, `H¹`-free and divisor-free, and
+  what remains is exactly the `cechPicClass` base-change identity that correction 2 above
+  predicted — at every extension of `κ(t)` rather than only at `κ(t)`, which is the one place
+  the reduction is not tight (`isChartDatumPlusFibreAt_self` measures the gap: at `L := κ(t)`
+  the two coincide by `Iff.rfl`).  Use `isChartDatumPresentation_of_plusFibre`.
+
   The datum-worksheet §2.3 chain, now fully landed except its last
   step: (1) extraction of the plus class to cocycle data on an étale carrier
   (`PicEtAff` + `exists_cechPicClass_eq`, `GluedSheafExtraction.lean:301`); (2) RE-5

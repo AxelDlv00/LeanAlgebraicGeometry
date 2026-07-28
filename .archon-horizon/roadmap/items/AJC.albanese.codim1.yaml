@@ -2,31 +2,33 @@ id: AJC.albanese.codim1
 title: Extend rational maps across codimension one
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Extend rational maps across codimension one. SORRY-FREE (run 0069, commit
-  8a5dc2a66).
-
-
-  Milne Lemma 3.3 (indeterminacy_pure_codim_one_into_grpScheme, Albanese/Milne33.lean)
-  is proved and axiom-clean, so Z(f) = empty for group-variety targets and extend_to_av
-  (Milne Theorem 3.2) is unconditional. Albanese/CodimOneExtension.lean carries no
-  sorry.
-
-
-  It lives DOWNSTREAM of CodimOneExtension.lean rather than in it: the difference-map
-  / pole-purity / Hauptidealsatz-transport layers (Albanese/Milne33{Rows,Diagonal,RowSection,Pullback,CMEquidim,KernelGen,Transport,TransportLocal}.lean)
-  import that file, so stating the keystone there is an import cycle. Ported sorry-free
-  from the sibling Rebuild tree, which had developed the chain on the identical toolchain
-  and mathlib pin; every algebra prerequisite already existed in AJC. Route and both
-  implementation notes are on hgraph node ca0776c343e5.
-
-
-  Caveat on the axiom claim: extend_to_av is unconditional GIVEN an abelian variety.
-  A fresh-context review found no axiom-clean inhabitant of the AV instance package
-  in this development today (a synthesis site at A := Jacobian C reports sorryAx,
-  via the Picard seam upstream). That is not a defect in this leg, but the two claims
-  are different.
-
-  '
+summary: "Extend rational maps across codimension one. SORRY-FREE (run 0069, commit\
+  \ 8a5dc2a66).\n\nMilne Lemma 3.3 (indeterminacy_pure_codim_one_into_grpScheme, Albanese/Milne33.lean)\
+  \ is proved and axiom-clean, so Z(f) = empty for group-variety targets and extend_to_av\
+  \ (Milne Theorem 3.2) is unconditional. Albanese/CodimOneExtension.lean carries\
+  \ no sorry.\n\nIt lives DOWNSTREAM of CodimOneExtension.lean rather than in it:\
+  \ the difference-map / pole-purity / Hauptidealsatz-transport layers (Albanese/Milne33{Rows,Diagonal,RowSection,Pullback,CMEquidim,KernelGen,Transport,TransportLocal}.lean)\
+  \ import that file, so stating the keystone there is an import cycle. Ported sorry-free\
+  \ from the sibling Rebuild tree, which had developed the chain on the identical\
+  \ toolchain and mathlib pin; every algebra prerequisite already existed in AJC.\
+  \ Route and both implementation notes are on hgraph node ca0776c343e5.\n\nCaveat\
+  \ on the axiom claim: extend_to_av is unconditional GIVEN an abelian variety. A\
+  \ fresh-context review found no axiom-clean inhabitant of the AV instance package\
+  \ in this development today (a synthesis site at A := Jacobian C reports sorryAx,\
+  \ via the Picard seam upstream). That is not a defect in this leg, but the two claims\
+  \ are different.\n\nRE-MEASURED run 0069 r7, because the ajc-albanese task brief\
+  \ handed to that session listed five\nsorry line numbers in CodimOneExtension.lean\
+  \ (:216, :218, :752, :1402, :1751) and three in\nRigidityLemma.lean (:481, :673,\
+  \ :764), and flagged Milne 3.3 as the highest-leverage OPEN node.\nAll of that is\
+  \ stale: those line numbers land in DOCSTRING PROSE, both files carry zero code\n\
+  sorries, and #print axioms on the lock-free scratch root gives\n[propext, Classical.choice,\
+  \ Quot.sound] for every one of\n\n  Scheme.RationalMap.CodimOneFree, Scheme.gammaSpecField_ringEquiv,\n\
+  \  Scheme.localRing_dvr_of_codim_one, Scheme.RationalMap.indeterminacy_pure_codim_one_into_grpScheme,\n\
+  \  Scheme.RationalMap.extend_to_av, rigidity_core.\n\nSo this row's `done` is correct\
+  \ and the brief is what needs fixing (recorded as inbox I-0732).\nThe caveat above\
+  \ about the AV instance package still stands unchanged -- it is about inhabiting\n\
+  the abelian-variety hypotheses at A := Jacobian C, which is the Picard seam, not\
+  \ this leg."
 status: done
 kind: proof
 priority: high
@@ -49,6 +51,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-28T05:59:29.514440+00:00'
+  updated_at: '2026-07-28T22:32:36.463132+00:00'
   pinned_commits:
   - 8a5dc2a66

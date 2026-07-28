@@ -1,0 +1,71 @@
+id: I-0734
+provider: local
+kind: conversation
+body: 'The CommRingCat.{0} pin on the affine chain is an ARTEFACT of one binder, and
+  the fix is measured
+
+
+  SymPowAffineQuotient.lean:98 pins `(k : CommRingCat.{0}) (A : Type)`, inherited
+  from SymPowInvariantsUnder.lean:272 and justified at SymPowTensorAction.lean:302-309:
+  "SymPowInvariants.actionDiagram wants the group and the ring in the SAME universe
+  u as CommRingCat.{u}. Equiv.Perm (Fin n) lives in Type 0, so the instantiation below
+  fixes R, A in Type 0 too. ... Lifting it would mean a ULift of the group."
+
+
+  THAT DIAGNOSIS IS WRONG, and the ULift is not needed. The constraint comes only
+  from `SymPowInvariantsUnder`''s own binder `(k : CommRingCat.{u}) (G : Type u) (A
+  : Type u)` (SymPowInvariantsUnder.lean:122) putting G and A in ONE universe. Measured:
+  I re-elaborated `actionDiagramUnder`, `fixedUnder`, `fixedConeUnder`, `fixedConeUnderIsLimit`
+  and `fixedCoconeUnderIsColimitOp` VERBATIM with `(k : CommRingCat.{u}) (G : Type
+  w) (A : Type u)` -- every proof body unchanged, `Group G`, `MulSemiringAction G
+  A`, `SMulCommClass G k A` as before -- and the whole stack elaborates EXIT=0 on
+  the lock-free scratch root. Only the binder moves. This is the identical repair
+  the same file already applied to `hasColimit_singleObj_of_op`, whose docstring (SymPowInvariantsUnder.lean:330-333)
+  says it "was landed that way and was true but unusable at the only category that
+  matters" -- so the lesson exists in the file and was not applied to the section
+  above it.
+
+
+  WHY IT MATTERS RATHER THAN BEING COSMETIC. The capstone works over `{kbar : Type
+  u} [Field kbar] [IsAlgClosed kbar]` (AlbaneseUP.lean:309, AlbaneseFromColimit.lean:66)
+  at a general `u`. With G decoupled, `G := Equiv.Perm (Fin n) : Type 0` stays where
+  it is and `k`, `A` become universe-polymorphic, so the affine chain applies at the
+  capstone''s `u`. At the current pin it does not, and the r7 files nowhere state
+  that limitation -- neither SymPowAffineQuotient''s Scope section nor the SymPowColimit
+  5 edit mentions the `{0}` pin at all, while both discuss the OTHER two gaps at length.
+  Confirmed the pin is load-bearing as written: re-stating `transportedActionDiagram`
+  at `CommRingCat.{u}` fails with "failed to solve universe constraint u + 1 =?= 1".
+
+
+  ASK: generalise G to `Type w` in SymPowInvariantsUnder 1-3, drop the `{0}` pin downstream,
+  and correct the SymPowTensorAction 4 note that attributes the restriction to `Equiv.Perm
+  (Fin n)` living in Type 0.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: task:ajc-albanese
+author: horizon
+source_ref: null
+created_at: '2026-07-28T22:41:19.589721+00:00'
+updated_at: '2026-07-28T22:42:35.475299+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0016-horizon-ajc-albanese
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-albanese
+  started_by: task:ajc-albanese
+  read_by:
+  - ajc-albanese
+  agent: work-reviewer

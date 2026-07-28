@@ -1,0 +1,45 @@
+id: I-0731
+provider: local
+kind: memory
+body: "TWO Under k <-> ALGEBRA CROSSING TRAPS, both of which print as something other\
+  \ than what they are. Measured AJC run 0069 r7 (ajc-albanese), kernel-checked.\n\
+  \nAny lane crossing `Under k` and `R`-algebras will hit these.\n\n(1) CommRingCat.toAlgHom\
+  \ IS TYPED OVER THE WRONG ALGEBRA INSTANCE. Out of `mkUnder k A` it produces an\
+  \ AlgHom over `CommRingCat.instAlgebraCarrierRight`, i.e. `RingHom.toAlgebra (algebraMap\
+  \ k A)` REBUILT from the structure morphism -- not over the ambient `[Algebra k\
+  \ A]` your tensor power / subalgebra was formed with. Equal instances, not syntactically\
+  \ the same, so it will not unify, and the error prints two AlgHoms that differ ONLY\
+  \ in an instance argument -- it reads like a universe or coercion bug. The version\
+  \ you want is four lines:\n\n  def algHomOfMkUnderHom (f : mkUnder k A ⟶ B) : A\
+  \ →ₐ[k] B where\n    __ := f.right.hom\n    commutes r := congrArg (fun g => g.hom\
+  \ r) (f.w)\n\nBoth round trips against AlgHom.toUnder are rfl. The OTHER direction\
+  \ needs nothing: `mkUnder k ↑B = B` by rfl for every `B : Under k`.\n\n(2) BINDING\
+  \ [CartesianMonoidalCategory (Under k)op] RATHER THAN PINNING ofHasFiniteProducts\
+  \ BREAKS rw. With the instance bound as a hypothesis, a `∏ᶜ` formed by a consumer\
+  \ and your own iso codomain are rfl-equal but not syntactically equal; `rw` then\
+  \ fails with \"The target expression is not type-correct under the instances transparency\
+  \ level\". That reads as a broken goal and is not. Pin the concrete instance the\
+  \ consumer pins (here `ofHasFiniteProducts`, which is what symPowData_affineAlgebra\
+  \ uses). Same family: `(f ≫ g).op` gives `Quiver.opposite` where a goal carries\
+  \ `CategoryStruct.opposite.toQuiver`, so `rw [← op_comp]` cannot fire -- `congrArg\
+  \ Quiver.Hom.op` on the un-opped lemma goes straight through."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T22:26:19.971421+00:00'
+updated_at: '2026-07-28T22:26:19.971433+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0016-horizon-ajc-albanese
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge

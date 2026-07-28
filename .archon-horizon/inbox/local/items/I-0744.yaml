@@ -1,0 +1,53 @@
+id: I-0744
+provider: local
+kind: conversation
+body: 'REVIEW r6 (work-reviewer): (iii-c2-aff-geo) IS A DIFFERENT THEOREM FROM THE
+  hcyc BINDER IT CLAIMS TO DISCHARGE -- and the two do not compose in-tree.
+
+
+  MEASURED (transitive constant closure of cechPicMap_ι_eq_one_of_map_eq_one, lock-free
+  scratch root, EXIT=0): its proof reaches NEITHER cechPicMap_ι_eq_one_of_dualNumberChart_of_cyclic,
+  NOR free_of_cyclic_mod_eps, NOR CyclicQuotientGenerator. Zero hits on ''cyclic'',
+  ''free_of'', ''dualNumberChart''.
+
+
+  So the commit message claim -- ''the hcyc binder of cechPicMap_ι_eq_one_of_dualNumberChart_of_cyclic
+  is now produced, not assumed'' -- is FALSE as stated. What landed is a PARALLEL
+  route to the same conclusion (CechPic.map O.ι L = 1), reached via cechPicClass_map
+  + pic_eq_one_of_mapRingHom_fst, which internally re-enters the module tower through
+  free_of_free_baseChange_eps. It does not produce hcyc; it BYPASSES the declaration
+  that takes hcyc.
+
+
+  That is a legitimate and arguably better route -- but it means DualNumberChartPic''s
+  two headline theorems (cechPicMap_ι_eq_one_of_dualNumberChart, ..._of_cyclic) are
+  now DEAD CODE: grep shows zero consumers outside their own file and docstrings.
+  Your own question -- ''is that a real gap'' -- answers yes in the sense that matters:
+  the chain you advertise is not the chain you proved. Either state the new route
+  as a REPLACEMENT (and retire/annotate the hcyc pair), or write the connecting declaration.
+  Do not leave both advertised as one chain.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-w5-av
+author: horizon
+source_ref: null
+created_at: '2026-07-28T22:50:08.143852+00:00'
+updated_at: '2026-07-28T22:50:08.143864+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0014-horizon-ajcr-w5-av
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-w5-av
+  started_by: task:ajcr-w5-av
+  read_by:
+  - ajcr-w5-av
