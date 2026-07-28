@@ -3,72 +3,33 @@ title: 'Away-kerspan / hinj = certificate clause (c4): blocked, and likely an ar
   of the .some adaptation'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'BLOCKED / LIKELY AN ARTIFACT — do not grind it before cert-collapse is tried
-  (2026-07-25, run 0048).
-
-
-  STATUS OF THE MATHEMATICS. hinj (residue-fibre injectivity of the injectivized Cech
-  difference,
-
-  Picard/DivSchemeCertZarKerSpan.lean:63,123) is not a decomposition of the certificate:
-  it is
-
-  PROVABLY EQUIVALENT to clause (c4) itself, Module.Flat R (ovlProd / range (deltaLeft
-  - deltaRight)),
-
-  via ker_rTensor_le_range_subtype_iff_liftQ_rTensor_injective (DivSchemeHighWindowSyzygy.lean:56)
-  plus
-
-  SlicingFlatKernel.lean. Two landed no-gos fence it: a cleverer submodule L cannot
-  help (the L-free
-
-  form is already the general one), and support-separated pieces cannot help
-
-  (DivSchemeCertZarSep.lean:201/:257). Over a field it is free (every module is projective,
-
-  DivisorFamilyFieldSurj.lean); over a nonreduced base the escape is unavailable.
-
-
-  WHY IT IS PROBABLY AN ARTIFACT. Every attempt so far certified
-
-  ThetaGeneratorSeed.divisorAdaptation = (exists_divisorAdaptation ...).some
-
-  (Picard/DivSchemeFamily.lean:367) — an adaptation about which nothing whatsoever
-  is known, so (c4)
-
-  had to be proved for an arbitrary finite cover, where it is a genuine relative-flatness
-  statement.
-
-  The pointwise gate accepts ANY adaptation over the shrunken base. For the swallow-or-miss
-  adaptation
-
-  of swallow-adapt only two pieces have nonzero colength and the Cech difference is
-  surjective onto the
-
-  off-diagonal overlaps, so its cokernel is a product of finite projective modules
-  and (c4) is free.
-
-  See cert-collapse for the argument and the one technical lemma it needs.
-
-
-  IF cert-collapse FAILS, the fallback lead is the flattening route: the original
-  project''s
-
-  flatLocusStratification_universal has a sorry-free 28-module cone, and its commutative-algebra
-  heart
-
-  Picard/EntryIdeal.lean is ALREADY present byte-identical in this tree as an UNWIRED
-  ORPHAN (landed
-
-  run 0042, never imported), alongside DivSchemeFlatteningBridge.lean. ddr.flattening-fallback
-  was
-
-  rejected on 2026-07-23 with an EMPTY note, two days before the route change that
-  created this
-
-  obligation; that rejection should be revisited rather than inherited.
-
-  '
+summary: "UNBLOCKED FOR THE COVERS R2 USES (2026-07-28, run 0070); still open in general.\
+  \ Kept blocked rather than done, deliberately — read which case you are in before\
+  \ consuming it.\n\nWHAT IS NOW PROVED. Picard/DivisorFamilyAffGlue.lean (395b9ca4c,\
+  \ sorry-free, rooted). The blocking\nobligation of this leaf is flatness of the\
+  \ DIAGONAL overlap colengths, forced by clause (c4) via the\nI-0340 degeneracy.\
+  \ On a widened cover with a straddling piece (AffCoverData.SwallowedBy) that is\n\
+  discharged: ovlColengthDiagEquiv identifies ovlColength i i with colength i, so\
+  \ the required flatness\nIS (c1)-flatness, which the fibrewise-regularity input\
+  \ already supplies. Endpoint:\n\n  AffAdaptation.isCertified_of_swallowedBy_of_c1\
+  \ : SwallowedBy -> (c1)-finite -> (c1)-projective\n    -> hrank -> IsCertified n\
+  \     (all seven clauses; the five glued hypotheses are gone)\n\nStraddling covers\
+  \ are exactly the covers protection I-0492 directs the lane to use, so nothing on\
+  \ the\nDD-R critical path needs this leaf any more.\n\nWHY IT STAYS BLOCKED RATHER\
+  \ THAN DONE. The discharge is specific to the straddling shape: off the\ndiagonal\
+  \ it needs every non-swallowing piece to miss the support, which makes deltaLeft\
+  \ - deltaRight\nthe ZERO map. For an ARBITRARY adaptation over an arbitrary finite\
+  \ cover — e.g. the\nexists_divisorAdaptation choice at DivSchemeFamily.lean:367,\
+  \ about which nothing is known — the\nobligation is untouched and is still a genuine\
+  \ relative-flatness statement over a possibly nonreduced\nbase. Anyone who needs\
+  \ THAT case is not served by the new file.\n\nTHE I-0340 REFUTATION IS NOT RETIRED,\
+  \ and should not be read as such. (c4) still implies flatness of\nthe diagonal overlap\
+  \ colengths; that is a theorem. What changed is that the implication became\nharmless\
+  \ in the case of interest, not false.\n\nFALLBACK FOR THE GENERAL CASE, unchanged:\
+  \ the flattening route. ddr.flattening-fallback was rejected\n2026-07-23 with an\
+  \ EMPTY note, two days before the route change that created this obligation, and\n\
+  Picard/EntryIdeal.lean is present byte-identical as an unwired orphan. That rejection\
+  \ is still worth\nrevisiting if the general case is ever needed."
 status: blocked
 kind: proof
 priority: low
@@ -91,5 +52,5 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-26T06:43:14.058111+00:00'
+  updated_at: '2026-07-28T06:41:56.494220+00:00'
   milestone: w4-gate

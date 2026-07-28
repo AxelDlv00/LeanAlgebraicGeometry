@@ -1,0 +1,101 @@
+id: I-0543
+provider: local
+kind: issue
+body: 'THE TASK-STATUS/ROADMAP COUPLING OF I-0386 FIRED AGAIN TODAY, and this time
+  it closed a node whose owner had just written down that it must not close
+
+
+  Third occurrence of the hazard recorded in memory `I-0386` ("`horizon task set <id>
+  --status done|cancelled` ALSO REWRITES THE ROADMAP ROWS IN THAT TASK''S `roadmap_refs`").
+  Filing as an issue for a human because the memory item has not stopped it, and the
+  failure is now silent corruption of another agent''s stated decision rather than
+  a nuisance.
+
+
+  ## What happened
+
+
+  At `2026-07-28T06:04:16` task `ajc-etale-pic` was set `running` -> `done`. In the
+  same instant, all four rows in its `roadmap_refs` were rewritten:
+
+
+  - `AJC.jacobian.assembly` `pending` -> `done`
+
+  - `AJC.picrep` `pending` -> `done`
+
+  - `AJC.picrep.assembly` `pending` -> `done`
+
+  - `AJC.picrep.rational-point` `active` -> `done`
+
+
+  Three of those are defensible. `AJC.jacobian.assembly` is not, and the reason it
+  is not was written down **three minutes earlier** by that same task, on team thread
+  `I-0493`: *"I own AJC.jacobian.assembly (it is in my roadmap_refs) and I am NOT
+  marking it done."* It then gave the measurement — $\texttt{picardJacobianWitness}$
+  reports `sorryAx`, entering through five named open obligations — and said the all-children-done
+  warning should be left standing deliberately.
+
+
+  So the tool overrode an explicit, reasoned, contemporaneous decision by the agent
+  that owned the row, with no mention of the roadmap in the command''s output.
+
+
+  ## Why the existing memory is not enough
+
+
+  `I-0386`''s mitigation is a discipline: read `roadmap_refs` before a terminal status,
+  then re-assert each row''s status afterwards. That fails here for a structural reason
+  — the task''s **last** action is setting its own terminal status, so there is no
+  "afterwards" in which it can repair the damage. An agent following the memory perfectly
+  still loses.
+
+
+  ## Suggested fixes, in order of preference
+
+
+  1. **Do not propagate.** A task''s terminal status should not write roadmap rows
+  at all; the two collections mean different things (a task is a unit of work, a milestone
+  is a unit of mathematics), which is exactly why the workspace keeps milestones when
+  it cancels duplicate tasks.
+
+  2. **Propagate only on explicit opt-in**, e.g. `task set … --status done --close-roadmap-refs`.
+
+  3. **At minimum, name what changed in the command output**, so the next reader can
+  see four rows moved and object.
+
+
+  ## What I did
+
+
+  Restored `AJC.jacobian.assembly` to `pending` with a roadmap comment recording that
+  the flip was a side effect and not its owner''s judgement, and that I verified the
+  owner''s reasoning independently at HEAD (sorry counts: 3 in `Picard/Pic0AbelianVariety.lean`,
+  2 in `Picard/Pic0Et.lean`, 1 in `Picard/FGAPicRepresentability.lean`, 3 in `Picard/IdentityComponent.lean`,
+  4 in `Jacobian.lean`).
+
+
+  I left `AJC.picrep` alone at `done` even though it now prints a warning for three
+  open children (`quot`, `serre`, `tensor`) — whether the Quot lane is retired or
+  merely paused is a route decision, not hygiene.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-28T06:40:45.601779+00:00'
+updated_at: '2026-07-28T06:42:06.486201+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0002-horizon-ajc-fbc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-fbc

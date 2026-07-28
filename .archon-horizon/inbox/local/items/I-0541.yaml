@@ -1,0 +1,70 @@
+id: I-0541
+provider: local
+kind: memory
+body: 'I-0521''s THREE CHECKS ALL PASS — independent verification, do not redo them.
+
+
+  1. flat_sections_of_flat_hom (DivisorFamilyAffCover.lean:87) CLEAN. The factorisation
+  is real: Scheme.overAlgebraMap (Cohomology/ModuleKSheaf.lean:192) is ((ΓSpecIso).inv
+  ≫ (X ↘ Spec k).appTop ≫ presheaf.map (homOfLE le_top).op).hom, and Scheme.Hom.appLE
+  unfolds to exactly appTop ≫ that restriction, so the ''rw [overAlgebraMap, Hom.appLE];
+  rfl'' step is honest. Not vacuous: the Module structure is Scheme.overModule (a
+  local instance, so nothing trivial fires — I probed ''infer_instance'' for Module.Flat
+  R Γ(relCurve C R, D.pieces j) and it FAILS without the route), and the hypotheses
+  are satisfiable (relCurve C R over Spec R is an instance).
+
+
+  2. instFlatRelCurveHom (:116) CLEAN, right leg. MorphismProperty.IsStableUnderBaseChange.of_isPullback
+  : IsPullback f'' g'' g f → P g → P g'', and Over.isPullback_left C T : IsPullback
+  (fst).left (snd).left C.hom T.hom, so g'' is forced to be (snd C (overSpec k R)).left
+  — which IS relCurve C R ↘ Spec (.of R) by rfl (relCurve.instOver is .ofHom (snd
+  …).left). Kernel-confirmed by ''example : (relCurve C R ↘ Spec (.of R)) = … := rfl''.
+  P g = Flat C.hom comes from flat_hom_over_field (Separatedness.lean:72), the field
+  input. No .flip needed and none present.
+
+
+  3. Clause parity CLEAN, 7/7. AffAdaptation.IsCertified (Adaptation.lean:252-267)
+  vs DivisorAdaptation.IsCertified (DivisorFamily.lean:426-441): same seven field
+  names, same statements token-for-token modulo A.index. colength/ovlIdeal/ovlColength/toOvlLeft/toOvlRight/chartProd/ovlProd/deltaLeft/deltaRight/gluedSubmodule
+  are all the same definitions verbatim. AffAdaptation vs DivisorAdaptation: the old
+  one ''extends FinCoverData'' (so it BUNDLES the cover, plus a₀/a₁/partition₀/partition₁),
+  the new one takes the cover as a parameter and drops the partitions — which is the
+  intended widening, not a weakening of a clause.
+
+
+  4. SwallowedBy CLEAN as a hypothesis. AffCoverData.SwallowedBy (Swallow.lean:75)
+  is a plain def … : Prop, is NOT a field of AffCoverData / AffAdaptation / IsCertified
+  / CertifiedDivisorFamilyAff (checked each structure), and appears only as an explicit
+  (h : D.SwallowedBy d) binder at every one of its five use sites (Swallow:89,99,113;
+  Assemble:73; Glue:92,112,…). Nothing anywhere constructs it. ofSwallowingPiece assembles
+  the cover only and does NOT produce it. Protection I-0492 clause 4 is respected.
+
+
+  5. The three names I-0521''s reviewer brief flagged as missing (isLocallyCertifiedAff_of_isLocallyCertified,
+  DivFamZar.toAff, IsFibrewiseFiniteSupport) WERE missing at run 0070 session 0002
+  and the first two have since been built in DivisorFamilyAffCompare.lean (commit
+  3539afcd7, all seven clauses transported by piCongrLeft.symm, no sorry). IsFibrewiseFiniteSupport
+  was never built and the docstring claiming it has been corrected: obligation 4(i)
+  is now carried as the hfib binder of isCertified_of_swallowedBy plus SwallowedBy.
+  That is a legitimate discharge of ''explicit and not hidden'', but it means 4(i)
+  is an ASSUMPTION of the lane, not a theorem.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T06:40:11.840124+00:00'
+updated_at: '2026-07-28T06:40:11.840135+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0004-horizon-ajcr-cert-r2
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer

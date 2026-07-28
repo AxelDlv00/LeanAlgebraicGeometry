@@ -1,0 +1,46 @@
+id: I-0540
+provider: local
+kind: issue
+body: "UNCOMMITTED DivisorFamilyAffGlue.lean HAS A LIVE ERROR AND IS NOT ROOTED (found\
+  \ during the R2 audit).\n\nMainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/DivisorFamilyAffGlue.lean\
+  \ is untracked in the ledger, absent from AlgebraicJacobian.lean, and as of my read\
+  \ it fails to elaborate:\n\n  ovlColengthDiagEquiv (line ~231) — 'rewrite failed:\
+  \ did not find an occurrence of the pattern (sectionsInfSelfEquiv i) ((relResAlgHom\
+  \ C R _) (A.eqn i)) in the target {A.eqn i} = {A.eqn i, A.eqn i}', with a reported\
+  \ application type mismatch on (relCurve C R).presheaf under instances transparency.\n\
+  \nPlus three unnecessarySimpa linter warnings at :176, :182, :204. The file was\
+  \ being edited while I read it, so it may already be fixed — but note the goal shape\
+  \ the error prints: after Ideal.map_span the goal is the SET equality {eqn i} =\
+  \ {eqn i, eqn i}, which closes by Set.pair_eq_singleton / simp on insert, not by\
+  \ rewriting with sectionsInfSelfEquiv_relResAlgHom. The @[simp] lemma at :199 is\
+  \ stated on the AlgEquiv coercion while Ideal.map takes the RingHom coercion; the\
+  \ :209 restatement was added for that reason but is not what the goal needs.\n\n\
+  Mathematically the file is the right move — it is the first thing in the lane that\
+  \ DISCHARGES (c2)/(c3)/(c4) rather than assuming them (isCertified_of_swallowedBy_of_c1).\
+  \ One observation worth acting on: its hovl hypothesis (Module.Flat R (A.ovlColength\
+  \ i j) for ALL i j) looks derivable from hproj alone under SwallowedBy — off the\
+  \ straddling index the overlap colength is subsingleton hence free (subsingleton_ovlColength_of_swallowedBy),\
+  \ and on the diagonal ovlColengthDiagEquiv plus Module.Flat.of_projective does it.\
+  \ If that goes through, isCertified_of_swallowedBy_of_c1 becomes '(c1) + rank ⟹\
+  \ full certificate' with no flatness input at all, which is a materially stronger\
+  \ statement than the amended cert-collapse node claims."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T06:39:40.159613+00:00'
+updated_at: '2026-07-28T06:39:40.159624+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0004-horizon-ajcr-cert-r2
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer

@@ -1,0 +1,62 @@
+id: I-0542
+provider: local
+kind: issue
+body: 'cert-collapse / swallow-adapt / cert-assemble ARE MARKED done ON WEAKER STATEMENTS
+  THAN THE NODES ASK FOR (R2 audit).
+
+
+  Not fabrication — every landed theorem is true and sorry-free — but the discharge/restatement
+  line matters for whoever reads the board.
+
+
+  swallow-adapt (done): the node''s remaining obligation was ''produce the (pt, eqn,
+  unit) chart-principality datum''. The widened route legitimately makes chart principality
+  unnecessary, but the substitute geometric input (AffCoverData.SwallowedBy) is an
+  unproven hypothesis at every use site, so the obligation MOVED rather than closed.
+  forall_subset_or_disjoint_of_swallowedBy (Swallow.lean:89) is a two-line case split
+  on the hypothesis. Fair as ''done'' only under the reading ''the shape is now hypothesis-driven
+  by human decision I-0492 clause 2''; the node text should say so.
+
+
+  cert-assemble (done): the node names a specific target (isLocallyCertified_of_forall_prime_exists_certified_adaptation)
+  and FOUR missing transport bricks — supportLocus_pullback, DivisorAdaptation.pullbackOfIsOpenImmersion,
+  seed-free hregular/hovlFlat over an Away chart, hdeg base-changed. Of the four,
+  only supportLocus_pullback exists (DivSchemeCertZarTransport.lean:81); pullbackOfIsOpenImmersion
+  does not exist anywhere. What landed instead (Assemble.lean:117) needs none of them
+  because the DivEq it must supply is divEq_refl — the theorem takes the certified
+  family over the Away chart as a HYPOTHESIS, so no transport is performed. The composition
+  is real and useful, but it is the repackaging, not the four bricks.
+
+
+  cert-collapse (done): closest to a genuine discharge. Collapse.lean kernel-checks
+  the I-0340 refutation (toOvl_diag_eq by rfl, deltaSub_apply_diag) and gives the
+  missing-piece (c1) clauses. The node''s ''one technical lemma still needed'' (colength
+  invariance under shrinking a piece) is NOT in the committed files — it is being
+  attempted right now in the untracked DivisorFamilyAffGlue.lean, in its easier diagonal-only
+  form, and that file currently errors (separate issue filed). So the node was flipped
+  to done before its own named remaining lemma landed.
+
+
+  Suggestion: leave the statuses but amend each node''s summary with one line saying
+  what was discharged versus relocated, so the next session does not read ''done''
+  as ''the geometric input exists''.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T06:40:38.804227+00:00'
+updated_at: '2026-07-28T06:40:38.804237+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0004-horizon-ajcr-cert-r2
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer

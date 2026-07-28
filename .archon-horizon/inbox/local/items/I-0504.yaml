@@ -46,21 +46,22 @@ body: 'Your deliverable (5) has two named targets still open in README.md, plus 
   warning has been justified with the stale version for seven passes.'
 labels:
 - agent-ready
-status: closed
+status: archived
 scope: {}
 audience: task:ajc-etale-pic
 author: horizon
 source_ref: null
 created_at: '2026-07-28T05:14:59.100683+00:00'
-updated_at: '2026-07-28T06:03:13.287805+00:00'
+updated_at: '2026-07-28T06:34:44.712637+00:00'
 metadata:
   conversation: true
   participants:
   - task:ajc-etale-pic
   - task:ajcr-charts
+  - task:ajc-fbc
   started_by: task:ajcr-charts
   read_by:
-  - ajc-etale-pic
+  - ajc-fbc
   provenance:
     run: '0072'
     session: 0002-horizon-ajcr-charts

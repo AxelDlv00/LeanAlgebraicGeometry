@@ -2,33 +2,65 @@ id: ajc-rr
 project: Algebraic-Jacobian-Challenge
 objective: 'Give Algebraic-Jacobian-Challenge the strongest honest Riemann-Roch and
   vanishing substrate available for the committed Picard representability route. Cluster
-  P consists of the Euler-characteristic ledger, section-drop results, and uniform
-  H1 vanishing needed downstream. AJC already contains a substantial sorry-free adelic
-  lane, including RiemannRoch/Adelic/ChiLedger.lean, but the sibling Algebraic-Jacobian-Challenge-Rebuild
-  contains a broader sorry-free 17,792-line RiemannRoch development. In particular,
-  AJCR RiemannRoch/UniformVanishing.lean proves a single-field bounded vanishing core;
-  it does not by itself supply field-extension uniformity or global generation.
+  P is the Euler-characteristic ledger, section-drop results, and uniform H1 vanishing
+  needed downstream. AJC already has a substantial sorry-free adelic lane including
+  RiemannRoch/Adelic/ChiLedger.lean; the sibling Algebraic-Jacobian-Challenge-Rebuild
+  has a broader sorry-free 17,792-line RiemannRoch development across 63 files. In
+  particular AJCR RiemannRoch/UniformVanishing.lean proves a single-field bounded
+  vanishing core — it does NOT by itself supply field-extension uniformity or global
+  generation, and conflating those three is the specific error this task exists to
+  avoid.
 
 
-  The owner of this task should decide, theorem by theorem, whether to reuse AJC code,
-  port an AJCR result, adapt its argument, or rederive it in the AJC abstractions.
-  Report that provenance honestly and do not promise a mechanical port. The one already
-  identified open AJC leaf in this cone is principal-divisor degree zero in RiemannRoch/WeilDivisor.lean.
-  Work may close it when it materially advances the shared substrate.
+  DECIDE PROVENANCE THEOREM BY THEOREM: reuse AJC code, port an AJCR result, adapt
+  its argument, or rederive it in the AJC abstractions. Report that provenance honestly
+  and do not promise a mechanical port. A predecessor assessment judged that auditing
+  AJCR for portability decides where the next two months go, more than any single
+  proof would — so the audit IS deliverable work, not a preliminary.
 
 
-  This task owns only AlgebraicJacobian/RiemannRoch/** in AJC and may read AJCR without
-  modifying it. It must not edit Picard/RigidPushforward files, Jacobian.lean, AbelJacobi.lean,
-  the root import roll-up, or blueprint files. Notify ajc-gate when a vanishing or
-  cohomology theorem becomes available so that gate hypotheses can be removed. Ask
-  ajc-truth to add final root imports and to audit axioms of major landed results.
+  READ THE CAVEAT BEFORE TRUSTING AJC RR: much of the adelic lane is conditional in
+  the STATEMENT on the closed chi-ledger or a peel datum. Read scripts/axiom-frontier.lean
+  sections 6b/6d before treating any of it as available. Report #print axioms for
+  every major landed result, measured at a synthesis site rather than at the declaration
+  — a theorem quantifying over a gate instance reports clean axioms as stated and
+  only picks up sorryAx where the instance is synthesised.
 
 
-  Done means the strongest reachable cluster-P statements are present under AJC-compatible
-  hypotheses, focused Lean checks and the appropriate project build pass, no new anonymous
-  or misleading sorry boundaries are introduced, #print axioms results are reported,
-  and every remaining gap distinguishes single-field vanishing, extension-uniformity,
-  and global generation precisely.'
+  FILE SCOPE, NARROWED 2026-07-28 TO AVOID A LIVE COLLISION. You own AlgebraicJacobian/RiemannRoch/**
+  EXCEPT RiemannRoch/WeilDivisor.lean, which belongs to the concurrently-running ajc-pic0av
+  lane along with the AJC.rr.principal milestone (principal divisors have degree zero).
+  DO NOT EDIT WeilDivisor.lean. If your substrate work would materially help close
+  that leaf, post the lemma on the AJC conversation thread (I-0493) and let ajc-pic0av
+  land it. You may read AJCR freely but must never modify it. Also off-limits: Picard/**,
+  Jacobian.lean, AbelJacobi.lean, Cohomology/**, the root import roll-up, and blueprint
+  files.
+
+
+  WORKSPACE STATE YOU ARE JOINING, so you do not misdiagnose it: seven other lanes
+  are live. The ROOT BUILD IS CURRENTLY RED on ajc-fbcs in-flight Cohomology/ edit
+  — that is expected, it is their file, and it is not yours to fix. Build your own
+  target (lake build AlgebraicJacobian.RiemannRoch... or the narrowest lake env lean)
+  rather than the root, and do not report another lanes red build as your own failure.
+  ajc-gate and ajc-truth are FINISHED, so the old instruction to notify them is void:
+  post to the AJC thread I-0493 instead, and note that ajc-etale-pic has already landed
+  the etale-sheafified Picard seam (Picard/PicEtSheaf.lean, sorry-free) and DELETED
+  the false leaf hasRationalPoint_of_curve — do not build against a rational-point
+  hypothesis.
+
+
+  CONCURRENCY. Commit via a private index with compare-and-swap, never a bare git
+  commit against the ledger: ajc-etale-pic hit exactly that race this morning and
+  had to repair two commits whose diffs did not match their messages (recipe on I-0493).
+  Verify after every commit that git status --porcelain shows no stray deletions and
+  that your commit touched only your paths.
+
+
+  DONE MEANS: the strongest reachable cluster-P statements are present under AJC-compatible
+  hypotheses; focused Lean checks pass; no new anonymous or misleading sorry boundaries;
+  axioms reported; and every remaining gap distinguishes single-field vanishing, extension-uniformity,
+  and global generation precisely. A fresh-context ground review before any terminal
+  done claim.'
 title: Bring the cluster-P Riemann-Roch substrate into AJC
 explanation: ''
 projects:
@@ -50,10 +82,13 @@ scope:
   - AlgebraicJacobian/RiemannRoch/**
 roadmap_refs:
 - AJC.rr
-- AJC.rr.principal
-inbox_refs: []
+inbox_refs:
+- I-0491
+- I-0074
+- I-0493
+- I-0495
 artifact_refs: []
 created_at: '2026-07-27T06:53:28.730901+00:00'
-updated_at: '2026-07-27T22:12:14.668868+00:00'
+updated_at: '2026-07-28T06:41:16.620624+00:00'
 metadata:
   author: human

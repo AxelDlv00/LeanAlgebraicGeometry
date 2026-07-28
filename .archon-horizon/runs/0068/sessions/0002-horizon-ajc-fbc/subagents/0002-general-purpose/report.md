@@ -1,1 +1,1 @@
-Let me check key mathlib handles and compile the reduction steps.
+Both outer factors of `pullbackIso` preserve monos. Now the route-C reduction and the mono-locality lemma.

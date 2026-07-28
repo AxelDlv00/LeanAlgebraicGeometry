@@ -3,3 +3,4 @@
 {"at": "2026-07-27T12:12:47.733330+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-27T16:45:44.944756+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-28T06:04:16.158051+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "done", "note": "synced from task ajc-etale-pic"}
+{"at": "2026-07-28T06:35:22.018141+00:00", "actor": "horizon", "field": "status", "from": "done", "to": "pending", "note": ""}

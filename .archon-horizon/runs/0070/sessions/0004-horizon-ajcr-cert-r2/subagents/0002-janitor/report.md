@@ -1,1 +1,1 @@
-I'll start by loading the horizon skill and getting oriented.
+Now checking the docs before I act on the inbox.

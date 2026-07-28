@@ -1,1 +1,27 @@
-A ninth file exists (DivisorFamilyAffCompare.lean) that the task's file list omits.
+Audit complete. Four inbox items filed (three issues, one memory).
+
+## Verdict: converging, not churning — but the widening is structurally complete and mathematically unexercised
+
+The eight files are real work, not padding: ~1640 lines, sorry-free, all in the root import list, ten of them now (two more landed while I audited). No axioms beyond `propext/Classical.choice/Quot.sound`. No helper-churn, no circling, no excuse-comments. The negative results in I-0492 clause 5 are respected — I found no reference anywhere in the lane to the refuted chart machinery, and no `ChartTyping` requirement in any certificate clause.
+
+The one thing that does not hold up is the implied payoff. `IsLocallyCertifiedAff` is strictly larger than `IsLocallyCertified`, but at HEAD it is not more *populated*: everything that inhabits it either comes through the chart-typed pin or takes the widened certificate as a hypothesis.
+
+### The three I-0521 checks
+
+1. `flat_sections_of_flat_hom` — **CLEAN** (`/…/Picard/DivisorFamilyAffCover.lean:87`). The claimed factorisation of `Scheme.overAlgebraMap` (`/…/Cohomology/ModuleKSheaf.lean:192`) is exactly what the proof uses: `overAlgebraMap` is `(ΓSpecIso.inv ≫ appTop ≫ presheaf.map (homOfLE le_top).op).hom` and `Scheme.Hom.appLE` unfolds to `appTop ≫` that restriction, so the `rw […]; rfl` is honest. Not vacuous — the `Module` structure is the local instance `Scheme.overModule`, and I confirmed `infer_instance` **fails** for `Module.Flat R Γ(relCurve C R, D.pieces j)` without this route.
+
+2. `instFlatRelCurveHom` — **CLEAN, right leg** (`:116`). `of_isPullback : IsPullback f' g' g f → P g → P g'` against `Over.isPullback_left C T : IsPullback (fst).left (snd).left C.hom T.hom` forces `g' = (snd C (overSpec k R)).left`, which is `relCurve C R ↘ Spec (.of R)` by `rfl` (kernel-confirmed). The `P g` input is `Flat C.hom`, the field fact from `/…/Picard/Separatedness.lean:72`. No stray `.flip`.
+
+3. Clause parity — **CLEAN, 7/7**. `AffAdaptation.IsCertified` (`/…/DivisorFamilyAffAdaptation.lean:252-267`) matches `DivisorAdaptation.IsCertified` (`/…/DivisorFamily.lean:426-441`) field name for field name and statement for statement; `colength`/`ovlColength`/`deltaLeft`/`deltaRight`/`gluedSubmodule` are the same definitions. The structure difference is the intended one: the old adaptation `extends FinCoverData` (bundling `a₀/a₁/partition₀/partition₁`), the new takes the cover as a parameter and drops the partitions.
+
+4. `SwallowedBy` — **CLEAN as a hypothesis** (`/…/DivisorFamilyAffSwallow.lean:75`). A plain `def … : Prop`, not a field of `AffCoverData`, `AffAdaptation`, `IsCertified` or `CertifiedDivisorFamilyAff`, an explicit binder at all five use sites, and constructed by nothing. `ofSwallowingPiece` assembles only the cover. I-0492 clause 4 holds.
+
+### The findings that matter
+
+**The widened predicate has no independent producer** — the main finding. The chart-typed side has both an extraction (`exists_divisorAdaptation`) and a field-case certificate (`DivisorFamilyFieldSurj.isCertified_of_deg`, all seven clauses from a degree hypothesis). The widened side has neither: no `exists_affAdaptation`, no `isCertifiedAff_of_deg`, no `AffAdaptation.deg_presentationDivisor`. So no landed declaration exhibits the R2 payoff (a straddling divisor certified affinely though not chart-wise).
+
+**The three names I was asked to check were indeed absent, and two have since been built.** `isLocallyCertifiedAff_of_isLocallyCertified` and `DivFamZar.toAff` now exist in `/…/Picard/DivisorFamilyAffCompare.lean` (commit `3539afcd7`, all seven clauses transported along `piCongrLeft.symm`, sorry-free, diagnostics clean) — that closes the chart-typed → widened comparison honestly. `IsFibrewiseFiniteSupport` was never built; the stale docstring has been corrected, and obligation 4(i) is now carried as the `hfib` binder of `isCertified_of_swallowedBy` plus `SwallowedBy`. Explicit, per the protection — but an assumption of the lane, not a theorem.
+
+**An uncommitted file is live and erroring.** `/…/Picard/DivisorFamilyAffGlue.lean` (untracked, not in the root) fails at `ovlColengthDiagEquiv` (~:231): after `Ideal.map_span` the goal is the set equality `{A.eqn i} = {A.eqn i, A.eqn i}`, which wants `Set.pair_eq_singleton`, not a rewrite with `sectionsInfSelfEquiv_relResAlgHom`. Worth flagging beyond the error: this file is the first thing in the lane that *discharges* (c2)/(c3)/(c4) instead of assuming them, and its `hovl` hypothesis looks redundant — off the straddling index the overlap colength is subsingleton, on the diagonal `ovlColengthDiagEquiv` + `Module.Flat.of_projective` suffices — which would make the result stronger than the amended cert-collapse node claims.
+
+**The three roadmap nodes are `done` on weaker statements than they ask for.** `cert-assemble`'s four named transport bricks are still missing (one exists; `DivisorAdaptation.pullbackOfIsOpenImmersion` does not exist at all) — what landed needs none of them because the `DivEq` it supplies is `divEq_refl`, the certified family being a hypothesis. `swallow-adapt`'s chart-principality obligation moved into `SwallowedBy` rather than closing. `cert-collapse` is the closest to a real discharge, but its own "one technical lemma still needed" is what the erroring untracked file is attempting.

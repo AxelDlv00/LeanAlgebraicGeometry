@@ -1,0 +1,53 @@
+id: I-0539
+provider: local
+kind: issue
+body: "R2 AUDIT: THE WIDENED PREDICATE HAS NO PRODUCER THAT DOES NOT PASS THROUGH\
+  \ THE CHART-TYPED ONE.\n\nFresh-context audit of the eight/ten DivisorFamilyAff*.lean\
+  \ files (I-0521 checks). All three named checks come back CLEAN — see the separate\
+  \ memory item. This is the one real gap, and it is a throughput gap, not an error.\n\
+  \nWHAT IS TRUE. IsLocallyCertifiedAff is inhabited from exactly two directions:\n\
+  \ (a) isLocallyCertifiedAff_of_isLocallyCertified (DivisorFamilyAffCompare.lean:249)\
+  \ — via the chart-typed pin, so it produces nothing the fixed-pair design could\
+  \ not already produce;\n (b) the hypothesis-shaped gates isLocallyCertifiedAff_of_forall_prime_exists_away\
+  \ (Zar:206) and isLocallyCertifiedAff_of_forall_prime_certified_adaptation (Assemble:117),\
+  \ which take a CertifiedDivisorFamilyAff / (AffCoverData, AffAdaptation, IsCertified)\
+  \ at every prime and repackage it.\n\nWHAT IS MISSING. Nothing constructs an AffAdaptation\
+  \ over a cover with a straddling piece for an actual divisor. Compare the chart-typed\
+  \ side, which has BOTH an extraction (exists_divisorAdaptation, DivisorFamilyExtraction.lean:54)\
+  \ AND a field-case certificate (DivisorFamilyFieldSurj.isCertified_of_deg:104, all\
+  \ seven clauses from a degree hypothesis). The widened side has neither: no exists_affAdaptation,\
+  \ no isCertifiedAff_of_deg, no AffAdaptation.deg_presentationDivisor. So the strictly-larger\
+  \ predicate is, at HEAD, only as populated as the strictly-smaller one — the widening\
+  \ is structurally complete and mathematically unexercised.\n\nCONSEQUENCE FOR THE\
+  \ R2 CLAIM. The R2 payoff is 'a straddling divisor has an affine-open certificate\
+  \ though it has no chart-typed one'. No landed declaration exhibits that. AffCoverData.ofSwallowingPiece\
+  \ (Swallow.lean:140) assembles the cover but takes W and its affineness as inputs;\
+  \ SwallowedBy is a separate hypothesis; and nothing produces either from a divisor.\
+  \ The honest state is: the widened TARGET exists and receives the old material;\
+  \ the widening has not yet certified anything new.\n\nCONCRETE NEXT STEP, in order\
+  \ of value: (1) an affine-open analogue of exists_divisorAdaptation over ofSwallowingPiece;\
+  \ (2) the widened field case (AffAdaptation over a field: every module free, so\
+  \ six of seven clauses are instances and only the rank needs deg_presentationDivisor,\
+  \ which is currently stated only for DivisorAdaptation); (3) then a divisor-level\
+  \ producer of W and SwallowedBy, or an explicit statement that 0B8B stays an axiom-free\
+  \ hypothesis of the lane."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T06:39:15.219450+00:00'
+updated_at: '2026-07-28T06:39:15.219461+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0004-horizon-ajcr-cert-r2
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
