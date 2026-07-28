@@ -10,7 +10,12 @@ import AlgebraicJacobian.RiemannRoch.CoverageDrop
 /-!
 # B-5, the fibre step: the greedy drop RUN at the splitting field, as a `chartLocus` witness
 
-`w4-datb` §1.2 steps 4–6 happen entirely on the curve over the splitting field `L`.  This file
+**Title corrected (issue I-0615): this file is steps 4 and 5, not "4–6".**  Step 6 — feeding the
+drop's output `Σ` back as the chart index — is NOT here and is not discharged anywhere; see the
+DEFECT section of `Picard/Pic0ChartCoverageTest.lean`, which explains why the drop stage and the
+index stage carry different `Z`.  The original "4–6" wording is what that retraction corrects.
+
+`w4-datb` §1.2 steps 4–5 happen entirely on the curve over the splitting field `L`.  This file
 runs them and hands the result to `Picard/Pic0ChartTwistSplit.lean`'s introduction rule, so
 that what comes out is membership of `chartLocus`.
 
@@ -76,7 +81,8 @@ noncomputable section
 /-! ## The fibre step -/
 
 variable (C) in
-/-- **B-5's fibre step** (`w4-datb` §1.2 steps 4–6, run at the splitting field).
+/-- **B-5's fibre step** (`w4-datb` §1.2 steps 4–5, run at the splitting field; **not** step 6 —
+see the header correction and issue I-0615).
 
 Given the twisted fibre class presented over `L` by `M`, a divisor `W₀` in `M` of degree
 `g + e` with vanishing `H¹`, and an admissible point oracle `P` on the `L`-curve, the greedy

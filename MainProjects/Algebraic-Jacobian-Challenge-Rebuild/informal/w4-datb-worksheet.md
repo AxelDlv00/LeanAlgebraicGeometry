@@ -142,12 +142,29 @@ the row's own step-6 typing gap is diagnosed (see the §1.2 amendment).**  Lande
 | step 1, splitting with the twist carried | `picEtAffineEquiv_map_chartTwistFactor_eq_unit` | `Picard/Pic0ChartTwistSplit.lean` |
 | the `chartLocus` intro rule | `isSplitWitness_of_witness_twistClass` | same |
 | steps 2–4, degree of the presenting class | `classDeg_chartTwistClass_baseChange`, `classDeg_of_presenting` | `Picard/Pic0ChartCoverageDegree.lean` |
-| step 6, chart index base change | `graphPicClass_base_of_field`, `classDeg_graphPicClass_base` | `Picard/Pic0ChartRationalGraph.lean` |
+| step 6, chart index base change — **HALF: transport upward from a `k`-point only** | `graphPicClass_base_of_field`, `classDeg_graphPicClass_base` | `Picard/Pic0ChartRationalGraph.lean` |
 
-What B-5 still owes is the **assembly**: choosing `m` at the fibre field against its own DAT-0a
-instance (step 3) and running `exists_effective_sub_h0_eq_one` there with the oracle
-instantiated by B-2 (step 5).  Both are statements about the *fibre curve over `L`* and need
-the `L`-level instance pack; nothing in them is `divRep`- or certificate-gated.
+**WHAT B-5 STILL OWES — corrected 2026-07-28 later the same session (issues I-0614, I-0615),
+after a degree probe and a fresh-context review each refuted part of the paragraph that stood
+here.  It claimed steps 1/2/4/5/6 discharged and step 3 the sole residue.  THREE residues:**
+
+1. **step 3 — the twist exponent `m`**, chosen against the fibre's OWN DAT-0a bound.  No uniform
+   `m₀` exists (§0.2.2, I-0204), so this is irreducibly a per-fibre `∃ m` and no formulation can
+   produce it for a caller.  (This was correctly identified.)
+2. **step 2 — the degree of the presenting class.**  `classDeg_of_presenting` relates
+   `classDeg L M` to the plus-class degree **at `L`**, while the coverage argument holds it at
+   `K`.  Bridging them needs **base-field invariance of `degAff` under `PicEtAff.map`**, which
+   does not exist in the tree (measured: nothing matches it).  Small, real, shaped like the
+   landed `degAff_baseFieldShuffle` (`Picard/Pic0ThetaAssembly.lean:67`).
+3. **step 6 — the FEEDBACK.**  The drop runs at `Z := 0` (where `chartTwistClass C m 0 = θᵐ`,
+   degree `m·d₁`, so the budget `e = m·d₁ − g` is nonzero); its output `Σ` is then the chart
+   index's `Z`, at which the twisted degree is `g`.  **One `Z` is an input and the other an
+   output**, and the landed graph transport goes upward from a `k`-point rather than from the
+   `L`-level `Σ` the drop produces.  Machine-derived: under the single-`Z` reading the hypothesis
+   pack forces `e = 0`, i.e. a zero drop budget.
+
+Steps 1, 4 and 5 are discharged.  None of the three residues is `divRep`- or certificate-gated;
+all three are statements about the fibre curve over `L` or the `k`-level index.
 
 ### §0.6 Standing context
 

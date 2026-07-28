@@ -103,21 +103,32 @@ theorem classDeg_chartTwistClass_baseChange (L : Type u) [Field L] [Algebra k L]
 /-! ## Where degree-zero-ness is spent: the `λ` factor -/
 
 variable (C) in
-/-- **The presenting class of a class carries its `degAt` as its `classDeg`.**
+/-- **The presenting class's `classDeg` equals the transported plus-class degree.**
 
-If the plus class `ν` over the field `K` is presented over `L/K` by the Čech class `M`, then
-`classDeg L M = degAt ν (identity point of overSpec k K)`.
+`classDeg L M = degAff L (PicEtAff.map C L (picEtAffineEquiv C K ν))`, whenever `M` presents
+`ν` over `L`.  Read the statement, not the ambition: the right-hand side is the plus-class
+degree **at `L`**, and this is `degAff_unit` plus `relPicDeg_relPicMk`, nothing more.
 
-This is the seam `w4-datb` §1.2 step 2 needs and the reason this file exists: the coverage
-argument knows `degAt λ_t = 0` (that is `mem_pic0Subgroup_iff`, definitionally), and it needs
-that fact about the *presenting Čech class*, which is a different object.  The bridge is
-`PicEtAff.degAff_unit` plus `relPicDeg_relPicMk`, with the `K → L` step absorbed by
-`PicEtAff.degAff` being computed on any refining field (`degAff` is defined *through* a finite
-separable refinement, so reading it at `L` rather than at `K` costs nothing).
+**A CORRECTION, and it is the reason this docstring is now shorter than it was** (issue I-0614,
+found by fresh-context review).  The previous version claimed this theorem was the `w4-datb`
+§1.2 step-2 seam — that it carried `degAt ν = 0` over to `classDeg M = 0` — and justified the
+`K → L` step by citing `degAff_map_eq`.  **No such lemma exists**: the only occurrence of that
+name in the workspace was that docstring.  So the claim was a phantom citation, and the step it
+claimed to make is genuinely absent:
 
-The proof is the calculation `degAt ν t = degAff K (picEtAffineEquiv C K ν)` (definitional,
-at the identity point) `= degAff L (PicEtAff.map C L …)` (base-field invariance of the
-plus-class degree, `degAff_map_eq`) `= degAff L (unit (relPicMk M)) = classDeg L M`. -/
+* what the coverage argument HAS is `degAt ν t = degAff K (picEtAffineEquiv C K ν)`, at `K`;
+* what this theorem's RHS mentions is `degAff L (PicEtAff.map C L …)`, at `L`;
+* nothing in the tree equates them.  The missing brick is **base-field invariance of `degAff`
+  under `PicEtAff.map`**, a small real lemma shaped like the landed `degAff_baseFieldShuffle`
+  (`Picard/Pic0ThetaAssembly.lean:67`) — measured, not guessed: `exact?` on
+  `degAff L (map C L a) = degAff K a` finds nothing.
+
+So **COV-1 step 2 is NOT discharged**, and this theorem has zero consumers, which is why
+nothing broke.  It is kept because it is true and is half of the seam; a lane closing step 2
+proves the `degAff` invariance and composes it here.
+
+The other half of the ledger — the twist factor's contribution — IS complete
+(`classDeg_chartTwistClass_baseChange` above, via E-iv-alg). -/
 theorem classDeg_of_presenting {K : Type u} [Field K] [Algebra k K]
     (ν : picEt C (overSpec k K)) {L : Type u} [Field L] [Algebra k L] [Algebra K L]
     [IsScalarTower k K L] (M : ((C ⊗ overSpec k L).left).CechPic)
