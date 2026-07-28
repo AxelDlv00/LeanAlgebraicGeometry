@@ -425,6 +425,7 @@ import AlgebraicJacobian.Picard.DivRepAffPullbackReduce
 import AlgebraicJacobian.Picard.DivRepGlobalLift
 import AlgebraicJacobian.Picard.DivRepGlobalClassify
 import AlgebraicJacobian.Picard.DivRepAwaySpanGlue
+import AlgebraicJacobian.Picard.DivRepAffPullGlue
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
 import AlgebraicJacobian.Algebra.ABDepthSES
