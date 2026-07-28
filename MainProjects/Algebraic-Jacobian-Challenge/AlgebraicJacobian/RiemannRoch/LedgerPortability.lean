@@ -43,6 +43,31 @@ not even statable, so the mismatch reads like a wall.
    `χ(𝒪(D)) = χ(𝒪_X) + deg D`, `deg (div g) = 0`.  A universe mismatch between carriers does not
    obstruct transporting an equation between their `finrank`s.
 
+## NON-VACUITY OF THE CHART-FINITENESS RESULT, measured at a synthesis site
+
+`scripts/axiom-frontier.lean` §6e records trap (d): a theorem whose instance binders nothing can
+instantiate for the ambient object reports clean axioms and always will.  Its own resolution note
+adds the sting — instantiability is `open`-sensitive, so the check must elaborate a *consumer*
+rather than read a signature.  `ChartFinitenessRefuted`'s results carry `[IsConstantField k X]`
+and `[Algebra k X.functionField]`, both of whose producers are **scoped** instances in
+`Adelic/GateInstances.lean`, so they are exactly the shape trap (d) catches.
+
+Checked, and it took three attempts, which is the point:
+
+* with an arbitrary `[Algebra k C.left.functionField]` binder supplied by hand,
+  `IsConstantField k C.left` does **not** synthesise — the producer needs the *scoped*
+  `functionFieldAlgebra`, not any `k`-algebra structure;
+* with `open scoped AlgebraicGeometry.Scheme` but without importing `GateInstances`, `Algebra k
+  C.left.functionField` itself fails;
+* with `import AlgebraicJacobian.RiemannRoch.Adelic.GateInstances` **and** `open scoped
+  AlgebraicGeometry.Scheme`, `not_chart_finite_of_primeDivisor k hU P` elaborates at an AJC curve
+  bundle `C : Over (Spec (CommRingCat.of k))` with `[IsIntegral] [IsLocallyNoetherian]
+  [IsRegularInCodimensionOne]` and nothing else — every remaining binder synthesised.
+
+So the collapse is **not** trap (d): it fires at the object the lane actually runs on.  A consumer
+must import `GateInstances` and open the scope, and a failure to do so looks exactly like
+un-instantiability even though the instance exists — the fifth thing §6e says no axiom line shows.
+
 ## The audit verdict this supports
 
 The universe gap is an **annotation artifact**, not a mathematical obstruction: it costs a
