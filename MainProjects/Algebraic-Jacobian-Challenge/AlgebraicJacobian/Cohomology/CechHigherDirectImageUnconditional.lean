@@ -193,9 +193,7 @@ set_option backward.isDefEq.respectTransparency false in
 sections over *every* open then `φ` is a monomorphism: injectivity on all opens makes the
 underlying `Ab`-presheaf morphism sectionwise mono, hence mono in the functor category, and
 the faithful `Scheme.Modules.toPresheaf` reflects monomorphisms.  Converse of
-`Modules.injective_app_of_mono`; a basis-local sharpening (only basic opens needed) is
-`Modules.mono_of_injective_app_of_isBasis` in `Picard/FlatKernelBase.lean`, which this file
-does not import.  Project-local. -/
+`Modules.injective_app_of_mono`; sharpened to a basis just below.  Project-local. -/
 theorem Modules.mono_of_injective_app {X : Scheme.{u}} {M N : X.Modules} {φ : M ⟶ N}
     (h : ∀ U : X.Opens, Function.Injective (φ.app U)) : Mono φ := by
   have hpre : Mono ((Scheme.Modules.toPresheaf X).map φ) := by
@@ -205,10 +203,69 @@ theorem Modules.mono_of_injective_app {X : Scheme.{u}} {M N : X.Modules} {φ : M
   haveI := hpre
   exact (Scheme.Modules.toPresheaf X).mono_of_mono_map hpre
 
+set_option backward.isDefEq.respectTransparency false in
+/-- **Basis-local criterion for a monomorphism of `𝒪_X`-modules.**  Only the sections over a
+*basis* of opens need to be checked: basis injectivity gives stalkwise injectivity
+(`TopCat.Presheaf.stalkFunctor_map_injective_of_isBasis`), a morphism of sheaves of abelian
+groups with monic stalk maps is monic (`TopCat.Presheaf.mono_of_stalk_mono`), and the faithful
+`Scheme.Modules.toPresheaf` reflects it.  Sharpens `Modules.mono_of_injective_app`; the same
+statement is proved in `Picard/FlatKernelBase.lean` as
+`Modules.mono_of_injective_app_of_isBasis`, which this file cannot import (that file pulls in
+all of `Picard/`).  Project-local. -/
+theorem Modules.mono_of_injective_app_isBasis {X : Scheme.{u}} {M N : X.Modules}
+    {ι : Type*} {B : ι → X.Opens} (hB : TopologicalSpace.Opens.IsBasis (Set.range B))
+    {φ : M ⟶ N} (h : ∀ i, Function.Injective (φ.app (B i))) : Mono φ := by
+  have happ : ∀ U ∈ Set.range B,
+      Function.Injective (((Scheme.Modules.toPresheaf X).map φ).app (Opposite.op U)) := by
+    rintro U ⟨i, rfl⟩; exact h i
+  let MS : TopCat.Sheaf Ab.{u} X := ⟨M.presheaf, M.isSheaf⟩
+  let NS : TopCat.Sheaf Ab.{u} X := ⟨N.presheaf, N.isSheaf⟩
+  let fS : MS ⟶ NS := ⟨(Scheme.Modules.toPresheaf X).map φ⟩
+  haveI : ∀ x, Mono ((TopCat.Presheaf.stalkFunctor Ab.{u} x).map fS.1) := fun x =>
+    (AddCommGrpCat.mono_iff_injective _).mpr
+      (TopCat.Presheaf.stalkFunctor_map_injective_of_isBasis hB happ x)
+  haveI hmS : Mono fS := TopCat.Presheaf.mono_of_stalk_mono fS
+  haveI : Mono ((Scheme.Modules.toPresheaf X).map φ) :=
+    (CategoryTheory.Sheaf.Hom.mono_iff_presheaf_mono _ _ fS).mp hmS
+  exact (Scheme.Modules.toPresheaf X).mono_of_mono_map ‹_›
+
+/-- **The opens lying inside a cover member form a basis.**  For an open cover `𝒰` of `X`, the
+images `f_j(V)` of opens `V` of the cover members are a basis of `X`: given `x ∈ U`, the cover
+provides a preimage `y` of `x` in some member, and `f_j(f_j⁻¹(U))` is a basic open containing
+`x` and contained in `U`.  This is what makes mono-checking *cover-local*
+(`Modules.mono_of_mono_restrict`).  Project-local. -/
+theorem Scheme.OpenCover.isBasis_image_opens {X : Scheme.{u}} (𝒰 : X.OpenCover) :
+    TopologicalSpace.Opens.IsBasis
+      (Set.range (fun p : (j : 𝒰.I₀) × (𝒰.X j).Opens => (𝒰.f p.1) ''ᵁ p.2)) := by
+  rw [TopologicalSpace.Opens.isBasis_iff_nbhd]
+  intro U x hxU
+  obtain ⟨y, hy⟩ := 𝒰.covers x
+  refine ⟨(𝒰.f (𝒰.idx x)) ''ᵁ ((𝒰.f (𝒰.idx x)) ⁻¹ᵁ U), ⟨⟨𝒰.idx x, _⟩, rfl⟩, ?_, ?_⟩
+  · exact ⟨y, by simpa [← hy] using hxU, hy⟩
+  · rintro z ⟨w, hw, rfl⟩
+    exact hw
+
+/-- **Mono-checking is cover-local.**  If the restriction of `φ` to every member of an open
+cover is a monomorphism then `φ` is one.  Combines the basis criterion
+`Modules.mono_of_injective_app_isBasis` with `Scheme.OpenCover.isBasis_image_opens`, using that
+restriction is sectionwise.  Companion of the iso-level
+`Scheme.Modules.Hom.isIso_iff_isIso_restrict` (`Cohomology/ModulesCoverConservativity.lean`).
+
+This is the reduction step for the general flat case of `pullback_preservesMonomorphisms`:
+mono-preservation may be checked after restricting to an affine cover of the source, where the
+morphism factors through an affine open of the target.  Project-local. -/
+theorem Modules.mono_of_mono_restrict {X : Scheme.{u}} {M N : X.Modules} {φ : M ⟶ N}
+    (𝒰 : X.OpenCover)
+    (h : ∀ j, Mono ((Scheme.Modules.restrictFunctor (𝒰.f j)).map φ)) : Mono φ := by
+  refine Modules.mono_of_injective_app_isBasis 𝒰.isBasis_image_opens (φ := φ) ?_
+  rintro ⟨j, V⟩
+  haveI := h j
+  exact Modules.injective_app_of_mono ((Scheme.Modules.restrictFunctor (𝒰.f j)).map φ) V
+
 /-- **Restriction along an open immersion preserves monomorphisms.**  Restriction is
 *sectionwise* — `((restrictFunctor f).map φ).app U = φ.app (f ''ᵁ U)` holds by `rfl`
 (`Scheme.Modules.restrict_obj`) — so injectivity on sections transfers verbatim, and
-`Modules.mono_of_injective_app_of_isBasis` over the basis of *all* opens concludes.
+`Modules.mono_of_injective_app` concludes.
 Combined with `Scheme.Modules.restrictFunctorIsoPullback` this gives the open-immersion
 case of `pullback_preservesMonomorphisms` with no flatness input beyond the (automatic)
 flatness of an open immersion.  Project-local. -/
