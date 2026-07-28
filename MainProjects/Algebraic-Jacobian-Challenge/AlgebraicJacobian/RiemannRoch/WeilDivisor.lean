@@ -111,20 +111,31 @@ are the **index-set half of the bridge to the χ-ledger route** for
 This project indexes divisors by `Scheme.PrimeDivisor X` — a point together with a proof that
 its coheight is `1`. The sibling project `Algebraic-Jacobian-Challenge-Rebuild` indexes them
 by `{x : X // x ≠ genericPoint X}` (`RiemannRoch/Divisor.lean`), and its χ-ledger closes
-degree-zero-of-principal sorry-free on that carrier. Transporting that route here needs the
-two index sets compared, and the comparison splits cleanly:
+degree-zero-of-principal sorry-free on that carrier. That route is now *taken*: the χ-ledger
+is ported into `RiemannRoch/Ledger/` and `principal_degree_zero` below is proved through it.
+The index comparison splits cleanly and **both directions are available here**:
 
-* **coheight 1 ⟹ non-generic** is `Scheme.PrimeDivisor.point_ne_genericPoint` below. It is
-  unconditional and elementary, so it is proved here.
+* **coheight 1 ⟹ non-generic** is `Scheme.PrimeDivisor.point_ne_genericPoint` below.
+  Unconditional and elementary.
 * **non-generic ⟹ coheight 1** is *not* elementary: it needs the curve hypothesis, since it
   fails as soon as the space has dimension `> 1`. Its two halves are
   `1 ≤ coheight` (elementary, `one_le_coheight_of_ne_genericPoint` below) and
-  `coheight ≤ 1` (the substantive half — via the standard-smooth stalk bound and the
-  coheight/stalk bridge, which is `Adelic.coheight_le_one_of_curve` and lives *downstream* of
-  this file).
+  `coheight ≤ 1`, the substantive half, which is `Adelic.coheight_le_one_of_curve`.
 
-So the direction needed to *produce* prime divisors is the one that is still out of scope
-here; the direction needed to *consume* them is available. -/
+⚠ CORRECTED (run 0067 r4). This paragraph used to say `coheight ≤ 1` "lives *downstream* of
+this file", and concluded that "the direction needed to *produce* prime divisors is the one
+that is still out of scope here". **Both clauses are false**, and the same file refuted them
+1100 lines below while this header still asserted them — caught by a fresh-context reviewer.
+`Adelic.coheight_le_one_of_curve` sits in a three-file import cone
+(`Albanese.CoheightBridge`, `Picard.ProjectiveSpace`, `Adelic.P1BaseCase`), all of which this
+module already reached through `Genus`; it was never downstream of `WeilDivisor.lean`, and it
+is now imported here directly. So the *producing* direction is in scope: see the index
+equivalence built inline in the proof of `principal_degree_zero`, whose `invFun` is exactly it
+(`le_antisymm` of the bound against `one_le_coheight_of_ne_genericPoint`).
+
+The general lesson, recorded because this lane made the same error three times in three
+different files: downstreamness is a property of a **file**, not of a theorem, so a
+"lives downstream" note must be re-measured whenever the importing file's own imports change. -/
 
 /-- **A prime divisor is not the generic point.** If it were, it would be a maximum in the
 specialisation order and its coheight would be `0`, contradicting `coheight = 1`.
