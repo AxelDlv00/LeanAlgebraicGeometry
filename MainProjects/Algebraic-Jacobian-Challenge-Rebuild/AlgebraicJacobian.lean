@@ -523,6 +523,7 @@ import AlgebraicJacobian.Picard.DivSchemeRedesignFreeFlat
 import AlgebraicJacobian.Picard.DivSchemeRedesignFreeFlatChart
 import AlgebraicJacobian.Picard.DivisorFamilyAffZar
 import AlgebraicJacobian.Picard.DivRepAffPullIndep
+import AlgebraicJacobian.Picard.DivRepAwayPush
 
 /-!
 # AlgebraicJacobian — library root
