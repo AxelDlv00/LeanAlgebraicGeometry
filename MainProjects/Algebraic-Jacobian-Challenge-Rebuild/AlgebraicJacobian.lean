@@ -553,6 +553,7 @@ import AlgebraicJacobian.Picard.DivRepAwayPush
 import AlgebraicJacobian.Picard.DivRepAffPullField
 import AlgebraicJacobian.Picard.DivRepAffPullNat
 import AlgebraicJacobian.Picard.DivRepAffPullClause
+import AlgebraicJacobian.Picard.DivRepChartRange
 import AlgebraicJacobian.Picard.JacobianDataAbelImage
 
 /-!
