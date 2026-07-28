@@ -71,7 +71,7 @@ theorem swallowedBy_ofSwallowingPiece {d : (relCurve C R).LocalEquations}
     exact hsub
   · intro j hj
     obtain ⟨i, rfl⟩ := Fin.exists_castSucc_eq.mpr hj
-    show Disjoint d.supportLocus ((Fin.snoc Ws W : Fin (m + 1) → _) i.castSucc : Set _)
+    change Disjoint d.supportLocus ((Fin.snoc Ws W : Fin (m + 1) → _) i.castSucc : Set _)
     rw [Fin.snoc_castSucc]
     exact hmiss i
 
