@@ -264,4 +264,19 @@ theorem exists_isCertified_of_swallowing_affineOpen [IsProper C.hom] [IsNoetheri
   haveI := hfin j
   exact A.projective_colength_of_forall_tmul_residueField j (hfib D A j)
 
+/-- **Non-vacuity of the swallowing hypotheses** (trap (c) of the workspace axiom-probe
+catalogue, inbox `I-0442`: a theorem with a FALSE named hypothesis is vacuously true and reports
+clean axioms like any other).  The hypothesis set of `exists_affAdaptation_swallowedBy` is
+inhabited: for a system with empty support locus — the zero divisor, `eqn ≡ 1` — the containment
+holds for ANY affine open inside a cover member.
+
+This does not make the theorem useful at the zero divisor; it certifies that its hypotheses are
+satisfiable, so the theorem is not vacuous. -/
+theorem exists_affAdaptation_swallowedBy_of_supportLocus_empty [IsProper C.hom]
+    (d : (relCurve C R).LocalEquations) (hempty : d.supportLocus = ∅)
+    {W : (relCurve C R).Opens} (hW : IsAffineOpen W)
+    (z₀ : relCurve C R) (hWle : W ≤ d.cover.opens z₀) :
+    ∃ (D : AffCoverData C R) (_ : AffAdaptation D d), D.SwallowedBy d :=
+  exists_affAdaptation_swallowedBy C R d hW (by rw [hempty]; exact Set.empty_subset _) z₀ hWle
+
 end AlgebraicGeometry
