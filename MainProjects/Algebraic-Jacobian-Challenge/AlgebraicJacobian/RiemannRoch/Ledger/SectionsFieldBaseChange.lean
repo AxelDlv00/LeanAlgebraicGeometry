@@ -228,7 +228,162 @@ theorem sectionsBaseChangeField_tmul {V : C.left.Opens}
     rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
   rw [h, map_mul, sectionsBaseChangeField_tmul_one, sectionsBaseChangeField_one_tmul]
 
+/-! ### The `κ`-linear form
+
+`BaseSections C 𝒪 V` is *definitionally* `Γ(C.left, V)` (`BaseSections` is a type synonym) and
+its `k`-module structure is restriction of scalars along `kToSection`, which is the same as the
+`algebraMap` of `toModuleKSheaf.algebraSection` — so the ring equivalence above already carries
+the `κ`-linear structure the Čech kit consumes.  `sectionsBaseChangeFieldₗ` records that as a
+`≃ₗ[κ]` so consumers do not have to re-derive the scalar compatibility. -/
+
+/-- **Base change of chart sections along a field extension, `κ`-linearly**:
+`κ ⊗[k] Γ(C.left, V) ≃ₗ[κ] Γ(C_κ, fst ⁻¹ᵁ V)`.
+
+Tensor order note, and it is not cosmetic: `κ` goes on the **left**.  That is the side mathlib's
+`Module κ (κ ⊗[k] M)` instance and `Module.finrank_baseChange` are keyed on, whereas the pushout
+of §2 produces the factors the other way round (`Γ ⊗[k] κ`), so the two are bridged by
+`TensorProduct.comm`.  Writing the equivalence at `Γ ⊗[k] κ ≃ₗ[κ]` does not typecheck at all —
+there is no `Module κ` on that spelling — which is worth recording because it is the kind of
+order mismatch that reads like bookkeeping and is actually an instance wall.
+
+On the target the `κ`-action is the structure action of `C_κ`'s own structure morphism, i.e.
+exactly the `Scheme.BaseSections` action of `CohomologyKit` at base field `κ`. -/
+noncomputable def sectionsBaseChangeFieldₗ {C : Over (Spec (CommRingCat.of k))}
+    {V : C.left.Opens} (hV : IsCompact (V : Set C.left))
+    (hV' : IsQuasiSeparated (V : Set C.left)) :
+    κ ⊗[k] Γ(C.left, V) ≃ₗ[κ]
+      Γ((baseChangeField C κ).left, baseChangeFieldFst C κ ⁻¹ᵁ V) where
+  toFun x := sectionsBaseChangeField κ hV hV' (TensorProduct.comm k κ Γ(C.left, V) x)
+  invFun y := (TensorProduct.comm k κ Γ(C.left, V)).symm
+    ((sectionsBaseChangeField κ hV hV').symm y)
+  left_inv x := by
+    simp only [RingEquiv.symm_apply_apply, LinearEquiv.symm_apply_apply]
+  right_inv y := by
+    simp only [LinearEquiv.apply_symm_apply, RingEquiv.apply_symm_apply]
+  map_add' x y := by rw [map_add, map_add]
+  map_smul' a x := by
+    rw [RingHom.id_apply]
+    induction x with
+    | zero => simp only [smul_zero, map_zero]
+    | add u v hu hv => rw [smul_add, map_add, map_add, hu, hv, map_add, map_add, smul_add]
+    | tmul b s =>
+      rw [TensorProduct.smul_tmul', smul_eq_mul, TensorProduct.comm_tmul,
+        TensorProduct.comm_tmul, sectionsBaseChangeField_tmul,
+        sectionsBaseChangeField_tmul, map_mul, Algebra.smul_def]
+      ring
+
+/-- Computation rule for the `κ`-linear form on `1 ⊗ s`: the pullback of `s` along the first
+projection. -/
+@[simp] lemma sectionsBaseChangeFieldₗ_one_tmul {C : Over (Spec (CommRingCat.of k))}
+    {V : C.left.Opens} (hV : IsCompact (V : Set C.left))
+    (hV' : IsQuasiSeparated (V : Set C.left)) (s : Γ(C.left, V)) :
+    sectionsBaseChangeFieldₗ κ hV hV' (1 ⊗ₜ s) =
+      (baseChangeFieldFst C κ).appLE V (baseChangeFieldFst C κ ⁻¹ᵁ V) le_rfl s := by
+  change sectionsBaseChangeField κ hV hV' (TensorProduct.comm k κ Γ(C.left, V) (1 ⊗ₜ s)) = _
+  rw [TensorProduct.comm_tmul, sectionsBaseChangeField_tmul_one]
+
 end Pushout
+
+/-! ## §3. Compatibility with restriction
+
+The one identity that makes the equivalence a *comparison of complexes* rather than a
+coincidence of dimensions: base-changing then restricting is restricting then base-changing.
+Both sides are ring maps out of a tensor product, so it suffices to check on pure tensors, and
+on those it is the naturality of `appLE` in both projections.
+
+This is what `Ledger/GenusFieldInvariance.lean` needs in order to identify the base-changed
+two-term Čech complex of `S.baseChangeField κ` with the base change of the complex of `S`. -/
+
+section Restriction
+
+variable {C}
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **Restriction-naturality of the field base change of sections.**  For qcqs opens `W ≤ V` of
+`C.left`, restricting a base-changed section from `fst ⁻¹ᵁ V` to `fst ⁻¹ᵁ W` is the base change
+of the restricted section.
+
+Stated on the tensor side as a composite with `Algebra.TensorProduct.map (res) (id κ)`, so it
+can be used to rewrite either way. -/
+theorem sectionsBaseChangeField_res {V W : C.left.Opens}
+    (hV : IsCompact (V : Set C.left)) (hV' : IsQuasiSeparated (V : Set C.left))
+    (hW : IsCompact (W : Set C.left)) (hW' : IsQuasiSeparated (W : Set C.left))
+    (hWV : W ≤ V) (s : Γ(C.left, V)) (a : κ) :
+    ((baseChangeField C κ).left.presheaf.map
+        (homOfLE (show baseChangeFieldFst C κ ⁻¹ᵁ W ≤ baseChangeFieldFst C κ ⁻¹ᵁ V by
+          gcongr)).op).hom
+      (sectionsBaseChangeField κ hV hV' (s ⊗ₜ a)) =
+      sectionsBaseChangeField κ hW hW'
+        ((C.left.presheaf.map (homOfLE hWV).op).hom s ⊗ₜ a) := by
+  rw [sectionsBaseChangeField_tmul, sectionsBaseChangeField_tmul, map_mul]
+  congr 1
+  · -- the first-projection pullback is natural in the open: postcomposing the pullback with the
+    -- downstairs restriction (`appLE_map`) is precomposing with the upstairs one (`map_appLE`)
+    have h₁ := Scheme.Hom.appLE_map (baseChangeFieldFst C κ)
+      (le_rfl : baseChangeFieldFst C κ ⁻¹ᵁ V ≤ baseChangeFieldFst C κ ⁻¹ᵁ V)
+      (homOfLE (show baseChangeFieldFst C κ ⁻¹ᵁ W ≤ baseChangeFieldFst C κ ⁻¹ᵁ V by gcongr)).op
+    have h₂ := Scheme.Hom.map_appLE (baseChangeFieldFst C κ)
+      (show baseChangeFieldFst C κ ⁻¹ᵁ W ≤ baseChangeFieldFst C κ ⁻¹ᵁ W from le_rfl)
+      (homOfLE hWV).op
+    exact congr($(h₁.trans h₂.symm).hom s)
+  · -- the constant `a` is unchanged by restriction (`algebraMap` naturality)
+    exact toModuleKSheaf.algebraMap_naturality (C := baseChangeField C κ) _ a
+
+end Restriction
+
+/-! ## §4. The dimension consequence, and precisely what it is not
+
+`finrank_sections_baseChangeField` is the numerical payoff available *from §2 alone*: the
+`κ`-dimension of the base-changed chart sections equals the `k`-dimension of the original's,
+whenever the latter is free (automatic over a field).  This is `Module.finrank_baseChange`
+composed with the equivalence — no geometry beyond §2.
+
+**Read the scope note.**  This is a statement about **chart sections**, i.e. about the terms of
+the Čech complex.  It is *not* `h¹` invariance and it is *not* the genus identity: those need
+§3 to identify the *maps*, and then right-exactness of `⊗` to pass to the cokernel.  Publishing
+the termwise identity as if it were the cohomological one is exactly the conflation this
+cluster's task exists to prevent, so it is named termwise and its limits are stated here. -/
+
+section Dimension
+
+variable {C}
+
+/-- **The `κ`-dimension of base-changed chart sections is the `k`-dimension of the original's.**
+
+Termwise only: `V` is one open, and this says nothing about `H¹`, whose comparison additionally
+needs §3 and right-exactness.  Free-ness of `Γ(C.left, V)` over `k` is automatic (`k` is a
+field), which is why there is no hypothesis for it. -/
+theorem finrank_sections_baseChangeField {V : C.left.Opens}
+    (hV : IsCompact (V : Set C.left)) (hV' : IsQuasiSeparated (V : Set C.left)) :
+    Module.finrank κ Γ((baseChangeField C κ).left, baseChangeFieldFst C κ ⁻¹ᵁ V) =
+      Module.finrank k Γ(C.left, V) := by
+  rw [← (sectionsBaseChangeFieldₗ κ hV hV').finrank_eq, Module.finrank_baseChange]
+
+/-- Non-vacuity of §4 in the shape a consumer meets it: on a chart of a 2-affine cover the qcqs
+hypotheses are discharged by affineness, so the dimension identity fires with no side condition.
+
+Stated at `U₁`; `U₂` and `U₁ ⊓ U₂` are identical, and the overlap is the case the Čech `H¹`
+carrier is built from — `(S.baseChangeField κ).U₁ ⊓ (S.baseChangeField κ).U₂` is `rfl`-equal to
+`fst ⁻¹ᵁ (S.U₁ ⊓ S.U₂)`, so this covers every term of the base-changed complex. -/
+theorem finrank_sections_baseChangeField_chart (S : C.left.AffineCoverMVSquare) :
+    Module.finrank κ Γ((baseChangeField C κ).left, (S.baseChangeField κ).U₁) =
+      Module.finrank k Γ(C.left, S.U₁) :=
+  finrank_sections_baseChangeField κ S.isAffineOpen_U₁.isCompact
+    S.isAffineOpen_U₁.isQuasiSeparated
+
+/-- The same at the overlap `U₁ ⊓ U₂` — the term whose quotient *is* the Čech `Ȟ¹` carrier.
+Recorded separately because it is the one §5 of a genus-invariance file would consume, and
+because it makes explicit that the overlap chart of the base-changed cover is the preimage of
+the overlap (`rfl`, by `AffineCoverMVSquare.preimage`). -/
+theorem finrank_sections_baseChangeField_overlap (S : C.left.AffineCoverMVSquare) :
+    Module.finrank κ
+        Γ((baseChangeField C κ).left,
+          (S.baseChangeField κ).U₁ ⊓ (S.baseChangeField κ).U₂) =
+      Module.finrank k Γ(C.left, S.U₁ ⊓ S.U₂) :=
+  finrank_sections_baseChangeField κ S.isAffineOpen_inf.isCompact
+    S.isAffineOpen_inf.isQuasiSeparated
+
+end Dimension
 
 end Scheme
 
