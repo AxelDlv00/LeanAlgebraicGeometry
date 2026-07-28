@@ -38,7 +38,8 @@ a cover, adapts to it, and certifies *that*).
 * `AlgebraicGeometry.ThetaGeneratorSeed.certifiedFamilyOfAdaptation` and
   `divFamEps_certifiedFamilyOfAdaptation` — the ε-projection identity from a certificate at
   an arbitrary adaptation, the general (seed-level, no chart) form.
-* `AlgebraicGeometry.PointwiseAchiever.exists_divFamZar_divFamEps_eq_universal_pair_of_hasCertifiedAdaptation`
+* `AlgebraicGeometry.PointwiseAchiever` ·
+  `exists_divFamZar_divFamEps_eq_universal_pair_of_hasCertifiedAdaptation`
   — U2's ε-identity **and** the `DivFamZar` class over the chart ring, from
   `HasCertifiedAdaptation` plus `g ≠ 0`, i.e. from the weakest form of the certificate
   obligation with no scalar side condition.

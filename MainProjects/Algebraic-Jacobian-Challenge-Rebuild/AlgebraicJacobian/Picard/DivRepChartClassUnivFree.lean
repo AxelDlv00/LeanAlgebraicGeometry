@@ -40,8 +40,9 @@ consumer of a genus-`g` Jacobian has, `g = 0` being the case where `Pic⁰` is t
   from the ledger normalizations alone.  General: no seed, no chart, no universal point.
 * `AlgebraicGeometry.PointwiseAchiever.divFamEps_highWindow_eq_universal_pair_of_ne_zero`
   — the U2 ε-identity with `hb` replaced by `g ≠ 0`.
-* `AlgebraicGeometry.PointwiseAchiever.exists_certifiedFamily_divFamEps_eq_universal_pair_of_ne_zero`
-  and `divFamZarUnivOfNeZero` — the existential and the `DivFamZar` class, same swap.
+* `AlgebraicGeometry.PointwiseAchiever` ·
+  `exists_certifiedFamily_divFamEps_eq_universal_pair_of_ne_zero` and `divFamZarUnivOfNeZero`
+  — the existential and the `DivFamZar` class, same swap.
 
 ## What this does NOT do
 
