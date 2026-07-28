@@ -1447,6 +1447,12 @@ Picard/DivisorFamilyAffMap.lean                 -- the functoriality
 Picard/DivisorFamilyAffFunctorCompare.lean      -- the comparison of FUNCTORS
   divFamZarToAffVehicle_map
   divFunctorToAff : divFunctor C π n ⟶ divFunctorAff C n
+
+Picard/DivRepGlobalAffLift.lean                 -- A DD-R CONSUMER on the widened functor
+  DivRepAffinePullback.pullGlobalAff
+  pullGlobalAff_val
+  pullGlobalAff_comp                            -- the pull_comp law at divFamZarAff.map
+  divFamZarAffAffineEquiv_pullGlobalAff
 ```
 
 `[IsProper C.hom]` throughout (the widened `mapAlg` needs it, and the DD-R lane carries it
@@ -1492,18 +1498,30 @@ an affine open `W ⊇ supp d` lying inside one member of `d.cover`. I-0492 claus
 not re-derive it; mathlib has no form of `0B8B` and this tree constructs no curve but `P¹`.
 
 **And one item that is NOT an obligation but is the lane's real exposure, stated because a green
-build hides it.** Measured at this session's HEAD, with the substring collision against the
+build hides it.** Measured **before commit `1e571f4f5`**, with the substring collision against the
 chart-typed `divFamZarAffineEquiv` excluded:
 
-> `DivFamZarAff` / `divFamZarAff` / `divFunctorAff` appear in **zero** Lean files outside the
+> `DivFamZarAff` / `divFamZarAff` / `divFunctorAff` appeared in **zero** Lean files outside the
 > `Picard/DivisorFamilyAff*.lean` family.
 
-The widened layer is still an **island**. ADDENDUM 8 §8.1 diagnosed the cause of the island as a
-missing face and fixed the face; the island itself did not close, because closing it means a
-*consumer* is restated on the widened functor. `divFunctorToAff` is the bridge that makes that
-restatement cheap (a consumer keeps its chart-typed input and pushes forward), but no consumer has
-been restated. **Do not read "the widened carrier is a functor" as "the widened carrier is in
-use".** The cheap check, and the one to run on any replacement type in this project: grep the new
-carrier's name outside the files that define it, and exclude substring collisions before believing
-the count.
+The widened layer was an **island**. ADDENDUM 8 §8.1 diagnosed the *cause* as a missing base-change
+face and fixed the face; that did not close the island, because closing it means a **consumer** is
+restated on the widened functor.
+
+**CORRECTED IN PLACE (reviewer finding `I-0674`).** The paragraph above was written 102 seconds
+before this same session falsified it, and said "no consumer has been restated" as if it were
+standing state. `Picard/DivRepGlobalAffLift.lean` (commit `1e571f4f5`, listed in §9.1 above) is
+exactly such a file: it restates the DD-R general-test pullback as `pullGlobalAff` and proves the
+`pull_comp` law at `divFamZarAff.map`. So at HEAD the honest count is **one** file outside the
+family, and that hit is legitimate rather than a stray — which is precisely what a future audit
+re-measuring the island needs told, since one unexplained hit is indistinguishable from noise.
+
+**What is still true, and is the transferable part.** One consumer is not a migration: 49 Lean
+files still consume the chart-typed `DivFamZar`, and `partition₀`/`partition₁` still occur 33 times
+across 11 files *including the carrier fields* `FinCoverData.partition₀`/`.partition₁`
+(`Picard/DivisorFamily.lean:173–176`) that I-0492 clause 3 names as what has to go. Until consumers
+move, the chart-typed carrier is the live one and R2's field-uniformity is not yet reaching the DD-R
+gate. **Do not read "the widened carrier is a functor" as "the widened carrier is in use".** The
+cheap check, and the one to run on any replacement type in this project: grep the new carrier's name
+outside the files that define it, and exclude substring collisions before believing the count.
 
