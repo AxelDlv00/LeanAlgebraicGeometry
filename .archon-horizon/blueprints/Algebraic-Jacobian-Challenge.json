@@ -18028,10 +18028,10 @@
     "macros": {},
     "states": {
       "blocked": 131,
-      "closed": 6169,
+      "closed": 6171,
       "formalized_open": 201,
       "informal": 170,
-      "ready": 131
+      "ready": 132
     },
     "warnings": [
       "lem:pushforwardPullbackBaseChange_restrict_naturality: \\lean{AlgebraicGeometry.pushforwardPullbackBaseChange_restrict_naturality} not found in Lean sources",
@@ -46651,7 +46651,7 @@
       "id": "lem:pic0_relative_dimension_genus",
       "lean_file": "AlgebraicJacobian/Jacobian.lean",
       "lean_name": "AlgebraicGeometry.smoothOfRelativeDimension_genus_pic0",
-      "lean_source": "theorem smoothOfRelativeDimension_genus_pic0 (C : Over (Spec (.of k)))\n    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]\n    [Scheme.HasPicScheme C] [Scheme.PicScheme.PicSchemeLocallyOfFiniteType C] :\n    SmoothOfRelativeDimension (genus C) (Scheme.Pic0Scheme C).hom :=\n  sorry",
+      "lean_source": "theorem smoothOfRelativeDimension_genus_pic0 (C : Over (Spec (.of k)))\n    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]\n    [Scheme.HasPicScheme C] [Scheme.PicScheme.PicSchemeLocallyOfFiniteType C] :\n    SmoothOfRelativeDimension (genus C) (Scheme.Pic0Scheme C).hom :=\n  sorry\n\n/-- **Leaf B's dimension count, at the headline and against the landed development.**\n\nThe number `genus C` in leaf B is not an arbitrary index: it is the dimension of the\nZariski tangent space of `Pic\u2070_{C/k}` at the identity, and *that* identity is landed\nmathematics (`Scheme.Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne`, the Kleiman \u00a75\nThm 5.11 chain through the truncated-exponential splitting and the Mayer\u2013Vietoris\ncomparison). Since `genus C` is by definition `dim_k H\u00b9(C, \ud835\udcaa_C)`, the two sides match\nwith no transport, exactly as leaf C's `isAlbanese_pic0_of_isAlgClosed` matches\n`Albanese.Pic0.albanese_universal_property`.\n\nStating it here fixes what leaf B still owes, which is easy to misjudge from the leaf\nalone. It is *not* the dimension count. It is the two steps that turn a tangent-space\ndimension into a relative dimension:\n\n1. `Scheme.Pic0.smooth` \u2014 bare smoothness of `Pic\u2070_{C/k}` over `k`, itself `sorry`-bodied\n   upstream, so leaf B presupposes an obligation rather than reducing one. That obligation\n   is smaller than it looks, and worth stating here because it changes what a reader should\n   expect to have to build: its *entire* remaining content is\n   `GeometricallyReduced (Pic\u2070_{C/k}).hom`. Mathlib's public `smooth_of_grpObj` takes\n   `[LocallyOfFiniteType f]`, `[GrpObj (Over.mk f)]` and `[GeometricallyReduced f]` and\n   returns `Smooth f` over an arbitrary field, so the translation argument that propagates\n   smoothness from the identity is already done there; the first two inputs are landed\n   (`Pic0.locallyOfFiniteType`, `Pic0.grpObj`) and elaborate at these hypotheses verbatim,\n   while `GeometricallyReduced` does not synthesize and its only producer in the tree is\n   `Smooth.geometricallyReduced`, which would be circular. So `Pic0.smooth` is Cartier's",
       "lean_status": "sorry",
       "level": "medium",
       "mathlib_ok": false,

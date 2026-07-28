@@ -6,10 +6,9 @@ decl: anyone
 file: scripts/axiom-frontier.lean
 generated: lean
 lean_status: sorry
-stale: true
 title: anyone
 type: lean
-updated: '2026-07-28T07:24:14'
+updated: '2026-07-28T08:10:13'
 ---
 instance anyone would use, `¬H`. The theorem is true, axiom-clean, non-vacuous by every probe
 in this file, and empty.
