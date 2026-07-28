@@ -524,16 +524,42 @@ comparison is §0b's. -/
 #print axioms AlgebraicGeometry.Jacobian.exists_unique_ofCurve_comp
 #print axioms AlgebraicGeometry.genus
 
-/-! §2 The two `sorry`-bodied INSTANCES, which are the whole of trap (a).
+/-! §2 Trap (a) is now EMPTY: there are no `sorry`-bodied instances left.
 
-These two are singled out because an instance is the only kind of `sorry` carrier that a
-consumer can pick up *without naming it*: every other carrier has to be written down by
-whoever depends on it, whereas these arrive through synthesis. §8 measures the consequence.
+An instance is the only kind of `sorry` carrier a consumer can pick up *without naming it*:
+every other carrier has to be written down by whoever depends on it, whereas an instance
+arrives through synthesis, so a declaration merely *quantifying* over it reports clean axioms
+while every *synthesis site* silently acquires `sorryAx`. That is trap (a), and §8 used to
+measure its consequence.
 
-The enumeration is exhaustive, and worth stating as such because "there are two" is the kind
-of claim that rots silently as modules land. Measured on the rooted tree (2026-07-28), the
-project declares **26 `sorry`-bodied declarations** over 11 modules, of which exactly **two
-are instances** — the two below. The other 24 are theorems and definitions:
+**As of 2026-07-28 the surface is empty.** Both offenders were demoted to plain theorems in the
+same window, by the two lanes that owned them:
+
+* `instHasPicScheme` → the theorem `Scheme.picSchemeOfHasRationalPoint` (ajc-etale-pic);
+* `pullback_preservesFiniteLimits` and `pullback_preservesHomology` → plain theorems (ajc-fbc),
+  with their in-file consumers citing them explicitly via `haveI`.
+
+Measured at HEAD over the rooted tree: **28 `sorry`-bodied declarations** over 11 modules, of
+which **21 theorem + 7 def + 0 instance**. Re-derive that split with the command below rather
+than trusting this paragraph — the whole point of the section is that the claim rots.
+
+Consequences for how to read this file. A `sorryAx` line can no longer appear at a site that
+does not name its carrier, so a *clean* line is now somewhat stronger evidence than it was, and
+the §8 synthesis-site probes measure explicit dependencies rather than invisible ones. What has
+NOT changed: a clean axiom set still says nothing about unproved or false hypotheses in the
+statement (§6b, §6c, §8), and the underlying mathematics is exactly as unfinished as before —
+demoting an instance closes a leak *mechanism*, it does not prove anything.
+
+One trap the demotion introduced, worth knowing before reading any probe here: a probe written
+over a DEGENERATE argument (the identity morphism, a terminal object, a trivial ring) measures
+its intended declaration only while no cheaper instance path exists. Change the instance graph
+and it silently starts measuring something else, and the symptom is a leaking line turning clean
+for no mathematical reason. That happened to this file's own flat-pullback probe — see §6's
+`leakProbe_pullback_finiteLimits`, restated for exactly this reason. Probe over a general
+argument, name the carrier, and ship a control that must come out the other way.
+
+The historical enumeration, retained because the per-module shape is still useful: the 24
+non-instance carriers as of the measurement above were
 
   Jacobian.lean          `hasRationalPoint_of_curve`, `smoothOfRelativeDimension_genus_pic0`,
                          `isAlbanese_pic0`                                    (the three leaves)
@@ -557,17 +583,16 @@ To re-derive rather than trust that list, and to see immediately if it has drift
     lake build AlgebraicJacobian 2>&1 | grep 'declaration uses' | sort -u
 
 Each line is one carrier, `file:line:col`. Which of them are instances is a source question at
-those lines, not something the build reports; the two below are `noncomputable instance
-instHasPicScheme` and `instance pullback_preservesFiniteLimits`. Do not derive the count by
-grepping the sources for `:= sorry`: that misses the last two entries above, whose `sorry`
-sits in a structure field, and it counts prose mentions of the word. Two earlier revisions of
-this file got the arithmetic wrong in exactly one of those ways, which is the reason the
-command is written out here rather than the number alone.
+those lines, not something the build reports. Do not derive the count by grepping the sources
+for `:= sorry`: that misses the last two entries above, whose `sorry` sits in a structure field,
+and it counts prose mentions of the word. Two earlier revisions of this file got the arithmetic
+wrong in exactly one of those ways, which is the reason the command is written out here rather
+than the number alone.
 
-"Exactly two are instances" is what the whole synthesis-leak argument rests on, so check it
-against the DECLARATION KEYWORD at each carrier line rather than against the enumeration
-above — a prose list is the thing that rots, and reading this file is how you would miss an
-instance added to it:
+"There are no instances among the carriers" is what the whole synthesis-leak argument now rests
+on, so check it against the DECLARATION KEYWORD at each carrier line rather than against any
+prose in this file — a prose list is the thing that rots, and reading this file is exactly how
+you would miss an instance added back to it:
 
     lake build AlgebraicJacobian 2>&1 | grep 'declaration uses' | sort -u |
       while read -r l; do
@@ -576,13 +601,16 @@ instance added to it:
         sed -n "${n}p" "$f" | grep -oE '(instance|theorem|def)' | head -1
       done | sort | uniq -c
 
-Measured 2026-07-28: **17 theorem + 7 def + 2 instance = 26**, agreeing with the enumeration.
-Note the line numbers move as docstrings are edited, so re-run the build rather than reusing a
-saved carrier list — a stale list silently misattributes a keyword to whatever now sits at
-that line. -/
--- The `picSharp` gate's producer is no longer an instance (étale rewire, 2026-07-28):
--- `picSchemeOfHasRationalPoint` is a named theorem, so it cannot leak through synthesis.
--- Exactly ONE `sorry`-bodied instance now remains in the tree.
+Measured at HEAD 2026-07-28, after both demotions: **21 theorem + 7 def + 0 instance = 28**.
+(An earlier revision of this paragraph read "17 theorem + 7 def + 2 instance = 26" and was
+correct when written; both instances were demoted the same day.  If you find it disagreeing with
+the command again, trust the command.)  Note the line numbers move as docstrings are edited, so
+re-run the build rather than reusing a saved carrier list — a stale list silently misattributes a
+keyword to whatever now sits at that line. -/
+-- Both former leaking instances, now named theorems, probed as ordinary carriers.  Neither can
+-- reach a consumer that does not name it; each still reports `sorryAx`, which is the honest
+-- state of the mathematics behind them.
+#print axioms AlgebraicGeometry.Scheme.picSchemeOfHasRationalPoint
 #print axioms AlgebraicGeometry.pullback_preservesFiniteLimits
 
 -- §3 Picard cone keystones
