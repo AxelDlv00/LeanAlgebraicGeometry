@@ -373,6 +373,62 @@ theorem topologicalKrullDim_eq_genus_of_homogeneous_of_regular {k : Type u} [Fie
   topologicalKrullDim_eq_genus_of_homogeneous C
     (AlgebraicGeometry.Scheme.Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne C) hreg htrans
 
+/-! ### The whole A.3 leg over its honest inputs
+
+`Pic0.isAbelianVariety` (`Picard/Pic0AbelianVariety.lean`) states the four conjuncts of the
+abelian-variety conclusion, and it consumes `Pic0.proper` and `Pic0.smooth`, i.e. the two
+`sorry`s of that file. The theorem below states the same conclusion **plus the dimension**
+over the reductions instead, so that the leg's total open content is visible in one signature
+and can be checked against a probe rather than read off four docstrings.
+
+Its hypotheses are exactly, and only:
+
+* `hval` — the valuative existence criterion for `(Pic0Scheme C).hom`. This is the *whole* of
+  properness (`Pic0.proper_of_valuativeCriterion`; the other three `IsProper` conjuncts are
+  theorems of that file, and the ambient-`Pic` route is refuted — `Pic_{C/k}` is an infinite
+  disjoint union over `deg ∈ ℤ`, so universal closedness would force `CompactSpace`).
+* `hred` — `IsReduced` of the **single** scheme `Pic⁰ ×_{Spec k} Spec k̄`. This is the whole of
+  smoothness *and* of geometric reducedness: `Pic0.smooth_of_isReduced_algebraicClosureBaseChange`
+  gives smoothness, and `Pic0.geometricallyReduced_of_isReduced_algebraicClosureBaseChange`
+  shows the same hypothesis discharges the reducedness obligation too.
+* `hid` — the cotangent value at the identity, which is front (a).
+* `hreg`, `htrans` — regularity at the identity and the orbit condition, as above.
+
+Nothing else. Geometric irreducibility and the group-object structure are already theorems.
+So the A.3 leg is five statements, of which `hid` is the load-bearing one and `hreg` is free
+over a perfect field. -/
+theorem isAbelianVariety_of_dimension_genus {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    [GrpObj (Pic0Scheme C)]
+    (hval : ValuativeCriterion.Existence (Pic0Scheme C).hom)
+    (hred : IsReduced (Limits.pullback (Pic0Scheme C).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k (AlgebraicClosure k))))))
+    (hid : Module.finrank
+        (IsLocalRing.ResidueField ((Pic0Scheme C).left.presheaf.stalk
+          ((identitySection C).base default)))
+        (IsLocalRing.CotangentSpace ((Pic0Scheme C).left.presheaf.stalk
+          ((identitySection C).base default)))
+      = AlgebraicGeometry.genus C)
+    (hreg : IsRegularLocalRing ((Pic0Scheme C).left.presheaf.stalk
+      ((identitySection C).base default)))
+    (htrans : ∀ z : (Pic0Scheme C).left,
+      ∃ x y : 𝟙_ (Over (Spec (.of k))) ⟶ Pic0Scheme C,
+        (pointTranslationIso (Pic0Scheme C) x y).hom.base
+          ((identitySection C).base default) = z) :
+    IsProper (Pic0Scheme C).hom ∧ Smooth (Pic0Scheme C).hom ∧
+      GeometricallyIrreducible (Pic0Scheme C).hom ∧
+      Nonempty (GrpObj (Pic0Scheme C)) ∧
+      topologicalKrullDim (Pic0Scheme C).left
+        = ((AlgebraicGeometry.genus C : ℕ) : WithBot ℕ∞) :=
+  ⟨AlgebraicGeometry.Scheme.Pic0.proper_of_valuativeCriterion C hval,
+   AlgebraicGeometry.Scheme.Pic0.smooth_of_isReduced_algebraicClosureBaseChange C hred,
+   AlgebraicGeometry.Scheme.Pic0.geometricallyIrreducible C,
+   AlgebraicGeometry.Scheme.Pic0.grpObj C,
+   topologicalKrullDim_eq_genus_of_homogeneous C hid hreg htrans⟩
+
 end Scheme.Pic0
 
 end AlgebraicGeometry
