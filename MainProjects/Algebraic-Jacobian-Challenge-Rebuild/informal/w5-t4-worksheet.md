@@ -1289,3 +1289,114 @@ produced a false claim in two documents.
 `attribute [local instance] algebraBase`, so it is not in scope for a `scoped` wrapper — the local
 one is still proved by hand (`of_algebraMap_eq`, two lines). So "the tower needs no proof" as `I-0634`
 put it is not quite right; it needs two lines, and only the algebra is a pure rename.*
+
+### 6.20 THE THREE INTERTWINING ITEMS, PLANNED BEFORE THE LEAN (run 0073 r4)
+
+*Worksheet-first, as T4 binds. §6.18 named the residue from the reviewer's `I-0630`; this section
+is the plan, written before touching a file. Each item gets: the statement in Lean-ready form, the
+inputs already in the tree, and what could go wrong.*
+
+#### (1) Naturality of the DESCENDED `twoChartClass`
+
+**Statement.** For `f : X ⟶ Y`, `V : Bool → Y.Opens`, `sel : Y → Bool`, `hmem`, and
+`hsel : Function.Surjective sel`, `hsel' : Function.Surjective (sel ∘ f.base)`:
+
+```
+CechPic.map f (twoChartClass V sel hmem hsel q)
+  = twoChartClass (f ⁻¹ᵁ V ·) (sel ∘ f.base) _ hsel' (pullbackOverlapQuot f q)
+```
+
+where `pullbackOverlapQuot f` is `QuotientGroup.map` of the monoid hom
+`f.unitsAppLE (V false ⊓ V true) (f ⁻¹ᵁ V false ⊓ f ⁻¹ᵁ V true) le_rfl` — i.e. of
+`pullbackOverlapUnit`, which is already a `MonoidHom` and not merely a function (this is the first
+thing that makes the item cheap: no new map has to be built, only a containment proved).
+
+**The containment to prove**, which is the mathematical content:
+
+```
+cechCoboundaryUnits (Y.resHom inf_le_left) (Y.resHom inf_le_right)
+  ≤ (cechCoboundaryUnits (X.resHom inf_le_left) (X.resHom inf_le_right)).comap
+      (f.unitsAppLE _ _ le_rfl)
+```
+
+**Predicted proof, and it should be four rewrites.** Take `u = ρ₀ˣ(v₀) · ρ₁ˣ(v₁)` from
+`mem_cechCoboundaryUnits`. `map_mul` splits it; then for each factor, `Hom.map_unitsAppLE`
+("pullback after restriction") turns `f.unitsAppLE (V₀ ⊓ V₁) T le_rfl (Units.map (Y.resHom h) v)`
+into `f.unitsAppLE (V s) T _ v`, and `Hom.unitsAppLE_map` ("restriction after pullback") turns that
+into `X.unitsRestrict inf_le_* (f.unitsAppLE (V s) (f ⁻¹ᵁ V s) le_rfl v)`. Since
+`unitsMap_resHom` is `rfl`, `X.unitsRestrict` **is** `Units.map (X.resHom _)`, so the result is
+literally in the range that `cechCoboundaryUnits` is the join of. **No cohomology, no cocycles** —
+the whole item is the functoriality of `unitsAppLE` in the two directions the tree already has.
+
+**What could go wrong.** The pulled-back chart unit is `f.unitsAppLE (V s) (f ⁻¹ᵁ V s) le_rfl v`,
+which lives on `f ⁻¹ᵁ V s`, and the coboundary subgroup at the pulled-back cover is stated with
+`X.resHom (inf_le_left : f ⁻¹ᵁ V false ⊓ f ⁻¹ᵁ V true ≤ f ⁻¹ᵁ V false)`. Those agree, but only if
+the `⊓` on the `X` side is the *inf of preimages* and not the *preimage of the inf* — the same seam
+`pullbackOverlapUnit` already navigates by `le_rfl`, so it is defeq. If instance-level unification
+balks, state the lemma with `(fun s ↦ f ⁻¹ᵁ V s)` as the family, exactly as
+`map_twoChartClassHom` does, rather than with `f ⁻¹ᵁ (V false ⊓ V true)`.
+
+**Then the square itself is free**: `QuotientGroup.map_mk` + `twoChartClass_mk` reduce both sides to
+`map_twoChartClassHom`, which is landed. So item (1) = one containment + one `induction q`.
+
+#### (2) `dualNumberSectionsUnits` carries the thickened coboundary subgroup ONTO the base one
+
+**Statement.** With `C : Over (Spec k)`, two affine opens `V : Bool → C.left.Opens`, and
+`W := V false ⊓ V true`:
+
+```
+Subgroup.map (Over.dualNumberSectionsUnits C hW hW').toMonoidHom
+    (cechCoboundaryUnits (mapRingHom (C.left.resHom inf_le_left))
+                         (mapRingHom (C.left.resHom inf_le_right)))
+  = cechCoboundaryUnits ((C ⊗ ε).left.resHom (preimage_mono _ inf_le_left))
+                        ((C ⊗ ε).left.resHom (preimage_mono _ inf_le_right))
+```
+
+**Why `=` and not `≤`, and why that matters.** `I-0571`'s lesson is that an isomorphism of the two
+ends is worth nothing to a kernel computation. Here the two ends are the two `Ȟ¹` carriers, and what
+the kernel computation needs is that the **iso descends to the quotients**, which needs the image
+subgroup to be *exactly* the target subgroup — not merely contained in it. Both inclusions come from
+the same lemma applied to the equivalence and to its inverse, so proving `=` costs one extra
+`le_antisymm` branch, and skipping it would leave precisely the gap the reviewer named.
+
+**Inputs, both landed.** `Over.unitsMap_resHom_dualNumberSectionsUnits` (naturality of the carrier
+translation in the open, unit form) at `h : W ≤ V s` is exactly the square that moves a chart
+coboundary generator across. `unitsMap_resHom` identifies `Units.map (resHom _)` with
+`unitsRestrict`. Nothing else is needed: the generators of the source subgroup are
+`Units.map (mapRingHom (resHom _))` of chart units, the equivalence sends them to
+`Units.map (resHom _)` of the *translated* chart units, and translation at a chart is again the
+equivalence at that chart — so surjectivity onto the generators is `MulEquiv.surjective` chartwise.
+
+**Consequence to record as its own declaration** (this is what a consumer will actually call): the
+induced `MulEquiv` of the two `Ȟ¹` quotients,
+`(Γ(C,W)[ε])ˣ ⧸ cechCoboundaryUnits … ≃* Γ(C_ε, fst⁻¹W)ˣ ⧸ cechCoboundaryUnits …`, via
+`QuotientGroup.congr` (mathlib's name for the quotient of an equivalence matching subgroups).
+
+**What could go wrong.** `Subgroup.map` of a `MulEquiv` needs the `toMonoidHom` coercion to be the
+same one the naturality lemma is stated with. If `QuotientGroup.congr` wants
+`Subgroup.map e.toMonoidHom S = T` in the opposite orientation, take the `symm` form; both
+inclusions are proved anyway.
+
+#### (3) The transport seam — the one that is bookkeeping, not mathematics
+
+Three sub-items, in increasing order of what they cost:
+
+* **(3a)** the `Bool`-indexed family + selector from `relCover`: `V := fun s ↦ if s then (relCover
+  C R D).V₁ else .V₀`, `sel` from `relCover_sup` (a point of `⊤` lies in `V₀ ⊔ V₁`, so pick the
+  chart), and `hsel` from both charts being nonempty — which needs an argument, since a chart of a
+  cover can be empty in general. **Flagged: `hsel` (selector surjectivity) is a real side condition,
+  not bookkeeping.** For a curve over a field with `V₀, V₁` a genuine two-chart cover both are
+  nonempty, but that has to be said, and it is the same `hsel` clause item (1) needs at both ends.
+* **(3b)** identify `(C ◁ overDualNumberZero).left` with `relCurveMap C k[ε] k`. This is an equality
+  of *morphisms of schemes*, and `relSectionsMap` is defined from `relCurveMap`'s `appLE`, so the
+  identification is what lets the (b-coeff) statement be read as the coefficient half of the square.
+* **(3c)** `overSpec k k` vs the monoidal unit `Over.mk (𝟙 _)` that `overDualNumberZero`'s target
+  is.
+
+**Order of work, and the honest expectation.** (1) and (2) are self-contained, need no scheme
+identifications, and are stated entirely in vocabulary already in the tree — take them first and in
+that order. (3) is where a session can disappear: it is four identifications of *objects*, each of
+which can produce a "motive is not type correct" of the family this lane has already recorded twice.
+If (3b)/(3c) resist, the right move is to state the composed square with the identification as an
+explicit hypothesis (`heq : (C ◁ overDualNumberZero).left = relCurveMap C _ _`) and discharge it
+separately — the same discipline as `hcyc` in `DualNumberChartPic.lean`, and for the same reason.
