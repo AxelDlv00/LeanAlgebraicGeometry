@@ -516,6 +516,7 @@ import AlgebraicJacobian.Picard.Pic0ChartLocusIsOpen
 import AlgebraicJacobian.Picard.Pic0ChartPair
 import AlgebraicJacobian.Picard.Pic0ChartTwistSplit
 import AlgebraicJacobian.Picard.Pic0ChartCoverageDegree
+import AlgebraicJacobian.Picard.Pic0ChartRationalGraph
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivGen
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivClose
 import AlgebraicJacobian.Picard.DivSchemeUnivFibreKerSpan
