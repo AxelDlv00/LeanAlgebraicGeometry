@@ -40,7 +40,7 @@ Everything comes off the six-term slice of the dévissage sequence
   (`h0_divisorSheaf_of_subsingleton_of_le`), and makes the section drop *exact*
   (`h0_eq_h0_sub_point_add_residueDeg_of_subsingleton`).
 
-**The peel chain uses no finiteness at all.**  Ten of the seventeen declarations below `omit` both
+**The peel chain uses no finiteness at all.**  Eleven of the nineteen declarations below `omit` both
 `Module.Finite` cohomology instances: surjectivity of a map is not a dimension count.  That
 is also why the peel is stated on `Subsingleton (H¹ …)` rather than on `h¹ … = 0` — the
 latter is vacuously true for an infinite-dimensional `H¹`, since `Module.finrank` reads `0`
@@ -387,6 +387,64 @@ theorem h0_eq_h0_sub_point_add_residueDeg_of_subsingleton {x : X}
   exact hstep
 
 end ExactRR
+
+/-! ## What separates the order-cone from a degree threshold
+
+The adelic lane's `Adelic.exists_bound_subsingleton_h1Mod` concludes vanishing for every
+divisor of **weighted degree** `≥ b`, from a base vanishing, a peel datum and the closed
+ledger.  On this carrier the peel and the ledger are both theorems, so it is worth recording
+exactly what the remaining distance is — and it is *not* bookkeeping.
+
+`Adelic.coneVanishing_iff_base_and_peel` proves, on the adelic carrier, that base-plus-peel
+is *equivalent* to vanishing on the whole order-cone `{D' ≥ D₀}`.  There, therefore, the peel
+hypothesis is as strong as the conclusion it feeds; here the peel is free
+(`subsingleton_hModule_one_of_le`), which is the genuine asymmetry between the two carriers.
+
+What no amount of peeling supplies is the step from the **order**-cone to a **degree**
+half-space.  `exists_bound_of_cofinal_vanishing` below isolates that step as a single named
+hypothesis, so that a future session sees precisely one obligation rather than a vague gap:
+one needs, for each large-degree `D`, *some* divisor `D₀` with `H¹(𝒪(D₀)) = 0` and `D₀ ≤ D`.
+That is a cofinality statement about where vanishing occurs in the divisor order, and nothing
+in AJC or AJCR currently produces it — for the reason recorded in item 1 of the module
+docstring: `deg` is a sum of residue-weighted coefficients, so a divisor can have huge degree
+while being small at every point of `supp D₀`. -/
+
+section DegreeThreshold
+
+/-- **From cofinal vanishing to a degree threshold.**  If above every degree bound the
+vanishing locus is *cofinal in the divisor order* — i.e. every `D` of degree `≥ b` dominates
+some `D₀` at which `H¹` vanishes — then `H¹(𝒪(D)) = 0` for every such `D`, and Riemann–Roch
+is an equality there.
+
+The hypothesis is exactly the missing input and is deliberately left named and open: this is
+*not* a proof of single-field bounded vanishing, it is a reduction of it to one cofinality
+statement.  Compare `Adelic.exists_bound_subsingleton_h1Mod`, which needs a base, a peel and
+the ledger; here the peel and the ledger are discharged and only this remains. -/
+theorem exists_bound_of_cofinal_vanishing {b : ℤ}
+    (hcof : ∀ D : X.CurveDivisor, b ≤ CurveDivisor.deg K D →
+      ∃ D₀ : X.CurveDivisor, D₀ ≤ D ∧
+        Subsingleton (Sheaf.HModule (X.divisorSheaf K D₀) 1)) :
+    ∀ D : X.CurveDivisor, b ≤ CurveDivisor.deg K D →
+      (Sheaf.h0 (X.divisorSheaf K D) : ℤ) =
+        Sheaf.chi (X.moduleKSheaf K) + CurveDivisor.deg K D := by
+  intro D hD
+  obtain ⟨D₀, hle, hvan⟩ := hcof D hD
+  exact h0_divisorSheaf_of_subsingleton_of_le K hle hvan
+
+omit [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 0)]
+  [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 1)] in
+/-- The vanishing half of `exists_bound_of_cofinal_vanishing`, with no finiteness. -/
+theorem subsingleton_of_cofinal_vanishing {b : ℤ}
+    (hcof : ∀ D : X.CurveDivisor, b ≤ CurveDivisor.deg K D →
+      ∃ D₀ : X.CurveDivisor, D₀ ≤ D ∧
+        Subsingleton (Sheaf.HModule (X.divisorSheaf K D₀) 1)) :
+    ∀ D : X.CurveDivisor, b ≤ CurveDivisor.deg K D →
+      Subsingleton (Sheaf.HModule (X.divisorSheaf K D) 1) := by
+  intro D hD
+  obtain ⟨D₀, hle, hvan⟩ := hcof D hD
+  exact subsingleton_hModule_one_of_le K hle hvan
+
+end DegreeThreshold
 
 end Drop
 
