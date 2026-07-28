@@ -73,7 +73,7 @@ theorem swallowedBy_ofSwallowingPiece {d : (relCurve C R).LocalEquations}
     (hmiss : ∀ i, Disjoint d.supportLocus (Ws i : Set (relCurve C R))) :
     (ofSwallowingPiece W hW Ws hWs hcover).SwallowedBy d := by
   refine ⟨Fin.last m, ?_, ?_⟩
-  · show d.supportLocus ⊆ ((Fin.snoc Ws W : Fin (m + 1) → _) (Fin.last m) : Set _)
+  · change d.supportLocus ⊆ ((Fin.snoc Ws W : Fin (m + 1) → _) (Fin.last m) : Set _)
     rw [Fin.snoc_last]
     exact hsub
   · intro j hj
@@ -203,12 +203,12 @@ theorem exists_affAdaptation_swallowedBy [IsProper C.hom]
     Fin.snoc (fun j => ((e j).1 : relCurve C R)) z₀ with hpt
   have hle : ∀ j : D.index, D.pieces j ≤ d.cover.opens (pt j) := by
     refine Fin.lastCases ?_ ?_
-    · show (Fin.snoc (fun j => V (e j).1) W : Fin _ → _) (Fin.last _)
+    · change (Fin.snoc (fun j => V (e j).1) W : Fin _ → _) (Fin.last _)
         ≤ d.cover.opens (pt (Fin.last _))
       rw [hpt, Fin.snoc_last, Fin.snoc_last]
       exact hWle
     · intro i
-      show (Fin.snoc (fun j => V (e j).1) W : Fin _ → _) i.castSucc
+      change (Fin.snoc (fun j => V (e j).1) W : Fin _ → _) i.castSucc
         ≤ d.cover.opens (pt i.castSucc)
       rw [hpt, Fin.snoc_castSucc, Fin.snoc_castSucc]
       exact (hVle (e i).1).trans inf_le_right
