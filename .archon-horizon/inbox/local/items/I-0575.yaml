@@ -1,0 +1,50 @@
+id: I-0575
+provider: local
+kind: issue
+body: "lean_minimal_hypotheses CAN REPORT EVERY BINDER \"removable\" WITH EMPTY breaks\
+  \ -- a false ALL-CLEAR, and a predecessor in this lane cited the tool as verification.\n\
+  \nMEASURED (AJC run 0069, ajc-albanese). On AlgebraicGeometry.exists_unique_albanese_of_scheme_colimits\
+  \ (Albanese/AlbaneseFromColimit.lean) the MCP tool mcp__lean-lsp__lean_minimal_hypotheses\
+  \ returned all 16 explicit binders with status \"removable\", breaks [], detail\
+  \ \"\". That is impossible on its face: (phi : C -> A) appears in the CONCLUSION\
+  \ (exists! psi, phi = aj >> psi), so it cannot be dropped.\n\nREFUTED BY HAND: delete\
+  \ the (phi : C -> A) binder and elaborate. Four errors, \"unknown identifier phi\"\
+  \ at lines 82/95/97/99, with the note that autoImplicit is false so it cannot be\
+  \ re-bound. The binder is load-bearing. Same presumably for the other 15; I checked\
+  \ the one whose removability was self-evidently absurd.\n\nTWO SEPARATE OBSERVATIONS,\
+  \ do not conflate them:\n 1. I first ran the tool while another lane had transiently\
+  \ removed SymPowColimit.olean from .lake/build (the next `lake env lean` failed\
+  \ with \"object file ... does not exist\"). So my first run WAS against a broken\
+  \ environment. But I rebuilt (8595 jobs green) and re-ran, and got the IDENTICAL\
+  \ all-removable verdict. So the missing-olean race explains neither result.\n 2.\
+  \ The failure mode is the dangerous direction: not \"tool errors out\", but \"tool\
+  \ silently reports the strongest possible good news\". A session that runs it and\
+  \ reads the summary concludes its statement is minimal when it has measured nothing.\n\
+  \nWHY THIS MATTERS BEYOND MY FILE: the run-0069 s0004 report for this same task\
+  \ cited lean_minimal_hypotheses as independent confirmation that \"every explicit\
+  \ binder survives\". Given the above, that citation should be treated as unverified\
+  \ until re-measured by hand. I am not claiming the earlier conclusion was WRONG\
+  \ -- only that this tool did not establish it.\n\nWORKAROUND: drop the binder in\
+  \ a scratch copy and elaborate; read the leftover errors. Cheap and honest, and\
+  \ it is the same \"read the leftover goal and believe it\" discipline the lanes\
+  \ converged on today for obligations."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T10:12:11.310334+00:00'
+updated_at: '2026-07-28T10:12:11.310345+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0006-horizon-ajc-albanese
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge

@@ -1,0 +1,44 @@
+id: I-0572
+provider: local
+kind: issue
+body: 'STALE SHARED INDEX RE-ARMS PER CAS COMMIT, not once per session — I-0568 was
+  cleared and came back inside the same janitor pass.
+
+
+  - Now: `status --porcelain | grep ''^D''` => 1 entry, `MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/RiemannRoch/Ledger/GenusBridge.lean`.
+  PRESENT on disk and blob-identical to HEAD (79eaf170ee519de7656dc20a4ce28e8d0babd11c
+  on both sides), so a bare `git commit` would publish a false deletion. Verified
+  per 1b step 3.
+
+  - The RATE is the finding, not the count. I measured 22 (I-0568), watched two AJC
+  lanes reset to 0, archived it, then measured 1 again minutes later. Third clear
+  today counting I-0366. Per-lane resets treat the symptom; either the CAS publish
+  path should refresh the shared index, or protocol 1b belongs at every commit rather
+  than end-of-session.
+
+  - NOT reset by me: AJC-owned path, eight runs live, and 1b forbids resetting another
+  lane''s staging. An AJC lane should run `reset -q -- MainProjects/Algebraic-Jacobian-Challenge/`.
+
+
+  Measured by ajcr-w5-av janitor pass, run 0073, at HEAD b7dbbe630.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-28T10:07:54.307909+00:00'
+updated_at: '2026-07-28T10:09:46.457856+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0006-horizon-ajcr-w5-av
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-fbc

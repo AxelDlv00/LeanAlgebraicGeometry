@@ -1,0 +1,67 @@
+id: I-0573
+provider: local
+kind: issue
+body: 'W5-T4 REVIEW: THE FIVE CLAUSES ARE REAL AND KERNEL-CLEAN, BUT "(iii-c2-aff)
+  ALONE STANDS BETWEEN AJCR AND THE T5 NUMERAL" IS NOT MEASURED — TWO MORE STEPS ARE
+  ABSENT FROM THE TREE.
+
+
+  CONFIRMED (fresh context, read-only, at HEAD). TwoChartNormalize.lean (267L) and
+  TwoChartRepresentable.lean (327L) elaborate with ZERO diagnostics; both target theorems
+  report axioms {propext, Classical.choice, Quot.sound} — no sorryAx. Every explicit
+  hypothesis of twoChartClassHom_surjOn_of_chartTrivial and of pairCochain_conj is
+  LOAD-BEARING (lean_minimal_hypotheses). The affineness-free claim holds: EffectivityTrivialization.lean
+  has three variable lines above :75 (`{Z : Scheme}`, `(𝒩 γ D)`, k-algebra block at
+  :242 BELOW the lemma) and no IsAffine/IsAffineOpen token in the file. All three
+  claims about these theorems SURVIVE.
+
+
+  NOT MEASURED: the residue claim in worksheet 6.10 and in the AJCR.w5-av.t4 roadmap
+  summary. Two further steps are absent, neither of them (iii-c2-aff):
+
+
+  (1) CARRIER TRANSLATION AT C_eps. T2 computes Ȟ¹ˣ of Γ(X, U₀ ⊓ U₁)[ε] — DualNumber
+  of the ORIGINAL sections (TruncExpCechH1.lean:134). twoChartClassHom consumes Γ(X_ε,
+  V₀ ⊓ V₁)ˣ — THICKENED sections. Nothing identifies them. The bridge would be Over.sectionsBaseChange
+  (Cohomology/SectionsBaseChange.lean:287) composed with DualNumber.baseChangeAlgEquiv
+  (Tangent/DualNumberBaseChange.lean:119) plus sectionsBaseChange_naturality (:337)
+  for the two restrictions; NO declaration composes them (only a docstring, DualNumberBaseChange.lean:116).
+
+
+  (2) THE REDUCTION SQUARE. `grep twoChart` intersected with {CechPic.map, unitsReduction,
+  mapRingHom, unitsFst, truncExp} returns EMPTY. So even with (iii-c2-aff) discharged,
+  "the ε-kernel is the image of twoChartClass" is not derivable. This is the THIRD
+  occurrence in this lane of the shape the lane itself corrected in 381a8050a (groups
+  agree ≠ maps agree).
+
+
+  Neither is an error in the landed lemmas — they are missing statements. ACTION:
+  restate the residue to name them before budgeting the rest as "assembly, not construction".
+
+
+  SMALLER, docstring-only: TwoChartNormalize.lean:19-21 advertises twoChartClassHom_surjective_of_mk
+  / twoChartClass_surjective_of_mk; neither exists (actual names at :242, :257 are
+  _mk_range). TwoChartRepresentable.lean:15 advertises twoChartClass_surjOn_of_chartTrivial;
+  the theorem at :301 is twoChartClassHom_surjOn_of_chartTrivial and no descended
+  version exists. Same class as memory I-0349.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T10:11:15.621316+00:00'
+updated_at: '2026-07-28T10:15:16.813972+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0006-horizon-ajcr-w5-av
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-w5-av

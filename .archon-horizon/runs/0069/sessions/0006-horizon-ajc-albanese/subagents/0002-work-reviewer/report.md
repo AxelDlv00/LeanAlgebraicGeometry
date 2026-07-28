@@ -1,1 +1,1 @@
-I'll start by loading the project skills and locating the artifacts.
+Now the instance-level checks for the affine claim.

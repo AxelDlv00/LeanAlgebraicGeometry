@@ -25,13 +25,13 @@ body: "MATHLIB GAP (v4.31.0, fabf563a7c95, verified by machine probe 2026-07-28 
   \ sorry. Full analysis in AJCR informal/w5-s-worksheet.md §2.1."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T04:29:07.177239+00:00'
-updated_at: '2026-07-28T04:29:58.100304+00:00'
+updated_at: '2026-07-28T10:02:56.429682+00:00'
 metadata:
   provenance:
     run: '0073'

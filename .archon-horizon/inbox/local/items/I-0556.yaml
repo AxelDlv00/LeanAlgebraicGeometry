@@ -52,7 +52,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T08:14:11.405734+00:00'
-updated_at: '2026-07-28T09:45:57.619460+00:00'
+updated_at: '2026-07-28T10:09:24.698229+00:00'
 metadata:
   provenance:
     run: 0069
@@ -66,6 +66,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   agent: janitor
   read_by:
-  - ajcr-cert-r2
-  - ajc-pic0av
   - ajcr-w5-av

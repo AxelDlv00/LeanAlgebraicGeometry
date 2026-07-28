@@ -4,18 +4,22 @@ title: 'T4 (WORKSHEET-FIRST, risk R1): the étale-plus/Zariski kernel crossing a
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'R1 RESOLVED IN THE GOOD DIRECTION: the etale-plus/Zariski crossing never
-  had to be made. Clause (iii) decomposed to (iii-a)(iii-b)(iii-c1)(iii-c2-Zar)(iii-c2-aff);
-  FOUR of the five are landed sorry-free and ALL FOUR are scheme-general with no dual
-  numbers. Landed run 0073: Scheme.twoChartClass + twoChartClass_injective (Tangent/TwoChartCechPic.lean),
-  twoChartClassHom_mk_range (Tangent/TwoChartNormalize.lean, iii-c1), twoChartClassHom_surjOn_of_chartTrivial
-  (Tangent/TwoChartRepresentable.lean, iii-c2-Zar). Plus picFromBase is TRIVIAL at
-  k[eps] (one-point space, Tangent/RelPicPointTest.lean) so the relative quotient
-  leaves the computation, with the compatibility square. RESIDUE: (iii-c2-aff) alone
-  -- an eps-kernel class is trivial on each THICKENED chart. Its three inputs (free_of_cyclic_mod_eps,
-  baseChangeAlgEquiv, cechPicEquivPic) are all landed and Opens.cechPicMap_ι_eq_one_of_cechPicClass_eq_one
-  is the exit. Worksheet informal/w5-t4-worksheet.md 6.8-6.10 carries the sizing and
-  a RETRACTION: EffectivityMoving bridges INTO chart triviality, not out of it, so
-  it belongs to (iii-c2-aff).'
+  had to be made. Clause (iii) decomposed into five; FOUR are landed sorry-free and
+  all four are scheme-general with NO dual numbers and NO IsAffine, so AJC can import
+  rather than re-derive: (iii-a)+(iii-b) Tangent/TwoChartCechPic.lean, (iii-c1) twoChartClassHom_mk_range
+  in Tangent/TwoChartNormalize.lean, (iii-c2-Zar) twoChartClassHom_surjOn_of_chartTrivial
+  in Tangent/TwoChartRepresentable.lean. Plus picFromBase is TRIVIAL at k[eps] with
+  its compatibility square (Tangent/RelPicPointTest.lean). REVIEWED at HEAD (inbox
+  I-0573, fresh context): zero diagnostics, axiom-clean, every explicit hypothesis
+  load-bearing, affineness-free claim survives. RESIDUE IS THREE STATEMENTS, not one
+  -- an earlier version of this row said (iii-c2-aff) alone, which was NOT MEASURED:
+  (a) (iii-c2-aff), the last GEOMETRIC clause, inputs landed incl. relCover for the
+  affine thickened cover; (b) the CARRIER TRANSLATION at C_eps, since T2 computes
+  Cech H1 of DualNumber-of-ORIGINAL sections while the comparison consumes THICKENED
+  sections and nothing composes the bridge; (c) the REDUCTION SQUARE intertwining
+  twoChartClass with unitsReduction -- groups agreeing is not maps agreeing, the third
+  occurrence of that shape in this lane. (b) and (c) are bookkeeping, not mathematics.
+  Worksheet informal/w5-t4-worksheet.md 6.8-6.11.'
 status: active
 kind: proof
 priority: normal
@@ -29,5 +33,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:45.485310+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T09:28:05.414103+00:00'
+  updated_at: '2026-07-28T10:15:37.921433+00:00'
   owner: ajcr-w5-av

@@ -1,0 +1,51 @@
+id: I-0574
+provider: local
+kind: memory
+body: "RESTRICT ALONG A ≤, DO NOT REWRITE THE TYPE — the rule that turned a predicted\
+  \ [M] into an [S] (AJCR run 0073 W5-T4, confirmed on a reviewer pass).\n\nTHE MEASUREMENT.\
+  \ Worksheet 6.6/6.7 priced (iii-c1) as [M] because the normalizing 0-cochain `x\
+  \ ↦ γ.evInf x (base (sel x))` lives on `V (sel x) ⊓ V (sel (base (sel x)))` and\
+  \ so needed its TYPE rewritten down to `V (sel x)` by hbase + inf_idem, then a four-case\
+  \ Bool subst for the same-chart values. The delivered proof pays NEITHER cost:\n\
+  \n  normCochain … x := (cocycleValueOn … x (base (sel x)) le_rfl (le_of_eq (congrArg\
+  \ V (hbase (sel x))).symm))⁻¹\n\ni.e. RESTRICT the pair value along `V (sel x) ≤\
+  \ V (sel x) ⊓ V (sel (base (sel x)))`. An inequality of opens is a Prop, so the\
+  \ chart bookkeeping happens inside Prop where proof irrelevance does for free what\
+  \ inf_idem was being asked to do in a type. The result lands in `Γ(X, V (sel x))ˣ`\
+  \ ON THE NOSE; hbase stays load-bearing but only to BUILD the inequality.\n\nTHE\
+  \ UNPREDICTED CONSEQUENCE, the more valuable half: the conjugation identity normCochain_conj\
+  \ (Tangent/TwoChartNormalize.lean:141) is then UNIFORM in whether sel x = sel y\
+  \ — three applications of one chart-level cocycle law, no case split. The four-case\
+  \ Bool split survives only in cocycleValueOn_base_eq_twoChartPairUnit (:199), where\
+  \ it IDENTIFIES pair values rather than transporting them.\n\nTHE RULE. When a 0-cochain\
+  \ type is almost right, look for a restriction map INTO the type you want before\
+  \ rewriting the type. rw/▸ inside a type is what produces \"motive is not type correct\"\
+  ; a restriction along ≤ never can. Companion to memory bool-index-two-chart-subst\
+  \ (for when you genuinely must transport an INDEX): prefer the restriction, fall\
+  \ back to abstract-index-and-subst.\n\nCORROBORATION, index side, same lane: Tangent/TwoChartRepresentable.lean:139-142\
+  \ keeps the Bool chart index a VARIABLE and instantiates at sel b, so t (sel b)\
+  \ b typechecks at the refinement member (\U0001D4A9 ⊓ twoChartCover).opens b by\
+  \ rfl.\n\nTWO TACTIC FACTS measured the same session, each cost real time: `group`\
+  \ does NOT use commutativity (abelian cancellations need mul_comm / mul_inv_cancel_left\
+  \ written out); and rw under an elided proof-irrelevant restriction argument fails\
+  \ with a spurious X.presheaf mismatch — state the step as a named `have` with the\
+  \ inequalities named and close by exact/congrArg."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T10:12:00.416915+00:00'
+updated_at: '2026-07-28T10:12:00.416927+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0006-horizon-ajcr-w5-av
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

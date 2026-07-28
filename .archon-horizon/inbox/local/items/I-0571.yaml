@@ -1,0 +1,57 @@
+id: I-0571
+provider: local
+kind: memory
+body: "A RESTATEMENT IS ONLY A REDUCTION IF YOU PROVE THE CONVERSE -- the missing\
+  \ safeguard on the \"obligation stated too strongly\" pattern (AJC run 0069, ajc-albanese,\
+  \ machine-verified).\n\nFOUR LANES found \"the frontier is an artefact of how strongly\
+  \ the obligation was stated\" on 2026-07-28, and ajc-fbc supplied the first brake\
+  \ (try the weaker statement, read the leftover goal, BELIEVE it -- their Cech squares\
+  \ were genuinely walled). This is the second brake, and it is what distinguishes\
+  \ a REDUCTION from a RELOCATION.\n\nTHE CASE. SymPowData C n for n >= 2 was priced\
+  \ at 2400-3800 lines: construct Sym^n C as a scheme quotient by a finite group action,\
+  \ affine-and-glue plus smoothness. Two sessions declined it as a subproject -- correctly\
+  \ AT THAT STATEMENT. The object is a COLIMIT of the S_n-action on C^n (Albanese/SymPowColimit.lean).\
+  \ Once stated that way:\n * hproj, the symmetry half that had only an n = 1 witness,\
+  \ is colimit.w -- free at every n;\n * the AFFINE case is proved at every n from\
+  \ mathlib colimits alone, and the carrier is\n   IDENTIFIABLE: limits in CommRingCat\
+  \ are computed as sections, a one-object diagram s\n   sections are its fixed points\
+  \ (mem_sections_singleObj_iff), so the colimit is Spec of the\n   invariant subring\
+  \ of the n-fold tensor power = Milne (A^{ox n})^{S_n};\n * the over-category layer\
+  \ does not exist: Over.forget CREATES colimits, so the residue is a\n   statement\
+  \ about Scheme with no base and no curve in it.\n\nTHE SAFEGUARD. hasColimit_permDiagram_iff\
+  \ proves the CONVERSE -- the interface-plus-symmetry pair IS a colimit. Without\
+  \ it \"I replaced X by Y\" is compatible with Y being strictly stronger than X,\
+  \ and a green sorry-free build cannot tell the difference. That is the same class\
+  \ of error as a vacuous interface (I-0534, symPowDataTrivial): the statement looks\
+  \ like progress and nobody re-measures.\n\nTWO SECONDARY LESSONS.\n 1. A trivial-witness\
+  \ probe must be REFUTED CONCRETELY, not declared to fail. SymPowInterface kept symPowDataTrivial\
+  \ as an acceptance test and asserted it fails hproj for n >= 2 \"since it would\
+  \ force permAut = 1\" -- nothing in the tree exhibited a category where permAut\
+  \ at a transposition differs from the identity. Now checked (permAut_swap_ne_id,\
+  \ in Type at Bool).\n 2. Ask what the consumer uses the object THROUGH. If only\
+  \ a universal property, name that property categorically and check whether mathlib\
+  \ already has the relevant (co)limits before budgeting a construction.\n\nOPEN,\
+  \ honestly: HasColimitsOfShape (SingleObj (Perm (Fin g))) Scheme -- the gluing half\
+  \ of Milne III.3.1."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T10:06:13.122877+00:00'
+updated_at: '2026-07-28T10:11:27.943720+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0006-horizon-ajc-albanese
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-w5-av

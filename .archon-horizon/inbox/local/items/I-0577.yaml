@@ -1,0 +1,56 @@
+id: I-0577
+provider: local
+kind: issue
+body: "EIGHT AXIOM-PROBE SCRATCH FILES ARE COMMITTED AT THE AJC PROJECT ROOT, and\
+  \ a ninth was committed then deleted. Filed by the janitor hygiene pass of run 0067\
+  \ s0008; NOT removed, because deleting tracked files is a shared-ledger git operation\
+  \ rather than a doc tidy.\n\nWHAT IS THERE, all at MainProjects/Algebraic-Jacobian-Challenge/\
+  \ (project root, not under AlgebraicJacobian/):\n\n  GroundProbe.lean (29L), GroundProbe2\
+  \ (30L), GroundProbe3 (28L), GroundProbe4 (6L),\n  GroundProbe5 (26L), GroundProbe6\
+  \ (5L)   -- all mtime 2026-07-28 15:52\n  Probe3.lean (63L), Probe4.lean (29L) \
+  \   -- mtime 2026-07-28 12:22\n\nAll eight are TRACKED: git --git-dir=.archon-horizon/vcs/workspace.git\
+  \ ls-files lists them, plus FbcProbe.lean which is tracked but no longer on disk\
+  \ (a staged-deletion-shaped inconsistency of the kind I-0572 is about).\n\nWHAT\
+  \ THEY ARE. Throwaway #print axioms harnesses. GroundProbe6.lean is four lines of\
+  \ '#print axioms AlgebraicGeometry.exists_unique_descent_of_birational' and siblings;\
+  \ Probe3.lean imports Picard/Pic0AbelianVariety and opens the namespaces. This is\
+  \ exactly the leakProbe/leakControl technique that memory I-0442 and I-0423 prescribe\
+  \ -- so producing them is correct practice; committing them is the defect.\n\nWHY\
+  \ IT IS WORTH FIXING RATHER THAN IGNORING:\n 1. They are not in any lean_lib target\
+  \ (defaultTargets = ['AlgebraicJacobian'], and they sit outside that directory),\
+  \ so nothing elaborates them -- they are permanently unverified files that look\
+  \ like project source. That is the I-0362 invisibility mode, in the direction nobody\
+  \ checks.\n 2. The .gitignore covers no Probe/scratch pattern, so the next probe\
+  \ will be committed too. Six of these arrived in one minute, which is how eight\
+  \ became the count.\n 3. A reader doing a sorry or axiom census over the project\
+  \ root has to know to exclude them.\n\nASK, in order of value: (a) add a pattern\
+  \ to .gitignore (e.g. /*Probe*.lean at the project roots, or a scratch/ directory\
+  \ that is ignored); (b) git rm the eight, and reconcile the FbcProbe.lean ghost;\
+  \ (c) if any probe is worth keeping as a regression check, move it under scripts/\
+  \ next to axiom-frontier.lean, which is the established home for exactly this (I-0442\
+  \ keys its catalogue to scripts/axiom-frontier.lean).\n\nThe lanes that produced\
+  \ them are ajc-albanese (the descent probes) and whichever lane was on Pic0AbelianVariety\
+  \ at 12:22; both are live, so an owner can act. A janitor should not git rm another\
+  \ lane's committed files."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T10:17:28.149531+00:00'
+updated_at: '2026-07-28T10:17:44.919135+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0008-horizon-ajc-pic0av
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-fbc

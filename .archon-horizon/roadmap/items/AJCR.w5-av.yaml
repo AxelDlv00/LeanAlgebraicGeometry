@@ -3,18 +3,20 @@ title: 'Wave 5: Pic^0 is an abelian variety'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: 'Wave 5: Pic^0 is an abelian variety of dimension g. 10/16 children done.
-  THE WHOLE WAVE NOW FUNNELS THROUGH ONE GEOMETRIC STATEMENT, (iii-c2-aff): an eps-kernel
-  Picard class is trivial on each THICKENED chart. Everything else on the T3/T4/T5
-  chain is landed sorry-free, and every landed piece of the comparison is scheme-general
-  with no dual numbers -- (iii-a)+(iii-b) Tangent/TwoChartCechPic.lean, (iii-c1) Tangent/TwoChartNormalize.lean,
-  (iii-c2-Zar) Tangent/TwoChartRepresentable.lean -- so AJC can import rather than
-  re-derive. (iii-c2-aff)''s three inputs (free_of_cyclic_mod_eps, baseChangeAlgEquiv,
-  cechPicEquivPic) are all landed and Opens.cechPicMap_ι_eq_one_of_cechPicClass_eq_one
-  is its exit. S1 stays a HYPOTHESIS by design (S2/S3 take GeometricallyReduced as
-  an instance argument, so it blocks nothing); its residue is the transcendental-extension
-  statement, genuinely absent from mathlib. P1 remains the only CROSS-WAVE gate, held
-  by the DD shapes freeze on ajcr-divrep. Worksheets: informal/w5-t4-worksheet.md
-  6, informal/w5-s-worksheet.md.'
+  THE T3/T4/T5 CHAIN NOW NEEDS THREE STATEMENTS, all named and reviewer-confirmed
+  absent at HEAD (inbox I-0573): (a) (iii-c2-aff), the last GEOMETRIC clause -- an
+  eps-kernel Picard class is trivial on each THICKENED chart, inputs all landed including
+  relCover for the affine thickened two-cover; (b) the CARRIER TRANSLATION at C_eps,
+  because T2 computes Cech H1 of DualNumber-of-ORIGINAL sections while the comparison
+  consumes THICKENED sections and no declaration composes the bridge; (c) the REDUCTION
+  SQUARE intertwining twoChartClass with unitsReduction. (b) and (c) are bookkeeping,
+  not mathematics, but neither is landed and an earlier version of this row said (a)
+  alone -- that was not measured. Everything else in the comparison is landed sorry-free
+  and scheme-general with no dual numbers and no IsAffine, so AJC can import it: Tangent/TwoChartCechPic.lean,
+  TwoChartNormalize.lean, TwoChartRepresentable.lean. S1 stays a HYPOTHESIS by design
+  (S2/S3 take GeometricallyReduced as an instance argument, so it blocks nothing);
+  its residue is the transcendental-extension statement, genuinely absent from mathlib.
+  P1 remains the only CROSS-WAVE gate, held by the DD shapes freeze on ajcr-divrep.'
 status: pending
 kind: proof
 priority: normal
@@ -28,4 +30,4 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:12.423543+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-28T09:50:21.888898+00:00'
+  updated_at: '2026-07-28T10:16:28.783091+00:00'

@@ -1,1 +1,1 @@
-I'll start by orienting myself in the workspace and reading the horizon skill.
+All three binders are load-bearing. Now the harder question: is `preservesLeftHomologyOf_of_preservesKernel` secretly requiring global exactness, and is the kernel hypothesis satisfiable at a genuinely nonzero example?
