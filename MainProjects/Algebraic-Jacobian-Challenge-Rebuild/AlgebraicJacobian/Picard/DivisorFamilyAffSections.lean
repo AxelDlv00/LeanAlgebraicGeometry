@@ -102,6 +102,24 @@ differences from the divisor layer's conventions are `rfl`: the product spelling
 (`relCurveMap_eq_cg`).  Only the tensor side needs an actual move, and that is
 `Algebra.TensorProduct.comm`. -/
 
+/-- **Restriction naturality of the section comparison**: comparing then restricting is
+restricting then comparing.  Holds for ARBITRARY opens `W ≤ V` — no affineness, because it is
+only the two `appLE` collapse rules.  This is what identifies the base-changed overlap ideal
+with the ideal of the base-changed equations. -/
+lemma relAffSectionsMap_res {V W : (relCurve C R).Opens} (h : W ≤ V)
+    (s : Γ(relCurve C R, V)) :
+    ((relCurve C R').presheaf.map (homOfLE ((relCurveMap C R R').preimage_mono h)).op).hom
+        (relAffSectionsMap C R' V s)
+      = relAffSectionsMap C R' W (((relCurve C R).presheaf.map (homOfLE h).op).hom s) := by
+  have hle : relCurveMap C R R' ⁻¹ᵁ W ≤ relCurveMap C R R' ⁻¹ᵁ V :=
+    (relCurveMap C R R').preimage_mono h
+  calc ((relCurve C R').presheaf.map (homOfLE hle).op).hom (relAffSectionsMap C R' V s)
+      = ((relCurveMap C R R').appLE V (relCurveMap C R R' ⁻¹ᵁ W)
+          (hle.trans le_rfl)).hom s := by
+        rw [relAffSectionsMap_apply, ← CommRingCat.comp_apply, Scheme.Hom.appLE_map]
+    _ = relAffSectionsMap C R' W (((relCurve C R).presheaf.map (homOfLE h).op).hom s) := by
+        rw [relAffSectionsMap_apply, ← CommRingCat.comp_apply, Scheme.Hom.map_appLE]
+
 section BaseChange
 
 attribute [local instance] Over.sectionsAlgebraA
