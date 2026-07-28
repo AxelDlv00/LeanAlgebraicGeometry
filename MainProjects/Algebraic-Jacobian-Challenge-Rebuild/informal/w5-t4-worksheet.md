@@ -504,3 +504,62 @@ typecheck, for the stated reason. Do not retry it.
 The lane's honest bottom line is unchanged in direction but sharper: after §6.0 the numeral
 waits on **(iii-a) + (iii-b) + (iii-c)** and on nothing else, and two of those three are
 dual-number-free general Čech theory that AJC can import rather than re-derive.
+
+### 6.6 (iii-c) SPLITS AGAIN — and only the smaller half touches dual numbers
+
+*Added later in the same session, after (iii-a)/(iii-b) landed (commits `428d0d4f7`,
+`fb34e89f0`, `381a8050a`) and the probing of (iii-c) began. Recorded before writing its Lean,
+per the same WORKSHEET-FIRST rule.*
+
+The statement I first wrote for (iii-c) was
+
+> `L : X.CechPic` restricting trivially to both charts ⟹ `L` is in the range of
+> `twoChartClassHom`,
+
+and probing it showed it is **two** statements, exactly as clause (iii) was three:
+
+| part | statement | dual numbers? |
+|---|---|---|
+| **(iii-c1)** | every class *representable on the two-chart cover* is in the range of `twoChartClassHom` | **NO** — general Čech theory, like (iii-a)/(iii-b) |
+| **(iii-c2)** | an `ε`-kernel class *is* representable on the two-chart cover | **YES** — this is where clause (i) is spent |
+
+**(iii-c1) is a normalization statement, and the obstacle is genuine.** A general
+`γ : X.unitsCocycle (twoChartCover V sel hmem)` is *not* of the form `twoChartCocycle u`: its
+value at a pair `(x, x')` with `sel x = sel x'` lives on `V s ⊓ V s = V s` and is an arbitrary
+unit there, whereas `twoChartPairUnit` is `1` on such pairs. Note carefully **why `ev_refl`
+does not help**: it forces the value to `1` only when the two *indices* coincide, not when
+their *opens* do — and on a pointed cover many points share a chart. So the same-chart values
+are real data that must be normalized away.
+
+The normalization is by an explicit `0`-cochain. Choose base points `base s` with
+`sel (base s) = s` (this is where `Function.Surjective sel` is used a *second* time), and set
+
+```
+β x := γ.evInf x (base (sel x))    ∈ Γ(X, V (sel x))ˣ
+```
+
+— the type works out because `V (sel x) ⊓ V (sel (base (sel x))) = V (sel x) ⊓ V (sel x)` is
+`V (sel x)` by `inf_idem`. **Type-checked by machine this session** (the `rw [twoChartCover_opens,
+twoChartCover_opens, hbase, inf_idem]` chain elaborates). Conjugating `γ` by `β` kills the
+same-chart values by the cocycle law, leaving a cocycle determined by its value at
+`(base false, base true)`, which is the `u` wanted.
+
+**Cost note, honest:** the *type* of `β` needs a `rw`-transport, and transporting it inside
+*proofs* will meet the same `motive is not type correct` wall as
+`twoChartCoboundary_of_pairRelation` (§6.2 / the file's docstring). The fix is the same —
+abstract the chart index as a variable and `subst` — but it has to be done for each
+same-chart case, so (iii-c1) is **[M]**, not [S]. Anyone starting it should write the
+`subst`-shaped helper *first* and only then the normalization.
+
+**(iii-c2) is the genuinely geometric half** and its route is §6.3 unchanged: on each
+thickened chart `V_{i,ε}` — affine — the dictionary `cechPicEquivPic` plus clause (ii)
+`baseChangeAlgEquiv` turn the class into an invertible `Γ(V_i)[ε]`-module, trivial mod `ε`;
+clause (i) `free_of_cyclic_mod_eps` makes it free; so `L` is trivial on both thickened charts
+and therefore representable on the two-chart cover. `Picard/EffectivityMoving.lean`
+(`Opens.cechPicClass`, `cechPicMap_ι_eq_one_of_cechPicClass_eq_one`,
+`Opens.cechPicClass_of_le`) is the landed bridge between "trivial in `CommRing.Pic` of the
+chart sections" and "`CechPic.map (V s).ι L = 1`" — found this session, and it is the piece
+that makes (iii-c2) assembly rather than construction.
+
+**Revised residue of the whole lane:** (iii-c1) [M, dual-number-free, portable to AJC] +
+(iii-c2) [M, all three inputs landed]. Nothing else stands between AJCR and the numeral.
