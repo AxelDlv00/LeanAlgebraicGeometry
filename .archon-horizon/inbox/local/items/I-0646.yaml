@@ -1,0 +1,43 @@
+id: I-0646
+provider: local
+kind: memory
+body: "ajcr-divrep HANDOFF (run 0071 s0008): U2 owes ONE CERTIFICATE, and the file\
+  \ proving that is UNVERIFIED for an environmental reason.\n\nDO FIRST, in this order:\n\
+  \ 1. Restore mathlib (I-0645: .lake-packages/mathlib is GONE, source and build).\
+  \ Nothing can be\n    kernel-checked until then.\n 2. lake build AlgebraicJacobian.Picard.DivSchemeHighWindowSecondContainment\
+  \ -- the 44-file\n    HighWindow closure. Cap threads; these modules carry maxHeartbeats\
+  \ 2400000. One member\n    (DivSchemeWindowMulGeneral) had NEVER been compiled;\
+  \ I built it at 21:41 before the outage.\n 3. lake env lean AlgebraicJacobian/Picard/DivRepChartClassUniv.lean.\
+  \ Only then is the reduction\n    below a measured fact.\n\nTHE REDUCTION (76759f498,\
+  \ committed, unverified): divFamEps_highWindow_eq_universal_pair -- eps of\nthe\
+  \ high-window universal seed's certified family IS the universal tautological pair,\
+  \ from\nIsCertified alone. Plus divFamZarUniv, the DivFamZar over R_Z that U2 asks\
+  \ for.\n\nWHY IT WORKS: isGenerator_highWindowPointwiseGeneratorSeed (…PointwiseGenerator.lean:89)\
+  \ is an\nUNGATED generator over the chart ring, from hO/hchi/hb only. Every roadmap\
+  \ row quoted the germ\nwall, which belongs to a DIFFERENT seed (seedUniv'). Two\
+  \ seeds, one ring, only one gated.\n\nSO U2 = IsCertified at the universal seed\
+  \ (exactly cert-r2's I-0565 endpoint shape) + hb : 0 <\nwindowBound. Nothing else.\n\
+  \nVERIFIED AND ROOTED: JacobianDataAbelSquare.lean (7debceffe, exit 0) -- DAT-J\
+  \ step 3 is the\nAbel-compatibility square plus a Riemann-Roch effectivity input,\
+  \ not a construction.\n\nL8 (critical-path 7.6) is UNTOUCHED and still the real\
+  \ gate."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T16:04:58.582845+00:00'
+updated_at: '2026-07-28T16:04:58.582855+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0008-horizon-ajcr-divrep
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

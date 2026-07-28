@@ -12,31 +12,35 @@ docstring: "**THE B-5 ASSEMBLY** (`w4-datb` §1.2, everything except the two per
   \ and the earlier version of this paragraph\nwas wrong in two places** (issues I-0614,\
   \ I-0615).  It said \"steps 1, 2, 4, 5, 6 are all\ndischarged\".  Three of those\
   \ five are; the other two are not:\n\n* **step 1 — discharged.**  The `hM₀` hypothesis,\
-  \ which `exists_splitting_of_picEt` supplies\n  unconditionally.\n* **step 2 — NOT\
-  \ discharged.**  It needs `degAt λ_t = 0` transported to the presenting Čech\n \
-  \ class, and the theorem meant to do that (`classDeg_of_presenting`) cannot: it\
-  \ relates\n  `classDeg L M` to the plus-class degree **at `L`**, while the coverage\
-  \ argument has it at `K`,\n  and base-field invariance of `degAff` under `PicEtAff.map`\
-  \ does not exist in the tree.  See\n  that theorem's docstring; the missing lemma\
-  \ is small but real.\n* **step 4 — discharged** as an input: `hdeg` + `h1`.\n* **step\
-  \ 5 — discharged** by the oracle.\n* **step 6 — NOT discharged.**  The drop's output\
-  \ `Σ` must become the chart index's `Z`, and\n  the graph transport of `Picard/Pic0ChartRationalGraph.lean`\
-  \ goes *upward from a `k`-point*,\n  not from the `L`-level divisor the drop produces.\
-  \  See the DEFECT section above for why the\n  two stages carry different `Z`.\n\
-  * **step 3 — the residue this paragraph originally named**, and still a residue:\
-  \ `m`, `W₀` and\n  `hdeg` are *inputs*, because `b_L` is per-fibre and does not\
-  \ transport (I-0204), so no\n  formulation of this theorem can produce `m` for the\
-  \ caller.\n\n**Note one conclusion this theorem deliberately drops and step 6 will\
-  \ want back**: the fibre\nstep returns `S`'s support clause (`coeffAt hx S ≠ 0 →\
-  \ x ∈ P`), and the `-` pattern below\ndiscards it.  A lane closing step 6 should\
-  \ re-expose it — it is what says `Σ` is supported in\nthe rational points whose\
-  \ graph classes the index is built from."
+  \ which `exists_splitting_of_picEt` supplies\n  unconditionally.\n* **step 2 — DISCHARGED\
+  \ 2026-07-28, this line supersedes the \"NOT discharged\" it replaced.**\n  The\
+  \ missing input was base-field invariance of `degAff` under `PicEtAff.map`; it is\
+  \ now\n  `PicEtAff.degAff_map` (`Picard/DegreeZeroBaseField.lean`) and holds for\
+  \ an **arbitrary** field\n  extension `L/K`, with no finiteness or separability.\
+  \  Step 2 itself is\n  `classDeg_presenting_eq_zero` (`Picard/Pic0ChartCoverageDegreeStep2.lean`),\
+  \ and the whole\n  twisted ledger closes to `g + e` there.\n* **step 4 — discharged**\
+  \ as an input: `hdeg` + `h1`.\n* **step 5 — discharged** by the oracle.\n* **step\
+  \ 6 — NOT NEEDED, which supersedes \"NOT discharged\".**  The feedback is real for\
+  \ the\n  route *through the drop*, and the DEFECT section's arithmetic stands. \
+  \ But coverage does not\n  need the drop: `IsSplitWitness` asks for `h¹ = 0` and\
+  \ for **neither** effectivity **nor**\n  degree `g`, so a witness of the twisted\
+  \ class suffices and there is only ever one `Z`.  See\n  `Picard/Pic0ChartCoverageNoDrop.lean`,\
+  \ whose `mem_chartLocus_of_witness_h1` strictly\n  generalises this theorem's membership\
+  \ half — with `g`, `e`, `hχ`, `hdeg` and the whole oracle\n  deleted rather than\
+  \ discharged.\n* **step 3 — the residue this paragraph originally named**, and still\
+  \ a residue: `m`, `W₀` and\n  `hdeg` are *inputs*, because `b_L` is per-fibre and\
+  \ does not transport (I-0204), so no\n  formulation of this theorem can produce\
+  \ `m` for the caller.\n\n**Note one conclusion this theorem deliberately drops and\
+  \ step 6 will want back**: the fibre\nstep returns `S`'s support clause (`coeffAt\
+  \ hx S ≠ 0 → x ∈ P`), and the `-` pattern below\ndiscards it.  A lane closing step\
+  \ 6 should re-expose it — it is what says `Σ` is supported in\nthe rational points\
+  \ whose graph classes the index is built from."
 file: AlgebraicJacobian/Picard/Pic0ChartCoverageTest.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.mem_chartLocus_of_drop
 type: lean
-updated: '2026-07-28T22:23:04'
+updated: '2026-07-29T00:02:39'
 ---
 theorem mem_chartLocus_of_drop {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left)
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)

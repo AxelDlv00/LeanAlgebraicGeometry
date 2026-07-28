@@ -5,32 +5,42 @@ title: 'DAT-B: coverage + injectivity — every $\mathrm{pic}^0$ point is Zarisk
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DAT-B: coverage + injectivity. Injectivity is LANDED (worksheet 0.4/2, consumed\
-  \ not proved).\nCoverage (COV-1 = B-5) is ASSEMBLED over a general test but has\
-  \ THREE open residues.\n\nLANDED 2026-07-28 (run 0072 s0006): six files, sorry-free,\
-  \ axiom-clean against a sorryAx\ncontrol. mem_chartLocus_of_drop -- for a point\
-  \ t of an ARBITRARY test and any plus class lam,\na splitting of the fibre class\
-  \ at kappa(t) plus a divisor W0 in the twisted class over L of\ndegree g+e with\
-  \ h1=0 plus the point oracle give t in chartLocus, with the h0=1 normalisation.\n\
-  Satisfiability CHECKED at the trivial splitting, not assumed.\n\nTHREE RESIDUES,\
-  \ corrected twice the same session -- first by my own degree probe, then by a\n\
-  fresh-context review, each refuting part of what I had just written:\n\n step 3\
-  \  the twist exponent m, chosen against the FIBRE'S OWN DAT-0a bound. Irreducible:\
-  \ no\n         uniform m0 exists (I-0204, worksheet 0.2.2), so no formulation can\
-  \ produce it.\n step 2  the degree of the presenting class. classDeg_of_presenting\
-  \ relates classDeg L M to\n         the plus-class degree at L while the argument\
-  \ holds it at K; base-field invariance of\n         degAff under PicEtAff.map is\
-  \ ABSENT from the tree. Small, real, shaped like the landed\n         degAff_baseFieldShuffle.\
-  \ (My docstring had cited a lemma 'degAff_map_eq' that does not\n         exist\
-  \ -- I-0614.)\n step 6  the FEEDBACK. The drop runs at Z := 0 (budget e = m*d1 -\
-  \ g, nonzero); its OUTPUT Sigma\n         is then the index's Z. One Z is an input,\
-  \ the other an output, and the landed graph\n         transport goes upward from\
-  \ a k-point, not from the L-level Sigma. Machine-derived:\n         under the single-Z\
-  \ reading the pack forces e = 0.\n\nSteps 1, 4, 5 are discharged. None of the three\
-  \ is divRep- or certificate-gated.\n\nALSO ESTABLISHED: there is NO CurveDivisor\
-  \ base change in the tree and none is needed -- the\nclass-level graph square (Curve/GraphDivisor.lean:263,\
-  \ GraphDegree.lean:422/:445) does it.\nNever transport a coefficient function.\n\
-  \nB-6 (the IsLocallySurjective instance + DAT-glue handoff) still waits on divRep\
-  \ through C9b.\n"
+  \ not proved).\nCoverage (COV-1 = B-5) is ASSEMBLED over a general test and owes\
+  \ ONE residue, not three.\n\nSTATE 2026-07-28 (run 0072 s0008, lane ajcr-charts).\
+  \ Two of the three residues the previous\nround recorded are GONE, and only one\
+  \ of them by proving something:\n\n step 2  DISCHARGED. The named-absent brick was\
+  \ base-field invariance of degAff under\n         PicEtAff.map; it is PicEtAff.degAff_map\
+  \ (Picard/DegreeZeroBaseField.lean) and is\n         UNCONDITIONAL in L/K -- no\
+  \ finiteness, no separability, no algebraicity, which the\n         degAff_baseFieldShuffle\
+  \ analogy did not predict. Two expected prices were not paid: the\n         L/K\
+  \ step is free (relPicDeg_relPicAlgMap needs only a k-algebra map OF FIELDS) and\n\
+  \         relPicAlgMap_congr is not needed at all (baseChangeMap_comp_baseChangeInclude\
+  \ makes the\n         two K-algebra maps LITERALLY EQUAL). The one real constraint:\
+  \ the common reading field\n         must be BUILT from the K-side one (a field\
+  \ factor of L tensor_K N) -- for K = Q,\n         N = Q(i), L = R no K-embedding\
+  \ of N into an arbitrary finite separable P/L exists.\n         Step 2 itself +\
+  \ the twisted ledger closing to g + e:\n         Picard/Pic0ChartCoverageDegreeStep2.lean.\n\
+  \n step 6  RETRACTED -- NOT NEEDED rather than not discharged. The predecessor's\
+  \ feedback\n         diagnosis is CORRECT about the route through the greedy drop\
+  \ (drop at Z := 0, its\n         output Sigma becomes the index's Z, two different\
+  \ Z). The error was treating the drop\n         as NECESSARY. IsSplitWitness asks\
+  \ for h1 = 0 and for NEITHER effectivity NOR degree g;\n         the drop manufactures\
+  \ exactly those two, which membership discards -- visible in\n         mem_chartLocus_of_drop's\
+  \ own proof, whose split-witness half never mentions the drop,\n         the oracle,\
+  \ g, e, hchi or hdeg. Cut the drop: one Z, nothing to feed back.\n         Picard/Pic0ChartCoverageNoDrop.lean.\n\
+  \n step 3  STILL the residue, but now DERIVED not chosen. mem_chartLocus_of_vanishing_bound\
+  \ takes\n         the DAT-0a threshold b_L in exactly the shape\n         exists_bound_subsingleton_hModule_one_of_isFinite_toP1\
+  \ produces it, so what remains is\n         INSTANTIATING DAT-0a at the base-changed\
+  \ curve C_L. The I-0204 non-uniformity of m\n         stands and is honoured.\n\n\
+  WHERE THE DISCARDED PROPERTIES DO MATTER, so nothing is smuggled away: effectivity\
+  \ and h0 = 1\nare needed by DAT-C's canonical section and GAP-2 uniqueness (eq_of_picClass_eq_of_h0_one\
+  \ takes\n0 <= D), i.e. by the chart map's INJECTIVITY, not by coverage. Worksheet\
+  \ 1.4/1.5/1.6 are to be\nread as serving that; mem_chartLocus_of_drop stays the\
+  \ right theorem there.\n\nB-4 openness: CHART-U(b) AT A GENERAL TEST is now landed\
+  \ too\n(isOpen_chartLocus_of_affineLocal, Picard/Pic0ChartLocusGeneralTest.lean)\
+  \ -- see the\nc9-chartlocus.chart-u row for the two ingredients that were not where\
+  \ the tree said they were.\n\nB-6 (the IsLocallySurjective instance + DAT-glue handoff)\
+  \ still waits on divRep through C9b.\n"
 status: pending
 kind: proof
 priority: normal
@@ -44,7 +54,7 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:09.039287+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-28T12:23:59.580266+00:00'
+  updated_at: '2026-07-28T16:08:43.440376+00:00'
   milestone: w4-tail
   owner: ajcr-charts
   pinned_commits:

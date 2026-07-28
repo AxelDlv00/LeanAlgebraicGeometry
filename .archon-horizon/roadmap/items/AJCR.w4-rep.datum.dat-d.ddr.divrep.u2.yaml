@@ -66,7 +66,22 @@ summary: "U2: the DDR9-U epsilon-identity at the universal point (the last gate 
   \ IS SUPERSEDED where it says the relaxation \"moves the obligation to\ngerm divisibility\
   \ + fibre nonvanishing + away-local certificates\". That is true of the\ndivFamZar_of_forall_away_certified\
   \ route through seedUniv'. It is NOT the only route, and the\nhigh-window route\
-  \ needs none of those three.\n"
+  \ needs none of those three.\n\nVERIFICATION CAVEAT, AND IT IS A WORKSPACE OUTAGE\
+  \ NOT A LANE FAILURE (2026-07-29 ~00:05).\nDivRepChartClassUniv.lean is committed\
+  \ but UNVERIFIED. Two separate causes, in order:\n 1. Its transitive dependency\
+  \ DivSchemeWindowMulGeneral.lean had NEVER been compiled in this tree\n    (no .olean\
+  \ at all, source dated Jul 21). It DID build successfully at 21:41 once the mutex\
+  \ was\n    held and threads capped -- so that half is now fixed and the module has\
+  \ an olean.\n 2. Then the SHARED MATHLIB PACKAGE DISAPPEARED. At .lake-packages/mathlib:\
+  \ .lake/build/ gone,\n    mathlib olean count ZERO, Mathlib/ source ZERO .lean files,\
+  \ git rev-parse HEAD failing. lake\n    reports the repo 'may be corrupt'. Filed\
+  \ as I-0645 (--to human) and announced to all AJCR lanes.\n    Window: mathlib was\
+  \ working at 21:41, gone by 23:58.\nSo NOTHING in the workspace can be kernel-checked\
+  \ until mathlib is restored. Per-project build trees\nsurvive, so already-built\
+  \ modules can still be read.\nNEXT SESSION: restore mathlib first, then (a) lake\
+  \ build the HighWindow closure, (b) lake env lean\nDivRepChartClassUniv.lean. Only\
+  \ then is the eps-reduction above a measured fact rather than a\ncommitted claim.\
+  \ Do not quote it as verified before that.\n"
 status: pending
 kind: proof
 priority: normal
@@ -89,7 +104,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-28T13:08:19.834000+00:00'
+  updated_at: '2026-07-28T16:02:59.761644+00:00'
   pinned_commits:
   - 0a6351e5e
   - 0b67179bb

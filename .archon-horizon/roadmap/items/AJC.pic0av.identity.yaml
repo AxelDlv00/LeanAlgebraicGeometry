@@ -2,95 +2,34 @@ id: AJC.pic0av.identity
 title: Identity component and degree-zero points
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Identity component and degree-zero points. The identity component itself
-  is DONE (Pic0Scheme,
-
-  Pic0Scheme.inclusion, isSection_comp_inclusion). Picard/IdentityComponent.lean is
-  at TWO sorries
-
-  (was three); run 0067 r4 closed the degree map.
-
-
-  1 PicScheme.degree -- CLOSED 2026-07-28 (commit 23b263f3c), and the previous entry
-  here was WRONG.
-
-  This node used to say: ''A STATEMENT BUG, not a missing proof. No total function
-  of that type is
-
-  constructible from the Picard functor.'' The premise was right -- an arbitrary morphism
-
-  Spec k -> Pic need not be a section, so representability says nothing about it --
-  but the
-
-  conclusion does not follow. That is a claim about which values are PINNED, not about
-  TOTALITY,
-
-  and a total function may invent values where nothing pins them. ''fun _ => 0'' already
-  inhabited
-
-  the type, so the impossibility verdict was refuted by a one-line probe nobody ran
-  for three
-
-  sessions.
-
-  WHAT IS THERE NOW: degree splits on the section condition. On sections it IS
-
-  degreeOfSectionPinned (the degree pinned against the Abel map), recorded as the
-  equation
-
-  degree_eq_degreeOfSectionPinned; off them it is 0, and the docstring states that
-  no consumer may
-
-  rely on that value. degree_eq_zero_of_class_eq_zero gives the direction additivity
-  buys.
-
-  The new [ClassDegreePinned C] binder is load-bearing: unpinned ClassDegree admits
-  the zero
-
-  homomorphism (probed vacuous in r2), so pinning is the difference between a degree
-  and an
-
-  arbitrary additive map. All three declarations axiom-clean, MEASURED WITH A CONTROL
-  (the still
-
-  open kPoints_iff_kerDegree in the same file reports sorryAx).
-
-
-  2 THE DEGREE HOMOMORPHISM ITSELF -- residue unchanged and it is a CONSTRUCTION,
-  not a
-
-  characterisation. ClassDegreePinned needs a producer, and its acceptance test
-
-  (classDegree_ne_zero_of_exists_pos_fiberDeg, refuting the zero map) is conditional
-  on a
-
-  nonzero-degree DivFamily over the trivial test object, of which AJC has no in-tree
-  producer.
-
-  Exhibiting one is the open work. AJCR''s relPicDeg (RiemannRoch/RelPicDegree.lean)
-  is the
-
-  sorry-free homomorphism to port against.
-
-
-  3 finrank_eq_genus -- blocked on mathlib, NOT on the tangent identity. topologicalKrullDim
-  has
-
-  almost no API in v4.31 and nothing connects it to SmoothOfRelativeDimension or to
-  a tangent-space
-
-  dimension. Consumers wanting only a dimension INDEX should target
-
-  SmoothOfRelativeDimension (genus C), which is cheaper.
-
-
-  4 kPoints_iff_kerDegree -- structural half CLOSED (Pic0Scheme.inclusion). It now
-  carries
-
-  [ClassDegreePinned C] and is NO LONGER blocked on a declaration that could not exist:
-  the
-
-  remaining content is the degree characterisation itself, i.e. item 2.'
+summary: "Identity component and degree-zero points (AJC.pic0av.identity).\n\nSTATE\
+  \ at run 0067 r5. IdentityComponent.lean carries 2 sorries: finrank_eq_genus\nand\
+  \ kPoints_iff_kerDegree. PicScheme.degree is constructed (r4).\n\nDIMENSION LEG,\
+  \ reduced to ONE uniform bound (r5, commits b9bfa997f / 476236c3b /\nb653ef4d6).\
+  \ The recorded blocker -- \"mathlib v4.31 has almost no topologicalKrullDim\nAPI,\
+  \ so the route must go through Algebra.IsStandardSmoothOfRelativeDimension and an\n\
+  affine-local presentation\" -- was a mis-measurement: it read the API surface, not\
+  \ the\nDEFINITION. topologicalKrullDim IS krullDim of the irreducible closeds; a\
+  \ scheme is\nsober and T0, so irreducibleSetEquivPoints is an order iso onto the\
+  \ carrier,\nkrullDim_eq_iSup_coheight applies, and the project's own ringKrullDim_stalk_eq_coheight\n\
+  finishes. For ANY scheme: dim X = sup over z of dim O_{X,z}\n(Picard/SchemeKrullDimStalk.lean).\n\
+  \nConsequences (Picard/Pic0Dimension.lean):\n * \"genus <= dim Pic^0\" is PROVED\
+  \ from the tangent space at the IDENTITY ALONE, its\n   only side condition being\
+  \ regularity of that one stalk -- and over a PERFECT base\n   field that follows\
+  \ from smoothness of Pic^0, i.e. from AJC.pic0av.structure and\n   nothing else.\n\
+  \ * the remaining open content is \"dim <= genus\": one UNIFORM bound\n   (forall\
+  \ z, ringKrullDim (stalk z) <= genus C). It cannot come from one point,\n   since\
+  \ the dimension is a supremum. finrank_eq_genus is now stated against exactly\n\
+  \   that hypothesis as topologicalKrullDim_eq_genus_of_forall_ringKrullDim_stalk_le.\n\
+  \   SmoothOfRelativeDimension (genus C) (Pic0Scheme C).hom would supply it.\n\n\
+  SPIN-OFF, upstream of this node: stalks of a smooth scheme over a PERFECT field\
+  \ are\nregular local rings, with no other hypothesis\n(Scheme.isRegularLocalRing_stalk_of_smooth_of_perfectField).\
+  \ AJC had this only over\nk-bar and with five further binders (Albanese/CodimOneExtension);\
+  \ the alg-closed form\nis unusable here because Pic^0_{C/k} lives over the given\
+  \ k and stalk regularity\ndescends along Spec k-bar -> Spec k by no route in this\
+  \ tree.\n\nkPoints_iff_kerDegree is untouched: its easy direction is landed\n(degreeOfSection_eq_zero_of_factors),\
+  \ the converse -- that the degree separates the\ncomponents of Pic_{C/k} -- is the\
+  \ open half.\n"
 status: active
 kind: proof
 priority: normal
@@ -113,7 +52,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-28T12:16:44.930564+00:00'
+  updated_at: '2026-07-28T16:07:23.705548+00:00'
   owner: ajc-pic0av
   pinned_commits:
   - 6b1ed2604
