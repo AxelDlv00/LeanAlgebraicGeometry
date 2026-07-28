@@ -120,7 +120,31 @@ witness divisor with vanishing `H¹`.
 
 Stated with the witness clause on a *presenting Čech class* rather than on a datum,
 because the datum layer is where the shifted-datum constructor (DAT-C GAP-1) is missing;
-the two agree through `Pic0ChartLocusClass.mem_cechWitnessLocus_iff_exists`. -/
+the two agree through `Pic0ChartLocusClass.mem_cechWitnessLocus_iff_exists`.
+
+## A convention this predicate INHERITS, and which a consumer must not misread
+
+The worksheets say "effective degree-`g` witness with `h¹ = 0`".  The witness clause here —
+and the tree's `BasicOpenCocycleDatum.HasWitnessH1Vanishing`
+(`Pic0ChartLocusFibreField.lean:115`) that it mirrors, and the GAP-6 dictionary
+`subsingleton_h1_tensor_iff_exists_witness` (`DivisorFamilyH1Locus.lean:182`) that both rest
+on — asks for **neither `0 ≤ W` nor `deg W = g`**.  It asks only for a `CurveDivisor` in the
+class with vanishing `H¹`.  That is deliberate on the tree's side: the dictionary is an *iff*
+against the engine's complex-form condition `Subsingleton (H¹(pair D) ⊗ L)`, and that
+condition cannot see effectivity or degree, so adding either clause would break the iff and
+with it the openness route.
+
+Two consequences, both load-bearing:
+
+* the degree is supplied **externally**, by the chart-index constraint through
+  `degAt_chartTwist` below: on a degree-zero `λ` the twisted class has fibre degree
+  `deg Z − m·d₁`, which the constraint `deg Z = m·d₁ − g` makes `−g`.  It is *not* a
+  hypothesis of this predicate;
+* effectivity likewise is not asserted here.  Where the *worksheet's* stronger reading is
+  actually needed — the canonical-section normalization `h⁰ = 1`, and GAP-2 uniqueness
+  (`Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one`, which does take `0 ≤ D`, `0 ≤ D'`) — the
+  effectivity must be re-supplied at that point.  A lane that reads `IsSplitWitness` as
+  already giving it will have a gap where it least expects one. -/
 def IsSplitWitness {K : Type u} [Field K] [Algebra k K]
     (μ : picEt C (overSpec k K)) : Prop :=
   ∃ (L : Type u) (_ : Field L) (_ : Algebra k L) (_ : Algebra K L)
@@ -277,6 +301,33 @@ theorem picEtMap_chartTwist (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDiviso
       = chartTwist C m Z T' (picEtMap C f lam) := by
   rw [chartTwist, chartTwist, map_mul, map_inv, map_mul, map_pow,
     sigmaFamily_natural, thetaFamily_natural]
+
+/-- **`chartLocus` pulls back into `chartLocus`** — transport (i) of `w4-datb` §1.6, in the
+form the assembly consumes.
+
+For `f : T' ⟶ T` and `t : T'.left`, membership of `t` in the pulled-back locus and of `f t`
+in the original are the *same* condition on the *same* twisted class, read at two fields:
+`κ(t)` and `κ(f t)`, with `κ(f t) → κ(t)` the induced extension (`testPointFieldMap`).  So
+the transport is exactly the invariance of `IsSplitWitness` under that extension.
+
+**This lemma proves nothing on its own — it is an interface, and its proof is `hinv`.**  Said
+plainly so that no lane cites it as if transport (i) were discharged.  What it *does* is fix
+the exact shape of the obligation and put the burden where it belongs: on the morphism `f`,
+via the field extension `κ(f t) → κ(t)` it induces, rather than hidden inside the locus.  The
+tree's landed invariance (`hasWitnessH1Vanishing_iff_of_separable`) discharges `hinv` when
+that extension is separable — which is the étale-carrier case the (b-amendment) needs, and is
+*not* automatic for an arbitrary morphism of tests.  The residue between the two is why
+`hinv` is a hypothesis and not a `rw`. -/
+theorem mem_chartLocus_of_mem_chartLocus_comp (m : ℕ)
+    (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    {T T' : Over (Spec (.of k))} (f : T' ⟶ T) (lam : picEt C T) (t : T'.left)
+    (hinv : IsSplitWitness C
+        (picEtMap C (Over.testPoint (T := T) (f.left.base t)) (chartTwist C m Z T lam))
+      → IsSplitWitness C
+        (picEtMap C (Over.testPoint t) (chartTwist C m Z T' (picEtMap C f lam)))) :
+    f.left.base t ∈ chartLocus C m Z lam
+      → t ∈ chartLocus C m Z (picEtMap C f lam) :=
+  hinv
 
 end
 
