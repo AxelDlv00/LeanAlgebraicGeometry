@@ -1269,3 +1269,49 @@ layer looks, and a green sorry-free build cannot see it — the missing thing is
 Recorded as inbox memory `I-0617`. This is `I-0592` ("a new type needs its old API") with a
 sharper edge: `I-0592` says diff the API, and this says a *name-level* diff reads as complete
 precisely when one **face** is missing, because the two faces live under different names.
+
+### 8.5 Why residue item (b) is blocked by a STATEMENT SHAPE, not by mathematics (measured)
+
+Item (b) of §8.3 was priced as "a port of the base-side gluing keystone, because R2 left the base
+side alone". That pricing is right about the *mathematics* and was incomplete about the *types*,
+and the difference is worth stating because it is the same lesson as ADDENDUM 7's `hfib`
+transport read from the other side.
+
+**What the assembly consumes versus what it demands.** `awayGluedEquations`
+(`Picard/DivisorFamilyZariskiGlue.lean:454`) is the actual divisor assembly. Measured over its
+whole body, the only projections of its input `E` that appear are `.eqns` (eight occurrences) and
+`.cover` — which is `eqns.cover` — seven. It never touches `.adaptation` and never touches
+`.certified`. It returns a bare `(relCurve C R).LocalEquations` and mentions `π` zero times.
+Its *declared* input, however, is
+
+```
+variable {n : ℕ} (E : ∀ i, CertifiedDivisorFamily C (S i) π n)
+```
+
+the full **chart-typed certified family**. Likewise `DivFamZar.exists_glue_of_certified_away_compat`
+(the certified-input core) names no cover or adaptation type anywhere in its signature; its only
+two occurrences of the word "chart" are comments, and they refer to the *base* localization
+restriction rather than to a `P¹` chart.
+
+**So the blocker is precisely this mismatch, and it is not removable by being clever at the call
+site.** A widened class over `S i` has no chart-typed certificate at all — *that failure is the
+content of R2* — so the chart-typed assembly cannot be instantiated at widened input however
+carrier-free its proof happens to be. The fix is to restate the assembly at the datum both
+carriers actually have: bare local-equation systems `E : ∀ i, (relCurve C (S i)).LocalEquations`,
+with the pullback regularity that the certificate used to supply carried explicitly. Naming that
+side-condition is itself necessary rather than cosmetic: a *family* of `hreg`s has to be
+quantified over in the compatibility hypothesis, and the anonymous `∀ y z hz, …` spelling cannot
+be. Hence `Scheme.LocalEquations.PullRegular`, with
+`pullRegular_of_isOpenImmersion` discharging it in the case every away localization is in.
+
+**Status, stated exactly.** `PullRegular` and `pullRegular_of_isOpenImmersion` are landed and
+elaborate. The restated assembly on top of them is **not** landed. So item (b) is now decomposed
+rather than closed, and its price is a repackaging at a weaker input type — no new mathematics,
+but more than a substitution of names.
+
+**Generalisable, and it is the converse of ADDENDUM 7's lesson.** There, an obligation looked
+chart-typed because it *lived* in a chart-typed file, and transported once its leaf input's
+statement was read. Here an assembly is carrier-free in its *proof* and chart-typed in its
+*statement*, and the port is blocked by the statement alone. Same underlying question in both
+directions: **read what the declaration consumes, not what its signature demands** — and when the
+two differ, the fix is to weaken the signature to what the body actually uses.
