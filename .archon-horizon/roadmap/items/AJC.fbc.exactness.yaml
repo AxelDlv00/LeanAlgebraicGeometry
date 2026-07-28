@@ -1,54 +1,28 @@
 id: AJC.fbc.exactness
-title: Flat pullback preserves finite limits
+title: Flat pullback preserves finite limits (bypassed on quasi-coherent objects;
+  arbitrary-module case open)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Flat pullback preserves finite limits. REDUCED TO ONE CARRIER; the synthesis-leak
-  MECHANISM is closed project-wide (run 0068). NOT closed as mathematics.
-
-
-  THE LEAK MECHANISM IS GONE. pullback_preservesFiniteLimits and pullback_preservesHomology
-  are no longer `instance`s -- the attribute WAS the leak: it let synthesis inject
-  sorryAx at sites that never named the sorried declaration. Verified both directions:
-  for a general flat g, `inferInstance` for PreservesFiniteLimits (pullback g) now
-  FAILS, whereas before it elaborated and reported sorryAx. Combined with ajc-etale-pic
-  demoting instHasPicScheme the same day, the project now has ZERO sorry-bodied instances:
-  21 theorem + 7 def + 0 instance = 28 carriers, re-derived with axiom-frontier''s
-  own keyword census.
-
-
-  PROVED, sorry-free and Ground-verified axiom-clean: preservesFiniteLimits_of_preservesMonomorphisms
-  (additive + right exact + mono-preserving => left exact); Modules.injective_app_of_mono
-  / mono_of_injective_app / mono_of_injective_app_isBasis (monos of O_X-modules are
-  sectionwise, both directions, incl. basis-local); Scheme.OpenCover.isBasis_image_opens
-  + Modules.mono_of_mono_restrict (mono-checking is COVER-LOCAL); Modules.restrictFunctor_preservesMonomorphisms
-  + pullback_preservesMonomorphisms_of_isOpenImmersion (the OPEN-IMMERSION case, outright);
-  tildePullbackNatIso + tildePullback_preservesFiniteLimits (the AFFINE case on the
-  tilde image).
-
-
-  THE SOLE RESIDUAL is pullback_preservesMonomorphisms: g flat => g^* preserves monos,
-  for ARBITRARY modules. Three of its four ingredients now exist. THE GAP, precisely:
-  the affine case is available only on the tilde image (quasi-coherent modules), while
-  the statement quantifies over all modules, and over an affine base Scheme.Modules
-  is strictly larger than ModuleCat -- tilde is not an equivalence. Next target: mono-preservation
-  for the AFFINE pullback on arbitrary modules. Deducing it from the quasi-coherent
-  case would need quasi-coherent modules to generate, which is false.
-
-
-  DEAD END, do not retry: the presheaf-pullback / sheafification factorisation. Its
-  outer two factors DO synthesise their PreservesFiniteLimits instances on the scheme
-  site (checked), so the categorical glue was never the gap; its middle factor is
-  characterised as a left adjoint with no pointwise description, i.e. it needs the
-  same missing stalk model. Reasons are in the docstring of pullback_preservesMonomorphisms.
-
-
-  MEASURED WITH CONTROLS in scripts/axiom-frontier.lean (restated this run because
-  the old identity-argument probe went VACUOUSLY clean after de-instancing): leakControl_pullback_finiteLimits_given_monos
-  and leakControl_pullback_monos_openImmersion are axiom-clean; the two probes over
-  a general flat g leak, as they must. Frontier at session end 147/95/52. NO previously-contaminated
-  declaration became clean.
-
-  '
+summary: "BYPASSED, NOT PROVED -- and the arbitrary-module form should NOT be attempted\
+  \ (run 0068 r1, ajc-fbc).\n\npullback_preservesMonomorphisms (flat g^* preserves\
+  \ monos of ARBITRARY O_S-modules) is genuinely\nwalled: mathlib gives SheafOfModules.pullback\
+  \ no pointwise model, and the sibling\nMR0555258-Compactifying-Picard independently\
+  \ reduced j_! to the same missing brick. It is also NOT\nNEEDED. Every consumer\
+  \ instantiates flat exactness at QUASI-COHERENT objects, where it is now proved\n\
+  sorry-free:\n\n * pullback_preservesKernel_of_isQuasicoherent -- general flat g,\
+  \ affine base, any map of\n   quasi-coherent modules -- via cone-cancellation (preservesLimit_comp_cancel)\
+  \ off the tilde-image\n   exactness already in the tree, plus the FULLNESS of tilde;\n\
+  \ * mapHomologicalComplexHomologyIso_of_preservesKernel -- because ShortComplex.mapHomologyIso\
+  \ needs\n   ONE KERNEL per degree, not global exactness;\n * cech_flatBaseChange_of_termsQuasicoherent\
+  \ -- the capstone with the leaf out of its proof term.\n\nMEASURED, not asserted:\
+  \ axiom-frontier's leakProbe_qcohRoute_kernel / _homologyIso / _coneCancel and\n\
+  leakWitness_qcohRoute_nonvacuous all report clean, while leakControl_qcohRoute_oldRoute\
+  \ (same\nconclusion, old route) still reports sorryAx. All four explicit binders\
+  \ of the main theorem verified\nload-bearing with populated breaks.\n\nREMAINING\
+  \ on this row: closure of quasi-coherence under FINITE PRODUCTS, which discharges\
+  \ the two\nhypotheses of cech_flatBaseChange_of_termsQuasicoherent. Absent from\
+  \ mathlib and from this workspace.\nThe :681 sorry stays as a monument to the reduction;\
+  \ do not price it.\n"
 status: active
 kind: proof
 priority: high
@@ -71,9 +45,11 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc
-  updated_at: '2026-07-28T07:26:53.044267+00:00'
+  updated_at: '2026-07-28T10:22:48.129525+00:00'
   owner: ajc-fbc
   pinned_commits:
+  - 672a8c656
+  - 325b4d0e8
   - 93cdfb5e5
   - c6533164c
   - 8a6e5ef61

@@ -1,12 +1,27 @@
 id: AJC.fbc
-title: Flat base change (2 hard leaves; exactness bypassed)
+title: Flat base change (2 walled naturality leaves + 1 bypassed monument)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: For flat g, prove base change for higher direct images. The global flat-base-change
-  scaffolding (Cohomology/FlatBaseChange, Cohomology/FlatBaseChangeGlobal) and the
-  affine termwise comparison are sorry-free; the three open obligations all live in
-  Cohomology/CechHigherDirectImageUnconditional -- flat pullback preserving finite
-  limits, and the naturality fields of cech_pushforward_baseChange_natIso and twisted_cech_nerve_iso.
+summary: "For flat g, prove base change for higher direct images (Stacks 02KG/02KH,\
+  \ separated case).\n\nSTATE AFTER run 0068 r1 (ajc-fbc). Three sorry terms remain\
+  \ in\nCohomology/CechHigherDirectImageUnconditional.lean, but they are NOT three\
+  \ comparable obligations,\nand the earlier \"three leaves open\" summary was misleading\
+  \ about where the work is:\n\n * AJC.fbc.exactness -- BYPASSED, not proved. The\
+  \ arbitrary-module statement\n   (pullback_preservesMonomorphisms, :681) is walled\
+  \ and should NOT be attempted. The quasi-coherent\n   statement every consumer instantiates\
+  \ is proved sorry-free and axiom-clean\n   (pullback_preservesKernel_of_isQuasicoherent,\
+  \ mapHomologicalComplexHomologyIso_of_preservesKernel),\n   and cech_flatBaseChange_of_termsQuasicoherent\
+  \ routes the homology half through it, so the leaf is\n   out of that proof term.\
+  \ Measured against a deliberately-leaking control in\n   scripts/axiom-frontier.lean.\n\
+  \n * AJC.fbc.cosimplicial.{pushforward,twisted} -- GENUINELY HARD, probed this session\
+  \ and confirmed\n   not mis-scoped. Both need the same missing per-sigma projection\
+  \ lemma for a heavy Beck-Chevalley\n   iso; treat them as ONE obligation with two\
+  \ instances (I-0570).\n\nTHE REMAINING PATH to a hypothesis-free flat base change,\
+  \ in order:\n (a) closure of quasi-coherence under FINITE PRODUCTS, which discharges\
+  \ the two hypotheses of\n     cech_flatBaseChange_of_termsQuasicoherent and is absent\
+  \ from both mathlib and this workspace;\n (b) the two naturality squares, the genuine\
+  \ open content of Stacks 02KG.\n\nThe global scaffolding (Cohomology/FlatBaseChange,\
+  \ FlatBaseChangeGlobal) and the affine termwise\ncomparison remain sorry-free.\n"
 status: pending
 kind: proof
 priority: high
@@ -19,5 +34,5 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:43.293058+00:00'
-  updated_at: '2026-07-28T10:15:41.097971+00:00'
+  updated_at: '2026-07-28T10:23:58.595774+00:00'
   parent: AJC.cohomology

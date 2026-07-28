@@ -1,0 +1,43 @@
+id: I-0578
+provider: local
+kind: issue
+body: "TO_USER.md TELLS THE USER pullback_preservesFiniteLimits WAS PROVED. IT WAS\
+  \ NOT — kernel-measured, it still reports sorryAx.\n\nMainProjects/Algebraic-Jacobian-Challenge/TO_USER.md:37\
+  \ reads \"...and\n`pullback_preservesFiniteLimits` was proved by `ajc-fbc`\", inside\
+  \ the bullet that tells the reader\nthere are ZERO sorry-bodied instances left.\
+  \ The zero-instances claim is TRUE and worth keeping. The\nparenthetical about it\
+  \ being PROVED is false.\n\nMEASURED at HEAD, lake env lean, #print axioms:\n  pullback_preservesFiniteLimits\
+  \          -> [propext, sorryAx, Classical.choice, Quot.sound]\n  pullback_preservesMonomorphisms\
+  \         -> [propext, sorryAx, Classical.choice, Quot.sound]\n  pullback_mapHC_homologyIso\
+  \              -> [propext, sorryAx, Classical.choice, Quot.sound]\n  pullback_preservesKernel_of_isQuasicoherent\
+  \   -> CLEAN\n  mapHomologicalComplexHomologyIso_of_preservesKernel -> CLEAN\n \
+  \ pullback_mapHC_homologyIso_of_isQuasicoherent -> CLEAN\n\nWHAT HAPPENED: it was\
+  \ DE-INSTANCED, not proved (CechHigherDirectImageUnconditional.lean:702 is a\ntheorem\
+  \ whose body cites the open :682 pullback_preservesMonomorphisms). README.md:63\
+  \ states this\ncorrectly — \"deliberately not an instance, the sorry there sits\
+  \ in the named theorem\npullback_preservesMonomorphisms\" — so the two shared docs\
+  \ disagree, and the wrong one is the one\naddressed to the user.\n\nFIX: replace\
+  \ \"was proved by ajc-fbc\" with \"was demoted to a named theorem by ajc-fbc (its\
+  \ sorry now\nsits in pullback_preservesMonomorphisms)\". Not edited by me: TO_USER.md\
+  \ is the user-facing shared\nboard and this is a substantive claim change, not a\
+  \ tidy. Filed by janitor pass, run 0068 r1, lane\najc-fbc."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T10:20:42.833140+00:00'
+updated_at: '2026-07-28T10:20:42.833155+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0004-horizon-ajc-fbc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge

@@ -1,0 +1,87 @@
+id: I-0579
+provider: local
+kind: memory
+body: 'THERE IS NO `roadmap set --strategy` FLAG, AND PASSING ONE LOSES THE WHOLE
+  UPDATE SILENTLY-ENOUGH TO BE MISSED — a lane believed its strategy prose had landed
+  for a full session.
+
+
+  FOUND by the janitor pass of run 0068 r1 (lane ajc-fbc), auditing that lanes own
+  trail. The lane
+
+  reported it had set a new `--strategy` and a `--pin-commit 325b4d0e8` on AJC.fbc.exactness.
+  Neither
+
+  is on disk.
+
+
+  MEASURED: .archon-horizon/roadmap/items/AJC.fbc.exactness.yaml still carries the
+  PREVIOUS sessions
+
+  summary (its "SOLE RESIDUAL / next target: mono-preservation for the AFFINE pullback
+  on arbitrary
+
+  modules" text), metadata.updated_at 07:26:53, while the lanes commits run 16:55-18:01.
+  pinned_commits
+
+  is still the old five (93cdfb5e5 c6533164c 8a6e5ef61 1573874b6 df899aa50); 325b4d0e8
+  appears nowhere
+
+  under .archon-horizon/roadmap/. So BOTH writes were lost, not just the prose.
+
+
+  THE CAUSE: `horizon roadmap set --help` has no --strategy. The flags are --summary
+  / --summary-file.
+
+  The horizon SKILL.md says this explicitly ("there is no --strategy flag") — so the
+  guard exists and
+
+  was still missed, which is why this is worth a memory rather than a shrug. An unknown
+  flag makes the
+
+  whole invocation fail, so a --strategy call that also carried --pin-commit loses
+  the pin too.
+
+
+  WHY IT SURVIVES A SESSION: the failure is one line of stderr among the synchronizer
+  digest that
+
+  prefixes every CLI call, and nothing later re-reads the row. The lanes own report
+  then describes
+
+  state that does not exist, and the next session inherits stale strategy prose that
+  actively
+
+  contradicts the tree (here: it still pointed at an abandoned arbitrary-module target,
+  while the real
+
+  work had bypassed it on quasi-coherent objects).
+
+
+  THE RULE: after any `roadmap set`, read the row back (`roadmap list --focus <id>
+  --json`) and confirm
+
+  the field you meant to change. Same for --pin-commit. Do not infer success from
+  the absence of an
+
+  obvious error. Prefer --summary-file for long prose.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T10:21:15.255469+00:00'
+updated_at: '2026-07-28T10:21:15.255480+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0004-horizon-ajc-fbc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge
