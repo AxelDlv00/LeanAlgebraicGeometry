@@ -2387,4 +2387,48 @@ theorem cech_flatBaseChange
   exact ⟨(pullback_mapHC_homologyIso g (CechComplex f 𝒰 F) i).symm ≪≫
     HomologicalComplex.homologyMapIso (cechComplex_baseChange_iso f g f' g' h 𝒰 F hF) i⟩
 
+/-- **Flat base change for the Čech higher direct images, with the flat-exactness leaf REMOVED
+from the proof term** (Stacks 02KH).
+
+Identical conclusion to `cech_flatBaseChange`, and identical hypotheses except that the two
+quasi-coherence facts the *homology half* needs are taken as named hypotheses `h₂`, `h₃` on the
+degree-`i` short complex of `Č•(𝒰, F)`.  In exchange, the homology half is routed through
+`pullback_mapHC_homologyIso_of_isQuasicoherent` rather than `pullback_mapHC_homologyIso`, so
+`pullback_preservesMonomorphisms` does not appear in the proof term at all.
+
+**What this does and does not buy.**  It does *not* make flat base change axiom-clean: the second
+half, `cechComplex_baseChange_iso`, still carries the two cosimplicial naturality sorries, which
+are genuine open mathematics (Stacks 02KG; see the docstrings of
+`cech_pushforward_baseChange_natIso` and `twisted_cech_nerve_iso`).  What it does buy is that the
+*flat-exactness* leaf is no longer one of the reasons this theorem is unproved — the leak now has
+exactly one source instead of two, and that source is the Beck–Chevalley heart rather than a
+statement about arbitrary modules that nobody needs.
+
+`h₂`/`h₃` are expected to be discharged, not assumed, once quasi-coherence of the Čech terms is
+available.  Each term is a finite product of push–pull objects over affine intersection opens
+(`pushPull_sigma_iso`), each factor quasi-coherent by `isQuasicoherent_pullback_opens` plus
+`pushforward_isQuasicoherent`; the missing step is closure of quasi-coherence under *finite
+products*, which neither mathlib nor this workspace currently has (mathlib's
+`Quasicoherent.lean` offers only `IsClosedUnderIsomorphisms` and `of_coversTop`).  That is the
+one named obligation between here and a flat-exactness-free statement with no extra hypotheses.
+Project-local. -/
+theorem cech_flatBaseChange_of_termsQuasicoherent
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f]
+    [IsAffine S] [IsAffine S']
+    (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [∀ i, IsAffine (𝒰.X i)]
+    [Finite ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+      h.isoPullback.symm.hom).I₀]
+    [∀ i, IsAffine (((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+      h.isoPullback.symm.hom).X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent) (i : ℕ)
+    (h₂ : ((CechComplex f 𝒰 F).sc i).X₂.IsQuasicoherent)
+    (h₃ : ((CechComplex f 𝒰 F).sc i).X₃.IsQuasicoherent) :
+    Nonempty ((Scheme.Modules.pullback g).obj (cechHigherDirectImage f 𝒰 F i) ≅
+      cechHigherDirectImage f'
+        ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso h.isoPullback.symm.hom)
+        ((Scheme.Modules.pullback g').obj F) i) :=
+  ⟨(pullback_mapHC_homologyIso_of_isQuasicoherent g (CechComplex f 𝒰 F) i h₂ h₃).symm ≪≫
+    HomologicalComplex.homologyMapIso (cechComplex_baseChange_iso f g f' g' h 𝒰 F hF) i⟩
+
 end AlgebraicGeometry
