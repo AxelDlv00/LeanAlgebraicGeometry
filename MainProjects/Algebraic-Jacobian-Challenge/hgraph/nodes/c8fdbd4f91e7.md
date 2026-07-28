@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:pullback_mapHC_homologyIso
 lean_status: lean_ok
-order: 490
+order: 496
 title: Flat pullback commutes with {\v C}ech homology
 type: tex
-updated: '2026-07-27T15:50:36'
+updated: '2026-07-28T14:03:59'
 ---
 For \(g\) flat, applying \(g^*\) to the \(i\)-th cohomology of a cochain complex of
   \(\mathcal{O}_S\)-modules agrees with the \(i\)-th cohomology of the degreewise

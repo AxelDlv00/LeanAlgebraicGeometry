@@ -26,7 +26,7 @@ summary: 'Represent the relative Picard functor by the Milne-Kollar route select
   is available for the schemes this route quotients.  THE RATIONAL POINT REMAINS AN
   OPEN HUMAN DECISION (I-0372, AJC.picrep.rational-point) and is orthogonal to the
   route choice -- both routes carry it identically.'
-status: pending
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -39,5 +39,5 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:40.928722+00:00'
-  updated_at: '2026-07-27T12:49:06.268432+00:00'
+  updated_at: '2026-07-28T06:04:16.158698+00:00'
   parent: AJC.jacobian

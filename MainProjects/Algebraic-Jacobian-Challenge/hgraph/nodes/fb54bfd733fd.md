@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:pullback_tensor_map_eq_sheafify_delta
 lean_status: lean_ok
-order: 817
+order: 823
 title: '$\delta$ mate-identification: the tensor comparison is the sheafified cotensorator
   (Cone A)'
 type: tex
-updated: '2026-07-28T04:57:36'
+updated: '2026-07-28T14:04:00'
 ---
 Let \(f : Y \to X\) and \(M, N \in \Scheme.\mathtt{Modules}\,X\). The sheaf-level tensor comparison
   \(\mathtt{pullbackTensorMap}\,f\,M\,N\) (\cref{lem:pullback_tensor_map}) is the sheafification

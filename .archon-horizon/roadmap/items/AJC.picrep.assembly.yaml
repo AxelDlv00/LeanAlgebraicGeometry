@@ -14,7 +14,7 @@ summary: 'Assemble the Picard scheme on the committed Milne-Kollar route: glue t
   Superseded description: this node previously read ''combine Quot representability
   and flattening stratification''. That was the Grothendieck/Kleiman quotient route,
   which the tree marks off-path -- see AJC.picrep.'
-status: pending
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -36,4 +36,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-27T07:36:11.011730+00:00'
+  updated_at: '2026-07-28T06:04:16.158431+00:00'

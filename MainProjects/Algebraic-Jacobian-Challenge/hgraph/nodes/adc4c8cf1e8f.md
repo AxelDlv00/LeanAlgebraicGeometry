@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:coverinter_baseChanged_module_iso_tensor
 lean_status: lean_ok
-order: 509
+order: 515
 title: 'Base-change cancellation: the restricted corner module is the tensor base
   change of \(N\)'
 type: tex
-updated: '2026-07-27T15:50:36'
+updated: '2026-07-28T14:03:59'
 ---
 Let \(\varphi : R \to A_\sigma\), \(\rho : A_\sigma \to B\), \(\psi : R \to R'\),
   \(\sigma' : R' \to B\) be commutative-ring homomorphisms forming a pushout (cocartesian)

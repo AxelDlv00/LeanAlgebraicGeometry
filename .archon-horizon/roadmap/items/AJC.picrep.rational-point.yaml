@@ -32,7 +32,7 @@ summary: "DECIDED BY THE HUMAN 2026-07-28: BRANCH (2), ETALE-SHEAFIFY. This node
   \ identically, so the route choice never depended on this. Over k-bar the point\
   \ remains a THEOREM (hasRationalPoint_of_curve_of_isAlgClosed, axiom-clean) and\
   \ that lane is untouched."
-status: active
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -54,5 +54,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-28T03:01:10.437233+00:00'
+  updated_at: '2026-07-28T06:04:16.158557+00:00'
   owner: ajc-etale-pic

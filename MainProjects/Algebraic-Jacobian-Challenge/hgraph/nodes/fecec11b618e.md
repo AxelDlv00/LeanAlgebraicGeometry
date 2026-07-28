@@ -44,40 +44,63 @@ docstring: 'The Albanese witness for a smooth proper geometrically irreducible c
   removed in favour of this single uniform witness.
 
 
-  The construction is **wired to the Picard development**: the underlying scheme
+  **No hypothesis on `C(k)`.** The binders are exactly the three challenge hypotheses,
+  which
 
-  is `Scheme.Pic0Scheme C`, and four of the six witness fields are theorems of
+  is the owner decision of 2026-07-28 (protection I-0491) and the full strength the
+  challenge
 
-  `Picard/Pic0AbelianVariety.lean` applied directly. Those fields live in
+  asks for. This is *not* a specialisation of
 
-  `picardJacobianWitnessOfHasRationalPoint`, of which this definition is the specialisation
+  `picardJacobianWitnessOfHasRationalPoint`: it is wired to the **étale** Picard development,
 
-  supplying the rational point from leaf A; splitting them apart separates the assembly
+  with underlying scheme `Scheme.Pic0SchemeEt C` — the identity component of the scheme
 
-  from the open decision about where the point comes from. This definition carries
-  no
+  representing the étale-sheafified relative Picard functor (`Picard/Pic0Et.lean`,
 
-  `sorry` of its own, but that is a statement about this file, not a completeness
-  claim: two
+  `Picard/FGAPicRepresentability.lean`). Sheafifying is what removes the rational
+  point:
 
-  of those four upstream theorems (`Pic0.smooth`, `Pic0.proper`) are `sorry`-bodied,
-  so
+  the unsheafified functor is not a sheaf, so representability of it over an arbitrary
+  field
 
-  the witness depends on five open obligations — those two, plus the three leaves
+  would be a *false* statement rather than an unproved one.
 
-  `hasRationalPoint_of_curve`, `smoothOfRelativeDimension_genus_pic0` and
 
-  `isAlbanese_pic0` above. The `GeometricallyIntegral` hypothesis of the Picard
+  Four of the six witness fields come from theorems that are proved **unconditionally**
+  and
 
-  development is *not* among them: it is synthesised from the challenge hypotheses
+  measure axiom-clean (`Pic0Et.grpObj`, `Pic0Et.geometricallyIrreducible`, and through
+  them
 
-  through `Smooth.geometricallyIntegral` (see `geometricallyIntegral_of_curve`).'
+  `Pic0Et.locallyOfFiniteType` / `Pic0Et.isSeparated`). This definition carries no
+  `sorry` of
+
+  its own, but that is a statement about this file, not a completeness claim: it depends
+  on
+
+  the five obligations enumerated in the file header —
+
+  `Scheme.fgaPicardRepresentability`, `Scheme.Pic0Et.geometricallyReduced`,
+
+  `Scheme.Pic0Et.universallyClosed`, `smoothOfRelativeDimension_genus_pic0Et` and
+
+  `isAlbanese_pic0Et` — every one of which is a **true statement awaiting a proof**.
+  The
+
+  `GeometricallyIntegral` hypothesis of the Picard development is *not* among them:
+  it is
+
+  synthesised from the challenge hypotheses through `Smooth.geometricallyIntegral`
+  (see
+
+  `geometricallyIntegral_of_curve`).'
 file: AlgebraicJacobian/Jacobian.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picardJacobianWitness
 type: lean
-updated: '2026-07-28T13:22:16'
+updated: '2026-07-28T14:03:57'
 ---
 noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :

@@ -6,11 +6,11 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:rigidity_eqOn_saturated_open_to_affine
 lean_status: lean_ok
-order: 541
+order: 547
 ref: mumford-abelian-varieties:page-0054
 title: Constancy on a saturated open
 type: tex
-updated: '2026-07-27T15:50:36'
+updated: '2026-07-28T14:03:59'
 ---
 Let \(X\) be proper, suppose that \(X\times Y\) is reduced, geometrically
   irreducible, and locally of finite type over \(\bar k\), and let \(Z\) be separated.

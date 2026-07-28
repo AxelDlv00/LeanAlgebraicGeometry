@@ -6,10 +6,10 @@ created: '2026-07-27T19:45:43'
 generated: blueprint
 label: rem:orbit_in_affine_hypothesis
 lean_status: empty
-order: 1552
+order: 1558
 title: The orbit hypothesis is load-bearing
 type: tex
-updated: '2026-07-28T04:57:38'
+updated: '2026-07-28T14:04:00'
 ---
 The hypothesis of \cref{lem:stable_affine_open} that every orbit lie in an
   affine open cannot be dropped, and it is the same phenomenon as

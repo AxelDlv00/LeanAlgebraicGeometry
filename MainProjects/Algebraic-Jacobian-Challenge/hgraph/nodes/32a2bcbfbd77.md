@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: lem:graded_inf_isHomogeneous
 lean_status: lean_ok
-order: 1061
+order: 1067
 title: Intersection of homogeneous submodules is homogeneous
 type: tex
-updated: '2026-07-28T04:57:37'
+updated: '2026-07-28T14:04:00'
 ---
 If \(p, q \subseteq M\) are homogeneous submodules
   (\cref{lem:submodule_isHomogeneous_mathlib}) then so is their intersection \(p

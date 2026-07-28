@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:30'
 generated: blueprint
 label: def:gr_glueChartComponent
 lean_status: lean_ok
-order: 1456
+order: 1462
 title: The \(j\)-th component of the candidate inverse
 type: tex
-updated: '2026-07-28T04:57:37'
+updated: '2026-07-28T14:04:00'
 ---
 Given the transition isomorphisms \(g_{ij} : f_{ij}^{*}\mathcal{M}_i \xrightarrow{\sim}
   (t_{ij}\circ f_{ji})^{*}\mathcal{M}_j\), the \(j\)-th component of the candidate

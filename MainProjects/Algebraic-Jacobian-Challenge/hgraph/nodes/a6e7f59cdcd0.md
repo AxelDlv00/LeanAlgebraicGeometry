@@ -8,10 +8,10 @@ label: lem:isHomogeneousElem_graded_smul_mathlib
 lean_status: mathlib_ok
 mathlib_name:
 - SetLike.IsHomogeneousElem.graded_smul
-order: 1044
+order: 1050
 title: Multiplication by a homogeneous element shifts degree
 type: tex
-updated: '2026-07-28T04:57:37'
+updated: '2026-07-28T14:04:00'
 ---
 \textit{Provided by Mathlib (\texttt{Mathlib.Algebra.GradedMulAction}).}
   Let \(\mathcal{A}\) be a graded family acting on a graded family \(\mathcal{M}\)

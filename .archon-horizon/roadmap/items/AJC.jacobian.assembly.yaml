@@ -33,7 +33,7 @@ summary: 'Construct picardJacobianWitness from Picard representability, the Pic0
   called this missing mathematics with no bridge; that was retracted (memory I-0446).  Pic0.smooth
   and Pic0.proper belong to no current task and are the nearest unowned work under
   the headline.'
-status: pending
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -55,4 +55,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
-  updated_at: '2026-07-27T16:45:44.944948+00:00'
+  updated_at: '2026-07-28T06:04:16.158246+00:00'

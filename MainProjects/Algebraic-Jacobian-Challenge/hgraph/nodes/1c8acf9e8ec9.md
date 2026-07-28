@@ -6,10 +6,10 @@ created: '2026-07-16T21:14:29'
 generated: blueprint
 label: def:unit_dual_section_equiv
 lean_status: lean_ok
-order: 721
+order: 727
 title: Section equivalence for the dual of the unit
 type: tex
-updated: '2026-07-28T04:57:36'
+updated: '2026-07-28T14:03:59'
 ---
 For a presheaf of modules over a base ring presheaf \(R_0\) and an object \(X\), the
   \(R_0(X)\)-linear equivalence

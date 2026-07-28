@@ -5,3 +5,4 @@
 {"at": "2026-07-27T20:25:21.873922+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-28T03:01:10.436850+00:00", "actor": "human", "field": "status", "from": "blocked", "to": "active", "note": ""}
 {"at": "2026-07-28T03:01:10.437102+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "summary, title, priority, owner updated"}
+{"at": "2026-07-28T06:04:16.158456+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "done", "note": "synced from task ajc-etale-pic"}
