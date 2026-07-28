@@ -102,6 +102,66 @@ lemma algebraMap_testPointField {T : Over (Spec (.of k))} (t : T.left) :
       = (Spec.preimage (T.left.fromSpecResidueField t ≫ T.hom)).hom :=
   rfl
 
+/-! ## The affine case: the test algebra also acts
+
+Over an affine test `overSpec k A` the residue field of a point is a `κ(t)`-algebra over `A`
+as well as over `k`, and the two structures form a tower.  This is what the engine-facing
+predicates of the tree require — `BasicOpenCocycleDatum.HasWitnessH1Vanishing` takes
+`[Algebra B L]` and `[IsScalarTower k B L]` — so without these two instances the
+`testPoint`-indexed loci and the `PrimeSpectrum`-indexed loci cannot even be compared.
+
+Both come from the same source as the `k`-structure: `Spec.preimage` of the composite
+`Spec κ(t) ⟶ Spec A`, which for an affine test is the structure morphism itself. -/
+
+section Affine
+
+variable {A : Type u} [CommRing A] [Algebra k A]
+
+/-- The `A`-algebra structure on the residue field of a point of an affine test: the
+`Spec.preimage` of `Spec κ(t) ⟶ Spec A`.  (Over an affine test the carrier of the test object
+*is* `Spec A`, so the composite is `fromSpecResidueField` alone.) -/
+instance instAlgebraTestPointFieldAffine (t : (overSpec k A).left) :
+    Algebra A (testPointField (T := overSpec k A) t) :=
+  (Spec.preimage ((overSpec k A).left.fromSpecResidueField t)).hom.toAlgebra
+
+lemma algebraMap_testPointFieldAffine (t : (overSpec k A).left) :
+    algebraMap A (testPointField (T := overSpec k A) t)
+      = (Spec.preimage ((overSpec k A).left.fromSpecResidueField t)).hom :=
+  rfl
+
+/-- **The tower `k → A → κ(t)`** on an affine test.  `Spec` of the tower identity is the
+factorisation of `Spec κ(t) ⟶ Spec k` through `Spec A`, which is the `Over` triangle of the
+affine test object — the same identity `isScalarTower_fieldPointAlgebra`
+(`Picard/Pic0Theta.lean:358`) proves for an abstract field point, here at the canonical
+residue-field point. -/
+instance instIsScalarTowerTestPointFieldAffine (t : (overSpec k A).left) :
+    IsScalarTower k A (testPointField (T := overSpec k A) t) := by
+  refine IsScalarTower.of_algebraMap_eq' ?_
+  -- Both algebra maps are `Spec.preimage` of a morphism out of `Spec κ(t)`; `Spec.preimage`
+  -- is a bijection on homs, so it suffices to compare the two morphisms, and there the
+  -- identity is the `Over` triangle of the affine test object: `(overSpec k A).hom` is by
+  -- definition `Spec.map (algebraMap k A)`.
+  have hcomp : ((overSpec k A).left.fromSpecResidueField t ≫ (overSpec k A).hom)
+      = (overSpec k A).left.fromSpecResidueField t
+          ≫ Spec.map (CommRingCat.ofHom (algebraMap k A)) := rfl
+  -- `Spec.preimage` is injective on the composite, and the composite identity is `hcomp`.
+  have hw := congrArg (fun f => (Spec.preimage f).hom) hcomp
+  have hsplit : (Spec.preimage ((overSpec k A).left.fromSpecResidueField t
+        ≫ Spec.map (CommRingCat.ofHom (algebraMap k A)))).hom
+      = (algebraMap A (testPointField (T := overSpec k A) t)).comp
+          (algebraMap k A) := by
+    have : ((overSpec k A).left.fromSpecResidueField t
+          ≫ Spec.map (CommRingCat.ofHom (algebraMap k A)))
+        = Spec.map (CommRingCat.ofHom (algebraMap k A)
+            ≫ Spec.preimage ((overSpec k A).left.fromSpecResidueField t)) := by
+      rw [Spec.map_comp, Spec.map_preimage]
+      rfl
+    rw [this, Spec.preimage_map]
+    rfl
+  exact hw.trans hsplit
+
+end Affine
+
 /-! ## The field point -/
 
 /-- **The bridge: a point of `T.left` as a field point of `T`.**
