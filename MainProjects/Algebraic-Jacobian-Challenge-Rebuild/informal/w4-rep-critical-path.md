@@ -406,3 +406,79 @@ characterized by the restriction property. That is the concrete next step and it
 too-small divisor functor) remains the campaign's real gate; nothing above touches it. What
 changed is only that the *tail* below L9 is now one structure with one ε-gated field, so the
 cost of the tail is no longer a reason to defer confronting L8.
+
+## 7.8 ROUND-0071 s0004 AMENDMENT: the tail's two obligations are one, and the clause is local on the base
+
+*Run 0071 session 0004, task `ajcr-divrep`, 2026-07-28. All Lean below is sorry-free,
+kernel-checked (`lake env lean` exit 0 per file), rooted, and in a green root build at
+9157 jobs. The reduction was independently audited by a fresh-context reviewer; what that
+audit confirmed and what it qualified are both recorded below.*
+
+§7.7 closed by naming the remaining ε-gated debt as **two** statements —
+`isDivRepClassify_pull` and `DivRepChartFamily.IsCompatible` — and called the tail "one
+structure with two ε-gated fields". That count was right about the fields and wrong about
+the obligations: **the two are the same statement**, and the tail now has a producer.
+
+**The endpoint from one hypothesis.** `Picard/DivRepAffPullClause.lean`:
+
+> `divFunctor_representableBy_of_chartClause : IsChartClause U → (divFunctor C π g).RepresentableBy DivOver`
+
+where `DivRepChartFamily.IsChartClause U` says: for every chart `(i,j)` and every
+`ω : R_Z(i,j) →ₐ[k] S`, the chart pull `divRepPullAt U i j ω` satisfies `IsDivRepClassify`
+for the chart morphism `Spec ω ≫ ChartMap i j`. That is *verbatim* the hypothesis
+`isCompatible_of_isDivRepClassify_divRepPullAt` (`Picard/DivRepAffPullbackReduce.lean:98`)
+already consumed — the reviewer verified this by a `rfl` proof of propositional equality of
+the two `Prop`s, in both directions, so it is a **naming plus a proof, not a strengthening**.
+
+**What made it work, and it is the reusable part.**
+
+> `isDivRepClassify_of_forall_away` — **`IsDivRepClassify` is local on the base.** If every
+> restriction of `F₀` to `Localization.Away (f t)` along a spanning family is classified by
+> the corresponding restriction of `v`, then `F₀` is classified by `v`.
+
+The predicate quantifies over *tower tests*, so its hypothesis data (a certified
+representative plus a pair-chart framing) and its conclusion (an equality of morphisms) both
+restrict; the framing pushes along the left leg into `T ⊗_S A` by
+`map_window_frame_toSubmodule` at the **identity tower** — the `hβ` trick already inside the
+landed `pullback_chart_divClassifyClause_compat`. Once that exists, `isDivRepClassify_pull`
+is four lines: on the `t`-th piece of the atlas factorization the value *is* the chart pull
+(`divRepPullValue_spec`) and the chart morphism *is* the restriction of `v.left`, so the
+chart clause *is* the piecewise statement.
+
+**Also landed, and cheaper than §7.7 priced it.** `pull_naturality`
+(`divRepPullValue_naturality`, `Picard/DivRepAffPullNat.lean`) is ε-free **and performs no
+gluing**. §7.7 called it "the same glue machinery as `pull`"; it is not — it is a witness
+construction against `divRepPullValue_eq_of`. General form: once a choice-defined value has
+an existential characterizing predicate *plus* a uniqueness theorem, every naturality
+statement about it is a witness construction, never a second cover chase.
+
+**A spelling hazard worth recording.** The locality lemma needs **two** declarations: the
+per-piece overlap comparison in the `algebraMap` spelling, then the cover chase consuming it
+by defeq. A single-declaration version does not elaborate — the pulled-back cover's index is
+not `Fin m` on the nose, so the cover-spelled goal cannot see `f t`. This is exactly the
+split the landed `pullback_chart_divClassifyClause_compat` uses, and now the reason is on
+record.
+
+**The qualifications, both of which a reader planning off this needs.**
+
+* **No gate cleared.** Nothing here produces an `IsChartClause`: U2 is unproved, and per
+  roadmap `…divrep.u2` it stays gated on the G-4 certificate discharge
+  (`ThetaGeneratorSeed.certifiedFamily`, `Picard/DivSchemeEps.lean:237`, demands a *global*
+  `IsCertified` over the chart ring). The R2 widening does **not** reach it: cert-r2's
+  `DivFamZar.toAff` maps the old value into the widened one, which is the wrong direction
+  for this obligation.
+* **"One hypothesis" is about the new debt only** (the reviewer's qualification). The
+  endpoint theorem still carries `hO`, `hχ` and the ambient curve instances, so a proof of
+  `IsChartClause` alone does not give representability for an arbitrary `C`.
+* **§7.6 stands untouched.** L8 — local surjectivity of the Abel map out of a too-small
+  divisor functor — remains the campaign's real gate, and is arguably false as stated. None
+  of the above bears on it.
+
+**DAT-J moved too** (`Picard/JacobianDataAbelImage.lean`). w4-datj §2.2's a-posteriori qc
+argument has four steps; three were landed separately with nothing joining them. A
+point-surjective morphism from `DivScheme g` onto `J.left` now yields `QuasiCompact J.hom`
+(DD-Q's `compactSpace_divScheme` instance + DJ-0), and `JacobianData.ofChartsOfAbelImage`
+supplies `ofChartsOfCompactSpace`'s `CompactSpace` hypothesis from it — which is what §7.5's
+first correction needs, since the chart index is infinite. What remains of DAT-J is step 3
+alone: surjectivity of the Abel map on points, which needs `divRep`, and which per §0.5 must
+stay Challenge-free (`exists_effective_of_picClass`, never `riemann_inequality_curve`).
