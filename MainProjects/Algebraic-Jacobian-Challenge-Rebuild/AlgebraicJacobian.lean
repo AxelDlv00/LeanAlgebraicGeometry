@@ -471,6 +471,7 @@ import AlgebraicJacobian.Tangent.TwoChartNaturality
 import AlgebraicJacobian.Tangent.DualNumberCarrier
 import AlgebraicJacobian.Tangent.DualNumberCarrierReduction
 import AlgebraicJacobian.Tangent.CyclicQuotientGenerator
+import AlgebraicJacobian.Tangent.ReductionTrivialCyclic
 import AlgebraicJacobian.Tangent.DualNumberChartPic
 import AlgebraicJacobian.Tangent.Pic0TangentSpace
 import AlgebraicJacobian.AbelianVariety.JacobianSmooth

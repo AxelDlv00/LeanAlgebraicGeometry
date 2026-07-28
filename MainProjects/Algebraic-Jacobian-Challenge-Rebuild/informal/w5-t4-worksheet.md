@@ -1103,3 +1103,48 @@ the **restriction** on the chart, and it is genuinely geometric — the triviali
 what makes the reduction cyclic. Untouched. Do not read either new file as closing the clause;
 `ajc-pic0av`'s C-0034 makes exactly that point about a sorry-free census hiding binder content,
 and it applies to this lane's files.
+
+### 6.17 §6.16's "one statement" WAS TWO, and the algebraic half is now closed
+
+*Run 0073 r3, after §6.16. Second correction to this lane's own sizing in one session — the
+pattern is worth more than either correction.*
+
+§6.16 said the remaining obligation is "freeness of the restriction, genuinely geometric". That
+conflated two things:
+
+> **(iii-c2-aff-alg)** freeness of the base change along `ε ↦ 0` ⟹ cyclicity of `M ⧸ (ε)·M`
+> **(iii-c2-aff-geo)** the chart module of an `ε`-kernel class base-changes to the chart module
+> of its restriction
+
+**(iii-c2-aff-alg) IS CLOSED** — `Tangent/ReductionTrivialCyclic.lean` (sorry-free, `lake env lean`
+exit 0), and it is not geometry either:
+`Module.Invertible.quotient_smul_cyclic_of_free_baseChange` for an arbitrary ideal `I`, with
+`DualNumber.free_of_free_baseChange_eps` as the instance. Two mathlib facts do it, and finding them
+was the whole cost:
+
+* `TensorProduct.quotTensorEquivQuotSMul M I : (R ⧸ I) ⊗[R] M ≃ₗ[R] M ⧸ I • ⊤` — the base change
+  along `R → R ⧸ I` **is** the quotient by `I·M`. Found by `lean_leansearch` on the *statement*
+  ("tensor with R/I is the quotient by I smul top"), not by name.
+* `Module.Invertible.free_iff_linearEquiv : Module.Free R M ↔ Nonempty (M ≃ₗ[R] R)` — an invertible
+  module is free exactly when it *is* the ring, hence cyclic on the preimage of `1`
+  (`Module.Invertible.cyclic_of_free`).
+
+**So the module-level chain of (iii-c2-aff) is COMPLETE:** free base change ⟹ cyclic reduction ⟹
+generator ⟹ `Module.Free A[ε] M` ⟹ chart class `= 1` ⟹ `CechPic.map (V s).ι L = 1`, five steps,
+every one landed and axiom-clean.
+
+**WHAT IS LEFT IS EXACTLY (iii-c2-aff-geo), and it is a different kind of statement**: that
+`Opens.cechPicClass` commutes with the `ε ↦ 0` pullback — i.e. the chart module of the base-changed
+class is the base change of the chart module. It mentions no dual numbers, no freeness and no
+cyclicity; it is a naturality square for the affine dictionary, of the same *shape* as the reduction
+square §6.12 proved for the two-chart comparison. **That is a real lead for the next session**: the
+one already-proved square is naturality of `twoChartClassHom` in the scheme, and this is naturality
+of `cechPicClass` in the scheme. Look for it in `Picard/EffectivityMoving.lean` and
+`Picard/CechPicToPicNaturality.lean` (whose name says it may already exist) *before* building it.
+
+**THE METHOD LESSON, since this lane has now mis-sized the same clause twice in one session.**
+§6.15 said "the geometry is in step 3"; §6.16 said "the geometry is freeness of the restriction";
+both were true only after removing another layer of algebra that already existed or was cheap. Rule:
+*when you name the residue of a clause, state it as a Lean statement you could type, not as a phrase
+like "the geometric part".* A phrase cannot be checked against the tree; a statement can, and both
+times the check would have found the layer immediately.
