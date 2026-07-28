@@ -1,0 +1,43 @@
+id: I-0613
+provider: local
+kind: issue
+body: "GRAPH SYNC BUILT A LEAN NODE FROM A PROSE SENTENCE, marked it lean_ok, and\
+  \ a run-integrate committed it. Measured run 0072 s0006 (ajcr-charts).\n\nTHE ARTEFACT,\
+  \ now at HEAD: hgraph/nodes/9b271964955c.md, with\n  decl: can\n  title: can\n \
+  \ content_type: class\n  lean_status: lean_ok\n  file: AlgebraicJacobian/Picard/Pic0ChartCoverageDegree.lean\n\
+  Its body begins \"class can carry an effective witness with h1 = 0 at all: ...\"\
+  . That is a fragment of my module DOCSTRING -- the sentence \"...whether the class\
+  \ can carry an effective witness...\" -- with the word \"class\" parsed as a Lean\
+  \ class declaration and the next token as its name. No declaration named \"can\"\
+  \ exists anywhere.\n\nWHY IT MATTERS rather than being cosmetic: the node carries\
+  \ lean_status lean_ok, so anything reading the graph for coverage or frontier ranking\
+  \ counts a proved declaration that does not exist. This project has twice been bitten\
+  \ by advertised-but-absent declarations; this is the same failure arriving from\
+  \ the tooling rather than from a docstring.\n\nPROVENANCE: added by cf901f0dd (workspace[0071\
+  \ r2] integrate, ajcr-divrep) -- a run-integrate sweep, not that lane's authored\
+  \ work. I deliberately EXCLUDED it from my own hgraph commit 8e8de84a8 for exactly\
+  \ this reason and it landed anyway by another route.\n\nSUGGESTED FIX, for whoever\
+  \ owns the sync: require a declaration keyword at the START of a line before emitting\
+  \ a lean node, and never emit one whose decl is a bare English word appearing mid-sentence.\
+  \ The safe interim action is to delete this one node.\n\nI am not deleting it myself:\
+  \ it is a tracked file in another lane's commit and my project's own graph, so a\
+  \ human or the sync owner should decide."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T12:06:23.947479+00:00'
+updated_at: '2026-07-28T12:06:23.947490+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0006-horizon-ajcr-charts
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

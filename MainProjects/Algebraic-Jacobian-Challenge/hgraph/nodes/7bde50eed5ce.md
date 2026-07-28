@@ -6,9 +6,10 @@ decl: HomogeneousLocalization.algebraMap_val
 file: AlgebraicJacobian/RiemannRoch/Ledger/P1.lean
 generated: lean
 lean_status: lean_ok
+private: true
 title: HomogeneousLocalization.algebraMap_val
 type: lean
-updated: '2026-07-28T19:35:13'
+updated: '2026-07-28T20:03:00'
 ---
 private lemma algebraMap_val (r : R) :
     (algebraMap R (HomogeneousLocalization 𝒜 x) r).val =

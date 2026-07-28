@@ -492,7 +492,7 @@ Over a *general* base this is not available by this argument — the tilde dicti
 the corresponding statement is a genuine gap; mathlib's `Quasicoherent.lean` offers only
 `IsClosedUnderIsomorphisms` and `IsQuasicoherent.of_coversTop`.  But the affine case is the only one
 the Čech consumer needs, since `cech_flatBaseChange` carries `[IsAffine S]`.  Project-local. -/
-theorem isQuasicoherent_pi_of_isAffineBase {R : CommRingCat.{u}} {J : Type} [Finite J]
+theorem isQuasicoherent_pi_of_isAffineBase {R : CommRingCat.{u}} {J : Type u} [Finite J]
     (A : J → (Spec R).Modules) (hA : ∀ j, (A j).IsQuasicoherent) :
     (∏ᶜ A).IsQuasicoherent := by
   haveI : Limits.PreservesFiniteLimits (tilde.functor R) := tildePreservesFiniteLimits
@@ -503,6 +503,128 @@ theorem isQuasicoherent_pi_of_isAffineBase {R : CommRingCat.{u}} {J : Type} [Fin
       Limits.Pi.mapIso (fun j => (e j).some)) ?_
   exact (presentationTilde.{u} (∏ᶜ M) Set.univ (by simp) _
     (Submodule.span_eq _)).isQuasicoherent
+
+/-- **Quasi-coherence is closed under finite products over an ABSTRACT affine base.**  The
+`isoSpec`-conjugated form of `isQuasicoherent_pi_of_isAffineBase`, which is stated over a literal
+`Spec R` while the Čech consumer carries `[IsAffine S]` with `S` abstract.
+
+Pushforward along the *iso* `S.isoSpec` is an equivalence, so it carries the product to the
+product (`PreservesProduct.iso`) and moves quasi-coherence in both directions
+(`pushforward_iso_preserves_qcoh`, `Cohomology/OpenImmersionPushforward.lean`).  Project-local. -/
+theorem isQuasicoherent_pi_of_isAffine {B : Scheme.{u}} [IsAffine B] {J : Type u} [Finite J]
+    (A : J → B.Modules) (hA : ∀ j, (A j).IsQuasicoherent) : (∏ᶜ A).IsQuasicoherent := by
+  haveI : Fintype J := Fintype.ofFinite J
+  have hA' : ∀ j, ((Scheme.Modules.pushforward B.isoSpec.hom).obj (A j)).IsQuasicoherent :=
+    fun j => pushforward_iso_preserves_qcoh B.isoSpec (A j) (hA j)
+  have hprod : (∏ᶜ fun j => (Scheme.Modules.pushforward B.isoSpec.hom).obj (A j)
+      ).IsQuasicoherent :=
+    isQuasicoherent_pi_of_isAffineBase _ hA'
+  haveI : (Scheme.Modules.pushforward B.isoSpec.hom).IsEquivalence :=
+    (Scheme.Modules.pushforwardEquivOfIso B.isoSpec).isEquivalence_functor
+  have hback : ((Scheme.Modules.pushforward B.isoSpec.hom).obj (∏ᶜ A)).IsQuasicoherent :=
+    (SheafOfModules.isQuasicoherent.{u} (Spec Γ(B, ⊤)).ringCatSheaf).prop_of_iso
+      (Limits.PreservesProduct.iso (Scheme.Modules.pushforward B.isoSpec.hom) A).symm hprod
+  refine (SheafOfModules.isQuasicoherent.{u} B.ringCatSheaf).prop_of_iso ?_
+    (pushforward_iso_preserves_qcoh B.isoSpec.symm _ hback)
+  exact ((Scheme.Modules.pushforwardComp B.isoSpec.hom B.isoSpec.inv).app _) ≪≫
+    (Scheme.Modules.pushforwardCongr B.isoSpec.hom_inv_id).app _ ≪≫
+    (Scheme.Modules.pushforwardId B).app _
+
+/-- **Affine pushforward preserves quasi-coherence, at a literal `Spec.map`.**  For a ring map
+`φ : R ⟶ R'` and a quasi-coherent `M` on `Spec R'`, the pushforward `(Spec φ)_* M` is
+quasi-coherent on `Spec R`.
+
+This is the brick the Čech terms need and it is *entirely* mathlib: `isIso_fromTildeΓ_pushforward`
+(`Mathlib/AlgebraicGeometry/Modules/Tilde.lean`) says exactly that an affine pushforward preserves
+the tilde model, and `isIso_fromTildeΓ_iff` converts that to essential-image membership, whence
+quasi-coherence because a tilde is quasi-coherent outright.
+
+**Why this exists here rather than being imported.**  The general statement
+`Scheme.Modules.pushforward_isQuasicoherent` (Stacks 01XJ, qcqs morphisms) *does* exist in this
+project — in `Picard/QuotScheme.lean`, which this file deliberately does not import (see the
+`canonicalBaseChangeMap` note at `openImmersion_bareBC`), because that module carries `sorry`s.
+An earlier revision of `cech_flatBaseChange_of_termsQuasicoherent`'s docstring advertised that
+out-of-cone lemma as the route for its `h₂`/`h₃`; the affine case, which is all the Čech consumer
+needs, is four lines from mathlib and stays inside this cone.  Project-local. -/
+theorem isQuasicoherent_pushforward_specMap {R R' : CommRingCat.{u}} (φ : R ⟶ R')
+    (M : (Spec R').Modules) (hM : M.IsQuasicoherent) :
+    ((Scheme.Modules.pushforward (Spec.map φ)).obj M).IsQuasicoherent := by
+  haveI := hM
+  haveI hpf : IsIso ((Scheme.Modules.pushforward (Spec.map φ)).obj M).fromTildeΓ :=
+    isIso_fromTildeΓ_pushforward φ M
+  obtain ⟨N, ⟨e⟩⟩ := isIso_fromTildeΓ_iff.mp hpf
+  exact (SheafOfModules.isQuasicoherent.{u} (Spec R).ringCatSheaf).prop_of_iso e
+    (presentationTilde.{u} N Set.univ (by simp) _ (Submodule.span_eq _)).isQuasicoherent
+
+/-- **Pushforward along ANY morphism of affine schemes preserves quasi-coherence.**  The
+`isoSpec`-conjugated form of `isQuasicoherent_pushforward_specMap`: `q` is conjugate to
+`Spec.map (Γ q)` by `Scheme.isoSpec_hom_naturality`, and the conjugating functors are pushforwards
+along isomorphisms, which move quasi-coherence in both directions.
+
+This is the shape the Čech term consumes: each intersection open `U_σ` is affine (`X` separated,
+cover affine) and the base `S` is affine, so `j_σ ≫ f : U_σ ⟶ S` is a morphism of affine schemes.
+Project-local. -/
+theorem isQuasicoherent_pushforward_of_isAffine {A B : Scheme.{u}} (q : A ⟶ B)
+    [IsAffine A] [IsAffine B] (M : A.Modules) (hM : M.IsQuasicoherent) :
+    ((Scheme.Modules.pushforward q).obj M).IsQuasicoherent := by
+  set φ : Γ(B, ⊤) ⟶ Γ(A, ⊤) := Scheme.Hom.appTop q with hφ
+  have hM' : ((Scheme.Modules.pushforward A.isoSpec.hom).obj M).IsQuasicoherent :=
+    pushforward_iso_preserves_qcoh A.isoSpec M hM
+  have hstep : ((Scheme.Modules.pushforward (Spec.map φ)).obj
+      ((Scheme.Modules.pushforward A.isoSpec.hom).obj M)).IsQuasicoherent :=
+    isQuasicoherent_pushforward_specMap φ _ hM'
+  have hnat : A.isoSpec.hom ≫ Spec.map φ = q ≫ B.isoSpec.hom :=
+    Scheme.isoSpec_hom_naturality q
+  have h1 : ((Scheme.Modules.pushforward (q ≫ B.isoSpec.hom)).obj M).IsQuasicoherent := by
+    refine (SheafOfModules.isQuasicoherent.{u} (Spec Γ(B, ⊤)).ringCatSheaf).prop_of_iso ?_ hstep
+    exact ((Scheme.Modules.pushforwardComp A.isoSpec.hom (Spec.map φ)).app M) ≪≫
+      (Scheme.Modules.pushforwardCongr hnat).app M
+  have h2 : ((Scheme.Modules.pushforward B.isoSpec.hom).obj
+      ((Scheme.Modules.pushforward q).obj M)).IsQuasicoherent :=
+    (SheafOfModules.isQuasicoherent.{u} (Spec Γ(B, ⊤)).ringCatSheaf).prop_of_iso
+      ((Scheme.Modules.pushforwardComp q B.isoSpec.hom).app M).symm h1
+  refine (SheafOfModules.isQuasicoherent.{u} B.ringCatSheaf).prop_of_iso ?_
+    (pushforward_iso_preserves_qcoh B.isoSpec.symm _ h2)
+  exact ((Scheme.Modules.pushforwardComp B.isoSpec.hom B.isoSpec.inv).app _) ≪≫
+    (Scheme.Modules.pushforwardCongr B.isoSpec.hom_inv_id).app _ ≪≫
+    (Scheme.Modules.pushforwardId B).app _
+
+set_option synthInstance.maxHeartbeats 800000 in
+-- The σ-indexed Čech product exceeds the default instance-synthesis budget.
+set_option maxHeartbeats 1000000 in
+/-- **Every term of the relative Čech complex is quasi-coherent** — the discharge of the `h₂`/`h₃`
+hypotheses of `cech_flatBaseChange_of_termsQuasicoherent`.
+
+Over an affine base `S`, for a separated `f` and a finite affine open cover of a separated `X`,
+the degree-`p` term `Čᵖ(𝒰, F) = f_*(∏_σ (j_σ)_*((j_σ)^* F))` is quasi-coherent.  Three inputs, all
+now in this cone:
+
+* the degree-`p` term *is* `f_*(pushPullObj F (backbone p))` — definitionally (`rfl`), the same
+  identity `cechTerm_pushforward_acyclic` uses;
+* the σ-product decomposition `pushPull_sigma_iso`, transported through `f_*` (which preserves
+  the finite product), reduces to one factor;
+* per factor, `f_*((j_σ)_* N) ≅ (j_σ ≫ f)_* N` (`pushforwardComp`) with `U_σ` affine
+  (`isAffineOpen_coverInterOpen`) and `S` affine, so `isQuasicoherent_pushforward_of_isAffine`
+  applies to a `(j_σ)^* F` that is quasi-coherent by `isQuasicoherent_pullback_opens`;
+* reassembly over the affine base by `isQuasicoherent_pi_of_isAffine`.
+
+Project-local. -/
+theorem isQuasicoherent_cechComplex_X (f : X ⟶ S) [IsSeparated f] [X.IsSeparated] [IsAffine S]
+    (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (h𝒰 : ∀ i, IsAffine (𝒰.X i))
+    (F : X.Modules) (hF : F.IsQuasicoherent) (p : ℕ) :
+    ((CechComplex f 𝒰 F).X p).IsQuasicoherent := by
+  change ((Scheme.Modules.pushforward f).obj
+    (pushPullObj F ((coverCechNerveOver 𝒰).obj (Opposite.op (SimplexCategory.mk p))))
+      ).IsQuasicoherent
+  refine (SheafOfModules.isQuasicoherent.{u} S.ringCatSheaf).prop_of_iso
+    (((Scheme.Modules.pushforward f).mapIso (pushPull_sigma_iso 𝒰 F p)) ≪≫
+      Limits.PreservesProduct.iso (Scheme.Modules.pushforward f) _).symm ?_
+  refine isQuasicoherent_pi_of_isAffine (J := Fin (p + 1) → 𝒰.I₀) _ (fun σ => ?_)
+  haveI : IsAffine (↑(coverInterOpen 𝒰 σ) : Scheme.{u}) := isAffineOpen_coverInterOpen 𝒰 h𝒰 σ
+  refine (SheafOfModules.isQuasicoherent.{u} S.ringCatSheaf).prop_of_iso
+    ((Scheme.Modules.pushforwardComp (Scheme.Opens.ι (coverInterOpen 𝒰 σ)) f).app _).symm ?_
+  exact isQuasicoherent_pushforward_of_isAffine _ _
+    (isQuasicoherent_pullback_opens (coverInterOpen 𝒰 σ) F hF)
 
 /-- **`Γ(g)` is flat for a flat `g` between affine schemes.**  Specialisation of
 `Flat.flat_appLE` to `U = V = ⊤`, where `appLE` is `appTop` up to the identity restriction map.
@@ -2430,18 +2552,22 @@ are genuine open mathematics (Stacks 02KG; see the docstrings of
 exactly one source instead of two, and that source is the Beck–Chevalley heart rather than a
 statement about arbitrary modules that nobody needs.
 
-`h₂`/`h₃` are expected to be discharged, not assumed.  Each Čech term is a finite product of
-push–pull objects over affine intersection opens (`pushPull_sigma_iso`), each factor quasi-coherent
-by `isQuasicoherent_pullback_opens` plus `pushforward_isQuasicoherent`, and the finite product of
-quasi-coherent modules over an affine base is quasi-coherent — that is
-`isQuasicoherent_pi_of_isAffineBase` above.  So what remains is bookkeeping: matching the two
-`(CechComplex f 𝒰 F).sc i` terms to that product decomposition through `pushPull_sigma_iso`, with
-the degree indices `c.prev i`/`c.next i` resolved.  Nothing on that path is open mathematics.
+**`h₂`/`h₃` ARE NOW DISCHARGEABLE, and `cech_flatBaseChange_qcoh` below does it** — see
+`isQuasicoherent_cechComplex_X`.  Prefer that form; this one is kept because taking the two
+quasi-coherence facts as hypotheses is what makes the *reduction* legible, and because a caller
+with a different complex can still use it.
 
-(An earlier revision of this paragraph asserted that closure of quasi-coherence under finite
-products "neither mathlib nor this workspace currently has".  That was wrong over an affine base,
-which is the only case this theorem is stated in: the tilde dictionary proves it in a few lines.
-The general-base statement is a real gap, and no consumer needs it.)  Project-local. -/
+(Two earlier revisions of this paragraph were wrong, both in the direction of over-stating an
+absence.  The first asserted that closure of quasi-coherence under finite products is missing from
+mathlib and this workspace: false over an affine base, which is the only case this theorem is
+stated in — `isQuasicoherent_pi_of_isAffineBase`.  The second then advertised the remaining route
+as "`isQuasicoherent_pullback_opens` plus `pushforward_isQuasicoherent`, so what remains is
+bookkeeping": `Scheme.Modules.pushforward_isQuasicoherent` is **not in this file's import cone** —
+it lives in `Picard/QuotScheme.lean`, which is deliberately not imported because it carries
+`sorry`s.  So that sentence named a lemma the file cannot use.  The affine case, which is all the
+Čech consumer needs, is four lines from mathlib's `isIso_fromTildeΓ_pushforward`:
+`isQuasicoherent_pushforward_specMap` and `isQuasicoherent_pushforward_of_isAffine`.)
+Project-local. -/
 theorem cech_flatBaseChange_of_termsQuasicoherent
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
     (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f]
@@ -2460,5 +2586,40 @@ theorem cech_flatBaseChange_of_termsQuasicoherent
         ((Scheme.Modules.pullback g').obj F) i) :=
   ⟨(pullback_mapHC_homologyIso_of_isQuasicoherent g (CechComplex f 𝒰 F) i h₂ h₃).symm ≪≫
     HomologicalComplex.homologyMapIso (cechComplex_baseChange_iso f g f' g' h 𝒰 F hF) i⟩
+
+/-- **Flat base change for the Čech higher direct images, with the flat-exactness leaf REMOVED and
+NO extra hypotheses** (Stacks 02KH).
+
+The form to use.  Hypotheses are exactly those of `cech_flatBaseChange` plus `[X.IsSeparated]`
+(which the affineness of the Čech intersection opens needs, and which every consumer of this file
+already carries), and the conclusion is identical.  The two quasi-coherence facts that
+`cech_flatBaseChange_of_termsQuasicoherent` takes as `h₂`/`h₃` are *discharged* here by
+`isQuasicoherent_cechComplex_X`, so the homology half runs through
+`pullback_mapHC_homologyIso_of_isQuasicoherent` and `pullback_preservesMonomorphisms` does not
+appear in the proof term.
+
+**What is left, stated exactly.**  This is still not axiom-clean, and the reason is now a single
+one: `cechComplex_baseChange_iso` carries the two cosimplicial naturality `sorry`s of
+`cech_pushforward_baseChange_natIso` and `twisted_cech_nerve_iso` (Stacks 02KG).  Those are the
+*only* obstruction between this tree and flat base change — the flat-exactness leaf is gone from
+this route, and so are the two quasi-coherence hypotheses.  Measure at
+`scripts/axiom-frontier.lean`. -/
+theorem cech_flatBaseChange_qcoh
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f] [X.IsSeparated]
+    [IsAffine S] [IsAffine S']
+    (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [h𝒰 : ∀ i, IsAffine (𝒰.X i)]
+    [Finite ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+      h.isoPullback.symm.hom).I₀]
+    [∀ i, IsAffine (((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+      h.isoPullback.symm.hom).X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent) (i : ℕ) :
+    Nonempty ((Scheme.Modules.pullback g).obj (cechHigherDirectImage f 𝒰 F i) ≅
+      cechHigherDirectImage f'
+        ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso h.isoPullback.symm.hom)
+        ((Scheme.Modules.pullback g').obj F) i) :=
+  cech_flatBaseChange_of_termsQuasicoherent f g f' g' h 𝒰 F hF i
+    (isQuasicoherent_cechComplex_X f 𝒰 (fun j => h𝒰 j) F hF i)
+    (isQuasicoherent_cechComplex_X f 𝒰 (fun j => h𝒰 j) F hF _)
 
 end AlgebraicGeometry

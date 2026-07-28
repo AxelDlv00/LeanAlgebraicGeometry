@@ -1420,22 +1420,38 @@ The degree map is a group homomorphism from the additive structure on
 function is stated here, the homomorphism property and the functoriality in
 `k` being left to separate lemmas.
 
-ROUTE CHANGE (run 0067). The construction is still an open obligation, but it is no
-longer the *Quot* obligation the previous docstring described, and the difference matters
-because Quot is retained-not-revived in this project. See `ClassDegree` and
-`degreeOfSection` below: representability already transports a `k`-rational point to a
-relative Picard class over the base, so the only missing input is a degree homomorphism on
-those classes — no Hilbert polynomial and no representing sheaf extraction.
+ROUTE CHANGE (run 0067). The construction is not the *Quot* obligation the original
+docstring described, and the difference matters because Quot is retained-not-revived in this
+project. Representability already transports a `k`-rational point to a relative Picard class
+over the base (`classOfSection`, sorry-free), so no Hilbert polynomial and no representing
+sheaf extraction is needed — only a degree homomorphism on those classes, which is
+`ClassDegreePinned`.
 
-The body is still `sorry`, and deliberately so: see `degreeOfSection` for the honest
-version, which is total, and for why *this* declaration cannot be closed as stated. -/
-noncomputable def degree {k : Type u} [Field k]
-    (C : Over (Spec (.of k)))
-    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIntegral C.hom] [HasPicScheme C] :
-    (Spec (.of k) ⟶ (PicScheme C).left) → ℤ :=
-  sorry
+**CLOSED (run 0067 r4), and the docstring this replaces was wrong on a point of fact.**
+It read: "A total function of that type therefore cannot be built from the Picard functor at
+all; it would have to invent a value off the sections." The first clause does not follow from
+the second. Inventing a value off the sections is exactly what a total function of this type
+is *permitted* to do, and `fun _ => 0` already witnesses that the type is inhabited — so
+"cannot be built" was never true, and a `sorry` is not the honest encoding of "the domain is
+wrong".
 
+What IS true is the observation the old note was reaching for: a morphism
+`Spec k ⟶ (PicScheme C).left` need not satisfy `lambda ≫ (PicScheme C).hom = 𝟙`, so it need
+not name a `k`-*rational* point, and representability says nothing about it. That is a
+statement about which values are *pinned*, not about totality. So the construction below
+splits on precisely that condition:
+
+* on sections it is `degreeOfSectionPinned`, i.e. *the* degree, pinned against the Abel map;
+* off them it is `0`, an arbitrary choice that no consumer may rely on.
+
+`degree_eq_degreeOfSectionPinned` below records the first half as an equation, so the value
+on the rational points — the only place the classical degree map is defined — is determined
+rather than chosen. Consumers should still prefer `degreeOfSectionPinned`, which carries the
+section hypothesis in its type and therefore cannot be misread; `degree` exists because
+`kPoints_iff_kerDegree` is stated against it, and it now has a body rather than a `sorry`.
+
+The `[ClassDegreePinned C]` binder is new and is what makes the pinned half meaningful; the
+unpinned `ClassDegree` would have permitted the zero homomorphism (see its docstring). -/
 /-! ### The degree, factored through the relative Picard group
 
 The route below replaces the Quot/Hilbert-polynomial construction the section header
@@ -1673,6 +1689,49 @@ theorem degreeOfSectionPinned_eq_zero_of_class_eq_zero {k : Type u} [Field k]
     (hclass : classOfSection C lambda hlambda = 0) :
     degreeOfSectionPinned C lambda hlambda = 0 := by
   rw [degreeOfSectionPinned, hclass, map_zero]
+
+open Classical in
+noncomputable def degree {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C] [ClassDegreePinned C] :
+    (Spec (.of k) ⟶ (PicScheme C).left) → ℤ :=
+  fun lambda =>
+    if h : lambda ≫ (PicScheme C).hom = 𝟙 (Spec (.of k)) then
+      degreeOfSectionPinned C lambda h
+    else 0
+
+/-- **On a `k`-rational point, `degree` is the pinned degree** — the equation that makes
+`degree`'s value on the sections determined rather than chosen.
+
+Immediately `dif_pos`. Recorded as a named lemma because it is the whole content of the
+claim that `degree` is a degree: off the sections its value is arbitrary, and this lemma
+says exactly where that arbitrariness does *not* reach. -/
+theorem degree_eq_degreeOfSectionPinned {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C] [ClassDegreePinned C]
+    (lambda : Spec (.of k) ⟶ (PicScheme C).left)
+    (hlambda : lambda ≫ (PicScheme C).hom = 𝟙 (Spec (.of k))) :
+    degree C lambda = degreeOfSectionPinned C lambda hlambda := by
+  classical
+  rw [degree, dif_pos hlambda]
+
+/-- **`degree` vanishes on a rational point whose relative Picard class is trivial.**
+
+The composite of `degree_eq_degreeOfSectionPinned` with
+`degreeOfSectionPinned_eq_zero_of_class_eq_zero`. This is the direction of
+`kPoints_iff_kerDegree` that additivity alone buys, now available on `degree`'s own domain. -/
+theorem degree_eq_zero_of_class_eq_zero {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C] [ClassDegreePinned C]
+    (lambda : Spec (.of k) ⟶ (PicScheme C).left)
+    (hlambda : lambda ≫ (PicScheme C).hom = 𝟙 (Spec (.of k)))
+    (hclass : classOfSection C lambda hlambda = 0) :
+    degree C lambda = 0 := by
+  rw [degree_eq_degreeOfSectionPinned C lambda hlambda]
+  exact degreeOfSectionPinned_eq_zero_of_class_eq_zero C lambda hlambda hclass
 
 end PicScheme
 
