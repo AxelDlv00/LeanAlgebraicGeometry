@@ -6,11 +6,11 @@ created: '2026-07-26T00:49:45'
 generated: blueprint
 label: lem:symmetric_product_general_divisor
 lean_status: empty
-order: 1786
+order: 1791
 ref: abelian-varieties:page-0107, abelian-varieties:page-0108
 title: General divisors of degree at most the genus
 type: tex
-updated: '2026-07-28T14:04:00'
+updated: '2026-07-28T14:11:06'
 ---
 If \(1\le r\le g\), there is a dense open subset of \(C^{(r)}\) on which
   \(h^0(D)=1\).  Thus the fibres of \(f^{(r)}\) over this open consist of one
