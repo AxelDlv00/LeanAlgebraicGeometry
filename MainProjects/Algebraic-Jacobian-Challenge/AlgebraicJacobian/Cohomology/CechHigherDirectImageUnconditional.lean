@@ -82,7 +82,16 @@ objects through the `tilde` dictionary over `Spec`.
   `∑ᵢ (-1)ⁱ • δᵢ`, so that is all any consumer here can see — and it is all this tree's
   σ-coordinate lemmas can supply.
 * `sigmaAssembled_δ_square` / `twistedNerve_δ_square_concrete` (run 0068 r4): the twisted leaf's
-  coface square, **proved** from the per-σ compatibility `TwistedPerSigmaDeltaCompat`.
+  coface square, **proved** from the per-σ compatibility `TwistedPerSigmaDeltaCompat` — but in
+  σ-decomposed form (target a `Pi` product).
+* `twistedComponent` / `twistedComponent_δ_square` (run 0068 r5): the same square at
+  `twisted_cech_nerve_iso`'s **own** spelling, target the base-changed nerve's degree object.  The
+  bridge is `cechNerve_backbone_δ_sigma` applied to the *base-changed* cover.  This is the wiring
+  r4's own notes named as unwritten, so the twisted leaf now has ONE open item, not two.
+* `BcSquareNaturality` / `BcSquarePullbackSide` / `bcSquareNaturality_iff_pullbackSide` (run 0068
+  r5): half (a) — the one remaining obligation — as a **named** `Prop` rather than an unnamed
+  hypothesis binder, together with an equivalent form carrying no `pushforward`, hence attackable by
+  the pullback pseudofunctor's coherence and the mate's unit law.
 
 ## Obligations not yet discharged
 
@@ -3562,18 +3571,20 @@ telescope corrections — **typechecks but is not `rfl`**, and `simp` with `bare
 `TwistedPerSigmaDeltaCompat` follows from half (a) alone: `twistedPerSigmaCompat_of_bcNaturality`.
 Everything else in this section is `sorry`-free.
 
-**WHAT IS STILL UNWRITTEN, stated so it is not met as a surprise — there are TWO items, not one.**
+**ITEM (i), THE WIRING, IS NOW WRITTEN (run 0068 r5) — ONE ITEM REMAINS, NOT TWO.**
 `sigmaAssembled_δ_square` and `twistedNerve_δ_square_concrete` prove the coface square in the
 **σ-decomposed** form: their target is a `Pi` product, and the target-side coface appears as a
 `Pi.lift`.  Feeding that to `alternatingCofaceComplexIsoOfDelta` at `twisted_cech_nerve_iso`'s *own*
-spelling — where the target is the base-changed nerve's degree object — is a further step: it needs
-the `Pi` product identified with that object through `pushPull_sigma_iso` **for the base-changed
-cover**, and the base-changed nerve's coface put into the `Pi.lift` shape.  That is bookkeeping of
-the kind this file already does elsewhere, but it is not written, and the r4 commit messages name
-only the mathematical residue.  So:
+spelling — where the target is the base-changed nerve's degree object — was named here as unwritten
+bookkeeping.  It is `twistedComponent_δ_square` below, and the bridge is that the **same**
+σ-coordinate coface formula applies to the base-changed cover: `cechNerve_backbone_δ_sigma` at `𝒰'`
+says its nerve's coface, read through `pushPull_sigma_iso 𝒰'`, is reindex-then-restrict — exactly
+the `Pi.lift` shape.  No transport: the index types agree on the nose (`baseChangedCover_I₀`).
 
-  (i) the wiring above — mechanical, unwritten;
-  (ii) half (a) — the mathematics.
+So the honest state is one item:
+
+  (ii) half (a) — mate-naturality in the SQUARE, now named `BcSquareNaturality` and shown
+       equivalent to a pushforward-free form `BcSquarePullbackSide`.
 
 Neither is a `sorry` in this file; `twisted_cech_nerve_iso`'s own square is still the only one. -/
 
@@ -3928,7 +3939,125 @@ theorem bareBC_eq_of_w {V V' : Scheme.{u}} (g' : X' ⟶ X) (p : V ⟶ X) (p' : V
     openImmersion_bareBC g' p p' gV hsq = bareBC_of_w g' p p' gV hsq.w :=
   rfl
 
-/-! (2) THE PASTE STRUCTURE -- this is what makes `mateEquiv_vcomp` the route to half (a).
+/-- **A right adjoint reflects equality of maps into its image.**  For `adj : L ⊣ R`, two morphisms
+`a b : M ⟶ R.obj Z` are equal as soon as `L.map a = L.map b`.
+
+This is the cancellation half (a) needs, and it is why half (a) needs no "generator" on the source:
+**both** sides of the compatibility land in `pV_* (…)` — a pushforward — so comparing their
+`pV^*`-images suffices.  Pure adjunction theory: `L.map a` determines
+`(homEquiv).symm a = L.map a ≫ counit`, and `homEquiv` is a bijection.  Project-local. -/
+theorem eq_of_map_eq_of_adjunction {C D : Type*} [Category C] [Category D] {L : C ⥤ D} {R : D ⥤ C}
+    (adj : L ⊣ R) {M : C} {Z : D} (a b : M ⟶ R.obj Z) (hab : L.map a = L.map b) : a = b :=
+  (adj.homEquiv M Z).symm.injective (by
+    simp only [Adjunction.homEquiv_counit, hab])
+
+/-! ### HALF (a), NAMED — and reduced to a statement with no pushforward on the target
+
+Half (a) has been described in prose in this file since r4 and passed around as an unnamed
+hypothesis `hBC` of `twistedPerSigmaCompat_of_bcNaturality`.  Naming it is not cosmetic: an
+obligation that exists only as a binder cannot be cited, measured by a probe, or reduced.
+`BcSquareNaturality` below is that binder, verbatim, as a `Prop`.
+
+The second declaration, `BcSquarePullbackSide`, restates it with the target's `pushforward`
+cancelled: both sides land in `pushPullObj (g'^*F) (Over.mk pV) = pV_* pV^*(g'^*F)`, the image of a
+right adjoint, so `eq_of_map_eq_of_adjunction` reflects the equality down from `pV^*`.
+
+**It is an EQUIVALENT restatement, not a weakening, and this is stated up front rather than
+discovered later** — `bcSquareNaturality_iff_pullbackSide` proves both directions, the converse
+being `congrArg`.  So nothing here reduces the mathematical content of half (a); what it changes is
+the *vocabulary*.  `BcSquareNaturality` has a `p_*` wrapped around everything and offers no handle;
+`BcSquarePullbackSide` mentions no pushforward at all, so the pullback pseudofunctor's own coherence
+(`pullbackComp`, `pullbackCongr`) and the mate's unit law (`unit_mateEquiv`) apply to it directly.
+
+The `mateEquiv_vcomp` route recorded below remains the other candidate, and it is genuinely blocked
+on the brick "`pushPullMap` is the degenerate-square mate" — measured here as typechecking but not
+`rfl` and not closable by `simp`. -/
+
+/-- **HALF (a), the crux of the twisted leaf, as a named `Prop`.**  Naturality of the
+restricted-square Beck–Chevalley iso `bcv` in the SQUARE: for the intersection-open inclusion
+`U_{σ'} ⊆ U_{σ'∘δᵏ}` and its base change `wmap`, base-change-then-restrict equals
+restrict-then-base-change.
+
+This is exactly the hypothesis `hBC` of `twistedPerSigmaCompat_of_bcNaturality`, and by that theorem
+plus `twistedComponent_δ_square` it is the ONLY thing between this file and Stacks 02KG/02KH.  It is
+*not* `openImmersion_bareBC_app_eq` (naturality in the module) nor `pushPullMap_comp`/`_id` (functor
+laws in the slice variable): nothing in the tree relates the mate across a change of square.
+Project-local. -/
+def BcSquareNaturality (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover) [IsSeparated f] [IsAffine S]
+    [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent) : Prop :=
+  ∀ (p : ℕ) (k : Fin (p + 2)) (σ' : Fin (p + 2) → 𝒰.I₀),
+    (bcv f g' 𝒰 F hF (σ' ∘ (SimplexCategory.δ k).toOrderHom)).hom ≫
+        pushPullMap ((Scheme.Modules.pullback g').obj F)
+          (wmap g' 𝒰 (SimplexCategory.δ k).toOrderHom σ')
+      = (Scheme.Modules.pullback g').map (pushPullMap F (interLegHom 𝒰 σ' k)) ≫
+          (bcv f g' 𝒰 F hF σ').hom
+
+/-- **Half (a) with the target pushforward cancelled.**  The same two composites, compared after
+applying `pV^*` where `pV = pullback.fst g' (ι U_{σ'})` is the target's structure map.  No
+`pushforward pV` occurs, so this is an equation between maps of *pullbacks* — pseudofunctor
+bookkeeping plus the mate's unit law, not a mate-across-squares statement.  Project-local. -/
+def BcSquarePullbackSide (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover) [IsSeparated f] [IsAffine S]
+    [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent) : Prop :=
+  ∀ (p : ℕ) (k : Fin (p + 2)) (σ' : Fin (p + 2) → 𝒰.I₀),
+    (Scheme.Modules.pullback
+        (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ')))).map
+      ((bcv f g' 𝒰 F hF (σ' ∘ (SimplexCategory.δ k).toOrderHom)).hom ≫
+        pushPullMap ((Scheme.Modules.pullback g').obj F)
+          (wmap g' 𝒰 (SimplexCategory.δ k).toOrderHom σ'))
+      = (Scheme.Modules.pullback
+          (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ')))).map
+        ((Scheme.Modules.pullback g').map (pushPullMap F (interLegHom 𝒰 σ' k)) ≫
+          (bcv f g' 𝒰 F hF σ').hom)
+
+/-- **THE CANCELLATION: half (a) follows from its pullback-side form.**  `pushPullObj` is by
+definition `p_* p^* (−)`, so the common target of the two composites is in the image of the right
+adjoint `pushforward pV`; `eq_of_map_eq_of_adjunction` then reflects the equality down from
+`pV^*`.  Nothing about the mate, the square, or open immersions is used.  Project-local. -/
+theorem bcSquareNaturality_of_pullbackSide (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover)
+    [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent)
+    (hpb : BcSquarePullbackSide f g' 𝒰 F hF) : BcSquareNaturality f g' 𝒰 F hF :=
+  fun p k σ' => eq_of_map_eq_of_adjunction
+    (Scheme.Modules.pullbackPushforwardAdjunction
+      (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ')))) _ _ (hpb p k σ')
+
+/-- **The full chain from half (a)'s pullback-side form to `TwistedPerSigmaDeltaCompat`.**
+`bcSquareNaturality_of_pullbackSide` then `twistedPerSigmaCompat_of_bcNaturality`.  Stated so the
+single remaining obligation of flat base change is citable in one name.  Project-local. -/
+theorem twistedPerSigmaCompat_of_pullbackSide (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [IsSeparated f] [IsAffine S]
+    [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent)
+    (hpb : BcSquarePullbackSide f g' 𝒰 F hF) :
+    TwistedPerSigmaDeltaCompat f g f' g' h 𝒰 F hF :=
+  twistedPerSigmaCompat_of_bcNaturality f g f' g' h 𝒰 F hF
+    (bcSquareNaturality_of_pullbackSide f g' 𝒰 F hF hpb)
+
+/-- **THE CONVERSE — so the two forms are EQUIVALENT, and this is a restatement, not a weakening.**
+Trivially `congrArg`, and stated for a reason this workspace has been bitten by: a "reduction" whose
+converse fails may have thrown away what made the statement true, and one whose converse holds is
+honestly a *change of vocabulary*.  This one is the latter.
+
+What the change buys is nonetheless real: `BcSquarePullbackSide` mentions no `pushforward`, so it is
+attackable by the pullback pseudofunctor's own coherence (`pullbackComp`, `pullbackCongr`) plus the
+mate's unit law `unit_mateEquiv`, whereas `BcSquareNaturality` had a `p_*` around everything and no
+handle at all.  Project-local. -/
+theorem bcSquarePullbackSide_of_naturality (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover)
+    [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent)
+    (hbc : BcSquareNaturality f g' 𝒰 F hF) : BcSquarePullbackSide f g' 𝒰 F hF :=
+  fun p k σ' => congrArg (Scheme.Modules.pullback
+    (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ')))).map (hbc p k σ')
+
+/-- The two forms of half (a) are equivalent (`bcSquareNaturality_of_pullbackSide` and its
+converse).  Recorded as one statement so a reader cannot take the reduction for a weakening. -/
+theorem bcSquareNaturality_iff_pullbackSide (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover)
+    [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent) :
+    BcSquareNaturality f g' 𝒰 F hF ↔ BcSquarePullbackSide f g' 𝒰 F hF :=
+  ⟨bcSquarePullbackSide_of_naturality f g' 𝒰 F hF,
+   bcSquareNaturality_of_pullbackSide f g' 𝒰 F hF⟩
+
+/-! (2) THE PASTE STRUCTURE -- an alternative route to half (a), NOT the one taken.
 
 MEASURED NEGATIVE: the statement
 

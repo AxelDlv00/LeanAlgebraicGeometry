@@ -2,38 +2,46 @@ id: AJC.rr.extuniform
 title: 'Extension-uniform H1 vanishing: one threshold serving every field extension'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'OPEN at genus >= 1; CLOSED at genus 0 (run 0074 r7).
+summary: 'OPEN at genus >= 1; genus 0 reduced to ONE named brick (run 0074 r7).
 
 
-  Cluster-P item 2''s strong quantifier order: one b chosen BEFORE the field, serving
-  every extension kappa/k. Kept apart from single-field bounded vanishing (AJC.rr.degvanish,
-  CLOSED) and from global generation (closed at a single field only, NOT uniform over
-  extensions).
+  Cluster-P item 2: one threshold b chosen BEFORE the field, serving every extension
+  kappa/k. Kept apart from single-field bounded vanishing (AJC.rr.degvanish, CLOSED)
+  and from global generation (single-field only, NOT uniform over extensions).
 
 
-  State. The reduction needed two inputs. Input (1), base-field invariance of the
-  genus, closed r6 (Ledger/GenusFieldInvariance.genus_baseChangeField_curve). Input
-  (2) is UniformBaseDivisor C d -- one degree bound with a vanishing divisor of degree
-  <= d over every kappa -- and it now has its FIRST producer (r7, Ledger/VanishingFieldDescent.lean):
-  H1(O) vanishing is base-field invariant in BOTH directions by faithful flatness
-  of kappa/k applied to the Cech comparison, so uniformBaseDivisor_zero_of_subsingleton
-  yields UniformBaseDivisor C 0 and uniformVanishing_of_subsingleton_h1 is the first
-  UniformVanishing instance in AJC.
+  Input (1), base-field invariance of the genus, closed r6. Input (2) is UniformBaseDivisor
+  C d and now has its first PRODUCER (r7, Ledger/VanishingFieldDescent.lean): a field
+  extension is faithfully flat, so kappa (x)_k - REFLECTS as well as preserves triviality,
+  and r6''s Cech comparison upgrades from an isomorphism of modules to an equivalence
+  of VANISHING statements in BOTH directions. Not a corollary of the genus identity
+  -- finrank reads 0 on infinite-dimensional spaces, so a dimension equality cannot
+  decide Subsingleton. The descent half has no analogue in this workspace.
 
 
-  Why it is still open. That producer''s hypothesis is Subsingleton H1(O_C), i.e.
-  genus C = 0. For genus >= 1 the hypothesis is false and input (2) remains a missing
-  production from geometry. The method''s ceiling is measured: the Cech comparison
-  is stated at the UNIT module, so AJC has no divisor-level base-change comparison
-  to reach d > 0 with. That general-module comparison is the next brick.
+  WHY GENUS >= 1 IS STILL OPEN. subsingleton_hModule_one_iff_genus_eq_zero (a theorem,
+  not a docstring claim) shows the producer''s hypothesis IS genus C = 0. For genus
+  >= 1 it is false and input (2) remains a missing production from geometry. The method''s
+  ceiling is measured: the Cech comparison is stated at the UNIT module, so AJC has
+  no divisor-level base-change comparison to reach d > 0. That general-module comparison
+  is the brick for positive genus.
 
 
-  Not portable from AJCR. Measured r7: AJCR has the content (subsingleton_h1_windowN
-  + deg_windowN, kappa-independent degree) but uniform BY CONSTRUCTION OF THE STATEMENT
-  (its pi is bound at P1 k) rather than by a theorem, and neither UniformBaseDivisor
-  nor UniformVanishing occurs there at all. Cost is an 88-139 file dependency cone
-  plus two carrier boundaries with no bridge in either project (AffineTwoCover<->AffineCoverMVSquare,
-  relCurve<->baseChangeField).
+  WHY GENUS 0 IS NOT YET AN INSTANCE EITHER. AJC discharges Subsingleton H1(O_C) at
+  NO curve -- no Subsingleton H1(O_P1), no genus (p1Over k) = 0 (verified independently
+  by review). So the genus-0 result is a true implication with no exhibited instance.
+  The missing brick is elementary and scoped on I-0746: h1(O_P1) = 0, i.e. surjectivity
+  of k[x] x k[y] -> k[x,x^-1]. The obstacle is structural, not mathematical -- LaurentChartData
+  carries span-of-powers for the two CHARTS but not integer powers on the OVERLAP.
+
+
+  NOT PORTABLE FROM AJCR. Measured r7 and confirmed by review: AJCR has the content
+  (subsingleton_h1_windowN + deg_windowN) but uniform BY CONSTRUCTION OF THE STATEMENT
+  -- its pi is bound at P1 k -- not by a theorem, and neither UniformBaseDivisor nor
+  UniformVanishing occurs there. Cone measured exactly: 88 files for GluedSheafH0BaseChange,
+  139 for WindowFieldTransport, across two carrier boundaries with zero overlap in
+  either direction (AffineCoverMVSquare 37 files in AJC / 0 in AJCR; baseChangeField
+  11 / 0; AffineTwoCover 0 / 19; relCurve 0 / 280).
 
 
   No Serre duality anywhere in this workspace, so deg D >= 2g-1 => H1 = 0 is NOT available
@@ -63,7 +71,8 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.rr
   owner: ajc-rr
-  updated_at: '2026-07-28T22:41:39.936095+00:00'
+  updated_at: '2026-07-28T23:26:49.439424+00:00'
   pinned_commits:
+  - 81e3ef56f
   - f7d1ec0d0
   - 57f19428d

@@ -1813,4 +1813,94 @@ theorem leakProbe_baseChangedCover_I₀ {S S' X X' : Scheme.{u}}
 #print axioms twisted_cech_nerve_iso
 #print axioms cech_flatBaseChange_oneLeaf
 
+/-! ### §6i. THE WIRING IS WRITTEN AND HALF (a) IS NAMED (run 0068 r5)
+
+**NO ENDPOINT MOVED, and nothing previously contaminated became clean.**  Lead with that, because
+§6h had to say the same thing and the temptation is to let a longer clean list imply otherwise.
+`twisted_cech_nerve_iso` and `cech_flatBaseChange_oneLeaf` still report `sorryAx` — the controls
+above are unchanged and are re-run below.  What changed is the *count of open items*, from two to
+one, and that the remaining one now has a name.
+
+* `leakProbe_wiredDeltaSquare` — the coface square at `twisted_cech_nerve_iso`'s OWN spelling
+  (target the base-changed nerve's degree object, not a `Pi` product).  This is r4's item (i), and
+  it must be **clean**: it is a theorem from `TwistedPerSigmaDeltaCompat`, exactly like §6h's
+  σ-decomposed version, so if it ever reports `sorryAx` the wiring has acquired a leak.
+* `leakProbe_bcNerveCoface_sigma` — the bridge: the σ-coordinate coface formula AT THE BASE-CHANGED
+  COVER.  Clean, and worth its own line because it is the whole content of the wiring; the rest is
+  cancellation.
+* `leakProbe_halfA_equiv` — half (a) in its two forms are EQUIVALENT.  Measured because a
+  "reduction" is worth nothing until someone checks it did not throw away content, and this one is
+  honestly a change of vocabulary rather than a weakening.
+* `leakProbe_twistedCompat_from_pullbackSide` — the full chain from the pushforward-free form of
+  half (a) to `TwistedPerSigmaDeltaCompat`.  Clean, and it is the line that says one named `Prop`
+  is all that is missing.
+
+Read together: four clean declarations, two controls that must keep firing. -/
+
+section Section6i
+
+variable {S S' X X' : Scheme.{u}}
+
+/-- Item (i), measured: the coface square at the nerve's own spelling. -/
+theorem leakProbe_wiredDeltaSquare (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
+    [Finite (bcCover f g f' g' h 𝒰).I₀]
+    (F : X.Modules) (hF : F.IsQuasicoherent)
+    (hcompat : TwistedPerSigmaDeltaCompat f g f' g' h 𝒰 F hF) (n : ℕ) (k : Fin (n + 2)) :
+    (twistedComponent f g f' g' h 𝒰 F hF n).hom ≫
+        (CosimplicialObject.Augmented.drop.obj
+          (CechNerve (bcCover f g f' g' h 𝒰) ((Scheme.Modules.pullback g').obj F))).δ k
+      = (Scheme.Modules.pullback g').map
+            ((CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ k) ≫
+          (twistedComponent f g f' g' h 𝒰 F hF (n + 1)).hom :=
+  twistedComponent_δ_square f g f' g' h 𝒰 F hF hcompat n k
+
+/-- The bridge the wiring rests on: the σ-coordinate coface AT THE BASE-CHANGED COVER. -/
+theorem leakProbe_bcNerveCoface_sigma (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite (bcCover f g f' g' h 𝒰).I₀]
+    (F : X.Modules) (n : ℕ) (k : Fin (n + 2)) (σ' : Fin (n + 2) → 𝒰.I₀) :
+    (pushPull_sigma_iso (bcCover f g f' g' h 𝒰) ((Scheme.Modules.pullback g').obj F) n).hom ≫
+        Limits.Pi.π (fun τ : Fin (n + 1) → 𝒰.I₀ =>
+          pushPullObj ((Scheme.Modules.pullback g').obj F)
+            (Over.mk (Scheme.Opens.ι (coverInterOpen (bcCover f g f' g' h 𝒰) τ))))
+          (σ' ∘ (SimplexCategory.δ k).toOrderHom) ≫
+        pushPullMap ((Scheme.Modules.pullback g').obj F)
+          (interLegHom (bcCover f g f' g' h 𝒰) σ' k)
+      = (CosimplicialObject.Augmented.drop.obj
+            (CechNerve (bcCover f g f' g' h 𝒰) ((Scheme.Modules.pullback g').obj F))).δ k ≫
+          (pushPull_sigma_iso (bcCover f g f' g' h 𝒰)
+            ((Scheme.Modules.pullback g').obj F) (n + 1)).hom ≫
+          Limits.Pi.π (fun τ : Fin (n + 2) → 𝒰.I₀ =>
+            pushPullObj ((Scheme.Modules.pullback g').obj F)
+              (Over.mk (Scheme.Opens.ι (coverInterOpen (bcCover f g f' g' h 𝒰) τ)))) σ' :=
+  bcNerve_drop_δ_sigma f g f' g' h 𝒰 F n k σ'
+
+/-- Half (a)'s two forms are equivalent — so the restatement is not a weakening. -/
+theorem leakProbe_halfA_equiv (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover)
+    [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent) :
+    BcSquareNaturality f g' 𝒰 F hF ↔ BcSquarePullbackSide f g' 𝒰 F hF :=
+  bcSquareNaturality_iff_pullbackSide f g' 𝒰 F hF
+
+/-- The whole residue in one name: the pushforward-free half (a) gives the per-σ compatibility. -/
+theorem leakProbe_twistedCompat_from_pullbackSide (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S')
+    (g' : X' ⟶ X) (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [IsSeparated f] [IsAffine S]
+    [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent)
+    (hpb : BcSquarePullbackSide f g' 𝒰 F hF) :
+    TwistedPerSigmaDeltaCompat f g f' g' h 𝒰 F hF :=
+  twistedPerSigmaCompat_of_pullbackSide f g f' g' h 𝒰 F hF hpb
+
+end Section6i
+
+#print axioms leakProbe_wiredDeltaSquare
+#print axioms leakProbe_bcNerveCoface_sigma
+#print axioms leakProbe_halfA_equiv
+#print axioms leakProbe_twistedCompat_from_pullbackSide
+-- CONTROLS for §6i, the same two as §6h.  They MUST still report `sorryAx`: no endpoint moved this
+-- round, and if one of them comes back clean without the twisted square being discharged then the
+-- probes above have stopped measuring the thing they are named for.
+#print axioms twisted_cech_nerve_iso
+#print axioms cech_flatBaseChange_oneLeaf
+
 end AlgebraicGeometry
