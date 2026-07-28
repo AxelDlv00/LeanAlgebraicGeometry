@@ -348,6 +348,26 @@ namespace CategoryTheory
 
 open Limits
 
+/-- **A one-object diagram's sections are its invariants.** For a diagram indexed by
+`SingleObj G`, lying in the `sections` set is equivalent to being fixed by every `g : G` —
+the many-object quantifier collapses because the index category has one object and
+`SingleObj.toEnd` is an equivalence onto its endomorphisms.
+
+This is what makes the affine case below *computable* rather than merely abstract. Limits
+in `CommRingCat` are computed as sections (`CommRingCat.limitCone`), so dually the colimit
+of the permutation action on an affine scheme is `Spec` of the **invariant subring** of the
+`n`-fold tensor power — which is exactly the ring Milne writes as `(A^{⊗n})^{S_n}` in
+III.3 Proposition 3.1. Without this the affine inhabitation would be a black box; with it,
+the carrier is named. -/
+theorem mem_sections_singleObj_iff {G : Type u} [Group G] (F : SingleObj G ⥤ Type v)
+    (x : (j : SingleObj G) → F.obj j) :
+    x ∈ F.sections ↔
+      ∀ g : G, F.map (SingleObj.toEnd G g) (x (SingleObj.star G)) = x (SingleObj.star G) := by
+  refine ⟨fun hx g => hx (SingleObj.toEnd G g), fun h j j' f => ?_⟩
+  obtain rfl : j = SingleObj.star G := Subsingleton.elim _ _
+  obtain rfl : j' = SingleObj.star G := Subsingleton.elim _ _
+  exact h ((SingleObj.toEnd G).symm f)
+
 /-- **Every `n`, in `Type`.** The symmetric power interface with its symmetry hypothesis,
 inhabited at all `n` — `Type` has all colimits.
 
