@@ -519,6 +519,7 @@ import AlgebraicJacobian.Picard.DivSchemeRedesignHsubChartPin
 import AlgebraicJacobian.Picard.DivSchemeRedesignCascade
 import AlgebraicJacobian.Picard.DivSchemeRedesignFreeFlat
 import AlgebraicJacobian.Picard.DivSchemeRedesignFreeFlatChart
+import AlgebraicJacobian.Picard.DivisorFamilyAffZar
 
 /-!
 # AlgebraicJacobian — library root
