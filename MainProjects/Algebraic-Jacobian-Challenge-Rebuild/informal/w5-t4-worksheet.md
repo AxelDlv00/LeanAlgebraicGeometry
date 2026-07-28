@@ -1952,8 +1952,10 @@ Two things are wrong with that, and the second is the one that matters.
    link, stated sharply. The engine's arrow is `unitsFst` on the dual-number carrier; item (1)'s
    arrow is `pullbackOverlapQuot` along the `ε ↦ 0` scheme morphism. Saying these are the same arrow
    across `dualNumberCechH1Equiv` is precisely `(b-coeff)` composed with the (3c) object
-   transport."* That link was never built. §6.26 closed **(3c)**, which is one of its two
-   *ingredients*, and §§6.27–6.29 closed the *chart-triviality* clause, which is a different leg.
+   transport."* That link had never been built **at the time this section was written** (it is
+   closed later the same session, §7.4 — and by `rfl`, which is its own lesson). §6.26 closed
+   **(3c)**, which §6.24 named as one of its two *ingredients* — though §7.4 finds the arrow
+   consumes neither — and §§6.27–6.29 closed the *chart-triviality* clause, a different leg.
 
 **Measured, and this is the instrument that should have been run before the row was written**
 (`I-0630`/`I-0687`/`I-0711` shape: a carrier with no consumers reads exactly like one with no
@@ -1968,7 +1970,10 @@ grep -rln 'relSectionsMapUnits'    → DualNumberCarrierReduction.lean    (its o
 ```
 
 **Every one of the four objects §6.24 named as the two sides of the missing link is consumed by
-nothing outside the file that defines it.** Three of the four are consumed by *nothing at all*. So
+nothing outside the file that defines it.** Three of the four are consumed by *nothing at all*.
+(Fixed later the same session for two of them: `EpsArrowIdentification.lean` consumes
+`pullbackOverlapQuot` and `dualNumberCechH1Equiv`, §7.4. `unitsReduction` and `relSectionsMapUnits`
+are still island-shaped, and (T3-3) is what should consume them.) So
 the honest reading of the T-chain at the start of this session is not "assembly over one geometric
 hypothesis" but **"four landed carriers and the arrow between two of them is absent"** — the
 `I-0711` island shape, in a lane that has now recorded that shape three times.
@@ -1994,9 +1999,9 @@ and the chain that computes it, right to left:
 | step | statement | status |
 |---|---|---|
 | (T3-1) | `H¹(C,𝒪) ≃+ Additive (unitsReduction C.left U₀ U₁).ker` | **LANDED** — T2, `h1AddEquivTruncExpCechKernel` |
-| (T3-2) | that kernel `≃` the kernel of `pullbackOverlapQuot (relCurveMap C k[ε] k)` | **THE MISSING LINK** — §6.24; two ingredients landed, arrow absent |
-| (T3-3) | that kernel `≃` `ker(CechPic(Z) → CechPic(X))` | **LANDED** — `map_twoChartClass_eq_one_iff` + `twoChartClass_injective` + (iii-c2) surjectivity |
-| (T3-4) | `CechPic(X) ≃ CechPic(C.left)` and the map matches | **NOT MEASURED before this session** — see 7.2 |
+| (T3-2) | that kernel `≃` the kernel of `pullbackOverlapQuot (relCurveMap C k[ε] k)` | ~~THE MISSING LINK — §6.24; two ingredients landed, arrow absent~~ **CLOSED §7.4, `rfl`** — `EpsArrowIdentification.lean` |
+| (T3-3) | that kernel `≃` `ker(CechPic(Z) → CechPic(X))` | inputs LANDED, **assembly NOT written** — `map_twoChartClass_eq_one_iff` + `twoChartClass_injective` + (iii-c2) surjectivity. T3's residue after §7.4 |
+| (T3-4) | `CechPic(X) ≃ CechPic(C.left)` and the map matches | **NOT MEASURED before this session** — §7.2; **CLOSED**, `CechPicIsoTransport.lean` |
 
 (T3-2) is the arrow §6.24 named. (T3-4) is a step **no section of this worksheet has ever named**,
 and it is where the `ε ↦ 0` morphism's target lives: `twoChartClass`'s pullback lands on
@@ -2063,9 +2068,9 @@ and `CechPic.map (f ≫ g) L = CechPic.map f (CechPic.map g L)` needs `rw [CechP
 
 | item | size | note |
 |---|---|---|
-| `cechPicMap_injective_of_isIso` | **[XS], probed green** | two lines; the (T3-4) brick |
-| (T3-4) instantiated at `transportLeft` | [S] | the iso is landed; needs `relCurveMap_preimage` transport, NOT `rfl` |
-| (T3-2), the §6.24 arrow | **[M], and it is the real residue** | `(b-coeff)` (`relSectionsMapUnits_dualNumberSectionsUnits`, landed) composed with `dualNumberCechH1Equiv` (landed) — both islands; the composite is the statement |
+| `cechPicMap_injective_of_isIso` | ~~[XS], probed green~~ **LANDED** | `CechPicIsoTransport.lean`; shipped as a `MulEquiv` (`cechPicMapEquivOfIso`) since a kernel needs both directions |
+| (T3-4) instantiated at `transportLeft` | ~~[S]~~ **LANDED** | `cechPicMap_transportLeft_injective` / `cechPicTransportLeftEquiv`. The `relCurveMap_preimage` transport is still NOT `rfl` and is named in that file's Scope section |
+| (T3-2), the §6.24 arrow | ~~[M], and it is the real residue~~ **RETRACTED — it is `rfl`, §7.4** | I priced it by "both ingredients are landed" and then wrote, in this same subsection, that the number was a guess. It was. `EpsArrowIdentification.lean`, `rfl`, and neither named ingredient appears in it |
 | (T3-3) surjectivity leg wiring | [S/M] | every input landed (§§6.10, 6.27–6.28); no gap named |
 
 **What NOT to conclude, stated because this lane's failure mode is exactly this.** The above is a
@@ -2079,3 +2084,64 @@ And the transferable finding of this section is not any of the sizes — it is �
 prior sessions of this lane wrote a hand-off summarising the worksheet's *last* section; §6.24's
 open arrow survived all three, and one of those hand-offs upgraded it to "the pieces no longer have
 gaps between them".
+
+### 7.4 RETRACTION OF §7.3: (T3-2) IS `rfl`, AND MY OWN CAVEAT PREDICTED THAT IT MIGHT BE
+
+*Run 0073 r7, `Tangent/EpsArrowIdentification.lean`. Kernel-green on the scratch olean root, rooted,
+three headlines axiom-clean against two controls that both fire `sorryAx`. Written the same session
+as §7.3, one hour later.*
+
+**§7.3 priced (T3-2) at [M] and called it "the real residue". It is `rfl`.** Two statements, both
+`rfl`, and nothing between them:
+
+* `cechCoboundaryUnits_preimage_eq` — `dualNumberCechH1Equiv`'s target subgroup (stated with
+  `resHom (preimage_mono (fst …) inf_le_left)`) and `pullbackOverlapQuot`'s source subgroup (stated
+  with `resHom inf_le_left` at the family `fun s => fst ⁻¹ᵁ U s`) are **the same term**. Preimage
+  distributes over `⊓` definitionally, so `preimage_mono` at `inf_le_left` *is* `inf_le_left`.
+* `pullbackOverlapQuot_dualNumberCechH1Equiv_mk` — the §6.24 square itself, on generators.
+
+**WHAT MADE IT `rfl`, and this is the reusable half: stating the target in the PULLED-BACK opens.**
+The first attempt asked for the right-hand side as `Units.map (relSectionsMap …)` landing in
+`Γ(relCurve C k, fst ⁻¹ᵁ (U₀ ⊓ U₁))` — the spelling the engine's downstairs side uses. That does not
+typecheck, and the error names exactly the two opens `relCurveMap_preimage` relates:
+
+```
+has type      (Γ(relCurve C k, fst ⁻¹ᵁ (U false ⊓ U true)))ˣ ⧸ ?m
+but expected  (Γ(relCurve C k, relCurveMap ⁻¹ᵁ fst ⁻¹ᵁ U false ⊓ relCurveMap ⁻¹ᵁ fst ⁻¹ᵁ U true))ˣ ⧸ …
+```
+
+Restated with `Scheme.Hom.unitsAppLE` **into** the pulled-back overlap — which is what
+`pullbackOverlapQuot` actually produces — the whole square closes by `rfl`. This is workspace memory
+`restrict-into-the-type-dont-rewrite-the-type` for the third time in this directory, and the first
+time on a *base-change preimage* rather than a `≤`-restriction. The tell was identical both times: a
+**type mismatch naming two opens**, not a failing tactic.
+
+**WHY THE [M] WAS WRONG, stated precisely, because "I under-priced again" is not the useful
+description.** §7.3's reasoning was *"[M] on the strength of 'both ingredients are landed'"* — i.e. I
+priced the composite of `(b-coeff)` and `dualNumberCechH1Equiv` by the fact that both exist. That is
+exactly the reasoning §6.28 was written to warn against, and §7.3 **says so in its own text**: *"the
+[M] on (T3-2) is a guess until a session writes the statement down and reads the leftover goals."*
+The caveat was correct and it was mine; what it did not do is stop me writing [M] into the sizing
+table as though it were a measurement. **A caveat next to a number does not make the number a
+measurement — and a reader takes the number.**
+
+> **Rule: if you can write "this is a guess until someone writes the statement", write the statement.**
+> §7.3's honest hedge cost one paragraph; discharging what it hedged cost twenty minutes, and the
+> hedge would otherwise have been carried into a roadmap row and a hand-off as [M]. The distance
+> between "I know this needs probing" and "I probed it" is where this lane's mis-pricings live —
+> §6.28 recorded the same gap from the same side (a residue *named accurately* is not thereby
+> measured).
+
+**And `(b-coeff)`/(3c) were NOT consumed by the link they were built for.** §6.24 predicted the
+arrow would be *"`(b-coeff)` composed with the (3c) object transport"*. Neither appears in
+`EpsArrowIdentification.lean`. They are not thereby useless — (3c) is what
+`Tangent/CechPicIsoTransport.lean` consumes for **(T3-4)**, a different step of the same chain, and
+`(b-coeff)`'s unit form is what (T3-3) will read when it computes the *kernel* rather than the
+square. But §6.24's decomposition of the arrow into those two pieces was wrong about the arrow, and
+right that the pieces were needed *somewhere*.
+
+**T3's RESIDUE AFTER §7.4: one step, (T3-3).** The kernel computation proper — combine T2's
+`h1AddEquivTruncExpCechKernel` with `map_twoChartClass_eq_one_iff`, `twoChartClass_injective` and the
+(iii-c2) surjectivity leg. Every input is landed; (T3-2) and (T3-4) are now the arrows between them,
+so this is genuinely assembly. **And that sentence is subject to §7.4's own rule** — it is a
+decomposition, not a measurement, and the next session should write the statement before pricing it.
