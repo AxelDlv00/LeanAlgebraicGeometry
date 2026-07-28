@@ -40,6 +40,20 @@ Equality is the regular case (`IsRegularLocalRing.iff_finrank_cotangentSpace`), 
 that is the *only* form the project had. The inequality is what a dimension **upper**
 bound needs, and it holds everywhere.
 
+**How close this already was, which is the sharper version of the correction.** The
+ingredient was not merely available in mathlib — it was already *in use* in this
+project. `Albanese/AuslanderBuchsbaum.lean:2239` applies
+`ringKrullDim_le_spanFinrank_maximalIdeal` inline to bound a quotient's dimension, and
+`Albanese/StandardSmoothDimension.lean:211` — the very file whose absence of an upper
+bound was measured and recorded — states the fact in prose in its own docstring: "the
+reverse inequality `dim ≤ dim_κ m/m²` holds in any Noetherian local ring, via
+`ringKrullDim_le_spanFinrank_maximalIdeal`". So what was missing was never the
+mathematics or even the mathlib lemma: it was a *named, reusable statement at the
+scheme level*, and the search that concluded "genuinely absent" was looking for an
+upper bound on `ringKrullDim` in a file that only ever needed lower bounds, while the
+upper bound sat in its own prose. A fact used inside one proof body and mentioned in
+one docstring is invisible to every search that looks for a declaration.
+
 ## Why this matters for the `PerfectField` binder
 
 `Pic0.genus_le_topologicalKrullDim_of_smooth` and
