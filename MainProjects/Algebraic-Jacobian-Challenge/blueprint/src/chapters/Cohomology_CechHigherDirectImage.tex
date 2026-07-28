@@ -12863,6 +12863,54 @@ of an affine open-immersion cover of a separated scheme.
   \end{enumerate}
 \end{proof}
 
+\begin{lemma}[Affine pushforward preserves quasi-coherence]\leanok
+  \label{lem:isQuasicoherent_pushforward_of_isAffine}
+  \lean{AlgebraicGeometry.isQuasicoherent_pushforward_of_isAffine}
+  Let \(q : A \to B\) be a morphism of affine schemes and \(\mathcal{M}\) a quasi-coherent
+  \(\mathcal{O}_A\)-module. Then \(q_*\mathcal{M}\) is quasi-coherent.
+\end{lemma}
+
+\begin{proof}\leanok
+  For a literal \(q = \operatorname{Spec}\varphi\) this is the statement that an affine
+  pushforward preserves the \(\widetilde{(-)}\) model: \(\mathcal{M} \cong \widetilde{N}\)
+  for an \(A\)-module \(N\), and \((\operatorname{Spec}\varphi)_*\widetilde{N}\) is again a
+  tilde, hence quasi-coherent. A general \(q\) between affine schemes is conjugate to
+  \(\operatorname{Spec}\Gamma(q)\) by the canonical identifications
+  \(A \cong \operatorname{Spec}\Gamma(A,\top)\), \(B \cong \operatorname{Spec}\Gamma(B,\top)\),
+  and pushforward along an isomorphism preserves quasi-coherence in both directions.
+\end{proof}
+
+\begin{lemma}[Every {\v C}ech term is quasi-coherent]\leanok
+  \label{lem:isQuasicoherent_cechComplex_X}
+  \lean{AlgebraicGeometry.isQuasicoherent_cechComplex_X}
+  \uses{lem:isQuasicoherent_pushforward_of_isAffine, lem:pushPull_sigma_iso,
+        lem:isAffineOpen_biInf_mathlib}
+  Let \(f : X \to S\) be separated with \(X\) separated and \(S\) affine, let
+  \(\mathfrak{U}\) be a finite affine open cover of \(X\), and let \(\mathcal{F}\) be
+  quasi-coherent. Then every term \(\check{C}^p(\mathfrak{U}, \mathcal{F})\) of the relative
+  {\v C}ech complex is quasi-coherent.
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{lem:isQuasicoherent_pushforward_of_isAffine, lem:pushPull_sigma_iso,
+        lem:isAffineOpen_biInf_mathlib, lem:isQuasicoherent_pullback_opens}
+  The degree-\(p\) term is \(f_*\bigl(\operatorname{pushPullObj}\mathcal{F}\,Y_p\bigr)\) for the
+  degree-\(p\) {\v C}ech backbone \(Y_p\). By \cref{lem:pushPull_sigma_iso} this push--pull object
+  is the finite product \(\prod_\sigma (j_\sigma)_*(j_\sigma)^*\mathcal{F}\) over index tuples
+  \(\sigma\), and \(f_*\) preserves that finite product, so it suffices to treat one factor and
+  then reassemble: over an affine base a finite product of quasi-coherent modules is
+  quasi-coherent, since each factor is a tilde, \(\widetilde{(-)}\) preserves finite products, and
+  quasi-coherence is closed under isomorphism.
+
+  For a single factor, \(f_*\bigl((j_\sigma)_* \mathcal{N}\bigr) \cong (j_\sigma \circ f)_*
+  \mathcal{N}\). Each intersection open \(U_\sigma\) is affine
+  (\cref{lem:isAffineOpen_biInf_mathlib}, using that \(X\) is separated and the cover is affine)
+  and \(S\) is affine, so \(j_\sigma \circ f : U_\sigma \to S\) is a morphism of affine schemes and
+  \cref{lem:isQuasicoherent_pushforward_of_isAffine} applies to
+  \(\mathcal{N} = (j_\sigma)^*\mathcal{F}\), which is quasi-coherent by
+  \cref{lem:isQuasicoherent_pullback_opens}.
+\end{proof}
+
 \begin{lemma}[Beck--Chevalley natural iso through the {\v C}ech nerve]\leanok
   \label{lem:cech_pushforward_baseChange_natIso}
   \lean{AlgebraicGeometry.cech_pushforward_baseChange_natIso}
