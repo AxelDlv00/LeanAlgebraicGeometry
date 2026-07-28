@@ -238,6 +238,9 @@ lemma pulledToOvlRight_colengthBaseChange (i j : D.index) (x : R' ⊗[R] A.colen
       (relAffSectionsMap_res C R'
         (inf_le_right : D.pieces i ⊓ D.pieces j ≤ D.pieces j) t)
 
+/- The defeq checks through the mixed `relCurve`/product spellings are heavy here (as in the
+chart-typed `delta_baseChange_comm`), and the instance searches on the large tensor/product
+types exceed the defaults; both limits are raised for this declaration only. -/
 set_option maxHeartbeats 1000000 in
 set_option synthInstance.maxHeartbeats 400000 in
 /-- **`δ`-naturality**: the pulled difference arrow matches `id ⊗ δ` through the product
