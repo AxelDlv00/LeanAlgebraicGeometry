@@ -46,11 +46,32 @@ derives from it. The missing geometry is isolated in exactly one place — inhab
   because `φ(Q) + φ(P₀) + ⋯ + φ(P₀) = φ(Q) + η + ⋯ + η = φ(Q)`. In the hom-monoid
   this is `Finset.prod_ite_eq`; the geometry evaporates exactly as it does in
   `GrpObjFoldSum.lean`.
-* `symPowDataOne` — **the interface is inhabited**: `Sym^1 C = C`. The `S_1`-action
-  is trivial and `π : C^1 ⟶ C` is the (iso) projection, so the universal property
-  holds outright. This matters: it shows `SymPowData` is not a vacuous package that
-  could never be filled, and it means the Albanese argument assembled over this
-  interface is a genuine theorem for `n = 1`.
+* `symPowDataOne` and `symPowDataOne_proj_perm` — **an inhabitant of the interface
+  *together with* the symmetry hypothesis**: `Sym^1 C = C`. See the warning below for
+  why both halves are needed and what they do and do not show.
+
+## What non-vacuity does and does not mean here — read this before citing it
+
+`SymPowData C n` **on its own is trivially inhabited for every `n`**: take
+`carrier := C^n` and `proj := 𝟙`, and `desc` becomes `∃! u, 𝟙 ≫ u = h`. So the bare
+structure is nearly free, and exhibiting *some* `SymPowData` proves nothing.
+
+What the downstream theorems actually quantify over is the **pair**
+`(D, hproj)`, where `hproj : ∀ σ, permAut C σ ≫ D.proj = D.proj` says the projection
+is genuinely symmetric. The `proj := 𝟙` trick fails that for `n ≥ 2` (it would need
+`permAut C σ = 𝟙`). So the pair is the meaningful object, and this file witnesses it
+for `n = 1`: `symPowDataOne` plus `symPowDataOne_proj_perm`.
+
+Two honest caveats about that witness:
+
+* `n = 1` is the case where the *interesting* step degenerates. The forward direction
+  of the connector (`Albanese/AlbaneseFromData.lean`) uses that `ψ` is a homomorphism
+  to move it through a `g`-fold product; a 1-fold product has one factor, so at
+  `n = 1` that step is mere associativity. The general-`n` theorem is the real one —
+  do not cite `n = 1` as evidence that the group law is exercised.
+* Consequently, "the interface is inhabited" should be read as *the hypotheses are
+  consistent and the statements are not about nothing*, not as *the hard case is
+  covered*.
 
 ## What is *not* here
 
@@ -215,17 +236,20 @@ end MonObj
 
 /-! ## §3. The interface is inhabited: `Sym^1 C = C`
 
-`SymPowData` would be worthless if nothing could ever fill it. For `n = 1` the
-symmetric group is trivial, `C^1 ⟶ C` is an isomorphism, and the universal property
-is immediate. So the Albanese argument assembled over this interface
-(`Albanese/AlbaneseFromData.lean`) is a genuine theorem, not a vacuous implication. -/
+For `n = 1` the symmetric group is trivial, `C^1 ⟶ C` is an isomorphism, and the
+universal property is immediate. Both halves of the meaningful object are supplied: the
+datum `symPowDataOne` and the symmetry `symPowDataOne_proj_perm`.
+
+As the module header warns, the bare structure `SymPowData C n` is trivially inhabited
+for every `n` (take `proj := 𝟙`), so it is the **pair** with `hproj` that carries
+content — and `n = 1` is the degenerate case for the group-law step. See the header. -/
 
 /-- **`Sym^1 C = C`.** The unique projection `C^1 ⟶ C` is an isomorphism, so every
 morphism out of `C^1` — symmetric or not, since `S_1` is trivial — factors uniquely
 through it.
 
-This inhabits `SymPowData C 1`, witnessing that the interface of §1 is satisfiable.
-For `n ≥ 2` inhabiting it is the missing scheme-quotient construction. -/
+For `n ≥ 2` inhabiting `SymPowData` *together with the symmetry hypothesis* is the
+missing scheme-quotient construction. -/
 noncomputable def symPowDataOne (C : K) : SymPowData C 1 where
   carrier := C
   proj := Pi.π (fun _ : Fin 1 => C) 0
@@ -245,5 +269,21 @@ noncomputable def symPowDataOne (C : K) : SymPowData C 1 where
       rw [← Category.assoc, hret, Category.id_comp]
     · intro u hu
       rw [← hu, ← Category.assoc, hsec, Category.id_comp]
+
+omit [CartesianMonoidalCategory K] in
+/-- **The other half of the witness: `symPowDataOne`'s projection is symmetric.**
+
+Every downstream theorem quantifies over a `SymPowData` *paired with* this hypothesis,
+and the pairing is what rules out the trivial `proj := 𝟙` datum for `n ≥ 2`. Here it is
+immediate: `Equiv.Perm (Fin 1)` is a subsingleton, so `σ 0 = 0` and `permAut_π` closes
+it.
+
+Without this lemma the claim "the interface is inhabited" would not be machine-backed
+end to end, since the bare structure is inhabited trivially. -/
+theorem symPowDataOne_proj_perm (C : K) (σ : Equiv.Perm (Fin 1)) :
+    MonObj.permAut C σ ≫ (symPowDataOne C).proj = (symPowDataOne C).proj := by
+  have h : σ 0 = 0 := Subsingleton.elim _ _
+  change MonObj.permAut C σ ≫ Pi.π (fun _ : Fin 1 => C) 0 = Pi.π (fun _ : Fin 1 => C) 0
+  rw [MonObj.permAut_π, h]
 
 end CategoryTheory

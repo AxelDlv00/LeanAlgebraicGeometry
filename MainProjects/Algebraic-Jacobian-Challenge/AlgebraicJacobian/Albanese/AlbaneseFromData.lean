@@ -303,8 +303,12 @@ their place — the extension theorem gives the equation on `V`, and agreement i
 transported to all of `S` along the dense open `f⁻¹V` (`ext_of_isDominant`, using that
 `S` is reduced and `A` separated).
 
-So the Albanese descent needs no rational-map reasoning at the call site, and no
-birational-inverse API: it needs a section, a retraction, and two density facts. -/
+So the Albanese descent needs no birational-inverse API. The full call-site bill is
+**five** items, not four: the section `s`, the retraction `hsr`, the two density facts
+`hV` and `hVpre`, and `hover` — the compatibility of the partial map with the structure
+morphisms over `k̄`, which is what `exists_unique_hom_restrict_eq_of_dense_open`
+(`Albanese/DenseOpenDescent.lean`) consumes. `hover` is a genuine hypothesis; it is
+listed here because an earlier draft of this docstring omitted it. -/
 theorem exists_unique_descent_of_birational
     {S J : Over (Spec (.of kbar))} [IsReduced S.left]
     [Smooth J.hom] [GeometricallyIrreducible J.hom] [IsSeparated J.hom]
@@ -407,9 +411,15 @@ The capstone. Everything above is assembled into one statement whose hypotheses 
    over a dense open `V`, a matching retraction, dominance, and two density facts.
 
 No `sorry`-bodied object appears, no rational-map reasoning is left at the call site,
-and the result is axiom-clean. That is the precise sense in which Milne's proof of
-Proposition III.6.1 is *finished* here, and the sense in which what remains is the
-construction of `Sym^g C` rather than any part of his argument. -/
+and the result is axiom-clean.
+
+**Stated precisely, so "finished" is not read too generously.** What is proved is the
+*implication*: given (1) and (2), Milne III.6.1 holds. Every step of his argument is
+machine-checked, and no step of it is what remains. But the antecedent is currently
+witnessed only for `g = 1` (`symPowDataOne` with `symPowDataOne_proj_perm`), which is
+the case where the group-law step degenerates — see the warning in
+`Albanese/SymPowInterface.lean`. So this is a complete argument awaiting a
+construction, not a theorem about the actual `Sym^g C`. -/
 
 /-- **Milne Proposition III.6.1, end to end.**
 
