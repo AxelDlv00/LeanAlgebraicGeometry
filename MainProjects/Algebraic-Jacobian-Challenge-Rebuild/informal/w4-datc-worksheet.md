@@ -573,7 +573,65 @@ the boundary as a NAMED interface so the DAT-B lane slots in:
   what remains is exactly the `cechPicClass` base-change identity that correction 2 above
   predicted — at every extension of `κ(t)` rather than only at `κ(t)`, which is the one place
   the reduction is not tight (`isChartDatumPlusFibreAt_self` measures the gap: at `L := κ(t)`
-  the two coincide by `Iff.rfl`).  Use `isChartDatumPresentation_of_plusFibre`.
+  the two coincide by `Iff.rfl`).
+
+  **FOURTH CORRECTION, 2026-07-29 (run 0072 r7, lane `ajcr-charts`): "at every extension rather
+  than only at `κ(t)`" OVERPRICED THE GAP, and the reason it went unpriced is that the transport
+  closing it was cited by name and never written.**
+
+  `Picard/Pic0ChartPresentationConverse.lean`'s header said it does "not silently assume the
+  transport" because `isChartDatumPlusFibreAt_of_isScalarTower` was "the honest statement" of when
+  the `κ(t)`-level `hfib` gives the `L`-level one.  **That declaration existed nowhere in the
+  tree.**  The effect was worse than a dangling reference: the sentence made the `hplus` side
+  condition read as bookkeeping already discharged, while `hplus` was the *whole* of this row's
+  remaining content — and a `sorry` census, an axiom probe and a green root build are all silent
+  about a docstring naming a declaration that does not exist.
+
+  **The gap is zero.**  `hplus` at `L` is `hfib` at `κ(t)` pushed forward along
+  `PicEtAff.map C L`: `PicEtAff.map_map` on the left, `PicEtAff.map_unit` on the right, and
+  `relCurveMap_comp` over `k → A → κ(t) → L` to identify the two-step pull of `D.cechPicClass`
+  with the one-step pull.  Three functoriality laws, no geometry, and nothing specific to
+  `cechPicClass` at all.  All three had been in the tree for weeks.  So
+  `isChartDatumPlusFibreAt_self` measured the gap from below and the transport now measures it
+  from above, and the generalisation in `L` costs nothing.
+
+  **Use `isChartDatumPresentation_of_plusFibre_tower`** (`Picard/Pic0ChartPlusFibreTower.lean`):
+  `IsChartDatumPresentation` from `hfib` **alone**.
+
+  **A second r7 finding, about a statement rather than a proof, and it is the more transferable
+  one.**  `hasWitnessH1Vanishing_of_isSplitWitness_at`'s `hplus` binder quantifies
+  `(_ : Algebra A L)` universally with only `IsScalarTower k A L`.  That is strictly stronger than
+  its own proof consumes — the proof takes the `A`-structure from its `htow` argument and uses
+  `hplus` at *that* instance only — and the extra strength is not harmless:
+  `IsChartDatumPlusFibreAt` mentions `relCurveMap C A L`, so at an `Algebra A L` unrelated to the
+  composite `A → κ(t) → L` the right-hand side pulls `D.cechPicClass` along a *different*
+  morphism and `hfib` cannot imply it.  So the `∀`-form is not merely hard to supply — it is the
+  wrong statement.  `hasWitnessH1Vanishing_of_isSplitWitness_tower` adds
+  `IsScalarTower A κ(t) L` to that binder: exactly the third component
+  `towerOfResidueFieldExtension` already returns, and which the landed proof already destructures
+  and then discards.  A hypothesis can be over-strong *inside a binder*, and a census sees
+  argument positions, not the instances they quantify.
+
+  **THE ROW'S ENDPOINT, and what it still does not claim.**
+  `isOpen_chartLocus_of_plusFibre` (`Picard/Pic0ChartLocusPlusFibre.lean`) is CHART-U(b) at a
+  general test from a witness-free hypothesis: per affine piece of the test, one
+  `BasicOpenCocycleDatum` satisfying `IsChartDatumPlusFibre`.  `chartLocusOpensOfPlusFibre` gives
+  the locus as an **open of the test** (`T.left.Opens`) rather than as a `Prop`, because that is
+  what a chart datum's `W` field consumes and the bundling step is where the `haff` cost got lost
+  the first time.  What is **not** claimed is a *producer* of the per-piece datum — the
+  identification of the datum's fibre class with `μ`'s fibre, which for the Σ-chart's `μ` is where
+  §1.2's twist bookkeeping enters.  That is a different obligation from every link in the chain
+  above, and it is now the whole of what CHART-U(b) owes.
+
+  **A correction to r7's own evidence, because the instrument matters more than the claim.**  The
+  new file first asserted certificate-freedom "verified by the import closure".  The import closure
+  is **not** certificate-free — it reaches `DivSchemeCertificate`, `DivSchemeClassify*` and
+  `Pic0AtlasFromDivRep` along `Pic0ChartLocusFibreField → DivisorFamilyH1Locus →
+  DivRepClassifyZarKit`, purely incidentally.  A lane checking gatedness by grepping imports would
+  conclude the *opposite* of the truth.  What is true is the statement about the theorems: their
+  transitive **constant** dependencies (7445 and 7448 constants) contain **zero** names matching
+  `Cert`, `DivFamZar`, `FinCover`, `Classify`, `DivRep` or `divRep`.  Gatedness is cone-relative
+  exactly like availability — measure the declaration's own closure, not the module's imports.
 
   The datum-worksheet §2.3 chain, now fully landed except its last
   step: (1) extraction of the plus class to cocycle data on an étale carrier
