@@ -1249,3 +1249,43 @@ carrier translation (both halves), the reduction square at *hom* level, and the 
 chain of (iii-c2-aff) bar one square. **Still owed for the T5 numeral:** (a) the three intertwining
 items above, (b) (iii-c2-aff-geo), the `cechPicClass` naturality square of §6.17. Do not describe the
 T4 residue as "one statement" again without naming which statement and checking its consumer.
+
+### 6.19 RETRACTION: §6.14's PRICING LESSON RESTS ON A FALSE PREMISE — mathlib HAS the instance
+
+*Reviewer finding, inbox `I-0634`, verified independently against the mathlib source before acting.*
+
+§6.14 said the (b-coeff) obstruction was that *"`Algebra k[ε] k` does not exist in mathlib"*, and
+built a pricing lesson on it ("an absent instance looks exactly like an absent theorem"). **The
+premise is false.**
+
+`Mathlib/Algebra/TrivSqZeroExt/Basic.lean:890` defines
+
+```
+abbrev algebraBase : Algebra (tsze R' M) R' where algebraMap := (fstHom R' R' M).toRingHom …
+```
+
+and `:897` is the matching `instance : IsScalarTower R' (tsze R' M) R'`. At `R' = M = k` those are
+*exactly* `Algebra k[ε] k` via `fstHom` and *exactly* `IsScalarTower k k[ε] k`. Verified by reading
+the file, not by search. `Tangent/DualNumberCarrierReduction.lean` now wraps
+`TrivSqZeroExt.algebraBase k k` rather than rebuilding it from `fstHom.toAlgebra`.
+
+**And the diamond justification was a rationalization.** Mathlib's own comment says why
+`algebraBase` is not an instance: it "creates a different
+`Algebra (TrivSqZeroExt R' M) (TrivSqZeroExt R' M)` instance from `TrivSqZeroExt.algebra'`". That is
+a clash at `Algebra (tsze) (tsze)` — **not** the "diamond with `Algebra k k`" §6.14 asserted, which
+is between different types and cannot clash at all. The `scoped` choice was right; the reason given
+for it was invented.
+
+**What survives, restated correctly.** The *shape* of the lesson holds but it is not a new family:
+this is `I-0567`'s — **present upstream but deliberately not an instance**, exactly like a `private`
+name whose proof is public. The operative rule is therefore the existing one: *when a landed lemma
+"does not apply", check whether the missing piece exists upstream in a deliberately non-instance /
+non-exported form before pricing new infrastructure* — and, added by this incident, **read the
+upstream file, because instance search failing is not evidence of absence.** A `scoped`
+re-exposure of an existing `abbrev` costs one line; deriving it from scratch cost me five and
+produced a false claim in two documents.
+
+*One caveat on the `IsScalarTower`: mathlib's is stated at `TrivSqZeroExt` level under
+`attribute [local instance] algebraBase`, so it is not in scope for a `scoped` wrapper — the local
+one is still proved by hand (`of_algebraMap_eq`, two lines). So "the tower needs no proof" as `I-0634`
+put it is not quite right; it needs two lines, and only the algebra is a pure rename.*

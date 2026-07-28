@@ -20,21 +20,27 @@ relSectionsMap C k[ε] k W ∘ dualNumberSections C  =  (· ⊗ₜ 1) ∘ TrivSq
 (`AlgebraicGeometry.Over.relSectionsMap_dualNumberSections`), and on units the corresponding
 statement with `TruncExpCech.unitsFst` (`Over.relSectionsMapUnits_dualNumberSectionsUnits`).
 
-## Why this needed a local algebra instance, and why that is safe
+## Why this needs a `scoped` algebra instance, and where it comes from
 
 The tree's coefficient-direction tool `AlgebraicGeometry.relSectionsMap`
-(`Cohomology/RelativeSectionsLinear.lean`) binds `[Algebra R R'] [IsScalarTower k R R']`. At
-`R := k[ε]`, `R' := k` the instance `Algebra k[ε] k` does **not** exist in mathlib, and it must
-not be added globally: `fstRingHom` is one of many `k`-algebra maps `k[ε] → k`-shaped things,
-and a global instance would form a diamond with `Algebra k k` at `k[ε] = k`-like reducts and
-make `algebraMap` ambiguous at every site that mentions both.
+(`Cohomology/RelativeSectionsLinear.lean`) binds `[Algebra R R'] [IsScalarTower k R R']`, and at
+`R := k[ε]`, `R' := k` neither is found by instance search.
 
-So `epsAlgebra`/`epsIsScalarTower` below are declared **`scoped`**: they are instances only
-inside `namespace TruncExpCech.EpsilonReduction` (opened explicitly by a consumer), never in
-ambient instance search. With them, the whole landed `relSectionsMap` API applies unchanged —
-`relSectionsMap_pullback`, `relSectionsMap_overAlgebraMap`, `relSectionsMap_resHom` — which is
-why this file is short: the geometry was already proved, only the coefficient identification
-was missing.
+**Both exist upstream** — `TrivSqZeroExt.algebraBase` and the `IsScalarTower` immediately after it
+(`Mathlib/Algebra/TrivSqZeroExt/Basic.lean:890, :897`) — but `algebraBase` is deliberately **not an
+instance**, because (mathlib's own comment) it "creates a different
+`Algebra (TrivSqZeroExt R' M) (TrivSqZeroExt R' M)` instance from `TrivSqZeroExt.algebra'`". So
+`epsAlgebra`/`epsIsScalarTower` below are `scoped` **re-exposures**, not constructions: instances
+only inside `namespace TruncExpCech.EpsilonReduction`, which a consumer opens explicitly, never in
+ambient search. With them the whole landed `relSectionsMap` API applies unchanged —
+`relSectionsMap_pullback`, `relSectionsMap_overAlgebraMap`, `relSectionsMap_resHom` — which is why
+this file is short: the geometry was already proved, and so was the algebra.
+
+**An earlier version of this docstring said mathlib "has none" and justified `scoped` by a diamond
+with `Algebra k k`. Both were wrong** (reviewer finding, inbox `I-0634`; a clash between *different*
+types is impossible, and the real clash is at `Algebra (tsze) (tsze)`). The pattern is `I-0567`'s —
+*present upstream but deliberately not an instance*, like a `private` name — not absent
+infrastructure.
 
 The identification itself is then a `rfl`: with `epsAlgebra` in scope,
 `algebraMap k[ε] k = TrivSqZeroExt.fst` **definitionally** (`algebraMap_eps_eq_fst`), so
@@ -81,19 +87,34 @@ namespace EpsilonReduction
 
 variable {k : Type u} [Field k]
 
-/-- **`k[ε]` acts on `k` through `ε ↦ 0`** — a `scoped` instance, deliberately.
+/-- **`k[ε]` acts on `k` through `ε ↦ 0`** — a `scoped` instance wrapping **mathlib's own**
+`TrivSqZeroExt.algebraBase`.
 
-`relSectionsMap` needs an `Algebra k[ε] k`, and mathlib has none. Making this global would be a
-diamond (`algebraMap` would become ambiguous wherever both `Algebra k k[ε]` and this one are in
-scope), so it is confined to this namespace and a consumer opts in by opening it. -/
+**Corrected 2026-07-28 (reviewer finding, inbox `I-0634`).** An earlier version of this file and of
+`informal/w5-t4-worksheet.md` §6.14 said *"`relSectionsMap` needs an `Algebra k[ε] k`, and mathlib
+has none"*. **That was false.** `Mathlib/Algebra/TrivSqZeroExt/Basic.lean:890` defines
+`TrivSqZeroExt.algebraBase : Algebra (tsze R' M) R'` by exactly `fstHom`, and the next declaration
+(`:897`) is the matching `IsScalarTower R' (tsze R' M) R'`. At `R' = M = k` those are precisely what
+is needed, so this is a *rename*, not a construction.
+
+**Why mathlib does not make it an instance** — quoting its own comment, not a guess: it "creates a
+different `Algebra (TrivSqZeroExt R' M) (TrivSqZeroExt R' M)` instance from `TrivSqZeroExt.algebra'`".
+So the clash is at `Algebra (tsze) (tsze)`, *not* the "diamond with `Algebra k k`" this file
+previously claimed (a clash between different types is impossible). Keeping it `scoped` is right; the
+reason recorded for it was wrong.
+
+This is therefore the `I-0567` family — *present upstream but deliberately not an instance*, like a
+`private` name — and **not** a case of absent infrastructure. -/
 noncomputable scoped instance epsAlgebra : _root_.Algebra (DualNumber k) k :=
-  (TrivSqZeroExt.fstHom k k k).toRingHom.toAlgebra
+  TrivSqZeroExt.algebraBase k k
 
-/-- `k → k[ε] → k` is the identity, so the two structure maps are compatible — the
-`IsScalarTower` that `relSectionsMap` also requires. -/
+/-- `k → k[ε] → k` is the identity, so the two structure maps are compatible.
+
+This is mathlib's `TrivSqZeroExt`-level instance (`Basic.lean:897`) at `R' = M = k`, re-exposed here
+under `epsAlgebra`; it needs no proof of its own — see `epsAlgebra`'s docstring and `I-0634`. -/
 scoped instance epsIsScalarTower : IsScalarTower k (DualNumber k) k :=
   IsScalarTower.of_algebraMap_eq (R := k) (S := DualNumber k) (A := k) fun c => by
-    change _ = TrivSqZeroExt.fstHom k k k (algebraMap k (DualNumber k) c)
+    change _ = TrivSqZeroExt.fst (algebraMap k (DualNumber k) c)
     simp [TrivSqZeroExt.algebraMap_eq_inl]
 
 /-- With `epsAlgebra` in scope, the structure map **is** `TrivSqZeroExt.fst`, definitionally.
