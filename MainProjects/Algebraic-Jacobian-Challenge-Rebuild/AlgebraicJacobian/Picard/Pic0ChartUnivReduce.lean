@@ -20,7 +20,8 @@ and at the Abel chart three of them are supplied here:
 
 | field | at the Abel chart | status |
 |---|---|---|
-| `W` | `chartLocus` of the class named by the test point, as an open | **supplied here** — the openness is the unconditional `isOpen_chartLocus_of_affineLocal'` |
+| `W` | `chartLocus` of the test point's class, as an open | **supplied here** — by the
+  unconditional `isOpen_chartLocus_of_affineLocal'` |
 | `r` | the divisor family over the locus | the classifier `divRepClassifyZar` |
 | `sq` | its class is the test's class | the classifier's own characterisation |
 | `exists_factor` | uniqueness of the normalized representative | **the relative form of GAP-2** |
