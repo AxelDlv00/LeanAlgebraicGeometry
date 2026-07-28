@@ -135,9 +135,14 @@ local notation "RZ" => DivCarveChartRing k
   (windowS_choice pi hpi g • fiberWeilDivisor pi)
   (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j
 
+include hO hchi in
 /-- **The scalar side condition at U2's own ledger data.**  `hO`/`hchi` are stated over
 `C.left` with base field `k`, which is exactly the instantiation
-`windowBound_pos_of_genus_ne_zero` asks for. -/
+`windowBound_pos_of_genus_ne_zero` asks for.
+
+The `include` is load-bearing and was found by the kernel: `hO`/`hchi` appear only in the
+PROOF, so without it they are not section variables of this theorem, and the four call sites
+below then pass arguments the signature does not have. -/
 theorem windowBound_pos_of_ne_zero (hg : g ≠ 0) : 0 < windowBound pi hpi :=
   windowBound_pos_of_genus_ne_zero pi hpi g hg hO hchi
 
@@ -146,26 +151,26 @@ Identical to `divFamEps_highWindow_eq_universal_pair` with `hb` replaced by `g �
 which is what a genus-`g` consumer holds. -/
 theorem divFamEps_highWindow_eq_universal_pair_of_ne_zero (hg : g ≠ 0)
     (hc : ((univSeed C hpi g r1 r2 b1 b2 i j hO hchi
-      (windowBound_pos_of_ne_zero C hpi g r1 r2 b1 b2 i j hO hchi hg)).divisorAdaptation
+      (windowBound_pos_of_ne_zero C hpi g hO hchi hg)).divisorAdaptation
       (isGenerator_univSeed C hpi g r1 r2 b1 b2 i j hO hchi
-        (windowBound_pos_of_ne_zero C hpi g r1 r2 b1 b2 i j hO hchi hg))).IsCertified g) :
+        (windowBound_pos_of_ne_zero C hpi g hO hchi hg))).IsCertified g) :
     divFamEps hpi g (DivFam.mk
         ((univSeed C hpi g r1 r2 b1 b2 i j hO hchi
-            (windowBound_pos_of_ne_zero C hpi g r1 r2 b1 b2 i j hO hchi hg)).certifiedFamily g
+            (windowBound_pos_of_ne_zero C hpi g hO hchi hg)).certifiedFamily g
           (isGenerator_univSeed C hpi g r1 r2 b1 b2 i j hO hchi
-            (windowBound_pos_of_ne_zero C hpi g r1 r2 b1 b2 i j hO hchi hg)) hc))
+            (windowBound_pos_of_ne_zero C hpi g hO hchi hg)) hc))
       = ((divUniversalFstWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule,
          (divUniversalSndWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule) :=
   divFamEps_highWindow_eq_universal_pair C hpi g r1 r2 b1 b2 i j hO hchi
-    (windowBound_pos_of_ne_zero C hpi g r1 r2 b1 b2 i j hO hchi hg) hc
+    (windowBound_pos_of_ne_zero C hpi g hO hchi hg) hc
 
 /-- **The existential form with no scalar hypothesis** — what a chart-class producer
 consumes once it knows the genus is nonzero. -/
 theorem exists_certifiedFamily_divFamEps_eq_universal_pair_of_ne_zero (hg : g ≠ 0)
     (hc : ((univSeed C hpi g r1 r2 b1 b2 i j hO hchi
-      (windowBound_pos_of_ne_zero C hpi g r1 r2 b1 b2 i j hO hchi hg)).divisorAdaptation
+      (windowBound_pos_of_ne_zero C hpi g hO hchi hg)).divisorAdaptation
       (isGenerator_univSeed C hpi g r1 r2 b1 b2 i j hO hchi
-        (windowBound_pos_of_ne_zero C hpi g r1 r2 b1 b2 i j hO hchi hg))).IsCertified g) :
+        (windowBound_pos_of_ne_zero C hpi g hO hchi hg))).IsCertified g) :
     ∃ G : CertifiedDivisorFamily C RZ pi g,
       divFamEps hpi g (DivFam.mk G)
         = ((divUniversalFstWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule,
@@ -176,12 +181,12 @@ theorem exists_certifiedFamily_divFamEps_eq_universal_pair_of_ne_zero (hg : g �
 /-- **The `DivFamZar` class of the universal point with no scalar hypothesis.** -/
 noncomputable def divFamZarUnivOfNeZero (hg : g ≠ 0)
     (hc : ((univSeed C hpi g r1 r2 b1 b2 i j hO hchi
-      (windowBound_pos_of_ne_zero C hpi g r1 r2 b1 b2 i j hO hchi hg)).divisorAdaptation
+      (windowBound_pos_of_ne_zero C hpi g hO hchi hg)).divisorAdaptation
       (isGenerator_univSeed C hpi g r1 r2 b1 b2 i j hO hchi
-        (windowBound_pos_of_ne_zero C hpi g r1 r2 b1 b2 i j hO hchi hg))).IsCertified g) :
+        (windowBound_pos_of_ne_zero C hpi g hO hchi hg))).IsCertified g) :
     DivFamZar C RZ pi g :=
   divFamZarUniv C hpi g r1 r2 b1 b2 i j hO hchi
-    (windowBound_pos_of_ne_zero C hpi g r1 r2 b1 b2 i j hO hchi hg) hc
+    (windowBound_pos_of_ne_zero C hpi g hO hchi hg) hc
 
 end UniversalEpsIdentityFree
 

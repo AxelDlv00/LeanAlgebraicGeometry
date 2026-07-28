@@ -6,6 +6,10 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.DivSchemeHighWindowSecondContainment
 import AlgebraicJacobian.Picard.DivSchemeEps
 import AlgebraicJacobian.Picard.DivisorThetaFibreData
+-- `divFamZarUniv` below needs `DivFamZar` and `CertifiedDivisorFamily.isLocallyCertified`,
+-- which live here; the ε-identity above needs none of it.  Measured, not guessed: the first
+-- kernel check of this file failed at `:212` with "Unknown identifier `DivFamZar`".
+import AlgebraicJacobian.Picard.DivisorFamilyZar
 
 /-!
 # U2's ε-identity at the universal point, from the certificate alone
