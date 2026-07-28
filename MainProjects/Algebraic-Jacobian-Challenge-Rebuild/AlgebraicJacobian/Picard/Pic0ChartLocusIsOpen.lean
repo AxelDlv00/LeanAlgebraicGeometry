@@ -30,7 +30,7 @@ Reading the (b-amendment) against the tree at HEAD:
 | carrier/field translation | `isOpen_setOf_hasWitnessH1Vanishing_testPointField` (below) | **landed** |
 | twist collapse | `chartTwist_collapse` (`Pic0ChartTwistCollapse`) | **landed** |
 | ~~GAP-1 mul~~ | ~~a datum for a *product*, on a common cover refinement~~ | **NOT NEEDED** |
-| honesty over a general affine base | a plus class over `A` presented by an honest Čech class | **NOT landed** |
+| honesty over the étale carrier | `PicEtAff.map_mk_eq_unit_self` (`Pic0ChartHonest`) | **landed** |
 | pointwise presentation | `IsChartDatumPresentation` (below) | **NOT landed** |
 | `cechPicClass_inv` | the class law of `invDatum` | **NOT landed**, and off the path |
 
@@ -48,16 +48,19 @@ false (`Picard/Pic0ChartTwistCollapse.lean`): the twist is ONE `thetaFamily`, si
 **What genuinely remains, stated without under-pricing it** (this is the correction the
 reviewer of I-0558 asked for).  Two things, and neither is bookkeeping:
 
-1. **Honesty over a general affine base.**  `exists_datum_cechPicClass_chartTwistClass` takes
-   an honest Čech class `c` over `B` as a *hypothesis*, and nothing in the tree supplies one
-   over a general affine `B`.  The splitting theorem
-   (`exists_splitting_of_picEt`, `Picard/Pic0ChartSplit.lean`) needs `[Field K]` — its engine
-   is étale field-cofinality, which is false over a general base — and the only other plus-unit
-   surjectivity in the tree (`PicEtAff.unit_surjective_of_section`) is also field-only.  Over
-   `Spec A` there is as yet no `c` to feed the corollary; obtaining one is what the
-   (b-amendment)'s "collapse over the étale carrier `B := E.Carrier`" step means, and it is a
-   construction.
-2. **The pointwise presentation itself.**  `IsChartDatumPresentation` asks for ONE datum over
+1. ~~**Honesty over a general affine base.**~~  **LANDED** (`Picard/Pic0ChartHonest.lean`).  This
+   row read: `exists_datum_cechPicClass_chartTwistClass` takes an honest Čech class `c` over `B`
+   as a *hypothesis*, and nothing supplies one, because the splitting theorem
+   (`exists_splitting_of_picEt`) needs `[Field K]` — its engine is étale field-cofinality — and
+   the only other plus-unit surjectivity is field-only too.  All of that is accurate about the
+   tree and none of it matters: **a cover splits over its own carrier.**
+   `PicEtAff.map_mk_eq_unit_self` gives `PicEtAff.map C E.Carrier (mk C E x) = unit C E.Carrier x`
+   over an ARBITRARY affine base, because the map cofinality was being asked to produce is the
+   *identity* `E.Carrier →ₐ[A] E.Carrier`.  This is exactly the (b-amendment)'s "over the étale
+   carrier `B := E.Carrier` the class is honest" step, so it was never a general-`A` obligation
+   in the first place.
+2. **The pointwise presentation itself** — now the ONLY residue.  `IsChartDatumPresentation` asks
+   for ONE datum over
    `A` whose fibre predicate matches, at every residue field simultaneously, a split predicate
    whose splitting field `L` varies from point to point (`IsSplitWitness` quantifies `L`
    existentially *per point*).  Calling that "a `cechPicClass` base-change statement, not a
