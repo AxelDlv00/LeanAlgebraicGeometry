@@ -729,3 +729,41 @@ So the affineness and the dual numbers are confined to (iii-c2-aff), and the coh
 bookkeeping — the part that was sized "not [S]" — is Zariski and general. Doing (iii-c2-Zar)
 first is strictly better than attacking (iii-c2) whole: it is the larger half, it needs none of
 the curve hypotheses, and AJC can take it.
+
+### 6.10 (iii-c2-Zar) IS CLOSED — the whole Zariski half, same session
+
+*`Tangent/TwoChartRepresentable.lean` (327L, sorry-free, `lake env lean` exit 0).*
+
+`Scheme.twoChartClassHom_surjOn_of_chartTrivial`:
+
+> `L : X.CechPic`, `∀ s : Bool, CechPic.map (V s).ι L = 1`
+> ⟹ `∃ u, twoChartClassHom V sel hmem u = L`.
+
+**No `IsAffine`, no dual numbers, no curve, no `Function.Surjective sel`.** The §6.9 plan went
+through unchanged; the supporting declarations are `IsTrimmedTrivializing` /
+`exists_isTrimmedTrivializing` (the landed affineness-free trimmed cochain, renamed),
+`ratio_agree` + `exists_overlapUnit` (steps 2–3), `pairCochain` /
+`isTrimmedTrivializing_pairCochain` / `selCochain`, `pairCochain_pairUnit_at` (the four-case
+core), `pairCochain_conj` and `pairCochain_conj_inv`.
+
+Three things worth recording for the next session in this file:
+
+1. **`group` does not use commutativity.** Every unit group here is abelian, but `group`
+   normalises only in the free group, so the cancellations need `mul_comm` /
+   `mul_inv_cancel_left` / `inv_mul_cancel` written out. Several apparent dead ends this session
+   were only this.
+2. **The coboundary convention fixes the orientation, and getting it wrong costs a rewrite of
+   three statements.** `unitsCocycle_isCohomologous` wants `α b · γ₁(b,b') = γ₂(b,b') · α b'`
+   with `γ₁` the *normalized* cocycle. With `u := t₀ · t₁⁻¹` the conjugating cochain is
+   therefore `t⁻¹` (`selCochain` returns the inverse), and `pairCochain_conj_inv` is the
+   orientation the consumer takes. Decide `u`'s orientation *before* writing the four cases.
+3. **`rw` under an elided restriction argument fails** with a spurious `X.presheaf` type
+   mismatch, because the two sides carry different (proof-irrelevant, hence displayed as `⋯`)
+   inequality proofs. The fix is never to fight it: state the step as a `have` with the
+   inequalities named, and close with `exact` / `congrArg`. Same family as the §6.8 lesson.
+
+**Residue of the entire T4 lane after this: (iii-c2-aff) alone** — an `ε`-kernel class is
+trivial on each thickened chart. That is the geometric statement, with all three inputs landed
+(clause (i) `free_of_cyclic_mod_eps`, clause (ii) `baseChangeAlgEquiv`, the affine dictionary
+`cechPicEquivPic`) and `Opens.cechPicMap_ι_eq_one_of_cechPicClass_eq_one` as the exit. Nothing
+else stands between AJCR and the T5 numeral.

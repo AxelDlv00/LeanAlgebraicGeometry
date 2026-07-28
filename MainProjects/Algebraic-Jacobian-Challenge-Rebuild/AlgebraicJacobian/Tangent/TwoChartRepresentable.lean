@@ -139,7 +139,7 @@ definitionally (`PointedCover.inf_opens`, `twoChartCover_opens`). The `Bool` ind
 noncomputable def selCochain (sel : X → Bool) (hmem : ∀ x, x ∈ V (sel x))
     {𝒩 : X.PointedCover} (t : ∀ (s : Bool) (b : X), Γ(X, 𝒩.opens b ⊓ V s)ˣ) (b : X) :
     Γ(X, (𝒩 ⊓ twoChartCover V sel hmem).opens b)ˣ :=
-  t (sel b) b
+  (t (sel b) b)⁻¹
 
 /-- The two chart cochains, packaged as one `Bool`-indexed family so that `selCochain` can
 select without a transport. -/
@@ -249,6 +249,49 @@ theorem pairCochain_conj {𝒩 : X.PointedCover} (γ : X.unitsCocycle 𝒩)
   have hpt := pairCochain_pairUnit_at hu s r b hs hbs hbr
   rw [← er, ← hpt, mul_assoc]
 
+/-- **The conjugation identity in the orientation `unitsCocycle_isCohomologous` consumes.**
+`Scheme.unitsCocycle_isCohomologous` wants `α b · γ₁(b,b') = γ₂(b,b') · α b'` with `γ₁` the
+*normalized* cocycle; with `u = t₀ · t₁⁻¹` the conjugating cochain is therefore `t⁻¹`, not `t`.
+Derived from `pairCochain_conj` by moving both `t`-factors across. -/
+theorem pairCochain_conj_inv {𝒩 : X.PointedCover} (γ : X.unitsCocycle 𝒩)
+    {t : ∀ (s : Bool) (b : X), Γ(X, 𝒩.opens b ⊓ V s)ˣ}
+    (ht : ∀ s, IsTrimmedTrivializing γ (V s) (t s))
+    {u : Γ(X, V false ⊓ V true)ˣ}
+    (hu : ∀ b : X,
+      X.unitsRestrict (inf_le_right : 𝒩.opens b ⊓ (V false ⊓ V true) ≤ V false ⊓ V true) u
+        = X.unitsRestrict (le_inf inf_le_left (inf_le_right.trans inf_le_left)) (t false b)
+          * (X.unitsRestrict (le_inf inf_le_left
+              (inf_le_right.trans inf_le_right)) (t true b))⁻¹)
+    (s r : Bool) (b b' : X)
+    (hO : (𝒩.opens b ⊓ V s) ⊓ (𝒩.opens b' ⊓ V r) ≤ 𝒩.opens b ⊓ 𝒩.opens b')
+    (hs : (𝒩.opens b ⊓ V s) ⊓ (𝒩.opens b' ⊓ V r) ≤ V s ⊓ V r) :
+    X.unitsRestrict (inf_le_left) (t s b)⁻¹ * X.unitsRestrict hs (twoChartPairUnit u s r)
+      = X.unitsRestrict hO (Scheme.unitsEvInf γ b b')
+        * X.unitsRestrict (inf_le_right) (t r b')⁻¹ := by
+  set O : X.Opens := (𝒩.opens b ⊓ V s) ⊓ (𝒩.opens b' ⊓ V r) with hOdef
+  have hbs : O ≤ 𝒩.opens b ⊓ V s := inf_le_left
+  have hbr : O ≤ 𝒩.opens b ⊓ V r := fun w hw => ⟨hw.1.1, (hs hw).2⟩
+  have er : X.unitsRestrict hbr (t r b)
+        * X.unitsRestrict hO (Scheme.unitsEvInf γ b b')
+      = X.unitsRestrict (inf_le_right : O ≤ 𝒩.opens b' ⊓ V r) (t r b') := by
+    have e := congrArg (X.unitsRestrict (le_inf hO (hs.trans inf_le_right) :
+      O ≤ (𝒩.opens b ⊓ 𝒩.opens b') ⊓ V r)) (ht r b b')
+    simp only [map_mul, unitsRestrict_unitsRestrict] at e
+    exact e
+  have hpt := pairCochain_pairUnit_at hu s r b hs hbs hbr
+  -- both sides equal `(t r b)⁻¹`
+  rw [map_inv, map_inv]
+  have hR : X.unitsRestrict hO (Scheme.unitsEvInf γ b b')
+        * (X.unitsRestrict (inf_le_right : O ≤ 𝒩.opens b' ⊓ V r) (t r b'))⁻¹
+      = (X.unitsRestrict hbr (t r b))⁻¹ := by
+    rw [← er, mul_inv, mul_comm (X.unitsRestrict hbr (t r b))⁻¹, ← mul_assoc,
+      mul_inv_cancel, one_mul]
+  have hL : (X.unitsRestrict hbs (t s b))⁻¹ * X.unitsRestrict hs (twoChartPairUnit u s r)
+      = (X.unitsRestrict hbr (t r b))⁻¹ := by
+    rw [← hpt, mul_inv, mul_comm (X.unitsRestrict hs (twoChartPairUnit u s r))⁻¹,
+      mul_assoc, inv_mul_cancel, mul_one]
+  exact hL.trans hR.symm
+
 /-- **(iii-c2-Zar).** A class trivial on each of the two charts is `twoChartClassHom` of an
 overlap unit. All the cohomological content of clause (iii-c2), with **no** affineness, dual
 numbers, or curve hypothesis.
@@ -275,7 +318,9 @@ theorem twoChartClassHom_surjOn_of_chartTrivial (sel : X → Bool) (hmem : ∀ x
       change OneCocycle.class _ = OneCocycle.class _
       refine (OneCocycle.class_eq_iff _ _).mpr (Scheme.unitsCocycle_isCohomologous
         (selCochain sel hmem (pairCochain t₀ t₁)) fun b b' => ?_)
-      sorry
+      rw [Scheme.res_unitsEvInf, Scheme.res_unitsEvInf, twoChartCocycle_unitsEvInf]
+      exact pairCochain_conj_inv γ (isTrimmedTrivializing_pairCochain γ h₀ h₁) hu
+        (sel b) (sel b') b b' _ _
 
 end Scheme
 

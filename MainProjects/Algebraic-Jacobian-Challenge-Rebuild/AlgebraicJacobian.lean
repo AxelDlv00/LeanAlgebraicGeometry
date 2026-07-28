@@ -466,6 +466,7 @@ import AlgebraicJacobian.Tangent.DualNumberChartTriviality
 import AlgebraicJacobian.Tangent.RelPicPointTest
 import AlgebraicJacobian.Tangent.TwoChartCechPic
 import AlgebraicJacobian.Tangent.TwoChartNormalize
+import AlgebraicJacobian.Tangent.TwoChartRepresentable
 import AlgebraicJacobian.Tangent.Pic0TangentSpace
 import AlgebraicJacobian.AbelianVariety.JacobianSmooth
 import AlgebraicJacobian.AbelianVariety.JacobianAbelianVariety
