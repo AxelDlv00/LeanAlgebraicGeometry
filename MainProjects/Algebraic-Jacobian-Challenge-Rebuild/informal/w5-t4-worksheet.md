@@ -562,7 +562,9 @@ chart sections" and "`CechPic.map (V s).ι L = 1`" — found this session, and i
 that makes (iii-c2) assembly rather than construction.
 
 **Revised residue of the whole lane:** (iii-c1) [M, dual-number-free, portable to AJC] +
-(iii-c2) [M, all three inputs landed]. Nothing else stands between AJCR and the numeral.
+(iii-c2) [M, all three inputs landed]. *(Amended 2026-07-28: this paragraph also ended "nothing
+else stands between AJCR and the numeral". Incomplete for the same reason as §6.10's version —
+the T2-to-comparison intertwining square is owed too. See the box in §6.10.)*
 
 ### 6.7 State of (iii-c1) at the end of run 0073 r1 — read this before starting it
 
@@ -762,11 +764,39 @@ Three things worth recording for the next session in this file:
    inequality proofs. The fix is never to fight it: state the step as a `have` with the
    inequalities named, and close with `exact` / `congrArg`. Same family as the §6.8 lesson.
 
+**A SECOND OBLIGATION, found by applying inbox `I-0571`'s safeguard to my own split — record
+this before anyone treats the T4 chain as "(iii-c2-aff) and then arithmetic".**
+
+`I-0571`'s rule is: *a restatement is only a reduction if you prove the converse*, and the
+adjacent trap is the one my own lane shipped in run 0073 r1 — an isomorphism at each end of a
+map says nothing about the map, and the consumer computes a **kernel**. Checked at HEAD, and it
+applies here:
+
+* **T2's engine** (`h1AddEquivTruncExpCechKernel`) computes `ker(unitsReduction X U₀ U₁)`, where
+  `unitsReduction` is a map **between the two Čech unit quotients** —
+  `Γ(U₀⊓U₁)[ε]ˣ/coboundaries → Γ(U₀⊓U₁)ˣ/coboundaries`.
+* **My comparison** (`twoChartClass`) maps *each* such quotient into its own `X.CechPic`.
+* **What is NOT in the tree:** any statement that these commute — i.e. that
+  `twoChartClass` at `C_ε` followed by `CechPic.map` (restriction along `ε ↦ 0`) equals
+  `unitsReduction` followed by `twoChartClass` at `C`. Searched by name and by shape;
+  `grep` for `twoChartClass` outside its three home files returns **nothing**, so no consumer
+  has yet needed it and nothing supplies it.
+
+**Consequence for sizing, stated plainly:** (iii-c2-aff) is the last *geometric* clause, but it
+is **not** the last clause. The chain from `H¹(C,𝒪)` to `ker(relPic(k[ε]) → relPic(k))` also
+needs that **intertwining square**. It should be cheap — both sides are induced by restriction
+of overlap units, so it ought to reduce to `unitsRestrict` functoriality on representatives via
+`twoChartClass_mk` and `CechPic.map_mk` — but *cheap is not landed*, and pricing it at zero is
+exactly the error `I-0571` names. Do not claim T5's numeral until it exists.
+
 **Residue of the entire T4 lane after this: (iii-c2-aff) alone** — an `ε`-kernel class is
 trivial on each thickened chart. That is the geometric statement, with all three inputs landed
 (clause (i) `free_of_cyclic_mod_eps`, clause (ii) `baseChangeAlgEquiv`, the affine dictionary
-`cechPicEquivPic`) and `Opens.cechPicMap_ι_eq_one_of_cechPicClass_eq_one` as the exit. Nothing
-else stands between AJCR and the T5 numeral.
+`cechPicEquivPic`) and `Opens.cechPicMap_ι_eq_one_of_cechPicClass_eq_one` as the exit. It is the
+last clause needing *geometry*; the intertwining square flagged just above is the other thing
+still owed, and it is bookkeeping rather than mathematics. **Corrected 2026-07-28: an earlier
+draft of this line said "nothing else stands between AJCR and the T5 numeral" — that was wrong
+by exactly the omission the box above documents.**
 
 ### 6.11 Start-of-session checklist for (iii-c2-aff) — the import graph is clear
 
