@@ -182,29 +182,54 @@ theorem pullback_preservesFiniteLimits_of_preservesMonomorphisms (g : S' ⟶ S)
   haveI := h
   preservesFiniteLimits_of_preservesMonomorphisms (Scheme.Modules.pullback g)
 
-/-- **Flat implies `g^*` is left-exact.**  This is not yet proved; what follows records the
-reduction.
+/-- **Flat pullback preserves monomorphisms** (OPEN — the sole residual content of flat
+left-exactness, after `pullback_preservesFiniteLimits_of_preservesMonomorphisms`).
 
-By `SheafOfModules.pullbackIso`, the pullback factors as
-`g^* ≅ forget ⋙ (PresheafOfModules.pullback φ.hom ⋙ PresheafOfModules.sheafification)`.
-Two of the three factors preserve finite limits *in Mathlib already*:
-* `SheafOfModules.forget` — `SheafOfModules.forgetPreservesFiniteLimits` (it is a right
-  adjoint to sheafification);
-* `PresheafOfModules.sheafification` — the instance in
-  `Mathlib/Algebra/Category/ModuleCat/Presheaf/Sheafification.lean` (sheafification is a
-  left-exact reflector; needs `HasSheafify J AddCommGrpCat`, which holds for the scheme
-  site since `X.Modules` is abelian).
+The statement is true for *arbitrary* `𝒪_S`-modules, not just quasi-coherent ones, and the
+only proof is stalkwise: for `x : S'` the stalk of `g^* M` is
+`M_{g(x)} ⊗_{𝒪_{S,g(x)}} 𝒪_{S',x}`, the stalk map `𝒪_{S,g(x)} ⟶ 𝒪_{S',x}` of a flat `g` is
+flat (`AlgebraicGeometry.Flat.iff_flat_stalkMap`), and a flat base change preserves
+injections; mono in `S'.Modules` is then detected on stalks
+(`TopCat.Presheaf.mono_of_stalk_mono` through the faithful `Scheme.Modules.toPresheaf`, as in
+`Modules.mono_of_injective_app_of_isBasis`).
 
-So the *only* irreducible content is that the **presheaf-level** pullback
-`PresheafOfModules.pullback φ.hom` preserves finite limits when `g` is flat. Mathlib
-defines this presheaf pullback purely as `(pushforward φ).leftAdjoint` with **no
-pointwise description**; mathematically it is the inverse image `g⁻¹` (exact) followed
-by extension of scalars along the flat ring map (left-exact, cf.
-`ModuleCat.preservesFiniteLimits_extendScalars_of_flat`), but neither this factorisation
-nor its left-exactness is available.  Assembling the argument via `pullbackIso`
-additionally requires the `sheafification`/`HasSheafify` instances for the scheme site. -/
+**Why this is not discharged here, stated precisely so the next session does not re-derive
+the dead ends.**  Mathlib defines `SheafOfModules.pullback` as `(pushforward φ).leftAdjoint`
+and gives it *no* pointwise description; `SheafOfModules.pullbackIso` factors it as
+`forget ⋙ PresheafOfModules.pullback φ.hom ⋙ PresheafOfModules.sheafification`, whose outer
+two factors are left exact in mathlib already (`SheafOfModules.Finite.forgetPreservesFiniteLimits`
+and the `PreservesFiniteLimits (sheafification α)` instance, both of which *do* synthesise on
+the scheme site — checked), but whose middle factor `PresheafOfModules.pullback` is again
+only a left adjoint with no formula.  So the missing input is the same either way: a stalk (or
+affine-section) model of the module pullback.
+
+Two routes that do **not** work, and why:
+* the *affine* section formula `Scheme.Modules.pullback_app_isoTensor` (Picard/QuotScheme.lean)
+  does give `Γ(g^* N, U) ≅ Γ(N, V) ⊗_{Γ(S,V)} Γ(S',U)` and would combine with
+  `Modules.mono_of_injective_app_of_isBasis` — but it carries `[N.IsQuasicoherent]`, which the
+  instance's statement (all modules) does not, and over an affine base `Scheme.Modules` is
+  *not* `ModuleCat Γ(S,⊤)`, so quasi-coherence cannot be dropped from that route;
+* there is no mathlib "right exact + preserves monos ⟹ exact" gap any more — that is closed
+  above by `preservesFiniteLimits_of_preservesMonomorphisms` — so the categorical glue is
+  *not* what is missing.  The whole obligation is now this one mono statement. -/
+theorem pullback_preservesMonomorphisms (g : S' ⟶ S) [Flat g] :
+    (Scheme.Modules.pullback g).PreservesMonomorphisms := sorry
+
+/-- **Flat implies `g^*` is left-exact.**  Now a two-line derivation: `g^*` is additive and
+right exact (a left adjoint, `pullback_preservesFiniteColimits`), so by
+`pullback_preservesFiniteLimits_of_preservesMonomorphisms` left exactness follows from
+mono-preservation, which for a flat `g` is `pullback_preservesMonomorphisms`.
+
+This declaration is still an `instance` with a `sorry` *behind* it, so it still leaks
+`sorryAx` into anything that synthesises it — but the leak now has a single named carrier,
+`pullback_preservesMonomorphisms`, whose statement is one line of mathematics
+(flat base change preserves injections, stalkwise) rather than a three-functor
+sheafification argument.  Measure the leak at a synthesis site, e.g.
+`scripts/axiom-frontier.lean`'s `leakProbe_pullback_finiteLimits`. -/
 instance pullback_preservesFiniteLimits (g : S' ⟶ S) [Flat g] :
-    Limits.PreservesFiniteLimits (Scheme.Modules.pullback g) := sorry
+    Limits.PreservesFiniteLimits (Scheme.Modules.pullback g) :=
+  pullback_preservesFiniteLimits_of_preservesMonomorphisms g
+    (pullback_preservesMonomorphisms g)
 
 /-- **Flat implies `g^*` preserves homology**, derived from left-exactness together with
 left-adjointness via `Functor.preservesHomologyOfExact`. -/

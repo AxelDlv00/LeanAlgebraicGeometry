@@ -238,29 +238,6 @@ element's Σ-component (both DEFINITIONAL, docstring `Pic0SigmaSheaf.lean:153-16
 **This is the entire "01JJ assembly."**  There is no new mathematics in it; every symbol
 is landed except `f`/`hf`/`inst`, which are C9/B-6.
 
-**Sharpening of the `f`/`hf` input, 2026-07-28 (run 0072, lane `ajcr-charts`).**  Two of the
-three inputs above are now decomposed, so this section's "gated on C9" can be costed instead
-of merely deferred:
-
-* **`f` is available today.**  `abelSigmaChart` (`Picard/Pic0AtlasFromDivRep.lean:198`)
-  consumes a `(divFunctor C π n).RepresentableBy`, and `ajcr-divrep` has published
-  `DivRepAffinePullback.representableBy` (`Picard/DivRepGlobalClassify.lean:306`, sorry-free,
-  rooted) as exactly that.  Restricting it to a chart open is `restrictChart`
-  (`Picard/Pic0ChartPair.lean`).
-* **`hf` is FACTORED, and only one factor remains.**  The composition half is discharged
-  unconditionally (`isOpenImmersion_presheaf_restrictChart`, same file), so `hf` reduces to
-  the single statement `IsChartUniv` = CHART-U(c): on the chart locus the Abel map is an open
-  immersion because the normalized effective representative is unique there.  Its
-  *field-level* input is landed (GAP-2, `RiemannRoch/EffectiveUniqueness.lean:144`); what it
-  needs is the relative form plus `divRepClassifyZar`.
-* **`chartLocus` itself now exists** (`Picard/Pic0ChartLocus.lean`), in the co-signed
-  CHART-U(a) split form, so nothing here waits on the *name* any more.  Its openness carries
-  one declared `sorry` and is gated on GAP-1's mul/tensor half.
-
-So the honest reading of §1.2's gate is: **not "nothing fires until C9 lands", but "one
-statement (CHART-U(c)) plus GAP-1-mul stand between this section and firing"** — with `inst`
-(= B-6, hence COV-1) independent of both.
-
 ### §1.3 The `ChartIndex` and the chart maps (frozen by DAT-C/DAT-B; consumed, not built)
 
 `ChartIndex C := (m : ℕ) × {Σ : (C ⊗ overSpec k k).left.CurveDivisor // 0 ≤ Σ ∧
