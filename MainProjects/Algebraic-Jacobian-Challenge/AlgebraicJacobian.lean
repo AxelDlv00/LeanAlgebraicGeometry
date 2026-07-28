@@ -140,6 +140,12 @@ import AlgebraicJacobian.Picard.NilpotentThickeningFree
 import AlgebraicJacobian.Picard.DualNumberChartTriviality
 import AlgebraicJacobian.Picard.GroupSchemeSmoothAlgClosed
 import AlgebraicJacobian.Picard.Pic0AbelianVariety
+-- The A.3 dimension leg and the ambient-properness refutation (run 0067 r5/r6).
+-- Rooted here per inbox I-0600 / I-0659: an unrooted module is invisible to the
+-- workspace axiom probe, which walks the cone of THIS file. `Pic0Dimension`
+-- transitively pulls in `SchemeKrullDimStalk`.
+import AlgebraicJacobian.Picard.Pic0Dimension
+import AlgebraicJacobian.Picard.AmbientPicNotProper
 import AlgebraicJacobian.Picard.FlatteningStratification
 import AlgebraicJacobian.Picard.EntryIdeal
 import AlgebraicJacobian.Picard.EntryIdealStratum
