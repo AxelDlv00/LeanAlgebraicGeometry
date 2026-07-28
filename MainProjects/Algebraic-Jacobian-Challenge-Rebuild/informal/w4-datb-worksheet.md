@@ -178,12 +178,36 @@ more carefully*, not by proving anything about the drop:
      `chartValue`, `chartValueTrans`, `abelSigmaChart` are all stated at arbitrary `n`; `n = g` is
      where the *divisor-representability* lane instantiates).
 
-   **So the residue is: reconcile the chart parameter with the threshold.**  The available move is
-   to carry the slack in `Z` at parameter `g` — the `g + e` shape
-   `classDeg_presenting_twist_eq_add` already has — and its open question is the legality of such
-   an index (§1.1 demands `0 ≤ Σ` *and* `deg = m·d₁ − g`).  Note this is also *not* the reviewer's
-   proposed repair verbatim: they proposed restating with slack and themselves observed it
-   collides with that legality condition.
+   **AND THE RESIDUE MOVES ONCE MORE, same session** (`Picard/Pic0ChartAtlasParamFree.lean`).
+   Everything above — the reviewer's reading *and* my restatement of it — reasons about "the" chart
+   parameter as though the atlas had one.  **It does not.**  `pic0RepresentableByOfCharts` takes a
+   family over an *arbitrary* index type with a **per-index** certificate and no coherence
+   condition across indices, so nothing ties the chart parameters of different charts together:
+   `mixedParamChart` builds such a family from `nn : ι → ℕ` with a per-index representation of
+   `divFunctor C π (nn i)` and a per-index chart index legal *at that index's own parameter*, and
+   `mixedParamRepresentableBy` feeds it to the DAT-glue seam verbatim.
+
+   So `b = n` is a **per-chart** calibration.  A point whose splitting field has threshold `b_L`
+   may be covered by the chart of parameter `b_L.toNat`, another point by another chart — and the
+   I-0204 non-uniformity of `m` stops being an obstruction to the atlas: it becomes an *argument
+   for* an atlas indexed by the threshold.
+
+   **What is still missing is a question for the divRep lane, not this one.**  `mixedParamChart`
+   takes `rep i` as a *hypothesis*, one representation per parameter, and the divisor-representability
+   endpoint (`divFunctor_representableBy_of_chartClause`, `Picard/DivRepAffPullClause.lean:475`) is
+   at `n = g`.  So the heterogeneous atlas is **admissible but not inhabited** beyond `g`.  Asked on
+   the AJCR thread: does anything in the divRep chain *use* `n = g`, or is `g` incidental?
+
+   * if representability generalises in `n`: coverage assembles chart-by-chart against each fibre's
+     own threshold and the `b = n` forcing is harmless;
+   * if it is `g`-only: the slack must go into `Z` at parameter `g` — the `g + e` shape
+     `classDeg_presenting_twist_eq_add` already has — and the open question is the legality of such
+     an index (§1.1 demands `0 ≤ Σ` *and* `deg = m·d₁ − g`).  That is also not the reviewer's
+     proposed repair verbatim: they proposed restating with slack and themselves observed it
+     collides with that legality condition.
+
+   Not weakened by any of this: `IsChartUniv` (CERT-Σ-gated) and local surjectivity / B-6, which is
+   what would actually consume the freedom.
 2. **step 2 — DISCHARGED (run 0072 s0008).**  The missing brick was base-field invariance of
    `degAff` under `PicEtAff.map`; it is `PicEtAff.degAff_map`
    (`Picard/DegreeZeroBaseField.lean`) and is **unconditional in `L/K`** — no finiteness, no
