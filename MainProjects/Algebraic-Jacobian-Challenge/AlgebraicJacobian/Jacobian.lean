@@ -30,61 +30,81 @@ falls out automatically. The former separate `genusZeroWitness` lane (with its
 `RigidityKbar` / cotangent-vanishing / Frobenius / `ℙ¹`-identification machinery) was a
 pre-FGA local optimisation and has been removed.
 
-`picardJacobianWitness` is wired to the `Pic⁰_{C/k}` development: the witness scheme
-is `Scheme.Pic0Scheme C`, and its four structural fields are the theorems of
-`Picard/Pic0AbelianVariety.lean`. Be precise about what that buys, because
-"invoked upstream" is not "proved upstream": of those four, `Pic0.grpObj` and
-`Pic0.geometricallyIrreducible` are proved, while **`Pic0.smooth` and `Pic0.proper`
-are themselves `sorry`-bodied**. So the witness reaches **five** open obligations,
-not three: those two upstream, plus the three leaves below, which are the ones new
-here. Proving only the three would leave `sorryAx` in the witness — verified with
-`scripts/axiom-frontier.lean`.
+`picardJacobianWitness` is wired to the `Pic⁰_{C/k}` development in its **étale** form
+(`Picard/Pic0Et.lean`): the witness scheme is `Scheme.Pic0SchemeEt C`, the identity
+component of the scheme representing the *étale-sheafified* relative Picard functor. It
+carries **no hypothesis on `C(k)`** — exactly the three challenge hypotheses and nothing
+else — which is the owner decision of 2026-07-28 (protection I-0491) and the full strength
+the challenge asks for.
 
-One of the five is of a different *kind* from the other four, and the difference decides what
-can be done about it. `Pic0.smooth`, `Pic0.proper` and leaves B and C are *unproved*: each is
-a true statement awaiting a proof. Leaf A is *false* over a general base field, so
-`picardJacobianWitness` rests on an inconsistent hypothesis and its consequences are
-vacuously true — a state no axiom check can distinguish from an honest one. Over an
-algebraically closed field that leaf is a theorem
-(`hasRationalPoint_of_curve_of_isAlgClosed`), and `picardJacobianWitnessOfIsAlgClosed`
-assembles the same witness with it supplied rather than assumed. That is the version of the
-headline whose open obligations are all of the ordinary kind.
+Why sheafifying is what makes that possible. The unsheafified functor
+`T ↦ Pic(C ×_k T)/π_T^* Pic(T)` is not a sheaf even Zariski-locally, and a representable
+functor is a sheaf for any subcanonical topology, so representability of *it* over an
+arbitrary field is a **false** statement rather than an unproved one. The étale
+sheafification is Kleiman's own object; its sheaf property is *proved* in
+`Picard/PicEtSheaf.lean` (`picEt_isSheaf_forget`), not assumed.
 
-What that does *not* do is reduce the count, and the tempting arithmetic here is wrong.
-`Scheme.Pic0Scheme` carries `[Scheme.HasPicScheme C]`, whose sole producer is the
-`sorry`-bodied `Scheme.instHasPicScheme`. Over a general field that gate is reached *through*
-leaf A, so counting it separately looks like double-counting; discharging leaf A makes it
-*fire* rather than removing it, and it stands free over `k̄`. So the obligations over `k̄`
-number five as well — `instHasPicScheme`, `Pic0.smooth`, `Pic0.proper`, leaves B and C — with
-the difference that all five are true. `scripts/axiom-frontier.lean` §0b measures this instead
-of asserting it.
+## The five obligations, and none of them is false
 
-The three leaves are each stated at exactly the strength the assembly consumes:
+Be precise about what the wiring buys, because "invoked upstream" is not "proved
+upstream". The witness reaches **five** open obligations:
 
-- `hasRationalPoint_of_curve` — the one genuine hypothesis gap: a `k`-rational point on
-  `C`, which the challenge hypotheses do not give and which is false in general. It is a
-  gap marker to be *replaced*, not proved (see the leaf's docstring). The former
-  combined leaf also asserted geometric integrality; that half is now the theorem
-  `geometricallyIntegral_of_curve`, so the gap is exactly the rational point. Over an
-  algebraically closed field the gap closes outright:
-  `hasRationalPoint_of_curve_of_isAlgClosed` is a theorem with clean axioms, so the leaf
-  is a gap only over a general base field, and `picardJacobianWitnessOfIsAlgClosed`
-  assembles the witness over `k̄` with it supplied rather than assumed — five obligations
-  still, but every one of them true.
-- `smoothOfRelativeDimension_genus_pic0` — bare smoothness of `Pic⁰_{C/k}` refined to
-  relative dimension `genus C`. Note this refines `Pic0.smooth`, which is itself
-  unproved, so the leaf presupposes an obligation rather than resting on one.
-  `finrank_tangentSpace_pic0_eq_genus` measures what remains: the *dimension count*
-  `dim T_e Pic⁰_{C/k} = genus C` is landed mathematics and holds here with no transport,
-  so the leaf owes `Pic0.smooth` plus a translation between two invariants of smoothness
-  — the tangent-space dimension and the rank of `Ω`, which is what Mathlib's
-  presentation-based `SmoothOfRelativeDimension` is characterised by — and nothing else.
-- `isAlbanese_pic0` — the Albanese universal property over an arbitrary base field and
+1. `Scheme.fgaPicardRepresentability` — representability of the étale-sheafified functor
+   over an arbitrary field (`Picard/FGAPicRepresentability.lean`). The project's central
+   open obligation, expected to stay open;
+2. `Scheme.Pic0Et.geometricallyReduced` — Cartier's theorem in characteristic zero, a
+   genuine statement in characteristic `p`;
+3. `Scheme.Pic0Et.universallyClosed` — Kleiman §5 Thm. `th:qpp&p`;
+4. `smoothOfRelativeDimension_genus_pic0Et`, 5. `isAlbanese_pic0Et` — the two leaves
+   stated below, each at exactly the strength the assembly consumes.
+
+Note (2) and (3) rather than smoothness and properness: `Pic0Et.smooth` and
+`Pic0Et.proper` are **assemblies** over them, not obligations of their own, and citing
+them as the open statements is a stale reading. What *is* proved unconditionally, and
+measures axiom-clean: `Pic0Et.grpObj`, `Pic0Et.geometricallyIrreducible`,
+`Pic0Et.locallyOfFiniteType`, `Pic0Et.isSeparated`.
+
+**All five are true statements awaiting proofs**, and that is the substance of the 2026-07-28
+change rather than the count. The former leaf `hasRationalPoint_of_curve` asserted a
+`k`-rational point from the challenge hypotheses alone; it was *false*, so the witness rested
+on an inconsistent hypothesis and its consequences were vacuously true — a state no axiom
+check can distinguish from an honest one. It has been deleted, never proved. The count was
+five before and is five now; what changed is that no obligation is a false statement any
+more.
+
+That the headline carries no rational-point binder is **checked**, not asserted: the
+`HeadlineBinders` section of `scripts/axiom-frontier.lean` elaborates every headline
+declaration under exactly the three challenge hypotheses and stops compiling if a
+`[HasRationalPoint _]` binder ever returns.
+
+Two conditional results are kept beside the headline and **neither may be presented as
+it**: `picardJacobianWitnessOfHasRationalPoint`, the same assembly on the *unsheafified*
+functor with `C(k) ≠ ∅` as a hypothesis (true, strictly weaker than the challenge), and
+`picardJacobianWitnessOfIsAlgClosed`, a genuine theorem over `k̄`. Their gate
+`Scheme.HasPicScheme` has no instance: its only producer is the named theorem
+`Scheme.picSchemeOfHasRationalPoint`, so nothing acquires a rational point by synthesis.
+
+The two étale leaves are each stated at exactly the strength the assembly consumes, and
+each carries a *companion* measuring what the landed development already reaches, so the
+remaining distance is compiler-checked rather than described:
+
+- `smoothOfRelativeDimension_genus_pic0Et` — bare smoothness of `Pic⁰_{C/k}` refined to
+  relative dimension `genus C`. `finrank_tangentSpace_pic0_eq_genus` measures what remains:
+  the *dimension count* `dim T_e Pic⁰_{C/k} = genus C` is landed mathematics, so the leaf
+  owes a translation between two invariants of smoothness — the tangent-space dimension and
+  the rank of `Ω`, which is what Mathlib's presentation-based `SmoothOfRelativeDimension`
+  is characterised by — plus the transport of that landed chain from `Pic0Scheme` to
+  `Pic0SchemeEt`, which is the honest extra cost of the étale formulation here.
+- `isAlbanese_pic0Et` — the Albanese universal property over an arbitrary base field and
   for every marked point, where the landed proof covers the algebraically closed,
   positive-genus case. `isAlbanese_pic0_of_isAlgClosed` measures the distance exactly:
   in that case the universal property *is* the landed
   `Albanese.Pic0.albanese_universal_property` with no transport, and what the leaf adds
   is arbitrary base field, genus `0`, and the basepoint condition `P ≫ ι_P = η`.
+
+The `picSharp`-shaped leaves `smoothOfRelativeDimension_genus_pic0` and `isAlbanese_pic0`
+are retained below: they are the obligations of the *conditional* milestone
+`picardJacobianWitnessOfHasRationalPoint`, not of the headline.
 
 The file contains:
 - `IsAlbanese`: the Albanese universal property for a pointed curve.
@@ -570,20 +590,22 @@ I-0372 and none of the assembly. Given `[Scheme.HasRationalPoint C]`, the identi
 recorded in the file header: the representability gate `Scheme.instHasPicScheme` (which
 this binder makes fire), the upstream `Pic0.smooth` and `Pic0.proper`, and leaves B and C.
 
-Factoring the assembly this way is what makes the two witnesses below *specialisations*
-rather than duplicated code: `picardJacobianWitness` supplies the binder from the false
-gap marker `hasRationalPoint_of_curve`, `picardJacobianWitnessOfIsAlgClosed` from the
-theorem `hasRationalPoint_of_curve_of_isAlgClosed`, and neither repeats a field. It also
-gives branch (1) of the open decision a compiled form: a headline that carries
-`C(k) ≠ ∅` as a hypothesis is exactly this definition, so that branch costs no new
-mathematics — a fact worth having checked by the elaborator rather than described in
-prose. Branch (2), étale sheafification, is *not* obtainable from here: it needs a
-different representability input and would replace `Scheme.instHasPicScheme` rather than
-supply its hypothesis. Recording both branches is not the same as being able to build
-both, and this definition is honest about which one it reaches.
+**This is a CONDITIONAL milestone and NOT the headline** (owner decision of 2026-07-28,
+protection I-0491 clause 4). It is true, it records exactly what a rational point buys, and
+it is strictly weaker than the challenge, whose curve need not have one. It is retained
+because the tangent-space development is written against the `picSharp` shape.
 
-Nothing here chooses a branch. Both consumers below are kept, and the general-field one
-remains the default. -/
+`picardJacobianWitnessOfIsAlgClosed` below is its specialisation to `k̄`, supplying the
+binder from the theorem `hasRationalPoint_of_curve_of_isAlgClosed`. The headline
+`picardJacobianWitness` is **not** a specialisation of this definition and does not route
+through it: it is built on `Scheme.Pic0SchemeEt`, the identity component of the scheme
+representing the *étale-sheafified* functor, which replaces `Scheme.HasPicScheme` rather
+than supplying its hypothesis. That is why the headline carries no rational point while
+this does.
+
+Note the gate is named rather than synthesized: `Scheme.HasPicScheme` has no instance, so
+`Scheme.picSchemeOfHasRationalPoint` is invoked explicitly here. Nothing in the tree
+acquires a rational-point hypothesis by instance search. -/
 noncomputable def picardJacobianWitnessOfHasRationalPoint (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
     [Scheme.HasRationalPoint C] :
@@ -618,19 +640,27 @@ that every pointed morphism `C ⟶ A` into an abelian variety is constant. The f
 rigidity / cotangent-vanishing / Frobenius / `ℙ¹`-identification machinery — has been
 removed in favour of this single uniform witness.
 
-The construction is **wired to the Picard development**: the underlying scheme
-is `Scheme.Pic0Scheme C`, and four of the six witness fields are theorems of
-`Picard/Pic0AbelianVariety.lean` applied directly. Those fields live in
-`picardJacobianWitnessOfHasRationalPoint`, of which this definition is the specialisation
-supplying the rational point from leaf A; splitting them apart separates the assembly
-from the open decision about where the point comes from. This definition carries no
-`sorry` of its own, but that is a statement about this file, not a completeness claim: two
-of those four upstream theorems (`Pic0.smooth`, `Pic0.proper`) are `sorry`-bodied, so
-the witness depends on five open obligations — those two, plus the three leaves
-`hasRationalPoint_of_curve`, `smoothOfRelativeDimension_genus_pic0` and
-`isAlbanese_pic0` above. The `GeometricallyIntegral` hypothesis of the Picard
-development is *not* among them: it is synthesised from the challenge hypotheses
-through `Smooth.geometricallyIntegral` (see `geometricallyIntegral_of_curve`). -/
+**No hypothesis on `C(k)`.** The binders are exactly the three challenge hypotheses, which
+is the owner decision of 2026-07-28 (protection I-0491) and the full strength the challenge
+asks for. This is *not* a specialisation of
+`picardJacobianWitnessOfHasRationalPoint`: it is wired to the **étale** Picard development,
+with underlying scheme `Scheme.Pic0SchemeEt C` — the identity component of the scheme
+representing the étale-sheafified relative Picard functor (`Picard/Pic0Et.lean`,
+`Picard/FGAPicRepresentability.lean`). Sheafifying is what removes the rational point:
+the unsheafified functor is not a sheaf, so representability of it over an arbitrary field
+would be a *false* statement rather than an unproved one.
+
+Four of the six witness fields come from theorems that are proved **unconditionally** and
+measure axiom-clean (`Pic0Et.grpObj`, `Pic0Et.geometricallyIrreducible`, and through them
+`Pic0Et.locallyOfFiniteType` / `Pic0Et.isSeparated`). This definition carries no `sorry` of
+its own, but that is a statement about this file, not a completeness claim: it depends on
+the five obligations enumerated in the file header —
+`Scheme.fgaPicardRepresentability`, `Scheme.Pic0Et.geometricallyReduced`,
+`Scheme.Pic0Et.universallyClosed`, `smoothOfRelativeDimension_genus_pic0Et` and
+`isAlbanese_pic0Et` — every one of which is a **true statement awaiting a proof**. The
+`GeometricallyIntegral` hypothesis of the Picard development is *not* among them: it is
+synthesised from the challenge hypotheses through `Smooth.geometricallyIntegral` (see
+`geometricallyIntegral_of_curve`). -/
 noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
     JacobianWitness C where
@@ -642,38 +672,30 @@ noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
   smoothGenus := smoothOfRelativeDimension_genus_pic0Et C
   isAlbaneseFor := fun P => isAlbanese_pic0Et C _ _ _ _ P
 
-/-- **The witness over an algebraically closed field, free of the inconsistent leaf.**
+/-- **The witness over an algebraically closed field: a genuine `k̄` theorem.**
 
-The same assembly as `picardJacobianWitness` — both are
-`picardJacobianWitnessOfHasRationalPoint` — differing in exactly one thing: the rational
-point is supplied by the theorem `hasRationalPoint_of_curve_of_isAlgClosed` rather than by
-the gap marker `hasRationalPoint_of_curve`. Since the shared assembly is now a single
-definition, that one difference is the *only* difference, which the elaborator checks
-rather than the reader. The distinction is not cosmetic and is the reason this
-definition exists separately.
+The same assembly as `picardJacobianWitnessOfHasRationalPoint`, with the rational point
+supplied by the theorem `hasRationalPoint_of_curve_of_isAlgClosed` rather than assumed. Over
+`k̄` a smooth proper geometrically irreducible curve really does have a rational point — the
+curve is a nonempty Jacobson space and its closed points are rational — so this definition
+records what the `picSharp` route actually reaches, with nothing false anywhere in it.
 
-`hasRationalPoint_of_curve` is *false* as stated, so every consequence of
-`picardJacobianWitness` is a consequence of an inconsistent hypothesis: true, but with no
-content, and no axiom check can see the difference. Here the same assembly runs on a
-hypothesis that holds, so the obligations that remain are all *true statements awaiting
-proofs*: `Scheme.instHasPicScheme`, `Pic0.smooth`, `Pic0.proper`, and leaves B and C.
-Closing those five closes this definition; closing them would *not* give
-`picardJacobianWitness` content over a general field, because leaf A must be replaced there
-rather than proved.
+**It is not the headline** (owner decision of 2026-07-28, protection I-0491 clause 4). It is
+a theorem about algebraically closed base fields, and the challenge asks for an arbitrary
+one; that statement is `picardJacobianWitness`, which is built on the étale-sheafified
+functor and does not pass through this definition or through
+`picardJacobianWitnessOfHasRationalPoint`.
 
-The count is **five, not four**, and the reason is worth stating because the natural
-arithmetic gets it wrong. Discharging leaf A does not remove the representability gate — it
-makes `instHasPicScheme` *fire* instead of being assumed, since `Scheme.Pic0Scheme` carries
-`[Scheme.HasPicScheme C]` and that `sorry`-bodied instance is its sole producer. Over a
-general field the gate sits *behind* leaf A, which is what makes counting it separately look
-like double-counting; over `k̄` it stands free. `scripts/axiom-frontier.lean` §0b measures
-this rather than asserting it: naming `Pic0Scheme` with leaf A discharged and neither
-`Pic0.smooth`, `Pic0.proper`, nor leaves B and C anywhere in the term still reports `sorryAx`,
-while the control that assumes the gate is clean. So what this definition buys is not a
-smaller count — it is that every remaining obligation is of the ordinary kind.
+Its obligations are those of the `picSharp` route with the rational point discharged:
+`Scheme.picSchemeOfHasRationalPoint`'s content (i.e. `Scheme.fgaPicardRepresentability`),
+`Pic0.smooth`, `Pic0.proper`, and the two `picSharp`-shaped leaves
+`smoothOfRelativeDimension_genus_pic0` / `isAlbanese_pic0`. Discharging the rational point
+does not remove the representability gate — it makes it *fire* instead of being assumed,
+since `Scheme.Pic0Scheme` carries `[Scheme.HasPicScheme C]` — so the count does not shrink
+here either. What it buys is that every obligation is of the ordinary kind.
 
-Both are kept: this one records what is actually reachable, and the general one keeps the
-open decision visible where a reader of the headline meets it. -/
+Both are kept: this one records what the `picSharp` route reaches over `k̄`, and the
+headline states what the project claims over an arbitrary field. -/
 noncomputable def picardJacobianWitnessOfIsAlgClosed [IsAlgClosed k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
     JacobianWitness C :=

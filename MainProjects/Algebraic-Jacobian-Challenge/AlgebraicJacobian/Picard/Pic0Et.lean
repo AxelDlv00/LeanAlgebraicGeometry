@@ -81,7 +81,7 @@ This is the Jacobian candidate of the headline. When `genus C = 0` it is
 noncomputable def Pic0SchemeEt {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIntegral C.hom] :
+    [GeometricallyIntegral C.hom] [HasPicSchemeEt C] :
     Over (Spec (.of k)) :=
   GroupScheme.IdentityComponent (PicSchemeEt C)
 
@@ -100,7 +100,7 @@ substrate delivers the subgroup-scheme structure existentially. -/
 theorem grpObj {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIntegral C.hom] :
+    [GeometricallyIntegral C.hom] [HasPicSchemeEt C] :
     Nonempty (GrpObj (Pic0SchemeEt C)) :=
   GroupScheme.IdentityComponent.isSubgroupHomomorphism (PicSchemeEt C)
 
@@ -113,7 +113,7 @@ the third conjunct is taken here. -/
 theorem geometricallyIrreducible {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIntegral C.hom] :
+    [GeometricallyIntegral C.hom] [HasPicSchemeEt C] :
     GeometricallyIrreducible (Pic0SchemeEt C).hom :=
   (GroupScheme.IdentityComponent.isFiniteTypeGeometricallyIrreducible
     (PicSchemeEt C)).2.2
@@ -123,7 +123,7 @@ theorem geometricallyIrreducible {k : Type u} [Field k]
 theorem locallyOfFiniteType {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIntegral C.hom] :
+    [GeometricallyIntegral C.hom] [HasPicSchemeEt C] :
     LocallyOfFiniteType (Pic0SchemeEt C).hom :=
   (GroupScheme.IdentityComponent.isFiniteTypeGeometricallyIrreducible
     (PicSchemeEt C)).1
@@ -150,7 +150,7 @@ the two other inputs are proved above, so the obligation proper is
 theorem smooth_of_geometricallyReduced {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIntegral C.hom]
+    [GeometricallyIntegral C.hom] [HasPicSchemeEt C]
     (h : GeometricallyReduced (Pic0SchemeEt C).hom) :
     Smooth (Pic0SchemeEt C).hom := by
   haveI : LocallyOfFiniteType (Pic0SchemeEt C).hom := locallyOfFiniteType C
@@ -170,7 +170,7 @@ This is the étale counterpart of `Scheme.Pic0.geometricallyReduced`. -/
 theorem geometricallyReduced {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIntegral C.hom] :
+    [GeometricallyIntegral C.hom] [HasPicSchemeEt C] :
     GeometricallyReduced (Pic0SchemeEt C).hom :=
   sorry
 
@@ -179,7 +179,7 @@ theorem geometricallyReduced {k : Type u} [Field k]
 theorem smooth {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIntegral C.hom] :
+    [GeometricallyIntegral C.hom] [HasPicSchemeEt C] :
     Smooth (Pic0SchemeEt C).hom :=
   smooth_of_geometricallyReduced C (geometricallyReduced C)
 
@@ -201,7 +201,7 @@ obligation proper is `universallyClosed` below. -/
 theorem isSeparated {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIntegral C.hom] :
+    [GeometricallyIntegral C.hom] [HasPicSchemeEt C] :
     IsSeparated (Pic0SchemeEt C).hom := by
   obtain ⟨⟨f, hopen, -⟩⟩ :=
     GroupScheme.IdentityComponent.isOpenSubgroupScheme (PicSchemeEt C)
@@ -223,7 +223,7 @@ This is the étale counterpart of `Scheme.Pic0.universallyClosed`. -/
 theorem universallyClosed {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIntegral C.hom] :
+    [GeometricallyIntegral C.hom] [HasPicSchemeEt C] :
     UniversallyClosed (Pic0SchemeEt C).hom :=
   sorry
 
@@ -232,7 +232,7 @@ with the single open one. -/
 theorem proper {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIntegral C.hom] :
+    [GeometricallyIntegral C.hom] [HasPicSchemeEt C] :
     IsProper (Pic0SchemeEt C).hom := by
   haveI : IsSeparated (Pic0SchemeEt C).hom := isSeparated C
   haveI : LocallyOfFiniteType (Pic0SchemeEt C).hom := locallyOfFiniteType C

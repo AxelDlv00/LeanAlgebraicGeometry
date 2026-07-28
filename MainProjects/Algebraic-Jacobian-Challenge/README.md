@@ -64,8 +64,9 @@ same theorem by a separate curve-specialized strategy.
   discharged by the caller; the leak appears at any call site that must
   synthesise the instance.  Run
   [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean) (`lake env lean
-  scripts/axiom-frontier.lean`, 126 declarations: 84 clean and 42 carrying `sorryAx`,
-  measured 2026-07-28 with the root build green at 8,746 jobs) before believing any
+  scripts/axiom-frontier.lean`, 147 declarations: 95 clean and 52 carrying `sorryAx`,
+  measured 2026-07-28 with `lake build AlgebraicJacobian.Jacobian` green at 8,657
+  jobs) before believing any
   completeness claim — it measures the frontier rather than inferring it.  Count by
   output *entry*, not by output line:
   Lean wraps a long axiom list across several lines, so a per-line filter
@@ -143,8 +144,10 @@ What that means concretely, and each piece is checkable:
   `[HasRationalPoint _]` binder ever returns to the headline cone.
 
 **The obligation count is unchanged at five, and that is the deliverable.**  The
-witness rests on `fgaPicardRepresentability`, `Pic0Et.smooth`, `Pic0Et.proper`,
-`smoothOfRelativeDimension_genus_pic0Et` and `isAlbanese_pic0Et`.  What changed is not
+witness rests on `fgaPicardRepresentability`, `Pic0Et.geometricallyReduced`,
+`Pic0Et.universallyClosed`, `smoothOfRelativeDimension_genus_pic0Et` and
+`isAlbanese_pic0Et`.  (Not `Pic0Et.smooth` / `Pic0Et.proper`: those are *assemblies*
+over the middle two, so citing them as the open statements is a stale reading.)  What changed is not
 the number but the *kind*: **none of the five is a false statement any more**.  All
 five are true statements awaiting proofs.  That difference is invisible to
 `#print axioms` — it is a property of the statements, not of the proof terms — which
