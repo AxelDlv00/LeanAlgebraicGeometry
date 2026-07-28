@@ -2,67 +2,28 @@ id: AJCR.w5-av
 title: 'Wave 5: Pic^0 is an abelian variety'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Wave 5: $\mathrm{Pic}^0$ is an abelian variety of dimension $g$.
+summary: 'Wave 5: Pic^0 is an abelian variety of dimension g.
 
 
-  **Interface layer complete; T4''s two-session residue (3c) closed run 0073 r5.**
-  Done: the pinned
-
-  `JacobianData` consumption interface, G1 geometric irreducibility, P2/P3 properness,
-  S2 smoothness
-
-  via `smooth_of_grpObj`, X1 separatedness, X2 translation transport, X3 $H^1$/genus
-  base-field
-
-  invariance, T1 the dual-number tangent kit, T2 the truncated-exponential Čech kernel.
+  STATE after run 0073 r6. The interface layer is complete (data, x1-x3, g1, p2, p3,
+  s2). T4''s CLAUSE (iii) IS NOW MATHEMATICALLY COMPLETE, including both of its named
+  consumer inputs — see AJCR.w5-av.t4 and worksheet 6.27. Five new modules this round
+  (Tangent/ChartClassNaturality, PicEpsKernelTrivial, ChartTrivialityGeo, EpsZeroSurjective,
+  TwoChartHonest), all kernel-green, rooted and axiom-clean.
 
 
-  **T4 is the live front and it is now down to one mathematical statement plus two
-  consumer inputs.**
-
-  (3c), the monoidal-unit transport at $\varepsilon \mapsto 0$, is an **isomorphism**
-  rather than the
-
-  `eqToHom` the predecessor prescribed (`Tangent/DualNumberUnitTransport.lean`), and
-  the ring-theoretic
-
-  bridge $A[\varepsilon]/(\varepsilon) \simeq A$ under (iii-c2-aff-geo) is landed
-
-  (`Tangent/DualNumberFstKernel.lean`). What remains of T4: (iii-c2-aff-geo) proper
-  — a `CechPic` class
-
-  on a chart of the thickened curve, owing the identification of `Opens.cechPicClass`
-  of the restricted
-
-  bundle with the base change upstairs — and the two satisfiable-but-unwitnessed inputs
-
-  ($V_0 \neq \bot \wedge V_0 \neq \top$; `Surjective f.base` at $\varepsilon \mapsto
-  0$).
+  THE OPEN FRONT is now T3/T5 and the S-chain, plus two instantiation items T4 hands
+  over (not-IsAffine C.left; the chart presentations and their square hsq). P1 stays
+  a cross-wave gate on the DD shapes freeze held by ajcr-divrep and is not this lane''s
+  to unblock.
 
 
-  **T5/S1/S3 are downstream of T4 and unstarted.** T5 (the scalar identity $\dim_k
-  T_0 = g$) consumes
-
-  the T4 kernel comparison. S1 and S3 carry WORKSHEET-FIRST and have no worksheet
-  section yet.
-
-
-  **P1 remains a CROSS-WAVE GATE** on the DD shapes freeze held by `ajcr-divrep`;
-  not attempted, and
-
-  correctly so — nothing here is to be built against a guessed shape.
-
-
-  **Cross-project (I-0689).** `ajc-pic0av`''s finding that the two-chart Čech machinery
-  cannot close the
-
-  tangent comparison is correct **for AJC only**: `LineBundle` occurs in zero AJCR
-  files, `relPic` *is*
-
-  a `CechPic` quotient definitionally, and the `[IsAffine]`-gated dictionary has no
-  call site in AJCR''s
-
-  tangent chain. Recorded so no successor re-prices that port in either direction.
+  METHOD NOTE FOR SUCCESSORS, earned three times in one round: this lane''s standing
+  failure mode is no longer under-pricing a rfl. It is pricing an obligation by searching
+  for it in THIS project''s vocabulary. All three items closed this round had been
+  priced by correct reading plus a same-vocabulary search — one of them at >1.6M heartbeats
+  for what is a three-rewrite mathlib lemma under a different spelling. Search the
+  upstream name too, and ask what a pair of hypotheses are both symptoms of.
 
   '
 status: pending
@@ -78,4 +39,4 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:12.423543+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-28T20:34:29.613402+00:00'
+  updated_at: '2026-07-28T22:06:25.548219+00:00'

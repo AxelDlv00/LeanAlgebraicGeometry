@@ -1,0 +1,17 @@
+{
+  "role": "horizon",
+  "round": 6,
+  "project": "Algebraic-Jacobian-Challenge-Rebuild",
+  "task_id": "ajcr-charts",
+  "status": "running",
+  "started_at": "2026-07-28T22:05:02.115965+00:00",
+  "projects": [
+    "Algebraic-Jacobian-Challenge-Rebuild"
+  ],
+  "harness_name": "opus5",
+  "harness_kind": "claude-code",
+  "model": "claude-opus-5",
+  "effort": "ultracode",
+  "auth": "api-key",
+  "workspace_sha": "4c06c94713193b06ffded79ad41eb6b992cc2f9e"
+}

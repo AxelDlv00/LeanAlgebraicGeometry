@@ -3,78 +3,23 @@ title: 'T4 (WORKSHEET-FIRST, risk R1): the étale-plus/Zariski kernel crossing a
   — probe tonight'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'T4 (WORKSHEET-FIRST, risk R1): the étale-plus/Zariski kernel crossing at
-  $k[\varepsilon]$.
-
-
-  **(3c) IS CLOSED (run 0073 r5)** — `Tangent/DualNumberUnitTransport.lean`, `lake
-  env lean` EXIT=0.
-
-  The monoidal-unit seam `Over.mk (\mathbb{1}) \cong \mathrm{overSpec}\ k\ k` is an
-  **isomorphism**
-
-  built from `Over.isoMk (Iso.refl _)`; the predecessor''s prescribed `eqToHom` is
-  not needed, since the
-
-  two objects share their underlying scheme by `rfl` and `Spec.map_id` is spent only
-  on the
-
-  structure-morphism triangle. Because it is an iso rather than a rewrite, a kernel
-  statement crosses
-
-  it in **both** directions — which is what the kernel comparison needs. Yields
-
-  `(C \triangleleft \mathrm{overDualNumberZero}).left = \mathrm{transportLeft} \gg
-  \mathrm{relCurveMap}`,
-
-  the identification worksheet §6.24 named as the one link between the engine''s arrow
-  and item (1)''s.
-
-
-  **Also landed: the ring-theoretic bridge under (iii-c2-aff-geo)** —
-
-  `Tangent/DualNumberFstKernel.lean`, `ker fstRingHom = span {\varepsilon}`, hence
-
-  $A[\varepsilon]/(\varepsilon) \simeq A$. The two sides of that obligation named
-  different
-
-  constructions (a base change vs a quotient) and mathlib links them only via
-
-  `QuotSMulTop.equivQuotTensor`, which needs $A$ to *be* the quotient ring. No curve,
-  no field, no
-
-  finiteness: portable to the AJC sibling verbatim.
-
-
-  **RESIDUE, honestly sized.** (iii-c2-aff-geo) itself is still open: it lives at
-  the level of a
-
-  `CechPic` class on a chart of the thickened curve and owes the identification of
-
-  `Opens.cechPicClass` of the restricted bundle with the base change of the class
-  upstairs. Plus the
-
-  two named consumer inputs ($V_0 \neq \bot \wedge V_0 \neq \top$, and `Surjective
-  f.base` at
-
-  $\varepsilon \mapsto 0$), both satisfiable and both still unwitnessed in the tree.
-
-
-  **CROSS-PROJECT (I-0689 adjudicated).** `ajc-pic0av` reports the two-chart Čech
-  machinery cannot
-
-  close clause (iii) because `CechPic` reaches invertible sheaves only through an
-  `[IsAffine]`-gated
-
-  dictionary. That is **correct for AJC and does not transfer**: `LineBundle` occurs
-  in zero AJCR
-
-  files, `relPic` *is* a `CechPic` quotient by definition, and `cechPicEquivPic` has
-  no call site in
-
-  AJCR''s tangent chain. The missing arrow points the other way on each side.
-
-  '
+summary: "T4 (WORKSHEET-FIRST, risk R1) — the etale-plus/Zariski kernel crossing at\
+  \ k[eps].\n\nCLAUSE (iii) IS MATHEMATICALLY COMPLETE as of run 0073 r6. (iii-c2-aff-geo),\
+  \ open since r3 and the last named statement, is CLOSED by Tangent/ChartClassNaturality.lean\
+  \ + PicEpsKernelTrivial.lean + ChartTrivialityGeo.lean (93f84ed2). BOTH named consumer\
+  \ inputs are also closed: EpsZeroSurjective.lean (2755a58e) and TwoChartHonest.lean\
+  \ (80e6da8e). Five modules, kernel-green, rooted, eleven headlines axiom-clean against\
+  \ controls that fire sorryAx. Worksheet 6.27.\n\nWHAT REMAINS IS INSTANTIATION,\
+  \ NOT MATHEMATICS — two items, neither a wall:\n 1. not-IsAffine C.left for the\
+  \ smooth proper positive-dimensional curve. ONE statement where 6.25 left two (non-emptiness\
+  \ is not an input: the empty scheme is affine). Absent from this project, the sibling\
+  \ and mathlib.\n 2. The two chart presentations at the thickened charts (e = Over.dualNumberSectionsOfIsAffineOpen,\
+  \ e' its eps-zero reduction) and the commuting square hsq between them. Pieces exist;\
+  \ the square is not assembled. relCover supplies the affine-preimage hypothesis\
+  \ via isAffineOpen0/1.\n\nTHE LESSON 6.27 RECORDS, because it mis-priced all three\
+  \ items the same way: each obligation had been searched for in THIS project's vocabulary.\
+  \ The square my own r3 priced at >1.6M heartbeats is mathlib's Hom.resLE_app_top,\
+  \ stated for topIso where we spell iotaTop — three rewrites at the default budget.\n"
 status: active
 kind: proof
 priority: normal
@@ -88,5 +33,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:45.485310+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T20:33:32.832870+00:00'
+  updated_at: '2026-07-28T22:05:34.767710+00:00'
   owner: ajcr-w5-av
