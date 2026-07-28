@@ -1483,7 +1483,34 @@ For a smooth proper geometrically integral curve `C/k` of genus
 (Kleiman~§5 Ex.~`ex:jac`), so the dimension equals `dim_k H¹(C, O_C) = g(C)`
 by `def:genus`.
 
-This argument is not yet formalised: the proof is `sorry`. -/
+This argument is not yet formalised: the proof is `sorry`.
+
+WHERE THE BLOCKER ACTUALLY IS (measured run 0067). It is *not* the tangent-space
+identity. Even granting `dim_k T₀ Pic⁰ = g` — which the sibling
+`Picard/Pic0AbelianVariety.lean` has now reduced to a single geometric cocycle
+comparison — and granting smoothness, the passage to `topologicalKrullDim` is a
+separate construction, because mathlib v4.31 has almost no API for that
+invariant: `IsHomeomorph.topologicalKrullDim_eq`,
+`IsInducing.topologicalKrullDim_le`, `topologicalKrullDim_subspace_le`,
+`topologicalKrullDim_zero_of_discreteTopology` and
+`PrimeSpectrum.topologicalKrullDim_eq_ringKrullDim`. Nothing connects it to
+`SmoothOfRelativeDimension` or to a tangent-space dimension.
+
+The available bridge runs through a *different* invariant and at the algebra
+level: `Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth`
+characterises relative dimension `n` as `Module.rank S Ω[S⁄R] = n`, the rank of
+the module of Kähler differentials. So closing this needs (i) the identification
+of that rank with the tangent-space dimension at the identity — over a field the
+two are dual, but the statement has to be made and the `rank`/`finrank`
+mismatch is where it would bite — and (ii) the passage from an affine-local
+presentation statement to a scheme-level Krull dimension, which quantifies over
+an affine cover of `Pic⁰_{C/k}` rather than over one point. The same analysis is
+recorded at `Jacobian.lean:395-410` for
+`smoothOfRelativeDimension_genus_pic0`.
+
+Consumers wanting only a dimension *index* (e.g. the Albanese lane) may find
+`SmoothOfRelativeDimension (genus C) (Pic0Scheme C).hom` a cheaper target than
+this Krull-dimension form. -/
 theorem finrank_eq_genus {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
