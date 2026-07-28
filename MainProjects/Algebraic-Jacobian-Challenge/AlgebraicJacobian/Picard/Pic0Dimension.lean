@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Albanese.CodimOneExtension
 import AlgebraicJacobian.Picard.SchemeKrullDimStalk
+import AlgebraicJacobian.Picard.EmbeddingDimensionBound
 import AlgebraicJacobian.Picard.Pic0AbelianVariety
 
 /-!
@@ -260,6 +261,90 @@ theorem topologicalKrullDim_eq_genus_of_forall_ringKrullDim_stalk_le
   le_antisymm
     (Scheme.topologicalKrullDim_le_of_forall_ringKrullDim_stalk_le _ _ hle)
     (genus_le_topologicalKrullDim_of_smooth C hsm)
+
+/-! ### The `≤` bound restated in cotangent currency (run 0067 r6)
+
+The `hle` hypothesis above asks for a bound on `ringKrullDim` at every point. The two
+statements below ask instead for a bound on the **cotangent dimension** at every
+point, which is the invariant the tangent-space leg of this chapter actually computes,
+and they need neither regularity nor `PerfectField` to convert it. See
+`Picard/EmbeddingDimensionBound.lean` for why the conversion is unconditional in this
+direction only. -/
+
+/-- **`dim Pic⁰_{C/k} ≤ g(C)` from a uniform bound on the cotangent spaces** — no
+regularity, no `PerfectField`, no presentation.
+
+This replaces the `ringKrullDim`-shaped hypothesis of
+`topologicalKrullDim_eq_genus_of_forall_ringKrullDim_stalk_le` with a
+cotangent-shaped one. The measurement recorded at that theorem — that the `≤`
+direction is "genuinely absent rather than merely unlocated", having searched
+`Albanese/StandardSmoothDimension.lean` for a `ringKrullDim` upper bound — was of the
+wrong quantity: `ringKrullDim R ≤ dim_κ(m/m²)` holds for **every** Noetherian local
+ring (`ringKrullDim_le_finrank_cotangentSpace`, Krull's height theorem composed with
+Nakayama, both already in the pinned mathlib). What is genuinely still owed is the
+uniform *cotangent* bound, and that is a statement about embedding dimensions rather
+than about dimension theory.
+
+`IsLocallyNoetherian (Pic0Scheme C).left` is supplied by `Pic0.isLocallyNoetherian`
+above — the helper the previous session kept with the note "the ≤ half of the
+dimension statement is likely to need it where no regularity hypothesis is in scope".
+That is exactly this. -/
+theorem topologicalKrullDim_le_genus_of_forall_finrank_cotangentSpace_le
+    {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    (hle : ∀ z : (Pic0Scheme C).left,
+      Module.finrank (IsLocalRing.ResidueField ((Pic0Scheme C).left.presheaf.stalk z))
+        (IsLocalRing.CotangentSpace ((Pic0Scheme C).left.presheaf.stalk z))
+          ≤ AlgebraicGeometry.genus C) :
+    topologicalKrullDim (Pic0Scheme C).left
+      ≤ ((AlgebraicGeometry.genus C : ℕ) : WithBot ℕ∞) := by
+  haveI := isLocallyNoetherian C
+  exact Scheme.topologicalKrullDim_le_of_forall_finrank_cotangentSpace_le
+    (Pic0Scheme C).left _ hle
+
+/-- **`dim Pic⁰_{C/k} = g(C)` with both halves in cotangent currency.**
+
+The two directions and their genuinely different costs, now visible in one statement:
+
+* `≤` consumes `hle`, a uniform bound on the embedding dimension at every point, and
+  converts it with no side conditions at all;
+* `≥` consumes regularity of the **single** stalk at the identity, which is
+  irreducible — an embedding dimension bounds the Krull dimension from below only at a
+  regular point (at a cusp it exceeds it) — together with the tangent-space identity
+  `Pic0.finrank_cotangentSpace_eq_finrank_hModuleOne`, which supplies the value `g(C)`
+  there and is front (a) of this chapter, still open.
+
+Compare `topologicalKrullDim_eq_genus_of_forall_ringKrullDim_stalk_le`: that version
+carries `[PerfectField k]`, because it discharges regularity from smoothness through
+`Scheme.isRegularLocalRing_stalk_of_smooth_of_perfectField`, whose own upstream input
+carries the binder irremovably. This version takes regularity at the identity as a
+hypothesis instead and so is stated over an **arbitrary** field — which is what the
+standing owner decision (inbox I-0491) requires of this leg. A caller over a perfect
+field can still discharge `hreg` from smoothness by that route.
+
+MEASURE BEFORE QUOTING: like everything downstream of front (a), this reports
+`sorryAx` at the full root through the tangent-space identity. The dimension
+machinery it rests on (`Picard/EmbeddingDimensionBound.lean`,
+`Picard/SchemeKrullDimStalk.lean`) is axiom-clean. -/
+theorem topologicalKrullDim_eq_genus_of_forall_finrank_cotangentSpace_le
+    {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    (hle : ∀ z : (Pic0Scheme C).left,
+      Module.finrank (IsLocalRing.ResidueField ((Pic0Scheme C).left.presheaf.stalk z))
+        (IsLocalRing.CotangentSpace ((Pic0Scheme C).left.presheaf.stalk z))
+          ≤ AlgebraicGeometry.genus C)
+    (hreg : IsRegularLocalRing ((Pic0Scheme C).left.presheaf.stalk
+      ((identitySection C).base default))) :
+    topologicalKrullDim (Pic0Scheme C).left
+      = ((AlgebraicGeometry.genus C : ℕ) : WithBot ℕ∞) :=
+  le_antisymm (topologicalKrullDim_le_genus_of_forall_finrank_cotangentSpace_le C hle)
+    (genus_le_topologicalKrullDim_of_isRegular C hreg)
 
 end Pic0
 

@@ -144,6 +144,7 @@ import AlgebraicJacobian.Picard.Pic0AbelianVariety
 -- Rooted here per inbox I-0600 / I-0659: an unrooted module is invisible to the
 -- workspace axiom probe, which walks the cone of THIS file. `Pic0Dimension`
 -- transitively pulls in `SchemeKrullDimStalk`.
+import AlgebraicJacobian.Picard.EmbeddingDimensionBound
 import AlgebraicJacobian.Picard.Pic0Dimension
 import AlgebraicJacobian.Picard.AmbientPicNotProper
 import AlgebraicJacobian.Picard.FlatteningStratification
