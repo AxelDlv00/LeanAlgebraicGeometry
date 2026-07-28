@@ -1,67 +1,80 @@
 id: I-0487
 provider: local
 kind: memory
-body: "Pic0.smooth IS NOT A TRANSLATION ARGUMENT: its whole remaining content is\n`GeometricallyReduced`,\
-  \ and mathlib already does the rest — publicly.\n\nMeasured 2026-07-28 by elaboration (task ajc-truth),\
-  \ on the rooted tree, root build green\nat 8746 jobs. Relevant to anyone who picks up `Pic0.smooth`\
-  \ (T10/T16 territory) or who is\nabout to build translation machinery for it.\n\nWHAT THE DOCSTRING\
-  \ PLANS. `Scheme.Pic0.smooth` (`Picard/Pic0AbelianVariety.lean:800`,\n`sorry`-bodied) documents the\
-  \ classical route: smoothness at the identity propagates\neverywhere by translation, and the identity\
-  \ case reduces to a tangent-space dimension\ninequality becoming equality — Cartier in characteristic\
-  \ 0, `H²(C, \U0001D4AA_C) = 0` in\ncharacteristic p.\n\nWHAT IS ACTUALLY LEFT. Mathlib v4.31 carries\n\
-  \n    @smooth_of_grpObj : ∀ {K} [Field K] {G : Scheme} (f : G ⟶ Spec (CommRingCat.of K))\n      [LocallyOfFiniteType\
-  \ f] [GrpObj (Over.mk f)] [GeometricallyReduced f], Smooth f\n\nwhich is PUBLIC, needs no algebraically\
-  \ closed field (it descends from `k̄` internally by\nfaithfully-flat descent), and performs the translation\
-  \ argument itself. Two of its three\ninputs are landed in this project and elaborate at the hypotheses\
-  \ of `Pic0.smooth`\nverbatim: `Pic0.locallyOfFiniteType C`, and `Pic0.grpObj C` after `obtain ⟨i⟩` —\n\
-  `Over.mk (Pic0Scheme C).hom` accepts that `GrpObj` instance directly, so there is no\n`Over`-repackaging\
-  \ obstruction. Checked by elaborating it, not by reading signatures.\n\nThe third does not synthesize:\n\
-  \n    example : GeometricallyReduced (Pic0Scheme C).hom := by infer_instance\n    -- failed to synthesize\
-  \ instance of type class GeometricallyReduced (Pic0Scheme C).hom\n\nand the only producer in the tree\
-  \ is `Smooth.geometricallyReduced` (priority 100), i.e. the\nconverse — so using it would be circular.\
-  \ That is what makes this a reduction and not a\ndischarge, and it is worth having measured either way:\
-  \ the obligation's SHAPE changed even\nthough its axiom line did not move.\n\nSO, CONCRETELY. Do not\
-  \ build translation lemmas for `Pic0.smooth`. Prove\n`GeometricallyReduced (Pic0Scheme C).hom` — reducedness\
-  \ of `Pic⁰_{C/k̄}`, which is Cartier\nin characteristic 0 and a real theorem in characteristic p, where\
-  \ μ_p and α_p exist and the\ncurve-specific input is what rules them out — then apply `smooth_of_grpObj`.\n\
-  \nONE THING NOT TO BE MISLED BY. The sibling `Algebraic-Jacobian-Challenge-Rebuild` has the\ntranslation\
-  \ lemmas standalone and sorry-free (`AbelianVariety/Translation.lean`:\n`GrpObj.pointTranslationIso`,\
-  \ `mem_smoothLocus_iff_of_comp_eq`), written deliberately\nbecause mathlib's own form of the argument\
-  \ is `private`\n(`smooth_of_grpObj_of_isAlgClosed`). Reading that file suggests the translation step\
-  \ is the\nwork. For THIS statement it is not: the public wrapper suffices and the sibling's lemmas are\n\
-  not needed. Their value is elsewhere — where a point-local property other than smoothness\nhas to be\
-  \ spread.\n\n`Pic0.proper` is untouched by this. Its Chevalley–Rosenlicht / quasi-projectivity route\n\
-  stands as documented, and nothing here shortens it.\n\nRecorded on hgraph node 44929083d4cf (`Pic0.smooth`)\
-  \ with the elaboration details, and in\n`Jacobian.lean`'s leaf-B docstring, which had inherited the\
-  \ same \"translation\" reading.\n\n======================================================================\n\
-  STRENGTHENED, same session, by attacking my own claim rather than restating it.\n\nI had written that\
-  \ the \"entire remaining content\" of `Pic0.smooth` is\n`GeometricallyReduced (Pic0Scheme C).hom`. That\
-  \ phrasing is defensible but it was an\ninference from three signature checks, and the way it would\
-  \ be OVERSTATED is trap (d) in\n`scripts/axiom-frontier.lean`: the reduction might only work at a RESTATEMENT\
-  \ of\n`Pic0.smooth`'s hypotheses rather than at the hypotheses themselves, or it might leave a\nresidual\
-  \ leak somewhere else in the assembly that the three checks never touched.\n\nSo I proved the conclusion\
-  \ at this theorem's binders VERBATIM, with geometric reducedness as\nthe sole added hypothesis, and\
-  \ measured the result:\n\n    theorem pic0_smooth_of_geometricallyReduced {k : Type u} [Field k]\n \
-  \       (C : Over (Spec (.of k)))\n        [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]\n  \
-  \      [GeometricallyIntegral C.hom] [HasPicScheme C]\n        [PicScheme.PicSchemeLocallyOfFiniteType\
-  \ C]\n        (hred : GeometricallyReduced (Pic0Scheme C).hom) :\n        Smooth (Pic0Scheme C).hom\
-  \ := by\n      haveI : LocallyOfFiniteType (Pic0Scheme C).hom := Pic0.locallyOfFiniteType C\n      obtain\
-  \ ⟨i⟩ := Pic0.grpObj C\n      haveI : GrpObj (Over.mk (Pic0Scheme C).hom) := i\n      haveI := hred\n\
-  \      exact AlgebraicGeometry.smooth_of_grpObj _\n\n    'pic0_smooth_of_geometricallyReduced' depends\
-  \ on axioms:\n      [propext, Classical.choice, Quot.sound]\n\nAXIOM-CLEAN. Compare `Pic0.smooth` itself,\
-  \ which reports\n`[propext, sorryAx, Classical.choice, Quot.sound]`. That contrast is the whole result:\
-  \ the\nclaim is not merely that geometric reducedness is what remains, but that supplying it\nDISCHARGES\
-  \ `Pic0.smooth` outright, with no leak left anywhere else in the chain — no\n`Pic0.tangentSpaceIso`,\
-  \ no `finrank_cotangentSpaceDual_eq_finrank_h1Cok`, nothing.\n\nTwo controls, because a clean line proves\
-  \ nothing by itself:\n\n  * the hypothesis is an ordinary satisfiable class, not something uninstantiable\
-  \ in\n    principle — `example (f) [Smooth f] : GeometricallyReduced f := inferInstance` compiles,\n\
-  \    so the class has real inhabitants (this is the trap-(d) control);\n  * it is genuinely NOT available\
-  \ for `Pic0Scheme C` — `infer_instance` fails, and the tree's\n    only producer is the converse `Smooth.geometricallyReduced`.\
-  \ Were synthesis able to find\n    it, the \"reduction\" would have been a full discharge and I would\
-  \ have been understating\n    the result in the other direction.\n\nSo whoever takes `Pic0.smooth`:\
-  \ the Lean side of it is three `haveI`s and one `exact`. The\nmathematics is entirely `GeometricallyReduced\
-  \ (Pic0Scheme C).hom`, i.e. reducedness of\n`Pic⁰_{C/k̄}` — Cartier in characteristic zero, and in characteristic\
-  \ `p` a real theorem,\nwhere μ_p and α_p exist and the curve-specific input is what rules them out.\n"
+body: "Pic0.smooth IS NOT A TRANSLATION ARGUMENT: its whole remaining content is\n\
+  `GeometricallyReduced`, and mathlib already does the rest — publicly.\n\nMeasured\
+  \ 2026-07-28 by elaboration (task ajc-truth), on the rooted tree, root build green\n\
+  at 8746 jobs. Relevant to anyone who picks up `Pic0.smooth` (T10/T16 territory)\
+  \ or who is\nabout to build translation machinery for it.\n\nWHAT THE DOCSTRING\
+  \ PLANS. `Scheme.Pic0.smooth` (`Picard/Pic0AbelianVariety.lean:800`,\n`sorry`-bodied)\
+  \ documents the classical route: smoothness at the identity propagates\neverywhere\
+  \ by translation, and the identity case reduces to a tangent-space dimension\ninequality\
+  \ becoming equality — Cartier in characteristic 0, `H²(C, \U0001D4AA_C) = 0` in\n\
+  characteristic p.\n\nWHAT IS ACTUALLY LEFT. Mathlib v4.31 carries\n\n    @smooth_of_grpObj\
+  \ : ∀ {K} [Field K] {G : Scheme} (f : G ⟶ Spec (CommRingCat.of K))\n      [LocallyOfFiniteType\
+  \ f] [GrpObj (Over.mk f)] [GeometricallyReduced f], Smooth f\n\nwhich is PUBLIC,\
+  \ needs no algebraically closed field (it descends from `k̄` internally by\nfaithfully-flat\
+  \ descent), and performs the translation argument itself. Two of its three\ninputs\
+  \ are landed in this project and elaborate at the hypotheses of `Pic0.smooth`\n\
+  verbatim: `Pic0.locallyOfFiniteType C`, and `Pic0.grpObj C` after `obtain ⟨i⟩` —\n\
+  `Over.mk (Pic0Scheme C).hom` accepts that `GrpObj` instance directly, so there is\
+  \ no\n`Over`-repackaging obstruction. Checked by elaborating it, not by reading\
+  \ signatures.\n\nThe third does not synthesize:\n\n    example : GeometricallyReduced\
+  \ (Pic0Scheme C).hom := by infer_instance\n    -- failed to synthesize instance\
+  \ of type class GeometricallyReduced (Pic0Scheme C).hom\n\nand the only producer\
+  \ in the tree is `Smooth.geometricallyReduced` (priority 100), i.e. the\nconverse\
+  \ — so using it would be circular. That is what makes this a reduction and not a\n\
+  discharge, and it is worth having measured either way: the obligation's SHAPE changed\
+  \ even\nthough its axiom line did not move.\n\nSO, CONCRETELY. Do not build translation\
+  \ lemmas for `Pic0.smooth`. Prove\n`GeometricallyReduced (Pic0Scheme C).hom` — reducedness\
+  \ of `Pic⁰_{C/k̄}`, which is Cartier\nin characteristic 0 and a real theorem in\
+  \ characteristic p, where μ_p and α_p exist and the\ncurve-specific input is what\
+  \ rules them out — then apply `smooth_of_grpObj`.\n\nONE THING NOT TO BE MISLED\
+  \ BY. The sibling `Algebraic-Jacobian-Challenge-Rebuild` has the\ntranslation lemmas\
+  \ standalone and sorry-free (`AbelianVariety/Translation.lean`:\n`GrpObj.pointTranslationIso`,\
+  \ `mem_smoothLocus_iff_of_comp_eq`), written deliberately\nbecause mathlib's own\
+  \ form of the argument is `private`\n(`smooth_of_grpObj_of_isAlgClosed`). Reading\
+  \ that file suggests the translation step is the\nwork. For THIS statement it is\
+  \ not: the public wrapper suffices and the sibling's lemmas are\nnot needed. Their\
+  \ value is elsewhere — where a point-local property other than smoothness\nhas to\
+  \ be spread.\n\n`Pic0.proper` is untouched by this. Its Chevalley–Rosenlicht / quasi-projectivity\
+  \ route\nstands as documented, and nothing here shortens it.\n\nRecorded on hgraph\
+  \ node 44929083d4cf (`Pic0.smooth`) with the elaboration details, and in\n`Jacobian.lean`'s\
+  \ leaf-B docstring, which had inherited the same \"translation\" reading.\n\n======================================================================\n\
+  STRENGTHENED, same session, by attacking my own claim rather than restating it.\n\
+  \nI had written that the \"entire remaining content\" of `Pic0.smooth` is\n`GeometricallyReduced\
+  \ (Pic0Scheme C).hom`. That phrasing is defensible but it was an\ninference from\
+  \ three signature checks, and the way it would be OVERSTATED is trap (d) in\n`scripts/axiom-frontier.lean`:\
+  \ the reduction might only work at a RESTATEMENT of\n`Pic0.smooth`'s hypotheses\
+  \ rather than at the hypotheses themselves, or it might leave a\nresidual leak somewhere\
+  \ else in the assembly that the three checks never touched.\n\nSo I proved the conclusion\
+  \ at this theorem's binders VERBATIM, with geometric reducedness as\nthe sole added\
+  \ hypothesis, and measured the result:\n\n    theorem pic0_smooth_of_geometricallyReduced\
+  \ {k : Type u} [Field k]\n        (C : Over (Spec (.of k)))\n        [SmoothOfRelativeDimension\
+  \ 1 C.hom] [IsProper C.hom]\n        [GeometricallyIntegral C.hom] [HasPicScheme\
+  \ C]\n        [PicScheme.PicSchemeLocallyOfFiniteType C]\n        (hred : GeometricallyReduced\
+  \ (Pic0Scheme C).hom) :\n        Smooth (Pic0Scheme C).hom := by\n      haveI :\
+  \ LocallyOfFiniteType (Pic0Scheme C).hom := Pic0.locallyOfFiniteType C\n      obtain\
+  \ ⟨i⟩ := Pic0.grpObj C\n      haveI : GrpObj (Over.mk (Pic0Scheme C).hom) := i\n\
+  \      haveI := hred\n      exact AlgebraicGeometry.smooth_of_grpObj _\n\n    'pic0_smooth_of_geometricallyReduced'\
+  \ depends on axioms:\n      [propext, Classical.choice, Quot.sound]\n\nAXIOM-CLEAN.\
+  \ Compare `Pic0.smooth` itself, which reports\n`[propext, sorryAx, Classical.choice,\
+  \ Quot.sound]`. That contrast is the whole result: the\nclaim is not merely that\
+  \ geometric reducedness is what remains, but that supplying it\nDISCHARGES `Pic0.smooth`\
+  \ outright, with no leak left anywhere else in the chain — no\n`Pic0.tangentSpaceIso`,\
+  \ no `finrank_cotangentSpaceDual_eq_finrank_h1Cok`, nothing.\n\nTwo controls, because\
+  \ a clean line proves nothing by itself:\n\n  * the hypothesis is an ordinary satisfiable\
+  \ class, not something uninstantiable in\n    principle — `example (f) [Smooth f]\
+  \ : GeometricallyReduced f := inferInstance` compiles,\n    so the class has real\
+  \ inhabitants (this is the trap-(d) control);\n  * it is genuinely NOT available\
+  \ for `Pic0Scheme C` — `infer_instance` fails, and the tree's\n    only producer\
+  \ is the converse `Smooth.geometricallyReduced`. Were synthesis able to find\n \
+  \   it, the \"reduction\" would have been a full discharge and I would have been\
+  \ understating\n    the result in the other direction.\n\nSo whoever takes `Pic0.smooth`:\
+  \ the Lean side of it is three `haveI`s and one `exact`. The\nmathematics is entirely\
+  \ `GeometricallyReduced (Pic0Scheme C).hom`, i.e. reducedness of\n`Pic⁰_{C/k̄}`\
+  \ — Cartier in characteristic zero, and in characteristic `p` a real theorem,\n\
+  where μ_p and α_p exist and the curve-specific input is what rules them out.\n"
 labels:
 - agent-ready
 status: open
