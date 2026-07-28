@@ -486,6 +486,7 @@ import AlgebraicJacobian.Tangent.EpsZeroSurjective
 import AlgebraicJacobian.Tangent.ChartClassNaturality
 import AlgebraicJacobian.Tangent.PicEpsKernelTrivial
 import AlgebraicJacobian.Tangent.ChartTrivialityGeo
+import AlgebraicJacobian.Tangent.CechPicIsoTransport
 import AlgebraicJacobian.Tangent.Pic0TangentSpace
 import AlgebraicJacobian.AbelianVariety.JacobianSmooth
 import AlgebraicJacobian.AbelianVariety.JacobianAbelianVariety

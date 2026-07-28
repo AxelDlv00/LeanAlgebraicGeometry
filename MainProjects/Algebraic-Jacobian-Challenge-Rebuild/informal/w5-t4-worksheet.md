@@ -1929,3 +1929,153 @@ nothing in T3/T4 needs it.
 **T4's RESIDUE AFTER §6.29: none.** Clause (iii) is complete, instantiated at the charts
 (§6.28), and its last geometric input is replaced by a cohomological one the tree already computes.
 What remains in the T-chain is T3's assembly and T5's numeral — consumers, not comparisons.
+
+## §7 T3 — THE ASSEMBLY, measured before the Lean (run 0073 r7, task `ajcr-w5-av`)
+
+*Worksheet-first, as §6 was. §6.29 closed T4 and handed T3 an assembly; this section asks what that
+assembly actually consumes, and the answer corrects the `.t3` roadmap row.*
+
+### 7.0 The row said T3 "waits on one geometric fact". It does not — it waits on the §6.24 link, which has ZERO consumers at either end
+
+The `.t3` roadmap row at the start of this session read: *"WHAT T3 WAITS ON NOW is one geometric
+fact, not a comparison: `¬ IsAffine C.left` … Every other input of the chain is landed, rooted and
+axiom-clean. A successor should start there, or start assembling the ε-kernel statement itself over
+that hypothesis — **the pieces no longer have gaps between them**."*
+
+Two things are wrong with that, and the second is the one that matters.
+
+1. **`¬ IsAffine C.left` is not an input at all** — §6.29 replaced it with `g ≠ 0` in the same
+   session that wrote the row. The row's own sibling (`.t4`) says so. This is a stale sentence, not
+   a mis-pricing.
+2. **"the pieces no longer have gaps between them" is false, and §6.24 says so.** §6.24 ran the
+   carrier-by-carrier level check and concluded: *"What is therefore still missing is exactly one
+   link, stated sharply. The engine's arrow is `unitsFst` on the dual-number carrier; item (1)'s
+   arrow is `pullbackOverlapQuot` along the `ε ↦ 0` scheme morphism. Saying these are the same arrow
+   across `dualNumberCechH1Equiv` is precisely `(b-coeff)` composed with the (3c) object
+   transport."* That link was never built. §6.26 closed **(3c)**, which is one of its two
+   *ingredients*, and §§6.27–6.29 closed the *chart-triviality* clause, which is a different leg.
+
+**Measured, and this is the instrument that should have been run before the row was written**
+(`I-0630`/`I-0687`/`I-0711` shape: a carrier with no consumers reads exactly like one with no
+producers):
+
+```
+grep -rln 'pullbackOverlapQuot' AlgebraicJacobian/ --include=*.lean
+  → TwoChartQuotientNaturality.lean (its own file), plus ONE DOCSTRING MENTION
+grep -rln 'dualNumberCechH1Equiv'  → DualNumberCarrierCoboundary.lean   (its own file only)
+grep -rln 'unitsReduction'         → TruncExpCechH1.lean, TwoChartNaturality.lean
+grep -rln 'relSectionsMapUnits'    → DualNumberCarrierReduction.lean    (its own file only)
+```
+
+**Every one of the four objects §6.24 named as the two sides of the missing link is consumed by
+nothing outside the file that defines it.** Three of the four are consumed by *nothing at all*. So
+the honest reading of the T-chain at the start of this session is not "assembly over one geometric
+hypothesis" but **"four landed carriers and the arrow between two of them is absent"** — the
+`I-0711` island shape, in a lane that has now recorded that shape three times.
+
+> **Rule: "the pieces no longer have gaps between them" is a claim about ARROWS, and the cheap test
+> is a consumer grep on each piece.** A hand-off written from a level check (§6.24, carriers line up)
+> plus a session's worth of closed leaves reads as "assembly remains" — but §6.24 had *itself*
+> written down the missing arrow, in the same document, five sections earlier. The failure is not
+> the measurement; it is that a closing session summarised its own worksheet by its last section
+> rather than by its open items.
+
+### 7.1 What the link decomposes into — three steps, and only one is new
+
+Write `Z := (C ⊗ overDualNumber k).left` (the thickened curve), `X := relCurve C k`, and `U : Bool →
+C.left.Opens` for an affine two-chart cover of `C.left`. The kernel statement T3 wants is
+
+```
+ker( CechPic(Z) → CechPic(C.left) )  ≃+  H¹(C, 𝒪_C)          (T3, absolute form, §6.0)
+```
+
+and the chain that computes it, right to left:
+
+| step | statement | status |
+|---|---|---|
+| (T3-1) | `H¹(C,𝒪) ≃+ Additive (unitsReduction C.left U₀ U₁).ker` | **LANDED** — T2, `h1AddEquivTruncExpCechKernel` |
+| (T3-2) | that kernel `≃` the kernel of `pullbackOverlapQuot (relCurveMap C k[ε] k)` | **THE MISSING LINK** — §6.24; two ingredients landed, arrow absent |
+| (T3-3) | that kernel `≃` `ker(CechPic(Z) → CechPic(X))` | **LANDED** — `map_twoChartClass_eq_one_iff` + `twoChartClass_injective` + (iii-c2) surjectivity |
+| (T3-4) | `CechPic(X) ≃ CechPic(C.left)` and the map matches | **NOT MEASURED before this session** — see 7.2 |
+
+(T3-2) is the arrow §6.24 named. (T3-4) is a step **no section of this worksheet has ever named**,
+and it is where the `ε ↦ 0` morphism's target lives: `twoChartClass`'s pullback lands on
+`relCurve C k`, *not* on `C.left`, because the `ε ↦ 0` map of relative curves is
+`relCurveMap C k[ε] k : relCurve C k ⟶ relCurve C k[ε]`. Something has to identify `relCurve C k`
+with `C.left`.
+
+### 7.2 (T3-4) is the (3c) seam again, and it is a `CechPic` transport nobody has stated
+
+`Tangent/DualNumberUnitTransport.lean` built exactly the object that closes (T3-4) and stopped one
+step short of the consumer. `transportLeft k C : (C ⊗ Over.mk (𝟙 (Spec k))).left ⟶ relCurve C k` is
+an `IsIso` (`isIso_transportLeft`), and its docstring already says why that matters: *"a consumer may
+transport a kernel or injectivity statement across the seam in either direction — which is what a
+kernel comparison needs."*
+
+**What is absent is the sentence that cashes that in: `CechPic.map` along an isomorphism is
+injective.** Measured this session (`grep -rn 'IsIso' Picard/Pic.lean` → nothing;
+`horizon search "CechPic map isIso bijective"` → only `classDeg_cechPicMap_of_isIso`, which is about
+*degrees*, not injectivity). So the tree has:
+
+* the iso (`isIso_transportLeft`), and
+* `CechPic.map_comp` / `CechPic.map_id` (`Picard/Pic.lean:223,237`),
+
+and does not have the two-line lemma that composes them.
+
+**Probed, kernel-green on the scratch olean root** (four probes, ~8 s each; the probe file is
+`.gitignore`d as `*Probe*.lean` and stays that way — `dont-commit-a-gitignored-probe`):
+
+```lean
+example {X Y : Scheme.{u}} (f : X ⟶ Y) [IsIso f] : Function.Injective (CechPic.map f) := by
+  intro a b h
+  have h2 := congrArg (CechPic.map (inv f)) h
+  have e : ∀ L : Y.CechPic, CechPic.map (inv f) (CechPic.map f L) = L := by
+    intro L
+    rw [show CechPic.map (inv f) (CechPic.map f L) = CechPic.map (inv f ≫ f) L from
+          by rw [CechPic.map_comp]; rfl,
+      IsIso.inv_hom_id, CechPic.map_id]
+    rfl
+  rw [e, e] at h2; exact h2
+```
+
+**And the `rfl` I expected to make (T3-4) free is REFUTED.** Probe 1 of the same run:
+
+```lean
+example (V : C.left.Opens) :
+    relCurveMap C k[ε] k ⁻¹ᵁ ((fst C (overSpec k k[ε])).left ⁻¹ᵁ V) = (fst C (overSpec k k)).left ⁻¹ᵁ V := rfl
+-- error: type mismatch … ?m = ?m  vs  relCurveMap C k[ε] k ⁻¹ᵁ … = …
+```
+
+It is `relCurveMap_preimage` (`Cohomology/RelativeSectionsLinear.lean:179`), a **theorem**. So the
+opens on the two sides of (T3-2)/(T3-4) are equal propositionally and not definitionally, and the
+transport is load-bearing rather than cosmetic — the same shape as (3c) itself, one level down.
+(Probe 2 confirms `h ⁻¹ᵁ (U ⊓ V) = h ⁻¹ᵁ U ⊓ h ⁻¹ᵁ V` **is** `rfl`, so the *overlap* costs nothing;
+it is only the base-change leg that does.)
+
+Probes A/B/D of the same run, all green and all worth recording because each removes a step somebody
+would otherwise build: `overDualNumber k = overSpec k (DualNumber k)` is **`rfl`**;
+`Subsingleton (Over.mk (𝟙 (Spec k))).left` is `inferInstanceAs (Subsingleton (PrimeSpectrum k))`, so
+§6.0's `picFromBase = ⊥` collapse applies at the *monoidal unit* end too and not only at `k[ε]`;
+and `CechPic.map (f ≫ g) L = CechPic.map f (CechPic.map g L)` needs `rw [CechPic.map_comp]` then
+`rfl` (the `MonoidHom.comp` spelling does not reduce on its own).
+
+### 7.3 Honest sizing of T3 after this measurement, and what NOT to conclude
+
+| item | size | note |
+|---|---|---|
+| `cechPicMap_injective_of_isIso` | **[XS], probed green** | two lines; the (T3-4) brick |
+| (T3-4) instantiated at `transportLeft` | [S] | the iso is landed; needs `relCurveMap_preimage` transport, NOT `rfl` |
+| (T3-2), the §6.24 arrow | **[M], and it is the real residue** | `(b-coeff)` (`relSectionsMapUnits_dualNumberSectionsUnits`, landed) composed with `dualNumberCechH1Equiv` (landed) — both islands; the composite is the statement |
+| (T3-3) surjectivity leg wiring | [S/M] | every input landed (§§6.10, 6.27–6.28); no gap named |
+
+**What NOT to conclude, stated because this lane's failure mode is exactly this.** The above is a
+*decomposition plus one probe*, not a discharge. In particular (T3-2) is priced [M] on the strength
+of "both ingredients are landed", and §6.28 is the record of what that reasoning is worth when the
+composite is not attempted: it under-priced by a factor of four in one direction, and §6.19/§6.26
+over-priced in the other. **The [M] on (T3-2) is a guess until a session writes the statement down
+and reads the leftover goals.**
+
+And the transferable finding of this section is not any of the sizes — it is §7.0's rule. Three
+prior sessions of this lane wrote a hand-off summarising the worksheet's *last* section; §6.24's
+open arrow survived all three, and one of those hand-offs upgraded it to "the pieces no longer have
+gaps between them".
