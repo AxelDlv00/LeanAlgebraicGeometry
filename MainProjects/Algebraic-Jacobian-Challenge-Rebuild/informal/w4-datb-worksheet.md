@@ -335,9 +335,19 @@ are accepted as written and are now Lean:
 * the division of labour below is honoured, with one correction to its *sizing*: DAT-C's
   half was budgeted as "the shifted-datum constructor".  Its **inverse** part is small and
   is landed (`BasicOpenCocycleDatum.invDatum`, `Picard/Pic0ChartShiftedDatum.lean`); its
-  **mul/tensor** part is not, and it — not transports (i)/(ii) — is what still gates the
-  openness.  Transports (i)/(ii) reduce, given a presentation, to the landed
-  `hasWitnessH1Vanishing_iff_of_separable` plus carrier bookkeeping.
+  **mul/tensor** part is not.  ~~and it — not transports (i)/(ii) — is what still gates the
+  openness.~~  **RETRACTED later the same day** (`a5da2f1a1`,
+  `Picard/Pic0ChartTwistCollapse.lean`): the mul/tensor half never gated CHART-U(b).  The
+  twist is ONE `thetaFamily` — `sigmaFamily` *is* a `thetaFamily` by definition and
+  `thetaFamily` is multiplicative in its class, so Σ and `θᵐ` fuse in `CechPic` over the
+  fixed base before any datum is extracted (`chartTwist_collapse`) — and in any case
+  `exists_cechPicClass_eq` presents an arbitrary class, product or not, outright.  See
+  `w4-datc` §0.3 GAP-1 for the full retraction and for why the error survived (a gate
+  inferred from an absent NAME rather than from the obligation).  Transports (i)/(ii) reduce,
+  given a presentation, to the landed `hasWitnessH1Vanishing_iff_of_separable` plus carrier
+  bookkeeping — and that carrier bookkeeping is now landed too (`e6a7b0582`;
+  `Pic0ChartLocusIsOpen.lean` is sorry-free).  The one remaining input of the row is the
+  pointwise `IsChartDatumPresentation`.
 * **a FOURTH input, prior to all three listed, had to be built first**: nothing in the tree
   converted a point of a general test into a field point at which a class could be read.
   That is `Over.testPoint` (`Picard/Pic0ChartTestPoint.lean`); see w4-datc §3.3 for the
@@ -500,7 +510,7 @@ defs, maxRecDepth near window defeq, no two-level `letI` algebra towers).
 | B-1 | `RiemannRoch/CoverageDrop.lean` | §1.4: the oracle-parametrized greedy drop `exists_effective_sub_h0_eq_one` + the exact-drop step lemma | M→L | none | **NOW** |
 | B-2 | `Curve/SepPointsDense.lean` | §1.5: `dense_baseChange_rationalPoints` (DAT-P + singleton-fibre + tensor argument) | M | none | **NOW** |
 | B-3 | `Picard/DivisorFamilyFieldSurj.lean` | §1.7: `exists_divFam_divFamDivisor_eq`, unconditional `divFamFieldEquiv`, the field DivScheme-point corollary | M→L | none (F4 landed) | **NOW** |
-| B-4 | ~~`Picard/Pic0ChartLocusOpen.lean`~~ → **landed as `Pic0ChartLocus{,IsOpen}.lean`** | §1.6: the split predicate (a-amendment) **DONE** (`IsSplitWitness`); `isOpen_chartLocus` assembled **conditionally** (one declared `sorry`); transports (i)/(ii) reduce to the landed separable invariance given a presentation | M→L | ~~co-sign~~ **acknowledged**; residue is DAT-C GAP-1's **mul/tensor** half | **partly done 2026-07-28** |
+| B-4 | ~~`Picard/Pic0ChartLocusOpen.lean`~~ → **landed as `Pic0ChartLocus{,IsOpen,Split,TwistCollapse}.lean`** | §1.6: the split predicate (a-amendment) **DONE** (`IsSplitWitness`, plus the unconditional `exists_splitting_of_picEt`); `isOpen_chartLocus` assembled conditionally and now **sorry-free**; the twist collapse retracts the GAP-1 gate | M→L | ~~co-sign~~ **acknowledged**; ~~residue is DAT-C GAP-1's mul/tensor half~~ residue is the pointwise `IsChartDatumPresentation` ONLY | **partly done 2026-07-28** |
 | B-5 | `Picard/Pic0Coverage.lean` | §1.2: `pic0_chartLocus_cover` (COV-1) at the `K_s` instantiation | M→L | B-1, B-2, ~~B-4(a-part)~~ **available**, DAT-C C5 (`chartValue`/`sigmaFamily` names — landed) | **NOW** — `chartLocus` exists, so the statement is expressible |
 | B-6 | `Picard/Pic0CoverageSurj.lean` | §1.1 instance + §3.3 export + the §2 consumption-map docstring | M | B-4, B-5, DAT-C C9 (CHART-U(c) — gated on divRep F7 + CERT-Σ) | no |
 

@@ -83,9 +83,37 @@ the nine file-plan rows are launchable before `divRep` lands** (§5).
     reuse it without building a datum.  The only real content is that the triple-overlap
     section ring is **commutative**: `(ab)⁻¹ = a⁻¹b⁻¹` fails non-commutatively without a
     transposed index pair.
-  * **The mul/tensor half is NOT landed and is the larger one.**  It needs two data on a
-    **common refinement** of their covers plus a comparison of the two `cechPicClass`
-    readings there.  This is the live gate of CHART-U(b) (see §3.3).
+  * **The mul/tensor half is NOT landed — and it NEVER GATED CHART-U(b).  Retracted
+    2026-07-28 (run 0072, later the same day), commit `a5da2f1a1`,
+    `Picard/Pic0ChartTwistCollapse.lean`, sorry-free.**  The sentence this bullet used to
+    carry ("this is the live gate of CHART-U(b)") was false for two independent reasons:
+    * **the twist is not a product of families.**  `sigmaFamily C Z T` is *by definition*
+      `thetaFamily C (picClass k Z) T` (`Picard/DivSchemeAbel.lean:326`; `degAt_sigmaFamily`
+      already proved it by `change`), and `thetaFamily` applies **four group homomorphisms**
+      to its class argument over the `CommGroup` `Scheme.CechPic`.  So it is multiplicative
+      *in the class* (`thetaFamily_mul`/`_inv`/`_pow`, each `map_mul`/`map_inv`/`map_pow`
+      four times), and `chartTwist_collapse` gives
+      `chartTwist C m Z T λ = λ · thetaFamily C (picClass k Z · (θᵐ)⁻¹) T`.  Σ and `θᵐ` are
+      ONE construction at two classes; the multiplication happens in `CechPic` over the
+      **fixed** base `overSpec k k`, before any datum is extracted.  There is no datum
+      product in the route to build;
+    * **even for a genuine product, presentation is surjective.**
+      `BasicOpenCocycleDatum.exists_cechPicClass_eq`
+      (`Cohomology/GluedSheafExtraction.lean:301`) produces a datum for *every* Čech class
+      over an affine base, so a datum for `c·c'⁻¹` exists outright
+      (`exists_datum_cechPicClass_mul_inv`).  Extract AT the product class; do not multiply
+      data.
+
+    A genuine `BasicOpenCocycleDatum.mul` — build the product datum *from the factors'* data
+    on a computable common refinement — is a strictly stronger statement, is still absent,
+    and is still a reasonable thing to want.  It is simply not on the CHART-U(b) path.
+
+    **How this error survived, because the mechanism will recur:** the gate was inferred from
+    an ABSENT NAME (grep found no `BasicOpenCocycleDatum.mul`) rather than from the
+    obligation.  An absent constructor blocks you only if what you need is the *construction*.
+    Before pricing a gate on a missing name, check whether an existential already in the tree
+    covers the obligation.  This is the §7-of-`w4-rep-critical-path` failure mode in its
+    mirror form: not a stale MISSING claim, but a stale *inference* from one.
   * **`cechPicClass_inv` is NOT landed either.**  Stating it needs the subordinated-cocycle
     `inv_unitsEvInf`-style calculus that `Picard/DivSchemeFibreH1.lean:63-66` keeps
     *private*; publishing that is its own brick.  The paragraph below describes the route
@@ -452,6 +480,25 @@ the boundary as a NAMED interface so the DAT-B lane slots in:
     `hasWitnessH1Vanishing_iff_of_separable`), not through a direct comparison.  The
     splitting itself is `Algebra.EtaleCover.exists_finiteSeparableField_algHom`
     (`Algebra/EtaleCover.lean:287`, landed) applied to the étale cover of the plus class.
+
+    **The splitting is now its own theorem** (`Picard/Pic0ChartSplit.lean`, `9f5d2a3e6`,
+    sorry-free): `exists_splitting_of_picEt` — *every* plus class over a field is `relPicMk`
+    of an honest Čech class over some finite separable extension, unconditionally and with no
+    witness clause; and `isSplitWitness_iff_exists_splitting_witness` says `IsSplitWitness`
+    is exactly "some splitting carries a witness".  This matters for lane order rather than
+    tidiness: `IsSplitWitness` is a twelve-component existential whose **first eight
+    components exist for every class with no hypothesis**, and §1.2 of `w4-datb` needs the
+    splitting fixed at step 1 so that `m` can be chosen at *that* field in step 3 (where the
+    uniform bound provably does not exist) and the witness produced only at step 5.  As one
+    existential the `m`-choice and the splitting choice are entangled.
+
+    Two elaboration hazards are recorded in that file and should not be re-discovered: the
+    derived `Algebra k L` must be `clear_value`d before closing the existential (otherwise a
+    composite instance term is substituted and the `overSpec k L` carriers are re-checked
+    against it — no convergence in 1600000 heartbeats), and **no positional introduction rule
+    exists**, deliberately: `IsSplitWitness` spells the base-changed curve two ways, so
+    handing its tuple to one anonymous constructor while `L` is a metavariable does not
+    elaborate at any budget tried.  Use `Iff.rfl` plus `.mpr` at a site where `L` is fixed.
   * **The twist has a class-side avatar now**: `chartTwist`, with
     `degAt_chartTwist` giving fibre degree `deg Z − m·d₁`, matching `degAt_chartValue` at
     `n = 0` — which is the ledger reason the locus tests `λθᵐ(−Σ)` rather than `λ`.
@@ -465,12 +512,30 @@ the boundary as a NAMED interface so the DAT-B lane slots in:
   **not** the point-set transports: it is the *shifted-datum presentation* — a
   `BasicOpenCocycleDatum` whose class is the twisted class — pinned as
   `IsChartDatumPresentation` and consumed by
-  `isOpen_setOf_isSplitWitness_of_presentation`.  Producing it needs the **mul/tensor**
-  half of GAP-1 (below), which needs a common refinement of two basic-open covers.
-  One declared `sorry` remains, `isOpen_setOf_hasWitnessH1Vanishing_testPointField`; it
-  is transcription (carrier identification `Spec A = PrimeSpectrum A`, the topology
-  agreement, and `Spec.residueFieldIso` fed to `hasWitnessH1Vanishing_iff_of_fieldExtension`),
-  and the exact three residual goals are recorded at the `sorry`.  The datum-worksheet §2.3 chain, now fully landed except its last
+  `isOpen_setOf_isSplitWitness_of_presentation`.
+
+  **TWO CORRECTIONS TO THIS ROW, both later on 2026-07-28 (run 0072), both retracting
+  claims made higher up in the same paragraph:**
+
+  1. **The file is now sorry-free** (`e6a7b0582`).  The `sorry` at
+     `isOpen_setOf_hasWitnessH1Vanishing_testPointField` was described here as
+     "transcription", and the three goals recorded at it were correct — but it was stated
+     with the `Algebra A` / `IsScalarTower k A` structures on `κ(t)` as explicit `alg`/`tow`
+     ARGUMENTS, and in that form **the statement is unprovable**: an arbitrary regrading of
+     `κ(t)` over `A` is not a legal reading of the fibre.  With the canonical instances of
+     `Picard/Pic0ChartTestPoint.lean` the proof is three lines.  The carrier identification
+     `↥(overSpec k A).left = PrimeSpectrum A` is *definitional* (so the topology agreement is
+     free and the two loci are the same set of the same type), and the only content is
+     `Spec.residueFieldIso` fed to `hasWitnessH1Vanishing_iff_of_fieldExtension` through the
+     new `algebraMap_testPointFieldAffine_factors`.
+  2. **"Producing it needs the mul/tensor half of GAP-1" is FALSE** (`a5da2f1a1`; see the
+     retraction in §0.3).  The twist is ONE `thetaFamily` (`chartTwist_collapse`), so there
+     is no datum product in the route; and `exists_cechPicClass_eq` presents any class
+     including a product outright.  The residue of this row is therefore *only* the pointwise
+     identification `IsChartDatumPresentation` — a `cechPicClass` base-change statement — and
+     not any construction.
+
+  The datum-worksheet §2.3 chain, now fully landed except its last
   step: (1) extraction of the plus class to cocycle data on an étale carrier
   (`PicEtAff` + `exists_cechPicClass_eq`, `GluedSheafExtraction.lean:301`); (2) RE-5
   to a Noetherian stage (`DatumDescent.lean:514`); (3) the datum engine open on the
