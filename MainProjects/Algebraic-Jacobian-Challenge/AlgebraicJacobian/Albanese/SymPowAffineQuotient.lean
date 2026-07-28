@@ -63,9 +63,16 @@ Four inversions appear along this chain and they must be counted, not guessed:
 
 (2) and (3) cancel, leaving `transportedActionDiagram_map` inverse-free; (1) and (4) cancel in
 the naturality square, which is why it closes by `permAut_eq_op_permAlgHom` after one `inv_inv`
-and no further bookkeeping. Every step was checked against the kernel; the `e⁻¹` in (4) was got
-backwards on the first attempt in the sibling file and caught by a residual goal that is true
-only at an involution.
+and no further bookkeeping. The `e⁻¹` in (4) was got backwards on the first attempt in the
+sibling file and caught by a residual goal true only at an involution.
+
+**Both cancellations are machine-checked, not read off the list.** Each of (1)–(4) was
+re-derived as a standalone example, and so was the composite endpoint: at
+`permDiagram.map σ = permAut σ⁻¹` the algebra side is `permAlgHom (σ⁻¹)⁻¹ = permAlgHom σ`, which
+is exactly what (2)+(3) deliver — so the square closes and nothing is left over. A ledger of
+inversions is the kind of claim that stays self-consistent while being wrong (this project
+records a case where a degree ledger faithfully recomputed an inverted twist), so counting them
+is not evidence; deriving the endpoint is.
 
 ## Scope — the curve is untouched
 
