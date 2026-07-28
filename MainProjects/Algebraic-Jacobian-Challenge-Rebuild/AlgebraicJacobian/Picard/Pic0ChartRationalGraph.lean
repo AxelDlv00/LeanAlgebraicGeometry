@@ -7,9 +7,18 @@ import AlgebraicJacobian.Picard.Pic0ChartCoverageDegree
 import AlgebraicJacobian.RiemannRoch.GraphDegree
 
 /-!
-# COV-1 input 3: base-changing the chart index — via GRAPH classes, not via divisors
+# Base-changing the chart index — via GRAPH classes, not via divisors
 
-`w4-datb` §1.2 step 6 has to package the drop divisor as a chart index, and the chart index
+**TITLE CORRECTED and the framing below narrowed (2026-07-28, issue I-0615).**  This file was
+titled "COV-1 input 3" and presented as serving `w4-datb` §1.2 step 6.  **COV-1 does not need
+it**: coverage needs no drop, hence no repackaging of a drop divisor as a chart index, because
+`IsSplitWitness` asks for `h¹ = 0` and for neither effectivity nor degree `g`
+(`Picard/Pic0ChartCoverageNoDrop.lean`).  What is below is still true and still useful — it is the
+right tool wherever a `k`-rational point's divisor class must reach a fibre field, which is what
+DAT-C's canonical section and GAP-2 uniqueness need — but it is not a coverage input.
+
+The obligation as originally framed: `w4-datb` §1.2 step 6 has to package the drop divisor as a
+chart index, and the chart index
 `Z` is a `CurveDivisor` on the **base** curve `(C ⊗ overSpec k k).left` (frozen, `w4-datc`
 §3.2) while the drop of `RiemannRoch/CoverageDrop.lean` produces its divisor over the
 **fibre field** `L`.  Relating the two looks like it needs a base-change operation on
