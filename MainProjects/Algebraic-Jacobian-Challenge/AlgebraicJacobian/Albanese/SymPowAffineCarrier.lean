@@ -83,25 +83,27 @@ subalgebra — sitting at the object `permDiagram` is built on, with the actions
   `albanese_universal_property` still reports `sorryAx`.
 
 **A distinction to keep, because the first draft of this header collapsed it.** That draft said
-the bold caveat "**The carrier is not named in Lean**" is "now false". It is not. That caveat is
-about the **colimit** carrier — Milne's quotient `Spec_k (A^{⊗n})^{S_n}` — whereas what this
-file names is the **object the action acts on**, `(Spec_k A)^n = Spec_k (A^{⊗n})`. Input, not
-output. Naming the input is what was *missing*; it is not the same as naming the quotient.
+`SymPowColimit.lean` §5's former bold caveat "**The carrier is not named in Lean**" was "now
+false" on the strength of this file alone. It was not: that caveat was about the **colimit**
+carrier — Milne's quotient `Spec_k (A^{⊗n})^{S_n}` — whereas what this file names is the
+**object the action acts on**, `(Spec_k A)^n = Spec_k (A^{⊗n})`. Input, not output. Naming the
+input is what was *missing*; it is not the same as naming the quotient. Keep the distinction
+even now that both halves are closed, because it is what makes this file's contribution legible.
 
-What the two do compose to, and what still separates them:
+What the two compose to:
 
 * `SymPowInvariantsUnder.hasColimit_actionDiagramUnder_op` gives the quotient of the
   `S_n`-action **on the tensor power** as `op` of the invariant subalgebra — the output, named;
 * this file gives the object `permDiagram` acts on as `op` of the tensor power, with the actions
   matched — the input, named;
-* what is **not** written is the composition, which needs the index-category transport of
-  `SymPowInvariantsUnder` §5 (`(SingleObj G)ᵒᵖ` versus `SingleObj G`, via
-  `Groupoid.invEquivalence`) applied across this comparison.
+* the composition — the index-category transport of `SymPowInvariantsUnder` §5
+  (`(SingleObj G)ᵒᵖ` versus `SingleObj G`, via `Groupoid.invEquivalence`) applied across this
+  comparison — **is now written**: `SymPowAffineQuotient.colimitPermDiagramIsoFixed`
+  (run 0069 r7). Until that round this bullet read "what is **not** written is the composition".
 
-So the honest delta is: the bold caveat's *object half* is closed and its *quotient half* is one
-index-category composition away, where before it was that composition plus this comparison plus
-the coproduct identification. Anyone closing the caveat should write that composition and then
-edit `SymPowColimit.lean` §5, not cite this file.
+So the delta this file contributes is its *object half*; the quotient half is
+`Albanese/SymPowAffineQuotient.lean`, and with it `SymPowColimit.lean` §5's bold caveat is
+discharged and deleted. Cite that file, not this one, for the carrier.
 
 ## References
 

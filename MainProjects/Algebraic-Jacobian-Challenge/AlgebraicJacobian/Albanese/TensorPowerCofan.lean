@@ -60,8 +60,10 @@ reads 3 supplied, 1 open.
 curve. `AlbaneseUP.lean`'s six sorries are unchanged by this file, and
 `albanese_universal_property` still reports `sorryAx`. What changes is that the affine chart's
 carrier is now a *named* object of `Under k` with its universal property in categorical form,
-rather than an unnamed colimit — which is the gap `SymPowColimit.lean` §5 flags with "**The
-carrier is not named in Lean.**"
+rather than an unnamed colimit — which was the gap `SymPowColimit.lean` §5 flagged with "**The
+carrier is not named in Lean.**" That caveat was discharged and deleted later the same round
+(run 0069 r7) by `SymPowAffineQuotient.colimitPermDiagramIsoFixed`; this file is one of its
+inputs, not its closure.
 
 ## References
 

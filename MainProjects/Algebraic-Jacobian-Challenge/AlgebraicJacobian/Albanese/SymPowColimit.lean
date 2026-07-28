@@ -413,9 +413,12 @@ new fact — cocompleteness already gives that instance, `infer_instance` discha
 *iso* is new, because only a statement mentioning the object can name it.
 
 So read this section as: *the affine algebra case of the interface is inhabited at every
-`n`, from mathlib's colimits, with no construction written*. Not as: *Milne III.3
-Proposition 3.1's affine half is formalised* — that proposition also says what the object
-is, and identifying the carrier is unfinished work.
+`n`, from mathlib's colimits, with no construction written* — and, since run 0069 r7, *with the
+resulting object identified elsewhere* by `colimitPermDiagramIsoFixed`. Still not as: *Milne III.3
+Proposition 3.1's affine half is formalised in this file* — the identification is a theorem of
+`Albanese/SymPowAffineQuotient.lean`, it holds at the `mkUnder` instantiations rather than the
+arbitrary `X` quantified over below, and the second bridge (that `(Under k)ᵒᵖ` **is** affine
+`k`-schemes) is still unbuilt, so all of it is `k`-algebra language rather than `Spec`-language.
 
 What is likewise *not* here is the curve case: `Over (Spec k̄)` with `C` proper. The gluing
 of the affine quotients — the remaining half of Milne III.3.1 — is what would give that, and
