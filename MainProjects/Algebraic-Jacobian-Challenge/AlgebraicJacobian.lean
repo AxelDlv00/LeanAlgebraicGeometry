@@ -147,6 +147,7 @@ import AlgebraicJacobian.Picard.Pic0AbelianVariety
 import AlgebraicJacobian.Picard.EmbeddingDimensionBound
 import AlgebraicJacobian.Picard.Pic0Dimension
 import AlgebraicJacobian.Picard.AmbientPicNotProper
+import AlgebraicJacobian.Picard.GroupSchemeHomogeneity
 import AlgebraicJacobian.Picard.FlatteningStratification
 import AlgebraicJacobian.Picard.EntryIdeal
 import AlgebraicJacobian.Picard.EntryIdealStratum
