@@ -795,11 +795,13 @@ map out of a too-small divisor functor.
 
 ## 7.12 ROUND-0071 s0012 AMENDMENT: U2's ε-half is no-go-immune, and DAT-J's first row was vacuous
 
-*Run 0071 session 0012, task `ajcr-divrep`, 2026-07-29. Both new modules are sorry-free, rooted
-in `AlgebraicJacobian.lean`, and pass a lock-free scratch-olean check (`lake env lean` against a
-symlinked olean root with the lakefile `leanOptions` passed explicitly) at **EXIT=0 with zero
-warnings**. **No full `lake build` ran this session** — four concurrent AJCR lanes held the
-mutex — so read these as kernel-elaborated modules, not as a green root.*
+*Run 0071 session 0012, task `ajcr-divrep`, 2026-07-29. Both new modules are sorry-free and rooted
+in `AlgebraicJacobian.lean`. **Verified by a full root build at the session close: `lake build
+AlgebraicJacobian` → 9279 jobs, EXIT=0, zero errors, zero `uses sorry` warnings**, with neither
+module appearing anywhere in the log (so neither contributed an error or a linter warning). Axiom
+probe with a control that fires (`I-0661`): `AlgebraicGeometry.Jacobian` reports `sorryAx`, while
+all six new theorems report only `propext, Classical.choice, Quot.sound`. An earlier draft of this
+subsection said no full build had run; that caveat is discharged.*
 
 §7.11.3 was retracted the same session it was written, leaving the `…divrep.u2` row **unpriced**:
 `forall_not_isCertified_of_straddling` (`Picard/DivisorFamilyAffStrict.lean:127`) concludes
