@@ -487,6 +487,7 @@ import AlgebraicJacobian.Tangent.ChartClassNaturality
 import AlgebraicJacobian.Tangent.PicEpsKernelTrivial
 import AlgebraicJacobian.Tangent.ChartTrivialityGeo
 import AlgebraicJacobian.Tangent.CechPicIsoTransport
+import AlgebraicJacobian.Tangent.EpsArrowIdentification
 import AlgebraicJacobian.Tangent.Pic0TangentSpace
 import AlgebraicJacobian.AbelianVariety.JacobianSmooth
 import AlgebraicJacobian.AbelianVariety.JacobianAbelianVariety
@@ -540,6 +541,7 @@ import AlgebraicJacobian.Picard.Pic0ChartCoverageFibre
 import AlgebraicJacobian.Picard.Pic0ChartCoverageTest
 import AlgebraicJacobian.Picard.Pic0ChartPresentationHalf
 import AlgebraicJacobian.Picard.Pic0ChartPresentationConverse
+import AlgebraicJacobian.Picard.Pic0ChartPlusFibreTower
 import AlgebraicJacobian.Picard.DegreeZeroBaseField
 import AlgebraicJacobian.Picard.Pic0ChartCoverageDegreeStep2
 import AlgebraicJacobian.Picard.Pic0ChartCoverageNoDrop

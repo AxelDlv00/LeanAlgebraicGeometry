@@ -47,10 +47,33 @@ witnesses and `H¹`, and what remains is a statement about *plus classes only*, 
 no `H¹` and no divisor — exactly the shape §0.3's GAP-6 dictionary cannot see and the shape
 `IsChartDatumPlusFibre` already has at `κ(t)`.
 
-It does **not** silently assume the transport: `isChartDatumPlusFibreAt_of_isScalarTower` is
-the honest statement of when the `κ(t)`-level `hfib` gives the `L_t`-level one, and its
-hypothesis is a tower compatibility that the split witness's own instances supply.  So the
-composite `isChartDatumPresentation_of_plusFibre` needs `hfib` at `κ(t)` and nothing else.
+**CORRECTION 2026-07-29 (r7), and this paragraph is why it is worth reading.**  The sentence that
+stood here said the transport was not silently assumed because
+`isChartDatumPlusFibreAt_of_isScalarTower` was "the honest statement" of it — and **that
+declaration did not exist**, in this file or anywhere in the tree.  It was advertised by name and
+never written (the failure mode `docstring-declaration-lists-unchecked`), and the effect was worse
+than a dangling reference: the sentence made `hplus` read as bookkeeping already discharged, while
+`hplus` was in fact the *whole* of B-4's remaining content.  The last clause — "so the composite
+needs `hfib` at `κ(t)` and nothing else" — was therefore false of the theorem actually below it,
+which takes `hplus` as a hypothesis.
+
+**It is true now, and of a different theorem.**  `Picard/Pic0ChartPlusFibreTower.lean` proves the
+transport (three functoriality laws — `PicEtAff.map_map`, `PicEtAff.map_unit`, `relCurveMap_comp`
+— and no geometry) and derives `IsChartDatumPresentation` from `hfib` alone as
+`isChartDatumPresentation_of_plusFibre_tower`.  **Prefer that theorem**; the one below remains
+correct and is the general form.
+
+**One further finding, about the statement of `hasWitnessH1Vanishing_of_isSplitWitness_at` below
+rather than its proof.**  Its `hplus` binder quantifies `(_ : Algebra A L)` universally with only
+the `k`-tower imposed, and that is strictly stronger than the proof consumes: the proof takes the
+`A`-structure from its own `htow` and uses `hplus` at *that* instance only.  The extra strength is
+not harmless — `IsChartDatumPlusFibreAt` mentions `relCurveMap C A L`, so at an `Algebra A L`
+unrelated to the composite `A → κ(t) → L` the right-hand side pulls `D.cechPicClass` along a
+different morphism and `hfib` cannot imply it.  So the `∀`-form is not merely hard to supply, it
+is the wrong statement.  `hasWitnessH1Vanishing_of_isSplitWitness_tower` (same file as the
+transport) is this theorem with `IsScalarTower A κ(t) L` added to that binder — the third
+component `towerOfResidueFieldExtension` already returns, and which the proof below already
+destructures and then discards.
 
 ## Main declarations
 
@@ -255,11 +278,19 @@ converse is now, by the plus-unit injectivity.  So the whole of CHART-U(b) reduc
 ("a `cechPicClass` base-change statement, and not any construction") and what
 `Pic0ChartLocusIsOpen`'s header calls the residue.
 
-**What it does not buy.**  The remaining identity is at *every* extension `L` of `κ(t)`, not
-only at `κ(t)`; that is strictly more than `IsChartDatumPlusFibre` asks.  Whether the two are
-equivalent is the naturality of `cechPicClass` under `κ(t) → L`, which this file does not
-settle — so this is a reduction of `hconv` to a plus-class statement, not a proof of
-`IsChartDatumPresentation` outright. -/
+**What it does not buy — SUPERSEDED 2026-07-29 (r7).**  This paragraph said the remaining identity
+is at *every* extension `L` of `κ(t)`, strictly more than `IsChartDatumPlusFibre` asks, and that
+whether the two are equivalent "is the naturality of `cechPicClass` under `κ(t) → L`, which this
+file does not settle".  **They are equivalent, and the answer was cheaper than the framing
+suggested**: the identity at `L` is the identity at `κ(t)` pushed forward along `PicEtAff.map C L`,
+so it needs `PicEtAff.map_map`, `PicEtAff.map_unit` and `relCurveMap_comp` and nothing about
+`cechPicClass` specifically.  `isChartDatumPlusFibreAt_of_isScalarTower`
+(`Picard/Pic0ChartPlusFibreTower.lean`) is the transport; `isChartDatumPresentation_of_plusFibre_tower`
+is this theorem with the `hplus` argument removed.  Use that one.
+
+The one caveat the transport does carry is the tower compatibility `IsScalarTower A κ(t) L`, which
+is genuinely needed (see the correction in this file's header) and is supplied by
+`towerOfResidueFieldExtension` — so it is not an obligation on any caller. -/
 theorem isChartDatumPresentation_of_plusFibre {A : Type u} [CommRing A] [Algebra k A]
     {μ : picEt C (overSpec k A)} {D : BasicOpenCocycleDatum C A π}
     (hfib : IsChartDatumPlusFibre C π μ D)
