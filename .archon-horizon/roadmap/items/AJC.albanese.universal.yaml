@@ -2,41 +2,41 @@ id: AJC.albanese.universal
 title: Albanese universal property
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Albanese universal property. CORRECTED run 0069: the headline is NOT sorry-free.
-
-
-  Measured: #print axioms AlgebraicGeometry.Pic0.albanese_universal_property = [propext,
-  sorryAx, Classical.choice, Quot.sound]. The assembly from descentThroughBirationalSigma
-  and albanese_eq_iff_symmetricPower_eq is honest and the statement is the right one,
-  but it inherits sorryAx from all six unproved AlbaneseUP declarations -- decisively
-  from abelJacobi, which is a sorry-BODIED DEFINITION, so the equation phi = abelJacobi
-  C P0 >> psi does not yet say what it is meant to say. Must not be reported as a
-  landed theorem. File header and theorem docstring corrected in run 0069.
-
-
-  REAL INPUTS THAT NOW EXIST: extend_to_av (Milne Thm 3.2) is unconditional and axiom-clean
-  as of run 0069 (Milne Lemma 3.3 closed, commit 8a5dc2a66); and the whole RigidityLemma.lean
-  chain is sorry-free and axiom-clean, so step 4''s homomorphism property (Milne Cor
-  I.1.2) has its input.
-
-
-  descentThroughBirationalSigma is now blocked UPSTREAM of the extension rather than
-  at it: producing the rational map needs the dense open where f^{(g)} is an isomorphism
-  plus a way to invert it there, and mathlib has no birational-inverse API at this
-  pin (checked Birational/{RationalMap,Dominant}.lean).
-
-
-  THE EXTENSION HALF IS NOW DISCHARGED (commit 2e58d6cd1). Scheme.RationalMap.exists_unique_hom_restrict_eq_of_dense_open
-  (Albanese/DenseOpenDescent.lean, axiom-clean) gives: for ANY dense open V of a nonsingular
-  k-bar-variety and ANY compatible morphism h : V -> A into an abelian variety, a
-  UNIQUE g : X -> A with V.iota >> g = h. No rational map in the statement; the enabling
-  bridge hom_toRationalMap_eq_partialMap_iff discharges the RationalMap quotient once.
-  So what remains in descentThroughBirationalSigma is producing V and h -- i.e. Sym^g
-  C and f^{(g)} existing at all, plus Milne III.5.1(a) birationality as a SECTION
-  of f^{(g)} over a dense open.
-
-  '
-status: pending
+summary: "Albanese universal property. THE ARGUMENT IS NOW PROVED (run 0069, session\
+  \ 0004); what remains is one missing OBJECT.\n\nMILNE III.6.1 IS PROVED, both connector\
+  \ directions, over the symmetric power taken as an interface rather than a sorry\
+  \ -- Albanese/AlbaneseFromData.lean and Albanese/AlbaneseJacobian.lean, sorry-free.\
+  \ Forward (symAVMap_eq_of_albanese_eq) needs psi to be a HOMOMORPHISM: pushing psi\
+  \ through the g-fold sum is map_prod (IsMonHom.monoidHom), which is exactly where\
+  \ Milne's step 5 uses homomorphy. Backward (albanese_eq_of_symAVMap_eq) needs NEITHER\
+  \ that nor the quotient universal property -- it is restriction along Q |-> (Q,P0,...,P0)\
+  \ plus the collapse basePointShift_comp_powSum. The pinned docstring described both\
+  \ as one step; they are not the same difficulty.\n\nMilne's identification of the\
+  \ Abel-Jacobi map with 'Q |-> Q + (g-1)P0 followed by f^(g)' is DERIVED (basePointShift_proj_comp),\
+  \ not assumed; and pointed rigidity is applied only after PROVING the candidate\
+  \ psi is pointed.\n\nTHE MEASUREMENT, which attributes the residual sorry rather\
+  \ than asserting whose it is:\n    #print axioms albanese_universal_property_of_symPowData_generic\
+  \ -> [propext, Classical.choice, Quot.sound]  AXIOM-CLEAN\n    #print axioms Pic0.albanese_universal_property_of_symPowData\
+  \    -> [propext, sorryAx, Classical.choice, Quot.sound]\nSame statement; the sole\
+  \ difference is whether the target group object is Pic0.jacobianScheme C or an arbitrary\
+  \ abelian variety. So the entire sorryAx residue of the Pic0 form is the PICARD\
+  \ REPRESENTABILITY SEAM upstream of this leg, and none of it is Milne's argument.\
+  \ Re-runnable by a later session in one command.\n\nDISCHARGED UNCONDITIONALLY THIS\
+  \ RUN (Albanese/AVSelfProduct.lean, on the project's four-instance abelian-variety\
+  \ package): commutativity of an abelian variety (Milne I.1.4) and pointed rigidity\
+  \ (Milne I.1.2). A previous session had recorded these as unavailable; the obstruction\
+  \ was instance KEYING through the monoidal notation -- (A (x) A).hom is reducibly\
+  \ pullback.fst A.hom A.hom >> A.hom -- not missing mathematics.\n\nREMAINING INPUTS:\
+  \ (1) SymPowData C (genus C) -- see AJC.albanese.symmetric; (2) Milne III.5.1(a)\
+  \ birationality as a SECTION of f^(g) over a dense open. The descent around them\
+  \ is closed: extend_to_av (Milne Thm 3.2) is unconditional and axiom-clean, and\
+  \ exists_unique_descent_of_section / hom_ext_of_dense_open package it in elementary\
+  \ terms with no rational map in the statement.\n\nNOT A CLOSED RESULT ABOUT THE\
+  \ JACOBIAN, and the module headers say so in those words. The pinned Pic0.albanese_universal_property\
+  \ still reports sorryAx and its six sorries are UNCHANGED -- they are stated against\
+  \ a sorry-BODIED SymmetricPower and are undischargeable as stated, which the AlbaneseUP.lean\
+  \ header now records along with a pointer to where the mathematics lives.\n"
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -58,7 +58,10 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-28T05:59:50.434889+00:00'
+  updated_at: '2026-07-28T07:28:08.400337+00:00'
   pinned_commits:
+  - 7b71f602f
+  - a88231902
   - 2e58d6cd1
   - 21eefaf60
+  owner: ajc-albanese

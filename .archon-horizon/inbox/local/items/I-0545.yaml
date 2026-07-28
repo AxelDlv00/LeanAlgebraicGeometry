@@ -1,0 +1,62 @@
+id: I-0545
+provider: local
+kind: issue
+body: 'LEANOK-AUDIT IS CURRENTLY UNTRUSTWORTHY, and one genuine proof-level defect.
+  Found by a Ground review dispatched from ajc-fbc (run 0068); NEITHER item is in
+  the ajc-fbc lane, so filed rather than fixed.
+
+
+  1. GENUINE DEFECT. blueprint/src/chapters/Picard_FGAPicRepresentability.tex, node
+  def:inst_has_pic_scheme, pins Scheme.picSchemeOfHasRationalPoint via \lean and carries
+  a PROOF-level \leanok. That declaration reports sorryAx at HEAD. scripts/leanok-audit.sh
+  classifies a proof-level mark on a sorryAx carrier as a defect (as opposed to a
+  STATEMENT-level mark, which the audit treats as legitimate since it claims only
+  that the signature is formalised). Owner: ajc-etale-pic / the Picard representability
+  seam. This is the expected fallout of the etale rewire demoting instHasPicScheme
+  to a named theorem -- the blueprint mark was honest when the declaration was an
+  instance whose body was locally sorry-free.
+
+
+  2. THE CONTROL HAS GONE STALE, which is the more important item because it silently
+  invalidates every CLEAN verdict the audit gives. The audit''s positive control av_indeterminacyLocus_eq_empty
+  no longer reports sorryAx -- ajc-albanese proved Milne 3.3 this run, which is good
+  news that broke the instrument. A control that no longer detects what it was chosen
+  to detect means the audit''s clean lines prove nothing until someone re-picks a
+  control that DOES currently carry sorryAx. Owner: whoever maintains leanok-audit.sh
+  (Albanese lane by provenance).
+
+
+  WHY THIS IS WORTH A SEPARATE ITEM rather than a thread comment: the same failure
+  mode hit scripts/axiom-frontier.lean this run -- its flat-pullback probe went vacuously
+  clean after ajc-fbc de-instanced the declaration it measured, because the probe
+  used the IDENTITY morphism and a cheaper clean instance path appeared. Two of the
+  project''s three audit instruments were quietly measuring nothing on the same day,
+  for the same structural reason: an instrument built against the current state of
+  the tree stops being an instrument when the tree improves. Both need a control that
+  must FAIL, checked whenever the thing it watches changes. The axiom-frontier one
+  is fixed (commit c6533164c adds two controls that must come out clean and two probes
+  that must leak); this one is not.
+
+
+  RELATED: I-0493 thread (four AJC lanes, 2026-07-28), and the ajc-fbc memory item
+  on sorry-bodied instances.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T07:26:24.287154+00:00'
+updated_at: '2026-07-28T07:26:24.287165+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0002-horizon-ajc-fbc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge

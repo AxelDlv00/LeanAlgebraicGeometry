@@ -1,0 +1,70 @@
+id: AJC.cohomology.tilde-exact
+title: Exactness of the tilde functor (Stacks 01HV)
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'Exactness of the tilde functor (Stacks 01HV), blueprint lem:tilde_preserves_kernels.
+  DONE, sorry-free, kernel-verified (run 0068). Cohomology/TildeExactness.lean is
+  now entirely sorry-free -- this was that file''s long-open named target, with a
+  header section literally titled "Why tildePreservesFiniteLimits itself is NOT closed
+  here".
+
+
+  LANDED: tilde_preservesMonomorphisms, tildePreservesFiniteLimits, tilde_preservesHomology,
+  plus the supporting sectMap / sectMap_eq / tilde_injective_app_basicOpen.
+
+
+  ROUTE -- basic opens, not stalks. Basic opens are a basis of Spec R, and mathlib
+  ALREADY exhibits Gamma(M~, D(r)) as a localisation of M at the powers of r (tilde.toOpen
+  carries an IsLocalizedModule.Away instance). So the section map of ~f over D(r)
+  IS IsLocalizedModule.map of f (by IsLocalizedModule.ext against the naturality square
+  tilde.toOpen_map_app), injective by IsLocalizedModule.map_injective since localisation
+  is flat. Basis injectivity gives stalkwise injectivity hence mono; right exactness
+  is free (left adjoint); right exact + mono-preserving => left exact.
+
+
+  WHY IT IS WORTH RECORDING AS A LESSON, not just a result. The file''s own header
+  prescribed a DIFFERENT route and estimated 100-150 LOC for it: R-linearity of the
+  Ab STALK map, then a jointly-reflecting stalk family through JointlyReflectIsomorphisms.jointlyReflectsLimit,
+  with a long warning that the ModuleCat-valued stalk path is dead because mathlib
+  keeps toStalk_l / stalkIso_l / stalkToLocalization_l private. NONE of that is needed
+  on the basic-open route: the injectivity check happens BEFORE any stalk is formed,
+  so no stalk colimit and no jointly-reflecting step enters, and the R-linearity that
+  matters is on SECTIONS where Scheme.Modules.Hom.app_smul supplies it in one line.
+  A carefully-written plan in a docstring is evidence about ONE route, not about the
+  difficulty of the statement. The header has been corrected in place; the section-1
+  stalk material is retained as the sharpest per-point statement.
+
+
+  CONSUMES: nothing open. FEEDS: the affine-morphism ingredient of AJC.fbc.exactness
+  (tildePullback_preservesFiniteLimits), and any consumer that wanted "qcoh kernels
+  are qcoh".
+
+  '
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-28T07:28:28.653078+00:00'
+  provenance:
+    run: 0068
+    session: 0002-horizon-ajc-fbc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.cohomology
+  owner: ajc-fbc
+  updated_at: '2026-07-28T07:28:29.975422+00:00'
+  pinned_commits:
+  - fcc4e9591
+  - 36f623f46

@@ -64,8 +64,49 @@ body: "A CLEAN `#print axioms` LINE LIES IN EIGHT DISTINCT WAYS — the workspac
   \ false; and a *conditional* refutation (one taking the\n      thing it refutes\
   \ as a hypothesis, as `not_bump_of_notMem_overlap` does with `hchiAdd`) is much\n\
   \      weaker than an unconditional one, so do not read the first as the second.\
-  \ (probe §2c)\n\nHOW TO CHECK, and it is the only way that works: **ELABORATE A\
-  \ CONSUMER**, do not read the\nsignature. Write an `example` with only the hypotheses\
+  \ (probe §2c)\n\n  (i) **A SORRY-BODIED INSTANCE THE `declaration uses sorry` CENSUS\
+  \ DOES NOT SEE, and its cure's\n      own trap.** Two faces of one mechanism, absorbed\
+  \ from `I-0530` and `I-0526` (both archived).\n      *The census undercounts:* it\
+  \ flags an instance only if the instance's BODY contains `sorry`.\n      `instHasPicSchemeEt`\
+  \ has body `(fgaPicardRepresentability C).1` — an open obligation — and\n      emits\
+  \ NO warning. Measured cost: `Pic0SchemeEt` was declared without a `[HasPicSchemeEt\
+  \ C]`\n      binder, synthesis fired at elaboration and baked `sorryAx` into the\
+  \ DEFINITION, so every\n      theorem about it leaked while `PicSchemeEt` one level\
+  \ up (which takes the binder) stayed\n      clean; four \"PROVED unconditionally\"\
+  \ docstrings were wrong. Check: `#print axioms` the\n      DEFINITION, not only\
+  \ theorems about it, and compare against the same declaration with the\n      gate\
+  \ as an explicit binder — clean-with-binder plus dirty-without is the signature.\
+  \ Rule:\n      every definition downstream of a gate whose only producer is sorry-bodied\
+  \ must take the gate\n      as a BINDER; parametricity is lost silently at the first\
+  \ declaration that omits it. Never\n      quote \"zero sorry-bodied instances\"\
+  \ as \"no synthesis leak\".\n      *The cure is one keyword, and it can make the\
+  \ probe go vacuously clean:* de-instancing\n      (`instance` -> `theorem` + `haveI`\
+  \ at the real consumers) makes `inferInstance` FAIL, so the\n      dependency must\
+  \ be named and appears in the proof term; cost zero (AJC stayed green at 8762\n\
+  \      jobs, commits `df899aa50`, `519eecb15`). But `leakProbe_pullback_finiteLimits`\
+  \ was built on\n      the IDENTITY morphism, and after de-instancing it went from\
+  \ `sorryAx` to CLEAN — because for\n      the identity the pullback IS the identity\
+  \ functor (`Scheme.Modules.pullbackId`) and synthesis\n      found a cheaper clean\
+  \ route. A probe on a DEGENERATE argument measures the intended\n      declaration\
+  \ only until the instance graph changes. Hence the two standing defences in\n  \
+  \    `scripts/axiom-frontier.lean`: probe over a GENERAL argument and NAME the carrier,\
+  \ and ship a\n      CONTROL that must come out the other way. **If a control and\
+  \ its probe ever agree, the\n      measurement is broken, not the mathematics.**\
+  \ Distinct from the sorried-DEFINITION trap\n      (`abelJacobi`, `ajc-albanese`,\
+  \ same day), where no synthesis is involved and the leak is\n      visible in the\
+  \ term.\n  (j) **A GATE CLASS THAT ONLY ASSERTS INHABITATION** — the exact dual\
+  \ of (d), and it reads\n      identically in the axiom line. Absorbed from `I-0536`\
+  \ (archived). (d) is a binder NOTHING can\n      instantiate; this is a binder ANYTHING\
+  \ can. `PicScheme.ClassDegree` is literally\n      `Nonempty (relPicClasses ->+\
+  \ Z)`; that type contains `0`, so `<<0>>` proves it with no\n      hypothesis, and\
+  \ `degreeOfSection` built on it is not pinned to the degree — the \"one remaining\n\
+  \      input\" demanded nothing. Fine: `HasPicScheme` asserts a PROPERTY of the\
+  \ object\n      (`exists X, RepresentableBy X and LocallyOfFiniteType and IsSeparated`).\
+  \ Vacuous:\n      `Nonempty (A ->+ B)`, `Nonempty (A -> Z)`, `Nonempty (A ~= B)`\
+  \ whenever `B` has a point.\n      Probe: restate the class as a `theorem` with\
+  \ no gate and try `<<0>>` / `<default>` /\n      `<fun _ => 0>`. Live instance:\
+  \ issue `I-0534`.\n\nHOW TO CHECK, and it is the only way that works: **ELABORATE\
+  \ A CONSUMER**, do not read the\nsignature. Write an `example` with only the hypotheses\
   \ you claim to need, apply the theorem, and\nsee whether it compiles. Reading binders\
   \ tells you what is asked for; only elaboration tells you\nwhat can be supplied.\n\
   \nWORKED PAIR, which is why (d) is worth stating rather than just avoiding:\n`hasRationalResidues_of_isAlgClosed`\
@@ -85,11 +126,12 @@ body: "A CLEAN `#print axioms` LINE LIES IN EIGHT DISTINCT WAYS — the workspac
   \ HISTORY: this item is the single catalogue for this subject. `I-0380` (mode (a))\
   \ and\n`I-0432` (mode (f)) were folded in at run 0055 s0008 with their detection\
   \ recipes preserved in the\ncomments below; `I-0451` (mode (g)) and `I-0456` (mode\
-  \ (h)) were folded in at run 0054 s0010. File\nnew modes here as comments rather\
-  \ than as new memory items. Related and deliberately kept separate:\n`I-0445` (publish\
-  \ the command, not the count), `I-0439` (prose asserting a gate is still open),\n\
-  `I-0447` (the positive move — re-read your hypotheses' quantifiers before hunting\
-  \ for machinery)."
+  \ (h)) were folded in at run 0054 s0010; `I-0530` + `I-0526` (mode (i)) and `I-0536`\
+  \ (mode (j)) were folded in at the janitor pass of 2026-07-28. File\nnew modes here\
+  \ as comments rather than as new memory items. Related and deliberately kept separate:\n\
+  `I-0445` (publish the command, not the count), `I-0439` (prose asserting a gate\
+  \ is still open),\n`I-0447` (the positive move — re-read your hypotheses' quantifiers\
+  \ before hunting for machinery)."
 labels:
 - agent-ready
 status: open
@@ -98,7 +140,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-27T14:51:02.524222+00:00'
-updated_at: '2026-07-28T06:22:29.067912+00:00'
+updated_at: '2026-07-28T06:51:26.108446+00:00'
 metadata:
   provenance:
     run: '0054'

@@ -8,7 +8,7 @@ generated: lean
 lean_status: sorry
 title: is
 type: lean
-updated: '2026-07-28T14:00:52'
+updated: '2026-07-28T15:00:54'
 ---
 theorem is real mathematics (it is the three transports plus the dictionary), and the
 hypothesis is a single, precisely stated obligation which the GAP-1 mul/tensor brick will
@@ -16,6 +16,16 @@ discharge.
 
 Writing it the other way round — stating `isOpen_chartLocus` unconditionally with a `sorry`
 — would hide the fact that the missing input is a *construction*, not a proof.
+
+**This file is sorry-free as of 2026-07-28.**  Its earlier single `sorry` (the carrier/field
+translation) was not a mathematical gap: it was an artifact of taking the `Algebra A` /
+`IsScalarTower k A` structures on `κ(t)` as explicit `alg`/`tow` *arguments*, which both made
+the statement unprovable — an arbitrary regrading of `κ(t)` over `A` is not a legal reading of
+the fibre — and forced every consumer to carry two dead parameters.  With the canonical
+instances of `Picard/Pic0ChartTestPoint.lean` the whole translation is
+`hasWitnessH1Vanishing_iff_of_fieldExtension` across `Spec.residueFieldIso`, and the carrier
+identification `↥(overSpec k A).left = PrimeSpectrum A` is definitional.  The general lesson
+is recorded on the `chart-u` roadmap node.
 
 ## Main declarations
 

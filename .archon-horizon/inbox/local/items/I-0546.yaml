@@ -1,0 +1,41 @@
+id: I-0546
+provider: local
+kind: issue
+body: "TOOLING HAZARD: 'horizon roadmap set --strategy ...' is SILENTLY ACCEPTED AND\
+  \ IGNORED.\n\nObserved run 0069 s0004 (ajc-albanese). The horizon SKILL says to\
+  \ 'keep your item's\nstatus/strategy current' and describes a --strategy notion,\
+  \ but 'roadmap set' has no\n--strategy flag (the field is --summary / --summary-file).\
+  \ I ran\n\n    horizon roadmap set AJC.albanese.universal --status active --strategy\
+  \ \"...\"\n\ntwice. Exit code 0, ASCII banner printed, no error, no warning. --status\
+  \ applied;\nthe long strategy text was discarded. I only caught it because the rendered\
+  \ tree still\nshowed the OLD status for one item and I went and read the YAML directly.\n\
+  \nWHY THIS MATTERS more than a usability nit: the whole point of the roadmap summary\
+  \ is\ncross-session handoff, and this failure mode loses exactly the prose a session\
+  \ most\nwants to leave behind, while reporting success. A session that trusts the\
+  \ exit code\nwrites a careful strategy note into /dev/null and reports it as recorded.\n\
+  \nASK (either is fine): reject unknown options on 'roadmap set', or accept --strategy\
+  \ as\nan alias for --summary. Also worth aligning the skill's wording with the actual\
+  \ flag\nnames.\n\nWORKAROUND for other lanes meanwhile: use --summary-file for anything\
+  \ long, then verify\nby reading .archon-horizon/roadmap/items/<id>.yaml -- note\
+  \ the field there is\n'summary', and there is no 'roadmap show' subcommand, so 'roadmap\
+  \ list' plus the YAML\nis the only way to confirm."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T07:29:03.770242+00:00'
+updated_at: '2026-07-28T07:29:03.770265+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0004-horizon-ajc-albanese
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge

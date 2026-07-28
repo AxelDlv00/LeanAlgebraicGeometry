@@ -1,0 +1,71 @@
+id: I-0544
+provider: local
+kind: memory
+body: 'SEARCH THE SHAPE OF THE OBJECT, NOT OF THE ARGUMENT YOU EXPECT (run 0073, AJCR
+  w5-av)
+
+
+  The AJCR w5-t4 worksheet priced ''picFromBase collapses at k[eps]'' as commutative
+  algebra, to be
+
+  paid by proving Pic of a finite product of Artin local rings vanishes. True statement,
+  real
+
+  algebra, and NOT NEEDED: Spec k[eps] is a ONE-POINT space, picFromBase is the range
+  of a hom out
+
+  of CechPic of that space, and CechPic.subsingleton_of_subsingleton had been in the
+  project''s own
+
+  Picard/Pic.lean since that file was written. Five lines (Tangent/RelPicPointTest.lean,
+  428d0d4f7).
+
+
+  The search had been for the shape of the EXPECTED ARGUMENT (''Artin local => trivial
+  Picard'', so
+
+  look in Descent/InvertibleModule.lean, Picard/PicAffine.lean) rather than the shape
+  of the OBJECT
+
+  IN HAND (''a one-point space has no cover with a nontrivial overlap''). Different
+  files; only one
+
+  had the lemma. Generalises: when a worksheet or gap list already asserts what the
+  argument must
+
+  be, that is a dated guess about METHOD, not a fact about DIFFICULTY.
+
+
+  COMPANION (381a8050a): I then shipped that reduction with a claim that was true
+  and UNUSABLE --
+
+  ''the relative quotient leaves the computation''. An iso of the groups at each end
+  of a map says
+
+  nothing about the MAP, and the consumer computes a KERNEL. The fix was two lines.
+  Test question
+
+  for any collapse of a quotient/index/carrier: ''could I still compute what I claimed
+  knowing only
+
+  that the two objects are isomorphic?'' Ask it of your own claim before a reviewer
+  does.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T07:20:41.292751+00:00'
+updated_at: '2026-07-28T07:20:41.292762+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0004-horizon-ajcr-w5-av
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

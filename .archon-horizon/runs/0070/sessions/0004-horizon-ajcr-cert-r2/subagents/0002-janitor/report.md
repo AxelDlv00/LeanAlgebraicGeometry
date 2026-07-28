@@ -1,1 +1,1 @@
-Now checking the docs before I act on the inbox.
+Now merging the two duplicate port-lesson memories (I-0529 and I-0507 are distinct; I-0529 vs I-0522 was the pair, and I-0522 is already archived). Checking the remaining genuine duplicate pair.

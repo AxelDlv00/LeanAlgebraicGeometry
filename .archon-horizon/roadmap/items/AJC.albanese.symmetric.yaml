@@ -2,44 +2,39 @@ id: AJC.albanese.symmetric
 title: Abel-Jacobi and symmetric-power factorisation
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Abel-Jacobi and symmetric-power factorisation. BLOCKED ON A SUBPROJECT,
-  sized run 0069.
-
-
-  Five of the six AlbaneseUP.lean sorries are downstream of Sym^g C, which does not
-  exist: mathlib has no quotient of a scheme by a finite group action (its SymmetricPower
-  is modules only). analogies/m3-route-audit.md scopes the construction at ~2400-3800
-  LOC: group-action typeclass, affine quotient Spec(A^{S_g}) with universal property,
-  glued global quotient, and smoothness of Sym^g C for a curve. Treat as a subproject,
-  not a step.
-
-
-  LANDED run 0069 (commit a1dd46a99): the INPUT the quotient''s universal property
-  consumes. MonObj.powSum (the g-fold sum C^g -> A) and MonObj.powSum_perm (its S_g-invariance
-  -- Milne''s "clearly this is symmetric"), axiom-clean, in Albanese/GrpObjFoldSum.lean.
-  Only the factorisation through pi : C^g -> Sym^g C is now missing, not the symmetry
-  that licenses it. Also added MonObj.preHom (precomposition as a MonoidHom on hom-sets),
-  which mathlib lacked.
-
-
-  abelJacobi is separately blocked: it wants PicScheme.degree / Pic0(k) = ker degree,
-  and ajc-pic0av reports degree unconstructed with no route it is confident in (I-0493,
-  run 0067).
-
-
-  AND THE INPUT IS NOW APPLICABLE AT AN ABELIAN VARIETY (commit f7391b281, later in
-  run 0069). MonObj.powSum requires [IsCommMonObj A], which the project''s AV package
-  did NOT supply -- a fresh-context review caught that the g-fold sum, though correct
-  and general, did not elaborate at its intended target. Closed at the root: isCommMonObj_of_isProper_smooth
-  (Albanese/AVCommutative.lean, Milne I.1 Corollary 1.4) proves an abelian variety
-  over k-bar is a commutative group object, axiom-clean, via pointed inversion being
-  a homomorphism by the Rigidity Lemma. Deliberately not an instance -- the three
-  (A tensor A)-side hypotheses are not synthesised from the AV package, so consumers
-  thread letI := isCommMonObj_of_isProper_smooth (A := A), per GrpObjFoldSum.lean''s
-  header. Verified by probe that powSum and powSum_perm both elaborate at the AV binder
-  set.
-
-  '
+summary: "Abel-Jacobi and symmetric-power factorisation. BLOCKED on exactly ONE object;\
+  \ the surrounding mathematics is proved (run 0069, session 0004).\n\nWHAT IS PROVED,\
+  \ sorry-free, in Albanese/SymPowInterface.lean:\n * SymPowData C n -- the universal\
+  \ property of the n-th symmetric power as DATA (carrier, symmetrisation projection\
+  \ pi, unique factorisation of every S_n-symmetric morphism out of C^n).\n * SymPowData.symAVMap\
+  \ -- Milne's Sym^n phi. This is now a CONSTRUCTION rather than a hypothesis: powSum\
+  \ is S_n-symmetric (powSum_perm, Milne's 'clearly this is symmetric'), so the interface\
+  \ descends it. Plus its defining equation and uniqueness.\n * MonObj.basePointShift\
+  \ and basePointShift_comp_powSum -- Milne's Q |-> Q + (n-1)P0, and the collapse\
+  \ showing that summing a POINTED phi over (Q,P0,...,P0) returns phi. Every slot\
+  \ but one contributes the hom-monoid identity (Finset.prod_ite_eq). This is the\
+  \ whole content of 'restrict along the basepoint shift and use phi(P0) = eta_A'.\n\
+  \ * symPowDataOne -- THE INTERFACE IS INHABITED: Sym^1 C = C, since S_1 is trivial\
+  \ and the single projection C^1 -> C is an iso. This is the check that separates\
+  \ an interface from a relabelled sorry: statements quantifying over SymPowData are\
+  \ not vacuous, and the Albanese argument assembled over it is a genuine theorem\
+  \ for n = 1.\n\nSTILL BLOCKED, and the sizing is unchanged: SymPowData C g for g\
+  \ >= 2, i.e. a quotient of a scheme by a finite group action. Mathlib at this pin\
+  \ has none (its SymmetricPower is for modules); analogies/m3-route-audit.md sizes\
+  \ the construction at roughly 2400-3800 lines -- an action typeclass, the affine\
+  \ quotient Spec(A^{S_g}) with its universal property, the glued global quotient,\
+  \ and smoothness of Sym^g C for a curve. A subproject, not a step.\n\nA CORRECTION\
+  \ TO HOW THIS ROW USED TO BE READ. The six sorries in Albanese/AlbaneseUP.lean are\
+  \ NOT the work of this row. They are stated against Pic0.SymmetricPower, a sorry-BODIED\
+  \ definition, so they are equations between morphisms out of a junk term: not dischargeable,\
+  \ and discharging them would establish nothing. Sizing them as 'five obligations\
+  \ blocked on an object' overstated them. The AlbaneseUP.lean header now says this\
+  \ and points at the four files where Milne's argument is actually proved.\n\nALSO\
+  \ WORTH KNOWING: Milne III.6.1 needs NO curve hypotheses once the symmetric power\
+  \ is given -- the genus enters only as the NUMBER of factors (albanese_universal_property_of_symPowData_generic).\
+  \ The curve is needed to CONSTRUCT Sym^g and to prove f^(g) birational, not to run\
+  \ the universal-property argument. So whoever opens the Sym^g subproject can develop\
+  \ it for a general scheme and specialise afterwards.\n"
 status: blocked
 kind: proof
 priority: high
@@ -62,8 +57,10 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-28T05:59:49.166032+00:00'
+  updated_at: '2026-07-28T07:28:09.934041+00:00'
   pinned_commits:
+  - 1fedb22e4
   - f7391b281
   - a1dd46a99
   - 21eefaf60
+  owner: ajc-albanese
