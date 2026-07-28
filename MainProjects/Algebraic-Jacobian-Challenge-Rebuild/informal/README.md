@@ -8,7 +8,7 @@ re-reconciled against the directory 2026-07-28 (janitor pass, run 0073).
 from reading the file's header. `SUPERSEDED-BY` is recorded **only** where the file itself (or its
 successor) says so in writing; it was not inferred from dates. `LANDED` means the roadmap wave the
 file serves is `done`, so the file is a historical record of shipped work, not a live instruction.
-The 26k lines were *not* read end to end — a `CURRENT` mark means "no evidence of supersession was
+The ~27k lines were *not* read end to end — a `CURRENT` mark means "no evidence of supersession was
 found", not "audited line by line".
 
 **Two standing cautions that apply to every file here.**
