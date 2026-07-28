@@ -238,6 +238,19 @@ import AlgebraicJacobian.Albanese.CoheightBridge
 import AlgebraicJacobian.Albanese.DifferenceMap
 import AlgebraicJacobian.Albanese.PolePurity
 import AlgebraicJacobian.Albanese.Milne33Substeps
+-- Milne Lemma 3.3 (`lem:milne_codim1_indeterminacy`) and its substep layers:
+-- ported sorry-free from the sibling Rebuild tree in run 0069, closing the last
+-- open obligation of the codim-one extension chapter and making Milne Theorem
+-- 3.2 (`extend_to_av`) unconditional.
+import AlgebraicJacobian.Albanese.Milne33CMEquidim
+import AlgebraicJacobian.Albanese.Milne33KernelGen
+import AlgebraicJacobian.Albanese.Milne33TransportLocal
+import AlgebraicJacobian.Albanese.Milne33Rows
+import AlgebraicJacobian.Albanese.Milne33Diagonal
+import AlgebraicJacobian.Albanese.Milne33RowSection
+import AlgebraicJacobian.Albanese.Milne33Pullback
+import AlgebraicJacobian.Albanese.Milne33Transport
+import AlgebraicJacobian.Albanese.Milne33
 import AlgebraicJacobian.Albanese.RationalMapFunctionField
 import AlgebraicJacobian.Albanese.RationalMapPrecomp
 import AlgebraicJacobian.Albanese.RationalMapProd

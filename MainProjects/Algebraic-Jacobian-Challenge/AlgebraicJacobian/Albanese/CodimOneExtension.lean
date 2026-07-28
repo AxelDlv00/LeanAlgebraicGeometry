@@ -29,7 +29,8 @@ reformulation of the codim-`1` obstruction:
   uniquely represented by a regular morphism. (This replaces the removed
   `extend_of_codimOneFree_of_smooth`, whose "CodimOneFree ⇒ extension"
   statement was false for general complete targets — see its docstring.)
-* **Milne Lemma 3.3** (`indeterminacy_pure_codim_one_into_grpScheme`): for a
+* **Milne Lemma 3.3** (`indeterminacy_pure_codim_one_into_grpScheme`, proved
+  in the *downstream* file `Albanese/Milne33.lean` — see §5): for a
   rational map from a nonsingular variety to a group variety, the
   indeterminacy locus is either empty or of pure codimension `1` (every
   point of `Z(f)` specialises from a codim-1 point of `Z(f)`).
@@ -47,13 +48,15 @@ These outputs feed Milne Theorem 3.2 in the sibling
 `cor:regular_cohen_macaulay` / Stacks 0AVF for a "Step 2 extension" is gone:
 the extension needs no local-cohomology input once `Z(f) = ∅` is in hand.)
 
-## Status (run-0006 T6, session 0015)
+## Status (run 0069)
 
-Of the blueprint-pinned declarations below, everything is proved and
-axiom-clean EXCEPT Milne Lemma 3.3
-(`indeterminacy_pure_codim_one_into_grpScheme`), the single remaining
-`sorry` of this file (needs the difference-map + function-field pullback
-machinery). In particular the DVR chain (via the sorry-free
+**This file is `sorry`-free.** Every blueprint-pinned declaration below is
+proved and axiom-clean. Milne Lemma 3.3
+(`indeterminacy_pure_codim_one_into_grpScheme`) was this file's single
+remaining `sorry` until run 0069; it is now proved in
+`Albanese/Milne33.lean` — a *downstream* module, since the proof's
+difference-map / pole-purity / Hauptidealsatz-transport layers import this
+file. See §5 for the pointer. In particular the DVR chain (via the sorry-free
 `isRegularLocalRing_stalk_of_smooth` — Stacks 00TT at every point, proved
 Serre-free in `Albanese/SmoothPrimeRegularity.lean`), Milne 3.1
 (`indeterminacy_codimGe2_of_smooth_of_complete`, via Mathlib's valuative
@@ -1231,7 +1234,7 @@ by the closed-point corollaries and `isReduced_of_smooth_of_isAlgClosed`.
 Blueprint reference: `\cref{lem:smooth_to_regular_local_ring}` in
 `blueprint/src/chapters/Albanese_CodimOneExtension.tex` (also Stacks
 \href{https://stacks.math.columbia.edu/tag/00TT}{tag 00TT}). -/
-private theorem isRegularLocalRing_stalk_of_smooth
+theorem isRegularLocalRing_stalk_of_smooth
     {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     (X : Over (Spec (.of kbar)))
     [Smooth X.hom] [GeometricallyIrreducible X.hom]
@@ -1663,93 +1666,17 @@ indeterminacy locus either empty or of pure codimension `1`. Combined with
 to be empty when the target is an abelian variety, at which point
 `existsUnique_hom_of_indeterminacyLocus_eq_empty` extends.
 
+**The theorem now lives in `Albanese/Milne33.lean`** as
+`indeterminacy_pure_codim_one_into_grpScheme`, where it is **proved** (no
+`sorry`). It was stated here without proof until run 0069; the proof needs the
+difference-map / pole-purity / Hauptidealsatz-transport layers
+(`Albanese/Milne33{Rows,Diagonal,RowSection,Pullback,CMEquidim,KernelGen,
+TransportLocal,Transport}.lean`), which import *this* file, so the theorem
+cannot be stated here without a cycle. Consumers import
+`Albanese/Milne33.lean`; the only one is `av_indeterminacyLocus_eq_empty` in
+`Albanese/Thm32RationalMapExtension.lean`.
+
 Blueprint pin: `lem:milne_codim1_indeterminacy` (Milne §I.3 Lemma 3.3 p. 17). -/
-
-/-- **Milne Lemma 3.3 — indeterminacy into a group variety is empty or pure
-codim 1.**
-
-For `X` a nonsingular variety over `k̄`, `G` a group variety over `k̄`
-(a smooth group scheme of finite type, separated), and `f : X ⇢ G` a
-rational map, the indeterminacy locus `Z(f) := indeterminacyLocus f` is
-either empty (`f` is defined on all of `X`) or of *pure codimension 1*,
-encoded as: every point of `Z(f)` lies in the closure of a codim-1 point
-*of `Z(f)` itself*. (The `z ∈ indeterminacyLocus f` conjunct is essential:
-without it the disjunct is nearly vacuous — on a variety every non-generic
-point specialises from *some* codim-1 point — and, in particular, too weak
-to combine with the codim-≥2 conclusion of Milne 3.1 to force `Z(f) = ∅`
-in Theorem 3.2. Statement strengthened in run-0006 T6, session 0015.)
-
-The proof (Milne's): consider the difference map
-`Φ : X × X ⇢ G`, `(x, y) ↦ f(x) · f(y)⁻¹`. Then `Φ` is defined at `(x, x)`
-iff `f` is defined at `x`. Pulling back the maximal ideal of `O_{G,e}` gives
-a finite set of rational functions on `X × X` whose pole divisors are pure
-codim-1; their intersection with the diagonal exhibits the indeterminacy
-locus of `f` as pure codim-1.
-
-Blueprint reference: `lem:milne_codim1_indeterminacy` (Milne, *Abelian
-Varieties*, Lemma 3.3, §I.3, p. 17). -/
-theorem indeterminacy_pure_codim_one_into_grpScheme
-    {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
-    {X : Over (Spec (.of kbar))}
-    [Smooth X.hom] [GeometricallyIrreducible X.hom]
-    [IsSeparated X.hom] [LocallyOfFiniteType X.hom]
-    [IsIntegral X.left] [IsReduced X.left]
-    {G : Over (Spec (.of kbar))}
-    [GrpObj G] [Smooth G.hom] [GeometricallyIrreducible G.hom]
-    [IsSeparated G.hom] [LocallyOfFiniteType G.hom]
-    [IsIntegral G.left] [IsReduced G.left]
-    (f : X.left.RationalMap G.left)
-    (_hover : f.compHom G.hom = X.hom.toRationalMap) :
-    indeterminacyLocus f = ∅ ∨
-      ∀ x ∈ indeterminacyLocus f,
-        ∃ z ∈ indeterminacyLocus f,
-          Order.coheight z = 1 ∧ x ∈ closure ({z} : Set X.left) := by
-  -- Milne's 4-substep proof body — see informal/milne-lemma-3.3.md for the
-  -- full transcribed proof, substep DAG, and current status. Each substep is
-  -- project-side buildable on top of Mathlib's Weil-divisor apparatus and the
-  -- group-object API; substep 4b (pole-divisor intersection with the diagonal
-  -- is pure codim-1) is the substantive Mathlib gap.
-  --
-  -- * Substep 1: construct the difference rational map
-  --   `Φ := (id × inv) ∘ (f × f) ∘ m : X × X ⇢ G`. **DONE**
-  --   (`Albanese/DifferenceMap.lean`, `differenceRationalMap`); its domain
-  --   contains `Dom(f) ×_{k̄} Dom(f)` (**DONE**, session 0042,
-  --   `le_domain_differenceRationalMap`), which is the easy direction of
-  --   substep 2 (`Φ` defined at `(x,x)` if `f` defined at `x`).
-  -- * Substep 2 (hard direction): `(x, x) ∈ Dom(Φ) ⟹ x ∈ Dom(f)` via the
-  --   formula `f(x) = Φ(x, u) · f(u)` for any `u ∈ Dom(f)` in a chosen open
-  --   neighbourhood — from the group-law + openness of `Dom(Φ)` and density
-  --   of `Dom(f)`. **OPEN.**
-  -- * Substep 3: pullback of the local ring at the identity `e ∈ G`:
-  --   `Φ` defined at `(x, x)` ⟺ `Φ^* (𝒪_{G,e}) ⊆ 𝒪_{X×X, (x,x)}`. Uses the
-  --   `Scheme.RationalMap`-to-function-field machinery (the same gap that
-  --   blocks `thm:weil_divisor_obstruction` at L744 below).
-  -- * Substep 4: on the nonsingular variety `X × X`, the pole divisor
-  --   `div(g)_∞` of any non-zero rational function `g ∈ Φ^*(𝒪_{G,e})` is
-  --   pure codim-1; its intersection with the diagonal is pure codim-1 in
-  --   the diagonal (Hartshorne AG 9.2, Krull's principal-ideal theorem).
-  --   **Substep 4a (pole-divisor purity) is PROVED (run-0006 T6, session
-  --   0019)**: `Albanese/PolePurity.lean` provides
-  --   `Scheme.exists_specializes_coheight_eq_one_of_notMem_stalk_range` —
-  --   on a locally Noetherian integral scheme with regular stalks (e.g.
-  --   `X × X` smooth over `k̄`, via `isRegularLocalRing_stalk_of_smooth`
-  --   applied to the product), an `h ∈ K(X×X)` not regular at a point `Q₀`
-  --   fails to be regular at some coheight-1 generization `z ⤳ Q₀`. The
-  --   proof is Serre-free/UFD-free (elementary swap-pair argument replaces
-  --   normality; blueprint node `lem:pole_divisor_purity`, axiom-clean).
-  --   **Substep 4b (diagonal intersection)** remains: transport the
-  --   coheight-1 pole point of `X × X` through `Δ` to a coheight-1 point
-  --   of `X` inside `Z(f)` (Krull height bound for the diagonal, a local
-  --   complete intersection of codim `dim X` since `X` is smooth).
-  --
-  -- Iter-200+ tracked: gated on (a) the function-field-pullback bridge for
-  -- `Scheme.RationalMap` (Substeps 1–3: difference map, slice argument,
-  -- `Φ^*` of `𝒪_{G,e}`; also blocks `thm:weil_divisor_obstruction`),
-  -- (b) Substep 4b, the codim-1 diagonal-intersection bound (Hartshorne
-  -- AG 9.2 scheme-level form). Substep 4a is closed by
-  -- `Albanese/PolePurity.lean` (imported above).
-  sorry
-
 /-! ## §6. Definedness at a prime-divisor generic point
 
 A truthful, lightweight reformulation of definedness at a prime-divisor

@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import Mathlib
 import AlgebraicJacobian.Albanese.CodimOneExtension
+import AlgebraicJacobian.Albanese.Milne33
 
 /-!
 # Rational maps to an abelian variety extend
@@ -31,9 +32,9 @@ map `C^{(g)} ⇢ A` to a regular morphism `J → A`.
   `f : X ⇢ A` equals `g.toRationalMap` for a unique morphism `g : X ⟶ A`.
 
 The pure-codimension-one input, Milne Lemma 3.3
-(`indeterminacy_pure_codim_one_into_grpScheme` in
-`Albanese/CodimOneExtension.lean`), is not yet proved; the results here are
-conditional on it.
+(`indeterminacy_pure_codim_one_into_grpScheme` in `Albanese/Milne33.lean`), is
+**proved** as of run 0069, so `extend_to_av` is unconditional and axiom-clean
+(`propext`, `Classical.choice`, `Quot.sound` only).
 
 ## Conventions
 
@@ -165,7 +166,8 @@ general complete target, codimension-`≥ 2` indeterminacy does not imply an
 extension (see `existsUnique_hom_of_indeterminacyLocus_eq_empty`); the
 group-variety input (1) is what forces `Z(f) = ∅`.
 
-Input (1) is not yet proved, so this lemma is conditional on it. -/
+Both inputs are proved (input (1) in `Albanese/Milne33.lean` as of run 0069),
+so this lemma is unconditional. -/
 private theorem av_indeterminacyLocus_eq_empty
     {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     {X : Over (Spec (.of kbar))}
@@ -223,8 +225,9 @@ statement `Z(f) = ∅`:
    `A.left.IsSeparated` comes from `IsSeparated A.hom` (itself from
    `IsProper A.hom`) composed with the affine `Spec k̄ ⟶ ⊤_ Scheme`.
 
-Step 1 depends on Milne Lemma 3.3, which is not yet proved; that is the only
-missing content behind this theorem. -/
+Step 1's Milne Lemma 3.3 input is proved in `Albanese/Milne33.lean` (run
+0069), so nothing behind this theorem is missing: it is `sorry`-free and
+axiom-clean. -/
 theorem extend_to_av
     {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     {X : Over (Spec (.of kbar))}
