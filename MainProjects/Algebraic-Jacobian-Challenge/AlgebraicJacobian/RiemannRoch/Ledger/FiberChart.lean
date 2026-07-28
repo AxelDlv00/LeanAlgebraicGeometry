@@ -25,7 +25,7 @@ three regularity lemmas of `section Main`), ported with bodies unchanged.  The p
 stops before AJCR's `fiberDivisor`/`fiberTwist`/`fiberCocycle`/`classDeg_fiberTwist`, which
 present the same fiber as a `LocalEquations` and compute its **Picard class**.  AJC has neither
 `Scheme.PointedCover` nor `Scheme.LocalEquations` nor `CechPic`, and that class-side material is
-what pulls AJCR's twelve-file `Picard.*` presentation cone (and `AlgebraicJacobian.Challenge`)
+what pulls AJCR's fourteen-file `Picard.*` presentation cone (and `AlgebraicJacobian.Challenge`)
 into the import closure.  Measured against the vanishing chain, none of it is load-bearing: the
 `H¹` argument uses `fiberChart₀`, `fiberChart₁`, `fiberCoord`,
 `preimage_inf_eq_basicOpen_fiberCoord`, `genericPoint_mem_preimage_inf` and the two germ lemmas,

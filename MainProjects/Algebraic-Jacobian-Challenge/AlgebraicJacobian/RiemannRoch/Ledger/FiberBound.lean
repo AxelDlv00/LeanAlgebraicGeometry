@@ -50,7 +50,7 @@ carried by the linear-equivalence translate manufactured inside
    transport — it moves vanishing *facts* one field at a time instead.  Nothing in AJC or AJCR
    closes this.
 3. **Global generation: CLOSED here too, but by an independent route.**
-   `generated_unconditional_of_isFinite_toP1` below is not a corollary of (1): it comes from the
+   `exists_bound_generated_of_isFinite_toP1` below is not a corollary of (1): it comes from the
    dévissage slice in `DegreeVanishing`, whose evaluation map *is* the quotient map, and the
    vanishing enters only to make that quotient surjective on `H⁰`.  Neither statement implies the
    other without the exactness input.

@@ -22,7 +22,7 @@ two-cover `H¹` carrier consumes at the chart preimages `V₀`, `V₁`.
 
 AJCR `RiemannRoch/FLVQcoh.lean`, bodies unchanged.  **This file is the empirical confirmation
 of the port audit**: AJCR imports it against `Picard/PresentationDivisor.lean`, and that edge —
-the single entry point of AJCR's twelve-module `Picard.*` presentation cone into the vanishing
+the single entry point of AJCR's fourteen-module `Picard.*` presentation cone into the vanishing
 chain — turned out to be needed only for the `coeffAt` calculus, which
 `Ledger/FiberDivisor.lean` now carries.  Substituting that import for the Picard one, the file
 elaborates with **no other change**: no `picClass`, no `CechPic`, no meromorphic presentation.

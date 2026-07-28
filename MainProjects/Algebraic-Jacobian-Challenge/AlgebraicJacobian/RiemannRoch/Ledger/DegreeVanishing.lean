@@ -160,7 +160,7 @@ This file closes exactly one of the three, and it is worth being blunt about whi
      the reusable lesson.**  This paragraph used to price the port at 59 closure modules with an
      unavoidable Picard-presentation dependency, "~2.5k lines and a Picard dependency".  That
      counted IMPORT LINES.  Counted instead by DECLARATION REFERENCE, the vanishing chain uses
-     `picClass`, `CechPic`, `divisorClass` and `classDeg` exactly zero times: the twelve
+     `picClass`, `CechPic`, `divisorClass` and `classDeg` exactly zero times: the fourteen
      `Picard/` modules enter only through AJCR `FiberTwist.lean`'s class-side material
      (`fiberDivisor`/`fiberTwist`/`classDeg_fiberTwist`), which the argument never mentions, and
      `AlgebraicJacobian.Challenge` arrives the same way through `ChiCurve ← Degree ← classDeg`.
