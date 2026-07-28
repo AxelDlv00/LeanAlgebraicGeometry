@@ -1801,6 +1801,83 @@ noncomputable def openImmersion_beckChevalley {V' : Scheme.{u}}
       ((Scheme.Modules.pullback V₀.ι).obj F)) hiso) ≪≫
     ((pushforward p').mapIso (openImmersion_bc_telescope g' V₀.ι p' gV hsq F)).symm
 
+/-! ### The cosimplicial comparison is a WHISKERED MATE — so naturality is not an obligation
+
+This is the structural correction that removes the two cosimplicial naturality `sorry`s, and it
+is worth stating why they existed.  Both `cech_pushforward_baseChange_natIso` and
+`twisted_cech_nerve_iso` were built with `NatIso.ofComponents`: a degree-`n` isomorphism plus a
+*proof obligation* that those isomorphisms commute with the index-omission maps.  That obligation
+is genuinely hard as posed — an earlier revision established that `Pi.hom_ext`, the tool that
+closed this project's other naturality squares, cannot fire, because the σ-decomposition sits
+mid-chain behind pushforward/pullback applications.
+
+But the obligation is an artefact of the *construction*, not of the mathematics.  Two facts:
+
+* `openImmersion_bareBC` is **misnamed**.  Read its docstring: it needs no open immersion and no
+  flatness.  It is the Beck–Chevalley mate of the `pullback` pseudofunctor 2-isomorphism attached
+  to *any* commuting square.  Instantiated at the **outer** square `h : IsPullback g' f' f g` it
+  is a natural transformation `f_* ⋙ g^* ⟶ g'^* ⋙ f'_*` of functors `X.Modules ⥤ S'.Modules`.
+* The nested `CosimplicialObject.whiskering` in both statements **is** functor composition: each
+  side is definitionally `N ⋙ (…)` for `N` the dropped Čech nerve (checked both ways by `rfl`).
+
+So `Functor.whiskerLeft N (cechOuterBC …)` is already a morphism between exactly the two
+cosimplicial objects in question, and its naturality in the simplex index *is* the naturality of
+the transformation being whiskered — free, by construction.  `NatIso.isIso_of_isIso_app` then
+promotes it to an isomorphism from one `IsIso` per degree, and no cosimplicial statement is left.
+
+The moral, recorded because this run found three variants of it: a walled obligation can be an
+artefact of how the object was *built*, not only of how its statement was *phrased*.
+`NatIso.ofComponents` asks for naturality; whiskering a natural transformation never does. -/
+
+/-- **The S-level base-change mate at the outer cartesian square.**  `openImmersion_bareBC`
+instantiated at `h : IsPullback g' f' f g` itself — no open immersion, no flatness, no affineness
+(see the section note above on why that lemma's name is misleading).  This is the canonical
+comparison `f_*(−)` pulled back along `g` ⟶ pushed forward along `f'` of the `g'`-pullback:
+```
+  f_* ⋙ g^*  ⟶  g'^* ⋙ f'_*.
+```
+Being a natural transformation is the whole point: whiskering a *cosimplicial* object with it
+produces a map of cosimplicial objects whose compatibility with the coface maps is automatic.
+Project-local. -/
+noncomputable def cechOuterBC (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) :
+    Scheme.Modules.pushforward f ⋙ Scheme.Modules.pullback g ⟶
+      Scheme.Modules.pullback g' ⋙ Scheme.Modules.pushforward f' :=
+  openImmersion_bareBC g f f' g' h
+
+/-- **The whiskered cosimplicial base-change comparison, from a degreewise `IsIso` alone.**
+Given that the outer mate `cechOuterBC` is invertible at every object of the dropped Čech nerve,
+this assembles the natural isomorphism of cosimplicial objects that
+`cechComplex_baseChange_cosimplicialIso` consumes.
+
+**There is no naturality hypothesis, and that is the content.**  The two sides are
+definitionally `N ⋙ (f_* ⋙ g^*)` and `N ⋙ (g'^* ⋙ f'_*)`, so `Functor.whiskerLeft N` of the
+mate is a morphism between them, and its coface compatibility is the mate's own naturality.
+Compare `cech_pushforward_baseChange_natIso`, which builds the same isomorphism degreewise via
+`NatIso.ofComponents` and therefore *does* carry a naturality obligation — the one that has been
+open in this file.  Project-local. -/
+noncomputable def cech_pushforward_baseChange_natIso_of_isIso
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) (F : X.Modules)
+    (hiso : ∀ n : SimplexCategory, IsIso ((cechOuterBC f g f' g' h).app
+      ((CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).obj n))) :
+    ((CosimplicialObject.whiskering S.Modules S'.Modules).obj
+        (Scheme.Modules.pullback g)).obj
+      (((CosimplicialObject.whiskering X.Modules S.Modules).obj
+          (Scheme.Modules.pushforward f)).obj
+        (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)))
+      ≅ ((CosimplicialObject.whiskering X'.Modules S'.Modules).obj
+          (Scheme.Modules.pushforward f')).obj
+        (((CosimplicialObject.whiskering X.Modules X'.Modules).obj
+            (Scheme.Modules.pullback g')).obj
+          (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F))) :=
+  letI happ : ∀ n, IsIso ((Functor.whiskerLeft
+      (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)) (cechOuterBC f g f' g' h)).app n) :=
+    fun n => hiso n
+  @asIso _ _ _ _ (Functor.whiskerLeft
+      (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)) (cechOuterBC f g f' g' h))
+    (@NatIso.isIso_of_isIso_app _ _ _ _ _ _ _ happ)
+
 /-- **Per-intersection-open X-level Beck–Chevalley** (the per-σ residual of the X-level leaf
 `twisted_cech_nerve_iso`, after the product decomposition `pushPull_sigma_iso`).  For a Čech
 fibre-power intersection open `U_σ = coverInterOpen 𝒰 σ ↪ X` (open immersion `j_σ`), pulling the
