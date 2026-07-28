@@ -56,10 +56,11 @@ same theorem by a separate curve-specialized strategy.
   routinely non-empty for a short while: a module not yet committed to the workspace
   ledger must **not** be rooted, since a clean checkout would then fail to build.  That
   grace period ends at the commit — once a module is in the ledger, leaving it unrooted
-  means the build does not check it.  **Currently violated in 17 modules** (measured
-  2026-07-29 02:55 by walking `import AlgebraicJacobian` from the root module: 257 of 274
-  modules — the 273 under `AlgebraicJacobian/` plus the root aggregator — in the root cone,
-  17 outside it).  All 17 are committed to the ledger, so none is inside the grace period:
+  means the build does not check it.  **Currently violated in 18 modules** (measured
+  2026-07-29 05:10 by walking `import AlgebraicJacobian` from the root module: 262 of 281
+  modules — the 280 under `AlgebraicJacobian/` plus the root aggregator — in the root cone,
+  18 outside it).  All 18 are committed to the ledger, so none is inside the grace period,
+  and every one is now in `RiemannRoch/`:
   - `RiemannRoch/Ledger/{DegreeVanishing,GenusBridge,NonVacuity,PrincipalCompare,`
     `PrincipalTransport,SectionDrop}` and `RiemannRoch/LedgerPortability` — 37 of the 51
     `Ledger/` files are in the cone via `RiemannRoch/WeilDivisor.lean` (commit
@@ -69,10 +70,13 @@ same theorem by a separate curve-specialized strategy.
     vanishing layer ported from the sibling project (run 0074 r4, task `ajc-rr`), which
     makes the cluster-P statements unconditional at this project's own curve.  Landed
     unrooted because the root roll-up is outside that lane's write scope; same `I-0600`.
-  - `Picard/{Pic0Dimension,SchemeKrullDimStalk}`.
+  - `RiemannRoch/Ledger/{ExtensionUniformity,GenusFieldInvariance,SectionsFieldBaseChange}`
+    — the same lane's later files, landed unrooted for the same reason.
 
-  The four `Albanese/SymPow*` modules that this bullet used to list were rooted by run 0069
-  r5 and are no longer in the set.
+  `Picard/{Pic0Dimension,SchemeKrullDimStalk}`, which this bullet used to list, were rooted
+  by run 0067 r7: the new `Picard/GroupSchemeHomogeneity.lean` imports `Pic0Dimension`, and
+  its own root import line pulls both into the cone.  The four `Albanese/SymPow*` modules
+  were rooted by run 0069 r5 and are likewise no longer in the set.
 
   Their declarations are not elaborated by `lake build AlgebraicJacobian` and no
   `#print axioms` line through the root can reach them.  Re-measure with the

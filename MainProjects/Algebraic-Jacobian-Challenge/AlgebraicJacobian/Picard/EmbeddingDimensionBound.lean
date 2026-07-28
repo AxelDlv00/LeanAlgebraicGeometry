@@ -88,6 +88,27 @@ regularity — so of the two directions of `dim Pic⁰ = g`, the one previously 
 
 ## What is still owed, located precisely (run 0067 r6)
 
+> **SUPERSEDED IN ITS HEADLINE CLAIM (run 0067 r7), and this was the third framing of
+> this leg to be wrong.** The section below says the remaining input for `dim Pic⁰ ≤ g`
+> is the uniform bound `∀ z, dim_κ (m_z/m_z²) ≤ g`, and then prices it as a standard-smooth
+> presentation problem. It is **not** a separate piece of mathematics here: `Pic⁰` is a
+> **group** scheme, so translations are automorphisms of the underlying scheme and the
+> embedding dimension is constant along a translate orbit.
+> `Pic0.forall_finrank_cotangentSpace_le_of_homogeneous`
+> (`Picard/GroupSchemeHomogeneity.lean`) derives the uniform bound from the value at *one*
+> point plus an orbit condition, and since that value is an *equality*, one point serves
+> both directions — `Pic0.topologicalKrullDim_eq_genus_of_homogeneous` is the resulting
+> form, axiom-clean. The predecessors of this framing were "`topologicalKrullDim` has no
+> mathlib API" (refuted by unfolding the definition) and "no `ringKrullDim` upper bound
+> exists" (refuted: the wrong quantity had been searched for).
+>
+> **What survives below, and is still worth reading:** the *general* theorems of this file
+> are untouched and remain the right bricks — they take the uniform bound as a hypothesis,
+> which is correct at the generality of an arbitrary scheme, where no group structure is
+> available. Only the "this is what `Pic⁰` still owes" reading is retracted. The
+> standard-smooth analysis is also still accurate as a statement about presentations, and
+> records why `SmoothOfRelativeDimension` is *not* the cheap source it looks like.
+
 The remaining input for `dim Pic⁰ ≤ g` is the *uniform* bound
 `∀ z, dim_κ (m_z/m_z²) ≤ g`. The natural source is
 `SmoothOfRelativeDimension (genus C) (Pic0Scheme C).hom`, whose field gives a
