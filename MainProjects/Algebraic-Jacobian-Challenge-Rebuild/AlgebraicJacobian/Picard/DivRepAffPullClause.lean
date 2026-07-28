@@ -362,6 +362,10 @@ theorem pullback_isDivRepClassify_compat {S : Type u} [CommRing S] [Algebra k S]
   exact hmain.symm
 
 set_option maxHeartbeats 800000 in
+-- The `Scheme.Cover.hom_ext` chase runs over the factorization cover pulled back along
+-- `Spec T ⟶ Spec S`, so each piece re-elaborates the `pullback₁` carrier against
+-- `pullback_isDivRepClassify_compat`'s tensor overlap; past the default budget, and cheaper
+-- than the per-piece lemma above because the window transports are already discharged there.
 include hO hchi in
 /-- **`IsDivRepClassify` is local on the base** — the tool this file is really about, and it
 mentions no chart family.  If every restriction of `F₀` to `Localization.Away (f t)` along a
