@@ -52,8 +52,15 @@ derives from it. The missing geometry is isolated in exactly one place — inhab
 
 ## What non-vacuity does and does not mean here — read this before citing it
 
-`SymPowData C n` **on its own is trivially inhabited for every `n`**: take
-`carrier := C^n` and `proj := 𝟙`, and `desc` becomes `∃! u, 𝟙 ≫ u = h`. So the bare
+`SymPowData C n` **on its own is trivially inhabited for every `n`** — and the witness
+is recorded below as `symPowDataTrivial` rather than left as a remark, so that nobody
+has to rediscover it:
+
+```
+carrier := C^n,  proj := 𝟙,  desc := fun h _ => ⟨h, Category.id_comp h, …⟩
+```
+
+With `proj = 𝟙` the universal property degenerates to `∃! u, 𝟙 ≫ u = h`. So the bare
 structure is nearly free, and exhibiting *some* `SymPowData` proves nothing.
 
 What the downstream theorems actually quantify over is the **pair**
@@ -269,6 +276,28 @@ noncomputable def symPowDataOne (C : K) : SymPowData C 1 where
       rw [← Category.assoc, hret, Category.id_comp]
     · intro u hu
       rw [← hu, ← Category.assoc, hsec, Category.id_comp]
+
+/-- **The trivial witness — kept deliberately, as the acceptance test for this file.**
+
+`SymPowData C n` is inhabited for *every* `n` by taking `proj := 𝟙`, which makes the
+universal property vacuous. This declaration exists so that the limitation is a checked
+fact in the tree rather than a remark someone might doubt or forget.
+
+Its purpose is contrastive: a downstream theorem is only meaningful because it *also*
+requires `hproj : ∀ σ, permAut C σ ≫ D.proj = D.proj`, which this datum **fails** for
+`n ≥ 2` (it would force `permAut C σ = 𝟙`). Do not use it for anything; if a future
+lemma over `SymPowData` can be instantiated at `symPowDataTrivial`, that lemma is
+vacuous and the bug is in the lemma.
+
+(The general lesson, arrived at independently in the `ajc-pic0av` lane the same day for
+`PicScheme.ClassDegree`: an interface reduces something only when it asserts a
+*nontrivial* property, and the test is to try inhabiting the thing your theorems
+quantify over with a trivial witness. Recording the probe next to the structure is what
+stops the failure mode, because a named-but-vacuous input reads as progress.) -/
+noncomputable def symPowDataTrivial (C : K) (n : ℕ) : SymPowData C n where
+  carrier := ∏ᶜ (fun _ : Fin n => C)
+  proj := 𝟙 _
+  desc := fun {_} h _ => ⟨h, Category.id_comp h, fun _ hu => by simpa using hu⟩
 
 omit [CartesianMonoidalCategory K] in
 /-- **The other half of the witness: `symPowDataOne`'s projection is symmetric.**
