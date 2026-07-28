@@ -50,9 +50,32 @@ consequence of `thm:rigidity_lemma`).
 
 ## Remaining obligations
 
-`albanese_universal_property` is assembled from
-`descentThroughBirationalSigma` and `albanese_eq_iff_symmetricPower_eq`, but
-six declarations of this file are stated without proof:
+**Status, measured (run 0069).** `albanese_universal_property` is *assembled*
+from `descentThroughBirationalSigma` and `albanese_eq_iff_symmetricPower_eq`,
+and that assembly is honest — but the headline is **not** sorry-free:
+`#print axioms albanese_universal_property` reports `sorryAx`, inherited from
+the six unproved declarations below. It should not be described as a landed
+theorem until they close.
+
+What *has* landed, and is genuinely unconditional, is the rational-map
+extension this file consumes: `Scheme.RationalMap.extend_to_av` (Milne Theorem
+3.2) is proved and axiom-clean as of run 0069, Milne Lemma 3.3 with it. So
+`descentThroughBirationalSigma`'s *extension* step has a real input; what it
+still lacks is the birationality data to build the rational map in the first
+place (mathlib at this pin has no "invert a birational morphism on a dense
+open" API).
+
+The single root cause of five of the six gaps is that `Sym^g C` does not exist
+yet: mathlib has no quotient of a scheme by a finite group action (its
+`SymmetricPower` is for modules), and the project's `analogies/m3-route-audit.md`
+scopes the construction at roughly 2400–3800 lines — an action typeclass, the
+affine quotient `Spec(A^{S_g})` with its universal property, the glued global
+quotient, and smoothness of `Sym^g C` for a curve. That is a subproject, not a
+step. The `S_g`-symmetry that the quotient's universal property *consumes* is
+however proved: see `Albanese/GrpObjFoldSum.lean` (`MonObj.powSum`,
+`MonObj.powSum_perm`).
+
+The six declarations stated without proof:
 
 * `abelJacobi` — the moduli classifier of the rigidified diagonal
   correspondence `𝓛^{P₀} = 𝓞_{C × C}(Δ − {P₀} × C − C × {P₀})`, taken as a
@@ -62,9 +85,14 @@ six declarations of this file are stated without proof:
   no scheme-theoretic symmetric power, only `Sym` for types and modules.
 * `symmetricPowerAVMap` and `symmetricPowerToJacobian` — the two invocations
   of the universal property of `Sym^g C`, which need the symmetric projection
-  `π : C^g ⟶ Sym^g C` supplied by that construction.
+  `π : C^g ⟶ Sym^g C` supplied by that construction. Their *symmetric input* is
+  proved (`MonObj.powSum` / `MonObj.powSum_perm`, `Albanese/GrpObjFoldSum.lean`);
+  only the factorisation through `π` is missing.
 * `descentThroughBirationalSigma` — extension of the rational map
-  `Sym^g φ ∘ (f^{(g)})^{-1}` to a regular morphism (Milne Theorem I.3.2).
+  `Sym^g φ ∘ (f^{(g)})^{-1}` to a regular morphism (Milne Theorem I.3.2). The
+  extension theorem `extend_to_av` is now proved and unconditional; the gap is
+  upstream of it — producing the rational map, which needs the dense open on
+  which `f^{(g)}` is an isomorphism *and* a way to invert it there.
 * `albanese_eq_iff_symmetricPower_eq` — Milne's identification of `ι_{P₀}`
   with `Q ↦ Q + (g − 1) P₀` followed by `f^{(g)}`.
 
@@ -405,9 +433,20 @@ addition in a commutative group object is order-independent. By the
 universal property of `Sym^g C` (`def:symmetric_power_curve`) it
 factors uniquely as `Sym^g φ ∘ π = add_A ∘ φ^{×g}`.
 
-**Not yet constructed.** The body is the universal-property invocation on
-the symmetric composition `add_A ∘ φ^{×g}`, which needs the projection `π`
-and its universal property from the construction of `Sym^g C`. -/
+**Not yet constructed — but the symmetric input now exists.** The morphism
+`add_A ∘ φ^{×g} : C^g ⟶ A` and its `S_g`-invariance are supplied, proved, by
+`Albanese/GrpObjFoldSum.lean`:
+
+* `CategoryTheory.MonObj.powSum g φ : ∏ᶜ (fun _ : Fin g => C) ⟶ A` is the
+  `g`-fold sum `(P₁,…,P_g) ↦ φ(P₁) + ⋯ + φ(P_g)`;
+* `CategoryTheory.MonObj.powSum_perm` is exactly the equivariance
+  `permAut C σ ≫ powSum g φ = powSum g φ` — Milne's "clearly this is
+  symmetric", which reduces to the commutativity of `A`'s group law.
+
+So what is missing here is *only* the universal-property invocation, i.e. the
+projection `π : C^g ⟶ Sym^g C` and its factorisation property from the
+construction of `Sym^g C` — not the symmetry that licenses the factorisation.
+See the file header for why that construction is a separate subproject. -/
 noncomputable def symmetricPowerAVMap (g : ℕ)
     {A : Over (Spec (.of kbar))}
     [GrpObj A] [IsProper A.hom] [Smooth A.hom] [GeometricallyIrreducible A.hom]
@@ -586,7 +625,17 @@ in the construction, by Milne Corollary I.1.2 (registered in
 The proof below is pure assembly: `descentThroughBirationalSigma` (§5)
 transported across `albanese_eq_iff_symmetricPower_eq` (§5.5). Both of
 those, and the constructions of §1–§4 they rest on, are still unproved —
-see the file header. -/
+see the file header.
+
+**Therefore this theorem is NOT sorry-free**, and must not be reported as a
+landed result. `#print axioms albanese_universal_property` reports
+`[propext, sorryAx, Classical.choice, Quot.sound]` (measured, run 0069). The
+assembly is honest and the statement is the right one; what is missing is
+everything the statement quantifies over — in particular `abelJacobi`, whose
+`sorry`-bodied *definition* means the equation `φ = abelJacobi C P₀ ≫ ψ` does
+not yet say what it is meant to say. Step 4 (the homomorphism property, via
+Milne Corollary I.1.2) does have a real input: the rigidity chain in
+`RigidityLemma.lean` is sorry-free and axiom-clean. -/
 theorem albanese_universal_property
     (_hg : 0 < genus C)
     (P0 : 𝟙_ (Over (Spec (.of kbar))) ⟶ C)

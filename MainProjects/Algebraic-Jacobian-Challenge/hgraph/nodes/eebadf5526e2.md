@@ -3,19 +3,12 @@ author: sync
 content_type: structure
 created: '2026-07-24T17:02:56'
 decl: AlgebraicGeometry.Scheme.sheaf
-file: AlgebraicJacobian/Picard/RelPicFunctor.lean
+file: AlgebraicJacobian/RiemannRoch/CohomologyKit.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.sheaf
 type: lean
-updated: '2026-07-28T11:16:12'
+updated: '2026-07-28T11:16:24'
 ---
-structure sheaf, so it preserves the abelian-group operations on both
-sides; the upgrade is the substantive content of
-`lem:rel_pic_sharp_functorial`.
-
-(§3 precedes §2 in the file because the functor `PicSharp` below
-consumes `functorial` as its morphism action.)
-
-Blueprint reference: `lem:rel_pic_sharp_functorial` (Kleiman §2,
-Defs. `df:aPf` + `df:Pfs`). -/
+structure sheaf of `k`-modules `toModuleKSheaf C` — by the *identity*
+function.  Both `k`-scalar paths are restriction of scalars along the same

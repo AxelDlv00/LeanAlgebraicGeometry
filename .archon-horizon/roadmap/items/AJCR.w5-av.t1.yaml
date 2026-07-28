@@ -4,7 +4,7 @@ title: 'T1: dual-number tangent kit (pointed \(k[\varepsilon]\)-points, cotangen
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: ''
-status: pending
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -17,4 +17,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:43.080775+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-24T09:13:10.222398+00:00'
+  updated_at: '2026-07-28T03:55:24.967214+00:00'
+  owner: ajcr-w5-av

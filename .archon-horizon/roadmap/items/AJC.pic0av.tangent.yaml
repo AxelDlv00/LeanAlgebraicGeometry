@@ -2,9 +2,45 @@ id: AJC.pic0av.tangent
 title: Cotangent space and H1 comparison
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Identify the cotangent-space dual at the identity with the Cech H1 cokernel
-  and hence with H1(C,O_C), including the required linearity and finrank comparison.
-status: pending
+summary: "Identify the cotangent-space dual at the identity with the Cech H1 cokernel\
+  \ and hence with\nH1(C,O_C), including the required linearity and finrank comparison.\n\
+  \nSTATE (run 0067, ajc-pic0av, commit 306349cc5): finrank_cotangentSpaceDual_eq_finrank_h1Cok\
+  \ IS NO\nLONGER A SORRY. It is proved from a single named input, and the linearity/dimension-count\
+  \ half of the\nold two-step reduction is CLOSED. The lane's residue is now the geometric\
+  \ middle only.\n\nWHAT LANDED:\n * finrank_eq_of_addEquiv_of_bijective_smul (Pic0AbelianVariety.lean,\
+  \ sorry-free, fully general):\n   an AddEquiv j : M -> M1 together with a BIJECTION\
+  \ i : R -> R' of the scalar rings satisfying\n   j (r . m) = i r . j m forces finrank\
+  \ R M = finrank R' M1. This is the finrank form of mathlib's\n   rank_eq_of_equiv_equiv\
+  \ (LinearAlgebra/Dimension/Basic.lean), via toNat of Module.rank. It is the\n  \
+  \ right instrument because the two sides live over GENUINELY DIFFERENT rings, kappa(e)\
+  \ and k, so\n   LinearEquiv.finrank_eq does not apply and neither does a restrictScalars\
+  \ argument; and because i\n   is required only to be bijective, not a ring homomorphism.\n\
+  \ * semilinearComparison_cotangentSpaceDual_h1Cok: the single remaining named obligation.\
+  \ Asks for a\n   bijection of scalars kappa(e) -> k, an AddEquiv Dual_{kappa(e)}(m_e/m_e^2)\
+  \ -> H1Cok(S), and the\n   intertwining law. NOT a weakening: a bare Equiv does\
+  \ not determine finrank (which is why the old\n   docstring listed semilinearity\
+  \ separately), so bundling the compatibility square is the exact\n   strength required\
+  \ -- no more, no less.\n\nREMAINING MATHEMATICAL CONTENT, and it is only this: an\
+  \ invertible sheaf on C x_k Spec k[eps] trivial\nalong eps -> 0 is trivial on the\
+  \ two base-changed charts of a 2-affine cover; Gamma(V x Spec k[eps], O)\n= Gamma(V,\
+  \ O)[eps] for affine V; and a kernel element goes to its transition unit under those\n\
+  identifications.\n\nTWO CROSS-PROJECT FINDINGS THAT NARROW IT (inbox I-0495, ajcr-w5-av,\
+  \ 2026-07-28) -- do not re-derive:\n * This leg needs NEITHER Hilbert 90 NOR any\
+  \ henselian cover-splitting brick. After the\n   truncated-exponential linearisation\
+  \ the descent condition is ADDITIVE, and the thickening\n   k[eps] -> k is square-zero,\
+  \ so mathlib's Algebra.FormallyEtale.comp_bijective\n   (RingTheory/Etale/Basic.lean:77)\
+  \ does the job. Do not open a henselian campaign.\n * AJC does NOT face AJCR's etale-plus/Zariski\
+  \ crossing at k[eps]. AJC's picSharp is the Zariski\n   relative-Picard presheaf,\
+  \ so the representability leg lands directly where the trunc-exp Cech\n   cocycle\
+  \ leg computes. That asymmetry is why AJC's residue is one comparison and AJCR's\
+  \ T4 is a\n   descent argument first.\n\nALREADY AVAILABLE toward the obligation\
+  \ (all landed, none needs redoing):\ncotangentSpaceDual_equiv_relPicKernel (set-level\
+  \ chain through the FGA representability leg);\nrelPicKernelSMul + laws (the Mumford\
+  \ eps -> a.eps scaling, source of the LHS action);\nDualNumber.truncExpCechKernelAddEquiv\
+  \ + AffineCoverMVSquare.h1CokAddEquivTruncExpCechKernel (the\nadditive equivalence\
+  \ on the Cech side) with DualNumber.unitsScale_mk_truncExpUnit (its t.b\nequivariance);\
+  \ residueFieldIso_of_section_over_field (the scalar bijection kappa(e) = k).\n"
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -26,3 +62,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
+  updated_at: '2026-07-28T03:51:22.138536+00:00'
+  owner: ajc-pic0av

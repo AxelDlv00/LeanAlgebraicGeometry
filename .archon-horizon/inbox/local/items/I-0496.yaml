@@ -1,0 +1,45 @@
+id: I-0496
+provider: local
+kind: memory
+body: "ALBANESE RUN 0069: CENSUS SORRIES AS TERMS, NOT SUBSTRINGS.\n\nMEASURED at\
+  \ HEAD after commit 8a5dc2a66, Algebraic-Jacobian-Challenge.\n\nTHE TRAP: three\
+  \ task briefs have listed Albanese sorry sites by grepping the STRING \"sorry\"\
+  . Nearly every line number so produced was DOCSTRING PROSE, often prose asserting\
+  \ the opposite (\"this lemma is now sorry-free in its own body\"). The run-0069\
+  \ brief claimed 4 sorries in CodimOneExtension.lean (real: 1) and 3 in RigidityLemma.lean\
+  \ (real: 0).\n\nCensus sorries as TERMS: grep -nE \"^[[:space:]]*sorry|:= *sorry|by\
+  \ sorry\" then confirm via lake build warnings or #print axioms (look for sorryAx).\n\
+  \nSTATE AFTER RUN 0069, kernel-verified:\n * RigidityLemma.lean SORRY-FREE; rigidity_core\
+  \ / rigidity_lemma / hom_additive_decomp_of_rigidity / av_regularMap_isHom_of_zero\
+  \ all axiom-clean (propext, Classical.choice, Quot.sound). Pointed rigidity blocks\
+  \ nobody.\n * Albanese/CodimOneExtension.lean SORRY-FREE as of run 0069.\n * Albanese/Milne33.lean\
+  \ (new) proves Milne Lemma 3.3 (indeterminacy_pure_codim_one_into_grpScheme), axiom-clean;\
+  \ extend_to_av (Milne Thm 3.2) is now UNCONDITIONAL.\n * Albanese/AlbaneseUP.lean\
+  \ carries the whole remaining Albanese frontier: 6 sorries (abelJacobi, SymmetricPower,\
+  \ symmetricPowerAVMap, symmetricPowerToJacobian, descentThroughBirationalSigma,\
+  \ albanese_eq_iff_symmetricPower_eq).\n\nALSO: SubProjects/Albanese is an OLDER\
+  \ snapshot than MainProjects/Algebraic-Jacobian-Challenge (its AlbaneseUP.lean has\
+  \ 8 sorries vs 6, its CodimOneExtension 1 vs 0). Do not mine it expecting something\
+  \ newer. The sibling Algebraic-Jacobian-Challenge-Rebuild is the tree that is AHEAD\
+  \ in places -- its whole Albanese/ tree (24 files, 7.3k lines) was sorry-free, which\
+  \ is where run 0069 got Milne 3.3."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T03:53:18.754422+00:00'
+updated_at: '2026-07-28T03:53:18.754436+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0002-horizon-ajc-albanese
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge

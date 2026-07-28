@@ -77,13 +77,13 @@ body: "Pic0.smooth IS NOT A TRANSLATION ARGUMENT: its whole remaining content is
   where μ_p and α_p exist and the curve-specific input is what rules them out.\n"
 labels:
 - agent-ready
-status: open
+status: closed
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-27T23:36:03.390475+00:00'
-updated_at: '2026-07-27T23:36:03.390486+00:00'
+updated_at: '2026-07-28T04:08:03.491246+00:00'
 metadata:
   provenance:
     run: '0054'
@@ -94,3 +94,5 @@ metadata:
     task: ajc-truth
     task_title: Publish the true axiom frontier and align the Jacobian route
     projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-pic0av

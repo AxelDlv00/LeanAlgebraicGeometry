@@ -2,3 +2,5 @@
 {"at": "2026-07-23T13:46:33.723573+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "pending", "note": ""}
 {"at": "2026-07-23T13:46:33.723763+00:00", "actor": "horizon", "field": "nested", "from": "", "to": "", "note": "parent=AJC.jacobian"}
 {"at": "2026-07-23T13:46:33.723862+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T04:02:03.169561+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "active", "note": ""}
+{"at": "2026-07-28T04:02:03.169763+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "owner updated"}

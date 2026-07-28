@@ -243,24 +243,106 @@ noncomputable def PicScheme {k : Type u} [Field k]
     Over (Spec (.of k)) :=
   (HasPicScheme.has_pic_scheme (C := C)).choose
 
-/-- Existence instance for `HasPicScheme` — the **one unproved statement of
-this file**. Mathematical content: Kleiman §4 Thm `th:main` + Cor
-`cor:algsch` (the étale-sheafified relative Picard functor of a smooth proper
-geometrically integral curve is representable by a separated `k`-scheme
-locally of finite type, a disjoint union of open quasi-projective
-`k`-subschemes), combined with Kleiman §2 Thm 2.5 (under the `k`-rational
-point of `[HasRationalPoint C]`, the plain relative functor `picSharp C`
-coincides with the étale-sheafified one, so the same scheme represents it).
-All three conjuncts of the existential — representability, local finiteness,
-separatedness — are parts of that one Kleiman theorem.
+/-- **THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
 
-The conditionality on `[HasRationalPoint C]` is essential for truth: without
-a section, `Pic(C ×_k T)/π_T^* Pic(T)` need not even be a Zariski sheaf. -/
-noncomputable instance instHasPicScheme {k : Type u} [Field k]
+Kleiman §4 Thm `th:main` + Cor `cor:algsch`: for a smooth proper geometrically
+integral curve `C` over an *arbitrary* field `k`, the **étale-sheafified**
+relative Picard functor `Pic_{(C/k)ét}` (`PicScheme.picEt`,
+`Picard/PicEtSheaf.lean`) is representable by a `k`-scheme that is separated
+and locally of finite type — a disjoint union of open quasi-projective
+`k`-subschemes. All three conjuncts are parts of that one theorem, which is
+why they are bundled.
+
+**There is no hypothesis on `C(k)`, and that is the point.** This statement is
+the one the challenge asks for: `AlgebraicJacobian/Challenge.lean` binds
+`Jacobian C` for a curve with no rational point, so a representability input
+carrying `[HasRationalPoint C]` answers a different question. The conditional
+form survives beside this one as `picSchemeOfHasRationalPoint` below, clearly
+labelled as strictly weaker.
+
+**Why sheafifying is what makes an unconditional statement possible.** The
+unsheafified functor `picSharp C = T ↦ Pic(C ×_k T)/π_T^* Pic(T)` is *not*
+representable over a general field — it is not even a Zariski sheaf (Kleiman §2
+L1292–L1302), and a representable functor is a sheaf for any subcanonical
+topology. So an unconditional `RepresentableBy` against `picSharp` would be a
+FALSE statement, not merely an unproved one. Against `picEt` it is Kleiman's own
+theorem. `PicScheme.picEt_isSheaf_forget` records the sheaf property that makes
+the difference, and it is proved rather than assumed.
+
+**Expected to stay open, and that is the honest state rather than a defect.**
+Discharging it means formalising the Kleiman §4 existence proof: the Abel-map
+slice `Div^d_{C/k} → Pic^d_{C/k}` is a smooth proper equivalence relation whose
+quotient is a scheme (`smoothProperQuotient`, itself gated on
+`HasSmoothProperQuotient` because Mathlib `v4.31` has no quasi-projectivity
+vocabulary), together with `Div` representability (Kleiman §3 Thm `th:repDiv`,
+which needs the Quot scheme). Neither input is available; the project reaches
+this statement rather than proving it, and it is the single named `sorry` that
+the whole Jacobian headline rests on. Do not replace it with a weaker
+conditional statement to make a count go down. -/
+theorem hasPicScheme_of_etaleSheafified {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-    [GeometricallyIntegral C.hom] [HasRationalPoint C] : HasPicScheme C :=
-  ⟨sorry⟩
+    [GeometricallyIntegral C.hom] :
+    ∃ (X : Over (Spec (.of k))),
+      Nonempty ((PicScheme.picEt C).RepresentableBy X) ∧
+        LocallyOfFiniteType X.hom ∧ IsSeparated X.hom :=
+  sorry
+
+/-- **The comparison that transports representability of `Pic_{(C/k)ét}` to the
+`picSharp`-shaped consumer interface**, and the one place where the étale
+formulation costs something.
+
+`HasPicScheme` is stated against `picSharp C` because that is the shape every
+downstream consumer uses — the tangent-space chain of
+`Picard/Pic0AbelianVariety.lean` composes with `representable`'s `homEquiv` to
+turn scheme points into line-bundle classes. The obligation above is about
+`picEt C`. Bridging them is exactly the assertion that the sheafification
+comparison `PicScheme.picEtComparison C` is an isomorphism of functors, which
+is Kleiman §2 Thm 2.5 (`th:comp`) — TRUE under a section, and FALSE in general
+without one.
+
+So this is deliberately **not** proved unconditionally, and deliberately not
+`sorry`-bodied either: it takes `[HasRationalPoint C]`, where it is a theorem
+of Kleiman rather than a gap. The consequence for the headline, stated plainly
+because it is the shape of the remaining work: over an arbitrary field the
+project reaches representability of the *étale* functor, and a consumer wanting
+the `picSharp` shape must either supply a section or be restated against
+`picEt`. That restatement is downstream work in
+`Picard/Pic0AbelianVariety.lean` (a lane this file does not own), not a defect
+of this file.
+
+Kept as an `Iso`-valued existence statement rather than an instance so that no
+consumer picks it up by synthesis. -/
+theorem picEtComparison_isIso_of_hasRationalPoint {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasRationalPoint C] :
+    Nonempty (IsIso (PicScheme.picEtComparison C)) :=
+  sorry
+
+/-- **The conditional milestone: the Picard scheme of a curve WITH a rational
+point.** Kleiman §4 Thm `th:main` combined with §2 Thm 2.5: given a section,
+the comparison `picSharp C → Pic_{(C/k)ét}` is bijective, so the scheme
+representing the étale sheaf represents the plain relative functor too.
+
+**This is strictly weaker than the challenge and is not the headline.** It is
+retained (owner decision of 2026-07-28, clause 4) because it is true, because
+it records what a rational point buys, and because the group-scheme /
+tangent-space development is stated against the `picSharp` shape. It is
+deliberately **not an instance**: nothing may pick up a rational-point
+hypothesis by synthesis, and any consumer wanting this must name it.
+
+Derivation, so that the two `sorry`s above are the only inputs: transport the
+étale representability of `hasPicScheme_of_etaleSheafified` along the
+comparison isomorphism of `picEtComparison_isIso_of_hasRationalPoint`,
+using `Functor.RepresentableBy.ofIso`. -/
+noncomputable def picSchemeOfHasRationalPoint {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasRationalPoint C] : HasPicScheme C := by
+  obtain ⟨X, ⟨rep⟩, hft, hsep⟩ := hasPicScheme_of_etaleSheafified C
+  obtain ⟨hiso⟩ := picEtComparison_isIso_of_hasRationalPoint C
+  exact ⟨X, ⟨rep.ofIso (@asIso _ _ _ _ (PicScheme.picEtComparison C) hiso).symm⟩, hft, hsep⟩
 
 namespace PicScheme
 

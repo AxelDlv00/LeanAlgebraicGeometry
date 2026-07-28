@@ -1,0 +1,1 @@
+A hard result on claim 3. Let me test whether the same equivalence collapse applies to claims 1 and 2.

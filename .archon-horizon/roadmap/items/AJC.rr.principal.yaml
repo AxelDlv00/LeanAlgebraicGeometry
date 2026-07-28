@@ -2,80 +2,54 @@ id: AJC.rr.principal
 title: Principal divisors have degree zero
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Principal divisors have degree zero. STILL OPEN (sorry at RiemannRoch/WeilDivisor.lean:1194,
-
-  deliberately in place). Both items of the old two-item residue are now closed; what
-  remains is
-
-  ONE input, and it is a one-point local statement rather than a global identity.
-
-
-  ITEM 1, residueDeg = 1: DISCHARGED (run 0055 s0006, Adelic/ResidueField.lean,
-
-  residueDeg_eq_one_of_isAlgClosed_curve). For a prime divisor of a curve C : Over
-  (Spec kbar) with
-
-  kbar algebraically closed, under [IsIntegral] [IsLocallyNoetherian] [IsRegularInCodimensionOne]
-
-  [LocallyOfFiniteType] [SmoothOfRelativeDimension 1] -- all carried by the project''s
-  headline
-
-  curve, LocallyOfFiniteType because mathlib''s IsProper extends it structurally (NOT
-  from
-
-  smoothness: that bridge is outside the module''s import closure, machine-checked).
-  Route: mathlib''s
-
-  residueFieldIsoBase gets integrality of kappa(x) from LocallyOfFiniteType via the
-  Jacobson-space
-
-  criterion, so the residue-finiteness gate is AVOIDED, not built. Bonus: node N14''s
-  residue
-
-  finiteness gate fell with it.
-
-
-  ITEM 2, THE CLOSED LEDGER: DISCHARGED (run 0055 s0008, Adelic/LedgerClosure.chi_eq_of_bump).
-
-  chi(D) = chi(0) + deg_k D at EVERY Weil divisor from the one-point bump alone. The
-  previous
-
-  summary recorded the extension past the effective cone as the substantive open half,
-  needing
-
-  ''an input the lane does not have'', with a correct-but-irrelevant obstruction argument
-  (chi is not
-
-  additive; D is not linearly equivalent to D+). No transport was needed: hbump admits
-  an ARBITRARY
-
-  base divisor, so the telescope runs onto the base D rather than up from 0.
-
-
-  WHAT REMAINS, precisely: the leaf needs the BUMP for a 2-affine cover of C -- one
-  application of
-
-  chi_add_eq_residueDeg per step, which consumes the ledger exact sequence''s connecting
-  and
-
-  surjectivity data plus the strong-approximation input hsurj. So the leaf is open,
-  but its open
-
-  input is now a single one-point local statement.
-
-
-  The sorry stays in place deliberately: substituting
-
-  Adelic.degree_principal_eq_zero_of_isAlgClosed_curve (which proves the UNWEIGHTED
-  deg(div g) = 0
-
-  on curve hypotheses from the ledger alone) would make a theorem whose statement
-  mentions no
-
-  hypotheses depend silently on the bump. Adelic.degK_eq_degree_of_isAlgClosed_curve
-  gives
-
-  deg_k = deg with no open input whatsoever.'
+summary: "Principal divisors have degree zero. STILL OPEN (sorry at RiemannRoch/WeilDivisor.lean,\
+  \ non-constant\nbranch of principal_degree_zero, deliberately in place).\n\nCORRECTION\
+  \ (run 0067, ajc-pic0av): the previous summary said \"what remains is ONE input,\
+  \ and it is a\none-point local statement rather than a global identity\". That is\
+  \ WRONG, and the project already\ncontains the machine-checked refutation of it.\
+  \ Both obstructions below were measured at HEAD.\n\nOBSTRUCTION 1 -- IMPORT DIRECTION,\
+  \ and this one is decisive on its own.\nAdelic.degree_principal_eq_zero_of_isAlgClosed_curve\
+  \ (Adelic/ResidueField.lean:521) proves exactly\nthe conclusion of the open leaf,\
+  \ but it is NOT IN SCOPE at the leaf: WeilDivisor.lean imports only\nAlgebraicJacobian.Genus\
+  \ and Albanese.CoheightBridge, while Adelic/ResidueField.lean imports\nAdelic.LedgerClosure,\
+  \ Adelic.GateInstances, Adelic.FiniteMapToP1, RiemannRoch.CurveBaseChange and\n\
+  Picard.TangentSpaceStalkAlgebra -- all strictly downstream of the leaf. Closing\
+  \ the branch by\nsubstitution is an IMPORT INVERSION, not a proof step. The previous\
+  \ summary's stated reason for\nleaving the sorry (avoiding a silent dependence on\
+  \ the bump) is real but is the SECOND reason; this\nis the first and nobody had\
+  \ recorded it.\n\nOBSTRUCTION 2 -- THE ADELIC INPUT IS NOT ONE LOCAL LEMMA. The\
+  \ endpoint above carries an explicit\nhledger hypothesis, and the bump route to\
+  \ hledger is REFUTED IN-TREE:\n  * ChiLedger.chi_add_eq_residueDeg requires P.point\
+  \ in U0 inf U1, so off the overlap it supplies\n    no route to the bump at all.\n\
+  \  * ChiUnconditional.not_bump_of_notMem_left (ChiUnconditional.lean:382) proves\
+  \ hbump OUTRIGHT\n    FALSE -- unconditionally, with no chi_add, no exactness datum\
+  \ and no approximation input --\n    whenever a prime divisor lies off a chart of\
+  \ a genuine cover (U0 sup U1 = top) whose three\n    chart section spaces are all\
+  \ finite-dimensional. ledger_refuted_of_notMem_left (:558) does the\n    same for\
+  \ hledger.\n  * Adelic/SectionBounds.lean:327-340 already records this and WITHDRAWS\
+  \ the earlier reading that\n    hbump makes hledger satisfiable.\nSo \"one one-point\
+  \ local statement\" describes the OVERLAP PRIMES ONLY.\n\nWHY THE REFUTATION IS\
+  \ NOT FATAL EITHER -- the part that had not been written down anywhere, and the\n\
+  reason this node is still worth working. The refutation's load-bearing hypothesis\
+  \ is\n[forall D, Module.Finite k (sectionSub k U_i D)] at a NON-TOTAL U_i.\nChiUnconditional.ell_le_finrank_chart_along_tower\
+  \ (:353) documents in its own docstring that this\nbinder \"is not bookkeeping --\
+  \ it is a substantive geometric restriction, and any theorem assuming it\nover all\
+  \ divisors has already excluded the curves Riemann-Roch is about\". Affine charts\
+  \ of a curve do\nNOT have finite-dimensional section spaces over k. So what the\
+  \ refutation rules out is a CLASS OF\nCOVERS, not the ledger as such.\n\nWHAT THE\
+  \ OPEN WORK ACTUALLY IS, in that module's own words: exhibit a cover on which the\
+  \ ledger CAN\nhold. That is a question about the COVER, not about the bump and not\
+  \ a one-point local statement.\n\nSTILL TRUE FROM THE PREVIOUS SUMMARY (do not re-derive\
+  \ either):\n * residueDeg = 1 is DISCHARGED (run 0055 s0006, Adelic/ResidueField.lean,\n\
+  \   residueDeg_eq_one_of_isAlgClosed_curve), via mathlib residueFieldIsoBase getting\
+  \ integrality of\n   kappa(x) from LocallyOfFiniteType through the Jacobson-space\
+  \ criterion, so the residue-finiteness\n   gate is AVOIDED rather than built.\n\
+  \ * chi(D) = chi(0) + deg_k D at EVERY Weil divisor FROM THE BUMP is DISCHARGED\n\
+  \   (Adelic.LedgerClosure.chi_eq_of_bump) -- hbump admits an arbitrary base divisor,\
+  \ so no transport\n   past the effective cone is needed. Note this is a derivation\
+  \ FROM hbump, which obstruction 2 says\n   is false on the refuted covers; it is\
+  \ not evidence that hbump is satisfiable.\n * Adelic.degK_eq_degree_of_isAlgClosed_curve\
+  \ (ResidueField.lean:501) gives deg_k = deg with NO open\n   input whatsoever.\n"
 status: pending
 kind: proof
 priority: normal
@@ -98,7 +72,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.rr
-  updated_at: '2026-07-27T20:27:16.525298+00:00'
+  updated_at: '2026-07-28T03:50:23.542261+00:00'
   pinned_commits:
   - 768b6cbd4
   owner: ajc-rr

@@ -4,7 +4,7 @@ projects:
 - Algebraic-Jacobian-Challenge
 summary: Finish the diagonal-intersection and function-field pullback steps needed
   to show a rational map to an abelian variety has no codimension-one indeterminacy.
-status: pending
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -26,3 +26,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
+  updated_at: '2026-07-28T03:44:24.317049+00:00'

@@ -4,3 +4,4 @@
 {"at": "2026-07-26T17:04:45.737143+00:00", "actor": "horizon", "field": "body", "from": "", "to": "", "note": "description edited"}
 {"at": "2026-07-27T02:47:13.258616+00:00", "actor": "horizon", "field": "read_by", "from": "", "to": "read", "note": ""}
 {"at": "2026-07-28T02:32:31.590600+00:00", "actor": "human", "field": "read_by", "from": "", "to": "read", "note": ""}
+{"at": "2026-07-28T03:17:55.666797+00:00", "actor": "horizon", "field": "read_by", "from": "", "to": "read", "note": "", "provenance": {"run": "0070", "session": "0002-horizon-ajcr-cert-r2", "role": "horizon", "round": "0", "rounds": "8", "task": "ajcr-cert-r2", "task_title": "Execute R2: widen DivFamZar to arbitrary affine-open pieces", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}

@@ -1,0 +1,64 @@
+id: I-0497
+provider: local
+kind: memory
+body: "PIC0.PROPER REDUCES TO UniversallyClosed ALONE, AND THE OTHER TWO CONJUNCTS\
+  \ WERE ALREADY PROVED IN THE FILE, SITTING UNUSED NEXT TO THE SORRY.\n\nMeasured\
+  \ and landed 2026-07-28 (run 0067, task ajc-pic0av, commits 082109747 + 14cf5c5f9),\
+  \ Algebraic-Jacobian-Challenge. Companion to I-0487 (which did the same for Pic0.smooth\
+  \ and is now completed); this is the half that memory explicitly said it did NOT\
+  \ cover.\n\nTHE FINDING. mathlib IsProper (Mathlib/AlgebraicGeometry/Morphisms/Proper.lean)\
+  \ is a THREE-field structure:\n    class IsProper : Prop extends IsSeparated f,\
+  \ UniversallyClosed f, LocallyOfFiniteType f\nQuasiCompact is NOT a field -- the\
+  \ module docstring says so explicitly (\"we do not require quasi-compact, since\
+  \ this is implied by universally closed\"). And Picard/Pic0AbelianVariety.lean had\
+  \ ALREADY PROVED two of the three, before this run, as theorems adjacent to the\
+  \ sorry:\n  * Pic0.isSeparated -- the clopen inclusion Pic0 -> Pic is a monomorphism\
+  \ hence separated, composed with picScheme_isSeparated from the strengthened HasPicScheme\
+  \ existential;\n  * Pic0.locallyOfFiniteType -- first conjunct of IdentityComponent.isFiniteTypeGeometricallyIrreducible.\n\
+  It even had Pic0.quasiCompact, with a docstring correctly noting it is not needed\
+  \ for the proper assembly. So the sorry was standing next to two thirds of its own\
+  \ proof.\n\nWHAT IS LEFT: UniversallyClosed only, now named Pic0.universallyClosed.\
+  \ And it is further reducible: the already-proved Pic0.universallyClosed_of_baseChange\
+  \ (Stacks 02KS fpqc descent, via MorphismProperty.of_pullback_snd_of_descendsAlong)\
+  \ takes universal closedness of the base change to k-bar and returns it over k --\
+  \ so Kleiman s projectivity argument is only needed over an algebraically closed\
+  \ field.\n\nINTERACTION WITH THE STANDING CAVEAT I-0074 (Caveat 2), which matters\
+  \ for how to attack it: mathlib v4.31 has NO quasi-projectivity vocabulary, which\
+  \ is exactly why PicScheme.smoothProperQuotient is weaker than Kleiman lm:qt and\
+  \ unprovable as stated. Kleiman th:qpp&p s first conclusion (Pic0 is quasi-projective)\
+  \ needs that missing vocabulary. So the expected route is base change to k-bar,\
+  \ NOT formalising quasi-projectivity from scratch.\n\nGENERALISABLE LESSON, the\
+  \ reason this is worth a memory rather than just a commit: before attacking a sorry\
+  \ whose conclusion is a mathlib STRUCTURE (IsProper, IsFinite, IsAffine...), enumerate\
+  \ that structure s fields and grep the file for each one. A multi-field target can\
+  \ be two thirds discharged by theorems already in the same file. The relevant check\
+  \ is \"how many fields does the conclusion have, and which are already present\"\
+  , and it took minutes.\n\nMEASUREMENT TECHNIQUE, applicable to any such reduction:\
+  \ with the sorry-bodied gate ASSUMED as a hypothesis (so typeclass synthesis cannot\
+  \ contribute) and the reduced input SUPPLIED, print axioms; ALSO print a control\
+  \ (the unreduced theorem at the same binders) which must still report sorryAx. Probe\
+  \ alone proves nothing -- it cannot distinguish \"no leak\" from \"too weak to see\
+  \ one\". Here: proper_of_universallyClosed and smooth_of_geometricallyReduced both\
+  \ [propext, Classical.choice, Quot.sound]; control bare Pic0.smooth [propext, sorryAx,\
+  \ Classical.choice, Quot.sound]. Same pattern as scripts/axiom-frontier.lean section\
+  \ 0b."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T04:08:31.902721+00:00'
+updated_at: '2026-07-28T04:08:31.902731+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0002-horizon-ajc-pic0av
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
