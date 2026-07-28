@@ -304,6 +304,57 @@ matter to anyone planning off it.**
 
 Everything below the atlas — L9 through L14 — exists to produce (1) and (2).
 
+## 7.7 ROUND-0071 AMENDMENT: §7.1's own L11 row is now stale, the same way §1 was
+
+*Run 0071, task `ajcr-divrep`, 2026-07-28. Everything below was checked at HEAD or landed as
+Lean this run; root build green at 9136 jobs.*
+
+§7.1 was written to correct §1 for trusting a `MISSING` claim across an integrate commit. Its
+own L11 row has now aged the same way, in one day, and by the same mechanism.
+
+**§7.1 said:** "What is left of L11 is the general-test **classifier** and the two inverse
+laws." **Truth at HEAD:** all three landed on 2026-07-27, in commits `31930badb` and
+`aeb77e174`, as `Picard/DivRepGlobalClassify.lean` — `classifyGlobal` (`:204`),
+`pullGlobal_classifyGlobal` (`:252`), `classifyGlobal_pullGlobal` (`:269`), plus
+`toGlobalData` (`:288`) and the endpoint `DivRepAffinePullback.representableBy` (`:306`).
+Sorry-free, and the root aggregator imports the file. So **L10 and L11 have zero remaining
+obligations**, and the divisor-representability endpoint L9 is reachable from a single
+structure.
+
+**The chain below L9 is therefore one object, not five.** Everything from L10 to L13 collapses
+to: produce a term of `DivRepAffinePullback` (`Picard/DivRepAffKit.lean:175`). By
+`DivRepAffinePullback.ofPull` (`Picard/DivRepAffPullbackReduce.lean:140`) that is three fields.
+
+**What this run landed, and one gating claim it retracts.** The roadmap leaf `…divrep.u2` and
+`w4-ddr9-worksheet.md` §3.4 both describe the affine package as "U2 + choice bookkeeping",
+which reads as though the bookkeeping sat behind the ε-identity. It does not:
+
+* `Picard/DivRepAwaySpanGlue.lean` — the eight-field instance pack of the S5b gluing keystone
+  `DivFamZar.exists_glue_of_away_compat`, discharged at the canonical away carriers
+  `Localization.Away (f p)` / `Localization.Away (f p * f q)`. This pack was the mechanical
+  obstruction between the atlas factorization (which returns a *bare* spanning family) and
+  every gluing keystone (which wants carriers as instance data).
+* `Picard/DivRepAffPullGlue.lean` — the chart pulls of one factorization glue, uniquely.
+* `Picard/DivRepAffPullIndep.lean` — `divRepPullGlue_eq_of_chartFactors`: two *different*
+  factorizations of the same morphism give the same class. **U2-free.**
+
+The reason the last one is free is a property of a landed lemma nobody had used:
+`divRepPullAt_mapAlgHom_eq_of_chartFactor` (`Picard/DivRepAffChartOverlap.lean:126`) compares
+**any two chart presentations of the same morphism**, over any two carriers, restricted to any
+common tower ring — it never asks that they share a factorization. So the cross-refinement of
+two factorizations is handled by the very lemma that handles one factorization's own overlaps.
+
+**What genuinely remains ε-gated**, and it is a smaller target than "U2 + bookkeeping":
+`isDivRepClassify_pull` (the glued pulled class satisfies the characterizing clause) and
+`DivRepChartFamily.IsCompatible` for the universal family — which by
+`isCompatible_of_isDivRepClassify_divRepPullAt` is itself the per-chart clause, i.e. U2.
+`pull_naturality` is still unwritten but is the same glue machinery as `pull`.
+
+**§7.6's finding stands and is unaffected.** L8 (local surjectivity of the Abel map out of a
+too-small divisor functor) remains the campaign's real gate; nothing above touches it. What
+changed is only that the *tail* below L9 is now one structure with one ε-gated field, so the
+cost of the tail is no longer a reason to defer confronting L8.
+
 ## 7.6 The gate is L8, not U2 — and that is the round's main finding
 
 Inbox **I-0365**. The framing "the divrep tail is independent of the certificate; the certificate
