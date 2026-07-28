@@ -318,6 +318,15 @@ obstruction, not any need to know the translated charts cover. If a future prove
 non-trivial extension and no `k`-translate of the identity chart meets it), the `k̄` route plus §5
 returns. Sizing unchanged: **S3 stays [M]**, now with one fewer named risk.
 
+**THE CRITERION IS NOW LANDED, not merely probed** — `AbelianVariety/RelativeDimensionLocal.lean`,
+`lake env lean` EXIT=0, rooted. Three general lemmas (`smoothOfRelativeDimension_comp_iso`,
+`smoothOfRelativeDimension_of_zeroHypercover` and its `iff` form) plus two Jacobian shapes
+(`JacobianData.smoothOfRelativeDimension_of_translation_cover`, `..._pointTranslationIso`). So S3's
+residue is now exactly **two** inputs, both named in that file's docstring: the **numeral**
+($n = \mathrm{genus}\ C$ at the identity, i.e. T5, still T4-gated) and the **cover** (that the
+translated identity charts cover `d.J.left`, carried as `hcov`). The third — pointwise reachability
+— is gone.
+
 **METHOD NOTE, since this lane has been burned by the opposite mistake twice today.** The
 worksheet's caveat was a *correct* reading of the class's statement (`∀ (x : X), ∃ U V e, …`) that
 priced a consequence the statement does not have. Unfolding a class tells you what must be
