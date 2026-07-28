@@ -118,7 +118,7 @@ theorem relSectionsMap_eq_fstRingHom_comp {W : C.left.Opens} (hW : IsAffineOpen 
   rw [hy]
   simp only [RingEquiv.coe_toRingHom]
   rw [Over.dualNumberSectionsOfIsAffineOpen, Over.relSectionsMap_dualNumberSections]
-  show (Algebra.TensorProduct.rid k k _)
+  change (Algebra.TensorProduct.rid k k _)
       ((Over.sectionsBaseChangeOfIsAffineOpen C k hW).symm
         ((Over.sectionsBaseChange C k hW.isCompact hW.isQuasiSeparated)
           (TrivSqZeroExt.fst x ⊗ₜ[k] (1 : k)))) = _
@@ -128,7 +128,7 @@ theorem relSectionsMap_eq_fstRingHom_comp {W : C.left.Opens} (hW : IsAffineOpen 
           (TrivSqZeroExt.fst x ⊗ₜ[k] (1 : k)) from rfl,
     RingEquiv.symm_apply_apply]
   rw [Algebra.TensorProduct.rid_tmul, one_smul]
-  show TrivSqZeroExt.fst x
+  change TrivSqZeroExt.fst x
       = fstRingHom ((Over.dualNumberSections C hW.isCompact hW.isQuasiSeparated).symm
           ((Over.dualNumberSections C hW.isCompact hW.isQuasiSeparated) x))
   rw [RingEquiv.symm_apply_apply, fstRingHom_apply]
