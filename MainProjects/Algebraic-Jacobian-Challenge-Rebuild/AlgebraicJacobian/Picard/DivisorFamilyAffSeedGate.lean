@@ -66,6 +66,42 @@ Nothing here hides an obligation inside a `LocalEquations` (protection I-0492 cl
   I-0492 clause 2;
 * the degree datum is the explicit `hrank`, read at the swallowing piece.
 
+## What IS still chart-typed here, measured and stated rather than glossed
+
+A declaration-closure probe (the calibrated form of ADDENDUM 10 §10.3 — controls
+`FinCoverData.toAffCoverData` / `.toChartTyping`, both of which fire) reports for
+`divFamZarAff_of_swallowing_affineOpen` (closure 4780) and `divFunctorAffSection` (4887):
+
+| probe | in closure? |
+|---|---|
+| `FinCoverData`, `FinCoverData.mk` | **no** |
+| `ChartTyping` | **no** |
+| `relCover_sup` | **no** |
+| `AffCoverData` | yes (the widened carrier — expected) |
+| `relPinnedChart` | **YES**, and only through `ThetaGeneratorSeed` |
+
+So the honest reading, in both directions:
+
+* **The certificate side is chart-free.** No `FinCoverData`, no `ChartTyping`, and in particular
+  no `relCover_sup` — which matters specifically, because `relCover_sup` is the step that turned
+  "misses `V₀`" into "lies inside `V₁`", i.e. the exact mechanism the refuted fixed-pair repair
+  depended on (spec ADDENDUM 3 §2).  Nothing here can reconstruct it: the cover has `m` pieces and
+  no distinguished pair.
+* **The SEED is not chart-free, and that is not something this file fixes.**
+  `ThetaGeneratorSeed` (`DivSchemeFamily.lean:74`) has fields `side : relCurve C R → Bool` and
+  `h : ∀ z, Γ(relCurve C R, relPinnedChart C R π (side z))`, so its pieces *are* basic opens of
+  the pinned charts.  Its `LocalEquations` cover therefore consists of chart-typed pieces even
+  though the certificate's cover does not.
+
+This is a genuine limit on the claim, not a violation of I-0492 clause 3, and the difference is
+worth being precise about.  Clause 3 forbids the *certificate clauses* from requiring the pieces
+to lie in a fixed pair of charts — that is what made the per-piece statement upgrade to a chart
+statement, and that is gone.  What remains is that the *input datum* this project happens to
+produce systems from is chart-indexed; the widened route consumes it without ever needing the
+containment, which is why the subordinate `0B8B` open `W` is an arbitrary affine open with no
+relation to `V₀`/`V₁`.  A chart-free seed notion would remove the last occurrence, and no consumer
+of this file needs one.
+
 ## Main declarations
 
 * `AlgebraicGeometry.ThetaGeneratorSeed.isLocallyCertifiedAff_of_swallowing_affineOpen` — the
