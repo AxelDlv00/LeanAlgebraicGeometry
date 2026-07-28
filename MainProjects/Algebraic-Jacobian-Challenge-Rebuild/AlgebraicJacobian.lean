@@ -423,6 +423,7 @@ import AlgebraicJacobian.Picard.DivRepAffChartOverlap
 import AlgebraicJacobian.Picard.DivRepAffPullbackReduce
 import AlgebraicJacobian.Picard.DivRepGlobalLift
 import AlgebraicJacobian.Picard.DivRepGlobalClassify
+import AlgebraicJacobian.Picard.DivRepAwaySpanGlue
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
 import AlgebraicJacobian.Algebra.ABDepthSES
