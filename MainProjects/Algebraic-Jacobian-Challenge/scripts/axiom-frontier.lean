@@ -1454,4 +1454,91 @@ theorem leakWitness_qcohRoute_nonvacuous {R R' : CommRingCat.{u}} (φ : R ⟶ R'
 #print axioms leakControl_qcohRoute_oldRoute
 #print axioms leakWitness_qcohRoute_nonvacuous
 
+/-! ### §6d. FLAT BASE CHANGE ITSELF — the declaration the task is about
+
+Everything in §6c measures *ingredients*.  Until now **nothing in this file measured
+`cech_flatBaseChange`**, which is the theorem the whole `AJC.fbc` lane exists to prove — so the
+lane's axiom claims were being read off its inputs.  Fix that: the three declarations below are
+the endpoint, its hypothesis-free form, and the two structural lemmas that removed the
+cosimplicial naturality obligation.
+
+Read the group as follows.
+
+* `leakEndpoint_cech_flatBaseChange` and `leakEndpoint_cech_flatBaseChange_qcoh` are both
+  expected to report `sorryAx`, and for a **single** reason: `cechComplex_baseChange_iso` carries
+  the two cosimplicial naturality `sorry`s of `cech_pushforward_baseChange_natIso` and
+  `twisted_cech_nerve_iso`.  That is now the *only* obstruction — the `_qcoh` form no longer
+  routes through flat exactness and no longer carries the `h₂`/`h₃` quasi-coherence hypotheses.
+* `leakProbe_cechTerm_isQuasicoherent` is the discharge of those hypotheses and must be **clean**.
+  If it ever reports `sorryAx`, `cech_flatBaseChange_qcoh` has silently regressed to depending on
+  something unproved *besides* naturality.
+* `leakProbe_whiskeredBC_natIso` is the structural half: the cosimplicial natural isomorphism
+  built by whiskering the outer mate.  It must be **clean**, and its cleanliness is the content
+  of the claim "naturality is not an obligation" — it constructs, from a degreewise `IsIso` alone,
+  the object that `NatIso.ofComponents` could only produce with a naturality proof.
+* `leakProbe_isIso_app_pi` is the reduction of that degreewise `IsIso` to one per index tuple.
+  Clean, and pure category theory.
+
+So the honest summary of the lane is readable off four lines: the two endpoints dirty, the four
+supporting reductions clean, and the delta between them is exactly the per-σ Beck–Chevalley
+comparison. -/
+
+theorem leakProbe_cechTerm_isQuasicoherent {S X : Scheme.{u}} (f : X ⟶ S) [IsSeparated f]
+    [X.IsSeparated] [IsAffine S] (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    (h𝒰 : ∀ i, IsAffine (𝒰.X i)) (F : X.Modules) (hF : F.IsQuasicoherent) (p : ℕ) :
+    ((CechComplex f 𝒰 F).X p).IsQuasicoherent :=
+  isQuasicoherent_cechComplex_X f 𝒰 h𝒰 F hF p
+
+noncomputable def leakProbe_whiskeredBC_natIso {S S' X X' : Scheme.{u}}
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) (F : X.Modules)
+    (hiso : ∀ n : SimplexCategory, IsIso ((cechOuterBC f g f' g' h).app
+      ((CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).obj n))) :
+    ((CosimplicialObject.whiskering S.Modules S'.Modules).obj
+        (Scheme.Modules.pullback g)).obj
+      (((CosimplicialObject.whiskering X.Modules S.Modules).obj
+          (Scheme.Modules.pushforward f)).obj
+        (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)))
+      ≅ ((CosimplicialObject.whiskering X'.Modules S'.Modules).obj
+          (Scheme.Modules.pushforward f')).obj
+        (((CosimplicialObject.whiskering X.Modules X'.Modules).obj
+            (Scheme.Modules.pullback g')).obj
+          (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F))) :=
+  cech_pushforward_baseChange_natIso_of_isIso f g f' g' h 𝒰 F hiso
+
+theorem leakProbe_isIso_app_pi {C D : Type*} [Category C] [Category D]
+    {P Q : C ⥤ D} (α : P ⟶ Q) {J : Type*} [Finite J] (A : J → C)
+    [Limits.HasProduct A] [Limits.HasProduct (fun j => P.obj (A j))]
+    [Limits.HasProduct (fun j => Q.obj (A j))]
+    [Limits.PreservesLimit (Discrete.functor A) P]
+    [Limits.PreservesLimit (Discrete.functor A) Q]
+    (h : ∀ j, IsIso (α.app (A j))) : IsIso (α.app (∏ᶜ A)) :=
+  isIso_app_pi_of_isIso_app α A h
+
+/-- **THE ENDPOINT, in its hypothesis-free form.**  Expected `sorryAx`, from the two cosimplicial
+naturality leaves and nothing else.  Compare `leakProbe_cechTerm_isQuasicoherent` above, which is
+the discharge of the hypotheses this form no longer carries, and is clean. -/
+theorem leakEndpoint_cech_flatBaseChange_qcoh {S S' X X' : Scheme.{u}}
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f] [X.IsSeparated]
+    [IsAffine S] [IsAffine S']
+    (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [∀ i, IsAffine (𝒰.X i)]
+    [Finite ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+      h.isoPullback.symm.hom).I₀]
+    [∀ i, IsAffine (((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+      h.isoPullback.symm.hom).X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent) (i : ℕ) :
+    Nonempty ((Scheme.Modules.pullback g).obj (cechHigherDirectImage f 𝒰 F i) ≅
+      cechHigherDirectImage f'
+        ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso h.isoPullback.symm.hom)
+        ((Scheme.Modules.pullback g').obj F) i) :=
+  cech_flatBaseChange_qcoh f g f' g' h 𝒰 F hF i
+
+#print axioms leakProbe_cechTerm_isQuasicoherent
+#print axioms leakProbe_whiskeredBC_natIso
+#print axioms leakProbe_isIso_app_pi
+#print axioms leakEndpoint_cech_flatBaseChange_qcoh
+#print axioms cech_flatBaseChange
+#print axioms cechComplex_baseChange_iso
+
 end AlgebraicGeometry
