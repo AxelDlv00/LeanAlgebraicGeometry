@@ -32,6 +32,38 @@ If the `update-ref` CAS fails (HEAD moved), re-read HEAD and repeat — never fo
 ALWAYS verify afterward: `git --git-dir=$GD show --stat HEAD` must touch only your paths.
 A single-lane session may keep the plain `add`+`commit` recipe, but must still verify.
 
+### 1a. THE RECIPE ABOVE HAS A RACE — read HEAD ONCE, not twice (2026-07-28, run 0072)
+
+**As written, the recipe reads `HEAD` twice**: once in `read-tree HEAD`, and again several lines
+later in `PARENT=$(… rev-parse HEAD)`. If another lane's CAS lands **between those two reads**,
+your tree is built from the *old* snapshot while your parent is the *new* commit — and
+`update-ref` **succeeds**, because it only checks that the ref has not moved since `rev-parse`.
+It never checks that the tree was built from that ref. You publish a stale tree, silently
+reverting everything that landed in the window.
+
+**Measured twice in one session, on the same four files.** A commit reverted four files; another
+lane restored them (`a1ef4d59c`); the next commit from the first lane re-reverted the *same*
+four, because its `read-tree` preceded their CAS. Both commits staged explicit paths and both
+pathspecs were honoured — **the sweep came from the TREE BASE, not the pathspec.** This is why
+"stage explicit files" does not protect you, and why the symptom is indistinguishable from §1b's
+shared-index staleness. If you are diagnosing a mystery revert, check *this* first.
+
+**The fix is one line — capture the parent BEFORE the tree, and read-tree that sha:**
+
+```bash
+PARENT=$(git --git-dir=$GD rev-parse HEAD)     # ONCE, up front
+export GIT_INDEX_FILE=$(mktemp)
+git --git-dir=$GD --work-tree=. read-tree $PARENT      # not "HEAD"
+git --git-dir=$GD --work-tree=. add <ONLY your paths…>
+TREE=$(git --git-dir=$GD --work-tree=. write-tree)
+COMMIT=$(git --git-dir=$GD … commit-tree $TREE -p $PARENT -m "…")
+git --git-dir=$GD update-ref refs/heads/main $COMMIT $PARENT   # now genuinely atomic
+```
+
+Then a mid-recipe CAS by another lane makes `update-ref` **fail**, you re-read and retry, and the
+protocol behaves as it was meant to. The verification step ("must touch only your paths") is what
+catches it after the fact — run it every time, and read the file list, not just the count.
+
 ### 1b. The CAS recipe leaves the SHARED index permanently stale — this is by design, and it is armed
 
 Added 2026-07-27 (run 0048 r5) after this failed a **third** time (`I-0366`: the shared index
