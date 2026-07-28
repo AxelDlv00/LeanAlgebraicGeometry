@@ -57,15 +57,24 @@ it this way is not a shortcut: it is the correct observation that Milne's
 
 `powSum` requires `[IsCommMonObj A]`, which is *load-bearing*: without it the
 hom-set is only a `Monoid`, the `∏` notation cannot be written, and the symmetry
-is false. The project's abelian-variety hypothesis package does not yield
-`IsCommMonObj` by synthesis, so use
-`AlgebraicGeometry.isCommMonObj_of_isProper_smooth`
-(`Albanese/AVCommutative.lean`, Milne §I.1 Corollary 1.4 — proved from the
-Rigidity Lemma) and thread it explicitly:
+is false. It is **not** obtained by synthesis, but it *is* available as a theorem on
+the project's standard abelian-variety package — use
 
 ```
-letI := isCommMonObj_of_isProper_smooth (A := A)
+letI := isCommMonObj_of_isProper_smooth_of_package A
 ```
+
+(`AlgebraicGeometry.isCommMonObj_of_isProper_smooth_of_package`,
+`Albanese/AVSelfProduct.lean`: Milne §I.1 Corollary 1.4, proved from the Rigidity
+Lemma, with the three `A ⊗ A` side conditions discharged).
+
+Earlier revisions of this note said the project *could not* supply `IsCommMonObj`,
+because `isCommMonObj_of_isProper_smooth` (`Albanese/AVCommutative.lean`) carries
+hypotheses `[GeometricallyIrreducible (A ⊗ A).hom] [LocallyOfFiniteType (A ⊗ A).hom]
+[IsReduced (A ⊗ A).left]` that synthesis cannot discharge. That was a statement about
+instance **keying**, not about the mathematics: `(A ⊗ A).hom` is reducibly
+`pullback.fst A.hom A.hom ≫ A.hom` (`Over.tensorObj_hom`), and one rewrite puts each
+goal in a form mathlib's own instances solve. See `Albanese/AVSelfProduct.lean`.
 
 ## Scope
 
@@ -75,6 +84,11 @@ action (see `analogies/m3-route-audit.md`, which scopes that construction at
 roughly 2400–3800 lines). What is supplied here is the *input* to the symmetric
 power's universal property, which is the half of Milne's symmetrisation step that
 does not depend on the quotient existing.
+
+The other half now has a home: `Albanese/SymPowInterface.lean` takes that universal
+property as **data** (`SymPowData`) and uses `powSum_perm` below to turn Milne's
+`Sym^n φ` into a construction. The quotient is still missing as an *object*, but no
+statement downstream of it is a statement about a `sorry` any more.
 
 ## References
 
