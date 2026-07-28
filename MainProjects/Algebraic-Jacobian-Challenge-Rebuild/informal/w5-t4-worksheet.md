@@ -663,3 +663,69 @@ nothing about which classes are representable — that is (iii-c2) and it is whe
 dual-number hypothesis is spent. Do not read `twoChartClass_mk_range` as surjectivity of
 `twoChartClass` onto `X.CechPic`; it is surjectivity onto the image of
 `CechPic.mk (twoChartCover …)`, which for a general scheme is a proper subgroup.
+
+### 6.9 (iii-c2) SPLITS, and the Zariski half needs NO affineness and NO dual numbers
+
+*Worksheet-first pass, run 0073 r2, written before the Lean per the binding rule on T4.*
+
+A scoped read of the tree (subagent, read-only) established one negative and one positive fact
+that together change the shape of (iii-c2).
+
+**The negative, and it is the honest crux.** *Nothing in the tree — at any generality — says
+"a `CechPic` class trivial on every member of a cover is `CechPic.mk` of a class on that
+cover".* Six search phrasings, plus a direct audit of `EffectivityMoving.lean`,
+`EffectivityTrivialization.lean` and `CechPicSurjective.lean`. In particular
+`EffectivityMoving.lean` is *one-directional*: `Opens.cechPicClass … = 1 ⟹ CechPic.map O.ι L = 1`
+and nothing back. §6.6 called that file "the landed bridge that makes (iii-c2) assembly rather
+than construction" — **that reading was too generous**, and I am retracting it here rather than
+letting a later session discover it. `EffectivityMoving` bridges *into* the chart-triviality
+hypothesis; the step *from* chart triviality to representability is unbuilt.
+
+**The positive: chart triviality is exactly the right hypothesis, and it is Zariski.** Write
+the target as
+
+> **(iii-c2-Zar)** `L : X.CechPic` with `CechPic.map (V s).ι L = 1` for both `s : Bool`
+> ⟹ `L` is representable on `twoChartCover V sel hmem`.
+
+*No `IsAffine`, no `k[ε]`, no curve.* The proof:
+
+1. `L = mk 𝒩 γ.class` (`CechPic.ind`).
+2. For each `s`, feed `CechPic.map (V s).ι L = 1` to the **landed**
+   `exists_trimmed_trivializing_of_cechPicMap_ι_eq_one` (`EffectivityTrivialization.lean:75`,
+   *no affineness hypothesis*): a family `t s b : Γ(X, 𝒩.opens b ⊓ V s)ˣ` with
+   `t s b · γ(b,b') = t s b'` on trimmed overlaps.
+3. **The overlap unit.** The family `b ↦ t false b · (t true b)⁻¹`, on the opens
+   `𝒩.opens b ⊓ V false ⊓ V true`, is **independent of `b`**: from step 2 at both `s`,
+   `t s b' = t s b · γ(b,b')`, so the ratio picks up `γ(b,b')⁻¹ · … · γ(b,b')` — which cancels
+   because *sections of a scheme are commutative rings and their units commute*. The opens
+   cover `V false ⊓ V true`, so the landed `exists_unitsRestrict_eq`
+   (`RefinementInjectivity.lean:76`) glues them to `u : Γ(X, V false ⊓ V true)ˣ`.
+4. **The comparison.** On the common refinement `𝒲 := 𝒩 ⊓ twoChartCover`, whose member at `b`
+   is `𝒩.opens b ⊓ V (sel b)` (`PointedCover.inf_opens`), the `0`-cochain
+   `β b := t (sel b) b` conjugates `γ` into `twoChartCocycle u`:
+   `β b · γ(b,b') = t (sel b) b' `, and `twoChartPairUnit u (sel b) (sel b') · β b'` is the same
+   by the glue property of `u` at the point `b'`. Then `mk_unitsRes` on both sides.
+
+**Two typing notes, both the §6.8 lesson again.** (a) `t` is indexed by `s : Bool`, so
+`t (sel b) b : Γ(X, 𝒩.opens b ⊓ V (sel b))ˣ` typechecks **on the nose** at the `𝒲`-member — the
+`Bool` index is instantiated, never transported. (b) The four-case split in step 4 is again an
+*identification* of `twoChartPairUnit` values, not a transport: diagonals are `t s b' · (t s b')⁻¹`,
+the mixed pair is the glue property, the reversed pair its inverse.
+
+**What this buys, and it is the real point.** (iii-c2) is now
+**(iii-c2-Zar) [M, scheme-general, dual-number-free, portable to AJC] + (iii-c2-aff)**, where
+
+> **(iii-c2-aff)** for `L` in the `ε`-kernel, `CechPic.map (V s).ι L = 1` — i.e. the class is
+> trivial on each *thickened* chart.
+
+and **(iii-c2-aff) is where every geometric input goes**: the thickened chart is affine, so
+`cechPicEquivPic` + clause (ii) `baseChangeAlgEquiv` present the class as an invertible
+`Γ(V_i)[ε]`-module trivial mod `ε`, clause (i) `free_of_cyclic_mod_eps` makes it free, and
+`Opens.cechPicMap_ι_eq_one_of_cechPicClass_eq_one` (`EffectivityMoving.lean:101`) converts that
+back to `CechPic.map (V s).ι L = 1` — *this* is what `EffectivityMoving` is for, and pointed the
+right way it does exactly the job §6.6 wanted from it.
+
+So the affineness and the dual numbers are confined to (iii-c2-aff), and the cohomological
+bookkeeping — the part that was sized "not [S]" — is Zariski and general. Doing (iii-c2-Zar)
+first is strictly better than attacking (iii-c2) whole: it is the larger half, it needs none of
+the curve hypotheses, and AJC can take it.
