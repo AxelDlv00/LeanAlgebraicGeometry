@@ -801,7 +801,7 @@ variables before the structure argument — and no `sorry` census sees the resul
 exactly the reading §7.10.4 warned against: nothing in §7.11 bears on local surjectivity of the Abel
 map out of a too-small divisor functor.
 
-## 7.12 ROUND-0071 s0012 AMENDMENT: U2's ε-half is no-go-immune, and DAT-J's first row was vacuous
+## 7.12 ROUND-0071 s0012 AMENDMENT: U2's ε-half is DISCHARGED, and DAT-J's first row was vacuous
 
 *Run 0071 session 0012, task `ajcr-divrep`, 2026-07-29. Both new modules are sorry-free and rooted
 in `AlgebraicJacobian.lean`. **Verified by a full root build at the session close: `lake build
@@ -820,6 +820,13 @@ subsection said no full build had run; that caveat is discharged.*
 separates them in Lean.**
 
 ### 7.12.1 The ε-identity consumes the window quotient, not a certificate
+
+> **SUPERSEDED IN ITS HEADLINE BY §7.12.4, SAME SESSION — read that first.** This subsection
+> concludes "the ε-half is **open**, not false". §7.12.4 discharges it outright: the two
+> window-quotient facts are landed *unconditionally* on `DivFam`
+> (`Picard/DivSchemeFrameCover.lean:106/:117`), so `divFamEps_eq_of_le` needs only the two
+> containments. Everything below about *why the no-go misses the ε-half* stands and is what made
+> §7.12.4 findable; only the word "open" is too weak.
 
 `Picard/DivRepChartClassUnivQuot.lean` (commit `ae01cfcb2`):
 
@@ -913,9 +920,59 @@ collapses to nothing. Both are answered by the same question — *which of this 
 arguments does the consumer get to choose?* — and neither is visible from reading the predicate's
 statement for whether it "says something geometric".
 
-### 7.12.3 §7.6 still stands
+### 7.12.4 THE SAME-SESSION CORRECTION: the ε-half is DISCHARGED, and it was never certificate-gated
+
+*Appended at the s0012 close, after `ajcr-charts` observed on `I-0494` that a reduction owes **two**
+probes — not vacuous, and not silently stronger — and that §7.12.1 had run neither on itself.
+Verified: root build 9280 jobs, EXIT=0; `divFamEps_eq_of_le` axiom-clean against a control that
+reports `sorryAx`.*
+
+§7.12.1's headline was "the ε-half is **open**, not false". That is a claim about the *no-go* and
+is silent about **satisfiability** — and for a hypothesis *determined by the data* rather than
+consumer-chosen, unsatisfiability is the live failure mode, because a reduction to a false
+hypothesis passes every `sorry` census and every axiom probe (it is then a theorem). So the probe
+had to be run. It comes back better than positive:
+
+> `divFamEps_eq_of_le` (`Picard/DivRepChartClassUnivQuot.lean`, commit `32476f85a`): the ε-pair
+> identity at an **arbitrary** `F : DivFam C R π g` from **the two containments alone** — no
+> projectivity hypothesis, no rank hypothesis, no certificate.
+
+**Because the window-quotient facts were already landed, unconditionally.**
+`Picard/DivSchemeFrameCover.lean` carries `DivFam.projective_window_quotient` (`:106`) and
+`DivFam.rankAtStalk_window_quotient` (`:117`) for *every* `F`, at *every* window `a ≥
+windowM_choice`, each discharged inside from the representative's own certificate — which `DivFam`
+has **by construction**, `CertifiedDivisorFamily` being the triple `(eqns, adaptation, certified)`.
+§7.12.1 restated as hypotheses two facts the tree already proved.
+
+**The sharp reading, and it retracts five sessions of this row's framing including my own of an hour
+earlier.** The ε-half of U2 was **never gated on a certificate at all** — not on the original
+`(D.divisorAdaptation hD).IsCertified g`, and not on the weakened `HasCertifiedAdaptation` of
+§7.11.2. What every re-scope read as "U2 needs a certificate" was the **class** requirement leaking
+into the ε statement *through the carrier*: one cannot **write** `divFamEps hπ g F` without an `F`,
+and every `F` carries a certificate. The ε layer asked for nothing beyond that.
+
+So the partition of §7.12.1 is not "ε open, class refuted". It is:
+
+| half | status |
+|---|---|
+| the **ε-value** | **DISCHARGED** — `divFamEps_eq_of_le`, containments only |
+| the **class** | 100% of U2's remaining content |
+
+and the straddling probe now decides the class half and nothing else. Protection `I-0492`'s
+widening is the route; cert-r2's `divFamZarAff_of_swallowing_affineOpen` is the live candidate.
+
+**General form, and it is the reusable part.** When you generalise a lemma by removing its vehicle,
+the *next* question is not "is the residual hypothesis satisfiable" but "**is it already a theorem
+here**". Twice in one session the answer to a question about a hypothesis was that the tree had
+proved it: window-quotient finiteness (never an input at all, §7.12.1) and then projectivity plus
+rank (landed unconditionally). The instrument is the same in both directions — search for the
+*hypothesis*, not only for the conclusion.
+
+### 7.12.5 §7.6 still stands
 
 **L8 remains the gate and is arguably false as stated.** Two rows moved this session and neither
-touches local surjectivity of the Abel map out of a too-small divisor functor. §7.12.1 makes the
-ε-half of U2 open rather than false, and §7.12.2 *removes* a row from DAT-J's ledger; both shrink
-the tail, and §7.10.4's warning applies verbatim — a shrinking tail is not progress toward L8.
+touches local surjectivity of the Abel map out of a too-small divisor functor. §7.12.4 *discharges*
+the ε-half of U2 and §7.12.2 *removes* a row from DAT-J's ledger; both shrink the tail, and
+§7.10.4's warning applies verbatim — a shrinking tail is not progress toward L8. Note this session
+shrank the tail three times and moved the gate zero times, which is exactly the pattern §7.10.4
+warned would invite the opposite reading.
