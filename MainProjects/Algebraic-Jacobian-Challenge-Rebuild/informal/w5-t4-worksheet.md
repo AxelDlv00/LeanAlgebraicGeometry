@@ -1450,3 +1450,64 @@ Two different faces of one seam:
    have this in any spelling either, so it is genuinely open on both sides.
 
 Nothing else stands between the two-chart comparison and the T2 engine at quotient level.
+
+### 6.22 ITEM (3): (3a) IS MEASURED AND (3b) IS A `rfl` — THE SEAM WAS A SPELLING, NOT INFRASTRUCTURE
+
+*Run 0073 r4, continuing §6.21. §6.20(3) predicted this sub-item was "where a session can
+disappear": four identifications of objects, each able to produce a "motive is not type correct".
+Measured, that prediction was **wrong in the cheap direction** — but only after the right question
+was asked, and it is the question this lane keeps having to be reminded of.*
+
+**(3a): `hsel` IS A REAL SIDE CONDITION, AND NOW IT IS CHARACTERIZED.** `Tangent/TwoChartSelector.lean`
+gives the `Bool`-indexed family and the canonical selector of a `Scheme.AffineTwoCover`, and proves
+
+```
+Function.Surjective D.selector  ↔  D.V₀ ≠ ⊥ ∧ D.V₀ ≠ ⊤
+```
+
+So the hypothesis every quotient-level two-chart result carries is exactly *"the cover is honestly
+two-chart"*: `V₀ = ⊥` degenerates to the one-chart cover `V₁ = ⊤`, and `V₀ = ⊤` says `X` is covered
+by one affine chart, i.e. `X` is affine. Both fail for the Wave-5 curve — it is non-empty, and a
+proper positive-dimensional scheme over a field is not affine — but **neither is free**, and neither
+is proved in that file: they are consumer inputs `h0 : V₀ ≠ ⊥`, `h1 : V₀ ≠ ⊤`. §6.20 was right to
+flag this as content rather than bookkeeping, and characterizing it is better than carrying it: a
+reader can now see what the cover has to satisfy without reading a proof.
+
+The family is spelled with `cond` (`bif s then V₁ else V₀`) rather than a `match` so that
+`boolFamily false ⊓ boolFamily true` is **syntactically** `V₀ ⊓ V₁`; that is what lets the landed
+`isAffineOpen_inf` field apply at the overlap with no transport, and it is the whole reason the file
+is short.
+
+**(3b): THE IDENTIFICATION IS `rfl`, AND THE "MISSING" BRIDGE WAS A `scoped` INSTANCE.** §6.20(3b)
+priced "identify `(C ◁ overDualNumberZero).left` with `relCurveMap C k[ε] k`" as an equality of
+scheme morphisms to be built. It is neither built nor hard:
+
+* `relCurveMap C R R'` is *by definition* `(C ◁ overSpecMap R R').left`;
+* `overSpecMap k[ε] k` is `Over.homMk (Spec.map (ofHom (algebraMap k[ε] k)))`;
+* `overDualNumberZero k` is `Over.homMk (Spec.map (ofHom TruncExpCech.fstRingHom))`;
+* and under the `scoped` `epsAlgebra` of `Tangent/DualNumberCarrierReduction.lean`,
+  `algebraMap k[ε] k` **is** `TrivSqZeroExt.fst` definitionally (`algebraMap_eps_eq_fst`).
+
+So the two morphisms are equal by `rfl`, and the source objects agree for the same kind of reason
+(`overSpec k k = Over.mk (Spec.map (ofHom (algebraMap k k)))` with `algebraMap k k = RingHom.id k`,
+also `rfl`). Both defeq facts were confirmed standalone against mathlib before the file-level check.
+
+> **The pattern, and it is the third time this lane has met it: a "missing identification" between
+> two spellings that differ only across a deliberately-`scoped` instance is not missing
+> infrastructure.** `I-0567` (present upstream but not an instance), `I-0634` (`algebraBase` exists;
+> my diamond reason was invented), and now this. **Before pricing an object identification, unfold
+> both sides to the `RingHom` they are built from and try `rfl` with the scoped instance open.** It
+> costs one `#check`. In this lane the wrong answer has cost a session's worth of pricing three
+> times.
+
+**What (3c) turns out to be.** §6.20 listed `overSpec k k` vs the monoidal unit `Over.mk (𝟙 _)`
+separately. It is the *same* `rfl` as above and not an independent item, so the honest count for item
+(3) is **two sub-items, not three**, and both are now closed modulo the kernel check.
+
+**T4's residue after §§6.21–6.22, and it is now ONE named statement:** **(iii-c2-aff-geo)** — "L
+restricts trivially along `ε ↦ 0`" ⟹ "the chart module's reduction `M/(ε)M` is cyclic". Carried as
+the `hcyc` binder in `Tangent/DualNumberChartPic.lean`, so a sorry census does not see it, and open
+in the AJC sibling too (confirmed by `ajc-pic0av`, 2026-07-28). **Per §6.18's rule this is stated
+with its consumer named**: the binder is consumed by
+`Opens.cechPicMap_ι_eq_one_of_dualNumberChart_of_cyclic`, and nothing else in the chain now stands
+between the T2 engine and the two-chart comparison at quotient level.
