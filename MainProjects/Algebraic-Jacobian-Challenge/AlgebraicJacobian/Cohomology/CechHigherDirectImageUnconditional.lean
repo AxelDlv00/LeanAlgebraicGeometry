@@ -2982,9 +2982,10 @@ file's import cone.  **THE THIRD REVISION — the fix to the second — WAS ALSO
 direction.**  It said `Picard/QuotScheme.lean` "is deliberately not imported because it carries
 `sorry`s".  That was false at HEAD: QuotScheme's import cone is `sorry`-free — six modules, five
 of them new to this file; its seven `sorry` *mentions* are docstrings asserting a chain is
-sorry-free — and it does not import this file.  Run 0068 r3 imports it, which is how Stacks 01XJ and — far more importantly —
-`canonicalBaseChangeMap_isIso` became available here.  So an over-stated absence about a *module*
-had silently priced two *theorems* as unavailable, one of them this file's priority obligation.
+sorry-free — and it does not import this file.  Run 0068 r3 imports it, which is how Stacks 01XJ
+and — far more importantly — `canonicalBaseChangeMap_isIso` became available here.  So an
+over-stated absence about a *module* had silently priced two *theorems* as unavailable, one of them
+this file's priority obligation.
 The affine special case built instead is still used and still correct:
 `isQuasicoherent_pushforward_specMap` and `isQuasicoherent_pushforward_of_isAffine`.)
 Project-local. -/

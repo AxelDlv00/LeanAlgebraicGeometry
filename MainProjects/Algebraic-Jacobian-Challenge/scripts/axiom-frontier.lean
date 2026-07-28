@@ -1584,8 +1584,14 @@ What to expect from the four lines below, and read them as a *pair of pairs*:
 
 Do not read a clean line here as "flat base change holds"; §6b's caution applies unchanged.
 
-MEASURED 2026-07-29 at HEAD, from a minimal-import scratch file rather than this whole script
-(which does not finish inside a session's budget under workspace load — see the note at the top).
+MEASURED 2026-07-29 at HEAD, from a minimal-import scratch file rather than through this whole
+script, and the reason is worth recording because it will recur: this script's first line is
+`import AlgebraicJacobian`, the root roll-up, so running it requires an olean for *every* project
+module. With other lanes concurrently rebuilding `Picard/`, `lake env lean` on it aborts on
+whichever olean is being rewritten at that instant — two consecutive attempts failed on
+`Picard/GlueDescent` and `Picard/GrassmannianQuot`, neither related to this section. So under
+concurrency the whole-script run is not a stricter check than a scratch file, it is a *less
+reliable* one; measure the declarations you care about from their own minimal import.
 Seven declarations report `[propext, Classical.choice, Quot.sound]`:
 `isQuasicoherent_pushPullObj_coverInter`, `isIso_app_of_iso_obj`, `isIso_cechOuterBC_coverInter`,
 `isIso_cechOuterBC_nerve_obj`, `cech_pushforward_baseChange_natIso_flat`,
