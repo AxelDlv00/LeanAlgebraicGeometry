@@ -542,6 +542,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffCert
 import AlgebraicJacobian.Picard.DivisorFamilyAffMapAlg
 import AlgebraicJacobian.Picard.DivisorFamilyAffExtraction
 import AlgebraicJacobian.Picard.DivisorFamilyAffStraddle
+import AlgebraicJacobian.Picard.DivisorFamilyAffFibre
 import AlgebraicJacobian.Picard.DivRepAffPullIndep
 import AlgebraicJacobian.Picard.DivRepAwayPush
 import AlgebraicJacobian.Picard.DivRepAffPullField
