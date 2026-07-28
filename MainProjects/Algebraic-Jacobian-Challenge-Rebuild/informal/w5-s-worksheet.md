@@ -17,22 +17,12 @@ waits on the DD freeze.*
 `AlgebraicGeometry/Group/Smooth.lean:64`, hypotheses `[LocallyOfFiniteType]` +
 `[GrpObj (Over.mk f)]` + `[GeometricallyReduced f]`, the first two supplied by the datum).
 **S1 is the whole S-cluster's cost** and route α1 survives probing — but with a correction
-to the recon's description of it that changes which brick is hard (§2), and with a *second*
-correction, to this worksheet's own first draft, that adds a mathlib-absent brick nobody had
-counted: "reduced after base change to `k̄` ⟹ geometrically reduced" is **not** available,
-in either project or mathlib, and the missing content is exactly the transcendental-extension
-case (§2.1 — read it, it retracts a claim made in §2). Recommendation: **keep S1 a
-hypothesis**; the AV package assembles conditionally on it today.
-**S3 is [M]-shaped, not [L]**, and the R3 fear is now bounded from *both* ends: the descent
-half has a full ingredient list (t4 worksheet §5) and the *uniformity* half — the part that
+to the recon's description of it that changes which brick is hard (§2). **S3 is
+[M]-shaped, not [L]**, and the R3 fear is now bounded from *both* ends: the descent half
+has a full ingredient list (t4 worksheet §5) and the *uniformity* half — the part that
 appendix left unprobed — turns out to have a clean route through mathlib's
 `SmoothOfRelativeDimension` being a **local-at-source** property, so no
-"locally constant relative dimension on an irreducible base" theorem is needed at all (§3),
-and the t4-§5 codescent brick is contingency rather than a requirement.
-
-**The single sentence that matters for planning:** after T1/T5 (landed), the T5 numeral,
-S1-a and the S3 count are three consumers of **one** computation, T3/T4. Nothing in the
-S-cluster substitutes for it.
+"locally constant relative dimension on an irreducible base" theorem is needed at all (§3).
 
 ---
 

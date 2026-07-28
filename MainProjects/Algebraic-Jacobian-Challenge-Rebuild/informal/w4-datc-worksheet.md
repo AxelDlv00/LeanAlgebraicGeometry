@@ -103,25 +103,9 @@ the nine file-plan rows are launchable before `divRep` lands** (§5).
   `a = 0` + `fiberTwist_zero` (`RiemannRoch/FiberTwist.lean:363`) +
   `cechPicClass_thetaChartDatum` (`Cohomology/RelCurveCollapse.lean:641`, whose RHS at
   `a = 0` is the pullback of `1`).
-* **GAP-2 (Σ-UNIQ-fld) — LANDED.  This row was STALE; corrected 2026-07-28 (run 0072).**
-  `RiemannRoch/EffectiveUniqueness.lean` implements the pinned statement *verbatim*,
-  sorry-free, and its module header cites this very GAP-2 row as its specification.  The
-  keystone is
-  `Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one` (`:144`) — `0 ≤ D`, `0 ≤ D'`, equal
-  Čech classes, `h⁰(𝒪(D)) = 1` ⟹ `D' = D` — with the section-space form
-  `eq_of_picClass_eq_of_finrank_one` (`:110`) and its three supports
-  (`ord_functionFieldOverAlgebraMap_eq_one` `:55`,
-  `divOf_eq_zero_of_val_eq_functionFieldOverAlgebraMap` `:81`,
-  `one_mem_divisorSections_top` `:97`).  The route taken is the one this row prescribes,
-  step for step.
-  **Consequence for the chart lane:** the *field-level* uniqueness input of CHART-U(c) is
-  available now; what CHART-U(c) still needs is the relative/family-level statement on
-  `chartLocus` plus the classifier, not this brick.
-  *(This is the §7-of-w4-rep-critical-path failure mode inside w4-datc's own gap list: the
-  "no such lemma exists (grep this pass)" claim outlived the commit that landed it.  Check
-  the ledger before trusting a MISSING claim here.)*
-
-  Original pin, kept for the record: over a standing-pack
+* **GAP-2 (Σ-UNIQ-fld, S→M, launchable now).**  No field-level "h⁰ = 1 ⟹ the
+  effective representative is unique" lemma exists (grep over `RiemannRoch/` this
+  pass; `PFib`'s uniqueness legs are window-specific).  Pin: over a standing-pack
   field `K` with `hO`, for `D D' : CurveDivisor`, `0 ≤ D`, `0 ≤ D'`,
   `picClass K D = picClass K D'`, `h0 (𝒪(D)) = 1` ⟹ `D' = D`.  Route:
   `picClass_eq_iff_exists_divOf` (`Picard/PresentationExtraction.lean:112`, in its
