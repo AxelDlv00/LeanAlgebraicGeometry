@@ -1891,12 +1891,34 @@ theorem leakProbe_twistedCompat_from_pullbackSide (f : X ⟶ S) (g : S' ⟶ S) (
     TwistedPerSigmaDeltaCompat f g f' g' h 𝒰 F hF :=
   twistedPerSigmaCompat_of_pullbackSide f g f' g' h 𝒰 F hF hpb
 
+/-- The same from the WEAKEST form, `BcSquareCounitSide` — the one `mateEquiv_counit` speaks about,
+and therefore the one a future session should aim at.  Clean. -/
+theorem leakProbe_twistedCompat_from_counitSide (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S')
+    (g' : X' ⟶ X) (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [IsSeparated f] [IsAffine S]
+    [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent)
+    (hct : BcSquareCounitSide f g' 𝒰 F hF) :
+    TwistedPerSigmaDeltaCompat f g f' g' h 𝒰 F hF :=
+  twistedPerSigmaCompat_of_counitSide f g f' g' h 𝒰 F hF hct
+
+/-- **NON-VACUITY OF THE WEAKEST FORM.**  `BcSquareCounitSide` is implied by the pullback-side form,
+so it is not a strictly stronger statement smuggled in as a "weakening" — the three forms are
+interderivable.  Measured because a chain that ends at an unreachable hypothesis proves nothing, and
+because a `Prop` weakened until it is trivially true would also report clean here; this line is what
+distinguishes the two.  Clean. -/
+theorem leakProbe_counitSide_from_pullbackSide (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover)
+    [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent)
+    (hpb : BcSquarePullbackSide f g' 𝒰 F hF) : BcSquareCounitSide f g' 𝒰 F hF :=
+  bcSquareCounitSide_of_pullbackSide f g' 𝒰 F hF hpb
+
 end Section6i
 
 #print axioms leakProbe_wiredDeltaSquare
 #print axioms leakProbe_bcNerveCoface_sigma
 #print axioms leakProbe_halfA_equiv
 #print axioms leakProbe_twistedCompat_from_pullbackSide
+#print axioms leakProbe_twistedCompat_from_counitSide
+#print axioms leakProbe_counitSide_from_pullbackSide
 -- CONTROLS for §6i, the same two as §6h.  They MUST still report `sorryAx`: no endpoint moved this
 -- round, and if one of them comes back clean without the twisted square being discharged then the
 -- probes above have stopped measuring the thing they are named for.

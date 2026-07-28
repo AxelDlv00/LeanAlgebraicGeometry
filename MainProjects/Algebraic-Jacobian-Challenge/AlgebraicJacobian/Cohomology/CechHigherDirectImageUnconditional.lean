@@ -3951,6 +3951,25 @@ theorem eq_of_map_eq_of_adjunction {C D : Type*} [Category C] [Category D] {L : 
   (adj.homEquiv M Z).symm.injective (by
     simp only [Adjunction.homEquiv_counit, hab])
 
+/-- **The counit form of the same cancellation, and the one that is actually usable.**
+`a = b` as soon as `L.map a ≫ counit = L.map b ≫ counit`.
+
+Weaker hypothesis than `eq_of_map_eq_of_adjunction` (it is that lemma's hypothesis post-composed
+with the counit), and strictly more useful here: mathlib's mate API computes **exactly** this
+composite.  `CategoryTheory.mateEquiv_counit` reads
+
+    L₂.map ((mateEquiv adj₁ adj₂ α).app d) ≫ adj₂.counit.app _
+      = α.app _ ≫ H.map (adj₁.counit.app d)
+
+i.e. it evaluates `L.map (mate) ≫ counit` and *removes the mate*, replacing it by the 2-cell `α` it
+came from.  So this is the cancellation that turns a statement about mates into one about the
+pullback pseudofunctor's own coherence — see `BcSquareCounitSide`.  Project-local. -/
+theorem eq_of_map_comp_counit_eq {C D : Type*} [Category C] [Category D] {L : C ⥤ D} {R : D ⥤ C}
+    (adj : L ⊣ R) {M : C} {Z : D} (a b : M ⟶ R.obj Z)
+    (hab : L.map a ≫ adj.counit.app Z = L.map b ≫ adj.counit.app Z) : a = b :=
+  (adj.homEquiv M Z).symm.injective (by
+    simp only [Adjunction.homEquiv_counit]; exact hab)
+
 /-! ### HALF (a), NAMED — and reduced to a statement with no pushforward on the target
 
 Half (a) has been described in prose in this file since r4 and passed around as an unnamed
@@ -3958,16 +3977,31 @@ hypothesis `hBC` of `twistedPerSigmaCompat_of_bcNaturality`.  Naming it is not c
 obligation that exists only as a binder cannot be cited, measured by a probe, or reduced.
 `BcSquareNaturality` below is that binder, verbatim, as a `Prop`.
 
-The second declaration, `BcSquarePullbackSide`, restates it with the target's `pushforward`
-cancelled: both sides land in `pushPullObj (g'^*F) (Over.mk pV) = pV_* pV^*(g'^*F)`, the image of a
-right adjoint, so `eq_of_map_eq_of_adjunction` reflects the equality down from `pV^*`.
+Two restatements follow, each cancelling more.  Both sides of the equation land in
+`pushPullObj (g'^*F) (Over.mk pV) = pV_* pV^*(g'^*F)`, the image of a right adjoint, so the
+`pushforward pV` can be dropped:
 
-**It is an EQUIVALENT restatement, not a weakening, and this is stated up front rather than
-discovered later** — `bcSquareNaturality_iff_pullbackSide` proves both directions, the converse
-being `congrArg`.  So nothing here reduces the mathematical content of half (a); what it changes is
-the *vocabulary*.  `BcSquareNaturality` has a `p_*` wrapped around everything and offers no handle;
-`BcSquarePullbackSide` mentions no pushforward at all, so the pullback pseudofunctor's own coherence
-(`pullbackComp`, `pullbackCongr`) and the mate's unit law (`unit_mateEquiv`) apply to it directly.
+* `BcSquarePullbackSide` compares the two composites after applying `pV^*`
+  (`eq_of_map_eq_of_adjunction`).  No `pushforward` occurs in it.
+* `BcSquareCounitSide` compares them after `pV^*` **and** post-composition with the `pV`-counit
+  (`eq_of_map_comp_counit_eq`).  This is the weakest as a hypothesis and **the one to prove**, for a
+  specific reason: `CategoryTheory.mateEquiv_counit` evaluates exactly that composite and
+  *eliminates the mate*, replacing it by the 2-cell it was built from.  Since
+  `openImmersion_bareBC` is by definition `mateEquiv` of the pullback-pseudofunctor telescope, that
+  law converts half (a) from a statement about mates across a change of square — for which the tree
+  has nothing — into one about `pullbackComp`/`pullbackCongr`, which it has.
+
+**These are EQUIVALENT restatements, not weakenings, and that is stated up front rather than
+discovered later.**  `bcSquareNaturality_iff_pullbackSide` proves both directions (the converse is
+`congrArg`), and `bcSquareCounitSide_of_pullbackSide` / `bcSquareNaturality_of_counitSide` close the
+triangle.  So nothing here reduces the mathematical content of half (a); what changes is the
+*vocabulary*, from one with no handle to one the mate API can speak about.
+
+What the tree still lacks, measured at r5 by unfolding `bcv`: both sides of half (a) are
+`asIso (openImmersion_bareBC … .app (ι U_σ ^* F))` followed by
+`(pushforward (pullback.fst g' (ι U_σ))).mapIso (openImmersion_bc_telescope …).symm`, compared
+across the change of σ.  So it is a statement about `openImmersion_bareBC` **and**
+`openImmersion_bc_telescope` across a change of square.
 
 The `mateEquiv_vcomp` route recorded below remains the other candidate, and it is genuinely blocked
 on the brick "`pushPullMap` is the degenerate-square mate" — measured here as typechecking but not
@@ -4021,6 +4055,43 @@ theorem bcSquareNaturality_of_pullbackSide (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 :
     (Scheme.Modules.pullbackPushforwardAdjunction
       (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ')))) _ _ (hpb p k σ')
 
+/-- **Half (a), COUNIT-SIDE — the form mathlib's mate API can actually consume.**  The two
+composites' `pV^*`-images, post-composed with the `pV`-counit.
+
+Strictly weaker as a hypothesis than `BcSquarePullbackSide` (it is that, post-composed), and it is
+the form to attack, because `CategoryTheory.mateEquiv_counit` **evaluates exactly this composite**:
+`L.map (mate.app d) ≫ counit = α.app _ ≫ H.map (counit)`, with the mate *eliminated* in favour of
+the 2-cell `α` it was built from.  Since `openImmersion_bareBC` is by definition
+`mateEquiv … (pullbackComp ≪≫ pullbackCongr ≪≫ (pullbackComp).symm).hom`, applying that law to both
+occurrences turns half (a) from a statement about mates across a change of square into one about the
+pullback pseudofunctor's coherence isomorphisms — which the tree does have.  Project-local. -/
+def BcSquareCounitSide (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover) [IsSeparated f] [IsAffine S]
+    [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent) : Prop :=
+  ∀ (p : ℕ) (k : Fin (p + 2)) (σ' : Fin (p + 2) → 𝒰.I₀),
+    (Scheme.Modules.pullback
+          (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ')))).map
+        ((bcv f g' 𝒰 F hF (σ' ∘ (SimplexCategory.δ k).toOrderHom)).hom ≫
+          pushPullMap ((Scheme.Modules.pullback g').obj F)
+            (wmap g' 𝒰 (SimplexCategory.δ k).toOrderHom σ')) ≫
+      (Scheme.Modules.pullbackPushforwardAdjunction
+        (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ')))).counit.app _
+      = (Scheme.Modules.pullback
+            (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ')))).map
+          ((Scheme.Modules.pullback g').map (pushPullMap F (interLegHom 𝒰 σ' k)) ≫
+            (bcv f g' 𝒰 F hF σ').hom) ≫
+        (Scheme.Modules.pullbackPushforwardAdjunction
+          (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ')))).counit.app _
+
+/-- **Half (a) from its counit-side form** — via `eq_of_map_comp_counit_eq`.  This is the weakest of
+the three equivalent forms as a hypothesis, hence the best one to prove.  Project-local. -/
+theorem bcSquareNaturality_of_counitSide (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover)
+    [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent)
+    (hct : BcSquareCounitSide f g' 𝒰 F hF) : BcSquareNaturality f g' 𝒰 F hF :=
+  fun p k σ' => eq_of_map_comp_counit_eq
+    (Scheme.Modules.pullbackPushforwardAdjunction
+      (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ')))) _ _ (hct p k σ')
+
 /-- **The full chain from half (a)'s pullback-side form to `TwistedPerSigmaDeltaCompat`.**
 `bcSquareNaturality_of_pullbackSide` then `twistedPerSigmaCompat_of_bcNaturality`.  Stated so the
 single remaining obligation of flat base change is citable in one name.  Project-local. -/
@@ -4031,6 +4102,27 @@ theorem twistedPerSigmaCompat_of_pullbackSide (f : X ⟶ S) (g : S' ⟶ S) (f' :
     TwistedPerSigmaDeltaCompat f g f' g' h 𝒰 F hF :=
   twistedPerSigmaCompat_of_bcNaturality f g f' g' h 𝒰 F hF
     (bcSquareNaturality_of_pullbackSide f g' 𝒰 F hF hpb)
+
+/-- **The whole residue from the WEAKEST of the three forms.**  `BcSquareCounitSide` is what a
+future session should aim at: it is implied by each of the other two, and it is the one
+`mateEquiv_counit` speaks about.  Project-local. -/
+theorem twistedPerSigmaCompat_of_counitSide (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [IsSeparated f] [IsAffine S]
+    [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent)
+    (hct : BcSquareCounitSide f g' 𝒰 F hF) :
+    TwistedPerSigmaDeltaCompat f g f' g' h 𝒰 F hF :=
+  twistedPerSigmaCompat_of_bcNaturality f g f' g' h 𝒰 F hF
+    (bcSquareNaturality_of_counitSide f g' 𝒰 F hF hct)
+
+/-- The counit-side form follows from the pullback-side one by post-composing with the counit.  With
+`bcSquareNaturality_of_counitSide` and the equivalence below, all three forms of half (a) are
+interderivable — so `BcSquareCounitSide`, the weakest as a hypothesis, is the one to prove. -/
+theorem bcSquareCounitSide_of_pullbackSide (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover)
+    [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent)
+    (hpb : BcSquarePullbackSide f g' 𝒰 F hF) : BcSquareCounitSide f g' 𝒰 F hF :=
+  fun p k σ' => congrArg (fun m => m ≫ (Scheme.Modules.pullbackPushforwardAdjunction
+    (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ')))).counit.app _) (hpb p k σ')
 
 /-- **THE CONVERSE — so the two forms are EQUIVALENT, and this is a restatement, not a weakening.**
 Trivially `congrArg`, and stated for a reason this workspace has been bitten by: a "reduction" whose
