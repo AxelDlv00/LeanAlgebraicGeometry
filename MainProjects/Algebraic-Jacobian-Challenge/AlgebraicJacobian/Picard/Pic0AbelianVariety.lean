@@ -1100,6 +1100,59 @@ theorem universallyClosed {k : Type u} [Field k]
     UniversallyClosed (Pic0Scheme C).hom :=
   sorry
 
+/-- **Universal closedness of `Pic⁰_{C/k}` from that of the ambient `Pic_{C/k}`** — proved
+(run 0067), and this is the reduction that removes the identity component from the problem
+entirely.
+
+`Pic⁰_{C/k} ↪ Pic_{C/k}` is a **closed** immersion — the second conjunct of the sibling's
+`IdentityComponent.isOpenSubgroupScheme`, which supplies the inclusion as an open *and*
+closed immersion. A closed immersion is universally closed, `UniversallyClosed` is stable
+under composition (`universallyClosed_isStableUnderComposition`), and the composite
+`Pic⁰ ↪ Pic → Spec k` *is* `(Pic0Scheme C).hom` by `Over.w` of the inclusion. So universal
+closedness of the structural morphism of `Pic⁰` follows from that of `Pic`.
+
+Why this is worth stating separately: it moves the open content off the identity component
+and onto the ambient Picard scheme, where Kleiman's argument actually lives — Kleiman §5
+Thm.~`th:qpp&p` is a statement about `Pic_{C/k}`, and the passage to the identity component
+was never the difficulty. Combined with `proper_of_universallyClosed`, properness of `Pic⁰`
+now rests on a property of `Pic` alone.
+
+Note the closed-immersion conjunct is doing real work: an *open* immersion is not
+universally closed, so this argument needs the clopen-ness that
+`isOpenSubgroupScheme` provides and would fail for a general open subgroup scheme. -/
+theorem universallyClosed_of_ambient {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    (hPic : UniversallyClosed (PicScheme C).hom) :
+    UniversallyClosed (Pic0Scheme C).hom := by
+  obtain ⟨f, -, hclosed⟩ :=
+    GroupScheme.IdentityComponent.isOpenSubgroupScheme (PicScheme C)
+  haveI := hclosed
+  haveI hfc : UniversallyClosed f.left := by infer_instance
+  have hw : f.left ≫ (PicScheme C).hom = (Pic0Scheme C).hom := Over.w f
+  rw [← hw]
+  exact MorphismProperty.IsStableUnderComposition.comp_mem _ _ hfc hPic
+
+/-- **Properness of `Pic⁰_{C/k}` from universal closedness of the ambient `Pic_{C/k}`** —
+proved (run 0067). The composite of `universallyClosed_of_ambient` with
+`proper_of_universallyClosed`.
+
+This is the sharpest form of the properness reduction currently available: `Pic⁰_{C/k}` is
+proper over `k` as soon as `Pic_{C/k}` is universally closed over `k`. Both the separatedness
+and finite-type conjuncts of `IsProper`, and the passage from the ambient scheme to the
+identity component, are discharged; what remains is one property of `Pic_{C/k}`, which is
+where Kleiman §5 Thm.~`th:qpp&p` speaks. -/
+theorem proper_of_ambient_universallyClosed {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    (hPic : UniversallyClosed (PicScheme C).hom) :
+    IsProper (Pic0Scheme C).hom :=
+  proper_of_universallyClosed C (universallyClosed_of_ambient C hPic)
+
 /-- **Properness of `Pic⁰_{C/k}`** — assembly (run 0067) of the two landed
 conjuncts `isSeparated` / `locallyOfFiniteType` with the single open conjunct
 `universallyClosed`, via `proper_of_universallyClosed`. -/
