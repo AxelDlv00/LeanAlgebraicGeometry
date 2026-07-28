@@ -1,0 +1,249 @@
+/-
+Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The AlgebraicJacobian Contributors
+-/
+import Mathlib
+import AlgebraicJacobian.Albanese.GrpObjFoldSum
+
+/-!
+# The symmetric power as an *interface*, and the two maps it produces
+
+Milne's proof of the Albanese universal property (*Abelian Varieties* III.6
+Proposition 6.1) uses the `n`-th symmetric power `Sym^n C` only through its
+**universal property**: every `S_n`-symmetric morphism `C^n ⟶ T` factors uniquely
+through the symmetrisation projection `π : C^n ⟶ Sym^n C`.
+
+At this Mathlib pin the *object* `Sym^n C` does not exist — there is no quotient of
+a scheme by a finite group action (`analogies/m3-route-audit.md` sizes the
+construction at roughly 2400–3800 lines, and mathlib's `SymmetricPower` is for
+modules). Writing `Sym^n C := sorry` makes every downstream equation a statement
+about a junk term, which is why `Albanese/AlbaneseUP.lean` keeps its obligations
+unproved rather than discharging them against a meaningless definition.
+
+This file takes the other route: it **names the interface** as a structure
+`SymPowData C n`, and then proves, unconditionally, everything Milne's argument
+derives from it. The missing geometry is isolated in exactly one place — inhabiting
+`SymPowData` — and nothing downstream is a statement about `sorry`.
+
+## What is proved here (no `sorry`, nothing conditional on unproved statements)
+
+* `SymPowData.symAVMap` — Milne's `Sym^n φ`. Given `φ : C ⟶ A` into a *commutative*
+  monoid object, the `n`-fold sum `powSum n φ` is `S_n`-symmetric
+  (`MonObj.powSum_perm`, already proved), so the interface descends it. This is the
+  content of `lem:symmetric_product_av_map`, and it is a construction, not a
+  hypothesis.
+* `SymPowData.proj_comp_symAVMap` / `SymPowData.symAVMap_unique` — its defining
+  equation and uniqueness.
+* `MonObj.basePointShift` — the morphism `Q ↦ (P₀, …, Q, …, P₀)` placing `Q` in a
+  designated slot `i₀` and the basepoint elsewhere. Milne's `Q ↦ Q + (n−1) P₀`
+  factors through it.
+* `MonObj.basePointShift_comp_powSum` — **the computation that makes the backward
+  direction of the Albanese connector work**: for a *pointed* `φ` (`P₀ ≫ φ = η[A]`),
+
+  `basePointShift P₀ i₀ ≫ powSum n φ = φ`,
+
+  because `φ(Q) + φ(P₀) + ⋯ + φ(P₀) = φ(Q) + η + ⋯ + η = φ(Q)`. In the hom-monoid
+  this is `Finset.prod_ite_eq`; the geometry evaporates exactly as it does in
+  `GrpObjFoldSum.lean`.
+* `symPowDataOne` — **the interface is inhabited**: `Sym^1 C = C`. The `S_1`-action
+  is trivial and `π : C^1 ⟶ C` is the (iso) projection, so the universal property
+  holds outright. This matters: it shows `SymPowData` is not a vacuous package that
+  could never be filled, and it means the Albanese argument assembled over this
+  interface is a genuine theorem for `n = 1`.
+
+## What is *not* here
+
+`SymPowData C n` for `n ≥ 2`. That is the missing quotient, and it is the honest
+boundary of this leg. See `Albanese/AlbaneseFromData.lean` for the Albanese
+universal property proved over this interface, and the header of
+`Albanese/AlbaneseUP.lean` for the pinned statements.
+
+## References
+
+Milne, *Abelian Varieties*, §III.3 Proposition 3.1 (the symmetric power) and §III.6
+Proposition 6.1, p. 104; blueprint `def:symmetric_power_curve` and
+`lem:symmetric_product_av_map` in `blueprint/src/chapters/Albanese_AlbaneseUP.tex`.
+-/
+
+set_option autoImplicit false
+
+universe v u
+
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
+
+namespace CategoryTheory
+
+variable {K : Type u} [Category.{v} K] [CartesianMonoidalCategory K] [HasFiniteProducts K]
+
+/-! ## §1. The interface
+
+`SymPowData C n` is exactly the data Milne's proof uses: a scheme, a symmetrisation
+projection from `C^n`, and the universal property for `S_n`-symmetric morphisms. The
+symmetry hypothesis is phrased with `MonObj.permAut` (`Albanese/GrpObjFoldSum.lean`),
+the factor-permuting automorphism of `C^n`. -/
+
+/-- **The universal property of the `n`-th symmetric power, as data.**
+
+A `SymPowData C n` is a `carrier` (morally `Sym^n C`) together with a symmetrisation
+morphism `proj : C^n ⟶ carrier` through which *every* `S_n`-symmetric morphism out of
+`C^n` factors uniquely.
+
+This is the interface, not the construction: see `symPowDataOne` for the case `n = 1`,
+and the module header for why the general case is a separate subproject. -/
+structure SymPowData (C : K) (n : ℕ) where
+  /-- The underlying object, morally `Sym^n C`. -/
+  carrier : K
+  /-- The symmetrisation projection `π : C^n ⟶ Sym^n C`. -/
+  proj : (∏ᶜ (fun _ : Fin n => C)) ⟶ carrier
+  /-- **The universal property.** Every `S_n`-symmetric morphism `C^n ⟶ T` factors
+  uniquely through `proj`. -/
+  desc : ∀ {T : K} (h : (∏ᶜ (fun _ : Fin n => C)) ⟶ T),
+    (∀ σ : Equiv.Perm (Fin n), MonObj.permAut C σ ≫ h = h) →
+    ∃! u : carrier ⟶ T, proj ≫ u = h
+
+namespace SymPowData
+
+variable {C : K} {n : ℕ}
+
+omit [CartesianMonoidalCategory K] in
+/-- Uniqueness of a factorisation through `proj`, in the form used at call sites:
+two morphisms out of the carrier that agree after `proj` are equal.
+
+Note that no symmetry hypothesis is needed: if `u₁` and `u₂` both factor `h` then
+`h` *is* symmetric (being `proj ≫ u₁` with `proj` symmetric would be the argument,
+but here we get it more cheaply — apply `desc` to `proj ≫ u₁`, whose symmetry follows
+from that of `proj` composed with anything). We therefore take the symmetry of
+`proj` itself as the input. -/
+theorem hom_ext_of_proj (D : SymPowData C n) {T : K} {u₁ u₂ : D.carrier ⟶ T}
+    (hproj : ∀ σ : Equiv.Perm (Fin n), MonObj.permAut C σ ≫ D.proj = D.proj)
+    (h : D.proj ≫ u₁ = D.proj ≫ u₂) : u₁ = u₂ := by
+  obtain ⟨u, -, huniq⟩ := D.desc (D.proj ≫ u₁) (fun σ => by rw [← Category.assoc, hproj])
+  rw [huniq u₁ rfl, huniq u₂ h.symm]
+
+section SymAVMap
+
+variable [BraidedCategory K]
+
+/-- **Milne's `Sym^n φ`.** For `φ : C ⟶ A` into a commutative monoid object, the
+`n`-fold sum `(P₁,…,P_n) ↦ φ(P₁) + ⋯ + φ(P_n)` is `S_n`-symmetric
+(`MonObj.powSum_perm` — Milne's "clearly this is symmetric"), so the interface
+descends it to `Sym^n C ⟶ A`.
+
+This is `lem:symmetric_product_av_map`: a *construction* from the interface, with no
+further geometric input. -/
+noncomputable def symAVMap {A : K} [MonObj A] [IsCommMonObj A]
+    (D : SymPowData C n) (φ : C ⟶ A) : D.carrier ⟶ A :=
+  (D.desc (MonObj.powSum n φ) (fun σ => MonObj.powSum_perm n φ σ)).choose
+
+/-- The defining equation of `Sym^n φ`: it restores the `n`-fold sum along `proj`. -/
+@[reassoc]
+theorem proj_comp_symAVMap {A : K} [MonObj A] [IsCommMonObj A]
+    (D : SymPowData C n) (φ : C ⟶ A) :
+    D.proj ≫ D.symAVMap φ = MonObj.powSum n φ :=
+  (D.desc (MonObj.powSum n φ) (fun σ => MonObj.powSum_perm n φ σ)).choose_spec.1
+
+/-- `Sym^n φ` is the *unique* morphism restoring the `n`-fold sum along `proj`. -/
+theorem symAVMap_unique {A : K} [MonObj A] [IsCommMonObj A]
+    (D : SymPowData C n) (φ : C ⟶ A) (u : D.carrier ⟶ A)
+    (hu : D.proj ≫ u = MonObj.powSum n φ) : u = D.symAVMap φ :=
+  (D.desc (MonObj.powSum n φ) (fun σ => MonObj.powSum_perm n φ σ)).choose_spec.2 u hu
+
+end SymAVMap
+
+end SymPowData
+
+/-! ## §2. Milne's `Q ↦ Q + (n − 1) P₀`, and why it collapses the sum
+
+The backward direction of the Albanese connector restricts the symmetric-power
+equation along `Q ↦ (Q, P₀, …, P₀)`. The whole force of that step is the following
+computation in the hom-monoid: summing `φ` over such a tuple gives
+`φ(Q) + φ(P₀) + ⋯ + φ(P₀)`, and a *pointed* `φ` kills every term but the first. -/
+
+namespace MonObj
+
+variable {C : K}
+
+/-- **The basepoint shift `Q ↦ (P₀, …, Q, …, P₀)`**, placing `Q` in the designated
+slot `i₀` and the basepoint `P₀ : 𝟙_ ⟶ C` in every other slot.
+
+Composed with the symmetrisation projection this is Milne's
+`Q ↦ Q + (n − 1) P₀ : C ⟶ Sym^n C`. -/
+noncomputable def basePointShift (P0 : 𝟙_ K ⟶ C) {n : ℕ} (i₀ : Fin n) :
+    C ⟶ (∏ᶜ (fun _ : Fin n => C)) :=
+  Pi.lift (fun i => if i = i₀ then 𝟙 C else toUnit C ≫ P0)
+
+@[reassoc (attr := simp)]
+theorem basePointShift_π (P0 : 𝟙_ K ⟶ C) {n : ℕ} (i₀ i : Fin n) :
+    basePointShift P0 i₀ ≫ Pi.π (fun _ : Fin n => C) i
+      = if i = i₀ then 𝟙 C else toUnit C ≫ P0 := by
+  simp only [basePointShift, Pi.lift_π]
+
+section Collapse
+
+variable [BraidedCategory K]
+
+/-- **The collapse computation.** For `φ : C ⟶ A` into a commutative monoid object
+which is *pointed* at `P₀` (`P₀ ≫ φ = η[A]`), summing `φ` over the tuple
+`(P₀, …, Q, …, P₀)` returns `φ` itself:
+
+`basePointShift P₀ i₀ ≫ powSum n φ = φ`.
+
+Every slot other than `i₀` contributes `toUnit ≫ P₀ ≫ φ = toUnit ≫ η[A] = 1`, the
+identity of the hom-monoid, so the product collapses to the single factor at `i₀`
+(`Finset.prod_ite_eq`). This is the entire content of Milne's "restrict along
+`Q ↦ Q + (g − 1) P₀` and use `φ(P₀) = η_A`". -/
+theorem basePointShift_comp_powSum {A : K} [MonObj A] [IsCommMonObj A]
+    (P0 : 𝟙_ K ⟶ C) {n : ℕ} (i₀ : Fin n) (φ : C ⟶ A) (hφ : P0 ≫ φ = η[A]) :
+    basePointShift P0 i₀ ≫ powSum n φ = φ := by
+  classical
+  rw [comp_powSum]
+  have hterm : ∀ i : Fin n,
+      basePointShift P0 i₀ ≫ Pi.π (fun _ : Fin n => C) i ≫ φ
+        = if i₀ = i then φ else 1 := by
+    intro i
+    rw [← Category.assoc, basePointShift_π]
+    by_cases h : i = i₀
+    · subst h; simp
+    · rw [if_neg h, if_neg (fun hc => h hc.symm), Category.assoc, hφ, ← Hom.one_def]
+  rw [Finset.prod_congr rfl (fun i _ => hterm i), Finset.prod_ite_eq]
+  simp
+
+end Collapse
+
+end MonObj
+
+/-! ## §3. The interface is inhabited: `Sym^1 C = C`
+
+`SymPowData` would be worthless if nothing could ever fill it. For `n = 1` the
+symmetric group is trivial, `C^1 ⟶ C` is an isomorphism, and the universal property
+is immediate. So the Albanese argument assembled over this interface
+(`Albanese/AlbaneseFromData.lean`) is a genuine theorem, not a vacuous implication. -/
+
+/-- **`Sym^1 C = C`.** The unique projection `C^1 ⟶ C` is an isomorphism, so every
+morphism out of `C^1` — symmetric or not, since `S_1` is trivial — factors uniquely
+through it.
+
+This inhabits `SymPowData C 1`, witnessing that the interface of §1 is satisfiable.
+For `n ≥ 2` inhabiting it is the missing scheme-quotient construction. -/
+noncomputable def symPowDataOne (C : K) : SymPowData C 1 where
+  carrier := C
+  proj := Pi.π (fun _ : Fin 1 => C) 0
+  desc := fun {T} h _ => by
+    -- `Pi.lift (fun _ => 𝟙 C)` is a two-sided inverse of the single projection.
+    have hsec : Pi.lift (fun _ : Fin 1 => (𝟙 C)) ≫ Pi.π (fun _ : Fin 1 => C) 0 = 𝟙 C := by
+      rw [Pi.lift_π]
+    have hret : Pi.π (fun _ : Fin 1 => C) 0 ≫ Pi.lift (fun _ : Fin 1 => (𝟙 C))
+        = 𝟙 (∏ᶜ (fun _ : Fin 1 => C)) := by
+      apply Pi.hom_ext
+      intro b
+      have hb : b = 0 := Subsingleton.elim _ _
+      subst hb
+      rw [Category.assoc, Pi.lift_π, Category.comp_id, Category.id_comp]
+    refine ⟨Pi.lift (fun _ : Fin 1 => (𝟙 C)) ≫ h, ?_, ?_⟩
+    · change Pi.π (fun _ : Fin 1 => C) 0 ≫ Pi.lift (fun _ : Fin 1 => (𝟙 C)) ≫ h = h
+      rw [← Category.assoc, hret, Category.id_comp]
+    · intro u hu
+      rw [← hu, ← Category.assoc, hsec, Category.id_comp]
+
+end CategoryTheory
