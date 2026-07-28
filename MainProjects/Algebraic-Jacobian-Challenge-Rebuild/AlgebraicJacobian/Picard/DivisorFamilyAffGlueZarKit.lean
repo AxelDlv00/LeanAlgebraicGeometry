@@ -161,12 +161,27 @@ pulled systems as `adaptation.pulledEquations`, i.e. as `pullback` at the regula
 CERTIFICATE supplies; a bare system carries no certificate, so the regularity witnesses travel
 with the hypothesis.
 
-They are **existentially** bound, and that is load-bearing rather than stylistic.  A
-`∀ hi hj, DivEq …` spelling would be satisfied by every family whatsoever the moment one of the
-two `PullRegular`s happened to be uninhabited — a vacuous obligation wearing the shape of a
-compatibility.  The `∃` form asserts what the geometry actually provides: the pulled systems exist
-AND agree.  (Since `regular` is a `Prop` field, `pullback f d hi` does not depend on WHICH witness
-is supplied, so a consumer may discharge the `DivEq` against any witness of its own.) -/
+They are **existentially** bound.  A predecessor draft of this docstring justified that by
+claiming the `∀ hi hj, DivEq …` spelling "would be vacuous the moment one of the two
+`PullRegular`s happened to be uninhabited".  **That justification is false and was refuted by
+elaboration** (reviewer pass, run 0070 s0010; inbox `I-0643`).  The two spellings are equivalent
+wherever this file is instantiated:
+
+* `∃ ⟹ ∀` holds unconditionally, because `regular` is a `Prop` field and so
+  `d.pullback f h₁ = d.pullback f h₂` by `rfl`;
+* `∀ ⟹ ∃` holds whenever both legs are open immersions, by
+  `pullRegular_of_isOpenImmersion` above — and every instantiation in this tree puts the overlap
+  carrier at an away localization, where both legs *are* open immersions
+  (`isOpenImmersion_relCurveMap_away`).
+
+So the vacuity scenario cannot arise here, and a vacuity argument of that shape is
+**carrier-relative**: it must be checked where the side condition is actually instantiated, not
+in the abstract (inbox `I-0644`).
+
+The real reasons to keep the `∃` form, which are the ones to quote: the *producer* has the
+certificate's own regularity witnesses in hand and should not have to prove the general
+statement, and the *caller* need not know its legs are immersions in order to state the
+hypothesis.  It is also the stronger form, so nothing is lost. -/
 def AwayCompatPullDivEq : Prop :=
   ∀ i j, ∃ (hi : Scheme.LocalEquations.PullRegular (relCurveMap C (S i) (T i j)) (E i))
     (hj : Scheme.LocalEquations.PullRegular (relCurveMap C (S j) (T i j)) (E j)),

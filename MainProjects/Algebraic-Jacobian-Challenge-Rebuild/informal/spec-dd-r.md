@@ -1026,7 +1026,7 @@ clauses**), `CertifiedDivisorFamilyAff.mapAlg`, `IsLocallyCertifiedAff.pullback`
 > them are spelled at the **instance-parameterized** face `mapAlg`; the vehicle and functor
 > layer — and hence every consumer — is spelled at the **explicit-map** face `mapAlgHom`, which
 > the widened carrier did not have. So `toAff` was a map of values compatible with `mapAlg`, and
-> not yet a map of anything a consumer could receive: outside the thirteen `DivisorFamilyAff*`
+> not yet a map of anything a consumer could receive: outside the twenty `DivisorFamilyAff*`
 > files, `DivFamZarAff` appeared nowhere in the tree. This paragraph's own moral — *the missing
 > property is an absence, and a green build cannot see it* — applied once more to the fix for it.
 > Landed in ADDENDUM 8 §8.2.
@@ -1193,7 +1193,7 @@ base-change layer, listed the four files that fixed it, and concluded "so `toAff
 Both were measured on the certificate side and both are correct there. Neither was measured on
 the **consumer** side, and on that side the situation was this:
 
-> Outside the thirteen `Picard/DivisorFamilyAff*.lean` files, the string `DivFamZarAff` appeared
+> Outside the twenty `Picard/DivisorFamilyAff*.lean` files, the string `DivFamZarAff` appeared
 > **nowhere in the tree**.
 
 ### 8.1 The defect: one operation, two faces, and the consumers use the other one
@@ -1211,11 +1211,21 @@ complete.
 
 The consumers cannot use the instance face. `divFamZar` (`Picard/DivisorFamilyZarVehicle.lean`)
 indexes its compatibility condition by the section-restriction maps `Over.resAlgHom T h`, which
-are bare `AlgHom`s carrying **no** tower instance; `divFunctor`
-(`Picard/DivisorFamilyZarFunctor.lean`) is built on that vehicle, and `DivRepGlobalData`
-(`Picard/DivRepKit.lean`) is stated against `divFamZar` and `divFamZar.map`. So the entire
-consumer stack is spelled at `mapAlgHom`, and until the widened carrier had that face there was
-no widened vehicle, no widened functor, and no statement a consumer could be given.
+are bare `AlgHom`s carrying **no** tower instance — that subtype condition *is* a `mapAlgHom`
+equation, and the file uses `mapAlgHom` 46 times. `divFunctor`
+(`Picard/DivisorFamilyZarFunctor.lean`) and `DivRepGlobalData` (`Picard/DivRepKit.lean`) then sit
+on the vehicle: **neither mentions `mapAlgHom` at all**, both being stated at `divFamZar` and
+`divFamZar.map`. So the dependence is one level of indirection rather than a direct spelling, and
+an earlier draft of this addendum saying the consumer stack is "spelled entirely at `mapAlgHom`"
+was wrong in a way that would send a reader to grep `DivRepKit.lean` and find nothing (reviewer
+finding, same session).
+
+The load-bearing conclusion is unaffected and does not need the stronger claim: until the widened
+carrier had the explicit face there was no widened *vehicle*, hence no widened functor and no
+statement a consumer could be given. Note also that `divFamZar.map` — what
+`DivRepGlobalData.pull_comp` actually consumes — is built from `mapAlgHom` **and** from
+`DivFamZar.exists_glue_of_away_compat`, so the face alone was never going to suffice; §8.3 item 2
+states that correctly.
 
 **The honest reading of `cert-assemble` before this session:**
 `divFamZarAff_of_forall_prime_certified_adaptation` produced a class **at an affine test**, and
@@ -1337,7 +1347,7 @@ or anywhere on its route — which is the entire purpose of R2.
 
 Landed in `Picard/DivisorFamilyAffGlueZar.lean` on the kit of `…AffGlueZarKit.lean`, which now
 carries the restated assembly in full: `AwayCompatPullDivEq` (with the regularity witnesses
-existentially bound — the `∀` spelling would be a vacuous obligation),
+existentially bound — see the note below, the reason first given for that was wrong),
 `germ_awayTransportLoc_mem_nonZeroDivisors`, `exists_res_awayTransportLoc_eq_unit_mul`,
 `awayGluedEquationsLoc`, `divEq_pullback_awayGluedEquationsLoc`,
 `CertifiedDivisorFamilyAff.isLocallyCertifiedAff` / `.toZarAff`, and
@@ -1359,3 +1369,54 @@ objects, and `divFunctorAff` on top of it. The keystone above was that construct
 (the chart-typed `map` is built from `DivFamZar.exists_glue_of_away_compat` via the basic-cover
 gluing kit), so item (b) is now one packaging layer from done rather than one keystone plus a
 packaging layer.
+
+### 8.7 What a fresh-context review corrected in §8.1–8.6, and two hazards it surfaced
+
+An adversarial review of this session's nine commits (run 0070 s0010) confirmed the four
+substantive claims and found three defects, all in *prose* rather than in a theorem. Recorded
+because the pattern — the mathematics survives, the surrounding numbers and justifications do not
+— is the one this project keeps catching.
+
+**Corrected in place, above.**
+
+1. **"Thirteen `DivisorFamilyAff*.lean` files" was wrong; there were twenty** at `ed13f29a1^`.
+   Fixed in §8.1 and §8.2. The island claim itself is confirmed: at that commit
+   `git grep -l DivFamZarAff` returns exactly six Lean files, all in the family, and zero outside.
+2. **"The consumer stack is spelled entirely at `mapAlgHom`" was overstated.** True of
+   `divFamZar` (46 uses; its subtype condition *is* a `mapAlgHom` equation), but `divFunctor` and
+   `DivRepGlobalData` mention `mapAlgHom` **zero** times — they sit on the vehicle, one level of
+   indirection. §8.1 now says so. The conclusion does not need the stronger claim.
+3. **`AwayCompatPullDivEq`'s vacuity justification was false**, and it was not mine — it came with
+   the draft and I flagged that I had not checked it. Both spellings are *equivalent* at every
+   carrier used here: `∃ ⟹ ∀` unconditionally (`regular` is a `Prop`, so the two pullbacks are
+   `rfl`-equal), and `∀ ⟹ ∃` whenever both legs are open immersions, which they always are at an
+   away localization. The definition is right and is the stronger form; its stated reason was
+   wrong. Corrected in the Lean docstring, which now records the true reasons (the producer has
+   the certificate's own witnesses; the caller need not know its legs are immersions). Inbox
+   `I-0643`, with the transferable rule — **a vacuity argument is carrier-relative** — as `I-0644`.
+
+**Confirmed, and one of them was owed.** The composition this session asserted but did not land —
+`divFamZarAff_of_forall_prime_certified_adaptation` through `(divFamZarAffAffineEquiv …).symm` —
+**does** typecheck, elaborated by the reviewer with the round trip by `apply_symm_apply`. The
+keystone's hypotheses are jointly satisfiable *at the carrier that will consume them* (the
+widened `exists_glue_of_basic_compat` shape, not merely at a degenerate cover), the route is not
+circular, all 25 advertised declarations exist, and the `|P¹(k)|`-freedom holds at the root: the
+transitive import closure of the four new files is 282 modules and `Curve/P1Aut.lean` — the only
+file carrying `[Infinite k]` and an `ncard + 2` bound — is not among them.
+
+**Two hazards, neither created by this session.**
+
+* **The chart-typed assembly is now dead weight.** `awayGluedEquationsLoc` at
+  `(fun i => (E i).eqns)` is **definitionally equal** to `awayGluedEquations` at `E` (proved by
+  `rfl`), so `Picard/DivisorFamilyZariskiGlue.lean:189–495` is strictly subsumed by the Kit —
+  ~300 lines of unit-spreading argument now existing in two copies that must stay in sync, with
+  no pointer between them. Cheap mitigation: a docstring note in the chart-typed file naming
+  `awayGluedEquationsLoc` as the general form. Real fix: redefine the chart-typed five in terms of
+  the `Loc` five.
+* **Residue item (b) is smaller than §8.6 says, and now priced exactly.** `divFamZarAff.map` needs
+  three bricks; the reviewer elaborated two as pure transcriptions (widened
+  `exists_glue_of_basic_compat`, ~90 lines; widened `eq_of_basic_eq`, ~25 lines — and it hits the
+  same explicit-`n` trap §8.6 records) and judged the third, `mapAlgHom_appLE_eq`, transcribable
+  since all its inputs are carrier-independent. With those, `IsPullbackValue` through `map_comp`
+  and `divFunctorAff` are mechanical. **Honest price: one file of ~350 transcribed lines, no new
+  mathematics.**

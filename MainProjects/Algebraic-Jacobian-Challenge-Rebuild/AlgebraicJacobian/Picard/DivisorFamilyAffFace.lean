@@ -101,7 +101,14 @@ theorem mapAlgHom_comp (φ : A →ₐ[k] A') (ψ : A' →ₐ[k] A'') (F : DivFam
 
 /-- `DivFamZarAff.mapAlg` depends on the `A`-algebra structure of the target only through the
 structure itself: equal algebra structures give equal base changes (the scalar-tower witnesses
-are proof-irrelevant).  The congruence backing `mapAlgHom_eq_mapAlg`. -/
+are proof-irrelevant).  The congruence backing `mapAlgHom_eq_mapAlg`.
+
+**DO NOT DELETE THIS AS A TAUTOLOGY.**  `#check` renders it as
+`mapAlg A' n F = mapAlg A' n F`, because the two sides differ *only* in the suppressed
+`Algebra A A'` instance argument — which is why the statement below is written with explicit
+`@`-applications.  It is a real lemma (`subst h; rfl` on distinct instance arguments) and
+`mapAlgHom_eq_mapAlg` genuinely needs it.  Flagged because an audit reading `#check` output alone
+would score it as vacuous (reviewer note, run 0070 s0010). -/
 theorem mapAlg_congr {a₁ a₂ : Algebra A A'} (h : a₁ = a₂)
     (t₁ : @IsScalarTower k A A' Algebra.toSMul a₁.toSMul Algebra.toSMul)
     (t₂ : @IsScalarTower k A A' Algebra.toSMul a₂.toSMul Algebra.toSMul)
