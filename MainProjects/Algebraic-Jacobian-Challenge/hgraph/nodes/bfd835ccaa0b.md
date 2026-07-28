@@ -34,16 +34,34 @@ docstring: "**The base-changed nerve is the nerve of the base-changed data** (St
   \ slice identifications used per σ in `twisted_cech_nerve_per_sigma` commute with\n\
   the inclusions `U_τ ⊆ U_σ` for `σ` a subtuple of `τ`.  That is a statement about\
   \ the cover\nbase-change identification, not about modules, and it is the honest\
-  \ residue here.\n\nConsequently: attempt `cech_pushforward_baseChange_natIso` **first**\
-  \ (its naturality is already\nfree, and only a per-σ `IsIso` of a mate remains),\
-  \ and treat this leaf as the harder of the two\ndespite its lighter hypotheses.\
-  \  Project-local."
+  \ residue here.\n\n**THAT RESIDUE IS NOW ISOLATED AND THE REST IS PROVED (run 0068\
+  \ r4) — DO NOT DISCHARGE THIS `sorry`,\nAND DO NOT READ THE PARAGRAPH ABOVE AS A\
+  \ PRICE.**  Two things changed.\n\n*The general-`φ` obligation was over-strong.*\
+  \  This declaration's only consumer is\n`cechComplex_baseChange_cosimplicialIso`,\
+  \ and *its* only consumer takes\n`alternatingCofaceMapComplex`, whose differential\
+  \ is `∑ᵢ (-1)ⁱ • δᵢ` — no codegeneracy appears\nanywhere downstream.  `alternatingCofaceComplexIsoOfDelta`\
+  \ therefore builds the same complex\nisomorphism from **coface** compatibility alone.\
+  \  That is what brings the obligation into range:\nthis tree's σ-coordinate lemmas\
+  \ are stated for `δ k` only, and no general-`φ` analogue exists in\nthis workspace\
+  \ or in mathlib, so the wide obligation was unprovable from the lemmas we have while\n\
+  the narrow one is not.\n\n*And the coface square is proved from a per-σ hypothesis.*\
+  \  See `cechNerve_drop_δ_sigma` (the\ncoface in σ-coordinates is \"reindex by `δᵏ`,\
+  \ then restrict\"), `sigmaAssembled_δ_square` and\n`twistedNerve_δ_square_concrete`.\
+  \  What is left is `TwistedPerSigmaDeltaCompat`: that the per-σ\nBeck–Chevalley\
+  \ isos commute with the intersection-open inclusions — exactly the residue named\
+  \ in\nprose above, now a Lean equation between composites of landed `sorry`-free\
+  \ declarations, with no\nnerve, product or cosimplicial vocabulary in it.\n\nEquivalently,\
+  \ and this is the useful way to see what is missing: `twisted_cech_nerve_per_sigma`\
+  \ is\nbuilt *per σ*, and the residue is its **naturality in the over-object**. \
+  \ A `Y`-natural\nBeck–Chevalley for `pushPullFunctor` would give it as a component,\
+  \ and a workspace-wide search found\nnone — `pushPullFunctor` has no API at all\
+  \ beyond being whiskered once in `cechNerveCosimplicial`.\n\nProject-local."
 file: AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean
 generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.twisted_cech_nerve_iso
 type: lean
-updated: '2026-07-29T04:25:58'
+updated: '2026-07-29T04:37:49'
 ---
 noncomputable def twisted_cech_nerve_iso
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)

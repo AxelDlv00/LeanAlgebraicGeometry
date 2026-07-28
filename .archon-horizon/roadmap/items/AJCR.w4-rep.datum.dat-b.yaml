@@ -72,32 +72,36 @@ summary: "DAT-B: coverage + injectivity. Injectivity LANDED (worksheet 0.4/2, co
   \ of those and\nneither is disturbed.\n\nWHERE THE DISCARDED PROPERTIES DO MATTER:\
   \ effectivity and h0 = 1 are needed by DAT-C's canonical\nsection and GAP-2 uniqueness,\
   \ i.e. by INJECTIVITY, not by coverage.\n\nB-6 (the IsLocallySurjective instance\
-  \ + DAT-glue handoff) still waits on divRep through C9b, whose\nown gate is now\
-  \ the single clause IsChartUniv.\n\nADDENDUM, same session (commit ab27f5c0b, Picard/Pic0ChartAtlasParamFree.lean):\
-  \ THE ATLAS IS\nCHART-PARAMETER HETEROGENEOUS, which reshapes the residue above\
-  \ once more -- and this correction\napplies to my own restatement as much as to\
-  \ the reviewer's.\n\nBoth readings above reason about \"the\" chart parameter as\
-  \ if the atlas had one. It does not.\npic0RepresentableByOfCharts takes a family\
-  \ over an ARBITRARY index type with a PER-INDEX\ncertificate and NO coherence condition\
-  \ across indices, so nothing ties the chart parameters of\ndifferent charts together.\
-  \ mixedParamChart builds such a family from nn : iota -> N with a\nper-index representation\
-  \ of divFunctor C pi (nn i) and a per-index index legal AT THAT index's own\nparameter;\
-  \ mixedParamRepresentableBy feeds it to the DAT-glue seam verbatim.\n\nCONSEQUENCE:\
-  \ b = n is a PER-CHART calibration. A point whose splitting field has threshold\
-  \ b_L can\nbe covered by the chart of parameter b_L.toNat and a different point\
-  \ by a different chart -- so the\nI-0204 non-uniformity of m is NOT an obstruction\
-  \ to the atlas; it is an argument FOR an atlas\nindexed by the threshold.\n\nWHAT\
-  \ IS STILL MISSING, and it is now a question for ajcr-divrep rather than for this\
-  \ lane:\nmixedParamChart takes rep i as a HYPOTHESIS, one representation per parameter,\
-  \ and the divRep\nendpoint (divFunctor_representableBy_of_chartClause, DivRepAffPullClause.lean:475)\
-  \ is at g. So the\nheterogeneous atlas is ADMISSIBLE but not INHABITED beyond n\
-  \ = g. Asked on the AJCR thread: does\nanything in the divRep chain USE n = g, or\
-  \ is g incidental?\n\n - if representability generalises in n: coverage assembles\
-  \ chart-by-chart against each fibre's own\n   threshold, and the b = n forcing is\
-  \ harmless;\n - if it is g-only: the slack must go into Z at parameter g, and the\
-  \ legality question above (0 <=\n   Sigma AND deg = m*d1 - g) is the real residue.\n\
-  \nNot weakened by this: IsChartUniv (CERT-Sigma-gated) and local surjectivity /\
-  \ B-6, which is what\nwould actually consume the freedom.\n"
+  \ + DAT-glue handoff) -- SUPERSEDED, see the B-6 IS CLOSED\nsection at the top of\
+  \ this row. What stood here read \"still waits on divRep through C9b, whose\nown\
+  \ gate is now the single clause IsChartUniv\"; both clauses are false as of 2026-07-29.\
+  \ B-6\nneeded nothing divRep-side (isLocallySurjective_sigmaDesc, commit b4d608389)\
+  \ and C9b's gate was\nnever a single clause (see the c9b row).\n\nADDENDUM, same\
+  \ session (commit ab27f5c0b, Picard/Pic0ChartAtlasParamFree.lean): THE ATLAS IS\n\
+  CHART-PARAMETER HETEROGENEOUS, which reshapes the residue above once more -- and\
+  \ this correction\napplies to my own restatement as much as to the reviewer's.\n\
+  \nBoth readings above reason about \"the\" chart parameter as if the atlas had one.\
+  \ It does not.\npic0RepresentableByOfCharts takes a family over an ARBITRARY index\
+  \ type with a PER-INDEX\ncertificate and NO coherence condition across indices,\
+  \ so nothing ties the chart parameters of\ndifferent charts together. mixedParamChart\
+  \ builds such a family from nn : iota -> N with a\nper-index representation of divFunctor\
+  \ C pi (nn i) and a per-index index legal AT THAT index's own\nparameter; mixedParamRepresentableBy\
+  \ feeds it to the DAT-glue seam verbatim.\n\nCONSEQUENCE: b = n is a PER-CHART calibration.\
+  \ A point whose splitting field has threshold b_L can\nbe covered by the chart of\
+  \ parameter b_L.toNat and a different point by a different chart -- so the\nI-0204\
+  \ non-uniformity of m is NOT an obstruction to the atlas; it is an argument FOR\
+  \ an atlas\nindexed by the threshold.\n\nWHAT IS STILL MISSING, and it is now a\
+  \ question for ajcr-divrep rather than for this lane:\nmixedParamChart takes rep\
+  \ i as a HYPOTHESIS, one representation per parameter, and the divRep\nendpoint\
+  \ (divFunctor_representableBy_of_chartClause, DivRepAffPullClause.lean:475) is at\
+  \ g. So the\nheterogeneous atlas is ADMISSIBLE but not INHABITED beyond n = g. Asked\
+  \ on the AJCR thread: does\nanything in the divRep chain USE n = g, or is g incidental?\n\
+  \n - if representability generalises in n: coverage assembles chart-by-chart against\
+  \ each fibre's own\n   threshold, and the b = n forcing is harmless;\n - if it is\
+  \ g-only: the slack must go into Z at parameter g, and the legality question above\
+  \ (0 <=\n   Sigma AND deg = m*d1 - g) is the real residue.\n\nNot weakened by this:\
+  \ IsChartUniv (CERT-Sigma-gated) and local surjectivity / B-6, which is what\nwould\
+  \ actually consume the freedom.\n"
 status: pending
 kind: proof
 priority: normal
@@ -111,7 +115,7 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:09.039287+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-28T21:12:58.503752+00:00'
+  updated_at: '2026-07-28T21:13:22.956626+00:00'
   milestone: w4-tail
   owner: ajcr-charts
   pinned_commits:

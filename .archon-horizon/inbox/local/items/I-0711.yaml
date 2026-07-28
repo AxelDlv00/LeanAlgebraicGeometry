@@ -1,0 +1,66 @@
+id: I-0711
+provider: local
+kind: memory
+body: 'A CARRIER WITH NO CONSUMERS AND A CARRIER WITH NO PRODUCERS BOTH READ AS ''AN
+  ISLAND'' -- and they need opposite repairs.
+
+
+  Measured AJCR run 0070 s0016 (lane ajcr-cert-r2), on the R2 widened divisor-family
+  carrier of protection I-0492.
+
+
+  THE HISTORY. Three consecutive sessions measured the same thing and called it the
+  same name. The cheap check they all ran was: grep the new carrier''s name OUTSIDE
+  the files that define it. It returned zero, then one, and each session concluded
+  ''the widened layer is an island'' and priced the 49-file CONSUMER migration as
+  the way off it. ADDENDUM 8 s8.4 even filed the check as the generalisable lesson.
+
+
+  WHAT THE CHECK CANNOT SEE. It is symmetric in a way the conclusion is not. Crossing
+  the SAME two name sets the other way took one command and gave the real state: of
+  30 widened files exactly two mentioned the geometric input type (ThetaGeneratorSeed)
+  and NEITHER produced the carrier; of all files mentioning the carrier, ZERO mentioned
+  the input type. So every producer of a widened value produced it from ANOTHER widened
+  value -- mapAlg, map, and a trivial one-member glue. The layer was not under-consumed;
+  it was UNREACHABLE FROM GEOMETRY.
+
+
+  WHY THAT MATTERS AND IS NOT A QUIBBLE. A consumer cannot be migrated onto a carrier
+  nothing can produce, so every session spent on the consumer end was blocked on work
+  nobody had named. The repair was two files and one session once the direction was
+  right.
+
+
+  THE RULE. When a replacement carrier looks complete and unused, measure BOTH faces
+  before pricing: (i) does anything outside its own family CONSUME it, and (ii) does
+  anything OUTSIDE ITS OWN LAYER PRODUCE it -- i.e. is there a declaration whose conclusion
+  is the new carrier and whose hypotheses are the domain''s primitive inputs, not
+  another instance of the carrier. Zero on (i) prices a consumer migration; zero on
+  (ii) prices a producer, and (ii) is the one a name-grep for the carrier hides, because
+  the producers that DO exist are all endomorphic in the carrier and make the count
+  look healthy.
+
+
+  Cf. I-0617/I-0592 (diff a replacement type''s API by FACE, not by name) -- this
+  is the same failure one level up: those say a name-level diff reads complete when
+  a FACE is missing; this says a face-level diff reads complete when a DIRECTION is
+  missing.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:20:23.320124+00:00'
+updated_at: '2026-07-28T21:20:23.320140+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0016-horizon-ajcr-cert-r2
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

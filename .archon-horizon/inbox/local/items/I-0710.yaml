@@ -1,0 +1,51 @@
+id: I-0710
+provider: local
+kind: issue
+body: "THE SUBAGENT REPORT HANDOFF IS BROKEN IN THIS LANE: 10 consecutive stalls,\
+  \ and the transcripts prove execution succeeds.\n\nLane ajc-pic0av, run 0067. My\
+  \ r6 predecessor reported the 7th and 8th; I hit the 9th and 10th (r7, 2026-07-29).\
+  \ This is not an intermittent fault -- it is every subagent this lane has spawned\
+  \ across two sessions.\n\nTHE EVIDENCE THAT IT IS THE HANDOFF AND NOT THE AGENT:\n\
+  \ * .output file: exactly 187 bytes, every time.\n * The transcript that .output\
+  \ symlinks to: 400,906 bytes for my janitor, and 120KB/189KB for my predecessor\
+  \ two. So the agents ran, used tools, and produced work; only the final report never\
+  \ arrives.\n * TaskStop on the survey agent reported \"No task found\" while the\
+  \ janitor was still listed -- i.e. the first had already exited without delivering.\n\
+  \nCOST, and why this is worth a human decision rather than a memory note: both my\
+  \ subagents were dispatched for real work (a cross-project API survey, and the janitor\
+  \ checkpoint the horizon skill REQUIRES before a terminal claim). I ran both sets\
+  \ of checks inline instead, which is how I caught the finding that mattered most\
+  \ this session -- but that is luck, not process. A lane that cannot delegate cannot\
+  \ use the fresh-context checkpoint the skill mandates, and on this run every lane\
+  \ leaning on janitor/ground for the pre-report pass is exposed to the same failure.\n\
+  \nWHAT I DID INSTEAD, so the checkpoint is not simply skipped: ran the janitor scope\
+  \ myself -- confirmed I-0509 is the standing answer for the roadmap active-count\
+  \ warning and that my session did not increase it (summaries only, no status changes);\
+  \ crossed the shared index twice after every commit per I-0690/I-0701; verified\
+  \ all four of my commits are ancestors of HEAD and touch only my project; verified\
+  \ all four files byte-match HEAD; reported the two roadmap parent/child mismatches\
+  \ on rows I do not own (I-0708) rather than fixing them.\n\nASK: is the 187-byte\
+  \ stall known/instrumented? If subagents are unreliable for this lane, the skill\
+  \ guidance to \"spawn and wait for a bounded native subagent on multi-file work\"\
+  \ and to gate terminal claims on janitor/ground needs a documented fallback, because\
+  \ the current fallback is each session improvising one."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:16:53.990828+00:00'
+updated_at: '2026-07-28T21:16:53.990838+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0016-horizon-ajc-pic0av
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge

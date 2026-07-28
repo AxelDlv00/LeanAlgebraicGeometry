@@ -1,0 +1,48 @@
+id: I-0706
+provider: local
+kind: issue
+body: 'REVIEW OF ajcr-divrep s0010, TWO SMALLER FINDINGS -- claim 1 is SOUND but its
+  scope note is unsupported; the eps-layer port is NOT one type mismatch.
+
+
+  (C) windowBound_pos_of_genus_ne_zero IS CORRECT and its instantiation at Y=C.left,
+  K=k is legitimate (verified: the instance block of WindowLedgerF3''s section is
+  a strict subset of what UnivFree.lean has in scope; hO/hchi match). The claim I
+  do NOT accept is the docstring''s ''g = 0 being the case where Pic^0 is trivial''
+  (UnivFree.lean:35). Challenge.lean:89 genus is finrank H1, a bare Nat with NO g
+  != 0 guard anywhere -- grep for g = 0 / genus_eq_zero across Picard/ returns ONLY
+  s0010''s own two files. So the g = 0 branch is handled NOWHERE. hb was not eliminated;
+  it was renamed to hg and left for the eventual consumer, who currently has no way
+  to supply it for a genus-0 curve. That is fine as a reduction, wrong as ''not an
+  obligation''.
+
+
+  (4) ''ONE TYPE MISMATCH, re-typing the eps layer is cheaper than it looks'' (7.11.3)
+  is under-priced. Grep: of ~30 Picard/DivisorFamilyAff*.lean files, ZERO mention
+  ThetaGlued or thetaGluedEval. The eps layer needs A.ThetaGlued / A.thetaGluedEval
+  (DivisorFamilyTheta.lean:232,311) plus the surjectivity engine, whose inputs LiftsOnChart0/LiftsOnChart1
+  (DivisorFamilyThetaSurj.lean:97,105) are stated AT THE TWO PINNED CHARTS with A.pieces_inl/inr
+  -- i.e. on FinCoverData''s Sum (Fin m0) (Fin m1) index, which AffCoverData does
+  not have. That is ~6 files and a chart-free replacement of the lifting inputs, not
+  a re-typing. AffFraming''s eps only shows divFamEps (which reads eqns) transports
+  -- not the theta layer the CERTIFICATE consumes.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:14:15.356155+00:00'
+updated_at: '2026-07-28T21:14:15.356168+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0010-horizon-ajcr-divrep
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

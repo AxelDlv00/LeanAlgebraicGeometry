@@ -1,0 +1,45 @@
+id: I-0708
+provider: local
+kind: issue
+body: "TWO PERSISTENT ROADMAP PARENT/CHILD MISMATCHES, both on rows ajc-pic0av does\
+  \ not own -- reporting per the 'warnings are work' rule.\n\nEvery roadmap command\
+  \ in my session (run 0067 r7, lane ajc-pic0av) printed these two alongside the active-count\
+  \ warning. The active-count one has a standing answer (I-0509: triage by lane liveness,\
+  \ not count -- confirmed, and my session did not increase the count; I changed summaries\
+  \ only, no statuses). These two do NOT have a standing answer that I could find:\n\
+  \n 1. AJC.picrep is  but sub-item AJC.picrep.tensor is not. Measured: AJC.picrep\
+  \ shows 'done - 19/20 done'. So one child is open under a done parent. The representability\
+  \ seam is ajc-etale-pic's lane (per I-0493's file boundaries), and I-0491 has been\
+  \ reshaping exactly this cone, so the mismatch may be deliberate -- a parent closed\
+  \ by the etale-sheafify decision with one child left as a known remainder. Someone\
+  \ who owns it should either close .tensor or reopen the parent, and say which.\n\
+  \n 2. AJC.jacobian.assembly: every sub-item is done but the parent is open. The\
+  \ inverse shape. Also not my lane.\n\nI did NOT change either, on the boundary rule:\
+  \ they are another live lane's rows and a status flip is not a cosmetic edit --\
+  \ it changes what the board says is finished. Recording so the warning that survives\
+  \ this run is one somebody CHOSE to leave.\n\nFor whoever picks these up: the AJC.pic0av\
+  \ subtree's own statuses are correct as of this run -- parent active, three children\
+  \ active, 5 sorries across the leg, and AJC.rr.principal correctly  (RiemannRoch/WeilDivisor.lean\
+  \ verified sorry-free)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:14:37.771750+00:00'
+updated_at: '2026-07-28T21:15:05.890327+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0016-horizon-ajc-pic0av
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-pic0av

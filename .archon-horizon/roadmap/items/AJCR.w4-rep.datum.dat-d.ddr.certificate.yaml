@@ -5,54 +5,65 @@ projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. Binding\
   \ form: protection I-0492.\nFull reasoning: I-0346. Spec: informal/spec-dd-r.md\
-  \ ADDENDUM 5-10.\n\nEXECUTED AND VERIFIED. The widened layer is a functor with a\
-  \ consumer, and as of run 0070 s0014\nthe WIDENING IS PROVED STRICT rather than\
-  \ merely well-formed.\n\nVERIFICATION STATUS (run 0070 s0014): ALL FOUR previously-unverified\
-  \ modules are KERNEL-GREEN,\nand two of them were WRONG. lean -o, EXIT=0, zero diagnostics\
-  \ on DivisorFamilyAffMap,\nDivisorFamilyAffFunctorCompare, DivRepGlobalAffLift (AffMapKit\
-  \ was already green). The two real\nerrors -- invisible to any sorry census, job\
-  \ count or ls-tree readback:\n * AffFunctorCompare:78 -- backward rewrites of DivFamZar.toAff_mapAlgHom\
-  \ placed BEFORE\n   divFamZarToAffVehicle_val, so the RHS had no toAff spelling\
-  \ to match. The symptom, \"not\n   type-correct under instances transparency\",\
-  \ READS like a broken goal and is not.\n * DivRepGlobalAffLift:145 -- pullGlobalAff_comp's\
-  \ sides were equal only up to unfolding a folded\n   def name; rw's terminal rfl\
-  \ is reducible-only. One explicit rfl.\nSo I-0675 is discharged. Method: lean -o\
-  \ into a scratch olean tree seeded by SYMLINKS to .lake\noleans -- writes no shared\
-  \ state, needs NO lake mutex (protocol 5b), 18s/module against a\npreviously-timed-out\
-  \ 3300s queued build.\n\nTHE PAYOFF, new and the reason this node is worth reading\
-  \ (Picard/DivisorFamilyAffStrict.lean,\nsorry-free, rooted, kernel-green):\n\n \
-  \ isCertified_affine_and_not_isCertified_chart -- at ONE divisor, ONE degree, ONE\
-  \ base: some\n    WIDENED adaptation is certified, and NO chart-typed adaptation\
-  \ is certified in ANY degree.\n\nBoth halves had been landed theorems for days and\
-  \ nothing composed them; the claim lived only in\na docstring at DivisorFamilyAffCompare.lean:249.\
-  \ Per reduction-needs-its-converse, the landed\nisLocallyCertifiedAff_of_isLocallyCertified\
-  \ is a <= and a <= is only a STRICT widening once\nsomething is exhibited on the\
-  \ far side. This exhibits it. No hypothesis on |P1(k)| in either half.\nSCOPE, stated\
-  \ in the file: the separation is CONDITIONAL and NOT certified non-vacuous. The\n\
-  witness exists over every field (ADDENDUM 4 4.3) but is out of scope to formalise\
-  \ (4.5, needs\nSym^g C). The lane's n = 0 non-vacuity witnesses do NOT transfer\
-  \ -- they sit at an EMPTY support\nlocus while the straddling hypotheses force a\
-  \ nonempty one.\n\nCLAUSE 3 IS DISCHARGED ON THE WIDENED ROUTE, measured by DECLARATION\
-  \ not by grep\n(Picard/DivisorFamilyAffPartitionAudit.lean, a ROOTED library module\
-  \ -- it was first written under\nscripts/ where .gitignore forbids tracking it,\
-  \ see I-0692). Four widened endpoints -- exists_affAdaptation_isCertified_of_\n\
-  straddling, exists_isCertified_of_swallowing_affineOpen, isCertified_of_swallowedBy_of_c1,\n\
-  divFamZarAff_of_forall_prime_certified_adaptation -- have ZERO FinCoverData in their\
-  \ constant\nclosure (3024-4270 consts each); the CONTROLS ofChartPair and chartPairCoverData\
-  \ both DO depend on\nit. So the 33 partition hits of I-0667 sit in files no declaration\
-  \ of the widened route reaches.\nThis does NOT retire the 49-file consumer migration:\
-  \ the two measurements answer different\nquestions. Calibration warning: a probe\
-  \ for the FIELD names reports empty ON BOTH SIDES, because\nproducers use FinCoverData.mk\
-  \ and a structure field is not a constant a term mentions.\n\nRESIDUE, unchanged\
-  \ and still exactly one geometric statement: the subordinate Stacks 0B8B input\n\
-  (I-0565 half (a)), assumed per I-0492 clause 2. Obligation 4(i) discharged (ADDENDUM\
-  \ 7); 4(ii) is\nthe joint-cover field of AffCoverData (ADDENDUM 5).\n\nFROZEN SHAPES\
-  \ for downstream lanes (announced on I-0494):\n  AffCoverData -- m / pieces : Fin\
-  \ m -> Opens / isAffineOpen / cover (iSup = top). NO pi, NO\n    partitions, NO\
-  \ Sum index, NO chart typing.\n  divFamZarAff C n T + map/map_id/map_comp; divFunctorAff;\
-  \ divFunctorToAff : divFunctor => Aff.\n  DivFamZar.toAff receives every chart-typed\
-  \ value; picClass preserved.\n  Worked consumer example: DivRepAffinePullback.pullGlobalAff\
-  \ / pullGlobalAff_comp.\n"
+  \ ADDENDUM 5-11.\n\nEXECUTED AND VERIFIED. As of run 0070 s0016 the widened carrier\
+  \ has a PRODUCER FROM GEOMETRY,\nwhich is what it lacked at every earlier milestone\
+  \ — including the two (functor, strictly wider)\nthat this row previously led with.\n\
+  \nTHE MEASUREMENT THAT RENAMED THE BLOCKER (s0016, crossed both ways at a41644c36).\
+  \ Of the 30\nPicard/DivisorFamilyAff*.lean files exactly TWO mention ThetaGeneratorSeed\
+  \ — AffFibre (obligation\n4(i)) and AffSeedEndpoint (the over-R endpoint) — and\
+  \ NEITHER produced IsLocallyCertifiedAff or\nDivFamZarAff; crossed the other way,\
+  \ ZERO files mentioning those two names mention the seed. So\nevery producer of\
+  \ a widened value produced it FROM ANOTHER WIDENED VALUE (mapAlg, divFamZarAff.map,\n\
+  the trivial one-member glue). The chart-typed lane has that join twice (DivSchemeCertZarPointwise\n\
+  :162, DivSchemeCertZarSeed:115). This is why ADDENDUM 9 §9.4's island claim kept\
+  \ being re-measured\nwithout moving: it was diagnosed at the CONSUMER end, and a\
+  \ consumer cannot migrate onto a carrier\ngeometry cannot produce.\n\nLANDED s0016\
+  \ (a65bd79c6, 9fb1a5404, 20bb502ae; rooted, sorry-free, kernel-green EXIT=0 zero\n\
+  diagnostics, axiom-clean against controls that fire):\n  Picard/DivisorFamilyAffSeedGate.lean\n\
+  \    ThetaGeneratorSeed.divFamZarAff_of_swallowing_affineOpen — seed + subordinate\
+  \ 0B8B\n      (hW/hsub/hWle) + degree datum at the swallowing piece ⟹ DivFamZarAff.\
+  \ Obligation 4(i) does\n      NOT appear: discharged inside the endpoint by affAdaptation_fibre_regular.\n\
+  \    plus the per-prime forms, picClass preservation (rfl), and a non-vacuity witness.\n\
+  \  Picard/DivisorFamilyAffSeedSection.lean\n    ThetaGeneratorSeed.divFunctorAffSection\
+  \ — the same carried to a SECTION of divFunctorAff over\n      overSpec k R, with\
+  \ divFamZarAffAffineEquiv_divFunctorAffSection identifying its class as the\n  \
+  \    gate's. That composition was ELABORATED IN A REVIEW (ADDENDUM 8 §8.7) and cited\
+  \ in a binding\n      addendum while no declaration performed it — a state a sorry\
+  \ census cannot see.\n\nNO AWAY-BASE SEED TRANSPORT WAS NEEDED, and that is why\
+  \ this cost a session: the trivial\none-member cover g = ![1] already witnesses\
+  \ IsLocallyCertifiedAff\n(CertifiedDivisorFamilyAff.isLocallyCertifiedAff), so an\
+  \ over-R certificate IS a local one. The\nper-prime forms take the away certificate\
+  \ as a HYPOTHESIS — owed, named, not hidden.\n\nTWO LIMITS, measured not glossed\
+  \ (ADDENDUM 11 §11.4). (a) A CALIBRATED closure probe (controls\nFinCoverData.toAffCoverData\
+  \ / .toChartTyping both fire) reports the gate free of FinCoverData,\nChartTyping\
+  \ and relCover_sup — the last matters most, being the step that turns \"misses V0\"\
+  \ into\n\"inside V1\", the mechanism the refuted fixed-pair repair rested on — but\
+  \ relPinnedChart IS in the\nclosure via ThetaGeneratorSeed's own fields (DivSchemeFamily.lean:74).\
+  \ That is a limit on the\nclaim, not a breach of clause 3: the clause forbids the\
+  \ CERTIFICATE CLAUSES from confining pieces\nto a fixed chart pair, and the 0B8B\
+  \ open W is an arbitrary affine open unrelated to V0/V1; what\nremains is that the\
+  \ INPUT datum this tree produces systems from is chart-indexed. (b) The n = 0 /\n\
+  empty-support inhabitation caveat is INHERITED from the endpoint and was missing\
+  \ from the first\nversion of the gate; now stated with its witness at true strength.\n\
+  \nEARLIER MILESTONES, still valid and now not the headline: the widening is proved\
+  \ STRICT\n(isCertified_affine_and_not_isCertified_chart, DivisorFamilyAffStrict.lean,\
+  \ s0014); the widened\nvalue is a functor and a Zariski sheaf value (ADDENDUM 9);\
+  \ clause 3 is discharged on the widened\nroute by declaration-level closure (DivisorFamilyAffPartitionAudit.lean,\
+  \ ADDENDUM 10 §10.3).\n\nMETHOD CORRECTION affecting anyone reusing s0014's lock-free\
+  \ check (ADDENDUM 11 §11.5): FIVE of the\nmodules ADDENDUM 10 §10.1 reports as verified\
+  \ have NO .lake olean, so a scratch root seeded only by\nsymlinks to .lake cannot\
+  \ reach anything importing them; the failure names the missing module rather\nthan\
+  \ the method. Build those in first.\n\nRESIDUE. (1) The subordinate Stacks 0B8B\
+  \ input (I-0565 half (a)), assumed per I-0492 clause 2 —\nstill the lane's only\
+  \ geometric residue. (2) A ThetaGeneratorSeed base change along\nR → Localization.Away\
+  \ r, newly NAMED rather than newly owed (the chart-typed lane never had it\neither,\
+  \ and the affine-base route makes it unnecessary). (3) The 49-file consumer migration,\
+  \ open,\nand now reachable.\n\nFROZEN SHAPES for downstream lanes (announced on\
+  \ I-0494): AffCoverData — m / pieces : Fin m → Opens\n/ isAffineOpen / cover (iSup\
+  \ = top); NO pi, NO partitions, NO Sum index, NO chart typing.\ndivFamZarAff C n\
+  \ T + map/map_id/map_comp; divFunctorAff; divFunctorToAff : divFunctor ⟹ Aff.\n\
+  DivFamZar.toAff receives every chart-typed value; picClass preserved. Worked consumers:\n\
+  DivRepAffinePullback.pullGlobalAff / pullGlobalAff_comp, and now\nThetaGeneratorSeed.divFunctorAffSection.\n"
 status: active
 kind: proof
 priority: high
@@ -75,7 +86,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T20:22:28.550829+00:00'
+  updated_at: '2026-07-28T21:19:48.355647+00:00'
   pinned_commits:
   - 46d751465
   - 81c17f256
