@@ -14,10 +14,13 @@ Proposition 6.1) uses the `n`-th symmetric power `Sym^n C` only through its
 **universal property**: every `S_n`-symmetric morphism `C^n ⟶ T` factors uniquely
 through the symmetrisation projection `π : C^n ⟶ Sym^n C`.
 
-At this Mathlib pin the *object* `Sym^n C` does not exist — there is no quotient of
-a scheme by a finite group action (`analogies/m3-route-audit.md` sizes the
-construction at roughly 2400–3800 lines, and mathlib's `SymmetricPower` is for
-modules). Writing `Sym^n C := sorry` makes every downstream equation a statement
+At this Mathlib pin the *object* `Sym^n C` does not exist for a proper curve — there is no
+quotient of a scheme by a finite group action, and mathlib's `SymmetricPower` is for
+modules. (The `analogies/m3-route-audit.md` figure of 2400–3800 lines priced Milne's
+affine-and-glue route; `Albanese/SymPowColimit.lean` later reduced the obligation to one
+`HasColimit` instance and discharged the affine half outright. Read that file before
+budgeting anything from this paragraph.) Writing `Sym^n C := sorry` makes every downstream
+equation a statement
 about a junk term, which is why `Albanese/AlbaneseUP.lean` keeps its obligations
 unproved rather than discharging them against a meaningless definition.
 
@@ -80,12 +83,34 @@ Two honest caveats about that witness:
   consistent and the statements are not about nothing*, not as *the hard case is
   covered*.
 
-## What is *not* here
+## What is *not* here — but see `Albanese/SymPowColimit.lean` first
 
-`SymPowData C n` for `n ≥ 2`. That is the missing quotient, and it is the honest
-boundary of this leg. See `Albanese/AlbaneseFromData.lean` for the Albanese
-universal property proved over this interface, and the header of
-`Albanese/AlbaneseUP.lean` for the pinned statements.
+**This section is superseded in part (2026-07-28).** It said `SymPowData C n` for `n ≥ 2`
+is "the missing quotient", the honest boundary of the leg. That reading was tied to one
+presentation of the object — Milne's affine-and-glue construction — and
+`Albanese/SymPowColimit.lean` replaces it:
+
+* the pair `(D, hproj)` **is** a colimit of the `S_n`-action on `C^n`, in both directions
+  (`symPowOfColimit`, `SymPowData.isColimit`, and `hasColimit_permDiagram_iff` for the
+  equivalence, so the identification loses nothing);
+* consequently `hproj` — the half that only `n = 1` witnessed here — is `colimit.w`, free
+  at every `n`;
+* and the **affine** case of Milne III.3 Proposition 3.1 is *proved* at every `n`
+  (`symPowData_affine`), with `mem_sections_singleObj_iff` naming the carrier as `Spec` of
+  the invariant subring of the `n`-fold tensor power, i.e. Milne's `(A^{⊗n})^{S_n}`.
+
+What is genuinely still missing is the **gluing**: `HasColimitsOfShape (SingleObj
+(Equiv.Perm (Fin n))) Scheme`. So the boundary moved from a construction subproject to one
+instance about one named diagram, and — since `Over.forget` creates colimits — it is a
+statement about `Scheme` with no base and no curve in it.
+
+Also note the warning above is now *checked* rather than asserted: `permAut_swap_ne_id`
+exhibits `permAut ≠ 𝟙` at a transposition (in `Type`, at `Bool`, `n = 2`), so
+`symPowDataTrivial` demonstrably fails `hproj`. Nothing in this tree had verified that.
+
+See `Albanese/AlbaneseFromData.lean` for the Albanese universal property proved over this
+interface, `Albanese/AlbaneseFromColimit.lean` for the same statement with no `SymPowData`
+argument at all, and the header of `Albanese/AlbaneseUP.lean` for the pinned statements.
 
 ## References
 
@@ -255,8 +280,9 @@ content — and `n = 1` is the degenerate case for the group-law step. See the h
 morphism out of `C^1` — symmetric or not, since `S_1` is trivial — factors uniquely
 through it.
 
-For `n ≥ 2` inhabiting `SymPowData` *together with the symmetry hypothesis* is the
-missing scheme-quotient construction. -/
+For `n ≥ 2`, inhabiting `SymPowData` *together with the symmetry hypothesis* is equivalent
+to a colimit of the `S_n`-action (`Albanese/SymPowColimit.lean`) — proved for affine
+`k`-schemes at every `n`, still open for a proper curve. -/
 noncomputable def symPowDataOne (C : K) : SymPowData C 1 where
   carrier := C
   proj := Pi.π (fun _ : Fin 1 => C) 0

@@ -85,12 +85,27 @@ Milne's argument itself **is** proved, over the symmetric power taken as an
   theorem with an arbitrary abelian variety target is axiom-clean.
 
 So the honest description of this leg is **one missing object**, not six gaps:
-`SymPowData C g` for `g ≥ 2`. Mathlib has no quotient of a scheme by a finite
-group action (its `SymmetricPower` is for modules), and the project's
-`analogies/m3-route-audit.md` scopes the construction at roughly 2400–3800
-lines — an action typeclass, the affine quotient `Spec(A^{S_g})` with its
-universal property, the glued global quotient, and smoothness of `Sym^g C` for a
-curve. That is a subproject, not a step.
+`SymPowData C g` for `g ≥ 2`.
+
+**Update (2026-07-28) — that object is now identified, and the missing part is smaller than
+this paragraph used to say.** `Albanese/SymPowColimit.lean` proves that `SymPowData C n`
+*together with* its symmetry hypothesis **is** a colimit of the `S_n`-action on `C^n`, in
+both directions (`hasColimit_permDiagram_iff`), so:
+
+* the symmetry half is `colimit.w` — free, at every `n`;
+* the **affine** case of Milne III.3 Proposition 3.1 is *proved* at every `n`
+  (`symPowData_affine`), with the carrier named as `Spec` of the invariant subring of the
+  `n`-fold tensor power — Milne's `(A^{⊗ n})^{S_g}` — by `mem_sections_singleObj_iff`;
+* what remains is the **gluing**, as one instance: `HasColimitsOfShape (SingleObj
+  (Equiv.Perm (Fin g))) Scheme`. Since `Over.forget` creates colimits, that is a statement
+  about `Scheme` with no base and no curve in it
+  (`symPowData_over_of_scheme_colimits`).
+
+The `analogies/m3-route-audit.md` figure of 2400–3800 lines priced the affine-and-glue
+route as a whole (action typeclass, affine quotient with its universal property, glued
+global quotient, smoothness). Two of those four are no longer work: the affine quotient and
+its universal property come from mathlib's colimits. Treat the figure as historical and read
+`Albanese/SymPowColimit.lean` before budgeting from it.
 
 What *has* landed, and is genuinely unconditional, is the rational-map
 extension this file consumes: `Scheme.RationalMap.extend_to_av` (Milne Theorem
