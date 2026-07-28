@@ -238,6 +238,43 @@ noncomputable def AffineCoverMVSquare.h1CokAddEquivCechQuotient {k : Type u} [Fi
           (LinearMap.range (S.sectionDiff (Scheme.toModuleKSheaf C))).toAddSubgroup)).trans
     (QuotientAddGroup.quotientAddEquivOfEq S.range_sectionDiff_toAddSubgroup)
 
+/-- **The dual-number kernel of the relative Picard functor, as an `AddSubgroup`** — the
+prerequisite of clause (iii) of the geometric middle (run 0067).
+
+`ker(Pic^♯_{C/k}(Spec k[ε]) →+ Pic^♯_{C/k}(Spec k))`, the tangent space of the Picard functor
+at the identity in its functor-of-points form.
+
+WHY THIS EXISTS AS A NAMED DEFINITION rather than being spelled inline. The
+representability leg (`pointedDualNumberPointsEquivAddKernel`,
+`Picard/Pic0DualNumberCocycle.lean`) delivers this kernel as the *subtype*
+`{a // (map …).hom a = 0}`. That subtype **is** the coercion of this `AddSubgroup` — the
+`rfl` below — but instance search does not see through the subtype spelling to find the
+group structure, so an `≃+` stated against the subtype fails to elaborate with
+`failed to synthesize Add {a // …}` while the same statement against this definition
+elaborates. Spelled as the `AddSubgroup`, the group structure is free.
+
+This is what makes clause (iii) of `semilinearComparison_cotangentSpaceDual_h1Cok`
+*statable* as an additive equivalence rather than as a bare `Equiv` — and a bare `Equiv`
+does not transport `finrank`, which is precisely the error the sibling project retracted on
+this lane (inbox I-0495, 2026-07-28). The Čech side of the same comparison is
+`AffineCoverMVSquare.h1CokAddEquivTruncExpCechKernel` below, already additive. -/
+noncomputable def relPicDualKernel {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] :
+    AddSubgroup ((PicSharp.relPresheaf C).obj (Opposite.op (overDualNumber k))) :=
+  ((PicSharp.relPresheaf C).map (overDualNumberZero k).op).hom.ker
+
+/-- The `AddSubgroup` spelling of the dual-number kernel has the same carrier as the subtype
+the representability leg produces — definitionally, so no transport is needed anywhere. Only
+the *instance* behaviour differs (see `relPicDualKernel`). -/
+theorem relPicDualKernel_eq_subtype {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] :
+    (relPicDualKernel C : Type (u + 1))
+      = {a : (PicSharp.relPresheaf C).obj (Opposite.op (overDualNumber k)) //
+          ((PicSharp.relPresheaf C).map (overDualNumberZero k).op).hom a = 0} :=
+  rfl
+
 /-- **The Čech side of the Kleiman §5 Thm 5.11 cocycle leg, assembled**:
 for any 2-affine cover `S` of the curve, the concrete Čech cokernel
 `Ȟ¹(S, 𝒪_C)` — i.e. `H¹(C, 𝒪_C)`, by `hModuleOneEquivH1Cok_curve` — is
@@ -713,21 +750,28 @@ sibling project restated its own T3/T4 target as this same comparison after
 porting clauses (i) and (ii), so clause (iii) is the *joint* residue of both
 developments and whichever side proves it hands it to the other.
 
-WHY CLAUSE (iii) IS NOT SPLIT OUT AS ITS OWN NAMED `sorry` HERE, recorded because
-it is the obvious next move and it does not work yet. Naming it requires stating
-an *additive* equivalence out of the kernel subtype
-`{a : Pic^♯(Spec k[ε]) // restriction along ε ↦ 0 vanishes}`, and that subtype
-carries no `AddCommGroup` instance in this development: `relPicKernelSMul` gives
-it a multiplicative-monoid `k`-action, and `pointedDualNumberPointsEquivAddKernel`
-produces it as a `Subtype` of a group rather than as an `AddSubgroup` bundle. So a
-clause-(iii) statement written today is either about a bare `Equiv` — which does
-not transport `finrank`, the exact error the sibling retracted on this lane — or it
-has to carry its own additivity side conditions, which reintroduces the
-bookkeeping that `semilinearComparison_cotangentSpaceDual_h1Cok` was factored to
-avoid. Promoting the kernel to an `AddSubgroup` (or transporting the group
-structure along `pointedDualNumberPointsEquivAddKernel`) is the real prerequisite,
-and it is a small but genuine piece of work rather than a restatement. Until then
-this docstring, not a second sorry, is the honest home for the residue. -/
+STATING CLAUSE (iii) — the prerequisite, and the trap in it. Clause (iii) has to be
+an *additive* equivalence out of the dual-number kernel: a bare `Equiv` does not
+transport `finrank`, which is exactly the error the sibling project retracted on
+this lane (inbox I-0495, 2026-07-28). The representability leg
+(`pointedDualNumberPointsEquivAddKernel`) delivers that kernel as the *subtype*
+`{a // (map …).hom a = 0}`, and an `≃+` stated against the subtype **fails to
+elaborate** — `failed to synthesize Add {a // …}` — because instance search does
+not see through the subtype spelling to the group structure.
+
+The fix is not new mathematics, only the right spelling: `relPicDualKernel` above
+names the same thing as an `AddSubgroup` (`rfl`-equal to the subtype, see
+`relPicDualKernel_eq_subtype`), and against that the additive statement elaborates.
+So clause (iii) is stateable as
+`relPicDualKernel C ≃+ S.H1Cok (Scheme.toModuleKSheaf C)` plus the Mumford-scaling
+intertwining, with the Čech side already additive
+(`AffineCoverMVSquare.h1CokAddEquivTruncExpCechKernel`).
+
+What is *not* yet done is the mathematics: exhibiting that equivalence, i.e. sending
+a kernel class to its transition unit. That is why clause (iii) remains inside this
+statement rather than sitting beside it as a second `sorry` — splitting it would add
+a declaration without reducing the open content, and the reduction only becomes real
+once the map exists. -/
 theorem semilinearComparison_cotangentSpaceDual_h1Cok {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
