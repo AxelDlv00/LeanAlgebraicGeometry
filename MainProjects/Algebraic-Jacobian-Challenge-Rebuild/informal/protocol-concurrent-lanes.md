@@ -41,12 +41,21 @@ your tree is built from the *old* snapshot while your parent is the *new* commit
 It never checks that the tree was built from that ref. You publish a stale tree, silently
 reverting everything that landed in the window.
 
-**Measured twice in one session, on the same four files.** A commit reverted four files; another
-lane restored them (`a1ef4d59c`); the next commit from the first lane re-reverted the *same*
-four, because its `read-tree` preceded their CAS. Both commits staged explicit paths and both
-pathspecs were honoured — **the sweep came from the TREE BASE, not the pathspec.** This is why
-"stage explicit files" does not protect you, and why the symptom is indistinguishable from §1b's
-shared-index staleness. If you are diagnosing a mystery revert, check *this* first.
+**Measured once, and the measurement is narrow — do not over-read it.** `e964967e8` has parent
+`a1ef4d59c` and, diffed against *that parent*, deletes 95 lines of
+`informal/w4-rep-critical-path.md`, 52 of `informal/w5-t4-worksheet.md` and 19 of
+`Picard/Pic0ChartLocusIsOpen.lean` — exactly the restore `a1ef4d59c` had just performed, undone.
+Its `read-tree` ran before `a1ef4d59c` landed; its parent was captured after. It staged explicit
+paths and the pathspec *was* honoured: **the sweep came from the TREE BASE, not the pathspec**,
+which is why "stage explicit files" is not a defence and why the symptom is indistinguishable
+from §1b's shared-index staleness.
+
+**Two other lanes audited their own CAS commits the same day (fifteen commits between them,
+recipe verbatim) and found zero reverts.** That is consistent with this: the race only fires when
+another lane's CAS lands inside your particular window, so clean commits are the expected
+outcome, not evidence of absence. The discriminating question is not "did my commits look clean"
+but "was my `read-tree` separated from my `rev-parse` by somebody else's commit". Treat §1a as
+cheap insurance, not as a diagnosis of every mystery revert — and check §1b too.
 
 **The fix is one line — capture the parent BEFORE the tree, and read-tree that sha:**
 
