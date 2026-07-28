@@ -86,13 +86,22 @@ needs. Fixed to `{C : Type w} [Category.{v} C]`, same proof.)
 `(Under k)ᵒᵖ`*, i.e. the `n`-fold *coproduct in `Under k`*. Everything here is about
 `⨂[k] _ : Fin n, A`. For those to be the same object one needs (i) the `n`-ary coproduct of
 `k`-algebras identified with the `n`-fold tensor power and (ii) the induced permutation action
-matched to `PiTensorProduct.permAlgHom`. Neither exists: mathlib has only the **binary** case
-(`Algebra/Category/Ring/Constructions.lean`), and nothing in AJC builds the `n`-ary one.
+matched to `PiTensorProduct.permAlgHom`.
 
-So the honest reading is: this file fixed the *category* mismatch its predecessor had, and the
-same shape reappears one level down at the *object*. Calling these statements "directly
-consumable" would be the overclaim; the missing brick is the `n`-ary coproduct/tensor-power
-identification, which is cheap but real.
+**Updated 2026-07-29 (run 0069 r6): (i) and (ii) now exist; the paragraph above said "neither
+exists" and that is no longer true.** `Albanese/TensorPowerCoproduct.lean` supplies the `n`-ary
+universal property (`existsUnique_coprodLift`) together with both equivariance statements
+(`coprodLift_permAlgHom` and `permAlgHom_comp_singleAlgHom`). The claim that mathlib has only
+the binary case was itself the error: mathlib has both halves of the `n`-ary property
+unbundled — uniqueness *is* `PiTensorProduct.algHom_ext`, existence is one `liftAlgHom` — and
+only the binary *pushout* is packaged as a colimit, which is what the comparison was made
+against.
+
+What still blocks literal consumption is narrower than a missing brick: the `Cofan`/`IsColimit`
+packaging in `(Under k)ᵒᵖ` has not been written, so `symPowData_affineAlgebra`'s diagram and
+this file's carrier remain formally distinct even though the mathematics identifying them is
+proved. Calling these statements "directly consumable" would still be an overclaim — but the
+remaining step is categorical bookkeeping, not mathematics.
 
 ## References
 
@@ -309,9 +318,11 @@ third time. Three independent occurrences of one inversion is a sign the convent
 coherent, not that something is off.
 
 What this does **not** do: it does not rewrite `symPowData_affineAlgebra` to consume the named
-carrier, and the obstruction is *not* merely mechanical — see (b) in the header. That file's
-diagram is built from the `n`-fold coproduct of algebras, this one's from the tensor power, and
-identifying those at `n ≥ 3` is a missing brick rather than an alignment.
+carrier. That file's diagram is built from the `n`-fold coproduct of algebras, this one's from
+the tensor power. **Superseded in part (2026-07-29):** this paragraph used to say identifying
+those at `n ≥ 3` is "a missing brick rather than an alignment". The identification is now
+proved (`Albanese/TensorPowerCoproduct.lean`, with both equivariance clauses); what is left is
+the `Cofan`/`IsColimit` packaging in `(Under k)ᵒᵖ`, which *is* alignment. See (b) in the header.
 
 The universe binder here is `{C : Type w} [Category.{v} C]` deliberately. With everything pinned
 to `u` the lemma cannot be instantiated at `Under k` (`Category.{u, u+1}`) — it was landed that

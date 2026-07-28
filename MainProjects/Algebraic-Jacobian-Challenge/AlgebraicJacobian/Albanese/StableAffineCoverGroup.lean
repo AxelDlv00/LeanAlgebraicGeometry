@@ -74,27 +74,37 @@ through averaging would exclude exactly the cases the challenge is stated over.
 a *finite group acting on a scheme by automorphisms*, with no Galois hypothesis and no
 characteristic hypothesis.
 
-**Does** now also apply it to `S_n` acting on `C^n` — `exists_stable_affineOpen_perm` below,
-via `MonObj.permAutHom`. See the correction in the main-results list: the two previous
-revisions of this section, in both directions, were wrong about that.
+**Does** now also apply it to `S_n` acting on `C^n`: `exists_stable_affineOpen_perm` for the
+product in `Scheme`, and `exists_stable_affineOpen_perm_over` for the underlying scheme of the
+`Over (Spec k̄)`-product — **which is the one the leg uses**, and is a different object (see
+that theorem's docstring; `Over.forget` does not preserve binary products).
 
 **Does not**: build the glue data. `HasColimit (permDiagram C g)` remains open and
-`AlbaneseUP.lean`'s six sorries are unchanged. Counting honestly, a glue-data assembly needs
-*four* things and this file now supplies two of them:
+`AlbaneseUP.lean`'s six sorries are unchanged.
 
-1. ✓ a `G`-stable affine cover — below;
-2. ✓ the `Aut`-valued `S_n`-action — `MonObj.permAutHom`, and its instantiation here;
-3. the identification of the `n`-fold coproduct of algebras with the `n`-fold tensor power,
-   matching its permutation action to `PiTensorProduct.permAlgHom` — mathlib has only the
-   *binary* case (`Algebra/Category/Ring/Constructions.lean`), and nothing in AJC builds the
-   `n`-ary one. Without it the affine layer of `Albanese/SymPowInvariantsUnder.lean` and
-   `SymPowColimit.symPowData_affineAlgebra` are about different objects;
-4. the cocycle/overlap agreement of the chart quotients, plus `OrbitsInAffineOpen` **for the
-   curve** — where quasi-projectivity would enter, and mathlib has no quasi-projectivity
-   vocabulary at this pin.
+**The count, in one place, because three places in this tree disagreed about it.** A glue-data
+assembly needs *four* things:
 
-Nothing consumes this file yet, and item 2 is why: it is not wired in, and it cannot be until
-that action exists.
+1. ✓ a `G`-stable affine cover — below, with both `S_n` instantiations.
+2. ✓ the `Aut`-valued `S_n`-action — `MonObj.permAutHom` (`Albanese/GrpObjFoldSum.lean`).
+3. **Partly.** The `n`-ary coproduct of commutative algebras = `n`-fold tensor power, with the
+   permutation action matched to `PiTensorProduct.permAlgHom`, is
+   `Albanese/TensorPowerCoproduct.lean` (`existsUnique_coprodLift`, `coprodLift_permAlgHom`,
+   `permAlgHom_comp_singleAlgHom`). What is **not** built is the `Cofan`/`IsColimit` packaging
+   in `(Under k)ᵒᵖ`, so `SymPowColimit.symPowData_affineAlgebra` still does not literally
+   consume it. The algebra-level universal property is the mathematics; the categorical
+   crossing is undone bookkeeping.
+4. **Open, and the honest wall.** The cocycle/overlap agreement of the chart quotients, plus
+   `OrbitsInAffineOpen` **for the curve** — where quasi-projectivity would enter, and mathlib
+   has no quasi-projectivity vocabulary at this pin.
+
+So: **2 supplied, 1 partial, 1 open.** Do not round that to 3. A fresh-context review of run
+0069 r6 found the roadmap saying "3 of 4", the team thread saying "2 of 4", and this header
+asserting both at once — which is why the count now lives here and nowhere else.
+
+**Nothing outside this file consumes any of it.** That is four consecutive rounds on this lane
+shipping a layer with no consumer, and it should be read as the signal it is rather than as an
+incidental gap.
 
 ## References
 
@@ -250,21 +260,63 @@ is what makes item 1 consumable rather than free-standing. -/
 
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 
-/-- **Every point of `C^n` has an `S_n`-stable affine open neighbourhood.**
+/-- **Every point of `C^n` has an `S_n`-stable affine open neighbourhood** — for `C` a
+plain scheme and `C^n` the product *in `Scheme`*.
 
 The `S_n`-equivariant form of `exists_stable_affineOpen_of_orbits`, obtained by feeding it
 the action `MonObj.permAutHom C n`. The orbit hypothesis is unchanged and still has to be
-supplied for the curve — that is item 4 of the glue-data bill, where quasi-projectivity
-would enter — but the *equivariance* half is now discharged.
+supplied for the curve — item 4 of the glue-data bill, where quasi-projectivity would
+enter — but the *equivariance* half is discharged.
 
-Note what is and is not claimed: this gives the stable charts a `Scheme.GlueData` for
-`Sym^n C` would be built on. It does not build that glue data, and `HasColimit
-(permDiagram C n)` remains open. -/
+**Read the ambient category, and do not assume it is the leg's.** `∏ᶜ` here is formed in
+`Scheme`, whereas the Albanese connector forms it in `Over (Spec k̄)`: `SymPowData.proj` is
+instantiated at `K = Over (Spec k̄)` by `AlbaneseUP`, `AlbaneseFromData` and
+`SymPowColimit`. Those two objects are **not** the same — `Over.forget` does not preserve
+binary products (`PreservesLimitsOfShape (Discrete (Fin 2)) (Over.forget _)` does not
+synthesize; one product is the fibre product over `Spec k̄`, the other over the terminal
+scheme). So this theorem does *not* by itself apply to the leg's `C^n`; use
+`exists_stable_affineOpen_perm_over` below, which acts on the object the leg uses.
+
+An earlier version of this docstring said the availability of the action "is what makes
+item 1 consumable". That was false for exactly this reason, and it is the second time on
+this leg that a correct fix at one layer (there: a universe binder) was reported as if it
+had fixed the layer above. -/
 theorem exists_stable_affineOpen_perm (C : Scheme.{u}) (n : ℕ)
     (h : StableGroupAction.OrbitsInAffineOpen (MonObj.permAutHom C n))
     (x : (∏ᶜ (fun _ : Fin n => C) : Scheme.{u})) :
     ∃ U : (∏ᶜ (fun _ : Fin n => C) : Scheme.{u}).Opens,
       IsAffineOpen U ∧ x ∈ U ∧ StableGroupAction.IsStableOpen (MonObj.permAutHom C n) U :=
   StableGroupAction.exists_stable_affineOpen_of_orbits (MonObj.permAutHom C n) h x
+
+/-- **The `S_n`-action on the underlying scheme of the `Over (Spec k̄)`-product.**
+
+This is the action on the object the Albanese leg actually uses. `MonObj.permAutHom C n` for
+`C : Over (Spec k̄)` is valued in `Aut` of the *over-category* product; pushing it along
+`Over.forget` with `Functor.mapAut` gives an action on `(∏ᶜ fun _ => C).left`, a genuine
+`Scheme`, which is what the stable-cover theorem consumes.
+
+Note this is a transport of the action, not a comparison of the two products: it makes no
+claim that `(∏ᶜ fun _ => C).left` agrees with the `Scheme`-product of `C.left`, which is
+false in general. -/
+noncomputable def permAutHomOverLeft {kbar : Type u} [Field kbar]
+    (C : Over (Spec (CommRingCat.of kbar))) (n : ℕ) :
+    Equiv.Perm (Fin n) →* Aut ((∏ᶜ (fun _ : Fin n => C)).left) :=
+  (Functor.mapAut _ (Over.forget (Spec (CommRingCat.of kbar)))).comp (MonObj.permAutHom C n)
+
+/-- **The stable-cover theorem at the object the Albanese leg uses.**
+
+Same statement as `exists_stable_affineOpen_perm`, but for `(∏ᶜ fun _ : Fin n => C).left`
+with `C : Over (Spec k̄)` — the underlying scheme of the *over-category* product, which is
+what `SymPowData C n` is about. This is the form a `Scheme.GlueData` for `Sym^n C` would
+consume.
+
+The orbit hypothesis remains the open geometric input (item 4). -/
+theorem exists_stable_affineOpen_perm_over {kbar : Type u} [Field kbar]
+    (C : Over (Spec (CommRingCat.of kbar))) (n : ℕ)
+    (h : StableGroupAction.OrbitsInAffineOpen (permAutHomOverLeft C n))
+    (x : ((∏ᶜ (fun _ : Fin n => C)).left)) :
+    ∃ U : ((∏ᶜ (fun _ : Fin n => C)).left).Opens,
+      IsAffineOpen U ∧ x ∈ U ∧ StableGroupAction.IsStableOpen (permAutHomOverLeft C n) U :=
+  StableGroupAction.exists_stable_affineOpen_of_orbits (permAutHomOverLeft C n) h x
 
 end AlgebraicGeometry

@@ -251,6 +251,33 @@ theorem coprodLift_permAlgHom (f : ι → (A' →ₐ[R] S)) (e : Equiv.Perm ι) 
     Finset.prod_update_of_mem (Finset.mem_univ i)]
   simp
 
+omit [Fintype ι] in
+/-- **The action on the coprojections: permuting factors relabels the inclusions.**
+
+`permAlgHom e ∘ singleAlgHom i = singleAlgHom (e⁻¹ i)`.
+
+This is the statement that matches the two `S_n`-actions *at the level of the coproduct
+structure*, and it is the one "matching the permutation action to `permAlgHom`" really asks
+for: `coprodLift_permAlgHom` above relates the lift to itself under reindexing, with both
+sides inside `PiTensorProduct`, whereas this one says how the action moves the `i`-th
+coprojection — the datum a cofan is built from.
+
+Note it carries `e⁻¹`, independently confirming the variance of `coprodLift_permAlgHom`:
+`permAlgHom e` sends `tprod x` to `tprod (x ∘ e)`, so the tuple `mulSingle i a` is hit at the
+slot `j` with `e j = i`. -/
+theorem permAlgHom_comp_singleAlgHom [DecidableEq ι] (e : Equiv.Perm ι) (i : ι) :
+    (permAlgHom R A' e).comp (singleAlgHom (R := R) (A := fun _ : ι => A') i)
+      = singleAlgHom (R := R) (A := fun _ : ι => A') (e.symm i) := by
+  classical
+  ext a
+  rw [AlgHom.comp_apply, singleAlgHom_apply, permAlgHom_tprod, singleAlgHom_apply]
+  congr 1
+  funext j
+  by_cases hj : j = e.symm i
+  · subst hj; simp
+  · have hne : e j ≠ i := fun hc => hj (by rw [← hc, Equiv.symm_apply_apply])
+    simp [Pi.mulSingle_eq_of_ne hj, Pi.mulSingle_eq_of_ne hne]
+
 end Equivariance
 
 end Coproduct
