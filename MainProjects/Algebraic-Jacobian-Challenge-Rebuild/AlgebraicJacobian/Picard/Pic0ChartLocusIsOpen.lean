@@ -28,19 +28,44 @@ Reading the (b-amendment) against the tree at HEAD:
 | fibre-field | `hasWitnessH1Vanishing_iff_of_separable` (`FibreField:157`) | **landed** |
 | GAP-1 inverse | `BasicOpenCocycleDatum.invDatum` (`Pic0ChartShiftedDatum`) | **landed** |
 | carrier/field translation | `isOpen_setOf_hasWitnessH1Vanishing_testPointField` (below) | **landed** |
-| GAP-1 mul | a datum for a *product*, on a common cover refinement | **NOT landed** |
-| `cechPicClass_inv` | the class law of `invDatum` | **NOT landed** |
+| twist collapse | `chartTwist_collapse` (`Pic0ChartTwistCollapse`) | **landed** |
+| ~~GAP-1 mul~~ | ~~a datum for a *product*, on a common cover refinement~~ | **NOT NEEDED** |
+| honesty over a general affine base | a plus class over `A` presented by an honest Čech class | **NOT landed** |
+| pointwise presentation | `IsChartDatumPresentation` (below) | **NOT landed** |
+| `cechPicClass_inv` | the class law of `invDatum` | **NOT landed**, and off the path |
 
 (The engine is Noetherian-free; the GAP-1 inverse and the carrier/field translation landed
 2026-07-28.)
 
-So the chain is landed *except* at one place, and it is worth being exact about where,
-because the roadmap node's phrasing ("transports (i)/(ii) are DAT-B's") suggests the residue
-is point-set bookkeeping.  It is not.  The residue is the **shifted-datum presentation**: to
-run the engine at the twisted class `λθᵐ(−Σ)` one needs a `BasicOpenCocycleDatum` *whose
-class is that twisted class*, and producing it needs the mul/tensor half of GAP-1, which
-needs a common refinement of two basic-open covers.  Everything downstream of that datum is
-landed.
+**The GAP-1 mul row is struck, and this paragraph is a correction of what stood here.**  It
+used to say the residue was the shifted-datum presentation and that "producing it needs the
+mul/tensor half of GAP-1, which needs a common refinement of two basic-open covers".  That is
+false (`Picard/Pic0ChartTwistCollapse.lean`): the twist is ONE `thetaFamily`, since
+`sigmaFamily` *is* a `thetaFamily` and `thetaFamily` is multiplicative in its class, so Σ and
+`θᵐ` fuse in `CechPic` over the fixed base before any datum is extracted; and
+`exists_cechPicClass_eq` presents an arbitrary class, product or not, outright.
+
+**What genuinely remains, stated without under-pricing it** (this is the correction the
+reviewer of I-0558 asked for).  Two things, and neither is bookkeeping:
+
+1. **Honesty over a general affine base.**  `exists_datum_cechPicClass_chartTwistClass` takes
+   an honest Čech class `c` over `B` as a *hypothesis*, and nothing in the tree supplies one
+   over a general affine `B`.  The splitting theorem
+   (`exists_splitting_of_picEt`, `Picard/Pic0ChartSplit.lean`) needs `[Field K]` — its engine
+   is étale field-cofinality, which is false over a general base — and the only other plus-unit
+   surjectivity in the tree (`PicEtAff.unit_surjective_of_section`) is also field-only.  Over
+   `Spec A` there is as yet no `c` to feed the corollary; obtaining one is what the
+   (b-amendment)'s "collapse over the étale carrier `B := E.Carrier`" step means, and it is a
+   construction.
+2. **The pointwise presentation itself.**  `IsChartDatumPresentation` asks for ONE datum over
+   `A` whose fibre predicate matches, at every residue field simultaneously, a split predicate
+   whose splitting field `L` varies from point to point (`IsSplitWitness` quantifies `L`
+   existentially *per point*).  Calling that "a `cechPicClass` base-change statement, not a
+   construction" — as an earlier draft of this header did — prices a construction as
+   bookkeeping, which is precisely the mis-pricing the twist-collapse retraction was written
+   to correct one level up.
+
+Everything downstream of a presenting datum is landed.
 
 ## The shape of this file
 
@@ -48,8 +73,8 @@ landed.
 presentation of the twisted fibre class by a datum — and `isOpen_chartLocus_of_presentation`
 derives the openness from it over an affine test.  This is the honest factorisation: the
 theorem is real mathematics (it is the three transports plus the dictionary), and the
-hypothesis is a single, precisely stated obligation which the GAP-1 mul/tensor brick will
-discharge.
+hypothesis is a single, precisely stated obligation.  (An earlier draft said the GAP-1
+mul/tensor brick would discharge it; see the struck table row for why that was wrong.)
 
 Writing it the other way round — stating `isOpen_chartLocus` unconditionally with a `sorry`
 — would hide the fact that the missing input is a *construction*, not a proof.
@@ -57,8 +82,11 @@ Writing it the other way round — stating `isOpen_chartLocus` unconditionally w
 **This file is sorry-free as of 2026-07-28.**  Its earlier single `sorry` (the carrier/field
 translation) was not a mathematical gap: it was an artifact of taking the `Algebra A` /
 `IsScalarTower k A` structures on `κ(t)` as explicit `alg`/`tow` *arguments*, which both made
-the statement unprovable — an arbitrary regrading of `κ(t)` over `A` is not a legal reading of
-the fibre — and forced every consumer to carry two dead parameters.  With the canonical
+the statement FALSE for some regradings — `HasWitnessH1Vanishing` reads its `Algebra` instance
+inside `relCurveMap C B L`, so a non-canonical `alg` names a different base-change map and a
+different set — and forced every consumer to carry two dead parameters.  (No refuting
+`A`, `alg` was exhibited, so the honest verdict is "wrong shape, false for some regradings",
+not "no proof can exist"; recorded per I-0559.)  With the canonical
 instances of `Picard/Pic0ChartTestPoint.lean` the whole translation is
 `hasWitnessH1Vanishing_iff_of_fieldExtension` across `Spec.residueFieldIso`, and the carrier
 identification `↥(overSpec k A).left = PrimeSpectrum A` is definitional.  The general lesson
@@ -117,15 +145,16 @@ Two remarks on the shape, both deliberate:
 * it is stated as an **agreement of predicates at every point**, not as a class equality.
   That is weaker than "the datum's class is `μ`", and it is all the openness argument
   consumes — which matters, because the class equality is what needs `cechPicClass_inv` and
-  the mul/tensor of GAP-1, whereas a lane that can produce the pointwise agreement by any
+  a class-level identification, whereas a lane that can produce the pointwise agreement by any
   other route may use this theorem immediately;
 * the split predicate is read at `Over.testPoint`, i.e. at the canonical residue-field point
   of the affine test, so no choice of affine chart enters;
 * the `Algebra A (testPointField t)` / `IsScalarTower k A (testPointField t)` instances the
   datum predicate needs are the **canonical** ones of `Picard/Pic0ChartTestPoint.lean`.  An
   earlier draft of this file carried them as explicit `alg`/`tow` arguments; that was strictly
-  worse — it made the statement unprovable (an arbitrary regrading of `κ(t)` over `A` is not a
-  legal reading of the fibre) as well as unusable. -/
+  worse — it made the statement false for some regradings (`HasWitnessH1Vanishing` reads its
+  `Algebra` instance inside `relCurveMap`, so a non-canonical `alg` names a different set) as
+  well as unusable. -/
 def IsChartDatumPresentation {A : Type u} [CommRing A] [Algebra k A]
     (μ : picEt C (overSpec k A)) (D : BasicOpenCocycleDatum C A π) : Prop :=
   ∀ t : (overSpec k A).left,
@@ -187,8 +216,8 @@ Three points about the proof, each of which was a suspected wall and is not:
   `Over.instIsScalarTowerTestPointFieldAffine`), so nothing has to be passed in as an
   argument.  An earlier draft of this file took `alg`/`tow` as explicit hypotheses and left
   the conclusion as a `sorry`; that was a statement-shape artifact, not a gap — and worse,
-  the hypothesis form is *unprovable*, since an arbitrary `alg` need not be the canonical
-  instance and the predicate is not invariant under regrading the field over `A`;
+  the hypothesis form is *false for some regradings*, since an arbitrary `alg` need not be the
+  canonical instance and the predicate is not invariant under regrading the field over `A`;
 * the only genuine content is the transport across `Spec.residueFieldIso`, which is
   `hasWitnessH1Vanishing_iff_of_fieldExtension` applied to the isomorphism, in the tower
   `A → κ(q) → (Spec A).residueField t` supplied by
@@ -268,7 +297,7 @@ The general-test statement follows from this one by the affine-piece locality of
 That last step is `isOpen_iff_forall_isOpen_inter`-style bookkeeping and needs no new
 mathematics; it is not stated here only because it would need the presentation hypothesis
 *per affine piece*, which is a statement about the general test and therefore belongs with
-the mul/tensor brick that produces the presentations. -/
+the honesty/presentation obligations named in the header table. -/
 theorem isOpen_setOf_isSplitWitness_of_presentation (hπ : π ≫ P1.structureMap k = C.hom)
     {A : Type u} [CommRing A] [Algebra k A]
     {μ : picEt C (overSpec k A)} {D : BasicOpenCocycleDatum C A π}
