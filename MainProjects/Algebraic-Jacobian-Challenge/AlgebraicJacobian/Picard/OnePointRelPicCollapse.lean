@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.RelPicFunctor
+import AlgebraicJacobian.Picard.Pic0DualNumberCocycle
 
 /-!
 # The relative Picard group at a one-point test object (A.3.iii, tangent lane)
@@ -170,6 +171,99 @@ noncomputable def relPicQuotAddEquivAbs {S C T : Scheme.{u}} (πC : C ⟶ S) (π
 theorem relPicQuotAddEquivAbs_mk {S C T : Scheme.{u}} (πC : C ⟶ S) (πT : T ⟶ S)
     [Subsingleton T] [Nonempty T] (L : LineBundle.OnProduct πC πT) :
     relPicQuotAddEquivAbs πC πT (Quotient.mk _ L) = Quotient.mk _ L := rfl
+
+/-- **The collapse at the functor-object carriers** — the spelling every consumer of
+`PicSharp.relPresheaf` actually sees.
+
+Mathematically identical to `relPicQuotAddEquivAbs`, but stated against
+`(relPresheaf C).obj (op T)` and `(PicSharp C).obj (op T)` rather than the bare `Quotient`s.
+That is not cosmetic: the two agree only up to `AddCommGrpCat.of`, and at `instances`
+transparency Lean will *not* accept one where the other is expected — `AddMonoidHom.mem_ker`
+against the raw `Quotient` fails with a `Membership` instance mismatch. Restating here once
+means no consumer has to fight it. -/
+noncomputable def relPresheafObjAddEquivAbs {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (T : Over (Spec (CommRingCat.of k))) [Subsingleton T.left] [Nonempty T.left] :
+    (PicSharp.relPresheaf C).obj (Opposite.op T) ≃+ (PicSharp C).obj (Opposite.op T) :=
+  relPicQuotAddEquivAbs C.hom T.hom
+
+/-! ## §4. The dual-number specialisation: the ε-kernel leaves the relative world
+
+The tangent lane needs the collapse at exactly two test objects, and both are one-point
+spaces: `Spec k[ε]` (a local ring with nilpotent maximal ideal) and `Spec k`. The four
+instances below are what make the collapse *apply* there, and the two theorems transport the
+dual-number kernel — the functor-of-points tangent space of `Pic^♯_{C/k}` at the identity —
+from the relative functor onto the absolute Picard group, where the two-chart Čech
+unit-cocycle model of `Picard/Pic0DualNumberCocycle.lean` §6 lives. -/
+
+instance subsingleton_overDualNumber_left (k : Type u) [Field k] :
+    Subsingleton (overDualNumber k).left :=
+  inferInstanceAs (Subsingleton (PrimeSpectrum (DualNumber k)))
+
+instance nonempty_overDualNumber_left (k : Type u) [Field k] :
+    Nonempty (overDualNumber k).left :=
+  inferInstanceAs (Nonempty (PrimeSpectrum (DualNumber k)))
+
+instance subsingleton_overTrivial_left (k : Type u) [Field k] :
+    Subsingleton (Over.mk (𝟙 (Spec (CommRingCat.of k)))).left :=
+  inferInstanceAs (Subsingleton (PrimeSpectrum k))
+
+instance nonempty_overTrivial_left (k : Type u) [Field k] :
+    Nonempty (Over.mk (𝟙 (Spec (CommRingCat.of k)))).left :=
+  inferInstanceAs (Nonempty (PrimeSpectrum k))
+
+/-- **The collapse intertwines the two `ε ↦ 0` restriction homomorphisms.** Naturality of the
+collapse at the one morphism the tangent lane restricts along; `rfl` on representatives,
+because both functorial actions are the same pullback descended through different
+quotients. -/
+theorem relPresheafObjAddEquivAbs_map_overDualNumberZero {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (a : (PicSharp.relPresheaf C).obj (Opposite.op (overDualNumber k))) :
+    relPresheafObjAddEquivAbs C (Over.mk (𝟙 (Spec (CommRingCat.of k))))
+        (((PicSharp.relPresheaf C).map (overDualNumberZero k).op).hom a)
+      = ((PicSharp C).map (overDualNumberZero k).op).hom
+          (relPresheafObjAddEquivAbs C (overDualNumber k) a) := by
+  induction a using Quotient.ind with | _ L => ?_
+  rfl
+
+/-- Membership in the relative ε-kernel is membership in the absolute ε-kernel, transported.
+Both directions, the reverse one by injectivity of the collapse at `Spec k`. -/
+theorem mem_ker_relPresheaf_iff {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (a : (PicSharp.relPresheaf C).obj (Opposite.op (overDualNumber k))) :
+    a ∈ ((PicSharp.relPresheaf C).map (overDualNumberZero k).op).hom.ker ↔
+      relPresheafObjAddEquivAbs C (overDualNumber k) a ∈
+        ((PicSharp C).map (overDualNumberZero k).op).hom.ker := by
+  simp only [AddMonoidHom.mem_ker,
+    ← relPresheafObjAddEquivAbs_map_overDualNumberZero C a]
+  exact ⟨fun h => by rw [h]; exact map_zero _,
+    fun h => (relPresheafObjAddEquivAbs C
+      (Over.mk (𝟙 (Spec (CommRingCat.of k))))).injective (h.trans (map_zero _).symm)⟩
+
+/-- **The dual-number kernel of the RELATIVE Picard functor is the dual-number kernel of the
+ABSOLUTE Picard group** — additively.
+
+This is what the collapse buys the tangent lane. `relPicDualKernel C`
+(`Picard/Pic0AbelianVariety.lean`) is the left-hand side; the right-hand side is a kernel on
+`Pic(C ×_k Spec k[ε])`, which is where the two-chart Čech unit-cocycle engine computes. So
+the cocycle comparison no longer has to see the `H_T`-coset quotient at all.
+
+Additive, not a bare `Equiv`: the tangent-space dimension count transports `finrank`. -/
+noncomputable def kerRelPresheafAddEquivKerAbs {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] :
+    ((PicSharp.relPresheaf C).map (overDualNumberZero k).op).hom.ker ≃+
+      ((PicSharp C).map (overDualNumberZero k).op).hom.ker where
+  toFun a := ⟨relPresheafObjAddEquivAbs C (overDualNumber k) a.1,
+    (mem_ker_relPresheaf_iff C a.1).mp a.2⟩
+  invFun b := ⟨(relPresheafObjAddEquivAbs C (overDualNumber k)).symm b.1,
+    (mem_ker_relPresheaf_iff C _).mpr (by rw [AddEquiv.apply_symm_apply]; exact b.2)⟩
+  left_inv a := Subtype.ext (AddEquiv.symm_apply_apply _ _)
+  right_inv b := Subtype.ext (AddEquiv.apply_symm_apply _ _)
+  map_add' a b := Subtype.ext (map_add _ _ _)
 
 end PicSharp
 
