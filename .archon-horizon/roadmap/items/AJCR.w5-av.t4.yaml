@@ -3,56 +3,78 @@ title: 'T4 (WORKSHEET-FIRST, risk R1): the étale-plus/Zariski kernel crossing a
   — probe tonight'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "R1 RESOLVED IN THE GOOD DIRECTION (the etale-plus/Zariski crossing never\
-  \ had to be made). The five clauses of (iii) are landed, the carrier translation\
-  \ and the hom-level reduction square are landed, and AS OF RUN 0073 r4 TWO OF THE\
-  \ THREE INTERTWINING ITEMS THE REVIEWER FOUND (I-0630) ARE CLOSED.\n\nWHAT LANDED\
-  \ IN r4, both sorry-free and both scheme-general where they can be:\n\n ITEM (1)\
-  \ THE QUOTIENT-LEVEL REDUCTION SQUARE -- Tangent/TwoChartQuotientNaturality.lean\
-  \ (aa1efb95e). map_twoChartClassHom was naturality BEFORE the Cech quotient; the\
-  \ T2 engine's unitsReduction is between quotients. The missing piece was ONE containment\
-  \ and it is not cohomological: cechCoboundaryUnits (Y.resHom inf_le_left) (Y.resHom\
-  \ inf_le_right) <= (cechCoboundaryUnits (X.resHom _) (X.resHom _)).comap (f.unitsAppLE\
-  \ _ _ le_rfl). A coboundary is rho_0(v_0) * rho_1(v_1) for CHART units, and the\
-  \ two unitsAppLE functoriality lemmas already in the tree (Hom.map_unitsAppLE, Hom.unitsAppLE_map)\
-  \ move the pullback past the restriction in both directions. Declarations: cechCoboundaryUnits_le_comap_unitsAppLE,\
-  \ pullbackOverlapQuot, map_twoChartClass (with hsel at BOTH ends, as I-0630 requires),\
-  \ map_twoChartClass_eq_one_iff (the kernel form, through twoChartClass_injective).\n\
-  \n ITEM (2) THE TWO CECH H1 CARRIERS AGREE AS QUOTIENTS -- Tangent/DualNumberCarrierCoboundary.lean\
-  \ (83ac96bf8). dualNumberSectionsUnits carries the THICKENED coboundary subgroup\
-  \ ONTO the base one. Stated as an EQUALITY on purpose: a containment would let the\
-  \ map descend without identifying the quotients, i.e. would leave exactly the I-0571\
-  \ gap the reviewer named. cechCoboundaryUnits is a JOIN of two ranges and Subgroup.map\
-  \ distributes over it, so the proof is two range identifications (range_dualNumberSectionsUnits_comp)\
-  \ with NO Bool case analysis anywhere. dualNumberCechH1Equiv is the QuotientGroup.congr\
-  \ a consumer calls, and because it comes FROM the subgroup equality a kernel may\
-  \ be transported across it.\n\n ITEM (3a) STARTED -- Tangent/TwoChartSelector.lean:\
-  \ the Bool-indexed family and canonical selector of a Scheme.AffineTwoCover, with\
-  \ the side condition MEASURED rather than flagged: surjective_selector_iff says\
-  \ Function.Surjective sel <-> V0 != bot AND V0 != top. So hsel is not bookkeeping,\
-  \ it is \"the cover is honestly two-chart\" (V0 = bot degenerates to a one-chart\
-  \ cover; V0 = top says X is affine). Both hold for the Wave-5 curve but each is\
-  \ a real geometric input, supplied by the consumer.\n\nTHE SEAM THAT COST BOTH r4\
-  \ FILES A DETOUR, and it is a NEW family for this lane (worksheet 6.21): when two\
-  \ rfl-equal spellings of a restriction meet, exact is transparent and rw is NOT\
-  \ -- it fails with \"the target expression is not type-correct under the instances\
-  \ transparency level\" plus a presheaf.obj mismatch, which reads like a broken goal\
-  \ and is not one. Item (1) fixed it with simp [Scheme.resHom] (unfold the wrapper\
-  \ into the library's spelling; rfl does NOT close it); item (2) by STATING the bridging\
-  \ lemma in the CONSUMER's spelling (resHom) rather than the input lemma's (resAlgHom).\n\
-  \nT4 STILL OWES, BY NAME (not by count -- the discipline 6.18 imposed after three\
-  \ mis-sizings):\n (i) item (3b)/(3c), the scheme-object identifications: nothing\
-  \ identifies (C whisker overDualNumberZero).left with relCurveMap C k[eps] k, nor\
-  \ overSpec k k with the monoidal unit. If they resist, carry the identification\
-  \ as an explicit hypothesis rather than grinding (the hcyc discipline).\n (ii) (iii-c2-aff-geo):\
-  \ \"L trivial along eps -> 0\" ==> \"the chart reduction M/(eps)M is cyclic\". Carried\
-  \ as the hcyc BINDER in Tangent/DualNumberChartPic.lean, not a sorry, so invisible\
-  \ to a sorry census. The generator half IS closed (CyclicQuotientGenerator.lean).\
-  \ ajc-pic0av confirmed on 2026-07-28 that AJC does not have this in any spelling\
-  \ either, so it is open on BOTH sides and neither project should assume the other\
-  \ holds it.\n\nWorksheet informal/w5-t4-worksheet.md 6.8-6.21; 6.20 was written\
-  \ BEFORE the r4 Lean as this row binds, and 6.21 records that its predictions held\
-  \ on both mechanisms -- the first time in this lane.\n"
+summary: 'T4 (WORKSHEET-FIRST, risk R1): the étale-plus/Zariski kernel crossing at
+  $k[\varepsilon]$.
+
+
+  **(3c) IS CLOSED (run 0073 r5)** — `Tangent/DualNumberUnitTransport.lean`, `lake
+  env lean` EXIT=0.
+
+  The monoidal-unit seam `Over.mk (\mathbb{1}) \cong \mathrm{overSpec}\ k\ k` is an
+  **isomorphism**
+
+  built from `Over.isoMk (Iso.refl _)`; the predecessor''s prescribed `eqToHom` is
+  not needed, since the
+
+  two objects share their underlying scheme by `rfl` and `Spec.map_id` is spent only
+  on the
+
+  structure-morphism triangle. Because it is an iso rather than a rewrite, a kernel
+  statement crosses
+
+  it in **both** directions — which is what the kernel comparison needs. Yields
+
+  `(C \triangleleft \mathrm{overDualNumberZero}).left = \mathrm{transportLeft} \gg
+  \mathrm{relCurveMap}`,
+
+  the identification worksheet §6.24 named as the one link between the engine''s arrow
+  and item (1)''s.
+
+
+  **Also landed: the ring-theoretic bridge under (iii-c2-aff-geo)** —
+
+  `Tangent/DualNumberFstKernel.lean`, `ker fstRingHom = span {\varepsilon}`, hence
+
+  $A[\varepsilon]/(\varepsilon) \simeq A$. The two sides of that obligation named
+  different
+
+  constructions (a base change vs a quotient) and mathlib links them only via
+
+  `QuotSMulTop.equivQuotTensor`, which needs $A$ to *be* the quotient ring. No curve,
+  no field, no
+
+  finiteness: portable to the AJC sibling verbatim.
+
+
+  **RESIDUE, honestly sized.** (iii-c2-aff-geo) itself is still open: it lives at
+  the level of a
+
+  `CechPic` class on a chart of the thickened curve and owes the identification of
+
+  `Opens.cechPicClass` of the restricted bundle with the base change of the class
+  upstairs. Plus the
+
+  two named consumer inputs ($V_0 \neq \bot \wedge V_0 \neq \top$, and `Surjective
+  f.base` at
+
+  $\varepsilon \mapsto 0$), both satisfiable and both still unwitnessed in the tree.
+
+
+  **CROSS-PROJECT (I-0689 adjudicated).** `ajc-pic0av` reports the two-chart Čech
+  machinery cannot
+
+  close clause (iii) because `CechPic` reaches invertible sheaves only through an
+  `[IsAffine]`-gated
+
+  dictionary. That is **correct for AJC and does not transfer**: `LineBundle` occurs
+  in zero AJCR
+
+  files, `relPic` *is* a `CechPic` quotient by definition, and `cechPicEquivPic` has
+  no call site in
+
+  AJCR''s tangent chain. The missing arrow points the other way on each side.
+
+  '
 status: active
 kind: proof
 priority: normal
@@ -66,5 +88,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:45.485310+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T16:28:04.696486+00:00'
+  updated_at: '2026-07-28T20:33:32.832870+00:00'
   owner: ajcr-w5-av

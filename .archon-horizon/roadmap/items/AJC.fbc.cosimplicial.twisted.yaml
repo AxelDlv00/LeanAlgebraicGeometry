@@ -2,31 +2,36 @@ id: AJC.fbc.cosimplicial.twisted
 title: Twisted Čech nerve compatibility
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'NOW THE ONLY OBSTRUCTION for flat base change (run 0068 r3, reviewer-verified
-  at eed54636d). Its sibling leaf is closed, so this square alone stands between the
-  tree and Stacks 02KG/02KH; the one-leaf endpoint is cech_flatBaseChange_oneLeaf,
-  and a reviewer proved the "exactly one" claim rather than inferring it from absence
-  (restate the endpoint with the twisted-nerve iso as an explicit hypothesis and the
-  same term is axiom-clean).
-
-
-  WHY THE MATE TRICK DOES NOT TRANSFER, verified by two rfl probes: this leaf''s RHS
-  is drop.obj (CechNerve U'' (g''^* F)), the nerve of the BASE-CHANGED cover -- a
-  different cosimplicial object, not a whiskering of the same N. So there is no natural
-  transformation to whisker. The residue is a two-nerve comparison: that the isoOfRangeEq
-  slice identifications used per sigma in twisted_cech_nerve_per_sigma (landed, axiom-clean)
-  commute with the inclusions U_tau subset U_sigma for sigma a subtuple of tau. That
-  is about coverInterOpen_baseChange_eq, not about modules.
-
-
-  DECISION OWED TO A FUTURE SESSION (reviewer observation, not a defect): the r3 route
-  leaves roughly 55 in-module declarations off the live path -- the whole pushPullObj_coverInter_baseChange
-  / _spec / tilde-bridge chain that the superseded natIso consumed. All sorry-free
-  and still compiling, so this is not churn, but decide whether that layer is retained
-  deliberately or is maintenance-only before extending it.
-
-  '
-status: pending
+summary: "Twisted Cech nerve compatibility. ONE named residue, everything around it\
+  \ discharged (run 0068 r4).\n\nSTATE. twisted_cech_nerve_iso's naturality sorry\
+  \ is still in the file, but the obligation is now\nreduced to a single equation\
+  \ with no cosimplicial vocabulary in it, and the reduction is proved:\n\n * alternatingCofaceComplexIsoOfDelta\
+  \ -- the consumer (alternatingCofaceMapComplex) has differential\n   sum (-1)^i\
+  \ delta_i and never mentions a codegeneracy, so a complex isomorphism needs only\
+  \ COFACE\n   compatibility, not the general-phi naturality NatIso.ofComponents demands.\
+  \ This is load-bearing:\n   this tree's sigma-coordinate lemmas exist for delta\
+  \ ONLY, and no general-phi analogue exists here\n   or in mathlib, so the wide interface\
+  \ was unprovable from what we have.\n * cechNerve_backbone_δ_sigma / cechNerve_drop_δ_sigma\
+  \ -- the coface in sigma-coordinates is\n   'reindex by delta^k, then restrict'.\
+  \ One rw over four pre-existing lemmas that were merely\n   OUTSIDE the consumer's\
+  \ import cone; three sessions had priced their absence as mathematics.\n * sigmaAssembled_δ_square\
+  \ + twistedNerve_δ_square{,_concrete} -- the coface square FOLLOWS from the\n  \
+  \ per-sigma compatibility. Pi.hom_ext does fire; the earlier 'it cannot' was true\
+  \ only of the\n   obligation as posed, before the coordinate formula was available.\n\
+  \nTHE RESIDUE, and it is the honest one: TwistedPerSigmaDeltaCompat --\nbase-change-then-restrict\
+  \ = restrict-then-base-change for the per-sigma Beck-Chevalley isos\ntwisted_cech_nerve_per_sigma\
+  \ and the intersection-open inclusions interLegHom. Both sides are\ncomposites of\
+  \ landed sorry-free declarations. Equivalently: twisted_cech_nerve_per_sigma is\
+  \ built\nper-sigma, and what is missing is its NATURALITY in the over-object --\
+  \ a Y-natural Beck-Chevalley for\npush-pull, which a workspace-wide search found\
+  \ nowhere (pushPullFunctor has no API beyond being\nwhiskered once).\n\nNEXT. Either\
+  \ prove TwistedPerSigmaDeltaCompat directly (unfold twisted_cech_nerve_per_sigma:\
+  \ an\nopenImmersion_beckChevalley composed with a pushPullObjCongr along an isoOfRangeEq\
+  \ slice iso; the\ncontent is that both are induced by the same inclusions), or build\
+  \ the Y-natural mate once and get\nit as a component. The second is more work and\
+  \ more reusable.\n\nSeven new declarations measured axiom-clean; controls (twisted_cech_nerve_iso,\n\
+  cech_flatBaseChange_oneLeaf, pullback_preservesMonomorphisms) still sorryAx, correctly.\n"
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -48,4 +53,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc.cosimplicial
-  updated_at: '2026-07-28T17:54:32.918150+00:00'
+  updated_at: '2026-07-28T20:26:06.965663+00:00'
+  owner: ajc-fbc

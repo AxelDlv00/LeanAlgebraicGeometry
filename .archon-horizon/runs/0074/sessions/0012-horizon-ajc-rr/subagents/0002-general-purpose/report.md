@@ -1,64 +1,61 @@
-All clean. The earlier failures were my probe writing the `haveI` inside a statement where Lean elaborates the type before the `haveI` binds — a probe artifact, not a carrier problem.
+All four inputs are present in AJC's Ledger. Here's the report.
 
-## Bottom line: **(b) a bounded port — carriers match exactly, no comparison isomorphism needed**
+## Answer to (2): the instance stack lands on AJC's; `curveCover` is NOT the real cost
 
-The single most important question is settled favorably: **the carriers are `rfl`-identical, not merely isomorphic.** AJC's `ExtensionUniformity.lean:77-81` explicitly flags this as unsettled ("Whether those agree up to defeq or need a comparison isomorphism is a real question and is **not** settled in this file"). It is now settled: they agree by `rfl`.
+**The three `BaseChangeInstances` instances land on AJC's `CurveBaseChange.lean` instances.** Verified by elaboration against AJC at HEAD (all three `example`s green, zero diagnostics):
 
-### 3. Carrier match (verified by elaboration, not by reading)
+```lean
+example : (Over.mk (snd C (overSpec k K)).left).hom = (Scheme.baseChangeField C K).hom := rfl
+example : IsProper (Over.mk (snd C (overSpec k K)).left).hom :=
+  inferInstanceAs (IsProper (Scheme.baseChangeField C K).hom)
+example : SmoothOfRelativeDimension 1 (Over.mk (snd C (overSpec k K)).left).hom :=
+  inferInstanceAs (SmoothOfRelativeDimension 1 (Scheme.baseChangeField C K).hom)
+example : GeometricallyIrreducible (Over.mk (snd C (overSpec k K)).left).hom :=
+  inferInstanceAs (GeometricallyIrreducible (Scheme.baseChangeField C K).hom)
+```
 
-AJCR's definitions, verbatim:
-- `overSpec` — `/…/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Cohomology/SectionsBaseChange.lean:97`
-  ```lean
-  noncomputable abbrev overSpec : Over (Spec (.of k)) :=
-    Over.mk (Spec.map (CommRingCat.ofHom (algebraMap k A)))
-  ```
-- `baseChangeBundle` — `/…/Cohomology/TransitionSectionsBaseChange.lean:116`
-  ```lean
-  noncomputable abbrev baseChangeBundle (K : Type u) [Field K] [Algebra k K] :
-      Over (Spec (.of K)) := Over.mk (snd C (overSpec k K)).left
-  ```
-- The `⊗` is **not** a project notation. It is Mathlib's cartesian-monoidal product on `Over S`, activated by a *global* instance at `Mathlib/AlgebraicGeometry/Pullbacks.lean:705`. Mathlib provides `Over.tensorObj_left : (R ⊗ S).left = Limits.pullback R.hom S.hom := rfl` and `Over.snd_left : (snd R S).left = pullback.snd _ _ := rfl` (`Mathlib/CategoryTheory/Monoidal/Cartesian/Over.lean:60,79`).
+AJCR's are `MorphismProperty.of_isPullback … (Over.isPullback_left C (overSpec k K))` at `AJCR/AlgebraicJacobian/Curve/BaseChangeInstances.lean:97,106,112`; AJC's are `MorphismProperty.pullback_snd _ _ ‹_›` at `AJC/AlgebraicJacobian/RiemannRoch/CurveBaseChange.lean:256,265` plus `Scheme.geometricallyIrreducible_hom_baseChangeField` at `AJC/AlgebraicJacobian/RiemannRoch/Ledger/ExtensionUniformity.lean:124`. Same three properties, same pullback, different keying. **Not an absent subtree — a re-keying, 3 lines of `inferInstanceAs`.** One caveat measured: plain `inferInstance` does *not* fire on the raw `(snd C (overSpec k K)).left` spelling (AJC's instances are keyed on `baseChangeField`); `inferInstanceAs` does. `CurveBaseChange.lean`: **0 real sorries**.
 
-So AJCR's `baseChangeBundle C K` unfolds by `rfl` to `Over.mk (pullback.snd C.hom (Spec.map (CommRingCat.ofHom (algebraMap k K))))`, which *is* AJC's `Scheme.baseChangeField C κ`. I confirmed by elaboration that `(baseChangeBundle C K).left`, `.hom`, and the bundled `Over`-objects are each `rfl`-equal to AJC's, and that AJC's `IsProper` / `SmoothOfRelativeDimension 1` / `GeometricallyIrreducible` instances are accepted on the AJCR spelling via `inferInstanceAs`.
+**`curveCover` is cheap, and this is the good news.** `AJCR/AlgebraicJacobian/Cohomology/H1BaseFieldInvariance.lean:292`:
+```lean
+noncomputable def curveCover : C.left.AffineTwoCover :=
+  (Scheme.AffineTwoCover.nonempty_of_curve C).some
+```
+`Scheme.AffineTwoCover` (`AJCR/AlgebraicJacobian/Picard/AffineTwoCover.lean:51`) has fields `V₀ V₁ isAffineOpen₀ isAffineOpen₁ sup_eq_top isAffineOpen_inf`. AJC's `Scheme.AffineCoverMVSquare` (`AJC/AlgebraicJacobian/Cohomology/MayerVietorisCover.lean:51`) has `U₁ U₂ isAffineOpen_U₁ isAffineOpen_U₂ isAffineOpen_inf cover`. **Field-for-field identical up to naming and field order.** I built both conversion functions and verified both round-trips are `rfl` — no side conditions, no data loss.
 
-There is a **second** carrier axis, which AJC has already bridged. AJC's frozen `genus` (`AlgebraicJacobian/Genus.lean:41`) uses `Scheme.HModule k (Scheme.toModuleKSheaf C) 1` at `Type (u+1)`; AJCR uses `Sheaf.HModule (C.left.moduleKSheaf k) 1` at `Type u`. These are *not* defeq. But AJC already owns `ledgerGenus` (`Ledger/ChiCurve.lean:131`, AJCR's `genus` verbatim) and `ledgerGenus_eq_genus` (`Ledger/GenusBridge.lean:103`), proved sorry-free via `Abelian.Ext.chgUnivLinearEquiv`. I verified `ledgerGenus_eq_genus` elaborates on `Scheme.baseChangeField C K`. Also `Ledger/ModuleKSheaf.lean` is **byte-identical** to AJCR's `Cohomology/ModuleKSheaf.lean` (`diff` empty).
+AJC lacks only the *producer*: `exact?` on `Nonempty C.left.AffineCoverMVSquare` from the three curve binders fails. But every input AJCR's proof uses is present in AJC's Ledger and sorry-free:
 
-### 1. Incremental closure
+| input | AJC location |
+|---|---|
+| `exists_isFinite_toP1` | `Ledger/MapToP1.lean:107` |
+| `isAffineOpen_preimage_chartOpen` | `Ledger/MapToP1.lean:144` |
+| `preimage_chartOpen_sup` | `Ledger/MapToP1.lean:149` |
+| `P1.chartOpen_inf` | `Ledger/P1.lean:239` |
+| `P1.isAffineOpen_overlap` | `Ledger/P1Charts.lean:199` |
 
-Transitive `AlgebraicJacobian.*` closure: **67 modules** (all resolve in AJCR). Applying the direct-or-`RiemannRoch/Ledger/` rule: **38 present** (37 via Ledger, 1 direct: `Curve/GeometricallyReduced.lean`), **29 absent, 7852 lines**.
+`Ledger/MapToP1.lean` and `Cohomology/MayerVietorisCover.lean`: **0 real sorries each**. AJCR's `nonempty_of_curve` body is 15 lines (`AffineTwoCover.lean:91-107`); it transcribes onto `AffineCoverMVSquare` verbatim. **~15-20 lines, not a subtree.**
 
-Absent, by cluster:
-- **Head chain (5 files, 1541 lines)**: `Cohomology/H1BaseFieldInvariance` 384, `Cohomology/RelativeH1BaseChange` 373, `Cohomology/TransitionSectionsBaseChange` 300, `Curve/BaseChangeInstances` 197, `Cohomology/RelativeTwoCover` 175 (+ `Cohomology/RelativeSectionsLinear` 287, `Cohomology/SectionsBaseChange` 360, `Cohomology/TwistedSheaf` 500 — engine, 2688 total for all 8)
-- **Picard cluster (18 files, 4394 lines)**: `CechH1` 501, `DivisorClass` 466, `PointDivisor` 382, `PointPresentation` 368, `UnitsCocycle` 371, `Pic` 279, `MeromorphicPresentation` 238, `RelPic` 233, `PresentationDivisor` 206, `UniversalSections` 195, `PresentationCalculus` 193, `DivisorClassMeromorphic` 191, `PresentationClassLaw` 173, `AffineTwoCover` 161, `DivisorClassCompat` 157, `PresentationExtraction` 130, `RelPicAlgebra` 105
-- **Other**: `Challenge` 287, `Curve/BaseFieldTransition` 253, `RiemannRoch/Degree` 244
+`Picard/AffineTwoCover.lean` (161 lines) also carries `Over.isAffineHom_fst_left` and `Scheme.AffineTwoCover.pullbackProd` (cover stability under base change), needed by `RelativeTwoCover`. AJC has the analogue already: `AffineCoverMVSquare.baseChangeField` at `CurveBaseChange.lean:341` plus `AffineCoverMVSquare.preimage`. Both files: **0 real sorries**.
 
-### 2. Dependency vs bundling
+## Closure numbers (as requested)
 
-By namespace-qualified declaration reference, all 29 are formally reachable — but two edges are thin and cut the port roughly in half:
+Transitive `import AlgebraicJacobian.*` closure of `H1BaseFieldInvariance.lean`: **67 modules**, all resolving in AJCR. Under the direct-or-`RiemannRoch/Ledger/` rule: **38 present** (37 via Ledger, 1 direct — `Curve/GeometricallyReduced.lean`), **29 absent / 7852 lines**.
 
-- **`Challenge.lean` (287 lines) is bundling for the math.** Only `genus` (lines 89-92) is used, and AJC already has it twice over (`genus`, `ledgerGenus`). Do not port this file.
-- **The 4394-line Picard cluster hangs on two narrow edges:**
-  1. `Curve/BaseFieldTransition` → `Picard/RelPicAlgebra` for `Over.overSpecMap`. I read `RelPicAlgebra.lean` in full: `Over.overSpecMap` and its three lemmas are lines 37-78, **entirely self-contained** (only `Spec.map`, `CommRingCat.ofHom`, `Over.homMk`). The `relPicAlgMap` half (lines 80-103) is what imports `RelPic` and drags in the cluster. Extracting ~40 lines severs it.
-  2. `Curve/BaseChangeInstances` → `RiemannRoch/Degree` for `classDeg`, used **only** in `classDegBaseChangeSmoke` (line 193), a `private` smoke test. Deleting it severs `Degree` → `DivisorClassCompat` → the entire divisor-class subtree.
-- Also: `H1BaseFieldInvariance` needs from the 300-line `TransitionSectionsBaseChange` **only** the 3-line `baseChangeBundle` abbrev; it references nothing built on `isPullback_baseFieldTransition` (grep count: 0). And AJC's `baseChangeField` already supersedes it.
-- `Picard/AffineTwoCover` (161) and `Picard/UniversalSections` (195) are genuine: `RelativeTwoCover` needs `AffineTwoCover` and `Over.universalSectionsEquiv`. `Picard/CechH1` is needed only for `H1.resHom` plumbing.
+Absent, `wc -l`:
+- Head+engine (8 files, 2688): `H1BaseFieldInvariance` 384, `RelativeH1BaseChange` 373, `TransitionSectionsBaseChange` 300, `SectionsBaseChange` 360, `RelativeSectionsLinear` 287, `TwistedSheaf` 500, `Curve/BaseChangeInstances` 197, `RelativeTwoCover` 175
+- Picard cluster (18 files, 4394)
+- Other (3): `Challenge` 287, `Curve/BaseFieldTransition` 253, `RiemannRoch/Degree` 244
 
-### 4. Does AJC already have it? No.
+**Sorries.** `lean_verify` on built oleans: `finrank_h1_baseField` and `genus_baseField` both depend on exactly `[propext, Classical.choice, Quot.sound]` — no `sorryAx`. Across all load-bearing absent modules the **only** real sorries are **15 in `Challenge.lean`** (lines 99, 108, 113, 117, 121, 126, 134, 147, 156-158, 248, 259, 272, 283 — all `Jacobian`/`instGrpObj`/`ofCurve`/`functor`); 3 more are inside docstrings. `genus` at `Challenge.lean:89-92` is sorry-free and is the only thing needed, and AJC already owns it twice (`Genus.lean:41`, `ledgerGenus` at `Ledger/ChiCurve.lean:131`). **Every other load-bearing module: 0 sorries, 0 axioms.**
 
-AJC has **zero** H¹/section-space base-change statements along a field extension. `overSpec` appears in 2 files, both in prose only. `sectionsBaseChange`, `relSectionsBaseChange`, `relCurve`, `relTwoCoverH1`, `twistSubmodule`, `universalSectionsEquiv`, `AffineTwoCover`: **0 files each**.
+## Two other findings worth your time
 
-What AJC does have, sorry-free:
-- `Scheme.baseChangeField` + 9 stability instances (`RiemannRoch/CurveBaseChange.lean:250-340`)
-- `Scheme.geometricallyIrreducible_hom_baseChangeField` (`Ledger/ExtensionUniformity.lean:124`)
-- `ledgerGenus_eq_genus`, `moduleKSheaf_eq_toModuleKSheaf` (`Ledger/GenusBridge.lean` — grep for `sorry`: NONE)
-- `uniformVanishing_of_genus_invariant` — **conditional**, taking `hgenus : ∀ κ, genus C_κ = genus C` as a hypothesis. This is the consumer waiting on the port.
+**A second carrier axis exists, and AJC has already bridged it.** AJC's frozen `genus` uses `Scheme.HModule k (Scheme.toModuleKSheaf C) 1` at `Type (u+1)`; AJCR uses `Sheaf.HModule (C.left.moduleKSheaf k) 1` at `Type u`. Not defeq. But `ledgerGenus_eq_genus` (`Ledger/GenusBridge.lean:103`, via `Abelian.Ext.chgUnivLinearEquiv`, **0 sorries**) closes it, and I verified it elaborates on `Scheme.baseChangeField C K`. Also `Ledger/ModuleKSheaf.lean` is **byte-identical** to AJCR's `Cohomology/ModuleKSheaf.lean` (`diff` empty).
 
-### 5. Sorry/axiom honesty
+**The 4394-line Picard cluster is severable at two thin edges.** (i) `Curve/BaseFieldTransition` → `Picard/RelPicAlgebra` needs only `Over.overSpecMap`, which is lines 37-78 of that 105-line file and **entirely self-contained**; `relPicAlgMap` (lines 80-103) is what imports `RelPic`. (ii) `Curve/BaseChangeInstances` → `RiemannRoch/Degree` needs `classDeg` only in `private … classDegBaseChangeSmoke` (line 193-195), a smoke test. Cutting these two drops the whole divisor-class subtree. Further, `H1BaseFieldInvariance` needs from the 300-line `TransitionSectionsBaseChange` only the 3-line `baseChangeBundle` abbrev (references to `isPullback_baseFieldTransition`: 0) — and AJC's `baseChangeField` supersedes it.
 
-`lean_verify` on the built oleans: both `AlgebraicGeometry.finrank_h1_baseField` and `AlgebraicGeometry.genus_baseField` depend on exactly `[propext, Classical.choice, Quot.sound]` — **no `sorryAx`**. Genuinely sorry-free.
+## Revised sizing
 
-Across all load-bearing absent modules, the **only** real sorries are 15 in `Challenge.lean` (lines 99, 108, 113, 117, 121, 126, 134, 147, 156-158, 248, 259, 272, 283) — all in `Jacobian`, `instGrpObj`, `ofCurve`, `functor` etc., i.e. the Jacobian challenge statement itself. `genus` at lines 89-92 is sorry-free, and it is the only thing needed. 3 further `sorry` occurrences in that file are inside docstrings. **Every other load-bearing module: 0 sorries, 0 axioms.**
+**~2500-2700 lines / 9-10 files**, down from 7852/29: the 8 head+engine files (2688) minus `TransitionSectionsBaseChange`'s ~297 non-`baseChangeBundle` lines, plus `Picard/AffineTwoCover` (161) and `Picard/UniversalSections` (195), plus ~40 lines of `overSpecMap` extraction and ~20 for the `AffineCoverMVSquare` producer. `Challenge.lean` not ported. No comparison isomorphism anywhere. Bottom line unchanged: **(b) bounded port**, with the instance stack and `curveCover` both confirmed cheap rather than blocking.
 
-### Sizing
-
-Naive: 29 files / 7852 lines. After dropping `Challenge.lean` and severing the two thin edges, the realistic port is **~9-11 files / ~2700-2900 lines**: the 8 head+engine files (2688), plus a ~40-line `overSpecMap` extraction, plus `Picard/AffineTwoCover` (161) and `Picard/UniversalSections` (195), minus `TransitionSectionsBaseChange`'s 297 non-`baseChangeBundle` lines. Two known frictions, both mechanical: instances must be re-keyed onto whichever carrier spelling the ported statements use (`inferInstanceAs` works, verified), and the final statement must route through `ledgerGenus_eq_genus` to reach AJC's frozen `genus`. No comparison isomorphism is required anywhere.
+**Not measured:** whether the 8 engine files elaborate cleanly against AJC's mathlib pin once re-homed (both projects pin mathlib `v4.31.0`, so I expect yes, but I did not build them), and whether `TwistedSheaf`'s `twistSubmodule` collides with an existing AJC name.

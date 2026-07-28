@@ -2,46 +2,69 @@ id: AJCR.w5-av
 title: 'Wave 5: Pic^0 is an abelian variety'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "Wave 5: Pic^0 is an abelian variety of dimension g. 10/16 children done.\n\
-  \nSTATE AFTER RUN 0073 r4. The interface layer is complete and the T3/T4/T5 chain\
-  \ now needs TWO named statements, both isolated and neither vague. Run 0073 r4 closed\
-  \ two of the three intertwining items a fresh-context reviewer had found (I-0630)\
-  \ -- the gaps a predecessor session had priced at zero:\n\n ITEM (1) THE QUOTIENT-LEVEL\
-  \ REDUCTION SQUARE -- Tangent/TwoChartQuotientNaturality.lean, sorry-free. The hom-level\
-  \ square of r3 sat one level BELOW its consumer: the T2 engine's unitsReduction\
-  \ is a map between Cech H1 QUOTIENTS. The missing piece was one containment (pullback\
-  \ carries two-chart Cech coboundaries to coboundaries), provable from unitsAppLE\
-  \ functoriality alone -- nothing cohomological. map_twoChartClass now carries hsel\
-  \ at BOTH ends, as the reviewer required, and map_twoChartClass_eq_one_iff gives\
-  \ the kernel form via twoChartClass_injective.\n\n ITEM (2) THE TWO CECH H1 CARRIERS\
-  \ AGREE AS QUOTIENTS -- Tangent/DualNumberCarrierCoboundary.lean, sorry-free. dualNumberSectionsUnits\
-  \ carries the thickened coboundary subgroup ONTO the base one (an EQUALITY: a containment\
-  \ would let the map descend without identifying the quotients, leaving exactly the\
-  \ I-0571 gap). dualNumberCechH1Equiv is the QuotientGroup.congr a consumer calls,\
-  \ and because it is built FROM the subgroup equality a KERNEL may be transported\
-  \ across it.\n\n ITEM (3a) -- Tangent/TwoChartSelector.lean: the Bool-indexed family\
-  \ and selector of a Scheme.AffineTwoCover, with the side condition MEASURED not\
-  \ flagged: Surjective sel <-> V0 != bot AND V0 != top, i.e. \"the cover is honestly\
-  \ two-chart\". Both hold for the curve; neither is free.\n\nWHAT WAVE 5 STILL OWES,\
-  \ two statements:\n (i) (3c) AN OBJECT TRANSPORT. overSpec k k and the monoidal\
-  \ unit Over.mk (id) are equal objects that are NOT definitionally equal, because\
-  \ Spec.map is functorial only propositionally (Spec.map_id is a theorem). So relCurveMap\
-  \ C k[eps] k and (C whisker overDualNumberZero).left have DIFFERENT TYPES, and (b-coeff)\
-  \ is not yet the coefficient half of the square. Needs eqToHom along Spec.map_id\
-  \ plus a whiskering congruence. RETRACTS this lane's own r4 claim that (3c) was\
-  \ free -- kernel-caught, worksheet 6.23.\n (ii) (iii-c2-aff-geo): \"L trivial along\
-  \ eps -> 0\" ==> the chart reduction M/(eps)M is cyclic. Carried as the hcyc BINDER\
-  \ in Tangent/DualNumberChartPic.lean, so INVISIBLE to a sorry census, and open in\
-  \ the AJC sibling too (confirmed by ajc-pic0av) -- neither project should assume\
-  \ the other holds it.\n\nT5's spine is landed and unconditional except for one hypothesis\
-  \ hdim, which is a SEMILINEAR comparison (AddEquiv + intertwining), not a bare kernel\
-  \ bijection: finrank does not transport along a bijection of sets.\n\nS1 stays a\
-  \ HYPOTHESIS by design (S2/S3 take GeometricallyReduced as an instance argument,\
-  \ so it blocks nothing); its residue is the transcendental-extension statement,\
-  \ genuinely absent from mathlib. P1 remains the only CROSS-WAVE gate, held by the\
-  \ DD shapes freeze on ajcr-divrep, and is untouched.\n\nEverything in the comparison\
-  \ is sorry-free and scheme-general where it can be, so AJC can import rather than\
-  \ re-derive; both r4 modules were posted to the cross-project thread.\n"
+summary: 'Wave 5: $\mathrm{Pic}^0$ is an abelian variety of dimension $g$.
+
+
+  **Interface layer complete; T4''s two-session residue (3c) closed run 0073 r5.**
+  Done: the pinned
+
+  `JacobianData` consumption interface, G1 geometric irreducibility, P2/P3 properness,
+  S2 smoothness
+
+  via `smooth_of_grpObj`, X1 separatedness, X2 translation transport, X3 $H^1$/genus
+  base-field
+
+  invariance, T1 the dual-number tangent kit, T2 the truncated-exponential Čech kernel.
+
+
+  **T4 is the live front and it is now down to one mathematical statement plus two
+  consumer inputs.**
+
+  (3c), the monoidal-unit transport at $\varepsilon \mapsto 0$, is an **isomorphism**
+  rather than the
+
+  `eqToHom` the predecessor prescribed (`Tangent/DualNumberUnitTransport.lean`), and
+  the ring-theoretic
+
+  bridge $A[\varepsilon]/(\varepsilon) \simeq A$ under (iii-c2-aff-geo) is landed
+
+  (`Tangent/DualNumberFstKernel.lean`). What remains of T4: (iii-c2-aff-geo) proper
+  — a `CechPic` class
+
+  on a chart of the thickened curve, owing the identification of `Opens.cechPicClass`
+  of the restricted
+
+  bundle with the base change upstairs — and the two satisfiable-but-unwitnessed inputs
+
+  ($V_0 \neq \bot \wedge V_0 \neq \top$; `Surjective f.base` at $\varepsilon \mapsto
+  0$).
+
+
+  **T5/S1/S3 are downstream of T4 and unstarted.** T5 (the scalar identity $\dim_k
+  T_0 = g$) consumes
+
+  the T4 kernel comparison. S1 and S3 carry WORKSHEET-FIRST and have no worksheet
+  section yet.
+
+
+  **P1 remains a CROSS-WAVE GATE** on the DD shapes freeze held by `ajcr-divrep`;
+  not attempted, and
+
+  correctly so — nothing here is to be built against a guessed shape.
+
+
+  **Cross-project (I-0689).** `ajc-pic0av`''s finding that the two-chart Čech machinery
+  cannot close the
+
+  tangent comparison is correct **for AJC only**: `LineBundle` occurs in zero AJCR
+  files, `relPic` *is*
+
+  a `CechPic` quotient definitionally, and the `[IsAffine]`-gated dictionary has no
+  call site in AJCR''s
+
+  tangent chain. Recorded so no successor re-prices that port in either direction.
+
+  '
 status: pending
 kind: proof
 priority: normal
@@ -55,4 +78,4 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:12.423543+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-28T17:36:00.143198+00:00'
+  updated_at: '2026-07-28T20:34:29.613402+00:00'

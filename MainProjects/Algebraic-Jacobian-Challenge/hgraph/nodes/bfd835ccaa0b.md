@@ -43,7 +43,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.twisted_cech_nerve_iso
 type: lean
-updated: '2026-07-28T22:30:22'
+updated: '2026-07-29T04:25:58'
 ---
 noncomputable def twisted_cech_nerve_iso
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
@@ -95,3 +95,19 @@ noncomputable def twisted_cech_nerve_iso
         (pushPull_sigma_iso ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
           h.isoPullback.symm.hom) ((Scheme.Modules.pullback g').obj F) n.len).symm)
     (fun {n m} φ => sorry)
+
+/-! ### The twisted leaf, restated as a δ-square — and what remains is stated in σ-coordinates
+
+`twisted_cech_nerve_iso` is consumed only through `alternatingCofaceMapComplex`, whose differential
+is `∑ᵢ (-1)ⁱ • δᵢ`.  So the full cosimplicial isomorphism is more than any consumer needs:
+`alternatingCofaceComplexIsoOfDelta` (above) builds the same complex isomorphism from the
+degreewise family plus **coface** compatibility.  The declarations below carry out that
+replacement, and the point of doing so is that the coface obligation is stateable in the
+σ-coordinates that `cechNerve_drop_δ_sigma` provides, whereas the general-`φ` one is not.
+
+The residue is named `twistedPerSigmaDeltaCompat` and is one equation between two composites of
+*existing* maps, with no cosimplicial vocabulary left in it: that the per-σ Beck–Chevalley
+identifications `twisted_cech_nerve_per_sigma` commute with the reindex-and-restrict description of
+the coface.  That is the honest content — the same statement the previous docstring named
+informally ("the `isoOfRangeEq` slice identifications commute with the inclusions `U_τ ⊆ U_σ`"),
+now written as a Lean equation a session can attack directly. -/

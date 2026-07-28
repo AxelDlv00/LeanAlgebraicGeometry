@@ -2,88 +2,24 @@ id: AJC.rr
 title: Riemann--Roch, divisors, and the adelic genus
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Riemann--Roch, divisors, and the adelic genus.\n\nCluster-P substrate, all\
-  \ sorry-free and axiom-clean [propext, Classical.choice, Quot.sound]:\n\n(a) UNCONDITIONAL\
-  \ class invariance (Adelic/ClassInvariance.lean) -- multiplication by g is a\n \
-  \   k-linear automorphism of K(X) carrying chart sections, coboundary and overlap\
-  \ onto their\n    shifted counterparts, so ell, h1 and chi are functions of the\
-  \ linear-equivalence class, with\n    no gate, no finiteness and no ledger-exactness\
-  \ input.\n\n(b) UNCONDITIONAL degree and drop bounds (Adelic/SectionBounds.lean)\
-  \ -- deg_k as a bundled\n    AddMonoidHom, residue-degree positivity, positive degree\
-  \ for nonzero effective divisors, and\n    the drop sandwich ell(D) <= ell(D+P)\
-  \ <= ell(D)+[kappa(P):k].\n\n(c) THE CLOSED CHI-LEDGER, PROVED (Adelic/LedgerClosure.chi_eq_of_bump,\
-  \ run 0055 s0008) --\n    chi(D) = chi(0) + deg_k D at EVERY Weil divisor, from\
-  \ the one-point bump alone. This was\n    recorded as open by three sessions, with\
-  \ a correct-but-irrelevant obstruction argument; the\n    resolution is that hbump\
-  \ admits an ARBITRARY base divisor, so the telescope runs onto the\n    base D rather\
-  \ than up from 0. hledger is therefore no longer an independent lane input, and\n\
-  \    six ledger-free restatements of the lane's conclusions are in LedgerClosure\
-  \ section 2.\n\n(d) CONDITIONAL single-field bounded H1 vanishing (Adelic/BoundedVanishing.lean)\
-  \ --\n    exists_bound_subsingleton_h1Mod, b = deg_k D0 + 1 - chi(0). Open inputs\
-  \ now TWO, not three,\n    and both are one-point local statements: the bump, and\
-  \ the one-point peel. The peel is FREE\n    off the overlap (peel_pointDivisor_of_notMem_overlap),\
-  \ so its content sits at overlap points\n    only -- a small saving, since the overlap\
-  \ of a 2-affine cover of an irreducible curve is dense.\n\n(e) PROVED global generation\
-  \ (Adelic/GlobalGeneration.lean) -- the evaluation map\n    Gamma(D)/Gamma(D-P)\
-  \ -> kappa(P) is onto exactly when the section drop is maximal, which the\n    ledger\
-  \ converts into a PAIR of vanishings. Conditional on the same inputs as (d).\n\n\
-  (f) THE RESIDUE LANE, CLOSED (Adelic/ResidueField.lean) -- residueDeg = 1 and node\
-  \ N14's\n    residue-finiteness gate both DISCHARGED on curve hypotheses; deg_k\
-  \ = deg unconditional;\n    ell(D) = deg D + 1 - g for deg large on the GEOMETRIC\
-  \ degree.\n\nTHE THREE GAPS, KEPT APART (the task requires this separation):\n \
-  \ 1. single-field vanishing -- conditional on the bump, one base vanishing, and\
-  \ the overlap peel;\n  2. extension uniformity -- OPEN. UniformlyBoundedVanishing\
-  \ is a definition proved at no curve.\n     UniformlyBoundedVanishing' gives an\
-  \ instance-binder form, defeq to it by Iff.rfl; that is a\n     usability fix and\
-  \ proves NOTHING about uniformity. Missing inputs unchanged: flat base change\n\
-  \     for the section spaces, and a WeilDivisor pullback along C_kappa -> C (hard:\
-  \ points split);\n  3. global generation -- PROVED, conditional on the inputs of\
-  \ (1).\nPARENT CLOSED 2026-07-28 (run 0067 r4, ajc-pic0av). All five children are\
-  \ done:\nAJC.rr.adelic, .divisor, .ledger, .principal, .sectiondrop. The last to\
-  \ close was\n.principal (principal divisors have degree zero, commit 8b654f78d),\
-  \ which is why the\n\"every sub-item is done\" warning appeared on this row only\
-  \ now. RiemannRoch/WeilDivisor.lean\ncarries ZERO sorries, and principal_degree_zero\
-  \ is axiom-clean measured at the FULL ROOT\n(import AlgebraicJacobian, 252 modules):\
-  \ [propext, Classical.choice, Quot.sound], no sorryAx,\nwith two controls in the\
-  \ same probe correctly reporting sorryAx.\n\nMarked done by an AJC lane rather than\
-  \ left to accumulate janitor passes: five passes across\nfour lanes had recorded\
-  \ the sibling AJC.picrep mismatch without acting, since no AJCR lane can\nadjudicate\
-  \ an AJC row. This one needed no route decision -- the children were simply all\n\
-  finished.\n\nCAVEAT ON WHAT \"DONE\" MEANS HERE, so nobody reads more into it: the\
-  \ Riemann-Roch SUBSTRATE is\ncomplete and sorry-free, and principal_degree_zero\
-  \ carries [IsAlgClosed kbar], as it always\ndid. The general-field statement of\
-  \ degree-zero-of-principal is NOT proved and was never this\nnode's target -- over\
-  \ a general field the ledger proves the residue-WEIGHTED degree vanishes,\nand the\
-  \ unweighted degree is a different number (see Ledger/ResidueOneAlgClosed).\n\n\
-  DELTA 2026-07-28 (run 0074 r4, ajc-rr): GAP 1 IS NO LONGER CONDITIONAL, GAP 2 IS\
-  \ UNCHANGED.\n\nThe list above describes the ADELIC lane, where single-field vanishing\
-  \ is conditional on the bump\nand the overlap peel. A second, independent route\
-  \ now closes it outright on the LEDGER carrier:\n\n  Ledger/FiberChart, FiberDivisor,\
-  \ FiberLattice, QcohSections, AffineVanishingQcoh,\n  DivisorSheafQcoh, FiberVanishing,\
-  \ FiberBound -- 2,556 lines, 0 sorries, kernel-checked.\n\nAJCR's fibrewise large-twist\
-  \ H1 vanishing, ported (bodies unchanged), then composed with the\nlanded chi-ledger.\
-  \ The endpoint is CURVE-LEVEL and hypothesis-free:\n\n  FiberBound.exists_bound_subsingleton_hModule_one_curve\
-  \  and  exists_bound_h0_eq_genus_curve\n\ncarry only [IsProper C.hom], [SmoothOfRelativeDimension\
-  \ 1 C.hom], [GeometricallyIrreducible\nC.hom]. The finite dominant pi is CONSTRUCTED\
-  \ inside (Ledger/MapToP1.exists_isFinite_isDominant_\ntoP1), and both Module.Finite\
-  \ cohomology binders are SYNTHESISED by ChiCurve. So there is no\nbinder left for\
-  \ a caller to fail to instantiate -- which is exactly what Ledger/DegreeVanishing\n\
-  lacked: its clean axiom lines sat above an antecedent AJC witnessed at no proper\
-  \ curve.\n\n41/41 axiom-clean [propext, Classical.choice, Quot.sound] with the control\n\
-  Scheme.fgaPicardRepresentability correctly reporting sorryAx\n(scripts/ajcrr-fibervanishing-axioms.lean).\n\
-  \nGAP 3 (global generation) is closed on the ledger carrier too, but by an INDEPENDENT\
-  \ route (the\ndevissage slice), not as a corollary of vanishing.\n\nGAP 2 (extension\
-  \ uniformity) IS UNTOUCHED AND STILL OPEN. Every constant in the new layer --\n\
-  n0, b, deg, chi -- lives over the single field K, and n0 comes from a Classical.choose\
-  \ on a\nNoetherian stabilization re-run from scratch at each base field. Nothing\
-  \ landed today bears on it.\nThe row stays `done` because the SUBSTRATE was its\
-  \ target, not uniformity; do not read the new\nfiles as progress on gap 2.\n\nPORT-COST\
-  \ CORRECTION worth carrying: the port was priced at 23 missing modules including\
-  \ twelve\nPicard.* presentation modules. Counted by DECLARATION REFERENCE rather\
-  \ than import line, the\nvanishing chain uses picClass/CechPic/divisorClass/classDeg\
-  \ zero times -- the Picard cone hung\noff AJCR's class-side fiberDivisor/fiberTwist,\
-  \ which the argument never mentions. Import closures\nare upper bounds and can overstate\
-  \ tenfold when a file bundles a construction with its class\ntheory.\n"
+summary: 'Riemann--Roch, divisors, and the adelic genus. Cluster-P items 1 and 3 (bounded
+  H1 vanishing, global generation) and exact Riemann--Roch are CLOSED at AJC''s own
+  curve under three curve binders (RiemannRoch/Ledger/FiberBound.lean). Item 2, extension-uniformity,
+  remains OPEN and is now precisely decomposed rather than disclaimed (Ledger/ExtensionUniformity.lean,
+  r5): the FREE half is witnessed at the base-changed curve C_kappa itself, not merely
+  asserted of morphism classes -- one missing instance (GeometricallyIrreducible on
+  Scheme.baseChangeField) was all that blocked every curve-level statement from re-firing
+  at C_kappa by synthesis. The OPEN half needs TWO inputs, not one: (a) base-field
+  invariance of the genus, and (b) a kappa-independent degree bound on a vanishing
+  base divisor. An earlier reading collapsed these into (a) alone via a 2g-1 threshold;
+  that is Serre duality, which exists nowhere in this workspace, and the claim is
+  retracted in place. Input (a) is reachable: AJCR''s H1BaseFieldInvariance.lean proves
+  it sorry-free and the base-change carriers agree by rfl (verified at AJC''s spelling
+  with a negative control), but the cover carriers differ (AffineTwoCover vs AffineCoverMVSquare)
+  so the port crosses a second boundary. AJC owns both SIDES of the genus comparison
+  on transported covers and lacks the comparison map itself -- the termwise base change
+  Gamma(C,V) tensor kappa = Gamma(C_kappa,V_kappa). Input (b) is genuinely open in
+  both projects.'
 status: done
 kind: proof
 priority: normal
@@ -106,7 +42,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
-  updated_at: '2026-07-28T18:51:51.829044+00:00'
+  updated_at: '2026-07-28T20:29:46.910664+00:00'
   owner: ajc-rr
   pinned_commits:
   - 37f95374c

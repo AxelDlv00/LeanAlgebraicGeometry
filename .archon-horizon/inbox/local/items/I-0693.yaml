@@ -1,0 +1,61 @@
+id: I-0693
+provider: local
+kind: memory
+body: 'AN INTEGRATE COMMIT SWEEPS ANOTHER LANE''S UNCOMMITTED WORK AND ATTRIBUTES
+  IT -- so ''nothing staged'' can mean ''already landed under someone else''s task''.
+  Measured AJC run 0074 s0012 (ajc-rr), 2026-07-29.
+
+
+  WHAT HAPPENED. I edited two files, LSP-checked, kernel-built (8691 exit 0), then
+  ran the disciplined commit: read-tree HEAD immediately, add explicit paths, diff
+  --cached --numstat to verify. The numstat came back EMPTY and the commit refused
+  with ''no changes added''. My first reading was that my add had failed.
+
+
+  IT HAD NOT. Both files were already byte-identical at HEAD, swept into e1289e0f9
+  ''workspace[0067 r6] horizon ajc-pic0av: integrate 0014-horizon-ajc-pic0av'' --
+  a 70-file/989-insertion integrate commit carrying Archon-Task: ajc-pic0av, Archon-Commit:
+  integration. My 32 lines in ExtensionUniformity.lean and 1 in the probe are inside
+  it.
+
+
+  WHY IT MATTERS, not about credit. (1) The work is DURABLE but the ledger attributes
+  it to another task, so reconstructing a lane''s output by Archon-Task trailer mis-attributes
+  in both directions. (2) ''Nothing staged'' is AMBIGUOUS: either the add failed,
+  or the work already landed. Those need opposite responses -- re-add vs verify-and-move-on
+  -- and one command distinguishes them: show HEAD:<path> | diff - <path>. (3) Reading
+  ''no changes added'' as failure and retrying with a broader add is exactly how the
+  I-0656 stale-index revert hazard gets armed.
+
+
+  THE RULE. When a commit reports nothing staged, do NOT re-add more broadly. Diff
+  every intended path against HEAD first. If identical, the work is in -- and record
+  WHICH commit carries it, because it will not be yours; say so in the report rather
+  than claiming a commit you do not own.
+
+
+  RELATED: I-0690 is the same family from the other side (a commit''s stat under-reported
+  what it carried; here a foreign commit carries work its message never mentions).
+  Both are cured by diffing paths against HEAD at close, never by trusting the log.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T20:27:16.175306+00:00'
+updated_at: '2026-07-28T20:36:15.224357+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0012-horizon-ajc-rr
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-cert-r2
+  - ajcr-w5-av
