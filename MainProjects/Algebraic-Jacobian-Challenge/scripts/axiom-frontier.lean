@@ -1356,4 +1356,58 @@ theorem leakControl_pullback_monos_openImmersion {X Y : Scheme.{u}} (f : X ⟶ Y
 #print axioms leakControl_pullback_finiteLimits_given_monos
 #print axioms leakControl_pullback_monos_openImmersion
 
+/-! ### The QUASI-COHERENT route, and the first genuinely clean flat base change (run 0068 r1)
+
+The four lines above measure the *arbitrary-module* obligation, which remains open.  The lines
+below measure the route that BYPASSES it, and they are the ones that changed today.
+
+The mathematics is in `Cohomology/CechHigherDirectImageUnconditional.lean`: flat left-exactness
+was being demanded for all `𝒪_S`-modules (walled: mathlib gives `SheafOfModules.pullback` no
+pointwise model), while every consumer instantiates it at *quasi-coherent* objects, where the tree
+already had exactness on the tilde image.  Two steps closed the gap — cone-cancellation
+(`preservesLimit_comp_cancel`) and the observation that `ShortComplex.mapHomologyIso` needs one
+KERNEL rather than global exactness (`preservesLeftHomologyOf_of_preservesKernel`).
+
+Read these four lines together with `leakControl_qcohRoute_oldRoute` below.  The control is the
+point: it exercises the OLD route at the same statement and must keep reporting `sorryAx`.  If it
+ever comes back clean, the probes above have stopped measuring anything — the §6b trap. -/
+
+/-- PROBE: flat base change preserves kernels of quasi-coherent maps, general `g`, affine base. -/
+theorem leakProbe_qcohRoute_kernel {S S' : Scheme.{u}} (g : S' ⟶ S) [Flat g]
+    [IsAffine S] [IsAffine S'] {A B : S.Modules} (ψ : A ⟶ B)
+    (hA : A.IsQuasicoherent) (hB : B.IsQuasicoherent) :
+    Limits.PreservesLimit (Limits.parallelPair ψ 0) (Scheme.Modules.pullback g) :=
+  pullback_preservesKernel_of_isQuasicoherent g ψ hA hB
+
+/-- PROBE: the rewired homology comparison — the `sorry`-free replacement for
+`pullback_mapHC_homologyIso`, which is the form the Čech proof consumes. -/
+noncomputable def leakProbe_qcohRoute_homologyIso {S S' : Scheme.{u}} (g : S' ⟶ S) [Flat g]
+    [IsAffine S] [IsAffine S'] (K : CochainComplex S.Modules ℕ) (i : ℕ)
+    (h₂ : (K.sc i).X₂.IsQuasicoherent) (h₃ : (K.sc i).X₃.IsQuasicoherent) :
+    (((Scheme.Modules.pullback g).mapHomologicalComplex (ComplexShape.up ℕ)).obj K).homology i
+      ≅ (Scheme.Modules.pullback g).obj (K.homology i) :=
+  pullback_mapHC_homologyIso_of_isQuasicoherent g K i h₂ h₃
+
+/-- PROBE: the cone-cancellation brick, so a regression can be localised to it. -/
+theorem leakProbe_qcohRoute_coneCancel {R R' : CommRingCat.{u}} (φ : R ⟶ R') (hφ : φ.hom.Flat)
+    {M N : ModuleCat.{u} R} (f : M ⟶ N) :
+    Limits.PreservesLimit (Limits.parallelPair ((tilde.functor R).map f) 0)
+      (Scheme.Modules.pullback (Spec.map φ)) :=
+  tildePullback_preservesKernel φ hφ f
+
+/-- CONTROL, and the load-bearing line of this block: the OLD route at the *same* conclusion as
+`leakProbe_qcohRoute_homologyIso`.  It goes through `pullback_preservesHomology`, hence through
+the open `pullback_preservesMonomorphisms`, so it MUST report `sorryAx`.  A clean reading here
+means the comparison has gone vacuous. -/
+noncomputable def leakControl_qcohRoute_oldRoute {S S' : Scheme.{u}} (g : S' ⟶ S) [Flat g]
+    (K : CochainComplex S.Modules ℕ) (i : ℕ) :
+    (((Scheme.Modules.pullback g).mapHomologicalComplex (ComplexShape.up ℕ)).obj K).homology i
+      ≅ (Scheme.Modules.pullback g).obj (K.homology i) :=
+  pullback_mapHC_homologyIso g K i
+
+#print axioms leakProbe_qcohRoute_kernel
+#print axioms leakProbe_qcohRoute_homologyIso
+#print axioms leakProbe_qcohRoute_coneCancel
+#print axioms leakControl_qcohRoute_oldRoute
+
 end AlgebraicGeometry

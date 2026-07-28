@@ -699,6 +699,25 @@ noncomputable def pullback_mapHC_homologyIso (g : S' ⟶ S) [Flat g]
   haveI := pullback_preservesHomology g
   mapHomologicalComplexHomologyIso (Scheme.Modules.pullback g) K i
 
+/-- **`g^*` commutes with the homology of a QUASI-COHERENT complex — with no open input.**  The
+`sorry`-free replacement for `pullback_mapHC_homologyIso`, and the reason the flat-exactness leaf
+is off the critical path.  It asks for exactly the two things the Čech complex supplies:
+an affine base and quasi-coherence of the two terms that meet in degree `i`
+(`K.X i` and `K.X (next i)`, which are `(K.sc i).X₂` and `(K.sc i).X₃` definitionally).
+
+Compare `pullback_mapHC_homologyIso`, whose `[Flat g]` route runs through
+`pullback_preservesHomology → pullback_preservesFiniteLimits → pullback_preservesMonomorphisms`
+and so inherits that leaf's `sorryAx`.  Here the same conclusion comes from
+`pullback_preservesKernel_of_isQuasicoherent` (the kernel of `(K.sc i).g`) fed into
+`mapHomologicalComplexHomologyIso_of_preservesKernel`.  Project-local. -/
+noncomputable def pullback_mapHC_homologyIso_of_isQuasicoherent (g : S' ⟶ S) [Flat g]
+    [IsAffine S] [IsAffine S'] (K : CochainComplex S.Modules ℕ) (i : ℕ)
+    (h₂ : (K.sc i).X₂.IsQuasicoherent) (h₃ : (K.sc i).X₃.IsQuasicoherent) :
+    (((Scheme.Modules.pullback g).mapHomologicalComplex (ComplexShape.up ℕ)).obj K).homology i
+      ≅ (Scheme.Modules.pullback g).obj (K.homology i) :=
+  haveI := pullback_preservesKernel_of_isQuasicoherent g (K.sc i).g h₂ h₃
+  mapHomologicalComplexHomologyIso_of_preservesKernel (Scheme.Modules.pullback g) K i
+
 /-! ## Additive functors and the alternating coface complex
 
 The relative Čech complex `CechComplex` is, by construction
