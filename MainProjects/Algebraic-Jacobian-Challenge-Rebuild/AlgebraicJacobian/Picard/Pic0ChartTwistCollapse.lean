@@ -31,9 +31,9 @@ So `thetaFamily` is multiplicative *in its class argument*:
 * `thetaFamily_mul`, `thetaFamily_inv`, `thetaFamily_pow` — each proved by `map_mul` /
   `map_inv` / `map_pow` four times, nothing else.
 
-Consequently `chartTwist C m Z T λ = λ · thetaFamily C (picClass k Z · (θ^m)⁻¹) T`
+Consequently `chartTwist C m Z T λ = λ · thetaFamily C (θ^m · (picClass k Z)⁻¹) T`
 (`chartTwist_collapse`): the Σ-factor and the θᵐ-factor are *the same construction at two
-classes*, and they fuse into one call at the single class `picClass k Z · (θ^m)⁻¹`, computed
+classes*, and they fuse into one call at the single class `θ^m · (picClass k Z)⁻¹`, computed
 entirely in `CechPic` over the FIXED base `overSpec k k`.  No datum-level product is
 involved anywhere, because the multiplication happens in the Čech Picard *group* before any
 datum is extracted.
@@ -152,10 +152,10 @@ theorem sigmaFamily_eq_thetaFamily (Z : (C ⊗ overSpec k k).left.CurveDivisor)
 variable (C) in
 /-- **The chart twist is ONE θ-family** (this file's headline).
 
-`chartTwist C m Z T λ = λ · thetaFamily C (picClass k Z · (θ^m)⁻¹) T`.
+`chartTwist C m Z T λ = λ · thetaFamily C (θ^m · (picClass k Z)⁻¹) T`.
 
 The Σ-shift and the `m` inverse θ-powers fuse into a single θ-family at the single class
-`picClass k Z · (θ^m)⁻¹`, which lives in `CechPic` over the FIXED base `overSpec k k` — a
+`θ^m · (picClass k Z)⁻¹`, which lives in `CechPic` over the FIXED base `overSpec k k` — a
 `CommGroup`, where the multiplication and inversion are free.
 
 Why this matters beyond tidiness: `w4-datc` §0.3 GAP-1 and `w4-datb` §1.6 both record that
@@ -167,7 +167,7 @@ theorem chartTwist_collapse (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDiviso
     (T : Over (Spec (.of k))) (lam : picEt C T) :
     chartTwist C m Z T lam
       = lam * thetaFamily C
-          (Scheme.CurveDivisor.picClass k Z * (thetaCechClass C ^ m)⁻¹) T := by
+          (thetaCechClass C ^ m * (Scheme.CurveDivisor.picClass k Z)⁻¹) T := by
   rw [chartTwist, thetaFamily_mul, thetaFamily_inv, thetaFamily_pow, mul_assoc]
   rfl
 
@@ -178,7 +178,7 @@ because it makes the chart index's role visible — the whole twist is one class
 chart-index degree constraint `deg Z = m·d₁ − n` is a statement about *its* degree. -/
 def chartTwistClass (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor) :
     (C ⊗ overSpec k k).left.CechPic :=
-  Scheme.CurveDivisor.picClass k Z * (thetaCechClass C ^ m)⁻¹
+  thetaCechClass C ^ m * (Scheme.CurveDivisor.picClass k Z)⁻¹
 
 variable (C) in
 theorem chartTwist_eq_mul_thetaFamily_chartTwistClass (m : ℕ)

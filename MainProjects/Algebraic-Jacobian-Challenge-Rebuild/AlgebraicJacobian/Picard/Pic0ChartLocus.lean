@@ -63,8 +63,9 @@ the ∃-form and the ∀-form is a theorem, not a second definition.
   every)".
 * `AlgebraicGeometry.chartTwist C m Σ λ` — the twisted fibre family
   `λ · sigmaFamily Σ · (θ^m)⁻¹`, i.e. the class whose chart-membership is at issue.  Its
-  fibre degree is `Σ.deg − m·d₁` by the landed degree ledger, which is the degree the
-  chart index is calibrated to.
+  fibre degree is `m·d₁ − Σ.deg` by the landed degree ledger, which the chart-index
+  constraint `deg Z = m·d₁ − g` makes `+g` — the degree at which an effective witness with
+  `h¹ = 0` can exist at all.
 * **`AlgebraicGeometry.chartLocus`** — CHART-U(a): `{t : T.left | IsSplitWitness of the
   twisted fibre class at κ(t)}`.
 * `AlgebraicGeometry.mem_chartLocus_iff` / `mem_chartLocus_iff_forall` — the two readings.
@@ -138,8 +139,10 @@ Two consequences, both load-bearing:
 
 * the degree is supplied **externally**, by the chart-index constraint through
   `degAt_chartTwist` below: on a degree-zero `λ` the twisted class has fibre degree
-  `deg Z − m·d₁`, which the constraint `deg Z = m·d₁ − g` makes `−g`.  It is *not* a
-  hypothesis of this predicate;
+  `m·d₁ − deg Z`, which the constraint `deg Z = m·d₁ − g` makes `+g`.  It is *not* a
+  hypothesis of this predicate.  (Until 2026-07-28 this read `−g`, and that sign made the
+  locus empty for every `g ≥ 1` — see `degAt_chartTwist` and issue I-0514;
+  `chartTwist_chartValue` now pins the direction by the kernel);
 * effectivity likewise is not asserted here.  Where the *worksheet's* stronger reading is
   actually needed — the canonical-section normalization `h⁰ = 1`, and GAP-2 uniqueness
   (`Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one`, which does take `0 ≤ D`, `0 ≤ D'`) — the
@@ -170,21 +173,47 @@ plus class by the same two factors.  A point of `chartLocus` is precisely a poin
 a chart value, after undoing the twist. -/
 def chartTwist (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
     (T : Over (Spec (.of k))) (lam : picEt C T) : picEt C T :=
-  lam * sigmaFamily C Z T * (thetaFamily C (thetaCechClass C) T ^ m)⁻¹
+  lam * (thetaFamily C (thetaCechClass C) T ^ m) * (sigmaFamily C Z T)⁻¹
 
 /-- **The degree ledger of the twist**: at every field point the twisted family has fibre
-degree `deg Z − m·d₁` when `λ` is degree-zero.  With the chart-index constraint
-`deg Z = m·d₁ − g` this is `−g`; the chart-side `chartValue` lands at `n + deg Z − m·d₁`
-(`degAt_chartValue`, `DivSchemeAbel.lean:368`), so the two agree at `n = 0` — which is why
-`chartLocus` tests the class `λθ^m(−Σ)` and not `λ` itself. -/
+degree `m·d₁ − deg Z` when `λ` is degree-zero.  With the chart-index constraint
+`deg Z = m·d₁ − g` this is `+g`, which is the degree at which an effective witness with
+`h¹ = 0` can exist at all.
+
+**Sign discipline, and it was wrong here until 2026-07-28 (issue I-0514).**  `chartTwist`
+must be the INVERSE of `chartValue`'s twist, not the same one.  `chartValue` is
+`abelDiv · Σ · (θᵐ)⁻¹` (`DivSchemeAbel.lean:351`), so recovering the Abel class from a chart
+value means multiplying by `θᵐ` and dividing by `Σ` — hence `chartTwist` is
+`λ · θᵐ · Σ⁻¹`.  An earlier version applied the `chartValue` twist itself, giving fibre degree
+`deg Z − m·d₁ = −g`; since `Subsingleton H¹(𝒪(W))` forces `deg W ≥ g − 1`, that locus was
+**empty for every `g ≥ 1`** and its openness was the openness of `∅`.  The comparison point is
+`degAt_chartValue` at `n = g` (where the chart index is calibrated and `chartValue` lands in
+`pic0`), NOT at `n = 0`. -/
 theorem degAt_chartTwist (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
     {T : Over (Spec (.of k))} {lam : picEt C T} (hlam : lam ∈ pic0Subgroup C T)
     {K : Type u} [Field K] [Algebra k K] (t : overSpec k K ⟶ T) :
     degAt (chartTwist C m Z T lam) t
-      = Scheme.CurveDivisor.deg k Z - (m : ℤ) * classDeg k (thetaCechClass C) := by
+      = (m : ℤ) * classDeg k (thetaCechClass C) - Scheme.CurveDivisor.deg k Z := by
   rw [chartTwist, degAt_mul, degAt_inv, degAt_mul, degAt_thetaFamily_pow,
     degAt_sigmaFamily, (mem_pic0Subgroup_iff.mp hlam) K t]
   ring
+
+/-- **`chartTwist` inverts `chartValue`'s twist** — the sign check, as a theorem rather than a
+docstring claim.
+
+Applying `chartTwist` to a chart value returns the Abel class it came from.  This is the
+statement that was FALSE of the earlier definition (which returned
+`abelDiv · Σ² · (θᵐ)⁻²`), and it is why the direction is now pinned by the kernel: any future
+edit to `chartTwist` that breaks the inversion breaks this lemma.
+
+Recorded per issue I-0514.  A degree ledger alone does not catch a sign error — the wrong-signed
+ledger was internally consistent — but an inversion law does. -/
+theorem chartTwist_chartValue {n : ℕ} (m : ℕ)
+    (Z : (C ⊗ overSpec k k).left.CurveDivisor) (T : Over (Spec (.of k)))
+    (s : divFamZar C π n T) :
+    chartTwist C m Z T (chartValue C π n m Z T s) = abelDiv C π n T s := by
+  rw [chartTwist, chartValue]
+  group
 
 /-! ## CHART-U(a): the locus -/
 
