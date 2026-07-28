@@ -12,7 +12,7 @@ import AlgebraicJacobian.Picard.EffectivityTrivialization
 The **Zariski half** of clause `(iii-c2)` (`informal/w5-t4-worksheet.md` §6.9). For a scheme
 `X` with two opens `V : Bool → X.Opens` covering it:
 
-> `Scheme.twoChartClass_surjOn_of_chartTrivial` —
+> `Scheme.twoChartClassHom_surjOn_of_chartTrivial` —
 > if `L : X.CechPic` restricts trivially to each chart (`CechPic.map (V s).ι L = 1`), then
 > `L = twoChartClassHom V sel hmem u` for an overlap unit `u : Γ(X, V₀ ⊓ V₁)ˣ`.
 

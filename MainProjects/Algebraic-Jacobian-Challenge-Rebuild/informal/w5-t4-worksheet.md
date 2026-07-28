@@ -782,6 +782,17 @@ applies here:
   `grep` for `twoChartClass` outside its three home files returns **nothing**, so no consumer
   has yet needed it and nothing supplies it.
 
+**AND A SECOND ABSENT STEP, found by the reviewer pass and NOT by me (inbox `I-0573`): the
+carrier translation at `C_ε`.** T2's engine computes `Ȟ¹ˣ` of `Γ(X, U₀ ⊓ U₁)[ε]` — the
+`DualNumber` of the **original** sections (`TruncExpCechH1.lean:134`). `twoChartClassHom`
+consumes `Γ(X_ε, V₀ ⊓ V₁)ˣ` — the **thickened** sections. *Nothing identifies them.* The bridge
+would be `Over.sectionsBaseChange` (`Cohomology/SectionsBaseChange.lean:287`) composed with
+`DualNumber.baseChangeAlgEquiv` (`Tangent/DualNumberBaseChange.lean:119`), plus
+`sectionsBaseChange_naturality` (:337) for the two restrictions — but **no declaration composes
+them**; only a docstring at `DualNumberBaseChange.lean:116` asserts the composite. So "clause (ii)
+is landed" is true of the *algebra* equivalence and false of the *cover-level* translation the
+comparison needs.
+
 **Consequence for sizing, stated plainly:** (iii-c2-aff) is the last *geometric* clause, but it
 is **not** the last clause. The chain from `H¹(C,𝒪)` to `ker(relPic(k[ε]) → relPic(k))` also
 needs that **intertwining square**. It should be cheap — both sides are induced by restriction
@@ -793,8 +804,9 @@ exactly the error `I-0571` names. Do not claim T5's numeral until it exists.
 trivial on each thickened chart. That is the geometric statement, with all three inputs landed
 (clause (i) `free_of_cyclic_mod_eps`, clause (ii) `baseChangeAlgEquiv`, the affine dictionary
 `cechPicEquivPic`) and `Opens.cechPicMap_ι_eq_one_of_cechPicClass_eq_one` as the exit. It is the
-last clause needing *geometry*; the intertwining square flagged just above is the other thing
-still owed, and it is bookkeeping rather than mathematics. **Corrected 2026-07-28: an earlier
+last clause needing *geometry*; **two further steps are owed and both are bookkeeping rather
+than mathematics** — the carrier translation at `C_ε` and the reduction square, both boxed
+above. Reviewer-confirmed absent at HEAD (`I-0573`). **Corrected 2026-07-28: an earlier
 draft of this line said "nothing else stands between AJCR and the T5 numeral" — that was wrong
 by exactly the omission the box above documents.**
 

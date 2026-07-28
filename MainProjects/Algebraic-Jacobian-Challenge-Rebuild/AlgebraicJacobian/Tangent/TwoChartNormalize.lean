@@ -16,9 +16,9 @@ unit Čech cocycle `γ` on the pointed cover attached to a two-open family
 single overlap unit `u` — namely of `twoChartCandidate`, the value of `γ` at a pair of
 points lying in the two different charts. Consequently
 
-* `Scheme.twoChartClassHom_surjective_of_mk` — every `CechPic` class *represented on the
+* `Scheme.twoChartClassHom_mk_range` — every `CechPic` class *represented on the
   two-chart cover* is `twoChartClassHom u` for some `u`;
-* `Scheme.twoChartClass_surjective_of_mk` — the same statement for the descended
+* `Scheme.twoChartClass_mk_range` — the same statement for the descended
   `twoChartClass`, which with the landed `twoChartClass_injective` makes the two-chart
   Čech `Ȟ¹` of units **isomorphic** onto the classes representable on the cover.
 
