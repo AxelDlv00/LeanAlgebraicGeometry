@@ -255,7 +255,18 @@ two diagrams were definitionally equal. They are **not**: `rfl` between them fai
 ("`transportedActionDiagram k A n` is not definitionally equal to
 `permDiagram (op (mkUnder k A)) n`"), measured. So `permDiagramIsoTransportedAction` is
 load-bearing, and unlike `hasColimit_permDiagram_op_mkUnder` this theorem is not reachable
-without the two object comparisons it composes. -/
+without the two object comparisons it composes.
+
+**Two non-vacuity checks, since an identification can be true and say nothing.** Both measured:
+
+* the right-hand object really is Milne's. `(fixedUnder k (Perm (Fin n)) (⨂[k] _ : Fin n, A))`
+  is `FixedPoints.subalgebra k (⨂[k] _ : Fin n, A) (Perm (Fin n))` by `rfl` — the invariant
+  subalgebra, not some other object that happens to sit at that index;
+* the action being quotiented by is not trivial. `permAlgHom k A (Equiv.swap 0 1)` is **not**
+  definitionally `AlgHom.id` at `n = 2`, so the `S_n`-quotient is a genuine quotient. Had it
+  been the identity, the "quotient" would be the tensor power itself and the theorem would be
+  an elaborate `Iso.refl`. This is the same trivial-witness discipline `SymPowInterface.lean`
+  applies to `symPowDataTrivial`. -/
 noncomputable def colimitPermDiagramIsoFixed :
     letI := permMulSemiringAction (k : Type) (ι := Fin n) A
     letI := permSMulCommClass (k : Type) (ι := Fin n) A
