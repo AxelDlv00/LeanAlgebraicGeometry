@@ -39,13 +39,13 @@ bound genuinely does not exist), and only then run the drop.  Without this separ
 
 ## Main declarations
 
-* `AlgebraicGeometry.exists_splitting_of_picEt` — **every plus class over a field is an
+* `AlgebraicGeometry.exists_splitting_of_picEtAff` — **every plus class over a field is an
   honest Čech class over some finite separable extension.**  Unconditional; no witness.
-* `AlgebraicGeometry.isSplitWitness_of_splitting` — the introduction rule for
-  `IsSplitWitness` from a splitting plus a witness at it, so a consumer never assembles the
-  seven-component tuple by hand.
+* `AlgebraicGeometry.exists_splitting_of_picEt` — the same in the `picEt` spelling, which is
+  the one `IsSplitWitness` is stated against.
 * `AlgebraicGeometry.isSplitWitness_iff_exists_splitting_witness` — the two readings agree:
-  `IsSplitWitness` is exactly "some splitting carries a witness".
+  `IsSplitWitness` is exactly "some splitting carries a witness".  Its `.mpr` is also the
+  introduction rule; see the closing note for why no positional constructor lemma exists.
 -/
 
 set_option autoImplicit false
@@ -174,39 +174,26 @@ theorem isSplitWitness_iff_exists_splitting_witness {K : Type u} [Field K] [Alge
                     ((C ⊗ overSpec k L).left.divisorSheaf L W) 1) :=
   Iff.rfl
 
-set_option maxHeartbeats 1000000 in
-variable (C) in
-/-- **Introduction rule for `IsSplitWitness`**: a splitting together with a witness divisor
-at it.  Recorded so that no consumer assembles the twelve-component existential by hand —
-the arguments are in the order a consumer actually obtains them (the splitting from
-`exists_splitting_of_picEt`, then the witness by working over `L`).
+/-! ## A note on the intro rule that is deliberately ABSENT
 
-Two shape decisions, both forced by elaboration cost measured this session:
+An `isSplitWitness_of_splitting` taking the twelve components as separate arguments was
+written and then **removed**, because it cannot be elaborated at acceptable cost and the
+`iff` above already serves as it: `(isSplitWitness_iff_exists_splitting_witness C μ).mpr`
+takes exactly the bundled tuple.
 
-* it is derived through `isSplitWitness_iff_exists_splitting_witness` rather than by handing
-  the whole tuple to one anonymous constructor.  Constructing it directly makes Lean unify
-  the seven instance slots while `L` is still a metavariable, and the `relCurve` /
-  `divisorSheaf` carriers are re-checked on each attempted assignment — over 1000000
-  heartbeats without converging;
-* the witness clause is taken **bundled** (`hwit`) rather than as three separate arguments.
-  `IsSplitWitness` mixes the two spellings of the base-changed curve — `(relCurve C L).CechPic`
-  for the presenting class, `((C ⊗ overSpec k L).left).CurveDivisor` for the witness — and
-  splitting the clause makes the elaborator reconcile them at the call site instead of once,
-  here. -/
-theorem isSplitWitness_of_splitting {K : Type u} [Field K] [Algebra k K]
-    {μ : picEt C (overSpec k K)}
-    (L : Type u) [Field L] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
-    [Module.Finite K L] [Algebra.IsSeparable K L] (M : (relCurve C L).CechPic)
-    (hM : PicEtAff.map C L (picEtAffineEquiv C K μ)
-      = PicEtAff.unit C L (relPicMk C (overSpec k L) M))
-    (hwit : ∃ W : ((C ⊗ overSpec k L).left).CurveDivisor,
-      Scheme.CurveDivisor.picClass L W = M
-        ∧ Subsingleton (Sheaf.HModule
-            ((C ⊗ overSpec k L).left.divisorSheaf L W) 1)) :
-    IsSplitWitness C μ :=
-  (isSplitWitness_iff_exists_splitting_witness C μ).mpr
-    ⟨L, ‹Field L›, ‹Algebra k L›, ‹Algebra K L›, ‹IsScalarTower k K L›,
-      ‹Module.Finite K L›, ‹Algebra.IsSeparable K L›, M, hM, hwit⟩
+The measurement, recorded so nobody re-attempts it: `IsSplitWitness` mixes the two spellings
+of the base-changed curve — `(relCurve C L).CechPic` for the presenting class and
+`((C ⊗ overSpec k L).left).CurveDivisor` for the witness divisor.  Handing the tuple to one
+anonymous constructor makes Lean unify the seven instance slots while `L` is still a
+metavariable, re-checking those carriers on each attempted assignment.  Every variant tried
+(`refine` instead of `exact`; bundling the witness clause as a single `have`; normalising
+either spelling; routing through the `iff`) still timed out at 1000000 heartbeats.  Going
+through `.mpr` at a call site where `L` is already fixed costs nothing, because there is then
+no metavariable to unify around.
+
+The general shape of the hazard: a definition that spells one object two ways is cheap to
+*use* and expensive to *introduce* positionally.  Prefer `Iff.rfl` plus `.mpr` to a bespoke
+constructor lemma. -/
 
 end
 
