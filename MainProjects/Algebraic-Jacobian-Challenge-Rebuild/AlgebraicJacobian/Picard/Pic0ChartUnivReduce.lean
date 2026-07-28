@@ -108,8 +108,9 @@ openness supplies."  The landed affine openness does **not** supply it.
 on `IsChartDatumPresentation` — dat-b row B-4's own named residue, whose *witness* half is now
 discharged too (`hconv`, by plus-unit injectivity,
 `Picard/Pic0ChartPresentationConverse.lean`), leaving a plus-class base-change
-identity — and no theorem in the tree produces `haff` for a general test.  It is a genuine open obligation; it is named
-`ChartLocusAffineLocal` and reduced to B-4 by `chartLocusAffineLocal_of_presentation`.  It is
+identity — and no theorem in the tree produces `haff` for a general test.  It is a genuine
+open obligation, named `ChartLocusAffineLocal` and reduced to B-4 by
+`chartLocusAffineLocal_of_presentation`.  It is
 carried as an argument here so the definition does not silently depend on a chosen route. -/
 def chartLocusOpens (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
     (T : Over (Spec (.of k))) (lam : picEt C T)
