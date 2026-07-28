@@ -474,7 +474,8 @@ record.
   divisor functor — remains the campaign's real gate, and is arguably false as stated. None
   of the above bears on it.
 
-**DAT-J moved too** (`Picard/JacobianDataAbelImage.lean`). w4-datj §2.2's a-posteriori qc
+**DAT-J moved too — but see §7.9, which corrects the last paragraph of this subsection**
+(`Picard/JacobianDataAbelImage.lean`). w4-datj §2.2's a-posteriori qc
 argument has four steps; three were landed separately with nothing joining them. A
 point-surjective morphism from `DivScheme g` onto `J.left` now yields `QuasiCompact J.hom`
 (DD-Q's `compactSpace_divScheme` instance + DJ-0), and `JacobianData.ofChartsOfAbelImage`
@@ -482,3 +483,96 @@ supplies `ofChartsOfCompactSpace`'s `CompactSpace` hypothesis from it — which 
 first correction needs, since the chart index is infinite. What remains of DAT-J is step 3
 alone: surjectivity of the Abel map on points, which needs `divRep`, and which per §0.5 must
 stay Challenge-free (`exists_effective_of_picClass`, never `riemann_inequality_curve`).
+
+## 7.9 ROUND-0071 s0006 AMENDMENT: U2 is an equation, and DAT-J's "step 3" was two steps
+
+*Run 0071 session 0006, task `ajcr-divrep`, 2026-07-28. All Lean below is sorry-free, kernel-checked
+(`lake env lean` exit 0 per file), rooted, in a green root build at **9176 jobs**, and axiom-probed
+at `propext / Classical.choice / Quot.sound` **with a control (`Jacobian`) that still reports
+`sorryAx`**, so the readings mean something.*
+
+### 7.9.1 U2 carries no quantifier: it is an equation between two landed morphisms
+
+§7.8 reduced the tail to one hypothesis, `IsChartClause`, and read it as the ε-identity — a
+*submodule* identity, quantified inside `IsDivRepClassify` over all tower tests and all framings.
+That quantifier is not there. `Picard/DivRepChartRange.lean`:
+
+> `isDivRepClassify_iff_divRepClassifyZar_left_eq` :
+> `IsDivRepClassify F₀ v ↔ (divRepClassifyZar … F₀).left = v`
+
+**Why, and this is the whole content.** `divRepClassifyZar` is **total** — defined for every
+locally certified class over every affine test, with no hypotheses beyond the ambient ones — and
+`isDivRepClassify_unique` makes it the *unique* morphism satisfying the clause. So the clause is
+not a property one verifies of `v`; it says `v` **is** the classifier. Forward is uniqueness,
+backward is a rewrite. The statement names no chart family and no universal point, so it serves
+anyone holding an `IsDivRepClassify` obligation.
+
+Hence, and **stated as an `iff` on purpose** (inbox `I-0571`: a restatement is a reduction only
+when the converse is proved — both directions are):
+
+> `DivRepChartFamily.isChartClause_iff_forall_classify_eq` :
+> `IsChartClause U ↔ ∀ i j, (divRepClassifyZar … (U i j)).left = ChartMap i j`
+
+So **U2 is a per-chart equation between two morphisms `Spec R_Z(i,j) ⟶ DivScheme g` that both
+already exist as landed terms.** Reading off the existential:
+
+> `divFunctor_representableBy_of_chartRange` :
+> `(∀ i j, ∃ F, (divRepClassifyZar … F).left = ChartMap i j) → (divFunctor C π g).RepresentableBy DivOver`
+
+Since `divRepClassifyZar` is injective on classes (`eq_of_isDivRepClassify`), representability of
+`divFunctor` is *equivalent* to surjectivity of the classifier at every affine test; what is new is
+that **surjectivity at the chart rings alone suffices**. The remaining debt is a *preimage under a
+landed map* at `glueData`-many points.
+
+**No gate cleared.** Nothing produces a term of `DivFamZar C (DivCarveChartRing … i j) π g`; U2 is
+unproved, and the endpoint still carries `hO`, `hχ` and the ambient curve instances, so "one
+equation" describes the debt and not representability for an arbitrary `C`.
+
+**But the G-4 quote should be re-measured, not re-quoted.** This row has already outlived one stale
+blocker (the I-0234 `windowS` strengthening, which was `done`). Two facts say the same scrutiny is
+owed to "U2 is gated on a *global* `IsCertified` over the chart ring":
+
+* `Picard/DivSchemeCertZarSeed.lean` exists to remove exactly that. Its docstring states that
+  **nothing downstream of `DivFamZar` asks for a certificate over `R` itself**, and
+  `ThetaGeneratorSeed.divFamZar_of_forall_away_certified` (`:132`) produces the class from
+  **away-local** certificates. `Picard/DivSchemeCertZarPointwise.lean` goes further —
+  `divFamZar_of_forall_prime_away_certified` (`:181`) needs a certificate only *after shrinking at
+  each prime*, which is the shape the support tube actually produces.
+* Inbox `I-0602` (cert-r2, machine-measured) gives the general trap: the chart-typing that
+  `divRepClassifyZar`'s signature *appears* to require is not what its body consumes — `divFamEps`
+  reads only the `eqns` field, through `divisorWindow`, and the framing clause mentions no cover, no
+  piece and no chart typing.
+
+Neither fact proves the gate is stale and this amendment does not claim it. It says: **measure it in
+Lean before spending another session treating it as a wall.**
+
+### 7.9.2 DAT-J: §7.8's closing paragraph undercounted, and the assembly was never written
+
+§7.8 ends "*What remains of DAT-J is step 3 alone: surjectivity of the Abel map on points*". Step 3
+was **two** statements, and one of them was not mathematics about the Jacobian at all.
+
+* **The bridge** (`Picard/JacobianDataAbelSurj.lean`). §2.3's argument (the `fiberTwist` shift plus
+  `exists_effective_of_picClass`) delivers, for a point `y`, a **morphism** `Spec κ(y) ⟶ DivScheme g`.
+  The qc field consumes `Function.Surjective abel.base`. **Nothing converted one into the other.**
+  `surjective_of_forall_exists_residueField_lift` does: `κ(y)` is a field hence `Spec κ(y)` is
+  nonempty, and mathlib's `range_fromSpecResidueField` pins the range to `{y}`. Pure scheme
+  topology — no curve, no Picard functor, no divisor scheme — hence reusable. With DJ-0 it gives
+  `quasiCompact_of_forall_residueField_lift_from_divScheme`, `JacobianData.ofAbelLifts` and
+  `JacobianData.ofChartsOfAbelLifts` (the infinite-atlas producer §7.5 asks for).
+* **The DAT-G handoff** (`Picard/JacobianDataFromPicRepDatum.lean`). w4-datj §1.1 pins DJ-IN =
+  `PicRepDatum k k C` and asserts the packaging is free because the `rep` field types are
+  definitionally equal. **The packaging had never been written**, and the tell is sharp:
+  `PicRepDatum` occurred in *no other Lean file in the tree*, its defeq recorded as an `example`
+  that nothing consumed. `PicRepDatum.toJacobianData` is the first declaration to use it, so the
+  worksheet's assertion is now a machine fact rather than an assertion.
+
+**What DAT-J now owes is visible in one signature and nowhere else** —
+`PicRepDatum.toJacobianDataOfAbelLifts` takes exactly a `PicRepDatum k k C` (DAT-G/DAT-G0,
+divRep-gated) and a per-point lift. Both remain open; the lift stays binding-Challenge-free per §0.5
+(`exists_effective_of_picClass` / `riemann_inequality`, **never** `riemann_inequality_curve`).
+
+### 7.9.3 §7.6 stands
+
+L8 — local surjectivity of the Abel map out of a too-small divisor functor — remains the campaign's
+real gate and is arguably false as stated. Nothing above bears on it. The tail becoming an equation
+is not progress toward L8, and should not be read as any.
