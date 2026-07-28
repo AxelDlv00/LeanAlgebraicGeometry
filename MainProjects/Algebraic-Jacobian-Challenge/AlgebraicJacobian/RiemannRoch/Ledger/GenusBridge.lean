@@ -42,6 +42,28 @@ The predecessor audit (`RiemannRoch/LedgerPortability.lean`, inbox `I-0495`) pre
 this: the universe gap is an *annotation*, because the ledger is a ledger of dimensions.  This
 file is that prediction discharged rather than asserted.
 
+## THIS CONE IS NOT ROOTED, so the standing axiom probe does not cover it
+
+`AlgebraicJacobian.lean` — the root roll-up — contains **no** `RiemannRoch.Ledger.*` import, and
+nothing outside `Ledger/` imports anything inside it.  Consequently:
+
+* `lake build` on the default target does not elaborate these 40 files, so a green root-build job
+  count says nothing about them;
+* `scripts/axiom-frontier.lean` imports only `AlgebraicJacobian`, so **none** of the results here
+  appears in the workspace's standing axiom probe.
+
+This is the project's own documented trap (5) (`TO_USER.md`): *an unrooted module is not probed at
+all, because the root import never reaches it.*  The axiom lines quoted in these files' docstrings
+and commit messages were measured directly, by elaborating scratch probes against each module, and
+were independently re-measured by a fresh-context review and by `ajc-pic0av` against the full root.
+They are real.  But they are **not** covered by the standing check, and a later session should not
+assume the frontier script would have caught a regression here.
+
+The cone *is* co-rootable: adding the import is one line, and a probe importing `AlgebraicJacobian`
+together with all 40 modules elaborates cleanly (verified after fixing three name collisions, inbox
+`I-0576`).  Rooting it was out of this lane's write scope — the roll-up belongs to nobody's
+`RiemannRoch/**` — so it is left as the single outstanding integration step.
+
 ## Provenance
 
 AJC-native.  Nothing here is ported; it is a comparison between the ported material and this
