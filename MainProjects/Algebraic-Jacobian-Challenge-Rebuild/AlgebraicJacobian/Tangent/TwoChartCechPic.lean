@@ -356,6 +356,63 @@ theorem twoChartClassHom_eq_one_iff (V : Bool → X.Opens) (sel : X → Bool)
     rw [OneCocycle.one_evInf, one_mul]
     exact twoChartCob_spec v₁ v₂ u hv (sel x) (sel y) _ _ _ _
 
+/-! ## Towards (iii-c1): extracting the overlap unit of a general two-chart cocycle
+
+The remaining clause `(iii-c1)` (`informal/w5-t4-worksheet.md` §6.6) is a **normalization**:
+a general `γ : X.unitsCocycle (twoChartCover V sel hmem)` need *not* be of the form
+`twoChartCocycle u`, because at a pair `(x, x')` with `sel x = sel x'` its value lives on
+`V s ⊓ V s = V s` and is an arbitrary unit there, whereas `twoChartPairUnit` is `1` on such
+pairs.
+
+**Why `OneCocycle.ev_refl` does not settle this**, which is the trap: it forces a value to `1`
+only when the two *indices* coincide, not when their *opens* do — and on a pointed cover many
+points share a chart. The same-chart values are genuine data to be normalized away (by
+conjugating with the `0`-cochain `x ↦ γ.evInf x (base (sel x))`, which is where selector
+surjectivity is used a second time).
+
+What is provided here is the piece the worksheet says to write *first*: the `subst`-shaped
+extractor of the mixed-pair value, so that no `rw` ever has to happen inside a type. -/
+
+/-- **Transport of an overlap unit along the chart indices, by `subst` rather than by `▸`.**
+With `s`, `t` abstract and constrained propositionally, `subst` retypes the unit with no
+transport term; rewriting the type directly would produce the ill-typed motive described at
+`twoChartCoboundary_of_pairRelation`. -/
+noncomputable def mixedValue {s t : Bool} (hs : s = false) (ht : t = true)
+    (w : Γ(X, V s ⊓ V t)ˣ) : Γ(X, V false ⊓ V true)ˣ := by
+  subst hs
+  subst ht
+  exact w
+
+@[simp]
+theorem mixedValue_rfl (w : Γ(X, V false ⊓ V true)ˣ) :
+    mixedValue (V := V) rfl rfl w = w :=
+  rfl
+
+/-- **The candidate overlap unit of a two-chart cocycle**: its value at a pair of points
+lying in the two different charts. For a cocycle already in normal form this recovers the unit
+it was built from (`twoChartCandidate_twoChartCocycle`); in general it is the `u` that the
+`(iii-c1)` normalization must show `γ` is cohomologous to. -/
+noncomputable def twoChartCandidate (sel : X → Bool) (hmem : ∀ x, x ∈ V (sel x))
+    (γ : X.unitsCocycle (twoChartCover V sel hmem))
+    {x₀ x₁ : X} (h₀ : sel x₀ = false) (h₁ : sel x₁ = true) : Γ(X, V false ⊓ V true)ˣ :=
+  mixedValue h₀ h₁ (Scheme.unitsEvInf γ x₀ x₁)
+
+/-- **The candidate is a left inverse on normalized cocycles**: extracting the overlap unit of
+`twoChartCocycle u` returns `u`. So the normalization of `(iii-c1)`, once proved, will be a
+genuine inverse rather than merely a surjection — and this lemma is what pins which `u` the
+normalization must produce. -/
+theorem twoChartCandidate_twoChartCocycle (sel : X → Bool) (hmem : ∀ x, x ∈ V (sel x))
+    (u : Γ(X, V false ⊓ V true)ˣ) {x₀ x₁ : X} (h₀ : sel x₀ = false) (h₁ : sel x₁ = true) :
+    twoChartCandidate sel hmem (twoChartCocycle u sel hmem) h₀ h₁ = u := by
+  rw [twoChartCandidate, twoChartCocycle_unitsEvInf]
+  revert h₀ h₁
+  generalize sel x₀ = s
+  generalize sel x₁ = t
+  intro h₀ h₁
+  subst h₀
+  subst h₁
+  rfl
+
 /-! ## (iii-a) packaged: the comparison on the two-chart Čech quotient -/
 
 /-- **(iii-a): the two-chart Čech `Ȟ¹` of units maps to the Picard group.** The comparison
