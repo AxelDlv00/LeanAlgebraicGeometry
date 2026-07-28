@@ -84,7 +84,13 @@ variable {ι R A : Type*} [AddCommMonoid ι] [DecidableEq ι]
 variable [CommRing R] [CommRing A] [Algebra R A]
 variable (𝒜 : ι → Submodule R A) [GradedAlgebra 𝒜] (x : Submonoid A)
 
-lemma val_fromZeroRingHom (c : 𝒜 0) :
+/- `private` IN THE PORT (ajc-rr, 2026-07-28): Algebraic-Jacobian-Challenge already declares
+`HomogeneousLocalization.val_fromZeroRingHom` and `.algebraMap_val`, with identical statements
+and proofs, at `Picard/RigidPushforwardP1ChartRing.lean:76,110`.  Two modules declaring one
+fully-qualified name cannot be co-imported, which would make this subtree unrootable alongside
+`Picard/`.  `private` mangles the name by module, so the local uses below still work and the
+public name stays AJC's.  Consumers should take the `Picard/` version.  Inbox `I-0576`. -/
+private lemma val_fromZeroRingHom (c : 𝒜 0) :
     (fromZeroRingHom 𝒜 x c).val = algebraMap A (Localization x) (c : A) := by
   have h : fromZeroRingHom 𝒜 x c = HomogeneousLocalization.mk ⟨0, c, 1, one_mem x⟩ := rfl
   rw [h, val_mk, ← Localization.mk_one_eq_algebraMap]
@@ -117,7 +123,7 @@ instance : IsScalarTower R (𝒜 0) (HomogeneousLocalization 𝒜 x) :=
   .of_algebraMap_eq' rfl
 
 @[simp]
-lemma algebraMap_val (r : R) :
+private lemma algebraMap_val (r : R) :
     (algebraMap R (HomogeneousLocalization 𝒜 x) r).val =
       algebraMap A (Localization x) (algebraMap R A r) := by
   rw [algebraMap_eq', RingHom.comp_apply, val_fromZeroRingHom,

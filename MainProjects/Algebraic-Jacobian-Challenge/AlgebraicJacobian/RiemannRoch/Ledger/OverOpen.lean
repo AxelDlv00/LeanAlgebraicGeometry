@@ -74,12 +74,15 @@ namespace Abelian.Ext
 variable {C : Type u} [Category.{u} C] [Abelian C] [HasExt.{u} C]
 variable (R : Type u) [CommRing R] [Linear R C]
 
-/-- Precomposition with `mk₀ f` corresponds to composition with `f` under the degree-zero
-identification `Ext X Y 0 ≃ₗ[R] (X ⟶ Y)`. -/
-lemma linearEquiv₀_mk₀_comp {X Y Z : C} (f : X ⟶ Y) (x : Ext Y Z 0) :
-    linearEquiv₀ (R := R) ((mk₀ f).comp x (zero_add 0)) = f ≫ linearEquiv₀ (R := R) x := by
-  apply (mk₀_bijective X Z).injective
-  rw [mk₀_linearEquiv₀_apply, ← mk₀_comp_mk₀, mk₀_linearEquiv₀_apply]
+/- REMOVED IN THE PORT (ajc-rr, 2026-07-28).  The sibling project declares
+`Abelian.Ext.linearEquiv₀_mk₀_comp` here, but Algebraic-Jacobian-Challenge already owns that
+exact name at `Cohomology/StructureSheafModuleK/SectionsBridge.lean:91`, with *strictly more
+general* binders (`Ring R` and independent universes `u₂ v₂ w`, against `CommRing R` and a
+single `u` here).  Two modules declaring one fully-qualified name cannot be imported together
+— `import` fails with "environment already contains" — so keeping the copy would make this
+whole ported subtree impossible to root alongside `Cohomology/`.  Nothing in the ported cone
+used it (checked: zero references outside its own proof).  Consumers should take
+`SectionsBridge`'s version.  Reported as inbox `I-0576`. -/
 
 end Abelian.Ext
 
