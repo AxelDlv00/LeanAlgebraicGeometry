@@ -386,7 +386,12 @@ dimension into a relative dimension:
    while `GeometricallyReduced` does not synthesize and its only producer in the tree is
    `Smooth.geometricallyReduced`, which would be circular. So `Pic0.smooth` is Cartier's
    theorem in characteristic zero and a genuine characteristic-`p` statement otherwise —
-   not a translation argument;
+   not a translation argument. "Entire remaining content" is meant strictly, and it is
+   measured rather than estimated: the conclusion of `Pic0.smooth`, proved at that
+   theorem's binders verbatim with `GeometricallyReduced` as the sole added hypothesis, is
+   **axiom-clean** — `[propext, Classical.choice, Quot.sound]`, where `Pic0.smooth` itself
+   reports `sorryAx`. So supplying geometric reducedness discharges it outright, with no
+   residual leak elsewhere in the assembly;
 2. the passage from "smooth, with `dim_{κ(e)} T_e = n`" to
    `SmoothOfRelativeDimension n`. Mathlib defines the latter by local standard-smooth
    presentations, not by a tangent-space dimension. There *is* a bridge, but it is at the

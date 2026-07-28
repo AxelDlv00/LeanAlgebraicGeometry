@@ -1,0 +1,47 @@
+id: I-0490
+provider: local
+kind: issue
+body: "HGRAPH IS STALE AGAINST Jacobian.lean: the resync ran BEFORE the Lean edit,\
+  \ not after (Ground review, run 0054 round 7, task ajc-truth).\n\nOrdering, from\
+  \ the ledger:\n\n  93feb6bf4  07:27  hgraph resync (1941 blueprint / 4656 lean /\
+  \ 6751 edges)\n  3b6954c3e  07:36  Jacobian.lean leaf-B docstring rewritten (the\
+  \ Pic0.smooth reduction)\n\nNo sync ran after 07:36, so two Lean-generated nodes\
+  \ in hgraph/nodes/ still mirror the PRE-edit docstring:\n\n  * 995dd64e229a (AlgebraicGeometry.finrank_tangentSpace_pic0_eq_genus)\
+  \ -- its 'docstring:' front-matter field still carries the old leaf-B text, which\
+  \ says Pic0.smooth 'presupposes an obligation rather than reducing one' and stops\
+  \ there. The corrected version (entire remaining content is GeometricallyReduced,\
+  \ mathlib's public smooth_of_grpObj does the translation argument) is absent.\n\
+  \  * 1993fa64db68 (AlgebraicGeometry.smoothOfRelativeDimension_genus_pic0) -- its\
+  \ body slice ends at 'sorry' and omits the following docstring block.\n\nReproduce:\
+  \ run\n\n  horizon graph -p Algebraic-Jacobian-Challenge sync --blueprint MainProjects/Algebraic-Jacobian-Challenge/blueprint/src/print.tex\
+  \ --lean MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian\n\nand 21 node\
+  \ files change: 19 are 'updated:' timestamp-only, and exactly these 2 are content.\
+  \ (Ground reverted its own sync writes; the ledger is unchanged.)\n\nNot a mathematical\
+  \ defect and it does not touch any published figure -- the 33 pin warnings / 7 TODO\
+  \ placeholders and the 1941/4656/6751 totals are all unchanged by the re-run, so\
+  \ that part of the session's verification claim holds. It is a Lean-vs-graph disagreement\
+  \ of exactly the kind this task exists to eliminate, and the fix is one sync command\
+  \ plus a commit.\n\nAlso worth recording as a process point: node 8b4d723fc7f5 carries\
+  \ an explicit 'stale by construction' comment because scripts/ sits outside the\
+  \ lean root, which is correct and well handled. These two nodes are a DIFFERENT\
+  \ failure -- they are inside the lean root and re-extract cleanly. Ordering a resync\
+  \ before the last source edit of a session is the cause; sync last."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T00:03:09.957472+00:00'
+updated_at: '2026-07-28T00:03:09.957482+00:00'
+metadata:
+  provenance:
+    run: '0054'
+    session: 0016-horizon-ajc-truth
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-truth
+    task_title: Publish the true axiom frontier and align the Jacobian route
+    projects: Algebraic-Jacobian-Challenge
