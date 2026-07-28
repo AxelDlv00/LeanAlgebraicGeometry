@@ -61,13 +61,33 @@ divisors.
 
 This matters more than the negative result itself, because if the argument reached `⊤` it would
 demolish `GlobalGeneration.lean`, `LedgerClosure.lean` and `SectionBounds.lean` as well, all of
-which assume `Module.Finite k (sectionSub k ⊤ D)`.  It does not, and the reason is visible in the
+which assume `Module.Finite k (sectionSub k ⊤ D)`.  The dividing line is visible in the
 signature: **`IsAffineOpen U` is load-bearing**, used exactly once, for
 `chartRing_isFractionRing` — the step that identifies `K(X)` as the fraction field of the chart
-ring.  On a *proper* curve `⊤` is not affine, so that step is unavailable at `⊤` and the collapse
-does not run.  This is the honest asymmetry: `Module.Finite k (sectionSub k ⊤ D)` is finiteness of
-`L(D)`, which is what Riemann–Roch asserts; `Module.Finite k (sectionSub k U D)` at an affine `U`
-is a disguised finiteness of `K(X)/k`, which is false.
+ring.
+
+**The precise statement, and it is NOT "⊤ is safe".**  What decides the matter is whether `⊤` is
+affine, i.e. whether `X` is affine — *not* whether `U` is written `⊤`:
+
+* On a **proper** curve `⊤` is not affine, `chartRing_isFractionRing` is unavailable there, and
+  the collapse does not run.  This is the case the `hledger`-consuming results are *about*, and
+  their `⊤` binders survive.
+* On an **affine** `X` with a prime divisor, `isAffineOpen_top` applies and
+  `not_chart_finite_of_primeDivisor` kills the `⊤` binder as well.  Machine-checked, not
+  reasoned: `not_chart_finite_of_primeDivisor k (isAffineOpen_top X) P` elaborates.
+
+That second bullet is a real caveat rather than a curiosity, because the consumers in
+`GlobalGeneration.lean`, `LedgerClosure.lean` and `SectionBounds.lean` are stated for a **bare
+`Scheme X`** with no `IsProper` binder anywhere.  So their `⊤` binders are unsatisfiable on the
+affine members of the family they quantify over.  They are not thereby wrong or useless — at a
+proper curve, the case of interest, the binder is exactly the finiteness of `L(D)` that
+Riemann–Roch asserts — but a consumer instantiating them at an affine scheme gets a vacuous
+statement, and no docstring in that lane says so.
+
+The honest asymmetry, stated with the hypothesis it needs: at a **proper** curve,
+`Module.Finite k (sectionSub k ⊤ D)` is finiteness of `L(D)`, which Riemann–Roch asserts, while
+`Module.Finite k (sectionSub k U D)` at an affine chart is a disguised finiteness of `K(X)/k`,
+which is false.  Drop properness and the distinction collapses with it.
 
 `ell_le_finrank_chart_along_tower` is the one to compare: it needs no cover and no affineness, so
 it applies at any `U`, but its *conclusion* is vacuous when `U = ⊤` (`ℓ(D) ≤ ℓ(E)` with the tower
@@ -360,6 +380,25 @@ theorem not_chart_finite_of_primeDivisor {U : X.Opens} (hU : IsAffineOpen U) [No
     ¬ Module.Finite k (sectionSub k U (0 : X.WeilDivisor)) := fun hfin =>
   not_module_finite_functionField_of_primeDivisor k P
     (module_finite_functionField_of_chart_finite k hU hfin)
+
+/-- **On an AFFINE `X`, even the `⊤` binder collapses** — so "state it at `⊤`" is only safe when
+`⊤` fails to be affine, i.e. when `X` is non-affine (in the intended application, proper).
+
+This is the sharp form of the scope caveat in the module docstring, and it is stated as a theorem
+because the prose version invites exactly the wrong summary ("`⊤` is safe").  What is safe is
+*non-affineness*, not the symbol `⊤`.
+
+Consequence a consumer should know: `GlobalGeneration.lean`, `LedgerClosure.lean` and
+`SectionBounds.lean` assume `Module.Finite k (sectionSub k ⊤ D)` over a **bare `Scheme X`** with
+no `IsProper` binder, so at the affine members of that family their hypotheses are unsatisfiable
+and their conclusions vacuous.  At a proper curve — the intended case — the binder is the honest
+finiteness of `L(D)` and they are fine. -/
+theorem not_chart_finite_top_of_isAffine [IsAffine X] [Nonempty (X : Type u)]
+    (P : X.PrimeDivisor) :
+    ¬ Module.Finite k (sectionSub k (⊤ : X.Opens) (0 : X.WeilDivisor)) := by
+  haveI : Nonempty ((⊤ : X.Opens) : Type u) := by
+    obtain ⟨x⟩ := (inferInstance : Nonempty (X : Type u)); exact ⟨⟨x, trivial⟩⟩
+  exact not_chart_finite_of_primeDivisor k (isAffineOpen_top X) P
 
 /-- **The refutations' binder is unsatisfiable on a curve with a nonconstant function.**  The
 contrapositive form a consumer wants: no nonempty affine chart of such a curve has
