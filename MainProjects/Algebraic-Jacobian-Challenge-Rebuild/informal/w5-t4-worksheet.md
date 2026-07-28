@@ -1569,3 +1569,42 @@ written for the two items it describes; it should not be read as a trend.
 **T4's residue, corrected once more and this is the count that should be quoted:** **(3c)** the
 object transport above, **plus (iii-c2-aff-geo)**. Two named statements, not one. §6.22's closing
 line ("T4's residue is now ONE named statement") is hereby withdrawn.
+
+### 6.24 THE LEVEL CHECK, RUN EXPLICITLY: do items (1)+(2) actually meet the engine?
+
+*Run 0073 r4. §6.18's rule says a generality or closure claim must be checked at its CONSUMER, and
+this lane has broken that rule four times in a day. So rather than assert that items (1) and (2)
+"compose with the T2 engine", here is the carrier-by-carrier comparison, read off the declarations.*
+
+**The engine** (`TwoCover.unitsReduction`, `Tangent/TruncExpCechH1.lean:133`) is
+
+```
+(Γ(X, U₀ ⊓ U₁)[ε])ˣ ⧸ cechCoboundaryUnits (mapRingHom (X.resHom inf_le_left))
+                                          (mapRingHom (X.resHom inf_le_right))
+  →*  Γ(X, U₀ ⊓ U₁)ˣ ⧸ cechCoboundaryUnits (X.resHom inf_le_left) (X.resHom inf_le_right)
+```
+
+**The comparison** (`Scheme.twoChartClass`, `Tangent/TwoChartCechPic.lean`) has source
+
+```
+Γ(X, V false ⊓ V true)ˣ ⧸ TruncExpCech.cechCoboundaryUnits (X.resHom inf_le_left)
+                                                          (X.resHom inf_le_right)
+```
+
+**Verdict, and it is favourable.** The engine's **target** is *syntactically* the comparison's
+source at `X` (same carrier, same subgroup, same two restriction maps). The engine's **source** is
+the `DualNumber`-of-original-sections carrier, which is precisely what item (2)'s
+`dualNumberCechH1Equiv` identifies with the comparison's source at the *thickened* curve. And item
+(1)'s `map_twoChartClass` is the square for the induced map between the two comparison sources. So
+the three pieces do line up at one level, which is what §6.18 said had to be checked and not
+assumed.
+
+**What is therefore still missing is exactly one link, stated sharply.** The engine's arrow is
+`unitsFst` on the dual-number carrier; item (1)'s arrow is `pullbackOverlapQuot` along the `ε ↦ 0`
+scheme morphism. Saying these are *the same arrow* across `dualNumberCechH1Equiv` is precisely
+`(b-coeff)` composed with the (3c) object transport — which is why (3c) is not cosmetic bookkeeping:
+**it is the step that turns two aligned diagrams into one commuting one.** Recorded here so no
+successor reads §§6.21–6.22 as "the intertwining is done".
+
+So the residue of §6.23 stands unchanged and is now justified rather than asserted: **(3c)** and
+**(iii-c2-aff-geo)**.
