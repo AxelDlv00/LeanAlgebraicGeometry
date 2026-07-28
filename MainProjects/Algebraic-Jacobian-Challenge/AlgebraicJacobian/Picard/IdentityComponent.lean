@@ -1453,6 +1453,24 @@ namespace Pic0Scheme
 theorems `Pic0.proper` / `Pic0.smooth` / `Pic0.geometricallyIrreducible` /
 `Pic0.grpObj` of that chapter. -/
 
+/-- **The inclusion `Pic⁰_{C/k} ⟶ Pic_{C/k}` as a morphism over `Spec k`.**
+(Run 0067 — the closed half of `kPoints_iff_kerDegree`, split out.)
+
+`Pic0Scheme C` is by definition `GroupScheme.IdentityComponent (PicScheme C)`,
+and the sibling's `IdentityComponent.isOpenSubgroupScheme` supplies the
+inclusion as an open-and-closed immersion of `k`-group schemes. Extracting the
+underlying morphism of schemes needs no new mathematics, so packaging it here
+keeps the open content of `kPoints_iff_kerDegree` down to the degree
+characterisation alone. -/
+theorem inclusion {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C] :
+    Nonempty ((Pic0Scheme C).left ⟶ (PicScheme C).left) := by
+  obtain ⟨f, -⟩ := GroupScheme.IdentityComponent.isOpenSubgroupScheme (PicScheme C)
+  exact ⟨f.left⟩
+
 /-- **Dimension of `Pic⁰_{C/k}` equals the genus of `C`.**
 
 Milne~§III.1, Rmk.~1.4(e): "The dimension of `J` is the genus of `C`".
@@ -1491,7 +1509,14 @@ characterisation of `k`-points factoring through it as those with degree
 zero.
 
 This depends on the still-unconstructed `PicScheme.degree`, and is not yet
-formalised: the proof is `sorry`. -/
+formalised: the proof is `sorry`.
+
+SPLIT (run 0067): the *first* of the two packaged pieces — existence of the
+inclusion morphism `Pic⁰_{C/k} ⟶ Pic_{C/k}` — is not open at all, and is now
+recorded separately as `inclusion` below, proved from
+`GroupScheme.IdentityComponent.isOpenSubgroupScheme`. So the only open content
+of this statement is the degree characterisation, and it is blocked on
+`PicScheme.degree` rather than on anything about the identity component. -/
 theorem kPoints_iff_kerDegree {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
