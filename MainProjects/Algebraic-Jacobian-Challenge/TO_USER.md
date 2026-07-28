@@ -27,14 +27,23 @@
 
 - **Sorry-free is not axiom-clean, and there are eight separate ways to be misled.**
   Run `lake env lean scripts/axiom-frontier.lean` before believing any completeness
-  number; it probes 147 declarations, 95 clean and 52 carrying `sorryAx` as last
-  measured (2026-07-28, `lake build AlgebraicJacobian.Jacobian` green at 8,657 jobs).
+  number; it probes 162 declarations, 108 clean and 54 carrying `sorryAx` as last
+  measured (2026-07-28, `lake build AlgebraicJacobian` green at 8,773 jobs).  One of
+  those 54 is a *deliberately* leaking control, kept so that the clean lines beside it
+  mean something — a probe with no leaking counterpart has stopped measuring.
   (1) A `sorry`-bodied *instance* leaks through synthesis, so a theorem reports
   clean axioms while every real consumer depends on `sorryAx`.  As of 2026-07-28 there
   are **none left**, which is worth stating precisely because this trap has been the
   headline caveat for months: `instHasPicScheme` was demoted to the named theorem
   `picSchemeOfHasRationalPoint` by the étale rewire (so it cannot fire by synthesis at
-  all), and `pullback_preservesFiniteLimits` was proved by `ajc-fbc`.  Measured, not
+  all), and `pullback_preservesFiniteLimits` was likewise **demoted from an instance to a
+  plain theorem** by `ajc-fbc` — it is *not* proved, and naming it still reports
+  `sorryAx`; what changed is that the dependency is now visible in every proof term that
+  uses it instead of being injected silently at synthesis sites.  (For the quasi-coherent
+  objects that actually arise, flat exactness *is* proved: see
+  `pullback_preservesKernel_of_isQuasicoherent`, and the probe's
+  `leakProbe_qcohRoute_*`/`leakControl_qcohRoute_oldRoute` pair, which reports the proved
+  route clean beside the old route still leaking.)  Measured, not
   assumed: of the tree's 28 `sorry` carriers, zero are instances.  The trap remains
   worth understanding — it costs nothing to re-check and a reintroduced sorried
   instance would be invisible again — and the probe's §2 and §8/§8b are where to
