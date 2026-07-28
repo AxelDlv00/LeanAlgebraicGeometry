@@ -20,13 +20,14 @@ and at the Abel chart three of them are supplied here:
 
 | field | at the Abel chart | status |
 |---|---|---|
-| `W` | `chartLocus` of the test point's class, as an open | **supplied here** — by the
-  unconditional `isOpen_chartLocus_of_affineLocal'` |
+| `W` | `chartLocus` of the test point's class, as an open | **shape supplied here**, but at the
+  cost of `haff` — see the retraction below |
 | `r` | the divisor family over the locus | the classifier `divRepClassifyZar` |
 | `sq` | its class is the test's class | the classifier's own characterisation |
 | `exists_factor` | uniqueness of the normalized representative | **the relative form of GAP-2** |
 
-So `W` needs nothing, `sq` is a property of whatever `r` is, and the genuine content is
+So `W` needs only B-4 (**not** "nothing" — retracted below), `sq` is a property of whatever
+`r` is, and the genuine content is
 concentrated in `r` (a construction, from the classifier) and `exists_factor` (relative
 GAP-2).  This file makes that split machine-checkable: `IsChartLocusFibre` below names
 exactly the `r`/`sq`/`exists_factor` triple **at the chart locus**, and
@@ -37,8 +38,20 @@ exactly the `r`/`sq`/`exists_factor` triple **at the chart locus**, and
 A reduction that merely renames its obligation is worthless, and this one is checked against
 that failure mode in two directions:
 
-* `chartLocusOpens` is **constructed**, not hypothesised — the `W` field costs zero, which
-  is a real reduction of the datum from four fields to three;
+* `chartLocusOpens` is **constructed**, not hypothesised, so the `W` field is a *shape* a lane
+  no longer has to invent.
+
+  **RETRACTED 2026-07-29, second clause only** (`Picard/Pic0ChartCoverageAbel.lean`).  This
+  read "the `W` field costs zero, which is a real reduction of the datum from four fields to
+  three".  The cost is not zero: `chartLocusOpens` takes the argument `haff`, and **nothing in
+  the tree discharges it**.  `isOpen_chartLocus_of_affineLocal'` removed the
+  `IsSplitWitnessIsoInvariant` hypothesis but passes `haff` straight through, as does
+  `isOpen_chartLocus_of_affineLocal` before it; the affine case that would feed it
+  (`isOpen_setOf_isSplitWitness_of_presentation`) is itself conditional on
+  `IsChartDatumPresentation`, which is dat-b row B-4's named residue and is only half landed.
+  So the datum went from four fields to three *shapes* but not to three *obligations*.  The
+  residue is now named `ChartLocusAffineLocal` and reduced to B-4's own obligation by
+  `chartLocusAffineLocal_of_presentation`;
 * `isChartLocusFibre_of_isChartUniv` is the **converse**: `IsChartUniv` at the chart locus
   gives injectivity on every test, so a lane cannot obtain `IsChartUniv` while avoiding the
   content of `exists_factor`.  The reduction is therefore an equivalence in the direction
@@ -74,8 +87,11 @@ noncomputable section
 /-! ## The chart locus as an open of the test
 
 `chartLocus` is a `Set T.left` and `restrictChart` wants a `T.Opens`.  The bridge is the
-openness theorem, which is now unconditional — so this costs a hypothesis-free definition
-rather than a gate. -/
+openness theorem.  **"which is now unconditional — so this costs a hypothesis-free definition
+rather than a gate" is RETRACTED** (2026-07-29): the general-test openness theorem is
+unconditional in `IsSplitWitnessIsoInvariant` but still takes the affine-local `haff`, which
+nothing discharges.  See `chartLocusOpens`' docstring and
+`Picard/Pic0ChartCoverageAbel.lean`. -/
 
 variable (C) in
 /-- **`chartLocus` as an open subscheme of the test.**
@@ -84,9 +100,16 @@ For a test `T` presented as `Over.mk a` and a class `lam` on it, the chart locus
 `isOpen_chartLocus_of_affineLocal'` (CHART-U(b) at a general test, unconditional since
 `IsSplitWitnessIsoInvariant` was discharged), so it is an honest element of `T.Opens`.
 
-The `haff` hypothesis is the affine-local input of that theorem and is *not* a residue of
-this file: it is what the landed affine openness supplies.  It is carried as an argument
-here so that the definition does not silently depend on a chosen route to it. -/
+**THE `haff` SENTENCE HERE WAS WRONG AND IS CORRECTED** (2026-07-29,
+`Picard/Pic0ChartCoverageAbel.lean`).  It read: "The `haff` hypothesis is the affine-local
+input of that theorem and is *not* a residue of this file: it is what the landed affine
+openness supplies."  The landed affine openness does **not** supply it.
+`isOpen_setOf_isSplitWitness_of_presentation` (`Pic0ChartLocusIsOpen.lean:321`) is conditional
+on `IsChartDatumPresentation` — dat-b row B-4's own named residue, only half landed
+(`isChartDatumPresentation_of_plusFibre_of_converse` still owes `hconv`) — and no theorem in
+the tree produces `haff` for a general test.  It is a genuine open obligation; it is named
+`ChartLocusAffineLocal` and reduced to B-4 by `chartLocusAffineLocal_of_presentation`.  It is
+carried as an argument here so the definition does not silently depend on a chosen route. -/
 def chartLocusOpens (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
     (T : Over (Spec (.of k))) (lam : picEt C T)
     (haff : ∀ U : T.left.affineOpens,
