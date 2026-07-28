@@ -767,3 +767,39 @@ trivial on each thickened chart. That is the geometric statement, with all three
 (clause (i) `free_of_cyclic_mod_eps`, clause (ii) `baseChangeAlgEquiv`, the affine dictionary
 `cechPicEquivPic`) and `Opens.cechPicMap_ι_eq_one_of_cechPicClass_eq_one` as the exit. Nothing
 else stands between AJCR and the T5 numeral.
+
+### 6.11 Start-of-session checklist for (iii-c2-aff) — the import graph is clear
+
+*Measured at the end of run 0073 r2, so the next session need not re-check.*
+
+**The statement to prove**, phrased to plug straight into `twoChartClassHom_surjOn_of_chartTrivial`:
+
+```
+L : (C ⊗ overDualNumber k).left.CechPic,   L restricting trivially to C   ⊢   ∀ s : Bool,
+  Scheme.CechPic.map (V s).ι L = 1
+```
+
+for `V` the two *thickened* charts. Then (iii-c2-Zar) gives the overlap unit, (iii-c1) pins it,
+(iii-b) makes the assignment injective, and the T2 engine converts to `H¹(C, 𝒪)`.
+
+**No import cycles stand in the way** — a new module may import `Tangent/TwoChartRepresentable`
+together with *all five* inputs. Transitive closures measured at HEAD: `TwoChartRepresentable`
+(57), `Picard/EffectivityMoving` (54), `Tangent/DualNumberChartTriviality` (3),
+`Tangent/DualNumberBaseChange` (2), `Picard/CechPicSurjective` (21),
+`Tangent/RelPicPointTest` (13) — **none of them imports `TwoChartRepresentable`**, and none is
+already in its closure. So the assembly module is a fresh leaf; no import inversion to
+negotiate (contrast the `rr.principal` situation, which was blocked by exactly that).
+
+**Order to work in**, cheapest diagnostic first:
+1. Confirm each thickened chart `V s` of `C_ε` is an **affine open** — this is the one fact the
+   route needs about the *geometry*, and `AffineTwoCover` should supply it. If it does not,
+   stop and say so: everything downstream assumes it.
+2. `cechPicEquivPic` at `V s` to land in `CommRing.Pic Γ(V_{s,ε})`, then clause (ii)
+   `baseChangeAlgEquiv` to rewrite `Γ(V_{s,ε}) ≅ Γ(V_s)[ε]`.
+3. Clause (i) `free_of_cyclic_mod_eps` for freeness. **Note its shape before planning:** it wants
+   a generator `m` and the hypothesis `∀ x, ∃ r, x - r • m ∈ span{ε} • ⊤`, i.e. cyclic *mod* `ε`
+   — that is where "trivial after restriction to `C`" is spent, and it is a module statement, so
+   expect a sheaf→module step (the sibling project was flagged for eliding exactly this, inbox
+   `I-0533`; do not repeat it silently).
+4. `Opens.cechPicMap_ι_eq_one_of_cechPicClass_eq_one` to exit back to
+   `CechPic.map (V s).ι L = 1`.
