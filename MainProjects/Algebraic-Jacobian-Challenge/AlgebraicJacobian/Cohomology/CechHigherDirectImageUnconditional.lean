@@ -446,6 +446,24 @@ theorem essImage_tilde_of_isQuasicoherent {R : CommRingCat.{u}} (M : (Spec R).Mo
   haveI := hM
   exact isIso_fromTildeΓ_iff.mp inferInstance
 
+/-! ### From `Spec.map (Γ g)` to a general flat `g` between affine schemes
+
+`tildePullback_preservesKernel_of_essImage` is stated for a literal `Spec.map φ`.  The Čech
+consumer carries `[IsAffine S] [IsAffine S']`, where `g` is `isoSpec`-conjugate to
+`Spec.map (Γ g)` by `Scheme.isoSpec_inv_naturality`.  The conjugating functors are pullbacks along
+*isomorphisms*, hence equivalences (`Scheme.Modules.pullbackIsoPushforwardInv` identifies them
+with pushforwards along the inverse), so they neither create nor destroy preserved limits. -/
+
+/-- **Pullback along an isomorphism is an equivalence.**  Via
+`Scheme.Modules.pullbackIsoPushforwardInv`, which identifies it with the pushforward along the
+inverse, itself half of `pushforwardEquivOfIso`.  Project-local; needed to move preserved limits
+across the affine conjugation. -/
+theorem Modules.pullback_iso_isEquivalence {X Y : Scheme.{u}} (e : X ≅ Y) :
+    (Scheme.Modules.pullback e.hom).IsEquivalence := by
+  haveI : (Scheme.Modules.pushforward e.inv).IsEquivalence :=
+    (Scheme.Modules.pushforwardEquivOfIso e.symm).isEquivalence_functor
+  exact Functor.isEquivalence_of_iso (Scheme.Modules.pullbackIsoPushforwardInv e).symm
+
 /-- **`Γ(g)` is flat for a flat `g` between affine schemes.**  Specialisation of
 `Flat.flat_appLE` to `U = V = ⊤`, where `appLE` is `appTop` up to the identity restriction map.
 Project-local. -/
@@ -455,6 +473,67 @@ theorem flat_appTop_of_flat (g : S' ⟶ S) [Flat g] [IsAffine S] [IsAffine S'] :
     (by simp)
   rw [Scheme.Hom.appLE] at h
   simpa [Scheme.Hom.appTop] using h
+
+/-- The `inv`-direction conjugation square, the one that composes correctly for pullbacks:
+`g^* ⋙ (isoSpec_{S'}.inv)^* ≅ (isoSpec_S.inv)^* ⋙ (Spec Γg)^*`, from
+`Scheme.isoSpec_inv_naturality`.  Project-local. -/
+noncomputable def pullbackConjSpecInvIso (g : S' ⟶ S) [IsAffine S] [IsAffine S'] :
+    Scheme.Modules.pullback g ⋙ Scheme.Modules.pullback S'.isoSpec.inv ≅
+      Scheme.Modules.pullback S.isoSpec.inv ⋙
+        Scheme.Modules.pullback (Spec.map (Scheme.Hom.appTop g)) :=
+  Scheme.Modules.pullbackComp S'.isoSpec.inv g ≪≫
+    Scheme.Modules.pullbackCongr (Scheme.isoSpec_inv_naturality g).symm ≪≫
+    (Scheme.Modules.pullbackComp (Spec.map (Scheme.Hom.appTop g)) S.isoSpec.inv).symm
+
+/-- **FLAT BASE CHANGE PRESERVES KERNELS OF QUASI-COHERENT MAPS, over an affine base.**  For a
+flat `g : S' ⟶ S` between affine schemes and any `ψ : A ⟶ B` with `A`, `B` quasi-coherent,
+`g^*` preserves `ker ψ`.  This is the general-`g` form of
+`tildePullback_preservesKernel_of_essImage`, and — paired with
+`mapHomologicalComplexHomologyIso_of_preservesKernel` — it is a complete substitute for
+`pullback_preservesFiniteLimits` at every place the Čech flat-base-change proof uses it.
+
+Route, in three moves.  (1) Transport `ψ` to the `Spec Γ(S,⊤)` side along `(isoSpec.inv)^*`;
+quasi-coherence survives, by `pullback_isQuasicoherent_hom`.  (2) There the kernel is preserved by
+`tildePullback_preservesKernel_of_essImage`, since `Γ(g)` is flat (`flat_appTop_of_flat`) and
+quasi-coherent modules over an affine lie in the tilde essential image.  (3) Move back: the
+conjugating functors are pullbacks along isomorphisms, hence equivalences
+(`Modules.pullback_iso_isEquivalence`), so they both preserve the limit *and*, being fully
+faithful, reflect it — which lets `preservesLimit_of_reflects_of_preserves` cancel the right-hand
+factor off the composite rewritten by `pullbackConjSpecInvIso`.
+
+No mono-preservation and no stalk model appear anywhere in this chain.  Project-local. -/
+theorem pullback_preservesKernel_of_isQuasicoherent (g : S' ⟶ S) [Flat g]
+    [IsAffine S] [IsAffine S'] {A B : S.Modules} (ψ : A ⟶ B)
+    (hA : A.IsQuasicoherent) (hB : B.IsQuasicoherent) :
+    Limits.PreservesLimit (Limits.parallelPair ψ 0) (Scheme.Modules.pullback g) := by
+  set T := Scheme.Modules.pullback S.isoSpec.inv with hT
+  haveI hqA : ((Scheme.Modules.pullback S.isoSpec.inv).obj A).IsQuasicoherent :=
+    pullback_isQuasicoherent_hom _ _ hA
+  haveI hqB : ((Scheme.Modules.pullback S.isoSpec.inv).obj B).IsQuasicoherent :=
+    pullback_isQuasicoherent_hom _ _ hB
+  haveI hspec : Limits.PreservesLimit (Limits.parallelPair (T.map ψ) 0)
+      (Scheme.Modules.pullback (Spec.map (Scheme.Hom.appTop g))) :=
+    tildePullback_preservesKernel_of_essImage _ (flat_appTop_of_flat g) _
+      (essImage_tilde_of_isQuasicoherent _ hqA) (essImage_tilde_of_isQuasicoherent _ hqB)
+  haveI hTeq := Modules.pullback_iso_isEquivalence S.isoSpec.symm
+  haveI hT'eq := Modules.pullback_iso_isEquivalence S'.isoSpec.symm
+  haveI : (Scheme.Modules.pullback S'.isoSpec.inv).Full := hT'eq.full
+  haveI : (Scheme.Modules.pullback S'.isoSpec.inv).Faithful := hT'eq.faithful
+  haveI : T.IsEquivalence := hTeq
+  haveI : Limits.PreservesLimit (Limits.parallelPair ψ 0) T := inferInstance
+  haveI : Limits.PreservesLimit (Limits.parallelPair ψ 0 ⋙ T)
+      (Scheme.Modules.pullback (Spec.map (Scheme.Hom.appTop g))) :=
+    Limits.preservesLimit_of_iso_diagram _
+      (Limits.parallelPair.ext (Iso.refl _) (Iso.refl _) :
+        Limits.parallelPair (T.map ψ) 0 ≅ Limits.parallelPair ψ 0 ⋙ T)
+  haveI : Limits.PreservesLimit (Limits.parallelPair ψ 0)
+      (T ⋙ Scheme.Modules.pullback (Spec.map (Scheme.Hom.appTop g))) :=
+    Limits.comp_preservesLimit _ _
+  haveI : Limits.PreservesLimit (Limits.parallelPair ψ 0)
+      (Scheme.Modules.pullback g ⋙ Scheme.Modules.pullback S'.isoSpec.inv) :=
+    Limits.preservesLimit_of_natIso _ (pullbackConjSpecInvIso g).symm
+  exact Limits.preservesLimit_of_reflects_of_preserves (Scheme.Modules.pullback g)
+    (Scheme.Modules.pullback S'.isoSpec.inv)
 
 /-! ### The consumer needs ONE kernel, not global exactness
 
@@ -501,35 +580,6 @@ noncomputable def mapHomologicalComplexHomologyIso_of_preservesKernel {C D : Typ
   haveI : F.PreservesLeftHomologyOf (K.sc i) :=
     preservesLeftHomologyOf_of_preservesKernel F (K.sc i)
   ShortComplex.mapHomologyIso (K.sc i) F
-
-/-! ### From `Spec.map (Γ g)` to a general flat `g` between affine schemes
-
-`tildePullback_preservesKernel` is stated for a literal `Spec.map φ`.  The Čech consumer carries
-`[IsAffine S] [IsAffine S']`, where `g` is `isoSpec`-conjugate to `Spec.map (Γ g)` by
-`Scheme.isoSpec_hom_naturality`.  The conjugating functors are pullbacks along *isomorphisms*,
-which are equivalences (`Scheme.Modules.pullbackIsoPushforwardInv` identifies them with
-pushforwards along the inverse), so they neither create nor destroy preserved limits. -/
-
-/-- **The conjugation isomorphism.**  For `g` between affine schemes,
-`isoSpec^* ⋙ g^* ≅ (Spec Γg)^* ⋙ isoSpec^*`, from `Scheme.isoSpec_hom_naturality` through
-`pullbackComp`/`pullbackCongr`.  Project-local. -/
-noncomputable def pullbackConjSpecIso (g : S' ⟶ S) [IsAffine S] [IsAffine S'] :
-    Scheme.Modules.pullback S.isoSpec.hom ⋙ Scheme.Modules.pullback g ≅
-      Scheme.Modules.pullback (Spec.map (Scheme.Hom.appTop g)) ⋙
-        Scheme.Modules.pullback S'.isoSpec.hom :=
-  Scheme.Modules.pullbackComp g S.isoSpec.hom ≪≫
-    Scheme.Modules.pullbackCongr (Scheme.isoSpec_hom_naturality g).symm ≪≫
-    (Scheme.Modules.pullbackComp S'.isoSpec.hom (Spec.map (Scheme.Hom.appTop g))).symm
-
-/-- **Pullback along an isomorphism is an equivalence.**  Via
-`Scheme.Modules.pullbackIsoPushforwardInv`, which identifies it with the pushforward along the
-inverse, itself half of `pushforwardEquivOfIso`.  Project-local; needed to move preserved limits
-across the conjugation of `pullbackConjSpecIso`. -/
-theorem Modules.pullback_iso_isEquivalence {X Y : Scheme.{u}} (e : X ≅ Y) :
-    (Scheme.Modules.pullback e.hom).IsEquivalence := by
-  haveI : (Scheme.Modules.pushforward e.inv).IsEquivalence :=
-    (Scheme.Modules.pushforwardEquivOfIso e.symm).isEquivalence_functor
-  exact Functor.isEquivalence_of_iso (Scheme.Modules.pullbackIsoPushforwardInv e).symm
 
 /-- **Flat base change has left-adjoint pullback**, hence `g^*` preserves finite
 colimits (free: `g^* = pullback g` is a left adjoint). -/
