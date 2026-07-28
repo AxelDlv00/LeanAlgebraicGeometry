@@ -1400,3 +1400,53 @@ which can produce a "motive is not type correct" of the family this lane has alr
 If (3b)/(3c) resist, the right move is to state the composed square with the identification as an
 explicit hypothesis (`heq : (C ◁ overDualNumberZero).left = relCurveMap C _ _`) and discharge it
 separately — the same discipline as `hcyc` in `DualNumberChartPic.lean`, and for the same reason.
+
+### 6.21 ITEMS (1) AND (2) ARE CLOSED, AND §6.20 PREDICTED BOTH MECHANISMS CORRECTLY
+
+*Run 0073 r4. First time in this lane that a §6.x prediction has held on both counts — recorded
+because the previous four sections were all corrections of predictions.*
+
+**Item (1), `Tangent/TwoChartQuotientNaturality.lean` (0 sorries).** Exactly as §6.20(1) said: one
+containment, `cechCoboundaryUnits_le_comap_unitsAppLE`, provable from the two `unitsAppLE`
+functoriality lemmas already in the tree, then the square by `induction q` + `map_twoChartClassHom`.
+`hsel` appears at both ends, as `I-0630` requires. Also landed:
+`map_twoChartClass_eq_one_iff`, the kernel form, which goes through `twoChartClass_injective` — so
+the `CechPic`-level kernel really is computed by the `Ȟ¹`-level one.
+
+**Item (2), `Tangent/DualNumberCarrierCoboundary.lean` (0 sorries).** Also as predicted: the
+`Subgroup.map_sup` route means **no `Bool` case analysis appears anywhere**, and the whole statement
+is two range identifications, each one application of the landed naturality square. Beyond the
+subgroup equality, `dualNumberCechH1Equiv` is the `QuotientGroup.congr` a consumer calls.
+
+**THE ONE THING §6.20 DID NOT PREDICT, and it cost both files a detour.** Both proofs hit the same
+wall, and it is neither of the traps this lane has recorded before:
+
+> `rw` fails with *"the target expression is not type-correct under the `instances` transparency
+> level"*, with a `Full error` naming a `presheaf.obj` application mismatch — even though the two
+> sides are `rfl`-equal and `exact` accepts them.
+
+Two different faces of one seam:
+* in item (1) the goal was stated with `Scheme.resHom` while the `@[simp]` lemmas that close it are
+  stated with `presheaf.map`. **Fix: `simp [Scheme.resHom]`** — unfold the wrapper so the goal is in
+  the library's spelling. `rfl` does *not* close it; neither does any hand-directed `rw` chain.
+* in item (2) the landed square is stated with `Over.resAlgHom` coerced to a `RingHom`, while the
+  coboundary subgroup is stated with `C.left.resHom`. **Fix: state the new lemma in the CONSUMER's
+  spelling** (`resHom`), not in the spelling of the input lemma. Then the subgroup equality is one
+  `rw` chain.
+
+> **Rule: when two `rfl`-equal spellings of a restriction meet, `exact` is transparent and `rw` is
+> not. Choose the spelling of the CONSUMER when stating a bridging lemma, and reach for
+> `simp [<the wrapper def>]` rather than a `rw` chain when the goal is already fixed.** The
+> diagnostic to recognise is "not type-correct under the `instances` transparency level" — it reads
+> like a broken goal and it is not; it means `rw` is looking at a coercion it cannot see through.
+
+**RESIDUE OF T4 AFTER THIS SECTION, and I am naming statements rather than counting them**
+(the discipline §6.18 imposed after three mis-sizings):
+1. **Item (3), the transport seam** — §6.20(3), three sub-items, unstarted. (3a)'s `hsel` is a real
+   side condition; (3b)/(3c) are scheme-object identifications.
+2. **(iii-c2-aff-geo)** — "L trivial along `ε ↦ 0`" ⟹ "the chart reduction is cyclic". Carried as the
+   `hcyc` binder in `Tangent/DualNumberChartPic.lean`; the generator half is closed
+   (`CyclicQuotientGenerator.lean`). The AJC sibling confirmed on 2026-07-28 that it does **not**
+   have this in any spelling either, so it is genuinely open on both sides.
+
+Nothing else stands between the two-chart comparison and the T2 engine at quotient level.
