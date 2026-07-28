@@ -479,6 +479,7 @@ import AlgebraicJacobian.Tangent.DualNumberCarrierReduction
 import AlgebraicJacobian.Tangent.CyclicQuotientGenerator
 import AlgebraicJacobian.Tangent.ReductionTrivialCyclic
 import AlgebraicJacobian.Tangent.DualNumberChartPic
+import AlgebraicJacobian.Tangent.TwoChartHonestGenus
 import AlgebraicJacobian.Tangent.EpsChartSquare
 import AlgebraicJacobian.Tangent.TwoChartHonest
 import AlgebraicJacobian.Tangent.EpsZeroSurjective
