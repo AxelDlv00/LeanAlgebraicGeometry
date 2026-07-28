@@ -33,7 +33,9 @@ summary: "DECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. Bin
   \ (4.5, needs\nSym^g C). The lane's n = 0 non-vacuity witnesses do NOT transfer\
   \ -- they sit at an EMPTY support\nlocus while the straddling hypotheses force a\
   \ nonempty one.\n\nCLAUSE 3 IS DISCHARGED ON THE WIDENED ROUTE, measured by DECLARATION\
-  \ not by grep\n(scripts/partition-probe.lean). Four widened endpoints -- exists_affAdaptation_isCertified_of_\n\
+  \ not by grep\n(Picard/DivisorFamilyAffPartitionAudit.lean, a ROOTED library module\
+  \ -- it was first written under\nscripts/ where .gitignore forbids tracking it,\
+  \ see I-0692). Four widened endpoints -- exists_affAdaptation_isCertified_of_\n\
   straddling, exists_isCertified_of_swallowing_affineOpen, isCertified_of_swallowedBy_of_c1,\n\
   divFamZarAff_of_forall_prime_certified_adaptation -- have ZERO FinCoverData in their\
   \ constant\nclosure (3024-4270 consts each); the CONTROLS ofChartPair and chartPairCoverData\
@@ -73,7 +75,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T20:05:40.606397+00:00'
+  updated_at: '2026-07-28T20:22:28.550829+00:00'
   pinned_commits:
   - 46d751465
   - 81c17f256

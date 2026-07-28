@@ -39,6 +39,9 @@ finiteness, not separability, not perfectness.
 * `uniformVanishing_of_uniform_base_of_genus_invariant` — the **reduction**: the open half
   follows from exactly **two** inputs, a uniform degree bound on a vanishing base divisor and
   base-field invariance of the genus.  Neither is proved here; both are named precisely.
+* `exists_deg_ge` — **non-vacuity**: degrees are unbounded above given one closed point of
+  positive residue degree, so a degree half-space is never empty and `UniformVanishing` is not
+  trivially satisfiable by having no instances.  Proved.
 
 ## What the constant actually decomposes into (correcting my own earlier account)
 
@@ -320,6 +323,35 @@ theorem uniformVanishing_of_uniform_base_of_genus_invariant {d : ℤ} {g : ℕ}
   refine subsingleton_hModule_one_of_deg_ge κ hvan D ?_
   rw [hchi]
   omega
+
+/-! ### Non-vacuity: the degree half-space is never empty
+
+A `∀ D, b ≤ deg D → …` statement is worth nothing if no divisor ever reaches degree `b`; it would
+then be true for large `b` by having no instances, and `UniformVanishing` would be trivially
+satisfiable.  This rules that out: one closed point of positive residue degree makes `deg`
+unbounded above, so every degree half-space contains divisors.
+
+The hypothesis is the honest one — `residueDeg` positivity at a single point — rather than a
+claim that AJC witnesses it at the challenge curve, which is a separate question and is not
+asserted here. -/
+
+/-- **Degrees are unbounded above**, given one closed point of positive residue degree: for every
+`b` there is a divisor of degree at least `b`, namely a large multiple of that point
+(`deg (n • x) = n · [κ(x) : K]`).
+
+This is what makes the bounded-vanishing statements of this file and of `DegreeVanishing`
+non-vacuous rather than true-by-emptiness. -/
+theorem exists_deg_ge {K : Type u} [Field K] {X : Scheme.{u}}
+    [X.Over (Spec (CommRingCat.of K))] [IsIntegral X] {x : X} (hx : x ≠ genericPoint X)
+    (hpos : 0 < X.residueDeg K x) (b : ℤ) :
+    ∃ D : X.CurveDivisor, b ≤ CurveDivisor.deg K D := by
+  refine ⟨CurveDivisor.single hx (max b 0), ?_⟩
+  rw [Scheme.CurveDivisor.deg_single' K hx]
+  have h1 : (1 : ℤ) ≤ (X.residueDeg K x : ℤ) := by exact_mod_cast hpos
+  have h0 : (0 : ℤ) ≤ max b 0 := le_max_right _ _
+  calc b ≤ max b 0 := le_max_left _ _
+    _ = max b 0 * 1 := by ring
+    _ ≤ max b 0 * (X.residueDeg K x : ℤ) := mul_le_mul_of_nonneg_left h1 h0
 
 omit [IsProper C.hom] in
 /-- The uniform statement is **strictly stronger** than the per-field one, in the only sense

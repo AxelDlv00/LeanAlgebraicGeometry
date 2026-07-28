@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: is
 type: lean
-updated: '2026-07-29T03:18:57'
+updated: '2026-07-29T03:26:02'
 ---
 structure is nearly free, and exhibiting *some* `SymPowData` proves nothing.
 

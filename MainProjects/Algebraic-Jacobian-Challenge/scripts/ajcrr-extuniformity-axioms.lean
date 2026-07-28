@@ -82,6 +82,7 @@ reads clean, stop, because §2–§5 are then uncalibrated. -/
 #print axioms AlgebraicGeometry.UniformBaseDivisor
 #print axioms AlgebraicGeometry.uniformVanishing_of_uniform_base_of_genus_invariant
 #print axioms AlgebraicGeometry.vanishing_baseChangeField_of_uniformVanishing
+#print axioms AlgebraicGeometry.exists_deg_ge
 
 /-! ## §5. The synthesis-site readings
 
