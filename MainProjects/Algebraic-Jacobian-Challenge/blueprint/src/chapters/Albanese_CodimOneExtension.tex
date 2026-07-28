@@ -1711,7 +1711,7 @@ codimension-one generisation.
 % This is a subset of pure codimension one in \(\Delta\) (AG 9.2), and when we identify
 % it with a subset of \(V\), it is a subset of \(V\) of codimension one passing through
 % \(x\) on which \(\varphi\) is not defined."
-\begin{proof}
+\begin{proof}\leanok
   \uses{def:rationalMap_precomp, lem:rationalMap_precomp_compHom,
         lem:rationalMap_precomp_hom, def:rationalMap_prod, lem:rationalMap_prod_proj,
         def:grpObj_diff, lem:grpObjDiffLeft_comp_hom, def:rationalMap_difference,
@@ -1723,6 +1723,15 @@ codimension-one generisation.
         lem:milne33_diagonal_vanishing_purity}
   Following Milne's proof of Lemma~3.3. The argument has four sub-steps. Throughout we
   fix a representative \((U, \varphi_U)\) of \(f\).
+
+  The Lean proof takes the component-reduction route to the same conclusion: fix
+  \(x \in Z(f)\), choose a Noetherian affine window \(W \ni x\), let \(C\) be the
+  irreducible component of \(x\) in \(Z(f) \cap W\), select by Jacobson density a point
+  \(x_0 \in C\) closed in \(X\) and avoiding the other components, transport
+  sub-step~4 at \(x_0\) to obtain \(z \in Z(f)\) with \(z \rightsquigarrow x_0\) and
+  \(\operatorname{coheight} z = 1\), and identify \(z\) with the generic point of \(C\)
+  by strictness of coheight along a specialisation. This yields
+  \(x \in C = \overline{\{z\}}\).
 
   \emph{Sub-step 1: the difference rational map.} Define
   \[
