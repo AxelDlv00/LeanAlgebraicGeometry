@@ -37,12 +37,23 @@ standard-smooth presentation is required.
 
 * `Scheme.topologicalKrullDim_eq_iSup_ringKrullDim_stalk` — the general identity
   `dim X = ⨆ z, dim 𝒪_{X,z}`, for **any** scheme.
-* `Scheme.topologicalKrullDim_eq_of_forall_ringKrullDim_stalk_eq` — the constant
-  case, which is the one a homogeneous space (a group scheme) lands in.
-* `Scheme.topologicalKrullDim_eq_of_forall_finrank_cotangentSpace_eq` — the same
-  with the stalk dimension replaced by the cotangent-space dimension, valid at
-  regular points. This is the shape the tangent-space computation
-  `dim_k T₀ = g` feeds.
+* `Scheme.topologicalKrullDim_le_of_forall_ringKrullDim_stalk_le` and
+  `Scheme.ringKrullDim_stalk_le_topologicalKrullDim` — the two halves, combined in
+  `Scheme.topologicalKrullDim_eq_of_le_of_exists_ge`.
+* `Scheme.le_topologicalKrullDim_of_finrank_cotangentSpace` — the ≥ half in
+  cotangent form, from data at a **single** regular point. This is the shape the
+  tangent-space computation `dim_k T₀ = g` feeds.
+
+## A scope warning that shaped the statements
+
+Stalks of a scheme do **not** all have the same dimension: at a generic point the
+stalk is a localisation at a minimal prime, of dimension `0`. So a
+"constant stalk dimension" hypothesis is nearly vacuous, and the
+homogeneity of a group scheme does not repair it — translation acts transitively
+on *closed* points over an algebraically closed field, not on all points. The
+constant forms are retained (`…_eq_of_forall_ringKrullDim_stalk_eq`,
+`…_eq_of_forall_finrank_cotangentSpace_eq`) with that warning attached; a real
+dimension computation pairs a uniform ≤ bound with a ≥ witness at one point.
 -/
 
 universe u
@@ -82,8 +93,21 @@ The specialisation of `topologicalKrullDim_eq_iSup_ringKrullDim_stalk` to a
 *constant* stalk dimension. `Nonempty X` is genuinely needed: over an empty
 scheme the supremum is `⊥`, not `d`.
 
-This is the case a group scheme lands in, since translation by a point is an
-isomorphism, so all stalks of a group scheme over a field are isomorphic. -/
+**READ THE SCOPE WARNING BEFORE REACHING FOR THIS.** It is nearly vacuous, and
+saying so is the point of stating the two bounds below instead. Stalks of a
+scheme are *not* all of the same dimension: the stalk at a generic point of an
+irreducible component is a localisation at a minimal prime, so it has dimension
+`0`, while the stalk at a closed point of a `d`-dimensional variety has dimension
+`d`. So the hypothesis `∀ z, ringKrullDim (stalk z) = d` forces `d = 0` on any
+nonempty scheme with a generic point — in particular this lemma says nothing
+about `Pic⁰` beyond `d = 0`, and the "translation makes all stalks isomorphic"
+reading of homogeneity is **false**: translation is transitive on *closed* points
+of a group scheme over an algebraically closed field, not on all points.
+
+The useful forms are `topologicalKrullDim_le_of_forall_ringKrullDim_stalk_le`
+(the ≤ half, quantified over all points) and
+`ringKrullDim_stalk_le_topologicalKrullDim` (the ≥ half, at one point), combined
+in `topologicalKrullDim_eq_of_le_of_exists_ge`. -/
 theorem topologicalKrullDim_eq_of_forall_ringKrullDim_stalk_eq
     (X : Scheme.{u}) [Nonempty X] (d : WithBot ℕ∞)
     (h : ∀ z : X, ringKrullDim (X.presheaf.stalk z) = d) :
@@ -91,18 +115,72 @@ theorem topologicalKrullDim_eq_of_forall_ringKrullDim_stalk_eq
   rw [topologicalKrullDim_eq_iSup_ringKrullDim_stalk X]
   simp [h]
 
-/-- **Dimension from the cotangent spaces, at regular points.**
+/-- **The ≤ half: a bound at every point bounds the dimension.** Unlike the
+constant form above this is not vacuous — a bound holding at all points is
+exactly what "every local ring has dimension at most `d`" says, and it is the
+half a *smooth* scheme of relative dimension `d` supplies. -/
+theorem topologicalKrullDim_le_of_forall_ringKrullDim_stalk_le
+    (X : Scheme.{u}) (d : WithBot ℕ∞)
+    (h : ∀ z : X, ringKrullDim (X.presheaf.stalk z) ≤ d) :
+    topologicalKrullDim X ≤ d := by
+  rw [topologicalKrullDim_eq_iSup_ringKrullDim_stalk X]
+  exact iSup_le h
 
-If every stalk of `X` is a regular local ring of embedding dimension `d`, then
-`dim X = d`. The step from the cotangent space to the Krull dimension of the
-stalk is mathlib's `IsRegularLocalRing.iff_finrank_cotangentSpace`, which needs
-the stalk Noetherian — supplied here by `[IsLocallyNoetherian X]`, which for a
-scheme locally of finite type over a field is free
-(`LocallyOfFiniteType.isLocallyNoetherian`).
+/-- **The ≥ half: one point's stalk dimension bounds the dimension from below.**
+The witness may be taken at any single point — for a group scheme, the identity. -/
+theorem ringKrullDim_stalk_le_topologicalKrullDim
+    (X : Scheme.{u}) (z : X) :
+    ringKrullDim (X.presheaf.stalk z) ≤ topologicalKrullDim X := by
+  rw [topologicalKrullDim_eq_iSup_ringKrullDim_stalk X]
+  exact le_iSup (fun z : X => ringKrullDim (X.presheaf.stalk z)) z
 
-This is the form the tangent-space identity `dim_k T₀ Pic⁰ = g` plugs into: the
-cotangent space at a point is the linear dual of the tangent space there, and the
-regularity hypothesis is exactly what smoothness supplies. -/
+/-- **The honest constant-dimension criterion**: a uniform upper bound at *every*
+point plus a matching lower bound at *one* point. This is the shape a dimension
+computation on a variety actually has — the bound comes from smoothness (or a
+presentation) globally, and the witness from a distinguished closed point, which
+for `Pic⁰_{C/k}` is the identity. -/
+theorem topologicalKrullDim_eq_of_le_of_exists_ge
+    (X : Scheme.{u}) (d : WithBot ℕ∞)
+    (hle : ∀ z : X, ringKrullDim (X.presheaf.stalk z) ≤ d)
+    (z₀ : X) (hz₀ : d ≤ ringKrullDim (X.presheaf.stalk z₀)) :
+    topologicalKrullDim X = d :=
+  le_antisymm (topologicalKrullDim_le_of_forall_ringKrullDim_stalk_le X d hle)
+    (hz₀.trans (ringKrullDim_stalk_le_topologicalKrullDim X z₀))
+
+/-- **The ≥ half in cotangent form: the embedding dimension at ONE regular point
+bounds the scheme's dimension from below.**
+
+At a regular point, `IsRegularLocalRing.iff_finrank_cotangentSpace` identifies
+`dim_{κ(z)} m_z/m_z²` with `dim 𝒪_{X,z}`, and that is at most `dim X` by
+`ringKrullDim_stalk_le_topologicalKrullDim`. `[IsLocallyNoetherian X]` is what
+makes the stalk Noetherian; for a scheme locally of finite type over a field it
+is free (`LocallyOfFiniteType.isLocallyNoetherian`).
+
+**This is the direction the tangent-space identity `dim_k T₀ Pic⁰ = g` feeds**,
+and it needs data at the identity only — no quantifier over the points of
+`Pic⁰`, which is why it is stated separately from the ≤ half. The cotangent space
+is the linear dual of the tangent space, and `Subspace.dual_finrank_eq` makes
+that a dimension-preserving step. -/
+theorem le_topologicalKrullDim_of_finrank_cotangentSpace
+    (X : Scheme.{u}) [IsLocallyNoetherian X] (d : ℕ) (z : X)
+    (hreg : IsRegularLocalRing (X.presheaf.stalk z))
+    (h : Module.finrank (IsLocalRing.ResidueField (X.presheaf.stalk z))
+      (IsLocalRing.CotangentSpace (X.presheaf.stalk z)) = d) :
+    (d : WithBot ℕ∞) ≤ topologicalKrullDim X := by
+  haveI := hreg
+  have hdim : ringKrullDim (X.presheaf.stalk z) = (d : WithBot ℕ∞) := by
+    rw [← (IsRegularLocalRing.iff_finrank_cotangentSpace (R := X.presheaf.stalk z)).mp hreg, h]
+  rw [← hdim]
+  exact ringKrullDim_stalk_le_topologicalKrullDim X z
+
+/-- **Dimension from the cotangent spaces, at regular points** — the constant
+form, inheriting the vacuity warning of
+`topologicalKrullDim_eq_of_forall_ringKrullDim_stalk_eq`: asking the embedding
+dimension to be `d` at *every* point (including generic points, where it is `0`)
+forces `d = 0`. Kept because it is the direct cotangent translation, but a
+dimension computation should use
+`le_topologicalKrullDim_of_finrank_cotangentSpace` for the ≥ half together with
+`topologicalKrullDim_le_of_forall_ringKrullDim_stalk_le` for the ≤ half. -/
 theorem topologicalKrullDim_eq_of_forall_finrank_cotangentSpace_eq
     (X : Scheme.{u}) [Nonempty X] [IsLocallyNoetherian X] (d : ℕ)
     (hreg : ∀ z : X, IsRegularLocalRing (X.presheaf.stalk z))
