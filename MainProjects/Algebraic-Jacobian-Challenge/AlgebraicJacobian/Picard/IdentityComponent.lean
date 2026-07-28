@@ -1653,6 +1653,61 @@ theorem kPoints_iff_kerDegree {k : Type u} [Field k]
           PicScheme.degree C lambda = 0) :=
   sorry
 
+/-- **A `k`-rational point of `Pic⁰_{C/k}` is a `k`-rational point of `Pic_{C/k}`** —
+sorry-free, and the piece `kPoints_iff_kerDegree` needs to even *state* its own conclusion on
+the correct domain.
+
+If `mu` is a section of `(Pic0Scheme C).hom` and `f` is a morphism over `Spec k` (in
+particular the inclusion of `Pic0Scheme.inclusion`), then `mu ≫ f.left` is a section of
+`(PicScheme C).hom`: associativity plus `Over.w f` plus the section equation.
+
+Why this is worth a name: `PicScheme.degreeOfSection` — unlike the broken
+`PicScheme.degree` — requires its argument to *be* a section, so any statement of the form
+"points of `Pic⁰` are the degree-zero points" must produce that section proof for the
+composite. This is it, and it is free. -/
+theorem isSection_comp_inclusion {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    (f : Pic0Scheme C ⟶ PicScheme C)
+    (mu : Spec (.of k) ⟶ (Pic0Scheme C).left)
+    (hmu : mu ≫ (Pic0Scheme C).hom = 𝟙 (Spec (.of k))) :
+    (mu ≫ f.left) ≫ (PicScheme C).hom = 𝟙 (Spec (.of k)) := by
+  rw [Category.assoc, Over.w f, hmu]
+
+/-- **The degree-zero characterisation of `Pic⁰`-points, on the correct domain** — the
+restatement of `kPoints_iff_kerDegree` against `degreeOfSection` rather than the broken
+`degree`, with its structural half discharged.
+
+Compared with `kPoints_iff_kerDegree` above, three things are fixed or supplied here:
+
+* the inclusion is `Pic0Scheme.inclusion`-style but taken as a morphism *over* `Spec k`, so
+  that composing with it preserves sections (`isSection_comp_inclusion`);
+* points are sections, matching `degreeOfSection`'s domain;
+* the "⟹" direction is reduced to a statement purely about *classes*: a point coming from
+  `Pic⁰` has trivial relative Picard class. Given that, degree zero is `map_zero`
+  (`PicScheme.degreeOfSection_eq_zero_of_class_eq_zero`).
+
+The remaining hypothesis `hclass` is the honest mathematical content of Milne III.1 p.~88 in
+this direction: the identity component consists of the classes of degree zero, i.e. the
+degree map's kernel is exactly the connected component of the identity. It is *not*
+bookkeeping — it is the statement that the degree separates the components of `Pic_{C/k}` —
+which is why it is a hypothesis rather than a proof step. -/
+theorem degreeOfSection_eq_zero_of_factors {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C] [PicScheme.ClassDegree C]
+    (f : Pic0Scheme C ⟶ PicScheme C)
+    (hclass : ∀ (mu : Spec (.of k) ⟶ (Pic0Scheme C).left)
+      (hmu : mu ≫ (Pic0Scheme C).hom = 𝟙 (Spec (.of k))),
+      PicScheme.classOfSection C (mu ≫ f.left) (isSection_comp_inclusion C f mu hmu) = 0)
+    (mu : Spec (.of k) ⟶ (Pic0Scheme C).left)
+    (hmu : mu ≫ (Pic0Scheme C).hom = 𝟙 (Spec (.of k))) :
+    PicScheme.degreeOfSection C (mu ≫ f.left) (isSection_comp_inclusion C f mu hmu) = 0 :=
+  PicScheme.degreeOfSection_eq_zero_of_class_eq_zero C _ _ (hclass mu hmu)
+
 end Pic0Scheme
 
 end Scheme
