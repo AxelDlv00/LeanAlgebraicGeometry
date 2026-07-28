@@ -46,12 +46,24 @@ objects through the `tilde` dictionary over `Spec`.
 
 Three statements below are still assumed rather than proved.
 
-* `pullback_preservesFiniteLimits`: for `g` flat, `g^*` preserves finite limits.  What is
-  missing is left-exactness of the presheaf-level pullback; see the docstring there.
+* `pullback_preservesMonomorphisms`: for `g` flat, `g^*` preserves monomorphisms.  This is the
+  *sole* carrier behind flat left-exactness — `pullback_preservesFiniteLimits` is a two-line
+  consequence of it (`pullback_preservesFiniteLimits_of_preservesMonomorphisms`) and its own body
+  is sorry-free.  Note this is **not** the presheaf-pullback route the older revisions of this
+  header prescribed: that route is retired as a dead end, for the reasons set out in the
+  docstring of `pullback_preservesMonomorphisms`.  Three of its four ingredients now exist
+  sorry-free (the open-immersion case, cover-locality on the source, and the affine case on the
+  tilde image); what is missing is the affine case for *arbitrary* rather than quasi-coherent
+  modules.
 * the cosimplicial naturality of `cech_pushforward_baseChange_natIso` and of
   `twisted_cech_nerve_iso`.  In both cases the degreewise isomorphisms are constructed, and
   what remains is their compatibility with the index-omission maps generating the
   cosimplicial structure of the Čech nerve.
+
+Neither `pullback_preservesFiniteLimits` nor `pullback_preservesHomology` is an `instance`, and
+that is deliberate: as instances they leaked `sorryAx` into every *synthesis site* while
+declarations merely quantifying over them reported clean axioms.  Do not restore the attribute
+before the carrier is proved.
 
 Everything downstream of these — in particular `cechComplex_baseChange_iso` and
 `cech_flatBaseChange` — is proved modulo them.
@@ -92,10 +104,10 @@ The proof decomposes into two independent halves, assembled in `cech_flatBaseCha
 1. **Homology side.** The pullback `g^*` is exact, so it commutes with
    `HomologicalComplex.homology`:
    * `pullback_preservesFiniteColimits` — `g^*` is a left adjoint;
-   * `pullback_preservesFiniteLimits` — `g` flat implies `g^*` left-exact.  Mathlib has this
-     affine-locally for extension of scalars,
-     `ModuleCat.preservesFiniteLimits_extendScalars_of_flat`, but not lifted through
-     sheafification to `SheafOfModules.pullback`; this step is not yet proved;
+   * `pullback_preservesFiniteLimits` — `g` flat implies `g^*` left-exact.  Reduced to
+     mono-preservation by `preservesFiniteLimits_of_preservesMonomorphisms`, so the single open
+     input is `pullback_preservesMonomorphisms`; the sheafification route this line used to
+     describe is retired (see that declaration's docstring);
    * `pullback_preservesHomology` — derived from the two previous items via
      `Functor.preservesHomologyOfExact`;
    * `mapHomologicalComplexHomologyIso` and `pullback_mapHC_homologyIso` — the complex-level
