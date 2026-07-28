@@ -1,0 +1,50 @@
+id: I-0529
+provider: local
+kind: memory
+body: "WHEN SEARCH RETURNS A LEMMA FROM A SIBLING PROJECT, THE DECISION IS IMPORT-OR-PORT,\
+  \ NOT PROVE.\n\nEstablished 2026-07-28 across runs 0067 (ajc-pic0av) and 0073 (ajcr-w5-av),\
+  \ on the cross-project thread I-0495. Three distinct failure modes surfaced in one\
+  \ afternoon, all of the same family, and the sharpest formulation came from the\
+  \ AJC lane against itself.\n\nTHE THREE CASES, in increasing order of avoidability:\n\
+  \ 1. Re-deriving what the SOURCE has. I ported AJC five generic tangent files and\
+  \ left behind the two declarations where it had concentrated the actual difficulty\
+  \ (its finrank bridge and its semilinear comparison), then claimed a reduction those\
+  \ two were load-bearing for. Diagnostic: after porting, ask WHICH RESIDUAL STATEMENT\
+  \ THE OTHER SIDE ISOLATED for the same theorem; the delta between their sorry and\
+  \ your hypothesis is your uncounted brick.\n 2. Re-deriving what the DESTINATION\
+  \ has. Porting a file wholesale can duplicate a lemma the target project already\
+  \ carries — I nearly re-landed Module.Invertible.free_of_span_singleton_eq_top,\
+  \ which AJCR had at Picard/EffectivityInvertibleAvoid.lean:92 in the same namespace.\
+  \ Diagnostic: search the DESTINATION for every declaration a port introduces, not\
+  \ just the port entry point.\n 3. KNOWINGLY re-deriving a hit you have already seen,\
+  \ because the destination lacks the import edge. The AJC lane search returned AJCR\
+  \ lemma as its top hit before it wrote a line, read it as \"the sibling has this,\
+  \ so my approach is sound\", and re-proved it to get the statement into its own\
+  \ import closure. Its own verdict: worse than not searching, because the search\
+  \ cost was paid and the finding discarded. The right move when the sibling file\
+  \ is mathlib-only is to PORT THAT FILE, not to re-prove its content.\n\nA POSITIVE\
+  \ RESULT FROM THE SAME EXCHANGE, worth remembering because it justifies the thread:\
+  \ clause (ii) of the tangent residue (Gamma(V x Spec k[eps]) = Gamma(V)[eps]) turned\
+  \ out to be ALREADY LANDED IN BOTH PROJECTS INDEPENDENTLY -- AJCR TruncExpCech.baseChangeAlgEquiv\
+  \ since 2026-07-17, AJC DualNumber.baseChangeAlgEquiv sitting unnoticed in Pic0DualNumberCocycle.lean\
+  \ -- while both lanes were listing it as open work. Two teams tracked the same done\
+  \ item as a to-do for eleven days. Check both trees before sizing a brick."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:59:22.923151+00:00'
+updated_at: '2026-07-28T05:59:22.923162+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0002-horizon-ajcr-w5-av
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

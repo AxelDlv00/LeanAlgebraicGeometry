@@ -2,9 +2,48 @@ id: AJC.fbc.exactness
 title: Flat pullback preserves finite limits
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Prove left exactness of Scheme.Modules.pullback for a flat morphism, reducing
-  presheaf pullback to inverse image followed by flat extension of scalars.
-status: pending
+summary: 'Flat pullback preserves finite limits. REDUCED TO ONE STATEMENT, and the
+  synthesis leak is closed (run 0068).
+
+
+  STATE. pullback_preservesFiniteLimits (Cohomology/CechHigherDirectImageUnconditional.lean)
+  is no longer an `instance` and its body is sorry-free. The `instance` attribute
+  WAS the leak mechanism: it let typeclass synthesis inject sorryAx at sites that
+  never named the sorried declaration. For a general flat g, `inferInstance` for PreservesFiniteLimits
+  (pullback g) now FAILS rather than silently leaking; a consumer must name the theorem.
+
+
+  WHAT IS PROVED. preservesFiniteLimits_of_preservesMonomorphisms: for an additive
+  functor between abelian categories, right exactness + preservation of monomorphisms
+  implies left exactness (Functor.preservesFiniteLimits_iff_forall_exact_map_and_mono
+  for the characterisation, ShortComplex.Exact.map_of_epi_of_preservesCokernel for
+  the exactness half). Applied to g^*, which is additive and a left adjoint. Also
+  proved: monos of O_X-modules are sectionwise in both directions (Modules.injective_app_of_mono,
+  Modules.mono_of_injective_app), and hence the OPEN-IMMERSION case of the residual,
+  Modules.pullback_preservesMonomorphisms_of_isOpenImmersion, since restriction is
+  literally sectionwise.
+
+
+  THE SOLE RESIDUAL. pullback_preservesMonomorphisms : g flat => g^* preserves monos.
+  One line of mathematics (flat base change preserves injections, stalkwise), replacing
+  the former three-functor sheafification argument.
+
+
+  MEASURED WITH CONTROLS (scripts/axiom-frontier.lean, restated this run because the
+  old identity-argument probe went vacuously clean after de-instancing): leakControl_pullback_finiteLimits_given_monos
+  and leakControl_pullback_monos_openImmersion are axiom-clean; leakProbe_pullback_finiteLimits
+  and leakProbe_pullback_monos over a general flat g leak, as they should.
+
+
+  MISSING INFRASTRUCTURE, stated so it is not re-derived: mathlib has NO stalk model
+  of SheafOfModules.pullback (it is defined as (pushforward).leftAdjoint with no pointwise
+  description; the outer two factors of SheafOfModules.pullbackIso DO have their PreservesFiniteLimits
+  instances on the scheme site, so the categorical glue was never the gap). The affine
+  section formula Scheme.Modules.pullback_app_isoTensor cannot substitute: it carries
+  [IsQuasicoherent] while PreservesMonomorphisms quantifies over all modules.
+
+  '
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -26,3 +65,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc
+  updated_at: '2026-07-28T05:51:07.378453+00:00'
+  owner: ajc-fbc
+  pinned_commits:
+  - 8a6e5ef61
+  - 1573874b6
+  - df899aa50

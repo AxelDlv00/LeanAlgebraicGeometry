@@ -1,0 +1,58 @@
+id: I-0528
+provider: local
+kind: memory
+body: "A SORRY OPEN FOR MANY SESSIONS MAY BE UNPROVABLE BECAUSE ITS STATEMENT IS WRONG\
+  \ — check the binders before sizing a route.\n\nFound 2026-07-28 (run 0067 r1, task\
+  \ ajc-pic0av, commit f820eff22), Algebraic-Jacobian-Challenge.\n\nTHE CASE. AlgebraicGeometry.Scheme.PicScheme.degree\
+  \ (Picard/IdentityComponent.lean) had been\nopen across many sessions. Successive\
+  \ reports — including my own, one round earlier — described\nit as blocked on Quot\
+  \ (retained-not-revived), or as \"unconstructed, no route I would stand\nbehind\"\
+  . All of that was beside the point. Its domain is\n\n    (Spec (.of k) ⟶ (PicScheme\
+  \ C).left) → ℤ\n\ni.e. an ARBITRARY morphism of schemes, not a morphism OVER Spec\
+  \ k. Such a morphism need not be\na section of (PicScheme C).hom — the goal lambda\
+  \ ≫ hom = identity is simply not derivable — so\nit does not name a k-RATIONAL point,\
+  \ and representability says nothing about it. No total\nfunction of that type can\
+  \ be built from the Picard functor at all; it would have to invent\nvalues off the\
+  \ sections. The sorry is a STATEMENT bug. No amount of degree theory closes it.\n\
+  \nHOW IT SURFACED, and this is the transferable part: I wrote the INTENDED one-line\
+  \ proof\n(transport the point through PicScheme.representable's homEquiv at the\
+  \ trivial test object\nOver.mk (identity of Spec k)) and read the leftover goal.\
+  \ It was not a mathematical subproblem\n— it was an undischargeable side condition\
+  \ on the statement's own argument. That is the tell,\nand it costs one minute.\n\
+  \nWHAT I DID INSTEAD OF SILENTLY FIXING THE PIN: added PicScheme.degreeOfSection\
+  \ on the correct\ndomain (sections, with the section proof as an argument), sorry-free\
+  \ and total given one named\ninput (the class PicScheme.ClassDegree); RETAINED the\
+  \ broken degree with its sorry, because\nkPoints_iff_kerDegree is pinned against\
+  \ it and swapping a pinned statement is worse than\nleaving a labelled defect. Recorded\
+  \ the defect in both docstrings. Whoever owns the pin decides.\n\nCONTRAST WITH\
+  \ THE ADJACENT FAILURE MODE, since both live on this lane: I-0518 is about a\nstatement\
+  \ that is TRUE but too weak (a bare Equiv does not transport finrank). This one\
+  \ is\nabout a statement that cannot be satisfied at all. Both look like \"the proof\
+  \ is hard\" from\noutside, and both are diagnosed by reading types rather than by\
+  \ looking for mathematics.\n\nGENERALISABLE RULE: before estimating a route for\
+  \ a long-open obligation, write the intended\nproof and read the leftover goals.\
+  \ If a goal is a well-formedness condition on the statement's\nown arguments rather\
+  \ than mathematics, stop looking for a route — the statement is the bug.\nThen fix\
+  \ it BESIDE the pinned one and say so, rather than reporting the lane as blocked.\n\
+  Cf. I-0442 (the eight ways a clean axiom print lies) — same family: the type, not\
+  \ the proof, is\nwhere the claim actually lives."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:56:24.779239+00:00'
+updated_at: '2026-07-28T05:56:24.779249+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0004-horizon-ajc-pic0av
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge

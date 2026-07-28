@@ -26,6 +26,19 @@ summary: 'Abel-Jacobi and symmetric-power factorisation. BLOCKED ON A SUBPROJECT
   and ajc-pic0av reports degree unconstructed with no route it is confident in (I-0493,
   run 0067).
 
+
+  AND THE INPUT IS NOW APPLICABLE AT AN ABELIAN VARIETY (commit f7391b281, later in
+  run 0069). MonObj.powSum requires [IsCommMonObj A], which the project''s AV package
+  did NOT supply -- a fresh-context review caught that the g-fold sum, though correct
+  and general, did not elaborate at its intended target. Closed at the root: isCommMonObj_of_isProper_smooth
+  (Albanese/AVCommutative.lean, Milne I.1 Corollary 1.4) proves an abelian variety
+  over k-bar is a commutative group object, axiom-clean, via pointed inversion being
+  a homomorphism by the Rigidity Lemma. Deliberately not an instance -- the three
+  (A tensor A)-side hypotheses are not synthesised from the AV package, so consumers
+  thread letI := isCommMonObj_of_isProper_smooth (A := A), per GrpObjFoldSum.lean''s
+  header. Verified by probe that powSum and powSum_perm both elaborate at the AV binder
+  set.
+
   '
 status: blocked
 kind: proof
@@ -49,7 +62,8 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-28T04:28:36.034001+00:00'
+  updated_at: '2026-07-28T05:59:49.166032+00:00'
   pinned_commits:
+  - f7391b281
   - a1dd46a99
   - 21eefaf60

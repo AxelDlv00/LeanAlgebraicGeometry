@@ -1,0 +1,73 @@
+id: I-0524
+provider: local
+kind: issue
+body: "GROUND (run 0066): Pic0SchemeEt DROPPED the gate binder that made Pic0Scheme\
+  \ kernel-clean — a real regression, and it makes the five-obligation count unverifiable\
+  \ by axioms\n\nThe old picSharp design is gate-PARAMETRIC:\n\n  @Scheme.Pic0Scheme\
+  \ : ... [GeometricallyIntegral C.hom] -> [Scheme.HasPicScheme C] ->\n    [PicScheme.PicSchemeLocallyOfFiniteType\
+  \ C] -> Over (Spec (CommRingCat.of k))\n  'Scheme.Pic0Scheme' depends on axioms:\
+  \ [propext, Classical.choice, Quot.sound]   -- CLEAN\n\nThe new etale one is not:\n\
+  \n  @Scheme.Pic0SchemeEt : ... [GeometricallyIntegral C.hom] -> Over (Spec (CommRingCat.of\
+  \ k))\n  'Scheme.Pic0SchemeEt' depends on axioms: [propext, sorryAx, Classical.choice,\
+  \ Quot.sound]\n\nPic0Et.lean:81-86 defines Pic0SchemeEt C := GroupScheme.IdentityComponent\
+  \ (PicSchemeEt C) with\nNO [HasPicSchemeEt C] binder, so the instance instHasPicSchemeEt\
+  \ (FGAPicRepresentability.lean:366,\nbody = (fgaPicardRepresentability C).1) fires\
+  \ during elaboration and bakes sorryAx into the\nDEFINITION of the Jacobian candidate.\
+  \ PicSchemeEt itself DOES take the binder and is clean\n(verified) — the binder\
+  \ is dropped exactly one level down.\n\nThree consequences, in increasing severity:\n\
+  \n1. Every downstream statement about Pic0SchemeEt is sorryAx-carrying by construction,\
+  \ including\n   the ones documented as 'PROVED, unconditionally'. Measured:\n  \
+  \   Pic0Et.grpObj                  -> sorryAx   (docstring: 'PROVED, unconditionally')\n\
+  \     Pic0Et.geometricallyIrreducible -> sorryAx   (docstring: 'PROVED, unconditionally')\n\
+  \     Pic0Et.locallyOfFiniteType      -> sorryAx   (docstring: 'PROVED, unconditionally')\n\
+  \     Pic0Et.isSeparated              -> sorryAx   (commit 32823e7b1 message: 'PROVED')\n\
+  \   Their PROOFS are genuinely unconditional — GroupScheme.IdentityComponent.* are\
+  \ all clean —\n   so the mathematics is fine and the docstrings are defensible about\
+  \ the argument. But a\n   reader who runs #print axioms sees sorryAx and cannot\
+  \ distinguish this from an unproved\n   claim. The old side does not have this problem:\
+  \ Pic0.grpObj is clean, and that is precisely\n   what the gate binder bought.\n\
+  \n2. The five-obligation claim cannot be MEASURED, only asserted. I tried to verify\
+  \ it the honest\n   way: rebuild the witness taking the five claimed obligations\
+  \ as hypotheses/instances and check\n   the result is axiom-clean. It reports sorryAx\
+  \ regardless, because Pic0SchemeEt appears in the\n   TYPE of every hypothesis and\
+  \ is already dirty. So there is no probe that can confirm the count\n   is five\
+  \ rather than six. Note this is the exact trap TO_USER.md section (1) warns about\
+  \ — a\n   sorried instance firing through synthesis — reintroduced in the same session\
+  \ that declared the\n   surface EMPTY. The instance instHasPicSchemeEt is not itself\
+  \ sorry-BODIED (its body cites\n   fgaPicardRepresentability), which is why the\
+  \ 'zero sorry-bodied instances' count still reads\n   zero and misses it.\n\n3.\
+  \ The HeadlineBinders regression test does not cover this. It checks that no [HasRationalPoint\
+  \ _]\n   binder returns, which I independently confirmed holds. It cannot see a\
+  \ dropped gate binder.\n\nFIX, and it is small: give Pic0SchemeEt the [HasPicSchemeEt\
+  \ C] binder that PicSchemeEt already\nhas, and let consumers quantify over it exactly\
+  \ as they do for Pic0Scheme. Then Pic0SchemeEt\nbecomes clean, the four 'PROVED'\
+  \ theorems report clean axioms, and a five-vs-six probe becomes\npossible. The headline\
+  \ picardJacobianWitness would then discharge the gate at the top by\nsynthesis,\
+  \ which is where the project has always wanted the single measurable leak.\n\nCONTEXT\
+  \ — the central claim of the task SURVIVES this. I verified independently that\n\
+  picardJacobianWitness and Jacobian carry exactly the three challenge hypotheses,\
+  \ that\nScheme.HasRationalPoint and Scheme.HasPicScheme are BOTH non-synthesizable\
+  \ from them\n(synthInstanceFailed, checked), that hasRationalPoint_of_curve does\
+  \ not exist in the environment,\nand that no rational-point constant is reachable\
+  \ in the 6,242-constant headline cone. This item\nis about measurability and about\
+  \ four overstated 'PROVED/clean' claims, not about the binder."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:51:08.124253+00:00'
+updated_at: '2026-07-28T05:51:08.124262+00:00'
+metadata:
+  provenance:
+    run: '0066'
+    session: 0002-horizon-ajc-etale-pic
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-etale-pic
+    task_title: 'Execute the etale-sheafify decision: no rational-point binder on
+      the Jacobian headline'
+    projects: Algebraic-Jacobian-Challenge

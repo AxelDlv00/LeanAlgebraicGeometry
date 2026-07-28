@@ -1,0 +1,60 @@
+id: I-0526
+provider: local
+kind: memory
+body: "THE 'instance' ATTRIBUTE IS THE LEAK MECHANISM, NOT THE SORRY -- and de-instancing\
+  \ can make a leak PROBE go vacuously clean.\n\nTwo lessons from closing the flat-pullback\
+  \ exactness leak in Algebraic-Jacobian-Challenge (run 0068, ajc-fbc, commits df899aa50\
+  \ and 519eecb15). Both generalise to the sibling instHasPicScheme situation and\
+  \ to any future sorry-bodied instance.\n\nLESSON 1 -- DE-INSTANCE IT. A sorry-bodied\
+  \ INSTANCE is qualitatively worse than a sorry-bodied theorem, and the fix is one\
+  \ keyword. As an instance, pullback_preservesFiniteLimits was found by typeclass\
+  \ synthesis anywhere in scope, so a declaration that merely QUANTIFIED over it reported\
+  \ clean axioms while every SYNTHESIS SITE silently acquired sorryAx -- contamination\
+  \ with no textual trace. Changing 'instance' to 'theorem' and citing it with haveI\
+  \ at its (two) real consumers means:\n  before: 'theorem q {g} [Flat g] : PreservesFiniteLimits\
+  \ (pullback g) := inferInstance' ELABORATES and reports sorryAx.\n  after: the same\
+  \ inferInstance FAILS to synthesise; a consumer must name the theorem, and the dependency\
+  \ appears in the proof term.\nCost: zero (lake build AlgebraicJacobian stayed green\
+  \ at 8762 jobs). Do this the moment you introduce a sorried instance, not later.\n\
+  \nLESSON 2 -- THE PROBE THAT MEASURED IT MAY BECOME VACUOUS, AND WILL LOOK LIKE\
+  \ PROGRESS. scripts/axiom-frontier.lean measured the leak with\n  leakProbe_pullback_finiteLimits\
+  \ (S) : PreservesFiniteLimits (Scheme.Modules.pullback (\U0001D7D9 S)) := inferInstance\n\
+  using the IDENTITY morphism because Flat (\U0001D7D9 S) synthesises for free. After\
+  \ de-instancing, that probe went from sorryAx to CLEAN -- not because anything was\
+  \ proved, but because for the identity the pullback IS the identity functor (Scheme.Modules.pullbackId)\
+  \ and synthesis found a different, clean route. A session reading the diff would\
+  \ have seen a leaking line become clean and reported a closure that did not happen.\n\
+  \nThe general trap: a probe built on a DEGENERATE argument (identity, terminal object,\
+  \ trivial ring) measures the intended declaration only as long as no cheaper instance\
+  \ path exists. Change the instance graph and the probe silently starts measuring\
+  \ something else. Two defences, both now in the file:\n * probe over a GENERAL argument\
+  \ and NAME the carrier rather than synthesising it -- the only honest way to measure\
+  \ a non-instance;\n * always ship a CONTROL that must come out the other way. leakControl_pullback_finiteLimits_given_monos\
+  \ (supply the residual hypothesis -> clean) and leakControl_pullback_monos_openImmersion\
+  \ (a genuinely proved special case -> clean) sit next to two probes that must leak.\
+  \ If a control and its probe ever agree, the measurement is broken, not the mathematics.\n\
+  \nRELATED: this is a different mechanism from the sorried-DEFINITION trap ajc-albanese\
+  \ reported the same day (abelJacobi), where no synthesis is involved and the leak\
+  \ is visible in the term. Sorried instance = invisible contamination at use sites;\
+  \ sorried def = the statement does not say what it appears to say. Both are missed\
+  \ by a sorry-count and caught by #print axioms at a use site."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:54:07.927878+00:00'
+updated_at: '2026-07-28T05:54:07.927890+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0002-horizon-ajc-fbc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge

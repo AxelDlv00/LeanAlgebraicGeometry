@@ -1,0 +1,60 @@
+id: I-0523
+provider: local
+kind: issue
+body: "GROUND (run 0066, task ajc-etale-pic): THE ETALE REWIRE IS NOT COMMITTED —\
+  \ it lives only in the ledger WORKING TREE\n\nThe mathematics is real and I verified\
+  \ it. The RECORD of it is not. Four files carrying the\nentire deliverable are unstaged\
+  \ at ledger HEAD (787291cbf):\n\n  AlgebraicJacobian/Jacobian.lean             \
+  \       (+149/-105 headline rewire)\n  AlgebraicJacobian/Picard/FGAPicRepresentability.lean\
+  \ (+287 etale interface)\n  AlgebraicJacobian/Albanese/AlbaneseUP.lean         \
+  \ (consumer repair)\n  AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean\
+  \ (another lane's, +64)\n\nEvidence that the four session commits do NOT contain\
+  \ them:\n  `hgit show c9691933b --stat` lists FOUR files, all in Algebraic-Jacobian-Challenge-REBUILD\n\
+  \  (Picard/Pic0ChartPair.lean, informal/spec-dd-r.md, w4-datc-worksheet.md, w5-s-worksheet.md).\n\
+  \  Its 60-line message describes the etale rewire in AJC. The message and the diff\
+  \ are\n  unrelated. Same for d63ea89c3, whose message describes axiom-frontier.lean\
+  \ edits and whose\n  diff includes AJCR informal/protocol-concurrent-lanes.md.\n\
+  \  `hgit log -- .../Jacobian.lean` newest entry is d0a9025b3, a PREVIOUS run.\n\
+  \  `hgit show HEAD:.../Jacobian.lean | grep hasRationalPoint_of_curve` still finds\
+  \ the FALSE\n  leaf at line 315, with its body `sorry`. At HEAD, clause 1 of I-0491\
+  \ is UNEXECUTED.\n  `HEAD:.../FGAPicRepresentability.lean` has zero occurrences\
+  \ of PicSchemeEt,\n  HasPicSchemeEt, fgaPicardRepresentability.\n\nOnly 32823e7b1\
+  \ (Pic0Et.lean NEW + blueprint + README) and e65ca0954 (TO_USER + hgraph) landed\n\
+  their intended content. So HEAD is INTERNALLY INCONSISTENT: Pic0Et.lean is committed\
+  \ and\nimports PicSchemeEt from a version of FGAPicRepresentability.lean that HEAD\
+  \ does not have.\nHEAD does not build. Jacobian.lean at HEAD does not import Pic0Et.\n\
+  \nLikely cause: four AJC lanes plus four AJCR lanes share one ledger work tree and\
+  \ one branch.\nA concurrent `git add`/`commit` from another run almost certainly\
+  \ captured this session's\nstaged paths and left it committing whatever was staged\
+  \ at its own commit time. This is a\nworkspace-level hazard, not one team's mistake.\n\
+  \nREQUIRED ACTION, and it is the highest-value next step for this task: commit the\
+  \ four modified\nAJC files with an accurate message, and stage EXPLICIT PATHS. Do\
+  \ not use `add -A` — the tree\nalso holds another lane's CechHigherDirectImageUnconditional.lean\
+  \ edit, which is currently\nBROKEN (`lake build AlgebraicJacobian` fails: unknown\
+  \ identifier\nModules.mono_of_injective_app_of_isBasis at line 202, 'No goals to\
+  \ be solved' at 204) and must\nnot be swept into this task's commit.\n\nAlso worth\
+  \ recording: c9691933b and d63ea89c3 modified five files under\nMainProjects/Algebraic-Jacobian-Challenge-Rebuild,\
+  \ outside this task's declared boundary\n(I-0493). Those edits are almost certainly\
+  \ another run's work captured by the same race rather\nthan authored by ajc-etale-pic,\
+  \ but the commits carry this session's Archon-Task trailer, so\nthe ledger attributes\
+  \ them here."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T05:50:35.536083+00:00'
+updated_at: '2026-07-28T05:50:35.536095+00:00'
+metadata:
+  provenance:
+    run: '0066'
+    session: 0002-horizon-ajc-etale-pic
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-etale-pic
+    task_title: 'Execute the etale-sheafify decision: no rational-point binder on
+      the Jacobian headline'
+    projects: Algebraic-Jacobian-Challenge

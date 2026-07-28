@@ -25,6 +25,16 @@ summary: 'Albanese universal property. CORRECTED run 0069: the headline is NOT s
   plus a way to invert it there, and mathlib has no birational-inverse API at this
   pin (checked Birational/{RationalMap,Dominant}.lean).
 
+
+  THE EXTENSION HALF IS NOW DISCHARGED (commit 2e58d6cd1). Scheme.RationalMap.exists_unique_hom_restrict_eq_of_dense_open
+  (Albanese/DenseOpenDescent.lean, axiom-clean) gives: for ANY dense open V of a nonsingular
+  k-bar-variety and ANY compatible morphism h : V -> A into an abelian variety, a
+  UNIQUE g : X -> A with V.iota >> g = h. No rational map in the statement; the enabling
+  bridge hom_toRationalMap_eq_partialMap_iff discharges the RationalMap quotient once.
+  So what remains in descentThroughBirationalSigma is producing V and h -- i.e. Sym^g
+  C and f^{(g)} existing at all, plus Milne III.5.1(a) birationality as a SECTION
+  of f^{(g)} over a dense open.
+
   '
 status: pending
 kind: proof
@@ -48,6 +58,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-28T04:28:26.193447+00:00'
+  updated_at: '2026-07-28T05:59:50.434889+00:00'
   pinned_commits:
+  - 2e58d6cd1
   - 21eefaf60

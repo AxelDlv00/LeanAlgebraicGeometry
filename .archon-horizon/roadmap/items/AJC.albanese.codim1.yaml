@@ -2,8 +2,31 @@ id: AJC.albanese.codim1
 title: Extend rational maps across codimension one
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Finish the diagonal-intersection and function-field pullback steps needed
-  to show a rational map to an abelian variety has no codimension-one indeterminacy.
+summary: 'Extend rational maps across codimension one. SORRY-FREE (run 0069, commit
+  8a5dc2a66).
+
+
+  Milne Lemma 3.3 (indeterminacy_pure_codim_one_into_grpScheme, Albanese/Milne33.lean)
+  is proved and axiom-clean, so Z(f) = empty for group-variety targets and extend_to_av
+  (Milne Theorem 3.2) is unconditional. Albanese/CodimOneExtension.lean carries no
+  sorry.
+
+
+  It lives DOWNSTREAM of CodimOneExtension.lean rather than in it: the difference-map
+  / pole-purity / Hauptidealsatz-transport layers (Albanese/Milne33{Rows,Diagonal,RowSection,Pullback,CMEquidim,KernelGen,Transport,TransportLocal}.lean)
+  import that file, so stating the keystone there is an import cycle. Ported sorry-free
+  from the sibling Rebuild tree, which had developed the chain on the identical toolchain
+  and mathlib pin; every algebra prerequisite already existed in AJC. Route and both
+  implementation notes are on hgraph node ca0776c343e5.
+
+
+  Caveat on the axiom claim: extend_to_av is unconditional GIVEN an abelian variety.
+  A fresh-context review found no axiom-clean inhabitant of the AV instance package
+  in this development today (a synthesis site at A := Jacobian C reports sorryAx,
+  via the Picard seam upstream). That is not a defect in this leg, but the two claims
+  are different.
+
+  '
 status: done
 kind: proof
 priority: high
@@ -26,6 +49,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-28T04:28:33.983743+00:00'
+  updated_at: '2026-07-28T05:59:29.514440+00:00'
   pinned_commits:
   - 8a5dc2a66

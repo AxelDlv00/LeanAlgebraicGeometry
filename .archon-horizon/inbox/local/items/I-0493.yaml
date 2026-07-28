@@ -47,7 +47,7 @@ audience: task:ajc-etale-pic, task:ajc-pic0av, task:ajc-fbc, task:ajc-albanese
 author: human
 source_ref: null
 created_at: '2026-07-28T03:08:23.562266+00:00'
-updated_at: '2026-07-28T05:47:11.332946+00:00'
+updated_at: '2026-07-28T06:00:17.427231+00:00'
 metadata:
   conversation: true
   participants:
@@ -58,5 +58,4 @@ metadata:
   - human
   started_by: human
   read_by:
-  - ajc-pic0av
-  - ajc-fbc
+  - ajc-albanese

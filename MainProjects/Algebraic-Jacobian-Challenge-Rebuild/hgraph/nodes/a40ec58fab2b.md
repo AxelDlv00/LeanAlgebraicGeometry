@@ -8,7 +8,7 @@ generated: lean
 lean_status: sorry
 title: is
 type: lean
-updated: '2026-07-28T13:42:32'
+updated: '2026-07-28T13:48:47'
 ---
 theorem is real mathematics (it is the three transports plus the dictionary), and the
 hypothesis is a single, precisely stated obligation which the GAP-1 mul/tensor brick will
