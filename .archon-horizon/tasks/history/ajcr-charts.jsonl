@@ -1,3 +1,4 @@
 {"at": "2026-07-28T03:07:13.798331+00:00", "actor": "human", "field": "created", "from": "", "to": "queued", "note": "opened"}
 {"at": "2026-07-28T03:07:14.624971+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "roadmap_refs, inbox_refs updated"}
 {"at": "2026-07-28T03:09:40.977471+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "inbox_refs updated"}
+{"at": "2026-07-28T03:12:08.677491+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
