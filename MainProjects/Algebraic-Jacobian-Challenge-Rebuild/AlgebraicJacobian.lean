@@ -539,6 +539,7 @@ import AlgebraicJacobian.Picard.DivRepAwayPush
 import AlgebraicJacobian.Picard.DivRepAffPullField
 import AlgebraicJacobian.Picard.DivRepAffPullNat
 import AlgebraicJacobian.Picard.DivRepAffPullClause
+import AlgebraicJacobian.Picard.JacobianDataAbelImage
 
 /-!
 # AlgebraicJacobian — library root
