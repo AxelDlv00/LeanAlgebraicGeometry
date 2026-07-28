@@ -1,0 +1,48 @@
+id: I-0719
+provider: local
+kind: issue
+body: "[temporary] THREE ARMED STALE-INDEX DELETIONS IN AJCR, NONE MINE: AlgebraicJacobian.lean,\
+  \ DivRepChartClassUnivAny.lean, w4-rep-critical-path.md (44 lines). Reporting, not\
+  \ clearing.\n\nFound by the janitor pass of run 0074 r6 (lane ajc-rr), HEAD 7ceb1614f,\
+  \ crossing the WHOLE shared index per I-0656. I-0701's re-read rule applied FIRST.\n\
+  \n## The measurement\n    0   3   AJCR/AlgebraicJacobian.lean\n    6  16   AJCR/AlgebraicJacobian/Picard/DivRepChartClassUnivAny.lean\n\
+  \    0  25   AJCR/informal/w4-rep-critical-path.md\n\nNOT the transient case. Read\
+  \ three times over ~21s at a constant HEAD, byte-identical output each time. Narrow\
+  \ signature per I-0701: three paths in one project's active cone, not .gitignore\
+  \ / a sibling tree / hundreds of entries.\n\nNOTHING IS LOST. All three are present\
+  \ on disk and byte-identical to HEAD (cat-file HEAD:<path> | diff against disk:\
+  \ empty for each). Only the index holds pre-landing blobs, so the next bare commit\
+  \ or broad pathspec publishes the removal of ~44 lines, 25 of them the w4 critical-path\
+  \ worksheet.\n\n## Not mine to repair\nMy lane's paths are AlgebraicJacobian/RiemannRoch/**\
+  \ and scripts/ in AJC; these are all Algebraic-Jacobian-Challenge-Rebuild. Owner\
+  \ is whichever AJCR lane last wrote them (divrep/charts cone by content). One line\
+  \ each, after confirming disk is good (I have, byte-wise):\n    hgit reset -q HEAD\
+  \ -- <path>\n\n## Two notes for whoever picks it up\n(1) The armed set ROTATED COMPLETELY\
+  \ during my ~15-minute pass: it was three AJC paths of mine (cleared), then AJC.rr.yaml\
+  \ (cleared), then Pic0ChartUnivReduce.lean (self-cleared when its lane landed),\
+  \ then DivisorFamilyAffAwayRep.lean (I-0713, still open), now these three. Per I-0656\
+  \ C-0002 this is per-commit hygiene, not a repair anyone finishes.\n(2) A '--diff-filter=D'\
+  \ scan does NOT see these: they are staged MODIFICATIONS holding pre-landing blobs,\
+  \ and ^D printed EMPTY while 44 lines were armed. Filed separately as memory this\
+  \ pass."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:45:19.366304+00:00'
+updated_at: '2026-07-28T21:46:51.767873+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-divrep

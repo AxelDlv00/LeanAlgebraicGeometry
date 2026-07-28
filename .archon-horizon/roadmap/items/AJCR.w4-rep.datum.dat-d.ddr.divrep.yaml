@@ -3,20 +3,50 @@ title: 'DD-R divRep: affine classification, Zariski/global representability, and
   export'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "DD-R divRep: affine classification, Zariski/global representability, and\
-  \ consumer export.\n\nSTATUS 2026-07-29 (run 0071 s0010, ajcr-divrep). U2 OWES ONE\
-  \ STATEMENT AND NO SCALAR, AND THE\nSHAPE OF THAT STATEMENT IS WEAKER THAN EVERY\
-  \ PREVIOUS RE-SCOPE SAID.\n\nTHE ENDPOINT IS UNCHANGED and is still what consumers\
-  \ write against:\n  DivRepAffinePullback.representableBy (Picard/DivRepGlobalClassify.lean:306)\n\
-  \  divFunctor_representableBy_of_chartClause (DivRepAffPullClause.lean)\n  divFunctor_representableBy_of_chartRange\
-  \  (DivRepChartRange.lean:220)\nL10/L11 have zero remaining obligations.\n\nTWO\
-  \ THINGS MOVED THIS SESSION, both KERNEL-VERIFIED by lean_run_code (zero diagnostics),\
-  \ not by\nlake -- see the verification note at the end for why that distinction\
-  \ is being drawn honestly.\n\n(1) THE SCALAR IS GONE, and it is a retraction of\
-  \ my own s0008 pricing.\n  windowBound_pos_of_genus_ne_zero (Picard/DivRepChartClassUnivFree.lean,\
-  \ commit 877459d8c)\n    g != 0 -> 0 < windowBound pi hpi\nThe whole content is\
-  \ genus_eq_zero_of_windowBound_nonpos (RiemannRoch/WindowLedgerF3.lean:68),\nwhich\
-  \ has been in the tree since the F3 ledger extension: a non-positive bound makes\n\
+summary: "RETRACTION AT THE TOP, 2026-07-29 (run 0071 s0010, ajcr-divrep), because\
+  \ it changes how the rest of\nthis row must be read. A fresh-context review (inbox\
+  \ I-0705, CONFIRMED by the no-go's own owner)\nestablished that the certificate\
+  \ residue of this row -- in BOTH its old and its new spelling -- may\nbe FALSE rather\
+  \ than open, and nobody had checked.\n\n  forall_not_isCertified_of_straddling (Picard/DivisorFamilyAffStrict.lean:127)\n\
+  \    concludes: forall (A : DivisorAdaptation C R pi d) (n : Nat), NOT A.IsCertified\
+  \ n\n    for a connected d whose support meets both pinned vertical fibres.\n\n\
+  That is the negation of \"some adaptation is certified\" at the SAME binder. And\
+  \ because it quantifies\nover ALL A, it equally refutes the older spelling (D.divisorAdaptation\
+  \ hD).IsCertified g, which is\none instance of that forall. So: if the high-window\
+  \ universal seed's local equations straddle in that\nsense, this row has been pricing\
+  \ a FALSE statement since s0004, and the weakening of s0010 neither\ncaused that\
+  \ nor escaped it.\n\nWHAT SURVIVES: the eps-layer reduction is sound and kernel-checked\
+  \ -- the identity genuinely does not\ncare WHICH adaptation carries the certificate.\
+  \ What does NOT survive is any statement that the\nremainder is \"one certificate\"\
+  \ or \"one type mismatch\"; both presume the chart-typed statement is\nmerely unproved.\n\
+  \nTHE DECISIVE UNMEASURED FACT, and it is cheap: is (univSeed ..).localEquations'\
+  \ supportLocus\npreconnected with a point off V0 and a point off V1? NO file in\
+  \ the tree measures it. Until it is\nmeasured, treat this row as UNPRICED.\n\nWHICH\
+  \ WAY IT CUTS: if the universal seed straddles, R2 (protection I-0492) is not an\
+  \ inconvenience\nfor divrep -- it is the ONLY route, because no chart-typed adaptation\
+  \ can ever certify.\n\nMethodological error recorded as I-0707: this lane crossed\
+  \ its new existential against the\ncertificate lane's PRODUCERS and never against\
+  \ the tree's REFUTATIONS.\n\nVERIFICATION UPDATE, superseding the caveat at the\
+  \ end of this row: lake build of\n...DivRepChartClassUnivAny returned EXIT=0, and\
+  \ DivRepChartClassUniv, DivRepChartClassUnivFree and\nDivRepChartClassUnivAny are\
+  \ now all imported by AlgebraicJacobian.lean. The kernel found THREE real\nerrors\
+  \ on the way (dot notation reassigning arguments; a missing DivisorFamilyZar import;\
+  \ a missing\n`include hO hchi`), none of which a sorry census or an extracted-fragment\
+  \ elaboration would see.\n\n--- the pre-retraction body follows, correct except\
+  \ where the retraction above overrides it ---\n\nDD-R divRep: affine classification,\
+  \ Zariski/global representability, and consumer export.\n\nSTATUS 2026-07-29 (run\
+  \ 0071 s0010, ajcr-divrep). U2 OWES ONE STATEMENT AND NO SCALAR, AND THE\nSHAPE\
+  \ OF THAT STATEMENT IS WEAKER THAN EVERY PREVIOUS RE-SCOPE SAID.\n\nTHE ENDPOINT\
+  \ IS UNCHANGED and is still what consumers write against:\n  DivRepAffinePullback.representableBy\
+  \ (Picard/DivRepGlobalClassify.lean:306)\n  divFunctor_representableBy_of_chartClause\
+  \ (DivRepAffPullClause.lean)\n  divFunctor_representableBy_of_chartRange  (DivRepChartRange.lean:220)\n\
+  L10/L11 have zero remaining obligations.\n\nTWO THINGS MOVED THIS SESSION, both\
+  \ KERNEL-VERIFIED by lean_run_code (zero diagnostics), not by\nlake -- see the verification\
+  \ note at the end for why that distinction is being drawn honestly.\n\n(1) THE SCALAR\
+  \ IS GONE, and it is a retraction of my own s0008 pricing.\n  windowBound_pos_of_genus_ne_zero\
+  \ (Picard/DivRepChartClassUnivFree.lean, commit 877459d8c)\n    g != 0 -> 0 < windowBound\
+  \ pi hpi\nThe whole content is genus_eq_zero_of_windowBound_nonpos (RiemannRoch/WindowLedgerF3.lean:68),\n\
+  which has been in the tree since the F3 ledger extension: a non-positive bound makes\n\
   windowBound_spec fire at the ZERO divisor, so h1(O) = 0, and with hO : h0 = 1 and\n\
   hchi : chi = 1 - g that forces g = 0. WindowLedgerF3 uses this disjunction twice\
   \ for its own\nbudget bounds (:91, :106); nobody had drawn it for the high-window\
@@ -82,7 +112,15 @@ summary: "DD-R divRep: affine classification, Zariski/global representability, a
   \ output directories mid-run -- four AJCR lanes were\nbuilding at once), and the\
   \ second timed out at 8000s inside the ~9000-job cone the mathlib restore\ninvalidated.\
   \ A third (12000s) was running at session end. Next session: read that task's output\n\
-  before re-launching, and root the three modules once green.\n"
+  before re-launching, and root the three modules once green.\nVERIFICATION, FINAL\
+  \ AND MEASURED (appended at s0010 close, superseding every earlier caveat on this\
+  \ row):\n  lake build AlgebraicJacobian -> [9269/9270], EXIT=0, ZERO \"uses sorry\"\
+  \ warnings in the whole log.\n  Axiom probe with a CONTROL that fires (I-0661):\
+  \ AlgebraicGeometry.Jacobian reports sorryAx, while\n  windowBound_pos_of_genus_ne_zero,\
+  \ ThetaGeneratorSeed.divFamEps_certifiedFamilyOfAdaptation,\n  PointwiseAchiever.divFamEps_highWindow_eq_universal_pair\
+  \ and\n  ..._of_hasCertifiedAdaptation each report only [propext, Classical.choice,\
+  \ Quot.sound].\nAll three modules are rooted (imported by AlgebraicJacobian.lean)\
+  \ and sorry-free. This is the first\nkernel measurement any of them has had.\n\n"
 status: active
 kind: proof
 priority: normal
@@ -105,7 +143,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T20:37:09.370869+00:00'
+  updated_at: '2026-07-28T21:58:58.101030+00:00'
   owner: ajcr-divrep
   pinned_commits:
   - 0b67179bb

@@ -3,37 +3,32 @@ title: Flat pullback preserves finite limits (bypassed on quasi-coherent objects
   arbitrary-module case open)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'BYPASSED AND NOW ALSO OFF THE HYPOTHESIS LIST -- and the task brief that
-  calls this the PRIORITY is stale (run 0068 r2).
-
-
-  WHY THE BRIEF IS STALE, since it will be read again: it says pullback_preservesFiniteLimits
-  is one of only two sorry-bodied INSTANCES leaking through typeclass synthesis, which
-  made closing it worth more than its line count. That was true when written. r0 de-instanced
-  it -- it is a plain theorem, and the file''s own census reports 0 instance carriers
-  -- so the synthesis-leak argument no longer applies. The arbitrary-module statement
-  should NOT be attempted.
-
-
-  MEASURED ANSWER to the brief''s real question (which declarations become clean if
-  this lands): ONLY the two probes that name it. Nothing else in the lane routes through
-  it. cech_flatBaseChange_qcoh does not touch it and is still dirty, for an unrelated
-  reason.
-
-
-  WHAT REPLACED IT, all sorry-free: pullback_preservesKernel_of_isQuasicoherent (r1)
-  plus, this session, isQuasicoherent_cechComplex_X -- which discharges the two quasi-coherence
-  hypotheses h2/h3 that the bypass route previously had to ASSUME. So cech_flatBaseChange_qcoh
-  now has the full cech_flatBaseChange conclusion, no flat-exactness leaf in its proof
-  term, and NO extra hypotheses.
-
-
-  The mono statement stays a MONUMENT: keep it for the reduction''s legibility, do
-  not prove it, route new work through the _of_isQuasicoherent forms. mathlib gives
-  SheafOfModules.pullback no pointwise model and a sibling project hit the same brick
-  for j_!; over an affine base Scheme.Modules is strictly larger than ModuleCat, so
-  the tilde route cannot reach arbitrary modules. Status pending rather than active:
-  this is deliberately not a frontier.'
+summary: "Flat pullback preserves finite limits. A DELIBERATE MONUMENT, NOT A FRONTIER\
+  \ -- do not spend a\nsession here, and read this before treating the task brief's\
+  \ priority ordering as current.\n\nWHY IT IS OFF THE PATH, measured across run 0068\
+  \ r1/r2:\n * pullback_preservesMonomorphisms quantifies over ALL O_S-modules, and\
+  \ over an affine base\n   Scheme.Modules is strictly larger than ModuleCat of the\
+  \ global sections (tilde is fully faithful\n   but not essentially surjective).\
+  \ Mathlib gives SheafOfModules.pullback no pointwise model, so the\n   general statement\
+  \ is walled -- the sibling MR0555258-Compactifying-Picard independently reduced\n\
+  \   j_! to the same missing brick.\n * The obligation was MIS-SCOPED. Every consumer\
+  \ instantiates flat exactness at QUASI-COHERENT\n   objects, and there it is PROVED,\
+  \ sorry-free: pullback_preservesKernel_of_isQuasicoherent, by\n   cone-cancellation\
+  \ off tilde-image exactness plus fullness of tilde.\n * The homology comparison\
+  \ needs ONE KERNEL PER DEGREE, not global exactness, so\n   pullback_mapHC_homologyIso_of_isQuasicoherent\
+  \ is an axiom-clean replacement.\n * MEASURED r2: closing it would clean only the\
+  \ two probes that NAME it. cech_flatBaseChange_qcoh\n   never touches it and is\
+  \ dirty for an unrelated reason.\n\nSTATUS NOTE, deliberate: pullback_preservesFiniteLimits\
+  \ and pullback_preservesHomology are NOT\ninstances. They were, and that was worse\
+  \ -- as instances they were picked up by synthesis, so\ndeclarations merely quantifying\
+  \ over them reported clean axioms while every SYNTHESIS SITE silently\nacquired\
+  \ sorryAx. Demoted at r1. Do not restore the attribute before the carrier is proved.\n\
+  \nThe task brief for ajc-fbc still calls this \"one of only two sorry-bodied INSTANCES\
+  \ that leak through\ntypeclass synthesis\" and names it THE priority. That was true\
+  \ when the brief was written and is not\ntrue at HEAD; the lane's own r1 made it\
+  \ stale.\n\nLeft `pending` rather than `rejected`: the statement is TRUE and someone\
+  \ may want it if mathlib grows\na pointwise model for module pullback. It is simply\
+  \ not on the route to Stacks 02KH.\n"
 status: pending
 kind: proof
 priority: high
@@ -56,7 +51,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc
-  updated_at: '2026-07-28T13:46:55.123512+00:00'
+  updated_at: '2026-07-28T21:55:15.705480+00:00'
   owner: ajc-fbc
   pinned_commits:
   - 672a8c656

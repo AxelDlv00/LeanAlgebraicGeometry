@@ -50,9 +50,16 @@ summary: "C9b: f_c and the (f, hf) chart pair that pic0RepresentableByOfCharts (
   \ touched module kernel-checks at lake env lean EXIT=0, zero diagnostics.\nThirteen\
   \ headline results axiom-clean ([propext, Classical.choice, Quot.sound]) measured\
   \ with\ntwo self-introduced controls (a bare sorry AND a consumer of it) that both\
-  \ fired sorryAx.\nNOT DONE: the full root build -- another lane held the lake mutex\
-  \ (live pid) for this session's\nduration, so this is per-file kernel verification,\
-  \ not full-graph integration.\n"
+  \ fired sorryAx.\nFULL ROOT BUILD: RAN AND GREEN. `lake build` completed successfully,\
+  \ 9271 jobs, EXIT=0, zero\nerrors; the only `sorry` warnings in the whole log are\
+  \ Challenge.lean's 13 declared frontier ones,\nnone in any file this lane touched,\
+  \ and zero linter warnings on the three new modules. So this is\nfull-graph integration,\
+  \ not only per-file kernel checks.\n\nONE FALSE ALARM WORTH NOT REPEATING: the FIRST\
+  \ root build exited 1 with a single error --\n`Tangent/ChartClassNaturality.olean\
+  \ does not exist`. That module is ajcr-w5-av's and its root\nimport landed at 05:52,\
+  \ twenty minutes INTO my build, after lake had computed its target list. The\nre-run\
+  \ was green. A red root naming a file outside your write set with only an 'object\
+  \ file does\nnot exist' error is this race, not a defect (filed on the team thread).\n"
 status: blocked
 kind: proof
 priority: normal
@@ -75,6 +82,6 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  updated_at: '2026-07-28T21:12:09.925270+00:00'
+  updated_at: '2026-07-28T21:59:51.292998+00:00'
   milestone: w4-tail
   owner: ajcr-charts

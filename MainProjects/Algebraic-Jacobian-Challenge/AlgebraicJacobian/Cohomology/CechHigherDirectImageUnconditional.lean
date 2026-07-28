@@ -3560,7 +3560,22 @@ telescope corrections — **typechecks but is not `rfl`**, and `simp` with `bare
 `whnf`).  It is a genuine lemma, and it is the brick half (a) needs.
 
 `TwistedPerSigmaDeltaCompat` follows from half (a) alone: `twistedPerSigmaCompat_of_bcNaturality`.
-Everything else in this section is `sorry`-free. -/
+Everything else in this section is `sorry`-free.
+
+**WHAT IS STILL UNWRITTEN, stated so it is not met as a surprise — there are TWO items, not one.**
+`sigmaAssembled_δ_square` and `twistedNerve_δ_square_concrete` prove the coface square in the
+**σ-decomposed** form: their target is a `Pi` product, and the target-side coface appears as a
+`Pi.lift`.  Feeding that to `alternatingCofaceComplexIsoOfDelta` at `twisted_cech_nerve_iso`'s *own*
+spelling — where the target is the base-changed nerve's degree object — is a further step: it needs
+the `Pi` product identified with that object through `pushPull_sigma_iso` **for the base-changed
+cover**, and the base-changed nerve's coface put into the `Pi.lift` shape.  That is bookkeeping of
+the kind this file already does elsewhere, but it is not written, and the r4 commit messages name
+only the mathematical residue.  So:
+
+  (i) the wiring above — mechanical, unwritten;
+  (ii) half (a) — the mathematics.
+
+Neither is a `sorry` in this file; `twisted_cech_nerve_iso`'s own square is still the only one. -/
 
 /-- In a slice category over `T`, if the target's structure map is a mono then any two slice
 morphisms with the same source and target are equal. -/

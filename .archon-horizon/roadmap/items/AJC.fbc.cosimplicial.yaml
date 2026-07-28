@@ -2,25 +2,15 @@ id: AJC.fbc.cosimplicial
 title: Cosimplicial base-change comparison
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "THE TWO LEAVES ARE NOT THE SAME OBLIGATION, and only one of them is still\
-  \ a naturality problem (run 0068 r2; both children were rewritten with this finding,\
-  \ verified by rfl). This item's previous summary -- \"split the remaining degreewise\
-  \ Cech base-change naturality into the pushforward comparison and twisted-nerve\
-  \ compatibility obligations\" -- mis-describes the state and is replaced.\n\n *\
-  \ AJC.fbc.cosimplicial.pushforward -- NATURALITY IS GONE. cech_pushforward_baseChange_natIso_of_isIso\
-  \ rebuilds the same cosimplicial isomorphism by whiskering cechOuterBC; both sides\
-  \ are defeq to N >> (a composite), so coface compatibility IS the mate's own naturality.\
-  \ What remains is one IsIso per index tuple, IsIso (cechOuterBC.app (pushPullObj\
-  \ F (Over.mk j_sigma))), with the trap named in the child (an iso with those endpoints\
-  \ is not IsIso of a given map). Route identified: mateEquiv_vcomp plus the sorry-free\
-  \ openImmersion_beckChevalley. DO THIS LEAF FIRST.\n\n * AJC.fbc.cosimplicial.twisted\
-  \ -- WHISKERING DOES NOT APPLY. Its RHS is the nerve of the BASE-CHANGED cover (degree-n\
-  \ backbone in Over X', not Over X), so there is no natural transformation to whisker.\
-  \ Its content is a comparison of TWO NERVES: that coverInterOpen_baseChange_eq is\
-  \ compatible with the index-omission maps. HARDER than the sibling despite lighter\
-  \ hypotheses.\n\nConsequence for pricing: do not treat these as one obligation or\
-  \ estimate them together. Read each child.\n"
-status: pending
+summary: "Cosimplicial base-change comparison (Stacks 02KG). 1/2 done, and the open\
+  \ half is REDUCED.\n\n * .pushforward -- DONE (run 0068 r3). cechOuterBC = canonicalBaseChangeMap\
+  \ by rfl, and\n   canonicalBaseChangeMap_isIso closes the per-sigma mate at quasi-coherent\
+  \ modules. Naturality never\n   was an obligation: both sides are N followed by\
+  \ a composite, so whiskering supplies it.\n * .twisted -- ACTIVE. Its coface square\
+  \ is PROVED from one per-sigma equation (run 0068 r4); that\n   equation then splits,\
+  \ with the slice half free and mate-naturality-in-the-square the residue.\n\nStatus\
+  \ active rather than pending because .twisted is being worked, not deferred.\n"
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -42,4 +32,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc
-  updated_at: '2026-07-28T14:34:36.402751+00:00'
+  updated_at: '2026-07-28T21:54:50.648302+00:00'
+  owner: ajc-fbc

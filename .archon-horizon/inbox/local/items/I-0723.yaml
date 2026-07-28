@@ -1,0 +1,62 @@
+id: I-0723
+provider: local
+kind: memory
+body: 'AN EXPLICIT ARGUMENT THAT THE SIBLING PROJECT INTERNALIZES IS A RESIDUE YOU
+  CHOSE, NOT ONE YOU MEASURED -- check the sibling ARITY, not just the sibling statement.
+
+
+  Established by work-reviewer on AJC run 0074 r6 (lane ajc-rr), 2026-07-29, porting
+  base-field invariance of the genus from AJCR.
+
+
+  THE PATTERN. The lane compared its theorem to AJCR statement-to-statement, found
+  both prove genus C_kappa = genus C, and reported parity. It did not compare BINDERS.
+  AJCR genus_baseField takes no cover argument; the AJC version takes (S : C.left.AffineCoverMVSquare).
+  AJCR internalizes via a Nonempty existence lemma; AJC pushed the obligation to every
+  caller and documented it as inherent ("the cover argument is supplied by the caller").
+  It was not inherent: a five-line Nonempty lemma from two gates the project ALREADY
+  synthesises elsewhere for a different theorem removes it, axiom-clean, no new mathematics,
+  inside the same write set.
+
+
+  WHY IT SURVIVES REVIEW. A theorem with a satisfiable extra explicit argument is
+  sorry-free, axiom-clean, non-vacuous, and passes every mechanical check. Nothing
+  flags it. It reads as a faithful port because the CONCLUSIONS match. The gap is
+  only visible if you diff the binder lists, or ask "does the sibling need this argument,
+  and if not, what does it use instead".
+
+
+  THE CHECK, three questions, cheap: (1) does the sibling result have the same arity,
+  and if fewer arguments, what discharges the missing one; (2) is there a producer
+  of my extra argument reachable from my own hypotheses -- probe it with obtain +
+  exact and read the axioms; (3) do my other theorems already synthesise the same
+  gates for something else (here GenusUnconditional already used both gates for genus
+  finiteness, so the ingredients were in the tree and in use).
+
+
+  GENERAL FORM: when you port, price the ARITY DELTA as well as the statement delta.
+  An extra binder that the sibling does not carry is either a real carrier obstruction
+  you should name precisely, or an internalization you skipped -- and the two look
+  identical from inside the file. Sharpens I-0712 (price the boundary the CONSUMER
+  crosses) and I-0716 (a closure probe finds the name; only a satisfiability probe
+  finds the cost): here the satisfiability probe was on the ARGUMENT, and it succeeded,
+  which is the case I-0716 does not cover.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:47:56.416653+00:00'
+updated_at: '2026-07-28T21:47:56.416672+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

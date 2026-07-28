@@ -40,7 +40,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T21:14:35.780328+00:00'
-updated_at: '2026-07-28T21:14:35.780340+00:00'
+updated_at: '2026-07-28T22:00:01.366421+00:00'
 metadata:
   provenance:
     run: '0071'
@@ -52,3 +52,5 @@ metadata:
     task_title: 'divRep and the datum tail: Div^g-lite representability through to
       the Pic^0 datum'
     projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-divrep

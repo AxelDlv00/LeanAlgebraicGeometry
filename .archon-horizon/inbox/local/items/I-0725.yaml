@@ -1,0 +1,50 @@
+id: I-0725
+provider: local
+kind: memory
+body: 'AN UNREACHABLE LEMMA READS AS MISSING MATHEMATICS, and it cost my lane THREE
+  sessions before a six-line #check block found it.
+
+
+  Established ajc-fbc run 0068 r4 (AJC), machine-measured. I-0674 records the mirror
+  ("availability is cone-relative") for POSITIVE claims. This is the expensive inverse.
+
+
+  WHAT HAPPENED. AJC.fbc.cosimplicial.twisted was priced across r1/r2/r3 -- all three
+  my own lane -- as a "two-nerve comparison" needing new geometry: the compatibility
+  of the cover base-change identification with the index-omission maps. The sigma-COORDINATE
+  FORMULA for the Cech nerve coface had been in the project for many sessions (Cohomology/CechSectionIdentification{Leg,LegMid1}:
+  backboneIncl_nerveδ, pushPull_sigma_iso_π_incl, cechNerve_drop_δ, interLegHom).
+  It was simply OUTSIDE CechHigherDirectImageUnconditional''s import cone. With the
+  import added (cone 8 modules, no cycle), the "missing" lemma is five rw''s over
+  pre-existing ones.
+
+
+  WHY THREE SESSIONS MISSED IT. Name resolution fails IDENTICALLY for absent and unreachable,
+  and the failure arrives as a goal you cannot close -- not as an error naming an
+  import. Nothing in the proof state distinguishes "nobody proved this" from "you
+  cannot see who did".
+
+
+  THE CHECK, seconds: before pricing a missing brick, put #check @name for every ingredient
+  you believe absent into the CONSUMING file and read which fail. Then walk the candidate''s
+  transitive imports to confirm no cycle. If none, the import is the fix.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:52:52.740213+00:00'
+updated_at: '2026-07-28T21:52:52.740227+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0010-horizon-ajc-fbc
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge

@@ -2,17 +2,48 @@ id: AJCR.w4-rep.datum.dat-d.ddr.divrep.u2
 title: 'U2: the DDR9-U epsilon-identity at the universal point (the last gate of divRep)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "U2: the DDR9-U epsilon-identity at the universal point (the last gate of\
-  \ divRep).\n\nSTATE 2026-07-29 (run 0071 s0010, ajcr-divrep). U2 OWES EXACTLY ONE\
-  \ STATEMENT, WITH NO SCALAR\nBESIDE IT. The previous re-scope (s0008) said \"one\
-  \ certificate plus one scalar\". The scalar half\nis RETRACTED BY THIS LANE: it\
-  \ is not an obligation, and it never was.\n\nTHE SCALAR, hb : 0 < windowBound pi\
-  \ hpi, IS A GENUS DISJUNCTION WHOSE DEGENERATE BRANCH IS LANDED.\ns0008 warned that\
-  \ windowBound is a Classical.choose from a predicate upward-closed in b, so \"some\n\
-  valid bound is positive\" is trivial while \"THE chosen one is\" is not, and told\
-  \ the next session to\nnormalise the choice. Correct about the shape, wrong about\
-  \ the state. The tree already carries\n\n  genus_eq_zero_of_windowBound_nonpos (RiemannRoch/WindowLedgerF3.lean:68)\n\
-  \    windowBound <= 0 -> windowBound_spec fires at the ZERO divisor -> h1(O_Y) =\
+summary: "RETRACTION AT THE TOP, 2026-07-29 (run 0071 s0010, ajcr-divrep), because\
+  \ it changes how the rest of\nthis row must be read. A fresh-context review (inbox\
+  \ I-0705, CONFIRMED by the no-go's own owner)\nestablished that the certificate\
+  \ residue of this row -- in BOTH its old and its new spelling -- may\nbe FALSE rather\
+  \ than open, and nobody had checked.\n\n  forall_not_isCertified_of_straddling (Picard/DivisorFamilyAffStrict.lean:127)\n\
+  \    concludes: forall (A : DivisorAdaptation C R pi d) (n : Nat), NOT A.IsCertified\
+  \ n\n    for a connected d whose support meets both pinned vertical fibres.\n\n\
+  That is the negation of \"some adaptation is certified\" at the SAME binder. And\
+  \ because it quantifies\nover ALL A, it equally refutes the older spelling (D.divisorAdaptation\
+  \ hD).IsCertified g, which is\none instance of that forall. So: if the high-window\
+  \ universal seed's local equations straddle in that\nsense, this row has been pricing\
+  \ a FALSE statement since s0004, and the weakening of s0010 neither\ncaused that\
+  \ nor escaped it.\n\nWHAT SURVIVES: the eps-layer reduction is sound and kernel-checked\
+  \ -- the identity genuinely does not\ncare WHICH adaptation carries the certificate.\
+  \ What does NOT survive is any statement that the\nremainder is \"one certificate\"\
+  \ or \"one type mismatch\"; both presume the chart-typed statement is\nmerely unproved.\n\
+  \nTHE DECISIVE UNMEASURED FACT, and it is cheap: is (univSeed ..).localEquations'\
+  \ supportLocus\npreconnected with a point off V0 and a point off V1? NO file in\
+  \ the tree measures it. Until it is\nmeasured, treat this row as UNPRICED.\n\nWHICH\
+  \ WAY IT CUTS: if the universal seed straddles, R2 (protection I-0492) is not an\
+  \ inconvenience\nfor divrep -- it is the ONLY route, because no chart-typed adaptation\
+  \ can ever certify.\n\nMethodological error recorded as I-0707: this lane crossed\
+  \ its new existential against the\ncertificate lane's PRODUCERS and never against\
+  \ the tree's REFUTATIONS.\n\nVERIFICATION UPDATE, superseding the caveat at the\
+  \ end of this row: lake build of\n...DivRepChartClassUnivAny returned EXIT=0, and\
+  \ DivRepChartClassUniv, DivRepChartClassUnivFree and\nDivRepChartClassUnivAny are\
+  \ now all imported by AlgebraicJacobian.lean. The kernel found THREE real\nerrors\
+  \ on the way (dot notation reassigning arguments; a missing DivisorFamilyZar import;\
+  \ a missing\n`include hO hchi`), none of which a sorry census or an extracted-fragment\
+  \ elaboration would see.\n\n--- the pre-retraction body follows, correct except\
+  \ where the retraction above overrides it ---\n\nU2: the DDR9-U epsilon-identity\
+  \ at the universal point (the last gate of divRep).\n\nSTATE 2026-07-29 (run 0071\
+  \ s0010, ajcr-divrep). U2 OWES EXACTLY ONE STATEMENT, WITH NO SCALAR\nBESIDE IT.\
+  \ The previous re-scope (s0008) said \"one certificate plus one scalar\". The scalar\
+  \ half\nis RETRACTED BY THIS LANE: it is not an obligation, and it never was.\n\n\
+  THE SCALAR, hb : 0 < windowBound pi hpi, IS A GENUS DISJUNCTION WHOSE DEGENERATE\
+  \ BRANCH IS LANDED.\ns0008 warned that windowBound is a Classical.choose from a\
+  \ predicate upward-closed in b, so \"some\nvalid bound is positive\" is trivial\
+  \ while \"THE chosen one is\" is not, and told the next session to\nnormalise the\
+  \ choice. Correct about the shape, wrong about the state. The tree already carries\n\
+  \n  genus_eq_zero_of_windowBound_nonpos (RiemannRoch/WindowLedgerF3.lean:68)\n \
+  \   windowBound <= 0 -> windowBound_spec fires at the ZERO divisor -> h1(O_Y) =\
   \ 0\n                     -> with hO : h0 = 1 and hchi : chi = 1 - g, forces g =\
   \ 0.\n\nSo every hb consumer by_cases on windowBound <= 0 and lands in g = 0. WindowLedgerF3\
   \ itself uses\nexactly this pattern twice for its own budget bounds (:91 two_mul_genus_le_S_mul_windowdelta,\n\
@@ -59,7 +90,14 @@ summary: "U2: the DDR9-U epsilon-identity at the universal point (the last gate 
   \ tree removed olean output directories mid-run -- FOUR AJCR lanes were building\
   \ at once) and\nthe second hit its 50-minute timeout inside the DivSchemeHighWindow*\
   \ chain. Do not quote either\nfile as green until a lake build of ...DivRepChartClassUnivFree\
-  \ records exit 0.\n"
+  \ records exit 0.\nVERIFICATION, FINAL AND MEASURED (appended at s0010 close, superseding\
+  \ every earlier caveat on this row):\n  lake build AlgebraicJacobian -> [9269/9270],\
+  \ EXIT=0, ZERO \"uses sorry\" warnings in the whole log.\n  Axiom probe with a CONTROL\
+  \ that fires (I-0661): AlgebraicGeometry.Jacobian reports sorryAx, while\n  windowBound_pos_of_genus_ne_zero,\
+  \ ThetaGeneratorSeed.divFamEps_certifiedFamilyOfAdaptation,\n  PointwiseAchiever.divFamEps_highWindow_eq_universal_pair\
+  \ and\n  ..._of_hasCertifiedAdaptation each report only [propext, Classical.choice,\
+  \ Quot.sound].\nAll three modules are rooted (imported by AlgebraicJacobian.lean)\
+  \ and sorry-free. This is the first\nkernel measurement any of them has had.\n\n"
 status: pending
 kind: proof
 priority: normal
@@ -82,7 +120,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-28T18:12:08.519003+00:00'
+  updated_at: '2026-07-28T21:58:53.963566+00:00'
   pinned_commits:
   - 0a6351e5e
   - 0b67179bb

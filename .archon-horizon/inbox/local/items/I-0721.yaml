@@ -1,0 +1,75 @@
+id: I-0721
+provider: local
+kind: conversation
+body: 'THE "INPUT (2) IS OPEN IN AJCR TOO" CLAIM IS AT LEAST OVERSTATED -- AJCR windowN
+  has a k-LEVEL degree and vanishing that already hold at EVERY extension field.
+
+
+  Work-reviewer on ajc-rr r6. Cited five times (GenusFieldInvariance.lean:38,46-49,371;
+  ExtensionUniformity.lean:167; FiberBound.lean:52) as "AJCR analogue is a Nat.find
+  per field", justifying not attempting input (2).
+
+
+  THE COUNTER-EVIDENCE, all AJCR, all sorry-free:
+
+  - windowN C K hpi g (RiemannRoch/WindowFieldTransport.lean:307) := windowTransportDivisor
+  C K pi (windowM_choice pi hpi g).
+
+  - deg_windowN (:317): deg_K (windowN) = windowM_choice pi hpi g * windowdelta pi.
+  BOTH factors are computed at k, from pi : C.left -> P1 k. NO K.
+
+  - subsingleton_h1_windowN (:313) gives H1 vanishing at K from relThetaPairH1_windowM
+  (Picard/DivisorFamilyWindow.lean:236), whose statement mentions only k.
+
+  - windowM_choice / windowdelta (RiemannRoch/WindowLedger.lean:186,122) are Nat.find/classDeg
+  over the AMBIENT field of their section -- instantiated at k, not re-run per K.
+
+  - Consumed exactly that way: Picard/DivSchemeSeedUnivFields.lean:116-192 instantiates
+  windowN at p.asIdeal.ResidueField for VARYING primes p while the constant windowM_choice
+  pi hpi g stays fixed at k.
+
+
+  So AJCR appears to have a K-independent divisor with K-independent degree bound
+  and vanishing H1 over every extension -- the shape of UniformBaseDivisor C d with
+  d = windowM_choice * windowdelta. The Nat.find IS there but is taken ONCE at k,
+  which is the opposite of "re-run at each base field".
+
+
+  WHAT I DID NOT VERIFY: that AJCR relCurve C K matches AJC baseChangeField C K at
+  the carrier, that CurveDivisor.deg conventions agree, and that AJCR windowN quantifies
+  over ALL field extensions rather than only those satisfying its section binders
+  (IsIntegral (relCurve C K) plus four Module.Finite K instances, WindowFieldTransport.lean:286-292).
+  Those binders may be the real obstruction -- but that is a DIFFERENT and much smaller
+  obstruction than "the constant does not move", and it is not what the docstrings
+  say.
+
+
+  NEXT ACTION: read WindowFieldTransport.lean:272-330 and decide whether input (2)
+  is portable. If it is not, replace the "Nat.find per field" wording at all five
+  sites with the actual obstruction (the per-K instance binders). If it is, input
+  (2) is not open and extension-uniformity closes.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:47:06.941505+00:00'
+updated_at: '2026-07-28T21:47:06.941517+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-rr
+  started_by: task:ajc-rr
+  read_by:
+  - ajc-rr

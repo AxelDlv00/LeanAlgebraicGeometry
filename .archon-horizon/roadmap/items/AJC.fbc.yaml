@@ -2,18 +2,36 @@ id: AJC.fbc
 title: Flat base change (1 walled naturality leaf + 1 bypassed monument)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'ONE OPEN LEAF as of run 0068 r3 (eed54636d), down from two naturality squares
-  plus a bypassed monument. The S-level cosimplicial leaf (.cosimplicial.pushforward)
-  is CLOSED: cechOuterBC is definitionally canonicalBaseChangeMap and canonicalBaseChangeMap_isIso
-  already proved it. The endpoint cech_flatBaseChange_oneLeaf has hypotheses identical
-  to cech_flatBaseChange with both the flat-exactness leaf and the S-level leaf absent
-  from its proof term. What remains is exactly .cosimplicial.twisted: the naturality
-  square of twisted_cech_nerve_iso, i.e. compatibility of coverInterOpen_baseChange_eq
-  with the index-omission maps. Its per-sigma geometric content (twisted_cech_nerve_per_sigma)
-  is landed and axiom-clean. .exactness stays deliberately unproved and bypassed on
-  quasi-coherent objects.
-
-  '
+summary: "Flat base change for the Cech higher direct images (Stacks 02KH). ONE open\
+  \ leaf, and its content is\nnow a single per-sigma equation rather than a two-nerve\
+  \ comparison (run 0068 r4).\n\nSTATE, kernel-verified (lake build of the module,\
+  \ 3243 jobs, exit 0, exactly 3 code sorries):\n * cech_flatBaseChange_oneLeaf is\
+  \ the form to consume -- hypotheses and conclusion identical to\n   cech_flatBaseChange,\
+  \ with BOTH the flat-exactness leaf and the S-level cosimplicial leaf absent\n \
+  \  from the proof term. It reports sorryAx for exactly one reason: twisted_cech_nerve_iso's\n\
+  \   naturality square.\n * That square is REDUCED, not proved. The chain alternatingCofaceComplexIsoOfDelta\
+  \ ->\n   cechNerve_drop_δ_sigma -> sigmaAssembled_δ_square -> twistedNerve_δ_square_concrete\
+  \ is sorry-free\n   and derives it from TwistedPerSigmaDeltaCompat alone.\n * That\
+  \ residue then SPLITS at the rfl seam of twisted_cech_nerve_per_sigma. Half (b)\
+  \ -- the\n   isoOfRangeEq slice transports, which this project's docstrings named\
+  \ as THE residue for three\n   rounds -- is free by mono-cancellation (slice_compat).\
+  \ Half (a), naturality of the mate in the\n   SQUARE rather than the module, is\
+  \ the whole remaining content.\n\nTHE OTHER TWO CHILDREN, so nobody re-prices them:\n\
+  \ * AJC.fbc.cosimplicial.pushforward -- DONE (r3), via cechOuterBC = canonicalBaseChangeMap\
+  \ by rfl.\n * AJC.fbc.exactness -- a DELIBERATE MONUMENT, not a frontier. pullback_preservesMonomorphisms\
+  \ is\n   walled at arbitrary modules, is no longer an instance (demoted at r1 precisely\
+  \ so it cannot leak\n   through synthesis), and every consumer instantiates flat\
+  \ exactness at quasi-coherent objects\n   where it is PROVED. Measured at r2: closing\
+  \ it would clean only the two probes that name it.\n\nMEASUREMENT DISCIPLINE: axiom-frontier\
+  \ section 6h carries the reduction's ten clean lines together\nwith three controls\
+  \ (cech_flatBaseChange_oneLeaf, twisted_cech_nerve_iso,\npullback_preservesMonomorphisms)\
+  \ that must keep reporting sorryAx. No previously-contaminated\ndeclaration has\
+  \ become clean, and nothing in this subtree should be read as claiming otherwise.\n\
+  \nNEXT: half (a) by mateEquiv_vcomp over the vertical paste of the two restricted\
+  \ squares. Two facts\nland it in reach, both machine-checked at r4: openImmersion_bareBC\
+  \ never uses cartesianness (so it\ncovers the degenerate square that is pushPullMap's\
+  \ own shape), and the two squares paste. The\nmissing brick is \"pushPullMap is\
+  \ the degenerate-square mate\" -- typechecks, is NOT rfl.\n"
 status: active
 kind: proof
 priority: high
@@ -26,8 +44,9 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:43.293058+00:00'
-  updated_at: '2026-07-28T16:54:08.527017+00:00'
+  updated_at: '2026-07-28T21:51:08.536057+00:00'
   parent: AJC.cohomology
   pinned_commits:
   - 875b1172e
   - 672a8c656
+  owner: ajc-fbc

@@ -32,7 +32,39 @@ summary: "COMPOSE the new chain into the consumer predicate. Target, already lan
   \ the widened value is a\nFUNCTOR on all tests (divFamZarAff.map, divFunctorAff),\
   \ the comparison out of the chart-typed\nfunctor is a natural transformation (divFunctorToAff),\
   \ and one DD-R consumer is restated on it\n(DivRepAffinePullback.pullGlobalAff /\
-  \ pullGlobalAff_comp, the pull_comp law). Spec ADDENDUM 9.\n"
+  \ pullGlobalAff_comp, the pull_comp law). Spec ADDENDUM 9.\n\nSECOND DISCHARGE LINE,\
+  \ added 2026-07-29 (run 0070 s0016). The line above is right that the s0012\npackaging\
+  \ performed no transport — and it left the composition's real gap unnamed, which\
+  \ this row's\n`done` had been hiding since. The gap was on the PRODUCER side, not\
+  \ the transport side: measured at\na41644c36, NOTHING in the project produced IsLocallyCertifiedAff\
+  \ or DivFamZarAff from a\nThetaGeneratorSeed (of 30 widened files exactly two mention\
+  \ the seed; neither produces the carrier;\ncrossed the other way, zero). So the\
+  \ assembler had no geometric input and the composition it\n\"repackaged\" could\
+  \ not be instantiated from the lane's own seeds.\n\nCLOSED s0016, all rooted, sorry-free,\
+  \ and covered by a FULL lake build (8882 jobs, EXIT=0, zero\nwarnings in these files):\n\
+  \ * Picard/DivisorFamilyAffSeedGate.lean — ThetaGeneratorSeed.divFamZarAff_of_swallowing_affineOpen\n\
+  \   and .isLocallyCertifiedAff_of_swallowing_affineOpen: seed + subordinate 0B8B\
+  \ + degree datum at\n   the swallowing piece ⟹ the widened class. Obligation 4(i)\
+  \ does not appear (discharged inside the\n   endpoint). picClass preserved by rfl.\
+  \ Per-prime forms stated, taking the away certificate as an\n   explicit HYPOTHESIS.\
+  \ Non-vacuity witness included, at its true (n = 0) strength.\n * Picard/DivisorFamilyAffSeedSection.lean\
+  \ — .divFunctorAffSection: the same carried to a SECTION of\n   divFunctorAff, with\
+  \ divFamZarAffAffineEquiv_divFunctorAffSection identifying its class as the\n  \
+  \ gate's. That composition was elaborated in the s0010 review (ADDENDUM 8 §8.7)\
+  \ and cited in a\n   binding addendum while NO declaration performed it.\n * Picard/DivisorFamilyAffAwayRep.lean\
+  \ — DivFamZarAff.exists_certified_away_rep: STEP 1 of the\n   CLASSIFIER direction,\
+  \ widened. Note this corrects a scope claim in the lane's own AffFraming.lean,\n\
+  \   which says exists_certChartCover \"does not port\" because its proof runs through\
+  \ the two-chart\n   PairChartRing window: true of that theorem, but it conflates\
+  \ two steps, and step 1 alone has no\n   chart content (Quotient rep → read the\
+  \ pin's existential → recover the DivEq → repackage as a\n   mk-equality; π occurs\
+  \ only in the carrier's TYPE).\n\nSTILL OWED for a widened CLASSIFIER, and genuinely\
+  \ two-chart: the ε-framing half of\nexists_certChartCover. Its inputs exist widened\
+  \ (CertifiedDivisorFamilyAff.eps, .IsPairChartFramed);\nwhat does not exist is the\
+  \ derivation that the framing can be ACHIEVED over each away piece.\nAlso owed,\
+  \ newly NAMED rather than newly owed: a ThetaGeneratorSeed base change along\nR\
+  \ → Localization.Away r, which is what the per-prime forms take as a hypothesis.\
+  \ Spec ADDENDUM 11.\n"
 status: done
 kind: proof
 priority: normal
@@ -55,7 +87,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
-  updated_at: '2026-07-28T17:43:37.949419+00:00'
+  updated_at: '2026-07-28T21:49:14.666215+00:00'
   milestone: w4-gate
   owner: ajcr-cert-r2
   pinned_commits:

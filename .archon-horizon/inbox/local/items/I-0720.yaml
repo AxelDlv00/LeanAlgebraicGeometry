@@ -1,0 +1,54 @@
+id: I-0720
+provider: local
+kind: conversation
+body: "THE COVER ARGUMENT ON genus_baseChangeField IS REMOVABLE -- AJC can internalize\
+  \ it exactly as AJCR does, and the docstring cites the wrong producer.\n\nWork-reviewer\
+  \ on ajc-rr r6 (6f1203408 et al).\n\nFINDING. genus_baseChangeField (Ledger/GenusFieldInvariance.lean:310)\
+  \ and uniformVanishing_of_uniformBaseDivisor (:376) take an explicit (S : C.left.AffineCoverMVSquare).\
+  \ AJCR does NOT: genus_baseField (AJCR Cohomology/H1BaseFieldInvariance.lean:373)\
+  \ takes no cover, because curveCover (:292) internalizes it via AffineTwoCover.nonempty_of_curve\
+  \ (AJCR Picard/AffineTwoCover.lean:91), sorry-free from the three curve binders.\n\
+  \nAJC CAN DO THE SAME TODAY, NO NEW MATH. Probe EXIT=0, axioms [propext, Classical.choice,\
+  \ Quot.sound]:\n\n  theorem test_nonempty_cover [IsProper C.hom] [SmoothOfRelativeDimension\
+  \ 1 C.hom]\n      [GeometricallyIntegral C.hom] : Nonempty C.left.AffineCoverMVSquare\
+  \ := by\n    obtain <pi, hpi> := Adelic.HasFiniteMapToP1.nonempty_finite_map (C\
+  \ := C)\n    obtain <D> := Adelic.P1HasLaurentChartData.nonempty_laurentChartData\
+  \ (k := k)\n    haveI := hpi; exact <D.pullbackSquare pi>\n\nBoth gates synthesise\
+  \ unconditionally at AJC binders (instP1HasLaurentChartData, P1ChartData.lean:1150;\
+  \ hasFiniteMapToP1_of_existsNonconstantMapToP1, FiniteMapToP1.lean:462) -- the same\
+  \ chain GenusUnconditional.lean:414 already uses for instModuleFiniteHModuleOne.\
+  \ Cover-free genus_baseChangeField AND cover-free uniformVanishing_of_uniformBaseDivisor\
+  \ both elaborate axiom-clean.\n\nSo the central claim is TRUE but UNDERSOLD, not\
+  \ vacuous: nothing is conditional on an unsuppliable input. But it is stated one\
+  \ notch weaker than the project can prove, and everything needed is already in the\
+  \ write set.\n\nDOCSTRING ERROR at :375: \"on the challenge curve Adelic.LaurentChartData.pullbackSquare\
+  \ produces it\". That decl exists (Adelic/FinitenessP1.lean:439) but is not a producer\
+  \ alone -- it needs a LaurentChartData target AND a finite pi. Cite the two gate\
+  \ instances instead. Also AJC has no \"challenge curve\" object; the statement is\
+  \ over an arbitrary AJC curve.\n\nNEXT ACTION (inside write set): add the Nonempty\
+  \ lemma under RiemannRoch/, then drop S from both theorems."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-rr
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:46:41.864958+00:00'
+updated_at: '2026-07-28T21:46:41.864968+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0014-horizon-ajc-rr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-rr
+  started_by: task:ajc-rr
+  read_by:
+  - ajc-rr

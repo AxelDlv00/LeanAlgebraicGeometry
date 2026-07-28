@@ -341,13 +341,23 @@ anywhere; the campaign's own stated end state — `HasRationalPoint` retained as
 hypothesis — is the *route's* assumption about the gate, not a decision about what the
 project's headline claims.
 
-- **`instHasPicScheme` — still the target, and still the only genuine synthesis leak on this
-  route.** Of the tree's 26 `sorry` carriers exactly *two* are instances, so exactly two can
-  reach a consumer without being named in the statement it depends on: `instHasPicScheme`
-  itself and `pullback_preservesFiniteLimits` (the flat-pullback left-exactness of the
-  cohomology lane, off this route). Everything else on the route is honest debt — visible in
-  the signature of whatever depends on it. That is the useful shape of the remaining work: the
-  campaign has one hidden obligation, not a diffuse cloud of them, and G5 closes it.
+- **The representability gate — still the target, and still the only genuine synthesis leak on
+  this route.** Everything else on the route is honest debt — visible in the signature of
+  whatever depends on it. That is the useful shape of the remaining work: the campaign has one
+  hidden obligation, not a diffuse cloud of them, and G5 closes it.
+
+  > **CORRECTED 2026-07-29 (janitor, run 0068 r4).** This bullet used to name
+  > `pullback_preservesFiniteLimits` as the *second* of exactly two sorried instances in the
+  > tree. That is stale on both halves and the fbc half is measured here: at HEAD
+  > `pullback_preservesFiniteLimits` is a plain `theorem`, **not an instance** — `ajc-fbc`
+  > demoted it at run 0068 r1 precisely so it cannot leak through synthesis, and it is a
+  > deliberate non-instance monument off every critical path (roadmap `AJC.fbc.exactness`; the
+  > named carrier of its `sorry` is `pullback_preservesMonomorphisms`). Do not restore the
+  > attribute. The gate half (`instHasPicScheme`, demoted to the named theorem
+  > `picSchemeOfHasRationalPoint` by the étale rewire, protection `I-0491`) belongs to the
+  > `ajc-etale-pic` seam and is left for that lane to restate; see `TO_USER.md`, whose
+  > trap-(1) paragraph is current on both. The `sorry`-carrier count is likewise not re-measured
+  > here — read `scripts/axiom-frontier.lean` rather than the number that used to sit here.
 
 - **`HasRigidPushforward C` — DISCHARGED (2026-07-27, commits `d6bfd59be`/`f4a56a754`).**
   `Adelic.instHasRigidPushforwardOfCurve`

@@ -23,22 +23,28 @@ docstring: 'The degreewise component of a twisted-nerve-style identification, as
   (`Iso.symm_hom` does) makes the goal fail to typecheck, reported as "motive is not
   type correct".
 
-  Second, that cover''s index type is only *propositionally* `𝒰.I₀`, and a transport
-  `hI ▸ σ l` does
+  Second — **and this half is retracted, see `baseChangedCover_I₀`** — an earlier
+  revision of this
 
-  not commute syntactically with `σ ∘ δᵏ`, so the reindexed tuple and the tuple-then-reindex
-  disagree
+  section believed that cover''s index type agreed with `𝒰.I₀` only *propositionally*
+  and threaded a
 
-  as terms.  Abstracting the target removes both obstructions from every proof below;
-  the real data is
+  transport `hI ▸ σ l` through every statement.  It is `rfl`, and the transport was
+  the thing making
 
-  supplied at the application site, where nothing is rewritten.'
+  the reindexed tuple and the tuple-then-reindexed disagree as terms.  The first reason
+  stands on its
+
+  own and is why the abstraction is kept: the real data is supplied at the application
+  site, where
+
+  nothing is rewritten.'
 file: AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.sigmaAssembledComponent
 type: lean
-updated: '2026-07-29T04:25:58'
+updated: '2026-07-29T05:40:30'
 ---
 noncomputable def sigmaAssembledComponent (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
     (F : X.Modules) (n : ℕ) (T : (Fin (n + 1) → 𝒰.I₀) → Y.Modules)

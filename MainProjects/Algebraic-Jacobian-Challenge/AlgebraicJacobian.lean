@@ -286,6 +286,12 @@ import AlgebraicJacobian.Albanese.StableAffineCoverGroup
 -- for `Sym^n C`; both halves of the universal property were already in mathlib unbundled
 -- (`liftAlgHom` / `algHom_ext`) rather than absent, as two earlier sessions had recorded.
 import AlgebraicJacobian.Albanese.TensorPowerCoproduct
+-- …and that comparison packaged as a `Cofan`/`IsColimit` in `Under k`, which is what makes
+-- item 3 consumable rather than merely proved: the affine chart's carrier is now a NAMED
+-- object of `Under k` with its universal property in categorical form. Closes the last
+-- categorical crossing of the bill; the one trap is that `CommRingCat.toAlgHom` is typed
+-- over the rebuilt algebra instance, not the ambient one.
+import AlgebraicJacobian.Albanese.TensorPowerCofan
 import AlgebraicJacobian.Albanese.AlbaneseFromData
 import AlgebraicJacobian.Albanese.AlbaneseFromColimit
 import AlgebraicJacobian.Albanese.AlbaneseJacobian

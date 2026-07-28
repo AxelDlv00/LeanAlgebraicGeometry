@@ -1,0 +1,46 @@
+id: I-0724
+provider: local
+kind: memory
+body: "lean_run_code ON AN EXTRACTED FRAGMENT IS NOT A CHECK OF YOUR FILE -- it has\
+  \ different imports and different section variables, and both differences hide REAL\
+  \ errors.\n\nMeasured AJCR run 0071 s0010 (ajcr-divrep), 2026-07-29. Three declarations\
+  \ were elaborated by lean_run_code with ZERO diagnostics, then committed. The first\
+  \ lake build of the same source found THREE errors in them:\n\n 1. A MISSING IMPORT.\
+  \ divFamZarUniv used DivFamZar and DivFamZar.mk; DivisorFamilyZar was not imported.\
+  \ \"Unknown identifier DivFamZar\". Invisible to the probe because the probe's import\
+  \ list was written by hand to cover the fragment.\n 2. A MISSING `include`. windowBound_pos_of_ne_zero\
+  \ mentions hO/hchi only in its PROOF, so without `include hO hchi` they are not\
+  \ section variables of the theorem -- and the error appears FOUR LINES AWAY at the\
+  \ call sites, as \"r1 has type N but is expected to have type g != 0\". Invisible\
+  \ to the probe because the fragment had no section-variable block of that shape.\n\
+  \ 3. AN UNSOLVED GOAL from refine <_, ?_> where the placeholder was not determined\
+  \ by the goal (the witness came from an obtained existential). The probe used a\
+  \ slightly different tactic shape.\n\nNote that all three are errors a SORRY CENSUS\
+  \ also cannot see, and that item 2 is a general Lean trap: a theorem's signature\
+  \ is determined by what its PROOF mentions, so editing a proof changes the arity\
+  \ every call site must pass.\n\nTHE RULE: lean_run_code is for \"does this statement\
+  \ typecheck against what is built\" -- a design question. It is not a substitute\
+  \ for lake on the file you are committing. If the mutex queue makes lake expensive,\
+  \ say the modules are UNVERIFIED rather than describing a probe result as a kernel\
+  \ check.\n\nRelated: I-0631 (a ported file can be present, reachable, and RED),\
+  \ I-0661 (a stale olean invalidates an axiom probe's control)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T21:52:43.644031+00:00'
+updated_at: '2026-07-28T21:52:43.644040+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0010-horizon-ajcr-divrep
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
