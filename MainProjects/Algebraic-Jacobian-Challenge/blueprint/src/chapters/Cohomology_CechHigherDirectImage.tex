@@ -11564,7 +11564,7 @@ Mathlib bridge.
 
 \section{Flat base change for the {\v C}ech higher direct images}
 
-\begin{lemma}[Flat base change of $R^i f_*$ via {\v C}ech]\leanok
+\begin{lemma}[Flat base change of $R^i f_*$ via {\v C}ech]
   \label{lem:cech_flat_base_change}
   \lean{AlgebraicGeometry.cech_flatBaseChange}
   \uses{def:cech_higher_direct_image, lem:cech_computes_cohomology}
@@ -11621,6 +11621,20 @@ Mathlib bridge.
   \(B\)-modules \(H^i(X, \mathcal{F}) \otimes_A B \to H^i(X', \mathcal{F}')\) is an
   isomorphism.
 \end{lemma}
+
+\begin{remark}[What of Tag 02KH is formalised]
+  \label{rem:cech_flat_base_change_state}
+  \uses{lem:cech_flat_base_change, lem:cech_pushforward_baseChange_natIso,
+        lem:twisted_cech_nerve_iso}
+  The statement above is formalised as \texttt{cech\_flatBaseChange}, and three variants of it
+  carry successively less in their proof terms: \texttt{cech\_flatBaseChange\_qcoh} omits the
+  left-exactness input by taking kernels degreewise on quasi-coherent terms, and
+  \texttt{cech\_flatBaseChange\_oneLeaf} omits in addition the cosimplicial comparison
+  \cref{lem:cech_pushforward_baseChange_natIso}, which is proved. All three have the same
+  hypotheses and the same conclusion. A single ingredient is still assumed rather than proved,
+  namely the coface compatibility of \cref{lem:twisted_cech_nerve_iso}; the marks on these nodes
+  record exactly that.
+\end{remark}
 
 \begin{proof}
   \uses{lem:pullback_mapHC_homologyIso, def:cech_complex_base_change_iso,
@@ -13454,7 +13468,7 @@ of an affine open-immersion cover of a separated scheme.
   altitude~1.
 \end{proof}
 
-\begin{lemma}[The base-changed nerve is the nerve of the base-changed data]\leanok
+\begin{lemma}[The base-changed nerve is the nerve of the base-changed data]
   \label{lem:twisted_cech_nerve_iso}
   \lean{AlgebraicGeometry.twisted_cech_nerve_iso}
   \uses{def:cech_nerve, def:cover_cech_nerve, lem:pushPullObj_iso_tilde}
@@ -13586,9 +13600,9 @@ of an affine open-immersion cover of a separated scheme.
   iso by feeding \(e\) into the present reduction.
 \end{definition}
 
-\begin{definition}[The {\v C}ech base-change cosimplicial isomorphism \(e\)]\leanok
+\begin{definition}[The {\v C}ech base-change cosimplicial isomorphism \(e\)]
   \label{def:cech_complex_base_change_cosimplicialIso}
-  \lean{AlgebraicGeometry.cechComplex_baseChange_cosimplicialIso}
+  \lean{AlgebraicGeometry.cechComplex_baseChange_cosimplicialIso_flat}
   \uses{lem:cech_pushforward_baseChange_natIso, lem:twisted_cech_nerve_iso}
   The cosimplicial natural isomorphism \(e\) required by
   \cref{def:cech_complex_base_change_iso_of_cosimplicialIso} is assembled from the two
@@ -13611,7 +13625,7 @@ of an affine open-immersion cover of a separated scheme.
   by \cref{def:cech_complex_base_change_iso_of_cosimplicialIso}.
 \end{definition}
 
-\begin{definition}[Tensorial base change of the {\v C}ech complex \textnormal{(Stacks 02KG, OPEN)}]\leanok
+\begin{definition}[Tensorial base change of the {\v C}ech complex \textnormal{(Stacks 02KG, OPEN)}]
   \label{def:cech_complex_base_change_iso}
   \lean{AlgebraicGeometry.cechComplex_baseChange_iso}
   \uses{def:cech_complex, def:relative_cech_complex_of_nerve,

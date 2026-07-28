@@ -2053,9 +2053,9 @@ theorem isIso_cechOuterBC_coverInter (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S
   haveI := isQuasicoherent_pushPullObj_coverInter f 𝒰 σ F hF
   exact canonicalBaseChangeMap_isIso h _
 
--- The σ-indexed product decomposition of the nerve degree forces the same finite-product and
--- quasi-coherence instance searches as `isQuasicoherent_cechComplex_X`, and needs the same headroom.
 set_option maxHeartbeats 1600000 in
+-- The σ-indexed product decomposition of the nerve degree forces the same finite-product
+-- and quasi-coherence instance searches as `isQuasicoherent_cechComplex_X`.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- **The outer mate is invertible at every degree of the dropped Čech nerve.**  The degree-`n`
 object is the push–pull object over the degree-`n` fibre power, which decomposes as the finite
@@ -2079,9 +2079,9 @@ theorem isIso_cechOuterBC_nerve_obj (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S'
   refine isIso_app_pi_of_isIso_app (cechOuterBC f g f' g' h) _ (fun σ => ?_)
   exact isIso_cechOuterBC_coverInter f g f' g' h 𝒰 σ F hF
 
--- Elaborating the two nested `CosimplicialObject.whiskering` applications in the statement is what
--- costs here, as in the declaration it replaces; the proof itself is one application.
 set_option maxHeartbeats 1600000 in
+-- Elaborating the two nested `CosimplicialObject.whiskering` applications in the statement is
+-- what costs here, as in the declaration this replaces; the proof itself is one application.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- **The cosimplicial base-change comparison, `sorry`-free** (Stacks 02KG, the cosimplicial half).
 `cech_pushforward_baseChange_natIso_of_isIso` fed by `isIso_cechOuterBC_nerve_obj`: same statement
