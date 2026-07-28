@@ -33,8 +33,8 @@ All three pieces now exist:
 
 | mismatch | closed by |
 |---|---|
-| index set `PrimeDivisor` vs `{x ≠ η}` | `CurveDivisorIndexBridge.addEquivNonGeneric` (additive, degree-preserving) |
-| residue weighting `Σ nₓ[κ(x):k]` vs `Σ nₓ` | `Ledger/ResidueOneAlgClosed.deg_eq_sum_of_isAlgClosed` (needs `k = k̄`) |
+| index set `PrimeDivisor` vs `{x ≠ η}` | `CurveDivisorIndexBridge.addEquivNonGeneric` |
+| residue weighting `Σ nₓ[κ(x):k]` vs `Σ nₓ` | `ResidueOneAlgClosed` (needs `k = k̄`) |
 | `ordZ` vs `RationalMap.order` | `Ledger/PrincipalCompare.ordZ_toAdd_eq_log_ordFrac` |
 
 and the χ-machinery they were the cost *of* is `Ledger/ChiLedger.deg_divOf`, unconditional at a
@@ -85,7 +85,7 @@ theorem addEquivNonGeneric_principal (hdim : ∀ z : X, Order.coheight z ≤ 1)
     Scheme.IsRegularInCodimensionOne.instKrullDimLEStalk
       (Scheme.PrimeDivisor.ofNonGeneric y.2 (hdim _))
   rw [Scheme.divOf_apply _ g y.2]
-  show (Finsupp.equivMapDomain (Scheme.PrimeDivisor.equivNonGeneric hdim)
+  change (Finsupp.equivMapDomain (Scheme.PrimeDivisor.equivNonGeneric hdim)
       (principal (g : X.functionField) hg : X.PrimeDivisor →₀ ℤ)) y = _
   rw [Finsupp.equivMapDomain_apply, principal_apply]
   exact (Scheme.ordZ_toAdd_eq_log_ordFrac _ g y.2).symm
@@ -100,7 +100,7 @@ theorem degree_principal_eq_deg (hdim : ∀ z : X, Order.coheight z ≤ 1)
     (g : X.functionFieldˣ) (hg : (g : X.functionField) ≠ 0) :
     degree (principal (g : X.functionField) hg)
       = (Scheme.divOf (X ↘ Spec (CommRingCat.of k)) g).sum (fun _ n => n) := by
-  rw [degree_eq_sum_nonGeneric hdim, addEquivNonGeneric_principal hdim g hg]
+  rw [degree_eq_sum_nonGeneric hdim, addEquivNonGeneric_principal (k := k) hdim g hg]
 
 /-- **Principal divisors have degree zero over an algebraically closed base field** (★).
 
@@ -112,16 +112,52 @@ finiteness binders are discharged at a curve by `Ledger/ChiCurve`);
 `degree_principal_eq_deg` transports it onto `degree`.
 
 `[IsAlgClosed k]` is load-bearing and not bookkeeping: see the module docstring. -/
-theorem degree_principal_eq_zero_of_isAlgClosed [IsAlgClosed k] [IsProper (X ↘ Spec (.of k))]
+theorem degree_principal_eq_zero_of_isAlgClosed [IsAlgClosed k]
     [Module.Finite k (Sheaf.HModule (X.moduleKSheaf k) 0)]
     [Module.Finite k (Sheaf.HModule (X.moduleKSheaf k) 1)]
     (hdim : ∀ z : X, Order.coheight z ≤ 1)
     (g : X.functionFieldˣ) (hg : (g : X.functionField) ≠ 0) :
     degree (principal (g : X.functionField) hg) = 0 := by
-  rw [degree_principal_eq_deg hdim g hg,
+  rw [degree_principal_eq_deg (k := k) hdim g hg,
     ← Scheme.CurveDivisor.deg_eq_sum_of_isAlgClosed (K := k)]
   exact deg_divOf k g
 
 end Scheme.WeilDivisor
+
+/-! ## The bundled-curve form, with the finiteness binders discharged -/
+
+/-- **Principal divisors have degree zero on a curve over `k̄`** — the bundled form, and the
+one to quote.
+
+`degree_principal_eq_zero_of_isAlgClosed` still *carries* the two `Module.Finite` cohomology
+binders, because it is stated for a bare scheme over `Spec k` rather than for the bundled curve
+that discharges them.  Here they are discharged, from `moduleFinite_hModule_zero` and
+`moduleFinite_hModule_one` (`Ledger/ChiCurve`, `Ledger/Finiteness`), so the hypotheses are:
+properness, smoothness of relative dimension one, geometric irreducibility, Noetherianness,
+regularity in codimension one, the coheight bound, and `k = k̄`.
+
+That is `Scheme.WeilDivisor.principal_degree_zero` (milestone `AJC.rr.principal`) over an
+algebraically closed field.  The `[IsAlgClosed k]` binder is the only gap to the general
+statement, and it is a genuine one — see `Ledger/ResidueOneAlgClosed`. -/
+theorem degree_principal_eq_zero_curve {k : Type u} [Field k] [IsAlgClosed k]
+    (C : Over (Spec (CommRingCat.of k)))
+    [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom]
+    [IsNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left] [IrreducibleSpace C.left]
+    (hdim : ∀ z : C.left, Order.coheight z ≤ 1)
+    (g : C.left.functionFieldˣ) (hg : (g : C.left.functionField) ≠ 0) :
+    Scheme.WeilDivisor.degree
+      (Scheme.WeilDivisor.principal (g : C.left.functionField) hg) = 0 := by
+  letI : C.left.Over (Spec (CommRingCat.of k)) := .ofHom C.hom
+  haveI : SmoothOfRelativeDimension 1 (C.left ↘ Spec (CommRingCat.of k)) :=
+    inferInstanceAs (SmoothOfRelativeDimension 1 C.hom)
+  haveI : LocallyOfFiniteType (C.left ↘ Spec (CommRingCat.of k)) :=
+    inferInstanceAs (LocallyOfFiniteType C.hom)
+  haveI : QuasiCompact (C.left ↘ Spec (CommRingCat.of k)) :=
+    inferInstanceAs (QuasiCompact C.hom)
+  haveI : Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0) :=
+    moduleFinite_hModule_zero C
+  haveI : Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1) :=
+    moduleFinite_hModule_one C
+  exact Scheme.WeilDivisor.degree_principal_eq_zero_of_isAlgClosed (k := k) hdim g hg
 
 end AlgebraicGeometry
