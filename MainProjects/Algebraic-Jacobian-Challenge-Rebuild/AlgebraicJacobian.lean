@@ -342,6 +342,7 @@ import AlgebraicJacobian.Picard.InvertibleModuleTransfer
 import AlgebraicJacobian.Picard.DivisorFamily
 import AlgebraicJacobian.Picard.DivisorFamilyAffCover
 import AlgebraicJacobian.Picard.DivisorFamilyAffAdaptation
+import AlgebraicJacobian.Picard.DivisorFamilyAffReindex
 import AlgebraicJacobian.Picard.DivisorFamilyAffPerPiece
 import AlgebraicJacobian.Picard.DivisorFamilyAffCollapse
 import AlgebraicJacobian.Picard.DivisorFamilyAffSwallow
