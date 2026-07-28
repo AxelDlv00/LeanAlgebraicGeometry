@@ -41,6 +41,13 @@ objects through the `tilde` dictionary over `Spec`.
 * `cechComplex_baseChange_iso`: applying `g^*` degreewise to `Č•(𝒰, F)` gives `Č•(𝒰', g'^* F)`
   for the base-changed cover `𝒰'` and the base-changed sheaf `g'^* F`.
 * `cech_flatBaseChange`: flat base change for the Čech higher direct images.
+* `cech_flatBaseChange_qcoh`: the same conclusion with the flat-exactness leaf absent from the
+  proof term and no extra hypotheses — **the form to consume**.
+* `isQuasicoherent_cechComplex_X`: every term of the relative Čech complex is quasi-coherent,
+  which is what discharges the hypotheses of `cech_flatBaseChange_of_termsQuasicoherent`.
+* `cechOuterBC` / `cech_pushforward_baseChange_natIso_of_isIso` / `isIso_app_pi_of_isIso_app`:
+  the cosimplicial comparison as a *whiskered mate*, which removes the cosimplicial naturality
+  obligation entirely and leaves one `IsIso` per index tuple.
 
 ## Obligations not yet discharged
 
@@ -67,10 +74,20 @@ Three statements below are still assumed rather than proved.
   axioms while `leakControl_qcohRoute_oldRoute` — the same conclusion via the old route — still
   reports `sorryAx`.  Prefer the `_of_isQuasicoherent` forms in anything new; the two `[Flat g]`
   declarations that route through mono-preservation are kept only so the reduction stays legible.
-* the cosimplicial naturality of `cech_pushforward_baseChange_natIso` and of
-  `twisted_cech_nerve_iso`.  In both cases the degreewise isomorphisms are constructed, and
-  what remains is their compatibility with the index-omission maps generating the
-  cosimplicial structure of the Čech nerve.
+* the two `sorry`s in `cech_pushforward_baseChange_natIso` and `twisted_cech_nerve_iso`.  These
+  are `NatIso.ofComponents` naturality obligations, and **they should not be discharged — those
+  two declarations should be replaced.**  Naturality is an artefact of building the cosimplicial
+  isomorphism degreewise; `cech_pushforward_baseChange_natIso_of_isIso` builds the same object by
+  whiskering the natural transformation `cechOuterBC`, so naturality holds by construction, and
+  `isIso_app_pi_of_isIso_app` then reduces the whole residue to **one `IsIso` per index tuple `σ`**.
+  Both replacements are sorry-free.
+
+  What is genuinely open is that per-σ `IsIso` *of the mate's component*.  The file has an
+  isomorphism with the right endpoints (`pushPullObj_coverInter_baseChange`,
+  `twisted_cech_nerve_per_sigma`), but an isomorphism between two objects is not `IsIso` of a
+  given map.  See the docstring of `cech_pushforward_baseChange_natIso` for the two routes, of
+  which splitting the mate by `CategoryTheory.mateEquiv_vcomp` (affine mate over `U_σ ⟶ S`
+  composed with the landed `openImmersion_beckChevalley`) is the promising one.
 
 Neither `pullback_preservesFiniteLimits` nor `pullback_preservesHomology` is an `instance`, and
 that is deliberate: as instances they leaked `sorryAx` into every *synthesis site* while
@@ -2409,9 +2426,39 @@ dictionaries `pushforward_spec_tilde_iso`/`pullback_spec_tilde_iso` and the comm
 cancellation `cancelBaseChange` — *not* the canonical adjoint mate `pushforwardBaseChangeMap`.
 Cosimplicial naturality is restriction along inclusions of finite affine intersections.
 
-*(STUB — the multi-hundred-LOC Beck–Chevalley heart. The decomposition is in place: this is
-the genuine open content of 02KG/02KH; the residual `sorry` is the degreewise + naturality
-assembly of `affinePushforwardPullbackBaseChange`.)* Project-local. -/
+**DO NOT DISCHARGE THE `sorry` BELOW — REPLACE THIS DECLARATION** (run 0068 r2).  The residual
+`sorry` is the `NatIso.ofComponents` naturality obligation, and it is an artefact of building the
+isomorphism degreewise.  An earlier session established that it is unreachable as posed:
+`Pi.hom_ext`, the tool that closed this project's other naturality squares, cannot fire because
+the σ-decomposition sits mid-chain behind pushforward/pullback applications.  That diagnosis is
+correct, and the conclusion to draw from it is that the construction is wrong, not that the
+mathematics is hard.
+
+Use `cech_pushforward_baseChange_natIso_of_isIso` instead: it builds the *same* isomorphism by
+whiskering the natural transformation `cechOuterBC` (see the section note above), so naturality
+holds by construction and the entire residue is one `IsIso` per degree — reduced further to one
+per index tuple `σ` by `isIso_app_pi_of_isIso_app`.  Both are sorry-free.
+
+**What is genuinely open, stated so it is not over-read.**  The per-σ obligation is
+```
+  IsIso ((cechOuterBC f g f' g' h).app (pushPullObj F (Over.mk j_σ))).
+```
+This file *already* has an isomorphism with exactly those endpoints,
+`pushPullObj_coverInter_baseChange` — but an isomorphism between the same two objects is **not**
+`IsIso` of a specific map, and treating it as one is the "groups agree ≠ maps agree" error this
+workspace has recorded.  Two ways to close it, and the second looks right:
+
+* identify `pushPullObj_coverInter_baseChange` *with* the mate's component (a compatibility
+  square — the same shape of work that the tilde-bridge assembly already does, but on the mate);
+* or split the mate.  `CategoryTheory.mateEquiv_vcomp` (mathlib) says the mate of a vertically
+  composed square is the vertical composite of the mates.  Stack the *inner* square over `U_σ`
+  (base change of the open immersion `j_σ` along `g'`) on top of the outer square `h`: the
+  composite is the square for `j_σ ≫ f : U_σ ⟶ S`, a morphism **between affine schemes**, where
+  flat base change is the affine brick `affinePushforwardPullbackBaseChange`; and the inner factor
+  is `openImmersion_beckChevalley`, already sorry-free here.  So the per-σ mate would factor as
+  (affine mate, `g` flat) ∘ᵥ (open-immersion mate, landed), with `mateEquiv_vcomp` as the glue.
+
+Project-local; the residual is the genuine open content of Stacks 02KG/02KH. -/
 noncomputable def cech_pushforward_baseChange_natIso
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
     (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
@@ -2474,10 +2521,21 @@ itself a Beck–Chevalley identification `g'^* (p_* p^* F) ≅ p'_* p'^* (g'^* F
 restricted cartesian square — and the identifications are compatible with the cosimplicial
 structure maps because both are induced by the same inclusions of intersections.
 
-*(STUB — the residual `sorry` is the termwise commuting of `g'^*` with `pushPullFunctor`
-along the base-changed fibre powers; structurally lighter than
-`cech_pushforward_baseChange_natIso` but still a Beck–Chevalley identification.)*
-Project-local. -/
+**THE SAME STRUCTURAL CORRECTION APPLIES HERE** (run 0068 r2).  The residual `sorry` is again the
+`NatIso.ofComponents` naturality obligation, and again it is an artefact of the degreewise
+construction rather than of the mathematics — see the section note above
+("The cosimplicial comparison is a WHISKERED MATE") and the extended note on
+`cech_pushforward_baseChange_natIso`.
+
+The X-level analogue of `cechOuterBC` is the mate of the *X-level* square, i.e.
+`openImmersion_bareBC` at `(g', 𝟙, …)` for this leaf's data; whiskering it with the dropped nerve
+gives this isomorphism with naturality for free, and `isIso_app_pi_of_isIso_app` reduces the
+residue to one `IsIso` per index tuple.  Here the per-σ statement is exactly
+`twisted_cech_nerve_per_sigma`'s endpoint pair, and the same caveat holds: that declaration is an
+*isomorphism* between those objects, not a proof that the *mate's component* is invertible.
+
+This leaf is the structurally lighter of the two — there is no base affineness and no
+`f_*`/`f'_*` layer — so it is the one to attempt first.  Project-local. -/
 noncomputable def twisted_cech_nerve_iso
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
     (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
