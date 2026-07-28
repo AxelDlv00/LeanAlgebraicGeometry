@@ -1,0 +1,1 @@
+Two strong hits. I-0411 (archived, 05:28) says the assembly warning was left deliberately; I-0538 (open conversation) is about the picrep mismatch. Let me read both, plus I-0552 which looks like a [persistent] memory that got archived.

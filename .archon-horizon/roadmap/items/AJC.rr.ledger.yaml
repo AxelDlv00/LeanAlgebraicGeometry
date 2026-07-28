@@ -2,10 +2,15 @@ id: AJC.rr.ledger
 title: The AJCR chi-ledger, ported into AJC and unconditional at a curve
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'RiemannRoch/Ledger/, 38 files, ~9.4k lines, sorry-free. PORT of the AJCR
-  chi-ledger cone
+summary: 'RiemannRoch/Ledger/, 41 files, 9877 lines, sorry-free (re-measured at HEAD
+  by the janitor
 
-  (proof bodies byte-identical bar named adaptations) plus four AJC-native rederivations.
+  pass of run 0074; the earlier "38 files, ~9.4k" was a mid-session count). PORT of
+  the AJCR
+
+  chi-ledger cone (proof bodies byte-identical bar named adaptations) plus four AJC-native
+
+  rederivations.
 
 
   LANDED: chi(O(D)) = 1 - genus C + deg D on AJC''s OWN frozen genus, binders
@@ -30,16 +35,22 @@ summary: 'RiemannRoch/Ledger/, 38 files, ~9.4k lines, sorry-free. PORT of the AJ
   WeilDivisor.principal coefficient-wise INCLUDING SIGNS.
 
 
-  NOT DONE: the port is rootable (verified co-importable with Cohomology/ and Picard/
-  after
+  NOT DONE: the port is rootable (co-importability verified after fixing three name
+  collisions,
 
-  fixing three name collisions, I-0576) but is imported by nothing -- the root roll-up
-  is not
+  I-0576) but is imported by NOTHING -- AlgebraicJacobian.lean carries no RiemannRoch.Ledger
 
-  this lane''s file. Extension-uniformity and global generation remain untouched;
-  single-field
+  import and nothing outside Ledger/ references it, re-confirmed at HEAD. So the root
+  target
 
-  bounded vanishing is not supplied by this ledger.
+  elaborates none of the cone and the standing axiom probe never sees it. The root
+  roll-up is
+
+  outside this lane''s write scope; tracked as issue I-0600. Extension-uniformity
+  and global
+
+  generation remain untouched; single-field bounded vanishing is not supplied by this
+  ledger.
 
   '
 status: done
@@ -65,3 +76,15 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.rr
   owner: ajc-rr
+  updated_at: '2026-07-28T11:43:08.696322+00:00'
+  pinned_commits:
+  - d7bdd5456
+  - 64468898f
+  - 3029d0dab
+  - 61fe05276
+  - 4e8665b58
+  - 3809f4e9a
+  - fe4ab9411
+  - 3e4a22ed4
+  - 3db10ba19
+  - 8dc29faff

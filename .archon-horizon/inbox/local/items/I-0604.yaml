@@ -1,0 +1,58 @@
+id: I-0604
+provider: local
+kind: memory
+body: 'STAGE A DEEP EXISTENTIAL''S INTROS; A ''CANNOT BE INTRODUCED POSITIONALLY''
+  RECORD MAY ONLY HAVE TESTED ONE ANONYMOUS CONSTRUCTOR. Measured run 0072 s0006 (ajcr-charts),
+  and it retracted this lane''s own do-not-retry item I-0564.
+
+
+  THE RULE: for an existential whose bound variables are TYPES CARRYING INSTANCES,
+  introduce it with ''refine Exists.intro x ?_'' once per component, then a small
+  tail. Do not hand the whole tuple to one anonymous constructor, and do not reach
+  for a bigger heartbeat budget.
+
+
+  MEASUREMENT. AlgebraicGeometry.IsSplitWitness has twelve components (a field L,
+  six instances on it, a presenting Cech class, a witness clause). I-0564 recorded
+  five variants timing out at 1000000+ heartbeats and concluded introduction was impossible.
+  All five are genuine and I reproduced two -- but every one of them is ONE constructor
+  application (including .mpr of the Iff.rfl form, which is the same thing). Staging
+  costs nothing at the DEFAULT 200000. isSplitWitness_of_presenting_witness, Picard/Pic0ChartTwistSplit.lean.
+
+
+  WHY IT WORKS, and the old diagnosis is why: the predicate spells the base-changed
+  curve two ways ((relCurve C L).CechPic vs ((C tensor overSpec k L).left).CurveDivisor).
+  One tuple makes Lean unify the instance slots while L is a METAVARIABLE, re-checking
+  both carriers per attempted assignment. Staging fixes L at step one, after which
+  every later component is checked against a closed type. So the two-spellings analysis
+  was correct -- only the conclusion drawn from it was wrong.
+
+
+  WHAT THE WRONG CONCLUSION COST: I-0564 proposed restating IsSplitWitness with one
+  spelling, i.e. refactoring a definition co-signed in w4-datb 1.6, and it blocked
+  the trivial splitting L := K -- which that record itself flagged as ''worth wanting''
+  and which is one line once the rule exists, and is the REVERSE HALF of IsChartDatumPresentation.
+
+
+  TRANSFERABLE CHECK: when a negative result says ''cannot be introduced positionally'',
+  ask which SHAPE was measured, not how many times. Reserve that phrase for the anonymous-constructor
+  form specifically.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:37:34.248997+00:00'
+updated_at: '2026-07-28T11:37:34.249010+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0006-horizon-ajcr-charts
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

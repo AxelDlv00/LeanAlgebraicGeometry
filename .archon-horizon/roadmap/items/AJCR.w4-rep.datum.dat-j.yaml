@@ -4,31 +4,39 @@ title: 'DAT-J: JacobianData assembly — quasi-compactness via the Abel image of
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DAT-J: JacobianData assembly -- quasi-compactness via the Abel image of\
-  \ Div^g-lite.\n\nSTATUS 2026-07-28 (run 0071 s0004, ajcr-divrep). DJ-1's QC STEP\
-  \ AND DJ-2 ARE LANDED; WHAT\nREMAINS OF DAT-J IS EXACTLY ONE STATEMENT, and it is\
-  \ not packaging.\n\nPicard/JacobianDataAbelImage.lean (sorry-free, kernel exit 0,\
-  \ rooted):\n * quasiCompact_of_surjective_from_divScheme -- w4-datj 2.2 steps 1,\
-  \ 2, 4: a point-surjective\n   morphism from DivScheme g onto J.left gives QuasiCompact\
-  \ J.hom. The compact source is\n   DD-Q's compactSpace_divScheme INSTANCE, the base\
-  \ is affine, DJ-0's\n   quasiCompact_of_surjective (CompactImageQc.lean:60) converts.\n\
-  \ * JacobianData.ofAbelImage -- DJ-2, the four-field packaging with the qc field\
-  \ replaced by\n   the Abel-image hypothesis.\n * JacobianData.ofChartsOfAbelImage\
-  \ -- the same against a chart atlas. This is the one that\n   matters: ofChartsOfCompactSpace\
-  \ asks for CompactSpace of the glued object, which 2.1\n   records as genuinely\
-  \ a-posteriori BECAUSE THE CHART INDEX IS INFINITE (one chart per\n   divisor class\
-  \ with an effective witness). A surjection supplies it with no finiteness of\n \
-  \  the atlas anywhere.\n\nWHAT REMAINS: step 3 only -- SURJECTIVITY OF THE ABEL\
-  \ MAP ON POINTS (DJ-1's honest brick).\nIt needs the universal degree-g class (hence\
-  \ divRep), the fiberTwist degree shift, and\nexists_effective_of_picClass. BINDING\
-  \ (w4-datj 0.5): that brick must stay Challenge-free --\nuse exists_effective_of_picClass\
-  \ / riemann_inequality (FLVClass.lean:208/205), NEVER\nriemann_inequality_curve\
-  \ (ChiCurve.lean:183), which imports Challenge.lean and would create\nan import\
-  \ cycle.\n\nAlso still true and worth not re-discovering: JacobianData has THREE\
-  \ producers now\n(ofRepresentableBy :71, ofCharts :182, ofChartsOfCompactSpace :199)\
-  \ plus the two above, and\nthe atlas is NOT finite -- so ofChartsOfCompactSpace\
-  \ / ofChartsOfAbelImage is the producer to\naim at, not ofCharts (critical-path\
-  \ 7.5).\nDJ-3 (the Challenge.lean discharge) is untouched and gated on a real jacobianData\
-  \ term.\n"
+  \ Div^g-lite.\n\nSTATUS 2026-07-28 (run 0071 s0006, ajcr-divrep). DAT-J IS NOW TWO\
+  \ INPUTS, BOTH VISIBLE IN ONE\nSIGNATURE, and the assembly between them is landed\
+  \ rather than asserted.\n\nPicRepDatum.toJacobianDataOfAbelLifts (Picard/JacobianDataFromPicRepDatum.lean,\
+  \ sorry-free,\nkernel exit 0, rooted, axiom-clean with a control) takes exactly\
+  \ two arguments:\n * a PicRepDatum k k C -- DAT-G/DAT-G0, divRep-gated;\n * an Abel\
+  \ morphism DivScheme g --> d.J.left with a residue-field lift at EVERY POINT.\n\
+  Nothing else. So \"the assembly\" is no longer a step that could hide work.\n\n\
+  LANDED THIS RUN, both new files.\n\n1. Picard/JacobianDataAbelSurj.lean -- DJ-1's\
+  \ TOPOLOGICAL half.\n   surjective_of_forall_exists_residueField_lift: per-point\
+  \ lifts q : Spec kappa(y) --> X with\n   q >> f = fromSpecResidueField y give Function.Surjective\
+  \ f.base.\n   This was a real gap, not bookkeeping. w4-datj 2.3 produces a MORPHISM\
+  \ out of a residue field\n   (fiberTwist shift + exists_effective_of_picClass),\
+  \ while the qc field consumes a statement\n   about Hom.base, and nothing in the\
+  \ tree converted the one into the other. The proof is\n   mathlib's range_fromSpecResidueField\
+  \ plus nontriviality of a field. PURE SCHEME TOPOLOGY --\n   no curve, no Picard\
+  \ functor, no divisor scheme -- so it is reusable by anyone holding lifts\n   rather\
+  \ than a surjection.\n   Also landed there: quasiCompact_of_forall_residueField_lift_from_divScheme,\n\
+  \   JacobianData.ofAbelLifts, and JacobianData.ofChartsOfAbelLifts (the infinite-atlas\
+  \ producer\n   critical-path 7.5 says to aim at).\n\n2. Picard/JacobianDataFromPicRepDatum.lean\
+  \ -- DJ-IN, the DAT-G handoff.\n   PicRepDatum.toJacobianData (d) (hqc) : JacobianData\
+  \ C.\n   THE TELL that this was missing: PicRepDatum occurred in NO other Lean file\
+  \ in the tree. Its\n   rep-field defeq was recorded as an example in its own module,\
+  \ so nothing CONSUMED it. This is\n   the first declaration to use it. w4-datj 1.1\
+  \ asserted the handoff was free; that assertion is\n   now machine-checked rather\
+  \ than asserted.\n\nWHAT REMAINS OF DAT-J, unchanged in substance:\n * step 3, the\
+  \ LIFT itself -- divRep-gated, and BINDING (w4-datj 0.5): spell it with\n   exists_effective_of_picClass\
+  \ / riemann_inequality (FLVClass.lean:208/205), NEVER\n   riemann_inequality_curve\
+  \ (ChiCurve.lean:183), which imports Challenge.lean and would create\n   an import\
+  \ cycle;\n * a PicRepDatum k k C from DAT-G;\n * DJ-3, the Challenge.lean discharge,\
+  \ gated on a real jacobianData term.\n\nJacobianData now has SEVEN producers (ofRepresentableBy\
+  \ :71, ofCharts :182,\nofChartsOfCompactSpace :199, ofAbelImage, ofChartsOfAbelImage,\
+  \ ofAbelLifts,\nofChartsOfAbelLifts) plus the two PicRepDatum entry points. The\
+  \ atlas is NOT finite, so aim at\none of the ofCharts* forms.\n"
 status: pending
 kind: proof
 priority: normal
@@ -42,7 +50,7 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:11.223347+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-28T08:07:33.960711+00:00'
+  updated_at: '2026-07-28T11:36:24.081978+00:00'
   milestone: w4-tail
   owner: ajcr-divrep
   pinned_commits:

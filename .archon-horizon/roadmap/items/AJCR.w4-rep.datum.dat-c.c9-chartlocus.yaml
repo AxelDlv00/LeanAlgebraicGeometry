@@ -2,30 +2,58 @@ id: AJCR.w4-rep.datum.dat-c.c9-chartlocus
 title: 'C9 chartLocus: the sole gate of dat-b B-6 AND the whole dat-glue assembly'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'SPLIT 2026-07-26 (run 0048 round 2) into c9a (DONE) and c9b (blocked), after
-  the row''s
-
-  "first action" -- decide what chartLocus is and write the definition -- was carried
-  out.
+summary: 'SPLIT 2026-07-26 into c9a (DONE) and c9b (blocked). CHART-U(a)/(b) are DONE
+  (leaf chart-u).
 
 
-  c9a: `chartLocus` is now DEFINED and OPEN, at the parameter-space carrier level,
-  indexed by
-
-  a Picard class rather than a chosen datum.  Certificate-free and divRep-free.
-
-  c9b: f_c and the (f, hf) pair.  CERT-Sigma-gated, not merely divRep-gated.
+  STATE 2026-07-28 (run 0072 s0006, lane ajcr-charts):
 
 
-  CORRECTION TO THIS ROW''S OWN OLD TEXT: the claim that C9 "gates dat-b B-6 AND the
-  entire
+  c9a: chartLocus DEFINED and OPEN at the parameter-space carrier level. Certificate-free,
 
-  dat-glue, and is completely independent of the DD-R certificate lane, so it can
-  run in
+  divRep-free.
 
-  parallel" is HALF right.  c9a is independent and has run.  c9b is not: its deliverable
 
-  needs the universal family.  Do not brief a lane on the old text.
+  chart-u: DONE. Its residue IsChartDatumPresentation now has its REVERSE HALF landed
+  --
+
+  isSplitWitness_of_presenting_witness_self (Picard/Pic0ChartTwistSplit.lean), the
+  trivial
+
+  splitting L := K, which memory I-0564 had recorded as unelaborable. That record
+  is RETRACTED
+
+  IN PART: positional introduction of IsSplitWitness works once the existentials are
+  STAGED
+
+  (eight refine Exists.intro, default heartbeats). The five variants I-0564 measured
+  all hand
+
+  the twelve components to ONE anonymous constructor, and those do time out. Do NOT
+  restate
+
+  IsSplitWitness with one curve spelling -- that was the old suggested fix and it
+  refactors a
+
+  co-signed definition for a tactic-level problem.
+
+
+  c9b: f_c and the (f, hf) pair. STILL the deliverable proper and still CERT-Sigma-gated;
+  the
+
+  composition half of hf is landed (Pic0ChartPair.lean), the mathematics is CHART-U(c).
+
+
+  WHAT THIS LANE PROVED INSTEAD THIS PASS, because c9b''s gate is real: dat-b''s B-5
+  (COV-1) is
+
+  assembled over a general test -- mem_chartLocus_of_drop, five new files, sorry-free
+  and
+
+  axiom-clean against a sorryAx control. C9 gates dat-b B-6, not B-5, and B-5 turned
+  out to be
+
+  the reachable half. See the dat-b row.
 
   '
 status: pending
@@ -50,4 +78,4 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c
-  updated_at: '2026-07-26T17:07:25.028080+00:00'
+  updated_at: '2026-07-28T11:34:22.592798+00:00'

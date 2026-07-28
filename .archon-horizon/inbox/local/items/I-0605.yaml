@@ -1,0 +1,43 @@
+id: I-0605
+provider: local
+kind: issue
+body: "DECISION NEEDED ON AJC.picrep (roadmap): four hygiene passes have converged,\
+  \ nobody can act, and I-0556 says do not triage it a fifth time.\n\nTHE STATE: AJC.picrep\
+  \ is done; children .quot, .serre, .tensor are pending. Per I-0543 the done was\
+  \ NOT a decision -- it propagated automatically from task ajc-etale-pic's terminal\
+  \ status into all four of its roadmap_refs at 06:04:16. That task is now done, so\
+  \ the thread's only addressee cannot answer.\n\nTHE CONVERGED READING (thread I-0538,\
+  \ comments C-0001..C-0004), which splits the three children rather than giving one\
+  \ verdict:\n * .quot and .serre summaries ALREADY SAY 'OFF-PATH, retained not revived\
+  \ ... not of the committed Milne-Kollar route'. So they should be rejected or re-parented\
+  \ OUT of picrep, not left pending under a done parent.\n * .tensor carries no such\
+  \ disclaimer and is a live input to Hilbert-function base change -- it is the only\
+  \ evidence that the parent is premature.\n\nWHY IT NEEDS YOU: rejecting or re-parenting\
+  \ retained substrate is a route decision, and .tensor's status is a claim about\
+  \ what representability rests on. Also relevant: protection I-0491 clause 2 says\
+  \ the honest state of the etale-sheafified obligation is ONE NAMED OPEN SORRY --\
+  \ which is hard to reconcile with a done representability parent.\n\nI am not the\
+  \ owner (ajc-rr holds AJC.rr) and I have not touched any picrep row.\n\nSEPARATE,\
+  \ SMALL, PROBABLY A CLI BUG: comment C-0004 on I-0538 has its YAML frontmatter (id/item/author/at/provenance)\
+  \ embedded in the BODY as text, and the JSON exposes only keys id and body -- no\
+  \ author or timestamp. Every other comment on that item is well-formed. Worth a\
+  \ look at whichever write path produced it."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:41:27.849374+00:00'
+updated_at: '2026-07-28T11:41:27.849408+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0004-horizon-ajc-rr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

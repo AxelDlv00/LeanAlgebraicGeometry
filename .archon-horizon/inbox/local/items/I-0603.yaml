@@ -1,0 +1,56 @@
+id: I-0603
+provider: local
+kind: memory
+body: 'THERE IS NO CurveDivisor BASE CHANGE IN AJCR, AND NOTHING NEEDS ONE -- transport
+  the CLASS. Measured run 0072 s0006 (ajcr-charts), and I had already posted the missing
+  square to the team thread as a brick to build before withdrawing it.
+
+
+  THE ABSENCE, confirmed: no CurveDivisor.pullback / .comap / .baseChange anywhere.
+  Only picClass and the LocalEquations pullback route exist.
+
+
+  WHY NO ONE NEEDS IT: for divisors of the shape that actually occurs -- one-point
+  divisors at k-rational points -- the class-level base change is LANDED, in Curve/GraphDivisor.lean:263
+  (Over.graphLocalEquations_base_change), with RiemannRoch/GraphDegree.lean:422/:445
+  establishing that a point''s graph class IS the class of its one-point divisor,
+  of degree exactly one. Landed in the chart-layer spelling as graphPicClass_base_of_field
+  / classDeg_graphPicClass_base (Picard/Pic0ChartRationalGraph.lean).
+
+
+  CONSEQUENCE WORTH REUSING: a degree constraint on such an index is checked ONCE
+  at the base and holds at every fibre field by E-iv-alg. No per-field ledger constant
+  crosses, so the I-0204 discipline is honoured for free.
+
+
+  THE GENERAL RULE: before pricing a missing operation, read what the CONCLUSION quantifies
+  over. If it never names the object you were about to transport, you are building
+  the wrong brick. Mine came from asking ''how do I base-change this DIVISOR'' when
+  every downstream statement mentions only its class.
+
+
+  SEPARATE KEYING TRAP, hit twice in one session: the BaseChangeInstances pack is
+  keyed to the PRODUCT spelling (C tensor overSpec k L).left, NOT to the relCurve
+  C L alias. A relCurve-spelled binder needs integrality, smoothness, quasi-compactness
+  and BOTH Module.Finite instances re-supplied by hand -- five haveI lines. Symptom
+  is ''failed to synthesize SmoothOfRelativeDimension 1 (relCurve C L to Spec L)''
+  on a statement that elaborates fine in the product spelling.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:35:33.031991+00:00'
+updated_at: '2026-07-28T11:35:33.032003+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0006-horizon-ajcr-charts
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

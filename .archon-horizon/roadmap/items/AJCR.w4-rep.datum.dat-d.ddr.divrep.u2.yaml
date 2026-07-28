@@ -3,50 +3,54 @@ title: 'U2: the DDR9-U epsilon-identity at the universal point (the last gate of
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "U2: the DDR9-U epsilon-identity at the universal point (the last gate of\
-  \ divRep).\n\nRE-SCOPED A FOURTH TIME, 2026-07-28 (run 0071 s0004, ajcr-divrep).\
-  \ THE TWO OBLIGATIONS THIS\nROW LISTED SIDE BY SIDE ARE ONE OBLIGATION, and the\
-  \ reduction is now Lean, not a plan.\n\nThe previous summary named two things left,\
-  \ both \"genuinely needing the epsilon-identity\":\n 1. isDivRepClassify_pull (the\
-  \ second field of ofPull)\n 2. DivRepChartFamily.IsCompatible for the universal\
-  \ family\nIt is now proved that BOTH follow from a single per-chart statement, and\
-  \ there is a producer\nof the whole endpoint from that statement alone.\n\nTHE NAMED\
-  \ INTERFACE (Picard/DivRepAffPullClause.lean, sorry-free, kernel-checked, rooted):\n\
-  \  DivRepChartFamily.IsChartClause U :\n    for every chart (i,j) and every omega\
-  \ : R_Z(i,j) -> S, the chart pull\n    divRepPullAt U i j omega satisfies IsDivRepClassify\
-  \ for Spec omega >> ChartMap i j.\nThis is VERBATIM the hypothesis isCompatible_of_isDivRepClassify_divRepPullAt\
-  \ already took,\nso it is not a strengthening -- it is the same statement, named.\n\
-  \nWHAT IT NOW BUYS:\n * IsChartClause.isCompatible            -- obligation 2 (the\
-  \ old lemma, renamed)\n * isDivRepClassify_divRepPullValue      -- obligation 1,\
-  \ four lines\n * divRepAffinePullback_ofChartClause    -- a producer of DivRepAffinePullback\n\
-  \ * divFunctor_representableBy_of_chartClause -- (divFunctor C pi g).RepresentableBy\
-  \ DivOver\n\nTHE TOOL THAT MADE IT WORK, and it mentions no chart family at all:\n\
-  \  isDivRepClassify_of_forall_away -- IsDivRepClassify IS LOCAL ON THE BASE. If\
-  \ every\n  restriction of F0 to Localization.Away (f t) along a spanning family\
-  \ is classified by the\n  corresponding restriction of v, then F0 is classified\
-  \ by v.\nWhy: the clause quantifies over tower tests, so its hypothesis data AND\
-  \ its conclusion both\nrestrict; the framing over T pushes along the left leg into\
-  \ TensorProduct S T A by\nmap_window_frame_toSubmodule at the IDENTITY tower, and\
-  \ the certified representative pushes\nwith it. Once that exists, obligation 1 is\
-  \ immediate: on the t-th piece of the atlas\nfactorization the value IS the chart\
-  \ pull (divRepPullValue_spec) and the chart morphism IS\nthe restriction of v.left,\
-  \ so the chart clause IS the piecewise statement.\nSpelling hazard recorded: this\
-  \ needs TWO declarations, the overlap comparison in the\nalgebraMap spelling plus\
-  \ the cover chase consuming it by defeq. A one-declaration version\ndoes not elaborate,\
-  \ because the pullback cover's index is not Fin m on the nose.\n\nALSO LANDED THIS\
-  \ RUN: pull_naturality (divRepPullValue_naturality,\nPicard/DivRepAffPullNat.lean),\
-  \ which is epsilon-FREE and performs no gluing -- it is a\nwitness construction\
-  \ against divRepPullValue_eq_of. The predecessor summary priced it as\n\"the same\
-  \ glue machinery as pull\"; that was wrong and cost nothing to correct.\n\nSO WHAT\
-  \ IS LEFT ON THIS LEAF IS EXACTLY ONE STATEMENT: a producer of IsChartClause for\
-  \ the\nuniversal family, i.e. U2 itself. No bookkeeping, no second obligation, no\
-  \ naturality.\n\nSTANDING, unchanged and still binding:\n * U2 is NOT proved. Nothing\
-  \ in the tree produces an IsChartClause.\n * U2 remains gated on the G-4 certificate\
-  \ discharge: ThetaGeneratorSeed.certifiedFamily\n   (DivSchemeEps.lean:237) demands\
-  \ a GLOBAL IsCertified over the chart ring. The R2 widening\n   (I-0492) does not\
-  \ reach it -- cert-r2 landed DivFamZar.toAff (DivisorFamilyAffCompare)\n   but that\
-  \ maps the OLD value into the widened one, which is the wrong direction for this\n\
-  \   obligation.\n * the I-0234 windowS blocker this row used to quote is DONE. Do\
-  \ not quote it again.\n"
+  \ divRep).\n\nRE-SCOPED A FIFTH TIME, 2026-07-28 (run 0071 s0006, ajcr-divrep).\
+  \ U2 IS NOW AN EQUATION BETWEEN\nTWO MORPHISMS THAT ALREADY EXIST, and the reduction\
+  \ is proved in BOTH DIRECTIONS.\n\nPicard/DivRepChartRange.lean (sorry-free, kernel\
+  \ exit 0, rooted, axiom-clean measured against a\ncontrol that still reports sorryAx):\n\
+  \n 1. isDivRepClassify_iff_divRepClassifyZar_left_eq\n      IsDivRepClassify F0\
+  \ v  <->  (divRepClassifyZar ... F0).left = v\n    WHY, and this is the whole content:\
+  \ divRepClassifyZar is TOTAL -- defined for every locally\n    certified class over\
+  \ every affine test, with no hypotheses beyond the ambient ones -- and\n    isDivRepClassify_unique\
+  \ makes it the UNIQUE morphism satisfying the clause. So the clause is\n    not\
+  \ a property one verifies of v; it says v IS the classifier. Forward is uniqueness,\n\
+  \    backward is a rewrite. The statement names NO chart family and NO universal\
+  \ point, so it is\n    reusable by anyone holding an IsDivRepClassify obligation.\n\
+  \n 2. DivRepChartFamily.isChartClause_iff_forall_classify_eq\n      IsChartClause\
+  \ U  <->  forall i j, (divRepClassifyZar (U i j)).left = ChartMap i j\n    STATED\
+  \ AS AN IFF ON PURPOSE. I-0571 records that a restatement is only a reduction if\
+  \ the\n    converse is proved; both directions are proved here, so this is not a\
+  \ renaming. Consequence:\n    U2 carries NO residual quantifier over tower tests\
+  \ or over framings. It is a per-chart\n    equation between two morphisms Spec R_Z(i,j)\
+  \ --> DivScheme g, both of which are landed terms.\n\n 3. divFunctor_representableBy_of_chartRange\n\
+  \      (forall i j, exists F, (divRepClassifyZar F).left = ChartMap i j)\n     \
+  \   -> (divFunctor C pi g).RepresentableBy DivOver\n    Since divRepClassifyZar\
+  \ is injective on classes (eq_of_isDivRepClassify), representability of\n    divFunctor\
+  \ is EQUIVALENT to surjectivity of the classifier at every affine test. What is\
+  \ new\n    is that surjectivity AT THE CHART RINGS ALONE suffices. So the remaining\
+  \ debt is a preimage\n    under a landed map at glueData-many points, not a submodule\
+  \ computation.\n\nSO WHAT A PRODUCER OWES has changed shape, not size: exhibit,\
+  \ for each pair chart, a locally\ncertified class over R_Z(i,j) whose backward classifier\
+  \ is that chart's own map to DivScheme.\n\nSTANDING, unchanged and still binding:\n\
+  \ * U2 is NOT proved. Nothing in the tree produces a term of DivFamZar C (DivCarveChartRing\
+  \ ...) pi g.\n * The endpoint still carries hO, hchi and the ambient curve instances,\
+  \ so \"one equation\"\n   describes the DEBT, not representability for an arbitrary\
+  \ curve.\n * per the previous re-scope, U2 remains gated on the G-4 certificate\
+  \ discharge. BUT see the\n   note below: that gate should be re-measured rather\
+  \ than quoted.\n\nA GATE WORTH RE-MEASURING BEFORE QUOTING IT AGAIN. This row has\
+  \ quoted a stale blocker once\nalready (the I-0234 windowS strengthening, which\
+  \ was DONE). Two facts suggest the G-4 quote\ndeserves the same scrutiny:\n * Picard/DivSchemeCertZarSeed.lean\
+  \ already lands the relaxation: its docstring states that\n   NOTHING downstream\
+  \ of DivFamZar asks for a certificate over R itself, and\n   ThetaGeneratorSeed.divFamZar_of_forall_away_certified\
+  \ (:132) produces the DivFamZar class from\n   AWAY-LOCAL certificates only. The\
+  \ global IsCertified over the chart ring that this row cites\n   (ThetaGeneratorSeed.certifiedFamily,\
+  \ DivSchemeEps.lean:237) is exactly what that file was\n   written to avoid needing.\n\
+  \ * I-0602 (cert-r2, machine-measured) establishes the general form of the trap:\
+  \ the chart-typing\n   that divRepClassifyZar's signature APPEARS to require is\
+  \ not what its body consumes --\n   divFamEps reads only the eqns field, through\
+  \ divisorWindow, and the framing clause mentions no\n   cover, no piece and no chart\
+  \ typing.\nNeither fact PROVES the gate is stale, and this row does not claim it\
+  \ is. What it says is:\nmeasure it in Lean before spending another session treating\
+  \ it as a wall.\n"
 status: pending
 kind: proof
 priority: normal
@@ -69,7 +73,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-28T09:59:00.812311+00:00'
+  updated_at: '2026-07-28T11:36:59.995934+00:00'
   pinned_commits:
   - 0a6351e5e
   - 0b67179bb
