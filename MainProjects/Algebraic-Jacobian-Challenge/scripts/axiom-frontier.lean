@@ -712,6 +712,39 @@ So the discipline this adds to the other six: for a hypothesis quantified over a
 not stop at "is it satisfiable". Ask where the project can derive its negation. Recorded as
 I-0449/I-0454 with the machine-checked steps, and as the durable lesson I-0451.
 
+ROUND 4, and it closes this entry by invalidating rounds 1-3 AT A CURVE (task ajc-rr,
+2026-07-28, `RiemannRoch/Adelic/ChartFinitenessRefuted.lean`, sorry-free and axiom-clean).
+Every refutation above runs on the binder `[∀ D, Module.Finite k (sectionSub k U₀ D)]` at a
+NON-TOTAL open. That binder is not merely restrictive: it is UNSATISFIABLE on a curve. One
+instance at `D = 0` alone forces `K(X)/k` to be a finite extension
+(`module_finite_functionField_of_chart_finite`), and the binder is *equivalent* to that
+(`chart_finiteness_iff_module_finite_functionField`) — a statement with no cover, no chart and
+no divisor in it. Mechanism: `Γ(U,𝒪(0))` is a ring containing `Γ(X,U)`; a `k`-finite domain is
+a field; a field between `Γ(X,U)` and its own fraction field is all of `K(X)`. And `K(X)/k` is
+never finite once a single prime divisor exists, because the DVR stalk `𝒪_P` would then be a
+`k`-finite domain hence a field, while `exists_order_eq` gives an element of order `1` whose
+inverse has order `-1` (`not_module_finite_functionField_of_primeDivisor`).
+
+So `hbump` and `hledger` are OPEN at a curve, not refuted; rounds 1-3 argued about which route
+refutes them when in fact none reaches a curve. Note the scope: `IsAffineOpen U` is
+load-bearing (used once, for `chartRing_isFractionRing`), and on a proper curve `⊤` is not
+affine — so the `Module.Finite k (sectionSub k ⊤ D)` binders used throughout
+`GlobalGeneration.lean`, `LedgerClosure.lean` and `SectionBounds.lean` are UNAFFECTED. That
+asymmetry is the whole content: finiteness at `⊤` is finiteness of `L(D)`, which Riemann-Roch
+asserts; finiteness at an affine `U` is a disguised finiteness of `K(X)/k`, which is false.
+
+THE NINTH TRAP, which is what this really is, and no earlier entry covers it:
+
+  (i) a REFUTATION whose own hypotheses are unsatisfiable. It reports clean axioms exactly
+      like a useful theorem, every binder synthesises in the abstract, `#print axioms` sees
+      nothing, and it is *true*. It simply says nothing about the object you care about. This
+      is trap (c) with the sign flipped, and it is more dangerous than trap (c) because a
+      negative result is normally treated as closing a route: rounds 1-3 above, plus five
+      docstrings and a roadmap comment, told the next session to go find a better cover. There
+      is no better cover. The check is the same one trap (c) demands, applied to the
+      refutation instead of the theorem: instantiate its hypotheses at the object you actually
+      have.
+
 §2c The EIGHTH, found in the same audit and cheaper to check than any of the others: a
 hypothesis EQUIVALENT to the conclusion it is supposed to buy.
 
@@ -935,10 +968,62 @@ premise (trap (h)). -/
 #print axioms AlgebraicGeometry.Adelic.exists_bound_h1dim_eq_zero_of_charts
 #print axioms AlgebraicGeometry.Adelic.uniformlyBoundedVanishing_of_uniformChartCount
 
--- The two refutations that replaced the deleted `ChartCountsDegree` pair.  Both are
--- unconditional negative results on a cover with a prime divisor off one chart.
+-- The two refutations that replaced the deleted `ChartCountsDegree` pair.  Both are negative
+-- results on a cover with a prime divisor off one chart, under chart-finiteness binders.
+-- THEY DO NOT REACH A CURVE — see §2b round 4 and §6g.  Measured here because a clean line on a
+-- refutation is exactly as uninformative as a clean line on a vacuous theorem (trap (i)).
 #print axioms AlgebraicGeometry.Adelic.not_bump_of_notMem_left
 #print axioms AlgebraicGeometry.Adelic.ledger_refuted_of_notMem_left
+
+/-! §6g The chart-finiteness collapse (task ajc-rr, 2026-07-28) — the measurement that says the
+two lines above are about nothing, and the one place in this file where the interesting content
+is which binder is UNSATISFIABLE rather than which axiom is present.
+
+All of these are `[propext, Classical.choice, Quot.sound]`, and for once that is not the point:
+the point is what they say about the binders of §6f.
+
+  `module_finite_functionField_of_chart_finite`  — `Module.Finite k (sectionSub k U 0)` at ONE
+      nonempty affine chart forces `Module.Finite k K(X)`.  Not the whole divisor family: one
+      divisor, `D = 0`.
+  `chart_finiteness_iff_module_finite_functionField` — and conversely, so the binder IS that
+      statement.  No cover, no chart, no divisor appears on the right-hand side.
+  `not_module_finite_functionField_of_primeDivisor` — `K(X)/k` is not finite as soon as one
+      prime divisor exists.  A DVR is not a field, and finiteness over `k` would make `𝒪_P` one.
+  `not_chart_finite_of_primeDivisor` — hence the binder holds at NO chart of such a curve.
+
+Consequences for this file's own claims, stated because several were wrong:
+ * §6f called the two refutations "unconditional negative results". They are unconditional in
+   *exactness data* only. Corrected above.
+ * "a clean axiom line on anything downstream of either is clean about a vacuous premise (trap
+   (h))" — that inference is now void for curves, since the refutations have no instances there.
+   The `hledger`-conditional results of `SectionBounds`/`BoundedVanishing`/`GlobalGeneration` are
+   NOT shown vacuous.
+ * The `⊤` binders those files use are unaffected: `IsAffineOpen U` is load-bearing in the
+   collapse and `⊤` is not affine on a proper curve.
+
+What no axiom line shows here, and it is the fifth such thing this file has had to record: that
+a hypothesis is unsatisfiable at the object of interest. Only instantiation shows it.
+
+MEASUREMENT CAVEAT, recorded rather than glossed, because §6f exists precisely to punish this.
+`ChartFinitenessRefuted` and `CurveCoheight` are NOT yet in the root roll-up
+(`AlgebraicJacobian.lean`), which task `ajc-rr` does not own. So the eight lines above are
+UNREACHABLE from `import AlgebraicJacobian` alone, and were measured by adding the two modules
+as explicit imports alongside it — the same scratch-path measurement §6f warns can differ from
+the root path in instance scope. All eight came out `[propext, Classical.choice, Quot.sound]`
+with zero elaboration errors across the whole file (156 probes, 35 `sorryAx`). Whoever owns the
+roll-up: root both modules, rebuild, and re-measure here before quoting these as root-path
+numbers. Requested on the AJC thread I-0493. -/
+#print axioms AlgebraicGeometry.Adelic.module_finite_functionField_of_chart_finite
+#print axioms AlgebraicGeometry.Adelic.chart_finiteness_iff_module_finite_functionField
+#print axioms AlgebraicGeometry.Adelic.not_module_finite_functionField_of_primeDivisor
+#print axioms AlgebraicGeometry.Adelic.not_chart_finite_of_primeDivisor
+#print axioms AlgebraicGeometry.Adelic.sectionSub_mul_mem_zero
+#print axioms AlgebraicGeometry.Adelic.algebraMap_chart_mem_sectionSub_zero
+
+-- The index-set half of the χ-ledger port (task ajc-rr): `X.PrimeDivisor ≃ {x // x ≠ η}` given
+-- the coheight bound, stated at `WeilDivisor` import level so it inverts no imports.
+#print axioms AlgebraicGeometry.Scheme.PrimeDivisor.ofNonGeneric
+#print axioms AlgebraicGeometry.Scheme.PrimeDivisor.equivNonGeneric
 
 -- §6c The rigid-pushforward gate (task ajc-gate).  THE GATE IS NOW INSTANTIATED AND THE
 -- INSTANCE IS AXIOM-CLEAN — `instHasRigidPushforwardOfCurve`
