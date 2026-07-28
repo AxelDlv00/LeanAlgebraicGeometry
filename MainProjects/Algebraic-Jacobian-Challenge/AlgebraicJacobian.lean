@@ -137,6 +137,7 @@ import AlgebraicJacobian.Picard.TangentSpaceStalkAlgebra
 import AlgebraicJacobian.Picard.TangentSpaceIdentitySection
 import AlgebraicJacobian.Picard.DualNumberUnits
 import AlgebraicJacobian.Picard.NilpotentThickeningFree
+import AlgebraicJacobian.Picard.DualNumberChartTriviality
 import AlgebraicJacobian.Picard.Pic0AbelianVariety
 import AlgebraicJacobian.Picard.FlatteningStratification
 import AlgebraicJacobian.Picard.EntryIdeal
