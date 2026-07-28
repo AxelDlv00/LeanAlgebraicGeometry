@@ -46,6 +46,11 @@ order-cone peel to `D₀' ≤ D`.  Done — and note this is *exactly* the cofin
   and it is a *degree* half-space, not an order-cone.
 * `exists_bound_subsingleton_hModule_one` — the `∃ b, ∀ D, b ≤ deg D → …` shape, which is the
   form downstream consumers ask for.
+* `subsingleton_of_h1_eq_zero`, `subsingleton_hModule_one_of_deg_ge_of_h1_eq_zero` — the entry
+  point for a caller holding the base vanishing in the *numeric* `h¹ = 0` spelling plus
+  finiteness of that `H¹`.  The `Subsingleton` form stays primitive throughout, because `h¹ = 0`
+  alone is vacuous on an infinite-dimensional `H¹`; these only convert where finiteness is in
+  hand, which is where a genus computation puts it.
 * `h0_eq_of_deg_ge`, `riemann_roch_of_deg_ge` (★★) — **exact Riemann–Roch above a degree
   bound**: `h⁰(𝒪(D)) = χ(𝒪_X) + deg D`, and its curve spelling
   `h⁰(𝒪(D)) = 1 − genus + deg D` is `RiemannRochCurve.lean`'s business, not this file's.
@@ -355,6 +360,47 @@ theorem subsingleton_of_deg_ge_of_moduleKSheaf
     haveI := h₀
     (Sheaf.HModule.mapEquiv (Scheme.divisorSheafZeroIso K (X := X)) 1).toEquiv.subsingleton
   exact subsingleton_of_deg_ge_of_zero K hzero D hD
+
+/-! ### The `h¹ = 0` entry point
+
+Every theorem above takes its base vanishing in the `Subsingleton` spelling, which is the
+strong one: `Module.finrank` reads `0` on an infinite-dimensional space, so `h¹ = 0` alone is
+strictly weaker and would make the hypotheses cheap for the wrong reason.  A caller holding
+`h¹ = 0` *together with* finiteness of `H¹` can nevertheless enter, since over a field the two
+spellings agree on finite-dimensional spaces.  This matters in practice because the numeric
+form is what the genus computations produce (`ledgerGenus C = 0`), and finiteness of `H¹` is
+exactly what `ChiCurve`/`Finiteness` discharge at a curve. -/
+
+omit [LocallyOfFiniteType (X ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (X ↘ Spec (CommRingCat.of K))]
+  [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 0)]
+  [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 1)] in
+/-- **`h¹ = 0` upgrades to the `Subsingleton` vanishing when `H¹` is finite.** The bridge from
+the numeric spelling (what a genus computation gives) to the strong spelling (what the peel
+consumes).  The `Module.Finite` hypothesis on `H¹(𝒪(D₀))` is not removable: without it
+`h¹ = 0` is vacuous.
+
+Note how little this needs — the linter found it, not me: **no** curve geometry at all beyond
+what names `divisorSheaf`.  It is the general fact that over a field `finrank = 0` and
+`Subsingleton` agree on a finite module, so the four omitted binders (properness,
+quasi-compactness, and both structure-sheaf finiteness instances) play no part. -/
+theorem subsingleton_of_h1_eq_zero {D₀ : X.CurveDivisor}
+    [Module.Finite K (Sheaf.HModule (X.divisorSheaf K D₀) 1)]
+    (h : Sheaf.h1 (X.divisorSheaf K D₀) = 0) :
+    Subsingleton (Sheaf.HModule (X.divisorSheaf K D₀) 1) := by
+  haveI : FiniteDimensional K (Sheaf.HModule (X.divisorSheaf K D₀) 1) := inferInstance
+  exact subsingleton_iff_forall_eq 0 |>.mpr (finrank_zero_iff_forall_zero.mp h)
+
+/-- **Bounded vanishing from the numeric base**: the headline with its base vanishing supplied
+in the `h¹ = 0` spelling plus finiteness of `H¹(𝒪(D₀))`.  Convenience form of
+`subsingleton_hModule_one_of_deg_ge`; the `Subsingleton` version remains the primitive. -/
+theorem subsingleton_hModule_one_of_deg_ge_of_h1_eq_zero {D₀ : X.CurveDivisor}
+    [Module.Finite K (Sheaf.HModule (X.divisorSheaf K D₀) 1)]
+    (h₀ : Sheaf.h1 (X.divisorSheaf K D₀) = 0) (D : X.CurveDivisor)
+    (hD : CurveDivisor.deg K D₀ + 1 - Sheaf.chi (X.moduleKSheaf K)
+      ≤ CurveDivisor.deg K D) :
+    Subsingleton (Sheaf.HModule (X.divisorSheaf K D) 1) :=
+  subsingleton_hModule_one_of_deg_ge K (subsingleton_of_h1_eq_zero K h₀) D hD
 
 /-- **Contrapositive, as a degree obstruction**: if `H¹(𝒪(D))` does *not* vanish while
 `H¹(𝒪(D₀))` does, then `deg D < deg D₀ + 1 − χ(𝒪_X)`.  A non-vanishing `H¹` is therefore a
