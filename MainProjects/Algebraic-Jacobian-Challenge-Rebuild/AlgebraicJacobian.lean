@@ -340,6 +340,7 @@ import AlgebraicJacobian.Algebra.SmoothPrimeRegularity
 import AlgebraicJacobian.Picard.FlatCokernel
 import AlgebraicJacobian.Picard.InvertibleModuleTransfer
 import AlgebraicJacobian.Picard.DivisorFamily
+import AlgebraicJacobian.Picard.DivisorFamilyAffCover
 import AlgebraicJacobian.Picard.DivisorFamilyExtraction
 import AlgebraicJacobian.Picard.DivisorFamilyField
 import AlgebraicJacobian.Picard.DivisorFamilyFieldDegree
