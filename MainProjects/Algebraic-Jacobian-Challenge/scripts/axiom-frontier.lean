@@ -1582,7 +1582,21 @@ What to expect from the four lines below, and read them as a *pair of pairs*:
 * `leakProbe_twistedNerve_perSigma` is clean, which is the honest statement that the twisted leaf's
   *geometric* content is done and only the cosimplicial square remains.
 
-Do not read a clean line here as "flat base change holds"; §6b's caution applies unchanged. -/
+Do not read a clean line here as "flat base change holds"; §6b's caution applies unchanged.
+
+MEASURED 2026-07-29 at HEAD, from a minimal-import scratch file rather than this whole script
+(which does not finish inside a session's budget under workspace load — see the note at the top).
+Seven declarations report `[propext, Classical.choice, Quot.sound]`:
+`isQuasicoherent_pushPullObj_coverInter`, `isIso_app_of_iso_obj`, `isIso_cechOuterBC_coverInter`,
+`isIso_cechOuterBC_nerve_obj`, `cech_pushforward_baseChange_natIso_flat`,
+`twisted_cech_nerve_per_sigma`, and `canonicalBaseChangeMap_isIso` itself.  Five report `sorryAx`,
+each correctly: `cech_flatBaseChange_oneLeaf`, `cech_flatBaseChange_qcoh`,
+`cechComplex_baseChange_iso_flat`, `twisted_cech_nerve_iso`, and the replaced
+`cech_pushforward_baseChange_natIso`.
+
+The pair `cech_flatBaseChange_oneLeaf` / `cech_flatBaseChange_qcoh` is the useful measurement: same
+statement, both leaking, but the first from ONE source and the second from two.  **No previously
+contaminated declaration became clean**, and nothing here should be read as claiming otherwise. -/
 
 noncomputable def leakProbe_bcNatIso_flat {S S' X X' : Scheme.{u}}
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
