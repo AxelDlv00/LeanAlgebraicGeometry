@@ -11,7 +11,8 @@ import AlgebraicJacobian.Albanese.SymPowAffineCarrier
 
 This file writes the composition that `Albanese/SymPowAffineCarrier.lean`'s Scope section named
 as the one thing still separating the two named ends of the affine picture, and that
-`Albanese/SymPowColimit.lean` §5 flags in bold as "**The carrier is not named in Lean.**"
+`Albanese/SymPowColimit.lean` §5 flagged in bold as "**The carrier is not named in Lean.**"
+With this file that caveat is discharged; §5 now records it as deleted rather than standing.
 
 Three landed results, none of which was enough alone:
 
@@ -231,14 +232,23 @@ The colimit of the `S_n`-action on `(Spec_k A)^n` — the very diagram
 `SymPowColimit.symPowData_affineAlgebra` takes a colimit of — is `Spec_k` of the invariant
 subalgebra `(A^{⊗ n})^{S_n}`.
 
-This is what `SymPowColimit.lean` §5's bold caveat "**The carrier is not named in Lean**" asked
-for, and unlike the `HasColimit` statement above it is not obtainable from cocompleteness: it is
+This is what `SymPowColimit.lean` §5's former bold caveat "**The carrier is not named in Lean**"
+asked for, and unlike the `HasColimit` statement above it is not obtainable from cocompleteness: it is
 an equation between the anonymous colimit and a named object, so it needs both
 `permDiagramIsoTransportedAction` (this file) and `fixedCoconeUnderIsColimitOp`
 (`SymPowInvariantsUnder`).
 
 Two colimits of isomorphic diagrams, composed with `whiskerEquivalence` to absorb the
-index-category transport. -/
+index-category transport.
+
+**Checked that this is not free, after the `hasColimit` lesson above.** Generic uniqueness of
+colimits relates two colimits *of the same diagram*, and the invariants cocone is a cocone on
+`transportedActionDiagram`, not on `permDiagram` — so the argument would collapse only if those
+two diagrams were definitionally equal. They are **not**: `rfl` between them fails
+("`transportedActionDiagram k A n` is not definitionally equal to
+`permDiagram (op (mkUnder k A)) n`"), measured. So `permDiagramIsoTransportedAction` is
+load-bearing, and unlike `hasColimit_permDiagram_op_mkUnder` this theorem is not reachable
+without the two object comparisons it composes. -/
 noncomputable def colimitPermDiagramIsoFixed :
     letI := permMulSemiringAction (k : Type) (ι := Fin n) A
     letI := permSMulCommClass (k : Type) (ι := Fin n) A
