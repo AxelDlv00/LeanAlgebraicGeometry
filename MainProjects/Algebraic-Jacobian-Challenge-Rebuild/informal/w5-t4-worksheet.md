@@ -791,9 +791,14 @@ already in its closure. So the assembly module is a fresh leaf; no import invers
 negotiate (contrast the `rr.principal` situation, which was blocked by exactly that).
 
 **Order to work in**, cheapest diagnostic first:
-1. Confirm each thickened chart `V s` of `C_ε` is an **affine open** — this is the one fact the
-   route needs about the *geometry*, and `AffineTwoCover` should supply it. If it does not,
-   stop and say so: everything downstream assumes it.
+1. ~~Confirm each thickened chart `V s` of `C_ε` is an **affine open**.~~ **ALREADY LANDED — do
+   not build it.** `relCover C R D : (relCurve C R).AffineTwoCover`
+   (`Cohomology/RelativeTwoCover.lean:128`) is the base-changed two-cover for *any* test ring
+   `R`, defined as `D.pullbackProd R`, with `relCover_isAffineOpen₀ / ₁` and `relCover_sup`
+   beside it. Instantiate at `R := DualNumber k`; note `relCurve C R` is *by definition*
+   `(C ⊗ overSpec k R).left`, which is the carrier the ε-kernel already lives on. The
+   `AffineTwoCover` structure also carries `isAffineOpen_inf`, so the **overlap** is affine
+   too — which the affine dictionary needs and which a hand-rolled cover would have owed.
 2. `cechPicEquivPic` at `V s` to land in `CommRing.Pic Γ(V_{s,ε})`, then clause (ii)
    `baseChangeAlgEquiv` to rewrite `Γ(V_{s,ε}) ≅ Γ(V_s)[ε]`.
 3. Clause (i) `free_of_cyclic_mod_eps` for freeness. **Note its shape before planning:** it wants
