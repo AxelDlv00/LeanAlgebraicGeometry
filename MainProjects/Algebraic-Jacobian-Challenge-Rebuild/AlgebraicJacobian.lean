@@ -428,7 +428,6 @@ import AlgebraicJacobian.Picard.DivRepGlobalLift
 import AlgebraicJacobian.Picard.DivRepGlobalClassify
 import AlgebraicJacobian.Picard.DivRepAwaySpanGlue
 import AlgebraicJacobian.Picard.DivRepAffPullGlue
-import AlgebraicJacobian.Picard.DivRepAffPullIndep
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
 import AlgebraicJacobian.Algebra.ABDepthSES
@@ -501,6 +500,7 @@ import AlgebraicJacobian.Picard.Pic0ChartTestPoint
 import AlgebraicJacobian.Picard.Pic0ChartLocus
 import AlgebraicJacobian.Picard.Pic0ChartShiftedDatum
 import AlgebraicJacobian.Picard.Pic0ChartLocusIsOpen
+import AlgebraicJacobian.Picard.Pic0ChartPair
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivGen
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivClose
 import AlgebraicJacobian.Picard.DivSchemeUnivFibreKerSpan
@@ -520,6 +520,7 @@ import AlgebraicJacobian.Picard.DivSchemeRedesignHsubChartPin
 import AlgebraicJacobian.Picard.DivSchemeRedesignCascade
 import AlgebraicJacobian.Picard.DivSchemeRedesignFreeFlat
 import AlgebraicJacobian.Picard.DivSchemeRedesignFreeFlatChart
+import AlgebraicJacobian.Picard.DivisorFamilyAffZar
 
 /-!
 # AlgebraicJacobian — library root
