@@ -568,6 +568,10 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffFace
 import AlgebraicJacobian.Picard.DivisorFamilyAffVehicle
 import AlgebraicJacobian.Picard.DivisorFamilyAffGlueZarKit
 import AlgebraicJacobian.Picard.DivisorFamilyAffGlueZar
+import AlgebraicJacobian.Picard.DivisorFamilyAffMapKit
+import AlgebraicJacobian.Picard.DivisorFamilyAffMap
+import AlgebraicJacobian.Picard.DivisorFamilyAffFunctorCompare
+import AlgebraicJacobian.Picard.DivRepGlobalAffLift
 import AlgebraicJacobian.Picard.DivRepAffPullIndep
 import AlgebraicJacobian.Picard.DivRepAwayPush
 import AlgebraicJacobian.Picard.DivRepAffPullField
