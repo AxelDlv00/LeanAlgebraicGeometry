@@ -1021,6 +1021,16 @@ clauses**), `CertifiedDivisorFamilyAff.mapAlg`, `IsLocallyCertifiedAff.pullback`
 `DivFamZarAff.mapAlg` with the functor laws and `eq_of_away_eq`, and `DivFamZar.toAff_mapAlg`
 — so `toAff` is a map of **functors**, not merely of values.
 
+> **CORRECTED IN PART by ADDENDUM 8 (same day, session 0010).** Every declaration listed above
+> exists and the paragraph's diagnosis is right, but the closing clause over-reads it. All of
+> them are spelled at the **instance-parameterized** face `mapAlg`; the vehicle and functor
+> layer — and hence every consumer — is spelled at the **explicit-map** face `mapAlgHom`, which
+> the widened carrier did not have. So `toAff` was a map of values compatible with `mapAlg`, and
+> not yet a map of anything a consumer could receive: outside the thirteen `DivisorFamilyAff*`
+> files, `DivFamZarAff` appeared nowhere in the tree. This paragraph's own moral — *the missing
+> property is an absence, and a green build cannot see it* — applied once more to the fix for it.
+> Landed in ADDENDUM 8 §8.2.
+
 **2. The widening makes base change CHEAPER, and the reason generalises.**
 The chart-typed route reaches a piece *through* its chart: `relTermBaseChange` is freeness-based
 (over the base curve) and `pieceTermBaseChangeAlg` then localises at a generator.  An arbitrary
@@ -1161,8 +1171,101 @@ containment does not give it. Composition is checked by the elaborator here.
 
 ### 7.5 What is left
 
+> **SCOPE CORRECTED by ADDENDUM 8 (same day, session 0010):** "exactly one statement" is a claim
+> about the **certificate**, and as such it stands. It is not true of the lane, which also owed
+> the widened carrier's explicit-map face and its vehicle/functor layer — measured absent, now
+> landed (§8.2) except for `divFamZarAff.map` along an arbitrary test morphism. Read §8.3 for
+> the two-item residue.
+
 **Exactly one statement:** the subordinate Stacks `0B8B` input — an affine open `W` containing
 `supp D` and contained in one member of `d.cover`. I-0492 clause 2 directs the lane to USE it,
 not re-derive it; mathlib has no form of `0B8B` and this tree constructs no curve but `P¹`. The
 degree datum `hrank` is not a *missing* input in the same sense: it is the honest content of
 "the divisor has degree `n`", and it is now stated at the one affine open where the divisor is.
+
+## ADDENDUM 8 (2026-07-28, run 0070 session 0010) — the widened carrier had NO EXPLICIT-MAP FACE, so nothing could consume it (BINDING; corrects ADDENDUM 5 §5.7, ADDENDUM 6 item 1 and ADDENDUM 7 §7.5)
+
+ADDENDUM 6 item 1 recorded, correctly and self-critically, that `DivFamZarAff` had no
+base-change layer, listed the four files that fixed it, and concluded "so `toAff` is a map of
+**functors**, not merely of values". ADDENDUM 7 §7.5 then reported the lane's residue as
+**exactly one statement**, the subordinate `0B8B` input.
+
+Both were measured on the certificate side and both are correct there. Neither was measured on
+the **consumer** side, and on that side the situation was this:
+
+> Outside the thirteen `Picard/DivisorFamilyAff*.lean` files, the string `DivFamZarAff` appeared
+> **nowhere in the tree**.
+
+### 8.1 The defect: one operation, two faces, and the consumers use the other one
+
+A carrier that base-changes in this project has *two* faces of the same operation:
+
+* the **instance-parameterized** face `mapAlg`, taking `[Algebra R R'] [IsScalarTower k R R']`;
+* the **explicit-map** face `mapAlgHom`, taking a bare `(φ : A →ₐ[k] A')`.
+
+`DivFamZarAff` had the first and not the second. The two are interderivable in a few lines
+(`mapAlgHom` is `mapAlg` at `RingHom.toAlgebra` of the map; the bridge back is one
+`Algebra.algebra_ext`), which is exactly why the gap survived: every audit of the widened
+base-change layer compared it to the chart-typed one **by name**, and by name the S5b list was
+complete.
+
+The consumers cannot use the instance face. `divFamZar` (`Picard/DivisorFamilyZarVehicle.lean`)
+indexes its compatibility condition by the section-restriction maps `Over.resAlgHom T h`, which
+are bare `AlgHom`s carrying **no** tower instance; `divFunctor`
+(`Picard/DivisorFamilyZarFunctor.lean`) is built on that vehicle, and `DivRepGlobalData`
+(`Picard/DivRepKit.lean`) is stated against `divFamZar` and `divFamZar.map`. So the entire
+consumer stack is spelled at `mapAlgHom`, and until the widened carrier had that face there was
+no widened vehicle, no widened functor, and no statement a consumer could be given.
+
+**The honest reading of `cert-assemble` before this session:**
+`divFamZarAff_of_forall_prime_certified_adaptation` produced a class **at an affine test**, and
+nothing carried it to a general one.
+
+### 8.2 What landed
+
+* `Picard/DivisorFamilyAffFace.lean` (`ed13f29a1`) — `DivFamZarAff.mapAlgHom` with
+  `mapAlgHom_id`, `mapAlgHom_comp`, the face-change bridge `mapAlg_congr` /
+  `mapAlgHom_eq_mapAlg` (usable in both directions), `picClass_mapAlgHom`, `congr`, and
+  `DivFamZar.toAff_mapAlgHom`.
+* `Picard/DivisorFamilyAffVehicle.lean` (`2a1e05623`, `a5c5ca3e9`) — the widened affine-opens
+  limit `divFamZarAff C n T` with its section API, the affine comparison
+  `divFamZarAffAffineEquiv C n R : divFamZarAff C n (overSpec k R) ≃ DivFamZarAff C R n`, and
+  the vehicle-level comparison `divFamZarToAffVehicle` with
+  `divFamZarAffAffineEquiv_toAffVehicle`.
+
+All sorry-free, axiom-clean against a `sorryAx` control, rooted, `lake env lean` exit 0.
+
+The affine comparison is the load-bearing one: the certificate lane's endpoint lands in its
+right-hand side, so it is the step that carries a widened certificate into a vehicle.
+
+`[IsProper C.hom]` is carried on both files rather than hidden. The widened `mapAlg` needs it
+(§ADDENDUM 6 item 3: an arbitrary affine open's overlaps are not affine by fiat), and it is a
+hypothesis this lane has everywhere, so it costs no generality — but it is one of the things
+I-0492 clause 4(ii) warns the old typing supplied silently, so it is stated.
+
+### 8.3 The residue, restated honestly
+
+ADDENDUM 7 §7.5's "exactly one statement" was a claim about the **certificate**, and it stands
+as such. The lane's residue as a whole is now **two** items, of quite different kinds:
+
+1. the subordinate Stacks `0B8B` input, unchanged, out of scope per I-0492 clause 2;
+2. `divFamZarAff.map` along an **arbitrary morphism of test objects**, plus the functor
+   packaging `divFunctorAff` on top of it. This is what `DivRepGlobalData.pull_comp` consumes,
+   and it is *not* a restatement of (1): it is the widened analogue of
+   `Picard/DivisorFamilyZarMap.lean`, whose input is the widened Zariski **gluing** keystone
+   (`DivFamZar.exists_glue_of_away_compat`, `Picard/DivisorFamilyZarGlue.lean`) at the widened
+   carrier. That keystone's argument is entirely about the Zariski cover of the **base**, which
+   R2 did not touch — the cover datum appears only inside the opaque `mapAlg` — so it should
+   port the way `IsLocallyCertifiedAff.pullback` ported. Priced as a port, not as mathematics;
+   not yet measured.
+
+### 8.4 The generalisable lesson
+
+**Diff a replacement type's API by FACE, not only by name**, and measure the absence *outside*
+the new type's own cone. The cheap check is one grep: the name of the new carrier, outside the
+files that define it. Zero hits means the replacement is an island however complete its own
+layer looks, and a green sorry-free build cannot see it — the missing thing is an absence.
+
+Recorded as inbox memory `I-0617`. This is `I-0592` ("a new type needs its old API") with a
+sharper edge: `I-0592` says diff the API, and this says a *name-level* diff reads as complete
+precisely when one **face** is missing, because the two faces live under different names.
