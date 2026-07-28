@@ -1405,9 +1405,30 @@ noncomputable def leakControl_qcohRoute_oldRoute {S S' : Scheme.{u}} (g : S' ⟶
       ≅ (Scheme.Modules.pullback g).obj (K.homology i) :=
   pullback_mapHC_homologyIso g K i
 
+/-- **NON-VACUITY WITNESS** for the two hypothesis-carrying probes above, per trap (c)/(d) of the
+workspace catalogue: a clean axiom line proves nothing if the hypotheses cannot be satisfied.
+`leakProbe_qcohRoute_kernel` carries `A.IsQuasicoherent`, `B.IsQuasicoherent` as *named*
+hypotheses and `[Flat g]`, `[IsAffine S]`, `[IsAffine S']` as instance binders — all four kinds
+that the catalogue records as invisible to `#print axioms`.
+
+So here the theorem is FIRED, at objects that exist: `A = B = M^~` over `S = S' = Spec R` (the
+tilde of any `R`-module is quasi-coherent, `AlgebraicGeometry.tilde` instance), with the map the
+identity and `g` a `Spec` of a flat ring map.  If the hypotheses were unsatisfiable — or the
+statement vacuous — this would not elaborate.
+
+Note what this does and does not do: it witnesses *satisfiability*, not strength.  The strength
+claim rests on `leakProbe_qcohRoute_*` versus `leakControl_qcohRoute_oldRoute`; `g` being an
+identity-like `Spec` map here would be the wrong argument for *that* comparison (§6b). -/
+theorem leakWitness_qcohRoute_nonvacuous {R R' : CommRingCat.{u}} (φ : R ⟶ R')
+    (hφ : φ.hom.Flat) [Flat (Spec.map φ)] (M : ModuleCat.{u} R) :
+    Limits.PreservesLimit (Limits.parallelPair (𝟙 (tilde M)) 0)
+      (Scheme.Modules.pullback (Spec.map φ)) :=
+  leakProbe_qcohRoute_kernel (Spec.map φ) (𝟙 (tilde M)) inferInstance inferInstance
+
 #print axioms leakProbe_qcohRoute_kernel
 #print axioms leakProbe_qcohRoute_homologyIso
 #print axioms leakProbe_qcohRoute_coneCancel
 #print axioms leakControl_qcohRoute_oldRoute
+#print axioms leakWitness_qcohRoute_nonvacuous
 
 end AlgebraicGeometry
