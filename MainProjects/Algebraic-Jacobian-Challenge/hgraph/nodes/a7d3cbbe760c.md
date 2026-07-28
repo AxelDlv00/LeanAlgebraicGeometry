@@ -24,12 +24,12 @@ docstring: '**The two order functions agree** (★): the ported ledger''s `ordZ`
 
 
   The sign conventions agree with no correction term.'
-file: AlgebraicJacobian/RiemannRoch/Ledger/PrincipalCompare.lean
+file: AlgebraicJacobian/RiemannRoch/Ledger/OrdCompare.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.ordZ_toAdd_eq_log_ordFrac
 type: lean
-updated: '2026-07-28T19:06:13'
+updated: '2026-07-28T19:26:15'
 ---
 theorem Scheme.ordZ_toAdd_eq_log_ordFrac (f : X ⟶ Spec (CommRingCat.of K))
     [SmoothOfRelativeDimension 1 f] [IsIntegral X] [IsLocallyNoetherian X]

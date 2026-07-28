@@ -4,10 +4,30 @@ title: 'DAT-B: coverage + injectivity — every $\mathrm{pic}^0$ point is Zarisk
   lane'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Coverage-drop, separably-closed points, divisor-family field surjectivity,
-  local chart openness, and fibre-field invariance are landed. Remaining B5/B6/chart-locus
-  packaging is divRep/C9-gated; keep this milestone pending until the DD-R quotient
-  and divRep consumers are available.
+summary: "DAT-B: coverage + injectivity. Injectivity is LANDED (worksheet §0.4/§2,\
+  \ consumed not proved).\nCoverage (COV-1 = B-5) is now ASSEMBLED over a general\
+  \ test, 2026-07-28 run 0072 s0006.\n\nWHAT LANDED THIS PASS (five files, all sorry-free,\
+  \ all axiom-clean measured against a sorryAx\ncontrol; Picard/Pic0Chart{TwistSplit,CoverageDegree,RationalGraph,CoverageFibre,CoverageTest}.lean):\n\
+  \n  mem_chartLocus_of_drop -- for a point t of an ARBITRARY test T and any plus\
+  \ class lam:\n  a splitting of the fibre class at kappa(t), a divisor W0 in the\
+  \ twisted class over the\n  splitting field of degree g+e with vanishing H1, and\
+  \ the admissible point oracle, give\n  t in chartLocus C m Z lam TOGETHER WITH the\
+  \ h0 = 1 normalisation.\n\nSteps 1, 2, 4, 5, 6 of worksheet §1.2 are discharged.\
+  \ The satisfiability of the hypothesis\npack was CHECKED (it instantiates at the\
+  \ trivial splitting L := kappa(t) with every instance\nsynthesised), not assumed\
+  \ -- this lane has shipped a vacuous statement before.\n\nWHAT REMAINS OF B-5 IS\
+  \ STEP 3 ALONE: choosing the twist exponent m against the FIBRE'S OWN\nDAT-0a bound.\
+  \ No formulation can produce it for the caller -- b_L is per-fibre and provably\n\
+  does not transport across k -> kappa(t) (I-0204, worksheet §0.2.2) -- so it appears\
+  \ as the\nhypothesis \"a W0 of degree g+e with h1 = 0 exists\". Honest rather than\
+  \ hidden.\n\nTWO CORRECTIONS TO THE WORKSHEET, both in it now: step 6 hid a TYPING\
+  \ gap (the chart index\nlives on the BASE curve, the drop's divisor over L), and\
+  \ the natural repair was the wrong\nobligation. There is NO CurveDivisor base-change\
+  \ operation anywhere in the tree, and none is\nneeded: everything downstream mentions\
+  \ only the CLASS, and the class-level base change of a\nrational point's one-point\
+  \ divisor is the landed graph square (Curve/GraphDivisor.lean:263 +\nRiemannRoch/GraphDegree.lean:422/:445).\
+  \ Never transport a coefficient function.\n\nB-6 (the IsLocallySurjective instance\
+  \ + DAT-glue handoff) still waits on divRep through C9b.\n"
 status: pending
 kind: proof
 priority: normal
@@ -21,5 +41,12 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:09.039287+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-26T06:43:25.376285+00:00'
+  updated_at: '2026-07-28T11:32:31.018865+00:00'
   milestone: w4-tail
+  owner: ajcr-charts
+  pinned_commits:
+  - bb9ff83fc
+  - bcae33ba3
+  - a54e27a21
+  - aa870245e
+  - 60e01af8f

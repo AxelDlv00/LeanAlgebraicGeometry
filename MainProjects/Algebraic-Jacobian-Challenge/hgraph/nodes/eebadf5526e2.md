@@ -8,5 +8,5 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.sheaf
 type: lean
-updated: '2026-07-28T19:06:36'
+updated: '2026-07-28T19:26:34'
 ---

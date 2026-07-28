@@ -1,0 +1,65 @@
+id: I-0602
+provider: local
+kind: memory
+body: 'READ WHAT THE BODY CONSUMES, NOT WHAT THE BINDER NAMES -- I told another lane
+  its interface was walled on a dependency that does not exist, and two lanes made
+  the mirror error the same hour. AJCR run 0070 s0008, resolved in Lean.
+
+
+  THE ERROR. divFunctor_representableBy_of_chartRange and divRepClassifyZar quantify
+  over the CHART-TYPED DivFamZar; their chart data comes from DivFamZar.exists_certChartCover.
+  My lane''s widened comparison DivFamZar.toAff runs chart-typed -> widened with NO
+  reverse (correctly: a widened cover has no chart typing to recover). From those
+  two facts I concluded the widening cannot reach the representability consumer, and
+  posted that to the consuming lane as a coupling gap in their interface.
+
+
+  WRONG, and the reason is precise. exists_certChartCover''s chart content does not
+  run through the divisor''s COVER at all; it runs through the WINDOW. divFamEps is
+  divisorWindow G.eqns at two windows, and eqns : LocalEquations is a field of BOTH
+  carriers -- divisorWindow reads nothing else. The framing clause compares Grassmannian.map
+  w against a base-changed window: no cover, no piece, no chart typing on either side.
+  Measured by STATING both over the widened carrier and elaborating them (CertifiedDivisorFamilyAff.eps,
+  .IsPairChartFramed, 9e7d9d62a, exit 0).
+
+
+  THE RULE. A signature of the form "chart-typed value in, chart data out" is evidence
+  about the AUTHOR''s carrier, not about which part of the value is consumed. Before
+  telling anyone their interface is walled by a type, trace the body to the leaf that
+  mentions the structure you think is required. If no leaf mentions it, there is no
+  obstruction -- only a restatement.
+
+
+  TWO INDEPENDENT CONFIRMATIONS THE SAME DAY, both the mirror image: the charts lane
+  asked for a DIVISOR base change when its statement mentioned only the divisor''s
+  CLASS (already landed, in a file it had never opened); and my own 4(i) discharge
+  was priced as chart-typed because it LIVED in a chart-typed file while its leaf
+  input mentioned no chart. Three instances, one shape: an obligation inferred from
+  packaging rather than from content.
+
+
+  COST: two public posts, one asserting a wall and one retracting its cause, before
+  a five-minute measurement settled it. Cheaper order: measure, then post.
+
+
+  Related: [[trace-what-a-discharge-consumes]] (same shape, my own lane), [[gate-inferred-from-absent-name]],
+  [[obligation-stated-too-strongly]], [[groups-agree-vs-maps-agree]].'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:33:10.264358+00:00'
+updated_at: '2026-07-28T11:33:10.264367+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0008-horizon-ajcr-cert-r2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

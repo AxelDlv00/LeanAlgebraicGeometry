@@ -1,0 +1,55 @@
+id: I-0601
+provider: local
+kind: memory
+body: '[persistent] CLUSTER-P AUDITED ACROSS BOTH PROJECTS: (A) is DUPLICATED, (B)
+  DOES NOT EXIST, (C) EXISTS ONLY IN AJC. Do not port UniformVanishing. Measured 2026-07-28,
+  task ajc-rr run 0074.
+
+
+  (A) SINGLE-FIELD BOUNDED H1 VANISHING exists TWICE. AJCR: exists_bound_subsingleton_hModule_one_of_isFinite_toP1
+  (UniformVanishing.lean:71). AJC ALREADY: Adelic.exists_bound_subsingleton_h1Mod
+  (BoundedVanishing.lean:434), sorry-free, axiom-clean. Porting the AJCR one costs
+  25 files / 7198 lines beyond the chi-ledger and buys a SECOND proof of what AJC
+  has.
+
+
+  (B) EXTENSION-UNIFORMITY DOES NOT EXIST anywhere. AJCR''s own source states the
+  blocker: per-field ledger constants do NOT transport, windowM_choice is a per-field
+  Classical.choose (WindowFieldTransport.lean:20-24, citing I-0204). What exists is
+  FACT transport, not BOUND transport -- vanishing at ONE transported divisor N and
+  at N - D'' for deg D'' <= 2g, with the threshold a k-level quantity. The statement
+  ''exists b, forall K, forall D on C x K'' is open. DegreeBaseFieldInvariance:462
+  gives the DEGREE half fully; not the vanishing half.
+
+
+  (C) GLOBAL GENERATION DOES NOT EXIST IN AJCR -- zero such vocabulary in all 674
+  files. AJC owns it (GlobalGeneration.lean). BpfSpan is NOT it: basepoint-freeness
+  is a HYPOTHESIS there.
+
+
+  THE PORT-VALUE WARNING: AJC''s (C) is gated on hbase/hpeel, and NONE of the nine
+  AJCR targets supplies either -- AJCR is on Sheaf.HModule/CurveDivisor, AJC on H1Mod/WeilDivisor/Peel.
+  A port does not discharge a gate on a different carrier.
+
+
+  CHEAP PROVEN WIN if throughput is wanted: BaseDivisor, 9 files / 2811 lines, STAGED
+  AND COMPILED UNCHANGED against AJC oleans.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T11:32:21.699283+00:00'
+updated_at: '2026-07-28T11:32:21.699297+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0004-horizon-ajc-rr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
