@@ -969,12 +969,25 @@ why the widened `DivFamZarAff` carries no hypothesis on `|P¹(k)|` anywhere.
 
 ### 5.7 What remains on this lane
 
-1. **The comparison** `CertifiedDivisorFamily → CertifiedDivisorFamilyAff`. The COVER half is
-   landed sorry-free (`FinCoverData.toAffCoverData`) and (c1) transports pointwise;
-   (c2)/(c3)/(c4) need an equalizer transport along `Fin m₀ ⊕ Fin m₁ ≃ Fin (m₀+m₁)` commuting
-   with `deltaLeft`/`deltaRight`, plus `rankAtStalk` invariance. ~100 lines, no clause
-   changes, only the index. Nothing downstream needs it; it matters only for REUSING a
-   chart-typed certificate.
+1. **The reindexing transport is LANDED**, and the estimate first written here (~100 lines of
+   equalizer transport commuting with `deltaLeft`/`deltaRight` plus `rankAtStalk` invariance)
+   was wrong by an order of magnitude — corrected in `Picard/DivisorFamilyAffReindex.lean`.
+   Define the reindexed cover so its pieces are *definitionally* `D.pieces (e j)`; then
+   `colength`, `ovlColength`, `toOvlLeft` and `toOvlRight` are all `rfl` at `(e i, e j)`,
+   because reindexing acts **diagonally** on the pair index. `mem_gluedSubmodule_reindex_iff`
+   then follows from the existing `mem_gluedSubmodule_iff` with no intertwining lemma, and
+   `chartProdCongr` is just `LinearEquiv.piCongrLeft`. `FinCoverData.toAffCoverData` already
+   has that shape (`pieces := D.pieces (finSumFinEquiv.symm j)`).
+   Generalisable lesson: before writing a transport lemma for a kernel or equalizer along an
+   index bijection, check whether the reindexed data can be made definitionally the original
+   at the relabelled index. One negative result recorded in the file: the `Submodule.comap`
+   spelling does NOT elaborate, since `Submodule R (A.reindex e).chartProd` needs the
+   section-ring algebra instances to unfold through the reindexed cover and instance search
+   does not get there; use the membership-iff form.
+   What is still *not* assembled is the full `CertifiedDivisorFamily → CertifiedDivisorFamilyAff`
+   packaging on top of it — the pieces are all present and it is now bookkeeping, not
+   mathematics. Nothing downstream needs it; it matters only for REUSING a chart-typed
+   certificate.
 2. **`away-kerspan` is CONFIRMED a real obligation, not an artifact.** `cert-collapse` was
    tried first, as its node instructed, and the answer is negative: `deltaSub_apply_diag`
    shows every diagonal component of the difference arrow vanishes identically, so (c4)
