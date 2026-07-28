@@ -472,6 +472,7 @@ import AlgebraicJacobian.Tangent.TwoChartQuotientNaturality
 import AlgebraicJacobian.Tangent.TwoChartSelector
 import AlgebraicJacobian.Tangent.DualNumberUnitTransport
 import AlgebraicJacobian.Tangent.DualNumberFstKernel
+import AlgebraicJacobian.AbelianVariety.RelativeDimensionLocal
 import AlgebraicJacobian.Tangent.DualNumberCarrier
 import AlgebraicJacobian.Tangent.DualNumberCarrierCoboundary
 import AlgebraicJacobian.Tangent.DualNumberCarrierReduction
