@@ -2783,6 +2783,29 @@ So the coface is "reindex the tuple by `δᵏ`, then restrict" — index-omissio
 
 Every input is a one-line composition of existing lemmas; what was missing was that they were not
 in this file's import cone.  Project-local. -/
+theorem cechNerve_backbone_δ_sigma (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules) (p : ℕ)
+    (k : Fin (p + 2)) (σ' : Fin (p + 2) → 𝒰.I₀) :
+    (pushPull_sigma_iso 𝒰 F p).hom ≫
+        Pi.π (fun τ : Fin (p + 1) → 𝒰.I₀ =>
+          pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ))))
+          (σ' ∘ (SimplexCategory.δ k).toOrderHom) ≫
+        pushPullMap F (interLegHom 𝒰 σ' k)
+      = pushPullMap F ((coverCechNerveOver 𝒰).map ((SimplexCategory.δ k).op)) ≫
+          (pushPull_sigma_iso 𝒰 F (p + 1)).hom ≫
+          Pi.π (fun τ : Fin (p + 2) → 𝒰.I₀ =>
+            pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ)))) σ' := by
+  -- Turn every σ-projection into `pushPullMap` of a summand inclusion, then use that `pushPullMap`
+  -- is contravariantly functorial: both sides become `pushPullMap F` of a composite in `Over X`,
+  -- and `backboneIncl_nerveδ` is exactly the equality of those two composites.
+  rw [← Category.assoc, pushPull_sigma_iso_π_incl, pushPull_sigma_iso_π_incl,
+    ← pushPullMap_comp, ← pushPullMap_comp, backboneIncl_nerveδ]
+
+/-- `cechNerve_backbone_δ_sigma`, with the geometric coface replaced by the nerve's own `δ`.
+
+Split from it because `CosimplicialObject C` and `SimplexCategory ⥤ C` are `rfl`-equal spellings
+that make `rw` report a motive failure ("not type-correct under `instances` transparency") when the
+coface is rewritten inside the σ-projection composite — the geometric statement carries no
+cosimplicial vocabulary, so it has no such boundary. -/
 theorem cechNerve_drop_δ_sigma (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules) (p : ℕ)
     (k : Fin (p + 2)) (σ' : Fin (p + 2) → 𝒰.I₀) :
     (pushPull_sigma_iso 𝒰 F p).hom ≫
@@ -2793,12 +2816,12 @@ theorem cechNerve_drop_δ_sigma (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.M
       = (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).δ k ≫
           (pushPull_sigma_iso 𝒰 F (p + 1)).hom ≫
           Pi.π (fun τ : Fin (p + 2) → 𝒰.I₀ =>
-            pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ)))) σ' := by
-  -- RHS: rewrite both the nerve coface and the σ'-projection into `pushPullMap` form, then the
-  -- functoriality of `pushPullMap` (contravariant) turns the composite into `pushPullMap` of
-  -- `backboneIncl (p+1) σ' ≫ geometric coface` — which `backboneIncl_nerveδ` factors.
-  rw [cechNerve_drop_δ, pushPull_sigma_iso_π_incl, pushPull_sigma_iso_π_incl,
-    ← pushPullMap_comp, ← pushPullMap_comp, backboneIncl_nerveδ]
+            pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ)))) σ' :=
+  (cechNerve_backbone_δ_sigma 𝒰 F p k σ').trans
+    (congrArg (fun m => m ≫ (pushPull_sigma_iso 𝒰 F (p + 1)).hom ≫
+      Pi.π (fun τ : Fin (p + 2) → 𝒰.I₀ =>
+        pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ)))) σ')
+      (cechNerve_drop_δ 𝒰 F k).symm)
 
 /-- **The base-changed nerve is the nerve of the base-changed data** (Stacks 02KG, the
 mechanical half). Applying `(g')^*` (at the `X`-level) to the dropped Čech nerve of
@@ -2887,6 +2910,44 @@ noncomputable def twisted_cech_nerve_iso
         (pushPull_sigma_iso ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
           h.isoPullback.symm.hom) ((Scheme.Modules.pullback g').obj F) n.len).symm)
     (fun {n m} φ => sorry)
+
+/-! ### The twisted leaf, restated as a δ-square — and what remains is stated in σ-coordinates
+
+`twisted_cech_nerve_iso` is consumed only through `alternatingCofaceMapComplex`, whose differential
+is `∑ᵢ (-1)ⁱ • δᵢ`.  So the full cosimplicial isomorphism is more than any consumer needs:
+`alternatingCofaceComplexIsoOfDelta` (above) builds the same complex isomorphism from the
+degreewise family plus **coface** compatibility.  The declarations below carry out that
+replacement, and the point of doing so is that the coface obligation is stateable in the
+σ-coordinates that `cechNerve_drop_δ_sigma` provides, whereas the general-`φ` one is not.
+
+The residue is named `twistedPerSigmaDeltaCompat` and is one equation between two composites of
+*existing* maps, with no cosimplicial vocabulary left in it: that the per-σ Beck–Chevalley
+identifications `twisted_cech_nerve_per_sigma` commute with the reindex-and-restrict description of
+the coface.  That is the honest content — the same statement the previous docstring named
+informally ("the `isoOfRangeEq` slice identifications commute with the inclusions `U_τ ⊆ U_σ`"),
+now written as a Lean equation a session can attack directly. -/
+
+/-- **The per-σ compatibility that the twisted leaf's coface square reduces to.**
+
+Read it as: base-change-then-restrict = restrict-then-base-change, for the intersection-open
+inclusion `U_{σ'} ⊆ U_{σ' ∘ δᵏ}` and its base change `U'_{σ'} ⊆ U'_{σ' ∘ δᵏ}`.  The left vertical
+maps are the per-σ Beck–Chevalley isos `twisted_cech_nerve_per_sigma`; the horizontals are the
+push–pull restrictions along `interLegHom`, pulled back along `g'` on the source side.
+
+This is stated as a hypothesis rather than proved: it is the residue of `twisted_cech_nerve_iso`,
+carved so that everything *around* it is discharged.  Both sides are composites of declarations
+that already exist and are `sorry`-free.  Project-local. -/
+def TwistedPerSigmaDeltaCompat (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [IsSeparated f] [IsAffine S]
+    [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent) : Prop :=
+  ∀ (p : ℕ) (k : Fin (p + 2)) (σ' : Fin (p + 2) → 𝒰.I₀),
+    (twisted_cech_nerve_per_sigma f g f' g' h 𝒰 F hF
+        (σ' ∘ (SimplexCategory.δ k).toOrderHom)).hom ≫
+      pushPullMap ((Scheme.Modules.pullback g').obj F)
+        (interLegHom ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+          h.isoPullback.symm.hom) σ' k)
+      = (Scheme.Modules.pullback g').map (pushPullMap F (interLegHom 𝒰 σ' k)) ≫
+          (twisted_cech_nerve_per_sigma f g f' g' h 𝒰 F hF σ').hom
 
 /-- **The cosimplicial Beck–Chevalley iso `e`** consumed by
 `cechComplex_baseChange_iso_of_cosimplicialIso`. It is the whiskered composite of the
