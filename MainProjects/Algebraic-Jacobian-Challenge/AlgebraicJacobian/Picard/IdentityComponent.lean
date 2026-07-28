@@ -1834,6 +1834,27 @@ STATE OF THE TWO DIRECTIONS (`Picard/Pic0Dimension.lean`):
   `Pic0.topologicalKrullDim_eq_genus_of_forall_ringKrullDim_stalk_le` states this
   theorem against exactly that hypothesis.
 
+  **UPDATED (run 0067 r6): the ≤ direction is now axiom-clean at `Pic⁰`, and the
+  r5 verdict that it was "genuinely absent" measured the wrong quantity.** That
+  search was for an upper bound on `ringKrullDim`; what this chapter produces is a
+  *cotangent* dimension, and
+
+  ```
+  ringKrullDim R ≤ dim_{κ(R)} (m/m²)
+  ```
+
+  holds for **every** Noetherian local ring — no regularity, no condition on the
+  residue field — by Krull's height theorem
+  (`ringKrullDim_le_spanFinrank_maximalIdeal`) composed with Nakayama
+  (`IsLocalRing.spanFinrank_maximalIdeal_eq_finrank_cotangentSpace`), both already
+  in the pinned mathlib and neither previously used here. Regularity is the case of
+  *equality*, and that `iff` was the only form the project had. So
+  `Pic0.topologicalKrullDim_le_genus_of_forall_finrank_cotangentSpace_le`
+  (`Picard/EmbeddingDimensionBound.lean` + `Picard/Pic0Dimension.lean`) is
+  axiom-clean, and what remains owed is the uniform *cotangent* bound — a statement
+  about embedding dimensions rather than about dimension theory. It also carries no
+  `[PerfectField k]`, which the r5 form did.
+
 So the *dimension-theoretic* content of Milne III.1 Rmk 1.4(e) is consumed: what
 is left is front (a) for the `≥` direction and the equidimensionality bound for
 the `≤` direction, with nothing between them and the statement. Consumers wanting

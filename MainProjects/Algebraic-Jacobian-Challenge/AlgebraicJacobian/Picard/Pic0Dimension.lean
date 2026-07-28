@@ -235,17 +235,38 @@ bound for `≤` plus front (a) for `≥`. This theorem reports `sorryAx` for the
 latter reason; only the `Picard/SchemeKrullDimStalk.lean` bridge underneath is
 axiom-clean.
 
-WHERE THE `≤` BOUND IS **NOT** AVAILABLE, measured so the next session does not
-re-search. `Albanese/StandardSmoothDimension.lean` looks like it should supply it
-and does not: its
+⚠ **RETRACTED (run 0067 r6): the paragraph that stood here concluded "the `≤`
+direction is genuinely absent rather than merely unlocated", and that was a
+measurement of the wrong quantity.** What it correctly established is only that
+`Albanese/StandardSmoothDimension.lean` has no `ringKrullDim` *upper* bound — its
 `Algebra.IsStandardSmoothOfRelativeDimension.le_ringKrullDim_of_isLocalization_atPrime`
-gives `n ≤ ringKrullDim Sₘ` — the **lower** bound, and only at a *maximal* ideal.
-Every dimension lemma in that file points the same way (`natCast_le_height_of_isMaximal`,
-`MvPolynomial.height_eq_natCard_of_isMaximal`), because the file exists to feed
-`IsRegularLocalRing.of_finrank_cotangentSpace_le_ringKrullDim`, whose hypothesis
-is a lower bound on the Krull dimension. So the `≤` direction is genuinely absent
-rather than merely unlocated, and it is absent in the direction that matters: an
-upper bound at *every* prime, not just the maximal ones. -/
+gives `n ≤ ringKrullDim Sₘ`, a lower bound at a maximal ideal, and every lemma in
+that file points the same way because it exists to feed
+`IsRegularLocalRing.of_finrank_cotangentSpace_le_ringKrullDim`. That much stands.
+
+What does not stand is the conclusion. This chapter's tangent leg produces
+**cotangent** dimensions, not `ringKrullDim`, and
+
+```
+ringKrullDim R ≤ dim_{κ(R)} (m/m²)
+```
+
+holds for *every* Noetherian local ring — no regularity, no condition on the
+residue field. `ringKrullDim_le_finrank_cotangentSpace`
+(`Picard/EmbeddingDimensionBound.lean`) composes Krull's height theorem
+(`ringKrullDim_le_spanFinrank_maximalIdeal`) with Nakayama
+(`IsLocalRing.spanFinrank_maximalIdeal_eq_finrank_cotangentSpace`); both were
+already in the pinned mathlib, and `spanFinrank` occurred in exactly one AJC file
+for an unrelated purpose. Regularity is the case of *equality*
+(`IsRegularLocalRing.iff_finrank_cotangentSpace`), which is the only form this
+project had, and the `iff` is why the inequality was never noticed.
+
+USE INSTEAD `topologicalKrullDim_le_genus_of_forall_finrank_cotangentSpace_le` and
+`topologicalKrullDim_eq_genus_of_forall_finrank_cotangentSpace_le` below: the first
+is **axiom-clean**, and both are free of `[PerfectField k]`, which this theorem
+carries. What is genuinely still owed for `≤` is the uniform *cotangent* bound —
+a statement about embedding dimensions rather than about dimension theory, and
+`SmoothOfRelativeDimension (genus C) (Pic0Scheme C).hom` would supply it. -/
 theorem topologicalKrullDim_eq_genus_of_forall_ringKrullDim_stalk_le
     {k : Type u} [Field k] [PerfectField k]
     (C : Over (Spec (.of k)))
