@@ -152,18 +152,17 @@ theorem exists_unit_nonneg_of_h0_pos (A : X.CurveDivisor)
   rw [hval] at hb
   simp only [divisorBound, WithZero.coe_le_coe, Multiplicative.ofAdd_le] at hb
   change (0 : ℤ) ≤ (toFinsupp
-    (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) (Units.mk0 g hgne))) p
+    (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) u)) p
   have hadd : (toFinsupp
-      (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) (Units.mk0 g hgne))) p
+      (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) u)) p
       = (toFinsupp A) p
-        + (toFinsupp (Scheme.divOf (X ↘ Spec (CommRingCat.of K)) (Units.mk0 g hgne))) p :=
+        + (toFinsupp (Scheme.divOf (X ↘ Spec (CommRingCat.of K)) u)) p :=
     rfl
-  have hneg : (toFinsupp (- Scheme.divOf (X ↘ Spec (CommRingCat.of K))
-      (Units.mk0 g hgne))) p
-      = - (toFinsupp (Scheme.divOf (X ↘ Spec (CommRingCat.of K)) (Units.mk0 g hgne))) p :=
-    rfl
+  -- `simp` has already stripped the `toFinsupp` wrapper off `hb`, leaving a raw application
+  -- of the `CurveDivisor`s; restate it on the `Finsupp` side by `change` rather than `rw`.
+  have hb' : - (toFinsupp (Scheme.divOf (X ↘ Spec (CommRingCat.of K)) u)) p
+      ≤ (toFinsupp A) p := hb
   rw [hadd]
-  rw [hneg] at hb
   omega
 
 /-! ## Translating the base vanishing along a linear equivalence
@@ -349,9 +348,13 @@ theorem subsingleton_of_deg_ge_of_moduleKSheaf
     (h₀ : Subsingleton (Sheaf.HModule (X.moduleKSheaf K) 1))
     (D : X.CurveDivisor)
     (hD : 1 - Sheaf.chi (X.moduleKSheaf K) ≤ CurveDivisor.deg K D) :
-    Subsingleton (Sheaf.HModule (X.divisorSheaf K D) 1) :=
-  subsingleton_of_deg_ge_of_zero K
-    ((Sheaf.HModule.mapEquiv (divisorSheafZeroIso K (X := X)) 1).toEquiv.symm.subsingleton) D hD
+    Subsingleton (Sheaf.HModule (X.divisorSheaf K D) 1) := by
+  -- `divisorSheafZeroIso : 𝒪(0) ≅ 𝒪_X`, so the transport of the vanishing runs backwards
+  -- along the induced equivalence on `H¹`.
+  have hzero : Subsingleton (Sheaf.HModule (X.divisorSheaf K (0 : X.CurveDivisor)) 1) :=
+    haveI := h₀
+    (Sheaf.HModule.mapEquiv (Scheme.divisorSheafZeroIso K (X := X)) 1).toEquiv.subsingleton
+  exact subsingleton_of_deg_ge_of_zero K hzero D hD
 
 /-- **Contrapositive, as a degree obstruction**: if `H¹(𝒪(D))` does *not* vanish while
 `H¹(𝒪(D₀))` does, then `deg D < deg D₀ + 1 − χ(𝒪_X)`.  A non-vanishing `H¹` is therefore a
