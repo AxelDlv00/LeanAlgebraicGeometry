@@ -3,27 +3,19 @@ title: 'T4 (WORKSHEET-FIRST, risk R1): the étale-plus/Zariski kernel crossing a
   — probe tonight'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'PENDING — WORKSHEET RATIFIED (informal/w5-t4-worksheet.md, route (ii): kernel-level
-  cancellation over k, uniform in K/k). Two fears are dead: the Artin-local splitting
-  needs NO henselian machinery (the thickening k[eps]->k is square-zero, so FormallyEtale.comp_bijective
-  does the whole job, and mathlib has no henselian cover-splitting anyway), and the
-  "Hilbert-90 cancellation" dissolves into the already-landed module-level Amitsur
-  exactness (Descent/ModuleDescent.lean:247), because the trunc-exp linearisation
-  happens BEFORE descent, making the descent condition additive. Five bricks T4-a..T4-e;
-  T4-a and T4-c have NO gates and launch immediately.
-
-
-  THE TARGET IS THE SEMILINEAR COMPARISON, NOT A BARE KERNEL BIJECTION (corrected
-  2026-07-28, I-0513). A set bijection of eps-kernels does not transport finrank,
-  so T5 hdim needs an ADDITIVE equivalence plus the intertwining law across kappa(e)
-  ~+* k. The finrank bridge is now landed (JacobianData.finrank_eq_of_addEquiv_of_bijective_smul,
-  commit e441cf715), so T4-e should be stated to output the additive/intertwining
-  data, not just the bijection. Getting this wrong makes a perfect kernel computation
-  still insufficient.
-
-
-  THIS IS THE ONE REMAINING TARGET OF WAVE 5: the T5 numeral, S1-a and the S3 count
-  are all consumers of this single computation.'
+summary: 'R1 RESOLVED IN THE GOOD DIRECTION: the etale-plus/Zariski crossing never
+  had to be made. Clause (iii) decomposed to (iii-a)(iii-b)(iii-c1)(iii-c2-Zar)(iii-c2-aff);
+  FOUR of the five are landed sorry-free and ALL FOUR are scheme-general with no dual
+  numbers. Landed run 0073: Scheme.twoChartClass + twoChartClass_injective (Tangent/TwoChartCechPic.lean),
+  twoChartClassHom_mk_range (Tangent/TwoChartNormalize.lean, iii-c1), twoChartClassHom_surjOn_of_chartTrivial
+  (Tangent/TwoChartRepresentable.lean, iii-c2-Zar). Plus picFromBase is TRIVIAL at
+  k[eps] (one-point space, Tangent/RelPicPointTest.lean) so the relative quotient
+  leaves the computation, with the compatibility square. RESIDUE: (iii-c2-aff) alone
+  -- an eps-kernel class is trivial on each THICKENED chart. Its three inputs (free_of_cyclic_mod_eps,
+  baseChangeAlgEquiv, cechPicEquivPic) are all landed and Opens.cechPicMap_ι_eq_one_of_cechPicClass_eq_one
+  is the exit. Worksheet informal/w5-t4-worksheet.md 6.8-6.10 carries the sizing and
+  a RETRACTION: EffectivityMoving bridges INTO chart triviality, not out of it, so
+  it belongs to (iii-c2-aff).'
 status: active
 kind: proof
 priority: normal
@@ -37,4 +29,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:45.485310+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T07:07:25.087149+00:00'
+  updated_at: '2026-07-28T09:28:05.414103+00:00'
+  owner: ajcr-w5-av

@@ -126,6 +126,69 @@ def IsChartClause
       (divRepPullAt (hpi := hpi) g r1 r2 b1 b2 U i j omega)
       (Spec.map (CommRingCat.ofHom omega.toRingHom) ≫ ChartMap i j)
 
+set_option maxHeartbeats 1600000 in
+-- The `letI` re-topologization of the tower test as a `ChartRing`-algebra makes the
+-- elaborator unify TWO algebra structures on `T` (through `omega`, and the ambient
+-- `k`/`S`-tower) while `divRepPullAt` unfolds `mapAlgHom`; the defeq check is the same
+-- profile as `divRepPullAt_awayMul_compat`, well past the default budget.
+/-- **The `ω`-quantifier of `IsChartClause` adds no strength**: it suffices to have the
+clause at the *identity point* of every chart, which is exactly U2 as the worksheet states
+it (`informal/w4-ddr9-worksheet.md` §3.1: `S = R_Z`, `ω = id`, `w = divCarveChartMk`).
+
+`IsDivRepClassify` already quantifies over all `k`/`S`-tower tests, so base-changing the
+chart point is free: retopologize a tower test `T` over `S` as a `ChartRing`-algebra through
+`ω`, and a certified representative of `divRepPullAt U i j ω` over `T` *is* one of `U i j`
+over `T`, because `divRepPullAt` is `mapAlgHom ω` and `mapAlgHom_comp` collapses the two
+restrictions.  The framing is untouched, and the conclusion transports because
+`algebraMap (ChartRing i j) T` factors as `(algebraMap S T).comp ω`.
+
+So a producer owes the identity-point statement only — the one `divUniversalFamily` is built
+to satisfy, whose left-hand side is `divUniversalFst` definitionally
+(`Picard/DivSchemeFamilyUniv.lean:72-79`).  Found by a fresh-context review of this file
+(inbox `I-0561`), which correctly observed that the interface as written advertises a *larger*
+debt than is owed.
+
+Note the curve-properness/irreducibility instances are genuinely unused here: the collapse is
+a base-change bookkeeping fact about the clause, with no curve geometry in it (the linter is
+silenced rather than `omit`-ed, because the ambient curve instances of this section are
+mutually referenced and cannot be dropped individually). -/
+set_option maxHeartbeats 1600000 in
+-- The `letI` re-topologization of the tower test as a `ChartRing`-algebra makes the
+-- elaborator unify TWO algebra structures on `T` (through `omega`, and the ambient
+-- `k`/`S`-tower) while `divRepPullAt` unfolds `mapAlgHom`; same defeq profile as
+-- `divRepPullAt_awayMul_compat`, well past the default budget.
+set_option linter.unusedSectionVars false in
+theorem IsChartClause.of_id
+    {U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
+      DivFamZar C (ChartRing i j) pi g}
+    (hid : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
+      IsDivRepClassify hpi g r1 r2 b1 b2 (U i j) (ChartMap i j)) :
+    IsChartClause (hpi := hpi) g r1 r2 b1 b2 U := by
+  intro S _ _ i j omega T _ _ _ _ GT hGT i' j' w hw1 hw2
+  -- read `T` as a `ChartRing i j`-algebra through `omega`
+  letI algCT : Algebra (ChartRing i j) T :=
+    ((IsScalarTower.toAlgHom k S T).comp omega).toRingHom.toAlgebra
+  haveI towkCT : IsScalarTower k (ChartRing i j) T :=
+    IsScalarTower.of_algebraMap_eq' (RingHom.ext fun x => by
+      rw [RingHom.comp_apply, RingHom.algebraMap_toAlgebra]
+      exact (((IsScalarTower.toAlgHom k S T).comp omega).commutes x).symm)
+  -- the same certified family represents the unpulled class over `T`
+  have hGT' : (DivFam.mk GT).toZar = DivFamZar.mapAlg T g (U i j) := by
+    rw [hGT, divRepPullAt, ← DivFamZar.mapAlgHom_eq_mapAlg
+        ((IsScalarTower.toAlgHom k S T).comp omega) (fun _ => rfl) (U i j),
+      DivFamZar.mapAlgHom_comp omega (IsScalarTower.toAlgHom k S T) (U i j),
+      DivFamZar.mapAlgHom_eq_mapAlg (IsScalarTower.toAlgHom k S T) (fun _ => rfl)]
+  -- and the chart morphism composes: `algebraMap (ChartRing i j) T = (algebraMap S T) ∘ omega`
+  have hfac : Spec.map (CommRingCat.ofHom (algebraMap S T))
+        ≫ Spec.map (CommRingCat.ofHom omega.toRingHom)
+      = Spec.map (CommRingCat.ofHom (algebraMap (ChartRing i j) T)) := by
+    rw [← Spec.map_comp]
+    rfl
+  have hmain := hid i j T GT hGT' i' j' w hw1 hw2
+  rw [← Category.assoc] at hmain
+  rw [← Category.assoc, ← Category.assoc, hfac]
+  exact hmain
+
 include hO hchi in
 /-- The clause interface gives the compatibility the `pull` field is conditional on:
 this is `isCompatible_of_isDivRepClassify_divRepPullAt` under its new name. -/
@@ -425,6 +488,26 @@ noncomputable def divFunctor_representableBy_of_chartClause
   DivRepAffinePullback.representableBy (hpi := hpi) (g := g) (hO := hO) (hchi := hchi)
     (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
     (divRepAffinePullback_ofChartClause hpi g hO hchi r1 r2 b1 b2 U hU)
+
+include hO hchi in
+/-- **Divisor representability from U2 exactly as the worksheet states it** — the form a
+producer should quote.
+
+`informal/w4-ddr9-worksheet.md` §3.1 states U2 at the *identity point* of each chart
+(`S = R_Z`, `ω = id`), and `IsChartClause.of_id` shows the `ω`-quantifier of the interface
+adds nothing.  So the whole divisor-representability chain rests on: *for each pair chart,
+the supplied chart class is classified by that chart's own morphism to `DivScheme`*.
+
+Nothing below the endpoint is left to do.  What is left is that statement, which is U2, and
+which is gated on the G-4 certificate discharge. -/
+noncomputable def divFunctor_representableBy_of_id
+    (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
+      DivFamZar C (ChartRing i j) pi g)
+    (hid : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
+      IsDivRepClassify hpi g r1 r2 b1 b2 (U i j) (ChartMap i j)) :
+    (divFunctor C pi g).RepresentableBy DivOver :=
+  divFunctor_representableBy_of_chartClause hpi g hO hchi r1 r2 b1 b2 U
+    (DivRepChartFamily.IsChartClause.of_id hpi g r1 r2 b1 b2 hid)
 
 end Clause
 

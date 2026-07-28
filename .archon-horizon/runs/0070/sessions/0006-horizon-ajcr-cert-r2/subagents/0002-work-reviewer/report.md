@@ -1,1 +1,1 @@
-A concurrent build is rebuilding the Cert olean. Let me look at the surrounding state while it finishes.
+While that runs, let me check divergence questions: whether `HasAffineOverlaps` is ever assumed without the IsProper binder downstream, and the Swallow file's role.

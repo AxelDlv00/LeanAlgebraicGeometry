@@ -1,1 +1,1 @@
-[Your previous response had no visible output. Please continue and produce a user-visible response.]
+The five cited commits are real in the ledger. But `DivisorFamilyAffExtraction.lean` has no ledger history — checking whether it's uncommitted.

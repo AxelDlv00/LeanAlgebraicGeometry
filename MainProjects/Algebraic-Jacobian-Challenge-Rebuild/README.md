@@ -28,17 +28,16 @@ which carries the full charter (target, constraints, working model, and phases).
 - `AlgebraicJacobian/Challenge.lean` — the single, reviewable **statement file**: every signature a
   reviewer must trust, and nothing else. Agents own the proofs, never these signatures.
 - `AlgebraicJacobian/` — the infrastructure that discharges the statement (added as the rebuild
-  proceeds; house limit 500 lines per file, currently exceeded by 15 files tracked in inbox
+  proceeds; house limit 500 lines per file, currently exceeded by 17 files tracked in inbox
   `I-0220`; layout mirrors the mathematical structure of the paper).
 - `AlgebraicJacobian.lean` — the library root import list, and the index of what is actually
   checked: `lake build`'s default target is this module, so a new file is **not** elaborated by a
   bare `lake build` until it is imported here. Add the import, or check the file explicitly by
-  module name. **This gap is large, not hypothetical:** measured 2026-07-28, 663 `.lean` files
-  exist under `AlgebraicJacobian/` and **594 are reachable** from the root (539 direct imports plus
-  their transitive imports), so **69** modules are never kernel-checked by a bare `lake build`.
-  Count reachability transitively, not by the root's import lines. Parallel lanes move this figure
-  hourly — re-measure rather than quoting it. An unrooted module looks green because no job runs
-  it — see roadmap row
+  module name. **This gap is large, not hypothetical:** measured 2026-07-28, 672 `.lean` files
+  exist under `AlgebraicJacobian/` and **69 are unreachable** from the root, so they are never
+  kernel-checked by a bare `lake build`. Count reachability transitively, not by the root's
+  import lines; parallel lanes move these figures hourly, so re-measure rather than quoting.
+  An unrooted module looks green because no job runs it — see roadmap row
   `AJCR.w4-rep.build-reach` (the triaged list) and inbox `I-0362` (why it bites). Check the root
   before trusting a "landed" claim.
 - `informal/` — 78 design worksheets, brick specs, and recon dumps (~27k lines). **Start from

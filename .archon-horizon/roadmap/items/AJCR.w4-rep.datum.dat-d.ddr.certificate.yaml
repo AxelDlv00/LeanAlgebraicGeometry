@@ -39,17 +39,31 @@ summary: "DECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. Bin
   \ and it is FREE for proper C (hasAffineOverlaps_of_isProper, via\nOver.isAffineOpen_inf\
   \ on the separated relative curve) and propagates along a tower. It is NOT a\nfield\
   \ of anything -- bundling it would quietly re-strengthen the widened structure.\n\
-  \nSTILL OPEN, and it is the honest residue of the whole lane: NO PRODUCER OF A DivFamZarAff\
-  \ FROM\nGEOMETRY that does not pass through the chart-typed predicate (I-0539).\
-  \ The two relocated\nobligations of I-0492 clause 4 -- fibrewise-finite support\
-  \ (hfib) and SwallowedBy -- are explicit\nin signatures as the protection demands,\
-  \ but nothing in the tree CONSTRUCTS them. Whoever builds\na widened certificate\
-  \ from an actual divisor owes both. That is a throughput gap, not an error.\n\n\
-  STANDING NEGATIVE RESULTS, all still binding: chart-avoid is NO, and the counterexample\
-  \ is\nFIELD-INDEPENDENT; no repair keeping the pieces inside preimages of a FIXED\
-  \ PAIR of P1 points can\nwork (joint-cover REJECTED); p1-aut stays pending and DEPRIORITISED,\
-  \ no consumer against it. The\nlanded finite-field-avoid work is valid mathematics\
-  \ and is not to be deleted.\n"
+  \nTHE ADAPTATION HALF OF THE PRODUCER GAP IS NOW CLOSED (321af6cb6):\n\n  exists_affAdaptation_of_isProper\
+  \ (d : LocalEquations) :\n    exists D : AffCoverData C R, Nonempty (AffAdaptation\
+  \ D d)\n\nwith NO hypothesis on d, no pi, no chart, no partition of unity. Until\
+  \ this landed, the only route\nto an AffAdaptation was FinCoverData.toAffCoverData\
+  \ then DivisorAdaptation.toAff -- i.e. THROUGH\nthe chart-typed predicate, exactly\
+  \ what R2 exists to avoid, which was the standing complaint of\nI-0539. It is short\
+  \ for the same reason the base change was: the chart-typed extraction runs the\n\
+  basic-open refinement on EACH pinned chart and glues with a per-chart partition\
+  \ of unity (those\npartitions being what I-0492 deleted), whereas widened there\
+  \ is nothing to glue -- affine opens are\na basis of any scheme, so pick one inside\
+  \ d.cover.opens z at each z and take a finite subcover.\nCompactness is free as\
+  \ well: instQuasiCompactRelCurveHom (IsProper => QuasiCompact, base-change\nstable)\
+  \ then QuasiCompact.compactSpace_of_compactSpace.\n\nSTILL OPEN, and it is now the\
+  \ WHOLE residue of the lane: the CERTIFICATE half. The two relocated\nobligations\
+  \ of I-0492 clause 4 -- fibrewise-finite support (hfib) and SwallowedBy -- are explicit\
+  \ in\nsignatures as the protection demands, but nothing in the tree CONSTRUCTS them,\
+  \ and a cover produced\nby the extraction above has no reason to carry a straddling\
+  \ piece. Arranging one is precisely where\nthe Stacks 0B8B input enters. Obligation\
+  \ 4(i) is at least now readable by the layer that owes it:\nAffAdaptation.eqn_tmul_one_mem_nonZeroDivisors_iff\
+  \ (09396353c) restates the tensor condition as\nregularity of the pulled equation\
+  \ on the FIBRE CURVE over kappa(p).\n\nSTANDING NEGATIVE RESULTS, all still binding:\
+  \ chart-avoid is NO, and the counterexample is\nFIELD-INDEPENDENT; no repair keeping\
+  \ the pieces inside preimages of a FIXED PAIR of P1 points can\nwork (joint-cover\
+  \ REJECTED); p1-aut stays pending and DEPRIORITISED, no consumer against it. The\n\
+  landed finite-field-avoid work is valid mathematics and is not to be deleted.\n"
 status: active
 kind: proof
 priority: high
@@ -72,8 +86,9 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T08:48:16.179991+00:00'
+  updated_at: '2026-07-28T09:13:40.913840+00:00'
   pinned_commits:
+  - 321af6cb6
   - 107cd5581
   - c843eafd7
   - 359c0a38d
