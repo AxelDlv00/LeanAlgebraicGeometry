@@ -17,12 +17,22 @@ waits on the DD freeze.*
 `AlgebraicGeometry/Group/Smooth.lean:64`, hypotheses `[LocallyOfFiniteType]` +
 `[GrpObj (Over.mk f)]` + `[GeometricallyReduced f]`, the first two supplied by the datum).
 **S1 is the whole S-cluster's cost** and route α1 survives probing — but with a correction
-to the recon's description of it that changes which brick is hard (§2). **S3 is
-[M]-shaped, not [L]**, and the R3 fear is now bounded from *both* ends: the descent half
-has a full ingredient list (t4 worksheet §5) and the *uniformity* half — the part that
+to the recon's description of it that changes which brick is hard (§2), and with a *second*
+correction, to this worksheet's own first draft, that adds a mathlib-absent brick nobody had
+counted: "reduced after base change to `k̄` ⟹ geometrically reduced" is **not** available,
+in either project or mathlib, and the missing content is exactly the transcendental-extension
+case (§2.1 — read it, it retracts a claim made in §2). Recommendation: **keep S1 a
+hypothesis**; the AV package assembles conditionally on it today.
+**S3 is [M]-shaped, not [L]**, and the R3 fear is now bounded from *both* ends: the descent
+half has a full ingredient list (t4 worksheet §5) and the *uniformity* half — the part that
 appendix left unprobed — turns out to have a clean route through mathlib's
 `SmoothOfRelativeDimension` being a **local-at-source** property, so no
-"locally constant relative dimension on an irreducible base" theorem is needed at all (§3).
+"locally constant relative dimension on an irreducible base" theorem is needed at all (§3),
+and the t4-§5 codescent brick is contingency rather than a requirement.
+
+**The single sentence that matters for planning:** after T1/T5 (landed), the T5 numeral,
+S1-a and the S3 count are three consumers of **one** computation, T3/T4. Nothing in the
+S-cluster substitutes for it.
 
 ---
 
@@ -243,6 +253,37 @@ steps 1–3 after base change to `k̄` (where closed points are rational and mat
 `smooth_of_grpObj_of_isAlgClosed` does the same thing for the same reason) and *then* pay the
 §5 codescent brick. So the §5 brick is the **contingency for exactly this caveat**, not for
 the count itself. Probe this before writing S3's Lean.
+
+## §3.5 A warning for whoever takes P1 (not the S-cluster, but it belongs in a Wave-5 doc)
+
+Recorded 2026-07-28 from `ajcr-charts`' audit on inbox I-0494, because the lane it affects
+does not exist yet and the finding would otherwise be discoverable only from a thread.
+
+**The witness predicates do not assert effectivity or degree.** All three of
+`BasicOpenCocycleDatum.HasWitnessH1Vanishing` (`Picard/Pic0ChartLocusFibreField.lean:115`),
+`subsingleton_h1_tensor_iff_exists_witness` (`Picard/DivisorFamilyH1Locus.lean:182`) and
+`IsSplitWitness` (`Picard/Pic0ChartLocus.lean`) ask only for *some* `CurveDivisor W` in the
+class with `Subsingleton (H¹ …)`. None asks for `0 ≤ W`; none asks for `deg W = g` — even
+though the worksheets throughout say "effective degree-`g` witness with `h¹ = 0`".
+
+This is **correct and must not be "fixed"**: the dictionary is an iff against the engine's
+condition `Subsingleton (H¹(pair D) ⊗ L)`, which cannot see effectivity or degree, and that
+iff is what carries openness to a class-indexed locus. Degree is supplied externally from the
+chart-index constraint via `degAt_chartTwist`; effectivity is supplied *nowhere* by these
+predicates.
+
+**Why this is a Wave-5 concern.** P1 — the `AbelSourceData` discharge — builds the Abel
+morphism from the universal degree-`d` class (`rep.homEquiv.symm` plus a `fiberTwist` shift)
+and gets field-point surjectivity from `riemann_inequality_curve` (`h⁰ ≥ deg + 1 − g ≥ 1`).
+That last step **is** an effectivity statement, so the P1 prover is exactly the consumer who
+will reach for "effective degree-`g` witness" and not get effectivity from the witness
+predicate. The right address for the stronger reading is
+`eq_of_picClass_eq_of_h0_one`, which does take `0 ≤ D`.
+
+Wave 5 as landed is **not** exposed: `AbelSourceData`'s five fields (`D`, `isProper`,
+`geometricallyIrreducible`, `abel`, `surjective`) mention no witness, degree or effectivity,
+and grep confirms no file under `Tangent/` or `AbelianVariety/` touches the witness
+predicates. Nothing landed needs revisiting — this is a note for the future P1 session.
 
 ## §4 Dependency summary (what is startable when)
 
