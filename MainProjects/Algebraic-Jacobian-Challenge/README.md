@@ -56,10 +56,17 @@ same theorem by a separate curve-specialized strategy.
   routinely non-empty for a short while: a module not yet committed to the workspace
   ledger must **not** be rooted, since a clean checkout would then fail to build.  That
   grace period ends at the commit — once a module is in the ledger, leaving it unrooted
-  means the build does not check it.  **Currently violated:** the 42 files of
-  `RiemannRoch/Ledger/` are committed and rooted by nothing, so none of their
-  declarations is elaborated by `lake build AlgebraicJacobian` and the axiom probe
-  never reaches them.  Adding the import is one line; see inbox issue `I-0600`.
+  means the build does not check it.  **Currently violated, but much less than it was:**
+  of the 43 files of `RiemannRoch/Ledger/`, **37 are now in the root cone** —
+  `RiemannRoch/WeilDivisor.lean` imports `Ledger/OrdCompare` and
+  `Ledger/ResidueOneAlgClosed` (commit `8b654f78d`), which drags most of the ported
+  χ-ledger in.  The **6 still unrooted** are `DegreeVanishing`, `GenusBridge`,
+  `NonVacuity`, `PrincipalCompare`, `PrincipalTransport`, `SectionDrop`: their
+  declarations are not elaborated by `lake build AlgebraicJacobian` and no
+  `#print axioms` line through the root can reach them.  Re-measure with the
+  reachability snippet in [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean)'s
+  header (seed it at `AlgebraicJacobian`, not `AlgebraicJacobian.Jacobian`) rather than
+  quoting these counts; tracked as inbox issue `I-0600`.
 - **Locally sorry-free is not axiom-clean.**  The synthesis-leak surface is now a single
   instance: `instHasPicSchemeEt` (`Picard/FGAPicRepresentability.lean`), whose body cites
   the one named `sorry` `fgaPicardRepresentability`, so every site that *synthesises*
@@ -225,10 +232,11 @@ Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
 - `AlgebraicJacobian/Albanese/`: rigidity and extension of rational maps, plus the
   Albanese factorization.
 - `AlgebraicJacobian/RiemannRoch/`: divisor and adelic Riemann–Roch infrastructure.
-  `RiemannRoch/Ledger/` (41 files) is the χ-ledger ported from the sibling
+  `RiemannRoch/Ledger/` (43 files) is the χ-ledger ported from the sibling
   Algebraic-Jacobian-Challenge-Rebuild project, plus four AJC-native
-  rederivations.  It is committed but **not rooted** — see the rootedness note
-  above; tracked as inbox issue `I-0600`.
+  rederivations.  Mostly rooted now (37 of 43, via `WeilDivisor.lean`); six leaves
+  are still outside the root cone — see the rootedness note above and inbox issue
+  `I-0600`.
 - `blueprint/src/chapters/`: the mathematical blueprint.
 - `hgraph/`: the generated statement/declaration dependency graph.
 - `scripts/`: import-minimization and budget-trimming helpers (`min-imports.sh`,
