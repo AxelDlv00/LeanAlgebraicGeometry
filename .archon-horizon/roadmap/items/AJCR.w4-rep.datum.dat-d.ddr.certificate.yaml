@@ -5,68 +5,65 @@ projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DECIDED BY THE HUMAN 2026-07-28: R2 — GENERALIZE THE PIECE TYPE. Binding\
   \ form: protection I-0492.\nFull reasoning: I-0346 (human comment, same date).\n\
-  \nEXECUTED. The widened certificate layer is sorry-free, axiom-clean and rooted\
-  \ (fifteen\nDivisorFamilyAff*.lean files). Of the two obligations I-0492 clause\
-  \ 4 relocated, 4(i) is\nDISCHARGED rather than assumed. Read the residue in the\
-  \ CORRECTED form below, not in the form\nsessions 0006/0008 reported it.\n\n  AffCoverData\
-  \          -- m / pieces : Fin m -> Opens / isAffineOpen / cover (iSup = top).\n\
-  \                           NO pi argument, NO partitions of unity, NO Sum index,\
-  \ NO chart typing.\n  AffAdaptation         -- eqn per piece + eqn_rel; IsCertified\
-  \ with (c1)-(c4) VERBATIM.\n  CertifiedDivisorFamilyAff / IsLocallyCertifiedAff\
-  \ / DivFamZarAff (mk, mk_eq_mk_iff, picClass)\n  DivFamZar.toAff       -- the widened\
-  \ value RECEIVES every chart-typed one, same picClass\n  isCertified_of_swallowedBy_of_c1\
+  \nEXECUTED, AND THE WIDENED LAYER IS NOW A FUNCTOR WITH A CONSUMER. Sorry-free,\
+  \ rooted (twenty-seven\nDivisorFamilyAff*.lean files plus DivRepGlobalAffLift.lean).\
+  \ Of the two obligations I-0492 clause 4\nrelocated, 4(i) is DISCHARGED rather than\
+  \ assumed.\n\n  AffCoverData          -- m / pieces : Fin m -> Opens / isAffineOpen\
+  \ / cover (iSup = top).\n                           NO pi argument, NO partitions\
+  \ of unity, NO Sum index, NO chart typing.\n  AffAdaptation         -- eqn per piece\
+  \ + eqn_rel; IsCertified with (c1)-(c4) VERBATIM.\n  CertifiedDivisorFamilyAff /\
+  \ IsLocallyCertifiedAff / DivFamZarAff (mk, mk_eq_mk_iff, picClass)\n  DivFamZar.toAff\
+  \       -- the widened value RECEIVES every chart-typed one, same picClass\n  isCertified_of_swallowedBy_of_c1\
   \ -- cert-collapse: all seven clauses from (c1) + the rank datum\n  exists_isCertified_of_seed_of_swallowing_affineOpen\
-  \ -- the endpoint at a seed\n  DivFamZarAff.mapAlg + the S5b layer (mapAlg_id/comp,\
-  \ picClass_mapAlg, eq_of_away_eq)\n  DivFamZarAff.mapAlgHom + mapAlgHom_eq_mapAlg\
-  \ -- the EXPLICIT-MAP face (session 0010)\n  divFamZarAff + divFamZarAffAffineEquiv\
-  \ -- the widened vehicle and its affine collapse\n\nTHE RESIDUE IS TWO ITEMS OF\
-  \ DIFFERENT KINDS (corrected 2026-07-28 session 0010; spec-dd-r\nADDENDUM 8). Sessions\
-  \ 0006 and 0008 reported ONE, and that claim was true of the CERTIFICATE\nbut not\
-  \ of the lane:\n\n (a) THE SUBORDINATE STACKS 0B8B INPUT. An affine open W with\
-  \ supp d inside W, and W inside one\n     member of d.cover. Out of scope per I-0492\
-  \ clause 2: USE it, do not re-derive it. Mathlib\n     has no form of 0B8B and this\
-  \ tree constructs no curve but P1. Unchanged.\n\n (b) divFamZarAff.map ALONG AN\
-  \ ARBITRARY MORPHISM OF TEST OBJECTS, and divFunctorAff on top of\n     it. This\
-  \ is what DivRepGlobalData.pull_comp consumes. Priced as a PORT, not as mathematics:\n\
-  \     its input is the base-side Zariski gluing keystone DivFamZar.exists_glue_of_away_compat\n\
-  \     (DivisorFamilyZarGlue.lean), whose argument is entirely about the Zariski\
-  \ cover of the BASE\n     -- which R2 did not touch. MEASURED 2026-07-28 s0010 and\
-  \ the pricing is SHARPER than\n     \"a port\": awayGluedEquations (DivisorFamilyZariskiGlue.lean:454),\
-  \ the divisor assembly\n     itself, projects only .eqns (8x) and .cover (7x, =\
-  \ eqns.cover) across its whole body --\n     never .adaptation, never .certified\
-  \ -- returns a bare LocalEquations and mentions pi zero\n     times, yet its DECLARED\
-  \ input is the full chart-typed CertifiedDivisorFamily. That\n     STATEMENT/proof\
-  \ mismatch is the blocker and no call-site cleverness removes it: a widened\n  \
-  \   class has no chart-typed certificate at all, which is the CONTENT of R2. The\
-  \ fix is to\n     restate the assembly at bare local-equation systems plus the pullback\
-  \ regularity the\n     certificate used to supply, carried explicitly (Scheme.LocalEquations.PullRegular,\
-  \ landed\n     with its open-immersion discharge; the restated assembly itself is\
-  \ NOT landed). So (b) is\n     DECOMPOSED, not closed. Full argument: spec-dd-r\
-  \ ADDENDUM 8 SS8.5 (132ac965a).\n\n     (b) UPDATE, SAME SESSION: THE KEYSTONE IS\
-  \ PROVED (fae9b7448 + 0743f5a5c, sorry-free,\n     axiom-clean vs a sorryAx control,\
-  \ lake build 8838 exit 0). 8.5's prescription executed:\n     DivFamZarAff.exists_glue_of_away_compat,\
-  \ plus the restated bare-input assembly it stands on\n     (AwayCompatPullDivEq,\
-  \ awayGluedEquationsLoc, divEq_pullback_awayGluedEquationsLoc,\n     CertifiedDivisorFamilyAff.isLocallyCertifiedAff\
-  \ / toZarAff,\n     exists_glue_of_certified_away_compat). With the landed eq_of_away_eq\
-  \ for uniqueness, the\n     widened value is a Zariski SHEAF value. So (b) now owes\
-  \ only ONE PACKAGING LAYER --\n     divFamZarAff.map along an arbitrary test morphism,\
-  \ then divFunctorAff -- because the\n     keystone was that construction's input.\
-  \ Record: spec ADDENDUM 8 SS8.6 (2cdf3e343).\n\n     A DEFECT WORTH CARRYING FROM\
-  \ THAT WORK: the keystone file was RED WITH ZERO SORRIES.\n     DivFamZarAff.eq_of_away_eq\
-  \ takes n as an EXPLICIT leading argument where the chart-typed\n     one has it\
-  \ implicit there, so a port copying the chart-typed call site feeds the cover\n\
-  \     family where n belongs, and the error surfaces as an unresolvable l.down on\
-  \ a ULift binder,\n     naming neither n nor eq_of_away_eq. Sorry census and job\
-  \ count both call the file healthy.\n\nWHY (b) WAS INVISIBLE FOR FOUR SESSIONS,\
-  \ and it is the lane's generalisable finding. A carrier\nthat base-changes has TWO\
-  \ FACES of one operation: mapAlg, taking an algebra-tower instance pack,\nand mapAlgHom,\
-  \ taking a bare AlgHom. They are interderivable in a few lines. The widened carrier\n\
-  had the first only. But the vehicle indexes its compatibility by Over.resAlgHom,\
-  \ a bare AlgHom\ncarrying no tower, so divFamZar, divFunctor and DivRepGlobalData\
-  \ are ALL spelled at the second.\nEvery audit compared the widened S5b layer to\
-  \ the chart-typed one BY NAME, and by name the list\nwas complete. Cheap check that\
-  \ would have caught it, and the one to run on any replacement type:\ngrep the new\
-  \ carrier's name OUTSIDE the files defining it. It returned zero hits.\n"
+  \ -- the endpoint at a seed\n  DivFamZarAff.mapAlg + mapAlgHom + mapAlgHom_eq_mapAlg\
+  \ -- both faces (s0010)\n  DivFamZarAff.eq_of_away_eq / exists_glue_of_away_compat\
+  \ -- a Zariski SHEAF value (s0010)\n  divFamZarAff + divFamZarAffAffineEquiv --\
+  \ the widened vehicle and its affine collapse\n\nRESIDUE ITEM (b) IS LANDED (2026-07-29\
+  \ session 0012; spec ADDENDUM 9). The widened vehicle is\nfunctorial along an ARBITRARY\
+  \ morphism of test objects, and the comparison out of the chart-typed\nside is a\
+  \ NATURAL TRANSFORMATION, which is the form a consumer substitutes:\n\n  divFamZarAff.eq_of_basic_eq\
+  \ / exists_glue_of_basic_compat / mapAlgHom_appLE_eq   (…AffMapKit)\n  divFamZarAff.IsPullbackValue\
+  \ / exists_isPullbackValue / mapVal / mapVal_eq_mapAlgHom\n  divFamZarAff.map, map_id,\
+  \ map_comp; divFunctorAff; divFamZarAffAffineEquiv_naturality (…AffMap)\n  divFamZarToAffVehicle_map;\
+  \ divFunctorToAff : divFunctor => divFunctorAff  (…AffFunctorCompare)\n\nNot new\
+  \ mathematics, and the reason generalises: every statement is about the Zariski\
+  \ topology of\nthe BASE, which R2 left alone, so the chart-typed proofs of DivisorFamilyZarMapKit/ZarMap/\n\
+  ZarFunctor transfer clause for clause. The typing is what costs: keystones speak\
+  \ localization\ninstance packs, the vehicle speaks Over.resAlgHom, and every crossing\
+  \ goes through\nmapAlgHom_eq_mapAlg. Predecessor price (ADDENDUM 8 §8.7) was \"\
+  one file, ~350 lines\"; actual was\nthree files, ~730 lines, because the comparison\
+  \ of FUNCTORS was never priced.\n\nTHE ISLAND IS BROKEN, and it was the lane's real\
+  \ exposure. Before this session the widened names\nappeared in ZERO Lean files outside\
+  \ their own family — a functor nothing consumes and a functor\neverything can consume\
+  \ are indistinguishable to a sorry census and a job count.\nDivRepGlobalAffLift.lean\
+  \ restates a DD-R consumer on it:\n\n  DivRepAffinePullback.pullGlobalAff / pullGlobalAff_val\
+  \ / pullGlobalAff_comp\n  divFamZarAffAffineEquiv_pullGlobalAff\n\npull_comp is\
+  \ the one DivRepGlobalData field that is about the FUNCTOR rather than one test,\
+  \ so it\nis the law that decides usability, and its proof is the chart-typed pullGlobal_comp\
+  \ transported\nalong divFamZarToAffVehicle_map. Cost: a push-forward. NOT claimed:\
+  \ representability of\ndivFunctorAff by DivOver. The transformation is old -> new\
+  \ only and the converse cannot exist.\n\nWHAT THE LANE STILL OWES: ONE STATEMENT.\n\
+  \ (a) THE SUBORDINATE STACKS 0B8B INPUT. An affine open W with supp d inside W,\
+  \ and W inside one\n     member of d.cover. Out of scope per I-0492 clause 2: USE\
+  \ it, do not re-derive it. Mathlib has\n     no form of 0B8B and this tree constructs\
+  \ no curve but P1. Unchanged since ADDENDUM 5.\n\nCARRIED HAZARDS, both real and\
+  \ neither created here:\n * DivFamZarAff.eq_of_away_eq takes n as an EXPLICIT leading\
+  \ argument where the chart-typed one has\n   it implicit. A port copying the chart-typed\
+  \ call site feeds the cover family where n belongs and\n   fails as an unresolvable\
+  \ l.down on a ULift binder, naming neither. Sorry census and job count\n   both\
+  \ call such a file healthy; only elaborating it does not.\n * awayGluedEquationsLoc\
+  \ at (fun i => (E i).eqns) is DEFINITIONALLY equal to awayGluedEquations at\n  \
+  \ E, so DivisorFamilyZariskiGlue.lean:189-495 is subsumed — ~300 lines in two copies\
+  \ needing sync.\n   Real fix: redefine the chart-typed five in terms of the Loc\
+  \ five.\n\nWHY (b) WAS INVISIBLE FOR FOUR SESSIONS, the lane's generalisable finding.\
+  \ A carrier that base\nchanges has TWO FACES of one operation: mapAlg (instance\
+  \ tower) and mapAlgHom (bare AlgHom). They\nare interderivable in a few lines. The\
+  \ widened carrier had the first only, while the vehicle indexes\nits compatibility\
+  \ by Over.resAlgHom — a bare AlgHom. Every audit compared the widened layer to the\n\
+  chart-typed one BY NAME, and by name the list was complete. Cheap check, to run\
+  \ on any replacement\ntype: grep the new carrier's name OUTSIDE its defining files,\
+  \ and exclude substring collisions\n(divFamZarAffineEquiv is chart-typed and matches\
+  \ \"divFamZarAff\") before believing the count.\n"
 status: active
 kind: proof
 priority: high
@@ -89,7 +86,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-28T14:35:39.154000+00:00'
+  updated_at: '2026-07-28T16:57:09.897718+00:00'
   pinned_commits:
   - 46d751465
   - 81c17f256

@@ -1,0 +1,55 @@
+id: I-0652
+provider: local
+kind: issue
+body: "THE SHARED-INDEX BUG (I-0611) IS NOW ARMED WITH SIX STALE BLOBS AT ONCE, INCLUDING\
+  \ 317 LINES OF LIVE LEAN WORK. It is regenerating faster than lanes defuse it, and\
+  \ it needs a fix in the tool, not per-commit repair.\n\nMEASURED (ajc-rr, run 0074\
+  \ r3, three-way diff of index / disk / HEAD). Six index entries whose DISK COPY\
+  \ MATCHES HEAD -- so the index alone is wrong and the NEXT commit by ANY lane publishes\
+  \ them:\n  AJC Cohomology/CechHigherDirectImageUnconditional.lean  37/317\n  AJC\
+  \ blueprint/.../Cohomology_CechHigherDirectImage.tex   7/34\n  AJC Picard/Pic0Dimension.lean\
+  \                            1/13\n  AJCR informal/spec-dd-r.md                \
+  \               0/87\n  AJCR informal/w5-t4-worksheet.md                       \
+  \  0/61\n  AJCR informal/protocol-concurrent-lanes.md               0/28\nTwo further\
+  \ entries are LIVE (disk and index agree, another lane mid-edit) and must be left\
+  \ alone: AJCR AlgebraicJacobian.lean, an hgraph comment.\n\nI defused three earlier\
+  \ today (the AJCR ROOT, which would have unrooted three modules; an AJCR worksheet;\
+  \ and AJC scripts/axiom-frontier.lean, 91 lines, in my own scope). All three regenerated\
+  \ or were replaced by new ones within the hour. I have NOT touched the six above:\
+  \ five are other lanes files and one is a blueprint, both outside my write scope,\
+  \ and blindly refreshing another lane in-flight state is how this becomes data loss\
+  \ rather than a nuisance.\n\nTHE TEST any lane can run, which is the one durable\
+  \ thing I can contribute (also on I-0611):\n  disk == HEAD, index differs      \
+  \  -> STALE, safe to refresh that path\n  disk == index, both differ from HEAD ->\
+  \ LIVE edit, LEAVE IT\n  all three differ                   -> ask the owner\nChecking\
+  \ `git status --porcelain -- <your paths>` does NOT see any of this; the blobs sit\
+  \ outside the checking lane paths, which is exactly why eight lanes have each concluded\
+  \ their own tree is clean.\n\nWHY THIS NEEDS YOU: I-0611 asked for either (1) the\
+  \ CAS publish path to refresh the index, or (2) commit to publish ONLY explicitly-staged\
+  \ paths. Neither has happened, and the evidence is now that per-commit repair does\
+  \ not converge -- three restores for one README line in the original incident, and\
+  \ six fresh entries today. Until it is fixed, every commit in this workspace is\
+  \ a coin flip on silently reverting someone else work, and the failure is invisible\
+  \ to the lane that causes it.\n\nLower-risk mitigation if a tool fix is not quick:\
+  \ have the commit wrapper REFUSE to commit when the index holds entries outside\
+  \ the staged path set, printing the three-way verdict. That turns silent data loss\
+  \ into a visible error."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:09:33.434339+00:00'
+updated_at: '2026-07-28T17:09:33.434354+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0008-horizon-ajc-rr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

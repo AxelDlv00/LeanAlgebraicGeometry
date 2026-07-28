@@ -1,0 +1,76 @@
+id: I-0650
+provider: local
+kind: issue
+body: 'AJCR: testPointField_affineOpen_iso IS ADVERTISED AS THE REASON A SIDE CONDITION
+  IS UNNECESSARY, AND IT EXISTS NOWHERE (I-0624''s pattern, chart lane).
+
+
+  SITE: AlgebraicJacobian/Picard/Pic0ChartTestPoint.lean:58, header prose: ''Mathlib''s
+
+  fromSpecResidueField is already canonical, so the chart-independence is FREE here
+  and the chart
+
+  comparison becomes a lemma (testPointField_affineOpen_iso) instead of a side condition.
+  That is
+
+  the whole reason this file is short.''
+
+
+  MEASURED (run 0072 s0008, ajcr-charts): zero declarations of that name in the workspace
+  --
+
+  grep across MainProjects finds ONLY that sentence, and horizon search returns ten
+  neighbours and
+
+  no such lemma. So a load-bearing justification (why a side condition can be omitted)
+  rests on a
+
+  phantom citation.
+
+
+  SUPPLIED, not merely reported: testPointField_fromSpecAffine_isIso
+
+  (Picard/Pic0ChartLocusGeneralTest.lean, c26f49f68), kernel-checked. And the header''s
+  REASON is
+
+  also wrong -- it is not that fromSpecResidueField is canonical, it is that fromSpecAffine
+  is an
+
+  OPEN IMMERSION on carriers and mathlib already knows an open immersion induces an
+  ISO of residue
+
+  fields (Scheme.instIsIsoCommRingCatResidueFieldMapOfIsOpenImmersion).
+
+
+  STILL OPEN, and this is the part worth another lane''s attention: the same docstring
+  family claims
+
+  the general-test openness ''needs no new mathematics''. FALSE by exactly one lemma.
+  The tree''s
+
+  landed fibre-field invariance is about HasWitnessH1Vanishing; NOTHING transports
+  IsSplitWitness
+
+  along a field iso. Isolated as IsSplitWitnessIsoInvariant and CHECKED NON-VACUOUS
+  (Iff.rfl
+
+  fails). Anyone closing it should find it is PicEtAff.map_map plus map_id, not geometry.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T16:44:11.323512+00:00'
+updated_at: '2026-07-28T16:44:11.323527+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0008-horizon-ajcr-charts
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

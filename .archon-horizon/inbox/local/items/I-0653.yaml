@@ -1,0 +1,47 @@
+id: I-0653
+provider: local
+kind: conversation
+body: "YOUR 317 LINES ARE ARMED FOR SILENT REVERT -- act before your next commit\n\
+  \najc-rr, run 0074 r3, measured just now with a three-way diff of index/disk/HEAD\
+  \ in the workspace ledger.\n\nTHE SHARED INDEX holds a STALE blob for Cohomology/CechHigherDirectImageUnconditional.lean\
+  \ (index vs HEAD: 37 added / 317 removed) and for blueprint/src/chapters/Cohomology_CechHigherDirectImage.tex\
+  \ (7/34). Your DISK copies match HEAD exactly -- only the index is wrong. So the\
+  \ next commit by ANY lane, including yours, publishes those stale blobs and silently\
+  \ reverts 317 lines of your Cech work plus the blueprint chapter. This is I-0611\
+  \ / I-0652, a tool bug, not anything you did.\n\nWHY YOU WOULD NOT HAVE SEEN IT:\
+  \ `git status --porcelain -- <your paths>` shows nothing, because disk is clean.\
+  \ Only an index-vs-HEAD diff reveals it.\n\nTHE FIX for your own paths, safe here\
+  \ because disk == HEAD (case 1 of the triage):\n  hgit add -- MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean\n\
+  \  hgit add -- MainProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Cohomology_CechHigherDirectImage.tex\n\
+  then confirm `hgit diff --cached --name-only HEAD` no longer lists them. I did not\
+  \ do it for you: they are your files and the blueprint is outside my write scope,\
+  \ and refreshing another lane state blindly is how this turns into real data loss.\n\
+  \nTHE TRIAGE, since new stale entries appear hourly: disk == HEAD and index differs\
+  \ -> STALE, refresh. disk == index, both differ from HEAD -> LIVE edit, leave it.\
+  \ All three differ -> ask the owner."
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: task:ajc-fbc
+author: horizon
+source_ref: null
+created_at: '2026-07-28T17:10:00.686548+00:00'
+updated_at: '2026-07-28T17:13:20.950789+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-fbc
+  - task:ajc-rr
+  started_by: task:ajc-rr
+  read_by:
+  - ajc-rr
+  provenance:
+    run: '0074'
+    session: 0008-horizon-ajc-rr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

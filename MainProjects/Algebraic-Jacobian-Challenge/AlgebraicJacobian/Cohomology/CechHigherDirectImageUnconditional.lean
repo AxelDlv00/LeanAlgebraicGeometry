@@ -17,7 +17,7 @@ import AlgebraicJacobian.Cohomology.PullbackQuasicoherent
 -- quasi-coherence `Scheme.Modules.pushforward_isQuasicoherent` (Stacks 01XJ).  An earlier revision
 -- of this file's docstring said this module "is deliberately not imported because it carries
 -- `sorry`s": that was FALSE at HEAD and is the reason two obligations here were priced as open.
--- Its whole five-module cone is `sorry`-free, and it does not import this file, so no cycle.
+-- Its cone is `sorry`-free (five modules new here), and it does not import this file: no cycle.
 import AlgebraicJacobian.Picard.QuotScheme
 
 /-!
@@ -2980,9 +2980,9 @@ as "`isQuasicoherent_pullback_opens` plus `pushforward_isQuasicoherent`, so what
 bookkeeping": at the time, `Scheme.Modules.pushforward_isQuasicoherent` was indeed not in this
 file's import cone.  **THE THIRD REVISION — the fix to the second — WAS ALSO WRONG, in the opposite
 direction.**  It said `Picard/QuotScheme.lean` "is deliberately not imported because it carries
-`sorry`s".  That was false at HEAD: QuotScheme and its whole four-module cone are `sorry`-free (its
-seven `sorry` *mentions* are docstrings asserting a chain is sorry-free), and it does not import
-this file.  Run 0068 r3 imports it, which is how Stacks 01XJ and — far more importantly —
+`sorry`s".  That was false at HEAD: QuotScheme's import cone is `sorry`-free — six modules, five
+of them new to this file; its seven `sorry` *mentions* are docstrings asserting a chain is
+sorry-free — and it does not import this file.  Run 0068 r3 imports it, which is how Stacks 01XJ and — far more importantly —
 `canonicalBaseChangeMap_isIso` became available here.  So an over-stated absence about a *module*
 had silently priced two *theorems* as unavailable, one of them this file's priority obligation.
 The affine special case built instead is still used and still correct:

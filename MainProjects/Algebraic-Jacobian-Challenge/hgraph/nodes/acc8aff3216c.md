@@ -33,7 +33,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.exists_unit_nonneg_of_h0_pos
 type: lean
-updated: '2026-07-28T23:00:33'
+updated: '2026-07-28T23:30:57'
 ---
 theorem exists_unit_nonneg_of_h0_pos (A : X.CurveDivisor)
     (hA : 0 < Sheaf.h0 (X.divisorSheaf K A)) :
@@ -72,11 +72,11 @@ theorem exists_unit_nonneg_of_h0_pos (A : X.CurveDivisor)
       = (toFinsupp A) p
         + (toFinsupp (Scheme.divOf (X ↘ Spec (CommRingCat.of K)) u)) p :=
     rfl
-  have hneg : (toFinsupp (- Scheme.divOf (X ↘ Spec (CommRingCat.of K)) u)) p
-      = - (toFinsupp (Scheme.divOf (X ↘ Spec (CommRingCat.of K)) u)) p :=
-    rfl
+  -- `simp` has already stripped the `toFinsupp` wrapper off `hb`, leaving a raw application
+  -- of the `CurveDivisor`s; restate it on the `Finsupp` side by `change` rather than `rw`.
+  have hb' : - (toFinsupp (Scheme.divOf (X ↘ Spec (CommRingCat.of K)) u)) p
+      ≤ (toFinsupp A) p := hb
   rw [hadd]
-  rw [hneg] at hb
   omega
 
 /-! ## Translating the base vanishing along a linear equivalence

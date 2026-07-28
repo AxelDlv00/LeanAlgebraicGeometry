@@ -2,27 +2,18 @@ id: AJC.fbc.cosimplicial.twisted
 title: Twisted Čech nerve compatibility
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "NOT THE SAME SHAPE AS ITS SIBLING -- and I am the lane that wrongly said\
-  \ it was, twice (run 0068 r2, verified by rfl).\n\nr1's summary here said 'same\
-  \ shape and same missing input as the sibling AJC.fbc.cosimplicial.pushforward'.\
-  \ Then r2 landed a whiskered-mate construction that removes the sibling's naturality\
-  \ obligation entirely, and initially claimed the same fix applies here. BOTH claims\
-  \ are wrong, and the reason is one rfl check:\n\n * the sibling's two sides are\
-  \ BOTH N >> (a composite) for one cosimplicial N, so a whiskered natural transformation\
-  \ maps between them and naturality is inherited;\n * THIS leaf's left side is N\
-  \ >> g'^*, but its right side is drop.obj (CechNerve U' (g'^* F)) -- the nerve of\
-  \ the BASE-CHANGED COVER, whose degree-n backbone lives in Over X' rather than Over\
-  \ X. It is NOT a whiskering of N, so THERE IS NO NATURAL TRANSFORMATION TO WHISKER.\n\
-  \nSo this leaf's naturality is genuine work of a DIFFERENT KIND from the sibling's:\
-  \ it is a comparison of TWO NERVES. The content is that the cover base-change identification\
-  \ coverInterOpen_baseChange_eq (landed, sorry-free) is compatible with the index-omission\
-  \ maps -- i.e. that the isoOfRangeEq slice identifications used per sigma in twisted_cech_nerve_per_sigma\
-  \ commute with the inclusions U_tau subset U_sigma for sigma a subtuple of tau.\
-  \ That is a statement about the cover base change, not about modules.\n\nPRIORITY,\
-  \ reversed from the earlier advice: do AJC.fbc.cosimplicial.pushforward FIRST. Its\
-  \ naturality is already free and only a per-sigma IsIso of a mate remains. This\
-  \ leaf is the HARDER of the two despite carrying lighter hypotheses (no base affineness,\
-  \ no f_*/f'_* layer) -- lighter hypotheses are not lighter work."
+summary: 'NOW THE ONLY OBSTRUCTION for flat base change (run 0068 r3). Its sibling
+  leaf is closed, so this square alone stands between the tree and Stacks 02KG/02KH;
+  the one-leaf endpoint is cech_flatBaseChange_oneLeaf. Whiskering does NOT apply
+  here (verified by two rfl probes in run 0068 r2): the RHS is the nerve of the BASE-CHANGED
+  cover, a different cosimplicial object, so there is no natural transformation to
+  whisker and the mate trick that closed the S-level leaf cannot be reused. The residue
+  is a two-nerve comparison: that the isoOfRangeEq slice identifications used per
+  sigma in twisted_cech_nerve_per_sigma (landed, axiom-clean) commute with the inclusions
+  U_tau subset U_sigma for sigma a subtuple of tau. That is a statement about the
+  cover base-change identification coverInterOpen_baseChange_eq, not about modules.
+
+  '
 status: pending
 kind: proof
 priority: high
@@ -45,4 +36,4 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc.cosimplicial
-  updated_at: '2026-07-28T13:46:26.115257+00:00'
+  updated_at: '2026-07-28T16:53:55.370017+00:00'

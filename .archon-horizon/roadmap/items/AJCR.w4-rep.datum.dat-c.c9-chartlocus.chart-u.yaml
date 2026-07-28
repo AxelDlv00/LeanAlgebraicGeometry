@@ -3,27 +3,39 @@ title: 'CHART-U(a)/(b): the co-signed chartLocus c lambda and isOpen_chartLocus 
   missing inputs, all divRep-free)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "THE CO-SIGNED BRICK, opened 2026-07-26 (run 0048 round 2) after the C9a-0\
-  \ rescope made clear\nthat nothing in the tree implements it.\n\n`chartLocus c lambda`\
-  \ (w4-datc-worksheet.md §3.3, CHART-U(a)) is a locus over a GENERAL TEST\nT, indexed\
-  \ by a plus class lambda in pic0Subgroup C (Over.mk a), at the TWISTED fibre class\n\
-  lambda_t . theta^m . (-Sigma).  w4-datb-worksheet.md §1.6 CO-SIGNS it with two amendments\n\
-  that the DAT-C lane was asked to acknowledge BEFORE EITHER LANE BUILDS:\n  (a) for\
-  \ arbitrary plus classes the predicate is the SPLIT form -- for some (equivalently\n\
-  \      every) finite separable L/kappa(t) splitting the collapsed class, h^0 = 1\
-  \ and h^1 = 0;\n  (b) the openness route of record is: reduce to affine pieces;\
-  \ collapse to PicEtAff.mk E x;\n      extract a cocycle datum over the etale carrier;\
-  \ TWIST it by the theta layer + DAT-C's\n      GAP-1 inverse datum; descend to a\
-  \ Noetherian stage (RE-5); fire the engine there; then\n      transports (i) descent-preimage,\
-  \ (ii) etale-image openness, (iii) affine gluing.\n`isOpen_chartLocus` is dat-b\
-  \ row B-4's ASSEMBLY of (i)/(ii) against DAT-C's shifted-datum\nhalf.\n\nINPUT STATUS\
-  \ 2026-07-26: transport (0) -- the class-indexation of the engine output -- is\n\
-  LANDED (leaf c9a).  Still missing, all three: the SHIFTED-DATUM CONSTRUCTOR (DAT-C\
-  \ GAP-1;\nthere is no BasicOpenCocycleDatum.mul or tensor anywhere, so the twist\
-  \ has no route), the\nSPLIT predicate (a-amendment), and transports (i)/(ii) (DAT-B).\
-  \  None of the three is\ndivRep-gated, so all three are launchable cold.\n\nDO NOT\
-  \ let a lane cite isOpen_cechWitnessLocus as if it were isOpen_chartLocus.  It is\n\
-  strictly weaker: affine base, untwisted class, no split, no transports.\n"
+summary: "THE CO-SIGNED BRICK. chartLocus and isOpen_chartLocus. DONE as of 2026-07-26;\
+  \ EXTENDED TO A\nGENERAL TEST 2026-07-28 (run 0072 s0008, lane ajcr-charts).\n\n\
+  WHAT LANDED THIS PASS: isOpen_chartLocus_of_affineLocal\n(Picard/Pic0ChartLocusGeneralTest.lean)\
+  \ -- chartLocus open over every affine-open test object\nimplies open over T. Pic0ChartLocusIsOpen's\
+  \ docstring promised exactly this \"by the affine-piece\nlocality of transport (iii)\
+  \ ... needs no new mathematics\". The assembly is proved; TWO of its\nstated ingredients\
+  \ were not where the tree said they were, and both corrections are the point of\n\
+  this row:\n\n 1. ADVERTISED-BUT-ABSENT (I-0624). Pic0ChartTestPoint's header justifies\
+  \ chart-independence\n    being free by \"the chart comparison becomes a lemma (testPointField_affineOpen_iso)\
+  \ instead\n    of a side condition. That is the whole reason this file is short.\"\
+  \ NO DECLARATION OF THAT\n    NAME EXISTS anywhere in the workspace -- the sole\
+  \ occurrence was that sentence, and it was\n    load-bearing prose (cited as the\
+  \ reason a side condition is unnecessary). Now supplied as\n    testPointField_fromSpecAffine_isIso,\
+  \ and for a DIFFERENT reason than the header implies: not\n    a Spec.residueFieldIso\
+  \ computation but the structural fact that fromSpecAffine is an OPEN\n    IMMERSION\
+  \ on carriers, and mathlib already knows an open immersion induces an ISO of residue\n\
+  \    fields (Scheme.instIsIsoCommRingCatResidueFieldMapOfIsOpenImmersion).\n\n 2.\
+  \ \"NEEDS NO NEW MATHEMATICS\" IS FALSE, BY EXACTLY ONE LEMMA. The tree's landed\
+  \ fibre-field\n    invariance is about HasWitnessH1Vanishing; nothing transports\
+  \ IsSplitWitness along a field\n    ISO (measured: its only invariance mentions\
+  \ are two docstring sentences). Isolated as\n    IsSplitWitnessIsoInvariant, and\
+  \ CHECKED NON-VACUOUS -- Iff.rfl fails, the two sides are not\n    definitionally\
+  \ equal, so this is a real obligation and not a restatement. Believable and\n  \
+  \  small: along an iso the same L presents the transported class, so it should be\n\
+  \    PicEtAff.map_map plus map_id, not geometry.\n\nAlso corrected: the locality\
+  \ bookkeeping is NOT the isOpen_iff_forall_isOpen_inter the docstring\nnames, because\
+  \ the affine piece's locus lives in a DIFFERENT SPACE (Spec Gamma(T.left,U), not\n\
+  T.left). The bridge is IsAffineOpen.range_fromSpec plus the image of an open immersion;\n\
+  chartLocus_fromSpecAffine_eq_preimage carries it, and it also DISCHARGES transport\
+  \ (i) for the\naffine-piece maps in BOTH directions (a one-sided containment would\
+  \ not give openness).\n\nNEXT ON THIS ROW: prove IsSplitWitnessIsoInvariant. It\
+  \ is the only input between the landed\naffine openness and isOpen_chartLocus over\
+  \ a general test.\n"
 status: done
 kind: proof
 priority: normal
@@ -46,7 +58,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  updated_at: '2026-07-28T11:41:06.970538+00:00'
+  updated_at: '2026-07-28T16:09:20.672619+00:00'
   milestone: w4-tail
   owner: ajcr-charts
   pinned_commits:

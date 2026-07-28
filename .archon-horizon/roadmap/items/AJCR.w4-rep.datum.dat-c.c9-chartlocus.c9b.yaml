@@ -2,41 +2,29 @@ id: AJCR.w4-rep.datum.dat-c.c9-chartlocus.c9b
 title: 'C9b: f_c and the (f, hf) chart pair (CERT-Sigma-gated; developable parametrically)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'The C9 DELIVERABLE PROPER: f_c, the chart morphism, and the (f, hf) pair
-  that
-
-  pic0RepresentableByOfCharts (Pic0SigmaSheaf.lean:161) consumes.
-
-
-  HONEST GATE, corrected 2026-07-26 (run 0048 round 2, adversarially verified): this
-  half is
-
-  NOT merely divRep-gated, it is CERT-Sigma-gated -- it needs the universal family
-  from a
-
-  DivRepGlobalData term, of which there are zero, AND the shifted-datum constructor,
-  for
-
-  which no BasicOpenCocycleDatum.mul / tensor exists anywhere.  The four roadmap comments
-
-  under dat-c calling the remainder "C9-gated plumbing, no math left" are REFUTED
-  for this
-
-  half; they were written before the gate existed and were never tested.
-
-
-  What is not blocked is the parametric idiom: c9b can be developed over a section
-  variable
-
-  `(divRep : (divFunctor C pi g).RepresentableBy DivOver)`, the pattern already landed
-  at
-
-  DivRepKit.lean:113.  A lane that does that produces real, checkable mathematics
-  today
-
-  without waiting for DAT-J.
-
-  '
+summary: "The C9 DELIVERABLE PROPER: f_c, the chart morphism, and the (f, hf) pair\
+  \ that\npic0RepresentableByOfCharts (Pic0SigmaSheaf.lean:161) consumes.\n\nGATE,\
+  \ unchanged and still real: CERT-Sigma, not merely divRep. hf needs CHART-U(c) --\
+  \ on the chart\nlocus the Abel map is a bijection onto its image because the normalized\
+  \ effective representative\nis unique (DAT-C GAP-2, relative form) -- plus the classifier.\
+  \ The composition half of hf is\nlanded (isOpenImmersion_presheaf_restrictChart,\
+  \ Picard/Pic0ChartPair.lean), and CHART-U(c) is\npinned in Lean as IsChartUniv rather\
+  \ than left in a worksheet.\n\nWHAT MOVED 2026-07-28 (run 0072 s0008, lane ajcr-charts)\
+  \ -- the V of restrictChart:\n\nc9b consumes `restrictChart f V` at V := chartLocus,\
+  \ so it needs chartLocus OPEN over the test\nthat carries the universal family,\
+  \ i.e. a GENERAL test, not an affine one. That openness is now\nlanded at the general\
+  \ test: isOpen_chartLocus_of_affineLocal\n(Picard/Pic0ChartLocusGeneralTest.lean),\
+  \ which reduces general-test openness to the landed affine\nopenness by affine-piece\
+  \ locality.\n\nIts ONE remaining input is IsSplitWitnessIsoInvariant -- the transport\
+  \ of IsSplitWitness along an\nISO of residue fields. Checked NON-VACUOUS (Iff.rfl\
+  \ fails). It is NOT certificate- or\ndivRep-gated, so it is the cheapest live brick\
+  \ on this row; expected route is PicEtAff.map_map\nplus map_id, not geometry. Two\
+  \ related corrections are recorded on the chart-u row, including one\nadvertised\
+  \ declaration that does not exist (I-0650).\n\nSO THE HONEST SPLIT of what c9b owes,\
+  \ after this pass:\n (a) CHART-U(c) / IsChartUniv -- CERT-Sigma-gated, genuinely\
+  \ blocked;\n (b) chartLocus openness at the general test -- landed modulo IsSplitWitnessIsoInvariant,\
+  \ and\n     that residue is developable COLD, today, by any lane.\nThe row stays\
+  \ blocked because (a) is, but (b) is no longer part of the wall.\n"
 status: blocked
 kind: proof
 priority: normal
@@ -59,6 +47,6 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  updated_at: '2026-07-28T04:38:05.681844+00:00'
+  updated_at: '2026-07-28T16:58:01.055892+00:00'
   milestone: w4-tail
   owner: ajcr-charts

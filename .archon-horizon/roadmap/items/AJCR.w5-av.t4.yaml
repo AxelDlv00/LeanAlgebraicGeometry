@@ -4,80 +4,55 @@ title: 'T4 (WORKSHEET-FIRST, risk R1): the étale-plus/Zariski kernel crossing a
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "R1 RESOLVED IN THE GOOD DIRECTION (the etale-plus/Zariski crossing never\
-  \ had to be made), and as of run 0073 r3 the residue is ONE statement, not three.\
-  \ Clause (iii) decomposed into five; four landed in r2 (Tangent/TwoChartCechPic.lean\
-  \ for (iii-a)+(iii-b), TwoChartNormalize.lean twoChartClassHom_mk_range for (iii-c1),\
-  \ TwoChartRepresentable.lean twoChartClassHom_surjOn_of_chartTrivial for (iii-c2-Zar)),\
-  \ all scheme-general with NO dual numbers and NO IsAffine so AJC can import rather\
-  \ than re-derive. Plus picFromBase is TRIVIAL at k[eps] with its compatibility square\
-  \ (Tangent/RelPicPointTest.lean).\n\nRUN 0073 r3 CLOSED BOTH BOOKKEEPING STEPS the\
-  \ r2 review (I-0573) found absent, and BOTH mechanisms differed from the prediction,\
-  \ cheaper each time:\n\n (c) REDUCTION SQUARE -- Tangent/TwoChartNaturality.lean,\
-  \ sorry-free. map_twoChartClassHom: CechPic.map f (twoChartClassHom V sel hmem u)\
-  \ = twoChartClassHom (f preimage V) (sel . f.base) _ (pullbackOverlapUnit f u),\
-  \ for an ARBITRARY morphism of schemes and an arbitrary two-open family. It was\
-  \ priced as a coboundary-level argument via unitsRestrict functoriality; measured,\
-  \ the two COCYCLES are equal on the nose before any quotient, so map_twoChartCocycle\
-  \ is a OneCocycle.ext and everything cohomological is vacuous. Three definitional\
-  \ facts do it: the pulled-back two-chart cover IS the two-chart cover of the preimages\
-  \ (rfl), preimage commutes with the overlap inf (rfl), and the four pair-value cases\
-  \ are one simp only over the unitsAppLE calculus.\n\n (b) CARRIER TRANSLATION --\
-  \ it SPLIT in two and the earlier account covered one half. (b-open): Tangent/DualNumberCarrier.lean,\
-  \ Over.dualNumberSections gives Gamma(C,W)[eps] ~+* Gamma(C_eps, fst^-1 W) with\
-  \ naturality in the open and the unit-group forms. (b-coeff): Tangent/DualNumberCarrierReduction.lean,\
-  \ Over.relSectionsMap_dualNumberSections says the eps|->0 section map IS TrivSqZeroExt.fst\
-  \ / unitsFst across that equivalence. Both sorry-free. (b-coeff)'s obstruction was\
-  \ an INSTANCE, not a theorem: relSectionsMap binds [Algebra R R'] [IsScalarTower]\
-  \ and Algebra k[eps] k does not exist in mathlib; two SCOPED instances (namespace\
-  \ TruncExpCech.EpsilonReduction) unlock the entire landed relSectionsMap calculus,\
-  \ after which algebraMap k[eps] k IS fst by rfl. Global would diamond with Algebra\
-  \ k k.\n\nRESIDUE: (iii-c2-aff) ALONE -- an eps-kernel class is trivial on each\
-  \ thickened affine chart -- and it is now further reduced. Tangent/DualNumberChartPic.lean\
-  \ lands two of its three steps (CommRing.Pic.eq_one_of_cyclic_mod_eps, CommRing.Pic.eq_one_of_mapRingEquiv,\
-  \ and Opens.cechPicMap_i_eq_one_of_dualNumberChart composing them with the affine\
-  \ dictionary), leaving EXACTLY the generator: given L trivial on C, produce m in\
-  \ the chart module and its cyclicity mod (eps). Carried as the explicit hypothesis\
-  \ hcyc, not a sorry.\n\nAND THE FLAGGED RISK IS MIS-SITED: 6.11 step 3 priced a\
-  \ sheaf->module crossing as this clause's honest risk (citing I-0533). It does not\
-  \ have to be built -- Opens.cechPicClass already presents an affine-chart class\
-  \ as a CommRing.Pic element and mathlib's Pic.AsModule / mk_eq_self / mk_eq_one_iff_free\
-  \ complete the passage; EffectivityMoving's own cechPicClass_basicOpen_eq_one_of_free\
-  \ already uses that pattern. Real risk in general, not sited here, and it should\
-  \ not be carried forward.\n\nWorksheet informal/w5-t4-worksheet.md 6.8-6.15.\n\n\
-  \nCORRECTION TO THIS ROW'S OWN ADVERTISING (accepted from ajc-pic0av, cross-project\
-  \ I-0495 C-0034): \"residue is one statement\" reads as further along than the Lean\
-  \ is. (iii-c2-aff) is carried as a BINDER, not proved -- Tangent/DualNumberChartPic.lean\
-  \ takes the chart-module hypothesis explicitly, which is correct discipline (never\
-  \ register a staged fact) but invisible to a sorry census. A reader comparing \"\
-  AJCR sorry-free\" against the sibling's sorry must not conclude AJCR is ahead on\
-  \ this clause; the same content is open on both sides.\n\nWHAT (iii-c2-aff) OWES\
-  \ AFTER RUN 0073 r3, precisely one statement: identify \"L restricts trivially along\
-  \ eps -> 0\" with \"the chart module's reduction M/(eps)M is cyclic\" -- i.e. freeness\
-  \ of the RESTRICTION on the chart. The generator half is CLOSED and is not geometry:\
-  \ Tangent/CyclicQuotientGenerator.lean (ported from AJC c1ed5be8b via I-0495) proves\
-  \ the \"fixed m\" binder IS cyclicity of the reduction, with the converse, so Opens.cechPicMap_i_eq_one_of_dualNumberChart_of_cyclic\
-  \ consumes cyclicity directly. One deviation from a verbatim port: AJCR's free_of_cyclic_mod_eps\
-  \ is universe-monomorphic, so the port is pinned to Type u.\n\nREVIEWER CORRECTION,\
-  \ run 0073 r3 (I-0630, I-0633), accepted: THE INTERTWINING HAS A THIRD GAP AND I\
-  \ PRICED IT AT ZERO AGAIN. map_twoChartClassHom is naturality of the map BEFORE\
-  \ the quotient; the T2 engine's unitsReduction is between the Cech H1 QUOTIENTS.\
-  \ Three items stand between them, none in the tree: (1) naturality of the DESCENDED\
-  \ twoChartClass, which needs Function.Surjective sel at BOTH ends plus \"pullbackOverlapUnit\
-  \ maps cechCoboundaryUnits into cechCoboundaryUnits\" -- my \"no Function.Surjective\
-  \ sel\" is true of the hom-level lemma and does NOT carry to the quotient level;\
-  \ (2) that dualNumberSectionsUnits carries the thickened coboundary subgroup ONTO\
-  \ the base one (resHom_dualNumberSections makes it provable, nobody proved it --\
-  \ the I-0571 shape inside the file I wrote to fix an I-0571 problem); (3) a typing/transport\
-  \ seam -- nothing produces the Bool-indexed V plus selector from relCover, and nothing\
-  \ identifies (C whisker overDualNumberZero).left with relCurveMap C k[eps] k.\n\n\
-  SO T4 STILL OWES, precisely: those three intertwining items PLUS (iii-c2-aff-geo),\
-  \ the cechPicClass naturality square. Do not describe the T4 residue as \"one statement\"\
-  \ again without naming the statement and checking its CONSUMER.\n\nTHE TRANSFERABLE\
-  \ RULE (I-0633): a generality claim is scoped to the DECLARATION it is written on,\
-  \ not to the chain. map_twoChartClassHom's binders really are fully general, but\
-  \ its consumer twoChartClass needs hsel, so the general lemma one level below a\
-  \ hypothesis-bearing consumer does not remove the hypothesis. Likewise \"steps 1-2\
-  \ over an arbitrary commutative ring\" buys PORTABILITY, not progress.\n"
+  \ had to be made). The five clauses of (iii) are landed, the carrier translation\
+  \ and the hom-level reduction square are landed, and AS OF RUN 0073 r4 TWO OF THE\
+  \ THREE INTERTWINING ITEMS THE REVIEWER FOUND (I-0630) ARE CLOSED.\n\nWHAT LANDED\
+  \ IN r4, both sorry-free and both scheme-general where they can be:\n\n ITEM (1)\
+  \ THE QUOTIENT-LEVEL REDUCTION SQUARE -- Tangent/TwoChartQuotientNaturality.lean\
+  \ (aa1efb95e). map_twoChartClassHom was naturality BEFORE the Cech quotient; the\
+  \ T2 engine's unitsReduction is between quotients. The missing piece was ONE containment\
+  \ and it is not cohomological: cechCoboundaryUnits (Y.resHom inf_le_left) (Y.resHom\
+  \ inf_le_right) <= (cechCoboundaryUnits (X.resHom _) (X.resHom _)).comap (f.unitsAppLE\
+  \ _ _ le_rfl). A coboundary is rho_0(v_0) * rho_1(v_1) for CHART units, and the\
+  \ two unitsAppLE functoriality lemmas already in the tree (Hom.map_unitsAppLE, Hom.unitsAppLE_map)\
+  \ move the pullback past the restriction in both directions. Declarations: cechCoboundaryUnits_le_comap_unitsAppLE,\
+  \ pullbackOverlapQuot, map_twoChartClass (with hsel at BOTH ends, as I-0630 requires),\
+  \ map_twoChartClass_eq_one_iff (the kernel form, through twoChartClass_injective).\n\
+  \n ITEM (2) THE TWO CECH H1 CARRIERS AGREE AS QUOTIENTS -- Tangent/DualNumberCarrierCoboundary.lean\
+  \ (83ac96bf8). dualNumberSectionsUnits carries the THICKENED coboundary subgroup\
+  \ ONTO the base one. Stated as an EQUALITY on purpose: a containment would let the\
+  \ map descend without identifying the quotients, i.e. would leave exactly the I-0571\
+  \ gap the reviewer named. cechCoboundaryUnits is a JOIN of two ranges and Subgroup.map\
+  \ distributes over it, so the proof is two range identifications (range_dualNumberSectionsUnits_comp)\
+  \ with NO Bool case analysis anywhere. dualNumberCechH1Equiv is the QuotientGroup.congr\
+  \ a consumer calls, and because it comes FROM the subgroup equality a kernel may\
+  \ be transported across it.\n\n ITEM (3a) STARTED -- Tangent/TwoChartSelector.lean:\
+  \ the Bool-indexed family and canonical selector of a Scheme.AffineTwoCover, with\
+  \ the side condition MEASURED rather than flagged: surjective_selector_iff says\
+  \ Function.Surjective sel <-> V0 != bot AND V0 != top. So hsel is not bookkeeping,\
+  \ it is \"the cover is honestly two-chart\" (V0 = bot degenerates to a one-chart\
+  \ cover; V0 = top says X is affine). Both hold for the Wave-5 curve but each is\
+  \ a real geometric input, supplied by the consumer.\n\nTHE SEAM THAT COST BOTH r4\
+  \ FILES A DETOUR, and it is a NEW family for this lane (worksheet 6.21): when two\
+  \ rfl-equal spellings of a restriction meet, exact is transparent and rw is NOT\
+  \ -- it fails with \"the target expression is not type-correct under the instances\
+  \ transparency level\" plus a presheaf.obj mismatch, which reads like a broken goal\
+  \ and is not one. Item (1) fixed it with simp [Scheme.resHom] (unfold the wrapper\
+  \ into the library's spelling; rfl does NOT close it); item (2) by STATING the bridging\
+  \ lemma in the CONSUMER's spelling (resHom) rather than the input lemma's (resAlgHom).\n\
+  \nT4 STILL OWES, BY NAME (not by count -- the discipline 6.18 imposed after three\
+  \ mis-sizings):\n (i) item (3b)/(3c), the scheme-object identifications: nothing\
+  \ identifies (C whisker overDualNumberZero).left with relCurveMap C k[eps] k, nor\
+  \ overSpec k k with the monoidal unit. If they resist, carry the identification\
+  \ as an explicit hypothesis rather than grinding (the hcyc discipline).\n (ii) (iii-c2-aff-geo):\
+  \ \"L trivial along eps -> 0\" ==> \"the chart reduction M/(eps)M is cyclic\". Carried\
+  \ as the hcyc BINDER in Tangent/DualNumberChartPic.lean, not a sorry, so invisible\
+  \ to a sorry census. The generator half IS closed (CyclicQuotientGenerator.lean).\
+  \ ajc-pic0av confirmed on 2026-07-28 that AJC does not have this in any spelling\
+  \ either, so it is open on BOTH sides and neither project should assume the other\
+  \ holds it.\n\nWorksheet informal/w5-t4-worksheet.md 6.8-6.21; 6.20 was written\
+  \ BEFORE the r4 Lean as this row binds, and 6.21 records that its predictions held\
+  \ on both mechanisms -- the first time in this lane.\n"
 status: active
 kind: proof
 priority: normal
@@ -91,5 +66,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:45.485310+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T14:58:35.339223+00:00'
+  updated_at: '2026-07-28T16:28:04.696486+00:00'
   owner: ajcr-w5-av

@@ -2,42 +2,36 @@ id: AJC.albanese.symmetric
 title: Abel-Jacobi and symmetric-power factorisation
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Abel-Jacobi and symmetric-power factorisation.\n\nSTATE (run 0069 r4). Milne's\
-  \ ARGUMENT is proved; the missing thing is one object.\n\nPROVED, sorry-free and\
-  \ axiom-clean, over the symmetric power as an INTERFACE:\n * SymPowInterface.lean\
-  \  -- SymPowData C n; symAVMap (Milne's Sym^n phi) as a\n   CONSTRUCTION; basePointShift_comp_powSum\
-  \ (the \"use phi(P0)=eta_A\" collapse).\n * AlbaneseFromData.lean -- the connector\
-  \ in BOTH directions and Milne III.6.1\n   assembled; exists_unique_descent_of_birational\
-  \ is Milne's step 2 in full.\n * SymPowColimit.lean    -- the pair (D, hproj) IS\
-  \ a colimit of the S_n-action on\n   C^n, in both directions (hasColimit_permDiagram_iff),\
-  \ so the reduction is\n   LOSSLESS; hproj is colimit.w, free at every n.\n * AlbaneseFromColimit.lean\
-  \ -- the same capstone with no SymPowData argument.\n\nTHE CARRIER IS NOW NAMED\
-  \ (this round, SymPowInvariants.lean). SymPowColimit had\nflagged three times that\
-  \ the affine quotient was inhabited but NOT identified.\nfixedConeIsLimit: the invariant\
-  \ subring A^G IS the limit of the SingleObj G action\ndiagram in CommRingCat; fixedCoconeIsColimitOp\
-  \ dualises it into CommRingCat^op,\nthe variance the interface consumes. No finiteness\
-  \ on G and no Noetherian\nhypothesis -- finiteness is what the GEOMETRY of Spec\
-  \ A -> Spec A^G needs\n(integrality, surjectivity), not the universal property.\
-  \ This matters because\ngluing compares two overlapping charts' quotients, and a\
-  \ comparison needs a\nformula per side: an abstract colimit supplies none, A^G does.\n\
-  \nONE GLUING INPUT LANDED (SymPowInvariantsLocalization.lean): the action transports\n\
-  to a localization at an invariant element (awayMap), and an invariant element of\n\
-  A_b has an INVARIANT NUMERATOR (exists_invariant_numerator) -- the substantive\n\
-  half of (A_b)^G = (A^G)_b, which mathlib lacks. Characteristic-free: no averaging\n\
-  over G, since |G| = g! may vanish in A. Finiteness is spent only on a max of\nexponents;\
-  \ invariance of b is what makes b^m*a invariant.\n\nOPEN, and this is the whole\
-  \ residue of the leg: HasColimit (permDiagram C g) for\nthe curve -- i.e. the GLUING\
-  \ of the affine quotients into a scheme. State it\nper-diagram, NEVER as HasColimitsOfShape\
-  \ (SingleObj (Perm (Fin g))) Scheme: the\nquantified form is strictly stronger and\
-  \ believed false at this pin (schemes have\nno coequalizers), so a theorem carrying\
-  \ it would be vacuous. Availability measured:\nHasCoproducts Scheme YES, HasCoequalizers/HasPushouts\
-  \ NO, Scheme.GlueData YES.\nRemaining work is the cocycle/overlap compatibility\
-  \ of the chart quotients.\n\nNOT the residue, and not this node's debt: abelJacobi.\
-  \ It is blocked on a\nDIFFERENT and earlier brick -- the line bundle O(Delta - {P0}xC\
-  \ - Cx{P0}) on CxC\nis nowhere constructed in the tree, and there is no in-tree\
-  \ producer of any\nDivFamily to feed PicScheme.abelMap. Measured this round. The\
-  \ 2400-3800 line\nfigure in analogies/m3-route-audit.md is HISTORICAL; read SymPowColimit.lean\
-  \ and\nSymPowInvariants.lean before budgeting from it.\n"
+summary: "Abel-Jacobi and symmetric-power factorisation. Milne's argument is PROVED\
+  \ over the\nsymmetric power taken as an interface (Albanese/AlbaneseFromData.lean);\
+  \ what is missing\nis the object. As of run 0069 r5 the affine half of Milne III.3\
+  \ Proposition 3.1 has a\nNAMED carrier with a proved quotient property, over the\
+  \ base:\n\n * SymPowTensorAction.lean -- the S_n-action on the n-fold tensor power\
+  \ of a commutative\n   RING. Mathlib had factor permutation only as a LINEAR equiv,\
+  \ so MulSemiringAction did\n   not synthesize and FixedPoints.subring could not\
+  \ be STATED at a tensor power; Milne's\n   (A^{tensor n})^{S_n} was not expressible.\
+  \ permAlgHom (an ALGEBRA hom, via liftAlgHom on\n   the domDomCongr'd tprod) plus\
+  \ permMulSemiringAction and permSMulCommClass fix that.\n   Characteristic-free:\
+  \ nothing averages, so no g! is inverted.\n * SymPowInvariantsUnder.lean -- the\
+  \ invariants ARE the limit in Under k, and dually a\n   colimit in (Under k)^op:\
+  \ the consumer's category AND variance. Cheaper by restating\n   than by transporting\
+  \ across Over.opEquivOpUnder, since FixedPoints.subalgebra is\n   already a k-algebra.\n\
+  \ * Index-category step: Functor.op yields a diagram over (SingleObj G)^op, NOT\
+  \ over\n   SingleObj G. hasColimit_singleObj_of_op transports along Groupoid.invEquivalence,\
+  \ with\n   the reindexing exactly sigma -> sigma-inverse (rfl).\n\nTHE RESIDUE IS\
+  \ THE GLUING, unchanged: HasColimit (permDiagram C g) in Over (Spec kbar)\nfor the\
+  \ proper curve. SymPowColimit.lean section 6 has the availability table measured\
+  \ at\nthis pin -- HasCoproducts Scheme yes, HasCoequalizers/HasPushouts Scheme NO,\n\
+  Scheme.GlueData yes -- so the route is explicit glue data plus overlap cocycles.\n\
+  \nTWO LEADS NOT YET SPENT, both in this project and both sorry-free: Picard/StableAffineCover\n\
+  .lean proves exists_stable_affineOpen_of_orbitsInAffineOpen (a Gamma-STABLE affine\
+  \ cover via\nthe norm trick) and Picard/FiniteGaloisQuotientAffine.lean proves isGaloisQuotient_spec\n\
+  unconditionally. Those are the two hardest inputs a glue-data assembly needs, built\
+  \ for\nsemilinear Galois actions rather than S_n; whether the S_n case can consume\
+  \ them is the\nnext question to settle, and it was NOT settled this round.\n\nAlbaneseUP.lean's\
+  \ six sorries are UNCHANGED and albanese_universal_property still reports\nsorryAx\
+  \ -- they are stated against a sorry-bodied SymmetricPower, so discharging them\
+  \ would\nestablish nothing.\n"
 status: active
 kind: proof
 priority: high
@@ -60,7 +54,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-28T14:29:22.204514+00:00'
+  updated_at: '2026-07-28T16:59:59.631733+00:00'
   pinned_commits:
   - 1fedb22e4
   - f7391b281

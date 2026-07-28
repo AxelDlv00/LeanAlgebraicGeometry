@@ -3,26 +3,31 @@ title: 'T3: \(\ker(\mathrm{relPic}(k[\varepsilon]) \to \mathrm{relPic}(k)) \sime
   H^1(C,\mathcal{O})\) via nilpotent unit-lifting'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'T3 is the consumer of the T4 comparison, not independent work. With (iii-a)(iii-b)(iii-c1)(iii-c2-Zar)
-  landed, the T2 truncated-exponential engine already giving H1(C,O) = ker of the
-  two-chart Cech unit quotient, and -- as of run 0073 r3 -- BOTH intertwining steps
-  landed (the carrier translation Tangent/DualNumberCarrier.lean + DualNumberCarrierReduction.lean,
-  and the reduction square Tangent/TwoChartNaturality.lean), ker(relPic(k[eps]) ->
-  relPic(k)) =+ H1(C,O) follows once (iii-c2-aff) lands.
-
-
-  The relative-to-absolute step was already landed: picFromBase is TRIVIAL at Spec
-  k[eps] (a one-point space has no cover with nontrivial overlap), with the compatibility
-  square intertwining relPicMap with CechPic.map -- Tangent/RelPicPointTest.lean.
-  Clause (i) (nilpotent chart triviality) and clause (ii) (DualNumber.baseChangeAlgEquiv)
-  both landed, and clause (ii) is now composed to the cover level rather than only
-  asserted in a docstring.
-
-
-  So T3 = (iii-c2-aff) + assembly, where (iii-c2-aff) is itself down to its generator
-  (Tangent/DualNumberChartPic.lean).
-
-  '
+summary: "T3 is the CONSUMER of the T4 comparison, not independent work: ker(relPic(k[eps])\
+  \ -> relPic(k)) =+ H1(C,O) follows once T4's residue lands.\n\nWHAT IS IN PLACE.\
+  \ The T2 truncated-exponential engine gives H1(C,O) = ker of the two-chart Cech\
+  \ unit quotient. Clause (i) (nilpotent chart triviality) and clause (ii) (DualNumber.baseChangeAlgEquiv,\
+  \ composed to the cover level rather than only asserted in a docstring) are landed.\
+  \ The relative-to-absolute step was already landed: picFromBase is TRIVIAL at Spec\
+  \ k[eps] -- a one-point space has no cover with nontrivial overlap -- with the compatibility\
+  \ square intertwining relPicMap with CechPic.map (Tangent/RelPicPointTest.lean).\n\
+  \nRUN 0073 r4 CLOSED THE TWO INTERTWINING ITEMS T3 ACTUALLY CONSUMES, which is the\
+  \ substantive change to this row:\n * the reduction square now exists AT QUOTIENT\
+  \ LEVEL (Tangent/TwoChartQuotientNaturality.lean, map_twoChartClass), where the\
+  \ T2 engine's unitsReduction lives -- the hom-level square of r3 was one level below\
+  \ the consumer;\n * the two Cech H1 carriers now agree AS QUOTIENTS, not merely\
+  \ as carriers (Tangent/DualNumberCarrierCoboundary.lean, dualNumberCechH1Equiv,\
+  \ built FROM a subgroup EQUALITY so a kernel may be transported across it).\n\n\
+  Both were reviewer findings (I-0630) that a predecessor session had priced at zero;\
+  \ both turned out cheap, and neither was cohomological.\n\nWHAT T3 STILL WAITS ON,\
+  \ and it is exactly T4's named residue: the scheme-object identifications of item\
+  \ (3b)/(3c), and (iii-c2-aff-geo) -- \"L trivial along eps -> 0\" ==> the chart\
+  \ reduction is cyclic -- which is carried as the hcyc BINDER in Tangent/DualNumberChartPic.lean\
+  \ (not a sorry, hence invisible to a sorry census) and is open in the AJC sibling\
+  \ too.\n\nNOTE FOR WHOEVER TAKES T5 AFTER THIS: what T3 must hand T5 is the SEMILINEAR\
+  \ COMPARISON (AddEquiv + intertwining across kappa(e) ~+* k), NOT a bare eps-kernel\
+  \ bijection -- finrank does not transport along a bijection of sets. See the t5\
+  \ row.\n"
 status: pending
 kind: proof
 priority: normal
@@ -36,5 +41,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:44.680736+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T11:49:42.705174+00:00'
+  updated_at: '2026-07-28T16:42:16.107473+00:00'
   owner: ajcr-w5-av

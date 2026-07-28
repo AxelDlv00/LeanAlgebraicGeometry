@@ -13276,10 +13276,10 @@
     "macros": {},
     "states": {
       "blocked": 20,
-      "closed": 8645,
+      "closed": 8657,
       "formalized_open": 169,
       "informal": 18,
-      "ready": 31
+      "ready": 30
     },
     "warnings": [
       "thm:jacobian_proper: \\lean{AlgebraicGeometry.Jacobian.instIsProper} not found in Lean sources",

@@ -1,0 +1,52 @@
+id: I-0647
+provider: local
+kind: memory
+body: "[persistent] EXPORTING GIT_DIR/GIT_WORK_TREE IN A SHELL THAT LATER RUNS lake\
+  \ DESTROYS THE SHARED MATHLIB BUILD TREE FOR EVERY LANE. Caused and repaired by\
+  \ ajc-rr, run 0074 r3, 2026-07-28. This is a workspace-wide hazard, not a project\
+  \ one.\n\nWHAT HAPPENS, exactly. The ledger needs git pointed at .archon-horizon/vcs/workspace.git,\
+  \ and the obvious way to do that in a multi-command shell is `export GIT_DIR=...\
+  \ GIT_WORK_TREE=...`. If lake then runs in the same shell it inherits both. lake\
+  \ reads them, concludes the mathlib dependency URL has changed, DELETES .lake-packages/mathlib\
+  \ (source AND .lake/build), and re-clones. The re-clone then fails, because GIT_WORK_TREE\
+  \ still points at the workspace root: `fatal: working tree /home/axel/LeanAlgebraicGeometry-Horizon\
+  \ already exists`.\n\nBLAST RADIUS. .lake-packages is SHARED by all projects, so\
+  \ one lane doing this breaks the build for all eight simultaneously. Symptom in\
+  \ other lanes: `error: unknown module prefix Mathlib` with a search path that lists\
+  \ every package EXCEPT mathlib. That looks like a broken import in your own file.\
+  \ It is not.\n\nMEASURED STATE AFTER: Mathlib.olean absent, 0 oleans under .lake-packages/mathlib/.lake/build/lib,\
+  \ source present at the right revision. Project oleans also need rebuilding afterwards,\
+  \ since their imports were invalidated.\n\nREPAIR, and it does NOT happen by itself.\
+  \ `lake exe cache get` with the variables UNSET restores everything: 8542 files\
+  \ downloaded and decompressed, exit 0, back to 8176 oleans, ~2 minutes. A sibling\
+  \ lane observed the recovery and reported that the outage self-healed and the oleans\
+  \ were never lost; that was wrong on both counts -- they measured after my repair.\
+  \ If you see an outage report, check WHO repaired it before concluding it is benign.\n\
+  \nTHE RULE, two safe forms:\n * per-invocation flags: git --git-dir \"$HORIZON_LEDGER_GIT_DIR\"\
+  \ --work-tree \"$HORIZON_LEDGER_WORK_TREE\" ... (this is what \"$HORIZON_GIT\" does,\
+  \ and it is safe);\n * if you must export, prefix every lake call: env -u GIT_DIR\
+  \ -u GIT_WORK_TREE lake ...\nDo not mix an exported GIT_DIR and a lake call in one\
+  \ shell, even several commands apart -- the harness keeps the working directory\
+  \ across calls but re-initialises the shell, so the export can outlive the intent\
+  \ that set it."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T16:20:20.232702+00:00'
+updated_at: '2026-07-28T16:20:47.900268+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0008-horizon-ajc-rr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-w5-av

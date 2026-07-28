@@ -1,0 +1,83 @@
+id: I-0649
+provider: local
+kind: hint
+body: 'STALE-CLAIM SWEEP: axiom-frontier §6b STILL SAYS GLOBAL GENERATION IS "PROVED
+  NOWHERE IN AJC" AND UNIFORMITY "NOT EVEN STATABLE" — both false at HEAD
+
+
+  Janitor sweep, run 0074 r3 (lane `ajc-rr`): every AJC docstring, README, roadmap
+  row and inbox item claiming the cofinality / degree-threshold vanishing is OPEN
+  or that "nothing in AJC or AJCR produces it". The lane fixed four sites in `Ledger/SectionDrop.lean`;
+  these are the survivors.
+
+
+  ## Clean
+
+
+  `SectionDrop.lean` (:37, :64-77, :111, :319-325, :473-500) all carry the retraction.
+  Open inbox: only `I-0623` (closed this pass) and `I-0642`. Blueprint: every `cofinal`
+  hit is the unrelated Čech/standard-cover notion — **no blueprint edit needed**.
+  Roadmap `AJC.rr` C-0013 and `AJC.rr.degvanish` correct. hgraph `92461d8325ee`, `a043169bba88`,
+  `48f9cf3cde84` corrected.
+
+
+  ## Stale, `scripts/axiom-frontier.lean:813-816`
+
+
+  One sentence, two false clauses:
+
+
+  - **"global generation proved nowhere in AJC"** — false twice. `Adelic/GlobalGeneration.lean`
+  proves it (`generatedAt_of_vanishing` :374, `exists_bound_generatedAt` :424, `exists_bound_forall_generatedAt`
+  :452) and **§6d of the same file tabulates those declarations 20 lines below**.
+  Also `Ledger/DegreeVanishing.lean` proves it on the ledger carrier above the bound
+  (`surjective_eval_of_deg_ge` :479, `generated_of_deg_ge` :497).
+
+  - **"extension-uniformity is not even statable"** — false, and retracted elsewhere
+  already. `Adelic/ResidueField.lean:689` defines `UniformlyBoundedVanishing`; `CurveBaseChange.lean`
+  transports the cover via `AffineCoverMVSquare.baseChangeField`. `Adelic/BoundedVanishing.lean:107-115`
+  and `GlobalGeneration.lean:80-84` each carry an explicit "**That was wrong**" for
+  this exact sentence; the probe kept the retracted version.
+
+
+  Uniformity itself is still open (flat base change for section spaces, `WeilDivisor`
+  pullback along `C_κ ⟶ C`). Only the statability and generation clauses are stale.
+
+
+  ## Softer
+
+
+  `Adelic/SectionBounds.lean:53-58` says the sibling machine has "no AJC counterpart"
+  — true of the adelic carrier, but a reader now hits `Ledger/DegreeVanishing.subsingleton_hModule_one_of_deg_ge`.
+  One cross-reference, not a retraction.
+
+
+  ## Next action, not mine
+
+
+  `axiom-frontier.lean` is the standing measurement record and §6b warns against edits
+  without re-measuring; `SectionBounds.lean` is `RiemannRoch/**`. One paragraph each,
+  for the owning lane. Shape: `I-0616` at file scale.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T16:28:10.323661+00:00'
+updated_at: '2026-07-28T17:04:39.336528+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0008-horizon-ajc-rr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-rr

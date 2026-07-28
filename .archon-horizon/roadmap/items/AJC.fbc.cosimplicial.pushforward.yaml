@@ -2,39 +2,17 @@ id: AJC.fbc.cosimplicial.pushforward
 title: Pushforward Čech base-change naturality
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'REPLACE THE DECLARATION, DO NOT PROVE THE SQUARE (run 0068 r2, verified
-  in Lean).
+summary: 'CLOSED run 0068 r3 (eed54636d). The obligation was already a theorem in
+  this project: cechOuterBC = canonicalBaseChangeMap by rfl, and canonicalBaseChangeMap_isIso
+  (Picard/QuotScheme.lean) proves it invertible at quasi-coherent modules for [QuasiCompact
+  f] [QuasiSeparated f] [Flat g], axiom-clean. Only missing input was quasi-coherence
+  of the sigma-term (isQuasicoherent_pushPullObj_coverInter). Carrier: cech_pushforward_baseChange_natIso_flat,
+  sorry-free. The mateEquiv_vcomp / TwoSquare route recorded by three predecessor
+  sessions is NOT needed; they were blocked by this file''s own false claim that QuotScheme
+  carries sorries.
 
-
-  r1 recorded this leaf as PROBED AND CONFIRMED HARD, needing per-sigma projection
-  lemmas nobody has built, because Pi.hom_ext cannot fire through the buried sigma-decomposition.
-  That is right about the DEGREEWISE CONSTRUCTION, and the construction is the mistake.
-
-
-  LANDED, sorry-free: cech_pushforward_baseChange_natIso_of_isIso builds the SAME
-  cosimplicial isomorphism by whiskering the natural transformation cechOuterBC (=
-  openImmersion_bareBC at the OUTER square; that lemma needs no open immersion and
-  no flatness despite its name). Both sides are DEFEQ to N >> (a composite), rfl-checked
-  both ways, so Functor.whiskerLeft gives the map and its coface compatibility IS
-  the mate''s own naturality. NO NATURALITY OBLIGATION. Then isIso_app_pi_of_isIso_app
-  (landed) reduces the residue to one IsIso per index tuple.
-
-
-  WHAT IS OPEN, with the trap named: IsIso (cechOuterBC.app (pushPullObj F (Over.mk
-  j_sigma))). The file HAS an iso with those endpoints (pushPullObj_coverInter_baseChange)
-  but an iso between two objects is NOT IsIso of a specific map -- the recorded groups-agree-vs-maps-agree
-  error.
-
-
-  ROUTE, identified not built: mateEquiv_vcomp splits the mate of a vertically composed
-  square. Stack the inner square over U_sigma on the outer square h: the composite
-  is the square for j_sigma >> f : U_sigma -> S, between AFFINE schemes, where flat
-  base change is the sorry-free affinePushforwardPullbackBaseChange; the inner factor
-  is openImmersion_beckChevalley, already sorry-free.
-
-
-  DO THIS LEAF FIRST, before the twisted sibling.'
-status: pending
+  '
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -56,6 +34,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc.cosimplicial
-  updated_at: '2026-07-28T13:48:32.084214+00:00'
+  updated_at: '2026-07-28T16:53:29.535519+00:00'
   pinned_commits:
   - 672a8c656
+  owner: ajc-fbc

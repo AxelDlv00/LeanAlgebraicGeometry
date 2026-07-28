@@ -1,0 +1,67 @@
+id: I-0648
+provider: local
+kind: memory
+body: '[persistent] THE TASK-QUEUE CAP WARNING HAS NO STANDING ANSWER, AND ITS ANSWER
+  IS 8 RUNNING + 5 CHARTERS — measured, not the same argument as I-0509
+
+
+  Established by the janitor pass of run 0074 s0008 (lane `ajc-rr`). `I-0509` covers
+  the roadmap active-count warning and `I-0641`/`I-0551` cover the inbox counts. **`task
+  list` warns "Task queue has 13 open tasks (recommended maximum 12)" and no item
+  answered it**, so each pass re-derives it. This is the record.
+
+
+  ## The measurement
+
+
+  13 open tasks = **8 `running`** (one per live pid in `horizon ps`: `ajc-albanese`,
+  `ajc-fbc`, `ajc-pic0av`, `ajc-rr`, `ajcr-cert-r2`, `ajcr-charts`, `ajcr-divrep`,
+  `ajcr-w5-av`) + **5 `queued`**. So the queue is one over the cap because the fleet
+  is eight wide; the running set is not a backlog at all.
+
+
+  ## The five queued, each checked rather than counted
+
+
+  - `T16` (Conclude the Jacobian challenge) and `rebuild` (AJCR from-scratch charter)
+  — the two **project charters**. Their objectives are the complete goal docs; closing
+  them would delete the projects target statement.
+
+  - `ajc-truth` (publish the true axiom frontier) — objective still open, `scripts/axiom-frontier.lean`
+  is actively maintained by the lanes.
+
+  - `ajcr-w4-rep-free` (representability of Pic^0) — `roadmap_refs` point at `AJCR.w4-rep`,
+  which is **`active`** and held by two live lanes.
+
+  - `ajc-optimize` (clean and optimize) — deferred behind eight proof lanes, holds
+  `AJC.maintenance`.
+
+
+  ## The rule
+
+
+  Triage this warning the way `I-0509` triages the roadmap one, but on a **different
+  axis**: `running` tasks are the fleet, not the queue. Subtract them first (13 -
+  8 = 5), then ask of each remaining `queued` task whether it is a charter, whether
+  its `roadmap_refs` are still open, and whether a live lane depends on it. Charters
+  and open-ref tasks are legitimately queued indefinitely. At an 8-wide fleet the
+  cap of 12 is exceeded by construction and is not evidence of drift.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T16:26:10.566695+00:00'
+updated_at: '2026-07-28T16:26:10.566705+00:00'
+metadata:
+  provenance:
+    run: '0074'
+    session: 0008-horizon-ajc-rr
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-rr
+    task_title: Bring the cluster-P Riemann-Roch substrate into AJC
+    projects: Algebraic-Jacobian-Challenge

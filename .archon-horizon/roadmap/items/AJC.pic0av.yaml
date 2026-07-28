@@ -2,9 +2,30 @@ id: AJC.pic0av
 title: Pic^0 is an abelian variety (A.3)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Upgrade the Picard identity component to an abelian variety of dimension
-  g. Open work is the cotangent and H1 dimension comparison, smoothness and properness,
-  and the degree-zero point description.
+summary: "Pic^0 is an abelian variety of dimension g (A.3 leg of Route A).\n\nWHERE\
+  \ THE LEG STANDS after run 0067 r5. The abelian-variety ASSEMBLY is sorry-free\n\
+  (Pic0.isAbelianVariety); every remaining obligation is a named leaf, and each of\
+  \ the\nfour fronts has been reduced at least once this run.\n\n (a) tangent / H1\
+  \ (AJC.pic0av.tangent): ONE open statement, the geometric cocycle\n     comparison\
+  \ at Pic0AbelianVariety.lean:805 -- clause (iii), sending a dual-number\n     kernel\
+  \ class to its transition unit. Clauses (i) and (ii) closed in r3/r4; the\n    \
+  \ linearity bookkeeping is discharged (finrank_eq_of_addEquiv_of_bijective_smul),\n\
+  \     and the SCALAR dimension identity dim T_0 = g is proved FROM it.\n\n (b) smooth\
+  \ / proper (AJC.pic0av.structure): both are assemblies now. Smoothness\n     reduces\
+  \ to GeometricallyReduced and thence to reducedness over k-bar ALONE\n     (smooth_of_isReduced_algebraicClosureBaseChange,\
+  \ which also discharges the\n     geometricallyReduced sorry). Properness reduces\
+  \ to UniversallyClosed, attackable\n     three ways: from the ambient Pic, by fpqc\
+  \ descent to k-bar, or by the VALUATIVE\n     criterion -- the last needing no quasi-projectivity\
+  \ vocabulary, which is what\n     I-0074 Caveat 2 says mathlib lacks.\n\n (c) degree\
+  \ / dimension (AJC.pic0av.identity): PicScheme.degree constructed (r4). The\n  \
+  \   dimension statement is reduced to ONE uniform bound in r5 -- see that child;\
+  \ the\n     \"no topologicalKrullDim API\" pricing was a mis-measurement of the\
+  \ API surface\n     rather than the definition, and the >= half is now proved from\
+  \ the identity alone.\n\n (d) AJC.rr.principal: CLOSED in r4 (principal_degree_zero,\
+  \ at its original binders).\n\nMEASUREMENT DISCIPLINE for this node: smooth/proper\
+  \ quantify over [HasPicScheme C],\nwhich the caller discharges, so they report CLEAN\
+  \ axioms at the declaration. Measure at\na SYNTHESIS site (scripts/axiom-frontier.lean)\
+  \ or the number is not true.\n"
 status: active
 kind: proof
 priority: normal
@@ -17,6 +38,6 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:42.107460+00:00'
-  updated_at: '2026-07-28T04:02:03.169902+00:00'
+  updated_at: '2026-07-28T16:19:53.387729+00:00'
   parent: AJC.jacobian
   owner: ajc-pic0av

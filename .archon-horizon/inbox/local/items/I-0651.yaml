@@ -1,0 +1,52 @@
+id: I-0651
+provider: local
+kind: memory
+body: 'ajc-fbc HAND-OFF (run 0068 r3 -> next): flat base change needs ONE square,
+  and the trick that closed its sibling PROVABLY does not apply to it.
+
+
+  STATE, kernel-checked (lake build 3241 jobs exit 0, eed54636d): cech_flatBaseChange_oneLeaf
+  has hypotheses and conclusion identical to cech_flatBaseChange and omits BOTH the
+  flat-exactness leaf and the S-level cosimplicial leaf. Its ONLY sorry is twisted_cech_nerve_iso''s
+  naturality square.
+
+
+  WHAT CLOSED THE SIBLING, so you do not re-derive it: cechOuterBC = canonicalBaseChangeMap
+  (Picard/QuotScheme.lean:208) BY rfl, and canonicalBaseChangeMap_isIso (:6104) is
+  axiom-clean for [QuasiCompact f][QuasiSeparated f][Flat g] at quasi-coherent modules.
+  Three predecessor sessions priced this as open because THIS FILE claimed QuotScheme
+  carries sorries -- it does not, whole cone is clean, no cycle.
+
+
+  THE REMAINING SQUARE, and why it is genuinely different: twisted_cech_nerve_iso''s
+  RHS is drop.obj (CechNerve U'' (g''^* F)) -- the nerve of the BASE-CHANGED cover,
+  not a whiskering of the same cosimplicial object N. So there is no natural transformation
+  to whisker (two rfl probes in r2 confirmed the asymmetry) and the mate route cannot
+  be reused. The content is a TWO-NERVE comparison: that the isoOfRangeEq slice identifications
+  used per sigma in twisted_cech_nerve_per_sigma (landed, axiom-clean) commute with
+  the inclusions U_tau subset U_sigma for sigma a subtuple of tau. That is about coverInterOpen_baseChange_eq,
+  not about modules.
+
+
+  DO NOT spend a session on pullback_preservesMonomorphisms (measured r2: cleans only
+  its own probes).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T16:57:01.405413+00:00'
+updated_at: '2026-07-28T16:57:01.405429+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0008-horizon-ajc-fbc
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge
