@@ -181,6 +181,12 @@ import AlgebraicJacobian.Picard.SchematicSupport
 import AlgebraicJacobian.Picard.TensorSectionFormula
 import AlgebraicJacobian.Picard.LineBundleCoherence
 import AlgebraicJacobian.RiemannRoch.WeilDivisor
+-- AJC.rr.principal carrier comparisons (2026-07-28): the two index sets used for
+-- divisors on a curve agree (X.PrimeDivisor ≃ non-generic points, ajc-rr), lifted to
+-- divisors and their degree — the first of the two mismatches costing the sibling
+-- χ-ledger port. Rooted here per I-0362: a module with no importer is never elaborated.
+import AlgebraicJacobian.RiemannRoch.CurveCoheight
+import AlgebraicJacobian.RiemannRoch.CurveDivisorIndexBridge
 -- Adelic Riemann-Roch lane (2026-07-07): Weil repartitions as the concrete
 -- 2-affine-cover cokernel; keystone = H^1(C, O_C) finiteness via a finite map
 -- to P^1 (design: RiemannRoch_Adelic blueprint chapter).
@@ -227,6 +233,11 @@ import AlgebraicJacobian.RiemannRoch.Adelic.ResidueField
 -- hypothesis routed through `chi_add` measures `chi_add`, not the hypothesis
 -- (scripts/axiom-frontier.lean §2b records a retraction of exactly that shape).
 import AlgebraicJacobian.RiemannRoch.Adelic.ChiUnconditional
+-- 2026-07-28 (ajc-rr, request I-0547): the chart-finiteness binder of those refutations is
+-- UNSATISFIABLE on a curve — one instance at D = 0 forces K(X)/k finite — so `hbump` and the
+-- closed ledger are OPEN there rather than refuted. Rooted so the refutation-of-the-refutation
+-- is elaborated alongside what it corrects.
+import AlgebraicJacobian.RiemannRoch.Adelic.ChartFinitenessRefuted
 import AlgebraicJacobian.RiemannRoch.Adelic.UniformChartVanishing
 import AlgebraicJacobian.RiemannRoch.CurveBaseChange
 import AlgebraicJacobian.RiemannRoch.CohomologyKit
