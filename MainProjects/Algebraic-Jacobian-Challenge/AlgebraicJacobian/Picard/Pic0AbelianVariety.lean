@@ -1287,6 +1287,87 @@ theorem universallyClosed {k : Type u} [Field k]
     UniversallyClosed (Pic0Scheme C).hom :=
   sorry
 
+/-- **Universal closedness of `Pic⁰_{C/k}` from the VALUATIVE criterion** — proved (run 0067
+r3), and this route needs no quasi-projectivity vocabulary at all.
+
+The recorded expectation at `universallyClosed` above is that the obligation would have to be
+discharged by base change to `k̄`, "rather than by formalising quasi-projectivity from
+scratch" — the standing caveat (inbox I-0074, Caveat 2) being that mathlib v4.31 has no
+quasi-projectivity API, which is exactly the vocabulary Kleiman §5 Thm.~`th:qpp&p` uses.
+
+There is a third route, and it is the standard one for properness: the **valuative
+criterion** (Stacks 01KF). Mathlib has it as
+`UniversallyClosed.of_valuativeCriterion`, which needs
+
+* `[QuasiCompact (Pic0Scheme C).hom]` — already a theorem of this file, `quasiCompact`
+  (Kleiman §5 Lem.~`lem:agps`(3), landed since run 0009);
+* `ValuativeCriterion.Existence (Pic0Scheme C).hom` — the hypothesis here.
+
+So universal closedness needs no projectivity, no Chevalley–Rosenlicht structure theorem and
+no ruling out of `𝔾_m → Pic⁰_{C/k̄}`; it needs *lifting*. Concretely
+`ValuativeCriterion.Existence` says: for every valuation ring `R` with fraction field `K`,
+every square
+
+```
+Spec K ⟶ Pic⁰_{C/k}
+  |            |
+  ↓            ↓
+Spec R ⟶   Spec k
+```
+
+admits a lift `Spec R ⟶ Pic⁰_{C/k}`.
+
+WHY THIS IS THE RIGHT SHAPE FOR THIS PROJECT, and the reason it is worth stating even though
+the hypothesis is still open. Through representability (`PicScheme.representable`) a
+`Spec R`-point of the Picard scheme *is* a relative Picard class on `C ×_k Spec R`, so the
+lifting statement translates into the concrete algebraic assertion that an invertible sheaf on
+`C ×_k Spec K` extends over the valuation ring — which is the classical content of properness
+of the Picard scheme, and is the kind of statement the tangent/chart machinery of this chapter
+already speaks about (compare `DualNumber.free_of_cyclic_mod_eps`, which is the same species
+of extension statement for the square-zero thickening `k[ε] → k`). The quasi-projectivity
+route, by contrast, requires vocabulary that does not exist in the pinned mathlib.
+
+Not claimed: the existence half is *not* proved here. What is established is that properness
+of `Pic⁰` reduces to it with nothing else outstanding — see `proper_of_valuativeCriterion`
+below, where all three other conjuncts are discharged from theorems of this file. -/
+theorem universallyClosed_of_valuativeCriterion {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    (h : ValuativeCriterion.Existence (Pic0Scheme C).hom) :
+    UniversallyClosed (Pic0Scheme C).hom := by
+  haveI : QuasiCompact (Pic0Scheme C).hom := quasiCompact C
+  exact UniversallyClosed.of_valuativeCriterion _ h
+
+/-- **Properness of `Pic⁰_{C/k}` from the valuative existence criterion alone** — proved
+(run 0067 r3). The sharpest properness reduction in this file, and the only one whose
+hypothesis is a statement mathlib has vocabulary for.
+
+Every conjunct of `IsProper` other than the valuative lifting is a theorem of this file:
+
+* `IsSeparated` — `isSeparated` (clopen mono into the separated ambient `Pic`);
+* `LocallyOfFiniteType` — `locallyOfFiniteType` (Kleiman §5 Lem.~`lem:agps`);
+* `QuasiCompact` — `quasiCompact` (same lemma, second conjunct);
+* `UniversallyClosed` — `universallyClosed_of_valuativeCriterion` above, from the hypothesis.
+
+Compare the two earlier reductions in this file. `proper_of_universallyClosed` leaves
+universal closedness of `Pic⁰` open; `proper_of_ambient_universallyClosed` moves it to the
+ambient `Pic_{C/k}`, where Kleiman argues — but *his* argument is the quasi-projectivity one,
+whose vocabulary is missing. This version replaces that residue with a lifting statement,
+which is both formalisable in the pinned mathlib and the classical content of properness. -/
+theorem proper_of_valuativeCriterion {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    (h : ValuativeCriterion.Existence (Pic0Scheme C).hom) :
+    IsProper (Pic0Scheme C).hom := by
+  haveI : IsSeparated (Pic0Scheme C).hom := isSeparated C
+  haveI : LocallyOfFiniteType (Pic0Scheme C).hom := locallyOfFiniteType C
+  haveI := universallyClosed_of_valuativeCriterion C h
+  constructor
+
 /-- **Universal closedness of `Pic⁰_{C/k}` from that of the ambient `Pic_{C/k}`** — proved
 (run 0067), and this is the reduction that removes the identity component from the problem
 entirely.
