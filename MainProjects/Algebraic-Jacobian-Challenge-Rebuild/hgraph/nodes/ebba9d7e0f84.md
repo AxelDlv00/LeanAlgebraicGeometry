@@ -33,7 +33,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.mem_chartLocus_of_witness_h1
 type: lean
-updated: '2026-07-29T00:02:39'
+updated: '2026-07-29T03:41:56'
 ---
 theorem mem_chartLocus_of_witness_h1 {T : Over (Spec (.of k))} (lam : picEt C T) (t : T.left)
     (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
@@ -57,3 +57,8 @@ theorem mem_chartLocus_of_witness_h1 {T : Over (Spec (.of k))} (lam : picEt C T)
 /-! ## Producing the witness from a degree threshold -/
 
 variable (C) in
+/-- **Coverage from a vanishing threshold at the splitting field.**  The theorem is TRUE and
+correctly proved; the paragraph that described `hb` as "DAT-0a's threshold, so the twist exponent
+is *derived*" was WRONG and is retracted below.
+
+`hb`: every divisor of degree `≥ b` on `C_L` has vanishing `H¹`.  `hdeg`: the twisted presenting

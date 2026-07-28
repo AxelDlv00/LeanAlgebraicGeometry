@@ -74,15 +74,20 @@ be used at the overlap with no transport. That reduction is the whole reason thi
   measurement: the first is `rfl`, the second is **not** (it needs `Spec.map_id`), which is why
   (3c) is a genuine object transport and not free. See that docstring for the retraction it forces.
 
-## What this file deliberately does NOT contain
+## What this file does not contain — and where it now lives (updated)
 
 An identification of `relCurveMap C k[ε] k` with `(C ◁ overDualNumberZero k).left`. Those two have
-**different types** — a kernel check refuted the attempt — because their sources are the monoidal
-unit and `overSpec k k` respectively, which are equal objects but not definitionally equal. Building
-that transport is (3c), left to a successor with the diagnosis recorded rather than attempted
-blind; `informal/w5-t4-worksheet.md` §6.23.
+**different types** — a kernel check refuted the naive attempt — because their sources are the
+monoidal unit and `overSpec k k` respectively, which are equal objects but not definitionally equal.
 
-Reference: `informal/w5-t4-worksheet.md` §§6.20(3a), 6.23.
+**That transport, (3c), is now BUILT**: `Tangent/DualNumberUnitTransport.lean`
+(`overDualNumberZero_eq`, `whiskerLeft_overDualNumberZero_left`, `isIso_transportLeft`). The seam
+turned out to be an **isomorphism** `Over.mk (𝟙 (Spec k)) ≅ overSpec k k` rather than an `eqToHom`,
+so it travels in both directions; see `informal/w5-t4-worksheet.md` §6.26. The measurements below
+(`ofHom_algebraMap_self_eq_id`, `specMap_algebraMap_self_eq_id`) are what that file consumes, and
+they remain the honest record of why (3c) was not free.
+
+Reference: `informal/w5-t4-worksheet.md` §§6.20(3a), 6.23, 6.26.
 -/
 
 set_option autoImplicit false
@@ -276,10 +281,13 @@ consequently `relCurveMap C k[ε] k` and `(C ◁ overDualNumberZero k).left` hav
 `rfl` attempt with exactly that type mismatch.
 
 **This retracts `informal/w5-t4-worksheet.md` §6.22's claim that (3c) "is the same `rfl`" and that
-item (3) is "two sub-items, not three".** It is three, and the third needs an object transport (an
-`eqToHom`/`Over.isoMk` along `Spec.map_id`, then a whiskering-congruence), which is deliberately
-**not** built here: see §6.23. What is true and useful is the ring-level half below plus
-`overSpecMap_eps_eq_overDualNumberZero` above, which is where the `ε ↦ 0` content actually lives. -/
+item (3) is "two sub-items, not three".** It is three, and the third needs an object transport,
+which is not built here but **is** built in `Tangent/DualNumberUnitTransport.lean` — as an
+`Over.isoMk` along `Spec.map_id` plus a whiskering congruence, with **no `eqToHom`** (the two source
+objects share their underlying scheme, so only the structure-morphism triangle needs `Spec.map_id`);
+worksheet §6.26. What is true and useful here is the ring-level half below plus
+`overSpecMap_eps_eq_overDualNumberZero` above, which is where the `ε ↦ 0` content actually lives and
+which that transport consumes. -/
 theorem ofHom_algebraMap_self_eq_id :
     CommRingCat.ofHom (algebraMap k k) = 𝟙 (CommRingCat.of k) :=
   rfl

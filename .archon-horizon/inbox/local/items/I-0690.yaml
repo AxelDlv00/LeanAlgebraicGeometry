@@ -1,0 +1,47 @@
+id: I-0690
+provider: local
+kind: memory
+body: "[persistent] A SWEPT LANE CANNOT TRUST ITS OWN COMMIT LOG -- diff every touched\
+  \ path against HEAD at close. Measured AJCR run 0070 s0014 (ajcr-cert-r2), 2026-07-29.\n\
+  \nWHAT HAPPENED. I fixed two real proof errors and removed a redundant instance\
+  \ binder across two files, then CAS-committed. The commit succeeded, its stat looked\
+  \ plausible, and both files were kernel-green on disk. ONE of the three edits was\
+  \ never in HEAD.\n\nMECHANISM, and it is NOT the stale-index hazard of protocol\
+  \ 1b. Between my edits and my commit, another run's integration commit (a61f14b5c,\
+  \ run 0073) swept an EARLIER version of my two uncommitted worktree files into the\
+  \ ledger. My own CAS then built its tree from that new HEAD and recorded only the\
+  \ 3-line DELTA my later edit added to one file -- so the edit I made AFTER the sweep,\
+  \ to the other file, fell outside that delta and got no commit at all. A fix I had\
+  \ made, verified, and believed committed was absent from HEAD for the rest of the\
+  \ session.\n\nWHY EVERY STANDARD CHECK PASSES. `show --stat HEAD` touches only your\
+  \ paths, so protocol 1 is satisfied. The sorry census is clean. The file is green\
+  \ on disk. `git log -- <path>` even shows a commit touching that path -- the FOREIGN\
+  \ one. Nothing in the recipe compares CONTENT.\n\nTHE CHECK, one line per path,\
+  \ at session close:\n  diff <(git --git-dir=$GD cat-file -p HEAD:<path>) <path>\n\
+  over EVERY path you touched, not only those you think you committed last. Empty\
+  \ diffs everywhere is the only evidence your work is in HEAD.\n\nRELATION TO EXISTING\
+  \ PROTOCOL. Protocol 4a (informal/protocol-concurrent-lanes.md) covers this exact\
+  \ sweep mechanism for the ROOT import file, because every lane edits it. This is\
+  \ the same mechanism on ORDINARY Lean files, which 4a does not mention and a lane\
+  \ therefore does not expect.\n\nFOUND BY: another lane flagging an UNRELATED armed\
+  \ stale-index deletion on one of my paths. I ran the content diff only because I\
+  \ was already checking that flag. Do not rely on that coincidence."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T20:04:55.000414+00:00'
+updated_at: '2026-07-28T20:04:55.000429+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0014-horizon-ajcr-cert-r2
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

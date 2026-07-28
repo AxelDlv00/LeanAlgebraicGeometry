@@ -23,13 +23,13 @@ body: "ajcr-charts HANDOFF (run 0072 s0008 -> next): ONE brick, cold-developable
   (present on disk AND in HEAD, so nothing lost yet). Theirs to clear."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T17:29:56.536292+00:00'
-updated_at: '2026-07-28T17:29:56.536306+00:00'
+updated_at: '2026-07-28T19:45:18.790916+00:00'
 metadata:
   provenance:
     run: '0072'
@@ -40,3 +40,5 @@ metadata:
     task: ajcr-charts
     task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
     projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-charts

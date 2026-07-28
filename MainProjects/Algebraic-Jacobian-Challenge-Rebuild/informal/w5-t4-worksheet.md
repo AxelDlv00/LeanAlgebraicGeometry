@@ -1666,7 +1666,75 @@ second time today, and the reason is worth naming: I struck the *worksheet* pros
 Lean docstrings as a separate artifact. They are not — **a docstring is the copy a consumer actually
 reads.** When retracting, grep the retracted sentence across `.lean` files too, not only the notes.
 
-**Residue after this section, unchanged in substance and better sized:** **(3c)** the object
-transport, **(iii-c2-aff-geo)**, and — newly explicit — the two named consumer inputs
-(`V₀ ≠ ⊥ ∧ V₀ ≠ ⊤`, and `Surjective f.base` at the `ε ↦ 0` map) which are satisfiable, unwitnessed in
-the tree, and now each have a producer or a named owner.
+**Residue after this section, unchanged in substance and better sized:** ~~**(3c)** the object
+transport~~ (**CLOSED, §6.26**), **(iii-c2-aff-geo)**, and — newly explicit — the two named consumer
+inputs (`V₀ ≠ ⊥ ∧ V₀ ≠ ⊤`, and `Surjective f.base` at the `ε ↦ 0` map) which are satisfiable,
+unwitnessed in the tree, and now each have a producer or a named owner.
+
+### 6.26 (3c) IS CLOSED — the seam is an ISO, and the only obstacle was a spelling
+
+*Run 0073 r5, `Tangent/DualNumberUnitTransport.lean`, `lake env lean` EXIT=0 with zero diagnostics.
+Written after the Lean this once and saying so: §6.23 had already done the worksheet-first work —
+it named the obligation, diagnosed it to the exact step, and prescribed a route. What follows
+records where that prescription was right, where it over-priced, and where it under-priced.*
+
+**THE STATEMENT.** With `unitIso k : Over.mk (𝟙 (Spec k)) ≅ overSpec k k`:
+
+```
+overDualNumberZero k = (unitIso k).hom ≫ overSpecMap k[ε] k          -- overDualNumberZero_eq
+(C ◁ overDualNumberZero k).left = transportLeft C ≫ relCurveMap C k[ε] k
+                                                     -- whiskerLeft_overDualNumberZero_left
+IsIso (transportLeft C)                                     -- isIso_transportLeft
+```
+
+The second is *exactly* the identification §6.24 isolated as **"the step that turns two aligned
+diagrams into one commuting one"** — the engine's arrow reaches the base through `relCurveMap`,
+item (1)'s reaches it through the `ε ↦ 0` scheme morphism, and this is the equation between them.
+
+**WHERE §6.23's PRESCRIPTION OVER-PRICED.** It said *"`eqToHom`/`Over.isoMk` along `Spec.map_id`,
+then a whiskering congruence"*. **The `eqToHom` half is never needed.** The two source objects have
+the *same underlying scheme* `Spec k` — that much **is** `rfl`, and `Over.isoMk (Iso.refl _)` takes
+the left component. `Spec.map_id` is spent on one thing only: the structure-morphism triangle
+`𝟙 ≫ Spec.map (ofHom (algebraMap k k)) = 𝟙`. And the whiskering congruence is `whiskerLeft_comp`
+plus the landed **(3b)** reversed. Total: three short lemmas.
+
+Worth naming because it is the *mirror* of this lane's usual error. The habitual failure is
+under-pricing (a claimed `rfl` that isn't). Here the retraction that corrected an under-pricing
+went on to over-price the repair — a diagnosis reached under the sting of being wrong reached for
+the heaviest available tool. **A retraction is not automatically a correct re-estimate.**
+
+**WHERE IT UNDER-PRICED, AND THIS IS THE USEFUL HALF.** §6.23 described (3c) as *a transport*, which
+suggests a one-directional rewrite. It is an **isomorphism** (`isIso_transportLeft`): whiskering an
+iso is an iso, and `Over.forget` carries that to schemes. So a consumer may travel the seam in
+**either** direction — and a kernel comparison *must*, since "dies after pullback ⟺ dies before" is
+a two-way statement. An `eqToHom`-shaped mental model would have obtained the forward rewrite and
+left the reverse looking like new work.
+
+**THE ONE REAL OBSTACLE, and it was not mathematics.** The composite with `relCurveMap` is
+`rfl`-equal to the whiskering spelling, but `rw` refuses it:
+
+```
+Application type mismatch: relCurveMap C k[ε] k has type relCurve C k ⟶ relCurve C k[ε]
+  but is expected to have type (C ⊗ overSpec k k).left ⟶ relCurve C k[ε]
+Note: The target expression is not type-correct under the `instances` transparency level
+```
+
+`(C ⊗ overSpec k k).left = relCurve C k` **is** `rfl` (measured), so the goal is type-correct and
+that message names a *spelling*, not a defect — inbox `I-0685`'s trap, met here for the first time
+in this lane. Fixed by giving the transport a **definition whose declared type already ends in
+`relCurve C k`**; both spellings then coexist, `_left'` (whiskering) proving `_left` (relCurveMap)
+by term with no transport at all.
+
+> **Rule, and it is the (3b)/(3c) pair read together.** §6.22's rule was *unfold to the `RingHom`
+> and try `rfl` at every level*. Add: **when `rw` reports a type mismatch on terms you believe are
+> `rfl`-equal, test that belief with `example : lhsType = rhsType := rfl` before concluding the goal
+> is malformed.** Two `rfl` outcomes with opposite meanings live one line apart here — the objects
+> `overSpec k k` vs the unit are genuinely **not** defeq (that is (3c)), while the *carriers*
+> `(C ⊗ overSpec k k).left` vs `relCurve C k` **are** (that is the spelling). Confusing the two costs
+> either a false claim or an invented obstacle.
+
+**T4's residue after §6.26 — one statement plus two named consumer inputs.** **(iii-c2-aff-geo)**
+("L restricts trivially along `ε ↦ 0`" ⟹ "the chart module's reduction `M/(ε)M` is cyclic"), carried
+as the `hcyc` binder of `Opens.cechPicMap_ι_eq_one_of_dualNumberChart_of_cyclic` and open in the AJC
+sibling too; plus `V₀ ≠ ⊥ ∧ V₀ ≠ ⊤` and `Surjective f.base` at `ε ↦ 0`, both satisfiable and both
+still unwitnessed.

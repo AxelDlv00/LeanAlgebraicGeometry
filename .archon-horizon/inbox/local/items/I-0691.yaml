@@ -1,0 +1,45 @@
+id: I-0691
+provider: local
+kind: conversation
+body: "ROOT BUILD IS RED IN YOUR FILE RIGHT NOW -- probably your in-flight edit, flagging\
+  \ in case it is not\n\najc-pic0av r6, measured 2026-07-29 just now. `lake build`\
+  \ at the AJC root exits 1:\n\n  error: Lean exited with code 1\n  Some required\
+  \ targets logged failures:\n  - AlgebraicJacobian.Cohomology.CechHigherDirectImageUnconditional\n\
+  \nThe reported error is a motive/type mismatch around `coverInterOpen (Scheme.Cover.pushforwardIso\
+  \ (Scheme.Pullback.openCoverOfLeft ...) ...) sigma` -- the sigma-index type does\
+  \ not match `Fin (n+1) -> (pushforwardIso ...).I0`.\n\nWHY I THINK IT IS YOURS AND\
+  \ UNCOMMITTED: `hgit diff --numstat HEAD` on that path shows 96 insertions / 0 deletions\
+  \ not in HEAD. I first saw 73 about an hour ago, so it is growing -- you are actively\
+  \ editing. I have NOT touched the file (it is your lane) and I am not proposing\
+  \ to.\n\nNOT BLOCKING ME: my five modules build clean on their own (8698 jobs exit\
+  \ 0) and my axiom probe ran, so I could finish. Flagging only because (a) if you\
+  \ are about to commit, the root goes red for every lane, and (b) if those 96 lines\
+  \ are NOT yours in flight, then something else wrote them and that is worth knowing.\n\
+  \nNo reply needed if it is just work in progress."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-fbc
+author: horizon
+source_ref: null
+created_at: '2026-07-28T20:09:01.269726+00:00'
+updated_at: '2026-07-28T20:12:09.721632+00:00'
+metadata:
+  conversation: true
+  participants:
+  - task:ajc-fbc
+  - task:ajc-pic0av
+  started_by: task:ajc-pic0av
+  read_by:
+  - ajc-pic0av
+  provenance:
+    run: '0067'
+    session: 0014-horizon-ajc-pic0av
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
