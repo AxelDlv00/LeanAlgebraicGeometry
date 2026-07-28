@@ -1541,4 +1541,95 @@ theorem leakEndpoint_cech_flatBaseChange_qcoh {S S' X X' : Scheme.{u}}
 #print axioms cech_flatBaseChange
 #print axioms cechComplex_baseChange_iso
 
+/-! ### §6g. THE S-LEVEL COSIMPLICIAL LEAF IS CLOSED (run 0068 r3) — which of the §6d lines move
+
+`cech_pushforward_baseChange_natIso` was one of the two `sorry`s behind every line of §6d.  It is
+now fully replaced by `cech_pushforward_baseChange_natIso_flat`, because the per-σ mate obligation
+turned out to be an existing theorem: `cechOuterBC f g f' g' h` is *definitionally*
+`canonicalBaseChangeMap h` (`Picard/QuotScheme.lean`, `rfl`), and `canonicalBaseChangeMap_isIso`
+proves that mate invertible at quasi-coherent modules with no `sorry`.
+
+What to expect from the four lines below, and read them as a *pair of pairs*:
+
+* `leakProbe_bcNatIso_flat` and `leakProbe_isIso_nerveObj` are the new closures: **clean**.  These
+  are the whole of `AJC.fbc.cosimplicial.pushforward`.
+* `leakEndpoint_cech_flatBaseChange_oneLeaf` still reports `sorryAx`, and that is CORRECT and is the
+  point of the section: exactly one leaf is left, `twisted_cech_nerve_iso`'s naturality square.  Its
+  value as a measurement is in comparison with `leakEndpoint_cech_flatBaseChange_qcoh` above — same
+  statement, two leaves — so a future session that closes the twisted square can check its work by
+  this line turning clean *without any other edit*.
+* `leakProbe_twistedNerve_perSigma` is clean, which is the honest statement that the twisted leaf's
+  *geometric* content is done and only the cosimplicial square remains.
+
+Do not read a clean line here as "flat base change holds"; §6b's caution applies unchanged. -/
+
+noncomputable def leakProbe_bcNatIso_flat {S S' X X' : Scheme.{u}}
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [QuasiSeparated f]
+    [IsSeparated f] [IsAffine S]
+    (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [∀ i, IsAffine (𝒰.X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent) :
+    ((CosimplicialObject.whiskering S.Modules S'.Modules).obj
+        (Scheme.Modules.pullback g)).obj
+      (((CosimplicialObject.whiskering X.Modules S.Modules).obj
+          (Scheme.Modules.pushforward f)).obj
+        (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)))
+      ≅ ((CosimplicialObject.whiskering X'.Modules S'.Modules).obj
+          (Scheme.Modules.pushforward f')).obj
+        (((CosimplicialObject.whiskering X.Modules X'.Modules).obj
+            (Scheme.Modules.pullback g')).obj
+          (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F))) :=
+  cech_pushforward_baseChange_natIso_flat f g f' g' h 𝒰 F hF
+
+theorem leakProbe_isIso_nerveObj {S S' X X' : Scheme.{u}}
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [QuasiSeparated f]
+    [IsSeparated f] [IsAffine S]
+    (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [∀ i, IsAffine (𝒰.X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent) (n : SimplexCategory) :
+    IsIso ((cechOuterBC f g f' g' h).app
+      ((CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).obj n)) :=
+  isIso_cechOuterBC_nerve_obj f g f' g' h 𝒰 F hF n
+
+/-- The twisted leaf's per-σ geometric content, expected clean: what is left there is the
+cosimplicial square, not the Beck–Chevalley identification. -/
+noncomputable def leakProbe_twistedNerve_perSigma {S S' X X' : Scheme.{u}}
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [IsSeparated f] [IsAffine S]
+    [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent)
+    {κ : Type} [Finite κ] [Nonempty κ] (σ : κ → 𝒰.I₀) :
+    (Scheme.Modules.pullback g').obj
+        (pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))) ≅
+      pushPullObj ((Scheme.Modules.pullback g').obj F)
+        (Over.mk (Scheme.Opens.ι (coverInterOpen
+          ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+            h.isoPullback.symm.hom) σ))) :=
+  twisted_cech_nerve_per_sigma f g f' g' h 𝒰 F hF σ
+
+/-- **The endpoint with ONE leaf.**  Expected `sorryAx` — from `twisted_cech_nerve_iso`'s
+naturality square and nothing else.  Compare `leakEndpoint_cech_flatBaseChange_qcoh`: identical
+statement, two leaves. -/
+theorem leakEndpoint_cech_flatBaseChange_oneLeaf {S S' X X' : Scheme.{u}}
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f]
+    [IsAffine S] [IsAffine S']
+    (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [∀ i, IsAffine (𝒰.X i)]
+    [Finite ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+      h.isoPullback.symm.hom).I₀]
+    [∀ i, IsAffine (((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+      h.isoPullback.symm.hom).X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent) (i : ℕ) :
+    Nonempty ((Scheme.Modules.pullback g).obj (cechHigherDirectImage f 𝒰 F i) ≅
+      cechHigherDirectImage f'
+        ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso h.isoPullback.symm.hom)
+        ((Scheme.Modules.pullback g').obj F) i) :=
+  cech_flatBaseChange_oneLeaf f g f' g' h 𝒰 F hF i
+
+#print axioms leakProbe_bcNatIso_flat
+#print axioms leakProbe_isIso_nerveObj
+#print axioms leakProbe_twistedNerve_perSigma
+#print axioms leakEndpoint_cech_flatBaseChange_oneLeaf
+#print axioms cech_pushforward_baseChange_natIso_flat
+#print axioms canonicalBaseChangeMap_isIso
+
 end AlgebraicGeometry

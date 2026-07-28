@@ -12913,7 +12913,7 @@ of an affine open-immersion cover of a separated scheme.
 
 \begin{lemma}[Beck--Chevalley natural iso through the {\v C}ech nerve]\leanok
   \label{lem:cech_pushforward_baseChange_natIso}
-  \lean{AlgebraicGeometry.cech_pushforward_baseChange_natIso}
+  \lean{AlgebraicGeometry.cech_pushforward_baseChange_natIso_flat}
   \uses{lem:affine_pushforward_pullback_baseChange, lem:pushPullObj_iso_tilde,
         def:cech_nerve_cosimplicial, def:push_pull_functor}
   Let \(f : X \to S\) be \emph{separated} with affine base \(S = \operatorname{Spec} R\),
@@ -12935,7 +12935,8 @@ of an affine open-immersion cover of a separated scheme.
         lem:pushforward_spec_tilde_iso,
         lem:pullback_spec_tilde_iso, lem:cancelBaseChange_mathlib,
         lem:pushPull_sigma_iso, lem:pushpullobj_coverinter_basechange,
-        def:cech_nerve_cosimplicial, def:push_pull_functor}
+        def:cech_nerve_cosimplicial, def:push_pull_functor,
+        thm:quot_canonical_basechange_isIso, lem:openimm_beckchevalley}
   The natural isomorphism is built degreewise. Fix a cosimplicial degree \(n\) and work over
   the affine base \(S = \operatorname{Spec} R\). The degree-\(n\) comparison is between
   \(g^*\bigl(f_*(\operatorname{pushPullObj}\mathcal{F}\, Y_n)\bigr)\) and
@@ -12972,6 +12973,18 @@ of an affine open-immersion cover of a separated scheme.
       naturality in the base-change morphism \(g\) is inherited termwise from the affine
       base change.
   \end{enumerate}
+
+  A second, shorter proof avoids the naturality verification entirely, and it is the one the
+  formalisation follows. The comparison is the \emph{mate} \(\alpha : f_* \circ g^* \to (g')^*
+  \circ f'_*\) of the canonical pullback \(2\)-isomorphism attached to the cartesian square
+  (\cref{lem:openimm_beckchevalley}, mate form, instantiated at the outer square rather than a
+  restricted one). Whiskering a natural transformation with the {\v C}ech nerve produces a map of
+  cosimplicial objects whose compatibility with the cofaces is \(\alpha\)'s own naturality, so no
+  square has to be checked; and \(\alpha\) is invertible degreewise because, for \(g\) flat and
+  \(f\) quasi-compact and quasi-separated, it is invertible at every quasi-coherent module
+  (\cref{thm:quot_canonical_basechange_isIso}), while each degree of the nerve is a finite product of
+  the quasi-coherent objects \((j_\sigma)_*(j_\sigma)^*\mathcal{F}\) and a natural transformation
+  invertible at each factor of a preserved finite product is invertible at the product.
 \end{proof}
 
 \begin{lemma}[The base-changed cover intersection is the preimage of the intersection]\leanok

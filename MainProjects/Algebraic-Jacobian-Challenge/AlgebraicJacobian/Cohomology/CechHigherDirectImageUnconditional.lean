@@ -12,6 +12,13 @@ import AlgebraicJacobian.Cohomology.CechTermAcyclic
 import AlgebraicJacobian.Cohomology.ModulesCoverConservativity
 import AlgebraicJacobian.Cohomology.AffinePushPullEssImage
 import AlgebraicJacobian.Cohomology.PullbackQuasicoherent
+-- Added run 0068 r3.  Supplies the general 02KG/02KH mate `canonicalBaseChangeMap` together with
+-- its `IsIso` theorem (flat `g`, qcqs `f`, quasi-coherent `F`) and the qcqs pushforward
+-- quasi-coherence `Scheme.Modules.pushforward_isQuasicoherent` (Stacks 01XJ).  An earlier revision
+-- of this file's docstring said this module "is deliberately not imported because it carries
+-- `sorry`s": that was FALSE at HEAD and is the reason two obligations here were priced as open.
+-- Its whole five-module cone is `sorry`-free, and it does not import this file, so no cycle.
+import AlgebraicJacobian.Picard.QuotScheme
 
 /-!
 # Unconditional higher direct images via Čech complexes, and flat base change
@@ -42,7 +49,13 @@ objects through the `tilde` dictionary over `Spec`.
   for the base-changed cover `𝒰'` and the base-changed sheaf `g'^* F`.
 * `cech_flatBaseChange`: flat base change for the Čech higher direct images.
 * `cech_flatBaseChange_qcoh`: the same conclusion with the flat-exactness leaf absent from the
-  proof term and no extra hypotheses — **the form to consume**.
+  proof term and no extra hypotheses.
+* `cech_flatBaseChange_oneLeaf`: **the form to consume** — same hypotheses and conclusion again,
+  with the flat-exactness leaf *and* the S-level cosimplicial leaf both absent, so exactly one
+  `sorry` (the twisted-nerve naturality square) separates it from Stacks 02KH.
+* `cech_pushforward_baseChange_natIso_flat` / `isIso_cechOuterBC_nerve_obj`: the S-level
+  cosimplicial comparison, `sorry`-free, via the definitional identity of `cechOuterBC` with
+  `canonicalBaseChangeMap` and the landed `canonicalBaseChangeMap_isIso`.
 * `isQuasicoherent_cechComplex_X`: every term of the relative Čech complex is quasi-coherent,
   which is what discharges the hypotheses of `cech_flatBaseChange_of_termsQuasicoherent`.
 * `cechOuterBC` / `cech_pushforward_baseChange_natIso_of_isIso` / `isIso_app_pi_of_isIso_app`:
@@ -76,24 +89,29 @@ Three statements below are still assumed rather than proved.
   declarations that route through mono-preservation are kept only so the reduction stays legible.
 * the two `sorry`s in `cech_pushforward_baseChange_natIso` and `twisted_cech_nerve_iso`.  Both are
   `NatIso.ofComponents` naturality obligations, but **they are not the same kind of obligation**,
-  and the difference decides how to spend a session on them.
+  and only the second is still on the critical path.
 
-  For `cech_pushforward_baseChange_natIso` the naturality is an *artefact of the construction* and
-  **that declaration should be replaced rather than proved**: both sides are `N ⋙ (a composite)`
-  for the same cosimplicial `N`, so `cech_pushforward_baseChange_natIso_of_isIso` builds the same
-  isomorphism by whiskering the natural transformation `cechOuterBC` — naturality free — and
-  `isIso_app_pi_of_isIso_app` reduces the whole residue to **one `IsIso` per index tuple `σ`**.
-  Both replacements are sorry-free.  What is genuinely open there is that per-σ `IsIso` *of the
-  mate's component*: the file has an isomorphism with the right endpoints
-  (`pushPullObj_coverInter_baseChange`) but an isomorphism between two objects is not `IsIso` of a
-  given map.  The promising route is `CategoryTheory.mateEquiv_vcomp` — split the per-σ mate into
-  the affine mate over `U_σ ⟶ S` and the landed `openImmersion_beckChevalley`.
+  `cech_pushforward_baseChange_natIso` IS FULLY REPLACED (run 0068 r3) by
+  `cech_pushforward_baseChange_natIso_flat`, which is `sorry`-free.  Two steps got it there.  First,
+  naturality was an *artefact of the construction*: both sides are `N ⋙ (a composite)` for the same
+  cosimplicial `N`, so `cech_pushforward_baseChange_natIso_of_isIso` whiskers `cechOuterBC` and
+  naturality is free, leaving one `IsIso` per index tuple `σ` via `isIso_app_pi_of_isIso_app`.
+  Second — and this is what three sessions missed — that per-σ `IsIso` is **already a theorem
+  here**: `cechOuterBC f g f' g' h` is *definitionally* `canonicalBaseChangeMap h`
+  (`Picard/QuotScheme.lean`, checked by `rfl`), and `canonicalBaseChangeMap_isIso` proves that mate
+  invertible at every quasi-coherent module for `[QuasiCompact f] [QuasiSeparated f] [Flat g]`.  The
+  only missing input was quasi-coherence of the σ-term, now
+  `isQuasicoherent_pushPullObj_coverInter`.  No `mateEquiv_vcomp` split, and no identification of
+  `pushPullObj_coverInter_baseChange` with the mate, was needed.
 
   For `twisted_cech_nerve_iso` the whiskering argument **does not apply**: its right-hand side is
   the nerve of the *base-changed cover*, a different cosimplicial object, so there is no natural
   transformation to whisker.  Its naturality is genuine work — the compatibility of the cover
   base-change identification `coverInterOpen_baseChange_eq` with the index-omission maps.  Attempt
-  the first leaf before this one, despite this one's lighter hypotheses.
+  the first leaf before this one, despite this one's lighter hypotheses — that advice is now
+  spent: the first leaf is closed, and this square is **the single remaining obstruction** between
+  this file and Stacks 02KG/02KH.  Its axiom-clean-modulo-this-one form is
+  `cech_flatBaseChange_oneLeaf`.
 
 Neither `pullback_preservesFiniteLimits` nor `pullback_preservesHomology` is an `instance`, and
 that is deliberate: as instances they leaked `sorryAx` into every *synthesis site* while
@@ -562,13 +580,14 @@ This is the brick the Čech terms need and it is *entirely* mathlib: `isIso_from
 the tilde model, and `isIso_fromTildeΓ_iff` converts that to essential-image membership, whence
 quasi-coherence because a tilde is quasi-coherent outright.
 
-**Why this exists here rather than being imported.**  The general statement
-`Scheme.Modules.pushforward_isQuasicoherent` (Stacks 01XJ, qcqs morphisms) *does* exist in this
-project — in `Picard/QuotScheme.lean`, which this file deliberately does not import (see the
-`canonicalBaseChangeMap` note at `openImmersion_bareBC`), because that module carries `sorry`s.
-An earlier revision of `cech_flatBaseChange_of_termsQuasicoherent`'s docstring advertised that
-out-of-cone lemma as the route for its `h₂`/`h₃`; the affine case, which is all the Čech consumer
-needs, is four lines from mathlib and stays inside this cone.  Project-local. -/
+**Why this exists here rather than being imported — and the reason is now historical.**  The general
+statement `Scheme.Modules.pushforward_isQuasicoherent` (Stacks 01XJ, qcqs morphisms) lives in
+`Picard/QuotScheme.lean`, which this file used not to import on the ground that that module carries
+`sorry`s.  **That ground was false at HEAD** (its whole cone is `sorry`-free), and run 0068 r3 added
+the import, so the general form *is* available here now and
+`isQuasicoherent_pushPullObj_coverInter` uses it.  This affine special case is retained because it
+is four lines of mathlib, needs no qcqs side conditions, and several existing proofs consume it.
+Project-local. -/
 theorem isQuasicoherent_pushforward_specMap {R R' : CommRingCat.{u}} (φ : R ⟶ R')
     (M : (Spec R').Modules) (hM : M.IsQuasicoherent) :
     ((Scheme.Modules.pushforward (Spec.map φ)).obj M).IsQuasicoherent := by
@@ -1382,8 +1401,12 @@ theorem coverInterOpen_baseChange_eq (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S
 
 This natural transformation always exists (no flatness, no open-immersion hypothesis): it is the
 *comparison map* whose being an iso is the genuine Beck–Chevalley content.  It is a 6-line local
-restatement of the (sorry-tainted-`QuotScheme`) `canonicalBaseChangeMap` so that this file does
-not import `QuotScheme`.  Project-local; blueprint `lem:openimm_beckchevalley` (mate). -/
+restatement of `canonicalBaseChangeMap`, originally written that way to avoid importing
+`QuotScheme` — a precaution based on the false claim that that module carries `sorry`s.  Since run
+0068 r3 this file *does* import it, and the two are definitionally equal (`cechOuterBC` below is
+literally `canonicalBaseChangeMap`, by `rfl`), which is what closed the S-level cosimplicial leaf.
+The local copy is kept because the open-immersion Stage-2 factorization lemmas below are stated
+against it.  Project-local; blueprint `lem:openimm_beckchevalley` (mate). -/
 noncomputable def openImmersion_bareBC {V V' : Scheme.{u}}
     (g' : X' ⟶ X) (p : V ⟶ X) (p' : V' ⟶ X') (gV : V' ⟶ V)
     (hsq : IsPullback gV p' p g') :
@@ -1833,8 +1856,10 @@ noncomputable def openImmersion_beckChevalley {V' : Scheme.{u}}
 
 /-! ### The cosimplicial comparison is a WHISKERED MATE — so naturality is not an obligation
 
-This is the structural correction that removes the two cosimplicial naturality `sorry`s, and it
-is worth stating why they existed.  Both `cech_pushforward_baseChange_natIso` and
+This is the structural correction that removes the *first* of the two cosimplicial naturality
+`sorry`s — an earlier revision of this heading claimed both, and two `rfl` probes refuted that (the
+twisted leaf's right-hand side is a different cosimplicial object; see its docstring).  It is worth
+stating why they existed.  Both `cech_pushforward_baseChange_natIso` and
 `twisted_cech_nerve_iso` were built with `NatIso.ofComponents`: a degree-`n` isomorphism plus a
 *proof obligation* that those isomorphisms commute with the index-omission maps.  That obligation
 is genuinely hard as posed — an earlier revision established that `Pi.hom_ext`, the tool that
@@ -1857,7 +1882,14 @@ promotes it to an isomorphism from one `IsIso` per degree, and no cosimplicial s
 
 The moral, recorded because this run found three variants of it: a walled obligation can be an
 artefact of how the object was *built*, not only of how its statement was *phrased*.
-`NatIso.ofComponents` asks for naturality; whiskering a natural transformation never does. -/
+`NatIso.ofComponents` asks for naturality; whiskering a natural transformation never does.
+
+**AND THE SECOND HALF, run 0068 r3.**  The `IsIso` residue this reduction leaves was *also* not new
+work.  `cechOuterBC` is definitionally `canonicalBaseChangeMap` and its invertibility at
+quasi-coherent modules is `canonicalBaseChangeMap_isIso`, already proved in this project; see
+`isIso_cechOuterBC_coverInter` / `isIso_cechOuterBC_nerve_obj` below and the note there.  So the
+S-level leaf is closed, and the whole chain here — reduce by whiskering, then apply an existing
+theorem — is `sorry`-free.  Only the twisted-nerve square remains. -/
 
 /-- **The S-level base-change mate at the outer cartesian square.**  `openImmersion_bareBC`
 instantiated at `h : IsPullback g' f' f g` itself — no open immersion, no flatness, no affineness
@@ -1939,6 +1971,142 @@ theorem isIso_app_pi_of_isIso_app {C D : Type*} [Category C] [Category D]
     refine ⟨Limits.Pi.map (fun j => inv (α.app (A j))), ?_, ?_⟩ <;>
       refine Limits.Pi.hom_ext _ _ (fun j => ?_) <;> simp
   exact IsIso.of_isIso_fac_right hsq.symm
+
+/-! ### The per-σ mate obligation is `canonicalBaseChangeMap_isIso`, and it is already proved
+
+The `IsIso` residue left by `cech_pushforward_baseChange_natIso_of_isIso` was priced, across three
+sessions, as genuinely open Beck–Chevalley content needing `mateEquiv_vcomp` and a `TwoSquare`
+`hComp`/`vComp` calculation.  It is neither.  `cechOuterBC f g f' g' h` is *definitionally* (checked
+by `rfl`) the mate `canonicalBaseChangeMap h` of `Picard/QuotScheme.lean` — the same `mateEquiv` of
+the same `pullbackComp`/`pullbackCongr` 2-isomorphism — and `canonicalBaseChangeMap_isIso` proves
+that mate invertible at every quasi-coherent module for `[QuasiCompact f] [QuasiSeparated f]
+[Flat g]`, `sorry`-free.  So the only thing that had to be supplied here is *quasi-coherence of the
+degree-`n` Čech nerve object*, which is what `isQuasicoherent_pushPullObj_coverInter` and
+`isQuasicoherent_cechNerve_obj` below do.
+
+Why it was missed: this file's own docstring asserted that `Picard/QuotScheme` "is deliberately not
+imported because it carries `sorry`s".  That was false at HEAD — its whole five-module cone is
+`sorry`-free — and the false claim was load-bearing, since it also ruled out the qcqs pushforward
+quasi-coherence (Stacks 01XJ) that the nerve-term argument needs.  An absence claim about a
+*module* silently became an absence claim about two *theorems*. -/
+
+/-- **The single-intersection-open push–pull object is quasi-coherent.**  For `U_σ = coverInterOpen
+𝒰 σ` with `f` separated and `S` affine, the open `U_σ` is affine (`coverInterOpen_isAffine`), hence
+its inclusion `j_σ` is an affine morphism into the separated `X` — so
+`pushPullObj F (Over.mk j_σ) = (j_σ)_*((j_σ)^* F)` is quasi-coherent by Stacks 01BG for the
+restriction and Stacks 01XJ for the pushforward.
+
+This is the input that turns the per-σ mate obligation of
+`cech_pushforward_baseChange_natIso_of_isIso` into an application of `canonicalBaseChangeMap_isIso`.
+Project-local. -/
+theorem isQuasicoherent_pushPullObj_coverInter (f : X ⟶ S) [IsSeparated f] [IsAffine S]
+    (𝒰 : X.OpenCover) [∀ i, IsAffine (𝒰.X i)]
+    {κ : Type} [Finite κ] [Nonempty κ] (σ : κ → 𝒰.I₀)
+    (F : X.Modules) (hF : F.IsQuasicoherent) :
+    (pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))).IsQuasicoherent := by
+  haveI hsepX : X.IsSeparated := by
+    constructor
+    rw [← terminal.comp_from f]
+    exact IsSeparated.comp_iff.mpr ‹IsSeparated f›
+  haveI : IsAffine (↑(coverInterOpen 𝒰 σ) : Scheme.{u}) := coverInterOpen_isAffine f 𝒰 σ
+  haveI haff : IsAffineHom (Scheme.Opens.ι (coverInterOpen 𝒰 σ)) :=
+    isAffineHom_of_isAffine_of_isSeparated _
+  haveI haff' : IsAffineHom (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).hom := haff
+  haveI : QuasiCompact (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).hom := inferInstance
+  haveI : QuasiSeparated (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).hom := inferInstance
+  haveI : ((Scheme.Modules.pullback (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).hom).obj
+      F).IsQuasicoherent :=
+    isQuasicoherent_pullback_opens (coverInterOpen 𝒰 σ) F hF
+  exact Scheme.Modules.pushforward_isQuasicoherent
+    (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).hom _
+
+/-- **`IsIso` of a natural transformation transports along an isomorphism of the object.**
+If `α.app Z'` is invertible and `Z ≅ Z'`, then `α.app Z` is invertible: the naturality square at
+`e.hom` exhibits `α.app Z ≫ Q.map e.hom = P.map e.hom ≫ α.app Z'` with both outer maps isos.
+
+Small, but it is the bridge that lets the per-σ product decomposition `pushPull_sigma_iso` be used
+on the *object* side of an `IsIso`-of-a-map obligation, where "an isomorphism with the right
+endpoints" is not enough.  Project-local. -/
+theorem isIso_app_of_iso_obj {C D : Type*} [Category C] [Category D] {P Q : C ⥤ D} (α : P ⟶ Q)
+    {Z Z' : C} (e : Z ≅ Z') (h : IsIso (α.app Z')) : IsIso (α.app Z) := by
+  have hsq : P.map e.hom ≫ α.app Z' = α.app Z ≫ Q.map e.hom := α.naturality e.hom
+  haveI : IsIso (α.app Z ≫ Q.map e.hom) := by rw [← hsq]; infer_instance
+  exact IsIso.of_isIso_comp_right (α.app Z) (Q.map e.hom)
+
+/-- **The outer mate is invertible at a single-intersection-open push–pull object.**  This is the
+per-σ obligation that `isIso_app_pi_of_isIso_app` reduces the degreewise one to, and it is a *direct
+application* of the 02KG/02KH mate theorem: `cechOuterBC` is `canonicalBaseChangeMap` (by `rfl`, see
+the section note), and the argument is quasi-coherent by
+`isQuasicoherent_pushPullObj_coverInter`.
+
+Recorded because this leaf was priced as open Beck–Chevalley content for three sessions: the
+`mateEquiv_vcomp` split proposed in earlier revisions is not needed, and neither is any
+identification of `pushPullObj_coverInter_baseChange` with the mate's component.  Project-local. -/
+theorem isIso_cechOuterBC_coverInter (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [QuasiSeparated f]
+    [IsSeparated f] [IsAffine S]
+    (𝒰 : X.OpenCover) [∀ i, IsAffine (𝒰.X i)]
+    {κ : Type} [Finite κ] [Nonempty κ] (σ : κ → 𝒰.I₀)
+    (F : X.Modules) (hF : F.IsQuasicoherent) :
+    IsIso ((cechOuterBC f g f' g' h).app
+      (pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ))))) := by
+  haveI := isQuasicoherent_pushPullObj_coverInter f 𝒰 σ F hF
+  exact canonicalBaseChangeMap_isIso h _
+
+-- The σ-indexed product decomposition of the nerve degree forces the same finite-product and
+-- quasi-coherence instance searches as `isQuasicoherent_cechComplex_X`, and needs the same headroom.
+set_option maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- **The outer mate is invertible at every degree of the dropped Čech nerve.**  The degree-`n`
+object is the push–pull object over the degree-`n` fibre power, which decomposes as the finite
+product over index tuples `σ` (`pushPull_sigma_iso`); `isIso_app_of_iso_obj` moves the obligation
+across that decomposition, `isIso_app_pi_of_isIso_app` splits the product, and each factor is
+`isIso_cechOuterBC_coverInter`.
+
+This is the *whole* degreewise hypothesis of `cech_pushforward_baseChange_natIso_of_isIso`, so
+together they replace `cech_pushforward_baseChange_natIso` with a `sorry`-free construction.
+Project-local. -/
+theorem isIso_cechOuterBC_nerve_obj (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [QuasiSeparated f]
+    [IsSeparated f] [IsAffine S]
+    (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [∀ i, IsAffine (𝒰.X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent) (n : SimplexCategory) :
+    IsIso ((cechOuterBC f g f' g' h).app
+      ((CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).obj n)) := by
+  -- the degree-`n` object IS `pushPullObj F (backbone n)` (`rfl`), and that is the σ-product
+  refine isIso_app_of_iso_obj (cechOuterBC f g f' g' h)
+    (pushPull_sigma_iso 𝒰 F n.len) ?_
+  refine isIso_app_pi_of_isIso_app (cechOuterBC f g f' g' h) _ (fun σ => ?_)
+  exact isIso_cechOuterBC_coverInter f g f' g' h 𝒰 σ F hF
+
+-- Elaborating the two nested `CosimplicialObject.whiskering` applications in the statement is what
+-- costs here, as in the declaration it replaces; the proof itself is one application.
+set_option maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- **The cosimplicial base-change comparison, `sorry`-free** (Stacks 02KG, the cosimplicial half).
+`cech_pushforward_baseChange_natIso_of_isIso` fed by `isIso_cechOuterBC_nerve_obj`: same statement
+as `cech_pushforward_baseChange_natIso`, no naturality obligation and no open leaf.  Its extra
+hypotheses over that declaration are `[QuasiCompact f]`, `[QuasiSeparated f]` and `[Flat g]` — all
+three already carried by `cech_flatBaseChange`, whose route this serves, and `[IsAffine S']` is
+*not* needed.  Project-local. -/
+noncomputable def cech_pushforward_baseChange_natIso_flat
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [QuasiSeparated f]
+    [IsSeparated f] [IsAffine S]
+    (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [∀ i, IsAffine (𝒰.X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent) :
+    ((CosimplicialObject.whiskering S.Modules S'.Modules).obj
+        (Scheme.Modules.pullback g)).obj
+      (((CosimplicialObject.whiskering X.Modules S.Modules).obj
+          (Scheme.Modules.pushforward f)).obj
+        (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)))
+      ≅ ((CosimplicialObject.whiskering X'.Modules S'.Modules).obj
+          (Scheme.Modules.pushforward f')).obj
+        (((CosimplicialObject.whiskering X.Modules X'.Modules).obj
+            (Scheme.Modules.pullback g')).obj
+          (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F))) :=
+  cech_pushforward_baseChange_natIso_of_isIso f g f' g' h 𝒰 F
+    (fun n => isIso_cechOuterBC_nerve_obj f g f' g' h 𝒰 F hF n)
 
 /-- **Per-intersection-open X-level Beck–Chevalley** (the per-σ residual of the X-level leaf
 `twisted_cech_nerve_iso`, after the product decomposition `pushPull_sigma_iso`).  For a Čech
@@ -2637,6 +2805,40 @@ noncomputable def cechComplex_baseChange_cosimplicialIso
     ((CosimplicialObject.whiskering X'.Modules S'.Modules).obj
         (Scheme.Modules.pushforward f')).mapIso (twisted_cech_nerve_iso f g f' g' h 𝒰 F hF)
 
+/-- **The cosimplicial Beck–Chevalley iso with the S-level leaf REMOVED** (run 0068 r3).  Same
+statement as `cechComplex_baseChange_cosimplicialIso`, but its first factor is the `sorry`-free
+`cech_pushforward_baseChange_natIso_flat` rather than `cech_pushforward_baseChange_natIso`.  So its
+proof term contains **exactly one** open leaf — the twisted-nerve naturality square — not two, and
+that square is the only obstruction left between this file and Stacks 02KG/02KH.
+
+The price is the three instance binders `[Flat g]`, `[QuasiCompact f]`, `[QuasiSeparated f]`; all
+three are carried by `cech_flatBaseChange` already (`[QuasiSeparated f]` follows from
+`[IsSeparated f]` by a mathlib instance), so this is a strict drop-in for that route.
+Project-local. -/
+noncomputable def cechComplex_baseChange_cosimplicialIso_flat
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    [Flat g] [QuasiCompact f] [IsSeparated f] [IsAffine S] [IsAffine S']
+    [∀ i, IsAffine (𝒰.X i)]
+    [Finite ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+      h.isoPullback.symm.hom).I₀]
+    [∀ i, IsAffine (((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+      h.isoPullback.symm.hom).X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent) :
+    ((CosimplicialObject.whiskering S.Modules S'.Modules).obj
+        (Scheme.Modules.pullback g)).obj
+      (((CosimplicialObject.whiskering X.Modules S.Modules).obj
+          (Scheme.Modules.pushforward f)).obj
+        (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)))
+      ≅ ((CosimplicialObject.whiskering X'.Modules S'.Modules).obj
+          (Scheme.Modules.pushforward f')).obj
+        (CosimplicialObject.Augmented.drop.obj
+          (CechNerve ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+            h.isoPullback.symm.hom) ((Scheme.Modules.pullback g').obj F))) :=
+  cech_pushforward_baseChange_natIso_flat f g f' g' h 𝒰 F hF ≪≫
+    ((CosimplicialObject.whiskering X'.Modules S'.Modules).obj
+        (Scheme.Modules.pushforward f')).mapIso (twisted_cech_nerve_iso f g f' g' h 𝒰 F hF)
+
 /-- **Tensorial base change of the Čech complex** (Stacks 02KG; *load-bearing*, OPEN).
 Applying `g^*` degreewise to the relative Čech complex `Č•(𝒰, F)` yields the relative
 Čech complex `Č•(𝒰', g'^* F)` of the base-changed data. Sorry-free *modulo* the cosimplicial
@@ -2675,6 +2877,32 @@ noncomputable def cechComplex_baseChange_iso
   -- blueprinted residuals — the genuine open content of Stacks 02KG/02KH.
   cechComplex_baseChange_iso_of_cosimplicialIso f g f' g' h 𝒰 F
     (cechComplex_baseChange_cosimplicialIso f g f' g' h 𝒰 F hF)
+
+/-- **The tensorial base change of the Čech complex, with the S-level leaf REMOVED** (run 0068 r3).
+Same conclusion as `cechComplex_baseChange_iso`, built from
+`cechComplex_baseChange_cosimplicialIso_flat`, so `cech_pushforward_baseChange_natIso` — one of the
+two open leaves of that declaration — is **absent from this proof term**.  The single remaining
+leaf is `twisted_cech_nerve_iso`'s naturality square.
+
+Extra binder over `cechComplex_baseChange_iso`: `[Flat g]`, which every consumer of that
+declaration in this file already has.  Project-local. -/
+noncomputable def cechComplex_baseChange_iso_flat
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f]
+    [IsAffine S] [IsAffine S']
+    (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [∀ i, IsAffine (𝒰.X i)]
+    [Finite ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+      h.isoPullback.symm.hom).I₀]
+    [∀ i, IsAffine (((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+      h.isoPullback.symm.hom).X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent) :
+    ((Scheme.Modules.pullback g).mapHomologicalComplex (ComplexShape.up ℕ)).obj
+        (CechComplex f 𝒰 F)
+      ≅ CechComplex f'
+          ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso h.isoPullback.symm.hom)
+          ((Scheme.Modules.pullback g').obj F) :=
+  cechComplex_baseChange_iso_of_cosimplicialIso f g f' g' h 𝒰 F
+    (cechComplex_baseChange_cosimplicialIso_flat f g f' g' h 𝒰 F hF)
 
 /-- **Flat base change for the Čech higher direct images** (Stacks 02KH,
 `lemma-flat-base-change-cohomology`).
@@ -2731,9 +2959,10 @@ degree-`i` short complex of `Č•(𝒰, F)`.  In exchange, the homology half is
 `pullback_preservesMonomorphisms` does not appear in the proof term at all.
 
 **What this does and does not buy.**  It does *not* make flat base change axiom-clean: the second
-half, `cechComplex_baseChange_iso`, still carries the two cosimplicial naturality sorries, which
-are genuine open mathematics (Stacks 02KG; see the docstrings of
-`cech_pushforward_baseChange_natIso` and `twisted_cech_nerve_iso`).  What it does buy is that the
+half, `cechComplex_baseChange_iso`, still carries a cosimplicial naturality `sorry` — as of run
+0068 r3 exactly one, `twisted_cech_nerve_iso`'s, since the S-level one is replaced by
+`cech_pushforward_baseChange_natIso_flat`; for both improvements at once use
+`cech_flatBaseChange_oneLeaf`.  What it does buy is that the
 *flat-exactness* leaf is no longer one of the reasons this theorem is unproved — the leak now has
 exactly one source instead of two, and that source is the Beck–Chevalley heart rather than a
 statement about arbitrary modules that nobody needs.
@@ -2748,10 +2977,15 @@ absence.  The first asserted that closure of quasi-coherence under finite produc
 mathlib and this workspace: false over an affine base, which is the only case this theorem is
 stated in — `isQuasicoherent_pi_of_isAffineBase`.  The second then advertised the remaining route
 as "`isQuasicoherent_pullback_opens` plus `pushforward_isQuasicoherent`, so what remains is
-bookkeeping": `Scheme.Modules.pushforward_isQuasicoherent` is **not in this file's import cone** —
-it lives in `Picard/QuotScheme.lean`, which is deliberately not imported because it carries
-`sorry`s.  So that sentence named a lemma the file cannot use.  The affine case, which is all the
-Čech consumer needs, is four lines from mathlib's `isIso_fromTildeΓ_pushforward`:
+bookkeeping": at the time, `Scheme.Modules.pushforward_isQuasicoherent` was indeed not in this
+file's import cone.  **THE THIRD REVISION — the fix to the second — WAS ALSO WRONG, in the opposite
+direction.**  It said `Picard/QuotScheme.lean` "is deliberately not imported because it carries
+`sorry`s".  That was false at HEAD: QuotScheme and its whole four-module cone are `sorry`-free (its
+seven `sorry` *mentions* are docstrings asserting a chain is sorry-free), and it does not import
+this file.  Run 0068 r3 imports it, which is how Stacks 01XJ and — far more importantly —
+`canonicalBaseChangeMap_isIso` became available here.  So an over-stated absence about a *module*
+had silently priced two *theorems* as unavailable, one of them this file's priority obligation.
+The affine special case built instead is still used and still correct:
 `isQuasicoherent_pushforward_specMap` and `isQuasicoherent_pushforward_of_isAffine`.)
 Project-local. -/
 theorem cech_flatBaseChange_of_termsQuasicoherent
@@ -2785,12 +3019,17 @@ since `coverInterOpen_isAffine` *derives* separatedness of `X` from `[IsSeparate
 `pullback_mapHC_homologyIso_of_isQuasicoherent` and `pullback_preservesMonomorphisms` does not
 appear in the proof term.
 
-**What is left, stated exactly.**  This is still not axiom-clean, and the reason is now a single
-one: `cechComplex_baseChange_iso` carries the two cosimplicial naturality `sorry`s of
+**What is left, stated exactly.**  This is still not axiom-clean, because
+`cechComplex_baseChange_iso` carries the two cosimplicial naturality `sorry`s of
 `cech_pushforward_baseChange_natIso` and `twisted_cech_nerve_iso` (Stacks 02KG).  Those are the
 *only* obstruction between this tree and flat base change — the flat-exactness leaf is gone from
-this route, and so are the two quasi-coherence hypotheses.  Measure at
-`scripts/axiom-frontier.lean`. -/
+this route, and so are the two quasi-coherence hypotheses.
+
+**PREFER `cech_flatBaseChange_oneLeaf` (run 0068 r3), whose hypotheses and conclusion are
+identical.**  It routes the tensorial half through `cechComplex_baseChange_iso_flat`, so the
+S-level cosimplicial leaf is gone too and exactly ONE `sorry` — the twisted-nerve square — stands
+between it and Stacks 02KH.  This declaration is retained because its proof term is the legible
+two-step reduction.  Measure both at `scripts/axiom-frontier.lean` §6d/§6g. -/
 theorem cech_flatBaseChange_qcoh
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
     (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f]
@@ -2817,5 +3056,46 @@ theorem cech_flatBaseChange_qcoh
     (isQuasicoherent_cechComplex_X f 𝒰 (fun σ => coverInterOpen_isAffine f 𝒰 σ) F hF i)
     (isQuasicoherent_cechComplex_X f 𝒰 (fun σ => coverInterOpen_isAffine f 𝒰 σ) F hF
       ((ComplexShape.up ℕ).next i))
+
+/-- **Flat base change for the Čech higher direct images — ONE OPEN LEAF LEFT** (Stacks 02KH; run
+0068 r3, the form to consume).
+
+Hypotheses and conclusion are **exactly** those of `cech_flatBaseChange` and
+`cech_flatBaseChange_qcoh`: no extra binder of any kind.  What changed is the proof term, and it
+changed twice over:
+
+* the *flat-exactness* leaf `pullback_preservesMonomorphisms` is absent (inherited from
+  `cech_flatBaseChange_qcoh`'s route through `pullback_mapHC_homologyIso_of_isQuasicoherent`);
+* the *S-level cosimplicial* leaf `cech_pushforward_baseChange_natIso` is absent too, because the
+  tensorial half now runs through `cechComplex_baseChange_iso_flat`.
+
+So the **only** remaining reason this theorem is not axiom-clean is the naturality square of
+`twisted_cech_nerve_iso` — the compatibility of the cover base-change identification
+`coverInterOpen_baseChange_eq` with the index-omission maps.  Everything else in Stacks 02KG/02KH is
+proved here: the per-σ mate is `canonicalBaseChangeMap_isIso` (see `isIso_cechOuterBC_coverInter`),
+the per-σ X-level Beck–Chevalley is `twisted_cech_nerve_per_sigma`, and the homology half is the
+quasi-coherent kernel route.
+
+Measure at `scripts/axiom-frontier.lean` §6e. -/
+theorem cech_flatBaseChange_oneLeaf
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f]
+    [IsAffine S] [IsAffine S']
+    (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [h𝒰 : ∀ i, IsAffine (𝒰.X i)]
+    [Finite ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+      h.isoPullback.symm.hom).I₀]
+    [∀ i, IsAffine (((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso
+      h.isoPullback.symm.hom).X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent) (i : ℕ) :
+    Nonempty ((Scheme.Modules.pullback g).obj (cechHigherDirectImage f 𝒰 F i) ≅
+      cechHigherDirectImage f'
+        ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso h.isoPullback.symm.hom)
+        ((Scheme.Modules.pullback g').obj F) i) :=
+  ⟨(pullback_mapHC_homologyIso_of_isQuasicoherent g (CechComplex f 𝒰 F) i
+      (isQuasicoherent_cechComplex_X f 𝒰 (fun σ => coverInterOpen_isAffine f 𝒰 σ) F hF i)
+      (isQuasicoherent_cechComplex_X f 𝒰 (fun σ => coverInterOpen_isAffine f 𝒰 σ) F hF
+        ((ComplexShape.up ℕ).next i))).symm ≪≫
+    HomologicalComplex.homologyMapIso
+      (cechComplex_baseChange_iso_flat f g f' g' h 𝒰 F hF) i⟩
 
 end AlgebraicGeometry
