@@ -1420,3 +1420,90 @@ file carrying `[Infinite k]` and an `ncard + 2` bound — is not among them.
   since all its inputs are carrier-independent. With those, `IsPullbackValue` through `map_comp`
   and `divFunctorAff` are mechanical. **Honest price: one file of ~350 transcribed lines, no new
   mathematics.**
+
+## ADDENDUM 9 (2026-07-29, run 0070 session 0012) — residue item (b) is LANDED: the widened carrier is a FUNCTOR on all tests, and it maps naturally out of the chart-typed one (BINDING)
+
+ADDENDUM 8 §8.7 priced residue item (b) at "one file of ~350 transcribed lines, no new
+mathematics". That price was right in kind and slightly low in volume: it took **three** files and
+~730 lines, because the comparison of *functors* (which §8.7 did not price at all) is a separate
+statement from the functor itself.
+
+### 9.1 What landed
+
+```
+Picard/DivisorFamilyAffMapKit.lean              -- the widened basic-open toolkit
+  divFamZarAff.eq_of_basic_eq                   -- separation over a basic cover
+  divFamZarAff.exists_glue_of_basic_compat      -- gluing over a basic cover
+  divFamZarAff.mapAlgHom_appLE_eq               -- choice independence
+
+Picard/DivisorFamilyAffMap.lean                 -- the functoriality
+  divFamZarAff.IsPullbackValue / pullbackValue_unique / exists_isPullbackValue
+  divFamZarAff.existsUnique_isPullbackValue
+  divFamZarAff.mapVal / mapVal_spec / mapVal_eq_of / mapVal_eq_mapAlgHom
+  divFamZarAff.map, map_val, map_id, map_comp
+  divFunctorAff : (Over (Spec k))ᵒᵖ ⥤ Type u    -- obj T = divFamZarAff C n T.unop
+  divFamZarAffAffineEquiv_naturality
+
+Picard/DivisorFamilyAffFunctorCompare.lean      -- the comparison of FUNCTORS
+  divFamZarToAffVehicle_map
+  divFunctorToAff : divFunctor C π n ⟶ divFunctorAff C n
+```
+
+`[IsProper C.hom]` throughout (the widened `mapAlg` needs it, and the DD-R lane carries it
+everywhere); **no hypothesis on `|P¹(k)|` in any statement or on any route**, which is the whole
+purpose of R2.
+
+### 9.2 Why the transcription is legitimate, stated as the general principle
+
+Every statement in these three files is about the Zariski topology of the **base** `T'.left`: a
+finite basic-open refinement of an affine open, the localizations at its members, and the
+multiplicative overlaps. R2 (protection I-0492) widened where the certificate's cover pieces live
+**on the curve**. The two are orthogonal, so the chart-typed proofs of
+`Picard/DivisorFamilyZarMapKit.lean` / `…ZarMap.lean` / `…ZarFunctor.lean` transfer clause for
+clause under `DivFamZar → DivFamZarAff`.
+
+What is *not* free is the **typing**, and this is the third time this lane has paid for it: the
+keystones are spelled at localization instance packs (`[Algebra R (S i)]`,
+`[IsLocalization.Away (g i) (S i)]`) while the vehicle's compatibility is spelled at
+`Over.resAlgHom`, a bare `AlgHom` carrying no tower. Every crossing goes through
+`DivFamZarAff.mapAlgHom_eq_mapAlg` (ADDENDUM 8 §8.2). A port that does not plan for the face
+change does not compile, and a port that does is mechanical.
+
+### 9.3 The comparison is a natural transformation, and that is the form a consumer substitutes
+
+`divFamZarToAffVehicle` (ADDENDUM 6) was componentwise: it said the two carriers agree at each
+affine open. That is not what a consumer holding a section over a general test wants. It wants to
+replace `divFunctor` by `divFunctorAff` and **keep its restriction equations** — which is
+naturality, and which is what `divFunctorToAff` now provides.
+
+The proof needs no gluing: the componentwise image of the chart-typed glued value already has the
+*widened* pullback property, because `DivFamZar.toAff_mapAlgHom` turns each clause of the
+chart-typed `mapVal_spec` into the corresponding widened clause, and widened uniqueness
+(`divFamZarAff.mapVal_eq_of`) closes it.
+
+Direction: **old → new only**, and that is content, not omission. By ADDENDUM 3 §2 / ADDENDUM 4
+§4.3 there is a straddling divisor at every genus `≥ 2` that no fixed pair of `P¹` charts can
+confine, so no transformation back can exist.
+
+### 9.4 What the R2 lane owes after this
+
+**One item, and it is unchanged since ADDENDUM 5:** the **subordinate Stacks `0B8B` input** —
+an affine open `W ⊇ supp d` lying inside one member of `d.cover`. I-0492 clause 2 says USE it, do
+not re-derive it; mathlib has no form of `0B8B` and this tree constructs no curve but `P¹`.
+
+**And one item that is NOT an obligation but is the lane's real exposure, stated because a green
+build hides it.** Measured at this session's HEAD, with the substring collision against the
+chart-typed `divFamZarAffineEquiv` excluded:
+
+> `DivFamZarAff` / `divFamZarAff` / `divFunctorAff` appear in **zero** Lean files outside the
+> `Picard/DivisorFamilyAff*.lean` family.
+
+The widened layer is still an **island**. ADDENDUM 8 §8.1 diagnosed the cause of the island as a
+missing face and fixed the face; the island itself did not close, because closing it means a
+*consumer* is restated on the widened functor. `divFunctorToAff` is the bridge that makes that
+restatement cheap (a consumer keeps its chart-typed input and pushes forward), but no consumer has
+been restated. **Do not read "the widened carrier is a functor" as "the widened carrier is in
+use".** The cheap check, and the one to run on any replacement type in this project: grep the new
+carrier's name outside the files that define it, and exclude substring collisions before believing
+the count.
+
