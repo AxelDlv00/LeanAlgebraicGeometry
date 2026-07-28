@@ -185,8 +185,7 @@ discharged".  Three of those five are; the other two are not:
   `hdeg` are *inputs*, because `b_L` is per-fibre and does not transport (I-0204), so no
   formulation of this theorem can produce `m` for the caller.
 
-**Note one conclusion this theorem deliberately drops** — wanted not by coverage (which needs no
-drop at all, see the step-6 entry above) but by DAT-C's canonical section and GAP-2 uniqueness: the fibre
+**Note one conclusion this theorem deliberately drops and step 6 will want back**: the fibre
 step returns `S`'s support clause (`coeffAt hx S ≠ 0 → x ∈ P`), and the `-` pattern below
 discards it.  A lane closing step 6 should re-expose it — it is what says `Σ` is supported in
 the rational points whose graph classes the index is built from. -/
