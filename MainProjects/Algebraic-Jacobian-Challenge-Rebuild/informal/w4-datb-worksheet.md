@@ -134,6 +134,21 @@ re-proves any of it.
 * Gated on divRep(F7)+CERT-Σ through DAT-C's C9: **B-6** (the `IsLocallySurjective`
   instance + DAT-glue handoff) — the ONLY row of this plan that waits for `divRep`.
 
+**B-5 STATUS 2026-07-28 (run 0072, lane `ajcr-charts`): three of its inputs are now Lean, and
+the row's own step-6 typing gap is diagnosed (see the §1.2 amendment).**  Landed this pass:
+
+| input | name | file |
+|---|---|---|
+| step 1, splitting with the twist carried | `picEtAffineEquiv_map_chartTwistFactor_eq_unit` | `Picard/Pic0ChartTwistSplit.lean` |
+| the `chartLocus` intro rule | `isSplitWitness_of_witness_twistClass` | same |
+| steps 2–4, degree of the presenting class | `classDeg_chartTwistClass_baseChange`, `classDeg_of_presenting` | `Picard/Pic0ChartCoverageDegree.lean` |
+| step 6, chart index base change | `graphPicClass_base_of_field`, `classDeg_graphPicClass_base` | `Picard/Pic0ChartRationalGraph.lean` |
+
+What B-5 still owes is the **assembly**: choosing `m` at the fibre field against its own DAT-0a
+instance (step 3) and running `exists_effective_sub_h0_eq_one` there with the oracle
+instantiated by B-2 (step 5).  Both are statements about the *fibre curve over `L`* and need
+the `L`-level instance pack; nothing in them is `divRep`- or certificate-gated.
+
 ### §0.6 Standing context
 
 The w4-datc §0.5 pack verbatim (= the `DivRepClassifyZar.lean:56-81` context), at the
@@ -228,6 +243,43 @@ witness is unique).  Proof chain, every step pinned:
    `m·d₁ − g` — a legal `ChartIndex` entry; the predicate of CHART-U(a) holds at `t`
    with splitting `L`; splitting-independence is E-iv-alg + class-invariance
    (dimension conditions only, step 4's tools).  ∎
+
+**AMENDMENT TO STEP 6, 2026-07-28 (run 0072, lane `ajcr-charts`) — the step as written
+hides a typing gap, and the natural repair is the WRONG obligation.**
+
+The gap: `ChartIndex`'s `Σ` is a `CurveDivisor` on the **base** curve
+`(C ⊗ overSpec k k).left` (frozen, `w4-datc` §3.2), while steps 5's `xᵢ` and the drop divisor
+live over the **fibre field** `L`.  "`Σ := Σᵢ single(xᵢ)` is a legal `ChartIndex` entry" is
+therefore not a typing identity, and closing it looks like it needs a base-change operation on
+`CurveDivisor`.
+
+Two findings, both measured:
+
+* **There is no such operation anywhere in the tree** — no `CurveDivisor.pullback`, `.comap`
+  or `.baseChange`.  Only `picClass` and the `LocalEquations` pullback route exist.  So a lane
+  that budgets step 6 as "transport the divisor" is budgeting a construction.
+* **It does not need one.**  Everything downstream of step 6 mentions only the *class*: the
+  witness clause of `IsSplitWitness` is `picClass L W = M`, and the chart-index constraint is
+  about `deg_k Z`.  For the divisors that actually occur — one-point divisors at the
+  `k`-rational points step 5 draws from the density oracle — the class-level base change is
+  **already landed** and was never cited by either lane:
+
+  ```
+  Over.graphLocalEquations_base_change      Curve/GraphDivisor.lean:263
+      graphPicClass C (g ≫ t) = CechPic.map (C ◁ g).left (graphPicClass C t)
+  presentationDivisor_graphLocalEquations   RiemannRoch/GraphDegree.lean:422
+  classDeg_graphPicClass                   RiemannRoch/GraphDegree.lean:445  (degree = 1)
+  ```
+
+  i.e. a rational point's graph class *is* the class of its one-point divisor, of degree
+  exactly one, and it base-changes.  Landed in this spelling as
+  `graphPicClass_base_of_field` / `classDeg_graphPicClass_base`
+  (`Picard/Pic0ChartRationalGraph.lean`).
+
+**Restated step 6:** build the chart index from the `k`-points' *graph classes* at the base,
+check `deg_k Z = m·d₁ − g` there **once**, and transport by E-iv-alg — the degree then holds at
+every fibre field with no per-field computation, honouring I-0204 (ledger constants do not
+cross).  Never transport a coefficient function.
 
 ### §1.3 What is spent where (the parent's clause map)
 
