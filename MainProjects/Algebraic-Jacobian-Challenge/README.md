@@ -56,13 +56,20 @@ same theorem by a separate curve-specialized strategy.
   routinely non-empty for a short while: a module not yet committed to the workspace
   ledger must **not** be rooted, since a clean checkout would then fail to build.  That
   grace period ends at the commit — once a module is in the ledger, leaving it unrooted
-  means the build does not check it.  **Currently violated, but much less than it was:**
-  of the 43 files of `RiemannRoch/Ledger/`, **37 are now in the root cone** —
-  `RiemannRoch/WeilDivisor.lean` imports `Ledger/OrdCompare` and
-  `Ledger/ResidueOneAlgClosed` (commit `8b654f78d`), which drags most of the ported
-  χ-ledger in.  The **6 still unrooted** are `DegreeVanishing`, `GenusBridge`,
-  `NonVacuity`, `PrincipalCompare`, `PrincipalTransport`, `SectionDrop`: their
-  declarations are not elaborated by `lake build AlgebraicJacobian` and no
+  means the build does not check it.  **Currently violated in 13 modules** (measured
+  2026-07-29 01:15 by walking `import AlgebraicJacobian`: 252 of 264 modules in the root
+  cone, 12 outside it plus `Picard/Pic0Dimension`, which is unrooted *and* unbuilt).  All
+  13 are committed to the ledger, so none is inside the grace period:
+  - `RiemannRoch/Ledger/{DegreeVanishing,GenusBridge,NonVacuity,PrincipalCompare,`
+    `PrincipalTransport,SectionDrop}` and `RiemannRoch/LedgerPortability` — 37 of the 43
+    `Ledger/` files are in the cone via `RiemannRoch/WeilDivisor.lean` (commit
+    `8b654f78d`); these 7 are not.  Tracked as inbox issue `I-0600`.
+  - `Albanese/{SymPowInvariants,SymPowInvariantsLocalization,SymPowInvariantsUnder,`
+    `SymPowTensorAction}` — the invariants/tensor-action family; the root reaches only
+    `Albanese/SymPowInterface` and `Albanese/SymPowColimit`.
+  - `Picard/{Pic0Dimension,SchemeKrullDimStalk}`.
+
+  Their declarations are not elaborated by `lake build AlgebraicJacobian` and no
   `#print axioms` line through the root can reach them.  Re-measure with the
   reachability snippet in [`scripts/axiom-frontier.lean`](scripts/axiom-frontier.lean)'s
   header (seed it at `AlgebraicJacobian`, not `AlgebraicJacobian.Jacobian`) rather than
@@ -162,7 +169,8 @@ retained-not-revived.
 
 
 Cones closed: `AJC.substrate`, `AJC.linebundle`, `AJC.grquot`, `AJC.cech`.
-Cones open: `AJC.fbc` (flat base change, three leaves), `AJC.rr`, `AJC.picrep`
+Cones open: `AJC.fbc` (flat base change; one walled naturality leaf plus one
+bypassed monument, run 0068 r3), `AJC.rr`, `AJC.picrep`
 (Picard representability), `AJC.pic0av` (Pic⁰ is an abelian variety),
 `AJC.albanese`.  Run `horizon roadmap list --focus AJC.jacobian` for the live tree
 — the roadmap, not this file, is the authority on status.

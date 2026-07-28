@@ -17,7 +17,7 @@ migration debt.)*
 | Project | Stage | Open `sorry` |
 | --- | --- | --- |
 | Algebraic-Jacobian-Challenge-Rebuild | prover ✨ | 16 — 15 protected `Challenge.lean` targets, 1 in `Picard/Pic0ThetaCocycle.lean` (`Picard/DivRepAffPullClause.lean` is now sorry-free). `Pic0ThetaCocycle` is imported from nowhere and has **never been elaborated** (no `.olean`), so its theta coherence is unverified rather than proved; it is also not elaborable as written — 34 GB RSS and still climbing at 5 min, so it needs a split (roadmap `AJCR.w4-rep.build-reach`, `AJCR.w7-functor.k1`) |
-| Algebraic-Jacobian-Challenge | prover | 28 — in 11 of 252 modules *(grouped by the nested AJC roadmap below)* |
+| Algebraic-Jacobian-Challenge | prover | 28 — in 11 modules, measured when the tree held 252 modules; it holds **257** as of 2026-07-28 evening and four AJC lanes have landed work since, so re-derive before quoting *(grouped by the nested AJC roadmap below)* |
 | Cech-Cohomology | ✅ complete · merged → AJC | 0 |
 | GR-Quot-Closure | ✅ complete · merged → AJC | 0 |
 | Line-Bundle-Comparison-Iso | ✅ complete · merged → AJC | 0 |
@@ -71,9 +71,11 @@ functor (curve-specialized Kleiman, no Quot schemes), Albanese via Milne III.6.1
   open pieces (R2). The `Aut(ℙ¹)`/`GL₂` coordinate-twist route (R1) is **not** to be built —
   leaf `…certificate.p1-aut` stays pending and deprioritised, and no consumer may be written
   against it. The small-finite-field question of `I-0346` is closed by the same decision. The R2
-  widening is **built and sorry-free** as of 2026-07-28, in nine `Picard/DivisorFamilyAff*.lean`
-  files; the migration half has not started — 32 files still consume the old chart-typed
-  `DivFamZar` and nothing yet consumes the widened tower, per inbox `I-0506`.)
+  widening is **built and sorry-free** as of 2026-07-28, in 23 `Picard/DivisorFamilyAff*.lean`
+  files (nine earlier the same day); the widened carrier now has both its `mapAlg` and
+  `mapAlgHom` faces and a vehicle, but the migration half has not started — 42 files still
+  consume the old chart-typed `DivFamZar`, and outside the `DivisorFamilyAff*` cone nothing
+  yet mentions `DivFamZarAff`, per inbox `I-0506` and `I-0617`.)
 - [~] **Waves 5–7** — Pic⁰ abelian-variety package, Abel–Jacobi / Albanese, functoriality and
   base change of fields (each partly landed; see the structured roadmap)
 
@@ -87,8 +89,9 @@ Blueprint: Challenge/BaseChange/Curves/Algebra/Cohomology/AbelianVariety chapter
 establish the Albanese universal property. The structured roadmap command
 `horizon roadmap list --focus AJC.jacobian` is the authoritative work breakdown.
 
-*241 of the 252 modules are sorry-free; all 28 remaining `sorry`s live in 11 modules. Counts
-drift as modules land — re-derive with
+*At the last measurement 241 of 252 modules were sorry-free, with all 28 remaining `sorry`s in
+11 modules; the tree is at **257** modules now, so both halves of that ratio have drifted.
+Re-derive with
 `lake build AlgebraicJacobian 2>&1 | grep 'declaration uses' | sort -u`
 rather than quoting these.*
 
@@ -106,14 +109,20 @@ rather than quoting these.*
   sub-items: Grassmannian cells and representability, section graded ring/module,
   graded Hilbert--Serre and the Hilbert polynomial, flattening stratification, and
   generic flatness.
-- [~] **Cohomology and flat base change** *(3 open leaves)*
+- [~] **Cohomology and flat base change** *(1 open leaf + 1 bypassed monument)*
   - [x] The whole Čech engine — `AJC.cech`, six sorry-free sub-items: the
     combinatorial and section complexes with their contracting homotopy, the
     section-complex identification, affine acyclicity and acyclic resolutions,
     higher direct images with `pushPull` functoriality, Mayer--Vietoris, and the
     unconditional comparison theorem `cech_computes_higherDirectImage`.
-  - [ ] Prove that flat pullback preserves finite limits *(1)*.
-  - [ ] Prove the pushforward and twisted-nerve cosimplicial naturality laws *(2)*.
+  - [x] The pushforward cosimplicial naturality law — closed run 0068 r3
+    (`cech_pushforward_baseChange_natIso_flat`); the per-σ mate was already the
+    project's own `canonicalBaseChangeMap_isIso`.
+  - [ ] Prove the twisted-nerve cosimplicial naturality law *(1)* — the sole
+    obstruction; endpoint `cech_flatBaseChange_oneLeaf`.
+  - [~] Flat pullback preserves finite limits — bypassed on quasi-coherent objects
+    (`pullback_preservesKernel_of_isQuasicoherent`); the arbitrary-module mono
+    statement is kept as a monument, deliberately unproved.
 - [~] **Picard-scheme representability** *(6 open leaves)*
   - [x] Line bundles, the Grassmannian, graded modules, descent, and flattening are
     complete inputs.
