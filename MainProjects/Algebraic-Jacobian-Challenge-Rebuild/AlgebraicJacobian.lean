@@ -530,6 +530,7 @@ import AlgebraicJacobian.Picard.Pic0ChartPresentationHalf
 import AlgebraicJacobian.Picard.DegreeZeroBaseField
 import AlgebraicJacobian.Picard.Pic0ChartCoverageDegreeStep2
 import AlgebraicJacobian.Picard.Pic0ChartCoverageNoDrop
+import AlgebraicJacobian.Picard.Pic0ChartLocusGeneralTest
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivGen
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivClose
 import AlgebraicJacobian.Picard.DivSchemeUnivFibreKerSpan

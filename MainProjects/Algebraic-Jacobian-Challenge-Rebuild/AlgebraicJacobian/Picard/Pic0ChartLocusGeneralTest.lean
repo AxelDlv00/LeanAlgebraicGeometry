@@ -200,8 +200,9 @@ theorem isOpen_chartLocus_of_affineLocal (hinv : IsSplitWitnessIsoInvariant C)
   intro t ht
   -- an affine open around `t`
   obtain ⟨U, hUmem⟩ : ∃ U : T.left.affineOpens, t ∈ U.1 := by
-    obtain ⟨U, hU, hmem, -⟩ := T.left.exists_affineOpen_mem_and_subset
-      (x := t) (U := ⊤) trivial
+    obtain ⟨U, hU, hmem, -⟩ :=
+      (TopologicalSpace.Opens.isBasis_iff_nbhd.mp T.left.isBasis_affineOpens)
+        (show t ∈ (⊤ : T.left.Opens) from trivial)
     exact ⟨⟨U, hU⟩, hmem⟩
   -- the piece's locus is open, and its image is `chartLocus ∩ U`
   have hpre := chartLocus_fromSpecAffine_eq_preimage C hinv m Z T U lam
@@ -216,7 +217,8 @@ theorem isOpen_chartLocus_of_affineLocal (hinv : IsSplitWitnessIsoInvariant C)
       = chartLocus C m Z lam ∩ U.1 := by
     rw [hpre, Set.image_preimage_eq_inter_range, hrange]
   rw [← himg]
-  exact hoi.isOpenEmbedding.isOpenMap _ (haff U)
+  haveI := hoi
+  exact (Over.fromSpecAffine T U).left.isOpenEmbedding.isOpenMap _ (haff U)
 
 end
 
