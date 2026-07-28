@@ -664,3 +664,100 @@ Riemann–Roch effectivity input — the "groups agree ≠ maps agree" shape (I-
 Unchanged by all of the above, and worth repeating because two reductions in one session invite the
 opposite reading: **L8 is still the gate and is arguably false as stated.** Nothing in §7.10 bears on
 it.
+
+## 7.11 ROUND-0071 s0010 AMENDMENT: both of U2's inputs were artefacts of how the residue was spelled
+
+*Run 0071 session 0010, task `ajcr-divrep`, 2026-07-29. Every theorem below was elaborated with
+zero diagnostics against the built `.olean`s; **none of the three modules has been through a `lake
+build`** and none is imported by `AlgebraicJacobian.lean`, so no root measurement covers them.
+§7.11.4 states exactly what that does and does not license.*
+
+§7.10 priced U2 as "one certificate plus one scalar". Both halves of that pricing were about the
+*spelling* of the residue rather than about mathematics, and both are now removed.
+
+### 7.11.1 The scalar was discharged in the tree before the row that owed it was written
+
+`Picard/DivRepChartClassUnivFree.lean` (commit `877459d8c`):
+
+> `windowBound_pos_of_genus_ne_zero` : `g ≠ 0 → 0 < windowBound π hπ`
+
+The content is `genus_eq_zero_of_windowBound_nonpos` (`RiemannRoch/WindowLedgerF3.lean:68`): if the
+chosen bound were `≤ 0`, the vanishing it certifies fires at the **zero** divisor, so `h¹(𝒪) = 0`,
+and with `h⁰(𝒪) = 1`, `χ(𝒪) = 1 − g` that forces `g = 0`. So `hb` is a *genus disjunction with a
+landed degenerate branch*, not an obligation — and `WindowLedgerF3` had already used exactly this
+disjunction twice for its own budget bounds (`:91`, `:106`).
+
+§7.10 warned that `windowBound` is a `Classical.choose` from a predicate upward-closed in `b`, so
+"some valid bound is positive" is trivial while "*the chosen one* is" is not, and told the next
+session to normalise the choice. That reasoning is correct and was the wrong question: nothing needs
+to know whether the chosen bound is positive, because the case where it is not is a case where
+`g = 0`. **General form: before pricing a side condition, ask what its negation implies about the
+ambient data — a hypothesis whose failure collapses the whole setting is a disjunction, not a debt.**
+
+### 7.11.2 The certificate was being demanded at a `Classical.choose`, which no producer can hit
+
+Every prior statement of U2's residue was phrased at `ThetaGeneratorSeed.divisorAdaptation`
+(`Picard/DivSchemeFamily.lean:367`) `= (exists_divisorAdaptation …).some`. So the obligation read
+*"`IsCertified g` for the adaptation the extraction happened to pick"* — unusable by any producer
+that builds its own cover and certifies **that**, which is what every certificate-assembly route
+does. `Picard/DivRepChartClassUnivAny.lean` (commit `4cff9b00c`) replaces it with
+
+> `ThetaGeneratorSeed.HasCertifiedAdaptation n D hD` : `∃ A : DivisorAdaptation C R π (D.localEquations hD), A.IsCertified n`
+
+and re-derives the whole U2 package from it. Three landed facts make this a theorem rather than a
+weakening:
+
+* `divisorWindow` *"depends only on `d`, not on any chart adaptation"* — its own docstring
+  (`Picard/DivisorFamilyWindow.lean:101`), and `divFamEps` is two `divisorWindow`s;
+* `divisorWindow_eq_of_le_of_isCertified` (`Picard/DivSchemeEps.lean:196`) takes an **arbitrary**
+  `A : DivisorAdaptation C R π d` and concludes about `d` alone;
+* `CertifiedDivisorFamily` (`Picard/DivisorFamily.lean:452`) is the triple
+  `(eqns, adaptation, certified)` and never mentions the extraction.
+
+`hasCertifiedAdaptation_of_divisorAdaptation` records that the old spelling is a special case — as a
+lemma, so the relation between the two is machine-checked rather than asserted in prose.
+
+### 7.11.3 The residue is now a single type mismatch, and it is the whole critical path
+
+With the generator clause free (`isGenerator_highWindowPointwiseGeneratorSeed`, ungated over `R_Z`),
+the scalar free (§7.11.1), the adaptation choice free (§7.11.2) and the ε-identity a corollary
+(§7.10.1), what U2 owes is: **some certified adaptation of the high-window universal seed's local
+equations over `R_Z`, at degree `g`.** The obstruction to discharging it from the R2 lane is not
+mathematics but a carrier:
+
+| wanted | supplied |
+|---|---|
+| `DivisorAdaptation.IsCertified` (`DivisorFamily.lean:426`) | `AffAdaptation.IsCertified` (`DivisorFamilyAffAdaptation.lean:252`) |
+
+by `exists_isCertified_of_seed_of_swallowing_affineOpen` (`DivisorFamilyAffSeedEndpoint.lean:78`).
+`DivFamZar.toAff` runs chart-typed → widened, the wrong direction; and `DivisorAdaptation` extends
+`FinCoverData`, so a widened cover has no chart typing to recover — manufacturing one is exactly
+what protection `I-0492` clause 3 forbids. Either a widened → old bridge lands, or the ε layer is
+re-typed onto the widened adaptation. **The second is cheaper than it looks**, for the same reason as
+§7.11.2: `Picard/DivisorFamilyAffFraming.lean` already carries `CertifiedDivisorFamilyAff.eps` and
+`IsPairChartFramed` over the widened carrier, elaborating, because `divFamEps` reads only `eqns`.
+
+### 7.11.4 What the verification does and does not license, and one error it caught
+
+`windowBound_pos_of_genus_ne_zero`, `certifiedFamilyOfAdaptation`, `HasCertifiedAdaptation`,
+`hasCertifiedAdaptation_of_divisorAdaptation` and `divFamEps_certifiedFamilyOfAdaptation` were each
+elaborated standalone against the built `.olean`s with **zero diagnostics**. That is a kernel
+elaboration of statement *and* proof. It is **not** a `lake build` of the modules: three builds were
+launched under the mkdir mutex this session — one failed transiently (a concurrent build in the same
+tree removed olean output directories mid-run; four AJCR lanes were building at once) and one timed
+out at 8000 s inside the ~9000-job cone the 2026-07-29 mathlib restore invalidated. So: read these as
+verified theorems in unrooted modules, and root them once a green build exists.
+
+**The first kernel check `DivRepChartClassUniv.lean` ever received found a real error in it** — the
+file §7.10 committed unverified. It called `hc.thetaGluedEval_surjective hO hchi …`; dot notation
+does not work there, because `DivisorAdaptation.IsCertified.thetaGluedEval_surjective` has `C`, `π`,
+`hπ` as **explicit** section variables *preceding* `hc` (`Picard/DivisorThetaFibreData.lean:56-58`),
+so `hO` is fed into the `C` binder. Fixed to the explicit spelling. **General form: dot notation on a
+structure-projection lemma silently reassigns your arguments when the namespace owner has explicit
+variables before the structure argument — and no `sorry` census sees the result.**
+
+### 7.11.5 §7.6 still stands
+
+**L8 remains the gate and is arguably false as stated.** Two spellings collapsing in one session is
+exactly the reading §7.10.4 warned against: nothing in §7.11 bears on local surjectivity of the Abel
+map out of a too-small divisor functor.
