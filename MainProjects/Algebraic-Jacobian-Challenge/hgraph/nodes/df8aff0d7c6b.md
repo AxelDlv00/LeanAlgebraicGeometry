@@ -15,11 +15,11 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.leakEndpoint_cech_flatBaseChange_qcoh
 type: lean
-updated: '2026-07-28T22:30:24'
+updated: '2026-07-28T22:57:24'
 ---
 theorem leakEndpoint_cech_flatBaseChange_qcoh {S S' X X' : Scheme.{u}}
     (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
-    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f] [X.IsSeparated]
+    (h : IsPullback g' f' f g) [Flat g] [QuasiCompact f] [IsSeparated f]
     [IsAffine S] [IsAffine S']
     (𝒰 : X.OpenCover) [Finite 𝒰.I₀] [∀ i, IsAffine (𝒰.X i)]
     [Finite ((Scheme.Pullback.openCoverOfLeft 𝒰 f g).pushforwardIso

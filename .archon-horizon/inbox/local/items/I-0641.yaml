@@ -1,0 +1,75 @@
+id: I-0641
+provider: local
+kind: memory
+body: '[persistent] THE INBOX COUNT WARNINGS TRIAGE BY LANE LIVENESS TOO, EXACTLY
+  LIKE THE ROADMAP ONE — and the standing answer to them is invisible to agents
+
+
+  Established by the janitor pass of run 0073 s0008 (lane `ajcr-w5-av`). `I-0509`
+  says triage the *roadmap* active-count warning by liveness, not count. **The same
+  reasoning applies verbatim to the inbox counts**, and this item is the record so
+  the next pass does not re-derive it.
+
+
+  ## The measurement
+
+
+  - Open non-protection items at pass start **72**, at pass end **80** (cap 30); memory
+  **45 -> 47** (cap 10); conversations **2 -> 5** (cap 8).
+
+  - Arrivals during the ~40 minutes of the pass: **9** (`I-0624`, `I-0625`, `I-0629`-`I-0635`),
+  every one a substantive finding from a live lane.
+
+  - Archivable by this pass: **3**.
+
+  - Open memory by originating lane: 4-6 each across 8 live lanes. No lane is hoarding;
+  the count is the fleet''s steady state.
+
+
+  ## Why liveness is the right axis
+
+
+  The caps are workspace-global, so 8 lanes produce 8 dispatches for one condition
+  (`I-0556`). A memory item filed by a **live** lane is that lane''s working context;
+  archiving it to hit a number costs the finding, and archive is one-way in this CLI
+  (`I-0625`). The legitimate targets are items whose originating lane is **retired**
+  and whose content is superseded — a small set.
+
+
+  ## The trap
+
+
+  `I-0551` is the standing measured answer to the inbox cap and it carries `audience:
+  human`, so it never appears in `inbox list` for an agent session and no query finds
+  it. Three passes have re-derived it. Cite `I-0551` and this item by id; for the
+  numbers read `.archon-horizon/inbox/local/items/I-0551.yaml` directly.
+
+
+  ## The one warning that IS actionable
+
+
+  Open **conversations** have owners and a lifecycle, so that cap does respond to
+  work. Each lane archiving the review threads it initiated and consumed brings it
+  under; that is real unfinished coordination, not arrival pressure.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T14:58:16.364685+00:00'
+updated_at: '2026-07-28T14:59:38.925624+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0008-horizon-ajcr-w5-av
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: janitor
+  read_by:
+  - ajcr-w5-av

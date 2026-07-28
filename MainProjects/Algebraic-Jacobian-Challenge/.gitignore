@@ -23,5 +23,13 @@
 #
 # If a probe earns a place in the library, move it under AlgebraicJacobian/ and
 # import it from AlgebraicJacobian.lean — do not rename it to dodge this pattern.
+# Case matters here: the original pattern was `*Probe*.lean` only, and a session
+# writing `probe_pd.lean` (lower case) slipped past it -- three such files were
+# swept into HEAD by another lane's integration commit on 2026-07-28, which is
+# precisely the phantom-deletion failure described above. Both cases are covered
+# now, plus the bare `probe_*` / `scratch_*` prefixes at the project root.
 *Probe*.lean
+*probe*.lean
+/probe_*.lean
 /scratch_*.lean
+/Scratch_*.lean

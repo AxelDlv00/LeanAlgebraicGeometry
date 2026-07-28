@@ -8,6 +8,6 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.morphism,
 type: lean
-updated: '2026-07-28T22:30:51'
+updated: '2026-07-28T22:58:00'
 ---
 structure morphism, the stalk map of `e` at the closed point retracts the

@@ -38,8 +38,24 @@ summary: "Riemann--Roch, divisors, and the adelic genus.\n\nCluster-P substrate,
   \ proves NOTHING about uniformity. Missing inputs unchanged: flat base change\n\
   \     for the section spaces, and a WeilDivisor pullback along C_kappa -> C (hard:\
   \ points split);\n  3. global generation -- PROVED, conditional on the inputs of\
-  \ (1)."
-status: pending
+  \ (1).\nPARENT CLOSED 2026-07-28 (run 0067 r4, ajc-pic0av). All five children are\
+  \ done:\nAJC.rr.adelic, .divisor, .ledger, .principal, .sectiondrop. The last to\
+  \ close was\n.principal (principal divisors have degree zero, commit 8b654f78d),\
+  \ which is why the\n\"every sub-item is done\" warning appeared on this row only\
+  \ now. RiemannRoch/WeilDivisor.lean\ncarries ZERO sorries, and principal_degree_zero\
+  \ is axiom-clean measured at the FULL ROOT\n(import AlgebraicJacobian, 252 modules):\
+  \ [propext, Classical.choice, Quot.sound], no sorryAx,\nwith two controls in the\
+  \ same probe correctly reporting sorryAx.\n\nMarked done by an AJC lane rather than\
+  \ left to accumulate janitor passes: five passes across\nfour lanes had recorded\
+  \ the sibling AJC.picrep mismatch without acting, since no AJCR lane can\nadjudicate\
+  \ an AJC row. This one needed no route decision -- the children were simply all\n\
+  finished.\n\nCAVEAT ON WHAT \"DONE\" MEANS HERE, so nobody reads more into it: the\
+  \ Riemann-Roch SUBSTRATE is\ncomplete and sorry-free, and principal_degree_zero\
+  \ carries [IsAlgClosed kbar], as it always\ndid. The general-field statement of\
+  \ degree-zero-of-principal is NOT proved and was never this\nnode's target -- over\
+  \ a general field the ledger proves the residue-WEIGHTED degree vanishes,\nand the\
+  \ unweighted degree is a different number (see Ledger/ResidueOneAlgClosed).\n"
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -61,7 +77,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
-  updated_at: '2026-07-27T16:48:51.363153+00:00'
+  updated_at: '2026-07-28T14:56:29.284059+00:00'
   owner: ajc-rr
   pinned_commits:
   - 37f95374c

@@ -3,3 +3,5 @@
 {"at": "2026-07-27T07:57:13.858718+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, owner, pinned_commits updated"}
 {"at": "2026-07-27T14:47:11.469596+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, pinned_commits updated"}
 {"at": "2026-07-27T16:48:51.362313+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-28T14:56:29.270912+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "done", "note": ""}
+{"at": "2026-07-28T14:56:29.283809+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}

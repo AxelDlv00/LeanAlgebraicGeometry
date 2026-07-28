@@ -34,7 +34,7 @@ summary: "R1 RESOLVED IN THE GOOD DIRECTION (the etale-plus/Zariski crossing nev
   \ k k.\n\nRESIDUE: (iii-c2-aff) ALONE -- an eps-kernel class is trivial on each\
   \ thickened affine chart -- and it is now further reduced. Tangent/DualNumberChartPic.lean\
   \ lands two of its three steps (CommRing.Pic.eq_one_of_cyclic_mod_eps, CommRing.Pic.eq_one_of_mapRingEquiv,\
-  \ and Opens.cechPicMap_ι_eq_one_of_dualNumberChart composing them with the affine\
+  \ and Opens.cechPicMap_i_eq_one_of_dualNumberChart composing them with the affine\
   \ dictionary), leaving EXACTLY the generator: given L trivial on C, produce m in\
   \ the chart module and its cyclicity mod (eps). Carried as the explicit hypothesis\
   \ hcyc, not a sorry.\n\nAND THE FLAGGED RISK IS MIS-SITED: 6.11 step 3 priced a\
@@ -55,16 +55,29 @@ summary: "R1 RESOLVED IN THE GOOD DIRECTION (the etale-plus/Zariski crossing nev
   \ eps -> 0\" with \"the chart module's reduction M/(eps)M is cyclic\" -- i.e. freeness\
   \ of the RESTRICTION on the chart. The generator half is CLOSED and is not geometry:\
   \ Tangent/CyclicQuotientGenerator.lean (ported from AJC c1ed5be8b via I-0495) proves\
-  \ the \"fixed m\" binder IS cyclicity of the reduction, with the converse, so Opens.cechPicMap_ι_eq_one_of_dualNumberChart_of_cyclic\
+  \ the \"fixed m\" binder IS cyclicity of the reduction, with the converse, so Opens.cechPicMap_i_eq_one_of_dualNumberChart_of_cyclic\
   \ consumes cyclicity directly. One deviation from a verbatim port: AJCR's free_of_cyclic_mod_eps\
-  \ is universe-monomorphic, so the port is pinned to Type u.\n\n\nOPEN AGAINST THIS\
-  \ ROW AT THE TIME OF WRITING (janitor pass, run 0073 s0008; not adjudicated here):\
-  \ reviewer threads I-0630 (the twoChartClassHom/unitsReduction square is hom-level,\
-  \ not quotient-level — three named gaps, so \"both intertwining steps landed\" is\
-  \ stronger than the tree), I-0632 (a phantom name in TwoChartNaturality.lean's declaration\
-  \ list, since fixed), I-0634 (mathlib DOES have Algebra k[ε] k as TrivSqZeroExt.algebraBase,\
-  \ so the \"absent instance\" pricing lesson in §6.14 needs restating). Reconcile\
-  \ before any \"residue is one statement\" claim is carried forward.\n"
+  \ is universe-monomorphic, so the port is pinned to Type u.\n\nREVIEWER CORRECTION,\
+  \ run 0073 r3 (I-0630, I-0633), accepted: THE INTERTWINING HAS A THIRD GAP AND I\
+  \ PRICED IT AT ZERO AGAIN. map_twoChartClassHom is naturality of the map BEFORE\
+  \ the quotient; the T2 engine's unitsReduction is between the Cech H1 QUOTIENTS.\
+  \ Three items stand between them, none in the tree: (1) naturality of the DESCENDED\
+  \ twoChartClass, which needs Function.Surjective sel at BOTH ends plus \"pullbackOverlapUnit\
+  \ maps cechCoboundaryUnits into cechCoboundaryUnits\" -- my \"no Function.Surjective\
+  \ sel\" is true of the hom-level lemma and does NOT carry to the quotient level;\
+  \ (2) that dualNumberSectionsUnits carries the thickened coboundary subgroup ONTO\
+  \ the base one (resHom_dualNumberSections makes it provable, nobody proved it --\
+  \ the I-0571 shape inside the file I wrote to fix an I-0571 problem); (3) a typing/transport\
+  \ seam -- nothing produces the Bool-indexed V plus selector from relCover, and nothing\
+  \ identifies (C whisker overDualNumberZero).left with relCurveMap C k[eps] k.\n\n\
+  SO T4 STILL OWES, precisely: those three intertwining items PLUS (iii-c2-aff-geo),\
+  \ the cechPicClass naturality square. Do not describe the T4 residue as \"one statement\"\
+  \ again without naming the statement and checking its CONSUMER.\n\nTHE TRANSFERABLE\
+  \ RULE (I-0633): a generality claim is scoped to the DECLARATION it is written on,\
+  \ not to the chain. map_twoChartClassHom's binders really are fully general, but\
+  \ its consumer twoChartClass needs hsel, so the general lemma one level below a\
+  \ hypothesis-bearing consumer does not remove the hypothesis. Likewise \"steps 1-2\
+  \ over an arbitrary commutative ring\" buys PORTABILITY, not progress.\n"
 status: active
 kind: proof
 priority: normal
@@ -78,5 +91,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:45.485310+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T14:50:29.942784+00:00'
+  updated_at: '2026-07-28T14:58:35.339223+00:00'
   owner: ajcr-w5-av
