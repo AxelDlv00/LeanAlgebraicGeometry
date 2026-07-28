@@ -533,6 +533,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffZar
 import AlgebraicJacobian.Picard.DivisorFamilyAffAssemble
 import AlgebraicJacobian.Picard.DivisorFamilyAffCompare
 import AlgebraicJacobian.Picard.DivisorFamilyAffGlue
+import AlgebraicJacobian.Picard.DivisorFamilyAffSections
 import AlgebraicJacobian.Picard.DivRepAffPullIndep
 import AlgebraicJacobian.Picard.DivRepAwayPush
 import AlgebraicJacobian.Picard.DivRepAffPullField
