@@ -519,6 +519,7 @@ import AlgebraicJacobian.Picard.Pic0ChartTwistSplit
 import AlgebraicJacobian.Picard.Pic0ChartCoverageDegree
 import AlgebraicJacobian.Picard.Pic0ChartRationalGraph
 import AlgebraicJacobian.Picard.Pic0ChartCoverageFibre
+import AlgebraicJacobian.Picard.Pic0ChartCoverageTest
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivGen
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivClose
 import AlgebraicJacobian.Picard.DivSchemeUnivFibreKerSpan
@@ -558,6 +559,7 @@ import AlgebraicJacobian.Picard.DivRepAffPullNat
 import AlgebraicJacobian.Picard.DivRepAffPullClause
 import AlgebraicJacobian.Picard.DivRepChartRange
 import AlgebraicJacobian.Picard.JacobianDataAbelImage
+import AlgebraicJacobian.Picard.JacobianDataAbelSurj
 
 /-!
 # AlgebraicJacobian — library root
