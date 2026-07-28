@@ -279,7 +279,7 @@ theorem sectMapₗ_eq (f : M ⟶ N) (r : R) :
     (tilde.toOpen M (PrimeSpectrum.basicOpen r)).hom
     (fun s => IsLocalizedModule.map_units (tilde.toOpen N (PrimeSpectrum.basicOpen r)).hom s)
   ext x
-  show sectMapₗ f r ((tilde.toOpen M (PrimeSpectrum.basicOpen r)).hom x)
+  change sectMapₗ f r ((tilde.toOpen M (PrimeSpectrum.basicOpen r)).hom x)
       = IsLocalizedModule.map (Submonoid.powers r)
         (tilde.toOpen M (PrimeSpectrum.basicOpen r)).hom
         (tilde.toOpen N (PrimeSpectrum.basicOpen r)).hom f.hom

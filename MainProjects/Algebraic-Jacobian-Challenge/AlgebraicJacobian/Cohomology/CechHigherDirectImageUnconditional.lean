@@ -3,8 +3,10 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
+import Mathlib.Algebra.Category.ModuleCat.Descent
 import AlgebraicJacobian.Cohomology.CechHigherDirectImage
 import AlgebraicJacobian.Cohomology.FlatBaseChange
+import AlgebraicJacobian.Cohomology.TildeExactness
 import AlgebraicJacobian.Cohomology.QcohTildeSections
 import AlgebraicJacobian.Cohomology.CechTermAcyclic
 import AlgebraicJacobian.Cohomology.ModulesCoverConservativity
@@ -286,6 +288,51 @@ theorem Modules.pullback_preservesMonomorphisms_of_isOpenImmersion {X Y : Scheme
   haveI := Modules.restrictFunctor_preservesMonomorphisms f
   Functor.preservesMonomorphisms.of_iso (Scheme.Modules.restrictFunctorIsoPullback f)
 
+/-! ### The affine case of flat exactness, on the tilde image
+
+For a flat ring map `φ : R ⟶ R'` the composite `(~) ⋙ g^*` (with `g = Spec.map φ`) *is* exact.
+This is the affine-morphism ingredient of `pullback_preservesMonomorphisms`, and it is available
+because both factors of the identification `pullback_spec_tilde_iso` are exact: extension of
+scalars along a flat map (`ModuleCat.preservesFiniteLimits_extendScalars_of_flat`) and the tilde
+functor itself (`tildePreservesFiniteLimits`, `Cohomology/TildeExactness.lean`).
+
+The limitation is the domain, not the flatness: this says `g^*` is exact *on the tilde image*,
+i.e. on quasi-coherent modules, whereas `PreservesMonomorphisms` quantifies over all modules.
+See the docstring of `pullback_preservesMonomorphisms` for what that leaves open. -/
+
+/-- **The tilde/pullback identification, at the level of functors.**  `pullback_spec_tilde_iso`
+(`Cohomology/FlatBaseChange.lean`) is literally the `M`-component of a natural isomorphism — it
+is built as `((conjugateIsoEquiv adjL adjR).symm (gammaPushforwardNatIso φ)).symm |>.app M` — so
+the functor-level statement is obtained by dropping the `.app M`.  Recorded here because the
+exactness argument needs naturality, and re-deriving it componentwise would be pointless.
+Project-local. -/
+noncomputable def tildePullbackNatIso {R R' : CommRingCat.{u}} (φ : R ⟶ R') :
+    tilde.functor R ⋙ Scheme.Modules.pullback (Spec.map φ) ≅
+      ModuleCat.extendScalars.{u, u, u} φ.hom ⋙ tilde.functor R' :=
+  let adjL := (tilde.adjunction (R := R)).comp
+    (Scheme.Modules.pullbackPushforwardAdjunction (Spec.map φ))
+  let adjR := (ModuleCat.extendRestrictScalarsAdj φ.hom).comp (tilde.adjunction (R := R'))
+  ((conjugateIsoEquiv adjL adjR).symm (gammaPushforwardNatIso φ)).symm
+
+/-- **Affine flat pullback is exact on the tilde image.**  For a flat ring map `φ : R ⟶ R'`, the
+composite `M ↦ (Spec φ)^*(M^~)` preserves finite limits: by `tildePullbackNatIso` it is
+isomorphic to `M ↦ (R' ⊗_R M)^~`, and both of those factors are exact — extension of scalars
+because `φ` is flat (`ModuleCat.preservesFiniteLimits_extendScalars_of_flat`), and `~` by
+`tildePreservesFiniteLimits`.
+
+This is the affine-morphism ingredient of `pullback_preservesMonomorphisms`; with cover-locality
+(`Modules.mono_of_mono_restrict`) and the open-immersion case it covers every *quasi-coherent*
+module.  Project-local. -/
+@[implicit_reducible]
+noncomputable def tildePullback_preservesFiniteLimits {R R' : CommRingCat.{u}} (φ : R ⟶ R')
+    (hφ : φ.hom.Flat) :
+    Limits.PreservesFiniteLimits (tilde.functor R ⋙ Scheme.Modules.pullback (Spec.map φ)) := by
+  haveI := ModuleCat.preservesFiniteLimits_extendScalars_of_flat hφ
+  haveI := tildePreservesFiniteLimits (R := R')
+  haveI : Limits.PreservesFiniteLimits
+      (ModuleCat.extendScalars.{u, u, u} φ.hom ⋙ tilde.functor R') := inferInstance
+  exact Limits.preservesFiniteLimits_of_natIso (tildePullbackNatIso φ).symm
+
 /-- **Flat base change has left-adjoint pullback**, hence `g^*` preserves finite
 colimits (free: `g^* = pullback g` is a left adjoint). -/
 instance pullback_preservesFiniteColimits (g : S' ⟶ S) :
@@ -334,11 +381,30 @@ Two routes that do **not** work, and why:
   above by `preservesFiniteLimits_of_preservesMonomorphisms` — so the categorical glue is
   *not* what is missing.  The whole obligation is now this one mono statement.
 
-**What IS discharged**: the *open-immersion* case, sorry-free, as
-`Modules.pullback_preservesMonomorphisms_of_isOpenImmersion` above — because there `g^*` is
-isomorphic to the sectionwise `restrictFunctor`.
-So the residual is genuinely about a general flat `g`, where no sectionwise formula holds and
-the stalk model is unavoidable. -/
+**WHAT IS DISCHARGED, and how little is left.**  Three of the four ingredients now exist,
+sorry-free:
+* the *open-immersion* case, `Modules.pullback_preservesMonomorphisms_of_isOpenImmersion` above
+  (there `g^*` is the sectionwise `restrictFunctor`);
+* *cover-locality*, `Modules.mono_of_mono_restrict` above: mono-preservation may be checked
+  after restricting to an affine cover of the **source** `S'`, and on an affine `W ⊆ S'` with
+  `g(W) ⊆ V` affine in `S` the map `W.ι ≫ g` factors through `V` with `Flat.flat_appLE` making
+  that factor `Spec` of a flat ring map;
+* the *affine* case **on the tilde image**, `tildePullback_preservesFiniteLimits` below — for a
+  flat ring map `φ`, `g^* ∘ (~)` is exact, because `pullback_spec_tilde_iso` identifies it with
+  `(~) ∘ extendScalars φ` and both factors are exact
+  (`ModuleCat.preservesFiniteLimits_extendScalars_of_flat` for flat `φ`, and
+  `tildePreservesFiniteLimits` — proved this session in `Cohomology/TildeExactness.lean`).
+
+**WHAT IS ACTUALLY MISSING**, stated sharply so the next session starts from it rather than from
+the dead ends above: the affine case is available only *on the tilde image*, i.e. for
+quasi-coherent modules, while `PreservesMonomorphisms` quantifies over **all** `𝒪_S`-modules.
+Over an affine base `Scheme.Modules` is strictly larger than `ModuleCat Γ(S, ⊤)` — the tilde
+functor is not an equivalence — so the assembly needs either
+(a) a mono-preservation statement for the affine pullback on arbitrary modules (which is the
+    stalk model again, now only over an affine base), or
+(b) the observation that mono-preservation for arbitrary modules follows from the
+    quasi-coherent case, which would need quasi-coherent modules to generate — false in general.
+Route (a) over an affine base is the smaller of the two and is the recommended next target. -/
 theorem pullback_preservesMonomorphisms (g : S' ⟶ S) [Flat g] :
     (Scheme.Modules.pullback g).PreservesMonomorphisms := sorry
 
