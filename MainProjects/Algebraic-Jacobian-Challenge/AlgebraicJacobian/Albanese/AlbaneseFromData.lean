@@ -54,13 +54,21 @@ equation `Sym^g φ = f^{(g)} ≫ ψ`. Both directions are proved here:
   geometric source: a morphism on a dense open of the Jacobian. This is where
   `extend_to_av` (Milne I.3.2, proved and unconditional) does its work, and it is
   the form the eventual `Sym^g C` construction would feed.
+* `exists_unique_descent_of_birational` (§2) — **Milne's step 2 in full.** The descent
+  datum `hdesc` above, produced from exactly what Milne III.5.1(a) gives: a section of
+  `f^{(g)}` over a dense open `V`, a matching retraction, and density of `V` and of
+  `f⁻¹V`. Its conclusion `∃! ψ, h = f ≫ ψ` is an equation on *all* of `Sym^g C`, not
+  merely on `V`, which is what the connector consumes.
 * `hom_ext_of_dense_open` — the agreement principle used for uniqueness.
 
 ## What remains, precisely
 
-Only `SymPowData C g` for the actual curve and `g = genus C`, together with the
-birationality of `f^{(g)}` (Milne III.5.1(a)) in the form of a section over a dense
-open. Everything Milne derives *from* those is proved below.
+Only `SymPowData C g` for the actual curve and `g = genus C`, together with Milne
+III.5.1(a) birationality in the concrete form `exists_unique_descent_of_birational`
+consumes (section + retraction + two density facts). Everything Milne derives *from*
+those is proved below — including, note, the step that used to be described as blocked
+on "a way to invert a birational morphism": no birational-inverse API is needed, only
+the section and retraction that birationality supplies directly.
 
 ## References
 
@@ -268,6 +276,65 @@ theorem isDominant_opens_ι {X : Scheme.{u}} (V : X.Opens) (hV : Dense (V : Set 
     IsDominant V.ι := by
   rw [isDominant_iff]
   simpa [DenseRange, Scheme.Opens.range_ι] using hV
+
+/-- **Milne's step 2 in full, from birationality data.**
+
+This is the descent datum `hdesc` of `exists_unique_albanese_factorisation`, produced
+from exactly what Milne III.5.1(a) provides. Suppose `f : S ⟶ J` (morally
+`f^{(g)} : Sym^g C ⟶ Pic⁰`) is an **isomorphism over a dense open** `V ⊆ J`, presented
+concretely as
+
+* `s : V ⟶ S` with `s ≫ f = V.ι` — a section of `f` over `V`;
+* `hsr` — and `s` is also a retraction of the restriction `f|_{f⁻¹V} : f⁻¹V ⟶ V`;
+* `hVpre` — the preimage `f⁻¹V` is dense in `S`.
+
+Then for any `h : S ⟶ A` into an abelian variety there is a **unique** `ψ : J ⟶ A`
+with `h = f ≫ ψ`.
+
+Note the shape of the conclusion: the equation is on **all** of `S`, not merely on
+`V`. That is the difference between this and
+`exists_unique_hom_restrict_eq_of_dense_open`, and it is where `hsr` and `hVpre` earn
+their place — the extension theorem gives the equation on `V`, and agreement is then
+transported to all of `S` along the dense open `f⁻¹V` (`ext_of_isDominant`, using that
+`S` is reduced and `A` separated).
+
+So the Albanese descent needs no rational-map reasoning at the call site, and no
+birational-inverse API: it needs a section, a retraction, and two density facts. -/
+theorem exists_unique_descent_of_birational
+    {S J : Over (Spec (.of kbar))} [IsReduced S.left]
+    [Smooth J.hom] [GeometricallyIrreducible J.hom] [IsSeparated J.hom]
+    [LocallyOfFiniteType J.hom] [IsIntegral J.left] [IsReduced J.left]
+    {A : Over (Spec (.of kbar))}
+    [GrpObj A] [IsProper A.hom] [Smooth A.hom] [GeometricallyIrreducible A.hom]
+    (f : S.left ⟶ J.left) (h : S.left ⟶ A.left)
+    (V : J.left.Opens) (hV : Dense (V : Set J.left))
+    (hVpre : Dense ((f ⁻¹ᵁ V : S.left.Opens) : Set S.left))
+    (s : (V : Scheme) ⟶ S.left) (hs : s ≫ f = V.ι)
+    (hsr : f.resLE V (f ⁻¹ᵁ V) le_rfl ≫ s = (f ⁻¹ᵁ V).ι)
+    (hover : (Scheme.PartialMap.mk V hV (s ≫ h)).toRationalMap.compHom A.hom
+      = J.hom.toRationalMap) :
+    ∃! ψ : J.left ⟶ A.left, h = f ≫ ψ := by
+  haveI : A.left.IsSeparated := Scheme.RationalMap.isSeparated_left_of_isProper A
+  haveI hdom : IsDominant (f ⁻¹ᵁ V).ι := by
+    rw [isDominant_iff]
+    simpa [DenseRange, Scheme.Opens.range_ι] using hVpre
+  obtain ⟨ψ, hψ, huniq⟩ :=
+    Scheme.RationalMap.exists_unique_hom_restrict_eq_of_dense_open V hV (s ≫ h) hover
+  refine ⟨ψ, ?_, ?_⟩
+  · -- Both sides agree on the dense open `f⁻¹(V)`; transport to all of `S`.
+    refine ext_of_isDominant (f ⁻¹ᵁ V).ι ?_
+    calc (f ⁻¹ᵁ V).ι ≫ h
+        = (f.resLE V (f ⁻¹ᵁ V) le_rfl ≫ s) ≫ h := by rw [hsr]
+      _ = f.resLE V (f ⁻¹ᵁ V) le_rfl ≫ (s ≫ h) := by simp
+      _ = f.resLE V (f ⁻¹ᵁ V) le_rfl ≫ (V.ι ≫ ψ) := by rw [hψ]
+      _ = (f ⁻¹ᵁ V).ι ≫ f ≫ ψ := by
+            rw [← Category.assoc,
+              show f.resLE V (f ⁻¹ᵁ V) le_rfl ≫ V.ι = (f ⁻¹ᵁ V).ι ≫ f from by
+                simp [Scheme.Hom.resLE], Category.assoc]
+  · intro ψ' hψ'
+    refine huniq ψ' ?_
+    change V.ι ≫ ψ' = s ≫ h
+    rw [← hs, Category.assoc, ← hψ']
 
 omit [IsAlgClosed kbar] in
 /-- **Uniqueness of the Albanese descent, geometrically.** Two morphisms from the
