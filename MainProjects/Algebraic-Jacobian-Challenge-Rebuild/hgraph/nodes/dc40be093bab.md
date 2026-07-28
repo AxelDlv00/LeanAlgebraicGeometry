@@ -12,21 +12,65 @@ docstring: '**`IsChartDatumPlusFibreAt` at `L := κ(t)` IS `IsChartDatumPlusFibr
   not a different statement that happens to specialise.
 
 
-  This is the non-vacuity check for `hplus` below, and it is the sharp one: it shows
-  the extra
+  This is the upper half of the two-sided check on `hplus` below, and it is the sharp
+  one: it shows
 
-  strength of `hplus` over `hfib` is exactly "the same identity at every extension",
-  so a lane
+  the extra strength of `hplus` over `hfib` is exactly "the same identity at every
+  extension", so a
 
-  reading `hplus` knows precisely what it owes beyond `hfib` — the naturality of `cechPicClass`
+  lane reading `hplus` knows precisely what it owes beyond `hfib` — the naturality
+  of `cechPicClass`
 
-  along `κ(t) → L`, and nothing else.'
+  along `κ(t) → L`, and nothing else.
+
+
+  **The lower half was measured too, and is recorded here because it cannot be a theorem.**  A
+
+  reduction whose new hypothesis is *satisfiable by construction* is vacuous, and
+  `D` in
+
+  `IsChartDatumPlusFibreAt` is chosen by the consumer — exactly the configuration
+  in which that
+
+  happens.  Probed at arbitrary `μ`, `D`, `t`, `L`: `rfl` fails on the left-hand side,
+  and `simp`
+
+  and `aesop` both leave unsolved goals.  So it is a genuine equation between two
+  plus classes and
+
+  not a `Prop` true for free.  (A passing automation attempt would have refuted the
+  reduction, which
+
+  is why the probe is worth running before pricing anything as a residue.)
+
+
+  **And the probe has a second form, which the first does not cover.**  Junk-inhabitation
+  is the risk
+
+  when the hypothesis is *consumer-chosen* — `D` here.  When it is *determined* by
+  the setting, the
+
+  mirror risk is **unsatisfiability**: a reduction to a false hypothesis passes every
+  `sorry` census
+
+  and every axiom probe, because it then *is* a theorem.  `hplus` is determined in
+  `μ`, so that
+
+  direction needs a witness, and the witness is landed and unconditional:
+
+  `exists_splitting_of_picEt` produces, for **any** plus class over **any** reading
+  field, a finite
+
+  separable `L` and a presenting class `M` with exactly the identity `hplus` asserts.  So
+  the
+
+  plus-class identity is *inhabited* at every `μ`, not merely consistent.'
 file: AlgebraicJacobian/Picard/Pic0ChartPresentationConverse.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.isChartDatumPlusFibreAt_self
 type: lean
-updated: '2026-07-29T06:51:20'
+updated: '2026-07-29T07:17:06'
 ---
 theorem isChartDatumPlusFibreAt_self {A : Type u} [CommRing A] [Algebra k A]
     (μ : picEt C (overSpec k A)) (D : BasicOpenCocycleDatum C A π)

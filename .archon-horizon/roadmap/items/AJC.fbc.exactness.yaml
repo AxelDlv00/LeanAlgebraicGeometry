@@ -3,32 +3,30 @@ title: Flat pullback preserves finite limits (bypassed on quasi-coherent objects
   arbitrary-module case open)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Flat pullback preserves finite limits. A DELIBERATE MONUMENT, NOT A FRONTIER\
-  \ -- do not spend a\nsession here, and read this before treating the task brief's\
-  \ priority ordering as current.\n\nWHY IT IS OFF THE PATH, measured across run 0068\
-  \ r1/r2:\n * pullback_preservesMonomorphisms quantifies over ALL O_S-modules, and\
-  \ over an affine base\n   Scheme.Modules is strictly larger than ModuleCat of the\
-  \ global sections (tilde is fully faithful\n   but not essentially surjective).\
-  \ Mathlib gives SheafOfModules.pullback no pointwise model, so the\n   general statement\
-  \ is walled -- the sibling MR0555258-Compactifying-Picard independently reduced\n\
-  \   j_! to the same missing brick.\n * The obligation was MIS-SCOPED. Every consumer\
-  \ instantiates flat exactness at QUASI-COHERENT\n   objects, and there it is PROVED,\
-  \ sorry-free: pullback_preservesKernel_of_isQuasicoherent, by\n   cone-cancellation\
-  \ off tilde-image exactness plus fullness of tilde.\n * The homology comparison\
-  \ needs ONE KERNEL PER DEGREE, not global exactness, so\n   pullback_mapHC_homologyIso_of_isQuasicoherent\
-  \ is an axiom-clean replacement.\n * MEASURED r2: closing it would clean only the\
-  \ two probes that NAME it. cech_flatBaseChange_qcoh\n   never touches it and is\
-  \ dirty for an unrelated reason.\n\nSTATUS NOTE, deliberate: pullback_preservesFiniteLimits\
-  \ and pullback_preservesHomology are NOT\ninstances. They were, and that was worse\
-  \ -- as instances they were picked up by synthesis, so\ndeclarations merely quantifying\
-  \ over them reported clean axioms while every SYNTHESIS SITE silently\nacquired\
-  \ sorryAx. Demoted at r1. Do not restore the attribute before the carrier is proved.\n\
-  \nThe task brief for ajc-fbc still calls this \"one of only two sorry-bodied INSTANCES\
-  \ that leak through\ntypeclass synthesis\" and names it THE priority. That was true\
-  \ when the brief was written and is not\ntrue at HEAD; the lane's own r1 made it\
-  \ stale.\n\nLeft `pending` rather than `rejected`: the statement is TRUE and someone\
-  \ may want it if mathlib grows\na pointwise model for module pullback. It is simply\
-  \ not on the route to Stacks 02KH.\n"
+summary: "Flat pullback preserves finite limits. NOT ON THE CRITICAL PATH, and the\
+  \ \"instance leak\" that made\nit the task brief's stated priority NO LONGER EXISTS\
+  \ (re-measured run 0068 r5).\n\nTHE BRIEF'S FRAMING IS STALE, and this row is where\
+  \ a fresh session will act on it, so it is\ncorrected here (full measurement in\
+  \ I-0756):\n * \"pullback_preservesFiniteLimits is one of only two sorry-bodied\
+  \ INSTANCES leaking through\n   typeclass synthesis\" -- it is NOT an instance.\
+  \ This lane demoted it at r1 for exactly that leak\n   reason; the file says so\
+  \ at its header. And the project now has ZERO sorry-bodied instances\n   (grep for\
+  \ `instance ... := sorry` returns nothing). There is no leak to close, and no\n\
+  \   contaminated declaration for closing it to clean.\n * r2 separately measured\
+  \ that discharging it would clean only the two probes that name it.\n\nWHY NOTHING\
+  \ NEEDS IT. Flat left-exactness was being demanded at the strongest generality that\
+  \ makes\nthe sentence true, while every consumer instantiates it at QUASI-COHERENT\
+  \ objects, where it is\nPROVED sorry-free by pullback_preservesKernel_of_isQuasicoherent\
+  \ (cone-cancellation off the\ntilde-image exactness, plus fullness of tilde). And\
+  \ the homology comparison the Cech proof consumes\nneeds only ONE KERNEL PER DEGREE\
+  \ (mapHomologicalComplexHomologyIso_of_preservesKernel), not global\nexactness --\
+  \ so pullback_mapHC_homologyIso_of_isQuasicoherent is an axiom-clean replacement.\n\
+  Measured: the leakProbe_qcohRoute_* lines are clean while leakControl_qcohRoute_oldRoute\
+  \ (same\nconclusion, old route) still reports sorryAx.\n\nWHAT REMAINS OPEN, honestly:\
+  \ pullback_preservesMonomorphisms for ARBITRARY O_S-modules, walled --\nmathlib\
+  \ gives SheafOfModules.pullback no pointwise model, and the sibling project\nMR0555258-Compactifying-Picard\
+  \ independently reduced j_! to the same missing brick. It should not be\nattempted\
+  \ from this row; the quasi-coherent route bypasses it entirely.\n"
 status: pending
 kind: proof
 priority: high
@@ -51,7 +49,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc
-  updated_at: '2026-07-28T21:55:15.705480+00:00'
+  updated_at: '2026-07-28T23:36:15.341652+00:00'
   owner: ajc-fbc
   pinned_commits:
   - 672a8c656

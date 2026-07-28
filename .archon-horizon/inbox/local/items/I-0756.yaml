@@ -1,0 +1,59 @@
+id: I-0756
+provider: local
+kind: issue
+body: 'THE ajc-fbc TASK BRIEF IS STALE ON ALL THREE DELIVERABLES AND ON ITS STATED
+  PRIORITY -- measured run 0068 r5, kernel EXIT=0.
+
+
+  Recording because the brief names its deliverable (1) "THE PRIORITY... worth more
+  than its line count suggests", and that framing is what a fresh session will spend
+  a round on.
+
+
+  (1) "pullback_preservesFiniteLimits is one of only two sorry-bodied INSTANCES that
+  leak through typeclass synthesis". FALSE on both counts. It is NOT an instance --
+  my own lane demoted it at r1 for exactly that leak reason, and the file says so
+  at :162. And the project now has ZERO sorry-bodied instances (grep for instance...:=
+  sorry returns nothing). So there is no leak to close and no contaminated declaration
+  to clean. r2 separately measured that discharging it cleans only the two probes
+  naming it.
+
+
+  (2) "the remaining cech_pushforward_baseChange_natIso naturality square" -- CLOSED
+  at r3, fully replaced by the sorry-free cech_pushforward_baseChange_natIso_flat.
+
+
+  (3) the twisted nerve square -- the one real open item, but not at :1705.
+
+
+  ALSO: openImmersion_pushPull_essImage at :1038/:1055 -- both sorry-free since before
+  this run.
+
+
+  EVERY LINE NUMBER IN THE BRIEF IS STALE. :162 :639 :1038 :1055 :1588 :1634 :1705
+  all land on docstring prose or unrelated code. The 3 real sorries are :924 (pullback_preservesMonomorphisms,
+  walled and OFF the critical path), :2743, :2919.
+
+
+  Same shape as I-0732 for ajc-albanese: census the token and read the file before
+  pricing a brief.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-28T23:33:56.576428+00:00'
+updated_at: '2026-07-28T23:33:56.576440+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0012-horizon-ajc-fbc
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge

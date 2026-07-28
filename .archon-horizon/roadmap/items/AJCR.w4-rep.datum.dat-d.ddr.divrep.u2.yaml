@@ -82,7 +82,35 @@ summary: "U2: the DDR9-U epsilon-identity at the universal point (the last gate 
   is impossible and satisfiability is the only live failure mode. The 'not silently\
   \ stronger' probe\nIS discharged (divisorWindow_eq_of_le_of_isCertified_of_quotientData\
   \ recovers the landed\nchart-typed statement as a corollary); the satisfiability\
-  \ probe is owed and is the cheapest next\nmeasurement on this row."
+  \ probe is owed and is the cheapest next\nmeasurement on this row.\n\nSUPERSEDING\
+  \ THE SATISFIABILITY CAVEAT ABOVE -- I RAN THE PROBE AND THE EPS-HALF IS DISCHARGED,\
+  \ NOT\nMERELY OPEN (s0012 close, commit 32476f85a, root build 9280 jobs EXIT=0,\
+  \ divFamEps_eq_of_le\naxiom-clean vs a control that fires sorryAx).\n\n  divFamEps_eq_of_le\
+  \ (Picard/DivRepChartClassUnivQuot.lean)\n    the eps-pair identity at an ARBITRARY\
+  \ F : DivFam C R pi g from THE TWO CONTAINMENTS ALONE --\n    no projectivity hypothesis,\
+  \ no rank hypothesis, no certificate.\n\nWHY: Picard/DivSchemeFrameCover.lean ALREADY\
+  \ carries DivFam.projective_window_quotient (:106) and\nDivFam.rankAtStalk_window_quotient\
+  \ (:117) for EVERY F at EVERY window a >= windowM_choice,\ndischarged inside from\
+  \ the representative's own certificate -- which DivFam has BY CONSTRUCTION,\nCertifiedDivisorFamily\
+  \ being the triple (eqns, adaptation, certified). So the window-quotient facts\n\
+  were not merely satisfiable: they were landed unconditionally, and this lane had\
+  \ restated them as\nhypotheses.\n\nTHE SHARP READING, and it retracts this row's\
+  \ own framing across five sessions: THE EPS-HALF OF U2\nWAS NEVER GATED ON A CERTIFICATE\
+  \ AT ALL -- not on the original (D.divisorAdaptation hD).IsCertified\ng, and not\
+  \ on the weakened HasCertifiedAdaptation this lane landed at s0010. What every re-scope\n\
+  read as 'U2 needs a certificate' was the CLASS requirement leaking into the eps\
+  \ statement THROUGH\nTHE CARRIER: one cannot WRITE divFamEps hpi g F without an\
+  \ F, and every F carries a certificate.\nThe eps layer never asked for one beyond\
+  \ that.\n\nSO THE PARTITION IS NOT 'eps open, class refuted'. It is: eps DISCHARGED,\
+  \ and 100% of U2's\nremaining content is PRODUCING THE CLASS over the chart ring\
+  \ -- exactly the face protection I-0492's\nwidening exists to supply, and cert-r2's\
+  \ divFamZarAff_of_swallowing_affineOpen is the live\ncandidate. The straddling probe\
+  \ now decides that and nothing else.\n\nMETHOD NOTE, worth more than the result:\
+  \ this came from running the probe ajcr-charts named on\nI-0494 -- a reduction owes\
+  \ BOTH 'not vacuous' and 'not silently stronger'. My hypothesis was\nDETERMINED\
+  \ by the data rather than consumer-chosen, so the live risk was UNSATISFIABILITY\
+  \ rather\nthan vacuity; checking it turned a caveat into a theorem and refuted my\
+  \ own headline of an hour\nearlier."
 status: pending
 kind: proof
 priority: normal
@@ -105,7 +133,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-28T23:14:23.961962+00:00'
+  updated_at: '2026-07-28T23:34:36.618582+00:00'
   pinned_commits:
   - 0a6351e5e
   - 0b67179bb

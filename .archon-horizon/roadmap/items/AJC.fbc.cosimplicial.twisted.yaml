@@ -2,40 +2,41 @@ id: AJC.fbc.cosimplicial.twisted
 title: Twisted Čech nerve compatibility
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Twisted Cech nerve compatibility. TWO items remain, and only one of them\
-  \ is mathematics (run 0068 r4).\n\nWHAT IS PROVED, all sorry-free and axiom-measured\
-  \ clean:\n * alternatingCofaceComplexIsoOfDelta -- the consumer (alternatingCofaceMapComplex)\
-  \ has differential\n   sum (-1)^i delta_i and never mentions a codegeneracy, so\
-  \ a complex isomorphism needs only COFACE\n   compatibility, not the general-phi\
-  \ naturality NatIso.ofComponents demands. Load-bearing, not\n   cosmetic: this tree's\
-  \ sigma-coordinate lemmas exist for delta ONLY, and no general-phi analogue\n  \
-  \ exists here or in mathlib, so the obligation was out of reach AS STATED.\n * cechNerve_backbone_δ_sigma\
-  \ / cechNerve_drop_δ_sigma -- the coface in sigma-coordinates is\n   'reindex by\
-  \ delta^k, then restrict'. One rw over four lemmas that had been in the project\
-  \ for\n   many sessions and were merely OUTSIDE the consumer's import cone (see\
-  \ I-0725); three sessions\n   priced their absence as mathematics.\n * sigmaAssembled_δ_square,\
-  \ twistedNerve_δ_square{,_concrete} -- the coface square FROM one per-sigma\n  \
-  \ equation. Pi.hom_ext does fire; the earlier 'it cannot' was true only of the obligation\
-  \ as posed.\n * tcnps_eq / slice_compat / twistedPerSigmaCompat_of_bcNaturality\
-  \ -- the residue SPLITS at a rfl\n   seam, and half (b) is FREE by mono-cancellation\
-  \ in Over X'. That half is exactly what this\n   project's docstrings named as THE\
-  \ residue for three rounds, so that pricing is retracted.\n\nWHAT REMAINS -- TWO\
-  \ items, and earlier r4 commit messages named only the second:\n (i) WIRING, mechanical\
-  \ and unwritten. The square is proved in SIGMA-DECOMPOSED form (target a Pi\n  \
-  \   product, target coface a Pi.lift). Feeding it to alternatingCofaceComplexIsoOfDelta\
-  \ at\n     twisted_cech_nerve_iso's own spelling needs the Pi product identified\
-  \ with the base-changed\n     nerve's degree object via pushPull_sigma_iso FOR THE\
-  \ BASE-CHANGED COVER, plus the nerve's coface\n     put in Pi.lift shape.\n (ii)\
-  \ HALF (a), the mathematics: naturality of the restricted-square Beck-Chevalley\
-  \ iso in the\n     SQUARE, not the module. Nothing in the tree relates the mate\
-  \ across a change of square.\n\nROUTE FOR (ii), two facts machine-checked at r4:\
-  \ openImmersion_bareBC never uses cartesianness (by\nrfl it is the w-only mate,\
-  \ so it covers the degenerate square that is pushPullMap's own shape), and\nthe\
-  \ two restricted squares paste vertically. So mateEquiv_vcomp is the glue. The missing\
-  \ brick is\n'pushPullMap is the degenerate-square mate' -- TYPECHECKS but is NOT\
-  \ rfl, and simp does not close it.\n\nMEASUREMENT: axiom-frontier section 6h, with\
-  \ three controls that must keep reporting sorryAx. Nothing\nhere has made a previously-contaminated\
-  \ declaration clean.\n"
+summary: "Twisted Cech nerve compatibility. ONE item remains, and it is the mathematics\
+  \ (run 0068 r5).\n\nr4 left TWO items: (i) wiring, mechanical and unwritten; (ii)\
+  \ half (a), the mathematics. (i) IS NOW\nWRITTEN. So this row's residue is exactly\
+  \ one named Prop.\n\nITEM (i), CLOSED (r5, commit 09f2d8798, kernel EXIT=0):\n *\
+  \ twistedComponent / twistedComponent_eq -- the degreewise component factored through\
+  \ the\n   sigma-product, and the proof that it IS twisted_cech_nerve_iso's own component.\n\
+  \ * twistedComponent_δ_square -- the coface square at the NERVE'S OWN spelling (target\
+  \ the\n   base-changed nerve's degree object, not a Pi product), from TwistedPerSigmaDeltaCompat\
+  \ alone.\n * THE BRIDGE was that the SAME sigma-coordinate coface formula applies\
+  \ to the BASE-CHANGED cover:\n   cechNerve_backbone_δ_sigma at the bc cover gives\
+  \ its nerve's coface as reindex-then-restrict,\n   exactly the Pi.lift shape r4's\
+  \ square produces. No transport: the index types agree on the nose\n   (baseChangedCover_I₀).\
+  \ bcNerve_drop_δ_sigma + sigmaAssembled_δ_square_cancel are the two bricks.\n\n\
+  ITEM (ii), THE ONLY RESIDUE, now NAMED (r5, content in HEAD via 00aeff0e6; RECORD\
+  \ 4fff36452):\n * BcSquareNaturality -- half (a) as a citable Prop, verbatim the\
+  \ hBC binder of\n   twistedPerSigmaCompat_of_bcNaturality. Naming it is not cosmetic:\
+  \ an obligation existing only as\n   a binder cannot be cited, probed, or reduced.\n\
+  \ * BcSquarePullbackSide -- the same with the target pushforward cancelled (both\
+  \ sides land in\n   pV_* pV^*(g'^*F), so eq_of_map_eq_of_adjunction reflects the\
+  \ equality down from pV^*). Mentions\n   NO pushforward, so pullbackComp/pullbackCongr\
+  \ and unit_mateEquiv apply to it directly.\n * bcSquareNaturality_iff_pullbackSide\
+  \ -- BOTH directions, so this is a change of VOCABULARY and\n   NOT a weakening.\
+  \ Stated up front because a reduction whose converse fails may have discarded\n\
+  \   what made the statement true.\n * twistedPerSigmaCompat_of_pullbackSide -- the\
+  \ whole residue in one name.\n\nSHAPE OF WHAT IS LEFT, measured by unfolding bcv\
+  \ at r5: both sides are\n  asIso (openImmersion_bareBC ... .app (ι U_sigma ^* F))\
+  \ followed by\n  (pushforward (pullback.fst g' (ι U_sigma))).mapIso (openImmersion_bc_telescope\
+  \ ...).symm,\ncompared across the change of sigma. So half (a) is a statement about\
+  \ openImmersion_bareBC and\nopenImmersion_bc_telescope across a change of square.\
+  \ mateEquiv_vcomp remains the other candidate\nroute and is still blocked on \"\
+  pushPullMap is the degenerate-square mate\" -- typechecks, NOT rfl,\nnot closed\
+  \ by simp.\n\nMEASUREMENT: axiom-frontier section 6i. Four probes clean; TWO controls\
+  \ (twisted_cech_nerve_iso,\ncech_flatBaseChange_oneLeaf) must and do still report\
+  \ sorryAx. NOTHING previously contaminated\nbecame clean this round -- no endpoint\
+  \ moved.\n"
 status: active
 kind: proof
 priority: high
@@ -58,5 +59,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc.cosimplicial
-  updated_at: '2026-07-28T22:02:11.571243+00:00'
+  updated_at: '2026-07-28T23:35:53.856932+00:00'
   owner: ajc-fbc
