@@ -2,11 +2,56 @@ id: AJCR.w4-rep
 title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "*** THE COSTING, RE-RANKED 2026-07-29 (run 0082, review-ajcr). THE THREE\
-  \ ANTECEDENTS ARE NOT THREE\nINDEPENDENT PRICES, AND NONE OF THEM CLOSES THIS WEEK.\
-  \ Read this before picking a leaf. ***\n\nWHAT IS GENUINELY SOUND, and it is worth\
-  \ stating first because it is unusual: pic0RepresentableByOfCharts\n(Picard/Pic0SigmaSheaf.lean:161)\
-  \ and mixedParamRepresentableBy (Pic0ChartAtlasParamFree.lean:125) are\nsorry-free,\
+summary: "*** RANKING AMENDMENT, second reviewer pass 2026-07-29 (run 0082 session\
+  \ 0004, review-ajcr).\nANTECEDENT 2 IS NOT A GEOMETRY BILL, IT IS A SITE DECISION\
+  \ -- so the #2 slot below is\nMIS-JUSTIFIED even though its position may be right.\
+  \ Issue I-0920. ***\n\nThe costing below is otherwise intact and should be read\
+  \ as it stands. This amendment changes ONE\nthing: the reason antecedent 2 (dat-b\
+  \ B-5/B-6, local surjectivity) is expensive.\n\nBELOW IT SAYS: \"It carries the\
+  \ content, and its packaging is complete ... What it owes is geometry:\nthe per-point\
+  \ datum, plus the chart-parameter/threshold reconciliation.\"\n\nMEASURED, tracing\
+  \ the per-point datum through its own producer chain rather than through the rows'\n\
+  prose. The producer exists (exists_isChartDatumPlusFibre_of_mem_range, rooted, sorry-free),\
+  \ and what\nit needs reduces to ONE hypothesis: IsPlusHonest (Pic0ChartPlusFibreProducer.lean:200).\
+  \ Read as a\nstatement, that says: for every affine open U of the test, the class\
+  \ restricted to U lies in the\nRANGE of relPicToPicEt -- i.e. Zariski-locally the\
+  \ class comes from the UN-sheafified relPic.\n\nThat is the etale-sheafification\
+  \ gap, structurally:\n * picEt is built on PicEtAff (PicEt.lean:9-21), and PicEtAff\
+  \ C A (PicEtAff.lean:218) is a QUOTIENT\n   OVER ALL ETALE COVERS -- elements are\
+  \ PicEtAff.mk E x;\n * PicEtAff.unit (:377), the target of relPicToPicEt (PicEtUnit.lean:126),\
+  \ is mk at the TRIVIAL\n   cover `.self A` alone.\nSo honesty asserts that no nontrivial\
+  \ etale cover is needed on that piece -- precisely what the\none-step plus construction\
+  \ exists to permit to FAIL. The tree's only honesty mechanism agrees:\nPic0ChartHonest.lean's\
+  \ own \"does not give\" says honesty holds over Spec E.Carrier and NOT over\nSpec\
+  \ A, bought by CHANGING THE BASE, with \"Nothing here performs that descent\".\n\
+  \nWHY THE CHART SIDE IS UNAFFECTED, which is what makes this a real distinction\
+  \ rather than a blanket\npessimism: chartValue = abelDiv * sigmaFamily * (thetaFamily^m)^{-1}\
+  \ (DivSchemeAbel.lean:351, read\nfrom the definition), and honesty is discharged\
+  \ for each factor and closed under the group\noperations. Coverage is different\
+  \ because chartsCoverLocally_of_pointwise\n(Pic0ChartCoveragePointwise.lean:128)\
+  \ quantifies over EVERY s : (pic0SigmaSheaf C).1.obj (op T);\narbitrariness is the\
+  \ content of coverage, and narrowing s to chart-value shape makes it circular.\n\
+  \nCONSEQUENCE. Antecedent 2 splits into a cheap half and an out-of-reach half, and\
+  \ the rows conflate\nthem: honesty of coverage's own WITNESS is already covered;\
+  \ honesty of the class coverage must HIT\nis the gap. The repair -- refine to the\
+  \ etale carrier, then descend -- changes the site from Zariski\nto etale, and pic0RepresentableByOfCharts'\
+  \ antecedent is Zariski-local surjectivity. No leaf settles\nthat. It is a route\
+  \ question for the human/reviewer layer, and it is the third antecedent-level\n\
+  obstruction found on this seam after the unrestricted-certificate fork (antecedent\
+  \ 1) and U2.\n\nNOT A REFUTATION. Proving IsPlusHonest false for an arbitrary class\
+  \ needs a class not\nZariski-locally in relPic's image; this tree has no Brauer\
+  \ or nontrivial-etale-class machinery to\nbuild one, and I did not build it. The\
+  \ claim is the weaker sufficient one: it is not a lemma about\nthe tree's own constructions,\
+  \ and a lane sent at it will not find a proof.\n\nTHE VERDICT BELOW (\"none of the\
+  \ three antecedents closes this week\") is unchanged and, if anything,\nbetter supported:\
+  \ the antecedent that looked closest to being a bounded geometry bill is the one\n\
+  that turns out to need a decision above the leaf layer.\n\n--- the first reviewer\
+  \ pass's costing follows, accurate except as amended above ---\n\n*** THE COSTING,\
+  \ RE-RANKED 2026-07-29 (run 0082, review-ajcr). THE THREE ANTECEDENTS ARE NOT THREE\n\
+  INDEPENDENT PRICES, AND NONE OF THEM CLOSES THIS WEEK. Read this before picking\
+  \ a leaf. ***\n\nWHAT IS GENUINELY SOUND, and it is worth stating first because\
+  \ it is unusual: pic0RepresentableByOfCharts\n(Picard/Pic0SigmaSheaf.lean:161) and\
+  \ mixedParamRepresentableBy (Pic0ChartAtlasParamFree.lean:125) are\nsorry-free,\
   \ rooted, and honest. Given the three antecedents they WOULD produce a representing\
   \ scheme.\nThe machine is correct. Nothing feeds it.\n\nTHE THREE ANTECEDENTS DO\
   \ NOT COMPOSE AS THE ROWS IMPLY. Measured, `lake env lean` EXIT=0 (probes in\nrun\
@@ -176,5 +221,5 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:10.654781+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-29T11:51:40.610786+00:00'
+  updated_at: '2026-07-29T12:44:17.650342+00:00'
   milestone: AJCR.w4-rep
