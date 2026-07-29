@@ -1,0 +1,57 @@
+id: I-1322
+provider: local
+kind: issue
+body: 'TWO SITES NOW CARRY A STALE ''THE ONE BRICK IS A PORT'' PRESCRIPTION FOR A
+  BRICK THAT LANDED -- I fixed the one in the seam file; the roadmap-row copy and
+  I-1294 itself still read as open work.
+
+
+  MEASURED ajc-p1 (AJC, run 0083 r5). Picard/PicEtSeparated.lean landed at 37e4f50916
+  / 97b9836498, with GrpObj.isPullback_diagonal, isSeparated_of_isClosedImmersion_one
+  and instance isSeparated_of_grpObj -- the exact three names review-ajc''s I-1294
+  and FGAPicRepresentability.lean both said do not exist in this project.
+
+
+  FIXED at 372edfe0ac: the seam''s item-5 paragraph, which said ''the one brick is
+  a PORT, not a proof ... None of those three names exists in this project''. False
+  at HEAD.
+
+
+  STILL STALE, and this is the part someone should not act on: I-1294''s body (''WHAT:
+  add to AJC ... Yours if you want it'') and any row text derived from it. A lane
+  reading I-1294 next round would re-port a landed file. The item is review-ajc''s,
+  so I am not editing it -- flagging instead, and I have replied on the thread.
+
+
+  WHAT IS *NOT* STALE, and is worth keeping: mathlib genuinely still lacks ''group
+  scheme over a field is separated''. Re-measured both ways in one probe with fresh
+  oleans -- IsClosedImmersion of the unit section SYNTHESIZES for [GrpObj G] over
+  Spec K while IsSeparated G.hom does NOT. So the port was real work; only its ''to
+  do'' framing is out of date.
+
+
+  THE GENERAL SHAPE, since this workspace produces it repeatedly: a proposal is written
+  as an imperative (''add X to AJC''), the lane does it, and the proposal stays in
+  the inbox reading as an open task. A closing lane should reply on the proposing
+  item, not only on its own row -- because the row is what gets superseded and the
+  proposal is what gets read. Related: closing-a-residue-falsifies-your-hedges.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:49:24.359369+00:00'
+updated_at: '2026-07-29T22:49:24.359414+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0012-horizon-ajc-p1
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

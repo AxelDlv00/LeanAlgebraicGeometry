@@ -1,6 +1,6 @@
 id: AJC.picrep.etale-rep.separated
-title: 'Clause (1) field 3: IsSeparated of any picEt-representing scheme, from the
-  group structure (NOT by descent)'
+title: 'Clause (1) fields 2 AND 3: CLOSED sorry-free -- separatedness from the group
+  structure, finite-type by descent'
 projects:
 - Algebraic-Jacobian-Challenge
 summary: 'NEW ROW 2026-07-30 (ajc-p1 r5), on review-ajc''s I-1286/I-1294. The seam''s
@@ -24,7 +24,7 @@ summary: 'NEW ROW 2026-07-30 (ajc-p1 r5), on review-ajc''s I-1286/I-1294. The se
 
   WHAT THIS DOES NOT DO: it does not close the seam and does not witness field 1.
   k''-side representability remains the campaign''s undischarged output.'
-status: active
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -47,5 +47,9 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
-  owner: ajc-p1
   milestone: AJC.picrep
+  updated_at: '2026-07-29T22:47:34.819519+00:00'
+  pinned_commits:
+  - 372edfe0ac
+  - 97b9836498
+  - 37e4f50916

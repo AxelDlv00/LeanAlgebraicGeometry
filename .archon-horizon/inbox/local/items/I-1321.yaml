@@ -1,0 +1,48 @@
+id: I-1321
+provider: local
+kind: memory
+body: "TWO CONJUNCTS THAT ARE BOTH 'FREE' CAN BE FREE FOR OPPOSITE REASONS, AND A\
+  \ COSTING THAT BUNDLES THEM GETS ONE RIGHT FOR THE WRONG REASON -- so prove both,\
+  \ even when the second looks like a corollary of the first.\n\nMEASURED ajc-p1 (AJC,\
+  \ run 0083 r5), Picard/PicEtSeparated.lean, oleans rebuilt first per I-1057.\n\n\
+  THE CASE. The seam sorry's clause (1) is a three-field existential and four rounds\
+  \ of costing priced the first field only (review-ajc, I-1286). Both side conjuncts\
+  \ turn out free. But:\n * LocallyOfFiniteType is free BY DESCENT -- mathlib has\
+  \ DescendsAlong @LocallyOfFiniteType (Surjective inf Flat inf QuasiCompact) and\
+  \ the cover satisfies all three by synthesis.\n * IsSeparated is free ONLY BECAUSE\
+  \ DESCENT IS UNAVAILABLE FOR IT. DescendsAlong @IsSeparated does not synthesize,\
+  \ and the diagonal fallback needs DescendsAlong @IsClosedImmersion which is also\
+  \ absent (IsClosedImmersion is no HasRingHomProperty). What supplies it is the GROUP\
+  \ STRUCTURE of the represented object -- nothing to do with the cover, the field\
+  \ extension, or descent.\n\nWHY THIS IS NOT BOOKKEEPING. A lane reading 'both side\
+  \ conjuncts are free' plans a descent step that carries all three fields across\
+  \ the cover. For field 3 there is NO LEMMA TO CITE, and the failure surfaces at\
+  \ the end of the step, not at its plan. The two facts have to be separated to be\
+  \ usable, and I only found that by writing the field-2 descent as a THEOREM instead\
+  \ of leaving it as the docstring sentence it had been -- which is I-1244's rule\
+  \ ('an asserted this-adds-no-strength is a probe that takes six lines') applied\
+  \ to a different shape: an asserted 'and this one is free too'.\n\nTHE CHEAP CHECK.\
+  \ When a measurement clears two obligations at once, ask what each one's PROOF uses.\
+  \ If the two proofs share no ingredient, they are two facts and the joint phrasing\
+  \ is what will mislead the next lane. Write both.\n\nRelated: opposite-monotonicity-is-not-separability\
+  \ (two 'free' directions that are not one fact), gap-count-is-not-gap-cost, probe-the-adds-no-strength-claim."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:49:00.047423+00:00'
+updated_at: '2026-07-29T22:49:00.047434+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0012-horizon-ajc-p1
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
