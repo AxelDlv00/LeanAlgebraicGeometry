@@ -56,12 +56,22 @@ instances**).  For the campaign consumer `J'_r` the hypothesis is supplied by th
 * `IsGaloisQuotient ρ g` — the full quotient predicate: `Γ`-equivariant base-change
   isomorphism **and** the universal `T`-points property
   `Hom_k(T, X) ≅ Hom_{k'}(T_{k'}, X')^Γ` (unique descent of equivariant morphisms).
-* `HasStableAffineCover` — `Prop`-gate (NO instances): Γ-stable affine refinement,
-  the EGA II 4.5.4 pattern (`finite point set in an affine open of a separated/
-  quasi-projective scheme refines to a Γ-stable affine open`); orbit-in-affine ⟹
-  stable affine cover is the gated geometric step of `G2(a)`.
-* `HasGaloisQuotient` — `Prop`-gate (NO instances) for the existence statement; to
-  be discharged by gluing `Spec (A^Γ)` along a stable affine cover (`G2(c)`).
+* `HasStableAffineCover` — Γ-stable affine refinement, the EGA II 4.5.4 pattern
+  (`finite point set in an affine open of a separated/quasi-projective scheme
+  refines to a Γ-stable affine open`). **This is no longer a gate: `G2(a)` was
+  discharged** and `StableAffineCover.lean:283`
+  (`hasStableAffineCover_of_orbitsInAffineOpen`) is a global `instance` deriving
+  it from `[ρ.OrbitsInAffineOpen]` alone. Measured (`review-ajc`, 2026-07-29):
+  `infer_instance` succeeds for an *abstract* `ρ` carrying only the orbit
+  hypothesis, and fails without it — so the orbit hypothesis is exactly what it
+  costs. The three sentences in this file and in `FiniteGaloisQuotientAffine.lean`
+  that called it instance-free predate that discharge.
+* `HasGaloisQuotient` — `Prop`-gate, and this one **is** genuinely instance-free
+  (same measurement: `infer_instance` fails for an abstract `ρ` even with the
+  orbit hypothesis in scope). It is the existence statement, to be discharged by
+  gluing `Spec (A^Γ)` along a stable affine cover (`G2(c)`) — and it is therefore
+  the single remaining gate of the whole `G2` engine, the quotient step the
+  repaired representability route runs on.
 * `affineGaloisQuotientHomEquiv` — **the affine case of the Hom property, proved**:
   for `X' = Spec A` and affine `T = Spec B`,
   `Hom_{Spec K}(T, Spec A^Γ) ≃ Γ-invariant Hom_{Spec L}(T ×_K Spec L, Spec A)`,
