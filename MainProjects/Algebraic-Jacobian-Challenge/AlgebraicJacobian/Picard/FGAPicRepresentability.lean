@@ -154,7 +154,8 @@ central open obligation and is **expected to stay open**. Its inputs are the
 Milne–Kollár ones — `Div^d` through the Grassmannian and a finite Galois
 quotient — *not* Quot and *not* `smoothProperQuotient`; see the "Which route
 discharges it" paragraph on `fgaPicardRepresentability` below, which corrects an
-earlier claim here that the inputs were blocked on Quot. Everything else here — the representing scheme,
+earlier claim here that the inputs were blocked on Quot. Everything else here —
+the representing scheme,
 its representability, local finiteness, separatedness and group-scheme
 structure, and the conditional `picSchemeOfHasRationalPoint` — is derived from
 that one existence statement.
