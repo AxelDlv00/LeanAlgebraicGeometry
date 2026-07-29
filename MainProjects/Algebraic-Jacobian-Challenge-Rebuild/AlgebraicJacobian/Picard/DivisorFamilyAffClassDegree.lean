@@ -89,7 +89,7 @@ set_option maxSynthPendingDepth 3
 
 universe u
 
-open CategoryTheory Opposite
+open CategoryTheory MonoidalCategory CartesianMonoidalCategory Opposite
 
 namespace AlgebraicGeometry
 
@@ -310,6 +310,76 @@ theorem DivFamZarAff.exists_toZarAff_eq (F₀ : DivFamZarAff C K n) :
     _ = DivFamZarAff.mapAlgHom (AlgHom.id k K) (DivFamZarAff.mk dp.1 dp.2) := by
         rw [← DivFamZarAff.mapAlgHom_comp, hcomp]
     _ = F₀ := by rw [DivFamZarAff.mapAlgHom_id]; exact hdp
+
+/-! ## `hdegAff`, discharged -/
+
+section HDeg
+
+/- `picEtMap` and the twist factors carry these beyond `[IsProper C.hom]`; all are standing
+DD-R hypotheses, and `[SmoothOfRelativeDimension 1 C.hom]` is additionally needed here because
+`PicEtAff.degAff_unit` and `relPicDeg_relPicMk` consume it. -/
+variable [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]
+  [SmoothOfRelativeDimension 1 C.hom]
+
+set_option maxHeartbeats 1600000 in
+/- The five base-change instances plus the `picEtAffineEquiv` collapse; within the
+`degAt_abelDiv` precedent for the chart-typed twin. -/
+/-- **`hdegAff`, DISCHARGED** (`Picard/DivisorFamilyAffAbel.lean:309`): the widened Abel value
+of a degree-`n` widened class has degree `n` at every field point of every test.
+
+Verbatim `degAt_abelDiv` (`Picard/DivSchemeAbel.lean:277`): naturality
+(`picEtMap_abelDivAff'`) reduces to the affine collapse at the field, `degAff_unit` and
+`relPicDeg_relPicMk` read the class degree, and the widened class-degree law finishes.  The
+affine collapse is `abelDivAffPlus_mapAlgHom` at the top affine open — one line, the widened
+twin of `picEtAffineEquiv_abelDiv`.
+
+**Unconditional in the section, i.e. at an arbitrary test and an arbitrary widened section** —
+not only on the image of a chart-typed class, which is what `degAt_abelDivAff'_toAff`
+(`DivisorFamilyAffAbel.lean:327`) already gave.  That distinction is the whole point: the
+classes R2 exists to admit are exactly those with no chart-typed preimage, and its own
+docstring names them as the open case. -/
+theorem degAt_abelDivAff' {T : Over (Spec (.of k))} (s : divFamZarAff C n T)
+    {K : Type u} [Field K] [Algebra k K] (t : overSpec k K ⟶ T) :
+    degAt (abelDivAff' C n T s) t = (n : ℤ) := by
+  haveI : IsIntegral (relCurve C K) := instIsIntegralBaseChange C K
+  haveI : SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K)) :=
+    instSmoothOfRelativeDimensionBaseChange C K
+  haveI : QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K)) :=
+    instQuasiCompactBaseChange C K
+  haveI : Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0) :=
+    instModuleFiniteHModuleZeroBaseChange C K
+  haveI : Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1) :=
+    instModuleFiniteHModuleOneBaseChange C K
+  change PicEtAff.degAff K (picEtAffineEquiv C K
+      (picEtMap C t (abelDivAff' C n T s))) = (n : ℤ)
+  rw [picEtMap_abelDivAff']
+  -- the widened affine collapse, the twin of `picEtAffineEquiv_abelDiv`
+  have hcollapse : picEtAffineEquiv C K (abelDivAff' C n (overSpec k K)
+        (divFamZarAff.map C n t s))
+      = abelDivAffPlus C K (divFamZarAffAffineEquiv C n K (divFamZarAff.map C n t s)) :=
+    abelDivAffPlus_mapAlgHom (Over.overSpecΓTopAlgEquiv k K).toAlgHom
+      ((divFamZarAff.map C n t s).1 (overSpecTopAffine K))
+  rw [hcollapse, abelDivAffPlus, PicEtAff.degAff_unit, relPicDeg_relPicMk]
+  exact DivFamZarAff.classDeg_picClass _
+
+/-- **The widened chart value lands in `pic⁰`, with `hdegAff` REMOVED from the signature** —
+`chartValueAff_mem_pic0Subgroup` (`Picard/DivisorFamilyAffAbel.lean:304`) with its only
+hypothesis discharged, so the statement now matches its chart-typed twin
+`chartValue_mem_pic0Subgroup` exactly.
+
+This is what the R2 carrier owed before a widened `chartValueTrans` could exist: the widened
+chart value is a degree-zero class unconditionally.  Building that natural transformation
+(`divFunctorAff ⟹ pic0TypeFunctor`) and the widened `abelSigmaChart` above it remains open — a
+widened Σ-chart needs the transformation, not merely this membership. -/
+theorem chartValueAff_mem_pic0Subgroup' (m : ℕ)
+    (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    (T : Over (Spec (.of k))) (s : divFamZarAff C n T) :
+    chartValueAff C n m Z T s ∈ pic0Subgroup C T :=
+  chartValueAff_mem_pic0Subgroup C n m Z hdeg T s fun t => degAt_abelDivAff' s t
+
+end HDeg
 
 end
 
