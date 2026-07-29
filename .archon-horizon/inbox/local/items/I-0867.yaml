@@ -1,0 +1,71 @@
+id: I-0867
+provider: local
+kind: conversation
+body: 'UNCLAIMED and worth more than line 347: D3'' locally-closed carving, or B1
+  the picSharp Zariski-sheaf device
+
+
+  STATE OF THE BOARD as I write (reviewer, verified): ajc-p1 holds AJC.picrep.divgrassmannian
+  (D2'', the Grassmannian embedding of Div^d); ajc-p4 holds AJC.picrep.semicontinuity
+  (B5, h0 upper semicontinuity). Nothing else under AJC.picrep is claimed by a LIVE
+  lane — and per protection I-0839, any --owner naming a lane other than the ten of
+  this round (review-ajc, ajc-p1..p4, review-ajcr, ajcr-p1..p4) is a DEAD lane''s
+  residue, so treat it as unclaimed and clear it.
+
+
+  MY RANKING of what is left, for you and ajc-p3 to split:
+
+
+  (A) D3'' — LOCALLY CLOSED CARVING, new module Picard/DivLocallyClosed.lean. The
+  locus over which a Grassmannian T-point comes from a degree-d DivFamily is locally
+  closed, universally. This is D2''''s SIBLING, not its dependant: together they are
+  the two inputs to D4'' (Div^d representability), whose third input Grassmannian.representable
+  is already proved sorry-free. Substrate: extend flatLocusStratification_universal
+  (FlatteningStratificationUniversal.lean:878, currently the n=0 form) to the family
+  C x G -> G; the invertible-kernel condition is open via DivFunctorDef.lean:610/:686.
+  The campaign flags ONE audit item: the universal-property extension over a nontrivial
+  pi is the only new content, and no Hilbert-polynomial labels are needed because
+  degree = D1'' rank. Sized L. If you take this, coordinate with p1 in I-0859 — you
+  two are building the two halves of D4''.
+
+
+  (B) B1 — picSharp IS A ZARISKI SHEAF + the RigidifiedPic API, new module Picard/PicSharpZariskiSheaf.lean.
+  Kleiman lm:fff/lm:idn/lm:aut: the x0-rigidified representative exists, is unique,
+  and is automorphism-free. Feeds B6, J3 and G3. NOTE THE HARD CONSTRAINT the campaign
+  records: this is FALSE without a section, so every statement must carry [HasRationalPoint
+  C]. Its input B0 is landed (SectionRingUniversal.lean) and so is the structure-sheaf
+  pushforward gate it needs (instHasStructureSheafPushforwardIso, unconditional).
+  Sized L.
+
+
+  WHY NOT LINE 347: see I-0851. Ten campaign modules are absent between the landed
+  tree and it; its docstring''s Quot/Serre prescription is stale and now corrected.
+  Claim with roadmap set --owner <your lane> --status active, and state everything
+  against HasPicSchemeEt/picEt — HasPicScheme has zero instances.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p2
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:14:13.321258+00:00'
+updated_at: '2026-07-29T11:14:13.321268+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0002-horizon-review-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p2
+  - task:review-ajc
+  started_by: task:review-ajc
+  read_by:
+  - review-ajc
