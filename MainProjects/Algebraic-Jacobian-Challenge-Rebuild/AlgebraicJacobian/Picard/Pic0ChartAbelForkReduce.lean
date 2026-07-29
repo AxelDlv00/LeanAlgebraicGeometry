@@ -42,10 +42,11 @@ relPicMk (s₂|U).picClass`.  Both directions, no hypothesis beyond the standing
 
 * **The negative branch** (build a witness): the target is not "two divisors in one linear
   system", and not even "two families with equal `chartValue`".  It is two locally certified
-  systems over one affine piece whose Čech classes agree **modulo `picFromBase`** — the
-  subgroup `relPic` quotients by — and which are not `DivEq`.  Strictly easier than the old
-  target (the class equality is now only required modulo base-pulled classes), and stated with
-  no twist data.
+  systems over one affine piece whose Čech classes agree **modulo `picFromBase`** and which are
+  not `DivEq`, stated with no twist data.  **"Strictly easier than the old target" was here and
+  is RETRACTED** (`I-1149`): at a field test `picFromBase` is trivial, so the "modulo" buys
+  nothing exactly where the fibrewise arguments live, and the residue is if anything the
+  *stronger* statement.  What changed is the target's **shape**, not its price.
 * **The positive branch** (`exists_factor`): the residue is *not* "relative GAP-2 is absent
   from the tree".  It is the composite of two statements, of which the tree already has the
   harder-looking one.  `divFam_divEq_of_eps_eq_total`
@@ -71,16 +72,27 @@ relPicMk (s₂|U).picClass`.  Both directions, no hypothesis beyond the standing
   closure, verified by `#check`**, so it is cited as background and never applied here), whose
   `hone` binder would become redundant.
 
-  That dichotomy is not left as prose: `h0_eq_one_of_relPicSeparates_field` below **proves** the
-  forcing direction at a field, from the rank anchor.  The consequence to carry off this file:
-  the residue is *equivalent to* a Riemann–Roch statement about the curve at the chart's own
-  degree, so proving it is not a plumbing step.  A lane must not price it as one.
+  **RETRACTED SENTENCE, 2026-07-30 (`I-1148`), removed rather than rephrased because it asserted
+  a proof that does not exist.**  It read: "That dichotomy is not left as prose:
+  `h0_eq_one_of_relPicSeparates_field` below **proves** the forcing direction at a field, from
+  the rank anchor."  No such declaration was ever written, here or anywhere.  What *is* below is
+  `effective_and_picClass_eq_of_picClass_eq_field`, which proves something weaker and in the
+  other direction — class equality at a field delivers GAP-2's `hD`/`hD'`/`hcl` — and says
+  nothing about `h⁰ = 1` being *forced*.  So the dichotomy below is an argument, not a theorem,
+  and must be read as one.
 
 **MEASURED, and it is why the four sites could say what they say**: `DivSchemeMonoBridgeRel`
 is in the import closure of **no** chart file — not `Pic0ChartPair`, not
 `Pic0ChartUnivReduce`, not `Pic0ChartOpenImmersionCriterion`, not
-`Pic0ChartAbelNonInjective`, not `Pic0ChartRestrictedFibre`.  The absence claims are true of
-each file's own scope and false of the project.
+`Pic0ChartAbelNonInjective`, not `Pic0ChartRestrictedFibre`, **and not this file either**.  The
+absence claims are true of each file's own scope and false of the project — a scope limitation
+this file shares rather than escapes, which is why nothing here composes the mono.
+
+Two facts to carry with that (`I-1151`, re-measured independently over 771 modules): exactly
+**7** modules have the mono in closure, the only direct importer being `DivRepClassifyZarSep`;
+and two of the seven are `DivRepChartRange` and `DivRepAffPullClause` — i.e. `rep` producers.
+So the mono and the divisor-representability layer already sit in one closure, and *that* is
+where a class-to-window bridge would have to be built, not in a chart file.
 
 ## Main declarations
 
@@ -91,10 +103,14 @@ each file's own scope and false of the project.
   fork's hypothesis, twist-free and unit-free.
 * `AlgebraicGeometry.not_isChartLocusFibre_of_relPicMk_picClass_eq` — the fork's negative
   branch restated at the sharp target.
-* `AlgebraicGeometry.RelPicSeparatesDivFamZar` — the honest residue of the positive branch,
-  named at ONE test algebra.  No instance of it is proved here.
+* `AlgebraicGeometry.RelPicSeparatesDivFamZar` — the residue, named at ONE test algebra.  No
+  instance of it is proved here.
 * `AlgebraicGeometry.injective_chartValue_of_relPicSeparates` — it suffices: piecewise
   separation makes the chart map injective on `divFamZar` sections at every test.
+* `AlgebraicGeometry.relPicMk_picClass_mapAlgHom` /
+  `AlgebraicGeometry.relPicSeparates_of_injective_chartValue` — **the converse**, so the residue
+  is an *equivalence* rather than a weakening: it is the fork's own injectivity obligation
+  renamed.  The naturality brick is the only new input.
 * `AlgebraicGeometry.effective_and_picClass_eq_of_picClass_eq_field` — why the residue is a
   Riemann–Roch statement rather than plumbing: at a field, class equality already delivers
   GAP-2's `hD`/`hD'`/`hcl`, leaving exactly its `h⁰ = 1` binder, which the rank anchor ties to
@@ -192,19 +208,31 @@ variable (C π n) in
 /-- **THE RESIDUE, at one affine test algebra**: the `relPic` class of a locally certified
 divisor class determines the class.
 
-This is what the fork's positive branch actually owes, and it is *strictly weaker* than the
-"relative form of DAT-C GAP-2" that four sites price it at, in two independent ways:
+This is what the fork's positive branch owes, spelled at a **single ring**, with no test object,
+no chart, no twist, no representing object and no `Σ`-component.  It is the only layer left,
+because `chartValue`'s other two are discharged above: the twist by cancellation and the plus
+unit by `PicEtAff.unit_injective`.
 
-* it is about `relPicMk ∘ picClass` at a **single ring**, with no test object, no chart, no
-  twist, no representing object and no `Σ`-component;
-* it is the **only** thing left, because `chartValue`'s two other layers are now discharged:
-  the twist by cancellation and the plus unit by `PicEtAff.unit_injective`.
+**IT IS NOT WEAKER, AND TWO EARLIER VERSIONS OF THIS PARAGRAPH SAID IT WAS** (`I-1149`,
+corrected in place rather than appended).  The removed claims were: that it is "*strictly
+weaker*" than the relative form of DAT-C GAP-2 "in two independent ways", and that the
+`picFromBase` quotient makes it "the weakest form of the separation the fork needs".  Both are
+false, and the file now proves the first false itself:
+
+* `relPicSeparates_of_injective_chartValue` is the converse of
+  `injective_chartValue_of_relPicSeparates`, so the residue at every `A` is **equivalent** to
+  injectivity of `chartValue` at every test.  A shorter spelling is a nicer statement to prove
+  *about*, never a smaller thing to prove;
+* the `picFromBase` "discount" is **empty where the fibrewise arguments live**: at a field test
+  `Spec K` the subgroup is trivial (`picFromBase_eq_bot_of_subsingleton`,
+  `Tangent/RelPicPointTest.lean:77`), so there the residue *is* injectivity of `picClass`.  In
+  general it implies that injectivity by `congrArg`, hence is the **stronger** of the two.
+
+What survives, and is the file's actual contribution: the residue says *what* the obligation is —
+one ring-level injectivity — at an unchanged price.
 
 **Read the quantifier carefully — this is a `Prop` about one `A`, deliberately.**  It is not
-asserted here for any `A`, and this file proves no instance of it.  Note also what it is *not*:
-it is not injectivity of `picClass` itself.  `relPicMk` quotients by `picFromBase`, so the
-demand is only that two locally certified systems whose Čech classes differ by a *base-pulled*
-class are already equal — the weakest form of the separation the fork needs. -/
+asserted here for any `A`, and this file proves no instance of it. -/
 def RelPicSeparatesDivFamZar (A : Type u) [CommRing A] [Algebra k A] : Prop :=
   Function.Injective
     (fun F : DivFamZar C A π n => relPicMk C (overSpec k A) F.picClass)
@@ -223,6 +251,57 @@ theorem injective_chartValue_of_relPicSeparates [GeometricallyReduced C.hom]
   intro s₁ s₂ h
   refine divFamZar.ext fun U => hsep U ?_
   exact (chartValue_eq_iff_forall_relPicMk_picClass_eq C π n m Z T s₁ s₂).mp h U
+
+/-! ## The converse: the residue is the fork's own injectivity, RENAMED
+
+A fresh-context audit (`I-1149`) proved the converse of `injective_chartValue_of_relPicSeparates`
+free, which refutes the "strictly weaker" framing three docstrings of this file carried.  It is
+landed here rather than cited, so the equivalence is compiler-checked and the weaker-than claim
+cannot be re-made. -/
+
+omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] in
+variable (C π n) in
+/-- **Naturality of `relPicMk ∘ picClass` in the test algebra** — the one brick the converse
+needs, three lines from `DivFamZar.picClass_mapAlg` and `relPicMap_mk`. -/
+theorem relPicMk_picClass_mapAlgHom {A A' : Type u} [CommRing A] [Algebra k A]
+    [CommRing A'] [Algebra k A'] (φ : A →ₐ[k] A') (F : DivFamZar C A π n) :
+    relPicMk C (overSpec k A') (DivFamZar.mapAlgHom φ F).picClass
+      = relPicMap C (Over.overSpecMap φ) (relPicMk C (overSpec k A) F.picClass) := by
+  letI : Algebra A A' := φ.toRingHom.toAlgebra
+  haveI : IsScalarTower k A A' := .of_algebraMap_eq fun a => (φ.commutes a).symm
+  have hcurve : relCurveMap C A A' = (C ◁ Over.overSpecMap φ).left := by
+    refine congrArg (fun ψ : overSpec k A' ⟶ overSpec k A => (C ◁ ψ).left) ?_
+    exact Over.OverMorphism.ext rfl
+  rw [relPicMap_mk, ← hcurve]
+  exact congrArg (relPicMk C (overSpec k A'))
+    (DivFamZar.picClass_mapAlg (R' := A') n F)
+
+variable (C π n) in
+/-- **THE CONVERSE, AND IT REFUTES THIS FILE'S OWN "STRICTLY WEAKER" FRAMING.**
+
+Injectivity of `chartValue` at the affine test `Spec A` gives the residue at `A`.  With
+`injective_chartValue_of_relPicSeparates` this is an **equivalence**, so
+`RelPicSeparatesDivFamZar` is the fork's injectivity obligation *renamed*, not reduced.
+
+Three docstrings of this file and two commit messages of mine sold the residue as "strictly
+weaker — one ring, no test object, no chart, no twist, no representing object".  That describes
+the **spelling**, not the strength: fewer binders is a nicer statement to prove *about*, never a
+smaller thing to prove.  Found by a fresh-context audit (`I-1149`); landed here rather than
+merely cited so the equivalence is compiler-checked and the claim cannot be re-made.
+
+The two identities the file opens with (`chartValue_eq_iff_abelDiv_eq`,
+`abelDiv_eq_iff_forall_relPicMk_picClass_eq`) are unaffected and remain the useful content: they
+say *what* the obligation is, which is worth having even at unchanged price. -/
+theorem relPicSeparates_of_injective_chartValue [GeometricallyReduced C.hom] (m : ℕ)
+    (Z : (C ⊗ overSpec k k).left.CurveDivisor) (A : Type u) [CommRing A] [Algebra k A]
+    (h : Function.Injective (chartValue C π n m Z (overSpec k A))) :
+    RelPicSeparatesDivFamZar C π n A := by
+  intro F₁ F₂ hcl
+  refine (divFamZarAffineEquiv C π n A).symm.injective (h ?_)
+  refine (chartValue_eq_iff_forall_relPicMk_picClass_eq C π n m Z _ _ _).mpr fun U => ?_
+  rw [divFamZarAffineEquiv_symm_apply_val, divFamZarAffineEquiv_symm_apply_val,
+    relPicMk_picClass_mapAlgHom C π n, relPicMk_picClass_mapAlgHom C π n]
+  exact congrArg (relPicMap C _) hcl
 
 /-! ## The residue is a Riemann–Roch statement, not plumbing
 
