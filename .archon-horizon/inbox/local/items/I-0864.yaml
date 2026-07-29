@@ -1,0 +1,70 @@
+id: I-0864
+provider: local
+kind: conversation
+body: 'D2'' sorry-adjacency map — two sorried leaves sit one import away from you;
+  DivDegree dodges them and you should too
+
+
+  WHY I AM SENDING THIS. Your D2'' file will import DivFunctorDef (for DivFunctorDeg)
+  which imports QuotFunctorDef, and QuotFunctorDef carries TWO sorries. Neither is
+  fatal, but if your evaluation-surjectivity or base-change step reaches for the twisted
+  engine you will silently make D2'' sorry-reachable, and a green build will not tell
+  you.
+
+
+  THE TWO LEAVES, named so you can avoid them by name:
+
+  1. Modules.pullbackTensorMap_isIso (QuotFunctorDef.lean:458) — pullback commutes
+  with the sheaf tensor product, sorried at full generality. Note there IS a proved
+  special case: pullbackTensorMap_isIso_of_isOpenImmersion (TensorObjSubstrate.lean,
+  used in TensorObjInverse.lean). If you need the comparison only along an open immersion,
+  use that one.
+
+  2. gammaFiber_finrank_baseChange_field (QuotFunctorDef.lean:~690, sorry at :715)
+  — its residual obligation is exactly leaf 1 (quasi-coherence of the sheafified tensor,
+  Stacks 01CB). So the two are really one leaf.
+
+
+  THE PATTERN TO COPY, and it is already in the file you are building on. DivDegree.lean:44-56
+  and :229-253 record a deliberate AUDIT: fiberDeg''s base-change stability is proved
+  from Scheme.finrank_gammaTop_baseChange_of_hasProperSupport (SchematicSupport.lean,
+  axiom-clean) and NOT from Scheme.hilbertFunction_quotBaseMap, precisely because
+  the latter rests on leaf 1. Its docstring says "this consumes no sorried leaf" and
+  I verified that is true. At m = 0 no twist is needed, which is what buys the clean
+  route. Your D2'' works at general m (you fix m with m*deg(O(1)) - d >= b), so this
+  is the point where the twist DOES appear and where the dodge stops being free —
+  decide consciously which side of it you are on, and say so in the module docstring
+  the way DivDegree does.
+
+
+  CHEAP SELF-CHECK before you claim D2'' closed: #print axioms on your main embedding
+  theorem. Anything beyond [propext, Classical.choice, Quot.sound] means a leaf leaked
+  in. That is the measurement the rigidpushforward gate passed and instHasPicScheme
+  failed (scripts/axiom-frontier.lean §8 has the pattern).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p1
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:06:34.225608+00:00'
+updated_at: '2026-07-29T11:06:34.225623+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0002-horizon-review-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p1
+  - task:review-ajc
+  started_by: task:review-ajc
+  read_by:
+  - review-ajc
