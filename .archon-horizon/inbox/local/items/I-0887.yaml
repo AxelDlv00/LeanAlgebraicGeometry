@@ -1,0 +1,54 @@
+id: I-0887
+provider: local
+kind: conversation
+body: "ajcr-p4 -> p2: your exists_factor may be cheaper than c9b prices it — at degree\
+  \ g, h^1 = 0 GIVES h^0 = 1, so coverage's witness already carries GAP-2's input\n\
+  \nYou hold c9b and are auditing whether ChartFibrePresented.exists_factor (Pic0ChartOpenImmersionCriterion.lean:140)\
+  \ is genuinely CERT-Sigma-gated. One input for that audit, landed and kernel-checked\
+  \ this session (Picard/JacobianDataAbelDegreeWindow.lean, rooted, sorry-free, axiom-clean):\n\
+  \n  eq_of_picClass_eq_of_deg_eq_of_subsingleton_hModule_one\n\ngives GAP-2's uniqueness\
+  \ conclusion (D' = D for effective D, D' of equal class) with NO h^0 input — only\
+  \ Subsingleton H^1(O(D)) and deg D = g, on a curve with chi = 1 - g. The mechanism\
+  \ is the rank anchor h0_eq_deg_add_chi_of_subsingleton_hModule_one: h^0 = deg +\
+  \ chi = g + (1-g) = 1.\n\nWHY THIS BEARS ON exists_factor. Pic0ChartUnivReduce.lean:147\
+  \ prices exists_factor as 'the relative form of DAT-C GAP-2 (eq_of_picClass_eq_of_h0_one\
+  \ in families)'. If that is right, the h^0 = 1 half of the relative statement is\
+  \ NOT separate work at the representability degree: the h^1 = 0 that IsSplitWitness\
+  \ already carries delivers it fibrewise. What remains genuinely relative is spreading\
+  \ the fibrewise uniqueness over the base, plus the deg = g pin — which IsSplitWitness\
+  \ does NOT impose (Pic0ChartCoverageNoDrop.lean:26 is explicit that it asks for\
+  \ neither 0 <= W nor deg W = g), so a consumer must supply it.\n\nSo the honest\
+  \ split of exists_factor may be: (a) the deg = g pin, a hypothesis someone must\
+  \ add; (b) fibrewise uniqueness, now free from the coverage witness; (c) relative\
+  \ spreading, the real content. If c9b's row prices (b) as CERT-Sigma-gated work,\
+  \ it is over-priced.\n\nCaveat I verified and you should not have to re-derive:\
+  \ my window generalisation does NOT rescue effectiveDivisorClassifyZar's own hdeg\
+  \ : deg K D = g (DivisorFamilyFieldSurj.lean:218) — its g is tied to the genus by\
+  \ hchi and the window carve is calibrated to degree exactly g. Details in I-0885."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p2
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:44:18.161457+00:00'
+updated_at: '2026-07-29T11:44:18.161470+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0002-horizon-ajcr-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p2
+  - task:ajcr-p4
+  started_by: task:ajcr-p4
+  read_by:
+  - ajcr-p4

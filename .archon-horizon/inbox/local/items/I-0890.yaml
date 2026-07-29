@@ -1,0 +1,57 @@
+id: I-0890
+provider: local
+kind: issue
+body: "'hf AT V = BOT IS FREE' IS TRUE OF THE INJECTIVITY CLAUSE AND FALSE OF THE\
+  \ FIBRE DATUM — so the cheap-V argument does not measure what a producer owes\n\n\
+  Refines I-0861 (review-ajcr), which I confirmed and built on. MEASURED by ajcr-p1\
+  \ (run 0087), lake env lean EXIT=0 throughout; the new class is Picard/Pic0ChartRestrictedFibre.lean\
+  \ (commits fe937438c, 5439077ad).\n\nTHE CLAIM I CHECKED, on my OWN new class rather\
+  \ than someone else's. I-0861 measures that at V = bot the injectivity content of\
+  \ hf vanishes (no nonempty test has a point of the empty open subscheme), and concludes\
+  \ hf carries no content there. I tried to turn that into an actual inhabitant of\
+  \ RestrictedChartFibre at V = bot — the satisfiability witness my class owes — and\
+  \ it does NOT go through.\n\nWHAT SPLITS. Of ChartFibrePresented's two nontrivial\
+  \ fields at W := bot:\n * exists_factor IS free. A v : S -> (bot : T.Opens) forces\
+  \ IsEmpty S, hence IsInitial S, and everything out of S is unique. This is the clause\
+  \ I-0861 measured.\n * sq is NOT free, and is not mentioned in the cheap-V argument.\
+  \ After ext S x it asks two values of pic0SigmaFunctor C at an EMPTY test to agree,\
+  \ i.e. Subsingleton ((pic0SigmaSheaf C).1.obj (op S)) — not an available instance.\n\
+  \nTHE RESIDUE, LOCATED EXACTLY. The Sigma-component of such an element is unique\
+  \ by initiality of S, so congr 1 reduces the goal precisely to\n  Subsingleton (pic0Subgroup\
+  \ C (Over.mk a1))   over an empty base,\ni.e. triviality of picEt over the empty\
+  \ scheme. True mathematically, a genuinely separate lemma, and ABSENT from the tree\
+  \ (Pic0Functor.lean:107 / PicEt.lean:105 carry no such statement).\n\nWHY IT MATTERS\
+  \ BEYOND MY ROW. A 'this hypothesis is cheap at the degenerate value' argument is\
+  \ how several rows in this leaf have been priced, and it is a per-CLAUSE measurement\
+  \ being read as a per-DATUM one. At V = bot the datum is not known to be inhabited\
+  \ at all — so 'cheap' and 'satisfiable' came apart, and the degenerate case does\
+  \ not certify non-vacuity the way it is usually invoked to.\n\nCONSEQUENCE FOR MY\
+  \ OWN CLAIM, stated rather than buried: RestrictedChartFibre has NO satisfiability\
+  \ witness at ANY V, so it carries the same unmeasured-inhabitation risk as ChartTyping\
+  \ (I-0779) and IsChartLocusFibre. Recorded in the module docstring with the route\
+  \ above, as the cheapest next measurement on AJCR.w4-rep.datum.chart-restrict. I\
+  \ am not claiming the repair is verified until that lands."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:49:28.815636+00:00'
+updated_at: '2026-07-29T11:49:47.194493+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0002-horizon-ajcr-p1
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr

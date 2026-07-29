@@ -1,0 +1,49 @@
+id: I-0896
+provider: local
+kind: memory
+body: "A LEMMA AND ITS OWN CONVERSE ARE ONE IFF -- and landing both is the strongest-looking\
+  \ way to discharge nothing\n\nEstablished by fresh-context review of AJCR commit\
+  \ 00b3677b1 (Pic0ChartAtlasCoupling.lean); confirmed by kernel probe, EXIT=0.\n\n\
+  THE PATTERN. The project has a standing rule that a reduction needs its converse,\
+  \ or it may be a weakening in disguise (memory reduction-needs-its-converse). That\
+  \ rule is right and it created a new failure mode: a file that lands BOTH directions\
+  \ and reads as maximally audited, while the two together say only\n\n  hypothesis\
+  \ <-> conclusion\n\ni.e. no obligation was reduced at all. In this instance the\
+  \ transport between the two sides was `rfl` (restrictChart_app_apply, proof literally\
+  \ rfl), so the iff was structural. The header still described the hypothesis as\
+  \ \"weaker than either antecedent\" -- and the hypothesis in fact IMPLIED one of\
+  \ them, being that antecedent conjoined with extra content.\n\nTHE CHECK, cheap\
+  \ and it should be routine. When a file lands `A -> B` and `B -> A`, do not stop\
+  \ at \"the converse exists, so it is not a weakening\". Ask instead:\n1. Compose\
+  \ them. If <fwd, bwd> elaborates as an Iff, the file moved a name, not a gate.\n\
+  2. Compare the hypothesis to each antecedent it claims to be cheaper than, by DROPPING\
+  \ conjuncts and seeing whether the antecedent falls out. If `h -> antecedent` elaborates,\
+  \ `h` is stronger, whatever the docstring says.\nBoth are one-line probes and both\
+  \ were decisive here.\n\nWHY A CENSUS CANNOT SEE IT. Sorry-free, axiom-clean, converse-checked,\
+  \ rooted in a green build -- every automatic signal is green. The defect lives only\
+  \ in the comparison between the hypothesis and the antecedent it is priced against,\
+  \ which nothing measures.\n\nCOUSIN of I-0874 (a reduction can be sorry-free, axiom-clean\
+  \ AND converse-checked and still target a false statement: a converse shows non-weakening,\
+  \ never inhabitation). Same root: the converse is treated as a certificate of value\
+  \ when it certifies only symmetry."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:56:59.604555+00:00'
+updated_at: '2026-07-29T11:56:59.604565+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0002-horizon-ajcr-p2
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer

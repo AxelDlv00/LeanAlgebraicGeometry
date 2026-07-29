@@ -1,0 +1,58 @@
+id: I-0869
+provider: local
+kind: info
+body: "CLAIM ajcr-p1: AJCR.w4-rep.datum.chart-restrict — both routes to antecedent\
+  \ 1 factor through a statement the project calls FALSE\n\nClaimed AJCR.w4-rep.datum.chart-restrict\
+  \ (new row under AJCR.w4-rep.datum, owner ajcr-p1, active).\n\nCONCLUSION. Antecedent\
+  \ 1 of pic0RepresentableByOfCharts (Pic0SigmaSheaf.lean:161) is hf = IsChartUniv\
+  \ (Pic0ChartPair.lean:173) = IsOpenImmersion.presheaf (restrictChart (abelSigmaChart\
+  \ ..) V). Exactly TWO declarations in the tree conclude IsChartUniv, and BOTH are\
+  \ gated on the UNRESTRICTED certificate:\n * isChartUniv_of_unrestricted (Pic0ChartPair.lean:191)\
+  \ — its own docstring says its hypothesis is FALSE at V = top.\n * isChartUniv_of_isChartLocusFibre\
+  \ (Pic0ChartUnivReduce.lean:170) from IsChartLocusFibre (:152), whose ChartFibrePresented\
+  \ has W as a FREE field — nothing pins W := chartLocus, though the docstring at\
+  \ :138 says the W field 'is already discharged — it is chartLocus'.\n\nEVIDENCE\
+  \ (scratch_p1/ProbeChartLocusFibre.lean, lake env lean EXIT=0, zero diagnostics,\
+  \ oleans newer than sources):\n IsChartLocusFibre -> IsOpenImmersion.presheaf (abelSigmaChart\
+  \ ..) [unrestricted], -> Mono, -> injective on every test. Probe 1 is one term;\
+  \ V never appears, because the criterion (Pic0ChartOpenImmersionCriterion.lean:195)\
+  \ consumes a datum for the UNRESTRICTED f.\n\nSo the sole non-circular route to\
+  \ hf implies exactly what Pic0AtlasFromDivRep.lean:54, Pic0ChartPair.lean:14 and\
+  \ Pic0ChartOpenImmersionCriterion.lean:214 cite as the REASON the unrestricted route\
+  \ fails. If those headers are right, IsChartLocusFibre is UNSATISFIABLE. The same\
+  \ file already proves the guard — isEmpty_forall_chartFibrePresented_of_not_injective\
+  \ (:219) — and never instantiates it at the Abel chart, so the tree holds the reduction\
+  \ and its refutation and has connected neither. Sorry-free and axiom-clean; no census\
+  \ sees it.\n\nNEXT ACTION. Build the fibre criterion at the RESTRICTED chart: exists_factor\
+  \ quantified over points landing in V, presenting the fibre over V instead of over\
+  \ X. That makes hf reachable at V = chartLocus without asserting it at top.\n\n\
+  RELATION TO I-0861 (review-ajcr): complementary, not duplicate. I-0861 = V is uncoupled\
+  \ from the coverage witness, so hf at free V carries no content. This = the only\
+  \ PRODUCER of hf ignores V, so hf at the coverage V needs a false antecedent. Same\
+  \ repair. ajcr-p2 holds c9b (I-0855), whose stated reduction is the one measured\
+  \ false here."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:15:38.643883+00:00'
+updated_at: '2026-07-29T11:16:31.370372+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0002-horizon-ajcr-p1
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p2
+  - review-ajcr

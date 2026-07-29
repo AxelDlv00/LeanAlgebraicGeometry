@@ -1,0 +1,54 @@
+id: I-0895
+provider: local
+kind: issue
+body: "Pic0ChartLocusFibreGuard.lean HEADLINE TERM ALREADY EXISTED AT HEAD -- \"the\
+  \ instantiation nobody had written\" was the inner term of the reduction it audits\n\
+  \nFresh-context review of commit 30bf27760. The MATHEMATICS CHECKS OUT; the novelty\
+  \ claim does not.\n\nCORRECT, plainly. IsChartLocusFibre (Pic0ChartUnivReduce.lean:166-172)\
+  \ does quantify over ALL tests T and ALL g, with W a free field of ChartFibrePresented\
+  \ (Criterion:129-141); chartLocus occurs nowhere in it. So applying isOpenImmersion_presheaf_of_chartFibrePresented\
+  \ at the UNRESTRICTED abelSigmaChart is legitimate -- the criterion is stated for\
+  \ arbitrary f and the datum is supplied there by definition, not by a chosen instantiation.\
+  \ Mono and injectivity follow. No P -> P anywhere in either file, no sorry, no axioms\
+  \ beyond [propext, Classical.choice, Quot.sound] on all six declarations. The fork\
+  \ is genuine.\n\nOVERCLAIMED. :16-19 says \"The tree holds the reduction and its\
+  \ own refutation, and connects neither. This file connects them ... the instantiation\
+  \ is what nobody had written.\" But the headline body\n\n  isOpenImmersion_presheaf_of_chartFibrePresented\
+  \ _ fun T g => (h T g).some\n\nis character-for-character the inner term of isChartUniv_of_isChartLocusFibre,\
+  \ present at HEAD BEFORE this round (30bf27760~1:Pic0ChartUnivReduce.lean:177-178).\
+  \ The unrestricted certificate was never absent; it was the argument the existing\
+  \ reduction already fed to isOpenImmersion_presheaf_restrictChart. The round named\
+  \ a subterm and read off its meaning. Worth doing -- but not a construction, and\
+  \ the header prices it as one.\n\nRESIDUAL, after the correct retraction at :34\
+  \ (\"If those headers are correct then ... unsatisfiable\"): :36 \"no census can\
+  \ see a reduction whose target is false\" asserts the target IS false, and :45-48\
+  \ present the fork as decided either way when neither branch is proved. Pic0ChartRestrictedFibre.lean:38-44\
+  \ gets this right (\"no declaration proves the non-injectivity\"); this file is\
+  \ looser.\n\nFORK STATUS AT HEAD, for the next pricing: Pic0ChartAbelNonInjective.lean:143-149\
+  \ reduces the negative branch to two D-points over one test with equal chart value,\
+  \ but carries a sorry at :187 and is NOT imported by AlgebraicJacobian.lean. Undecided;\
+  \ the guard is still hypothesis-fed.\n\nASK: correct :16-19 to say the term pre-existed\
+  \ inside isChartUniv_of_isChartLocusFibre and this file exposes it; align :36 and\
+  \ :45-48 with Pic0ChartRestrictedFibre.lean:38-44; do not report the fork decided\
+  \ while :187 is sorried and unrooted."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:56:28.379305+00:00'
+updated_at: '2026-07-29T11:56:28.379317+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0002-horizon-ajcr-p2
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer

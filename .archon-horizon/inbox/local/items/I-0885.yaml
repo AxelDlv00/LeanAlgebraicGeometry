@@ -1,0 +1,73 @@
+id: I-0885
+provider: local
+kind: issue
+body: 'OVER-PRICED: JacobianDataAbelEffective.lean:119-146 records ''producing Z is
+  a genuine arithmetic hypothesis on the curve, open here''. It is only open for ''=
+  g''; at ''>= g'' the divisor is FREE, and is now landed.
+
+
+  MEASURED by ajcr-p4 (run 0090). lake build of the new module EXIT=0 (8868 jobs);
+  all six new declarations axiom-clean on exactly [propext, Classical.choice, Quot.sound];
+  oleans confirmed newer than sources before probing.
+
+
+  THE CLAIM AUDITED. exists_effective_deg_eq_of_classDeg_eq_zero (:147) takes Z with
+  deg K Z = g; the docstring retraction says producing Z is open, reasoning that deg
+  is residue-degree weighted so its image is index.Z, at index 3 / genus 1 no degree-1
+  divisor exists, and the campaign reference has deg (m . fiberWeilDivisor pi) = m
+  . delta so ''= g'' needs delta | g. All correct.
+
+
+  WHAT THE AUDIT FOUND. The obstruction is an artefact of the EQUALITY. In exists_effective_deg_eq_of_classDeg_eq
+  (:103) classDeg = g is consumed twice and only one use needs it: Riemann''s entry
+  condition is 1 <= deg W + chi = deg W + 1 - g, i.e. g <= deg W. The other use only
+  states the conclusion''s degree.
+
+
+  LANDED (Picard/JacobianDataAbelDegreeWindow.lean, rooted, sorry-free):
+
+  * exists_effective_deg_eq_of_le_classDeg -- same theorem at ANY target d with g
+  <= d; the d := g face recovers the original, so not a weakening.
+
+  * exists_reference_divisor_le_deg -- a divisor of degree >= d EXISTS on any curve
+  with a finite dominant map to P^1 (d copies of the fibre divisor, degree >= 1 by
+  one_le_classDeg_fiberTwist_one). No rational point, no index hypothesis, no delta
+  | g.
+
+  * NON-VACUITY VERIFIED: that pi binder is inhabited on the campaign''s own base-changed
+  curve by thetaP1 (isFinite_thetaP1 / isDominant_thetaP1); exists_isFinite_isDominant_toP1
+  (Curve/MapToP1.lean:125) supplies it unconditionally.
+
+  * exists_effective_of_classDeg_eq_zero_of_toP1 composes them.
+
+
+  HONEST LIMIT, where the obstruction actually lives. The produced degree is deg Z,
+  a multiple of delta at least g, NOT g on the nose. effectiveDivisorClassifyZar (DivisorFamilyFieldSurj.lean:218)
+  pins hdeg : deg K D = g and my window does NOT rescue it -- its g is tied to the
+  genus by hchi and the window carve is calibrated to degree exactly g. The residue
+  is unchanged there. What is settled: the obstruction is the CONSUMER''s degree pin,
+  not the curve''s arithmetic.
+
+
+  ACTION: the retraction paragraph should read ''= g is a genuine arithmetic hypothesis;
+  >= g is free''.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:42:32.659931+00:00'
+updated_at: '2026-07-29T11:42:32.659943+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0002-horizon-ajcr-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,66 @@
+id: I-0897
+provider: local
+kind: issue
+body: 'OVER-PRICED: GenusFieldInvariance.lean:426-438 confines extension-uniformity''s
+  residue to genus 0 as a ''missing production from geometry''. THE PRODUCTION EXISTS
+  AT EVERY GENUS.
+
+
+  MEASURED by ajc-p2 (run 0084), landed as Ledger/BaseDivisorEveryField.lean (71f1cf403).
+  lake env lean EXIT=0; both theorems axiom-clean [propext, Classical.choice, Quot.sound].
+
+
+  THE CLAIM. :426-430 applies the producer/consumer test to UniformBaseDivisor: ''the
+  gap is a missing production from geometry.'' :432-438 records its own partial refutation
+  (VanishingFieldDescent produced UniformBaseDivisor C 0) but keeps the final clause:
+  that producer needs Subsingleton (H1(O_C)) = genus C = 0, ''so genus C >= 1 is untouched.''
+
+
+  WHAT IS TRUE. exists_base_subsingleton_baseChangeField: for EVERY extension kappa/k
+  a divisor on C_kappa with vanishing H1 exists, on the three curve binders, no genus
+  hypothesis. ONE TERM: FiberBound.exists_base_subsingleton_of_isFinite_toP1 at Scheme.baseChangeField
+  C kappa. Its inputs (finite dominant map to P1, two cohomology finiteness binders)
+  are theorems of this project on the curve (MapToP1, ChiCurve); none is genus-restricted.
+  Adjacent and unassembled.
+
+
+  WHY IT WENT WRONG -- the reusable part. The genus-0 ceiling belongs to VanishingFieldDescent''s
+  ROUTE: transporting the UNIT sheaf''s vanishing by faithful flatness forces the
+  zero divisor as witness, hence forces H1(O_C) to vanish. The obligation never mentions
+  the unit sheaf. A route''s restriction was read as the gap''s. The docstring that
+  had it RIGHT was upstream (ExtensionUniformity.lean:352-355: a D0 exists per field,
+  only deg control missing); the downstream index was stricter and wrong, and the
+  index is read first.
+
+
+  THE RESIDUE. Clauses now split at the type level (uniformBaseDivisor_of_exists_deg_le).
+  Only the DEGREE clause is open: a uniform bound on n0(kappa) * deg_kappa F_kappa,
+  n0 the fibre-lattice stabilisation index re-run per base field. NOT free from in-tree
+  theorems: DegreeVanishing''s threshold is deg D0 + 1 - chi(O), relative to a base
+  divisor already in hand, so bounding deg D0 by it is circular. Breaking it needs
+  absolute large-degree vanishing (Serre duality deg >= 2g-1, absent -- searched both
+  projects) or a bound on the stabilisation index via genus C, which is base-field-invariant.
+  I would try the second.
+
+
+  Sites corrected in 6618d6979.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:59:32.670071+00:00'
+updated_at: '2026-07-29T11:59:32.670083+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0002-horizon-ajc-p2
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

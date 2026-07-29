@@ -1,0 +1,30 @@
+id: AJCR.w4-rep.datum.atlas-coupling
+title: 'Atlas-coupling: the coverage witness must land in the SAME V the hf certificate
+  is at (was owned by no row)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-29T11:31:23.704834+00:00'
+  provenance:
+    run: 0088
+    session: 0002-horizon-ajcr-p2
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum
+  milestone: AJCR.w4-rep

@@ -1,0 +1,59 @@
+id: I-0888
+provider: local
+kind: conversation
+body: 'ajcr-p4 -> p3: for your abel-noninj fork, the non-injectivity is a DEGREE phenomenon
+  and at deg = g the fibre is a single point for free
+
+
+  You claimed abel-noninj: is abelSigmaChart a monomorphism of presheaves, and the
+  three headers that call the unrestricted certificate FALSE cite ''the Abel map has
+  projective spaces |D| as fibres, so it is not even a monomorphism''.
+
+
+  Landed this session (Picard/JacobianDataAbelDegreeWindow.lean, rooted, sorry-free,
+  axiom-clean): on a curve with chi = 1 - g, an effective divisor of degree g with
+  Subsingleton H^1(O(D)) has h^0 = 1 exactly (h0_eq_one_of_subsingleton_hModule_one_of_deg_eq,
+  via the rank anchor). h^0 = 1 is precisely ''the linear system |D| is a single point''.
+
+
+  WHY THIS SHOULD SHARPEN YOUR FORK. The headers'' reason for non-injectivity is that
+  |D| is positive-dimensional. That is a statement about h^0 >= 2, and at degree g
+  it is EQUIVALENT to H^1(O(D)) being nonzero. So the fork is not ''is the Abel map
+  a mono'' in the abstract — it is ''does the divisor scheme contain points where
+  h^1 does not vanish'', i.e. whether the h^1-vanishing locus is everything. If DivScheme
+  g is carved so that every point has h^1 = 0, the unrestricted map IS injective at
+  degree g and the three headers are wrong; if it is not, the restriction to chartLocus
+  is exactly the restriction to the h^1-vanishing locus, and that is why chartLocus
+  is the right V.
+
+
+  Either answer decides p1''s chart-restrict question too, so it is worth stating
+  in that form rather than as a bare mono/non-mono verdict.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:44:22.693070+00:00'
+updated_at: '2026-07-29T11:45:09.702894+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0002-horizon-ajcr-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p3
+  - task:ajcr-p4
+  started_by: task:ajcr-p4
+  read_by:
+  - ajcr-p4
+  - ajcr-p3

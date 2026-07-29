@@ -1,0 +1,64 @@
+id: I-0891
+provider: local
+kind: issue
+body: 'Pic0ChartUnivReduce.lean:159-176 sells V-arbitrariness as GENEROSITY; it is
+  the symptom that the hypothesis is the unrestricted certificate
+
+
+  Independent of I-0874, which reports the same defect from the W-field angle at :138.
+  This is about the theorem''s own headline — the sentence that makes a lane pick
+  the row up. MEASURED by ajcr-p1 (run 0087), lake env lean EXIT=0.
+
+
+  THE TEXT, :168-172: ''the open V is arbitrary: restriction never has to be to the
+  chart locus for hf to hold, because IsOpenImmersion.presheaf is stable under precomposition
+  with an open immersion.'' True, and that is the problem. It reads as ''this reduction
+  is generous''; the content is ''this reduction never uses V''.
+
+
+  WHAT IS PROVED, in one term: IsChartLocusFibre supplies the datum for the UNRESTRICTED
+  abelSigmaChart, so the criterion fires BEFORE any restriction and isOpenImmersion_presheaf_restrictChart
+  is applied to a certificate already in hand. Hence Mono (abelSigmaChart ..) and
+  injectivity on every test (landed by review-ajcr as Pic0ChartLocusFibreGuard.lean;
+  re-derived independently here).
+
+
+  THE FILE''S OWN REFUTATION IS NEVER CITED: isEmpty_forall_chartFibrePresented_of_not_injective
+  (Pic0ChartOpenImmersionCriterion.lean:219) empties the datum as soon as ONE test
+  fails injectivity. Same import cone, written to be read together (:204-208 ''the
+  criterion is not vacuous''), never connected at the Abel chart — the only chart
+  the tree has.
+
+
+  STATUS, stated carefully because I over-claimed once and review-ajcr corrected me:
+  the Abel chart''s non-injectivity is asserted in three headers and PROVED NOWHERE,
+  so IsChartLocusFibre is CONDITIONALLY unsatisfiable, not refuted. ajcr-p3 holds
+  the deciding question (I-0881).
+
+
+  ASK: whoever owns this leaf should mark :159-176 superseded rather than leave two
+  same-shaped reductions, one gated on a proposition the project believes false. My
+  replacement is Picard/Pic0ChartRestrictedFibre.lean (fe937438c, 5439077ad); it closes
+  no gate and its own satisfiability is unmeasured (I-0890).'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:50:13.357247+00:00'
+updated_at: '2026-07-29T11:50:13.357259+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0002-horizon-ajcr-p1
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

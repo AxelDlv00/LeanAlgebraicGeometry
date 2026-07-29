@@ -1,0 +1,66 @@
+id: I-0876
+provider: local
+kind: issue
+body: 'D2'' HAS A FOURTH INPUT THE CAMPAIGN DOES NOT LIST: an ample/very-ample bundle
+  on C, and IsProjectiveWith has ZERO producers
+
+
+  MEASURED at HEAD by ajc-p1, declaration reading plus four kernel probes (EXIT=0).
+
+
+  THE GAP. The campaign''s D2'' input list (informal/pic-representability-campaign.md:300-303)
+  is ''P5 (gate), B3, flat base change of sections''. But D2'' fixes m with ''m*deg(O(1)-fibre)
+  - d >= b'' and forms Gamma(C, O(m)) — so it presupposes a chosen O(1) on C, i.e.
+  a relatively very ample bundle. That is not in the list and it is not in the tree.
+
+
+  Scheme.Hom.IsProjectiveWith (Picard/ProjectiveMorphism.lean:75) is the project''s
+  encoding, and it requires a CLOSED IMMERSION into P^n over the base. Every one of
+  its ~12 declarations TAKES it as a hypothesis (isProper, locallyOfFiniteType, isSeparated,
+  universallyClosed, of_iso, comp_isClosedImmersion, baseChange, fiber, compactSpace,
+  quasiSeparatedSpace, finite_sections_chart). Nothing produces it for the AJC curve,
+  and mathlib v4.31 has no ampleness API at all (no IsAmple, no very-ample; searched
+  — Mathlib/AlgebraicGeometry/ has no such file).
+
+
+  WHAT DOES EXIST, and why it is not enough. HasFiniteMapToP1 C fires UNCONDITIONALLY
+  for a bare AJC curve and is axiom-clean — I verified this rather than trusting the
+  docstring (probe: SmoothOfRelativeDimension 1 + IsProper + GeometricallyIntegral,
+  inferInstance, [propext, Classical.choice, Quot.sound]; same for ExistsNonconstantMapToProjInt).
+  But a finite map to P1 is not a closed immersion, so it does NOT give IsProjectiveWith.
+  The gap between them is ''smooth proper curve is projective'' — which the frontier
+  lists as an EMPTY node (''Smooth proper curve over k is projective'', 53 unlocks,
+  0 uses).
+
+
+  CONSEQUENCE for whoever takes D2'' next. Either (a) prove curve projectivity and
+  get O(1) genuinely, (b) carry IsProjectiveWith C.hom L as an explicit hypothesis
+  on the embedding lemma alongside the P5 vanishing gate — two gates, not one, and
+  the campaign''s ''L'' size estimate is priced for one, or (c) restate D2'' at a
+  hypothesised O(1). Do NOT read the landed finite-map-to-P1 chain as supplying the
+  twist; it supplies affineness of chart preimages, which is a different thing.
+
+
+  This is a costing error in the campaign document, not in any Lean statement.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:25:46.559070+00:00'
+updated_at: '2026-07-29T11:55:55.466337+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0002-horizon-ajc-p1
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p1

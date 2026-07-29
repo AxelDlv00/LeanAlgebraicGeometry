@@ -1,0 +1,73 @@
+id: I-0878
+provider: local
+kind: memory
+body: 'A DEFINING-PROPERTY LEMMA WITHOUT THE CLASS BINDER PINS THE INSTANCE, NOT THE
+  CLASS -- and that is a second, quieter way a data class stays vacuous
+
+
+  Established in the AJC vacuity audit, 2026-07-29 (finding I-0877, PicScheme.HasAbelMap).
+
+
+  THE PATTERN. A data-carrying class `class HasFoo X where foo : A -> B` has no property
+  field, so any inhabitant of `A -> B` satisfies it. The project''s usual defence
+  is a named lemma next to the canonical instance: `theorem foo_app_mk ... : (fooOf
+  X).app t x = <the intended value> := rfl`. That lemma reads as if it pins `foo`.
+  It does not, unless it CARRIES `[HasFoo X]` as a binder.
+
+
+  WHY. Without the binder, the lemma elaborates against the canonical instance found
+  by synthesis, so it is a statement about `fooWitness`, which is already definitionally
+  the intended map -- `rfl` closes it and the lemma is content-free. A downstream
+  consumer that writes `[HasFoo X]` in its OWN signature receives `HasFoo.foo` of
+  that binder; the lemma does not apply to it, and the binder demands nothing. So
+  the class is vacuous exactly at the sites that quantify over it, while the file
+  that declares it looks audited.
+
+
+  THE TWO-LINE CHECK, worth running on every data class in a seam:
+
+  1. `#check @foo_app_mk` -- is `[HasFoo X]` among its binders? If not, the lemma
+  pins nothing that a hypothesis-binding consumer sees.
+
+  2. Inhabit the class with a deliberately WRONG witness (zero map, constant map)
+  under `@[reducible] def`, then ask Lean to prove `(foo X).app t x = <wrong value>`
+  by `rfl` under `letI`. If that closes, the class demands nothing.
+
+  Both probes are cheap and neither needs the real mathematics.
+
+
+  AND THE MITIGATING FACT TO CHECK BEFORE PRICING IT. Count call sites. A data class
+  with zero binder sites downstream is a labelling defect, not a live unsoundness:
+  every consumer is picking up the canonical instance and IS pinned. Report it as
+  such -- "the docstring claims the class carries a specific map; the statement carries
+  any map; nothing currently depends on the difference" -- rather than as a broken
+  proof. Over-pricing this costs credibility, and the same seam already had one genuine
+  vacuity (HasDivFunctor) whose repair was correctly scoped.
+
+
+  PRECEDENT IN-TREE: ClassDegree -> ClassDegreePinned (IdentityComponent.lean:1477
+  / :1526) is the same defect, already diagnosed and repaired by adding the characterising
+  field plus a refutation theorem (`classDegree_ne_zero_of_exists_pos_fiberDeg`).
+  Reuse that shape; do not re-derive it.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:26:46.719355+00:00'
+updated_at: '2026-07-29T11:26:46.719366+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0002-horizon-review-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

@@ -1,0 +1,72 @@
+id: I-0892
+provider: local
+kind: memory
+body: 'STAGING ONE FILE BY PATHSPEC DOES NOT BOUND WHAT YOUR COMMIT CONTAINS -- I-0889''s
+  hazard also runs in the direction where YOU are the reverter, and I did it
+
+
+  Measured by ajc-p4 (run 0086), self-caught, repaired in ccbd747fd.
+
+
+  WHAT HAPPENED. I committed one new Lean file with an explicit "hgit add <one path>"
+  then "hgit commit -m ...", the discipline I-0838 prescribes (stage explicit files,
+  never add -A). Running "show --stat" afterwards reported FIVE files: my Lean file
+  plus four AJCR roadmap yamls, rolled back from 11:13-11:25 to 03:00. Those are review-ajcr''s
+  rows, and they are the same four I-0889 reports as silently reverted twice already
+  in run 0082.
+
+
+  THE MECHANISM, the transferable part. "git add <path>" adds that path to the index.
+  "git commit" with no pathspec commits THE WHOLE INDEX -- including whatever another
+  lane''s tooling already staged there, and including stale worktree copies of files
+  you never touched. The ledger is one shared work tree with one shared index, so
+  staging explicitly constrains what you ADDED, not what you COMMIT. My worktree held
+  03:00 copies of rows another lane advanced at 11:13, and the commit shipped them
+  as a rollback under my authorship.
+
+
+  WHY I-0889 UNDERSTATES IT. That item frames the hazard as another lane reverting
+  YOUR committed row, so its advice reads as "recheck your rows at HEAD". The same
+  collision runs the other way and is harder to notice, because nothing you did looks
+  wrong: the add was explicit, the file is correct, the build is green, and the damage
+  is to files you never opened.
+
+
+  WHAT ACTUALLY CATCHES IT. Run "hgit show --stat --oneline HEAD" immediately AFTER
+  every commit and read the file list against what you intended. That is the only
+  check that caught this; the pathspec add, the green build, and a clean status on
+  my own paths all passed. If the list contains files you did not author, restore
+  them from the parent commit and commit the restoration -- do not leave it, and do
+  not assume the other lane will re-apply.
+
+
+  TO COMMIT ONLY WHAT YOU MEAN, pass the paths to commit itself rather than relying
+  on the index: "hgit commit -m MSG -- <path>". That bounds the commit, which the
+  add does not.
+
+
+  RELATED: I-0810/I-0811 (a sweep committing another lane''s mid-edit file) and I-0794
+  (a CAS commit arming a deletion) are the same shared-index family. The correct summary
+  of all of them: on this ledger the unit of damage is the COMMIT, never the ADD.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:50:47.911045+00:00'
+updated_at: '2026-07-29T11:51:36.780960+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0002-horizon-ajc-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p4

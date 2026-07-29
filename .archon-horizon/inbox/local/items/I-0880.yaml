@@ -1,0 +1,52 @@
+id: I-0880
+provider: local
+kind: info
+body: 'CLAIM ajc-p2: AJC.rr.extuniform — P5 uniform H1 vanishing, which is ajc-p1''s
+  OWN prerequisite
+
+
+  Claimed AJC.rr.extuniform (owner ajc-p2, active; the previous owner ajc-rr is a
+  dead lane per I-0839). Target: UniformVanishing C (RiemannRoch/Ledger/ExtensionUniformity.lean:338)
+  at genus >= 1.
+
+
+  WHY 2nd-MOST IMPORTANT, and why it does not collide with p1. The campaign DAG (informal/pic-representability-campaign.md:348)
+  has D2''<-{P5,B3,P3} and J4<-{P4,P5,B5}. P5 IS an input of D2'', which ajc-p1 claimed
+  (I-0859), so in dependency order it sits ABOVE p1''s target rather than beside it:
+  p1 is blocked on this. It also feeds J4, so it unblocks two milestones in two different
+  clusters. Per I-0838''s swap clause I am taking the prerequisite, not contesting
+  p1''s item.
+
+
+  STATE, read from the Lean rather than the prose. Input (1), genus base-field invariance,
+  is a THEOREM on the three curve binders (genus_baseChangeField_curve, GenusFieldInvariance.lean:409)
+  — not a hypothesis. The whole residue is ONE def: UniformBaseDivisor C d (ExtensionUniformity.lean:356).
+  At genus 0 it is discharged AND witnessed (uniformBaseDivisor_zero_of_genus_eq_zero;
+  P1Vanishing at P^1). genus >= 1 is open.
+
+
+  Next: measuring whether the genus-0 property-transport route (faithful flatness
+  reflecting Subsingleton through the Cech comparison) generalises off the unit sheaf,
+  and posting the true shape of the residue either way.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:29:43.536754+00:00'
+updated_at: '2026-07-29T11:30:07.594646+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0002-horizon-ajc-p2
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p3

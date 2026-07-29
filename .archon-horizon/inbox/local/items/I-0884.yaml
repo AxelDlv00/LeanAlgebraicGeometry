@@ -1,0 +1,68 @@
+id: I-0884
+provider: local
+kind: issue
+body: 'SemicontinuityH0''s PRESCRIBED DISCHARGE ROUTE CANNOT WORK: the bridge it names
+  forces h0 LOCALLY CONSTANT, stronger than the semicontinuity asked for
+
+
+  MEASURED by ajc-p4 (run 0086), kernel EXIT=0, green Picard cone (8710 jobs).
+
+
+  PRESCRIPTION. SemicontinuityH0.lean:55-57/:86-92 say HasH0Semicontinuity is ''discharged
+  by the B3/B5 session via minors of the Mumford two-term complex, then deleted''.
+  TwoTermFiniteFree.lean:12 agrees. Both point a future lane at B3.
+
+
+  WHY BLOCKED. The landed bridge to fibre h0 is rank_pushforward_eq_fiberH0 (RigidPushforwardRank.lean:491),
+  carrying hproj : Module.Projective. LOAD-BEARING -- proved at :117-137 by counterexample
+  (A=k[x], M=O/x on P^1_A; RigidPushforwardP1Sheaf.lean:567-576). Finite projective
+  ⟹ rank LOCALLY CONSTANT. A statement that h0 never jumps cannot be the input to
+  one about WHERE it jumps; the prescription inverts the difficulty.
+
+
+  SECOND MEASUREMENT, for costing B3-gated work: the B3 LEMMAS are gated on ''forall
+  t, q.FiberH1Vanishing L t'' and that antecedent has NO PRODUCER IN THE TREE -- the
+  project says so at RigidPushforwardP1Witness.lean:50 and :264. Grep: always hypothesis
+  or docstring, never a conclusion. This does NOT impugn B3''s GATE: Adelic.instHasRigidPushforwardOfCurve
+  fires by inferInstance at the AJC curve bundle, axiom-clean (verified).
+
+
+  LANDED INSTEAD, h1-free (ea668debf, 866989ffb): Scheme.Modules.isOpen_pointRank_le
+  -- {s | pointRank S F s <= e} OPEN for F fin.presented quasi-coherent on locally
+  noetherian S, NO FLATNESS; plus the closed superlevel form B6 wants. Route is not
+  the two-term complex: the locus IS the union over i <= e of chartLocus F i, an S.Opens
+  by construction; inclusion by mem_chartLocus_of_pointRank_eq at i := pointRank F
+  s, reverse by pointRank_le_of_mem_chartLocus. Distinct from isOpen_pointRank_pullback_eq
+  (:701), which assumes flatness and gives the EQUALITY locus. Non-vacuity witnessed
+  on campaign data for L merely locally trivial.
+
+
+  STILL OPEN: HasH0Semicontinuity. Not weakened, moved or deleted. Its h0 is dim Gamma(C_t,L_t)
+  on the fibre CURVE; pointRank is a module on P^1_A. Remaining obligation: compare
+  pointRank (q_*L) t with q.fiberH0 L t WITHOUT projectivity -- the honest half of
+  Stacks 02KG, only the Nakayama inequality available. AJC has no such map; mathlib
+  has no fibre-dimension semicontinuity (searched).
+
+
+  NEXT LANE: the chart-locus argument is committed, do not re-derive; do not route
+  through rank_pushforward_eq_fiberH0.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:39:31.887564+00:00'
+updated_at: '2026-07-29T11:39:31.887576+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0002-horizon-ajc-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

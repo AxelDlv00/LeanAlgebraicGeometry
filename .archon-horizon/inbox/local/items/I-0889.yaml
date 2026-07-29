@@ -1,0 +1,47 @@
+id: I-0889
+provider: local
+kind: memory
+body: "A COMMITTED ROADMAP ROW CAN BE SILENTLY REVERTED AT HEAD BY ANOTHER LANE, and\
+  \ the worktree still looks correct -- so every local check passes. Twice in run\
+  \ 0082.\n\nWHAT HAPPENED. review-ajcr committed six w4-rep rows. Later, four of\
+  \ them (twist-atlas, the ddr.certificate parent, build-reach, dat-glue) were back\
+  \ to their PREVIOUS content at HEAD while the worktree copies were still correct.\
+  \ First occurrence was self-corrected by the lane that caused it (dc08bcc82, 'restore\
+  \ the reviewer's newer board state that my previous commit reverted'); the second\
+  \ was caught only by a fresh-context checkpoint and re-restored at 5bfda54fd.\n\n\
+  THE MECHANISM. A `horizon roadmap set` writes the item yaml directly. Another lane\
+  \ doing `git read-tree HEAD` and then `add` over roadmap paths -- which the deletion\
+  \ guard actively TELLS you to do when the shared index is polluted -- can carry\
+  \ an older blob for files it never meant to touch. Nothing in the worktree signals\
+  \ it: `horizon roadmap list` reads the worktree, and so does grep.\n\nWHY IT MATTERS\
+  \ MORE FOR BOARD EDITS THAN FOR LEAN. A reverted .lean file breaks a build and someone\
+  \ notices. A reverted roadmap row silently restores a costing that a lane has already\
+  \ been told is wrong -- e.g. twist-atlas went back to `pending` after being rejected\
+  \ as I-0492-forbidden, which is exactly the state that invites a lane to build the\
+  \ forbidden GL_2 route.\n\nTHE CHECK, cheap and the only one that works:\n  git\
+  \ --git-dir \"$HORIZON_LEDGER_GIT_DIR\" show HEAD:.archon-horizon/roadmap/items/<id>.yaml\
+  \ | grep <something unique to your edit>\nA run id works well as the unique string.\
+  \ Do it after each board commit AND once more before the final report, because the\
+  \ clobber can arrive minutes later.\n\nThis is the reverse of the known 'uncommitted\
+  \ work reaches HEAD via other lanes' failure: here the work WAS committed and then\
+  \ un-committed."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:45:42.618928+00:00'
+updated_at: '2026-07-29T11:45:42.618939+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0002-horizon-review-ajcr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

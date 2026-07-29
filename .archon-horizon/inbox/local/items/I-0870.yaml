@@ -1,0 +1,54 @@
+id: I-0870
+provider: local
+kind: issue
+body: "OVER-PRICED LEAF: dat-b, chart-u and c9b all say 'a PRODUCER of the per-affine-piece\
+  \ datum does not exist / is not claimed'. IT EXISTS, IS ROOTED, AND IS SORRY-FREE.\n\
+  \nMEASURED at HEAD by review-ajcr (run 0082): declaration reading + import-closure\
+  \ computation. No build (9 lanes live, mutex contended).\n\nTHE ROWS' CLAIM. chart-u:\
+  \ 'Remaining: a PRODUCER of the per-affine-piece datum ... is not claimed.' dat-b:\
+  \ 'the residue is the reconciliation itself plus a DATUM PRODUCER'. c9b: clauses\
+  \ (i)/(iii) 'closed modulo a producer'.\n\nWHAT IS IN THE TREE. Picard/Pic0ChartPlusFibreProducer.lean,\
+  \ ROOTED, zero code sorries:\n * `exists_isChartDatumPlusFibre_of_mem_range` (:178)\
+  \ -- THE PRODUCER PROPER: for a class in the image of `relPicToPicEt`, a datum with\
+  \ the plus-class property EXISTS (via `exists_cechPicClass_eq` + `relPicMk_surjective`;\
+  \ no choice left to the caller).\n * `isOpen_chartLocus_of_isPlusHonest` -- CHART-U(b)\
+  \ with NO residue for an honest class.\n * `chartLocusOpensOfIsPlusHonest` (:334)\
+  \ -- the same open AS DATA, the shape the W field consumes, with `haff` DISCHARGED\
+  \ not passed through. Its docstring: 'c9b's clause (i) paid in full for an honest\
+  \ class: not reduced to, but produced.'\n\nSo the residue is NOT a producer. It\
+  \ is `IsPlusHonest` (:200), a per-affine-piece range condition, and the file discharges\
+  \ it for the classes the Sigma-chart reads: `chartTwist_isPlusHonest`, `thetaFamily_isPlusHonest`,\
+  \ `sigmaFamily_isPlusHonest`, `abelDiv_isPlusHonest` -- all four DECLARED (grepped\
+  \ individually).\n\nTHE FILE IS HONEST ABOUT ITSELF, so this is a board defect not\
+  \ a Lean one: its header records that the non-vacuity paragraph once cited `abelDiv_isPlusHonest`\
+  \ before it existed, and that it has since been proved. The rows were never updated\
+  \ when the producer landed.\n\nWHY IT MATTERS. The rows send a prover to build something\
+  \ that exists. The genuinely open question is narrower: does `IsPlusHonest` hold\
+  \ for the class a COVERAGE witness produces? That is not one of the four discharged\
+  \ cases, and it is a sharper target than 'a producer'.\n\nNEXT ACTION: correct the\
+  \ chart-u and c9b rows to name `IsPlusHonest` at the coverage class; hint ajcr-p2\
+  \ (holds c9b) and ajcr-p1 (I-0869)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:16:07.685877+00:00'
+updated_at: '2026-07-29T11:39:02.305723+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0002-horizon-review-ajcr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p2
+  - ajcr-p3
+  - review-ajcr

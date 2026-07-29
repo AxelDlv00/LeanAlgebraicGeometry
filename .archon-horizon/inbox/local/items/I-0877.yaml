@@ -1,0 +1,56 @@
+id: I-0877
+provider: local
+kind: issue
+body: "HasAbelMap is an UNPINNED data class: the ZERO natural transformation inhabits\
+  \ it, and abelMap_app_mk cannot rule that out\n\nVACUITY LENS (review-ajc). Machine-verified\
+  \ via lean_run_code on a fresh import closure of Picard/FGAPicRepresentability.lean.\n\
+  \nTHE CLASS. FGAPicRepresentability.lean:691 -- `class HasAbelMap ... where abel\
+  \ : divFunctor C -> picSharp C`. DATA with NO property. Same shape as ClassDegree\
+  \ (IdentityComponent.lean:1477), which this project already convicted of exactly\
+  \ this defect in ClassDegree's own docstring: \"asserts existence of a map with\
+  \ no property, which is why it collapsed\".\n\nPROBE 1 (elaborates clean): the ZERO\
+  \ natural transformation inhabits it --\n  abel := { app := fun T => TypeCat.ofHom\
+  \ (fun _ => (0 : (Scheme.PicSharp.relPresheaf C).obj T)),\n            naturality\
+  \ := ... map_zero (Scheme.PicSharp.relFunctorial ...) }\nPROBE 2 (closes by rfl):\
+  \ under that instance, `(abelMap C).app T z = 0`.\n\nWHY abelMap_app_mk (:721) DOES\
+  \ NOT SAVE IT: #check shows it has NO [HasAbelMap C] binder, so it speaks only about\
+  \ the canonical instHasAbelMap. A consumer that BINDS [HasAbelMap C] gets HasAbelMap.abel\
+  \ of its own binder, about which the theorem says nothing.\n\nWHY THIS IS LABELLING,\
+  \ NOT LIVE UNSOUNDNESS -- instances 1, call sites 0. HasAbelMap appears nowhere\
+  \ outside FGAPicRepresentability.lean. The one real Abel-map consumer, ClassDegreePinned.classDegree_abel\
+  \ (IdentityComponent.lean:1539), cites abelMap C with NO such binder so it synthesises\
+  \ instHasAbelMap and IS pinned; DivDegree.abelDeg (:681) bypasses the class and\
+  \ composes abelMapWitness directly.\n\nFIX, matching the ClassDegreePinned pattern\
+  \ one file over: (a) delete HasAbelMap/abelMap, let consumers name abelMapWitness\
+  \ (which they all effectively already do); or (b) add the pin as a field, `abel_app_mk\
+  \ : forall T x, abel.app T (Quotient.mk _ x) = - Quotient.mk _ <kernel x.q, _>`.\
+  \ What must not stay is data-with-no-property described as \"the class CARRYING\
+  \ the Abel map\" -- that wording is what let ClassDegree survive to run 0067.\n\n\
+  CAVEAT so (b) is not over-priced later: its pin quantifies over `x : DivFamily C.hom\
+  \ T`, and there are ZERO producers of DivFamily project-wide (every declaration\
+  \ returning one is DivFamily.pullbackAlong, DivFunctorDef.lean:809, which needs\
+  \ one as input). So (b) buys a conditionally-biting pin -- still strictly better\
+  \ than none, same shape as classDegree_ne_zero_of_exists_pos_fiberDeg whose docstring\
+  \ already admits the missing producer."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:26:21.586284+00:00'
+updated_at: '2026-07-29T11:26:21.586297+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0002-horizon-review-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

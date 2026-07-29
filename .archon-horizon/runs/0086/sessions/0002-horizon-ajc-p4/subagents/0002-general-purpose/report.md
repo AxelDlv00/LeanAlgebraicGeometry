@@ -1,0 +1,1 @@
+Confirmed: AJC's `picEt` is `Type (u+1)`-valued; AJCR's `pic0TypeFunctor` is `Type u`-valued. Let me verify the last structural point — AJCR's `Over.sigmaExtension` and whether AJC's `picEt` includes degree-zero.

@@ -1,0 +1,78 @@
+id: I-0862
+provider: local
+kind: issue
+body: 'THE REJECTION CLUSTER''S PRESCRIBED REPLACEMENT IS THE ROUTE PROTECTION I-0492
+  FORBIDS. `twist-atlas` is a GL_2(k) construction, and it is the only thing `cert-relocalize`
+  hands its obligations to.
+
+
+  MEASURED at HEAD by review-ajcr (run 0082), source-level (declaration reading, no
+  build).
+
+
+  THE CHAIN.
+
+  * `...certificate.cert-relocalize` is REJECTED, and its rejection note ends: ''The
+  correct replacement is an OUTER twist-indexed atlas ... Those obligations are tracked
+  by twist-atlas.''
+
+  * `...certificate.twist-atlas` (PENDING, unowned) says: ''For every fixed M, instantiate
+  the existing DivFamZar, theta-window, cocycle, evaluation, DivOver, and DivRepGlobalData
+  classifier at `twistedP1Map pi M`.''
+
+  * `twistedP1Map` (Cohomology/TwistedFiberTwoCover.lean:29) is `pi ≫ P1.autOfMatrix
+  k M` with `M : Matrix.GeneralLinearGroup (Fin 2) k`. `P1.autOfMatrix` (Curve/P1Aut.lean:227)
+  is documented as ''THE GL_2(k)-TWIST OF THE PROJECTIVE LINE''.
+
+  * Protection I-0492 clause 1: ''DO NOT BUILD THE GL_2(k) ACTION ON P1 ... no consumer
+  may be written against it. Same for any descent work whose only purpose is to rescue
+  R1.'' And leaf `p1-aut` is DEPRIORITISED on exactly that ground.
+
+
+  SO: `twist-atlas` as written IS the R1 route wearing an atlas. Its `M` ranges over
+  GL_2(k) and its whole content is transition isomorphisms between the fixed-M charts
+  -- i.e. the descent that makes varying the pinned pair work, which clause 1''s second
+  sentence names explicitly.
+
+
+  WHY IT SURVIVED. `twist-atlas` predates the human decision: `cert-relocalize` was
+  rejected 2026-07-27, I-0492 landed 2026-07-28. The rejection note was never re-read
+  against the decision it precedes by one day. Nothing re-checks a rejected leaf''s
+  prescription.
+
+
+  CONSEQUENCE, and this is the reviewer''s verdict on the cluster. The four rejections
+  (`cert-relocalize`, `joint-cover`, `leak-image`, `tube-fibre`) are each CORRECT
+  as refutations -- I checked their stated grounds and all four are typing/geometry
+  facts, not proof failures. But the PARENT is mis-stated: `certificate` still routes
+  its residue to `twist-atlas`, a forbidden route, while the actual live route is
+  R2/widened (`DivisorFamilyAffSeedGate.lean:205`). Three of the four rejections (`joint-cover`,
+  `leak-image`, `tube-fibre`) are symptoms of ONE fact -- pieces confined to a fixed
+  chart pair -- which R2 removes; `cert-relocalize` is the odd one out and its prescription
+  is stale.
+
+
+  NEXT ACTION: `twist-atlas` should be REJECTED (superseded by I-0492 + R2), not left
+  pending as a route a lane might pick up. Doing that on the board now.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:03:46.441470+00:00'
+updated_at: '2026-07-29T11:39:05.862404+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0002-horizon-review-ajcr
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr

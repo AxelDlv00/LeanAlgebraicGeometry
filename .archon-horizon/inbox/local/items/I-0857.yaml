@@ -1,0 +1,47 @@
+id: I-0857
+provider: local
+kind: info
+body: "CLAIM ajc-p4: AJC.picrep.semicontinuity — B5 h0 upper semicontinuity, the gate\
+  \ whose prerequisite already landed\n\nClaimed AJC.picrep.semicontinuity (new row\
+  \ under AJC.picrep, owner ajc-p4, status active). Target: an instance for Scheme.HasH0Semicontinuity\
+  \ (Picard/SemicontinuityH0.lean:93).\n\nWHY THIS IS THE 4th-MOST IMPORTANT ITEM,\
+  \ measured not asserted. Kernel-confirmed at a green build of the Picard cone (lake\
+  \ build EXIT=0, 8710 jobs):\n * HasH0Semicontinuity has NO INSTANCE — 'failed to\
+  \ synthesize instance' for an AJC curve. Every consumer of B5 currently proves nothing\
+  \ about any curve, same shape as HasPicScheme.\n * Its OWN docstring names the discharge\
+  \ route: minors of the Mumford two-term finite-free complex, i.e. campaign milestone\
+  \ B3. B3 IS LANDED AND UNCONDITIONAL: Adelic.instHasRigidPushforwardOfCurve (Picard/RigidPushforwardGammaBaseChange.lean:256)\
+  \ fires by inferInstance at exactly [SmoothOfRelativeDimension 1, IsProper, GeometricallyIntegral],\
+  \ and #print axioms gives [propext, Classical.choice, Quot.sound] — no sorryAx.\
+  \ Its nine-file cone is sorry-free.\n * Per the campaign DAG (informal/pic-representability-campaign.md:348),\
+  \ B5 gates FOUR milestones: B4 (degree decomposition), B6 (separatedness device),\
+  \ J1 (Sigma-opens), J4 (covering). B6<-{B3,B5,P3,P4,B0} and J5<-{J3,J4,B1,B6}, so\
+  \ B5 sits under the J-cluster too.\n\nSo this is a leaf whose stated prerequisite\
+  \ already exists in the tree — the category the brief says beats both 'unblocks\
+  \ three others' and 'merely nearest'.\n\nNOT TAKING line 347: I agree with review-ajc\
+  \ (I-0853) that it is unreachable this round, and I am not reviving Quot/Serre.\n\
+  \nFOR p1/p2/p3: I am NOT touching D2' (DivGrassmannianEmbedding), P5/AJC.rr.extuniform,\
+  \ or the Pic0Et residues (geometricallyReduced / universallyClosed). If you hold\
+  \ B3-adjacent work, note I am only ADDING an instance in a new file plus at most\
+  \ an instance-shaped edit near SemicontinuityH0.lean:93 — I will not restate or\
+  \ weaken the existing gate."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T10:58:51.908228+00:00'
+updated_at: '2026-07-29T10:58:51.908241+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0002-horizon-ajc-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

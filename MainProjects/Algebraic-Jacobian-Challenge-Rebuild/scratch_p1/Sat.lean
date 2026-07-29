@@ -1,0 +1,70 @@
+import AlgebraicJacobian.Picard.Pic0ChartRestrictedFibre
+
+set_option autoImplicit false
+universe u
+open CategoryTheory Limits Opposite MonoidalCategory CartesianMonoidalCategory
+namespace AlgebraicGeometry
+
+variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
+variable {π : C.left ⟶ P1 k} [IsAffineHom π] {n : ℕ}
+variable [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+variable [GeometricallyIrreducible C.hom]
+
+/-- Step 1: the empty open of any scheme is an initial scheme. -/
+theorem probe_isInitial_bot (T : Scheme.{u}) :
+    Nonempty (IsInitial ((⊥ : T.Opens) : Scheme.{u})) := by
+  rw [isInitial_iff_isEmpty]
+  constructor
+  intro x
+  exact TopologicalSpace.Opens.mem_bot.mp x.2
+
+/-- Step 2: THE SATISFIABILITY PROBE. `RestrictedChartFibre` at `V = ⊥` — is the class
+inhabitable at all, or is it a second conditionally-unsatisfiable gate? Take `W := ⊥`:
+then `r` and the factoring map are initial-object maps, and `exists_factor`'s hypothesis
+supplies a point of the empty scheme. -/
+theorem probe_restrictedChartFibre_bot {D : Over (Spec (.of k))}
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ)) :
+    RestrictedChartFibre C π n rep m Z hdeg ⊥ := by
+  intro T g
+  -- the source of the restricted chart at `V = ⊥` is an initial scheme
+  set VD : D.left.Opens := ⊥ with hVD
+  set WT : T.Opens := ⊥ with hWT
+  haveI hTbot : IsInitial ((WT : Scheme.{u})) := (probe_isInitial_bot T).some
+  refine ⟨⟨WT, hTbot.to _, ?_, ?_⟩⟩
+  · -- both legs are natural transformations out of `yoneda.obj ↑WT` with `↑WT` empty;
+    -- an S-point of an empty scheme forces S empty, and then the two values agree
+    ext S x
+    haveI hWTe : IsEmpty ((WT : Scheme.{u}) : Type u) :=
+      (isInitial_iff_isEmpty.mp ⟨hTbot⟩)
+    haveI : IsEmpty (S.unop : Type u) :=
+      ⟨fun z => hWTe.elim ((x : S.unop ⟶ (WT : Scheme.{u})).base z)⟩
+    haveI hSi : IsInitial (S.unop) :=
+      (isInitial_iff_isEmpty.mpr ‹IsEmpty (S.unop : Type u)›).some
+    -- both sides are `g`-values (resp. chart-values) at maps out of an initial scheme
+    show (restrictChart (abelSigmaChart C π n rep m Z hdeg) VD).app S
+        (x ≫ hTbot.to ((VD : Scheme.{u}))) = g.app S (x ≫ WT.ι)
+    rw [restrictChart]
+    show (abelSigmaChart C π n rep m Z hdeg).app S
+        ((x ≫ hTbot.to ((VD : Scheme.{u}))) ≫ VD.ι) = g.app S (x ≫ WT.ι)
+    -- the abel chart value at ANY map out of the empty S equals the g-value there:
+    -- both are values of a natural transformation whose source has an initial S-point set
+    have hxv : (x ≫ hTbot.to ((VD : Scheme.{u}))) ≫ VD.ι
+        = hSi.to D.left := hSi.hom_ext _ _
+    have hxw : x ≫ WT.ι = hSi.to T := hSi.hom_ext _ _
+    rw [hxv, hxw]
+    -- remaining: chart value at the initial map = g value at the initial map.
+    -- Both live in `pic0SigmaFunctor C` at an EMPTY test, which is a subsingleton.
+    exact Subsingleton.elim _ _
+  · intro S v w hvw
+    -- `v : S ⟶ ⊥`, so `S` is empty, hence initial: everything out of it is unique
+    haveI hSempty : IsEmpty S := by
+      constructor
+      intro z
+      exact TopologicalSpace.Opens.mem_bot.mp (v.base z).2
+    haveI hS : IsInitial S := (isInitial_iff_isEmpty.mpr hSempty).some
+    exact ⟨hS.to _, hS.hom_ext _ _, hS.hom_ext _ _⟩
+
+end AlgebraicGeometry

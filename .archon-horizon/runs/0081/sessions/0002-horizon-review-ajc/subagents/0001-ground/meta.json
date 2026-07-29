@@ -1,0 +1,11 @@
+{
+  "name": "ground",
+  "native_subagent_id": "toolu_bdrk_01DwHnTsZAkrEZyRdTVsRBsc",
+  "parent_session": "0002-horizon-review-ajc",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 881815,
+    "tokens_out": 44
+  }
+}

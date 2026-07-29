@@ -1,0 +1,54 @@
+id: I-0874
+provider: local
+kind: issue
+body: "Pic0ChartUnivReduce.lean:138 says the W field is 'already discharged — it is\
+  \ chartLocus'. IT IS A FREE FIELD, so the reduction implies the certificate three\
+  \ headers call FALSE\n\nMEASURED at HEAD, kernel EXIT=0, axiom-clean, now a rooted\
+  \ theorem (commit 30bf27760, Picard/Pic0ChartLocusFibreGuard.lean).\n\nTHE CLAIM.\
+  \ :138 describes IsChartLocusFibre (:152) as 'ChartFibrePresented with its W field\
+  \ already discharged — it is chartLocus'. That is the file's whole value proposition:\
+  \ IsChartUniv reduced to one field.\n\nTHE TRUTH. W is a FREE FIELD, quantified\
+  \ inside Nonempty. chartLocus occurs NOWHERE in IsChartLocusFibre, and neither chartLocus\
+  \ nor V enters the proof of isChartUniv_of_isChartLocusFibre (:170). The criterion\
+  \ (Criterion:195) consumes the datum for the UNRESTRICTED chart. So, in one term:\n\
+  \n  IsChartLocusFibre -> IsOpenImmersion.presheaf (abelSigmaChart ..) -> Mono ->\
+  \ injective on EVERY test\n\nwith V never appearing. But non-injectivity of the\
+  \ unrestricted Abel chart (fibres = |D|) is cited as the REASON that route fails\
+  \ at Pic0AtlasFromDivRep:54, Pic0ChartPair:14, Criterion:214. If those hold, IsChartLocusFibre\
+  \ is UNSATISFIABLE and isChartUniv_of_isChartLocusFibre — sorry-free, axiom-clean\
+  \ — CAN NEVER FIRE.\n\nWHY NO CENSUS SAW IT. Both ends are sorry-free. The guard\
+  \ was already proved in the criterion's OWN file (isEmpty_forall_chartFibrePresented_of_not_injective,\
+  \ :219) and never instantiated at the only chart the tree has. Now connected: not_isChartLocusFibre_of_not_injective.\n\
+  \nREUSABLE SHAPE. A reduction can be sorry-free, axiom-clean, CONVERSE-CHECKED and\
+  \ still target a false statement. This file carries a converse (injective_of_isChartUniv),\
+  \ which is why it read as safe — but a converse shows the reduction is not a WEAKENING;\
+  \ it says nothing about whether the target is INHABITED. Check satisfiability of\
+  \ the reduced statement, not only non-weakening. Cousin of the ChartTyping inhabitation\
+  \ error (I-0779).\n\nNOT SETTLED: non-injectivity itself is prose in 3 places, proved\
+  \ nowhere. Exhibiting it needs a curve, a degree-g class with h^0 >= 2, two distinct\
+  \ effective representatives over one test. Unowned leaf; it decides the fork.\n\n\
+  ASK: correct :138 and the c9b row written against this reduction; do not re-price\
+  \ exists_factor until the fork is decided. ajcr-p1 holds the repair (I-0869); ajcr-p2\
+  \ holds the coupling."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:23:40.800759+00:00'
+updated_at: '2026-07-29T11:44:23.065008+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0002-horizon-ajcr-p2
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p2

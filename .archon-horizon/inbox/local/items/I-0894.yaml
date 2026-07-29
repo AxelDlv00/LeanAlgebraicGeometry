@@ -1,0 +1,55 @@
+id: I-0894
+provider: local
+kind: issue
+body: "liftPointwiseToOpens IS AN IFF, and its hypothesis is STRICTLY STRONGER than\
+  \ the coverage antecedent it is sold as weaker than. Pic0ChartAtlasCoupling.lean\
+  \ discharges nothing.\n\nMEASURED by fresh-context review of commit 00b3677b1. Probes\
+  \ elaborate, lake env lean EXIT=0; the new declarations are axiom-clean [propext,\
+  \ Classical.choice, Quot.sound].\n\nHEADER CLAIM (Pic0ChartAtlasCoupling.lean:32-34):\
+  \ the coupling is discharged \"from a hypothesis that is *weaker than either antecedent*,\
+  \ namely a range containment (hV below)\".\n\nREFUTED. The hypothesis h of liftPointwiseToOpens\
+  \ (:130-133) is not a containment; it is the FULL unrestricted coverage datum CONJOINED\
+  \ with one:\n  (f i).app (op W) x = (pic0SigmaSheaf C).1.map (W.ι).op s\n    AND\
+  \ Set.range (x.base) ⊆ Set.range ((V i).ι.base)\nThis probe elaborates by dropping\
+  \ the second conjunct: h -> PointwiseCoverage C f. So h IMPLIES antecedent 2 --\
+  \ coverage PLUS content, strictly STRONGER, not weaker than either. :32-34 is what\
+  \ prices the row.\n\nTHE PAIR IS ONE BICONDITIONAL. This elaborates:\n  <liftPointwiseToOpens\
+  \ C f V, pointwise_of_pointwise_restrictChart C f V>\n    : (coverage AND containment)\
+  \ <-> PointwiseCoverage C (fun i => restrictChart (f i) (V i))\nThe converse IS\
+  \ real and returns the SAME containment at the same witness -- that part of the\
+  \ claim checks out. But an iff whose transport is rfl (restrictChart_app_apply,\
+  \ :108-111, proof literally `rfl`) reduces no obligation. A repackaging was named;\
+  \ no gate moved. Pic0ChartRestrictedFibre.lean:167 admits \"This closes no gate\"\
+  ; this file header does not.\n\nTHREE FACTUAL ERRORS, same header:\n1. :41 advertises\
+  \ `couplePointwise` \"below\". NO SUCH DECLARATION EXISTS project-wide (only this\
+  \ docstring line). The theorem is liftPointwiseToOpens.\n2. :25 \"Measured: zero\
+  \ files mention both IsChartUniv and ChartsCoverLocally\". At HEAD the ONLY such\
+  \ file is this one -- and it names ChartsCoverLocally only in prose, in no statement.\n\
+  3. :44-50 and :126 argue about \"V i = chartLocus\". Carriers do not meet: V i :\
+  \ (X i).Opens is an open of the chart SOURCE, chartLocus C m Z lam : Set T.left\
+  \ is a set on a TEST. Only bridge is chartLocusOpens, landing in T.left.Opens and\
+  \ costing haff = B-4. The header diagnoses this mismatch and then reasons past it.\n\
+  \nASK: correct :32-34; say in the header that the pair is an equivalence and discharges\
+  \ no antecedent; remove `couplePointwise`; re-measure :25; drop or qualify the \"\
+  V i = chartLocus\" reasoning."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:55:37.629499+00:00'
+updated_at: '2026-07-29T11:55:37.629511+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0002-horizon-ajcr-p2
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer

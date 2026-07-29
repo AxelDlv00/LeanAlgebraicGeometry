@@ -14,40 +14,49 @@ the board tracks them on three separate rows: `IsChartUniv` (c9b), Zariski-local
 of `Sigma.desc f` (dat-b B-6), and `rep i` (divrep).  Reading those rows one concludes the
 three compose — discharge each and the seam fires.
 
-**They do not compose as stated, and this file is the missing link.**  The atlas the seam
-consumes is a family of *restricted* charts `restrictChart (abelSigmaChart …) (V i)`
-(`Picard/Pic0ChartAtlasParamFree.lean:86`), whose source is `(V i : Scheme)` — an open of the
-*divisor scheme*.  So the coverage antecedent, unfolded through
-`chartsCoverLocally_of_pointwise` (`Pic0ChartCoveragePointwise.lean:128`), must produce a
-chart point `x : (W : Scheme) ⟶ (V i : Scheme)` landing **in that same `V i`**.  What
-coverage geometry produces is a point of the divisor scheme `D.left`: `chartLocus` is an open
-of the *test*, `V i` is an open of the *divisor scheme*, and nothing in the tree relates them.
-Measured: zero files mention both `IsChartUniv` and `ChartsCoverLocally`.
+**They do not compose as stated.**  The atlas the seam consumes is a family of *restricted*
+charts `restrictChart (abelSigmaChart …) (V i)` (`Picard/Pic0ChartAtlasParamFree.lean:86`),
+whose source is `(V i : Scheme)` — an open of the *chart source*, i.e. of the divisor scheme.
+So the coverage antecedent, unfolded through `chartsCoverLocally_of_pointwise`
+(`Pic0ChartCoveragePointwise.lean:128`), must produce a chart point
+`x : (W : Scheme) ⟶ (V i : Scheme)` landing **in that same `V i`**, while coverage geometry
+produces a point of the divisor scheme `D.left` with no such constraint.  The two opens the
+route wants to identify live on different objects — `V i` on the divisor scheme, `chartLocus`
+on the test — and no declaration in the tree relates them.
 
 That is an obligation *between* two antecedents, owned by no row, and it is why "close c9b,
 then close B-6" would not have composed even with both closed.
 
 ## What this file does about it
 
-It names the coupling and discharges it from a hypothesis that is *weaker than either
-antecedent*, namely a range containment (`hV` below): the coverage witness, viewed in the
-divisor scheme, factors set-theoretically through `V i`.  Given that, the witness lifts to
-`V i` along the open immersion `(V i).ι` by `IsOpenImmersion.lift`, and the class it names is
-unchanged because `restrictChart` is *by definition* precomposition with `yoneda.map (V i).ι`
-— so the lift's chart value is the unlifted one, with no transport.
+It names the coupling and derives restricted coverage from unrestricted coverage together
+with a range containment: the coverage witness, viewed in the chart source, factors
+set-theoretically through `V i`.  Given that, the witness lifts to `V i` along the open
+immersion `(V i).ι` by `IsOpenImmersion.lift`, and the class it names is unchanged because
+`restrictChart` is *by definition* precomposition with `yoneda.map (V i).ι` — so the lift's
+chart value is the unlifted one, with no transport.
 
-Two consequences worth stating separately, and they pull in opposite directions:
+**THREE CORRECTIONS TO AN EARLIER DRAFT OF THIS HEADER**, all from a fresh-context audit
+(2026-07-29, inbox `I-0894`), because each would have mispriced the row:
 
-* **the coupling is cheap.**  `couplePointwise` below costs one `IsOpenImmersion.lift` and one
-  naturality step.  A lane holding unrestricted coverage plus the containment gets restricted
-  coverage, hence B-6 for the *restricted* atlas, which is the atlas the seam actually takes;
-* **the containment is not free, and it is where the real content moved.**  `hV` says every
-  class that coverage hits is hit *inside the chart locus* — i.e. by a divisor family whose
-  fibre is a single point.  For `V i = chartLocus` that is exactly "the representative
-  coverage produces is the normalized one", which is a nontrivial statement about the
-  coverage witness and NOT a consequence of either antecedent.  So the composition gap is
-  real; what this file establishes is that it is a *range containment* and nothing more,
-  rather than a compatibility of two unrelated opens.
+1. the hypothesis is **NOT "weaker than either antecedent"**, as the draft claimed.  It is the
+   unrestricted coverage datum **conjoined** with the containment, so it *implies* the
+   coverage antecedent and is strictly STRONGER than it.  What is true is the much smaller
+   claim that the containment is all that separates unrestricted from restricted coverage;
+2. `liftPointwiseToOpens` and `pointwise_of_pointwise_restrictChart` together are one
+   **biconditional**, and its transport step (`restrictChart_app_apply`) is `rfl`.  So this
+   file is a *repackaging with its difference named*, and **it closes no gate**.  It is
+   reported as routing information, not as progress on any antecedent;
+3. the draft argued about "`V i = chartLocus`" in two places.  **Those carriers do not meet**:
+   `V i : (X i).Opens` is an open of the chart source (the divisor scheme), while
+   `chartLocus C m Z lam : Set ↥T.left` is a set on a *test*.  The only bridge is
+   `chartLocusOpens`, which lands in `T.left.Opens` and costs `haff` (= dat-b's B-4).  The
+   mismatch is precisely what this file was written to expose, so reasoning as though the two
+   were interchangeable — as the draft did below — defeated the purpose.
+
+What survives all three: the containment is genuine content (probes below), it is exactly the
+difference between the two coverage statements (the converse), and no declaration in the tree
+relates the two carriers.
 
 ## Main declarations
 
@@ -116,15 +125,21 @@ variable (C) in
 /-- **THE COUPLING**: pointwise coverage for `f` plus a range containment gives pointwise
 coverage for the restricted family.
 
-`hV` is the honest content: at the point, index and witness coverage produces, the witness's
-image in the chart source lies inside `V i`.  Everything else is the lift along the open
-immersion `(V i).ι` and `restrictChart_app_apply`.
+The containment is the honest content: at the point, index and witness coverage produces, the
+witness's image in the chart source lies inside `V i`.  Everything else is the lift along the
+open immersion `(V i).ι` and `restrictChart_app_apply`, which is `rfl` — so this direction
+carries no mathematics beyond the lift, and together with its converse below it is a
+biconditional rather than a reduction.  **It closes no gate.**
 
-Note the shape of `hV`: it quantifies over the data coverage *returns*, not over all opens or
-all witnesses.  So a producer discharges it exactly where it produces the witness, which is
-the only place the information is available — a formulation asking for the containment
-uniformly would be strictly stronger and, at `V i = chartLocus`, false (a class may well be
-hit by a non-normalized representative somewhere). -/
+Note the shape of the hypothesis: it quantifies over the data coverage *returns*, not over all
+opens or all witnesses.  So a producer discharges it exactly where it produces the witness,
+which is the only place the information is available; a formulation asking for the containment
+uniformly over all witnesses would be strictly stronger.
+
+What the containment *means* geometrically depends on which open `V i` is, and this file
+deliberately does not assume an answer — in particular `V i` is an open of the chart source
+while `chartLocus` is a set on a test, so the two are not interchangeable and the intended
+instantiation still owes the `chartLocusOpens` bridge (cost: `haff`, i.e. dat-b's B-4). -/
 theorem liftPointwiseToOpens {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) (V : ∀ i, (X i).Opens)
     (h : ∀ (T : Scheme.{u}) (s : (pic0SigmaSheaf C).1.obj (op T)) (t : ↥T),

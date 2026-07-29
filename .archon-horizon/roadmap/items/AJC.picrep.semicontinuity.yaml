@@ -1,0 +1,60 @@
+id: AJC.picrep.semicontinuity
+title: 'B5: h0 upper semicontinuity — discharge the HasH0Semicontinuity gate from
+  the landed B3 two-term complex'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: "B5 (h0 upper semicontinuity). BASE-SIDE HALF LANDED sorry-free and axiom-clean;\
+  \ the FIBRE-CURVE half is open and its prescribed route is REFUTED (I-0884).\n\n\
+  LANDED (ajc-p4, run 0086; commits ea668debf, 866989ffb; kernel EXIT=0, axioms [propext,\
+  \ Classical.choice, Quot.sound]):\n * Picard/PointRankSemicontinuity.lean -- Scheme.Modules.isOpen_pointRank_le:\
+  \ {s | pointRank S F s <= e} is OPEN for F finitely presented quasi-coherent on\
+  \ locally noetherian S, with NO FLATNESS hypothesis; plus isClosed_le_pointRank,\
+  \ the superlevel form B6 consumes.\n * Picard/PointRankSemicontinuityWitness.lean\
+  \ -- non-vacuity on the campaign's OWN data: it fires on (pi_A)_* L for L merely\
+  \ LOCALLY TRIVIAL on C_A, no h1 hypothesis.\n * The proof is NOT the two-term complex.\
+  \ The locus IS the union over i <= e of chartLocus F i, and chartLocus is an S.Opens\
+  \ by construction. Inclusion = the Nakayama prolongation mem_chartLocus_of_pointRank_eq\
+  \ at i := pointRank F s; reverse = pointRank_le_of_mem_chartLocus. Both were already\
+  \ in the tree since the flattening-stratification work; the missing step was only\
+  \ that the union over i <= e IS the sublevel set. No monotonicity of IsPresentationChart\
+  \ is needed.\n * Distinct from the pre-existing isOpen_pointRank_pullback_eq (FlatteningStratificationUniversal.lean:701),\
+  \ which assumes CoherentSheafFlat and gives openness of the rank EQUALITY locus.\
+  \ Neither implies the other: drop flatness from that one and it is false; strengthen\
+  \ <= to = here and it is false.\n\nSTILL OPEN, and NOT weakened: Scheme.HasH0Semicontinuity\
+  \ (SemicontinuityH0.lean:93) has no instance. Its h0 is dim Gamma(C_t, L_t) on the\
+  \ scheme-theoretic fibre CURVE; pointRank is the fibre dimension of a module on\
+  \ the base. The gap is one comparison: pointRank (q_* L) t vs q.fiberH0 L t.\n\n\
+  COSTING REFUTED (I-0884): that comparison CANNOT come from the route the file prescribes.\
+  \ rank_pushforward_eq_fiberH0 (RigidPushforwardRank.lean:491) proves exactly the\
+  \ equation but carries hproj : Module.Projective, which the file itself proves load-bearing\
+  \ by counterexample -- and finite projective forces the rank LOCALLY CONSTANT, strictly\
+  \ stronger than semicontinuity. Also measured: the B3 LEMMAS' antecedent FiberH1Vanishing\
+  \ has NO PRODUCER in the tree (RigidPushforwardP1Witness.lean:50, :264), though\
+  \ B3's GATE is genuine and axiom-clean. Next lane needs the honest half of cohomology-and-base-change\
+  \ (Stacks 02KG), Nakayama-inequality direction; mathlib has no fibre-dimension semicontinuity\
+  \ at all."
+status: active
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-29T10:58:19.288730+00:00'
+  provenance:
+    run: 0086
+    session: 0002-horizon-ajc-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep
+  owner: ajc-p4
+  updated_at: '2026-07-29T11:40:06.609307+00:00'

@@ -22,7 +22,7 @@ audience: task:ajc-p3
 author: human
 source_ref: null
 created_at: '2026-07-29T10:32:03.790935+00:00'
-updated_at: '2026-07-29T10:32:03.790946+00:00'
+updated_at: '2026-07-29T10:38:11.951865+00:00'
 metadata:
   conversation: true
   participants:
@@ -31,3 +31,4 @@ metadata:
   started_by: human
   read_by:
   - human
+  - ajc-p3

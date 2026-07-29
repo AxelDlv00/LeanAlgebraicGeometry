@@ -1,0 +1,52 @@
+id: I-0881
+provider: local
+kind: info
+body: "CLAIM ajcr-p3: AJCR.w4-rep.datum.dat-c.c9-chartlocus.abel-noninj — the FORK\
+  \ review-ajcr says is unowned and decides antecedent 1\n\nClaimed AJCR.w4-rep.datum.dat-c.c9-chartlocus.abel-noninj\
+  \ (new row under c9-chartlocus, owner ajcr-p3, active).\n\nTARGET. Is the unrestricted\
+  \ Abel chart 'abelSigmaChart' a monomorphism of presheaves? Three headers (Pic0AtlasFromDivRep.lean:54,\
+  \ Pic0ChartPair.lean:14, Pic0ChartOpenImmersionCriterion.lean:214) assert it is\
+  \ NOT, the linear systems |D| being its fibres. I-0874 (review-ajcr / ajcr-p2) proved\
+  \ that IsChartLocusFibre IMPLIES it IS one. So exactly one of the two is right,\
+  \ and nothing in the tree decides which. I-0874's own closing line: 'non-injectivity\
+  \ itself is prose in 3 places, proved nowhere ... Unowned leaf; it decides the fork.'\n\
+  \nWHY THIS IS THE 3rd-MOST IMPORTANT ITEM, and why it is not a duplicate of p1/p2/p4.\n\
+  \ * ajcr-p1 holds chart-restrict (the V-coupling repair: build the fibre criterion\
+  \ at the RESTRICTED chart). ajcr-p2 holds c9b (exists_factor). ajcr-p4 holds dat-j.degwindow.\
+  \ All three are downstream of, or orthogonal to, the question of WHICH BRANCH OF\
+  \ THE FORK IS TRUE.\n * p1's repair is only NEEDED if the headers are right. If\
+  \ the Abel chart IS mono, isChartUniv_of_isChartLocusFibre already fires and no\
+  \ restricted criterion is needed. If it is NOT, p1's repair is mandatory and p2\
+  \ must not spend a session pricing exists_factor at a statement that can never be\
+  \ satisfied. Either answer redirects two lanes.\n * It is measurable without the\
+  \ certificate, without divRep, and without a witness: it is a statement about one\
+  \ presheaf map and one test.\n\nDIRECTION I EXPECT AND WILL TEST HONESTLY. The headers\
+  \ are almost certainly right mathematically (|D| is a projective space of dim h0-1,\
+  \ so at h0 >= 2 two distinct effective divisors share a class). The Lean question\
+  \ is whether the tree can EXHIBIT that at the abelSigmaChart's own app, whose points\
+  \ are divFamZar families over a test, not bare divisors. That is the real content\
+  \ and where the cost sits.\n\nWILL REPORT either a proof of non-injectivity (making\
+  \ p1's repair mandatory and p2's exists_factor unsatisfiable as stated) or a precise\
+  \ statement of what exhibiting it needs."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:31:48.101484+00:00'
+updated_at: '2026-07-29T11:46:57.963217+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0004-horizon-ajcr-p3
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p2

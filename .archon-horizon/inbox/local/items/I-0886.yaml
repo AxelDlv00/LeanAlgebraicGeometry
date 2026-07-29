@@ -1,0 +1,53 @@
+id: I-0886
+provider: local
+kind: memory
+body: "AT THE REPRESENTABILITY DEGREE, COVERAGE'S HYPOTHESIS AND GAP-2's HYPOTHESIS\
+  \ ARE THE SAME HYPOTHESIS — so 'membership does not need h0 = 1' is true of the\
+  \ binders and false of the content.\n\nMEASURED by ajcr-p4 (run 0090), landed as\
+  \ h0_eq_one_of_subsingleton_hModule_one_of_deg_eq and eq_of_picClass_eq_of_deg_eq_of_subsingleton_hModule_one\
+  \ (Picard/JacobianDataAbelDegreeWindow.lean, rooted, sorry-free, axiom-clean on\
+  \ the standard three).\n\nTHE IDENTITY. On a curve with chi(O) = 1 - g, the rank\
+  \ anchor h0_eq_deg_add_chi_of_subsingleton_hModule_one (RiemannRoch/FLVClass.lean:412)\
+  \ gives, for a divisor D with Subsingleton H^1(O(D)):\n\n  h0(O(D)) = deg D + chi(O)\
+  \ = deg D + 1 - g.\n\nAt deg D = g that is exactly 1. So h^1 = 0 FORCES h^0 = 1\
+  \ at degree g. Three lines.\n\nWHY IT MATTERS TO THE CHART LAYER. h^1 = 0 is what\
+  \ IsSplitWitness asks for, hence what chartLocus membership and therefore COVERAGE\
+  \ carries. h^0 = 1 is what DAT-C GAP-2 (Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one)\
+  \ and hence the chart map's INJECTIVITY ask for. Pic0ChartCoverageNoDrop.lean:26-35\
+  \ says effectivity and h^0 = 1 'are what the chart map's injectivity needs, not\
+  \ what membership needs'. That is accurate about the HYPOTHESES AS WRITTEN and understates\
+  \ the coupling: at the representability degree the membership hypothesis already\
+  \ delivers the injectivity hypothesis. eq_of_picClass_eq_of_deg_eq_of_subsingleton_hModule_one\
+  \ gives GAP-2's uniqueness conclusion with no h^0 input at all.\n\nCONSEQUENCE FOR\
+  \ TWO EXISTING FINDINGS, which are one finding.\n* Pic0ChartCoverageNoDrop's deletion\
+  \ of the greedy drop is not a lucky simplification: the drop existed to manufacture\
+  \ effectivity and h^0 = 1, and at degree g the h^1 witness supplies h^0 = 1 for\
+  \ free. That is the structural reason the drop was deletable rather than dischargeable.\n\
+  * Pic0ChartCoverageIndexSlack's hb_forces_h0_eq_one reads its own conclusion as\
+  \ a defect ('hb at b = g forces EVERY degree-g divisor to have h0 = 1, false on\
+  \ a curve with a moving degree-g family'). Right about the UNIVERSALLY QUANTIFIED\
+  \ form. The POINTWISE form is not a defect but the chi-ledger. So the index-slack\
+  \ residue and the drop-freeness are two faces of one identity, not independent findings,\
+  \ and a lane costing them separately double-counts.\n\nWHAT IS NOT CLAIMED: no antecedent\
+  \ of pic0RepresentableByOfCharts is discharged. The residue is the deg = g pin on\
+  \ the witness, which IsSplitWitness does NOT impose and a consumer must supply."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:43:32.057997+00:00'
+updated_at: '2026-07-29T11:43:32.058010+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0002-horizon-ajcr-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

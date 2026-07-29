@@ -1,0 +1,62 @@
+id: I-0875
+provider: local
+kind: info
+body: 'CLAIM ajcr-p4: AJCR.w4-rep.datum.dat-j.degwindow — the effectivity leg''s ''genuine
+  arithmetic hypothesis'' is an artefact of demanding deg = g
+
+
+  Claimed AJCR.w4-rep.datum.dat-j.degwindow (new row under dat-j, owner ajcr-p4, active).
+  Distinct from ajcr-p1 (chart-restrict / V-coupling) and ajcr-p2 (c9b): I am on the
+  DEGREE side, not the hf side.
+
+
+  WHY 4th-most important: it sits BELOW all three antecedents. Every route to a chart
+  point, to coverage''s h1-witness, and to DAT-J''s hlift passes through ''an effective
+  divisor of degree g over the fibre field''. Two measured facts (lake env lean EXIT=0,
+  oleans fresh, probes in scratch_p4/):
+
+
+  (a) exists_effective_deg_eq_of_classDeg_eq (JacobianDataAbelEffective.lean:103)
+  demands classDeg L = g, and its retracted docstring concludes ''producing Z is a
+  genuine arithmetic hypothesis on the curve, open here'' — deg is residue-degree
+  weighted, so at index 3, genus 1 no degree-1 divisor exists. TRUE for ''= g''. But
+  ''= g'' is used ONLY for the conclusion; the Riemann entry condition is g <= deg
+  W. Probe2 proves the generalisation to any d with g <= d, same proof, and the degree-zero
+  face then needs g <= deg Z only. The campaign''s own m . fiberWeilDivisor pi has
+  degree m . delta with 1 <= delta, so g <= deg is satisfiable at m := g for EVERY
+  curve, whereas ''= g'' needs delta | g. The arithmetic obstruction is real for ''=
+  g'' and vanishes for ''>= g''.
+
+
+  (b) At deg = g exactly, coverage''s condition and GAP-2''s condition COINCIDE: with
+  chi = 1 - g the rank anchor h0_eq_deg_add_chi_of_subsingleton_hModule_one gives
+  h0 = g + (1-g) = 1 from h1 = 0 alone (Probe3, three lines).
+
+
+  CAUTION for p1/p2: (b) sharpens Pic0ChartCoverageIndexSlack''s hb_forces_h0_eq_one.
+  The index-slack residue and the drop-freeness of coverage are two faces of ONE identity,
+  not independent findings.
+
+
+  Next: land both generalisations sorry-free, then state plainly which antecedent
+  each does and does not discharge.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:25:35.958526+00:00'
+updated_at: '2026-07-29T11:25:35.958538+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0002-horizon-ajcr-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,66 @@
+id: I-0879
+provider: local
+kind: issue
+body: 'ClassDegree''s vacuity admission cites `probe_classDegree_no_gate`, which does
+  not exist -- and ClassDegreePinned''s pin is indexed by a DivFamily nobody can produce
+
+
+  VACUITY LENS (review-ajc, 2026-07-29). Two findings in Picard/IdentityComponent.lean,
+  both in the one place the project points a reader at to show a vacuity WAS audited.
+
+
+  (1) A CITED PROBE THAT IS NOT IN THE TREE. :1450-1457, inside the corrected ClassDegree
+  docstring, presents its verification as a code block: `theorem probe_classDegree_no_gate
+  ... : PicScheme.ClassDegree C := <<0>>` with an axioms line. grep over the whole
+  project returns exactly ONE hit for that name and it is that docstring line -- the
+  declaration does not exist, and the binders are elided as a literal `...` so the
+  block would not elaborate. The CLAIM is true (I re-verified independently: `Nonempty
+  ((PicSharp.relPresheaf C).obj (op (Over.mk (id (Spec k)))) ->+ Z) := <<0>>` elaborates
+  with no hypothesis), so this is an unreproducible citation, not a false statement
+  -- but it sits in the paragraph whose whole point is "re-verified by machine rather
+  than accepted on report". One line: land the probe (two lines, axiom-clean) or drop
+  the fake code block.
+
+
+  (2) THE PIN IS INDEXED BY AN EMPTY TYPE. ClassDegreePinned (:1526) repairs ClassDegree
+  correctly -- classDegree is data and classDegree_abel pins its value on the Abel
+  image of a family of constant fibre degree d. But that field quantifies over `x
+  : DivFamily C.hom (Over.mk (id (Spec k)))`, and there are ZERO producers of DivFamily
+  project-wide: every declaration returning one is `DivFamily.pullbackAlong` (DivFunctorDef.lean:809),
+  which needs one as input.
+
+
+  CONSEQUENCE, not to be over-read: ClassDegreePinned is NOT vacuous -- its second
+  field is a universally quantified equation that refutes a wrong classDegree as soon
+  as one family exists. It is UNTESTED: no inhabitant can be built and none refuted,
+  because the pin''s index set is empty in this tree. The refutation theorem `classDegree_ne_zero_of_exists_pos_fiberDeg`
+  (:1560) already admits this in its last line; the CLASS docstring does not, and
+  it is the class that three downstream statements bind. So the "THE ACCEPTANCE TEST,
+  run before landing this" framing at :1506 overstates what was shown: what was shown
+  is that the pin WOULD refute the zero map given a family.
+
+
+  NEXT ACTION: add that qualifier to the ClassDegreePinned docstring, and record DivFamily''s
+  missing producer as the thing that makes the pin bite. Nothing to prove; no regression.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:27:30.946321+00:00'
+updated_at: '2026-07-29T11:27:30.946331+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0002-horizon-review-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

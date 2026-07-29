@@ -14,9 +14,20 @@ describes that residue as "`ChartFibrePresented` with its `W` field already disc
 guard `isEmpty_forall_chartFibrePresented_of_not_injective` (`:219`): no family of
 `ChartFibrePresented` data exists for a chart map that fails to be injective on some test.
 
-**The tree holds the reduction and its own refutation, and connects neither.**  This file
-connects them.  The two facts are one instantiation apart, and the instantiation is what
-nobody had written:
+**The tree holds the reduction and its own guard as separate facts and draws the consequence
+nowhere.**  This file draws it.
+
+**AN ATTRIBUTION CORRECTION, from a fresh-context audit (2026-07-29, inbox `I-0895`).**  An
+earlier draft of this header said the instantiation "is what nobody had written".  That
+overstates it: the term proving the unrestricted certificate below is character-for-character
+the inner argument that `isChartUniv_of_isChartLocusFibre` was *already* passing to
+`isOpenImmersion_presheaf_restrictChart` (`Pic0ChartUnivReduce.lean:177-178`, present before
+this file).  The unrestricted certificate was never missing — it was sitting inside the
+existing reduction, unnamed.  What is new here is only that it is *stated*, so that its
+conflict with the three headers is visible to a reader and to a grep.  The value is routing,
+not mathematics.
+
+The two facts are one instantiation apart:
 
 * `IsChartLocusFibre` quantifies `Nonempty (ChartFibrePresented C (abelSigmaChart …) g)` — the
   datum for the **unrestricted** Abel chart, with `W` a *free field* of the structure.  Neither
@@ -32,8 +43,9 @@ fails — the Abel map has the linear systems `|D|` as fibres, so it is not a mo
 (`Pic0AtlasFromDivRep.lean:54`, `Pic0ChartPair.lean:14`,
 `Pic0ChartOpenImmersionCriterion.lean:214`).  If those headers are correct then
 `IsChartLocusFibre` is **unsatisfiable**, and a lane proving its `exists_factor` field is
-working a false goal.  Nothing in the tree said so, because the implication is sorry-free and
-axiom-clean at both ends: no census can see a reduction whose target is false.
+working a false goal.  Note the conditional: the headers are *prose*, so this file establishes
+an implication, not a refutation.  Nothing in the tree connected the two, and a `sorry`-census
+cannot flag the connection, because both ends are sorry-free and axiom-clean.
 
 ## What this file does and does not settle
 

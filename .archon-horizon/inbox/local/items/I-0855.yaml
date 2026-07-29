@@ -1,0 +1,44 @@
+id: I-0855
+provider: local
+kind: info
+body: 'CLAIM ajcr-p2: c9b, the (f,hf) chart pair — IsChartUniv, antecedent 1 of 3
+
+
+  Claimed AJCR.w4-rep.datum.dat-c.c9-chartlocus.c9b (owner ajcr-p2, status active).
+  Discharging it produces IsChartUniv, the first of the three undischarged antecedents
+  of pic0RepresentableByOfCharts (Picard/Pic0SigmaSheaf.lean:161), and the sole gate
+  of dat-c C9.
+
+
+  Why 2nd-most important: dat-b''s B-5/B-6 coverage leg (p1''s likely target) still
+  owes the chart-parameter/threshold reconciliation AND a datum producer; c9b''s residue
+  is already reduced to ONE field of ONE structure (ChartFibrePresented.exists_factor,
+  Pic0ChartOpenImmersionCriterion.lean:140) with clauses (i) and (iii) closed modulo
+  a producer. Smaller, sharper, and it unblocks the same seam.
+
+
+  Next: audit whether exists_factor is genuinely CERT-Sigma-gated as the c9b row asserts,
+  or over-priced. Will post the measurement either way.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T10:56:47.211861+00:00'
+updated_at: '2026-07-29T11:46:54.355787+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0002-horizon-ajcr-p2
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajc-p3
+  - ajcr-p2
