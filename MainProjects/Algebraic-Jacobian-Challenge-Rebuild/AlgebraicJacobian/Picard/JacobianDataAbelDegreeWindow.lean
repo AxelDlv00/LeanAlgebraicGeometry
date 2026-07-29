@@ -4,6 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.JacobianDataAbelEffective
+import AlgebraicJacobian.RiemannRoch.EffectiveUniqueness
+import AlgebraicJacobian.RiemannRoch.SectionSpaces
+import AlgebraicJacobian.RiemannRoch.ThetaDegree
 
 /-!
 # The target degree is a WINDOW, not the genus — and at `deg = g` the two chart conditions coincide
@@ -154,6 +157,75 @@ theorem exists_effective_of_classDeg_eq_zero_of_le_deg (g : ℕ)
 
 end Window
 
+/-! ## The reference divisor at that bound EXISTS — the retraction's "open here", discharged -/
+
+section Reference
+
+variable (K : Type u) [Field K] {Y : Scheme.{u}} [IsIntegral Y]
+  [Y.Over (Spec (CommRingCat.of K))]
+  [SmoothOfRelativeDimension 1 (Y ↘ Spec (CommRingCat.of K))]
+  [LocallyOfFiniteType (Y ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (Y ↘ Spec (CommRingCat.of K))]
+  [Module.Finite K (Sheaf.HModule (Y.moduleKSheaf K) 0)]
+  [Module.Finite K (Sheaf.HModule (Y.moduleKSheaf K) 1)]
+
+/-- **A divisor of degree at least `d`, on any curve carrying a finite dominant map to `ℙ¹`.**
+
+`d` copies of the fibre divisor: `deg (d • F) = d · deg F` (`deg_nsmul'`) and `1 ≤ deg F`
+(`one_le_classDeg_fiberTwist_one` read through `classDeg_fiberTwist_one`).
+
+**This is what makes `exists_effective_of_classDeg_eq_zero_of_le_deg` inhabited rather than
+conditional, and it is the point of the whole file.**  The `= g` predecessor needed a divisor
+of degree *exactly* `g`, which need not exist — `deg` is weighted by residue degrees, so the
+image of `deg` is `index · ℤ`, and the campaign's own reference has `deg (m • F) = m · δ`, hence
+`= g` requires `δ ∣ g`.  A *lower bound* asks nothing of `δ` beyond `1 ≤ δ`, which is landed.
+
+No rational point, no hypothesis on the index, no condition relating `g` and `δ`.  On the
+campaign's curve the map is supplied unconditionally by `exists_isFinite_isDominant_toP1`
+(`Curve/MapToP1.lean`), whose `thetaP1` face (`Picard/ThetaShift.lean`) is what the chart layer
+already uses. -/
+theorem exists_reference_divisor_le_deg (π : Y ⟶ P1 K) [IsDominant π] [IsFinite π] (d : ℕ) :
+    ∃ Z : Y.CurveDivisor, (d : ℤ) ≤ CurveDivisor.deg K Z := by
+  refine ⟨d • fiberWeilDivisor π, ?_⟩
+  have h1 : 1 ≤ CurveDivisor.deg K (fiberWeilDivisor π) := by
+    have h := one_le_classDeg_fiberTwist_one (K := K) π
+    rwa [classDeg_fiberTwist_one π] at h
+  calc (d : ℤ) = (d : ℤ) * 1 := by ring
+    _ ≤ (d : ℤ) * CurveDivisor.deg K (fiberWeilDivisor π) :=
+        mul_le_mul_of_nonneg_left h1 (Int.natCast_nonneg d)
+    _ = CurveDivisor.deg K (d • fiberWeilDivisor π) := by
+        rw [Scheme.CurveDivisor.deg_nsmul' K]
+
+/-- **The effectivity leg with NO arithmetic hypothesis left**: on a curve with a finite
+dominant map to `ℙ¹`, every degree-zero class has an effective representative, of some degree
+`≥ g` named by the statement.
+
+This composes `exists_reference_divisor_le_deg` with
+`exists_effective_of_classDeg_eq_zero_of_le_deg`.  Compare
+`exists_effective_deg_eq_of_classDeg_eq_zero`, which takes the reference divisor as an argument
+and whose docstring records producing it as "a genuine arithmetic hypothesis on the curve, open
+here": here nothing is assumed about the curve beyond the package it already carries.
+
+What is *given up* relative to the `= g` form, stated plainly because it is the honest cost:
+the resulting degree is `deg Z`, a multiple of `δ` at least `g`, not `g` on the nose.  A
+consumer that genuinely needs degree exactly `g` — `effectiveDivisorClassifyZar`
+(`Picard/DivisorFamilyFieldSurj.lean`) does, through its `hdeg` field — is **not** served by
+this, and that residue is unchanged.  What this settles is that the obstruction lives in the
+*consumer's* degree pin, not in the curve's arithmetic. -/
+theorem exists_effective_of_classDeg_eq_zero_of_toP1 (g : ℕ)
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (g : ℤ))
+    (π : Y ⟶ P1 K) [IsDominant π] [IsFinite π]
+    (L₀ : Y.CechPic) (hL₀ : classDeg K L₀ = 0) :
+    ∃ (Z : Y.CurveDivisor) (E : Y.CurveDivisor), (g : ℤ) ≤ CurveDivisor.deg K Z ∧
+      0 ≤ E ∧ CurveDivisor.picClass K E = L₀ * CurveDivisor.picClass K Z ∧
+      CurveDivisor.deg K E = CurveDivisor.deg K Z := by
+  obtain ⟨Z, hZ⟩ := exists_reference_divisor_le_deg K π g
+  obtain ⟨E, hE, hcl, hdeg⟩ :=
+    exists_effective_of_classDeg_eq_zero_of_le_deg K g hχ Z hZ L₀ hL₀
+  exact ⟨Z, E, hZ, hE, hcl, hdeg⟩
+
+end Reference
+
 /-! ## At degree `g`, `h¹ = 0` forces `h⁰ = 1` -/
 
 section RankAnchor
@@ -183,6 +255,31 @@ theorem h0_eq_one_of_subsingleton_hModule_one_of_deg_eq (g : ℕ)
   have h := h0_eq_deg_add_chi_of_subsingleton_hModule_one (K := K) D h1
   rw [hdeg, hχ] at h
   omega
+
+/-- **GAP-2's uniqueness from the COVERAGE hypothesis** — no `h⁰` input anywhere.
+
+`Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one` (`RiemannRoch/EffectiveUniqueness.lean`) is
+DAT-C GAP-2: two effective divisors with the same class agree as soon as one of them has
+`h⁰ = 1`.  The `h⁰ = 1` input is what `Pic0ChartPair.lean` calls the chart map's injectivity
+obligation, and what `Pic0ChartCoverageNoDrop.lean` says membership does *not* need.
+
+At degree `g` on a curve with `χ = 1 − g` it is not a separate input: `h¹ = 0`, which is
+exactly what `IsSplitWitness` and hence `chartLocus` membership carries, delivers it through
+`h0_eq_one_of_subsingleton_hModule_one_of_deg_eq`.
+
+So the coverage witness of `mem_chartLocus_of_witness_h1` already carries GAP-2's uniqueness
+at the representability degree — provided the witness has degree `g`, which is the hypothesis
+`IsSplitWitness` does *not* impose and a consumer must supply.  That remaining `deg = g` pin is
+the honest residue and is stated as a hypothesis here rather than hidden. -/
+theorem eq_of_picClass_eq_of_deg_eq_of_subsingleton_hModule_one (g : ℕ)
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (g : ℤ))
+    {D D' : Y.CurveDivisor} (hD : 0 ≤ D) (hD' : 0 ≤ D')
+    (hdeg : CurveDivisor.deg K D = (g : ℤ))
+    (h1 : Subsingleton (Sheaf.HModule (Y.divisorSheaf K D) 1))
+    (hcl : CurveDivisor.picClass K D = CurveDivisor.picClass K D') :
+    D' = D :=
+  Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one (K := K) hD hD' hcl
+    (h0_eq_one_of_subsingleton_hModule_one_of_deg_eq g hχ D hdeg h1)
 
 end RankAnchor
 
