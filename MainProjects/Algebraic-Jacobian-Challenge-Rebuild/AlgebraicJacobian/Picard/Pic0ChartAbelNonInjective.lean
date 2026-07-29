@@ -28,20 +28,22 @@ agree before the classes are in the same type at all.  That is the trap the c9b 
 
 The reduction, in the direction a witness-builder needs, and its converse:
 
-* `exists_not_injective_abelSigmaChart_of_chartValue_eq` — from two `D.left`-points over one
-  test with **equal structure morphism** and **equal chart value** but distinct as points, the
-  Abel chart fails to be injective, hence (composing with the guard)
-  `IsChartLocusFibre` is false.
-* `abelChartApp_inj_iff` — the exact shape injectivity has at a test: it is *precisely*
-  injectivity of `x ↦ ⟨x ≫ D.hom, chartValue … (rep.homEquiv …)⟩`, so no reformulation can
-  avoid the Σ-component.
-* `not_isChartLocusFibre_of_divFamZar` — the version stated on the **divisor families**
-  rather than on the points, obtained by transporting along `rep.homEquiv`: two distinct
-  families over one test with equal chart value.  This is the shape the linear-system argument
-  produces, and the transport is where `rep` does its work.  Note the Σ-component obligation
-  **disappears** here: both points are `(rep.homEquiv.symm sᵢ).left`, whose structure morphism
-  is the test's own by `Over.w`, so `hstruct` holds by construction rather than by hypothesis.
-  That is the payoff of stating it at the family level.
+* `not_injective_abelSigmaChart_of_points` — from two `D.left`-points over one test with
+  **equal structure morphism** and **equal chart value** but distinct as points, the Abel chart
+  fails to be injective; `not_isChartLocusFibre_of_points` composes that with the guard to
+  refute `IsChartLocusFibre`.
+* `not_isChartLocusFibre_of_divFamZar` — the same reduction **reparameterised onto divisor
+  families**: two distinct elements of `divFamZar C π n T` with equal chart value.  Here the
+  Σ-component hypothesis is not passed in: both points are `(rep.homEquiv.symm sᵢ).left`, whose
+  structure morphism is the test's own by `Over.w`, so `hstruct` holds by construction.
+  **This is a change of parameterisation, not a strengthening** — the two forms are
+  inter-derivable (from the family form, take `T := Over.mk (x₁ ≫ D.hom)` and use
+  `rep.homEquiv.injective` for distinctness), so `hstruct` is absorbed by the choice of test
+  rather than eliminated.  Its value is that the family form is the shape a divisor argument
+  produces, with no scheme-theoretic side condition to discharge first.
+* `abelChartApp_inj_iff` — the unfolded shape of injectivity at a test, by `Iff.rfl`.  A
+  documentation lemma only: it has no call site below, and `abelChartApp_eq`
+  (`Pic0ChartCoverageAbel.lean:105`) already exposes both components.
 
 ## What is NOT proved here, stated so this file is not over-read
 
@@ -62,23 +64,30 @@ Three things to know before pricing that, and the third is the one that moves.
    families are a quotient of local-equation data (`DivisorFamilyZar.lean:235`), so distinct
    divisors need not give distinct families until that equivalence is read.  Nothing here
    assumes otherwise.
-3. **`n` is not free, and this is where the fork is actually decided.**  At `n = g` the chart's
-   own degree calibration makes the fibre a single point *for free*: an effective divisor of
-   degree `g` with `Subsingleton H¹` has `h⁰ = 1` exactly (`degAt_chartTwist`'s `+g` discussion
-   in `Pic0ChartLocus.lean:178-201`, and the rank anchor
+3. **`n` is not free.**  At `n = g` the chart's own degree calibration makes the *fibrewise*
+   linear system a single point for free: over a field `K`, an effective `K`-divisor of degree
+   `g` with `Subsingleton H¹` has `h⁰ = 1` exactly (`degAt_chartTwist`'s `+g` discussion in
+   `Pic0ChartLocus.lean:178-201`, and the rank anchor
    `h0_eq_deg_add_chi_of_subsingleton_hModule_one`, `RiemannRoch/FLVClass.lean:412`, giving
-   `h⁰ = g + (1 − g) = 1`).  So at the representability degree the two branches of the fork are
-   *not* "is the Abel map a mono" in the abstract — they are **"does `DivScheme g` contain
-   points where `H¹` fails to vanish"**.  If it does not, the unrestricted chart is injective at
-   `n = g` and the three headers are wrong *at that degree*; if it does, the restriction to
-   `chartLocus` is precisely the restriction to the `H¹`-vanishing locus, which is why
-   `chartLocus` is the right `V` rather than an arbitrary one.
+   `h⁰ = g + (1 − g) = 1`).  So the *fibrewise* form of the headers' reason — a
+   positive-dimensional `|D|` — is unavailable at `n = g` wherever `H¹` vanishes.
 
-Consequence for the two lanes reading this: the headers' claim is about a *positive-dimensional*
-linear system, i.e. `h⁰ ≥ 2`, i.e. `H¹ ≠ 0` at degree `g`.  A witness must therefore exhibit a
-point of the divisor scheme with non-vanishing `H¹`; a bare "two divisors in a linear system" is
-not enough, because at `n = g` with `h¹ = 0` there are none.  (The degree-`g`/`h⁰ = 1` link is
-`ajcr-p4`'s measurement, I-0888.)
+**AND HERE IS THE LIMIT OF THAT OBSERVATION, which item 3 must not be read past.**  Every anchor
+in item 3 is fibrewise over one field: `CurveDivisor` over `K`, `h⁰` a `finrank` over `K`,
+`degAt` evaluated at `overSpec k K`-points.  The obligation is **general-test**: injectivity of
+`.app (op Y)` at arbitrary `Y`, and correspondingly distinctness in `divFamZar C π n T` at
+arbitrary `T`.  A fibrewise anchor does not settle a general-test statement, and the brick that
+would bridge them is *relative* GAP-2 — exactly `ChartFibrePresented.exists_factor`
+(`Pic0ChartOpenImmersionCriterion.lean:140`), which `Pic0ChartUnivReduce.lean:160-161` names as
+"the relative form of DAT-C GAP-2" and which **nothing in the tree produces**: no declaration
+concludes `s₁ = s₂` for two `divFamZar` sections from an equality of their classes.
+
+So item 3 **relocates** the fork; it does not shrink it.  What it changes is what a witness
+should aim at: a bare "two divisors in one linear system" is the wrong target, because at `n = g`
+with `h¹ = 0` there are none fibrewise — so a witness wants a point of the divisor scheme where
+`H¹` fails to vanish, or a genuinely relative failure of uniqueness that no fibre sees.  Which
+of those two it is, is undecided here.  (The degree-`g`/`h⁰ = 1` link is `ajcr-p4`'s measurement,
+I-0888; the fibrewise/general-test caveat is a fresh-context review's, I-0923/I-0924.)
 -/
 
 set_option autoImplicit false
@@ -154,7 +163,7 @@ theorem not_injective_abelSigmaChart_of_points {Y : Scheme.{u}} (x₁ x₂ : Y �
   exact Subtype.ext hval.symm
 
 /-- **Hence `IsChartLocusFibre` is false** — the composite with the landed guard
-`not_isChartLocusFibre_of_not_injective` (`Pic0ChartLocusFibreGuard.lean:134`).
+`not_isChartLocusFibre_of_not_injective` (`Pic0ChartLocusFibreGuard.lean:159`).
 
 This is the deliverable of the fork's negative branch: a witness at ONE test kills the only
 non-circular route to `IsChartUniv`, hence to antecedent 1 of `pic0RepresentableByOfCharts`. -/
