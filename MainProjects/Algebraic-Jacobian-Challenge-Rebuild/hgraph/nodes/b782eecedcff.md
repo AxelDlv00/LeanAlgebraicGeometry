@@ -7,10 +7,9 @@ docstring: Both pinned charts are affine.
 file: AlgebraicJacobian/Picard/DivSchemeFamilySide.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.isAffineOpen_relPinnedChart
 type: lean
-updated: '2026-07-29T15:26:32'
+updated: '2026-07-29T15:31:39'
 ---
 lemma isAffineOpen_relPinnedChart (b : Bool) : IsAffineOpen (relPinnedChart C R π b) := by
   cases b

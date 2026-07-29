@@ -7,10 +7,9 @@ docstring: The factorisation on the underlying schemes, in the whiskering spelli
 file: AlgebraicJacobian/Tangent/DualNumberUnitTransport.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.whiskerLeft_overDualNumberZero_left'
 type: lean
-updated: '2026-07-29T15:26:18'
+updated: '2026-07-29T15:31:50'
 ---
 theorem whiskerLeft_overDualNumberZero_left' :
     (C ◁ overDualNumberZero k).left

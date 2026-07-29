@@ -10,10 +10,9 @@ docstring: 'Two `C`-linear maps out of `C ⊗[A] N` valued in `C` that agree on 
 file: AlgebraicJacobian/Algebra/BaseChangeTrivialization.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Module.trivialization_hom_ext
 type: lean
-updated: '2026-07-29T15:26:26'
+updated: '2026-07-29T15:31:33'
 ---
 theorem trivialization_hom_ext {t₁ t₂ : C ⊗[A] N →ₗ[C] C}
     (h : ∀ n : N, t₁ (1 ⊗ₜ n) = t₂ (1 ⊗ₜ n)) : t₁ = t₂ := by

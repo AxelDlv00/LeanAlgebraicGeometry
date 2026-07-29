@@ -7,10 +7,9 @@ docstring: The second base-changed chart is affine (`G-CBC-1`).
 file: AlgebraicJacobian/Cohomology/RelativeTwoCover.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relCover_isAffineOpen₁
 type: lean
-updated: '2026-07-29T15:26:10'
+updated: '2026-07-29T15:31:36'
 ---
 theorem relCover_isAffineOpen₁ : IsAffineOpen (relCover C R D).V₁ :=
   (relCover C R D).isAffineOpen₁

@@ -30,10 +30,9 @@ docstring: '**The away-span glue, uniquely**: the glued class of `exists_glue_of
 file: AlgebraicJacobian/Picard/DivRepAwaySpanGlue.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivFamZar.existsUnique_glue_of_awaySpan
 type: lean
-updated: '2026-07-29T15:26:26'
+updated: '2026-07-29T15:31:38'
 ---
 theorem existsUnique_glue_of_awaySpan {m : ℕ} (f : Fin m → S)
     (hspan : Ideal.span (Set.range f) = ⊤)

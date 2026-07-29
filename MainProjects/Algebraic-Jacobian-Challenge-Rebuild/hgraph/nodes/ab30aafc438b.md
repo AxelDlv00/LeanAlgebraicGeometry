@@ -10,10 +10,9 @@ docstring: 'The tensor-level point evaluation `Γ(C, U) ⊗[k] F → F`, `a ⊗ 
 file: AlgebraicJacobian/RiemannRoch/GraphChart.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.graphTensorEval
 type: lean
-updated: '2026-07-29T15:26:30'
+updated: '2026-07-29T15:31:49'
 ---
 noncomputable def graphTensorEval :
     Γ(C.left, graphBaseChart C t) ⊗[k] Γ((overSpec k K).left, ⊤)

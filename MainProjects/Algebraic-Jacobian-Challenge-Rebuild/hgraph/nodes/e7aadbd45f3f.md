@@ -11,10 +11,9 @@ docstring: '**Affine consistency**: on an affine test the general-test pullback 
 file: AlgebraicJacobian/Picard/DivRepGlobalLift.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivRepAffinePullback.divFamZarAffineEquiv_pullGlobal
 type: lean
-updated: '2026-07-29T15:26:37'
+updated: '2026-07-29T15:31:38'
 ---
 theorem divFamZarAffineEquiv_pullGlobal
     (D : DivRepAffinePullback hpi g hO hchi r1 r2 b1 b2)

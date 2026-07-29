@@ -9,9 +9,8 @@ docstring: 'The product of the chart-local colength modules (an `abbrev`, so the
 file: AlgebraicJacobian/Picard/DivisorFamily.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.chartProd
 type: lean
-updated: '2026-07-29T15:26:25'
+updated: '2026-07-29T15:31:43'
 ---
 noncomputable abbrev chartProd : Type u := ∀ j : A.index, A.colength j

@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.relThetaResSide_relThetaSectionsMul
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowChartExhaustion.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relThetaResSide_relThetaSectionsMul
 type: lean
-updated: '2026-07-29T15:26:32'
+updated: '2026-07-29T15:31:40'
 ---
 theorem relThetaResSide_relThetaSectionsMul (a b : Nat) (side : Bool)
     (x : relThetaSections C R pi a) (y : relThetaSections C R pi b) :

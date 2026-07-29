@@ -10,10 +10,9 @@ docstring: 'The pair of two `Dom f`-valued morphisms lands pointwise in the doma
 file: AlgebraicJacobian/Albanese/Milne33Diagonal.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.RationalMap.pair_mem_diffPairingRep_domain
 type: lean
-updated: '2026-07-29T15:26:13'
+updated: '2026-07-29T15:31:33'
 ---
 lemma pair_mem_diffPairingRep_domain
     {T : Scheme.{u}} (aD bD : T ⟶ ↑f.toPartialMap.domain)

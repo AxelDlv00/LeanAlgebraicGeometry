@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.Over.mem_pieceAmitsurOpen
 file: AlgebraicJacobian/Picard/EffectivityPieceClass.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.mem_pieceAmitsurOpen
 type: lean
-updated: '2026-07-29T15:26:38'
+updated: '2026-07-29T15:31:46'
 ---
 lemma mem_pieceAmitsurOpen (𝒲 : (Xq).PointedCover) (V : (XA).Opens) {z : Xcb}
     (hz : z ∈ (cgcb) ⁻¹ᵁ V) : z ∈ pieceAmitsurOpen C 𝒲 V z :=

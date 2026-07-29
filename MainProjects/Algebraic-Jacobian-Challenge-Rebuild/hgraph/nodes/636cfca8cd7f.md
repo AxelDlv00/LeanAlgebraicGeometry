@@ -13,10 +13,9 @@ docstring: 'The section-wise map is injective: the value determines both compone
 file: AlgebraicJacobian/RiemannRoch/ThetaSections.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.thetaToDivisorApp_injective
 type: lean
-updated: '2026-07-29T15:26:23'
+updated: '2026-07-29T15:31:50'
 ---
 lemma thetaToDivisorApp_injective {W : Y.Opens} (hηW : genericPoint Y ∈ W) :
     Function.Injective (thetaToDivisorApp K π n hηW) := by

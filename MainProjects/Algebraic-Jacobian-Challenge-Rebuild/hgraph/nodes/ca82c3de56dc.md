@@ -17,10 +17,9 @@ file: AlgebraicJacobian/Picard/DivSchemeSeedUnivRes.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.divUniversalFst_toSubmodule_eq_span_aux
 type: lean
-updated: '2026-07-29T15:26:34'
+updated: '2026-07-29T15:31:43'
 ---
 private lemma divUniversalFst_toSubmodule_eq_span_aux :
     (divUniversalFst k (windowS_choice π hπ g • fiberWeilDivisor π)

@@ -12,10 +12,9 @@ docstring: '**The retraction identity** on Čech Picard groups: pullback along t
 file: AlgebraicJacobian/Picard/Rigidification.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.cechPicMap_sectionOfPoint_snd
 type: lean
-updated: '2026-07-29T15:26:32'
+updated: '2026-07-29T15:31:48'
 ---
 lemma cechPicMap_sectionOfPoint_snd (σ : T ⟶ C) (N : T.left.CechPic) :
     CechPic.map (sectionOfPoint σ).left (CechPic.map (snd C T).left N) = N := by

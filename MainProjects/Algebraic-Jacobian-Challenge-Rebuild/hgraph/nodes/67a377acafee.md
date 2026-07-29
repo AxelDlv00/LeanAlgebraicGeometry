@@ -13,10 +13,9 @@ docstring: '**Behaviour of the multiplication isomorphism on section values.** O
 file: AlgebraicJacobian/RiemannRoch/MulEquiv.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.divisorVal_mulEquiv
 type: lean
-updated: '2026-07-29T15:26:23'
+updated: '2026-07-29T15:31:49'
 ---
 theorem divisorVal_mulEquiv {U : X.Opens} (hU : (U : Set X).Nonempty)
     (s : (divisorPresheaf K D).obj (op U)) :

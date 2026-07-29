@@ -10,10 +10,9 @@ docstring: 'The right-tensor of multiplication-by-`s` is multiplication by `s ‚ä
 file: AlgebraicJacobian/Picard/FibrewiseRegular.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: rTensor_mulLeft_eq_mulLeft_tmul
 type: lean
-updated: '2026-07-29T15:26:33'
+updated: '2026-07-29T15:31:46'
 ---
 theorem rTensor_mulLeft_eq_mulLeft_tmul (S : Type u) [CommRing S] [Algebra R S]
     (s : A) :

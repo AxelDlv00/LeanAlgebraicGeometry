@@ -13,10 +13,9 @@ docstring: 'Every point of an integral scheme smooth of relative dimension `1` o
 file: AlgebraicJacobian/Curve/StalksDVR.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.SmoothOfRelativeDimension.exists_isDedekindDomain_section
 type: lean
-updated: '2026-07-29T15:26:39'
+updated: '2026-07-29T15:31:37'
 ---
 theorem SmoothOfRelativeDimension.exists_isDedekindDomain_section
     [SmoothOfRelativeDimension 1 f] [IsIntegral X] (x : X) :

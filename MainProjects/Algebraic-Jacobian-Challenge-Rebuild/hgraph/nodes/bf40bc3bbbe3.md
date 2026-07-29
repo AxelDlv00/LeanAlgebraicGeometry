@@ -13,10 +13,9 @@ docstring: '**Bijectivity of the chart-term comparison** (stage 1d-ii): the `lif
 file: AlgebraicJacobian/Cohomology/GluedSheafTermBaseChangeEquiv.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.termBaseChange_bijective
 type: lean
-updated: '2026-07-29T15:26:33'
+updated: '2026-07-29T15:31:35'
 ---
 theorem termBaseChange_bijective
     (hVaff : IsAffineOpen ((fst C (overSpec k B)).left ⁻¹ᵁ V))

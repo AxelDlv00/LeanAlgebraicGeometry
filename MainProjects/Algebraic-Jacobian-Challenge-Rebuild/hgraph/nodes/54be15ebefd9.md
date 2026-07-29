@@ -12,10 +12,9 @@ docstring: '**Base change of the kernel, injectivity half**: `L ⊗ κ(p) → M 
 file: AlgebraicJacobian/Picard/SlicingFlatKernel.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: LinearMap.rTensor_subtype_injective_of_forall_ker_rTensor_residueField_le
 type: lean
-updated: '2026-07-29T15:26:21'
+updated: '2026-07-29T15:31:48'
 ---
 theorem LinearMap.rTensor_subtype_injective_of_forall_ker_rTensor_residueField_le
     [Module.Flat R M] (hle : L ≤ LinearMap.ker f)

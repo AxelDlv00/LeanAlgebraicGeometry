@@ -14,10 +14,9 @@ docstring: '**Pullback of a unit cocycle to the relative curve**: the image of a
 file: AlgebraicJacobian/Cohomology/TwistedSheaf.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relUnitCocycle
 type: lean
-updated: '2026-07-29T15:26:37'
+updated: '2026-07-29T15:31:36'
 ---
 noncomputable def relUnitCocycle (gk : Γ(C.left, D.V₀ ⊓ D.V₁)ˣ) :
     Γ(relCurve C R, (relCover C R D).V₀ ⊓ (relCover C R D).V₁)ˣ :=

@@ -10,10 +10,9 @@ docstring: '**Flatness of the pinned chart sections over the test ring**: `Γ(C_
 file: AlgebraicJacobian/Picard/DivSchemeFamilySide.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.flat_sections_relPinnedChart
 type: lean
-updated: '2026-07-29T15:26:33'
+updated: '2026-07-29T15:31:39'
 ---
 theorem flat_sections_relPinnedChart (b : Bool) :
     Module.Flat R Γ(relCurve C R, relPinnedChart C R π b) := by

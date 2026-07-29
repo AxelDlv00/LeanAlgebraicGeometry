@@ -12,10 +12,9 @@ docstring: 'If the members of the family are mutually comparable (e.g. the famil
 file: AlgebraicJacobian/Picard/CechH1.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: CategoryTheory.PresheafOfGroups.H1.subsingleton_of_forall_le
 type: lean
-updated: '2026-07-29T15:26:34'
+updated: '2026-07-29T15:31:37'
 ---
 theorem H1.subsingleton_of_forall_le (G : Pᵒᵖ ⥤ GrpCat.{w}) (U : I → P)
     (h : ∀ i j, U i ≤ U j) : Subsingleton (H1 G U) := by

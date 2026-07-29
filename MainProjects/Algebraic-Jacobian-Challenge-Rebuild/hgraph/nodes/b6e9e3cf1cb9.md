@@ -7,10 +7,9 @@ docstring: '**The reading is a germ at `η`, chart-1 case** (mirror).'
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivAssemble.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.thetaFieldRead_eq_germ_snd
 type: lean
-updated: '2026-07-29T15:26:32'
+updated: '2026-07-29T15:31:42'
 ---
 lemma thetaFieldRead_eq_germ_snd
     (hη : genericPoint (relCurve C K) ∉ (relCover C K (fiberTwoCover π)).V₀)

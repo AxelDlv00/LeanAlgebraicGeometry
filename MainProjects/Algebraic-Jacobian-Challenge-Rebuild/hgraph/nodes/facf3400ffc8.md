@@ -24,10 +24,9 @@ docstring: '**DD-4 (2), the on-the-nose base change** (`informal/dat-d-worksheet
 file: AlgebraicJacobian/Cohomology/RelThetaTwist.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relThetaTwistH0BaseChange
 type: lean
-updated: '2026-07-29T15:26:39'
+updated: '2026-07-29T15:31:36'
 ---
 noncomputable def relThetaTwistH0BaseChange
     (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π n)).H1) :

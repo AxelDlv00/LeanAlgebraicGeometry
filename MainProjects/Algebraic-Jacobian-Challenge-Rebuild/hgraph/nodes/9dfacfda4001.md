@@ -13,10 +13,9 @@ docstring: 'If the pulled local-equation divisor has degree `n`, then the fibre 
 file: AlgebraicJacobian/Picard/DivSchemeCertFibreRank.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.finrank_ker_delta_baseChange_eq_of_pulled_degree
 type: lean
-updated: '2026-07-29T15:26:29'
+updated: '2026-07-29T15:31:39'
 ---
 theorem finrank_ker_delta_baseChange_eq_of_pulled_degree {n : Nat}
     (hproj : forall j : A.index, Module.Projective R (A.colength j))

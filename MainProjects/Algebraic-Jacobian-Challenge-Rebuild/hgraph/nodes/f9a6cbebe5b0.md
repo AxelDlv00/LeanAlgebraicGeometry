@@ -20,10 +20,9 @@ docstring: 'An independent boundary presentation of every base-changed kernel ma
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowSyzygy.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.liftQ_baseChange_injective_of_boundary
 type: lean
-updated: '2026-07-29T15:26:39'
+updated: '2026-07-29T15:31:40'
 ---
 theorem liftQ_baseChange_injective_of_boundary
     (f : M →ₗ[R] N) (d : P →ₗ[R] M) (hfd : f.comp d = 0)

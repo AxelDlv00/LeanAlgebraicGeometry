@@ -16,10 +16,9 @@ docstring: '**The chart-framed classification keystone** (DDR-6): a chart map `w
 file: AlgebraicJacobian/Picard/DivSchemeClassify.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.carveIdeal_le_ker_of_map_pairTaut
 type: lean
-updated: '2026-07-29T15:26:32'
+updated: '2026-07-29T15:31:39'
 ---
 theorem carveIdeal_le_ker_of_map_pairTaut
     (i : (glueData k g r₁).J) (j : (glueData k g r₂).J)

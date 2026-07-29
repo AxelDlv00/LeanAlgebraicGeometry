@@ -13,9 +13,8 @@ docstring: 'The **base-changed affine two-cover** of the relative curve: the pre
 file: AlgebraicJacobian/Cohomology/RelativeTwoCover.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relCover
 type: lean
-updated: '2026-07-29T15:26:34'
+updated: '2026-07-29T15:31:36'
 ---
 noncomputable def relCover : (relCurve C R).AffineTwoCover := D.pullbackProd R

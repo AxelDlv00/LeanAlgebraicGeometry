@@ -20,10 +20,9 @@ file: AlgebraicJacobian/Albanese/CodimOneMatsumura.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: isRegular_cons_of_quotient_ring
 type: lean
-updated: '2026-07-29T15:26:30'
+updated: '2026-07-29T15:31:33'
 ---
 private theorem isRegular_cons_of_quotient_ring
     {A : Type u} [CommRing A] {r : A} {rs : List A}

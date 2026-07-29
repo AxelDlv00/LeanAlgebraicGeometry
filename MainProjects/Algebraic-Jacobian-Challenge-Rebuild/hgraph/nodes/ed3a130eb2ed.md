@@ -19,10 +19,9 @@ docstring: '**"At most one piece meets the support" is impossible once the suppo
 file: AlgebraicJacobian/Picard/DivSchemeCertZarSep.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.not_exists_unique_support_piece
 type: lean
-updated: '2026-07-29T15:26:37'
+updated: '2026-07-29T15:31:39'
 ---
 theorem not_exists_unique_support_piece
     {z : relCurve C R} (hz : z ∈ d.supportLocus)

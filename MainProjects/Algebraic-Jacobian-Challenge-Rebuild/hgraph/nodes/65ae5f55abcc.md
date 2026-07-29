@@ -7,10 +7,9 @@ docstring: The assembly commutes with restriction of the glued section.
 file: AlgebraicJacobian/Picard/DivisorThetaGlue.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.gluedToIdeal₀_secRes
 type: lean
-updated: '2026-07-29T15:26:23'
+updated: '2026-07-29T15:31:46'
 ---
 lemma gluedToIdeal₀_secRes {W' W : (relCurve C R).Opens} (h : W' ≤ W)
     (hW : W ≤ (relCover C R (fiberTwoCover π)).V₀) (s : A.ThetaIdealSections a W) :

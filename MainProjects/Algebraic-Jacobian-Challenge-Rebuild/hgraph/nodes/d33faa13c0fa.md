@@ -15,10 +15,9 @@ docstring: '**The `δ`-preimage of the diagonal member is the whole chart** (wor
 file: AlgebraicJacobian/Curve/DiagonalChart.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.diagonal_preimage_diagonalChart
 type: lean
-updated: '2026-07-29T15:26:34'
+updated: '2026-07-29T15:31:36'
 ---
 theorem diagonal_preimage_diagonalChart (C : Over (Spec (.of k))) {U : C.left.Opens}
     (hU : IsAffineOpen U) (elift : Γ(C.left, U) ⊗[k] Γ(C.left, U))

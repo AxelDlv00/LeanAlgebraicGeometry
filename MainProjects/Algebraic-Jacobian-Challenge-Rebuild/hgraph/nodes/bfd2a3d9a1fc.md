@@ -10,10 +10,9 @@ docstring: 'A submodule of a finite module with projective quotient is finite: t
 file: AlgebraicJacobian/Picard/DivCarveKit.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Grassmannian.finite_submodule_of_projective_quotient
 type: lean
-updated: '2026-07-29T15:26:33'
+updated: '2026-07-29T15:31:38'
 ---
 theorem finite_submodule_of_projective_quotient [Module.Finite R M] :
     Module.Finite R ↥N :=

@@ -8,10 +8,9 @@ file: AlgebraicJacobian/Picard/DegreeZero.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.degAffHom
 type: lean
-updated: '2026-07-29T15:26:17'
+updated: '2026-07-29T15:31:38'
 ---
 private def degAffHom (E : Algebra.EtaleCover K) : E.Carrier →ₐ[K] degAffField E :=
   E.exists_finiteSeparableField_algHom.choose_spec.choose_spec.choose_spec.choose_spec

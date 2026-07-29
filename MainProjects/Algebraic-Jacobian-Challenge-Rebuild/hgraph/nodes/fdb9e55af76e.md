@@ -24,10 +24,9 @@ docstring: '**The embedding `ε` of the divisor functor, submodule form** (works
 file: AlgebraicJacobian/Picard/DivisorFamilyWindow.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divFamEps
 type: lean
-updated: '2026-07-29T15:26:39'
+updated: '2026-07-29T15:31:45'
 ---
 noncomputable def divFamEps (g : ℕ) (F : DivFam C R π g) :
     Submodule R (R ⊗[k]

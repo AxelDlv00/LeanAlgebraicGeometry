@@ -13,10 +13,9 @@ docstring: 'A cyclic invertible module is free on its generator: the section `r 
 file: AlgebraicJacobian/Picard/EffectivityInvertibleAvoid.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Module.Invertible.bijective_toSpanSingleton_of_span_eq_top
 type: lean
-updated: '2026-07-29T15:26:31'
+updated: '2026-07-29T15:31:46'
 ---
 theorem bijective_toSpanSingleton_of_span_eq_top (N : Type u) [AddCommGroup N]
     [Module R N] [Module.Invertible R N] (m₀ : N)

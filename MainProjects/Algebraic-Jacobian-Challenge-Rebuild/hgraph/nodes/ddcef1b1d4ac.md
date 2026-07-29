@@ -20,10 +20,9 @@ file: AlgebraicJacobian/Picard/CechPicToPicNaturality.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.Scheme.prodRefinement
 type: lean
-updated: '2026-07-29T15:26:35'
+updated: '2026-07-29T15:31:38'
 ---
 private def prodRefinement (g : X ⟶ Y) {𝒰 : Y.PointedCover} (P : 𝒰.BasicRefinement)
     (Q : (𝒰.pullback g).BasicRefinement) : (𝒰.pullback g).BasicRefinement where

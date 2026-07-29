@@ -13,10 +13,9 @@ docstring: '**The coboundary relation for `twoChartCob`**: if `u = ρ₀(v₁) �
 file: AlgebraicJacobian/Tangent/TwoChartCechPic.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.twoChartCob_spec
 type: lean
-updated: '2026-07-29T15:26:31'
+updated: '2026-07-29T15:31:50'
 ---
 theorem twoChartCob_spec (v₁ : Γ(X, V false)ˣ) (v₂ : Γ(X, V true)ˣ)
     (u : Γ(X, V false ⊓ V true)ˣ)

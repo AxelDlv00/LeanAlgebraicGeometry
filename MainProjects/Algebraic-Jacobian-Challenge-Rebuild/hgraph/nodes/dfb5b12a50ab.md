@@ -17,10 +17,9 @@ docstring: '**The theta transition unit** `t₀|_{V₀ ⊓ V₁} ∈ Γ(Y, V₀ 
 file: AlgebraicJacobian/RiemannRoch/ThetaSections.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.thetaUnit
 type: lean
-updated: '2026-07-29T15:26:35'
+updated: '2026-07-29T15:31:50'
 ---
 noncomputable def thetaUnit : Γ(Y, fiberChart₀ π ⊓ fiberChart₁ π)ˣ where
   val := (Y.presheaf.map (homOfLE

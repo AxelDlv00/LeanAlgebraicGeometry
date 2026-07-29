@@ -11,10 +11,9 @@ docstring: '**Base change of a Čech 1-cocycle of units.** Pushing a cover cocyc
 file: AlgebraicJacobian/Algebra/LocalizationCocycleBaseChange.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: IsLocalization.AwayCover.IsCoverCocycle.baseChange
 type: lean
-updated: '2026-07-29T15:26:09'
+updated: '2026-07-29T15:31:34'
 ---
 theorem IsCoverCocycle.baseChange {γ : ∀ i j, (T i j)ˣ}
     (hγ : IsCoverCocycle (f := f) (S := S) (W := W) γ) :

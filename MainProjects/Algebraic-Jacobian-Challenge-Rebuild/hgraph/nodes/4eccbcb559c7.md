@@ -7,10 +7,9 @@ docstring: The chart-0 pieces sit inside the pinned chart `V₀ᴿ`.
 file: AlgebraicJacobian/Picard/DivisorFamilyTheta.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.FinCoverData.pieces_inl_le
 type: lean
-updated: '2026-07-29T15:26:20'
+updated: '2026-07-29T15:31:45'
 ---
 lemma pieces_inl_le (j : Fin D.m₀) :
     D.pieces (Sum.inl j) ≤ (relCover C R (fiberTwoCover π)).V₀ := by

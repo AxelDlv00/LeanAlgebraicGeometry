@@ -7,8 +7,7 @@ file: AlgebraicJacobian/Picard/DescentClassRepBuild.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.Over.μunit_val
 type: lean
-updated: '2026-07-29T15:26:30'
+updated: '2026-07-29T15:31:38'
 ---

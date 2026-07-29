@@ -12,10 +12,9 @@ docstring: '**Restriction coherence of `fromSpecAffine`**: the affine-open test 
 file: AlgebraicJacobian/Picard/PicEtUnit.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.fromSpecAffine_resAlgHom
 type: lean
-updated: '2026-07-29T15:26:32'
+updated: '2026-07-29T15:31:47'
 ---
 theorem fromSpecAffine_resAlgHom {T : Over (Spec (.of k))} {U V : T.left.affineOpens}
     (h : U.1 ≤ V.1) :

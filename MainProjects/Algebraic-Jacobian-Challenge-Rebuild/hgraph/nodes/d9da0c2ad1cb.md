@@ -10,10 +10,9 @@ docstring: 'The compared pointwise vector is the fibre achiever, including its n
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseFibreData.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.PointwiseAchiever.pointwiseSectionVector_fibreAchieverData
 type: lean
-updated: '2026-07-29T15:26:35'
+updated: '2026-07-29T15:31:43'
 ---
 theorem pointwiseSectionVector_fibreAchieverData
     (z : relCurve C RZ)

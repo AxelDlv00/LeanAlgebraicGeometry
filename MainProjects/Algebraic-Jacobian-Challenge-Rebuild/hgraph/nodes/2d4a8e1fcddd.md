@@ -6,8 +6,7 @@ decl: AlgebraicGeometry.mem_descentClasses_iff
 file: AlgebraicJacobian/Picard/PicEtAff.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.mem_descentClasses_iff
 type: lean
-updated: '2026-07-29T15:26:13'
+updated: '2026-07-29T15:31:47'
 ---

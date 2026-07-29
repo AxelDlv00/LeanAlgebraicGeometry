@@ -24,10 +24,9 @@ docstring: '**The residue-field comparison along an affine-open test object is a
 file: AlgebraicJacobian/Picard/Pic0ChartLocusGeneralTest.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.testPointField_fromSpecAffine_isIso
 type: lean
-updated: '2026-07-29T15:26:32'
+updated: '2026-07-29T15:31:47'
 ---
 instance testPointField_fromSpecAffine_isIso (T : Over (Spec (.of k)))
     (U : T.left.affineOpens) (t : (overSpec k Γ(T.left, U.1)).left) :

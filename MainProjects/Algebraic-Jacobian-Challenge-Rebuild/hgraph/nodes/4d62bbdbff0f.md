@@ -9,10 +9,9 @@ docstring: 'One relative multiplication row becomes multiplication by the corres
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowMulConjugacy.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divUniversalHighWindowMulRow_fibre_conjugacy
 type: lean
-updated: '2026-07-29T15:26:20'
+updated: '2026-07-29T15:31:40'
 ---
 theorem divUniversalHighWindowMulRow_fibre_conjugacy (n : Nat)
     [Module.Projective RZ (Amb[n] ⧸ Kr[n])]

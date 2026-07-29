@@ -10,10 +10,9 @@ docstring: 'The two chart cochains, packaged as one `Bool`-indexed family so tha
 file: AlgebraicJacobian/Tangent/TwoChartRepresentable.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.pairCochain
 type: lean
-updated: '2026-07-29T15:26:34'
+updated: '2026-07-29T15:31:51'
 ---
 noncomputable def pairCochain {𝒩 : X.PointedCover}
     (t₀ : ∀ b : X, Γ(X, 𝒩.opens b ⊓ V false)ˣ)

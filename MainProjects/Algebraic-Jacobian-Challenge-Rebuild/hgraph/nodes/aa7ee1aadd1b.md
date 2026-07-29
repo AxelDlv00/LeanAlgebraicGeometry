@@ -10,10 +10,9 @@ docstring: 'Multiplication by a section of the shift window preserves vanishing 
 file: AlgebraicJacobian/Picard/DivSchemeEpsCarve.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.windowShiftMul_mem_divisorWindow
 type: lean
-updated: '2026-07-29T15:26:30'
+updated: '2026-07-29T15:31:39'
 ---
 theorem windowShiftMul_mem_divisorWindow
     (d : (relCurve C R).LocalEquations)

@@ -7,10 +7,9 @@ docstring: The base-changed family covers the base-changed chart.
 file: AlgebraicJacobian/Cohomology/GluedSheafTermBaseChange.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.termFamily_cover
 type: lean
-updated: '2026-07-29T15:26:33'
+updated: '2026-07-29T15:31:35'
 ---
 lemma termFamily_cover (hspan : Ideal.span (Set.range h) = ⊤) :
     ((fst C (overSpec k B')).left ⁻¹ᵁ V : (relCurve C B').Opens) ≤

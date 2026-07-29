@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.JacobianData.homEquiv_ofRepresentableBy
 file: AlgebraicJacobian/Picard/JacobianDataCharts.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.JacobianData.homEquiv_ofRepresentableBy
 type: lean
-updated: '2026-07-29T15:26:21'
+updated: '2026-07-29T15:31:46'
 ---
 lemma JacobianData.homEquiv_ofRepresentableBy (J : Over (Spec (.of k)))
     (rep : (pic0TypeFunctor C).RepresentableBy J)

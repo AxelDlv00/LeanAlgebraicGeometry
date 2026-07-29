@@ -7,10 +7,9 @@ docstring: 'Scheme-level retraction: `(δ C).left ≫ (fst C C).left = 𝟙`.'
 file: AlgebraicJacobian/Curve/DiagonalClosed.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.diagonal_left_fst_left
 type: lean
-updated: '2026-07-29T15:26:24'
+updated: '2026-07-29T15:31:36'
 ---
 lemma diagonal_left_fst_left : (diagonal C).left ≫ (fst C C).left = 𝟙 C.left := by
   rw [← Over.comp_left, diagonal_fst, Over.id_left]

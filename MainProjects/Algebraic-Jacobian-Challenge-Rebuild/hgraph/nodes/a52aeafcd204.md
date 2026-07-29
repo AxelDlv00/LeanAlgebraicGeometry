@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.thetaChartDatum_pieces
 file: AlgebraicJacobian/Cohomology/RelCurveCollapse.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.thetaChartDatum_pieces
 type: lean
-updated: '2026-07-29T15:26:30'
+updated: '2026-07-29T15:31:35'
 ---
 lemma thetaChartDatum_pieces :
     (thetaChartDatum C B π a).pieces = (thetaChartCover C B π).pieces := rfl

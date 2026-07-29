@@ -9,10 +9,9 @@ docstring: 'The vanishing locus is a **closed subscheme** of `Spec R`:
 file: AlgebraicJacobian/Picard/VanishingLocus.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Grassmannian.isClosedImmersion_vanishingLocusι
 type: lean
-updated: '2026-07-29T15:26:30'
+updated: '2026-07-29T15:31:48'
 ---
 instance isClosedImmersion_vanishingLocusι (φ : M →ₗ[R] N) :
     IsClosedImmersion (vanishingLocusι φ) :=

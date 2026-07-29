@@ -10,10 +10,9 @@ docstring: 'The trimmed comparison-cover member is bounded by the `u₁`-preimag
 file: AlgebraicJacobian/Picard/EffectivityPieceClass.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.trimmed_le_inl
 type: lean
-updated: '2026-07-29T15:26:22'
+updated: '2026-07-29T15:31:46'
 ---
 lemma trimmed_le_inl {𝒩 : (XB).PointedCover} {γ : (XB).unitsCocycle 𝒩}
     (W : NormalizedCechComparison k A B C σ 𝒩 γ) (V : (XA).Opens) (x : Xq) :

@@ -9,10 +9,9 @@ file: AlgebraicJacobian/RiemannRoch/FLVQcoh.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.divisorSheaf_obj_subsingleton
 type: lean
-updated: '2026-07-29T15:26:25'
+updated: '2026-07-29T15:31:49'
 ---
 private lemma divisorSheaf_obj_subsingleton {D : X.CurveDivisor} {W : X.Opens}
     (hW : ¬ (W : Set X).Nonempty) :

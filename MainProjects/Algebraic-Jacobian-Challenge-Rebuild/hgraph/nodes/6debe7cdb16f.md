@@ -7,10 +7,9 @@ docstring: Freeness of the quotient transports across the ambient identification
 file: AlgebraicJacobian/Picard/DivSchemeFrameKit.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Grassmannian.free_quotient_congrAmbient
 type: lean
-updated: '2026-07-29T15:26:24'
+updated: '2026-07-29T15:31:39'
 ---
 theorem free_quotient_congrAmbient (e : H ≃ₗ[k] H') (x : grFunctorAff k H g T)
     (hfree : Module.Free T (TensorProduct k T H ⧸ x.toSubmodule)) :

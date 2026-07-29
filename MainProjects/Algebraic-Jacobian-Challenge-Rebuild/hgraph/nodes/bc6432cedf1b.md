@@ -24,10 +24,9 @@ docstring: '**The frozen étale-coordinate chart data of the curve `C`.** A choi
 file: AlgebraicJacobian/Curve/DiagonalChartData.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.DiagonalChartData
 type: lean
-updated: '2026-07-29T15:26:32'
+updated: '2026-07-29T15:31:36'
 ---
 structure DiagonalChartData (C : Over (Spec (.of k))) where
   /-- The chosen affine chart at each point. -/

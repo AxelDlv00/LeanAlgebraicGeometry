@@ -11,10 +11,9 @@ docstring: '**Degree-zero cohomology of a skyscraper sheaf is its value**, `K`-l
 file: AlgebraicJacobian/RiemannRoch/Skyscraper.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.skyModuleGammaEquiv
 type: lean
-updated: '2026-07-29T15:26:12'
+updated: '2026-07-29T15:31:50'
 ---
 def skyModuleGammaEquiv (x : X) (M : ModuleCat.{u} K) :
     Sheaf.HModule (skyModule x M) 0 ≃ₗ[K] M :=

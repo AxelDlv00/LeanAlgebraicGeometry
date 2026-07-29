@@ -8,10 +8,9 @@ docstring: '`specSectionsAlgebra`, re-keyed on the `overSpec`-spelling of `Spec 
 file: AlgebraicJacobian/Picard/DescentSectionEval.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.overSpecSectionsAlgebraA
 type: lean
-updated: '2026-07-29T15:26:25'
+updated: '2026-07-29T15:31:38'
 ---
 @[reducible] noncomputable def overSpecSectionsAlgebraA (U : (SA).Opens) :
     Algebra A Γ(SA, U) :=

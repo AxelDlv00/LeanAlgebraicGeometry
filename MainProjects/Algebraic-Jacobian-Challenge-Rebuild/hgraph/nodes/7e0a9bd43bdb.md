@@ -18,10 +18,9 @@ docstring: '**The pole-existence corollary (substep 3 + landed 4a).** Let `F : Y
 file: AlgebraicJacobian/Albanese/Milne33Pullback.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.RationalMap.exists_germ_stalkPullback_notMem_range_of_notMem_domain
 type: lean
-updated: '2026-07-29T15:26:26'
+updated: '2026-07-29T15:31:33'
 ---
 theorem Scheme.RationalMap.exists_germ_stalkPullback_notMem_range_of_notMem_domain
     {Y Z S : Scheme.{u}} [IsIntegral Y] [IsAffine S] [IsLocallyNoetherian Y]

@@ -7,9 +7,8 @@ docstring: The gluing index of the datum, `J = J₀ ⊕ J₁`.
 file: AlgebraicJacobian/Cohomology/GluedSheafDatum.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.BasicOpenCoverData.index
 type: lean
-updated: '2026-07-29T15:26:20'
+updated: '2026-07-29T15:31:34'
 ---
 abbrev index : Type u := D.J₀ ⊕ D.J₁

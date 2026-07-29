@@ -10,10 +10,9 @@ docstring: '**Clause (c2)-projectivity reduces to the piece colengths.**  The in
 file: AlgebraicJacobian/Picard/DivisorFamilyAffGlue.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.projective_glued_of_swallowedBy
 type: lean
-updated: '2026-07-29T15:26:39'
+updated: '2026-07-29T15:31:43'
 ---
 theorem projective_glued_of_swallowedBy (h : D.SwallowedBy d)
     (hproj : ∀ j, Module.Projective R (A.colength j)) :

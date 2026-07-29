@@ -11,10 +11,9 @@ docstring: 'The witness predicate is the engine''s complex-form fibre condition
 file: AlgebraicJacobian/Picard/Pic0ChartLocusFibreField.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.hasWitnessH1Vanishing_iff_subsingleton
 type: lean
-updated: '2026-07-29T15:26:38'
+updated: '2026-07-29T15:31:47'
 ---
 theorem BasicOpenCocycleDatum.hasWitnessH1Vanishing_iff_subsingleton
     (D : BasicOpenCocycleDatum C B π) (L : Type u) [Field L] [Algebra k L] [Algebra B L]

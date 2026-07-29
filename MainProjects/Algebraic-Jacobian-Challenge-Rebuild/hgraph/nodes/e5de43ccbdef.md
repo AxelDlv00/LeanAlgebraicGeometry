@@ -7,10 +7,9 @@ docstring: The section collapse commutes with restriction.
 file: AlgebraicJacobian/Cohomology/RelThetaTransportCore.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.sectionsCollapse_resHom
 type: lean
-updated: '2026-07-29T15:26:36'
+updated: '2026-07-29T15:31:35'
 ---
 lemma sectionsCollapse_resHom {W V : C.left.Opens} (hWV : W ≤ V)
     (hW : IsCompact (W : Set C.left)) (hW' : IsQuasiSeparated (W : Set C.left))

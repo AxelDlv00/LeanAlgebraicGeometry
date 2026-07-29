@@ -16,10 +16,9 @@ docstring: '**Restriction naturality of the identification, in both factors**: f
 file: AlgebraicJacobian/Curve/ProductCharts.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.productChartSections_naturality
 type: lean
-updated: '2026-07-29T15:26:31'
+updated: '2026-07-29T15:31:37'
 ---
 theorem productChartSections_naturality {U U' : X.left.Opens} {V V' : T.left.Opens}
     (hU : IsAffineOpen U) (hV : IsAffineOpen V) (hU' : IsAffineOpen U')

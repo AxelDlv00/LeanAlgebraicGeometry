@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.crossBaseAffineIso_inv_snd
 file: AlgebraicJacobian/Picard/Pic0Theta.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.crossBaseAffineIso_inv_snd
 type: lean
-updated: '2026-07-29T15:26:34'
+updated: '2026-07-29T15:31:47'
 ---
 lemma crossBaseAffineIso_inv_snd :
     (crossBaseAffineIso k L C A).inv

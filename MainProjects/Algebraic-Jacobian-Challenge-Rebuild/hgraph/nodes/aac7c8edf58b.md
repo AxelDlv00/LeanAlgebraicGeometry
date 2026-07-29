@@ -8,10 +8,9 @@ docstring: 'The two twisted charts still cover `P¹_k`: preimage preserves `⊔`
 file: AlgebraicJacobian/Curve/P1Aut.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.P1.autOfMatrix_preimage_chartOpen_sup
 type: lean
-updated: '2026-07-29T15:26:30'
+updated: '2026-07-29T15:31:37'
 ---
 theorem autOfMatrix_preimage_chartOpen_sup (M : Matrix.GeneralLinearGroup (Fin 2) k) :
     (autOfMatrix k M ⁻¹ᵁ chartOpen k 0) ⊔ (autOfMatrix k M ⁻¹ᵁ chartOpen k 1) = ⊤ := by

@@ -11,10 +11,9 @@ docstring: '**Section regularity of the restricted chart equation**: every restr
 file: AlgebraicJacobian/Curve/DiagonalEquations.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.DiagonalChartData.res_chartEqn_mem_nonZeroDivisors
 type: lean
-updated: '2026-07-29T15:26:32'
+updated: '2026-07-29T15:31:36'
 ---
 theorem res_chartEqn_mem_nonZeroDivisors {W : (C ⊗ C).left.Opens}
     (hW : W ≤ diagonalChart C (data.isAffineOpen p) (data.elift p)) :

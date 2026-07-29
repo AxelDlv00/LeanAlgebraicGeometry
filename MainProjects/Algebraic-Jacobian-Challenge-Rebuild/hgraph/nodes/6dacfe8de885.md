@@ -20,10 +20,9 @@ docstring: '**THE TRIANGLE, chart 0** (the G-2 crux, `informal/spec-w4-gates.md`
 file: AlgebraicJacobian/Picard/DivisorFamilyWindowTriangle.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.resHom_relThetaWindowEquiv_cancelBaseChange_fst
 type: lean
-updated: '2026-07-29T15:26:24'
+updated: '2026-07-29T15:31:45'
 ---
 theorem resHom_relThetaWindowEquiv_cancelBaseChange_fst
     (x : R ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) :

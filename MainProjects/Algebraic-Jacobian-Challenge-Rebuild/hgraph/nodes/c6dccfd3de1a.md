@@ -7,10 +7,9 @@ docstring: The relative-theta quotient of a stage is finite.
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowStage.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.finite_divUniversalHighWindowThetaQuotient
 type: lean
-updated: '2026-07-29T15:26:33'
+updated: '2026-07-29T15:31:40'
 ---
 theorem finite_divUniversalHighWindowThetaQuotient (n : Nat)
     (x : DivUniversalHighWindowStage (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j n) :

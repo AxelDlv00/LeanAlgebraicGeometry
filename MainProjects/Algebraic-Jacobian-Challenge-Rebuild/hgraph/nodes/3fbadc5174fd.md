@@ -39,10 +39,9 @@ docstring: '**The TRIVIAL splitting `L := K`** — the variant the predecessor r
 file: AlgebraicJacobian/Picard/Pic0ChartTwistSplit.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.isSplitWitness_of_presenting_witness_self
 type: lean
-updated: '2026-07-29T15:26:17'
+updated: '2026-07-29T15:31:47'
 ---
 theorem isSplitWitness_of_presenting_witness_self
     {K : Type u} [Field K] [Algebra k K] (ν : picEt C (overSpec k K))

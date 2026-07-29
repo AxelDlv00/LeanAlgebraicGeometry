@@ -10,10 +10,9 @@ docstring: '**Two subordinations of the same cover give cohomologous cocycles**,
 file: AlgebraicJacobian/Cohomology/GluedSheafClass.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.gluedSubordCocycle_isCohomologous
 type: lean
-updated: '2026-07-29T15:26:20'
+updated: '2026-07-29T15:31:34'
 ---
 lemma gluedSubordCocycle_isCohomologous (hc : Scheme.IsGluingCocycle U g)
     (𝒲 : X.PointedCover) (σ σ' : X → J) (hσ : ∀ x : X, 𝒲.opens x ≤ U (σ x))

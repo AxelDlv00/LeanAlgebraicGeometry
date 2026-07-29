@@ -12,10 +12,9 @@ docstring: 'The certificate constructor in the exact SupportTube form: fibrewise
 file: AlgebraicJacobian/Picard/DivSchemeCertUniv.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.isCertified_of_noLeak_kernel_spanning
 type: lean
-updated: '2026-07-29T15:26:36'
+updated: '2026-07-29T15:31:39'
 ---
 theorem isCertified_of_noLeak_kernel_spanning [IsNoetherianRing R] {n : Nat}
     (hnoLeak : forall (j : A.index) (s : Spec (.of R)),

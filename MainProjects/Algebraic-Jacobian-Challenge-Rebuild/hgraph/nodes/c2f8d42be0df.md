@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.BasicOpenCoverData.chartAt_inl
 file: AlgebraicJacobian/Cohomology/RigidEngine5Toolkit.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.BasicOpenCoverData.chartAt_inl
 type: lean
-updated: '2026-07-29T15:26:33'
+updated: '2026-07-29T15:31:36'
 ---
 lemma chartAt_inl (j : D.J₀) : D.chartAt (Sum.inl j) = (fiberTwoCover π).V₀ := rfl
 

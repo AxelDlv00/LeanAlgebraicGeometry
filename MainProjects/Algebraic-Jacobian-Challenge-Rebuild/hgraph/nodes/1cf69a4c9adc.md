@@ -12,10 +12,9 @@ docstring: 'Piece overlaps are affine (the relative curve is separated over `Spe
 file: AlgebraicJacobian/Picard/DivisorFamilyAffCover.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffCoverData.flat_sections_pieces_inf
 type: lean
-updated: '2026-07-29T15:26:11'
+updated: '2026-07-29T15:31:43'
 ---
 theorem flat_sections_pieces_inf (i j : D.index)
     (hinf : IsAffineOpen (D.pieces i ⊓ D.pieces j)) :

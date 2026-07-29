@@ -8,10 +8,9 @@ docstring: The multiplier-window basis readings generate the unit ideal on eithe
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowRelationReadSuccessor.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_divUniversalHighWindowMultiplierChartRead_mul_eq_one
 type: lean
-updated: '2026-07-29T15:26:26'
+updated: '2026-07-29T15:31:40'
 ---
 theorem exists_divUniversalHighWindowMultiplierChartRead_mul_eq_one (side : Bool) :
     ∃ c : Fin (Module.finrank k HS) →

@@ -7,10 +7,9 @@ docstring: The universal fibre window lies under the pointwise achiever's pole d
 file: AlgebraicJacobian/Picard/DivSchemeSeedUnivPointwiseFibreData.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.PointwiseAchiever.divUniversalFibreKM_le_pointwiseFibrePoleDivisor
 type: lean
-updated: '2026-07-29T15:26:37'
+updated: '2026-07-29T15:31:43'
 ---
 theorem divUniversalFibreKM_le_pointwiseFibrePoleDivisor
     (z : relCurve C RZ) :

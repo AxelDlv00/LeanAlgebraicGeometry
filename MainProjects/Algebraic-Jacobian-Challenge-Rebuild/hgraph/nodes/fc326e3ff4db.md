@@ -8,10 +8,9 @@ docstring: The affine two-chart cover of `Y` associated to the coordinate-twiste
 file: AlgebraicJacobian/Cohomology/TwistedFiberTwoCover.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.twistedFiberTwoCover
 type: lean
-updated: '2026-07-29T15:26:39'
+updated: '2026-07-29T15:31:36'
 ---
 noncomputable def twistedFiberTwoCover {Y : Scheme.{u}} (π : Y ⟶ P1 k)
     [IsAffineHom π] (M : Matrix.GeneralLinearGroup (Fin 2) k) : Y.AffineTwoCover :=

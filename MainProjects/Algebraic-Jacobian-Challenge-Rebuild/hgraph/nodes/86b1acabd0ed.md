@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.Over.overSpecMap_comp
 file: AlgebraicJacobian/Picard/RelPicAlgebra.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.overSpecMap_comp
 type: lean
-updated: '2026-07-29T15:26:27'
+updated: '2026-07-29T15:31:48'
 ---
 lemma Over.overSpecMap_comp (f : A →ₐ[k] B) (g : B →ₐ[k] C') :
     Over.overSpecMap (g.comp f) = Over.overSpecMap g ≫ Over.overSpecMap f := by

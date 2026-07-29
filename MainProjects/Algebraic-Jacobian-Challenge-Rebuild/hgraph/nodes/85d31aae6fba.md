@@ -19,10 +19,9 @@ docstring: '**Heterogeneity costs nothing in the certificate**: the `hf` clause 
 file: AlgebraicJacobian/Picard/Pic0ChartAtlasParamFree.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.isOpenImmersion_presheaf_mixedParamChart
 type: lean
-updated: '2026-07-29T15:26:27'
+updated: '2026-07-29T15:31:47'
 ---
 theorem isOpenImmersion_presheaf_mixedParamChart {ι : Type u} (nn : ι → ℕ)
     (D : ι → Over (Spec (.of k)))

@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.skyModule_obj_of_mem
 file: AlgebraicJacobian/RiemannRoch/Skyscraper.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.skyModule_obj_of_mem
 type: lean
-updated: '2026-07-29T15:26:28'
+updated: '2026-07-29T15:31:50'
 ---
 lemma skyModule_obj_of_mem (x : X) (M : ModuleCat.{u} K) {U : X.Opens} (h : x ∈ U) :
     (skyModule x M).obj.obj (op U) = M := by

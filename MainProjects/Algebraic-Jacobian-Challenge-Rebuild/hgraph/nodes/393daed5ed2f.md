@@ -24,10 +24,9 @@ docstring: "**The engine input, assembled**: for any plus class over any affine 
 file: AlgebraicJacobian/Picard/Pic0ChartHonest.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.exists_datum_cechPicClass_twist
 type: lean
-updated: '2026-07-29T15:26:15'
+updated: '2026-07-29T15:31:47'
 ---
 theorem exists_datum_cechPicClass_twist {B : Type u} [CommRing B] [Algebra k B]
     (c : (relCurve C B).CechPic) (m : ℕ)

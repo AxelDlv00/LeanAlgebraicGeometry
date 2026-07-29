@@ -7,10 +7,9 @@ docstring: The diagonal member lies in the product chart `𝔚(U, U)`.
 file: AlgebraicJacobian/Curve/DiagonalChart.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.diagonalChart_le_productChart
 type: lean
-updated: '2026-07-29T15:26:32'
+updated: '2026-07-29T15:31:36'
 ---
 lemma diagonalChart_le_productChart (C : Over (Spec (.of k))) {U : C.left.Opens}
     (hU : IsAffineOpen U) (elift : Γ(C.left, U) ⊗[k] Γ(C.left, U)) :

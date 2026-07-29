@@ -10,10 +10,9 @@ docstring: 'The short complex `0 → R[X₁] → R[X₂] ⊞ R[X₃] → R[X₄]
 file: AlgebraicJacobian/Cohomology/MayerVietoris.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleShortComplex_shortExact
 type: lean
-updated: '2026-07-29T15:26:10'
+updated: '2026-07-29T15:31:35'
 ---
 lemma moduleShortComplex_shortExact : (S.moduleShortComplex R).ShortExact where
   exact := S.moduleShortComplex_exact R

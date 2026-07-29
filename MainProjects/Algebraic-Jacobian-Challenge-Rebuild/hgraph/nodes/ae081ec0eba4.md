@@ -9,10 +9,9 @@ docstring: '**The pulled fiber system**: the local-equation system of `a · F` o
 file: AlgebraicJacobian/Cohomology/RelCurveCollapse.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.thetaFiberPullback
 type: lean
-updated: '2026-07-29T15:26:31'
+updated: '2026-07-29T15:31:35'
 ---
 noncomputable def thetaFiberPullback : (relCurve C k).LocalEquations :=
   haveI : IsIntegral (C ⊗ overSpec k k).left := ‹IsIntegral (relCurve C k)›

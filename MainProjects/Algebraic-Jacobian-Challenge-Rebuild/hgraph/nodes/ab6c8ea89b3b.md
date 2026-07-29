@@ -9,10 +9,9 @@ docstring: 'The anchored `CurveDivisor.picClass` packaged as an additive-to-mult
 file: AlgebraicJacobian/Picard/DivisorClassCompat.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.picClassHom
 type: lean
-updated: '2026-07-29T15:26:30'
+updated: '2026-07-29T15:31:43'
 ---
 noncomputable def picClassHom : X.CurveDivisor →+ Additive X.CechPic where
   toFun D := Additive.ofMul (CurveDivisor.picClass K D)

@@ -14,10 +14,9 @@ docstring: 'The action of `pullbackHom` on test points, `symm` form: composition
 file: AlgebraicJacobian/Picard/Pic0PullbackGrp.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.JacobianData.comp_pullbackHom
 type: lean
-updated: '2026-07-29T15:26:34'
+updated: '2026-07-29T15:31:47'
 ---
 theorem comp_pullbackHom (dX : JacobianData X) (dY : JacobianData Y) (g : X ⟶ Y)
     {T : Over (Spec (.of k))} (f : T ⟶ dY.J) :

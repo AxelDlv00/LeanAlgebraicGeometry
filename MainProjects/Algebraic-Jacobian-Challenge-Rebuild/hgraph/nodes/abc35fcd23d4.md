@@ -8,10 +8,9 @@ docstring: The underlying function-field value of a restricted section (nonempty
 file: AlgebraicJacobian/RiemannRoch/DivisorSheaf.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.divisorPresheaf_map_val
 type: lean
-updated: '2026-07-29T15:26:31'
+updated: '2026-07-29T15:31:49'
 ---
 lemma divisorPresheaf_map_val {D : X.CurveDivisor} {U V : (X.Opens)ᵒᵖ} (i : U ⟶ V)
     (hV : (V.unop : Set X).Nonempty) (s : (divisorPresheaf K D).obj U) :

@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.divUniversalHighWindowTensorMultiplierTransition_tmul
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowTransitionRelation.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divUniversalHighWindowTensorMultiplierTransition_tmul
 type: lean
-updated: '2026-07-29T15:26:38'
+updated: '2026-07-29T15:31:40'
 ---
 theorem divUniversalHighWindowTensorMultiplierTransition_tmul
     (n : Nat) (r : RZ) (a : HS) :

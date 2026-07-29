@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.FinCoverData.thetaOvlUnit_inr_inl
 file: AlgebraicJacobian/Picard/DivisorFamilyTheta.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.FinCoverData.thetaOvlUnit_inr_inl
 type: lean
-updated: '2026-07-29T15:26:39'
+updated: '2026-07-29T15:31:45'
 ---
 lemma thetaOvlUnit_inr_inl (a : ℕ) (j₁ : Fin D.m₁) (j₀ : Fin D.m₀) :
     D.thetaOvlUnit a (Sum.inr j₁) (Sum.inl j₀)

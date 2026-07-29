@@ -10,10 +10,9 @@ docstring: 'The canonical high-window fibre cut out by the universal divisor rec
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowPersistence.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divUniversalFibreHighWindow
 type: lean
-updated: '2026-07-29T15:26:30'
+updated: '2026-07-29T15:31:40'
 ---
 noncomputable def divUniversalFibreHighWindow (n : ℕ) :
     Submodule K (relCurve C K).functionField :=

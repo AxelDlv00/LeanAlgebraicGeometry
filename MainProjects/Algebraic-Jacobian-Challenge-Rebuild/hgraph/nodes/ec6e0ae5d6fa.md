@@ -22,10 +22,9 @@ docstring: '**Two split presentations of the same point differ by a `GL_d(S)` le
 file: AlgebraicJacobian/Picard/GrassmannianChartFrame.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Grassmannian.exists_isUnit_mul_of_matrixPoint_eq
 type: lean
-updated: '2026-07-29T15:26:37'
+updated: '2026-07-29T15:31:46'
 ---
 theorem exists_isUnit_mul_of_matrixPoint_eq (X Y : Matrix (Fin d) (Fin r) S)
     (hX : Function.Surjective (matrixProj k d r S X))

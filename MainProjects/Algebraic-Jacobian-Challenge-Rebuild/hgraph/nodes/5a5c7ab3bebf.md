@@ -9,10 +9,9 @@ docstring: 'A finite submodule whose inclusion is fibrewise surjective is the wh
 file: AlgebraicJacobian/Cohomology/FibreSurjective.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicJacobian.RigidEngine.submodule_eq_top_of_forall_rTensor_residueField_surjective
 type: lean
-updated: '2026-07-29T15:26:21'
+updated: '2026-07-29T15:31:34'
 ---
 theorem submodule_eq_top_of_forall_rTensor_residueField_surjective
     {X : Type u} [AddCommGroup X] [Module R X] [Module.Finite R X]

@@ -10,10 +10,9 @@ file: AlgebraicJacobian/Picard/CoherentWitnessExists.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.stepG_R₁₂
 type: lean
-updated: '2026-07-29T15:26:35'
+updated: '2026-07-29T15:31:38'
 ---
 private lemma stepG_R₁₂ (𝒲 : (Sq).PointedCover) (θ₀ : ∀ x : Sq, Γ(Sq, 𝒲.opens x)ˣ)
     (𝒜 : (XB).PointedCover) (α : ∀ v : XB, Γ(XB, 𝒜.opens v)ˣ)

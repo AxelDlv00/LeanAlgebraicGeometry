@@ -10,10 +10,9 @@ docstring: '**Clause (c1) for the piece `j`**: fibrewise-regular equation + fini
 file: AlgebraicJacobian/Picard/DivisorFamilyAffPerPiece.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.projective_colength_of_forall_tmul_residueField
 type: lean
-updated: '2026-07-29T15:26:31'
+updated: '2026-07-29T15:31:44'
 ---
 theorem projective_colength_of_forall_tmul_residueField (j : D.index)
     (hfib : ∀ p : PrimeSpectrum R,

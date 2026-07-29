@@ -10,10 +10,9 @@ docstring: 'The unit Čech cocycle of a trivializing family on its pointed cover
 file: AlgebraicJacobian/Picard/CechPicSurjective.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.TrivializingFamily.cocycle
 type: lean
-updated: '2026-07-29T15:26:29'
+updated: '2026-07-29T15:31:38'
 ---
 noncomputable def cocycle : X.unitsCocycle F.cover where
   ev x y _ a b :=

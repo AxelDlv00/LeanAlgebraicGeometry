@@ -13,10 +13,9 @@ docstring: '**The Σ-extension is functorial in the extended presheaf**: a natur
 file: AlgebraicJacobian/Picard/Pic0AtlasFromDivRep.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: CategoryTheory.Over.sigmaExtensionNat
 type: lean
-updated: '2026-07-29T15:26:34'
+updated: '2026-07-29T15:31:47'
 ---
 def sigmaExtensionNat (φ : F ⟶ G) : sigmaExtension S F ⟶ sigmaExtension S G where
   app T := TypeCat.ofHom fun x => ⟨x.1, φ.app _ x.2⟩

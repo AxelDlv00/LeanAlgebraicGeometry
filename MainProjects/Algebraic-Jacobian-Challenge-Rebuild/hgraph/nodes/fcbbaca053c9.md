@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.fiberEqn_of_mem
 file: AlgebraicJacobian/RiemannRoch/FiberTwist.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.fiberEqn_of_mem
 type: lean
-updated: '2026-07-29T15:26:39'
+updated: '2026-07-29T15:31:49'
 ---
 lemma fiberEqn_of_mem (n : ℕ) {z : Y} (h : z ∈ fiberChart₀ π) :
     fiberEqn π n z

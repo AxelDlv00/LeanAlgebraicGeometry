@@ -23,10 +23,9 @@ docstring: '**The overlap of the diagonal member with the off-diagonal member is
 file: AlgebraicJacobian/Curve/DiagonalChart.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.diagonalChart_inf_diagonalComplement
 type: lean
-updated: '2026-07-29T15:26:31'
+updated: '2026-07-29T15:31:36'
 ---
 theorem diagonalChart_inf_diagonalComplement (C : Over (Spec (.of k)))
     [IsSeparated C.hom] {U : C.left.Opens} (hU : IsAffineOpen U)

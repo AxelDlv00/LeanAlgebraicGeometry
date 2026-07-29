@@ -16,10 +16,9 @@ docstring: '**The gluing identity**: for a unit `u` of `A`, the morphism `[1 : u
 file: AlgebraicJacobian/Curve/P1Points.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.P1.fromSpecChart_units
 type: lean
-updated: '2026-07-29T15:26:16'
+updated: '2026-07-29T15:31:37'
 ---
 theorem fromSpecChart_units (u : Aˣ) :
     fromSpecChart k ρ 0 (u : A) = fromSpecChart k ρ 1 ((u⁻¹ : Aˣ) : A) := by

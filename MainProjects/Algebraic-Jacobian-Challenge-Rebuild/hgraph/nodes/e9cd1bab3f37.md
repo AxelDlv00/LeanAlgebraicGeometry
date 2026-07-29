@@ -9,10 +9,9 @@ docstring: 'One relative relation-basis step becomes multiplication by the corre
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowRelationKoszulConjugacy.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divUniversalHighWindowRelationBasisStep_fibre_conjugacy
 type: lean
-updated: '2026-07-29T15:26:37'
+updated: '2026-07-29T15:31:40'
 ---
 theorem divUniversalHighWindowRelationBasisStep_fibre_conjugacy (n : Nat)
     [Module.Projective RZ (Amb[n] ⧸ Kr[n])]

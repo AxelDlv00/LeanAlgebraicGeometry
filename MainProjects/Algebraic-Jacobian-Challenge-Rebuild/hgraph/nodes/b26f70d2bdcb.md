@@ -8,10 +8,9 @@ file: AlgebraicJacobian/Picard/DivisorDatumInverse.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.BasicOpenCocycleDatum.inv_unitsEvInf
 type: lean
-updated: '2026-07-29T15:26:31'
+updated: '2026-07-29T15:31:43'
 ---
 private lemma inv_unitsEvInf {X : Scheme.{u}} {𝒰 : X.PointedCover}
     (γ : X.unitsCocycle 𝒰) (i j : X) :

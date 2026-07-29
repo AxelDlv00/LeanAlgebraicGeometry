@@ -24,10 +24,9 @@ docstring: '**The migration map.** An old chart-typed `FinCoverData` gives a wid
 file: AlgebraicJacobian/Picard/DivisorFamilyAffCover.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.FinCoverData.toAffCoverData
 type: lean
-updated: '2026-07-29T15:26:38'
+updated: '2026-07-29T15:31:43'
 ---
 noncomputable def toAffCoverData : AffCoverData C R where
   m := D.m₀ + D.m₁

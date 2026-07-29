@@ -10,10 +10,9 @@ docstring: 'The preimage of each standard chart of `ℙ¹` under an affine (e.g.
 file: AlgebraicJacobian/Curve/MapToP1.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.isAffineOpen_preimage_chartOpen
 type: lean
-updated: '2026-07-29T15:26:26'
+updated: '2026-07-29T15:31:37'
 ---
 theorem isAffineOpen_preimage_chartOpen [IsAffineHom π] (i : Fin 2) :
     IsAffineOpen (π ⁻¹ᵁ P1.chartOpen k i) :=

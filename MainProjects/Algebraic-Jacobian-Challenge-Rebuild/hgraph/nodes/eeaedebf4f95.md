@@ -12,10 +12,9 @@ docstring: '**The `DivFamZar` class of a Zariski-locally certified seed** — th
 file: AlgebraicJacobian/Picard/DivSchemeCertZarSeed.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.ThetaGeneratorSeed.divFamZar_of_forall_away_certified
 type: lean
-updated: '2026-07-29T15:26:38'
+updated: '2026-07-29T15:31:39'
 ---
 noncomputable def divFamZar_of_forall_away_certified (hD : D.IsGenerator)
     {m : ℕ} (g : Fin m → R) (hg : Ideal.span (Set.range g) = ⊤)

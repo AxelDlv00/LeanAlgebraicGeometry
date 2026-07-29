@@ -14,10 +14,9 @@ file: AlgebraicJacobian/Picard/CechPicToPicNaturality.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.Scheme.CechPic.pic_pullback_eq_mapRingHom
 type: lean
-updated: '2026-07-29T15:26:35'
+updated: '2026-07-29T15:31:38'
 ---
 private lemma pic_pullback_eq_mapRingHom [IsAffine X] [IsAffine Y] (g : X ⟶ Y)
     {𝒰 : Y.PointedCover} (γ : Y.unitsCocycle 𝒰)

@@ -14,10 +14,9 @@ docstring: 'A ring homomorphism from a local ring to the dual numbers `k[ε]` ov
 file: AlgebraicJacobian/Tangent/TangentSchemePoints.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.isLocalHom_dualNumber_iff
 type: lean
-updated: '2026-07-29T15:26:31'
+updated: '2026-07-29T15:31:50'
 ---
 lemma isLocalHom_dualNumber_iff (f : R →+* DualNumber k) :
     IsLocalHom f ↔ ∀ x ∈ maximalIdeal R, fst (f x) = 0 := by

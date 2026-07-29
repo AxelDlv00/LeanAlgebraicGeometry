@@ -14,10 +14,9 @@ docstring: '**The collapse of the assembled unit is the descent unit of the cove
 file: AlgebraicJacobian/Algebra/PiAssembly.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: IsLocalization.AwayCover.tensorCollapse_piAssemblyUnit
 type: lean
-updated: '2026-07-29T15:26:36'
+updated: '2026-07-29T15:31:34'
 ---
 theorem tensorCollapse_piAssemblyUnit [Fintype ι] [DecidableEq ι]
     {w : ∀ i j, (S i ⊗[A] S j)ˣ} {c : ∀ i j, (T i j)ˣ}

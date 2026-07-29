@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.Grassmannian.splitSurj_comp_splitSect
 file: AlgebraicJacobian/Picard/EntriesIdeal.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Grassmannian.splitSurj_comp_splitSect
 type: lean
-updated: '2026-07-29T15:26:14'
+updated: '2026-07-29T15:31:46'
 ---
 lemma splitSurj_comp_splitSect : splitSurj R N ∘ₗ splitSect R N = LinearMap.id :=
   (Module.Finite.exists_comp_eq_id_of_projective

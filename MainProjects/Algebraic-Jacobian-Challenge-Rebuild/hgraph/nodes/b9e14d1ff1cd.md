@@ -7,10 +7,9 @@ file: AlgebraicJacobian/Picard/DivSchemeHighWindowTransitionRelationZero.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.universalMulMap_piSingle
 type: lean
-updated: '2026-07-29T15:26:32'
+updated: '2026-07-29T15:31:40'
 ---
 private theorem universalMulMap_piSingle
     (t : Fin (Module.finrank k HS))

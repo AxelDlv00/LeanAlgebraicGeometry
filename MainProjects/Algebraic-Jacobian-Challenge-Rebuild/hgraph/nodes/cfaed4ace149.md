@@ -10,10 +10,9 @@ docstring: 'The range of the finite basis-indexed product map is exactly the spa
 file: AlgebraicJacobian/Picard/DivSchemeMulSpanMap.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.range_finiteMulMap
 type: lean
-updated: '2026-07-29T15:26:34'
+updated: '2026-07-29T15:31:41'
 ---
 theorem Scheme.range_finiteMulMap
     (U T : Submodule K X.functionField) (b : Module.Basis ι K U) :

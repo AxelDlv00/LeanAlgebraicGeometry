@@ -10,10 +10,9 @@ docstring: 'The pair value of the subordinated cocycle: the transition unit `g (
 file: AlgebraicJacobian/Cohomology/GluedSheafClass.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.gluedSubordUnit
 type: lean
-updated: '2026-07-29T15:26:37'
+updated: '2026-07-29T15:31:34'
 ---
 noncomputable def gluedSubordUnit (g : ∀ i j : J, Γ(X, U i ⊓ U j)ˣ) (𝒲 : X.PointedCover)
     (σ : X → J) (hσ : ∀ x : X, 𝒲.opens x ≤ U (σ x)) (x y : X) :

@@ -15,10 +15,9 @@ docstring: 'The canonical common refinement of the pulled-back covers carrying t
 file: AlgebraicJacobian/Picard/CoherentWitnessCochains.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.comparisonCover
 type: lean
-updated: '2026-07-29T15:26:39'
+updated: '2026-07-29T15:31:38'
 ---
 noncomputable def comparisonCover (𝒲 : (Sq).PointedCover)
     (𝒜 : (XB).PointedCover) : (Xq).PointedCover :=

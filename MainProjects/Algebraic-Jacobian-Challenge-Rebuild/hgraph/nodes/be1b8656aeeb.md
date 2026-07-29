@@ -12,10 +12,9 @@ docstring: 'Tensoring distributes over finite products of algebras, on the right
 file: AlgebraicJacobian/Algebra/PiLocalization.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Algebra.TensorProduct.piRightAlgEquiv
 type: lean
-updated: '2026-07-29T15:26:32'
+updated: '2026-07-29T15:31:34'
 ---
 noncomputable def piRightAlgEquiv : (N ⊗[A] ∀ i, S i) ≃ₐ[A] ∀ i, N ⊗[A] S i :=
   -- `map_mul` is checked by two rounds of `TensorProduct.induction_on` (both sides are

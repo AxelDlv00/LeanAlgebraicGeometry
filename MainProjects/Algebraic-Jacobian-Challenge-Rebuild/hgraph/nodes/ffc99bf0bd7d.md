@@ -22,10 +22,9 @@ docstring: '**Height bound for colon primes of principal ideals.** Let `A` be a
 file: AlgebraicJacobian/Albanese/PolePurityLocal.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: Ideal.height_le_one_of_colon_span_singleton
 type: lean
-updated: '2026-07-29T15:26:40'
+updated: '2026-07-29T15:31:33'
 ---
 theorem Ideal.height_le_one_of_colon_span_singleton
     {A : Type u} [CommRing A] [IsDomain A] [IsNoetherianRing A]

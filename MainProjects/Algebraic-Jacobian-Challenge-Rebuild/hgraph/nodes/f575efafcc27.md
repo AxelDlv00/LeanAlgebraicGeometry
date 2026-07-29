@@ -7,10 +7,9 @@ docstring: The piece-local colength module `Γ(pieces j) ⧸ (f_j)`.
 file: AlgebraicJacobian/Picard/DivisorFamilyAffAdaptation.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffAdaptation.colength
 type: lean
-updated: '2026-07-29T15:26:38'
+updated: '2026-07-29T15:31:43'
 ---
 noncomputable abbrev colength (j : D.index) : Type u :=
   Γ(relCurve C R, D.pieces j) ⧸ Ideal.span {A.eqn j}

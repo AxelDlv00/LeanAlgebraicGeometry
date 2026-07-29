@@ -12,9 +12,8 @@ docstring: '**The embedding exponent `M`** — least `M` with `M·δ ≥ b + 2g 
 file: AlgebraicJacobian/RiemannRoch/WindowLedger.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.windowM_choice
 type: lean
-updated: '2026-07-29T15:26:23'
+updated: '2026-07-29T15:31:50'
 ---
 noncomputable def windowM_choice (g : ℕ) : ℕ := Nat.find (windowM_exists π hπ g)

@@ -21,10 +21,9 @@ docstring: '**`HasAffineOverlaps` is FREE for a proper `C`** — which is the on
 file: AlgebraicJacobian/Picard/DivisorFamilyAffMapAlg.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.AffCoverData.hasAffineOverlaps_of_isProper
 type: lean
-updated: '2026-07-29T15:26:33'
+updated: '2026-07-29T15:31:44'
 ---
 theorem AffCoverData.hasAffineOverlaps_of_isProper [IsProper C.hom] (D : AffCoverData C R) :
     D.HasAffineOverlaps := fun i j =>

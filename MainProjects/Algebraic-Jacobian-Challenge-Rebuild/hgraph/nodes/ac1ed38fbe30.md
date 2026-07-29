@@ -7,10 +7,9 @@ docstring: The section rings on the basic opens are `Away` models over `B` itsel
 file: AlgebraicJacobian/Picard/WitnessAway.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.isLocalization_awayElt
 type: lean
-updated: '2026-07-29T15:26:31'
+updated: '2026-07-29T15:31:48'
 ---
 lemma isLocalization_awayElt (i : P.ι) :
     IsLocalization.Away (awayElt P i) Γ(XB, (XB).basicOpen (P.r i)) :=

@@ -19,10 +19,9 @@ docstring: '**Finite support of the order.**  For a unit `g` of the function fie
 file: AlgebraicJacobian/RiemannRoch/PrincipalDivisor.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.ordZ_support_finite
 type: lean
-updated: '2026-07-29T15:26:10'
+updated: '2026-07-29T15:31:50'
 ---
 theorem Scheme.ordZ_support_finite (f : X ⟶ Spec (CommRingCat.of K))
     [SmoothOfRelativeDimension 1 f] [IsIntegral X] [LocallyOfFiniteType f] [QuasiCompact f]

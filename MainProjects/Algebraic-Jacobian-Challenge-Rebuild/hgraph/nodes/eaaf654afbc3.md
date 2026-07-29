@@ -9,10 +9,9 @@ docstring: 'The piece trivializations intertwine the componentwise action with
 file: AlgebraicJacobian/Cohomology/GluedSheafQcoh.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.gluedTriv_gluedQsmul
 type: lean
-updated: '2026-07-29T15:26:37'
+updated: '2026-07-29T15:31:35'
 ---
 lemma gluedTriv_gluedQsmul (hc : Scheme.IsGluingCocycle U g) {V W : X.Opens}
     (hWV : W ≤ V) {j : J} (hWj : W ≤ U j) (r : Γ(X, V))

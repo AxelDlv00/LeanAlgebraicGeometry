@@ -13,10 +13,9 @@ docstring: '(Implementation) The collapse pairing `(S ⊗[R] A) →ₗ[R] M →�
 file: AlgebraicJacobian/Picard/InvertibleModuleTransfer.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: TensorProduct.baseChangeAlgebraModulePairing
 type: lean
-updated: '2026-07-29T15:26:31'
+updated: '2026-07-29T15:31:46'
 ---
 noncomputable def baseChangeAlgebraModulePairing :
     (S ⊗[R] A) →ₗ[R] M →ₗ[R] S ⊗[R] M :=

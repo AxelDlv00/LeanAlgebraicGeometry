@@ -20,10 +20,9 @@ docstring: '**The degree-zero restriction engine for θ** (the B-4a → B-4b han
 file: AlgebraicJacobian/Picard/Pic0Theta.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.mem_pic0Subgroup_iff_of_degAt_pushFieldPoint_eq
 type: lean
-updated: '2026-07-29T15:26:38'
+updated: '2026-07-29T15:31:47'
 ---
 theorem mem_pic0Subgroup_iff_of_degAt_pushFieldPoint_eq
     {lam : picEt C ((Over.map (Spec.map (CommRingCat.ofHom (algebraMap k L)))).obj T)}

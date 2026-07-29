@@ -14,10 +14,9 @@ docstring: '**Flattening**: if the descended class of a trivialized piece is tri
 file: AlgebraicJacobian/Picard/EffectivityOverlap.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.exists_pieceComparisonUnit_eq_one
 type: lean
-updated: '2026-07-29T15:26:35'
+updated: '2026-07-29T15:31:46'
 ---
 theorem exists_pieceComparisonUnit_eq_one [Module.FaithfullyFlat A B]
     [IsProper C.hom] [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]

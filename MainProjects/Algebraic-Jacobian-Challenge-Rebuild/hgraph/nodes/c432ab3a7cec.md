@@ -13,10 +13,9 @@ docstring: '**The sections identification** (in `CommRingCat`): for affine opens
 file: AlgebraicJacobian/Curve/ProductCharts.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Over.productChartSectionsIso
 type: lean
-updated: '2026-07-29T15:26:33'
+updated: '2026-07-29T15:31:37'
 ---
 noncomputable def productChartSectionsIso {U : X.left.Opens} {V : T.left.Opens}
     (hU : IsAffineOpen U) (hV : IsAffineOpen V) :

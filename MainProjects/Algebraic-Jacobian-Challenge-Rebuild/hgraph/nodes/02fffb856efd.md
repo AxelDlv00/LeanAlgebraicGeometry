@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.Scheme.annKernel_le
 file: AlgebraicJacobian/RiemannRoch/AnnihilatorKernel.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.annKernel_le
 type: lean
-updated: '2026-07-29T15:26:07'
+updated: '2026-07-29T15:31:49'
 ---
 lemma Scheme.annKernel_le (U V : Submodule K X.functionField)
     (Λ : Module.Dual K X.functionField) : Scheme.annKernel K U V Λ ≤ U :=

@@ -19,10 +19,9 @@ docstring: '**The pair values of the two-chart cocycle attached to an overlap un
 file: AlgebraicJacobian/Tangent/TwoChartCechPic.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.twoChartPairUnit
 type: lean
-updated: '2026-07-29T15:26:39'
+updated: '2026-07-29T15:31:50'
 ---
 noncomputable def twoChartPairUnit (u : Γ(X, V false ⊓ V true)ˣ) :
     ∀ s t : Bool, Γ(X, V s ⊓ V t)ˣ

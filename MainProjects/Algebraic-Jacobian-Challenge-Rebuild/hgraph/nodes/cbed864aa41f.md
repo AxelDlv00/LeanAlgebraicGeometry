@@ -23,10 +23,9 @@ docstring: '**The regularity engine (deg-D4b §D2).** For a flat coordinate `Pol
 file: AlgebraicJacobian/Algebra/DiagonalRegular.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicJacobian.Diagonal.tmul_one_sub_one_tmul_mem_nonZeroDivisors
 type: lean
-updated: '2026-07-29T15:26:34'
+updated: '2026-07-29T15:31:34'
 ---
 theorem tmul_one_sub_one_tmul_mem_nonZeroDivisors
     {A : Type*} [CommRing A] [Algebra k A] (b : A) :

@@ -13,10 +13,9 @@ docstring: '**The germ reading of the glued components off the first chart**: at
 file: AlgebraicJacobian/Picard/DivisorFamilyFieldDictionaryCore.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.germ_thetaFieldGluedEquiv_snd
 type: lean
-updated: '2026-07-29T15:26:35'
+updated: '2026-07-29T15:31:45'
 ---
 lemma germ_thetaFieldGluedEquiv_snd (s : relThetaSections C K π a) {x : relCurve C K}
     (hx : x ∉ (relCover C K (fiberTwoCover π)).V₀) {w : relCurve C K}

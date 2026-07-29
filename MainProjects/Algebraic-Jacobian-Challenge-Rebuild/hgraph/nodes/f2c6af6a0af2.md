@@ -10,10 +10,9 @@ docstring: '**The δ colimit cocone.**  The inclusion cocone from the finite sub
 file: AlgebraicJacobian/Picard/PicRepColimitMountain.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DatG0.deltaCocone
 type: lean
-updated: '2026-07-29T15:26:38'
+updated: '2026-07-29T15:31:47'
 ---
 noncomputable def deltaCocone : Cocone (deltaRingDiagram (k := k) (K := K)) where
   pt := CommRingCat.of K

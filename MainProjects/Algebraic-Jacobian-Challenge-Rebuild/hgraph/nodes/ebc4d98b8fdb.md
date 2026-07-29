@@ -7,10 +7,9 @@ docstring: Arbitrary-exponent multiplication, stated uniformly on either pinned 
 file: AlgebraicJacobian/Picard/DivSchemeWindowMulGeneral.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.relThetaResSide_relThetaWindowEquiv_thetaWindowMul
 type: lean
-updated: '2026-07-29T15:26:37'
+updated: '2026-07-29T15:31:43'
 ---
 theorem relThetaResSide_relThetaWindowEquiv_thetaWindowMul (p q : Nat)
     (a : ↥(divisorSections k (p • fiberWeilDivisor pi) ⊤))

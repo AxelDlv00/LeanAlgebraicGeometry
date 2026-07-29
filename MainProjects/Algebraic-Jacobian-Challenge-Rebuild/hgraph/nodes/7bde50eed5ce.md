@@ -6,10 +6,9 @@ decl: HomogeneousLocalization.algebraMap_val
 file: AlgebraicJacobian/Curve/P1.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: HomogeneousLocalization.algebraMap_val
 type: lean
-updated: '2026-07-29T15:26:26'
+updated: '2026-07-29T15:31:37'
 ---
 lemma algebraMap_val (r : R) :
     (algebraMap R (HomogeneousLocalization 𝒜 x) r).val =

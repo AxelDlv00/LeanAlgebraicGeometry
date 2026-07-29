@@ -7,10 +7,9 @@ docstring: The sections of a basic refinement span the unit ideal.
 file: AlgebraicJacobian/Picard/PicAffineCover.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.PointedCover.BasicRefinement.span_eq_top
 type: lean
-updated: '2026-07-29T15:26:29'
+updated: '2026-07-29T15:31:47'
 ---
 theorem span_eq_top [IsAffine X] : Ideal.span (Set.range P.r) = ⊤ := by
   rw [← (isAffineOpen_top X).iSup_basicOpen_eq_self_iff]

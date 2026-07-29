@@ -9,10 +9,9 @@ docstring: 'Fibre-germ divisibility of two compared window vectors implies prime
 file: AlgebraicJacobian/Picard/DivSchemeRedesignPointPrime.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.mem_prime_of_windowEquiv_fibre_dvd
 type: lean
-updated: '2026-07-29T15:26:35'
+updated: '2026-07-29T15:31:42'
 ---
 theorem mem_prime_of_windowEquiv_fibre_dvd
     (b : Bool) {z : relCurve C R}

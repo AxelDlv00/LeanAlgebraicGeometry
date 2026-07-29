@@ -7,10 +7,9 @@ docstring: The difference cokernels are equivalent.
 file: AlgebraicJacobian/Picard/DivisorFamilyAffCompare.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.cokerDiffCongr
 type: lean
-updated: '2026-07-29T15:26:38'
+updated: '2026-07-29T15:31:43'
 ---
 noncomputable def cokerDiffCongr :
     (A.ovlProd ⧸ LinearMap.range (A.deltaLeft - A.deltaRight)) ≃ₗ[R]

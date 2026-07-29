@@ -20,10 +20,9 @@ docstring: '**`picFromBase` is trivial at a one-point test object.** Classes on 
 file: AlgebraicJacobian/Tangent/RelPicPointTest.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.picFromBase_eq_bot_of_subsingleton
 type: lean
-updated: '2026-07-29T15:26:34'
+updated: '2026-07-29T15:31:50'
 ---
 theorem picFromBase_eq_bot_of_subsingleton (T : Over (Spec (.of k)))
     [Subsingleton T.left] : picFromBase C T = ⊥ := by

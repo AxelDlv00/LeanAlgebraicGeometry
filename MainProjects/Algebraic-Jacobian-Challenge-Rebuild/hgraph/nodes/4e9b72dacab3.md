@@ -7,10 +7,9 @@ docstring: Multiplication into the next high window, linear in the multiplier.
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowTransitionRelation.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divUniversalHighWindowShiftMulLinear
 type: lean
-updated: '2026-07-29T15:26:20'
+updated: '2026-07-29T15:31:40'
 ---
 noncomputable def divUniversalHighWindowShiftMulLinear (n : Nat) :
     HS →ₗ[k] ((H n) →ₗ[k] (H (n + 1))) :=

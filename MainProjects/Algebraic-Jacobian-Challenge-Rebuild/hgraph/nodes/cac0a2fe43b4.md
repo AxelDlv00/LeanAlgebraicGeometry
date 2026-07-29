@@ -7,10 +7,9 @@ docstring: Reindex a transported successor section space to the sum exponent.
 file: AlgebraicJacobian/Picard/DivSchemeHighWindowFibreNormalization.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divUniversalHighWindowSuccessorExponentFibreEquiv
 type: lean
-updated: '2026-07-29T15:26:34'
+updated: '2026-07-29T15:31:40'
 ---
 noncomputable def divUniversalHighWindowSuccessorExponentFibreEquiv (n : Nat) :
     ↥(Scheme.divisorSections K

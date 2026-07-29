@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.rowSnd_snd
 file: AlgebraicJacobian/Albanese/Milne33Rows.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.rowSnd_snd
 type: lean
-updated: '2026-07-29T15:26:29'
+updated: '2026-07-29T15:31:33'
 ---
 lemma rowSnd_snd (pt : Spec (.of kbar) ⟶ X.left) (hpt : pt ≫ X.hom = 𝟙 _) :
     rowSnd pt hpt ≫ pullback.snd X.hom X.hom = X.hom ≫ pt :=

@@ -10,10 +10,9 @@ docstring: 'The value of `divFamZarAffOfAff` at every affine open is the restric
 file: AlgebraicJacobian/Picard/DivisorFamilyAffVehicle.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.divFamZarAffOfAff_val
 type: lean
-updated: '2026-07-29T15:26:12'
+updated: '2026-07-29T15:31:44'
 ---
 lemma divFamZarAffOfAff_val (x : DivFamZarAff C R n)
     (U : (overSpec k R).left.affineOpens) :

@@ -7,10 +7,9 @@ docstring: The chart-0 generators, restricted to the overlap of the pinned chart
 file: AlgebraicJacobian/Cohomology/GluedSheafDatum.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.BasicOpenCoverData.hInf
 type: lean
-updated: '2026-07-29T15:26:39'
+updated: '2026-07-29T15:31:34'
 ---
 noncomputable def hInf (j : D.J₀) :
     Γ(relCurve C B,

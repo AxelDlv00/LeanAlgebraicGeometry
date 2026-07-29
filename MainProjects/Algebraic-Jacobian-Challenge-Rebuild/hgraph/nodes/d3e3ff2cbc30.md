@@ -15,10 +15,9 @@ docstring: 'Base change of locally certified divisor classes along an explicit `
 file: AlgebraicJacobian/Picard/DivisorFamilyZarVehicle.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.DivFamZar.mapAlgHom
 type: lean
-updated: '2026-07-29T15:26:34'
+updated: '2026-07-29T15:31:45'
 ---
 def mapAlgHom (φ : A →ₐ[k] A') : DivFamZar C A π n → DivFamZar C A' π n :=
   letI : Algebra A A' := φ.toRingHom.toAlgebra

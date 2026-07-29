@@ -10,10 +10,9 @@ docstring: 'Any overlap between a range member and a non-range member of the ext
 file: AlgebraicJacobian/Picard/CechPicClopenGlue.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.CechPic.extOpens_overlap_le_bot
 type: lean
-updated: '2026-07-29T15:26:16'
+updated: '2026-07-29T15:31:37'
 ---
 lemma extOpens_overlap_le_bot (hdisj : w.opensRange ⊓ Ω' = ⊥) {y y' : Y}
     (hy : y ∈ w.opensRange) (hy' : y' ∉ w.opensRange) :

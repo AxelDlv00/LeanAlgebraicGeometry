@@ -9,10 +9,9 @@ docstring: 'The intertwining property of `uniqueUpToIso`: composing with the can
 file: AlgebraicJacobian/Picard/JacobianData.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.JacobianData.homEquiv_uniqueUpToIso_hom
 type: lean
-updated: '2026-07-29T15:26:11'
+updated: '2026-07-29T15:31:46'
 ---
 theorem homEquiv_uniqueUpToIso_hom (d d' : JacobianData C) {T : Over (Spec (.of k))}
     (f : T ⟶ d.J) :

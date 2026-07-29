@@ -11,10 +11,9 @@ file: AlgebraicJacobian/Picard/DivisorThetaDatum.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.DivisorAdaptation.germ_res_eqn_left
 type: lean
-updated: '2026-07-29T15:26:36'
+updated: '2026-07-29T15:31:45'
 ---
 private lemma germ_res_eqn_left (i j : A.index) :
     ∀ (z : relCurve C R) (hz : z ∈ A.pieces i ⊓ A.pieces j),

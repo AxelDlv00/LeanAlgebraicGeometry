@@ -8,10 +8,9 @@ docstring: '**Cohomology vanishing transports across the subordination** in ever
 file: AlgebraicJacobian/Cohomology/GluedSheafSubord.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.subsingleton_hModule_gluedSheaf_subord
 type: lean
-updated: '2026-07-29T15:26:08'
+updated: '2026-07-29T15:31:35'
 ---
 theorem subsingleton_hModule_gluedSheaf_subord (hσ : ∀ i : I, V i ≤ U (σ i))
     (hg' : ∀ i i' : I, (g' i i' : Γ(X, V i ⊓ V i')) =

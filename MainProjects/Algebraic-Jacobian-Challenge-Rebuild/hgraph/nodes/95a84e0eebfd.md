@@ -16,10 +16,9 @@ docstring: '**The trivial (unit) local-equation system**: the constant equation 
 file: AlgebraicJacobian/Picard/DivisorFamilyBackward.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.LocalEquations.unitEquations
 type: lean
-updated: '2026-07-29T15:26:29'
+updated: '2026-07-29T15:31:44'
 ---
 noncomputable def unitEquations : X.LocalEquations where
   cover := ⊤

@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.fiberCoordUnit_inv_val
 file: AlgebraicJacobian/RiemannRoch/FLVFiberToolkit.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.fiberCoordUnit_inv_val
 type: lean
-updated: '2026-07-29T15:26:32'
+updated: '2026-07-29T15:31:49'
 ---
 lemma fiberCoordUnit_inv_val : ((fiberCoordUnit π)⁻¹).val
     = (Y.presheaf.germ (fiberChart₁ π) (genericPoint Y)

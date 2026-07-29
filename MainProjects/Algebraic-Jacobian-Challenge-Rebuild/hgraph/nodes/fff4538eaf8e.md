@@ -7,10 +7,9 @@ docstring: 'The one-point lattices are monotone: a larger bound admits more func
 file: AlgebraicJacobian/RiemannRoch/Devissage.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.pointLattice_mono
 type: lean
-updated: '2026-07-29T15:26:40'
+updated: '2026-07-29T15:31:49'
 ---
 lemma pointLattice_mono {m n : ℤ} (h : m ≤ n) : pointLattice K hx m ≤ pointLattice K hx n := by
   intro g hg

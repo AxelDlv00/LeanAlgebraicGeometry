@@ -29,10 +29,9 @@ docstring: '**W1 — the cross-chart converse of chart compatibility**
 file: AlgebraicJacobian/Picard/GrassmannianChartCompare.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Grassmannian.specMap_ι_eq_of_map_chartTautologicalPoint_eq
 type: lean
-updated: '2026-07-29T15:26:07'
+updated: '2026-07-29T15:31:46'
 ---
 theorem specMap_ι_eq_of_map_chartTautologicalPoint_eq
     (i i' : (glueData k d r).J) {B : Type u} [CommRing B] [Algebra k B]

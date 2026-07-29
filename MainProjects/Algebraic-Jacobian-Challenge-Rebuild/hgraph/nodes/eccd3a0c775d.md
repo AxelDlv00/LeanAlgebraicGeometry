@@ -6,10 +6,9 @@ decl: AlgebraicGeometry.Scheme.TwoCoverPairData.end₀_apply
 file: AlgebraicJacobian/Cohomology/RigidEngine4Assembly.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: AlgebraicGeometry.Scheme.TwoCoverPairData.end₀_apply
 type: lean
-updated: '2026-07-29T15:26:37'
+updated: '2026-07-29T15:31:36'
 ---
 lemma end₀_apply {W : X.Opens} (hW : W ≤ U₀) (m : F.obj.obj (op W)) :
     dat.end₀ hW m = Scheme.QcohOn.qsmul hW dat.g₀ m := rfl

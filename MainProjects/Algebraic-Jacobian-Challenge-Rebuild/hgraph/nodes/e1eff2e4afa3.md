@@ -8,10 +8,9 @@ file: AlgebraicJacobian/RiemannRoch/JumpDimension.lean
 generated: lean
 lean_status: lean_ok
 private: true
-stale: true
 title: AlgebraicGeometry.mem_pointLattice_zero_iff
 type: lean
-updated: '2026-07-29T15:26:35'
+updated: '2026-07-29T15:31:49'
 ---
 private lemma mem_pointLattice_zero_iff {g : X.functionField} :
     g ∈ pointLattice K hx 0 ↔ Scheme.ord (X ↘ Spec (CommRingCat.of K)) hx g ≤ 1 := by

@@ -15,10 +15,9 @@ docstring: '**Base change commutes with cokernels**: for a linear map `f : M →
 file: AlgebraicJacobian/Cohomology/RelativeH1BaseChange.lean
 generated: lean
 lean_status: lean_ok
-stale: true
 title: LinearMap.quotRangeBaseChangeEquiv
 type: lean
-updated: '2026-07-29T15:26:39'
+updated: '2026-07-29T15:31:36'
 ---
 noncomputable def quotRangeBaseChangeEquiv :
     A ⊗[R] (N ⧸ LinearMap.range f) ≃ₗ[A]
