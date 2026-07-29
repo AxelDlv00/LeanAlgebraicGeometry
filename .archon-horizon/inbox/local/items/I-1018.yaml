@@ -1,0 +1,54 @@
+id: I-1018
+provider: local
+kind: issue
+body: "\"Unconditional.\" ON THE ETALE HALF OF THE PIC SEAM IS UNLABELLED SORRY-REACHABILITY\
+  \ -- and the CONSUMER file is more honest than the seam it consumes. MEASURED by\
+  \ work-reviewer: lake env lean EXIT=0; imports current (lake build EXIT=0, 8710\
+  \ jobs, sole warning = line-481 sorry). File: AlgebraicJacobian/Picard/FGAPicRepresentability.lean.\n\
+  \nMEASUREMENT. Declaration-level #print axioms: PicSchemeEt, representableEt,\n\
+  instPicSchemeEtLocallyOfFiniteType, instPicSchemeEtIsSeparated, picEtCommGrp,\n\
+  picEtCommGrpForgetIso, groupSchemeStructureEt = [propext, Classical.choice, Quot.sound]\n\
+  (each BINDS [HasPicSchemeEt C]). Direct sorryAx: fgaPicardRepresentability,\ninstHasPicSchemeEt,\
+  \ picEtComparison_isIso_of_hasRationalPoint, picSchemeOfHasRationalPoint.\n\nUSE\
+  \ SITE, at a real curve of this project (Adelic.p1Over k -- all three binders synthesise):\n\
+  HasPicSchemeEt (p1Over k) := inferInstance -> sorryAx; PicSchemeEt (p1Over k) ->\
+  \ sorryAx;\nPic0Et.finiteDimensional_cotangentSpace (p1Over k) -> sorryAx. Also\
+  \ at an ABSTRACT curve\ncarrying only the three geometric binders and NOT the gate:\
+  \ it synthesises and yields\nrepresentableEt C, sorryAx. So [HasPicSchemeEt C] is\
+  \ not a gate -- it is discharged by\nsearch for every object in its own domain.\
+  \ Control in the same probe: [HasPicScheme C] :=\ninferInstance FAILS (synthInstanceFailed),\
+  \ so the legacy class really is instance-free.\n\nUNLABELLED DOCSTRINGS (docstring-only\
+  \ fixes):\n* :542, :551 -- both end \"extracted from the etale existence package.\
+  \ Unconditional.\" That\n  bare word reads as \"holds today at a curve\"; measured\
+  \ it is sorryAx at p1Over. Highest value.\n* :517-519 PicSchemeEt \"the honest Pic_{C/k}\
+  \ ... available for every smooth proper\n  geometrically integral curve\" -- true\
+  \ as an implication, no mention the availability IS the\n  sorry firing.\n* :534\
+  \ representableEt, :585 groupSchemeStructureEt -- same shape, no sorry mention.\n\
+  * :491-492 HasPicSchemeEt \"consumers can quantify over it as a hypothesis and stay\n\
+  \  kernel-clean\" -- undeliverable at a use site, since the class is always synthesisable.\n\
+  \nALREADY LABELLED, leave alone: instHasPicSchemeEt (:504-507) and picSchemeOfHasRationalPoint\n\
+  (:640-644).\n\nTHE ASYMMETRY. Pic0EtTangentSpace.lean:59-67 and scripts/axiom-frontier.lean:1293-1300\n\
+  already state the implication-vs-use-site distinction exactly right. The seam file\
+  \ that OWNS\nthe sorry does not, and it is where a reader arrives first."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:06:01.025249+00:00'
+updated_at: '2026-07-29T15:06:34.408181+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0006-horizon-review-ajc
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - review-ajc

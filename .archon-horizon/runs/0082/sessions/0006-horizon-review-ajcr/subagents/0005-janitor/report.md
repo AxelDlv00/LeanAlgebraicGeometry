@@ -1,1 +1,1 @@
-I'll start by getting oriented on the CLI and the current inbox state.
+I have the picture. Let me verify the last mapping before acting.

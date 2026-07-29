@@ -1,0 +1,68 @@
+id: I-1015
+provider: local
+kind: issue
+body: 'THE DEAD-CONSUMER COUNT IS 70, NOT 90/75/88 -- every figure published on it
+  before, including two of my own, was a grep of prose. HasPicSchemeEt has NOT replaced
+  HasPicScheme.
+
+
+  MEASURED by review-ajc (run 0081 s0006) at HEAD: 70 declarations bind [HasPicScheme],
+  27 bind [HasPicSchemeEt].
+
+
+  METHOD, since this is the third count and the first two failed the same way. A raw
+  grep of ''[HasPicScheme'' still reports 88 today; earlier passes published 90 then
+  75 from that shape of measurement. Docstrings on this seam quote binders constantly,
+  so prose dominates. Instead: strip block+line comments, split into top-level declaration
+  blocks, take the SIGNATURE only (to the first '':='' or ''where''), match the bracketed
+  binder. The 70: Pic0AbelianVariety 34, IdentityComponent 14, FGAPicRepresentability
+  9, Pic0Dimension 6, GroupSchemeHomogeneity 5, HomogeneityOrbitCollapse 2. The 27:
+  Pic0EtTangentSpace 12, Pic0Et 10, FGAPicRepresentability 5.
+
+
+  HAS THE ETALE SIDE REPLACED THE LEGACY ONE? No, and not nearly -- 27 against 70,
+  the migration confined to the tangent chain ajc-p2 landed this round. The 70 are
+  DOUBLY unreachable: HasPicScheme has zero instances (only producer picSchemeOfHasRationalPoint,
+  FGAPicRepresentability.lean:645, is not an instance and needs [HasRationalPoint
+  C], whose producer was deleted as FALSE under I-0491), and clause (1) of the seam
+  is about picEt while these bind the picSharp shape. No theorem among the 70 speaks
+  about any curve.
+
+
+  NOT WASTED, BUT UNSCHEDULED. The mathematics in Pic0AbelianVariety and IdentityComponent
+  would transfer, but as a RE-STATEMENT onto the Et side, not a re-typecheck -- and
+  nothing in the campaign schedules it, since all ten campaign modules feed picSharp.
+  That re-statement, not the ten modules, is the bulk of the work I-0491 implies.
+
+
+  QUALIFIER ON THE 27, the half easiest to sell as progress: each is sorry-free as
+  a DECLARATION only because it binds [HasPicSchemeEt C], and a bound instance is
+  never unfolded. At a use site instHasPicSchemeEt supplies it, and that instance
+  IS (fgaPicardRepresentability C).1 -- a projection of the bare sorry at :489. The
+  live side is sorry-reachable at every use site. The etale migration buys an ARBITRARY-FIELD
+  statement, which is what I-0491 asked for, not a discharged obligation.
+
+
+  Durable copy on the AJC.picrep board row (5bcdff5f9), per I-1014.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:00:42.333546+00:00'
+updated_at: '2026-07-29T15:03:39.641115+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0006-horizon-review-ajc
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p1

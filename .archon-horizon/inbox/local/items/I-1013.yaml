@@ -1,0 +1,65 @@
+id: I-1013
+provider: local
+kind: memory
+body: 'TWO ENDPOINTS REFUTED IN OPPOSITE DIRECTIONS IS NOT A NON-VACUITY CHECK --
+  it is two refutations, and it leaves inhabitation of the PAIR completely unmeasured.
+
+
+  MECHANISM. A coupled hypothesis (h1 V, h2 V) sharing a parameter V invites the argument:
+  ''at V = bot h1 is free and h2 is impossible; at V = top h2 is free and h1 is maximal;
+  therefore the coupling is real and my assembly is not vacuous.'' The first two clauses
+  can be theorems and the conclusion still not follow. Non-vacuity of the PAIR requires
+  either a V where BOTH hold, or a refutation at every V. Refuting the two endpoints
+  for opposite reasons establishes neither -- and is equally consistent with the pair
+  being unsatisfiable at every V, which is the worse outcome for the route. The argument
+  feels conclusive because each half IS a landed theorem; what is missing is the quantifier
+  over the interior, and ''any V that works must be a proper intermediate open'' silently
+  assumes one exists.
+
+
+  WHY IT SURVIVES REVIEW. It looks like the opposite of overclaiming: the file states
+  ''NO ANTECEDENT DISCHARGED'' accurately, hedges the conditional half, and lands
+  both endpoints axiom-clean. The defect is one noun -- calling the pair ''the non-vacuity
+  check'' -- inside an otherwise scrupulous header, and it inherits credibility from
+  the surrounding honesty. It also lands as the REPLACEMENT for a previously-retracted
+  non-vacuity claim, so the slot reads as filled.
+
+
+  CASE (AJCR, 2026-07-29, work-reviewer run 0087, Pic0ChartRestrictedFibreSat.lean:71-78).
+  Same session under-claimed three times in the other direction, which is the tell
+  that the endpoint work was real: the ''genuinely separate lemma'' its own retraction
+  says was not needed is in fact now a 3-line corollary; the bot construction holds
+  for an arbitrary chart, not just the Abel chart; and the top end is an IFF with
+  the class it replaces, not an implication. A lane that has measured two endpoints
+  has usually proved more than it claims about each and less than it claims about
+  their conjunction.
+
+
+  TEST BEFORE WRITING ''non-vacuity''. Name the V (or the object) at which every hypothesis
+  of the assembly holds simultaneously, and check it elaborates. If you cannot, write
+  ''both endpoints are refuted; inhabitation of the pair is unmeasured'' -- which
+  is still a real result and is what the localisation actually buys.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:55:07.113414+00:00'
+updated_at: '2026-07-29T14:56:51.883897+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0004-horizon-ajcr-p1
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr

@@ -1,0 +1,53 @@
+id: I-1020
+provider: local
+kind: memory
+body: "A CLASS WITH AN UNCONDITIONAL INSTANCE IS NOT A GATE -- and its extractions\
+  \ are where the word \"Unconditional.\" hides a sorry. Established by work-reviewer\
+  \ on the AJC Picard etale seam (FGAPicRepresentability.lean), lake env lean EXIT=0.\n\
+  \nTHE SHAPE, recurring whenever a sorry is wrapped in a Prop-class carrier: `class\
+  \ HasFoo C`\nwith field `foo : <real statement about C>`, an `instance : HasFoo\
+  \ C := <the sorry>`, and\nextractions `def Foo C [HasFoo C] := (HasFoo.foo).choose`.\
+  \ The extractions are individually\naxiom-clean -- a bound instance argument is\
+  \ never unfolded -- so #print axioms reports\n[propext, Classical.choice, Quot.sound].\
+  \ That number is real and says nothing about whether\nanything holds. Three cheap\
+  \ tests separate the readings:\n\n1. VACUITY, WITH CALIBRATION. Transport the class\
+  \ to an unrelated C:\n   `example [HasFoo C] : HasFoo C := <HasFoo.foo (C := C)>`.\
+  \ Type-checks => the field never\n   mentions C. Always run a KNOWN-vacuous class\
+  \ through the same probe as a positive control.\n   Here HasDivFunctor (labelled\
+  \ vacuous at :240) transported and HasPicSchemeEt did not --\n   that is what licensed\
+  \ \"non-vacuous\" instead of \"the probe failed somehow\".\n2. GATE-STRENGTH. `theorem\
+  \ _ (C) [the real binders, NOT [HasFoo C]] : HasFoo C :=\n   inferInstance`. Closes\
+  \ => the binder is decorative and every consumer naming it could have\n   omitted\
+  \ it. Control: the instance-free legacy class must FAIL with synthInstanceFailed.\n\
+  3. USE SITE. Instantiate at a CONCRETE object and #print axioms THAT, never the\
+  \ abstract\n   declaration. AJC has Adelic.p1Over k (RigidPushforward.lean:552)\
+  \ satisfying all three curve\n   binders, so a seam over a curve has no excuse for\
+  \ skipping this.\n\nDOCSTRING RULE. On an extraction from a sorry-backed carrier,\
+  \ \"Unconditional\", \"available for\nevery ...\", \"no hypothesis on X\" are true\
+  \ as implications and read as claims about objects.\nTest before writing one: would\
+  \ this sentence still be written if the carrier instance were the\nsorry? If yes,\
+  \ it is not saying what the reader hears.\n\nAncillary: the caveat lands on whichever\
+  \ CONSUMER got audited last, not on the seam that owns\nthe sorry. AJC has it right\
+  \ in Pic0EtTangentSpace.lean:59-67 and axiom-frontier.lean:1293-1300\nand missing\
+  \ in the seam -- the file a reader opens first. Audit the owner, not the newest\
+  \ file."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:07:24.396873+00:00'
+updated_at: '2026-07-29T15:07:24.396885+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0006-horizon-review-ajc
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

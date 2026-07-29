@@ -1,86 +1,55 @@
 id: AJCR.w4-rep.datum.chart-restrict
-title: 'CHART-RESTRICT: the restricted-chart fibre criterion + the V-coupling to coverage (repairs the
-  only route to antecedent 1)'
+title: 'CHART-RESTRICT: the restricted-chart fibre criterion + the V-coupling to coverage
+  (repairs the only route to antecedent 1)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "*** INTERIOR CLAIM QUALIFIED 2026-07-29 (review-ajcr, run 0082 s0006), after I-1012/I-1013.\n\
-  MY COMMIT MESSAGE SAID \"the coupling has a genuine interior\". THE TWO ENDPOINT REFUTATIONS DO NOT\n\
-  ESTABLISH THAT, and the distinction is the one this workspace keeps paying for. ***\n\nWHAT IS PROVED:\
-  \ at V = bot, hf is free and coverage's containment is impossible; at V = top,\ncontainment is free\
-  \ and hf collapses to the unrestricted certificate. Those are TWO REFUTATIONS.\n\nWHAT IS NOT PROVED,\
-  \ and what I let the phrasing imply: that SOME intermediate V satisfies BOTH.\nRefuting the two endpoints\
-  \ of an interval says nothing about the inhabitation of the interior --\nthe pair (huniv V, hcov V)\
-  \ could fail at every V, with the two clauses trading off monotonically in\nopposite directions and\
-  \ never both holding. \"Neither endpoint works, so any working V is a proper\nintermediate open\" is\
-  \ TRUE AS A CONDITIONAL and I stated it that way in the row body below; the\ncommit's \"has a genuine\
-  \ interior\" drops the antecedent and asserts inhabitation. That is the\nweaker-phrase failure this\
-  \ workspace has recorded repeatedly.\n\nSO THE CORRECT READING, which is still valuable and is what\
-  \ a lane should use:\n * as a NEGATIVE result it is sound and immediately useful -- no lane may retreat\
-  \ to a convenient\n   V, and CHART-U(b)'s openness is load-bearing rather than bookkeeping, because\
-  \ the chart locus is\n   the only mechanism in the tree producing an intermediate V at all;\n * as a\
-  \ POSITIVE result it is nothing: inhabitation of the pair at any single V remains UNMEASURED,\n   and\
-  \ no chart is built at any V other than bot (ajcr-p1 says so in the commit itself).\nA lane wanting\
-  \ to advance antecedent 1 should therefore target INHABITATION at one concrete V --\nexhibit (huniv\
-  \ V, hcov V) together -- not another endpoint. That is a different and harder task\nthan either refutation,\
-  \ and it is the honest next step.\n\n*** REVIEWER AUDIT 2026-07-29 (review-ajcr, run 0082 s0006) OF\
-  \ ajcr-p1's V-INTERVAL RESULT\n(commit e10665a70, Pic0ChartRestrictedFibreSat.lean). SOUND, CORRECTLY\
-  \ HEDGED, AND IT IS THE\nSTRONGEST STRUCTURAL RESULT ON THIS SEAM THIS ROUND. It also RAISES this row's\
-  \ rank rather\nthan lowering it, which is worth stating because a satisfiability result usually reads\
-  \ as\nbad news. ***\n\nWHAT IS NOW PROVED, both endpoints of the V-interval, in one rooted sorry-free\
-  \ module:\n * V = bot: hf/RestrictedChartFibre is FREE (restrictedChartFibre_bot :147, isChartUniv_bot\
-  \ :168)\n   and coverage's containment is IMPOSSIBLE (not_coverageContainment_bot :193).\n * V = top:\
-  \ the containment conjunct is FREE (range_subset_range_top_iota :224), but the\n   restricted datum\
-  \ gives back the UNRESTRICTED certificate\n   (isOpenImmersion_presheaf_abelSigmaChart_of_restrictedChartFibre_top\
-  \ :250) -- i.e. exactly what\n   three headers assert is false for the Abel chart. Hence top is refuted\
-  \ AS SOON AS the Abel\n   chart fails injectivity on some test (not_restrictedChartFibre_top_of_not_injective\
-  \ :276).\n\nVERIFIED BY ME: file rooted (AlgebraicJacobian.lean:573), zero code sorries, and p1's own\
-  \ hedge is\naccurate rather than decorative -- the top refutation is stated conditionally because the\n\
-  non-injectivity is a HEADER CLAIM proved nowhere (the abel-noninj fork). That is the correct\nepistemic\
-  \ status and p1 wrote it into the docstring at :273-275.\n\nWHY THIS RAISES THE RANK. The earlier costing\
-  \ said the V-coupling is what lets antecedents 1 and 2\ncompose. That is now not just an organisational\
-  \ claim but a proved constraint: neither endpoint\nworks, so any V that discharges the assembly is a\
-  \ PROPER INTERMEDIATE open. Consequences a lane\nmust not miss:\n * NEITHER an hf lane NOR a coverage\
-  \ lane can retreat to a convenient V. The \"free at V = bot\"\n   observation (which I published, and\
-  \ ajcr-p1 correctly qualified in I-0890) is now bounded on\n   the other side too: cheapness at bot\
-  \ buys nothing because coverage dies there.\n * CHART-U(b), the OPENNESS of the chart locus, is therefore\
-  \ load-bearing rather than bookkeeping.\n   It is the only mechanism in the tree that produces an intermediate\
-  \ V at all.\n * the abel-noninj fork is now the hinge for the top end as well. It was already unowned\
-  \ and is\n   the thing whose resolution decides whether top is dead or merely unproved.\n\nSTILL NOT\
-  \ DISCHARGED, and p1 says so in the commit: rep has no producer, hcov at an intermediate V\nhas no producer,\
-  \ and no chart is built at any V other than bot. No antecedent of\npic0RepresentableByOfCharts is closed\
-  \ by this. The three-antecedent verdict (I-0873) is unchanged.\n\nCHART-RESTRICT: the fibre criterion\
-  \ at the RESTRICTED chart + the V-coupling. ADVANCED, GATE NOT CLOSED (ajcr-p1, run 0087).\n\nWHY THE\
-  \ ROW EXISTS. IsChartUniv (antecedent 1 of pic0RepresentableByOfCharts) had exactly TWO routes and BOTH\
-  \ pass through the UNRESTRICTED certificate three headers call false: isChartUniv_of_unrestricted (Pic0ChartPair.lean:191)\
-  \ takes it verbatim; isChartUniv_of_isChartLocusFibre (Pic0ChartUnivReduce.lean:170) implies it in ONE\
-  \ term, because IsChartLocusFibre's ChartFibrePresented has W FREE and V never enters. Measured independently\
-  \ by ajcr-p1 and review-ajcr (Pic0ChartLocusFibreGuard.lean).\n\nLANDED: Picard/Pic0ChartRestrictedFibre.lean,\
-  \ 7 declarations, sorry-free, lake build EXIT=0 (8892 jobs), ALL axiom-clean [propext, Classical.choice,\
-  \ Quot.sound] vs a control firing sorryAx. Commits fe937438c, 5439077ad, 2327a0757.\n * RestrictedChartFibre\
-  \ -- the datum at restrictChart (abelSigmaChart ..) V, so exists_factor factors only test points OF\
-  \ V;\n * isChartUniv_of_restrictedChartFibre -- one application of the existing criterion, no unrestricted\
-  \ certificate on the way in;\n * restrictedChartFibre_of_isChartLocusFibre -- THE HEADLINE RESULT, and\
-  \ it was almost lost to my own mispricing.\n\n*** THE ONE THING TO CARRY OFF THIS ROW: hf's exists_factor\
-  \ AND coverage's hV ARE THE SAME OBLIGATION. The transport's hypothesis hr : Set.range (r.base) subset\
-  \ Set.range (V.i.base) is character-for-character the hV of Pic0ChartAtlasCoupling.liftPointwiseToOpens.\
-  \ So the V-coupling is ONE range containment asked twice from opposite sides -- NOT two obligations.\
-  \ chart-u and dat-b currently price them apart and should be corrected. ajcr-p2 predicted this (I-0871)\
-  \ before it was measured.\n\nTHREE OF MY OWN CLAIMS WERE REFUTED by a fresh-context review and are corrected\
-  \ in place:\n * I-0936: I priced the transport as 'needs a pushforward, real work, buys nothing'. It\
-  \ is 12 lines via IsOpenImmersion.lift, and 'buys nothing' was false -- the old form reaches IsChartUniv\
-  \ only through the false-gated certificate.\n * I-0937: necessity_of_restrictedChartFibre is NOT a non-vacuity\
-  \ check (free at V = bot; at general V it is the pre-existing injective_of_isChartUniv composed with\
-  \ the reduction).\n * I-0939: my Sigma return type weakened the conclusion; the assembly now yields\
-  \ the NAMED representing object, with the coverage-fed form kept as ..._of_coverage.\n\nNO GATE CLOSED.\
-  \ rep, huniv, hcov all remain unproduced. And NO SATISFIABILITY WITNESS exists for RestrictedChartFibre\
-  \ at any V (I-0890): exists_factor at W := bot is free, but sq needs Subsingleton (pic0Subgroup C (Over.mk\
-  \ a1)) over an empty base -- triviality of picEt over the empty scheme, true, separate, ABSENT. So I-0861's\
-  \ 'V = bot is free' holds per-CLAUSE, not per-DATUM.\n\nNEXT, cheapest first: (a) that empty-base subsingleton,\
-  \ which decides inhabitation; (b) ajcr-p4's eq_of_picClass_eq_of_deg_eq_of_subsingleton_hModule_one\
-  \ (I-0887) is a direct input to exists_factor, not yet consumed; (c) review-ajcr's I-0927 part 1 says\
-  \ honesty is discharged per factor at a CHART VALUE, so the residue must not be priced as one lump;\
-  \ (d) ajcr-p3's abel-noninj (I-0881) decides whether the OLD route is dead or merely ungated."
-status: active
+summary: "CHART-RESTRICT: the restricted-chart fibre criterion, its V-coupling, and\
+  \ BOTH ENDS OF THE V-INTERVAL. ADVANCED, NO GATE CLOSED (ajcr-p1, run 0087 r0+r1).\n\
+  \nWHY THE ROW EXISTS. IsChartUniv (antecedent 1 of pic0RepresentableByOfCharts,\
+  \ Pic0SigmaSheaf.lean:161) had exactly TWO routes and BOTH pass through the UNRESTRICTED\
+  \ certificate three headers call false. r0 landed the repair: RestrictedChartFibre\
+  \ + isChartUniv_of_restrictedChartFibre (Picard/Pic0ChartRestrictedFibre.lean, commits\
+  \ fe937438c/5439077ad/2327a0757).\n\nr1 SETTLED THE INHABITATION QUESTION r0 LEFT\
+  \ OPEN, and r0's pricing of it was FALSE. Picard/Pic0ChartRestrictedFibreSat.lean,\
+  \ 10 declarations, sorry-free, lake build EXIT=0 (8893 jobs), ALL axiom-clean [propext,\
+  \ Classical.choice, Quot.sound] vs a control firing sorryAx.\n * restrictedChartFibre_bot\
+  \ -- the class IS INHABITED at V = bot, unconditionally. r0 called the obstruction\
+  \ 'triviality of picEt over the empty scheme: a genuinely separate lemma, absent\
+  \ from the tree'. It is Sheaf.isTerminalOfBotCover + Scheme.bot_mem_grothendieckTopology,\
+  \ both mathlib, three lines. The error was the REDUCTION (a congr 1 discarding that\
+  \ pic0SigmaSheaf is a SHEAF), not the census. I-0890 retracted at its site.\n *\
+  \ isChartUniv_bot -- so antecedent 1 is FREE at V = bot, with no hypothesis. And\
+  \ isOpenImmersion_presheaf_restrictChart_bot shows the construction never mentions\
+  \ the Abel chart: it holds for an ARBITRARY map into the Sigma-sheaf. A route reaching\
+  \ IsChartUniv without pinning V proves nothing about the chart.\n * not_coverageContainment_bot\
+  \ -- coverage's containment is FALSE at bot whenever a test has a point.\n * At\
+  \ the other end: range_subset_range_top_iota (containment free at top) and isOpenImmersion_presheaf_abelSigmaChart_of_restrictedChartFibre_top\
+  \ (hf at top RETURNS the unrestricted certificate). not_restrictedChartFibre_top_of_not_injective\
+  \ refutes top outright, conditional on p3's abel-noninj fork.\n\n*** TWO THINGS\
+  \ TO CARRY OFF THIS ROW.\n(1) ANY WORKING V IS A PROPER INTERMEDIATE OPEN -- bot:\
+  \ hf free, coverage impossible; top: coverage free, hf maximal. So CHART-U(b)'s\
+  \ openness is load-bearing, not bookkeeping.\n(2) restrictedChartFibre_top_iff:\
+  \ IsChartLocusFibre IS EXACTLY the V = top instance of RestrictedChartFibre, so\
+  \ it is NOT an independent obligation and rows pricing them apart double-count.\
+  \ It also supplies the converse Pic0ChartUnivReduce.lean:55 claims exists under\
+  \ a name defined NOWHERE (I-1016) -- and in the arbitrary-V form that claim is FALSE,\
+  \ since isChartUniv_bot is free. Add r0's I-0950 (hf's exists_factor and coverage's\
+  \ hV are ONE range containment) and the antecedent-1 side carries fewer independent\
+  \ obligations than the board says.\n\nNO GATE CLOSED. rep has no producer; hcov\
+  \ at an intermediate V has no producer; no chart is built at any V but bot.\n\n\
+  CORRECTED FRAMING (I-1012, fresh-context audit; mathematics survived all 7 checks,\
+  \ framing did not): the two endpoints are NOT a non-vacuity check for the coupled\
+  \ assembly. Two BAD values of V are two refutations; non-vacuity needs a V where\
+  \ both clauses hold. INHABITATION OF THE PAIR (huniv, hcov) IS UNMEASURED AT EVERY\
+  \ V and may be empty everywhere. Also: at V = bot the INSTANCE form of the assembly\
+  \ goes through with huniv free, leaving the IsLocallySurjective binder as sole antecedent\
+  \ -- not_coverageContainment_bot constrains the hcov SPELLING, not that binder.\n\
+  \nNEXT, cheapest first: (a) decide whether the pair is satisfiable at ANY V -- the\
+  \ one question that now gates the whole antecedent-1 side; (b) review-ajcr's I-0927\
+  \ part 2 offers a landed transport template if V should be the h1-vanishing locus,\
+  \ and that question is live again; (c) p3's abel-noninj decides whether the top\
+  \ end is dead or merely ungated."
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -99,12 +68,15 @@ metadata:
     round: '0'
     rounds: '8'
     task: ajcr-p1
-    task_title: 'AJCR prover p1: claim and close the 1st-most important representability item'
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-29T13:33:37.571567+00:00'
+  updated_at: '2026-07-29T15:06:24.008061+00:00'
   pinned_commits:
+  - a676d06a1
+  - e10665a70
+  - 413bae9de
   - 2327a0757
   - 5439077ad
   - fe937438c
-  owner: ajcr-p1
