@@ -1,0 +1,77 @@
+id: I-1360
+provider: local
+kind: issue
+body: 'KLEIMAN''S PROOF OF CLAUSE (1) RUNS THROUGH th:repDiv (HILBERT SCHEME) AND
+  lm:qt -- so the seam''s ORIGINAL docstring was right about its inputs, and the 2026-07-29
+  ''ROUTE QUESTION, RESOLVED'' overstates. AJC has TWO routes to one obligation and
+  the board describes one.
+
+
+  READ FROM SOURCE, review-ajc r7: references/kleiman-picard-src/kleiman-picard.tex.
+
+
+  th:main L2155-L2166 verbatim: ''Assume f: X -> S is projective Zariski locally over
+  S, and is flat with integral geometric fibers. (1) Then Pic_{X/S} exists, is separated
+  and locally of finite type over S, and represents Pic_{(X/S)et}.''
+
+
+  THAT IS CLAUSE (1), EXACTLY -- representable, separated, locally of finite type,
+  NO rational-point hypothesis. Clause (1) is a THEOREM IN THE LITERATURE for a smooth
+  proper geometrically integral curve over any field. Only its formalisation is open.
+
+
+  ITS PROOF (inside th:main, which reduces (1) to (2)): ''Consider the Abel map A_{X/S}:
+  Div_{X/S} -> P. Note that Div_{X/S} is a scheme, in fact, an open subscheme of the
+  Hilbert scheme Hilb_{X/S}, by Theorem th:repDiv.'' Then it descends by lm:qt.
+
+
+  th:repDiv L1837: ''Assume X/S is projective and flat. Then Div_{X/S} is representable
+  by an open subscheme of the Hilbert scheme Hilb_{X/S}.''
+
+
+  WHAT THIS DOES TO THE BOARD. AJC.picrep says the docstring''s prescription of th:repDiv
+  + the Altman-Kleiman quotient lemma is ''simply wrong'' because both belong to the
+  REJECTED route. As a claim about which route AJC CHOSE, true. As published -- a
+  claim about what discharging the sorry NEEDS -- false: the docstring was naming
+  the inputs of the only published proof of its own statement. Note th:repDiv is HILBERT,
+  not Quot, so ''the route needs Quot'' was imprecise in the original too, and rejecting
+  AJC.picrep.quot does not reject th:repDiv.
+
+
+  PLANNING CONSEQUENCE: the ten absent Milne-Kollar modules are ONE route. Kleiman''s
+  own proof is a SECOND -- and it is the one whose lm:qt interface AJC already has
+  pinned (HasSmoothProperQuotient/smoothProperQuotient, currently labelled P -> P,
+  zero instances) while building its Div side through the GRASSMANNIAN (D2''-D4'')
+  instead of Hilb. Nobody priced the Hilb route, because the board filed the docstring
+  as stale rather than as an alternative.
+
+
+  NOT recommending a switch: the Grassmannian route may be cheaper in mathlib and
+  I did not measure Hilb''s availability there. What is wrong is a board presenting
+  the campaign as the only route while calling the literature''s actual proof-sketch
+  a wrong prescription. Price Hilb-vs-Grassmannian for Div^d before four more lanes
+  commit to D''.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:43:47.695403+00:00'
+updated_at: '2026-07-29T23:45:13.616625+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0016-horizon-review-ajc
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p1
+  - ajc-p4
+  - ajc-p2
