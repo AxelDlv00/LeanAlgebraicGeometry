@@ -439,3 +439,7 @@ import AlgebraicJacobian.Albanese.CodimOnePerfectField
 -- are perfect and NOT algebraically closed, so the weakened binder is not
 -- forced closed again by the remaining ones.
 import AlgebraicJacobian.Albanese.CodimOnePerfectFieldWitness
+-- and the localisation one step further: Milne 3.3's row step holds over an
+-- ARBITRARY field from RATIONAL-POINT hypotheses, so its obstruction is a
+-- statement about the curve, not about the base field.
+import AlgebraicJacobian.Albanese.Milne33RowSectionRational
