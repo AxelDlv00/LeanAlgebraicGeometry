@@ -2,51 +2,73 @@ id: AJC.picrep
 title: Picard scheme representability cone
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Represent the relative Picard functor by the Milne-Kollar route selected
-  in informal/pic-representability-campaign.md: build Pic^r over a separably closed
-  field from the h0=1 loci cut out by a tuple of rational points, glue, descend to
-  k by a finite Galois quotient, then assemble the degrees by a coproduct.  COMPLETED
-  INPUTS: line-bundle coherence, the Grassmannian and graded algebra substrate, glue-descent,
-  Speiser semilinear descent, the affine Galois quotient, the stable affine cover,
-  and -- new 2026-07-27 -- the RIGIDIFIED PUSHFORWARD GATE, discharged with a real
-  instance and verified clean at the synthesis site (AJC.picrep.rigidpushforward,
-  task ajc-gate). Both engines that distinguish this route from the quotient route
-  are now substantially built: the pushforward is done, and the finite Galois quotient
-  has Speiser descent, the affine model and Gamma-stable affine covers proved, with
-  gluing (G2(c)) remaining.  OPEN INPUTS: uniform H^1 vanishing in high degree (cluster
-  P, task ajc-rr -- landed further than the campaign table suggests, but almost all
-  of it conditional in the STATEMENT on the closed chi-ledger or a peel datum, so
-  read scripts/axiom-frontier.lean §6b/§6d before treating any of it as available),
-  degree-r divisor representability with its Grassmannian certificate, the Milne glue
-  itself (cluster J, zero lines), and Galois descent of picSharp points through rigidified
-  pairs (cluster G).  NEITHER ROUTE IS HYPOTHESIS-FREE, and the blueprint now says
-  so (rem:orbit_in_affine_hypothesis): the quotient route needs quasi-projectivity
-  of the Abel-map slice, this route needs every finite Galois orbit in an affine open,
-  and the same Hironaka example defeats both. The difference is that the orbit condition
-  is available for the schemes this route quotients.  THE RATIONAL POINT IS NO LONGER
-  AN OPEN DECISION. I-0372 was CLOSED on 2026-07-28 by protection I-0491: branch (2)
-  ETALE-SHEAFIFY is chosen, the headline is stated over an ARBITRARY field with no
-  rational-point binder, and hasRationalPoint_of_curve was FALSE as stated and has
-  been deleted rather than proved. An earlier version of this summary said the decision
-  remained open and was carried identically by both routes; that reading is stale.
-  AJC.picrep.rational-point is done.
+summary: 'REOPENED active by review-ajc 2026-07-29 (was `done`, which was wrong in
+  the strongest available sense: the deliverable this node advertised does not exist).
 
 
-  STATUS MISMATCH, KNOWN AND ESCALATED -- DO NOT RE-TRIAGE. This row is `done` while
-  children .quot, .serre and .tensor are `pending`, so `roadmap list` warns. Per I-0543
-  the `done` was NOT a decision anyone made: it propagated automatically from task
-  ajc-etale-pic''s terminal status into all four of its roadmap_refs at 2026-07-28T06:04:16.
-  Five hygiene passes have converged on the reading (thread I-0538, C-0001..C-0004)
-  and it SPLITS the children rather than giving one verdict: .quot and .serre say
-  in their OWN summaries that they are ''OFF-PATH, retained not revived'' and serve
-  the abandoned Quot endgame, so they want `rejected` or re-parenting out of picrep;
-  .tensor carries no such disclaimer and is a live input to Hilbert-function base
-  change, so it is the only evidence this parent is premature. Also unreconciled:
-  I-0491 clause 2 says the honest state of the etale-sheafified obligation is ONE
-  NAMED OPEN SORRY, which sits badly with a `done` representability parent. Executing
-  any of that is a route decision, not bookkeeping; it is with the human as I-0605.
-  Until that returns, THIS WARNING IS EXPECTED AND SHOULD BE LEFT ALONE.'
-status: done
+  THE ONE OPEN OBLIGATION, named. `Scheme.fgaPicardRepresentability`, `Picard/FGAPicRepresentability.lean:347`
+  — a BARE `sorry`. Statement: for a smooth proper geometrically integral curve over
+  an ARBITRARY field `k`, (1) the etale-sheafified relative Picard functor `PicScheme.picEt
+  C` is representable by a `k`-scheme that is `LocallyOfFiniteType` and `IsSeparated`,
+  AND (2) `HasRationalPoint C -> IsIso (PicScheme.picEtComparison C)` (Kleiman section
+  2 Thm 2.5). Everything else on the seam is a projection of it.
+
+
+  WHY THE OLD `done` WAS FALSE, verified three ways this round. (a) The advertised
+  deliverable `instHasPicScheme` exists in NO `.lean` file — 16 grep hits project-wide,
+  every one a docstring or comment mention; it was deleted 2026-07-28 under decision
+  I-0491, not discharged. (b) `AJC.picrep.assembly` still says "Discharges instHasPicScheme
+  (FGAPicRepresentability.lean:259)"; line 259 is mid-docstring, inside the bundling
+  rationale above `class HasPicScheme` (line 263). Both are corrected on that node.
+  (c) A `done` parent over the open child `AJC.picrep.tensor` had been warning for
+  some time.
+
+
+  THE ROUTE QUESTION, RESOLVED — the file docstring and this board disagreed, and
+  the FILE IS THE STALE ONE. `fgaPicardRepresentability`''s docstring (lines 310-319)
+  says discharging it needs "`Div` representability (Kleiman section 3 Thm `th:repDiv`,
+  which needs the Quot scheme)" and the Altman-Kleiman quotient lemma, and that "neither
+  input is available". Both cited inputs belong to the GROTHENDIECK/KLEIMAN QUOTIENT
+  ROUTE, which this project does not take and marked `rejected` (`AJC.picrep.quot`,
+  `AJC.picrep.serre`). The committed route is MILNE-KOLLAR (D3, `informal/pic-representability-campaign.md`),
+  whose Cluster D'' reaches `Div^d` representability through the GRASSMANNIAN — D1''
+  fibre-degree slices, D2'' the Grassmannian embedding, D3'' locally-closed carving,
+  D4'' `Div^d` as a scheme with a quasi-projectivity CERTIFICATE (a locally closed
+  immersion `Z_d -> Gr`) — and never through Quot. The quotient step is likewise not
+  `smoothProperQuotient`: it is G2, the FINITE GALOIS quotient of a semilinear action
+  whose finite orbits lie in affine opens, which is landed (`Picard/FiniteGaloisQuotient.lean`,
+  550 lines, sorry-free). So rejecting Quot and Serre is NOT incoherent with keeping
+  the sorry; the docstring''s prescription of the inputs is simply wrong, and it has
+  been costing every reader who trusted it. Issue filed; the docstring is corrected
+  in place.
+
+
+  WHAT THE MILNE-KOLLAR ROUTE ACTUALLY STILL NEEDS, measured by module existence rather
+  than asserted. LANDED: B0 `Picard/SectionRingUniversal.lean`, B2 `Picard/FinitePresentationFunctor.lean`,
+  B3 `Picard/RigidPushforward.lean` + the discharged gate `AJC.picrep.rigidpushforward`,
+  D1''/A2 `Picard/DivDegree.lean`, G2 `Picard/FiniteGaloisQuotient.lean` + `GaloisDescent/`,
+  P2 `RiemannRoch/CohomologyKit.lean`, and the whole Grassmannian/flattening/graded
+  substrate (`AJC.grquot`, sorry-free, with `Grassmannian.representable` proved).
+  ABSENT AS MODULES, i.e. not started: B1 `PicSharpZariskiSheaf`, B4 `PicSharpDegree`,
+  B6 `PicSharpSeparatedDevice`, D2'' `DivGrassmannianEmbedding`, D3'' `DivLocallyClosed`,
+  D4'' `DivRepresentability`, J1-J5 `MilneGlue`, G3 `PicSharpGaloisDescent`, G4 `PicTotalAssembly`,
+  P5 `UniformVanishing` (the `AJC.rr.extuniform` leaf, open). That is roughly ten
+  modules including three the campaign sized XL, on a critical path P5 -> D2''/D3''
+  -> D4'' -> J1-J5 -> G3 -> G4 -> the sorry. NOT reachable this round; the honest
+  targets are individual campaign milestones, and the two cheapest independent poles
+  are D4''-side (the substrate under it is sorry-free) and P5.
+
+
+  NOTE ON THE CONSUMER INTERFACE, because it decides which side new work goes on.
+  `HasPicScheme` (line 263, the legacy `picSharp` shape) has ZERO instances: its only
+  producer `picSchemeOfHasRationalPoint` (line 503) is deliberately not an instance
+  and needs `[HasRationalPoint C]`, which has no unconditional producer either (`hasRationalPoint_of_curve`
+  was FALSE and is deleted, I-0491 clause 1). `HasPicSchemeEt` (line 355) is the live
+  side; its instance `instHasPicSchemeEt` (line 366) is `(fgaPicardRepresentability
+  C).1`, i.e. a projection of the bare sorry. New work goes against `HasPicSchemeEt`/`picEt`.
+
+  '
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -59,6 +81,6 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:40.928722+00:00'
-  updated_at: '2026-07-29T02:59:30.028275+00:00'
+  updated_at: '2026-07-29T10:38:23.352127+00:00'
   parent: AJC.jacobian
   milestone: AJC.picrep

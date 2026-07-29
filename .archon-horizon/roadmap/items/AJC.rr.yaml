@@ -30,7 +30,7 @@ summary: 'Riemann--Roch, divisors, and the adelic genus. Cluster-P items 1 and 3
   roll-up); rooting is one import line, outside this task''s write scope.
 
   '
-status: done
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -52,7 +52,7 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian
-  updated_at: '2026-07-29T02:59:42.763881+00:00'
+  updated_at: '2026-07-29T10:35:18.140545+00:00'
   owner: ajc-rr
   pinned_commits:
   - 37f95374c

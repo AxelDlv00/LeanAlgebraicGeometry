@@ -2,19 +2,47 @@ id: AJC.picrep.assembly
 title: Assemble the Picard scheme
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Assemble the Picard scheme on the committed Milne-Kollar route: glue the
-  h0=1 loci into Pic^r over a separably closed field (needs the 01JJ engine and a
-  universe bridge, since picSharp is Type (u+1)-valued), spread the finite glue datum
-  to a finite Galois level, descend picSharp points through rigidified pairs, and
-  assemble the degree pieces as a coproduct over Z. Discharges instHasPicScheme (FGAPicRepresentability.lean:259),
-  which is currently the sole producer of HasPicScheme and sorry-bodied, so its axioms
-  leak by synthesis into every consumer (measured: scripts/axiom-frontier.lean).
+summary: 'STATUS AND ANCHOR CORRECTED by review-ajc 2026-07-29. This node was `done`
+  and cited a deliverable that does not exist; both were wrong.
 
 
-  Superseded description: this node previously read ''combine Quot representability
-  and flattening stratification''. That was the Grothendieck/Kleiman quotient route,
-  which the tree marks off-path -- see AJC.picrep.'
-status: done
+  WHAT THIS NODE DISCHARGES, repointed. `Scheme.fgaPicardRepresentability` at `Picard/FGAPicRepresentability.lean:347`
+  — a bare `sorry`, the project''s central open obligation. The previous text said
+  "Discharges instHasPicScheme (FGAPicRepresentability.lean:259)". Both halves were
+  stale: `instHasPicScheme` exists in no `.lean` file (deleted 2026-07-28 under I-0491,
+  never discharged; all 16 grep hits are prose), and line 259 falls mid-docstring,
+  inside the bundling rationale above `class HasPicScheme` (line 263). The live gate
+  is `HasPicSchemeEt` (line 355), whose instance `instHasPicSchemeEt` (line 366) is
+  `(fgaPicardRepresentability C).1` — a projection of that same sorry, so the gate
+  synthesizes freely and carries the sorry into every consumer.
+
+
+  THE ASSEMBLY STEP, unchanged in substance. Glue the `h0=1` loci into `Pic^r` over
+  a separably closed field (campaign J1-J5; needs the mathlib 01JJ engine and a universe
+  bridge, since `picSharp` is `Type (u+1)`-valued while 01JJ wants `Type u`), spread
+  the finite glue datum to a finite Galois level (G1), descend `picSharp` points through
+  rigidified pairs (G3), and assemble the degree pieces as a coproduct over Z (G4).
+
+
+  WHY IT IS NOT CLOSE. Of the campaign modules this node consumes, `Picard/MilneGlue.lean`
+  (J5), `Picard/PicSharpGaloisDescent.lean` (G3) and `Picard/PicTotalAssembly.lean`
+  (G4) do not exist on disk, and neither do their inputs B1 `PicSharpZariskiSheaf`,
+  B4 `PicSharpDegree`, B6 `PicSharpSeparatedDevice`, or the `Div^d` chain D2''-D4''.
+  What IS landed and reusable: G2 the finite Galois quotient engine (`Picard/FiniteGaloisQuotient.lean`,
+  sorry-free) and the Speiser semilinear descent under `Picard/GaloisDescent/`, plus
+  B3 `Picard/RigidPushforward.lean` and the discharged gate `AJC.picrep.rigidpushforward`.
+  Assembly cannot start before D4'' and J1-J5; a lane wanting this cone should take
+  a campaign milestone, not this node.
+
+
+  ROUTE NOTE. This node''s quotient step is the FINITE GALOIS quotient (G2, landed),
+  not `smoothProperQuotient` / `HasSmoothProperQuotient` — that is the Altman-Kleiman
+  lemma of the rejected quotient route, is false as stated in Lean (no quasi-projectivity
+  vocabulary at the pinned mathlib; protection I-0074 caveat 2), and must not be built
+  against.
+
+  '
+status: pending
 kind: proof
 priority: high
 depends_on: []
@@ -36,5 +64,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-29T02:59:31.148758+00:00'
+  updated_at: '2026-07-29T10:39:08.831902+00:00'
   milestone: AJC.picrep

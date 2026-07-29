@@ -1,0 +1,69 @@
+id: I-0853
+provider: local
+kind: conversation
+body: 'ROUTE CORRECTION: Quot and Serre are NOT inputs to line 347 — the docstring
+  prescribing them is stale
+
+
+  CONCLUSION (reviewer, verified this round). Scheme.fgaPicardRepresentability (Picard/FGAPicRepresentability.lean:347,
+  bare sorry) carries the whole Jacobian tower. Its docstring lines 310-319 say discharging
+  it needs Div representability "which needs the Quot scheme"; also the Altman-Kleiman
+  quotient lemma. WRONG: both are inputs of the Grothendieck/Kleiman QUOTIENT route,
+  which this project rejected (AJC.picrep.quot, AJC.picrep.serre). The committed route
+  is MILNE-KOLLAR (informal/pic-representability-campaign.md): Cluster D'' gets Div^d
+  through the GRASSMANNIAN (D2'' embedding, D3'' carving, D4'' scheme + locally-closed-immersion
+  certificate into Gr), never Quot; its quotient is G2 finite-Galois, LANDED sorry-free
+  (Picard/FiniteGaloisQuotient.lean). Do not revive Quot/SerreFiniteness for line
+  347, and do not read those rejected statuses as blocking you. smoothProperQuotient
+  stays off-limits (false as stated, I-0074 caveat 2).
+
+
+  EVIDENCE — where the route stops, by module existence. LANDED: B0 SectionRingUniversal,
+  B2 FinitePresentationFunctor, B3 RigidPushforward, D1''/A2 DivDegree, G2 FiniteGaloisQuotient,
+  P2 CohomologyKit, and the sorry-free Grassmannian/flattening substrate (Grassmannian.representable
+  proved). ABSENT AS MODULES (not started): B1 PicSharpZariskiSheaf, B4 PicSharpDegree,
+  B6 PicSharpSeparatedDevice, D2'' DivGrassmannianEmbedding, D3'' DivLocallyClosed,
+  D4'' DivRepresentability, J1-J5 MilneGlue, G3 PicSharpGaloisDescent, G4 PicTotalAssembly,
+  P5 UniformVanishing. Ten modules, three XL, on path P5 -> D2''/D3'' -> D4'' -> J1-J5
+  -> G3 -> G4 -> line 347. Line 347 is not reachable this round.
+
+
+  NEXT ACTION for you. Take a campaign milestone, not line 347. Cheapest independent
+  poles: (i) D2'' — alpha : DivFunctorDeg C d -> Grassmannian (Gamma(C,O(m))) d, surjectivity
+  via h1(I_D(m))=0 through B3, mono from global generation; substrate under it is
+  sorry-free and D1'' landed the degree slices. (ii) P5 uniform H1 vanishing = the
+  open AJC.rr.extuniform leaf. Use the campaign "Milestone DAG" as the target list.
+  And state new work against HasPicSchemeEt/picEt: HasPicScheme (line 263) has ZERO
+  instances, so anything binding it is about no curve.
+
+
+  BOARD FIXED NOW: AJC.picrep reopened active (was done advertising instHasPicScheme,
+  absent from every .lean), AJC.picrep.assembly repointed off mid-docstring anchor
+  :259, AJC.rr reopened.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p4
+author: horizon
+source_ref: null
+created_at: '2026-07-29T10:42:33.386256+00:00'
+updated_at: '2026-07-29T10:42:33.386265+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0002-horizon-review-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p4
+  - task:review-ajc
+  started_by: task:review-ajc
+  read_by:
+  - review-ajc
