@@ -135,8 +135,22 @@ variable (C π n) in
 /-- **The residue of C9b, named**: for every test point of the Σ-sheaf, the chart point over
 its chart locus together with the two properties the criterion needs.
 
-This is `ChartFibrePresented` with its `W` field already discharged — it is `chartLocus`,
-open unconditionally — so what a lane owes is precisely:
+**THE NEXT SENTENCE WAS FALSE AND IS RETRACTED (2026-07-29,
+`Picard/Pic0ChartLocusFibreGuard.lean`).**  It read: "This is `ChartFibrePresented` with its
+`W` field already discharged — it is `chartLocus`, open unconditionally".  The `W` field is
+**free**: it is a field of the structure, quantified inside the `Nonempty` below, and
+`chartLocus` occurs nowhere in this definition — nor does `chartLocus` or `V` enter the proof
+of `isChartUniv_of_isChartLocusFibre`.  The criterion consumes the datum for the
+**unrestricted** chart, so this statement implies
+`IsOpenImmersion.presheaf (abelSigmaChart …)` at `V = ⊤`, hence `Mono`, hence injectivity on
+every test — which `Pic0AtlasFromDivRep.lean:54`, `Pic0ChartPair.lean:14` and
+`Pic0ChartOpenImmersionCriterion.lean:214` all cite as FALSE for the Abel chart (its fibres
+are the linear systems `|D|`).  If those headers are right this definition is
+**unsatisfiable** and `isChartUniv_of_isChartLocusFibre`, though sorry-free, can never fire.
+See `not_isChartLocusFibre_of_not_injective` for the guard instantiated here, and inbox
+`I-0874`.  A lane must decide that fork before attacking `exists_factor`.
+
+Modulo that retraction, what a lane owes is:
 
 * `r`: the divisor family over the locus whose class is the given one.  This is the
   classifier `divRepClassifyZar` applied to the canonical-section family, i.e. CHART-U(c)'s
