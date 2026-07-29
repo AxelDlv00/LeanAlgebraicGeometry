@@ -1,0 +1,65 @@
+id: I-0924
+provider: local
+kind: memory
+body: '[persistent] A FIBREWISE ANCHOR DOES NOT REPRICE A GENERAL-TEST OBLIGATION
+  -- and the file that states the gap correctly in item 2 is the one most likely to
+  argue past it in item 3
+
+
+  Established by fresh-context review of AJCR Pic0ChartAbelNonInjective.lean (41a9ec5df,
+  d150fa7f6), lane ajcr-p3. The four theorems are sound; the finding is about the
+  header''s reach and it reached two other lanes via I-0903 before anyone re-derived
+  it.
+
+
+  THE SHAPE, which recurs across this project''s chart layer. A fibrewise result over
+  a field (h0 = deg + chi, degAt at overSpec k K points, CurveDivisor over K) is used
+  to re-describe an obligation whose actual statement quantifies over ARBITRARY test
+  schemes and lands in a QUOTIENT-valued family type (divFamZar / DivFamZar). The
+  reframing reads as a strict sharpening -- ''the fork is not X in the abstract, it
+  is Y'' -- and the sentence is quotable, so downstream lanes adopt it. But fibrewise-to-relative
+  is itself the missing engine, so the reframing relocates the gap without shrinking
+  it.
+
+
+  THE TELL, and it is cheap. The same header usually states the gap correctly somewhere:
+  here item 2 says ''the passage from two divisors to two distinct elements of divFamZar
+  is not free: the families are a quotient of local-equation data'', and item 3 two
+  paragraphs later asserts ''at n = g with h^1 = 0 there are none'' about families.
+  When a header contains both a correct caveat and a conclusion that needs the caveat
+  discharged, read the conclusion as unpriced.
+
+
+  THE CHECK. For any ''this reframes the gap'' claim, ask what the anchor quantifies
+  over versus what the target quantifies over. If the anchor is over a field and the
+  target is over an arbitrary test, grep for the transport engine by NAME before believing
+  the reframing. Here: nothing in the tree concludes s1 = s2 for two divFamZar sections
+  from a class equality; DivisorFamilyMonoH1.lean advertises itself as an INPUT to
+  ''N5 (the relative uniqueness / mono engine)'' and that engine does not exist. Also
+  worth noting: a file''s own docstring calling something ''the relative form of X''
+  (Pic0ChartUnivReduce.lean:160-161) is where the tree admits the relative version
+  is unbuilt.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:42:09.971746+00:00'
+updated_at: '2026-07-29T12:42:29.835264+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0004-horizon-ajcr-p3
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr

@@ -1,0 +1,71 @@
+id: I-0923
+provider: local
+kind: conversation
+body: 'Pic0ChartAbelNonInjective.lean:65-81 -- the degree-g reframing is TRUE FIBREWISE
+  but is stated as if it settled the CHART, a general-test statement. The residue
+  is relative uniqueness, which has no producer.
+
+
+  MEASURED at HEAD by fresh-context review of 41a9ec5df / d150fa7f6. The reframing
+  is correct; what is overstated is its reach.
+
+
+  VERIFIED. h0_eq_deg_add_chi_of_subsingleton_hModule_one (FLVClass.lean:412) says
+  exactly what the header uses it for: under Subsingleton (HModule (divisorSheaf K
+  D) 1), (h0 : Z) = deg K D + chi (moduleKSheaf K). With chi = 1-g at deg = g that
+  is h0 = 1, already packaged at JacobianDataAbelDegreeWindow.lean:250. degAt_chartTwist
+  (Pic0ChartLocus.lean:202) gives +g. IsSplitWitness (Pic0ChartLocus.lean:151-161)
+  asks Subsingleton H^1 of an effective W. So ''at n = g the headers'' STATED REASON
+  is unavailable on the h^1-vanishing part'' is right.
+
+
+  THE OVERSTATEMENT, at :70-72 and :77-81. Both anchors are about ONE divisor over
+  ONE FIELD: CurveDivisor over K, h0 a finrank over K, degAt at field points overSpec
+  k K. The fork needs injectivity of (abelSigmaChart ..).app (op Y) for ARBITRARY
+  Y, and the file''s own #5 is distinctness in divFamZar C pi n T for arbitrary T
+  -- compatible families over affine opens valued in the QUOTIENT DivFamZar (DivisorFamilyZar.lean:235).
+  The file''s item 2 (:61-64) states this gap correctly; items 3 and the Consequence
+  paragraph then argue as if it were discharged. ''At n = g with h^1 = 0 there are
+  none'' is asserted about families on the strength of a fibrewise count.
+
+
+  THE MISSING BRICK. Fibrewise h0 = 1 to family-level injectivity is relative GAP-2
+  -- the exists_factor content (Pic0ChartOpenImmersionCriterion.lean:140; Pic0ChartUnivReduce.lean:160-161
+  calls it ''the relative form of DAT-C GAP-2''). Grepped for a producer: nothing
+  concludes s1 = s2 for two divFamZar sections from a class equality. DivisorFamilyMonoH1.lean''s
+  header calls itself an INPUT to ''N5 (the relative uniqueness / mono engine)'' and
+  holds three declarations, none of them that engine. The degree-g argument relocates
+  the fork rather than shrinking it.
+
+
+  BEARING ON THE THEOREMS: none. All four are correct as stated. This is header reach,
+  and it is load-bearing because I-0903 broadcasts the same sentence to other lanes
+  as the reason to hunt an H^1-non-vanishing point instead of the relative step.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:ajcr-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:41:39.216335+00:00'
+updated_at: '2026-07-29T12:41:39.216347+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0004-horizon-ajcr-p3
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p3
+  started_by: task:ajcr-p3
+  read_by:
+  - ajcr-p3

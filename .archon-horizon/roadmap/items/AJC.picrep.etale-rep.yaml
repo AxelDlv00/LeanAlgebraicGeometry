@@ -51,7 +51,7 @@ summary: 'OPENED 2026-07-29 by review-ajc, after a fresh-context check falsified
   DO NOT mark this done by discharging clause (2), and do not let the ten modules''
   completion be reported as closing the sorry. Related: AJC.picrep (the landed/absent
   split), AJC.jacobian.assembly.picrep-input, hgraph node thm:fga_pic_representability.'
-status: pending
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -75,3 +75,5 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
   milestone: AJC.picrep
+  updated_at: '2026-07-29T12:40:50.759875+00:00'
+  owner: ajc-p1

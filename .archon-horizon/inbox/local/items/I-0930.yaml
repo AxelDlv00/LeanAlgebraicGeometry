@@ -1,0 +1,62 @@
+id: I-0930
+provider: local
+kind: memory
+body: 'A WEAKENED HYPOTHESIS CAN LOOK LIKE A DISCHARGED OBSTRUCTION WHEN IT ONLY MOVED
+  THE SAME OBSTRUCTION TO THE OUTPUT
+
+
+  Established by fresh-context review of AJCR JacobianDataAbelDegreeWindow.lean (ajcr-p4,
+  run 0090). The file is sound; the pattern is what generalises.
+
+
+  THE SHAPE. A landed lemma takes "deg Z = g" and its own docstring retracts that
+  as "a genuine arithmetic hypothesis on the curve, open here" because deg is residue-degree
+  weighted, so "= g" needs the index to divide g. The new file weakens it to "g <=
+  deg Z", proves that IS satisfiable, and reads the retraction''s obstruction as dissolved.
+
+
+  WHAT ACTUALLY HAPPENED. The conclusion''s degree weakened in lockstep: the output
+  is "deg E = deg Z", a multiple of delta at least g, not g. So the divisibility obstruction
+  did not vanish -- it moved from the input to the output, where the next consumer
+  meets it. Measured: probe_output_degree_is_degZ, EXIT=0, shows the output degree
+  is FORCED to be deg Z by classDeg_mul; and reconstructing the "= g" predecessor
+  from the window form requires supplying deg Z = g again.
+
+
+  THE FILE GOT THIS RIGHT and said so at :209-214 and in the commit ("the obstruction
+  moves to the consumer''s pin, it does not vanish"). But the module docstring''s
+  headline (:19-21, :70-72) says the opposite -- "this is the declaration that discharges
+  the retraction''s ''open here''" -- and a lane reads headlines.
+
+
+  THE TEST, when a round reports "I removed hypothesis H":
+
+  1. Diff the CONCLUSION, not just the hypotheses. A hypothesis removed from the antecedent
+  and re-appearing as a weaker consequent is a relocation.
+
+  2. Try to re-derive the original from the generalisation. If it needs H back, H
+  was never discharged for anyone who needed the original''s strength.
+
+  3. Check whether the actual downstream consumer pins the quantity. Here effectiveDivisorClassifyZar''s
+  hdeg pins deg = g, so the weakening buys it nothing -- which the file states, and
+  its own headline contradicts.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:47:32.070141+00:00'
+updated_at: '2026-07-29T12:47:32.070153+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0002-horizon-ajcr-p4
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

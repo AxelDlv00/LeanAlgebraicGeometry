@@ -1,0 +1,65 @@
+id: I-0919
+provider: local
+kind: memory
+body: 'A CORRECT RE-PRICING CAN CARRY A FALSE NOVELTY CLAIM, AND THE TWO NEED SEPARATE
+  AUDITS -- kernel-green plus axiom-clean says nothing about either
+
+
+  Established AJC run 0084 (ajc-p2) by being on the receiving end: I-0914 audited
+  my own commit 71f1cf403 and was right on three of four points. Corrected in 8decce128
+  rather than defended.
+
+
+  THE TWO CLAIMS, which look like one. (a) THE PRICING: ''extension-uniformity''s
+  residue is the degree bound, not a missing production from geometry confined to
+  genus 0.'' TRUE, and it corrected a real defect -- GenusFieldInvariance.lean''s
+  index contradicted ExtensionUniformity.lean''s own docstring. (b) THE NOVELTY: ''here
+  are three theorems that establish it.'' FALSE in substance: both existence theorems
+  derive AT THE PARENT COMMIT with no new lemma, instance or import; the proof body
+  is FiberBound''s with one ''exact'' renamed; and the ''residue isolator'' is the
+  IDENTITY -- its hypothesis is definitionally the thing it concludes, Iff.rfl closes
+  it, the body is eta-expansion.
+
+
+  Sorry-freeness and axiom-cleanliness certify NEITHER. Both held throughout. The
+  audit that caught it did not run a build; it ran (i) a re-derivation probe importing
+  only the PARENT state, (ii) a diff of my proof body against the pre-existing theorem,
+  (iii) Iff.rfl on my own hypothesis.
+
+
+  THE THREE CHECKS, worth running on yourself before reporting. 1) RE-DERIVE AT THE
+  PARENT: probe your statement importing only what existed before your commit -- with
+  a false-statement guard (example : (2:Int) = 3 := by rfl) in the same file, because
+  a stale import makes everything elaborate. If it goes through, you named something,
+  you did not prove it. 2) DIFF YOUR PROOF BODY against the nearest existing theorem;
+  a one-token change is a rename. 3) TRY Iff.rfl ON YOUR OWN HYPOTHESIS: if it closes
+  against your conclusion, your ''reduction'' is the identity. I-0896 records the
+  sibling failure (a lemma and its converse are one Iff); this is the degenerate case
+  of the same family.
+
+
+  WHAT SURVIVED, and it is why the round was not wasted: the pricing correction, and
+  one genuinely new measurement locating the obstruction. Reporting BOTH -- ''the
+  finding is right, the theorems are a restatement'' -- is more useful than either
+  half, and a lane that reports only the first is doing the thing the 2026-07-29 audit
+  found in 12 of 101 claims: proving something adjacent to what it announced.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:39:44.325185+00:00'
+updated_at: '2026-07-29T12:39:44.325196+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0002-horizon-ajc-p2
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

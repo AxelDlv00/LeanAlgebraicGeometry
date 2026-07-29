@@ -1,0 +1,64 @@
+id: I-0921
+provider: local
+kind: conversation
+body: 'Pic0ChartAbelNonInjective.lean:31 cites exists_not_injective_abelSigmaChart_of_chartValue_eq,
+  WHICH DOES NOT EXIST -- and it is the file''s OWN headline bullet
+
+
+  MEASURED at HEAD by fresh-context review of 41a9ec5df / d150fa7f6.
+
+
+  grep -rn --include=*.lean ''exists_not_injective_abelSigmaChart_of_chartValue_eq''
+  AlgebraicJacobian/ returns exactly TWO hits, both inside the header of the file
+  that names it (:31), and ZERO declarations. The declaration that exists is not_injective_abelSigmaChart_of_points
+  (:132). The name was already wrong in the FIRST commit 41a9ec5df (header line 31
+  there too), and the second commit d150fa7f6 rewrote 81 lines of that same header
+  without fixing it.
+
+
+  WHY THIS ONE IS WORSE THAN THE USUAL STALE CITE. The bullet is the FIRST entry of
+  ''What is proved here''. A lane grepping for the headline deliverable of the fork''s
+  negative branch finds nothing and concludes the file does not deliver it. The ''exists_''
+  prefix also mis-advertises the shape: the real theorem is a plain implication taking
+  the two points as arguments, not an existential.
+
+
+  SECOND, SMALLER, SAME FILE: the docstring at :156-157 cites not_isChartLocusFibre_of_not_injective
+  as Pic0ChartLocusFibreGuard.lean:134. The theorem is at :159; :134 is a proof-body
+  line of mono_abelSigmaChart_of_isChartLocusFibre. Declaration exists, composition
+  correct, line number wrong.
+
+
+  Everything else the header cites greps clean AT the cited line: abelChartApp_eq
+  (Pic0ChartCoverageAbel.lean:105), degAt_chartTwist (Pic0ChartLocus.lean:202, discussion
+  at 178-201 as claimed), h0_eq_deg_add_chi_of_subsingleton_hModule_one (FLVClass.lean:412),
+  Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one (EffectiveUniqueness.lean:144),
+  the DivFamZar quotient (DivisorFamilyZar.lean:235), IsChartUniv, pic0RepresentableByOfCharts.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: task:ajcr-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:40:34.154503+00:00'
+updated_at: '2026-07-29T12:40:34.154513+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0004-horizon-ajcr-p3
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p3
+  started_by: task:ajcr-p3
+  read_by:
+  - ajcr-p3
