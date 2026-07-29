@@ -3,46 +3,65 @@ title: 'Extension-uniform H1 vanishing: one threshold serving every field extens
 projects:
 - Algebraic-Jacobian-Challenge
 summary: 'RE-PRICED 2026-07-29 (ajc-p2, run 0084): the residue is the DEGREE BOUND
-  ALONE, not a missing production from geometry.
+  ALONE. Read the novelty caveat at the bottom -- it is part of the finding.
 
 
   UniformBaseDivisor C d has two clauses.
 
 
-  (1) EXISTENCE of a vanishing divisor over every field extension -- now a THEOREM
-  AT EVERY GENUS: Ledger/BaseDivisorEveryField.exists_base_subsingleton_baseChangeField,
+  (1) EXISTENCE of a vanishing divisor over every field extension -- a THEOREM AT
+  EVERY GENUS: Ledger/BaseDivisorEveryField.exists_base_subsingleton_baseChangeField,
   three curve binders, no genus hypothesis, no hypothesis on kappa/k. Kernel EXIT=0,
-  axiom-clean [propext, Classical.choice, Quot.sound]. One term, from FiberBound.exists_base_subsingleton_of_isFinite_toP1
-  at Scheme.baseChangeField C kappa; its inputs (a finite dominant map to P1, two
-  cohomology finiteness binders) are all theorems of this project on the curve, and
-  none is genus-restricted.
+  axiom-clean. CARRIER VERIFIED BY MACHINE: UniformBaseDivisor C d is derivable from
+  it plus a hypothesis with NO vanishing content, only deg kappa D0 <= d -- so the
+  carriers are the same object, not similar spellings.
 
 
   (2) DEGREE BOUND -- open, and it is the whole gap.
 
 
-  The genus-0 ceiling of the previous producer (VanishingFieldDescent.uniformBaseDivisor_zero_of_subsingleton)
+  WHY THE OLD PRICING WAS WRONG. The genus-0 ceiling of the previous producer (VanishingFieldDescent.uniformBaseDivisor_zero_of_subsingleton)
   belongs to its ROUTE: transporting the UNIT sheaf''s vanishing by faithful flatness
   forces the zero divisor as witness, hence forces H1(O_C) to vanish. It is not a
   property of the obligation, which never mentions the unit sheaf. GenusFieldInvariance.lean''s
-  index said otherwise and is corrected (6618d6979); the upstream ExtensionUniformity
-  docstring had it right all along. Filed as I-0897.
+  index said otherwise and is corrected (6618d6979). The UPSTREAM ExtensionUniformity
+  docstring had it right all along -- when two docstrings about one gap disagree,
+  the one nearer the definition tends to be right. Filed as I-0897; lesson as I-0906.
+
+
+  NOVELTY CAVEAT, from a fresh-context audit (I-0914) whose points I re-verified and
+  accepted (8decce128). The PRICING is right; the THEOREMS add no new mathematics.
+  Both existence statements derive at the parent commit with no new lemma, instance
+  or import; the proof body is FiberBound''s exists_bound_subsingleton_hModule_one_curve
+  with one ''exact'' renamed; and uniformBaseDivisor_of_exists_deg_le is the IDENTITY
+  (its hypothesis is definitionally its conclusion, Iff.rfl closes it). One audit
+  clause was refuted: the pre-existing threshold form does NOT imply these without
+  exists_deg_ge, whose hypothesis (a non-generic point of positive residue degree)
+  is not free on C -- so they are incomparable inputs, not a chain.
 
 
   REMAINING OBLIGATION, exact: a uniform bound on n0(kappa) * deg_kappa F_kappa, where
   n0 is the Noetherian fibre-lattice stabilisation index (FiberVanishing.lean) re-run
-  at each base field. Split at the type level by uniformBaseDivisor_of_exists_deg_le,
-  so the next attempt need not re-derive the existence half.
+  at each base field.
 
 
-  NOT free from the in-tree theorems: DegreeVanishing.subsingleton_hModule_one_of_deg_ge''s
-  threshold is deg D0 + 1 - chi(O), stated relative to a base divisor ALREADY IN HAND,
-  so bounding deg D0 by it is circular. Two candidate routes: (a) an absolute large-degree
-  vanishing (Serre duality''s deg >= 2g-1) -- ABSENT from both projects, searched;
-  (b) a bound on n0 in terms of genus C, which is base-field-invariant (genus_baseChangeField_curve).
-  (b) is untried and is where the next lane should start. Caveat measured this round:
-  the fibre-lattice chain need not STRICTLY increase, so finite-dimensionality of
-  H1 alone does not bound n0 -- a strictness argument is needed too.
+  WHERE TO START, measured this round: finrank_stabilisationAmbient_eq_h1 (fd811e5fd)
+  shows the quotient in which n0 is chosen has dimension h1(O(D + n*F)), so at D =
+  0 it is the GENUS -- base-field-invariant. A bound n0 <= genus C would close the
+  clause with d := genus C * deg_kappa F_kappa. The missing step is STRICTNESS: a
+  monotone chain in a g-dimensional space may repeat a term without reaching the top,
+  so bounded dimension alone bounds nothing. n0 <= genus MUST NOT be cited as available.
+
+
+  DEAD END: absolute large-degree vanishing (Serre duality deg >= 2g-1) is absent
+  from BOTH projects -- searched. And DegreeVanishing''s threshold is deg D0 + 1 -
+  chi(O), stated relative to a base divisor already in hand, so bounding deg D0 by
+  it is circular.
+
+
+  ALSO RELEVANT (I-0908, reviewer): closing P5 does not close the seam. fgaPicardRepresentability
+  clause (1) is about picEt, while every Milne-Kollar milestone targets picSharp;
+  the gap is tracked at AJC.picrep.etale-rep and needs a human decision.
 
   '
 status: active
@@ -67,12 +86,13 @@ metadata:
     task_title: Bring the cluster-P Riemann-Roch substrate into AJC
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.rr
-  updated_at: '2026-07-29T12:02:22.016333+00:00'
+  updated_at: '2026-07-29T12:40:28.658355+00:00'
   pinned_commits:
+  - 8decce128
+  - fd811e5fd
   - 6618d6979
   - 71f1cf403
   - 81e3ef56f
   - f7d1ec0d0
   - 57f19428d
   milestone: AJC.rr
-  owner: ajc-p2
