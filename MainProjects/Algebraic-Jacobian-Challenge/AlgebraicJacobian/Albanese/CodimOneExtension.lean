@@ -875,10 +875,23 @@ structure (`RingHom.isStandardSmooth_respectsIso`), Step B.e above gives
 at the prime of `z` (`IsAffineOpen.isLocalization_stalk`) — is reduced by
 `isReduced_localizationPreserves`.
 
-Unlike the still-open regularity keystone `isRegularLocalRing_stalk_of_smooth`
-(blocked on Stacks `00OF` at non-closed points), reducedness only needs the
-maximal-ideal localisations of the chart ring, so the closed-point theorem
-B.d′ suffices at EVERY point `z`. Axiom-clean. -/
+Reducedness only needs the maximal-ideal localisations of the chart ring, so the
+closed-point theorem B.d′ suffices at EVERY point `z`. Axiom-clean.
+
+**Two corrections to this paragraph, 2026-07-30 (`ajc-p4`).**  It used to open
+"Unlike the still-open regularity keystone `isRegularLocalRing_stalk_of_smooth`
+(blocked on Stacks `00OF` at non-closed points)".  That keystone is **not** open
+and is **not** blocked on `00OF`: it is proved above via
+`isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perfectField`
+(`Albanese/SmoothPrimeRegularity.lean`), whose whole point is avoiding `00OF`,
+and its own docstring says so.  Second, the contrast drawn here is backwards as
+a guide to which statement is cheaper in the field: the regularity route widens
+to a **perfect** base field unchanged, while THIS statement's route does not,
+because Step B.e (`isReduced_of_isStandardSmooth_of_isAlgClosed`) is the
+closed-point argument.  The perfect-field reducedness statement therefore takes a
+different route — regular local ⇒ domain ⇒ reduced at each stalk — and is
+`Scheme.isReduced_of_smooth_perfectField` in `Albanese/CodimOnePerfectField.lean`,
+together with the rest of the Milne 3.1 chain over a perfect field. -/
 theorem isReduced_of_smooth_of_isAlgClosed
     {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     (X : Over (Spec (.of kbar)))
@@ -1461,7 +1474,20 @@ function field (`RationalMap.eq_of_fromFunctionField_eq` + the
 The over-`k̄` hypothesis `hf` is necessary: the valuative square's base
 compatibility identifies the `k̄`-structure on `K(X)` induced by `f` with
 the one induced by `X`, which can fail for abstract-scheme rational maps.
-This matches Milne's setting (rational maps of varieties *over* `k`). -/
+This matches Milne's setting (rational maps of varieties *over* `k`).
+
+**The `[IsAlgClosed kbar]` binder, by contrast, is NOT necessary** (`ajc-p4`,
+2026-07-30, measured rather than argued).  Nothing in this proof consumes it: the
+coheight-`0` branch is topology of an irreducible sober space and the
+coheight-`1` branch is the valuative criterion at the DVR stalk.  It enters only
+through `localRing_dvr_of_codim_one` → `isRegularLocalRing_stalk_of_smooth`,
+whose delegate asks for a **perfect** field.  The same proof body, with
+`[PerfectField k]`, is
+`Scheme.RationalMap.indeterminacy_codimGe2_of_smooth_of_complete_perfectField`
+in `Albanese/CodimOnePerfectField.lean`, so this theorem also holds over `ℚ`,
+every number field and every `𝔽_q`.  Do not price a transport of this statement
+off the binder written here.  (What does not widen is Milne **3.3** — see that
+file's §2.) -/
 theorem indeterminacy_codimGe2_of_smooth_of_complete
     {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     {X : Over (Spec (.of kbar))}

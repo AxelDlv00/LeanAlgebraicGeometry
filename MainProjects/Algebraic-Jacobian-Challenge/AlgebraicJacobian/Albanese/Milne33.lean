@@ -242,6 +242,29 @@ The mathematical content is `indeterminacy_pure_codim_one_into_grpScheme_core`
 above (Milne's difference-map argument, via the pole-purity and
 Hauptidealsatz-transport layers of `Albanese/Milne33*.lean`).
 
+**THIS THEOREM IS THE LOAD-BEARING `IsAlgClosed` LINK OF THE MILNE §I.3 CHAIN**
+(`ajc-p4`, 2026-07-30, measured).  The binder is on the section `variable` line
+above, not in this declaration's own header, so `#check` shows it but reading the
+header does not — inbox `I-1115` reported this theorem as carrying no
+`IsAlgClosed` in either project, and that was wrong for exactly that reason.
+
+Restating this statement over `[PerfectField k]` and closing it by
+`indeterminacy_pure_codim_one_into_grpScheme_core` **fails**, with
+`failed to synthesize instance of type class IsAlgClosed k`.  The consumption
+site is `mem_domain_of_selfDiag_mem_domain` (`Albanese/Milne33RowSection.lean`),
+whose row argument builds a base-field point at a *closed* point of `X` via
+mathlib's `pointOfClosedPoint`; that construction needs the residue field at the
+closed point to **be** the base field (`residueFieldIsoBase`, through
+`IsAlgClosed.ringHom_bijective_of_isIntegral`), which is false already over `ℚ`.
+Only three of the twelve modules in this cone carry the binder at all — this one,
+`Milne33RowSection.lean` and `Milne33Transport.lean` — and the latter two are the
+closed-point layers.
+
+By contrast Milne **3.1** and its whole chain widen to a perfect field with the
+proof bodies unchanged (`Albanese/CodimOnePerfectField.lean`).  So a lane pricing
+"Milne §I.3 over an arbitrary field" owes this theorem's closed-point row
+argument and nothing else in the chain.
+
 Blueprint reference: `lem:milne_codim1_indeterminacy` (Milne, *Abelian
 Varieties*, Lemma 3.3, §I.3, p. 17). -/
 theorem indeterminacy_pure_codim_one_into_grpScheme
