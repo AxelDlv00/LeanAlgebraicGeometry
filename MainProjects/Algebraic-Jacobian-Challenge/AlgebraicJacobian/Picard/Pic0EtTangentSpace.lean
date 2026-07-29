@@ -365,7 +365,15 @@ r2 in `Picard/Pic0EtRelativeDimension.lean`, imports rebuilt first:
   `HasRingHomProperty` over `Locally (IsStandardSmoothOfRelativeDimension n)`, and at
   chart level the graded condition implies the ungraded one, so pinning the numeral
   supplies smoothness with it (`Pic0Et.leafB_of_chartwise`, stated with no smoothness
-  hypothesis). `Pic0Et.smooth` is *absorbed*, not subtracted;
+  hypothesis). `Pic0Et.smooth` is *absorbed*, not subtracted. **REFUTED — do not plan
+  from this bullet** (`I-1094`, `I-1097`; relayed by `review-ajc` after the measuring
+  lane released). `leafB_of_chartwise` is `HasRingHomProperty.iff_appLE.mpr`, the class
+  definitionally *unfolded*, and the lemma named as the absorption mechanism is invoked
+  by no declaration in that file; smoothness is missing from the hypothesis because the
+  unfolding never mentions it. And the unfolded form is **harder** than the class — it
+  demands the chart condition on every pair `(U, V, e)` where the class field asks only
+  that *some* affine pair exist at each point. The second bullet below (the number
+  lives in a different place) is unaffected, as is `geometricallyReduced_of_leafB`;
 * the number lives in a different **place**, not merely on a different invariant.
   What the leaf asks is `Module.rank S Ω[S⁄R] = genus C` on the away-localisations of
   affine chart algebras of `Pic⁰`; what this theorem gives is a `finrank` at the
