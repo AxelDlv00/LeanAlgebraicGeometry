@@ -2435,3 +2435,118 @@ pointed at my own new file).
 > its price differed from the guess. This time the price is not a guess — it is the leftover goal
 > text after every landed lemma has fired. That is the cheapest honest estimate available, it took
 > under half an hour, and **it is what "print the types" escalates to once the types line up.**
+
+## §8 (T3-6): THE SECTION EQUATION IS PROVED, AND §7.8 WAS SHORT BY A CAST (run 0073 r8)
+
+### 8.0 §7.8's equation, landed — and the ingredient §7.8 said was not there
+
+*Written before the Lean of this round, updated with the measurements as they came in
+(worksheet-first, per §1 D4). `Tangent/EpsReductionSquare.lean`.*
+
+> **CONFIDENCE OF THIS SECTION, stated up front because the box would not let me finish the
+> check.** Every claim below was verified **under the LSP** (`lean_diagnostic_messages`
+> returning `success: true`, zero diagnostics) on the probe file that became this module, before
+> the machine went to load ~65 with swap exhausted (17/17 G) — nine other Horizon runs on the
+> same box. The **kernel** check of the assembled module (`lake env lean`) was started and had
+> not returned when this section was written. So: *LSP-verified, kernel-unconfirmed*. The
+> `rfl`-failure quoted below and the two green probes are LSP measurements and are reliable as
+> such; do not upgrade "landed" to "kernel-green" here without re-running the check.
+
+**§7.8's prediction held on its own terms.** It quoted (T3-6)'s "entire content" as one
+section-level equation and predicted *spelling, not mathematics*; landed as
+`Over.appLE_dualNumberSections` (ring form) and `Over.unitsAppLE_dualNumberSectionsUnits` (units
+form), and the proof is exactly the two ingredients §7.8 named — `(b-coeff)`
+(`Over.relSectionsMap_dualNumberSections`) plus the `sectionsCollapse` ↔ `Over.sectionsBaseChange`
+bridge, the latter two rewrites and a `rfl` as §7.8's probe said — closed by `Scheme.Hom.appLE_map`
+(`appLE` then a restriction is one `appLE`, by proof irrelevance of the witnesses). No new
+mathematics, no new geometry.
+
+**But §7.8 reported "[S], NO MISSING INPUT IDENTIFIED", and there is one.** It is not a brick, and
+it is not nothing:
+
+```lean
+example (W : C.left.Opens) :
+    relCurveMap C k[ε] k ⁻¹ᵁ ((fst C (overSpec k k[ε])).left ⁻¹ᵁ W)
+      = (fst C (overSpec k k)).left ⁻¹ᵁ W := rfl
+-- FAILS. "Type mismatch: rfl has type ?m.78 = ?m.78 but is expected to have type …"
+```
+
+`relSectionsMap C k[ε] k W` is `appLE` **at the pair** `(fst_{k[ε]} ⁻¹ᵁ W, fst_k ⁻¹ᵁ W)`, whereas
+the geometric arrow `pullbackOverlapQuot (relCurveMap …)` lands at `relCurveMap ⁻¹ᵁ fst_{k[ε]} ⁻¹ᵁ W`;
+`relCurveMap_preimage` relates the two **propositionally** (`rw [← comp_preimage, relCurveMap_fst]`).
+So the composite must cross an equality of opens — and, since the geometric side is indexed by a
+family `Bool → Opens`, an equality of **families**. Landed as `epsFamilyEq` (one `funext`) and
+`overlapQuotCongr` (`subst` on it), both kernel-green.
+
+**Why the miss is worth recording rather than shrugging off.** §7.8 measured the *goal text* after
+the landed lemmas fired, which is the honest and cheap method, and it caught the content correctly.
+What a goal text cannot show you is a cast that the *statement you chose to write* had already
+absorbed: §7.8 wrote its square with the target open spelled in `relCurve C k`'s own
+`fst ⁻¹ᵁ (U₀ ⊓ U₁)` form, so the transport sat inside the elaborated type and never appeared as a
+leftover goal. The tell was available and unchecked — the same tell §7.2 and (T3-2) both hit from the
+other side, a *type mismatch naming two opens*. **Reading the leftover goals measures the difficulty;
+it does not enumerate the ingredients.** Print the goals AND probe the equalities the statement
+assumes.
+
+**The shape that keeps the cast out of the mathematics**, and the reason
+`appLE_dualNumberSections` has an explicit `e`-binder and an explicit `hle`: the consumer supplies
+whichever `≤` its own opens satisfy, the equation never mentions the propositional equality, and the
+transport happens **once**, at the family level, in `overlapQuotCongr`. That is
+`restrict-into-the-type-dont-rewrite-the-type` applied *before* the statement is written rather than
+after it fails.
+
+### 8.1 WHAT (T3-6) STILL OWES, and one measurement that says why the composite is not a `rw` away
+
+Both ingredients of the composite are now landed statements, so the residue is the composition
+itself. Two facts about it, the first measured this round, the second still open:
+
+1. **The elaborated `pullbackOverlapQuot`/`collapseCechH1Equiv` square is expensive.** Stating it
+   (not proving it — merely `have _lhs := …` inside a `True` goal) did not finish under the LSP at
+   two timeouts, and `lake env lean` on the same file did not finish in ten minutes. Measured under
+   machine load average ~60 with swap exhausted (17/17 G), so **this is not a clean measurement of
+   the term's cost** and must not be quoted as one; what it does establish is that a successor
+   should assemble the composite in *small named steps* with the transport already factored out,
+   not as one `rw` chain through both carriers.
+2. **Additivity is still open and still separate.** Every arrow is a `MulEquiv`; `Additive`-wrapping
+   happens only on the (T3-1) leg; T5 needs the **semilinear** form (`AddEquiv` + intertwining across
+   `κ(e) ≃+* k`) on top of that. Nothing in §8.0 touches it. `MulEquiv.toAdditive` exists
+   (`#check`ed) and transports the multiplicative chain to `Additive`, but the intertwining law is
+   not a corollary of any of it — the `.t5` row's trap stands verbatim.
+
+### 8.2 THE SAME CAST BLOCKS §7.9's OPEN ITEM — `hchart`'s instantiation, and the consumer grep that dates it
+
+*Measured by reading the two signatures against each other, **not** by an elaboration probe: the
+probe was written and did not finish under the LSP at two timeouts nor under `lake env lean`, on a
+box at load ~65 with swap exhausted. So §8.2 is a type-level reading, at the confidence a type-level
+reading earns, and a successor should elaborate it on a quiet box before quoting it as measured.*
+
+§7.9 item (4) closed with the honest state that *"`hchart` is discharged at the instance" remains an
+argument with every step verified rather than a landed declaration*, and named its instantiation as
+the first thing a successor should close. Two facts about it now:
+
+**(a) The consumer grep dates the claim.** Run this round over the whole project:
+`Opens.cechPicMap_ι_eq_one_of_map_eq_one` — the `hchart` producer — appears **four** times outside
+its defining file, and **all four are prose**: three docstring citations in `EpsChartSquare.lean`
+(`:64`, `:89`, `:100`) and one in `TwoChartKernelComparison.lean` (`:35`). Zero occurrences in a
+proof term. The same grep over the S3 criterion and every T3 arrow returns **0 external consumers
+for all eight declarations** (`smoothOfRelativeDimension_{of_translation_cover,pointTranslationIso,
+comp_iso,of_zeroHypercover}`, `twoChartKernelEquiv`, `collapseCechH1Equiv`, `cechPicMapEquivOfIso`,
+`appLE_dualNumberSections`). That is the parent row's I-0711 island shape, still holding across the
+whole of Wave 5's landed surface — three sessions of arrows, no compositions.
+
+**(b) The obstacle is §8.0's cast again, and this is the reason to record §8.2 at all.** Reading the
+producer's binders at `g := relCurveMap C k[ε] k` and `O := fst_{k[ε]} ⁻¹ᵁ W`:
+
+* it wants `e' : Γ(X, g ⁻¹ᵁ O) ≃+* A`, i.e. at the open **`relCurveMap ⁻¹ᵁ fst_{k[ε]} ⁻¹ᵁ W`**;
+* `EpsChartSquare.epsChartDown` is `Γ(relCurve C k, fst_k ⁻¹ᵁ W) ≃+* Γ(C.left, W)`, i.e. at
+  **`fst_k ⁻¹ᵁ W`**;
+* and `relSectionsMap_eq_fstRingHom_comp` — the file's `hsq` — is stated through `relSectionsMap`,
+  so its typing carries the *same* `fst_k ⁻¹ᵁ W` spelling, while the producer's `hsq` is stated
+  through `(g.appLE O (g ⁻¹ᵁ O) le_rfl).hom`.
+
+These are the **same non-`rfl` pair of opens** §8.0 measured. So `hchart`'s instantiation and
+(T3-6)'s composite are blocked on one transport, not two, and `overlapQuotCongr`/`epsFamilyEq` plus
+a `presheafCongr`-style ring transport at a single open is the shared vehicle. **What this predicts,
+as a prediction and not a measurement:** once the transport is applied at both sites, §7.9's item
+(4) and (T3-6) fall together. What it does *not* say is that either is then free — §8.1(1)'s
+elaboration cost is unmeasured and the additivity question is untouched.
