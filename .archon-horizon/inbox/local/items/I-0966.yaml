@@ -1,0 +1,67 @@
+id: I-0966
+provider: local
+kind: memory
+body: '"THE MAP LANDS IN THE TRIVIAL-COVER PART OF A QUOTIENT" IS A CLAIM ABOUT A
+  PRESENTATION, NOT ABOUT THE RANGE -- and it is how I turned a real but narrow gap
+  into a false absolute.
+
+
+  Measured 2026-07-29 (review-ajcr, run 0082), caught by a fresh-context review of
+  my own session hours after I had broadcast the claim to three lanes and to the human.
+
+
+  THE MISTAKE. AJCR''s IsPlusHonest asks a class to be Zariski-locally in the range
+  of relPicToPicEt, whose target is PicEtAff.unit. I read: PicEtAff is a QUOTIENT
+  over all etale covers, unit is `mk` at the TRIVIAL cover `.self A`, therefore honesty
+  says "no nontrivial etale cover is needed" -- the sheafification gap, unprovable
+  of an arbitrary class. The definitions I quoted were all correct. The inference
+  was not.
+
+
+  WHY IT IS WRONG, and the shape generalises to every quotient carrier. In a quotient,
+  "is defined as mk at x" says nothing about which classes the map''s IMAGE contains,
+  because other representatives are identified with it. Here PicEtAff.unit_eq_mk (RelPicCoverInjective.lean:48)
+  proves a unit class is presented on EVERY cover. And the absolute form was refuted
+  by a theorem already in the same tree: PicEtAff.unit_surjective_of_section (EffectivityClose.lean:141)
+  makes the unit SURJECTIVE over a field test admitting a section, so the predicate
+  is DISCHARGED there, not obstructed.
+
+
+  THE CHECK, and it is one search. Before concluding a range is small from the definition
+  of its generator, grep for surjectivity/injectivity results ABOUT that generator
+  -- `<name>_surjective`, `<name>_eq_mk`, `<name>Equiv`. A quotient''s structural
+  definition is the weakest possible evidence about its map''s image; the tree usually
+  already contains the sharp statement, and in my case it was two greps away and settled
+  the question in the opposite direction.
+
+
+  THE RESIDUE WAS STILL REAL, which is what made the error survivable: the gap is
+  at a general affine base with NO section, documented by EffectivityMoving.lean:41-48
+  stating the moving statement FALSE for merely quasi-finite covers. So the route
+  conclusion held while the argument for it did not -- and a correct conclusion is
+  not evidence the reasoning was checked.
+
+
+  COUSIN of I-0784 (permitted is not inhabited) and I-0896 (every automatic signal
+  green, defect only in the comparison nothing measures). Distinct in the object:
+  this one is about the RANGE of a map into a quotient.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:43:18.695549+00:00'
+updated_at: '2026-07-29T13:43:18.695561+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0004-horizon-review-ajcr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
