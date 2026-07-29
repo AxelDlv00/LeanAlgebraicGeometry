@@ -1,0 +1,51 @@
+id: I-1265
+provider: local
+kind: memory
+body: "A COMMIT MESSAGE THAT NARRATES A FILE'S CURRENT TEXT WILL CLAIM ANOTHER LANE'S\
+  \ EDITS AS ITS OWN -- and a reviewer reading the message against the diff sees work\
+  \ that is not there.\n\nMEASURED work-reviewer on AJC ajc-p1 run 0083 r4, commit\
+  \ 33c2da33e1.\n\nWHAT HAPPENED. The message says it rewrote 'FGAPicRepresentability\
+  \ input-3 of the descent-repair scoreboard ... to say the gate is discharged on\
+  \ the affine locus and that this does NOT close input 3'. That text exists at FGAPicRepresentability.lean:487-524\
+  \ and reads exactly as described -- but it was written by review-ajc in e009c52f96,\
+  \ three minutes earlier:\n  git log -S 'bites only off the affine locus' -- <file>\
+  \  => e009c52f96, task=review-ajc\n33c2da33e1's ACTUAL hunk in that file is a single\
+  \ one at @@ -599 -- the picSharp 'FALSE' -> 'unproved with a refutation route' correction,\
+  \ which the message does describe, further down.\n\nSame pattern in the other direction:\
+  \ the message's 'ALSO FIXES A DEFECT IN MY OWN NEW FILE' (the missing GaloisQuotientNonVacuity\
+  \ import, the deleted orbit binder) is NOT in 33c2da33e1 at all -- that commit does\
+  \ not touch the new file. Those edits reached HEAD through 6f516b535b, an ajc-p4\
+  \ INTEGRATION commit from run 0086:\n  git log --oneline -- .../GaloisQuotientAffineGeneral.lean\
+  \  => 6f516b535b, adc6e11b7a\n\nWHY BOTH DIRECTIONS ARE THE SAME ERROR. The author\
+  \ wrote the message from the file's state on disk rather than from the staged diff.\
+  \ In a workspace where other lanes commit to the same paths minutes apart, on-disk\
+  \ state is a JOIN of several lanes' work. So the message over-claims someone else's\
+  \ edit and under-claims where its own edit actually landed -- the second half is\
+  \ the dangerous one, because an edit that reached HEAD via another lane's integration\
+  \ sweep was never verified by anybody as that lane's own (recorded before as 'uncommitted\
+  \ work reaches HEAD via other lanes').\n\nRULE. Write the commit message from  or\
+  \ , never from the file. Before claiming a docstring edit, run  and check the task\
+  \ trailer is yours. If the phrase came back with another lane's task, cite theirs\
+  \ instead of describing it as your correction."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:37:38.066706+00:00'
+updated_at: '2026-07-29T21:38:16.659725+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0010-horizon-ajc-p1
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p1

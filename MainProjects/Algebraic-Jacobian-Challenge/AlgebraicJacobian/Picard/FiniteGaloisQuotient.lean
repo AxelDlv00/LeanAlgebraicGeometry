@@ -70,7 +70,9 @@ instances**).  For the campaign consumer `J'_r` the hypothesis is supplied by th
   any more, and the residue is now precisely the **non-affine** case.
   `hasGaloisQuotient_of_isAffine` (`Picard/GaloisQuotientAffineGeneral.lean`) is a
   global `instance` discharging it for `[IsAffine X]`, via transport of
-  `isGaloisQuotient_spec` along the equivariant `X.isoSpec`. Measured both ways:
+  `isGaloisQuotient_spec` along the equivariant `X.isoSpec`. Measured both ways
+  **from a file that imports that module** — the qualification is load-bearing and
+  this file is two import hops *below* it, so neither claim can be reproduced here:
   `inferInstance` closes the goal at the formerly hand-built witness
   `hasGaloisQuotient_specF4`, and **fails** for an abstract `ρ` carrying the orbit
   hypothesis without affineness. So the remaining `G2(c)` work is the gluing of
@@ -416,10 +418,11 @@ orbit-in-affine hypothesis.
 AFFINE locus** (`hasGaloisQuotient_of_isAffine`,
 `Picard/GaloisQuotientAffineGeneral.lean`, a global `instance`), so for `[IsAffine X]`
 this class synthesizes outright and subsumes the former single-object witness
-`hasGaloisQuotient_specF4` (measured: `inferInstance` closes that goal). Measured in
-the other direction too — `inferInstance` **fails** for an abstract `ρ` carrying the
-orbit hypothesis but not affineness, so the remaining content is exactly the
-non-affine case.
+`hasGaloisQuotient_specF4`. Both measurements below are **from a file importing that
+module**, which this one is two hops below, so do not expect to reproduce either
+here: `inferInstance` closes the `𝔽₄` goal, and — the other direction — **fails** for
+an abstract `ρ` carrying the orbit hypothesis but not affineness, so the remaining
+content is exactly the non-affine case.
 
 Intended discharge of what is left (`G2(c)`): a `Γ`-stable affine cover
 (`HasStableAffineCover`, from `OrbitsInAffineOpen` via the EGA II 4.5.4 pattern),

@@ -194,13 +194,20 @@ theorem hasStableAffineCover_specF4 :
 instance of this class could be stated, let alone proved.  With §1 it is discharged from
 `isGaloisQuotient_spec` (Speiser descent plus the globalized `T`-points property).
 
-**Superseded as a producer, kept as a witness (2026-07-30).**  This goal is now closed by
-`inferInstance` through `hasGaloisQuotient_of_isAffine`
-(`Picard/GaloisQuotientAffineGeneral.lean`), which discharges the gate for *every* semilinear
-action on an affine scheme rather than for this one action.  The explicit proof is retained
-because a named nontrivial-group witness is what makes the clauses of `IsGaloisQuotient`
-non-vacuous (see `nontrivial_aut_F4`), and because it is the control that showed the general
-instance actually fires.
+**Generalised downstream, and this proof is NOT redundant here (2026-07-30).**
+`hasGaloisQuotient_of_isAffine` (`Picard/GaloisQuotientAffineGeneral.lean`) discharges the gate
+for *every* semilinear action on an affine scheme, so from a file importing that module this
+goal closes by `inferInstance`. **It does not close that way here, and cannot**: that module
+imports *this* one (for §1's `instOrbitsInAffineOpen_of_isAffine`), so the reverse import would
+be a cycle. Measured at exactly this file's imports, `inferInstance` fails — on
+`OrbitsInAffineOpen`, since §1's instance is declared below this point. An earlier revision of
+this paragraph said the goal "is now closed by `inferInstance`" full stop; that was false as
+placed, and it is the import-closure trap (`I-1226`) reproduced one file away from a commit
+correcting another instance of it.
+
+The explicit proof therefore stays as the producer at this site, and independently as the
+non-vacuity witness: a named *nontrivial*-group object (`nontrivial_aut_F4`) is what keeps the
+`∀ γ` clauses of `IsGaloisQuotient` from degenerating.
 
 `Spec (𝔽₄^Γ) ⟶ Spec 𝔽₂` is the quotient; `𝔽₄^Γ` is `𝔽₂` by Artin, though the statement does
 not need that identification. -/

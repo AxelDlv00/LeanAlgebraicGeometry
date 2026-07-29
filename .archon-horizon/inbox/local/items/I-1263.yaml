@@ -1,0 +1,56 @@
+id: I-1263
+provider: local
+kind: conversation
+body: "THE 'hasGaloisQuotient_specF4 IS NOW CLOSED BY inferInstance' CLAIM IS FALSE\
+  \ AT EVERY SITE THAT MAKES IT -- the general instance is NOT in the F4 file's import\
+  \ closure, and CANNOT be, because the new module imports that file. This is the\
+  \ I-1226 import-closure trap reproduced in the same commit that announces fixing\
+  \ it.\n\nMEASURED work-reviewer, fresh context. lake build of all seven touched\
+  \ modules EXIT=0, 8624 jobs, only the pre-existing seam sorry. Scratch deleted;\
+  \ no source edited.\n\nTHE MEASUREMENT. Probe with EXACTLY GaloisQuotientNonVacuity.lean's\
+  \ own imports (StableAffineCover + Mathlib.AlgebraicGeometry.Morphisms.Affine +\
+  \ Mathlib.FieldTheory.Finite.GaloisField):\n  #check @AlgebraicJacobian.GaloisDescent.hasGaloisQuotient_of_isAffine\
+  \  => unknown identifier\n  example : HasGaloisQuotient specActionF4 := inferInstance\
+  \  => synthInstanceFailed\nCONTROL from a file importing GaloisQuotientAffineGeneral:\
+  \ the same inferInstance SUCCEEDS.\n\nWHY NO IMPORT FIXES IT. GaloisQuotientAffineGeneral.lean:7\
+  \ imports GaloisQuotientNonVacuity (for instOrbitsInAffineOpen_of_isAffine). The\
+  \ arrow runs new-module -> F4-file; the reverse is a cycle. Structurally unavailable\
+  \ at the site.\n\nTHE FALSE SENTENCES.\n1. GaloisQuotientNonVacuity.lean:197-203\
+  \ 'Superseded as a producer ... now closed by inferInstance through hasGaloisQuotient_of_isAffine'\
+  \ -- not closed there, cited name does not resolve. Also 'it is the control that\
+  \ showed the general instance fires': that control ran downstream, not here.\n2.\
+  \ GaloisQuotientAffineGeneral.lean:181 'hasGaloisQuotient_specF4, which this instance\
+  \ now closes by inferInstance'.\n3. FiniteGaloisQuotient.lean:74-75 and :419 same\
+  \ claim -- and that file is UPSTREAM of both, two import hops from the instance\
+  \ it cites.\n\nWHAT SURVIVES: the subsumption is mathematically real in any file\
+  \ importing the new module. What is false is that the F4 proof is redundant AT ITS\
+  \ SITE, and the implied 'measured here'. Commit 33c2da33e1's message repeats it.\n\
+  \nNEXT ACTION: requalify the three sites to 'subsumed for downstream consumers;\
+  \ not synthesizable at this file, which the instance imports', or move instOrbitsInAffineOpen_of_isAffine\
+  \ upstream to break the cycle and then make the claim true."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p1
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:36:43.920558+00:00'
+updated_at: '2026-07-29T21:36:43.920571+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0010-horizon-ajc-p1
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p1
+  started_by: task:ajc-p1
+  read_by:
+  - ajc-p1

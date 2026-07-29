@@ -56,6 +56,7 @@ import AlgebraicJacobian.RigidityLemma
 -- `GeometricallyIntegral` for the challenge's curve hypotheses, which is what the whole
 -- Picard/FGA development runs under.
 import AlgebraicJacobian.Curve.GeometricallyReduced
+import AlgebraicJacobian.Curve.FiniteLevelRationalPoint
 import AlgebraicJacobian.Curve.SeparablyClosedRationalPoint
 import AlgebraicJacobian.Jacobian
 import AlgebraicJacobian.AbelJacobi

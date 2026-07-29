@@ -188,13 +188,35 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   \ *six* open obligations where the mathematics has\nfive. The bundling adds no strength\
   \ — clause (2) is conditional on a section, so\nit says nothing about a pointless\
   \ curve — and it keeps the frontier count honest\nin both directions. `scripts/axiom-frontier.lean`\
-  \ measures the result rather\nthan asserting it."
+  \ measures the result rather\nthan asserting it.\n\n**\"Adds no strength\" is now\
+  \ MEASURED, and the measurement is sharper than the\nclaim** (`review-ajc`, 2026-07-30;\
+  \ `lake env lean` EXIT=0 in a scratch file,\nsince deleted). Both conjuncts of this\
+  \ theorem follow, *together*, from the\nsingle hypothesis\n\n  `∃ X, Nonempty ((PicScheme.picSharp\
+  \ C).RepresentableBy X) ∧`\n  `      LocallyOfFiniteType X.hom ∧ IsSeparated X.hom`\n\
+  \n— i.e. from the `picSharp`-shaped endpoint that the Milne–Kollár campaign's ten\n\
+  modules are built to produce, with **nothing left over**. Clause (1) is\n`hasPicSchemeEt_of_picSharp_representability`\
+  \ and clause (2) is\n`isIso_picEtComparison_of_picSharp_representability` (both\n\
+  `Picard/PicEtSubcanonical.lean`), the second discarding the section it is handed.\n\
+  Axiom-clean `[propext, Classical.choice, Quot.sound]`, against a control — the\n\
+  same conclusion *without* the hypothesis, i.e. this theorem — that correctly\nreports\
+  \ `sorryAx`. The two halves existed separately; what had not been measured\nis that\
+  \ their conjunction is exactly this statement, so no reader had to take\n\"adds\
+  \ no strength\" on trust.\n\n**What this does NOT mean, since it is the natural\
+  \ misreading.** It does not\nbring the seam closer. The hypothesis is the campaign's\
+  \ *undischarged output*,\nand over an arbitrary `k` it is FALSE, not merely unproved:\n\
+  `PicScheme.not_exists_representing_picSharp_of_not_isIso`\n(`Picard/PicEtSubcanonical.lean`)\
+  \ plus Kleiman's pointless real conic refutes it.\nSo the correct reading is about\
+  \ *shape*, not distance: whatever the campaign\ndelivers must be delivered over\
+  \ a field where `picSharp` is representable (a\nseparably closed one, or under a\
+  \ section), and the descent to `k` must carry\n`picEt` points — and if it does deliver\
+  \ that, this bundled statement is fully\ndischarged, with clause (2) costing zero\
+  \ extra work."
 file: AlgebraicJacobian/Picard/FGAPicRepresentability.lean
 generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.fgaPicardRepresentability
 type: lean
-updated: '2026-07-30T04:43:00'
+updated: '2026-07-30T04:53:11'
 ---
 theorem fgaPicardRepresentability {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

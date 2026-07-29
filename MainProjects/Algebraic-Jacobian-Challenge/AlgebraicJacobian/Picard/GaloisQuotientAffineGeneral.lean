@@ -178,7 +178,11 @@ theorem exists_isGaloisQuotient_of_isAffine {X : Scheme.{u}} [IsAffine X]
 `HasGaloisQuotient ρ` synthesizes for any semilinear action on an affine scheme.
 
 Before this, the gate's only inhabitant in the project was the single-`𝔽₄` witness
-`hasGaloisQuotient_specF4`, which this instance now closes by `inferInstance`.
+`hasGaloisQuotient_specF4`. This instance subsumes it **from any file that imports this
+module** — measured, `inferInstance` closes that goal here — but *not at its own site*, which
+imports only up to `StableAffineCover`; this module imports that one, so the reverse is a
+cycle. It is therefore a generalisation, not a deletion, and that witness remains the producer
+where it stands.
 
 **The orbit-in-affine binder of the class costs the consumer nothing here, and that needed
 an import to be true rather than merely plausible.** It is discharged by
