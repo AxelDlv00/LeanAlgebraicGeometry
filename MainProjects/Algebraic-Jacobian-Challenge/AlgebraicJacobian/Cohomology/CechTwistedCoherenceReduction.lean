@@ -89,8 +89,11 @@ Measured, and this is the point of the declaration: the goal that the chain of
 `bcv`, or `mateEquiv`.  Everything in it is `pullbackComp` / `pullbackCongr` / `ppTel` /
 `openImmersion_bc_telescope` plus two counits of *open inclusions* and the restriction map
 `pushPullMap (interLegHom …)`.  Project-local. -/
+-- `_hF` is deliberately unused: the mate-free form needs no quasi-coherence (`bcAdjFree` does not
+-- mention it), but the binder is kept so the statement is parametrised exactly like
+-- `BcSquareCounitSide`, which does use it, and so consumers apply both at the same arguments.
 def BcSquareCoherence (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover) [IsSeparated f] [IsAffine S]
-    [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent) : Prop :=
+    [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (_hF : F.IsQuasicoherent) : Prop :=
   ∀ (p : ℕ) (k : Fin (p + 2)) (σ' : Fin (p + 2) → 𝒰.I₀),
     (ppTel (Over.Hom.left (wmap g' 𝒰 (SimplexCategory.δ k).toOrderHom σ'))
           (Over.mk (pullback.fst g' (Scheme.Opens.ι
@@ -114,13 +117,10 @@ def BcSquareCoherence (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover) [IsSepa
           ((Scheme.Modules.pullback g').map (pushPullMap F (interLegHom 𝒰 σ' k))) ≫
         bcAdjFree g' 𝒰 F σ'
 
-set_option maxHeartbeats 3200000 in
--- Both `bcv` adjuncts are eliminated in one goal, so whnf runs through
--- `openImmersion_beckChevalley`'s `asIso` twice, and the three `erw`s each re-run the
--- open-immersion / finite-intersection instance searches over the intersection opens.
-set_option synthInstance.maxHeartbeats 1600000 in
-set_option backward.isDefEq.respectTransparency false in
-/-- **THE REDUCTION: half (a) follows from a statement with no mate in it.**
+/-!
+### THE REDUCTION: half (a) follows from a statement with no mate in it
+
+**THE REDUCTION: half (a) follows from a statement with no mate in it.**
 
 Chain, each step machine-checked: expand both sides' functor images; rewrite the restriction
 map to `rawPushPullMap` and kill its unit with `rawPushPullMap_pullback_counit` (the general
@@ -161,8 +161,14 @@ explicitly-named terms.  See inbox I-0798.
 Project-local. -/
 /-
 THE VERIFIED-BUT-UNAFFORDABLE REDUCTION.  Restore by deleting this comment's delimiters, but read
-the cost note above first and expect to restructure rather than to wait.
+the cost note above first and expect to restructure rather than to wait.  The three `set_option`s
+belong with it (they were live at HEAD with nothing to attach to, which made the root build red —
+a doc comment and `set_option … in` both REQUIRE a following declaration, and a commented-out
+theorem is not one):
 
+set_option maxHeartbeats 3200000 in
+set_option synthInstance.maxHeartbeats 1600000 in
+set_option backward.isDefEq.respectTransparency false in
 theorem bcSquareCounitSide_of_coherence (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover)
     [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
     (F : X.Modules) (hF : F.IsQuasicoherent)
