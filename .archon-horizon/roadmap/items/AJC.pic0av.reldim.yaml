@@ -2,20 +2,58 @@ id: AJC.pic0av.reldim
 title: 'Leaf B (etale): SmoothOfRelativeDimension (genus C) of Pic0SchemeEt'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: 'Headline obligation 4 (smoothOfRelativeDimension_genus_pic0Et, Jacobian.lean:454).
-  NO board row tracked it before 2026-07-29. MEASURED by ajc-p2 (run 0084 r2, lake
-  env lean EXIT=0 after rebuilding imports): this obligation STRICTLY CONTAINS headline
-  obligation 2 (Pic0Et.geometricallyReduced) -- SmoothOfRelativeDimension.geometricallyReduced
-  (genus C) discharges it from leaf B, and SmoothOfRelativeDimension.smooth gives
-  bare Smooth too. So the five headline obligations are NOT independent; obligation
-  2 is a sub-problem of obligation 4, and AJC.pic0av.structure''s reducedness half
-  is subsumed here. THE RESIDUE, split: mathlib''s SmoothOfRelativeDimension is defined
-  by RingHom.IsStandardSmoothOfRelativeDimension on an affine chart pair, and Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth
-  turns it (given IsStandardSmooth + Nontrivial) into Module.rank S Omega[S/R] = n.
-  So leaf B = (bare smoothness, i.e. p3''s reducedness) + (the rank-of-Omega number
-  equals genus C). The landed Pic0Et tangent chain (Pic0EtTangentSpace.lean) gives
-  the COTANGENT-SPACE-AT-IDENTITY dimension, a different invariant; the Omega-rank
-  bridge is the open part.'
+summary: 'Headline obligation 4: smoothOfRelativeDimension_genus_pic0Et (Jacobian.lean:454,
+  bare sorry). NO board row tracked it before 2026-07-29 r2. ADVANCED by ajc-p2 (run
+  0084 r2), NOT closed. Landed Picard/Pic0EtRelativeDimension.lean, 6 declarations,
+  no sorry, rooted; commits 27127110a4 / 3c4408f7d6 / 6b706df968 / 70e4aa5f23.
+
+
+  TWO RESULTS, both measured with imports rebuilt FIRST (lake build AlgebraicJacobian
+  EXIT=0, 8853 jobs; then lake env lean EXIT=0).
+
+
+  (1) THE FIVE HEADLINE OBLIGATIONS ARE NOT INDEPENDENT. Obligation 4 implies obligation
+  2 (Pic0Et.geometricallyReduced): SmoothOfRelativeDimension.smooth then this project''s
+  Smooth.geometricallyReduced, packaged as geometricallyReduced_of_leafB. Independently
+  reproduced by ajc-p3 (I-1044). So closing leaf B closes two of five, and the distances
+  must not be added. This does NOT make obligation 2 cheaper -- it is the weaker statement,
+  and the kbar reduction on AJC.pic0av.structure (ajc-p3) is still the right attack
+  there. The bridge is invisible from inside Pic0Et.lean''s cone, hence a separate
+  module.
+
+
+  (2) LEAF B IS ONE OBLIGATION, NOT TWO. Jacobian.lean:418-421 and Pic0EtTangentSpace.lean:349
+  priced it as Pic0Et.smooth PLUS a tangent-to-Omega-rank translation. The smooth
+  half is ABSORBED: SmoothOfRelativeDimension n is HasRingHomProperty over Locally
+  (IsStandardSmoothOfRelativeDimension n) (leafB_iff_appLE; and on one affine cover
+  of Pic0 since the base is affine, leafB_iff_affineCover), and at chart level the
+  graded condition implies the ungraded one, so leafB_of_chartwise carries NO smoothness
+  hypothesis. Both docstrings repaired (6b706df968), one of them mine from r1.
+
+
+  MEASURED NEGATIVE: Smooth does NOT carry Locally IsStandardSmooth (synthesis fails);
+  it carries RingHom.Smooth. So Pic0Et.smooth gives standard smoothness per chart
+  with no numeral, and the entire distance to leaf B is pinning the number.
+
+
+  THE RESIDUE, precisely: Module.rank S Omega[S/k] = genus C on the away-localisations
+  of affine chart algebras of Pic0, via Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth.
+  The landed Pic0EtTangentSpace chain gives a finrank at the IDENTITY -- different
+  invariant AND different locus. Nothing in the tree computes a chart.
+
+
+  DEAD END, measured: homogeneity does not help with the numeral. Translations are
+  automorphisms OVER the base, so translating the structure morphism gives an EQUAL
+  proposition (GrpObj.smoothOfRelativeDimension_pointTranslation_eq). It is free for
+  the covering step and empty for the number. The sibling project''s smoothOfRelativeDimension_pointTranslationIso
+  (AJCR RelativeDimensionLocal.lean:139) takes [SmoothOfRelativeDimension n d.J.hom]
+  -- the conclusion of the criterion it feeds -- so read as a step towards this leaf
+  it is circular.
+
+
+  SORRY-REACHABILITY: every declaration binds [HasPicSchemeEt C], whose global instance
+  projects fgaPicardRepresentability. Sorry-free as implications, sorryAx-reachable
+  at the use site.'
 status: active
 kind: proof
 priority: high
@@ -40,3 +78,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
   owner: ajc-p2
+  updated_at: '2026-07-29T16:14:28.611678+00:00'
