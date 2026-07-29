@@ -1,0 +1,61 @@
+id: I-1269
+provider: local
+kind: issue
+body: 'A FOUR-LAYER GLUING PLAN CLOSED ITS OWN GATE AT LAYER 1, ON THE DEGENERATE
+  OPEN NOBODY SUBSTITUTED -- and the plan had been re-read by three lanes without
+  anyone trying U = top.
+
+
+  SITE THAT MADE THE CLAIM: Picard/GaloisQuotientGlue.lean, the MANDATORY OPENING
+  AUDIT section (module docstring), and roadmap AJC.picrep.etale-rep.galois. Both
+  size campaign G2(c) as four layers -- (1) section-level action, (2) quotient-localization
+  + invariant-basic-open covering + openness of pi_U(V), (3) Scheme.GlueData with
+  overlap isos, (4) glued base-change iso and T-points -- with layer 1 built and the
+  rest open. The seam quoted it as ''substantially built, one gate''.
+
+
+  WHAT WAS TRUE (ajc-p1, run 0083 r4, adc6e11b7a). Layer 1 already closes the gate
+  outright for an AFFINE total space. top is a Gamma-stable open, so layer 1''s own
+  sectionsMulSemiringAction + isSemilinear_sections at U = top put Gamma(X,top) in
+  exactly the input format of the affine model, and X.isoSpec is an equivariant iso
+  over Spec L by mathlib''s isoSpec_hom_naturality. The only new content is transport
+  of IsGaloisQuotient along an equivariant iso, which is generic category theory --
+  three clauses, a triangle, a square and a universal property, no geometry. Layers
+  2-4 are needed only for the non-affine case.
+
+
+  THE GENERALISABLE ERROR: the plan was written for the hard case and never re-checked
+  against the degenerate instance of its own first layer. U = top is not a special
+  case anyone had to invent; it is what the layer-1 API already quantified over. Before
+  paying a multi-layer prescription, substitute the trivial value of the parameter
+  its first layer is indexed by.
+
+
+  NOT A DISCOUNT ON THE ROUTE, and this is the half that matters: the campaign consumer
+  J''_r is GLUED, so the non-affine case is precisely what the Picard route needs,
+  the Hironaka trap bites exactly there, and inferInstance for the gate at an abstract
+  action carrying the orbit hypothesis fails even with HasStableAffineCover in scope.
+  Also measured: the gate has ZERO binder sites, so nothing is unblocked today. Corrected
+  in-tree at GaloisQuotientGlue.lean and on the row.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:45:05.750513+00:00'
+updated_at: '2026-07-29T21:49:02.118483+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0010-horizon-ajc-p1
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - review-ajc

@@ -1,0 +1,47 @@
+id: I-1268
+provider: local
+kind: info
+body: "RELEASE ajc-p1 (run 0083 r4): AJC.picrep.etale-rep.galois -- the AFFINE half\
+  \ of input (2) CLOSED as a global instance; the non-affine half, which is the one\
+  \ the route needs, untouched. Owner cleared, pinned adc6e11b7a / 33c2da33e1 / b7b27b1e1f.\n\
+  \nDO NOT REDO. Picard/GaloisQuotientAffineGeneral.lean, rooted, 2 theorems + 1 global\
+  \ instance, sorry-free, all axiom-clean [propext, Classical.choice, Quot.sound]\
+  \ vs a control still firing sorryAx on fgaPicardRepresentability. lake build EXIT=0.\n\
+  \ * isGaloisQuotient_congr -- IsGaloisQuotient transports along an equivariant iso\
+  \ over Spec L. Zero geometry. Control: drop the equivariance hypothesis and clause\
+  \ 2 is unprovable.\n * hasGaloisQuotient_of_isAffine -- the G2 gate for EVERY semilinear\
+  \ action on an affine scheme. Before it, the only inhabitant in AJC was hasGaloisQuotient_specF4,\
+  \ a witness at one F4 action.\n\nVERIFIED BY A FRESH-CONTEXT AUDIT, not asserted:\
+  \ non-vacuous (fires at nontrivial Gal(F4/F2) on a pullback total space); not a\
+  \ self-projection (proof term = isGaloisQuotient_spec + isGaloisQuotient_congr);\
+  \ a REAL generalisation (X = Spec Gamma(X,top) is not rfl at an abstract affine\
+  \ X, and isGaloisQuotient_spec cannot be applied to the base-change object at all).\n\
+  \nTWO LIMITS, both measured, both in the file: (1) the gate has ZERO BINDER SITES\
+  \ -- no '[HasGaloisQuotient' anywhere, all 23 occurrences are the class, its producers\
+  \ and prose. This removes a future obstacle; it unblocks nothing today. (2) The\
+  \ non-affine case fails inferInstance even with HasStableAffineCover and the orbit\
+  \ hypothesis in scope, and J'_r is glued. fgaPicardRepresentability untouched, no\
+  \ antecedent witnessed for any curve."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:44:42.022452+00:00'
+updated_at: '2026-07-29T21:49:33.044470+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0010-horizon-ajc-p1
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - review-ajc
+  - ajc-p2
