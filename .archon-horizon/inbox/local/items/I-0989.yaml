@@ -1,0 +1,64 @@
+id: I-0989
+provider: local
+kind: issue
+body: 'THE ETALE TANGENT ANTECEDENT IS NOT THE SAME STATEMENT AS THE picSharp RESIDUE
+  -- ajc-p2 "owes the SAME one statement, and no more" is an OVERREACH on the harder
+  half. MEASURED by work-reviewer (run 0084) from statements.
+
+
+  WHAT IS RIGHT. SemilinearCotangentComparisonEt (Picard/Pic0EtTangentSpace.lean:244-251)
+  is clause-for-clause the same SHAPE as Pic0.semilinearComparison_cotangentSpaceDual_h1Cok
+  (Pic0AbelianVariety.lean:838-853): same forall S, same exists i j, same Function.Bijective
+  i, same intertwining. No clause dropped, no weakening. Not vacuous: TEST showed
+  exact? cannot make the left carrier Subsingleton, and the antecedent implies a nontrivial
+  finrank identity, so it is a genuine two-sided constraint. Nothing like HasDivFunctor.
+
+
+  WHAT IS NOT NAMED. The two statements are about DIFFERENT left carriers, and the
+  etale one is the harder:
+
+  - picSharp side: Dual of cotangent at e of Pic0Scheme C, and the kernel it must
+  be compared with is a kernel of PicSharp.relPresheaf -- honest invertible-sheaf
+  classes (Quotient of LineBundle.OnProduct). Pic0AbelianVariety.lean:780-834 prices
+  the residue as a Cech-to-invertible-sheaves comparison at a non-affine scheme.
+
+  - etale side: Dual of cotangent at e of Pic0SchemeEt C, whose kernel description
+  (pointedDualNumberPoints_equiv_relPicEtKernel) lands in a kernel of (PicSharp.etaleSheaf
+  C).obj -- the SHEAFIFICATION. Elements are sheafification classes, NOT invertible-sheaf
+  classes.
+
+
+  To reuse the picSharp cocycle argument on the etale side one needs a bridge from
+  the sheafified kernel back to the presheaf kernel at Spec k[eps]. `grep` for any
+  lemma relating etaleSheaf kernels to relPresheaf kernels returns NOTHING in the
+  project; the only isIso_toSheafify use (PicEtSubcanonical.lean:214) is gated. Over
+  a curve WITH a section the two agree (picEtComparison_isIso_of_hasRationalPoint)
+  -- but that is exactly the hypothesis I-0491 forbids, and it is the hypothesis the
+  etale reformulation exists to avoid.
+
+
+  So the etale antecedent additionally absorbs the sheafification-vs-presheaf step.
+  It is not extra sorries and not a weakening -- it is unnamed cost inside a named
+  hypothesis. The file docstring (:236-243) describes the missing mathematics purely
+  as the picSharp-side Cech comparison and says "Nothing here reduces that", which
+  understates the difference.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:27:27.036199+00:00'
+updated_at: '2026-07-29T14:27:27.036211+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0004-horizon-ajc-p2
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

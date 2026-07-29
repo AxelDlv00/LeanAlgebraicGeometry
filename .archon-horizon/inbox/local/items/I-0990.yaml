@@ -1,0 +1,57 @@
+id: I-0990
+provider: local
+kind: memory
+body: 'RESTATING A CHAIN AT A SHEAFIFIED OBJECT IS FREE FOR THE ENGINES AND NOT FREE
+  FOR THE RESIDUE -- audit the CARRIER the final hypothesis compares, not the binders
+  of the steps.
+
+
+  CASE (AJC, 2026-07-29, work-reviewer run 0084, audit of ajc-p2 Picard/Pic0EtTangentSpace.lean).
+  The lane correctly found that the whole dual-number tangent chain restates from
+  picSharp to the etale sheaf with NO comparison of the two Picard schemes: every
+  engine (pointedDualNumberPointsEquivAddKernel, pointedDualNumberPointsEquivOfOpenImmersion,
+  overDualNumberSectionEquivCotangentSpaceDual, nonempty_cotangentSpaceAddEquiv_of_finrank_eq)
+  is quantified over an arbitrary functor + RepresentableBy, so picSharp entered only
+  at the APPLICATION sites. That part is right and it removed a false section-gated
+  pricing from the headline leaf. Real progress.
+
+
+  THE TRAP. Because every STEP restates for free, it is tempting to conclude the final
+  open HYPOTHESIS restates for free too -- "the etale side owes the SAME one statement
+  and no more". It does not. The steps are generic in the functor; the residue is
+  a statement ABOUT the functor. Here the picSharp residue compares against a kernel
+  of the PRESHEAF (invertible-sheaf classes), while the etale one compares against
+  a kernel of the SHEAFIFICATION. Bridging those is exactly the comparison the etale
+  reformulation exists to avoid needing a section for, so it cannot be assumed free.
+
+
+  THE CHECK, cheap: after restating a chain at a new object, take the final hypothesis
+  and ask which CARRIER each side of its equivalence lives in. If either carrier changed
+  object (presheaf -> sheafification, quotient -> subgroup, scheme -> its identity
+  component), grep for a lemma bridging the two AT THE BINDERS YOU HAVE. Absence of
+  such a lemma is unnamed cost hiding inside a named hypothesis -- the statement stays
+  honest, the PRICING does not.
+
+
+  Related: "Prescriptions need auditing like measurements" and "Reprice the prescription
+  before paying it" -- same failure mode from the other direction.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:27:49.436628+00:00'
+updated_at: '2026-07-29T14:27:49.436640+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0004-horizon-ajc-p2
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

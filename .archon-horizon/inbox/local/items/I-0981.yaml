@@ -1,0 +1,51 @@
+id: I-0981
+provider: local
+kind: issue
+body: "VACUITY SWEEP EXTENDED TO THE R2 (WIDENED) ROUTE -- STILL CLEAN. Closes the\
+  \ coverage limit I-0943 admitted. review-ajcr run 0082 s0006.\n\nI-0943 found no\
+  \ HasDivFunctor-style vacuity but stated it spot-checked rather than exhausted the\
+  \ DivisorFamily*/DivSchemeCert* cluster. The widening (I-0492 R2) holds the NEWEST\
+  \ Prop-valued definitions, so it is where a quietly-vacuous side condition survives\
+  \ longest. Swept what I-0943 did not name, reading statements:\n\n * AffCoverData\
+  \ (DivisorFamilyAffCover.lean:145) -- SUBSTANTIVE, and I probed the degeneracy that\
+  \ would matter. PROBED, EXIT=0: from D.m = 0 the `cover` field FORCES (top : (relCurve\
+  \ C R).Opens) = bot, so an empty cover is admissible ONLY over an empty relative\
+  \ curve. The covering field is not decoration; it is obligation I-0492 4(ii) discharged\
+  \ structurally rather than supplied by the typing, which is what the human asked\
+  \ for.\n * AffAdaptation (DivisorFamilyAffAdaptation.lean:75) -- SUBSTANTIVE: eqn\
+  \ per piece, and eqn_rel demands a UNIT relating restricted eqn to d.eqn on every\
+  \ overlap. Both eqn and d occur; refutable.\n * SwallowedBy (DivisorFamilyAffSwallow.lean:75)\
+  \ -- SUBSTANTIVE: a distinguished piece containing supportLocus AND disjointness\
+  \ from all others. Two-sided, so no trivial witness.\n * IsLocallyCertifiedAff (DivisorFamilyAffZar.lean:103)\
+  \ -- SUBSTANTIVE: explicit span-top g, a CertifiedDivisorFamilyAff per localisation,\
+  \ a DivEq against pulled equations.\n * HasAffineOverlaps (DivisorFamilyAffMapAlg.lean:65)\
+  \ -- SUBSTANTIVE, a real hypothesis of mapAlg, not a free rider.\n\nWHAT THE WIDENING\
+  \ DID NOT SMUGGLE BACK IN, since I-0492 clause 3 warns of exactly this: AffCoverData.pieces\
+  \ are (relCurve C R).Opens with an affineness FIELD -- NOT typed into the charts.\
+  \ The pattern the human named (DivisorFamily.lean h0/h1/pieces typed into Gamma\
+  \ of V0/V1) is absent from the widened structure. That is what makes the widening\
+  \ real rather than cosmetic.\n\nREMAINING LIMIT, so the next sweep is not blind:\
+  \ I have now read every Prop-valued def/structure my grep found in DivisorFamily*.lean\
+  \ and DivSchemeCert*.lean. I did NOT read DivSchemeRedesign* -- 11 of those modules\
+  \ are UNROOTED and on the documented DELETE list, so a vacuity there is unreachable\
+  \ by any consumer and moot. If one is ever rooted it needs this pass."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:20:58.952935+00:00'
+updated_at: '2026-07-29T14:20:58.952947+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0006-horizon-review-ajcr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

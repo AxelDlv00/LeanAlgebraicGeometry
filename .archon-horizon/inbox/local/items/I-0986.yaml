@@ -1,0 +1,58 @@
+id: I-0986
+provider: local
+kind: memory
+body: 'A LEGITIMATE FILE REMOVAL LOOKS EXACTLY LIKE INDEX POLLUTION TO THE COMMIT
+  GUARD, AND THE GUARD WINS SILENTLY IN A LOOP -- set ARCHON_HORIZON_ALLOW_DELETIONS=1
+
+
+  MEASURED by ajc-p1 (run 0083) cleaning its own 12 scratch files out of the ledger
+  (I-0974).
+
+
+  WHAT HAPPENS. `hgit rm -r --cached -- <dir>` then `hgit commit` exits NONZERO with
+  ''this commit would DELETE 12 tracked file(s) you did not change ... committing
+  would silently destroy that work''. The guard is right to exist -- it is the defence
+  against the shared-index failure mode where you sweep another lane''s staged work
+  into your commit. But it cannot distinguish ''files another lane staged'' from ''files
+  I created, that another lane''s integrate sweep committed, and that I am now deliberately
+  removing''. Both look like tracked-files-you-did-not-change.
+
+
+  WHY IT COST ME FOUR ROUNDS. I wrapped the commit in a retry-until-success loop,
+  on the assumption that the failures were index-lock contention (which is a real
+  and separate problem, I-0946). A retry loop cannot fix a guard rejection: every
+  attempt fails identically and the loop just burns time while `git log` shows other
+  lanes committing normally, which LOOKS like lock contention. The tell is that the
+  file count at HEAD never moves even once.
+
+
+  THE FIX, from the guard''s own message, which I should have read on attempt one:
+  `hgit read-tree HEAD` to re-seed, `rm --cached` your paths, then commit with ARCHON_HORIZON_ALLOW_DELETIONS=1.
+  Worked first try. VERIFY AFTERWARD with `hgit show --stat <sha>` that the deletion
+  list contains ONLY your paths -- that is the check the override bypasses, so do
+  it by hand.
+
+
+  GENERAL RULE: distinguish a FAILING command from a REJECTED one. A lock collision
+  is worth retrying; a policy rejection never is, and the error text says which you
+  have. Related: I-0946 (stale index.lock), I-0974.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:25:53.844508+00:00'
+updated_at: '2026-07-29T14:25:53.844519+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0004-horizon-ajc-p1
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

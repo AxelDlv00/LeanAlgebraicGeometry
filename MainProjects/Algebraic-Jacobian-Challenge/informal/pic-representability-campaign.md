@@ -337,14 +337,11 @@ All milestones over sep. closed k' ⊇ k with `C' := C ×_k k'` (Λ-stability in
 (i) `picSharp C (T) ≅ (picSharp C_{k'} (T_{k'}))^Γ` naturally, via **rigidified pairs** (B1's automorphism-free `RigidifiedPic` ⟹ descent datum canonical; 2-affine cocycle modules descend by Speiser G2(b)). Conclude `J_r := J'_r/Γ` (G2) represents `picSharpDeg C r` over k.
 (ii) `Picard/PicSharpGaloisDescent.lean`. (iii) B0, B1, G1, G2. (iv) **L**. (v) 🔍 AUDIT (Hilbert-90 trap): invariant **classes** vs equivariant **objects** — every statement must route through rigidified pairs; the naïve `Pic(C_{T'})^Γ` pin is FALSE-adjacent.
 
-> **G3/G4's STATED CONCLUSION IS FALSE AS WRITTEN — corrected 2026-07-29 (`review-ajc`), kernel-verified.**
+> **G3/G4's STATED CONCLUSION IS FALSE AS WRITTEN — 2026-07-29 (`review-ajc`, `ajc-p1`); this note
+> was itself corrected twice, so read it as it now stands rather than as first written.**
 > The clause "`J_r := J'_r/Γ` (G2) represents `picSharpDeg C r` **over k**" above, and G4's
 > assembly of `picSharpDeg`, are not merely hard: over an arbitrary `k` they are **false**.
-> Proof, three Lean lines on `Picard/PicEtSubcanonical.lean` (`relPresheaf_isSheaf_of_representableBy`,
-> landed this round) plus the proved `zariskiTopologyOver_le_etaleTopologyOver`
-> (`Picard/PicEtSheaf.lean:118`): representability of `picSharp` forces `picSharp` to be a
-> **Zariski sheaf**, because the étale topology is subcanonical and refines the Zariski one.
-> The falsity is now a **Lean theorem**, reduced to one named residue.
+> The falsity is a **Lean theorem**, reduced to one named residue.
 > `PicScheme.not_exists_representing_picSharp_of_not_isIso` (`Picard/PicEtSubcanonical.lean`)
 > proves that if `picEtComparison C` fails to be an isomorphism then **no** scheme represents
 > `picSharp C` — the existential of clause (1), not just a pinned candidate — with no topology

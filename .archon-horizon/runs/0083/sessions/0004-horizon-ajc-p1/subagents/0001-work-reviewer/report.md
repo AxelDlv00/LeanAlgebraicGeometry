@@ -1,0 +1,18 @@
+Fresh-context audit of lane ajc-p1's work this session in the Archon Horizon workspace at /home/axel/LeanAlgebraicGeometry-Horizon, project MainProjects/Algebraic-Jacobian-Challenge.
+
+WHAT I LANDED (four commits at HEAD, use the ledger git wrapper "$HORIZON_GIT" = git --git-dir $HORIZON_LEDGER_GIT_DIR --work-tree $HORIZON_LEDGER_WORK_TREE):
+- 6558cd78e, 323c7bb8c, 4009e3f98 — new file AlgebraicJacobian/Picard/PicEtSubcanonical.lean
+- 22cc938fe — docstring correction inside AlgebraicJacobian/Picard/FGAPicRepresentability.lean (the "eleventh item" paragraph, around lines 362-403)
+
+MY CENTRAL CLAIM, which is what I want attacked. The project's board row AJC.picrep.etale-rep and the seam docstring both asserted that the Milne-Kollar campaign's endpoint (representability of PicScheme.picSharp) CANNOT be transported to clause (1) of the central sorry (representability of PicScheme.picEt, the etale sheafification) without a k-rational point, because the comparison map picEtComparison is Kleiman §2 Thm 2.5 — an iso only under a section. I claim that is a direction confusion and the transport is free, because the comparison is the sheafification unit, a unit is an iso exactly when its source is already a sheaf (isIso_toSheafify), and a representable functor is a sheaf for a subcanonical topology.
+
+PLEASE VERIFY, adversarially, and be specific about which of these fail:
+1. Do all declarations in PicEtSubcanonical.lean actually compile and are they axiom-clean (no sorryAx)? Run `lake env lean AlgebraicJacobian/Picard/PicEtSubcanonical.lean` and `#print axioms` on each of the seven declarations. Report the actual output.
+2. VACUITY: is any declaration's statement true for a trivial/irrelevant reason? In particular check that picSharp and picEt in my statements are the SAME objects the seam's fgaPicardRepresentability binds — not same-named different carriers. The workspace has a documented history of this exact failure (a class HasDivFunctor whose field did not mention the curve).
+3. Am I projecting a hypothesis I assumed? Check that no proof is of the shape `P → P`.
+4. Is `subcanonical_etaleTopology` actually new, or does Mathlib/the project already have it under another name? I found it absent by `infer_instance` failing; verify independently.
+5. THE STRONGEST ATTACK I CAN THINK OF, please pursue it: my §4 theorem picSharp_isSheaf_zariski_of_representableBy proves representable ⇒ Zariski sheaf. I then argue by contrapositive that picSharp representability over an arbitrary field is FALSE, hence campaign milestones G3/G4 target a false statement. That argument depends on Kleiman §2 exhibiting a non-Zariski-sheaf curve MEETING this project's binders (smooth, proper, geometrically integral). I measured that references/ contains only Kleiman_The_Picard_Scheme_Theorem-4.8.tex (a §4 excerpt) and that grep finds no §2 non-sheaf material — so that half is quoted, not verified. Did I hedge this correctly in BOTH files, or does either file still state the falsity flatly somewhere? Quote the exact lines.
+6. Does my docstring edit to FGAPicRepresentability.lean cite any declaration that does not exist? Grep every backticked name I introduced. This workspace has repeatedly shipped docstrings naming absent declarations.
+7. Did I break anything? The seam file should still have exactly one sorry (its own, at fgaPicardRepresentability).
+
+Report concrete findings with file:line. Do not fix anything — report. If my central claim survives, say so plainly; if it does not, say exactly where it breaks.

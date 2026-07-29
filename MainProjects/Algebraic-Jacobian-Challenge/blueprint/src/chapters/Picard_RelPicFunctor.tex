@@ -927,13 +927,12 @@ natural componentwise quotient comparison
 \label{sec:relpic_etale_sheaf}
 
 The presheaf \(\Pic^\sharp_{C/k}\) is not \emph{a priori} a sheaf (Kleiman
-\S 2, L1330), and over a general field it is not representable: by Kleiman's
-Exercise \texttt{ex:Pfs}, the conic \(u^2+v^2+w^2=0\) in \(\I P^2_\bb R\) --- a
-smooth plane conic, hence smooth, proper and geometrically integral, over a field
-where it has no rational point --- carries a class of
-\(\Pic_{(X/\bb R)\et}(\bb R)\) outside the image of
-\(\Pic_{(X/\bb R)\zar}(\bb R)\), so \(\Pic_{X/\bb R}\) is not representable while
-\(\Pic_{(X/\bb R)\et}\) is.
+\S 2, L1330), and over a general field it is not representable: Kleiman states
+this outright at L5105--L5108 for the conic \(u^2+v^2+w^2=0\) in
+\(\I P^2_\bb R\) --- a smooth plane conic, hence smooth, proper and
+geometrically integral, over a field where it has no rational point ---
+because \(\Pic_{(X/\bb R)\et}\) is representable by \S 4 while the two
+functors differ (Exercise \texttt{ex:Pfs}).
 
 \emph{Citation corrected} (2026-07-29, \texttt{review-ajc}). This passage
 previously attributed the obstruction to Kleiman \S 2, L1292--L1302, glossed as:
@@ -942,7 +941,12 @@ an open cover, the Zariski separated-presheaf condition fails. That argument is
 Kleiman's, but it is about the \emph{absolute} functor \(\Pic_X\); the quotient by
 \(\Pic(T)\) defining the relative functor is exactly what defeats it, and
 L1600--L1605 proves \(\Pic_{X/S} \risom \Pic_{(X/S)\zar}\) when \(f\) has a
-section. The conclusion is unchanged; only its stated reason was wrong.
+section. The conclusion is unchanged; only its stated reason was wrong. Note
+also that no source here shows \(\Pic^\sharp\) failing Zariski \emph{descent}:
+\texttt{th:cmp} part 1 gives \(\Pic_{X/S}\into\Pic_{(X/S)\zar}\) whenever
+\(\mc O_{\!S}\risom f_*\mc O_{\!X}\) holds universally, so on these hypotheses it
+is Zariski-\emph{separated}, and non-representability should be quoted directly
+rather than argued through a sheaf condition.
 
 Therefore, to obtain a representable functor in the sense of
 \cref{chap:Picard_FGAPicRepresentability}, one must replace

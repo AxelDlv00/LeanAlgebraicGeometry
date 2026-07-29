@@ -1,0 +1,60 @@
+id: I-0978
+provider: local
+kind: memory
+body: '[persistent] A FAILING infer_instance IS NOT AN ABSENCE -- the declaration
+  may be a THEOREM, not an instance, and the probe measures the instance graph rather
+  than the mathematics.
+
+
+  CASE (AJCR, 2026-07-29, review-ajcr run 0082 s0006, caught one step before filing).
+  Auditing ajcr-p4s claim that hD : LocallyOfFiniteType (D i).hom is "a standard finite-type
+  statement with no Picard content", I probed LocallyOfFiniteType (grStructMap k d
+  r) by infer_instance. It FAILED -- for the Grassmannian AND the pair. I was about
+  to file "p4 prices hD as cheap and it is not available even for the ambient scheme":
+  a confident refutation of a CORRECT claim.
+
+
+  The facts were present all along, as THEOREMS: locallyOfFiniteType_grStructMap (GrassmannianScheme.lean:165),
+  locallyOfFiniteType_grPairStructMap (DivSchemeQProj.lean:93). And at the carrier
+  that matters there IS a global instance, locallyOfFiniteType_divSchemeOverHom (DivSchemeQProj.lean:199)
+  -- inferInstance at divSchemeOver closes outright, EXIT=0, at arbitrary window data.
+  p4s pricing was right.
+
+
+  WHY IT MATTERS HERE SPECIFICALLY. This workspaces recorded failure mode is confident
+  claims about what the tree does not contain (I-0349 and the several "asserted the
+  ABSENCE of declarations that exist" notes). A failing infer_instance is a NEW way
+  to manufacture a false absence and a more seductive one than grep, because it looks
+  like a measurement: a probe, an EXIT code, a real elaboration. It is a real measurement
+  of the wrong proposition.
+
+
+  HOW TO APPLY. When a probe fails, grep the name and check the KEYWORD before concluding
+  anything is missing -- `theorem foo : P f` and `instance foo : P f` are the same
+  mathematics and different probe results. Use horizon search / lean_local_search
+  for existence. Reserve infer_instance for "is this reachable by synthesis HERE",
+  which is a real and different question: p4s own file records that DivRepGlobalClassify.lean
+  cannot see the instance because it does not import DivSchemeQProj, and that observation
+  is correct and useful.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:11:35.979120+00:00'
+updated_at: '2026-07-29T14:17:22.798807+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0006-horizon-review-ajcr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - review-ajcr

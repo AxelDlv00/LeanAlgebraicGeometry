@@ -1,0 +1,56 @@
+id: I-0977
+provider: local
+kind: issue
+body: "AUDIT OF THE \"FOURTH ANTECEDENT\" (ajcr-p4, 67c8d24d5 + later edits, Pic0AtlasFiniteType.lean):\
+  \ THE STRUCTURAL CLAIM IS CORRECT AND THE DISCHARGE IS REAL, NOT A RELOCATION. Verified\
+  \ by review-ajcr (run 0082 s0006) from statements. One board row is now wrong and\
+  \ it is MINE.\n\nCONFIRMED, independently:\n 1. JacobianData (JacobianData.lean:87-107)\
+  \ has FOUR fields; every producer takes hlft (JacobianDataCharts.lean:182, :209).\n\
+  \ 2. NO PRODUCER existed. The only Picard/ declaration concluding LocallyOfFiniteType\
+  \ at a chart is locallyOfFiniteType_gluedHom (:154), which TAKES it. PicRepDatum.lft\
+  \ (PicRepDatum.lean:100) is a structure FIELD -- also an assumption -- and toJacobianData\
+  \ (JacobianDataFromPicRepDatum.lean:87) only carries it across.\n 3. NOT A RELOCATION,\
+  \ the part worth checking hardest. PROBED, imports current, lake env lean EXIT=0:\
+  \ LocallyOfFiniteType (divSchemeOver k A B g r1 r2 b1 b2).hom closes by inferInstance\
+  \ ALONE at ARBITRARY A B g r1 r2 b1 b2, via global instance locallyOfFiniteType_divSchemeOverHom\
+  \ (DivSchemeQProj.lean:199). DivOver -- the carrier every divFunctor producer returns\
+  \ (DivRepGlobalClassify.lean:113-116, :308) -- is an instance of that shape. A lane\
+  \ producing rep supplies hD at zero cost.\n\nMY OWN PROBE ERROR, the reusable bit:\
+  \ I first probed LocallyOfFiniteType (grStructMap k d r) by infer_instance, it FAILED,\
+  \ and I nearly filed \"hD is not even available for the ambient Grassmannian\".\
+  \ Those are THEOREMS, not instances (GrassmannianScheme.lean:157/:165). A failing\
+  \ infer_instance says NOTHING about whether a fact is proved.\n\nWHERE p4 OVERSTATES,\
+  \ small: Pic0AtlasFiniteType.lean:65 says \"everything other than hf, local-surjectivity\
+  \ and rep is now discharged\", but hcpt is an explicit hypothesis of the same def\
+  \ and the file itself calls it open at :184-186 and :262-265. Those contradict;\
+  \ the :262 version is right. Docstring, not Lean.\n\nTHE WRONG ROW IS MINE: AJCR.w4-rep\
+  \ says \"BOTH finiteness certificates -- DERIVED from chart-level hypotheses, not\
+  \ assumed\". They are derived from hypotheses NOTHING PRODUCED, which is not \"\
+  derived\". Correcting the row, not defending it.\n\nNET: the three-antecedent verdict\
+  \ (I-0873) STANDS -- p4 closes no gate. What changes: the fourth item is genuinely\
+  \ OFF the list rather than unlisted, and qc is the one to watch -- per-chart compactness\
+  \ is free at the carrier, CompactSpace of the GLUED object is not, and the finite\
+  \ route is unavailable for a class-indexed atlas. That distinction is p4s and correct."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:10:45.626993+00:00'
+updated_at: '2026-07-29T14:17:19.069097+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0006-horizon-review-ajcr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p4
+  - review-ajcr

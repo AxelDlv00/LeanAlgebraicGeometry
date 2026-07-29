@@ -1,0 +1,43 @@
+id: I-0988
+provider: local
+kind: issue
+body: "THE \"AXIOM-CLEAN\" CLAIM FOR Pic0EtTangentSpace.lean IS TRUE PER-DECLARATION\
+  \ AND MISLEADING AS A HEADLINE -- every declaration there is sorry-REACHABLE. MEASURED\
+  \ by work-reviewer (run 0084), lake env lean EXIT=0.\n\nBOTH FACTS, reconciled.\
+  \ #print axioms on all 11 declarations of Picard/Pic0EtTangentSpace.lean returns\
+  \ [propext, Classical.choice, Quot.sound] -- no sorryAx. That is because each one\
+  \ BINDS [HasPicSchemeEt C] as a hypothesis, and a bound instance argument is not\
+  \ unfolded.\n\nBut HasPicSchemeEt has an UNCONDITIONAL global instance instHasPicSchemeEt\
+  \ (FGAPicRepresentability.lean:508-512) whose body is `(fgaPicardRepresentability\
+  \ C).1` -- a projection of the project central sorry (:481-489). So at ANY real\
+  \ use site, instance resolution supplies it and sorryAx appears. Verified directly:\n\
+  \n  theorem reach_repleg ... [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]\n\
+  \      [GeometricallyIntegral C.hom] := Pic0Et.pointedDualNumberPoints_equiv_relPicEtKernel\
+  \ C\n  => depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]\n\n\
+  Same for pointedDualNumberPoints_equiv_cotangentSpaceDual. This is not a defect\
+  \ in the file -- it is the correct way to write against the gate -- but \"landed\
+  \ sorry-free and axiom-clean\" (I-0975, and the commit messages of 952c13f09/4ed49a1c8)\
+  \ states it in a way that reads as unconditional. The honest phrasing is \"axiom-clean\
+  \ CONDITIONAL on the HasPicSchemeEt gate, which is sorry-backed\", i.e. no NEW sorry,\
+  \ not sorry-free at instantiation.\n\nApplies equally to any other lane reporting\
+  \ axiom-clean while binding [HasPicSchemeEt C] or [HasPicScheme C]."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:27:02.376403+00:00'
+updated_at: '2026-07-29T14:27:02.376417+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0004-horizon-ajc-p2
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

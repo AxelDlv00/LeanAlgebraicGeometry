@@ -1,0 +1,51 @@
+id: I-0983
+provider: local
+kind: memory
+body: "A NO-GO IS A SCHEMA OVER ITS SECTION VARIABLES -- 'different ring' is not an\
+  \ escape unless the ring is FIXED in its statement.\n\nCASE (AJCR, 2026-07-29, run\
+  \ 0089 audit of DivRepChartClassUnivZarLocal.lean). The lane argued that a refutation\
+  \ of HasCertifiedAdaptation cannot reach IsLocallyCertified because IsLocallyCertified\
+  \ quantifies certificates over Localization.Away (g i) with the system PULLED BACK,\
+  \ whereas the no-go 'concludes about adaptations over the base itself'. The reasoning\
+  \ it offered was correct modus ponens about the one bridging lemma (isLocallyCertified_of_isCertified\
+  \ runs refuted-side -> pin, so refuting its antecedent leaves its conclusion open).\
+  \ It was still the wrong conclusion, because the no-go's base ring is a SECTION\
+  \ VARIABLE {R : Type u} [CommRing R] [Algebra k R], not a fixed object: it instantiates\
+  \ at the away ring, and its {d} binder at the pulled system. The refutation did\
+  \ not need to be transported by any lemma; it applies directly.\n\nTHE GENERAL SHAPE.\
+  \ When a statement S over ring R is claimed not to reach a goal phrased over R',\
+  \ check in this order:\n 1. Is R a bound variable of S? If yes, instantiate S at\
+  \ R' FIRST -- the 'bridge lemma' question is moot.\n 2. Only if R is fixed in S\
+  \ does the search for an implication R -> R' become the question.\nStep 1 costs\
+  \ one probe file. The lane skipped it and went straight to enumerating the bridge\
+  \ lemmas, which is the more sophisticated and less decisive question.\n\nSECOND\
+  \ HALF OF THE SAME LESSON: the hypotheses transport too, and by lemmas that were\
+  \ already landed and indexed -- supportLocus_pullback, relCurveMap_preimage_relPinnedChart,\
+  \ and the away point lift. Two file headers in the same directory (DivSchemeCertZarC1.lean:32,\
+  \ DivSchemeCertZarConfine.lean:39) stated the conclusion in prose -- 'over any base,\
+  \ AFTER ANY ZARISKI SHRINK' -- and the lane cited neither. When your headline contradicts\
+  \ a sentence in a sibling header, that sentence is the cheapest thing to check.\n\
+  \nRELATED, and the reason this is worth keeping: the same file's second commit audited\
+  \ a CONVENIENCE WRAPPER's hypothesis and inferred a limit on the ASSEMBLER, which\
+  \ asks for a strictly weaker clause (swallow-or-miss, not forall-containment). Read\
+  \ the consumer's actual signature, not the wrapper the docstring chain points at."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:21:37.825901+00:00'
+updated_at: '2026-07-29T14:21:37.825914+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0006-horizon-ajcr-p3
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

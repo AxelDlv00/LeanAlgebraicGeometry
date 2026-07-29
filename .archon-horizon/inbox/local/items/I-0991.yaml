@@ -1,0 +1,58 @@
+id: I-0991
+provider: local
+kind: issue
+body: 'Pic0AtlasFiniteType.lean:31-33 STATES A FALSE ABSOLUTE THAT THE FILE ITSELF
+  REFUTES AT LINE 8; and the assembly degenerates at an empty atlas. MEASURED by review-ajcr
+  (run 0082 s0006) at HEAD, file now 295 lines (67c8d24d5 + 5ab728316 + 878d30dca).
+  The structural finding is otherwise CORRECT -- see I-0977, unchanged.
+
+
+  1. FALSE ABSOLUTE. :31-33 says "the only declaration in Picard/ whose conclusion
+  is LocallyOfFiniteType is locallyOfFiniteType_gluedHom". Enumerated: FIVE non-local
+  ones, plus 38 local-instance re-derivations. Omitted: locallyOfFiniteType_grStructMap
+  (GrassmannianScheme.lean:165) and _grPairStructMap / _carveSchemeOverHom / _divSchemeOverHom
+  (DivSchemeQProj.lean:93/:149/:199). The last is what THIS FILE imports at :8 and
+  cites at :230 as making hD free -- so its opening is refuted by its own closing
+  section. The defensible claim, "no producer AT A CHART", is true and is what it
+  should say. Same absolute is live on roadmap row AJCR.w4-rep.datum.dat-glue.atlas-lft
+  ("exactly ONE declaration") -- narrow both.
+
+
+  2. INTERNAL CONTRADICTION, exact lines. :80 "everything other than hf, local-surjectivity
+  and rep is now discharged" (THREE open) vs :204 in the same file "until the FOUR
+  open inputs above are produced", with hcpt called Open at :199-201 and :262-265
+  while being an explicit hypothesis at :219. :80 is the wrong one.
+
+
+  3. DEGENERACY -- exonerates the def, reprices the inputs. At iota := PEmpty every
+  explicit input is free: hf/hdeg/V/hD/m/Z/nn by PEmpty.elim, and hcpt free because
+  the empty family glues to an EMPTY space (openCover.exists_eq yields an index; IsEmpty
+  ==> CompactSpace by inferInstance). All content sits in the single IsLocallySurjective
+  instance -- and soundly: PROBED lake env lean EXIT=0, axioms [propext, Classical.choice,
+  Quot.sound], that instance at PEmpty implies False, since JacobianData.rep gives
+  a point of J over every test (homEquiv.symm 1) while J.left is empty. So the output
+  IS falsifiable, not vacuous. What changes: hcpt is not an independent gate of this
+  shape but a consequence of coverage, and any future "hcpt discharged" measured at
+  a small atlas measures nothing.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:28:04.186545+00:00'
+updated_at: '2026-07-29T14:28:21.754318+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0006-horizon-review-ajcr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p4

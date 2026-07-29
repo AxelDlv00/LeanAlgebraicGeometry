@@ -1,0 +1,53 @@
+id: I-0980
+provider: local
+kind: issue
+body: "REFUTED: DivRepChartClassUnivZarLocal.lean's headline. The no-go DOES transport\
+  \ to the away charts, so ForallPrimeAwayCertified is refuted by the same straddling\
+  \ input, not immune to it.\n\nMEASURED by work-reviewer (run 0089, audit of bde5fdc94\
+  \ + 12e9aea46). Probes lake env lean EXIT=0, axiom-clean [propext, Classical.choice,\
+  \ Quot.sound].\n\nTHE FILE CLAIMS (:218-224, :31-40) that ForallPrimeAwayCertified\
+  \ is not an instance of forall_not_isCertified_of_straddling because 'that quantifier\
+  \ ranges over adaptations over R_Z itself'. FALSE: that theorem (DivisorFamilyAffStrict.lean:127)\
+  \ is a SCHEMA over the base ring -- its {R} [CommRing R] [Algebra k R] binder instantiates\
+  \ at R := Localization.Away r and its {d} at the PULLED system. I instantiated exactly\
+  \ that; it typechecks.\n\nBOTH ITS HYPOTHESES TRANSPORT UPWARD by ALREADY-LANDED\
+  \ lemmas:\n * supportLocus_pullback (DivSchemeCertZarTransport.lean): pulled support\
+  \ = preimage of support;\n * relCurveMap_preimage_relPinnedChart (DivSchemeFibrePoint.lean:199):\
+  \ away chart = preimage of base chart;\n * point lift: a point whose base prime\
+  \ avoids r lifts to relCurve C (Away r) (localization_away_comap_range + Over.range_whiskerLeft,\
+  \ pattern of exists_relCurveMap_base_eq, DivisorFamilyZariskiSep.lean:224).\n\n\
+  I proved sorry-free: given a prime p, two support points of the BASE system LYING\
+  \ OVER p, one off V0 and one off V1, plus preconnectedness of the pulled support,\
+  \ then NOT (forall q, exists r not in q, exists A over Away r, A.IsCertified n).\
+  \ The 'for each r not in p' quantifier is no escape -- p avoids r by the existential's\
+  \ own choice, so both witnesses lift for whichever r is offered.\n\nTHE TREE ALREADY\
+  \ SAID SO, in headers the file does not cite: DivSchemeCertZarC1.lean:32 'blind\
+  \ ... over any base, AFTER ANY ZARISKI SHRINK, for any adaptation'; DivSchemeCertZarConfine.lean:39\
+  \ and DivSchemeCertZarVerdict.lean:25 'no Zariski shrink separates the witnesses'.\
+  \ The commit's argument is true of isLocallyCertified_of_isCertified and false of\
+  \ the tree: the transport does not run through that lemma.\n\nWHAT SURVIVES: the\
+  \ modus-ponens remark is correct; and the refuting input is genuinely NARROWED --\
+  \ it must now be straddling WITHIN ONE FIBRE, not merely globally. That narrowing\
+  \ is the only defensible headline.\n\nNEXT: I-0705's decisive probe is still not\
+  \ done. grep confirms no file measures univSeed's supportLocus against V0/V1. The\
+  \ leaf is unpriced in both directions."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:20:25.818626+00:00'
+updated_at: '2026-07-29T14:20:25.818638+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0006-horizon-ajcr-p3
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

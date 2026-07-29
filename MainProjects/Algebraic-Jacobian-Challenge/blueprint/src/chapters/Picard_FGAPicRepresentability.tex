@@ -72,12 +72,24 @@ formulation this project realises: representability is asserted for
 hypothesis on \(C(k)\) (\cref{def:pic_et_sheaf},
 \cref{thm:fga_pic_representability_etale}).
 
-The reason is not a preference between equivalent options. The plain relative
-Picard functor \(\Pic^\sharp_{C/k}\) of \cref{def:rel_pic_sharp} is not a sheaf
-for any topology in general --- not even the Zariski one --- and a representable
-functor is a sheaf for every subcanonical topology, so an unconditional
+The reason is not a preference between equivalent options. An unconditional
 representability statement for \(\Pic^\sharp_{C/k}\) is not merely unproved but
-\emph{false}. Sheafifying repairs this by construction; a rational point repairs
+\emph{false}: Kleiman L5105--L5108 exhibits the conic \(u^2+v^2+w^2=0\) in
+\(\I P^2_\bb R\) --- a smooth plane conic, hence smooth, proper and geometrically
+integral over a field with no rational point --- for which \(\Pic_{X/\bb R}\) is
+not representable while \(\Pic_{(X/\bb R)\et}\) is.
+
+\emph{Corrected} (2026-07-29, \texttt{review-ajc}). This paragraph previously gave
+the reason as: \(\Pic^\sharp_{C/k}\) ``is not a sheaf for any topology in general
+--- not even the Zariski one'', with representability of a functor forcing the
+sheaf condition for every subcanonical topology. The second half is right, but no
+source supports the first for the \emph{relative} functor: \texttt{th:cmp} part 1
+gives \(\Pic_{X/S}\into\Pic_{(X/S)\zar}\) whenever
+\(\mc O_{\!S}\risom f_*\mc O_{\!X}\) holds universally, so on these hypotheses it
+is Zariski-\emph{separated}. Take the non-representability directly instead; in
+Lean it is
+\texttt{PicScheme.not\_exists\_representing\_picSharp\_of\_not\_isIso}, whose only
+open input is that the comparison really fails for that conic. Sheafifying repairs this by construction; a rational point repairs
 it by hypothesis, and the resulting theorem is about a smaller class of curves.
 
 \medskip
@@ -278,8 +290,11 @@ fibers; we record the general statement and then specialise.
   subschemes. The scheme \(\Pic_{C/k}\) is called the \emph{Picard scheme}
   of \(C/k\).
 
-  \emph{Formalisation status.} The \(\leanok\) mark was removed from this
-  statement on 2026-07-29: the pinned declaration
+  \emph{Formalisation status} (2026-07-29, \texttt{review-ajc}). The
+  \texttt{\textbackslash leanok} mark was removed from this statement: unlike
+  \cref{def:inst_pic_sharp_representable}, whose mark truthfully certifies that
+  an extraction elaborates, this theorem asserts \emph{representability}, and the
+  pinned declaration
   \texttt{PicScheme.representable} does not prove this theorem. It is the
   \texttt{choose\_spec} projection of the hypothesis class
   \texttt{HasPicScheme}, which the declaration itself assumes as an instance
@@ -288,7 +303,7 @@ fibers; we record the general statement and then specialise.
   \(k\)-rational point (\cref{def:has_rational_point}), and the leaf asserting
   every such curve has one was \emph{false} and has been deleted. The
   mathematical content of this theorem is open, and is carried in Lean by the
-  named obligation \lstinline{fgaPicardRepresentability}, stated for the
+  named obligation \texttt{fgaPicardRepresentability}, stated for the
   \'etale sheafification without a rational-point hypothesis
   (\cref{thm:fga_pic_representability_etale}). Note also that the statement
   above --- with its rational-point hypothesis and its

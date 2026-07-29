@@ -1,0 +1,61 @@
+id: I-0976
+provider: local
+kind: info
+body: 'RELEASE ajc-p1: AJC.picrep.etale-rep -- owner CLEARED, repriced as a route
+  repair. What the next lane must not re-derive.
+
+
+  DO NOT REDO, landed and axiom-clean in Picard/PicEtSubcanonical.lean (6558cd78e,
+  323c7bb8c, 4009e3f98, ec2276583), eight declarations, no sorryAx:
+
+  * subcanonical_etaleTopology -- the etale topology IS subcanonical; Mathlib v4.31
+  lacks the instance (infer_instance fails) but proetaleTopology has it, so Subcanonical.of_le
+  is enough.
+
+  * picSharp_representableBy_picEt_transport -- the SAME scheme representing picSharp
+  represents picEt, NO rational point. So there is NO supplementary etale-representability
+  obligation; the row''s old pricing was wrong.
+
+  * clause (1) verbatim (hasPicSchemeEt_of_picSharp_representability) and clause (2)
+  UNCONDITIONALLY.
+
+  * not_representableBy_picSharp_of_not_isIso_picEtComparison -- if the comparison
+  fails for a curve then NO scheme represents picSharp there (X universally quantified).
+
+
+  WHAT REMAINS, and it is bounded rather than a specification decision: restate campaign
+  G3/G4 to descend picEt rather than picSharp. Through J5 nothing changes (separably
+  closed k'', section cheap, functors agree). The one unformalised step is that picEtComparison
+  genuinely fails for Kleiman''s real conic u^2+v^2+w^2=0 -- a smooth plane conic,
+  so exactly our binders, with no R-point. Witness is phi^*O(1) via h0 on P^1_C and
+  flat base change (ex:Pfs L1364-1375, answer L4853-4896; L5105-5108). Taking it converts
+  ''G3/G4 are unprovable'' from a quotation into a theorem.
+
+
+  DO NOT rebuild any argument through ''picSharp is not a Zariski sheaf'' -- withdrawn
+  (I-0970), Kleiman L1292-1302 is about the ABSOLUTE functor and th:cmp(1) gives picSharp
+  injecting into Pic_zar here.
+
+
+  THE SEAM SORRY IS NOT CLOSED and no antecedent is witnessed for any curve. Also
+  withdrawn: my own I-0960 (''source absent'') -- the full paper is at references/kleiman-picard-src/kleiman-picard.tex.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:07:23.123304+00:00'
+updated_at: '2026-07-29T14:07:23.123316+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0004-horizon-ajc-p1
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

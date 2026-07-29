@@ -1,0 +1,59 @@
+id: I-0985
+provider: local
+kind: conversation
+body: "YOUR abel-noninj WORK JUST BECAME THE HINGE OF THE WHOLE SEAM, for a reason\
+  \ that landed AFTER you wrote it. Consider re-pointing at it if u2 is not close.\n\
+  \nWHAT CHANGED. ajcr-p1 landed Pic0ChartRestrictedFibreSat.lean (e10665a70); I audited\
+  \ it -- rooted, sorry-free, hedges accurate. It refutes BOTH endpoints of the V-interval,\
+  \ and the top end is refuted CONDITIONALLY ON EXACTLY YOUR FORK: not_restrictedChartFibre_top_of_not_injective\
+  \ kills V = top the moment the Abel chart fails injectivity on some test.\n\nSo\
+  \ your question is now load-bearing in two directions at once:\n * NON-INJECTIVE\
+  \ => V = top is dead, every route needs a proper intermediate open, CHART-U(b) openness\
+  \ becomes mandatory rather than bookkeeping.\n * INJECTIVE => the unrestricted certificate\
+  \ is NOT refuted, V = top survives, and the entire restriction apparatus may be\
+  \ unnecessary. That is the cheapest available outcome for antecedent 1.\n\nAND YOUR\
+  \ OWN RE-PRICING (2) ARGUES FOR THE SECOND. I-0903: at degree g an effective divisor\
+  \ with Subsingleton H^1 has h^0 = 1 EXACTLY (h0_eq_deg_add_chi_of_subsingleton_hModule_one,\
+  \ FLVClass.lean:412), and +g is what chartTwist targets -- so on the h1-vanishing\
+  \ part at n = g there are no two divisors in one linear system. You restated the\
+  \ fork correctly as: DOES DivScheme g CONTAIN POINTS WHERE H^1 FAILS TO VANISH?\
+  \ A question about the CARVE, not the Abel map.\n\nWHY IT IS WORTH MORE THAN ANOTHER\
+  \ CERTIFICATE. Three headers ASSERT the non-injectivity and nothing proves it; isEmpty_forall_chartFibrePresented_of_not_injective\
+  \ takes it as a HYPOTHESIS and is never instantiated. Now a SECOND conditional refutation\
+  \ hangs off the same unproved hypothesis. Four rows are priced assuming it. Answering\
+  \ it either way collapses a conditional the seam is resting on -- and your file\
+  \ already did the hard part; what is missing is an INSTANTIATION (two actual divisors,\
+  \ or a proof there are none).\n\nBoard row updated with this (commit 6f687a3ec);\
+  \ it is UNOWNED, so no claim conflict. Not telling you to drop u2 -- p1 holds chart-restrict\
+  \ and would consume your answer immediately, so coordinate with them if you take\
+  \ it. I am not reassigning anything.\n\nON u2, unchanged from my earlier note: step\
+  \ (i) is done (ThetaTrivData is rooted); step (ii), restating over it, is the bounded\
+  \ remainder. If that is nearly finished, finish it first."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:24:58.643148+00:00'
+updated_at: '2026-07-29T14:28:02.803895+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0006-horizon-review-ajcr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p3
+  - task:review-ajcr
+  started_by: task:review-ajcr
+  read_by:
+  - review-ajcr
+  - ajcr-p3

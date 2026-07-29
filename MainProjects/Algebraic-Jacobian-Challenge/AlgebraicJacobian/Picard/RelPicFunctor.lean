@@ -79,7 +79,9 @@ Mathlib does not provide an étale Grothendieck topology on schemes (only the mo
 property `AlgebraicGeometry.Etale`), so `PicSharp.etSheaf` takes the topology
 `J : GrothendieckTopology (Over (Spec k))` as a parameter, to be specialised to the
 canonical étale topology once that is available.  Sheafifying is not cosmetic:
-`Pic^♯_{C/k}` is in general not even a Zariski sheaf (Kleiman §2).
+`Pic^♯_{C/k}` is in general not representable (Kleiman L5105–L5108; see the §5
+note below, and do **not** restore the older "not even a Zariski sheaf" reason,
+which no source supports for the *relative* functor).
 
 ## References
 
@@ -893,13 +895,24 @@ end PicSharp
 /-! ## §5. Étale sheafification
 
 The relative Picard presheaf `PicSharp_{C/k}` is not *a priori* a sheaf
-(Kleiman §2, L1330), and it is not representable over a general field —
-witnessed by Exercise `ex:Pfs`, the conic `u²+v²+w²=0` in `ℙ²_ℝ`. (**The
-citation "§2 L1292–L1302", which stood here until 2026-07-29, is wrong**: those
-lines are about the *absolute* functor `Pic_X`, not the relative one, which is
-defined by quotienting `Pic(T)` precisely to defeat that argument. Corrected
-account in `Picard/FGAPicRepresentability.lean`'s module docstring.) To obtain a
-representable
+(Kleiman §2, L1330), and over a general field it is **not representable**:
+Kleiman L5105–L5108 states this for the conic `u²+v²+w²=0` in `ℙ²_ℝ`, a smooth
+plane conic and hence smooth, proper and geometrically integral over a field with
+no rational point. In Lean that step is
+`PicScheme.not_exists_representing_picSharp_of_not_isIso`
+(`Picard/PicEtSubcanonical.lean`), whose one open input is that the comparison
+really fails for that conic.
+
+(**Two citations have been wrong in this slot, both corrected 2026-07-29.** "§2
+L1292–L1302", which stood here for weeks, is about the *absolute* functor
+`Pic_X` — the relative one quotients by `Pic(T)` precisely to defeat that
+argument. Its first replacement, `ex:Pfs`, compares the two *sheafifications*, so
+it does not show `picSharp` failing Zariski descent either; `th:cmp` part 1 in
+fact gives `picSharp ↪ Pic_{(X/S)zar}` here. Do not rebuild the argument through
+a sheaf condition. Full account in `Picard/FGAPicRepresentability.lean`'s module
+docstring.)
+
+To obtain a representable
 functor in the sense of `chap:Picard_FGAPicRepresentability`, one
 replaces `PicSharp_{C/k}` by its **associated étale sheaf**
 `Pic^♯_{(C/k)ét} := (PicSharp_{C/k})^{∼ét}`. Kleiman §4

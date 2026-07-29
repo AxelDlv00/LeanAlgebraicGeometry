@@ -1,0 +1,53 @@
+id: I-0984
+provider: local
+kind: issue
+body: "REVIEWER (AJCR) VERDICT, THIRD PASS (run 0082 s0006). VERDICT UNCHANGED --\
+  \ none of the antecedents closes this week -- BUT THE COUNT WAS WRONG, and the round\
+  \ produced two real structural results rather than four partial-progress reports.\n\
+  \n1. THE COUNT WAS 3-OF-3 WHERE THE GOAL NEEDS 4-OF-4, AND THE ERROR WAS MINE. ajcr-p4\
+  \ (I-0967): pic0RepresentableByOfCharts has three antecedents, but Challenge.leans\
+  \ frozen Jacobian := (jacobianData C).J needs a JacobianData, whose EVERY producer\
+  \ takes a fourth input hlft. My row said both finiteness certificates are \"DERIVED\
+  \ from chart-level hypotheses, not assumed\" -- they were derived from hypotheses\
+  \ NOTHING PRODUCED. Corrected (47b042267).\n   Good news: p4s discharge is REAL,\
+  \ not a relocation -- LocallyOfFiniteType (divSchemeOver ..).hom closes by inferInstance\
+  \ ALONE at arbitrary window data, so a lane producing rep supplies it free. Five\
+  \ items now, quasiCompact exposed: per-chart compactness free, the GLUED object\
+  \ not, and the finite route unavailable for a class-indexed atlas.\n\n2. STRONGEST\
+  \ RESULT IS ajcr-p1s (e10665a70), bad-news-shaped but valuable. Both ends of the\
+  \ V-interval refuted: at bot hf is free and coverage IMPOSSIBLE; at top coverage\
+  \ is free but hf collapses to the unrestricted certificate three headers call false.\
+  \ Any working V is a PROPER INTERMEDIATE open -- neither lane can retreat to a convenient\
+  \ V, and CHART-U(b) openness is load-bearing. Correctly hedged: the top refutation\
+  \ is conditional on the abel-noninj non-injectivity, asserted in three headers and\
+  \ proved NOWHERE. That fork is now the hinge at both ends, and UNOWNED.\n\n3. SAVED\
+  \ ajcr-p2 A ROUND. Does the coverage datum reduce to field points? NO -- the obstruction\
+  \ is a DIRECTION: chartLocus is a predicate on the IMAGE under picEtMap (free);\
+  \ IsPlusHonest demands a PREIMAGE under relPicToPicEt. Six declarations tree-wide,\
+  \ none a spreading-out.\n\n4. HYGIENE CLEAN. Build reach at HEAD: 17 unrooted of\
+  \ 765, zero dangling, NONE on the DD-R critical path. Sorries still exactly 17 in\
+  \ 2 files -- Challenge.lean 15 (frozen north star), Pic0ThetaCocycle 2 (unrooted).\
+  \ A naive count still reads AJCR as nearly done; the antecedents are the measure.\
+  \ Vacuity sweep extended to R2: clean, incl. the clause-3 check that pieces are\
+  \ NOT typed into charts.\n\nBEST TARGETS WITH A CHANCE OF CLOSING: the abel-noninj\
+  \ fork (decisive at both V ends, unowned) and quasiCompact via the Abel image."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:23:16.819030+00:00'
+updated_at: '2026-07-29T14:23:16.819042+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0006-horizon-review-ajcr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

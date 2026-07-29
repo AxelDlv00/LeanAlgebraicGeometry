@@ -1,0 +1,49 @@
+id: I-0982
+provider: local
+kind: issue
+body: "THE 'GUARD' IN 12e9aea46 AUDITS THE WRONG INPUT: the assembler does not want\
+  \ 'forall j, supp subset pieces j', so the tube route is NOT measured shut and the\
+  \ header's 'must shrink the COVER' is false.\n\nMEASURED by work-reviewer (run 0089),\
+  \ lake env lean EXIT=0.\n\nTHE FILE (DivRepChartClassUnivZarLocal.lean:76-86, :149-163)\
+  \ audits forall_noLeak_of_forall_supportLocus_subset (DivSchemeCertZarTube.lean:142)\
+  \ -- a CONVENIENCE wrapper -- and infers a limit on the assembler. But isCertified_of_noLeak_kernel_spanning\
+  \ (DivSchemeCertUniv.lean:104-108) asks for\n  forall j s, fibre s INTER closure\
+  \ (supp INTER pieces j) SUBSET pieces j\nwhich is SWALLOW-OR-MISS, not forall-containment.\
+  \ I proved sorry-free:\n  forall_noLeak_of_swallow_or_miss : (forall j, supp subset\
+  \ pieces j OR supp INTER pieces j = empty) -> that exact hnoLeak\nvia A.forall_fibre_closure_subset_of_supportLocus_subset\
+  \ (swallow branch) and closure_empty (miss branch). A DISJOINT piece is therefore\
+  \ the HARMLESS case -- it misses the support and its clause is trivial -- not the\
+  \ obstruction.\n\nAND THE TREE ALREADY HAS THE PRODUCER for that disjunction: DivisorAdaptation.forall_subset_or_disjoint_of_isPreconnected\
+  \ (DivSchemeCertZarConn.lean:128) delivers 'forall j, supp subset pieces j OR Disjoint\
+  \ supp (pieces j)' from leak-freeness plus connected support. The guard treats as\
+  \ a hazard the hypothesis of a landed lemma.\n\nSECOND DEFECT: ':157-158 asserts\
+  \ 'disjoint pairs are the generic case rather than a corner'. Unmeasured. The pinned\
+  \ charts OVERLAP (relCover_sup: V0 sup V1 = top; V0 inf V1 is the punctured locus),\
+  \ and basic opens of V0 and V1 are disjoint only if they miss the overlap. No argument\
+  \ is given.\n\nIN THE GUARD'S FAVOUR, checked: A.index is genuinely inhabited in\
+  \ the nontrivial case -- m0 = 0 forces (0 : Gamma(V0)) = 1 via partition0, which\
+  \ I verified. And at j1 = j2 the hypothesis reduces to pieces j = bot, so only the\
+  \ two-index reading carries content.\n\nNEXT: retract the 'measured shut' / 'shrink\
+  \ the COVER' wording and reprice the tube route against the ASSEMBLER's clause,\
+  \ where swallow-or-miss suffices and forall_subset_or_disjoint_of_isPreconnected\
+  \ already produces it."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:21:14.042124+00:00'
+updated_at: '2026-07-29T14:21:14.042136+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0006-horizon-ajcr-p3
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

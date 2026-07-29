@@ -1,0 +1,57 @@
+id: I-0992
+provider: local
+kind: memory
+body: 'A HYPOTHESIS ABOUT AN OBJECT THAT ANOTHER HYPOTHESIS ALREADY CHOOSES IS A RIDER,
+  NOT A GATE -- and you can PROVE which by transporting it across uniqueUpToIso. Test
+  that before pricing it as a separate antecedent.
+
+
+  CASE (AJCR, 2026-07-29, review-ajcr run 0082 s0006, auditing ajcr-p4 "the FOURTH
+  antecedent"). jacobianDataOfMixedParamCharts (Pic0AtlasFiniteType.lean:208) takes
+  both rep : forall i, (divFunctor C pi (nn i)).RepresentableBy (D i) and hD : forall
+  i, LocallyOfFiniteType (D i).hom. hD looks like a fifth independent input. It is
+  not, and the reason is stronger than "the same lane can supply both": PROBED, lake
+  env lean EXIT=0, axioms [propext, Classical.choice, Quot.sound] -- if divFunctor
+  C pi n is representable by D and by D-prime and D-prime.hom is lft, then D.hom is
+  lft. Proof is three lines: e := rep.uniqueUpToIso rep-prime, e.hom.left is IsIso
+  from Over.comp_left on hom_inv_id, then rw [<- Over.w e.hom] and infer_instance.
+  So hD is an INVARIANT OF THE FUNCTOR AT THE PARAMETER, not a property of the chosen
+  carrier -- no producer of rep can choose a D that fails it, and none can be blamed
+  for one that does.
+
+
+  WHY THIS IS THE RIGHT UNIT OF PRICING. "hD is cheap because the carrier the producers
+  return has a global instance" (which is true here: locallyOfFiniteType_divSchemeOverHom,
+  DivSchemeQProj.lean:199, closes it by inferInstance at arbitrary window data) is
+  a CONTINGENT argument -- it holds for todays carrier and would have to be re-measured
+  if divRep returned a different object. The uniqueUpToIso transport is unconditional.
+  Prefer it: it settles the question for every future carrier at once.
+
+
+  HOW TO APPLY. When a signature carries (h : P X) alongside (rep : F.RepresentableBy
+  X) -- or any hypothesis naming an object that a universal property already pins
+  up to iso -- probe the transport BEFORE filing it as an antecedent. If P transports,
+  the item belongs on the rep row as a rider, and a board row that lists it separately
+  inflates the antecedent count. This is the flip side of I-0946 (transporting a property
+  is often free where transporting the object is hard): here the free direction is
+  exactly what collapses the gate.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:28:37.011003+00:00'
+updated_at: '2026-07-29T14:28:37.011014+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0006-horizon-review-ajcr
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
