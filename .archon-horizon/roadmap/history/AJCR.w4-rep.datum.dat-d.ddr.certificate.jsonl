@@ -36,4 +36,3 @@
 {"at": "2026-07-28T21:19:48.355476+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, owner updated"}
 {"at": "2026-07-29T03:01:28.521786+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}
 {"at": "2026-07-29T10:29:28.931513+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "owner updated"}
-{"at": "2026-07-29T11:05:00.672341+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, owner updated", "provenance": {"run": "0082", "session": "0002-horizon-review-ajcr", "role": "horizon", "round": "0", "rounds": "8", "task": "review-ajcr", "task_title": "REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and the costings", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
