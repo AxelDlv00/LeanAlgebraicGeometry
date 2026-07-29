@@ -744,7 +744,27 @@ the first projection — canonically isomorphic to `O_{X_T}` — verbatim the
 `E`-slot of `Scheme.QuotFamily` at `E = O_X`, so the Quot-family base-change
 lemmas and pseudofunctor-coherence functor laws apply unchanged.  The fields
 `isFinitePresentation` and `properSupport` are automatic for divisors on a
-`T`-proper `X_T` (the FGA regime); see the module docstring. -/
+`T`-proper `X_T` (the FGA regime); see the module docstring.
+
+**NOTHING IN THIS PROJECT CONSTRUCTS A `DivFamily`** (`review-ajc`, 2026-07-29).
+The converse direction described above — "a relative effective divisor `D ⊆ X_T`
+yields the family `q : O_{X_T} ↠ O_D`" — is mathematics, not a declaration here:
+there is no producer of this structure for any curve, any base, or any test
+object, including the trivial one. Measured with the elaborator rather than by
+grep: `exact?` on
+`Nonempty (DivFamily C.hom (Over.mk (𝟙 (Spec (.of k)))))`, with the three curve
+binders in scope, fails to close the goal.
+
+Consequences a reader should carry downstream, since this type is the input of the
+whole divisor-side development. Every statement quantified over a `DivFamily` is
+*true but untested* — it has no instance to be wrong about, and a green build over
+it is evidence about elaboration only. `Picard/IdentityComponent.lean` says so
+explicitly at the one place it matters most (`ClassDegreePinned`'s acceptance test
+`classDegree_ne_zero_of_exists_pos_fiberDeg`, whose degree-`d` family is a
+*hypothesis* precisely because none can be supplied); this note exists so the fact
+is visible at the definition too, and not only to a reader who reaches the degree
+interface. Building the first producer is campaign milestone D1′ (`Picard/DivDegree.lean`
+provides the degree slices *of the functor*, not a family). -/
 structure DivFamily (π : X ⟶ S) (T : Over S) : Type (u + 1) where
   /-- The structure sheaf `O_D` of the divisor, as a quotient module on the
   relative product `X ×_S T`. -/
