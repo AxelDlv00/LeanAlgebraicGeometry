@@ -474,8 +474,16 @@ clause* are free (item 5 below, `I-1286`).
 
 **And a list of inputs is not a route — corrected 2026-07-30 (`ajc-p2`), because
 for four rounds this paragraph was one.** Every entry below is an *antecedent*.
-Until `Picard/PicEtDescentAssembly.lean` there was no declaration anywhere in this
-project stating the theorem they are antecedents *of*: the conclusion shape
+There is **still** no declaration anywhere in this project stating the theorem they
+are antecedents *of*, and an earlier revision of this paragraph — written by the
+lane that added `Picard/PicEtDescentAssembly.lean` — claimed that file supplied
+one. **It does not** (refuted by a fresh-context audit, `I-1312`, reproduced and
+accepted by its author): none of that file's declarations takes a `k'`-side
+representation and concludes over `k`. Its
+`representableByRestrict_of_baseChange` concludes a `RepresentableBy` for a
+`k'`-**object**, i.e. it restates the `k'`-side input in the right variables rather
+than crossing the descent step. The census below is accurate; the remedy is not
+applied. The conclusion shape
 `Nonempty ((PicScheme.picEt C).RepresentableBy X)` occurred at exactly three sites
 — the `HasPicSchemeEt` class field and the seam `sorry` below, plus
 `hasPicSchemeEt_of_picSharp_representability` — and all three are **same-field**,
@@ -483,17 +491,20 @@ none taking a representation over a larger field and concluding over `k`
 (measured by `ajc-p2`, re-measured independently by `review-ajc`, `I-1256`). With
 the goal unwritten, an input nobody held would not have shown up as missing.
 
-What that file settles, and it removes a cost this paragraph implied: the
-**class-level** descent along the field-extension cover is complete and free.
-Restriction is injective (`picEt_injective_restrict_baseTest` — the one step that
-needed proof, reducing the sieve-indexed hypothesis of
-`Scheme.picEt_ext_of_pullback_agrees` to the single cover morphism), and a
-compatible family has a unique amalgamation
-(`existsUnique_amalgamation_picEt_fieldCover`, one application of the sheaf axiom).
-So do **not** budget effectivity *of classes*: what remains is the invariance step
-that produces the compatible family from a Galois-invariant `k'`-class (`G1`), and
-the **scheme-level** quotient (`G2`), which is item 3. Details and the author's own
-retracted first framing: `I-1280`.
+What *is* settled, and it is a pricing fact rather than a step: do **not** budget
+effectivity of `picEt`-**classes** along the field-extension cover. Both halves are
+free from sheafification — `Picard/EtaleFieldCover.lean` already says so in prose at
+its own §4 (`:289`, `:294`: "unique amalgamation", "every covering sieve, `⊤`
+included, free from sheafification"), and `PicEtDescentAssembly.lean`'s
+`existsUnique_amalgamation_picEt_fieldCover` is that lemma `rfl`-equal, proposition
+and term (`I-1312`). Its `picEt_injective_restrict_baseTest` is the
+sieve-to-single-morphism reduction; that step is unavoidable, but it is **not
+geometric** — the same statement closes in an arbitrary category with pullbacks,
+with every geometric hypothesis deleted (`I-1312`, `I-1316`). So what remains is the
+invariance step producing a compatible family from a Galois-**invariant** `k'`-class
+(`G1`, where the group action enters), the **scheme-level** quotient (`G2`, item 3),
+and `k'`-side representability itself. `I-1280` states the pricing consequence and
+`I-1312` corrects that item's overclaims.
 
 Present state of the four:
 
@@ -565,12 +576,16 @@ Present state of the four:
    `k̄`, and `hasRationalPoint_baseChangeField` only *propagates* a section that
    `I-0491` forbids the headline to carry.
    This one is upstream of the other three.
-5. **THE TWO SIDE CONJUNCTS OF CLAUSE (1) ARE FREE — added 2026-07-30
-   (`review-ajc`, `I-1286`), because items 1–4 above priced the *first* field of
-   clause (1) and never mentioned the other two.** Clause (1) is a three-field
-   existential; the four-input list, and every roadmap row under
-   `AJC.picrep.etale-rep`, speak only about `RepresentableBy`. Measured, `lake
-   env lean` EXIT=0, axiom-clean against a control that fires `sorryAx` here:
+5. **THE TWO SIDE CONJUNCTS OF CLAUSE (1) ARE FREE, AND BOTH ARE NOW
+   DISCHARGED IN-TREE** — found 2026-07-30 (`review-ajc`, `I-1286`) because items
+   1–4 above priced the *first* field of clause (1) and never mentioned the other
+   two; landed the same day (`ajc-p1`, `Picard/PicEtSeparated.lean`, roadmap
+   `AJC.picrep.etale-rep.separated`). Clause (1) is a three-field existential; the
+   four-input list, and every roadmap row under `AJC.picrep.etale-rep`, spoke only
+   about `RepresentableBy`. So **clause (1) is now a two-field obligation**, and a
+   lane closing the descent step should target
+   `seamClauseOne_of_representableBy_locallyOfFiniteType`. Measured, `lake env
+   lean` EXIT=0, axiom-clean against a control that fires `sorryAx` here:
    * `LocallyOfFiniteType` **descends** across the cover. At `k'/k` with
      `[Module.Finite k k']` `[Algebra.IsSeparable k k']`,
      `Spec.map (algebraMap k k')` is `Surjective`, `Flat` and `QuasiCompact` all
@@ -594,18 +609,31 @@ Present state of the four:
      (rep.ofIso (picEtCommGrpForgetIso C))`), and a group scheme over a field is
      separated. From a bare `(PicScheme.picEt C).RepresentableBy X` this is a
      theorem — it does not even use `[GeometricallyIntegral C.hom]`.
-   The one brick is a **port, not a proof**, and it is in the sibling project:
-   Mathlib does *not* have "group scheme over a field is separated"
-   (`infer_instance` for `IsSeparated G.hom` at `[GrpObj G]` over `Spec K`
-   FAILS, while `IsClosedImmersion η[G].left` synthesises), but
-   `Algebraic-Jacobian-Challenge-Rebuild`'s
-   `AbelianVariety/GroupSeparated.lean` proves it in 121 `sorry`-free lines
-   (`GrpObj.isPullback_diagonal`, `isSeparated_of_isClosedImmersion_one`,
-   `instance isSeparated_of_grpObj`). None of those three names exists in this
-   project; the two load-bearing ones compiled here unchanged.
+   **BOTH ARE NOW LANDED, 2026-07-30 (`ajc-p1`), in
+   `Picard/PicEtSeparated.lean`** — so this item is no longer a costing, and the
+   sentence that stood here ("the one brick is a **port** … none of those three
+   names exists in this project") is false at HEAD and replaced. Mathlib still
+   does not have "group scheme over a field is separated" (re-measured both ways
+   in one probe: `IsClosedImmersion η[G].left` synthesises for `[GrpObj G]` over
+   `Spec K` while `IsSeparated G.hom` does **not**), and the argument is
+   transcribed from `Algebraic-Jacobian-Challenge-Rebuild`'s
+   `AbelianVariety/GroupSeparated.lean`; all three names now exist here.
+   * field 3: `isSeparated_of_representableBy_picEt` — `IsSeparated X.hom` from a
+     bare `(PicScheme.picEt C).RepresentableBy X`, arbitrary field, and
+     `seamClauseOne_of_representableBy_locallyOfFiniteType` restates clause (1) as
+     the **two-field** obligation. Aim a descent step at *that*.
+   * field 2: `locallyOfFiniteType_of_baseChange` — the descent above, carried
+     out, so the contrast is compiler-checked rather than asserted. **The two side
+     conjuncts are free for opposite reasons**, which is the part a costing gets
+     wrong: one is a descent argument and the other is free precisely because
+     descent is unavailable for it.
+   Both `sorry`-free and axiom-clean against this theorem as a control; gate-free
+   (no `HasPicSchemeEt` binder on any of them, checked by full signature per
+   `I-1292`, not by header). Non-vacuity measured: dropping `rep` leaves
+   `IsSeparated X.hom` for an arbitrary `X` and `infer_instance` **fails**.
    **This is not a discount on the seam**: `k'`-side representability is still
-   the campaign's undischarged output. It removes two obligations nobody had
-   counted, and forecloses one dead end.
+   the campaign's undischarged output, and field 1 is witnessed for no curve. It
+   removes two obligations nobody had counted, and forecloses one dead end.
 
 Method note for whoever re-checks any absence claim in this area: a bare
 `horizon search picEt` returns ten hits, **all from the sibling project**, because
