@@ -8,39 +8,61 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffCompare
 import AlgebraicJacobian.Picard.DivisorFamilyFieldDegree
 
 /-!
-# The degree ledger on the WIDENED adaptation: the algebraic half of the port
+# The degree ledger on the WIDENED adaptation: `deg D = n` over arbitrary affine pieces
 
-`Picard/DivisorFamilyAffAbel.lean` leaves exactly one obligation, `hdegAff` — the widened Abel
-value of a degree-`n` widened class has degree `n` at every field point — and names its price:
-port four lemmas of `Picard/DivisorFamilyFieldDegree.lean` from `DivisorAdaptation` to
-`AffAdaptation`.  That price was itself a correction: an earlier version of the row called the
-port *obstructed* by the pinned-pair covering, which is false (the step in question outputs only
-"every point lies in some piece", a structure **field** of `AffCoverData`).
+The colength↔degree identity of `Picard/DivisorFamilyFieldDegree.lean`, ported from
+`DivisorAdaptation` (pieces typed into a fixed pair of pinned `P¹` charts) to `AffAdaptation`
+(arbitrary affine opens, human decision I-0492).  The port is **complete**: the widened
+`deg_presentationDivisor_eq_finrank_glued` and its `deg = n` corollary are proved here, and
+nothing in the chain remains conditional on the chart typing.
 
-This file executes the part of the port that is pure module algebra over the field, and it is
-deliberately a verbatim transcription: same statements, same proofs, `AffAdaptation` in place of
-`DivisorAdaptation`.  Nothing here is new mathematics — the point is that nothing *had* to be,
-which is what the reprice predicted and what a transcription either confirms or refutes.
+## What the port cost, measured rather than predicted
 
-## Why these two and not all four
+The board carried this as a **four**-lemma port.  It is five: the prescription omitted
+`coeffAt_eq_toAdd_ordZ_eqn`, the coefficient dictionary that both other geometric lemmas call.
+That is the only way the estimate was wrong, and it was wrong in the cheap direction — not one
+proof step of any of the five differs from its chart-typed original.
 
-`finrank_glued_eq_sum_of_separated` and its input `gluedSubmodule_eq_top_of_separated` are the
-two steps that mention **no** geometry at all: they quantify over `A.index`, `A.colength`,
-`A.ovlColength`, `A.chartProd`, `A.Glued` and the two overlap-restriction maps, every one of
-which `AffAdaptation` carries under the same name.  The remaining two
-(`finrank_colength_eq_sum`, `coeffAt_eq_zero_of_isUnit_germ`) are about the *presentation
-divisor* and need the geometric side of the transcription; they are not attempted here, and
-`hdegAff` therefore remains open.  Read this as one third of a named residue discharged, not as
-the ledger.
+Two substitutions carry the entire widening, and both replace a *derivation* by a structure
+**field**:
+
+* `DivisorAdaptation.isAffineOpen_pieces` is a two-case `rcases` on the `Sum` index proving each
+  piece is a basic open of a pinned affine chart; `AffCoverData.isAffineOpen_pieces` is the field.
+  The keystone that consumes it, `finrank_quotient_span_section`
+  (`RiemannRoch/ChartColength.lean`, in `AlgebraicGeometry` with no further namespace), takes
+  `IsAffineOpen V` as an *argument* — it never wanted a chart.
+* the three-line `relCover_sup` + `cover₀`/`cover₁` block inside the assembly produces exactly
+  `∃ j, p.1 ∈ pieces j`; widened, that is `AffCoverData.exists_mem_pieces`, the joint covering
+  field.
+
+So the pinned pair was never load-bearing for the degree ledger.  It was the chart-typed **cost**
+of two facts `AffCoverData` assumes, which is why an earlier pricing of this port as *obstructed*
+by the covering was backwards (retracted at `Picard/DivisorFamilyAffAbel.lean`, issue I-1098).
 
 ## Main declarations
 
-* `AlgebraicGeometry.AffAdaptation.toOvlLeft_self_eq_toOvlRight_self` — the diagonal collapse.
-* `AlgebraicGeometry.AffAdaptation.gluedSubmodule_eq_top_of_separated` — separation makes the
-  equalizer the whole product.
-* `AlgebraicGeometry.AffAdaptation.gluedTopEquiv` — that identification as a `LinearEquiv`.
-* `AlgebraicGeometry.AffAdaptation.finrank_glued_eq_sum_of_separated` — Mayer–Vietoris finrank
-  additivity with no overlap correction, on the widened adaptation over a field.
+* `AffAdaptation.gluedSubmodule_eq_top_of_separated`, `finrank_glued_eq_sum_of_separated` — the
+  algebraic half: separation collapses the equalizer to the product, and Mayer–Vietoris finrank
+  additivity with no overlap correction.
+* `AffAdaptation.coeffAt_eq_toAdd_ordZ_eqn` — the coefficient dictionary (the fifth lemma).
+* `AffAdaptation.finrank_colength_eq_sum` — the per-piece degree reading, on an arbitrary affine
+  piece.
+* `AffAdaptation.coeffAt_eq_zero_of_isUnit_germ`, `subsingleton_ovlColength_of_sep` — the
+  separation inputs.
+* `AffAdaptation.deg_presentationDivisor_eq_finrank_glued` — the geometric half.
+* `AffAdaptation.IsCertified.finrank_glued` — the field half.
+* `AffAdaptation.deg_presentationDivisor_eq_of_isCertified` — `deg D = n`.
+* `DivisorAdaptation.sep_toAff`, `exists_widened_deg_eq_of_certifiedFamily_sep` — the joint
+  non-vacuity witness for the corollary's two hypotheses, at every `n`.
+
+## What is NOT closed by this file
+
+`hdegAff` (`Picard/DivisorFamilyAffAbel.lean`) is the *Abel-value* ledger — the widened Abel value
+of a degree-`n` widened class has degree `n` at every field point — and it is still an explicit
+hypothesis there.  This file supplies the identity that gate needed, not the gate: the remaining
+distance is the widened analogue of `DivFamZar.classDeg_picClass`, which routes the presentation
+divisor's degree through the field collapse to the Picard class.  Nothing here should be read as
+discharging `rep` or any antecedent of the atlas assembly.
 -/
 
 set_option autoImplicit false
