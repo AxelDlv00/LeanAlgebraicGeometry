@@ -2528,11 +2528,18 @@ the first thing a successor should close. Two facts about it now:
 `Opens.cechPicMap_ι_eq_one_of_map_eq_one` — the `hchart` producer — appears **four** times outside
 its defining file, and **all four are prose**: three docstring citations in `EpsChartSquare.lean`
 (`:64`, `:89`, `:100`) and one in `TwoChartKernelComparison.lean` (`:35`). Zero occurrences in a
-proof term. The same grep over the S3 criterion and every T3 arrow returns **0 external consumers
-for all eight declarations** (`smoothOfRelativeDimension_{of_translation_cover,pointTranslationIso,
-comp_iso,of_zeroHypercover}`, `twoChartKernelEquiv`, `collapseCechH1Equiv`, `cechPicMapEquivOfIso`,
-`appLE_dualNumberSections`). That is the parent row's I-0711 island shape, still holding across the
-whole of Wave 5's landed surface — three sessions of arrows, no compositions.
+proof term. *(Re-verified at HEAD by review `I-0830`: the count holds, and §8.3's file adds the
+fifth occurrence — the first that is a proof term.)*
+
+The same grep over the S3 criterion and every T3 arrow returned "**0 external consumers for all
+eight**" — and **that number was wrong on two of them, corrected here per review `I-0830`.**
+`smoothOfRelativeDimension_comp_iso` and `smoothOfRelativeDimension_of_zeroHypercover` are each
+consumed in a *proof term*, at `AbelianVariety/RelativeDimensionLocal.lean:143` and `:131`
+respectively — by the two Jacobian shapes in their own file. My grep excluded the defining file, which
+is right for detecting an island but wrong for counting consumers when the module deliberately
+supplies both a general lemma and its instantiation. **Six of eight are genuine islands**, which is
+still the I-0711 shape and still the point; the headline figure was overstated by two, and "three
+sessions of arrows, no compositions" should read *"almost no compositions"*.
 
 **(b) The obstacle is §8.0's cast again, and this is the reason to record §8.2 at all.** Reading the
 producer's binders at `g := relCurveMap C k[ε] k` and `O := fst_{k[ε]} ⁻¹ᵁ W`:
@@ -2551,6 +2558,15 @@ as a prediction and not a measurement:** once the transport is applied at both s
 (4) and (T3-6) fall together. What it does *not* say is that either is then free — §8.1(1)'s
 elaboration cost is unmeasured and the additivity question is untouched.
 
+**QUALIFICATION on the "shared vehicle" clause, from review `I-0832`.** §8.3 confirmed the *ring*
+transport at a single open is what `hchart` needed. Whether the **family**-level `overlapQuotCongr` is
+what the *composite* needs is **not** established: `pullbackOverlapQuot f`'s target is
+`overlapQuot X (fun s ↦ f ⁻¹ᵁ V s)`, whose carrier is `Γ(X, f ⁻¹ᵁ V false ⊓ f ⁻¹ᵁ V true)` — so the
+seam there may differ by an `⊓` rather than by the family, and §7.8 item 1 already priced the
+single-open `⊓` version at two rewrites and a `rfl`. `overlapQuotCongr` has **zero consumers** at
+HEAD. It is a correct statement whose motivating use is unvalidated; write one line of the composite
+before building more transport on it.
+
 ### 8.3 §7.9's ITEM (4) IS CLOSED — `hchart` is a landed declaration, and §8.2's prediction held
 
 *`Tangent/EpsChartTrivialInstance.lean`. Written immediately after §8.2, testing its own prediction
@@ -2564,25 +2580,36 @@ transported pair is `relSectionsMap` then the transport), and `hsq_at` (`EpsChar
 the producer's `hsq`). The geometric content is entirely `EpsChartSquare` and `ChartTrivialityGeo`;
 this file is the transport plus the composition, exactly as §8.2 predicted.
 
-**ONE MEASUREMENT WORTH THE SPACE, because it is a failure mode with no error message.** The first
-draft defined the transport the obvious way, `h ▸ RingEquiv.refl _`. Everything downstream
-*typechecks* — and `hsq_at`'s proof then cannot start: `rw [relSectionsMap, RingEquiv.symm_apply_eq,
-resRingEquivOfEq]` is a **silent no-op**. `lean_goal` before and after that `rw` returned
-character-for-character identical goals, and Lean reported **no error** (the `rw` "succeeded"). The
-cause is that nothing rewrites under a `▸`-transport whose motive is opaque. Rebuilt as
-`X.resHom (le_of_eq h)` in both directions — so that `Scheme.resHom_resHom` and `resHom_self` are
-applicable and the two projection lemmas give `rw` a handle — the same proof closes.
+**ONE IMPLEMENTATION NOTE WORTH THE SPACE.** The first draft defined the transport the obvious way,
+`h ▸ RingEquiv.refl _`. Everything downstream *typechecks* — and `hsq_at`'s proof then cannot start:
+`rw [relSectionsMap, RingEquiv.symm_apply_eq, resRingEquivOfEq]` does not advance the goal, because
+nothing rewrites under a `▸`-transport whose motive is opaque. Rebuilt as `X.resHom (le_of_eq h)` in
+both directions — so that `Scheme.resHom_resHom` and `resHom_self` are applicable and the two
+projection lemmas give `rw` a handle — the same proof closes.
 
-> **The tell:** *a `rw` that changes nothing and reports nothing is a wrong definition, not a failing
-> tactic.* This is the mirror image of §7.7's lesson ("failed to synthesize instance" was not about
-> instances): there, an error message pointed at the wrong cause; here, the **absence** of an error
-> message hid the cause entirely. When a rewrite chain leaves the goal untouched, diff the goal — do
-> not add more rewrites.
+> **RETRACTION, 2026-07-29, review `I-0831` — and it is a retraction of the headline this subsection
+> originally led with.** The paragraph above was first written as *"a failure mode with **no error
+> message**"*, asserting that the `rw` was a *"silent no-op"* which *"Lean reported **no error**"*
+> for, and generalising that into a rule: *"a `rw` that changes nothing and reports nothing is a wrong
+> definition"*, billed as *"the mirror image of §7.7"*. **The factual claim is false.** A reviewer
+> rebuilt the `▸` draft verbatim and `rw` **does** report:
 >
-> `Cohomology/RelThetaTransportCore.presheafCongr` had already arrived at the `resHom`-based design
-> for the same reason. Searching for an existing *shape* of transport, not just an existing lemma,
-> would have skipped this — the same lesson §7.6 recorded when `sectionsCollapse` beat this lane's
-> own `epsChartDown`.
+> ```
+> Tactic 'rewrite' failed: Did not find an occurrence of the pattern (RingEquiv.symm ?e) ?x = ?y
+> Note: The target expression is not type-correct under the 'instances' transparency level
+> ```
+>
+> **How I got it wrong, since that is the transferable part.** I observed the *unchanged goal* with
+> `lean_goal` on the surrounding proof and **inferred** the absence of a diagnostic rather than
+> reading one — the same move §7.8 made when it inferred an ingredient list from a goal text. Twice
+> in one session I treated "what I looked at did not show X" as "X is absent". The whole
+> §7.7-mirror framing is withdrawn.
+>
+> **What survives is ordinary and already on record** (`I-0685`/`I-0817`): a `▸`-transport is opaque
+> to `rw`, and the message names *transparency*, not the definition — so it reads like a missing
+> lemma. `Cohomology/RelThetaTransportCore.presheafCongr` had already arrived at the `resHom`-based
+> design for this reason; searching for the *shape* of a transport rather than a lemma name would
+> have skipped the detour, which is §7.6's lesson again.
 
 **What is still open after §8.3**, stated so the next session does not re-read the file to find out:
 `twoChartKernelEquiv` itself is still not instantiated — `hchart` is one of its three hypotheses and

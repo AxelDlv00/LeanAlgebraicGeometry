@@ -45,23 +45,37 @@ missing piece was never a mathematical one.
 
 The first draft defined the open-equality transport as `h ▸ RingEquiv.refl _`. It typechecks, and
 `epsChartDownAt` built from it typechecks — but then `hsq_at`'s proof cannot proceed: the
-`rw [relSectionsMap, RingEquiv.symm_apply_eq, resRingEquivOfEq]` chain is a **silent no-op** (the
-goal after it is character-for-character the goal before, measured with `lean_goal`), because
-nothing rewrites under a `▸`-transport whose motive is opaque. Rebuilt from
+`rw [relSectionsMap, RingEquiv.symm_apply_eq, resRingEquivOfEq]` chain does not advance the goal,
+because nothing rewrites under a `▸`-transport whose motive is opaque. Rebuilt from
 `X.resHom (le_of_eq h)` in both directions, the same proof closes: `Scheme.resHom_resHom` and
 `Scheme.resHom_self` fire, and the two `@[simp]` projection lemmas below give `rw` a handle.
 
-> **The tell worth keeping:** a `rw` that changes nothing and reports no error is not a failing
-> tactic, it is a wrong *definition* — `▸` is the shape that produces it. Prefer a transport
-> assembled from the API's own restriction maps whenever lemmas about them exist, which for
-> `Scheme.resHom` they do (this is `presheafCongr`'s design in
-> `Cohomology/RelThetaTransportCore.lean`, arrived at independently).
+> **CORRECTION (2026-07-29, review `I-0831`) — and it corrects this file's own first version.** The
+> paragraph above originally called that a *"silent no-op … with **no error** reported"*, and
+> generalised it into a rule about rewrites that fail without a message. **That is false**, and
+> it was checked by rebuilding the `▸` draft verbatim: `rw` **does** report,
+> *"Tactic 'rewrite' failed: Did not find an occurrence of the pattern `(RingEquiv.symm ?e) ?x = ?y`
+> … the target expression is not type-correct under the 'instances' transparency level."* I had
+> observed the unchanged goal (via `lean_goal` on the surrounding proof) and inferred the absence of
+> a diagnostic instead of reading one. The mechanism and the fix are unchanged; the "no error
+> message" claim is withdrawn, along with the "mirror image of §7.7" framing built on it.
+>
+> **What survives is the ordinary lesson, already on record as `I-0685`/`I-0817`:** a `▸`-transport
+> is opaque to `rw`, and the error message names transparency rather than the definition. Prefer a
+> transport assembled from the API's own restriction maps whenever lemmas about them exist, which
+> for `Scheme.resHom` they do — this is `presheafCongr`'s design in
+> `Cohomology/RelThetaTransportCore.lean`, arrived at independently.
 
 ## Scope
 
-`W` is an arbitrary affine open of `C.left`, with the affineness of the two base-changed opens
-carried as hypotheses (`hO`, `hgO`) — the producer needs them and this file does not manufacture
-them. Nothing here is two-chart: `chartTrivial_of_map_eq_one` is per-chart, which is exactly the
+`W` is an arbitrary affine open of `C.left`, and that is the **only** hypothesis: the affineness of
+the two base-changed opens is produced here (`isAffineOpen_fst_preimage`,
+`isAffineOpen_relCurveMap_fst_preimage`), not assumed. ~~carried as hypotheses (`hO`, `hgO`) — the
+producer needs them and this file does not manufacture them.~~ **That sentence described this file's
+first version and was the defect `I-0829` found**: with both as binders the headline was true as a
+statement and unusable as a tool, since neither had a reachable producer.
+
+Nothing here is two-chart: `chartTrivial_of_map_eq_one` is per-chart, which is exactly the
 shape `hchart`'s `∀ s : Bool` quantifier consumes. This file does **not** instantiate
 `twoChartKernelEquiv` itself; that needs the two surjectivity binders as well
 (`Tangent/TwoChartHonestGenus.lean`, `Tangent/EpsZeroSurjective.lean`).
@@ -74,8 +88,11 @@ shape `hchart`'s `∀ s : Bool` quantifier consumes. This file does **not** inst
 * `AlgebraicGeometry.appLE_relCurveMap_eq` — `appLE` at the transported pair is `relSectionsMap`
   followed by the transport.
 * `AlgebraicGeometry.hsq_at` — `EpsChartSquare`'s square, restated as the producer's `hsq`.
+* `AlgebraicGeometry.isAffineOpen_fst_preimage` / `isAffineOpen_relCurveMap_fst_preimage` — the two
+  affineness inputs the producer needs, **produced** (they were binders in this file's first
+  version; `I-0829`).
 * `AlgebraicGeometry.chartTrivial_of_map_eq_one` — **(iii-c2) at the Wave-5 charts**: a class killed
-  by `ε ↦ 0` is trivial on each thickened affine chart.
+  by `ε ↦ 0` is trivial on each thickened affine chart. Takes `hW` alone.
 
 Reference: Kleiman, "The Picard scheme", §5 Thm. 5.11 (arXiv:math/0504020);
 `informal/w5-t4-worksheet.md` §§7.9, 8.2, 8.3.
@@ -169,6 +186,30 @@ theorem hsq_at {W : C.left.Opens} (hW : IsAffineOpen W) :
     Scheme.resHom_self]
   rfl
 
+/-! ## The two affineness inputs, PRODUCED rather than assumed
+
+A fresh-context review (inbox `I-0829`) found that the first version of this file carried both
+affineness facts as hypotheses of `chartTrivial_of_map_eq_one` and called them routine in its
+docstring — while no reachable producer existed for either, so the headline was true as a statement
+and unusable as a tool (`I-0688`: every explicit binder needs a producer). Both are one line from
+`IsAffineOpen.preimage`, and the second needs the same `relCurveMap_preimage` rewrite as everything
+else in this file. -/
+
+/-- **The base-changed chart is affine.** `IsAffineOpen.preimage` along the first projection, whose
+`IsAffineHom` instance is `Over.isAffineHom_fst_left`. -/
+theorem isAffineOpen_fst_preimage {W : C.left.Opens} (hW : IsAffineOpen W) :
+    IsAffineOpen ((fst C (overSpec k (DualNumber k))).left ⁻¹ᵁ W) :=
+  hW.preimage (fst C (overSpec k (DualNumber k))).left
+
+/-- **The `ε ↦ 0` preimage of the base-changed chart is affine.** Rewrite by
+`relCurveMap_preimage` — the propositional equality of opens this whole file is about — and it is
+the `k`-side base-changed chart, affine by the same `IsAffineOpen.preimage`. -/
+theorem isAffineOpen_relCurveMap_fst_preimage {W : C.left.Opens} (hW : IsAffineOpen W) :
+    IsAffineOpen (relCurveMap C (DualNumber k) k ⁻¹ᵁ
+      ((fst C (overSpec k (DualNumber k))).left ⁻¹ᵁ W)) := by
+  rw [relCurveMap_preimage]
+  exact hW.preimage (fst C (overSpec k k)).left
+
 /-! ## (iii-c2) at the Wave-5 charts -/
 
 /-- **`hchart` DISCHARGED, per chart** (clause (iii-c2) at the Wave-5 instance): a Čech Picard class
@@ -179,16 +220,18 @@ This is the composite worksheet §7.9 item (4) named and did not write: the geom
 supplied by `epsChartDownAt`/`hsq_at` above, and its `htriv` obtained from the kernel hypothesis by
 `rw [hker, map_one]` — the one-line implication §7.9 had already probed.
 
-Per-chart, hence exactly the shape `twoChartKernelEquiv`'s `hchart : ∀ s : Bool, …` consumes. -/
+Per-chart, hence exactly the shape `twoChartKernelEquiv`'s `hchart : ∀ s : Bool, …` consumes.
+
+**It takes `hW` alone.** The two affineness facts the geometric producer needs are discharged above
+rather than assumed — see that section's note and `I-0829` for why the first version of this file
+was wrong to carry them as binders. -/
 theorem chartTrivial_of_map_eq_one {W : C.left.Opens} (hW : IsAffineOpen W)
-    (hO : IsAffineOpen ((fst C (overSpec k (DualNumber k))).left ⁻¹ᵁ W))
-    (hgO : IsAffineOpen (relCurveMap C (DualNumber k) k ⁻¹ᵁ
-        ((fst C (overSpec k (DualNumber k))).left ⁻¹ᵁ W)))
     (L : (relCurve C (DualNumber k)).CechPic)
     (hker : Scheme.CechPic.map (relCurveMap C (DualNumber k) k) L = 1) :
     Scheme.CechPic.map ((fst C (overSpec k (DualNumber k))).left ⁻¹ᵁ W).ι L = 1 :=
   Scheme.Opens.cechPicMap_ι_eq_one_of_map_eq_one (relCurveMap C (DualNumber k) k)
-    ((fst C (overSpec k (DualNumber k))).left ⁻¹ᵁ W) hO hgO L Γ(C.left, W)
+    ((fst C (overSpec k (DualNumber k))).left ⁻¹ᵁ W)
+    (isAffineOpen_fst_preimage C hW) (isAffineOpen_relCurveMap_fst_preimage C hW) L Γ(C.left, W)
     (Over.dualNumberSectionsOfIsAffineOpen C hW).symm (epsChartDownAt C hW) (hsq_at C hW)
     (by rw [hker, map_one])
 

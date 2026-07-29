@@ -409,7 +409,7 @@ predicates. Nothing landed needs revisiting — this is a note for the future P1
 | S1-b0 `IsReduced (X ×_k k̄) ⇒ GeometricallyReduced` | none (mathlib-facing) | S/M | **yes** — see §2.1; upstreamable |
 | S1-b translation spread | S1-a + X2 (landed) | S | after S1-a |
 | S1-a reduced stalk at identity | T3/T4 | M/L | **no** |
-| S3 assembly | S2 + T5 + X2 | M | shape frozen here; numeral waits on T3/T4. §3's pointwise-reachability caveat is **probed and dissolved** (§3.1): the class is Zariski-local at source, so translated charts need only **cover**, not exhaust the points. |
+| S3 assembly | S2 + T5 + X2 | M | shape frozen here; numeral waits on T3/T4. §3's pointwise-reachability caveat is **probed and dissolved** (§3.1): the class is Zariski-local at source, so translated charts need only **cover**, not exhaust the points. **But BOTH remaining inputs cost something (§3.2, r8):** the numeral *and* `hcov`. X2 gives the count on each translated chart, **not** that they cover, and the natural route to that is contradictory for `g ≥ 1`. |
 
 The honest bottom line for the lane: **after T1/T5, every remaining Wave-5 item funnels
 through T3/T4.** S1-a, T5's numeral and S3's count are three consumers of one computation.
