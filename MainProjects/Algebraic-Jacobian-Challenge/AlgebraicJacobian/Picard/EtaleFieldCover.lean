@@ -21,18 +21,29 @@ The seam's single open obligation `Scheme.fgaPicardRepresentability`
 campaign (`informal/pic-representability-campaign.md`). That campaign builds a
 representing scheme over a separably closed field (`J1`–`J5`), spreads it to a
 finite Galois level (`G1`) and descends to `k` (`G3`). Its tail is stated for
-`picSharp` and, as such, is **false**: by
+`picSharp`, and that is where the route is believed to break:
 `PicScheme.not_exists_representing_picSharp_of_not_isIso`
-(`Picard/PicEtSubcanonical.lean`) no scheme represents `picSharp C` once
-`picEtComparison C` fails to be an isomorphism, which Kleiman's real conic
-supplies. The repair recorded on the board row `AJC.picrep.etale-rep` is to
-descend `picEt` instead, *because `picEt` is a sheaf for the étale topology and
-`picSharp` is not*.
+(`Picard/PicEtSubcanonical.lean`) proves that **no** scheme represents
+`picSharp C` once `picEtComparison C` fails to be an isomorphism.
 
-That repair has a prerequisite nothing in the tree provided: the descent step
-needs `Spec k' ⟶ Spec k` to actually be an **étale covering** in Mathlib's sense,
-so that the sheaf axiom of `PicSharp.etaleSheaf` can be fired at it. This file
-proves exactly that, and nothing more. It is infrastructure, not a discharge:
+**That is a conditional theorem, and the antecedent is not formalised** — stated
+plainly because this file's own earlier revision asserted the conclusion flatly.
+`¬IsIso (picEtComparison C)` is an explicit hypothesis of that theorem, proved for
+no curve. Kleiman's real conic `u²+v²+w²=0` in `ℙ²_ℝ` meets the *binders*
+(smooth, proper, geometrically integral, no rational point) and he states the
+non-representability, but the Lean antecedent — that the comparison genuinely
+fails there, via `φ*O(1)` and `h⁰` on `ℙ¹_ℂ` — is quoted rather than proved
+(`PicEtSubcanonical.lean` §4 says so of itself). So the honest form is: *if* the
+comparison fails for one such curve, `G3`/`G4` target a false statement; and the
+repair is then to descend `picEt`, which **is** an étale sheaf
+(`PicScheme.picEt_isSheaf_forget`) — whereas whether `picSharp` fails étale
+descent is likewise not proved here (`th:cmp` part 1 shows it is at least
+Zariski-*separated* on these binders).
+
+Under that repair the descent step needs `Spec k' ⟶ Spec k` to be an **étale
+covering** in Mathlib's sense, and nothing in the tree provided that. §1–§3 prove
+it. §4 records what the sheaf side contributes, which is less than an earlier
+revision claimed. It is infrastructure, not a discharge:
 
 **No `sorry` is closed here, and no antecedent of the seam is witnessed.** What
 changes is that the cover the restated `G3` quantifies over is now a theorem
@@ -50,10 +61,19 @@ forms (`Algebra.FormallyEtale.of_isSeparable`,
 free by synthesis — `Etale` and `Surjective` are both stable under base change in
 Mathlib.
 
-The sibling project `Algebraic-Jacobian-Challenge-Rebuild` has the same
-`Algebra.Etale` instance in `AlgebraicJacobian/Algebra/EtaleCover.lean`
-(`Algebra.EtaleCover.ofField`); the scheme-level covering statements below are
-not there.
+The sibling project `Algebraic-Jacobian-Challenge-Rebuild` has a
+character-identical `Algebra.Etale` instance — the *anonymous*
+`instance : Algebra.Etale K L` at `AlgebraicJacobian/Algebra/EtaleCover.lean:304`,
+not the `def` `Algebra.EtaleCover.ofField` below it. The duplication is
+unavoidable rather than an oversight: AJC's `lakefile.toml` requires only
+`checkdecls`, `doc-gen4` and `mathlib`, no AJCR file is in AJC's import closure,
+and there is no dependency edge to add one. The scheme-level covering statements
+below are in neither project.
+
+Both hypotheses are load-bearing, measured by dropping each: without
+`[Algebra.IsSeparable k k']`, and separately without `[Module.Finite k k']`,
+`etale_specMap_algebraMap` fails with
+`failed to synthesize instance of type class Algebra.Etale …`.
 
 ## Main results
 
@@ -66,14 +86,15 @@ not there.
   — its base change along an arbitrary `k`-scheme is again étale and surjective.
 * `Scheme.sieve_specMap_mem_etaleTopology` — the generated sieve is a covering
   sieve of `Scheme.etaleTopology`.
-* `Scheme.picEt_isSheaf_etaleTopologyOver` — `picEt C` is an étale sheaf on
-  `(Sch/k)` in the type-valued form, for every smooth proper curve `C`, with
-  **no** hypothesis on `C(k)`.
-* `Scheme.isSheafFor_picEt_pullback_presieve` — the payoff: `picEt C` satisfies
-  the sheaf axiom for the field-extension cover at every test object. This is the
-  descent test `G3` needs.
-* `Scheme.picEt_ext_of_pullback_agrees` — its uniqueness half on its own:
-  restriction along the cover is injective on `picEt`-classes.
+* `Scheme.isSheafFor_picEt_of_mem` — the sheaf axiom of `picEt C` at an
+  **arbitrary** covering sieve, `PicScheme.picEt_isSheaf_forget` unfolded. Free
+  from sheafification; recorded to make clear that §4 is not where the work is.
+* `Scheme.isSheafFor_picEt_pullback_presieve` — the same at the field-extension
+  cover. Its content over the previous item is the membership witness, i.e. §1–§3.
+* `Scheme.picEt_ext_of_pullback_agrees` — the uniqueness half alone: restriction
+  along the cover is injective on `picEt`-classes.
+
+Nothing in the tree consumes these yet; the consumer is the restated `G3`.
 
 ## References
 
@@ -239,53 +260,49 @@ theorem sieve_pullback_mem_etaleTopologyOver (T : Over (Spec (CommRingCat.of k))
     (Precoverage.generate_mem_toGrothendieck
       (singleton_pullback_mem_etalePrecoverage k' T))
 
-/-- **`picEt C` is an étale sheaf on `(Sch/k)`**, in the type-valued form the
-descent test needs.
+/-- **The sheaf axiom of `picEt` at an arbitrary covering sieve.**
 
-`PicSharp.etaleSheaf C` is a sheaf by construction, and the sheaf property of an
-`AddCommGrpCat`-valued presheaf is equivalent to that of its underlying
-type-valued functor (`Presheaf.isSheaf_iff_isSheaf_forget`, the forgetful functor
-of a concrete algebraic category preserving limits and reflecting isomorphisms).
-Proved, not assumed — and with no hypothesis on `C(k)`.
+This is `PicScheme.picEt_isSheaf_forget` (`Picard/PicEtSheaf.lean`) unfolded at
+one sieve, and it is stated here to make the division of labour explicit: the
+sheaf property is **free** — it is `PicSharp.etaleSheaf`'s own `Sheaf.cond`,
+pushed through the forgetful functor — and holds at *every* covering sieve of
+`etaleTopologyOver k`, the trivial sieve `⊤` included. Nothing about a field
+extension enters.
 
-This is the same reflection step as
-`PicScheme.relPresheaf_isSheaf_of_representableBy`
-(`Picard/PicEtSubcanonical.lean`) run in the opposite direction: there it takes a
-representing scheme to make the *unsheafified* presheaf a sheaf; here the
-sheafified one is a sheaf for free. -/
-theorem picEt_isSheaf_etaleTopologyOver (C : Over (Spec (CommRingCat.of k)))
-    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] :
-    Presieve.IsSheaf (etaleTopologyOver k) (PicScheme.picEt C) := by
-  have h := PicSharp.etaleSheaf_isSheaf C
-  rw [Presheaf.isSheaf_iff_isSheaf_forget
-      (s := CategoryTheory.forget AddCommGrpCat.{u + 1}),
-    isSheaf_iff_isSheaf_of_type] at h
-  exact h
+An earlier revision of this file proved the sheaf property again here, by a
+different route (`Presheaf.isSheaf_iff_isSheaf_forget` in place of
+`sheafCompose`), and presented it as new work. It was already in this file's
+import closure; the duplicate is deleted rather than annotated. What §1–§3
+contribute is not the sheaf axiom but a **particular covering sieve** that the
+campaign's descent step needs and that the tree did not have. -/
+theorem isSheafFor_picEt_of_mem (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    {T : Over (Spec (CommRingCat.of k))} (S : Sieve T)
+    (hS : S ∈ etaleTopologyOver k T) :
+    Presieve.IsSheafFor (PicScheme.picEt C) (S : Presieve T) :=
+  PicScheme.picEt_isSheaf_forget C S hS
 
-/-- **THE DESCENT TEST: `picEt C` satisfies the sheaf axiom for the
-field-extension cover, at every test object.**
+/-- **The sheaf axiom of `picEt` at the field-extension cover.**
 
 Concretely: for a `k`-scheme `T` and a finite separable `k'/k`, a family of
 `Pic_{(C/k)ét}`-classes on `T ×_k k'` that is compatible on overlaps has a
-*unique* amalgamation on `T` (`Presieve.IsSheafFor` unfolds to exactly that
-existence-and-uniqueness statement).
+*unique* amalgamation on `T`. No hypothesis on `C(k)` anywhere.
 
-This is the descent step the repaired campaign milestone `G3` runs on, and it
-carries **no** hypothesis on `C(k)`: it composes §3's cover with §4's sheaf
-property, both unconditional. `G3` as written descends `picSharp` instead, for
-which the corresponding statement is *not* available — `picSharp` is not an étale
-sheaf, which by
-`PicScheme.not_exists_representing_picSharp_of_not_isIso`
-(`Picard/PicEtSubcanonical.lean`) is why its representability over an arbitrary
-field is false rather than merely open. That asymmetry is the entire content of
-the repair, and this theorem is the side of it that works.
+**Where the content is, stated precisely because an earlier revision of this
+docstring got it wrong.** That revision called this "THE DESCENT TEST" and "the
+payoff", implying the sheaf side was the achievement. It is not: by
+`isSheafFor_picEt_of_mem` the amalgamation property holds at *every* covering
+sieve, `⊤` included, for free from sheafification. The only thing this
+declaration adds over that is the *membership witness* — that this particular
+family, the one the campaign's descent step actually restricts along, is a
+covering sieve. That witness is §1–§3, and it is what the tree lacked.
 
-**What this does and does not give.** It supplies the *descent test*; it does not
-supply a descended object. Turning a `k'`-representing scheme into a
-`k`-representing one additionally needs the Galois action and the effectivity of
-the resulting descent datum (campaign `G1`/`G2`, `Picard/FiniteGaloisQuotient.lean`).
-So this closes no `sorry` and witnesses no antecedent of
-`Scheme.fgaPicardRepresentability`. -/
+**What it does not give, and this is the larger half.** A descent *test* is not a
+descended object. Turning a `k'`-representing scheme into a `k`-representing one
+needs the semilinear Galois action and the effectivity of the resulting descent
+datum — campaign `G1`/`G2`, `Picard/FiniteGaloisQuotient.lean`, whose existence
+gate `HasGaloisQuotient` has no instance. So this closes no `sorry` and witnesses
+no antecedent of `Scheme.fgaPicardRepresentability`. -/
 theorem isSheafFor_picEt_pullback_presieve (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     (T : Over (Spec (CommRingCat.of k))) :
@@ -294,7 +311,7 @@ theorem isSheafFor_picEt_pullback_presieve (C : Over (Spec (CommRingCat.of k)))
         (Sieve.generate (Presieve.singleton
           (pullback.fst T.hom
             (Spec.map (CommRingCat.ofHom (algebraMap k k'))))))) : Presieve T) :=
-  picEt_isSheaf_etaleTopologyOver C _ (sieve_pullback_mem_etaleTopologyOver k' T)
+  isSheafFor_picEt_of_mem C _ (sieve_pullback_mem_etaleTopologyOver k' T)
 
 /-- **The separatedness half, in the form `G3` uses it: restriction along the
 cover is injective on `picEt`-classes.**
