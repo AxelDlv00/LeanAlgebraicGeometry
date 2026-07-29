@@ -66,9 +66,13 @@ Three statements, all now machine-checked, none of which was the one the roadmap
 above reasons about "the threshold" as a per-fibre quantity still to be obtained.  It is not
 per-fibre, and it is already available.**  The two halves:
 
-* DAT-0a itself really is *not* instantiable at a splitting field `L` — it binds
-  `π : Y ⟶ ℙ¹` with `[IsFinite]`/`[IsDominant]`, and no `relCurve C L ⟶ P1 L` exists anywhere
-  in this tree.  That much of the pricing is right, and is presumably why nobody tried.
+* ~~DAT-0a itself really is *not* instantiable at a splitting field `L`~~ — **this bullet was
+  FALSE and is retracted the same day it was written** (audit + author reproduction, inbox
+  `I-1349`/`I-1350`).  `exists_isFinite_isDominant_toP1` (`Curve/MapToP1.lean:126`) produces
+  the morphism for any bundle meeting the curve hypotheses, and `Curve/BaseChangeInstances.lean`
+  supplies those for `baseChangeBundle C L`, so DAT-0a **is** instantiable at `L` in three
+  `haveI`s.  The error was grepping for the arrow as a term when the answer was an
+  `exists_`-producer quantified over curves.
 * But the threshold does not need DAT-0a.  `subsingleton_hModule_one_of_witness`
   (`RiemannRoch/WindowFieldTransport.lean:87`) is the **π-free** peeling — one witness with
   vanishing `H¹` bounds every divisor of degree `≥ deg W₀ + 1 − χ` — and `windowN C L hπ g` is

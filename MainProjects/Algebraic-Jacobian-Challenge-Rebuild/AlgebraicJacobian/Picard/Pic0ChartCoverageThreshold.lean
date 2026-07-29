@@ -20,19 +20,49 @@ reconciliation can even be stated.
 
 **That is where the pricing is wrong, and this file measures why.**  Two separate points:
 
-* **DAT-0a itself is not instantiable at `L`, and that is not an obstruction.**
-  `exists_bound_subsingleton_hModule_one_of_isFinite_toP1`
-  (`RiemannRoch/UniformVanishing.lean:71`) carries `π : Y ⟶ ℙ¹` with `[IsFinite π]`,
-  `[IsDominant π]` and `hπ`.  There is no `relCurve C L ⟶ P1 L` anywhere in this tree, so a
-  lane trying to instantiate DAT-0a at a splitting field is trying to build a morphism the
-  project does not have.  This is presumably why no coverage file ever cited a threshold at
-  `L`.
+* **RETRACTED, 2026-07-30, by a fresh-context audit and reproduced by the author (inbox
+  `I-1349`/`I-1350`).**  This bullet read: *"DAT-0a itself is not instantiable at `L` ... there
+  is no `relCurve C L ⟶ P1 L` anywhere in this tree, so a lane trying to instantiate DAT-0a at
+  a splitting field is trying to build a morphism the project does not have."*  **That is
+  false.**  `exists_isFinite_isDominant_toP1` (`Curve/MapToP1.lean:126`) *produces* such a
+  morphism for any bundle satisfying the curve hypotheses, and
+  `Curve/BaseChangeInstances.lean` supplies those for `baseChangeBundle C L`
+  (`instSmoothOfRelativeDimensionSndLeft`, `instIsProperSndLeft`,
+  `instGeometricallyIrreducibleSndLeft`).  So DAT-0a *is* instantiable at a splitting field,
+  in three `haveI`s.  The error was grepping for the arrow as a *term* when the answer was an
+  `exists_`-producer quantified over curves — a producer census, not a term census, is what
+  settles "no such morphism exists".
 * **The threshold does not need DAT-0a.**  `subsingleton_hModule_one_of_witness`
   (`RiemannRoch/WindowFieldTransport.lean:87`) is the **π-free peeling**: a *single* witness
   divisor with vanishing `H¹` gives vanishing for every divisor of degree
   `≥ deg W₀ + 1 − χ`.  And `windowN C L hπ g` (`:307`) is such a witness on `relCurve C L`
   for every field extension `L/k`, with `subsingleton_h1_windowN` and
   `deg_windowN = M·δ`.
+
+## THE HEADLINE IS A RE-DERIVATION — read this before citing `subsingleton_h1_of_ledger_bound`
+
+**Also from the 2026-07-30 audit (`I-1349`), and it is the more important correction.**
+`subsingleton_h1_of_windowA_le_deg` (`Picard/DivSchemeSeedUnivFibre.lean:259`, landed
+2026-07-19) is *already* the uniform π-free per-field-extension threshold: same
+`subsingleton_hModule_one_of_witness` peel, same transported-window witness, bound
+`windowA_choice π hπ · δ + g`.  And that bound is **smaller** than this file's — via
+`Nat.find_le (windowBound_le_M_mul π hπ g)` one gets `windowA_choice ≤ windowM_choice`, hence
+`a·δ ≤ M·δ`.  So `subsingleton_h1_of_ledger_bound` is a strictly **weaker** corollary of a
+landed lemma, not a new fact, and a lane wanting the threshold should cite the `windowA` form.
+
+What survives as genuinely new is the *coverage-side composition* — `mem_chartLocus_of_ledger_bound`
+onwards, which nothing previously connected to the chart layer — and even that goes through at
+the smaller landed parameter with the same script modulo the constant.  The repricing of the
+two coverage sites also survives, since neither of them cited *any* threshold at `L`.
+
+**Why the duplicate escaped me**, recorded because it is the workspace's most expensive
+recurring failure: I searched for occurrences of `windowN` and of
+`subsingleton_hModule_one_of_witness` in the chart layer, found zero, and read that as
+novelty.  But `windowA` also has zero occurrences there — and `windowA` is the name carrying
+the equivalent fact.  A name-scoped novelty check cannot see a same-content lemma under a
+different name; the check that would have caught it is a search on the *statement*
+(`leansearch`/`loogle` on "uniform H¹ vanishing threshold over a field extension"), which I
+did not run against this shape.
 
 ## The consequence, and it is the point of the file
 
@@ -60,22 +90,18 @@ value of a legal chart index at parameter `b.toNat`.  What it could not be compo
   since `n` is free throughout the chart layer (`Pic0ChartCoverageIndexSlack`'s own
   correction, `Pic0ChartAtlasParamFree`'s heterogeneity), that is a *statement about which
   parameter the atlas is indexed at*, which is addressed to the divRep lane.
-* **It is not new geometry.**  Every ingredient was landed; `windowN` and
-  `subsingleton_hModule_one_of_witness` had zero occurrences in any `Pic0Chart*` file, so
-  this is a cross-layer citation that nobody had made.
+* **It is not new geometry, and the threshold is not even new Lean** — see the
+  re-derivation section above.  `windowN` and `subsingleton_hModule_one_of_witness` did have
+  zero occurrences in any `Pic0Chart*` file before this one, but that measured the wrong thing:
+  `windowA` also has zero occurrences there, and `windowA` is the name under which the
+  equivalent threshold was already landed.
 
-  Two notes on how to re-check that, because the naive checks are both misleading (cf. I-0717
-  — an absence-claim docstring breaks the grep that would verify it).  First, the claim is
-  about the state *before* this file: the corrections it prompted at
-  `Pic0ChartCoverageIndexSlack.lean` and `Pic0ChartCoverageNoDrop.lean` now name both
-  declarations, so `grep windowN Pic0Chart*` returns those two hits today.  Verify at
-  `042e9e1154` (where both files were still unedited), which returns zero for each.  Second,
-  the "no `relCurve C L ⟶ P1 L`" half must be checked in **conclusion** position: `π : Y ⟶ P1 K`
-  occurs as a *hypothesis binder* in several `RiemannRoch` files (`PFib`, `W6Full`,
-  `FLVVanishing`, `WindowLedgerF3`, `RelCurveCollapse`), which is what makes those engines
-  usable at all; what does not exist is a **producer** of such a morphism for the base-changed
-  curve.  A case-insensitive hypothesis-position grep therefore appears to refute the claim and
-  does not.
+  If you re-check the zero-occurrence claim, note it is about the state *before* this file:
+  the corrections it prompted at `Pic0ChartCoverageIndexSlack.lean` and
+  `Pic0ChartCoverageNoDrop.lean` now name both declarations, so `grep windowN Pic0Chart*`
+  returns hits today.  Verify at `042e9e1154`, where both files were still unedited.  (This is
+  the I-0717 shape — an absence claim breaking the grep that would check it — here caused by
+  the fix rather than by the claim.)
 
 ## Main declarations
 
@@ -143,9 +169,13 @@ coverage layer's pricing of its own residue assumed to be unavailable
 (`Pic0ChartCoverageIndexSlack.lean` item 3, `Pic0ChartCoverageNoDrop.lean`'s retraction: both
 treat DAT-0a's threshold at `L` as a per-`L` quantity still to be obtained).
 
-The route uses **no** `π` at the extension, which is why it exists at all: DAT-0a
-(`exists_bound_subsingleton_hModule_one_of_isFinite_toP1`) needs a finite dominant
-`relCurve C L ⟶ P1 L` and this tree has none.  Instead
+The route uses **no** `π` at the extension.  **The clause that used to follow here — "which is
+why it exists at all: DAT-0a needs a finite dominant `relCurve C L ⟶ P1 L` and this tree has
+none" — is RETRACTED** (see the module docstring): the tree does produce one, via
+`exists_isFinite_isDominant_toP1` plus the `baseChangeBundle` instances, so DAT-0a *is*
+instantiable at `L` and being π-free is a convenience here rather than a necessity.  See also
+the re-derivation notice: this statement is a weaker corollary of the landed
+`subsingleton_h1_of_windowA_le_deg`.  Concretely,
 `subsingleton_hModule_one_of_witness` peels from a single witness, and the witness is the
 transported window divisor `windowN C L hπ g` whose vanishing is `subsingleton_h1_windowN`
 and whose degree is `M·δ` (`deg_windowN`).  The χ at `L` is the base normalization
