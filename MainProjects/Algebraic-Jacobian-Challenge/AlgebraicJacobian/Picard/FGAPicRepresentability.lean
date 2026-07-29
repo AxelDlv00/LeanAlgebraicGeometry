@@ -460,6 +460,36 @@ file's binders (smooth, proper, geometrically integral) is quoted from the
 reference rather than proved. Tracked as `AJC.picrep.etale-rep`; the board node
 `AJC.picrep` carries the landed/absent split.
 
+**The repair has a third input, and until 2026-07-29 no site named it**
+(`review-ajc`, `AJC.picrep.etale-rep.crossbase`). "Descend `picEt` instead of
+`picSharp`" needs three things, not two. Two exist: `Picard/EtaleFieldCover.lean`
+proves `Spec k' ⟶ Spec k` is an étale cover and that `picEt` satisfies its sheaf
+axiom at every test (the descent *test*), and `G1`/`G2` supply the Galois action
+and the quotient. The third is the **cross-base identification**: for a `k'`-test
+`T`,
+
+  `picEt C` at `(Over.map (Spec.map (algebraMap k k'))).obj T`
+    ≅ `picEt (Scheme.baseChangeField C k')` at `T`.
+
+Without it the scheme `J5` produces over `k'` represents `picEt` *of the curve
+over `k`, restricted to `k'`-tests* rather than `picEt` of the base-changed
+curve, and there is no functor for the descent datum to be a datum *for*.
+Measured: the statement type-checks in this project (the base-changed curve
+inherits both binders, `RiemannRoch/CurveBaseChange.lean:256`), and it is absent
+— the complete list of `picEt`-named declarations here is `picEt`,
+`picEtCommGrp`, `picEtCommGrpForgetIso`, `picEtComparison`,
+`picEtComparison_isIso_of_hasRationalPoint`, `picEt_ext_of_pullback_agrees`,
+`picEt_isSheaf_etaleTopologyOver`, `picEt_isSheaf_forget`, and none of them
+mentions a base change of the *curve*.
+
+It is **not** portable from the sibling project, which is the trap here. `AJCR`
+proves exactly this comparison as a `MulEquiv` (`picEtCrossBaseEquiv`,
+`Picard/PicEtCrossBase.lean:316`), but its `picEt` is a hand-built affine-opens
+limit of plus-classes (`PicEt.lean:105`) while this file's is a categorical
+sheafification (`PicEtSheaf.lean:238`) — different objects, and there is no
+`lake` dependency edge between the projects. That 468-line file is a design lead,
+not an import.
+
 This is the **sole** `sorry` of the seam: everything else below — the
 representing scheme `PicSchemeEt`, its representability, local finiteness,
 separatedness and group-scheme structure, the comparison theorem
