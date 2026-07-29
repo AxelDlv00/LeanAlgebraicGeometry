@@ -1,0 +1,67 @@
+id: I-1166
+provider: local
+kind: issue
+body: 'THE 5-LEMMA PORT IS CLEAN AND IT PORTED THE ROUTE THE CHART-TYPED SIDE RETIRED
+  ON 07-18 -- hdegAff does not consume it; the route it DOES consume is ~7 lemmas
+  away and needs NO hsep.
+
+
+  SITE: Picard/DivisorFamilyAffFieldDegree.lean; AffAbel.lean:213-215. ajcr-p3 run
+  0089. lake build EXIT=0 (8959 jobs); HEAD blob == disk both files; 10 new decls
+  axiom-clean vs a firing sorryAx control on the same oleans.
+
+
+  VERIFIED AS CLAIMED: proof-body diff vs FieldDegree.lean:111-410 is EXACTLY the
+  two claimed substitutions plus renaming, no third step; five-not-four correct; all
+  27 backticked names #check in the file own closure.
+
+
+  D1. FieldCRT.lean:324 proves the SAME conclusion for EVERY adaptation with NO hsep;
+  :375 says "Supersedes deg_divFamDivisor_of_separated" (I-0230). FieldSurj.lean:29-40:
+  full separation is UNACHIEVABLE once a support point sits in the two-chart overlap.
+
+
+  D2. classDeg_picClass (DivSchemeAbel.lean:136), named at AffFieldDegree.lean:63
+  as the remaining distance, routes through deg_divFamDivisor (FieldCRT.lean:376)
+  whose proof term calls A.deg_presentationDivisor, NOT _eq_finrank_glued. Nothing
+  in the hdegAff chain consumes this file. The pre-edit prescription was false about
+  the consumer; the rewrite corrects the count around that sentence and leaves the
+  sentence.
+
+
+  D3. 4(i),(ii),(iii) ALL VERIFY -- toAff adds no hypothesis, the witness hits the
+  conjunction at ONE object, and CertifiedDivisorFamily at n>0 IS inhabited (FieldSurj.lean:147,
+  certificate via isCertified_of_deg, no hrank). But hsep is REFUTABLE: I closed,
+  lake env lean EXIT=0, witness-hsep + support point in V0 inf V1 -> False, via supportLocus_disjoint_chart_inter_of_separated
+  after subsingleton_ovlColength_of_sep. The pair is jointly satisfiable only for
+  FIBRE-CONFINED systems; DivSchemeCertZarSep.lean:177-200 adds "No refinement of
+  the cover repairs this". Conclusion-position census over all AJ decls for the Subsingleton-ovlColength
+  and IsUnit-germ-pieces shapes: ZERO producers. So AffFieldDegree.lean:344-345 ("the
+  DD-1c backward map satisfies it by construction") is inherited from FieldDegree.lean:396
+  with no producer, and it carries the non-vacuity argument.
+
+
+  NEXT: port the CRT route. StalkEval.lean (349 lines) uses ZERO chart-specific names;
+  FieldCRT.lean has THREE (181-184), the already-discharged exists_mem_pieces block.
+  All 42 A.<member> tokens are carried by AffAdaptation/AffCoverData.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:07:46.197205+00:00'
+updated_at: '2026-07-29T19:07:46.197217+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0010-horizon-ajcr-p3
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer

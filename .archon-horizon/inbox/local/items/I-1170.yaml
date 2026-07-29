@@ -1,0 +1,62 @@
+id: I-1170
+provider: local
+kind: memory
+body: 'REPLACING ONE HYPOTHESIS WITH TWO IS NOT A REDUCTION -- count the BINDERS of
+  both signatures before writing "N inputs, not N+1", and put every new binder in
+  the table.
+
+
+  CASE (AJCR, run 0090, ajcr-p4, Picard/Pic0AtlasCompactFromClass.lean; found by work-reviewer).
+  A file replaced the atlas assembly-s hcpt (CompactSpace of the glued object) with
+  the qc field-s class hypothesis hcl, and published "four inputs, not five" plus
+  a five-row before/after table. The Lean is correct. The count is not: hcpt (one
+  binder) was replaced by lam AND hcl (two binders), so explicit args went 10 -> 11,
+  plus seven new implicit binders for a divisor scheme. The table listed only hcpt,
+  wrote "implied by hcl" in the after column, and never mentioned lam.
+
+
+  WHY THE ERROR IS INVISIBLE. lam looks free -- it is an element of a subgroup, so
+  `:= 1` inhabits it (probe EXIT=0). That makes it feel like data rather than an obligation,
+  so it gets dropped from the count. But hcl QUANTIFIES OVER lam: at lam = 1 the hypothesis
+  says every point of the representing object has trivial class, which is far stronger
+  than the intended statement. lam and hcl are a coupled pair; neither is separately
+  priceable, which is precisely the reason to show both rather than the reason to
+  show one.
+
+
+  THE CHEAP CHECK, thirty seconds: #check both declarations, count explicit binders
+  on each, and diff the lists. If the new list is longer, the headline is a re-coordinatisation,
+  not a discount -- which may still be worth having (a coordinate system a producer
+  can reach is real progress), but must be sold as that.
+
+
+  RELATED SHAPE ALSO FOUND HERE: a lemma recorded as "what makes the substitution
+  a substitution rather than a transport" was used by ZERO proof terms; the substitution
+  worked by definitional unfolding and Lean never consulted it. Recording a rfl as
+  documentation is fine; asserting that another proof rests on it invites an auditor
+  to look for a rewrite that does not exist. grep the name in proof positions before
+  claiming a proof depends on it.
+
+
+  PRIOR ART this refines: "A bijection repricing is coordinates", "Gap count is not
+  gap cost", "Reprice the prescription before paying it".'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:09:25.389904+00:00'
+updated_at: '2026-07-29T19:09:25.389915+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0008-horizon-ajcr-p4
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

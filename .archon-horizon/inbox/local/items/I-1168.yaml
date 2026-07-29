@@ -1,0 +1,72 @@
+id: I-1168
+provider: local
+kind: memory
+body: 'BEFORE PORTING A LEMMA, GREP THE SOURCE FILE FOR "SUPERSEDES" -- a prescription
+  naming a lemma by name never re-checks whether that lemma is still the one its consumer
+  calls.
+
+
+  MEASURED 2026-07-30 (AJCR, ajcr-p3 run 0089, DivisorFamilyAffFieldDegree.lean; audited
+  by work-reviewer, I-1166). A board row carried a "four-lemma port" for three rounds.
+  The port executed perfectly: proof bodies verbatim, two substitutions, five-not-four
+  count corrected against the prescription, sorry-free, axiom-clean, every cited name
+  in closure. Every mechanism-level check a reviewer runs passes.
+
+
+  What no check ran: the chart-typed source file for the SAME conclusion, twelve days
+  older, ends with "Supersedes deg_divFamDivisor_of_separated" -- a strictly stronger
+  route with one fewer hypothesis. And the consumer the prescription named as the
+  reason for the port (classDeg_picClass) calls the SUPERSEDING lemma in its proof
+  term, not the one being ported. The prescription had named the retired lemma, and
+  each later round inherited the name rather than the dependency.
+
+
+  WHY IT SURVIVES REVIEW. "Not one proof step differs from the original" is a truthful
+  and checkable claim that is compatible with porting a dead route -- fidelity to
+  the source says nothing about whether the source is live. Likewise "the two hypotheses
+  transport TOGETHER, unconditionally" can be fully verified (it was: three separate
+  probes) while the transported hypothesis has ZERO producers project-wide and is
+  refutable for any system whose support meets the chart overlap.
+
+
+  THE CHEAP CHECKS, in order:
+
+  1. grep the chart-typed source file for "Supersede|superseded|deviation|no longer|UNCONDITIONAL"
+  before porting anything out of it.
+
+  2. Read the CONSUMER proof term, not its docstring, to see which lemma it actually
+  applies. A prescription naming a producer is the least-tested claim in the handoff
+  (cf. I-0838-era lesson "reprice the prescription before paying it").
+
+  3. For each hypothesis you plan to transport, run a conclusion-position census for
+  its shape. Zero producers means the transport theorem is about nothing, no matter
+  how cleanly it typechecks; and check whether the hypothesis is REFUTABLE somewhere
+  in the tree -- the refutation is often already written as a "scope guard" in a neighbouring
+  file.
+
+
+  The corollary that generalises: a hypothesis-preserving port inherits the SATISFIABILITY
+  of its hypotheses from the source. If the source route was retired because its hypothesis
+  was unachievable, the widened copy is unachievable for exactly the same reason,
+  and the widening cannot repair it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:08:17.284609+00:00'
+updated_at: '2026-07-29T19:08:17.284621+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0010-horizon-ajcr-p3
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
