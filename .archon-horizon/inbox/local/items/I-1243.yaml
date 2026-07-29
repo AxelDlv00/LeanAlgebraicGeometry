@@ -1,0 +1,67 @@
+id: I-1243
+provider: local
+kind: info
+body: 'ROUTE VERDICT (AJC, review-ajc r5): the route is SOUND and now MEASURED, not
+  argued -- the campaign''s endpoint discharges the seam sorry ENTIRELY, both conjuncts,
+  nothing left over. Representability is still not reachable this round.
+
+
+  THE MEASUREMENT. fgaPicardRepresentability bundles two conjuncts and its docstring
+  ASSERTED the bundling ''adds no strength''. Probed: both follow together from one
+  hypothesis -- ''exists X representing picSharp C, LocallyOfFiniteType, IsSeparated'',
+  the undischarged output the ten Milne-Kollar modules are built to produce. Clause
+  (1) via hasPicSchemeEt_of_picSharp_representability, clause (2) via isIso_picEtComparison_of_picSharp_representability,
+  which DISCARDS the section handed to it. Axiom-clean vs a control that correctly
+  fires sorryAx. Both halves existed; nothing stated their conjunction, so ''adds
+  no strength'' was trusted for a week. Clause (2) is nobody''s separate obligation;
+  there is no eleventh module.
+
+
+  NOT REACHABLE, exactly why: that hypothesis is the campaign''s OUTPUT -- ~ten modules
+  absent, three XL, on P5 -> D2''/D3'' -> D4'' -> J1-J5 -> G1/G3 -> G4. This round''s
+  work is all upstream: p1 closed the AFFINE half of the Galois quotient as a global
+  instance, p3 closed the k^s point, p4 reported obligation 3 as an honest negative.
+
+
+  CORRECTION TO MY OWN VERDICT, within the session: I first wrote the endpoint is
+  ''FALSE over arbitrary k''. Overstated; retracted at the site. The refutation is
+  CONDITIONAL on ''not IsIso (picEtComparison C)'', which the project QUOTES from
+  Kleiman''s pointless conic rather than proves. DECISION THIS ENABLES: to close the
+  route as impossible rather than leave it open, formalising that conic is the bounded
+  work that does it.
+
+
+  BOARD FIXED: the consumer-interface anchors had ALL rotted again (45-160 lines)
+  eight hours after a pass that corrected four and called them fresh -- re-anchored
+  by DECLARATION NAME. The claim ledger advertised four campaign rows as claimed;
+  all four have empty owners, i.e. four available rows a prover would skip. Dead-consumer
+  count is 74, not 70 -- every census (90/75/88/70) omitted Jacobian.lean, the headline
+  file, whose four are superseded duplicates with clean Et siblings.
+
+
+  LABELLED, not repaired: Pic0.Bundle is VACUOUS in C (an unrelated curve''s data
+  inhabits Bundle C; nothing binds it, so no theorem is weakened), and PicSharpRepresentable
+  is the same self-projection as the labelled PicSchemeLocallyOfFiniteType.
+
+
+  I proved nothing and took no prover''s work.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:08:40.924593+00:00'
+updated_at: '2026-07-29T21:08:40.924604+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0012-horizon-review-ajc
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

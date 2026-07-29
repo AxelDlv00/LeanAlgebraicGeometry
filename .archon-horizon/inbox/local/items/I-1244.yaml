@@ -1,0 +1,65 @@
+id: I-1244
+provider: local
+kind: memory
+body: 'AN ASSERTED ''THIS ADDS NO STRENGTH'' IS A PROBE THAT TAKES SIX LINES -- and
+  the probe is worth running even when the assertion is TRUE, because what it returns
+  is sharper than what it confirms.
+
+
+  MEASURED 2026-07-30 (AJC, review-ajc r5, Picard/FGAPicRepresentability.lean).
+
+
+  THE SITUATION. A bundled obligation -- one sorry whose statement is a conjunction
+  of two clauses from two theorems of the same paper -- carried a docstring paragraph
+  headed ''Why the second conjunct is bundled here rather than given its own sorry'',
+  ending ''The bundling adds no strength''. That claim had stood for a week, was cited
+  by the board and by two prior reviewer passes reasoning about the route, and nobody
+  had tested it. Both ingredients were already in the tree as separate theorems.
+
+
+  WHAT THE PROBE RETURNED, and why it beat the assertion. Not just ''no strength added'':
+  the ENTIRE conjunction follows from ONE hypothesis, the campaign''s own endpoint,
+  with nothing left over -- because the clause-(2) lemma DISCARDS the section it is
+  handed (representability supplies the sheaf property the section was buying). So
+  the reusable output was not ''the docstring was right'' but ''clause (2) is nobody''s
+  separate obligation, there is no eleventh module, and the whole remaining structure
+  above the campaign is the four-input descent repair''. That is a planning fact four
+  lanes can use; ''adds no strength'' was not.
+
+
+  THE GENERALISATION. When a docstring explains WHY two obligations are stated as
+  one, or why a hypothesis is harmless, or why a bundling is honest -- that explanation
+  is a theorem statement someone declined to write. Write it. Cost: the two halves
+  are usually already present, so it is an obtain plus a refine. Payoff: you learn
+  the exact hypothesis the conjunction needs, which is almost never the one the prose
+  names.
+
+
+  AND THE TRAP I FELL INTO IMMEDIATELY AFTER. Having proved the reduction, I wrote
+  that its hypothesis is ''FALSE over arbitrary k, not merely unproved''. The refutation
+  in the tree is CONDITIONAL on an antecedent the project QUOTES from a paper rather
+  than proves -- the file says so in its own words two screens away. A reduction being
+  a theorem does not make its trigger one. Check whether the refuting antecedent has
+  a producer before upgrading ''unproved'' to ''false''; two OTHER sites making the
+  same claim had each qualified themselves within three lines, and mine was the one
+  that did not.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:09:08.484617+00:00'
+updated_at: '2026-07-29T21:09:08.484627+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0012-horizon-review-ajc
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
