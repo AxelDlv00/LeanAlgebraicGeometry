@@ -230,7 +230,18 @@ Read it as the corrected antecedent list of the *goal*:
 * `hcpt` — `CompactSpace` of the glued object.  **Open**, and it is the input this file leaves
   exposed.  `JacobianDataCharts.lean` calls it a-posteriori for the class-indexed atlas — a
   theorem about the Jacobian, supplied there from a surjective Abel map (`JacobianDataAbelImage`,
-  outside this closure).  But that is the board's pricing quoted, **not** a measurement made here,
+  outside this closure).
+
+  **CORRECTED 2026-07-30 (`Picard/Pic0AtlasCompactFromClass.lean`, inbox `I-1132`): `hcpt` is
+  not atlas-specific and there is a THIRD route.**  Two things measured there:
+  `compactSpace_glued_iff_quasiCompact` shows `hcpt` is *interderivable* with
+  `QuasiCompact (gluedHom …)` over the affine base — i.e. it **is** the `JacobianData.quasiCompact`
+  field, not an extra input, so the `dat-glue` and `dat-j` rows were holding one obligation
+  between them; and `compactSpace_glued_of_pic0_class` supplies it from the `dat-j.qcfield`
+  hypothesis `hcl` applied to *this atlas's own* representation, needing no Abel morphism and no
+  index finiteness.  So "the two routes the tree already names are still the honest ones" below
+  is an incomplete enumeration.  What that file does **not** change: `hcl` has no producer, so
+  nothing is discharged.  But that is the board's pricing quoted, **not** a measurement made here,
   and it is a genuine obligation rather than a repackaging of coverage.  That was worth checking,
   since `review-ajcr` observed that at `ι = PEmpty` every explicit input including `hcpt` is free
   and read it as evidence that `hcpt` is a *consequence* of the local-surjectivity instance.
@@ -242,6 +253,9 @@ Read it as the corrected antecedent list of the *goal*:
   and not the mathematics, the claim is the careful one: nothing in scope derives `hcpt` from
   coverage, and the gap is finiteness — which the class-indexed atlas does not have.  So the two
   routes the tree already names are still the honest ones: a finite atlas, or the Abel image.
+  **That last sentence is corrected above**: a third route (the `dat-j.qcfield` class hypothesis
+  at this atlas's own representation) needs neither, and `hcpt` is the `quasiCompact` field
+  rather than a separate input — `Picard/Pic0AtlasCompactFromClass.lean`.
 
 So this declaration is an *implication*, not a witness: it produces no `JacobianData` at any curve
 until the four open inputs above are produced.  Its value is that the fourth antecedent is no
