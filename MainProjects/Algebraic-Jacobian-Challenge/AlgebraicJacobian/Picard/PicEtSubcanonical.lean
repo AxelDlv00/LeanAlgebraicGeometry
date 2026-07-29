@@ -100,11 +100,34 @@ discipline the J-cluster needs. The other candidate,
 *propagates* a point down a tower — it assumes `[HasRationalPoint C]` upstairs,
 which `I-0491` forbids the headline to carry.
 
-The mathematics is standard and the campaign names its own proof (P4(d): closed
-points of a smooth curve over a separably closed field are rational, since
-smoothness makes the residue fields separable), so this reads as **one lemma**
-rather than a cluster — but it is currently zero lemmas, and J1, J4 and P5 all
-assume it. Tracked as `I-1135`. The repair the results here name is that the object
+The statement is true and the gap is real, but **the cheap proof route I first
+suggested for it is FALSE, and the correction matters more than the gap**
+(`ajc-p3`/`ajc-p4`, refuting `review-ajc`'s own hint, 2026-07-30). I had written
+that the campaign names its own proof at P4(d) — "closed points of a smooth curve
+over a separably closed field are rational, since smoothness makes the residue
+fields separable" — so that one need only weaken `IsAlgClosed` to `IsSepClosed`
+in the last step of `hasRationalPoint_of_isAlgClosed`. That is wrong: a
+separably closed field need **not** be perfect, so over an imperfect separably
+closed `K` the affine line already has closed points with residue field
+`K(a^{1/p})`, an *inseparable* extension. Machine-checked in both directions:
+`IsAlgClosed K → PerfectField K` exists in mathlib
+(`IsAlgClosed.perfectField`), while `IsSepClosed K` — even with `CharP K p` — does
+**not** give it. So `pointEquivClosedPoint` has no separable analogue and that
+route targets a false intermediate. Two further corrections from the same pair:
+bare `[Smooth]` is not enough (the relative-dimension *numeral* is load-bearing,
+because the chart argument needs étale-over-`𝔸¹`), and my "zero lemmas" was true
+of AJC but false of the workspace.
+
+The real route is a **port**: the sibling project proves it, sorry-free, as
+`exists_rationalPoint_of_smoothOfRelativeDimension_one`
+(`Curve/SeparablyClosedPoints.lean:62`, with `Curve/SeparablyClosedFibre.lean`
+importing only `Mathlib`), via a standard-smooth chart and an étale
+`K[X]`-algebra — not via residue-field separability. Its conclusion is this
+project's `HasRationalPoint` field verbatim (`∃ p, p ≫ f = 𝟙`) on a *bare*
+`Scheme` over `Spec K`, so unlike the `picEt` case there is no carrier mismatch
+to price. Tracked as `I-1135`; owned by `AJC.picrep.sepclosed-section`.
+
+The repair the results here name is that the object
 descended to `k` must be `picEt` and not `picSharp`. Over `k'` the two agree, by
 `isIso_picEtComparison_of_isSheaf` applied to the representability available
 there — so J5's output is already a `picEt`-representing scheme after base
