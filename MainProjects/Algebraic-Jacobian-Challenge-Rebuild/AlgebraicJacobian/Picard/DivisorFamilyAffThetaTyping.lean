@@ -283,6 +283,70 @@ noncomputable def glueThetaZeroHom :
       exact (relCurve C R).overAlgebraMap_apply_res R (homOfLE inf_le_left).op r
     rw [RingHom.id_apply, hsmul, resHom_glueThetaZero, map_smul]
 
+variable {C R π}
+
+/-- **THE PRODUCER: every widened cover carries a twisting datum at exponent `0`.**  No
+hypothesis on the pieces beyond `AffCoverData` itself — in particular a STRADDLING cover, on
+which `ChartTyping` is empty (`AffAdaptation.isEmpty_chartTyping_of_straddling`), carries one.
+
+The reading is the glued global section restricted to the piece; the comparison unit is `1`,
+because at exponent `0` there is nothing to compare — the two chart components are two views of
+one global section rather than two independent data.  The germ law holds with `u = 1` for the
+same reason.
+
+`0` is not a vacuous corner: it is the exponent `DivisorAdaptation.divisorDatum` runs at
+(`thetaIdealUnit_zero`, `Picard/DivisorDatumInverse.lean:207`), i.e. the twist in which the
+divisor's own class is read. -/
+noncomputable def AffCoverData.thetaTrivDataZero (D : AffCoverData C R) :
+    ThetaTrivData (π := π) D 0 where
+  read j := (relResAlgHom C R (le_top : D.pieces j ≤ ⊤)).toLinearMap ∘ₗ glueThetaZeroHom C R π
+  unit _ _ := 1
+  matching i j x := by
+    -- both sides restrict the SAME global section into the overlap
+    simp only [Units.val_one, one_mul, LinearMap.coe_comp, Function.comp_apply,
+      AlgHom.toLinearMap_apply, relResAlgHom_apply]
+    change (relCurve C R).resHom _ ((relCurve C R).resHom (le_top : D.pieces i ≤ ⊤) _)
+      = (relCurve C R).resHom _ ((relCurve C R).resHom (le_top : D.pieces j ≤ ⊤) _)
+    rw [Scheme.resHom_resHom, Scheme.resHom_resHom]
+  germ_read j b z hzj hzb x := by
+    refine ⟨1, ?_⟩
+    rw [Units.val_one, one_mul]
+    -- both germs are the germ of ONE global section: the glued one
+    have hleft : ((relCurve C R).presheaf.germ (D.pieces j) z hzj).hom
+        (relResAlgHom C R (le_top : D.pieces j ≤ ⊤) (glueThetaZero C R π x))
+        = ((relCurve C R).presheaf.germ ⊤ z trivial).hom (glueThetaZero C R π x) :=
+      TopCat.Presheaf.germ_res_apply _ _ _ _ _
+    have hright : ((relCurve C R).presheaf.germ
+        ((⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b) z ⟨trivial, hzb⟩).hom
+          (relThetaResSide 0 b inf_le_right x)
+        = ((relCurve C R).presheaf.germ ⊤ z trivial).hom (glueThetaZero C R π x) := by
+      rw [← resHom_glueThetaZero C R π x b]
+      exact TopCat.Presheaf.germ_res_apply _ _ _ _ _
+    -- `glueThetaZeroHom … x` is `glueThetaZero … x` by `rfl`, but `rw` is reducible-only
+    -- against the folded bundled name, so the fold is discharged by `show` first.
+    change ((relCurve C R).presheaf.germ (D.pieces j) z hzj).hom
+        (relResAlgHom C R (le_top : D.pieces j ≤ ⊤) (glueThetaZero C R π x))
+      = ((relCurve C R).presheaf.germ
+          ((⊤ : (relCurve C R).Opens) ⊓ relPinnedChart C R π b) z ⟨trivial, hzb⟩).hom
+        (relThetaResSide 0 b inf_le_right x)
+    exact hleft.trans hright.symm
+
+/-- **THE SEPARATION, which is the point of the file.**  On a cover with a straddling piece —
+one holding a point off `V₀` and a point off `V₁` — the new twisting index is INHABITED while
+`ChartTyping` is EMPTY.
+
+So `ThetaTrivData` is strictly wider than `ChartTyping` on exactly the covers protection
+`I-0492`'s widening exists for, and the widened Θ-layer's vacuity there
+(`AffAdaptation.isEmpty_chartTyping_of_straddling`, reviewer item `I-0779`) is a defect of the
+index rather than of the layer's mathematics. -/
+theorem nonempty_thetaTrivData_and_isEmpty_chartTyping (D : AffCoverData C R) (j : D.index)
+    {x y : relCurve C R} (hxj : x ∈ D.pieces j) (hyj : y ∈ D.pieces j)
+    (hx₀ : x ∉ ((relCover C R (fiberTwoCover π)).V₀ : Set (relCurve C R)))
+    (hy₁ : y ∉ ((relCover C R (fiberTwoCover π)).V₁ : Set (relCurve C R))) :
+    Nonempty (ThetaTrivData (π := π) D 0) ∧ IsEmpty (ChartTyping C R π D) :=
+  ⟨⟨D.thetaTrivDataZero⟩,
+    AffAdaptation.isEmpty_chartTyping_of_straddling (π := π) D j hxj hyj hx₀ hy₁⟩
+
 end ZeroExponent
 
 end AlgebraicGeometry
