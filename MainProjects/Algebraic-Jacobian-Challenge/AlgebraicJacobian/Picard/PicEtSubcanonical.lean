@@ -60,9 +60,18 @@ is a different thing, and the honest statement of what remains is:
 **But the antecedent must not be read as reachable over `k`, and §4 is why.**
 The same subcanonicity that powers the transport also proves that a
 representable `picSharp` is a *Zariski* sheaf
-(`PicScheme.picSharp_isSheaf_zariski_of_representableBy`). Kleiman §2
-(L1292–L1302) exhibits a curve over a field for which `picSharp` is **not** a
-Zariski sheaf. Contrapositive: representability of `picSharp C` over an
+(`PicScheme.picSharp_isSheaf_zariski_of_representableBy`). Kleiman's Exercise
+`ex:Pfs` exhibits a curve satisfying exactly these binders for which `picSharp`
+is **not** a Zariski sheaf: the conic `u²+v²+w²=0` in `ℙ²_ℝ`, a smooth plane
+conic — smooth, proper, geometrically integral — over a field where it has no
+rational point. Kleiman produces a class of `Pic_{(X/ℝ)ét}(ℝ)` outside the image
+of `Pic_{(X/ℝ)zar}(ℝ)` and concludes that `Pic_{X/ℝ}` is not representable while
+`Pic_{(X/ℝ)ét}` is. (**Cite `ex:Pfs`, not "§2 L1292–L1302"** — corrected
+2026-07-29 by `review-ajc` after reading
+`references/kleiman-picard-src/kleiman-picard.tex`, the full paper, which *is* in
+the workspace: those lines are about the *absolute* functor `Pic_X`, and the
+relative one is defined to defeat that argument.) Contrapositive:
+representability of `picSharp C` over an
 arbitrary field is **false in general**, not merely unproved. So the campaign
 milestones that conclude representability of `picSharp`/`picSharpDeg` over `k`
 itself — G3 (Galois descent of `picSharp` points) and G4 (the coproduct
@@ -312,8 +321,11 @@ would also transport it from there.
 (`Picard/FGAPicRepresentability.lean`, "Why sheafifying is what makes an
 unconditional statement possible") argues *in prose* that an unconditional
 `RepresentableBy` against `picSharp` is FALSE rather than unproved, because
-Kleiman §2 (L1292–L1302) gives a curve whose `picSharp` is not a Zariski sheaf
-while a representable functor is a sheaf for any subcanonical topology. This
+Kleiman's Exercise `ex:Pfs` gives a curve — the real conic `u²+v²+w²=0`, smooth
+proper geometrically integral, no rational point — whose `picSharp` is not a
+Zariski sheaf, while a representable functor is a sheaf for any subcanonical
+topology. (That docstring's earlier citation "§2 L1292–L1302" was about the
+*absolute* functor and has been corrected.) This
 theorem is the second half of that argument, as a Lean statement rather than as
 prose. Its contrapositive therefore says: over an arbitrary field, no scheme
 represents `picSharp C` in general.
