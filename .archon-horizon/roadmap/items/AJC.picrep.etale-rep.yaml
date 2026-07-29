@@ -1,0 +1,77 @@
+id: AJC.picrep.etale-rep
+title: 'UNOWNED: representability of picEt itself — the obligation no campaign milestone
+  covers'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'OPENED 2026-07-29 by review-ajc, after a fresh-context check falsified my
+  own first correction of the seam docstring. This is the ELEVENTH item: the one piece
+  of the central sorry that no campaign milestone, no other roadmap row, and no Lean
+  declaration covers.
+
+
+  THE GAP, precisely. Clause (1) of Scheme.fgaPicardRepresentability (Picard/FGAPicRepresentability.lean:377)
+  asks for representability of PicScheme.picEt C — the ETALE-SHEAFIFIED functor, (PicSharp.etaleSheaf
+  C).obj composed with the forgetful functor (Picard/PicEtSheaf.lean). EVERY milestone
+  of the Milne-Kollar campaign (informal/pic-representability-campaign.md) targets
+  picSharp instead: J3/J4/J5 are stated for picSharpDeg C'' r, G3 descends picSharp
+  points, G4 assembles picSharpDeg, and the retired G5 discharged the picSharp-shaped
+  instHasPicScheme. The string picEt occurs nowhere in any milestone body. The campaign
+  was written 2026-07-09, NINETEEN DAYS BEFORE the etale decision of 2026-07-28 (protection
+  I-0491), and was never rescheduled against the restated obligation.
+
+
+  WHY IT CANNOT BE CLOSED BY COMPOSING. The obvious repair — complete the ten campaign
+  modules, then transport along PicScheme.picEtComparison — does not work: that comparison
+  is an isomorphism only under a section (Kleiman section 2 Thm 2.5, which is clause
+  (2) of the same sorry), and a section is exactly the hypothesis I-0491 forbids the
+  headline to carry. The seam''s own docstring supplies the reason this is not a technicality:
+  an unconditional RepresentableBy against picSharp would be a FALSE statement, not
+  merely unproved, because picSharp is not even a Zariski sheaf over a general field.
+  So the campaign''s endpoint is not transportable to clause (1) for free, and the
+  ten modules — however valuable, and they are the right work — do not by themselves
+  discharge the sorry.
+
+
+  THE CAMPAIGN SAYS SO ITSELF, twice, in its preamble (lines ~51-53 and ~394): the
+  remaining distance is the comparison, available only under a section, PLUS representability
+  of the sheafified functor itself, and ''what neither project has is a representability
+  theorem for it''. It names the obligation as outstanding and then never schedules
+  a milestone for it. That is why this row exists.
+
+
+  WHAT IT WOULD TAKE, unpriced and deliberately so — nobody has costed this, and a
+  guess here would repeat the error this row was opened to correct. The honest options
+  are (a) represent picEt directly, e.g. by descent from a level where a section exists
+  together with a Galois-descent argument for the sheafification rather than for picSharp
+  classes; or (b) restate the headline against a functor for which the campaign''s
+  output IS the answer, which is a specification change and therefore a human decision,
+  not a lane''s. Either way it needs pricing before it is claimable.
+
+
+  DO NOT mark this done by discharging clause (2), and do not let the ten modules''
+  completion be reported as closing the sorry. Related: AJC.picrep (the landed/absent
+  split), AJC.jacobian.assembly.picrep-input, hgraph node thm:fga_pic_representability.'
+status: pending
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-29T12:15:14.887440+00:00'
+  provenance:
+    run: 0081
+    session: 0002-horizon-review-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep
+  milestone: AJC.picrep

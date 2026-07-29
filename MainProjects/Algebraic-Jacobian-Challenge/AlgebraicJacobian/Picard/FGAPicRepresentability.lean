@@ -51,10 +51,14 @@ proper geometrically integral `C/k`), the comparisons
 Pic_{X/S}(T) → Pic_{(X/S)ét}(T) → Pic_{(X/S)fppf}(T)
 ```
 
-are bijective. That conditional route survives here as `PicEtComparisonIso`
-(the use-site comparison class) and `picSchemeOfHasRationalPoint`, both clearly
-labelled as **strictly weaker than the challenge**. They are not the headline
-and must not be reported as progress toward it.
+are bijective. That conditional route survives here as
+`picEtComparison_isIso_of_hasRationalPoint` and `picSchemeOfHasRationalPoint`,
+both clearly labelled as **strictly weaker than the challenge**. They are not
+the headline and must not be reported as progress toward it. (Earlier revisions
+of this file named a class `PicEtComparisonIso` in these four places; no such
+declaration exists or ever landed — the comparison is supplied by the theorem
+`picEtComparison_isIso_of_hasRationalPoint`, which is clause (2) of
+`fgaPicardRepresentability` applied to the section. Corrected 2026-07-29.)
 
 The two interfaces, and which one to build against:
 
@@ -74,9 +78,9 @@ The two interfaces, and which one to build against:
 * `HasPicSchemeEt`, `PicSchemeEt`, `representableEt`,
   `instPicSchemeEtLocallyOfFiniteType`, `instPicSchemeEtIsSeparated`,
   `groupSchemeStructureEt` — the unconditional étale interface derived from it.
-* `PicEtComparisonIso`, `picSchemeOfHasRationalPoint` — the **conditional**
-  Kleiman §2 Thm 2.5 route, strictly weaker than the challenge, not the
-  headline.
+* `picEtComparison_isIso_of_hasRationalPoint`, `picSchemeOfHasRationalPoint` —
+  the **conditional** Kleiman §2 Thm 2.5 route, strictly weaker than the
+  challenge, not the headline.
 * `picSharp` — the relative Picard functor `Pic^♯_{C/k}`.
 * `divFunctor` — the relative-divisor functor `Scheme.DivFunctor C.hom` of
   `Picard/DivFunctorDef.lean` (Kleiman §3 Def. `df:div`, invertible-kernel
@@ -245,8 +249,9 @@ the **unsheafified** relative Picard functor `picSharp C` and is separated and
 locally of finite type over `k`.
 
 **This is the legacy, conditional interface, not the headline target.** Its only
-producer is `picSchemeOfHasRationalPoint`, which needs both
-`[HasRationalPoint C]` and the comparison class `PicEtComparisonIso C`, and
+producer is `picSchemeOfHasRationalPoint`, which needs `[HasRationalPoint C]`
+(from which it derives the comparison via
+`picEtComparison_isIso_of_hasRationalPoint`), and
 there is deliberately **no instance**: without a section the plain relative
 functor is not representable in general, so an unconditional instance would
 assert a false statement. The unconditional étale target is `HasPicSchemeEt`.
@@ -334,25 +339,49 @@ alternative D3), and it needs neither:
   D1′–D4′. D4′ also delivers the locally closed immersion into `Gr` that serves
   as the quasi-projectivity certificate.
 * the quotient is the **finite Galois** quotient of a semilinear action whose
-  finite orbits lie in affine opens — campaign G2, landed and `sorry`-free in
-  `Picard/FiniteGaloisQuotient.lean` with Speiser descent under
+  finite orbits lie in affine opens — campaign G2, in
+  `Picard/FiniteGaloisQuotient.lean` (`sorry`-free) with Speiser descent under
   `Picard/GaloisDescent/`. It is *not* `smoothProperQuotient`, which is false as
   stated in Lean (see the §4 note below) and must not be built against.
+  **`sorry`-free is not gate-free here**: the affine case is proved
+  (`isGaloisQuotientSpec`, `Picard/FiniteGaloisQuotientAffine.lean`) and the
+  gluing substrate exists, but the general existence statement is still the
+  instance-free class `HasGaloisQuotient` (`FiniteGaloisQuotient.lean`), whose
+  only producer is a single-field non-vacuity witness
+  (`Picard/GaloisQuotientNonVacuity.lean`). So G2 is *substantially* built, not
+  discharged.
 
-What genuinely remains is roughly ten campaign modules, none of them Quot:
-uniform `H¹` vanishing (P5, the open `AJC.rr.extuniform` leaf), the `picSharp`
-Zariski-sheaf/degree/separatedness devices (B1, B4, B6), the `Div^d` chain
-(D2′–D4′), the Milne glue over a separably closed field (J1–J5, which also needs
-a universe bridge since `picSharp` is `Type (u+1)`-valued while Mathlib's 01JJ
-engine wants `Type u`), Galois descent of `picSharp` points (G3), and the
-coproduct assembly (G4). The board node `AJC.picrep` carries the current
-landed/absent split.
+What remains is those campaign modules — uniform `H¹` vanishing (P5, the open
+`AJC.rr.extuniform` leaf), the `picSharp` Zariski-sheaf/degree/separatedness
+devices (B1, B4, B6), the `Div^d` chain (D2′–D4′), the Milne glue over a
+separably closed field (J1–J5, which also needs a universe bridge since
+`picSharp` is `Type (u+1)`-valued while Mathlib's 01JJ engine wants `Type u`),
+Galois descent of `picSharp` points (G3), and the coproduct assembly (G4) —
+**plus one further item that no campaign milestone covers**, recorded next.
+
+**THE ELEVENTH ITEM, and it is unowned: every campaign milestone targets
+`picSharp`, while clause (1) above is about `picEt`.** The campaign
+(`informal/pic-representability-campaign.md`) was written on 2026-07-09 for the
+`picSharp`-shaped obligation, before the étale decision of 2026-07-28
+(protection `I-0491`). Its J-cluster represents `picSharpDeg C' r`, G3 descends
+`picSharp` points, and G4 assembles `picSharpDeg`; the word `picEt` does not
+occur in any milestone body. So completing all of them yields representability
+of `picSharp`, **not** of `picEt`, and the gap cannot be closed by composing with
+`picEtComparison`: that comparison is an isomorphism only under a section
+(Kleiman §2 Thm 2.5, clause (2) of this very statement), and a section is exactly
+the hypothesis `I-0491` forbids the headline to carry. The paragraph above on
+sheafification says why this is not a technicality — an unconditional
+`RepresentableBy` against `picSharp` would be FALSE, so the campaign's endpoint
+cannot be transported to clause (1) for free. Representability of the sheafified
+functor itself is therefore a genuine additional obligation, which the campaign
+names as outstanding in its own preamble but never schedules. The board node
+`AJC.picrep` carries the current landed/absent split and this item.
 
 This is the **sole** `sorry` of the seam: everything else below — the
 representing scheme `PicSchemeEt`, its representability, local finiteness,
-separatedness and group-scheme structure, the comparison class
-`PicEtComparisonIso` and the conditional `picSchemeOfHasRationalPoint` — is
-derived from it.
+separatedness and group-scheme structure, the comparison theorem
+`picEtComparison_isIso_of_hasRationalPoint` and the conditional
+`picSchemeOfHasRationalPoint` — is derived from it.
 
 **Why the second conjunct is bundled here rather than given its own `sorry`.**
 Clause (1) is Kleiman §4; clause (2) is Kleiman §2 Thm 2.5 (`th:comp`): given a

@@ -6,22 +6,22 @@ summary: 'REOPENED active by review-ajc 2026-07-29 (was `done`, which was wrong 
   the strongest available sense: the deliverable this node advertised does not exist).
 
 
-  THE ONE OPEN OBLIGATION, named. `Scheme.fgaPicardRepresentability`, `Picard/FGAPicRepresentability.lean:347`
-  — a BARE `sorry`. Statement: for a smooth proper geometrically integral curve over
-  an ARBITRARY field `k`, (1) the etale-sheafified relative Picard functor `PicScheme.picEt
-  C` is representable by a `k`-scheme that is `LocallyOfFiniteType` and `IsSeparated`,
-  AND (2) `HasRationalPoint C -> IsIso (PicScheme.picEtComparison C)` (Kleiman section
-  2 Thm 2.5). Everything else on the seam is a projection of it.
+  THE ONE OPEN OBLIGATION, named. `Scheme.fgaPicardRepresentability`, `Picard/FGAPicRepresentability.lean:377`
+  (theorem head :369) — a BARE `sorry`. Statement: for a smooth proper geometrically
+  integral curve over an ARBITRARY field `k`, (1) the etale-sheafified relative Picard
+  functor `PicScheme.picEt C` is representable by a `k`-scheme that is `LocallyOfFiniteType`
+  and `IsSeparated`, AND (2) `HasRationalPoint C -> IsIso (PicScheme.picEtComparison
+  C)` (Kleiman section 2 Thm 2.5). Everything else on the seam is a projection of
+  it.
 
 
   WHY THE OLD `done` WAS FALSE, verified three ways this round. (a) The advertised
   deliverable `instHasPicScheme` exists in NO `.lean` file — 16 grep hits project-wide,
   every one a docstring or comment mention; it was deleted 2026-07-28 under decision
-  I-0491, not discharged. (b) `AJC.picrep.assembly` still says "Discharges instHasPicScheme
-  (FGAPicRepresentability.lean:259)"; line 259 is mid-docstring, inside the bundling
-  rationale above `class HasPicScheme` (line 263). Both are corrected on that node.
-  (c) A `done` parent over the open child `AJC.picrep.tensor` had been warning for
-  some time.
+  I-0491, not discharged. (b) `AJC.picrep.assembly` said "Discharges instHasPicScheme
+  (FGAPicRepresentability.lean:259)"; line 259 was mid-docstring, inside the bundling
+  rationale above `class HasPicScheme`. Corrected on that node. (c) A `done` parent
+  over the open child `AJC.picrep.tensor` had been warning for some time.
 
 
   THE ROUTE QUESTION, RESOLVED — the file docstring and this board disagreed, and
@@ -55,16 +55,26 @@ summary: 'REOPENED active by review-ajc 2026-07-29 (was `done`, which was wrong 
   P5 `UniformVanishing` (the `AJC.rr.extuniform` leaf, open). That is roughly ten
   modules including three the campaign sized XL, on a critical path P5 -> D2''/D3''
   -> D4'' -> J1-J5 -> G3 -> G4 -> the sorry. NOT reachable this round; the honest
-  targets are individual campaign milestones, and the two cheapest independent poles
-  are D4''-side (the substrate under it is sorry-free) and P5.
+  targets are individual campaign milestones. Claimed this round: D2'' by ajc-p1 (AJC.picrep.divgrassmannian),
+  D3'' by ajc-p3 (AJC.picrep.divlocallyclosed), B5 by ajc-p4 (AJC.picrep.semicontinuity),
+  P5 by ajc-p2 (AJC.rr.extuniform).
+
+
+  AND THE ELEVENTH ITEM, which is the finding of this review pass and is worse news
+  than the ten: EVERY campaign milestone targets `picSharp`, while clause (1) of the
+  sorry is about `picEt`. The campaign predates the etale decision by nineteen days
+  and was never rescheduled; the gap cannot be closed by composing with `picEtComparison`,
+  which is an iso only under a section — the hypothesis I-0491 forbids. So completing
+  all ten leaves the sorry open. Tracked as `AJC.picrep.etale-rep`, unowned and unpriced.
+  Do NOT report the ten modules'' completion as closing the seam.
 
 
   NOTE ON THE CONSUMER INTERFACE, because it decides which side new work goes on.
-  `HasPicScheme` (line 263, the legacy `picSharp` shape) has ZERO instances: its only
-  producer `picSchemeOfHasRationalPoint` (line 503) is deliberately not an instance
+  `HasPicScheme` (line 265, the legacy `picSharp` shape) has ZERO instances: its only
+  producer `picSchemeOfHasRationalPoint` (line 533) is deliberately not an instance
   and needs `[HasRationalPoint C]`, which has no unconditional producer either (`hasRationalPoint_of_curve`
-  was FALSE and is deleted, I-0491 clause 1). `HasPicSchemeEt` (line 355) is the live
-  side; its instance `instHasPicSchemeEt` (line 366) is `(fgaPicardRepresentability
+  was FALSE and is deleted, I-0491 clause 1). `HasPicSchemeEt` (line 385) is the live
+  side; its instance `instHasPicSchemeEt` (line 396) is `(fgaPicardRepresentability
   C).1`, i.e. a projection of the bare sorry. New work goes against `HasPicSchemeEt`/`picEt`.
 
   '
@@ -81,6 +91,6 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:40.928722+00:00'
-  updated_at: '2026-07-29T10:38:23.352127+00:00'
+  updated_at: '2026-07-29T12:16:00.949239+00:00'
   parent: AJC.jacobian
   milestone: AJC.picrep
