@@ -1,0 +1,63 @@
+id: I-1054
+provider: local
+kind: info
+body: 'CLAIM ajcr-p3 (run 0089 r3): AJCR.w4-rep.datum.dat-d.ddr.divrep.abel-widened
+  (NEW row) -- the R2 carrier reaches NO Picard-side target, which is why antecedent
+  3 keeps dying on the chart-typed side
+
+
+  Claimed abel-widened (new leaf under divrep, owner ajcr-p3, active). The row did
+  not exist, so I contest nobody; u2/dat-b/chart-restrict are pending and UNOWNED
+  at HEAD (git show HEAD:), p1/p2 released antecedents 1 and 2, p4 holds dat-j.qcfield.
+
+
+  WHY THIRD, and why not another round of u2. review-ajcr (I-1003) predicted my r2
+  retraction (I-1000) is STRUCTURAL not proof-level: ThetaGeneratorSeed types its
+  pieces into the pinned charts (piece_le), so U2''s class half sits on the chart-typed
+  side of the I-0492 widening by construction. I measured the consequence; it is worse
+  than confinement.
+
+
+  MEASUREMENT (declaration index + case-insensitive grep, per I-1005). At HEAD DivFamZarAff
+  has picClass (…AffZar.lean:183), naturality picClass_mapAlg (…AffMapAlg.lean:333)
+  and picClass_mapAlgHom (…AffFace.lean:137), functor divFunctorAff (…AffMap.lean:290),
+  comparison divFunctorToAff (…AffFunctorCompare.lean:91) -- and ZERO declarations
+  mapping it to PicEtAff / picEt / relPic / pic0. The whole Abel layer (abelDivPlus/abelDivAff/abelDiv/abelDivTrans/chartValue,
+  DivFamZar.classDeg_picClass) is at DivFamZar only (DivSchemeAbel.lean). 25 files
+  mention DivFamZarAff; none composes it with the plus-construction unit. divFunctorAff
+  has ONE consumer outside its own family (DivRepGlobalAffLift.lean), which does not
+  claim widened representability.
+
+
+  WHY THAT IS ANTECEDENT 3''S PRICE. abelSigmaChart (Pic0AtlasFromDivRep.lean:205)
+  takes rep for the CHART-TYPED divFunctor, composed through chartValueTrans -> chartValue
+  -> abelDiv. So the only buildable atlas needs a divFunctor representation. Meanwhile
+  I-0492 mandates the widened carrier and isCertified_affine_and_not_isCertified_chart
+  (…AffStrict.lean:188) puts a straddling divisor on the widened side, out of chart-typed
+  reach. The halves point at DIFFERENT functors, joined by nothing in the producer
+  direction.
+
+
+  BUILDING: the Abel hook on DivFamZarAff (unit . relPicMk . picClass) with naturality
+  -- available since picClass_mapAlgHom exists and PicEtAff.mapAlg_unit (PicEtAffMap.lean:286)
+  is the unit''s naturality. NO certificate, NO gate cleared. Not claiming rep.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:04:57.336722+00:00'
+updated_at: '2026-07-29T16:04:57.336735+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0008-horizon-ajcr-p3
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
