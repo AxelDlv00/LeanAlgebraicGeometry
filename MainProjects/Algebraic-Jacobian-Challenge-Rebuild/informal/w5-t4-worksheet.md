@@ -2204,4 +2204,131 @@ specifically that the target's defining predicate names the source's map.
 statements; `H¹(C,𝒪) ≃+ ker(CechPic(C_ε) → CechPic(C))` is the composite and is written nowhere. Per
 §7.4's rule this is a decomposition rather than a measurement — but note what changed: it is now four
 *arrows* to compose, not four carriers with gaps between them, which is what §7.0 found at the start
-of this session.
+of this session. **Measured immediately, §7.6 — and there is a fifth seam nobody had named.**
+
+### 7.6 THE COMPOSITION HAS A DOWNSTAIRS SEAM NO SECTION OF THIS WORKSHEET HAS EVER NAMED
+
+*Run 0073 r7, closing measurement. Not a proof attempt: two `#check`s, printing the two types the
+composition must join, and reading them.*
+
+Applying §7.4's own rule to §7.5's residue before pricing it. The two arrows the composite has to
+join, printed verbatim (opens abbreviated):
+
+```
+-- the ENGINE's reduction (TwoCover.unitsReduction C.left U₀ U₁), target:
+   Γ(C.left, U₀ ⊓ U₁)ˣ ⧸ cechCoboundaryUnits (C.left.resHom …) (C.left.resHom …)
+
+-- pullbackOverlapQuot (relCurveMap C k[ε] k), target:
+   Γ(relCurve C k, relCurveMap ⁻¹ᵁ fst ⁻¹ᵁ U₀ ⊓ relCurveMap ⁻¹ᵁ fst ⁻¹ᵁ U₁)ˣ
+     ⧸ cechCoboundaryUnits ((relCurve C k).resHom …) ((relCurve C k).resHom …)
+```
+
+**These are sections of different schemes.** The engine's downstairs side lives on `C.left`; the
+geometric arrow's downstairs side lives on `relCurve C k`. (T3-2) matched the two *sources* — that is
+what its `rfl` says, and §7.4's finding stands — but the composite also needs the **targets** matched,
+and that is a `k → k` base-change carrier translation, the downstairs analogue of
+`dualNumberCechH1Equiv`.
+
+**WHAT EXISTS — and I almost wrote this seam down as absent.** The first draft of this section said
+the only candidate was `epsChartDown` (`Tangent/EpsChartSquare.lean`), a **ring** equivalence at
+**one affine** open, and concluded that the downstairs side has one of the three ingredients the
+upstairs side needed. Then I searched in the *upstream* vocabulary rather than this lane's, and found
+
+```
+sectionsCollapse : Γ(C.left, V) ≃ₗ[k] Γ(relCurve C k, fst ⁻¹ᵁ V)
+    -- Cohomology/RelThetaTransportCore.lean:41
+sectionsCollapse_mul     -- multiplicative, so it induces a map of UNIT groups   (:116)
+sectionsCollapse_resHom  -- naturality in the open                              (:235)
+```
+
+at **arbitrary** `V` with only compact/quasi-separated hypotheses, **no affineness**, landed since the
+relative-theta work and used by four declarations there. That is the same two lemmas
+(`dualNumberSectionsUnits` needs multiplicativity, `resHom_dualNumberSections` needs
+naturality-in-the-open) from which the *upstairs* chain built its `Ȟ¹` equivalence in
+`Tangent/DualNumberCarrierCoboundary.lean` — and per that file's own docstring the subgroup step is
+then `Subgroup.map_sup` plus one range identification per chart, "no `Bool` case analysis".
+
+**So the honest statement of T3's residue is two items, and the first is smaller than the draft of
+this very section said:**
+
+| item | what | size |
+|---|---|---|
+| (T3-5) the downstairs `Ȟ¹` translation | the `k → k` analogue of `dualNumberCechH1Equiv`, over `sectionsCollapse` (**not** `epsChartDown`) | ~~[S/M], not measured~~ **LANDED, §7.7** — `Tangent/CollapseCechH1.lean` |
+| (T3-6) the composite proper | chain (T3-1) → (T3-2) → (T3-5) → (T3-3) → (T3-4) into `H¹(C,𝒪) ≃+ ker(CechPic(C_ε) → CechPic(C))` | **T3's only residue.** Unmeasured, including whether it comes out additive |
+
+> **Rule, third occurrence in this lane and the reason the §7.0 grep is not enough:** the consumer
+> grep tells you an arrow is missing; it does not tell you the arrow is *unbuilt*. `epsChartDown` is
+> the object **this lane** made for this job, so searching my own vocabulary found it and stopped.
+> `sectionsCollapse` is the same mathematics, built for a different purpose in a different directory,
+> stronger (arbitrary opens), and with both auxiliary lemmas already proved. **Search the object's
+> shape across the whole project, not the name your lane coined for it.**
+
+**AND THE `≃+` IS A THIRD THING.** Every arrow in the chain is a `MulEquiv` or a bare `Equiv`; the
+statement T5 consumes is **additive**, and `Additive`-wrapping a multiplicative kernel is what
+`h1AddEquivTruncExpCechKernel` already does on the (T3-1) leg. Whether the composite comes out
+additive without extra work is unmeasured. The `.t5` row's standing trap applies with full force here:
+T5 needs the **semilinear** comparison, so even a perfect additive composite leaves the intertwining
+across `κ(e) ≃+* k` to be supplied.
+
+> **Rule, and it is §7.4's rule applied one level up.** §7.5 wrote "the residue is the composition,
+> and nothing else" — a decomposition stated as if it were complete. Two `#check`s refuted it in
+> ninety seconds. **When you name a composition as the residue, print the types of the arrows you
+> intend to compose and read them**, because a composition's cost is entirely in the seams, and a
+> seam is invisible in a list of the pieces. This is the same instrument as §7.0's consumer grep,
+> pointed at types instead of names.
+
+**T3's RESIDUE AFTER §7.6: (T3-5) then (T3-6)** — and §7.7 closes (T3-5) the same session, so read on
+before pricing anything.
+
+### 7.7 (T3-5) IS LANDED, AND "FAILED TO SYNTHESIZE INSTANCE" WAS NOT ABOUT AN INSTANCE
+
+*Run 0073 r7, `Tangent/CollapseCechH1.lean`. Kernel-green, rooted, seven headlines axiom-clean
+against two firing controls. Six declarations; five of the six were green on the first attempt.*
+
+**WHAT LANDED.** `collapseCechH1Equiv` — the two-chart Čech `Ȟ¹`-of-units groups of `C.left` and of
+`relCurve C k` agree, built exactly as §7.6 predicted: `collapseRingEquiv` (from
+`sectionsCollapse` + `sectionsCollapse_mul`), `collapseUnits`, `unitsMap_resHom_collapseUnits`
+(from `sectionsCollapse_resHom`), `range_collapseUnits_comp`,
+`map_cechCoboundaryUnits_collapseUnits`, then `QuotientGroup.congr`. §7.6's route was right and its
+[S/M] was, for once, not an over- or under-price — it was simply untested, and testing it took
+twenty minutes.
+
+**THE ONE WALL, AND THREE WASTED ATTEMPTS AT IT.** Copying `Over.dualNumberCechH1Equiv`'s spelling
+`QuotientGroup.congr _ _ e he` fails here with
+
+```
+failed to synthesize instance of type class
+  (cechCoboundaryUnits ((relCurve C k).resHom ⋯) ((relCurve C k).resHom ⋯)).Normal
+```
+
+I read that as a missing instance and tried three fixes, all of which failed and **none of which was
+addressing the problem**: a `haveI` at the use site; a project-local
+`Subgroup.normal_of_isMulCommutative` instance at matched universes; and dropping
+`Scheme.overModule` from the file's local instances (on the theory that two `CommRing` paths were
+competing — the keying trap this lane has recorded before).
+
+**The measurement that ended it.** In a standalone probe, `inferInstance` produces that exact
+`Normal` instance, and the quotient *type* elaborates too — for the `relCurve C k` spelling, the
+`(C ⊗ overSpec k k).left` spelling, and the dual-number spelling alike. So the instance was never
+absent. The failure came from the two positional `_`s: with the subgroups left as **metavariables**,
+elaboration reaches the `[Normal]` instance argument before they are solved, and instance search
+cannot key on a metavariable. **Naming both subgroups explicitly in the `congr` call closes it with no
+instance work at all.**
+
+> **Rule: "failed to synthesize instance" is not always about the instance — check whether the
+> instance's own arguments are still metavariables.** The message names a fully-elaborated-looking
+> subgroup (`⋯` hides the `≤` proofs), which is exactly what makes it read as an absence. The
+> discriminating test is one `#check (inferInstance : …)` in a standalone file with the arguments
+> spelled out: if it succeeds there, the problem is elaboration order at your call site, not the
+> instance graph. This is the inverse of `measure-the-instance-surface`, and it cost three fixes to
+> a non-problem.
+>
+> Corollary, since it is why I copied the failing spelling in the first place: **a spelling that
+> works in a sibling file is not thereby a spelling.** `dualNumberCechH1Equiv` gets away with `_ _`
+> because its own elaboration happens to solve them first.
+
+**T3's RESIDUE AFTER §7.7: (T3-6) alone — the composite.** Five landed arrows
+((T3-1)…(T3-5)); `H¹(C,𝒪) ≃+ ker(CechPic(C_ε) → CechPic(C))` is their composition and is written
+nowhere. Unmeasured, **including whether it comes out additive**: every arrow in the chain is a
+`MulEquiv` or a bare `Equiv`, `Additive`-wrapping happens only on the (T3-1) leg, and T5 needs the
+**semilinear** form on top of that. Per §7.6's own rule, print the types before pricing it.
