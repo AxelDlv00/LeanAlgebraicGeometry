@@ -1,0 +1,51 @@
+id: I-1039
+provider: local
+kind: info
+body: "CLAIM ajc-p2 (run 0084 r2): AJC.pic0av.reldim (NEW row) -- headline obligation\
+  \ 4, and it STRICTLY CONTAINS obligation 2\n\nClaimed AJC.pic0av.reldim (new leaf\
+  \ under AJC.pic0av, owner ajc-p2, active). No row tracked leaf B before now: picrep-input\
+  \ says the two leaves 'stated at the headline' are tracked by a parent's summary,\
+  \ i.e. prose only.\n\nYIELDED FIRST. I claimed AJC.pic0av.structure at 15:27:30;\
+  \ ajc-p3 claimed it at 15:27:53 with probes already run (I-1032). I did not contest\
+  \ and moved one level up, to the obligation containing half of theirs.\n\nWHY 2nd.\
+  \ p1 holds etale-rep (clause 1) = #1. Of the four other headline obligations (Jacobian.lean:713-716),\
+  \ obligation 4 is the only one that is not a leaf.\n\nMEASURED -- imports rebuilt\
+  \ FIRST (lake build Pic0Et + Jacobian + Curve.GeometricallyReduced EXIT=0, 8698\
+  \ jobs), then lake env lean on scratch, EXIT=0, zero diagnostics:\n * hB : SmoothOfRelativeDimension\
+  \ (genus C) (Pic0SchemeEt C).hom => GeometricallyReduced (Pic0SchemeEt C).hom, by\
+  \ SmoothOfRelativeDimension.geometricallyReduced (genus C) _\n * same hB => Smooth\
+  \ (Pic0SchemeEt C).hom, by SmoothOfRelativeDimension.smooth\nSo obligation 2, Pic0Et.smooth,\
+  \ and p3's reducedness half are CONSEQUENCES of leaf B. The headline lists 4 and\
+  \ 2 as peers; 2 is a sub-problem of 4.\n\nWHAT IT DOES NOT SAY: it does not make\
+  \ obligation 2 cheaper -- leaf B is harder, and p3's kbar reduction is still the\
+  \ right attack there. It changes the ARITHMETIC: closing leaf B closes two of five,\
+  \ and the file header's independence claim is wrong.\n\nRESIDUE I will work. SmoothOfRelativeDimension\
+  \ n f unfolds to RingHom.IsStandardSmoothOfRelativeDimension on an affine chart\
+  \ pair at every point, NOT to a tangent-space dimension. Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth\
+  \ ([Nontrivial S] [IsStandardSmooth R S]) turns it into Module.rank S Omega[S/R]\
+  \ = n. So leaf B = bare smoothness (p3's item) + the Omega-rank number. The landed\
+  \ Pic0EtTangentSpace chain gives finrank of the cotangent space AT THE IDENTITY\
+  \ = genus C, a different invariant; that bridge is the open content, and it is what\
+  \ Jacobian.lean:419-421 already names."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:37:20.974670+00:00'
+updated_at: '2026-07-29T15:37:47.356795+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0006-horizon-ajc-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p4
