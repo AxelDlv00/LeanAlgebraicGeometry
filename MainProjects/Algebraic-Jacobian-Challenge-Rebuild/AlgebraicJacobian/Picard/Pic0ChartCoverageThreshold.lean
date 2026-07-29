@@ -330,6 +330,79 @@ theorem exists_chartIndex_mem_chartLocus_of_ledgerIndex
       t ∈ chartLocus C m' Z' lam :=
   ⟨m, Z, mem_chartLocus_of_ledgerIndex hπ g hχ lam t hlam m Z hZ M₀ hM₀⟩
 
+/-! ## The coupling limit, as a theorem rather than a caveat
+
+The parameter this route delivers is `M·δ + g`, and the divisor-representability endpoint
+`divFunctor_representableBy_of_chartClause` (`Picard/DivRepAffPullClause.lean:490`) supplies
+`rep` at the parameter its own `hchi` pins, i.e. at the genus.  Those two are the same number
+only in the degenerate case, and the statement below is the proof — recorded so the limit
+cannot be mistaken for a hedge, and so that nobody reads the reduction above as delivering a
+chart parameter the divRep lane can currently feed.
+
+This is the sharp form of the question `Pic0ChartAtlasParamFree.lean`'s header hands to the
+divRep lane: *at which parameters is `divFunctor C π n` representable?*  Heterogeneity
+(`mixedParamChart`) means the atlas needs no uniform answer, but it does need **some**
+parameter at which both coverage and `rep` are available, and `M·δ + g = g` is not it. -/
+
+-- The `C.hom` instances are idle here: the statement is ledger arithmetic plus
+-- `genus_eq_zero_of_windowBound_nonpos`, which reads only the `C.left`-over-`k` side.
 end
+
+/-! ### The coupling limit lives on an abstract curve, not on `C`
+
+Rather than `omit` the idle `C.hom` instances one at a time — the linter cannot be satisfied
+piecewise here, because dropping any proper subset leaves a referenced section variable — the
+statement is given at the generality its proof actually inhabits.  It is ledger arithmetic plus
+`genus_eq_zero_of_windowBound_nonpos`, both of which are stated for an abstract curve `Y` over
+`K` with a finite dominant `π`; the challenge curve `C` never enters.  So the honest home is
+this section, and `C` does not occur in the statement at all.
+
+That is also the `delete-the-geometry-and-retypecheck` test applied to my own theorem: what
+survived the deletion is where the theorem lives. -/
+
+section LedgerParam
+
+variable {K : Type u} [Field K] {Y : Scheme.{u}} [IsIntegral Y]
+  [Y.Over (Spec (CommRingCat.of K))]
+  [SmoothOfRelativeDimension 1 (Y ↘ Spec (CommRingCat.of K))]
+  [LocallyOfFiniteType (Y ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (Y ↘ Spec (CommRingCat.of K))]
+  [Module.Finite K (Sheaf.HModule (Y.moduleKSheaf K) 0)]
+  [Module.Finite K (Sheaf.HModule (Y.moduleKSheaf K) 1)]
+
+/-- **THE LEDGER PARAMETER EQUALS THE GENUS ONLY WHEN THE GENUS IS ZERO.**
+
+If `M·δ + g = g` then `g = 0`.  Since `δ ≥ 1` (`one_le_windowδ`), the equation forces
+`M = 0`; `windowM_spec` then makes `windowBound ≤ 0` — because its right-hand side is `M·δ = 0`
+while the left-hand side dominates `windowBound` — and `genus_eq_zero_of_windowBound_nonpos`
+concludes.
+
+**What this means for the reduction above, stated as the limit it is.** Coverage is now
+available at parameter `M·δ + g`, and the divRep endpoint supplies `rep` at the parameter its
+own `hchi` pins.  On a curve of positive genus those are different parameters, so the two
+halves do not yet co-instantiate — the numeric half of B-5 step 3 is discharged, and the
+*parameter matching* is what replaces it.  That is a strictly better-posed question than
+"reconcile the chart parameter with the threshold" (it names two specific numbers rather than a
+reconciliation), but it is not nothing, and I do not claim otherwise. -/
+theorem genus_eq_zero_of_ledgerParam_eq_genus {π : Y ⟶ P1 K} [IsFinite π] [IsDominant π]
+    (hπ : π ≫ P1.structureMap K = Y ↘ Spec (CommRingCat.of K)) (g : ℕ)
+    (hO : Sheaf.h0 (Y.moduleKSheaf K) = 1)
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (g : ℤ))
+    (heq : (windowM_choice π hπ g : ℤ) * windowδ π + (g : ℤ) = (g : ℤ)) :
+    g = 0 := by
+  have hδ : 1 ≤ windowδ π := one_le_windowδ π
+  have hM : (windowM_choice π hπ g : ℤ) * windowδ π = 0 := by linarith
+  have hspec := windowM_spec π hπ g
+  have hgnn : (0 : ℤ) ≤ (g : ℤ) := Int.natCast_nonneg _
+  have hsnn : (0 : ℤ) ≤ (windowS_choice π hπ g : ℤ) := Int.natCast_nonneg _
+  have hprod : (0 : ℤ) ≤ ((g : ℤ) + 2) * ((windowS_choice π hπ g : ℤ) + 1) * windowδ π := by
+    have h1 : (0 : ℤ) ≤ (g : ℤ) + 2 := by linarith
+    have h2 : (0 : ℤ) ≤ (windowS_choice π hπ g : ℤ) + 1 := by linarith
+    exact mul_nonneg (mul_nonneg h1 h2) (by linarith)
+  refine genus_eq_zero_of_windowBound_nonpos π hπ g ?_ hO hχ
+  rw [hM] at hspec
+  linarith
+
+end LedgerParam
 
 end AlgebraicGeometry
