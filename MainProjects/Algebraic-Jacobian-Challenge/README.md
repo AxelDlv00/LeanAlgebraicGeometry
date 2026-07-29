@@ -33,10 +33,11 @@ available for the schemes this route quotients.
 It is developed alongside `Algebraic-Jacobian-Challenge-Rebuild`, which attacks the
 same theorem by a separate curve-specialized strategy.
 
-## State (measured 2026-07-28)
+## State (measured 2026-07-30)
 
-- **288 modules, 165,477 lines** (re-measured 2026-07-29 by the recipe below, up from
-  284/163,544 earlier the same morning); a warm `lake build AlgebraicJacobian` was **green** at
+- **312 modules, 173,191 lines** (re-measured 2026-07-30 by the recipe below, up from
+  288/165,477 the previous day — the tree grew 24 modules in one day of ten-lane work, so
+  any figure quoted here is stale within hours); a warm `lake build AlgebraicJacobian` was **green** at
   8,746 jobs when last measured, which was before the 2026-07-28 lanes landed.  The `sorry`
   count is deliberately not restated here: it was 26 over 10 modules at the last census and
   four AJC lanes
@@ -106,7 +107,8 @@ same theorem by a separate curve-specialized strategy.
   ```bash
   lake build AlgebraicJacobian 2>&1 | grep 'declaration uses' | sort -u
   ```
-- 101 modules still open with a bare `import Mathlib` (re-measured 2026-07-29, up from 99);
+- 109 modules still open with a bare `import Mathlib` (re-measured 2026-07-30, up from 101);
+  the count rises with the module count, so the ratio is not improving;
   this is the dominant build cost and is being converted bottom-up with the helpers
   in `scripts/`.
 
