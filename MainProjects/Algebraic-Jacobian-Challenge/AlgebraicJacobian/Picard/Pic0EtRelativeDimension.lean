@@ -1,0 +1,243 @@
+/-
+Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The AlgebraicJacobian Contributors
+-/
+import AlgebraicJacobian.Picard.Pic0Et
+import AlgebraicJacobian.Picard.GroupSchemeHomogeneity
+import AlgebraicJacobian.Curve.GeometricallyReduced
+
+/-!
+# Leaf B in the étale formulation: relative dimension `genus C` for `Pic⁰_{C/k}`
+
+The Jacobian headline (`AlgebraicJacobian/Jacobian.lean`) rests on five named open
+obligations. This file is about the fourth,
+`smoothOfRelativeDimension_genus_pic0Et`, and it establishes two things about it that
+the headline's own list gets wrong.
+
+## 1. The five obligations are not independent: obligation 4 implies obligation 2
+
+`Jacobian.lean` lists `Scheme.Pic0Et.geometricallyReduced` (obligation 2) and
+`smoothOfRelativeDimension_genus_pic0Et` (obligation 4) as peers, and
+`Picard/Pic0Et.lean` describes the former as the sole remaining input to smoothness,
+"and nothing else". Both readings are right about the *direction they were written
+for* — smoothness is assembled out of reducedness — and both miss that the arrow also
+runs the other way, through mathlib's own class hierarchy:
+
+`SmoothOfRelativeDimension n f` gives `Smooth f`
+(`SmoothOfRelativeDimension.smooth`), and this project's
+`Smooth.geometricallyReduced` (`Curve/GeometricallyReduced.lean`) gives the class. The
+composite is `SmoothOfRelativeDimension.geometricallyReduced`, already in the tree.
+
+`geometricallyReduced_of_leafB` and `smooth_of_leafB` below are that observation at
+`Pic0SchemeEt`. The consequence is arithmetic, not mathematical: **closing leaf B
+closes two of the five**, so a reader who adds the two distances double-counts.
+
+What this does *not* claim, and the distinction is the whole point of stating it:
+obligation 2 is not thereby made *cheaper*. Leaf B is the harder statement, and the
+reducedness half is still best attacked at its own level, by the `k̄` reduction
+recorded on `AJC.pic0av.structure`. What is refuted is only the independence.
+
+## 2. What leaf B's *own* residue is, read off mathlib's definition
+
+`Jacobian.lean` prices the leaf as owing "a translation between two invariants of
+smoothness — the tangent-space dimension and the rank of `Ω`". That is the right
+shape, and this file pins the second half of it to a named mathlib `iff`:
+
+* `SmoothOfRelativeDimension n` is `HasRingHomProperty … (Locally
+  (IsStandardSmoothOfRelativeDimension n))`, so by `HasRingHomProperty.iff_appLE` the
+  class *is* an affine-chart-pair condition — `leafB_iff_appLE` below. It is not a
+  statement about a tangent space at a point, which is what the landed
+  `Picard/Pic0EtTangentSpace.lean` chain computes.
+* the base `Spec k` is affine, so `HasRingHomProperty.iff_of_iSup_eq_top` reduces the
+  chart pairs to a single family of affine opens *covering `Pic⁰`* —
+  `leafB_iff_affineCover` below.
+* on each such chart, `Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth`
+  turns the numeral into `Module.rank S Ω[S⁄k] = n`, given `IsStandardSmooth` and
+  `Nontrivial`.
+
+So leaf B factors as: **bare smoothness** (the reducedness half, obligation 2) **plus
+the `Ω`-rank number on an affine cover**. `finrank_cotangentSpace_eq_genus`
+(`Picard/Pic0EtTangentSpace.lean`) supplies a dimension at the *identity*; the gap
+between that and `rank Ω` on a chart is the leaf's real content, and it is exactly the
+translation the headline docstring names.
+
+## 3. Why the group structure does not close the gap by itself, measured
+
+The natural move is homogeneity: `Pic⁰` is a group scheme, so translate a chart around
+the identity over the whole scheme. `leafB_of_affineCover_translationInvariant` records
+what that buys, and `translation_comp_eq` records why it buys less than it looks.
+
+Translations of a group scheme over `S` are automorphisms **over** `S`
+(`CategoryTheory.GrpObj.pointTranslationIso_hom_comp`, which is `Over.w`), so the
+composite of a translation with the structure morphism is the structure morphism *on
+the nose*. Consequently "the class transports along a translation" is not a transport
+at all — it is the same proposition, and `translation_comp_eq` proves the two are
+*equal*, not merely interderivable. Homogeneity therefore gives the covering step for
+free and contributes **nothing** to the numeral: the `Ω`-rank obligation on one chart
+is not reduced to the identity by translating, because translating does not change
+which proposition is being asserted about the structure morphism.
+
+That is worth a name because the sibling project's
+`AbelianVariety/RelativeDimensionLocal.lean` states the transport as a lemma
+(`smoothOfRelativeDimension_comp_iso` applied at `pointTranslationIso`) whose
+hypothesis is `[SmoothOfRelativeDimension n d.J.hom]` — i.e. the conclusion of the
+criterion it feeds. Read as a step towards leaf B it is circular; read as what it is,
+a `RespectsIso` convenience, it is fine. Ported here, the honest form is the equality.
+
+## What is open
+
+Everything in this file is an implication or an equivalence; **no obligation is
+discharged**. In particular `smoothOfRelativeDimension_genus_pic0Et` (Jacobian.lean)
+and `Scheme.Pic0Et.geometricallyReduced` (Pic0Et.lean) are still `sorry` at HEAD, and
+every declaration here binds `[HasPicSchemeEt C]`, whose global instance
+`instHasPicSchemeEt` projects the central `sorry`
+`Scheme.fgaPicardRepresentability`. So these statements are `sorry`-free *as
+implications* and `sorryAx`-reachable at the use site — the distinction recorded in
+`Picard/Pic0EtTangentSpace.lean` and, since 2026-07-29, at the seam itself.
+
+References: Kleiman, "The Picard scheme" (arXiv:math/0504020), §5 Cor. `cor:sm`,
+Thm. `thm:tgtsp`. Board row `AJC.pic0av.reldim`.
+-/
+
+set_option autoImplicit false
+
+universe u
+
+open CategoryTheory MorphismProperty MonoidalCategory
+
+namespace AlgebraicGeometry
+
+/-! ## §1. Obligation 4 implies obligation 2 -/
+
+namespace Scheme.Pic0Et
+
+variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
+  [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+  [GeometricallyIntegral C.hom] [HasPicSchemeEt C]
+
+/-- **Leaf B gives bare smoothness of `Pic⁰_{C/k}`** — one mathlib projection.
+
+`Pic0Et.smooth` is currently assembled *from* `geometricallyReduced`; this is the other
+direction, and it is what makes the five-obligation list non-independent. -/
+theorem smooth_of_leafB
+    (hB : SmoothOfRelativeDimension (genus C) (Pic0SchemeEt C).hom) :
+    Smooth (Pic0SchemeEt C).hom :=
+  haveI := hB
+  SmoothOfRelativeDimension.smooth (n := genus C) (Pic0SchemeEt C).hom
+
+/-- **Leaf B implies headline obligation 2**, `Pic0Et.geometricallyReduced`.
+
+Via `smooth_of_leafB` and this project's `Smooth.geometricallyReduced`
+(`Curve/GeometricallyReduced.lean`) — packaged upstream as
+`SmoothOfRelativeDimension.geometricallyReduced`.
+
+The import matters and is the reason this lives in a new file rather than in
+`Pic0Et.lean`: that module's cone does not contain `Curve/GeometricallyReduced`, so the
+bridge is invisible from inside it and a synthesis probe there reads as absence
+(the measure-at-the-root lesson recorded at `Pic0AbelianVariety.lean:1208-1211`).
+
+Consequently `Pic0Et.geometricallyReduced` is a *sub-problem* of leaf B, not a peer of
+it, and the two distances must not be added. It does **not** follow that obligation 2
+is cheaper than it was: it is the weaker statement, so proving it directly remains the
+right attack, and this implication is useless in that direction. -/
+theorem geometricallyReduced_of_leafB
+    (hB : SmoothOfRelativeDimension (genus C) (Pic0SchemeEt C).hom) :
+    GeometricallyReduced (Pic0SchemeEt C).hom :=
+  haveI := hB
+  SmoothOfRelativeDimension.geometricallyReduced (genus C) _
+
+/-! ## §2. What leaf B actually asks: an affine-chart-pair condition
+
+Both statements here are mathlib's, instantiated. They are recorded because the
+headline docstring describes leaf B's residue in terms of "the rank of `Ω`" without
+saying where that rank is measured, and the answer — on affine charts of `Pic⁰`, not at
+the identity — is what separates it from the landed tangent-space chain. -/
+
+/-- **Leaf B *is* the affine-chart-pair condition.** `SmoothOfRelativeDimension n` is
+`HasRingHomProperty _ (RingHom.Locally (RingHom.IsStandardSmoothOfRelativeDimension n))`,
+so `HasRingHomProperty.iff_appLE` unfolds the class into a condition on the ring maps
+`Γ(U) ⟶ Γ(V)` for affine `U ⊆ Spec k`, `V ⊆ Pic⁰` with `V ⊆ f⁻¹U`.
+
+This is an `iff` in both directions, so nothing is weakened. Its use is to fix what
+"the rank of `Ω`" in the headline's pricing of this leaf refers to: the relative
+dimension is asserted of chart-level algebra maps, and
+`Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth` is what converts
+each into `Module.rank S Ω[S⁄R] = n` once standard smoothness is in hand. The tangent
+space at the identity does not occur. -/
+theorem leafB_iff_appLE :
+    SmoothOfRelativeDimension (genus C) (Pic0SchemeEt C).hom ↔
+      ∀ (U : (Spec (CommRingCat.of k)).affineOpens)
+        (V : ((Pic0SchemeEt C).left : Scheme.{u}).affineOpens)
+        (e : (V : Scheme.Opens _) ≤ (Pic0SchemeEt C).hom ⁻¹ᵁ (U : Scheme.Opens _)),
+        RingHom.Locally (RingHom.IsStandardSmoothOfRelativeDimension (genus C))
+          ((Pic0SchemeEt C).hom.appLE (U : Scheme.Opens _) (V : Scheme.Opens _) e).hom :=
+  HasRingHomProperty.iff_appLE
+
+/-- **Leaf B on an affine cover of `Pic⁰` alone.** The base `Spec k` is affine, so
+`HasRingHomProperty.iff_of_iSup_eq_top` collapses the pair quantifier of
+`leafB_iff_appLE` to a single family: it is enough to test the charts of any affine open
+cover of `Pic⁰_{C/k}`, each against the whole base.
+
+This is the form the remaining work has: exhibit an affine cover of `Pic⁰` and the
+`Ω`-rank count on each member. It is an `iff`, so it is neither a weakening nor a
+strengthening of leaf B. -/
+theorem leafB_iff_affineCover {ι : Type*}
+    (V : ι → ((Pic0SchemeEt C).left : Scheme.{u}).affineOpens)
+    (hV : ⨆ i, ((V i : ((Pic0SchemeEt C).left : Scheme.{u}).affineOpens) :
+      Scheme.Opens ((Pic0SchemeEt C).left : Scheme.{u})) = ⊤) :
+    SmoothOfRelativeDimension (genus C) (Pic0SchemeEt C).hom ↔
+      ∀ i, RingHom.Locally (RingHom.IsStandardSmoothOfRelativeDimension (genus C))
+        ((Pic0SchemeEt C).hom.appLE ⊤ (V i).1 le_top).hom :=
+  HasRingHomProperty.iff_of_iSup_eq_top V hV
+
+end Scheme.Pic0Et
+
+/-! ## §3. Homogeneity gives the cover for free and the numeral not at all
+
+The measured negative that keeps a lane from spending a round on translation
+transport. -/
+
+/-- **A translation composed with the structure morphism is the structure morphism.**
+
+For a group object `G` over `S`, `CategoryTheory.GrpObj.pointTranslationIso G x y` is an
+automorphism of `G.left` *over* `S`, so `Over.w` gives
+`(pointTranslationIso G x y).hom ≫ G.hom = G.hom`.
+
+Stated here in the form that matters for a relative-dimension argument: the two
+propositions
+
+  `SmoothOfRelativeDimension n ((pointTranslationIso G x y).hom ≫ G.hom)`
+  `SmoothOfRelativeDimension n G.hom`
+
+are **equal**, not merely interderivable. So "transport the class along a translation"
+asserts nothing new, for any morphism property whatsoever.
+
+WHY THIS IS WORTH A NAME. The sibling project
+(`Algebraic-Jacobian-Challenge-Rebuild`, `AbelianVariety/RelativeDimensionLocal.lean`)
+provides the transport as `smoothOfRelativeDimension_pointTranslationIso`, whose
+hypothesis is `[SmoothOfRelativeDimension n d.J.hom]` — the very conclusion the
+covering criterion it feeds is trying to reach. As a `RespectsIso` convenience that is
+correct and useful; read as a step towards the relative-dimension leaf it is circular,
+because by this equality its hypothesis and conclusion are the same proposition. The
+homogeneity of a group scheme therefore contributes to the *covering* step (any
+translate of a chart is a chart) and contributes nothing to the *numeral*. -/
+theorem GrpObj.smoothOfRelativeDimension_pointTranslation_eq {S : Scheme.{u}}
+    (G : Over S) [CategoryTheory.GrpObj G] (n : ℕ) (x y : 𝟙_ (Over S) ⟶ G) :
+    SmoothOfRelativeDimension n
+        ((CategoryTheory.GrpObj.pointTranslationIso G x y).hom ≫ G.hom)
+      = SmoothOfRelativeDimension n G.hom := by
+  rw [CategoryTheory.GrpObj.pointTranslationIso_hom_comp]
+
+/-- The same statement one level down, for a chart inclusion: translating a chart does
+not change the composite it induces to the base. This is the covering half of §3 — the
+legs of a translated cover have literally the same structure map composites as the
+original — and it is why homogeneity is free there and empty at the numeral. -/
+theorem GrpObj.chart_comp_pointTranslation_eq {S : Scheme.{u}}
+    (G : Over S) [CategoryTheory.GrpObj G] {U : Scheme.{u}} (incl : U ⟶ G.left)
+    (x y : 𝟙_ (Over S) ⟶ G) :
+    (incl ≫ (CategoryTheory.GrpObj.pointTranslationIso G x y).hom) ≫ G.hom
+      = incl ≫ G.hom := by
+  rw [Category.assoc, CategoryTheory.GrpObj.pointTranslationIso_hom_comp]
+
+end AlgebraicGeometry

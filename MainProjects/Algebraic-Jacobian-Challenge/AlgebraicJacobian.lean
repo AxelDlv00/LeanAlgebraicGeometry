@@ -159,6 +159,10 @@ import AlgebraicJacobian.Picard.Pic0EtTangentSpace
 -- reductions of `Pic0Et.geometricallyReduced` / `Pic0Et.universallyClosed`, the two
 -- `Pic0Et` obligations of `picardJacobianWitness`. Rooted here for the same reason.
 import AlgebraicJacobian.Picard.Pic0EtStructure
+-- Headline leaf B in the etale formulation (run 0084 r2, ajc-p2): leaf B implies the
+-- reducedness obligation, so the headline's five are not independent; plus what leaf
+-- B's own residue is (an affine-chart Omega-rank count, not a tangent space).
+import AlgebraicJacobian.Picard.Pic0EtRelativeDimension
 import AlgebraicJacobian.Picard.AmbientPicNotProper
 import AlgebraicJacobian.Picard.GroupSchemeHomogeneity
 import AlgebraicJacobian.Picard.HomogeneityOrbitCollapse
