@@ -18,7 +18,7 @@ the repair.
 
 ## The defect, measured
 
-`IsChartLocusFibre` (`Pic0ChartUnivReduce.lean:152`) asks for a
+`IsChartLocusFibre` (`Pic0ChartUnivReduce.lean:166`) asks for a
 `ChartFibrePresented C (abelSigmaChart …) g` at every test — the datum for the *unrestricted*
 chart, with `W` a free structure field.  Nothing pins `W := chartLocus`, although the docstring
 there says the `W` field "is already discharged — it is `chartLocus`".  So the open `V` never
@@ -93,11 +93,15 @@ chart — and the assembly that consumes both.  Nothing here re-proves either si
   a route to an uninhabitable hypothesis, and the unmeasured-inhabitation risk that `ChartTyping`
   (`I-0779`) and `IsChartLocusFibre` carried does **not** apply here.  What that inhabitant also
   shows is that `IsChartUniv` at `V = ⊥` is free (`isChartUniv_bot`) — antecedent 1 carries no
-  content in isolation.  That is not a vacuity of the assembly below, because the coverage clause
-  is *refuted* at the same value (`not_coverageContainment_bot`): `⊥` is precisely where `hf` is
-  free and coverage is impossible.  Those two together are the non-vacuity check for the
-  `V`-coupled assembly, and they are what `necessity_of_restrictedChartFibre` was wrongly claimed
-  to be.  The obligation is the *coupling*, not either side.
+  content in isolation — while the coverage clause is *refuted* at that same value
+  (`not_coverageContainment_bot`), and at the other end `V = ⊤` the prices are swapped: coverage's
+  containment becomes free and this datum returns the unrestricted certificate.  So the obligation
+  is the *coupling*, and any `V` that works must be a proper intermediate open.
+* **What that does NOT establish, since a draft of this file claimed it did** (`I-1012`): the two
+  endpoints are **not** a non-vacuity check for the assembly below.  Two *bad* values of `V` are
+  two refutations; non-vacuity of the pair needs a `V` where both clauses hold.  Inhabitation of
+  the **pair** is still unmeasured at every `V`, and `necessity_of_restrictedChartFibre` is not
+  that check either.  Only `RestrictedChartFibre` *alone* is now known inhabited.
 * **The relation to the old form IS measured, and an earlier draft mispriced it.**  That draft
   said the transport `IsChartLocusFibre → RestrictedChartFibre` "needs the preimage `r ⁻¹ V`
   pushed forward along `W.ι`, which is real work and buys nothing".  Both halves were wrong

@@ -38,10 +38,15 @@ a free goal look like a missing lemma.  Recorded because the prose pricing outli
   unmeasured-inhabitation risk `Pic0ChartRestrictedFibre.lean` flagged against itself (and that
   `ChartTyping` and `IsChartLocusFibre` carried) is discharged for this class.
 * `isChartUniv_bot` — hence `IsChartUniv C π n rep m Z hdeg ⊥` holds with **no hypothesis**.
+* `isOpenImmersion_presheaf_restrictChart_bot` — the same construction for an **arbitrary** chart
+  map, which is what the `⊥` witness really rests on: a lane that gets `hf` at `⊥` has learned
+  nothing about its own chart.
 * `range_subset_range_top_ι`,
   `isOpenImmersion_presheaf_abelSigmaChart_of_restrictedChartFibre_top` and
-  `not_restrictedChartFibre_top_of_not_injective` — the opposite end of the interval; see the
-  table below.
+  `not_restrictedChartFibre_top_of_not_injective` — the opposite end of the interval.
+* `restrictedChartFibre_top_iff` — at `V = ⊤` the class is **equivalent** to
+  `IsChartLocusFibre`, which retires the latter as an independent obligation and supplies the
+  converse `Pic0ChartUnivReduce.lean:55` claims exists under a name nothing defines.
 
 ## The consequence, and it is a statement about the seam rather than about this file
 
@@ -68,14 +73,29 @@ avoid — the one `Pic0AtlasFromDivRep.lean:54`, `Pic0ChartPair.lean:14` and
 `Pic0ChartOpenImmersionCriterion.lean:214` assert to be false for the Abel chart.  So the
 restriction is not a formality that a lane could undo by taking `V` large.
 
-Hence: **no endpoint discharges the assembly, and any `V` that works is a proper intermediate
-open** (`not_restrictedChartFibre_top_of_not_injective` makes the `⊤` end an outright refutation,
-conditional on the `abel-noninj` fork).  That is what the chart locus is for, and it is why
-CHART-U(b)'s openness is a real obligation rather than bookkeeping.  The `V`-coupling is the whole
-burden; neither an `hf` lane nor a coverage lane can retreat to a convenient `V`.  This is the
-non-vacuity check for
-`Pic0ChartRestrictedFibre.lean`'s assembly that `necessity_of_restrictedChartFibre` was
-wrongly claimed to be (`I-0937`).
+Hence **no endpoint discharges the assembly**, and any `V` that works must be a proper
+intermediate open (`not_restrictedChartFibre_top_of_not_injective` makes the `⊤` end an outright
+refutation, conditional on the `abel-noninj` fork).  That is what the chart locus is for, and it
+is why CHART-U(b)'s openness is a real obligation rather than bookkeeping: neither an `hf` lane
+nor a coverage lane can retreat to a convenient `V`.
+
+**What this is NOT, and an earlier draft of this header claimed otherwise** (`I-1012`, filed by a
+fresh-context review of this file).  The two endpoints are **not** a non-vacuity check for the
+coupled assembly.  Non-vacuity of a pair `(huniv V, hcov V)` needs a `V` where both hold — or a
+refutation at every `V` — and two *bad* values of `V` supply neither.  The pair still has **no
+measured inhabitant at any `V`**, and nothing here excludes it being unsatisfiable everywhere.
+What *is* discharged is inhabitation of `RestrictedChartFibre` alone, at `⊥`, which is strictly
+weaker.  The sentence above ("any `V` that works must be a proper intermediate open") is a
+conditional and must not be read as an existence claim.  So `necessity_of_restrictedChartFibre`
+was not the assembly's non-vacuity check (`I-0937`), and neither is this file; the assembly's
+non-vacuity is **open**.
+
+A further limit the endpoints do not reach: at `V = ⊥` the *instance* form
+`pic0RepresentableBy_of_restrictedChartFibre` goes through with `huniv` supplied free by
+`restrictedChartFibre_bot`, leaving the `IsLocallySurjective` instance binder as the sole
+remaining antecedent.  `not_coverageContainment_bot` constrains the `hcov` *spelling* of coverage,
+not that instance binder — so it does not by itself rule out a `⊥`-based route through the
+instance version.
 
 **What is still NOT closed, stated plainly.**  `rep` remains a hypothesis with no producer, so
 `IsChartUniv` is not even statable without it; `hcov` at a useful `V` has no producer; and
@@ -152,6 +172,27 @@ theorem restrictedChartFibre_bot {D : Over (Spec (.of k))}
     RestrictedChartFibre C π n rep m Z hdeg ⊥ := by
   intro T g
   refine ⟨⟨⊥, isInitialOfIsEmpty.to _, ?_, ?_⟩⟩
+  · ext S x
+    have : IsEmpty (S.unop : Scheme.{u}) := x.base.hom.1.isEmpty
+    exact (pic0Sigma_obj_subsingleton_of_isEmpty (C := C) S.unop).elim _ _
+  · intro S v w _
+    have : IsEmpty S := v.base.hom.1.isEmpty
+    exact ⟨isInitialOfIsEmpty.to _, isInitialOfIsEmpty.hom_ext _ _,
+      isInitialOfIsEmpty.hom_ext _ _⟩
+
+variable (C) in
+/-- **The `⊥` construction never mentions the Abel chart** — it works for an arbitrary morphism of
+presheaves into the Σ-sheaf.
+
+Stated separately because it says what `restrictedChartFibre_bot` really rests on: nothing about
+divisors, the chart index, the twist, or `rep`.  Any chart family whatsoever is an open immersion
+of presheaves after restriction to `⊥`.  Read as a caution — a lane that obtains `hf` at `⊥` has
+learned nothing about its own chart. -/
+theorem isOpenImmersion_presheaf_restrictChart_bot {X : Scheme.{u}}
+    (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1) :
+    IsOpenImmersion.presheaf (restrictChart f (⊥ : X.Opens)) := by
+  refine isOpenImmersion_presheaf_of_chartFibrePresented _ fun T g => ?_
+  refine ⟨⊥, isInitialOfIsEmpty.to _, ?_, ?_⟩
   · ext S x
     have : IsEmpty (S.unop : Scheme.{u}) := x.base.hom.1.isEmpty
     exact (pic0Sigma_obj_subsingleton_of_isEmpty (C := C) S.unop).elim _ _
@@ -257,6 +298,48 @@ theorem isOpenImmersion_presheaf_abelSigmaChart_of_restrictedChartFibre_top
     IsOpenImmersion.presheaf (abelSigmaChart C π n rep m Z hdeg) := by
   refine isOpenImmersion_presheaf_of_chartFibrePresented _ fun T g => ?_
   refine ⟨(h T g).some.W, (h T g).some.r ≫ (⊤ : D.left.Opens).ι, ?_, ?_⟩
+  · rw [yoneda.map_comp, Category.assoc]
+    exact (h T g).some.sq
+  · intro S v w hvw
+    obtain ⟨u, hu1, hu2⟩ := (h T g).some.exists_factor S
+      (IsOpenImmersion.lift (⊤ : D.left.Opens).ι v (range_subset_range_top_ι v)) w
+      (by rw [restrictChart_app_apply, IsOpenImmersion.lift_fac]; exact hvw)
+    refine ⟨u, ?_, hu2⟩
+    rw [← Category.assoc, hu1, IsOpenImmersion.lift_fac]
+
+variable (C π n) in
+/-- **At `V = ⊤` the restricted class is EQUIVALENT to `IsChartLocusFibre`** — not merely stronger
+than the certificate.
+
+Backward is `restrictedChartFibre_of_isChartLocusFibre` with its containment `hr` supplied free by
+`range_subset_range_top_ι`.  Forward is direct — keep the datum's `W` and postcompose `r` with
+`(⊤).ι`, the same two-line transport as
+`isOpenImmersion_presheaf_abelSigmaChart_of_restrictedChartFibre_top`; no relative-representability
+round trip is needed, and in particular the pullback-vs-open-of-`T` mismatch that
+`pointwise_of_chartsCoverLocally` documents does not arise here.
+
+**What this buys.**  It retires `IsChartLocusFibre` as an independent obligation: it is exactly the
+`V = ⊤` instance of the restricted class, so a lane holding either holds the other, and the
+`⊤`-refutation `not_restrictedChartFibre_top_of_not_injective` transfers to it verbatim.  The two
+classes were being tracked apart.
+
+**It also supplies a declaration the tree claims already exists and does not.**
+`Pic0ChartUnivReduce.lean:55` advertises "`isChartLocusFibre_of_isChartUniv` is the **converse**",
+and that name occurs nowhere in either project — the docstring line is its only occurrence.
+This theorem is the converse it describes, in the sharp form: not `IsChartUniv V →
+IsChartLocusFibre` for arbitrary `V` (which is false in the direction that matters, since
+`isChartUniv_bot` is free), but an equivalence at `V = ⊤`. -/
+theorem restrictedChartFibre_top_iff {D : Over (Spec (.of k))}
+    (rep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ)) :
+    RestrictedChartFibre C π n rep m Z hdeg ⊤
+      ↔ IsChartLocusFibre C π n rep m Z hdeg := by
+  refine ⟨fun h T g => ?_, fun h =>
+    restrictedChartFibre_of_isChartLocusFibre rep m Z hdeg ⊤ h
+      fun _ _ => range_subset_range_top_ι _⟩
+  refine ⟨⟨(h T g).some.W, (h T g).some.r ≫ (⊤ : D.left.Opens).ι, ?_, ?_⟩⟩
   · rw [yoneda.map_comp, Category.assoc]
     exact (h T g).some.sq
   · intro S v w hvw
