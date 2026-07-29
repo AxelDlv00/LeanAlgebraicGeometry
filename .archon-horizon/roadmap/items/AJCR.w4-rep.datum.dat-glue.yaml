@@ -3,39 +3,10 @@ title: 'DAT-glue: the 01JJ RepresentableBy assembly over $k^\prime$ (slice trick
   with the locally-of-finite-type certificate'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "AUDITED 2026-07-29 (run 0082, review-ajcr): THIS ROW'S PRICE IS CORRECT,\
-  \ and it is the only one of\nthe four I audited that was. Recorded so nobody re-audits\
-  \ it, and with two additions.\n\nTHE ROW SAID: 'The 01JJ slice assembly is mechanically\
-  \ prepared at the separably closed stage. The\nremaining DAT-G0 work is the filtered-colimit\
-  \ compatibility of pic0 and descent of the representing\ndatum to a finite separable\
-  \ stage; defer proof until divRep/C9/B6.' Verified accurate, declaration by\ndeclaration:\n\
-  \ * the assembly IS mechanically prepared and the arrow exists -- PicRepDatum.toJacobianData\n\
-  \   (Picard/JacobianDataFromPicRepDatum.lean:~90) carries J/rep/lft across verbatim,\
-  \ and\n   toJacobianDataOfAbelLifts (:137) is the same with quasi-compactness in\
-  \ the shape the classical\n   argument delivers it. That file's own 'What this does\
-  \ NOT do' section states plainly that it\n   produces no PicRepDatum;\n * the residue\
-  \ IS the filtered-colimit compatibility, and its avatar-less core is named and present:\n\
-  \   Pic0PreservesFilteredBaseColimit (Picard/PicRepColimitCompat.lean);\n * 'defer\
-  \ until divRep/C9/B6' is right -- it consumes them.\n\nADDITION 1, the shape of\
-  \ the remaining debt, which is now visible in ONE signature and is worth\nquoting\
-  \ to whoever picks this up: toJacobianDataOfAbelLifts's two hypotheses ARE the two\
-  \ remaining\nDAT-J inputs -- a PicRepDatum k k C, and a per-point residue-field\
-  \ lift of an Abel morphism out of\nDivScheme g. Quasi-compactness comes from the\
-  \ Abel IMAGE, never from the construction, because\nJacobianData's atlas is infinite\
-  \ (critical-path 7.5). So this row does not owe a finiteness argument.\n\nADDITION\
-  \ 2, and it is a caveat on the whole seam rather than on this row: the atlas being\
-  \ infinite is\nwhy JacobianData.ofChartsOfCompactSpace (Picard/JacobianDataCharts.lean:209)\
-  \ exists alongside\nJacobianData.ofCharts (:182). ofCharts needs [Finite iota];\
-  \ ofChartsOfCompactSpace takes\nCompactSpace of the glued object directly. A lane\
-  \ assembling the atlas must know which of the two it\nis heading for BEFORE choosing\
-  \ the index type, because the finite route is not available for the\nclass-indexed\
-  \ atlas.\n\nNO HYPOTHESIS GAP AT THE FROZEN SIGNATURE, checked because it would\
-  \ have been a real defect:\nPic0SigmaSheaf introduces [GeometricallyReduced C.hom]\
-  \ while Challenge.lean's frozen Jacobian carries\nonly IsProper / SmoothOfRelativeDimension\
-  \ 1 / GeometricallyIrreducible. Geometric reducedness is\nDERIVED from smoothness\
-  \ of relative dimension one by global instances in the import closure, and\nJacobianDataCharts.lean\
-  \ records it with an explicit inferInstance example after its Charts section. So\n\
-  every declaration on this route elaborates under the frozen bundle alone."
+summary: The 01JJ slice assembly is mechanically prepared at the separably closed
+  stage. The remaining DAT-G0 work is the filtered-colimit compatibility of pic0 and
+  descent of the representing datum to a finite separable stage; defer proof until
+  divRep/C9/B6.
 status: pending
 kind: proof
 priority: normal
@@ -49,5 +20,5 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:09.784174+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-29T11:25:54.667909+00:00'
+  updated_at: '2026-07-29T03:02:40.270292+00:00'
   milestone: AJCR.w4-rep
