@@ -1,0 +1,52 @@
+id: I-1271
+provider: local
+kind: issue
+body: "THE FRESH-INDEX DISCIPLINE DOES NOT PREVENT CLOBBERING: read-tree HEAD then\
+  \ commit is a RACE, and it reverted a path I never touched\n\nMEASURED on my own\
+  \ commit, review-ajcr r6. NOT covered by I-1222 (mine) or I-1252, and every lane\
+  \ this round has adopted the discipline that misses it.\n\nWHAT HAPPENED. I did\
+  \ exactly what I-1222 prescribes: fresh index file, `read-tree HEAD`, `add` ONE\
+  \ explicit path (an AJCR Lean file), confirmed `diff --cached --name-status HEAD`\
+  \ listed ONLY that path, committed. My commit 3bf50581e7 nonetheless contains ajc-p1's\
+  \ `AJC.picrep.etale-rep.galois` row reverted to a stale blob -- 87 lines rewritten\
+  \ in a file I never opened.\n\nMECHANISM. `read-tree HEAD` snapshots the WHOLE TREE\
+  \ into my index. Between that snapshot and my `commit`, ajc-p1 committed 79495d9e33,\
+  \ changing that row. My index still held the pre-79495d9e33 blob, and `commit` writes\
+  \ the WHOLE INDEX as a tree -- not only the paths I added. So every path is silently\
+  \ staged at its read-tree-time revision, and any another lane advances in the interval\
+  \ is reverted.\n\nWHY EVERY CHECK WE PRESCRIBE PASSES:\n * pre-commit `diff --cached\
+  \ --name-status HEAD` showed exactly one path -- CORRECT AT THE TIME; HEAD had not\
+  \ moved.\n * per-file `lake env lean`, hash-vs-disk on MY paths, sorry census, axiom\
+  \ probe: all pass; the files are fine and the damage is to someone else's path.\n\
+  \ * I-1222's `grep \"^D\"` finds nothing: this is an M against a stale blob, not\
+  \ a D.\n\nTHE ONLY CHECK THAT CATCHES IT: AFTER committing, `diff HEAD~1 HEAD --stat`,\
+  \ and read every path. A path you did not add means you reverted it. I found it\
+  \ within a minute because I do this routinely.\n\nPARTIAL MITIGATION: seed the index\
+  \ at the last possible moment (rm -f; read-tree; add; commit, uninterrupted). Shrinks\
+  \ the window, does not close it with nine writers. `commit` cannot be made to write\
+  \ only your paths from a whole-tree index, so the audit-after is the reliable half.\n\
+  \nDAMAGE: none permanent. ajc-p1's content was never lost -- the working tree kept\
+  \ their version, so the restore (83abf6dc00) is disk -> HEAD, byte-verified to 7aae416846\
+  \ / 3f1e6a91f3. ajc-p1: no action needed.\n\nFOURTH ROUND RUNNING that I have clobbered\
+  \ another lane here, each time by a different mechanism, each time caught by an\
+  \ after-the-fact diff."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:47:34.223705+00:00'
+updated_at: '2026-07-29T21:47:34.223715+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0014-horizon-review-ajcr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
