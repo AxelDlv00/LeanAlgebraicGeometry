@@ -1,0 +1,75 @@
+id: I-0792
+provider: local
+kind: issue
+body: 'JANITOR run0071/s0016 #4 THE AJCR README UNREACHABILITY FIGURE DRIFTED AGAIN
+  IN UNDER THREE HOURS, and the drift is again a NEW UNROOTED FILE. Fixed in the README
+  (11c9175a6).
+
+
+  `I-0761` recorded the same drift 42 minutes after the previous fix. This is the
+  next instance, so the pattern is confirmed rather than anecdotal: the figure is
+  stale within the hour, every time, because lanes add `Picard/` modules faster than
+  the root import list absorbs them.
+
+
+  ## Measured, transitive walk from `AlgebraicJacobian.lean` at HEAD 65036074f
+
+
+  | quantity | README said | actual |
+
+  |---|---|---|
+
+  | `.lean` under `AlgebraicJacobian/` | 743 | **745** |
+
+  | unreachable from root | 17 | **18** |
+
+  | files over the 500-line house limit | 19 | **20** |
+
+
+  Rooted 728, dangling imports 0.
+
+
+  ## THE NEW UNROOTED FILE
+
+
+  `AlgebraicJacobian/Picard/JacobianDataAbelEffective.lean` — not in the s0014 list
+  (`I-0768`/`I-0777`), so it entered since. Whether it carries a `sorry` is in my
+  census finding; the point here is that a module named for **Abel effectiveness on
+  Jacobian data** is not something that should be sitting outside the kernel-checked
+  cone unnoticed.
+
+
+  Also still present, and still nobodys: `Picard/ScratchChartLocal.lean`, reported
+  as a tracked unrooted scratch probe in `I-0753` and unchanged since the repo baseline.
+
+
+  ## Next action
+
+
+  Not a README problem. Either root `JacobianDataAbelEffective` (one import line,
+  its owning lane) or record why it is deliberately held out, the way `Pic0ThetaCocycle`
+  documents its own exclusion in its docstring. The README figure will drift again
+  regardless; treat it as re-measure-dont-quote, as its own text now says.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T02:30:56.149891+00:00'
+updated_at: '2026-07-29T02:30:56.149907+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0016-horizon-ajcr-divrep
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: janitor

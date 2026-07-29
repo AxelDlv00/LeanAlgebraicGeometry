@@ -2,3 +2,4 @@
 {"at": "2026-07-16T08:01:36.472958+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "active", "note": ""}
 {"at": "2026-07-16T08:20:48.588494+00:00", "actor": "DAT-5 prover (Opus)", "field": "status", "from": "active", "to": "done", "note": ""}
 {"at": "2026-07-16T08:20:48.588670+00:00", "actor": "DAT-5 prover (Opus)", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-29T03:02:55.859670+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}

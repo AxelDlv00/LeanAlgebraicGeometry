@@ -49,8 +49,9 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-27T14:47:52.702601+00:00'
+  updated_at: '2026-07-29T02:59:35.878647+00:00'
   owner: ajc-gate
   pinned_commits:
   - 02ae27824
   - 744a74bf2
+  milestone: AJC.picrep

@@ -6,7 +6,8 @@ decl: AlgebraicGeometry.homomorphism
 file: AlgebraicJacobian/Picard/TangentSpaceIdentitySection.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.homomorphism
 type: lean
-updated: '2026-07-29T07:30:32'
+updated: '2026-07-29T11:05:49'
 ---

@@ -6,3 +6,4 @@
 {"at": "2026-07-28T03:01:10.436850+00:00", "actor": "human", "field": "status", "from": "blocked", "to": "active", "note": ""}
 {"at": "2026-07-28T03:01:10.437102+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "summary, title, priority, owner updated"}
 {"at": "2026-07-28T06:04:16.158456+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "done", "note": "synced from task ajc-etale-pic"}
+{"at": "2026-07-29T02:59:34.657250+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}

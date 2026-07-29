@@ -5,11 +5,11 @@ content_type: definition
 created: '2026-07-16T21:14:29'
 generated: blueprint
 label: def:basis_cov_system
-lean_status: lean_ok
+lean_status: linked
 order: 315
 title: Cover system on a basis
 type: tex
-updated: '2026-07-27T15:50:36'
+updated: '2026-07-29T11:05:43'
 ---
 \textit{Project-bespoke encoding of the hypotheses of Stacks 01EO.}
   A \emph{cover system on a basis} for a scheme \(X\) is a record with five fields. A

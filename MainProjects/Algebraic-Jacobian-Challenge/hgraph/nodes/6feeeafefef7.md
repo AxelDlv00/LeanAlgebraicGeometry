@@ -6,8 +6,9 @@ decl: AlgebraicGeometry.morphism,
 file: AlgebraicJacobian/Picard/TangentSpaceIdentitySection.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.morphism,
 type: lean
-updated: '2026-07-29T07:30:32'
+updated: '2026-07-29T11:05:50'
 ---
 structure morphism, the stalk map of `e` at the closed point retracts the

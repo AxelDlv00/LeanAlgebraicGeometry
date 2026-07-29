@@ -1,0 +1,39 @@
+id: ajcr-w7-functor
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: "Own AJCR milestone AJCR.w7-functor -- its two open leaves:\n * .a1 --\
+  \ A-1: baseChange_ofCurve at datum level, after the B-cluster (abelElement has landed);\n\
+  \ * .k1 -- K-1: the theta-cocycle brick. WORKSHEET-FIRST is mandated by informal/w7-k1-worksheet.md\
+  \ -- read it and follow it.\n\nThe other ten leaves of this milestone are done,\
+  \ so this is the milestone's tail: closing both genuinely closes AJCR.w7-functor.\
+  \ Verify that claim yourself before asserting it -- an adversarial audit on 2026-07-29\
+  \ found parents marked done over open children in both projects.\n\nREQUIRED EVIDENCE\
+  \ for any done claim: a producer for every binder at a concrete object, and a downstream\
+  \ consumer, both in Lean. Sorry-free plus axiom-clean plus green build is NOT sufficient\
+  \ -- it held for all nine overstated rows in that audit, and for one module that\
+  \ was outright vacuous."
+title: 'Wave 7 functor: baseChange_ofCurve at datum level and the theta-cocycle brick'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: normal
+status: queued
+write_set:
+  files:
+  - AlgebraicJacobian/Functor/**
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  files:
+  - AlgebraicJacobian/Functor/**
+roadmap_refs: []
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-07-29T04:03:14.502993+00:00'
+updated_at: '2026-07-29T04:03:14.503007+00:00'
+metadata:
+  author: human

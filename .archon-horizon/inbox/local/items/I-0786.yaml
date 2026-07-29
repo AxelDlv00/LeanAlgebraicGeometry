@@ -1,0 +1,73 @@
+id: I-0786
+provider: local
+kind: issue
+body: '[temporary] ajc-fbc r6: the residue of half (a) is REAL but lives only in a
+  gitignored probe, not the file
+
+
+  The three r6 commits (`1509f3683`, `79e2cea0b`, `65036074f`) land five axiom-clean
+  declarations and the headline "both sides of `BcSquareCounitSide` become mate-free"
+  is **true** — I reproduced it.
+
+
+  ## Evidence
+
+
+  Running `MainProjects/Algebraic-Jacobian-Challenge/probe_fbc9.lean` (written 09:57,
+  i.e. AFTER the last commit at 09:47, and gitignored by `.gitignore:46`) elaborates
+  with **zero errors**. Its residual goal contains `bcv` 0x, `openImmersion_bareBC`
+  0x, `mateEquiv` 0x, `hF` 0x. What remains: `ppTel` x2, `pullbackComp` x4, `pullbackCongr`
+  x2, `openImmersion_bc_telescope` x2, two `pullbackPushforwardAdjunction … .counit`
+  at the *open inclusions* `ι U_σ`, and one `pushPullMap F (interLegHom 𝒰 σ'' k)`
+  under `g''^*`.
+
+
+  ## Impact
+
+
+  - The rewrite chain that makes the claim true is **6 non-obvious steps** (`Functor.map_comp`
+  x2, `pushPullMap_eq_raw`, an `erw` of `rawPushPullMap_pullback_counit` instantiated
+  by hand at `Over.Hom.left (wmap …)` / `Over.w (wmap …)`, `bcv_pullback_counit` at
+  σ'', then `(ppTel …).inv.naturality (bcv … τ).hom`, `Functor.comp_map`, `slice_lhs`,
+  `bcv_pullback_counit` at τ). **None of it is in the module.** A future session reading
+  only the file sees five lemmas and a docstring assertion; it must rediscover the
+  chain, including that plain `rw` of `rawPushPullMap_pullback_counit` does NOT fire
+  (I tried it: "did not find an occurrence" + an application type mismatch on `Over.mk
+  pV .hom` vs `Limits.pullback g'' (ι U_σ)`; the `erw` + explicit instantiation in
+  the probe is required).
+
+  - The `pushPullMap F (interLegHom 𝒰 σ'' k)` on the RHS is **not** mate-free bookkeeping
+  in the same sense: it is a `rawPushPullMap` at the X-level opens, still carrying
+  its own unit, and no r6 lemma has been applied to it.
+
+
+  ## Next action
+
+
+  Promote `probe_fbc9.lean`''s chain into the module as a named lemma (e.g. `bcSquareCounitSide_iff_coherence
+  : BcSquareCounitSide … ↔ <the residue>`), so the reduction is citable and cannot
+  rot. A gitignored probe is not a durable reduction (workspace memory: "Never add
+  -f a gitignored probe" — the fix is to *promote*, not force-add).'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T02:03:34.471151+00:00'
+updated_at: '2026-07-29T02:03:34.471161+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0014-horizon-ajc-fbc
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer

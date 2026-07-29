@@ -1,0 +1,67 @@
+id: I-0791
+provider: local
+kind: issue
+body: 'JANITOR run0071/s0016 #3 ALL THREE ROADMAP MISMATCHES ARE DELIBERATE AND DOCUMENTED
+  IN THE ROWS THEMSELVES: recommendation is LEAVE ALL THREE, zero edits.
+
+
+  Task 2 of my brief, reported not fixed. I read each rows own `summary` in `.archon-horizon/roadmap/items/`
+  rather than re-deriving, per `I-0556`.
+
+
+  ## The three, with the recommendation
+
+
+  - **`AJC.jacobian.assembly` pending, only child `.reachability` done.** LEAVE. The
+  rows summary says the parent is the assembly step, not a container, and history
+  shows an auto-flip to `done` already reverted once.
+
+  - **`AJC.picrep` done with open child `.tensor`.** LEAVE. Summary tail is explicit:
+  `.tensor` is a live input to Hilbert-function base change and is the only evidence
+  the parent is premature; the route decision is with the human as `I-0605`, and it
+  ends "THIS WARNING IS EXPECTED AND SHOULD BE LEFT ALONE".
+
+  - **`AJC.rr` done with open child `.extuniform`.** LEAVE. `I-0736` (info, filed
+  by the `ajc-rr` lane) records this as deliberate: the six original children are
+  genuinely done and four lanes import that substrate, so flipping the parent would
+  falsely signal a regression. The child was added at r7 precisely to make cluster-P
+  item 2 visible. s0014 recommended flipping it (`I-0767`) and then retracted itself
+  (`I-0770`); I am not re-opening that.
+
+
+  ## The active-count warning (21 rows, cap 8)
+
+
+  Not re-triaged. Standing answer is `I-0509` as amended by s0014s `I-0773`: with
+  only 2 lanes live (ajc-fbc, ajcr-divrep), 4 rows are held live and **17 are deferred
+  behind handed-back lanes**, none orphaned. The honest word is deferred, not active,
+  but changing 17 statuses is a fleet-level decision and not a janitors call.
+
+
+  ## Note for the human
+
+
+  The recurring cause of two of the three is the task/roadmap status coupling of `I-0386`
+  (`task set --status done` rewrites that tasks roadmap rows). `I-0543` and `I-0605`
+  carry that to the human already; nothing new from me.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T02:27:21.685258+00:00'
+updated_at: '2026-07-29T02:27:21.685271+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0016-horizon-ajcr-divrep
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: janitor

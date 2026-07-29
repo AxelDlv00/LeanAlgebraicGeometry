@@ -49,6 +49,7 @@ import AlgebraicJacobian.Cohomology.PullbackQuasicoherent
 -- Target-local roadmap nodes preserved across the merge (unconditional Rⁱf_*
 -- packaging + Čech flat base change, Stacks 02KH) — see file header.
 import AlgebraicJacobian.Cohomology.CechHigherDirectImageUnconditional
+import AlgebraicJacobian.Cohomology.CechTwistedCoherenceReduction
 import AlgebraicJacobian.Genus
 import AlgebraicJacobian.RigidityLemma
 -- Smooth ⟹ geometrically reduced (mathlib-general, upstreaming candidate). Supplies

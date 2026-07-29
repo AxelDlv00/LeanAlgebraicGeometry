@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechNerve_drop_δ_sigma
 type: lean
-updated: '2026-07-29T04:25:58'
+updated: '2026-07-29T11:05:39'
 ---
 theorem cechNerve_drop_δ_sigma (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules) (p : ℕ)
     (k : Fin (p + 2)) (σ' : Fin (p + 2) → 𝒰.I₀) :
@@ -40,18 +40,3 @@ theorem cechNerve_drop_δ_sigma (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.M
       Pi.π (fun τ : Fin (p + 2) → 𝒰.I₀ =>
         pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 τ)))) σ')
       (cechNerve_drop_δ 𝒰 F k).symm)
-
-/-- **The base-changed nerve is the nerve of the base-changed data** (Stacks 02KG, the
-mechanical half). Applying `(g')^*` (at the `X`-level) to the dropped Čech nerve of
-`(𝒰, F)` yields the dropped Čech nerve of the base-changed data `(𝒰', (g')^* F)`, where
-`𝒰' = (openCoverOfLeft 𝒰 f g).pushforwardIso h.isoPullback.symm.hom` is the base change of
-`𝒰` along `g'`:
-```
-  g'^* ∘ drop(nerve 𝒰 F)  ≅  drop(nerve 𝒰' (g'^* F)).
-```
-The geometric backbone `coverCechNerve` of `𝒰` base-changes to that of `𝒰'`: the fibre
-powers `U_{i₀} ×_X ⋯ ×_X U_{iₚ}` commute with the base change `g'` (pullback preserves fibre
-products), so the preimages `(g')⁻¹(U_{i₀…iₚ})` are exactly the corresponding intersections
-of `𝒰'`. The pullback then commutes with the push–pull functor `pushPullFunctor` termwise —
-itself a Beck–Chevalley identification `g'^* (p_* p^* F) ≅ p'_* p'^* (g'^* F)` for the
-restricted cartesian square — and the identifications are compatible with the cosimplicial

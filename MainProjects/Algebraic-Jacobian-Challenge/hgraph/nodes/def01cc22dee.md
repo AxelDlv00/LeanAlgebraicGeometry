@@ -5,11 +5,11 @@ content_type: lemma
 created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:section_cech_complex_mapop_iso
-lean_status: lean_ok
+lean_status: linked
 order: 208
 title: Opposite-transport identification of the section {\v C}ech complex
 type: tex
-updated: '2026-07-27T15:50:36'
+updated: '2026-07-29T11:05:43'
 ---
 With the notation above, composing the opposite-transport iso
   \(\operatorname{homCechComplexMapOpIso}\) of

@@ -6,7 +6,8 @@ decl: AlgebraicGeometry.Scheme.fills
 file: AlgebraicJacobian/Cohomology/MayerVietorisCore.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.fills
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-29T11:05:49'
 ---

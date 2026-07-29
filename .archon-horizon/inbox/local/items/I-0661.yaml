@@ -28,13 +28,13 @@ body: "AN AXIOM-PROBE CONTROL CAN BE INVALIDATED BY A STALE OLEAN — and then t
   \ so a sibling lane's lake build cannot sweep your inputs mid-probe."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T17:36:39.902495+00:00'
-updated_at: '2026-07-28T17:44:07.968919+00:00'
+updated_at: '2026-07-29T02:25:43.737032+00:00'
 metadata:
   provenance:
     run: '0072'

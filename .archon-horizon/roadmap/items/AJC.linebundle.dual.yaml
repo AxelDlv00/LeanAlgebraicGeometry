@@ -30,3 +30,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.linebundle
+  updated_at: '2026-07-29T02:58:34.862973+00:00'
+  milestone: AJC.picrep

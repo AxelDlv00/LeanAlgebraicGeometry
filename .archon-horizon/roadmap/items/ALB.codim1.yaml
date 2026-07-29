@@ -27,4 +27,5 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:57.820809+00:00'
-  updated_at: '2026-07-23T16:01:56.867882+00:00'
+  updated_at: '2026-07-29T03:04:32.700007+00:00'
+  milestone: ALB.albanese-legacy

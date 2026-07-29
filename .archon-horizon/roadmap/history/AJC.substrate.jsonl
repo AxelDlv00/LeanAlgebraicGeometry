@@ -1,3 +1,4 @@
 {"at": "2026-07-01T10:06:48.953585+00:00", "actor": "human", "field": "created", "from": "", "to": "done", "note": "opened"}
 {"at": "2026-07-23T13:45:27.945266+00:00", "actor": "horizon", "field": "nested", "from": "", "to": "", "note": "parent=AJC.jacobian"}
 {"at": "2026-07-24T11:40:52.288312+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, title updated"}
+{"at": "2026-07-29T02:59:54.352066+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}

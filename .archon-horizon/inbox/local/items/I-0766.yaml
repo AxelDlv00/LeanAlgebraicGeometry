@@ -26,13 +26,13 @@ body: 'JANITOR run0071/s0014 #2 ROADMAP MISMATCHES: 2 of 3 ARE EXPECTED, 1 IS A 
   (c) See next item -- AJC.rr is a genuine wrong status.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T01:13:06.530476+00:00'
-updated_at: '2026-07-29T01:13:06.530488+00:00'
+updated_at: '2026-07-29T02:30:19.210346+00:00'
 metadata:
   provenance:
     run: '0071'

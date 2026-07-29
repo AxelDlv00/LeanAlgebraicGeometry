@@ -35,3 +35,5 @@ metadata:
     run: '0005'
     session: 0005-ground
     role: ground
+  updated_at: '2026-07-29T03:05:00.803584+00:00'
+  milestone: PIC.idcomp-legacy

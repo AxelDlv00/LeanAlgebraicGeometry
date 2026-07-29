@@ -5,11 +5,11 @@ content_type: lemma
 created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:isLocalizedModule_of_span_cover
-lean_status: lean_ok
+lean_status: linked
 order: 295
 title: \(\operatorname{IsLocalizedModule}\) is local on a finite spanning cover
 type: tex
-updated: '2026-07-27T15:50:36'
+updated: '2026-07-29T11:05:43'
 ---
 Let \(R\) be a commutative ring, let \(M\) and \(N\) be \(R\)-modules, let
   \(g : M \to N\) be an \(R\)-linear map, let \(f \in R\), and let

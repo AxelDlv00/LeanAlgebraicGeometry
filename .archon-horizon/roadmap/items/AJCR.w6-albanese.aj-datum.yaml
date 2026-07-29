@@ -42,6 +42,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w6-albanese
   owner: ajcr-w4-rep-free
-  updated_at: '2026-07-25T16:19:50.492732+00:00'
+  updated_at: '2026-07-29T03:03:47.422918+00:00'
   pinned_commits:
   - 7e5e268a6
+  milestone: AJCR.w6-albanese

@@ -1,0 +1,56 @@
+id: ajc-picrep-apex
+project: Algebraic-Jacobian-Challenge
+objective: 'THE PROJECT''S CENTRAL OPEN OBLIGATION. AlgebraicJacobian/Picard/FGAPicRepresentability.lean:339-347
+  is a bare `sorry`, and line 366 declares instHasPicSchemeEt as an UNCONDITIONAL
+  global instance on top of it, so the sorry leaks by synthesis into every consumer.
+  An adversarial 3-lens audit (2026-07-29) REFUTED the roadmap claim that this was
+  assembled: the old target instHasPicScheme was DELETED, not discharged, and zero
+  Lean lines of the Milne-Kollar assembly exist.
+
+
+  DELIVERABLE 1 (the blocker behind the blocker): both named engines are real code
+  but gate on classes with ZERO PRODUCERS anywhere in the tree -- FiberH1Vanishing
+  and OrbitsInAffineOpen. GaloisDescent/SemilinearAlgebras.lean:171 and Picard/FiniteGaloisQuotientAffine.lean:473
+  therefore cannot fire at any object. Either construct a producer at a concrete curve
+  (P1 over a field is the workspace''s standard witness) or prove the class is unnecessary
+  and restate the engine without it. Until one of these happens the whole Milne-Kollar
+  route is inert and no amount of downstream work helps.
+
+
+  DELIVERABLE 2: close AJC.picrep.tensor (pullback-tensor and fibre base change),
+  the one remaining open child of AJC.picrep.
+
+
+  DISCIPLINE, from the audit: do NOT set AJC.picrep or AJC.picrep.assembly to done
+  while :347 carries a sorry -- both are currently done and both are wrong. Sorry-free
+  + axiom-clean + green build is NOT evidence of content; it was true of every overstated
+  row. Exhibit a PRODUCER for each binder at a concrete object and a DOWNSTREAM CONSUMER,
+  in Lean. AlgebraicJacobian/RiemannRoch/Ledger/NonVacuity.lean:60-69 is the pattern
+  that works.'
+title: 'Picard representability APEX: discharge the central sorry, or prove its engines
+  can fire'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge
+priority: normal
+status: queued
+write_set:
+  files:
+  - AlgebraicJacobian/Picard/**
+  projects:
+  - Algebraic-Jacobian-Challenge
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+  files:
+  - AlgebraicJacobian/Picard/**
+roadmap_refs: []
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-07-29T03:59:26.414049+00:00'
+updated_at: '2026-07-29T03:59:26.414063+00:00'
+metadata:
+  author: human

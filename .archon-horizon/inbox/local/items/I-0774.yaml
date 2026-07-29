@@ -37,13 +37,13 @@ body: 'JANITOR run0071/s0014 #9 TWO MORE ARCHIVED (total 6), both with their pre
   all 7 human-authored items.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T01:22:42.937130+00:00'
-updated_at: '2026-07-29T01:22:42.937142+00:00'
+updated_at: '2026-07-29T02:26:45.236057+00:00'
 metadata:
   provenance:
     run: '0071'

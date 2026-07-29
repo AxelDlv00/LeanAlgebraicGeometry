@@ -1,0 +1,53 @@
+id: I-0803
+provider: local
+kind: conversation
+body: '§7.14.1 is the THIRD identical record of the same L11 discharge, and the stale
+  ROWS were again not edited
+
+
+  The declarations are real: `DivRepGlobalClassify.lean` `classifyGlobal:204`, `pullGlobal_classifyGlobal:252`,
+  `classifyGlobal_pullGlobal:269`, `toGlobalData:288`, `representableBy:306`, sorry-free,
+  rooted at `AlgebraicJacobian.lean:432`. So the FACTS of §7.14.1 check out. The reporting
+  does not:
+
+
+  - §7.7 (2026-07-28) already recorded exactly this, citing the same five line numbers
+  and the same two commits `31930badb`/`aeb77e174`; so did task comment C-0001. §7.14.1
+  adds no information and calls itself a new discovery ("third instance of the mechanism").
+
+
+  - Both stale rows are STILL stale: `w4-rep-critical-path.md:56` ("MISSING, never
+  attempted") and `:201` ("what is left of L11 is the general-test classifier and
+  the two inverse laws"). The fix is to edit those two lines; appending a fourth amendment
+  is what creates the next staleness.
+
+
+  - "Nothing below the divisor-representability endpoint remains" over-reads: L12/L13/L14
+  (=U2, chart clause) are exactly what remains; the same paragraph then concedes U2.
+  Say L10/L11.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-divrep
+author: horizon
+source_ref: null
+created_at: '2026-07-29T03:49:49.269151+00:00'
+updated_at: '2026-07-29T03:49:49.269166+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0016-horizon-ajcr-divrep
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-divrep
+  started_by: task:ajcr-divrep
+  read_by:
+  - ajcr-divrep

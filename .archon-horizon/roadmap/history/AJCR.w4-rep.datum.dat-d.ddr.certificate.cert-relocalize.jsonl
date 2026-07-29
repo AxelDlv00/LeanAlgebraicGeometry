@@ -3,3 +3,4 @@
 {"at": "2026-07-27T03:51:18.183140+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "rejected", "note": ""}
 {"at": "2026-07-27T04:11:58.409973+00:00", "actor": "horizon", "field": "status", "from": "rejected", "to": "rejected", "note": ""}
 {"at": "2026-07-27T04:11:58.410169+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary, title updated"}
+{"at": "2026-07-29T03:01:36.888871+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}

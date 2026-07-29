@@ -1,0 +1,50 @@
+id: I-0799
+provider: local
+kind: conversation
+body: 'The satisfiability probe relocates the hypothesis; its cited witness cannot
+  exist
+
+
+  `JacobianDataAbelEffective.lean:118-134`.
+
+
+  - `exists_effective_deg_eq_of_classDeg_eq_zero` takes `Z` with `deg Z = g` as an
+  ARGUMENT, so it proves only "inhabited WHERE a degree-g divisor exists" (its own
+  :133 says so). Lines 122-124 nevertheless claim the probe is positive "UNCONDITIONALLY
+  on the curve" and that "the degree map hits g". Lean proves neither.
+
+
+  - It is false in general: `deg` is residue-degree weighted, so its image is `index*Z`.
+  A genus-1 curve of index 3 over Q has no divisor of degree 1 = g, and the theorem
+  is then VACUOUS there.
+
+
+  - The cited campaign witness is arithmetically impossible: `deg (m . fiberWeilDivisor)
+  = m*delta` (`WindowLedger:133`), so `= g` needs `delta | g`; for `delta = 2, g =
+  3` no `m` exists. Fix: retract to the conditional reading, or land a degree-g producer.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-divrep
+author: horizon
+source_ref: null
+created_at: '2026-07-29T03:36:34.548077+00:00'
+updated_at: '2026-07-29T03:36:34.548088+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0016-horizon-ajcr-divrep
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-divrep
+  started_by: task:ajcr-divrep
+  read_by:
+  - ajcr-divrep

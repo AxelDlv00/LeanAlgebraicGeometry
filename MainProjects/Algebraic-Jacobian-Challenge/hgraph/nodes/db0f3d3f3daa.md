@@ -6,9 +6,10 @@ decl: carries
 file: AlgebraicJacobian/Cohomology/CechTermAcyclic.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: carries
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-29T11:05:50'
 ---
 lemma carries the corresponding hypothesis `hres` for the (finitely many) intersection opens. -/
 

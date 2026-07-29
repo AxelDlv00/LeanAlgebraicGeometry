@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.HModule'_shortComplex
 type: lean
-updated: '2026-07-24T03:02:09'
+updated: '2026-07-29T11:05:39'
 ---
 noncomputable def HModule'_shortComplex
     (k : Type u) [Field k]
@@ -31,11 +31,3 @@ noncomputable def HModule'_shortComplex
   zero :=
     (S.map (yoneda ⋙ (Functor.whiskeringRight _ _ _).obj (ModuleCat.free k) ⋙
         presheafToSheaf J _)).cokernelCofork.condition
-
-/-- Phase A step 6 *Path 2* (iter-020 helper, Mathlib gap-fill): the free-module
-functor `ModuleCat.free k : Type u ⥤ ModuleCat.{u} k` preserves monomorphisms.
-Mathlib registers `AddCommGrpCat.instPreservesMonomorphismsFree :
-AddCommGrpCat.free.PreservesMonomorphisms` in
-`Mathlib/Algebra/Category/Grp/Adjunctions.lean` but does not register the
-corresponding instance for `ModuleCat.free k` in
-`Mathlib/Algebra/Category/ModuleCat/Adjunctions.lean`. This project-local

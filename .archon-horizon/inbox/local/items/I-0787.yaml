@@ -1,0 +1,80 @@
+id: I-0787
+provider: local
+kind: issue
+body: '[temporary] ajc-fbc r6: four in-file prose sites still assert the frontier
+  the same commit says is GONE
+
+
+  `65036074f`''s message says "This file recorded ''nothing relates the mate across
+  a change of square'' as its frontier for four rounds; that obligation is now gone."
+  The commit did **not** retract that sentence where the file asserts it. All line
+  numbers in `MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean`
+  at HEAD.
+
+
+  ## The sites
+
+
+  - **:3552** — "nothing in the tree relates the mate across a *change of square*".
+  Still asserted as present tense.
+
+  - **:4060** — `BcSquareNaturality`''s own docstring: "nothing in the tree relates
+  the mate across a change of square." This is the docstring of the named obligation;
+  a reader pricing the leaf reads this one.
+
+  - **:4042** — "What the tree still lacks, **measured at r5**": says half (a) is
+  "a statement about `openImmersion_bareBC` **and** `openImmersion_bc_telescope` across
+  a change of square". After r6 the `bareBC` half is discharged (`bcv_pullback_counit`);
+  the telescope half is what actually survives.
+
+  - **:4225–4238** — `bareBC_pullback_counit`''s "**That is the honest frontier**:
+  a comparison of the counits of two *different* adjunctions along the slice map `wmap`"
+  and "the residue is now sharply located: getting the LHS counit adjacent to its
+  mate". That residue **is** what `rawPushPullMap_pullback_counit` + `(ppTel …).inv.naturality`
+  now close; the note reads as open.
+
+  - **:4048 / :4216** — the `mateEquiv_vcomp` route "remains the other candidate",
+  blocked on "`pushPullMap` is the degenerate-square mate". r6 sidesteps this entirely;
+  leaving it as a live candidate invites a session to spend a round on a brick nothing
+  needs.
+
+
+  ## Why this matters here
+
+
+  This exact file has a recorded history of stale pricing costing whole sessions (its
+  own :19 and :2085 notes retract two earlier false "carries sorries" claims that
+  were load-bearing). The new r6 section at :4290 is appended at the END of the file;
+  the header''s "Obligations not yet discharged" (:98–:157) and the half-(a) section
+  (:4014–4260) were not updated, so the file now states both "the mate is the frontier"
+  and "the mate is gone" in different places.
+
+
+  ## Next action
+
+
+  Retract at the assertion sites, not only in the new section. The `BcSquareNaturality`
+  docstring (:4060) is the highest-value one.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T02:04:00.185774+00:00'
+updated_at: '2026-07-29T02:04:00.185784+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0014-horizon-ajc-fbc
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge
+  agent: work-reviewer

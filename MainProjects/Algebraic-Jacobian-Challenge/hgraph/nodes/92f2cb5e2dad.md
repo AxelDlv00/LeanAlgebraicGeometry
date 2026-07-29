@@ -5,11 +5,11 @@ content_type: lemma
 created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:pushPull_coprod_prod
-lean_status: lean_ok
+lean_status: linked
 order: 366
 title: Push--pull on a finite coproduct of legs is the product of the leg push--pulls
 type: tex
-updated: '2026-07-27T15:50:36'
+updated: '2026-07-29T11:05:43'
 ---
 Let \((\mathrm{legs} : \iota \to \operatorname{Over} X)\) be a finite family of objects of
   the slice category over a scheme \(X\) (\(\iota\) finite), and form the coproduct

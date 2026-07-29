@@ -6,9 +6,10 @@ decl: chart_smul_baseMap_res
 file: AlgebraicJacobian/Picard/RigidPushforwardAffineDescent.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: chart_smul_baseMap_res
 type: lean
-updated: '2026-07-27T22:48:27'
+updated: '2026-07-29T11:05:50'
 ---
    lemma chart_smul_baseMap_res {f' : X' ⟶ Y'} {g' : X' ⟶ X} (M : X.Modules)
        {W W₀ : X.Opens} {W'' : X'.Opens}

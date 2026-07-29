@@ -78,5 +78,5 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint.pins
   owner: ajc-truth
-  milestone: ajc-optimize
-  updated_at: '2026-07-27T19:06:54.518842+00:00'
+  milestone: AJC.maintenance
+  updated_at: '2026-07-29T02:58:52.864038+00:00'

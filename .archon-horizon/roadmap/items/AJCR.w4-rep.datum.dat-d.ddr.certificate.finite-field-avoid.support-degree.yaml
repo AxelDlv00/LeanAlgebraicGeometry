@@ -28,7 +28,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate.finite-field-avoid
-  milestone: w4-gate
-  updated_at: '2026-07-27T11:55:56.014758+00:00'
+  milestone: AJCR.w4-rep
+  updated_at: '2026-07-29T03:01:51.422720+00:00'
   pinned_commits:
   - d6c67f41d

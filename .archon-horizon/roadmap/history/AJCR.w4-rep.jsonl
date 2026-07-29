@@ -19,3 +19,4 @@
 {"at": "2026-07-26T16:57:11.245204+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-27T08:01:34.987476+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "rejected", "note": "synced from task AJCR.w4-rep"}
 {"at": "2026-07-27T08:03:05.974434+00:00", "actor": "horizon", "field": "status", "from": "rejected", "to": "active", "note": ""}
+{"at": "2026-07-29T03:00:52.110943+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}

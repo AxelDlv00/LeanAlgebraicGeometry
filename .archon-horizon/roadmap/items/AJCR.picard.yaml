@@ -23,4 +23,5 @@ metadata:
     session: 0012-ground
     role: ground
   parent: AJCR.jacobian
-  updated_at: '2026-07-17T00:29:18.041041+00:00'
+  updated_at: '2026-07-29T03:00:11.090316+00:00'
+  milestone: AJCR.picard

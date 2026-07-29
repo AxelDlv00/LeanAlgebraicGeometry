@@ -4,22 +4,59 @@ title: 'DAT-J: JacobianData assembly — quasi-compactness via the Abel image of
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DAT-J: JacobianData assembly -- quasi-compactness via the Abel image of\
-  \ Div^g-lite.\n\nRETRACTION AT THE TOP, 2026-07-29 (run 0071 s0012, ajcr-divrep).\
-  \ THIS ROW LISTED THREE\nOBLIGATIONS AND ITEM 1 WAS VACUOUS. It owes ONE statement,\
-  \ and that statement is STRONGER\nthan what item 2 described.\n\n  exists_isAbelClassifyCompatible\
-  \ (Picard/JacobianDataAbelSquareVacuity.lean, commit 7133fc1d6)\n    for an ARBITRARY\
-  \ abel : DivScheme g --> J, SOME pt satisfies IsAbelClassifyCompatible.\n\nThe only\
-  \ hypothesis beyond abel is that the pt TYPE is inhabited, which fills the junk\
-  \ branch\nof a case split on exactly the two hypotheses the square quantifies over;\
-  \ on its own branch the\nsquare is dif_pos. No geometry, no surjectivity, no property\
-  \ of abel whatsoever.\n\nWHY THE OLD PRICING WAS WRONG, and it is a shape worth\
-  \ recognising: pt is an ARGUMENT of\nIsAbelClassifyCompatible, not fixed campaign\
-  \ data. A consumer entitled to choose pt can choose\nthe classifier composite itself.\
-  \ This row called item 1 \"bookkeeping-shaped, but a real\nstatement, and nobody\
-  \ has written it\" -- it is not a statement about abel at all. Recorded\nshape:\
-  \ I-0605 (a residue existentially quantified over the datum that would give it content\n\
-  demands nothing; inhabit it with junk BEFORE pricing it).\n\nAND THE CONSUMER IS\
-  \ CIRCULAR AT THAT WITNESS, which is the half that matters:\n  heff_iff_conclusion_of_pt_eq\
+  \ Div^g-lite.\n\n*** THE EFFECTIVITY HALF IS DISCHARGED AND WAS NEVER divRep-GATED,\
+  \ 2026-07-29 (run 0071 s0016,\najcr-divrep). Commits 053897f16 + c8a4563af + 127d7cccf;\
+  \ kernel EXIT=0, axiom-clean against a\ncontrol reporting sorryAx; root build 9288\
+  \ jobs EXIT=0.\n\n  exists_effective_deg_eq_of_classDeg_eq (Picard/JacobianDataAbelEffective.lean)\n\
+  \    with chi(O) = 1 - g, a Cech Picard class of degree g has an EFFECTIVE representative\
+  \ OF\n    DEGREE g.  General: any X, no relative curve, no pi.\n  exists_effective_deg_eq_of_classDeg_eq_zero\n\
+  \    the satisfiability face AND the usable one -- a degree-ZERO class times a degree-g\n\
+  \    reference divisor.  The classes this row actually holds are of degree zero.\n\
+  \  exists_effective_deg_eq_of_pic0_at_point (Picard/JacobianDataAbelEffectivePoint.lean)\n\
+  \    from a point y of ANY Pic^0-representing object: a finite separable L over\
+  \ kappa(y) and an\n    effective degree-g divisor over L presenting the restricted\
+  \ class.\n\nTHE GAP WAS ONE CONJUNCT, AND IT WAS A STATEMENT GAP. Every effectivity\
+  \ lemma in the tree stops\nat \"0 <= E and picClass E = picClass W\" with NO claim\
+  \ about deg E (exists_effective_of_picClass\nFLVClass:208, exists_effective_of_h0_pos\
+  \ SectionBound:175), while effectiveDivisorClassifyZar\n(DivisorFamilyFieldSurj:217)\
+  \ demands 0 <= D AND deg D = g. Degree is a class invariant\n(deg_eq_deg_of_picClass_eq),\
+  \ so the missing conjunct transports for free off the class equation.\n\nTWO COST\
+  \ CLAIMS RETRACTED AT THEIR OWN SITES (not merely superseded here):\n * JacobianDataAbelImage\
+  \ said DJ-1's brick \"needs the universal degree-g class, hence divRep\".\n   It\
+  \ does not. The five steps from a POINT to a divisor are all landed and all divRep-free:\n\
+  \   Over.testPoint (Pic0ChartTestPoint:176), mem_pic0Subgroup_iff, exists_splitting_of_picEt\n\
+  \   (Pic0ChartSplit:143, UNCONDITIONAL on the curve), classDeg_presenting_eq_zero\n\
+  \   (Pic0ChartCoverageDegreeStep2:98), then the brick.\n * The same docstring predicted\
+  \ a fiberTwist shift. NONE is needed: at degree exactly g the RR\n   entry condition\
+  \ 1 <= deg W + chi(O) reads g <= deg W, so the class sits ON THE BOUNDARY and\n\
+  \   fires with no slack.\n\nSO THE TWO HALVES OF STEP 3 WERE NEVER GATED ALIKE,\
+  \ and this row priced them together -- hiding\na discharged half behind a gated\
+  \ one. Only the Abel SQUARE is divRep-gated, because naming abel\nat all requires\
+  \ the representation.\n\nWHAT REMAINS, exactly:\n (1) DESCENT, the honest new residue:\
+  \ the divisor lives over the finite separable SPLITTING\n     field L, while hlift\
+  \ wants a morphism out of Spec kappa(y). That is dat-g's work.\n (2) the Abel-compatibility\
+  \ square at a pt PINNED INDEPENDENTLY (the s0012 retraction below\n     stands:\
+  \ at a chosen pt the split is vacuous and its consumer is circular).\n (3) a PicRepDatum\
+  \ k k C from DAT-G (divRep-gated).\n (4) the caller's degree-g reference divisor\
+  \ Z -- over a small finite field a real hypothesis,\n     not bookkeeping.\nDJ-0\
+  \ compact-image qc remains landed.\n\n--- the s0012 body follows; its \"owes exactly\
+  \ one statement\" is now (2) of the list above ---\nDAT-J: JacobianData assembly\
+  \ -- quasi-compactness via the Abel image of Div^g-lite.\n\nRETRACTION AT THE TOP,\
+  \ 2026-07-29 (run 0071 s0012, ajcr-divrep). THIS ROW LISTED THREE\nOBLIGATIONS AND\
+  \ ITEM 1 WAS VACUOUS. It owes ONE statement, and that statement is STRONGER\nthan\
+  \ what item 2 described.\n\n  exists_isAbelClassifyCompatible (Picard/JacobianDataAbelSquareVacuity.lean,\
+  \ commit 7133fc1d6)\n    for an ARBITRARY abel : DivScheme g --> J, SOME pt satisfies\
+  \ IsAbelClassifyCompatible.\n\nThe only hypothesis beyond abel is that the pt TYPE\
+  \ is inhabited, which fills the junk branch\nof a case split on exactly the two\
+  \ hypotheses the square quantifies over; on its own branch the\nsquare is dif_pos.\
+  \ No geometry, no surjectivity, no property of abel whatsoever.\n\nWHY THE OLD PRICING\
+  \ WAS WRONG, and it is a shape worth recognising: pt is an ARGUMENT of\nIsAbelClassifyCompatible,\
+  \ not fixed campaign data. A consumer entitled to choose pt can choose\nthe classifier\
+  \ composite itself. This row called item 1 \"bookkeeping-shaped, but a real\nstatement,\
+  \ and nobody has written it\" -- it is not a statement about abel at all. Recorded\n\
+  shape: I-0605 (a residue existentially quantified over the datum that would give\
+  \ it content\ndemands nothing; inhabit it with junk BEFORE pricing it).\n\nAND THE\
+  \ CONSUMER IS CIRCULAR AT THAT WITNESS, which is the half that matters:\n  heff_iff_conclusion_of_pt_eq\
   \ (same file)\nAt that pt, the remaining hypothesis heff of exists_residueField_lift_of_abelCompatible\n\
   (JacobianDataAbelSquare.lean:158) unfolds to VERBATIM its own conclusion, so that\
   \ theorem is a\ntautology there. heff had silently absorbed all the content item\
@@ -76,8 +113,8 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:11.223347+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-28T23:05:58.494065+00:00'
-  milestone: w4-tail
+  updated_at: '2026-07-29T03:02:42.184335+00:00'
+  milestone: AJCR.w4-rep
   owner: ajcr-divrep
   pinned_commits:
   - fb275d7f9

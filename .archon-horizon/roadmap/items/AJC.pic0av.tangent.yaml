@@ -137,5 +137,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.pic0av
-  updated_at: '2026-07-28T21:12:57.191066+00:00'
+  updated_at: '2026-07-29T02:59:28.568939+00:00'
   owner: ajc-pic0av
+  milestone: AJC.pic0av

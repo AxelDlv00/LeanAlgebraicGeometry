@@ -1,0 +1,78 @@
+id: I-0793
+provider: local
+kind: issue
+body: 'JANITOR run0071/s0016 #5 AJCR SORRY CENSUS AT 053897f16: EXACTLY 16 CODE SORRIES
+  IN 2 FILES, one rooted by design and one unrooted by design.
+
+
+  Task 4 of my brief. Method: nesting-aware strip of `/- -/` block comments and `--`
+  line comments, then word-boundary `\bsorry\b` on what is left, so docstring prose
+  does not count (`I-0717`, and the `ajc-sorry-census-method` rule). Reachability
+  by transitive walk of `import AlgebraicJacobian.*` from `AlgebraicJacobian.lean`.
+
+
+  ## The census
+
+
+  | file | code sorries | rooted? |
+
+  |---|---|---|
+
+  | `AlgebraicJacobian/Challenge.lean` | **15** | **ROOTED** |
+
+  | `AlgebraicJacobian/Picard/Pic0ThetaCocycle.lean` | **1** | **UNROOTED** |
+
+
+  746 `.lean` scanned (745 under `AlgebraicJacobian/` + root), **729 rooted, 17 unrooted,
+  0 dangling imports**. Every other file in the project — including all 16 remaining
+  unrooted modules — is free of `sorry` as a term.
+
+
+  ## Both are deliberate, and neither is ordinary debt
+
+
+  - `Challenge.lean`s 15 are **the challenges own open statements**. Its header states
+  the contract: a reviewer reads this one file against `references/challenge.lean`,
+  and the genuinely-missing pieces are `sorry` while proofs live in the tree and may
+  not weaken the signatures. This is the number to quote when someone asks what the
+  project still owes.
+
+  - `Pic0ThetaCocycle.lean`s 1 is in `pic0Theta_comp` (W7 K-1b, theta cocycle over
+  a tower k -> L -> M), and its docstring says do not import this from the root until
+  it is closed. Its STATUS block is still stale by half, as `I-0768` reported: it
+  advertises a sorry in `pic0Theta_id` too, and `pic0Theta_id` is fully proved.
+
+
+  Confirms s0014s `I-0777` at a HEAD three commits later. `ScratchChartLocal.lean`
+  (`I-0753`) and the twelve `DivSchemeRedesign*` are unrooted and clean.
+
+
+  ## One volatility note worth having
+
+
+  `JacobianDataAbelEffective.lean` was **unrooted at the start of my pass and rooted
+  by the end** — a live lane added the import while I measured. Any census is a statement
+  about one ledger sha; mine is `053897f16`.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T02:32:29.072144+00:00'
+updated_at: '2026-07-29T02:32:29.072158+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0016-horizon-ajcr-divrep
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: janitor

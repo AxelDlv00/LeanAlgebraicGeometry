@@ -2,41 +2,45 @@ id: AJC.fbc.cosimplicial.twisted
 title: Twisted Čech nerve compatibility
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "Twisted Cech nerve compatibility. ONE item remains, and it is the mathematics\
-  \ (run 0068 r5).\n\nr4 left TWO items: (i) wiring, mechanical and unwritten; (ii)\
-  \ half (a), the mathematics. (i) IS NOW\nWRITTEN. So this row's residue is exactly\
-  \ one named Prop.\n\nITEM (i), CLOSED (r5, commit 09f2d8798, kernel EXIT=0):\n *\
-  \ twistedComponent / twistedComponent_eq -- the degreewise component factored through\
-  \ the\n   sigma-product, and the proof that it IS twisted_cech_nerve_iso's own component.\n\
-  \ * twistedComponent_δ_square -- the coface square at the NERVE'S OWN spelling (target\
-  \ the\n   base-changed nerve's degree object, not a Pi product), from TwistedPerSigmaDeltaCompat\
-  \ alone.\n * THE BRIDGE was that the SAME sigma-coordinate coface formula applies\
-  \ to the BASE-CHANGED cover:\n   cechNerve_backbone_δ_sigma at the bc cover gives\
-  \ its nerve's coface as reindex-then-restrict,\n   exactly the Pi.lift shape r4's\
-  \ square produces. No transport: the index types agree on the nose\n   (baseChangedCover_I₀).\
-  \ bcNerve_drop_δ_sigma + sigmaAssembled_δ_square_cancel are the two bricks.\n\n\
-  ITEM (ii), THE ONLY RESIDUE, now NAMED (r5, content in HEAD via 00aeff0e6; RECORD\
-  \ 4fff36452):\n * BcSquareNaturality -- half (a) as a citable Prop, verbatim the\
-  \ hBC binder of\n   twistedPerSigmaCompat_of_bcNaturality. Naming it is not cosmetic:\
-  \ an obligation existing only as\n   a binder cannot be cited, probed, or reduced.\n\
-  \ * BcSquarePullbackSide -- the same with the target pushforward cancelled (both\
-  \ sides land in\n   pV_* pV^*(g'^*F), so eq_of_map_eq_of_adjunction reflects the\
-  \ equality down from pV^*). Mentions\n   NO pushforward, so pullbackComp/pullbackCongr\
-  \ and unit_mateEquiv apply to it directly.\n * bcSquareNaturality_iff_pullbackSide\
-  \ -- BOTH directions, so this is a change of VOCABULARY and\n   NOT a weakening.\
-  \ Stated up front because a reduction whose converse fails may have discarded\n\
-  \   what made the statement true.\n * twistedPerSigmaCompat_of_pullbackSide -- the\
-  \ whole residue in one name.\n\nSHAPE OF WHAT IS LEFT, measured by unfolding bcv\
-  \ at r5: both sides are\n  asIso (openImmersion_bareBC ... .app (ι U_sigma ^* F))\
-  \ followed by\n  (pushforward (pullback.fst g' (ι U_sigma))).mapIso (openImmersion_bc_telescope\
-  \ ...).symm,\ncompared across the change of sigma. So half (a) is a statement about\
-  \ openImmersion_bareBC and\nopenImmersion_bc_telescope across a change of square.\
-  \ mateEquiv_vcomp remains the other candidate\nroute and is still blocked on \"\
-  pushPullMap is the degenerate-square mate\" -- typechecks, NOT rfl,\nnot closed\
-  \ by simp.\n\nMEASUREMENT: axiom-frontier section 6i. Four probes clean; TWO controls\
-  \ (twisted_cech_nerve_iso,\ncech_flatBaseChange_oneLeaf) must and do still report\
-  \ sorryAx. NOTHING previously contaminated\nbecame clean this round -- no endpoint\
-  \ moved.\n"
+summary: "Twisted Cech nerve compatibility. BOTH BECK-CHEVALLEY MATES ARE NOW ELIMINATED;\
+  \ what remains is a\npullback-pseudofunctor coherence identity (run 0068 r6).\n\n\
+  THE FRONTIER THIS ROW RECORDED FOR FOUR ROUNDS IS GONE, and not by finding what\
+  \ it asked for.\nr4/r5 said: \"nothing in the tree relates the mate across a change\
+  \ of square -- not in the project,\nnot in mathlib\", and priced the leaf on that.\
+  \ Correct diagnosis, wrong conclusion. A mate need not be\nRELATED across squares\
+  \ if it can be REMOVED. r5 removed one (mateEquiv_counit). r6 removed the other.\n\
+  \nWHY r5 GOT ONLY ONE SIDE, and how r6 got the second. r5's honest limit: on the\
+  \ other side the mate\nsits at sigma'-o-delta^k while the counit sits at sigma',\
+  \ separated by pushPullMap (wmap ...), and\nr5 correctly ruled out counit_naturality\
+  \ for that step. The fix was to ask what the OBSTRUCTION is\nbuilt from: rawPushPullMap\
+  \ is itself a UNIT (eta^a, pushforwardComp, pullbackComp). So the same\nmove applies\
+  \ to it -- under p^* past the counit its unit dies by the left triangle.\n\nLANDED\
+  \ r6, all axiom-clean, kernel EXIT=0, sorry count UNCHANGED at 3:\n * counit_comp_decomp\
+  \ -- counit of (a >> p1) via pullbackComp-inv and the two single counits.\n * rawPushPullMap_pullback_counit_self\
+  \ / rawPushPullMap_pullback_counit (general over-triangle).\n * bcv_hom_eq (by rfl)\
+  \ + bcv_pullback_counit -- bcv's adjunct in CLOSED MATE-FREE form: pure\n   pullbackComp/pullbackCongr\
+  \ coherence plus ONE counit of the open inclusion U_sigma -> X.\n * bcAdjFree, BcSquareCoherence,\
+  \ bcSquareCounitSide_of_coherence, twistedPerSigmaCompat_of_coherence.\n\nMEASURED,\
+  \ and this is the row's headline: the goal left by bcSquareCounitSide_of_coherence's\
+  \ chain\ncontains ZERO occurrences of openImmersion_bareBC, bcv, or mateEquiv. Everything\
+  \ in it is\npullbackComp / pullbackCongr / ppTel / openImmersion_bc_telescope plus\
+  \ two counits of OPEN INCLUSIONS\nand the restriction map pushPullMap (interLegHom\
+  \ ...).\n\nWHAT IS LEFT, stated so it is not mispriced in either direction: BcSquareCoherence\
+  \ is NOT proved and\nis NOT free. It is a real identity about how the pullback pseudofunctor's\
+  \ coherence isomorphisms\ninteract with the cover-intersection inclusion U_{sigma'}\
+  \ subset U_{sigma'-o-delta^k}. But it needs\nno mate, no flatness, no quasi-coherence\
+  \ and no open-immersion property, so the tools for it\n(pseudofunctor_associativity\
+  \ / _left_unitality / _right_unitality, pullbackCongr, ppTel naturality)\nDO exist\
+  \ here and in mathlib -- which was exactly what the old frontier lacked.\n\nCHAIN\
+  \ TO CITE: BcSquareCoherence -> bcSquareCounitSide_of_coherence -> bcSquareNaturality_of_counitSide\n\
+  -> twistedPerSigmaCompat_of_counitSide -> TwistedPerSigmaDeltaCompat -> twistedCechComplexIsoOfCompat.\n\
+  Equivalently twistedPerSigmaCompat_of_coherence in one step.\n\nMEASUREMENT: five/eight\
+  \ new decls report [propext, Classical.choice, Quot.sound] against TWO controls\n\
+  (twisted_cech_nerve_iso, cech_flatBaseChange_oneLeaf) which must and do still report\
+  \ sorryAx. NOTHING\npreviously contaminated became clean; no endpoint moved.\n\n\
+  CAVEAT: r5 and r6 have had NO independent review -- 4/4 review subagent dispatches\
+  \ stalled (I-0797).\nAll verification is self-verification: kernel EXIT=0, axiom\
+  \ probes with firing controls, and\nconsumer-application probes.\n"
 status: active
 kind: proof
 priority: high
@@ -59,5 +63,6 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc.cosimplicial
-  updated_at: '2026-07-28T23:35:53.856932+00:00'
+  updated_at: '2026-07-29T03:02:21.355403+00:00'
   owner: ajc-fbc
+  milestone: AJC.cohomology

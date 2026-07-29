@@ -34,7 +34,8 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.fbc.cosimplicial
-  updated_at: '2026-07-28T16:53:29.535519+00:00'
+  updated_at: '2026-07-29T02:58:14.703216+00:00'
   pinned_commits:
   - 672a8c656
   owner: ajc-fbc
+  milestone: AJC.cohomology

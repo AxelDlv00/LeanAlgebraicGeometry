@@ -6,9 +6,10 @@ decl: is
 file: AlgebraicJacobian/RiemannRoch/Ledger/ModuleKSheaf.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: is
 type: lean
-updated: '2026-07-29T07:30:33'
+updated: '2026-07-29T11:05:50'
 ---
   structure is carried by the explicit defs `Scheme.overAlgebraMap`/`Scheme.overModule`
   and, where needed, `attribute [local instance] Scheme.overModule`.

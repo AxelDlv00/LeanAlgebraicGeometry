@@ -4,10 +4,36 @@ title: 'DD-R divRep: affine classification, Zariski/global representability, and
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
 summary: "DD-R divRep: affine classification, Zariski/global representability, and\
-  \ consumer export.\n\n*** REFUTATION AT THE TOP, 2026-07-29 (run 0071 s0014 close).\
-  \ The s0014 correction below says the\nwidened Theta-layer is what cert-r2's producer\
-  \ needed. IT IS NOT: every declaration in\nPicard/DivisorFamilyAffTheta.lean is\
-  \ indexed by a ChartTyping, and\nAffAdaptation.isEmpty_chartTyping_of_straddling\
+  \ consumer export.\n\n*** NOTHING BELOW THE ENDPOINT REMAINS, 2026-07-29 (run 0071\
+  \ s0016, ajcr-divrep). The refutation\nbox below (s0014) still stands on its own\
+  \ terms. What is NEW is that this row's L11 debt --\ncarried by critical-path 7.1,\
+  \ amended once by 7.7, and repeated in this session's own task brief\n-- is DISCHARGED,\
+  \ and has been since commits 31930badb + aeb77e174.\n\n  Picard/DivRepGlobalClassify.lean,\
+  \ sorry-free and ROOTED:\n    classifyGlobal (:204)             the general-test\
+  \ CLASSIFIER, glued over\n                                      Scheme.directedAffineCover\
+  \ with\n                                      glueMorphismsOverOfLocallyDirected\n\
+  \    pullGlobal_classifyGlobal (:252)  } BOTH inverse laws\n    classifyGlobal_pullGlobal\
+  \ (:269)  }\n    toGlobalData (:288)               the DivRepGlobalData of an affine\
+  \ package\n    representableBy (:306)            (divFunctor C pi g).RepresentableBy\
+  \ DivOver\n\nTHREE CONSUMER FACES, weakest hypothesis last -- publish these, not\
+  \ any intermediate structure:\n  DivRepAffinePullback.representableBy       from\
+  \ a DivRepAffinePullback\n  divFunctor_representableBy_of_chartClause  (DivRepAffPullClause:482)\
+  \ from IsChartClause U\n  divFunctor_representableBy_of_id           (:502) from\
+  \ the identity-point clause per chart\n\nTHE STALE-\"MISSING\" MECHANISM, THIRD\
+  \ INSTANCE. 7.1 was written to correct 1 for trusting a\nMISSING claim across an\
+  \ integrate commit; 7.7 corrected 7.1's own L11 row the same way; this is\nthe third\
+  \ pass, and the row was stale in the task brief handed to this session. The lesson\
+  \ is\nnow load-bearing rather than anecdotal: check the ledger for files added by\
+  \ an integrate commit\nbefore believing any absence claim on this row.\n\nTHE ONLY\
+  \ SURVIVING HYPOTHESIS IS U2, and DivRepChartRange:183 makes it an IFF with an equation\n\
+  of morphisms that both already exist:\n  IsChartClause U  <->  forall i j, (divRepClassifyZar\
+  \ ... (U i j)).left = ChartMap i j.\n\nNO GATE CLEARED. Nothing produces an IsChartClause;\
+  \ critical-path 7.6 stands for the fourth\nconsecutive session -- L8 remains the\
+  \ campaign's real gate. Full write-up: critical-path 7.14.\n\nDD-R divRep: affine\
+  \ classification, Zariski/global representability, and consumer export.\n\n*** REFUTATION\
+  \ AT THE TOP, 2026-07-29 (run 0071 s0014 close). The s0014 correction below says\
+  \ the\nwidened Theta-layer is what cert-r2's producer needed. IT IS NOT: every declaration\
+  \ in\nPicard/DivisorFamilyAffTheta.lean is indexed by a ChartTyping, and\nAffAdaptation.isEmpty_chartTyping_of_straddling\
   \ (commit 4ee4ca6e3, kernel EXIT=0) proves NO\nChartTyping exists on a cover with\
   \ a straddling piece -- which is exactly cert-r2's case. So the\nlayer is vacuous\
   \ on the divisors I-0492's widening exists for, and the tree's only ChartTyping\n\
@@ -160,7 +186,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-29T01:38:47.957560+00:00'
+  updated_at: '2026-07-29T03:02:15.238367+00:00'
   owner: ajcr-divrep
   pinned_commits:
   - 4ee4ca6e3
@@ -172,3 +198,4 @@ metadata:
   - 406b5b242
   - 4ac067ed1
   - d8ce7e773
+  milestone: AJCR.w4-rep

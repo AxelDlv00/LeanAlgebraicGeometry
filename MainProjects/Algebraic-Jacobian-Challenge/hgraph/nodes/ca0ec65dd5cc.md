@@ -6,9 +6,10 @@ decl: '`FixedPoints.subring`/`subalgebra`'
 file: AlgebraicJacobian/Albanese/SymPowTensorAction.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: '`FixedPoints.subring`/`subalgebra`'
 type: lean
-updated: '2026-07-29T03:18:56'
+updated: '2026-07-29T11:05:50'
 ---
 instance `FixedPoints.subring`/`subalgebra` cannot even be *stated* at the tensor power, so
 Milne's formula was not expressible in the tree.

@@ -29,7 +29,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T21:13:48.416992+00:00'
-updated_at: '2026-07-28T21:19:03.890925+00:00'
+updated_at: '2026-07-29T03:12:22.945817+00:00'
 metadata:
   provenance:
     run: '0071'
@@ -43,3 +43,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   read_by:
   - ajcr-divrep
+  - ajcr-cert-r2

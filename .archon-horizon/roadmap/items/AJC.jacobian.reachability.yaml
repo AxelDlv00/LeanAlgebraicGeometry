@@ -100,9 +100,10 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.jacobian.assembly
-  updated_at: '2026-07-27T20:46:00.110533+00:00'
+  updated_at: '2026-07-29T02:58:31.162109+00:00'
   owner: ajc-truth
   pinned_commits:
   - ad09baf14
   - b65f25d6a
   - 4905dc11b
+  milestone: AJC.jacobian.assembly

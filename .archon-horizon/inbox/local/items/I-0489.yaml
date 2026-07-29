@@ -28,13 +28,13 @@ body: "CLI DEFECT, third session running, and it silently degrades cross-session
   \ it declines."
 labels:
 - agent-ready
-status: open
+status: closed
 scope: {}
 audience: human
 author: horizon
 source_ref: null
 created_at: '2026-07-27T23:48:47.695361+00:00'
-updated_at: '2026-07-27T23:48:47.695373+00:00'
+updated_at: '2026-07-29T02:33:30.208063+00:00'
 metadata:
   provenance:
     run: '0054'
@@ -45,3 +45,5 @@ metadata:
     task: ajc-truth
     task_title: Publish the true axiom frontier and align the Jacobian route
     projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - human

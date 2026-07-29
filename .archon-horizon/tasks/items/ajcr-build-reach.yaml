@@ -1,0 +1,49 @@
+id: ajcr-build-reach
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: 'Own AJCR.w4-rep.build-reach. Triage recorded 93 of 620 modules UNROOTED
+  (47 dirty, 80 live). Re-measure first -- the count is days old and four lanes have
+  been committing since.
+
+
+  WHY THIS MATTERS MORE THAN IT LOOKS. An adversarial audit on 2026-07-29 found the
+  same defect on the AJC side: the entire RiemannRoch/Ledger/ layer, 17k lines, is
+  imported by nothing in the root cone, so the standing axiom probe NEVER ELABORATES
+  IT. Its ''41/41 axiom-clean'' was measured by bespoke scripts, not the root target.
+  Unrooted code carries a materially weaker guarantee than rooted code, and the roadmap
+  does not currently distinguish them.
+
+
+  DELIVERABLES: (1) a re-measured, committed census of unrooted modules; (2) as many
+  as possible rooted into the umbrella, cheapest first; (3) for each module you CANNOT
+  root, a one-line reason recorded on its hgraph node -- not in the blueprint. Report
+  the residual count honestly; a partial result with an accurate census beats an optimistic
+  claim.
+
+
+  CAUTION: narrowing or adding imports has broken no-Mathlib dependents in this workspace
+  before. Build the affected module singly after each change; do not rely on lake
+  env lean alone, which misses the style linters.'
+title: 'Build reachability: root the 93 unrooted modules so the axiom probe actually
+  sees them'
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: normal
+status: queued
+write_set:
+  files: []
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+roadmap_refs: []
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-07-29T04:03:22.477996+00:00'
+updated_at: '2026-07-29T04:03:22.478008+00:00'
+metadata:
+  author: human

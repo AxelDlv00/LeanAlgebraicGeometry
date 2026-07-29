@@ -36,13 +36,13 @@ body: "HGRAPH SYNC INVENTS DECLARATIONS FROM DOCSTRING PROSE, AND SOME ARRIVE WI
   \ filed as I-0452), so this is one defect\nwith several faces."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-27T21:26:40.086140+00:00'
-updated_at: '2026-07-28T05:14:15.543046+00:00'
+updated_at: '2026-07-29T02:33:54.055697+00:00'
 metadata:
   provenance:
     run: '0054'
@@ -54,4 +54,4 @@ metadata:
     task_title: Publish the true axiom frontier and align the Jacobian route
     projects: Algebraic-Jacobian-Challenge
   read_by:
-  - ajcr-charts
+  - human

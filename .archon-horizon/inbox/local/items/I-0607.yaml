@@ -25,13 +25,13 @@ body: "A MORPHISM OUT OF EACH RESIDUE FIELD IS NOT SURJECTIVITY ON POINTS -- the
   \ as its own step and check it exists. Related shape one level up: I-0442 groups-agree-vs-maps-agree."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T11:45:35.870970+00:00'
-updated_at: '2026-07-28T11:45:35.870984+00:00'
+updated_at: '2026-07-29T02:24:36.892615+00:00'
 metadata:
   provenance:
     run: '0071'

@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.Adelic.here
 file: AlgebraicJacobian/Picard/RigidPushforwardP1Witness.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Adelic.here
 type: lean
-updated: '2026-07-28T00:32:01'
+updated: '2026-07-29T11:05:51'
 ---
 instance here would export a term that nothing downstream could re-derive. -/
 local instance instIsStandardSmoothOfRelativeDimensionOneP1ChartSections

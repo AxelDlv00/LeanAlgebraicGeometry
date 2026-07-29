@@ -1969,4 +1969,100 @@ end Section6i
 #print axioms twisted_cech_nerve_iso
 #print axioms cech_flatBaseChange_oneLeaf
 
+/-! ### §6j. BOTH MATES ELIMINATED; HALF (a) IS NOW A COHERENCE IDENTITY (run 0068 r6)
+
+**Leading with what did NOT move, because §6h and §6i each had to say it and a longer clean list
+invites the opposite reading: NO ENDPOINT MOVED THIS ROUND EITHER.**  `twisted_cech_nerve_iso` and
+`cech_flatBaseChange_oneLeaf` still report `sorryAx`, and nothing that was contaminated before this
+round became clean.  The project's `sorry` count is unchanged at 3.
+
+What DID change is the *vocabulary* of the one open obligation.  §6i left half (a) as
+`BcSquareNaturality`/`BcSquarePullbackSide`/`BcSquareCounitSide` — statements *about the
+Beck–Chevalley mate*, and the file recorded for four rounds that nothing here or in mathlib relates
+that mate across a change of square.  This round both mates are **eliminated**, and half (a) is
+restated as `BcSquareCoherence`, in which `openImmersion_bareBC`, `bcv` and `mateEquiv` do not occur
+at all.
+
+The probes below are the new bricks and the reduction.  Each must be **clean**: they are theorems
+*from* `BcSquareCoherence`, exactly as §6h's and §6i's probes are theorems from
+`TwistedPerSigmaDeltaCompat` — a hypothesis, not a `sorry`.  The two controls must keep reporting
+`sorryAx`.  If a control ever comes back clean without the twisted square being discharged, these
+probes have stopped measuring what they are named for. -/
+
+-- NOTE: the reduction itself (`BcSquareCoherence`, `bcSquareCounitSide_of_coherence`,
+-- `twistedPerSigmaCompat_of_coherence`) lives in
+-- `AlgebraicJacobian.Cohomology.CechTwistedCoherenceReduction`, NOT in
+-- `CechHigherDirectImageUnconditional` — its proof unfolds two `asIso`-wrapped `IsIso` instances,
+-- which is cheap against an olean and pathological when they are local declarations.  This script
+-- must import that module for the last two probes below to resolve.
+
+section Section6j
+
+variable {S S' X X' : Scheme.{u}}
+
+/-- The composite-counit decomposition.  No Čech content; pure adjunction + pseudofunctor. -/
+theorem leakProbe_counitCompDecomp {Z₁ Z₂ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (p₁ : Z₁ ⟶ X)
+    (d : Z₂.Modules) :
+    (Scheme.Modules.pullbackPushforwardAdjunction (a ≫ p₁)).counit.app d
+      = (Scheme.Modules.pullbackComp a p₁).inv.app
+            ((Scheme.Modules.pushforward a ⋙ Scheme.Modules.pushforward p₁).obj d) ≫
+          (Scheme.Modules.pullback a).map
+            ((Scheme.Modules.pullbackPushforwardAdjunction p₁).counit.app
+              ((Scheme.Modules.pushforward a).obj d)) ≫
+          (Scheme.Modules.pullbackPushforwardAdjunction a).counit.app d :=
+  counit_comp_decomp a p₁ d
+
+/-- **The second elimination**: the restriction map's own unit dies under `p^*` past the counit.
+This is the brick §6i did not have, and the reason its elimination fired on one side only. -/
+theorem leakProbe_pushPullAdjunct {Z₁ Z₂ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (p₁ : Z₁ ⟶ X)
+    (p₂ : Z₂ ⟶ X) (w : a ≫ p₁ = p₂) (F : X.Modules) :
+    (Scheme.Modules.pullback p₂).map (rawPushPullMap a p₁ p₂ w F) ≫
+        (Scheme.Modules.pullbackPushforwardAdjunction p₂).counit.app
+          ((Scheme.Modules.pullback p₂).obj F)
+      = (ppTel a p₁ p₂ w).inv.app
+            ((Scheme.Modules.pushforward p₁).obj ((Scheme.Modules.pullback p₁).obj F)) ≫
+          (Scheme.Modules.pullback a).map
+            ((Scheme.Modules.pullbackPushforwardAdjunction p₁).counit.app
+              ((Scheme.Modules.pullback p₁).obj F)) ≫
+          (ppTel a p₁ p₂ w).hom.app F :=
+  rawPushPullMap_pullback_counit a p₁ p₂ w F
+
+/-- **`bcv`'s adjunct is mate-free.**  The right-hand side is `bcAdjFree`: coherence isos plus one
+counit of an *open inclusion*. -/
+theorem leakProbe_bcvAdjunct (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover) [IsSeparated f]
+    [IsAffine S] [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent)
+    {κ : Type} [Finite κ] [Nonempty κ] (σ : κ → 𝒰.I₀) :
+    (Scheme.Modules.pullback
+          (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))).map (bcv f g' 𝒰 F hF σ).hom ≫
+        (Scheme.Modules.pullbackPushforwardAdjunction
+          (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))).counit.app _
+      = bcAdjFree g' 𝒰 F σ :=
+  bcv_pullback_counit f g' 𝒰 F hF σ
+
+/-- **THE REDUCTION**: half (a) from the mate-free coherence identity. -/
+theorem leakProbe_counitSide_from_coherence (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover)
+    [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
+    (F : X.Modules) (hF : F.IsQuasicoherent)
+    (hcoh : BcSquareCoherence f g' 𝒰 F hF) : BcSquareCounitSide f g' 𝒰 F hF :=
+  bcSquareCounitSide_of_coherence f g' 𝒰 F hF hcoh
+
+/-- **The whole twisted residue from the coherence identity, in one name.** -/
+theorem leakProbe_twistedCompat_from_coherence (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S')
+    (g' : X' ⟶ X) (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [IsSeparated f] [IsAffine S]
+    [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent)
+    (hcoh : BcSquareCoherence f g' 𝒰 F hF) :
+    TwistedPerSigmaDeltaCompat f g f' g' h 𝒰 F hF :=
+  twistedPerSigmaCompat_of_coherence f g f' g' h 𝒰 F hF hcoh
+
+end Section6j
+
+#print axioms leakProbe_counitCompDecomp
+#print axioms leakProbe_pushPullAdjunct
+#print axioms leakProbe_bcvAdjunct
+#print axioms leakProbe_counitSide_from_coherence
+#print axioms leakProbe_twistedCompat_from_coherence
+-- CONTROLS for §6j — the SAME two as §6h and §6i, deliberately.  They must still report `sorryAx`.
+#print axioms twisted_cech_nerve_iso
+#print axioms cech_flatBaseChange_oneLeaf
+
 end AlgebraicGeometry

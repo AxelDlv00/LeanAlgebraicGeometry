@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.quantified
 file: AlgebraicJacobian/RiemannRoch/Ledger/DegreeVanishing.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.quantified
 type: lean
-updated: '2026-07-29T06:43:23'
+updated: '2026-07-29T11:05:50'
 ---
 theorem quantified (`generated_of_deg_ge` below). -/
 

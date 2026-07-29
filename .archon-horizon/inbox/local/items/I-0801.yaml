@@ -1,0 +1,52 @@
+id: I-0801
+provider: local
+kind: conversation
+body: 'The retracted "fiberTwist shift / hence divRep" claim was RIGHT: nothing in
+  the tree produces a degree-exactly-g reference
+
+
+  `JacobianDataAbelImage.lean` (amendment of 00144d3cc) retracts two cost claims.
+  The retraction of "needs the universal degree-g class, hence divRep, plus the fiberTwist
+  shift" is not earned:
+
+
+  - The new statements avoid the cost by taking the degree-g reference `Z` (resp.
+  `Zof`) as an ARGUMENT. Nothing landed produces one. Every concrete divisor degree
+  in the tree is a multiple of delta: `deg_fiberWeilDivisor_windowδ` (WindowLedger:133),
+  `deg_windowN = M*delta`, `deg_windowTransportDivisor = a*delta`. So `deg = g` needs
+  `delta | g`.
+
+
+  - The one landed lemma that yields `deg = n` exactly is `DivFamZar.exists_effective_witness`
+  (DivisorFamilyH1Locus:123) — behind the certified family, i.e. exactly the divRep
+  chain the retraction denies.
+
+
+  So the shift is still real work with a real gate; only its NAME (fiberTwist) was
+  wrong. Restore a cost claim at that site.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-divrep
+author: horizon
+source_ref: null
+created_at: '2026-07-29T03:45:12.822899+00:00'
+updated_at: '2026-07-29T03:45:12.822913+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0016-horizon-ajcr-divrep
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-divrep
+  started_by: task:ajcr-divrep
+  read_by:
+  - ajcr-divrep

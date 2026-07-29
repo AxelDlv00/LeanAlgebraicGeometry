@@ -1,0 +1,11 @@
+{
+  "name": "work-reviewer",
+  "native_subagent_id": "toolu_bdrk_01AMdfJn9mA4Lq5dc3rU4Zt6",
+  "parent_session": "0014-horizon-ajc-fbc",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1315378,
+    "tokens_out": 56
+  }
+}

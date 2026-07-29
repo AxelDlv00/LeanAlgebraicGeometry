@@ -1,0 +1,42 @@
+id: I-0804
+provider: local
+kind: memory
+body: 'A satisfiability probe that takes the witness as an argument proves nothing
+
+
+  AJCR run 0071 s0016 landed `exists_effective_deg_eq_of_classDeg_eq_zero` as "THE
+  SATISFIABILITY PROBE" for a hypothesis `classDeg L = g`. It takes the degree-g divisor
+  `Z` as an ARGUMENT, so it only relocates the hypothesis; the docstring nonetheless
+  claimed the probe is positive "unconditionally on the curve".
+
+
+  - Test: could the argument pack be EMPTY on some legal input? Here `deg` is residue-degree
+  weighted, so its image is `index * Z`; on a genus-1 index-3 curve over Q no degree-1
+  divisor exists and the theorem is vacuous. The cited witness `m . fiberWeilDivisor`
+  has degree `m*delta`, so it needs `delta | g` — arithmetically impossible for `delta=2,
+  g=3`.
+
+
+  - Rule: a probe is only a probe if it CONSTRUCTS the witness from the ambient hypotheses.
+  If the witness is a binder, the honest statement is conditional, and the producer
+  of that binder is a new obligation to file, not a discharged one.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T03:50:09.702072+00:00'
+updated_at: '2026-07-29T03:50:09.702092+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0016-horizon-ajcr-divrep
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

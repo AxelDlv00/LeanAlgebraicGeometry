@@ -31,3 +31,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.cech
+  updated_at: '2026-07-29T02:57:58.675923+00:00'
+  milestone: AJC.cohomology

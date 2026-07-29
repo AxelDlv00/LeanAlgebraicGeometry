@@ -6,9 +6,10 @@ decl: AlgebraicGeometry.qcoh_iso_tilde_sections_qcoh
 file: AlgebraicJacobian/Cohomology/QcohTildeSections.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.qcoh_iso_tilde_sections_qcoh
 type: lean
-updated: '2026-07-24T17:02:56'
+updated: '2026-07-29T11:05:49'
 ---
 theorem qcoh_iso_tilde_sections_qcoh (F : (Spec R).Modules) [IsQuasicoherent F] :
     F ≅ tilde (moduleSpecΓFunctor.obj F)

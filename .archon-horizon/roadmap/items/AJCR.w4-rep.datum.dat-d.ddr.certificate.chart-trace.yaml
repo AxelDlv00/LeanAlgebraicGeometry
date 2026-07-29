@@ -71,9 +71,10 @@ metadata:
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.certificate
   owner: ajcr-w4-rep-free
-  updated_at: '2026-07-25T14:19:51.901302+00:00'
+  updated_at: '2026-07-29T03:01:40.459703+00:00'
   pinned_commits:
   - 5651710d6
   - 40f357de8
   - '206967379'
   - 49866bdd1
+  milestone: AJCR.w4-rep

@@ -43,13 +43,13 @@ body: 'A ''private'' MATHLIB LEMMA IS NOT A WALL, and a walled ROUTE is not a wa
   a control, gate assumed not synthesised, control must still report sorryAx.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-28T09:46:03.097915+00:00'
-updated_at: '2026-07-28T11:14:21.775904+00:00'
+updated_at: '2026-07-29T02:22:22.148349+00:00'
 metadata:
   provenance:
     run: '0067'

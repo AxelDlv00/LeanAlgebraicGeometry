@@ -6,9 +6,10 @@ decl: until
 file: AlgebraicJacobian/Albanese/AlbaneseUP.lean
 generated: lean
 lean_status: sorry
+stale: true
 title: until
 type: lean
-updated: '2026-07-28T15:48:27'
+updated: '2026-07-29T11:05:50'
 ---
 theorem until they close.
 

@@ -1,0 +1,52 @@
+id: I-0795
+provider: local
+kind: memory
+body: 'A GATED HALF CAN HIDE A DISCHARGED ONE: DAT-J step 3 was priced as divRep-gated
+  for its whole length, and half of it needed nothing. Run 0071 s0016 (ajcr-divrep),
+  kernel EXIT=0, axiom-clean vs a firing control.
+
+
+  WHAT HAPPENED. JacobianDataAbelSquare splits DAT-J step 3 into (a) an Abel-compatibility
+  square and (b) an effectivity input heff, and JacobianDataAbelImage says the brick
+  "needs the universal degree-g class, hence divRep". Only (a) needs the representation
+  -- naming abel requires it. (b) was available today: five landed lemmas, none touching
+  divFunctor/DivFamZar/certificate/chart (Over.testPoint, mem_pic0Subgroup_iff, exists_splitting_of_picEt
+  UNCONDITIONAL, classDeg_presenting_eq_zero, plus one new brick).
+
+
+  WHY NOBODY SAW IT. The row named both halves in one sentence, so the gating of (a)
+  was read as gating the pair. A row that lists two obligations under one gate should
+  be checked HALF BY HALF: ask of each half separately which named object it cannot
+  be WRITTEN without.
+
+
+  AND THE BRICK ITSELF WAS A STATEMENT GAP, NOT MATHEMATICS. Every effectivity lemma
+  in the tree concludes "0 <= E and picClass E = picClass W" -- no claim about deg
+  E -- while the consumer demands 0 <= D AND deg D = g. Degree is a class invariant,
+  so the missing conjunct transports for free. A one-conjunct mismatch between a producer
+  and its consumer reads exactly like missing mathematics in a census.
+
+
+  BONUS COST CORRECTION: a predicted fiberTwist shift was unnecessary -- at degree
+  exactly g the RR bound 1 <= deg + chi is TIGHT. Check whether a predicted shift
+  is needed at the BOUNDARY value before building it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T02:56:09.329824+00:00'
+updated_at: '2026-07-29T02:56:09.329834+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0016-horizon-ajcr-divrep
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

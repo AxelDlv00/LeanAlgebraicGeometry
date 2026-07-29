@@ -28,7 +28,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.maintenance.blueprint.pins
   owner: ajc-optimize
-  milestone: ajc-optimize
-  updated_at: '2026-07-25T21:48:01.448241+00:00'
+  milestone: AJC.maintenance
+  updated_at: '2026-07-29T02:58:50.982811+00:00'
   pinned_commits:
   - 0cd05df34

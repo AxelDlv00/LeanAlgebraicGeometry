@@ -1,3 +1,4 @@
 {"at": "2026-07-17T07:55:56.409764+00:00", "actor": "human", "field": "created", "from": "", "to": "pending", "note": "opened"}
 {"at": "2026-07-17T12:53:01.676720+00:00", "actor": "human", "field": "status", "from": "pending", "to": "active", "note": ""}
 {"at": "2026-07-17T13:18:01.761289+00:00", "actor": "human", "field": "status", "from": "active", "to": "done", "note": ""}
+{"at": "2026-07-29T03:04:27.092985+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}

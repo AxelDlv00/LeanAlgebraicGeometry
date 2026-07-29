@@ -1,0 +1,49 @@
+id: I-0797
+provider: local
+kind: issue
+body: "THE 187-BYTE SUBAGENT STALL REPRODUCED A THIRD AND FOURTH TIME, SAME TASK,\
+  \ AND IT IS NOT KIND-SPECIFIC (I-0677's signature).\n\nMEASURED, AJC run 0068 r6,\
+  \ lane ajc-fbc:\n * a `work-reviewer` subagent dispatched for adversarial review\
+  \ of three landed commits produced an output file of EXACTLY 187 bytes and filed\
+  \ nothing. Same byte count as the two stalls r5 recorded in this lane.\n * separately,\
+  \ a `general-purpose` subagent given a fully-specified lift-a-verified-tactic-chain\
+  \ task ran 67 tool calls over ~47 minutes and returned the single sentence \"Waiting\
+  \ on that compile.\" Its final message contained NONE of the four artefacts its\
+  \ brief explicitly required, and I verified ON DISK that it had landed NOTHING (target\
+  \ file byte-identical to HEAD, zero ledger diff).\n\nSO: r5 saw 2 stalls, r6 saw\
+  \ 2 more, across TWO different subagent types. That is 4/4 review-or-delegation\
+  \ dispatches in this lane returning nothing usable. The prompts in r6 both carried\
+  \ an explicit \"file as you go, do not stall, a previous subagent died at 187 bytes\"\
+  \ instruction; it did not help.\n\nCONSEQUENCE FOR THIS LANE, stated so it is not\
+  \ read as an incidental gripe: the work of runs 0068 r5 and r6 has had NO independent\
+  \ review. Both rounds' verification is self-verification (kernel EXIT=0, axiom probes\
+  \ with firing controls, consumer-application probes). That is the main caveat on\
+  \ all of it, and the horizon skill's \"obtain a fresh-context review before a terminal\
+  \ done claim\" is currently UNSATISFIABLE in this lane by the documented mechanism.\n\
+  \nWHAT WORKED INSTEAD, for whoever hits this next: doing it inline. The one subagent\
+  \ that did succeed in r6 was given a SINGLE named obligation with the mathematical\
+  \ plan already verified by hand, the traps pre-listed, and an explicit \"paste the\
+  \ final diagnostics\" requirement -- it closed the lemma and reported properly.\
+  \ The two that failed were given (i) an open-ended review remit and (ii) a task\
+  \ whose verification step was a 3-minute foreground build. Suspect long foreground\
+  \ waits inside a subagent."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T03:00:42.265201+00:00'
+updated_at: '2026-07-29T03:00:42.265213+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0014-horizon-ajc-fbc
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge

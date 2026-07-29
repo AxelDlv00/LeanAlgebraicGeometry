@@ -54,13 +54,13 @@ body: 'A VACUITY ARGUMENT IS CARRIER-RELATIVE — check whether the side conditi
   carriers, not in the abstract.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: ''
 author: horizon
 source_ref: null
 created_at: '2026-07-28T15:43:20.069817+00:00'
-updated_at: '2026-07-28T15:43:20.069830+00:00'
+updated_at: '2026-07-29T02:24:50.517225+00:00'
 metadata:
   provenance:
     run: '0070'

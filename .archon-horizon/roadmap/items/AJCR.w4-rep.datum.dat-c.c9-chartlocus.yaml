@@ -60,5 +60,6 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c
-  updated_at: '2026-07-28T23:43:39.357394+00:00'
+  updated_at: '2026-07-29T03:01:04.684806+00:00'
   owner: ajcr-charts
+  milestone: AJCR.w4-rep

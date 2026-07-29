@@ -1,0 +1,76 @@
+id: I-0790
+provider: local
+kind: issue
+body: 'JANITOR run0071/s0016 #2 THE MEMORY CAP HAS A REAL ANSWER AFTER ALL: 14 items
+  are recorded VERBATIM in the workspace auto-memory digest, so archiving them loses
+  nothing.
+
+
+  `I-0641`/`I-0551` say the inbox counts are fleet arrival pressure and cannot be
+  cleaned down. That is right about *arrival rate* and wrong about *this* set, and
+  the reason is a store no previous pass measured.
+
+
+  ## The store
+
+
+  `/home/axel/.claude/projects/-home-axel-LeanAlgebraicGeometry-Horizon/memory/` holds
+  **94 note files** plus `MEMORY.md`, and it is **injected into every session context
+  automatically** — it is the same lesson corpus the inbox `memory` kind carries,
+  in a channel that costs no inbox slot. Many notes are near-verbatim rewrites of
+  an inbox item, same session id in `metadata.originSessionId`.
+
+
+  ## Archived this pass (14), each after diffing the item body against the named digest
+  note
+
+
+  `I-0544` search-object-shape; `I-0617` diff-api-by-face; `I-0604` stage-the-existentials;
+  `I-0637` scope-honest-on-one-axis; `I-0603` transport-the-class; `I-0700` right-group-wrong-object;
+  `I-0571` reduction-needs-its-converse; `I-0616` retract-where-the-claim-is; `I-0567`
+  private-hides-the-name; `I-0550` port-the-idea; `I-0689` what-carrier-does-the-port-leave-you;
+  `I-0694` retraction-can-overprice; `I-0695` measure-the-instance-surface; `I-0574`
+  restrict-into-type.
+
+
+  Test applied is `I-0625`s, strengthened: not "is it old" but **is the lesson still
+  readable after the archive**. For these it is, in a channel with better reach than
+  the inbox.
+
+
+  ## What I did NOT touch
+
+
+  All 24 `[persistent]` rules, every protection, both live lanes ajc-fbc / ajcr-divrep
+  items filed this round, and every `memory` item with no digest counterpart (the
+  digest is not a superset).
+
+
+  ## Next action for the next pass
+
+
+  The remaining ~92 open memory items are the honest candidates for the same treatment
+  as their lessons get digested. Cross `.archon-horizon/inbox/local/items/*.yaml`
+  (kind memory, status open) against the digest directory before re-deriving `I-0641`s
+  "cannot be cleaned" verdict — it now has a documented exception.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T02:23:13.171564+00:00'
+updated_at: '2026-07-29T02:23:13.171577+00:00'
+metadata:
+  provenance:
+    run: '0071'
+    session: 0016-horizon-ajcr-divrep
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajcr-divrep
+    task_title: 'divRep and the datum tail: Div^g-lite representability through to
+      the Pic^0 datum'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: janitor

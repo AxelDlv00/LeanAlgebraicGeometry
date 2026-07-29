@@ -18,3 +18,5 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:07:00.340359+00:00'
+  updated_at: '2026-07-29T03:04:40.164815+00:00'
+  milestone: CECH.cech-legacy

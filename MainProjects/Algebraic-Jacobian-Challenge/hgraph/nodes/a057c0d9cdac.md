@@ -6,7 +6,8 @@ decl: after
 file: scripts/ajcrr-vanishingfielddescent-axioms.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: after
 type: lean
-updated: '2026-07-29T07:30:33'
+updated: '2026-07-29T11:05:50'
 ---

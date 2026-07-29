@@ -2,3 +2,4 @@
 {"at": "2026-07-16T18:36:05.771288+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "active", "note": ""}
 {"at": "2026-07-16T18:36:57.372966+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "active", "note": ""}
 {"at": "2026-07-19T02:56:12.400735+00:00", "actor": "horizon", "field": "status", "from": "active", "to": "done", "note": ""}
+{"at": "2026-07-29T03:01:20.935758+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}

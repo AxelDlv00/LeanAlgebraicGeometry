@@ -1,3 +1,4 @@
 {"at": "2026-07-14T01:19:17.296496+00:00", "actor": "horizon", "field": "created", "from": "", "to": "pending", "note": "opened"}
 {"at": "2026-07-14T03:56:18.271045+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-14T14:05:33.901229+00:00", "actor": "horizon", "field": "status", "from": "pending", "to": "done", "note": ""}
+{"at": "2026-07-29T03:00:44.020321+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}

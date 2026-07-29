@@ -92,10 +92,29 @@ objects through the `tilde` dictionary over `Spec`.
   r5): half (a) — the one remaining obligation — as a **named** `Prop` rather than an unnamed
   hypothesis binder, together with an equivalent form carrying no `pushforward`, hence attackable by
   the pullback pseudofunctor's coherence and the mate's unit law.
+* `counit_comp_decomp`, `rawPushPullMap_pullback_counit`, `bcv_hom_eq`, `bcv_pullback_counit`
+  (run 0068 r6): **both** Beck–Chevalley mates in half (a) are *eliminable*.  r5 removed one and
+  recorded honestly that the other was blocked by `pushPullMap (wmap …)` sitting between the mate
+  and the counit; the fix is that that restriction map is *itself* built from a unit, so the same
+  "under `p^*`, past the counit" move kills it.  See the section "THE SECOND MATE IS ELIMINABLE
+  TOO" below.  The reduction these feed —  `BcSquareCoherence` and
+  `bcSquareCounitSide_of_coherence` — lives in
+  `AlgebraicJacobian.Cohomology.CechTwistedCoherenceReduction`, deliberately in a **separate
+  module**: its proof unfolds two `asIso`-wrapped `IsIso` instances, which is cheap against an
+  olean and pathological (35 min CPU, 10 GB RSS, unfinished) when they are local to this file.
+  **None of this discharges anything**: `BcSquareCoherence` is assumed, not proved.
 
 ## Obligations not yet discharged
 
 Three statements below are still assumed rather than proved.
+
+**And one more that a `sorry` census cannot see, because it is a hypothesis and not a `sorry`:
+`BcSquareCoherence` (run 0068 r6, in `Cohomology.CechTwistedCoherenceReduction`).**  It is what the
+twisted-nerve chain now rests on.  It is stated with no Beck–Chevalley mate in it, which is the
+round's advance — but it is *not proved and not free*: it is a genuine identity relating the
+pullback pseudofunctor's coherence isomorphisms to the cover-intersection inclusion
+`U_{σ'} ⊆ U_{σ'∘δᵏ}`.  Listed here because a reader counting `sorry`s will not find it, and this
+file has a history of obligations that stayed invisible for exactly that reason.
 
 * `pullback_preservesMonomorphisms`: for `g` flat, `g^*` preserves monomorphisms — for
   *arbitrary* `𝒪_S`-modules.  **It is no longer on the critical path, and it should not be
@@ -158,6 +177,16 @@ Three statements below are still assumed rather than proved.
   **naturality in the over-object** is what is missing.  A `Y`-natural Beck–Chevalley for
   `pushPullFunctor` would supply it as a component; a workspace-wide search found none, and
   `pushPullFunctor` has no API beyond being whiskered once in `cechNerveCosimplicial`.
+
+  **RUN 0068 r6: A `Y`-NATURAL BECK–CHEVALLEY IS NO LONGER WHAT IS NEEDED.**  The mate does not have
+  to be related across squares — it can be *removed*, on both sides (`bcv_pullback_counit` and
+  `rawPushPullMap_pullback_counit` below).  What is left is `BcSquareCoherence`
+  (`Cohomology.CechTwistedCoherenceReduction`), an identity about the pullback pseudofunctor's
+  coherence isomorphisms and the cover-intersection inclusion, with no mate in it.  The `sorry` in
+  `twisted_cech_nerve_iso` still stands, because `BcSquareCoherence` is unproved; what changed is
+  *which* statement must be proved, and that the tools for the new one
+  (`pseudofunctor_associativity` and its unitality siblings, `pullbackCongr`, `ppTel` naturality)
+  do exist here and in mathlib — which is exactly what the old frontier lacked.
 
 Neither `pullback_preservesFiniteLimits` nor `pullback_preservesHomology` is an `instance`, and
 that is deliberate: as instances they leaked `sorryAx` into every *synthesis site* while

@@ -1,0 +1,52 @@
+id: I-0785
+provider: local
+kind: memory
+body: "ELIMINATE THE MATE ON BOTH SIDES: the second obstruction was the RESTRICTION\
+  \ MAP'S OWN UNIT, not the mate -- AJC run 0068 r6, ajc-fbc, kernel EXIT=0.\n\nBACKGROUND.\
+  \ r5 found mathlib's mateEquiv_counit DELETES a Beck-Chevalley mate under the left\
+  \ adjoint past the counit, with an honest limit: it fired on ONE SIDE ONLY of the\
+  \ twisted-nerve square, because there the mate is at sigma'-o-delta^k while the\
+  \ counit is at sigma', with pushPullMap (wmap ...) between them. r5 also correctly\
+  \ ruled out counit_naturality for that step.\n\nTHE MOVE, and it generalises: the\
+  \ thing BETWEEN the mate and the counit was itself built from a UNIT (rawPushPullMap\
+  \ = eta^a then pushforwardComp then pullbackComp). So apply the same trick to IT\
+  \ -- read the restriction map under p^* past the counit and its unit dies by the\
+  \ left triangle. What remains is pullbackComp coherence plus one ordinary counit.\
+  \ Landed: rawPushPullMap_pullback_counit_self/_counit, and bcv_pullback_counit doing\
+  \ the same for bcv in closed form. Axiom-clean; 2 controls still sorryAx.\n\nLESSON,\
+  \ one line: when a mate elimination is blocked by an intervening comparison map,\
+  \ eliminate THAT map's unit too -- ask what the obstruction is BUILT from.\n\nTHREE\
+  \ TRAPS, measured:\n 1. THE rfl CASE MAY NOT REACH THE CONSUMER. My adjunct for\
+  \ p2 = a>>p1 (over-triangle rfl) was USELESS: wmap's over-triangle is a genuine\
+  \ equation, NOT rfl. Needed the general-w version (subst w from the rfl one). Probe\
+  \ whether the consumer's instance is the rfl one.\n 2. THE LSP CAN SERVE A STALE\
+  \ OLEAN and report a just-added name as unknown while the kernel accepts it. I nearly\
+  \ read that as \"my edit did not land\".\n 3. rw vs erw is not taste here. (Over.mk\
+  \ q).hom vs q, and pushforward (a>>p1) vs pushforward a >> pushforward p1, are rfl-equal\
+  \ but differently SPELLED; rw says \"did not find an occurrence\" plus a type mismatch\
+  \ naming both, or \"motive is not type correct\" when a dependent Over.w proof mentions\
+  \ the abstracted occurrence. Fix: state the instance as a hypothesis in the goal's\
+  \ own spelling, and generalise the head to a variable.\n\nSTATE, honestly: half\
+  \ (a) is NOT closed. Its RHS is now entirely mate-free; the LHS still carries bcv\
+  \ at sigma'-o-delta^k, whose adjunct does not apply because that side's counit is\
+  \ at sigma'. No endpoint moved."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T01:49:14.711850+00:00'
+updated_at: '2026-07-29T01:49:14.711861+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0014-horizon-ajc-fbc
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge

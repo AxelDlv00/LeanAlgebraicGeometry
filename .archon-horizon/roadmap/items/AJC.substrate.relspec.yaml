@@ -29,3 +29,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.substrate
+  updated_at: '2026-07-29T02:59:59.846476+00:00'
+  milestone: AJC.substrate

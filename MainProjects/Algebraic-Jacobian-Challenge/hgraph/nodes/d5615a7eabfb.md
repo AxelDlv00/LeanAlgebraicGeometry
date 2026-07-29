@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Grassmannian.representable_of_iso_free
 type: lean
-updated: '2026-07-24T03:02:11'
+updated: '2026-07-29T11:05:40'
 ---
 theorem representable_of_iso_free {V : S.Modules} {r : ℕ}
     (e : V ≅ SheafOfModules.free (R := S.ringCatSheaf) (Fin r)) {d : ℕ}
@@ -38,3 +38,20 @@ The definitions `overRes` / `overResHom` / `overResLE` / `IsZariskiSheafOver`
 and the descent theorem `Scheme.representable_of_openCover`
 (EGA 0_I 4.5.4; Stacks 01JJ) now live in
 `AlgebraicJacobian/Picard/ZariskiDescentRepresentability.lean`, where the
+theorem is **proved** (via mathlib's
+`AlgebraicGeometry.Scheme.LocalRepresentability`, Stacks 01JJ, applied to the
+small total functor of `F`). -/
+
+/-! ## §6. Restriction of the Grassmannian to an open of the base
+
+For a base morphism `j : S' ⟶ S`, restricting the relative Grassmannian
+functor along `Over.map j : Over S' ⥤ Over S` classifies quotients of the
+restricted module: the pseudofunctor comparison `pullbackComp` re-presents a
+quotient of `(T.hom ≫ j)^* V` as a quotient of `T.hom^* (j^* V)`, naturally
+in `T` (`restrictIso`).  Combined with the trivialised case this yields local
+representability over each member of a trivialising cover of `(S, V)`
+(`representable_restrict`), and Zariski descent closes the theorem. -/
+
+namespace Grassmannian
+
+variable {S : Scheme.{0}} [IsLocallyNoetherian S]
