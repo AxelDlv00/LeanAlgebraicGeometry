@@ -1931,8 +1931,31 @@ theorem leakProbe_bareBC_mateElimination {V V' : Scheme.{u}}
             ((Scheme.Modules.pullbackPushforwardAdjunction p).counit.app c) :=
   bareBC_pullback_counit g' p p' gV hsq c
 
+/-- **THE WIRING IS CONSUMED, not merely stated** — the strongest line in this section.
+
+`alternatingCofaceComplexIsoOfDelta` applied to `twistedComponent` and `twistedComponent_δ_square`
+yields an actual isomorphism of alternating-coface complexes, on the single hypothesis
+`TwistedPerSigmaDeltaCompat`.  Measured because a degreewise family plus a proved square is not
+progress until the CONSUMER accepts them, and this workspace has repeatedly shipped interfaces that
+nothing could consume.  Clean. -/
+noncomputable def leakProbe_wiringConsumed (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
+    [Finite (bcCover f g f' g' h 𝒰).I₀]
+    (F : X.Modules) (hF : F.IsQuasicoherent)
+    (hcompat : TwistedPerSigmaDeltaCompat f g f' g' h 𝒰 F hF) :
+    (AlgebraicTopology.alternatingCofaceMapComplex X'.Modules).obj
+        (((CosimplicialObject.whiskering X.Modules X'.Modules).obj
+          (Scheme.Modules.pullback g')).obj
+          (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)))
+      ≅ (AlgebraicTopology.alternatingCofaceMapComplex X'.Modules).obj
+          (CosimplicialObject.Augmented.drop.obj
+            (CechNerve (bcCover f g f' g' h 𝒰) ((Scheme.Modules.pullback g').obj F))) :=
+  twistedCechComplexIsoOfCompat f g f' g' h 𝒰 F hF hcompat
+
 end Section6i
 
+#print axioms leakProbe_wiringConsumed
 #print axioms leakProbe_bareBC_mateElimination
 #print axioms leakProbe_wiredDeltaSquare
 #print axioms leakProbe_bcNerveCoface_sigma

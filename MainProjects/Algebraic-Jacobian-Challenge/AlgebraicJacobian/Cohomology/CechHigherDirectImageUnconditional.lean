@@ -3778,6 +3778,48 @@ theorem twistedComponent_δ_square (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S')
   exact cechNerve_backbone_δ_sigma (bcCover f g f' g' h 𝒰)
     ((Scheme.Modules.pullback g').obj F) n k σ'
 
+set_option maxHeartbeats 1600000 in
+-- Elaborating this application unfolds `twistedComponent` at two adjacent degrees, so both
+-- four-factor Beck-Chevalley composites over an intersection open are forced in one goal, and the
+-- σ-product instances (finite products over `Fin (n+1) → 𝒰.I₀`) are re-synthesised per degree.
+set_option synthInstance.maxHeartbeats 800000 in
+/-- **THE WIRING, CONSUMED — the twisted leaf as an actual isomorphism of complexes, modulo one
+hypothesis.**  `alternatingCofaceComplexIsoOfDelta` fed the degreewise family `twistedComponent`
+together with the coface square `twistedComponent_δ_square`.
+
+**This declaration is why "item (i) is closed" is a claim about Lean and not about prose.**  A
+degreewise family plus a proved square is not yet progress: what matters is whether the *consumer*
+accepts them, and this workspace has repeatedly shipped interfaces nothing could consume.  Here the
+consumer is applied, so the composition typechecks and the wiring is exercised rather than asserted.
+
+Note what the hypothesis is: `TwistedPerSigmaDeltaCompat`, i.e. half (a) and nothing else.  So the
+distance from here to Stacks 02KG/02KH's twisted half is exactly one named `Prop` — see
+`BcSquareNaturality` and its two equivalent restatements below.
+
+This does *not* by itself discharge `twisted_cech_nerve_iso`: that declaration is built with
+`NatIso.ofComponents` and produces a full *cosimplicial* isomorphism, whereas this produces the
+isomorphism of alternating-coface complexes that every consumer downstream actually reads
+(`cechComplex_baseChange_iso_of_cosimplicialIso` bottoms out at `alternatingCofaceMapComplex`).
+Rewiring the endpoint chain onto this is the next mechanical step and is not done here.
+Project-local. -/
+noncomputable def twistedCechComplexIsoOfCompat
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
+    [IsSeparated f] [IsAffine S] [∀ i, IsAffine (𝒰.X i)]
+    [Finite (bcCover f g f' g' h 𝒰).I₀]
+    (F : X.Modules) (hF : F.IsQuasicoherent)
+    (hcompat : TwistedPerSigmaDeltaCompat f g f' g' h 𝒰 F hF) :
+    (AlgebraicTopology.alternatingCofaceMapComplex X'.Modules).obj
+        (((CosimplicialObject.whiskering X.Modules X'.Modules).obj
+          (Scheme.Modules.pullback g')).obj
+          (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)))
+      ≅ (AlgebraicTopology.alternatingCofaceMapComplex X'.Modules).obj
+          (CosimplicialObject.Augmented.drop.obj
+            (CechNerve (bcCover f g f' g' h 𝒰) ((Scheme.Modules.pullback g').obj F))) :=
+  alternatingCofaceComplexIsoOfDelta _ _
+    (fun n => twistedComponent f g f' g' h 𝒰 F hF n)
+    (fun n k => twistedComponent_δ_square f g f' g' h 𝒰 F hF hcompat n k)
+
 /-- In a slice category over `T`, if the target's structure map is a mono then any two slice
 morphisms with the same source and target are equal. -/
 theorem over_hom_ext_of_mono {C : Type*} [Category C] {T : C} {A B : Over T}
