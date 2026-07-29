@@ -103,27 +103,54 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   \ as such: that Kleiman's non-sheaf curve satisfies this\nfile's binders (smooth,\
   \ proper, geometrically integral) is quoted from the\nreference rather than proved.\
   \ Tracked as `AJC.picrep.etale-rep`; the board node\n`AJC.picrep` carries the landed/absent\
-  \ split.\n\nThis is the **sole** `sorry` of the seam: everything else below — the\n\
-  representing scheme `PicSchemeEt`, its representability, local finiteness,\nseparatedness\
-  \ and group-scheme structure, the comparison theorem\n`picEtComparison_isIso_of_hasRationalPoint`\
-  \ and the conditional\n`picSchemeOfHasRationalPoint` — is derived from it.\n\n**Why\
-  \ the second conjunct is bundled here rather than given its own `sorry`.**\nClause\
-  \ (1) is Kleiman §4; clause (2) is Kleiman §2 Thm 2.5 (`th:comp`): given a\nsection,\
-  \ the comparison `picSharp C → Pic_{(C/k)ét}` is an isomorphism. Both are\ntheorems\
-  \ of the same paper and neither is formalised. They are stated as one\nnamed obligation\
-  \ on purpose: the `picSharp`-shaped consumer interface\n(`HasPicScheme`, and through\
-  \ it the tangent-space chain and the `k̄` Albanese\nwitness) needs clause (2) to\
-  \ exist at all, and splitting it out would report the\nJacobian headline as resting\
-  \ on *six* open obligations where the mathematics has\nfive. The bundling adds no\
-  \ strength — clause (2) is conditional on a section, so\nit says nothing about a\
-  \ pointless curve — and it keeps the frontier count honest\nin both directions.\
-  \ `scripts/axiom-frontier.lean` measures the result rather\nthan asserting it."
+  \ split.\n\n**The repair has a third input, and until 2026-07-29 no site named it**\n\
+  (`review-ajc`, `AJC.picrep.etale-rep.crossbase`). \"Descend `picEt` instead of\n\
+  `picSharp`\" needs three things, not two. Two exist: `Picard/EtaleFieldCover.lean`\n\
+  proves `Spec k' ⟶ Spec k` is an étale cover and that `picEt` satisfies its sheaf\n\
+  axiom at every test (the descent *test*), and `G1`/`G2` supply the Galois action\n\
+  and the quotient. The third is the **cross-base identification**: for a `k'`-test\n\
+  `T`,\n\n  `picEt C` at `(Over.map (Spec.map (algebraMap k k'))).obj T`\n    ≅ `picEt\
+  \ (Scheme.baseChangeField C k')` at `T`.\n\nWithout it the scheme `J5` produces\
+  \ over `k'` represents `picEt` *of the curve\nover `k`, restricted to `k'`-tests*\
+  \ rather than `picEt` of the base-changed\ncurve, and there is no functor for the\
+  \ descent datum to be a datum *for*.\nMeasured: the statement type-checks in this\
+  \ project (the base-changed curve\ninherits both binders, `RiemannRoch/CurveBaseChange.lean:256`),\
+  \ and it is absent\n— the complete list of `picEt`-named declarations here is `picEt`,\n\
+  `picEtCommGrp`, `picEtCommGrpForgetIso`, `picEtComparison`,\n`picEtComparison_isIso_of_hasRationalPoint`,\
+  \ `picEt_ext_of_pullback_agrees`,\n`isSheafFor_picEt_of_mem`, `isSheafFor_picEt_pullback_presieve`\
+  \ and\n`picEt_isSheaf_forget`, and none of them mentions a base change of the *curve*.\n\
+  (The census is as of 2026-07-29 at commit `d4e9f14b96`; an earlier revision of\n\
+  this paragraph listed `picEt_isSheaf_etaleTopologyOver`, which `ajc-p1` deleted\n\
+  the same day on finding it re-proved `picEt_isSheaf_forget` under a different\n\
+  route — `I-1075`. The absence conclusion is unaffected: the deletion removed a\n\
+  duplicate, not a cross-base statement.)\n\nIt is **not** portable from the sibling\
+  \ project, which is the trap here. `AJCR`\nproves exactly this comparison as a `MulEquiv`\
+  \ (`picEtCrossBaseEquiv`,\n`Picard/PicEtCrossBase.lean:316`), but its `picEt` is\
+  \ a hand-built affine-opens\nlimit of plus-classes (`PicEt.lean:105`) while this\
+  \ file's is a categorical\nsheafification (`PicEtSheaf.lean:238`) — different objects,\
+  \ and there is no\n`lake` dependency edge between the projects. That 468-line file\
+  \ is a design lead,\nnot an import.\n\nThis is the **sole** `sorry` of the seam:\
+  \ everything else below — the\nrepresenting scheme `PicSchemeEt`, its representability,\
+  \ local finiteness,\nseparatedness and group-scheme structure, the comparison theorem\n\
+  `picEtComparison_isIso_of_hasRationalPoint` and the conditional\n`picSchemeOfHasRationalPoint`\
+  \ — is derived from it.\n\n**Why the second conjunct is bundled here rather than\
+  \ given its own `sorry`.**\nClause (1) is Kleiman §4; clause (2) is Kleiman §2 Thm\
+  \ 2.5 (`th:comp`): given a\nsection, the comparison `picSharp C → Pic_{(C/k)ét}`\
+  \ is an isomorphism. Both are\ntheorems of the same paper and neither is formalised.\
+  \ They are stated as one\nnamed obligation on purpose: the `picSharp`-shaped consumer\
+  \ interface\n(`HasPicScheme`, and through it the tangent-space chain and the `k̄`\
+  \ Albanese\nwitness) needs clause (2) to exist at all, and splitting it out would\
+  \ report the\nJacobian headline as resting on *six* open obligations where the mathematics\
+  \ has\nfive. The bundling adds no strength — clause (2) is conditional on a section,\
+  \ so\nit says nothing about a pointless curve — and it keeps the frontier count\
+  \ honest\nin both directions. `scripts/axiom-frontier.lean` measures the result\
+  \ rather\nthan asserting it."
 file: AlgebraicJacobian/Picard/FGAPicRepresentability.lean
 generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.fgaPicardRepresentability
 type: lean
-updated: '2026-07-29T22:29:08'
+updated: '2026-07-30T00:50:56'
 ---
 theorem fgaPicardRepresentability {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

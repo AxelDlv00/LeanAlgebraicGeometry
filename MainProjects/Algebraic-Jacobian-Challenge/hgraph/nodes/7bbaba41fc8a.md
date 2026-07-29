@@ -7,9 +7,10 @@ docstring: 'PROBE 3: universal closedness from the valuative criterion, etale si
 file: Probe/P3Structure.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Probe3.probe_univClosed
 type: lean
-updated: '2026-07-29T23:31:12'
+updated: '2026-07-30T00:51:00'
 ---
 theorem probe_univClosed (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

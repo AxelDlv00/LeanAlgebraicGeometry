@@ -33,9 +33,10 @@ docstring: '**`picEt C` is an étale sheaf on `(Sch/k)`**, in the type-valued fo
 file: AlgebraicJacobian/Picard/EtaleFieldCover.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Scheme.picEt_isSheaf_etaleTopologyOver
 type: lean
-updated: '2026-07-29T23:41:45'
+updated: '2026-07-30T00:51:00'
 ---
 theorem picEt_isSheaf_etaleTopologyOver (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] :

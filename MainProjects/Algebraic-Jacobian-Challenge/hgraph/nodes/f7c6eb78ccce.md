@@ -7,9 +7,10 @@ docstring: 'PROBE E: and therefore obligation 4 discharges my whole smoothness h
 file: Probe/P3Perfect.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: AlgebraicGeometry.Probe3P.probe_p2_smooth
 type: lean
-updated: '2026-07-29T23:41:46'
+updated: '2026-07-30T00:51:01'
 ---
 theorem probe_p2_smooth
     (hB : SmoothOfRelativeDimension (genus C) (Scheme.Pic0SchemeEt C).hom) :

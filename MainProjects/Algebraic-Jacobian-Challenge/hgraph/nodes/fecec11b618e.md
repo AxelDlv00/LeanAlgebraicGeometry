@@ -86,7 +86,29 @@ docstring: 'The Albanese witness for a smooth proper geometrically irreducible c
   `Scheme.Pic0Et.universallyClosed`, `smoothOfRelativeDimension_genus_pic0Et` and
 
   `isAlbanese_pic0Et` — every one of which is a **true statement awaiting a proof**.
-  The
+
+
+  **These five are not five independent distances, and counting them as such
+
+  overstates the remaining work by one while understating what leaf B buys**
+
+  (measured by `ajc-p3`, independently by `ajc-p2`, relayed here by `review-ajc`
+
+  because both lanes declined to edit a third lane''s file mid-round; `I-1044`).
+
+  `SmoothOfRelativeDimension.geometricallyReduced` turns obligation 4
+
+  (`smoothOfRelativeDimension_genus_pic0Et`) directly into obligation 2
+
+  (`Pic0Et.geometricallyReduced`), and composed with
+
+  `Pic0Et.smooth_of_geometricallyReduced` it also gives `Pic0Et.smooth`. So the
+
+  arrow runs 4 ⟹ 2: no work on 2 is wasted, but closing leaf B closes two of the
+
+  five at once. Still genuinely independent: `Pic0Et.universallyClosed`, whose
+
+  residue is `IsReduced`-free and which nothing in the smoothness cone touches. The
 
   `GeometricallyIntegral` hypothesis of the Picard development is *not* among them:
   it is
@@ -100,7 +122,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.picardJacobianWitness
 type: lean
-updated: '2026-07-28T14:03:57'
+updated: '2026-07-30T00:50:56'
 ---
 noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
