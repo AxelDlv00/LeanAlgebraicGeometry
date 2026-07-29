@@ -575,6 +575,7 @@ import AlgebraicJacobian.Picard.Pic0ChartRestrictedFibre
 import AlgebraicJacobian.Picard.Pic0ChartRestrictedFibreSat
 import AlgebraicJacobian.Picard.Pic0ChartVMonotone
 import AlgebraicJacobian.Picard.Pic0ChartBotRefute
+import AlgebraicJacobian.Picard.Pic0ChartCoverForcesNonInj
 import AlgebraicJacobian.Picard.Pic0ChartCoverageAbel
 import AlgebraicJacobian.Picard.Pic0ChartLocusH0One
 import AlgebraicJacobian.Picard.Pic0ChartCoverageThreshold

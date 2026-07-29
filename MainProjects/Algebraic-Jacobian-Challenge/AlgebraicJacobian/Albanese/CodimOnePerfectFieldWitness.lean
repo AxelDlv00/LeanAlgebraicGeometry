@@ -4,7 +4,6 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Albanese.CodimOnePerfectField
-import AlgebraicJacobian.Picard.Pic0Dimension
 import AlgebraicJacobian.Picard.RigidPushforwardP1Witness
 import AlgebraicJacobian.Picard.RigidPushforwardInstance
 
@@ -26,12 +25,9 @@ would not elaborate.
 
 ## What this does and does not show
 
-* It **does** show the theorems of `CodimOnePerfectField.lean` are not vacuous,
-  and that the widening is not a re-spelling of the closed case: `ℚ` and `𝔽₅`
-  are genuinely outside `IsAlgClosed`.  (An earlier revision said "five
-  theorems"; an audit deleted two of them as weaker than landed lemmas —
-  `I-1302` — and this file lost its reducedness witness with them, since
-  `Smooth.isReduced_of_field` covers that over an ARBITRARY field.)
+* It **does** show the five theorems of `CodimOnePerfectField.lean` are not
+  vacuous, and that the widening is not a re-spelling of the closed case: `ℚ`
+  and `𝔽₅` are genuinely outside `IsAlgClosed`.
 * It does **not** touch `isAlbanese_pic0Et` (headline obligation 5) or witness
   any antecedent of it.  `ℙ¹` is a curve, but the obligation is about
   `Pic⁰_{C/k}` and the Albanese universal property, neither of which appears
@@ -56,18 +52,27 @@ below.  Recorded as a named theorem so the non-vacuity argument does not rest on
 an unstated instance. -/
 theorem perfectField_rat : PerfectField ℚ := inferInstance
 
-/-- **Non-vacuity at `ℙ¹_ℚ` of the landed perfect-field Stacks `00TT`**
-(`Picard/Pic0Dimension.lean`), included because the DVR witness below consumes it
-and because that theorem's own file carries no instantiation.  `ℚ` is perfect and
-not algebraically closed. -/
+/-- **Non-vacuity of `isRegularLocalRing_stalk_of_smooth_perfectField`**: Stacks
+`00TT` at every point of `ℙ¹_ℚ`.  The whole binder set — `Smooth`,
+`GeometricallyIrreducible`, `IsSeparated`, `LocallyOfFiniteType`, `IsIntegral`,
+`IsReduced` — is synthesized at `p1Over ℚ`, over a field that is not
+algebraically closed. -/
 theorem isRegularLocalRing_stalk_p1Over_rat (z : (p1Over ℚ).left) :
     IsRegularLocalRing ((p1Over ℚ).left.presheaf.stalk z) :=
-  isRegularLocalRing_stalk_of_smooth_of_perfectField (p1Over ℚ) z
+  isRegularLocalRing_stalk_of_smooth_perfectField (p1Over ℚ) z
 
 /-- **Non-vacuity of `localRing_dvr_of_codim_one_perfectField`** at `ℙ¹_ℚ`. -/
 theorem localRing_dvr_p1Over_rat (z : (p1Over ℚ).left) (hz : Order.coheight z = 1) :
     IsDiscreteValuationRing ((p1Over ℚ).left.presheaf.stalk z) :=
   localRing_dvr_of_codim_one_perfectField (p1Over ℚ) z hz
+
+/-- **Non-vacuity of `isReduced_of_smooth_perfectField`** at `ℙ¹_ℚ`.  Note this
+one is *also* available from the in-tree `IsIntegral` instance, so it is the
+weakest of the four as a witness; it is included because the perfect-field
+reducedness proof is the one that needed a different route from the in-tree
+`IsAlgClosed` version, and this checks that route fires on real data. -/
+theorem isReduced_p1Over_rat : IsReduced ((p1Over ℚ).left) :=
+  isReduced_of_smooth_perfectField (p1Over ℚ)
 
 namespace RationalMap
 
@@ -89,7 +94,7 @@ declaration needs no ambient instance. -/
 theorem isRegularLocalRing_stalk_p1Over_zmod
     (p : ℕ) [hp : Fact (Nat.Prime p)] (z : (p1Over (ZMod p)).left) :
     IsRegularLocalRing ((p1Over (ZMod p)).left.presheaf.stalk z) :=
-  isRegularLocalRing_stalk_of_smooth_of_perfectField (p1Over (ZMod p)) z
+  isRegularLocalRing_stalk_of_smooth_perfectField (p1Over (ZMod p)) z
 
 end Scheme
 
