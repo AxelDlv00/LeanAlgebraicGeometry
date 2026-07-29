@@ -1,169 +1,151 @@
 id: AJCR.w4-rep.datum.dat-d.ddr.divrep
-title: 'DD-R divRep: affine classification, Zariski/global representability, and consumer
-  export'
+title: 'DD-R divRep: affine classification, Zariski/global representability, and consumer export'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "DD-R divRep: affine classification, Zariski/global representability, and\
-  \ consumer export.\n\n*** NOTHING BELOW THE ENDPOINT REMAINS, 2026-07-29 (run 0071\
-  \ s0016, ajcr-divrep). The refutation\nbox below (s0014) still stands on its own\
-  \ terms. What is NEW is that this row's L11 debt --\ncarried by critical-path 7.1,\
-  \ amended once by 7.7, and repeated in this session's own task brief\n-- is DISCHARGED,\
-  \ and has been since commits 31930badb + aeb77e174.\n\n  Picard/DivRepGlobalClassify.lean,\
-  \ sorry-free and ROOTED:\n    classifyGlobal (:204)             the general-test\
-  \ CLASSIFIER, glued over\n                                      Scheme.directedAffineCover\
-  \ with\n                                      glueMorphismsOverOfLocallyDirected\n\
-  \    pullGlobal_classifyGlobal (:252)  } BOTH inverse laws\n    classifyGlobal_pullGlobal\
-  \ (:269)  }\n    toGlobalData (:288)               the DivRepGlobalData of an affine\
-  \ package\n    representableBy (:306)            (divFunctor C pi g).RepresentableBy\
-  \ DivOver\n\nTHREE CONSUMER FACES, weakest hypothesis last -- publish these, not\
-  \ any intermediate structure:\n  DivRepAffinePullback.representableBy       from\
-  \ a DivRepAffinePullback\n  divFunctor_representableBy_of_chartClause  (DivRepAffPullClause:482)\
-  \ from IsChartClause U\n  divFunctor_representableBy_of_id           (:502) from\
-  \ the identity-point clause per chart\n\nTHE STALE-\"MISSING\" MECHANISM, THIRD\
-  \ INSTANCE. 7.1 was written to correct 1 for trusting a\nMISSING claim across an\
-  \ integrate commit; 7.7 corrected 7.1's own L11 row the same way; this is\nthe third\
-  \ pass, and the row was stale in the task brief handed to this session. The lesson\
-  \ is\nnow load-bearing rather than anecdotal: check the ledger for files added by\
-  \ an integrate commit\nbefore believing any absence claim on this row.\n\nTHE ONLY\
-  \ SURVIVING HYPOTHESIS IS U2, and DivRepChartRange:183 makes it an IFF with an equation\n\
-  of morphisms that both already exist:\n  IsChartClause U  <->  forall i j, (divRepClassifyZar\
-  \ ... (U i j)).left = ChartMap i j.\n\nNO GATE CLEARED. Nothing produces an IsChartClause;\
-  \ critical-path 7.6 stands for the fourth\nconsecutive session -- L8 remains the\
-  \ campaign's real gate. Full write-up: critical-path 7.14.\n\nDD-R divRep: affine\
-  \ classification, Zariski/global representability, and consumer export.\n\n*** REFUTATION\
-  \ AT THE TOP, 2026-07-29 (run 0071 s0014 close). The s0014 correction below says\
-  \ the\nwidened Theta-layer is what cert-r2's producer needed. IT IS NOT: every declaration\
-  \ in\nPicard/DivisorFamilyAffTheta.lean is indexed by a ChartTyping, and\nAffAdaptation.isEmpty_chartTyping_of_straddling\
-  \ (commit 4ee4ca6e3, kernel EXIT=0) proves NO\nChartTyping exists on a cover with\
-  \ a straddling piece -- which is exactly cert-r2's case. So the\nlayer is vacuous\
-  \ on the divisors I-0492's widening exists for, and the tree's only ChartTyping\n\
-  producer is the migration FROM the chart-typed carrier. Detail and the methodological\
-  \ error (reading\nclause 3's 'may not REQUIRE' as 'is INHABITED') on the u2 child\
-  \ row and critical-path 7.13.6.\n\nWHAT SURVIVES: the three absence measurements\
-  \ (independently confirmed, I-0780) and a real, cheap,\nkernel-green Theta-layer\
-  \ for any cover that DOES carry a chart typing. NO GATE CLEARED; L8 stands.\n\n\
-  --- the s0014 body follows; its 'this is the face cert-r2's producer needed' framing\
-  \ is refuted ---\n\nDD-R divRep: affine classification, Zariski/global representability,\
-  \ and consumer export.\n\nCORRECTED 2026-07-29 (run 0071 s0014, ajcr-divrep). THE\
-  \ s0012 BODY BELOW SAYS THE CLASS HALF IS\nALL THAT REMAINS AND NAMES cert-r2's\
-  \ divFamZarAff_of_swallowing_affineOpen AS THE LIVE CANDIDATE.\ncert-r2 LANDED IT,\
-  \ AND IT STILL CANNOT FEED U2 -- and the reason is not a certificate.\n\nU2's consumer\
-  \ IsChartClause (DivRepAffPullClause.lean:121) is typed on the CHART-TYPED DivFamZar;\n\
-  that producer gives a DivFamZarAff; no map DivFamZarAff -> DivFamZar exists or can\
-  \ (ADDENDUM 3\ns2). So the route is re-deriving the eps-value facts widened -- and\
-  \ the absence was that the\nWIDENED CARRIER HAD NO THETA-LAYER AT ALL: divFamEps_eq_of_le\
-  \ rests on window-quotient\nprojectivity and rank, landed unconditionally on DivFam\
-  \ but ONLY via windowQuotEquiv, whose\ntarget A.ThetaGlued a was defined solely\
-  \ on DivisorAdaptation. Of all files naming AffAdaptation,\nZERO defined a theta\
-  \ arrow.\n\nLANDED: Picard/DivisorFamilyAffTheta.lean -- the widened Theta-layer\
-  \ through LEFT EXACTNESS\n(AffAdaptation.ker_thetaGluedEval), whose RHS is literally\
-  \ the chart-typed one's, so divisorWindow\nis the SAME submodule on both carriers;\
-  \ plus the whole (c2) substrate and the side-uniform\nsections. Sorry-free, rooted,\
-  \ kernel EXIT=0, axiom-clean vs a firing control. It was a PORT: the\nchart-dependence\
-  \ is one Bool per piece and ChartTyping supplies exactly that.\n\nSTILL OWED on\
-  \ this route, three items, detail on the u2 child row: thetaSectionSide_mem (the\n\
-  four-case cocycle argument -- REAL CONTENT, not re-indexing), then the widened IsThetaPaired,\
-  \ then\nthe mechanical (c2) transports. IsThetaPaired is a named Prop I do not prove\
-  \ and whose\nsatisfiability probe I have not run; that limit is recorded, not hidden.\n\
-  \nNO GATE HAS CLEARED. A type obstruction was removed; nothing produces an IsChartClause,\
-  \ and\ncritical-path 7.6 stands -- L8 remains the real gate and is arguably FALSE\
-  \ as stated.\n\nFull write-up: informal/w4-rep-critical-path.md section 7.13.\n\n\
-  --- the s0012 body follows; its \"the class half is all that remains\" framing is\
-  \ corrected above ---\n\nDD-R divRep: affine classification, Zariski/global representability,\
-  \ and consumer export.\n\nRE-PRICED 2026-07-29 (run 0071 s0012, ajcr-divrep). THE\
-  \ \"UNPRICED\" VERDICT AT THE TOP OF THE\nPREVIOUS BODY IS SUPERSEDED FOR ONE OF\
-  \ ITS TWO HALVES. Full detail on the child row\n...divrep.u2; the short form:\n\n\
-  U2 SPLITS, AND THE STANDING REFUTATION BITES ONLY ONE HALF.\n  epsilon-VALUE : d's\
-  \ window quotient is projective of constant rank g -- no-go-IMMUNE, OPEN.\n  the\
-  \ CLASS     : a term of DivFamZar C R_Z pi g (a LOCALLY CERTIFIED family) -- carries\
-  \ the\n                  WHOLE bite of I-0705.\n\nLANDED (Picard/DivRepChartClassUnivQuot.lean,\
-  \ commit ae01cfcb2; sorry-free, rooted, lock-free\nscratch-olean check EXIT=0, zero\
-  \ warnings): divisorWindow_eq_of_le_of_quotientData and\ndivFamEps_eq_of_le_of_quotientData\
-  \ state the epsilon-projection identity with NO\nDivisorAdaptation, NO IsCertified,\
-  \ no cover and no chart typing -- the input is three (in fact\ntwo: see the u2 row\
-  \ on finiteness) module-theoretic facts about the window quotient of d alone.\n\
-  The landed chart-typed statement is recovered as a COROLLARY, so the generalisation\
-  \ is\nmachine-checked.\n\nWHY THE REFUTATION MISSES IT: forall_not_isCertified_of_straddling\
-  \ proves its conclusion through\ncertificate clause (c1) -- finiteness of the CHART-LOCAL\
-  \ COLENGTHS forces supportLeak = empty,\nhence chart confinement. A statement about\
-  \ d's window quotient is not an instance of that\nforall.\n\nWHAT THIS DOES FOR\
-  \ THE CERT-R2 SEAM: the epsilon layer needs NO AffAdaptation.IsCertified ->\nDivisorAdaptation.IsCertified\
-  \ bridge. The type mismatch the previous body called \"the whole\ncritical path\"\
-  \ is off the epsilon path; it survives only on the class half, where cert-r2's\n\
-  divFamZarAff_of_swallowing_affineOpen (DivisorFamilyAffSeedGate.lean) is the live\
-  \ candidate.\nPosted to cert-r2 on I-0494.\n\nTHE ENDPOINT IS UNCHANGED and is still\
-  \ what consumers write against:\n  DivRepAffinePullback.representableBy (Picard/DivRepGlobalClassify.lean:306)\n\
+summary: "DD-R divRep: affine classification, Zariski/global representability, and consumer export.\n\n\
+  *** ONE PHRASE IN MY OWN s0016 HEADER IS TOO STRONG, corrected 2026-07-29 at the session close\nafter\
+  \ a fresh-context audit (I-0803). Commit 9753ad6e3.\n\n * \"NOTHING BELOW THE ENDPOINT REMAINS\" over-reads\
+  \ its own evidence. What is discharged is the\n   L11 row -- the affine-to-general LIFT. L12/L13 remain,\
+  \ and L13 IS U2. The header's own next\n   paragraph then concedes this, which is the tell.\n * The\
+  \ L11 measurement is NOT new: critical-path 7.7 already recorded it on 2026-07-28 with the\n   SAME\
+  \ five line numbers and the same two commits, and so did task comment C-0001. My 7.14.1\n   was the\
+  \ THIRD identical record, written as though it were a discovery.\n * THE REAL FIX, now applied: appending\
+  \ a fourth amendment while leaving the source tables stale\n   is what manufactures the next round's\
+  \ staleness. Section 1's L11 row and 7.1's L11 row are\n   both CORRECTED IN PLACE in informal/w4-rep-critical-path.md,\
+  \ so the tables themselves no\n   longer carry the false MISSING/what-is-left claims.\n\nWHAT STANDS\
+  \ UNCHANGED: the five declarations are real, sorry-free and rooted\n(DivRepGlobalClassify:204/:252/:269/:288/:306),\
+  \ the three consumer faces are correct, U2 remains\nthe only surviving hypothesis of the chain, and\
+  \ critical-path 7.6 stands -- L8 is the gate.\n\n--- the s0016 header follows; its \"nothing below the\
+  \ endpoint remains\" is corrected above ---\n\nDD-R divRep: affine classification, Zariski/global representability,\
+  \ and consumer export.\n\n*** NOTHING BELOW THE ENDPOINT REMAINS, 2026-07-29 (run 0071 s0016, ajcr-divrep).\
+  \ The refutation\nbox below (s0014) still stands on its own terms. What is NEW is that this row's L11\
+  \ debt --\ncarried by critical-path 7.1, amended once by 7.7, and repeated in this session's own task\
+  \ brief\n-- is DISCHARGED, and has been since commits 31930badb + aeb77e174.\n\n  Picard/DivRepGlobalClassify.lean,\
+  \ sorry-free and ROOTED:\n    classifyGlobal (:204)             the general-test CLASSIFIER, glued over\n\
+  \                                      Scheme.directedAffineCover with\n                           \
+  \           glueMorphismsOverOfLocallyDirected\n    pullGlobal_classifyGlobal (:252)  } BOTH inverse\
+  \ laws\n    classifyGlobal_pullGlobal (:269)  }\n    toGlobalData (:288)               the DivRepGlobalData\
+  \ of an affine package\n    representableBy (:306)            (divFunctor C pi g).RepresentableBy DivOver\n\
+  \nTHREE CONSUMER FACES, weakest hypothesis last -- publish these, not any intermediate structure:\n\
+  \  DivRepAffinePullback.representableBy       from a DivRepAffinePullback\n  divFunctor_representableBy_of_chartClause\
+  \  (DivRepAffPullClause:482) from IsChartClause U\n  divFunctor_representableBy_of_id           (:502)\
+  \ from the identity-point clause per chart\n\nTHE STALE-\"MISSING\" MECHANISM, THIRD INSTANCE. 7.1 was\
+  \ written to correct 1 for trusting a\nMISSING claim across an integrate commit; 7.7 corrected 7.1's\
+  \ own L11 row the same way; this is\nthe third pass, and the row was stale in the task brief handed\
+  \ to this session. The lesson is\nnow load-bearing rather than anecdotal: check the ledger for files\
+  \ added by an integrate commit\nbefore believing any absence claim on this row.\n\nTHE ONLY SURVIVING\
+  \ HYPOTHESIS IS U2, and DivRepChartRange:183 makes it an IFF with an equation\nof morphisms that both\
+  \ already exist:\n  IsChartClause U  <->  forall i j, (divRepClassifyZar ... (U i j)).left = ChartMap\
+  \ i j.\n\nNO GATE CLEARED. Nothing produces an IsChartClause; critical-path 7.6 stands for the fourth\n\
+  consecutive session -- L8 remains the campaign's real gate. Full write-up: critical-path 7.14.\n\nDD-R\
+  \ divRep: affine classification, Zariski/global representability, and consumer export.\n\n*** REFUTATION\
+  \ AT THE TOP, 2026-07-29 (run 0071 s0014 close). The s0014 correction below says the\nwidened Theta-layer\
+  \ is what cert-r2's producer needed. IT IS NOT: every declaration in\nPicard/DivisorFamilyAffTheta.lean\
+  \ is indexed by a ChartTyping, and\nAffAdaptation.isEmpty_chartTyping_of_straddling (commit 4ee4ca6e3,\
+  \ kernel EXIT=0) proves NO\nChartTyping exists on a cover with a straddling piece -- which is exactly\
+  \ cert-r2's case. So the\nlayer is vacuous on the divisors I-0492's widening exists for, and the tree's\
+  \ only ChartTyping\nproducer is the migration FROM the chart-typed carrier. Detail and the methodological\
+  \ error (reading\nclause 3's 'may not REQUIRE' as 'is INHABITED') on the u2 child row and critical-path\
+  \ 7.13.6.\n\nWHAT SURVIVES: the three absence measurements (independently confirmed, I-0780) and a real,\
+  \ cheap,\nkernel-green Theta-layer for any cover that DOES carry a chart typing. NO GATE CLEARED; L8\
+  \ stands.\n\n--- the s0014 body follows; its 'this is the face cert-r2's producer needed' framing is\
+  \ refuted ---\n\nDD-R divRep: affine classification, Zariski/global representability, and consumer export.\n\
+  \nCORRECTED 2026-07-29 (run 0071 s0014, ajcr-divrep). THE s0012 BODY BELOW SAYS THE CLASS HALF IS\n\
+  ALL THAT REMAINS AND NAMES cert-r2's divFamZarAff_of_swallowing_affineOpen AS THE LIVE CANDIDATE.\n\
+  cert-r2 LANDED IT, AND IT STILL CANNOT FEED U2 -- and the reason is not a certificate.\n\nU2's consumer\
+  \ IsChartClause (DivRepAffPullClause.lean:121) is typed on the CHART-TYPED DivFamZar;\nthat producer\
+  \ gives a DivFamZarAff; no map DivFamZarAff -> DivFamZar exists or can (ADDENDUM 3\ns2). So the route\
+  \ is re-deriving the eps-value facts widened -- and the absence was that the\nWIDENED CARRIER HAD NO\
+  \ THETA-LAYER AT ALL: divFamEps_eq_of_le rests on window-quotient\nprojectivity and rank, landed unconditionally\
+  \ on DivFam but ONLY via windowQuotEquiv, whose\ntarget A.ThetaGlued a was defined solely on DivisorAdaptation.\
+  \ Of all files naming AffAdaptation,\nZERO defined a theta arrow.\n\nLANDED: Picard/DivisorFamilyAffTheta.lean\
+  \ -- the widened Theta-layer through LEFT EXACTNESS\n(AffAdaptation.ker_thetaGluedEval), whose RHS is\
+  \ literally the chart-typed one's, so divisorWindow\nis the SAME submodule on both carriers; plus the\
+  \ whole (c2) substrate and the side-uniform\nsections. Sorry-free, rooted, kernel EXIT=0, axiom-clean\
+  \ vs a firing control. It was a PORT: the\nchart-dependence is one Bool per piece and ChartTyping supplies\
+  \ exactly that.\n\nSTILL OWED on this route, three items, detail on the u2 child row: thetaSectionSide_mem\
+  \ (the\nfour-case cocycle argument -- REAL CONTENT, not re-indexing), then the widened IsThetaPaired,\
+  \ then\nthe mechanical (c2) transports. IsThetaPaired is a named Prop I do not prove and whose\nsatisfiability\
+  \ probe I have not run; that limit is recorded, not hidden.\n\nNO GATE HAS CLEARED. A type obstruction\
+  \ was removed; nothing produces an IsChartClause, and\ncritical-path 7.6 stands -- L8 remains the real\
+  \ gate and is arguably FALSE as stated.\n\nFull write-up: informal/w4-rep-critical-path.md section 7.13.\n\
+  \n--- the s0012 body follows; its \"the class half is all that remains\" framing is corrected above\
+  \ ---\n\nDD-R divRep: affine classification, Zariski/global representability, and consumer export.\n\
+  \nRE-PRICED 2026-07-29 (run 0071 s0012, ajcr-divrep). THE \"UNPRICED\" VERDICT AT THE TOP OF THE\nPREVIOUS\
+  \ BODY IS SUPERSEDED FOR ONE OF ITS TWO HALVES. Full detail on the child row\n...divrep.u2; the short\
+  \ form:\n\nU2 SPLITS, AND THE STANDING REFUTATION BITES ONLY ONE HALF.\n  epsilon-VALUE : d's window\
+  \ quotient is projective of constant rank g -- no-go-IMMUNE, OPEN.\n  the CLASS     : a term of DivFamZar\
+  \ C R_Z pi g (a LOCALLY CERTIFIED family) -- carries the\n                  WHOLE bite of I-0705.\n\n\
+  LANDED (Picard/DivRepChartClassUnivQuot.lean, commit ae01cfcb2; sorry-free, rooted, lock-free\nscratch-olean\
+  \ check EXIT=0, zero warnings): divisorWindow_eq_of_le_of_quotientData and\ndivFamEps_eq_of_le_of_quotientData\
+  \ state the epsilon-projection identity with NO\nDivisorAdaptation, NO IsCertified, no cover and no\
+  \ chart typing -- the input is three (in fact\ntwo: see the u2 row on finiteness) module-theoretic facts\
+  \ about the window quotient of d alone.\nThe landed chart-typed statement is recovered as a COROLLARY,\
+  \ so the generalisation is\nmachine-checked.\n\nWHY THE REFUTATION MISSES IT: forall_not_isCertified_of_straddling\
+  \ proves its conclusion through\ncertificate clause (c1) -- finiteness of the CHART-LOCAL COLENGTHS\
+  \ forces supportLeak = empty,\nhence chart confinement. A statement about d's window quotient is not\
+  \ an instance of that\nforall.\n\nWHAT THIS DOES FOR THE CERT-R2 SEAM: the epsilon layer needs NO AffAdaptation.IsCertified\
+  \ ->\nDivisorAdaptation.IsCertified bridge. The type mismatch the previous body called \"the whole\n\
+  critical path\" is off the epsilon path; it survives only on the class half, where cert-r2's\ndivFamZarAff_of_swallowing_affineOpen\
+  \ (DivisorFamilyAffSeedGate.lean) is the live candidate.\nPosted to cert-r2 on I-0494.\n\nTHE ENDPOINT\
+  \ IS UNCHANGED and is still what consumers write against:\n  DivRepAffinePullback.representableBy (Picard/DivRepGlobalClassify.lean:306)\n\
   \  divFunctor_representableBy_of_chartClause (DivRepAffPullClause.lean)\n  divFunctor_representableBy_of_chartRange\
-  \  (DivRepChartRange.lean:220)\nL10/L11 have zero remaining obligations.\n\nSTILL\
-  \ BINDING: NO GATE HAS CLEARED. Nobody can construct a DivRepAffinePullback, because\n\
-  nothing produces the class. The straddling probe is still unmeasured and now decides\
-  \ only the\nclass half. critical-path 7.6 is untouched: L8 remains the campaign's\
-  \ real gate and is arguably\nFALSE as stated.\n\n--- the previous body follows;\
-  \ correct except that its \"unpriced\" verdict now applies only to\n--- the CLASS\
-  \ half, and its \"type mismatch is the whole critical path\" is retracted ---\n\n\
-  The certificate residue of this row was established (I-0705, CONFIRMED by the no-go's\
-  \ own owner)\nto be possibly FALSE rather than open: forall_not_isCertified_of_straddling\n\
-  (Picard/DivisorFamilyAffStrict.lean:127) is the negation of \"some adaptation is\
-  \ certified\" at the\nsame binder, and because it quantifies over ALL A it equally\
-  \ refutes the older spelling\n(D.divisorAdaptation hD).IsCertified g.\n\nTHE DECISIVE\
-  \ UNMEASURED FACT, and it is cheap: is (univSeed ..).localEquations' supportLocus\n\
-  preconnected with a point off V0 and a point off V1? NO file in the tree measures\
-  \ it. WHICH WAY\nIT CUTS: if the universal seed straddles, R2 (protection I-0492)\
-  \ is not an inconvenience for\ndivrep -- it is the ONLY route for the class half.\n\
-  \nAlso landed earlier in this run and unaffected: windowBound_pos_of_genus_ne_zero\
-  \ (the U2 scalar\nis a genus disjunction with a landed degenerate branch, DivRepChartClassUnivFree.lean);\n\
-  HasCertifiedAdaptation plus the epsilon identity at an arbitrary certified adaptation\n\
-  (DivRepChartClassUnivAny.lean); all three modules rooted, kernel-green in the 9270-job\
-  \ root\nbuild of s0010, axiom-clean against a control that reports sorryAx.\n\n\n\
-  VERIFICATION, FINAL AND MEASURED (appended at s0012 close, superseding the 'no full\
-  \ lake build'\ncaveat above): lake build AlgebraicJacobian -> 'Build completed successfully\
-  \ (9279 jobs)', EXIT=0,\nZERO errors and ZERO 'uses sorry' warnings in the whole\
-  \ log. Neither new module appears anywhere\nin the log, so neither contributed an\
-  \ error or a linter warning. Axiom probe with a CONTROL that\nfires (I-0661): AlgebraicGeometry.Jacobian\
-  \ reports sorryAx, while all six new theorems report only\n[propext, Classical.choice,\
-  \ Quot.sound]. Both modules rooted in AlgebraicJacobian.lean.\n\nTHE HONEST LIMIT\
-  \ OF THIS ROW'S HEADLINE, added at s0012 close after ajcr-charts pointed out on\n\
-  I-0494 that a reduction owes TWO probes and I had run only one on my own. 'The eps-half\
-  \ is OPEN,\nnot false' is a claim about the NO-GO: forall_not_isCertified_of_straddling\
-  \ does not bear on a\nhypothesis naming no adaptation. IT IS SILENT ABOUT SATISFIABILITY.\
-  \ The mirror risk is real and\nUNMEASURED: if the window quotient at the universal\
-  \ point can never be projective of constant\nrank g, then the eps-half has been\
-  \ reduced to a FALSE hypothesis -- which passes every sorry\ncensus and every axiom\
-  \ probe, because it is then a theorem.\n\nNote the asymmetry with the junk probe\
-  \ that refuted DAT-J's Abel square: that residue was vacuous\nbecause its witness\
-  \ was CONSUMER-CHOSEN. Here the window quotient is determined by d, so vacuity\n\
-  is impossible and satisfiability is the only live failure mode. The 'not silently\
-  \ stronger' probe\nIS discharged (divisorWindow_eq_of_le_of_isCertified_of_quotientData\
-  \ recovers the landed\nchart-typed statement as a corollary); the satisfiability\
-  \ probe is owed and is the cheapest next\nmeasurement on this row.\n\nSUPERSEDING\
-  \ THE SATISFIABILITY CAVEAT ABOVE -- I RAN THE PROBE AND THE EPS-HALF IS DISCHARGED,\
-  \ NOT\nMERELY OPEN (s0012 close, commit 32476f85a, root build 9280 jobs EXIT=0,\
-  \ divFamEps_eq_of_le\naxiom-clean vs a control that fires sorryAx).\n\n  divFamEps_eq_of_le\
-  \ (Picard/DivRepChartClassUnivQuot.lean)\n    the eps-pair identity at an ARBITRARY\
-  \ F : DivFam C R pi g from THE TWO CONTAINMENTS ALONE --\n    no projectivity hypothesis,\
-  \ no rank hypothesis, no certificate.\n\nWHY: Picard/DivSchemeFrameCover.lean ALREADY\
-  \ carries DivFam.projective_window_quotient (:106) and\nDivFam.rankAtStalk_window_quotient\
-  \ (:117) for EVERY F at EVERY window a >= windowM_choice,\ndischarged inside from\
-  \ the representative's own certificate -- which DivFam has BY CONSTRUCTION,\nCertifiedDivisorFamily\
-  \ being the triple (eqns, adaptation, certified). So the window-quotient facts\n\
-  were not merely satisfiable: they were landed unconditionally, and this lane had\
-  \ restated them as\nhypotheses.\n\nTHE SHARP READING, and it retracts this row's\
-  \ own framing across five sessions: THE EPS-HALF OF U2\nWAS NEVER GATED ON A CERTIFICATE\
-  \ AT ALL -- not on the original (D.divisorAdaptation hD).IsCertified\ng, and not\
-  \ on the weakened HasCertifiedAdaptation this lane landed at s0010. What every re-scope\n\
-  read as 'U2 needs a certificate' was the CLASS requirement leaking into the eps\
-  \ statement THROUGH\nTHE CARRIER: one cannot WRITE divFamEps hpi g F without an\
-  \ F, and every F carries a certificate.\nThe eps layer never asked for one beyond\
-  \ that.\n\nSO THE PARTITION IS NOT 'eps open, class refuted'. It is: eps DISCHARGED,\
-  \ and 100% of U2's\nremaining content is PRODUCING THE CLASS over the chart ring\
-  \ -- exactly the face protection I-0492's\nwidening exists to supply, and cert-r2's\
-  \ divFamZarAff_of_swallowing_affineOpen is the live\ncandidate. The straddling probe\
-  \ now decides that and nothing else.\n\nMETHOD NOTE, worth more than the result:\
-  \ this came from running the probe ajcr-charts named on\nI-0494 -- a reduction owes\
-  \ BOTH 'not vacuous' and 'not silently stronger'. My hypothesis was\nDETERMINED\
-  \ by the data rather than consumer-chosen, so the live risk was UNSATISFIABILITY\
-  \ rather\nthan vacuity; checking it turned a caveat into a theorem and refuted my\
-  \ own headline of an hour\nearlier."
+  \  (DivRepChartRange.lean:220)\nL10/L11 have zero remaining obligations.\n\nSTILL BINDING: NO GATE HAS\
+  \ CLEARED. Nobody can construct a DivRepAffinePullback, because\nnothing produces the class. The straddling\
+  \ probe is still unmeasured and now decides only the\nclass half. critical-path 7.6 is untouched: L8\
+  \ remains the campaign's real gate and is arguably\nFALSE as stated.\n\n--- the previous body follows;\
+  \ correct except that its \"unpriced\" verdict now applies only to\n--- the CLASS half, and its \"type\
+  \ mismatch is the whole critical path\" is retracted ---\n\nThe certificate residue of this row was\
+  \ established (I-0705, CONFIRMED by the no-go's own owner)\nto be possibly FALSE rather than open: forall_not_isCertified_of_straddling\n\
+  (Picard/DivisorFamilyAffStrict.lean:127) is the negation of \"some adaptation is certified\" at the\n\
+  same binder, and because it quantifies over ALL A it equally refutes the older spelling\n(D.divisorAdaptation\
+  \ hD).IsCertified g.\n\nTHE DECISIVE UNMEASURED FACT, and it is cheap: is (univSeed ..).localEquations'\
+  \ supportLocus\npreconnected with a point off V0 and a point off V1? NO file in the tree measures it.\
+  \ WHICH WAY\nIT CUTS: if the universal seed straddles, R2 (protection I-0492) is not an inconvenience\
+  \ for\ndivrep -- it is the ONLY route for the class half.\n\nAlso landed earlier in this run and unaffected:\
+  \ windowBound_pos_of_genus_ne_zero (the U2 scalar\nis a genus disjunction with a landed degenerate branch,\
+  \ DivRepChartClassUnivFree.lean);\nHasCertifiedAdaptation plus the epsilon identity at an arbitrary\
+  \ certified adaptation\n(DivRepChartClassUnivAny.lean); all three modules rooted, kernel-green in the\
+  \ 9270-job root\nbuild of s0010, axiom-clean against a control that reports sorryAx.\n\n\nVERIFICATION,\
+  \ FINAL AND MEASURED (appended at s0012 close, superseding the 'no full lake build'\ncaveat above):\
+  \ lake build AlgebraicJacobian -> 'Build completed successfully (9279 jobs)', EXIT=0,\nZERO errors and\
+  \ ZERO 'uses sorry' warnings in the whole log. Neither new module appears anywhere\nin the log, so neither\
+  \ contributed an error or a linter warning. Axiom probe with a CONTROL that\nfires (I-0661): AlgebraicGeometry.Jacobian\
+  \ reports sorryAx, while all six new theorems report only\n[propext, Classical.choice, Quot.sound].\
+  \ Both modules rooted in AlgebraicJacobian.lean.\n\nTHE HONEST LIMIT OF THIS ROW'S HEADLINE, added at\
+  \ s0012 close after ajcr-charts pointed out on\nI-0494 that a reduction owes TWO probes and I had run\
+  \ only one on my own. 'The eps-half is OPEN,\nnot false' is a claim about the NO-GO: forall_not_isCertified_of_straddling\
+  \ does not bear on a\nhypothesis naming no adaptation. IT IS SILENT ABOUT SATISFIABILITY. The mirror\
+  \ risk is real and\nUNMEASURED: if the window quotient at the universal point can never be projective\
+  \ of constant\nrank g, then the eps-half has been reduced to a FALSE hypothesis -- which passes every\
+  \ sorry\ncensus and every axiom probe, because it is then a theorem.\n\nNote the asymmetry with the\
+  \ junk probe that refuted DAT-J's Abel square: that residue was vacuous\nbecause its witness was CONSUMER-CHOSEN.\
+  \ Here the window quotient is determined by d, so vacuity\nis impossible and satisfiability is the only\
+  \ live failure mode. The 'not silently stronger' probe\nIS discharged (divisorWindow_eq_of_le_of_isCertified_of_quotientData\
+  \ recovers the landed\nchart-typed statement as a corollary); the satisfiability probe is owed and is\
+  \ the cheapest next\nmeasurement on this row.\n\nSUPERSEDING THE SATISFIABILITY CAVEAT ABOVE -- I RAN\
+  \ THE PROBE AND THE EPS-HALF IS DISCHARGED, NOT\nMERELY OPEN (s0012 close, commit 32476f85a, root build\
+  \ 9280 jobs EXIT=0, divFamEps_eq_of_le\naxiom-clean vs a control that fires sorryAx).\n\n  divFamEps_eq_of_le\
+  \ (Picard/DivRepChartClassUnivQuot.lean)\n    the eps-pair identity at an ARBITRARY F : DivFam C R pi\
+  \ g from THE TWO CONTAINMENTS ALONE --\n    no projectivity hypothesis, no rank hypothesis, no certificate.\n\
+  \nWHY: Picard/DivSchemeFrameCover.lean ALREADY carries DivFam.projective_window_quotient (:106) and\n\
+  DivFam.rankAtStalk_window_quotient (:117) for EVERY F at EVERY window a >= windowM_choice,\ndischarged\
+  \ inside from the representative's own certificate -- which DivFam has BY CONSTRUCTION,\nCertifiedDivisorFamily\
+  \ being the triple (eqns, adaptation, certified). So the window-quotient facts\nwere not merely satisfiable:\
+  \ they were landed unconditionally, and this lane had restated them as\nhypotheses.\n\nTHE SHARP READING,\
+  \ and it retracts this row's own framing across five sessions: THE EPS-HALF OF U2\nWAS NEVER GATED ON\
+  \ A CERTIFICATE AT ALL -- not on the original (D.divisorAdaptation hD).IsCertified\ng, and not on the\
+  \ weakened HasCertifiedAdaptation this lane landed at s0010. What every re-scope\nread as 'U2 needs\
+  \ a certificate' was the CLASS requirement leaking into the eps statement THROUGH\nTHE CARRIER: one\
+  \ cannot WRITE divFamEps hpi g F without an F, and every F carries a certificate.\nThe eps layer never\
+  \ asked for one beyond that.\n\nSO THE PARTITION IS NOT 'eps open, class refuted'. It is: eps DISCHARGED,\
+  \ and 100% of U2's\nremaining content is PRODUCING THE CLASS over the chart ring -- exactly the face\
+  \ protection I-0492's\nwidening exists to supply, and cert-r2's divFamZarAff_of_swallowing_affineOpen\
+  \ is the live\ncandidate. The straddling probe now decides that and nothing else.\n\nMETHOD NOTE, worth\
+  \ more than the result: this came from running the probe ajcr-charts named on\nI-0494 -- a reduction\
+  \ owes BOTH 'not vacuous' and 'not silently stronger'. My hypothesis was\nDETERMINED by the data rather\
+  \ than consumer-chosen, so the live risk was UNSATISFIABILITY rather\nthan vacuity; checking it turned\
+  \ a caveat into a theorem and refuted my own headline of an hour\nearlier."
 status: active
 kind: proof
 priority: normal

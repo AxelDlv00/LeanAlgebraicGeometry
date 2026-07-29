@@ -3,103 +3,116 @@ title: 'DAT-J: JacobianData assembly — quasi-compactness via the Abel image of
   discharge of the frozen $\mathrm{Jacobian}$ and $\mathrm{instGrpObj}$'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "DAT-J: JacobianData assembly -- quasi-compactness via the Abel image of\
-  \ Div^g-lite.\n\n*** THE EFFECTIVITY HALF IS DISCHARGED AND WAS NEVER divRep-GATED,\
-  \ 2026-07-29 (run 0071 s0016,\najcr-divrep). Commits 053897f16 + c8a4563af + 127d7cccf;\
-  \ kernel EXIT=0, axiom-clean against a\ncontrol reporting sorryAx; root build 9288\
-  \ jobs EXIT=0.\n\n  exists_effective_deg_eq_of_classDeg_eq (Picard/JacobianDataAbelEffective.lean)\n\
-  \    with chi(O) = 1 - g, a Cech Picard class of degree g has an EFFECTIVE representative\
-  \ OF\n    DEGREE g.  General: any X, no relative curve, no pi.\n  exists_effective_deg_eq_of_classDeg_eq_zero\n\
-  \    the satisfiability face AND the usable one -- a degree-ZERO class times a degree-g\n\
-  \    reference divisor.  The classes this row actually holds are of degree zero.\n\
-  \  exists_effective_deg_eq_of_pic0_at_point (Picard/JacobianDataAbelEffectivePoint.lean)\n\
-  \    from a point y of ANY Pic^0-representing object: a finite separable L over\
-  \ kappa(y) and an\n    effective degree-g divisor over L presenting the restricted\
-  \ class.\n\nTHE GAP WAS ONE CONJUNCT, AND IT WAS A STATEMENT GAP. Every effectivity\
-  \ lemma in the tree stops\nat \"0 <= E and picClass E = picClass W\" with NO claim\
-  \ about deg E (exists_effective_of_picClass\nFLVClass:208, exists_effective_of_h0_pos\
-  \ SectionBound:175), while effectiveDivisorClassifyZar\n(DivisorFamilyFieldSurj:217)\
-  \ demands 0 <= D AND deg D = g. Degree is a class invariant\n(deg_eq_deg_of_picClass_eq),\
-  \ so the missing conjunct transports for free off the class equation.\n\nTWO COST\
-  \ CLAIMS RETRACTED AT THEIR OWN SITES (not merely superseded here):\n * JacobianDataAbelImage\
-  \ said DJ-1's brick \"needs the universal degree-g class, hence divRep\".\n   It\
-  \ does not. The five steps from a POINT to a divisor are all landed and all divRep-free:\n\
-  \   Over.testPoint (Pic0ChartTestPoint:176), mem_pic0Subgroup_iff, exists_splitting_of_picEt\n\
-  \   (Pic0ChartSplit:143, UNCONDITIONAL on the curve), classDeg_presenting_eq_zero\n\
-  \   (Pic0ChartCoverageDegreeStep2:98), then the brick.\n * The same docstring predicted\
-  \ a fiberTwist shift. NONE is needed: at degree exactly g the RR\n   entry condition\
-  \ 1 <= deg W + chi(O) reads g <= deg W, so the class sits ON THE BOUNDARY and\n\
-  \   fires with no slack.\n\nSO THE TWO HALVES OF STEP 3 WERE NEVER GATED ALIKE,\
-  \ and this row priced them together -- hiding\na discharged half behind a gated\
-  \ one. Only the Abel SQUARE is divRep-gated, because naming abel\nat all requires\
-  \ the representation.\n\nWHAT REMAINS, exactly:\n (1) DESCENT, the honest new residue:\
-  \ the divisor lives over the finite separable SPLITTING\n     field L, while hlift\
-  \ wants a morphism out of Spec kappa(y). That is dat-g's work.\n (2) the Abel-compatibility\
-  \ square at a pt PINNED INDEPENDENTLY (the s0012 retraction below\n     stands:\
-  \ at a chosen pt the split is vacuous and its consumer is circular).\n (3) a PicRepDatum\
-  \ k k C from DAT-G (divRep-gated).\n (4) the caller's degree-g reference divisor\
-  \ Z -- over a small finite field a real hypothesis,\n     not bookkeeping.\nDJ-0\
-  \ compact-image qc remains landed.\n\n--- the s0012 body follows; its \"owes exactly\
-  \ one statement\" is now (2) of the list above ---\nDAT-J: JacobianData assembly\
-  \ -- quasi-compactness via the Abel image of Div^g-lite.\n\nRETRACTION AT THE TOP,\
-  \ 2026-07-29 (run 0071 s0012, ajcr-divrep). THIS ROW LISTED THREE\nOBLIGATIONS AND\
-  \ ITEM 1 WAS VACUOUS. It owes ONE statement, and that statement is STRONGER\nthan\
-  \ what item 2 described.\n\n  exists_isAbelClassifyCompatible (Picard/JacobianDataAbelSquareVacuity.lean,\
-  \ commit 7133fc1d6)\n    for an ARBITRARY abel : DivScheme g --> J, SOME pt satisfies\
-  \ IsAbelClassifyCompatible.\n\nThe only hypothesis beyond abel is that the pt TYPE\
-  \ is inhabited, which fills the junk branch\nof a case split on exactly the two\
-  \ hypotheses the square quantifies over; on its own branch the\nsquare is dif_pos.\
-  \ No geometry, no surjectivity, no property of abel whatsoever.\n\nWHY THE OLD PRICING\
-  \ WAS WRONG, and it is a shape worth recognising: pt is an ARGUMENT of\nIsAbelClassifyCompatible,\
-  \ not fixed campaign data. A consumer entitled to choose pt can choose\nthe classifier\
-  \ composite itself. This row called item 1 \"bookkeeping-shaped, but a real\nstatement,\
-  \ and nobody has written it\" -- it is not a statement about abel at all. Recorded\n\
-  shape: I-0605 (a residue existentially quantified over the datum that would give\
-  \ it content\ndemands nothing; inhabit it with junk BEFORE pricing it).\n\nAND THE\
-  \ CONSUMER IS CIRCULAR AT THAT WITNESS, which is the half that matters:\n  heff_iff_conclusion_of_pt_eq\
+summary: "DAT-J: JacobianData assembly -- quasi-compactness via the Abel image of Div^g-lite.\n\n*** CORRECTION\
+  \ AT THE TOP, 2026-07-29 (run 0071 s0016 close, ajcr-divrep), against MY OWN header\nbelow. A fresh-context\
+  \ audit (I-0799/I-0800/I-0802/I-0803) refuted three of its claims. Commit\n9753ad6e3; the Lean is unchanged\
+  \ and still kernel-green, the PRICING was wrong.\n\nWHAT SURVIVES: the effectivity half is genuinely\
+  \ divRep-FREE (the audit cone-checked 323 files:\nno divRepClassify, no DivRepAffinePullback, no IsChartClause,\
+  \ no universal family), and the three\ntheorems are real, sorry-free, rooted and axiom-clean.\n\nWHAT\
+  \ IS REFUTED -- and it is the word \"discharged\":\n (1) I called exists_effective_deg_eq_of_classDeg_eq_zero\
+  \ a SATISFIABILITY PROBE and claimed the\n     degree map hits g \"unconditionally on the curve\". FALSE,\
+  \ arithmetically: CurveDivisor.deg is\n     weighted by residue degrees (Divisor.lean:61), so its image\
+  \ is index*Z. On a genus-1 curve of\n     index 3 over Q no divisor of degree 1 = g exists and the theorem\
+  \ is a VACUOUS TRUTH. The\n     campaign reference does not escape it: deg (m . fiberWeilDivisor) =\
+  \ m*delta (WindowLedger:133)\n     requires delta | g. So the face RELOCATES the hypothesis (Z is an\
+  \ ARGUMENT), it does not\n     discharge it. Exactly the reduction-to-a-possibly-false-hypothesis trap\
+  \ this project has\n     recorded twice -- passes every census because it IS then a theorem.\n (2) THE\
+  \ BINDING LIMIT IS NOT THE DESCENT ONE I DISCLOSED. Since the splitting field L is\n     existential\
+  \ inside the proof, the reference binder is UNIFORM: forall L, deg L (Zof L) = g,\n     over every extension\
+  \ including L = k. Strictly stronger than the degree-0 face asks, and it\n     has NO PRODUCER anywhere\
+  \ in the tree.\n (3) THE CONE IS NOT Challenge-FREE, which w4-datj 0.5/3.4 make BINDING for a DAT-J\
+  \ producer:\n     DivisorDatumRankOne -> Cohomology/H1BaseFieldInvariance:6 -> Challenge. So \"available\
+  \ today\"\n     does NOT mean \"consumable by DJ-2/DJ-3 today\". Separately: 0.5's own claim that FLVClass\
+  \ is\n     Challenge-free is also false at HEAD (Degree.lean:7 -> ChiCurve -> Challenge), so the standing\n\
+  \     \"never riemann_inequality_curve\" rule no longer avoids the cycle. Tree-wide, pre-existing,\n\
+  \     and it needs its own decision.\n (4) A docstring advertised PicRepDatum.exists_effective_deg_eq_at_point,\
+  \ which DOES NOT EXIST.\n     So the one face that would consume the Pic^0 universal property is absent;\
+  \ lam/hlam remain\n     caller-supplied.\n\nSO THE HONEST STATE OF THE EFFECTIVITY HALF: divRep-free,\
+  \ and CONDITIONAL on an arithmetic\nhypothesis about the curve's index that nothing produces. Not discharged.\n\
+  \nWHAT DAT-J OWES NOW: (a) a degree-g divisor over the relevant field -- an index condition, newly\n\
+  visible and genuinely open; (b) descent from the splitting field to kappa(y) (dat-g); (c) the Abel\n\
+  square at an INDEPENDENTLY PINNED pt (the s0012 retraction stands); (d) a PicRepDatum from DAT-G\n(divRep-gated);\
+  \ (e) a Challenge-free route for the whole producer cone. DJ-0 remains landed.\n\n--- the s0016 header\
+  \ follows; its \"IS DISCHARGED\" and its satisfiability claim are refuted above ---\n\nDAT-J: JacobianData\
+  \ assembly -- quasi-compactness via the Abel image of Div^g-lite.\n\n*** THE EFFECTIVITY HALF IS DISCHARGED\
+  \ AND WAS NEVER divRep-GATED, 2026-07-29 (run 0071 s0016,\najcr-divrep). Commits 053897f16 + c8a4563af\
+  \ + 127d7cccf; kernel EXIT=0, axiom-clean against a\ncontrol reporting sorryAx; root build 9288 jobs\
+  \ EXIT=0.\n\n  exists_effective_deg_eq_of_classDeg_eq (Picard/JacobianDataAbelEffective.lean)\n    with\
+  \ chi(O) = 1 - g, a Cech Picard class of degree g has an EFFECTIVE representative OF\n    DEGREE g.\
+  \  General: any X, no relative curve, no pi.\n  exists_effective_deg_eq_of_classDeg_eq_zero\n    the\
+  \ satisfiability face AND the usable one -- a degree-ZERO class times a degree-g\n    reference divisor.\
+  \  The classes this row actually holds are of degree zero.\n  exists_effective_deg_eq_of_pic0_at_point\
+  \ (Picard/JacobianDataAbelEffectivePoint.lean)\n    from a point y of ANY Pic^0-representing object:\
+  \ a finite separable L over kappa(y) and an\n    effective degree-g divisor over L presenting the restricted\
+  \ class.\n\nTHE GAP WAS ONE CONJUNCT, AND IT WAS A STATEMENT GAP. Every effectivity lemma in the tree\
+  \ stops\nat \"0 <= E and picClass E = picClass W\" with NO claim about deg E (exists_effective_of_picClass\n\
+  FLVClass:208, exists_effective_of_h0_pos SectionBound:175), while effectiveDivisorClassifyZar\n(DivisorFamilyFieldSurj:217)\
+  \ demands 0 <= D AND deg D = g. Degree is a class invariant\n(deg_eq_deg_of_picClass_eq), so the missing\
+  \ conjunct transports for free off the class equation.\n\nTWO COST CLAIMS RETRACTED AT THEIR OWN SITES\
+  \ (not merely superseded here):\n * JacobianDataAbelImage said DJ-1's brick \"needs the universal degree-g\
+  \ class, hence divRep\".\n   It does not. The five steps from a POINT to a divisor are all landed and\
+  \ all divRep-free:\n   Over.testPoint (Pic0ChartTestPoint:176), mem_pic0Subgroup_iff, exists_splitting_of_picEt\n\
+  \   (Pic0ChartSplit:143, UNCONDITIONAL on the curve), classDeg_presenting_eq_zero\n   (Pic0ChartCoverageDegreeStep2:98),\
+  \ then the brick.\n * The same docstring predicted a fiberTwist shift. NONE is needed: at degree exactly\
+  \ g the RR\n   entry condition 1 <= deg W + chi(O) reads g <= deg W, so the class sits ON THE BOUNDARY\
+  \ and\n   fires with no slack.\n\nSO THE TWO HALVES OF STEP 3 WERE NEVER GATED ALIKE, and this row priced\
+  \ them together -- hiding\na discharged half behind a gated one. Only the Abel SQUARE is divRep-gated,\
+  \ because naming abel\nat all requires the representation.\n\nWHAT REMAINS, exactly:\n (1) DESCENT,\
+  \ the honest new residue: the divisor lives over the finite separable SPLITTING\n     field L, while\
+  \ hlift wants a morphism out of Spec kappa(y). That is dat-g's work.\n (2) the Abel-compatibility square\
+  \ at a pt PINNED INDEPENDENTLY (the s0012 retraction below\n     stands: at a chosen pt the split is\
+  \ vacuous and its consumer is circular).\n (3) a PicRepDatum k k C from DAT-G (divRep-gated).\n (4)\
+  \ the caller's degree-g reference divisor Z -- over a small finite field a real hypothesis,\n     not\
+  \ bookkeeping.\nDJ-0 compact-image qc remains landed.\n\n--- the s0012 body follows; its \"owes exactly\
+  \ one statement\" is now (2) of the list above ---\nDAT-J: JacobianData assembly -- quasi-compactness\
+  \ via the Abel image of Div^g-lite.\n\nRETRACTION AT THE TOP, 2026-07-29 (run 0071 s0012, ajcr-divrep).\
+  \ THIS ROW LISTED THREE\nOBLIGATIONS AND ITEM 1 WAS VACUOUS. It owes ONE statement, and that statement\
+  \ is STRONGER\nthan what item 2 described.\n\n  exists_isAbelClassifyCompatible (Picard/JacobianDataAbelSquareVacuity.lean,\
+  \ commit 7133fc1d6)\n    for an ARBITRARY abel : DivScheme g --> J, SOME pt satisfies IsAbelClassifyCompatible.\n\
+  \nThe only hypothesis beyond abel is that the pt TYPE is inhabited, which fills the junk branch\nof\
+  \ a case split on exactly the two hypotheses the square quantifies over; on its own branch the\nsquare\
+  \ is dif_pos. No geometry, no surjectivity, no property of abel whatsoever.\n\nWHY THE OLD PRICING WAS\
+  \ WRONG, and it is a shape worth recognising: pt is an ARGUMENT of\nIsAbelClassifyCompatible, not fixed\
+  \ campaign data. A consumer entitled to choose pt can choose\nthe classifier composite itself. This\
+  \ row called item 1 \"bookkeeping-shaped, but a real\nstatement, and nobody has written it\" -- it is\
+  \ not a statement about abel at all. Recorded\nshape: I-0605 (a residue existentially quantified over\
+  \ the datum that would give it content\ndemands nothing; inhabit it with junk BEFORE pricing it).\n\n\
+  AND THE CONSUMER IS CIRCULAR AT THAT WITNESS, which is the half that matters:\n  heff_iff_conclusion_of_pt_eq\
   \ (same file)\nAt that pt, the remaining hypothesis heff of exists_residueField_lift_of_abelCompatible\n\
-  (JacobianDataAbelSquare.lean:158) unfolds to VERBATIM its own conclusion, so that\
-  \ theorem is a\ntautology there. heff had silently absorbed all the content item\
-  \ 1 appeared to carry. So\nexists_residueField_lift_of_abelCompatible is a reduction\
-  \ only RELATIVE TO A pt PINNED\nINDEPENDENTLY -- pinned to the campaign Abel map's\
-  \ own point map -- and the interface never\npins it.\n\nWHAT DAT-J NOW OWES, exactly\
-  \ one statement:\n  for every point y of J, an effective degree-g divisor D on the\
-  \ curve over kappa(y) WHOSE\n  CLASSIFYING MORPHISM COMPOSES WITH abel TO fromSpecResidueField\
-  \ y.\nThe Riemann-Roch half produces D; the compatibility half is the honest residue.\
-  \ The split into\n\"the square\" plus \"the geometry\" CANNOT be restored: any pt\
-  \ making the split statable is either\nthe pinned campaign one (in which case there\
-  \ is no separate row) or a chosen one (in which case\nthe split is vacuous). Spelling\
-  \ of the RR half stays BINDING per w4-datj 0.5:\nexists_effective_of_picClass /\
-  \ riemann_inequality (FLVClass.lean:208/205), NEVER\nriemann_inequality_curve (ChiCurve.lean:183,\
-  \ imports Challenge.lean -- import cycle).\n\nSTILL OPEN AND UNCHANGED: a PicRepDatum\
-  \ k k C from DAT-G (divRep-gated).\n\n--- the pre-retraction body follows; item\
-  \ 1 of its \"owes\" list is now REFUTED, item 2 is\n--- restated above as the single\
-  \ obligation, item 3 stands ---\n\nSTATUS 2026-07-28 (run 0071 s0008, ajcr-divrep).\
-  \ STEP 3 IS A COMPATIBILITY SQUARE, NOT A\nCONSTRUCTION -- because the fibrewise\
-  \ half was already built, rooted, and had zero consumers.\n\nThe morphism half is\
-  \ NOT gated and NOT missing. Picard/DivisorFamilyFieldSurj.lean (ROOTED,\nsorry-free)\
-  \ carries:\n  DivisorAdaptation.isCertified_of_deg (:104) -- over a FIELD, an adaptation\
-  \ whose presentation\n    divisor has degree n is IsCertified n. All seven clauses\
-  \ from a bare degree equation.\n  exists_divFam_divFamDivisor_eq (:147); effectiveDivisorClassifyZar\
-  \ (:217), spec at (:231).\n\nTHE STRATEGIC POINT, and it is the sharp form of critical-path\
-  \ 7.6's own argument: the\nDivFamZar no-go is a purely RELATIVE phenomenon (over\
-  \ a field a divisor's support is finitely\nmany closed points, so IsPreconnected\
-  \ supportLocus is vacuous). The certificate difficulty that\nmakes U2 hard DOES\
-  \ NOT EXIST FIBREWISE. Any obligation phrased over a residue field should be\npriced\
-  \ against DivisorFamilyFieldSurj, not against the relative certificate machinery.\n\
-  \nDJ-0 (compact-image qc) and DJ-2 (packaging) remain landed. JacobianData has seven\
-  \ producers\nplus the two PicRepDatum entry points; the atlas is NOT finite, so\
-  \ aim at an ofCharts* form.\n\nVERIFICATION of the new file: lock-free scratch-olean\
-  \ check (lake env lean against a symlinked\nolean root, lakefile leanOptions passed\
-  \ explicitly) EXIT=0, zero warnings, zero sorries; rooted\nin AlgebraicJacobian.lean.\
-  \ NO full lake build this session -- four concurrent AJCR lanes.\n\n\nVERIFICATION,\
-  \ FINAL AND MEASURED (appended at s0012 close, superseding the 'no full lake build'\n\
-  caveat above): lake build AlgebraicJacobian -> 'Build completed successfully (9279\
-  \ jobs)', EXIT=0,\nZERO errors and ZERO 'uses sorry' warnings in the whole log.\
-  \ Neither new module appears anywhere\nin the log, so neither contributed an error\
-  \ or a linter warning. Axiom probe with a CONTROL that\nfires (I-0661): AlgebraicGeometry.Jacobian\
-  \ reports sorryAx, while all six new theorems report only\n[propext, Classical.choice,\
-  \ Quot.sound]. Both modules rooted in AlgebraicJacobian.lean."
+  (JacobianDataAbelSquare.lean:158) unfolds to VERBATIM its own conclusion, so that theorem is a\ntautology\
+  \ there. heff had silently absorbed all the content item 1 appeared to carry. So\nexists_residueField_lift_of_abelCompatible\
+  \ is a reduction only RELATIVE TO A pt PINNED\nINDEPENDENTLY -- pinned to the campaign Abel map's own\
+  \ point map -- and the interface never\npins it.\n\nWHAT DAT-J NOW OWES, exactly one statement:\n  for\
+  \ every point y of J, an effective degree-g divisor D on the curve over kappa(y) WHOSE\n  CLASSIFYING\
+  \ MORPHISM COMPOSES WITH abel TO fromSpecResidueField y.\nThe Riemann-Roch half produces D; the compatibility\
+  \ half is the honest residue. The split into\n\"the square\" plus \"the geometry\" CANNOT be restored:\
+  \ any pt making the split statable is either\nthe pinned campaign one (in which case there is no separate\
+  \ row) or a chosen one (in which case\nthe split is vacuous). Spelling of the RR half stays BINDING\
+  \ per w4-datj 0.5:\nexists_effective_of_picClass / riemann_inequality (FLVClass.lean:208/205), NEVER\n\
+  riemann_inequality_curve (ChiCurve.lean:183, imports Challenge.lean -- import cycle).\n\nSTILL OPEN\
+  \ AND UNCHANGED: a PicRepDatum k k C from DAT-G (divRep-gated).\n\n--- the pre-retraction body follows;\
+  \ item 1 of its \"owes\" list is now REFUTED, item 2 is\n--- restated above as the single obligation,\
+  \ item 3 stands ---\n\nSTATUS 2026-07-28 (run 0071 s0008, ajcr-divrep). STEP 3 IS A COMPATIBILITY SQUARE,\
+  \ NOT A\nCONSTRUCTION -- because the fibrewise half was already built, rooted, and had zero consumers.\n\
+  \nThe morphism half is NOT gated and NOT missing. Picard/DivisorFamilyFieldSurj.lean (ROOTED,\nsorry-free)\
+  \ carries:\n  DivisorAdaptation.isCertified_of_deg (:104) -- over a FIELD, an adaptation whose presentation\n\
+  \    divisor has degree n is IsCertified n. All seven clauses from a bare degree equation.\n  exists_divFam_divFamDivisor_eq\
+  \ (:147); effectiveDivisorClassifyZar (:217), spec at (:231).\n\nTHE STRATEGIC POINT, and it is the\
+  \ sharp form of critical-path 7.6's own argument: the\nDivFamZar no-go is a purely RELATIVE phenomenon\
+  \ (over a field a divisor's support is finitely\nmany closed points, so IsPreconnected supportLocus\
+  \ is vacuous). The certificate difficulty that\nmakes U2 hard DOES NOT EXIST FIBREWISE. Any obligation\
+  \ phrased over a residue field should be\npriced against DivisorFamilyFieldSurj, not against the relative\
+  \ certificate machinery.\n\nDJ-0 (compact-image qc) and DJ-2 (packaging) remain landed. JacobianData\
+  \ has seven producers\nplus the two PicRepDatum entry points; the atlas is NOT finite, so aim at an\
+  \ ofCharts* form.\n\nVERIFICATION of the new file: lock-free scratch-olean check (lake env lean against\
+  \ a symlinked\nolean root, lakefile leanOptions passed explicitly) EXIT=0, zero warnings, zero sorries;\
+  \ rooted\nin AlgebraicJacobian.lean. NO full lake build this session -- four concurrent AJCR lanes.\n\
+  \n\nVERIFICATION, FINAL AND MEASURED (appended at s0012 close, superseding the 'no full lake build'\n\
+  caveat above): lake build AlgebraicJacobian -> 'Build completed successfully (9279 jobs)', EXIT=0,\n\
+  ZERO errors and ZERO 'uses sorry' warnings in the whole log. Neither new module appears anywhere\nin\
+  \ the log, so neither contributed an error or a linter warning. Axiom probe with a CONTROL that\nfires\
+  \ (I-0661): AlgebraicGeometry.Jacobian reports sorryAx, while all six new theorems report only\n[propext,\
+  \ Classical.choice, Quot.sound]. Both modules rooted in AlgebraicJacobian.lean."
 status: pending
 kind: proof
 priority: normal
