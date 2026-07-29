@@ -273,4 +273,50 @@ theorem exists_finiteSeparable_level_factorization {k : Type u} [Field k] {X : S
   rw [← Category.assoc, ← Spec.map_comp, ← hq]
   congr 1
 
+/-! ## §5. Non-vacuity: the hypotheses are jointly inhabited, and the level is a real restriction
+
+Two things could have made §3–§4 true-about-nothing, and both are refuted here rather than
+asserted.
+
+* The binder set is inhabited **at the project's own curve hypotheses**: `LocallyOfFiniteType`
+  follows from `[SmoothOfRelativeDimension 1 C.hom]` by synthesis, so
+  `exists_finiteSeparable_level_factorization` applies to every curve `Challenge.lean` binds, with
+  no added hypothesis (`level_factorization_of_curve` below).
+* The conclusion is not secretly about `k' = k`. If `k` were already separably closed the finite
+  level would be `k` itself and the theorem would say nothing new; `not_isSepClosed_rat` exhibits
+  a field where that is false, so `k^s ⊋ k` genuinely occurs in the domain of the statement.
+-/
+
+/-- `ℚ` is not separably closed — the witness that §4's finite level is a real restriction rather
+than `k` itself. Route: `ℚ` is perfect, so a separably closed `ℚ` would be algebraically closed
+(`IsSepClosed.isAlgClosed_of_perfectField`), and then `X² + 1` would have a rational root. -/
+theorem not_isSepClosed_rat : ¬ IsSepClosed ℚ := by
+  intro h
+  haveI := h
+  haveI : IsAlgClosed ℚ := IsSepClosed.isAlgClosed_of_perfectField ℚ
+  obtain ⟨x, hx⟩ := IsAlgClosed.exists_root (k := ℚ)
+    (Polynomial.X ^ 2 + Polynomial.C 1 : Polynomial ℚ) (by
+      intro hdeg
+      have h2 : (Polynomial.X ^ 2 + Polynomial.C 1 : Polynomial ℚ).degree = 2 := by
+        compute_degree!
+      rw [hdeg] at h2
+      exact absurd h2 (by decide))
+  have hx2 : x ^ 2 = -1 := by
+    have hev := hx
+    simp [Polynomial.IsRoot, Polynomial.eval_add, Polynomial.eval_pow] at hev
+    linarith [hev]
+  nlinarith [sq_nonneg x, hx2]
+
+/-- §4 applied at the project's curve binders, with nothing added: a `k^s`-point of a smooth
+proper curve over an arbitrary field `k` is defined over a finite separable `k'/k`. This is the
+compiler-checked statement that the file is not about an empty class of inputs. -/
+theorem level_factorization_of_curve {k : Type u} [Field k]
+    (C : Over (Spec (CommRingCat.of k))) [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (p : Spec (CommRingCat.of (SeparableClosure k)) ⟶ C.left)
+    (hp : p ≫ C.hom = Spec.map (CommRingCat.ofHom (algebraMap k (SeparableClosure k)))) :
+    ∃ (k' : IntermediateField k (SeparableClosure k)) (_ : FiniteDimensional k k')
+      (_ : Algebra.IsSeparable k k') (q : Spec (CommRingCat.of k') ⟶ C.left),
+      Spec.map (CommRingCat.ofHom (k'.val.toRingHom)) ≫ q = p :=
+  exists_finiteSeparable_level_factorization C.hom p hp
+
 end AlgebraicGeometry.Scheme
