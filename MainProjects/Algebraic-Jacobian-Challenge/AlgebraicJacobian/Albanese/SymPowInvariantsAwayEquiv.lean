@@ -155,7 +155,7 @@ with denominator `1`. -/
 theorem algebraMap_mem_fixedAway (b : A) (hb : ∀ g : G, g • b = b) {a : A}
     (ha : ∀ g : G, g • a = a) :
     algebraMap A (Localization.Away b) a ∈ fixedAway b hb := by
-  intro g
+  refine mem_fixedAway.mpr fun g => ?_
   rw [awayMap_algebraMap b hb, ha g]
 
 /-- **An inverse of an invariant element is itself invariant.** Stated for a two-sided inverse
@@ -172,7 +172,7 @@ theorem inv_mem_fixedAway (b : A) (hb : ∀ g : G, g • b = b)
     (y : Localization.Away b)
     (hy : algebraMap A (Localization.Away b) b * y = 1) :
     y ∈ fixedAway b hb := by
-  intro g
+  refine mem_fixedAway.mpr fun g => ?_
   have hbg : awayMap b hb g (algebraMap A (Localization.Away b) b)
       = algebraMap A (Localization.Away b) b := by
     rw [awayMap_algebraMap b hb, hb g]
@@ -206,18 +206,22 @@ and backward directions) and needs only to thread the algebra structure. -/
 content here is that the inverse lies in `(A_b)^G`, which is `inv_mem_fixedAway`. So the unit is
 produced, not assumed — the statement takes no witness as an argument.
 
-This is `map_unit`, the first clause of `IsLocalization.Away.mk`, and geometrically it is the
-statement that `D(b)` upstairs is the preimage of `D(b)` on the quotient. -/
+Geometrically it is the statement that `D(b)` upstairs is the preimage of `D(b)` on the
+quotient; it is also the `map_units` clause anyone threading the `IsLocalization` spelling
+would need (see §3). -/
 theorem isUnit_algebraMap_fixedAway (b : A) (hb : ∀ g : G, g • b = b) :
     IsUnit (⟨algebraMap A (Localization.Away b) b,
       algebraMap_mem_fixedAway b hb hb⟩ : fixedAway b hb) := by
   obtain ⟨v, hv⟩ := IsLocalization.Away.algebraMap_isUnit (S := Localization.Away b) b
   have hy : algebraMap A (Localization.Away b) b
       * ((v⁻¹ : (Localization.Away b)ˣ) : Localization.Away b) = 1 := by
-    rw [hv]; exact v.mul_inv
-  exact isUnit_of_mul_eq_one _
-    ⟨((v⁻¹ : (Localization.Away b)ˣ) : Localization.Away b),
-      inv_mem_fixedAway b hb _ hy⟩ (Subtype.ext hy)
+    rw [← hv]; exact v.mul_inv
+  have hy' : ((v⁻¹ : (Localization.Away b)ˣ) : Localization.Away b)
+      * algebraMap A (Localization.Away b) b = 1 := by
+    rw [mul_comm]; exact hy
+  refine isUnit_iff_exists.mpr ⟨⟨_, inv_mem_fixedAway b hb _ hy⟩, ?_, ?_⟩
+  · exact Subtype.ext hy
+  · exact Subtype.ext hy'
 
 /-- **The comparison, in the form the gluing consumes: `(A_b)^G` is `(A^G)` with `b` inverted.**
 
@@ -259,22 +263,13 @@ theorem mem_fixedAway_iff_exists_invariant_num [Finite G] (b : A) (hb : ∀ g : 
           = algebraMap A (Localization.Away b) a := by
   refine ⟨exists_invariant_num_den b hb x, ?_⟩
   rintro ⟨a, n, ha, hxa⟩
-  intro g
+  refine mem_fixedAway.mpr fun g => ?_
   -- `b ^ n` is a unit of `A_b`, so `x` is determined by `x * b ^ n`.
-  obtain ⟨v, hv⟩ := IsLocalization.Away.algebraMap_isUnit (S := Localization.Away b) b
-  have hunit : ((v ^ n : (Localization.Away b)ˣ) : Localization.Away b)
-      = algebraMap A (Localization.Away b) (b ^ n) := by
-    rw [Units.val_pow_eq_pow_val, hv, map_pow]
-  have hcancel : ∀ y z : Localization.Away b,
-      y * algebraMap A (Localization.Away b) (b ^ n)
-        = z * algebraMap A (Localization.Away b) (b ^ n) → y = z := by
-    intro y z h
-    have h2 := congrArg (fun w => w * (((v ^ n : (Localization.Away b)ˣ)⁻¹
-      : (Localization.Away b)ˣ) : Localization.Away b)) h
-    simp only [← hunit, mul_assoc, Units.mul_inv, mul_one] at h2
-    exact h2
+  have hunit : IsUnit (algebraMap A (Localization.Away b) (b ^ n)) := by
+    rw [map_pow]
+    exact IsLocalization.Away.algebraMap_pow_isUnit (S := Localization.Away b) b n
+  refine hunit.mul_left_inj.mp ?_
   -- Apply `awayMap g` to the defining equation; both `a` and `b` are invariant.
-  refine hcancel _ _ ?_
   have hg := congrArg (awayMap b hb g) hxa
   rw [map_mul, awayMap_algebraMap b hb, awayMap_algebraMap b hb, smul_pow', hb g, ha g] at hg
   rw [hg, hxa]
