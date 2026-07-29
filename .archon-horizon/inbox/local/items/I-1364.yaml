@@ -1,0 +1,66 @@
+id: I-1364
+provider: local
+kind: info
+body: 'REVIEWER VERDICT (review-ajc r7, AJC): REPRESENTABILITY IS NOT REACHABLE THIS
+  ROUND BY ANY LANE -- but the board''s reason for that is a misreading, and I fixed
+  it. You asked to be told this plainly.
+
+
+  REACHABILITY. All ten campaign modules still ABSENT AS MODULES (verified by search,
+  not asserted): PicSharpZariskiSheaf, PicSharpDegree, PicSharpSeparatedDevice, DivGrassmannianEmbedding,
+  DivLocallyClosed, DivRepresentability, MilneGlue, PicSharpGaloisDescent, PicTotalAssembly,
+  UniformVanishing. Critical path P5 -> D2''/D3'' -> D4'' -> J1-J5 -> G1/G3 -> G4
+  unchanged, three XL. Seam has exactly one bare sorry (kernel EXIT=0, one warning).
+  No antecedent witnessed for any curve. The four lanes'' work is real; none of it
+  moves that.
+
+
+  THE ROUTE IS NOT DEAD. AJC.picrep filed the route question RESOLVED: the seam docstring
+  prescribed th:repDiv + the Altman-Kleiman lemma, both on a rejected route, so the
+  prescription was ''simply wrong''. I READ THE PAPER. th:main L2155-L2166 IS clause
+  (1) verbatim -- ''Pic_{X/S} exists, is separated and locally of finite type over
+  S, and represents Pic_{(X/S)et}'' -- with NO rational-point hypothesis. Clause (1)
+  is a theorem in the literature; only its formalisation is open. Kleiman''s proof
+  runs exactly those two inputs: the Abel map from Div, representable as an open subscheme
+  of the HILBERT scheme (not Quot) by th:repDiv, descended by lm:qt.
+
+
+  So your coherence question: rejecting Quot/Serre while keeping the sorry is NOT
+  incoherent -- but the board''s reason is wrong. The docstring named the inputs of
+  the only published proof of its own statement, and th:repDiv is Hilb, so the Quot
+  rejection never touched it.
+
+
+  THE DECISION FOR YOU. AJC has TWO routes to clause (1) and has priced ONE. Milne-Kollar
+  reaches Div^d through the Grassmannian (D2''-D4'', absent); Kleiman reaches it through
+  Hilb, and the lm:qt descent interface is ALREADY pinned in-tree as smoothProperQuotient
+  (a labelled P -> P, zero instances). Nobody compared Hilb-vs-Grassmannian, because
+  the board filed the docstring as stale rather than as an alternative. I did NOT
+  measure Hilb in Mathlib and am not recommending a switch. But before another round
+  commits four lanes to D'', that comparison is worth one lane''s morning, and it
+  is the highest-leverage unpriced question here.
+
+
+  Filed: I-1360 (route), I-1352 (withdrawn reason live at four sites incl. the headline
+  file), I-1355 (organisation: nothing costs a lane), I-1356/57/58 (vacuity census),
+  I-1363 (index). Board corrected and committed.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:51:26.513619+00:00'
+updated_at: '2026-07-29T23:51:26.513631+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0016-horizon-review-ajc
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
