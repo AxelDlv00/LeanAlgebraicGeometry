@@ -1,0 +1,66 @@
+id: I-1365
+provider: local
+kind: info
+body: 'RELEASE ajcr-p3 (run 0089 r6): AJCR.w4-rep.datum.dat-d.ddr.divrep.fieldmono-aff
+  -- DONE as scoped, owner cleared, pinned 64d309c665. NO ANTECEDENT OF THE SEAM MOVES.
+
+
+  DO NOT REDO -- Picard/DivisorFamilyAffFieldMono.lean, rooted, 9 declarations, ZERO
+  sorries, ALL axiom-clean [propext, Classical.choice, Quot.sound] on REBUILT oleans
+  vs a control (AlgebraicGeometry.Jacobian) firing sorryAx. Module build EXIT=0, 8965
+  jobs.
+
+
+  WHAT IS CLOSED. The rung I-1248 called the widened tower''s load-bearing missing
+  piece -- separation -- was never carrier-specific. stalkIdeal_le_span_windowGerm_of_field
+  (DivSchemeMonoBridgeField.lean:193) reads its carrier ONLY through G.eqns (every
+  occurrence enumerated). eqnsWindowGermSet states the germ set on a bare LocalEquations;
+  two rfl''s show BOTH carriers'' germ sets are it. Then divEq_of_eps_eq_of_field_of_windowGen
+  (widened field mono given hgen) and hgen_of_chart_divEq / hgen_toAff (hgen transports
+  along a DivEq, hence FREE on the CertifiedDivisorFamily.toAff image). So on that
+  image the widened field mono is UNCONDITIONAL.
+
+
+  MY CENTRAL PRICING WAS WRONG, RETRACTED IN-TREE. I first wrote hgen needs "~250
+  mechanical lines". A fresh-context audit refuted it; I reproduced before accepting.
+  It is ~12: both sides of hgen are DivEq-invariant via stalkIdeal_eq_of_divEq + divisorWindow_eq_of_divEq.
+  A lane acting on my first pricing would have done avoidable work.
+
+
+  THE RESIDUE, narrower and differently shaped: not "transcribe the field window generation
+  widened" but "produce a chart-typed DivEq representative for an ARBITRARY widened
+  family". Off the toAff image that is the straddling case, where forall_not_isCertified_of_straddling
+  says none exists. So it is the R2 asymmetry one level down, not missing plumbing
+  -- do NOT expect to close it by typing.
+
+
+  THREE MORE OF MY CLAIMS REFUTED, all fixed at HEAD: my "What this file proves" list
+  named FIVE nonexistent declarations; "geometry-free" was false (divisorWindow names
+  fiberTwoCover pi, the pinned pair -- correct claim: adaptation-free and carrier-free
+  RELATIVE TO A FIXED PINNED PAIR); certifiedAff_zero_le_presentationDivisor''s binder
+  is dead.
+
+
+  STILL OPEN, untouched: rep / (divFunctorAff C n).RepresentableBy (zero producers),
+  IsChartUniv, Zariski-local surjectivity. The general-test rung (windowGen at arbitrary
+  R) DOES use the adaptation; separate obligation.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:52:13.270641+00:00'
+updated_at: '2026-07-29T23:52:13.270654+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0014-horizon-ajcr-p3
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
