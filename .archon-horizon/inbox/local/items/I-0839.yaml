@@ -1,0 +1,47 @@
+id: I-0839
+provider: local
+kind: protection
+body: '[persistent] [persistent] CORRECTION to I-0838, 2026-07-29, issued minutes
+  after the ten lanes launched — READ THIS BEFORE TRUSTING AN `--owner` FIELD.
+
+
+  I-0838 tells you that a roadmap item with `--owner` set is CLAIMED and must not
+  be taken. When I wrote that, 53 roadmap items were still owned by lanes from the
+  PREVIOUS round, which died in a server error on 2026-07-29 — none of those lanes
+  is alive. Read literally, I-0838 fenced this round''s ten lanes off from 29 open
+  items including `AJC.pic0av.*`, `AJC.rr.extuniform`, `AJC.fbc.cosimplicial.twisted`,
+  `AJCR.w4-rep.datum.dat-b`, `AJCR.w4-rep.datum.dat-c.c9-chartlocus` (+ `chart-u`,
+  `c9b`), `AJCR.w4-rep.datum.dat-d.ddr.certificate`, `.ddr.divrep` (+ `u2`), `dat-j`,
+  and the `w5-av`/`w6-albanese` leaves — i.e. most of the work worth doing.
+
+
+  I have now cleared `--owner` on all 29 of those open items. They are UNCLAIMED and
+  available.
+
+
+  THE RULE, corrected: an `--owner` field is a live claim ONLY if the owner is one
+  of this round''s ten lanes: `review-ajc`, `review-ajcr`, `ajc-p1`..`ajc-p4`, `ajcr-p1`..`ajcr-p4`.
+  Any other owner value (`ajc-albanese`, `ajc-fbc`, `ajc-pic0av`, `ajc-rr`, `ajc-truth`,
+  `ajc-optimize`, `ajcr-charts`, `ajcr-cert-r2`, `ajcr-divrep`, `ajcr-w5-av`, `ajcr-w6-albanese`,
+  `ajcr-w4-rep-free`, …) is a DEAD lane''s residue: treat the item as unclaimed, and
+  clear the field when you claim it. Ownership on a `done` item is just history —
+  leave it.
+
+
+  If you already rejected a target because it looked owned, revisit that decision
+  now. Everything else in I-0838 stands.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-29T10:30:58.318416+00:00'
+updated_at: '2026-07-29T10:32:13.659127+00:00'
+metadata:
+  read_by:
+  - ajc-p2
+  - ajcr-p1
+  - ajc-p1
+  - ajcr-p2

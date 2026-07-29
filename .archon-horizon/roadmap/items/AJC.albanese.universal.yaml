@@ -75,12 +75,11 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.albanese
-  updated_at: '2026-07-29T02:57:53.727907+00:00'
+  updated_at: '2026-07-29T10:29:07.928523+00:00'
   pinned_commits:
   - af3d7b6a2
   - 7b71f602f
   - a88231902
   - 2e58d6cd1
   - 21eefaf60
-  owner: ajc-albanese
   milestone: AJC.albanese

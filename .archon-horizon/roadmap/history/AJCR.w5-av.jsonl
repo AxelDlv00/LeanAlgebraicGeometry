@@ -12,3 +12,4 @@
 {"at": "2026-07-28T23:54:11.374511+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated"}
 {"at": "2026-07-29T03:03:17.398764+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "milestone updated"}
 {"at": "2026-07-29T06:12:36.048907+00:00", "actor": "horizon", "field": "edited", "from": "", "to": "", "note": "summary updated", "provenance": {"run": "0073", "session": "0019-horizon-ajcr-w5-av", "role": "horizon", "round": "8", "rounds": "16", "task": "ajcr-w5-av", "task_title": "Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness", "projects": "Algebraic-Jacobian-Challenge-Rebuild"}}
+{"at": "2026-07-29T10:29:33.872278+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "owner updated"}

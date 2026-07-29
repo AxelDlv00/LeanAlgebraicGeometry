@@ -70,8 +70,7 @@ metadata:
     task_title: Bring the cluster-P Riemann-Roch substrate into AJC
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.rr
-  owner: ajc-rr
-  updated_at: '2026-07-29T02:59:47.899934+00:00'
+  updated_at: '2026-07-29T10:29:22.629352+00:00'
   pinned_commits:
   - 81e3ef56f
   - f7d1ec0d0

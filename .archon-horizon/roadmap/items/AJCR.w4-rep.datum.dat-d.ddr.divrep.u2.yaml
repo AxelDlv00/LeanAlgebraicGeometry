@@ -165,7 +165,7 @@ metadata:
     task_title: Representability of Pic^0
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
-  updated_at: '2026-07-29T01:38:25.797441+00:00'
+  updated_at: '2026-07-29T10:29:31.348754+00:00'
   pinned_commits:
   - 4ee4ca6e3
   - dd3d22fae
@@ -175,4 +175,3 @@ metadata:
   - 909ad18ad
   - 0b3ab49b8
   milestone: w4-gate
-  owner: ajcr-divrep

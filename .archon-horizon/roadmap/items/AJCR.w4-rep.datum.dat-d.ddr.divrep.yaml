@@ -204,8 +204,7 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-29T03:02:15.238367+00:00'
-  owner: ajcr-divrep
+  updated_at: '2026-07-29T10:29:30.138475+00:00'
   pinned_commits:
   - 4ee4ca6e3
   - 91f702164
