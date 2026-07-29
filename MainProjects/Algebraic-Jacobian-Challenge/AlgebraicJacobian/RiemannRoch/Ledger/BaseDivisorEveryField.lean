@@ -80,6 +80,39 @@ statement of the remaining obligation is either strictness of `n ↦ Aₙ` below
 argument bounding `n₀` by a base-field-invariant quantity.  This is *not* claimed here, and the
 bound `n₀ ≤ genus` must not be cited as available.
 
+## HOW MUCH OF THIS IS NEW: almost none of it, and that is the honest label
+
+A fresh-context audit of this module (2026-07-29) established, and this file records rather than
+hides, that **it adds no new mathematics**:
+
+* Both existence theorems **derive at the parent commit** — no new lemma, instance or import was
+  needed. `exists_base_subsingleton_curve`'s proof is `Ledger/FiberBound.lean`'s
+  `exists_bound_subsingleton_hModule_one_curve` with the final `exact` renamed to
+  `exists_base_subsingleton_of_isFinite_toP1`; the instance prologue is identical.
+* `uniformBaseDivisor_of_exists_deg_le` is **the identity**: its hypothesis is *definitionally*
+  `UniformBaseDivisor C d` (`Iff.rfl` closes the equivalence), and its body is η-expansion. Its
+  earlier description as "bookkeeping" was too generous — it separates the two clauses only
+  typographically, since they were already conjuncts at `ExtensionUniformity.lean:356`.
+* The re-pricing conclusion was **already in the tree**: `ExtensionUniformity.lean`'s
+  `UniformBaseDivisor` docstring already said a `D₀` is supplied per field with no control of its
+  degree.
+
+What the round contributes is therefore the *correction of a downstream index that contradicted
+that sentence* (`GenusFieldInvariance.lean` priced the residue as a missing production from
+geometry confined to genus 0) and `finrank_stabilisationAmbient_eq_h1`, which locates the actual
+obstruction. Read the theorems as a named restatement, not as progress on the degree clause —
+that clause is untouched.
+
+**One clause of the audit does not hold, and it is worth recording because it is the reason these
+statements are not simply redundant.** The audit called the pre-existing
+`ExtensionUniformity.vanishing_baseChangeField` (a *threshold* `b` past which every `D` of degree
+`≥ b` has vanishing `H¹`) *strictly stronger*, hence this module a weakening. It does not imply
+these statements without an extra input: extracting "some `D₀` vanishes" from a threshold needs a
+divisor of degree `≥ b` to exist, i.e. `exists_deg_ge`, whose hypothesis is a non-generic point of
+positive residue degree — and no closed point of `C` is available for free (verified: the
+existential over `C.left` does not close). The two statements are therefore incomparable inputs,
+not a chain, which is exactly why the existence clause needed stating at all.
+
 ## Contents
 
 * `exists_base_subsingleton_curve` — over `k`, at every genus: a divisor with vanishing `H¹`.
@@ -168,12 +201,16 @@ omit [IsProper C.hom] in
 /-- **The residue isolated**: `UniformBaseDivisor C d` from a *degree-bounded* per-field vanishing
 divisor.
 
-This is deliberately recorded as bookkeeping rather than progress.  It is `UniformBaseDivisor`'s
-definition with the existence clause supplied by
-`exists_base_subsingleton_baseChangeField` — so the only thing a producer still has to exhibit
-is the inequality `CurveDivisor.deg κ D₀ ≤ d`, uniformly in `κ`.  Stating it separates the two
-clauses at the type level, which is what stops the next attempt from re-deriving the existence
-half. -/
+**This is the IDENTITY, not even bookkeeping — established by a fresh-context audit,
+2026-07-29.**  Its hypothesis is *definitionally* `UniformBaseDivisor C d` (`Iff.rfl` closes the
+equivalence) and its body `fun κ _ _ => h κ` is η-expansion.  An earlier version of this docstring
+called it "bookkeeping rather than progress", which was still too generous: the two clauses were
+already conjuncts at `ExtensionUniformity.lean:356`, so this separates them typographically and in
+no other sense.
+
+Kept, rather than deleted, only as a signpost — a reader after the degree clause can see from the
+statement that the vanishing half is discharged by `exists_base_subsingleton_baseChangeField` and
+that `CurveDivisor.deg κ D₀ ≤ d` is all that remains.  Do not cite it as content. -/
 theorem uniformBaseDivisor_of_exists_deg_le {d : ℤ}
     (h : ∀ (κ : Type u) [Field κ] [Algebra k κ],
       -- the per-field vanishing divisor, with its degree bounded — the open clause
