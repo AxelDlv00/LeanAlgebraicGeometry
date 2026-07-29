@@ -360,6 +360,30 @@ DD-R hypotheses, and `[SmoothOfRelativeDimension 1 C.hom]` is additionally neede
 variable [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]
   [SmoothOfRelativeDimension 1 C.hom]
 
+omit [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]
+  [SmoothOfRelativeDimension 1 C.hom] in
+/-- **The widened affine collapse of the Abel value** — the R2 twin of
+`picEtAffineEquiv_abelDiv` (`Picard/DivSchemeAbel.lean:236`): on an affine test the vehicle-level
+widened Abel value is the affine one, through the comparison equivalences.
+
+`abelDivAffPlus_mapAlgHom` at the top affine open, one line — and the `omit` records what
+extraction revealed: the collapse needs **none** of the three geometric instances the section
+carries (`GeometricallyIrreducible`, `GeometricallyReduced`, `SmoothOfRelativeDimension 1`).
+Those enter only at `degAff_unit`/`relPicDeg_relPicMk` further down.  Inline, that was invisible.
+
+**Named on ajcr-p3's finding `I-1225`, which is about this file.**  It was an anonymous `have`
+inside `degAt_abelDivAff'` below, and an inlined `have` is invisible to every search this
+workspace runs — `horizon search`, loogle, `local_search` and the declaration index all
+enumerate *declarations*, and a proof-local binder is not one.  So p3 priced this exact term as
+a missing port step while it sat proved four lines away.  Extracted rather than left inline
+precisely so the next lane finds it by name. -/
+theorem picEtAffineEquiv_abelDivAff' (A : Type u) [CommRing A] [Algebra k A]
+    (s : divFamZarAff C n (overSpec k A)) :
+    picEtAffineEquiv C A (abelDivAff' C n (overSpec k A) s)
+      = abelDivAffPlus C A (divFamZarAffAffineEquiv C n A s) :=
+  abelDivAffPlus_mapAlgHom (Over.overSpecΓTopAlgEquiv k A).toAlgHom
+    (s.1 (overSpecTopAffine A))
+
 set_option maxHeartbeats 1600000 in
 /- The five base-change instances plus the `picEtAffineEquiv` collapse; within the
 `degAt_abelDiv` precedent for the chart-typed twin. -/
@@ -367,10 +391,9 @@ set_option maxHeartbeats 1600000 in
 of a degree-`n` widened class has degree `n` at every field point of every test.
 
 Verbatim `degAt_abelDiv` (`Picard/DivSchemeAbel.lean:277`): naturality
-(`picEtMap_abelDivAff'`) reduces to the affine collapse at the field, `degAff_unit` and
-`relPicDeg_relPicMk` read the class degree, and the widened class-degree law finishes.  The
-affine collapse is `abelDivAffPlus_mapAlgHom` at the top affine open — one line, the widened
-twin of `picEtAffineEquiv_abelDiv`.
+(`picEtMap_abelDivAff'`) reduces to the affine collapse at the field
+(`picEtAffineEquiv_abelDivAff'`, above), `degAff_unit` and `relPicDeg_relPicMk` read the class
+degree, and the widened class-degree law finishes.
 
 **Unconditional in the section, i.e. at an arbitrary test and an arbitrary widened section** —
 not only on the image of a chart-typed class, which is what `degAt_abelDivAff'_toAff`
@@ -391,14 +414,8 @@ theorem degAt_abelDivAff' {T : Over (Spec (.of k))} (s : divFamZarAff C n T)
     instModuleFiniteHModuleOneBaseChange C K
   change PicEtAff.degAff K (picEtAffineEquiv C K
       (picEtMap C t (abelDivAff' C n T s))) = (n : ℤ)
-  rw [picEtMap_abelDivAff']
-  -- the widened affine collapse, the twin of `picEtAffineEquiv_abelDiv`
-  have hcollapse : picEtAffineEquiv C K (abelDivAff' C n (overSpec k K)
-        (divFamZarAff.map C n t s))
-      = abelDivAffPlus C K (divFamZarAffAffineEquiv C n K (divFamZarAff.map C n t s)) :=
-    abelDivAffPlus_mapAlgHom (Over.overSpecΓTopAlgEquiv k K).toAlgHom
-      ((divFamZarAff.map C n t s).1 (overSpecTopAffine K))
-  rw [hcollapse, abelDivAffPlus, PicEtAff.degAff_unit, relPicDeg_relPicMk]
+  rw [picEtMap_abelDivAff', picEtAffineEquiv_abelDivAff', abelDivAffPlus,
+    PicEtAff.degAff_unit, relPicDeg_relPicMk]
   exact DivFamZarAff.classDeg_picClass _
 
 /-- **The widened chart value lands in `pic⁰`, with `hdegAff` REMOVED from the signature** —
