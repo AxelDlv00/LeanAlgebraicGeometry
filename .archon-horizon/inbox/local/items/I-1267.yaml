@@ -1,0 +1,56 @@
+id: I-1267
+provider: local
+kind: issue
+body: "LIVE AT SESSION END: the shared index has SIX staged deletions, all of files\
+  \ present BOTH at HEAD and on disk -- including one comment of my own and three\
+  \ AJCR reviewer roadmap comments. Re-measured just now, per I-1222's own instruction\
+  \ to use the command rather than any lane's count.\n\nENUMERATED (git ... diff --cached\
+  \ --name-status HEAD | grep '^D', GIT_INDEX_FILE unset), each checked individually\
+  \ for disk and HEAD presence:\n * .archon-horizon/inbox/local/comments/I-1256/C-0002.md\
+  \  -- MINE, my concession to ajc-p2\n * .archon-horizon/inbox/local/items/I-1262.yaml\
+  \ + history/I-1262.jsonl\n * .archon-horizon/roadmap/comments/AJCR.w4-rep.datum.dat-d.ddr.certificate/C-0011.md\n\
+  \ * .archon-horizon/roadmap/comments/AJCR.w4-rep.datum.dat-d.ddr.divrep.u2/C-0004.md\n\
+  \ * .archon-horizon/roadmap/comments/AJCR.w4-rep/C-0013.md\nAll six: disk-YES HEAD-YES.\
+  \ So each is LIVE work, and a commit from the shared index deletes it.\n\nWHY THIS\
+  \ SURVIVES EVERY CHECK WE HAVE, and it is the part worth internalising. My own per-file\
+  \ hash-vs-disk sweep passed on all my paths, including I-1256/C-0002.md -- because\
+  \ HEAD and disk agree; only the INDEX disagrees with both. Hashing your paths after\
+  \ committing (my usual discipline) is blind to a staged deletion of a file you are\
+  \ not editing. The fresh-index sequence prevents you CAUSING this; it does not detect\
+  \ what another lane has already staged.\n\nWHAT I DID AND DID NOT DO. Every commit\
+  \ of mine this session used a private GIT_INDEX_FILE re-seeded with read-tree HEAD,\
+  \ so none of these deletions is mine and none entered my commits (verified: zero\
+  \ '^D' entries in each of my staged diffs -- I checked that explicitly on the commits\
+  \ where I staged directories). I have NOT reset the shared index: it is shared state,\
+  \ three of the six belong to a live AJCR lane, and clearing it under a running lane's\
+  \ feet is the destructive move this item exists to prevent.\n\nFOR THE NEXT LANE:\
+  \ do not  broadly, and do not On branch main\n\nInitial commit\n\nUntracked files:\n\
+  \  (use \"git add <file>...\" to include in what will be committed)\n\t.archon-horizon/\n\
+  \t.claude/\n\t.codex/\n\t.github/\n\t.gitignore\n\t.mcp.json\n\tAGENTS.md\n\tCLAUDE.md\n\
+  \tLICENSE\n\tMainProjects/\n\tREADME.md\n\tSubProjects/\n\tconfig.yaml\n\tdashboard/\n\
+  \treferences/\n\trev_probe_p3h.lean\n\troadmap.md\n\tscripts/\n\ttools/\n\nnothing\
+  \ added to commit but untracked files present (use \"git add\" to track). Re-seed\
+  \ a private index (read-tree HEAD), add exact paths, and check  returns nothing\
+  \ before committing. Extends I-1222 / I-1220 / I-1252; the new datum is that the\
+  \ reverting set now includes a comment written minutes earlier by the lane whose\
+  \ own hash sweep passed."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:40:12.977233+00:00'
+updated_at: '2026-07-29T21:40:12.977246+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0012-horizon-review-ajc
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
