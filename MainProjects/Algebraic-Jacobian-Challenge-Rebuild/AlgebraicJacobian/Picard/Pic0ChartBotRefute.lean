@@ -107,6 +107,54 @@ theorem not_isLocallySurjective_restrictChart_bot {ι : Type u} {X : ι → Sche
     (op (𝒰.X j)) u
   exact (isEmpty_of_hom_bot (X := X i.as) x).elim y
 
+/-! ## Discharging the refutation's own antecedents
+
+The theorem above is an implication: it needs a test `T`, a section on it, and a point of `T`.
+An implication whose antecedents nobody exhibits refutes nothing — it is consistent with there
+being no such `T`.  This section exhibits them, so the `⊥` endpoint is dead outright and not
+merely dead-if-something-exists. -/
+
+/-- **`Spec k` carries a point.**  `k` is a field, hence nontrivial, hence its prime spectrum is
+nonempty; the carrier of `Spec (.of k)` *is* that spectrum.
+
+Stated because it is the antecedent the refutation needs and no other file in the seam
+exhibits it. -/
+theorem nonempty_specObj_of_field : Nonempty (Spec (CommRingCat.of k)) :=
+  inferInstanceAs (Nonempty (PrimeSpectrum k))
+
+variable (C) in
+/-- **A section of `pic0SigmaSheaf` over `Spec k`.**  A `Σ`-section at a test `T` is a pair: a
+structure morphism `T ⟶ Spec k` and a degree-zero class on `Over.mk` of it.  Take the identity
+morphism and the identity class — the trivial line bundle is always degree zero, so this needs
+nothing about the curve.
+
+The point of exhibiting it rather than quantifying over it: `pic0SigmaSheaf` could in principle
+have been empty at every test, and then the refutation below would be about nothing. -/
+def specSigmaSection : (pic0SigmaSheaf C).1.obj (op (Spec (CommRingCat.of k))) :=
+  ⟨𝟙 _, 1⟩
+
+/-- **The `⊥` endpoint is dead, unconditionally** — the form the board should quote.
+
+`not_isLocallySurjective_restrictChart_bot` with all three of its antecedents discharged:
+`Spec k` is the test, `specSigmaSection` the section, and `nonempty_specObj_of_field` the point.
+Nothing is quantified but the chart family, and nothing about the curve, the divisor index or
+`rep` enters at any step.
+
+**What this settles and what it does not.**  Antecedent 1 of `pic0RepresentableByOfCharts` is
+free at `⊥` with no hypothesis (`isChartUniv_bot`), so `⊥` was the one parameter value at which
+the seam would have fired from nothing.  It cannot.  Combined with `isLocallySurjective_of_bot`
+— inhabiting the binder at `⊥` would *give* unrestricted coverage — the endpoint is shut from
+both directions.
+
+It does **not** move the seam forward.  The pair (`huniv V`, coverage at `V`) has no measured
+inhabitant at any `V`, and refuting two endpoints is not exhibiting an interior point. -/
+theorem not_isLocallySurjective_restrictChart_bot' {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) :
+    ¬ Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (Sigma.desc fun i => restrictChart (f i) (⊥ : (X i).Opens)) :=
+  not_isLocallySurjective_restrictChart_bot f _ (specSigmaSection C)
+    nonempty_specObj_of_field.some
+
 end
 
 end AlgebraicGeometry
