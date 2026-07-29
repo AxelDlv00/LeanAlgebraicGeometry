@@ -7,6 +7,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffAdaptation
 import AlgebraicJacobian.Picard.DivSchemeFamilySide
 import AlgebraicJacobian.Picard.DivisorFamilyThetaSections
 import AlgebraicJacobian.Picard.DivisorDatumInverse
+import AlgebraicJacobian.Picard.DivisorFamilyWindow
 
 /-!
 # The Θ-LAYER OVER THE WIDENED CARRIER (R2): what actually blocked cert-r2's producer
@@ -82,9 +83,20 @@ identity: those consume the widened certificate's (c2) clause through a widened
   chart-typed one.
 * `AlgebraicGeometry.AffAdaptation.thetaGluedEval` — the evaluation
   `H⁰(𝒪(Θᵃ)) → W(d)^{Θᵃ}`.
-* `AlgebraicGeometry.AffAdaptation.ker_thetaGluedEval` — **the kernel bridge**: the kernel
-  is the cover-independent vanishing submodule, so it agrees with the chart-typed layer's
-  and `divisorWindow` is the same submodule on both carriers.
+* `AlgebraicGeometry.AffAdaptation.ker_thetaGluedEval` — **the kernel bridge**: the widened
+  kernel *is* the cover-independent vanishing submodule, hence literally the chart-typed
+  layer's kernel.
+* `AlgebraicGeometry.AffAdaptation.windowCarve` / `ker_windowCarve` / `windowQuotEquiv` — the
+  bridge plugged in: the widened carve arrow's kernel is `divisorWindow d`, and (conditional on
+  surjectivity, which is **not** proved here) the quotient of the free window by it is the
+  widened `W(d)^{Θᵃ}`.  That last equivalence is the vehicle whose absence made the ε-value at a
+  `DivFamZarAff` unstateable.
+
+**A phrasing correction taken from a fresh-context review** (`I-0769`), because the wrong version
+was in this docstring: `ker_thetaGluedEval` does **not** show "`divisorWindow` is the same on both
+carriers" — `divisorWindow` takes only `d` and `hH1` and never mentioned a carrier, so that is
+vacuous.  The content runs the other way: *the widened evaluation's kernel lands on that
+already-fixed submodule.*
 -/
 
 set_option autoImplicit false
@@ -96,6 +108,7 @@ set_option maxSynthPendingDepth 3
 universe u
 
 open CategoryTheory TopologicalSpace Opposite
+open scoped TensorProduct
 
 namespace AlgebraicGeometry
 
@@ -712,10 +725,15 @@ section sequence): the kernel of the widened Θ-twisted colength evaluation is e
 This is the statement that makes the widening *usable* rather than merely well-formed. Its
 right-hand side is **literally the same term** as in the chart-typed
 `DivisorAdaptation.ker_thetaGluedEval` (`Picard/DivisorFamilyTheta.lean:350`) — the
-vanishing submodule mentions `d` and the two pinned charts and no cover at all. Hence
-`divisorWindow` (`Picard/DivisorFamilyWindow.lean:103`), which is the comap of that
-submodule, is the *same submodule on both carriers*, and a widened
-`windowQuotEquiv`-analogue has the left-exactness half it needs.
+vanishing submodule mentions `d` and the two pinned charts and no cover at all — and both
+kernels live in the same `relThetaSections C R π a`, so the widened kernel *equals* the
+chart-typed one as a submodule.
+
+**Stated in the honest direction** (a fresh-context review, `I-0769`, corrected an earlier
+phrasing here): this is not "`divisorWindow` is carrier-independent" — that is vacuous, since
+`divisorWindow` takes only `d` and `hH1`. The content is that **the widened evaluation's kernel
+lands on that already-fixed submodule**, which is what `ker_windowCarve` below then turns into
+the widened `windowQuotEquiv`.
 
 Two places where the widened proof differs from the chart-typed one, both in R2's
 direction:
@@ -764,6 +782,79 @@ theorem ker_thetaGluedEval :
     -- The split is therefore factored out over an arbitrary Bool.
     exact germ_val_mem_stalkIdeal_of_forall_side a x h (τ.side j)
       ⟨trivial, piece_le_relPinnedChart τ j hz⟩
+
+/-! ## Plugging the bridge in: the widened window carve
+
+A fresh-context review of the above (inbox `I-0769`) made two corrections, and both are taken
+here rather than argued with.
+
+**First, a phrasing correction.** Saying `ker_thetaGluedEval` shows "`divisorWindow` is the same
+submodule on both carriers" is true but *empty*: `divisorWindow` takes only `d` and `hH1`
+(`Picard/DivisorFamilyWindow.lean:103`) and never mentioned a carrier, so nothing had to be
+proved to make it carrier-independent.  The honest content runs the other way — **the widened
+evaluation's kernel lands on that already-fixed submodule.**
+
+**Second, a real gap.** Nothing above connected `ker_thetaGluedEval` to `divisorWindow`: the
+chart-typed layer does that through `windowCarve` / `ker_windowCarve`
+(`Picard/DivisorFamilyWindow.lean:158/:166`), the composite with `relThetaWindowEquiv`, and no
+widened analogue existed.  Without it the "face" is not plugged in.  It is three lines, and here
+they are. -/
+
+section WindowCarve
+
+-- `divisorWindow` and `relThetaWindowEquiv` (`Picard/DivisorFamilyWindow.lean:103/:89`) are
+-- stated over the curve-instance tower and the `Over` local instance; nothing above this
+-- section needed them, which is itself the measurement that the Θ-layer proper is
+-- instance-light.
+noncomputable local instance instOverCleftAffWindow :
+    C.left.Over (Spec (.of k)) := ⟨C.hom⟩
+
+variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))] [IsIntegral C.left]
+  [LocallyOfFiniteType (C.left ↘ Spec (.of k))] [QuasiCompact (C.left ↘ Spec (.of k))]
+  [IsDominant π]
+
+variable (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+
+/-- **The widened window carve arrow** `R ⊗[k] H_a → W(d)^{Θᵃ}`: the widened Θ-twisted colength
+evaluation read through the window identification. -/
+noncomputable def windowCarve :
+    R ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤) →ₗ[R] ThetaGlued A τ a :=
+  thetaGluedEval A τ a ∘ₗ (relThetaWindowEquiv C R π a hH1).toLinearMap
+
+/-- **THE FACE, PLUGGED IN**: the kernel of the widened window carve arrow is exactly the window
+submodule `K_a(d)`.
+
+This is what `ker_thetaGluedEval` was for, and stating it is the step inbox `I-0769` correctly
+observed was missing.  Together with surjectivity of the widened evaluation — **not** proved, see
+the module docstring — it gives the widened analogue of `windowQuotEquiv`, i.e. the identification
+`(R ⊗[k] H_a) ⧸ K_a(d) ≃ W(d)^{Θᵃ}` that the ε-value facts are transported along.
+
+Note what carries it: `divisorWindow` is a `Submodule.comap` of the vanishing submodule, and
+`ker_thetaGluedEval` says the widened kernel *is* that vanishing submodule, so this is
+`LinearMap.ker_comp` and nothing else. -/
+theorem ker_windowCarve :
+    LinearMap.ker (windowCarve A τ a hH1) = divisorWindow d hH1 := by
+  rw [windowCarve, LinearMap.ker_comp, ker_thetaGluedEval, divisorWindow]
+
+/-- Surjectivity of the widened carve arrow follows from surjectivity of the widened
+evaluation — the remaining input, and the one this file does not supply. -/
+lemma windowCarve_surjective (hsurj : Function.Surjective (thetaGluedEval A τ a)) :
+    Function.Surjective (windowCarve A τ a hH1) := by
+  rw [windowCarve, LinearMap.coe_comp]
+  exact hsurj.comp (relThetaWindowEquiv C R π a hH1).surjective
+
+/-- **The widened corank identification**, conditional on the right-exactness heart: once the
+widened evaluation is surjective, the quotient of the free window by `K_a(d)` *is* the widened
+Θ-twisted colength module.  This is `windowQuotEquiv`'s widened analogue — the vehicle whose
+absence made the ε-value at a `DivFamZarAff` unstateable. -/
+noncomputable def windowQuotEquiv (hsurj : Function.Surjective (thetaGluedEval A τ a)) :
+    ((R ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) ⧸
+        divisorWindow d hH1) ≃ₗ[R] ThetaGlued A τ a :=
+  (Submodule.quotEquivOfEq _ _ (ker_windowCarve A τ a hH1).symm).trans
+    ((windowCarve A τ a hH1).quotKerEquivOfSurjective
+      (windowCarve_surjective A τ a hH1 hsurj))
+
+end WindowCarve
 
 end AffAdaptation
 
