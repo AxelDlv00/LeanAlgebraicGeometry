@@ -106,6 +106,60 @@ theorem finrank_glued_eq_sum_of_separated
   rw [LinearEquiv.finrank_eq (A.gluedTopEquiv (A.gluedSubmodule_eq_top_of_separated hsep))]
   exact Module.finrank_pi_fintype K
 
+/-! ## The geometric half: the presentation divisor read off an arbitrary affine piece -/
+
+section Geometric
+
+variable [IsIntegral (relCurve C K)]
+  [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+
+/-- **The divisor coefficient is read off any piece**, widened. -/
+lemma coeffAt_eq_toAdd_ordZ_eqn (j : D.index) {z : relCurve C K}
+    (hz : z ∈ D.pieces j) (hzg : z ≠ genericPoint (relCurve C K))
+    (gⱼ : (relCurve C K).functionFieldˣ)
+    (hgⱼ : (gⱼ : (relCurve C K).functionField)
+      = ((relCurve C K).presheaf.germ (D.pieces j) (genericPoint (relCurve C K))
+          (Scheme.genericPoint_mem_of_nonempty ⟨z, hz⟩)).hom (A.eqn j)) :
+    Multiplicative.toAdd (Scheme.ordZ (relCurve C K ↘ Spec (CommRingCat.of K)) hzg gⱼ)
+      = coeffAt hzg (Scheme.presentationDivisor K d.presentation) := by
+  sorry
+
+open scoped Classical in
+/-- **The per-piece degree reading**, widened. -/
+lemma finrank_colength_eq_sum (j : D.index) :
+    (finrank K (A.colength j) : ℤ)
+      = ∑ p ∈ (Scheme.presentationDivisor K d.presentation).support.filter
+          (fun p => p.1 ∈ D.pieces j),
+        coeffAt p.2 (Scheme.presentationDivisor K d.presentation)
+          * ((relCurve C K).residueDeg K p.1 : ℤ) := by
+  sorry
+
+/-- Unit germ on a piece kills the coefficient, widened. -/
+lemma coeffAt_eq_zero_of_isUnit_germ (j : D.index) {z : relCurve C K} (hz : z ∈ D.pieces j)
+    (hzg : z ≠ genericPoint (relCurve C K))
+    (hu : IsUnit (((relCurve C K).presheaf.germ (D.pieces j) z hz).hom (A.eqn j))) :
+    coeffAt hzg (Scheme.presentationDivisor K d.presentation) = 0 := by
+  sorry
+
+/-- Overlap vanishing from separation, widened. -/
+lemma subsingleton_ovlColength_of_sep
+    (hsep : ∀ i j : D.index, i ≠ j → ∀ (z : relCurve C K) (hzi : z ∈ D.pieces i),
+      z ∈ D.pieces j → IsUnit (((relCurve C K).presheaf.germ (D.pieces i) z hzi).hom (A.eqn i)))
+    (i j : D.index) (hij : i ≠ j) : Subsingleton (A.ovlColength i j) := by
+  sorry
+
+/-- **The colength↔degree identity, support-separated case — WIDENED.** -/
+theorem deg_presentationDivisor_eq_finrank_glued
+    (hsep : ∀ i j : D.index, i ≠ j → ∀ (z : relCurve C K) (hzi : z ∈ D.pieces i),
+      z ∈ D.pieces j → IsUnit (((relCurve C K).presheaf.germ (D.pieces i) z hzi).hom (A.eqn i)))
+    (hfin : ∀ j : D.index, Module.Finite K (A.colength j)) :
+    Scheme.CurveDivisor.deg K (Scheme.presentationDivisor K d.presentation)
+      = (finrank K A.Glued : ℤ) := by
+  sorry
+
+end Geometric
+
 end AffAdaptation
 
 end AlgebraicGeometry
