@@ -1,0 +1,54 @@
+id: I-0944
+provider: local
+kind: issue
+body: "Pic0Et.geometricallyReduced HAS THE FREE k-bar REDUCTION THE picSharp SIDE\
+  \ ALREADY ENJOYS -- kernel EXIT=0, UNOWNED work under the headline\n\nMEASURED by\
+  \ review-ajc (run 0081 s0004) in a scratch file: lake env lean EXIT=0, zero diagnostics,\
+  \ then deleted. Nothing landed -- read-mostly lane, this is prover work.\n\nTHE\
+  \ FINDING. Pic0Et.geometricallyReduced (Picard/Pic0Et.lean:174) is one of the headline's\
+  \ five obligations and one of only two sorries in the etale tower. Its picSharp\
+  \ twin (Pic0AbelianVariety.lean:1135) has a landed reduction beside it -- :1233\
+  \ and :1264 -- cutting it to reducedness of ONE scheme over kbar. Those carry [HasPicScheme\
+  \ C], so they look stranded on the dead side.\n\nThey are not specific to Pic0Scheme.\
+  \ The engine smooth_of_grpObj_of_isReduced_algebraicClosureBaseChange (Picard/GroupSchemeSmoothAlgClosed.lean:156)\
+  \ binds an ARBITRARY group scheme: {G : Scheme} (f : G -> Spec (.of K)) [LocallyOfFiniteType\
+  \ f] [GrpObj (Over.mk f)] (:93). Pic0Et proves both unconditionally (locallyOfFiniteType\
+  \ :127, grpObj :104). Two three-line probes elaborate:\n (1) [HasPicSchemeEt C]\
+  \ + IsReduced (pullback (Pic0SchemeEt C).hom (Spec.map (algebraMap k (AlgebraicClosure\
+  \ k)))) => Smooth (Pic0SchemeEt C).hom\n (2) same hypothesis => GeometricallyReduced\
+  \ (Pic0SchemeEt C).hom -- discharges the SORRY at :174, not just smoothness.\n(2)\
+  \ is the valuable half: Pic0Et.smooth (:183) is already an assembly over it, so\
+  \ (2) IS the obligation.\n\nONE TRAP, which is why it looks harder than it is. Pic0Et.lean\
+  \ imports only FGAPicRepresentability + IdentityComponent; in THAT cone probe (2)\
+  \ fails \"failed to synthesize GeometricallyReduced\". Adding import AlgebraicJacobian.Curve.GeometricallyReduced\
+  \ (owns the Smooth.geometricallyReduced instance, :142) makes it succeed. Pic0AbelianVariety.lean:1209-1213\
+  \ records this measure-at-the-root lesson about its OWN version; the trap re-fired\
+  \ on the etale side.\n\nSTILL OWED, not a discharge: IsReduced (Pic0SchemeEt x_k\
+  \ kbar) is the real mathematics and is a HYPOTHESIS in both probes. What is bought\
+  \ is that the etale obligation becomes the same single-scheme statement the picSharp\
+  \ side reduced to.\n\nQUALIFIES I-0938: its \"the Et tower has NO counterpart\"\
+  \ holds for the DIMENSION leaf, not here. Read it per-obligation.\n\nNEXT: AJC.pic0av.structure\
+  \ is active and UNOWNED, and its whole summary is about Pic0AbelianVariety.lean:1135/:1373\
+  \ -- the [HasPicScheme C] side no curve inhabits. Repointing that row."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:05:00.937171+00:00'
+updated_at: '2026-07-29T13:05:24.589704+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0004-horizon-review-ajc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p2
