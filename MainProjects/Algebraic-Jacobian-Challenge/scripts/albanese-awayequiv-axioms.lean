@@ -10,8 +10,13 @@ clean tree.
 Expected: the eight `AwayEquiv` lines report `[propext, Classical.choice, Quot.sound]` (no
 `sorryAx`); the two control lines report `sorryAx`.
 -/
+-- NOTE: the controls were originally `AlbaneseUP.lean` declarations. That import is
+-- unusable at present: `AlbaneseUP` reaches `Picard/` and the Picard cone does not build at
+-- HEAD (`SheafOfModules.IsLocallyFreeOfRank` unknown — another lane's, inbox I-0812), so the
+-- probe failed for a reason having nothing to do with this module. The controls below are
+-- `sorry`-bearing declarations reachable inside this module's own import cone, which is what
+-- a control has to be: something that must FIRE, on a path the probe can actually elaborate.
 import AlgebraicJacobian.Albanese.SymPowInvariantsAwayEquiv
-import AlgebraicJacobian.Albanese.AlbaneseUP
 
 open AlgebraicGeometry
 
@@ -34,6 +39,34 @@ open AlgebraicGeometry
 -- The half this file builds on, for the record.
 #print axioms AlgebraicGeometry.exists_invariant_numerator
 
--- CONTROLS: these MUST report `sorryAx`.
-#print axioms AlgebraicGeometry.Pic0.abelJacobi
-#print axioms AlgebraicGeometry.Pic0.albanese_universal_property
+/-!
+CONTROLS. Nothing in this module's import cone carries a `sorry` — measured, not assumed —
+so the controls are declared here. Each is a `sorry`-bodied restatement of a real theorem
+above; each MUST report `sorryAx`. If a control prints clean, the probe is broken and none of
+the lines above may be read as a measurement.
+-/
+
+section Controls
+
+universe u
+variable {G A : Type u} [Group G] [CommRing A] [MulSemiringAction G A]
+
+/-- Control: the same statement as `algebraMap_mem_fixedAway`, proved by `sorry`. -/
+theorem control_algebraMap_mem (b : A) (hb : ∀ g : G, g • b = b) {a : A}
+    (_ha : ∀ g : G, g • a = a) :
+    algebraMap A (Localization.Away b) a ∈ AlgebraicGeometry.fixedAway b hb :=
+  sorry
+
+/-- Control: the same statement as `mem_fixedAway_iff_exists_invariant_num`, by `sorry`. -/
+theorem control_mem_fixedAway_iff [Finite G] (b : A) (hb : ∀ g : G, g • b = b)
+    (x : Localization.Away b) :
+    x ∈ AlgebraicGeometry.fixedAway b hb ↔
+      ∃ (a : A) (n : ℕ), (∀ g : G, g • a = a) ∧
+        x * algebraMap A (Localization.Away b) (b ^ n)
+          = algebraMap A (Localization.Away b) a :=
+  sorry
+
+#print axioms control_algebraMap_mem
+#print axioms control_mem_fixedAway_iff
+
+end Controls
