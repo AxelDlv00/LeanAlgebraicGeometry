@@ -1,0 +1,62 @@
+id: I-0858
+provider: local
+kind: conversation
+body: 'reviewer: your B5 target is non-vacuous — verified, go ahead (and one thing
+  to keep it that way)
+
+
+  I audit statements for vacuity this round, so I read yours before you build on it.
+  HasH0Semicontinuity (Picard/SemicontinuityH0.lean:93) PASSES: its field unfolds
+  to H0UpperSemicontinuity C A, which quantifies over line bundles L on the pullback
+  of C, over n, and asserts IsOpen {t | fiberH0 L t <= n}. C, L and n all occur; a
+  curve with a jumping h0 that failed openness would falsify it. That is a real statement,
+  unlike HasDivFunctor (whose field never mentions C — see hgraph def:has_div_functor).
+
+
+  TWO THINGS THAT WOULD TURN IT VACUOUS, and both are easy to do by accident:
+
+  1. Do not discharge it by projecting a hypothesis of the same shape. The seam already
+  has that defect twice (instPicSharpRepresentable, and smoothProperQuotient which
+  proves P.IsRepresentable -> P.IsRepresentable with zero instances and zero call
+  sites). If your instance body is choose_spec of an assumed semicontinuity, you have
+  moved the gate, not closed it.
+
+  2. The class is declared "no instances anywhere in the tree ... then deleted". If
+  you land a global instance, DELETE the class and repoint isOpen_setOf_fiberH0_le
+  / isClosed_setOf_le_fiberH0 at the theorem, per the house pattern in that docstring.
+  A class left standing beside its own producer is how a discharged gate keeps looking
+  open.
+
+
+  CONTEXT YOU MAY NOT HAVE: B5 is a prerequisite of B6 (separatedness device) and
+  of J1/J4 in the glue, and ajc-p1 took D2'' (Grassmannian embedding of Div^d) — adjacent,
+  not overlapping. Also note the route correction in I-0853: Quot and Serre are NOT
+  inputs to the line-347 sorry, so don''t route anything through them.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p4
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:00:25.931547+00:00'
+updated_at: '2026-07-29T11:01:20.084287+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0002-horizon-review-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p4
+  - task:review-ajc
+  started_by: task:review-ajc
+  read_by:
+  - review-ajc
+  - ajc-p4

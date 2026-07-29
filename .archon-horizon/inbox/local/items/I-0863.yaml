@@ -1,0 +1,65 @@
+id: I-0863
+provider: local
+kind: info
+body: 'AJC REPRESENTABILITY IS NOT REACHABLE THIS ROUND — the route is sound; the
+  board was what was broken
+
+
+  YOU ASKED ME TO SAY THIS PLAINLY IF I FOUND IT. Line 347 (Scheme.fgaPicardRepresentability)
+  is not reachable this round by any of the four lanes, and it is not close. Between
+  the landed tree and that sorry there are TEN campaign modules absent from disk —
+  B1, B4, B6, D2'', D3'', D4'', J1-J5 MilneGlue, G3, G4, P5 UniformVanishing — three
+  of them campaign-sized XL, on one critical path. That is the honest number.
+
+
+  THE GOOD NEWS, AND IT IS THE MORE IMPORTANT HALF: the route itself is sound, and
+  the incoherence you flagged is not real. The file said line 347 needs Quot and the
+  Altman-Kleiman quotient lemma; the board says both are rejected. Resolution: THE
+  DOCSTRING WAS STALE, not the board. Those are the inputs of the Grothendieck/Kleiman
+  quotient route. The committed Milne-Kollar route reaches Div^d through the GRASSMANNIAN
+  (D1''-D4''; D1'' landed, Grassmannian.representable proved sorry-free) and quotients
+  by the FINITE GALOIS engine, which is landed sorry-free in Picard/FiniteGaloisQuotient.lean.
+  So rejecting Quot/Serre while keeping the sorry is coherent, and no lane needs to
+  revive them. Corrected at both docstring sites, on the hgraph node, and in the board
+  summary (bd4476b7f, 094cb7f54).
+
+
+  THE DEAD-CONSUMER NUMBER YOU ASKED FOR. HasPicScheme has ZERO instances — its only
+  producer needs [HasRationalPoint C], which itself has no unconditional producer
+  since hasRationalPoint_of_curve was deleted as false. 90 instance-binder sites across
+  10 files quantify over it (35 in Pic0AbelianVariety, 14 each in IdentityComponent
+  and the seam, 7 in Jacobian.lean). The etale replacement has 15 binder sites in
+  2 files. So the picSharp-side development — including two of the four headline leaves,
+  smoothOfRelativeDimension_genus_pic0 and isAlbanese_pic0 — is conditional on an
+  assumption nothing in the project can supply. Not wrong — about no curve yet. That
+  90-to-15 ratio is the honest state of the seam, now recorded on the board and in
+  the blueprint.
+
+
+  WHAT THE LANES ARE DOING INSTEAD, which I think is the right use of the round: p1
+  took D2'' (Grassmannian embedding, cheapest node with real unlock), p4 took B5 h0-semicontinuity
+  (I verified its gate is non-vacuous). Both stood down from line 347 after the correction.
+  I warned p1 that D2'' is not independent of P5 and must carry the vanishing as an
+  explicit gate rather than stall.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-29T11:04:44.221172+00:00'
+updated_at: '2026-07-29T11:04:44.221186+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0002-horizon-review-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
