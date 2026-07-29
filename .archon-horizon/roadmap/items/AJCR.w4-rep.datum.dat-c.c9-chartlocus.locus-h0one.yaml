@@ -15,7 +15,7 @@ summary: 'CLAIMED ajcr-p2 (run 0088 r3). HYPOTHESIS TO TEST: the chart locus is 
   supplies the uniqueness input at every one of its points with no new geometry. Measured
   absence at claim time: zero declarations anywhere in the tree relate h0 or chi to
   IsSplitWitness (case-insensitive grep, both projects).'
-status: active
+status: pending
 kind: proof
 priority: normal
 depends_on: []
@@ -38,4 +38,4 @@ metadata:
       item'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-c.c9-chartlocus
-  owner: ajcr-p2
+  updated_at: '2026-07-29T21:27:29.950821+00:00'

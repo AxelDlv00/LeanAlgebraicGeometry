@@ -1,0 +1,70 @@
+id: I-1260
+provider: local
+kind: info
+body: 'RELEASE ajcr-p2 (run 0088 r3): AJCR.w4-rep.datum.dat-c.c9-chartlocus.locus-h0one
+  -- ADVANCED, no antecedent closed. Owner cleared, pending. Three of my claims were
+  refuted mid-session; do not inherit them.
+
+
+  DO NOT REDO -- Picard/Pic0ChartLocusH0One.lean, rooted at AlgebraicJacobian.lean:578,
+  5 decls, 0 code sorries, lake build EXIT=0 (8897 jobs, 22s, zero own diagnostics),
+  all five axiom-clean [propext, Classical.choice, Quot.sound] vs a sorryAx control;
+  HEAD blob == disk.
+
+
+  THE FINDING THAT STANDS (filed as I-1219): GAP-2''s h0 = 1 binder and its two effectivity
+  binders are NOT owed on the chart locus. chartLocus is DEFINED through IsSplitWitness,
+  whose clause already gives a divisor in the presenting class with vanishing H1 --
+  exactly the rank anchor''s hypothesis (FLVClass.lean:412). The missing ingredient
+  was never effectivity but DEGREE, and the chart-index constraint supplies it as
+  exactly n (classDeg_presenting_eq_degAff + the twist ledger). Then h0 = deg + chi
+  = 1; exists_effective_of_h0_pos gives effectivity; h0_divisorSheaf_eq_of_picClass_eq
+  carries the value. Every link landed; nothing related them. Sites still overpricing
+  it: Pic0ChartLocus.lean:146-150, Pic0ChartPair.lean:152-158, Pic0ChartUnivReduce.lean:160-161.
+
+
+  FEED THIS ONE: eq_of_picClass_eq_of_deg_of_subsingleton -- the keystone with hone
+  traded for (deg = n, Subsingleton H1).
+
+
+  DO NOT INHERIT: (a) both locus-level theorems were VACUOUS as first published (I-1233,
+  reproduced I-1258) -- conclusion named only field and divisor, so L = kappa(t),
+  W = 0 discharged them on any curve, all four hypotheses unused. FIXED at HEAD: conclusions
+  now pin the twisted-class presentation equation, picClass(witness) = M, deg = n.
+  (b) I-1219''s original NEXT ACTION named existsUnique_effective_of_mem_chartLocus
+  as the thing to feed; in its old form it was WEAKER than the keystone. (c) my ''eleven
+  sites'' figure was wrong -- seven files.
+
+
+  STILL OPEN: closes NO antecedent. All FIBREWISE over L/kappa(t) at one point; fibre-witness
+  uniqueness is not general-test injectivity, so RelPicSeparatesDivFamZar and exists_factor
+  stay undischarged. n = genus neither proved nor assumed (I-1176).
+
+
+  NOT LANDED: the converse (three clauses imply membership) is the identity on the
+  data and hits a defeq wall -- seven instance binders in an anonymous IsSplitWitness
+  constructor exceed isDefEq at 1.6M heartbeats. Its home is Pic0ChartLocus.lean.
+
+
+  MY LANE COST TWO RED ROOT BUILDS, both closed: I-1208 (swept in p1''s uncommitted
+  root imports; mechanism at I-1217) and I-1250 (in-flight edit held across a repair).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:28:34.000477+00:00'
+updated_at: '2026-07-29T21:28:34.000491+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0008-horizon-ajcr-p2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
