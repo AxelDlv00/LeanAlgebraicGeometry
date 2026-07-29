@@ -50,10 +50,23 @@ inbox `I-1329`).  The *threshold* is not per-fibre.  I-0204 says the per-field l
 data: `subsingleton_hModule_one_of_witness` (`RiemannRoch/WindowFieldTransport.lean:87`) is
 π-free, `windowN C L hπ g` is a witness at every `L`, and `deg_windowN = M·δ` with
 `windowM_choice`/`windowδ` computed at `k`.  So `M·δ + g` is **one threshold for every
-splitting field** (`subsingleton_h1_of_ledger_bound`).  What remains true is that DAT-0a itself
-cannot be instantiated at `L` — there is no `relCurve C L ⟶ P1 L` in this tree — so the route
-runs through the peeling rather than through DAT-0a.  What is unaffected: the retraction below,
-`hb_forces_h0_eq_one`, and the whole `b = g` discussion, since `M·δ + g > g` for `δ ≥ 1`.
+splitting field**.
+
+**TWO CORRECTIONS TO THAT CORRECTION, both the same day** (audit + author reproduction, inbox
+`I-1349`/`I-1350`), so read the paragraph above only for its central point:
+
+* the sentence that stood here — "DAT-0a itself cannot be instantiated at `L`, there is no
+  `relCurve C L ⟶ P1 L` in this tree" — is **FALSE**.  `exists_isFinite_isDominant_toP1`
+  (`Curve/MapToP1.lean:126`) produces one for `baseChangeBundle C L` via the instances in
+  `Curve/BaseChangeInstances.lean`, so DAT-0a *is* available at `L`;
+* the uniform threshold is **not new Lean** either: `subsingleton_h1_of_windowA_le_deg`
+  (`Picard/DivSchemeSeedUnivFibre.lean:259`, landed 2026-07-19) is the same fact at a *smaller*
+  bound (`windowA_choice ≤ windowM_choice`).  Cite that, not
+  `subsingleton_h1_of_ledger_bound`.
+
+What survives is only the correction to the *"per-fibre"* reading itself, which was the point.
+Also unaffected: the retraction below, `hb_forces_h0_eq_one`, and the whole `b = g` discussion,
+since both `M·δ + g` and `a·δ + g` exceed `g` for `δ ≥ 1`.
 
 **RETRACTED 2026-07-29 (I-0660).**  This paragraph continued: `mem_chartLocus_of_vanishing_bound`
 "takes `b_L` in exactly the shape `exists_bound_subsingleton_hModule_one_of_isFinite_toP1`
