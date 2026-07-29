@@ -66,6 +66,20 @@ theorem — Serre duality's `deg ≥ 2g − 1`, which this workspace does not ha
 stabilisation index in terms of `genus C`, which is base-field-invariant
 (`Ledger/GenusFieldInvariance.genus_baseChangeField_curve`).
 
+**The second route is the live one, and `finrank_stabilisationAmbient_eq_h1` below is the
+measurement that makes it concrete.**  `n₀(κ)` is produced by
+`Submodule.eventually_eq_top_of_monotone_of_iSup_eq_top` from a monotone chain `Aₙ` inside
+`N = 𝒪(D)(V₀ ⊓ V₁)`, and the quotient it stabilises in is *exactly* `H¹(𝒪(D + n·F))` — so at
+`D = 0` the ambient has dimension `genus C_κ = genus C`, the same number for every `κ`.  If the
+chain strictly increased until it reached the top, `n₀ ≤ genus C` would follow at once and the
+degree clause would close with `d := genus C · deg_κ F_κ`.
+
+What is missing is **strictness**: a monotone chain in a `g`-dimensional space may repeat a term
+without having reached `⊤`, and nothing in the tree rules that out for `Aₙ`.  So the honest
+statement of the remaining obligation is either strictness of `n ↦ Aₙ` below the top, or any other
+argument bounding `n₀` by a base-field-invariant quantity.  This is *not* claimed here, and the
+bound `n₀ ≤ genus` must not be cited as available.
+
 ## Contents
 
 * `exists_base_subsingleton_curve` — over `k`, at every genus: a divisor with vanishing `H¹`.
@@ -74,6 +88,11 @@ stabilisation index in terms of `genus C`, which is base-field-invariant
   *bounded degree* gives `UniformBaseDivisor`.  Recorded so the degree clause is the only thing a
   consumer has to supply, and deliberately **not** advertised as progress: it is the definition
   with the existence clause discharged, which is exactly what the two theorems above buy.
+* `finrank_stabilisationAmbient_eq_h1` — where the next attempt should start: the space in which
+  `n₀` is chosen has dimension `h¹(𝒪(D + n·F))`, so at `D = 0` it has dimension the *genus*,
+  which is base-field-invariant.  A strictness argument for the chain would therefore bound `n₀`
+  by `genus C` uniformly in `κ` and close the degree clause.  Strictness is **not** proved here
+  and is the one missing step; see the declaration's docstring.
 -/
 
 set_option autoImplicit false
@@ -157,6 +176,7 @@ clauses at the type level, which is what stops the next attempt from re-deriving
 half. -/
 theorem uniformBaseDivisor_of_exists_deg_le {d : ℤ}
     (h : ∀ (κ : Type u) [Field κ] [Algebra k κ],
+      -- the per-field vanishing divisor, with its degree bounded — the open clause
       letI : (Scheme.baseChangeField C κ).left.Over (Spec (CommRingCat.of κ)) :=
         .ofHom (Scheme.baseChangeField C κ).hom
       haveI : SmoothOfRelativeDimension 1
@@ -170,5 +190,47 @@ theorem uniformBaseDivisor_of_exists_deg_le {d : ℤ}
   fun κ _ _ => h κ
 
 end BaseDivisor
+
+/-! ## Where the degree clause should be attacked
+
+One measurement, isolating the quantity a bound on `n₀` would have to control. -/
+
+section Stabilisation
+
+open Scheme
+
+attribute [local instance] Scheme.functionFieldOverModule Scheme.overModule
+
+variable {K : Type u} [Field K] {Y : Scheme.{u}} [IsIntegral Y]
+  [Y.Over (Spec (CommRingCat.of K))]
+  [SmoothOfRelativeDimension 1 (Y ↘ Spec (CommRingCat.of K))]
+  [LocallyOfFiniteType (Y ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (Y ↘ Spec (CommRingCat.of K))]
+  (π : Y ⟶ P1 K) [IsDominant π] [IsAffineHom π]
+
+/-- **The stabilisation happens in a space of dimension `h¹`** — the measurement that says where
+the degree clause should be attacked.
+
+`n₀` is produced by `Submodule.eventually_eq_top_of_monotone_of_iSup_eq_top` applied to the
+fibre-lattice chain `Aₙ` inside the fixed ambient `N = 𝒪(D)(V₀ ⊓ V₁)`.  This records that the
+quotient it stabilises in is *exactly* the twisted `H¹`, so its dimension is `h¹(𝒪(D + n·F))` —
+and at `D = 0` that is `h¹(𝒪) = genus`, **the same number over every base field**
+(`Ledger/GenusFieldInvariance.genus_baseChangeField_curve`).
+
+So a bound `n₀ ≤ genus C` would close the degree clause of `UniformBaseDivisor` with
+`d := genus C · deg_κ F_κ`, uniformly in `κ`.
+
+**It does not follow from this, and the gap is precisely strictness.**  A monotone chain in a
+`g`-dimensional space can repeat a term without having reached `⊤`, so bounded dimension alone
+bounds nothing; one needs `Aₙ ⊊ Aₙ₊₁` while `Aₙ ≠ ⊤`.  Nothing in the tree proves that for the
+fibre lattice.  Stated as a `finrank` identity and nothing more, so that the reduction is visible
+without any part of it being asserted. -/
+theorem finrank_stabilisationAmbient_eq_h1 (D : Y.CurveDivisor) (n : ℕ) :
+    Module.finrank K
+        (divisorSections K D (fiberChart₀ π ⊓ fiberChart₁ π) ⧸ fiberLatticeOverlap π D n)
+      = Sheaf.h1 (Y.divisorSheaf K (D + n • fiberWeilDivisor π)) :=
+  (LinearEquiv.finrank_eq (fiberLatticeH1Equiv π D n)).symm
+
+end Stabilisation
 
 end AlgebraicGeometry
