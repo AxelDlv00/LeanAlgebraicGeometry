@@ -1,0 +1,9 @@
+scratch_w7/k1d.lean:23:41: error: Application type mismatch: The argument
+  ((baseChange.idIso k).app C).inv ▷ overSpec k B
+has type
+  (𝟭 (Over (Spec (CommRingCat.of k)))).obj C ⊗ overSpec k B ⟶ (baseChange k k).obj C ⊗ overSpec k B
+of sort `Type u` but is expected to have type
+  Over (Spec (CommRingCat.of k))
+of sort `Type (u + 1)` in the application
+  Over.comp_left (overSpec k B) (((baseChange.idIso k).app C).inv ▷ overSpec k B)
+EXIT=1

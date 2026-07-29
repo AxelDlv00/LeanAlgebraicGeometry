@@ -1,0 +1,10 @@
+scratch_w7/k1b.lean:35:73: error: unsolved goals
+k : Type u
+inst✝³ : Field k
+C : Over (Spec (CommRingCat.of k))
+inst✝² : SmoothOfRelativeDimension 1 C.hom
+inst✝¹ : IsProper C.hom
+inst✝ : GeometricallyIrreducible C.hom
+T : Over (Spec (CommRingCat.of k))
+⊢ ((Over.map (𝟙 (Spec (CommRingCat.of k)))).obj T).left = ((𝟭 (Over (Spec (CommRingCat.of k)))).obj T).left
+EXIT=1

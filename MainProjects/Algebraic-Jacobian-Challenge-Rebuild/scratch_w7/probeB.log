@@ -1,0 +1,40 @@
+scratch_w7/probeB.lean:34:17: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (picEtMap ?C ?f) ((relPicToPicEt ?C ?T) ?z)
+in the target expression
+  (picEtCrossBase k L C ((baseChange k L).obj C))
+      ((picEtMap C ((Over.mapPullbackAdj (Spec.map (CommRingCat.ofHom (algebraMap k L)))).counit.app C))
+        ((relPicToPicEt C C) ((relPicMk C C) (abelCechClass C P)))) =
+    abelPicEt ((baseChange k L).obj C) (Functor.LaxMonoidal.ε (baseChange k L) ≫ (baseChange k L).map P)
+
+k : Type u
+inst✝⁵ : Field k
+C : Over (Spec (CommRingCat.of k))
+inst✝⁴ : SmoothOfRelativeDimension 1 C.hom
+inst✝³ : IsProper C.hom
+inst✝² : GeometricallyIrreducible C.hom
+L : Type u
+inst✝¹ : Field L
+inst✝ : Algebra k L
+P : 𝟙_ (Over (Spec (CommRingCat.of k))) ⟶ C
+h :
+  (CechPic.map (crossBaseIso k L C ((baseChange k L).obj C)).hom)
+      ((CechPic.map
+          (Over.Hom.left (C ◁ (Over.mapPullbackAdj (Spec.map (CommRingCat.ofHom (algebraMap k L)))).counit.app C)))
+        (abelCechClass C P)) =
+    abelCechClass ((baseChange k L).obj C) (Functor.LaxMonoidal.ε (baseChange k L) ≫ (baseChange k L).map P)
+⊢ (picEtCrossBase k L C ((baseChange k L).obj C))
+      ((picEtMap C ((Over.mapPullbackAdj (Spec.map (CommRingCat.ofHom (algebraMap k L)))).counit.app C))
+        ((relPicToPicEt C C) ((relPicMk C C) (abelCechClass C P)))) =
+    abelPicEt ((baseChange k L).obj C) (Functor.LaxMonoidal.ε (baseChange k L) ≫ (baseChange k L).map P)
+
+Note: The target expression is not type-correct under the `instances` transparency level, which may have triggered the failure. This is usually caused by unfolding of semireducible definitions in prior tactic steps. Use `set_option linter.tacticCheckInstances true` to investigate the source of the issue.
+Full error:
+  Application type mismatch: The argument
+    (relPicToPicEt C C) ((relPicMk C C) (abelCechClass C P))
+  has type
+    @picEt k inst✝⁵ C C
+  but is expected to have type
+    @picEt k inst✝⁵ C ((𝟭 (Over (Spec (CommRingCat.of k)))).obj C)
+  in the application
+    (picEtMap C ((Over.mapPullbackAdj (Spec.map (CommRingCat.ofHom (algebraMap k L)))).counit.app C))
+      ((relPicToPicEt C C) ((relPicMk C C) (abelCechClass C P)))

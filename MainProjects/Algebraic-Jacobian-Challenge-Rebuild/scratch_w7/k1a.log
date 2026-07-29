@@ -1,0 +1,3 @@
+pic0Theta k k C = cocycleIdRHS k C : Prop
+scratch_w7/k1a.lean:42:0: warning: declaration uses `sorry`
+EXIT=0

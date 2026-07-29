@@ -1,0 +1,2 @@
+scratch_w7/k1g.lean:20:10: error(lean.unknownIdentifier): Unknown identifier `expose_me`
+EXIT=1

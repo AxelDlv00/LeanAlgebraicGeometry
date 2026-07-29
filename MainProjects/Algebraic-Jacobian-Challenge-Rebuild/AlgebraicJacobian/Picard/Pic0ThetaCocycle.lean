@@ -36,16 +36,36 @@ identity on `sectionShuffle`. Every seam-crossing step is term-mode (I-0216 note
 The θ-cocycle is stated on the curve `C` alone — no `JacobianData` argument — since θ is a
 functor comparison; the datum enters only at DAT-J (the W7 datum idiom, D1).
 
-## STATUS (WORK IN PROGRESS — not committed, not wired into the root)
+## STATUS (WORK IN PROGRESS — unrooted; two open `sorry`s)
 
-The two headline definitions and their auxiliary isos (pinned exactly per the ratified
-`informal/w7-k1-worksheet.md`) elaborate green, as does the reduction key
-`RelPicTransportFamily.picEtAffHom_congr` and the full Leg-1..3 component reduction of
-`pic0Theta_id`. The two keystones `pic0Theta_id`/`pic0Theta_comp` bottom out in a single
-`sorry` each — the Leg-4 section-ring **atom** (base-field shuffle vs. curve base-change
-transport), reduced to a scheme-morphism identity on the product carriers. The exact
-remaining plan is recorded inline at each `sorry`. Do NOT import this file from the root
-until both `sorry`s are closed and the file is committed.
+**Corrected 2026-07-29 (run 0079, task `ajcr-w7-functor`).** The status block previously
+here claimed the Leg-1..3 component reduction of `pic0Theta_id` was complete, with only a
+Leg-4 `sorry` remaining. That was not the file's state:
+
+* **`pic0Theta_id` ended in `by exact rfl` nested inside a bare `by` in tactic position
+  (former :193), which is a SYNTAX ERROR** — `unexpected token 'by'; expected command`,
+  reproduced at HEAD. So the declaration never elaborated, and neither did anything after
+  it in the file.
+* **The file has no `.olean`, `.ilean`, `.trace` or hash, and is imported by nothing**, so
+  no claim in it had ever been checked by any tool (also recorded in the roadmap row's
+  build-reach triage, I-0361).
+
+What IS now measured, at HEAD, by `lake env lean` on scratch probes (run 0079):
+
+* the K-1a headline `pic0Theta k k C = cocycleIdRHS k C` **does** state and elaborate, and
+  the Leg-1..3 `change` step below **does** typecheck — the worksheet's §1.1/§6 probe-K-d
+  claim survives independent re-measurement;
+* **the Leg-4 atom's `snd` leg is CLOSED** (below, in the flipped orientation that
+  `IsPullback.hom_ext` actually presents): `crossBaseAffineIso_inv_snd` plus
+  `whiskerRight_snd`, term-mode — `rw` fails here because the identity base change spells
+  its codomain `(𝟭 _).obj C`;
+* **the atom's `fst` leg is the whole residue.** `Over.crossBaseIso_inv_fst` is stated
+  about the composite `(fst …).left ≫ pullback.fst C.hom σ`, whereas `hom_ext` on
+  `Over.isPullback_left` presents `(fst …).left` alone, so the landed projection lemma does
+  not apply as-is. That mismatch, not op/associator bookkeeping, is what a next session
+  faces.
+
+Do NOT import this file from the root until both `sorry`s are closed.
 -/
 
 set_option autoImplicit false
@@ -116,6 +136,33 @@ theorem baseChange_idIso_hom_app_left (k : Type u) [Field k] (C : Over (Spec (.o
     eqToHom_app, pullbackId_hom_app_left, Over.eqToHom_left]
   exact pullback_fst_congr_left C.hom hσ _
 
+/-! ## The Leg-4 atom, `snd` leg
+
+The K-1a Leg-4 atom is the scheme identity
+`((baseChange.idIso k).app C).inv ▷ overSpec k B).left = (crossBaseAffineIso k k C B).inv`,
+to be proved by `(Over.isPullback_left _ _).hom_ext` on the two projections.  The `snd` leg
+is below, closed; the `fst` leg is the file's residue (see the STATUS block). -/
+
+open MonoidalCategory CartesianMonoidalCategory in
+/-- **The `snd` leg of the K-1a Leg-4 atom**: the whiskered identity base-change comparison
+and the affine same-carrier comparison agree on the second projection — both are
+`(snd C (overSpec k B)).left`.
+
+Term-mode by necessity: the identity base change spells its codomain `(𝟭 _).obj C`, so `rw`
+reports "did not find an occurrence" on a goal that visibly contains the pattern (the R4/R5
+spelling friction of I-0216, measured here). -/
+theorem crossBaseAffineIso_inv_whiskerRight_snd (k : Type u) [Field k]
+    (C : Over (Spec (.of k))) [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIrreducible C.hom] (B : Type u) [CommRing B] [Algebra k B] :
+    (((baseChange.idIso k).app C).inv ▷ overSpec k B).left
+        ≫ (Limits.snd ((baseChange k k).obj C) (overSpec k B)).left
+      = (crossBaseAffineIso k k C B).inv
+          ≫ (Limits.snd ((baseChange k k).obj C) (overSpec k B)).left :=
+  Eq.trans
+    (congrArg Over.Hom.left
+      (MonoidalCategory.whiskerRight_snd (((baseChange.idIso k).app C).inv) (overSpec k B)))
+    (crossBaseAffineIso_inv_snd k k C B).symm
+
 /-! ## K-1a: the θ identity coherence over `Over.pullbackId` -/
 
 section Identity
@@ -165,7 +212,8 @@ theorem pic0Theta_id : pic0Theta k k C = cocycleIdRHS k C := by
         (picEtPullback ((baseChange.idIso k).app C).inv (Opposite.unop T) lam.1)
   refine picEt.ext fun W => ?_
   rw [picEtCrossBaseInv_val, picEtMap_val]
-  -- REMAINING ATOM (Leg 4). Goal:
+  -- REMAINING ATOM (Leg 4), now with its `snd` leg discharged in
+  -- `crossBaseAffineIso_inv_whiskerRight_snd` above; only the `fst` leg is open. Goal:
   --   `(sectionShuffle k k C T.unop W.1).symm (lam.1.1 W)`
   --     `= picEtMapVal C ((mIdσ k).hom.app T.unop)`
   --         `(picEtPullback ((baseChange.idIso k).app C).inv T.unop lam.1) W`.
@@ -190,8 +238,12 @@ theorem pic0Theta_id : pic0Theta k k C = cocycleIdRHS k C := by
   --          `crossBaseAffineIso`'s fst (the `whiskerLeftIso C mapOverSpecIso` only touches
   --          snd, so its fst is `crossBaseIso`'s, via `Over.crossBaseIso_hom_fst`), using
   --          `baseChange.idIso = eqToIso _ ≪≫ Over.pullbackId` so `g.left` is `pullbackId`.
-  by
-    exact rfl
+  --      MEASURED 2026-07-29: step (3)'s snd leg is DONE
+  --      (`crossBaseAffineIso_inv_whiskerRight_snd`). Its fst leg is the residue, and the
+  --      plan's appeal to `Over.crossBaseIso_hom_fst` does not apply verbatim: the landed
+  --      `_inv_fst` lemma is about `(fst …).left ≫ pullback.fst C.hom σ`, while `hom_ext`
+  --      on `Over.isPullback_left` presents `(fst …).left` alone.
+  sorry
 
 end Identity
 

@@ -1,0 +1,13 @@
+scratch_w7/k1e.lean:19:10: error(lean.unknownIdentifier): Unknown identifier `test_sorry_marker`
+scratch_w7/k1e.lean:20:33: error: Application type mismatch: The argument
+  congrArg Over.Hom.left (whiskerRight_snd ((baseChange.idIso k).app C).inv (overSpec k B))
+has type
+  Over.Hom.left (((baseChange.idIso k).app C).inv ▷ overSpec k B ≫ snd ((baseChange k k).obj C) (overSpec k B)) =
+    Over.Hom.left (snd ((𝟭 (Over (Spec (CommRingCat.of k)))).obj C) (overSpec k B))
+but is expected to have type
+  Over.Hom.left (((baseChange.idIso k).app C).inv ▷ overSpec k B) ≫
+      Over.Hom.left (snd ((baseChange k k).obj C) (overSpec k B)) =
+    (crossBaseAffineIso k k C B).inv ≫ Over.Hom.left (snd ((baseChange k k).obj C) (overSpec k B))
+in the application
+  Eq.trans rfl (congrArg Over.Hom.left (whiskerRight_snd ((baseChange.idIso k).app C).inv (overSpec k B)))
+EXIT=1

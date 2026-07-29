@@ -1,0 +1,18 @@
+AlgebraicJacobian/Picard/JacobianDataBaseChangeAbelCore.lean:112:33: error: Application type mismatch: The argument
+  L
+has type
+  Type u
+but is expected to have type
+  Over (Spec (CommRingCat.of k))
+in the application
+  @abelCrossBaseCechCore k ?m.30 L
+AlgebraicJacobian/Picard/JacobianDataBaseChangeAbelCore.lean:148:28: error: Application type mismatch: The argument
+  L
+has type
+  Type u
+but is expected to have type
+  Over (Spec (CommRingCat.of k))
+in the application
+  @abelCrossBaseCechCore k ?m.206 L
+AlgebraicJacobian/Picard/JacobianDataBaseChangeAbelCore.lean:149:6: error: Failed to rewrite using equation theorems for `abelCrossBaseCechCore`
+EXIT=1

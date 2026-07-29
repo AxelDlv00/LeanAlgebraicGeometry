@@ -1,0 +1,5 @@
+scratch_w7/k1d.lean:23:51: error(lean.invalidField): Invalid field `symm`: The environment does not contain `Function.symm`, so it is not possible to project the field `symm` from an expression
+  Over.comp_left ?m.137 ?m.138 (overSpec k B)
+of type
+  ∀ (f : ?m.137 ⟶ ?m.138) (g : ?m.138 ⟶ overSpec k B), Over.Hom.left (f ≫ g) = Over.Hom.left f ≫ Over.Hom.left g
+EXIT=1

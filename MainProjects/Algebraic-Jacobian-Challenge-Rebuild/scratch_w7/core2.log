@@ -1,0 +1,52 @@
+AlgebraicJacobian/Picard/JacobianDataBaseChangeAbelCore.lean:150:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  (CechPic.map (Over.Hom.left (?m.235 ◁ ?f))) (abelCechClass ?m.235 ?P)
+in the target expression
+  (CechPic.map (crossBaseIso k L C ((baseChange k L).obj C)).hom)
+      ((CechPic.map
+          (Over.Hom.left (C ◁ (Over.mapPullbackAdj (Spec.map (CommRingCat.ofHom (algebraMap k L)))).counit.app C)))
+        (abelCechClass C P)) =
+    abelCechClass ((baseChange k L).obj C) (Functor.LaxMonoidal.ε (baseChange k L) ≫ (baseChange k L).map P)
+
+k : Type u
+inst✝⁵ : Field k
+C : Over (Spec (CommRingCat.of k))
+inst✝⁴ : SmoothOfRelativeDimension 1 C.hom
+inst✝³ : IsProper C.hom
+inst✝² : GeometricallyIrreducible C.hom
+L : Type u
+inst✝¹ : Field L
+inst✝ : Algebra k L
+P : 𝟙_ (Over (Spec (CommRingCat.of k))) ⟶ C
+hdiag :
+  (CechPic.map (crossBaseIso k L C ((baseChange k L).obj C)).hom)
+      (Over.graphPicClass C ((Over.mapPullbackAdj (Spec.map (CommRingCat.ofHom (algebraMap k L)))).counit.app C)) =
+    Over.graphPicClass ((baseChange k L).obj C) (𝟙 ((baseChange k L).obj C))
+hconst :
+  (CechPic.map (crossBaseIso k L C ((baseChange k L).obj C)).hom)
+      (Over.graphPicClass C
+        (toUnit ((Over.map (Spec.map (CommRingCat.ofHom (algebraMap k L)))).obj ((baseChange k L).obj C)) ≫ P)) =
+    Over.graphPicClass ((baseChange k L).obj C)
+      (toUnit ((baseChange k L).obj C) ≫ Functor.LaxMonoidal.ε (baseChange k L) ≫ (baseChange k L).map P)
+⊢ (CechPic.map (crossBaseIso k L C ((baseChange k L).obj C)).hom)
+      ((CechPic.map
+          (Over.Hom.left (C ◁ (Over.mapPullbackAdj (Spec.map (CommRingCat.ofHom (algebraMap k L)))).counit.app C)))
+        (abelCechClass C P)) =
+    abelCechClass ((baseChange k L).obj C) (Functor.LaxMonoidal.ε (baseChange k L) ≫ (baseChange k L).map P)
+
+Note: The target expression is not type-correct under the `instances` transparency level, which may have triggered the failure. This is usually caused by unfolding of semireducible definitions in prior tactic steps. Use `set_option linter.tacticCheckInstances true` to investigate the source of the issue.
+Full error:
+  Application type mismatch: The argument
+    Over.Hom.left (C ◁ (Over.mapPullbackAdj (Spec.map (CommRingCat.ofHom (algebraMap k L)))).counit.app C)
+  has type
+    @Quiver.Hom Scheme Scheme.instCategory.toQuiver
+      (C ⊗
+          (Over.pullback (Spec.map (CommRingCat.ofHom (algebraMap k L))) ⋙
+                Over.map (Spec.map (CommRingCat.ofHom (algebraMap k L)))).obj
+            C).left
+      (C ⊗ (𝟭 (Over (Spec (CommRingCat.of k)))).obj C).left
+  but is expected to have type
+    @Quiver.Hom Scheme Scheme.instCategory.toQuiver
+      (C ⊗ (Over.map (Spec.map (CommRingCat.ofHom (algebraMap k L)))).obj ((baseChange k L).obj C)).left (C ⊗ C).left
+  in the application
+    CechPic.map (Over.Hom.left (C ◁ (Over.mapPullbackAdj (Spec.map (CommRingCat.ofHom (algebraMap k L)))).counit.app C))
+EXIT=1

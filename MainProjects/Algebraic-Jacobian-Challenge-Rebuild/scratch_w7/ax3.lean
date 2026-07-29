@@ -1,0 +1,3 @@
+import AlgebraicJacobian.Picard.JacobianDataBaseChangeAbelCore
+#print axioms AlgebraicGeometry.baseChange_ofCurve_data_of_cech
+#print axioms AlgebraicGeometry.abelCrossBaseCechCore_of_graph
