@@ -5,6 +5,15 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivisorFamilyAffFunctorCompare
 import AlgebraicJacobian.Picard.DivSchemeAbel
+-- The two declarations this file's docstrings reason ABOUT rather than use:
+-- `isCertified_affine_and_not_isCertified_chart` (the R2 strictness payoff, which is WHY the
+-- widened carrier has to reach the Picard side at all) and `abelSigmaChart` (the consumer that
+-- takes a CHART-TYPED representation, which is what it cannot currently reach). Imported so
+-- every cited name is in this file's import closure and `#check`s here rather than merely
+-- being greppable elsewhere -- measured on the first version of this header, which cited both
+-- out of scope (the recurring failure recorded at I-1073).
+import AlgebraicJacobian.Picard.DivisorFamilyAffStrict
+import AlgebraicJacobian.Picard.Pic0AtlasFromDivRep
 
 /-!
 # THE ABEL HOOK ON THE R2 CARRIER: `DivFamZarAff` acquires a Picard class in `picEt`
@@ -180,6 +189,109 @@ theorem picEtMap_abelDivAff' {T T' : Over (Spec (.of k))} (f : T' ⟶ T)
     divFamZarAff.mapVal_spec C n f s W W₀ hW₀ V hV]
 
 end AbelVehicle
+
+/-! ## The widened chart value, and the ONE statement still owed
+
+`chartValue` (`Picard/DivSchemeAbel.lean`) twists the Abel value into degree zero, and its
+`pic0Subgroup` membership is `degAt_chartValue` plus the chart-index degree constraint.  The
+widened analogue of the twist is free — it is the same product in `picEt C T`, whose factors
+`sigmaFamily`/`thetaFamily` never saw a divisor cover at all.  What is **not** free is the
+degree ledger: `degAt_abelDiv` rests on `DivFamZar.classDeg_picClass`, whose proof runs through
+the field collapse `DivFam.exists_toZar_eq` and the CRT identity `deg_divFamDivisor`, and the
+degree half of that chain (`DivisorAdaptation.deg_presentationDivisor_eq_finrank_glued`) consumes
+`relCover_sup` together with `cover₀`/`cover₁` — the pinned-pair structure R2 removes.
+
+Measured, not assumed: there is no widened analogue of `finrank_glued_eq_sum_of_separated`,
+`subsingleton_ovlColength_of_sep`, `finrank_colength_eq_sum` or `coeffAt_eq_zero_of_isUnit_germ`
+anywhere in the `DivisorFamilyAff*` family.  The widened `AffAdaptation` *does* carry the whole
+module layer these would be about (`colength`, `ovlColength`, `gluedSubmodule`, `Glued`,
+`IsCertified` clause for clause), so the obstruction is a missing transcription of the degree
+argument, not a missing structure — but the transcription is not free, because the chart-typed
+proof spends the two-chart covering where the widened one has only a joint `⨆ j, pieces j = ⊤`.
+
+So the degree ledger is stated below as an explicit hypothesis `hdegAff` on the widened Abel
+transformation, at exactly the shape `degAt_abelDiv` has.  It is **not** discharged here, and it
+is **not** hidden inside a class whose statement omits the objects: it mentions the curve, the
+widened section, the field point and the degree.  A `sorry` would have been dishonest in the
+other direction — this way the obligation appears in every consumer's signature. -/
+
+section ChartValueAff
+
+/- Beyond the vehicle's instances, the TWIST factors need the curve's geometry: `sigmaFamily`
+and `thetaFamily` (`Picard/DivSchemeAbel.lean` §Sigma, `Picard/ThetaShift.lean`) carry
+`[SmoothOfRelativeDimension 1 C.hom]` and `[GeometricallyIrreducible C.hom]`.  All are standing
+DD-R hypotheses; they are named here rather than inherited. -/
+variable [GeometricallyIrreducible C.hom] [GeometricallyReduced C.hom]
+  [SmoothOfRelativeDimension 1 C.hom]
+
+variable (C n) in
+/-- **The widened chart value**: the widened Abel value shifted by the Σ-family and `m` inverse
+powers of the pinned θ-family — verbatim `chartValue` with `abelDivAff'` in place of `abelDiv`.
+
+The twist itself is cover-free: `sigmaFamily` and `thetaFamily` are built from Čech classes on
+the base-changed curve and know nothing of a divisor cover, so the widening does not touch
+them. -/
+def chartValueAff (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (T : Over (Spec (.of k))) (s : divFamZarAff C n T) : picEt C T :=
+  abelDivAff' C n T s * sigmaFamily C Z T
+    * (thetaFamily C (thetaCechClass C) T ^ m)⁻¹
+
+variable (C n) in
+/-- Naturality of the widened chart value in the test object — `picEtMap_abelDivAff'` together
+with the two naturalities of the twist factors. -/
+theorem picEtMap_chartValueAff (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    {T T' : Over (Spec (.of k))} (f : T' ⟶ T) (s : divFamZarAff C n T) :
+    picEtMap C f (chartValueAff C n m Z T s)
+      = chartValueAff C n m Z T' (divFamZarAff.map C n f s) := by
+  rw [chartValueAff, chartValueAff, map_mul, map_mul, map_inv, map_pow, picEtMap_abelDivAff',
+    sigmaFamily_natural, thetaFamily_natural]
+
+omit [GeometricallyReduced C.hom] in
+variable (C n) in
+/-- **The widened chart value lands in `pic0`, GIVEN the widened degree ledger.**
+
+`hdegAff` is the widened form of `degAt_abelDiv` and it is the single statement this file does
+not prove: *the widened Abel value of a degree-`n` widened class has degree `n` at every field
+point*.  Read the dependency honestly — the chart-typed ledger goes through
+`DivFamZar.classDeg_picClass`, whose degree half consumes the pinned-pair covering
+(`relCover_sup`, `cover₀`/`cover₁`) that R2 deletes, so this is a genuine obligation and not
+bookkeeping.
+
+Everything else in the degree-zero-ness argument transports unchanged: the three degrees still
+sum to zero under the chart-index constraint, because the twist factors are cover-free. -/
+theorem chartValueAff_mem_pic0Subgroup (m : ℕ)
+    (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    (T : Over (Spec (.of k))) (s : divFamZarAff C n T)
+    (hdegAff : ∀ {K : Type u} [Field K] [Algebra k K] (t : overSpec k K ⟶ T),
+      degAt (abelDivAff' C n T s) t = (n : ℤ)) :
+    chartValueAff C n m Z T s ∈ pic0Subgroup C T := by
+  rw [mem_pic0Subgroup_iff]
+  intro K _ _ t
+  rw [chartValueAff, degAt_mul, degAt_mul, degAt_inv, degAt_thetaFamily_pow,
+    degAt_sigmaFamily, hdegAff t, hdeg]
+  ring
+
+omit [GeometricallyReduced C.hom] in
+/-- **The widened ledger holds on the image of a chart-typed class** — so the hypothesis of
+`chartValueAff_mem_pic0Subgroup` is not vacuous: it is inhabited at every widened section that
+comes from a chart-typed one, by `degAt_abelDiv` transported along `abelDivAffPlus_toAff`.
+
+This is deliberately *not* offered as evidence that the general ledger holds.  It says the
+obligation has witnesses, which is what distinguishes a real hypothesis from an unsatisfiable
+one; the open question is whether it holds for a widened class with no chart-typed preimage,
+which is exactly the class the R2 widening exists to admit. -/
+theorem degAt_abelDivAff'_toAff {π : C.left ⟶ P1 k} [IsFinite π]
+    {T : Over (Spec (.of k))} (s : divFamZar C π n T) {K : Type u} [Field K] [Algebra k K]
+    (t : overSpec k K ⟶ T) :
+    degAt (abelDivAff' C n T (divFamZarToAffVehicle C n π s)) t = (n : ℤ) := by
+  have hval : abelDivAff' C n T (divFamZarToAffVehicle C n π s) = abelDiv C π n T s := by
+    refine picEt.ext fun U => ?_
+    rw [abelDivAff'_val, abelDiv_val, divFamZarToAffVehicle_val, abelDivAffPlus_toAff]
+  rw [hval, degAt_abelDiv]
+
+end ChartValueAff
 
 end
 
