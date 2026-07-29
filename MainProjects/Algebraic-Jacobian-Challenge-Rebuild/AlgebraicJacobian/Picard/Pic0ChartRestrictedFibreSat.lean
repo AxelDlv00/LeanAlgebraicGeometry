@@ -308,6 +308,24 @@ free-and-impossible at `⊥`, and possible-and-maximal at `⊤`.  Neither endpoi
 assembly, so any `V` that works is a proper intermediate open — which is what the chart locus is
 for, and why CHART-U(b)'s openness is not optional bookkeeping.
 
+**SHARPENED 2026-07-30 (`Picard/Pic0ChartCoverForcesNonInj.lean`), and it makes that
+"proper intermediate open" conclusion *equivalent* to the `abel-noninj` fork rather than
+independent of it.**  The theorem below is conditional on the Abel chart failing to be injective,
+which this file's docstring correctly calls unproved.  But coverage at *any* proper `V` supplies
+that failure outright, with no divisor and no carve input:
+`not_injective_of_pointwiseCoverage_of_ne_top` reads the *tautological* section at a point
+outside `V`, and the coverage witness — which factors through `V` — disagrees with it there.  So
+for a one-chart atlas:
+
+* if the chart is non-injective, `⊤` is dead by the theorem below;
+* if it is injective, coverage holds at **no** proper `V`
+  (`not_pointwiseCoverage_of_injective_of_ne_top`), and with `⊥` refuted here only `⊤` survives.
+
+Hence a lane cannot adopt the restriction repair and stay agnostic about the fork: "any working
+`V` is proper" *is* the fork's negative branch.  Scope: one chart.  At a general index coverage
+may return an index other than the one tested, and nothing follows — see that file's own limits
+section.
+
 The proof re-applies the criterion at the unrestricted chart, using the `⊤`-datum's own `W` and
 composing its `r` with `(⊤).ι`; `exists_factor` transfers because every `v : S ⟶ X` lifts through
 `(⊤).ι` by `range_subset_range_top_ι`. -/

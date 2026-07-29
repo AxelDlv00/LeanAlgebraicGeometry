@@ -88,7 +88,32 @@ with `h¹ = 0` there are none fibrewise — so a witness wants a point of the di
 `H¹` fails to vanish, or a genuinely relative failure of uniqueness that no fibre sees.  Which
 of those two it is, is undecided here.  (The degree-`g`/`h⁰ = 1` link is `ajcr-p4`'s measurement,
 I-0888; the fibrewise/general-test caveat is a fresh-context review's, I-0923/I-0924.)
--/
+
+**A SECOND ROUTE TO THE SAME FORK, added 2026-07-30
+(`Picard/Pic0ChartCoverForcesNonInj.lean`), and it does not go through the carve at all.**  The
+discussion above — and the `abel-noninj` row — treat the fork as a question about `DivScheme g`:
+does it carry a point where `H¹` fails to vanish?  It is *also* a question coverage answers.
+`not_injective_of_pointwiseCoverage_of_ne_top` shows that for a **one-chart** atlas,
+`PointwiseCoverage` at any open `V ≠ ⊤` produces a test on which the chart is not injective:
+instantiate coverage at the test `D.left` itself and at the *tautological* section, at a point
+outside `V`; the coverage witness factors through `V` and the tautological one does not.  No
+divisor, no `H¹`, no carve fact enters.
+
+Two consequences for a lane on this row:
+
+* the fork's **negative** branch is implied by coverage at any proper `V`, so a witness of the
+  kind item 3 describes is not the only way to it — and the composites
+  `not_isChartLocusFibre_of_pointwiseCoverage_of_ne_top` /
+  `not_restrictedChartFibre_top_of_pointwiseCoverage_of_ne_top` land it directly;
+* the fork's **positive** branch — the one item 3 argues for at `n = g` — now has a *cost*:
+  by the contrapositive `not_pointwiseCoverage_of_injective_of_ne_top`, an injective chart
+  admits coverage at no proper `V`, and `⊥` is refuted too (`not_coverageContainment_bot`), so
+  the seam could then close only at `V = ⊤`.  The two branches are no longer "one kills the old
+  route, the other is the cheap outcome": each carries a commitment about `V`.
+
+Nothing there is discharged — coverage at a proper `V` has no producer — and the general-test
+caveat above is untouched: the new route sidesteps it rather than answering it, because it never
+needs a fibrewise statement in the first place. -/
 
 set_option autoImplicit false
 set_option maxSynthPendingDepth 3
