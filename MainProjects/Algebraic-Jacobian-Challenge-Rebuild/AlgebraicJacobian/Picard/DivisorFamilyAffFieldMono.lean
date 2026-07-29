@@ -143,11 +143,9 @@ omit [IsProper C.hom] [GeometricallyIrreducible C.hom]
 set_option maxRecDepth 8000 in
 /-- The chart-typed germ set is the carrier-free one at the family's equations.
 
-The `omit` list is not cosmetic and was measured, not guessed: the four binders dropped
-here are the ones the elaborator reports unused, and the fibre-curve binders that look
-equally idle canNOT be dropped — they are referenced through the instance towers that type
-`relThetaWindowEquiv`.  What the identification needs is the typing of the window, not the
-geometry of the divisor. -/
+The `omit` list is not cosmetic and was measured by binary search, not guessed: seven
+binders are dropped, and the eighth the linter flags cannot be (see the note above).  What
+the identification needs is the typing of the window, not the geometry of the divisor. -/
 lemma eqnsWindowGermSet_divFam (g : ℕ) (G : CertifiedDivisorFamily C K π g)
     (z : relCurve C K) :
     divFamEpsWindowGermSet hπ g (DivFam.mk G) z = eqnsWindowGermSet K hπ g G.eqns z :=
@@ -180,5 +178,140 @@ lemma eqnsWindowGermSet_eps (g : ℕ) (F : CertifiedDivisorFamilyAff C K g)
             (relThetaPairH1_windowM C π hπ g)).toLinearMap (F.eps hπ g).1) :
           Set (relThetaSections C K π (windowM_choice π hπ g)))) z :=
   rfl
+
+/-! ## The easy inclusion, carrier-free -/
+
+set_option linter.unusedSectionVars false in
+omit [IsProper C.hom] [GeometricallyIrreducible C.hom]
+  [IsIntegral (relCurve C K)]
+  [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [LocallyOfFiniteType (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0)]
+  [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1)] in
+/-- **Window germs lie in the stalk ideal, for a bare local-equation system.**  The
+chart-typed `span_divFamEpsWindowGermSet_le` (`Picard/DivSchemeMonoBridge.lean:355`) takes a
+`CertifiedDivisorFamily` and uses it only through `G.eqns`; this is that proof with the
+carrier deleted, including the `Submodule.map_comap_eq_of_surjective` step where
+`divisorWindow` unfolds to the vanishing submodule.
+
+The `omit` list is worth reading: **seven** binders drop, all of the fibre-curve geometry
+among them, so the easy inclusion is not merely carrier-free but geometry-free — it is the
+definitional content of `divisorWindow` as a `comap`.  The eighth,
+`SmoothOfRelativeDimension 1 C.hom`, is flagged unused and is again not omittable, for the
+same instance-argument reason recorded above. -/
+theorem span_eqnsWindowGermSet_le (g : ℕ) (d : (relCurve C K).LocalEquations)
+    (z : relCurve C K) :
+    Ideal.span (eqnsWindowGermSet K hπ g d z) ≤ d.stalkIdeal z := by
+  refine span_twistGermSet_le_stalkIdeal d ?_ z
+  have h1 : Submodule.map (relThetaWindowEquiv C K π (windowM_choice π hπ g)
+        (relThetaPairH1_windowM C π hπ g)).toLinearMap
+        (divisorWindow d (relThetaPairH1_windowM C π hπ g))
+      = d.vanishingSubmodule K (relCover C K (fiberTwoCover π)).V₀
+          (relCover C K (fiberTwoCover π)).V₁
+          (relThetaCocycle C K π (windowM_choice π hπ g)) := by
+    rw [divisorWindow]
+    exact Submodule.map_comap_eq_of_surjective
+      (relThetaWindowEquiv C K π (windowM_choice π hπ g)
+        (relThetaPairH1_windowM C π hπ g)).surjective _
+  rw [h1]
+
+/-! ## The widened field mono, with its ONE residue named
+
+The chart-typed field mono is `divFam_divEq_of_eps_eq_of_field`
+(`Picard/DivSchemeMonoBridgeField.lean:475`).  Unwound, its route is:
+
+* `divFam_divEq_of_stalkIdeal_eq` — which is `DivFam.mk_eq_mk_iff.mpr` of
+  `Scheme.LocalEquations.divEq_of_stalkIdeal_eq`, and **that upgrade is carrier-free**:
+  its signature is `(∀ z, d₁.stalkIdeal z = d₂.stalkIdeal z) → d₁.DivEq d₂` with no family
+  in it at all (read off the signature with `#check`, not off the docstring);
+* each stalk ideal being the span of the germ set, from the easy inclusion above together
+  with the field window generation.
+
+At `s = ⊥` — the field case — the chart-typed `stalkIdeal_eq_span_windowGerm`'s appeal to
+`G.adaptation.stalkIdeal_eq_of_le_sup_map` is **not needed**: `⊔ Ideal.map _ ⊥` collapses,
+so antisymmetry of the two inclusions suffices.  That is why the theorem below carries no
+adaptation, no cover and no certificate.
+
+So the widened field mono reduces to ONE obligation, stated as an explicit hypothesis
+rather than buried: the carrier-free **hard** inclusion `hgen`.  Its chart-typed instance is
+`CertifiedDivisorFamily.stalkIdeal_le_span_windowGerm_of_field`
+(`…MonoBridgeField.lean:193`), whose proof I audited occurrence by occurrence — `G` appears
+only as `G.eqns`, `G.eqns.presentation`, `G.eqns.stalkIdeal`, `G.eqns.vanishingSubmodule`,
+and inside `DivFam.mk G` under `divFamEps`/`divFamEpsWindowGermSet`, both `rfl`-equal to
+functions of `eqns` (that is `eqnsWindowGermSet_divFam` above).  Its two carrier-dependent
+inputs are `deg = g` and effectivity of the presentation divisor, and
+`certifiedAff_deg_presentationDivisor` / `certifiedAff_zero_le_presentationDivisor` below
+exhibit **both** for an arbitrary widened certified family.
+
+**WHAT IS THEREFORE OWED, stated plainly and not discounted.**  `hgen` is not proved here
+for either carrier: it is *cited* chart-typed and *transcribable* widened.  The
+transcription is mechanical (`G.eqns` ↦ `d`, the two facts becoming hypotheses) but it is
+~250 lines I did not type, so `divEq_of_eps_eq_of_field_of_windowGen` is a **reduction, not
+a discharge**, and this file does not claim the widened field mono unconditionally.  What it
+buys is that a lane finishing it need not re-derive which inputs it needs, and need not
+re-prove the two that are already available. -/
+
+set_option linter.unusedSectionVars false in
+omit [IsProper C.hom] [GeometricallyIrreducible C.hom]
+  [IsIntegral (relCurve C K)]
+  [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [LocallyOfFiniteType (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0)]
+  [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1)] in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxRecDepth 8000 in
+/-- **The widened field mono, modulo the carrier-free hard inclusion.**  Two widened
+certified families over a field whose `ε`-windows agree cut divisor-equal systems, given the
+carrier-free field window generation `hgen` for each.
+
+Every step other than `hgen` is discharged here: the easy inclusions are
+`span_eqnsWindowGermSet_le`, the germ-set transport is the `ε`-equality itself (the germ set
+being a function of the window alone), and the final upgrade is the carrier-free
+`Scheme.LocalEquations.divEq_of_stalkIdeal_eq`.
+
+Note the hypothesis is on the FIRST components only, exactly as the chart-typed fibrewise
+step consumes it (`divFamDivisor_eq_of_divFamEps_fst_eq`) — the shifted window plays no part
+in the stalk-ideal recovery. -/
+theorem divEq_of_eps_eq_of_field_of_windowGen (g : ℕ)
+    (F F' : CertifiedDivisorFamilyAff C K g)
+    (heps : (F.eps hπ g).1 = (F'.eps hπ g).1)
+    (hgen : ∀ z : relCurve C K,
+      F.eqns.stalkIdeal z ≤ Ideal.span (eqnsWindowGermSet K hπ g F.eqns z))
+    (hgen' : ∀ z : relCurve C K,
+      F'.eqns.stalkIdeal z ≤ Ideal.span (eqnsWindowGermSet K hπ g F'.eqns z)) :
+    F.eqns.DivEq F'.eqns := by
+  refine Scheme.LocalEquations.divEq_of_stalkIdeal_eq fun z => ?_
+  have hwin : divisorWindow F.eqns (relThetaPairH1_windowM C π hπ g)
+      = divisorWindow F'.eqns (relThetaPairH1_windowM C π hπ g) := heps
+  have hset : eqnsWindowGermSet K hπ g F.eqns z
+      = eqnsWindowGermSet K hπ g F'.eqns z := by
+    unfold eqnsWindowGermSet
+    rw [hwin]
+  rw [le_antisymm (hgen z) (span_eqnsWindowGermSet_le hπ g F.eqns z),
+    le_antisymm (hgen' z) (span_eqnsWindowGermSet_le hπ g F'.eqns z), hset]
+
+set_option linter.unusedSectionVars false in
+/-- **`hgen`'s first carrier-dependent input, exhibited widened**: the presentation divisor
+of a widened certified family has degree exactly `g`.  This is
+`AffAdaptation.IsCertified.deg_presentationDivisor`
+(`Picard/DivisorFamilyAffStalkEval.lean:669`) — no separation and no cover hypothesis, which
+is what makes it usable here. -/
+theorem certifiedAff_deg_presentationDivisor (g : ℕ)
+    (F : CertifiedDivisorFamilyAff C K g) :
+    Scheme.CurveDivisor.deg K (Scheme.presentationDivisor K F.eqns.presentation)
+      = (g : ℤ) :=
+  AffAdaptation.IsCertified.deg_presentationDivisor F.adaptation F.certified
+
+set_option linter.unusedSectionVars false in
+/-- **`hgen`'s second carrier-dependent input, exhibited widened**: that divisor is
+effective.  Carrier-free already — the anchor equations are genuine sections of the
+structure sheaf, integral at every closed point. -/
+theorem certifiedAff_zero_le_presentationDivisor (g : ℕ)
+    (F : CertifiedDivisorFamilyAff C K g) :
+    (0 : (relCurve C K).CurveDivisor)
+      ≤ Scheme.presentationDivisor K F.eqns.presentation :=
+  Finsupp.le_def.mpr fun p => Scheme.zero_le_coeffAt_presentationDivisor K F.eqns p.2
 
 end AlgebraicGeometry
