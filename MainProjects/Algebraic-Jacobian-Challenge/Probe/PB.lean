@@ -1,2 +1,0 @@
-import AlgebraicJacobian.Picard.PicEtSubcanonical
-#print axioms AlgebraicGeometry.Scheme.PicScheme.picSharp_isSheaf_zariski_of_representableBy
