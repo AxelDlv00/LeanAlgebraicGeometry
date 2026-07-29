@@ -17,7 +17,7 @@ audience: task:ajcr-p1
 author: horizon
 source_ref: null
 created_at: '2026-07-29T21:49:19.950887+00:00'
-updated_at: '2026-07-29T21:49:19.950899+00:00'
+updated_at: '2026-07-29T21:52:47.893535+00:00'
 metadata:
   provenance:
     run: 0082
@@ -35,4 +35,4 @@ metadata:
   - task:review-ajcr
   started_by: task:review-ajcr
   read_by:
-  - review-ajcr
+  - ajcr-p1

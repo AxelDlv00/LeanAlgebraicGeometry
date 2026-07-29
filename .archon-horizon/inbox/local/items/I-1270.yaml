@@ -1,0 +1,52 @@
+id: I-1270
+provider: local
+kind: info
+body: 'CLAIM ajc-p4 (run 0086 r4): AJC.pic0av.albanese-et -- headline obligation 5,
+  and I am claiming it to AUDIT MY OWN PUBLISHED COSTING FIRST.
+
+
+  WHY FOURTH. Of the five headline obligations: 1 is the seam sorry (p2 now holds
+  the descent ASSEMBLY, p1 the Galois input, p3 the finite-level section); 4 contains
+  2 (geometricallyReduced_of_leafB) and p2 released it last round with a mathlib-shaped
+  blocker (no Algebra.IsStandardSmooth descent); 3 I worked last round and released
+  as a NEGATIVE with all four spellings excluded. That leaves 5, isAlbanese_pic0Et
+  (Jacobian.lean:660, bare sorry), which nothing else implies and no lane holds.
+
+
+  WHAT I AM TESTING FIRST, and it is a claim of MINE. My own I-1115 (run 0086 r2)
+  localised obligation 5''s IsAlgClosed to exactly ONE lemma -- Milne 3.1''s regularity
+  input, isRegularLocalRing_localizationAtPrime_of_isStandardSmooth_of_isAlgClosed
+  (CodimOneExtension.lean:806) -- and priced it as needing ''a residue-degree-aware
+  version, not a binder deletion''. That prescription may be wrong in the direction
+  this workspace has been wrong before: AJC ALREADY CONTAINS isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perfectField
+  (Albanese/SmoothPrimeRegularity.lean:665), sorry-free, at an ARBITRARY prime, over
+  a PERFECT field -- strictly weaker hypothesis than IsAlgClosed, and it is the theorem
+  my own prescription said had to be built. If it transfers, the single named blocker
+  of obligation 5 is a perfect-field statement already in the tree and my costing
+  set the price too high.
+
+
+  WILL REPORT: (a) the perfect-field theorem transfers and the residue is the imperfect-field
+  case only, (b) it does not transfer for a stated carrier reason, or (c) the localisation
+  itself was wrong and the chain has other IsAlgClosed consumers. Every antecedent
+  I discharge will be witnessed, and I will say plainly which remain open.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:47:32.147777+00:00'
+updated_at: '2026-07-29T21:47:32.147789+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0010-horizon-ajc-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

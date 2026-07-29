@@ -45,17 +45,18 @@ the single morphism `T ×_k k' ⟶ T` is *injective* on `picEt`-classes, for eve
 
 **Proved, `sorry`-free** (§3): the transport that makes the `k'`-side hypothesis
 statable in the right variables (`representableByRestrict_of_baseChange`, free from
-input 2), and the sharp consequence of §2 —
-`picEtRestrictEquiv_of_surjective`: restriction along the cover is a *bijection* as
-soon as it is surjective, so the descent step's remaining class-level content is
-**one half of a bijection, not two**.
+input 2), and — sharper than §2 —
+`existsUnique_amalgamation_picEt_fieldCover`: a *compatible family* on the cover
+has a **unique** amalgamation, so the class-level descent is complete, both halves.
+`picEtRestrictEquiv_of_surjective` is the weaker single-morphism form, kept for
+consumers holding one class, with §2's injectivity as its content.
 
-**Not proved, and named rather than hidden** (§4): effectivity, and then the
-quotient construction. Surjectivity of restriction has no producer here for any
-curve, and the passage from a class-level bijection to a representing `k`-scheme is
-campaign `G2` itself, gated on the instance-free
-`AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`. This file does not weaken
-either, does not restate them more cheaply, and does not close them.
+**Not proved, and named rather than hidden** (§4): `G1` invariance — producing the
+compatible family from a Galois-invariant `k'`-class — and then the `G2` quotient
+construction that turns descended classes into a representing `k`-scheme, gated on
+`AlgebraicJacobian.GaloisDescent.HasGaloisQuotient` (affine half only). Neither is
+sheaf-theoretic; this file does not weaken either, does not restate them more
+cheaply, and does not close them.
 
 **What this file deliberately does not contain.** An earlier draft stated the
 assembly as a Lean implication whose antecedent was the seam's clause (1) and whose
@@ -225,17 +226,56 @@ noncomputable def representableByRestrict_of_baseChange
     ((restrictTest k k').op ⋙ picEt C).RepresentableBy X' :=
   rep.ofIso (picEt_crossBaseIso C k')
 
-/-- **THE SHARP FORM OF WHAT THE DESCENT STEP STILL OWES: surjectivity alone.**
+/-- **THE CLASS-LEVEL DESCENT IS COMPLETE AND FREE — both halves, not one.**
+
+A *compatible family* of `picEt C`-classes on the field-extension cover of a
+`k`-test `T` has a **unique** amalgamation. So descent of classes along the cover
+is settled outright: nothing about it is owed.
+
+**This corrects the framing of `picEtRestrictEquiv_of_surjective` below, which is
+this file's own first attempt.** That lemma says restriction is a bijection *as
+soon as it is surjective*, and I described surjectivity as "the sharp remaining
+class-level statement". That is too pessimistic, and it is the same
+already-in-the-tree error `Picard/EtaleFieldCover.lean` records at its own
+section 4: the amalgamation property of `picEt` is free at **every** covering
+sieve, `⊤` included, because it is `PicSharp.etaleSheaf`'s own `Sheaf.cond` pushed
+through the forgetful functor. Applied at *this* sieve — whose membership witness
+is what `EtaleFieldCover` contributes — it gives existence as well as uniqueness.
+
+So the residue of the descent step is **not** in the sheaf theory at all. It is in
+the two places this file cannot reach:
+
+1. producing the *compatible family* from a Galois-invariant `k'`-class, which is
+   the Hilbert-90/invariance content of campaign `G1`; and
+2. the **scheme-level** quotient — turning the descended classes into a `k`-scheme
+   representing `picEt C` — which is campaign `G2` and is gated on
+   `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`.
+
+A lane pricing the descent step should budget those two and *nothing* for the
+sheaf-theoretic halves. -/
+theorem existsUnique_amalgamation_picEt_fieldCover
+    [FiniteDimensional k k'] [Algebra.IsSeparable k k']
+    (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (T : Over (Spec (CommRingCat.of k)))
+    (x : Presieve.FamilyOfElements (picEt C)
+      (((Sieve.overEquiv T).symm
+        (Sieve.generate (Presieve.singleton
+          (pullback.fst T.hom (specMapAlgebra k k'))))) : Presieve T))
+    (hx : x.Compatible) :
+    ∃! t : (picEt C).obj (Opposite.op T), x.IsAmalgamation t :=
+  AlgebraicGeometry.Scheme.isSheafFor_picEt_pullback_presieve k' C T x hx
+
+/-- **A weaker, single-morphism form: restriction is a bijection once surjective.**
+
+Kept because it is the shape a consumer holding one class rather than a family
+wants, and because its injectivity half (`§2`) is the part that needed proof.
+`existsUnique_amalgamation_picEt_fieldCover` above is strictly stronger and shows
+`hsurj` is *not* the sharp residue: read that lemma's docstring before pricing
+anything from this one.
 
 Restriction along the cover `T_{k'} ⟶ T` is a **bijection** on `picEt`-classes as
-soon as it is surjective — because `§2` already supplies injectivity
-unconditionally. So the descent step's remaining content, at the level of classes,
-is exactly one half of a bijection, not two.
-
-This is the useful output of this file for whoever attacks campaign `G1`/`G2`: an
-effectivity argument has to produce a *preimage*, and nothing more. Any effort
-spent on uniqueness of the descended class is wasted — `§2` is unconditional in
-`T`, in `C`, and in the extension.
+soon as it is surjective, because `§2` supplies injectivity unconditionally.
 
 **What this is not.** It is not a discharge. `hsurj` has no producer in this
 project for any curve and any non-trivial `T`: producing one is the existence half
@@ -267,14 +307,21 @@ noncomputable def picEtRestrictEquiv_of_surjective
 
 /-! ## §4. What still stands between this and the seam's clause (1)
 
-The seam's clause (1) asks for a `k`-scheme representing `picEt C`. What `§2` and
-`picEtRestrictEquiv_of_surjective` establish is that the *class-level* descent is
-injective always and bijective as soon as it is surjective. What they do **not**
-supply, and what this file therefore leaves open, is the passage from a
-class-level bijection to a *representing scheme* over `k`: that is the quotient
-construction itself (campaign `G2`), which produces the `k`-scheme as a quotient of
-`X'` by the semilinear Galois action, and it is gated on
-`AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`.
+The seam's clause (1) asks for a `k`-scheme representing `picEt C`. What `§3`
+establishes is that the *class-level* descent along the field-extension cover is
+**complete**: a compatible family has a unique amalgamation, both halves free from
+sheafification once the covering-sieve witness of `Picard/EtaleFieldCover.lean` is
+in hand. What this file does **not** supply, and therefore leaves open, is two
+things, neither of them sheaf-theoretic:
+
+* producing the compatible family from a Galois-invariant `k'`-class (the
+  invariance content of campaign `G1`); and
+* the passage from descended classes to a *representing scheme* over `k` — the
+  quotient construction itself (campaign `G2`), which produces the `k`-scheme as a
+  quotient of `X'` by the semilinear Galois action, gated on
+  `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`. That gate now has a global
+  instance on the **affine** locus (`Picard/GaloisQuotientAffineGeneral.lean`,
+  `ajc-p1`), while the object this route descends is glued, so it still bites.
 
 Deliberately **not** stated here as a Lean implication with that passage as a
 hypothesis: an implication whose antecedent is its own conclusion is `P → P`, and
@@ -284,9 +331,9 @@ that. The route's remaining obligation is a *construction*, and the place for it
 
 So the scoreboard this file was written to complete reads, at HEAD: inputs 1 (the
 cover), 2 (cross-base), 4 (the `k^s` section) landed; input 3 (the Galois quotient)
-open and gated; the *goal* they feed now exists as `§2` for the uniqueness half,
-with surjectivity-of-restriction the sharp remaining class-level statement and the
-quotient construction the remaining geometric one.
+open, gated, affine half only; and the *goal* they feed now exists — with the
+class-level half of it **closed**, and the remaining cost entirely in `G1`
+invariance and the `G2` quotient.
 -/
 
 end PicScheme

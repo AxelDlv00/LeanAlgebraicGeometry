@@ -123,13 +123,26 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   \ for an arbitrary field extension, because the argument is\n   about pullback projections\
   \ rather than about étale covers. Finite-separability\n   is item 1's constraint\
   \ and was double-counted here. Do not budget a\n   separability argument for a cross-base\
-  \ step.\n3. **the Galois action and quotient — G1/G2, substantially built, one gate.**\n\
-  \   The affine case is proved and the gluing substrate exists; the general\n   existence\
-  \ statement is still the instance-free class\n   `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`.\n\
-  \   `AlgebraicJacobian.GaloisDescent.HasStableAffineCover` is **not** a second\n\
-  \   gate, but the reason stated here until now was false (`review-ajc`,\n   2026-07-29\
-  \ → corrected 2026-07-30 with controls both ways). It said the cover\n   class \"\
-  has had a global instance since G2(a) landed\"; that instance,\n   `hasStableAffineCover_of_orbitsInAffineOpen`,\
+  \ step.\n3. **the Galois action and quotient — G1/G2, substantially built; the gate\
+  \ now\n   bites only off the affine locus.** Updated 2026-07-30 (`ajc-p1`): the\
+  \ class\n   `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient` is **no longer\n\
+  \   instance-free**. `hasGaloisQuotient_of_isAffine`\n   (`Picard/GaloisQuotientAffineGeneral.lean`,\
+  \ global `instance`, `sorry`-free and\n   axiom-clean against a control that still\
+  \ reports `sorryAx` on this very\n   theorem) discharges it for **every** semilinear\
+  \ action on an affine total\n   space — not just for the affine *model* `specSemilinearGalAction`,\
+  \ which is\n   what `isGaloisQuotient_spec` had covered. The step was\n   `isGaloisQuotient_congr`,\
+  \ transport of `IsGaloisQuotient` along an equivariant\n   isomorphism over `Spec\
+  \ L`, applied to `X.isoSpec`; it subsumes the former\n   single-object witness `hasGaloisQuotient_specF4`\
+  \ by `inferInstance`.\n   **What this does not do, and it is the part that matters\
+  \ for this seam**: the\n   campaign consumer `J'_r` is a *glued* scheme, hence non-affine,\
+  \ and\n   `inferInstance` for the gate at an abstract action carrying the orbit\n\
+  \   hypothesis but not affineness **fails** (measured, control both ways). So the\n\
+  \   remaining `G2(c)` work is exactly the `Scheme.GlueData` assembly of the\n  \
+  \ per-chart quotients, and the Hironaka trap still bites there and is\n   untouched.\
+  \ Do not read \"the gate has an instance\" as \"input 3 is closed\".\n   `AlgebraicJacobian.GaloisDescent.HasStableAffineCover`\
+  \ is **not** a second\n   gate, but the reason stated here until now was false (`review-ajc`,\n\
+  \   2026-07-29 → corrected 2026-07-30 with controls both ways). It said the cover\n\
+  \   class \"has had a global instance since G2(a) landed\"; that instance,\n   `hasStableAffineCover_of_orbitsInAffineOpen`,\
   \ requires\n   `[ρ.OrbitsInAffineOpen]`, and `inferInstance` for `HasStableAffineCover`\
   \ at an\n   **abstract** semilinear action carrying only `[FiniteDimensional K L]`\n\
   \   `[IsGalois K L]` **fails** with `synthInstanceFailed` (control: with the orbit\n\
@@ -197,26 +210,45 @@ docstring: "**THE PROJECT'S CENTRAL OPEN OBLIGATION — expected to stay open.**
   modules are built to produce, with **nothing left over**. Clause (1) is\n`hasPicSchemeEt_of_picSharp_representability`\
   \ and clause (2) is\n`isIso_picEtComparison_of_picSharp_representability` (both\n\
   `Picard/PicEtSubcanonical.lean`), the second discarding the section it is handed.\n\
-  Axiom-clean `[propext, Classical.choice, Quot.sound]`, against a control — the\n\
-  same conclusion *without* the hypothesis, i.e. this theorem — that correctly\nreports\
-  \ `sorryAx`. The two halves existed separately; what had not been measured\nis that\
-  \ their conjunction is exactly this statement, so no reader had to take\n\"adds\
-  \ no strength\" on trust.\n\n**What this does NOT mean, since it is the natural\
-  \ misreading.** It does not\nbring the seam closer. The hypothesis is the campaign's\
-  \ *undischarged output*,\nand over an arbitrary `k` it is FALSE, not merely unproved:\n\
-  `PicScheme.not_exists_representing_picSharp_of_not_isIso`\n(`Picard/PicEtSubcanonical.lean`)\
-  \ plus Kleiman's pointless real conic refutes it.\nSo the correct reading is about\
-  \ *shape*, not distance: whatever the campaign\ndelivers must be delivered over\
-  \ a field where `picSharp` is representable (a\nseparably closed one, or under a\
-  \ section), and the descent to `k` must carry\n`picEt` points — and if it does deliver\
-  \ that, this bundled statement is fully\ndischarged, with clause (2) costing zero\
-  \ extra work."
+  Axiom-clean `[propext, Classical.choice, Quot.sound]`. The two halves existed\n\
+  separately; what had not been measured is that their conjunction is exactly this\n\
+  statement, so no reader had to take \"adds no strength\" on trust.\n\n**The control\
+  \ here has a trap in it, and the trap is worth more than the\nresult.** The obvious\
+  \ control — \"does the conclusion close *without* the campaign\nhypothesis?\" —\
+  \ **succeeds**, so read naively it says the reduction is empty.\n`exact?` closes\
+  \ clause (1) hypothesis-free via\n`HasPicSchemeEt.has_pic_scheme_et`, and clause\
+  \ (2) via\n`picEtComparison_isIso_of_hasRationalPoint`. Both are legitimate terms;\
+  \ both\nroute through `instHasPicSchemeEt`, which *is* a projection of the `sorry`\
+  \ below.\nMeasured: the hypothesis-free version reports\n`[propext, sorryAx, Classical.choice,\
+  \ Quot.sound]` while the version above\nreports no `sorryAx`. So on this seam **provability\
+  \ is not a discriminating\ncontrol and the axiom list is** — because an unconditional\
+  \ gate instance makes\nevery statement in its domain provable. Anyone probing a\
+  \ reduction anywhere near\n`HasPicSchemeEt` should compare axiom lists, not success\
+  \ and failure.\n\n**What this does NOT mean, since it is the natural misreading.**\
+  \ It does not\nbring the seam closer. The hypothesis is the campaign's *undischarged\
+  \ output*,\nand over an arbitrary `k` there is a refutation waiting for it —\n`PicScheme.not_exists_representing_picSharp_of_not_isIso`\n\
+  (`Picard/PicEtSubcanonical.lean`) turns any failure of\n`IsIso (picEtComparison\
+  \ C)` into a refutation of the existential, and Kleiman's\npointless real conic\
+  \ is where that failure is expected.\n\n**Stated precisely, because the first version\
+  \ of this paragraph overstated it**\n(`review-ajc`, corrected within the same session):\
+  \ that refutation is\n*conditional* on `¬ IsIso (picEtComparison C)`, which is **quoted\
+  \ from Kleiman,\nnot proved in this project** — `PicEtSubcanonical.lean` says so\
+  \ itself, and\nformalising it means exhibiting `φ*O(1)` in `picEt C (Spec ℝ)` outside\
+  \ the image\nvia `h⁰` on `ℙ¹_ℂ`. So the honest word for the campaign's `picSharp`\
+  \ endpoint\nover arbitrary `k` is **unproved with a refutation route mapped out**,\
+  \ not\n\"FALSE\" — the reduction above is a theorem, its trigger is not. Writing\
+  \ \"FALSE\"\nhere would be the same error the board row was corrected for in the\
+  \ opposite\ndirection.\n\nEither way the consequence for planning is unchanged:\
+  \ whatever the campaign\ndelivers must be delivered over a field where `picSharp`\
+  \ is representable (a\nseparably closed one, or under a section), and the descent\
+  \ to `k` must carry\n`picEt` points — and if it does deliver that, this bundled\
+  \ statement is fully\ndischarged, with clause (2) costing zero extra work."
 file: AlgebraicJacobian/Picard/FGAPicRepresentability.lean
 generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.fgaPicardRepresentability
 type: lean
-updated: '2026-07-30T04:53:11'
+updated: '2026-07-30T05:41:29'
 ---
 theorem fgaPicardRepresentability {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

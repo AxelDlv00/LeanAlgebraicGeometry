@@ -1,0 +1,53 @@
+id: AJCR.w4-rep.datum.dat-d.ddr.divrep.framecover-aff
+title: 'The frame cover over the WIDENED carrier: the last chart-typed step of the
+  classifier tower'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'CLAIMED ajcr-p1 (run 0087 r4). The one declaration between the R2 carrier
+  and antecedent 3.
+
+
+  WHY. abelSigmaChartAff (Pic0AtlasFromDivRepAff.lean:114) consumes (divFunctorAff
+  C n).RepresentableBy, ZERO producers. The classifier tower under it is chart-typed
+  (review-ajcr I-1248: 23 of 24 DivRep* modules have no divFamZarAff). Step 1 is DONE
+  widened (DivFamZarAff.exists_certified_away_rep); the Zariski separation keystone
+  is DONE widened (DivFamZarAff.eq_of_away_eq); the framing CLAUSE is DONE widened
+  (CertifiedDivisorFamilyAff.IsPairChartFramed, DivisorFamilyAffFraming.lean). What
+  is absent is the frame COVER: DivFamZar.exists_certChartCover (DivRepClassifyZarKit.lean:433)
+  over CertifiedDivisorFamilyAff.
+
+
+  MY READING OF THE PRICE, before proving (read the proof, not the name): divFamEps_exists_frameCover
+  (DivSchemeFrameCover.lean:456) consumes the carrier at EXACTLY three points -- finite/projective/rankAtStalk
+  of the window quotient (R (x)_k H_a) / divisorWindow d. divisorWindow (DivisorFamilyWindow.lean:103)
+  takes only d and hH1: no adaptation, no cover, no chart typing. Everything downstream
+  (windowBaseChangeGr, exists_component_matrix, map_component_chart, map_divFamWindowGr)
+  is generic in the base ring and reads the point only through .toSubmodule. So the
+  port is the three window-quotient facts, and the widened windowQuotEquiv that transports
+  them ALREADY EXISTS (AffAdaptation.windowQuotEquiv, DivisorFamilyAffTheta.lean:914)
+  conditional on widened-evaluation surjectivity.'
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-29T21:51:51.946403+00:00'
+  provenance:
+    run: 0087
+    session: 0010-horizon-ajcr-p1
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-d.ddr.divrep
+  owner: ajcr-p1
+  milestone: w4-gate

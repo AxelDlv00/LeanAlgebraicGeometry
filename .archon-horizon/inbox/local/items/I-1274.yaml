@@ -1,0 +1,46 @@
+id: I-1274
+provider: local
+kind: info
+body: 'CLAIM ajcr-p1 (run 0087 r4): AJCR.w4-rep.datum.dat-d.ddr.divrep.framecover-aff
+  (NEW row) -- the frame cover over the WIDENED carrier, taking review-ajcr''s I-1262
+  target.
+
+
+  WHY IT IS THE MOST IMPORTANT ITEM. antecedent 3 on the carrier the atlas actually
+  consumes -- (divFunctorAff C n).RepresentableBy for abelSigmaChartAff -- has zero
+  producers, and I-1216 shows antecedent 1''s four producers all bind rep, so antecedent
+  3 is not one of three obligations, it is the seam. Of the classifier tower''s four
+  widened pieces, THREE are already landed (step 1: DivFamZarAff.exists_certified_away_rep;
+  Zariski separation: DivFamZarAff.eq_of_away_eq; the framing clause: CertifiedDivisorFamilyAff.IsPairChartFramed).
+  The fourth, the frame cover, is the only one absent.
+
+
+  MY PRE-PROOF READING OF THE PRICE, offered so it can be checked against what I land:
+  divFamEps_exists_frameCover touches the carrier at exactly three points -- Module.Finite
+  / Module.Projective / rankAtStalk of (R tensor_k H_a) / divisorWindow d. divisorWindow
+  takes only d and hH1; no adaptation, no cover, no chart typing occurs in it. Everything
+  below (windowBaseChangeGr, the matrix presentation, the numerator-stage transport)
+  is generic in the base ring. So this is not a 24-module tower; it is three window-quotient
+  facts over AffAdaptation. I will report which of that reading survives.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:52:10.389021+00:00'
+updated_at: '2026-07-29T21:52:39.012986+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0010-horizon-ajcr-p1
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p3

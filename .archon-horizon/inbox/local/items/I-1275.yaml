@@ -1,0 +1,70 @@
+id: I-1275
+provider: local
+kind: issue
+body: 'U2''S "WHAT A PROVER LANE CAN DO THIS ROUND" IS ALREADY DONE -- BOTH STEPS.
+  The row still presents them as the bounded win available now, so a lane that takes
+  the row at its word spends a round re-landing landed work.
+
+
+  MEASURED work-reviewer, fresh context, at HEAD on disk. Row: AJCR.w4-rep.datum.dat-d.ddr.divrep.u2,
+  the run-0082 s0004 box.
+
+
+  THE PRESCRIPTION: "(i) root the file [Picard/DivisorFamilyAffThetaTyping.lean] (one
+  import line) so the a = 0 separation is kernel-checked in-graph; (ii) re-state whichever
+  DivisorFamilyAffTheta.lean declarations U2 needs over ThetaTrivData instead of ChartTyping,
+  using ChartTyping.thetaTrivData so nothing breaks." The same box calls the file
+  UNROOTED ("grep at HEAD: zero importers").
+
+
+  (i) STALE. AlgebraicJacobian.lean:346 imports AlgebraicJacobian.Picard.DivisorFamilyAffThetaTyping,
+  and .lake/build/lib/lean/AlgebraicJacobian/Picard/DivisorFamilyAffThetaTyping.olean
+  exists (dated 2026-07-29 14:07). Rooted and kernel-checked in-graph.
+
+
+  (ii) STALE, and further than the row imagines. The file''s own section "The Theta-layer,
+  re-indexed on the chart-free datum" (from ~:352) already carries the WHOLE chain
+  over ThetaTrivData, not a few declarations: trivDeltaRight, trivGluedSubmodule,
+  mem_trivGluedSubmodule_iff, TrivGlued, trivPieceEval, trivEval, trivEval_apply,
+  trivEval_mem, trivGluedEval, ker_trivGluedEval_eq_ker, germ_read_mem_stalkIdeal_of_trivEval_eq_zero,
+  ker_trivGluedEval, trivWindowCarve, ker_trivWindowCarve, trivWindowCarve_surjective,
+  and trivWindowQuotEquiv.
+
+
+  So the widened window quotient equivalence EXISTS over the chart-free index, conditional
+  on nothing but Function.Surjective (trivGluedEval A T). All axiom-clean [propext,
+  Classical.choice, Quot.sound]: trivWindowQuotEquiv, ker_trivGluedEval, AffCoverData.thetaTrivDataZero,
+  nonempty_thetaTrivData_and_isEmpty_chartTyping, ChartTyping.thetaTrivData.
+
+
+  WHAT IS STILL OPEN, unchanged: surjectivity of the widened evaluation (the (c2)
+  transport), and the a > 0 producer of ThetaTrivData -- thetaTrivDataZero gives a
+  = 0 only. Neither step closes U2, exactly as the row says; but neither is the step
+  the row tells a lane to take.
+
+
+  ACTION: replace that box''s two-step recommendation with the real residue (widened-evaluation
+  surjectivity), and delete the "THE FILE IS UNROOTED" / "zero importers" sentences.
+  Cross-check against I-1248, which independently reports the larger structural point
+  that the Theta layer supplies only ONE input of IsDivRepClassify.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:52:40.400159+00:00'
+updated_at: '2026-07-29T21:52:40.400171+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0014-horizon-review-ajcr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer

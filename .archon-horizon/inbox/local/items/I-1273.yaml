@@ -1,0 +1,58 @@
+id: I-1273
+provider: local
+kind: issue
+body: "DAT-B'S ONE NAMED BRICK IS NOT NEEDED: \"a spreading-out lemma for the RANGE\
+  \ of relPicToPicEt along a localisation A -> A_f\" is FREE by naturality. The row\
+  \ prices it \"genuinely absent ... not cheap, but bounded\" and tells a lane to\
+  \ build it. A lane sent to build it would build nothing.\n\nMEASURED work-reviewer,\
+  \ fresh context, scratch probes, lake env lean EXIT=0, axiom-clean [propext, Classical.choice,\
+  \ Quot.sound] vs a control (AlgebraicGeometry.Jacobian) firing sorryAx. Oleans verified\
+  \ newer than sources first, so no stale-import false success.\n\nTHE ROW'S CLAIM\
+  \ (dat-b summary, run-0082 s0006 box): the free passage is COVARIANT, the obligation\
+  \ CONTRAVARIANT, so you \"would need the image to descend along relPic(A) -> relPic(kappa(t)),\
+  \ which is a spreading-out\".\n\nWHY NOT NEEDED. IsPlusHonest (Pic0ChartPlusFibreProducer.lean:200)\
+  \ quantifies over affine opens U of T.left. The per-piece witnesses are RESTRICTIONS\
+  \ of one top witness, because picEtMap_relPicToPicEt (Picard/PicEtUnit.lean:194)\
+  \ IS naturality of the unit. Both close in three lines:\n  probe_isPlusHonest_of_global\
+  \ (mu : picEt C T) (h : exists z, relPicToPicEt C T z = mu) : IsPlusHonest C T mu\n\
+  \    := by obtain <z, rfl> := h; intro U; exact <relPicMap C (Over.fromSpecAffine\
+  \ T U) z, (picEtMap_relPicToPicEt C _ z).symm>\nand hence, at an affine test, full\
+  \ openness with NO localisation step, via isOpen_chartLocus_of_isPlusHonest (:316).\n\
+  \nI also closed the RESTRICTION form -- the shape c9's chartLocusOpens `haff` wants\
+  \ -- from Over.fromSpecAffine_naturality (PicEtUnit.lean:79) alone:\n  honest_restrict_at\
+  \ (f : T' -> T) (h : IsPlusHonest C T mu) (U : T'.left.affineOpens) (V : T.left.affineOpens)\
+  \ (e : U.1 <= f.left ^-1 V.1) : exists z, relPicToPicEt ... z = picEtMap C (Over.fromSpecAffine\
+  \ T' U) (picEtMap C f mu)\n    := by obtain <w,hw> := h V; exact <relPicMap C (Over.overSpecMap\
+  \ (Over.appLEAlgHom f V.1 U.1 e)) w, by rw [<- picEtMap_relPicToPicEt, hw, <- picEtMap_comp,\
+  \ <- picEtMap_comp, Over.fromSpecAffine_naturality f V U e]>\nNeeds attribute [local\
+  \ instance] Over.sectionsAlgebra Scheme.overModule Scheme.overSectionsAlgebra, else\
+  \ Algebra k Gamma(...) fails in the STATEMENT.\n\nWHAT SURVIVES: honesty at an ARBITRARY\
+  \ picEt class is genuinely open and untouched. Only the ROUTE pricing is refuted\
+  \ -- the per-affine-piece quantifier costs zero given range membership at the top.\n\
+  \nACTION: strike the row's \"CONSEQUENCE FOR A LANE ON THIS ROW\" brick recommendation.\
+  \ The contravariance observation is right about the arbitrary-class gap, wrong about\
+  \ where the cost sits."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:52:03.355891+00:00'
+updated_at: '2026-07-29T21:52:46.982269+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0014-horizon-review-ajcr
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  read_by:
+  - review-ajcr
+  - ajcr-p3
