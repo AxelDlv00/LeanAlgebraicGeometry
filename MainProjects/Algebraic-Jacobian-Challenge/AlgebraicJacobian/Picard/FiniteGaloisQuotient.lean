@@ -59,7 +59,7 @@ instances**).  For the campaign consumer `J'_r` the hypothesis is supplied by th
 * `HasStableAffineCover` — Γ-stable affine refinement, the EGA II 4.5.4 pattern
   (`finite point set in an affine open of a separated/quasi-projective scheme
   refines to a Γ-stable affine open`). **This is no longer a gate: `G2(a)` was
-  discharged** and `StableAffineCover.lean:283`
+  discharged** and `StableAffineCover.lean:279`
   (`hasStableAffineCover_of_orbitsInAffineOpen`) is a global `instance` deriving
   it from `[ρ.OrbitsInAffineOpen]` alone. Measured (`review-ajc`, 2026-07-29):
   `infer_instance` succeeds for an *abstract* `ρ` carrying only the orbit
@@ -201,9 +201,21 @@ def IsStableOpen (ρ : SemilinearGalAction K L X f) (U : X.Opens) : Prop :=
 
 end SemilinearGalAction
 
-/-- GATE (campaign `G2(a)`, EGA II 4.5.4 pattern; `Prop`-class, **no instances** — do
-not instantiate except by proving the geometry).  A `Γ`-stable affine refinement:
-every point admits a `Γ`-stable affine open neighbourhood.  The intended discharge:
+/-- Campaign `G2(a)`, EGA II 4.5.4 pattern: a `Γ`-stable affine refinement — every
+point admits a `Γ`-stable affine open neighbourhood.
+
+**This was a gate and is not one any more; the words "no instances" stood here after
+its own discharge landed** (`review-ajc`, 2026-07-29 — and they survived one file away
+from the module-header correction of the same error, which is why they are struck in
+the class docstring too). `hasStableAffineCover_of_orbitsInAffineOpen`
+(`Picard/StableAffineCover.lean:279`) is a global `instance` deriving this class from
+`[FiniteDimensional K L] [IsGalois K L] [ρ.OrbitsInAffineOpen]` — the sanctioned
+discharge, and the only one. Measured: `infer_instance` succeeds for an *abstract* `ρ`
+carrying the orbit hypothesis and fails without it, so the orbit hypothesis is exactly
+its price. `HasGaloisQuotient` below is the gate that remains (it fails to synthesize
+even with the orbit hypothesis *and* this class in scope).
+
+The historical discharge recipe, kept because it records what the proof cost:
 from `OrbitsInAffineOpen`, given an orbit inside affine `U`, prime avoidance produces
 `s ∈ Γ(U, 𝒪)` with the orbit inside `D(s) ⊆ ⋂_γ γU`, and the product `∏_γ γ(s)` cuts
 out a `Γ`-stable affine basic open — a genuine multi-session lemma (walls: transport

@@ -476,17 +476,27 @@ Without it the scheme `J5` produces over `k'` represents `picEt` *of the curve
 over `k`, restricted to `k'`-tests* rather than `picEt` of the base-changed
 curve, and there is no functor for the descent datum to be a datum *for*.
 Measured: the statement type-checks in this project (the base-changed curve
-inherits both binders, `RiemannRoch/CurveBaseChange.lean:256`), and it is absent
-— the complete list of `picEt`-named declarations here is `picEt`,
-`picEtCommGrp`, `picEtCommGrpForgetIso`, `picEtComparison`,
-`picEtComparison_isIso_of_hasRationalPoint`, `picEt_ext_of_pullback_agrees`,
-`isSheafFor_picEt_of_mem`, `isSheafFor_picEt_pullback_presieve` and
-`picEt_isSheaf_forget`, and none of them mentions a base change of the *curve*.
-(The census is as of 2026-07-29 at commit `d4e9f14b96`; an earlier revision of
-this paragraph listed `picEt_isSheaf_etaleTopologyOver`, which `ajc-p1` deleted
-the same day on finding it re-proved `picEt_isSheaf_forget` under a different
-route — `I-1075`. The absence conclusion is unaffected: the deletion removed a
-duplicate, not a cross-base statement.)
+inherits both binders, `RiemannRoch/CurveBaseChange.lean:256`), and it is absent.
+
+The absence rests on a **token scan, not on an enumeration being complete** — and
+that distinction is the point. Every `picEt`-mentioning declaration in this project
+was scanned for `baseChange`, `algebraMap` and `Over.map`; the only occurrence of
+the cross-base shape anywhere in `AlgebraicJacobian/` is the prose above. Two
+earlier revisions of this paragraph instead offered a list called "the complete
+list", and **both lists were wrong**: the first named
+`picEt_isSheaf_etaleTopologyOver`, which `ajc-p1` deleted hours later as a
+duplicate of `picEt_isSheaf_forget` (`I-1075`), and the second omitted six
+declarations, including `picSharp_representableBy_picEt_transport` and
+`isIso_picEtComparison_of_isSheaf` in `PicEtSubcanonical.lean` (found by a
+fresh-context audit of this very correction). Neither error touched the
+conclusion, because none of the missed or deleted declarations relates the functor
+of `C` to the functor of a base change of `C` — which is exactly why the scan, and
+not the census, is what the claim should have rested on from the start.
+
+Method note for whoever re-checks this: a bare `horizon search picEt` returns ten
+hits, **all from the sibling project**, because the result set is capped — reading
+that as absence in AJC would be a false negative. Query a specific name
+(`picEtComparison`) or scan declaration headers in-tree.
 
 It is **not** portable from the sibling project, which is the trap here. `AJCR`
 proves exactly this comparison as a `MulEquiv` (`picEtCrossBaseEquiv`,
