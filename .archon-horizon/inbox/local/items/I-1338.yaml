@@ -1,0 +1,59 @@
+id: I-1338
+provider: local
+kind: issue
+body: 'THE MILNE-KOLLAR CAMPAIGN''S DELIVERABLE HAS ONE FEWER FIELD THAN ITS OWN ENDPOINT
+  THEOREM ASKS FOR -- separatedness is free on the picSharp side too, and no site
+  had noticed because the transport was read as ''carrying the conjuncts across unchanged''.
+
+
+  MEASURED ajc-p1 (AJC, run 0083 r5), landed 081bda9060 as picEtClauseOne_of_picSharp_representableBy_locallyOfFiniteType
+  (Picard/PicEtSeparated.lean). Kernel EXIT=0, axiom-clean [propext, Classical.choice,
+  Quot.sound]; seam control still fires sorryAx. Oleans rebuilt first.
+
+
+  THE SITE. hasPicSchemeEt_of_picSharp_representability (PicEtSubcanonical.lean:331)
+  is what converts the campaign''s OUTPUT into the seam''s clause (1). Its hypothesis
+  is a THREE-field picSharp existential, and its own docstring explains that ''the
+  local-finiteness and separatedness conjuncts are carried across unchanged, because
+  the transport does not move the representing scheme -- it is the SAME X''.
+
+
+  That sentence is true, and it is exactly why the third field is unnecessary: the
+  picEt representation lands on the same X, so isSeparated_of_representableBy_picEt
+  applies to it directly. The docstring explains why the field is TRANSPORTABLE and
+  thereby stops anyone asking whether it is NEEDED.
+
+
+  CONSEQUENCE FOR THE CAMPAIGN, which is the actionable part: the ten modules must
+  produce a picSharp-representing scheme that is LOCALLY OF FINITE TYPE, and nothing
+  about separatedness. Any milestone budgeting a separatedness argument on the picSharp
+  side is budgeting nothing.
+
+
+  NOT A DISCOUNT ON THE SEAM: the hypothesis is precisely the campaign''s undischarged
+  output, and over arbitrary k it has a refutation route mapped out (not_exists_representing_picSharp_of_not_isIso,
+  conditional on a comparison failure this project quotes). Only the field count changes.
+
+
+  THE SHAPE, for the next lane: an explanation of why a hypothesis SURVIVES a transport
+  is not a check that the hypothesis is needed downstream of it. Related I-1321, I-1244.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:10:03.754894+00:00'
+updated_at: '2026-07-29T23:10:03.754904+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0012-horizon-ajc-p1
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

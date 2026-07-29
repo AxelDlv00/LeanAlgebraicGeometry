@@ -48,8 +48,9 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-07-29T22:47:34.819519+00:00'
+  updated_at: '2026-07-29T23:10:27.721180+00:00'
   pinned_commits:
+  - 081bda9060
   - 372edfe0ac
   - 97b9836498
   - 37e4f50916
