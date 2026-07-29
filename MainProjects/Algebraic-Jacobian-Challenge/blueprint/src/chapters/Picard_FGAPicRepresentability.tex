@@ -1054,10 +1054,19 @@ when the predicate is inhabited.
 
   This predicate concerns the \emph{unsheafified} functor, so its only witness
   \cref{def:inst_has_pic_scheme} is conditional on the \(k\)-rational point of
-  \cref{def:has_rational_point} --- necessarily so, since without a section
-  \(\Pic^\sharp_{C/k}\) is not a sheaf and the predicate is false in general.
-  The unconditional statement, for the \'etale sheafification, is
+  \cref{def:has_rational_point}. Without a section the predicate is not available
+  in general: Kleiman's pointless real conic (see the chapter introduction) is a
+  curve satisfying these very hypotheses for which \(\Pic_{X/\bb R}\) is not
+  representable. The unconditional statement, for the \'etale sheafification, is
   \cref{thm:fga_pic_representability_etale}.
+  % Reason corrected 2026-07-30 (review-ajc): this said "since without a section
+  % Pic^sharp is not a sheaf and the predicate is false in general". Both halves
+  % were withdrawn earlier at the chapter introduction and missed here. The
+  % Zariski-sheaf reason is about the ABSOLUTE Pic_X, not the relative functor
+  % (which is Zariski-separated on these binders, th:cmp part 1); and the
+  % non-representability is a CONDITIONAL Lean theorem
+  % (not_exists_representing_picSharp_of_not_isIso) whose antecedent is quoted
+  % from Kleiman rather than formalised, so "false in general" overstates it.
 \end{definition}
 
 \begin{proof}
@@ -1100,11 +1109,17 @@ when the predicate is inhabited.
   claim follows because the forgetful functor \(\Ab \to \Set\) preserves the
   limits the sheaf condition is expressed by.
 
-  This lemma is what makes \cref{thm:fga_pic_representability_etale} a
-  \emph{consistent} statement rather than a false one: a representable functor
-  is a sheaf for any subcanonical topology, so the corresponding assertion for
-  the unsheafified \(\Pic^\sharp_{C/k}\) --- which is not a sheaf --- could not
-  hold with no hypothesis on \(C(k)\).
+  This lemma is what makes \cref{thm:fga_pic_representability_etale} askable with
+  no hypothesis on \(C(k)\): the \'etale sheaf condition holds \emph{by
+  construction} here, whereas for the unsheafified \(\Pic^\sharp_{C/k}\) Kleiman's
+  pointless real conic is a curve on these very hypotheses where representability
+  fails (chapter introduction).
+  % Reason corrected 2026-07-30 (review-ajc): this said the unsheafified functor
+  % "is not a sheaf", the withdrawn claim -- it is Zariski-SEPARATED on these
+  % binders (th:cmp part 1); the absolute Pic_X is what fails. And the
+  % non-representability is conditional in Lean
+  % (not_exists_representing_picSharp_of_not_isIso), its antecedent quoted from
+  % Kleiman, so "could not hold" is stronger than what is proved here.
 \end{proof}
 
 \begin{theorem}[FGA representability, \'etale formulation]

@@ -147,7 +147,24 @@ The associated étale sheaf of the relative Picard presheaf
 of `Sheaf (etaleTopologyOver k) AddCommGrpCat`. Its sheaf property is not an
 assumption but part of the datum — `Sheaf.cond`, extracted as
 `etaleSheaf_isSheaf` below — which is the whole point of passing to it: the
-unsheafified `relPresheaf` is not a sheaf even Zariski-locally.
+unsheafified `relPresheaf` is not *a priori* an étale sheaf (Kleiman §2 L1330),
+so representability of `Pic_{(C/k)ét}` is the statement one can ask for over an
+arbitrary field.
+
+**Corrected 2026-07-30 (`review-ajc`): this said "not a sheaf even
+Zariski-locally", and that is the withdrawn claim.** It is wrong about exactly
+the functor named here. The lines it derives from (Kleiman §2 L1292–L1302) prove
+that the **absolute** `Pic_X` is never a separated Zariski presheaf; the
+**relative** functor — `relPresheaf`, this one — is *defined* by quotienting out
+`Pic(T)` precisely to defeat that argument. On these binders `th:cmp` part 1
+gives the opposite direction, `Pic_{X/S} ↪ Pic_{(X/S)zar}` whenever
+`O_S = f_*O_X` universally, i.e. `relPresheaf` is Zariski-**separated**; in Lean,
+`PicScheme.picSharp_isSheaf_zariski_of_representableBy`
+(`Picard/PicEtSubcanonical.lean`). The seam and the blueprint were both corrected
+for this on 2026-07-29 (`I-0970`, `I-0973`) and this site was missed. Do not
+restore a Zariski-sheaf reason here; take the non-representability directly, via
+`PicScheme.not_exists_representing_picSharp_of_not_isIso`, whose one open input is
+that the comparison really fails for Kleiman's pointless real conic.
 
 This is a genuine instantiation of the parametric `PicSharp.etSheaf` of
 `Picard/RelPicFunctor.lean` at the canonical étale topology, with one

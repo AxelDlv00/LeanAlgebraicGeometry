@@ -37,12 +37,41 @@ carries **no hypothesis on `C(k)`** — exactly the three challenge hypotheses a
 else — which is the owner decision of 2026-07-28 (protection I-0491) and the full strength
 the challenge asks for.
 
-Why sheafifying is what makes that possible. The unsheafified functor
-`T ↦ Pic(C ×_k T)/π_T^* Pic(T)` is not a sheaf even Zariski-locally, and a representable
-functor is a sheaf for any subcanonical topology, so representability of *it* over an
-arbitrary field is a **false** statement rather than an unproved one. The étale
-sheafification is Kleiman's own object; its sheaf property is *proved* in
-`Picard/PicEtSheaf.lean` (`picEt_isSheaf_forget`), not assumed.
+Why sheafifying is what makes that possible. Over an arbitrary field one cannot ask for
+representability of the *unsheafified* functor `T ↦ Pic(C ×_k T)/π_T^* Pic(T)`
+(`picSharp`): Kleiman L5105–L5108 exhibits the conic `u² + v² + w² = 0` in `ℙ²_ℝ` — a
+smooth plane conic, hence smooth, proper and geometrically integral, over a field where it
+has no rational point — for which he concludes `Pic_{X/ℝ}` is not representable while
+`Pic_{(X/ℝ)ét}` is. The étale sheafification is Kleiman's own object; its sheaf property is
+*proved* in `Picard/PicEtSheaf.lean` (`picEt_isSheaf_forget`), not assumed.
+
+**Two corrections to what this paragraph used to say** (`review-ajc`, 2026-07-30), both of
+which had already been made at the seam and in the blueprint and were missed *here*, in the
+file a reader opens first.
+
+*The reason was wrong.* This said `picSharp` "is not a sheaf even Zariski-locally". No
+source supports that for the **relative** functor: the lines it came from
+(Kleiman §2 L1292–L1302) are about the **absolute** `Pic_X`, and `picSharp` is *defined* by
+quotienting out `Pic(T)` precisely to defeat that argument. Kleiman's own claim about the
+relative functor is the much weaker "not *a priori* a sheaf" (L1330), and `th:cmp` part 1
+points the other way — `Pic_{X/S}` *injects* into `Pic_{(X/S)zar}` whenever
+`O_S = f_*O_X` universally, automatic on these binders, so `picSharp` is Zariski-**separated**
+here. In this project that direction is a theorem:
+`PicScheme.picSharp_isSheaf_zariski_of_representableBy` (`Picard/PicEtSubcanonical.lean`).
+Do not restore a Zariski-sheaf reason in this slot; two replacement citations have already
+been wrong in it (`I-0970`, `I-0973`).
+
+*And "**false**" overstates what is proved.* The non-representability of `picSharp` is a
+Lean theorem only *conditionally*:
+`PicScheme.not_exists_representing_picSharp_of_not_isIso`
+(`Picard/PicEtSubcanonical.lean`) derives from `¬ IsIso (picEtComparison C)` that no scheme
+represents `picSharp C`. Its antecedent — that the comparison genuinely fails for that conic
+— is **quoted from Kleiman, not formalised here**; doing so means exhibiting `φ^*O(1)` in
+`picEt C (Spec ℝ)` outside the image via `h⁰` on `ℙ¹_ℂ`. So the accurate word for the
+unsheafified statement over arbitrary `k` is **unproved with a refutation route mapped
+out**, not "false". `Picard/FGAPicRepresentability.lean` says exactly this at
+`fgaPicardRepresentability`, and says that writing "FALSE" here is the error the board row
+was corrected for in the opposite direction.
 
 ## The five obligations, and none of them is false
 
@@ -780,8 +809,10 @@ asks for. This is *not* a specialisation of
 with underlying scheme `Scheme.Pic0SchemeEt C` — the identity component of the scheme
 representing the étale-sheafified relative Picard functor (`Picard/Pic0Et.lean`,
 `Picard/FGAPicRepresentability.lean`). Sheafifying is what removes the rational point:
-the unsheafified functor is not a sheaf, so representability of it over an arbitrary field
-would be a *false* statement rather than an unproved one.
+over an arbitrary field, representability of the unsheafified functor is not available —
+see the file header for the precise statement, which is *unproved with a refutation route
+mapped out* rather than "false", and which does **not** rest on a Zariski-sheaf claim
+(`review-ajc`, 2026-07-30; this sentence carried both of the withdrawn versions).
 
 Four of the six witness fields come from theorems that are proved **unconditionally** and
 measure axiom-clean (`Pic0Et.grpObj`, `Pic0Et.geometricallyIrreducible`, and through them
