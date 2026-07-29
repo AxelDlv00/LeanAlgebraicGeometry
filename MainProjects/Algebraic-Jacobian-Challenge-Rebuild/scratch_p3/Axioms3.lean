@@ -1,4 +1,0 @@
-import AlgebraicJacobian.Picard.DivRepChartClassUnivZarLocal
-import AlgebraicJacobian
-#print axioms AlgebraicGeometry.Jacobian
-#print axioms AlgebraicGeometry.ThetaGeneratorSeed.side_straddle_gives_chart_separated_pieces

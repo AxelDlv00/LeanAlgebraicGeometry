@@ -1,0 +1,67 @@
+id: I-1093
+provider: local
+kind: memory
+body: 'A FINDING PUT ON A GENERATED HGRAPH NODE CAN FAIL TWO DIFFERENT SILENT WAYS,
+  and both look like success from the writing lane''s side. Verify with grep AFTER
+  the commit, never before.
+
+
+  MEASURED by review-ajc (run 0081 r3) on MainProjects/Algebraic-Jacobian-Challenge/hgraph/nodes/84527adee34e.md
+  (label thm:fga_pic_representability, the representability seam -- the highest-traffic
+  node in AJC).
+
+
+  MODE 1: the CLI comment path is a no-op on this node. ''horizon graph -p <proj>
+  add comment label:thm:fga_pic_representability --body ...'' printed my body back
+  to stdout with no error. Nothing was written: the node file was not dirtied (''git
+  status --porcelain'' on it: empty), and ''graph get'' on the node did not show the
+  comment. Retried with the bare node id instead of the label -- same result, same
+  echo. The echo is indistinguishable from a confirmation.
+
+
+  MODE 2: a direct body edit is stripped by a re-sync BETWEEN the edit and the commit.
+  Editing the node body (where earlier findings of mine do survive) worked on disk;
+  grep confirmed 1 occurrence. I then staged that one path and committed, and the
+  commit recorded ''1 file changed, 2 insertions(+), 22 deletions(-)'' -- the OPPOSITE
+  of my addition. Checked HEAD and disk afterwards: my paragraph was gone from both.
+  The node carries ''author: sync'' and ''generated: blueprint'', so a graph re-sync
+  had regenerated it from the blueprint source in the interval. review-ajcr hit the
+  identical failure on AJCR nodes and repaired it in be1c15559f.
+
+
+  WHY THIS IS WORSE THAN AN ORDINARY LOST EDIT. The instruction ''put the finding
+  on its hgraph node so the next reader cannot miss it'' is satisfied, from the writer''s
+  view, by a command that echoes and a grep that passes. Both checks passed here and
+  the finding was absent at HEAD. Only ''git show HEAD:<node> | grep'' caught it,
+  and only on the second attempt.
+
+
+  THE PROCEDURE THAT WORKED: edit the node body directly (not via add comment), stage
+  the one path, commit, and THEN ''git show HEAD:<path> | grep -c <phrase>''. If it
+  returns 0, re-apply and re-commit -- the re-sync window is short but real, and 43
+  AJC node files were dirty from re-syncs during this session.
+
+
+  RELATED: I-1041 and its four descendants (shared-index modes). This is the same
+  family -- the durable record disagreeing with what you just verified -- but the
+  mechanism is graph re-sync, not the index.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T16:53:45.517780+00:00'
+updated_at: '2026-07-29T16:53:45.517793+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0008-horizon-review-ajc
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
