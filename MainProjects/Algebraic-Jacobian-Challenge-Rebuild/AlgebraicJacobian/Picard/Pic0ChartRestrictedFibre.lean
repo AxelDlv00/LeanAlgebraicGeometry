@@ -76,11 +76,29 @@ chart — and the assembly that consumes both.  Nothing here re-proves either si
 * **Nothing here produces any input.**  This file replaces a badly-gated route by a
   well-gated one; it discharges no antecedent.  `rep` (divisor representability) is a hypothesis
   throughout, and `IsChartUniv` is not even statable without it.
-* **`RestrictedChartFibre` at `V = ⊥` is cheap** — no nonempty test has a point of the empty
-  open subscheme, so the injectivity content vanishes there (measured in `I-0861`).  It is
-  therefore not a self-standing certificate: it carries content only against a coverage
-  hypothesis reaching the same `V`, which is why the assembly takes both and why they are not
-  offered separately.
+* **`RestrictedChartFibre` at `V = ⊥` is expected to be cheap, and that is NOT verified here.**
+  The injectivity content plainly degenerates at `V = ⊥` (no nonempty test has a point of the
+  empty open subscheme — the shape `I-0861` measured for `hf`), so this class is *not* a
+  self-standing certificate of anything: it carries content only against a coverage hypothesis
+  reaching the same `V`, which is why the assembly takes both and why they are not offered
+  separately.  But an inhabitant at `V = ⊥` was **attempted and not obtained** in this session,
+  and the obstruction is informative rather than tactical.  Taking `W := ⊥` reduces `exists_factor`
+  to nothing (a `v : S ⟶ ↥⊥` forces `S` empty, hence initial) — that part is free, and is the part
+  `I-0861` measured.  The `sq` field is *not*: after `ext S x` it asks for two values of
+  `pic0SigmaFunctor C` at an **empty** test to agree, and that needs
+  `Subsingleton ((pic0SigmaSheaf C).1.obj (op S))` for empty `S`, which is *not* an available
+  instance.  Measured: the Σ-component of such an element is unique by initiality of `S`, so
+  `congr 1` reduces the goal exactly to
+  `(a b : (pic0TypeFunctor C).obj (op (Over.mk a₁))) → a = b` — i.e.
+  `Subsingleton (pic0Subgroup C (Over.mk a₁))` over an empty base.  That is the triviality of
+  `picEt` over the empty scheme: true, a genuinely separate lemma, and absent from the tree.
+* **Consequence, and it is the sharp form:** `I-0861`'s "`hf` at `V = ⊥` is free" is correct for
+  the *injectivity* clause and does **not** extend to the whole fibre datum.  So *no
+  satisfiability witness for `RestrictedChartFibre` exists in the tree at any `V`*, and until one
+  does this class carries the same unmeasured-inhabitation risk that `ChartTyping` (`I-0779`) and
+  `IsChartLocusFibre` did.  A lane picking this row up should produce that witness first, via the
+  empty-test subsingleton above: it is the cheapest measurement here and it decides whether the
+  repair is real.
 * **The weakening is not verified to be strict.**  A transport
   `IsChartLocusFibre → RestrictedChartFibre` at every `V` is *not* proved here: it needs the
   preimage `r ⁻¹ V` pushed forward along the open immersion `W.ι`, which is real work and buys
