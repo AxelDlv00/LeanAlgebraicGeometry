@@ -4463,4 +4463,76 @@ theorem rawPushPullMap_pullback_counit {Z₁ Z₂ : Scheme.{u}} (a : Z₂ ⟶ Z�
   simpa [ppTel, Scheme.Modules.pullbackCongr] using
     rawPushPullMap_pullback_counit_self a p₁ F
 
+/-- **`bcv` IS the bare mate followed by the telescope — by `rfl`.**  Probed, not assumed:
+`bcv` is `openImmersion_beckChevalley`, which is `asIso (openImmersion_bareBC … .app _)`
+composed with `(pushforward pV).mapIso telescope.symm`, so its `hom` is definitionally that
+composite.  Isolated as a named lemma because the `IsIso` instance inside `asIso` makes the
+unfolding invisible to `simp` and expensive to rediscover.  Project-local. -/
+theorem bcv_hom_eq (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover) [IsSeparated f]
+    [IsAffine S] [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent)
+    {κ : Type} [Finite κ] [Nonempty κ] (σ : κ → 𝒰.I₀) :
+    (bcv f g' 𝒰 F hF σ).hom
+      = (openImmersion_bareBC g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ))
+              (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))
+              (pullback.snd g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))
+              (restrictedCartesianAffinePushout g' 𝒰 σ)).app
+            ((Scheme.Modules.pullback (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).obj F) ≫
+          (Scheme.Modules.pushforward
+              (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))).map
+            (openImmersion_bc_telescope g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ))
+              (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))
+              (pullback.snd g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))
+              (restrictedCartesianAffinePushout g' 𝒰 σ) F).inv :=
+  rfl
+
+set_option maxHeartbeats 1600000 in
+-- The `bcv_hom_eq` unfolding forces whnf of `openImmersion_beckChevalley` through the `asIso`
+-- of its `IsIso` instance, and the `erw` then re-runs the open-immersion and finite-intersection
+-- instance searches over the intersection open, as `coverInterOpen_isAffine` does above.
+set_option synthInstance.maxHeartbeats 800000 in
+set_option backward.isDefEq.respectTransparency false in
+/-- **THE ADJUNCT OF `bcv`, IN CLOSED MATE-FREE FORM — the reusable brick half (a) is built from.**
+
+Read under `pV^*` and past the `pV`-counit, the restricted-square Beck–Chevalley iso `bcv` is
+*entirely* pullback-pseudofunctor coherence plus **one** counit of the *open inclusion*
+`U_σ ↪ X`.  No mate, no `bcv`, no `openImmersion_bareBC` survives on the right-hand side.
+
+This is `bcv_hom_eq` followed by `bareBC_pullback_counit` (with one `counit_naturality` to move
+the telescope factor past the counit), and it is the statement that makes both sides of
+`BcSquareCounitSide` speak the same language: each becomes a `ppTel`/telescope conjugate of the
+*same* shape, one at `σ'` and one at `σ' ∘ δᵏ`.
+
+What remains of half (a) after applying this on both sides is therefore a comparison of two
+pseudofunctor-coherence conjugations across the change of `σ` — no Beck–Chevalley mate, no
+flatness, no quasi-coherence, and no open-immersion property is left in it.  That is a
+strictly better-located obligation than "the mate across a change of square", which is what
+this file recorded as the frontier for four rounds.
+
+Project-local; axiom-clean. -/
+theorem bcv_pullback_counit (f : X ⟶ S) (g' : X' ⟶ X) (𝒰 : X.OpenCover) [IsSeparated f]
+    [IsAffine S] [∀ i, IsAffine (𝒰.X i)] (F : X.Modules) (hF : F.IsQuasicoherent)
+    {κ : Type} [Finite κ] [Nonempty κ] (σ : κ → 𝒰.I₀) :
+    (Scheme.Modules.pullback
+          (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))).map (bcv f g' 𝒰 F hF σ).hom ≫
+        (Scheme.Modules.pullbackPushforwardAdjunction
+          (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))).counit.app _
+      = (((pullbackComp (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ))) g') ≪≫
+              pullbackCongr (restrictedCartesianAffinePushout g' 𝒰 σ).w.symm ≪≫
+              (pullbackComp (pullback.snd g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))
+                (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).symm).hom).app
+            ((Scheme.Modules.pushforward (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).obj
+              ((Scheme.Modules.pullback (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).obj F)) ≫
+          (Scheme.Modules.pullback
+              (pullback.snd g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))).map
+            ((Scheme.Modules.pullbackPushforwardAdjunction
+              (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).counit.app
+                ((Scheme.Modules.pullback (Scheme.Opens.ι (coverInterOpen 𝒰 σ))).obj F)) ≫
+            (openImmersion_bc_telescope g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ))
+              (pullback.fst g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))
+              (pullback.snd g' (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))
+              (restrictedCartesianAffinePushout g' 𝒰 σ) F).inv := by
+  rw [bcv_hom_eq, Functor.map_comp, Category.assoc]
+  erw [Adjunction.counit_naturality]
+  rw [← Category.assoc, bareBC_pullback_counit, Category.assoc]
+
 end AlgebraicGeometry
