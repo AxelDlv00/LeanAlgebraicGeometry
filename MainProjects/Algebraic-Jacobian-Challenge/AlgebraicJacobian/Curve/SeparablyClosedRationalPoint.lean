@@ -77,10 +77,22 @@ binder bookkeeping happens.
 
 ## What this does and does not discharge
 
-It discharges the *availability of the section* at `k^s`, which is what cluster `J` assumes. It
-does **not** discharge `fgaPicardRepresentability`: the seam sorry is representability of
-`picEt`, and this file supplies one input of one branch of the route towards it. Nothing here
-mentions the Picard functor.
+**Discharged.** The section at `k^s`, unconditionally on `C(k)`. The specific goal
+`Picard/PicEtSubcanonical.lean` had no producer for — `Scheme.HasRationalPoint C` for a curve over
+a separably closed field — closes by `Scheme.hasRationalPoint_of_isSepClosed`.
+
+**Not discharged, and both limits were found by auditing this file rather than assumed.**
+
+* Campaign `G1` spreads `J5`'s datum to a **finite** Galois level `k'/k`; `IsSepClosed k'` is false
+  at a finite level and nothing here produces a point there. The step from `k^s` to finite levels
+  is a separate obligation, unpriced by any site.
+* `J1` wants an `(r−g)`-**tuple** of rational points. `exists_rationalPoint_mem` transports to the
+  base-changed curve, so points are plentiful by density, but extracting two *distinct* sections
+  does not follow from the bridge alone.
+* There are as yet **no formal consumers**: cluster `J`'s milestones are campaign prose, not Lean
+  binders, and the only citation of this file elsewhere is a docstring.
+* `fgaPicardRepresentability` is untouched. The seam sorry is representability of `picEt`; this is
+  one input of one branch of one route towards it, and nothing here mentions the Picard functor.
 -/
 
 set_option autoImplicit false
@@ -326,36 +338,64 @@ theorem hasRationalPoint_of_isSepClosed {K : Type u} [Field K] [IsSepClosed K]
     SeparablyClosed.exists_rationalPoint_of_smoothOfRelativeDimension_one C.hom
   exact ⟨⟨p, hp⟩⟩
 
-/-- **The bridge, and the point of the file**: for a smooth proper geometrically integral curve
-`C` over an **arbitrary** field `k`, the base change `C_{k^s}` to a separable closure has a
-`k^s`-rational point.
+/-- **The bridge, and the point of the file**: for a smooth geometrically integral curve `C` over
+an **arbitrary** field `k`, the base change `C_{k^s}` to a separable closure has a `k^s`-rational
+point.
 
 There is no hypothesis on `C(k)`, which is what makes this usable under `I-0491`: the section is
-obtained after a separable base extension, never assumed downstairs. This is the statement
-cluster `J` assumes when it says "over a separably closed field a section is available", and it
-is what `Picard/PicEtSubcanonical.lean` leans on to keep the `G3` refutation from sinking the
-route.
+obtained after a separable base extension, never assumed downstairs.
 
-Three inputs, each measured rather than assumed:
+**What it does and does not reach, measured rather than asserted.** It discharges the slot
+`Picard/PicEtSubcanonical.lean` names when it says a section is available over a separably closed
+field — `Scheme.hasRationalPoint_of_isSepClosed` closes that goal outright. It does **not** reach
+campaign `G1`, which spreads `J5`'s datum to a *finite* Galois level `k'/k`: `IsSepClosed k'` does
+not hold at a finite level and nothing here produces a point there. So this is the section at
+`k^s`, not at the finite levels `G1` needs, and the gap between them is a separate obligation. As
+of this file there are also **no formal consumers** of any declaration here; cluster `J`'s
+milestones exist as campaign prose, not as Lean binders.
+
+Three inputs, each measured:
 
 * `IsSepClosed (SeparableClosure k)` and `Algebra k (SeparableClosure k)` are mathlib instances;
 * the numeral binder survives the base change
   (`Scheme.smoothOfRelativeDimension_one_hom_baseChangeField`);
-* nonemptiness of the total space comes from `GeometricallyIntegral`, which *is* stable under the
-  field base change (`Scheme.geometricallyIntegral_hom_baseChangeField`) and gives
-  `IsIntegral C_{k^s}.left`, hence `Nonempty`. **`GeometricallyIrreducible` would not do**: it is
-  the hypothesis the challenge states, but it has no base-change-stability instance in this
-  project, so the geometrically *integral* form is the one to bind. Consumers of the challenge
-  package get it from `geometricallyIntegral_of_curve`.
+* nonemptiness of the total space comes from `GeometricallyIntegral`, stable under the field base
+  change (`Scheme.geometricallyIntegral_hom_baseChangeField`), giving `IsIntegral C_{k^s}.left`
+  hence `Nonempty`. The integral spelling is chosen for convenience only. An earlier revision of
+  this docstring claimed the geometrically *irreducible* form "would not do" because it has no
+  base-change-stability instance in this project; **that was false** — mathlib's
+  `instIsStableUnderBaseChangeSchemeGeometricallyIrreducible` is in this file's own import
+  closure, and `hasRationalPoint_baseChangeField_separableClosure_of_geometricallyIrreducible`
+  below proves the challenge-shaped version in four lines. The mistake was reading a failed
+  `inferInstance` as a mathematical absence.
 
-Properness is *not* used. It appears in the binders only because `GeometricallyIntegral` is how
-this project spells the nonemptiness input; the underlying §3 statement needs neither. -/
+Properness is **not** a binder and is not used. Decisively rather than by signature: §3 delivers a
+point for an arbitrary nonempty *open* subscheme of a curve, where properness fails. -/
 theorem hasRationalPoint_baseChangeField_separableClosure {k : Type u} [Field k]
     (C : Over (Spec (CommRingCat.of k))) [SmoothOfRelativeDimension 1 C.hom]
     [GeometricallyIntegral C.hom] :
     Scheme.HasRationalPoint (Scheme.baseChangeField C (SeparableClosure k)) := by
   haveI : IsIntegral (Scheme.baseChangeField C (SeparableClosure k)).left := inferInstance
   haveI : Nonempty (Scheme.baseChangeField C (SeparableClosure k)).left := IsIntegral.nonempty
+  exact hasRationalPoint_of_isSepClosed (Scheme.baseChangeField C (SeparableClosure k))
+
+/-- **The bridge at the challenge's own binder.** Same conclusion as
+`hasRationalPoint_baseChangeField_separableClosure`, with `GeometricallyIrreducible` in place of
+`GeometricallyIntegral` — which is what `AlgebraicJacobian/Challenge.lean` and the headline
+`picardJacobianWitness` actually carry, so a consumer needs no bridging instance.
+
+This exists because a fresh-context audit refuted the claim that the irreducible form was
+unavailable: `MorphismProperty.IsStableUnderBaseChange @GeometricallyIrreducible` is a mathlib
+instance already in this file's import closure, so the base change keeps the hypothesis and
+`IrreducibleSpace.toNonempty` supplies nonemptiness. Recorded rather than silently replacing the
+integral version, because both spellings have callers. -/
+theorem hasRationalPoint_baseChangeField_separableClosure_of_geometricallyIrreducible
+    {k : Type u} [Field k] (C : Over (Spec (CommRingCat.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom] :
+    Scheme.HasRationalPoint (Scheme.baseChangeField C (SeparableClosure k)) := by
+  haveI : GeometricallyIrreducible (Scheme.baseChangeField C (SeparableClosure k)).hom :=
+    MorphismProperty.pullback_snd _ _ ‹GeometricallyIrreducible C.hom›
+  haveI : Nonempty (Scheme.baseChangeField C (SeparableClosure k)).left := inferInstance
   exact hasRationalPoint_of_isSepClosed (Scheme.baseChangeField C (SeparableClosure k))
 
 end AlgebraicGeometry.Scheme
