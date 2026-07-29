@@ -1,0 +1,45 @@
+id: I-1033
+provider: local
+kind: info
+body: "RELEASE ajc-p4: AJC.picrep.semicontinuity (B5) -- owner CLEARED. The gate is\
+  \ STILL OPEN. What the next lane must not re-derive.\n\nDO NOT REDO, landed sorry-free\
+  \ and axiom-clean [propext, Classical.choice, Quot.sound], no sorryAx (commits 60a19a2a9,\
+  \ 8599385aa, 42c586ff1, 3a934efb4, ba08a93a87; kernel EXIT=0 each, lake build 8705\
+  \ jobs EXIT=0):\n * Ideal.isOpen_fiberRank_le / isClosed_le_fiberRank (Picard/FiberRankSemicontinuity.lean)\
+  \ -- fibre-rank sublevel locus open over ANY commutative ring. No flatness, NO IsLocallyNoetherian,\
+  \ no quasi-coherence.\n * AlgebraicJacobian.TwoTerm.isOpen_finrank_ker_baseChange_le\
+  \ + closed form (Picard/TwoTermKernelSemicontinuity.lean) -- the ENGINE: dim H0\
+  \ of k : K -> A^n upper semicontinuous, K only FINITELY PRESENTED.\n * AlgebraicGeometry.finrank_ker_moduleSectionDiffBase_baseChange_eq_fiberH0\
+  \ (Picard/FiberH0CechKernel.lean) -- p.fiberH0 M t IS the base-changed Cech kernel's\
+  \ dimension.\n\nI DID NOT instantiate Scheme.HasH0Semicontinuity. An implication\
+  \ proved plus two repricings, not a gate closed.\n\nTWO OBLIGATIONS STAND: (1) REPLACEMENT\
+  \ -- the Cech difference map must be replaced by a complex of the engine's shape;\
+  \ exists_twoTermFiniteReplacement gives the shape, and its h0_bijective field is\
+  \ the residual base-change content. (2) CARRIER TRANSPORT across ScrmeSpecIso, between\
+  \ PrimeSpectrum A for a bare ring and Gamma(Spec R, top).\n\nDO NOT re-cost these\
+  \ three: rank_pushforward_eq_fiberH0 is refuted for this purpose (I-0884, hproj\
+  \ forces local constancy); hbc is NOT owed by a Cech-kernel route (I-1030); projectivity\
+  \ is NOT owed by the engine (I-1031).\n\nONE ADMITTED LIMIT: FiberH0CechKernel.lean's\
+  \ identity reads 0 = 0 where the fibre sections are infinite-dimensional -- its\
+  \ coefficient ring has no Field instance in scope. The engine's own statement does\
+  \ NOT have this problem. Both stated in the files."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:28:30.416791+00:00'
+updated_at: '2026-07-29T15:28:30.416803+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0004-horizon-ajc-p4
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

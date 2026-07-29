@@ -1,0 +1,50 @@
+id: I-1034
+provider: local
+kind: memory
+body: "EDITING A ROADMAP ROW IN THE WORKTREE CAN REVERT ANOTHER LANE'S CLAIM SILENTLY\
+  \ -- the row's owner field on disk may be OLDER than HEAD, and a yaml round-trip\
+  \ writes the stale value back as if you had chosen it.\n\nCASE (AJC, review-ajc\
+  \ run 0081 s0006). I set out to correct one caveat paragraph in AJC.pic0av.structure.\
+  \ On disk the row read owner=ajc-p2; at HEAD it read owner=ajc-p3, because ajc-p3\
+  \ had claimed the row and committed it while my worktree copy predated the claim.\
+  \ Loading the on-disk yaml, editing the summary, and dumping it would have committed\
+  \ owner=ajc-p2 -- reverting a LIVE lane's claim, in a commit whose message was about\
+  \ a docstring hedge, with no conflict and no warning. The On branch main\n\nNo commits\
+  \ yet\n\nUntracked files:\n  (use \"git add <file>...\" to include in what will\
+  \ be committed)\n\t.archon-horizon/\n\t.claude/\n\t.codex/\n\t.github/\n\t.gitignore\n\
+  \t.mcp.json\n\tAGENTS.md\n\tCLAUDE.md\n\tLICENSE\n\tMainProjects/\n\tREADME.md\n\
+  \tSubProjects/\n\tabelSigmaChart\n\tconfig.yaml\n\tdashboard/\n\treferences/\n\t\
+  roadmap.md\n\tscripts/\n\ttools/\n\nnothing added to commit but untracked files\
+  \ present (use \"git add\" to track) line for the file just says ' M', which is\
+  \ what it says for my own intended edit too.\n\nWHY THE USUAL GUARDS MISS IT. The\
+  \ reversion is not in the text you are editing, so proofreading your own diff does\
+  \ not surface it -- I found it only because the row's owner disagreed with the claim\
+  \ notice I had just read in the inbox.  is safe (it re-reads), but a direct yaml\
+  \ edit is not, and a direct edit is what you reach for when the change is a long\
+  \ prose block inside .\n\nHOW TO APPLY. When editing a roadmap row's yaml directly\
+  \ in a multi-writer round: load the base from  rather than from disk, apply the\
+  \ edit to that, and write. You get HEAD's owner/status/pins and your prose, and\
+  \ a stale worktree copy is discarded instead of resurrected. Then verify with  after\
+  \ committing -- assert the OTHER lane's field, not just your own text. Related:\
+  \ I-1014 (node files rewritten by sync), and the standing lesson that explicit paths\
+  \ do not protect a shared index."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:29:24.166780+00:00'
+updated_at: '2026-07-29T15:29:24.166791+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0006-horizon-review-ajc
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

@@ -1,0 +1,51 @@
+id: I-1031
+provider: local
+kind: memory
+body: "TWO UPPER-SEMICONTINUOUS SUMMANDS BEAT ONE LOCALLY-CONSTANT ONE -- and reaching\
+  \ for local constancy is how you buy a flatness hypothesis the theorem does not\
+  \ need.\n\nEstablished by ajc-p4 (run 0086 r1) against its OWN landed proof; found\
+  \ by a fresh-context adversarial audit, fixed in ba08a93a87.\n\nTHE SHAPE. You have\
+  \ an additive decomposition of the quantity you want to bound above:\n\n  f(t) +\
+  \ const = g(t) + h(t)\n\nand you want {f <= e} open. The instinct is to make one\
+  \ summand CONSTANT so the inequality can be inverted exactly: prove g is locally\
+  \ constant, then near t0 the locus is {g = r} cap {h <= e + const - r}, an equality\
+  \ cut. That works. It is also strictly more than needed, and the extra costs a hypothesis:\
+  \ local constancy of a fibre rank needs Module.Flat (via isLocallyConstant_rankAtStalk),\
+  \ so the theorem acquires a projectivity or flatness binder.\n\nTHE CHEAPER ARGUMENT.\
+  \ You only ever need an UPPER BOUND on the sum. So bound EACH summand by its own\
+  \ value at t0:\n\n  {g <= g(t0)} cap {h <= h(t0)}  subset  {f <= e}   whenever f(t0)\
+  \ <= e,\n\nand t0 is in the left side by reflexivity. Both sets are open by the\
+  \ same upper-semicontinuity lemma, no flatness anywhere. omega closes the arithmetic.\n\
+  \nCONCRETE COST OF THE MISTAKE: my isOpen_finrank_ker_baseChange_le carried [Module.Projective\
+  \ A K] for one round. It was DECORATIVE -- deleting it left the proof shorter and\
+  \ the theorem strictly stronger. Downstream that mattered: I had restated an obligation\
+  \ as 'the Cech complex must be replaced by one with K projective and target A^n\
+  \ free', and the projectivity half of that requirement was never owed.\n\nTHE DETECTION\
+  \ RULE. When a binder exists only to feed a local-constancy or local-freeness lemma,\
+  \ ask whether the goal is an equality or an inequality. If it is an inequality in\
+  \ one direction, the constancy is probably decorative. Test it by deleting the binder\
+  \ and re-running -- cheaper than reasoning about it, and I-0931's caution applies\
+  \ in reverse here: a binder that LOOKS load-bearing because a named lemma demands\
+  \ it may just mean you picked a lemma stronger than the goal.\n\nRelated: [[gap-count-vs-gap-cost]],\
+  \ [[reprice-the-prescription-before-paying-it]]. See I-1030 for the sibling repricing\
+  \ found in the same audit."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:26:18.209155+00:00'
+updated_at: '2026-07-29T15:26:18.209169+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0004-horizon-ajc-p4
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

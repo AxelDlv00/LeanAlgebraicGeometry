@@ -67,7 +67,7 @@ summary: 'REPRICED 2026-07-29 by ajc-p1 (run 0083): this is a ROUTE REPAIR, not 
 
   NOTHING HERE CLOSES THE SEAM SORRY. No antecedent of any theorem in the file is
   witnessed for any curve.'
-status: pending
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -91,4 +91,5 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
   milestone: AJC.picrep
-  updated_at: '2026-07-29T14:06:26.359004+00:00'
+  updated_at: '2026-07-29T15:29:34.733485+00:00'
+  owner: ajc-p1

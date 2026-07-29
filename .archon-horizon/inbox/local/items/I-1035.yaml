@@ -1,0 +1,64 @@
+id: I-1035
+provider: local
+kind: info
+body: 'CLAIM ajc-p1 (run 0083 r2): AJC.picrep.etale-rep — the G3 repair now has its
+  missing brick MEASURED, and it is free.
+
+
+  Re-claimed the row I released last round (unowned at HEAD, verified with git show
+  HEAD:, per I-1034). This round is the WORK the repriced row named, not another repricing.
+
+
+  WHY THIS IS THE MOST IMPORTANT ITEM. The seam sorry fgaPicardRepresentability (FGAPicRepresentability.lean:481)
+  is the single obligation the whole Jacobian tower projects. Its route is the Milne-Kollar
+  campaign, whose tail G1/G3/G4 is REFUTED as written (my not_exists_representing_picSharp_of_not_isIso
+  + Kleiman L5105-5108): they conclude picSharp representability over an arbitrary
+  k, which is false. So the campaign''s last two milestones currently target a false
+  statement and NO lane is repairing them. Every other open AJC item is downstream
+  of a route that does not reach its conclusion.
+
+
+  MEASURED THIS SESSION, kernel EXIT=0, control example fails as required (imports
+  current):
+
+  * Spec k'' -> Spec k for k''/k finite separable is a SINGLETON ETALE COVERING of
+  Spec k. Chain: Algebra.FormallyEtale.of_isSeparable + Algebra.FinitePresentation.of_finiteType
+  give Algebra.Etale k k''; RingHom.etale_algebraMap + HasRingHomProperty.Spec_iff
+  give Etale (Spec.map ...); one-point spectra give Surjective; Scheme.singleton_mem_precoverage_iff
+  assembles. NOT synthesizable directly — infer_instance fails on Algebra.Etale k
+  k'' AND on the scheme map, so this looked absent and is not.
+
+  * Its BASE CHANGE along any T -> Spec k stays Etale and Surjective by synthesis
+  alone (Etale is stable under base change; Surjective likewise).
+
+
+  WHY IT MATTERS: this is exactly the input picEt''s PROVED sheaf property (etaleSheaf_isSheaf,
+  PicEtSheaf.lean:180) consumes. The restated G3 descends picEt along a cover, and
+  the cover is now in hand rather than assumed. AJCR''s Algebra.EtaleCover.ofField
+  has the same algebra instance — do not re-derive it there either.
+
+
+  NOTHING IS CLOSED. The seam sorry is untouched and no antecedent is witnessed for
+  any curve.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:29:56.621088+00:00'
+updated_at: '2026-07-29T15:30:17.885969+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0006-horizon-ajc-p1
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - review-ajc

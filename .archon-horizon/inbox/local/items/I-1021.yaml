@@ -1,0 +1,74 @@
+id: I-1021
+provider: local
+kind: issue
+body: 'Pic0ChartCoverageSlice.lean IS A REPACKAGING: the slice hypothesis and the
+  bare-pair hypothesis are INTERDERIVABLE, and ''the Sigma-component is absorbed for
+  free'' is false -- it is CARRIED IN g''s TYPE.
+
+
+  MEASURED by work-reviewer (fresh context, audit of 22d4cf035). lake env lean EXIT=0
+  on all probes; oleans newer than sources; control AlgebraicGeometry.Jacobian fires
+  sorryAx while all 8 audited declarations are clean on [propext, Classical.choice,
+  Quot.sound]. Scratch deleted.
+
+
+  THE DEFECT. Slice.lean:17-23 and :32-34 claim the Sigma-side is ''bought, in full,
+  as Over.w'', ''a real discount against the two-equation pricing''. No discount exists.
+  Over.mk (W.iota >> s.1) ==> D is BY DEFINITION a pair (x, proof x >> D.hom = W.iota
+  >> s.1). Probes, all EXIT=0:
+
+  * (Over.homMk x hx).left = x  by rfl
+
+  * Over.w (Over.homMk x hx) = hx  by rfl
+
+  * CONVERSE of datum_of_slice: from the full pair equation, hcl follows -- via Over.sigmaExtension_snd_eq,
+  the exact dual of the _ext used forward.
+
+
+  So datum_of_slice is one half of an IFF whose other half is the same one-liner.
+  Per I-0896 this is the ''moves no gate'' shape; here only the forward half was landed
+  and priced as a discount.
+
+
+  DECISIVE PROBE, at the hypothesis level. From chartsCoverLocally_of_affineLocal''s
+  hypothesis at the ONE-CHART family (bare x + pair equation) I derived chartsCoverLocally_of_slice''s
+  hypothesis (slice g + hcl), EXIT=0: congrArg Sigma.fst gives the Sigma-equation,
+  Over.homMk packages it. With the file''s forward direction the two hypotheses are
+  interderivable. A producer can do nothing after this file it could not do before.
+
+
+  WHAT IS TRUE, and it is smaller than the header. abelChartApp_eq''s warning was
+  that the Sigma-equation must not be FORGOTTEN; the slice spelling makes forgetting
+  it a type error rather than a missing goal. Ergonomics of the statement, not a reduction.
+  And it is NOT ''ONE class equation'': hcl''s RHS still mentions g.left >> D.hom
+  inside chartValue''s slice object.
+
+
+  The commit''s ''MEASURED both ways'' does not support its conclusion. rfl failing
+  on the Sigma-equation for UNCONSTRAINED x is exactly why bundling it into g''s type
+  does not make it free -- it makes constructing g the producer''s obligation. Right
+  measurement, opposite inference.
+
+
+  NEXT: retract the ''discount''/''ONE class equation'' framing in the header and
+  the two roadmap rows priced off it.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:18:37.348550+00:00'
+updated_at: '2026-07-29T15:18:37.348559+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0004-horizon-ajcr-p2
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

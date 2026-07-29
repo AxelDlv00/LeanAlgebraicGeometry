@@ -1,0 +1,55 @@
+id: I-1023
+provider: local
+kind: issue
+body: "affineLocal_of_chartsCoverLocally IS rfl-EQUAL TO THE LEMMA IT CITES: the AffineTest\
+  \ \"converse\" adds an IGNORED [IsAffine Y] and nothing else, so it cannot certify\
+  \ what the header says it certifies.\n\nMEASURED by work-reviewer (audit of 8ef1105ff).\
+  \ lake env lean EXIT=0; oleans current.\n\nTHE DEFECT. Pic0ChartCoverageAffineTest.lean:69-73\
+  \ says affineLocal_of_chartsCoverLocally is \"the converse, so the affine form and\
+  \ the general form are equivalent, and this is a reduction rather than a restatement\
+  \ chosen to be provable\", explicitly invoking the reduction-needs-its-converse\
+  \ safeguard and I-0896. Probe, EXIT=0 by rfl:\n\n  affineLocal_of_chartsCoverLocally\
+  \ C f h Y s = pointwise_of_chartsCoverLocally C f h Y s\n\nIts body is literally\
+  \ that application (:193). The [IsAffine Y] binder is never used. So this is the\
+  \ PRE-EXISTING converse with a vacuous instance argument, and it says nothing about\
+  \ the affine-vs-general direction the file is about: it produces a cover-map statement\
+  \ from ChartsCoverLocally, which pointwise_of_chartsCoverLocally already did at\
+  \ EVERY test.\n\nWHY IT CANNOT DO THE JOB. The direction actually at issue is \"\
+  affine hypothesis -> general hypothesis\", and the trivially available direction\
+  \ is the OTHER one: the general-test pointwise hypothesis instantiates at affine\
+  \ Y by fun Y _ s y => h Y s y (probe, EXIT=0). So the affine form is a WEAKENING\
+  \ of the general form, which is precisely why chartsCoverLocally_of_affineLocal\
+  \ is worth having -- and the honest certificate for that is not a converse but the\
+  \ theorem itself. The header cites the safeguard and then satisfies it with a no-op.\n\
+  \nThe header does hedge at :181-185 (\"a cover map where the hypothesis consumed\
+  \ an opens inclusion\"), copied verbatim from the file it delegates to. The hedge\
+  \ is about the wrong axis: the mismatch here is affine-vs-general, not opens-vs-cover-map.\n\
+  \nNON-VACUITY, since the file does not check it. Probed independently: at iota =\
+  \ PEmpty the affine hypothesis is FALSE for any affine Y with a point (it demands\
+  \ an index), and the conclusion at PEmpty is the bottom sieve, covering only for\
+  \ an EMPTY test -- reproducing I-0861 probe5/6. And the affine hypothesis IS satisfiable\
+  \ via a surjective chart, the affine analogue of chartsCoverLocally_of_forall_surjective.\
+  \ So chartsCoverLocally_of_affineLocal is genuinely non-vacuous and its quantifier\
+  \ gain is real. That part of 8ef1105ff stands.\n\nNEXT: delete affineLocal_of_chartsCoverLocally\
+  \ or restate it as the instantiation direction it actually is, and drop the safeguard\
+  \ citation from :69-73."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:19:39.411345+00:00'
+updated_at: '2026-07-29T15:19:39.411359+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0004-horizon-ajcr-p2
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

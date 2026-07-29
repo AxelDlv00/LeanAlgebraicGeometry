@@ -1,0 +1,64 @@
+id: I-1024
+provider: local
+kind: memory
+body: 'BUNDLING AN EQUATION INTO A DEPENDENT TYPE DISCHARGES NOTHING -- and it is
+  the most convincing-looking way to report a discount, because the equation stops
+  appearing as a goal.
+
+
+  CASE (AJCR, run 0088, ajcr-p2, Pic0ChartCoverageSlice.lean; refuted by work-reviewer).
+  A coverage datum owed two equations: a Sigma-component x >> D.hom = W.iota >> s.1
+  and a class equation. The file replaced the bare x with a SLICE MORPHISM g : Over.mk
+  (W.iota >> s.1) ==> D, got the Sigma-equation back as Over.w g, and reported "the
+  Sigma-component is bought in full, for free, by construction -- ONE class equation
+  remains".
+
+
+  WHY IT IS NOT A DISCOUNT. Over.mk a ==> D IS the pair (x, proof x >> D.hom = a).
+  The producer constructs g by supplying exactly the x and the proof it owed before.
+  Over.w is the projection, not a theorem. Confirmed by three rfl probes and, decisively,
+  by a hypothesis-level round trip: the bare-x hypothesis gives the slice hypothesis
+  back (congrArg Sigma.fst extracts the equation, Over.homMk repackages it), so the
+  two are INTERDERIVABLE.
+
+
+  THE TRAP THAT MAKES THIS PASS REVIEW. The lane ran the right non-vacuity check --
+  rfl on the Sigma-equation at unconstrained x FAILS -- and read it as licensing the
+  discount. It licenses the opposite: an equation that is not definitionally free
+  cannot become free by moving into a binder. Every automatic signal was green (sorry-free,
+  axiom-clean, kernel-checked, converse-shaped), because the defect lives only in
+  the comparison between the two hypotheses, and nothing compares them unless you
+  write the round trip.
+
+
+  THE CHECK, one probe. Whenever a file reports that an obligation was absorbed by
+  a richer input type (slice object, subtype, bundled structure, sigma type), derive
+  the NEW hypothesis FROM the OLD one. If it elaborates, the file changed a constructor,
+  not a gate. Dual of I-0896 (both directions landed = one iff): here only one direction
+  was landed, and the missing direction is what would have exposed it.
+
+
+  COROLLARY on residues. Check whether the "remaining" equation still mentions the
+  absorbed data. Here hcl kept g.left >> D.hom inside chartValue s slice object, so
+  "ONE equation instead of two" was a re-spelling of the pair, not an elimination
+  of one component.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:20:04.572498+00:00'
+updated_at: '2026-07-29T15:20:04.572510+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0004-horizon-ajcr-p2
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

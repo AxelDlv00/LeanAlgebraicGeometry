@@ -1,0 +1,51 @@
+id: I-1030
+provider: local
+kind: issue
+body: "hbc WAS MISPRICED BY ME: it is consumed in ONE step of fiberRank_gammaTop_eq_fiberH0,\
+  \ and a Cech-kernel route to fiberH0 owes it NOTHING\n\nMEASURED by ajc-p4 (run\
+  \ 0086 r1) at HEAD; corrects my own I-0884-adjacent claim and the docstring that\
+  \ carried it.\n\nTHE SITE THAT MADE THE CLAIM. Picard/FiberH0Comparison.lean:79-104\
+  \ (mine, r0) recorded 'B5 has THREE open obligations' and priced (a) as hbc -- bijectivity\
+  \ of TwoTerm.kerBaseChange over every algebra -- calling it 'the honest half of\
+  \ cohomology-and-base-change'. The counterexample there (A = Z, d = mult-by-2, B\
+  \ = Z/2, both terms flat, kerBaseChange not bijective) is CORRECT and hbc really\
+  \ is not free. What was wrong is WHO OWES IT.\n\nTHE MEASUREMENT. In fiberRank_gammaTop_eq_fiberH0,\
+  \ hbc is bound as hbcK at :213 and used at :220 -- two lines, both inside step3.\
+  \ step3's only job is to cross from ker (d (x) kappa(t)) to kappa(t) (x) ker d,\
+  \ i.e. to reach the PUSHFORWARD's own section module Gamma(p_* M, top). Steps 4,\
+  \ 5 and 6 alone already prove\n\n  dim_kappa(t) ker (moduleSectionDiffBase (x) kappa(t))\
+  \ = p.fiberH0 M t\n\nwith no hbc, no hfin, no hproj, no h1-vanishing. That is now\
+  \ landed as\nAlgebraicGeometry.finrank_ker_moduleSectionDiffBase_baseChange_eq_fiberH0\n\
+  (Picard/FiberH0CechKernel.lean, commit 42c586ff1), kernel EXIT=0, axiom-clean, and\
+  \ independently confirmed by a fresh-context audit which copied steps 2/4/5/6 verbatim\
+  \ with the hbc binder DELETED and had all four elaborate.\n\nSO: hbc identifies\
+  \ the fibre of the pushforward's section module. It does NOT identify the fibre\
+  \ h0. Any lane routing semicontinuity, or anything else, through the FIBREWISE CECH\
+  \ KERNEL does not owe hbc at all.\n\nWHAT REPLACES (a), so nobody reads this as\
+  \ one obligation fewer. The residual base-change content is TwoTermFiniteReplacement.h0_bijective\
+  \ (Picard/TwoTermFiniteFree.lean:527), which compares the REPLACEMENT's H0 with\
+  \ the ORIGINAL's over every algebra. That is a different statement from kerBaseChange\
+  \ bijectivity and it is still open.\n\nObligation (b) is separately CLOSED (see\
+  \ the engine, TwoTermKernelSemicontinuity.lean). Obligation (c), the carrier transport\
+  \ across ScrmeSpecIso, STANDS. Both correction paragraphs are now in the two docstrings\
+  \ (commit 3a934efb4)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:25:53.589216+00:00'
+updated_at: '2026-07-29T15:25:53.589232+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0004-horizon-ajc-p4
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

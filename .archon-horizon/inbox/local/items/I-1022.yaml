@@ -1,0 +1,70 @@
+id: I-1022
+provider: local
+kind: issue
+body: 'BOTH ''lands at the seam'' ENDPOINTS ARE STATED AT THE UNRESTRICTED ABEL CHART,
+  WHOSE hf IS THE FALSE ONE -- so isLocallySurjective_of_slice cannot be composed
+  with antecedent 1 at all, and ''the discount lands at the seam and not in mid-air''
+  is wrong in the direction that matters.
+
+
+  MEASURED by work-reviewer (audit of 8ef1105ff + 22d4cf035). lake env lean EXIT=0,
+  three probes; oleans current; sorryAx control fires. Scratch deleted.
+
+
+  THE DEFECT. Pic0ChartCoverageSlice.lean:125-128 and :159-161 say the two composites
+  put the reduction at ''antecedent 2 of pic0RepresentableByOfCharts itself ... at
+  the seam rather than in mid-air''. Both are stated for  -- the UNRESTRICTED chart,
+  source D.left. Probes:
+
+  * the family is constant: at any i it is rfl-equal to abelSigmaChart itself;
+
+  * if hf holds for THAT family then Mono (abelSigmaChart ...) follows, by mono_of_isOpenImmersion_presheaf
+  (Pic0ChartOpenImmersionCriterion.lean:90);
+
+  * the atlas the tree actually intends, mixedParamChart (Pic0ChartAtlasParamFree.lean:86),
+  is rfl-equal to yoneda.map (V i).iota >> abelSigmaChart -- source (V i : Scheme),
+  NOT D.left.
+
+
+  But Pic0AtlasFromDivRep.lean:54 and Pic0ChartPair.lean:14 both state that IsOpenImmersion.presheaf
+  (abelSigmaChart ...) is FALSE for the whole divisor scheme -- the Abel map has projective
+  spaces |D| as fibres, hence is not a monomorphism. So the family at which both new
+  endpoints supply antecedent 2 is the family at which antecedent 1 is FALSE. The
+  seam consumes f, hf and the instance for ONE family; these do not co-instantiate.
+
+
+  This is exactly I-0861''s V-coupling defect reappearing, and the AffineTest header
+  names hV as ''a further separate obligation'' (:63-67) while the Slice header does
+  not mention V at all. Naming it ''separate'' understates it: it is not a further
+  cost to pay later, it is the reason these two endpoints have no consumer as stated.
+
+
+  WHAT SURVIVES. The site-level content is real and family-generic: mem_zariskiTopology_of_pullback_affine
+  and chartsCoverLocally_of_affineLocal both take an arbitrary f, so they apply verbatim
+  to mixedParamChart. Only the two abelSigmaChart-instantiated composites are stranded.
+
+
+  NEXT: restate isLocallySurjective_of_slice (and isLocallySurjective_sigmaDesc_of_affine''s
+  intended use) at mixedParamChart / restrictChart, i.e. over (V i : Scheme), or route
+  through liftPointwiseToOpens (Pic0ChartAtlasCoupling.lean:143) and carry its range
+  containment as an explicit hypothesis.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:19:07.737677+00:00'
+updated_at: '2026-07-29T15:19:07.737691+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0004-horizon-ajcr-p2
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -138,7 +138,7 @@ explanation: ''
 projects:
 - Algebraic-Jacobian-Challenge
 priority: high
-status: running
+status: queued
 write_set:
   files: []
   projects:
@@ -157,6 +157,6 @@ inbox_refs:
 - I-0838
 artifact_refs: []
 created_at: '2026-07-29T10:10:49.054724+00:00'
-updated_at: '2026-07-29T13:19:05.129185+00:00'
+updated_at: '2026-07-29T15:31:03.937308+00:00'
 metadata:
   author: human
