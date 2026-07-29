@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.Pic0ChartCoverageIndexSlack
+import AlgebraicJacobian.RiemannRoch.EffectiveUniqueness
 
 /-!
 # The chart locus SUPPLIES GAP-2's `h⁰ = 1` binder (scaffold; proofs to follow)
@@ -92,6 +93,25 @@ theorem exists_splitting_h0_eq_one_of_mem_chartLocus
   have hχL : Sheaf.chi (((C ⊗ overSpec k L).left).moduleKSheaf L) = 1 - (n : ℤ) :=
     chi_relCurve_baseField C L n hχ
   exact h0_eq_one_of_subsingleton_of_deg n hχL W hWdeg hWh1
+
+/-- **GAP-2 UNIQUENESS AT A WITNESS OF THE PINNED DEGREE** — the keystone with its `h⁰`
+binder discharged rather than assumed. -/
+theorem eq_of_picClass_eq_of_deg_of_subsingleton
+    {L : Type u} [Field L] [Algebra k L]
+    [IsIntegral (relCurve C L)]
+    [SmoothOfRelativeDimension 1 (relCurve C L ↘ Spec (CommRingCat.of L))]
+    [QuasiCompact (relCurve C L ↘ Spec (CommRingCat.of L))]
+    [Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 0)]
+    [Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1)]
+    (n : ℕ) (hχ : Sheaf.chi (((C ⊗ overSpec k L).left).moduleKSheaf L) = 1 - (n : ℤ))
+    (W W' : ((C ⊗ overSpec k L).left).CurveDivisor)
+    (hW : Scheme.CurveDivisor.deg L W = (n : ℤ))
+    (h1 : Subsingleton (Sheaf.HModule ((C ⊗ overSpec k L).left.divisorSheaf L W) 1))
+    (hWe : 0 ≤ W) (hW'e : 0 ≤ W')
+    (hcl : Scheme.CurveDivisor.picClass L W = Scheme.CurveDivisor.picClass L W') :
+    W' = W :=
+  Scheme.CurveDivisor.eq_of_picClass_eq_of_h0_one (K := L) hWe hW'e hcl
+    (h0_eq_one_of_subsingleton_of_deg n hχ W hW h1)
 
 end
 

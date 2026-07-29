@@ -576,6 +576,7 @@ import AlgebraicJacobian.Picard.Pic0ChartRestrictedFibreSat
 import AlgebraicJacobian.Picard.Pic0ChartVMonotone
 import AlgebraicJacobian.Picard.Pic0ChartBotRefute
 import AlgebraicJacobian.Picard.Pic0ChartCoverageAbel
+import AlgebraicJacobian.Picard.Pic0ChartLocusH0One
 import AlgebraicJacobian.Picard.Pic0ChartPlusFibreProducer
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivGen
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivClose
@@ -638,6 +639,11 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffStalkEval
 -- widened chartValueTrans; the transformation itself is still absent. Rooted so the axiom probe
 -- covers it (AJCR.w4-rep.build-reach).
 import AlgebraicJacobian.Picard.DivisorFamilyAffClassDegree
+-- The Sigma-chart over the R2 carrier (run 0087 r3, ajcr-p1): with hdegAff discharged the
+-- widened chartValueTrans and abelSigmaChart are the chart-typed definitions verbatim, so the
+-- carrier I-0492 mandates now reaches the input type of pic0RepresentableByOfCharts. A chart
+-- SHAPE, not a chart: rep is still a hypothesis with no producer.
+import AlgebraicJacobian.Picard.Pic0AtlasFromDivRepAff
 import AlgebraicJacobian.Picard.DivRepGlobalAffLift
 import AlgebraicJacobian.Picard.DivRepAffPullIndep
 import AlgebraicJacobian.Picard.DivRepAwayPush
