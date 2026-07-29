@@ -1122,3 +1122,50 @@ the curve-instance tower and the `Over` local instance. The whole Θ-layer and t
 substrate above it are instance-light — a measurement of how little of the chart-typed apparatus
 the port actually consumed, and independent evidence that the obstruction was re-indexing rather
 than mathematics.
+
+### 7.13.6 §7.13's HEADLINE IS REFUTED, in Lean, by the file that asserted it
+
+*Appended at the s0014 close after a fresh-context review (`I-0779`/`I-0782`). I re-proved the
+refutation independently from my own restatement before accepting it. Commit `4ee4ca6e3`;
+kernel EXIT=0, axiom-clean against a control that fires.*
+
+> `AffAdaptation.isEmpty_chartTyping_of_straddling` — if one piece of a widened cover contains a
+> point outside `V₀` **and** a point outside `V₁`, then `ChartTyping C R π D` is **empty**.
+
+Three lines: the piece is assigned some side, `piece_le` puts the *whole* piece inside that pinned
+chart, and each witness contradicts one option.
+
+**Why that kills the second half of §7.13.** Every declaration in `Picard/DivisorFamilyAffTheta.lean`
+is indexed by a `ChartTyping`. cert-r2's producer runs through a cover whose support sits inside
+**one** piece `W` (`exists_affCoverData_swallowedBy`), and the straddling hypotheses of
+`forall_not_isCertified_of_straddling` (`Picard/DivisorFamilyAffStrict.lean:127`) say exactly that
+the support has a point outside `V₀` and one outside `V₁` — both then in `W`. So on **precisely the
+divisors protection `I-0492`'s widening exists to handle**, the index type is uninhabited and every
+theorem in the new module is vacuous. Compounding it (`I-0782`): the tree's only `ChartTyping`
+producer is `FinCoverData.toChartTyping` (`Picard/DivisorFamilyAffCover.lean:255`), the migration
+*from* the old chart-typed carrier, so every instantiation available today factors through
+`FinCoverData`.
+
+**The methodological error, which is the part worth carrying forward.** `I-0492` clause 3 keeps
+`ChartTyping` separate from the certificate clauses so that no certificate *requires* a chart
+typing. That is a statement about what is **permitted**. §7.13.2 read it as evidence about what is
+**inhabited** — and only the second question decides whether a layer indexed by that datum is
+usable. This is the recorded *"isolating a residue as a class"* shape, and I walked into it while
+quoting clause 3 as the justification. **Check inhabitation of an index before pricing anything
+stated over it.**
+
+**What survives, and it is not the headline.** The three absence measurements of §7.13.1 are all
+true and were independently confirmed (`I-0780`): the Θ-layer genuinely did not exist on
+`AffAdaptation`, `IsChartClause` really is typed on `DivFamZar` with only the forward `toAff`
+crossing, and `divFamEps_eq_of_le` really does route through `windowQuotEquiv`. The port is real,
+cheap, kernel-green, and usable for any cover that *does* carry a chart typing. What it is not is a
+route from cert-r2's producer to U2.
+
+**One further correction (`I-0778`), now moot but recorded.** §7.13.3 priced `thetaSectionSide_mem`
+as "genuine four-case cocycle content, not re-indexing". That was a claim about the *existing
+chart-typed proof*, not about the widened obligation: `thetaSectionSide A τ a b` is `thetaEval` of
+the already-landed global section, so its membership follows from `thetaEval_mem` in the same file.
+I over-priced it in the same session I under-priced the emptiness question.
+
+**§7.6 still stands, and more plainly than before.** L8 remains the gate; this session did not move
+it, and the layer it built does not reach the divisors the widening was chosen for.
