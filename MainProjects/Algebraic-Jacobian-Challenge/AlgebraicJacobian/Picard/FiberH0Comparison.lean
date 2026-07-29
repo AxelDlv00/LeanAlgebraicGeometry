@@ -49,15 +49,32 @@ what `Scheme.Modules.isOpen_pointRank_le`
 ## What is still open
 
 The remaining hypothesis `hbc` — bijectivity of
-`AlgebraicJacobian.TwoTerm.kerBaseChange` over every algebra — is *not* free:
-its producer in the tree
-(`TwoTerm.bijective_kerBaseChange_of_surjective`) goes through surjectivity of
-the Čech differential, i.e. through `h¹`-vanishing.  So this file converts the
-B5 obligation from "find a projectivity-free rank bridge" (impossible, and the
-route the gate's docstring prescribes) into "supply `hbc` without
+`AlgebraicJacobian.TwoTerm.kerBaseChange` over every algebra — is *not* free,
+and it is worth being precise about why, because the temptation is to hope it
+falls out of flatness.
+
+Its only producer in the tree,
+`TwoTerm.bijective_kerBaseChange_of_surjective`, needs `d` **surjective** —
+i.e. `h¹`-vanishing.  Surjectivity is genuinely necessary and not an artefact
+of that proof: take `A = ℤ`, `d = (2 · ·) : ℤ → ℤ`, which is injective with
+both terms flat but not surjective.  Then `ker d = 0`, so `B ⊗ ker d = 0` for
+every `B`, while over `B = ℤ/2` the base-changed map is zero and
+`ker (d ⊗ B) = ℤ/2 ≠ 0`.  So `kerBaseChange` is not bijective, with flatness
+of both terms intact.
+
+What this file therefore does is **relocate** the B5 obligation, not discharge
+it.  It converts "find a projectivity-free rank bridge" — impossible, and the
+route the gate's own docstring prescribes — into "supply `hbc` without
 `h¹`-vanishing", which is the honest half of cohomology-and-base-change
-(Stacks 02KG).  That is a strictly smaller and correctly-located obligation,
-and it is still open.
+(Stacks 02KG).  Strictly smaller and correctly located; still open.
+
+One route not yet followed: a `TwoTermFiniteReplacement` supplies
+`h0_bijective` for *every* algebra `B` with **no** surjectivity hypothesis
+(it is a field of the structure, and `exists_twoTermFiniteReplacement` needs
+only noetherian + flat + f.g. cohomology).  That is a comparison between the
+`H⁰`s of the replacement and original complexes rather than the
+`kerBaseChange` of one map, so it does not immediately give `hbc`; whether it
+can be made to is the next thing to try.
 
 ## References
 
