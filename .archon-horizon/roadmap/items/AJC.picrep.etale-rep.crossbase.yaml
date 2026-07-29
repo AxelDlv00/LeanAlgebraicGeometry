@@ -3,44 +3,61 @@ title: 'UNOWNED: picEt cross-base compatibility -- the brick the repaired G3 nee
   and no site prices'
 projects:
 - Algebraic-Jacobian-Challenge
-summary: "MEASURED by review-ajc 2026-07-29 (run 0081 r3). The repaired route says\
-  \ \"descend picEt, not picSharp\". That repair has ONE input that no site in the\
-  \ project prices, and it is not the descent test p1 landed.\n\nTHE OBLIGATION. For\
-  \ finite separable k'/k and a k'-test T, the descent needs\n\n  (PicScheme.picEt\
-  \ C).obj (op ((Over.map (Spec.map (algebraMap k k'))).obj T))\n    <-- IDENTIFIED\
-  \ WITH --> (PicScheme.picEt (Scheme.baseChangeField C k')).obj (op T)\n  (an iso/identification\
-  \ of the two values; the '=/=' first written here was a typo\n   for a comparison\
-  \ and read as a disequality -- corrected by its author, review-ajc)\n\ni.e. picEt\
-  \ of the curve over k, evaluated on k'-tests, compared with picEt of the BASE-CHANGED\
-  \ curve on the same tests. Without it, a k'-representing scheme from J5 represents\
-  \ the wrong functor and there is nothing for the Galois action to act on.\n\nMEASURED,\
-  \ three ways. (1) STATABLE in AJC: baseChangeField C k' inherits both binders ([SmoothOfRelativeDimension\
-  \ 1], [IsProper] are stable under field base change, CurveBaseChange.lean:256),\
-  \ and the comparison type-checks -- lean_run_code EXIT=0, zero diagnostics. (2)\
-  \ ABSENT: horizon search returns nothing; the complete list of picEt-named declarations\
-  \ in AJC is picEt, picEtCommGrp, picEtCommGrpForgetIso, picEtComparison, picEtComparison_isIso_of_hasRationalPoint,\
-  \ picEt_ext_of_pullback_agrees, isSheafFor_picEt_of_mem, isSheafFor_picEt_pullback_presieve,\
-  \ picEt_isSheaf_forget -- not one mentions a base change of the CURVE. (3) NOT PORTABLE\
-  \ from the sibling: AJCR proved exactly this as picEtCrossBaseEquiv (Picard/PicEtCrossBase.lean:316,\
-  \ a MulEquiv), but AJCR's picEt is a hand-built affine-opens limit of plus-classes\
-  \ (PicEt.lean:105 := picEtSubgroup C T) while AJC's is a categorical sheafification\
-  \ ((PicSharp.etaleSheaf C).obj compose forget, PicEtSheaf.lean:238). DIFFERENT OBJECTS,\
-  \ and there is no lake dependency edge between the projects. The 468-line AJCR file\
-  \ is a design lead, not an import.\n\nWHY IT MATTERS FOR THIS ROUND. p1's EtaleFieldCover.lean\
-  \ supplies the descent TEST (the cover is etale, picEt satisfies its sheaf axiom)\
-  \ and says so honestly -- it does not supply a descended object. G1/G2 supply the\
-  \ Galois action and the quotient. This row is the third thing: the identification\
-  \ that makes the descended object represent the right functor. Nothing in the campaign,\
-  \ on AJC.picrep, or in the seam docstring names it.\n\nNOT a blocker for any lane's\
-  \ current target -- everything through J5 is unaffected. It is a route input that\
-  \ must be visible before someone prices the descent step as \"restate G3\".\n\n\
-  CENSUS CORRECTION (same day, by its author): this row first listed picEt_isSheaf_etaleTopologyOver\
-  \ among the picEt-named declarations. ajc-p1 deleted that theorem at d4e9f14b96\
-  \ on finding it re-proved the existing picEt_isSheaf_forget by a different route\
-  \ (I-1075). The list above is as of that commit. The absence conclusion is unaffected\
-  \ -- a duplicate was removed, not a cross-base statement -- but the list was stale\
-  \ within the hour, which is the shape of every census in this project."
-status: active
+summary: 'CLOSED 2026-07-30 by ajc-p1 (run 0083 r3): Picard/PicEtCrossBase.lean, rooted
+  at AlgebraicJacobian.lean, 700 lines, NO sorry, all ten declarations axiom-clean
+  [propext, Classical.choice, Quot.sound] under lake env lean against a control --
+  fgaPicardRepresentability still reports sorryAx in the same run. Commits 3f050878cc,
+  ca4dc7a9b1, 38d60641ac, 33fe30e27a.
+
+
+  THE RESULT. picEt_crossBaseIso: for a smooth proper curve C over k and ANY field
+  extension k-prime, picEt of the base-changed curve is isomorphic to picEt C restricted
+  along Over.map -- as functors on (Sch/k-prime)^op. Group-valued form etaleSheaf_crossBaseIso.
+
+
+  THIS ROW ASKED FOR TOO MUCH, and the next reader should know: the row text and the
+  seam docstring both state the obligation for FINITE SEPARABLE k-prime/k. NEITHER
+  hypothesis is needed. The argument is about pullback PROJECTIONS, not about etale
+  covers, so it holds for an arbitrary field extension. Finite-separability is a constraint
+  of the GALOIS input (EtaleFieldCover.lean, input 1) and was double-counted onto
+  this brick.
+
+
+  HOW IT DECOMPOSED, four layers, three of them nearly free. (1) Total-space cancellation:
+  one mathlib lemma, pullbackLeftPullbackSndIso -- baseChangeField C k-prime IS by
+  definition the pullback of C.hom along phi, so C_k-prime x_k-prime T and C x_k T
+  are canonically isomorphic. (2) The H_T-coset relation transports both ways with
+  the SAME coset witness N, because the two projections to T agree -- this is the
+  layer where the two subgroups being quotiented by have to correspond, and it is
+  the substantive one. (3) Hence a bijection per test, the round trips being the isos
+  own hom_inv_id/inv_hom_id through relPicRel_of_iso; additive because addition is
+  descended tensor. (4) Naturality in T -- and THIS was the surprise: it is not a
+  fact about curves at all. Stated for an ARBITRARY category with pullbacks (pullbackLeftPullbackSndIso_naturality)
+  it falls to pullback.hom_ext from the isos two projection identities, and the project-spelling
+  square is that lemma applied, since baseChangeOverC IS the generic pullback.map.
+
+
+  THE SHEAFIFICATION LAYER IS FREE, which is the finding that prices the row: picEt
+  is a CATEGORICAL sheafification, and mathlibs Functor.pushforwardContinuousSheafificationCompatibility
+  says sheafification commutes with restriction along a continuous functor. Restriction
+  along Over.map is continuous for the two localised etale topologies by pure synthesis.
+  CONTROL, so this is not a stale-import artifact: the strictly stronger IsDenseSubsite
+  at the SAME two topologies does NOT synthesize, so the induced pushforward is not
+  an equivalence and the compatibility iso is not vacuous.
+
+
+  AJCR WAS CORRECTLY CALLED NOT-PORTABLE by review-ajc (I-1076). Its picEtCrossBaseEquiv
+  is 468 lines mostly spent on a section-ring scalar tower, which a sheafification-based
+  picEt does not need -- exactly because of the mathlib lemma above. The lead was
+  worth more than the transcription.
+
+
+  WHAT THIS DOES NOT DO, since sorry-free is not sufficient: it closes NO sorry in
+  FGAPicRepresentability.lean and witnesses NO antecedent of fgaPicardRepresentability
+  for any curve. It closes one INPUT of the routes repair. Per review-ajc I-1135 the
+  repair has FOUR inputs, not three: below all of them sits a section over separably
+  closed fields with no producer in AJC (now held by ajc-p3/ajc-p4 as sepclosed rows).'
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -64,5 +81,7 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep.etale-rep
   milestone: AJC.picrep
-  updated_at: '2026-07-29T17:22:09.454471+00:00'
+  updated_at: '2026-07-29T18:50:10.699223+00:00'
   owner: ajc-p1
+  pinned_commits:
+  - 33fe30e27a
