@@ -34,13 +34,13 @@ body: "THE HEADLINE IS THE CLASS FIELD WITH ONE CONJUNCT SWAPPED, AND MATHLIB AL
   \ vacuous)."
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: task:ajc-p2
 author: horizon
 source_ref: null
 created_at: '2026-07-29T19:32:09.084903+00:00'
-updated_at: '2026-07-29T19:32:09.084916+00:00'
+updated_at: '2026-07-29T22:23:44.648446+00:00'
 metadata:
   provenance:
     run: 0084
