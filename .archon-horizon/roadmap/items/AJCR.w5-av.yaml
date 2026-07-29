@@ -2,30 +2,52 @@ id: AJCR.w5-av
 title: 'Wave 5: Pic^0 is an abelian variety'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Wave 5: Pic^0 is an abelian variety of dimension g.
-
-
-  STATE after run 0073 r6. The interface layer is complete (data, x1-x3, g1, p2, p3,
-  s2). T4''s CLAUSE (iii) IS NOW MATHEMATICALLY COMPLETE, including both of its named
-  consumer inputs — see AJCR.w5-av.t4 and worksheet 6.27. Five new modules this round
-  (Tangent/ChartClassNaturality, PicEpsKernelTrivial, ChartTrivialityGeo, EpsZeroSurjective,
-  TwoChartHonest), all kernel-green, rooted and axiom-clean.
-
-
-  THE OPEN FRONT is now T3/T5 and the S-chain, plus two instantiation items T4 hands
-  over (not-IsAffine C.left; the chart presentations and their square hsq). P1 stays
-  a cross-wave gate on the DD shapes freeze held by ajcr-divrep and is not this lane''s
-  to unblock.
-
-
-  METHOD NOTE FOR SUCCESSORS, earned three times in one round: this lane''s standing
-  failure mode is no longer under-pricing a rfl. It is pricing an obligation by searching
-  for it in THIS project''s vocabulary. All three items closed this round had been
-  priced by correct reading plus a same-vocabulary search — one of them at >1.6M heartbeats
-  for what is a three-rewrite mathlib lemma under a different spelling. Search the
-  upstream name too, and ask what a pair of hypotheses are both symptoms of.
-
-  '
+summary: "Wave 5: Pic^0 is an abelian variety of dimension g. STATE at run 0073 r7:\
+  \ 11 of 16 children done (.t3 stays PENDING -- its three arrows are landed but the\
+  \ composition is not, and a row whose deliverable is unwritten is not done); the\
+  \ interface layer, the properness/separatedness/irreducibility legs, and now the\
+  \ WHOLE eps-kernel comparison chain (T1-T4 plus T3's three arrows) are landed. What\
+  \ is open: T3's composition, T5's numeral, S1, S3, and the DD-gated P1.\n\nTHE T-CHAIN\
+  \ IS COMPLETE EXCEPT FOR ONE COMPOSITION. As of r7 the four steps of worksheet section\
+  \ 7.1 are all landed statements: (T3-1) h1AddEquivTruncExpCechKernel (T2, earlier),\
+  \ (T3-2) EpsArrowIdentification (the section-6.24 link, rfl), (T3-3) TwoChartKernelComparison\
+  \ (twoChartClass is a BIJECTION of the two kernels), (T3-4) CechPicIsoTransport\
+  \ (CechPic.map along an iso is a MulEquiv). Composing them into H1(C,O) ~+ ker(CechPic(C_eps)\
+  \ -> CechPic(C)) is written nowhere, and is T3's entire residue. See the .t3 row.\n\
+  \nTHE STRUCTURAL LESSON OF THIS WAVE, worth reading before picking up any child\
+  \ row, because it has now cost this lane three sessions on the SAME shape. Wave-5\
+  \ rows repeatedly said \"the pieces are landed, what remains is assembly\" while\
+  \ the ARROWS between the pieces were absent. The r7 test that caught it costs one\
+  \ second per object: grep for consumers of each landed carrier and count occurrences\
+  \ OUTSIDE its defining file. Four objects that worksheet 6.24 had explicitly named\
+  \ as the two sides of a missing link returned their own file only, three of them\
+  \ nothing at all -- while the .t3 row said \"the pieces no longer have gaps between\
+  \ them\". A level check comparing CARRIERS cannot see this; only a consumer grep\
+  \ can. I-0711 / I-0630 island shape.\n\nAND THE SECOND HALF OF THE SAME LESSON:\
+  \ a residue named accurately is not thereby measured. r6 filed a landed item as\
+  \ \"a successor should start here\" (worksheet 6.28); r7 priced the 6.24 link [M]\
+  \ one hour before proving it rfl, in a subsection that ITSELF said the number was\
+  \ a guess until someone wrote the statement (worksheet 7.4). Both retracted at the\
+  \ site. Before writing a size into any Wave-5 row, write the Lean statement and\
+  \ read the leftover goals.\n\nCHILD STATE, one line each:\n * .data .g1 .p2 .p3\
+  \ .x1 .x2 .x3 .t1 .t2 .t4 .s2 -- done.\n * .t3 -- three arrows landed r7; residue\
+  \ is the composition only.\n * .t5 -- ACTIVE. Spine landed (identitySection, cotangent\
+  \ dual, kernel bijection, finiteDimensional, and the finrank-across-a-scalar-bijection\
+  \ bridge). Conditional on hdim, and hdim needs the SEMILINEAR comparison: AddEquiv\
+  \ plus intertwining across kappa(e) ~+* k. A bare kernel bijection does NOT give\
+  \ it -- finrank does not transport along a bijection of sets. That is the trap;\
+  \ T3's composition must deliver the semilinear form, not just the set bijection.\n\
+  \ * .s1 -- pending, and a HYPOTHESIS by design: S2/S3 take GeometricallyReduced\
+  \ as an instance argument, so keeping S1 open blocks nothing. Residue S1-b0 (IsReduced\
+  \ over an algebraically closed base does NOT give GeometricallyReduced; absent from\
+  \ mathlib) plus the reduced-identity-stalk question.\n * .s3 -- pending. The criterion\
+  \ is landed (SmoothOfRelativeDimension is IsLocalAtSource at the Zariski precoverage,\
+  \ so the obligation is a COVER, not a chart at every point). Two inputs: the numeral\
+  \ (= T5) and hcov (translated identity charts cover d.J.left).\n * .p1 -- BLOCKED,\
+  \ cross-wave gate on the DD shapes freeze held by ajcr-divrep. Not to be attempted\
+  \ or built against a guessed shape.\n\nCRITICAL PATH TO THE PARENT: T3's composition\
+  \ -> T5's numeral -> S3's assembly. S1 is off it (hypothesis by design) and P1 is\
+  \ gated elsewhere. Nothing in the T-chain waits on the DD freeze.\n"
 status: pending
 kind: proof
 priority: normal
@@ -39,4 +61,5 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:12.423543+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-28T22:06:25.548219+00:00'
+  updated_at: '2026-07-28T23:54:11.374672+00:00'
+  owner: ajcr-w5-av

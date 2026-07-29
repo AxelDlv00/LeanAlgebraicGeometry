@@ -1,0 +1,1 @@
+`Scheme.Modules.pullbackPushforwardAdjunction p : pullback p ⊣ pushforward p` — so L = pullback, R = pushforward, and the common target `pushPullObj (g'^*F) (Over.mk pV) = (pushforward pV).obj (...)` is indeed `R.obj Z`. Claim 5's typing is sound. Let me verify the "verbatim binder" claim exactly.

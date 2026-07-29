@@ -3,22 +3,23 @@ title: 'T3: \(\ker(\mathrm{relPic}(k[\varepsilon]) \to \mathrm{relPic}(k)) \sime
   H^1(C,\mathcal{O})\) via nilpotent unit-lifting'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "T3 IS THREE ARROWS AND ALL THREE ARE LANDED (run 0073 r7). The eps-kernel\
-  \ comparison chain of worksheet section 7.1 is complete except for its composition.\n\
-  \nWHAT THE PREVIOUS VERSION OF THIS ROW GOT WRONG, recorded because it cost three\
-  \ sessions. It said \"WHAT T3 WAITS ON NOW is one geometric fact, not a comparison:\
-  \ not-IsAffine C.left\" and \"the pieces no longer have gaps between them\". Both\
-  \ false. (a) not-IsAffine had been replaced by g != 0 in the same session that wrote\
-  \ the row (see the .t4 row, worksheet 6.29). (b) Worksheet 6.24 had recorded, at\
-  \ r4, that \"exactly one link\" was missing between the truncated-exponential engine\
-  \ and the two-chart CechPic comparison -- and the cheap test nobody ran is a CONSUMER\
-  \ GREP: each of the four objects 6.24 named as the two sides of that link (pullbackOverlapQuot,\
-  \ dualNumberCechH1Equiv, unitsReduction, relSectionsMapUnits) was consumed by NOTHING\
-  \ outside its own defining file, three of them by nothing at all. So T3 was not\
-  \ assembly-over-a-hypothesis; it was four carriers with the arrows between them\
-  \ absent. I-0711 island shape.\n\nLANDED THIS ROUND -- three modules, all kernel-green\
-  \ on the lock-free scratch root, all rooted in AlgebraicJacobian.lean, all headlines\
-  \ axiom-clean against two controls that both fire sorryAx:\n\n * (T3-4) Tangent/CechPicIsoTransport.lean\
+summary: "T3 IS FIVE ARROWS AND ALL FIVE ARE LANDED (run 0073 r7); only the COMPOSITE\
+  \ is unwritten. The eps-kernel comparison chain of worksheet section 7.1 is complete\
+  \ except for its composition.\n\nWHAT THE PREVIOUS VERSION OF THIS ROW GOT WRONG,\
+  \ recorded because it cost three sessions. It said \"WHAT T3 WAITS ON NOW is one\
+  \ geometric fact, not a comparison: not-IsAffine C.left\" and \"the pieces no longer\
+  \ have gaps between them\". Both false. (a) not-IsAffine had been replaced by g\
+  \ != 0 in the same session that wrote the row (see the .t4 row, worksheet 6.29).\
+  \ (b) Worksheet 6.24 had recorded, at r4, that \"exactly one link\" was missing\
+  \ between the truncated-exponential engine and the two-chart CechPic comparison\
+  \ -- and the cheap test nobody ran is a CONSUMER GREP: each of the four objects\
+  \ 6.24 named as the two sides of that link (pullbackOverlapQuot, dualNumberCechH1Equiv,\
+  \ unitsReduction, relSectionsMapUnits) was consumed by NOTHING outside its own defining\
+  \ file, three of them by nothing at all. So T3 was not assembly-over-a-hypothesis;\
+  \ it was four carriers with the arrows between them absent. I-0711 island shape.\n\
+  \nLANDED THIS ROUND -- three modules, all kernel-green on the lock-free scratch\
+  \ root, all rooted in AlgebraicJacobian.lean, all headlines axiom-clean against\
+  \ two controls that both fire sorryAx:\n\n * (T3-4) Tangent/CechPicIsoTransport.lean\
   \ -- CechPic.map along an ISOMORPHISM is a MulEquiv (cechPicMapEquivOfIso), with\
   \ both faces named since a kernel inclusion consumes only one. Pic.lean carried\
   \ map_id and map_comp and nothing composing them into invertibility; a workspace\
@@ -47,16 +48,36 @@ summary: "T3 IS THREE ARROWS AND ALL THREE ARE LANDED (run 0073 r7). The eps-ker
   \ the target subtype to include \"and L is a twoChartClass value from the kernel\"\
   , which typechecks and states that a set is in bijection with its own image. Moving\
   \ the obligation to a binder the consumer discharges made the residue unnecessary\
-  \ in both directions. Worksheet 7.5.\n\nT3'S RESIDUE: the COMPOSITION, and nothing\
-  \ else. (T3-1) h1AddEquivTruncExpCechKernel, (T3-2), (T3-3), (T3-4) are four landed\
-  \ statements; H1(C,O) ~+ ker(CechPic(C_eps) -> CechPic(C)) is their composite and\
-  \ is written nowhere. Per 7.4's own rule that is a decomposition, not a measurement\
-  \ -- write the composite statement and read the leftover goals before pricing it.\
-  \ Note what changed though: four arrows to compose, where the start of this session\
-  \ found four carriers with the arrows absent.\n\nSTILL TRUE AND STILL THE TRAP FOR\
-  \ T5: what T3 must hand T5 is the SEMILINEAR comparison (AddEquiv plus intertwining\
-  \ across kappa(e) ~+* k), NOT a bare kernel bijection -- finrank does not transport\
-  \ along a bijection of sets. The .t5 row records it, and Pic0TangentSpace.finrank_eq_of_addEquiv_of_bijective_smul\
+  \ in both directions. Worksheet 7.5.\n\nA FIFTH SEAM, FOUND BY PRINTING THE TYPES\
+  \ (worksheet 7.6-7.7). After the three arrows above I named \"the composition\"\
+  \ as the residue -- then applied my own rule and printed the types of the two arrows\
+  \ the composite must join. They are sections of DIFFERENT SCHEMES: the engine's\
+  \ reduction lands on Gamma(C.left, U0 inf U1), the geometric arrow on Gamma(relCurve\
+  \ C k, ...). (T3-2) matched the SOURCES; the TARGETS needed a k-to-k carrier translation\
+  \ nobody had named. Landed as (T3-5), Tangent/CollapseCechH1.lean: collapseCechH1Equiv,\
+  \ seven declarations, kernel-green, rooted, axiom-clean.\n\n * Built over sectionsCollapse\
+  \ (Cohomology/RelThetaTransportCore), NOT over this lane's own epsChartDown. My\
+  \ first draft of 7.6 priced the seam by epsChartDown -- one open, IsAffineOpen,\
+  \ ring form only -- and called the downstairs side one-third equipped. sectionsCollapse\
+  \ is arbitrary opens, no affineness, and ships both auxiliary lemmas. Searching\
+  \ the object's SHAPE beats searching the name this lane coined.\n * The one wall\
+  \ was NOT an instance. QuotientGroup.congr with two positional underscores fails\
+  \ on a .Normal instance; I tried three fixes (haveI, a local normal_of_isMulCommutative,\
+  \ dropping Scheme.overModule) and none addressed the problem. inferInstance produces\
+  \ that instance fine in a standalone probe. The failure was elaboration order --\
+  \ instance search cannot key on a metavariable. Naming both subgroups closes it.\
+  \ Check whether the instance's ARGUMENTS are metavariables before reading the message\
+  \ as an absence.\n\nT3'S RESIDUE: the COMPOSITE, and nothing else. (T3-1) h1AddEquivTruncExpCechKernel,\
+  \ (T3-2), (T3-3), (T3-4), (T3-5) are five landed statements; H1(C,O) ~+ ker(CechPic(C_eps)\
+  \ -> CechPic(C)) is their composite and is written nowhere. UNMEASURED, and specifically\
+  \ including WHETHER IT COMES OUT ADDITIVE: every arrow is a MulEquiv or a bare Equiv,\
+  \ Additive-wrapping happens only on the (T3-1) leg, and T5 needs the semilinear\
+  \ form on top of that. Per 7.4/7.6's rule, print the types before pricing it --\
+  \ doing exactly that is what found (T3-5), so the instrument has now paid twice\
+  \ in one session.\n\nSTILL TRUE AND STILL THE TRAP FOR T5: what T3 must hand T5\
+  \ is the SEMILINEAR comparison (AddEquiv plus intertwining across kappa(e) ~+* k),\
+  \ NOT a bare kernel bijection -- finrank does not transport along a bijection of\
+  \ sets. The .t5 row records it, and Pic0TangentSpace.finrank_eq_of_addEquiv_of_bijective_smul\
   \ is the landed bridge that consumes it.\n"
 status: pending
 kind: proof
@@ -71,5 +92,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:44.680736+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-28T23:52:07.117002+00:00'
+  updated_at: '2026-07-29T00:12:53.278740+00:00'
   owner: ajcr-w5-av
