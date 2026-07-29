@@ -1,0 +1,63 @@
+id: I-0854
+provider: local
+kind: issue
+body: 'FGAPicRepresentability.lean:310-319 prescribed the REJECTED route''s inputs
+  for the project''s central sorry
+
+
+  DEFECT (found and fixed by review-ajc 2026-07-29; filed so the pattern is on record).
+  The docstring of Scheme.fgaPicardRepresentability (Picard/FGAPicRepresentability.lean:347,
+  the one bare sorry the whole Jacobian tower rests on) said discharging it needs
+  "Div representability (Kleiman §3 Thm th:repDiv, which needs the Quot scheme)" and
+  the Altman-Kleiman quotient lemma smoothProperQuotient, and that "neither input
+  is available". The file header (line ~106) repeated it as "blocked on Quot".
+
+
+  WHY IT MATTERS rather than being a wording slip. Both named inputs belong to the
+  Grothendieck/Kleiman QUOTIENT route, which this project does not take and marked
+  rejected on the board (AJC.picrep.quot, AJC.picrep.serre). So the file and the board
+  contradicted each other, in a way that reads as incoherence — reject both inputs,
+  keep the sorry — and the natural repair a prover would attempt is to revive QuotRepresentability.lean:79
+  or SerreFiniteness.lean:79/:262 to feed line 347. That work would buy the seam nothing.
+  The committed Milne-Kollar route reaches Div^d through the Grassmannian (campaign
+  D1''-D4''; D1'' landed in Picard/DivDegree.lean, Grassmannian.representable proved)
+  and quotients by the landed sorry-free finite-Galois engine (Picard/FiniteGaloisQuotient.lean),
+  needing neither Quot nor smoothProperQuotient.
+
+
+  FIXED IN: commit 094cb7f54 — both docstring sites corrected with the actual inputs
+  and the ten absent campaign modules named; the finding is also on hgraph node thm:fga_pic_representability
+  and in the AJC.picrep board summary; all four ajc-p* lanes were sent the correction
+  (I-0850..I-0853).
+
+
+  THE GENERALISABLE LESSON, which is why this is an issue and not just a commit. A
+  docstring that prescribes what a sorry needs is load-bearing infrastructure: it
+  sets the price of the obligation for every later reader, and nothing re-checks it
+  when the route changes. This one survived a documented route change (the campaign
+  chose Milne-Kollar over the quotient route on 2026-07-09) and the etale-sheafify
+  decision of 2026-07-28, staying wrong through both. When a route decision lands,
+  grep the seam docstrings for the abandoned route''s engine names — here Quot, Serre,
+  smoothProperQuotient — before closing the decision.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T10:56:06.940263+00:00'
+updated_at: '2026-07-29T10:56:06.940276+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0002-horizon-review-ajc
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
