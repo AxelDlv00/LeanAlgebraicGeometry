@@ -40,10 +40,33 @@ localised at `Spec k`.
 
 Why the sheafification is not optional. The plain relative functor
 `picSharp C = T ↦ Pic(C ×_k T)/π_T^* Pic(T)` is not representable over a
-general field — it is not even a Zariski sheaf (Kleiman §2 L1292–L1302), and a
-representable functor is a sheaf for any subcanonical topology. So an
-unconditional `RepresentableBy` against `picSharp` is a **false** statement, not
-merely an unproved one. Kleiman §2 **Thm 2.5** repairs it only under a
+general field, so an unconditional `RepresentableBy` against `picSharp` is a
+**false** statement, not merely an unproved one.
+
+**CITATION CORRECTED 2026-07-29 (`review-ajc`), by reading the source. The
+conclusion above is right; the reason previously given for it was not.** This
+paragraph used to say `picSharp` "is not even a Zariski sheaf (Kleiman §2
+L1292–L1302)". Those lines
+(`references/kleiman-picard-src/kleiman-picard.tex`, the full paper) say
+something else: "The **absolute** Picard functor `Pic_X` is never a separated
+presheaf in the Zariski topology", proved with the `ℙ¹_X`/`O(1)` argument. That
+is about `Pic_X`, **not** about the relative `Pic_{X/S} = picSharp`, which is
+*defined* by quotienting out `Pic(T)` precisely to defeat that argument. What
+Kleiman actually asserts about the relative functor is weaker (L1330): "Since
+`Pic_{X/S}` is not *a priori* a sheaf, it is remarkable that it is representable
+so often in practice." Not-a-priori is not never — indeed L1600–L1605 proves
+`Pic_{X/S} ≅ Pic_{(X/S)zar}` whenever `f` has a section.
+
+**The correct witness, and it satisfies exactly this file's binders.** Kleiman
+Exercise `ex:Pfs` (L1364–L1375) with its answer (L4853–L4896), read together
+with L5105–L5108 and L5126–L5129: take `X : u² + v² + w² = 0` in `ℙ²_ℝ`, a
+smooth plane conic — hence smooth, proper, and geometrically integral, since
+`X_ℂ ≅ ℙ¹_ℂ` — over a field where it has **no** rational point. There is a class
+in `Pic_{(X/ℝ)ét}(ℝ)` outside the image of `Pic_{(X/ℝ)zar}(ℝ)`, and Kleiman
+concludes outright that `Pic_{X/ℝ}` is **not representable** while
+`Pic_{(X/ℝ)ét}` is (§4 `th:main`). So the falsity is witnessed on a curve of
+exactly the shape this file quantifies over, which the old citation never
+established. Kleiman §2 **Thm 2.5** repairs it only under a
 **section**: given one (and `O_S = f_* O_X` universally, automatic for our
 proper geometrically integral `C/k`), the comparisons
 
@@ -307,10 +330,14 @@ labelled as strictly weaker.
 
 **Why sheafifying is what makes an unconditional statement possible.** The
 unsheafified functor `picSharp C = T ↦ Pic(C ×_k T)/π_T^* Pic(T)` is *not*
-representable over a general field — it is not even a Zariski sheaf (Kleiman §2
-L1292–L1302), and a representable functor is a sheaf for any subcanonical
-topology. So an unconditional `RepresentableBy` against `picSharp` would be a
-FALSE statement, not merely an unproved one. Against `picEt` it is Kleiman's own
+representable over a general field, so an unconditional `RepresentableBy`
+against `picSharp` would be a FALSE statement, not merely an unproved one. The
+witness is Kleiman's own Exercise `ex:Pfs` — the real conic `u²+v²+w²=0` in
+`ℙ²_ℝ`, smooth proper geometrically integral with no rational point, for which
+`Pic_{X/ℝ}` is not representable while `Pic_{(X/ℝ)ét}` is. (**Do not cite
+"§2 L1292–L1302" for this**: those lines are about the *absolute* functor
+`Pic_X`, not about `picSharp`. See the corrected citation in the module
+docstring above.) Against `picEt` it is Kleiman's own
 theorem. `PicScheme.picEt_isSheaf_forget` records the sheaf property that makes
 the difference, and it is proved rather than assumed.
 
@@ -387,8 +414,10 @@ needed.
 **What the correction costs instead, and it is a sharper constraint.** The same
 subcanonicity proves that a representable `picSharp` is a *Zariski* sheaf
 (`PicScheme.picSharp_isSheaf_zariski_of_representableBy`), and the
-sheafification paragraph above records that Kleiman §2 (L1292–L1302) exhibits a
-curve whose `picSharp` is not one. Contrapositive: representability of `picSharp`
+sheafification paragraph above records the witness — Kleiman's Exercise `ex:Pfs`,
+the conic `u²+v²+w²=0` in `ℙ²_ℝ`, smooth proper geometrically integral with no
+rational point, whose `Pic_{X/ℝ}` he proves *not* representable while
+`Pic_{(X/ℝ)ét}` is. Contrapositive: representability of `picSharp`
 over an arbitrary field is FALSE, so **G3 and G4 target a false statement as
 written**, not a hard one. Everything through J5 runs over a separably closed
 `k'` where a section is available and the obstruction absent; the break is the
@@ -738,10 +767,34 @@ noncomputable def abelMapWitness {k : Type u} [Field k] (C : Over (Spec (.of k))
   abelKernelNatTrans C ≫ picNeg C
 
 /-- Class **carrying the Abel map** `Div_{C/k} ⟶ Pic^♯_{C/k}`.  It is a
-data-carrying class with field `abel`, so `abelMap := HasAbelMap.abel`
-inherits the concrete construction and the defining property
-`abelMap_app_mk`.  The instance `instHasAbelMap` supplies the witness
-`abelMapWitness C`. -/
+data-carrying class with field `abel`; the instance `instHasAbelMap` supplies
+the witness `abelMapWitness C`.
+
+**PROPERTY-FREE DATA SLOT — corrected 2026-07-29 (`review-ajc`, from a
+fresh-context vacuity sweep). The previous text claimed that `abelMap :=
+HasAbelMap.abel` "inherits the concrete construction and the defining property
+`abelMap_app_mk`". Both halves are false under the class binder**, and the
+second is provably so.
+
+The single field constrains nothing beyond the *type* of `abel`. Machine-checked:
+the constant-zero transformation inhabits the class — its naturality is
+`map_zero` of the pullback group hom, so it is free — and under that instance
+`abelMap C` is identically `0`, sending every divisor class to `0`. Probing
+`abelMap_app_mk`'s conclusion against it, `rfl` **fails**. So `abelMap_app_mk`
+is a statement about `instHasAbelMap` alone, never about the class: a consumer
+quantifying over `[HasAbelMap C]` gets an arbitrary natural transformation with
+no Abel-map content. This is the `ClassDegree` collapse
+(`IdentityComponent.lean:1450-1461`) one level up, and it is the
+property-free-data-field sibling of the `HasDivFunctor` vacuity recorded in this
+file's §2 caveat.
+
+Blast radius is small at HEAD and this is a documentation fix, not a repair: the
+only declaration taking `[HasAbelMap C]` is `abelMap` itself, and every real
+consumer routes through `abelMapWitness` directly (`DivDegree.lean:678-703`,
+`IdentityComponent.lean:1539`). **Do not write a new consumer against this
+class.** The cheap repair, for whoever owns this file, is to delete the class and
+use `abelMapWitness`; the alternative is to add the pin as a field, as
+`ClassDegreePinned` did after its own collapse. Recorded as inbox `I-0953`. -/
 class HasAbelMap {k : Type u} [Field k] (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     [GeometricallyIntegral C.hom] where
@@ -753,7 +806,14 @@ effective Cartier divisor `D ⊆ C ×_k T` over `T` to its associated invertible
 sheaf `[O_{C ×_k T}(D)] = [I_D⁻¹]`.
 
 It is the map carried by `HasAbelMap`; the instance `instHasAbelMap` fixes it
-to `abelMapWitness C`, and its defining property is `abelMap_app_mk`. -/
+to `abelMapWitness C`, and `abelMap_app_mk` is its defining property **at that
+instance**.
+
+**Not under an arbitrary `[HasAbelMap C]` binder** — that class is a
+property-free data slot, inhabited by the constant-zero transformation, and
+`abelMap_app_mk` provably fails there (see the class docstring, and `I-0953`).
+Read this definition as "the Abel map" only when the instance in scope is
+`instHasAbelMap`. -/
 noncomputable def abelMap {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]

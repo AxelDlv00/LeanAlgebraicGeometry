@@ -18,10 +18,24 @@ central open obligation (`Picard/FGAPicRepresentability.lean`).
 
 The relative Picard presheaf `T ↦ Pic(C ×_k T)/π_T^* Pic(T)`
 (`Scheme.PicSharp.relPresheaf`, Kleiman §2 Def. `df:Pfs`) is in general **not
-a sheaf**, not even for the Zariski topology (Kleiman §2, L1292–L1302): a line
-bundle on `C ×_k T` can be trivial on each member of a cover of `T` without
-being trivial modulo `π_T^* Pic(T)`, because the gluing data is a `Pic`-class
-of the overlaps. Kleiman's representability theorem (§4 Thm. `th:main`) is
+a sheaf** (Kleiman §2, L1330: "not *a priori* a sheaf"), and over a general
+field it is **not representable** — the witness is Exercise `ex:Pfs`, the conic
+`u²+v²+w²=0` in `ℙ²_ℝ`, smooth proper geometrically integral with no rational
+point.
+
+**CITATION CORRECTED 2026-07-29 (`review-ajc`).** This paragraph asserted
+non-sheafness "not even for the Zariski topology (Kleiman §2, L1292–L1302)",
+and glossed it as: a line bundle can be trivial on each member of a cover of `T`
+without being trivial modulo `π_T^* Pic(T)`. Both the citation and the gloss are
+wrong. L1292–L1302 proves that the **absolute** functor `Pic_X` is never a
+separated Zariski presheaf, using `T = ℙ¹_X`; the quotient by `π_T^* Pic(T)`
+that defines the *relative* functor is exactly what kills that argument, and
+L1600–L1605 in fact proves `Pic_{X/S} ≅ Pic_{(X/S)zar}` when `f` has a section.
+Sheafifying is still the right move and the conclusion below is unaffected —
+only the stated reason was. Full account in
+`Picard/FGAPicRepresentability.lean`'s module docstring.
+
+Kleiman's representability theorem (§4 Thm. `th:main`) is
 therefore a statement about the associated **étale** sheaf, and it is that
 statement which is true over an arbitrary base field with no rational-point
 hypothesis.

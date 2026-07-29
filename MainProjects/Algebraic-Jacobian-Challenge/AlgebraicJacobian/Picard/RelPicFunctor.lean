@@ -892,8 +892,14 @@ end PicSharp
 
 /-! ## §5. Étale sheafification
 
-The relative Picard presheaf `PicSharp_{C/k}` is generally not even a
-Zariski sheaf (Kleiman §2 L1292–L1302). To obtain a representable
+The relative Picard presheaf `PicSharp_{C/k}` is not *a priori* a sheaf
+(Kleiman §2, L1330), and it is not representable over a general field —
+witnessed by Exercise `ex:Pfs`, the conic `u²+v²+w²=0` in `ℙ²_ℝ`. (**The
+citation "§2 L1292–L1302", which stood here until 2026-07-29, is wrong**: those
+lines are about the *absolute* functor `Pic_X`, not the relative one, which is
+defined by quotienting `Pic(T)` precisely to defeat that argument. Corrected
+account in `Picard/FGAPicRepresentability.lean`'s module docstring.) To obtain a
+representable
 functor in the sense of `chap:Picard_FGAPicRepresentability`, one
 replaces `PicSharp_{C/k}` by its **associated étale sheaf**
 `Pic^♯_{(C/k)ét} := (PicSharp_{C/k})^{∼ét}`. Kleiman §4
