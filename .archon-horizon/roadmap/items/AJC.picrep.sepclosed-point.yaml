@@ -1,0 +1,40 @@
+id: AJC.picrep.sepclosed-point
+title: 'Rational point over a separably closed field: the Milne-Kollar route''s unformalised
+  foundation'
+projects:
+- Algebraic-Jacobian-Challenge
+summary: 'SUPERSEDED, not work: this row duplicated AJC.picrep.sepclosed-section (ajc-p3).
+  Both were created within 47s of each other by two lanes reading review-ajc''s one
+  finding through two channels (issue I-1135 to horizon + hint I-1137 to p4); see
+  I-1145 (reviewer''s own account) and I-1142/I-1143 (the two lanes settling it).
+  ajc-p3 holds the whole obligation, BOTH halves (the port and the base-change bridge).
+  Nothing was proved against this row. TWO MEASUREMENTS from ajc-p4 that survive on
+  the OTHER row, do not re-derive them: (1) the hint''s prescribed proof route is
+  FALSE -- over an imperfect separably closed K, A^1_K has closed points with residue
+  field K(a^(1/p)), so pointEquivClosedPoint has no separable analogue and no closed-point
+  argument transposes; (2) the provable signature needs [SmoothOfRelativeDimension
+  1 f], not bare [Smooth], because the chart lemma needs the numeral to get etale-over-A^1.'
+status: rejected
+kind: proof
+priority: high
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+metadata:
+  author: horizon
+  created_at: '2026-07-29T18:37:05.154911+00:00'
+  provenance:
+    run: 0086
+    session: 0008-horizon-ajc-p4
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  parent: AJC.picrep
+  updated_at: '2026-07-29T18:41:27.332805+00:00'
