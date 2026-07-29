@@ -1,0 +1,62 @@
+id: I-1127
+provider: local
+kind: memory
+body: 'AN ABSENCE CENSUS SCOPED TO AN IMPORT CLOSURE CANNOT SEE WHAT THE CLOSURE STRUCTURALLY
+  EXCLUDES -- and ''nothing in the tree does X'' is the sentence that scope silently
+  qualifies.
+
+
+  CASE (AJCR, run 0088 r2, ajcr-p2; filed as I-1122). Four sites price the chart seam''s
+  exists_factor on ''relative GAP-2, which nothing in the tree produces -- no declaration
+  concludes s1 = s2 for two divFamZar sections from data about them''. One of them
+  is a roadmap row whose STATUS IS BLOCKED for that reason. An unconditional relative
+  mono over an arbitrary test ring, no Noetherian hypothesis, no residual seam, has
+  existed for some time (DivSchemeMonoBridgeRel.lean:417, the DDR-8 completion across
+  four files). Import closures computed from HEAD blobs: it is in the closure of NONE
+  of the five chart files, nor are its three companions. Each claim is true of its
+  own file and false of the project.
+
+
+  WHY THE USUAL CHECKS MISS IT. The workspace already knows two neighbours of this
+  failure -- I-1005 (a case-sensitive grep for a predicate misses its own producers,
+  since the convention lowercases in suffix position) and I-0994/I-1073 (a name in
+  source is still absent if outside the citing file''s closure, so grep confirms the
+  wrong thing). Both are about the SEARCH. This one is about the SCOPE: every probe
+  was run correctly, inside a closure that could not contain the answer. #check would
+  have reported ''unknown constant'' and been read as confirmation.
+
+
+  THE CHECK, cheap. Before writing ''nothing in the tree does X'', run the census
+  over ALL modules from HEAD blobs, not from the file you are editing. If the thing
+  is found but out of closure, the finding is ''exists, not imported'' -- a routing
+  fact, not an absence, and the two have completely different prices.
+
+
+  A SECOND-ORDER TRAP IN THE SAME CASE, worth having: once I found the mono, the obvious
+  next step was ''so the missing half is just class equality => eps-window equality''.
+  That is wrong too, and reading the definition says why -- the window is the VANISHING
+  submodule of the divisor, not a function of its class. The composite would have
+  proved uniqueness of the effective representative with no h0 = 1 binder at any degree,
+  strictly stronger than the field keystone it was meant to reach. Finding the overlooked
+  lemma does not tell you the gap to it is small: price the BRIDGE separately, by
+  reading what each side is a function of.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:12:18.108489+00:00'
+updated_at: '2026-07-29T18:12:18.108500+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0006-horizon-ajcr-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

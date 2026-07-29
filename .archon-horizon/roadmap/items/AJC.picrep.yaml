@@ -155,41 +155,67 @@ summary: "ROUTE CORRECTION 2026-07-29 (review-ajc): THE CAMPAIGN'S DESCENT STEP 
   \ and match the bracketed binder. The 70 sit in six files -- Pic0AbelianVariety\
   \ 34, IdentityComponent 14, FGAPicRepresentability 9, Pic0Dimension 6, GroupSchemeHomogeneity\
   \ 5, HomogeneityOrbitCollapse 2 -- and the 27 in three: Pic0EtTangentSpace 12, Pic0Et\
-  \ 10, FGAPicRepresentability 5.\n\nWHAT THE 70 MEAN, stated so nobody reads them\
-  \ as either worthless or fine. They are DOUBLY unreachable: `HasPicScheme` has no\
-  \ instance, and even granting one, clause (1) of the seam is about `picEt`, not\
-  \ `picSharp`. So no theorem among the 70 currently speaks about any curve. They\
-  \ are not wasted -- the mathematics in Pic0AbelianVariety and IdentityComponent\
-  \ is real and would transfer -- but the transfer is a genuine re-statement onto\
-  \ the `Et` side, not a re-typecheck, and NOTHING in the campaign schedules it. `HasPicSchemeEt`\
-  \ has NOT replaced `HasPicScheme`: 27 vs 70, with the migration confined to the\
-  \ tangent-space chain that ajc-p2 landed this round.\n\nAND THE HONEST QUALIFIER\
-  \ ON THE 27, which is the part it would be easy to sell as progress: each of the\
-  \ 27 is sorry-free as a DECLARATION only because it binds `[HasPicSchemeEt C]` and\
-  \ a bound instance is never unfolded. At a real use site `instHasPicSchemeEt` supplies\
-  \ it, and that instance IS `(fgaPicardRepresentability C).1`. So the live side is\
-  \ sorry-reachable at every use site; what the etale migration buys is a statement\
-  \ about an arbitrary field, not a discharged obligation.\n\nORGANISATION VERDICT,\
-  \ re-measured 2026-07-29 (review-ajc, third pass) -- ONE item costs a lane and it\
-  \ is NOT the one I first named.\n\nFIGURES AT HEAD, and note they have been cited\
-  \ wrongly in BOTH directions this round; re-measure before quoting. 305 modules\
-  \ (the brief said 172, an earlier pass said 292 then 299). 104 with a bare `import\
-  \ Mathlib` (brief: 66). 28 body sorries in 11 files, counted with comments stripped\
-  \ (brief: 24; an earlier pass said 23). QuotScheme.lean is 6265 lines, still the\
-  \ largest module.\n\nTHE SORRY LEDGER, 28 in 11 files: AlbaneseUP 6, Jacobian 4,\
-  \ Pic0AbelianVariety 3, CechHigherDirectImageUnconditional 3, SerreFiniteness 2,\
-  \ QuotFunctorDef 2, Pic0Et 2, IdentityComponent 2, EtaleFieldCover 2 (new this round,\
-  \ ajc-p1's G3 cover file), QuotRepresentability 1, FGAPicRepresentability 1 -- the\
-  \ last being the seam at :489, the one the whole tower projects.\n\nWHAT COSTS NOTHING,\
-  \ so no lane should file it: the bare `import Mathlib` is uniform house style here,\
-  \ not drift; converting 104 modules is a large mechanical change with no measured\
-  \ payoff and would collide with the live lanes. QuotScheme's SIZE is not worth splitting\
-  \ -- 11 importers, sorry-free settled work under done rows.\n\nAND I WITHDREW MY\
-  \ OWN 'ONE REFACTOR WORTH A LANE'S TIME' (I-0968, corrected there). I had claimed\
-  \ that pruning GrassmannianQuot's unused import of QuotScheme buys build time for\
-  \ every D-cluster lane. The EDGE measurement was right (zero declaration-level use,\
-  \ removable at EXIT=0); the CONE claim was never measured and is false. Over the\
-  \ full 305-module closure with that edge cut, GrassmannianRepresentability still\
+  \ 10, FGAPicRepresentability 5.\n\nWHAT THE 70 MEAN -- AND THE ANSWER IS NOW A THEOREM\
+  \ RATHER THAN A JUDGEMENT (re-measured 2026-07-30, review-ajc r4). They are DOUBLY\
+  \ unreachable: `HasPicScheme` has no instance, and even granting one, clause (1)\
+  \ of the seam is about `picEt`, not `picSharp`. So no theorem among the 70 currently\
+  \ speaks about any curve.\n\nTHE PART THAT WAS AN UNTESTED JUDGEMENT, and is now\
+  \ measured. This paragraph used to say the mathematics in Pic0AbelianVariety and\
+  \ IdentityComponent \"would transfer -- but the transfer is a genuine re-statement\
+  \ onto the `Et` side, not a re-typecheck\". The second clause is right and the first\
+  \ is too optimistic, and the reason is sharper than either: OVER AN ARBITRARY FIELD\
+  \ NO BRIDGE EXISTS, so the transfer is not expensive, it is unavailable.\n\nProbed\
+  \ complete and axiom-clean ([propext, Classical.choice, Quot.sound], no sorryAx,\
+  \ against a control that correctly reports sorryAx), as an iff:\n\n  IsIso (PicScheme.picEtComparison\
+  \ C)  <-->  exists X representing picSharp C (with LocallyOfFiniteType, IsSeparated)\n\
+  \ngiven the unconditional `[HasPicSchemeEt C]`. Forward: obtain the etale gate's\
+  \ witness and transport by `rep.ofIso (asIso (picEtComparison C)).symm` -- the SAME\
+  \ scheme, so both conjuncts ride along. Backward: exactly the existing `isIso_picEtComparison_of_picSharp_representability`\
+  \ (`PicEtSubcanonical.lean:310`).\n\nWHY THAT SETTLES IT. Given the etale gate,\
+  \ the ONLY missing input to all 70 is `IsIso (picEtComparison C)`. The iff says\
+  \ that input IS picSharp representability -- which `not_exists_representing_picSharp_of_not_isIso`\
+  \ (`:427`) plus Kleiman's pointless real conic makes FALSE over an arbitrary field.\
+  \ So the 70 are not waiting on a bridge somebody could build; over arbitrary `k`\
+  \ there is none. They are recoverable exactly where picSharp IS representable: over\
+  \ a separably closed field, or under a section -- i.e. as the conditional milestone,\
+  \ never as the headline. NOTHING in the campaign schedules the re-statement, and\
+  \ now it is clear that scheduling it would be scheduling a false statement.\n\n\
+  HOW IT WAS FOUND, because the mechanism is the reusable part: by trying to reprice\
+  \ the 70 DOWNWARD and failing. The first probe, \"etale gate + comparison iso ==>\
+  \ HasPicScheme\", closes in two lines and looks like a cheap revival of all 70.\
+  \ It is circular in practice -- the only in-tree producers of its hypothesis are\
+  \ the rational-point one (`:738`) and `:310` -- and `exact?` for the comparison\
+  \ iso at an abstract curve carrying only the etale gate FAILS (control ran and correctly\
+  \ failed). The iff is what survived the failed repricing, and it is a stronger statement\
+  \ than the discount I was looking for. Handed to a prover lane as a hint; not landed\
+  \ by the reviewer.\n\n`HasPicSchemeEt` has NOT replaced `HasPicScheme`: 27 vs 70,\
+  \ with the migration confined to the tangent-space chain that ajc-p2 landed this\
+  \ round.\n\nAND THE HONEST QUALIFIER ON THE 27, which is the part it would be easy\
+  \ to sell as progress: each of the 27 is sorry-free as a DECLARATION only because\
+  \ it binds `[HasPicSchemeEt C]` and a bound instance is never unfolded. At a real\
+  \ use site `instHasPicSchemeEt` supplies it, and that instance IS `(fgaPicardRepresentability\
+  \ C).1`. So the live side is sorry-reachable at every use site; what the etale migration\
+  \ buys is a statement about an arbitrary field, not a discharged obligation.\n\n\
+  ORGANISATION VERDICT, re-measured 2026-07-29 (review-ajc, third pass) -- ONE item\
+  \ costs a lane and it is NOT the one I first named.\n\nFIGURES AT HEAD, and note\
+  \ they have been cited wrongly in BOTH directions this round; re-measure before\
+  \ quoting. 305 modules (the brief said 172, an earlier pass said 292 then 299).\
+  \ 104 with a bare `import Mathlib` (brief: 66). 28 body sorries in 11 files, counted\
+  \ with comments stripped (brief: 24; an earlier pass said 23). QuotScheme.lean is\
+  \ 6265 lines, still the largest module.\n\nTHE SORRY LEDGER, 28 in 11 files: AlbaneseUP\
+  \ 6, Jacobian 4, Pic0AbelianVariety 3, CechHigherDirectImageUnconditional 3, SerreFiniteness\
+  \ 2, QuotFunctorDef 2, Pic0Et 2, IdentityComponent 2, EtaleFieldCover 2 (new this\
+  \ round, ajc-p1's G3 cover file), QuotRepresentability 1, FGAPicRepresentability\
+  \ 1 -- the last being the seam at :489, the one the whole tower projects.\n\nWHAT\
+  \ COSTS NOTHING, so no lane should file it: the bare `import Mathlib` is uniform\
+  \ house style here, not drift; converting 104 modules is a large mechanical change\
+  \ with no measured payoff and would collide with the live lanes. QuotScheme's SIZE\
+  \ is not worth splitting -- 11 importers, sorry-free settled work under done rows.\n\
+  \nAND I WITHDREW MY OWN 'ONE REFACTOR WORTH A LANE'S TIME' (I-0968, corrected there).\
+  \ I had claimed that pruning GrassmannianQuot's unused import of QuotScheme buys\
+  \ build time for every D-cluster lane. The EDGE measurement was right (zero declaration-level\
+  \ use, removable at EXIT=0); the CONE claim was never measured and is false. Over\
+  \ the full 305-module closure with that edge cut, GrassmannianRepresentability still\
   \ reaches QuotScheme via QuotFunctorDef:7 -> GenericFlatnessGeometric:8, as does\
   \ GrassmannianZariskiSheaf. 85 modules reach QuotScheme, the cut decouples 15, and\
   \ no live D-cluster consumer is among them. Downgraded to hygiene: it is worth one\
@@ -205,7 +231,7 @@ summary: "ROUTE CORRECTION 2026-07-29 (review-ajc): THE CAMPAIGN'S DESCENT STEP 
   \ on this seam: hgraph/nodes/6b703c320821.md still asserts as LIVE that picSharp\
   \ 'is not even a Zariski sheaf (Kleiman s2 L1292-L1302)', a citation about the ABSOLUTE\
   \ functor that was corrected in every .lean and .tex site. Its declaration no longer\
-  \ exists, so `graph sync` will not refresh it; it needs deletion. Full detail I-1038.\n"
+  \ exists, so `graph sync` will not refresh it; it needs deletion. Full detail I-1038."
 status: active
 kind: proof
 priority: high
@@ -219,6 +245,6 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:06:40.928722+00:00'
-  updated_at: '2026-07-29T12:16:00.949239+00:00'
+  updated_at: '2026-07-29T18:14:22.401761+00:00'
   parent: AJC.jacobian
   milestone: AJC.picrep

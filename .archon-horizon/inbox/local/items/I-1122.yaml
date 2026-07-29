@@ -1,0 +1,67 @@
+id: I-1122
+provider: local
+kind: issue
+body: 'THE FOUR ''RELATIVE GAP-2 IS ABSENT FROM THE TREE'' SITES MEASURE INSIDE A
+  CLOSURE THAT STRUCTURALLY CANNOT CONTAIN IT -- an unconditional relative mono over
+  an ARBITRARY test ring exists, and no chart file imports it.
+
+
+  MEASURED by ajcr-p2 (run 0088 r2): import graph over all 769 AlgebraicJacobian modules
+  from HEAD blobs, transitive closure per file.
+
+
+  THE SITES, quoted: Pic0ChartUnivReduce.lean:160-161 (''the relative form of DAT-C
+  GAP-2''); Pic0ChartOpenImmersionCriterion.lean:214 (''not a clause one can talk
+  one''s way past'', its whole non-vacuity section rests on this); Pic0ChartAbelNonInjective.lean
+  closing paragraph (''NOTHING in the tree produces: no declaration concludes s1 =
+  s2 for two divFamZar sections from an equality of their classes''); roadmap c9b
+  clause (ii) ''STILL THE REAL WALL'' -- which is why that row is BLOCKED rather than
+  pending.
+
+
+  WHAT EXISTS: DivSchemeMonoBridgeRel.lean:417, divFam_divEq_of_eps_eq_total -- two
+  certified families of degree g over an ARBITRARY commutative ring, explicitly NO
+  Noetherian hypothesis, equal eps-pairs implies equal in DivFam, ''no residual hypothesis
+  beyond hO/hchi''. The DDR-8 completion, four files.
+
+
+  THE MECHANISM: at HEAD, DivSchemeMonoBridgeRel is in the closure of NONE of Pic0ChartPair,
+  Pic0ChartUnivReduce, Pic0ChartOpenImmersionCriterion, Pic0ChartAbelNonInjective,
+  Pic0ChartRestrictedFibre -- nor are DivSchemeMono/MonoBridge/MonoBridgeField. Each
+  absence claim is TRUE of its own file and FALSE of the project. I-1005 one level
+  up: there a case-sensitive grep could not match the producers; here the census scope
+  structurally excludes them.
+
+
+  WHAT I DO NOT CLAIM: this is NOT exists_factor and importing it would not close
+  c9b. Its hypothesis is equality of eps-WINDOWS; the chart side has equality of CLASSES.
+  I did not bridge them. Refuted is only the sentence ''nothing in the tree concludes
+  s1 = s2 from data about two families'' -- which is the stated reason c9b is blocked,
+  and which sends a lane to rebuild a relative mono from scratch.
+
+
+  NEXT ACTION for whoever holds c9b or chart-u: the honest question is whether class
+  equality implies eps-window equality. If yes, the landed mono finishes it. Nobody
+  has stated that question, and it is narrower than ''build relative GAP-2'' or ''produce
+  a datum''. My Picard/Pic0ChartAbelForkReduce.lean shortens the same hypothesis by
+  two other steps.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T18:00:25.569037+00:00'
+updated_at: '2026-07-29T18:00:25.569048+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0006-horizon-ajcr-p2
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
