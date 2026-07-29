@@ -625,6 +625,10 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffFunctorCompare
 -- representability datum could not have reached the Sigma-atlas at all. Rooted so the axiom
 -- probe covers it -- an unrooted file is one nobody has measured (AJCR.w4-rep.build-reach).
 import AlgebraicJacobian.Picard.DivisorFamilyAffAbel
+-- The algebraic half of hdegAff's four-lemma port, executed (run 0089 r3, ajcr-p3): the
+-- separated-equalizer finrank additivity transcribes to AffAdaptation verbatim, confirming the
+-- repriced residue rather than assuming it.
+import AlgebraicJacobian.Picard.DivisorFamilyAffFieldDegree
 import AlgebraicJacobian.Picard.DivRepGlobalAffLift
 import AlgebraicJacobian.Picard.DivRepAffPullIndep
 import AlgebraicJacobian.Picard.DivRepAwayPush
