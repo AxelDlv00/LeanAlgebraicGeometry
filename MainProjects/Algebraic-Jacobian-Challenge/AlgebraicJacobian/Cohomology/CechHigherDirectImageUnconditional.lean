@@ -4429,4 +4429,38 @@ theorem rawPushPullMap_pullback_counit_self {Z₁ Z₂ : Scheme.{u}} (a : Z₂ �
     (Scheme.Modules.pullbackPushforwardAdjunction a).left_triangle_components _
   rw [hc2, reassoc_of% htri]
 
+/-- The pullback telescope for a **general** over-triangle `w : a ≫ p₁ = p₂`:
+`p₂^* ≅ p₁^* ⋙ a^*`, as `pullbackComp` followed by the `pullbackCongr` transport along `w`.
+Project-local. -/
+noncomputable def ppTel {Z₁ Z₂ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (p₁ : Z₁ ⟶ X) (p₂ : Z₂ ⟶ X)
+    (w : a ≫ p₁ = p₂) :
+    Scheme.Modules.pullback p₁ ⋙ Scheme.Modules.pullback a ≅ Scheme.Modules.pullback p₂ :=
+  Scheme.Modules.pullbackComp a p₁ ≪≫ Scheme.Modules.pullbackCongr w
+
+/-- **The adjunct of `pushPullMap`, general over-triangle** — and this is the form the twisted
+square needs, not the `rfl` one.
+
+Measured, and worth stating because it is the kind of thing that silently blocks a route: the
+over-triangle of `wmap` is a **genuine equation, not `rfl`** (probed: `rfl` fails, `Over.w` is
+needed).  So `rawPushPullMap_pullback_counit_self` alone does not apply to `BcSquareCounitSide`;
+this version, with the triangle as a free hypothesis, does.  The proof is `subst w` onto the
+`rfl` case — cheap, because substituting removes the transport before anything is normalised
+(the same trick `pushPull_transport_cancel` uses in `CechHigherDirectImage.lean`).
+
+Project-local; axiom-clean. -/
+theorem rawPushPullMap_pullback_counit {Z₁ Z₂ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (p₁ : Z₁ ⟶ X)
+    (p₂ : Z₂ ⟶ X) (w : a ≫ p₁ = p₂) (F : X.Modules) :
+    (Scheme.Modules.pullback p₂).map (rawPushPullMap a p₁ p₂ w F) ≫
+        (Scheme.Modules.pullbackPushforwardAdjunction p₂).counit.app
+          ((Scheme.Modules.pullback p₂).obj F)
+      = (ppTel a p₁ p₂ w).inv.app
+            ((Scheme.Modules.pushforward p₁).obj ((Scheme.Modules.pullback p₁).obj F)) ≫
+          (Scheme.Modules.pullback a).map
+            ((Scheme.Modules.pullbackPushforwardAdjunction p₁).counit.app
+              ((Scheme.Modules.pullback p₁).obj F)) ≫
+          (ppTel a p₁ p₂ w).hom.app F := by
+  subst w
+  simpa [ppTel, Scheme.Modules.pullbackCongr] using
+    rawPushPullMap_pullback_counit_self a p₁ F
+
 end AlgebraicGeometry
