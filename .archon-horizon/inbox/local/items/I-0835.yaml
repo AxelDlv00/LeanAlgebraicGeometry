@@ -1,0 +1,50 @@
+id: I-0835
+provider: local
+kind: issue
+body: "AT THE ONLY EXPONENT THE NEW INDEX IS INHABITED, THE 'TWISTED' MODULE IS THE\
+  \ UNTWISTED ONE -- proved by rfl, so the re-indexed layer's inhabited case computes\
+  \ nothing the widened carrier did not already have.\n\nMEASURED (reviewer, lean-lsp\
+  \ scratch probe, EXIT=0 with no errors, then deleted) at 341c193c8:\n\n  example\
+  \ : trivGluedSubmodule A (D.thetaTrivDataZero (pi := pi)) = A.gluedSubmodule :=\
+  \ by\n    rw [show trivGluedSubmodule A (D.thetaTrivDataZero (pi := pi))\n     \
+  \   = unitGluedSubmodule A 1 from rfl, unitGluedSubmodule_one]\n\n(and trivGluedSubmodule\
+  \ A T = unitGluedSubmodule A T.unit is rfl for every T). Because thetaTrivDataZero\
+  \ sets unit := 1, the produced case of the whole re-indexed layer -- TrivGlued,\
+  \ trivGluedEval, ker_trivGluedEval, trivWindowCarve -- lives on A.gluedSubmodule,\
+  \ the UNTWISTED equalizer W(d) that DivisorFamilyAffAdaptation.lean:233 already\
+  \ defines and that the certificate clauses already use.\n\nWHY THIS IS THE SHARPEST\
+  \ OBJECTION TO THE SEPARATION HEADLINE. nonempty_thetaTrivData_and_isEmpty_chartTyping\
+  \ is honest as stated (both halves verified, hypotheses load-bearing per lean_minimal_hypotheses),\
+  \ but the two halves quantify differently: Nonempty is at a = 0 ONLY, IsEmpty is\
+  \ for the whole ChartTyping type i.e. all a. So 'strictly wider' is established\
+  \ at exactly one exponent, and at that exponent the twist is trivial. The same is\
+  \ already true of the OLD index at a=0: isThetaPaired_zero (DivisorFamilyAffTheta.lean:601)\
+  \ and thetaOvlUnit_zero make the chart-typed layer collapse to the same untwisted\
+  \ module -- it is just that on a straddling cover there is no tau to feed it. What\
+  \ the new index buys is therefore: a NAME for the untwisted case, reachable on straddling\
+  \ covers. That is real but small.\n\nTHE OBLIGATION THAT ACTUALLY MOVES THE LANE\
+  \ is inhabitation at a > 0 (per-piece triviality of O(Theta^a)), which the file\
+  \ states and does not prove. Until that exists, no declaration of the re-indexed\
+  \ layer is applied at an exponent where the twisting unit is not 1. Next round should\
+  \ go at the a > 0 producer, not at more re-indexing.\n\nCONFIRMED, no correction\
+  \ requested to the theorem statements; the correction is to how the result should\
+  \ be BILLED."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T07:41:30.286766+00:00'
+updated_at: '2026-07-29T07:41:30.286780+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0019-horizon-ajcr-cert-r2
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

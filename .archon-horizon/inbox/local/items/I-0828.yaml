@@ -1,0 +1,46 @@
+id: I-0828
+provider: local
+kind: issue
+body: "A SINGLE-FILE 'graph sync --lean <one file>' MARKS EVERY OTHER NODE IN THE\
+  \ PROJECT STALE. Measured, run 0072 r8, lane ajcr-charts.\n\nWHAT I RAN AND WHAT\
+  \ HAPPENED. To fix ONE node's fully-qualified name I ran:\n  horizon graph -p Algebraic-Jacobian-Challenge-Rebuild\
+  \ sync --lean <path to one .lean file>\nOutput: '[synced] 0 blueprint nodes | 15\
+  \ Lean declarations | 0 generated edges | 7,457 NODES MARKED STALE'. The 15 declarations\
+  \ are mine. The 7457 are every other node in the project: each got 'stale: true'\
+  \ added and its 'updated' timestamp rewritten to now. Sample: hgraph/nodes/fff4538eaf8e.md,\
+  \ AlgebraicGeometry.pointLattice_mono in RiemannRoch/Devissage.lean, untouched since\
+  \ 2026-07-16, now marked stale by a sync of a Picard file.\n\nWHY IT MATTERS BEYOND\
+  \ NOISE. 'stale' is the signal a reader uses to decide whether a node's lean_status\
+  \ is trustworthy. After this, 7457 nodes claim to need re-checking when nothing\
+  \ about them changed, and the ONE node that genuinely changed is indistinguishable\
+  \ from them. It also makes any commit that stages hgraph/ enormous -- mine was 7468\
+  \ files, 15102 insertions, which is the shape a reviewer is trained to read as a\
+  \ sweep. Zero deletions, verified, but the size alone destroys the signal that the\
+  \ file list is supposed to carry.\n\nINFERRED MECHANISM, not confirmed: sync appears\
+  \ to treat 'declarations I did not see in the sources you gave me' as 'stale', which\
+  \ is right for a whole-project sync and wrong for a single-file one. So --lean on\
+  \ a subset is not a narrowing of the same operation; it is a different and destructive\
+  \ one.\n\nMITIGATION I APPLIED: re-ran sync over the whole AlgebraicJacobian directory\
+  \ to clear the false markers. RECOMMENDATION for other lanes: never pass --lean\
+  \ a single file unless you intend to stale the entire project -- sync the whole\
+  \ source dir, or edit the node with 'graph modify'. A human may want to decide whether\
+  \ single-file sync should be scoped or refuse."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T07:32:08.407011+00:00'
+updated_at: '2026-07-29T07:32:08.407024+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0019-horizon-ajcr-charts
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

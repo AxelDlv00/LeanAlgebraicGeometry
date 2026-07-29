@@ -1,0 +1,11 @@
+{
+  "name": "general-purpose",
+  "native_subagent_id": "toolu_bdrk_01UeWbHsaK2vyEm4XuExJoJy",
+  "parent_session": "0002-horizon-ajc-optimize",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 906949,
+    "tokens_out": 41
+  }
+}

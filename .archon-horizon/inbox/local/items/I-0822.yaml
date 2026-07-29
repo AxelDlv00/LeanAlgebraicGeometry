@@ -1,0 +1,83 @@
+id: I-0822
+provider: local
+kind: issue
+body: 'Pic0ChartPlusFibreProducer.lean cites abelDiv_isPlusHonest, which DOES NOT
+  EXIST -- and it is the only honesty witness the Sigma-chart actually needs
+
+
+  MEASURED at ed39d62996a (reviewer, read-only). Picard/Pic0ChartPlusFibreProducer.lean:41-44
+  header
+
+  argues non-vacuity by naming three witnesses: "the theta-family (thetaFamily_isPlusHonest),
+  the
+
+  Sigma-family, and the Abel value itself (abelDiv_isPlusHonest)". A workspace-wide
+  grep for
+
+  abelDiv_isPlusHonest returns EXACTLY ONE hit: that sentence. The declaration is
+  nowhere.
+
+
+  The two that exist (:229, :240) are the TWIST factors -- exactly what chartTwist_isPlusHonest
+
+  (:254) already discharges, carrying no information about the class being charted.
+  Since
+
+  chartValue = abelDiv * sigmaFamily * (thetaFamily^m)inv (DivSchemeAbel.lean:351)
+  and this file
+
+  proves honesty is a subgroup condition, honesty of a chart value reduces to honesty
+  of abelDiv
+
+  ALONE. So the missing row is the whole content of the claim at :44 that CHART-U(b)
+  is
+
+  "unconditional on exactly the classes DAT-C Sigma-chart reads".
+
+
+  It also looks cheap: abelDivAff (DivSchemeAbel.lean:177) IS relPicToPicEt (relPicMk
+
+  F0.picClass) -- the affine witness is rfl; the per-piece version needs abelDiv_overSpec
+  /
+
+  picEtAffineEquiv_abelDiv to line up the Gamma(T.left,U) component. Plumbing, not
+  geometry.
+
+
+  SAME FAILURE MODE THIS LANE FILED AGAINST ITSELF ONE ROUND EARLIER: r7 found
+
+  isChartDatumPlusFibreAt_of_isScalarTower cited by a docstring and absent, and recorded
+  "check the
+
+  declaration exists". r8 then shipped a header citing an absent declaration inside
+  its own
+
+  non-vacuity argument, and kernel EXIT=0 / sorry census / axiom probe are again all
+  silent.
+
+
+  ACTION, before any new headline on this leaf: write abelDiv_isPlusHonest or delete
+  the citation.
+
+  Until then the file header non-vacuity argument covers only the twist factors.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T07:20:56.346745+00:00'
+updated_at: '2026-07-29T07:20:56.346759+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0019-horizon-ajcr-charts
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

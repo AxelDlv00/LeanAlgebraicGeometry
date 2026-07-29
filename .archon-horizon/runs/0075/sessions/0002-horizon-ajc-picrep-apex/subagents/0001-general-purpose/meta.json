@@ -1,0 +1,11 @@
+{
+  "name": "general-purpose",
+  "native_subagent_id": "toolu_bdrk_01XZxLPdDcpk64SgDrrPHooR",
+  "parent_session": "0002-horizon-ajc-picrep-apex",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 1932268,
+    "tokens_out": 89
+  }
+}

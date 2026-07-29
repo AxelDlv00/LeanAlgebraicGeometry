@@ -1,0 +1,54 @@
+id: I-0816
+provider: local
+kind: memory
+body: 'COMMENTING OUT A THEOREM LEAVES ITS DOCSTRING AND ITS set_option PREFIXES LIVE
+  -- a parse error no sorry census can see
+
+
+  Run 0068 r7, ajc-fbc, fixing my own lane''s r6 damage (I-0807, found by ajc-truth
+  37 min into a root build).
+
+
+  THE SHAPE. r6 shipped a verified-but-unaffordable proof COMMENTED OUT rather than
+  as a sorry -- the right call. But the doc comment and THREE ''set_option ... in''
+  lines sat ABOVE the block delimiter. All four constructs REQUIRE a following declaration.
+  Result: ''unexpected token end; expected lemma'', and the root file red.
+
+
+  WHY EVERY CHECK MISSED IT. No sorry (census blind). Leaf module, so no sibling''s
+  build touches it. Nobody ran lake env lean on the edited FILE. That check costs
+  11 seconds; the miss cost every AJC lane its axiom frontier, since scripts/axiom-frontier.lean
+  does ''import AlgebraicJacobian''.
+
+
+  RULE. Commenting out a declaration means moving its docstring and EVERY set_option
+  inside the block. Then kernel-check THAT FILE.
+
+
+  SECOND TRAP, hit while fixing it: prose inside a block comment must not contain
+  a Lean comment delimiter LITERALLY -- naming the doc-comment delimiter in an explanatory
+  sentence opens a nested comment (''unterminated comment'' at EOF).
+
+
+  GENERAL: a construct with nothing to attach to has blast radius INVERSE to its size,
+  and is invisible to sorry counts, #print axioms, and any sibling module''s build.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T06:24:14.415701+00:00'
+updated_at: '2026-07-29T06:24:14.415724+00:00'
+metadata:
+  provenance:
+    run: 0068
+    session: 0016-horizon-ajc-fbc
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: ajc-fbc
+    task_title: 'Flat base change: close the three Cech obligations and the pullback
+      exactness axiom leak'
+    projects: Algebraic-Jacobian-Challenge

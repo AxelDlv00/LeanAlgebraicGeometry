@@ -5,11 +5,11 @@ content_type: lemma
 created: '2026-07-16T21:14:29'
 generated: blueprint
 label: lem:higher_direct_image_presheaf
-lean_status: linked
+lean_status: lean_ok
 order: 404
 title: Presheaf description of the higher direct images
 type: tex
-updated: '2026-07-29T11:05:43'
+updated: '2026-07-29T13:44:21'
 ---
 \textit{Source: Stacks Project, Cohomology, Tag 01XJ
   (\texttt{lemma-describe-higher-direct-images}).}

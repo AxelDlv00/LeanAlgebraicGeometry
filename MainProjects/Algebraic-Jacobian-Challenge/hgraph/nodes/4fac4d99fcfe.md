@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.finrank_cotangentSpace_stalk_eq_of_isIso
 type: lean
-updated: '2026-07-29T05:21:16'
+updated: '2026-07-29T13:43:15'
 ---
 theorem finrank_cotangentSpace_stalk_eq_of_isIso {X Y : Scheme.{u}} (f : X ⟶ Y) [IsIso f]
     (x : X) [IsLocalRing (X.presheaf.stalk x)] [IsLocalRing (Y.presheaf.stalk (f.base x))]
@@ -44,7 +44,40 @@ translations act transitively": the translations available here are indexed by s
 scheme has points whose residue field is a proper extension of `k`, and those are *not* reached
 by a `k`-rational translation. So the hypothesis is exactly the gap, and it is not a
 formality — over `k̄` it holds for closed points, in general it is a descent question. Naming
-it is the point: it moves the residue out of dimension theory. -/
+it is the point: it moves the residue out of dimension theory.
+
+**RETRACTED (run 0067 r8), and this is the FOURTH framing of this leg to be wrong. The orbit
+condition is not a gap that a descent argument can close: it is CONTRADICTORY for every curve
+of genus `≥ 1`, so the two theorems below are VACUOUS exactly where the A.3 leg needs them.**
+
+`Picard/HomogeneityOrbitCollapse.lean` proves
+`Pic0.topologicalKrullDim_eq_zero_of_homogeneous`: the `htrans` hypothesis alone forces
+`topologicalKrullDim Pic⁰_{C/k} = 0`, hence (with `hid`, `hreg`)
+`Pic0.genus_eq_zero_of_homogeneous` — `genus C = 0`.
+
+The error is visible in the paragraph above, in the phrase "over `k̄` it holds **for closed
+points**". The hypothesis quantifies over **all** points of `Pic⁰`, and translations are
+*isomorphisms of schemes*, hence homeomorphisms; the identity point is closed (it is the image
+of a section of a morphism to `Spec k`, so a closed immersion's range). A homeomorphism carries
+closed points to closed points, so `htrans` says every point of `Pic⁰` is closed — `T1` — and a
+nonempty sober `T1` space has topological Krull dimension `0`. Nothing about `k` or the descent
+question enters; the collapse is unconditional.
+
+The corroboration was already in this project: the sibling irreducibility proof
+(`identityComponent_irreducibleSpace_of_isAlgClosed`, `Picard/IdentityComponent.lean:866`)
+translates through **closed** points only and then needs *Jacobson density* to "sweep up the
+non-closed points". That extra step is exactly what a `k`-rational orbit cannot supply.
+
+So the `≤` half's uniform cotangent bound is still owed, and it needs a route that reaches
+**non-closed** points — transport along a translation by a point valued in an extension of `k`,
+or a generic-point/density argument in the shape the sibling proof uses. What the two theorems
+below establish remains true and is worth keeping as the *shape* of the reduction; what is
+withdrawn is the claim that their hypothesis set is satisfiable for `g ≥ 1`, and with it the
+"one point suffices" reading recorded at
+`Picard/EmbeddingDimensionBound.lean`, `Picard/Pic0Dimension.lean` and
+`Picard/IdentityComponent.lean`. The cotangent-invariance theorems above
+(`finrank_cotangentSpace_eq_of_ringEquiv`, `finrank_cotangentSpace_stalk_eq_of_isIso`) are
+about a single isomorphism and are untouched. -/
 
 namespace Scheme.Pic0
 

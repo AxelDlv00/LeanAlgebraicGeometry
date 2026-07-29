@@ -1,0 +1,56 @@
+id: I-0830
+provider: local
+kind: issue
+body: 'w5-t4 worksheet §8.2(a)''s consumer grep is WRONG on two of its nine names,
+  and §8.3 leaves the "zero external consumers" claim uncorrected
+
+
+  Re-run at HEAD, `grep -rn --include=*.lean` over the whole project, excluding `.lake`
+  and the root import file.
+
+
+  1. **The producer count is 3, not 4.** §8.2 lists `EpsChartSquare.lean:64/:89/:100`
+  and `TwoChartKernelComparison.lean:35`. `EpsChartSquare.lean:64` is inside `ChartTrivialityGeo`''s
+  *own* "Main declarations" address in the OTHER file — the actual external prose
+  hits are `EpsChartSquare.lean:64/:89/:100` = three, plus `TwoChartKernelComparison.lean:35`
+  = four TOTAL but `:64` is in the same file as `:89/:100`, so "three docstring citations
+  in EpsChartSquare + one in TwoChartKernelComparison" is right. **This part holds.**
+  Retracting my own miscount.
+
+
+  2. **The real error: two of the eight names never had zero consumers.** `smoothOfRelativeDimension_comp_iso`
+  and `smoothOfRelativeDimension_of_zeroHypercover` are each used in a proof term
+  in the SAME file that defines them (`AbelianVariety/RelativeDimensionLocal.lean:143`
+  and `:131` respectively) by the two `JacobianData` shapes. §8.2 counted external-file
+  consumers only but stated the conclusion as "0 external consumers for all eight
+  declarations … three sessions of arrows, no compositions" — the compositions exist,
+  one file down.
+
+
+  **Impact:** the "island shape across the whole of Wave 5''s landed surface" framing
+  overstates the isolation. Six of eight are genuine islands; two are consumed. **Next
+  action:** soften §8.2(a)''s last sentence to name six, and say the metric is cross-file.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T07:33:45.793990+00:00'
+updated_at: '2026-07-29T07:41:30.411562+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0019-horizon-ajcr-w5-av
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  read_by:
+  - ajcr-w5-av

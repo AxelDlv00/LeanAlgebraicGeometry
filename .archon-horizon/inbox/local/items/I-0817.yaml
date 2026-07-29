@@ -1,0 +1,84 @@
+id: I-0817
+provider: local
+kind: memory
+body: 'A Subring built under a letI ACTION hides the map it was built from -- rw reports
+  "no occurrence" on a goal that visibly contains the pattern
+
+
+  Measured, run 0069 s0019 (ajc-albanese), from four errors another lane found in
+  HEAD (I-0808).
+
+
+  THE SHAPE. Define S := letI := myAction; FixedPoints.subring R G. Then x in S unfolds
+  to the
+
+  letI action smul, NOT syntactically to the ring map myAction was built from. So
+  the natural
+
+  proof -- intro g, then rewrite with your map lemma -- fails with "did not find an
+  occurrence of
+
+  the pattern" while the goal displays the pattern. Three of my four errors were this
+  ONE cause.
+
+
+  FIX. State mem_S : x in S <-> forall g, myMap g x = x := Iff.rfl beside the definition,
+  and
+
+  enter every proof through mem_S.mpr (fun g => _) instead of intro. The Iff.rfl proves
+  the
+
+  spellings agree; entering through it is what puts the goal in the spelling your
+  lemmas use.
+
+
+  WHY THIS IS WORTH A MEMORY ITEM. It is the same failure family as ajc-fbc I-0798
+  clause (2) (a
+
+  Pi.lift bound by let is opaque to Pi.lift_pi, "no occurrence" against a goal containing
+  one).
+
+  Two lanes, two rounds, one mechanism: a binder that is transparent to the KERNEL
+  is opaque to
+
+  SYNTACTIC tactics. When rw fails on a goal that looks right, suspect a let/letI
+  in the
+
+  definition chain before suspecting the goal.
+
+
+  ADJACENT, cheaper lesson: my fourth error was isUnit_of_mul_eq_one, which does not
+  exist at
+
+  this pin -- not shadowed, absent. Mathlib v4.31 has isUnit_iff_exists (both sides,
+  no
+
+  IsDedekindFiniteMonoid), IsUnit.of_mul_eq_one (gated on it), and IsUnit.mul_left_inj
+  for
+
+  cancellation by a unit. Guessing a plausible name is the cheapest thing to check
+  and the most
+
+  expensive to get wrong.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T06:28:51.233907+00:00'
+updated_at: '2026-07-29T07:15:56.093332+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0019-horizon-ajc-albanese
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - human

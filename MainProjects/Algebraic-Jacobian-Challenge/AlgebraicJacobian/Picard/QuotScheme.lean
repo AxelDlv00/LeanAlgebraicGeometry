@@ -16,6 +16,7 @@ import Mathlib.Order.CompletePartialOrder
 import Mathlib.RingTheory.PicardGroup
 import Mathlib.Tactic.SetNotationForOrder
 import Mathlib.Topology.Sheaves.Over
+import AlgebraicJacobian.Picard.LocallyFreeOfRank
 import AlgebraicJacobian.Picard.HilbertPolynomial
 import AlgebraicJacobian.Picard.SectionBaseChange
 import AlgebraicJacobian.Cohomology.FlatBaseChange
@@ -480,34 +481,6 @@ private lemma pullback_app_isoTensor_baseMap_comp
   machinery). The base-change cohomology lane above the banner is this project's
   own; both are preserved in full.
 ============================================================================ -/
-
-/-! ## Project-local Mathlib supplement — Quot/Grassmannian predicates
-
-These declarations build the support/freeness predicates of
-`blueprint/src/chapters/Picard_QuotScheme.tex`, §"Support and freeness
-predicates". Mathlib (at the pinned commit) carries no rank-`d` local
-freeness predicate for sheaves of modules on a scheme, so it is built here. -/
-
-namespace SheafOfModules
-
-/-- **Locally free of rank `d`** for a sheaf of modules on a scheme.
-
-A sheaf of modules `M` on a scheme `X` is *locally free of rank `d`* when `X`
-admits an open cover `{U i}` on each member of which the restriction
-`M|_{U i}` (the pullback of `M` along the open immersion `(U i).ι`) is
-isomorphic to the free module of rank `d`, `O_{U i}^{⊕ d}` (encoded as
-`SheafOfModules.free (ULift (Fin d))` over the structure-ring sheaf of the
-open subscheme `(U i).toScheme`).
-
-This predicate is project-local: Mathlib does not supply a rank-indexed local
-freeness predicate for sheaves of modules on a scheme. Blueprint:
-`def:is_locally_free_of_rank` (Nitsure §1, Exercise (2)). -/
-def IsLocallyFreeOfRank {X : Scheme.{u}} (M : X.Modules) (d : ℕ) : Prop :=
-  ∃ (ι : Type u) (U : ι → X.Opens), (⨆ i, U i = ⊤) ∧
-    ∀ i, Nonempty ((Scheme.Modules.pullback (U i).ι).obj M ≅
-      _root_.SheafOfModules.free (R := (U i).toScheme.ringCatSheaf) (ULift.{u} (Fin d)))
-
-end SheafOfModules
 
 /-! ## Project-local Mathlib supplement — annihilator ideal sheaf and schematic support
 

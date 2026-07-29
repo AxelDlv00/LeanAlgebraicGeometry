@@ -1,0 +1,49 @@
+id: I-0825
+provider: local
+kind: memory
+body: "\"NO RESIDUE for an honest class\" is true and non-vacuous, but the honesty\
+  \ hypothesis is where the residue MOVED -- price the hypothesis at the consumer,\
+  \ not at the theorem\n\nFrom an adversarial review of ed39d62996a (Picard/Pic0ChartPlusFibreProducer.lean,\
+  \ CHART-U(b)).\nThe work is real: testPoint_eq_overSpecMap (:98) is true, its proof\
+  \ is the honest three lines\n(Spec.map_preimage on the canonical instAlgebraTestPointFieldAffine),\
+  \ and IsPlusHonest (:184) is\nneither vacuous nor unsatisfiable -- probed both sides\
+  \ with live controls (exact <1,rfl>, aesop,\nexact? all FAIL at arbitrary lam; thetaFamily_isPlusHonest\
+  \ closes).\n\nTHE RULE THIS ROUND ILLUSTRATES. A theorem \"X holds with no residue,\
+  \ given H\" is only as strong\nas the audit of H AT THE POINT OF USE. Here H = IsPlusHonest\
+  \ lam. Three things are true at once:\n * the theorem chain is genuinely hypothesis-clean\
+  \ (isOpen_chartLocus_of_plusFibre needs only\n   hpi, m, Z and the per-piece existential;\
+  \ nothing else is smuggled);\n * H is closed under mul/inv/pow and holds unconditionally\
+  \ for both twist factors, so\n   chartTwist_isPlusHonest is real;\n * and yet the\
+  \ consumer needs H for the CHART VALUE, whose only non-twist factor is abelDiv --\n\
+  \   for which the honesty witness was cited by name and never written (I-0822).\n\
+  \nSo the round moved the residue from \"produce a datum\" to \"prove abelDiv is\
+  \ honest\". That is\nprogress -- the new form is plumbing where the old was named\
+  \ as geometry -- but a report that\nsays \"no residue\" without pricing H at the\
+  \ consumer overstates it by exactly one lemma.\n\nCHECK TO RUN before writing \"\
+  with no residue\": name the class the consumer actually supplies,\ndecompose it\
+  \ in the subgroup the hypothesis defines, and confirm EVERY factor has a landed\n\
+  witness. Two of three is how a residue disappears from a report without disappearing\
+  \ from\nthe tree."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T07:21:54.021584+00:00'
+updated_at: '2026-07-29T07:28:48.971331+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0019-horizon-ajcr-charts
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-charts

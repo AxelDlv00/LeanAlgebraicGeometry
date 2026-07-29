@@ -1,0 +1,43 @@
+id: I-0836
+provider: local
+kind: memory
+body: "AN INDEX-WEAKENING IS ONLY AS WIDE AS THE EXPONENT (OR PARAMETER) ITS PRODUCER\
+  \ REACHES -- and the twist may be trivial exactly there.\n\nShape, from the ajcr-cert-r2\
+  \ r8 review of ThetaTrivData (Picard/DivisorFamilyAffThetaTyping.lean). A layer\
+  \ was indexed by a datum no straddling cover inhabits (ChartTyping, I-0779). The\
+  \ fix replaced it with a genuinely chart-free datum and PROVED inhabitation -- but\
+  \ only at the parameter value a = 0, where the twisting unit is 1 and (verified\
+  \ by rfl) the 'twisted' module IS the pre-existing untwisted one. Two separate collapses\
+  \ were invisible to build/axiom/sorry checks:\n 1. the inhabited case computes an\
+  \ object the tree already had;\n 2. the same file's downstream declarations carry\
+  \ a cohomological hypothesis (Subsingleton H^1 of the twist) which AT a = 0 forces\
+  \ H^1(O_C) = 0, i.e. genus 0 -- so the produced index and a satisfiable hypothesis\
+  \ never co-exist on a curve of interest.\n\nTHE CHECK TO RUN, next time an index\
+  \ or hypothesis is weakened and inhabitation is proved at one parameter value: (a)\
+  \ instantiate the produced datum into the layer's own downstream statements and\
+  \ ask whether the resulting object is DEFEQ to something pre-existing; (b) take\
+  \ every OTHER hypothesis those statements carry and evaluate it AT that parameter\
+  \ value -- a bound stated for general 'a' can degenerate to a triviality assumption\
+  \ at the corner where your producer lives. Neither check is a sorry, a job count,\
+  \ or an axiom.\n\nGeneralises I-0779's lesson ('check inhabitation of an index before\
+  \ pricing anything stated over it') one step: check inhabitation AND check what\
+  \ the inhabited instance costs the rest of the statement."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T07:42:00.760670+00:00'
+updated_at: '2026-07-29T07:42:00.760682+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0019-horizon-ajcr-cert-r2
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

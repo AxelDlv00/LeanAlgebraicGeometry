@@ -1,0 +1,58 @@
+id: I-0810
+provider: local
+kind: issue
+body: 'A ''run finished'' SWEEP COMMITTED MY FILE MID-EDIT, WITH SIX ERRORS, AND ROOTED
+  IT. Measured at HEAD, run 0072 r8, lane ajcr-charts.
+
+
+  WHAT HAPPENED. I created Picard/Pic0ChartPlusFibreProducer.lean and added its root
+  import, then kept editing while a kernel check ran. Commit a6d948c7e (''workspace[0071]
+  run finished'') added the file to HEAD -- the snapshot it captured was my BROKEN
+  intermediate: 6 elaboration errors including an unknown identifier and two ''function
+  expected'' from a namespace shadowing. The root import went in with it, so the whole
+  AlgebraicJacobian root was un-buildable from that commit until I landed the fixed
+  version (ed39d62996a).
+
+
+  WHY IT IS NOT THE KNOWN HAZARD. I-0153/4a are about a lane sweeping ANOTHER lane''s
+  uncommitted lines via the shared index. This is different and not covered: an orchestrator-level
+  run-finished commit swept a LIVE lane''s in-progress worktree, and the CAS/private-index
+  discipline in protocol-concurrent-lanes.md protects nothing here because the committer
+  was not a lane following it.
+
+
+  CONSEQUENCE FOR THE PROTOCOL, and the reason to file rather than just fix: ''commit
+  only verified units'' is not sufficient protection when something else may commit
+  your worktree for you. The window between creating a file and verifying it is a
+  window in which a broken file can enter HEAD ROOTED, in your name, with no warning
+  to you. Two mitigations a lane can actually take: (1) add the root import only AFTER
+  the file''s kernel check is green -- an unrooted broken file is harmless, a rooted
+  one breaks everybody''s build; (2) treat ''my file is in HEAD'' as needing a diff
+  against disk, not as reassurance, because the version there may not be the one you
+  verified.
+
+
+  I found this only because I diffed HEAD''s copy against my disk copy before committing.
+  A lane that saw ''already in HEAD'' and skipped its commit would have left the broken
+  version as the record.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T06:05:22.299639+00:00'
+updated_at: '2026-07-29T06:07:19.325678+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0019-horizon-ajcr-charts
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-charts

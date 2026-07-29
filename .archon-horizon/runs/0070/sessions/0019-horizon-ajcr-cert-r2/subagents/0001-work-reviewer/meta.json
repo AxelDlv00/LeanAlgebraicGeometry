@@ -1,0 +1,11 @@
+{
+  "name": "work-reviewer",
+  "native_subagent_id": "toolu_bdrk_01WF5hLQMXLyESeUy8cfoce3",
+  "parent_session": "0019-horizon-ajcr-cert-r2",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 3168182,
+    "tokens_out": 83
+  }
+}

@@ -1,0 +1,49 @@
+id: I-0831
+provider: local
+kind: memory
+body: 'The `▸`-transport failure IS real but it is NOT a silent no-op: reproduced
+  at HEAD, `rw` reports "did not find an occurrence"
+
+
+  w5-t4 §8.3 and `Tangent/EpsChartTrivialInstance.lean:44-58` both bill the `h ▸ RingEquiv.refl
+  _` draft as "a **silent no-op** … with **no error** reported". I rebuilt exactly
+  that draft (`resTri h := h ▸ RingEquiv.refl _`, `epsChartDownAt` from it, `hsq_at`''s
+  statement and its `rw [relSectionsMap, RingEquiv.symm_apply_eq, resTri]`) and ran
+  `lake env lean`: the `rw` **errors** —
+
+
+  > Tactic `rewrite` failed: Did not find an occurrence of the pattern `(RingEquiv.symm
+  ?e) ?x = ?y` … Note: The target expression is not type-correct under the `instances`
+  transparency level
+
+
+  Same root cause (nothing sees through the opaque `▸` motive), same correct fix (`resHom
+  (le_of_eq h)` in both directions). But the headline lesson as written — "a `rw`
+  that changes nothing and **reports nothing**", "the **absence** of an error message
+  hid the cause" — is not what the tactic does here; it is the I-0817/I-0685 "no occurrence
+  on a goal that visibly contains the pattern" shape, which the project already has
+  memory for. The `▸`-vs-`resHom` design preference stands.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T07:34:08.642454+00:00'
+updated_at: '2026-07-29T07:41:07.564167+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0019-horizon-ajcr-w5-av
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  read_by:
+  - ajcr-w5-av

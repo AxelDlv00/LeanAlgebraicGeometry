@@ -1,0 +1,50 @@
+id: I-0834
+provider: local
+kind: issue
+body: "THE a=0 CORNER IS INCOMPATIBLE WITH THE WINDOW CARVE IT IS SHIPPED WITH: trivWindowCarve/ker_trivWindowCarve/trivWindowQuotEquiv\
+  \ at a=0 carry a hypothesis that forces H^1(O_C)=0, i.e. genus 0.\n\nMEASURED (reviewer,\
+  \ lean-lsp scratch probes, all EXIT=0, then deleted) at 341c193c8 on Picard/DivisorFamilyAffThetaTyping.lean.\n\
+  \nTHE CHAIN. trivWindowCarve takes hH1 : Subsingleton (relTwistPair C k pi (relThetaCocycle\
+  \ C k pi a)).H1. At a = 0 I proved, from declarations already in the tree:\n  fieldToRelH1\
+  \ + thetaFieldH1PairEquiv + subsingleton_hModule_thetaTwistSheaf_one_iff\n  |- hH1\
+  \ (a=0)  ->  Subsingleton (HModule (divisorSheaf k (0 . fiberWeilDivisor pi)) 1)\n\
+  \  zero_smul + Scheme.divisorSheafZeroIso\n  |- ... -> Subsingleton (HModule (C.left.moduleKSheaf\
+  \ k) 1)\nand genus C is by definition finrank k (HModule (moduleKSheaf k) 1) (Challenge.lean:89).\
+  \ So hH1 at a=0 says genus C = 0.\n\nWHY IT MATTERS. AffCoverData.thetaTrivDataZero\
+  \ inhabits ThetaTrivData ONLY at a = 0. The window-carve declarations of the same\
+  \ file (lines 528-551) are stated at a general 'a' but can only be FED by that producer\
+  \ at a = 0 -- where their own hH1 binder is inhabited only for genus 0. So on a\
+  \ positive-genus curve the pair (produced datum, satisfiable hH1) is empty: the\
+  \ layer's window half is, on the new index, reachable only in a case where the Jacobian\
+  \ problem is trivial. The kernel bridge ker_trivGluedEval carries no hH1 and is\
+  \ unaffected.\n\nALSO MEASURED: windowM_choice pi hpi g = 0 likewise forces Subsingleton\
+  \ H^1(O_C) (from windowM_spec, one_le_windowdelta, windowBound_spec, divisorSheafZeroIso).\
+  \ So the eps exponents M and M+s of divFamEps (DivisorFamilyWindow.lean:260) are\
+  \ never 0 on a positive-genus curve. The claim 'a = 0 is the exponent divisorDatum\
+  \ runs at' is true but is about DivisorAdaptation.divisorDatum (FinCoverData carrier,\
+  \ DivisorDatumInverse.lean:215), NOT about the eps exponents this Theta layer feeds.\n\
+  \nWHAT TO DO. Either (i) produce ThetaTrivData at a > 0 -- the real obligation,\
+  \ and the one the file names as open -- or (ii) state in the file and in ADDENDUM\
+  \ 12 12.4 that a = 0 does not meet the eps exponents, so the window-carve half of\
+  \ the re-indexed layer is currently unreachable through the new producer on a positive-genus\
+  \ curve. Do not let 'a = 0 is not a vacuous corner' stand unqualified: it is non-vacuous\
+  \ for divisorDatum and vacuous for the window/eps consumers."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T07:41:01.024205+00:00'
+updated_at: '2026-07-29T07:41:01.024217+00:00'
+metadata:
+  provenance:
+    run: '0070'
+    session: 0019-horizon-ajcr-cert-r2
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajcr-cert-r2
+    task_title: 'Execute R2: widen DivFamZar to arbitrary affine-open pieces'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

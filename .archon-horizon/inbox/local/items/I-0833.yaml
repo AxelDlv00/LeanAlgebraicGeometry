@@ -1,0 +1,46 @@
+id: I-0833
+provider: local
+kind: issue
+body: 'SymPowInvariantsAwayEquiv: the docstring of exists_invariant_num_den ASSERTS
+  A SECOND CLAUSE THE FILE NEVER PROVES, and it is exactly the IsLocalization clause
+  that is missing
+
+
+  Line 231-234 (docstring of exists_invariant_num_den): ''The comparison ... Precisely:
+  every element of (A_b)^G is a/b^n for an *invariant* a, AND TWO INVARIANTS WITH
+  THE SAME IMAGE DIFFER BY b-TORSION.'' The second clause appears in NO statement
+  in the file. exists_invariant_num_den''s body is ''exists_invariant_numerator b
+  hb x (mem_fixedAway.mp hx)'' -- with mem_fixedAway := Iff.rfl, a definitional re-export
+  of the sibling with zero added content, carrying the file''s most inflated docstring.
+
+
+  Compounding it, S3 (line 205) claims ''Anyone wanting the IsLocalization spelling
+  has the three clauses here (isUnit_algebraMap_fixedAway, the forward and backward
+  directions)''. IsLocalization''s three fields are map_units / surj / exists_of_eq.
+  map_units = isUnit_...; surj = forward. exists_of_eq is the b-torsion clause --
+  NOT PROVED. And the backward direction is not an IsLocalization field at all: inside
+  (A_b)^G every element is already fixed, so the ring-level spelling never needs it.
+
+
+  Net: two of three clauses, plus a docstring asserting the third. ''needs only to
+  thread the algebra structure'' is false as written.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T07:34:56.170155+00:00'
+updated_at: '2026-07-29T07:34:56.170169+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0019-horizon-ajc-albanese
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge

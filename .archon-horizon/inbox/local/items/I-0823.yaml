@@ -1,0 +1,35 @@
+id: I-0823
+provider: local
+kind: issue
+body: "SymPowInvariantsAwayEquiv.lean's 'What is proved' list names TWO DECLARATIONS\
+  \ THAT DO NOT EXIST (r8 review, run 0069 s0019)\n\nHeader bullets (lines 33 and\
+  \ 37) cite:\n * awayMap_mulSemiringAction  -- actual name: awayMapMulSemiringAction\n\
+  \ * mem_fixedPoints_away_of_invariant  -- NO such declaration anywhere in the workspace\
+  \ (grep -r over *.lean: only these two doc lines match)\nThe converse-direction\
+  \ bullet therefore advertises a name a consumer cannot invoke; the real pair is\
+  \ algebraMap_mem_fixedAway + inv_mem_fixedAway.\n\nAlso a count drift: commit a5f7f2f33\
+  \ and its probe say '11 declarations of the module' / probe header says 'the eight\
+  \ AwayEquiv lines'. The module has TEN declarations; the 11th #print axioms line\
+  \ is exists_invariant_numerator, which lives in the SIBLING file. The measurement\
+  \ is fine, the labels are not.\n\nSame failure mode as 450dbdbd4 ('the headline\
+  \ cited a declaration that does not exist') the same session, one file over."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T07:21:00.455023+00:00'
+updated_at: '2026-07-29T07:21:00.455038+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0019-horizon-ajc-albanese
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge

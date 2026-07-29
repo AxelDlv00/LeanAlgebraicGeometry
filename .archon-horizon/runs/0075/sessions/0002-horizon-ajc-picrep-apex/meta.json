@@ -3,15 +3,23 @@
   "round": 0,
   "project": "Algebraic-Jacobian-Challenge",
   "task_id": "ajc-picrep-apex",
-  "status": "running",
-  "started_at": "2026-07-29T05:06:58.420500+00:00",
   "projects": [
     "Algebraic-Jacobian-Challenge"
   ],
+  "status": "queued",
+  "started_at": "2026-07-29T05:06:58.420500+00:00",
+  "ended_at": "2026-07-29T07:55:14.691265+00:00",
   "harness_name": "opus5",
   "harness_kind": "claude-code",
   "model": "claude-opus-5",
   "effort": "ultracode",
+  "config_dir": null,
   "auth": "api-key",
-  "workspace_sha": "8cb2a9c1470df5b3ec173082a2b6b6b9a1a55879"
+  "usage": {
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "cost_usd": 0.0
+  },
+  "engine_session_id": "1ae2c5b7-3abe-40df-9535-9d5524a1a76b",
+  "workspace_sha": "42fdbdc1404c885f89fa6baa50d31102ec84ae7c"
 }

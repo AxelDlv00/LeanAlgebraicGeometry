@@ -10,9 +10,10 @@ docstring: '**The orbit hypothesis forces T1.** If some point `z₀` is closed a
 file: scratch-orbit-probe.lean
 generated: lean
 lean_status: lean_ok
+stale: true
 title: probe_t1_of_orbit
 type: lean
-updated: '2026-07-29T12:10:02'
+updated: '2026-07-29T13:43:32'
 ---
 theorem probe_t1_of_orbit (z₀ : X) (hz₀ : IsClosed ({z₀} : Set X))
     (horb : ∀ z : X, ∃ e : X ≃ₜ X, e z₀ = z) : T1Space X := by

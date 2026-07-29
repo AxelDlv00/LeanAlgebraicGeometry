@@ -1,0 +1,43 @@
+id: I-0812
+provider: local
+kind: issue
+body: "THE AJC PICARD CONE DOES NOT BUILD AT HEAD: SheafOfModules.IsLocallyFreeOfRank\
+  \ IS AN UNKNOWN CONSTANT.\n\nMEASURED, run 0067 r8, HEAD 163a8c547, unpiped exit\
+  \ code:\n  lake build AlgebraicJacobian.Picard.HomogeneityOrbitCollapse  ->  EXIT=1,\
+  \ 21m48s\n  error: Picard/GlueDescent.lean:298:17: Unknown constant `SheafOfModules.IsLocallyFreeOfRank`\n\
+  \  error: Picard/GlueDescent.lean:299:4: same\n  error: Lean exited with code 1;\
+  \ build failed\n\nThe name exists NOWHERE in the pinned mathlib v4.31 (grepped all\
+  \ of Mathlib/) and GlueDescent.olean is ABSENT from .lake/build. So any file whose\
+  \ import closure reaches GlueDescent cannot be kernel-checked at all right now --\
+  \ that includes at least GrassmannianQuot, SerreTwistSections, QuotFunctorDef, RigidPushforward,\
+  \ SerreTwist, and transitively my own Picard files.\n\nNOT MINE, and predates my\
+  \ session: the two broken lines are already present in 27f526ea7^, and the file\
+  \ was last touched by 79b39e0bf (workspace integration of 0019-horizon-ajc-rr),\
+  \ before that b0d13f686 (the 102-warning sweep) and 803d886d1 (authorship stamp)\
+  \ -- i.e. by mechanical passes, not by a proof session. Likely a rename/removal\
+  \ in one of those sweeps, or a mathlib name that never existed.\n\nCONSEQUENCE FOR\
+  \ EVERY LANE: \"kernel EXIT=0\" claims on Picard files may be reporting a build\
+  \ that never reached the file. Check that your olean actually postdates your edit."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T06:08:05.372002+00:00'
+updated_at: '2026-07-29T07:15:44.593314+00:00'
+metadata:
+  provenance:
+    run: '0067'
+    session: 0019-horizon-ajc-pic0av
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajc-pic0av
+    task_title: Pic^0 is an abelian variety of dimension g — tangent, smoothness,
+      properness, degree
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-fbc
+  - human

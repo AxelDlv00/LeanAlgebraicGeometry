@@ -3,71 +3,47 @@ title: 'S3 (WORKSHEET-FIRST, risk R3): \(\mathrm{SmoothOfRelativeDimension}\ (g)
   assembly — the frozen numeral'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'S3 (WORKSHEET-FIRST, risk R3): $\mathrm{SmoothOfRelativeDimension}\ (g)$
-  assembly — the frozen numeral.
-
-
-  **The CRITERION is landed and R3''s last named risk is dissolved (run 0073 r5)**
-  —
-
-  `AbelianVariety/RelativeDimensionLocal.lean`, `lake env lean` EXIT=0. `SmoothOfRelativeDimension
-  n`
-
-  is `IsLocalAtSource` at the Zariski precoverage (verified by `inferInstance`, with
-  `Smooth` as a
-
-  control), so `IsLocalAtSource.of_zeroHypercover` applies: the obligation is **"cover
-  `d.J.left` by
-
-  opens on which the count holds"**, not "exhibit a chart at every scheme point".
-  The `k`-rational
-
-  translates of the identity chart therefore need only **cover** — precisely the weaker
-  demand
-
-  worksheet §3''s caveat feared they could not meet.
-
-
-  Landed: `smoothOfRelativeDimension_comp_iso` (the source-iso transport, named because
-
-  `infer_instance` does *not* find it — the instance is on the property, not the composite),
-
-  `smoothOfRelativeDimension_of_zeroHypercover` plus its `iff` form, and the two Jacobian
-  shapes
-
-  `JacobianData.smoothOfRelativeDimension_of_translation_cover` /
-
-  `..._pointTranslationIso` (the X2 bridge at the level the criterion consumes).
-
-
-  **TWO INPUTS REMAIN, and the file names both rather than hiding them.** (1) The
-  **numeral**:
-
-  $n = g$ at the identity is T5, itself conditional on the T3/T4 $\varepsilon$-kernel
-  count, so S3''s
-
-  numeral is still gated on T4. (2) The **cover**: that translated identity charts
-  cover `d.J.left`,
-
-  carried as the `hcov` hypothesis. If (2) fails, worksheet §3''s $\bar{k}$ route
-  plus the t4-§5
-
-  codescent brick is the documented contingency — **this work does not retire that
-  brick**, it only
-
-  removes the third input (pointwise reachability).
-
-
-  Method note worth keeping (inbox `I-0695`): the caveat was a *correct* reading of
-  the class''s
-
-  unfolded statement that priced a consequence the statement does not have. Unfolding
-  a class says
-
-  what must be **produced**; it says nothing about the machinery available to produce
-  it.
-
-  '
+summary: "S3 (WORKSHEET-FIRST, risk R3): SmoothOfRelativeDimension (genus C) d.J.hom\
+  \ -- the frozen numeral.\n\nTHE CRITERION IS LANDED (run 0073 r5), AbelianVariety/RelativeDimensionLocal.lean,\
+  \ lake env lean EXIT=0. SmoothOfRelativeDimension n is IsLocalAtSource at the Zariski\
+  \ precoverage (verified by inferInstance, with Smooth as a control), so IsLocalAtSource.of_zeroHypercover\
+  \ applies: the obligation is 'cover d.J.left by opens on which the count holds',\
+  \ not 'exhibit a chart at every scheme point'. Landed: smoothOfRelativeDimension_comp_iso\
+  \ (the source-iso transport, named because infer_instance does NOT find it -- the\
+  \ instance is on the property, not the composite), smoothOfRelativeDimension_of_zeroHypercover\
+  \ plus its iff form, and the two Jacobian shapes JacobianData.smoothOfRelativeDimension_of_translation_cover\
+  \ / ..._pointTranslationIso.\n\nTWO INPUTS REMAIN AND -- CORRECTED r8 -- BOTH COST\
+  \ SOMETHING.\n (1) THE NUMERAL: n = g at the identity is T5, itself conditional\
+  \ on the T3/T4 eps-kernel count, which needs the SEMILINEAR comparison and not just\
+  \ the kernel bijection. Still gated.\n (2) THE COVER (hcov): that translated identity\
+  \ charts cover d.J.left.\n\nWHY (2) IS A GENUINE OPEN INPUT AND NOT BOOKKEEPING\
+  \ -- this row and worksheet 3.1 previously said the covering demand 'is met by the\
+  \ same X2 transport 3 already cites'. THAT CLAUSE IS STRUCK (r8, worksheet 3.2,\
+  \ struck at its own site in 3.1 as well). Two halves:\n\n * What X2 gives: per rational\
+  \ point, an iso, hence via smoothOfRelativeDimension_pointTranslationIso the count\
+  \ on ONE translated chart. It does NOT give that those charts COVER.\n * What the\
+  \ sibling proved: ajc-pic0av (cross-project thread I-0495) REFUTED ITS OWN reduction\
+  \ of dim Pic0 = g, whose 'orbit condition' -- every point of Pic0 is a translate\
+  \ of the identity by k-RATIONAL sections -- is CONTRADICTORY for g >= 1. A translation\
+  \ is an iso hence a homeomorphism; the identity point is closed (a section of a\
+  \ map to Spec k is a closed immersion); homeomorphisms preserve closed points; so\
+  \ every point is closed, i.e. T1, and a nonempty sober T1 space has topologicalKrullDim\
+  \ 0. So the natural route to hcov (rational translates exhausting the points) is\
+  \ not merely unproved but FALSE in the range that matters.\n\nTHE GOOD HALF OF THE\
+  \ SAME MESSAGE, and it confirms this row's shape from the other side: ajc-pic0av\
+  \ observes that smoothOfRelativeDimension_of_translation_cover quantifies over a\
+  \ ZeroHypercover, i.e. over OPENS, and is therefore IMMUNE -- 'restate it over POINTS\
+  \ and the theorem is lost'. So the opens-form is not merely sufficient, it is NECESSARY,\
+  \ established by a lane that reached the contradiction the point-form implies. Keep\
+  \ the ZeroHypercover binder.\n\nSIZING UNCHANGED: S3 stays [M]. If (2) fails outright,\
+  \ worksheet 3's kbar route plus the t4-5 codescent brick is the documented contingency;\
+  \ r5's locality work does NOT retire that brick, it removed only the third input\
+  \ (pointwise reachability).\n\nMETHOD NOTES worth keeping: (i) inbox I-0695 -- r5's\
+  \ caveat was a CORRECT reading of the class's unfolded statement that priced a consequence\
+  \ the statement does not have; unfolding a class says what must be PRODUCED, not\
+  \ what machinery exists to produce it. (ii) r8's addition -- and a correct reading\
+  \ can also OVERSTATE who supplies an input; 3.1 was right that the demand is weaker\
+  \ and wrong that X2 meets it."
 status: pending
 kind: proof
 priority: normal
@@ -81,5 +57,5 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:48.660776+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-29T03:03:30.158358+00:00'
+  updated_at: '2026-07-29T06:11:52.443841+00:00'
   milestone: AJCR.w5-av

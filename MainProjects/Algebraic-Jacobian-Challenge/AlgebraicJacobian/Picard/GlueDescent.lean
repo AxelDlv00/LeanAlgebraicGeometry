@@ -4,8 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import Mathlib
-import AlgebraicJacobian.Picard.SectionBaseChange
-import AlgebraicJacobian.Cohomology.FlatBaseChange
+import AlgebraicJacobian.Picard.LocallyFreeOfRank
 
 /-!
 # Glue-datum descent for sheaves of modules over a scheme

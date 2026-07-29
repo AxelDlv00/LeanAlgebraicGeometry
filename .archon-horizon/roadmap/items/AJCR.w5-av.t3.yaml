@@ -3,95 +3,57 @@ title: 'T3: \(\ker(\mathrm{relPic}(k[\varepsilon]) \to \mathrm{relPic}(k)) \sime
   H^1(C,\mathcal{O})\) via nilpotent unit-lifting'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: "T3 IS FIVE ARROWS AND ALL FIVE ARE LANDED (run 0073 r7); only the COMPOSITE\
-  \ is unwritten. The eps-kernel comparison chain of worksheet section 7.1 is complete\
-  \ except for its composition.\n\nWHAT THE PREVIOUS VERSION OF THIS ROW GOT WRONG,\
-  \ recorded because it cost three sessions. It said \"WHAT T3 WAITS ON NOW is one\
-  \ geometric fact, not a comparison: not-IsAffine C.left\" and \"the pieces no longer\
-  \ have gaps between them\". Both false. (a) not-IsAffine had been replaced by g\
-  \ != 0 in the same session that wrote the row (see the .t4 row, worksheet 6.29).\
-  \ (b) Worksheet 6.24 had recorded, at r4, that \"exactly one link\" was missing\
-  \ between the truncated-exponential engine and the two-chart CechPic comparison\
-  \ -- and the cheap test nobody ran is a CONSUMER GREP: each of the four objects\
-  \ 6.24 named as the two sides of that link (pullbackOverlapQuot, dualNumberCechH1Equiv,\
-  \ unitsReduction, relSectionsMapUnits) was consumed by NOTHING outside its own defining\
-  \ file, three of them by nothing at all. So T3 was not assembly-over-a-hypothesis;\
-  \ it was four carriers with the arrows between them absent. I-0711 island shape.\n\
-  \nLANDED THIS ROUND -- three modules, all kernel-green on the lock-free scratch\
-  \ root, all rooted in AlgebraicJacobian.lean, all headlines axiom-clean against\
-  \ two controls that both fire sorryAx:\n\n * (T3-4) Tangent/CechPicIsoTransport.lean\
-  \ -- CechPic.map along an ISOMORPHISM is a MulEquiv (cechPicMapEquivOfIso), with\
-  \ both faces named since a kernel inclusion consumes only one. Pic.lean carried\
-  \ map_id and map_comp and nothing composing them into invertibility; a workspace\
-  \ search found only classDeg_cechPicMap_of_isIso, which is about degrees. Instantiated\
-  \ at the (3c) seam: cechPicMap_transportLeft_injective. transportLeft had been landed\
-  \ as an IsIso whose own docstring said a consumer \"may transport a kernel in either\
-  \ direction\" -- the sentence cashing that in did not exist.\n\n * (T3-2) Tangent/EpsArrowIdentification.lean\
-  \ -- THE 6.24 LINK, and it is TWO rfls. cechCoboundaryUnits_preimage_eq: dualNumberCechH1Equiv's\
-  \ target subgroup (spelled with preimage_mono) and pullbackOverlapQuot's source\
-  \ subgroup (spelled with inf_le_left at the pulled-back family) are the SAME TERM,\
-  \ because preimage distributes over inf definitionally. pullbackOverlapQuot_dualNumberCechH1Equiv_mk:\
-  \ the square itself, on generators.\n\n * (T3-3) Tangent/TwoChartKernelComparison.lean\
-  \ -- twoChartKernelEquiv: twoChartClass is a BIJECTION ker(pullbackOverlapQuot f)\
-  \ = ker(CechPic.map f), for an arbitrary morphism and two-chart cover. A bijection\
-  \ and not two surjections is the point (I-0571): a dimension count cannot use mutual\
-  \ surjectability, and Wave 5's numeral is a dimension count. The one hypothesis\
-  \ is clause (iii-c2) verbatim -- classes killed by f are chart-trivial -- which\
-  \ is the chain's ONLY geometric input, has a producer at the Wave-5 instance, and\
-  \ was checked satisfiable with a junk witness.\n\nTWO PRICING CORRECTIONS FROM THIS\
-  \ ROUND, both mine, both recorded in the worksheet at the site. (i) Worksheet 7.3\
-  \ priced (T3-2) at [M] and called it \"the real residue\", on the strength of \"\
-  both ingredients are landed\" -- while the same subsection said the number was a\
-  \ guess until someone wrote the statement. It was; 7.4 retracts it and strikes the\
-  \ sizing table. (ii) My first draft of (T3-3) had a sorry AND was vacuous from one\
-  \ cause: toFun could not prove chart-triviality of a twoChartClass value, so I widened\
-  \ the target subtype to include \"and L is a twoChartClass value from the kernel\"\
-  , which typechecks and states that a set is in bijection with its own image. Moving\
-  \ the obligation to a binder the consumer discharges made the residue unnecessary\
-  \ in both directions. Worksheet 7.5.\n\nA FIFTH SEAM, FOUND BY PRINTING THE TYPES\
-  \ (worksheet 7.6-7.7). After the three arrows above I named \"the composition\"\
-  \ as the residue -- then applied my own rule and printed the types of the two arrows\
-  \ the composite must join. They are sections of DIFFERENT SCHEMES: the engine's\
-  \ reduction lands on Gamma(C.left, U0 inf U1), the geometric arrow on Gamma(relCurve\
-  \ C k, ...). (T3-2) matched the SOURCES; the TARGETS needed a k-to-k carrier translation\
-  \ nobody had named. Landed as (T3-5), Tangent/CollapseCechH1.lean: collapseCechH1Equiv,\
-  \ seven declarations, kernel-green, rooted, axiom-clean.\n\n * Built over sectionsCollapse\
-  \ (Cohomology/RelThetaTransportCore), NOT over this lane's own epsChartDown. My\
-  \ first draft of 7.6 priced the seam by epsChartDown -- one open, IsAffineOpen,\
-  \ ring form only -- and called the downstairs side one-third equipped. sectionsCollapse\
-  \ is arbitrary opens, no affineness, and ships both auxiliary lemmas. Searching\
-  \ the object's SHAPE beats searching the name this lane coined.\n * The one wall\
-  \ was NOT an instance. QuotientGroup.congr with two positional underscores fails\
-  \ on a .Normal instance; I tried three fixes (haveI, a local normal_of_isMulCommutative,\
-  \ dropping Scheme.overModule) and none addressed the problem. inferInstance produces\
-  \ that instance fine in a standalone probe. The failure was elaboration order --\
-  \ instance search cannot key on a metavariable. Naming both subgroups closes it.\
-  \ Check whether the instance's ARGUMENTS are metavariables before reading the message\
-  \ as an absence.\n\nT3'S RESIDUE: the COMPOSITE (T3-6), and nothing else. (T3-1)\
-  \ h1AddEquivTruncExpCechKernel, (T3-2), (T3-3), (T3-4), (T3-5) are five landed statements;\
-  \ H1(C,O) ~+ ker(CechPic(C_eps) -> CechPic(C)) is their composite and is written\
-  \ nowhere.\n\n(T3-6) IS MEASURED, NOT UNMEASURED -- worksheet 7.8, written after\
-  \ the five arrows landed, by writing the square and reading the leftover goal rather\
-  \ than guessing. PRICE [S], NO MISSING INPUT IDENTIFIED. The composite reduces to\
-  \ ONE section-level equation:\n  (relCurve C k).resHom ((relCurveMap C k[eps] k).appLE\
-  \ (dualNumberSections C u)) = collapseUnits C (U0 inf U1) (unitsFst u)\ni.e. restrict\
-  \ the eps |-> 0 image of the thickened section and get the collapse of fst u. What\
-  \ reduced for free: the opens transport (two rw then rfl), unitsReduction on a generator\
-  \ IS unitsFst (one show), and the quotient/Units peeling. Its one plausible-looking\
-  \ input -- sectionsCollapse vs Over.sectionsBaseChange -- is NOT a brick: two rewrites\
-  \ and a rfl, probed green (7.8 retracts its own first draft, which called it absent\
-  \ after searching names instead of trying rfl). What remains is the Units.ext-level\
-  \ assembly: coercion bookkeeping across Units.map / appLE / ConcreteCategory.hom,\
-  \ the I-0685 family. A SUCCESSOR SHOULD EXPECT SPELLING, NOT MATHEMATICS -- and\
-  \ 7.8 flags that as its prediction rather than its measurement.\n\nSTILL GENUINELY\
-  \ OPEN AND SEPARATE: WHETHER THE COMPOSITE COMES OUT ADDITIVE. Every arrow is a\
-  \ MulEquiv or a bare Equiv; Additive-wrapping happens only on the (T3-1) leg, and\
-  \ T5 needs the semilinear form on top of that. That question is not answered by\
-  \ 7.8's [S].\n\nSTILL TRUE AND STILL THE TRAP FOR T5: what T3 must hand T5 is the\
-  \ SEMILINEAR comparison (AddEquiv plus intertwining across kappa(e) ~+* k), NOT\
-  \ a bare kernel bijection -- finrank does not transport along a bijection of sets.\
-  \ The .t5 row records it, and Pic0TangentSpace.finrank_eq_of_addEquiv_of_bijective_smul\
-  \ is the landed bridge that consumes it.\n"
+summary: "T3: SEVEN of the eight arrows are landed; the COMPOSITE (T3-6) is still\
+  \ unwritten, so this row stays PENDING. Run 0073 r8 added the section equation and\
+  \ closed the last named non-composite residue.\n\nLANDED r8 -- both kernel EXIT=0,\
+  \ lake build EXIT=0 (8686 jobs), nine headlines axiom-clean vs two controls that\
+  \ both fire sorryAx (33f71cf06, 4b3f46153):\n\n * Tangent/EpsReductionSquare.lean\
+  \ -- Over.appLE_dualNumberSections and its units form: worksheet 7.8's section equation,\
+  \ i.e. 'restrict the eps|->0 image of a thickened section and get the collapse of\
+  \ fst x'. Plus overlapQuotCongr and Over.epsFamilyEq, the opens/family transport.\n\
+  \ * Tangent/EpsChartTrivialInstance.lean -- chartTrivial_of_map_eq_one: hchart (clause\
+  \ iii-c2) DISCHARGED at the Wave-5 charts, which closes worksheet 7.9 item (4).\
+  \ Four supporting statements: resRingEquivOfEq (+2 simp projections), epsChartDownAt,\
+  \ appLE_relCurveMap_eq, hsq_at.\n\nWHAT r7's MEASUREMENT GOT WRONG, and it is the\
+  \ method point of this round. 7.8 priced (T3-6) by writing the square and reading\
+  \ the LEFTOVER GOAL, then reported '[S], NO MISSING INPUT IDENTIFIED'. The CONTENT\
+  \ half held exactly -- (b-coeff) plus the sectionsCollapse/sectionsBaseChange bridge,\
+  \ closed by appLE_map, spelling not mathematics. The ENUMERATION half did not:\n\
+  \n  relCurveMap C k[eps] k ^-1 (fst_{k[eps]} ^-1 W) = fst_k ^-1 W   is NOT rfl\n\
+  \n7.8's square spelled its target open in relCurve C k's own fst ^-1 (U0 inf U1)\
+  \ form, so this transport was absorbed into the ELABORATED TYPE and never appeared\
+  \ as a leftover goal. READING THE LEFTOVER GOALS MEASURES THE DIFFICULTY; IT DOES\
+  \ NOT ENUMERATE THE INGREDIENTS. Probe the equalities your statement assumes, not\
+  \ just the goals it leaves. Worksheet 8.0.\n\nTHE SAME CAST was what blocked hchart's\
+  \ instantiation, and a consumer grep dates that claim: before r8 the producer Opens.cechPicMap_ι_eq_one_of_map_eq_one\
+  \ had FOUR occurrences outside its defining file and ALL FOUR WERE PROSE (EpsChartSquare:64/:89/:100,\
+  \ TwoChartKernelComparison:35), zero in a proof term. Three docstrings said it 'has\
+  \ a producer at the Wave-5 instance'; 7.9 verified every step by hand and said so\
+  \ honestly; nothing composed them. Worksheet 8.2/8.3.\n\nA FAILURE MODE WITH NO\
+  \ ERROR MESSAGE, recorded because it cost the round's only wasted stretch. Defining\
+  \ the open-equality transport the obvious way, h |> RingEquiv.refl, typechecks everywhere\
+  \ downstream -- and then hsq_at's rw chain is a SILENT NO-OP: lean_goal returned\
+  \ character-for-character identical goals before and after, and Lean reported NO\
+  \ ERROR. Nothing rewrites under a |>-transport with an opaque motive. Rebuilt from\
+  \ X.resHom (le_of_eq h) in both directions, so resHom_resHom and resHom_self apply,\
+  \ the same proof closes. A rw that changes nothing and reports nothing is a wrong\
+  \ DEFINITION, not a failing tactic -- the mirror image of 7.7, where an error message\
+  \ pointed at the wrong cause. Cohomology/RelThetaTransportCore.presheafCongr had\
+  \ already arrived at the resHom design; searching for the SHAPE of a transport,\
+  \ not a lemma name, would have skipped it.\n\nRESIDUE, unchanged in kind and now\
+  \ smaller: (T3-6), the composite H1(C,O) ~+ ker(CechPic(C_eps) -> CechPic(C)). Both\
+  \ halves exist as statements. Two cautions for whoever writes it:\n (a) the elaborated\
+  \ pullbackOverlapQuot/collapseCechH1Equiv square did not finish stating under LSP\
+  \ (two timeouts) nor under lake env lean (10 min) -- but measured at machine load\
+  \ ~60 with swap exhausted, so that is NOT a clean cost measurement and must not\
+  \ be quoted as one. Assemble in small named steps with the transport factored out;\
+  \ do not attempt one rw chain through both carriers.\n (b) ADDITIVITY is still open\
+  \ and still SEPARATE. Every arrow is a MulEquiv; Additive-wrapping happens only\
+  \ on the (T3-1) leg. MulEquiv.toAdditive exists and moves the chain, but the INTERTWINING\
+  \ LAW across kappa(e) ~+* k is not a corollary of any of it. T5's trap stands verbatim.\n\
+  \nALSO NOT DONE: twoChartKernelEquiv itself is still not instantiated -- hchart\
+  \ is one of its three hypotheses; the other two are the surjectivity binders (TwoChartHonestGenus,\
+  \ EpsZeroSurjective)."
 status: pending
 kind: proof
 priority: normal
@@ -105,6 +67,6 @@ metadata:
   author: horizon
   created_at: '2026-07-16T17:13:44.680736+00:00'
   parent: AJCR.w5-av
-  updated_at: '2026-07-29T03:03:34.240140+00:00'
+  updated_at: '2026-07-29T06:11:17.233871+00:00'
   owner: ajcr-w5-av
   milestone: AJCR.w5-av

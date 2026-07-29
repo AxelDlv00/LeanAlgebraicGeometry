@@ -1,5 +1,5 @@
-<!-- Campaign plan for instHasPicScheme — synthesized 2026-07-09 by the run-0019 recon+design workflow (4 recon agents, 3 designs, judge). Route decision: D3 Milne–Kollár (section trick + finite Galois quotient + coproduct assembly), grafts from D1/D2. Wave tracking lives in T16 comments. -->
-# FINAL — Campaign plan for `instHasPicScheme` (judge + synthesis, 2026-07-09)
+<!-- Campaign plan for Picard-scheme representability — synthesized 2026-07-09 by the run-0019 recon+design workflow (4 recon agents, 3 designs, judge). Route decision: D3 Milne–Kollár (section trick + finite Galois quotient + coproduct assembly), grafts from D1/D2. Target renamed 2026-07-29: the campaign was written against `instHasPicScheme`, which no longer exists; its successor obligation is `fgaPicardRepresentability`. Wave tracking lives in T16 comments. -->
+# FINAL — Campaign plan for Picard-scheme representability (judge + synthesis, 2026-07-09)
 
 > **This document is the route of record.** The blueprint chapter
 > `Picard_FGAPicRepresentability.tex` and the roadmap cone `AJC.picrep` were
@@ -8,41 +8,72 @@
 > mathematics but is not the path being built. The Quot-lane leaves listed under
 > "Off-path and untouched" at the end of Part II remain off-path.
 >
-> **Two things this plan does not settle.**
+> **What this campaign is a campaign FOR, restated 2026-07-29.** It was written
+> against the gate `instHasPicScheme`, and that declaration no longer exists:
+> the gate `HasPicScheme` has no instance, its sole producer is the conditional
+> theorem `picSchemeOfHasRationalPoint`, and the obligation both of them rest on
+> is `fgaPicardRepresentability` (`Picard/FGAPicRepresentability.lean`) — the
+> project's one open representability statement, taken for the **étale-sheafified**
+> functor with no hypothesis on `C(k)`. Read every `instHasPicScheme` below as
+> naming that obligation. The route is unaffected: what the Milne–Kollár
+> milestones construct is a representing scheme, and which functor it represents is
+> the subject of the settled decision immediately below, not of the construction.
 >
-> 1. *The rational point.* Every milestone below keeps `[HasRationalPoint C]` as
->    an honest hypothesis, which makes the resulting theorem strictly weaker than
->    the challenge statement — a smooth proper geometrically integral curve need
->    not have a `k`-rational point. The alternative is to étale-sheafify the
->    Picard functor and drop the hypothesis, which is Kleiman's own formulation
->    and needs no section precisely because sheafifying supplies étale-locally
->    what the section would supply globally. Mathlib v4.31 does carry the étale
->    topology, so this is a design decision, not a platform limitation. Open with
->    the human as inbox `I-0372`, roadmap node `AJC.picrep.rational-point`.
->    Neither branch is assumed anywhere in this plan.
+> **One thing this plan does not settle, and one it no longer has to.**
 >
->    The scope of this decision narrowed on 2026-07-27, and it is worth being
->    precise about what remains. The headline leaf used to assert the rational
->    point *and* geometric integrality together. Geometric integrality of a smooth
->    proper geometrically irreducible curve is not a decision at all: it follows
->    from `Smooth ⇒ GeometricallyReduced`, now proved in mathlib generality at
->    `AlgebraicJacobian/Curve/GeometricallyReduced.lean`, so `[GeometricallyIntegral
->    C.hom]` in the target statement above is *free* given the challenge
->    hypotheses. What the owner must decide is only the rational point, and that
->    half is genuinely false in general rather than merely unproved.
+> 1. *The rational point — **SETTLED 2026-07-28, not a branch to reopen.*** The
+>    project owner chose **étale sheafification** (inbox `I-0372` branch (2),
+>    protection `I-0491`, roadmap `AJC.picrep.rational-point`). The Jacobian headline
+>    is stated over an **arbitrary** base field with **no** `[HasRationalPoint C]`
+>    binder, and what gets represented is the étale-sheafified relative Picard
+>    functor `Pic_{(C/k)ét}` — Kleiman's own formulation, which needs no section
+>    precisely because sheafifying supplies étale-locally what a section supplies
+>    globally. The cost asymmetry between the branches was reported honestly and was
+>    explicitly *not* the deciding factor.
 >
->    It narrowed again on 2026-07-28, in a direction that bounds the decision
->    rather than settling it. Over an algebraically closed field the rational
->    point is a *theorem*, not a decision:
->    `hasRationalPoint_of_curve_of_isAlgClosed` (`Jacobian.lean`) is axiom-clean,
->    routed through `Albanese.hasRationalPoint_of_isAlgClosed`, and
->    `picardJacobianWitnessOfIsAlgClosed` assembles the headline witness over `k̄`
->    with that leaf supplied rather than assumed — five obligations still, since
->    discharging leaf A makes `instHasPicScheme` fire rather than removing it, but
->    every one of the five is then a true statement. So the branch point is exactly about
->    what is claimed over an *arbitrary* base field. Neither branch is chosen, and
->    nothing below assumes one; what is now settled is that the general-field leaf
->    is the only place the decision bites.
+>    **What that means for the milestones below, which were written before it.**
+>    They keep `[HasRationalPoint C]` as an honest hypothesis throughout, and that is
+>    now a property of *these milestones*, not of the project's claim. Three
+>    consequences, none of which invalidates the route:
+>
+>    - the false leaf `hasRationalPoint_of_curve` is **deleted** and nothing may
+>      reprove or consume it. Where a milestone below uses the rational point to
+>      supply an ample divisor or a rational basepoint (P5, J1, J4), that use is still
+>      sound *over a separably closed field*, which is where the Milne construction
+>      runs anyway — the descent to `k` is cluster G's job, not the section's;
+>    - a milestone that discharges its obligation under `[HasRationalPoint C]`
+>      advances `picSchemeOfHasRationalPoint`, i.e. the **conditional** milestone
+>      `picardJacobianWitnessOfHasRationalPoint`, and must be reported as such. It is
+>      true, it is strictly weaker than the challenge, and protection `I-0491` clause 4
+>      forbids presenting it as the headline;
+>    - the étale-sheafified functor itself is **built and `sorry`-free**
+>      (`Picard/PicEtSheaf.lean`, sheaf property *proved*), so the remaining distance
+>      from these milestones to the headline is the comparison
+>      `picSharp C → Pic_{(C/k)ét}` — which is Kleiman §2 Thm 2.5 and is available
+>      only under a section — plus representability of the sheafified functor itself.
+>      Both are bundled into the single obligation `fgaPicardRepresentability`, so
+>      that count stays honest in both directions.
+>
+>    **Two things established while the question was open, which survive it.** Both
+>    are about the milestones' hypothesis bundle rather than about the decision, so
+>    they are still load-bearing.
+>
+>    - `[GeometricallyIntegral C.hom]`, which every milestone below assumes, is
+>      **free** given the challenge hypotheses: a smooth morphism is geometrically
+>      reduced (`Smooth.geometricallyReduced`, proved in mathlib generality at
+>      `Curve/GeometricallyReduced.lean`) and geometrically reduced plus geometrically
+>      irreducible is geometrically integral. Both steps are instances, so no milestone
+>      owes it. It was once bundled with the rational point in a single leaf, which is
+>      what made that leaf look like one obligation instead of a theorem beside a
+>      falsehood;
+>    - over `k̄` the rational point is a **theorem**, not an assumption:
+>      `hasRationalPoint_of_curve_of_isAlgClosed` (`Jacobian.lean`) is axiom-clean via
+>      `Albanese.hasRationalPoint_of_isAlgClosed`, and
+>      `picardJacobianWitnessOfIsAlgClosed` assembles the `picSharp` witness on it. The
+>      obligation count does not drop when it is supplied — discharging it makes the
+>      representability gate *fire* rather than removing it — but every remaining
+>      obligation is then a true statement. This matters for the Milne construction,
+>      which runs over a separably closed field where rational points are cheap.
 > 2. *Cluster P's provenance.* Cluster P (χ-ledger, section drops, uniform `H¹`
 >    vanishing) is the longest pole, and the sibling
 >    `Algebraic-Jacobian-Challenge-Rebuild` carries a large sorry-free
@@ -120,7 +151,26 @@
 > `horizon search` or the LSP. Load-bearing citations are being converted to
 > declaration names as they are touched.
 
-Target: `instHasPicScheme` — `MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Picard/FGAPicRepresentability.lean:259-263` (re-verified 2026-07-27: `⟨sorry⟩` body at :263; statement `∃ X, Nonempty ((picSharp C).RepresentableBy X) ∧ LocallyOfFiniteType X.hom ∧ IsSeparated X.hom` under `[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom] [HasRationalPoint C]`). Project paths relative to `MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/`; mathlib paths relative to `.lake-packages/mathlib/Mathlib/`.
+Target, **re-resolved by name 2026-07-29** (the declaration this campaign was written against
+no longer exists; resolve by name, never by the line numbers below):
+`AlgebraicGeometry.Scheme.fgaPicardRepresentability` —
+`AlgebraicJacobian/Picard/FGAPicRepresentability.lean`, the file's sole `sorry`. Its statement is
+a **conjunction**, and the second conjunct is why there is one obligation here and not two:
+
+```
+(∃ X, Nonempty ((PicScheme.picEt C).RepresentableBy X) ∧ LocallyOfFiniteType X.hom ∧ IsSeparated X.hom)
+  ∧ (HasRationalPoint C → IsIso (PicScheme.picEtComparison C))
+```
+
+under `[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]` and
+**nothing else** — note the absence of `[HasRationalPoint C]`, which the old target carried as a
+binder. Clause (1) is Kleiman §4 for the étale-sheafified functor `picEt`; clause (2) is Kleiman
+§2 Thm 2.5, the comparison with the unsheafified `picSharp`, which is conditional on a section
+and therefore says nothing about a pointless curve. The milestones below construct a
+representing scheme for `picSharp`, so what they feed is clause (2)'s left-hand side together
+with clause (1) read through the comparison. Project paths relative to
+`MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/`; mathlib paths relative to
+`.lake-packages/mathlib/Mathlib/`.
 
 ---
 
@@ -321,25 +371,36 @@ scripts/axiom-frontier.lean` (126 declarations, 84 clean, 42 carrying `sorryAx`,
 root build green at 8,746 jobs), the carrier list from `lake build AlgebraicJacobian 2>&1 |
 grep 'declaration uses' | sort -u` (26 over 11 modules).
 
-**Branch (1) of the rational-point decision now has a compiled form, and that is a fact about
-build cost only.** `picardJacobianWitnessOfHasRationalPoint` (`Jacobian.lean`) is the FGA
-assembly with `[HasRationalPoint C]` as a binder; both headline witnesses are specialisations
-of it. So a headline that carries `C(k) ≠ ∅` needs no mathematics beyond the five obligations
-already open — five, not four, because the binder makes `instHasPicScheme` *fire* rather than
-removing it (probe §0b, §0c). Branch (2), étale sheafification, is **not** reachable from it:
-representing `Pic_{(C/k)ét}` replaces `instHasPicScheme` rather than supplying its hypothesis,
-so it needs a representability theorem for a different functor and remains the input this
-campaign does not have. But it does not start from nothing, and the campaign should not imply
-that it does: the étale-sheafified functor is **built and `sorry`-free** in the Rebuild sibling
+**Where the two formulations now stand, after the decision.** The chosen one is the étale
+sheafification, and the milestones below serve the other; being exact about how they relate
+keeps a discharge from being reported against the wrong statement.
+
+`picardJacobianWitnessOfHasRationalPoint` (`Jacobian.lean`) is this campaign's assembly with
+`[HasRationalPoint C]` as a binder rather than a source. Its obligations are five — the gate
+`HasPicScheme` (which the binder makes *fire*, through the named theorem
+`picSchemeOfHasRationalPoint`, rather than removing), `Pic0.smooth`, `Pic0.proper`, and the
+two `picSharp` leaves. `picardJacobianWitnessOfIsAlgClosed` is its specialisation to `k̄`. The
+**headline** `picardJacobianWitness` is *not* a specialisation of either: it is built on
+`Pic0SchemeEt`, so representing `Pic_{(C/k)ét}` **replaces** the `picSharp` gate rather than
+supplying its hypothesis. That is why the headline's five obligations are a different list —
+`fgaPicardRepresentability`, `Pic0Et.geometricallyReduced`, `Pic0Et.universallyClosed`, and the
+two étale leaves — sharing only `fgaPicardRepresentability` with this route's.
+
+So a milestone below that closes under the section advances the conditional statement, and the
+distance from there to the headline is not zero. It is also not a fresh start, and the campaign
+should not imply that it is: the étale-sheafified functor is **built and `sorry`-free** here
+(`Picard/PicEtSheaf.lean`, sheaf property proved) and independently in the Rebuild sibling
 (`Picard/PicEtAff.lean`, the étale-separatedness corollary in `Picard/RelPicCoverInjective.lean`,
-the degree-zero subfunctor in `Picard/Pic0Functor.lean`). What is missing there is the same thing
-missing here — a representability theorem; the Rebuild carries representability as a structure
-field of `JacobianData`, deliberately, never as a sorried instance. So: neither branch has its
-representability theorem, branch (1) reuses this project's gate, branch (2) needs a new one for a
-functor that already exists. The decision (`I-0372`) is the owner's and neither branch is assumed
-anywhere; the campaign's own stated end state — `HasRationalPoint` retained as an honest
-hypothesis — is the *route's* assumption about the gate, not a decision about what the
-project's headline claims.
+the degree-zero subfunctor in `Picard/Pic0Functor.lean`). What neither project has is a
+*representability theorem* for it; the Rebuild carries representability as a structure field of
+`JacobianData`, deliberately, never as a sorried instance. Both halves — representability of the
+sheafified functor, and Kleiman §2 Thm 2.5 identifying it with `picSharp` under a section — are
+bundled into the single obligation `fgaPicardRepresentability`, so the frontier count does not
+double-count them and does not drop one.
+
+The campaign's own stated end state (`HasRationalPoint` retained as an honest hypothesis) is
+therefore this *route's* assumption about its gate, and not a claim about the project headline,
+which carries no such hypothesis.
 
 - **The representability gate — still the target, and still the only genuine synthesis leak on
   this route.** Everything else on the route is honest debt — visible in the signature of

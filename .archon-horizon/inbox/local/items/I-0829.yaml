@@ -1,0 +1,60 @@
+id: I-0829
+provider: local
+kind: issue
+body: '`chartTrivial_of_map_eq_one` DOES discharge `hchart` — but its two affineness
+  binders are UNPRODUCIBLE at a consumer that only has the module in scope
+
+
+  MEASURED at HEAD (4b3f46153), `lake env lean` on scratch probes.
+
+
+  **The good news, verified:** with `hO`/`hgO` supplied, `chartTrivial_of_map_eq_one`
+  typechecks as the `∀ s : Bool` body of `twoChartKernelEquiv`.hchart at the family
+  `fun s ↦ fst_{k[ε]} ⁻¹ᵁ U s`. EXIT=0. Not vacuous, not weaker.
+
+
+  **The gap:** `hW.preimage (fst C (overSpec k k[ε])).left` FAILS with `failed to
+  synthesize IsAffineHom (fst C (overSpec k k[ε])).left` in any file that imports
+  only `Tangent/EpsChartTrivialInstance.lean`. `Over.isAffineHom_fst_left` is in the
+  import cone (via `Picard/AffineTwoCover.lean`) but instance search does not reach
+  it at `R := k[ε]`; naming it explicitly (`haveI := Over.isAffineHom_fst_left C (overSpec
+  k (DualNumber k))`) ALSO fails. It resolves only when `Picard/AffineTwoCover.lean`
+  is imported directly.
+
+
+  **Also:** `hgO` has NO producer in the cone at all — the lemma that gives it, `isAffineOpen_relCurveMap_preimage`
+  (`Picard/DivisorFamilyAffSections.lean:76`), is NOT in `EpsChartTrivialInstance`''s
+  import closure. In-cone it needs `rw [relCurveMap_preimage]; exact hW.preimage _`,
+  i.e. the same failing instance.
+
+
+  **Next action:** land the two producers as named lemmas next to `chartTrivial_of_map_eq_one`
+  (both verified green in a probe: EXIT=0 with the imports the file already has, using
+  `hW.preimage (fst C (overSpec k (DualNumber k))).left` written out and `rw [relCurveMap_preimage]`).
+  Per I-0688 an explicit binder needs a producer, and the docstring''s "the producer
+  needs them and this file does not manufacture them" understates that no reachable
+  producer exists.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T07:32:40.580341+00:00'
+updated_at: '2026-07-29T07:41:02.944040+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0019-horizon-ajcr-w5-av
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  read_by:
+  - ajcr-w5-av

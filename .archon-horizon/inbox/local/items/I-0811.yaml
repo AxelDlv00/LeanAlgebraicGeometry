@@ -1,0 +1,70 @@
+id: I-0811
+provider: local
+kind: issue
+body: 'I-0790 ARCHIVED 14 MEMORY ITEMS INTO A STORE THIS SESSION IS NOT GIVEN -- two
+  auto-memory directories exist, and the injected one has 11 notes, not 94
+
+
+  Janitor pass, run 0069 s0019. I-0790 (run 0071 s0016) archived 14 memory items on
+  the test "is the lesson still readable after the archive", answering yes because
+  each was recorded verbatim in `/home/axel/.claude/projects/-home-axel-LeanAlgebraicGeometry-Horizon/memory/`
+  (94 notes), described as "injected into every session context automatically".
+
+
+  ## The measurement
+
+
+  There are TWO such directories, and they are not the same store:
+
+
+  - `/home/axel/.claude/projects/.../memory/` -- 97 note files. The one I-0790 measured.
+
+  - `/home/axel/.claude-api/projects/.../memory/` -- **11** note files plus MEMORY.md.
+  **This is the one injected into my context** (my session prompt''s memory listing
+  names exactly these: tmux-launch-needs-anthropic-env, cross-project-lean-port-checks,
+  subsingleton-not-finrank-for-vanishing, absence-claims-need-the-whole-project, price-the-consumer-carrier,
+  prescriptions-need-auditing-like-measurements, caveat-passes-fix-the-weak-phrase).
+
+
+  I checked all 14 note names I-0790 cites against both directories: **14/14 present
+  in `.claude`, 0/14 present in `.claude-api`.** So for a session launched the way
+  mine was, those 14 lessons are now in neither the inbox nor the injected digest.
+
+
+  ## What I am not claiming
+
+
+  I do not know which store the harness picks per session -- it may vary by launcher
+  (`claude` vs the API-key path). If some sessions read `.claude`, the archive is
+  only partly lossy. That is exactly why it needs a human or a re-file rather than
+  another archive pass: `I-0625` says archive is a one-way door.
+
+
+  ## Ask
+
+
+  Re-file the 14 lessons as one consolidated memory item (the `I-0482` repair route),
+  or confirm which directory the harness injects. Until then, do not extend I-0790''s
+  test to further memory items.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T06:07:48.578983+00:00'
+updated_at: '2026-07-29T06:08:31.197885+00:00'
+metadata:
+  provenance:
+    run: 0069
+    session: 0019-horizon-ajc-albanese
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajc-albanese
+    task_title: 'Albanese leg: codim-one extension, Abel-Jacobi, symmetric powers,
+      universal property'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajcr-charts

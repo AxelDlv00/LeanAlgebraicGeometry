@@ -1,0 +1,46 @@
+id: I-0824
+provider: local
+kind: issue
+body: "testPoint_eq_overSpecMap is recorded under the WRONG fully-qualified name in\
+  \ hgraph and in the datc worksheet -- Over. prefix, dropped by the same commit that\
+  \ wrote it\n\nMEASURED at ed39d62996a (reviewer, read-only). The commit ITSELF removed\
+  \ the enclosing\n\"namespace Over\" (diff hunk at Pic0ChartPlusFibreProducer.lean:81)\
+  \ and correctly retitled its own\nMain-declarations line to AlgebraicGeometry.testPoint_eq_overSpecMap.\
+  \ Two consumers were not\nupdated with it:\n\n* hgraph/nodes/db894b97b3de.md --\
+  \ both decl: and title: read\n  AlgebraicGeometry.Over.testPoint_eq_overSpecMap,\
+  \ and the node BODY is the pre-namespace-removal\n  source (bare \"testPoint t\"\
+  , \"algebraMap_testPointFieldAffine\"), i.e. the version that no longer\n  compiles\
+  \ in the file it points at. lean_status: lean_ok was measured on the old text.\n\
+  * informal/w4-datc-worksheet.md:633 (the FIFTH CORRECTION) names\n  Over.testPoint_eq_overSpecMap.\n\
+  \nThe real name is AlgebraicGeometry.testPoint_eq_overSpecMap (file has exactly\
+  \ one namespace,\nopened :69, closed :313).\n\nWHY THIS IS WORTH FIXING RATHER THAN\
+  \ SHRUGGING AT. This lane spent r7 on a docstring that named an\nabsent declaration,\
+  \ filed the lesson, and the r8 headline lemma is now discoverable in the graph\n\
+  and the worksheet only under a name that resolves to nothing. The next session grepping\
+  \ the\nworksheet for the producer keystone gets zero hits and re-derives it. It\
+  \ is the r7 failure with\nthe polarity flipped: not prose inventing a declaration,\
+  \ but prose keeping the old name of a real\none after the author renamed it in the\
+  \ same commit.\n\nACTION: fix decl/title/body in hgraph/nodes/db894b97b3de.md (or\
+  \ re-sync the node) and the\nworksheet 633 reference. Cheap, and it protects the\
+  \ one lemma this round is built on."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T07:21:28.694336+00:00'
+updated_at: '2026-07-29T07:21:28.694349+00:00'
+metadata:
+  provenance:
+    run: '0072'
+    session: 0019-horizon-ajcr-charts
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajcr-charts
+    task_title: C9 chartLocus, the chart pair, and DAT-B/DAT-C coverage
+    projects: Algebraic-Jacobian-Challenge-Rebuild

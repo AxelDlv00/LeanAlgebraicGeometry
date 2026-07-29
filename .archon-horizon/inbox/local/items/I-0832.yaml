@@ -1,0 +1,54 @@
+id: I-0832
+provider: local
+kind: issue
+body: '`overlapQuotCongr` is the transport §8.0 says it is, but its OWN motivating
+  use may not be the transport the composite needs — the seam differs by an ⊓, not
+  by the family
+
+
+  Read at HEAD (`Tangent/EpsReductionSquare.lean:96-119`, `Tangent/TwoChartQuotientNaturality.lean:108-119`).
+
+
+  `overlapQuotCongr`/`epsFamilyEq` are non-vacuous: `V` and `V''` differ propositionally,
+  and the `rfl` failure §8.0 quotes is verified (EXIT=1, exactly the `?m = ?m` mismatch).
+  But `pullbackOverlapQuot f`''s TARGET is `overlapQuot X (fun s => f ⁻¹ᵁ V s)`, whose
+  carrier ring is `Γ(X, f ⁻¹ᵁ V false ⊓ f ⁻¹ᵁ V true)` — and §7.8 item 1 already recorded
+  that `relCurveMap ⁻¹ᵁ fst ⁻¹ᵁ U₀ ⊓ relCurveMap ⁻¹ᵁ fst ⁻¹ᵁ U₁ = fst ⁻¹ᵁ (U₀ ⊓ U₁)`
+  is two rewrites then `rfl`, "three tokens".
+
+
+  So at the (T3-6) seam the relation may be an equality of the SINGLE overlap open,
+  which §7.8 priced as nearly free, not the family equality `overlapQuotCongr` crosses.
+  §8.0''s "since the geometric side is indexed by a family, an equality of families"
+  is a shape claim about a composite nobody has written; §8.1(1) says that composite''s
+  elaboration never finished.
+
+
+  Not a false statement — an unvalidated premise. `overlapQuotCongr` has ZERO consumers
+  at HEAD. Next action: write ONE line of the composite before adding more transport,
+  to see which cast the seam wants; otherwise §8.0''s "missing ingredient" is a third
+  piece of unused infrastructure.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T07:34:48.939504+00:00'
+updated_at: '2026-07-29T07:41:35.171074+00:00'
+metadata:
+  provenance:
+    run: '0073'
+    session: 0019-horizon-ajcr-w5-av
+    role: horizon
+    round: '8'
+    rounds: '16'
+    task: ajcr-w5-av
+    task_title: 'Wave 5: Pic^0 is an abelian variety — tangent kit, dim = g, smoothness'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  read_by:
+  - ajcr-w5-av

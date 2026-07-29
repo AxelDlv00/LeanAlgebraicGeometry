@@ -2,42 +2,94 @@ id: AJC.fbc
 title: Flat base change (1 walled naturality leaf + 1 bypassed monument)
 projects:
 - Algebraic-Jacobian-Challenge
-summary: |
-  Flat base change for higher direct images along a flat g. ONE open obligation, and as of run 0068 r6
+summary: 'Flat base change for higher direct images along a flat g. ONE open obligation,
+  and as of run 0068 r6
+
   it is a PULLBACK-PSEUDOFUNCTOR COHERENCE identity, not a Beck-Chevalley mate statement.
-  
-  STATE. The global scaffolding (Cohomology/FlatBaseChange, FlatBaseChangeGlobal), the affine termwise
-  comparison, and the S-level cosimplicial half are sorry-free. AJC.fbc.cosimplicial.pushforward closed
+
+
+  STATE. The global scaffolding (Cohomology/FlatBaseChange, FlatBaseChangeGlobal),
+  the affine termwise
+
+  comparison, and the S-level cosimplicial half are sorry-free. AJC.fbc.cosimplicial.pushforward
+  closed
+
   at r3 (cech_pushforward_baseChange_natIso_flat). Cohomology/CechHigherDirectImageUnconditional.lean
+
   carries 3 sorries: :2743 and :2919 are the twisted-nerve chain, and :924
-  (pullback_preservesMonomorphisms for ARBITRARY O_S-modules) is WALLED AND OFF THE CRITICAL PATH --
-  see AJC.fbc.exactness; every consumer instantiates at quasi-coherent objects where it is proved.
-  
-  THE REMAINING OBLIGATION, in one name: BcSquareCoherence (twisted row for the full chain). Both
-  Beck-Chevalley mates in half (a) of the twisted square have been ELIMINATED -- not related across
-  squares, which is what four rounds recorded as impossible here and in mathlib, but removed, by
-  putting each under its left adjoint and past its counit. Measured: the residual goal contains ZERO
+
+  (pullback_preservesMonomorphisms for ARBITRARY O_S-modules) is WALLED AND OFF THE
+  CRITICAL PATH --
+
+  see AJC.fbc.exactness; every consumer instantiates at quasi-coherent objects where
+  it is proved.
+
+
+  THE REMAINING OBLIGATION, in one name: BcSquareCoherence (twisted row for the full
+  chain). Both
+
+  Beck-Chevalley mates in half (a) of the twisted square have been ELIMINATED -- not
+  related across
+
+  squares, which is what four rounds recorded as impossible here and in mathlib, but
+  removed, by
+
+  putting each under its left adjoint and past its counit. Measured: the residual
+  goal contains ZERO
+
   occurrences of openImmersion_bareBC, bcv or mateEquiv.
-  
-  WHY THAT CHANGES THE PRICING. The old frontier needed infrastructure that does not exist (nothing
-  relates a mate across a change of square). BcSquareCoherence needs only what mathlib and this file
-  already have: pseudofunctor_associativity / _left_unitality / _right_unitality, pullbackCongr, and
-  naturality of the ppTel telescope. It is a real identity and not free, but it is in-vocabulary.
-  
-  NOT DONE, and no endpoint moved: cech_flatBaseChange_oneLeaf and twisted_cech_nerve_iso still report
-  sorryAx (they are the controls in the axiom probe). Nothing previously contaminated became clean in
+
+
+  WHY THAT CHANGES THE PRICING. The old frontier needed infrastructure that does not
+  exist (nothing
+
+  relates a mate across a change of square). BcSquareCoherence needs only what mathlib
+  and this file
+
+  already have: pseudofunctor_associativity / _left_unitality / _right_unitality,
+  pullbackCongr, and
+
+  naturality of the ppTel telescope. It is a real identity and not free, but it is
+  in-vocabulary.
+
+
+  NOT DONE, and no endpoint moved: cech_flatBaseChange_oneLeaf and twisted_cech_nerve_iso
+  still report
+
+  sorryAx (they are the controls in the axiom probe). Nothing previously contaminated
+  became clean in
+
   r5 or r6.
-  
-  CAVEAT: r5 and r6 have had NO independent review -- 4/4 review subagent dispatches stalled (I-0797).
-  Verification is kernel EXIT=0 (3243 jobs), axiom probes against firing controls, and probes that
+
+
+  CAVEAT: r5 and r6 have had NO independent review -- 4/4 review subagent dispatches
+  stalled (I-0797).
+
+  Verification is kernel EXIT=0 (3243 jobs), axiom probes against firing controls,
+  and probes that
+
   apply each new brick at its actual consumer.
-  
-  RUN 0068 r6 ADDENDUM. Both mates are now eliminable and half (a) is restated mate-free as
-  BcSquareCoherence (Cohomology/CechTwistedCoherenceReduction.lean). The three elimination bricks are
-  kernel-verified and axiom-clean; the REDUCTION that consumes them is verified step-by-step but was
-  measured UNAFFORDABLE as one declaration (43 min CPU / 13 GB in-module; 13 min / 5.6 GB even from a
-  separate module), so its proof body ships COMMENTED OUT with the cost note in the file. See I-0798.
-  No endpoint moved; the 3 sorries stand and both axiom-frontier controls still report sorryAx.
+
+
+  RUN 0068 r6 ADDENDUM. Both mates are now eliminable and half (a) is restated mate-free
+  as
+
+  BcSquareCoherence (Cohomology/CechTwistedCoherenceReduction.lean). The three elimination
+  bricks are
+
+  kernel-verified and axiom-clean; the REDUCTION that consumes them is verified step-by-step
+  but was
+
+  measured UNAFFORDABLE as one declaration (43 min CPU / 13 GB in-module; 13 min /
+  5.6 GB even from a
+
+  separate module), so its proof body ships COMMENTED OUT with the cost note in the
+  file. See I-0798.
+
+  No endpoint moved; the 3 sorries stand and both axiom-frontier controls still report
+  sorryAx.
+
+  '
 status: active
 kind: proof
 priority: high

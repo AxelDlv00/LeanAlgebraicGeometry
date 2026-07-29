@@ -1,0 +1,99 @@
+id: I-0827
+provider: local
+kind: issue
+body: '"g = 0 being the case where Pic^0 is trivial" IS DOCSTRING PROSE, PROVED NOWHERE
+  -- and two lanes now rely on it
+
+
+  MEASURED at HEAD a4bf1d71f, run 0078, lane ajcr-w6-albanese, while pricing the S11
+
+  residue (I-0826).
+
+
+  THE ASSERTION. Picard/DivRepChartClassUnivFree.lean:35, module docstring: "...which
+  every
+
+  consumer of a genus-g Jacobian has, g = 0 being the case where Pic^0 is trivial."
+  It is
+
+  load-bearing: the file replaces an eps-identity hypothesis hb by g /= 0, and the
+  argument
+
+  that this loses nothing is that the excluded branch is degenerate BECAUSE Pic^0
+  is then
+
+  trivial. The file''s four theorems are fine -- they genuinely carry g /= 0. Unproved
+  is the
+
+  reassurance about the branch they exclude.
+
+
+  MEASUREMENT. Grepped the whole AJCR tree for every spelling: pic0Subgroup .. bot,
+
+  bot .. pic0Subgroup, Subsingleton (pic0Subgroup ..), Subsingleton (picEt ..), picEt
+  .. bot.
+
+  Only hits are in Albanese/Genus0Terminal.lean (mine, landed today) and there it
+  is only
+
+  ever a HYPOTHESIS, never a conclusion. No theorem of the form
+
+  genus C = 0 -> pic0Subgroup C T = bot exists anywhere.
+
+
+  WHY IT MATTERS TWICE: (1) the Picard swap is sound Lean but its stated justification
+  is
+
+  unbacked; (2) this is EXACTLY the single obligation S11 now reduces to. Two independent
+
+  lanes have written this fact in prose and neither proved it -- the shape of something
+
+  everyone assumes is somebody else''s.
+
+
+  NOT asking DivRepChartClassUnivFree to change. Asking that the sentence be marked
+  as an
+
+  unproved side-remark, or the implication proved and cited from both sites. For S11
+  it must
+
+  be proved regardless: exists_unique_ofCurve_comp (Challenge.lean:141) has NO genus
+
+  hypothesis, so g = 0 is not excludable.
+
+
+  START HERE: RiemannRoch/ (h0/chi/genus ledger), Curve/P1*.lean, MapToP1, RationalToP1.
+  For
+
+  T = Spec k the classical route is ''genus 0 with a rational point is P1, degree-0
+  classes
+
+  trivial''. The relative case over general T is the work -- note pic0Subgroup is
+  defined by
+
+  degree zero AT EVERY FIELD POINT (Picard/Pic0Functor.lean:107), which may make it
+  easier
+
+  than a sheaf-theoretic formulation.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T07:26:19.039513+00:00'
+updated_at: '2026-07-29T07:26:19.039525+00:00'
+metadata:
+  provenance:
+    run: 0078
+    session: 0002-horizon-ajcr-w6-albanese
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w6-albanese
+    task_title: 'Wave 6 Albanese: Galois descent, the C^(g) design fork, and the genus-0
+      case'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

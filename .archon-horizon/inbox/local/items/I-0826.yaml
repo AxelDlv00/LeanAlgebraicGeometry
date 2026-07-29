@@ -1,0 +1,54 @@
+id: I-0826
+provider: local
+kind: issue
+body: "WAVE-6 RESIDUES AFTER run 0078: S10 and S11 are each down to ONE named obligation,\
+  \ and both are smaller than the recon priced\n\nRecorded so the next session on\
+  \ AJCR.w6-albanese does not re-derive the repricing. Roadmap\nrows .descent and\
+  \ .genus0 carry the summaries; this is the residue list.\n\nS10 (kbar -> k descent).\
+  \ Uniqueness clause LANDED sorry-free\n(Albanese/BaseFieldFaithful.lean, Albanese/DescentUniqueness.lean;\
+  \ a65d53c86, a4bf1d71f).\nOf the three items informal/w6-albanese-port-recon.md\
+  \ row S10 budgeted:\n * finite-level spreading out -- GONE. Base change along ANY\
+  \ field extension is faithful\n   (Spec L -> Spec k is flat + surjective), and faithfulness\
+  \ does not see finiteness, so\n   S4.2's 'staging at the non-finite kbar is pinned\
+  \ nowhere' has nothing to pin.\n * representing-object comparison -- CHEAP BUT PRESENT.\
+  \ Absent for the transported datum\n   (d.baseChange L).J, which is (baseChange\
+  \ k L).obj d.J definitionally; PRESENT when the\n   kbar-side uniqueness is proved\
+  \ for an independently produced dL, which is the staging\n   the geometry actually\
+  \ offers. Landed for both\n   (existsUnique_ofCurve_comp_of_baseChange_datum, via\
+  \ the already-landed uniqueUpToIso).\n * EXISTENCE of the k-morphism -- THE WHOLE\
+  \ REMAINING COST. Untouched. This is the genuine\n   Galois cocycle and nothing\
+  \ in this session addresses it.\n\nS11 (genus 0). Uniqueness clause LANDED sorry-free\
+  \ (Albanese/Genus0Terminal.lean,\nd67015624). Repriced: Milne I 3.9 (rational maps\
+  \ P1 -> A constant) buys EXISTENCE only.\nTHE ONE OBLIGATION, and it is the whole\
+  \ leaf now:\n\n    genus C = 0  ==>  pic0Subgroup C T = bot   for every test T\n\
+  \nThe landed theorems take the RIGHT side as hypothesis, not the left. This is real\
+  \ curve\ntheory -- for T = Spec k it is 'a genus-0 curve with a rational point is\
+  \ P1, whose\ndegree-0 classes are trivial', and for general T the relative version.\
+  \ NOT proved\nanywhere. Whoever takes it: the h0/degree/genus machinery under RiemannRoch/\
+  \ and the P1\nmaterial under Curve/ (P1.lean, P1Points.lean, MapToP1.lean, RationalToP1.lean)\
+  \ are the\nplaces to look first; I did not survey them for this implication and\
+  \ it may be closer than\nit sounds.\n\nNote that the frozen target has NO genus\
+  \ hypothesis, so S11 is not optional: the g=0 case\nmust be discharged for exists_unique_ofCurve_comp\
+  \ to hold as stated (Challenge.lean:141)."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T07:24:55.149645+00:00'
+updated_at: '2026-07-29T07:24:55.149663+00:00'
+metadata:
+  provenance:
+    run: 0078
+    session: 0002-horizon-ajcr-w6-albanese
+    role: horizon
+    round: '0'
+    rounds: '8'
+    task: ajcr-w6-albanese
+    task_title: 'Wave 6 Albanese: Galois descent, the C^(g) design fork, and the genus-0
+      case'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -2,40 +2,37 @@ id: AJC.fbc.cosimplicial.twisted
 title: Twisted Čech nerve compatibility
 projects:
 - Algebraic-Jacobian-Challenge
-summary: |
-  Twisted Cech nerve compatibility. BOTH MATES ARE ELIMINABLE (proved, landed); the REDUCTION that
-  uses them is verified step-by-step but NOT AFFORDABLE as one declaration (run 0068 r6).
-  
-  THE MATHEMATICAL ADVANCE, and it is real. r4/r5 recorded the frontier as "nothing in the tree or in
-  mathlib relates the Beck-Chevalley mate across a change of square", and priced the leaf on that.
-  Correct diagnosis, wrong conclusion: a mate need not be RELATED across squares if it can be REMOVED.
-  r5 removed one side (mateEquiv_counit) and recorded honestly that the other was blocked by
-  pushPullMap (wmap ...) sitting between mate and counit. r6's fix: THAT MAP IS ITSELF BUILT FROM A
-  UNIT, so the same move kills it.
-  
-  LANDED AND KERNEL-VERIFIED, all axiom-clean, sorry count UNCHANGED at 3 (commits 1509f3683,
-  79e2cea0b, 65036074f):
-   * counit_comp_decomp -- counit of (a >> p1) via pullbackComp-inv and the two single counits.
-   * rawPushPullMap_pullback_counit_self / _counit -- under p^* past the counit, the restriction map's
-     UNIT dies by the left triangle. General over-triangle version is the one that reaches the
-     consumer: wmap's triangle is a GENUINE EQUATION, not rfl (measured).
-   * bcv_hom_eq (rfl) + bcv_pullback_counit -- bcv's adjunct in CLOSED MATE-FREE form.
-  
-  THE REDUCTION, and its honest status. bcSquareCounitSide_of_coherence reduces half (a) to
-  BcSquareCoherence, whose residue I MEASURED to contain ZERO occurrences of openImmersion_bareBC,
-  bcv or mateEquiv -- only pullbackComp/pullbackCongr/ppTel/telescope, two counits of OPEN INCLUSIONS,
-  and pushPullMap (interLegHom). Every step was machine-checked individually. BUT: as a single
-  declaration it burned 43 min CPU / 13 GB RSS inside CechHigherDirectImageUnconditional (a module
-  that builds in 156-248s), and 13 min / 5.6 GB and climbing even from a separate module. So it is
-  COMMENTED OUT in Cohomology/CechTwistedCoherenceReduction.lean, with the statements
-  (bcAdjFree, BcSquareCoherence) live and the cost note in the file. A proof nobody has seen the
-  kernel accept is not a proof, and a sorry there would have hidden that the blocker is COST, not
-  mathematics. Cause and the likely structural fix (name the intermediate composites so the erws match
-  syntactically instead of via whnf through two asIso-wrapped IsIso instances): inbox I-0798.
-  
-  NEXT: restructure that proof, do not just raise heartbeats.
-  
-  CAVEAT: r5 and r6 have had NO independent review -- 4/4 review subagent dispatches stalled (I-0797).
+summary: "Twisted Cech nerve compatibility. BOTH MATES ARE ELIMINABLE (proved, landed);\
+  \ the REDUCTION that\nuses them is verified step-by-step but NOT AFFORDABLE as one\
+  \ declaration (run 0068 r6).\n\nTHE MATHEMATICAL ADVANCE, and it is real. r4/r5\
+  \ recorded the frontier as \"nothing in the tree or in\nmathlib relates the Beck-Chevalley\
+  \ mate across a change of square\", and priced the leaf on that.\nCorrect diagnosis,\
+  \ wrong conclusion: a mate need not be RELATED across squares if it can be REMOVED.\n\
+  r5 removed one side (mateEquiv_counit) and recorded honestly that the other was\
+  \ blocked by\npushPullMap (wmap ...) sitting between mate and counit. r6's fix:\
+  \ THAT MAP IS ITSELF BUILT FROM A\nUNIT, so the same move kills it.\n\nLANDED AND\
+  \ KERNEL-VERIFIED, all axiom-clean, sorry count UNCHANGED at 3 (commits 1509f3683,\n\
+  79e2cea0b, 65036074f):\n * counit_comp_decomp -- counit of (a >> p1) via pullbackComp-inv\
+  \ and the two single counits.\n * rawPushPullMap_pullback_counit_self / _counit\
+  \ -- under p^* past the counit, the restriction map's\n   UNIT dies by the left\
+  \ triangle. General over-triangle version is the one that reaches the\n   consumer:\
+  \ wmap's triangle is a GENUINE EQUATION, not rfl (measured).\n * bcv_hom_eq (rfl)\
+  \ + bcv_pullback_counit -- bcv's adjunct in CLOSED MATE-FREE form.\n\nTHE REDUCTION,\
+  \ and its honest status. bcSquareCounitSide_of_coherence reduces half (a) to\nBcSquareCoherence,\
+  \ whose residue I MEASURED to contain ZERO occurrences of openImmersion_bareBC,\n\
+  bcv or mateEquiv -- only pullbackComp/pullbackCongr/ppTel/telescope, two counits\
+  \ of OPEN INCLUSIONS,\nand pushPullMap (interLegHom). Every step was machine-checked\
+  \ individually. BUT: as a single\ndeclaration it burned 43 min CPU / 13 GB RSS inside\
+  \ CechHigherDirectImageUnconditional (a module\nthat builds in 156-248s), and 13\
+  \ min / 5.6 GB and climbing even from a separate module. So it is\nCOMMENTED OUT\
+  \ in Cohomology/CechTwistedCoherenceReduction.lean, with the statements\n(bcAdjFree,\
+  \ BcSquareCoherence) live and the cost note in the file. A proof nobody has seen\
+  \ the\nkernel accept is not a proof, and a sorry there would have hidden that the\
+  \ blocker is COST, not\nmathematics. Cause and the likely structural fix (name the\
+  \ intermediate composites so the erws match\nsyntactically instead of via whnf through\
+  \ two asIso-wrapped IsIso instances): inbox I-0798.\n\nNEXT: restructure that proof,\
+  \ do not just raise heartbeats.\n\nCAVEAT: r5 and r6 have had NO independent review\
+  \ -- 4/4 review subagent dispatches stalled (I-0797).\n"
 status: active
 kind: proof
 priority: high
