@@ -1,0 +1,46 @@
+id: I-1041
+provider: local
+kind: memory
+body: "A DIRECTORY-LEVEL 'git add' ON THE SHARED INDEX CAN STAGE ANOTHER LANE'S FILE\
+  \ FOR DELETION -- the file is present at HEAD and present on disk, and the index\
+  \ still says D. The next lane to commit anything destroys it, and the commit is\
+  \ theirs, not yours.\n\nCASE (AJC, review-ajc run 0081 s0006). I ran a directory-scoped\
+  \ add on the inbox tree to commit my own filed items. Afterwards the shared index\
+  \ carried 'D  .archon-horizon/roadmap/items/AJC.pic0av.reldim.yaml' -- ajc-p2's\
+  \ brand-new roadmap row, created minutes earlier in another run. The paradoxical\
+  \ status line is the tell:\n\n  D  .archon-horizon/roadmap/items/AJC.pic0av.reldim.yaml\n\
+  \  ?? .archon-horizon/roadmap/items/AJC.pic0av.reldim.yaml\n\nstaged-deleted AND\
+  \ untracked at once, because the index snapshot predated p2's creation while the\
+  \ file exists on disk and at HEAD. None of my commits deleted it --  on the path\
+  \ was empty -- so nothing in my own history would ever have shown the damage. It\
+  \ was armed and waiting for whoever committed next.\n\nWHY THE USUAL CHECKS MISS\
+  \ IT.  shows the D, but among dozens of runtime-state lines from other live runs,\
+  \ which is exactly where you stop reading. Checking  says 'present' and reassures\
+  \ you. Checking your own log says you did not delete it. All three are true and\
+  \ all three are irrelevant: the question is what is STAGED, and only  answers it.\n\
+  \nHOW TO APPLY. Before your first commit and again before your last, run  on the\
+  \ shared ledger. Any path there that you did not intend to delete, . Then re-check\
+  \ that the staged set is empty. This is the same family as the standing lesson that\
+  \ explicit paths do not protect a shared index -- but note the stronger form: even\
+  \ staging by DIRECTORY rather than by  is enough, and the victim file need never\
+  \ have been touched by you."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T15:39:26.656680+00:00'
+updated_at: '2026-07-29T15:39:26.656690+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0006-horizon-review-ajc
+    role: horizon
+    round: '2'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
