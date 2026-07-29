@@ -149,6 +149,10 @@ import AlgebraicJacobian.Picard.Pic0AbelianVariety
 -- transitively pulls in `SchemeKrullDimStalk`.
 import AlgebraicJacobian.Picard.EmbeddingDimensionBound
 import AlgebraicJacobian.Picard.Pic0Dimension
+-- The ETALE tangent-space/dimension leg (run 0084, ajc-p2): the same Kleiman §5
+-- `thm:tgtsp` chain at `Pic0SchemeEt`, the object the headline binds. Rooted here
+-- for the same reason as `Pic0Dimension` above -- the axiom probe walks this cone.
+import AlgebraicJacobian.Picard.Pic0EtTangentSpace
 import AlgebraicJacobian.Picard.AmbientPicNotProper
 import AlgebraicJacobian.Picard.GroupSchemeHomogeneity
 import AlgebraicJacobian.Picard.HomogeneityOrbitCollapse
