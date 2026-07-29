@@ -623,6 +623,45 @@ the boundary as a NAMED interface so the DAT-B lane slots in:
   §1.2's twist bookkeeping enters.  That is a different obligation from every link in the chain
   above, and it is now the whole of what CHART-U(b) owes.
 
+  **FIFTH CORRECTION, 2026-07-29 (run 0072 r8, lane `ajcr-charts`): THE PRODUCER EXISTS, AND THE
+  PARAGRAPH ABOVE MIS-PRICES IT — it is a comparison of two spellings of one morphism, not the
+  identification of a fibre class, and no twist bookkeeping enters.**
+
+  Four sessions on this leaf described the missing producer as geometry ("the identification of the
+  datum's fibre class with `μ`'s fibre").  What was actually missing:
+
+  `Over.testPoint_eq_overSpecMap` (`Picard/Pic0ChartPlusFibreProducer.lean`) — **on an AFFINE test
+  the canonical field point `Over.testPoint t` IS the base-change morphism
+  `overSpecMap A κ(t)`.**  Both sides are `Spec` of the same ring map, because
+  `Over.instAlgebraTestPointFieldAffine` is *defined* as `Spec.preimage` of `fromSpecResidueField`;
+  `Spec.map_preimage` is the entire proof.  Nothing in the tree stated it.
+
+  **Why its absence read as a geometric gap.**  Every plus-class identity on this lane compares a
+  class pulled along `Over.testPoint` (the `chartLocus` side, indexed by *points of a test*) with
+  one pulled along `relCurveMap C A κ(t)` (the datum side, indexed by *base change*).  Absent the
+  comparison the two sides are not syntactically comparable, so no producer can be *written* — and
+  an obligation that cannot be stated is indistinguishable, from the outside, from one that is
+  hard.  With it, `IsChartDatumPlusFibre` for a class in the image of the sheafification unit
+  `relPicToPicEt` is four rewrites: `picEtMap_relPicToPicEt`,
+  `picEtAffineEquiv_relPicToPicEt`, `PicEtAff.map_id`, `relPicMap_mk`.  No witness, no `H¹`, no
+  divisor, no degree, no separability, no certificate.
+
+  **The honesty hypothesis is real and is NOT the twist bookkeeping.**  The producer needs `μ` to
+  be in the image of the unit, and a general plus class over `Spec A` is `PicEtAff.mk E x` — which
+  is exactly what `Picard/Pic0ChartHonest.lean` records as honest only over `E.Carrier`.  So the
+  residue is a genuine hypothesis.  What it is *not* is vacuous: the unit's range is a **subgroup**,
+  and both the θ-family (via `thetaFamily_overSpec_affineEquiv`) and the Abel value (`abelDivAff`
+  is `relPicToPicEt` of `relPicMk F₀.picClass`, by `rfl`) lie in it — measured, both probes close.
+  So `chartTwist` preserves honesty, and the residue is about the λ-factor alone.
+
+  **The transferable rule, and it is not "check whether the declaration exists" (that was r7's).**
+  r7 found a docstring naming an absent declaration.  This is the next failure along: the prose
+  named no declaration at all, it named a *mathematical obligation* — and the obligation it named
+  was not the one blocking the file.  A missing SPELLING COMPARISON presents as a missing THEOREM,
+  because the theorem cannot be stated without it, and the session then prices the statement it
+  can imagine rather than the one it cannot.  Before pricing a residue as geometry, check that its
+  two sides are even comparable: if a producer cannot be *written down*, the gap may be notation.
+
   **A correction to r7's own evidence, because the instrument matters more than the claim.**  The
   new file first asserted certificate-freedom "verified by the import closure".  The import closure
   is **not** certificate-free — it reaches `DivSchemeCertificate`, `DivSchemeClassify*` and
