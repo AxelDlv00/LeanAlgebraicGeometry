@@ -29,10 +29,25 @@ bookkeeping between them, so the qc field costs exactly one surjectivity stateme
 
 **What this is and is not.**  It is the plumbing of §2.2 steps 1, 2 and 4, discharged once.
 Step 3 — surjectivity of the Abel map on points — is DJ-1's honest brick and is *not* proved
-here: it needs the universal degree-`g` class, hence `divRep`, plus
-`exists_effective_of_picClass` (`RiemannRoch/FLVClass.lean:208`) and the `fiberTwist` shift.
-Per §0.5 that brick must stay Challenge-free: use `exists_effective_of_picClass` /
+here.  Per §0.5 that brick must stay Challenge-free: use `exists_effective_of_picClass` /
 `riemann_inequality`, never `riemann_inequality_curve`, which imports `Challenge.lean`.
+
+**AMENDMENT 2026-07-29, two corrections to the sentence this replaces.**  It used to say the
+brick "needs the universal degree-`g` class, hence `divRep`, plus `exists_effective_of_picClass`
+and the `fiberTwist` shift".  Both cost claims were wrong:
+
+* **Not `divRep`-gated.**  The effectivity content is landed and divRep-free at every point of
+  any `Pic⁰`-representing object (`exists_effective_deg_eq_of_pic0_at_point`,
+  `Picard/JacobianDataAbelEffectivePoint.lean`).  Only the Abel *square* needs the
+  representation.
+* **No `fiberTwist` shift.**  At degree exactly `g` the entry condition `1 ≤ deg W + χ(𝒪)`
+  reads `g ≤ deg W`, so the class sits on the boundary and `exists_effective_of_picClass` fires
+  with no slack.  A shift is what one needs to lift a degree-*zero* class into the effective
+  range, and that is one multiplication by a fixed degree-`g` class
+  (`exists_effective_deg_eq_of_classDeg_eq_zero`), not a `fiberTwist` construction.
+
+What genuinely remains on this side is **descent**: the divisor is produced over a finite
+separable splitting field of `κ(y)`, and `hlift` wants `Spec κ(y)`.
 
 Note that the statements below take the surjection as a *bare morphism* out of `DivScheme g`
 rather than as an Abel map built from a representation.  That is deliberate: it keeps the

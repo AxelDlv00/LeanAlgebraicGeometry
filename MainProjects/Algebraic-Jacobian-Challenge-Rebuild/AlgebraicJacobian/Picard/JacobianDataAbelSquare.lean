@@ -67,6 +67,20 @@ That is a *compatibility square*, not a surjectivity theorem, and it is the reco
 It produces no `AbelClassifyCompatible` and no effectivity witness, so it builds no
 `JacobianData`.  It removes the *construction* from DAT-J step 3 and leaves a square and
 an effectivity input, both stated here rather than assumed anywhere.
+
+## AMENDMENT 2026-07-29: `heff` is NOT the divRep-gated half
+
+The text above calls `heff` "the honest geometric input", which is right, and the `dat-j`
+roadmap row read that as work still gated behind divisor representability.  It is not:
+`Picard/JacobianDataAbelEffective.lean` and `Picard/JacobianDataAbelEffectivePoint.lean`
+discharge the effectivity content, at every point of *any* `Pic⁰`-representing object, with
+no `divFunctor`, no `DivFamZar`, no certificate and no chart
+(`exists_effective_deg_eq_of_pic0_at_point`).
+
+So of the two halves this file separates, only the **square** is divRep-gated — naming
+`abel` requires the representation.  They were never gated alike.  What the effectivity side
+still owes is *descent*: its divisor lives over a finite separable splitting field of `κ(y)`,
+and `hlift` wants `Spec κ(y)` itself.
 -/
 
 set_option autoImplicit false

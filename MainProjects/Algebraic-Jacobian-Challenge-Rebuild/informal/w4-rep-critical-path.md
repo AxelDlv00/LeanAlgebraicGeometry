@@ -1169,3 +1169,71 @@ I over-priced it in the same session I under-priced the emptiness question.
 
 **§7.6 still stands, and more plainly than before.** L8 remains the gate; this session did not move
 it, and the layer it built does not reach the divisors the widening was chosen for.
+
+## 7.14 ROUND-0071 s0016 AMENDMENT: two rows of §7.1's own successor table are stale, and DAT-J's Riemann–Roch half was never divRep-gated
+
+*Run 0071, task `ajcr-divrep`, 2026-07-29. Root build after the last change: **9288 jobs, EXIT=0**,
+zero errors, zero `uses sorry`, 129 warnings all pre-existing and none from the new modules.*
+
+### 7.14.1 The L11 row is stale *again*, and this time the whole row is discharged
+
+§7.1's L11 row says "what is left of L11 is the general-test **classifier** and the two inverse
+laws", and §7.7 already amended that row once. It is stale again, by the same mechanism it exists
+to warn about: `Picard/DivRepGlobalClassify.lean` (commits `31930badb`, `aeb77e174`) carries
+
+> `classifyGlobal` (:204) — the general-test classifier, glued over `Scheme.directedAffineCover`
+> with `glueMorphismsOverOfLocallyDirected`; `pullGlobal_classifyGlobal` (:252) and
+> `classifyGlobal_pullGlobal` (:269) — **both inverse laws**; `toGlobalData` (:288);
+> `representableBy` (:306).
+
+So **nothing below the divisor-representability endpoint remains**. The task brief for this session
+still listed the classifier and the inverse laws as the deliverable. Three faces are available to a
+consumer, weakest last: `DivRepAffinePullback.representableBy`,
+`divFunctor_representableBy_of_chartClause` (`DivRepAffPullClause.lean:482`), and
+`divFunctor_representableBy_of_id` (:502). The only surviving hypothesis is U2, and
+`DivRepChartRange.lean:183` makes it an **iff** with an equation of morphisms.
+
+### 7.14.2 DAT-J's effectivity half is not divRep-gated — three landed theorems
+
+`Picard/JacobianDataAbelSquare.lean` splits DAT-J step 3 into a compatibility square and an
+effectivity input `heff`, calling the latter "the honest geometric input"; and
+`Picard/JacobianDataAbelImage.lean:32` says DJ-1's brick "needs the universal degree-`g` class,
+hence `divRep`". **The effectivity half needs none of it.** Landed this session (`053897f16`,
+`c8a4563af`, `127d7cccf`; kernel EXIT=0, axiom-clean against a control reporting `sorryAx`):
+
+> `exists_effective_deg_eq_of_classDeg_eq` — with `χ(𝒪) = 1 − g`, a class of degree `g` has an
+> effective representative **of degree `g`**;
+> `exists_effective_deg_eq_of_classDeg_eq_zero` — the satisfiability face and the usable one: a
+> degree-**zero** class times a degree-`g` reference;
+> `exists_effective_deg_eq_of_pic0_at_point` — from a point of *any* `Pic⁰`-representing object.
+
+**The gap was one conjunct, and it was a statement gap rather than a mathematical one.** Every
+effectivity lemma in the tree stops at `0 ≤ E ∧ picClass E = picClass W` with no claim about
+`deg E` (`exists_effective_of_picClass` `FLVClass.lean:208`, `exists_effective_of_h0_pos`
+`SectionBound.lean:175`), while `effectiveDivisorClassifyZar` (`DivisorFamilyFieldSurj.lean:217`)
+demands `0 ≤ D` **and** `deg D = g`. Degree is a class invariant
+(`deg_eq_deg_of_picClass_eq`), so the conjunct transports for free off the class equation.
+
+Two smaller corrections fall out. **No `fiberTwist` shift is needed** at degree exactly `g`: the
+Riemann-inequality entry condition `1 ≤ deg W + χ(𝒪)` reads `g ≤ deg W`, so degree `g` sits on the
+boundary and fires with no slack — contrary to what `JacobianDataAbelImage`'s docstring predicts
+for this brick. And the five steps from a *point* to a divisor are all landed and all divRep-free:
+`Over.testPoint` (`Pic0ChartTestPoint.lean:176`), `mem_pic0Subgroup_iff`,
+`exists_splitting_of_picEt` (`Pic0ChartSplit.lean:143`, **unconditional** on the curve),
+`classDeg_presenting_eq_zero` (`Pic0ChartCoverageDegreeStep2.lean:98`), then the brick.
+
+**So the two halves of DAT-J step 3 were never gated alike**, and the row that priced them together
+was hiding a discharged half behind a gated one. What *is* divRep-gated is only the Abel
+**square** — naming `abel` at all requires the representation.
+
+**The honest limit, recorded rather than left for a reviewer.** The divisor produced at a point
+lives over the **splitting field `L`**, while `hlift` wants a morphism out of `Spec κ(y)`.
+Descending `L ↝ κ(y)` is finite separable descent, i.e. the `dat-g` lane's work, and this session
+did not take it. Also unchanged: the satisfiability face needs a degree-`g` reference divisor `Z`
+from the caller, which over a small finite field is a real hypothesis and not bookkeeping.
+
+### 7.14.3 §7.6 still stands, for the fourth consecutive session
+
+L8 remains the gate. Nothing this session produced an `IsChartClause`, and U2 is untouched. What
+changed is the *shape of the remaining work*: the divisor-representability tail is finished, and one
+of DAT-J's two obligations turns out to have been available all along.
