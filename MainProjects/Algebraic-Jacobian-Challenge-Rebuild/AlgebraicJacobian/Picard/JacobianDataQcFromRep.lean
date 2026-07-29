@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.JacobianDataAbelSurj
 import AlgebraicJacobian.Picard.Pic0ChartTestPoint
+import AlgebraicJacobian.Picard.Pic0AtlasFromDivRep
 
 /-!
 # DAT-J's `quasiCompact` field: the Abel map is not an input, it is `rep.homEquiv.symm`
@@ -88,7 +89,7 @@ set_option maxSynthPendingDepth 3
 
 universe u
 
-open CategoryTheory Limits Opposite
+open CategoryTheory Limits Opposite MonoidalCategory CartesianMonoidalCategory
 
 namespace AlgebraicGeometry
 
@@ -309,6 +310,52 @@ theorem compactSpace_of_pic0_class_surjective {J : Over (Spec (.of k))}
   compactSpace_of_surjective (abelOfPic0Class rep lam).left
     (surjective_of_forall_exists_residueField_lift _
       (residueField_lift_of_pic0_class rep lam hcl))
+
+/-! ### `lam` is PRODUCED, not assumed — the chart layer's own `divRep` supplies it
+
+The class `lam` above is not a second open input.  `chartValueTrans`
+(`Picard/Pic0AtlasFromDivRep.lean:176`) is a natural transformation
+`divFunctor C π n ⟶ pic0TypeFunctor C`, built from `chartValue_mem_pic0Subgroup`; applied at
+the representing object to the universal element of a divisor-functor representation it yields
+a degree-zero class on that object outright.
+
+So a lane holding the `divRep` the chart layer *already assumes* (`abelSigmaChart` takes it,
+`mixedParamChart` takes one per index) holds `lam` at no cost, and the qc field's hypothesis
+list is **one** statement, not two.  Recorded here because the same `divRep` appears on both
+sides and it is easy to double-count it. -/
+
+/-- **The degree-zero class on the divisor scheme, from a divisor-functor representation.**
+
+The universal element of `divRep` pushed through `chartValueTrans` — the same construction the
+Abel chart map uses, evaluated at the representing object itself.  Takes exactly the data
+`abelSigmaChart` does (`rep`, the twist exponent `m`, the chart index `Z`, and its legality
+`hdeg`), and no more. -/
+def lamOfDivRep {π : C.left ⟶ P1 k} [IsAffineHom π] (n : ℕ) {D : Over (Spec (.of k))}
+    (divRep : (divFunctor C π n).RepresentableBy D)
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ)) :
+    pic0Subgroup C D :=
+  (chartValueTrans C π n m Z hdeg).app (op D) (divRep.homEquiv (𝟙 D))
+
+/-- **The qc field with `lam` supplied by the chart layer's own representation** — the form in
+which the field costs exactly ONE open statement.
+
+Everything except `hcl` is data the chart layer already carries: `rep` is antecedent 3, `hlft`
+is discharged at the divisor-representability carrier (`Picard/Pic0AtlasFiniteType.lean`), and
+`divRep`/`m`/`Z`/`hdeg` are precisely `abelSigmaChart`'s arguments. -/
+theorem quasiCompact_of_divRep_of_lift {π : C.left ⟶ P1 k} [IsAffineHom π] (n : ℕ)
+    (divRep : (divFunctor C π n).RepresentableBy (divSchemeOver k A B g r₁ r₂ b₁ b₂))
+    (m : ℕ) (Z : (C ⊗ overSpec k k).left.CurveDivisor)
+    (hdeg : Scheme.CurveDivisor.deg k Z
+      = (m : ℤ) * classDeg k (thetaCechClass C) - (n : ℤ))
+    {J : Over (Spec (.of k))} (rep : (pic0TypeFunctor C).RepresentableBy J)
+    (hcl : ∀ y : J.left,
+      ∃ q : overSpec k (Over.testPointField y) ⟶ divSchemeOver k A B g r₁ r₂ b₁ b₂,
+        pic0Map C q (lamOfDivRep n divRep m Z hdeg)
+          = rep.homEquiv (Over.testPoint y)) :
+    QuasiCompact J.hom :=
+  quasiCompact_of_pic0_class_surjective rep (lamOfDivRep n divRep m Z hdeg) hcl
 
 /-- **The `JacobianData` producer with the qc field discharged from a class.**
 
