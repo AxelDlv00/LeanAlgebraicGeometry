@@ -5,9 +5,20 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivRepChartClassUnivQuot
 import AlgebraicJacobian.Picard.DivSchemeCertZarPointwise
+-- The four declarations this file's docstring reasons ABOUT rather than uses:
+-- `forall_not_isCertified_of_straddling` (the no-go), `forall_noLeak_of_forall_subset_or_disjoint`
+-- and `forall_subset_or_disjoint_of_isPreconnected` (the swallow-or-miss route), and
+-- `forall_noLeak_of_forall_supportLocus_subset` (the wrapper).  Imported so every cited name is
+-- IN THIS FILE'S IMPORT CLOSURE and `#check`s here, not merely greppable elsewhere: a name that
+-- exists in source but not in scope is a nonexistent citation, and grep cannot tell the
+-- difference (measured on the first version of this header, which cited all four out of scope).
+import AlgebraicJacobian.Picard.DivisorFamilyAffStrict
+import AlgebraicJacobian.Picard.DivSchemeCertZarConn
+import AlgebraicJacobian.Picard.DivSchemeCertZarSwallow
+import AlgebraicJacobian.Picard.DivSchemeCertZarTube
 
 /-!
-# U2's class half is not refuted: the no-go's `∀` and the pin's `∃` are different binders
+# U2's class half: the no-go DOES reach the Zariski-local pin, and its input narrows
 
 `Picard/DivRepChartClassUnivAny.lean:223-231` carries a warning that the roadmap leaf
 `…divrep.u2` and three inbox items have since quoted as the leaf's price:
