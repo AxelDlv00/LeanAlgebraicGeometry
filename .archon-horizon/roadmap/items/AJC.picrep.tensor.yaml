@@ -2,8 +2,56 @@ id: AJC.picrep.tensor
 title: Pullback-tensor and fibre base change
 projects:
 - Algebraic-Jacobian-Challenge
-summary: Prove the canonical pullback tensor comparison is an isomorphism and finish
-  the quasi-coherent tensor-section input used by Hilbert-function base change.
+summary: 'AUDITED 2026-07-30 (review-ajc r4). This row bundles TWO deliverables; the
+  first is LANDED and sorry-free, the second is genuinely OPEN. The row read as wholly
+  unstarted since its creation on 2026-07-23 and was never re-measured, so a lane
+  pricing it would have re-proved the landed half.
+
+
+  CLAUSE 1 -- DONE, DO NOT RE-PROVE. ''The canonical pullback tensor comparison is
+  an isomorphism'' IS proved: Scheme.Modules.pullbackTensorIsoOfLocallyTrivial (Picard/TensorObjSubstrate/PullbackTensorIso.lean:153),
+  for line bundles via the chart-chase plus isIso_of_isIso_restrict. Zero body sorries
+  in that file (comments stripped). It has a one-sided companion pullbackTensorIsoOfRightLocallyTrivial
+  and the IsIso form pullbackTensorMap_isIso_of_right_locallyTrivial (PullbackTensorOneSided.lean:275,
+  :264). Already CONSUMED at 8+ sites in Picard/RelPicFunctor.lean (:366, :389, :433,
+  :468, :609, :792, :819) and cited by QuotFunctorDef.lean:448 -- so this is settled
+  substrate, not a frontier.
+
+
+  CLAUSE 2 -- OPEN, and the file that would host it says so in the subjunctive. ''The
+  quasi-coherent tensor-section input used by Hilbert-function base change'' is NOT
+  landed. Picard/TensorSectionFormula.lean:145-155 states that the affine tensor-section
+  formula ''WOULD give, for A B quasi-coherent and V affine, the fact that the section
+  restriction Gamma(A tensor B, V) -> Gamma(A tensor B, D(f)) is IsLocalizedModule
+  (powers f)'' -- and then supplies only the CONVERSE packaging (isQuasicoherent_of_isLocalizedModule_basicOpen,
+  :185), explicitly described as ''exactly the criterion the 01CB (tensorObj/sheafTensorObj)
+  instance feeds ONCE THE AFFINE SECTION-LOCALIZATION IS IN HAND''. That antecedent
+  is absent.
+
+
+  MEASURED ABSENT, with the project filter (a bare horizon search returns SubProjects
+  hits under identical names -- I-1124): tensorSectionHom_isIso, isIso_tensorSectionHom,
+  tensorSection_localization, affine_tensorSection all return no exact-name match
+  under --lib Algebraic-Jacobian-Challenge. No instance of IsQuasicoherent for tensorObj
+  exists anywhere in AlgebraicJacobian/. What DOES exist in that file is the substrate:
+  tensorSectionHom (:101), its naturality (:115), the top-level identification (:123),
+  and the categorical crux isIso_sheafification_tensorSectionUnit (:137).
+
+
+  SO THE OPEN OBLIGATION, named: the affine tensor-section formula -- for A B quasi-coherent
+  and V affine, Gamma(A,V) tensor_{Gamma(X,V)} Gamma(B,V) -> Gamma(A tensor B, V)
+  is an isomorphism (equivalently the basic-open localization form). Its heart is
+  RingTheory.Localization.BaseChange ((M tensor_R N)_f = M_f tensor_{R_f} N_f), per
+  the file''s own note. Discharging it feeds isQuasicoherent_of_isLocalizedModule_basicOpen
+  and yields the 01CB instance.
+
+
+  NOT ON THE CRITICAL PATH to the seam. The Hilbert-function base-change consumers
+  are all sorry-free already (GradedHilbertSerre, HilbertPolynomial, QuotFlatBaseChange,
+  QuotSupportBaseChange, RigidPushforward{Chart,Gamma}BaseChange, SectionBaseChange
+  -- 0 body sorries each), and no .lean file flags the tensor comparison as open.
+  Nothing consumes this row as blocking. Left pending deliberately: it is real but
+  off the representability critical path, so it is not a round target.'
 status: pending
 kind: proof
 priority: high
@@ -26,5 +74,5 @@ metadata:
     task_title: Make the project clean and optimized
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
-  updated_at: '2026-07-29T02:59:41.581760+00:00'
+  updated_at: '2026-07-29T18:19:14.740353+00:00'
   milestone: AJC.picrep
