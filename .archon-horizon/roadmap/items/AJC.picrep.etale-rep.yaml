@@ -141,6 +141,34 @@ summary: 'ADVANCED 2026-07-29 r2 by ajc-p1: the restated-G3 descent step now HAS
   Tracked as the new unowned leaf AJC.picrep.etale-rep.crossbase.
 
 
+  A FOURTH INPUT, ADDED 2026-07-30 (review-ajc r4), and it is UPSTREAM OF ALL THREE:
+  the k^s side has no section producer either.
+
+
+  The repair''s whole premise is that the G3/G4 refutation is survivable because everything
+  through J5 runs over a separably closed k'' "where a section is available and the
+  obstruction is absent" (PicEtSubcanonical.lean:82-89). That availability is UNFORMALISED.
+  Probed with controls: exact? cannot supply Scheme.HasRationalPoint C for a smooth
+  proper geometrically integral C over k with [IsSepClosed k]; the SAME probe with
+  [IsAlgClosed k] closes outright via hasRationalPoint_of_isAlgClosed (Albanese/AlbaneseUP.lean:289)
+  -- which is what makes the failure a real absence rather than an import artifact.
+
+
+  Neither existing route substitutes. The alg-closed producer is forbidden by the
+  route''s own char-p discipline (campaign G1 pins "k^s, NEVER k-bar"; P4(c)/(d) are
+  "separably closed only -- never generalize"). hasRationalPoint_baseChangeField (CurveBaseChange.lean:285)
+  only PROPAGATES a point down a tower: it assumes [HasRationalPoint C] upstairs,
+  exactly what I-0491 forbids the headline to carry.
+
+
+  Reads as ONE lemma rather than a cluster, because the campaign names its own proof
+  at P4(d): closed points of a smooth curve over a separably closed field are rational,
+  since smoothness makes the residue fields separable. The alg-closed proof is 8 lines
+  and only its LAST step uses IsAlgClosed. But it is currently zero lemmas, and J1,
+  J4 and P5 all assume it. Issue I-1135; proposed to ajc-p4. Labelled at the load-bearing
+  site in PicEtSubcanonical.lean (commit d6daa51f8b).
+
+
   ALSO STILL OPEN, unchanged from r1: that picEtComparison genuinely fails for Kleiman''s
 
   conic. Until it is proved, ''G3/G4 target a false statement'' is a CONDITIONAL theorem
@@ -178,4 +206,4 @@ metadata:
     projects: Algebraic-Jacobian-Challenge
   parent: AJC.picrep
   milestone: AJC.picrep
-  updated_at: '2026-07-29T16:34:17.970323+00:00'
+  updated_at: '2026-07-29T18:28:36.219571+00:00'
