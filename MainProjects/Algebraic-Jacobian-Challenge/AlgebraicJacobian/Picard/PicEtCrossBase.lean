@@ -317,10 +317,8 @@ noncomputable def crossBaseRoundTripCarrier' (C : Over (Spec (CommRingCat.of k))
 `Pic(C_{k'} ×_{k'} T)/π_T^* Pic(T) ⟶ Pic(C ×_k T)/π_T^* Pic(T)`.
 
 Well defined by `crossBase_relPicRel`. This is the componentwise map of the
-presheaf-level face; it is upgraded to a bijection by `crossBaseQuotEquiv`, shown
-additive by `crossBaseQuotMap_add`, and shown natural in `T` by
-`crossBaseQuotMap_relFunctorial` — which together give the functor isomorphism
-`relPresheafCrossBaseIso`. -/
+presheaf-level face; what `relPresheaf_crossBaseIso` below still owes is that
+it is bijective and natural in `T`. -/
 noncomputable def crossBaseQuotMap (C : Over (Spec (CommRingCat.of k)))
     (T : Over (Spec (CommRingCat.of k'))) :
     Quotient (PicSharp.relPicSetoid (baseChangeField C k').hom T.hom) →
@@ -512,9 +510,8 @@ noncomputable def crossBaseQuotAddEquiv (C : Over (Spec (CommRingCat.of k)))
 /-! ## §4. The presheaf-level face — now PROVED -/
 
 /-- **The cross-base identification at the level of the UNSHEAFIFIED relative
-Picard presheaf** — proved here, and proved rather than assumed anywhere
-downstream. Earlier revisions of this docstring described it as the one statement
-the file left open; that was true of those revisions and is false of this one.
+Picard presheaf.** This is the one statement this file leaves open, and it is
+stated here rather than assumed anywhere downstream.
 
 What it says: the relative Picard presheaf of the base-changed curve `C_{k'}`,
 as a functor on `k'`-tests, agrees with the relative Picard presheaf of `C`
@@ -676,13 +673,9 @@ that is a constraint of the *Galois* input, not of this identification.
 
 **What it does NOT do**: it closes no `sorry` in
 `Picard/FGAPicRepresentability.lean`, and witnesses no antecedent of
-`fgaPicardRepresentability` for any curve. It is **one input of four** to the
-route's repair — the others being the descent test
-(`Picard/EtaleFieldCover.lean`, landed), the Galois action and quotient (`G1`/`G2`,
-gated on `AlgebraicJacobian.GaloisDescent.HasGaloisQuotient`), and, upstream of
-all three, a section over separably closed fields which has no producer in this
-project at all (`I-1135`). The module docstring above states the same count; if
-these two ever disagree, the module docstring is the one kept current. -/
+`fgaPicardRepresentability` for any curve. It is one input of three to the
+route's repair, and the route additionally rests on a section over separably
+closed fields which has no producer in this project (`I-1135`). -/
 noncomputable def picEt_crossBaseIso (C : Over (Spec (CommRingCat.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] (k' : Type u) [Field k']
     [Algebra k k'] :

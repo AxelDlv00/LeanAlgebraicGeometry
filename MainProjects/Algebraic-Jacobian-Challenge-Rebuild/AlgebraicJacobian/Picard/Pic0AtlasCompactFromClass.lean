@@ -38,12 +38,20 @@ identified with one already there:
 | `hf` (`IsChartUniv`) | open | open, unchanged |
 | the `IsLocallySurjective` instance (coverage) | open | open, unchanged |
 | `hD` (`LocallyOfFiniteType (D i).hom`) | discharged | discharged, unchanged |
-| **`hcpt` (`CompactSpace` of the glued)** | **open, "the exposed one"** | **implied by `hcl`** |
+| **`hcpt` (`CompactSpace` of the glued)** | **open, "the exposed one"** | **replaced by `(lam, hcl)`** |
+
+**Read that last row as a replacement, not a saving.**  An earlier draft of this header wrote
+"four inputs, not five", and the binder count says otherwise: `jacobianDataOfMixedParamCharts`
+takes ten explicit arguments, `jacobianDataOfCompactFromClass` takes eleven, plus seven implicit
+binders for the divisor scheme.  One hypothesis became two — `lam` and `hcl` — and only the fact
+that `lam` is trivially inhabited makes that look free.
 
 `hcl` is the class-coordinate lift hypothesis of the `dat-j.qcfield` row: *every point of the
 representing object has its class pulled back from a fixed degree-zero class `lam` on the
-divisor scheme along some field point.*  So a lane discharging the qc field discharges `hcpt`
-in the same breath, at no extra cost, and `hcpt` should not be counted as a separate distance.
+divisor scheme along some field point.*  What is genuinely bought is therefore not a shorter
+list but a **relocation onto a row that already exists**: a lane discharging the qc field
+discharges `hcpt` in the same breath, so `hcpt` is not a separate *distance* even though it is
+not a smaller *signature*.
 
 **AND THE SHARP FORM IS STRONGER THAN THAT, which corrects a claim of mine.**  I first reported
 `hcpt` as "a genuine fifth obligation of the goal with no lane".  It is not fifth and it is not
@@ -59,13 +67,17 @@ the same obligation, and the `hcl` route is how it gets paid once.
 **No gate is closed and no antecedent is discharged.**  `hcl` has no producer — that is the
 `dat-j.qcfield` residue, released open at `I-1091` — so `jacobianDataOfCompactFromClass` below
 is an *implication*, exactly like every other declaration on this route.  Its value is
-subtractive: it removes an obligation from the list by showing it was double-counted, which is
+subtractive: it removes a *row* from the list by showing it was double-counted, which is
 the failure mode this workspace has repeatedly found in its own costings.
 
 Two things worth being explicit about, since a reduction that merely renames is worthless:
 
+(`HasDivFunctor`, named below as the workspace's cautionary vacuity, is a declaration of the
+*sibling* project and is deliberately not `#check`-able here — it is referenced as a documented
+failure mode, not as a Lean dependency of this file.)
+
 * **`hcpt` is not free**, so this is not a trivial discharge.  At a *finite* atlas with compact
-  charts it is provable outright (`Scheme.Cover.compactSpace`, the route
+  charts it is provable outright (`Scheme.OpenCover.compactSpace`, the route
   `JacobianData.ofCharts` takes), but the classical atlas is indexed by divisor *classes* and
   is not finite — `JacobianDataCharts.lean` says so, and `Pic0AtlasFiniteType.lean` measured
   that with `hf` and the coverage instance in scope and nothing else, `CompactSpace` of the
@@ -74,15 +86,36 @@ Two things worth being explicit about, since a reduction that merely renames is 
   visibly different hypotheses rather than two spellings.
 * **`hcl` is falsifiable**, hence the implication is not vacuous in the `HasDivFunctor` sense:
   `compactSpace_of_pic0_class_surjective` *is* the proof that `hcl` implies compactness, so
-  `hcl` fails at any representing object with non-compact space.  The curve occurs in it
-  (through `pic0Map C`, `pic0Subgroup C` and the divisor scheme of `C`), which is the check
-  `HasDivFunctor` failed.
+  `hcl` fails at any representing object with non-compact space.  The curve `C` occurs in it
+  through `pic0Map C` and `pic0Subgroup C`, which is the check `HasDivFunctor` failed.
+
+  **A third clause here said "and the divisor scheme of `C`".  That is FALSE and is corrected
+  rather than annotated away.**  The `FromClass` section below binds an *independent* curve `Y`
+  with its own `A B g r₁ r₂ b₁ b₂`, and `divSchemeOver` is built from `Y`, not from `C` —
+  verified by elaborating `hcl` with `Y` wholly unrelated to `C.left`.  The falsifiability
+  conclusion survives on the two true clauses alone, which is exactly why the false one was easy
+  to write: it sat inside a correct argument and read as audited.  Inherited from
+  `JacobianDataQcFromRep.lean`, whose own section has the same independent binder.
+* **`lam` is trivially inhabited** (`lam := 1` elaborates), so it is not a second obligation —
+  but it is not free either: `hcl` *quantifies over it*, and at `lam = 1` the hypothesis says
+  every point of the representing object carries the trivial class.  `lam` and `hcl` are one
+  coupled pair, and the table above lists them as one row for that reason.  **Stated because an
+  earlier draft of this header claimed the input count drops from five to four; it does not.**
+  `jacobianDataOfMixedParamCharts` takes ten explicit arguments and
+  `jacobianDataOfCompactFromClass` takes eleven (plus the seven implicit binders of the divisor
+  scheme).  One hypothesis became two.  What is true is the *identification* — `hcpt` is the
+  `quasiCompact` field, and the class route pays it from a row that already exists — not a
+  reduction in binder count.
 
 ## Main declarations
 
 * `AlgebraicGeometry.gluedOfCharts_left_eq_glued` — the carrier identity, `rfl`: the space of
-  the glued object of a chart family is mathlib's glue-data glued scheme.  Recorded because it
-  is what makes the substitution below a substitution rather than a transport.
+  the glued object of a chart family is mathlib's glue-data glued scheme.  **Documentation only —
+  no proof term below uses it**, and an earlier draft of this list said it "is what makes the
+  substitution a substitution rather than a transport", which overstates its role: the
+  substitution goes through by definitional unfolding and Lean never consults this lemma.  It is
+  worth stating because a reader auditing for a hidden transport would otherwise go looking for
+  the rewrite that is not there.
 * `AlgebraicGeometry.compactSpace_glued_of_pic0_class` — **the correction**: `hcpt` for the
   mixed-parameter atlas from the qc field's `hcl` at the atlas's own representation.
 * `AlgebraicGeometry.jacobianDataOfCompactFromClass` — the assembly with `hcpt` replaced by
@@ -114,8 +147,8 @@ noncomputable section
 
 `jacobianDataOfMixedParamCharts` states `hcpt` about `(glueData hf).glued`, while the qc route
 concludes `CompactSpace J.left` for `J` the represented object `gluedOfCharts …`.  These are the
-same type, definitionally — recorded so that the substitution below needs no transport, which is
-the difference between a real reduction and a repackaging. -/
+same type, definitionally, so the substitution below needs no transport.  The lemma is a
+*record* of that, not a step in it: no proof term in this file cites it. -/
 
 variable (C) in
 /-- **The space of the glued object of a chart family is mathlib's glued scheme**, by `rfl`.
@@ -151,7 +184,9 @@ every point of the representing object carries a class pulled back from `lam` al
 point of the divisor scheme.
 
 The proof is one application of `compactSpace_of_pic0_class_surjective` to
-`pic0RepresentableByOfCharts` — no transport, by `gluedOfCharts_left_eq_glued`.
+`pic0RepresentableByOfCharts`, with no transport — the two carriers agree by definitional
+unfolding, which `gluedOfCharts_left_eq_glued` *records* but does not effect (that lemma appears
+in no proof term).
 
 **So `hcpt` was double-counted.**  A lane discharging the qc field gets it free; it is not a
 fifth distance to representability. -/
@@ -262,9 +297,26 @@ variable (C) in
 `CompactSpace (glueData hf).glued ↔ QuasiCompact (gluedHom C f hf)`: over the affine base both
 sides are `HasAffineProperty.iff_of_isAffine` read in the two directions.
 
-Stated as an `iff` deliberately.  The `mpr` direction alone would look like a reduction of the
-atlas's input to the datum's field; the `mp` direction is what shows there is nothing to reduce —
-a lane holding either holds the other, so no route can pay one and still owe the other. -/
+Stated as an `iff` deliberately, and **only one half is new**.  The `mpr` direction is already
+the *implementation* of `JacobianData.ofChartsOfCompactSpace` (`JacobianDataCharts.lean`), which
+is literally `HasAffineProperty.iff_of_isAffine.mpr hcpt` — so the collapse has been structural
+in the producer since that file landed, and nobody read it off.  The `mp` direction is one
+application of this project's own `compactSpace_left_of_quasiCompact` (`Curve/Basic.lean`).  What
+is contributed here is therefore not either implication but the **equivalence written down**:
+each half was one line away, and while they sat apart the two board rows could each carry the
+obligation without anyone noticing it was one.  Recorded at this strength rather than as a
+discovery, because a fresh-context audit found the `mpr` half pre-existing and it would be worse
+to leave the stronger reading standing.
+
+**THE CARRIER HAZARD, and it is one `rfl` wide.**  This `iff` is about `gluedHom C f hf`, i.e.
+about the glued *chart* object.  `JacobianData.quasiCompact` is `QuasiCompact J.hom` for the
+*representing* object `J`.  They are the same statement here **only** because
+`JacobianData.ofChartsOfCompactSpace_J` makes `J = gluedOfCharts C f hf` by `rfl`.  A lane that
+swaps the representing carrier — for instance transporting along
+`Functor.RepresentableBy.uniqueUpToIso` to a different but isomorphic `J` — keeps this `iff` true
+and **silently loses the identification**, so `hcpt` would become a genuinely separate input
+again without any statement here turning false.  Whoever moves the carrier must re-derive the
+identification, not inherit it. -/
 theorem compactSpace_glued_iff_quasiCompact {ι : Type u} {X : ι → Scheme.{u}}
     (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1)
     (hf : ∀ i, IsOpenImmersion.presheaf (f i))
