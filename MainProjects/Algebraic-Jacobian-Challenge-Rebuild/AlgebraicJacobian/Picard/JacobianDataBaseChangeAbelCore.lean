@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.PicEtCrossBaseGraph
-import AlgebraicJacobian.Picard.AbelElement
+import AlgebraicJacobian.Picard.JacobianDataBaseChangeAbel
 import AlgebraicJacobian.Picard.Pic0ThetaAssembly
 
 /-!
@@ -38,6 +38,8 @@ level below where the worksheet expected the boundary.
   committed `hCore` of `JacobianDataBaseChangeAbel.lean` follows from
   `abelCrossBaseCechCore`.  This is the theorem that makes `baseChange_ofCurve_data_of_core`
   applicable, so A-1's residue is now exactly `abelCrossBaseCechCore` and nothing else.
+* `AlgebraicGeometry.baseChange_ofCurve_data_of_cech` — **the consumer**: the worksheet §3
+  datum-level A-1 statement, off `abelCrossBaseCechCore` alone.
 * `AlgebraicGeometry.abelCrossBaseCechCore_of_graph` — the residue **split into its two graph
   factors**: it suffices that the cross-base transport carries the diagonal graph class to
   the diagonal graph class and the constant graph class to the constant one.  This is the
@@ -155,5 +157,26 @@ theorem abelCrossBaseCechCore_of_graph (P : 𝟙_ (Over (Spec (.of k))) ⟶ C)
     ((map_mul _ _ _).trans
       (((congrArg (· * _) hdiag).trans
         (congrArg (_ * ·) ((map_inv _ _).trans (congrArg (·⁻¹) hconst)))))))
+
+/-! ## The downstream consumer: A-1's datum-level statement off the Čech residue -/
+
+/-- **A-1 at the datum level, off the Čech residue** — this file's supplier composed with the
+landed reduction `baseChange_ofCurve_data_of_core`
+(`Picard/JacobianDataBaseChangeAbel.lean`).  This is the worksheet §3 statement
+`baseChange_ofCurve_data`, now depending on `abelCrossBaseCechCore` alone; at
+`d := jacobianData C`, `dL := jacobianData C_L` it is the frozen
+`Jacobian.baseChange_ofCurve` (`Challenge.lean:278`).
+
+Its existence is the point: A-1 is no longer a reduction plus a prose note about what is
+missing, but a single named hypothesis with one producer obligation and a consumer that
+actually applies it, both in Lean. -/
+theorem baseChange_ofCurve_data_of_cech (d : JacobianData C)
+    (dL : JacobianData ((baseChange k L).obj C)) (P : 𝟙_ (Over (Spec (.of k))) ⟶ C)
+    (h : abelCrossBaseCechCore k L C P) :
+    (baseChange k L).map (d.homEquiv.symm (abelElement C P))
+        ≫ (baseChangeIsoOfData d dL).hom.hom.hom
+      = dL.homEquiv.symm
+          (abelElement _ (Functor.LaxMonoidal.ε (baseChange k L) ≫ (baseChange k L).map P)) :=
+  baseChange_ofCurve_data_of_core d dL P (pic0CrossBaseEquiv_symm_abel_of_cech P h)
 
 end AlgebraicGeometry
