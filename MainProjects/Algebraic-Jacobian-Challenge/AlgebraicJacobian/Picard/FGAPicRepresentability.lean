@@ -563,7 +563,8 @@ Present state of the four:
    not `grep`" trap; import that module before probing either class.
 4. **a section over separably closed `k'` — LANDED 2026-07-30, this item is
    CLOSED.** (Read item 5 below first if you are pricing the descent: the
-   four-input list prices clause (1)'s *first* field only.) This entry read "NO PRODUCER IN THIS PROJECT" and that is no longer
+   four-input list prices clause (1)'s *first* field only.) This entry read "NO
+   PRODUCER IN THIS PROJECT" and that is no longer
    the state: `Curve/SeparablyClosedRationalPoint.lean`
    (`hasRationalPoint_of_isSepClosed`, `sorry`-free, axiom-clean) is exactly the
    producer it said was absent. What survives, and is the reason the descent step
@@ -578,11 +579,24 @@ Present state of the four:
    This one is upstream of the other three.
 5. **THE TWO SIDE CONJUNCTS OF CLAUSE (1) ARE FREE, AND BOTH ARE NOW
    DISCHARGED IN-TREE** — found 2026-07-30 (`review-ajc`, `I-1286`) because items
-   1–4 above priced the *first* field of clause (1) and never mentioned the other
-   two; landed the same day (`ajc-p1`, `Picard/PicEtSeparated.lean`, roadmap
-   `AJC.picrep.etale-rep.separated`). Clause (1) is a three-field existential; the
-   four-input list, and every roadmap row under `AJC.picrep.etale-rep`, spoke only
-   about `RepresentableBy`. So **clause (1) is now a two-field obligation**, and a
+   1–4 above priced the *first* field of clause (1); landed the same day
+   (`ajc-p1`, `Picard/PicEtSeparated.lean`, roadmap
+   `AJC.picrep.etale-rep.separated`). Clause (1) is a three-field existential, and
+   no roadmap row under `AJC.picrep.etale-rep` mentions either side conjunct.
+   **The stronger claim first published here — that they were "never mentioned"
+   anywhere — is FALSE and is withdrawn** (`review-ajc`, corrected by a
+   fresh-context audit): they were priced a day earlier, as *free by transport
+   from the `picSharp` endpoint*, on the board row `AJC.picrep` ("SAME scheme, so
+   `LocallyOfFiniteType` and `IsSeparated` ride along unchanged") and in
+   `Picard/PicEtSubcanonical.lean`, in the docstring of
+   `hasPicSchemeEt_of_picSharp_representability` ("the local-finiteness and
+   separatedness conjuncts are carried across unchanged, because the transport
+   does not move the representing scheme"). What is genuinely new here is a
+   *different* route — free from a bare `picEt` representation, with no `picSharp`
+   detour — and the descent-unavailability fact below. That distinction is
+   load-bearing: on the **field-descent** route this board actually holds, the
+   transport argument is not available, so there the two conjuncts really were
+   live and unpriced. So **clause (1) is now a two-field obligation**, and a
    lane closing the descent step should target
    `seamClauseOne_of_representableBy_locallyOfFiniteType`. Measured, `lake env
    lean` EXIT=0, axiom-clean against a control that fires `sorryAx` here:
@@ -598,11 +612,20 @@ Present state of the four:
      route through `IsSeparated.isSeparated_eq_diagonal_isClosedImmersion` fails
      too, because `DescendsAlong @IsClosedImmersion` is *also* absent
      (`IsClosedImmersion` is not a `HasRingHomProperty`, so
-     `HasRingHomProperty.descendsAlong_flat` does not apply). Mathlib has exactly
-     five such scheme instances: `LocallyOfFiniteType`,
-     `LocallyOfFinitePresentation`, `Smooth`, `FormallyUnramified`, `Etale`.
+     `HasRingHomProperty.descendsAlong_flat` does not apply).
      **So do not budget a separatedness-descent argument: the lemma it would cite
-     does not exist.** Separatedness instead comes from the *group structure of
+     does not exist.** (A previous revision of this sentence added "Mathlib has
+     exactly five such scheme instances", listing the five in
+     `Morphisms/LocalFlatDescent.lean`. **That count was FALSE and is withdrawn**
+     — `review-ajc`, corrected by a fresh-context audit, `I-1315`.
+     `Morphisms/FlatDescent.lean` registers six more, all of which synthesise on
+     probe: `Surjective`, `UniversallyClosed`, `UniversallyOpen`,
+     `UniversallyInjective`, `isomorphisms Scheme`, `IsOpenImmersion` — eleven,
+     not five. It was one file's count published as Mathlib's, three lines below
+     this file's own method note warning about exactly that. The absence of the
+     two properties above is unaffected: it was measured by failed synthesis, not
+     inferred from any list. Do not quote a total here; grep
+     `DescendsAlong` and count.) Separatedness instead comes from the *group structure of
      the represented object*: `picEt` is `CommGrpCat`-valued (`picEtCommGrp`), so
      ANY scheme representing it is a group object over `Spec k` by Yoneda
      transport (`CommGrpObj.ofRepresentableBy _ (picEtCommGrp C)
