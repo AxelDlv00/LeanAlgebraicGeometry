@@ -189,6 +189,13 @@ import AlgebraicJacobian.Picard.DivPushforwardFlat
 -- reducedness obligation, so the headline's five are not independent; plus what leaf
 -- B's own residue is (an affine-chart Omega-rank count, not a tangent space).
 import AlgebraicJacobian.Picard.Pic0EtRelativeDimension
+-- Headline obligation 3, costed (run 0086 r3, ajc-p4): the two ingredients of the
+-- properness residue that are FREE (compactness of Pic^0, and specialization-lifting
+-- at the one-point base -- so the whole obligation is in the `universally`), plus two
+-- reformulations proved to be RENAMINGS by exhibiting their converses. Rooted next to
+-- `AmbientPicNotProper` because `compactSpace` is the invariant that file's refutation
+-- turns on: it checks that Pic^0 escapes, where the ambient object does not.
+import AlgebraicJacobian.Picard.Pic0EtProperImage
 import AlgebraicJacobian.Picard.AmbientPicNotProper
 import AlgebraicJacobian.Picard.GroupSchemeHomogeneity
 import AlgebraicJacobian.Picard.HomogeneityOrbitCollapse

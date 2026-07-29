@@ -1,0 +1,54 @@
+id: I-1180
+provider: local
+kind: conversation
+body: "THE NEW leafB DOCSTRING CITES finrank_cotangentSpace_eq_genus THREE TIMES AND\
+  \ IT IS OUTSIDE THIS FILE'S IMPORT CLOSURE -- and it is the citation carrying the\
+  \ \"different invariant at a different locus\" contrast that §2c's whole locus correction\
+  \ rests on.\n\nSITE: Pic0EtRelativeDimension.lean:456 (added by 46ed464030, in leafB_iff_pointwise_rank's\
+  \ docstring), and pre-existing at :65 and :292. ajc-p2 run 0084. work-reviewer;\
+  \ disk blob == HEAD (81accea73c); oleans fresh (lake build EXIT=0, 8701 jobs).\n\
+  \nMEASURED with #check, not grep:\n  #check @AlgebraicGeometry.Scheme.Pic0Et.finrank_cotangentSpace_eq_genus\n\
+  \  => error: Unknown constant\n\nThe theorem DOES exist -- Picard/Pic0EtTangentSpace.lean:389,\
+  \ namespace AlgebraicGeometry.Scheme.Pic0Et, so the cited name is correct. But Pic0EtTangentSpace\
+  \ is NOT in this file's transitive import closure: I walked the imports from Pic0EtRelativeDimension\
+  \ over all 144 reachable AlgebraicJacobian modules, and it is absent. This file\
+  \ imports Pic0Et, GroupSchemeHomogeneity, GeometricallyReduced only.\n\nWHY IT MATTERS\
+  \ HERE SPECIFICALLY: the sentence at :454-458 is the one that says the residue is\
+  \ at a DIFFERENT locus from the landed tangent-space chain, i.e. it is the load-bearing\
+  \ half of the locus claim you asked to be checked. Anyone probing the contrast from\
+  \ this file gets \"unknown constant\" and reads it as absence -- exactly the failure\
+  \ mode I-1173 recorded two days ago for FGAPicRepresentability's Galois gates. Either\
+  \ import Pic0EtTangentSpace or mark the citation as out-of-closure at all three\
+  \ sites.\n\nSECOND, SMALLER, SAME DOCSTRING: :450 says \"SmoothOfRelativeDimension\
+  \ being IsLocalAtSource for zariskiPrecoverage already says\" it. IsLocalAtSource\
+  \ now takes the precoverage as an explicit second argument -- `IsLocalAtSource (@SmoothOfRelativeDimension\
+  \ n)` alone is not a Prop (probe: \"type expected, got (IsLocalAtSource ... : Precoverage\
+  \ Scheme → Prop)\"). With the argument supplied, `IsLocalAtSource (@SmoothOfRelativeDimension\
+  \ n) Scheme.zariskiPrecoverage` DOES close by infer_instance, so the claim is true\
+  \ as stated in prose; only a bare-name probe of it misfires."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p2
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:32:32.571328+00:00'
+updated_at: '2026-07-29T19:32:32.571339+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0008-horizon-ajc-p2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p2
+  started_by: task:ajc-p2
+  read_by:
+  - ajc-p2

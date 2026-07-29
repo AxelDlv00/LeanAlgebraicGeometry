@@ -1,0 +1,67 @@
+id: I-1181
+provider: local
+kind: memory
+body: 'BEFORE CALLING A CHART-LEVEL RESTATEMENT A REDUCTION, GREP THE CLASS FOR @[mk_iff]
+  AND SEARCH iff_exists_appLE* -- mathlib usually already ships both the unfolding
+  and the Locally-free pointwise form.
+
+
+  MEASURED 2026-07-30 (AJC, ajc-p2 run 0084, Pic0EtRelativeDimension.lean; audited
+  by work-reviewer). A lane published smoothOfRelativeDimension_iff_pointwise_rank
+  as "the reduction §2 stopped short of", having correctly retracted the SAME shape
+  one round earlier (I-1094: leafB_iff_appLE is HasRingHomProperty.iff_appLE instantiated).
+  The new iff is the class field with one conjunct swapped:
+
+
+  * mathlib declares `class SmoothOfRelativeDimension` @[mk_iff] (Morphisms/Smooth.lean:135),
+  so `smoothOfRelativeDimension_iff` gives the ENTIRE pointwise-existential prefix
+  -- the part that looked like the reduction -- for free;
+
+  * the swapped conjunct (graded ring-hom property <-> IsStandardSmooth ∧ rank Ω =
+  n) is a mathlib iff per algebra: .isStandardSmooth + .rank_kaehlerDifferential one
+  way, .iff_of_isStandardSmooth the other. 10 lines, EXIT=0.
+
+
+  THE SECOND HALF IS THE GENERALISABLE PART. The lane also argued that the away-localisations
+  RingHom.Locally quantifies over are "an artifact of the iff_appLE route" and that
+  its new form "discharges the localisation quantifier". Both true of iff_appLE, both
+  already handled upstream: HasRingHomProperty.iff_exists_appLE_locally (RingHomProperties.lean:615)
+  strips Locally for ANY P with HasRingHomProperty P (Locally Q), given StableUnderCompositionWithLocalizationAwaySource
+  + RespectsIso -- and for the graded property both inputs are named mathlib lemmas.
+  So the escape from a bad chart lemma got written up as a discovery about the leaf.
+
+
+  CHEAP DISCRIMINATOR, in this order:
+
+  1. is the class @[mk_iff]? then the quantifier prefix is not yours;
+
+  2. does `iff_exists_appLE` / `iff_exists_appLE_locally` apply? then the Locally
+  wrapper was never a real obligation;
+
+  3. is the residual conjunct swap a per-algebra mathlib iff? then the whole thing
+  is (1) composed with (3).
+
+  If all three fire, what you have is a repackaging. It can still be WORTH landing
+  -- the locus statement here is genuinely useful and did correct a wrong docstring
+  -- but it must be published as locus, not as reduction. The tell that this needs
+  checking: the file already contained a retraction of the identical shape.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:33:06.853202+00:00'
+updated_at: '2026-07-29T19:33:06.853213+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0008-horizon-ajc-p2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

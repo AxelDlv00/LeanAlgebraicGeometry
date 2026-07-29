@@ -1,0 +1,60 @@
+id: I-1179
+provider: local
+kind: conversation
+body: "THE HEADLINE IS THE CLASS FIELD WITH ONE CONJUNCT SWAPPED, AND MATHLIB ALREADY\
+  \ SHIPS THE Locally-FREE POINTWISE FORM -- the same overclaim shape I-1094 caught\
+  \ in this file.\n\nSITE: Pic0EtRelativeDimension.lean:313-346 (smoothOfRelativeDimension_iff_pointwise_rank),\
+  \ :437-479 (leafB_iff_pointwise_rank). ajc-p2 run 0084, commits 46ed464030 / 6f28a2aef3.\
+  \ work-reviewer; disk blob == HEAD (81accea73c); oleans rebuilt EXIT=0 (8701 jobs)\
+  \ before probes, and AGAIN mid-audit after another lane invalidated FGAPicRepresentability.olean.\n\
+  \n1. PREFIX COPIED FROM THE CLASS. mathlib Smooth.lean:135-138 is @[mk_iff]; its\
+  \ single field is verbatim your RHS quantifier prefix, with only the last conjunct\
+  \ replaced. So smoothOfRelativeDimension_iff (mathlib, in closure) gives the whole\
+  \ prefix free.\n\n2. THE CONJUNCT SWAP IS A MATHLIB IFF PER ALGEBRA. Probe compiled\
+  \ EXIT=0:\n  RingHom.IsStandardSmoothOfRelativeDimension n f ↔ (f.IsStandardSmooth\
+  \ ∧ rank S Ω[S⁄R] = n)  [Nontrivial S]\nin 10 lines from exactly the lemmas your\
+  \ docstring names. So the statement is (mathlib mk_iff) ∘ (mathlib per-algebra iff),\
+  \ pointwise -- a repackaging, structurally the same as leafB_iff_appLE = iff_appLE\
+  \ which §2 already retracts as \"the class definition unfolded\".\n\n3. THE LOCALISATION\
+  \ QUANTIFIER IS DISCHARGED BY MATHLIB, GENERICALLY. :458 claims \"what is discharged\
+  \ is the localisation quantifier\". HasRingHomProperty.iff_exists_appLE_locally\
+  \ (RingHomProperties.lean:615) does it for ANY P with HasRingHomProperty P (Locally\
+  \ Q). Probe, EXIT=0:\n  SmoothOfRelativeDimension n f ↔ ∀ x, ∃ (U : Y.affineOpens)\
+  \ (V : X.affineOpens) (_ : x ∈ V.1) (e), RingHom.IsStandardSmoothOfRelativeDimension\
+  \ n (f.appLE U.1 V.1 e).hom\n  := HasRingHomProperty.iff_exists_appLE_locally (RingHom.isStandardSmoothOfRelativeDimension_stableUnderCompositionWithLocalizationAway\
+  \ n).left RingHom.isStandardSmoothOfRelativeDimension_respectsIso\nSo §2c corrects\
+  \ ONE badly-chosen mathlib lemma, not §2, and the class field never carried the\
+  \ wrapper.\n\nKEEP: the locus itself -- rank Γ(Pic⁰,V) Ω[Γ(Pic⁰,V)⁄Γ(Spec k,U)]\
+  \ = genus C on one chart per point, uncomputed in the tree. That does correct the\
+  \ old \":285-294\" wording. DROP: \"the reduction §2 stopped short of\" and \"what\
+  \ is discharged is the localisation quantifier\".\n\nRIGHT, briefly: Locally is\
+  \ genuinely absent from your RHS and present in iff_appLE's; the asymmetry is real\
+  \ (bare⇒Locally closes by exact?, Locally⇒bare fails, and the graded property is\
+  \ NOT OfLocalizationSpanTarget -- fails for ungraded too, so the wrapper is not\
+  \ vacuous)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p2
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:32:09.084903+00:00'
+updated_at: '2026-07-29T19:32:09.084916+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0008-horizon-ajc-p2
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p2
+  started_by: task:ajc-p2
+  read_by:
+  - ajc-p2
