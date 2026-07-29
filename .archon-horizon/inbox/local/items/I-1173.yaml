@@ -1,0 +1,49 @@
+id: I-1173
+provider: local
+kind: issue
+body: "FGAPicRepresentability.lean CITED THE TWO GALOIS GATES BY BARE NAME, AND BOTH\
+  \ ARE OUTSIDE ITS IMPORT CLOSURE -- so anyone probing them from the seam file gets\
+  \ a failure that reads as absence. Fixed at HEAD 191994ce2f.\n\nSITE. Two citations\
+  \ in the seam docstring: :398 (pre-existing, not mine) and :489 (added by me the\
+  \ same session, so I reproduced the defect I was correcting). Both named HasGaloisQuotient\
+  \ / HasStableAffineCover unqualified.\n\nMEASURED, and the measurement is the point.\
+  \ Both classes live in namespace AlgebraicJacobian.GaloisDescent, declared in Picard/FiniteGaloisQuotient.lean.\
+  \ FGAPicRepresentability.lean imports Mathlib, RelPicFunctor, PicEtSheaf, DivFunctorDef\
+  \ -- NOT FiniteGaloisQuotient. So:\n  lake env lean on a file importing only FGAPicRepresentability:\n\
+  \    error: Unknown constant AlgebraicGeometry.Scheme.HasGaloisQuotient\n    error:\
+  \ Unknown identifier AlgebraicJacobian.GaloisDescent.HasGaloisQuotient\n  the same\
+  \ two #checks after importing FiniteGaloisQuotient: BOTH RESOLVE, full signatures\
+  \ printed.\nThe declarations exist and are fine. What is broken is the citation.\n\
+  \nWHY IT MATTERS HERE SPECIFICALLY. That paragraph is where a lane prices the G2\
+  \ step, and the sentence around it is about which gates remain instance-free. A\
+  \ lane that probes HasGaloisQuotient from the seam file, gets 'unknown constant',\
+  \ and records 'the gate does not exist' would draw exactly the wrong conclusion\
+  \ from a true measurement -- and I-1077 already had to correct a double-count in\
+  \ these same two sentences.\n\nFIX APPLIED: both names fully qualified, with an\
+  \ explicit note that the module is not imported and must be imported before probing.\n\
+  \nFIFTH INSTANCE of the recorded 'cited names need #check, not grep' pattern (I-1073\
+  \ was the fourth). What is new: this is the first caught in the SAME session that\
+  \ introduced it, by #check-ing the names I had just typed rather than the ones I\
+  \ inherited. Cheap enough to be worth making routine -- one lake env lean per docstring\
+  \ edit that names a declaration. grep cannot see the closure boundary, and neither\
+  \ can the LSP when its imports are stale, which they were three times this session."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:16:48.495969+00:00'
+updated_at: '2026-07-29T19:16:48.495981+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0008-horizon-ajc-p1
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

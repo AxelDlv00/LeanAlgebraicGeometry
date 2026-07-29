@@ -118,11 +118,12 @@ where a class-to-window bridge would have to be built, not in a chart file.
 * `AlgebraicGeometry.degAt_chartTwist_eq_chartParam` — the chart parameter **is** the fibre
   degree of the twisted class, unconditionally.  So where the fork is asked is arithmetic in `n`
   alone: on `chartLocus` the fibre witness has `h⁰ = n − g + 1`, which is `1` at `n = g` and
-  `≥ 2` for `n > g`.  `n` is pinned to the genus by `chi_moduleKSheaf` alone, unconditionally and
-  without inspecting any `rep` producer (see that theorem's docstring), so the `n > g` case —
-  where a refuting witness would live — cannot arise for a chart the atlas can contain.
-  **That closes no branch**: an unrefutable hypothesis is not a satisfied one, and the
-  datum still has no producer.
+  `≥ 2` for `n > g`.  Every `rep` producer in this tree carries an `hchi` at its own index, which
+  `chi_moduleKSheaf` turns into `n = genus C` (see that theorem's docstring — the pinning rests on
+  the producers, NOT on `chi_moduleKSheaf` alone, which only converts the hypothesis and cannot
+  supply it).  So the `n > g` case — where a refuting witness would live — cannot arise for a
+  chart built on such a producer.  **That closes no branch**: an unrefutable hypothesis is not a
+  satisfied one, and the datum still has no producer.
 -/
 
 set_option autoImplicit false
@@ -374,30 +375,49 @@ twist exponent and no `Z` enters it.
 wherever an `hchi : χ(𝒪_C) = 1 − g` accompanies such a representation it carries **the same `g`
 as the `divFunctor` index**, forcing `χ = 1 − n`.
 
-The pinning does **not** rest on that being true of every producer, and it should not be argued
-that way: `DivRepKit.lean:113` (`DivRepGlobalData.representableBy`) produces
-`(divFunctor C π g).RepresentableBy DivOver` with **no `χ` hypothesis at all** — the string
-`hchi` does not occur in that file.  So a census of producer signatures is the wrong instrument
-here, and an earlier version of this paragraph mis-stated it as five sites all carrying `hchi`.
+One caveat on the *phrasing* "every producer", and it is only a phrasing caveat:
+`DivRepKit.lean:113` (`DivRepGlobalData.representableBy`) produces
+`(divFunctor C π g).RepresentableBy DivOver` with no `χ` hypothesis in its own signature — the
+string `hchi` does not occur in that file.  But `DivRepGlobalData` has exactly one producer in
+the tree, `DivRepAffinePullback.toGlobalData` (`DivRepGlobalClassify.lean:290`), and *that*
+carries `hchi`.  So every **inhabitant** of `DivRepGlobalData` carries it, and the census reaches
+the right conclusion; what is loose is only that it censused signatures of consumers rather than
+producers of inhabitants.
 
-What actually pins `n` is one *unconditional* theorem, available under the instance binders the
-chart files already carry: `chi_moduleKSheaf` (`RiemannRoch/ChiCurve.lean:148`) gives
-`χ(𝒪_C) = 1 − genus C` for any `[IsProper] [SmoothOfRelativeDimension 1]
-[GeometricallyIrreducible]` bundle, with no hypothesis to discharge.  Hence *any* `n` admitting
-`χ = 1 − n` satisfies `n = genus C`, and two such parameters are equal — no `rep` producer need
-be inspected.  This is strictly stronger than the census reading: it pins the parameter of every
-chart whose curve is the challenge curve, including charts built through the `hchi`-free
-packaging, so the case `n > g` cannot arise for any chart the atlas can contain.
+**A retracted "improvement", recorded because the retraction is the instructive part.**  An
+earlier version of this paragraph (`review-ajcr`, HEAD `4ee25a3d66`) replaced the census with the
+claim that `chi_moduleKSheaf` (`RiemannRoch/ChiCurve.lean:148`) pins `n` *unconditionally*, so
+that "no `rep` producer need be inspected", and that this covers even the `hchi`-free packaging.
+**That is false, and backwards.**  `chi_moduleKSheaf` gives `χ(𝒪_C) = 1 − genus C`; it therefore
+*converts* `χ = 1 − n` into `n = genus C` and back, but it does not *supply* `χ = 1 − n` at a
+chart's own `n`.  Probed with `n` free and no `χ` hypothesis, `(n : ℤ) = genus C` FAILS
+(`omega`, counterexample `genus C − n ≥ 1`), and it still fails with a
+`(divFunctor C π n).RepresentableBy D` in scope: a representation at `n` carries no `χ`
+information.  So on the `hchi`-free packaging the theorem is strictly *weaker*, not stronger —
+there is no hypothesis there for it to convert.  The pinning does rest on the concrete producers'
+`hchi`, which is what the census was counting.
+
+The honest statement of what `chi_moduleKSheaf` buys: `χ = 1 − n` and `n = genus C` are
+**equivalent** at this curve.  With it, a producer's `hchi` at index `n` is exactly the statement
+`n = genus C`, so `n > g` cannot arise for a chart built on such a producer.
 
 So on `chartLocus`, at the only degree a chart can be built at, the fibre witness has `h⁰ = 1`
 and is unique.  `Pic0ChartAtlasParamFree.lean`'s heterogeneous atlas is constrained rather than
-contradicted by this — but note *why*, because the per-index route does not establish it: an
-index's `rep` need not come with an `hchi` (see the `DivRepKit` counterexample above), so
-"each index carries its own `hchi`" proves nothing.  The constraint comes from the ambient curve
-instead: `mixedParamChart`'s `nn i` indexes `divFunctor C π (nn i)` over the *same* `C` at every
-index, and `chi_moduleKSheaf C` pins `1 − χ(𝒪_C)` once and for all.  So `nn i = genus C` for
-every `i` regardless of how `rep i` was produced, and the freedom is admissible but never
+contradicted by this: each index carries its own `rep i`, and each `rep i` obtained from a
+producer in this tree comes with an `hchi` at that index's own `nn i`, which by the equivalence
+above says `nn i = genus C`.  Since `mixedParamChart` indexes `divFunctor C π (nn i)` over the
+*same* `C` at every index, all those values coincide, so the heterogeneity is admissible but never
 inhabited at two parameters.
+
+The dependence on the producers is essential here and an earlier version of this paragraph tried
+to remove it — arguing that "the constraint comes from the ambient curve instead", since
+`chi_moduleKSheaf C` pins `χ(𝒪_C)` once and for all, hence `nn i = genus C` "regardless of how
+`rep i` was produced".  That argument has exactly the defect it was written to repair:
+`chi_moduleKSheaf` pins `χ(𝒪_C)`, which says nothing about `nn i` in the absence of a hypothesis
+linking them.  Probed: `nn i = genus C` at a free `nn` FAILS, and `mixedParamChart` typechecks at
+an arbitrary `nn` — nothing in the typing restricts the atlas to `n = genus C`.  Whether an
+inhabitant exists at `n ≠ genus C` is an inhabitation question about `DivRepAffinePullback`, not
+something a typing or a `χ` computation settles.
 
 **WHAT THIS DOES NOT SAY, and the distinction is the whole point** (ajcr-p3's correction, and
 they are right): *unreachability of the refutation is not reachability of the positive branch.*

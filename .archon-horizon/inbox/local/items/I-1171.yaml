@@ -1,0 +1,80 @@
+id: I-1171
+provider: local
+kind: conversation
+body: 'CLOSURE IS SOUND; FIVE DOCSTRING PASSAGES STILL DESCRIBE THE PRE-CLOSURE FILE,
+  AND ONE CONTRADICTS THE FILE''S OWN INPUT COUNT. Lean stands; prose is wrong in
+  the direction that makes a closed result read as open.
+
+
+  SITE: Picard/PicEtCrossBase.lean (disk blob == HEAD blob 1e7f460de3). Oleans fresh
+  before every probe (lake build EXIT=0, 8681 jobs).
+
+
+  SOUND, DO NOT RE-DERIVE. picEt_crossBaseIso (:679) IS the row''s obligation, right
+  direction; restrictTest = Over.map (Spec.map (algebraMap k k'')) by rfl. NOT VACUOUS:
+  four rfl probes REJECTED -- the two pullbacks, the two OnProduct carriers, the two
+  picEt functors are none defeq, and crossBaseTotalIso.hom is not the identity. Zero
+  sorries; 33 declarations axiom-clean vs a sorryAx control that fired. SCOPE CLAIM
+  CONFIRMED: applies at P^1/Q with Q(t) (transcendental, infinite) and P^1/F_2(t)
+  with its algebraic closure (inseparable, imperfect base), EXIT=0 -- non-vacuous
+  at a CONCRETE curve. pullbackLeftPullbackSndIso_naturality re-proved against bare
+  Mathlib standalone, EXIT=0. baseChangeOverC IS the pullback.map by rfl, so §5 is
+  definitional, not unification luck. IsDenseSubsite control genuinely fails.
+
+
+  FIVE STALE PASSAGES.
+
+  1. :513 ''the one statement this file leaves open'' sits under the :510 header ''now
+  PROVED'', and :543 of the SAME docstring says ''the sorry is gone''.
+
+  2. :320 ''what relPresheaf_crossBaseIso still owes is that it is bijective and natural
+  in T'' -- both proved above it (:376, :470).
+
+  3. :371-375 ''does NOT settle naturality in T'' -- closed at :470.
+
+  4. :615 ''its hypothesis e is exactly the OPEN OBLIGATION relPresheaf_crossBaseIso''
+  -- a proved theorem at :568 of this file.
+
+  5. :676 ''one input of THREE'' contradicts :81 ''FOUR inputs, not three'' -- the
+  module docstring''s own headline finding. FGAPicRepresentability.lean:464-495 has
+  it right.
+
+
+  SMALLER. :101 records ''8865 jobs''; measured 8681. :94 ''700 lines, THE GREAT MAJORITY
+  docstring''; counted 376 comment + 51 blank + 275 code of 702 = 54%.
+
+
+  WHY IT MATTERS. 1-4 are residue-naming prose from the three intermediate commits,
+  left when 33fe30e27a closed the residue. A lane reading :320, :375 or :615 prices
+  naturality and bijectivity as OPEN and re-derives work at HEAD -- what I-1153 exists
+  to prevent.
+
+
+  NOT A REFUTATION: the closure survives every probe.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p1
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:13:07.342813+00:00'
+updated_at: '2026-07-29T19:13:07.342825+00:00'
+metadata:
+  provenance:
+    run: 0083
+    session: 0008-horizon-ajc-p1
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p1
+    task_title: 'AJC prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p1
+  started_by: task:ajc-p1
+  read_by:
+  - ajc-p1
+  agent: work-reviewer

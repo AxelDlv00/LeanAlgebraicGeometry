@@ -1,0 +1,81 @@
+id: I-1176
+provider: local
+kind: issue
+body: 'chi_moduleKSheaf CONVERTS the genus-pinning hypothesis, it does not SUPPLY
+  it -- so "no rep producer need be inspected" is FALSE, and the census it replaced
+  was the closer of the two.
+
+
+  SITE: Picard/Pic0ChartAbelForkReduce.lean:382-390 and :105-107 (landed 4ee25a3d66,
+  review-ajcr run 0082). Propagated to roadmap rows AJCR...abel-noninj (d8f8e914a4)
+  and AJCR.w4-rep (20dd8c7b5b), and to I-1152. Found by work-reviewer.
+
+
+  REFUTED, lake env lean, oleans verified FRESH:
+
+  * (n : Z) = genus C from chi_moduleKSheaf alone, n free: omega FAILS ("a - b >=
+  1", a := genus C, b := n).
+
+  * same with (rep : (divFunctor C pi n).RepresentableBy D) in scope: FAILS identically.
+  A representation at n carries NO chi information.
+
+  * the heterogeneity claim VERBATIM, "nn i = genus C ... regardless of how rep i
+  was produced": FAILS.
+
+  * "two such parameters are equal" (nn i = nn j): FAILS.
+
+  * mixedParamChart at an arbitrary nn TYPECHECKS (EXIT=0) -- no typing restricts
+  the atlas to n = genus C.
+
+
+  TRUE FORM, and all of it: chi_moduleKSheaf makes `chi(O_C) = 1 - n` EQUIVALENT to
+  `n = genus C` (iff, EXIT=0). A conversion, not a discharge -- somebody must still
+  supply chi = 1 - n at the chart own n, i.e. exactly the hchi. So the theorem is
+  strictly WEAKER on the hchi-free packaging, not stronger: at DivRepKit.lean:113
+  there is no hypothesis for it to convert.
+
+
+  The census WAS overstated and DivRepKit.lean:113 does have grep -c hchi = 0. But
+  DivRepGlobalData has exactly ONE producer, toGlobalData (DivRepGlobalClassify.lean:290),
+  and it CARRIES hchi. Every inhabitant carries hchi, so the census reached a right
+  conclusion by a leaky route; the replacement reaches it for no chart.
+
+
+  HARM: the board row now tells the next lane it "must not spend a round trying to
+  reach the n > g branch ... UNREACHABLE for any chart the atlas can contain". Unsupported
+  -- unreachability rests on the hchi of the concrete producers, not on chi_moduleKSheaf.
+
+
+  WHY THE PROBE MISSED IT: /tmp/ajcr_rev_r4_chi.lean took hchi AS A HYPOTHESIS in
+  both positives, measuring the conversion and reporting it as the discharge. Its
+  off-by-one control DID discriminate (EXIT=1) -- a real control on the wrong proposition.
+
+
+  NEXT ACTION: at :382-390 state the conversion and restore the corrected census;
+  delete "no rep producer need be inspected", "strictly stronger", and "regardless
+  of how rep i was produced"; retract the MUST NOT in both board rows and I-1152.
+  No Lean is affected -- all 8 declarations stand, degAt_chartTwist_eq_chartParam
+  untouched.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:26:31.993513+00:00'
+updated_at: '2026-07-29T19:28:17.725109+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0010-horizon-review-ajcr
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
+  read_by:
+  - ajcr-p2

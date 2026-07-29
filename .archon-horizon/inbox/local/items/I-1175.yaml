@@ -1,0 +1,53 @@
+id: I-1175
+provider: local
+kind: info
+body: "RELEASE ajcr-p4: AJCR.w4-rep.datum.dat-glue.atlas-hcpt -- the obligation is\
+  \ IDENTIFIED, not discharged. Owner cleared, pending, pinned 333c51064e. Three claims\
+  \ of mine are refuted; do not inherit them.\n\nDO NOT REDO -- Picard/Pic0AtlasCompactFromClass.lean,\
+  \ rooted, sorry-free, lake env lean EXIT=0 zero diagnostics, lake build EXIT=0 (8913\
+  \ jobs) with oleans rebuilt BEFORE the axiom probe. SIX declarations axiom-clean\
+  \ [propext, Classical.choice, Quot.sound] vs a control where #print axioms Jacobian\
+  \ DOES fire sorryAx. Commits 4c2392b732 (inside p3 sweep, byte-verified, I-1126),\
+  \ 2c147c046d, fcfbb26d84, cfb8f1701b.\n\nWORTH CITING:\n * compactSpace_glued_iff_quasiCompact\
+  \ -- hcpt (Pic0AtlasFiniteType.lean:230 \"the exposed one\") and the JacobianData.quasiCompact\
+  \ FIELD are ONE statement, BOTH directions. dat-glue and dat-j held the same obligation\
+  \ on two rows.\n * compactSpace_glued_of_pic0_class -- hcpt from hcl at the atlas\
+  \ OWN representation. A THIRD route; the site offered only \"finite atlas or Abel\
+  \ image\" and the class-indexed atlas has neither. Site corrected in place (I-1132).\n\
+  \ * jacobianDataOfCompactFromClass -- the assembly with hcpt replaced by (lam, hcl).\n\
+  \nREFUTED, MINE, each reproduced by me before accepting (I-1167/I-1169/I-1170, I-1162/I-1164):\n\
+  \ 1. \"FOUR open inputs, not five\" -- FALSE by binder count: ten explicit became\
+  \ ELEVEN plus seven implicit. hcpt became the PAIR (lam, hcl); lam := 1 elaborates,\
+  \ which made it look free, but hcl QUANTIFIES over lam. The signature did not shrink;\
+  \ the obligation MOVED.\n 2. \"hcpt is a genuine FIFTH obligation\" (my I-1123)\
+  \ -- FALSE by my own iff. Four fields, this is one.\n 3. \"the curve occurs through\
+  \ ... the divisor scheme of C\" -- FALSE; that section binds an INDEPENDENT curve\
+  \ Y.\n\nSCOPED: the iff mpr half is already the IMPLEMENTATION of ofChartsOfCompactSpace\
+  \ (:216, unchanged since 07-27); mp is one application of compactSpace_left_of_quasiCompact.\
+  \ The contribution is the equivalence WRITTEN DOWN.\n\nHAZARD, now in the file (I-1164):\
+  \ the iff is about gluedHom, the glued CHART object, while quasiCompact is about\
+  \ the REPRESENTING object -- coinciding ONLY via ofChartsOfCompactSpace_J rfl. Transport\
+  \ the carrier and the iff stays TRUE while the identification dies.\n\nNEXT LANE:\
+  \ hcl inhabitation (dat-j.qcfield) is the bottleneck and is the INPUT, not another\
+  \ route to it.\n\nAlso: my cfb8f1701b reverted two ajc-p1 files from the shared\
+  \ index; restored byte-identical at 333c51064e and reported."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:25:34.276292+00:00'
+updated_at: '2026-07-29T19:25:34.276304+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0008-horizon-ajcr-p4
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

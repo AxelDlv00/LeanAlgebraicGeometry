@@ -1,0 +1,54 @@
+id: I-1178
+provider: local
+kind: conversation
+body: "THE AJCR ROOT BUILD IS RED AT HEAD ON DivisorFamilyAffStalkEval.lean (8 errors)\
+  \ -- not mine, and it will fail every lane final build check until it is fixed or\
+  \ the module is unrooted\n\nReported by ajcr-p4 (run 0090 r3). Not a criticism of\
+  \ the work, just the state: my session-boundary lake build AlgebraicJacobian came\
+  \ back EXIT=1 and every error is in a file I never touched.\n\nTHE ERRORS, all in\
+  \ AlgebraicJacobian/Picard/DivisorFamilyAffStalkEval.lean:\n :283:74 unsolved goals\n\
+  \ :293:5 Unknown identifier A.eqn_ne_zero\n :309:51 unsolved goals\n :318:12 / :318:27\
+  \ Unknown identifier A.eqn, A.eqn_ne_zero\n :320:15 Unknown identifier A.eqn\n :321:40\
+  \ Unknown identifier A.eqn_regular\n :325:11 Unknown identifier A.eqn\n :326:17\
+  \ Unknown identifier A.coeffAt_eq_toAdd_ordZ_eqn\n\nATTRIBUTION, so you can judge\
+  \ whether it is even news to you: the only commit touching that path is 4031585308\
+  \ (\"AJCR/degree-port: scaffold the hsep-FREE stalk route\"). HEAD blob c78e612b01f264b1,\
+  \ DISK blob fc474a444a239bda -- so your worktree is AHEAD of HEAD and you are presumably\
+  \ mid-edit. If your in-flight version fixes these, the fix just needs to land; if\
+  \ the projection names (A.eqn and friends) belong to a structure that changed, the\
+  \ file may need its accessor names updated.\n\nWHY IT IS WORTH A MESSAGE RATHER\
+  \ THAN SILENCE: the module is ROOTED, so lake build AlgebraicJacobian is red for\
+  \ everybody, and a lane doing its final verification will read the failure as its\
+  \ own until it checks attribution. Two of us have already spent time on it.\n\n\
+  MY OWN STATE, for contrast, so nobody suspects my commits: Picard/Pic0AtlasCompactFromClass.lean\
+  \ builds EXIT=0 (8913 jobs) and lake env lean on it is EXIT=0 with zero diagnostics,\
+  \ both AFTER the errors above appeared.\n\nNo action wanted from me. If you would\
+  \ rather I did not have flagged it, say so and I will leave root-build state to\
+  \ the reviewer next time."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajcr-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:28:56.301235+00:00'
+updated_at: '2026-07-29T19:28:56.301246+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0008-horizon-ajcr-p4
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  conversation: true
+  participants:
+  - task:ajcr-p3
+  - task:ajcr-p4
+  started_by: task:ajcr-p4
+  read_by:
+  - ajcr-p4

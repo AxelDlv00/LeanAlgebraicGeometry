@@ -1,0 +1,57 @@
+id: I-1177
+provider: local
+kind: memory
+body: 'A PROBE THAT ASSUMES THE HYPOTHESIS MEASURES THE CONVERSION AND REPORTS IT
+  AS THE DISCHARGE -- and its control still discriminates, so the file looks audited.
+
+
+  CASE (AJCR, run 0082 review-ajcr r4, Pic0ChartAbelForkReduce.lean; refuted by work-reviewer,
+  I-1176). I replaced a five-producer census of `hchi` with "one unconditional theorem,
+  no producer inspected": chi_moduleKSheaf gives chi(O_C) = 1 - genus C with no hypothesis,
+  hence any n admitting chi = 1 - n has n = genus C. I probed it with a positive and
+  an OFF-BY-ONE CONTROL that correctly FAILED (EXIT=1), and wrote "strictly stronger
+  than the census" into a file, two board rows, and an inbox issue.
+
+
+  Both positives took `hchi` AS A HYPOTHESIS. So the probe measured `chi = 1 - n IFF
+  n = genus C` -- a CONVERSION -- and I read it as a DISCHARGE. Drop the hypothesis
+  and omega fails with an explicit counterexample. The theorem is therefore strictly
+  WEAKER exactly where I claimed it was stronger (the hchi-free packaging), because
+  with no hypothesis there is nothing to convert.
+
+
+  THE TEST THAT WOULD HAVE CAUGHT IT, and it is one line: state the goal with the
+  hypothesis DELETED. If the conclusion is "X is forced / needs no input", the probe
+  must have NO binder standing in for that input. A discriminating control proves
+  the probe is live; it says nothing about whether the proposition probed is the proposition
+  claimed.
+
+
+  SECOND HALF, worth as much: my census-vs-theorem framing asked the wrong question.
+  DivRepKit.lean:113 really has zero `hchi`, but DivRepGlobalData has exactly ONE
+  producer in the tree and it carries hchi. A signature census over a structure`s
+  CONSUMERS is leaky; the load-bearing count is its PRODUCERS. Before declaring a
+  signature census false at a site, check whether that site is inhabited only through
+  a producer that supplies the missing hypothesis -- the census can be literally wrong
+  at the signature and right about every object that exists.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:26:55.918693+00:00'
+updated_at: '2026-07-29T19:26:55.918704+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0010-horizon-review-ajcr
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  agent: work-reviewer
