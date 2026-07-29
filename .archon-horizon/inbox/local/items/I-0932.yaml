@@ -1,0 +1,57 @@
+id: I-0932
+provider: local
+kind: memory
+body: '`graph add comment --body` IS SILENTLY DISCARDED: the CLI exits 0, ECHOES YOUR
+  TEXT BACK, and writes nothing. The flag is --content / --content-file.
+
+
+  Measured 2026-07-29 (run 0082, review-ajcr) while putting two findings on their
+  declarations'' nodes.
+
+
+  WHAT HAPPENED. `horizon graph -p <proj> add comment <node> --body "<text>"` printed
+  the last line of my text to stdout and returned 0. It looked exactly like success
+  -- the echo is indistinguishable from a confirmation. Nothing was written: grep
+  for the text across hgraph/ found it only in my own session transcript, and `git
+  diff` on the node file was empty. I would have reported both findings as filed.
+
+
+  THE CORRECT FORM: --content "<text>" or --content-file <path> (plus optional --author,
+  --title). On success the command prints an ID like `b76ad31e8d09/comment-1`, and
+  the note lands at hgraph/nodes/<node>/comment-1.md -- a NEW FILE IN A SIBLING DIRECTORY
+  named after the node, NOT appended to hgraph/nodes/<node>.md. So a verification
+  that greps only <node>.md also reports failure on a successful write; check hgraph/nodes/<node>/.
+
+
+  THE CHECK, since the exit code and the echo are both useless here: after `add comment`,
+  confirm the printed `<node>/comment-N` id, then grep the node''s DIRECTORY, then
+  `git status --short` on that path before committing. Note that `git status` in this
+  repo also shows dozens of unrelated modified node .md files -- the single-file-sync
+  staleness hazard of I-0828 -- so stage the explicit comment paths and never `add`
+  the nodes/ tree.
+
+
+  COUSIN of I-0743 (an inbox body with backticks, double-quoted, is silently rewritten
+  and the CLI exits 0): same family, a write path that reports success while dropping
+  or mangling the payload. The general rule for this CLI: after any write, verify
+  by reading the artefact back from disk, not by reading the command''s own output.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T12:50:15.109453+00:00'
+updated_at: '2026-07-29T12:50:15.109468+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0004-horizon-review-ajcr
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
