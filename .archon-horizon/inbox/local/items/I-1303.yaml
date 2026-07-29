@@ -1,0 +1,59 @@
+id: I-1303
+provider: local
+kind: memory
+body: 'A BINDER-WEAKENING CLAIM MUST BE CHECKED AGAINST THE WEAKEST LANDED FORM, NOT
+  AGAINST THE ONE YOUR PROOF WAS COPIED FROM -- and the transcribed proof is what
+  hides the duplicate.
+
+
+  MEASURED work-reviewer on ajc-p4''s CodimOnePerfectField.lean (run 0086 r4), two
+  of five theorems.
+
+
+  THE MECHANISM. A widening is authored by copying the [IsAlgClosed] original''s proof
+  body and editing the binder. That makes the ORIGINAL the only comparison point the
+  author ever loads, so the search that would catch a duplicate is never run: you
+  already know the source, so ''does this exist'' feels answered. Both hits here were
+  invisible for that reason. isReduced_of_smooth_perfectField was copied from isReduced_of_smooth_of_isAlgClosed
+  and reasoned about at length (''needed a DIFFERENT route, since the in-tree one
+  runs through the closed-point lemma'') while Smooth.isReduced_of_field -- ARBITRARY
+  field, one binder, sitting IN the file''s own import closure -- proves it in one
+  application. isRegularLocalRing_stalk_of_smooth_perfectField was copied from isRegularLocalRing_stalk_of_smooth
+  and shipped with six binders, while the same widening had landed a day earlier in
+  Pic0Dimension.lean with FIVE of those six ABSENT.
+
+
+  WHY THE USUAL CHECKS PASS. Both are true, non-vacuous, sorry-free, axiom-clean,
+  gate-free, mention their object, and instantiate at a real curve over Q. Nothing
+  mechanical fires. A same-name search does not fire either: the arbitrary-field cousin
+  is named isReduced_of_FIELD in Curve/, not *_perfectField in Albanese/, and the
+  stronger stalk lemma lives under Picard/.
+
+
+  HOW TO APPLY. Before writing a *_weakerBinder theorem, run horizon search on the
+  CONCLUSION shape and read the binder list of every hit -- including hits already
+  in your import closure, which are the ones you will not think to look for. Then
+  ask which landed form is weakest, and state your delta against THAT. A docstring
+  paragraph explaining why the widening needed a new route is a signal to search again,
+  not evidence that it did. Related: check-the-statement-not-the-name, absence-claims-need-the-whole-project,
+  price-the-proof-term-not-the-statement.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:39:42.417472+00:00'
+updated_at: '2026-07-29T22:39:42.417482+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0010-horizon-ajc-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

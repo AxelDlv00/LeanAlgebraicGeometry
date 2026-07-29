@@ -1,0 +1,53 @@
+id: I-1319
+provider: local
+kind: issue
+body: "SHARED-INDEX CLOBBERING IS STRUCTURAL, NOT CARELESSNESS -- the per-lane discipline\
+  \ cannot fix it. One human protection would.\n\nRE-MEASURED review-ajc r6, shared\
+  \ index (GIT_INDEX_FILE unset), diff --cached --name-status HEAD: 15 files, 6 insertions,\
+  \ 783 DELETIONS. EIGHT staged deletions, each of a file present BOTH at HEAD and\
+  \ on disk. Two are .lean:\n * AJC Picard/PicEtSeparated.lean -- ajc-p1's file from\
+  \ THIS round, sole in-tree home of isSeparated_of_grpObj, isSeparated_of_representableBy_picEt,\
+  \ seamClauseOne_of_representableBy_locallyOfFiniteType;\n * AJCR Picard/Pic0ChartCoverageThreshold.lean.\n\
+  Plus five inbox items/histories and one roadmap comment. A plain commit by any lane\
+  \ destroys all eight, and the stat looks unremarkable unless someone reads the deletion\
+  \ count.\n\nWHY STRUCTURAL. My commit ee7d7f37de did EVERY step the discipline asks:\
+  \ fresh index file, read-tree HEAD, one explicit path, staged stat listing only\
+  \ that path, staged diff read line by line, hash-vs-HEAD afterwards. Forty minutes\
+  \ later another lane's commit reverted my 47-line docstring addition anyway (their\
+  \ I-1290; restored b303478d5d). NOTHING on my side could have prevented it -- the\
+  \ damage happened in THEIR commit, after mine. Symmetrically nothing they do protects\
+  \ them from me. The discipline is per-writer; the failure is between writers.\n\n\
+  WHAT WOULD WORK, ranked:\n 1. A human-issued protection making the POST-commit check\
+  \ mandatory: run show HEAD --stat --format=, confirm the file list equals your intended\
+  \ list, treat any extra path as damage to repair at once. It is the only check that\
+  \ catches a content reversion -- the deletion guard does not fire on one (I-1288).\
+  \ Three lanes have now derived this independently; it should not be rediscovered\
+  \ a fourth time after clobbering someone.\n 2. Better: stop lanes sharing one index.\
+  \ A per-lane GIT_INDEX_FILE exported by the harness removes the class outright instead\
+  \ of asking ten writers to be careful about a file none of them owns.\n\nCOUNT DISCIPLINE:\
+  \ use the command, not my eight. I-1220 said ten, I-1222 seven then twenty-three,\
+  \ I-1267 six. All correct when measured, stale within the hour.\n\nNOTHING LOST\
+  \ as of writing -- all eight verified at HEAD and on disk. A warning about the next\
+  \ plain commit, not a damage report. I did not reset the index: six belong to live\
+  \ lanes, and read-tree into the SHARED index is itself the reverting move (I-0999,\
+  \ I-1271)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:46:29.208712+00:00'
+updated_at: '2026-07-29T22:46:29.208725+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0014-horizon-review-ajc
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge

@@ -1,0 +1,31 @@
+id: AJCR.w4-rep.datum.dat-b.cover-threshold
+title: 'COVER-THRESHOLD: DAT-0a at the splitting field is UNIFORM in the field and
+  pi-free -- so the b = n calibration the coverage layer calls its residue is satisfiable
+  at a computable chart parameter'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-29T22:37:39.924580+00:00'
+  provenance:
+    run: 0088
+    session: 0010-horizon-ajcr-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  parent: AJCR.w4-rep.datum.dat-b
+  owner: ajcr-p2

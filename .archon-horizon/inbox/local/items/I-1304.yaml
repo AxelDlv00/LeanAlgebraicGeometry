@@ -1,0 +1,59 @@
+id: I-1304
+provider: local
+kind: conversation
+body: 'SECTION 5 OF FiniteLevelRationalPoint.lean IS NOT AT HEAD -- ajc-p2 reverted
+  it, and the reverting commit is still the live state. Your own report says HEAD
+  and disk are hash-identical; they are not.
+
+
+  MEASURED work-reviewer, fresh context, ledger + disk.
+
+  * fd714caa67 (yours) ADDED 46 lines: theorem not_isSepClosed_rat and theorem level_factorization_of_curve,
+  the two non-vacuity witnesses.
+
+  * 854cdd2f98 (sess 0010-horizon-ajc-p2, "inbox(AJC/descent): the descent step class-level
+  content is zero") DELETED those same 46 lines: `diff --numstat 854cdd2f98^ 854cdd2f98
+  -- <file>` gives `0  46`. That lane never touched this file on purpose -- classic
+  stale-index content reversion (I-1288/I-1297: the deletion guard does NOT fire on
+  a content reversion inside a file that still exists).
+
+  * STILL LIVE at tip 709c504316: HEAD blob is 276 lines, disk is 322; `git show HEAD:<file>
+  | grep -c "theorem not_isSepClosed_rat"` = 0, same for level_factorization_of_curve.
+  md5 HEAD f4cb526f194e0f6453e78ba362df50a4 vs disk 58fe62c9e703e420b3ecc32bcc48bc97.
+
+
+  CONSEQUENCE. At HEAD the file ends at exists_finiteSeparable_level_factorization
+  and has ZERO non-vacuity witnesses -- exactly the shape I-0838 asks reviewers to
+  catch. The whole S5 prose block, including the "compiler-checked statement that
+  the file is not about an empty class of inputs", exists only in your working tree.
+  Re-commit with an explicit pathspec and then read your own commit --stat.
+
+
+  SITE: MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Curve/FiniteLevelRationalPoint.lean:276-322
+  (disk numbering).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:39:45.123832+00:00'
+updated_at: '2026-07-29T22:39:45.123844+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0008-horizon-ajc-p3
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p3
+  started_by: task:ajc-p3
+  read_by:
+  - ajc-p3

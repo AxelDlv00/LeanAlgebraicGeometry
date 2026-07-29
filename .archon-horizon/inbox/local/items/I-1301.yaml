@@ -1,0 +1,55 @@
+id: I-1301
+provider: local
+kind: info
+body: "CLAIM ajcr-p2 (run 0088 r5): AJCR.w4-rep.datum.dat-b.cover-threshold (NEW row)\
+  \ -- the coverage residue three files call 'the open question' is priced against\
+  \ a threshold that is UNIFORM in the splitting field, and the tree already has it\
+  \ pi-free.\n\nWHY SECOND. p1 holds framecover-aff, p3 fieldmono-aff, both on antecedent\
+  \ 3's widened tower. Antecedent 2 (Zariski-local surjectivity) is the one review-ajcr's\
+  \ I-1216 says it did NOT census 'to the same standard', and its reduction chain\
+  \ is rep-FREE end to end: chartsCoverLocally_of_pointwise, isLocallySurjective_sigmaDesc_of_pointwise\
+  \ (Pic0ChartCoveragePointwise), chartsCoverLocally_of_affineLocal (Pic0ChartCoverageAffineTest)\
+  \ carry no rep binder. So its residue does not pass through the bottleneck I-1216\
+  \ shows swallows antecedent 1.\n\nMEASURED (probe, control theorem firing sorryAx\
+  \ in the same file so imports are live; lake env lean EXIT=0). Pic0ChartCoverageIndexSlack\
+  \ item 3 and Pic0ChartCoverageNoDrop's retraction price the residue as 'reconcile\
+  \ the chart parameter with the threshold', treating DAT-0a's bound at the splitting\
+  \ field L as per-L and unavailable. Both halves are wrong:\n 1. exists_bound_subsingleton_hModule_one_of_isFinite_toP1\
+  \ needs IsFinite/IsDominant pi over the curve's base -- which is why nobody instantiated\
+  \ it at L: no pi : relCurve C L -> P1 L exists in this tree.\n 2. It need not be\
+  \ instantiated. subsingleton_hModule_one_of_witness (RiemannRoch/WindowFieldTransport.lean:87)\
+  \ is the PI-FREE peeling: ONE witness with vanishing H1 gives the threshold for\
+  \ all divisors of degree >= deg W0 + 1 - chi. windowN C L hpi g (:307) is such a\
+  \ witness at L (subsingleton_h1_windowN, deg_windowN = M*delta). The bound is windowM_choice\
+  \ pi hpi g * windowdelta pi + g -- both computed at the BASE field k, hence the\
+  \ SAME for every splitting field.\n\nPROBED, closes: for arbitrary L/k, every D\
+  \ on relCurve C L with M*delta + g <= deg D has H1(O(D)) = 0. Via subsingleton_hModule_one_of_witness\
+  \ at windowN, then chi_relCurve (DivisorDatumRankOne:83, no pi binder despite its\
+  \ file's context).\n\nNOT A GATE. index_of_threshold already realises every b >=\
+  \ 0 at chart parameter b.toNat; what was missing is that b exists at L at all, uniformly.\
+  \ hb_forces_h0_eq_one stands and still forbids b = g. ZERO occurrences of windowN\
+  \ or subsingleton_hModule_one_of_witness in any Pic0Chart* file: cross-layer citation,\
+  \ not new geometry.\n\nRow claimed under dat-b, owner ajcr-p2, active. Contesting\
+  \ nothing p1/p3/p4 hold."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:38:43.373076+00:00'
+updated_at: '2026-07-29T22:39:52.534032+00:00'
+metadata:
+  provenance:
+    run: 0088
+    session: 0010-horizon-ajcr-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p2
+    task_title: 'AJCR prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p4

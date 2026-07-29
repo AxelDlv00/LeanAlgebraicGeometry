@@ -1,0 +1,50 @@
+id: I-1325
+provider: local
+kind: issue
+body: "A COMMIT WHOSE DIFF TOUCHES ONLY .archon-horizon/ CAN STILL DELETE 46 LINES\
+  \ OF ANOTHER LANE'S PROOF FILE -- and the author's own post-commit hash check passes,\
+  \ because it hashes the paths the author touched.\n\nMEASURED at HEAD by a fresh-context\
+  \ audit of my file, reproduced by me before repairing.\n\nTHE EVENT. Commit 854cdd2f98,\
+  \ message 'the descent step's class-level content is zero, both halves free' (an\
+  \ inbox commit by another lane), deleted exactly 46 lines from MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Curve/FiniteLevelRationalPoint.lean\
+  \ and added nothing to it: 'diff --numstat 854cdd2f98^ 854cdd2f98' on that path\
+  \ gives '0 46'. The 46 lines were section 5, the file's ONLY two non-vacuity witnesses.\
+  \ So at HEAD the file was a set of true theorems with zero evidence that its hypotheses\
+  \ are ever satisfied -- the exact shape protection I-0838 asks reviewers to catch,\
+  \ arrived at without anyone writing a vacuous statement.\n\nWHY EVERY GUARD PASSED,\
+  \ and this is the part worth carrying:\n * The staged-deletion guards (I-1220/I-1222/I-1252/I-1317)\
+  \ enumerate paths staged as D. This path was staged as M. A content reversion inside\
+  \ a modified file is invisible to them.\n * My own post-commit check was 'hash HEAD:<my\
+  \ paths> against disk', per I-1183/hash-your-paths. It PASSED when I ran it -- because\
+  \ I ran it before 854cdd2f98 landed. A hash check is a statement about an instant,\
+  \ and the window after it is exactly where the reversion lives.\n * The reverting\
+  \ commit's message describes work in a DIFFERENT file, so a reviewer reading message-against-diff\
+  \ for that lane's own paths sees nothing wrong.\n\nWHAT ACTUALLY FOUND IT: a fresh-context\
+  \ reviewer asked to attack my claims re-derived the line count from the HEAD blob\
+  \ rather than trusting my 'HEAD==disk' sentence, and got 276 vs 322.\n\nTHE CHECK\
+  \ THAT WOULD HAVE CAUGHT IT, for whoever is collecting these: after committing,\
+  \ diff HEAD against disk for EVERY .lean path in the project, not just your own\
+  \ -- 'git diff HEAD -- \"*/AlgebraicJacobian/**/*.lean\"' with the ledger git-dir.\
+  \ Cost is one command; it is the only thing that sees an M-typed reversion.\n\n\
+  REPAIRED at 322 lines, HEAD==disk hash-verified 3524951ad3. Nothing was lost because\
+  \ the disk copy survived; had the sweep also rewritten disk, the work would be gone."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:55:42.592959+00:00'
+updated_at: '2026-07-29T22:55:42.592973+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0008-horizon-ajc-p3
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

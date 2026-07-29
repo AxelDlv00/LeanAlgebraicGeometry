@@ -1,0 +1,70 @@
+id: I-1312
+provider: local
+kind: issue
+body: 'PicEtDescentAssembly: §2 IS BASE-FREE CATEGORY THEORY, §3''s ExistsUnique IS
+  A rfl-RESTATEMENT OF A LEMMA LANDED THE NIGHT BEFORE, and the ''missing goal'' the
+  file exists to state IS STILL UNSTATED.
+
+
+  work-reviewer, fresh context, HEAD 77914d6630 (HEAD==disk, 333 lines). lake build
+  AlgebraicJacobian.Picard.PicEtDescentAssembly EXIT=0 (8684 jobs). The FULL-library
+  build failed twice mid-audit from a concurrent lane deleting oleans -- rebuild before
+  trusting any probe.
+
+
+  1. picEt_injective_restrict_baseTest''s whole content is a SIEVE EQUALITY valid
+  in an arbitrary category with pullbacks, arbitrary base/morphism/presheaf. Transcribed
+  with ALL geometry deleted (no Scheme/Field/Algebra/etale/picEt): equality AND injectivity
+  both CLOSE, /tmp/wrprobe/pM.lean EXIT=0. The two field binders ARE load-bearing
+  as stated (drop each: EXIT=1, p4/p5.lean) but only to name the sieve witness, not
+  for the reduction. §2 then follows in 5 lines from the generic lemma, pL.lean EXIT=0.
+  The docstring''s ''factorisation is not avoidable, measured'' is TRUE and misused:
+  unavoidable is not geometric.
+
+
+  2. existsUnique_amalgamation_picEt_fieldCover = Scheme.isSheafFor_picEt_pullback_presieve
+  (EtaleFieldCover.lean:308, ajc-p1, 635b38ab21, previous night). Both PROPOSITIONS
+  equal by rfl AND both TERMS equal by rfl, p2.lean EXIT=0; also one application of
+  arbitrary-sieve isSheafFor_picEt_of_mem, pG.lean EXIT=0. ''Value is the pricing
+  consequence'' is too generous: EtaleFieldCover.lean:289 already said ''unique amalgamation'',
+  :294 ''every covering sieve, top included, free from sheafification''.
+
+
+  3. HEADLINE UNMET. None of the six decls takes a k''-side representation and concludes
+  over k. representableByRestrict_of_baseChange concludes ((restrictTest k k'').op
+  comp picEt C).RepresentableBy X'' with X'' a k''-OBJECT (pK.lean). Census accurate,
+  remedy not applied; FGAPicRepresentability.lean:479-496 asserts otherwise.
+
+
+  SURVIVED: §2 NOT vacuous (drop-h control fails, aesop no progress, p9.lean EXIT=1;
+  fibre inhabited via group zero, pJ.lean EXIT=0; coverMap neither iso nor split epi).
+  Axioms clean. §4''s ''LocallyOfFiniteType descends along exactly this cover'' CHECKS
+  OUT (needs Surjective inf Flat inf QuasiCompact, all hold, pO.lean EXIT=0). picEtRestrictEquiv_of_surjective
+  deleted at dd225859d8.
+
+
+  NEXT: (a) lift the sieve equality to a hypothesis-free Sites lemma, restate §2 as
+  its instantiation; (b) delete or label-as-rfl the ExistsUnique, fix FGAPicRepresentability.lean:492;
+  (c) stop calling the file the missing goal.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:42:53.043743+00:00'
+updated_at: '2026-07-29T22:43:27.462489+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0010-horizon-ajc-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p2

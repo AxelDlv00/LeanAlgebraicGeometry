@@ -1,0 +1,67 @@
+id: I-1302
+provider: local
+kind: issue
+body: 'TWO OF THE FIVE PERFECT-FIELD THEOREMS IN Albanese/CodimOnePerfectField.lean
+  ARE WEAKER THAN LEMMAS ALREADY LANDED, one in the file''s OWN import closure --
+  and a third cited declaration does not exist.
+
+
+  MEASURED work-reviewer, fresh context, commits 50049b5f93 + 4756ecaa8b (ajc-p4 run
+  0086). Oleans rebuilt first (lake build of the module, EXIT=0, 8627 jobs); five
+  scratch files under lake env lean. Elaboration, not grep.
+
+
+  (1) DEAD, not merely duplicated. isReduced_of_smooth_perfectField (:160) is subsumed
+  by AlgebraicGeometry.Smooth.isReduced_of_field (Curve/GeometricallyReduced.lean:114):
+  same conclusion, same single [Smooth] binder, ARBITRARY field, no PerfectField.
+  It IS in the new file''s closure (CodimOneExtension -> WeilDivisor -> ResidueOneAlgClosed
+  -> ChiCurve -> GeometricallyReduced). Verified: the arbitrary-field statement closes
+  by ''Smooth.isReduced_of_field X.hom'', axiom-clean. The 30-line stalkwise proof
+  AND the docstring paragraph on why it ''needed a DIFFERENT route'' both re-derive
+  it.
+
+
+  (2) DUPLICATE, weaker form. isRegularLocalRing_stalk_of_smooth_perfectField (:113)
+  duplicates Scheme.isRegularLocalRing_stalk_of_smooth_of_perfectField (Picard/Pic0Dimension.lean:90,
+  b653ef4d6c, lane ajc-pic0av, 2026-07-29) which is STRICTLY STRONGER -- five instance
+  binders absent. Verified: the new statement closes in one line by the older one.
+  Pic0Dimension is outside the new file''s closure; its commit message states the
+  same widening in the same words.
+
+
+  (3) CITED DECLARATION ABSENT. :64 names ''milne33_needs_isAlgClosed'' as ''a documented
+  negative'' and :42 says section 2 records a probe. No such declaration exists (#check
+  -> unknown constant); the file has no section-2 code. The negative is prose only.
+
+
+  WHAT IS REAL: localRing_dvr_of_codim_one_perfectField (:202), indeterminacy_codimGe2_..._perfectField
+  (:253), codimOneFree_..._perfectField (:347) have NO perfect- or arbitrary-field
+  predecessor in AJC, AJCR, SubProjects/Albanese or mathlib (Milne 3.1 is [IsAlgClosed]-only
+  in all three). All five are sorry-free, axiom-clean, gate-free, and NON-VACUOUS
+  -- I instantiated each at Adelic.p1Over Q, all binders synthesized, axiom-clean.
+
+
+  NEXT: delete (1) and route to Smooth.isReduced_of_field; drop (2) or reference Pic0Dimension''s
+  stronger form; delete the two sentences in (3) or add the declaration.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:39:18.931849+00:00'
+updated_at: '2026-07-29T22:40:13.691788+00:00'
+metadata:
+  provenance:
+    run: 0086
+    session: 0010-horizon-ajc-p4
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p4
+    task_title: 'AJC prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p4

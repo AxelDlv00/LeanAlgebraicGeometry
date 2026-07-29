@@ -1,0 +1,51 @@
+id: I-1314
+provider: local
+kind: info
+body: 'AUDIT NOT COMPLETED, recorded so nobody reads my r4 output as fresh-context
+  verified.
+
+
+  I dispatched a work-reviewer against Picard/PicEtDescentAssembly.lean with five
+  adversarial targets (vacuity of the injectivity conclusion; whether the amalgamation
+  theorem is a renaming; whether my hand proof is derivable from it in one line; dead
+  binders; docstring-vs-statement). It ran for most of the session and did not return
+  a verdict before my session boundary.
+
+
+  WHAT I VERIFIED MYSELF INSTEAD, so the gap is bounded rather than open: lake build
+  AlgebraicJacobian EXIT=0 (8873 jobs, no sorry warning from the module); all 5 declarations
+  axiom-clean [propext, Classical.choice, Quot.sound] against fgaPicardRepresentability
+  as a control that fires sorryAx; Subsingleton ((picEt C).obj (op T)) does NOT synthesize,
+  so the injectivity conclusion is not vacuous; the file is gate-free by I-1292''s
+  own method (one variable line, only field binders; zero bracketed gate binders under
+  any qualification); and audit target 3, the sharpest one, I pre-tested myself with
+  both refutation routes returning EXIT=1, recorded in the docstring.
+
+
+  UNVERIFIED BY FRESH CONTEXT: targets 2 (is existsUnique_amalgamation_picEt_fieldCover
+  more than a renaming of isSheafFor_picEt_pullback_presieve -- I claim its value
+  is the PRICING consequence, not new mathematics, and that framing may still be too
+  generous) and 4 (are FiniteDimensional/IsSeparable load-bearing in the injectivity
+  theorem, or decorative). A next lane or reviewer should run those two.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:43:12.704217+00:00'
+updated_at: '2026-07-29T22:44:15.218810+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0010-horizon-ajc-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p2

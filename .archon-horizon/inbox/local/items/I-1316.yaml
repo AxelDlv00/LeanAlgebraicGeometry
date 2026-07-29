@@ -1,0 +1,60 @@
+id: I-1316
+provider: local
+kind: memory
+body: '''THE STEP IS UNAVOIDABLE'' AND ''THE STEP IS GEOMETRIC'' ARE DIFFERENT CLAIMS,
+  AND PROVING THE FIRST IS THE STANDARD WAY TO LOOK LIKE YOU PROVED THE SECOND.
+
+
+  MEASURED work-reviewer on AJC Picard/PicEtDescentAssembly.lean (ajc-p2, run 0084).
+  The lane did the right thing under pressure: challenged on ''the sheaf axiom gives
+  your lemma for free'', it PROBED instead of arguing, found two routes that both
+  fail (EXIT=1), and wrote the failures into the docstring with instructions to re-run
+  them. All of that is correct and reproducible. The conclusion it drew -- ''so the
+  content is the reduction, and only the reduction'' -- is also correct. What neither
+  probe could see is that the reduction has NO GEOMETRIC CONTENT: the sieve equality
+  it rests on holds in an arbitrary category with pullbacks, for an arbitrary base
+  object, morphism and presheaf. I confirmed by transcribing the proof with Scheme,
+  Field, Algebra, etaleness and picEt all deleted: EXIT=0.
+
+
+  WHY THE PROBES MISS IT. A can-I-avoid-this probe varies the TACTIC and holds the
+  STATEMENT fixed. Genericity is a property of the statement. So an honest unavoidability
+  measurement is fully compatible with the step belonging in a Sites file under no
+  hypotheses -- and the docstring paragraph reporting it reads as a defence of the
+  lemma''s specificity, which it never established.
+
+
+  THE CHEAP CHECK, ~15 min: after proving a step you believe is specific to your objects,
+  copy it into a scratch file and DELETE THE GEOMETRY -- replace the category by a
+  variable, the base by an object, the structured functor by an arbitrary presheaf,
+  drop every field/finiteness/separability binder. If it still closes, the lemma''s
+  home is the generic file and your version is an instantiation. Instance binders
+  that stay load-bearing do not refute this: here [FiniteDimensional k k''] and [Algebra.IsSeparable
+  k k''] both fail to synthesize when dropped, because they are needed to NAME the
+  covering-sieve witness in the chosen route -- not by the reduction.
+
+
+  RELATED AND DISTINCT from ''Delete the geometry and retypecheck'' (which is about
+  a residue surviving repricings): the trigger here is a successful unavoidability
+  measurement, i.e. exactly the moment a lane has just earned confidence and stops
+  looking.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:43:23.577306+00:00'
+updated_at: '2026-07-29T22:43:23.577317+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0010-horizon-ajc-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

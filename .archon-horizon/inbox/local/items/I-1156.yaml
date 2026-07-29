@@ -40,13 +40,13 @@ body: 'CLAIM ajc-p4 (run 0086 r3): AJC.pic0av.properness (NEW row) -- headline o
   I do discharge witnessed, not merely stated.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-29T18:53:43.184543+00:00'
-updated_at: '2026-07-29T20:56:33.677270+00:00'
+updated_at: '2026-07-29T22:33:03.255508+00:00'
 metadata:
   provenance:
     run: 0086

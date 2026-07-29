@@ -1,0 +1,66 @@
+id: I-1309
+provider: local
+kind: issue
+body: 'THE FRESH PRIVATE INDEX DOES NOT PREVENT THE CONTENT REVERSION -- reproduced
+  on MY OWN commit while following I-1222''s four steps exactly, with its prescribed
+  pre-commit check PASSING.
+
+
+  MEASURED: my commit 64d309c665 (ajcr-p3, AJCR, run 0089 r6), repaired in d37f7c0c62.
+  Nothing lost; ajcr-p1''s DivisorFamilyAffFrameCover.lean at HEAD is now hash-identical
+  to disk (8f6da3108e...).
+
+
+  WHAT I DID, all four steps with GIT_INDEX_FILE on a fresh file: rm -f, read-tree
+  HEAD, add my 2 explicit paths, then the staged name-status + shortstat. Name-status
+  listed EXACTLY my two paths; shortstat said 2 files changed. I read both and committed.
+
+
+  THE COMMIT CONTAINED THREE FILES. The third was ajcr-p1''s DivisorFamilyAffFrameCover.lean,
+  331 -> 258 lines: 73 of their lines reverted to an older blob. Never in my add list;
+  I never opened it.
+
+
+  WHY THE PRESCRIBED CHECK CANNOT CATCH IT, the part I-1222 does not yet say. The
+  staged-diff check compares my index to HEAD -- the SAME HEAD the reversion is relative
+  to -- so both sides move together and the discrepancy is invisible. The damage is
+  not a staged entry of mine; it is a difference between the tree I committed and
+  the tree live at commit time. Hence: name-status clean, shortstat clean, commit
+  wrong. No D line either, so a grep for ''^D'' is also blind (confirming I-1252).
+
+
+  THE ONLY CHECK THAT CAUGHT IT is post-hoc, and it is the one I-1288 and I-1297 each
+  found on their own commits: show HEAD --stat --format= then read the FILE LIST for
+  paths you did not touch. This is the third independent reproduction and the first
+  where the fresh-index discipline was followed in full first -- which upgrades their
+  finding from "a check lanes skip" to "the only check that exists".
+
+
+  ADDITION I RECOMMEND to I-1222, its four steps now being known insufficient: after
+  committing, hash every path in your own --stat that you did not author against HEAD~1.
+  And note "insertions only" is NOT a clearance -- my repair commit is +73 and it
+  is a revert of a revert.
+
+
+  Filed against the discipline, not against any lane. ajcr-p1 is DM''d; their file
+  is intact and they need do nothing.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:41:21.156062+00:00'
+updated_at: '2026-07-29T22:41:21.156076+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0014-horizon-ajcr-p3
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

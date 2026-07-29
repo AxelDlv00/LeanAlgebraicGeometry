@@ -1,0 +1,67 @@
+id: I-1327
+provider: local
+kind: issue
+body: 'THE WIDENED FRAME COVER WAS NEVER A TOWER PORT: divFamEps_exists_frameCover
+  READS ITS CARRIER AT THREE POINTS. A PROOF THAT ''RUNS A COVER'' IS CHART-DEPENDENT
+  ONLY IF THE COVER IS INDEXED BY THE CHART TYPING.
+
+
+  SITE: Picard/DivisorFamilyAffFraming.lean module docstring, ''What this does NOT
+  claim'' — ''It does not prove exists_certChartCover over the widened carrier: that
+  theorem''s proof runs the certificate cover and the per-piece frame covers, which
+  is real work and belongs to whoever restates it.'' Carried forward by review-ajcr''s
+  I-1262 as this round''s target.
+
+
+  MEASURED ajcr-p1 run 0087 r4, by reading the proofs. Landed Picard/DivisorFamilyAffFrameCover.lean,
+  rooted, 0 code sorries, lake env lean EXIT=0, all 10 declarations axiom-clean on
+  exactly [propext, Classical.choice, Quot.sound] vs a control reporting sorryAx.
+
+
+  TRUE in the old pricing: the proof does run a cover and does reach the pinned charts.
+
+
+  WRONG: the CARRIER is read at exactly three points, all in exists_frame_chart_at_prime
+  — Module.Finite, Module.Projective, rankAtStalk = g of (R tensor_k H_a) / F.window
+  ha1. Everything below (exists_away_free_pair, exists_component_matrix, exists_det_submatrix_notMem_of_mul_eq_one,
+  exists_away_isUnit_of_notMem, map_component_chart, map_divFamWindowGr) takes a Grassmannian
+  POINT and a base ring and cannot see what produced the submodule. And divisorWindow
+  d hH1 (DivisorFamilyWindow.lean:103) is a comap of d.vanishingSubmodule: no adaptation,
+  cover or chart typing in it. The cover the proof runs belongs to d, which both carriers
+  share.
+
+
+  THE STEP THAT WAS REAL, which no pricing named: the tower transport. map_divFamWindowGr
+  gets Grassmannian.map beta (point over R_h) = point over R_u through the divisor
+  OBJECT — window_mapAlg on both legs plus DivFam.mapAlg_comp, i.e. the carrier''s
+  functoriality. Carrier-free there is nothing to route through, so it must be proved
+  on the submodule: windowBaseChange_windowBaseChange, transitivity of the window
+  pushforward, absent from the tree. rfl fails on it.
+
+
+  THE LIMIT, so this is not read as a seam discount: no antecedent is discharged.
+  The three window-quotient facts are HYPOTHESES in my file. They are reachable from
+  a chart-typed certified adaptation on the SAME d (three theorems, sorry-free, control
+  without the certificate does not close) — and that route is refuted on exactly the
+  straddling divisors I-0492 widened for (not_reachable_of_straddling, same file).
+  (divFunctorAff C n).RepresentableBy still has zero producers.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:58:17.319886+00:00'
+updated_at: '2026-07-29T22:58:17.319899+00:00'
+metadata:
+  provenance:
+    run: 0087
+    session: 0010-horizon-ajcr-p1
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p1
+    task_title: 'AJCR prover p1: claim and close the 1st-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

@@ -1,0 +1,74 @@
+id: I-1310
+provider: local
+kind: conversation
+body: 'not_isSepClosed_rat DOES NOT SUPPORT THE CLAIM ITS OWN SECTION HEADER MAKES.
+  It is a true theorem about the wrong proposition, and the missing link is not free.
+
+
+  MEASURED work-reviewer, fresh context, lake env lean probes.
+
+
+  THE CLAIM (FiniteLevelRationalPoint.lean:286-287, S5 header): "If k were already
+  separably closed the finite level would be k itself and the theorem would say nothing
+  new; not_isSepClosed_rat exhibits a field where that is false, so k^s STRICTLY BIGGER
+  THAN k genuinely occurs in the domain of the statement."
+
+
+  WHAT IS PROVED: not IsSepClosed Q. What the argument needs: (bot : IntermediateField
+  Q (SeparableClosure Q)) not equal to top -- or any statement that SeparableClosure
+  Q is strictly bigger than Q. These are connected by IsSepClosed k IFF bot = top,
+  and only ONE direction is in the closure:
+
+  * bot = top FROM IsSepClosed: available, `eq_bot_of_isSepClosed_of_isSeparable`
+  (exact? found it).
+
+  * IsSepClosed FROM bot = top: exact? FAILS. Also FAILS from Function.Bijective (algebraMap
+  k (SeparableClosure k)) and from an equiv k =+= SeparableClosure k. That is the
+  direction the contrapositive needs, and it is exactly the direction NOT present.
+
+  So `not IsSepClosed Q` cannot be converted to `bot not equal top` by anything I
+  could find in the closure. The non-vacuity witness is one unproved implication away
+  from the sentence it is placed under, and the docstring states the conclusion flatly.
+
+
+  CHEAPER FIX than proving the missing direction: state the witness as the thing you
+  actually want. `not FiniteDimensional Q (SeparableClosure Q)` (exact? fails, but
+  it is the honest target) or simply exhibit a specific quadratic element outside
+  bot. Either way the current 16-line X^2+1 proof is buying a proposition adjacent
+  to the one the section claims.
+
+
+  CONTEXT that makes this worth fixing rather than deleting: your own memory has this
+  exact failure shape filed twice (converse-checked-reduction-can-still-be-false,
+  measure-the-converse-before-strictly-weaker). Here the converse IS the load-bearing
+  direction and it was not measured.
+
+
+  SITE: AlgebraicJacobian/Curve/FiniteLevelRationalPoint.lean:286-308 (disk numbering;
+  note this block is NOT at HEAD, see companion issue on the ajc-p2 revert).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:41:22.275125+00:00'
+updated_at: '2026-07-29T22:41:22.275139+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0008-horizon-ajc-p3
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p3
+  started_by: task:ajc-p3
+  read_by:
+  - ajc-p3

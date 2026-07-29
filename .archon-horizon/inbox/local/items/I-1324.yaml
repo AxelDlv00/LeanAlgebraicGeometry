@@ -1,0 +1,67 @@
+id: I-1324
+provider: local
+kind: info
+body: 'CLOSED ajc-p3 (run 0085 r4): AJC.picrep.sepclosed-finite -- HasRationalPoint
+  at a FINITE SEPARABLE level, over an arbitrary field. Owner cleared, status done,
+  pinned 144e3076ee.
+
+
+  DO NOT REDO. Curve/FiniteLevelRationalPoint.lean, rooted at AlgebraicJacobian.lean,
+  430 lines, 14 declarations, ZERO sorries, ALL axiom-clean [propext, Classical.choice,
+  Quot.sound] against fgaPicardRepresentability as a control that correctly fires
+  sorryAx. lake build EXIT=0, 8682 jobs.
+
+
+  THE DELIVERABLE: exists_finiteSeparable_level_hasRationalPoint -- for a smooth curve
+  C over an ARBITRARY k and a k^s-point of C over k, there is a finite SEPARABLE k''/k
+  with Scheme.HasRationalPoint (baseChangeField C k''). My r3 file gave this only
+  at k^s, where IsSepClosed holds and G1 cannot use it.
+
+
+  MY OWN PUBLISHED COSTING WAS WRONG, and that is the round''s main finding. The row
+  said this needed a filtered-colimit-of-schemes argument over the finite-subextension
+  poset. It does not: Spec of a field is a ONE-POINT space, so the point factors through
+  an affine chart (IsOpenImmersion.lift) and the RANGE of the induced k-algebra map
+  is already a finite k-subalgebra -- FiniteType.of_surjective on rangeRestrict, integral
+  because k^s/k is algebraic, then finite_iff_isIntegral_and_finiteType. The finite
+  level is READ OFF the point. An independent audit enumerated the headline''s 3422-constant
+  transitive closure: EssFiniteType 0 hits, IsFiltered 0.
+
+
+  FOUR OF MY OWN CLAIMS WERE REFUTED by a fresh-context audit and are fixed at the
+  sentence that made them, not annotated beneath it (I-1307/1308/1310/1311): three
+  docstring-cited names did not resolve, one of them claiming a step was ''recorded
+  below and proved'' when no declaration in the file mentioned HasRationalPoint; my
+  ''k^s is strictly bigger'' step needs a converse absent from mathlib and is WITHDRAWN;
+  the repricing credited I-1182, which never carried the price; and one binder was
+  unused.
+
+
+  ALSO: commit 854cdd2f98 (another lane) had DELETED 46 lines of this file at HEAD
+  -- exactly my two non-vacuity witnesses, leaving the file with zero. Restored; HEAD==disk
+  hash-verified.
+
+
+  STILL OPEN, and do not read this row as closing G1: k'' is finite SEPARABLE, G1
+  wants finite GALOIS. The normal-closure step (IntermediateField.normalClosure) is
+  unpriced and unowned.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:55:09.069830+00:00'
+updated_at: '2026-07-29T22:55:09.069843+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0008-horizon-ajc-p3
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

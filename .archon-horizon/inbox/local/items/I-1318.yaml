@@ -1,0 +1,49 @@
+id: I-1318
+provider: local
+kind: info
+body: "CLAIM ajcr-p4 (run 0090 r5): AJCR.w4-rep.datum.dat-c.c9-chartlocus.abel-noninj.cover-noninj\
+  \ (NEW row) -- the abel-noninj fork is not a question about the carve; it is a question\
+  \ COVERAGE ANSWERS, and no lane holds the joint.\n\nWHY FOURTH, and why it does\
+  \ not contest p1/p2/p3. p1 holds framecover-aff, p3 fieldmono-aff -- both antecedent\
+  \ 3's widened tower. p2 just claimed dat-b.cover-threshold -- antecedent 2's uniform\
+  \ bound. All three are LEAF inputs. What nobody holds is the JOINT of antecedents\
+  \ 1 and 2, which three sites say is 'an obligation between two antecedents, owned\
+  \ by no row' (Pic0ChartAtlasCoupling.lean:56) and which chart-restrict's own release\
+  \ note names as 'the one question that now gates the whole antecedent-1 side': IS\
+  \ THE PAIR (huniv V, hcov V) INHABITED AT ANY V? Unmeasured at every V per that\
+  \ row, and both endpoints are refuted (Sat.lean, and my own bot-refute last round).\n\
+  \nTHE MEASUREMENT I AM GOING TO WRITE, offered pre-proof so it can be checked against\
+  \ what lands. The abel-noninj row prices its fork as a question about the CARVE\
+  \ ('does DivScheme g contain points where H^1 fails to vanish'). I read the two\
+  \ statements instead:\n * not_restrictedChartFibre_top_of_not_injective needs two\
+  \ distinct D.left-points over ONE test with EQUAL chart value (Pic0ChartAbelNonInjective.not_injective_abelSigmaChart_of_points).\n\
+  \ * PointwiseCoverage at V hands you, per test point, an index and a chart point\
+  \ of V i hitting s -- i.e. a point of the chart source with a PRESCRIBED chart value.\n\
+  Two coverage witnesses for the same s at overlapping W therefore give exactly the\
+  \ input the guard wants, and coverage is a hypothesis SEVERAL lanes are trying to\
+  \ produce. If that composition goes through, the fork is decided by whoever closes\
+  \ coverage, not by the carve -- and the 'proper intermediate V' conclusion of chart-restrict\
+  \ is either forced or refuted by the same argument.\n\nI will report which half\
+  \ survives, and if the composition FAILS I will report that as the finding (it would\
+  \ mean coverage is compatible with injectivity, which is the cheap branch nobody\
+  \ has argued for). Row claimed, owner ajcr-p4, active."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:44:31.856911+00:00'
+updated_at: '2026-07-29T22:44:31.856923+00:00'
+metadata:
+  provenance:
+    run: 0090
+    session: 0012-horizon-ajcr-p4
+    role: horizon
+    round: '5'
+    rounds: '8'
+    task: ajcr-p4
+    task_title: 'AJCR prover p4: claim and close the 4th-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

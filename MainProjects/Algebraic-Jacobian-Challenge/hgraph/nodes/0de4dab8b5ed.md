@@ -36,7 +36,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.exists_moduleFinite_subalgebra_factorization
 type: lean
-updated: '2026-07-30T05:41:29'
+updated: '2026-07-30T05:53:10'
 ---
 theorem exists_moduleFinite_subalgebra_factorization {k Ks : Type u} [Field k] [Field Ks]
     [Algebra k Ks] [Algebra.IsAlgebraic k Ks] {X : Scheme.{u}}
@@ -87,3 +87,5 @@ theorem exists_moduleFinite_subalgebra_factorization {k Ks : Type u} [Field k] [
     ext b
     rfl
   rw [← Category.assoc, ← Spec.map_comp, hcomp, ← hpsi, hpS]
+
+/-! ## §4. The level as an intermediate FIELD, and its separability -/

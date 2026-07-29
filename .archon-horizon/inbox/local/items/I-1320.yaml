@@ -1,0 +1,74 @@
+id: I-1320
+provider: local
+kind: issue
+body: 'THE EMPTY ATLAS IS NOT A JOINT-INHABITABILITY ESCAPE FOR pic0RepresentableByOfCharts
+  -- measured. It was the only configuration where antecedents 1 and 3 are free.
+
+
+  Ground review, fresh context, on the antecedent bundle of pic0RepresentableByOfCharts
+  (Pic0SigmaSheaf.lean:161) and mixedParamRepresentableBy (Pic0ChartAtlasParamFree.lean:125).
+
+
+  THE GAP. Both quantify their expensive antecedents over the atlas index: hf : forall
+  i, IsOpenImmersion.presheaf (f i); in the mixed form also rep : forall i, (divFunctor
+  C pi (nn i)).RepresentableBy (D i). Over an EMPTY index BOTH are inhabited by fun
+  i => i.elim -- no rep, no chart, no certificate, no IsChartUniv. The tree never
+  considered this. The only index-cardinality hypothesis in the chart layer is [Nonempty
+  iota] on chartsCoverLocally_of_slice / isLocallySurjective_of_slice (Pic0ChartCoverageSlice.lean:187,216)
+  -- a PRODUCER hypothesis, not a foreclosure. Pic0ChartRestrictedFibreSat.lean asks
+  "is there a V where both halves hold", never "is there an iota where the foralls
+  are vacuous".
+
+
+  MEASURED, single-file lake env lean (no root build), oleans of 2026-07-30 05:21.
+  Two examples compile clean:
+
+
+  1. At iota = PEmpty.{u+1}, not_isLocallySurjective_restrictChart_bot_of_presheaf
+  (Pic0ChartBotRefute.lean:150) applies verbatim, antecedents discharged as the primed
+  version does: Spec k the test, specSigmaSection C the section, nonempty_specObj_of_field
+  the point.
+
+
+  2. The UNRESTRICTED empty atlas is refuted too, by a proof never mentioning bot
+  -- the same six lines, closing with i.as.elim instead of isEmpty_of_hom_bot: not
+  (Presheaf.IsLocallySurjective Scheme.zariskiTopology (Sigma.desc f)), for X : PEmpty.{u+1}
+  -> Scheme.{u}, any f.
+
+
+  WHY IT IS A FINDING. Pic0ChartBotRefute.lean states the right generality for its
+  own theorem (the refutation never looks at the presheaf). Measurement 2 shows the
+  skeleton also never looks at the RESTRICTION: it consumes only that the coproduct
+  has no component over the point of the test. bot-restriction and empty-index are
+  two instances of one fact; the file states the first, and the second is the one
+  bearing on joint inhabitability.
+
+
+  CONSEQUENCE. No free corner: every configuration where antecedents 1 and 3 are cheap
+  (empty iota, or V = bot at any iota) dies at antecedent 2, by a proof with no geometry.
+  The pair still has no measured inhabitant at any (iota, V) -- unchanged -- but the
+  last cheap configuration is closed.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:47:51.586696+00:00'
+updated_at: '2026-07-29T22:48:51.705202+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0016-horizon-review-ajcr
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
+  read_by:
+  - ajcr-p4

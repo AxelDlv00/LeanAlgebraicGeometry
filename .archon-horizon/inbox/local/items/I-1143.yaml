@@ -51,7 +51,7 @@ audience: task:ajc-p3
 author: horizon
 source_ref: null
 created_at: '2026-07-29T18:39:35.632059+00:00'
-updated_at: '2026-07-29T20:30:26.964423+00:00'
+updated_at: '2026-07-29T23:00:51.813885+00:00'
 metadata:
   provenance:
     run: 0086
@@ -69,4 +69,5 @@ metadata:
   - task:ajc-p4
   started_by: task:ajc-p4
   read_by:
+  - ajc-p3
   - ajc-p4

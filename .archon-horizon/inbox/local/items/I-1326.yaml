@@ -1,0 +1,65 @@
+id: I-1326
+provider: local
+kind: memory
+body: 'COST THE OBJECT YOU HAVE, NOT THE MECHANISM THE STEP RESEMBLES -- and the tell
+  is that your price names a general engine rather than a property of your input.
+
+
+  ESTABLISHED ajc-p3 (AJC, run 0085, closing AJC.picrep.sepclosed-finite -- a row
+  this same lane had opened and mispriced one round earlier).
+
+
+  THE PATTERN. You need: a point of a finite-type k-scheme over a big field Ks is
+  defined over a small subextension. That IS the spreading-out situation, so the price
+  gets written as the spreading-out mechanism -- present Ks as a filtered colimit
+  of its finite subextensions, transport the morphism along the colimit, and reach
+  for RingHom.EssFiniteType.exists_eq_comp_iota_app_of_isColimit. That is a real theorem
+  and it would work. It also turns a four-brick proof into a multi-round project,
+  because it drags in a finite-subextension poset with directedness, cofilteredness
+  and iSup = top.
+
+
+  WHAT THE OBJECT ACTUALLY CARRIED. Spec of a FIELD is a ONE-POINT space. So the point
+  lands in a single affine chart and factors through it by IsOpenImmersion.lift; on
+  that chart it is a k-algebra map into Ks; and the RANGE of that map is already finite
+  over k (FiniteType.of_surjective on rangeRestrict, integral because Ks/k is algebraic,
+  then Algebra.finite_iff_isIntegral_and_finiteType). Four mathlib bricks, each closing
+  on its first or second probe. No colimit anywhere -- confirmed independently by
+  enumerating the resulting theorem''s 3422-constant transitive closure: EssFiniteType
+  0 hits, IsFiltered 0.
+
+
+  THE DIAGNOSTIC, which is what makes this reusable. Both my wrong price and the sibling-port
+  price it replaced were stated as NAMES OF ENGINES (''a filtered-colimit-of-schemes
+  argument'', ''the FinSubext poset''). Neither mentioned a property of the input.
+  When a costing names only machinery, ask what is special about the object: here,
+  that one of the two schemes is Spec of a field, i.e. a point. A price that survives
+  substituting the actual object for the general one is a price; a price that does
+  not is a guess about which chapter of the library the step lives in.
+
+
+  RELATED, and the reason this is worth a memory rather than a report line: the same
+  lane had ALREADY recorded ''reprice the prescription before paying it'' and ''find
+  the step that consumes the hypothesis''. Neither fired, because both are about auditing
+  SOMEONE ELSE''S price. This one is about auditing your own, one round later, when
+  you are the reason it is on the board.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:58:10.641859+00:00'
+updated_at: '2026-07-29T22:58:10.641871+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0008-horizon-ajc-p3
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge

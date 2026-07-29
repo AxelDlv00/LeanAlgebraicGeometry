@@ -1,0 +1,57 @@
+id: I-1308
+provider: local
+kind: conversation
+body: "THE HEADLINE THEOREM DOES NOT SAY THE FINITE-LEVEL POINT IS A POINT OVER k\
+  \ PRIME -- the conclusion omits the one equation the G1 consumer needs, and adding\
+  \ it is 4 LINES.\n\nMEASURED work-reviewer, fresh context, 4 scratch files, lake\
+  \ env lean EXIT=0 each.\n\nWHAT IS PROVED (FiniteLevelRationalPoint.lean:253-259):\
+  \ only\n  Spec.map (CommRingCat.ofHom k-prime.val.toRingHom) >> q = p\ni.e. p factors\
+  \ through Spec k-prime. It NEVER says q >> f = Spec.map (algebraMap k k-prime),\
+  \ that q is a morphism OVER Spec k-prime. \"A point defined over a finite separable\
+  \ subextension\" means the latter; the statement does not carry it and no docstring\
+  \ names this as the gap.\n\nWHY IT MATTERS. The step the module docstring promises\
+  \ (turn the point into a section of C_k-prime) takes exactly the missing equation\
+  \ as hypothesis. Verified chain:\n (a) base_tri: Spec.map(k-prime.val) >> Spec.map(algebraMap\
+  \ k k-prime) = Spec.map(algebraMap k k^s). Proof `rw [<- Spec.map_comp]; congr 1`\
+  \ -- FREE.\n (b) over_k-prime: from hp, hq derive q >> f = Spec.map(algebraMap k\
+  \ k-prime). Spec.map of the inclusion is an EPI (Flat.epi_of_flat_of_surjective,\
+  \ found by exact?), so `apply hepi.left_cancellation; rw [<- Category.assoc, hq,\
+  \ hp, base_tri]`. FOUR LINES.\n (c) hrp_of_finiteLevel: that equation gives Scheme.HasRationalPoint\
+  \ (Scheme.baseChangeField C k-prime) via `pullback.lift q (id)`, closed by `pullback.lift_snd`.\
+  \ SEVEN LINES.\n(b)+(c) is ~11 lines and takes the file from \"p factors\" to the\
+  \ HasRationalPoint at a finite separable level the seam consumes. Finish it rather\
+  \ than pricing it.\n\nPLUS one strengthening I verified, since S5 shows only that\
+  \ the binders are inhabited and not that the antecedent is DISCHARGEABLE: (p, hp)\
+  \ is CONSTRUCTIBLE at the challenge binders from the tree own landed k^s section,\
+  \ so the finite level is reached unconditionally. Verified (EXIT=0): from hasRationalPoint_baseChangeField_separableClosure_of_geometricallyIrreducible\
+  \ C, take sigma >> pullback.fst; hp by `rw [Category.assoc, pullback.condition,\
+  \ <- Category.assoc, hsigma, Category.id_comp]`. Coercion trick needed: `let sigma\
+  \ : Spec ... => pullback C.hom g := sigma0` -- a `simp only [Scheme.baseChangeField]`\
+  \ at the hypothesis creates a SECOND sigma and the rewrite then fails. Strictly\
+  \ stronger than level_factorization_of_curve."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: task:ajc-p3
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:40:59.040842+00:00'
+updated_at: '2026-07-29T22:40:59.040855+00:00'
+metadata:
+  provenance:
+    run: 0085
+    session: 0008-horizon-ajc-p3
+    role: horizon
+    round: '3'
+    rounds: '8'
+    task: ajc-p3
+    task_title: 'AJC prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  conversation: true
+  participants:
+  - task:ajc-p3
+  started_by: task:ajc-p3
+  read_by:
+  - ajc-p3

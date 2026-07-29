@@ -1,0 +1,51 @@
+id: I-1323
+provider: local
+kind: issue
+body: "THE Pic^0 SEAM AND EVERY `rep` PRODUCER ARE IMPORT-DISJOINT -- the composition\
+  \ the whole route rests on had NEVER been elaborated. I elaborated it: IT COMPOSES,\
+  \ and the plumbing is free.\n\nMEASURED review-ajcr r7 (run 0082 s0016): transitive-import\
+  \ census over all 781 AJCR modules, then two probes at `lake env lean` EXIT=0 (ScratchWR/,\
+  \ gitignored).\n\nTHE CENSUS. Zero modules import both a chart seam and any rep\
+  \ producer -- all twelve pairs are 0:\n seams     Pic0ChartAtlasParamFree, Pic0SigmaSheaf,\
+  \ Pic0ChartRestrictedFibre, Pic0ChartVMonotone\n producers DivRepAffPullClause,\
+  \ DivRepChartRange, DivRepGlobalClassify\nThe seam's closure is 323 modules and\
+  \ contains none of the three. So no #check, build or LSP query had ever held the\
+  \ two halves at once.\n\nWHY IT MATTERS. Every board row prices the route as three\
+  \ undischarged antecedents; none prices the JOIN, because from inside either half\
+  \ there is nothing to see. An unelaborated composition is where a carrier mismatch\
+  \ hides ('price the consumer's carrier').\n\nTHE RESULT -- they fit.\n 1. mixedParamRepresentableBy\
+  \ accepts a PRODUCED rep at the carrier, not just a hypothesis. Probed with PUnit.{u+1}\
+  \ at the producer's single parameter g. EXIT=0.\n 2. `GeometricallyReduced C.hom`,\
+  \ bound ONLY by Pic0SigmaSheaf and mentioned in no producer file, is FREE by instance\
+  \ resolution from GeometricallyIrreducible + IsProper + SmoothOfRelativeDimension\
+  \ 1. Probed standalone, EXIT=0. Not an extra obligation, though it looks like one\
+  \ from the producer side.\n\nTWO REAL CONSTRAINTS, cheap but not guessable:\n *\
+  \ `iota : Type u`, NOT Type 0 -- a Unit-indexed atlas fails to unify at the V argument;\
+  \ PUnit.{u+1} works.\n * `IsFinite pi` SUBSUMES `IsAffineHom pi` (overlappingInstances\
+  \ fires). Producers bind the former, the seam the latter.\n\nWHAT THIS DOES NOT\
+  \ ESTABLISH. No antecedent is discharged. rep's three producers are ALL conditional\
+  \ (_of_chartClause / _of_id / _of_chartRange), gated on U2 / the G-4 certificate;\
+  \ huniv and hcov have no producer at any V but the two refuted endpoints. Established:\
+  \ THE PLUMBING IS NOT A COST. The remaining price is entirely in the three antecedents,\
+  \ and a lane discharging one owes no carrier-transport or instance-bridging lemma.\
+  \ A subtraction from the cost of finishing, not a step toward it."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T22:54:35.323713+00:00'
+updated_at: '2026-07-29T22:54:35.323727+00:00'
+metadata:
+  provenance:
+    run: 0082
+    session: 0016-horizon-review-ajcr
+    role: horizon
+    round: '7'
+    rounds: '8'
+    task: review-ajcr
+    task_title: 'REVIEWER (AJCR): audit the Pic^0 route, the rejection cluster and
+      the costings'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
