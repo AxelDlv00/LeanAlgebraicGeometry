@@ -167,6 +167,59 @@ theorem isLocallySurjective_sigmaDesc_mono {ι : Type u} {X : ι → Scheme.{u}}
     (Limits.Sigma.map fun i => yoneda.map ((X i).homOfLE (e i)))
     (Limits.Sigma.desc fun i => restrictChart (f i) (V i))
 
+/-! ## Antecedent 2 at ANY `V` forces UNRESTRICTED coverage
+
+This is the one consequence of the two monotonicities that is not bookkeeping, and it is a
+*necessary condition on the route* rather than a statement about a particular `V`. -/
+
+/-- `restrictChart f ⊤` is precomposition with `Scheme.topIso.hom`, whose underlying morphism
+is `(⊤ : X.Opens).ι` — definitionally, since `topIso.hom` is *defined* as that inclusion. -/
+theorem restrictChart_top {X : Scheme.{u}} (f : yoneda.obj X ⟶ (pic0SigmaSheaf C).1) :
+    restrictChart f (⊤ : X.Opens) = yoneda.map X.topIso.hom ≫ f :=
+  rfl
+
+/-- The unrestricted atlas is the `⊤`-restricted atlas up to the coproduct of the `topIso`s. -/
+theorem sigmaDesc_restrictChart_top {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) :
+    (Sigma.desc fun i => restrictChart (f i) (⊤ : (X i).Opens))
+      = (Limits.Sigma.map fun i => yoneda.map (X i).topIso.hom) ≫ Sigma.desc f := by
+  refine Limits.Sigma.hom_ext _ _ fun i => ?_
+  rw [Limits.Sigma.ι_desc, Limits.Sigma.ι_map_assoc, Limits.Sigma.ι_desc]
+  exact restrictChart_top (C := C) (f i)
+
+/-- **A coverage lane cannot buy relief by restricting.**  Zariski-local surjectivity of the
+atlas restricted to *any* family of opens `V` implies it for the **unrestricted** family
+`Sigma.desc f`.
+
+Monotonicity carries antecedent 2 from `V` up to `⊤`, and at `⊤` the inclusion is an
+*isomorphism*, so the remaining factor is stripped.  Hence antecedent 2 is, up to nothing, a
+statement about the unrestricted atlas: it does not vary with `V` in the direction a lane would
+want.
+
+**This is the asymmetry of the restriction, and it is the file's substantive content.**  The
+restriction was introduced (`Pic0ChartRestrictedFibre.lean`) to weaken antecedent 1, and it
+does — `isChartUniv_bot` is free.  It does **not** weaken antecedent 2 by anything.  So the
+picture "pick `V` small enough and both sides become easy" is refuted for every `V`
+simultaneously, which no endpoint computation could establish: `not_coverageContainment_bot`
+refutes one value, this constrains all of them.
+
+Note the scope, since it is easy to over-read: this does not refute antecedent 2, and it is not
+a producer.  It says a *producer at any `V`* is a producer at `⊤`, so the coverage obligation
+a lane discharges is the unrestricted one no matter which open it names.  Read with
+`Pic0ChartCoverageAffineTest.lean`'s reduction, which is about the *test* rather than the chart
+source, and therefore orthogonal to this. -/
+theorem isLocallySurjective_unrestricted {ι : Type u} {X : ι → Scheme.{u}}
+    (f : ∀ i, yoneda.obj (X i) ⟶ (pic0SigmaSheaf C).1) (V : ∀ i, (X i).Opens)
+    (h : Presheaf.IsLocallySurjective Scheme.zariskiTopology
+      (Sigma.desc fun i => restrictChart (f i) (V i))) :
+    Presheaf.IsLocallySurjective Scheme.zariskiTopology (Sigma.desc f) := by
+  have htop := isLocallySurjective_sigmaDesc_mono (C := C) f V (fun _ => ⊤)
+    (fun _ => le_top) h
+  rw [sigmaDesc_restrictChart_top (C := C) f] at htop
+  exact Presheaf.isLocallySurjective_of_isLocallySurjective
+    (J := Scheme.zariskiTopology)
+    (Limits.Sigma.map fun i => yoneda.map (X i).topIso.hom) (Sigma.desc f)
+
 end
 
 end AlgebraicGeometry
