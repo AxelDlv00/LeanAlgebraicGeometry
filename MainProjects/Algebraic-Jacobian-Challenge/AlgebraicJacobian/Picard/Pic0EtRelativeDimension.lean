@@ -280,9 +280,18 @@ the passage from `Locally IsStandardSmooth` to
 `Locally (IsStandardSmoothOfRelativeDimension (genus C))` on each chart, i.e. pinning
 the number. Given `IsStandardSmooth` and `Nontrivial`,
 `Algebra.IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth` makes that
-pinning literally `Module.rank S Ω[S⁄R] = genus C` — on the away-localisations of chart
-algebras that `RingHom.Locally` quantifies over, which is where the residue lives and
-is *not* where `Pic0Et.finrank_cotangentSpace_eq_genus` computes. -/
+pinning literally `Module.rank S Ω[S⁄R] = genus C`.
+
+**CORRECTED (§2c). This paragraph used to end "— on the away-localisations of chart
+algebras that `RingHom.Locally` quantifies over, which is where the residue lives".** That
+located the residue one level too deep. The localisations are where *this* lemma's
+conclusion lives, because `RingHom.Locally` is what `Smooth`'s registered ring-hom property
+carries; they are not where leaf B's residue lives.
+`smoothOfRelativeDimension_iff_pointwise_rank` shows the class is equivalent to the rank
+equation on the **chart algebra itself**, with no `Locally` wrapper and one chart per point.
+Both halves of the old sentence's contrast with `Pic0Et.finrank_cotangentSpace_eq_genus`
+survive — the invariant and the locus still differ — but the locus is the chart, not its
+away-localisations. -/
 theorem locally_isStandardSmooth_appLE_of_smooth
     (hsm : Smooth (Pic0SchemeEt C).hom)
     (U : (Spec (CommRingCat.of k)).affineOpens)
@@ -446,7 +455,16 @@ Still open, and stated so the distance is not misread: nothing in the tree compu
 `Module.rank Γ(Pic⁰, V) Ω[Γ(Pic⁰, V)⁄Γ(Spec k, U)]` for a single chart `V` of `Pic⁰`, and
 `Pic0Et.finrank_cotangentSpace_eq_genus` computes a different invariant at a different
 locus (the tangent space at the identity). This is an equivalence, so **no obligation is
-discharged here**; what is discharged is the localisation quantifier. -/
+discharged here**; what is discharged is the localisation quantifier.
+
+**Axiom status, measured, and the two halves differ.** The generic
+`smoothOfRelativeDimension_iff_pointwise_rank` is axiom-clean *and stays clean when
+applied* — no Picard object occurs in it. This corollary is axiom-clean as a declaration
+but `sorryAx`-**reachable at any use site**: it binds `[HasPicSchemeEt C]`, whose
+unconditional instance `instHasPicSchemeEt` projects `fgaPicardRepresentability`, so
+`#print axioms` on an application reports `sorryAx` (checked, against the clean generic
+form as a control). Anything a lane wants to carry outside the seam should be stated
+against the generic lemma. -/
 theorem leafB_iff_pointwise_rank :
     SmoothOfRelativeDimension (genus C) (Pic0SchemeEt C).hom ↔
       ∀ x : ((Pic0SchemeEt C).left : Scheme.{u}),
