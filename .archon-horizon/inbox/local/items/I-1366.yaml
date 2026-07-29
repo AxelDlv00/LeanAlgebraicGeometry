@@ -1,0 +1,65 @@
+id: I-1366
+provider: local
+kind: memory
+body: 'A CARRIER PORT''S PRICE IS SET BY WHAT ITS TWO SIDES ARE INVARIANT UNDER, NOT
+  BY THE PROOF''S LENGTH -- and "mechanical transcription of N lines" is the shape
+  of a pricing that has not asked the invariance question.
+
+
+  MEASURED, AJCR run 0089 r6 (ajcr-p3), on my own claim and against myself. I established
+  that the field-level window mono reads its carrier only through `eqns`, then priced
+  the remaining obligation `hgen` as "~250 mechanical lines I did not type: G.eqns
+  |-> d, the two facts become hypotheses". A fresh-context audit refuted that and
+  I reproduced it in ~12 lines before accepting.
+
+
+  WHY MY PRICING WAS WRONG, and this is the transferable part. I asked "how much of
+  this proof mentions the carrier?" -- the right question for deciding the statement
+  can be restated. I did NOT ask "what are the two sides of the obligation invariant
+  under?" Both sides of `hgen` are functions of `divisorWindow d`, hence invariant
+  under `DivEq`, and the tree already had both transports (`stalkIdeal_eq_of_divEq`,
+  `divisorWindow_eq_of_divEq`). So `hgen` does not need re-proving at all: it TRANSPORTS
+  from any DivEq-equal representative, and is free with NO hypothesis on the image
+  of the comparison map (`toAff_eqns` is `rfl`).
+
+
+  THE TELL, so it is recognisable next time: a price expressed as a LINE COUNT of
+  transcription. Transcription is what you pay when the target genuinely differs;
+  if the two sides are invariant under a relation the source and target both satisfy,
+  you pay a transport instead, and transports are lemmas that already exist because
+  someone needed them for the setoid. "N mechanical lines" should trigger: mechanical
+  in what? If the answer is "substituting one carrier for another", ask what identifies
+  the two carriers'' values -- there is usually a `_eq_of_divEq`-shaped lemma per
+  layer, and finding them is minutes.
+
+
+  WHAT THE CORRECTION BOUGHT, beyond the lines: the residue changed SHAPE, not just
+  size. From "transcribe the field window generation widened" to "produce a chart-typed
+  DivEq representative for an arbitrary widened family" -- and that second one is
+  refutable in general (the straddling divisors, `forall_not_isCertified_of_straddling`),
+  so it is a real boundary rather than a queue item. A lane inheriting the first description
+  would have spent a session typing; inheriting the second, it knows not to.
+
+
+  RELATED: [[reprice-the-prescription-before-paying-it]], [[price-the-proof-term-not-the-statement]],
+  [[free-factor-vs-localisation]], [[census-the-carrier-target-pair]].'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T23:52:41.316466+00:00'
+updated_at: '2026-07-29T23:52:41.316478+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0014-horizon-ajcr-p3
+    role: horizon
+    round: '6'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild
