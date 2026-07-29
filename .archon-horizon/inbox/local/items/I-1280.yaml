@@ -1,0 +1,68 @@
+id: I-1280
+provider: local
+kind: issue
+body: 'THE DESCENT STEP''S CLASS-LEVEL CONTENT IS ZERO -- BOTH HALVES FREE FROM SHEAFIFICATION
+  -- so any pricing of the picEt descent that budgets sheaf-theoretic work budgets
+  nothing.
+
+
+  MEASURED by ajc-p2 (run 0084 r4), Picard/PicEtDescentAssembly.lean, at HEAD. Oleans
+  REBUILT FIRST (lake build AlgebraicJacobian EXIT=0, 8869 jobs) per I-1057; all decls
+  axiom-clean [propext, Classical.choice, Quot.sound] vs fgaPicardRepresentability
+  as a control that correctly fires sorryAx.
+
+
+  THE FACT. existsUnique_amalgamation_picEt_fieldCover: a COMPATIBLE FAMILY of picEt
+  C-classes on the field-extension cover of an arbitrary k-test has a UNIQUE amalgamation,
+  smooth proper curve over an ARBITRARY field. Both halves. Proof: isSheafFor_picEt_pullback_presieve
+  applied directly.
+
+
+  SITES READ OTHERWISE. EtaleFieldCover.lean section 4 says turning a k''-representing
+  scheme into a k-representing one needs the Galois action ''AND THE EFFECTIVITY of
+  the resulting descent datum''. True at the SCHEME level; read by lanes as though
+  effectivity-of-CLASSES were part of the cost. Same in roadmap AJC.picrep.etale-rep,
+  which lists the Galois quotient as covering both.
+
+
+  MY OWN FILE''S FIRST FRAMING WAS WRONG THE SAME WAY, corrected in-file 20 minutes
+  later: I landed picEtRestrictEquiv_of_surjective and called surjectivity ''the sharp
+  remaining class-level statement''. That is the error EtaleFieldCover records about
+  its OWN corollary -- amalgamation fires at EVERY covering sieve, top included, being
+  etaleSheaf''s Sheaf.cond through the forgetful functor. Reproduced against my own
+  claim before publishing.
+
+
+  WHAT GENUINELY REMAINS, so this is not a discount on the seam: (1) producing the
+  COMPATIBLE FAMILY from a Galois-INVARIANT k''-class -- the invariance content of
+  G1, where the group action actually enters; (2) the SCHEME-level G2 quotient, gated
+  on HasGaloisQuotient, affine half only (ajc-p1 r4). Neither is sheaf-theoretic.
+  Seam sorry untouched; no antecedent witnessed for any curve.
+
+
+  NEXT LANE: budget (1) and (2), nothing for existence or uniqueness of the descended
+  class. What was genuinely missing and is now proved is picEt_injective_restrict_baseTest
+  -- the reduction from the sieve-indexed hypothesis to the SINGLE cover morphism.
+  Subsingleton ((picEt C).obj (op T)) does NOT synthesize, so it is not vacuous.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T21:55:13.264741+00:00'
+updated_at: '2026-07-29T21:55:49.715149+00:00'
+metadata:
+  provenance:
+    run: 0084
+    session: 0010-horizon-ajc-p2
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajc-p2
+    task_title: 'AJC prover p2: claim and close the 2nd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge
+  read_by:
+  - ajc-p1
