@@ -17,11 +17,11 @@ migration debt.)*
 | Project | Stage | Open `sorry` |
 | --- | --- | --- |
 | Algebraic-Jacobian-Challenge-Rebuild | prover ✨ | 16 — 15 protected `Challenge.lean` targets, 1 in `Picard/Pic0ThetaCocycle.lean` (`Picard/DivRepAffPullClause.lean` is now sorry-free). `Pic0ThetaCocycle` is imported from nowhere and has **never been elaborated** (no `.olean`), so its theta coherence is unverified rather than proved; it is also not elaborable as written — 34 GB RSS and still climbing at 5 min, so it needs a split (roadmap `AJCR.w4-rep.build-reach`, `AJCR.w7-functor.k1`) |
-| Algebraic-Jacobian-Challenge | prover | 28 — in 11 modules, measured when the tree held 252 modules; it holds **257** as of 2026-07-28 evening and four AJC lanes have landed work since, so re-derive before quoting *(grouped by the nested AJC roadmap below)* |
+| Algebraic-Jacobian-Challenge | prover | 26 — in 10 modules, over a tree of **289** modules (re-measured 2026-07-29 at HEAD `163a8c547`); four AJC lanes are live, so re-derive before quoting *(grouped by the nested AJC roadmap below)* |
 | Cech-Cohomology | ✅ complete · merged → AJC | 0 |
 | GR-Quot-Closure | ✅ complete · merged → AJC | 0 |
 | Line-Bundle-Comparison-Iso | ✅ complete · merged → AJC | 0 |
-| Albanese | prover | 11 |
+| Albanese | prover | 12 |
 | Picard-IdentityComponent | prover | 16 |
 | MR0555258-Compactifying-Picard | prover | 1 |
 
@@ -136,9 +136,14 @@ rather than quoting these.*
 - [~] **Riemann--Roch and divisors** *(1 open leaf)*
   - [x] The adelic genus and cohomological finiteness lane is complete.
   - [ ] Prove that principal divisors have degree zero in `WeilDivisor` *(1)*.
-- [~] **Albanese** *(7 open leaves)*
-  - [ ] Finish the symmetric-power and universal-property assembly *(6)*.
-  - [ ] Extend rational maps across codimension one *(1)*.
+- [~] **Albanese** *(6 open leaves, all in one module)*
+  - [x] Extend rational maps across codimension one — Milne Lemma 3.3 and the Thm 3.2
+    extension are proved and axiom-clean; `Albanese/CodimOneExtension` is **sorry-free**
+    (run 0069, `8a5dc2a66`). Any note citing sorries there is quoting docstring prose.
+  - [ ] Finish the symmetric-power and universal-property assembly *(6, all in
+    `Albanese/AlbaneseUP`)*. Stated against the `sorry`-bodied `SymmetricPower`, so they are
+    undischargeable as stated until `HasColimit (permDiagram C g)` lands; the mathematics
+    itself is proved over the symmetric power as an interface in `Albanese/AlbaneseFromData`.
 - [~] **Final Jacobian witness.** `picardJacobianWitness` is built and wired — the witness *is*
   `Scheme.Pic0Scheme` — so what remains is mathematics, not assembly. **Decided 2026-07-28 by
   binding human decision `I-0491`:** the headline is stated over an arbitrary field with no
@@ -193,7 +198,7 @@ structure (the A.1.c.sub package; merged back into the Jacobian challenge).
 - [x] **Line-bundle pullback / relative Pic functor** — `LineBundlePullback`, `RelPicFunctor`
 - [x] **Terminal comparison inverse** — `TensorObjInverse` closed, including the keystone `trivialisation_restrict_compat` ✨
 
-## Albanese  *(prover stage — extraction → Jacobian, 11 open `sorry`)* ✨
+## Albanese  *(prover stage — extraction → Jacobian, 12 open `sorry`)* ✨
 
 **Goal:** the Albanese universal property of `Pic⁰` (Milne III §6 Prop 6.1, seed
 `thm:albanese_universal_property`) and the rational-map-extension machinery feeding the
