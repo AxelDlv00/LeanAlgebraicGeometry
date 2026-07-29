@@ -450,6 +450,8 @@ import AlgebraicJacobian.Albanese.CodimOneMilne31
 import AlgebraicJacobian.Albanese.CodimOneExtensionUnique
 import AlgebraicJacobian.Albanese.Thm32RationalMapExtension
 import AlgebraicJacobian.Albanese.BaseFieldFaithful
+import AlgebraicJacobian.Albanese.Genus0Terminal
+import AlgebraicJacobian.Albanese.DescentUniqueness
 import AlgebraicJacobian.Picard.FibrewiseRegular
 import AlgebraicJacobian.Picard.SectionsToDivisors
 import AlgebraicJacobian.Picard.SectionsToDivisorsClass
