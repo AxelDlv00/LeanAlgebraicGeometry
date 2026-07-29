@@ -202,6 +202,24 @@ theorem exists_effective_deg_eq_relCurve (g : ℕ)
       CurveDivisor.picClass L E = cls ∧ CurveDivisor.deg L E = (g : ℤ) :=
   exists_effective_deg_eq_of_classDeg_eq L g (chi_relCurve hχ L) cls hcls
 
+/-- **The fibre form of the shift** — the face a `Pic⁰` consumer actually meets, since the
+classes it holds have degree `0` and live on `relCurve C L`.
+
+Same content as `exists_effective_deg_eq_of_classDeg_eq_zero`, stated at the fibre curve so a
+caller does not have to re-derive `chi_relCurve` or re-install the fibre instances at the call
+site (which is what forces the `(C := …)`-style instance face; measured — supplying the
+general lemma directly at a `relCurve` goal fails instance synthesis on all three of
+`IsIntegral`, `SmoothOfRelativeDimension` and `QuasiCompact`). -/
+theorem exists_effective_deg_eq_relCurve_of_classDeg_eq_zero (g : ℕ)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    (L : Type u) [Field L] [Algebra k L]
+    (Z : (relCurve C L).CurveDivisor) (hZ : CurveDivisor.deg L Z = (g : ℤ))
+    (L₀ : (relCurve C L).CechPic) (hL₀ : classDeg L L₀ = 0) :
+    ∃ E : (relCurve C L).CurveDivisor, 0 ≤ E ∧
+      CurveDivisor.picClass L E = L₀ * CurveDivisor.picClass L Z ∧
+      CurveDivisor.deg L E = (g : ℤ) :=
+  exists_effective_deg_eq_of_classDeg_eq_zero L g (chi_relCurve hχ L) Z hZ L₀ hL₀
+
 /-- **The `heff` form**: at the residue field of a point `y` of an arbitrary scheme `J`,
 a degree-`g` class on the fibre curve has an effective degree-`g` representative.
 

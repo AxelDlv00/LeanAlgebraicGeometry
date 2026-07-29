@@ -615,6 +615,7 @@ import AlgebraicJacobian.Picard.DivRepChartClassUnivFree
 import AlgebraicJacobian.Picard.DivRepChartClassUnivAny
 import AlgebraicJacobian.Picard.DivRepChartClassUnivQuot
 import AlgebraicJacobian.Picard.JacobianDataAbelEffective
+import AlgebraicJacobian.Picard.JacobianDataAbelEffectivePoint
 import AlgebraicJacobian.Picard.JacobianDataAbelImage
 import AlgebraicJacobian.Picard.JacobianDataAbelSquare
 import AlgebraicJacobian.Picard.JacobianDataAbelSquareVacuity
