@@ -104,6 +104,18 @@ import AlgebraicJacobian.Picard.RigidPushforwardP1Witness
 import AlgebraicJacobian.Picard.P1SectionsFinite
 import AlgebraicJacobian.Picard.TwoTermFiniteFree
 import AlgebraicJacobian.Picard.SemicontinuityH0
+-- The B5 (h⁰ upper semicontinuity) cluster.  Rooted 2026-07-29 (`ajc-p4`) after `ajc-p2`
+-- found the six modules formed a closed island with no importer outside itself (I-1058,
+-- I-1061): every one of them compiled under `lake env lean`, but no build from this
+-- umbrella ever saw them, so an axiom measurement "from the root" could not reach their
+-- declarations.  Rooting them is what makes the earlier per-file measurements mean at the
+-- umbrella what they were reported to mean.
+import AlgebraicJacobian.Picard.PointRankSemicontinuity
+import AlgebraicJacobian.Picard.PointRankSemicontinuityWitness
+import AlgebraicJacobian.Picard.FiberRankSemicontinuity
+import AlgebraicJacobian.Picard.TwoTermKernelSemicontinuity
+import AlgebraicJacobian.Picard.FiberH0Comparison
+import AlgebraicJacobian.Picard.FiberH0CechKernel
 import AlgebraicJacobian.Picard.DivDegree
 import AlgebraicJacobian.Picard.FinitePresentationFunctor
 import AlgebraicJacobian.Picard.FiniteGaloisQuotient
@@ -159,6 +171,10 @@ import AlgebraicJacobian.Picard.Pic0EtTangentSpace
 -- reductions of `Pic0Et.geometricallyReduced` / `Pic0Et.universallyClosed`, the two
 -- `Pic0Et` obligations of `picardJacobianWitness`. Rooted here for the same reason.
 import AlgebraicJacobian.Picard.Pic0EtStructure
+-- Headline leaf B in the etale formulation (run 0084 r2, ajc-p2): leaf B implies the
+-- reducedness obligation, so the headline's five are not independent; plus what leaf
+-- B's own residue is (an affine-chart Omega-rank count, not a tangent space).
+import AlgebraicJacobian.Picard.Pic0EtRelativeDimension
 import AlgebraicJacobian.Picard.AmbientPicNotProper
 import AlgebraicJacobian.Picard.GroupSchemeHomogeneity
 import AlgebraicJacobian.Picard.HomogeneityOrbitCollapse
