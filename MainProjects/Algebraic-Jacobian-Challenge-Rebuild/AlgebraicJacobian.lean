@@ -634,6 +634,11 @@ import AlgebraicJacobian.Picard.DivisorFamilyAffAbel
 -- repriced residue rather than assuming it.
 import AlgebraicJacobian.Picard.DivisorFamilyAffFieldDegree
 import AlgebraicJacobian.Picard.DivisorFamilyAffStalkEval
+-- The field-level window-recovery mono is CARRIER-FREE (run 0089 r6, ajcr-p3): the rung
+-- I-1248 named as the widened tower's load-bearing missing piece reads its carrier only
+-- through `eqns`, so the widened analogue needs no widened mathematics. Rooted so the
+-- carrier-indifference `rfl`s are kernel-checked in-graph rather than asserted.
+import AlgebraicJacobian.Picard.DivisorFamilyAffFieldMono
 -- hdegAff DISCHARGED (run 0087 r3, ajcr-p1): the widened class-degree law, hence the widened
 -- Abel ledger at an arbitrary test, hence chartValueAff_mem_pic0Subgroup with no hypothesis
 -- beyond the chart-index constraint. The last obligation between the R2 carrier (I-0492) and a

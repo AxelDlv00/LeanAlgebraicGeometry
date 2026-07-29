@@ -125,8 +125,21 @@ noncomputable def eqnsWindowGermSet (g : ℕ) (d : (relCurve C K).LocalEquations
         (divisorWindow d (relThetaPairH1_windowM C π hπ g))) :
       Set (relThetaSections C K π (windowM_choice π hπ g)))) z
 
-omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-  [GeometricallyIrreducible C.hom] in
+/- MEASURED, not assumed (the failure mode of I-1241): the linter reports
+`SmoothOfRelativeDimension 1 C.hom` unused here, and `omit`-ing it is REJECTED with
+"cannot omit referenced section variable".  Both tools are right about different things —
+it is referenced through an instance argument of a later binder, not by the statement — so
+the warning cannot be silenced by omitting, and the honest record is to disable the linter
+for these two `rfl`s only.  A binary search over the four candidate binders established
+that the other three ARE omittable, and they are omitted. -/
+set_option linter.unusedSectionVars false in
+omit [IsProper C.hom] [GeometricallyIrreducible C.hom]
+  [IsIntegral (relCurve C K)]
+  [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [LocallyOfFiniteType (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0)]
+  [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1)] in
 set_option maxRecDepth 8000 in
 /-- The chart-typed germ set is the carrier-free one at the family's equations.
 
@@ -140,8 +153,21 @@ lemma eqnsWindowGermSet_divFam (g : ℕ) (G : CertifiedDivisorFamily C K π g)
     divFamEpsWindowGermSet hπ g (DivFam.mk G) z = eqnsWindowGermSet K hπ g G.eqns z :=
   rfl
 
-omit [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
-  [GeometricallyIrreducible C.hom] in
+/- MEASURED, not assumed (the failure mode of I-1241): the linter reports
+`SmoothOfRelativeDimension 1 C.hom` unused here, and `omit`-ing it is REJECTED with
+"cannot omit referenced section variable".  Both tools are right about different things —
+it is referenced through an instance argument of a later binder, not by the statement — so
+the warning cannot be silenced by omitting, and the honest record is to disable the linter
+for these two `rfl`s only.  A binary search over the four candidate binders established
+that the other three ARE omittable, and they are omitted. -/
+set_option linter.unusedSectionVars false in
+omit [IsProper C.hom] [GeometricallyIrreducible C.hom]
+  [IsIntegral (relCurve C K)]
+  [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [LocallyOfFiniteType (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0)]
+  [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1)] in
 set_option synthInstance.maxHeartbeats 800000 in
 set_option maxRecDepth 8000 in
 /-- The WIDENED germ set is the same carrier-free one — `CertifiedDivisorFamilyAff.eps`
