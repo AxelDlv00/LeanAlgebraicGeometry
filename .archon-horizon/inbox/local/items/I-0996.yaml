@@ -1,0 +1,55 @@
+id: I-0996
+provider: local
+kind: memory
+body: "A RETRACTION THAT APPENDS RATHER THAN DELETES LEAVES THE WRONG SENTENCE LOOKING\
+  \ AUDITED -- and the reviewer who files that lesson will still do it, twice, in\
+  \ one session\n\nEstablished review-ajc (run 0081 s0004) 2026-07-29, by a fresh-context\
+  \ audit of my own two correction passes. Extends the already-filed caveat-passes\
+  \ lesson with what actually happens at scale.\n\nTHE SEQUENCE. I found a false citation\
+  \ in the AJC seam (\"picSharp is not even a Zariski sheaf, Kleiman s2 L1292-L1302\"\
+  \ -- those lines are about the ABSOLUTE functor). I corrected it at what I called\
+  \ \"four sites\", then a work-reviewer pass showed my REPLACEMENT was wrong in the\
+  \ same slot, so I corrected again. A ground audit of both passes then found the\
+  \ withdrawn claim STILL LIVE at four more places:\n * the campaign G3 note read\
+  \ \"Proof, three Lean lines ... forces picSharp to be a Zariski sheaf\" TWO LINES\
+  \ ABOVE \"the falsity is now a Lean theorem\" and EIGHT above \"the theorem does\
+  \ not supply half of this refutation\";\n * a FIFTH blueprint site still gave the\
+  \ withdrawn reason, in the same chapter I had edited, after a commit message saying\
+  \ \"the last four sites\";\n * a module docstring at line 82 of a file whose line-898\
+  \ block I had repaired;\n * my hgraph comment rendered \\leanok as an empty math\
+  \ group, so the sentence read \"The mark was removed\".\n\nWHY IT KEEPS HAPPENING.\
+  \ Correcting prose feels like adding the true statement. The wrong sentence is left\
+  \ because deleting it loses the audit trail -- but a reader takes the FIRST assertion\
+  \ and stops, and a nearby correction makes the whole passage look reviewed. Grepping\
+  \ the citation string finds the sites that quote it and misses the ones that paraphrase\
+  \ the ARGUMENT.\n\nWHAT TO DO INSTEAD.\n 1. DELETE the wrong sentence; do not annotate\
+  \ it. Put the retraction where the claim WAS, not after it.\n 2. Grep the MECHANISM,\
+  \ not the citation: I grepped \"L1292\" and found 8 sites, then \"forces .* to be\
+  \ a\" found the paraphrases.\n 3. Never write \"the last N sites\" in a commit message\
+  \ unless you grepped after editing. I wrote it and was wrong by at least one.\n\
+  \ 4. Re-read the whole passage top to bottom after editing. Both my misses were\
+  \ visible within eight lines of my own correction.\n\nRELATED HAZARD, same session:\
+  \ my corrected board row was REVERTED at HEAD by another lane's integrate sweep\
+  \ 3.5 minutes later, so HEAD served the withdrawn version headed \"THE FACT ...\
+  \ kernel-verified\". Verify with `hgit show HEAD:` after any correction, not the\
+  \ worktree -- the correction is the thing most worth losing."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T14:31:51.403498+00:00'
+updated_at: '2026-07-29T14:31:51.403510+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0004-horizon-review-ajc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
