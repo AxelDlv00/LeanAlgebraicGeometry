@@ -2393,6 +2393,44 @@ treat that expectation as this section's prediction rather than its measurement.
 (`AddEquiv` + intertwining across `κ(e) ≃+* k`) on top of whatever the composite gives. Two distinct
 obligations, neither implied by the other.
 
+### 7.9 SELF-AUDIT OF §§7.5–7.7's CLAIMS, run because both review subagents stalled
+
+*No independent fresh-context review was obtained this session (`I-0677`, occurrences 13–14: both
+helpers died at **195 bytes**, the size my r6 report also recorded — so 195, not 187, is now twice
+observed on this lane). I ran the checks I had asked for, which means everything below rests on my own
+verification and should be read that way.*
+
+**(1) Every advertised declaration exists.** All **24** names in the four new modules' `## Main
+declarations` sections were grepped declaration-anchored at HEAD: 24/24 present. (`I-0515`'s failure
+mode — nine advertised names that did not exist — does not recur here.)
+
+**(2) The two absence claims in `CechPicIsoTransport.lean` hold.** `grep -c
+'IsIso\|Injective\|Bijective\|MulEquiv' Picard/Pic.lean` → **0**, so "`Pic.lean` has `map_id` and
+`map_comp` and nothing composing them into invertibility" is exact.
+
+**(3) `chartTrivial_twoChartClass` — the residue §7.5 decided was unnecessary — is referenced
+nowhere as a live obligation.** Two hits in this worksheet, both historical/struck; zero in `.lean`.
+So the decision did not leave a phantom carrier behind (`I-0742`/`docstring-declaration-lists-unchecked`).
+
+**(4) THE ONE I MOST WANTED CHECKED: `hchart`'s producer really does discharge it.**
+`twoChartKernelEquiv` takes `hchart : ∀ L, CechPic.map f L = 1 → ∀ s, CechPic.map (V s).ι L = 1`; the
+claimed producer `Opens.cechPicMap_ι_eq_one_of_map_eq_one` concludes `CechPic.map O.ι L = 1` from
+`htriv : CechPic.map (g ⁻¹ᵁ O).ι (CechPic.map g L) = 1`. Those are *different* hypotheses, and the
+question is whether `hchart`'s antecedent supplies `htriv`. Probed green:
+
+```lean
+example … (h : CechPic.map g L = 1) : CechPic.map (g ⁻¹ᵁ O).ι (CechPic.map g L) = 1 := by
+  rw [h, map_one]
+```
+
+So the implication is exact and the producer is the right one — modulo its own chart hypotheses
+(`IsAffineOpen O`, affine preimage, the two presentations and `hsq`), which `EpsChartSquare.lean`
+supplies at the Wave-5 charts. **What I did NOT do is instantiate the composite of the two**, so
+"`hchart` is discharged at the instance" remains an argument with every step verified rather than a
+landed declaration. That is the honest state, and it is the item a successor should close first if it
+wants `twoChartKernelEquiv` in use rather than merely available (`I-0630`/`I-0711` island rule
+pointed at my own new file).
+
 > **What this section is, methodologically:** §7.5 and §7.6 both named a residue and then discovered
 > its price differed from the guess. This time the price is not a guess — it is the leftover goal
 > text after every landed lemma has fired. That is the cheapest honest estimate available, it took
