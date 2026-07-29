@@ -359,23 +359,48 @@ separably closed field (J1–J5, which also needs a universe bridge since
 Galois descent of `picSharp` points (G3), and the coproduct assembly (G4) —
 **plus one further item that no campaign milestone covers**, recorded next.
 
-**THE ELEVENTH ITEM, and it is unowned: every campaign milestone targets
-`picSharp`, while clause (1) above is about `picEt`.** The campaign
+**THE ELEVENTH ITEM — every campaign milestone targets `picSharp`, while clause
+(1) above is about `picEt`. CORRECTED 2026-07-29 (`ajc-p1`): the gap is a route
+repair, NOT a missing representability theorem.** The campaign
 (`informal/pic-representability-campaign.md`) was written on 2026-07-09 for the
 `picSharp`-shaped obligation, before the étale decision of 2026-07-28
 (protection `I-0491`). Its J-cluster represents `picSharpDeg C' r`, G3 descends
 `picSharp` points, and G4 assembles `picSharpDeg`; the word `picEt` does not
-occur in any milestone body. So completing all of them yields representability
-of `picSharp`, **not** of `picEt`, and the gap cannot be closed by composing with
-`picEtComparison`: that comparison is an isomorphism only under a section
-(Kleiman §2 Thm 2.5, clause (2) of this very statement), and a section is exactly
-the hypothesis `I-0491` forbids the headline to carry. The paragraph above on
-sheafification says why this is not a technicality — an unconditional
-`RepresentableBy` against `picSharp` would be FALSE, so the campaign's endpoint
-cannot be transported to clause (1) for free. Representability of the sheafified
-functor itself is therefore a genuine additional obligation, which the campaign
-names as outstanding in its own preamble but never schedules. The board node
-`AJC.picrep` carries the current landed/absent split and this item.
+occur in any milestone body.
+
+The previous text here concluded that the gap "cannot be closed by composing
+with `picEtComparison`", because that comparison is an isomorphism only under a
+section (Kleiman §2 Thm 2.5), and hence that representability of the sheafified
+functor is a *genuine additional obligation*. **That inference was wrong**, and
+it is a direction confusion. Kleiman 2.5 makes the comparison an isomorphism
+from a section with no hypothesis on the presheaf; but the comparison is the
+sheafification *unit*, and a unit is an isomorphism exactly when its source is
+already a sheaf — and a representable functor is a sheaf for any subcanonical
+topology. `Picard/PicEtSubcanonical.lean` proves this chain
+(`subcanonical_etaleTopology`, absent from Mathlib `v4.31` for the étale
+topology but free from `proetaleTopology`), and
+`picSharp_representableBy_picEt_transport` transports a `picSharp`
+representation to a `picEt` one with **no** rational-point hypothesis, the same
+scheme serving both. So no supplementary étale-representability theorem is
+needed.
+
+**What the correction costs instead, and it is a sharper constraint.** The same
+subcanonicity proves that a representable `picSharp` is a *Zariski* sheaf
+(`PicScheme.picSharp_isSheaf_zariski_of_representableBy`), and the
+sheafification paragraph above records that Kleiman §2 (L1292–L1302) exhibits a
+curve whose `picSharp` is not one. Contrapositive: representability of `picSharp`
+over an arbitrary field is FALSE, so **G3 and G4 target a false statement as
+written**, not a hard one. Everything through J5 runs over a separably closed
+`k'` where a section is available and the obstruction absent; the break is the
+descent step where the conclusion returns to `k`, and the repair is that the
+object descended must be `picEt` (which has the sheaf property that carries
+descent) rather than `picSharp`. Over `k'` the two agree. Restating G3/G4 that
+way reaches clause (1) with no false intermediate.
+
+Not formalised, and named as such: that Kleiman's non-sheaf curve satisfies this
+file's binders (smooth, proper, geometrically integral) is quoted from the
+reference rather than proved. Tracked as `AJC.picrep.etale-rep`; the board node
+`AJC.picrep` carries the landed/absent split.
 
 This is the **sole** `sorry` of the seam: everything else below — the
 representing scheme `PicSchemeEt`, its representability, local finiteness,

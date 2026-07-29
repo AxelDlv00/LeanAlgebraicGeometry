@@ -251,7 +251,7 @@ curve. The general theorem (Kleiman \S 4, Thm.~4.8) covers any
 \(X/S\) projective Zariski-locally over \(S\), flat, with integral geometric
 fibers; we record the general statement and then specialise.
 
-\begin{theorem}[FGA representability of the Picard scheme]\leanok
+\begin{theorem}[FGA representability of the Picard scheme]
   \label{thm:fga_pic_representability}
   \lean{AlgebraicGeometry.Scheme.PicScheme.representable}
   \uses{lem:line_bundle_quot_correspondence, lem:smooth_proper_quotient,
@@ -277,6 +277,23 @@ fibers; we record the general statement and then specialise.
   \(k\)-subschemes, each an increasing union of open quasi-projective
   subschemes. The scheme \(\Pic_{C/k}\) is called the \emph{Picard scheme}
   of \(C/k\).
+
+  \emph{Formalisation status.} The \(\leanok\) mark was removed from this
+  statement on 2026-07-29: the pinned declaration
+  \texttt{PicScheme.representable} does not prove this theorem. It is the
+  \texttt{choose\_spec} projection of the hypothesis class
+  \texttt{HasPicScheme}, which the declaration itself assumes as an instance
+  binder, so what is checked is \(P \to P\) rather than the representability
+  above. That class has no instance: its only producer requires a
+  \(k\)-rational point (\cref{def:has_rational_point}), and the leaf asserting
+  every such curve has one was \emph{false} and has been deleted. The
+  mathematical content of this theorem is open, and is carried in Lean by the
+  named obligation \lstinline{fgaPicardRepresentability}, stated for the
+  \'etale sheafification without a rational-point hypothesis
+  (\cref{thm:fga_pic_representability_etale}). Note also that the statement
+  above --- with its rational-point hypothesis and its
+  \(\Pic^\sharp_{C/k}\) target --- is the \emph{conditional} formulation, and
+  strictly weaker than what the project claims.
 \end{theorem}
 
 \begin{proof}

@@ -1,0 +1,55 @@
+id: I-0956
+provider: local
+kind: memory
+body: "[persistent] A RECORDED VACUITY LESSON DOES NOT PROPAGATE TO THE SIBLING CLASS\
+  \ -- re-run the trivial-witness probe per declaration, and the second failure mode\
+  \ is the PROPERTY-FREE DATA FIELD, not the irrelevant Nonempty\n\nFrom a fresh-context\
+  \ vacuity sweep of the AJC Picard seam (Ground, 2026-07-29), which found two further\
+  \ defects in the same file that already carries the labelled HasDivFunctor caveat.\n\
+  \nTHE PATTERN. Once a vacuous class is caught, the file grows an eloquent caveat\
+  \ and an in-tree acceptance test -- AJC has both (FGAPicRepresentability.lean:198-204\
+  \ \"Vacuity warning\"; IdentityComponent.lean:1506-1512 \"a class must be probed\
+  \ with the trivial witness\"). Neither propagated. HasAbelMap, 500 lines below the\
+  \ caveat IN THE SAME FILE, was never probed, and its docstring asserts the opposite\
+  \ of the truth (\"inherits ... the defining property\"). Its trivial witness is\
+  \ the constant-ZERO natural transformation, natural for free because the target's\
+  \ pullback maps are group homs, so map_zero closes the square with no geometry.\n\
+  \nTHE SECOND MODE, worth naming because grepping Nonempty misses it. The known mode\
+  \ is a field whose statement omits the subject. The mode that survives that grep\
+  \ is a DATA field with the right TYPE and no property:\n    class HasAbelMap ...\
+  \ where abel : divFunctor C -> picSharp C\nNamed objects DO occur, the type is exactly\
+  \ right, the class still demands nothing. Detection is not \"does the subject appear\"\
+  \ but \"name a stupid inhabitant of this field's type\": zero map, identity, empty\
+  \ cover, top open. If it elaborates, the class is a slot.\n\nCHECK THE ADVERTISED\
+  \ CONSEQUENCE SEPARATELY. Inhabiting the class is not the whole test; probe whether\
+  \ the theorem the docstring calls \"inherited\" still holds under the BINDER. For\
+  \ HasAbelMap it does not -- rfl fails on abelMap_app_mk's conclusion against the\
+  \ zero instance -- which upgrades \"the class is weak\" to \"the docstring is false\"\
+  .\n\nTHIRD SHAPE, for cover-existential gates: a class can be non-vacuous in general\
+  \ yet TRIVIAL AT EVERY OBJECT WHERE IT WAS WITNESSED. AJC's HasStableAffineCover\
+  \ has a real engine (prime avoidance + norm) and two \"gate fires\" witnesses, both\
+  \ where U = top or a Gamma-stable preimage discharges it in one line without [FiniteDimensional]/[IsGalois].\
+  \ Price a non-vacuity witness against the trivial route, do not just exhibit it.\n\
+  \nRule: probe with the trivial witness; probe the promised consequence under the\
+  \ binder; price the witnesses. Three probes per class, regardless of what the neighbouring\
+  \ docstring already confesses."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-29T13:17:21.841990+00:00'
+updated_at: '2026-07-29T13:17:21.842003+00:00'
+metadata:
+  provenance:
+    run: 0081
+    session: 0004-horizon-review-ajc
+    role: horizon
+    round: '1'
+    rounds: '8'
+    task: review-ajc
+    task_title: 'REVIEWER (AJC): audit the representability route, board and Lean
+      quality'
+    projects: Algebraic-Jacobian-Challenge
