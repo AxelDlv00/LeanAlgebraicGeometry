@@ -1,0 +1,67 @@
+id: I-1187
+provider: local
+kind: info
+body: 'RELEASE ajcr-p3 (run 0089 r4): AJCR.w4-rep.datum.dat-d.ddr.divrep.abel-widened
+  -- the widened DEGREE LEDGER is CLOSED, hdegAff is NOT. Owner cleared, pending,
+  pinned 4d79bd7bc3.
+
+
+  DO NOT REDO. Picard/DivisorFamilyAffStalkEval.lean (new, rooted, 666 lines, 0 sorries):
+  AffAdaptation.deg_presentationDivisor and IsCertified.deg_presentationDivisor give
+  deg D = finrank W(d) and deg D = n over ARBITRARY affine covers with NO separation
+  hypothesis, for every widened adaptation. 18 declarations. lake build AlgebraicJacobian
+  EXIT=0 (9314 jobs); all probed decls axiom-clean [propext, Classical.choice, Quot.sound]
+  vs a control firing sorryAx on fresh oleans. Also Picard/DivisorFamilyAffFieldDegree.lean:
+  the support-separated route, 10 declarations, same verification -- but see below,
+  it is SUPERSEDED and you should not consume it.
+
+
+  WHAT IS AND IS NOT CLOSED. Closed: the colength<->degree identity on the R2 carrier,
+  i.e. the geometric input the degree ledger needed. NOT closed: hdegAff (DivisorFamilyAffAbel.lean)
+  -- it is the ABEL-VALUE ledger and remains an explicit hypothesis. rep, IsChartUniv
+  and Zariski-local surjectivity are untouched. No gate cleared.
+
+
+  TWO COSTINGS REFUTED, both cheap-direction, both filed at their sites:
+
+  1. The board''s ''four-lemma port'' is FIVE -- coeffAt_eq_toAdd_ordZ_eqn, the coefficient
+  dictionary the other two geometric lemmas call, was omitted from the prescription.
+
+  2. Bigger: the separated route the prescription named is the WRONG TARGET (I-1186).
+  Its hsep has ZERO producers in conclusion position project-wide and is REFUTABLE
+  (hsep + a support point in V0 inter V1 gives False). The chart-typed side retired
+  that route on 07-18; deg_divFamDivisor''s proof term calls the CRT identity, not
+  the separated one. I ported the separated route first, then the CRT route after
+  a work-reviewer audit caught it.
+
+
+  FOR WHOEVER TAKES THE NEXT STEP: the widened analogue of DivFamZar.classDeg_picClass,
+  which transports the presentation divisor''s degree to the Picard class of the widened
+  section. That is what hdegAff actually needs, and it now has its input. Do NOT price
+  it against the separated identity.
+
+
+  METHOD NOTE, cost two other lanes real time (I-1178): an explicit-sorry scaffold
+  in a ROOTED module is a red root build for all ten lanes as soon as any integrate
+  sweep picks it up, and sweeps are not the author''s to control. Add the umbrella
+  import in the commit that removes the last sorry, not in the scaffold commit.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-29T19:44:10.772509+00:00'
+updated_at: '2026-07-29T19:44:10.772520+00:00'
+metadata:
+  provenance:
+    run: 0089
+    session: 0010-horizon-ajcr-p3
+    role: horizon
+    round: '4'
+    rounds: '8'
+    task: ajcr-p3
+    task_title: 'AJCR prover p3: claim and close the 3rd-most important representability
+      item'
+    projects: Algebraic-Jacobian-Challenge-Rebuild

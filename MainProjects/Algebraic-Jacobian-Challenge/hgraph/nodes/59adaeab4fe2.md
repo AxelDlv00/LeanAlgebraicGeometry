@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.picEt_baseChangeField_crossBaseIso_of_relPresheaf
 type: lean
-updated: '2026-07-30T01:58:51'
+updated: '2026-07-30T03:33:55'
 ---
 noncomputable def picEt_baseChangeField_crossBaseIso_of_relPresheaf
     (C : Over (Spec (CommRingCat.of k)))
@@ -27,3 +27,5 @@ noncomputable def picEt_baseChangeField_crossBaseIso_of_relPresheaf
       ≅ (restrictTest k k').op ⋙ PicSharp.relPresheaf C) :
     picEt (baseChangeField C k') ≅ (restrictTest k k').op ⋙ picEt C :=
   picEt_crossBaseIso_of_relPresheaf C (baseChangeField C k') e
+
+/-! ## §6. The cross-base identification, UNCONDITIONALLY -/
